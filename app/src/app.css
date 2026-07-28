@@ -1,0 +1,53 @@
+:root {
+	/* Chaudes — cœur de marque */
+	--color-terracotta: #c8562e;
+	--color-brick: #a5342a;
+	--color-gold: #e0a43b;
+	--color-cream: #f5ead8;
+
+	/* Accents */
+	--color-teal: #1f5f63;
+	--color-sky: #3e7cb1;
+	--color-olive: #5e7b3a;
+	--color-text: #3a2a20;
+
+	--font-script: 'Caveat', cursive;
+	--font-heading: 'Fraunces', serif;
+	--font-body: 'Inter', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+body {
+	background: var(--color-cream);
+	color: var(--color-text);
+	font-family: var(--font-body);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+	font-family: var(--font-heading);
+	margin: 0;
+}
+
+button {
+	font-family: inherit;
+}
+
+a {
+	color: inherit;
+}
