@@ -4,46 +4,235 @@
 	let lang = $state('oc');
 </script>
 
-<main class="screen">
-	<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
-		<button type="button" class:active={lang === 'oc'} onclick={() => (lang = 'oc')}>Òc</button>
-		<button type="button" class:active={lang === 'fr'} onclick={() => (lang = 'fr')}>Fr</button>
-	</div>
+<div class="page-bg" aria-hidden="true">
+	<span class="blob blob-gold"></span>
+	<span class="blob blob-teal"></span>
+	<span class="blob blob-brick"></span>
+</div>
 
-	<div class="brand-card">
-		<img src={logo} alt="Lo Ligam" />
-	</div>
+<svg class="landscape" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+	<path
+		d="M0,120 C240,180 480,60 720,100 C960,140 1200,40 1440,90 L1440,220 L0,220 Z"
+		fill="var(--color-brick)"
+		opacity="0.5"
+	/>
+	<path
+		d="M0,160 C240,200 480,120 720,150 C960,180 1200,110 1440,140 L1440,220 L0,220 Z"
+		fill="var(--color-terracotta)"
+	/>
+</svg>
 
-	<div class="welcome">
-		<p class="tagline-oc">Benvenguda ! Aprèn l'occitan, teisse lo ligam amb sa cultura.</p>
-		<p class="tagline-fr">
-			<em>(Bienvenue&nbsp;! Apprends l'occitan, tisse le lien avec sa culture.)</em>
-		</p>
+<header class="topbar">
+	<div class="topbar-brand">
+		<span class="mini-logo"><img src={logo} alt="" /></span>
+		<span class="brand-name">Lo Ligam</span>
 	</div>
+	<div class="topbar-actions">
+		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
+			<button type="button" class:active={lang === 'oc'} onclick={() => (lang = 'oc')}>Òc</button>
+			<button type="button" class:active={lang === 'fr'} onclick={() => (lang = 'fr')}>Fr</button>
+		</div>
+		<a class="btn-primary btn-small" href="/aprene">Començar</a>
+	</div>
+</header>
 
-	<div class="actions">
-		<button type="button" class="btn-primary">Començar</button>
-		<button type="button" class="btn-secondary">Ai ja un compte</button>
-	</div>
+<main class="page">
+	<section class="hero">
+		<div class="brand-card">
+			<img src={logo} alt="Lo Ligam" />
+		</div>
+
+		<div class="welcome">
+			<p class="tagline-oc">Benvenguda ! Aprèn l'occitan, teisse lo ligam amb sa cultura.</p>
+			<p class="tagline-fr">
+				<em>(Bienvenue&nbsp;! Apprends l'occitan, tisse le lien avec sa culture.)</em>
+			</p>
+		</div>
+
+		<a class="btn-primary" href="/aprene">Aprèn l'occitan <span class="arrow">→</span></a>
+	</section>
+
+	<section class="feature">
+		<div class="feature-text">
+			<p class="feature-tag">Fièrs de la lenga</p>
+			<h2 class="feature-title">Una lenga a l'ora del monde modèrne.</h2>
+			<p class="feature-body">
+				Pour les occitans : un outil beau et sérieux, à la hauteur des plus grandes
+				applications, pour se réapproprier une langue qui est la vôtre — sans nostalgie, avec
+				fierté.
+			</p>
+		</div>
+		<div class="feature-visual feature-visual--terracotta" aria-hidden="true">
+			<svg class="watermark" viewBox="0 0 300 300">
+				<rect x="122" y="55" width="56" height="95" rx="24" />
+				<rect x="122" y="150" width="56" height="95" rx="24" />
+				<rect x="55" y="122" width="95" height="56" rx="24" />
+				<rect x="150" y="122" width="95" height="56" rx="24" />
+				<rect x="122" y="122" width="56" height="56" rx="10" />
+			</svg>
+		</div>
+	</section>
+
+	<section class="feature feature--reverse">
+		<div class="feature-text">
+			<p class="feature-tag feature-tag--teal">Descobrir l'Occitània</p>
+			<h2 class="feature-title">Una pòrta dobèrta sus un país entièr.</h2>
+			<p class="feature-body">
+				Pour les curieux : une porte d'entrée vers l'Occitanie, sa langue, son histoire et son
+				territoire — bien plus qu'un vocabulaire, tout un pays à explorer.
+			</p>
+		</div>
+		<div class="feature-visual feature-visual--teal" aria-hidden="true">
+			<svg class="watermark" viewBox="0 0 300 300">
+				<rect x="122" y="55" width="56" height="95" rx="24" />
+				<rect x="122" y="150" width="56" height="95" rx="24" />
+				<rect x="55" y="122" width="95" height="56" rx="24" />
+				<rect x="150" y="122" width="95" height="56" rx="24" />
+				<rect x="122" y="122" width="56" height="56" rx="10" />
+			</svg>
+		</div>
+	</section>
+
+	<section class="statement">
+		<p class="statement-oc">Una lenga viva, pas un musèu.</p>
+		<p class="statement-fr"><em>(Une langue vivante, pas un musée.)</em></p>
+	</section>
+
+	<section class="values">
+		<div class="value">
+			<p class="value-tag">Ètica</p>
+			<p class="value-text">Vos données ne sont ni vendues, ni pistées.</p>
+		</div>
+		<div class="value">
+			<p class="value-tag">Ecologia</p>
+			<p class="value-text">Un site sobre, hébergé en Europe, pensé pour peser léger.</p>
+		</div>
+		<div class="value">
+			<p class="value-tag">Inclusivitat</p>
+			<p class="value-text">Gratuit dans son cœur, pour ne jamais exclure par l'argent.</p>
+		</div>
+	</section>
+
+	<section class="trio">
+		<a class="trio-card" href="/aprene">
+			<p class="trio-title">Ensag gratuit</p>
+			<p class="trio-text">Una mini-leçon sans compte, pour tastar avant de te lançar.</p>
+		</a>
+		<a class="trio-card" href="/aprene">
+			<p class="trio-title">Ai ja un compte</p>
+			<p class="trio-text">Retròba ta progression e contunha ton apprentissage.</p>
+		</a>
+		<a class="trio-card" href="https://www.instagram.com/lo_ligam/" target="_blank" rel="noopener noreferrer">
+			<p class="trio-title">Seguètz-nos</p>
+			<p class="trio-text">Retrobatz Lo Ligam sus Instagram entre deux leçons.</p>
+		</a>
+	</section>
+
+	<footer class="site-footer">
+		<p class="footer-brand">Lo Ligam</p>
+		<p class="footer-tag">Fach amb amor en Occitània.</p>
+	</footer>
 </main>
 
 <style>
-	.screen {
-		min-height: 100dvh;
+	.page-bg {
+		position: fixed;
+		inset: 0;
+		overflow: hidden;
+		z-index: -2;
+		background: radial-gradient(circle at 50% 0%, #faf3e6 0%, var(--color-cream) 60%);
+	}
+
+	.blob {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(70px);
+	}
+
+	.blob-gold {
+		width: 420px;
+		height: 420px;
+		background: var(--color-gold);
+		opacity: 0.35;
+		top: -140px;
+		left: -120px;
+	}
+
+	.blob-teal {
+		width: 380px;
+		height: 380px;
+		background: var(--color-teal);
+		opacity: 0.2;
+		bottom: -100px;
+		right: -100px;
+	}
+
+	.blob-brick {
+		width: 300px;
+		height: 300px;
+		background: var(--color-brick);
+		opacity: 0.15;
+		top: 25%;
+		right: 8%;
+	}
+
+	.landscape {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 180px;
+		z-index: -1;
+	}
+
+	.topbar {
+		position: sticky;
+		top: 0;
+		z-index: 10;
 		display: flex;
-		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		gap: 2rem;
-		padding: 2rem 1.5rem;
-		text-align: center;
-		animation: fade-in 500ms ease-out;
+		justify-content: space-between;
+		padding: 0.9rem 1.5rem;
+		background: rgba(245, 234, 216, 0.85);
+		backdrop-filter: blur(10px);
+	}
+
+	.topbar-brand {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.mini-logo {
+		width: 34px;
+		height: 34px;
+		border-radius: 10px;
+		overflow: hidden;
+		display: block;
+		box-shadow: 0 2px 8px rgba(165, 52, 42, 0.25);
+	}
+
+	.mini-logo img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.brand-name {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.15rem;
+		color: var(--color-text);
+	}
+
+	.topbar-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
 	}
 
 	.lang-toggle {
-		position: absolute;
-		top: 1.25rem;
-		right: 1.25rem;
 		display: flex;
 		gap: 0.35rem;
 		background: white;
@@ -63,7 +252,16 @@
 		cursor: pointer;
 		transition:
 			background-color 150ms ease,
-			color 150ms ease;
+			color 150ms ease,
+			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.lang-toggle button:hover {
+		transform: scale(1.08);
+	}
+
+	.lang-toggle button:active {
+		transform: scale(0.95);
 	}
 
 	.lang-toggle button.active {
@@ -71,12 +269,28 @@
 		color: white;
 	}
 
+	.page {
+		position: relative;
+	}
+
+	.hero {
+		min-height: calc(100dvh - 64px);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 1.5rem;
+		padding: 2rem 1.5rem;
+		text-align: center;
+		animation: fade-in 600ms ease-out;
+	}
+
 	.brand-card {
 		width: 220px;
 		height: 220px;
-		border-radius: 28px;
+		border-radius: 30px;
 		overflow: hidden;
-		box-shadow: 0 10px 30px rgba(165, 52, 42, 0.25);
+		box-shadow: 0 16px 36px rgba(165, 52, 42, 0.3);
 	}
 
 	.brand-card img {
@@ -87,70 +301,285 @@
 	}
 
 	.welcome {
-		max-width: 32rem;
+		max-width: 34rem;
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.6rem;
 	}
 
 	.tagline-oc {
 		font-family: var(--font-heading);
-		font-size: 1.5rem;
+		font-size: 2rem;
 		font-weight: 600;
 		margin: 0;
 		color: var(--color-text);
+		line-height: 1.25;
 	}
 
 	.tagline-fr {
 		margin: 0;
-		font-size: 1rem;
-		color: var(--color-teal);
-	}
-
-	.actions {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		width: 100%;
-		max-width: 20rem;
-	}
-
-	button {
 		font-size: 1.05rem;
+		color: var(--color-teal);
 	}
 
 	.btn-primary {
+		display: inline-block;
 		background: var(--color-gold);
 		color: var(--color-text);
 		border: none;
-		padding: 0.9rem 1.5rem;
+		padding: 1rem 1.75rem;
 		border-radius: 999px;
 		font-weight: 600;
+		font-family: var(--font-heading);
+		font-size: 1.1rem;
+		text-decoration: none;
 		cursor: pointer;
 		transition:
-			transform 120ms ease,
-			box-shadow 120ms ease;
-		box-shadow: 0 4px 14px rgba(224, 164, 59, 0.4);
+			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+			box-shadow 220ms ease,
+			filter 80ms ease;
+		box-shadow: 0 6px 18px rgba(224, 164, 59, 0.45);
+	}
+
+	.btn-primary .arrow {
+		display: inline-block;
+		transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 
 	.btn-primary:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 6px 18px rgba(224, 164, 59, 0.5);
+		transform: translateY(-3px) scale(1.03);
+		box-shadow: 0 10px 24px rgba(224, 164, 59, 0.55);
+	}
+
+	.btn-primary:hover .arrow {
+		transform: translateX(4px);
 	}
 
 	.btn-primary:active {
-		transform: translateY(0) scale(0.98);
-		transition-duration: 60ms;
+		transform: translateY(0) scale(0.96);
+		filter: brightness(0.95);
+		transition-duration: 70ms;
 	}
 
-	.btn-secondary {
-		background: transparent;
+	.btn-small {
+		padding: 0.55rem 1.15rem;
+		font-size: 0.95rem;
+		box-shadow: 0 4px 12px rgba(224, 164, 59, 0.4);
+	}
+
+	.feature {
+		position: relative;
+		display: grid;
+		grid-template-columns: 1.1fr 0.9fr;
+		align-items: center;
+		gap: 2.5rem;
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 5rem 1.5rem;
+	}
+
+	.feature--reverse {
+		direction: rtl;
+	}
+
+	.feature--reverse .feature-text {
+		direction: ltr;
+	}
+
+	.feature-tag {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.95rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-brick);
+		margin: 0 0 0.5rem;
+	}
+
+	.feature-tag--teal {
 		color: var(--color-teal);
-		border: none;
-		padding: 0.5rem;
-		font-weight: 500;
-		text-decoration: underline;
-		cursor: pointer;
+	}
+
+	.feature-title {
+		font-family: var(--font-heading);
+		font-size: 1.85rem;
+		font-weight: 600;
+		color: var(--color-text);
+		margin: 0 0 0.75rem;
+		line-height: 1.3;
+	}
+
+	.feature-body {
+		margin: 0;
+		font-size: 1.05rem;
+		line-height: 1.6;
+		color: var(--color-text);
+		max-width: 34rem;
+	}
+
+	.feature-visual {
+		direction: ltr;
+		aspect-ratio: 4 / 3;
+		border-radius: 28px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.feature-visual--terracotta {
+		background: linear-gradient(155deg, var(--color-terracotta), var(--color-brick));
+	}
+
+	.feature-visual--teal {
+		background: linear-gradient(155deg, var(--color-teal), #163e41);
+	}
+
+	.watermark {
+		width: 60%;
+		height: 60%;
+	}
+
+	.feature-visual--terracotta .watermark rect {
+		fill: var(--color-gold);
+		opacity: 0.5;
+	}
+
+	.feature-visual--teal .watermark rect {
+		fill: var(--color-cream);
+		opacity: 0.35;
+	}
+
+	.statement {
+		position: relative;
+		background: var(--color-terracotta);
+		padding: 4.5rem 1.5rem;
+		text-align: center;
+	}
+
+	.statement-oc {
+		font-family: var(--font-heading);
+		font-size: clamp(1.75rem, 4vw, 2.5rem);
+		font-weight: 700;
+		color: white;
+		margin: 0 0 0.5rem;
+	}
+
+	.statement-fr {
+		margin: 0;
+		color: rgba(255, 255, 255, 0.85);
+		font-size: 1.1rem;
+	}
+
+	.values {
+		position: relative;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 1.5rem;
+		max-width: 60rem;
+		margin: 0 auto;
+		padding: 4rem 1.5rem 2rem;
+		text-align: center;
+	}
+
+	.value-tag {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-olive);
+		margin: 0 0 0.35rem;
+	}
+
+	.value-text {
+		margin: 0;
+		font-size: 0.9rem;
+		color: var(--color-text);
+	}
+
+	.trio {
+		position: relative;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1.25rem;
+		max-width: 60rem;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 3rem;
+	}
+
+	.trio-card {
+		display: block;
+		background: rgba(255, 255, 255, 0.6);
+		border: 1px solid rgba(165, 52, 42, 0.15);
+		border-radius: 20px;
+		padding: 1.5rem;
+		text-align: left;
+		text-decoration: none;
+		color: inherit;
+		transition:
+			transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+			box-shadow 200ms ease,
+			border-color 200ms ease;
+	}
+
+	.trio-card:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 10px 24px rgba(58, 42, 32, 0.12);
+		border-color: rgba(165, 52, 42, 0.35);
+	}
+
+	.trio-card:active {
+		transform: translateY(-1px) scale(0.98);
+	}
+
+	.trio-title {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.05rem;
+		margin: 0 0 0.35rem;
+		color: var(--color-brick);
+	}
+
+	.trio-text {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.45;
+		color: var(--color-text);
+	}
+
+	.site-footer {
+		position: relative;
+		text-align: center;
+		padding: 2rem 1.5rem 10rem;
+	}
+
+	.footer-brand {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.1rem;
+		color: var(--color-text);
+		margin: 0 0 0.25rem;
+	}
+
+	.footer-tag {
+		margin: 0;
+		font-size: 0.85rem;
+		color: var(--color-teal);
+	}
+
+	@media (max-width: 45rem) {
+		.feature,
+		.feature--reverse {
+			grid-template-columns: 1fr;
+			direction: ltr;
+			text-align: left;
+			padding: 3rem 1.5rem;
+		}
+
+		.feature-visual {
+			order: -1;
+		}
 	}
 
 	@keyframes fade-in {
