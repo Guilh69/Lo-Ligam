@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "lo-ligam-app-dev",
+      "runtimeExecutable": "C:\\Users\\perie\\OneDrive\\Documents\\Lengas\\Occitan\\Aplicacion\\Lo_Ligam\\app\\dev-server.cmd",
+      "runtimeArgs": [],
+      "port": 5173
+    }
+  ]
+}
