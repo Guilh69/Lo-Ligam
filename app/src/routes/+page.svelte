@@ -71,13 +71,17 @@
 		event.currentTarget.style.removeProperty('--my');
 	}
 
-	let rowEls = $state([null, null, null]);
 	const rowSpeeds = [16, -13, 19]; // px/s ; sign = direction
 
 	$effect(() => {
 		if (!browser) return;
 		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+		const els = [
+			document.querySelector('.bg-row-1'),
+			document.querySelector('.bg-row-2'),
+			document.querySelector('.bg-row-3')
+		];
 		const positions = [0, 0, 0];
 		let lastTime;
 		let rafId;
@@ -87,7 +91,7 @@
 			const dt = (now - lastTime) / 1000;
 			lastTime = now;
 
-			rowEls.forEach((el, idx) => {
+			els.forEach((el, idx) => {
 				if (!el) return;
 				const singleWidth = el.scrollWidth / 2;
 				if (!singleWidth) return;
@@ -109,7 +113,7 @@
 {#if browser}
 	<div class="bg-carousel" aria-hidden="true" style="opacity: {carouselOpacity}">
 		{#each bgRows as row, i}
-			<div class="bg-row bg-row-{i + 1}" style="top: {rowTops[i]}px" bind:this={rowEls[i]}>
+			<div class="bg-row bg-row-{i + 1}" style="top: {rowTops[i]}px">
 				{#each [...row, ...row] as src, j (i + '-' + j)}
 					<span
 						class="bg-item"
