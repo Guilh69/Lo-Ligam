@@ -298,6 +298,27 @@
 		z-index: 2;
 	}
 
+	.bg-item::after {
+		content: '';
+		position: absolute;
+		width: 116px;
+		height: 116px;
+		border-radius: 50%;
+		border: 3px solid rgba(224, 164, 59, 0.95);
+		box-shadow:
+			0 0 0 2px rgba(255, 255, 255, 0.6),
+			0 4px 14px rgba(58, 42, 32, 0.35);
+		left: calc(var(--mx, 50%) - 58px);
+		top: calc(var(--my, 50%) - 58px);
+		opacity: 0;
+		transition: opacity 150ms ease;
+		pointer-events: none;
+	}
+
+	.bg-item:hover::after {
+		opacity: 1;
+	}
+
 	.bg-img-blur,
 	.bg-img-sharp {
 		position: absolute;
@@ -310,13 +331,13 @@
 	}
 
 	.bg-img-blur {
-		filter: blur(4px);
+		filter: blur(1.8px);
 	}
 
 	.bg-img-sharp {
 		clip-path: circle(0px at var(--mx, 50%) var(--my, 50%));
 		transition: clip-path 30ms linear;
-		filter: contrast(1.18) saturate(1.3) brightness(1.04);
+		filter: contrast(1.1) saturate(1.15);
 	}
 
 	.bg-item:hover .bg-img-sharp {
