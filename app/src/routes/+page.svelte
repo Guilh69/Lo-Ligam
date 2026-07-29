@@ -48,8 +48,10 @@
 		return () => window.removeEventListener('resize', measureLayout);
 	});
 
+	const topClearance = 100;
+	const bottomClearance = 40;
 	let rowGap = $derived(
-		Math.max(110, Math.min(230, Math.min(centerY, viewportHeight - centerY) - 40))
+		Math.max(80, Math.min(230, centerY - topClearance, viewportHeight - centerY - bottomClearance))
 	);
 	let rowTops = $derived([centerY - rowGap, centerY, centerY + rowGap]);
 
@@ -221,7 +223,7 @@
 	.bg-carousel {
 		position: fixed;
 		inset: 0;
-		z-index: -3;
+		z-index: 0;
 		overflow: hidden;
 	}
 
@@ -307,7 +309,8 @@
 		position: fixed;
 		inset: 0;
 		overflow: hidden;
-		z-index: -2;
+		z-index: 1;
+		pointer-events: none;
 		background: radial-gradient(
 			circle at 50% 0%,
 			rgba(250, 243, 230, 0.9) 0%,
@@ -354,7 +357,8 @@
 		left: 0;
 		width: 100%;
 		height: 180px;
-		z-index: -1;
+		z-index: 2;
+		pointer-events: none;
 	}
 
 	.topbar {
@@ -443,6 +447,14 @@
 
 	.page {
 		position: relative;
+		z-index: 3;
+		pointer-events: none;
+	}
+
+	.page .welcome,
+	.page a,
+	.page button {
+		pointer-events: auto;
 	}
 
 	.hero {
