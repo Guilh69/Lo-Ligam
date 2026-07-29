@@ -57,10 +57,27 @@
 		return () => window.removeEventListener('resize', measureLayout);
 	});
 
+	let viewportHeight = $state(800);
+
+	$effect(() => {
+		if (!browser) return;
+		const onResize = () => (viewportHeight = window.innerHeight);
+		onResize();
+		window.addEventListener('resize', onResize);
+		return () => window.removeEventListener('resize', onResize);
+	});
+
 	const buffer = 40;
-	const halfItemHeight = 52;
+	const halfItemHeight = 66;
 	let rowGap = $derived(
-		Math.max(90, Math.min(220, centerY - topbarBottom - buffer - halfItemHeight))
+		Math.max(
+			90,
+			Math.min(
+				260,
+				centerY - topbarBottom - buffer - halfItemHeight,
+				viewportHeight - centerY - buffer - halfItemHeight
+			)
+		)
 	);
 	let rowTops = $derived([centerY - rowGap, centerY, centerY + rowGap]);
 
@@ -87,19 +104,24 @@
 			document.querySelector('.bg-row-2'),
 			document.querySelector('.bg-row-3')
 		];
+		// Largeur d'un seul jeu d'images mesurée une seule fois : la lire à
+		// chaque frame forcerait le navigateur à recalculer la mise en page
+		// ~60 fois par seconde (source classique de saccades).
+		const singleWidths = els.map((el) => (el ? el.scrollWidth / 4 : 0));
 		const positions = [0, 0, 0];
 		let lastTime;
 		let rafId;
 
 		function tick(now) {
 			if (lastTime === undefined) lastTime = now;
-			const dt = (now - lastTime) / 1000;
+			// Borne le pas de temps : si l'onglet a été mis en arrière-plan,
+			// évite un grand saut visuel au retour.
+			const dt = Math.min((now - lastTime) / 1000, 0.1);
 			lastTime = now;
 
 			els.forEach((el, idx) => {
-				if (!el) return;
-				const singleWidth = el.scrollWidth / 4;
-				if (!singleWidth) return;
+				const singleWidth = singleWidths[idx];
+				if (!el || !singleWidth) return;
 				positions[idx] += rowSpeeds[idx] * dt;
 				const wrapped = ((positions[idx] % singleWidth) + singleWidth) % singleWidth;
 				el.style.transform = `translateX(${-wrapped}px)`;
@@ -278,17 +300,18 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		margin-top: -52px;
+		margin-top: -66px;
 		display: flex;
 		align-items: center;
-		gap: 1.5rem;
+		gap: 1.75rem;
 		width: max-content;
+		will-change: transform;
 	}
 
 	.bg-item {
 		position: relative;
-		width: 104px;
-		height: 104px;
+		width: 132px;
+		height: 132px;
 		flex-shrink: 0;
 	}
 
@@ -314,7 +337,7 @@
 	}
 
 	.bg-item:hover .bg-img-sharp {
-		clip-path: circle(64px at var(--mx, 50%) var(--my, 50%));
+		clip-path: circle(76px at var(--mx, 50%) var(--my, 50%));
 	}
 
 	.page-bg {
