@@ -24,10 +24,16 @@
 		const shuffled = shuffle(bgImages);
 		bgRows = [shuffled.slice(0, 9), shuffled.slice(9, 19), shuffled.slice(19, 28)];
 	}
+
+	let scrollY = $state(0);
+	const fadeDistance = 500;
+	let carouselOpacity = $derived(Math.max(0, 1 - scrollY / fadeDistance));
 </script>
 
+<svelte:window bind:scrollY />
+
 {#if browser}
-	<div class="bg-carousel" aria-hidden="true">
+	<div class="bg-carousel" aria-hidden="true" style="opacity: {carouselOpacity}">
 		{#each bgRows as row, i}
 			<div class="bg-row bg-row-{i + 1}">
 				{#each [...row, ...row] as src, j (i + '-' + j)}
@@ -193,14 +199,6 @@
 		border-radius: 18px;
 		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.18);
 		flex-shrink: 0;
-	}
-
-	.bg-row img:nth-child(odd) {
-		transform: rotate(-4deg);
-	}
-
-	.bg-row img:nth-child(even) {
-		transform: rotate(3deg);
 	}
 
 	.bg-row-1 {
