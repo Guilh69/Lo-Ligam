@@ -180,12 +180,12 @@
 		inset: 0;
 		z-index: -3;
 		overflow: hidden;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-evenly;
 	}
 
 	.bg-row {
+		position: absolute;
+		left: 0;
+		right: 0;
 		display: flex;
 		align-items: center;
 		gap: 1.5rem;
@@ -199,17 +199,30 @@
 		border-radius: 18px;
 		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.18);
 		flex-shrink: 0;
+		filter: blur(2.5px);
+		transition:
+			filter 300ms ease,
+			transform 300ms ease;
+	}
+
+	.bg-row img:hover {
+		filter: blur(0);
+		transform: scale(1.1);
 	}
 
 	.bg-row-1 {
+		top: 16%;
 		animation: scroll-left 70s linear infinite;
 	}
 
 	.bg-row-2 {
+		top: calc(50% - 72px);
+		margin-top: -52px;
 		animation: scroll-right 90s linear infinite;
 	}
 
 	.bg-row-3 {
+		bottom: 16%;
 		animation: scroll-left 55s linear infinite;
 	}
 
