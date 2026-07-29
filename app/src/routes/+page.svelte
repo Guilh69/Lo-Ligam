@@ -18,12 +18,17 @@
 		return a;
 	}
 
-	let bgRows = $state([[], [], []]);
+	// Ordre fixe par défaut (identique serveur/client) pour que les rangées
+	// soient déjà pleines dès le tout premier rendu, sans "trou" le temps
+	// que le JS s'active. Le mélange aléatoire arrive juste après, en
+	// remplaçant seulement les src des images déjà en place (pas de flash).
+	let bgRows = $state([bgImages.slice(0, 9), bgImages.slice(9, 19), bgImages.slice(19, 28)]);
 
-	if (browser) {
+	$effect(() => {
+		if (!browser) return;
 		const shuffled = shuffle(bgImages);
 		bgRows = [shuffled.slice(0, 9), shuffled.slice(9, 19), shuffled.slice(19, 28)];
-	}
+	});
 
 	let scrollY = $state(0);
 	const fadeDistance = 500;
@@ -110,24 +115,18 @@
 
 <svelte:window bind:scrollY />
 
-{#if browser}
-	<div class="bg-carousel" aria-hidden="true" style="opacity: {carouselOpacity}">
-		{#each bgRows as row, i}
-			<div class="bg-row bg-row-{i + 1}" style="top: {rowTops[i]}px">
-				{#each [...row, ...row] as src, j (i + '-' + j)}
-					<span
-						class="bg-item"
-						onpointermove={updateLens}
-						onpointerleave={clearLens}
-					>
-						<img class="bg-img-blur" {src} alt="" />
-						<img class="bg-img-sharp" {src} alt="" />
-					</span>
-				{/each}
-			</div>
-		{/each}
-	</div>
-{/if}
+<div class="bg-carousel" aria-hidden="true" style="opacity: {carouselOpacity}">
+	{#each bgRows as row, i}
+		<div class="bg-row bg-row-{i + 1}" style="top: {rowTops[i]}px">
+			{#each [...row, ...row] as src, j (i + '-' + j)}
+				<span class="bg-item" onpointermove={updateLens} onpointerleave={clearLens}>
+					<img class="bg-img-blur" {src} alt="" />
+					<img class="bg-img-sharp" {src} alt="" />
+				</span>
+			{/each}
+		</div>
+	{/each}
+</div>
 
 <div class="page-bg" aria-hidden="true">
 	<span class="blob blob-gold"></span>
@@ -265,6 +264,14 @@
 		inset: 0;
 		z-index: 0;
 		overflow: hidden;
+		-webkit-mask-image: linear-gradient(
+			to right,
+			transparent 0%,
+			black 8%,
+			black 92%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 	}
 
 	.bg-row {
@@ -283,6 +290,12 @@
 		width: 104px;
 		height: 104px;
 		flex-shrink: 0;
+		transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.bg-item:hover {
+		transform: scale(1.12);
+		z-index: 2;
 	}
 
 	.bg-img-blur,
@@ -297,17 +310,17 @@
 	}
 
 	.bg-img-blur {
-		filter: blur(2.5px);
+		filter: blur(4px);
 	}
 
 	.bg-img-sharp {
 		clip-path: circle(0px at var(--mx, 50%) var(--my, 50%));
 		transition: clip-path 30ms linear;
-		filter: contrast(1.08) saturate(1.1);
+		filter: contrast(1.18) saturate(1.3) brightness(1.04);
 	}
 
 	.bg-item:hover .bg-img-sharp {
-		clip-path: circle(48px at var(--mx, 50%) var(--my, 50%));
+		clip-path: circle(58px at var(--mx, 50%) var(--my, 50%));
 	}
 
 	.page-bg {
