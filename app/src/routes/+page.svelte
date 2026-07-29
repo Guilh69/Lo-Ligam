@@ -30,28 +30,32 @@
 	let carouselOpacity = $derived(Math.max(0, 1 - scrollY / fadeDistance));
 
 	let brandCardEl = $state();
+	let topbarEl = $state();
 	let centerY = $state(300);
-	let viewportHeight = $state(800);
+	let topbarBottom = $state(64);
 
 	function measureLayout() {
 		if (brandCardEl) {
 			const rect = brandCardEl.getBoundingClientRect();
 			centerY = rect.top + rect.height / 2;
 		}
-		viewportHeight = window.innerHeight;
+		if (topbarEl) {
+			topbarBottom = topbarEl.getBoundingClientRect().bottom;
+		}
 	}
 
 	$effect(() => {
 		if (!browser) return;
 		measureLayout();
+		document.fonts?.ready.then(measureLayout);
 		window.addEventListener('resize', measureLayout);
 		return () => window.removeEventListener('resize', measureLayout);
 	});
 
-	const topClearance = 100;
-	const bottomClearance = 40;
+	const buffer = 40;
+	const halfItemHeight = 52;
 	let rowGap = $derived(
-		Math.max(80, Math.min(230, centerY - topClearance, viewportHeight - centerY - bottomClearance))
+		Math.max(90, Math.min(220, centerY - topbarBottom - buffer - halfItemHeight))
 	);
 	let rowTops = $derived([centerY - rowGap, centerY, centerY + rowGap]);
 
@@ -107,7 +111,7 @@
 	/>
 </svg>
 
-<header class="topbar">
+<header class="topbar" bind:this={topbarEl}>
 	<div class="topbar-brand">
 		<span class="mini-logo"><img src={logo} alt="" /></span>
 		<span class="brand-name">Lo Ligam</span>
@@ -262,11 +266,12 @@
 
 	.bg-img-sharp {
 		clip-path: circle(0px at var(--mx, 50%) var(--my, 50%));
-		transition: clip-path 60ms linear;
+		transition: clip-path 30ms linear;
+		filter: contrast(1.08) saturate(1.1);
 	}
 
 	.bg-item:hover .bg-img-sharp {
-		clip-path: circle(38px at var(--mx, 50%) var(--my, 50%));
+		clip-path: circle(48px at var(--mx, 50%) var(--my, 50%));
 	}
 
 	.bg-row-1 {
