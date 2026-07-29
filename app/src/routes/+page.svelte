@@ -1,8 +1,42 @@
 <script>
+	import { browser } from '$app/environment';
 	import logo from '$lib/assets/logo.png';
 
 	let lang = $state('oc');
+
+	const bgImages = Array.from(
+		{ length: 28 },
+		(_, i) => `/bg/design-${String(i + 1).padStart(2, '0')}.png`
+	);
+
+	function shuffle(arr) {
+		const a = [...arr];
+		for (let i = a.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[a[i], a[j]] = [a[j], a[i]];
+		}
+		return a;
+	}
+
+	let bgRows = $state([[], [], []]);
+
+	if (browser) {
+		const shuffled = shuffle(bgImages);
+		bgRows = [shuffled.slice(0, 9), shuffled.slice(9, 19), shuffled.slice(19, 28)];
+	}
 </script>
+
+{#if browser}
+	<div class="bg-carousel" aria-hidden="true">
+		{#each bgRows as row, i}
+			<div class="bg-row bg-row-{i + 1}">
+				{#each [...row, ...row] as src, j (i + '-' + j)}
+					<img {src} alt="" />
+				{/each}
+			</div>
+		{/each}
+	</div>
+{/if}
 
 <div class="page-bg" aria-hidden="true">
 	<span class="blob blob-gold"></span>
@@ -135,12 +169,86 @@
 </main>
 
 <style>
+	.bg-carousel {
+		position: fixed;
+		inset: 0;
+		z-index: -3;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+	}
+
+	.bg-row {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		width: max-content;
+	}
+
+	.bg-row img {
+		width: 104px;
+		height: 104px;
+		object-fit: cover;
+		border-radius: 18px;
+		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.18);
+		flex-shrink: 0;
+	}
+
+	.bg-row img:nth-child(odd) {
+		transform: rotate(-4deg);
+	}
+
+	.bg-row img:nth-child(even) {
+		transform: rotate(3deg);
+	}
+
+	.bg-row-1 {
+		animation: scroll-left 70s linear infinite;
+	}
+
+	.bg-row-2 {
+		animation: scroll-right 90s linear infinite;
+	}
+
+	.bg-row-3 {
+		animation: scroll-left 55s linear infinite;
+	}
+
+	@keyframes scroll-left {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	@keyframes scroll-right {
+		from {
+			transform: translateX(-50%);
+		}
+		to {
+			transform: translateX(0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.bg-row {
+			animation: none;
+		}
+	}
+
 	.page-bg {
 		position: fixed;
 		inset: 0;
 		overflow: hidden;
 		z-index: -2;
-		background: radial-gradient(circle at 50% 0%, #faf3e6 0%, var(--color-cream) 60%);
+		background: radial-gradient(
+			circle at 50% 0%,
+			rgba(250, 243, 230, 0.9) 0%,
+			rgba(245, 234, 216, 0.86) 60%
+		);
 	}
 
 	.blob {
