@@ -28,6 +28,42 @@
 	let scrollY = $state(0);
 	const fadeDistance = 500;
 	let carouselOpacity = $derived(Math.max(0, 1 - scrollY / fadeDistance));
+
+	let brandCardEl = $state();
+	let centerY = $state(300);
+	let viewportHeight = $state(800);
+
+	function measureLayout() {
+		if (brandCardEl) {
+			const rect = brandCardEl.getBoundingClientRect();
+			centerY = rect.top + rect.height / 2;
+		}
+		viewportHeight = window.innerHeight;
+	}
+
+	$effect(() => {
+		if (!browser) return;
+		measureLayout();
+		window.addEventListener('resize', measureLayout);
+		return () => window.removeEventListener('resize', measureLayout);
+	});
+
+	let rowGap = $derived(
+		Math.max(110, Math.min(230, Math.min(centerY, viewportHeight - centerY) - 40))
+	);
+	let rowTops = $derived([centerY - rowGap, centerY, centerY + rowGap]);
+
+	function updateLens(event) {
+		const item = event.currentTarget;
+		const rect = item.getBoundingClientRect();
+		item.style.setProperty('--mx', event.clientX - rect.left + 'px');
+		item.style.setProperty('--my', event.clientY - rect.top + 'px');
+	}
+
+	function clearLens(event) {
+		event.currentTarget.style.removeProperty('--mx');
+		event.currentTarget.style.removeProperty('--my');
+	}
 </script>
 
 <svelte:window bind:scrollY />
@@ -35,9 +71,16 @@
 {#if browser}
 	<div class="bg-carousel" aria-hidden="true" style="opacity: {carouselOpacity}">
 		{#each bgRows as row, i}
-			<div class="bg-row bg-row-{i + 1}">
+			<div class="bg-row bg-row-{i + 1}" style="top: {rowTops[i]}px">
 				{#each [...row, ...row] as src, j (i + '-' + j)}
-					<img {src} alt="" />
+					<span
+						class="bg-item"
+						onpointermove={updateLens}
+						onpointerleave={clearLens}
+					>
+						<img class="bg-img-blur" {src} alt="" />
+						<img class="bg-img-sharp" {src} alt="" />
+					</span>
 				{/each}
 			</div>
 		{/each}
@@ -78,7 +121,7 @@
 
 <main class="page">
 	<section class="hero">
-		<div class="brand-card">
+		<div class="brand-card" bind:this={brandCardEl}>
 			<img src={logo} alt="Lo Ligam" />
 		</div>
 
@@ -186,43 +229,53 @@
 		position: absolute;
 		left: 0;
 		right: 0;
+		margin-top: -52px;
 		display: flex;
 		align-items: center;
 		gap: 1.5rem;
 		width: max-content;
 	}
 
-	.bg-row img {
+	.bg-item {
+		position: relative;
 		width: 104px;
 		height: 104px;
+		flex-shrink: 0;
+	}
+
+	.bg-img-blur,
+	.bg-img-sharp {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
 		object-fit: cover;
 		border-radius: 18px;
 		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.18);
-		flex-shrink: 0;
-		filter: blur(2.5px);
-		transition:
-			filter 300ms ease,
-			transform 300ms ease;
 	}
 
-	.bg-row img:hover {
-		filter: blur(0);
-		transform: scale(1.1);
+	.bg-img-blur {
+		filter: blur(2.5px);
+	}
+
+	.bg-img-sharp {
+		clip-path: circle(0px at var(--mx, 50%) var(--my, 50%));
+		transition: clip-path 60ms linear;
+	}
+
+	.bg-item:hover .bg-img-sharp {
+		clip-path: circle(38px at var(--mx, 50%) var(--my, 50%));
 	}
 
 	.bg-row-1 {
-		top: 16%;
 		animation: scroll-left 70s linear infinite;
 	}
 
 	.bg-row-2 {
-		top: calc(50% - 72px);
-		margin-top: -52px;
 		animation: scroll-right 90s linear infinite;
 	}
 
 	.bg-row-3 {
-		bottom: 16%;
 		animation: scroll-left 55s linear infinite;
 	}
 
