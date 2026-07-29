@@ -98,11 +98,11 @@
 
 			els.forEach((el, idx) => {
 				if (!el) return;
-				const singleWidth = el.scrollWidth / 2;
+				const singleWidth = el.scrollWidth / 4;
 				if (!singleWidth) return;
 				positions[idx] += rowSpeeds[idx] * dt;
 				const wrapped = ((positions[idx] % singleWidth) + singleWidth) % singleWidth;
-				el.style.transform = `translateX(${wrapped}px)`;
+				el.style.transform = `translateX(${-wrapped}px)`;
 			});
 
 			rafId = requestAnimationFrame(tick);
@@ -118,7 +118,7 @@
 <div class="bg-carousel" aria-hidden="true" style="opacity: {carouselOpacity}">
 	{#each bgRows as row, i}
 		<div class="bg-row bg-row-{i + 1}" style="top: {rowTops[i]}px">
-			{#each [...row, ...row] as src, j (i + '-' + j)}
+			{#each [...row, ...row, ...row, ...row] as src, j (i + '-' + j)}
 				<span class="bg-item" onpointermove={updateLens} onpointerleave={clearLens}>
 					<img class="bg-img-blur" {src} alt="" />
 					<img class="bg-img-sharp" {src} alt="" />
@@ -290,33 +290,6 @@
 		width: 104px;
 		height: 104px;
 		flex-shrink: 0;
-		transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
-	.bg-item:hover {
-		transform: scale(1.12);
-		z-index: 2;
-	}
-
-	.bg-item::after {
-		content: '';
-		position: absolute;
-		width: 116px;
-		height: 116px;
-		border-radius: 50%;
-		border: 3px solid rgba(224, 164, 59, 0.95);
-		box-shadow:
-			0 0 0 2px rgba(255, 255, 255, 0.6),
-			0 4px 14px rgba(58, 42, 32, 0.35);
-		left: calc(var(--mx, 50%) - 58px);
-		top: calc(var(--my, 50%) - 58px);
-		opacity: 0;
-		transition: opacity 150ms ease;
-		pointer-events: none;
-	}
-
-	.bg-item:hover::after {
-		opacity: 1;
 	}
 
 	.bg-img-blur,
@@ -337,11 +310,11 @@
 	.bg-img-sharp {
 		clip-path: circle(0px at var(--mx, 50%) var(--my, 50%));
 		transition: clip-path 30ms linear;
-		filter: contrast(1.1) saturate(1.15);
+		filter: contrast(1.15) saturate(1.2);
 	}
 
 	.bg-item:hover .bg-img-sharp {
-		clip-path: circle(58px at var(--mx, 50%) var(--my, 50%));
+		clip-path: circle(64px at var(--mx, 50%) var(--my, 50%));
 	}
 
 	.page-bg {
