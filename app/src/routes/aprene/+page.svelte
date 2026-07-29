@@ -42,7 +42,7 @@
 	</div>
 
 	<div class="actions">
-		<button type="button" class="btn-primary">Començar <span class="arrow">→</span></button>
+		<a class="btn-primary" href="/aprene/essai">Començar <span class="arrow">→</span></a>
 		<button type="button" class="btn-secondary">Ai ja un compte</button>
 	</div>
 </main>
@@ -213,6 +213,10 @@
 	}
 
 	.btn-primary {
+		display: inline-block;
+		font-size: 1.1rem;
+		font-family: var(--font-heading);
+		text-decoration: none;
 		background: var(--color-gold);
 		color: var(--color-text);
 		border: none;
