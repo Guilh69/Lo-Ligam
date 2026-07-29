@@ -7,9 +7,8 @@ Stock de designs récupérés depuis le Canva de Lo Ligam (dossier "Lo Ligam" �
 - `logo/` — le logo officiel (croix occitana + « Lo ligam »).
 - `canva-vf/<NN-nom-du-theme>/` — un dossier par thème de publication Instagram (ex. `03-Cos-uman`, `10-Planetas`), avec un PNG par design à l'intérieur.
 
-## État (28 juillet 2026)
+## État (29 juillet 2026)
 
-Récupération en cours, pas encore terminée. Dossiers déjà exportés et téléchargés :
-Logo, 36-Amor d'Aussau, Francitan, 09-Cap d'an 2022, 08-Nadal 2022, 24-Senses, 27-Auton, 29-Direccions, 26-Oc-Non, 17-Som.
+Récupération terminée. 214 fichiers PNG, répartis dans 35 dossiers thématiques (`canva-vf/`) + le logo, couvrant l'intégralité du dossier Canva "VF" (36 thèmes numérotés + Francitan + Carta linguistic ; 3 dossiers listés dans Canva n'avaient aucun design exporté — probablement du contenu vidéo non indexé côté API).
 
-Reste à faire (36 thèmes au total dans le Canva) : voir la liste de tâches de la session Claude Code — 31-Bordèu, 32-Remplaçat, 33-Ostal, 34-Conjugason, 35-Conta me istoria, 1-Entre cèl e montanhas, 3-Cos uman, 10-Planetas, 2-Sason, 7 et 6-Colors, 4-Manjam uèi, 5-Pronoms Personals, 11-Meteo, 14-Emocions, 15-Trabalh, 12-Animals, 13-Astrologics, Carta linguistic, 16-Familha, 18-Ora, 22 et 21-Chifras, 25-JO, 28-Cardinals, 30-Biaisses cognitius.
+Le dossier "En cours" du Canva (brouillons/travaux non finalisés) n'a volontairement pas été récupéré.
