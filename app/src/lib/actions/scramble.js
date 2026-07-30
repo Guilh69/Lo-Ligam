@@ -9,7 +9,7 @@ function makeSpan(ch) {
 	span.textContent = ch;
 	span.style.opacity = '1';
 	span.style.filter = 'blur(0px)';
-	span.style.transition = 'opacity 240ms ease, filter 240ms ease';
+	span.style.transition = 'opacity 420ms ease-in-out, filter 420ms ease-in-out';
 	return span;
 }
 
@@ -53,9 +53,10 @@ export function scramble(node, text) {
 		// Décalage fixe et modeste par lettre : à tout instant, seule une
 		// poignée de lettres est en transition (même sur un long
 		// paragraphe), ce qui reste léger et fluide plutôt que de tout
-		// faire flou en même temps.
-		const perCharStagger = 5;
-		const hideDuration = 190;
+		// faire flou en même temps. Durées plus longues et flou très léger
+		// pour une transition douce, jamais brusque.
+		const perCharStagger = 7;
+		const hideDuration = 280;
 
 		spans.forEach((span, i) => {
 			const oldCh = span.textContent;
@@ -64,8 +65,8 @@ export function scramble(node, text) {
 			const delay = i * perCharStagger;
 			timers.push(
 				setTimeout(() => {
-					span.style.opacity = '0';
-					span.style.filter = 'blur(2px)';
+					span.style.opacity = '0.1';
+					span.style.filter = 'blur(1.5px)';
 				}, delay),
 				setTimeout(() => {
 					span.textContent = newCh;

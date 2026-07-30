@@ -627,7 +627,12 @@
 		max-width: 34rem;
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		gap: 0.6rem;
+		/* Réserve assez de place pour 2 lignes de chaque texte : la longueur
+		   de la phrase change selon la langue (Òc/Fr), sans ça le logo et le
+		   bouton au-dessus/en-dessous sautaient légèrement au changement. */
+		min-height: calc(2 * clamp(2.1rem, 4.5vw, 2.6rem) * 1.2 + 0.6rem + 2 * 1.05rem * 1.4);
 	}
 
 	.tagline-primary {
