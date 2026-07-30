@@ -189,7 +189,7 @@
 		</div>
 
 		<div class="welcome">
-			<p class="tagline-oc">Benvenguda ! Aprèn l'occitan, teisse lo ligam amb sa cultura.</p>
+			<p class="tagline-oc">Benvenguda ! Apren l'occitan, teis lo ligam amb sa cultura.</p>
 			<p class="tagline-fr">
 				<em>(Bienvenue&nbsp;! Apprends l'occitan, tisse le lien avec sa culture.)</em>
 			</p>
@@ -201,7 +201,7 @@
 	<section class="feature">
 		<div class="feature-text">
 			<p class="feature-tag">Fièrs de la lenga</p>
-			<h2 class="feature-title">Una lenga a l'ora del monde modèrne.</h2>
+			<h2 class="feature-title">Una lenga a l'ora del mond modèrne.</h2>
 			<p class="feature-body">
 				Pour les occitans : un outil beau et sérieux, à la hauteur des plus grandes
 				applications, pour se réapproprier une langue qui est la vôtre — sans nostalgie, avec
@@ -528,11 +528,11 @@
 
 	.tagline-oc {
 		font-family: var(--font-heading);
-		font-size: 2rem;
+		font-size: clamp(2.1rem, 4.5vw, 2.6rem);
 		font-weight: 600;
 		margin: 0;
 		color: var(--color-text);
-		line-height: 1.25;
+		line-height: 1.2;
 	}
 
 	.tagline-fr {
@@ -621,11 +621,11 @@
 
 	.feature-title {
 		font-family: var(--font-heading);
-		font-size: 1.85rem;
+		font-size: clamp(1.9rem, 3vw, 2.3rem);
 		font-weight: 600;
 		color: var(--color-text);
 		margin: 0 0 0.75rem;
-		line-height: 1.3;
+		line-height: 1.25;
 	}
 
 	.feature-body {
@@ -678,7 +678,7 @@
 
 	.statement-oc {
 		font-family: var(--font-heading);
-		font-size: clamp(1.75rem, 4vw, 2.5rem);
+		font-size: clamp(2rem, 4.5vw, 3rem);
 		font-weight: 700;
 		color: white;
 		margin: 0 0 0.5rem;

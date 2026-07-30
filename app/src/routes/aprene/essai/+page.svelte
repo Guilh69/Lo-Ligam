@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import HomeIcon from '$lib/components/HomeIcon.svelte';
+	import FougasseIcon from '$lib/components/FougasseIcon.svelte';
 
 	// Contenu validé par Romain (méthode-pedagogique.md) — Primièra leiçon, sans inscription.
 	const groups = [
@@ -317,7 +318,7 @@
 				<span class="resumed-toast">Represa ont aviás quitat ↺ <em>(reprise où tu avais arrêté)</em></span>
 			{/if}
 			<div class="points-pill">
-				<span aria-hidden="true">⭐</span> {points}
+				<FougasseIcon size={17} /> {points}
 				{#if showEarnedPop}<span class="earned-pop">+{lastEarned}</span>{/if}
 			</div>
 			<button
@@ -460,14 +461,16 @@
 			<p class="reward-title">Plan jogat !</p>
 			<p class="reward-sub"><em>(Bien joué&nbsp;!)</em></p>
 			<p class="reward-recap">
-				Tu sabes ara dire : <strong>Adieu</strong>, <strong>Adieu-siatz</strong>,
+				Ara, sabes dire : <strong>Adieu</strong>, <strong>Adieu-siatz</strong>,
 				<strong>Bonjorn</strong>, <strong>Bon vèspre</strong>, <strong>Bona jornada</strong>,
 				<strong>Bona vesprada</strong>, <strong>Bona nuèch</strong>.
 			</p>
-			<p class="reward-points">⭐ {points} punts gagnats <em>(points gagnés)</em></p>
+			<p class="reward-points">
+				<FougasseIcon size={20} /> {points} fogassas ganhadas <em>(fougasses gagnées)</em>
+			</p>
 			<p class="reward-next">
 				Crèa un compte per contunhar : exercicis, prononciacion, e ta bibliotèca de
-				vocabulari se remplirà a mesura.
+				vocabulari s'emplenarà a mesura.
 			</p>
 			<a class="btn-primary" href="/aprene"
 				>Crèa un compte per contunhar <span class="arrow">→</span></a
@@ -721,7 +724,7 @@
 		margin: 0;
 		font-family: var(--font-heading);
 		font-weight: 600;
-		font-size: 1.1rem;
+		font-size: 1.35rem;
 		color: var(--color-brick);
 	}
 
@@ -964,7 +967,7 @@
 
 	.reward-title {
 		font-family: var(--font-heading);
-		font-size: 2.4rem;
+		font-size: clamp(2.6rem, 6vw, 3.2rem);
 		font-weight: 700;
 		color: var(--color-brick);
 		margin: 0;
@@ -985,6 +988,10 @@
 
 	.reward-points {
 		margin: 0 0 0.75rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
 		font-family: var(--font-heading);
 		font-weight: 700;
 		color: var(--color-brick);

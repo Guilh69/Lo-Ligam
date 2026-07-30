@@ -206,7 +206,7 @@
 
 	.title {
 		font-family: var(--font-heading);
-		font-size: 2.1rem;
+		font-size: clamp(2.4rem, 5vw, 2.9rem);
 		font-weight: 700;
 		color: var(--color-brick);
 		margin: 0;
@@ -238,7 +238,7 @@
 		margin: 0;
 		font-family: var(--font-heading);
 		font-weight: 600;
-		font-size: 1.25rem;
+		font-size: 1.5rem;
 		color: var(--color-text);
 	}
 
