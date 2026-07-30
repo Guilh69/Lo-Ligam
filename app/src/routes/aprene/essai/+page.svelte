@@ -60,11 +60,39 @@
 		return a;
 	}
 
-	const distractorPool = ['a', 'e', 'i', 'o', 'u', 'n', 'r', 's', 't', 'l', 'c', 'm', 'g', 'p'];
-
+	// Pas de lettres pièges à ce stade (retiré à la demande de Romain : trop
+	// dur pour un néophyte). Prévu comme mode « difficile » optionnel plus tard.
 	let requiredLetters = $state([]);
 	let bank = $state([]);
 	let filledCount = $state(0);
+	let helpsUsedThisWord = $state(0);
+	let slotShake = $state(false);
+	let lastHelpTap = 0;
+
+	let points = $state(0);
+	let lastEarned = $state(0);
+	let showEarnedPop = $state(false);
+	let resumed = $state(false);
+
+	const STORAGE_KEY = 'lo-ligam-essai-progress';
+
+	function saveProgress() {
+		if (!browser) return;
+		try {
+			localStorage.setItem(STORAGE_KEY, JSON.stringify({ wordIndex, points }));
+		} catch (e) {
+			/* stockage indisponible (navigation privée…) : pas bloquant */
+		}
+	}
+
+	function clearProgress() {
+		if (!browser) return;
+		try {
+			localStorage.removeItem(STORAGE_KEY);
+		} catch (e) {
+			/* idem */
+		}
+	}
 
 	// Appelée explicitement (jamais depuis un $effect réactif : ça est entré
 	// en conflit avec l'hydratation de SvelteKit et cassait tous les clics
@@ -73,21 +101,32 @@
 		const word = flatWords[wordIndex];
 		if (!word) return;
 		requiredLetters = word.oc.replace(/[ -]/g, '').split('');
-		const distractors = [];
-		while (distractors.length < 3) {
-			distractors.push(distractorPool[Math.floor(Math.random() * distractorPool.length)]);
-		}
-		bank = shuffle([...requiredLetters, ...distractors]).map((char, id) => ({
+		bank = shuffle(requiredLetters).map((char, id) => ({
 			char,
 			used: false,
 			wrong: false,
 			id
 		}));
 		filledCount = 0;
+		helpsUsedThisWord = 0;
 		showNote = false;
 	}
 
 	onMount(() => {
+		if (browser) {
+			try {
+				const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+				if (saved && saved.wordIndex > 0 && saved.wordIndex < flatWords.length) {
+					wordIndex = saved.wordIndex;
+					points = saved.points ?? 0;
+					phase = 'discover';
+					resumed = true;
+					setTimeout(() => (resumed = false), 3200);
+				}
+			} catch (e) {
+				/* stockage indisponible : on repart simplement du début */
+			}
+		}
 		setupWord();
 	});
 
@@ -104,14 +143,14 @@
 		});
 	});
 
-	function tapBankTile(tile) {
+	function attemptTile(tile) {
 		if (tile.used || wordComplete) return;
 		const needed = requiredLetters[filledCount];
 		if (tile.char.toLowerCase() === needed.toLowerCase()) {
 			tile.used = true;
 			bank = [...bank];
 			filledCount += 1;
-			if (filledCount === requiredLetters.length) playChime();
+			if (filledCount === requiredLetters.length) completeWord();
 		} else {
 			tile.wrong = true;
 			bank = [...bank];
@@ -120,6 +159,65 @@
 				bank = [...bank];
 			}, 260);
 		}
+	}
+
+	// Tape au clavier : cherche d'abord une tuile qui correspond à la lettre
+	// attendue (accepte), sinon une tuile qui porte ce caractère ailleurs
+	// dans le mot (secoue, comme un tap à la souris), sinon secoue la carte
+	// entière (la lettre tapée n'appartient pas au mot).
+	function attemptChar(ch) {
+		const needed = requiredLetters[filledCount]?.toLowerCase();
+		let tile = bank.find((t) => !t.used && t.char.toLowerCase() === ch && ch === needed);
+		if (!tile) tile = bank.find((t) => !t.used && t.char.toLowerCase() === ch);
+		if (tile) {
+			attemptTile(tile);
+		} else {
+			slotShake = true;
+			setTimeout(() => (slotShake = false), 260);
+		}
+	}
+
+	function handleKeydown(e) {
+		if (phase !== 'discover' || wordComplete) return;
+		if (e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1) return;
+		attemptChar(e.key.toLowerCase());
+	}
+
+	function revealNextLetter() {
+		if (filledCount >= requiredLetters.length) return;
+		const needed = requiredLetters[filledCount].toLowerCase();
+		const tile = bank.find((t) => !t.used && t.char.toLowerCase() === needed);
+		if (tile) {
+			tile.used = true;
+			bank = [...bank];
+			filledCount += 1;
+			helpsUsedThisWord += 1;
+		}
+		if (filledCount === requiredLetters.length) completeWord();
+	}
+
+	// Un tap : révèle une seule lettre. Deux taps rapprochés : complète tout
+	// le mot d'un coup (repéré par l'écart de temps entre deux appels).
+	function useHelp() {
+		if (wordComplete) return;
+		const now = Date.now();
+		const isDouble = now - lastHelpTap < 420;
+		lastHelpTap = now;
+		if (isDouble) {
+			while (filledCount < requiredLetters.length) revealNextLetter();
+		} else {
+			revealNextLetter();
+		}
+	}
+
+	function completeWord() {
+		const earned = Math.max(2, 10 - helpsUsedThisWord * 3);
+		points += earned;
+		lastEarned = earned;
+		showEarnedPop = true;
+		setTimeout(() => (showEarnedPop = false), 900);
+		playChime();
+		saveProgress();
 	}
 
 	function playChime() {
@@ -156,13 +254,29 @@
 	function next() {
 		if (wordIndex < flatWords.length - 1) {
 			wordIndex += 1;
+			setupWord();
+			saveProgress();
 		} else {
 			phase = 'reward';
-			return;
+			clearProgress();
 		}
-		setupWord();
 	}
 </script>
+
+{#snippet speakerIcon(active)}
+	<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M4 9v6h4l5 4V5L8 9H4Z" />
+		{#if active}
+			<path d="M16.3 8.7a5 5 0 0 1 0 6.6" />
+			<path d="M19 6a8.2 8.2 0 0 1 0 12" />
+		{:else}
+			<line x1="16.5" y1="8" x2="21" y2="16" />
+			<line x1="21" y1="8" x2="16.5" y2="16" />
+		{/if}
+	</svg>
+{/snippet}
+
+<svelte:window onkeydown={handleKeydown} />
 
 <div class="page-bg" aria-hidden="true">
 	<span class="blob blob-gold"></span>
@@ -171,7 +285,7 @@
 
 <main class="screen">
 	<header class="lesson-top">
-		<a class="close" href="/aprene" aria-label="Tampar">×</a>
+		<a class="close" href="/" aria-label="Tornar a l'acuèlh">×</a>
 		{#if phase === 'discover'}
 			<div
 				class="progress"
@@ -187,14 +301,23 @@
 		{:else}
 			<div class="progress"></div>
 		{/if}
-		<button
-			type="button"
-			class="mute"
-			onclick={() => (muted = !muted)}
-			aria-label={muted ? 'Activar lo son' : 'Copar lo son'}
-		>
-			{muted ? '🔇' : '🔊'}
-		</button>
+		<div class="header-right">
+			{#if resumed}
+				<span class="resumed-toast">Represa ont aviás quitat ↺ <em>(reprise où tu avais arrêté)</em></span>
+			{/if}
+			<div class="points-pill">
+				<span aria-hidden="true">⭐</span> {points}
+				{#if showEarnedPop}<span class="earned-pop">+{lastEarned}</span>{/if}
+			</div>
+			<button
+				type="button"
+				class="mute"
+				onclick={() => (muted = !muted)}
+				aria-label={muted ? 'Activar lo son' : 'Copar lo son'}
+			>
+				{@render speakerIcon(!muted)}
+			</button>
+		</div>
 	</header>
 
 	{#if phase === 'context'}
@@ -254,11 +377,13 @@
 						onclick={playWordSound}
 						aria-label="Escotar (a venir)"
 					>
-						🔊
+						{@render speakerIcon(true)}
 					</button>
 				</div>
 
-				<div class="slots">
+				<p class="target-fr">{current.fr}</p>
+
+				<div class="slots" class:shake={slotShake}>
 					{#each displayChars as c}
 						{#if c.isLetter}
 							<span class="slot" class:filled={c.filled}>{c.filled ? c.ch : ''}</span>
@@ -276,16 +401,29 @@
 							class:used={tile.used}
 							class:wrong={tile.wrong}
 							disabled={tile.used}
-							onclick={() => tapBankTile(tile)}
+							onclick={() => attemptTile(tile)}
 						>
 							{tile.char}
 						</button>
 					{/each}
 				</div>
 
+				{#if !wordComplete}
+					<div class="help-block">
+						<button
+							type="button"
+							class="help-btn"
+							onclick={useHelp}
+							title="Un tap : una letra. Dos taps : lo mot entièr."
+						>
+							Ajuda ?
+						</button>
+						<p class="help-hint"><em>(un tap : une lettre — deux taps : le mot entier)</em></p>
+					</div>
+				{/if}
+
 				{#if wordComplete}
 					<div class="reveal">
-						<p class="word-fr">{current.fr}</p>
 						{#if current.note}
 							<button type="button" class="fact-toggle" onclick={() => (showNote = !showNote)}>
 								💡 Sabètz ? <em>(Le saviez-vous&nbsp;?)</em>
@@ -304,7 +442,7 @@
 				{wordIndex < flatWords.length - 1 ? 'Segon' : 'Acabar'} <span class="arrow">→</span>
 			</button>
 		{:else}
-			<p class="hint">Tapa las letras dins l'òrdre per formar lo mot</p>
+			<p class="hint">Tapa las letras dins l'òrdre, o pica-las al clavièr</p>
 		{/if}
 	{:else}
 		<section class="reward">
@@ -315,6 +453,7 @@
 				<strong>Bonjorn</strong>, <strong>Bon vèspre</strong>, <strong>Bona jornada</strong>,
 				<strong>Bona vesprada</strong>, <strong>Bona nuèch</strong>.
 			</p>
+			<p class="reward-points">⭐ {points} punts gagnats <em>(points gagnés)</em></p>
 			<p class="reward-next">
 				Crèa un compte per contunhar : exercicis, prononciacion, e ta bibliotèca de
 				vocabulari se remplirà a mesura.
@@ -322,7 +461,7 @@
 			<a class="btn-primary" href="/aprene"
 				>Crèa un compte per contunhar <span class="arrow">→</span></a
 			>
-			<a class="btn-secondary" href="/aprene">Tornar</a>
+			<a class="btn-secondary" href="/">Tornar a l'acuèlh</a>
 		</section>
 	{/if}
 </main>
@@ -396,12 +535,71 @@
 		background: rgba(58, 42, 32, 0.08);
 	}
 
+	.header-right {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		position: relative;
+	}
+
+	.resumed-toast {
+		position: absolute;
+		right: 0;
+		top: calc(100% + 0.5rem);
+		white-space: nowrap;
+		background: white;
+		color: var(--color-teal);
+		font-size: 0.78rem;
+		font-weight: 600;
+		padding: 0.4rem 0.8rem;
+		border-radius: 999px;
+		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.15);
+		animation:
+			card-in 250ms ease,
+			toast-out 250ms ease 2950ms forwards;
+	}
+
+	.resumed-toast em {
+		font-weight: 400;
+		opacity: 0.75;
+	}
+
+	.points-pill {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		background: rgba(224, 164, 59, 0.18);
+		color: var(--color-brick);
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.95rem;
+		padding: 0.35rem 0.8rem;
+		border-radius: 999px;
+	}
+
+	.earned-pop {
+		position: absolute;
+		left: 50%;
+		top: -0.4rem;
+		transform: translateX(-50%);
+		color: var(--color-olive);
+		font-weight: 700;
+		font-size: 0.85rem;
+		animation: points-float 900ms ease forwards;
+		pointer-events: none;
+	}
+
 	.mute {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		border: none;
 		background: transparent;
-		font-size: 1.2rem;
+		color: var(--color-text);
 		cursor: pointer;
-		padding: 0.25rem 0.5rem;
+		width: 2.2rem;
+		height: 2.2rem;
 		border-radius: 999px;
 		transition: background-color 150ms ease;
 	}
@@ -539,12 +737,15 @@
 	}
 
 	.listen {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		width: 44px;
 		height: 44px;
 		border-radius: 50%;
 		border: none;
 		background: rgba(31, 95, 99, 0.1);
-		font-size: 1.15rem;
+		color: var(--color-teal);
 		cursor: pointer;
 		transition:
 			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -559,11 +760,22 @@
 		transform: scale(0.9);
 	}
 
+	.target-fr {
+		margin: -0.5rem 0 0;
+		color: var(--color-teal);
+		font-size: 1.05rem;
+		text-align: center;
+	}
+
 	.slots {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		gap: 0.4rem;
+	}
+
+	.slots.shake {
+		animation: shake 250ms ease;
 	}
 
 	.slot {
@@ -641,18 +853,47 @@
 		animation: shake 250ms ease;
 	}
 
+	.help-block {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.3rem;
+	}
+
+	.help-btn {
+		border: none;
+		background: rgba(31, 95, 99, 0.12);
+		color: var(--color-teal);
+		font-weight: 600;
+		font-size: 0.88rem;
+		padding: 0.4rem 1rem;
+		border-radius: 999px;
+		cursor: pointer;
+		transition:
+			background-color 150ms ease,
+			transform 150ms ease;
+	}
+
+	.help-btn:hover {
+		background: rgba(31, 95, 99, 0.2);
+	}
+
+	.help-btn:active {
+		transform: scale(0.95);
+	}
+
+	.help-hint {
+		margin: 0;
+		font-size: 0.75rem;
+		color: rgba(58, 42, 32, 0.55);
+	}
+
 	.reveal {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 0.5rem;
 		animation: card-in 300ms ease;
-	}
-
-	.word-fr {
-		margin: 0;
-		color: var(--color-teal);
-		font-size: 1.05rem;
 	}
 
 	.fact-toggle {
@@ -714,6 +955,20 @@
 		font-size: 1.05rem;
 		color: var(--color-text);
 		text-align: justify;
+	}
+
+	.reward-points {
+		margin: 0 0 0.75rem;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		color: var(--color-brick);
+		font-size: 1.15rem;
+	}
+
+	.reward-points em {
+		font-weight: 400;
+		font-size: 0.85rem;
+		color: var(--color-teal);
 	}
 
 	.reward-next {
@@ -808,6 +1063,24 @@
 		}
 		75% {
 			transform: translateX(4px);
+		}
+	}
+
+	@keyframes points-float {
+		from {
+			opacity: 1;
+			transform: translateX(-50%) translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: translateX(-50%) translateY(-18px);
+		}
+	}
+
+	@keyframes toast-out {
+		to {
+			opacity: 0;
+			transform: translateY(-4px);
 		}
 	}
 </style>
