@@ -1,8 +1,99 @@
 <script>
 	import { browser } from '$app/environment';
+	import { fly } from 'svelte/transition';
 	import logo from '$lib/assets/logo.png';
 
 	let lang = $state('oc');
+
+	// Textes bilingues de la page d'accueil. Le contenu occitan est à
+	// valider par Romain (locuteur natif) avant publication finale — voir
+	// mémoire de session sur la pratique de validation du contenu.
+	const t = {
+		tagline: {
+			oc: "Benvenguda ! Apren l'occitan, teis lo ligam amb sa cultura.",
+			fr: 'Bienvenue ! Apprends l’occitan, tisse le lien avec sa culture.'
+		},
+		feature1: {
+			tag: { oc: 'Fièrs de la lenga', fr: 'Fiers de la langue' },
+			title: {
+				oc: "Una lenga a l'ora del mond modèrne.",
+				fr: 'Une langue à l’heure du monde moderne.'
+			},
+			body: {
+				oc: "Per los occitans : un espleit bèl e seriós, a l'ausada de las mai grandas aplicacions, per tornar prene una lenga qu'es ja vòstra — sens nostalgia, amb fiertat.",
+				fr: 'Pour les occitans : un outil beau et sérieux, à la hauteur des plus grandes applications, pour se réapproprier une langue qui est la vôtre — sans nostalgie, avec fierté.'
+			}
+		},
+		feature2: {
+			tag: { oc: "Descobrir l'Occitània", fr: 'Découvrir l’Occitanie' },
+			title: {
+				oc: 'Una pòrta dobèrta sus un país entièr.',
+				fr: 'Une porte ouverte sur un pays entier.'
+			},
+			body: {
+				oc: "Per los curioses : una pòrta d'entrada cap a l'Occitània, sa lenga, son istòria e son territòri — plan mai qu'un vocabulari, tot un país d'explorar.",
+				fr: 'Pour les curieux : une porte d’entrée vers l’Occitanie, sa langue, son histoire et son territoire — bien plus qu’un vocabulaire, tout un pays à explorer.'
+			}
+		},
+		statement: {
+			oc: 'Una lenga viva, pas un musèu.',
+			fr: 'Une langue vivante, pas un musée.'
+		},
+		values: [
+			{
+				tag: { oc: 'Ètica', fr: 'Éthique' },
+				text: {
+					oc: 'Vòstras donadas son pas vendudas, ni pistadas.',
+					fr: 'Vos données ne sont ni vendues, ni pistées.'
+				}
+			},
+			{
+				tag: { oc: 'Ecologia', fr: 'Écologie' },
+				text: {
+					oc: 'Un site sobri, albergat en Euròpa, pensat per pesar leugièr.',
+					fr: 'Un site sobre, hébergé en Europe, pensé pour peser léger.'
+				}
+			},
+			{
+				tag: { oc: 'Inclusivitat', fr: 'Inclusivité' },
+				text: {
+					oc: "Gratuit dins son còr, per jamai exclure per l'argent.",
+					fr: 'Gratuit dans son cœur, pour ne jamais exclure par l’argent.'
+				}
+			}
+		],
+		trio: [
+			{
+				title: { oc: 'Ensag gratuit', fr: 'Essai gratuit' },
+				text: {
+					oc: 'Una leiçon gratuita, sens compte, per tastar abans de te lançar.',
+					fr: 'Une leçon gratuite, sans compte, pour goûter avant de te lancer.'
+				},
+				href: '/aprene/essai'
+			},
+			{
+				title: { oc: 'Ai ja un compte', fr: 'J’ai déjà un compte' },
+				text: {
+					oc: 'Retròba ta progression e contunha ton aprendissatge.',
+					fr: 'Retrouve ta progression et continue ton apprentissage.'
+				},
+				href: '/compte'
+			},
+			{
+				title: { oc: 'Seguètz-nos', fr: 'Suivez-nous' },
+				text: {
+					oc: 'Retròba Lo Ligam sus Instagram entre doas leiçons.',
+					fr: 'Retrouve Lo Ligam sur Instagram entre deux leçons.'
+				},
+				href: 'https://www.instagram.com/lo_ligam/',
+				external: true
+			}
+		],
+		footer: {
+			oc: 'Fach amb amor en Occitània.',
+			fr: 'Fait avec amour en Occitanie.'
+		}
+	};
 
 	const bgImages = Array.from(
 		{ length: 28 },
@@ -176,7 +267,9 @@
 	<div class="topbar-actions">
 		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
 			<button type="button" class:active={lang === 'oc'} onclick={() => (lang = 'oc')}>Òc</button>
-			<button type="button" class:active={lang === 'fr'} onclick={() => (lang = 'fr')}>Fr</button>
+			<button type="button" class="fr" class:active={lang === 'fr'} onclick={() => (lang = 'fr')}
+				>Fr</button
+			>
 		</div>
 		<a class="btn-primary btn-small" href="/aprene">Començar</a>
 	</div>
@@ -189,10 +282,16 @@
 		</div>
 
 		<div class="welcome">
-			<p class="tagline-oc">Benvenguda ! Apren l'occitan, teis lo ligam amb sa cultura.</p>
-			<p class="tagline-fr">
-				<em>(Bienvenue&nbsp;! Apprends l'occitan, tisse le lien avec sa culture.)</em>
-			</p>
+			{#key lang}
+				<p class="tagline-primary" in:fly={{ y: 10, duration: 320 }}>
+					{lang === 'oc' ? t.tagline.oc : t.tagline.fr}
+				</p>
+			{/key}
+			{#key lang}
+				<p class="tagline-secondary" in:fly={{ y: 10, duration: 320, delay: 40 }}>
+					<em>({lang === 'oc' ? t.tagline.fr : t.tagline.oc})</em>
+				</p>
+			{/key}
 		</div>
 
 		<a class="btn-primary" href="/aprene">Aprèni l'occitan !</a>
@@ -200,13 +299,15 @@
 
 	<section class="feature">
 		<div class="feature-text">
-			<p class="feature-tag">Fièrs de la lenga</p>
-			<h2 class="feature-title">Una lenga a l'ora del mond modèrne.</h2>
-			<p class="feature-body">
-				Pour les occitans : un outil beau et sérieux, à la hauteur des plus grandes
-				applications, pour se réapproprier une langue qui est la vôtre — sans nostalgie, avec
-				fierté.
-			</p>
+			{#key lang}
+				<div in:fly={{ y: 10, duration: 320 }}>
+					<p class="feature-tag">{lang === 'oc' ? t.feature1.tag.oc : t.feature1.tag.fr}</p>
+					<h2 class="feature-title">
+						{lang === 'oc' ? t.feature1.title.oc : t.feature1.title.fr}
+					</h2>
+					<p class="feature-body">{lang === 'oc' ? t.feature1.body.oc : t.feature1.body.fr}</p>
+				</div>
+			{/key}
 		</div>
 		<div class="feature-visual feature-visual--terracotta" aria-hidden="true">
 			<svg class="watermark" viewBox="0 0 300 300">
@@ -221,12 +322,17 @@
 
 	<section class="feature feature--reverse">
 		<div class="feature-text">
-			<p class="feature-tag feature-tag--teal">Descobrir l'Occitània</p>
-			<h2 class="feature-title">Una pòrta dobèrta sus un país entièr.</h2>
-			<p class="feature-body">
-				Pour les curieux : une porte d'entrée vers l'Occitanie, sa langue, son histoire et son
-				territoire — bien plus qu'un vocabulaire, tout un pays à explorer.
-			</p>
+			{#key lang}
+				<div in:fly={{ y: 10, duration: 320 }}>
+					<p class="feature-tag feature-tag--teal">
+						{lang === 'oc' ? t.feature2.tag.oc : t.feature2.tag.fr}
+					</p>
+					<h2 class="feature-title">
+						{lang === 'oc' ? t.feature2.title.oc : t.feature2.title.fr}
+					</h2>
+					<p class="feature-body">{lang === 'oc' ? t.feature2.body.oc : t.feature2.body.fr}</p>
+				</div>
+			{/key}
 		</div>
 		<div class="feature-visual feature-visual--teal" aria-hidden="true">
 			<svg class="watermark" viewBox="0 0 300 300">
@@ -240,43 +346,56 @@
 	</section>
 
 	<section class="statement">
-		<p class="statement-oc">Una lenga viva, pas un musèu.</p>
-		<p class="statement-fr"><em>(Une langue vivante, pas un musée.)</em></p>
+		{#key lang}
+			<p class="statement-primary" in:fly={{ y: 10, duration: 320 }}>
+				{lang === 'oc' ? t.statement.oc : t.statement.fr}
+			</p>
+		{/key}
+		{#key lang}
+			<p class="statement-secondary" in:fly={{ y: 10, duration: 320, delay: 40 }}>
+				<em>({lang === 'oc' ? t.statement.fr : t.statement.oc})</em>
+			</p>
+		{/key}
 	</section>
 
 	<section class="values">
-		<div class="value">
-			<p class="value-tag">Ètica</p>
-			<p class="value-text">Vos données ne sont ni vendues, ni pistées.</p>
-		</div>
-		<div class="value">
-			<p class="value-tag">Ecologia</p>
-			<p class="value-text">Un site sobre, hébergé en Europe, pensé pour peser léger.</p>
-		</div>
-		<div class="value">
-			<p class="value-tag">Inclusivitat</p>
-			<p class="value-text">Gratuit dans son cœur, pour ne jamais exclure par l'argent.</p>
-		</div>
+		{#each t.values as value}
+			<div class="value">
+				{#key lang}
+					<div in:fly={{ y: 8, duration: 280 }}>
+						<p class="value-tag">{lang === 'oc' ? value.tag.oc : value.tag.fr}</p>
+						<p class="value-text">{lang === 'oc' ? value.text.oc : value.text.fr}</p>
+					</div>
+				{/key}
+			</div>
+		{/each}
 	</section>
 
 	<section class="trio">
-		<a class="trio-card" href="/aprene/essai">
-			<p class="trio-title">Ensag gratuit</p>
-			<p class="trio-text">Una mini-leçon sans compte, pour tastar avant de te lançar.</p>
-		</a>
-		<a class="trio-card" href="/compte">
-			<p class="trio-title">Ai ja un compte</p>
-			<p class="trio-text">Retròba ta progression e contunha ton apprentissage.</p>
-		</a>
-		<a class="trio-card" href="https://www.instagram.com/lo_ligam/" target="_blank" rel="noopener noreferrer">
-			<p class="trio-title">Seguètz-nos</p>
-			<p class="trio-text">Retrobatz Lo Ligam sus Instagram entre deux leçons.</p>
-		</a>
+		{#each t.trio as card}
+			<a
+				class="trio-card"
+				href={card.href}
+				target={card.external ? '_blank' : undefined}
+				rel={card.external ? 'noopener noreferrer' : undefined}
+			>
+				{#key lang}
+					<div in:fly={{ y: 8, duration: 280 }}>
+						<p class="trio-title">{lang === 'oc' ? card.title.oc : card.title.fr}</p>
+						<p class="trio-text">{lang === 'oc' ? card.text.oc : card.text.fr}</p>
+					</div>
+				{/key}
+			</a>
+		{/each}
 	</section>
 
 	<footer class="site-footer">
 		<p class="footer-brand">Lo Ligam</p>
-		<p class="footer-tag">Fach amb amor en Occitània.</p>
+		{#key lang}
+			<p class="footer-tag" in:fly={{ y: 8, duration: 280 }}>
+				{lang === 'oc' ? t.footer.oc : t.footer.fr}
+			</p>
+		{/key}
 	</footer>
 </main>
 
@@ -480,6 +599,10 @@
 		color: white;
 	}
 
+	.lang-toggle button.fr.active {
+		background: var(--color-sky);
+	}
+
 	.page {
 		position: relative;
 		z-index: 3;
@@ -526,7 +649,7 @@
 		gap: 0.6rem;
 	}
 
-	.tagline-oc {
+	.tagline-primary {
 		font-family: var(--font-heading);
 		font-size: clamp(2.1rem, 4.5vw, 2.6rem);
 		font-weight: 600;
@@ -535,7 +658,7 @@
 		line-height: 1.2;
 	}
 
-	.tagline-fr {
+	.tagline-secondary {
 		margin: 0;
 		font-size: 1.05rem;
 		color: var(--color-teal);
@@ -676,7 +799,7 @@
 		text-align: center;
 	}
 
-	.statement-oc {
+	.statement-primary {
 		font-family: var(--font-heading);
 		font-size: clamp(2rem, 4.5vw, 3rem);
 		font-weight: 700;
@@ -684,7 +807,7 @@
 		margin: 0 0 0.5rem;
 	}
 
-	.statement-fr {
+	.statement-secondary {
 		margin: 0;
 		color: rgba(255, 255, 255, 0.85);
 		font-size: 1.1rem;
