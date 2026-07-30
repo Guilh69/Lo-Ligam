@@ -1,8 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
+	import { get } from 'svelte/store';
 	import { browser } from '$app/environment';
 	import HomeIcon from '$lib/components/HomeIcon.svelte';
 	import FougasseIcon from '$lib/components/FougasseIcon.svelte';
+	import { supabase } from '$lib/supabaseClient';
+	import { session, authReady } from '$lib/authStore';
+
+	const MODULE_ID = 'module-1';
 
 	// Contenu validé par Romain (méthode-pedagogique.md) — Primièra leiçon, sans inscription.
 	const groups = [
@@ -79,21 +84,35 @@
 
 	const STORAGE_KEY = 'lo-ligam-essai-progress';
 
-	function saveProgress() {
+	// Connecté : la progression vit dans Supabase (table lesson_progress).
+	// Anonyme (essai sans compte) : elle reste dans le navigateur seulement.
+	async function saveProgress(completed = false) {
+		const currentSession = get(session);
+		if (currentSession) {
+			try {
+				await supabase.from('lesson_progress').upsert({
+					user_id: currentSession.user.id,
+					module_id: MODULE_ID,
+					word_index: wordIndex,
+					points,
+					updated_at: new Date().toISOString(),
+					...(completed ? { completed_at: new Date().toISOString() } : {})
+				});
+			} catch (e) {
+				/* échec réseau : pas bloquant, la partie continue localement */
+			}
+			return;
+		}
 		if (!browser) return;
 		try {
-			localStorage.setItem(STORAGE_KEY, JSON.stringify({ wordIndex, points }));
+			if (completed) {
+				localStorage.removeItem(STORAGE_KEY);
+				localStorage.setItem('lo-ligam-module-1-done', 'true');
+			} else {
+				localStorage.setItem(STORAGE_KEY, JSON.stringify({ wordIndex, points }));
+			}
 		} catch (e) {
 			/* stockage indisponible (navigation privée…) : pas bloquant */
-		}
-	}
-
-	function clearProgress() {
-		if (!browser) return;
-		try {
-			localStorage.removeItem(STORAGE_KEY);
-		} catch (e) {
-			/* idem */
 		}
 	}
 
@@ -115,17 +134,48 @@
 		showNote = false;
 	}
 
-	onMount(() => {
-		if (browser) {
+	function applyResumedProgress(savedWordIndex, savedPoints) {
+		if (savedWordIndex > 0 && savedWordIndex < flatWords.length) {
+			wordIndex = savedWordIndex;
+			points = savedPoints ?? 0;
+			phase = 'discover';
+			resumed = true;
+			setTimeout(() => (resumed = false), 3200);
+		} else {
+			points = savedPoints ?? 0;
+		}
+	}
+
+	async function waitForAuthReady() {
+		if (get(authReady)) return;
+		await new Promise((resolve) => {
+			const unsubscribe = authReady.subscribe((ready) => {
+				if (ready) {
+					unsubscribe();
+					resolve();
+				}
+			});
+		});
+	}
+
+	onMount(async () => {
+		if (browser) await waitForAuthReady();
+		const currentSession = get(session);
+		if (currentSession) {
+			try {
+				const { data } = await supabase
+					.from('lesson_progress')
+					.select('word_index, points, completed_at')
+					.eq('module_id', MODULE_ID)
+					.maybeSingle();
+				if (data && !data.completed_at) applyResumedProgress(data.word_index, data.points);
+			} catch (e) {
+				/* échec réseau : on repart simplement du début */
+			}
+		} else if (browser) {
 			try {
 				const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-				if (saved && saved.wordIndex > 0 && saved.wordIndex < flatWords.length) {
-					wordIndex = saved.wordIndex;
-					points = saved.points ?? 0;
-					phase = 'discover';
-					resumed = true;
-					setTimeout(() => (resumed = false), 3200);
-				}
+				if (saved) applyResumedProgress(saved.wordIndex, saved.points);
 			} catch (e) {
 				/* stockage indisponible : on repart simplement du début */
 			}
@@ -261,14 +311,7 @@
 			saveProgress();
 		} else {
 			phase = 'reward';
-			clearProgress();
-			if (browser) {
-				try {
-					localStorage.setItem('lo-ligam-module-1-done', 'true');
-				} catch (e) {
-					/* stockage indisponible : pas bloquant */
-				}
-			}
+			saveProgress(true);
 		}
 	}
 </script>
@@ -487,7 +530,7 @@
 				Crèa un compte per contunhar : exercicis, prononciacion, e ta bibliotèca de
 				vocabulari s'emplenarà a mesura.
 			</p>
-			<a class="btn-primary" href="/aprene"
+			<a class="btn-primary" href="/compte?mode=signup"
 				>Crèa un compte per contunhar <span class="arrow">→</span></a
 			>
 			<a class="btn-secondary" href="/">Tornar a l'acuèlh</a>

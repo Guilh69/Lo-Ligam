@@ -1,7 +1,8 @@
 <script>
-	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import HomeIcon from '$lib/components/HomeIcon.svelte';
+	import { supabase } from '$lib/supabaseClient';
+	import { session } from '$lib/authStore';
 
 	// Structure en chapitres (contextes de vie) > modules (une compétence
 	// précise chacun). Seul le module 1 a un contenu réel pour l'instant —
@@ -37,14 +38,32 @@
 
 	let moduleOneDone = $state(false);
 
-	onMount(() => {
+	async function loadModuleOneStatus() {
+		if ($session) {
+			const { data } = await supabase
+				.from('lesson_progress')
+				.select('completed_at')
+				.eq('module_id', 'module-1')
+				.maybeSingle();
+			moduleOneDone = !!data?.completed_at;
+			return;
+		}
 		if (!browser) return;
 		try {
 			moduleOneDone = localStorage.getItem('lo-ligam-module-1-done') === 'true';
 		} catch (e) {
 			/* stockage indisponible : on affiche simplement l'état par défaut */
 		}
+	}
+
+	$effect(() => {
+		$session;
+		loadModuleOneStatus();
 	});
+
+	async function logout() {
+		await supabase.auth.signOut();
+	}
 
 	let counter = 0;
 </script>
@@ -60,6 +79,14 @@
 			<HomeIcon size={22} />
 		</a>
 		<span class="brand-name">Lo Ligam</span>
+		<span class="account-state">
+			{#if $session}
+				<span class="account-email">{$session.user.email}</span>
+				<button type="button" class="link-btn" onclick={logout}>Se desconnectar</button>
+			{:else}
+				<a class="link-btn" href="/compte">Se connectar</a>
+			{/if}
+		</span>
 	</header>
 
 	<div class="intro">
@@ -188,6 +215,33 @@
 		font-weight: 600;
 		font-size: 1.05rem;
 		color: var(--color-text);
+	}
+
+	.account-state {
+		margin-left: auto;
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-size: 0.85rem;
+	}
+
+	.account-email {
+		color: var(--color-teal);
+		max-width: 10rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.link-btn {
+		border: none;
+		background: none;
+		color: var(--color-brick);
+		font-weight: 600;
+		text-decoration: underline;
+		cursor: pointer;
+		font-size: 0.85rem;
+		padding: 0;
 	}
 
 	.intro {

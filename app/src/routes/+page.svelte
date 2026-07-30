@@ -264,7 +264,7 @@
 			<p class="trio-title">Ensag gratuit</p>
 			<p class="trio-text">Una mini-leçon sans compte, pour tastar avant de te lançar.</p>
 		</a>
-		<a class="trio-card" href="/aprene">
+		<a class="trio-card" href="/compte">
 			<p class="trio-title">Ai ja un compte</p>
 			<p class="trio-text">Retròba ta progression e contunha ton apprentissage.</p>
 		</a>
