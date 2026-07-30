@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 
 	// Contenu validé par Romain (méthode-pedagogique.md) — Primièra leiçon, sans inscription.
@@ -9,16 +10,12 @@
 			words: [
 				{
 					oc: 'Adieu',
-					pron: 'adiou',
 					fr: 'bonjour ou au revoir, à une seule personne (tutoiement)',
-					icon: 'door',
 					note: 'Adieu sert aussi bien à dire bonjour qu’au revoir — comme « ciao » en italien !'
 				},
 				{
 					oc: 'Adieu-siatz',
-					pron: 'adioussiatz',
 					fr: 'bonjour ou au revoir, à plusieurs personnes, ou en vouvoyant',
-					icon: 'door',
 					note: 'Littéralement « soyez à Dieu » ! Rien que ça.'
 				}
 			]
@@ -27,50 +24,102 @@
 			title: 'En arribant',
 			subtitle: '(En arrivant)',
 			words: [
-				{ oc: 'Bonjorn', pron: 'bounjour', fr: 'bonjour', icon: 'sun' },
-				{ oc: 'Bon vèspre', fr: 'bonsoir, à l’arrivée', image: '/words/vespre.png' }
+				{ oc: 'Bonjorn', fr: 'bonjour' },
+				{ oc: 'Bon vèspre', fr: 'bonsoir, à l’arrivée' }
 			]
 		},
 		{
 			title: 'En partent',
 			subtitle: '(En partant)',
 			words: [
-				{ oc: 'Bona jornada', fr: 'souhaiter un bon reste de journée', icon: 'sun' },
-				{ oc: 'Bona vesprada', fr: 'souhaiter un bon reste d’après-midi ou de soirée', icon: 'moon' },
-				{ oc: 'Bona nuèch', fr: 'bonne nuit, avant de dormir', image: '/words/nuech.png' }
+				{ oc: 'Bona jornada', fr: 'souhaiter un bon reste de journée' },
+				{ oc: 'Bona vesprada', fr: 'souhaiter un bon reste d’après-midi ou de soirée' },
+				{ oc: 'Bona nuèch', fr: 'bonne nuit, avant de dormir' }
 			]
 		}
 	];
 
 	const flatWords = groups.flatMap((g) => g.words.map((w) => ({ ...w, group: g })));
 
-	let phase = $state('intro'); // 'intro' | 'discover' | 'reward'
+	let phase = $state('context'); // 'context' | 'detail' | 'discover' | 'reward'
 	let wordIndex = $state(0);
-	let revealed = $state([]);
 	let showNote = $state(false);
 	let muted = $state(false);
 
 	let current = $derived(flatWords[wordIndex]);
-	let letters = $derived(current ? current.oc.split('') : []);
-	let allRevealed = $derived(revealed.length > 0 && revealed.every(Boolean));
 	let isFirstOfGroup = $derived(
 		wordIndex === 0 || flatWords[wordIndex - 1].group !== current.group
 	);
 
-	$effect(() => {
-		if (current) {
-			// Les espaces et tirets sont déjà visibles (pas de tuile cliquable
-			// dessus) : on les marque révélés d'emblée, sinon le mot ne peut
-			// jamais être détecté comme complet.
-			revealed = current.oc.split('').map((ch) => ch === ' ' || ch === '-');
-			showNote = false;
+	function shuffle(arr) {
+		const a = [...arr];
+		for (let i = a.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[a[i], a[j]] = [a[j], a[i]];
 		}
+		return a;
+	}
+
+	const distractorPool = ['a', 'e', 'i', 'o', 'u', 'n', 'r', 's', 't', 'l', 'c', 'm', 'g', 'p'];
+
+	let requiredLetters = $state([]);
+	let bank = $state([]);
+	let filledCount = $state(0);
+
+	// Appelée explicitement (jamais depuis un $effect réactif : ça est entré
+	// en conflit avec l'hydratation de SvelteKit et cassait tous les clics
+	// de la page — cause identifiée en isolant le bug pas à pas).
+	function setupWord() {
+		const word = flatWords[wordIndex];
+		if (!word) return;
+		requiredLetters = word.oc.replace(/[ -]/g, '').split('');
+		const distractors = [];
+		while (distractors.length < 3) {
+			distractors.push(distractorPool[Math.floor(Math.random() * distractorPool.length)]);
+		}
+		bank = shuffle([...requiredLetters, ...distractors]).map((char, id) => ({
+			char,
+			used: false,
+			wrong: false,
+			id
+		}));
+		filledCount = 0;
+		showNote = false;
+	}
+
+	onMount(() => {
+		setupWord();
 	});
 
-	function flipTile(i) {
-		if (revealed[i]) return;
-		revealed[i] = true;
-		if (revealed.every(Boolean)) playChime();
+	let wordComplete = $derived(requiredLetters.length > 0 && filledCount >= requiredLetters.length);
+
+	let displayChars = $derived.by(() => {
+		if (!current) return [];
+		let letterIdx = 0;
+		return current.oc.split('').map((ch) => {
+			if (ch === ' ' || ch === '-') return { ch, isLetter: false };
+			const idx = letterIdx;
+			letterIdx += 1;
+			return { ch, isLetter: true, filled: idx < filledCount };
+		});
+	});
+
+	function tapBankTile(tile) {
+		if (tile.used || wordComplete) return;
+		const needed = requiredLetters[filledCount];
+		if (tile.char.toLowerCase() === needed.toLowerCase()) {
+			tile.used = true;
+			bank = [...bank];
+			filledCount += 1;
+			if (filledCount === requiredLetters.length) playChime();
+		} else {
+			tile.wrong = true;
+			bank = [...bank];
+			setTimeout(() => {
+				tile.wrong = false;
+				bank = [...bank];
+			}, 260);
+		}
 	}
 
 	function playChime() {
@@ -78,25 +127,30 @@
 		try {
 			const ctx = new (window.AudioContext || window.webkitAudioContext)();
 			const now = ctx.currentTime;
-			[523.25, 659.25, 783.99].forEach((freq, i) => {
+			[783.99, 1046.5].forEach((freq, i) => {
+				const t0 = now + i * 0.11;
 				const osc = ctx.createOscillator();
-				const gain = ctx.createGain();
+				osc.type = 'triangle';
 				osc.frequency.value = freq;
-				osc.type = 'sine';
-				gain.gain.setValueAtTime(0.0001, now + i * 0.09);
-				gain.gain.exponentialRampToValueAtTime(0.18, now + i * 0.09 + 0.02);
-				gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.3);
-				osc.connect(gain).connect(ctx.destination);
-				osc.start(now + i * 0.09);
-				osc.stop(now + i * 0.09 + 0.32);
+				const filter = ctx.createBiquadFilter();
+				filter.type = 'lowpass';
+				filter.frequency.value = 3200;
+				const gain = ctx.createGain();
+				gain.gain.setValueAtTime(0.0001, t0);
+				gain.gain.exponentialRampToValueAtTime(0.22, t0 + 0.015);
+				gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.5);
+				osc.connect(filter).connect(gain).connect(ctx.destination);
+				osc.start(t0);
+				osc.stop(t0 + 0.52);
 			});
 		} catch (e) {
 			/* Web Audio indisponible : on continue sans son, jamais bloquant. */
 		}
 	}
 
-	function startDiscovery() {
-		phase = 'discover';
+	function playWordSound() {
+		// Emplacement réservé pour la vraie prononciation occitane (Votz /
+		// API lo Congrès), pas encore intégrée. Ne joue rien pour l'instant.
 	}
 
 	function next() {
@@ -104,7 +158,9 @@
 			wordIndex += 1;
 		} else {
 			phase = 'reward';
+			return;
 		}
+		setupWord();
 	}
 </script>
 
@@ -141,8 +197,8 @@
 		</button>
 	</header>
 
-	{#if phase === 'intro'}
-		<section class="intro">
+	{#if phase === 'context'}
+		<section class="intro-card">
 			<p class="intro-kicker">Primièra leiçon · sens inscripcion</p>
 			<p class="intro-text">
 				Comencèm per la ont tot comença : quand rejonhes qualqu'un, o que vòles dire al
@@ -156,15 +212,22 @@
 					moment de la journée, la proximité avec la personne, et le nombre de personnes.)</em
 				>
 			</p>
+			<button type="button" class="btn-primary" onclick={() => (phase = 'detail')}>
+				Contunhar <span class="arrow">→</span>
+			</button>
+		</section>
+	{:else if phase === 'detail'}
+		<section class="intro-card">
+			<p class="intro-kicker">Pichon contèxte</p>
 			<p class="intro-detail">
 				En occitan, pour saluer une personne de manière familière (tutoiement), on dit
-				<strong>« Adieu »</strong> (prononcé <em>adiou</em>). Pour saluer plusieurs personnes, ou
-				vouvoyer, on dit <strong>« Adieu-siatz »</strong> (<em>adioussiatz</em>), littéralement
-				« soyez à Dieu ». Et ce qui est bien pratique : les deux marchent aussi bien pour dire
-				bonjour <strong>que</strong> pour dire au revoir !
+				<strong>« Adieu »</strong> (prononcé <em>adiou</em>). Pour saluer plusieurs personnes,
+				ou vouvoyer, on dit <strong>« Adieu-siatz »</strong> (<em>adioussiatz</em>),
+				littéralement « soyez à Dieu ». Et ce qui est bien pratique : les deux marchent aussi
+				bien pour dire bonjour <strong>que</strong> pour dire au revoir !
 			</p>
-			<button type="button" class="btn-primary" onclick={startDiscovery}>
-				Descobrir <span class="arrow">→</span>
+			<button type="button" class="btn-primary" onclick={() => (phase = 'discover')}>
+				Descobrir los mots <span class="arrow">→</span>
 			</button>
 		</section>
 	{:else if phase === 'discover'}
@@ -177,72 +240,54 @@
 
 		{#key wordIndex}
 			<section class="card">
-				<div class="visual">
-					{#if current.image}
-						<img src={current.image} alt="" class="word-image" />
-					{:else if current.icon === 'sun'}
-						<svg viewBox="0 0 100 100" width="64" height="64" aria-hidden="true">
-							<circle cx="50" cy="50" r="20" fill="var(--color-gold)" />
-							{#each Array(8) as _, i}
-								<line
-									x1="50"
-									y1="10"
-									x2="50"
-									y2="22"
-									stroke="var(--color-gold)"
-									stroke-width="5"
-									stroke-linecap="round"
-									transform="rotate({i * 45} 50 50)"
-								/>
-							{/each}
+				<div class="visual-row">
+					<div class="visual-placeholder" aria-hidden="true">
+						<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="var(--color-teal)" stroke-width="1.6">
+							<rect x="3" y="3" width="18" height="18" rx="3" />
+							<circle cx="8.5" cy="8.5" r="1.4" />
+							<path d="M21 15l-5-5L5 21" />
 						</svg>
-					{:else if current.icon === 'moon'}
-						<svg viewBox="0 0 100 100" width="64" height="64" aria-hidden="true">
-							<path
-								d="M62,18 A32,32 0 1,0 62,82 A25,25 0 1,1 62,18 Z"
-								fill="var(--color-teal)"
-							/>
-							<circle cx="80" cy="28" r="3.5" fill="var(--color-gold)" />
-							<circle cx="88" cy="46" r="2.5" fill="var(--color-gold)" />
-						</svg>
-					{:else}
-						<svg viewBox="0 0 100 100" width="64" height="64" aria-hidden="true">
-							<path d="M28,92 L28,48 A22,22 0 0,1 72,48 L72,92 Z" fill="var(--color-brick)" />
-							<circle cx="62" cy="70" r="3.5" fill="var(--color-cream)" />
-						</svg>
-					{/if}
+					</div>
+					<button
+						type="button"
+						class="listen"
+						onclick={playWordSound}
+						aria-label="Escotar (a venir)"
+					>
+						🔊
+					</button>
 				</div>
 
-				<div class="tiles" style="perspective: 600px;">
-					{#each letters as letter, i}
-						{#if letter === ' ' || letter === '-'}
-							<span class="tile-gap">{letter === '-' ? '-' : ''}</span>
+				<div class="slots">
+					{#each displayChars as c}
+						{#if c.isLetter}
+							<span class="slot" class:filled={c.filled}>{c.filled ? c.ch : ''}</span>
 						{:else}
-							<button
-								type="button"
-								class="tile"
-								class:revealed={revealed[i]}
-								disabled={revealed[i]}
-								onclick={() => flipTile(i)}
-								aria-label={revealed[i] ? letter : 'Descobrir la letra'}
-							>
-								{#if revealed[i]}
-									{letter}
-								{/if}
-							</button>
+							<span class="slot-gap">{c.ch === '-' ? '-' : ''}</span>
 						{/if}
 					{/each}
 				</div>
 
-				{#if allRevealed}
+				<div class="bank">
+					{#each bank as tile (tile.id)}
+						<button
+							type="button"
+							class="bank-tile"
+							class:used={tile.used}
+							class:wrong={tile.wrong}
+							disabled={tile.used}
+							onclick={() => tapBankTile(tile)}
+						>
+							{tile.char}
+						</button>
+					{/each}
+				</div>
+
+				{#if wordComplete}
 					<div class="reveal">
 						<p class="word-fr">{current.fr}</p>
 						{#if current.note}
-							<button
-								type="button"
-								class="fact-toggle"
-								onclick={() => (showNote = !showNote)}
-							>
+							<button type="button" class="fact-toggle" onclick={() => (showNote = !showNote)}>
 								💡 Sabètz ? <em>(Le saviez-vous&nbsp;?)</em>
 							</button>
 							{#if showNote}
@@ -254,12 +299,12 @@
 			</section>
 		{/key}
 
-		{#if allRevealed}
+		{#if wordComplete}
 			<button type="button" class="btn-primary" onclick={next}>
 				{wordIndex < flatWords.length - 1 ? 'Segon' : 'Acabar'} <span class="arrow">→</span>
 			</button>
 		{:else}
-			<p class="hint">Tapa las tèulas per descobrir lo mot</p>
+			<p class="hint">Tapa las letras dins l'òrdre per formar lo mot</p>
 		{/if}
 	{:else}
 		<section class="reward">
@@ -274,7 +319,9 @@
 				Crèa un compte per contunhar : exercicis, prononciacion, e ta bibliotèca de
 				vocabulari se remplirà a mesura.
 			</p>
-			<a class="btn-primary" href="/aprene">Crèa un compte per contunhar <span class="arrow">→</span></a>
+			<a class="btn-primary" href="/aprene"
+				>Crèa un compte per contunhar <span class="arrow">→</span></a
+			>
 			<a class="btn-secondary" href="/aprene">Tornar</a>
 		</section>
 	{/if}
@@ -389,42 +436,57 @@
 		transform: scale(1.3);
 	}
 
-	.intro {
-		max-width: 32rem;
+	.intro-card {
+		background: white;
+		border-radius: 24px;
+		padding: 2rem 2.25rem;
+		max-width: 30rem;
 		display: flex;
 		flex-direction: column;
-		gap: 0.85rem;
+		gap: 1rem;
+		box-shadow: 0 16px 36px rgba(58, 42, 32, 0.1);
+		animation: card-in 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+		text-align: left;
 	}
 
 	.intro-kicker {
 		margin: 0;
-		font-size: 0.8rem;
+		font-size: 0.78rem;
 		font-weight: 600;
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		color: var(--color-teal);
+		text-align: center;
 	}
 
 	.intro-text {
 		font-family: var(--font-heading);
-		font-size: 1.3rem;
+		font-size: 1.25rem;
 		font-weight: 600;
 		color: var(--color-text);
 		margin: 0;
-		line-height: 1.4;
+		line-height: 1.45;
+		text-align: justify;
 	}
 
 	.intro-text-fr {
 		margin: 0;
 		color: var(--color-teal);
 		font-size: 0.95rem;
+		text-align: justify;
 	}
 
 	.intro-detail {
-		margin: 0.5rem 0 0.75rem;
+		margin: 0;
 		font-size: 1rem;
-		line-height: 1.55;
+		line-height: 1.6;
 		color: var(--color-text);
+		text-align: justify;
+	}
+
+	.intro-card .btn-primary {
+		align-self: center;
+		margin-top: 0.25rem;
 	}
 
 	.group-label {
@@ -448,46 +510,111 @@
 	.card {
 		background: white;
 		border-radius: 28px;
-		padding: 2rem 2rem 1.5rem;
+		padding: 2.25rem 2.25rem 1.75rem;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 1rem;
+		gap: 1.25rem;
 		box-shadow: 0 16px 36px rgba(58, 42, 32, 0.12);
-		min-width: 18rem;
-		max-width: 24rem;
+		min-width: 20rem;
+		max-width: 26rem;
 		animation: card-in 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 
-	.visual {
+	.visual-row {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.visual-placeholder {
+		width: 64px;
+		height: 64px;
+		aspect-ratio: 1 / 1;
+		border-radius: 16px;
+		background: linear-gradient(155deg, rgba(224, 164, 59, 0.18), rgba(31, 95, 99, 0.12));
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 
-	.word-image {
-		width: 84px;
-		height: 84px;
-		object-fit: cover;
-		border-radius: 16px;
+	.listen {
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		border: none;
+		background: rgba(31, 95, 99, 0.1);
+		font-size: 1.15rem;
+		cursor: pointer;
+		transition:
+			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1),
+			background-color 150ms ease;
 	}
 
-	.tiles {
+	.listen:hover {
+		background: rgba(31, 95, 99, 0.18);
+	}
+
+	.listen:active {
+		transform: scale(0.9);
+	}
+
+	.slots {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		gap: 0.4rem;
 	}
 
-	.tile {
-		width: 2.3rem;
-		height: 2.7rem;
-		background: var(--color-terracotta);
+	.slot {
+		width: 2.4rem;
+		height: 2.8rem;
 		border-radius: 10px;
+		border: 2px dashed rgba(58, 42, 32, 0.2);
+		color: var(--color-text);
+		font-family: var(--font-heading);
+		font-size: 1.35rem;
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.slot.filled {
+		border: none;
+		background: var(--color-cream);
+		box-shadow: 0 4px 10px rgba(58, 42, 32, 0.15);
+		animation: tile-pop 280ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.slot-gap {
+		width: 0.6rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-text);
+		font-weight: 700;
+	}
+
+	.bank {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem;
+		padding-top: 0.5rem;
+		border-top: 1px solid rgba(58, 42, 32, 0.08);
+		width: 100%;
+	}
+
+	.bank-tile {
+		width: 2.1rem;
+		height: 2.5rem;
+		background: var(--color-terracotta);
+		border-radius: 9px;
 		border: none;
 		color: white;
 		font-family: var(--font-heading);
-		font-size: 1.3rem;
+		font-size: 1.15rem;
 		font-weight: 700;
 		cursor: pointer;
 		display: flex;
@@ -495,28 +622,23 @@
 		justify-content: center;
 		transition:
 			transform 150ms ease,
-			background-color 200ms ease;
+			background-color 150ms ease,
+			opacity 200ms ease;
 	}
 
-	.tile:hover:not(.revealed) {
+	.bank-tile:hover:not(.used) {
 		transform: translateY(-2px);
 	}
 
-	.tile.revealed {
-		background: var(--color-cream);
-		color: var(--color-text);
-		box-shadow: 0 4px 10px rgba(58, 42, 32, 0.15);
+	.bank-tile.used {
+		opacity: 0.25;
 		cursor: default;
-		animation: tile-pop 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+		transform: scale(0.9);
 	}
 
-	.tile-gap {
-		width: 0.6rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--color-text);
-		font-weight: 700;
+	.bank-tile.wrong {
+		background: var(--color-brick);
+		animation: shake 250ms ease;
 	}
 
 	.reveal {
@@ -554,6 +676,7 @@
 		max-width: 20rem;
 		font-size: 0.9rem;
 		color: var(--color-text);
+		text-align: justify;
 		animation: card-in 250ms ease;
 	}
 
@@ -590,6 +713,7 @@
 		margin: 0 0 0.5rem;
 		font-size: 1.05rem;
 		color: var(--color-text);
+		text-align: justify;
 	}
 
 	.reward-next {
@@ -597,6 +721,7 @@
 		font-size: 0.9rem;
 		color: var(--color-teal);
 		max-width: 24rem;
+		text-align: justify;
 	}
 
 	.btn-primary {
@@ -670,6 +795,19 @@
 		}
 		to {
 			transform: scale(1) rotateX(0);
+		}
+	}
+
+	@keyframes shake {
+		0%,
+		100% {
+			transform: translateX(0);
+		}
+		25% {
+			transform: translateX(-4px);
+		}
+		75% {
+			transform: translateX(4px);
 		}
 	}
 </style>
