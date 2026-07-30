@@ -1,0 +1,467 @@
+<script>
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { get } from 'svelte/store';
+	import { supabase } from '$lib/supabaseClient';
+	import { session, authReady } from '$lib/authStore';
+	import HomeIcon from '$lib/components/HomeIcon.svelte';
+
+	let checking = $state(true);
+	let pseudo = $state('');
+	let gender = $state('');
+	let ageBracket = $state('');
+	let profession = $state('');
+	let location = $state('');
+	let interest = $state('');
+	let interestOther = $state('');
+	let loading = $state(false);
+	let errorMsg = $state('');
+
+	async function waitForAuthReady() {
+		if (get(authReady)) return;
+		await new Promise((resolve) => {
+			const unsubscribe = authReady.subscribe((ready) => {
+				if (ready) {
+					unsubscribe();
+					resolve();
+				}
+			});
+		});
+	}
+
+	onMount(async () => {
+		await waitForAuthReady();
+		const currentSession = get(session);
+		if (!currentSession) {
+			goto('/compte');
+			return;
+		}
+		const { data } = await supabase
+			.from('profiles')
+			.select('user_id')
+			.eq('user_id', currentSession.user.id)
+			.maybeSingle();
+		if (data) {
+			goto('/aprene');
+			return;
+		}
+		checking = false;
+	});
+
+	async function submit() {
+		errorMsg = '';
+		const currentSession = get(session);
+		if (!currentSession) {
+			goto('/compte');
+			return;
+		}
+		if (!pseudo.trim()) {
+			errorMsg = 'Cal causir un pseudonim. (Il faut choisir un pseudo.)';
+			return;
+		}
+		loading = true;
+		const { error } = await supabase.from('profiles').insert({
+			user_id: currentSession.user.id,
+			pseudo: pseudo.trim(),
+			gender: gender || null,
+			age_bracket: ageBracket || null,
+			profession: profession.trim() || null,
+			location: location.trim() || null,
+			interest: interest || null,
+			interest_other: interest === 'autra' ? interestOther.trim() || null : null
+		});
+		loading = false;
+		if (error) {
+			errorMsg = /duplicate|unique/i.test(error.message)
+				? 'Aqueste pseudonim es ja pres, ensaja-n’un autre. (Ce pseudo est déjà pris, essaie-en un autre.)'
+				: error.message;
+			return;
+		}
+		goto('/aprene');
+	}
+</script>
+
+<div class="page-bg" aria-hidden="true">
+	<span class="blob blob-gold"></span>
+	<span class="blob blob-teal"></span>
+</div>
+
+<main class="screen">
+	<header class="top">
+		<a class="home-link" href="/" aria-label="Tornar a l'acuèlh">
+			<HomeIcon size={22} />
+		</a>
+		<span class="brand-name">Lo Ligam</span>
+	</header>
+
+	{#if !checking}
+		<section class="card">
+			<p class="kicker">Abans de començar</p>
+			<h1 class="title">Fai coneissença</h1>
+			<p class="subtitle">
+				<em>(Quelques questions rapides — la plupart sont facultatives.)</em>
+			</p>
+
+			<form onsubmit={(e) => (e.preventDefault(), submit())}>
+				<label>
+					Pseudonim <em>(pseudo, obligatòri)</em>
+					<input type="text" bind:value={pseudo} maxlength="24" required />
+				</label>
+
+				<fieldset>
+					<legend>Genre <em>(facultatiu)</em></legend>
+					<div class="radio-row">
+						<label class="radio"
+							><input type="radio" bind:group={gender} value="femna" /> Femna</label
+						>
+						<label class="radio"><input type="radio" bind:group={gender} value="ome" /> Òme</label>
+						<label class="radio"
+							><input type="radio" bind:group={gender} value="autra" /> Autra</label
+						>
+						<label class="radio"
+							><input type="radio" bind:group={gender} value="" checked /> Prefèri pas dire</label
+						>
+					</div>
+				</fieldset>
+
+				<label>
+					Edat <em>(âge, facultatif)</em>
+					<select bind:value={ageBracket}>
+						<option value="">Prefèri pas dire</option>
+						<option value="15-17">15-17</option>
+						<option value="18-24">18-24</option>
+						<option value="25-34">25-34</option>
+						<option value="35-44">35-44</option>
+						<option value="45-54">45-54</option>
+						<option value="55-64">55-64</option>
+						<option value="65+">65 e mai</option>
+					</select>
+				</label>
+
+				<label>
+					Mestièr <em>(profession, facultatif)</em>
+					<input type="text" bind:value={profession} maxlength="80" />
+				</label>
+
+				<label>
+					Ont demòras <em>(lieu de vie, facultatif)</em>
+					<input type="text" bind:value={location} maxlength="80" placeholder="Vila, region…" />
+				</label>
+
+				<fieldset>
+					<legend>Qué t'interèssa dins l'occitan ? <em>(facultatif)</em></legend>
+					<label class="radio-block">
+						<input type="radio" bind:group={interest} value="curiositat" />
+						Aprene la lenga per curiositat <em>(par curiosité)</em>
+					</label>
+					<label class="radio-block">
+						<input type="radio" bind:group={interest} value="originas" />
+						Renodar amb mas originas <em>(renouer avec mes origines)</em>
+					</label>
+					<label class="radio-block">
+						<input type="radio" bind:group={interest} value="region" />
+						Melhor conéisser ma region d'adopcion <em>(mieux connaître ma région d'adoption)</em>
+					</label>
+					<label class="radio-block">
+						<input type="radio" bind:group={interest} value="autra" />
+						Autra <em>(autre)</em>
+					</label>
+					{#if interest === 'autra'}
+						<input
+							type="text"
+							class="interest-other"
+							bind:value={interestOther}
+							placeholder="Precisa se vòles…"
+							maxlength="120"
+						/>
+					{/if}
+				</fieldset>
+
+				{#if errorMsg}<p class="msg error">{errorMsg}</p>{/if}
+
+				<button type="submit" class="btn-primary" disabled={loading}>
+					{loading ? '…' : 'Contunhar'} <span class="arrow">→</span>
+				</button>
+			</form>
+		</section>
+	{/if}
+</main>
+
+<style>
+	.page-bg {
+		position: fixed;
+		inset: 0;
+		overflow: hidden;
+		z-index: -1;
+		background: radial-gradient(circle at 50% 0%, #faf3e6 0%, var(--color-cream) 60%);
+	}
+
+	.blob {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(70px);
+	}
+
+	.blob-gold {
+		width: 380px;
+		height: 380px;
+		background: var(--color-gold);
+		opacity: 0.3;
+		top: -120px;
+		left: -100px;
+	}
+
+	.blob-teal {
+		width: 340px;
+		height: 340px;
+		background: var(--color-teal);
+		opacity: 0.18;
+		bottom: -100px;
+		right: -100px;
+	}
+
+	.screen {
+		position: relative;
+		min-height: 100dvh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5rem;
+		padding: 1.5rem 1.5rem 4rem;
+	}
+
+	.top {
+		width: 100%;
+		max-width: 40rem;
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.home-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.4rem;
+		height: 2.4rem;
+		border-radius: 999px;
+		color: var(--color-brick);
+		background: rgba(165, 52, 42, 0.1);
+		text-decoration: none;
+		transition:
+			background-color 150ms ease,
+			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.home-link:hover {
+		background: rgba(165, 52, 42, 0.18);
+		transform: scale(1.06);
+	}
+
+	.brand-name {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.05rem;
+		color: var(--color-text);
+	}
+
+	.card {
+		width: 100%;
+		max-width: 28rem;
+		background: white;
+		border-radius: 24px;
+		padding: 2rem 2.25rem;
+		box-shadow: 0 16px 36px rgba(58, 42, 32, 0.1);
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		animation: card-in 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.kicker {
+		margin: 0;
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-teal);
+		text-align: center;
+	}
+
+	.title {
+		font-family: var(--font-heading);
+		font-size: 1.9rem;
+		font-weight: 700;
+		color: var(--color-brick);
+		margin: 0;
+		text-align: center;
+	}
+
+	.subtitle {
+		margin: 0 0 0.5rem;
+		text-align: center;
+		font-size: 0.85rem;
+		color: var(--color-teal);
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 1.1rem;
+	}
+
+	label {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		font-size: 0.88rem;
+		font-weight: 600;
+		color: var(--color-text);
+	}
+
+	label em {
+		font-weight: 400;
+		color: var(--color-teal);
+		font-size: 0.8rem;
+	}
+
+	input[type='text'],
+	input[type='email'],
+	select {
+		font-family: var(--font-body);
+		font-size: 1rem;
+		font-weight: 400;
+		padding: 0.65rem 0.8rem;
+		border-radius: 12px;
+		border: 1.5px solid rgba(58, 42, 32, 0.15);
+		background: var(--color-cream);
+		color: var(--color-text);
+	}
+
+	input:focus,
+	select:focus {
+		outline: none;
+		border-color: var(--color-teal);
+	}
+
+	fieldset {
+		border: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	legend {
+		font-size: 0.88rem;
+		font-weight: 600;
+		color: var(--color-text);
+		padding: 0;
+		margin-bottom: 0.15rem;
+	}
+
+	legend em {
+		font-weight: 400;
+		color: var(--color-teal);
+		font-size: 0.8rem;
+	}
+
+	.radio-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+	}
+
+	.radio {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-weight: 400;
+		font-size: 0.9rem;
+	}
+
+	.radio-block {
+		display: flex;
+		align-items: baseline;
+		gap: 0.5rem;
+		font-weight: 400;
+		font-size: 0.9rem;
+		line-height: 1.4;
+	}
+
+	.radio-block em {
+		font-weight: 400;
+		color: var(--color-teal);
+		font-size: 0.8rem;
+	}
+
+	.interest-other {
+		margin-top: 0.35rem;
+		margin-left: 1.6rem;
+	}
+
+	.msg {
+		margin: 0;
+		font-size: 0.85rem;
+		line-height: 1.4;
+		padding: 0.6rem 0.8rem;
+		border-radius: 10px;
+	}
+
+	.msg.error {
+		background: rgba(165, 52, 42, 0.1);
+		color: var(--color-brick);
+	}
+
+	.btn-primary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--color-gold);
+		color: var(--color-text);
+		border: none;
+		padding: 0.9rem 1.5rem;
+		border-radius: 999px;
+		font-weight: 600;
+		font-family: var(--font-heading);
+		font-size: 1.05rem;
+		cursor: pointer;
+		transition:
+			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+			box-shadow 220ms ease,
+			filter 80ms ease;
+		box-shadow: 0 6px 18px rgba(224, 164, 59, 0.45);
+	}
+
+	.btn-primary .arrow {
+		display: inline-block;
+		margin-left: 0.3rem;
+	}
+
+	.btn-primary:hover:not(:disabled) {
+		transform: translateY(-2px) scale(1.02);
+		box-shadow: 0 10px 24px rgba(224, 164, 59, 0.55);
+	}
+
+	.btn-primary:active:not(:disabled) {
+		transform: translateY(0) scale(0.97);
+		filter: brightness(0.95);
+	}
+
+	.btn-primary:disabled {
+		opacity: 0.6;
+		cursor: default;
+	}
+
+	@keyframes card-in {
+		from {
+			opacity: 0;
+			transform: translateY(10px) scale(0.97);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+</style>

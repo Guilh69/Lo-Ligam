@@ -1,5 +1,6 @@
 <script>
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import HomeIcon from '$lib/components/HomeIcon.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { session } from '$lib/authStore';
@@ -37,15 +38,24 @@
 	];
 
 	let moduleOneDone = $state(false);
+	let pseudo = $state('');
 
 	async function loadModuleOneStatus() {
 		if ($session) {
-			const { data } = await supabase
-				.from('lesson_progress')
-				.select('completed_at')
-				.eq('module_id', 'module-1')
-				.maybeSingle();
-			moduleOneDone = !!data?.completed_at;
+			const [{ data: progress }, { data: profile }] = await Promise.all([
+				supabase
+					.from('lesson_progress')
+					.select('completed_at')
+					.eq('module_id', 'module-1')
+					.maybeSingle(),
+				supabase.from('profiles').select('pseudo').eq('user_id', $session.user.id).maybeSingle()
+			]);
+			moduleOneDone = !!progress?.completed_at;
+			if (!profile) {
+				goto('/compte/questionnaire');
+				return;
+			}
+			pseudo = profile.pseudo;
 			return;
 		}
 		if (!browser) return;
@@ -81,7 +91,7 @@
 		<span class="brand-name">Lo Ligam</span>
 		<span class="account-state">
 			{#if $session}
-				<span class="account-email">{$session.user.email}</span>
+				<span class="account-email">{pseudo || $session.user.email}</span>
 				<button type="button" class="link-btn" onclick={logout}>Se desconnectar</button>
 			{:else}
 				<a class="link-btn" href="/compte">Se connectar</a>

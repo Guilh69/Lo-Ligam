@@ -12,8 +12,19 @@
 	let errorMsg = $state('');
 	let infoMsg = $state('');
 
+	async function routeAfterAuth() {
+		if (!$session) return;
+		const { data } = await supabase
+			.from('profiles')
+			.select('user_id')
+			.eq('user_id', $session.user.id)
+			.maybeSingle();
+		goto(data ? '/aprene' : '/compte/questionnaire');
+	}
+
 	$effect(() => {
-		if ($session) goto('/aprene');
+		$session;
+		routeAfterAuth();
 	});
 
 	async function submit() {
