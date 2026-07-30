@@ -1,6 +1,6 @@
 <script>
 	import { browser } from '$app/environment';
-	import { fly } from 'svelte/transition';
+	import { scramble } from '$lib/actions/scramble';
 	import logo from '$lib/assets/logo.png';
 
 	let lang = $state('oc');
@@ -20,7 +20,7 @@
 				fr: 'Une langue à l’heure du monde moderne.'
 			},
 			body: {
-				oc: "Per los occitans : un espleit bèl e seriós, a l'ausada de las mai grandas aplicacions, per tornar prene una lenga qu'es ja vòstra — sens nostalgia, amb fiertat.",
+				oc: "Pels occitans : un espleit bèl e seriós, a l'ausada de las mai grandas aplicacions, per tornar prene una lenga qu'es ja vòstra — sens nostalgia, amb fiertat.",
 				fr: 'Pour les occitans : un outil beau et sérieux, à la hauteur des plus grandes applications, pour se réapproprier une langue qui est la vôtre — sans nostalgie, avec fierté.'
 			}
 		},
@@ -31,7 +31,7 @@
 				fr: 'Une porte ouverte sur un pays entier.'
 			},
 			body: {
-				oc: "Per los curioses : una pòrta d'entrada cap a l'Occitània, sa lenga, son istòria e son territòri — plan mai qu'un vocabulari, tot un país d'explorar.",
+				oc: "Pels curioses : una pòrta d'entrada cap a l'Occitània, sa lenga, son istòria e son territòri — plan mai qu'un vocabulari, tot un país d'explorar.",
 				fr: 'Pour les curieux : une porte d’entrée vers l’Occitanie, sa langue, son histoire et son territoire — bien plus qu’un vocabulaire, tout un pays à explorer.'
 			}
 		},
@@ -282,16 +282,10 @@
 		</div>
 
 		<div class="welcome">
-			{#key lang}
-				<p class="tagline-primary" in:fly={{ y: 10, duration: 320 }}>
-					{lang === 'oc' ? t.tagline.oc : t.tagline.fr}
-				</p>
-			{/key}
-			{#key lang}
-				<p class="tagline-secondary" in:fly={{ y: 10, duration: 320, delay: 40 }}>
-					<em>({lang === 'oc' ? t.tagline.fr : t.tagline.oc})</em>
-				</p>
-			{/key}
+			<p class="tagline-primary" use:scramble={lang === 'oc' ? t.tagline.oc : t.tagline.fr}></p>
+			<p class="tagline-secondary">
+				<em use:scramble={`(${lang === 'oc' ? t.tagline.fr : t.tagline.oc})`}></em>
+			</p>
 		</div>
 
 		<a class="btn-primary" href="/aprene">Aprèni l'occitan !</a>
@@ -299,15 +293,16 @@
 
 	<section class="feature">
 		<div class="feature-text">
-			{#key lang}
-				<div in:fly={{ y: 10, duration: 320 }}>
-					<p class="feature-tag">{lang === 'oc' ? t.feature1.tag.oc : t.feature1.tag.fr}</p>
-					<h2 class="feature-title">
-						{lang === 'oc' ? t.feature1.title.oc : t.feature1.title.fr}
-					</h2>
-					<p class="feature-body">{lang === 'oc' ? t.feature1.body.oc : t.feature1.body.fr}</p>
-				</div>
-			{/key}
+			<p class="feature-tag" use:scramble={lang === 'oc' ? t.feature1.tag.oc : t.feature1.tag.fr}
+			></p>
+			<h2
+				class="feature-title"
+				use:scramble={lang === 'oc' ? t.feature1.title.oc : t.feature1.title.fr}
+			></h2>
+			<p
+				class="feature-body"
+				use:scramble={lang === 'oc' ? t.feature1.body.oc : t.feature1.body.fr}
+			></p>
 		</div>
 		<div class="feature-visual feature-visual--terracotta" aria-hidden="true">
 			<svg class="watermark" viewBox="0 0 300 300">
@@ -322,17 +317,18 @@
 
 	<section class="feature feature--reverse">
 		<div class="feature-text">
-			{#key lang}
-				<div in:fly={{ y: 10, duration: 320 }}>
-					<p class="feature-tag feature-tag--teal">
-						{lang === 'oc' ? t.feature2.tag.oc : t.feature2.tag.fr}
-					</p>
-					<h2 class="feature-title">
-						{lang === 'oc' ? t.feature2.title.oc : t.feature2.title.fr}
-					</h2>
-					<p class="feature-body">{lang === 'oc' ? t.feature2.body.oc : t.feature2.body.fr}</p>
-				</div>
-			{/key}
+			<p
+				class="feature-tag feature-tag--teal"
+				use:scramble={lang === 'oc' ? t.feature2.tag.oc : t.feature2.tag.fr}
+			></p>
+			<h2
+				class="feature-title"
+				use:scramble={lang === 'oc' ? t.feature2.title.oc : t.feature2.title.fr}
+			></h2>
+			<p
+				class="feature-body"
+				use:scramble={lang === 'oc' ? t.feature2.body.oc : t.feature2.body.fr}
+			></p>
 		</div>
 		<div class="feature-visual feature-visual--teal" aria-hidden="true">
 			<svg class="watermark" viewBox="0 0 300 300">
@@ -346,27 +342,20 @@
 	</section>
 
 	<section class="statement">
-		{#key lang}
-			<p class="statement-primary" in:fly={{ y: 10, duration: 320 }}>
-				{lang === 'oc' ? t.statement.oc : t.statement.fr}
-			</p>
-		{/key}
-		{#key lang}
-			<p class="statement-secondary" in:fly={{ y: 10, duration: 320, delay: 40 }}>
-				<em>({lang === 'oc' ? t.statement.fr : t.statement.oc})</em>
-			</p>
-		{/key}
+		<p
+			class="statement-primary"
+			use:scramble={lang === 'oc' ? t.statement.oc : t.statement.fr}
+		></p>
+		<p class="statement-secondary">
+			<em use:scramble={`(${lang === 'oc' ? t.statement.fr : t.statement.oc})`}></em>
+		</p>
 	</section>
 
 	<section class="values">
 		{#each t.values as value}
 			<div class="value">
-				{#key lang}
-					<div in:fly={{ y: 8, duration: 280 }}>
-						<p class="value-tag">{lang === 'oc' ? value.tag.oc : value.tag.fr}</p>
-						<p class="value-text">{lang === 'oc' ? value.text.oc : value.text.fr}</p>
-					</div>
-				{/key}
+				<p class="value-tag" use:scramble={lang === 'oc' ? value.tag.oc : value.tag.fr}></p>
+				<p class="value-text" use:scramble={lang === 'oc' ? value.text.oc : value.text.fr}></p>
 			</div>
 		{/each}
 	</section>
@@ -379,23 +368,15 @@
 				target={card.external ? '_blank' : undefined}
 				rel={card.external ? 'noopener noreferrer' : undefined}
 			>
-				{#key lang}
-					<div in:fly={{ y: 8, duration: 280 }}>
-						<p class="trio-title">{lang === 'oc' ? card.title.oc : card.title.fr}</p>
-						<p class="trio-text">{lang === 'oc' ? card.text.oc : card.text.fr}</p>
-					</div>
-				{/key}
+				<p class="trio-title" use:scramble={lang === 'oc' ? card.title.oc : card.title.fr}></p>
+				<p class="trio-text" use:scramble={lang === 'oc' ? card.text.oc : card.text.fr}></p>
 			</a>
 		{/each}
 	</section>
 
 	<footer class="site-footer">
 		<p class="footer-brand">Lo Ligam</p>
-		{#key lang}
-			<p class="footer-tag" in:fly={{ y: 8, duration: 280 }}>
-				{lang === 'oc' ? t.footer.oc : t.footer.fr}
-			</p>
-		{/key}
+		<p class="footer-tag" use:scramble={lang === 'oc' ? t.footer.oc : t.footer.fr}></p>
 	</footer>
 </main>
 
