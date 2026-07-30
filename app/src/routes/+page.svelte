@@ -195,7 +195,7 @@
 			</p>
 		</div>
 
-		<a class="btn-primary" href="/aprene">Aprèn l'occitan <span class="arrow">→</span></a>
+		<a class="btn-primary" href="/aprene">Aprèni l'occitan !</a>
 	</section>
 
 	<section class="feature">
@@ -260,7 +260,7 @@
 	</section>
 
 	<section class="trio">
-		<a class="trio-card" href="/aprene">
+		<a class="trio-card" href="/aprene/essai">
 			<p class="trio-title">Ensag gratuit</p>
 			<p class="trio-text">Una mini-leçon sans compte, pour tastar avant de te lançar.</p>
 		</a>

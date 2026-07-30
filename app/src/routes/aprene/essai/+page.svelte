@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import HomeIcon from '$lib/components/HomeIcon.svelte';
 
 	// Contenu validé par Romain (méthode-pedagogique.md) — Primièra leiçon, sans inscription.
 	const groups = [
@@ -259,6 +260,13 @@
 		} else {
 			phase = 'reward';
 			clearProgress();
+			if (browser) {
+				try {
+					localStorage.setItem('lo-ligam-module-1-done', 'true');
+				} catch (e) {
+					/* stockage indisponible : pas bloquant */
+				}
+			}
 		}
 	}
 </script>
@@ -285,7 +293,10 @@
 
 <main class="screen">
 	<header class="lesson-top">
-		<a class="close" href="/" aria-label="Tornar a l'acuèlh">×</a>
+		<a class="close" href="/aprene" aria-label="Tornar als moduls">×</a>
+		<a class="home-link" href="/" aria-label="Tornar a l'acuèlh">
+			<HomeIcon size={18} />
+		</a>
 		{#if phase === 'discover'}
 			<div
 				class="progress"
@@ -532,6 +543,21 @@
 	}
 
 	.close:hover {
+		background: rgba(58, 42, 32, 0.08);
+	}
+
+	.home-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 999px;
+		color: var(--color-text);
+		transition: background-color 150ms ease;
+	}
+
+	.home-link:hover {
 		background: rgba(58, 42, 32, 0.08);
 	}
 
