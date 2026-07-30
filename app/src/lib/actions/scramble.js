@@ -1,16 +1,15 @@
-// Chaque lettre se floute et s'efface doucement, se remplace pendant
-// qu'elle est invisible, puis redevient nette — en cascade légère de
-// gauche à droite. Pas de caractères aléatoires : la transition ne
-// porte que sur la lettre elle-même (opacité + flou), pour rester
-// subtile et agréable à l'œil plutôt que « glitch ».
+// Chaque lettre s'efface dans un léger flou puis redevient nette une
+// fois remplacée, en cascade de gauche à droite. Volontairement sans
+// inline-block ni transform : les lettres restent des éléments inline
+// tout à fait normaux (comme du texte ordinaire), pour que le
+// retour à la ligne se comporte exactement comme du texte non animé
+// — jamais de coupure au milieu d'un mot.
 function makeSpan(ch) {
 	const span = document.createElement('span');
 	span.textContent = ch;
-	span.style.display = ch === ' ' ? 'inline' : 'inline-block';
 	span.style.opacity = '1';
 	span.style.filter = 'blur(0px)';
-	span.style.transform = 'translateY(0)';
-	span.style.transition = 'opacity 190ms ease, filter 190ms ease, transform 190ms ease';
+	span.style.transition = 'opacity 240ms ease, filter 240ms ease';
 	return span;
 }
 
@@ -51,11 +50,12 @@ export function scramble(node, text) {
 			node.removeChild(spans.pop());
 		}
 
-		// Étalement total plafonné : un long paragraphe ne prend pas plus de
-		// temps qu'un mot court, juste une cascade plus resserrée.
-		const revealSpread = Math.min(240, Math.max(50, maxLen * 8));
-		const perCharStagger = revealSpread / maxLen;
-		const hideDuration = 170;
+		// Décalage fixe et modeste par lettre : à tout instant, seule une
+		// poignée de lettres est en transition (même sur un long
+		// paragraphe), ce qui reste léger et fluide plutôt que de tout
+		// faire flou en même temps.
+		const perCharStagger = 5;
+		const hideDuration = 190;
 
 		spans.forEach((span, i) => {
 			const oldCh = span.textContent;
@@ -65,15 +65,12 @@ export function scramble(node, text) {
 			timers.push(
 				setTimeout(() => {
 					span.style.opacity = '0';
-					span.style.filter = 'blur(3px)';
-					span.style.transform = 'translateY(3px)';
+					span.style.filter = 'blur(2px)';
 				}, delay),
 				setTimeout(() => {
 					span.textContent = newCh;
-					span.style.display = newCh === ' ' ? 'inline' : 'inline-block';
 					span.style.opacity = '1';
 					span.style.filter = 'blur(0px)';
-					span.style.transform = 'translateY(0)';
 				}, delay + hideDuration)
 			);
 		});

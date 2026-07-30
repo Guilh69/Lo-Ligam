@@ -637,12 +637,14 @@
 		margin: 0;
 		color: var(--color-text);
 		line-height: 1.2;
+		text-wrap: balance;
 	}
 
 	.tagline-secondary {
 		margin: 0;
 		font-size: 1.05rem;
 		color: var(--color-teal);
+		text-wrap: pretty;
 	}
 
 	.btn-primary {
@@ -730,10 +732,12 @@
 		color: var(--color-text);
 		margin: 0 0 0.75rem;
 		line-height: 1.25;
+		text-wrap: balance;
 	}
 
 	.feature-body {
 		margin: 0;
+		text-wrap: pretty;
 		font-size: 1.05rem;
 		line-height: 1.6;
 		color: var(--color-text);
@@ -786,12 +790,14 @@
 		font-weight: 700;
 		color: white;
 		margin: 0 0 0.5rem;
+		text-wrap: balance;
 	}
 
 	.statement-secondary {
 		margin: 0;
 		color: rgba(255, 255, 255, 0.85);
 		font-size: 1.1rem;
+		text-wrap: pretty;
 	}
 
 	.values {
@@ -819,6 +825,7 @@
 		margin: 0;
 		font-size: 0.9rem;
 		color: var(--color-text);
+		text-wrap: pretty;
 	}
 
 	.trio {
@@ -869,6 +876,7 @@
 		font-size: 0.9rem;
 		line-height: 1.45;
 		color: var(--color-text);
+		text-wrap: pretty;
 	}
 
 	.site-footer {
@@ -889,6 +897,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		color: var(--color-teal);
+		text-wrap: balance;
 	}
 
 	@media (max-width: 45rem) {
