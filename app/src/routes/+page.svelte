@@ -282,9 +282,9 @@
 		</div>
 
 		<div class="welcome">
-			<p class="tagline-primary" use:scramble={lang === 'oc' ? t.tagline.oc : t.tagline.fr}></p>
+			<p class="tagline-primary" use:scramble={{ oc: t.tagline.oc, fr: t.tagline.fr, lang }}></p>
 			<p class="tagline-secondary">
-				<em use:scramble={`(${lang === 'oc' ? t.tagline.fr : t.tagline.oc})`}></em>
+				<em use:scramble={{ oc: `(${t.tagline.fr})`, fr: `(${t.tagline.oc})`, lang }}></em>
 			</p>
 		</div>
 
@@ -293,15 +293,17 @@
 
 	<section class="feature">
 		<div class="feature-text">
-			<p class="feature-tag" use:scramble={lang === 'oc' ? t.feature1.tag.oc : t.feature1.tag.fr}
+			<p
+				class="feature-tag"
+				use:scramble={{ oc: t.feature1.tag.oc, fr: t.feature1.tag.fr, lang }}
 			></p>
 			<h2
 				class="feature-title"
-				use:scramble={lang === 'oc' ? t.feature1.title.oc : t.feature1.title.fr}
+				use:scramble={{ oc: t.feature1.title.oc, fr: t.feature1.title.fr, lang }}
 			></h2>
 			<p
 				class="feature-body"
-				use:scramble={lang === 'oc' ? t.feature1.body.oc : t.feature1.body.fr}
+				use:scramble={{ oc: t.feature1.body.oc, fr: t.feature1.body.fr, lang }}
 			></p>
 		</div>
 		<div class="feature-visual feature-visual--terracotta" aria-hidden="true">
@@ -319,15 +321,15 @@
 		<div class="feature-text">
 			<p
 				class="feature-tag feature-tag--teal"
-				use:scramble={lang === 'oc' ? t.feature2.tag.oc : t.feature2.tag.fr}
+				use:scramble={{ oc: t.feature2.tag.oc, fr: t.feature2.tag.fr, lang }}
 			></p>
 			<h2
 				class="feature-title"
-				use:scramble={lang === 'oc' ? t.feature2.title.oc : t.feature2.title.fr}
+				use:scramble={{ oc: t.feature2.title.oc, fr: t.feature2.title.fr, lang }}
 			></h2>
 			<p
 				class="feature-body"
-				use:scramble={lang === 'oc' ? t.feature2.body.oc : t.feature2.body.fr}
+				use:scramble={{ oc: t.feature2.body.oc, fr: t.feature2.body.fr, lang }}
 			></p>
 		</div>
 		<div class="feature-visual feature-visual--teal" aria-hidden="true">
@@ -344,18 +346,18 @@
 	<section class="statement">
 		<p
 			class="statement-primary"
-			use:scramble={lang === 'oc' ? t.statement.oc : t.statement.fr}
+			use:scramble={{ oc: t.statement.oc, fr: t.statement.fr, lang }}
 		></p>
 		<p class="statement-secondary">
-			<em use:scramble={`(${lang === 'oc' ? t.statement.fr : t.statement.oc})`}></em>
+			<em use:scramble={{ oc: `(${t.statement.fr})`, fr: `(${t.statement.oc})`, lang }}></em>
 		</p>
 	</section>
 
 	<section class="values">
 		{#each t.values as value}
 			<div class="value">
-				<p class="value-tag" use:scramble={lang === 'oc' ? value.tag.oc : value.tag.fr}></p>
-				<p class="value-text" use:scramble={lang === 'oc' ? value.text.oc : value.text.fr}></p>
+				<p class="value-tag" use:scramble={{ oc: value.tag.oc, fr: value.tag.fr, lang }}></p>
+				<p class="value-text" use:scramble={{ oc: value.text.oc, fr: value.text.fr, lang }}></p>
 			</div>
 		{/each}
 	</section>
@@ -368,15 +370,15 @@
 				target={card.external ? '_blank' : undefined}
 				rel={card.external ? 'noopener noreferrer' : undefined}
 			>
-				<p class="trio-title" use:scramble={lang === 'oc' ? card.title.oc : card.title.fr}></p>
-				<p class="trio-text" use:scramble={lang === 'oc' ? card.text.oc : card.text.fr}></p>
+				<p class="trio-title" use:scramble={{ oc: card.title.oc, fr: card.title.fr, lang }}></p>
+				<p class="trio-text" use:scramble={{ oc: card.text.oc, fr: card.text.fr, lang }}></p>
 			</a>
 		{/each}
 	</section>
 
 	<footer class="site-footer">
 		<p class="footer-brand">Lo Ligam</p>
-		<p class="footer-tag" use:scramble={lang === 'oc' ? t.footer.oc : t.footer.fr}></p>
+		<p class="footer-tag" use:scramble={{ oc: t.footer.oc, fr: t.footer.fr, lang }}></p>
 	</footer>
 </main>
 
@@ -627,12 +629,7 @@
 		max-width: 34rem;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
 		gap: 0.6rem;
-		/* Réserve assez de place pour 2 lignes de chaque texte : la longueur
-		   de la phrase change selon la langue (Òc/Fr), sans ça le logo et le
-		   bouton au-dessus/en-dessous sautaient légèrement au changement. */
-		min-height: calc(2 * clamp(2.1rem, 4.5vw, 2.6rem) * 1.2 + 0.6rem + 2 * 1.05rem * 1.4);
 	}
 
 	.tagline-primary {

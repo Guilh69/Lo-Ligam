@@ -1,89 +1,53 @@
-// Chaque lettre s'efface dans un léger flou puis redevient nette une
-// fois remplacée, en cascade de gauche à droite. Volontairement sans
-// inline-block ni transform : les lettres restent des éléments inline
-// tout à fait normaux (comme du texte ordinaire), pour que le
-// retour à la ligne se comporte exactement comme du texte non animé
-// — jamais de coupure au milieu d'un mot.
-function makeSpan(ch) {
-	const span = document.createElement('span');
-	span.textContent = ch;
-	span.style.opacity = '1';
-	span.style.filter = 'blur(0px)';
-	span.style.transition = 'opacity 420ms ease-in-out, filter 420ms ease-in-out';
-	return span;
+// Fondu croisé lettre par lettre, sans jamais muter le texte affiché
+// pendant l'animation : les deux versions (occitan et français) sont
+// construites une seule fois au montage, empilées l'une sur l'autre
+// (CSS Grid, même cellule), et le changement de langue se contente de
+// faire basculer leur opacité/flou. Comme aucune lettre ne change de
+// contenu pendant la transition, il n'y a aucun recalcul de mise en
+// page en cours d'animation — juste un fondu doux, stable quelle que
+// soit la longueur du texte dans chaque langue.
+function buildLayer(str, stagger) {
+	const layer = document.createElement('span');
+	layer.style.gridArea = '1 / 1';
+	layer.style.display = 'block';
+	let i = 0;
+	for (const ch of str) {
+		const letter = document.createElement('span');
+		letter.textContent = ch;
+		const delay = i * stagger;
+		letter.style.transition = `opacity 560ms ease-in-out ${delay}ms, filter 560ms ease-in-out ${delay}ms`;
+		layer.appendChild(letter);
+		i += 1;
+	}
+	return layer;
 }
 
-export function scramble(node, text) {
-	function build(str) {
-		node.textContent = '';
-		const frag = document.createDocumentFragment();
-		const list = [];
-		for (const ch of str) {
-			const span = makeSpan(ch);
-			frag.appendChild(span);
-			list.push(span);
-		}
-		node.appendChild(frag);
-		return list;
+function setVisible(layer, visible) {
+	for (const letter of layer.children) {
+		letter.style.opacity = visible ? '1' : '0';
+		letter.style.filter = visible ? 'blur(0px)' : 'blur(2px)';
 	}
+	layer.style.pointerEvents = visible ? 'auto' : 'none';
+	layer.setAttribute('aria-hidden', visible ? 'false' : 'true');
+}
 
-	let spans = build(text);
-	let timers = [];
+export function scramble(node, params) {
+	const { oc, fr } = params;
+	node.style.display = 'grid';
+	node.textContent = '';
 
-	function clearTimers() {
-		timers.forEach(clearTimeout);
-		timers = [];
-	}
-
-	function run(newText) {
-		clearTimers();
-		const newChars = Array.from(newText);
-		const maxLen = Math.max(spans.length, newChars.length);
-
-		while (spans.length < maxLen) {
-			const span = makeSpan('');
-			span.style.opacity = '0';
-			node.appendChild(span);
-			spans.push(span);
-		}
-		while (spans.length > maxLen) {
-			node.removeChild(spans.pop());
-		}
-
-		// Décalage fixe et modeste par lettre : à tout instant, seule une
-		// poignée de lettres est en transition (même sur un long
-		// paragraphe), ce qui reste léger et fluide plutôt que de tout
-		// faire flou en même temps. Durées plus longues et flou très léger
-		// pour une transition douce, jamais brusque.
-		const perCharStagger = 7;
-		const hideDuration = 280;
-
-		spans.forEach((span, i) => {
-			const oldCh = span.textContent;
-			const newCh = newChars[i] ?? '';
-			if (oldCh === newCh) return;
-			const delay = i * perCharStagger;
-			timers.push(
-				setTimeout(() => {
-					span.style.opacity = '0.1';
-					span.style.filter = 'blur(1.5px)';
-				}, delay),
-				setTimeout(() => {
-					span.textContent = newCh;
-					span.style.opacity = '1';
-					span.style.filter = 'blur(0px)';
-				}, delay + hideDuration)
-			);
-		});
-	}
+	const stagger = 6;
+	const ocLayer = buildLayer(oc, stagger);
+	const frLayer = buildLayer(fr, stagger);
+	node.appendChild(ocLayer);
+	node.appendChild(frLayer);
+	setVisible(ocLayer, params.lang === 'oc');
+	setVisible(frLayer, params.lang !== 'oc');
 
 	return {
-		update(newText) {
-			const current = spans.map((s) => s.textContent).join('');
-			if (newText !== current) run(newText);
-		},
-		destroy() {
-			clearTimers();
+		update(newParams) {
+			setVisible(ocLayer, newParams.lang === 'oc');
+			setVisible(frLayer, newParams.lang !== 'oc');
 		}
 	};
 }
