@@ -61,3 +61,11 @@ En occitan, pour saluer une personne de manière familière (tutoiement), on dit
 
 - **Pas de vrai son de prononciation occitane** : aucune intégration Votz/API lo Congrès pour l'instant. Un bouton d'écoute est prévu dans l'interface mais reste un espace réservé tant que l'intégration audio n'est pas construite — pas de synthèse vocale de navigateur utilisée en remplacement, pour ne pas risquer une mauvaise prononciation qui nuirait à la confiance.
 - **Bibliothèque de vocabulaire persistante** : nécessite un compte (base de données utilisateur), pas encore construit.
+
+## 5. Mécanique de découverte — ajustements du 30/07/2026
+
+- **Pas de lettres pièges pour l'instant** : trop dur pour un néophyte en première leçon. Prévu comme mode « difficile » optionnel une fois le socle validé.
+- **Traduction française toujours visible** pendant la reconstitution du mot (pas seulement à la fin) — évite de deviner à l'aveugle.
+- **Aide intégrée** : un tap sur « Ajuda ? » révèle la lettre suivante ; deux taps rapprochés complètent le mot entier.
+- **Points** : 10 par mot, réduits de 3 par lettre obtenue via l'aide (plancher à 2). Affichés en continu, récapitulés à la fin. Persistance uniquement locale (navigateur), pas encore liée à un compte.
+- **Saisie clavier** en plus du tap, pour aller plus vite une fois l'utilisateur à l'aise.
