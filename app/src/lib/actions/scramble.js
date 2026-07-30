@@ -1,70 +1,91 @@
-const CHARSET =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzàâäéèêëïîôöùûüçòãÒ█▓▒░";
-
-function randomChar() {
-	if (Math.random() < 0.16) {
-		return '█▓▒░'[Math.floor(Math.random() * 4)];
-	}
-	return CHARSET[Math.floor(Math.random() * CHARSET.length)];
+// Chaque lettre se floute et s'efface doucement, se remplace pendant
+// qu'elle est invisible, puis redevient nette — en cascade légère de
+// gauche à droite. Pas de caractères aléatoires : la transition ne
+// porte que sur la lettre elle-même (opacité + flou), pour rester
+// subtile et agréable à l'œil plutôt que « glitch ».
+function makeSpan(ch) {
+	const span = document.createElement('span');
+	span.textContent = ch;
+	span.style.display = ch === ' ' ? 'inline' : 'inline-block';
+	span.style.opacity = '1';
+	span.style.filter = 'blur(0px)';
+	span.style.transform = 'translateY(0)';
+	span.style.transition = 'opacity 190ms ease, filter 190ms ease, transform 190ms ease';
+	return span;
 }
 
-// Effet « décodage rétro » : au lieu d'un simple fondu, chaque lettre défile
-// dans des caractères aléatoires (dont quelques blocs pixel) avant de se
-// stabiliser sur la bonne lettre, en cascade de gauche à droite. La durée
-// totale reste bornée (revealSpread) même pour les longs paragraphes, pour
-// que l'effet reste rapide quel que soit le texte.
 export function scramble(node, text) {
-	let frame;
-
-	function renderFrame(target, elapsed, revealSpread, scrambleWindow) {
-		let out = '';
-		for (let i = 0; i < target.length; i++) {
-			const ch = target[i];
-			if (ch === ' ' || ch === '\n') {
-				out += ch;
-				continue;
-			}
-			const charStart = (i / target.length) * revealSpread;
-			const progress = (elapsed - charStart) / scrambleWindow;
-			if (progress >= 1) {
-				out += ch;
-			} else if (progress < 0) {
-				out += ' ';
-			} else {
-				out += randomChar();
-			}
+	function build(str) {
+		node.textContent = '';
+		const frag = document.createDocumentFragment();
+		const list = [];
+		for (const ch of str) {
+			const span = makeSpan(ch);
+			frag.appendChild(span);
+			list.push(span);
 		}
-		node.textContent = out;
+		node.appendChild(frag);
+		return list;
+	}
+
+	let spans = build(text);
+	let timers = [];
+
+	function clearTimers() {
+		timers.forEach(clearTimeout);
+		timers = [];
 	}
 
 	function run(newText) {
-		cancelAnimationFrame(frame);
-		const scrambleWindow = 160;
-		const revealSpread = Math.min(320, Math.max(60, newText.length * 7));
-		const totalDuration = revealSpread + scrambleWindow;
-		const startTime = performance.now();
+		clearTimers();
+		const newChars = Array.from(newText);
+		const maxLen = Math.max(spans.length, newChars.length);
 
-		function tick(now) {
-			const elapsed = now - startTime;
-			if (elapsed >= totalDuration) {
-				node.textContent = newText;
-				return;
-			}
-			renderFrame(newText, elapsed, revealSpread, scrambleWindow);
-			frame = requestAnimationFrame(tick);
+		while (spans.length < maxLen) {
+			const span = makeSpan('');
+			span.style.opacity = '0';
+			node.appendChild(span);
+			spans.push(span);
+		}
+		while (spans.length > maxLen) {
+			node.removeChild(spans.pop());
 		}
 
-		frame = requestAnimationFrame(tick);
-	}
+		// Étalement total plafonné : un long paragraphe ne prend pas plus de
+		// temps qu'un mot court, juste une cascade plus resserrée.
+		const revealSpread = Math.min(240, Math.max(50, maxLen * 8));
+		const perCharStagger = revealSpread / maxLen;
+		const hideDuration = 170;
 
-	node.textContent = text;
+		spans.forEach((span, i) => {
+			const oldCh = span.textContent;
+			const newCh = newChars[i] ?? '';
+			if (oldCh === newCh) return;
+			const delay = i * perCharStagger;
+			timers.push(
+				setTimeout(() => {
+					span.style.opacity = '0';
+					span.style.filter = 'blur(3px)';
+					span.style.transform = 'translateY(3px)';
+				}, delay),
+				setTimeout(() => {
+					span.textContent = newCh;
+					span.style.display = newCh === ' ' ? 'inline' : 'inline-block';
+					span.style.opacity = '1';
+					span.style.filter = 'blur(0px)';
+					span.style.transform = 'translateY(0)';
+				}, delay + hideDuration)
+			);
+		});
+	}
 
 	return {
 		update(newText) {
-			if (newText !== node.textContent) run(newText);
+			const current = spans.map((s) => s.textContent).join('');
+			if (newText !== current) run(newText);
 		},
 		destroy() {
-			cancelAnimationFrame(frame);
+			clearTimers();
 		}
 	};
 }
