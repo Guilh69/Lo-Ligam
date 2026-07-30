@@ -13,7 +13,8 @@
 				{
 					oc: 'Adieu',
 					fr: 'bonjour ou au revoir, à une seule personne (tutoiement)',
-					note: 'Adieu sert aussi bien à dire bonjour qu’au revoir — comme « ciao » en italien !'
+					note: 'Adieu sert aussi bien à dire bonjour qu’au revoir — comme « ciao » en italien !',
+					img: '/words/adieu.jpg'
 				},
 				{
 					oc: 'Adieu-siatz',
@@ -296,7 +297,7 @@
 	<header class="lesson-top">
 		<a class="close" href="/aprene" aria-label="Tornar als moduls">×</a>
 		<a class="home-link" href="/" aria-label="Tornar a l'acuèlh">
-			<HomeIcon size={18} />
+			<HomeIcon size={21} />
 		</a>
 		{#if phase === 'discover'}
 			<div
@@ -318,7 +319,7 @@
 				<span class="resumed-toast">Represa ont aviás quitat ↺ <em>(reprise où tu avais arrêté)</em></span>
 			{/if}
 			<div class="points-pill">
-				<FougasseIcon size={17} /> {points}
+				<FougasseIcon size={20} /> {points}
 				{#if showEarnedPop}<span class="earned-pop">+{lastEarned}</span>{/if}
 			</div>
 			<button
@@ -376,21 +377,35 @@
 		{#key wordIndex}
 			<section class="card">
 				<div class="visual-row">
-					<div class="visual-placeholder" aria-hidden="true">
-						<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="var(--color-teal)" stroke-width="1.6">
-							<rect x="3" y="3" width="18" height="18" rx="3" />
-							<circle cx="8.5" cy="8.5" r="1.4" />
-							<path d="M21 15l-5-5L5 21" />
-						</svg>
-					</div>
-					<button
-						type="button"
-						class="listen"
-						onclick={playWordSound}
-						aria-label="Escotar (a venir)"
-					>
-						{@render speakerIcon(true)}
-					</button>
+					{#if current.img}
+						<div class="visual-photo">
+							<img src={current.img} alt="" />
+							<button
+								type="button"
+								class="listen listen-overlay"
+								onclick={playWordSound}
+								aria-label="Escotar (a venir)"
+							>
+								{@render speakerIcon(true)}
+							</button>
+						</div>
+					{:else}
+						<div class="visual-placeholder" aria-hidden="true">
+							<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="var(--color-teal)" stroke-width="1.6">
+								<rect x="3" y="3" width="18" height="18" rx="3" />
+								<circle cx="8.5" cy="8.5" r="1.4" />
+								<path d="M21 15l-5-5L5 21" />
+							</svg>
+						</div>
+						<button
+							type="button"
+							class="listen"
+							onclick={playWordSound}
+							aria-label="Escotar (a venir)"
+						>
+							{@render speakerIcon(true)}
+						</button>
+					{/if}
 				</div>
 
 				<p class="target-fr">{current.fr}</p>
@@ -466,7 +481,7 @@
 				<strong>Bona vesprada</strong>, <strong>Bona nuèch</strong>.
 			</p>
 			<p class="reward-points">
-				<FougasseIcon size={20} /> {points} fogassas ganhadas <em>(fougasses gagnées)</em>
+				<FougasseIcon size={26} /> {points} fogassas ganhadas <em>(fougasses gagnées)</em>
 			</p>
 			<p class="reward-next">
 				Crèa un compte per contunhar : exercicis, prononciacion, e ta bibliotèca de
@@ -553,15 +568,16 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 2rem;
-		height: 2rem;
+		width: 2.3rem;
+		height: 2.3rem;
 		border-radius: 999px;
-		color: var(--color-text);
+		color: var(--color-brick);
+		background: rgba(165, 52, 42, 0.1);
 		transition: background-color 150ms ease;
 	}
 
 	.home-link:hover {
-		background: rgba(58, 42, 32, 0.08);
+		background: rgba(165, 52, 42, 0.2);
 	}
 
 	.header-right {
@@ -763,6 +779,35 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.visual-photo {
+		position: relative;
+		width: 132px;
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: 0 10px 24px rgba(58, 42, 32, 0.2);
+		animation: card-in 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.visual-photo img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.listen-overlay {
+		position: absolute;
+		right: 0.4rem;
+		bottom: 0.4rem;
+		width: 38px;
+		height: 38px;
+		background: rgba(255, 255, 255, 0.92);
+		box-shadow: 0 4px 10px rgba(58, 42, 32, 0.3);
+	}
+
+	.listen-overlay:hover {
+		background: white;
 	}
 
 	.listen {

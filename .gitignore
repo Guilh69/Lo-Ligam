@@ -1,0 +1,3 @@
+# Sources brutes des visuels (photos/SVG bruts, souvent volumineux — Canva, exports).
+# Les versions optimisées utilisées par l'appli vivent dans app/static/ et app/src/lib/assets/.
+/Photo/
