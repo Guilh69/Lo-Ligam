@@ -2,11 +2,11 @@
 	import { browser } from '$app/environment';
 	import { scramble } from '$lib/actions/scramble';
 	import logo from '$lib/assets/logo.png';
-	import OccitaniaIcon from '$lib/components/OccitaniaIcon.svelte';
 	import MenuIcon from '$lib/components/MenuIcon.svelte';
+	import { siteSections, externalLinks } from '$lib/data/siteSections';
 
 	let lang = $state('oc');
-	let menuOpen = $state(false);
+	let sectionsOpen = $state(false);
 
 	// Textes bilingues de la page d'accueil. Le contenu occitan est à
 	// valider par Romain (locuteur natif) avant publication finale — voir
@@ -267,47 +267,68 @@
 		<span class="mini-logo"><img src={logo} alt="" /></span>
 		<span class="brand-name">Lo Ligam</span>
 	</div>
-	<div class="topbar-actions" class:menu-open={menuOpen}>
-		<!-- Lien de test temporaire, à retirer avant la publication -->
-		<a class="test-link" href="/dev-test-questionnaire">Questionnari (tèst)</a>
-		<a class="carta-link" href="/carta" aria-label="Veire lo Mond en occitan">
-			<OccitaniaIcon size={20} />
-		</a>
-		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
-			<button
-				type="button"
-				class:active={lang === 'oc'}
-				onclick={() => {
-					lang = 'oc';
-					menuOpen = false;
-				}}>Òc</button
-			>
-			<button
-				type="button"
-				class="fr"
-				class:active={lang === 'fr'}
-				onclick={() => {
-					lang = 'fr';
-					menuOpen = false;
-				}}>Fr</button
-			>
-		</div>
-		<a class="btn-primary btn-small" href="/aprene">Començar</a>
-	</div>
 	<button
 		type="button"
 		class="menu-toggle"
-		onclick={() => (menuOpen = !menuOpen)}
-		aria-label="Menú"
-		aria-expanded={menuOpen}
+		onclick={() => (sectionsOpen = !sectionsOpen)}
+		aria-label={sectionsOpen ? 'Tampar lo menú' : 'Dobrir lo menú'}
+		aria-expanded={sectionsOpen}
 	>
-		{#if menuOpen}
+		{#if sectionsOpen}
 			<span class="menu-close">×</span>
 		{:else}
 			<MenuIcon size={20} />
 		{/if}
+		<span class="menu-label">Menú</span>
 	</button>
+	<div class="topbar-actions">
+		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
+			<button type="button" class:active={lang === 'oc'} onclick={() => (lang = 'oc')}>Òc</button>
+			<button type="button" class="fr" class:active={lang === 'fr'} onclick={() => (lang = 'fr')}
+				>Fr</button
+			>
+		</div>
+		<a class="btn-primary btn-small" href="/aprene">Començar</a>
+	</div>
 </header>
+
+{#if sectionsOpen}
+	<div class="sections-panel" role="dialog" aria-modal="true" aria-label="Menú del site">
+		<div class="sections-grid">
+			{#each siteSections as s (s.id)}
+				{#if s.status === 'live'}
+					<a class="section-card" href={s.href} onclick={() => (sectionsOpen = false)}>
+						<span class="section-oc">{s.oc}</span>
+						<span class="section-fr">{s.fr}</span>
+						<span class="section-desc">{s.desc_oc}</span>
+					</a>
+				{:else}
+					<div class="section-card soon" aria-disabled="true">
+						<span class="section-oc">{s.oc}</span>
+						<span class="section-fr">{s.fr}</span>
+						<span class="section-desc">{s.desc_oc}</span>
+						<span class="soon-tag">Lèu <em>· bientôt</em></span>
+					</div>
+				{/if}
+			{/each}
+		</div>
+
+		<div class="sections-external">
+			<p class="external-title">Ressorsas occitanas <em>(ressources occitanes)</em></p>
+			<div class="external-links">
+				{#each externalLinks as l (l.href)}
+					<a href={l.href} target="_blank" rel="noopener noreferrer">
+						<span>{l.label} ↗</span>
+						<em>{l.desc}</em>
+					</a>
+				{/each}
+			</div>
+		</div>
+
+		<!-- Lien de test temporaire, à retirer avant la publication -->
+		<a class="test-link" href="/dev-test-questionnaire">Questionnari (tèst)</a>
+	</div>
+{/if}
 
 <main class="page">
 	<section class="hero">
@@ -411,8 +432,56 @@
 	</section>
 
 	<footer class="site-footer">
-		<p class="footer-brand">Lo Ligam</p>
-		<p class="footer-tag" use:scramble={{ oc: t.footer.oc, fr: t.footer.fr, lang }}></p>
+		<div class="footer-top">
+			<div class="footer-about">
+				<div class="footer-brand-row">
+					<span class="mini-logo"><img src={logo} alt="" /></span>
+					<span class="footer-brand">Lo Ligam</span>
+				</div>
+				<p class="footer-tag" use:scramble={{ oc: t.footer.oc, fr: t.footer.fr, lang }}></p>
+				<a
+					class="footer-social"
+					href="https://www.instagram.com/lo_ligam/"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Instagram ↗
+				</a>
+			</div>
+
+			<div class="footer-col">
+				<p class="footer-col-title">Explorar <em>(explorer)</em></p>
+				<ul>
+					{#each siteSections as s (s.id)}
+						<li>
+							{#if s.status === 'live'}
+								<a href={s.href}>{s.oc} <em>({s.fr})</em></a>
+							{:else}
+								<span class="soon-inline">{s.oc} <em>({s.fr}) · Lèu</em></span>
+							{/if}
+						</li>
+					{/each}
+				</ul>
+			</div>
+
+			<div class="footer-col">
+				<p class="footer-col-title">Ressorsas <em>(ressources)</em></p>
+				<ul>
+					{#each externalLinks as l (l.href)}
+						<li><a href={l.href} target="_blank" rel="noopener noreferrer">{l.label} ↗</a></li>
+					{/each}
+				</ul>
+			</div>
+		</div>
+
+		<div class="footer-legal">
+			<p>© 2026 Lo Ligam</p>
+			<div class="footer-legal-links">
+				<span class="soon-inline">Mentions legalas <em>· Lèu</em></span>
+				<span class="soon-inline">Confidencialitat <em>· Lèu</em></span>
+				<span class="soon-inline">Accessibilitat <em>· Lèu</em></span>
+			</div>
+		</div>
 	</footer>
 </main>
 
@@ -577,19 +646,24 @@
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
+		margin-left: auto;
 	}
 
 	.menu-toggle {
-		display: none;
+		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 2.4rem;
+		gap: 0.4rem;
 		height: 2.4rem;
 		flex-shrink: 0;
 		border: none;
 		border-radius: 999px;
+		padding: 0 0.9rem;
 		background: rgba(165, 52, 42, 0.1);
 		color: var(--color-brick);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.9rem;
 		cursor: pointer;
 		transition:
 			background-color 150ms ease,
@@ -598,49 +672,37 @@
 
 	.menu-toggle:hover {
 		background: rgba(165, 52, 42, 0.18);
-		transform: scale(1.06);
+		transform: scale(1.04);
 	}
 
 	.menu-close {
-		font-size: 1.3rem;
+		font-size: 1.2rem;
 		line-height: 1;
 	}
 
 	@media (max-width: 30rem) {
-		.topbar {
-			position: relative;
-		}
-
-		.menu-toggle {
-			display: flex;
-		}
-
-		.topbar-actions {
+		.menu-label {
 			display: none;
 		}
 
-		.topbar-actions.menu-open {
-			display: flex;
-			flex-direction: column;
-			align-items: stretch;
-			position: absolute;
-			top: 100%;
-			left: 0;
-			right: 0;
-			padding: 1rem 1.5rem 1.25rem;
-			background: rgba(245, 234, 216, 0.97);
-			backdrop-filter: blur(10px);
-			box-shadow: 0 12px 20px rgba(58, 42, 32, 0.15);
-			gap: 0.75rem;
-			z-index: 20;
+		.topbar {
+			padding: 0.9rem 0.85rem;
+			gap: 0.4rem;
 		}
 
-		.topbar-actions.menu-open .lang-toggle {
-			align-self: flex-start;
+		.topbar-actions {
+			gap: 0.45rem;
+		}
+
+		.btn-small {
+			padding: 0.55rem 0.85rem;
+			font-size: 0.85rem;
 		}
 	}
 
 	.test-link {
+		display: inline-block;
+		margin-top: 0.5rem;
 		font-size: 0.78rem;
 		font-weight: 600;
 		color: var(--color-brick);
@@ -653,22 +715,6 @@
 
 	.test-link:hover {
 		background: rgba(165, 52, 42, 0.08);
-	}
-
-	.carta-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.2rem;
-		height: 2.2rem;
-		border-radius: 999px;
-		color: var(--color-teal);
-		background: rgba(31, 95, 99, 0.1);
-		text-decoration: none;
-		flex-shrink: 0;
-		transition:
-			background-color 150ms ease,
-			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 
 	.carta-link:hover {
@@ -715,6 +761,147 @@
 
 	.lang-toggle button.fr.active {
 		background: var(--color-sky);
+	}
+
+	.sections-panel {
+		position: sticky;
+		top: 64px;
+		z-index: 9;
+		background: rgba(245, 234, 216, 0.98);
+		backdrop-filter: blur(10px);
+		box-shadow: 0 16px 30px rgba(58, 42, 32, 0.15);
+		padding: 1.5rem;
+		animation: card-in 220ms ease-out;
+	}
+
+	.sections-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+		gap: 0.75rem;
+		max-width: 60rem;
+		margin: 0 auto;
+	}
+
+	.section-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		background: white;
+		border-radius: 16px;
+		padding: 0.9rem 1.1rem;
+		text-decoration: none;
+		color: inherit;
+		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.08);
+		transition:
+			transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+			box-shadow 180ms ease;
+	}
+
+	.section-card:not(.soon):hover {
+		transform: translateY(-3px);
+		box-shadow: 0 10px 22px rgba(58, 42, 32, 0.14);
+	}
+
+	.section-card.soon {
+		background: rgba(255, 255, 255, 0.5);
+		box-shadow: none;
+		border: 1px dashed rgba(58, 42, 32, 0.18);
+		opacity: 0.75;
+		cursor: not-allowed;
+	}
+
+	.section-oc {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.05rem;
+		color: var(--color-brick);
+	}
+
+	.section-fr {
+		font-size: 0.78rem;
+		color: var(--color-teal);
+	}
+
+	.section-desc {
+		margin-top: 0.25rem;
+		font-size: 0.8rem;
+		line-height: 1.35;
+		color: var(--color-text);
+		opacity: 0.85;
+	}
+
+	.soon-tag {
+		margin-top: 0.4rem;
+		align-self: flex-start;
+		font-size: 0.7rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: rgba(58, 42, 32, 0.55);
+		background: rgba(58, 42, 32, 0.08);
+		padding: 0.15rem 0.5rem;
+		border-radius: 999px;
+	}
+
+	.soon-tag em {
+		font-weight: 400;
+		text-transform: none;
+		letter-spacing: normal;
+	}
+
+	.sections-external {
+		max-width: 60rem;
+		margin: 1.25rem auto 0;
+		padding-top: 1.25rem;
+		border-top: 1px solid rgba(58, 42, 32, 0.12);
+	}
+
+	.external-title {
+		margin: 0 0 0.6rem;
+		font-size: 0.8rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-teal);
+	}
+
+	.external-title em {
+		font-weight: 400;
+		text-transform: none;
+		letter-spacing: normal;
+	}
+
+	.external-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+
+	.external-links a {
+		display: flex;
+		flex-direction: column;
+		gap: 0.1rem;
+		background: white;
+		border-radius: 12px;
+		padding: 0.6rem 0.9rem;
+		text-decoration: none;
+		color: var(--color-brick);
+		font-weight: 600;
+		font-size: 0.88rem;
+		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.08);
+		transition: transform 150ms ease;
+	}
+
+	.external-links a:hover {
+		transform: translateY(-2px);
+	}
+
+	.external-links a em {
+		font-weight: 400;
+		font-style: normal;
+		color: var(--color-text);
+		font-size: 0.76rem;
+		opacity: 0.8;
 	}
 
 	.page {
@@ -1014,23 +1201,137 @@
 
 	.site-footer {
 		position: relative;
-		text-align: center;
-		padding: 2rem 1.5rem 10rem;
+		background: var(--color-text);
+		color: var(--color-cream);
+		padding: 3rem 1.5rem 8rem;
+		margin-top: 2rem;
+	}
+
+	.footer-top {
+		max-width: 60rem;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: 1.3fr 1fr 1fr;
+		gap: 2.5rem;
+		text-align: left;
+	}
+
+	.footer-brand-row {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		margin-bottom: 0.6rem;
 	}
 
 	.footer-brand {
 		font-family: var(--font-heading);
 		font-weight: 600;
-		font-size: 1.1rem;
-		color: var(--color-text);
-		margin: 0 0 0.25rem;
+		font-size: 1.15rem;
+		color: white;
 	}
 
 	.footer-tag {
-		margin: 0;
+		margin: 0 0 0.9rem;
 		font-size: 0.85rem;
-		color: var(--color-teal);
-		text-wrap: balance;
+		color: rgba(245, 234, 216, 0.75);
+		text-wrap: pretty;
+		max-width: 22rem;
+	}
+
+	.footer-social {
+		display: inline-block;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--color-gold);
+		text-decoration: none;
+	}
+
+	.footer-social:hover {
+		text-decoration: underline;
+	}
+
+	.footer-col-title {
+		margin: 0 0 0.75rem;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.85rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-gold);
+	}
+
+	.footer-col-title em {
+		text-transform: none;
+		font-weight: 400;
+		letter-spacing: normal;
+		color: rgba(245, 234, 216, 0.6);
+	}
+
+	.footer-col ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.55rem;
+	}
+
+	.footer-col a {
+		color: rgba(245, 234, 216, 0.9);
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+
+	.footer-col a:hover {
+		color: var(--color-gold);
+	}
+
+	.footer-col a em,
+	.soon-inline em {
+		font-weight: 400;
+		font-style: normal;
+		opacity: 0.65;
+		font-size: 0.82em;
+	}
+
+	.soon-inline {
+		font-size: 0.9rem;
+		color: rgba(245, 234, 216, 0.55);
+	}
+
+	.footer-legal {
+		max-width: 60rem;
+		margin: 2.5rem auto 0;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(245, 234, 216, 0.15);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+	}
+
+	.footer-legal p {
+		margin: 0;
+		font-size: 0.8rem;
+		color: rgba(245, 234, 216, 0.6);
+	}
+
+	.footer-legal-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 1.1rem;
+	}
+
+	.footer-legal-links .soon-inline {
+		font-size: 0.8rem;
+	}
+
+	@media (max-width: 45rem) {
+		.footer-top {
+			grid-template-columns: 1fr;
+			gap: 1.75rem;
+		}
 	}
 
 	@media (max-width: 45rem) {
