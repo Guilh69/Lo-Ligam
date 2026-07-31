@@ -148,6 +148,23 @@
 	const landscapeFadeDistance = 360;
 	let landscapeProgress = $derived(Math.min(1, scrollY / landscapeFadeDistance));
 
+	// La souris fait légèrement "pencher" les vagues vers elle (parallaxe),
+	// désactivé une fois les vagues effacées pour ne jamais gêner le
+	// contenu réel qui défile en dessous.
+	let waveMouseX = $state(0);
+	let waveMouseY = $state(0);
+
+	function handleWaveMove(event) {
+		const rect = event.currentTarget.getBoundingClientRect();
+		waveMouseX = (event.clientX - rect.left) / rect.width - 0.5;
+		waveMouseY = (event.clientY - rect.top) / rect.height - 0.5;
+	}
+
+	function resetWaveMouse() {
+		waveMouseX = 0;
+		waveMouseY = 0;
+	}
+
 	let brandCardEl = $state();
 	let topbarEl = $state();
 	let centerY = $state(300);
@@ -275,23 +292,29 @@
 	viewBox="0 0 1440 220"
 	preserveAspectRatio="none"
 	aria-hidden="true"
-	style="opacity: {1 - landscapeProgress}"
+	style="opacity: {1 - landscapeProgress}; pointer-events: {landscapeProgress < 1 ? 'auto' : 'none'}"
+	onpointermove={handleWaveMove}
+	onpointerleave={resetWaveMouse}
 >
 	<g class="wave-outer" style="transform: translateY({-landscapeProgress * 28}px)">
-		<g class="wave-bob wave-bob-1">
-			<path
-				d="M0,120 C240,180 480,60 720,100 C960,140 1200,40 1440,90 L1440,220 L0,220 Z"
-				fill="var(--color-brick)"
-				opacity="0.5"
-			/>
+		<g class="wave-mouse" style="transform: translate({waveMouseX * 16}px, {waveMouseY * 9}px)">
+			<g class="wave-bob wave-bob-1">
+				<path
+					d="M0,120 C240,180 480,60 720,100 C960,140 1200,40 1440,90 L1440,220 L0,220 Z"
+					fill="var(--color-brick)"
+					opacity="0.5"
+				/>
+			</g>
 		</g>
 	</g>
 	<g class="wave-outer" style="transform: translateY({landscapeProgress * 34}px)">
-		<g class="wave-bob wave-bob-2">
-			<path
-				d="M0,160 C240,200 480,120 720,150 C960,180 1200,110 1440,140 L1440,220 L0,220 Z"
-				fill="var(--color-terracotta)"
-			/>
+		<g class="wave-mouse" style="transform: translate({waveMouseX * 28}px, {waveMouseY * 16}px)">
+			<g class="wave-bob wave-bob-2">
+				<path
+					d="M0,160 C240,200 480,120 720,150 C960,180 1200,110 1440,140 L1440,220 L0,220 Z"
+					fill="var(--color-terracotta)"
+				/>
+			</g>
 		</g>
 	</g>
 </svg>
@@ -677,7 +700,6 @@
 		width: 100%;
 		height: 180px;
 		z-index: 2;
-		pointer-events: none;
 		transition: opacity 200ms linear;
 	}
 
@@ -685,35 +707,57 @@
 		transition: transform 200ms linear;
 	}
 
-	/* Léger mouvement de va-et-vient, jamais synchronisé entre les deux
-	   vagues (durées et déphasage différents), pour un effet organique
-	   plutôt qu'un rebond mécanique. */
+	/* Suit la souris avec un peu d'inertie (easing plus lent que le
+	   scroll) pour un effet de profondeur discret, jamais brusque. */
+	.wave-mouse {
+		transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	/* Mouvement organique en dérive, jamais synchronisé entre les deux
+	   vagues (durées, déphasage et trajets différents), pour éviter tout
+	   effet de rebond mécanique. */
 	.wave-bob-1 {
-		animation: wave-bob-1 9s ease-in-out infinite;
+		animation: wave-bob-1 14s ease-in-out infinite;
 	}
 
 	.wave-bob-2 {
-		animation: wave-bob-2 12s ease-in-out infinite;
-		animation-delay: -4s;
+		animation: wave-bob-2 18s ease-in-out infinite;
+		animation-delay: -7s;
 	}
 
 	@keyframes wave-bob-1 {
-		0%,
-		100% {
+		0% {
 			transform: translate(0, 0);
 		}
+		25% {
+			transform: translate(9px, -4px);
+		}
 		50% {
-			transform: translate(10px, -5px);
+			transform: translate(3px, -8px);
+		}
+		75% {
+			transform: translate(-7px, -2px);
+		}
+		100% {
+			transform: translate(0, 0);
 		}
 	}
 
 	@keyframes wave-bob-2 {
-		0%,
-		100% {
+		0% {
 			transform: translate(0, 0);
 		}
-		50% {
-			transform: translate(-8px, 4px);
+		30% {
+			transform: translate(-8px, 3px);
+		}
+		60% {
+			transform: translate(-2px, 6px);
+		}
+		85% {
+			transform: translate(6px, 2px);
+		}
+		100% {
+			transform: translate(0, 0);
 		}
 	}
 
@@ -721,6 +765,11 @@
 		.wave-bob-1,
 		.wave-bob-2 {
 			animation: none;
+		}
+
+		.wave-mouse {
+			transition: none;
+			transform: none !important;
 		}
 	}
 
@@ -779,6 +828,7 @@
 		gap: 0.4rem;
 		height: 2.4rem;
 		flex-shrink: 0;
+		margin-left: 1.75rem;
 		border: none;
 		border-radius: 999px;
 		padding: 0 0.9rem;
@@ -806,6 +856,10 @@
 	@media (max-width: 30rem) {
 		.menu-label {
 			display: none;
+		}
+
+		.menu-toggle {
+			margin-left: auto;
 		}
 
 		.topbar {
@@ -1083,7 +1137,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 1.5rem;
-		padding: 2rem 1.5rem;
+		padding: 2rem 1.5rem calc(2rem + 100px);
 		text-align: center;
 		animation: fade-in 600ms ease-out;
 	}
