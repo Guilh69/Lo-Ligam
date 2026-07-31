@@ -180,10 +180,21 @@
 		waveMouseY = 0;
 	}
 
+	let brandCardEl = $state();
 	let topbarEl = $state();
+	let centerY = $state(300);
 	let topbarBottom = $state(64);
 
 	function measureLayout() {
+		if (brandCardEl) {
+			const rect = brandCardEl.getBoundingClientRect();
+			// brandCardEl es un element normal dins lo flux : sa
+			// getBoundingClientRect() depend de l'endrech ont la pagina es
+			// scrollada al moment de la mesura. Se tòrna totjorn a la
+			// posicion "coma se scrollY=0" per èsser fisable quina que siá
+			// la scroll al moment del montatge (navigation history…).
+			centerY = rect.top + window.scrollY + rect.height / 2;
+		}
 		if (topbarEl) {
 			topbarBottom = topbarEl.getBoundingClientRect().bottom;
 		}
@@ -209,20 +220,18 @@
 
 	const buffer = 40;
 	const rowItemHeight = 132;
+	const halfItemHeight = rowItemHeight / 2;
 	// 160px = nautor maximala de .landscape (vaga) + un pichon marge, per
 	// que la renguèra 3 tòque pas jamai la vaga.
 	const waveClearance = 190;
-	// Tres renguèras espaciadas regularament sus tot l'espaci utilizable,
-	// de la barra amont fins a la vaga en bas — pas mai referidas a la
-	// posicion del logo. Aquò garantís un escart egal entre cada renguèra,
-	// quina que siá ont lo logo se tròba (abans, l'escart èra pichon en
-	// amont e grand en aval, çò que sarrava las renguèras en naut).
-	let rowTops = $derived.by(() => {
-		const top = topbarBottom + buffer;
-		const bottom = Math.max(top, viewportHeight - waveClearance - rowItemHeight);
-		const step = (bottom - top) / 2;
-		return [top, top + step, top + step * 2];
-	});
+	// La renguèra del mitan passa totjorn pel centre del logo (demanda
+	// explicita) ; las renguèras 1 e 3 utilizan cadascuna tot l'espaci
+	// que li demòra, en naut e en bas, per evitar lo tassament d'abans.
+	let rowTops = $derived([
+		topbarBottom + buffer,
+		centerY - halfItemHeight,
+		viewportHeight - waveClearance - rowItemHeight
+	]);
 
 	function updateLens(event) {
 		const item = event.currentTarget;
@@ -503,7 +512,7 @@
 
 <main class="page">
 	<section class="hero">
-		<div class="brand-card">
+		<div class="brand-card" bind:this={brandCardEl}>
 			<img src={logo} alt="Lo Ligam" />
 		</div>
 
@@ -1438,11 +1447,19 @@
 	/* Petit mot d'accueil, distinct del títol : donat una entrada mai
 	   douça abans lo vertadièr títol (hierarquia mai clara qu'una sola
 	   frasa tota egala). */
+	/* Badge bien visible plutôt qu'une petite ligne discrète : fond
+	   teinté, taille et graisse marquées, pour que « Benvenguda » se
+	   remarque autant que ce qu'il annonce. */
 	.tagline-kicker {
-		margin: 0;
-		font-size: 0.95rem;
+		display: inline-flex;
+		align-self: flex-start;
+		margin: 0 0 0.1rem;
+		padding: 0.35rem 0.9rem;
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--color-brick) 14%, transparent);
+		font-size: 1.15rem;
 		font-weight: 700;
-		letter-spacing: 0.03em;
+		letter-spacing: 0.02em;
 		color: var(--color-brick);
 	}
 
