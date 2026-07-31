@@ -22,6 +22,18 @@
 
 	let lang = $state('oc');
 	let sectionsOpen = $state(false);
+	let openTools = $state(null);
+
+	// Icòna (favicon) de cada site extèrne, per repèrer visualament cada
+	// actor/aplicacion dins la lista de ressorsas, sens aver de logo local
+	// a mantener per cadun.
+	function favicon(href) {
+		try {
+			return `https://www.google.com/s2/favicons?sz=64&domain=${new URL(href).hostname}`;
+		} catch {
+			return '';
+		}
+	}
 
 	// Textes bilingues de la page d'accueil. Le contenu occitan est à
 	// valider par Romain (locuteur natif) avant publication finale — voir
@@ -393,11 +405,54 @@
 				}}></p>
 			<div class="external-links">
 				{#each externalLinks as l (l.href)}
-					<a class="external-card" href={l.href} target="_blank" rel="noopener noreferrer">
-						<span class="shine" aria-hidden="true"></span>
-						<span class="external-label">{l.label} ↗</span>
-						<span use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}></span>
-					</a>
+					{#if l.tools}
+						<div class="external-card has-tools" class:tools-open={openTools === l.href}>
+							<span class="shine" aria-hidden="true"></span>
+							<button
+								type="button"
+								class="external-toggle"
+								aria-expanded={openTools === l.href}
+								onclick={() => (openTools = openTools === l.href ? null : l.href)}
+							>
+								<img class="external-logo" src={favicon(l.href)} alt="" loading="lazy" />
+								<span class="external-toggle-text">
+									<span class="external-label">{l.label}</span>
+									<span use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}></span>
+								</span>
+								<span class="external-chevron" aria-hidden="true">▾</span>
+							</button>
+							<div class="tools-wrap">
+								<div class="tools-inner">
+									<ul class="tools-list">
+										{#each l.tools as tool (tool.href)}
+											<li>
+												<a href={tool.href} target="_blank" rel="noopener noreferrer">
+													<img class="tool-logo" src={favicon(tool.href)} alt="" loading="lazy" />
+													<span class="tool-text">
+														<span class="tool-name">{tool.label} ↗</span>
+														<span class="tool-desc"
+															>(<span
+																use:scramble={{ oc: tool.desc_oc, fr: tool.desc_fr, lang }}
+															></span>)</span
+														>
+													</span>
+												</a>
+											</li>
+										{/each}
+									</ul>
+								</div>
+							</div>
+						</div>
+					{:else}
+						<a class="external-card" href={l.href} target="_blank" rel="noopener noreferrer">
+							<span class="shine" aria-hidden="true"></span>
+							<img class="external-logo" src={favicon(l.href)} alt="" loading="lazy" />
+							<span class="external-toggle-text">
+								<span class="external-label">{l.label} ↗</span>
+								<span use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}></span>
+							</span>
+						</a>
+					{/if}
 				{/each}
 			</div>
 		</div>
@@ -1017,9 +1072,12 @@
 			transparent 80%
 		);
 		transform: translateX(-130%);
-		transition: transform 500ms ease-in;
 	}
 
+	/* Pas de transition sur l'état de repos : au retrait de la souris, le
+	   reflet revient instantanément à son point de départ (hors champ)
+	   plutôt que de rejouer la traversée à l'envers — le mouvement ne va
+	   que dans un sens, gauche → droite. */
 	.section-card:hover .shine,
 	.external-card:hover .shine {
 		transform: translateX(130%);
@@ -1097,8 +1155,8 @@
 		position: relative;
 		overflow: hidden;
 		display: flex;
-		flex-direction: column;
-		gap: 0.1rem;
+		align-items: center;
+		gap: 0.6rem;
 		background: white;
 		border-radius: 12px;
 		padding: 0.6rem 0.9rem;
@@ -1112,6 +1170,32 @@
 
 	.external-card:hover {
 		transform: translateY(-2px);
+	}
+
+	.external-card.has-tools {
+		flex-direction: column;
+		align-items: stretch;
+		padding: 0;
+	}
+
+	.external-card.has-tools:hover {
+		transform: none;
+	}
+
+	.external-logo {
+		width: 22px;
+		height: 22px;
+		border-radius: 6px;
+		object-fit: contain;
+		background: white;
+		flex-shrink: 0;
+	}
+
+	.external-toggle-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.1rem;
+		min-width: 0;
 	}
 
 	.external-label {
@@ -1128,6 +1212,116 @@
 		color: var(--color-text);
 		font-size: 0.76rem;
 		opacity: 0.8;
+	}
+
+	/* Bouton « Lo Congrès » qui déplie ses aisinas (site + apps) : reset
+	   des styles natifs de bouton pour reprendre exactement la mise en
+	   page des autres cartes-ressource. */
+	.external-toggle {
+		all: unset;
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		width: 100%;
+		padding: 0.6rem 0.9rem;
+		cursor: pointer;
+		color: var(--color-brick);
+		font-weight: 600;
+		font-size: 0.88rem;
+	}
+
+	.external-toggle:hover {
+		transform: translateY(-2px);
+	}
+
+	.external-chevron {
+		flex-shrink: 0;
+		font-size: 0.75rem;
+		opacity: 0.55;
+		transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.external-card.tools-open .external-chevron {
+		transform: rotate(180deg);
+	}
+
+	/* Ouverture/fermeture du sosmenú via grid-template-rows (0fr → 1fr) :
+	   permet une animation de hauteur fluide malgré un contengut de
+	   hauteur variabla (pas possible amb una transition sus "height:auto"). */
+	.tools-wrap {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 420ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.external-card.tools-open .tools-wrap {
+		grid-template-rows: 1fr;
+	}
+
+	.tools-inner {
+		overflow: hidden;
+	}
+
+	.tools-list {
+		list-style: none;
+		margin: 0;
+		padding: 0.3rem 0.6rem 0.7rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		border-top: 1px solid rgba(58, 42, 32, 0.1);
+	}
+
+	.tools-list a {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		text-decoration: none;
+		color: inherit;
+		padding: 0.4rem 0.35rem;
+		border-radius: 8px;
+		transition: background 150ms ease;
+	}
+
+	.tools-list a:hover {
+		background: rgba(165, 52, 42, 0.07);
+	}
+
+	.tool-logo {
+		width: 24px;
+		height: 24px;
+		border-radius: 6px;
+		object-fit: contain;
+		background: white;
+		flex-shrink: 0;
+	}
+
+	.tool-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.05rem;
+		min-width: 0;
+	}
+
+	.tool-name {
+		font-weight: 700;
+		font-size: 0.95rem;
+		color: var(--color-brick);
+	}
+
+	.tool-desc {
+		font-size: 0.76rem;
+		font-weight: 400;
+		color: var(--color-text);
+		opacity: 0.75;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tools-wrap,
+		.external-chevron {
+			transition: none;
+		}
 	}
 
 	.page {

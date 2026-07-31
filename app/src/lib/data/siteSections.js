@@ -76,7 +76,42 @@ export const externalLinks = [
 		label: 'Lo Congrès',
 		desc_oc: 'Organisme oficial de regulacion de la lenga occitana',
 		desc_fr: 'Organisme officiel de régulation de la langue occitane',
-		href: 'https://locongres.org/fr/lo-congres/linstitution/missions'
+		href: 'https://locongres.org/fr/lo-congres/linstitution/missions',
+		// Aisinas numericas realas del Congrès (verificadas lo 2026-07-31
+		// sus locongres.org/fr/services/grand-public), afichadas dins un
+		// sosmenú al clic sus la carta.
+		tools: [
+			{
+				label: 'Site web',
+				desc_oc: 'Lo site oficial de Lo Congrès',
+				desc_fr: 'Le site officiel de Lo Congrès',
+				href: 'https://locongres.org'
+			},
+			{
+				label: 'Revirada',
+				desc_oc: 'Traductor automatic occitan-francés',
+				desc_fr: 'Traducteur automatique occitan-français',
+				href: 'https://revirada.eu'
+			},
+			{
+				label: 'Dicodòc',
+				desc_oc: 'Diccionari occitan, 5 varietats',
+				desc_fr: 'Dictionnaire occitan, 5 variétés',
+				href: 'https://dicodoc.eu/fr/dictionnaires'
+			},
+			{
+				label: 'Vèrbòc',
+				desc_oc: 'Conjugador occitan complet',
+				desc_fr: 'Conjugueur occitan complet',
+				href: 'https://dicodoc.eu/fr/conjugaisons'
+			},
+			{
+				label: 'Vòtz',
+				desc_oc: 'Sintèsi vocala occitana',
+				desc_fr: 'Synthèse vocale occitane',
+				href: 'http://votz.eu'
+			}
+		]
 	},
 	{
 		label: 'OPLO',
