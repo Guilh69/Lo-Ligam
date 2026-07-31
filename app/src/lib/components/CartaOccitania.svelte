@@ -11,14 +11,52 @@
 		{ oc: 'Avinhon', desc: 'Lo Palais dels Papas', lat: 43.9493, lng: 4.8055 }
 	];
 
+	// Còdis de la còla « Dialèctes » (SIG/Dialecte/Carte_dialecte_WG.geojson) :
+	// lo Lengadocian ressòrt en aur per marcar que's lo dialècte ensenhat
+	// dins l'aplicacion.
+	const dialectStyles = {
+		cro: { color: '#3e7cb1', label: 'Lo Creissent' },
+		pro: { color: '#c8562e', label: 'Provençau' },
+		gas: { color: '#1f5f63', label: 'Gascon' },
+		lan: { color: '#e0a43b', label: 'Lengadocian' },
+		noc: { color: '#5e7b3a', label: 'Nòrd-occitan' }
+	};
+
 	let { visibility = {} } = $props();
 
 	let mapEl;
 	let map;
+	let L;
 	let lieusLayer;
+	let dialectesLayer;
+	let dialectesLoading = false;
+
+	async function loadDialectesLayer() {
+		if (dialectesLayer || dialectesLoading) return;
+		dialectesLoading = true;
+		const res = await fetch('/data/dialectes.geojson');
+		const data = await res.json();
+		dialectesLayer = L.geoJSON(data, {
+			style: (feature) => {
+				const info = dialectStyles[feature.properties.name];
+				return {
+					color: info?.color ?? '#3a2a20',
+					weight: 1.5,
+					fillColor: info?.color ?? '#3a2a20',
+					fillOpacity: 0.35
+				};
+			},
+			onEachFeature: (feature, layer) => {
+				const info = dialectStyles[feature.properties.name];
+				layer.bindPopup(info?.label ?? feature.properties.name);
+			}
+		});
+		dialectesLoading = false;
+		if (visibility.dialectes) dialectesLayer.addTo(map);
+	}
 
 	onMount(async () => {
-		const L = (await import('leaflet')).default;
+		L = (await import('leaflet')).default;
 
 		map = L.map(mapEl, {
 			center: [43.95, 2.4],
@@ -46,19 +84,34 @@
 		);
 
 		if (visibility.lieusInteres) lieusLayer.addTo(map);
+		if (visibility.dialectes) loadDialectesLayer();
 	});
 
 	$effect(() => {
-		// Legir la proprietat en primièr, meteis dins lo cas ont la carta es pas
-		// encara prèsta : cal que l'effièch se marque coma dependent de
-		// « visibility.lieusInteres » d'en primièr còp, o se tornarà pas jamai
-		// executar quand la visibilitat càmbia mai tard.
-		const show = visibility.lieusInteres;
-		if (!map || !lieusLayer) return;
-		if (show) {
-			lieusLayer.addTo(map);
-		} else {
-			map.removeLayer(lieusLayer);
+		// Legir las proprietats en primièr, meteis dins lo cas ont la carta es
+		// pas encara prèsta : cal que l'effièch se marque coma dependent
+		// d'aquelas valors d'en primièr còp, o se tornarà pas jamai executar
+		// quand la visibilitat càmbia mai tard.
+		const showLieus = visibility.lieusInteres;
+		const showDialectes = visibility.dialectes;
+		if (!map || !L) return;
+
+		if (lieusLayer) {
+			if (showLieus) {
+				lieusLayer.addTo(map);
+			} else {
+				map.removeLayer(lieusLayer);
+			}
+		}
+
+		if (showDialectes) {
+			if (dialectesLayer) {
+				dialectesLayer.addTo(map);
+			} else if (!dialectesLoading) {
+				loadDialectesLayer();
+			}
+		} else if (dialectesLayer) {
+			map.removeLayer(dialectesLayer);
 		}
 	});
 

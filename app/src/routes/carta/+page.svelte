@@ -20,13 +20,15 @@
 		limsi: false
 	});
 
-	// Còlas de la carta : « lieusInteres » a de vertadièras donadas d'exemple
-	// (dins CartaOccitania.svelte) ; las autras son de jaces pas encara
-	// dotadas de donadas — vesedoiras dins lo panèl mas desactivadas, per
-	// mostrar l'arquitectura visada sens inventar de contengut.
+	// Còlas de la carta : « lieusInteres » e « dialectes » an de vertadièras
+	// donadas (dialectes vengudas de SIG/Dialecte/Carte_dialecte_WG.geojson,
+	// cargadas a la demanda dins CartaOccitania.svelte) ; las autras son de
+	// jaces pas encara dotadas de donadas — vesedoiras dins lo panèl mas
+	// desactivadas, per mostrar l'arquitectura visada sens inventar de
+	// contengut.
 	const layerDefs = [
 		{ id: 'lieusInteres', label: "Luòcs d'interès", available: true },
-		{ id: 'dialectes', label: 'Dialèctes', available: false, note: 'A venir — traçat lingüistic de besonh' },
+		{ id: 'dialectes', label: 'Dialèctes', available: true },
 		{ id: 'provincias', label: 'Provincias istoricas', available: false, note: 'A venir' },
 		{
 			id: 'limsi',
