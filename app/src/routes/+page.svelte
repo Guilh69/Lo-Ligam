@@ -3,8 +3,10 @@
 	import { scramble } from '$lib/actions/scramble';
 	import logo from '$lib/assets/logo.png';
 	import OccitaniaIcon from '$lib/components/OccitaniaIcon.svelte';
+	import MenuIcon from '$lib/components/MenuIcon.svelte';
 
 	let lang = $state('oc');
+	let menuOpen = $state(false);
 
 	// Textes bilingues de la page d'accueil. Le contenu occitan est à
 	// valider par Romain (locuteur natif) avant publication finale — voir
@@ -265,20 +267,46 @@
 		<span class="mini-logo"><img src={logo} alt="" /></span>
 		<span class="brand-name">Lo Ligam</span>
 	</div>
-	<div class="topbar-actions">
+	<div class="topbar-actions" class:menu-open={menuOpen}>
 		<!-- Lien de test temporaire, à retirer avant la publication -->
 		<a class="test-link" href="/dev-test-questionnaire">Questionnari (tèst)</a>
 		<a class="carta-link" href="/carta" aria-label="Veire la carta d'Occitània">
 			<OccitaniaIcon size={20} />
 		</a>
 		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
-			<button type="button" class:active={lang === 'oc'} onclick={() => (lang = 'oc')}>Òc</button>
-			<button type="button" class="fr" class:active={lang === 'fr'} onclick={() => (lang = 'fr')}
-				>Fr</button
+			<button
+				type="button"
+				class:active={lang === 'oc'}
+				onclick={() => {
+					lang = 'oc';
+					menuOpen = false;
+				}}>Òc</button
+			>
+			<button
+				type="button"
+				class="fr"
+				class:active={lang === 'fr'}
+				onclick={() => {
+					lang = 'fr';
+					menuOpen = false;
+				}}>Fr</button
 			>
 		</div>
 		<a class="btn-primary btn-small" href="/aprene">Començar</a>
 	</div>
+	<button
+		type="button"
+		class="menu-toggle"
+		onclick={() => (menuOpen = !menuOpen)}
+		aria-label="Menú"
+		aria-expanded={menuOpen}
+	>
+		{#if menuOpen}
+			<span class="menu-close">×</span>
+		{:else}
+			<MenuIcon size={20} />
+		{/if}
+	</button>
 </header>
 
 <main class="page">
@@ -551,17 +579,64 @@
 		gap: 0.75rem;
 	}
 
+	.menu-toggle {
+		display: none;
+		align-items: center;
+		justify-content: center;
+		width: 2.4rem;
+		height: 2.4rem;
+		flex-shrink: 0;
+		border: none;
+		border-radius: 999px;
+		background: rgba(165, 52, 42, 0.1);
+		color: var(--color-brick);
+		cursor: pointer;
+		transition:
+			background-color 150ms ease,
+			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.menu-toggle:hover {
+		background: rgba(165, 52, 42, 0.18);
+		transform: scale(1.06);
+	}
+
+	.menu-close {
+		font-size: 1.3rem;
+		line-height: 1;
+	}
+
 	@media (max-width: 30rem) {
 		.topbar {
-			flex-wrap: wrap;
-			row-gap: 0.6rem;
+			position: relative;
+		}
+
+		.menu-toggle {
+			display: flex;
 		}
 
 		.topbar-actions {
-			flex-wrap: wrap;
-			justify-content: flex-end;
-			width: 100%;
-			row-gap: 0.5rem;
+			display: none;
+		}
+
+		.topbar-actions.menu-open {
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			padding: 1rem 1.5rem 1.25rem;
+			background: rgba(245, 234, 216, 0.97);
+			backdrop-filter: blur(10px);
+			box-shadow: 0 12px 20px rgba(58, 42, 32, 0.15);
+			gap: 0.75rem;
+			z-index: 20;
+		}
+
+		.topbar-actions.menu-open .lang-toggle {
+			align-self: flex-start;
 		}
 	}
 
