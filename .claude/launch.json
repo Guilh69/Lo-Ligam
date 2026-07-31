@@ -5,7 +5,8 @@
       "name": "lo-ligam-app-dev",
       "runtimeExecutable": "C:\\Users\\perie\\OneDrive\\Documents\\Lengas\\Occitan\\Aplicacion\\Lo_Ligam\\app\\dev-server.cmd",
       "runtimeArgs": [],
-      "port": 5173
+      "port": 5173,
+      "autoPort": true
     }
   ]
 }
