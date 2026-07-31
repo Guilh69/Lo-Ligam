@@ -191,6 +191,13 @@
 	let topbarEl = $state();
 	let centerY = $state(300);
 	let topbarBottom = $state(64);
+	// Restat invisible tant que la premièra mesura fisabla (aprèp
+	// cargament complet de las poliças) es pas facha : la poliça Fredoka
+	// carga en async (font-display swap), e càmbia leugièrament la
+	// nautor del kicker un còp cargada — la mesura facha abans aquò es
+	// fausa, e corregir la posicion aprèp qu'òm vege lo logo dona
+	// justament l'impression qu'el "bolega" al cargament/refrescament.
+	let logoReady = $state(false);
 
 	function measureLayout() {
 		if (brandCardEl) {
@@ -210,7 +217,14 @@
 	$effect(() => {
 		if (!browser) return;
 		measureLayout();
-		document.fonts?.ready.then(measureLayout);
+		if (document.fonts?.ready) {
+			document.fonts.ready.then(() => {
+				measureLayout();
+				logoReady = true;
+			});
+		} else {
+			logoReady = true;
+		}
 		window.addEventListener('resize', measureLayout);
 		return () => window.removeEventListener('resize', measureLayout);
 	});
@@ -536,9 +550,12 @@
 		<div
 			class="brand-card"
 			bind:this={brandCardEl}
-			style="margin-bottom: {Math.max(0, logoOffset)}px"
+			style="margin-bottom: {logoOffset}px"
 		>
-			<div class="brand-card-inner" style="transform: translateY({logoOffset}px)">
+			<div
+				class="brand-card-inner"
+				style="transform: translateY({logoOffset}px); opacity: {logoReady ? 1 : 0}"
+			>
 				<img src={logo} alt="Lo Ligam" />
 			</div>
 		</div>
@@ -764,17 +781,20 @@
 	}
 
 	.bg-img-blur {
-		filter: blur(1.8px);
+		filter: blur(3.5px);
 	}
 
+	/* Écart plus net avec la version floue (contraste/saturation/luminosité
+	   nettement relevés) pour que la zone survolée se voie vraiment comme
+	   "mise au point", pas juste un peu moins floue. */
 	.bg-img-sharp {
 		clip-path: circle(0px at var(--mx, 50%) var(--my, 50%));
 		transition: clip-path 30ms linear;
-		filter: contrast(1.15) saturate(1.2);
+		filter: contrast(1.35) saturate(1.5) brightness(1.05);
 	}
 
 	.bg-item:hover .bg-img-sharp {
-		clip-path: circle(76px at var(--mx, 50%) var(--my, 50%));
+		clip-path: circle(84px at var(--mx, 50%) var(--my, 50%));
 	}
 
 	.page-bg {
@@ -1491,17 +1511,16 @@
 	   logo décalé). Capitales + Fredoka (déjà chargée pour les titres) :
 	   chaleureux et moderne sans ajouter de police. Apparition fluide du
 	   bas vers le haut au chargement. */
-	/* Plan gras : « Benvenguda » domine visuellement (comme un vrai mot
-	   d'accueil), le titre en dessous devient secondaire. Pas de fond de
-	   badge à cette taille — un aplomb de gras + couleur suffit, plus
-	   lisible qu'une pastille surdimensionnée. */
+	/* « Benvenguda » domine visuellement (comme un vrai mot d'accueil),
+	   le titre en dessous devient secondaire. Police script (Caveat, la
+	   même que « Lo ligam » dans le logo) plutôt que des capitales
+	   traçées façon startup tech — plus chaleureux, cohérent avec le
+	   logo, moins « générique ». Pas de fond de badge à cette taille. */
 	.tagline-kicker {
-		margin: 0 0 1.25rem;
-		font-family: var(--font-heading);
-		font-size: clamp(2rem, 5vw, 2.9rem);
+		margin: 0 0 2.5rem;
+		font-family: var(--font-script);
+		font-size: clamp(2.6rem, 6.5vw, 3.6rem);
 		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
 		color: var(--color-brick);
 		animation: kicker-reveal 750ms 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
 	}
