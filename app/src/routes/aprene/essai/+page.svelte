@@ -314,6 +314,39 @@
 			saveProgress(true);
 		}
 	}
+
+	// Reprendre du début, à la demande : efface la progression (locale ou
+	// Supabase selon connexion) au lieu de continuer où on s'était arrêté.
+	async function restartModule() {
+		wordIndex = 0;
+		points = 0;
+		phase = 'discover';
+		setupWord();
+		const currentSession = get(session);
+		if (currentSession) {
+			try {
+				await supabase.from('lesson_progress').upsert({
+					user_id: currentSession.user.id,
+					module_id: MODULE_ID,
+					word_index: 0,
+					points: 0,
+					completed_at: null,
+					updated_at: new Date().toISOString()
+				});
+			} catch (e) {
+				/* échec réseau : pas bloquant, on continue en local */
+			}
+			return;
+		}
+		if (browser) {
+			try {
+				localStorage.removeItem('lo-ligam-module-1-done');
+				localStorage.setItem(STORAGE_KEY, JSON.stringify({ wordIndex: 0, points: 0 }));
+			} catch (e) {
+				/* stockage indisponible : pas bloquant */
+			}
+		}
+	}
 </script>
 
 {#snippet speakerIcon(active)}
@@ -360,6 +393,17 @@
 		<div class="header-right">
 			{#if resumed}
 				<span class="resumed-toast">Represa ont aviás quitat ↺ <em>(reprise où tu avais arrêté)</em></span>
+			{/if}
+			{#if phase === 'discover'}
+				<button
+					type="button"
+					class="restart-btn"
+					onclick={restartModule}
+					aria-label="Recomençar lo modul de zèro"
+					title="Recomençar de zèro (recommencer depuis le début)"
+				>
+					↺ Recomençar
+				</button>
 			{/if}
 			<div class="points-pill">
 				<FougasseIcon size={20} /> {points}
@@ -533,7 +577,12 @@
 			<a class="btn-primary" href="/compte?mode=signup"
 				>Crèa un compte per contunhar <span class="arrow">→</span></a
 			>
-			<a class="btn-secondary" href="/">Tornar a l'acuèlh</a>
+			<div class="reward-links">
+				<button type="button" class="btn-secondary" onclick={restartModule}
+					>↺ Recomençar de zèro</button
+				>
+				<a class="btn-secondary" href="/">Tornar a l'acuèlh</a>
+			</div>
 		</section>
 	{/if}
 </main>
@@ -650,6 +699,25 @@
 	.resumed-toast em {
 		font-weight: 400;
 		opacity: 0.75;
+	}
+
+	.restart-btn {
+		border: none;
+		background: none;
+		color: rgba(58, 42, 32, 0.55);
+		font-size: 0.78rem;
+		font-weight: 600;
+		cursor: pointer;
+		padding: 0.3rem 0.5rem;
+		border-radius: 999px;
+		transition:
+			background-color 150ms ease,
+			color 150ms ease;
+	}
+
+	.restart-btn:hover {
+		background: rgba(58, 42, 32, 0.08);
+		color: var(--color-brick);
 	}
 
 	.points-pill {
@@ -1152,6 +1220,13 @@
 
 	.btn-secondary:hover {
 		color: var(--color-brick);
+	}
+
+	.reward-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem 1rem;
 	}
 
 	@keyframes card-in {
