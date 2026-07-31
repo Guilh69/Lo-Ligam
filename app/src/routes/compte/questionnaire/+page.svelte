@@ -4,7 +4,37 @@
 	import { get } from 'svelte/store';
 	import { supabase } from '$lib/supabaseClient';
 	import { session, authReady } from '$lib/authStore';
-	import HomeIcon from '$lib/components/HomeIcon.svelte';
+	import AppHeader from '$lib/components/AppHeader.svelte';
+	import LocationAutocomplete from '$lib/components/LocationAutocomplete.svelte';
+
+	// Groupes socioprofessionnels INSEE (PCS, niveau 1 — les 8 grandes
+	// catégories). Facultatif, "Prefèri pas dire" par défaut.
+	const pcsCategories = [
+		{ value: 'agriculteurs', oc: 'Agricultors exploitants', fr: 'Agriculteurs exploitants' },
+		{
+			value: 'artisans',
+			oc: 'Artisans, comerçants e caps d’empresa',
+			fr: 'Artisans, commerçants et chefs d’entreprise'
+		},
+		{
+			value: 'cadres',
+			oc: 'Quadres e professions intellectualas superioras',
+			fr: 'Cadres et professions intellectuelles supérieures'
+		},
+		{
+			value: 'intermediaires',
+			oc: 'Professions intermediàrias',
+			fr: 'Professions intermédiaires'
+		},
+		{ value: 'employes', oc: 'Emplegats', fr: 'Employés' },
+		{ value: 'ouvriers', oc: 'Obrièrs', fr: 'Ouvriers' },
+		{ value: 'retraites', oc: 'Retirats', fr: 'Retraités' },
+		{
+			value: 'sans_activite',
+			oc: 'Autras personas sens activitat professionala',
+			fr: 'Autres personnes sans activité professionnelle'
+		}
+	];
 
 	let checking = $state(true);
 	let pseudo = $state('');
@@ -87,12 +117,7 @@
 </div>
 
 <main class="screen">
-	<header class="top">
-		<a class="home-link" href="/" aria-label="Tornar a l'acuèlh">
-			<HomeIcon size={22} />
-		</a>
-		<span class="brand-name">Lo Ligam</span>
-	</header>
+	<AppHeader />
 
 	{#if !checking}
 		<section class="card">
@@ -140,12 +165,17 @@
 
 				<label>
 					Mestièr <em>(profession, facultatif)</em>
-					<input type="text" bind:value={profession} maxlength="80" />
+					<select bind:value={profession}>
+						<option value="">Prefèri pas dire</option>
+						{#each pcsCategories as cat}
+							<option value={cat.value}>{cat.oc} ({cat.fr})</option>
+						{/each}
+					</select>
 				</label>
 
 				<label>
 					Ont demòras <em>(lieu de vie, facultatif)</em>
-					<input type="text" bind:value={location} maxlength="80" placeholder="Vila, region…" />
+					<LocationAutocomplete bind:value={location} />
 				</label>
 
 				<fieldset>
@@ -228,41 +258,6 @@
 		align-items: center;
 		gap: 1.5rem;
 		padding: 1.5rem 1.5rem 4rem;
-	}
-
-	.top {
-		width: 100%;
-		max-width: 40rem;
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-	}
-
-	.home-link {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.4rem;
-		height: 2.4rem;
-		border-radius: 999px;
-		color: var(--color-brick);
-		background: rgba(165, 52, 42, 0.1);
-		text-decoration: none;
-		transition:
-			background-color 150ms ease,
-			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
-	.home-link:hover {
-		background: rgba(165, 52, 42, 0.18);
-		transform: scale(1.06);
-	}
-
-	.brand-name {
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 1.05rem;
-		color: var(--color-text);
 	}
 
 	.card {
