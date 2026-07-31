@@ -249,18 +249,6 @@
 	// del logo").
 	let logoOffset = $derived(rowTops[1] + halfItemHeight - centerY);
 
-	function updateLens(event) {
-		const item = event.currentTarget;
-		const rect = item.getBoundingClientRect();
-		item.style.setProperty('--mx', event.clientX - rect.left + 'px');
-		item.style.setProperty('--my', event.clientY - rect.top + 'px');
-	}
-
-	function clearLens(event) {
-		event.currentTarget.style.removeProperty('--mx');
-		event.currentTarget.style.removeProperty('--my');
-	}
-
 	const rowSpeeds = [16, -13, 19]; // px/s ; sign = direction
 
 	$effect(() => {
@@ -314,9 +302,8 @@
 	{#each bgRows as row, i}
 		<div class="bg-row bg-row-{i + 1}" style="top: {rowTops[i]}px">
 			{#each [...row, ...row, ...row, ...row] as src, j (i + '-' + j)}
-				<span class="bg-item" onpointermove={updateLens} onpointerleave={clearLens}>
+				<span class="bg-item">
 					<img class="bg-img-blur" {src} alt="" />
-					<img class="bg-img-sharp" {src} alt="" />
 				</span>
 			{/each}
 		</div>
@@ -752,8 +739,7 @@
 		flex-shrink: 0;
 	}
 
-	.bg-img-blur,
-	.bg-img-sharp {
+	.bg-img-blur {
 		position: absolute;
 		inset: 0;
 		width: 100%;
@@ -761,20 +747,7 @@
 		object-fit: cover;
 		border-radius: 18px;
 		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.18);
-	}
-
-	.bg-img-blur {
 		filter: blur(1.8px);
-	}
-
-	.bg-img-sharp {
-		clip-path: circle(0px at var(--mx, 50%) var(--my, 50%));
-		transition: clip-path 30ms linear;
-		filter: contrast(1.15) saturate(1.2);
-	}
-
-	.bg-item:hover .bg-img-sharp {
-		clip-path: circle(76px at var(--mx, 50%) var(--my, 50%));
 	}
 
 	.page-bg {
@@ -790,37 +763,93 @@
 		);
 	}
 
+	/* Fond ambiant animé, inspiré du bokeh flouté de microsoft.ai (WebGL
+	   chez eux ; ici de simples taches CSS déjà en place, mises en dérive
+	   lente et continue). Remplace l'ancien effet de loupe nette au
+	   survol des vignettes — trop discret pour être remarqué, et
+	   incohérent avec un fond qui, lui, ne bougeait pas du tout. Teintes
+	   Lo Ligam à pleine saturation plutôt que délavées. */
 	.blob {
 		position: absolute;
 		border-radius: 50%;
 		filter: blur(70px);
+		will-change: transform;
 	}
 
 	.blob-gold {
 		width: 420px;
 		height: 420px;
 		background: var(--color-gold);
-		opacity: 0.35;
+		opacity: 0.4;
 		top: -140px;
 		left: -120px;
+		animation: blob-drift-1 22s ease-in-out infinite;
 	}
 
 	.blob-teal {
 		width: 380px;
 		height: 380px;
 		background: var(--color-teal);
-		opacity: 0.2;
+		opacity: 0.24;
 		bottom: -100px;
 		right: -100px;
+		animation: blob-drift-2 26s ease-in-out infinite;
+		animation-delay: -9s;
 	}
 
 	.blob-brick {
 		width: 300px;
 		height: 300px;
 		background: var(--color-brick);
-		opacity: 0.15;
+		opacity: 0.2;
 		top: 25%;
 		right: 8%;
+		animation: blob-drift-3 19s ease-in-out infinite;
+		animation-delay: -4s;
+	}
+
+	@keyframes blob-drift-1 {
+		0%,
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+		33% {
+			transform: translate(40px, 30px) scale(1.08);
+		}
+		66% {
+			transform: translate(-20px, 50px) scale(0.95);
+		}
+	}
+
+	@keyframes blob-drift-2 {
+		0%,
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+		40% {
+			transform: translate(-35px, -25px) scale(1.1);
+		}
+		70% {
+			transform: translate(25px, -10px) scale(0.97);
+		}
+	}
+
+	@keyframes blob-drift-3 {
+		0%,
+		100% {
+			transform: translate(0, 0) scale(1);
+		}
+		50% {
+			transform: translate(-30px, 35px) scale(1.12);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.blob-gold,
+		.blob-teal,
+		.blob-brick {
+			animation: none;
+		}
 	}
 
 	.landscape {
