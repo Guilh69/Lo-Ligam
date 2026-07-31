@@ -143,6 +143,11 @@
 	const fadeDistance = 500;
 	let carouselOpacity = $derived(Math.max(0, 1 - scrollY / fadeDistance));
 
+	// Les vagues du bas s'écartent et s'effacent progressivement au scroll,
+	// plutôt que de disparaître d'un coup — même logique que le carrousel.
+	const landscapeFadeDistance = 360;
+	let landscapeProgress = $derived(Math.min(1, scrollY / landscapeFadeDistance));
+
 	let brandCardEl = $state();
 	let topbarEl = $state();
 	let centerY = $state(300);
@@ -265,16 +270,30 @@
 	<span class="blob blob-brick"></span>
 </div>
 
-<svg class="landscape" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
-	<path
-		d="M0,120 C240,180 480,60 720,100 C960,140 1200,40 1440,90 L1440,220 L0,220 Z"
-		fill="var(--color-brick)"
-		opacity="0.5"
-	/>
-	<path
-		d="M0,160 C240,200 480,120 720,150 C960,180 1200,110 1440,140 L1440,220 L0,220 Z"
-		fill="var(--color-terracotta)"
-	/>
+<svg
+	class="landscape"
+	viewBox="0 0 1440 220"
+	preserveAspectRatio="none"
+	aria-hidden="true"
+	style="opacity: {1 - landscapeProgress}"
+>
+	<g class="wave-outer" style="transform: translateY({-landscapeProgress * 28}px)">
+		<g class="wave-bob wave-bob-1">
+			<path
+				d="M0,120 C240,180 480,60 720,100 C960,140 1200,40 1440,90 L1440,220 L0,220 Z"
+				fill="var(--color-brick)"
+				opacity="0.5"
+			/>
+		</g>
+	</g>
+	<g class="wave-outer" style="transform: translateY({landscapeProgress * 34}px)">
+		<g class="wave-bob wave-bob-2">
+			<path
+				d="M0,160 C240,200 480,120 720,150 C960,180 1200,110 1440,140 L1440,220 L0,220 Z"
+				fill="var(--color-terracotta)"
+			/>
+		</g>
+	</g>
 </svg>
 
 <header class="topbar" bind:this={topbarEl}>
@@ -659,6 +678,50 @@
 		height: 180px;
 		z-index: 2;
 		pointer-events: none;
+		transition: opacity 200ms linear;
+	}
+
+	.wave-outer {
+		transition: transform 200ms linear;
+	}
+
+	/* Léger mouvement de va-et-vient, jamais synchronisé entre les deux
+	   vagues (durées et déphasage différents), pour un effet organique
+	   plutôt qu'un rebond mécanique. */
+	.wave-bob-1 {
+		animation: wave-bob-1 9s ease-in-out infinite;
+	}
+
+	.wave-bob-2 {
+		animation: wave-bob-2 12s ease-in-out infinite;
+		animation-delay: -4s;
+	}
+
+	@keyframes wave-bob-1 {
+		0%,
+		100% {
+			transform: translate(0, 0);
+		}
+		50% {
+			transform: translate(10px, -5px);
+		}
+	}
+
+	@keyframes wave-bob-2 {
+		0%,
+		100% {
+			transform: translate(0, 0);
+		}
+		50% {
+			transform: translate(-8px, 4px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.wave-bob-1,
+		.wave-bob-2 {
+			animation: none;
+		}
 	}
 
 	.topbar {
