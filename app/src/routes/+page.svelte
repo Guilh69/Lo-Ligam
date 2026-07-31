@@ -1,5 +1,7 @@
 <script>
 	import { browser } from '$app/environment';
+	import { fade, fly } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 	import { scramble } from '$lib/actions/scramble';
 	import logo from '$lib/assets/logo.png';
 	import MenuIcon from '$lib/components/MenuIcon.svelte';
@@ -278,7 +280,12 @@
 	});
 </script>
 
-<svelte:window bind:scrollY />
+<svelte:window
+	bind:scrollY
+	onkeydown={(event) => {
+		if (event.key === 'Escape' && openTools) openTools = null;
+	}}
+/>
 
 <div class="bg-carousel" aria-hidden="true" style="opacity: {carouselOpacity}">
 	{#each bgRows as row, i}
@@ -406,50 +413,33 @@
 			<div class="external-links">
 				{#each externalLinks as l (l.href)}
 					{#if l.tools}
-						<div class="external-card has-tools" class:tools-open={openTools === l.href}>
+						<button
+							type="button"
+							class="external-card external-card-btn"
+							aria-haspopup="dialog"
+							aria-expanded={openTools === l.href}
+							onclick={() => (openTools = openTools === l.href ? null : l.href)}
+						>
 							<span class="shine" aria-hidden="true"></span>
-							<button
-								type="button"
-								class="external-toggle"
-								aria-expanded={openTools === l.href}
-								onclick={() => (openTools = openTools === l.href ? null : l.href)}
-							>
-								<img class="external-logo" src={favicon(l.href)} alt="" loading="lazy" />
-								<span class="external-toggle-text">
-									<span class="external-label">{l.label}</span>
-									<span use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}></span>
-								</span>
-								<span class="external-chevron" aria-hidden="true">▾</span>
-							</button>
-							<div class="tools-wrap">
-								<div class="tools-inner">
-									<ul class="tools-list">
-										{#each l.tools as tool (tool.href)}
-											<li>
-												<a href={tool.href} target="_blank" rel="noopener noreferrer">
-													<img class="tool-logo" src={favicon(tool.href)} alt="" loading="lazy" />
-													<span class="tool-text">
-														<span class="tool-name">{tool.label} ↗</span>
-														<span class="tool-desc"
-															>(<span
-																use:scramble={{ oc: tool.desc_oc, fr: tool.desc_fr, lang }}
-															></span>)</span
-														>
-													</span>
-												</a>
-											</li>
-										{/each}
-									</ul>
-								</div>
-							</div>
-						</div>
+							<img class="external-logo" src={favicon(l.href)} alt="" loading="lazy" />
+							<span class="external-toggle-text">
+								<span class="external-label">{l.label}</span>
+								<span
+									class="external-desc"
+									use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}
+								></span>
+							</span>
+						</button>
 					{:else}
 						<a class="external-card" href={l.href} target="_blank" rel="noopener noreferrer">
 							<span class="shine" aria-hidden="true"></span>
 							<img class="external-logo" src={favicon(l.href)} alt="" loading="lazy" />
 							<span class="external-toggle-text">
 								<span class="external-label">{l.label} ↗</span>
-								<span use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}></span>
+								<span
+									class="external-desc"
+									use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}
+								></span>
 							</span>
 						</a>
 					{/if}
@@ -459,6 +449,57 @@
 
 		<!-- Lien de test temporaire, à retirer avant la publication -->
 		<a class="test-link" href="/dev-test-questionnaire">Questionnari (tèst)</a>
+	</div>
+{/if}
+
+<!-- Popover des aisinas d'un actor (Lo Congrès) : rendu hors de
+     .sections-panel (qui a un backdrop-filter, donc crée son pròpri
+     bloc de positionament) per que position:fixed se centre bien per
+     rapòrt a tot l'ecran, pas sonque per rapòrt al panèl del menú. -->
+{#if openTools}
+	{@const activeLink = externalLinks.find((l) => l.href === openTools)}
+	<div
+		class="tools-backdrop"
+		role="presentation"
+		onclick={() => (openTools = null)}
+		transition:fade={{ duration: 220 }}
+	></div>
+	<div
+		class="tools-popover"
+		role="dialog"
+		aria-modal="true"
+		aria-label={activeLink.label}
+		transition:fly={{ y: 14, duration: 320, easing: quintOut, opacity: 0 }}
+	>
+		<div class="tools-popover-header">
+			<img class="external-logo" src={favicon(activeLink.href)} alt="" />
+			<span class="tools-popover-title">{activeLink.label}</span>
+			<button
+				type="button"
+				class="tools-popover-close"
+				onclick={() => (openTools = null)}
+				aria-label={lang === 'oc' ? 'Tampar' : 'Fermer'}
+			>
+				×
+			</button>
+		</div>
+		<ul class="tools-list">
+			{#each activeLink.tools as tool (tool.href)}
+				<li>
+					<a href={tool.href} target="_blank" rel="noopener noreferrer">
+						<img class="tool-logo" src={favicon(tool.href)} alt="" loading="lazy" />
+						<span class="tool-text">
+							<span class="tool-name">{tool.label} ↗</span>
+							<span class="tool-desc"
+								>(<span
+									use:scramble={{ oc: tool.desc_oc, fr: tool.desc_fr, lang }}
+								></span>)</span
+							>
+						</span>
+					</a>
+				</li>
+			{/each}
+		</ul>
 	</div>
 {/if}
 
@@ -1172,14 +1213,14 @@
 		transform: translateY(-2px);
 	}
 
-	.external-card.has-tools {
-		flex-direction: column;
-		align-items: stretch;
-		padding: 0;
-	}
-
-	.external-card.has-tools:hover {
-		transform: none;
+	/* Le bouton « Lo Congrès » (qui ouvre le popover) reprend exactement
+	   la même carte visuelle qu'un lien simple : on ne reset que les
+	   à-côtés natifs d'un <button>. */
+	.external-card-btn {
+		border: none;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
 	}
 
 	.external-logo {
@@ -1198,69 +1239,88 @@
 		min-width: 0;
 	}
 
+	/* Le nom de l'acteur doit se voir en premier (gras) ; la description
+	   reste secondaire, jamais en gras. */
 	.external-label {
-		font-weight: 600;
+		font-weight: 700;
+	}
+
+	.external-desc {
+		display: block;
+		font-weight: 400;
+		font-size: 0.78rem;
+		color: var(--color-text);
+		opacity: 0.75;
+		margin-top: 0.05rem;
 	}
 
 	.external-links a:hover {
 		transform: translateY(-2px);
 	}
 
-	.external-links a em {
-		font-weight: 400;
-		font-style: normal;
-		color: var(--color-text);
-		font-size: 0.76rem;
-		opacity: 0.8;
+	/* Rideau qui assombrit le reste de la page pendant que le popover
+	   des aisinas de Lo Congrès est ouvert — la carte-déclencheur elle
+	   -même ne bouge pas, rien autour ne se redimensionne. */
+	.tools-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 20;
+		background: rgba(43, 30, 22, 0.45);
+		backdrop-filter: blur(2px);
 	}
 
-	/* Bouton « Lo Congrès » qui déplie ses aisinas (site + apps) : reset
-	   des styles natifs de bouton pour reprendre exactement la mise en
-	   page des autres cartes-ressource. */
-	.external-toggle {
-		all: unset;
-		box-sizing: border-box;
+	.tools-popover {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 21;
+		width: min(23rem, calc(100vw - 2.5rem));
+		max-height: min(28rem, calc(100vh - 4rem));
+		overflow-y: auto;
+		background: white;
+		border-radius: 18px;
+		box-shadow: 0 24px 60px rgba(43, 30, 22, 0.35);
+		padding: 1rem 1.1rem 0.5rem;
+	}
+
+	.tools-popover-header {
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
-		width: 100%;
-		padding: 0.6rem 0.9rem;
-		cursor: pointer;
+		padding-bottom: 0.7rem;
+		margin-bottom: 0.3rem;
+		border-bottom: 1px solid rgba(58, 42, 32, 0.12);
+		position: sticky;
+		top: -1rem;
+		background: white;
+	}
+
+	.tools-popover-title {
+		flex: 1;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 1.05rem;
 		color: var(--color-brick);
-		font-weight: 600;
-		font-size: 0.88rem;
 	}
 
-	.external-toggle:hover {
-		transform: translateY(-2px);
+	.tools-popover-close {
+		all: unset;
+		cursor: pointer;
+		font-size: 1.4rem;
+		line-height: 1;
+		color: var(--color-text);
+		opacity: 0.6;
+		padding: 0.2rem 0.5rem;
+		border-radius: 8px;
+		transition:
+			opacity 150ms ease,
+			background 150ms ease;
 	}
 
-	.external-chevron {
-		flex-shrink: 0;
-		font-size: 0.75rem;
-		opacity: 0.55;
-		transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-
-	.external-card.tools-open .external-chevron {
-		transform: rotate(180deg);
-	}
-
-	/* Ouverture/fermeture du sosmenú via grid-template-rows (0fr → 1fr) :
-	   permet une animation de hauteur fluide malgré un contengut de
-	   hauteur variabla (pas possible amb una transition sus "height:auto"). */
-	.tools-wrap {
-		display: grid;
-		grid-template-rows: 0fr;
-		transition: grid-template-rows 420ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-
-	.external-card.tools-open .tools-wrap {
-		grid-template-rows: 1fr;
-	}
-
-	.tools-inner {
-		overflow: hidden;
+	.tools-popover-close:hover {
+		opacity: 1;
+		background: rgba(58, 42, 32, 0.08);
 	}
 
 	.tools-list {
@@ -1315,13 +1375,6 @@
 		font-weight: 400;
 		color: var(--color-text);
 		opacity: 0.75;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.tools-wrap,
-		.external-chevron {
-			transition: none;
-		}
 	}
 
 	.page {
