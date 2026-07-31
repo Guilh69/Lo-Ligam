@@ -2,8 +2,20 @@
 	import { onMount, onDestroy } from 'svelte';
 	import 'leaflet/dist/leaflet.css';
 
+	// Exemple de contenu pour la còla « Luòcs d'interès » — à remplacer par
+	// de vraies données (association, curation manuelle) plus tard.
+	const lieusInteres = [
+		{ oc: 'Tolosa', desc: 'La Vila Ròsa, capitala istorica de l’Occitània', lat: 43.6045, lng: 1.4442 },
+		{ oc: 'Carcassona', desc: 'La Ciutat medievala', lat: 43.213, lng: 2.3491 },
+		{ oc: 'Nimes', desc: 'Las Arenas romanas', lat: 43.8367, lng: 4.3601 },
+		{ oc: 'Avinhon', desc: 'Lo Palais dels Papas', lat: 43.9493, lng: 4.8055 }
+	];
+
+	let { visibility = {} } = $props();
+
 	let mapEl;
 	let map;
+	let lieusLayer;
 
 	onMount(async () => {
 		const L = (await import('leaflet')).default;
@@ -20,6 +32,34 @@
 			attribution:
 				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · rendu par <a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener">OpenStreetMap e occitan</a>'
 		}).addTo(map);
+
+		lieusLayer = L.layerGroup(
+			lieusInteres.map((lieu) =>
+				L.circleMarker([lieu.lat, lieu.lng], {
+					radius: 7,
+					weight: 2,
+					color: '#a5342a',
+					fillColor: '#e0a43b',
+					fillOpacity: 0.9
+				}).bindPopup(`<strong>${lieu.oc}</strong><br>${lieu.desc}`)
+			)
+		);
+
+		if (visibility.lieusInteres) lieusLayer.addTo(map);
+	});
+
+	$effect(() => {
+		// Legir la proprietat en primièr, meteis dins lo cas ont la carta es pas
+		// encara prèsta : cal que l'effièch se marque coma dependent de
+		// « visibility.lieusInteres » d'en primièr còp, o se tornarà pas jamai
+		// executar quand la visibilitat càmbia mai tard.
+		const show = visibility.lieusInteres;
+		if (!map || !lieusLayer) return;
+		if (show) {
+			lieusLayer.addTo(map);
+		} else {
+			map.removeLayer(lieusLayer);
+		}
 	});
 
 	onDestroy(() => {
