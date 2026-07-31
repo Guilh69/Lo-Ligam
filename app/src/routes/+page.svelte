@@ -222,17 +222,17 @@
 
 	const buffer = 40;
 	const halfItemHeight = 66;
-	let rowGap = $derived(
-		Math.max(
-			90,
-			Math.min(
-				260,
-				centerY - topbarBottom - buffer - halfItemHeight,
-				viewportHeight - centerY - buffer - halfItemHeight
-			)
-		)
+	// Espaçament calculat a despart per amont e per aval : abans, lo meteis
+	// escart èra impausat dels dos costats (lo mai pichon dels dos), çò
+	// que sarrava las 3 renguèras a l'entorn del logo e daissava un grand
+	// espaci inutilizat en bas de la pagina, abans la vaga.
+	let gapAbove = $derived(
+		Math.max(90, Math.min(260, centerY - topbarBottom - buffer - halfItemHeight))
 	);
-	let rowTops = $derived([centerY - rowGap, centerY, centerY + rowGap]);
+	let gapBelow = $derived(
+		Math.max(90, Math.min(260, viewportHeight - centerY - buffer - halfItemHeight))
+	);
+	let rowTops = $derived([centerY - gapAbove, centerY, centerY + gapBelow]);
 
 	function updateLens(event) {
 		const item = event.currentTarget;
