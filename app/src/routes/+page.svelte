@@ -180,6 +180,13 @@
 		waveMouseY = 0;
 	}
 
+	// brandCardEl es lo repère (boita extèrna, JAMAI transformada) que
+	// dòna la posicion naturala del logo dins lo flux normal. Lo contengut
+	// vertadièrament afichat (brand-card-inner) es decalat en seguida per
+	// que son centre tòque exactament lo centre de la renguèra 2 — mesurar
+	// aquesta boita extèrna pas transformada evita tota bogla (mesurar un
+	// element que se decala tot solet fariá derivar lo calcul a cada
+	// mesura successiva).
 	let brandCardEl = $state();
 	let topbarEl = $state();
 	let centerY = $state(300);
@@ -188,11 +195,11 @@
 	function measureLayout() {
 		if (brandCardEl) {
 			const rect = brandCardEl.getBoundingClientRect();
-			// brandCardEl es un element normal dins lo flux : sa
-			// getBoundingClientRect() depend de l'endrech ont la pagina es
-			// scrollada al moment de la mesura. Se tòrna totjorn a la
-			// posicion "coma se scrollY=0" per èsser fisable quina que siá
-			// la scroll al moment del montatge (navigation history…).
+			// Element normal dins lo flux : sa getBoundingClientRect() depend
+			// de l'endrech ont la pagina es scrollada al moment de la
+			// mesura. Se tòrna totjorn a la posicion "coma se scrollY=0" per
+			// èsser fisable quina que siá la scroll al moment del montatge
+			// (navigation history de SvelteKit…).
 			centerY = rect.top + window.scrollY + rect.height / 2;
 		}
 		if (topbarEl) {
@@ -221,17 +228,26 @@
 	const buffer = 40;
 	const rowItemHeight = 132;
 	const halfItemHeight = rowItemHeight / 2;
-	// 160px = nautor maximala de .landscape (vaga) + un pichon marge, per
+	// 190px = nautor maximala de .landscape (vaga) + un pichon marge, per
 	// que la renguèra 3 tòque pas jamai la vaga.
 	const waveClearance = 190;
-	// La renguèra del mitan passa totjorn pel centre del logo (demanda
-	// explicita) ; las renguèras 1 e 3 utilizan cadascuna tot l'espaci
-	// que li demòra, en naut e en bas, per evitar lo tassament d'abans.
-	let rowTops = $derived([
-		topbarBottom + buffer,
-		centerY - halfItemHeight,
-		viewportHeight - waveClearance - rowItemHeight
-	]);
+	// Tres renguèras espaciadas regularament sus tot l'espaci utilizable
+	// (barra amont -> vaga), independentament de la posicion del logo :
+	// escart identic amont/aval, garentit quina que siá la nautor de
+	// l'ecran.
+	let rowTops = $derived.by(() => {
+		const top = topbarBottom + buffer;
+		const bottom = Math.max(top, viewportHeight - waveClearance - rowItemHeight);
+		const step = (bottom - top) / 2;
+		return [top, top + step, top + step * 2];
+	});
+
+	// Lo logo es decalat (visualament sonque : brand-card-inner, pas
+	// brand-card) per que son centre tòque exactament lo centre de la
+	// renguèra 2, quina que siá la posicion naturala qu'auriá agut sens
+	// aquò (demanda explicita : "la linha del mitan deu passar pel mitan
+	// del logo").
+	let logoOffset = $derived(rowTops[1] + halfItemHeight - centerY);
 
 	function updateLens(event) {
 		const item = event.currentTarget;
@@ -513,7 +529,9 @@
 <main class="page">
 	<section class="hero">
 		<div class="brand-card" bind:this={brandCardEl}>
-			<img src={logo} alt="Lo Ligam" />
+			<div class="brand-card-inner" style="transform: translateY({logoOffset}px)">
+				<img src={logo} alt="Lo Ligam" />
+			</div>
 		</div>
 
 		<div class="welcome">
@@ -1422,15 +1440,26 @@
 		animation: fade-in 600ms ease-out;
 	}
 
+	/* brand-card (extèrna) : nòta la posicion naturala/mesurada, jamai
+	   transformada — pas d'overflow:hidden aicí per pas retalhar
+	   brand-card-inner quand se decala. brand-card-inner : rebomb visual
+	   sonque (arredondiment + imatge), decalat via transform per tòcar lo
+	   centre de la renguèra 2. */
 	.brand-card {
 		width: 220px;
 		height: 220px;
+	}
+
+	.brand-card-inner {
+		width: 100%;
+		height: 100%;
 		border-radius: 30px;
 		overflow: hidden;
 		box-shadow: 0 16px 36px rgba(165, 52, 42, 0.3);
+		transition: transform 200ms linear;
 	}
 
-	.brand-card img {
+	.brand-card-inner img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -1452,7 +1481,7 @@
 	   remarque autant que ce qu'il annonce. */
 	.tagline-kicker {
 		display: inline-flex;
-		align-self: flex-start;
+		align-self: center;
 		margin: 0 0 0.1rem;
 		padding: 0.35rem 0.9rem;
 		border-radius: 999px;
