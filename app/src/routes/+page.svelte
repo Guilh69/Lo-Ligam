@@ -1442,7 +1442,6 @@
 		gap: 1.5rem;
 		padding: 2rem 1.5rem 2.5rem;
 		text-align: center;
-		animation: fade-in 600ms ease-out;
 	}
 
 	/* brand-card (extèrna) : nòta la posicion naturala/mesurada, jamai
@@ -1455,13 +1454,17 @@
 		height: 220px;
 	}
 
+	/* Logo statique : pas de transition sur le transform, qui ne sert
+	   qu'à caler le logo sur la ligne 2 du fond (voir logoOffset) — un
+	   changement de valeur (chargement, redimensionnement) ne doit jamais
+	   se voir comme une animation du logo. Seul « Benvenguda » doit
+	   apparaître visiblement. */
 	.brand-card-inner {
 		width: 100%;
 		height: 100%;
 		border-radius: 30px;
 		overflow: hidden;
 		box-shadow: 0 16px 36px rgba(165, 52, 42, 0.3);
-		transition: transform 200ms linear;
 	}
 
 	.brand-card-inner img {
@@ -1493,7 +1496,7 @@
 	   badge à cette taille — un aplomb de gras + couleur suffit, plus
 	   lisible qu'une pastille surdimensionnée. */
 	.tagline-kicker {
-		margin: 0;
+		margin: 0 0 1.25rem;
 		font-family: var(--font-heading);
 		font-size: clamp(2rem, 5vw, 2.9rem);
 		font-weight: 700;
@@ -1930,14 +1933,4 @@
 		}
 	}
 
-	@keyframes fade-in {
-		from {
-			opacity: 0;
-			transform: translateY(8px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
 </style>
