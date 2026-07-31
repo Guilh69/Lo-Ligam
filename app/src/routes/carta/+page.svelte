@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-	<title>Lo Mond — Lo Ligam</title>
+	<title>Lo Mond en occitan — Lo Ligam</title>
 </svelte:head>
 
 <div class="screen">
@@ -38,7 +38,7 @@
 					onclick={() => (showInfo = false)}
 					aria-label="Tampar">×</button
 				>
-				<h1>Lo Mond</h1>
+				<h1>Lo Mond en occitan</h1>
 				<p>
 					Fons de carta en occitan, realizat per <a
 						href="https://www.openstreetmap.bzh/"
@@ -52,7 +52,7 @@
 				type="button"
 				class="info-trigger"
 				onclick={() => (showInfo = true)}
-				aria-label="Saber mai sus lo Mond"
+				aria-label="Saber mai sus lo Mond en occitan"
 				transition:fly={{ y: -12, duration: 220, easing: quintOut }}
 			>
 				<InfoIcon size={22} />

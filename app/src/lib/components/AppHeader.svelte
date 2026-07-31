@@ -10,7 +10,7 @@
 		<HomeIcon size={22} />
 	</a>
 	<span class="brand-name">Lo Ligam</span>
-	<a class="carta-link" href="/carta" aria-label="Veire lo Mond">
+	<a class="carta-link" href="/carta" aria-label="Veire lo Mond en occitan">
 		<OccitaniaIcon size={20} />
 	</a>
 	{#if children}
