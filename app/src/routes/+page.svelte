@@ -270,7 +270,7 @@
 	<div class="topbar-actions" class:menu-open={menuOpen}>
 		<!-- Lien de test temporaire, à retirer avant la publication -->
 		<a class="test-link" href="/dev-test-questionnaire">Questionnari (tèst)</a>
-		<a class="carta-link" href="/carta" aria-label="Veire la carta d'Occitània">
+		<a class="carta-link" href="/carta" aria-label="Veire lo Mond">
 			<OccitaniaIcon size={20} />
 		</a>
 		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">

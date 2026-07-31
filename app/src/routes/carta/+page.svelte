@@ -1,6 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { fly } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
@@ -19,7 +21,7 @@
 </script>
 
 <svelte:head>
-	<title>Carta — Lo Ligam</title>
+	<title>Lo Mond — Lo Ligam</title>
 </svelte:head>
 
 <div class="screen">
@@ -29,14 +31,14 @@
 		<CartaOccitania />
 
 		{#if showInfo}
-			<div class="info-card">
+			<div class="info-card" transition:fly={{ y: -12, duration: 260, easing: quintOut }}>
 				<button
 					type="button"
 					class="info-close"
 					onclick={() => (showInfo = false)}
 					aria-label="Tampar">×</button
 				>
-				<h1>La carta d'Occitània</h1>
+				<h1>Lo Mond</h1>
 				<p>
 					Fons de carta en occitan, realizat per <a
 						href="https://www.openstreetmap.bzh/"
@@ -50,7 +52,8 @@
 				type="button"
 				class="info-trigger"
 				onclick={() => (showInfo = true)}
-				aria-label="Saber mai sus la carta"
+				aria-label="Saber mai sus lo Mond"
+				transition:fly={{ y: -12, duration: 220, easing: quintOut }}
 			>
 				<InfoIcon size={22} />
 			</button>
@@ -85,7 +88,7 @@
 	.info-card {
 		position: absolute;
 		top: 1rem;
-		left: 1rem;
+		right: 1rem;
 		z-index: 1000;
 		max-width: min(22rem, calc(100% - 2rem));
 		background: rgba(245, 234, 216, 0.92);
@@ -93,6 +96,7 @@
 		border-radius: 16px;
 		padding: 1rem 1.25rem;
 		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.18);
+		transform-origin: top right;
 	}
 
 	.info-card h1 {
@@ -160,20 +164,5 @@
 	.info-trigger:hover {
 		background: rgba(245, 234, 216, 1);
 		transform: scale(1.06);
-	}
-
-	@media (max-width: 30rem) {
-		.info-card {
-			top: auto;
-			bottom: 1rem;
-			left: 1rem;
-			right: 1rem;
-			max-width: none;
-		}
-
-		.info-trigger {
-			top: auto;
-			bottom: 1rem;
-		}
 	}
 </style>
