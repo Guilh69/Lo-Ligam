@@ -2,7 +2,7 @@
 ### Application d'apprentissage de l'occitan et communauté occitane en ligne
 
 > **Document vivant.** C'est notre source de vérité. On le met à jour à chaque décision tranchée.
-> Version : 0.4 · Dernière mise à jour : 28 juillet 2026
+> Version : 0.5 · Dernière mise à jour : 31 juillet 2026
 
 ---
 
@@ -57,6 +57,8 @@ Trois valeurs non négociables, inscrites dès la conception (pas ajoutées apr�
 
 *(L'ordre des phases 2 à 4 est ajustable selon ton énergie et les opportunités — la Phase 1 est le prérequis de tout.)*
 
+> ⚠️ **Réflexion en cours (2026-07-31, pas encore tranchée)** : la cartographie (Phase 3) pourrait devenir la toute première fonctionnalité sortie, plutôt que de suivre l'apprentissage. Si ça se confirme, ça remet en question le principe ci-dessus (« Phase 1 = prérequis de tout ») — à trancher explicitement avant de réorganiser les phases, notamment parce que la Phase 3 dépend encore d'un point juridique non résolu (licence de l'atlas, voir §8).
+
 ---
 
 ## 4. Volet linguistique (Phase 1)
@@ -99,9 +101,11 @@ Lo Congrès (organisme de régulation de la langue) met à disposition des API d
 
 | Volet | Modèle |
 |---|---|
-| Apprentissage autonome | Gratuit + dons libres pour te soutenir |
+| Apprentissage autonome | Une bonne partie du parcours gratuite (avec dons libres possibles) ; accès complet via un paiement **solidaire / classique / engagé** |
 | Cours en visio avec toi | 1er cours gratuit, puis tarif **solidaire / classique / engagé** |
 | Volet communautaire / carte / wiki | Gratuit |
+
+> ⚠️ **Mise à jour 2026-07-31** : le parcours autonome n'est plus pensé comme entièrement gratuit + dons. Nouveau modèle envisagé : une partie du parcours reste gratuite (avec dons libres), et l'accès à la **totalité** du parcours passe par un paiement solidaire (même principe classique/engagé que les cours en visio). Reste à définir : où placer la limite gratuit/payant (combien d'unités, quels critères), et si la logique solidaire est identique ou distincte de celle des cours en visio.
 
 - Dons : envisager **HelloAsso** (adapté aux structures d'intérêt général, sans commission pour l'association) ou Stripe.
 - Cours payants : nécessitent un **statut** (micro-entreprise probable au démarrage) et un prestataire de paiement. À cadrer en Phase 2.
@@ -181,6 +185,9 @@ Signer les accords, créer les comptes, héberger, gérer l'argent et les décla
 | 2026-07-28 | Cibles : application mobile **ET** web, une seule base de code ; commencer par le plus simple | Éviter de construire 2-3 fois ; cf. étape « choix techniques » |
 | 2026-07-28 | **Identité visuelle = celle de l'Instagram Lo Ligam existant** (palette chaude terracotta/or/crème, illustrations troubadour, croix occitana, convention bilingue), adaptée aux règles d'interface | Marque déjà cohérente et reconnue ; l'app la prolonge → charte-graphique.md |
 | 2026-07-28 | **Piliers UX** : animations soignées à chaque interaction (survol, clic, réussite) ; sons associés (désactivables, légers) ; humour fin par touches | Expérience captivante et chaleureuse, fidèle à la marque ; sobriété et accessibilité préservées |
+| 2026-07-31 | Ouvre le site (accueil, carte des modules, essai libre, compte Supabase avec questionnaire) et le déploie en ligne (Vercel, lien privé de test) | Premier aller-retour concret pour tester sur téléphone |
+| 2026-07-31 | *Réflexion ouverte, pas tranchée* : la cartographie (Phase 3) pourrait passer en premier plutôt qu'après l'apprentissage | Voir note au §3 — dépend notamment de la question juridique de la licence de l'atlas (§8), non résolue |
+| 2026-07-31 | *Réflexion ouverte, pas tranchée* : le parcours autonome ne serait plus 100% gratuit — une partie resterait gratuite, l'accès complet passerait par un paiement solidaire/classique/engagé (voir §6) | Modèle économique plus soutenable que « tout gratuit + dons » seul ; reste à définir la limite gratuit/payant |
 | — | *(à compléter)* | |
 
 ---
