@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { scramble } from '$lib/actions/scramble';
 	import logo from '$lib/assets/logo.png';
+	import OccitaniaIcon from '$lib/components/OccitaniaIcon.svelte';
 
 	let lang = $state('oc');
 
@@ -267,6 +268,9 @@
 	<div class="topbar-actions">
 		<!-- Lien de test temporaire, à retirer avant la publication -->
 		<a class="test-link" href="/dev-test-questionnaire">Questionnari (tèst)</a>
+		<a class="carta-link" href="/carta" aria-label="Veire la carta d'Occitània">
+			<OccitaniaIcon size={20} />
+		</a>
 		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
 			<button type="button" class:active={lang === 'oc'} onclick={() => (lang = 'oc')}>Òc</button>
 			<button type="button" class="fr" class:active={lang === 'fr'} onclick={() => (lang = 'fr')}
@@ -547,6 +551,20 @@
 		gap: 0.75rem;
 	}
 
+	@media (max-width: 30rem) {
+		.topbar {
+			flex-wrap: wrap;
+			row-gap: 0.6rem;
+		}
+
+		.topbar-actions {
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			width: 100%;
+			row-gap: 0.5rem;
+		}
+	}
+
 	.test-link {
 		font-size: 0.78rem;
 		font-weight: 600;
@@ -560,6 +578,27 @@
 
 	.test-link:hover {
 		background: rgba(165, 52, 42, 0.08);
+	}
+
+	.carta-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.2rem;
+		height: 2.2rem;
+		border-radius: 999px;
+		color: var(--color-teal);
+		background: rgba(31, 95, 99, 0.1);
+		text-decoration: none;
+		flex-shrink: 0;
+		transition:
+			background-color 150ms ease,
+			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.carta-link:hover {
+		background: rgba(31, 95, 99, 0.18);
+		transform: scale(1.06);
 	}
 
 	.lang-toggle {
