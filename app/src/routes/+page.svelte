@@ -528,17 +528,22 @@
 
 <main class="page">
 	<section class="hero">
-		<div class="brand-card" bind:this={brandCardEl}>
+		<p
+			class="tagline-kicker"
+			use:scramble={{ oc: t.heroKicker.oc, fr: t.heroKicker.fr, lang }}
+		></p>
+
+		<div
+			class="brand-card"
+			bind:this={brandCardEl}
+			style="margin-bottom: {Math.max(0, logoOffset)}px"
+		>
 			<div class="brand-card-inner" style="transform: translateY({logoOffset}px)">
 				<img src={logo} alt="Lo Ligam" />
 			</div>
 		</div>
 
 		<div class="welcome">
-			<p
-				class="tagline-kicker"
-				use:scramble={{ oc: t.heroKicker.oc, fr: t.heroKicker.fr, lang }}
-			></p>
 			<h1 class="tagline-primary" use:scramble={{ oc: t.heroTitle.oc, fr: t.heroTitle.fr, lang }}
 			></h1>
 			<p class="tagline-secondary">
@@ -1479,32 +1484,55 @@
 	/* Badge bien visible plutôt qu'une petite ligne discrète : fond
 	   teinté, taille et graisse marquées, pour que « Benvenguda » se
 	   remarque autant que ce qu'il annonce. */
+	/* Au-dessus du logo (pas dessous : évite qu'il soit couvert par le
+	   logo décalé). Capitales + Fredoka (déjà chargée pour les titres) :
+	   chaleureux et moderne sans ajouter de police. Apparition fluide du
+	   bas vers le haut au chargement. */
+	/* Plan gras : « Benvenguda » domine visuellement (comme un vrai mot
+	   d'accueil), le titre en dessous devient secondaire. Pas de fond de
+	   badge à cette taille — un aplomb de gras + couleur suffit, plus
+	   lisible qu'une pastille surdimensionnée. */
 	.tagline-kicker {
-		display: inline-flex;
-		align-self: center;
-		margin: 0 0 0.1rem;
-		padding: 0.35rem 0.9rem;
-		border-radius: 999px;
-		background: color-mix(in srgb, var(--color-brick) 14%, transparent);
-		font-size: 1.15rem;
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: clamp(2rem, 5vw, 2.9rem);
 		font-weight: 700;
-		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 		color: var(--color-brick);
+		animation: kicker-reveal 750ms 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
+	}
+
+	@keyframes kicker-reveal {
+		from {
+			opacity: 0;
+			transform: translateY(16px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tagline-kicker {
+			animation: none;
+		}
 	}
 
 	.tagline-primary {
 		font-family: var(--font-heading);
-		font-size: clamp(2.1rem, 4.5vw, 2.6rem);
+		font-size: clamp(1.3rem, 2.4vw, 1.6rem);
 		font-weight: 600;
 		margin: 0;
 		color: var(--color-text);
-		line-height: 1.2;
+		line-height: 1.35;
 		text-wrap: balance;
 	}
 
 	.tagline-secondary {
 		margin: 0.15rem 0 0;
-		font-size: 1.05rem;
+		font-size: 0.92rem;
 		color: var(--color-teal);
 		text-wrap: pretty;
 	}
