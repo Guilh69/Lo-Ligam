@@ -492,7 +492,7 @@
 							<span class="tool-name">{tool.label} ↗</span>
 							<span class="tool-desc"
 								>(<span
-									use:scramble={{ oc: tool.desc_oc, fr: tool.desc_fr, lang }}
+									use:scramble={{ oc: tool.desc_oc, fr: tool.desc_fr, lang, inline: true }}
 								></span>)</span
 							>
 						</span>
@@ -1285,15 +1285,26 @@
 	}
 
 	.tools-popover-header {
+		position: sticky;
+		top: -1rem;
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
-		padding-bottom: 0.7rem;
-		margin-bottom: 0.3rem;
-		border-bottom: 1px solid rgba(58, 42, 32, 0.12);
-		position: sticky;
-		top: -1rem;
+		padding-bottom: 0.65rem;
 		background: white;
+	}
+
+	/* Barra elegante color Lo Ligam per separar lo títol de la lista,
+	   plan mai fina qu'un traç gris ordinari. */
+	.tools-popover-header::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 3px;
+		border-radius: 999px;
+		background: linear-gradient(90deg, var(--color-brick), var(--color-terracotta) 55%, transparent);
 	}
 
 	.tools-popover-title {
@@ -1326,11 +1337,10 @@
 	.tools-list {
 		list-style: none;
 		margin: 0;
-		padding: 0.3rem 0.6rem 0.7rem;
+		padding: 0.55rem 0.6rem 0.7rem;
 		display: flex;
 		flex-direction: column;
 		gap: 0.2rem;
-		border-top: 1px solid rgba(58, 42, 32, 0.1);
 	}
 
 	.tools-list a {

@@ -32,8 +32,8 @@ function setVisible(layer, visible) {
 }
 
 export function scramble(node, params) {
-	const { oc, fr } = params;
-	node.style.display = 'grid';
+	const { oc, fr, inline } = params;
+	node.style.display = inline ? 'inline-grid' : 'grid';
 	node.textContent = '';
 
 	const stagger = 6;
