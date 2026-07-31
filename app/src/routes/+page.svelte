@@ -189,8 +189,10 @@
 	// mesura successiva).
 	let brandCardEl = $state();
 	let topbarEl = $state();
+	let ctaEl = $state();
 	let centerY = $state(300);
 	let topbarBottom = $state(64);
+	let ctaNaturalBottom = $state(0);
 	// Restat invisible tant que la premièra mesura fisabla (aprèp
 	// cargament complet de las poliças) es pas facha : la poliça Fredoka
 	// carga en async (font-display swap), e càmbia leugièrament la
@@ -212,6 +214,13 @@
 		if (topbarEl) {
 			topbarBottom = topbarEl.getBoundingClientRect().bottom;
 		}
+		if (ctaEl) {
+			// margin-top (+ctaOffset) e transform (-ctaOffset) s'anullan
+			// exactament : la posicion mesurada aicí es totjorn la posicion
+			// naturala, quina que siá la valor de ctaOffset — pas cap
+			// d'auto-referéncia de besonh.
+			ctaNaturalBottom = ctaEl.getBoundingClientRect().bottom + window.scrollY;
+		}
 	}
 
 	$effect(() => {
@@ -230,10 +239,14 @@
 	});
 
 	let viewportHeight = $state(800);
+	let viewportWidth = $state(1280);
 
 	$effect(() => {
 		if (!browser) return;
-		const onResize = () => (viewportHeight = window.innerHeight);
+		const onResize = () => {
+			viewportHeight = window.innerHeight;
+			viewportWidth = window.innerWidth;
+		};
 		onResize();
 		window.addEventListener('resize', onResize);
 		return () => window.removeEventListener('resize', onResize);
@@ -262,6 +275,14 @@
 	// aquò (demanda explicita : "la linha del mitan deu passar pel mitan
 	// del logo").
 	let logoOffset = $derived(rowTops[1] + halfItemHeight - centerY);
+
+	// Remonta lo bòton « Aprèni l'occitan ! » se sa posicion naturala lo
+	// menariá a tocar la vaga — un decalatge visual (transform) compensat
+	// per una marge-naut egala (garda l'espaçament egal amb los autres
+	// blòcs, tòca pas al rèsta). Nautor de .landscape : 128px en dejós de
+	// 40rem (640px), 160px en dessús — meteis breakpoint que lo CSS.
+	let ctaWaveClearance = $derived((viewportWidth >= 640 ? 160 : 128) + 30);
+	let ctaOffset = $derived(Math.max(0, ctaNaturalBottom - (viewportHeight - ctaWaveClearance)));
 
 	function updateLens(event) {
 		const item = event.currentTarget;
@@ -568,7 +589,14 @@
 			</p>
 		</div>
 
-		<a class="btn-primary" href="/aprene">Aprèni l'occitan !</a>
+		<a
+			class="btn-primary"
+			href="/aprene"
+			bind:this={ctaEl}
+			style="transform: translateY(-{ctaOffset}px); margin-top: {ctaOffset}px"
+		>
+			Aprèni l'occitan !
+		</a>
 	</section>
 
 	<section class="feature">
