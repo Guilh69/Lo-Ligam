@@ -3,7 +3,22 @@
 	import { scramble } from '$lib/actions/scramble';
 	import logo from '$lib/assets/logo.png';
 	import MenuIcon from '$lib/components/MenuIcon.svelte';
+	import BookIcon from '$lib/components/BookIcon.svelte';
+	import OccitaniaIcon from '$lib/components/OccitaniaIcon.svelte';
+	import CommunityIcon from '$lib/components/CommunityIcon.svelte';
+	import QuillIcon from '$lib/components/QuillIcon.svelte';
+	import CrossIcon from '$lib/components/CrossIcon.svelte';
+	import EnvelopeIcon from '$lib/components/EnvelopeIcon.svelte';
 	import { siteSections, externalLinks } from '$lib/data/siteSections';
+
+	const sectionIcons = {
+		book: BookIcon,
+		occitania: OccitaniaIcon,
+		community: CommunityIcon,
+		quill: QuillIcon,
+		cross: CrossIcon,
+		envelope: EnvelopeIcon
+	};
 
 	let lang = $state('oc');
 	let sectionsOpen = $state(false);
@@ -296,30 +311,50 @@
 	<div class="sections-panel" role="dialog" aria-modal="true" aria-label="Menú del site">
 		<div class="sections-grid">
 			{#each siteSections as s (s.id)}
+				{@const Icon = sectionIcons[s.icon]}
 				{#if s.status === 'live'}
-					<a class="section-card" href={s.href} onclick={() => (sectionsOpen = false)}>
-						<span class="section-oc">{s.oc}</span>
-						<span class="section-fr">{s.fr}</span>
-						<span class="section-desc">{s.desc_oc}</span>
+					<a
+						class="section-card"
+						href={s.href}
+						style="--section-color: {s.color}"
+						onclick={() => (sectionsOpen = false)}
+					>
+						<span class="shine" aria-hidden="true"></span>
+						<span class="section-icon"><Icon size={22} /></span>
+						<span class="section-primary" use:scramble={{ oc: s.oc, fr: s.fr, lang }}></span>
+						<span class="section-secondary" use:scramble={{ oc: s.fr, fr: s.oc, lang }}></span>
+						<span
+							class="section-desc"
+							use:scramble={{ oc: s.desc_oc, fr: s.desc_fr, lang }}
+						></span>
 					</a>
 				{:else}
-					<div class="section-card soon" aria-disabled="true">
-						<span class="section-oc">{s.oc}</span>
-						<span class="section-fr">{s.fr}</span>
-						<span class="section-desc">{s.desc_oc}</span>
-						<span class="soon-tag">Lèu <em>· bientôt</em></span>
+					<div class="section-card soon" style="--section-color: {s.color}" aria-disabled="true">
+						<span class="section-icon"><Icon size={22} /></span>
+						<span class="section-primary" use:scramble={{ oc: s.oc, fr: s.fr, lang }}></span>
+						<span class="section-secondary" use:scramble={{ oc: s.fr, fr: s.oc, lang }}></span>
+						<span
+							class="section-desc"
+							use:scramble={{ oc: s.desc_oc, fr: s.desc_fr, lang }}
+						></span>
+						<span class="soon-tag" use:scramble={{ oc: 'Lèu', fr: 'Bientôt', lang }}></span>
 					</div>
 				{/if}
 			{/each}
 		</div>
 
 		<div class="sections-external">
-			<p class="external-title">Ressorsas occitanas <em>(ressources occitanes)</em></p>
+			<p class="external-title" use:scramble={{
+					oc: 'Ressorsas occitanas',
+					fr: 'Ressources occitanes',
+					lang
+				}}></p>
 			<div class="external-links">
 				{#each externalLinks as l (l.href)}
-					<a href={l.href} target="_blank" rel="noopener noreferrer">
-						<span>{l.label} ↗</span>
-						<em>{l.desc}</em>
+					<a class="external-card" href={l.href} target="_blank" rel="noopener noreferrer">
+						<span class="shine" aria-hidden="true"></span>
+						<span class="external-label">{l.label} ↗</span>
+						<span use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}></span>
 					</a>
 				{/each}
 			</div>
@@ -450,14 +485,25 @@
 			</div>
 
 			<div class="footer-col">
-				<p class="footer-col-title">Explorar <em>(explorer)</em></p>
+				<p class="footer-col-title" use:scramble={{ oc: 'Explorar', fr: 'Explorer', lang }}></p>
 				<ul>
 					{#each siteSections as s (s.id)}
+						{@const Icon = sectionIcons[s.icon]}
 						<li>
 							{#if s.status === 'live'}
-								<a href={s.href}>{s.oc} <em>({s.fr})</em></a>
+								<a class="footer-link" href={s.href} style="--section-color: {s.color}">
+									<span class="footer-icon"><Icon size={15} /></span>
+									<span use:scramble={{ oc: s.oc, fr: s.fr, lang }}></span>
+								</a>
 							{:else}
-								<span class="soon-inline">{s.oc} <em>({s.fr}) · Lèu</em></span>
+								<span
+									class="footer-link soon-inline"
+									style="--section-color: {s.color}"
+								>
+									<span class="footer-icon"><Icon size={15} /></span>
+									<span use:scramble={{ oc: s.oc, fr: s.fr, lang }}></span>
+									<em use:scramble={{ oc: '· Lèu', fr: '· Bientôt', lang }}></em>
+								</span>
 							{/if}
 						</li>
 					{/each}
@@ -465,10 +511,15 @@
 			</div>
 
 			<div class="footer-col">
-				<p class="footer-col-title">Ressorsas <em>(ressources)</em></p>
+				<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', lang }}
+				></p>
 				<ul>
 					{#each externalLinks as l (l.href)}
-						<li><a href={l.href} target="_blank" rel="noopener noreferrer">{l.label} ↗</a></li>
+						<li>
+							<a class="footer-link" href={l.href} target="_blank" rel="noopener noreferrer"
+								>{l.label} ↗</a
+							>
+						</li>
 					{/each}
 				</ul>
 			</div>
@@ -477,9 +528,18 @@
 		<div class="footer-legal">
 			<p>© 2026 Lo Ligam</p>
 			<div class="footer-legal-links">
-				<span class="soon-inline">Mentions legalas <em>· Lèu</em></span>
-				<span class="soon-inline">Confidencialitat <em>· Lèu</em></span>
-				<span class="soon-inline">Accessibilitat <em>· Lèu</em></span>
+				<span class="soon-inline"
+					><span use:scramble={{ oc: 'Mentions legalas', fr: 'Mentions légales', lang }}
+					></span><em use:scramble={{ oc: '· Lèu', fr: '· Bientôt', lang }}></em></span
+				>
+				<span class="soon-inline"
+					><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', lang }}
+					></span><em use:scramble={{ oc: '· Lèu', fr: '· Bientôt', lang }}></em></span
+				>
+				<span class="soon-inline"
+					><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', lang }}
+					></span><em use:scramble={{ oc: '· Lèu', fr: '· Bientôt', lang }}></em></span
+				>
 			</div>
 		</div>
 	</footer>
@@ -783,6 +843,8 @@
 	}
 
 	.section-card {
+		position: relative;
+		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 		gap: 0.15rem;
@@ -791,6 +853,7 @@
 		padding: 0.9rem 1.1rem;
 		text-decoration: none;
 		color: inherit;
+		border-left: 4px solid var(--section-color, var(--color-terracotta));
 		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.08);
 		transition:
 			transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -806,18 +869,54 @@
 		background: rgba(255, 255, 255, 0.5);
 		box-shadow: none;
 		border: 1px dashed rgba(58, 42, 32, 0.18);
+		border-left-width: 4px;
 		opacity: 0.75;
 		cursor: not-allowed;
 	}
 
-	.section-oc {
+	/* Reflet qui balaie la carte au survol : un dégradé diagonal, caché
+	   hors du cadre (overflow:hidden sur .section-card), qui traverse de
+	   gauche à droite quand on passe la souris. */
+	.shine {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: linear-gradient(
+			115deg,
+			transparent 30%,
+			rgba(255, 255, 255, 0.55) 47%,
+			rgba(255, 255, 255, 0.55) 53%,
+			transparent 70%
+		);
+		transform: translateX(-120%);
+	}
+
+	.section-card:hover .shine,
+	.external-card:hover .shine {
+		transform: translateX(120%);
+		transition: transform 750ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.section-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.2rem;
+		height: 2.2rem;
+		margin-bottom: 0.3rem;
+		border-radius: 10px;
+		color: var(--section-color, var(--color-terracotta));
+		background: color-mix(in srgb, var(--section-color, var(--color-terracotta)) 14%, transparent);
+	}
+
+	.section-primary {
 		font-family: var(--font-heading);
 		font-weight: 600;
 		font-size: 1.05rem;
-		color: var(--color-brick);
+		color: var(--section-color, var(--color-brick));
 	}
 
-	.section-fr {
+	.section-secondary {
 		font-size: 0.78rem;
 		color: var(--color-teal);
 	}
@@ -843,12 +942,6 @@
 		border-radius: 999px;
 	}
 
-	.soon-tag em {
-		font-weight: 400;
-		text-transform: none;
-		letter-spacing: normal;
-	}
-
 	.sections-external {
 		max-width: 60rem;
 		margin: 1.25rem auto 0;
@@ -865,19 +958,15 @@
 		color: var(--color-teal);
 	}
 
-	.external-title em {
-		font-weight: 400;
-		text-transform: none;
-		letter-spacing: normal;
-	}
-
 	.external-links {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.6rem;
 	}
 
-	.external-links a {
+	.external-card {
+		position: relative;
+		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 		gap: 0.1rem;
@@ -890,6 +979,14 @@
 		font-size: 0.88rem;
 		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.08);
 		transition: transform 150ms ease;
+	}
+
+	.external-card:hover {
+		transform: translateY(-2px);
+	}
+
+	.external-label {
+		font-weight: 600;
 	}
 
 	.external-links a:hover {
@@ -1276,25 +1373,37 @@
 		gap: 0.55rem;
 	}
 
-	.footer-col a {
+	.footer-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
 		color: rgba(245, 234, 216, 0.9);
 		text-decoration: none;
 		font-size: 0.9rem;
 	}
 
-	.footer-col a:hover {
+	.footer-link:hover {
 		color: var(--color-gold);
 	}
 
-	.footer-col a em,
+	.footer-icon {
+		display: inline-flex;
+		color: var(--section-color, var(--color-gold));
+		flex-shrink: 0;
+	}
+
 	.soon-inline em {
 		font-weight: 400;
 		font-style: normal;
 		opacity: 0.65;
 		font-size: 0.82em;
+		margin-left: 0.3em;
 	}
 
 	.soon-inline {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
 		font-size: 0.9rem;
 		color: rgba(245, 234, 216, 0.55);
 	}
