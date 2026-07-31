@@ -698,9 +698,17 @@
 		bottom: 0;
 		left: 0;
 		width: 100%;
-		height: 180px;
+		height: 128px;
 		z-index: 2;
-		transition: opacity 200ms linear;
+		transition:
+			opacity 200ms linear,
+			height 200ms linear;
+	}
+
+	@media (min-width: 40rem) {
+		.landscape {
+			height: 160px;
+		}
 	}
 
 	.wave-outer {
@@ -991,27 +999,31 @@
 		cursor: not-allowed;
 	}
 
-	/* Reflet qui balaie la carte au survol : un dégradé diagonal, caché
-	   hors du cadre (overflow:hidden sur .section-card), qui traverse de
-	   gauche à droite quand on passe la souris. */
+	/* Reflet qui balaie TOUTE la carte au survol (pas juste l'icône) :
+	   un dégradé diagonal teinté de la couleur de la section, caché hors
+	   du cadre (overflow:hidden sur .section-card), qui traverse de
+	   gauche à droite lentement quand on passe la souris. Teinté plutôt
+	   que blanc pur pour rester visible même sur le fond blanc de la
+	   carte, pas seulement là où il croise la pastille d'icône colorée. */
 	.shine {
 		position: absolute;
 		inset: 0;
 		pointer-events: none;
 		background: linear-gradient(
 			115deg,
-			transparent 30%,
-			rgba(255, 255, 255, 0.55) 47%,
-			rgba(255, 255, 255, 0.55) 53%,
-			transparent 70%
+			transparent 20%,
+			color-mix(in srgb, var(--section-color, var(--color-terracotta)) 30%, white) 45%,
+			color-mix(in srgb, var(--section-color, var(--color-terracotta)) 30%, white) 58%,
+			transparent 80%
 		);
-		transform: translateX(-120%);
+		transform: translateX(-130%);
+		transition: transform 500ms ease-in;
 	}
 
 	.section-card:hover .shine,
 	.external-card:hover .shine {
-		transform: translateX(120%);
-		transition: transform 750ms cubic-bezier(0.22, 1, 0.36, 1);
+		transform: translateX(130%);
+		transition: transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
 	.section-icon {
@@ -1137,7 +1149,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 1.5rem;
-		padding: 2rem 1.5rem calc(2rem + 100px);
+		padding: 2rem 1.5rem 2.5rem;
 		text-align: center;
 		animation: fade-in 600ms ease-out;
 	}
