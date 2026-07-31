@@ -41,9 +41,10 @@
 	// valider par Romain (locuteur natif) avant publication finale — voir
 	// mémoire de session sur la pratique de validation du contenu.
 	const t = {
-		tagline: {
-			oc: "Benvenguda ! Apren l'occitan, teis lo ligam amb sa cultura.",
-			fr: 'Bienvenue ! Apprends l’occitan, tisse le lien avec sa culture.'
+		heroKicker: { oc: 'Benvenguda', fr: 'Bienvenue' },
+		heroTitle: {
+			oc: "Apren l'occitan, teis lo ligam amb sa cultura.",
+			fr: 'Apprends l’occitan, tisse le lien avec sa culture.'
 		},
 		feature1: {
 			tag: { oc: 'Fièrs de la lenga', fr: 'Fiers de la langue' },
@@ -179,24 +180,10 @@
 		waveMouseY = 0;
 	}
 
-	let brandCardEl = $state();
 	let topbarEl = $state();
-	let centerY = $state(300);
 	let topbarBottom = $state(64);
 
 	function measureLayout() {
-		if (brandCardEl) {
-			const rect = brandCardEl.getBoundingClientRect();
-			// Les lignes du carrossèl son en position:fixed (repèra fixe per
-			// rapòrt a la fenèstra), mas brandCardEl es un element normal
-			// dins lo flux : sa getBoundingClientRect() depend de l'endrech
-			// ont la pagina es scrollada al moment de la mesura. Se lo
-			// montatge arriba pendent qu'una scroll anteriora es encara
-			// restaurada (navigation history de SvelteKit, bfcache…), la
-			// posicion mesurada seriá fausa e las lignas partiriián fòra
-			// ecran. On tòrna totjorn a la posicion "coma se scrollY=0".
-			centerY = rect.top + window.scrollY + rect.height / 2;
-		}
 		if (topbarEl) {
 			topbarBottom = topbarEl.getBoundingClientRect().bottom;
 		}
@@ -221,18 +208,21 @@
 	});
 
 	const buffer = 40;
-	const halfItemHeight = 66;
-	// Espaçament calculat a despart per amont e per aval : abans, lo meteis
-	// escart èra impausat dels dos costats (lo mai pichon dels dos), çò
-	// que sarrava las 3 renguèras a l'entorn del logo e daissava un grand
-	// espaci inutilizat en bas de la pagina, abans la vaga.
-	let gapAbove = $derived(
-		Math.max(90, Math.min(260, centerY - topbarBottom - buffer - halfItemHeight))
-	);
-	let gapBelow = $derived(
-		Math.max(90, Math.min(260, viewportHeight - centerY - buffer - halfItemHeight))
-	);
-	let rowTops = $derived([centerY - gapAbove, centerY, centerY + gapBelow]);
+	const rowItemHeight = 132;
+	// 160px = nautor maximala de .landscape (vaga) + un pichon marge, per
+	// que la renguèra 3 tòque pas jamai la vaga.
+	const waveClearance = 190;
+	// Tres renguèras espaciadas regularament sus tot l'espaci utilizable,
+	// de la barra amont fins a la vaga en bas — pas mai referidas a la
+	// posicion del logo. Aquò garantís un escart egal entre cada renguèra,
+	// quina que siá ont lo logo se tròba (abans, l'escart èra pichon en
+	// amont e grand en aval, çò que sarrava las renguèras en naut).
+	let rowTops = $derived.by(() => {
+		const top = topbarBottom + buffer;
+		const bottom = Math.max(top, viewportHeight - waveClearance - rowItemHeight);
+		const step = (bottom - top) / 2;
+		return [top, top + step, top + step * 2];
+	});
 
 	function updateLens(event) {
 		const item = event.currentTarget;
@@ -513,14 +503,19 @@
 
 <main class="page">
 	<section class="hero">
-		<div class="brand-card" bind:this={brandCardEl}>
+		<div class="brand-card">
 			<img src={logo} alt="Lo Ligam" />
 		</div>
 
 		<div class="welcome">
-			<p class="tagline-primary" use:scramble={{ oc: t.tagline.oc, fr: t.tagline.fr, lang }}></p>
+			<p
+				class="tagline-kicker"
+				use:scramble={{ oc: t.heroKicker.oc, fr: t.heroKicker.fr, lang }}
+			></p>
+			<h1 class="tagline-primary" use:scramble={{ oc: t.heroTitle.oc, fr: t.heroTitle.fr, lang }}
+			></h1>
 			<p class="tagline-secondary">
-				<em use:scramble={{ oc: `(${t.tagline.fr})`, fr: `(${t.tagline.oc})`, lang }}></em>
+				<em use:scramble={{ oc: `(${t.heroTitle.fr})`, fr: `(${t.heroTitle.oc})`, lang }}></em>
 			</p>
 		</div>
 
@@ -711,7 +706,6 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		margin-top: -66px;
 		display: flex;
 		align-items: center;
 		gap: 1.75rem;
@@ -1438,7 +1432,18 @@
 		max-width: 34rem;
 		display: flex;
 		flex-direction: column;
-		gap: 0.6rem;
+		gap: 0.35rem;
+	}
+
+	/* Petit mot d'accueil, distinct del títol : donat una entrada mai
+	   douça abans lo vertadièr títol (hierarquia mai clara qu'una sola
+	   frasa tota egala). */
+	.tagline-kicker {
+		margin: 0;
+		font-size: 0.95rem;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+		color: var(--color-brick);
 	}
 
 	.tagline-primary {
@@ -1452,7 +1457,7 @@
 	}
 
 	.tagline-secondary {
-		margin: 0;
+		margin: 0.15rem 0 0;
 		font-size: 1.05rem;
 		color: var(--color-teal);
 		text-wrap: pretty;
