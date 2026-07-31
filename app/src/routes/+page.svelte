@@ -1453,12 +1453,15 @@
 		pointer-events: auto;
 	}
 
+	/* 4 blocs (Benvenguda / logo / titre+sostítol / bòton) espaçats
+	   regularament sus tota l'nautor del hero — pas sonque centrats amb
+	   un pichon gap fixe, que sarrava tot ensemble. */
 	.hero {
 		min-height: calc(100dvh - 64px);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-evenly;
 		gap: 1.5rem;
 		padding: 2rem 1.5rem 2.5rem;
 		text-align: center;
@@ -1501,26 +1504,18 @@
 		gap: 0.35rem;
 	}
 
-	/* Petit mot d'accueil, distinct del títol : donat una entrada mai
-	   douça abans lo vertadièr títol (hierarquia mai clara qu'una sola
-	   frasa tota egala). */
-	/* Badge bien visible plutôt qu'une petite ligne discrète : fond
-	   teinté, taille et graisse marquées, pour que « Benvenguda » se
-	   remarque autant que ce qu'il annonce. */
-	/* Au-dessus du logo (pas dessous : évite qu'il soit couvert par le
-	   logo décalé). Capitales + Fredoka (déjà chargée pour les titres) :
-	   chaleureux et moderne sans ajouter de police. Apparition fluide du
-	   bas vers le haut au chargement. */
-	/* « Benvenguda » domine visuellement (comme un vrai mot d'accueil),
-	   le titre en dessous devient secondaire. Police script (Caveat, la
-	   même que « Lo ligam » dans le logo) plutôt que des capitales
-	   traçées façon startup tech — plus chaleureux, cohérent avec le
-	   logo, moins « générique ». Pas de fond de badge à cette taille. */
+	/* Mot d'accueil, au-dessus du logo (pas dessous : évite qu'il soit
+	   couvert par le logo décalé). Capitales + Fredoka, la même police
+	   que le reste du site (cohérence), sans fond de badge — le gras et
+	   la couleur suffisent à cette taille. L'espacement avec les autres
+	   blocs vient de .hero (space-evenly), pas d'une marge fixe ici. */
 	.tagline-kicker {
-		margin: 0 0 2.5rem;
-		font-family: var(--font-script);
-		font-size: clamp(2.6rem, 6.5vw, 3.6rem);
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: clamp(2rem, 5vw, 2.9rem);
 		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
 		color: var(--color-brick);
 		animation: kicker-reveal 750ms 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
 	}
