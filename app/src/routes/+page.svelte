@@ -265,6 +265,8 @@
 		<span class="brand-name">Lo Ligam</span>
 	</div>
 	<div class="topbar-actions">
+		<!-- Lien de test temporaire, à retirer avant la publication -->
+		<a class="test-link" href="/dev-test-questionnaire">Questionnari (tèst)</a>
 		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
 			<button type="button" class:active={lang === 'oc'} onclick={() => (lang = 'oc')}>Òc</button>
 			<button type="button" class="fr" class:active={lang === 'fr'} onclick={() => (lang = 'fr')}
@@ -543,6 +545,21 @@
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
+	}
+
+	.test-link {
+		font-size: 0.78rem;
+		font-weight: 600;
+		color: var(--color-brick);
+		text-decoration: none;
+		border: 1px dashed rgba(165, 52, 42, 0.4);
+		padding: 0.3rem 0.6rem;
+		border-radius: 999px;
+		white-space: nowrap;
+	}
+
+	.test-link:hover {
+		background: rgba(165, 52, 42, 0.08);
 	}
 
 	.lang-toggle {
