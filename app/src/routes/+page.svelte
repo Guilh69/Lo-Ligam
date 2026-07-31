@@ -187,7 +187,15 @@
 	function measureLayout() {
 		if (brandCardEl) {
 			const rect = brandCardEl.getBoundingClientRect();
-			centerY = rect.top + rect.height / 2;
+			// Les lignes du carrossèl son en position:fixed (repèra fixe per
+			// rapòrt a la fenèstra), mas brandCardEl es un element normal
+			// dins lo flux : sa getBoundingClientRect() depend de l'endrech
+			// ont la pagina es scrollada al moment de la mesura. Se lo
+			// montatge arriba pendent qu'una scroll anteriora es encara
+			// restaurada (navigation history de SvelteKit, bfcache…), la
+			// posicion mesurada seriá fausa e las lignas partiriián fòra
+			// ecran. On tòrna totjorn a la posicion "coma se scrollY=0".
+			centerY = rect.top + window.scrollY + rect.height / 2;
 		}
 		if (topbarEl) {
 			topbarBottom = topbarEl.getBoundingClientRect().bottom;
