@@ -68,7 +68,7 @@
 
 	<section class="card">
 		<p class="kicker">Abans de començar</p>
-		<h1 class="title">Fai coneissença</h1>
+		<h1 class="title">Fasèm coneissença</h1>
 		<p class="subtitle">
 			<em>(Quelques questions rapides — la plupart sont facultatives.)</em>
 		</p>

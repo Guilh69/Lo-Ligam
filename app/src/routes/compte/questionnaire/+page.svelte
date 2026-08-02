@@ -6,6 +6,16 @@
 	import { session, authReady } from '$lib/authStore';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import LocationAutocomplete from '$lib/components/LocationAutocomplete.svelte';
+	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+
+	let lang = $derived(langStore.current);
+
+	// Met en avant la langue choisie et relègue l'autre entre parenthèses.
+	// Avant, l'occitan était toujours devant même en français.
+	let main = $derived((oc, fr) => (lang === 'oc' ? oc : fr));
+	let alt = $derived((oc, fr) => (lang === 'oc' ? fr : oc));
+	let optional = $derived(lang === 'oc' ? 'facultatiu' : 'facultatif');
+	let required = $derived(lang === 'oc' ? 'obligatòri' : 'obligatoire');
 
 	// Groupes socioprofessionnels INSEE (PCS, niveau 1 — les 8 grandes
 	// catégories). Facultatif, "Prefèri pas dire" par défaut.
@@ -121,87 +131,110 @@
 
 	{#if !checking}
 		<section class="card">
-			<p class="kicker">Abans de començar</p>
-			<h1 class="title">Fai coneissença</h1>
+			<p class="kicker">{main('Abans de començar', 'Avant de commencer')}</p>
+			<h1 class="title">{main('Fasèm coneissença', 'Faisons connaissance')}</h1>
 			<p class="subtitle">
-				<em>(Quelques questions rapides — la plupart sont facultatives.)</em>
+				<em
+					>({main(
+						'Qualques questions rapidas — la màger part son facultativas.',
+						'Quelques questions rapides — la plupart sont facultatives.'
+					)})</em
+				>
 			</p>
 
 			<form onsubmit={(e) => (e.preventDefault(), submit())}>
 				<label>
-					Pseudonim <em>(pseudo, obligatòri)</em>
+					{main('Pseudonim', 'Pseudonyme')}
+					<em>({alt('Pseudonim', 'Pseudonyme')} · {required})</em>
 					<input type="text" bind:value={pseudo} maxlength="24" required />
 				</label>
 
 				<fieldset>
-					<legend>Genre <em>(facultatiu)</em></legend>
+					<legend>{main('Genre', 'Genre')} <em>({optional})</em></legend>
 					<div class="radio-row">
 						<label class="radio"
-							><input type="radio" bind:group={gender} value="femna" /> Femna</label
-						>
-						<label class="radio"><input type="radio" bind:group={gender} value="ome" /> Òme</label>
-						<label class="radio"
-							><input type="radio" bind:group={gender} value="autra" /> Autra</label
+							><input type="radio" bind:group={gender} value="femna" />
+							{main('Femna', 'Femme')}</label
 						>
 						<label class="radio"
-							><input type="radio" bind:group={gender} value="" checked /> Prefèri pas dire</label
+							><input type="radio" bind:group={gender} value="ome" /> {main('Òme', 'Homme')}</label
+						>
+						<label class="radio"
+							><input type="radio" bind:group={gender} value="autra" />
+							{main('Autra', 'Autre')}</label
+						>
+						<label class="radio"
+							><input type="radio" bind:group={gender} value="" checked />
+							{main('Prefèri pas dire', 'Je préfère ne pas dire')}</label
 						>
 					</div>
 				</fieldset>
 
 				<label>
-					Edat <em>(âge, facultatif)</em>
+					{main('Edat', 'Âge')} <em>({alt('Edat', 'âge')} · {optional})</em>
 					<select bind:value={ageBracket}>
-						<option value="">Prefèri pas dire</option>
+						<option value="">{main('Prefèri pas dire', 'Je préfère ne pas dire')}</option>
 						<option value="15-17">15-17</option>
 						<option value="18-24">18-24</option>
 						<option value="25-34">25-34</option>
 						<option value="35-44">35-44</option>
 						<option value="45-54">45-54</option>
 						<option value="55-64">55-64</option>
-						<option value="65+">65 e mai</option>
+						<option value="65+">{main('65 e mai', '65 et plus')}</option>
 					</select>
 				</label>
 
 				<label>
-					Mestièr <em>(profession, facultatif)</em>
+					{main('Mestièr', 'Profession')} <em>({alt('Mestièr', 'profession')} · {optional})</em>
 					<select bind:value={profession}>
-						<option value="">Prefèri pas dire</option>
+						<option value="">{main('Prefèri pas dire', 'Je préfère ne pas dire')}</option>
 						{#each pcsCategories as cat}
-							<option value={cat.value}>{cat.oc} ({cat.fr})</option>
+							<option value={cat.value}
+								>{main(cat.oc, cat.fr)} ({alt(cat.oc, cat.fr)})</option
+							>
 						{/each}
 					</select>
 				</label>
 
 				<label>
-					Ont demòras <em>(lieu de vie, facultatif)</em>
+					{main('Ont demòras', 'Où tu vis')}
+					<em>({alt('Ont demòras', 'lieu de vie')} · {optional})</em>
 					<LocationAutocomplete bind:value={location} />
 				</label>
 
 				<fieldset>
-					<legend>Qué t'interèssa dins l'occitan ? <em>(facultatif)</em></legend>
+					<legend>
+						{main("Qué t'interèssa dins l'occitan ?", "Qu'est-ce qui t'intéresse dans l'occitan ?")}
+						<em>({optional})</em>
+					</legend>
 					<label class="radio-block">
 						<input type="radio" bind:group={interest} value="curiositat" />
-						Aprene la lenga per curiositat <em>(par curiosité)</em>
+						{main('Aprene la lenga per curiositat', 'Apprendre la langue par curiosité')}
+						<em>({alt('per curiositat', 'par curiosité')})</em>
 					</label>
 					<label class="radio-block">
 						<input type="radio" bind:group={interest} value="originas" />
-						Renodar amb mas originas <em>(renouer avec mes origines)</em>
+						{main('Renodar amb mas originas', 'Renouer avec mes origines')}
+						<em>({alt('mas originas', 'mes origines')})</em>
 					</label>
 					<label class="radio-block">
 						<input type="radio" bind:group={interest} value="region" />
-						Melhor conéisser ma region d'adopcion <em>(mieux connaître ma région d'adoption)</em>
+						{main(
+							"Melhor conéisser ma region d'adopcion",
+							"Mieux connaître ma région d'adoption"
+						)}
+						<em>({alt("region d'adopcion", "région d'adoption")})</em>
 					</label>
 					<label class="radio-block">
 						<input type="radio" bind:group={interest} value="autra" />
-						Autra <em>(autre)</em>
+						{main('Autra', 'Autre')} <em>({alt('Autra', 'autre')})</em>
 					</label>
 					{#if interest === 'autra'}
 						<input
 							type="text"
 							class="interest-other"
 							bind:value={interestOther}
-							placeholder="Precisa se vòles…"
+							placeholder={main('Precisa se vòles…', 'Précise si tu veux…')}
 							maxlength="120"
 						/>
 					{/if}
@@ -210,7 +243,7 @@
 				{#if errorMsg}<p class="msg error">{errorMsg}</p>{/if}
 
 				<button type="submit" class="btn-primary" disabled={loading}>
-					{loading ? '…' : 'Contunhar'} <span class="arrow">→</span>
+					{loading ? '…' : main('Contunhar', 'Continuer')} <span class="arrow">→</span>
 				</button>
 			</form>
 		</section>
