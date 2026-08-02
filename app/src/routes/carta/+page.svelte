@@ -7,6 +7,33 @@
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import LayersIcon from '$lib/components/LayersIcon.svelte';
+	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+
+	let lang = $derived(langStore.current);
+
+	// Textes de l'interface dans les deux langues. L'occitan reste la
+	// version de référence, le français en est la traduction.
+	const t = {
+		oc: {
+			title: 'Lo Mond en occitan',
+			intro: 'Fons de carta en occitan, realizat per',
+			introEnd: "amb l'Institut d'Estudis Occitans.",
+			close: 'Tampar',
+			more: 'Saber mai sus lo Mond en occitan',
+			layers: 'Jaces',
+			layersLabel: 'Jaces de la carta'
+		},
+		fr: {
+			title: 'Le Monde en occitan',
+			intro: 'Fond de carte en occitan, réalisé par',
+			introEnd: "avec l'Institut d'Études Occitanes.",
+			close: 'Fermer',
+			more: 'En savoir plus sur le Monde en occitan',
+			layers: 'Calques',
+			layersLabel: 'Calques de la carte'
+		}
+	};
+	let tx = $derived(t[lang]);
 
 	const SEEN_KEY = 'lo-ligam-carta-info-seen';
 
@@ -27,14 +54,23 @@
 	// desactivadas, per mostrar l'arquitectura visada sens inventar de
 	// contengut.
 	const layerDefs = [
-		{ id: 'lieusInteres', label: "Luòcs d'interès", available: true },
-		{ id: 'dialectes', label: 'Dialèctes', available: true },
-		{ id: 'provincias', label: 'Provincias istoricas', available: false, note: 'A venir' },
+		{ id: 'lieusInteres', oc: "Luòcs d'interès", fr: "Lieux d'intérêt", available: true },
+		{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', available: true },
+		{
+			id: 'provincias',
+			oc: 'Provincias istoricas',
+			fr: 'Provinces historiques',
+			available: false,
+			note_oc: 'A venir',
+			note_fr: 'À venir'
+		},
 		{
 			id: 'limsi',
-			label: 'Enquistas vocalas (Atlàs LISN)',
+			oc: 'Enquistas vocalas (Atlàs LISN)',
+			fr: 'Enquêtes vocales (Atlas LISN)',
 			available: false,
-			note: "En espèra de l'autorizacion del LISN (licéncia CC BY-NC-SA)"
+			note_oc: "En espèra de l'autorizacion del LISN (licéncia CC BY-NC-SA)",
+			note_fr: "En attente de l'autorisation du LISN (licence CC BY-NC-SA)"
 		}
 	];
 
@@ -48,7 +84,7 @@
 </script>
 
 <svelte:head>
-	<title>Lo Mond en occitan — Lo Ligam</title>
+	<title>{tx.title} — Lo Ligam</title>
 </svelte:head>
 
 <div class="screen">
@@ -63,15 +99,15 @@
 					type="button"
 					class="info-close"
 					onclick={() => (showInfo = false)}
-					aria-label="Tampar">×</button
+					aria-label={tx.close}>×</button
 				>
-				<h1>Lo Mond en occitan</h1>
+				<h1>{tx.title}</h1>
 				<p>
-					Fons de carta en occitan, realizat per <a
-						href="https://www.openstreetmap.bzh/"
-						target="_blank"
-						rel="noopener noreferrer">OpenStreetMap e occitan</a
-					> amb l'Institut d'Estudis Occitans.
+					{tx.intro}
+					<a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener noreferrer"
+						>OpenStreetMap e occitan</a
+					>
+					{tx.introEnd}
 				</p>
 			</div>
 		{:else}
@@ -79,7 +115,7 @@
 				type="button"
 				class="info-trigger"
 				onclick={() => (showInfo = true)}
-				aria-label="Saber mai sus lo Mond en occitan"
+				aria-label={tx.more}
 				transition:fly={{ y: -12, duration: 220, easing: quintOut }}
 			>
 				<InfoIcon size={22} />
@@ -89,12 +125,12 @@
 		{#if layersPanelOpen}
 			<div class="layers-panel" transition:fly={{ y: 12, duration: 260, easing: quintOut }}>
 				<div class="layers-head">
-					<h2>Jaces</h2>
+					<h2>{tx.layers}</h2>
 					<button
 						type="button"
 						class="info-close"
 						onclick={() => (layersPanelOpen = false)}
-						aria-label="Tampar">×</button
+						aria-label={tx.close}>×</button
 					>
 				</div>
 				<ul>
@@ -107,10 +143,10 @@
 									checked={layerVisibility[layer.id]}
 									onchange={(e) => (layerVisibility[layer.id] = e.currentTarget.checked)}
 								/>
-								{layer.label}
+								{lang === 'oc' ? layer.oc : layer.fr}
 							</label>
-							{#if layer.note}
-								<p class="layer-note">{layer.note}</p>
+							{#if layer.note_oc}
+								<p class="layer-note">{lang === 'oc' ? layer.note_oc : layer.note_fr}</p>
 							{/if}
 						</li>
 					{/each}
@@ -121,7 +157,7 @@
 				type="button"
 				class="layers-trigger"
 				onclick={() => (layersPanelOpen = true)}
-				aria-label="Jaces de la carta"
+				aria-label={tx.layersLabel}
 				transition:fly={{ y: 12, duration: 220, easing: quintOut }}
 			>
 				<LayersIcon size={20} />
