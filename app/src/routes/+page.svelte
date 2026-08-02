@@ -137,7 +137,7 @@
 
 	const bgImages = Array.from(
 		{ length: 28 },
-		(_, i) => `/bg/design-${String(i + 1).padStart(2, '0')}.png`
+		(_, i) => `/bg/design-${String(i + 1).padStart(2, '0')}.webp`
 	);
 
 	function shuffle(arr) {
