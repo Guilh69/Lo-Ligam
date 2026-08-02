@@ -67,6 +67,16 @@ Les visuels Instagram sont **denses** (bon pour un post). Une **interface** doit
 
 ---
 
+## 5ter. Navigation — anticiper les sections futures
+
+L'app n'a aujourd'hui que 2 pôles (Aprendre, Compte), reliés par un simple bouton retour-accueil (`AppHeader.svelte`, `app/src/lib/components/`). Les phases futures ajouteront **Comunautat** (groupes par ville) et **Contribuir** (contribution citoyenne) — cf. cahier des charges §3, Phase 4.
+
+- **Ne pas afficher ces sections avant qu'elles existent** (sobriété, pas de promesse non tenue) : pas d'icônes grisées "bientôt" dans l'interface actuelle.
+- **Mais garder l'architecture prête** : `AppHeader.svelte` centralise déjà l'en-tête des écrans internes (au lieu d'un en-tête dupliqué par page) — ajouter une vraie barre de navigation (probablement basse, mobile-first) entre sections quand elles existeront ne demandera pas de tout refaire.
+- **Réserver dès maintenant le style des icônes** de ces 2 futures sections, cohérent avec les motifs déjà identifiés (§3) : par ex. un groupe de toits/ostals pour Comunautat, une plume ou une main pour Contribuir — même langage graphique que `HomeIcon.svelte` (silhouette pleine, traits épais, pas un pictogramme générique).
+
+---
+
 ## 6. Décision
 
 L'identité visuelle de Lo Ligam est **actée** : celle de l'Instagram existant, adaptée aux règles d'interface ci-dessus. Sert de référence à Claude Code.
