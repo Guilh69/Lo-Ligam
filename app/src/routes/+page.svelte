@@ -55,11 +55,12 @@
 	// valider par Romain (locuteur natif) avant publication finale — voir
 	// mémoire de session sur la pratique de validation du contenu.
 	const t = {
-		heroKicker: { oc: 'Benvenguda', fr: 'Bienvenue' },
-		heroTitle: {
-			oc: "Apren l'occitan, teis lo ligam amb sa cultura.",
-			fr: 'Apprends l’occitan, tisse le lien avec sa culture.'
-		},
+		// Promessa d'acuèlh : lo nom de la marca ES lo concèpte (« ligam »
+		// = ligam). « Acompanha » ditz quicòm que las autras formulacions
+		// disián pas : que se daissa pas lo visitaire sol.
+		// À VALIDER par Romain sur dicodòc avant publication.
+		heroLead: { oc: "Lo Ligam t'acompanha", fr: "Lo Ligam t'accompagne" },
+		heroSub: { oc: "a la descobèrta de l'occitan", fr: "à la découverte de l'occitan" },
 		feature1: {
 			tag: { oc: 'Fièrs de la lenga', fr: 'Fiers de la langue' },
 			title: {
@@ -153,11 +154,8 @@
 	// mesura successiva).
 	let brandCardEl = $state();
 	let topbarEl = $state();
-	let kickerShiftEl = $state();
 	let centerY = $state(300);
-	let logoNaturalTop = $state(300);
 	let topbarBottom = $state(64);
-	let kickerNaturalCenterY = $state(0);
 	// Restat invisible tant que la premièra mesura fisabla (aprèp
 	// cargament complet de las poliças) es pas facha : la poliça Fredoka
 	// carga en async (font-display swap), e càmbia leugièrament la
@@ -175,44 +173,9 @@
 			// èsser fisable quina que siá la scroll al moment del montatge
 			// (navigation history de SvelteKit…).
 			centerY = rect.top + window.scrollY + rect.height / 2;
-			logoNaturalTop = rect.top + window.scrollY;
 		}
 		if (topbarEl) {
 			topbarBottom = topbarEl.getBoundingClientRect().bottom;
-		}
-		if (kickerShiftEl) {
-			// Lo transform ja aplicat es sostrach en legissent dirèctament la
-			// matritz CSS (lectura DOM pura, cap de dependéncia reactiva,
-			// donc cap de bocla).
-			const rect = kickerShiftEl.getBoundingClientRect();
-			const applied = new DOMMatrixReadOnly(getComputedStyle(kickerShiftEl).transform).m42;
-			const naturalTop = rect.top + window.scrollY - applied;
-			// Centrar la boita de linha metriá lo tèxte tròp naut : per de
-			// CAPITALAS sens jambatges, la boita reserva en bas una plaça
-			// voida per las descendentas. L'uèlh, el, vei lo centre de las
-			// LETRAS. On mesura donc l'encre reala amb las metricas de la
-			// poliça, e on tomba sus lo centre de linha se son pas
-			// disponiblas (vièlhs navegadors).
-			const ink = inkCenterFromTop(kickerShiftEl, rect.height);
-			kickerNaturalCenterY = naturalTop + (ink ?? rect.height / 2);
-		}
-	}
-
-	let inkCtx;
-	function inkCenterFromTop(el, boxHeight) {
-		try {
-			if (!inkCtx) inkCtx = document.createElement('canvas').getContext('2d');
-			const cs = getComputedStyle(el);
-			inkCtx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-			const m = inkCtx.measureText((el.textContent || '').trim().toUpperCase());
-			const { fontBoundingBoxAscent: fA, fontBoundingBoxDescent: fD } = m;
-			const { actualBoundingBoxAscent: aA, actualBoundingBoxDescent: aD } = m;
-			if (![fA, fD, aA, aD].every(Number.isFinite)) return null;
-			// Basa de linha dins la boita, puèi centre de l'encre a l'entorn.
-			const baselineFromTop = (boxHeight - (fA + fD)) / 2 + fA;
-			return baselineFromTop - (aA - aD) / 2;
-		} catch {
-			return null;
 		}
 	}
 
@@ -234,7 +197,6 @@
 		});
 		if (topbarEl) observer.observe(topbarEl);
 		if (brandCardEl) observer.observe(brandCardEl);
-		if (kickerShiftEl) observer.observe(kickerShiftEl);
 		// Filet de seguretat : lo logo deu jamai demorar invisible se
 		// l'observador se declenchava pas (navegador exotic, onglet en
 		// rèire plan…).
@@ -265,29 +227,25 @@
 	// 190px = nautor maximala de .landscape (vaga) + un pichon marge, per
 	// que la renguèra 3 tòque pas jamai la vaga.
 	const waveClearance = 190;
-	// Tres renguèras espaciadas regularament sus tot l'espaci utilizable
-	// (barra amont -> vaga), independentament de la posicion del logo :
-	// escart identic amont/aval, garentit quina que siá la nautor de
-	// l'ecran.
+	// C'est la RANGÉE qui vient sur le logo, pas l'inverse : déplacer le
+	// logo par-dessus la mise en page le faisait recouvrir le titre, et
+	// obligeait à des compensations qui bouclaient. Ici le logo ne bouge
+	// jamais — les rangées sont en position fixe, donc les déplacer ne
+	// gêne personne.
 	let rowTops = $derived.by(() => {
-		const top = topbarBottom + buffer;
-		const bottom = Math.max(top, viewportHeight - waveClearance - rowItemHeight);
-		const step = (bottom - top) / 2;
-		return [top, top + step, top + step * 2];
+		const first = topbarBottom + buffer;
+		const last = Math.max(first, viewportHeight - waveClearance - rowItemHeight);
+		// Idéalement la rangée du milieu passe par le centre du logo. Mais
+		// depuis que le message porte la page, le logo est haut placé : la
+		// suivre collerait les deux rangées du haut l'une à l'autre. On la
+		// borne donc pour qu'elle garde au moins une hauteur de vignette
+		// d'écart avec ses voisines.
+		const wanted = centerY - halfItemHeight;
+		const room = rowItemHeight * 0.9;
+		const middle = Math.min(Math.max(wanted, first + room), last - room);
+		return [first, middle, last];
 	});
 
-	// Lo logo es decalat (visualament sonque : brand-card-inner, pas
-	// brand-card) per que son centre tòque exactament lo centre de la
-	// renguèra 2, quina que siá la posicion naturala qu'auriá agut sens
-	// aquò (demanda explicita : "la linha del mitan deu passar pel mitan
-	// del logo").
-	let logoOffset = $derived(rowTops[1] + halfItemHeight - centerY);
-
-	// « Benvenguda » a mi camin entre la barra amont e lo logo (demanda
-	// explicita : las LIMITS dels dos elements — bas de la barra, naut
-	// del logo — mesuradas dirèctament, pas lors centres).
-	let kickerMidpointY = $derived((topbarBottom + logoNaturalTop) / 2);
-	let kickerOffset = $derived(kickerMidpointY - kickerNaturalCenterY);
 
 
 </script>
@@ -479,41 +437,33 @@
 
 <main class="page">
 	<section class="hero">
-		<p class="tagline-kicker">
-			<span
-				class="tagline-kicker-shift"
-				bind:this={kickerShiftEl}
-				style="transform: translateY({kickerOffset}px)"
-			>
-				<span
-					class="tagline-kicker-inner"
-					use:scramble={{ oc: t.heroKicker.oc, fr: t.heroKicker.fr, lang }}
-				></span>
-			</span>
-		</p>
-
-		<!-- Los decalatges calculats (logo, bòton) son PURAMENT visuals :
-		     jamai de marge, que cambiariá la reparticion « space-evenly » del
-		     hero, donc desplaçariá l'element mesurat, donc cambiariá lo
-		     decalatge… una bocla que fa derivar las mesuras a cada cicle. -->
+		<!-- Lo decalatge del logo es PURAMENT visual : jamai de marge, que
+		     cambiariá la reparticion « space-evenly » del hero, donc
+		     desplaçariá l'element mesurat, donc cambiariá lo decalatge…
+		     una bocla que fa derivar las mesuras a cada cicle. -->
 		<div class="brand-card" bind:this={brandCardEl}>
-			<div
-				class="brand-card-inner"
-				style="transform: translateY({logoOffset}px); opacity: {logoReady ? 1 : 0}"
-			>
+			<div class="brand-card-inner" style="opacity: {logoReady ? 1 : 0}">
 				<img src={logo} alt="Lo Ligam" />
 			</div>
 		</div>
 
 		<div class="welcome">
-			<h1 class="tagline-primary" use:scramble={{ oc: t.heroTitle.oc, fr: t.heroTitle.fr, lang }}
-			></h1>
+			<h1 class="hero-line" use:scramble={{ oc: t.heroLead.oc, fr: t.heroLead.fr, lang }}></h1>
+			<p class="hero-sub" use:scramble={{ oc: t.heroSub.oc, fr: t.heroSub.fr, lang }}></p>
 			<p class="tagline-secondary">
-				<em use:scramble={{ oc: `(${t.heroTitle.fr})`, fr: `(${t.heroTitle.oc})`, lang }}></em>
+				<em
+					use:scramble={{
+						oc: `(${t.heroLead.fr} ${t.heroSub.fr})`,
+						fr: `(${t.heroLead.oc} ${t.heroSub.oc})`,
+						lang
+					}}
+				></em>
 			</p>
 		</div>
 
-		<a class="btn-primary" href="/aprene">Aprèni l'occitan !</a>
+		<a class="btn-primary" href="/aprene"
+			>{lang === 'oc' ? "Aprèni l'occitan !" : "J'apprends l'occitan !"}</a
+		>
 	</section>
 
 	<section class="feature">
@@ -1199,35 +1149,32 @@
 		gap: 0.35rem;
 	}
 
-	/* Mot d'accueil, au-dessus du logo (pas dessous : évite qu'il soit
-	   couvert par le logo décalé). Capitales + Fredoka, la même police
-	   que le reste du site (cohérence), sans fond de badge — le gras et
-	   la couleur suffisent à cette taille.
-
-	   Trois nivèls pels transforms, per las pas fach entrecolpar :
-	   .tagline-kicker (extèrn) JAMAI transformat — servís de repère de
-	   mesura fisable (posicion naturala) per lo calcul « mi camin
-	   barra/logo ». .tagline-kicker-shift pòrta aqueste decalatge (JS).
-	   .tagline-kicker-inner pòrta l'animacion d'aparicion (CSS). */
-	.tagline-kicker {
+	/* La promesse porte la page : c'est elle qu'on lit en premier, pas le
+	   logo (qui est déjà dans la barre du haut). Deux niveaux — la ligne
+	   forte, puis la ligne d'appui — comme sur les références étudiées. */
+	.hero-line {
 		margin: 0;
 		font-family: var(--font-heading);
-		font-size: clamp(2rem, 5vw, 2.9rem);
+		font-size: clamp(2.1rem, 5.5vw, 3.4rem);
 		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.02em;
+		line-height: 1.1;
 		color: var(--color-brick);
+		text-wrap: balance;
+		animation: hero-reveal 750ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
 	}
 
-	.tagline-kicker-shift {
-		display: inline-block;
+	.hero-sub {
+		margin: 0.3rem 0 0;
+		font-family: var(--font-heading);
+		font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+		font-weight: 500;
+		line-height: 1.3;
+		color: var(--color-text);
+		text-wrap: balance;
+		animation: hero-reveal 750ms 250ms cubic-bezier(0.22, 1, 0.36, 1) both;
 	}
 
-	.tagline-kicker-inner {
-		animation: kicker-reveal 750ms 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
-	}
-
-	@keyframes kicker-reveal {
+	@keyframes hero-reveal {
 		from {
 			opacity: 0;
 			transform: translateY(16px);
@@ -1239,19 +1186,10 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.tagline-kicker-inner {
+		.hero-line,
+		.hero-sub {
 			animation: none;
 		}
-	}
-
-	.tagline-primary {
-		font-family: var(--font-heading);
-		font-size: clamp(1.3rem, 2.4vw, 1.6rem);
-		font-weight: 600;
-		margin: 0;
-		color: var(--color-text);
-		line-height: 1.35;
-		text-wrap: balance;
 	}
 
 	.tagline-secondary {
