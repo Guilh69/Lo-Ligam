@@ -190,9 +190,11 @@
 	let brandCardEl = $state();
 	let topbarEl = $state();
 	let ctaEl = $state();
+	let kickerEl = $state();
 	let centerY = $state(300);
 	let topbarBottom = $state(64);
 	let ctaNaturalBottom = $state(0);
+	let kickerNaturalCenterY = $state(0);
 	// Restat invisible tant que la premièra mesura fisabla (aprèp
 	// cargament complet de las poliças) es pas facha : la poliça Fredoka
 	// carga en async (font-display swap), e càmbia leugièrament la
@@ -220,6 +222,12 @@
 			// naturala, quina que siá la valor de ctaOffset — pas cap
 			// d'auto-referéncia de besonh.
 			ctaNaturalBottom = ctaEl.getBoundingClientRect().bottom + window.scrollY;
+		}
+		if (kickerEl) {
+			// kickerEl (extèrn) es JAMAI transformat — sa getBoundingClientRect()
+			// dòna totjorn la posicion naturala, sens auto-referéncia.
+			const rect = kickerEl.getBoundingClientRect();
+			kickerNaturalCenterY = rect.top + window.scrollY + rect.height / 2;
 		}
 	}
 
@@ -275,6 +283,14 @@
 	// aquò (demanda explicita : "la linha del mitan deu passar pel mitan
 	// del logo").
 	let logoOffset = $derived(rowTops[1] + halfItemHeight - centerY);
+
+	// « Benvenguda » a mi camin entre la barra amont e lo logo (demanda
+	// explicita : egala distança dels dos costats), quina que siá çò que
+	// l'espaçament « space-evenly » del hero auriá calculat tot sol.
+	const brandCardHeight = 220;
+	let logoNaturalTop = $derived(centerY - brandCardHeight / 2);
+	let kickerMidpointY = $derived((topbarBottom + logoNaturalTop) / 2);
+	let kickerOffset = $derived(kickerMidpointY - kickerNaturalCenterY);
 
 	// Remonta lo bòton « Aprèni l'occitan ! » se sa posicion naturala lo
 	// menariá a tocar la vaga — un decalatge visual (transform) compensat
@@ -565,8 +581,15 @@
 	<section class="hero">
 		<p
 			class="tagline-kicker"
-			use:scramble={{ oc: t.heroKicker.oc, fr: t.heroKicker.fr, lang }}
-		></p>
+			bind:this={kickerEl}
+		>
+			<span class="tagline-kicker-shift" style="transform: translateY({kickerOffset}px)">
+				<span
+					class="tagline-kicker-inner"
+					use:scramble={{ oc: t.heroKicker.oc, fr: t.heroKicker.fr, lang }}
+				></span>
+			</span>
+		</p>
 
 		<div
 			class="brand-card"
@@ -1535,8 +1558,13 @@
 	/* Mot d'accueil, au-dessus du logo (pas dessous : évite qu'il soit
 	   couvert par le logo décalé). Capitales + Fredoka, la même police
 	   que le reste du site (cohérence), sans fond de badge — le gras et
-	   la couleur suffisent à cette taille. L'espacement avec les autres
-	   blocs vient de .hero (space-evenly), pas d'une marge fixe ici. */
+	   la couleur suffisent à cette taille.
+
+	   Trois nivèls pels transforms, per las pas fach entrecolpar :
+	   .tagline-kicker (extèrn) JAMAI transformat — servís de repère de
+	   mesura fisable (posicion naturala) per lo calcul « mi camin
+	   barra/logo ». .tagline-kicker-shift pòrta aqueste decalatge (JS).
+	   .tagline-kicker-inner pòrta l'animacion d'aparicion (CSS). */
 	.tagline-kicker {
 		margin: 0;
 		font-family: var(--font-heading);
@@ -1545,6 +1573,13 @@
 		text-transform: uppercase;
 		letter-spacing: 0.02em;
 		color: var(--color-brick);
+	}
+
+	.tagline-kicker-shift {
+		display: inline-block;
+	}
+
+	.tagline-kicker-inner {
 		animation: kicker-reveal 750ms 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
 	}
 
@@ -1560,7 +1595,7 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.tagline-kicker {
+		.tagline-kicker-inner {
 			animation: none;
 		}
 	}
