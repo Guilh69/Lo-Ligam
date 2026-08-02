@@ -190,8 +190,9 @@
 	let brandCardEl = $state();
 	let topbarEl = $state();
 	let ctaEl = $state();
-	let kickerEl = $state();
+	let kickerShiftEl = $state();
 	let centerY = $state(300);
+	let logoNaturalTop = $state(300);
 	let topbarBottom = $state(64);
 	let ctaNaturalBottom = $state(0);
 	let kickerNaturalCenterY = $state(0);
@@ -212,6 +213,7 @@
 			// èsser fisable quina que siá la scroll al moment del montatge
 			// (navigation history de SvelteKit…).
 			centerY = rect.top + window.scrollY + rect.height / 2;
+			logoNaturalTop = rect.top + window.scrollY;
 		}
 		if (topbarEl) {
 			topbarBottom = topbarEl.getBoundingClientRect().bottom;
@@ -223,27 +225,49 @@
 			// d'auto-referéncia de besonh.
 			ctaNaturalBottom = ctaEl.getBoundingClientRect().bottom + window.scrollY;
 		}
-		if (kickerEl) {
-			// kickerEl (extèrn) es JAMAI transformat — sa getBoundingClientRect()
-			// dòna totjorn la posicion naturala, sens auto-referéncia.
-			const rect = kickerEl.getBoundingClientRect();
-			kickerNaturalCenterY = rect.top + window.scrollY + rect.height / 2;
+		if (kickerShiftEl) {
+			// Mesura la boita VISIBLA del tèxte (lo span decalat), pas lo <p>
+			// que l'enclau : lors boitas son pas identicas (block vs
+			// inline-block, ~5px d'escart), e es la boita visibla que cal
+			// centrar. Lo transform ja aplicat es sostrach en legissent
+			// dirèctament la matritz CSS (lectura DOM pura, cap de
+			// dependéncia reactiva, donc cap de bocla).
+			const rect = kickerShiftEl.getBoundingClientRect();
+			const applied = new DOMMatrixReadOnly(getComputedStyle(kickerShiftEl).transform).m42;
+			kickerNaturalCenterY = rect.top + window.scrollY + rect.height / 2 - applied;
 		}
 	}
 
+	// La mesura synchròna al montatge (abans lo primièr rendut complet
+	// del navegador) se revèla pas totjorn fisabla — un rAF suplementari
+	// tòrna mesurar aprèp lo primièr vertadièr passatge de mesa en
+	// pagina. Un ResizeObserver pren lo relai per las evolucions
+	// ulterioras (poliça que carga mai tard, redimensionament…).
 	$effect(() => {
 		if (!browser) return;
 		measureLayout();
-		if (document.fonts?.ready) {
-			document.fonts.ready.then(() => {
-				measureLayout();
-				logoReady = true;
-			});
-		} else {
+		// Lo ResizeObserver se declencha un primièr còp tre l'observacion
+		// (aprèp mesa en pagina), puèi a cada cambiament real de talha
+		// (poliça cargada mai tard, redimensionament…) : pas de pari sul
+		// moment ont las poliças acaban de cargar.
+		const observer = new ResizeObserver(() => {
+			measureLayout();
 			logoReady = true;
-		}
+		});
+		if (topbarEl) observer.observe(topbarEl);
+		if (brandCardEl) observer.observe(brandCardEl);
+		if (kickerShiftEl) observer.observe(kickerShiftEl);
+		if (ctaEl) observer.observe(ctaEl);
+		// Filet de seguretat : lo logo deu jamai demorar invisible se
+		// l'observador se declenchava pas (navegador exotic, onglet en
+		// rèire plan…).
+		const fallback = setTimeout(() => (logoReady = true), 400);
 		window.addEventListener('resize', measureLayout);
-		return () => window.removeEventListener('resize', measureLayout);
+		return () => {
+			observer.disconnect();
+			clearTimeout(fallback);
+			window.removeEventListener('resize', measureLayout);
+		};
 	});
 
 	let viewportHeight = $state(800);
@@ -285,10 +309,8 @@
 	let logoOffset = $derived(rowTops[1] + halfItemHeight - centerY);
 
 	// « Benvenguda » a mi camin entre la barra amont e lo logo (demanda
-	// explicita : egala distança dels dos costats), quina que siá çò que
-	// l'espaçament « space-evenly » del hero auriá calculat tot sol.
-	const brandCardHeight = 220;
-	let logoNaturalTop = $derived(centerY - brandCardHeight / 2);
+	// explicita : las LIMITS dels dos elements — bas de la barra, naut
+	// del logo — mesuradas dirèctament, pas lors centres).
 	let kickerMidpointY = $derived((topbarBottom + logoNaturalTop) / 2);
 	let kickerOffset = $derived(kickerMidpointY - kickerNaturalCenterY);
 
@@ -579,11 +601,12 @@
 
 <main class="page">
 	<section class="hero">
-		<p
-			class="tagline-kicker"
-			bind:this={kickerEl}
-		>
-			<span class="tagline-kicker-shift" style="transform: translateY({kickerOffset}px)">
+		<p class="tagline-kicker">
+			<span
+				class="tagline-kicker-shift"
+				bind:this={kickerShiftEl}
+				style="transform: translateY({kickerOffset}px)"
+			>
 				<span
 					class="tagline-kicker-inner"
 					use:scramble={{ oc: t.heroKicker.oc, fr: t.heroKicker.fr, lang }}
