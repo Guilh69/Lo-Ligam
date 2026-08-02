@@ -25,6 +25,13 @@
 	let lang = $state('oc');
 	let sectionsOpen = $state(false);
 	let openTools = $state(null);
+	// Resòlv l'actor dobèrt un sol còp : se openTools designa un href
+	// desconegut (donada modificada, estat obsolet…), aquò val null e lo
+	// popover s'aficha simplament pas, allòc de plantar en accedissent a
+	// « .label » sus undefined.
+	let activeToolsLink = $derived(
+		openTools ? (externalLinks.find((l) => l.href === openTools) ?? null) : null
+	);
 
 	// Icòna (favicon) de cada site extèrne, per repèrer visualament cada
 	// actor/aplicacion dins la lista de ressorsas, sens aver de logo local
@@ -575,8 +582,8 @@
      .sections-panel (qui a un backdrop-filter, donc crée son pròpri
      bloc de positionament) per que position:fixed se centre bien per
      rapòrt a tot l'ecran, pas sonque per rapòrt al panèl del menú. -->
-{#if openTools}
-	{@const activeLink = externalLinks.find((l) => l.href === openTools)}
+{#if activeToolsLink}
+	{@const activeLink = activeToolsLink}
 	<div
 		class="tools-backdrop"
 		role="presentation"
