@@ -153,12 +153,10 @@
 	// mesura successiva).
 	let brandCardEl = $state();
 	let topbarEl = $state();
-	let ctaEl = $state();
 	let kickerShiftEl = $state();
 	let centerY = $state(300);
 	let logoNaturalTop = $state(300);
 	let topbarBottom = $state(64);
-	let ctaNaturalBottom = $state(0);
 	let kickerNaturalCenterY = $state(0);
 	// Restat invisible tant que la premièra mesura fisabla (aprèp
 	// cargament complet de las poliças) es pas facha : la poliça Fredoka
@@ -181,13 +179,6 @@
 		}
 		if (topbarEl) {
 			topbarBottom = topbarEl.getBoundingClientRect().bottom;
-		}
-		if (ctaEl) {
-			// margin-top (+ctaOffset) e transform (-ctaOffset) s'anullan
-			// exactament : la posicion mesurada aicí es totjorn la posicion
-			// naturala, quina que siá la valor de ctaOffset — pas cap
-			// d'auto-referéncia de besonh.
-			ctaNaturalBottom = ctaEl.getBoundingClientRect().bottom + window.scrollY;
 		}
 		if (kickerShiftEl) {
 			// Lo transform ja aplicat es sostrach en legissent dirèctament la
@@ -244,7 +235,6 @@
 		if (topbarEl) observer.observe(topbarEl);
 		if (brandCardEl) observer.observe(brandCardEl);
 		if (kickerShiftEl) observer.observe(kickerShiftEl);
-		if (ctaEl) observer.observe(ctaEl);
 		// Filet de seguretat : lo logo deu jamai demorar invisible se
 		// l'observador se declenchava pas (navegador exotic, onglet en
 		// rèire plan…).
@@ -258,13 +248,11 @@
 	});
 
 	let viewportHeight = $state(800);
-	let viewportWidth = $state(1280);
 
 	$effect(() => {
 		if (!browser) return;
 		const onResize = () => {
 			viewportHeight = window.innerHeight;
-			viewportWidth = window.innerWidth;
 		};
 		onResize();
 		window.addEventListener('resize', onResize);
@@ -301,13 +289,6 @@
 	let kickerMidpointY = $derived((topbarBottom + logoNaturalTop) / 2);
 	let kickerOffset = $derived(kickerMidpointY - kickerNaturalCenterY);
 
-	// Remonta lo bòton « Aprèni l'occitan ! » se sa posicion naturala lo
-	// menariá a tocar la vaga — un decalatge visual (transform) compensat
-	// per una marge-naut egala (garda l'espaçament egal amb los autres
-	// blòcs, tòca pas al rèsta). Nautor de .landscape : 128px en dejós de
-	// 40rem (640px), 160px en dessús — meteis breakpoint que lo CSS.
-	let ctaWaveClearance = $derived((viewportWidth >= 640 ? 160 : 128) + 30);
-	let ctaOffset = $derived(Math.max(0, ctaNaturalBottom - (viewportHeight - ctaWaveClearance)));
 
 </script>
 
@@ -532,14 +513,7 @@
 			</p>
 		</div>
 
-		<a
-			class="btn-primary"
-			href="/aprene"
-			bind:this={ctaEl}
-			style="transform: translateY(-{ctaOffset}px)"
-		>
-			Aprèni l'occitan !
-		</a>
+		<a class="btn-primary" href="/aprene">Aprèni l'occitan !</a>
 	</section>
 
 	<section class="feature">
@@ -1156,6 +1130,11 @@
 	/* 4 blocs (Benvenguda / logo / titre+sostítol / bòton) espaçats
 	   regularament sus tota l'nautor del hero — pas sonque centrats amb
 	   un pichon gap fixe, que sarrava tot ensemble. */
+	/* La marge basse réserve la hauteur de la vague (128px, 160px au-delà
+	   de 40rem — mêmes valeurs que WaveLandscape). En CSS statique, pas
+	   calculée en JS : les 4 blocs se répartissent dans la place qui
+	   reste, donc le bouton ne peut ni toucher la vague ni recouvrir le
+	   texte au-dessus. */
 	.hero {
 		min-height: calc(100dvh - 64px);
 		display: flex;
@@ -1163,8 +1142,14 @@
 		align-items: center;
 		justify-content: space-evenly;
 		gap: 1.5rem;
-		padding: 2rem 1.5rem 2.5rem;
+		padding: 2rem 1.5rem calc(128px + 1.5rem);
 		text-align: center;
+	}
+
+	@media (min-width: 40rem) {
+		.hero {
+			padding-bottom: calc(160px + 1.5rem);
+		}
 	}
 
 	/* brand-card (extèrna) : nòta la posicion naturala/mesurada, jamai
@@ -1175,6 +1160,16 @@
 	.brand-card {
 		width: 220px;
 		height: 220px;
+	}
+
+	/* Écrans peu hauts (mobile paysage, petits téléphones) : sans ça les
+	   4 blocs + la place réservée à la vague ne tiennent pas dans la
+	   hauteur, et le bouton finit par mordre sur la vague. */
+	@media (max-height: 760px) {
+		.brand-card {
+			width: 150px;
+			height: 150px;
+		}
 	}
 
 	/* Logo statique : pas de transition sur le transform, qui ne sert
