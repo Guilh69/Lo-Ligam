@@ -235,14 +235,11 @@
 	let rowTops = $derived.by(() => {
 		const first = topbarBottom + buffer;
 		const last = Math.max(first, viewportHeight - waveClearance - rowItemHeight);
-		// Idéalement la rangée du milieu passe par le centre du logo. Mais
-		// depuis que le message porte la page, le logo est haut placé : la
-		// suivre collerait les deux rangées du haut l'une à l'autre. On la
-		// borne donc pour qu'elle garde au moins une hauteur de vignette
-		// d'écart avec ses voisines.
-		const wanted = centerY - halfItemHeight;
-		const room = rowItemHeight * 0.9;
-		const middle = Math.min(Math.max(wanted, first + room), last - room);
+		// Écarts strictement égaux. On a abandonné la règle « la rangée du
+		// milieu passe par le centre du logo » : depuis que le message
+		// porte la page, le logo est haut placé, et la suivre déséquilibrait
+		// visiblement les trois rangées.
+		const middle = (first + last) / 2;
 		return [first, middle, last];
 	});
 
