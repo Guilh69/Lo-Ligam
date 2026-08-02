@@ -16,7 +16,7 @@
 	import WaveLandscape from '$lib/components/WaveLandscape.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { siteSections, externalLinks } from '$lib/data/siteSections';
+	import { families, externalLinks } from '$lib/data/siteSections';
 
 	const sectionIcons = {
 		book: BookIcon,
@@ -299,37 +299,44 @@
 
 {#if sectionsOpen}
 	<div class="sections-panel" role="dialog" aria-modal="true" aria-label="Menú del site">
-		<div class="sections-grid">
-			{#each siteSections as s (s.id)}
-				{@const Icon = sectionIcons[s.icon]}
-				{#if s.status === 'live'}
-					<a
-						class="section-card"
-						href={s.href}
-						style="--section-color: {s.color}"
-						onclick={() => (sectionsOpen = false)}
-					>
-						<span class="shine" aria-hidden="true"></span>
-						<span class="section-icon"><Icon size={22} /></span>
-						<span class="section-primary" use:scramble={{ oc: s.oc, fr: s.fr, lang }}></span>
-						<span class="section-secondary" use:scramble={{ oc: s.fr, fr: s.oc, lang }}></span>
+		<div class="families-grid">
+			{#each families as fam (fam.id)}
+				{@const Icon = sectionIcons[fam.icon]}
+				<div class="family" style="--section-color: {fam.color}">
+					<div class="family-head">
+						<span class="family-icon"><Icon size={20} /></span>
+						<span class="family-name" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
 						<span
-							class="section-desc"
-							use:scramble={{ oc: s.desc_oc, fr: s.desc_fr, lang }}
+							class="family-tagline"
+							use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}
 						></span>
-					</a>
-				{:else}
-					<div class="section-card soon" style="--section-color: {s.color}" aria-disabled="true">
-						<span class="section-icon"><Icon size={22} /></span>
-						<span class="section-primary" use:scramble={{ oc: s.oc, fr: s.fr, lang }}></span>
-						<span class="section-secondary" use:scramble={{ oc: s.fr, fr: s.oc, lang }}></span>
-						<span
-							class="section-desc"
-							use:scramble={{ oc: s.desc_oc, fr: s.desc_fr, lang }}
-						></span>
-						<span class="soon-tag" use:scramble={{ oc: 'Lèu', fr: 'Bientôt', lang }}></span>
 					</div>
-				{/if}
+					<ul class="family-items">
+						{#each fam.items as it (it.id)}
+							<li>
+								{#if it.status === 'live'}
+									<a class="family-item" href={it.href} onclick={() => (sectionsOpen = false)}>
+										<span class="shine" aria-hidden="true"></span>
+										<span class="item-name" use:scramble={{ oc: it.oc, fr: it.fr, lang }}></span>
+										<span
+											class="item-desc"
+											use:scramble={{ oc: it.desc_oc, fr: it.desc_fr, lang }}
+										></span>
+									</a>
+								{:else}
+									<div class="family-item soon" aria-disabled="true">
+										<span class="item-name" use:scramble={{ oc: it.oc, fr: it.fr, lang }}></span>
+										<span
+											class="item-desc"
+											use:scramble={{ oc: it.desc_oc, fr: it.desc_fr, lang }}
+										></span>
+										<span class="soon-tag" use:scramble={{ oc: 'Lèu', fr: 'Bientôt', lang }}></span>
+									</div>
+								{/if}
+							</li>
+						{/each}
+					</ul>
+				</div>
 			{/each}
 		</div>
 
@@ -730,44 +737,96 @@
 		animation: card-in 220ms ease-out;
 	}
 
-	.sections-grid {
+	/* Quatre familles côte à côte, chacune avec sa couleur et ses entrées.
+	   Le visiteur balaie quatre intentions d'un coup d'œil au lieu de lire
+	   une grille plate de six cartes équivalentes. */
+	.families-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
-		gap: 0.75rem;
-		max-width: 60rem;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: 1.25rem 1rem;
+		max-width: 62rem;
 		margin: 0 auto;
 	}
 
-	.section-card {
+	.family-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		padding-bottom: 0.5rem;
+		margin-bottom: 0.6rem;
+		border-bottom: 2px solid var(--section-color, var(--color-terracotta));
+	}
+
+	.family-icon {
+		display: flex;
+		color: var(--section-color, var(--color-terracotta));
+	}
+
+	.family-name {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 1.1rem;
+		color: var(--section-color, var(--color-brick));
+	}
+
+	.family-tagline {
+		flex-basis: 100%;
+		font-size: 0.75rem;
+		color: var(--color-text);
+		opacity: 0.6;
+	}
+
+	.family-items {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.family-item {
 		position: relative;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
-		gap: 0.15rem;
+		gap: 0.1rem;
 		background: white;
-		border-radius: 16px;
-		padding: 0.9rem 1.1rem;
+		border-radius: 12px;
+		padding: 0.6rem 0.8rem;
 		text-decoration: none;
 		color: inherit;
-		border-left: 4px solid var(--section-color, var(--color-terracotta));
-		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.08);
+		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.07);
 		transition:
 			transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
 			box-shadow 180ms ease;
 	}
 
-	.section-card:not(.soon):hover {
+	.family-item:not(.soon):hover {
 		transform: translateY(-3px);
 		box-shadow: 0 10px 22px rgba(58, 42, 32, 0.14);
 	}
 
-	.section-card.soon {
-		background: rgba(255, 255, 255, 0.5);
+	.family-item.soon {
+		background: rgba(255, 255, 255, 0.45);
 		box-shadow: none;
-		border: 1px dashed rgba(58, 42, 32, 0.18);
-		border-left-width: 4px;
+		border: 1px dashed rgba(58, 42, 32, 0.16);
 		opacity: 0.75;
-		cursor: not-allowed;
+	}
+
+	.item-name {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.95rem;
+		color: var(--color-brick);
+	}
+
+	.item-desc {
+		font-size: 0.78rem;
+		line-height: 1.35;
+		color: var(--color-text);
+		opacity: 0.8;
 	}
 
 	/* Reflet qui balaie TOUTE la carte au survol (pas juste l'icône) :
@@ -794,42 +853,10 @@
 	   reflet revient instantanément à son point de départ (hors champ)
 	   plutôt que de rejouer la traversée à l'envers — le mouvement ne va
 	   que dans un sens, gauche → droite. */
-	.section-card:hover .shine,
+	.family-item:hover .shine,
 	.external-card:hover .shine {
 		transform: translateX(130%);
 		transition: transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-
-	.section-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.2rem;
-		height: 2.2rem;
-		margin-bottom: 0.3rem;
-		border-radius: 10px;
-		color: var(--section-color, var(--color-terracotta));
-		background: color-mix(in srgb, var(--section-color, var(--color-terracotta)) 14%, transparent);
-	}
-
-	.section-primary {
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 1.05rem;
-		color: var(--section-color, var(--color-brick));
-	}
-
-	.section-secondary {
-		font-size: 0.78rem;
-		color: var(--color-teal);
-	}
-
-	.section-desc {
-		margin-top: 0.25rem;
-		font-size: 0.8rem;
-		line-height: 1.35;
-		color: var(--color-text);
-		opacity: 0.85;
 	}
 
 	.soon-tag {
