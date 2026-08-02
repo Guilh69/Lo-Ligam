@@ -15,6 +15,7 @@
 	import PageBackground from '$lib/components/PageBackground.svelte';
 	import WaveLandscape from '$lib/components/WaveLandscape.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { families, externalLinks } from '$lib/data/siteSections';
 
@@ -61,82 +62,39 @@
 		// À VALIDER par Romain sur dicodòc avant publication.
 		heroLead: { oc: "Lo Ligam t'acompanha", fr: "Lo Ligam t'accompagne" },
 		heroSub: { oc: "a la descobèrta de l'occitan", fr: "à la découverte de l'occitan" },
-		feature1: {
-			tag: { oc: 'Fièrs de la lenga', fr: 'Fiers de la langue' },
-			title: {
-				oc: "Una lenga a l'ora del mond modèrne.",
-				fr: 'Une langue à l’heure du monde moderne.'
-			},
-			body: {
-				oc: "Pels occitans : un espleit bèl e seriós, a l'ausada de las mai grandas aplicacions, per tornar prene una lenga qu'es ja vòstra — sens nostalgia, amb fiertat.",
-				fr: 'Pour les occitans : un outil beau et sérieux, à la hauteur des plus grandes applications, pour se réapproprier une langue qui est la vôtre — sans nostalgie, avec fierté.'
+		what: {
+			title: { oc: 'Qu’es aquò, Lo Ligam ?', fr: 'Qu’est-ce que Lo Ligam ?' },
+			lead: {
+				oc: 'Un sol endrech per tot l’ecosistèma occitan : aprene la lenga, descobrir lo país, se retrobar.',
+				fr: 'Un seul endroit pour tout l’écosystème occitan : apprendre la langue, découvrir le pays, se retrouver.'
 			}
 		},
-		feature2: {
-			tag: { oc: "Descobrir l'Occitània", fr: 'Découvrir l’Occitanie' },
-			title: {
-				oc: 'Una pòrta dobèrta sus un país entièr.',
-				fr: 'Une porte ouverte sur un pays entier.'
+		// Chiffres volontairement en XX : le contenu sera produit et vérifié
+		// plus tard par Romain. On pose la forme, pas encore les données.
+		lenga: {
+			title: { oc: 'L’occitan, uèi', fr: 'L’occitan, aujourd’hui' },
+			lead: {
+				oc: 'Una lenga viva, parlada de l’Atlantic a las Alps.',
+				fr: 'Une langue vivante, parlée de l’Atlantique aux Alpes.'
 			},
-			body: {
-				oc: "Pels curioses : una pòrta d'entrada cap a l'Occitània, sa lenga, son istòria e son territòri — plan mai qu'un vocabulari, tot un país d'explorar.",
-				fr: 'Pour les curieux : une porte d’entrée vers l’Occitanie, sa langue, son histoire et son territoire — bien plus qu’un vocabulaire, tout un pays à explorer.'
+			facts: [
+				{ num: 'XX', oc: 'de locutors', fr: 'de locuteurs' },
+				{ num: 'XX', oc: 'despartaments', fr: 'départements' },
+				{ num: 'XX', oc: 'sègles de literatura', fr: 'siècles de littérature' }
+			],
+			note: {
+				oc: 'Chifras d’exemple, de completar.',
+				fr: 'Chiffres d’exemple, à compléter.'
 			}
 		},
-		statement: {
-			oc: 'Una lenga viva, pas un musèu.',
-			fr: 'Une langue vivante, pas un musée.'
+		carta: {
+			title: { oc: 'Lo Mond en occitan', fr: 'Le Monde en occitan' },
+			lead: {
+				oc: 'Una carta entièra dins la lenga, dialèctes e luòcs d’interès compreses.',
+				fr: 'Une carte entière dans la langue, dialectes et lieux d’intérêt compris.'
+			},
+			cta: { oc: 'Dobrir la carta', fr: 'Ouvrir la carte' }
 		},
-		values: [
-			{
-				tag: { oc: 'Ètica', fr: 'Éthique' },
-				text: {
-					oc: 'Vòstras donadas son pas vendudas, ni pistadas.',
-					fr: 'Vos données ne sont ni vendues, ni pistées.'
-				}
-			},
-			{
-				tag: { oc: 'Ecologia', fr: 'Écologie' },
-				text: {
-					oc: 'Un site sobri, albergat en Euròpa, pensat per pesar leugièr.',
-					fr: 'Un site sobre, hébergé en Europe, pensé pour peser léger.'
-				}
-			},
-			{
-				tag: { oc: 'Inclusivitat', fr: 'Inclusivité' },
-				text: {
-					oc: "Gratuit dins son còr, per jamai exclure per l'argent.",
-					fr: 'Gratuit dans son cœur, pour ne jamais exclure par l’argent.'
-				}
-			}
-		],
-		trio: [
-			{
-				title: { oc: 'Ensag gratuit', fr: 'Essai gratuit' },
-				text: {
-					oc: 'Una leiçon gratuita, sens compte, per tastar abans de te lançar.',
-					fr: 'Une leçon gratuite, sans compte, pour goûter avant de te lancer.'
-				},
-				href: '/aprene/essai'
-			},
-			{
-				title: { oc: 'Ai ja un compte', fr: 'J’ai déjà un compte' },
-				text: {
-					oc: 'Retròba ta progression e contunha ton aprendissatge.',
-					fr: 'Retrouve ta progression et continue ton apprentissage.'
-				},
-				href: '/compte'
-			},
-			{
-				title: { oc: 'Seguètz-nos', fr: 'Suivez-nous' },
-				text: {
-					oc: 'Retròba Lo Ligam sus Instagram entre doas leiçons.',
-					fr: 'Retrouve Lo Ligam sur Instagram entre deux leçons.'
-				},
-				href: 'https://www.instagram.com/lo_ligam/',
-				external: true
-			}
-		],
 		footer: {
 			oc: 'Fach amb amor en Occitània.',
 			fr: 'Fait avec amour en Occitanie.'
@@ -470,89 +428,52 @@
 		>
 	</section>
 
-	<section class="feature">
-		<div class="feature-text">
-			<p
-				class="feature-tag"
-				use:scramble={{ oc: t.feature1.tag.oc, fr: t.feature1.tag.fr, lang }}
-			></p>
-			<h2
-				class="feature-title"
-				use:scramble={{ oc: t.feature1.title.oc, fr: t.feature1.title.fr, lang }}
-			></h2>
-			<p
-				class="feature-body"
-				use:scramble={{ oc: t.feature1.body.oc, fr: t.feature1.body.fr, lang }}
-			></p>
-		</div>
-		<div class="feature-visual feature-visual--terracotta" aria-hidden="true">
-			<svg class="watermark" viewBox="0 0 300 300">
-				<rect x="122" y="55" width="56" height="95" rx="24" />
-				<rect x="122" y="150" width="56" height="95" rx="24" />
-				<rect x="55" y="122" width="95" height="56" rx="24" />
-				<rect x="150" y="122" width="95" height="56" rx="24" />
-				<rect x="122" y="122" width="56" height="56" rx="10" />
-			</svg>
+	<section class="chapter chapter--what">
+		<p class="chapter-num">01</p>
+		<h2 class="chapter-title" use:scramble={{ oc: t.what.title.oc, fr: t.what.title.fr, lang }}></h2>
+		<p class="chapter-lead" use:scramble={{ oc: t.what.lead.oc, fr: t.what.lead.fr, lang }}></p>
+
+		<div class="what-families">
+			{#each families as fam, i (fam.id)}
+				{@const Icon = sectionIcons[fam.icon]}
+				<div class="what-family reveal" style="--section-color: {fam.color}; --step: {i}">
+					<span class="what-icon"><Icon size={26} /></span>
+					<span class="what-name" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
+					<span
+						class="what-tagline"
+						use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}
+					></span>
+				</div>
+			{/each}
 		</div>
 	</section>
 
-	<section class="feature feature--reverse">
-		<div class="feature-text">
-			<p
-				class="feature-tag feature-tag--teal"
-				use:scramble={{ oc: t.feature2.tag.oc, fr: t.feature2.tag.fr, lang }}
-			></p>
-			<h2
-				class="feature-title"
-				use:scramble={{ oc: t.feature2.title.oc, fr: t.feature2.title.fr, lang }}
-			></h2>
-			<p
-				class="feature-body"
-				use:scramble={{ oc: t.feature2.body.oc, fr: t.feature2.body.fr, lang }}
-			></p>
+	<section class="chapter chapter--lenga">
+		<p class="chapter-num">02</p>
+		<h2 class="chapter-title" use:scramble={{ oc: t.lenga.title.oc, fr: t.lenga.title.fr, lang }}></h2>
+		<p class="chapter-lead" use:scramble={{ oc: t.lenga.lead.oc, fr: t.lenga.lead.fr, lang }}></p>
+
+		<div class="facts">
+			{#each t.lenga.facts as fact, i}
+				<div class="fact reveal" style="--step: {i}">
+					<span class="fact-num">{fact.num}</span>
+					<span class="fact-label" use:scramble={{ oc: fact.oc, fr: fact.fr, lang }}></span>
+				</div>
+			{/each}
 		</div>
-		<div class="feature-visual feature-visual--teal" aria-hidden="true">
-			<svg class="watermark" viewBox="0 0 300 300">
-				<rect x="122" y="55" width="56" height="95" rx="24" />
-				<rect x="122" y="150" width="56" height="95" rx="24" />
-				<rect x="55" y="122" width="95" height="56" rx="24" />
-				<rect x="150" y="122" width="95" height="56" rx="24" />
-				<rect x="122" y="122" width="56" height="56" rx="10" />
-			</svg>
-		</div>
+		<p class="facts-note" use:scramble={{ oc: t.lenga.note.oc, fr: t.lenga.note.fr, lang }}></p>
 	</section>
 
-	<section class="statement">
-		<p
-			class="statement-primary"
-			use:scramble={{ oc: t.statement.oc, fr: t.statement.fr, lang }}
-		></p>
-		<p class="statement-secondary">
-			<em use:scramble={{ oc: `(${t.statement.fr})`, fr: `(${t.statement.oc})`, lang }}></em>
-		</p>
-	</section>
-
-	<section class="values">
-		{#each t.values as value}
-			<div class="value">
-				<p class="value-tag" use:scramble={{ oc: value.tag.oc, fr: value.tag.fr, lang }}></p>
-				<p class="value-text" use:scramble={{ oc: value.text.oc, fr: value.text.fr, lang }}></p>
-			</div>
-		{/each}
-	</section>
-
-	<section class="trio">
-		{#each t.trio as card}
-			<a
-				class="trio-card"
-				href={card.href}
-				target={card.external ? '_blank' : undefined}
-				rel={card.external ? 'noopener noreferrer' : undefined}
-			>
-				<p class="trio-title" use:scramble={{ oc: card.title.oc, fr: card.title.fr, lang }}></p>
-				<p class="trio-text" use:scramble={{ oc: card.text.oc, fr: card.text.fr, lang }}></p>
-			</a>
-		{/each}
+	<section class="chapter chapter--carta">
+		<p class="chapter-num">03</p>
+		<h2 class="chapter-title" use:scramble={{ oc: t.carta.title.oc, fr: t.carta.title.fr, lang }}></h2>
+		<p class="chapter-lead" use:scramble={{ oc: t.carta.lead.oc, fr: t.carta.lead.fr, lang }}></p>
+		<a class="carta-preview reveal" href="/carta" aria-label={t.carta.title[lang]}>
+			<CartaOccitania visibility={{ lieusInteres: true, dialectes: false }} />
+			<span class="carta-overlay">
+				<span class="btn-primary btn-small" use:scramble={{ oc: t.carta.cta.oc, fr: t.carta.cta.fr, lang }}></span>
+			</span>
+		</a>
 	</section>
 
 	<SiteFooter tagline={t.footer} />
@@ -1268,206 +1189,182 @@
 		box-shadow: 0 4px 12px rgba(224, 164, 59, 0.4);
 	}
 
-	.feature {
+	/* Chapitres numérotés (repris de Ponpon Mania) : chaque section est
+	   une idée, annoncée par son numéro. Bandes pleine largeur alternées
+	   pour donner du rythme, au lieu d'une suite de cartes centrées. */
+	.chapter {
 		position: relative;
-		display: grid;
-		grid-template-columns: 1.1fr 0.9fr;
-		align-items: center;
-		gap: 2.5rem;
-		max-width: 72rem;
-		margin: 0 auto;
+		z-index: 3;
 		padding: 5rem 1.5rem;
+		text-align: center;
 	}
 
-	.feature--reverse {
-		direction: rtl;
+	.chapter--what {
+		background: rgba(255, 255, 255, 0.55);
 	}
 
-	.feature--reverse .feature-text {
-		direction: ltr;
+	.chapter--lenga {
+		background: var(--color-brick);
+		color: var(--color-cream);
 	}
 
-	.feature-tag {
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 0.95rem;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		color: var(--color-brick);
+	.chapter-num {
 		margin: 0 0 0.5rem;
-	}
-
-	.feature-tag--teal {
-		color: var(--color-teal);
-	}
-
-	.feature-title {
 		font-family: var(--font-heading);
-		font-size: clamp(1.9rem, 3vw, 2.3rem);
-		font-weight: 600;
-		color: var(--color-text);
-		margin: 0 0 0.75rem;
-		line-height: 1.25;
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.25em;
+		opacity: 0.45;
+	}
+
+	.chapter-title {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+		font-weight: 700;
 		text-wrap: balance;
 	}
 
-	.feature-body {
-		margin: 0;
-		text-wrap: pretty;
-		font-size: 1.05rem;
-		line-height: 1.6;
-		color: var(--color-text);
+	.chapter--what .chapter-title,
+	.chapter--carta .chapter-title {
+		color: var(--color-brick);
+	}
+
+	.chapter-lead {
 		max-width: 34rem;
+		margin: 0.75rem auto 0;
+		font-size: 1.02rem;
+		line-height: 1.5;
+		opacity: 0.85;
+		text-wrap: pretty;
 	}
 
-	.feature-visual {
-		direction: ltr;
-		aspect-ratio: 4 / 3;
-		border-radius: 28px;
+	/* Révélation au défilement, en CSS natif : chaque bloc apparaît quand
+	   il entre dans la fenêtre, décalé par --step pour un effet de
+	   cascade. Sur les navigateurs sans animation-timeline (Firefox,
+	   anciens Safari) le contenu s'affiche simplement, rien ne casse. */
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			.reveal {
+				animation: reveal-in linear both;
+				animation-timeline: view();
+				animation-range: entry 10% cover 32%;
+				animation-delay: calc(var(--step, 0) * -0.06s);
+			}
+		}
+	}
+
+	@keyframes reveal-in {
+		from {
+			opacity: 0;
+			transform: translateY(28px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.what-families {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+		gap: 1rem;
+		max-width: 58rem;
+		margin: 2.5rem auto 0;
+	}
+
+	.what-family {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		overflow: hidden;
+		gap: 0.35rem;
+		padding: 1.5rem 1rem;
+		background: white;
+		border-radius: 16px;
+		border-top: 4px solid var(--section-color);
+		box-shadow: 0 6px 18px rgba(58, 42, 32, 0.08);
 	}
 
-	.feature-visual--terracotta {
-		background: linear-gradient(155deg, var(--color-terracotta), var(--color-brick));
+	.what-icon {
+		display: flex;
+		color: var(--section-color);
 	}
 
-	.feature-visual--teal {
-		background: linear-gradient(155deg, var(--color-teal), #163e41);
+	.what-name {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 1.1rem;
+		color: var(--section-color);
 	}
 
-	.watermark {
-		width: 60%;
-		height: 60%;
+	.what-tagline {
+		font-size: 0.82rem;
+		opacity: 0.7;
 	}
 
-	.feature-visual--terracotta .watermark rect {
-		fill: var(--color-gold);
+	.facts {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+		gap: 1.5rem;
+		max-width: 46rem;
+		margin: 2.5rem auto 0;
+	}
+
+	.fact {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.fact-num {
+		font-family: var(--font-heading);
+		font-size: clamp(2.4rem, 6vw, 3.6rem);
+		font-weight: 700;
+		line-height: 1;
+		color: var(--color-gold);
+	}
+
+	.fact-label {
+		font-size: 0.9rem;
+		opacity: 0.8;
+	}
+
+	.facts-note {
+		margin: 1.75rem 0 0;
+		font-size: 0.78rem;
 		opacity: 0.5;
 	}
 
-	.feature-visual--teal .watermark rect {
-		fill: var(--color-cream);
-		opacity: 0.35;
-	}
-
-	.statement {
+	/* Aperçu cliquable de la vraie carte : on montre l'objet, on ne le
+	   décrit pas. pointer-events coupé sur la carte elle-même pour que le
+	   clic aille au lien et non aux commandes de zoom. */
+	.carta-preview {
 		position: relative;
-		background: var(--color-terracotta);
-		padding: 4.5rem 1.5rem;
-		text-align: center;
-	}
-
-	.statement-primary {
-		font-family: var(--font-heading);
-		font-size: clamp(2rem, 4.5vw, 3rem);
-		font-weight: 700;
-		color: white;
-		margin: 0 0 0.5rem;
-		text-wrap: balance;
-	}
-
-	.statement-secondary {
-		margin: 0;
-		color: rgba(255, 255, 255, 0.85);
-		font-size: 1.1rem;
-		text-wrap: pretty;
-	}
-
-	.values {
-		position: relative;
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 1.5rem;
-		max-width: 60rem;
-		margin: 0 auto;
-		padding: 4rem 1.5rem 2rem;
-		text-align: center;
-	}
-
-	.value-tag {
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 1rem;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: var(--color-olive);
-		margin: 0 0 0.35rem;
-	}
-
-	.value-text {
-		margin: 0;
-		font-size: 0.9rem;
-		color: var(--color-text);
-		text-wrap: pretty;
-	}
-
-	.trio {
-		position: relative;
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		gap: 1.25rem;
-		max-width: 60rem;
-		margin: 0 auto;
-		padding: 2rem 1.5rem 3rem;
-	}
-
-	.trio-card {
 		display: block;
-		background: rgba(255, 255, 255, 0.6);
-		border: 1px solid rgba(165, 52, 42, 0.15);
+		max-width: 62rem;
+		height: min(58vh, 26rem);
+		margin: 2.5rem auto 0;
 		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: 0 14px 36px rgba(58, 42, 32, 0.18);
+	}
+
+	.carta-preview > :global(*) {
+		pointer-events: none;
+	}
+
+	.carta-overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
 		padding: 1.5rem;
-		text-align: left;
-		text-decoration: none;
-		color: inherit;
-		transition:
-			transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
-			box-shadow 200ms ease,
-			border-color 200ms ease;
+		background: linear-gradient(to top, rgba(58, 42, 32, 0.35), transparent 45%);
+		transition: background 200ms ease;
 	}
 
-	.trio-card:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 10px 24px rgba(58, 42, 32, 0.12);
-		border-color: rgba(165, 52, 42, 0.35);
+	.carta-preview:hover .carta-overlay {
+		background: linear-gradient(to top, rgba(58, 42, 32, 0.5), transparent 55%);
 	}
-
-	.trio-card:active {
-		transform: translateY(-1px) scale(0.98);
-	}
-
-	.trio-title {
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 1.05rem;
-		margin: 0 0 0.35rem;
-		color: var(--color-brick);
-	}
-
-	.trio-text {
-		margin: 0;
-		font-size: 0.9rem;
-		line-height: 1.45;
-		color: var(--color-text);
-		text-wrap: pretty;
-	}
-
-
-	@media (max-width: 45rem) {
-		.feature,
-		.feature--reverse {
-			grid-template-columns: 1fr;
-			direction: ltr;
-			text-align: left;
-			padding: 3rem 1.5rem;
-		}
-
-		.feature-visual {
-			order: -1;
-		}
-	}
-
 </style>
