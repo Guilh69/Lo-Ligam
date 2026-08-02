@@ -82,6 +82,14 @@
 	let showEarnedPop = $state(false);
 	let resumed = $state(false);
 
+	// Vòl de la fogassa (mot gagné → pastilha de punts) : positions calculées
+	// au moment du gain, animation CSS entre les deux, punts ajoutats a l'arribada.
+	let slotsEl;
+	let pointsPillEl;
+	let flyingFougasse = $state(null);
+	let pillPulse = $state(false);
+	let flyId = 0;
+
 	const STORAGE_KEY = 'lo-ligam-essai-progress';
 
 	// Connecté : la progression vit dans Supabase (table lesson_progress).
@@ -203,6 +211,7 @@
 			tile.used = true;
 			bank = [...bank];
 			filledCount += 1;
+			playTick();
 			if (filledCount === requiredLetters.length) completeWord();
 		} else {
 			tile.wrong = true;
@@ -245,6 +254,7 @@
 			bank = [...bank];
 			filledCount += 1;
 			helpsUsedThisWord += 1;
+			playTick();
 		}
 		if (filledCount === requiredLetters.length) completeWord();
 	}
@@ -265,35 +275,113 @@
 
 	function completeWord() {
 		const earned = Math.max(2, 10 - helpsUsedThisWord * 3);
-		points += earned;
 		lastEarned = earned;
-		showEarnedPop = true;
-		setTimeout(() => (showEarnedPop = false), 900);
-		playChime();
-		saveProgress();
+		flyFougasseToPoints();
+		setTimeout(playChime, 180);
+		setTimeout(() => {
+			points += earned;
+			showEarnedPop = true;
+			pillPulse = true;
+			setTimeout(() => (showEarnedPop = false), 900);
+			setTimeout(() => (pillPulse = false), 260);
+			saveProgress();
+		}, 520);
 	}
 
+	// Calcule le trajet entre le mot tout juste complété et la pastille de
+	// punts, puis laisse la fogassa voler (voir le bloc flying-fougasse du markup).
+	function flyFougasseToPoints() {
+		if (!browser || !slotsEl || !pointsPillEl) return;
+		const from = slotsEl.getBoundingClientRect();
+		const to = pointsPillEl.getBoundingClientRect();
+		flyId += 1;
+		flyingFougasse = {
+			id: flyId,
+			startX: from.left + from.width / 2,
+			startY: from.top + from.height / 2,
+			dx: to.left + to.width / 2 - (from.left + from.width / 2),
+			dy: to.top + to.height / 2 - (from.top + from.height / 2)
+		};
+		const thisFlyId = flyId;
+		setTimeout(() => {
+			if (flyingFougasse?.id === thisFlyId) flyingFougasse = null;
+		}, 560);
+	}
+
+	// Petit "whoosh" d'air quand une lettre se pose dans la bonne case
+	// (touche, aide ou clic sur tuile) : bruit blanc filtré, balayage de fréquence.
+	function playTick() {
+		if (muted || !browser) return;
+		try {
+			const ctx = new (window.AudioContext || window.webkitAudioContext)();
+			const now = ctx.currentTime;
+			const duration = 0.18;
+
+			const bufferSize = Math.floor(ctx.sampleRate * duration);
+			const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+			const data = buffer.getChannelData(0);
+			for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+			const noise = ctx.createBufferSource();
+			noise.buffer = buffer;
+
+			const filter = ctx.createBiquadFilter();
+			filter.type = 'bandpass';
+			filter.Q.value = 0.7;
+			filter.frequency.setValueAtTime(500, now);
+			filter.frequency.exponentialRampToValueAtTime(2000, now + duration * 0.55);
+			filter.frequency.exponentialRampToValueAtTime(350, now + duration);
+
+			const gain = ctx.createGain();
+			gain.gain.setValueAtTime(0.0001, now);
+			gain.gain.exponentialRampToValueAtTime(0.2, now + duration * 0.25);
+			gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+			noise.connect(filter).connect(gain).connect(ctx.destination);
+			noise.start(now);
+			noise.stop(now + duration);
+		} catch (e) {
+			/* Web Audio indisponible : on continue sans son, jamais bloquant. */
+		}
+	}
+
+	// Une seule note, aiguë mais douce : sinusoïde pure (aucun harmonique dur,
+	// contrairement à triangle/carré), filtrée pour arrondir, avec une petite
+	// sous-octave discrète en dessous pour donner du corps sans stridence.
 	function playChime() {
 		if (muted || !browser) return;
 		try {
 			const ctx = new (window.AudioContext || window.webkitAudioContext)();
 			const now = ctx.currentTime;
-			[783.99, 1046.5].forEach((freq, i) => {
-				const t0 = now + i * 0.11;
-				const osc = ctx.createOscillator();
-				osc.type = 'triangle';
-				osc.frequency.value = freq;
-				const filter = ctx.createBiquadFilter();
-				filter.type = 'lowpass';
-				filter.frequency.value = 3200;
-				const gain = ctx.createGain();
-				gain.gain.setValueAtTime(0.0001, t0);
-				gain.gain.exponentialRampToValueAtTime(0.22, t0 + 0.015);
-				gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.5);
-				osc.connect(filter).connect(gain).connect(ctx.destination);
-				osc.start(t0);
-				osc.stop(t0 + 0.52);
-			});
+			const freq = 1567.98; // G6 : aigu, clair
+
+			const filter = ctx.createBiquadFilter();
+			filter.type = 'lowpass';
+			filter.frequency.value = 2600;
+			filter.Q.value = 0.4;
+			filter.connect(ctx.destination);
+
+			const osc = ctx.createOscillator();
+			osc.type = 'sine';
+			osc.frequency.value = freq;
+			const gain = ctx.createGain();
+			gain.gain.setValueAtTime(0.0001, now);
+			gain.gain.exponentialRampToValueAtTime(0.3, now + 0.02);
+			gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.1);
+			osc.connect(gain).connect(filter);
+			osc.start(now);
+			osc.stop(now + 1.12);
+
+			const undertone = ctx.createOscillator();
+			undertone.type = 'sine';
+			undertone.frequency.value = freq / 2;
+			const undertoneGain = ctx.createGain();
+			undertoneGain.gain.setValueAtTime(0.0001, now);
+			undertoneGain.gain.exponentialRampToValueAtTime(0.08, now + 0.02);
+			undertoneGain.gain.exponentialRampToValueAtTime(0.0001, now + 1);
+			undertone.connect(undertoneGain).connect(filter);
+			undertone.start(now);
+			undertone.stop(now + 1.02);
 		} catch (e) {
 			/* Web Audio indisponible : on continue sans son, jamais bloquant. */
 		}
@@ -405,7 +493,7 @@
 					↺ Recomençar
 				</button>
 			{/if}
-			<div class="points-pill">
+			<div class="points-pill" class:pulse={pillPulse} bind:this={pointsPillEl}>
 				<FougasseIcon size={20} /> {points}
 				{#if showEarnedPop}<span class="earned-pop">+{lastEarned}</span>{/if}
 			</div>
@@ -419,6 +507,18 @@
 			</button>
 		</div>
 	</header>
+
+	{#if flyingFougasse}
+		{#key flyingFougasse.id}
+			<div
+				class="flying-fougasse"
+				style="left:{flyingFougasse.startX}px; top:{flyingFougasse.startY}px; --dx:{flyingFougasse.dx}px; --dy:{flyingFougasse.dy}px;"
+				aria-hidden="true"
+			>
+				<FougasseIcon size={22} />
+			</div>
+		{/key}
+	{/if}
 
 	{#if phase === 'context'}
 		<section class="intro-card">
@@ -497,7 +597,7 @@
 
 				<p class="target-fr">{current.fr}</p>
 
-				<div class="slots" class:shake={slotShake}>
+				<div class="slots" class:shake={slotShake} bind:this={slotsEl}>
 					{#each displayChars as c}
 						{#if c.isLetter}
 							<span class="slot" class:filled={c.filled}>{c.filled ? c.ch : ''}</span>
@@ -732,6 +832,34 @@
 		font-size: 0.95rem;
 		padding: 0.35rem 0.8rem;
 		border-radius: 999px;
+		transition: transform 220ms ease;
+	}
+
+	.points-pill.pulse {
+		transform: scale(1.18);
+	}
+
+	.flying-fougasse {
+		position: fixed;
+		z-index: 60;
+		pointer-events: none;
+		transform: translate(-50%, -50%);
+		animation: fly-to-points 560ms cubic-bezier(0.3, 0, 0.35, 1) forwards;
+	}
+
+	@keyframes fly-to-points {
+		0% {
+			transform: translate(-50%, -50%) scale(1);
+			opacity: 1;
+		}
+		65% {
+			transform: translate(calc(-50% + var(--dx) * 0.7), calc(-50% + var(--dy) * 0.55 - 24px)) scale(1.1);
+			opacity: 1;
+		}
+		100% {
+			transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.35);
+			opacity: 0;
+		}
 	}
 
 	.earned-pop {
