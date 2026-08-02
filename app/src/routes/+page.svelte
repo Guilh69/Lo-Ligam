@@ -11,6 +11,9 @@
 	import QuillIcon from '$lib/components/QuillIcon.svelte';
 	import CrossIcon from '$lib/components/CrossIcon.svelte';
 	import EnvelopeIcon from '$lib/components/EnvelopeIcon.svelte';
+	import BgCarousel from '$lib/components/BgCarousel.svelte';
+	import PageBackground from '$lib/components/PageBackground.svelte';
+	import WaveLandscape from '$lib/components/WaveLandscape.svelte';
 	import { siteSections, externalLinks } from '$lib/data/siteSections';
 
 	const sectionIcons = {
@@ -135,57 +138,7 @@
 		}
 	};
 
-	const bgImages = Array.from(
-		{ length: 28 },
-		(_, i) => `/bg/design-${String(i + 1).padStart(2, '0')}.webp`
-	);
-
-	function shuffle(arr) {
-		const a = [...arr];
-		for (let i = a.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-			[a[i], a[j]] = [a[j], a[i]];
-		}
-		return a;
-	}
-
-	// Ordre fixe par défaut (identique serveur/client) pour que les rangées
-	// soient déjà pleines dès le tout premier rendu, sans "trou" le temps
-	// que le JS s'active. Le mélange aléatoire arrive juste après, en
-	// remplaçant seulement les src des images déjà en place (pas de flash).
-	let bgRows = $state([bgImages.slice(0, 9), bgImages.slice(9, 19), bgImages.slice(19, 28)]);
-
-	$effect(() => {
-		if (!browser) return;
-		const shuffled = shuffle(bgImages);
-		bgRows = [shuffled.slice(0, 9), shuffled.slice(9, 19), shuffled.slice(19, 28)];
-	});
-
 	let scrollY = $state(0);
-	const fadeDistance = 500;
-	let carouselOpacity = $derived(Math.max(0, 1 - scrollY / fadeDistance));
-
-	// Les vagues du bas s'écartent et s'effacent progressivement au scroll,
-	// plutôt que de disparaître d'un coup — même logique que le carrousel.
-	const landscapeFadeDistance = 360;
-	let landscapeProgress = $derived(Math.min(1, scrollY / landscapeFadeDistance));
-
-	// La souris fait légèrement "pencher" les vagues vers elle (parallaxe),
-	// désactivé une fois les vagues effacées pour ne jamais gêner le
-	// contenu réel qui défile en dessous.
-	let waveMouseX = $state(0);
-	let waveMouseY = $state(0);
-
-	function handleWaveMove(event) {
-		const rect = event.currentTarget.getBoundingClientRect();
-		waveMouseX = (event.clientX - rect.left) / rect.width - 0.5;
-		waveMouseY = (event.clientY - rect.top) / rect.height - 0.5;
-	}
-
-	function resetWaveMouse() {
-		waveMouseX = 0;
-		waveMouseY = 0;
-	}
 
 	// brandCardEl es lo repère (boita extèrna, JAMAI transformada) que
 	// dòna la posicion naturala del logo dins lo flux normal. Lo contengut
@@ -352,58 +305,6 @@
 	let ctaWaveClearance = $derived((viewportWidth >= 640 ? 160 : 128) + 30);
 	let ctaOffset = $derived(Math.max(0, ctaNaturalBottom - (viewportHeight - ctaWaveClearance)));
 
-	function updateLens(event) {
-		const item = event.currentTarget;
-		const rect = item.getBoundingClientRect();
-		item.style.setProperty('--mx', event.clientX - rect.left + 'px');
-		item.style.setProperty('--my', event.clientY - rect.top + 'px');
-	}
-
-	function clearLens(event) {
-		event.currentTarget.style.removeProperty('--mx');
-		event.currentTarget.style.removeProperty('--my');
-	}
-
-	const rowSpeeds = [16, -13, 19]; // px/s ; sign = direction
-
-	$effect(() => {
-		if (!browser) return;
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-		const els = [
-			document.querySelector('.bg-row-1'),
-			document.querySelector('.bg-row-2'),
-			document.querySelector('.bg-row-3')
-		];
-		// Largeur d'un seul jeu d'images mesurée une seule fois : la lire à
-		// chaque frame forcerait le navigateur à recalculer la mise en page
-		// ~60 fois par seconde (source classique de saccades).
-		const singleWidths = els.map((el) => (el ? el.scrollWidth / 4 : 0));
-		const positions = [0, 0, 0];
-		let lastTime;
-		let rafId;
-
-		function tick(now) {
-			if (lastTime === undefined) lastTime = now;
-			// Borne le pas de temps : si l'onglet a été mis en arrière-plan,
-			// évite un grand saut visuel au retour.
-			const dt = Math.min((now - lastTime) / 1000, 0.1);
-			lastTime = now;
-
-			els.forEach((el, idx) => {
-				const singleWidth = singleWidths[idx];
-				if (!el || !singleWidth) return;
-				positions[idx] += rowSpeeds[idx] * dt;
-				const wrapped = ((positions[idx] % singleWidth) + singleWidth) % singleWidth;
-				el.style.transform = `translateX(${-wrapped}px)`;
-			});
-
-			rafId = requestAnimationFrame(tick);
-		}
-
-		rafId = requestAnimationFrame(tick);
-		return () => cancelAnimationFrame(rafId);
-	});
 </script>
 
 <svelte:window
@@ -413,56 +314,11 @@
 	}}
 />
 
-<div class="bg-carousel" aria-hidden="true" style="opacity: {carouselOpacity}">
-	{#each bgRows as row, i}
-		<div class="bg-row bg-row-{i + 1}" style="top: {rowTops[i]}px">
-			{#each [...row, ...row, ...row, ...row] as src, j (i + '-' + j)}
-				<span class="bg-item" onpointermove={updateLens} onpointerleave={clearLens}>
-					<img class="bg-img-blur" {src} alt="" />
-					<img class="bg-img-sharp" {src} alt="" />
-				</span>
-			{/each}
-		</div>
-	{/each}
-</div>
+<BgCarousel {rowTops} {scrollY} />
 
-<div class="page-bg" aria-hidden="true">
-	<span class="blob blob-gold"></span>
-	<span class="blob blob-teal"></span>
-	<span class="blob blob-brick"></span>
-</div>
+<PageBackground />
 
-<svg
-	class="landscape"
-	viewBox="0 0 1440 220"
-	preserveAspectRatio="none"
-	aria-hidden="true"
-	style="opacity: {1 - landscapeProgress}; pointer-events: {landscapeProgress < 1 ? 'auto' : 'none'}"
-	onpointermove={handleWaveMove}
-	onpointerleave={resetWaveMouse}
->
-	<g class="wave-outer" style="transform: translateY({-landscapeProgress * 28}px)">
-		<g class="wave-mouse" style="transform: translate({waveMouseX * 16}px, {waveMouseY * 9}px)">
-			<g class="wave-bob wave-bob-1">
-				<path
-					d="M0,120 C240,180 480,60 720,100 C960,140 1200,40 1440,90 L1440,220 L0,220 Z"
-					fill="var(--color-brick)"
-					opacity="0.5"
-				/>
-			</g>
-		</g>
-	</g>
-	<g class="wave-outer" style="transform: translateY({landscapeProgress * 34}px)">
-		<g class="wave-mouse" style="transform: translate({waveMouseX * 28}px, {waveMouseY * 16}px)">
-			<g class="wave-bob wave-bob-2">
-				<path
-					d="M0,160 C240,200 480,120 720,150 C960,180 1200,110 1440,140 L1440,220 L0,220 Z"
-					fill="var(--color-terracotta)"
-				/>
-			</g>
-		</g>
-	</g>
-</svg>
+<WaveLandscape {scrollY} />
 
 <header class="topbar" bind:this={topbarEl}>
 	<div class="topbar-brand">
@@ -644,11 +500,11 @@
 			</span>
 		</p>
 
-		<div
-			class="brand-card"
-			bind:this={brandCardEl}
-			style="margin-bottom: {logoOffset}px"
-		>
+		<!-- Los decalatges calculats (logo, bòton) son PURAMENT visuals :
+		     jamai de marge, que cambiariá la reparticion « space-evenly » del
+		     hero, donc desplaçariá l'element mesurat, donc cambiariá lo
+		     decalatge… una bocla que fa derivar las mesuras a cada cicle. -->
+		<div class="brand-card" bind:this={brandCardEl}>
 			<div
 				class="brand-card-inner"
 				style="transform: translateY({logoOffset}px); opacity: {logoReady ? 1 : 0}"
@@ -669,7 +525,7 @@
 			class="btn-primary"
 			href="/aprene"
 			bind:this={ctaEl}
-			style="transform: translateY(-{ctaOffset}px); margin-top: {ctaOffset}px"
+			style="transform: translateY(-{ctaOffset}px)"
 		>
 			Aprèni l'occitan !
 		</a>
@@ -840,201 +696,6 @@
 </main>
 
 <style>
-	.bg-carousel {
-		position: fixed;
-		inset: 0;
-		z-index: 0;
-		overflow: hidden;
-		-webkit-mask-image: linear-gradient(
-			to right,
-			transparent 0%,
-			black 8%,
-			black 92%,
-			transparent 100%
-		);
-		mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-	}
-
-	.bg-row {
-		position: absolute;
-		left: 0;
-		right: 0;
-		display: flex;
-		align-items: center;
-		gap: 1.75rem;
-		width: max-content;
-		will-change: transform;
-	}
-
-	.bg-item {
-		position: relative;
-		width: 132px;
-		height: 132px;
-		flex-shrink: 0;
-	}
-
-	.bg-img-blur,
-	.bg-img-sharp {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		border-radius: 18px;
-		box-shadow: 0 6px 16px rgba(58, 42, 32, 0.18);
-	}
-
-	.bg-img-blur {
-		filter: blur(3.5px);
-	}
-
-	/* Écart plus net avec la version floue (contraste/saturation/luminosité
-	   nettement relevés) pour que la zone survolée se voie vraiment comme
-	   "mise au point", pas juste un peu moins floue. */
-	.bg-img-sharp {
-		clip-path: circle(0px at var(--mx, 50%) var(--my, 50%));
-		transition: clip-path 30ms linear;
-		filter: contrast(1.35) saturate(1.5) brightness(1.05);
-	}
-
-	.bg-item:hover .bg-img-sharp {
-		clip-path: circle(84px at var(--mx, 50%) var(--my, 50%));
-	}
-
-	.page-bg {
-		position: fixed;
-		inset: 0;
-		overflow: hidden;
-		z-index: 1;
-		pointer-events: none;
-		background: radial-gradient(
-			circle at 50% 0%,
-			rgba(250, 243, 230, 0.9) 0%,
-			rgba(245, 234, 216, 0.86) 60%
-		);
-	}
-
-	.blob {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(70px);
-	}
-
-	.blob-gold {
-		width: 420px;
-		height: 420px;
-		background: var(--color-gold);
-		opacity: 0.35;
-		top: -140px;
-		left: -120px;
-	}
-
-	.blob-teal {
-		width: 380px;
-		height: 380px;
-		background: var(--color-teal);
-		opacity: 0.2;
-		bottom: -100px;
-		right: -100px;
-	}
-
-	.blob-brick {
-		width: 300px;
-		height: 300px;
-		background: var(--color-brick);
-		opacity: 0.15;
-		top: 25%;
-		right: 8%;
-	}
-
-	.landscape {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 128px;
-		z-index: 2;
-		transition:
-			opacity 200ms linear,
-			height 200ms linear;
-	}
-
-	@media (min-width: 40rem) {
-		.landscape {
-			height: 160px;
-		}
-	}
-
-	.wave-outer {
-		transition: transform 200ms linear;
-	}
-
-	/* Suit la souris avec un peu d'inertie (easing plus lent que le
-	   scroll) pour un effet de profondeur discret, jamais brusque. */
-	.wave-mouse {
-		transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-	}
-
-	/* Mouvement organique en dérive, jamais synchronisé entre les deux
-	   vagues (durées, déphasage et trajets différents), pour éviter tout
-	   effet de rebond mécanique. */
-	.wave-bob-1 {
-		animation: wave-bob-1 14s ease-in-out infinite;
-	}
-
-	.wave-bob-2 {
-		animation: wave-bob-2 18s ease-in-out infinite;
-		animation-delay: -7s;
-	}
-
-	@keyframes wave-bob-1 {
-		0% {
-			transform: translate(0, 0);
-		}
-		25% {
-			transform: translate(9px, -4px);
-		}
-		50% {
-			transform: translate(3px, -8px);
-		}
-		75% {
-			transform: translate(-7px, -2px);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-
-	@keyframes wave-bob-2 {
-		0% {
-			transform: translate(0, 0);
-		}
-		30% {
-			transform: translate(-8px, 3px);
-		}
-		60% {
-			transform: translate(-2px, 6px);
-		}
-		85% {
-			transform: translate(6px, 2px);
-		}
-		100% {
-			transform: translate(0, 0);
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.wave-bob-1,
-		.wave-bob-2 {
-			animation: none;
-		}
-
-		.wave-mouse {
-			transition: none;
-			transform: none !important;
-		}
-	}
-
 	.topbar {
 		position: sticky;
 		top: 0;
