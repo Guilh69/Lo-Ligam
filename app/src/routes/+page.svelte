@@ -226,15 +226,38 @@
 			ctaNaturalBottom = ctaEl.getBoundingClientRect().bottom + window.scrollY;
 		}
 		if (kickerShiftEl) {
-			// Mesura la boita VISIBLA del tèxte (lo span decalat), pas lo <p>
-			// que l'enclau : lors boitas son pas identicas (block vs
-			// inline-block, ~5px d'escart), e es la boita visibla que cal
-			// centrar. Lo transform ja aplicat es sostrach en legissent
-			// dirèctament la matritz CSS (lectura DOM pura, cap de
-			// dependéncia reactiva, donc cap de bocla).
+			// Lo transform ja aplicat es sostrach en legissent dirèctament la
+			// matritz CSS (lectura DOM pura, cap de dependéncia reactiva,
+			// donc cap de bocla).
 			const rect = kickerShiftEl.getBoundingClientRect();
 			const applied = new DOMMatrixReadOnly(getComputedStyle(kickerShiftEl).transform).m42;
-			kickerNaturalCenterY = rect.top + window.scrollY + rect.height / 2 - applied;
+			const naturalTop = rect.top + window.scrollY - applied;
+			// Centrar la boita de linha metriá lo tèxte tròp naut : per de
+			// CAPITALAS sens jambatges, la boita reserva en bas una plaça
+			// voida per las descendentas. L'uèlh, el, vei lo centre de las
+			// LETRAS. On mesura donc l'encre reala amb las metricas de la
+			// poliça, e on tomba sus lo centre de linha se son pas
+			// disponiblas (vièlhs navegadors).
+			const ink = inkCenterFromTop(kickerShiftEl, rect.height);
+			kickerNaturalCenterY = naturalTop + (ink ?? rect.height / 2);
+		}
+	}
+
+	let inkCtx;
+	function inkCenterFromTop(el, boxHeight) {
+		try {
+			if (!inkCtx) inkCtx = document.createElement('canvas').getContext('2d');
+			const cs = getComputedStyle(el);
+			inkCtx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+			const m = inkCtx.measureText((el.textContent || '').trim().toUpperCase());
+			const { fontBoundingBoxAscent: fA, fontBoundingBoxDescent: fD } = m;
+			const { actualBoundingBoxAscent: aA, actualBoundingBoxDescent: aD } = m;
+			if (![fA, fD, aA, aD].every(Number.isFinite)) return null;
+			// Basa de linha dins la boita, puèi centre de l'encre a l'entorn.
+			const baselineFromTop = (boxHeight - (fA + fD)) / 2 + fA;
+			return baselineFromTop - (aA - aD) / 2;
+		} catch {
+			return null;
 		}
 	}
 
