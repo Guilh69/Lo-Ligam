@@ -11,8 +11,14 @@
 	// un tableau dérivé 60 fois par seconde saccadait.
 	let { items = [], onOpen = () => {} } = $props();
 
-	const GAP = 380; // écart en profondeur entre deux fiches
-	const NEAR = 60; // en deçà, la fiche est passée derrière le spectateur
+	const GAP = 460; // écart en profondeur entre deux fiches
+	// Jusqu'où la fiche continue d'avancer vers le spectateur avant d'être
+	// retirée. C'est ce réglage qui décide de la taille maximale atteinte :
+	// la perspective agrandit d'un facteur perspective / (perspective + z),
+	// donc plus la fiche vient en avant (z négatif), plus elle est grande.
+	// À 60, elle disparaissait avant même d'avoir dépassé sa taille normale —
+	// d'où l'impression qu'elle ne grossissait pas.
+	const NEAR = 500;
 	const FAR = 2600; // au-delà, invisible
 
 	let hostEl = $state();
@@ -29,15 +35,20 @@
 		offset += (18 + vitesse) * dt;
 		vitesse *= Math.pow(0.0015, dt); // amortissement continu, stable
 
+		// Sur un thème qui ne contient que deux ou trois fiches, la boucle est
+		// courte : on rapproche la limite pour qu'une fiche ne réapparaisse pas
+		// au fond avant d'être sortie par l'avant.
+		const near = Math.min(NEAR, span * 0.35);
+
 		for (let i = 0; i < cardEls.length; i++) {
 			const el = cardEls[i];
 			if (!el) continue;
 			let z = (((i * GAP - offset) % span) + span) % span;
-			// Ramène dans [-NEAR, span-NEAR] pour que les fiches sortent par
+			// Ramène dans [-near, span-near] pour que les fiches sortent par
 			// l'avant plutôt que de réapparaître brutalement.
-			if (z > span - NEAR) z -= span;
+			if (z > span - near) z -= span;
 
-			if (z < -NEAR || z > FAR) {
+			if (z < -near || z > FAR) {
 				el.style.visibility = 'hidden';
 				continue;
 			}
@@ -45,8 +56,11 @@
 
 			const t = Math.max(0, Math.min(1, z / FAR));
 			// Fondu aux deux bouts : entrée depuis le fond, sortie par l'avant.
+			// Le fondu de sortie ne commence qu'au tout dernier tiers : la fiche
+			// reste donc pleinement lisible pendant qu'elle grandit, et ne
+			// s'efface qu'en passant à côté du spectateur.
 			const fadeIn = Math.min(1, (1 - t) * 3.2);
-			const fadeOut = Math.min(1, (z + NEAR) / 220);
+			const fadeOut = Math.min(1, (z + near) / (near * 0.72));
 			el.style.opacity = String(Math.min(fadeIn, fadeOut).toFixed(3));
 			el.style.filter = `blur(${(t * 6).toFixed(2)}px)`;
 			el.style.transform = `translate3d(-50%, -50%, ${-z}px)`;
@@ -134,7 +148,7 @@
 		/* Le contenu est en position absolue : sans largeur explicite, le
 		   conteneur s'effondre à 0 dans un parent centré en colonne. */
 		width: 100%;
-		height: min(72vh, 36rem);
+		height: min(80vh, 44rem);
 		overflow: hidden;
 		border-radius: 20px;
 		background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.55), transparent 68%);
@@ -149,7 +163,8 @@
 	.scene {
 		position: absolute;
 		inset: 0;
-		perspective: 1000px;
+		/* Plus la perspective est courte, plus l'approche est spectaculaire. */
+		perspective: 900px;
 		perspective-origin: 50% 50%;
 		transform-style: preserve-3d;
 	}
@@ -158,7 +173,7 @@
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		width: min(17rem, 58vw);
+		width: min(22rem, 70vw);
 		padding: 0;
 		border: none;
 		background: none;

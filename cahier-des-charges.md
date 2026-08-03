@@ -322,6 +322,33 @@ pas une protection, seules les politiques RLS le sont.
 8. ⬜ À l'usage : Romain ajoute un vrai design depuis Canva et on vérifie le
    résultat sur `/mots`.
 
+### Chantiers ouverts le 2026-08-04
+
+1. ✅ Groupes de designs (onglet **Grops**) + lien admin dans le bandeau.
+2. ✅ Tunnel et carrousel — voir les deux causes trouvées ci-dessous.
+3. ⬜ Vidéos MP4 à l'ouverture d'une fiche. **Bloqué** : il faut un MP4 Canva
+   réel dans `design-stock/` pour mesurer avant de fixer un plafond de poids.
+4. ⬜ Espace **Òbras** (musiques, bandes-annonces, livres).
+
+**Tunnel — pourquoi les cartes ne grossissaient pas.** La taille apparente
+vient de la perspective : `perspective / (perspective + z)`. Les fiches
+étaient retirées dès `z < -60`, c'est-à-dire avant même d'avoir dépassé leur
+taille normale, et le fondu de sortie commençait encore plus tôt. La plus
+grande fiche pleinement visible faisait ~230 px. Elles avancent désormais
+jusqu'à `z = -500`, avec un fondu qui ne démarre qu'au dernier tiers.
+Attention à ce réglage : trop opaque trop longtemps, la fiche de devant
+masque toutes celles de derrière et le tunnel devient un diaporama.
+
+**Carrousel — pourquoi il fallait « cliquer pour commencer ».** L'effet de
+profondeur (`--away`) n'était calculé qu'à l'événement de défilement. Avant
+toute interaction, chaque carte gardait la valeur par défaut « au plus
+loin » : floue, à 55 % d'opacité et rétrécie — **carte centrale comprise**.
+Le carrousel semblait éteint. Il est désormais peint dès l'affichage, et la
+valeur par défaut est « au plus près » pour qu'un raté d'affichage ne rende
+jamais la page terne. Second point : un clic sur une carte de côté se
+contentait de la recentrer, il en fallait un second pour l'ouvrir. Un seul
+clic ouvre maintenant n'importe quelle carte.
+
 ### Choix techniques de l'espace d'administration
 
 - **Les images sont réduites dans le navigateur avant l'envoi**

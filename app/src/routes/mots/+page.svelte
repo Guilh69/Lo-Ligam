@@ -81,6 +81,22 @@
 			behavior: 'smooth'
 		});
 	}
+	// L'effet de profondeur des cartes n'était recalculé qu'au défilement. Tant
+	// qu'on n'avait rien touché, TOUTES les cartes gardaient leur valeur par
+	// défaut « au plus loin » : floues, ternes et rétrécies, carte centrale
+	// comprise. Le carrousel avait l'air éteint, et il fallait cliquer pour
+	// qu'il s'anime — ce n'était pas voulu. On peint donc dès l'affichage.
+	$effect(() => {
+		if (view !== 'carrossel' || !trackEl) return;
+		requestAnimationFrame(() => requestAnimationFrame(paint));
+	});
+
+	// Les flèches ne doivent pas sortir de la liste : sans bornes, la première
+	// flèche gauche ne faisait rien du tout, sans dire pourquoi.
+	function go(d) {
+		centerOn(Math.max(0, Math.min(visibles.length - 1, carIndex + d)));
+	}
+
 	function paint() {
 		if (!trackEl) return;
 		const mid = trackEl.scrollLeft + trackEl.clientWidth / 2;
@@ -185,12 +201,16 @@
 				onpointerup={up}
 				onpointercancel={up}
 			>
+				<!-- Un seul clic ouvre n'importe quelle carte, centrée ou non. Avant,
+				     une carte de côté se contentait de se recentrer : il fallait
+				     cliquer deux fois pour la voir, sans que rien ne l'indique. Le
+				     défilement et les flèches suffisent pour parcourir. -->
 				{#each visibles as f, i (f.id)}
 					<button
 						type="button"
 						class="slide"
 						bind:this={slideEls[i]}
-						onclick={() => moved <= 6 && (carIndex === i ? (openIndex = i) : centerOn(i))}
+						onclick={() => moved <= 6 && (openIndex = i)}
 					>
 						<img src={f.mini} alt="" loading="lazy" draggable="false" />
 						<span class="slide-name">{f.titre}</span>
@@ -198,9 +218,16 @@
 				{/each}
 			</div>
 			<div class="controls">
-				<button type="button" onclick={() => centerOn(carIndex - 1)} aria-label={tx.prev}>←</button>
+				<button type="button" onclick={() => go(-1)} disabled={carIndex === 0} aria-label={tx.prev}
+					>←</button
+				>
 				<span class="counter">{carIndex + 1} / {visibles.length}</span>
-				<button type="button" onclick={() => centerOn(carIndex + 1)} aria-label={tx.next}>→</button>
+				<button
+					type="button"
+					onclick={() => go(1)}
+					disabled={carIndex === visibles.length - 1}
+					aria-label={tx.next}>→</button
+				>
 			</div>
 		</div>
 	{:else}
@@ -432,9 +459,9 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-		filter: blur(calc(var(--away, 1) * 3px));
-		opacity: calc(1 - var(--away, 1) * 0.45);
-		transform: scale(calc(1 - var(--away, 1) * 0.1));
+		filter: blur(calc(var(--away, 0) * 3px));
+		opacity: calc(1 - var(--away, 0) * 0.45);
+		transform: scale(calc(1 - var(--away, 0) * 0.1));
 		transition: filter 120ms linear;
 	}
 
