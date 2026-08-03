@@ -1,42 +1,42 @@
-# Lo Ligam — mémoire du projet
+# Lo Ligam
 
-App + site d'apprentissage de l'occitan (languedocien, norme classique) et communauté occitane. Prolonge la marque Instagram existante « Lo Ligam ».
+Site d'apprentissage de l'occitan (languedocien, norme classique) + plateforme de l'écosystème occitan. Prolonge la marque Instagram « Lo Ligam ».
 
-## Documents de référence (à lire d'abord)
-- `cahier-des-charges.md` — source de vérité + **journal des décisions** (le lire en entier).
-- `plan-pedagogique-phase1.md` — pédagogie, niveaux CEFR, séquençage.
-- `parcours-utilisateur-mvp.md` — écrans du MVP.
-- `unitat-1-adieu.md` — 1er contenu.
-- `charte-graphique.md` — palette, typo, illustrations, piliers UX.
+## Travailler avec Romain
+- **Non développeur.** Expliquer en français simple, une étape à la fois, dire quoi cliquer.
+- **Ne jamais demander de clé API** : il utilise son abonnement.
+- Contredire quand c'est justifié ; signaler coûts, risques et dérives de périmètre.
+- Rôles : Claude conçoit/code/explique ; Romain installe, héberge, paie, décide.
+
+## VOUS DEVEZ vérifier avant d'annoncer que c'est fait
+- `npm run build` dans `app/` doit passer.
+- Pour tout changement visuel : **regarder la page** (capture d'écran), pas seulement mesurer des valeurs en JS. Des mesures correctes ont déjà masqué des chevauchements bien visibles.
+- Montrer la preuve (sortie de commande, capture). Ne jamais affirmer un succès non vérifié.
+- Le panneau Browser doit être affiché côté Romain pour que les captures fonctionnent.
 
 ## Valeurs (non négociables)
-Éthique, écologie (sobriété), inclusivité (RGAA/WCAG, écriture inclusive), fierté occitane. Européen quand possible.
+Éthique, écologie (**sobriété : poids des pages et des images**), inclusivité (RGAA/WCAG, écriture inclusive), fierté occitane. Européen quand possible.
 
-## Décisions clés déjà actées
-- Socle : **SvelteKit**, web d'abord ; mobile via Capacitor plus tard.
-- Langues MVP : occitan (défaut) + français. Puis catalan, anglais…
-- Niveaux CEFR ; MVP = A1. Âge minimum 15 ans (RGPD).
-- Essai libre avant compte. Connexion email/Google/Apple.
-- Identité : celle de l'Instagram (terracotta/or/crème, illustrations troubadour, croix occitana), adaptée aux règles d'interface (aéré, illustrations en accents).
-- Piliers UX : **animations soignées** (survol/clic/réussite), **sons** (désactivables, légers), **humour fin par touches**.
-- Contenu linguistique validé via ressources de lo Congrès (dicodòc).
+## Contenu
+- L'occitan produit par Claude est **toujours à valider par Romain** (dicodòc / lo Congrès) avant publication.
+- UX : animations soignées, sons discrets et désactivables, humour fin par touches.
+- Périmètre MVP : A1, compte, questionnaire. Cartographie et modèle payant = en cours d'arbitrage, voir `cahier-des-charges.md` §3/§6/§11 avant de supposer l'ancien périmètre.
 
-## Périmètre — rester sur la Phase 1
-MVP = apprentissage A1 + compte + questionnaire + relais (lo Congrès, OPLO). PAS de réseau social, wiki, visio pour l'instant.
-⚠️ Cartographie (Phase 3) et modèle payant du parcours autonome : réflexions ouvertes en cours de discussion, pas encore tranchées — voir `cahier-des-charges.md` §3/§6/§11 (journal, 2026-07-31) avant de supposer que l'ancien périmètre "tout gratuit, pas de carte avant longtemps" tient toujours.
+## Documents de référence
+`cahier-des-charges.md` (source de vérité + journal des décisions) · `plan-pedagogique-phase1.md` · `parcours-utilisateur-mvp.md` · `charte-graphique.md` · `unitat-1-adieu.md`
 
-## Comment travailler avec Romain (l'utilisateur)
-- **Non développeur.** Expliquer chaque action en français simple, une étape à la fois, dire quoi cliquer/accepter.
-- Contredire quand justifié ; signaler coûts, risques, pièges de périmètre.
-- **Ne jamais demander de clé API** (ANTHROPIC_API_KEY) : il utilise son abonnement. Rester sur Sonnet.
-- Rôles : Claude conçoit/code/explique ; Romain installe, crée les comptes, héberge, paie, décide.
-- Commits Git réguliers et lisibles.
+## Plusieurs conversations en parallèle
+Romain travaille via plusieurs conversations séparées, une par thème. Elles ne se voient pas : **Git est le seul canal de synchronisation**.
+- Avant une tâche conséquente : `git log --oneline -15` et `git status`.
+- Committer par petits lots, **uniquement les fichiers qu'on a soi-même modifiés**.
+- **Jamais de `git add -A`** sans relire `git status`.
+- Modifications non committées d'une autre conversation : ne pas les écraser ni les committer à sa place ; le signaler à Romain.
+- Fin de séance : vérifier que tout est **poussé** (committé ≠ poussé).
+- Décisions transverses → `cahier-des-charges.md` §11, pas la mémoire d'une conversation.
 
-## Coordination entre discussions
-Romain travaille sur ce projet via **plusieurs conversations Claude Code séparées**, une par thématique (accueil, parcours pédagogique, paiement, cartographie…). Chaque conversation est indépendante et ne voit pas ce qui se passe dans les autres — mais toutes partagent le **même dossier de projet** et le **même historique Git**. C'est le vrai canal de synchronisation, pas un rapport magique entre instances.
-
-- **En début de session sur une tâche un peu conséquente**, jeter un œil à `git log --oneline -15` et `git status` pour voir ce qui a changé récemment ailleurs, avant de supposer que l'état du code correspond à ce qu'on avait laissé.
-- **Committer régulièrement et par petits lots ciblés** (fichiers qu'on a soi-même modifiés), plutôt que de laisser traîner de gros changements non committés — d'autres conversations peuvent tourner en parallèle sur le même dossier, et de gros diffs non committés augmentent le risque de marcher sur le travail des autres.
-- **Ne jamais `git add -A` / large add sans relire `git status`** : des fichiers modifiés par une autre conversation peuvent être présents et ne doivent pas être committés à sa place sans le vouloir.
-- Si on tombe sur des modifications non committées visiblement faites par une autre conversation (nouveau composant, fichier modifié dont on n'est pas l'auteur) : ne pas les écraser ni les committer à leur place ; les prendre en compte, s'y aligner si pertinent, et le signaler à Romain.
-- Les décisions transverses (roadmap, modèle économique, périmètre) se logent dans `cahier-des-charges.md` (§11, journal) — c'est la référence commune à toutes les conversations, pas la mémoire d'une conversation en particulier.
+## Économiser le contexte
+La fenêtre de contexte est la ressource limitante : les performances se dégradent quand elle se remplit.
+- Lire des extraits ciblés plutôt que des fichiers entiers ; préférer `grep` à la lecture intégrale.
+- Ne pas relire un fichier qu'on vient d'éditer.
+- Déléguer les explorations larges à un sous-agent plutôt que de remplir la conversation principale.
+- Lors du compactage : **préserver la liste des fichiers modifiés, les décisions prises et ce qui reste à faire**.
