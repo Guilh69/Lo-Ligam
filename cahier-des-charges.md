@@ -310,7 +310,28 @@ pas une protection, seules les politiques RLS le sont.
    forçant une panne : la page affiche toujours les 204 fiches depuis le
    fichier gelé. Délai d'attente de la base : 5 s, au-delà on bascule.
    `fichas.js` porte désormais un en-tête « FICHIER GELÉ ».
-7. ⬜ Ensuite : les écrans de gestion des designs.
+7. ✅ **Fait** — écrans de gestion. `/admin` est un espace à deux onglets :
+   **Verrolhs** (le contrôle de sécurité, rejouable) et **Designs** (lister,
+   chercher, filtrer par thème, ajouter, modifier, publier/masquer,
+   réordonner, supprimer avec confirmation). Le contrôle d'accès est fait une
+   seule fois dans `admin/+layout.svelte`.
+8. ⬜ À l'usage : Romain ajoute un vrai design depuis Canva et on vérifie le
+   résultat sur `/mots`.
+
+### Choix techniques de l'espace d'administration
+
+- **Les images sont réduites dans le navigateur avant l'envoi**
+  (`$lib/imatges.js`) : deux WebP, 360 px et 860 px, qualité 0,82. L'export
+  Canva d'origine ne traverse jamais le réseau. Sobriété, quotas préservés, et
+  envoi bien plus rapide.
+- **Identifiants** sur le modèle des 204 fiches d'origine : `tema--titre`,
+  avec suffixe numérique si le nom est déjà pris.
+- **Suppression** : la ligne d'abord, puis les fichiers — et uniquement ceux
+  qui sont dans Supabase Storage. Les images historiques vivent dans
+  `app/static/` et ne doivent pas être touchées.
+- **Aucune marge négative dans les styles partagés du portail.** Une marge
+  négative sur `.subtitle` a fait chevaucher le titre de l'écran des designs.
+  Chaque page règle son propre sous-titre.
 
 ---
 
