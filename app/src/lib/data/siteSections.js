@@ -74,7 +74,7 @@ export const families = [
 				desc_oc: 'Fichas de vocabulari illustradas, per tèma.',
 				desc_fr: 'Fiches de vocabulaire illustrées, par thème.',
 				href: '/mots',
-				status: 'soon'
+				status: 'live'
 			},
 			{
 				id: 'bibliotèca',
