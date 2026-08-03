@@ -200,6 +200,57 @@ Signer les accords, créer les comptes, héberger, gérer l'argent et les décla
 
 ---
 
+## 12 bis. Espace d'administration (cadrage — conversation dédiée)
+
+> Ouvert le 2026-08-03. À traiter dans une conversation séparée : le sujet
+> touche à l'authentification, au stockage de fichiers et à la sécurité.
+
+### Le problème
+
+Les contenus du site sont aujourd'hui **écrits en dur dans le code** :
+les 204 fiches de vocabulaire (`app/src/lib/data/fichas.js`), les liens
+externes et les sections (`siteSections.js`). Ajouter un design, corriger
+un titre ou changer un lien suppose une intervention de Claude et un
+déploiement. Ce n'est pas tenable : Romain produit du contenu en continu.
+
+### Le besoin
+
+Un espace réservé à Romain pour **ajouter, modifier et supprimer** :
+
+- les **designs** (image, et vidéo MP4 quand elle existe) : titre, thème, ordre
+- les **sons** (prononciation, retours sonores de l'app)
+- les **liens** externes (acteurs occitans, ressources)
+
+### Ce que ça implique (à ne pas sous-estimer)
+
+| Brique | Enjeu |
+|---|---|
+| Authentification | Un seul compte administrateur. Personne d'autre ne doit pouvoir écrire. |
+| Stockage de fichiers | Supabase Storage (déjà dans le projet) pour images, MP4, sons |
+| Base de données | Tables `fichas`, `categories`, `sons`, `liens` + politiques RLS strictes |
+| Migration | Basculer les 204 fiches du fichier de code vers la base, sans rien perdre |
+| Écrans de gestion | Liste, formulaire, téléversement, aperçu, suppression avec confirmation |
+| Coût | Vérifier les quotas gratuits de Supabase Storage (les MP4 pèsent) |
+
+### Points à trancher dans cette conversation
+
+1. **Vidéos** : les MP4 sont dans le Canva de Romain, pas dans le projet.
+   Une image fixe *et* une vidéo par fiche ? Le son démarre-t-il seul
+   (les navigateurs le bloquent — il faut un bouton) ?
+2. **Migration ou cohabitation** : tout basculer en base d'un coup, ou
+   garder le fichier de code comme secours au début ?
+3. **Portée** : uniquement les designs pour commencer, ou sons et liens
+   dès le départ ?
+
+### Précaution
+
+C'est la première fois que le site aura une **écriture** en base depuis
+le navigateur. Les politiques RLS doivent être écrites et vérifiées avant
+d'ouvrir quoi que ce soit — une table ouverte en écriture publique est la
+faille la plus courante sur ce genre de projet.
+
+---
+
 ## 13. Prochaines étapes proposées
 
 1. Trancher la question de la **graphie** (bloquante pour le contenu).
