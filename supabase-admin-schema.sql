@@ -12,7 +12,7 @@
 --
 -- Ordre de mise en service :
 --   1. lancer ce script
---   2. s'ajouter comme administrateur (bloc 7, à la fin)
+--   2. s'ajouter comme administrateur (bloc 10, tout à la fin)
 --   3. lancer la vérification : cd app && npm run verificar:rls
 --   4. seulement ensuite, migrer les fiches et ouvrir les écrans
 
@@ -90,13 +90,15 @@ create table if not exists public.temas (
 	updated_at timestamptz not null default now()
 );
 
+-- Verrou posé IMMÉDIATEMENT après la création, avant toute autre commande :
+-- la table ne doit jamais exister, même une seconde, sans sa protection.
+alter table public.temas enable row level security;
+
 drop trigger if exists temas_updated_at on public.temas;
 
 create trigger temas_updated_at before
 update on public.temas for each row
 execute function public.toca_updated_at ();
-
-alter table public.temas enable row level security;
 
 
 -- 5) LES FICHES
@@ -123,6 +125,8 @@ create table if not exists public.fichas (
 	updated_at timestamptz not null default now()
 );
 
+alter table public.fichas enable row level security;
+
 create index if not exists fichas_tema_ordre_idx on public.fichas (tema_id, ordre);
 
 drop trigger if exists fichas_updated_at on public.fichas;
@@ -130,8 +134,6 @@ drop trigger if exists fichas_updated_at on public.fichas;
 create trigger fichas_updated_at before
 update on public.fichas for each row
 execute function public.toca_updated_at ();
-
-alter table public.fichas enable row level security;
 
 
 -- 6) LES POLITIQUES  ← le cœur de la sécurité
@@ -320,7 +322,58 @@ values
 on conflict (id) do nothing;
 
 
--- 9) TE DÉCLARER ADMINISTRATEUR
+-- 9) GARDE-FOU : le script REFUSE de se terminer si un verrou manque
+-- -----------------------------------------------------------------------------
+-- Ce bloc n'interroge pas ce que le script est CENSÉ avoir fait : il demande à
+-- la base son état réel. Si une table se retrouvait sans RLS, ou sans le bon
+-- nombre de politiques, il déclenche une erreur — et comme l'éditeur SQL
+-- exécute tout dans une seule transaction, l'ensemble est annulé. Il est donc
+-- impossible de ressortir d'ici avec une table ouverte en écriture.
+--
+-- Le dossier de fichiers (storage.objects) n'est volontairement pas contrôlé
+-- ici : ses politiques peuvent échouer pour une question de droits sans que ce
+-- soit grave. C'est npm run verificar:rls qui les met à l'épreuve.
+
+do $$
+declare
+	t text;
+	n int;
+begin
+	foreach t in array array['admins', 'temas', 'fichas'] loop
+		if not exists (
+			select 1
+			from pg_class c
+			join pg_namespace ns on ns.oid = c.relnamespace
+			where ns.nspname = 'public' and c.relname = t and c.relrowsecurity
+		) then
+			raise exception
+				'SEGURETAT : la taula public.% es pas protegida per RLS. Tot es anullat.', t;
+		end if;
+	end loop;
+
+	-- admins : verrou total, aucune politique attendue
+	select count(*) into n
+	from pg_policies where schemaname = 'public' and tablename = 'admins';
+	if n <> 0 then
+		raise exception
+			'SEGURETAT : public.admins deuriá aver 0 politica, ne a %. Tot es anullat.', n;
+	end if;
+
+	-- temas et fichas : 4 politiques chacune (lecture + apondre/modificar/suprimir)
+	foreach t in array array['temas', 'fichas'] loop
+		select count(*) into n
+		from pg_policies where schemaname = 'public' and tablename = t;
+		if n <> 4 then
+			raise exception
+				'SEGURETAT : public.% deuriá aver 4 politicas, ne a %. Tot es anullat.', t, n;
+		end if;
+	end loop;
+
+	raise notice 'Verrolhs verificats : RLS actiu e politicas completas sus admins, temas, fichas.';
+end $$;
+
+
+-- 10) TE DÉCLARER ADMINISTRATEUR
 -- -----------------------------------------------------------------------------
 -- Remplace l'adresse ci-dessous par celle de TON compte Lo Ligam (le compte
 -- doit déjà exister — inscris-toi sur le site d'abord si ce n'est pas fait),
