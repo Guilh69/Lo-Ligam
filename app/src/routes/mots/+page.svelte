@@ -1,7 +1,8 @@
 <script>
 	import AppHeader from '$lib/components/AppHeader.svelte';
+	import FichaTunnel from '$lib/components/FichaTunnel.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { categories, fichasUnicas } from '$lib/data/fichas';
+	import { categories, fichas } from '$lib/data/fichas';
 
 	let lang = $derived(langStore.current);
 
@@ -10,37 +11,39 @@
 			title: 'Mots en imatges',
 			lead: 'Cada ficha : un tèma, los mots en occitan, lor prononciacion e lor revirada.',
 			all: 'Totas',
-			count: (n) => `${n} fichas`,
 			close: 'Tampar',
 			prev: 'Precedenta',
 			next: 'Seguenta',
-			empty: 'Cap de ficha dins aqueste tèma per ara.'
+			views: { mosaica: 'Mosaïca', carrossel: 'Carrossèl', tunel: 'Tunèl' }
 		},
 		fr: {
 			title: 'Mots en images',
 			lead: 'Chaque fiche : un thème, les mots en occitan, leur prononciation et leur traduction.',
 			all: 'Toutes',
-			count: (n) => `${n} fiches`,
 			close: 'Fermer',
 			prev: 'Précédente',
 			next: 'Suivante',
-			empty: 'Aucune fiche dans ce thème pour l’instant.'
+			views: { mosaica: 'Mosaïque', carrossel: 'Carrousel', tunel: 'Tunnel' }
 		}
 	};
 	let tx = $derived(t[lang]);
 
+	let view = $state('mosaica');
 	let activeCat = $state('all');
 	let visibles = $derived(
-		activeCat === 'all' ? fichasUnicas : fichasUnicas.filter((f) => f.cat === activeCat)
+		activeCat === 'all' ? fichas : fichas.filter((f) => f.cat === activeCat)
 	);
 
-	// Index dans la liste VISIBLE : les flèches de la visionneuse doivent
-	// suivre le filtre affiché, pas la liste complète.
+	function countIn(id) {
+		return fichas.filter((f) => f.cat === id).length;
+	}
+
+	// Visionneuse partagée par les trois modes.
 	let openIndex = $state(-1);
 	let openFicha = $derived(openIndex >= 0 ? visibles[openIndex] : null);
 
-	function open(i) {
-		openIndex = i;
+	function openItem(item) {
+		openIndex = visibles.findIndex((f) => f.id === item.id);
 	}
 	function close() {
 		openIndex = -1;
@@ -49,7 +52,6 @@
 		if (openIndex < 0) return;
 		openIndex = (openIndex + d + visibles.length) % visibles.length;
 	}
-
 	function onKey(e) {
 		if (openIndex < 0) return;
 		if (e.key === 'Escape') close();
@@ -57,14 +59,57 @@
 		else if (e.key === 'ArrowLeft') step(-1);
 	}
 
-	function label(f) {
-		return lang === 'oc' ? f.oc : f.fr;
+	// Carrousel : glissement + centrage, même principe que sur l'accueil.
+	let trackEl = $state();
+	let slideEls = $state([]);
+	let carIndex = $state(0);
+	let dragging = $state(false);
+	let startX = 0,
+		startScroll = 0,
+		moved = 0;
+
+	function centerOn(i) {
+		const el = slideEls[i];
+		if (!el || !trackEl) return;
+		trackEl.scrollTo({
+			left: el.offsetLeft + el.offsetWidth / 2 - trackEl.clientWidth / 2,
+			behavior: 'smooth'
+		});
 	}
-	function catLabel(c) {
-		return lang === 'oc' ? c.oc : c.fr;
+	function paint() {
+		if (!trackEl) return;
+		const mid = trackEl.scrollLeft + trackEl.clientWidth / 2;
+		let best = 0,
+			bestD = Infinity;
+		slideEls.forEach((el, i) => {
+			if (!el) return;
+			const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - mid);
+			el.style.setProperty('--away', Math.min(1, d / (el.offsetWidth || 1)).toFixed(3));
+			if (d < bestD) {
+				bestD = d;
+				best = i;
+			}
+		});
+		carIndex = best;
 	}
-	function countIn(id) {
-		return fichasUnicas.filter((f) => f.cat === id).length;
+	function down(e) {
+		dragging = true;
+		moved = 0;
+		startX = e.clientX;
+		startScroll = trackEl.scrollLeft;
+		trackEl.setPointerCapture?.(e.pointerId);
+	}
+	function move(e) {
+		if (!dragging) return;
+		const dx = e.clientX - startX;
+		moved = Math.max(moved, Math.abs(dx));
+		trackEl.scrollLeft = startScroll - dx;
+	}
+	function up(e) {
+		if (!dragging) return;
+		dragging = false;
+		trackEl.releasePointerCapture?.(e.pointerId);
+		centerOn(carIndex);
 	}
 </script>
 
@@ -87,10 +132,17 @@
 		<p class="lead">{tx.lead}</p>
 	</header>
 
+	<div class="views" role="group" aria-label="Vista">
+		{#each ['mosaica', 'carrossel', 'tunel'] as v (v)}
+			<button type="button" class="view" class:on={view === v} onclick={() => (view = v)}>
+				{tx.views[v]}
+			</button>
+		{/each}
+	</div>
+
 	<nav class="cats" aria-label={tx.title}>
 		<button type="button" class="cat" class:on={activeCat === 'all'} onclick={() => (activeCat = 'all')}>
-			{tx.all}
-			<span class="cat-n">{fichasUnicas.length}</span>
+			{tx.all}<span class="cat-n">{fichas.length}</span>
 		</button>
 		{#each categories as c (c.id)}
 			<button
@@ -100,36 +152,63 @@
 				style="--cat: {c.color}"
 				onclick={() => (activeCat = c.id)}
 			>
-				{catLabel(c)}
-				<span class="cat-n">{countIn(c.id)}</span>
+				{lang === 'oc' ? c.oc : c.fr}<span class="cat-n">{countIn(c.id)}</span>
 			</button>
 		{/each}
 	</nav>
 
-	{#if visibles.length === 0}
-		<p class="empty">{tx.empty}</p>
-	{:else}
+	{#if view === 'mosaica'}
 		<ul class="grid">
 			{#each visibles as f, i (f.id)}
 				<li>
-					<button type="button" class="card" onclick={() => open(i)}>
-						<!-- Vignette légère (celle du fond) : la version lisible n'est
-						     chargée qu'à l'ouverture, pour ne pas peser inutilement. -->
-						<img src={f.src} alt="" loading="lazy" />
-						<span class="card-name">{label(f)}</span>
+					<button type="button" class="card" onclick={() => (openIndex = i)}>
+						<img src={f.mini} alt="" loading="lazy" />
+						<span class="card-name">{f.titre}</span>
 					</button>
 				</li>
 			{/each}
 		</ul>
+	{:else if view === 'carrossel'}
+		<div class="carousel">
+			<div
+				class="track"
+				class:dragging
+				bind:this={trackEl}
+				onscroll={paint}
+				onpointerdown={down}
+				onpointermove={move}
+				onpointerup={up}
+				onpointercancel={up}
+			>
+				{#each visibles as f, i (f.id)}
+					<button
+						type="button"
+						class="slide"
+						bind:this={slideEls[i]}
+						onclick={() => moved <= 6 && (carIndex === i ? (openIndex = i) : centerOn(i))}
+					>
+						<img src={f.mini} alt="" loading="lazy" draggable="false" />
+						<span class="slide-name">{f.titre}</span>
+					</button>
+				{/each}
+			</div>
+			<div class="controls">
+				<button type="button" onclick={() => centerOn(carIndex - 1)} aria-label={tx.prev}>←</button>
+				<span class="counter">{carIndex + 1} / {visibles.length}</span>
+				<button type="button" onclick={() => centerOn(carIndex + 1)} aria-label={tx.next}>→</button>
+			</div>
+		</div>
+	{:else}
+		<FichaTunnel items={visibles} onOpen={openItem} />
 	{/if}
 </main>
 
 {#if openFicha}
-	<div class="viewer" role="dialog" aria-modal="true" aria-label={label(openFicha)}>
+	<div class="viewer" role="dialog" aria-modal="true" aria-label={openFicha.titre}>
 		<button type="button" class="backdrop" onclick={close} aria-label={tx.close}></button>
 		<figure>
-			<img src={openFicha.src.replace('/bg/', '/fichas/')} alt={label(openFicha)} />
-			<figcaption>{label(openFicha)}</figcaption>
+			<img src={openFicha.grand} alt={openFicha.titre} />
+			<figcaption>{openFicha.titre}</figcaption>
 		</figure>
 		<button type="button" class="nav prev" onclick={() => step(-1)} aria-label={tx.prev}>←</button>
 		<button type="button" class="nav next" onclick={() => step(1)} aria-label={tx.next}>→</button>
@@ -171,7 +250,7 @@
 	}
 
 	.screen {
-		max-width: 64rem;
+		max-width: 68rem;
 		margin: 0 auto;
 		padding: 1.25rem 1.25rem 4rem;
 		display: flex;
@@ -181,7 +260,7 @@
 
 	.intro {
 		text-align: center;
-		margin: 2rem 0 1.5rem;
+		margin: 2rem 0 1.25rem;
 	}
 
 	h1 {
@@ -199,31 +278,60 @@
 		text-wrap: pretty;
 	}
 
+	.views {
+		display: flex;
+		gap: 0.3rem;
+		background: rgba(58, 42, 32, 0.07);
+		padding: 0.3rem;
+		border-radius: 999px;
+		margin-bottom: 1.25rem;
+	}
+
+	.view {
+		border: none;
+		background: transparent;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.85rem;
+		color: var(--color-text);
+		padding: 0.4rem 1rem;
+		border-radius: 999px;
+		cursor: pointer;
+		transition:
+			background 150ms ease,
+			color 150ms ease;
+	}
+
+	.view.on {
+		background: var(--color-brick);
+		color: white;
+	}
+
 	.cats {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		gap: 0.5rem;
+		gap: 0.4rem;
 		margin-bottom: 2rem;
+		max-width: 58rem;
 	}
 
 	.cat {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.45rem;
+		gap: 0.4rem;
 		border: 1px solid rgba(58, 42, 32, 0.15);
 		background: white;
 		color: var(--color-text);
 		font-family: var(--font-heading);
-		font-size: 0.88rem;
+		font-size: 0.82rem;
 		font-weight: 600;
-		padding: 0.4rem 0.85rem;
+		padding: 0.35rem 0.75rem;
 		border-radius: 999px;
 		cursor: pointer;
 		transition:
 			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1),
-			background 150ms ease,
-			color 150ms ease;
+			background 150ms ease;
 	}
 
 	.cat:hover {
@@ -237,8 +345,8 @@
 	}
 
 	.cat-n {
-		font-size: 0.72rem;
-		opacity: 0.65;
+		font-size: 0.7rem;
+		opacity: 0.6;
 	}
 
 	.grid {
@@ -247,7 +355,7 @@
 		padding: 0;
 		width: 100%;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
 		gap: 1rem;
 	}
 
@@ -259,7 +367,7 @@
 		cursor: pointer;
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.45rem;
 		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 
@@ -275,16 +383,88 @@
 		box-shadow: 0 6px 18px rgba(58, 42, 32, 0.14);
 	}
 
-	.card-name {
+	.card-name,
+	.slide-name {
 		font-family: var(--font-heading);
 		font-weight: 600;
-		font-size: 0.88rem;
+		font-size: 0.85rem;
 		color: var(--color-brick);
 		text-align: left;
 	}
 
-	.empty {
-		opacity: 0.6;
+	.carousel {
+		width: 100%;
+	}
+
+	.track {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		padding: 1.5rem max(1rem, calc(50% - 9rem)) 1.5rem;
+		scrollbar-width: none;
+		cursor: grab;
+	}
+
+	.track.dragging {
+		cursor: grabbing;
+		scroll-snap-type: none;
+	}
+
+	.track::-webkit-scrollbar {
+		display: none;
+	}
+
+	.slide {
+		flex: 0 0 auto;
+		width: min(18rem, 70vw);
+		padding: 0;
+		border: none;
+		background: none;
+		cursor: pointer;
+		scroll-snap-align: center;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		filter: blur(calc(var(--away, 1) * 3px));
+		opacity: calc(1 - var(--away, 1) * 0.45);
+		transform: scale(calc(1 - var(--away, 1) * 0.1));
+		transition: filter 120ms linear;
+	}
+
+	.slide img {
+		width: 100%;
+		border-radius: 16px;
+		box-shadow: 0 12px 30px rgba(58, 42, 32, 0.2);
+		user-select: none;
+	}
+
+	.controls {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	.controls > button {
+		border: none;
+		background: white;
+		color: var(--color-brick);
+		width: 2.4rem;
+		height: 2.4rem;
+		border-radius: 999px;
+		font-size: 1.1rem;
+		cursor: pointer;
+		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.12);
+	}
+
+	.counter {
+		font-family: var(--font-heading);
+		font-size: 0.85rem;
+		opacity: 0.7;
+		min-width: 4rem;
+		text-align: center;
 	}
 
 	.viewer {
@@ -311,7 +491,6 @@
 		position: relative;
 		margin: 0;
 		max-width: min(38rem, 100%);
-		max-height: 100%;
 		display: flex;
 		flex-direction: column;
 		gap: 0.6rem;
@@ -343,7 +522,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 
 	.nav {
@@ -352,10 +530,6 @@
 		height: 2.8rem;
 		font-size: 1.2rem;
 		transform: translateY(-50%);
-	}
-
-	.nav:hover {
-		transform: translateY(-50%) scale(1.1);
 	}
 
 	.prev {
@@ -372,10 +546,6 @@
 		width: 2.4rem;
 		height: 2.4rem;
 		font-size: 1.4rem;
-	}
-
-	.close:hover {
-		transform: scale(1.1);
 	}
 
 	@media (max-width: 30rem) {
