@@ -16,6 +16,7 @@
 	import WaveLandscape from '$lib/components/WaveLandscape.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
+	import OfficialitatCarousel from '$lib/components/OfficialitatCarousel.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { families, externalLinks } from '$lib/data/siteSections';
 
@@ -93,7 +94,14 @@
 				oc: 'Una carta entièra dins la lenga, dialèctes e luòcs d’interès compreses.',
 				fr: 'Une carte entière dans la langue, dialectes et lieux d’intérêt compris.'
 			},
-			cta: { oc: 'Dobrir la carta', fr: 'Ouvrir la carte' }
+			cta: { oc: 'Dobrir la carta entièra', fr: 'Ouvrir la carte entière' }
+		},
+		officialitat: {
+			title: { oc: 'Una lenga sens estatut', fr: 'Une langue sans statut' },
+			lead: {
+				oc: 'Co-oficiala en Val d’Aran, protegida en Itàlia, sens estatut en França : nòu cartas per o comprene.',
+				fr: 'Co-officielle au Val d’Aran, protégée en Italie, sans statut en France : neuf cartes pour le comprendre.'
+			}
 		},
 		footer: {
 			oc: 'Fach amb amor en Occitània.',
@@ -468,12 +476,28 @@
 		<p class="chapter-num">03</p>
 		<h2 class="chapter-title" use:scramble={{ oc: t.carta.title.oc, fr: t.carta.title.fr, lang }}></h2>
 		<p class="chapter-lead" use:scramble={{ oc: t.carta.lead.oc, fr: t.carta.lead.fr, lang }}></p>
-		<a class="carta-preview reveal" href="/carta" aria-label={t.carta.title[lang]}>
-			<CartaOccitania visibility={{ lieusInteres: true, dialectes: false }} />
-			<span class="carta-overlay">
-				<span class="btn-primary btn-small" use:scramble={{ oc: t.carta.cta.oc, fr: t.carta.cta.fr, lang }}></span>
-			</span>
-		</a>
+		<!-- Carte réellement navigable : on peut se déplacer et zoomer sans
+		     quitter l'accueil. Les dialectes sont le calque par défaut —
+		     c'est ce qui raconte la langue, plus parlant que des points
+		     d'intérêt isolés. -->
+		<div class="carta-live reveal">
+			<CartaOccitania visibility={{ lieusInteres: false, dialectes: true }} />
+		</div>
+		<a class="btn-primary carta-cta" href="/carta"
+			use:scramble={{ oc: t.carta.cta.oc, fr: t.carta.cta.fr, lang }}></a>
+	</section>
+
+	<section class="chapter chapter--officialitat">
+		<p class="chapter-num">04</p>
+		<h2
+			class="chapter-title"
+			use:scramble={{ oc: t.officialitat.title.oc, fr: t.officialitat.title.fr, lang }}
+		></h2>
+		<p
+			class="chapter-lead"
+			use:scramble={{ oc: t.officialitat.lead.oc, fr: t.officialitat.lead.fr, lang }}
+		></p>
+		<OfficialitatCarousel {lang} />
 	</section>
 
 	<SiteFooter tagline={t.footer} />
@@ -1335,12 +1359,11 @@
 		opacity: 0.5;
 	}
 
-	/* Aperçu cliquable de la vraie carte : on montre l'objet, on ne le
-	   décrit pas. pointer-events coupé sur la carte elle-même pour que le
-	   clic aille au lien et non aux commandes de zoom. */
-	.carta-preview {
-		position: relative;
-		display: block;
+	/* Carte réellement manipulable depuis l'accueil : on peut se déplacer
+	   et zoomer sur place. Le bouton sous la carte mène à la page pleine,
+	   au lieu d'un lien qui recouvrirait la carte et bloquerait son
+	   utilisation. */
+	.carta-live {
 		max-width: 62rem;
 		height: min(58vh, 26rem);
 		margin: 2.5rem auto 0;
@@ -1349,22 +1372,16 @@
 		box-shadow: 0 14px 36px rgba(58, 42, 32, 0.18);
 	}
 
-	.carta-preview > :global(*) {
-		pointer-events: none;
+	.carta-cta {
+		display: inline-block;
+		margin-top: 1.5rem;
 	}
 
-	.carta-overlay {
-		position: absolute;
-		inset: 0;
-		display: flex;
-		align-items: flex-end;
-		justify-content: center;
-		padding: 1.5rem;
-		background: linear-gradient(to top, rgba(58, 42, 32, 0.35), transparent 45%);
-		transition: background 200ms ease;
+	.chapter--officialitat {
+		background: rgba(255, 255, 255, 0.55);
 	}
 
-	.carta-preview:hover .carta-overlay {
-		background: linear-gradient(to top, rgba(58, 42, 32, 0.5), transparent 55%);
+	.chapter--officialitat .chapter-title {
+		color: var(--color-brick);
 	}
 </style>
