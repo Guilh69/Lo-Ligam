@@ -1042,12 +1042,22 @@
 	.page {
 		position: relative;
 		z-index: 3;
+	}
+
+	/* Seul le hero laisse passer la souris jusqu'aux illustrations de fond
+	   (effet de loupe au survol) : il est posé par-dessus elles. Les
+	   chapitres, eux, contiennent du contenu manipulable — carte, carrousel
+	   — et doivent recevoir la souris normalement. Cette règle était
+	   auparavant sur .page entière, ce qui empêchait de faire glisser le
+	   carrousel et de déplacer la carte : ce sont des div, et seuls les
+	   liens et boutons récupéraient les événements. */
+	.hero {
 		pointer-events: none;
 	}
 
-	.page .welcome,
-	.page a,
-	.page button {
+	.hero .welcome,
+	.hero a,
+	.hero button {
 		pointer-events: auto;
 	}
 
