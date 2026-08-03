@@ -2,6 +2,7 @@
 	import HomeIcon from './HomeIcon.svelte';
 	import OccitaniaIcon from './OccitaniaIcon.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { esAdmin } from '$lib/adminStore';
 
 	let { children } = $props();
 	let lang = $derived(langStore.current);
@@ -22,6 +23,14 @@
 	<div class="header-right">
 		{#if children}
 			{@render children()}
+		{/if}
+		<!-- Visible seulement pour un administrateur. C'est du confort, pas une
+		     protection : les verrous sont dans la base (RLS). -->
+		{#if $esAdmin}
+			<a class="admin-link" href="/admin">
+				<span aria-hidden="true">⚙</span>
+				{lang === 'oc' ? 'Administracion' : 'Administration'}
+			</a>
 		{/if}
 		<!-- Selector de lenga present sus TOTAS las paginas que passan per
 		     aqueste entèsta, pas mai sonque sus l'acuèlh. -->
@@ -46,6 +55,25 @@
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
+	}
+
+	.admin-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.35rem 0.7rem;
+		border-radius: 999px;
+		background: rgba(31, 95, 99, 0.12);
+		color: var(--color-teal);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.78rem;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.admin-link:hover {
+		background: rgba(31, 95, 99, 0.2);
 	}
 
 	.home-link {
