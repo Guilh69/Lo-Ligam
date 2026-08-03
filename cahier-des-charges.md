@@ -295,14 +295,22 @@ pas une protection, seules les politiques RLS le sont.
    Un anonyme ne peut ni ajouter, ni modifier, ni supprimer, ni publier une
    fiche cachée, ni se déclarer admin, ni téléverser. Le passage du script
    prouve aussi que le garde-fou du bloc 9 a validé RLS + politiques.
-4. ⬜ **À faire, prochaine séance** — vérifier l'autre moitié : que
-   l'administrateur, lui, **peut** écrire, et que le dossier de fichiers est
-   bien configuré. Impossible à contrôler de l'extérieur (la table `admins`
-   est illisible, par construction). Se connecter sur `/admin` et cliquer
-   **« Testar l'escritura »**.
-5. ⬜ Migrer les 204 fiches (le script de migration supprimera les lignes
-   d'essai `_essai…` et `_ensag…`).
-6. ⬜ Seulement ensuite : construire les écrans de gestion.
+4. ✅ **Vérifié côté administrateur** — `/admin` → « Testar l'escritura » :
+   **7/7 au vert**. L'administrateur peut ajouter, modifier, supprimer,
+   téléverser ; le SVG lui reste refusé (liste blanche MIME du dossier). Les
+   politiques Storage ont bien été créées — l'erreur `must be owner` redoutée
+   n'a pas eu lieu. **La sécurité est close : 20 contrôles, des deux côtés.**
+5. ✅ **Fait** — migration des 204 fiches. Vérifié en base : 35 thèmes,
+   204 fiches, 0 ligne d'essai, ordre et accents préservés. Le SQL est
+   engendré par `npm run generar:migracion` depuis `fichas.js` — jamais recopié
+   à la main.
+6. ✅ **Fait** — `/mots` lit la base via `$lib/data/fichasFont.js`. Vérifié :
+   page identique (204 vignettes, 35 thèmes, ordre et accents conservés),
+   données venant bien de la base. **Le filet a été mis à l'épreuve** en
+   forçant une panne : la page affiche toujours les 204 fiches depuis le
+   fichier gelé. Délai d'attente de la base : 5 s, au-delà on bascule.
+   `fichas.js` porte désormais un en-tête « FICHIER GELÉ ».
+7. ⬜ Ensuite : les écrans de gestion des designs.
 
 ---
 

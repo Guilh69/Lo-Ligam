@@ -2,7 +2,12 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import FichaTunnel from '$lib/components/FichaTunnel.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { categories, fichas } from '$lib/data/fichas';
+
+	// Les fiches arrivent de la base via +page.js, qui se replie sur le
+	// catalogue gelé si elle ne répond pas.
+	let { data } = $props();
+	let categories = $derived(data.categories);
+	let fichas = $derived(data.fichas);
 
 	let lang = $derived(langStore.current);
 

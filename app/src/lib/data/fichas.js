@@ -1,3 +1,15 @@
+// ⚠️ FICHIER GELÉ — NE PLUS LE MODIFIER À LA MAIN.
+//
+// Depuis le 2026-08-03, la vérité est en base (tables `temas` et `fichas`),
+// modifiable depuis l'espace d'administration. Ce fichier ne sert plus que de
+// FILET DE SECOURS : il est lu uniquement si Supabase ne répond pas — par
+// exemple quand le projet gratuit se met en pause après une semaine
+// d'inactivité. Voir $lib/data/fichasFont.js et le §11 du cahier des charges.
+//
+// Le modifier ici ne changera RIEN sur le site tant que la base répond, et
+// créerait deux vérités contradictoires. Pour corriger une fiche : passer par
+// /admin. Pour rafraîchir ce filet : régénérer depuis la base.
+//
 // Catalogue des fiches de vocabulaire illustrées.
 // Généré depuis design-stock/canva-vf/ : un dossier = un thème, un fichier
 // = une fiche dont le NOM est le mot occitan. La classification vient donc
