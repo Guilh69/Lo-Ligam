@@ -188,6 +188,11 @@ Signer les accords, créer les comptes, héberger, gérer l'argent et les décla
 | 2026-07-31 | Ouvre le site (accueil, carte des modules, essai libre, compte Supabase avec questionnaire) et le déploie en ligne (Vercel, lien privé de test) | Premier aller-retour concret pour tester sur téléphone |
 | 2026-07-31 | *Réflexion ouverte, pas tranchée* : la cartographie (Phase 3) pourrait passer en premier plutôt qu'après l'apprentissage | Voir note au §3 — dépend notamment de la question juridique de la licence de l'atlas (§8), non résolue |
 | 2026-07-31 | *Réflexion ouverte, pas tranchée* : le parcours autonome ne serait plus 100% gratuit — une partie resterait gratuite, l'accès complet passerait par un paiement solidaire/classique/engagé (voir §6) | Modèle économique plus soutenable que « tout gratuit + dons » seul ; reste à définir la limite gratuit/payant |
+| 2026-08-03 | **Espace d'administration — vidéos : colonne `video_url` prévue, aucun envoi de MP4 en v1** | 204 MP4 ≈ 1 Go = tout le stockage gratuit, et ~50 visiteurs/mois suffiraient à épuiser les 5 Go de bande passante ; contraire à la sobriété (§valeurs). Porte laissée ouverte pour une poignée de fiches vitrines plus tard |
+| 2026-08-03 | **Espace d'administration — bascule complète des 204 fiches en base, `fichas.js` gelé en filet de secours** (lu seulement si Supabase ne répond pas, jamais fusionné) | Deux sources modifiables = deux vérités et des bugs ingérables. Le filet est nécessaire : un projet Supabase gratuit se met en pause après ~1 semaine d'inactivité |
+| 2026-08-03 | **Espace d'administration — les 12 Mo d'images existantes restent dans `app/static/`** ; seules les nouvelles images vont dans Supabase Storage. La base stocke une adresse, indifféremment de l'un ou l'autre | Zéro migration de fichiers risquée, zéro consommation de quota, images servies par le CDN de l'hébergeur |
+| 2026-08-03 | **Espace d'administration — v1 = designs uniquement.** Sons et liens externes plus tard ; la navigation du site (`siteSections.js`) reste dans le code | Les sons n'existent pas encore (0 fichier) ; les 11 liens changent deux fois par an ; mettre la navigation en base exposerait menu, pied de page et accueil à une fausse manœuvre |
+| 2026-08-03 | **Espace d'administration — sécurité : table `admins` sans aucune politique** (impossible de se déclarer admin depuis un navigateur), fonction `is_admin()`, dossier Storage plafonné à 2 Mo et **SVG interdit** | La clé publique est lisible dans le code du site : cacher la page /admin n'est pas une protection, seul le RLS l'est. Le SVG peut porter du code exécutable |
 | — | *(à compléter)* | |
 
 ---
@@ -232,15 +237,28 @@ Un espace réservé à Romain pour **ajouter, modifier et supprimer** :
 | Écrans de gestion | Liste, formulaire, téléversement, aperçu, suppression avec confirmation |
 | Coût | Vérifier les quotas gratuits de Supabase Storage (les MP4 pèsent) |
 
-### Points à trancher dans cette conversation
+### Points tranchés le 2026-08-03
 
-1. **Vidéos** : les MP4 sont dans le Canva de Romain, pas dans le projet.
-   Une image fixe *et* une vidéo par fiche ? Le son démarre-t-il seul
-   (les navigateurs le bloquent — il faut un bouton) ?
-2. **Migration ou cohabitation** : tout basculer en base d'un coup, ou
-   garder le fichier de code comme secours au début ?
-3. **Portée** : uniquement les designs pour commencer, ou sons et liens
-   dès le départ ?
+1. **Vidéos** : colonne prévue en base, **aucun envoi de MP4 en v1**.
+2. **Migration** : **bascule complète**, `fichas.js` gelé en filet de secours.
+3. **Portée** : **designs uniquement** pour la v1.
+
+Détail et justification de chaque arbitrage au §11.
+
+Point acquis, pas un arbitrage : **le son ne démarrera jamais seul**. Les
+navigateurs le bloquent, et un son automatique est aussi un défaut
+d'accessibilité RGAA. Ce sera toujours un bouton.
+
+### État des lieux au moment du cadrage
+
+- 204 fiches dans le code, mais **213 paires d'images** sur le disque : les
+  9 fiches retirées (commit `c558fe2`) ont laissé leurs fichiers. Ne pas les
+  ressusciter à la migration.
+- Poids servi : 12 Mo (3 Mo de vignettes + 9,1 Mo de grandes). À côté,
+  111 Mo d'exports Canva en local, non déployés.
+- **Aucun fichier son** dans le projet.
+- `siteSections.js` contient deux choses distinctes : la navigation
+  (structure du site) et 11 liens externes.
 
 ### Précaution
 
@@ -248,6 +266,28 @@ C'est la première fois que le site aura une **écriture** en base depuis
 le navigateur. Les politiques RLS doivent être écrites et vérifiées avant
 d'ouvrir quoi que ce soit — une table ouverte en écriture publique est la
 faille la plus courante sur ce genre de projet.
+
+**Ce que ça donne concrètement** : la clé de connexion du site est publique
+(lisible dans le JavaScript de la page) — cacher la page `/admin` n'est donc
+pas une protection, seules les politiques RLS le sont.
+
+- `supabase-admin-schema.sql` — tables, fonction `is_admin()`, politiques,
+  dossier de fichiers plafonné à 2 Mo, **SVG interdit** (il peut porter du
+  code exécutable et serait servi depuis un dossier public).
+- La table `admins` n'a **aucune politique** : impossible de se déclarer
+  administrateur depuis un navigateur, quoi qu'il arrive.
+- `cd app && npm run verificar:rls` — tente ajout, modification, suppression,
+  publication d'une fiche cachée, auto-promotion en admin et téléversement,
+  en visiteur anonyme. Le script **relit la donnée après chaque tentative** :
+  une politique manquante laisse Postgres répondre « c'est bon » sans rien
+  modifier, ce qui fait passer au vert un test naïf sur une table ouverte.
+
+### Ordre de mise en service
+
+1. Lancer le SQL dans Supabase, s'ajouter comme administrateur.
+2. `npm run verificar:rls` → **doit être entièrement au vert**.
+3. Migrer les 204 fiches (le script de migration supprime les lignes d'essai).
+4. Seulement ensuite : construire les écrans de gestion.
 
 ---
 
