@@ -28,6 +28,7 @@
 
 	const menut = [
 		{ href: '/admin', oc: 'Verrolhs', fr: 'Verrous' },
+		{ href: '/admin/grops', oc: 'Grops', fr: 'Groupes' },
 		{ href: '/admin/designs', oc: 'Designs', fr: 'Designs' }
 	];
 </script>
@@ -258,6 +259,11 @@
 	.admin-screen :global(.btn-segond:hover:not(:disabled)) {
 		border-color: var(--color-teal);
 		color: var(--color-teal);
+	}
+
+	.admin-screen :global(.btn-segond:disabled) {
+		opacity: 0.4;
+		cursor: default;
 	}
 
 	.admin-screen :global(.btn-perilhos) {
