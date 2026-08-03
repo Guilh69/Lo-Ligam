@@ -328,7 +328,24 @@ pas une protection, seules les politiques RLS le sont.
 2. ✅ Tunnel et carrousel — voir les deux causes trouvées ci-dessous.
 3. ⬜ Vidéos MP4 à l'ouverture d'une fiche. **Bloqué** : il faut un MP4 Canva
    réel dans `design-stock/` pour mesurer avant de fixer un plafond de poids.
-4. ⬜ Espace **Òbras** (musiques, bandes-annonces, livres).
+4. ✅ Espace **Òbras** (`/obras` + onglet d'administration). Reprend l'entrée
+   « Bibliotèca » qui était en attente dans `siteSections.js` — c'était le
+   même espace ; elle est renommée et passée en ligne.
+
+**Òbras — ce qui est stocké et ce qui ne l'est pas.** Table `obras` : type,
+titre, auteur, éditeur, année, lien d'écoute, lien « en savoir plus »,
+adresse d'image, **commentaire de Romain**. Aucun extrait n'est hébergé.
+L'écoute passe par le lecteur officiel, chargé **au clic seulement**, sur le
+domaine `youtube-nocookie.com`. Conséquence voulue : aucune requête vers un
+tiers avant que le visiteur ne la demande, donc pas de bannière de
+consentement à prévoir pour cette page. Pour la même raison, **on n'affiche
+pas la vignette YouTube** d'une vidéo : elle est servie par un domaine de
+Google et enverrait l'adresse IP du visiteur chez eux avant le clic. Sans
+image autorisée, la fiche s'affiche sur un aplat de la charte.
+Le champ image n'est à remplir que si la source l'autorise (flux partenaire,
+dossier de presse, accord de l'éditeur).
+Seul YouTube s'intègre pour l'instant ; les autres plateformes s'affichent en
+lien simple, et le formulaire le dit au moment de la saisie.
 
 **Tunnel — pourquoi les cartes ne grossissaient pas.** La taille apparente
 vient de la perspective : `perspective / (perspective + z)`. Les fiches

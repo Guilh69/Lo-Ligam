@@ -29,7 +29,8 @@
 	const menut = [
 		{ href: '/admin', oc: 'Verrolhs', fr: 'Verrous' },
 		{ href: '/admin/grops', oc: 'Grops', fr: 'Groupes' },
-		{ href: '/admin/designs', oc: 'Designs', fr: 'Designs' }
+		{ href: '/admin/designs', oc: 'Designs', fr: 'Designs' },
+		{ href: '/admin/obras', oc: 'Òbras', fr: 'Œuvres' }
 	];
 </script>
 

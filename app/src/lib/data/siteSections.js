@@ -77,12 +77,16 @@ export const families = [
 				status: 'live'
 			},
 			{
-				id: 'bibliotèca',
-				oc: 'Bibliotèca',
-				fr: 'Bibliothèque',
-				desc_oc: 'Musica, filmes e libres en occitan.',
-				desc_fr: 'Musique, films et livres en occitan.',
-				status: 'soon'
+				// Anciennement « Bibliotèca », en attente. C'est le même espace :
+				// on lui donne le nom sous lequel il a été construit, et il est
+				// désormais en ligne.
+				id: 'obras',
+				oc: 'Òbras',
+				fr: 'Œuvres',
+				desc_oc: 'Musica, filmes e libres en occitan, comentats.',
+				desc_fr: 'Musique, films et livres en occitan, commentés.',
+				href: '/obras',
+				status: 'live'
 			}
 		]
 	},
