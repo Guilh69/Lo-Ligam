@@ -282,12 +282,27 @@ pas une protection, seules les politiques RLS le sont.
   une politique manquante laisse Postgres répondre « c'est bon » sans rien
   modifier, ce qui fait passer au vert un test naïf sur une table ouverte.
 
-### Ordre de mise en service
+### Ordre de mise en service — état au 2026-08-03
 
-1. Lancer le SQL dans Supabase, s'ajouter comme administrateur.
-2. `npm run verificar:rls` → **doit être entièrement au vert**.
-3. Migrer les 204 fiches (le script de migration supprime les lignes d'essai).
-4. Seulement ensuite : construire les écrans de gestion.
+1. ✅ **Fait** — schéma passé dans Supabase (tables `admins`, `temas`, `fichas`,
+   dossier `designs`). L'éditeur SQL avertit « creates a table without enabling
+   RLS » sur `public.temas` : **faux positif vérifié**, il ne rattache pas le
+   `alter table … enable row level security` à la création. Répondre
+   **« Run without RLS »** = « lance ma requête sans y ajouter de sécurité à ma
+   place » — et non « lance sans sécurité ».
+2. ✅ **Fait** — Romain déclaré administrateur (bloc 10).
+3. ✅ **Vérifié côté visiteur** — `npm run verificar:rls` : **13/13 au vert**.
+   Un anonyme ne peut ni ajouter, ni modifier, ni supprimer, ni publier une
+   fiche cachée, ni se déclarer admin, ni téléverser. Le passage du script
+   prouve aussi que le garde-fou du bloc 9 a validé RLS + politiques.
+4. ⬜ **À faire, prochaine séance** — vérifier l'autre moitié : que
+   l'administrateur, lui, **peut** écrire, et que le dossier de fichiers est
+   bien configuré. Impossible à contrôler de l'extérieur (la table `admins`
+   est illisible, par construction). Se connecter sur `/admin` et cliquer
+   **« Testar l'escritura »**.
+5. ⬜ Migrer les 204 fiches (le script de migration supprimera les lignes
+   d'essai `_essai…` et `_ensag…`).
+6. ⬜ Seulement ensuite : construire les écrans de gestion.
 
 ---
 
