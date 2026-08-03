@@ -483,8 +483,13 @@
 		<div class="carta-live reveal">
 			<CartaOccitania visibility={{ lieusInteres: false, dialectes: true }} />
 		</div>
-		<a class="btn-primary carta-cta" href="/carta"
-			use:scramble={{ oc: t.carta.cta.oc, fr: t.carta.cta.fr, lang }}></a>
+		<!-- Le texte bilingue est dans un span interne : l'action scramble
+		     impose display:grid à l'élément qu'elle occupe, ce qui étirait
+		     le bouton sur toute la largeur au lieu de le laisser tenir dans
+		     sa propre taille. -->
+		<a class="btn-primary carta-cta" href="/carta">
+			<span use:scramble={{ oc: t.carta.cta.oc, fr: t.carta.cta.fr, lang }}></span>
+		</a>
 	</section>
 
 	<section class="chapter chapter--officialitat">
@@ -1375,6 +1380,8 @@
 	.carta-cta {
 		display: inline-block;
 		margin-top: 1.5rem;
+		/* Ne dépasse jamais la largeur de la carte, quoi qu'il arrive. */
+		max-width: min(62rem, 100%);
 	}
 
 	.chapter--officialitat {
