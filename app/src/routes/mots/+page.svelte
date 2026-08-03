@@ -1,6 +1,7 @@
 <script>
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import FichaTunnel from '$lib/components/FichaTunnel.svelte';
+	import FichaVideo from '$lib/components/FichaVideo.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 
 	// Les fiches arrivent de la base via +page.js, qui se replie sur le
@@ -239,7 +240,11 @@
 	<div class="viewer" role="dialog" aria-modal="true" aria-label={openFicha.titre}>
 		<button type="button" class="backdrop" onclick={close} aria-label={tx.close}></button>
 		<figure>
-			<img src={openFicha.grand} alt={openFicha.titre} />
+			<!-- La vidéo ne joue qu'ici, à l'ouverture d'une fiche : une seule à la
+			     fois. C'est ce qui garde le poids maîtrisé — 204 vidéos en mosaïque
+			     épuiseraient le quota en quelques visiteurs (décision du
+			     2026-08-04, §11). Sans vidéo, la grande image est affichée. -->
+			<FichaVideo ficha={openFicha} {lang} />
 			<figcaption>{openFicha.titre}</figcaption>
 		</figure>
 		<button type="button" class="nav prev" onclick={() => step(-1)} aria-label={tx.prev}>←</button>

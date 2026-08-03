@@ -13,6 +13,13 @@
 		LARGOR_MINI,
 		LARGOR_GRAND
 	} from '$lib/imatges';
+	import {
+		PLAFON_VIDEO,
+		esVideoStorage,
+		caminVideoStorage,
+		ligamCanvaEmbed,
+		menaVideo
+	} from '$lib/videos';
 
 	let temas = $state([]);
 	let fichas = $state([]);
@@ -73,7 +80,11 @@
 			tema_id: filtreTema !== 'all' ? filtreTema : (temas[0]?.id ?? ''),
 			publicat: true,
 			fichier: null,
-			apercebut: null
+			apercebut: null,
+			videoMena: 'cap',
+			videoFichier: null,
+			videoLigam: '',
+			videoActuala: null
 		};
 	}
 
@@ -86,8 +97,34 @@
 			tema_id: f.tema_id,
 			publicat: f.publicat,
 			fichier: null,
-			apercebut: f.mini_url
+			apercebut: f.mini_url,
+			videoMena: menaVideo(f.video_url),
+			videoFichier: null,
+			videoLigam: f.video_url && !esVideoStorage(f.video_url) ? f.video_url : '',
+			videoActuala: f.video_url ?? null
 		};
+	}
+
+	function causirVideo(e) {
+		const fichier = e.target.files?.[0];
+		if (!fichier) return;
+		if (fichier.type !== 'video/mp4') {
+			msg = { tipe: 'error', text: 'Cal un MP4. (Il faut un MP4.)' };
+			e.target.value = '';
+			return;
+		}
+		// On prévient AVANT l'envoi plutôt que de laisser le serveur refuser
+		// après plusieurs mégaoctets téléversés pour rien.
+		if (fichier.size > PLAFON_VIDEO) {
+			msg = {
+				tipe: 'error',
+				text: `Aquesta vidèo fa ${pes(fichier.size)} — lo plafon es ${pes(PLAFON_VIDEO)}. Fai-la lisar sus outils/preparar-video.cmd, puèi manda lo fichièr « -web.mp4 ». (Fais-la glisser sur outils/preparar-video.cmd, puis envoie le fichier « -web.mp4 ».)`
+			};
+			e.target.value = '';
+			return;
+		}
+		msg = null;
+		forma.videoFichier = fichier;
 	}
 
 	function tancarForma() {
@@ -120,6 +157,45 @@
 		forma.apercebut = URL.createObjectURL(fichier);
 	}
 
+	// Résout ce qu'il faut inscrire dans `video_url`, en téléversant ou en
+	// nettoyant ce qui doit l'être. Renvoie l'adresse, ou null si la fiche n'a
+	// pas de vidéo.
+	async function resolverVideo(id) {
+		const camin = `fichas/${id}.mp4`;
+		const ancianaChesNos = esVideoStorage(forma.videoActuala)
+			? caminVideoStorage(forma.videoActuala)
+			: null;
+
+		if (forma.videoMena === 'cap') {
+			if (ancianaChesNos) await supabase.storage.from('videos').remove([ancianaChesNos]);
+			return null;
+		}
+
+		if (forma.videoMena === 'canva') {
+			const ligam = ligamCanvaEmbed(forma.videoLigam);
+			if (!ligam)
+				throw new Error(
+					'lo ligam Canva es pas reconegut — pega l’adreça o lo còdi d’integracion'
+				);
+			if (ancianaChesNos) await supabase.storage.from('videos').remove([ancianaChesNos]);
+			return ligam;
+		}
+
+		if (forma.videoFichier) {
+			estatEnregistrament = `Mandadís de la vidèo… (${pes(forma.videoFichier.size)})`;
+			const u = await supabase.storage
+				.from('videos')
+				.upload(camin, forma.videoFichier, { contentType: 'video/mp4', upsert: true });
+			if (u.error) throw u.error;
+			// L'adresse ne change pas quand on remplace un fichier : sans ce
+			// repère, les navigateurs continueraient d'afficher l'ancienne vidéo.
+			return `${supabase.storage.from('videos').getPublicUrl(camin).data.publicUrl}?v=${Date.now()}`;
+		}
+
+		if (forma.videoActuala) return forma.videoActuala;
+		throw new Error('cal causir una vidèo, o « cap de vidèo »');
+	}
+
 	async function enregistrar() {
 		msg = null;
 		const titre = forma.titre.trim();
@@ -138,10 +214,11 @@
 
 		try {
 			if (forma.mode === 'edicion') {
+				const video_url = await resolverVideo(forma.id);
 				estatEnregistrament = 'Enregistrament…';
 				const r = await supabase
 					.from('fichas')
-					.update({ titre, tema_id: forma.tema_id, publicat: forma.publicat })
+					.update({ titre, tema_id: forma.tema_id, publicat: forma.publicat, video_url })
 					.eq('id', forma.id)
 					.select();
 				if (r.error) throw r.error;
@@ -177,6 +254,8 @@
 					throw u2.error;
 				}
 
+				const video_url = await resolverVideo(id);
+
 				estatEnregistrament = 'Enregistrament…';
 				const dedins = fichas.filter((f) => f.tema_id === forma.tema_id).map((f) => f.ordre);
 				const ordre = (dedins.length ? Math.max(...dedins) : -1) + 1;
@@ -189,15 +268,19 @@
 						titre,
 						mini_url: adreçaPublica(cMini),
 						grand_url: adreçaPublica(cGrand),
+						video_url,
 						ordre,
 						publicat: forma.publicat
 					})
 					.select();
 
-				// Si la ligne n'a pas pu être écrite, on ne laisse pas d'images
-				// orphelines derrière soi.
+				// Si la ligne n'a pas pu être écrite, on ne laisse ni images ni
+				// vidéo orphelines derrière soi.
 				if (ins.error) {
 					await supabase.storage.from('designs').remove([cMini, cGrand]);
+					if (esVideoStorage(video_url)) {
+						await supabase.storage.from('videos').remove([caminVideoStorage(video_url)]);
+					}
 					throw ins.error;
 				}
 			}
@@ -238,6 +321,12 @@
 		// vivent dans app/static/ et ne sont pas dans le dossier de fichiers.
 		const camins = [f.mini_url, f.grand_url].filter(esEnStorage).map(caminStorage).filter(Boolean);
 		if (camins.length) await supabase.storage.from('designs').remove(camins);
+
+		// La vidéo vit dans un autre dossier — un lien Canva, lui, n'est pas à
+		// nous et ne se supprime pas.
+		if (esVideoStorage(f.video_url)) {
+			await supabase.storage.from('videos').remove([caminVideoStorage(f.video_url)]);
+		}
 
 		confirmaSup = null;
 		await cargar();
@@ -336,6 +425,58 @@
 						</p>
 					{/if}
 
+					<label>
+						Vidèo <em>(facultativa — jòga a la dubertura de la ficha)</em>
+						<select bind:value={forma.videoMena}>
+							<option value="cap">Cap de vidèo</option>
+							<option value="mp4">Mandar un MP4</option>
+							<option value="canva">Ligam Canva</option>
+						</select>
+					</label>
+
+					{#if forma.videoMena === 'mp4'}
+						<label>
+							Fichièr <em>({pes(PLAFON_VIDEO)} au maximum)</em>
+							<input type="file" accept="video/mp4" onchange={causirVideo} />
+						</label>
+						{#if forma.videoFichier}
+							<p class="ajuda">
+								Causit : {forma.videoFichier.name} — <strong>{pes(forma.videoFichier.size)}</strong>
+							</p>
+						{:else if esVideoStorage(forma.videoActuala)}
+							<p class="ajuda">
+								Una vidèo es ja estacada. Causís un fichièr solament per la remplaçar.
+								<em>(Une vidéo est déjà attachée. Choisis un fichier seulement pour la remplacer.)</em>
+							</p>
+						{/if}
+						<p class="ajuda">
+							Fai lisar ton expòrt Canva sus <code>outils/preparar-video.cmd</code> e manda lo
+							fichièr « -web.mp4 » que ne sortís. Un expòrt brut es refusat : es pas tant una
+							question de plaça que de donadas telecargadas per cada visitaire.
+							<em
+								>(Fais glisser ton export Canva sur outils/preparar-video.cmd et envoie le fichier
+								« -web.mp4 » qui en sort.)</em
+							>
+						</p>
+					{:else if forma.videoMena === 'canva'}
+						<label>
+							Ligam Canva <em>(l’adreça o lo còdi d’integracion)</em>
+							<input
+								type="text"
+								bind:value={forma.videoLigam}
+								placeholder="https://www.canva.com/design/…"
+							/>
+						</label>
+						<p class="ajuda">
+							Pesa pas res per nosautres, mas lo design vira public sus Canva e lor lector
+							pausa de traçadors. Es doncas cargat pas qu’al clic del visitaire.
+							<em
+								>(Ne pèse rien pour nous, mais le design devient public sur Canva et leur lecteur
+								dépose des traceurs. Il n’est donc chargé qu’au clic du visiteur.)</em
+							>
+						</p>
+					{/if}
+
 					<label class="casa">
 						<input type="checkbox" bind:checked={forma.publicat} />
 						<span>Publicada <em>(visible pels visitaires)</em></span>
@@ -393,6 +534,7 @@
 							{nomTema(f.tema_id)}
 							{#if !f.publicat}· <span class="pas-publicat">pas publicada</span>{/if}
 							{#if esEnStorage(f.mini_url)}· mandada{/if}
+							{#if f.video_url}· <span class="ten-video">{menaVideo(f.video_url) === 'canva' ? 'vidèo Canva' : 'vidèo'}</span>{/if}
 						</span>
 					</div>
 
@@ -624,6 +766,18 @@
 	.pas-publicat {
 		color: var(--color-brick);
 		font-weight: 600;
+	}
+
+	.ten-video {
+		color: var(--color-olive);
+		font-weight: 600;
+	}
+
+	.ajuda code {
+		font-size: 0.95em;
+		background: white;
+		padding: 0.1rem 0.3rem;
+		border-radius: 4px;
 	}
 
 	.rang {

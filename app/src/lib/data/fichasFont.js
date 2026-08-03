@@ -30,7 +30,7 @@ export async function cargarCatalog() {
 				.abortSignal(contraroTle.signal),
 			supabase
 				.from('fichas')
-				.select('id, tema_id, titre, mini_url, grand_url, ordre')
+					.select('id, tema_id, titre, mini_url, grand_url, video_url, ordre')
 				.abortSignal(contraroTle.signal)
 		]);
 
@@ -49,6 +49,7 @@ export async function cargarCatalog() {
 				titre: x.titre,
 				mini: x.mini_url,
 				grand: x.grand_url,
+				video: x.video_url ?? null,
 				_rang: [rang.get(x.tema_id) ?? 9999, x.ordre]
 			}))
 			.sort((a, b) => a._rang[0] - b._rang[0] || a._rang[1] - b._rang[1])
