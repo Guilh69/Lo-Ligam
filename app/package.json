@@ -10,7 +10,8 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
-		"verificar:rls": "node scripts/verificar-rls.mjs"
+		"verificar:rls": "node scripts/verificar-rls.mjs",
+		"generar:migracion": "node scripts/generar-migracion.mjs"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.1",
