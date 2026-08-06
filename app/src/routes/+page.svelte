@@ -19,6 +19,8 @@
 	import OfficialitatCarousel from '$lib/components/OfficialitatCarousel.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { families, externalLinks } from '$lib/data/siteSections';
+	import { supabase } from '$lib/supabaseClient';
+	import { esAdmin } from '$lib/adminStore';
 
 	const sectionIcons = {
 		book: BookIcon,
@@ -53,10 +55,12 @@
 		}
 	}
 
-	// Textes bilingues de la page d'accueil. Le contenu occitan est à
-	// valider par Romain (locuteur natif) avant publication finale — voir
-	// mémoire de session sur la pratique de validation du contenu.
-	const t = {
+	// Textes bilingues de la page d'accueil. Les valeurs écrites ici sont des
+	// valeurs de SECOURS : les vraies viennent de la table site_textes
+	// (éditable dans /admin/textes) et les remplacent dès qu'elles arrivent.
+	// Si la base est injoignable ou une ligne manquante, la page affiche
+	// simplement ceci — rien ne casse.
+	const t = $state({
 		// Promessa d'acuèlh : lo nom de la marca ES lo concèpte (« ligam »
 		// = ligam). « Acompanha » ditz quicòm que las autras formulacions
 		// disián pas : que se daissa pas lo visitaire sol.
@@ -107,7 +111,45 @@
 			oc: 'Fach amb amor en Occitània.',
 			fr: 'Fait avec amour en Occitanie.'
 		}
-	};
+	});
+
+	// Recopie les textes venus de la base par-dessus les valeurs de secours.
+	// Correspondance identifiant plat (base) → case du bloc t ci-dessus.
+	$effect(() => {
+		if (!browser) return;
+		supabase
+			.from('site_textes')
+			.select('id, oc, fr')
+			.then(({ data }) => {
+				if (!data?.length) return;
+				const linhas = new Map(data.map((r) => [r.id, r]));
+				const pren = (id, cibla) => {
+					const r = linhas.get(id);
+					if (r) {
+						cibla.oc = r.oc;
+						cibla.fr = r.fr;
+					}
+				};
+				pren('hero_lead', t.heroLead);
+				pren('hero_sub', t.heroSub);
+				pren('what_title', t.what.title);
+				pren('what_lead', t.what.lead);
+				pren('lenga_title', t.lenga.title);
+				pren('lenga_lead', t.lenga.lead);
+				pren('lenga_note', t.lenga.note);
+				pren('carta_title', t.carta.title);
+				pren('carta_lead', t.carta.lead);
+				pren('carta_cta', t.carta.cta);
+				pren('officialitat_title', t.officialitat.title);
+				pren('officialitat_lead', t.officialitat.lead);
+				pren('footer_tagline', t.footer);
+				t.lenga.facts.forEach((fact, i) => {
+					const num = linhas.get(`lenga_fact${i + 1}_num`);
+					if (num) fact.num = num.oc;
+					pren(`lenga_fact${i + 1}_label`, fact);
+				});
+			});
+	});
 
 	let scrollY = $state(0);
 
@@ -507,6 +549,16 @@
 
 	<SiteFooter tagline={t.footer} />
 </main>
+
+{#if $esAdmin}
+	<a class="edit-floating" href="/admin/textes" title="Modificar los tèxtes d'aquesta pagina">
+		<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
+			stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+			<path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+		</svg>
+		<span>Modificar</span>
+	</a>
+{/if}
 
 <style>
 	.topbar {
@@ -1400,5 +1452,34 @@
 
 	.chapter--officialitat .chapter-title {
 		color: var(--color-brick);
+	}
+
+	/* Bouton d'édition réservé à l'administrateur connecté — les visiteurs
+	   ne le voient jamais (esAdmin est faux pour eux). */
+	.edit-floating {
+		position: fixed;
+		bottom: 1.25rem;
+		right: 1.25rem;
+		z-index: 30;
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.6rem 1rem;
+		border-radius: 999px;
+		background: var(--color-text);
+		color: var(--color-cream);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.85rem;
+		text-decoration: none;
+		box-shadow: 0 8px 22px rgba(58, 42, 32, 0.35);
+		transition:
+			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1),
+			box-shadow 150ms ease;
+	}
+
+	.edit-floating:hover {
+		transform: translateY(-2px) scale(1.03);
+		box-shadow: 0 12px 28px rgba(58, 42, 32, 0.4);
 	}
 </style>

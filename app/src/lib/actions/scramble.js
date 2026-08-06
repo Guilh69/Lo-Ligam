@@ -32,20 +32,33 @@ function setVisible(layer, visible) {
 }
 
 export function scramble(node, params) {
-	const { oc, fr, inline } = params;
-	node.style.display = inline ? 'inline-grid' : 'grid';
-	node.textContent = '';
-
 	const stagger = 6;
-	const ocLayer = buildLayer(oc, stagger);
-	const frLayer = buildLayer(fr, stagger);
+	node.style.display = params.inline ? 'inline-grid' : 'grid';
+
+	let oc = params.oc;
+	let fr = params.fr;
+	let ocLayer = buildLayer(oc, stagger);
+	let frLayer = buildLayer(fr, stagger);
+	node.textContent = '';
 	node.appendChild(ocLayer);
 	node.appendChild(frLayer);
 	setVisible(ocLayer, params.lang === 'oc');
 	setVisible(frLayer, params.lang !== 'oc');
 
 	return {
+		// Rebastís las doas jaças sonque se lo tèxte cambièt vertadièrament
+		// (contengut vengut de l'admin cargat après lo montatge) — jamai al
+		// simple cambiament de lenga, per gardar l'animacion de fondut.
 		update(newParams) {
+			if (newParams.oc !== oc || newParams.fr !== fr) {
+				oc = newParams.oc;
+				fr = newParams.fr;
+				ocLayer = buildLayer(oc, stagger);
+				frLayer = buildLayer(fr, stagger);
+				node.textContent = '';
+				node.appendChild(ocLayer);
+				node.appendChild(frLayer);
+			}
 			setVisible(ocLayer, newParams.lang === 'oc');
 			setVisible(frLayer, newParams.lang !== 'oc');
 		}
