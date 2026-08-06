@@ -21,7 +21,11 @@
 			close: 'Tampar',
 			more: 'Saber mai sus lo Mond en occitan',
 			layers: 'Jaces',
-			layersLabel: 'Jaces de la carta'
+			layersLabel: 'Jaces de la carta',
+			basemap: 'Fons de carta',
+			basemapOccitan: 'Occitan',
+			basemapNatural: 'Natural',
+			basemapSatellite: 'Satellit'
 		},
 		fr: {
 			title: 'Le Monde en occitan',
@@ -30,7 +34,11 @@
 			close: 'Fermer',
 			more: 'En savoir plus sur le Monde en occitan',
 			layers: 'Calques',
-			layersLabel: 'Calques de la carte'
+			layersLabel: 'Calques de la carte',
+			basemap: 'Fond de carte',
+			basemapOccitan: 'Occitan',
+			basemapNatural: 'Naturel',
+			basemapSatellite: 'Satellite'
 		}
 	};
 	let tx = $derived(t[lang]);
@@ -39,6 +47,9 @@
 
 	let showInfo = $state(false);
 	let layersPanelOpen = $state(false);
+	let baseLayer = $state('occitan');
+
+	const baseLayerOptions = ['occitan', 'natural', 'satellite'];
 
 	let layerVisibility = $state({
 		lieusInteres: true,
@@ -91,7 +102,7 @@
 	<AppHeader />
 
 	<main class="carta-wrap">
-		<CartaOccitania visibility={layerVisibility} />
+		<CartaOccitania visibility={layerVisibility} {baseLayer} />
 
 		{#if showInfo}
 			<div class="info-card" transition:fly={{ y: -12, duration: 260, easing: quintOut }}>
@@ -133,6 +144,29 @@
 						aria-label={tx.close}>×</button
 					>
 				</div>
+
+				<div class="basemap-section">
+					<p class="basemap-label">{tx.basemap}</p>
+					<div class="basemap-options" role="radiogroup" aria-label={tx.basemap}>
+						{#each baseLayerOptions as option (option)}
+							<label class="basemap-option">
+								<input
+									type="radio"
+									name="basemap"
+									value={option}
+									checked={baseLayer === option}
+									onchange={() => (baseLayer = option)}
+								/>
+								{tx[
+									'basemap' + option.charAt(0).toUpperCase() + option.slice(1)
+								]}
+							</label>
+						{/each}
+					</div>
+				</div>
+
+				<hr class="layers-divider" />
+
 				<ul>
 					{#each layerDefs as layer (layer.id)}
 						<li class:disabled={!layer.available}>
@@ -322,6 +356,41 @@
 	.layers-head h2 {
 		font-size: 1rem;
 		color: var(--color-olive);
+	}
+
+	.basemap-label {
+		margin: 0 0 0.4rem;
+		font-size: 0.72rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--color-olive);
+	}
+
+	.basemap-options {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 0.9rem;
+	}
+
+	.basemap-option {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 0.85rem;
+		cursor: pointer;
+	}
+
+	.basemap-option input[type='radio'] {
+		accent-color: var(--color-olive);
+		width: 0.95rem;
+		height: 0.95rem;
+	}
+
+	.layers-divider {
+		border: none;
+		border-top: 1px solid rgba(58, 42, 32, 0.14);
+		margin: 0.75rem 0;
 	}
 
 	.layers-panel ul {

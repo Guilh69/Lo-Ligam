@@ -22,7 +22,31 @@
 		noc: { color: '#5e7b3a', label: 'Nòrd-occitan' }
 	};
 
-	let { visibility = {} } = $props();
+	// Fonses de carta disponibles. Sonque lo fons « occitan » a d'etiquetas en
+	// occitan (rendudas per OSM-bzh) ; los autres son de fonses tèrças sens
+	// contengut lingüistic occitan, gratuits e sens clau d'API.
+	const baseLayers = {
+		occitan: {
+			url: 'https://tile.openstreetmap.bzh/oc/{z}/{x}/{y}.png',
+			maxZoom: 17,
+			attribution:
+				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · rendu per <a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener">OpenStreetMap e occitan</a>'
+		},
+		natural: {
+			url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+			maxZoom: 17,
+			attribution:
+				'Donadas : © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a>, SRTM · Estil : © <a href="https://opentopomap.org" target="_blank" rel="noopener">OpenTopoMap</a> (CC-BY-SA)'
+		},
+		satellite: {
+			url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+			maxZoom: 19,
+			attribution:
+				'Tiles © <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a> — Esri, Maxar, Earthstar Geographics'
+		}
+	};
+
+	let { visibility = {}, baseLayer = 'occitan' } = $props();
 
 	let mapEl;
 	let map;
@@ -30,6 +54,19 @@
 	let lieusLayer;
 	let dialectesLayer;
 	let dialectesLoading = false;
+	let currentBaseTileLayer;
+
+	function setBaseLayer(key) {
+		const resolvedKey = baseLayers[key] ? key : 'occitan';
+		const cfg = baseLayers[resolvedKey];
+		if (currentBaseTileLayer) map.removeLayer(currentBaseTileLayer);
+		currentBaseTileLayer = L.tileLayer(cfg.url, {
+			maxZoom: cfg.maxZoom,
+			attribution: cfg.attribution
+		});
+		currentBaseTileLayer._loLigamKey = resolvedKey;
+		currentBaseTileLayer.addTo(map);
+	}
 
 	async function loadDialectesLayer() {
 		if (dialectesLayer || dialectesLoading) return;
@@ -62,14 +99,10 @@
 			center: [43.95, 2.4],
 			zoom: 7,
 			minZoom: 5,
-			maxZoom: 17
+			maxZoom: 19
 		});
 
-		L.tileLayer('https://tile.openstreetmap.bzh/oc/{z}/{x}/{y}.png', {
-			maxZoom: 17,
-			attribution:
-				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · rendu par <a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener">OpenStreetMap e occitan</a>'
-		}).addTo(map);
+		setBaseLayer(baseLayer);
 
 		lieusLayer = L.layerGroup(
 			lieusInteres.map((lieu) =>
@@ -94,6 +127,7 @@
 		// quand la visibilitat càmbia mai tard.
 		const showLieus = visibility.lieusInteres;
 		const showDialectes = visibility.dialectes;
+		const nextBaseLayer = baseLayer;
 		if (!map || !L) return;
 
 		if (lieusLayer) {
@@ -113,6 +147,10 @@
 		} else if (dialectesLayer) {
 			map.removeLayer(dialectesLayer);
 		}
+
+		if (currentBaseTileLayer?._loLigamKey !== nextBaseLayer) {
+			setBaseLayer(nextBaseLayer);
+		}
 	});
 
 	onDestroy(() => {
@@ -120,7 +158,7 @@
 	});
 </script>
 
-<div class="carta" bind:this={mapEl}></div>
+<div class="carta" class:muted={baseLayer === 'occitan'} bind:this={mapEl}></div>
 
 <style>
 	.carta {
@@ -135,8 +173,9 @@
 
 	/* Atenua lo fons OSM (rotas colorejadas en roge/irange) sens tocar las
 	   jaces (dialèctes, luòcs) que rèstan dins un autre pan Leaflet, pas
-	   afectat per aqueste filtre. */
-	.carta :global(.leaflet-tile-pane) {
+	   afectat per aqueste filtre. Pas aplicat als autres fonses (natural,
+	   satellit), qu'an ja de colors naturalas que cal pas amortir. */
+	.carta.muted :global(.leaflet-tile-pane) {
 		filter: grayscale(65%) brightness(1.08) contrast(0.92);
 	}
 </style>
