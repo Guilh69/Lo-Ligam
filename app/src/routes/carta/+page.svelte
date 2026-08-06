@@ -9,6 +9,7 @@
 	import LayersIcon from '$lib/components/LayersIcon.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { supabase } from '$lib/supabaseClient';
+	import { esAdmin } from '$lib/adminStore';
 
 	let lang = $derived(langStore.current);
 
@@ -26,7 +27,8 @@
 			basemap: 'Fons de carta',
 			basemapOccitan: 'Occitan',
 			basemapNatural: 'Natural',
-			basemapSatellite: 'Satellit'
+			basemapSatellite: 'Satellit',
+			adminLink: "Modificar dins l'admin"
 		},
 		fr: {
 			title: 'Le Monde en occitan',
@@ -39,7 +41,8 @@
 			basemap: 'Fond de carte',
 			basemapOccitan: 'Occitan',
 			basemapNatural: 'Naturel',
-			basemapSatellite: 'Satellite'
+			basemapSatellite: 'Satellite',
+			adminLink: "Modifier dans l'admin"
 		}
 	};
 	let tx = $derived(t[lang]);
@@ -175,6 +178,10 @@
 						</li>
 					{/each}
 				</ul>
+
+				{#if $esAdmin}
+					<a class="admin-link" href="/admin/carta">{tx.adminLink} →</a>
+				{/if}
 			</div>
 		{:else}
 			<button
@@ -417,5 +424,20 @@
 		font-size: 0.72rem;
 		line-height: 1.3;
 		color: var(--color-teal);
+	}
+
+	.admin-link {
+		display: block;
+		margin-top: 0.85rem;
+		padding-top: 0.7rem;
+		border-top: 1px solid rgba(58, 42, 32, 0.14);
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--color-brick);
+		text-decoration: none;
+	}
+
+	.admin-link:hover {
+		text-decoration: underline;
 	}
 </style>
