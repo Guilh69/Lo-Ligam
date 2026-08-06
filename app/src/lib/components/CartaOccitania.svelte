@@ -132,4 +132,11 @@
 		font-family: var(--font-body);
 		font-size: 0.7rem;
 	}
+
+	/* Atenua lo fons OSM (rotas colorejadas en roge/irange) sens tocar las
+	   jaces (dialèctes, luòcs) que rèstan dins un autre pan Leaflet, pas
+	   afectat per aqueste filtre. */
+	.carta :global(.leaflet-tile-pane) {
+		filter: grayscale(65%) brightness(1.08) contrast(0.92);
+	}
 </style>
