@@ -33,10 +33,10 @@
 				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · rendu per <a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener">OpenStreetMap e occitan</a>'
 		},
 		natural: {
-			url: 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
-			maxZoom: 20,
+			url: 'https://cawm.lib.uiowa.edu/tiles/{z}/{x}/{y}.png',
+			maxZoom: 11,
 			attribution:
-				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · estil <a href="https://www.cyclosm.org" target="_blank" rel="noopener">CyclOSM</a>'
+				'Relèu : <a href="https://cawm.lib.uiowa.edu/" target="_blank" rel="noopener">Consortium of Ancient World Mappers</a> / University of Iowa Libraries (CC BY 4.0)'
 		},
 		satellite: {
 			url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
