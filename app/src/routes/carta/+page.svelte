@@ -57,6 +57,7 @@
 
 	let layerVisibility = $state({
 		lieusInteres: true,
+		librarias: true,
 		dialectes: false,
 		provincias: false,
 		limsi: false

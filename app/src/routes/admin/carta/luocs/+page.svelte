@@ -3,6 +3,7 @@
 	import { supabase } from '$lib/supabaseClient';
 
 	let luocs = $state([]);
+	let colas = $state([]);
 	let cargant = $state(true);
 	let msg = $state(null);
 
@@ -10,17 +11,34 @@
 	let enregistrant = $state(false);
 	let confirmaSup = $state(null);
 
+	// Las còlas que son de PUNTS. Las autras (dialèctes, provincias…) son de
+	// zònas : un punt i seriá una error, doncas son pas prepausadas aicí.
+	const COLAS_PAS_DE_PUNTS = ['dialectes', 'provincias', 'limsi'];
+
+	// La colomna cola_id apareis amb supabase-carta-librarias.sql : abans
+	// aquela migracion, se ditz pas dins las escrituras (senon la basa las
+	// refusariá).
+	let teColaId = $derived(luocs.length ? 'cola_id' in luocs[0] : colas.length > 1);
+
+	function nomCola(id) {
+		return colas.find((c) => c.id === id)?.label_oc ?? id;
+	}
+
 	onMount(cargar);
 
 	async function cargar() {
 		cargant = true;
-		const { data, error } = await supabase.from('carta_luocs').select('*').order('ordre');
+		const [rLuocs, rColas] = await Promise.all([
+			supabase.from('carta_luocs').select('*').order('ordre'),
+			supabase.from('carta_colas').select('id, label_oc').order('ordre')
+		]);
 		cargant = false;
-		if (error) {
-			msg = { tipe: 'error', text: error.message };
+		if (rLuocs.error) {
+			msg = { tipe: 'error', text: rLuocs.error.message };
 			return;
 		}
-		luocs = data;
+		luocs = rLuocs.data;
+		colas = (rColas.data ?? []).filter((c) => !COLAS_PAS_DE_PUNTS.includes(c.id));
 	}
 
 	function slug(text) {
@@ -36,6 +54,7 @@
 		return {
 			mode: 'nòu',
 			id: null,
+			cola_id: 'lieusInteres',
 			nom_oc: '',
 			nom_fr: '',
 			descripcion_oc: '',
@@ -56,6 +75,7 @@
 		forma = {
 			mode: 'edicion',
 			id: l.id,
+			cola_id: l.cola_id ?? 'lieusInteres',
 			nom_oc: l.nom_oc,
 			nom_fr: l.nom_fr ?? '',
 			descripcion_oc: l.descripcion_oc ?? '',
@@ -86,6 +106,7 @@
 		}
 
 		const camps = {
+			...(teColaId ? { cola_id: forma.cola_id } : {}),
 			nom_oc,
 			nom_fr: forma.nom_fr.trim() || null,
 			descripcion_oc: forma.descripcion_oc.trim() || null,
@@ -194,6 +215,17 @@
 			<h2>{forma.mode === 'nòu' ? 'Apondre un luòc' : 'Modificar'}</h2>
 
 			<div class="camps">
+				{#if teColaId && colas.length > 1}
+					<label>
+						Còla <em>(dins quin jaç de la carta apareis aqueste punt)</em>
+						<select bind:value={forma.cola_id}>
+							{#each colas as c (c.id)}
+								<option value={c.id}>{c.label_oc}</option>
+							{/each}
+						</select>
+					</label>
+				{/if}
+
 				<div class="doble">
 					<label>
 						Nom occitan
@@ -263,7 +295,9 @@
 					<div class="tèxte">
 						<strong>{l.nom_oc}</strong>
 						<span class="meta">
-							{l.latitud.toFixed(3)}, {l.longitud.toFixed(3)}
+							{#if teColaId}{nomCola(l.cola_id ?? 'lieusInteres')} · {/if}{l.latitud.toFixed(3)}, {l.longitud.toFixed(
+								3
+							)}
 							{#if !l.publicat}· <span class="pas-publicat">pas publicat</span>{/if}
 						</span>
 					</div>

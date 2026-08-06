@@ -7,8 +7,11 @@
 	// carta_colas, carta_dialectes — gerits dins /admin/carta) puslèu que
 	// d'èsser escriches en dur aicí. Cargats dins onMount, abans de bastir la
 	// carta, per evitar tota corsa entre l'afichatge e las donadas.
-	let lieusInteres = [];
-	let lieusColor = '#e0a43b';
+	//
+	// Los punts son gropats per còla (colomna cola_id de carta_luocs) :
+	// « lieusInteres », « librarias », e tota còla de punts venenta — cap de
+	// còdi novèl serà de besonh, sonque una linha dins carta_colas e de punts.
+	let colaColors = {};
 	let dialectStyles = {};
 
 	// Fonses de carta disponibles. Sonque lo fons « occitan » a d'etiquetas en
@@ -45,7 +48,7 @@
 	let mapEl;
 	let map;
 	let L;
-	let lieusLayer;
+	let pointLayers = {};
 	let dialectesLayer;
 	let dialectesLoading = false;
 	let currentBaseTileLayer;
@@ -144,16 +147,23 @@
 	}
 
 	onMount(async () => {
-		const [{ data: luocsData }, { data: colaData }, { data: dialectesData }] = await Promise.all([
+		const [{ data: luocsData }, { data: colasData }, { data: dialectesData }] = await Promise.all([
 			supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
-			supabase.from('carta_colas').select('color').eq('id', 'lieusInteres').maybeSingle(),
+			supabase.from('carta_colas').select('id, color').order('ordre'),
 			supabase.from('carta_dialectes').select('*').order('ordre')
 		]);
 
-		lieusInteres = luocsData ?? [];
-		lieusColor = colaData?.color ?? lieusColor;
+		for (const c of colasData ?? []) colaColors[c.id] = c.color;
 		for (const d of dialectesData ?? []) {
 			dialectStyles[d.kòd] = { color: d.color, opacitat: d.opacitat, label: d.label_oc };
+		}
+
+		// Grope los punts per còla. Los punts d'abans la colomna cola_id (basa
+		// pas encara migrada) son de luòcs d'interès.
+		const perCola = {};
+		for (const luoc of luocsData ?? []) {
+			const cid = luoc.cola_id ?? 'lieusInteres';
+			(perCola[cid] ??= []).push(luoc);
 		}
 
 		L = (await import('leaflet')).default;
@@ -173,21 +183,23 @@
 			.scale({ position: 'bottomleft', metric: true, imperial: false, maxWidth: 110 })
 			.addTo(map);
 
-		lieusLayer = L.layerGroup(
-			lieusInteres.map((lieu) =>
-				L.circleMarker([lieu.latitud, lieu.longitud], {
-					radius: 7,
-					weight: 2,
-					color: '#a5342a',
-					fillColor: lieusColor,
-					fillOpacity: 0.9
-				}).bindPopup(
-					`<strong>${lieu.nom_oc}</strong>${lieu.descripcion_oc ? `<br>${lieu.descripcion_oc}` : ''}`
+		for (const [cid, luocs] of Object.entries(perCola)) {
+			pointLayers[cid] = L.layerGroup(
+				luocs.map((lieu) =>
+					L.circleMarker([lieu.latitud, lieu.longitud], {
+						radius: 7,
+						weight: 2,
+						color: '#a5342a',
+						fillColor: colaColors[cid] ?? '#e0a43b',
+						fillOpacity: 0.9
+					}).bindPopup(
+						`<strong>${lieu.nom_oc}</strong>${lieu.descripcion_oc ? `<br>${lieu.descripcion_oc}` : ''}`
+					)
 				)
-			)
-		);
+			);
+			if (visibility[cid]) pointLayers[cid].addTo(map);
+		}
 
-		if (visibility.lieusInteres) lieusLayer.addTo(map);
 		if (visibility.dialectes) loadDialectesLayer();
 	});
 
@@ -195,17 +207,18 @@
 		// Legir las proprietats en primièr, meteis dins lo cas ont la carta es
 		// pas encara prèsta : cal que l'effièch se marque coma dependent
 		// d'aquelas valors d'en primièr còp, o se tornarà pas jamai executar
-		// quand la visibilitat càmbia mai tard.
-		const showLieus = visibility.lieusInteres;
-		const showDialectes = visibility.dialectes;
+		// quand la visibilitat càmbia mai tard. L'espandiment (...) legís
+		// TOTAS las claus de visibility d'un còp — quina que siá la còla.
+		const vis = { ...visibility };
+		const showDialectes = vis.dialectes;
 		const nextBaseLayer = baseLayer;
 		if (!map || !L) return;
 
-		if (lieusLayer) {
-			if (showLieus) {
-				lieusLayer.addTo(map);
+		for (const [cid, layer] of Object.entries(pointLayers)) {
+			if (vis[cid]) {
+				layer.addTo(map);
 			} else {
-				map.removeLayer(lieusLayer);
+				map.removeLayer(layer);
 			}
 		}
 
