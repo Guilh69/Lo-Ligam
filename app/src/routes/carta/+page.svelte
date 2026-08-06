@@ -59,6 +59,7 @@
 		lieusInteres: true,
 		librarias: true,
 		dialectes: false,
+		regions: false,
 		provincias: false,
 		limsi: false
 	});

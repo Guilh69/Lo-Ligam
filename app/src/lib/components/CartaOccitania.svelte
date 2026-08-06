@@ -12,6 +12,7 @@
 	// « lieusInteres », « librarias », e tota còla de punts venenta — cap de
 	// còdi novèl serà de besonh, sonque una linha dins carta_colas e de punts.
 	let colaColors = {};
+	let colaOpacitats = {};
 	let dialectStyles = {};
 
 	// Fonses de carta disponibles. Sonque lo fons « occitan » a d'etiquetas en
@@ -49,8 +50,8 @@
 	let map;
 	let L;
 	let pointLayers = {};
-	let dialectesLayer;
-	let dialectesLoading = false;
+	let geoLayers = {};
+	let geoLoading = {};
 	let currentBaseTileLayer;
 	let toponymCities;
 	let toponymTowns;
@@ -68,12 +69,13 @@
 		currentBaseTileLayer.addTo(map);
 	}
 
-	async function loadDialectesLayer() {
-		if (dialectesLayer || dialectesLoading) return;
-		dialectesLoading = true;
-		const res = await fetch('/data/dialectes.geojson');
-		const data = await res.json();
-		dialectesLayer = L.geoJSON(data, {
+	// Jaces de zònas (GeoJSON cargat a la demanda, sonque al primièr
+	// afichatge). Cada dintrada balha l'adreça del fichièr e la faiçon de
+	// l'estilizar / de nomenar sas zònas. Per n'apondre una : una dintrada
+	// aicí + una linha dins carta_colas.
+	const GEO_LAYERS = {
+		dialectes: {
+			url: '/data/dialectes.geojson',
 			style: (feature) => {
 				const info = dialectStyles[feature.properties.name];
 				return {
@@ -83,13 +85,41 @@
 					fillOpacity: info?.opacitat ?? 0.35
 				};
 			},
+			popup: (feature) =>
+				dialectStyles[feature.properties.name]?.label ?? feature.properties.name
+		},
+		regions: {
+			url: '/data/regions.geojson',
+			attribution:
+				'Contorns : <a href="https://github.com/gregoiredavid/france-geojson" target="_blank" rel="noopener">france-geojson</a> / Etalab (Licéncia Dobèrta)',
+			// Simple linha de referéncia : contorn fin, emplenatge gaireben nul,
+			// color e opacitat reglablas dins /admin/carta (linha « regions »).
+			style: () => ({
+				color: colaColors.regions ?? '#3a2a20',
+				weight: 1.3,
+				dashArray: '4 3',
+				fillColor: colaColors.regions ?? '#3a2a20',
+				fillOpacity: colaOpacitats.regions ?? 0.04
+			}),
+			popup: (feature) => feature.properties.nom
+		}
+	};
+
+	async function loadGeoLayer(gid) {
+		const def = GEO_LAYERS[gid];
+		if (!def || geoLayers[gid] || geoLoading[gid]) return;
+		geoLoading[gid] = true;
+		const res = await fetch(def.url);
+		const data = await res.json();
+		geoLayers[gid] = L.geoJSON(data, {
+			style: def.style,
+			attribution: def.attribution,
 			onEachFeature: (feature, layer) => {
-				const info = dialectStyles[feature.properties.name];
-				layer.bindPopup(info?.label ?? feature.properties.name);
+				layer.bindPopup(def.popup(feature));
 			}
 		});
-		dialectesLoading = false;
-		if (visibility.dialectes) dialectesLayer.addTo(map);
+		geoLoading[gid] = false;
+		if (visibility[gid]) geoLayers[gid].addTo(map);
 	}
 
 	// Etiquetas dels noms de luòcs en occitan (venon d'OSM, camp « name:oc »,
@@ -149,11 +179,14 @@
 	onMount(async () => {
 		const [{ data: luocsData }, { data: colasData }, { data: dialectesData }] = await Promise.all([
 			supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
-			supabase.from('carta_colas').select('id, color').order('ordre'),
+			supabase.from('carta_colas').select('id, color, opacitat').order('ordre'),
 			supabase.from('carta_dialectes').select('*').order('ordre')
 		]);
 
-		for (const c of colasData ?? []) colaColors[c.id] = c.color;
+		for (const c of colasData ?? []) {
+			colaColors[c.id] = c.color;
+			colaOpacitats[c.id] = c.opacitat;
+		}
 		for (const d of dialectesData ?? []) {
 			dialectStyles[d.kòd] = { color: d.color, opacitat: d.opacitat, label: d.label_oc };
 		}
@@ -200,7 +233,9 @@
 			if (visibility[cid]) pointLayers[cid].addTo(map);
 		}
 
-		if (visibility.dialectes) loadDialectesLayer();
+		for (const gid of Object.keys(GEO_LAYERS)) {
+			if (visibility[gid]) loadGeoLayer(gid);
+		}
 	});
 
 	$effect(() => {
@@ -210,7 +245,6 @@
 		// quand la visibilitat càmbia mai tard. L'espandiment (...) legís
 		// TOTAS las claus de visibility d'un còp — quina que siá la còla.
 		const vis = { ...visibility };
-		const showDialectes = vis.dialectes;
 		const nextBaseLayer = baseLayer;
 		if (!map || !L) return;
 
@@ -222,14 +256,16 @@
 			}
 		}
 
-		if (showDialectes) {
-			if (dialectesLayer) {
-				dialectesLayer.addTo(map);
-			} else if (!dialectesLoading) {
-				loadDialectesLayer();
+		for (const gid of Object.keys(GEO_LAYERS)) {
+			if (vis[gid]) {
+				if (geoLayers[gid]) {
+					geoLayers[gid].addTo(map);
+				} else if (!geoLoading[gid]) {
+					loadGeoLayer(gid);
+				}
+			} else if (geoLayers[gid]) {
+				map.removeLayer(geoLayers[gid]);
 			}
-		} else if (dialectesLayer) {
-			map.removeLayer(dialectesLayer);
 		}
 
 		if (currentBaseTileLayer?._loLigamKey !== nextBaseLayer) {
