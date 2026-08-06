@@ -33,10 +33,10 @@
 				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · rendu per <a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener">OpenStreetMap e occitan</a>'
 		},
 		natural: {
-			url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-			maxZoom: 17,
+			url: 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
+			maxZoom: 20,
 			attribution:
-				'Donadas : © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a>, SRTM · Estil : © <a href="https://opentopomap.org" target="_blank" rel="noopener">OpenTopoMap</a> (CC-BY-SA)'
+				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · estil <a href="https://www.cyclosm.org" target="_blank" rel="noopener">CyclOSM</a>'
 		},
 		satellite: {
 			url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
@@ -45,6 +45,11 @@
 				'Tiles © <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a> — Esri, Maxar, Earthstar Geographics'
 		}
 	};
+
+	// Nivèl de zoom a partir d'ont apareisson los borgs (en mai de las vilas,
+	// totjorn vesedoiras) : evita d'encombrar la carta amb 354 etiquetas a
+	// una vista alunhada.
+	const TOWN_MIN_ZOOM = 9;
 
 	let { visibility = {}, baseLayer = 'occitan' } = $props();
 
@@ -55,6 +60,9 @@
 	let dialectesLayer;
 	let dialectesLoading = false;
 	let currentBaseTileLayer;
+	let toponymCities;
+	let toponymTowns;
+	let toponymsLoading = false;
 
 	function setBaseLayer(key) {
 		const resolvedKey = baseLayers[key] ? key : 'occitan';
@@ -92,6 +100,60 @@
 		if (visibility.dialectes) dialectesLayer.addTo(map);
 	}
 
+	// Etiquetas dels noms de luòcs en occitan (venon d'OSM, camp « name:oc »,
+	// extraches amb Overpass) — sonque utilas suls fonses que n'an pas ja
+	// (Natural, Satellit) : lo fons « Occitan » a ja sos pròpris noms rendus
+	// per las tuèlas.
+	function makeLabelMarker(feature) {
+		const [lng, lat] = feature.geometry.coordinates;
+		const isCity = feature.properties.place === 'city';
+		return L.marker([lat, lng], {
+			icon: L.divIcon({
+				className: `oc-label ${isCity ? 'oc-label-city' : 'oc-label-town'}`,
+				html: feature.properties.name_oc,
+				iconSize: [140, 18],
+				iconAnchor: [70, 9]
+			}),
+			interactive: false
+		});
+	}
+
+	async function loadToponymsLayer() {
+		if (toponymCities || toponymsLoading) return;
+		toponymsLoading = true;
+		const res = await fetch('/data/toponims-oc.geojson');
+		const data = await res.json();
+		const cityMarkers = [];
+		const townMarkers = [];
+		for (const feature of data.features) {
+			const marker = makeLabelMarker(feature);
+			if (feature.properties.place === 'city') {
+				cityMarkers.push(marker);
+			} else {
+				townMarkers.push(marker);
+			}
+		}
+		toponymCities = L.layerGroup(cityMarkers);
+		toponymTowns = L.layerGroup(townMarkers);
+		toponymsLoading = false;
+		applyToponymVisibility();
+	}
+
+	function applyToponymVisibility() {
+		if (!map || !toponymCities) return;
+		if (baseLayer !== 'occitan') {
+			toponymCities.addTo(map);
+			if (map.getZoom() >= TOWN_MIN_ZOOM) {
+				toponymTowns.addTo(map);
+			} else {
+				map.removeLayer(toponymTowns);
+			}
+		} else {
+			map.removeLayer(toponymCities);
+			map.removeLayer(toponymTowns);
+		}
+	}
+
 	onMount(async () => {
 		L = (await import('leaflet')).default;
 
@@ -103,6 +165,8 @@
 		});
 
 		setBaseLayer(baseLayer);
+		map.on('zoomend', applyToponymVisibility);
+		if (baseLayer !== 'occitan') loadToponymsLayer();
 
 		lieusLayer = L.layerGroup(
 			lieusInteres.map((lieu) =>
@@ -151,6 +215,12 @@
 		if (currentBaseTileLayer?._loLigamKey !== nextBaseLayer) {
 			setBaseLayer(nextBaseLayer);
 		}
+
+		if (toponymCities) {
+			applyToponymVisibility();
+		} else if (nextBaseLayer !== 'occitan' && !toponymsLoading) {
+			loadToponymsLayer();
+		}
 	});
 
 	onDestroy(() => {
@@ -177,5 +247,28 @@
 	   satellit), qu'an ja de colors naturalas que cal pas amortir. */
 	.carta.muted :global(.leaflet-tile-pane) {
 		filter: grayscale(65%) brightness(1.08) contrast(0.92);
+	}
+
+	/* Etiquetas dels noms occitans, per las mostrar suls fonses Natural e
+	   Satellit. Contorn clar (text-stroke) per rèstar legibles sus de fonses
+	   variables (fòrças colors en satellit). */
+	.carta :global(.oc-label) {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		color: var(--color-text);
+		text-align: center;
+		white-space: nowrap;
+		pointer-events: none;
+		-webkit-text-stroke: 3px rgba(245, 234, 216, 0.85);
+		paint-order: stroke fill;
+	}
+
+	.carta :global(.oc-label-city) {
+		font-size: 0.82rem;
+	}
+
+	.carta :global(.oc-label-town) {
+		font-size: 0.68rem;
+		font-weight: 600;
 	}
 </style>
