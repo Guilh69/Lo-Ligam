@@ -168,6 +168,10 @@
 		map.on('zoomend', applyToponymVisibility);
 		if (baseLayer !== 'occitan') loadToponymsLayer();
 
+		L.control
+			.scale({ position: 'bottomleft', metric: true, imperial: false, maxWidth: 110 })
+			.addTo(map);
+
 		lieusLayer = L.layerGroup(
 			lieusInteres.map((lieu) =>
 				L.circleMarker([lieu.lat, lieu.lng], {
@@ -228,9 +232,25 @@
 	});
 </script>
 
-<div class="carta" class:muted={baseLayer === 'occitan'} bind:this={mapEl}></div>
+<div class="carta-root">
+	<div class="carta" class:muted={baseLayer === 'occitan'} bind:this={mapEl}></div>
+
+	<div class="compass" aria-hidden="true">
+		<svg viewBox="0 0 24 24" width="18" height="18">
+			<polygon points="12,2 15.2,12 12,10.2 8.8,12" fill="#a5342a" />
+			<polygon points="12,22 15.2,12 12,13.8 8.8,12" fill="#3a2a20" fill-opacity="0.55" />
+		</svg>
+		<span>N</span>
+	</div>
+</div>
 
 <style>
+	.carta-root {
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+
 	.carta {
 		width: 100%;
 		height: 100%;
@@ -239,6 +259,45 @@
 	.carta :global(.leaflet-control-attribution) {
 		font-family: var(--font-body);
 		font-size: 0.7rem;
+	}
+
+	.carta :global(.leaflet-control-scale-line) {
+		background: rgba(245, 234, 216, 0.85);
+		backdrop-filter: blur(6px);
+		border: 2px solid var(--color-text);
+		border-top: none;
+		color: var(--color-text);
+		font-family: var(--font-body);
+		font-weight: 600;
+		font-size: 0.72rem;
+		padding: 1px 6px;
+		border-radius: 0 0 8px 8px;
+	}
+
+	.compass {
+		position: absolute;
+		top: 1rem;
+		left: 4.5rem;
+		z-index: 900;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.1rem;
+		width: 2.2rem;
+		height: 2.2rem;
+		justify-content: center;
+		border-radius: 999px;
+		background: rgba(245, 234, 216, 0.88);
+		backdrop-filter: blur(8px);
+		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.16);
+	}
+
+	.compass span {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.6rem;
+		color: var(--color-text);
+		line-height: 1;
 	}
 
 	/* Atenua lo fons OSM (rotas colorejadas en roge/irange) sens tocar las
