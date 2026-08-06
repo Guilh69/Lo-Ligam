@@ -14,6 +14,16 @@
 	let colaColors = {};
 	let colaOpacitats = {};
 	let dialectStyles = {};
+	let deptNivels = {};
+
+	// Los tres nivèls de la còla « Despartaments occitans » (definits per
+	// Romain) : lo nivèl mena l'intensitat de l'emplenatge e lo tèxte del
+	// popup. Etiquetas occitanas de validar (dicodòc).
+	const DEPT_NIVELS = {
+		1: { opacitat: 1, label: 'Occitan, sola lenga regionala' },
+		2: { opacitat: 0.55, label: 'Occitan, lenga regionala en partida' },
+		3: { opacitat: 0.25, label: "Preséncia anciana de l'occitan, despareguda" }
+	};
 
 	// Fonses de carta disponibles. Sonque lo fons « occitan » a d'etiquetas en
 	// occitan (rendudas per OSM-bzh) ; los autres son de fonses tèrças sens
@@ -88,6 +98,30 @@
 			popup: (feature) =>
 				dialectStyles[feature.properties.name]?.label ?? feature.properties.name
 		},
+		departaments: {
+			url: '/data/departements.geojson',
+			attribution:
+				'Contorns : <a href="https://github.com/gregoiredavid/france-geojson" target="_blank" rel="noopener">france-geojson</a> / Etalab (Licéncia Dobèrta)',
+			// Sonque los despartaments classats (taula carta_departaments) son
+			// afichats ; l'intensitat seguís lo nivèl (1 fòrt, 2 mejan, 3 leugièr).
+			filter: (feature) => feature.properties.code in deptNivels,
+			style: (feature) => {
+				const nivèl = DEPT_NIVELS[deptNivels[feature.properties.code]?.nivèl];
+				const basa = colaOpacitats.departaments ?? 0.45;
+				const color = colaColors.departaments ?? '#c8562e';
+				return {
+					color,
+					weight: 1,
+					fillColor: color,
+					fillOpacity: basa * (nivèl?.opacitat ?? 1)
+				};
+			},
+			popup: (feature) => {
+				const dept = deptNivels[feature.properties.code];
+				const nivèl = DEPT_NIVELS[dept?.nivèl];
+				return `<strong>${feature.properties.nom}</strong>${nivèl ? `<br>${nivèl.label}` : ''}`;
+			}
+		},
 		regions: {
 			url: '/data/regions.geojson',
 			attribution:
@@ -113,6 +147,7 @@
 		const data = await res.json();
 		geoLayers[gid] = L.geoJSON(data, {
 			style: def.style,
+			filter: def.filter,
 			attribution: def.attribution,
 			onEachFeature: (feature, layer) => {
 				layer.bindPopup(def.popup(feature));
@@ -177,11 +212,13 @@
 	}
 
 	onMount(async () => {
-		const [{ data: luocsData }, { data: colasData }, { data: dialectesData }] = await Promise.all([
-			supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
-			supabase.from('carta_colas').select('id, color, opacitat').order('ordre'),
-			supabase.from('carta_dialectes').select('*').order('ordre')
-		]);
+		const [{ data: luocsData }, { data: colasData }, { data: dialectesData }, { data: deptData }] =
+			await Promise.all([
+				supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
+				supabase.from('carta_colas').select('id, color, opacitat').order('ordre'),
+				supabase.from('carta_dialectes').select('*').order('ordre'),
+				supabase.from('carta_departaments').select('code, nom, nivèl')
+			]);
 
 		for (const c of colasData ?? []) {
 			colaColors[c.id] = c.color;
@@ -189,6 +226,9 @@
 		}
 		for (const d of dialectesData ?? []) {
 			dialectStyles[d.kòd] = { color: d.color, opacitat: d.opacitat, label: d.label_oc };
+		}
+		for (const d of deptData ?? []) {
+			deptNivels[d.code] = d;
 		}
 
 		// Grope los punts per còla. Los punts d'abans la colomna cola_id (basa

@@ -33,6 +33,7 @@
 		{ href: '/admin/obras', oc: 'Òbras', fr: 'Œuvres' },
 		{ href: '/admin/carta', oc: 'Carta', fr: 'Carte' },
 		{ href: '/admin/carta/luocs', oc: 'Luòcs', fr: 'Lieux' },
+		{ href: '/admin/carta/departaments', oc: 'Despts', fr: 'Départements' },
 		{ href: '/admin/textes', oc: 'Tèxtes', fr: 'Textes' }
 	];
 </script>
