@@ -8,6 +8,7 @@
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import LayersIcon from '$lib/components/LayersIcon.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { supabase } from '$lib/supabaseClient';
 
 	let lang = $derived(langStore.current);
 
@@ -58,34 +59,23 @@
 		limsi: false
 	});
 
-	// Còlas de la carta : « lieusInteres » e « dialectes » an de vertadièras
-	// donadas (dialectes vengudas de SIG/Dialecte/Carte_dialecte_WG.geojson,
-	// cargadas a la demanda dins CartaOccitania.svelte) ; las autras son de
-	// jaces pas encara dotadas de donadas — vesedoiras dins lo panèl mas
-	// desactivadas, per mostrar l'arquitectura visada sens inventar de
-	// contengut.
-	const layerDefs = [
-		{ id: 'lieusInteres', oc: "Luòcs d'interès", fr: "Lieux d'intérêt", available: true },
-		{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', available: true },
-		{
-			id: 'provincias',
-			oc: 'Provincias istoricas',
-			fr: 'Provinces historiques',
-			available: false,
-			note_oc: 'A venir',
-			note_fr: 'À venir'
-		},
-		{
-			id: 'limsi',
-			oc: 'Enquistas vocalas (Atlàs LISN)',
-			fr: 'Enquêtes vocales (Atlas LISN)',
-			available: false,
-			note_oc: "En espèra de l'autorizacion del LISN (licéncia CC BY-NC-SA)",
-			note_fr: "En attente de l'autorisation du LISN (licence CC BY-NC-SA)"
-		}
-	];
+	// Registre des còlas — vient ara de Supabase (taula carta_colas, gerida
+	// dins /admin/carta) puslèu que d'èsser escrich en dur : Romain pòt
+	// cambiar los libellats, las nòtas e la disponibilitat sens tocar al
+	// còdi.
+	let layerDefs = $state([]);
 
-	onMount(() => {
+	onMount(async () => {
+		const { data } = await supabase.from('carta_colas').select('*').order('ordre');
+		layerDefs = (data ?? []).map((row) => ({
+			id: row.id,
+			oc: row.label_oc,
+			fr: row.label_fr,
+			available: row.disponible,
+			note_oc: row.nòta_oc,
+			note_fr: row.nòta_fr
+		}));
+
 		if (!browser) return;
 		if (!localStorage.getItem(SEEN_KEY)) {
 			showInfo = true;

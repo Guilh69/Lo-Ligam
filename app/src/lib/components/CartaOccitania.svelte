@@ -1,26 +1,15 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
 	import 'leaflet/dist/leaflet.css';
+	import { supabase } from '$lib/supabaseClient';
 
-	// Exemple de contenu pour la còla « Luòcs d'interès » — à remplacer par
-	// de vraies données (association, curation manuelle) plus tard.
-	const lieusInteres = [
-		{ oc: 'Tolosa', desc: 'La Vila Ròsa, capitala istorica de l’Occitània', lat: 43.6045, lng: 1.4442 },
-		{ oc: 'Carcassona', desc: 'La Ciutat medievala', lat: 43.213, lng: 2.3491 },
-		{ oc: 'Nimes', desc: 'Las Arenas romanas', lat: 43.8367, lng: 4.3601 },
-		{ oc: 'Avinhon', desc: 'Lo Palais dels Papas', lat: 43.9493, lng: 4.8055 }
-	];
-
-	// Còdis de la còla « Dialèctes » (SIG/Dialecte/Carte_dialecte_WG.geojson) :
-	// lo Lengadocian ressòrt en aur per marcar que's lo dialècte ensenhat
-	// dins l'aplicacion.
-	const dialectStyles = {
-		cro: { color: '#3e7cb1', label: 'Lo Creissent' },
-		pro: { color: '#c8562e', label: 'Provençau' },
-		gas: { color: '#1f5f63', label: 'Gascon' },
-		lan: { color: '#e0a43b', label: 'Lengadocian' },
-		noc: { color: '#5e7b3a', label: 'Nòrd-occitan' }
-	};
+	// Contengut e estils venon ara de Supabase (taulas carta_luocs,
+	// carta_colas, carta_dialectes — gerits dins /admin/carta) puslèu que
+	// d'èsser escriches en dur aicí. Cargats dins onMount, abans de bastir la
+	// carta, per evitar tota corsa entre l'afichatge e las donadas.
+	let lieusInteres = [];
+	let lieusColor = '#e0a43b';
+	let dialectStyles = {};
 
 	// Fonses de carta disponibles. Sonque lo fons « occitan » a d'etiquetas en
 	// occitan (rendudas per OSM-bzh) ; los autres son de fonses tèrças sens
@@ -88,7 +77,7 @@
 					color: info?.color ?? '#3a2a20',
 					weight: 1.5,
 					fillColor: info?.color ?? '#3a2a20',
-					fillOpacity: 0.35
+					fillOpacity: info?.opacitat ?? 0.35
 				};
 			},
 			onEachFeature: (feature, layer) => {
@@ -155,6 +144,18 @@
 	}
 
 	onMount(async () => {
+		const [{ data: luocsData }, { data: colaData }, { data: dialectesData }] = await Promise.all([
+			supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
+			supabase.from('carta_colas').select('color').eq('id', 'lieusInteres').maybeSingle(),
+			supabase.from('carta_dialectes').select('*').order('ordre')
+		]);
+
+		lieusInteres = luocsData ?? [];
+		lieusColor = colaData?.color ?? lieusColor;
+		for (const d of dialectesData ?? []) {
+			dialectStyles[d.kòd] = { color: d.color, opacitat: d.opacitat, label: d.label_oc };
+		}
+
 		L = (await import('leaflet')).default;
 
 		map = L.map(mapEl, {
@@ -174,13 +175,15 @@
 
 		lieusLayer = L.layerGroup(
 			lieusInteres.map((lieu) =>
-				L.circleMarker([lieu.lat, lieu.lng], {
+				L.circleMarker([lieu.latitud, lieu.longitud], {
 					radius: 7,
 					weight: 2,
 					color: '#a5342a',
-					fillColor: '#e0a43b',
+					fillColor: lieusColor,
 					fillOpacity: 0.9
-				}).bindPopup(`<strong>${lieu.oc}</strong><br>${lieu.desc}`)
+				}).bindPopup(
+					`<strong>${lieu.nom_oc}</strong>${lieu.descripcion_oc ? `<br>${lieu.descripcion_oc}` : ''}`
+				)
 			)
 		);
 
