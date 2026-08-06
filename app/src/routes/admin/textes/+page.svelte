@@ -7,6 +7,13 @@
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
 
+	// L'aperçu ne touche pas la base : le brouillon est gardé dans CE
+	// navigateur (localStorage), et la page d'accueil ouverte avec
+	// ?apercebut=1 l'affiche par-dessus les textes publiés. Personne
+	// d'autre ne le voit. Enregistrar publie pour tout le monde et efface
+	// le brouillon du texte concerné.
+	const CLAU_APERCEBUT = 'lo-ligam-apercebut-textes';
+
 	let textes = $state([]);
 	let cargant = $state(true);
 	let msg = $state(null);
@@ -59,6 +66,35 @@
 		forma = { id: t.id, oc: t.oc, fr: t.fr, nòta: t.nòta };
 	}
 
+	function legirBrolhons() {
+		try {
+			return JSON.parse(localStorage.getItem(CLAU_APERCEBUT) ?? '{}');
+		} catch {
+			return {};
+		}
+	}
+
+	function apercebut() {
+		const oc = forma.oc.trim();
+		const fr = forma.fr.trim();
+		if (!oc || !fr) {
+			msg = { tipe: 'error', text: 'Cal las doas versions per l’apercebut.' };
+			return;
+		}
+		const brolhons = legirBrolhons();
+		brolhons[forma.id] = { oc, fr };
+		localStorage.setItem(CLAU_APERCEBUT, JSON.stringify(brolhons));
+		window.open('/?apercebut=1', '_blank', 'noopener');
+	}
+
+	function escafarBrolhon(id) {
+		const brolhons = legirBrolhons();
+		if (id in brolhons) {
+			delete brolhons[id];
+			localStorage.setItem(CLAU_APERCEBUT, JSON.stringify(brolhons));
+		}
+	}
+
 	async function enregistrar() {
 		const oc = forma.oc.trim();
 		const fr = forma.fr.trim();
@@ -71,6 +107,7 @@
 			const r = await supabase.from('site_textes').update({ oc, fr }).eq('id', forma.id).select();
 			if (r.error) throw r.error;
 			if (!r.data?.length) throw new Error('cap de linha cambiada — dreches refusats ?');
+			escafarBrolhon(forma.id);
 			forma = null;
 			await cargar();
 			msg = { tipe: 'ok', text: 'Enregistrat. Lo site aficha lo nòu tèxte tre ara.' };
@@ -117,6 +154,9 @@
 				<button type="submit" class="btn-primary" disabled={enregistrant}>
 					{enregistrant ? '…' : 'Enregistrar'}
 				</button>
+				<button type="button" class="btn-segond" onclick={apercebut} disabled={enregistrant}>
+					Apercebut
+				</button>
 				<button
 					type="button"
 					class="btn-segond"
@@ -124,6 +164,14 @@
 					disabled={enregistrant}>Anullar</button
 				>
 			</div>
+			<p class="ajuda">
+				« Apercebut » dobrís l'acuèlh amb aqueste tèxte, vesedor sonque per tu — res es pas
+				enregistrat tant que quiches pas « Enregistrar ».
+				<em
+					>(« Aperçu » ouvre l'accueil avec ce texte, visible seulement par toi — rien n'est
+					enregistré tant que tu ne cliques pas « Enregistrer ».)</em
+				>
+			</p>
 		</form>
 	{/if}
 
@@ -180,6 +228,17 @@
 		margin: -0.4rem 0 0;
 		font-size: 0.8rem;
 		color: var(--color-olive);
+	}
+
+	.ajuda {
+		margin: -0.3rem 0 0;
+		font-size: 0.78rem;
+		line-height: 1.45;
+		color: var(--color-olive);
+	}
+
+	.ajuda em {
+		color: var(--color-teal);
 	}
 
 	.camps {

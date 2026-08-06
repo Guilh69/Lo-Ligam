@@ -384,6 +384,28 @@ clic ouvre maintenant n'importe quelle carte.
   négative sur `.subtitle` a fait chevaucher le titre de l'écran des designs.
   Chaque page règle son propre sous-titre.
 
+### Aperçu avant publication (en place depuis le 2026-08-06)
+
+Dans `/admin/textes`, le bouton **Apercebut** ouvre l'accueil avec le texte en
+cours de saisie, visible **uniquement dans le navigateur de Romain** (brouillon
+en `localStorage`, jamais en base). Un bandeau « Mòde apercebut » le rappelle ;
+« Enregistrar » publie pour tout le monde et efface le brouillon. Modèle à
+reprendre pour les prochains écrans d'édition.
+
+### Chantier ouvert : la page d'accueil en blocs (à cadrer — coordination avec la conversation « accueil »)
+
+Souhait de Romain (2026-08-06) : pouvoir faire évoluer la **structure** de
+l'accueil lui-même — réordonner les sections, en masquer, en ajouter depuis une
+palette de modules existants avec des variantes de mise en page proposées.
+Principe retenu : la page devient une **liste de blocs typés en base**
+(hero, chapitre-texte, chiffres, carte, carrousel…), rendue par les composants
+actuels ; l'admin permet réordonner / masquer / ajouter / régler chaque bloc.
+Limite actée : composer avec les modules existants est autonome, **créer un
+type de module nouveau reste du code**. ⚠️ Ce chantier restructure la page
+d'accueil, construite et retravaillée par la conversation « accueil » : à
+mener là-bas, ou au minimum après synchronisation via ce document. Les textes
+restent dans `site_textes` (les blocs y font référence, rien n'est à refaire).
+
 ---
 
 ## 13. Prochaines étapes proposées

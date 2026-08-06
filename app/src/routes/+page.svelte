@@ -113,41 +113,66 @@
 		}
 	});
 
-	// Recopie les textes venus de la base par-dessus les valeurs de secours.
-	// Correspondance identifiant plat (base) → case du bloc t ci-dessus.
+	// Recopie les textes venus de la base par-dessus les valeurs de secours,
+	// puis — en mode aperçu (?apercebut=1, brouillon posé par /admin/textes
+	// dans CE navigateur) — le brouillon par-dessus tout. Le brouillon ne
+	// vit que dans localStorage : aucun visiteur ne peut le voir.
+	const CLAU_APERCEBUT = 'lo-ligam-apercebut-textes';
+	let apercebutActiu = $state(false);
+
+	function aplicarTexte(id, valors) {
+		const ciblas = {
+			hero_lead: t.heroLead,
+			hero_sub: t.heroSub,
+			what_title: t.what.title,
+			what_lead: t.what.lead,
+			lenga_title: t.lenga.title,
+			lenga_lead: t.lenga.lead,
+			lenga_note: t.lenga.note,
+			carta_title: t.carta.title,
+			carta_lead: t.carta.lead,
+			carta_cta: t.carta.cta,
+			officialitat_title: t.officialitat.title,
+			officialitat_lead: t.officialitat.lead,
+			footer_tagline: t.footer
+		};
+		const num = id.match(/^lenga_fact(\d)_num$/);
+		if (num) {
+			const fact = t.lenga.facts[Number(num[1]) - 1];
+			if (fact) fact.num = valors.oc;
+			return;
+		}
+		const label = id.match(/^lenga_fact(\d)_label$/);
+		const cibla = label ? t.lenga.facts[Number(label[1]) - 1] : ciblas[id];
+		if (cibla) {
+			cibla.oc = valors.oc;
+			cibla.fr = valors.fr;
+		}
+	}
+
+	function sortirApercebut() {
+		localStorage.removeItem(CLAU_APERCEBUT);
+		location.href = '/';
+	}
+
 	$effect(() => {
 		if (!browser) return;
 		supabase
 			.from('site_textes')
 			.select('id, oc, fr')
 			.then(({ data }) => {
-				if (!data?.length) return;
-				const linhas = new Map(data.map((r) => [r.id, r]));
-				const pren = (id, cibla) => {
-					const r = linhas.get(id);
-					if (r) {
-						cibla.oc = r.oc;
-						cibla.fr = r.fr;
-					}
-				};
-				pren('hero_lead', t.heroLead);
-				pren('hero_sub', t.heroSub);
-				pren('what_title', t.what.title);
-				pren('what_lead', t.what.lead);
-				pren('lenga_title', t.lenga.title);
-				pren('lenga_lead', t.lenga.lead);
-				pren('lenga_note', t.lenga.note);
-				pren('carta_title', t.carta.title);
-				pren('carta_lead', t.carta.lead);
-				pren('carta_cta', t.carta.cta);
-				pren('officialitat_title', t.officialitat.title);
-				pren('officialitat_lead', t.officialitat.lead);
-				pren('footer_tagline', t.footer);
-				t.lenga.facts.forEach((fact, i) => {
-					const num = linhas.get(`lenga_fact${i + 1}_num`);
-					if (num) fact.num = num.oc;
-					pren(`lenga_fact${i + 1}_label`, fact);
-				});
+				for (const r of data ?? []) aplicarTexte(r.id, r);
+			})
+			.finally(() => {
+				if (!new URLSearchParams(location.search).has('apercebut')) return;
+				let brolhons = {};
+				try {
+					brolhons = JSON.parse(localStorage.getItem(CLAU_APERCEBUT) ?? '{}');
+				} catch {
+					brolhons = {};
+				}
+				for (const [id, valors] of Object.entries(brolhons)) aplicarTexte(id, valors);
+				apercebutActiu = true;
 			});
 	});
 
@@ -549,6 +574,13 @@
 
 	<SiteFooter tagline={t.footer} />
 </main>
+
+{#if apercebutActiu}
+	<div class="apercebut-banda" role="status">
+		<span>Mòde apercebut — res es pas enregistrat</span>
+		<button type="button" onclick={sortirApercebut}>Sortir</button>
+	</div>
+{/if}
 
 {#if $esAdmin}
 	<a class="edit-floating" href="/admin/textes" title="Modificar los tèxtes d'aquesta pagina">
@@ -1481,5 +1513,51 @@
 	.edit-floating:hover {
 		transform: translateY(-2px) scale(1.03);
 		box-shadow: 0 12px 28px rgba(58, 42, 32, 0.4);
+	}
+
+	/* Bandeau du mode aperçu : bien visible mais sans gêner la lecture de
+	   la page qu'on est justement en train de juger. */
+	.apercebut-banda {
+		position: fixed;
+		bottom: 1.25rem;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 31;
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		padding: 0.55rem 0.6rem 0.55rem 1.1rem;
+		border-radius: 999px;
+		background: var(--color-brick);
+		color: white;
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.85rem;
+		box-shadow: 0 8px 22px rgba(58, 42, 32, 0.35);
+		white-space: nowrap;
+	}
+
+	.apercebut-banda button {
+		border: none;
+		border-radius: 999px;
+		padding: 0.35rem 0.8rem;
+		background: rgba(255, 255, 255, 0.9);
+		color: var(--color-brick);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 0.8rem;
+		cursor: pointer;
+	}
+
+	.apercebut-banda button:hover {
+		background: white;
+	}
+
+	@media (max-width: 30rem) {
+		.apercebut-banda {
+			white-space: normal;
+			width: calc(100% - 2rem);
+			justify-content: space-between;
+		}
 	}
 </style>
