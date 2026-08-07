@@ -4,6 +4,7 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { session } from '$lib/authStore';
+	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 
 	// Structure en chapitres (contextes de vie) > modules (une compétence
 	// précise chacun). Seul le module 1 a un contenu réel pour l'instant —
@@ -39,6 +40,11 @@
 
 	let moduleOneDone = $state(false);
 	let pseudo = $state('');
+
+	let lang = $derived(langStore.current);
+	let nomAfichat = $derived(pseudo || $session?.user?.email || '');
+	// Pastille d'initiale : évite qu'un pseudo se confonde avec le nom du site.
+	let inicial = $derived(nomAfichat ? nomAfichat.trim().charAt(0).toUpperCase() : '?');
 
 	async function loadModuleOneStatus() {
 		if ($session) {
@@ -85,14 +91,17 @@
 
 <main class="screen">
 	<AppHeader>
-		<span class="account-state">
-			{#if $session}
-				<span class="account-email">{pseudo || $session.user.email}</span>
-				<button type="button" class="link-btn" onclick={logout}>Se desconnectar</button>
-			{:else}
-				<a class="link-btn" href="/compte">Se connectar</a>
-			{/if}
-		</span>
+		{#if $session}
+			<span class="account-avatar" aria-hidden="true">{inicial}</span>
+			<span class="account-email" title={nomAfichat}>{nomAfichat}</span>
+			<button type="button" class="link-btn" onclick={logout}>
+				{lang === 'oc' ? 'Sortir' : 'Quitter'}
+			</button>
+		{:else}
+			<a class="link-btn" href="/compte">
+				{lang === 'oc' ? 'Se connectar' : 'Se connecter'}
+			</a>
+		{/if}
 	</AppHeader>
 
 	<div class="intro">
@@ -188,16 +197,28 @@
 		padding: 1.5rem 1.5rem 4rem;
 	}
 
-	.account-state {
+	/* Le bloc compte vit dans la pastille du bandeau (voir AppHeader) :
+	   initiale, nom, puis l'action. Plus de lien souligné rouge, qui donnait
+	   à la déconnexion le poids d'une alerte. */
+	.account-avatar {
 		display: flex;
 		align-items: center;
-		gap: 0.6rem;
-		font-size: 0.85rem;
+		justify-content: center;
+		width: 1.5rem;
+		height: 1.5rem;
+		border-radius: 999px;
+		background: var(--color-terracotta);
+		color: white;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.7rem;
+		flex-shrink: 0;
 	}
 
 	.account-email {
-		color: var(--color-teal);
-		max-width: 10rem;
+		color: var(--color-text);
+		font-weight: 600;
+		max-width: 8rem;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -205,13 +226,20 @@
 
 	.link-btn {
 		border: none;
+		border-left: 1px solid rgba(58, 42, 32, 0.16);
 		background: none;
 		color: var(--color-brick);
+		font-family: var(--font-heading);
 		font-weight: 600;
-		text-decoration: underline;
+		text-decoration: none;
 		cursor: pointer;
-		font-size: 0.85rem;
-		padding: 0;
+		font-size: 0.8rem;
+		padding: 0.1rem 0 0.1rem 0.55rem;
+		white-space: nowrap;
+	}
+
+	.link-btn:hover {
+		text-decoration: underline;
 	}
 
 	.intro {

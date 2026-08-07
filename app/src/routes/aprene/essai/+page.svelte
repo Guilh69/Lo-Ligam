@@ -756,6 +756,7 @@
 		background: rgba(58, 42, 32, 0.08);
 	}
 
+	/* Meteissa règla que dins AppHeader : l'icòna a son pròpri cercle. */
 	.home-link {
 		display: flex;
 		align-items: center;
@@ -763,13 +764,11 @@
 		width: 2.3rem;
 		height: 2.3rem;
 		border-radius: 999px;
-		color: var(--color-brick);
-		background: rgba(165, 52, 42, 0.1);
-		transition: background-color 150ms ease;
+		transition: box-shadow 150ms ease;
 	}
 
 	.home-link:hover {
-		background: rgba(165, 52, 42, 0.2);
+		box-shadow: 0 3px 10px rgba(165, 52, 42, 0.35);
 	}
 
 	.header-right {

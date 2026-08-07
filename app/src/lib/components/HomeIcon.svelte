@@ -1,27 +1,22 @@
 <script>
+	import iconeMas from '$lib/assets/icone-mas.webp';
+
 	let { size = 22 } = $props();
 </script>
 
-<!-- Silhouette de mas occitan (toit bas et large, volets) plutôt qu'une
-     maison générique — remplie légèrement (pas juste un contour fin)
-     pour rester bien visible même en petite taille. -->
-<svg
-	viewBox="0 0 24 24"
-	width={size}
-	height={size}
-	fill="none"
-	stroke="currentColor"
-	stroke-width="2"
-	stroke-linecap="round"
-	stroke-linejoin="round"
-	aria-hidden="true"
->
-	<path d="M2 10.5 L5.5 7 L18.5 7 L22 10.5" fill="currentColor" fill-opacity="0.22" />
-	<rect x="4" y="10.5" width="16" height="9.5" rx="1" fill="currentColor" fill-opacity="0.14" />
-	<rect x="15.4" y="4" width="1.6" height="4" fill="currentColor" fill-opacity="0.4" />
-	<rect x="6.3" y="13" width="2.6" height="3.4" rx="0.4" />
-	<line x1="7.6" y1="13" x2="7.6" y2="16.4" />
-	<rect x="15" y="13" width="2.6" height="3.4" rx="0.4" />
-	<line x1="16.3" y1="13" x2="16.3" y2="16.4" />
-	<rect x="10.6" y="14.3" width="2.8" height="5.7" rx="0.3" fill="currentColor" fill-opacity="0.4" />
-</svg>
+<!-- Illustration de mas occitan fournie par Romain (Icone_mas.png à la racine
+     du projet) : détourée sur son cercle et réduite en WebP 128 px (4 ko).
+     L'image porte DÉJÀ son propre fond rond terracotta — le bouton qui
+     l'accueille ne doit donc pas en remettre un derrière. -->
+<img class="icone-mas" src={iconeMas} width={size} height={size} alt="" />
+
+<style>
+	.icone-mas {
+		display: block;
+		/* Le parent (.home-link) fixe la taille en rem : l'image le remplit,
+		   pour rester alignée si le visiteur agrandit la police. */
+		width: 100%;
+		height: 100%;
+		border-radius: 999px;
+	}
+</style>
