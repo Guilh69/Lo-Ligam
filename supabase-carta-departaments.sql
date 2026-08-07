@@ -111,6 +111,7 @@ values
 	('47', 'Lot-et-Garonne', 1, null),
 	('48', 'Lozère', 1, null),
 	('63', 'Puy-de-Dôme', 1, null),
+	('65', 'Hautes-Pyrénées', 1, null),
 	('81', 'Tarn', 1, null),
 	('82', 'Tarn-et-Garonne', 1, null),
 	('83', 'Var', 1, null),
