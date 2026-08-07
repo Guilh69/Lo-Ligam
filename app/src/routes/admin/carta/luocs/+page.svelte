@@ -11,9 +11,9 @@
 	let enregistrant = $state(false);
 	let confirmaSup = $state(null);
 
-	// Las còlas que son de PUNTS. Las autras (dialèctes, provincias…) son de
-	// zònas : un punt i seriá una error, doncas son pas prepausadas aicí.
-	const COLAS_PAS_DE_PUNTS = ['dialectes', 'provincias', 'limsi'];
+	// Las còlas que son de PUNTS. Se la colomna « tipe » existís (migracion
+	// generica passada), es ela que decidís ; senon, lista fixa de secors.
+	const COLAS_PAS_DE_PUNTS = ['dialectes', 'provincias', 'limsi', 'regions', 'departaments'];
 
 	// La colomna cola_id apareis amb supabase-carta-librarias.sql : abans
 	// aquela migracion, se ditz pas dins las escrituras (senon la basa las
@@ -30,7 +30,7 @@
 		cargant = true;
 		const [rLuocs, rColas] = await Promise.all([
 			supabase.from('carta_luocs').select('*').order('ordre'),
-			supabase.from('carta_colas').select('id, label_oc').order('ordre')
+			supabase.from('carta_colas').select('*').order('ordre')
 		]);
 		cargant = false;
 		if (rLuocs.error) {
@@ -38,7 +38,9 @@
 			return;
 		}
 		luocs = rLuocs.data;
-		colas = (rColas.data ?? []).filter((c) => !COLAS_PAS_DE_PUNTS.includes(c.id));
+		colas = (rColas.data ?? []).filter((c) =>
+			c.tipe ? c.tipe === 'punts' : !COLAS_PAS_DE_PUNTS.includes(c.id)
+		);
 	}
 
 	function slug(text) {

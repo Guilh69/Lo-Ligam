@@ -79,11 +79,52 @@
 		currentBaseTileLayer.addTo(map);
 	}
 
-	// Jaces de zònas (GeoJSON cargat a la demanda, sonque al primièr
-	// afichatge). Cada dintrada balha l'adreça del fichièr e la faiçon de
-	// l'estilizar / de nomenar sas zònas. Per n'apondre una : una dintrada
-	// aicí + una linha dins carta_colas.
-	const GEO_LAYERS = {
+	// Jaces de zònas e de linhas. Doas menas :
+	// — GENERICAS : descrichas entièrament dins carta_colas (tipe, fichièr
+	//   geojson_url, color, opacitat, pes de linha, puntejat, plantilha de
+	//   popup) — creablas dempuèi /admin/carta sens cap de còdi ;
+	// — ESPECIALAS : dialèctes e despartaments, qu'an un compòrtament pròpri
+	//   (colors per zòna, nivèls), rendudas pel còdi çai-jos.
+	// Lo registre final (geoDefs) es bastit dins onMount, un còp la basa legida.
+	let geoDefs = {};
+
+	function escapeHtml(s) {
+		return String(s).replace(
+			/[&<>"']/g,
+			(c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
+		);
+	}
+
+	// « {nom} — {descripcion} » : cada {camp} es remplaçat per la valor del
+	// camp dins las donadas del traçat (escapada, per que de donadas
+	// telecargadas pòscan pas injectar d'HTML).
+	function renderPlantilha(plantilha, props) {
+		return plantilha.replace(/\{([^{}]+)\}/g, (m, clau) => {
+			const valor = props?.[clau.trim()];
+			return valor == null ? '' : escapeHtml(valor);
+		});
+	}
+
+	function makeGenericGeoDef(cola) {
+		const esLinha = cola.tipe === 'linhas';
+		return {
+			url: cola.geojson_url,
+			style: () => ({
+				color: cola.color,
+				weight: Number(cola.pes_linha ?? 1.5),
+				dashArray: cola.linha_puntejada ? '4 3' : null,
+				opacity: esLinha ? Number(cola.opacitat ?? 0.9) : 1,
+				fill: !esLinha,
+				fillColor: cola.color,
+				fillOpacity: esLinha ? 0 : Number(cola.opacitat ?? 0.3)
+			}),
+			popup: cola.popup_plantilha
+				? (feature) => renderPlantilha(cola.popup_plantilha, feature.properties)
+				: null
+		};
+	}
+
+	const SPECIAL_GEO = {
 		dialectes: {
 			url: '/data/dialectes.geojson',
 			style: (feature) => {
@@ -121,26 +162,28 @@
 				const nivèl = DEPT_NIVELS[dept?.nivèl];
 				return `<strong>${feature.properties.nom}</strong>${nivèl ? `<br>${nivèl.label}` : ''}`;
 			}
-		},
-		regions: {
-			url: '/data/regions.geojson',
-			attribution:
-				'Contorns : <a href="https://github.com/gregoiredavid/france-geojson" target="_blank" rel="noopener">france-geojson</a> / Etalab (Licéncia Dobèrta)',
-			// Simple linha de referéncia : contorn fin, emplenatge gaireben nul,
-			// color e opacitat reglablas dins /admin/carta (linha « regions »).
-			style: () => ({
-				color: colaColors.regions ?? '#3a2a20',
-				weight: 1.3,
-				dashArray: '4 3',
-				fillColor: colaColors.regions ?? '#3a2a20',
-				fillOpacity: colaOpacitats.regions ?? 0.04
-			}),
-			popup: (feature) => feature.properties.nom
 		}
 	};
 
+	// Filet de seguretat abans la migracion « generica » : tant que la linha
+	// « regions » de carta_colas a pas encara son geojson_url, la còla garda
+	// son anciana definicion escricha aicí.
+	const REGIONS_FALLBACK = {
+		url: '/data/regions.geojson',
+		attribution:
+			'Contorns : <a href="https://github.com/gregoiredavid/france-geojson" target="_blank" rel="noopener">france-geojson</a> / Etalab (Licéncia Dobèrta)',
+		style: () => ({
+			color: colaColors.regions ?? '#3a2a20',
+			weight: 1.3,
+			dashArray: '4 3',
+			fillColor: colaColors.regions ?? '#3a2a20',
+			fillOpacity: colaOpacitats.regions ?? 0.04
+		}),
+		popup: (feature) => feature.properties.nom
+	};
+
 	async function loadGeoLayer(gid) {
-		const def = GEO_LAYERS[gid];
+		const def = geoDefs[gid];
 		if (!def || geoLayers[gid] || geoLoading[gid]) return;
 		geoLoading[gid] = true;
 		const res = await fetch(def.url);
@@ -149,9 +192,11 @@
 			style: def.style,
 			filter: def.filter,
 			attribution: def.attribution,
-			onEachFeature: (feature, layer) => {
-				layer.bindPopup(def.popup(feature));
-			}
+			onEachFeature: def.popup
+				? (feature, layer) => {
+						layer.bindPopup(def.popup(feature));
+					}
+				: undefined
 		});
 		geoLoading[gid] = false;
 		if (visibility[gid]) geoLayers[gid].addTo(map);
@@ -215,7 +260,7 @@
 		const [{ data: luocsData }, { data: colasData }, { data: dialectesData }, { data: deptData }] =
 			await Promise.all([
 				supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
-				supabase.from('carta_colas').select('id, color, opacitat').order('ordre'),
+				supabase.from('carta_colas').select('*').order('ordre'),
 				supabase.from('carta_dialectes').select('*').order('ordre'),
 				supabase.from('carta_departaments').select('code, nom, nivèl')
 			]);
@@ -223,7 +268,23 @@
 		for (const c of colasData ?? []) {
 			colaColors[c.id] = c.color;
 			colaOpacitats[c.id] = c.opacitat;
+			// Còlas genericas de zònas/linhas : tota la definicion ven de la basa.
+			if (
+				(c.tipe === 'zonas' || c.tipe === 'linhas') &&
+				c.geojson_url &&
+				!(c.id in SPECIAL_GEO)
+			) {
+				geoDefs[c.id] = makeGenericGeoDef(c);
+			}
 		}
+		// Las especialas passan totjorn en darrièr (ganhan sus tota linha
+		// generica omonima), e « regions » garda son filet tant que la basa
+		// es pas migrada.
+		Object.assign(geoDefs, SPECIAL_GEO);
+		if (!geoDefs.regions && (colasData ?? []).some((c) => c.id === 'regions')) {
+			geoDefs.regions = REGIONS_FALLBACK;
+		}
+
 		for (const d of dialectesData ?? []) {
 			dialectStyles[d.kòd] = { color: d.color, opacitat: d.opacitat, label: d.label_oc };
 		}
@@ -273,7 +334,7 @@
 			if (visibility[cid]) pointLayers[cid].addTo(map);
 		}
 
-		for (const gid of Object.keys(GEO_LAYERS)) {
+		for (const gid of Object.keys(geoDefs)) {
 			if (visibility[gid]) loadGeoLayer(gid);
 		}
 	});
@@ -296,7 +357,7 @@
 			}
 		}
 
-		for (const gid of Object.keys(GEO_LAYERS)) {
+		for (const gid of Object.keys(geoDefs)) {
 			if (vis[gid]) {
 				if (geoLayers[gid]) {
 					geoLayers[gid].addTo(map);

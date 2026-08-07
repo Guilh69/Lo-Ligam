@@ -67,9 +67,27 @@
 
 	// Registre des còlas — vient ara de Supabase (taula carta_colas, gerida
 	// dins /admin/carta) puslèu que d'èsser escrich en dur : Romain pòt
-	// cambiar los libellats, las nòtas e la disponibilitat sens tocar al
-	// còdi.
+	// cambiar los libellats, las nòtas, las tematicas e la disponibilitat
+	// sens tocar al còdi.
 	let layerDefs = $state([]);
+
+	// Gropa las còlas per tematica, dins l'òrdre d'aparicion. Las còlas sens
+	// tematica van dins un grop mut (sens títol) en tèsta.
+	let layerGroups = $derived.by(() => {
+		const grops = [];
+		const perClau = new Map();
+		for (const def of layerDefs) {
+			const clau = def.tematica_oc ?? '';
+			let grop = perClau.get(clau);
+			if (!grop) {
+				grop = { tematica_oc: def.tematica_oc, tematica_fr: def.tematica_fr, defs: [] };
+				perClau.set(clau, grop);
+				grops.push(grop);
+			}
+			grop.defs.push(def);
+		}
+		return grops;
+	});
 
 	onMount(async () => {
 		const { data } = await supabase.from('carta_colas').select('*').order('ordre');
@@ -79,8 +97,17 @@
 			fr: row.label_fr,
 			available: row.disponible,
 			note_oc: row.nòta_oc,
-			note_fr: row.nòta_fr
+			note_fr: row.nòta_fr,
+			tematica_oc: row.tematica_oc ?? null,
+			tematica_fr: row.tematica_fr ?? null
 		}));
+
+		// La visibilitat per defaut ven ara de la basa (colomna « visibla »,
+		// reglabla dins l'admin). Abans la migracion, la colomna existís pas
+		// e los defauts escriches çai-subre demòran.
+		for (const row of data ?? []) {
+			if (typeof row.visibla === 'boolean') layerVisibility[row.id] = row.visibla;
+		}
 
 		if (!browser) return;
 		if (!localStorage.getItem(SEEN_KEY)) {
@@ -163,24 +190,29 @@
 
 				<hr class="layers-divider" />
 
-				<ul>
-					{#each layerDefs as layer (layer.id)}
-						<li class:disabled={!layer.available}>
-							<label>
-								<input
-									type="checkbox"
-									disabled={!layer.available}
-									checked={layerVisibility[layer.id]}
-									onchange={(e) => (layerVisibility[layer.id] = e.currentTarget.checked)}
-								/>
-								{lang === 'oc' ? layer.oc : layer.fr}
-							</label>
-							{#if layer.note_oc}
-								<p class="layer-note">{lang === 'oc' ? layer.note_oc : layer.note_fr}</p>
-							{/if}
-						</li>
-					{/each}
-				</ul>
+				{#each layerGroups as grop (grop.tematica_oc ?? '')}
+					{#if grop.tematica_oc}
+						<p class="grop-titol">{lang === 'oc' ? grop.tematica_oc : (grop.tematica_fr ?? grop.tematica_oc)}</p>
+					{/if}
+					<ul>
+						{#each grop.defs as layer (layer.id)}
+							<li class:disabled={!layer.available}>
+								<label>
+									<input
+										type="checkbox"
+										disabled={!layer.available}
+										checked={layerVisibility[layer.id]}
+										onchange={(e) => (layerVisibility[layer.id] = e.currentTarget.checked)}
+									/>
+									{lang === 'oc' ? layer.oc : layer.fr}
+								</label>
+								{#if layer.note_oc}
+									<p class="layer-note">{lang === 'oc' ? layer.note_oc : layer.note_fr}</p>
+								{/if}
+							</li>
+						{/each}
+					</ul>
+				{/each}
 
 				{#if $esAdmin}
 					<a class="admin-link" href="/admin/carta">{tx.adminLink} →</a>
@@ -427,6 +459,19 @@
 		font-size: 0.72rem;
 		line-height: 1.3;
 		color: var(--color-teal);
+	}
+
+	.grop-titol {
+		margin: 0.8rem 0 0.35rem;
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--color-olive);
+	}
+
+	.grop-titol:first-of-type {
+		margin-top: 0.2rem;
 	}
 
 	.admin-link {

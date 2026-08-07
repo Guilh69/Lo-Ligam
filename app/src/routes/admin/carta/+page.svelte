@@ -1,21 +1,37 @@
 <script>
-	// Réglages de la carta : les còlas (registre du panèl « Jaces ») et les
-	// couleurs par dialècte. Édition seulement — pas d'ajout/suppression ici,
-	// parce que le code (CartaOccitania.svelte) s'attend à des identifiants
-	// précis (« lieusInteres », « cro », etc.) : en créer ou en supprimer un
-	// depuis cet écran casserait la carte sans que ce soit visible tout de
-	// suite. Pour les points, voir « Luòcs ».
+	// Gestion des còlas (couches) de la carte. Depuis la migration
+	// « generica » (supabase-carta-colas-generic.sql), on peut ICI créer une
+	// couche complète sans code : type (punts / zonas / linhas), thématique de
+	// regroupement, style (couleur, opacité, épaisseur, pointillé), fichier
+	// GeoJSON téléversé (zones/lignes), et modèle de popup avec les champs des
+	// données — ex. « {nom} — {descripcion} ».
+	//
+	// Deux couches restent SPÉCIALES (comportement codé) : dialèctes (couleur
+	// par zone, voir plus bas) et despartaments (3 nivèls, écran dédié). On ne
+	// peut ni les supprimer ni changer leur fichier ici.
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
+
+	const ESPECIALAS = ['dialectes', 'departaments'];
+	const TIPES = [
+		{ id: 'punts', oc: 'Punts (marcadors)', ajuda: 'se gerisson dins « Luòcs »' },
+		{ id: 'zonas', oc: 'Zònas (susfàcias)', ajuda: 'fichièr GeoJSON de polygòns' },
+		{ id: 'linhas', oc: 'Linhas (traçats)', ajuda: 'fichièr GeoJSON de linhas (rius…)' }
+	];
 
 	let colas = $state([]);
 	let dialectes = $state([]);
 	let cargant = $state(true);
 	let msg = $state(null);
 
-	let formaCola = $state(null);
+	let forma = $state(null);
 	let formaDialecte = $state(null);
 	let enregistrant = $state(false);
+	let confirmaSup = $state(null);
+	let fichierGeo = $state(null);
+
+	// La migration est-elle passée ? (colonne « tipe » présente)
+	let teGeneric = $derived(colas.length ? 'tipe' in colas[0] : false);
 
 	onMount(cargar);
 
@@ -38,52 +54,242 @@
 		dialectes = rDialectes.data;
 	}
 
-	function obrirCola(c) {
+	function slug(text) {
+		return text
+			.normalize('NFD')
+			.replace(/[̀-ͯ]/g, '')
+			.toLowerCase()
+			.replace(/[^a-z0-9]+/g, '-')
+			.replace(/(^-|-$)/g, '');
+	}
+
+	function vueita() {
+		return {
+			mode: 'nòu',
+			id: null,
+			label_oc: '',
+			label_fr: '',
+			nòta_oc: '',
+			nòta_fr: '',
+			tematica_oc: '',
+			tematica_fr: '',
+			tipe: 'punts',
+			color: '#c8562e',
+			opacitat: 0.5,
+			pes_linha: 1.5,
+			linha_puntejada: false,
+			popup_plantilha: '',
+			visibla: false,
+			disponible: true,
+			geojson_url: null
+		};
+	}
+
+	function obrirNòu() {
 		msg = null;
-		formaCola = {
+		fichierGeo = null;
+		forma = vueita();
+	}
+
+	function obrirEdicion(c) {
+		msg = null;
+		fichierGeo = null;
+		forma = {
+			mode: 'edicion',
 			id: c.id,
 			label_oc: c.label_oc,
 			label_fr: c.label_fr,
 			nòta_oc: c.nòta_oc ?? '',
 			nòta_fr: c.nòta_fr ?? '',
+			tematica_oc: c.tematica_oc ?? '',
+			tematica_fr: c.tematica_fr ?? '',
+			tipe: c.tipe ?? 'punts',
 			color: c.color,
 			opacitat: c.opacitat,
-			disponible: c.disponible
+			pes_linha: c.pes_linha ?? 1.5,
+			linha_puntejada: c.linha_puntejada ?? false,
+			popup_plantilha: c.popup_plantilha ?? '',
+			visibla: c.visibla ?? false,
+			disponible: c.disponible,
+			geojson_url: c.geojson_url ?? null
 		};
 	}
 
-	async function enregistrarCola() {
-		const label_oc = formaCola.label_oc.trim();
-		const label_fr = formaCola.label_fr.trim();
+	// Cherche la première paire de coordonnées, pour vérifier qu'on est bien
+	// en longitude/latitude (WGS84) et pas en mètres Lambert.
+	function primieraCoordenada(geom) {
+		if (!geom) return null;
+		if (geom.type === 'GeometryCollection') {
+			for (const g of geom.geometries ?? []) {
+				const c = primieraCoordenada(g);
+				if (c) return c;
+			}
+			return null;
+		}
+		let c = geom.coordinates;
+		while (Array.isArray(c) && Array.isArray(c[0])) c = c[0];
+		return Array.isArray(c) && typeof c[0] === 'number' ? c : null;
+	}
+
+	async function legirFichier(event) {
+		msg = null;
+		fichierGeo = null;
+		const f = event.currentTarget.files?.[0];
+		if (!f) return;
+		if (f.size > 5 * 1024 * 1024) {
+			msg = {
+				tipe: 'error',
+				text: 'Fichièr tròp gròs (mai de 5 Mo). Dins QGIS : simplificar la geometria abans d’exportar.'
+			};
+			return;
+		}
+		const text = await f.text();
+		try {
+			const data = JSON.parse(text);
+			if (data.type !== 'FeatureCollection' || !Array.isArray(data.features)) {
+				throw new Error('es pas una FeatureCollection GeoJSON');
+			}
+			for (const feat of data.features.slice(0, 20)) {
+				const c = primieraCoordenada(feat.geometry);
+				if (c && (Math.abs(c[0]) > 180 || Math.abs(c[1]) > 90)) {
+					throw new Error(
+						'coordenadas pas en longitud/latitud (WGS84). Dins QGIS, exportar en EPSG:4326'
+					);
+				}
+			}
+			const camps = new Set();
+			for (const feat of data.features.slice(0, 50)) {
+				for (const k of Object.keys(feat.properties ?? {})) camps.add(k);
+			}
+			fichierGeo = { nom: f.name, text, nFeatures: data.features.length, camps: [...camps] };
+		} catch (e) {
+			msg = { tipe: 'error', text: `Fichièr pas valid : ${e.message}` };
+		}
+	}
+
+	async function enregistrar() {
+		msg = null;
+		const label_oc = forma.label_oc.trim();
+		const label_fr = forma.label_fr.trim();
 		if (!label_oc || !label_fr) {
 			msg = { tipe: 'error', text: 'Cal un libellat occitan e francés.' };
 			return;
 		}
+		const opacitat = Number(forma.opacitat);
+		if (!Number.isFinite(opacitat) || opacitat < 0 || opacitat > 1) {
+			msg = { tipe: 'error', text: 'Opacitat entre 0 e 1.' };
+			return;
+		}
+
 		enregistrant = true;
 		try {
-			const r = await supabase
-				.from('carta_colas')
-				.update({
-					label_oc,
-					label_fr,
-					nòta_oc: formaCola.nòta_oc.trim() || null,
-					nòta_fr: formaCola.nòta_fr.trim() || null,
-					color: formaCola.color,
-					opacitat: Number(formaCola.opacitat),
-					disponible: formaCola.disponible
-				})
-				.eq('id', formaCola.id)
-				.select();
-			if (r.error) throw r.error;
-			if (!r.data?.length) throw new Error('cap de linha cambiada — dreches refusats ?');
-			formaCola = null;
+			let id = forma.id;
+			if (forma.mode === 'nòu') {
+				const basa = slug(label_oc);
+				if (!basa) throw new Error('lo libellat balha pas cap d’identificant valid');
+				const presas = new Set(colas.map((c) => c.id));
+				id = basa;
+				let n = 2;
+				while (presas.has(id)) id = `${basa}-${n++}`;
+			}
+
+			const camps = {
+				label_oc,
+				label_fr,
+				nòta_oc: forma.nòta_oc.trim() || null,
+				nòta_fr: forma.nòta_fr.trim() || null,
+				color: forma.color,
+				opacitat,
+				disponible: forma.disponible
+			};
+
+			if (teGeneric || forma.mode === 'nòu') {
+				camps.tematica_oc = forma.tematica_oc.trim() || null;
+				camps.tematica_fr = forma.tematica_fr.trim() || null;
+				camps.pes_linha = Number(forma.pes_linha) || 1.5;
+				camps.linha_puntejada = forma.linha_puntejada;
+				camps.popup_plantilha = forma.popup_plantilha.trim() || null;
+				camps.visibla = forma.visibla;
+			}
+
+			// Téléversement du tracé (zones/lignes seulement).
+			if (fichierGeo && forma.tipe !== 'punts' && !ESPECIALAS.includes(id)) {
+				const camin = `${id}.geojson`;
+				const up = await supabase.storage
+					.from('cartas')
+					.upload(camin, new Blob([fichierGeo.text], { type: 'application/geo+json' }), {
+						upsert: true,
+						contentType: 'application/geo+json'
+					});
+				if (up.error) throw up.error;
+				const { data: pub } = supabase.storage.from('cartas').getPublicUrl(camin);
+				camps.geojson_url = pub.publicUrl;
+			}
+
+			if (forma.mode === 'edicion') {
+				const r = await supabase.from('carta_colas').update(camps).eq('id', id).select();
+				if (r.error) throw r.error;
+				if (!r.data?.length) throw new Error('cap de linha cambiada — dreches refusats ?');
+			} else {
+				camps.tipe = forma.tipe;
+				const ordre = (colas.length ? Math.max(...colas.map((c) => c.ordre)) : -1) + 1;
+				const r = await supabase
+					.from('carta_colas')
+					.insert({ id, ordre, ...camps })
+					.select();
+				if (r.error) throw r.error;
+			}
+
+			const sensFichier =
+				forma.tipe !== 'punts' && !camps.geojson_url && !forma.geojson_url && !ESPECIALAS.includes(id);
+			forma = null;
+			fichierGeo = null;
 			await cargar();
-			msg = { tipe: 'ok', text: 'Enregistrat.' };
+			msg = sensFichier
+				? {
+						tipe: 'info',
+						text: 'Enregistrat — mas sens fichièr GeoJSON, la còla aficharà pas res : torna la modificar per ne mandar un.'
+					}
+				: { tipe: 'ok', text: 'Enregistrat.' };
 		} catch (e) {
 			msg = { tipe: 'error', text: e?.message ?? String(e) };
 		} finally {
 			enregistrant = false;
 		}
+	}
+
+	async function suprimir(c) {
+		msg = null;
+		const r = await supabase.from('carta_colas').delete().eq('id', c.id).select();
+		if (r.error) {
+			msg = {
+				tipe: 'error',
+				text: /foreign key|viol/i.test(r.error.message)
+					? `« ${c.label_oc} » a encara de punts : tira-los (o desplaça-los) dins « Luòcs » abans de suprimir la còla.`
+					: r.error.message
+			};
+			return;
+		}
+		if (!r.data?.length) {
+			msg = { tipe: 'error', text: 'supression refusada' };
+			return;
+		}
+		confirmaSup = null;
+		await cargar();
+		msg = { tipe: 'ok', text: `« ${c.label_oc} » suprimida.` };
+	}
+
+	async function desplaçar(c, sens) {
+		msg = null;
+		const i = colas.findIndex((x) => x.id === c.id);
+		const j = i + sens;
+		if (j < 0 || j >= colas.length) return;
+		const autre = colas[j];
+		const rangC = c.ordre;
+		const r1 = await supabase.from('carta_colas').update({ ordre: autre.ordre }).eq('id', c.id).select();
+		const r2 = await supabase.from('carta_colas').update({ ordre: rangC }).eq('id', autre.id).select();
+		if (r1.error || r2.error) msg = { tipe: 'error', text: (r1.error ?? r2.error).message };
+		await cargar();
 	}
 
 	function obrirDialecte(d) {
@@ -133,53 +339,155 @@
 </svelte:head>
 
 <section class="card">
-	<h1>Carta — còlas</h1>
-	<p class="subtitle">
-		Çò que vei lo monde dins lo panèl « Jaces » de la carta.
-		<em>(Ce que le monde voit dans le panneau « Calques » de la carte.)</em>
-	</p>
+	<div class="cap">
+		<div>
+			<h1>Carta — còlas</h1>
+			<p class="subtitle">
+				Las jacas de la carta : crear, estilizar, gropar per tematica, ordenar.
+				<em>(Les couches de la carte : créer, styler, grouper, ordonner.)</em>
+			</p>
+		</div>
+		{#if teGeneric}
+			<button type="button" class="btn-primary" onclick={obrirNòu}>+ Nòva còla</button>
+		{/if}
+	</div>
+
+	{#if !cargant && !teGeneric}
+		<p class="msg info">
+			Per crear de còlas d'aicí, cal d'abòrd executar
+			<strong>supabase-carta-colas-generic.sql</strong> dins Supabase.
+			<em>(Exécuter d'abord le script dans Supabase pour débloquer la création.)</em>
+		</p>
+	{/if}
 
 	{#if msg}
 		<p class="msg {msg.tipe}" role="status">{msg.text}</p>
 	{/if}
 
-	{#if formaCola}
-		<form class="forma" onsubmit={(e) => (e.preventDefault(), enregistrarCola())}>
-			<h2>Modificar « {formaCola.id} »</h2>
+	{#if forma}
+		<form class="forma" onsubmit={(e) => (e.preventDefault(), enregistrar())}>
+			<h2>{forma.mode === 'nòu' ? 'Nòva còla' : `Modificar « ${forma.id} »`}</h2>
+
+			{#if ESPECIALAS.includes(forma.id)}
+				<p class="ajuda">
+					Còla especiala : son afichatge es codat (colors per zòna o nivèls). Se pòdon cambiar los
+					libellats, la tematica e la disponibilitat ; lo fichièr e la plantilha, non.
+				</p>
+			{/if}
+
 			<div class="camps">
+				{#if forma.mode === 'nòu'}
+					<label>
+						Mena <em>(type — se causís un còp, a la creacion)</em>
+						<select bind:value={forma.tipe}>
+							{#each TIPES as t (t.id)}
+								<option value={t.id}>{t.oc} — {t.ajuda}</option>
+							{/each}
+						</select>
+					</label>
+				{/if}
+
 				<div class="doble">
 					<label>
 						Libellat occitan
-						<input type="text" bind:value={formaCola.label_oc} maxlength="80" required />
+						<input type="text" bind:value={forma.label_oc} maxlength="80" required />
 					</label>
 					<label>
 						Libellat francés
-						<input type="text" bind:value={formaCola.label_fr} maxlength="80" required />
+						<input type="text" bind:value={forma.label_fr} maxlength="80" required />
 					</label>
 				</div>
+
+				<div class="doble">
+					<label>
+						Tematica occitana <em>(gropa las còlas dins lo panèl ; void = sens grop)</em>
+						<input type="text" bind:value={forma.tematica_oc} maxlength="60" list="tematicas" />
+					</label>
+					<label>
+						Tematica francesa
+						<input type="text" bind:value={forma.tematica_fr} maxlength="60" />
+					</label>
+				</div>
+				<datalist id="tematicas">
+					{#each [...new Set(colas.map((c) => c.tematica_oc).filter(Boolean))] as t (t)}
+						<option value={t}></option>
+					{/each}
+				</datalist>
+
 				<label>
 					Nòta occitana <em>(mostrada se la còla es pas disponibla)</em>
-					<input type="text" bind:value={formaCola.nòta_oc} maxlength="160" />
+					<input type="text" bind:value={forma.nòta_oc} maxlength="160" />
 				</label>
 				<label>
 					Nòta francesa
-					<input type="text" bind:value={formaCola.nòta_fr} maxlength="160" />
+					<input type="text" bind:value={forma.nòta_fr} maxlength="160" />
 				</label>
+
 				<div class="doble">
 					<label class="estrech">
 						Color
-						<input type="color" bind:value={formaCola.color} />
+						<input type="color" bind:value={forma.color} />
 					</label>
 					<label class="estrech">
 						Opacitat <em>(0 a 1)</em>
-						<input type="number" bind:value={formaCola.opacitat} min="0" max="1" step="0.05" />
+						<input type="number" bind:value={forma.opacitat} min="0" max="1" step="0.05" />
+					</label>
+					{#if forma.tipe !== 'punts'}
+						<label class="estrech">
+							Pes de linha <em>(espessor)</em>
+							<input type="number" bind:value={forma.pes_linha} min="0.5" max="8" step="0.1" />
+						</label>
+						<label class="casa estrech">
+							<input type="checkbox" bind:checked={forma.linha_puntejada} />
+							<span>Puntejada</span>
+						</label>
+					{/if}
+				</div>
+
+				{#if forma.tipe !== 'punts' && !ESPECIALAS.includes(forma.id)}
+					<label>
+						Fichièr GeoJSON {forma.geojson_url ? '(remplaçar lo fichièr actual)' : ''}
+						<input type="file" accept=".geojson,.json,application/geo+json" onchange={legirFichier} />
+					</label>
+					{#if fichierGeo}
+						<p class="ajuda">
+							✓ {fichierGeo.nom} — {fichierGeo.nFeatures} formas. Camps disponibles per la
+							plantilha : {fichierGeo.camps.map((c) => `{${c}}`).join(' ')}
+						</p>
+					{:else if forma.geojson_url}
+						<p class="ajuda">Fichièr actual : {forma.geojson_url.split('/').pop()}</p>
+					{/if}
+
+					<label>
+						Plantilha del popup <em>(çò mostrat al clic — {'{camp}'} = valor del camp)</em>
+						<input
+							type="text"
+							bind:value={forma.popup_plantilha}
+							maxlength="300"
+							placeholder="{'{nom}'} — {'{descripcion}'}"
+						/>
+					</label>
+				{/if}
+
+				{#if forma.tipe === 'punts' && forma.mode === 'nòu'}
+					<p class="ajuda">
+						Los punts d'aquesta còla s'apondràn dins « Luòcs » (menú), en causissent la còla dins
+						lo formulari.
+					</p>
+				{/if}
+
+				<div class="doble">
+					<label class="casa">
+						<input type="checkbox" bind:checked={forma.visibla} />
+						<span>Visibla per defaut <em>(marcada en dubrissent la carta)</em></span>
+					</label>
+					<label class="casa">
+						<input type="checkbox" bind:checked={forma.disponible} />
+						<span>Disponibla <em>(activabla pels visitaires)</em></span>
 					</label>
 				</div>
-				<label class="casa">
-					<input type="checkbox" bind:checked={formaCola.disponible} />
-					<span>Disponibla <em>(activabla dins lo panèl)</em></span>
-				</label>
 			</div>
+
 			<div class="accions">
 				<button type="submit" class="btn-primary" disabled={enregistrant}>
 					{enregistrant ? '…' : 'Enregistrar'}
@@ -187,7 +495,7 @@
 				<button
 					type="button"
 					class="btn-segond"
-					onclick={() => (formaCola = null)}
+					onclick={() => ((forma = null), (fichierGeo = null))}
 					disabled={enregistrant}>Anullar</button
 				>
 			</div>
@@ -198,17 +506,62 @@
 		<p class="subtitle">Cargament…</p>
 	{:else}
 		<ul class="lista">
-			{#each colas as c (c.id)}
+			{#each colas as c, i (c.id)}
 				<li class:rescondut={!c.disponible}>
 					<span class="pastilha" style="background:{c.color}"></span>
 					<div class="tèxte">
 						<strong>{c.label_oc}</strong>
 						<span class="meta">
-							{c.id} · opacitat {c.opacitat}
+							{c.id}
+							{#if c.tipe}· {c.tipe}{/if}
+							{#if c.tematica_oc}· {c.tematica_oc}{/if}
+							{#if c.visibla}· visibla{/if}
 							{#if !c.disponible}· <span class="pas-publicat">pas disponibla</span>{/if}
+							{#if ESPECIALAS.includes(c.id)}· <span class="especiala">especiala</span>{/if}
 						</span>
 					</div>
-					<button type="button" class="btn-segond" onclick={() => obrirCola(c)}>Modificar</button>
+
+					<div class="rang">
+						<button
+							type="button"
+							class="btn-icòna"
+							onclick={() => desplaçar(c, -1)}
+							disabled={i === 0}
+							aria-label="Montar">↑</button
+						>
+						<button
+							type="button"
+							class="btn-icòna"
+							onclick={() => desplaçar(c, 1)}
+							disabled={i === colas.length - 1}
+							aria-label="Davalar">↓</button
+						>
+					</div>
+
+					{#if confirmaSup === c.id}
+						<div class="accions-linha">
+							<span class="segur">Segur ?</span>
+							<button type="button" class="btn-segond btn-perilhos" onclick={() => suprimir(c)}
+								>Òc, suprimir</button
+							>
+							<button type="button" class="btn-segond" onclick={() => (confirmaSup = null)}
+								>Non</button
+							>
+						</div>
+					{:else}
+						<div class="accions-linha">
+							<button type="button" class="btn-segond" onclick={() => obrirEdicion(c)}
+								>Modificar</button
+							>
+							{#if teGeneric && !ESPECIALAS.includes(c.id)}
+								<button
+									type="button"
+									class="btn-segond btn-perilhos"
+									onclick={() => (confirmaSup = c.id)}>Suprimir</button
+								>
+							{/if}
+						</div>
+					{/if}
 				</li>
 			{/each}
 		</ul>
@@ -280,8 +633,22 @@
 </section>
 
 <style>
+	.cap {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.cap > div {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
 	.subtitle {
-		margin: -0.7rem 0 0;
+		margin: 0;
 		font-size: 0.85rem;
 		color: var(--color-teal);
 	}
@@ -315,6 +682,7 @@
 		display: flex;
 		gap: 0.8rem;
 		flex-wrap: wrap;
+		align-items: flex-end;
 	}
 
 	.doble > :global(label) {
@@ -334,10 +702,22 @@
 		background: var(--color-cream);
 	}
 
+	input[type='file'] {
+		font-size: 0.85rem;
+	}
+
 	.casa {
 		flex-direction: row !important;
 		align-items: center;
 		gap: 0.5rem;
+	}
+
+	.ajuda {
+		margin: -0.3rem 0 0;
+		font-size: 0.78rem;
+		line-height: 1.45;
+		color: var(--color-olive);
+		overflow-wrap: anywhere;
 	}
 
 	.accions {
@@ -398,5 +778,44 @@
 	.pas-publicat {
 		color: var(--color-brick);
 		font-weight: 600;
+	}
+
+	.especiala {
+		color: var(--color-sky);
+		font-weight: 600;
+	}
+
+	.rang {
+		display: flex;
+		gap: 0.2rem;
+	}
+
+	.btn-icòna {
+		width: 2rem;
+		height: 2rem;
+		border-radius: 999px;
+		border: 1.5px solid rgba(58, 42, 32, 0.2);
+		background: white;
+		cursor: pointer;
+		font-size: 0.9rem;
+		color: var(--color-text);
+	}
+
+	.btn-icòna:disabled {
+		opacity: 0.35;
+		cursor: default;
+	}
+
+	.accions-linha {
+		display: flex;
+		gap: 0.35rem;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	.segur {
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--color-brick);
 	}
 </style>
