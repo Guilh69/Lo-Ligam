@@ -22,6 +22,9 @@ on:
 env:
   REGISTRE: rg.fr-par.scw.cloud/lo-ligam
   IMATGE: lo-ligam
+  # Nom del conteneire Serverless (namespace « ligam-web »). Se lo nom
+  # cambia dins la consòla, cal lo cambiar aicí tanben.
+  CONTENEIRE: lo-ligam
 
 jobs:
   bastir:
@@ -55,3 +58,36 @@ jobs:
           # dépendances ne sont réinstallées que si package.json change.
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      # Mandar l'imatge basta pas : lo conteneire garda la version qu'a ja
+      # cargada. Cal li demandar de tornar quèrre l'imatge « latest ».
+      # L'API de Scaleway s'autentifica amb la sola clau secreta, doncas cap
+      # de segond secret d'apondre — mas la politica IAM deu autorizar
+      # ContainersFullAccess en mai de ContainerRegistryFullAccess.
+      - name: Tornar desplegar lo conteneire
+        # Facultatiu : tant que la politica IAM autoriza pas
+        # ContainersFullAccess, aquesta etapa fracassa sens far tombar la
+        # construccion. Lo mai important — bastir e mandar l'imatge — es ja
+        # fach. Dins aqueste cas, clicar « Redéployer » dins la consòla.
+        continue-on-error: true
+        env:
+          SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+        run: |
+          set -euo pipefail
+          API="https://api.scaleway.com/containers/v1beta1/regions/fr-par"
+
+          ID=$(curl -sS -H "X-Auth-Token: $SCW_SECRET_KEY" \
+            "$API/containers?name=$CONTENEIRE" \
+            | jq -r --arg n "$CONTENEIRE" \
+                '.containers // [] | map(select(.name == $n)) | .[0].id // empty')
+
+          if [ -z "$ID" ]; then
+            echo "::error::Cap de conteneire nomenat « $CONTENEIRE » trobat en fr-par."
+            echo "::error::Verificar lo nom del conteneire e que la clau a ben lo drech ContainersFullAccess."
+            exit 1
+          fi
+
+          echo "Conteneire trobat : $ID"
+          curl -sS -X POST -H "X-Auth-Token: $SCW_SECRET_KEY" \
+            "$API/containers/$ID/deploy" > /dev/null
+          echo "Desplegament demandat. Scaleway carga l'imatge novèla."

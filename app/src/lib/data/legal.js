@@ -22,12 +22,15 @@ export const editor = {
 	adresse: 'À_COMPLÉTER_SI_STRUCTURE_JURIDIQUE'
 };
 
-// Adresse vérifiée le 2026-08-08 auprès des registres d'entreprises
-// américains. À revérifier si Vercel déménage.
+// Hébergeur depuis le 2026-08-08 : le site a quitté Vercel (États-Unis) pour
+// Scaleway (France), conformément au choix d'outils européens. Coordonnées
+// relevées le 2026-08-08 sur scaleway.com/fr/mentions-legales.
 export const hebergeur = {
-	nom: 'Vercel Inc.',
-	adresse: '440 N Barranca Ave #4133, Covina, CA 91723, États-Unis',
-	site: 'https://vercel.com'
+	nom: 'SCALEWAY SAS',
+	adresse: "8 rue de la Ville-l'Évêque, 75008 Paris, France",
+	site: 'https://www.scaleway.com',
+	// Utile au visiteur : dit où ses données transitent réellement.
+	region: 'Paris (fr-par), France'
 };
 
 // La base de données et l'authentification. Sous-traitant au sens du RGPD.

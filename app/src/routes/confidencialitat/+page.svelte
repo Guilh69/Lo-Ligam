@@ -161,7 +161,9 @@
 					<a href={baseDonnadas.site} target="_blank" rel="noopener noreferrer">{baseDonnadas.site}</a>
 				</li>
 				<li>
-					<strong>{hebergeur.nom}</strong> — hébergement ·
+					<strong>{hebergeur.nom}</strong> — hébergement
+					{#if hebergeur.region}({hebergeur.region}){/if}
+					·
 					<a href={hebergeur.site} target="_blank" rel="noopener noreferrer">{hebergeur.site}</a>
 				</li>
 			</ul>
