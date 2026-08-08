@@ -19,6 +19,7 @@
 	import OfficialitatCarousel from '$lib/components/OfficialitatCarousel.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { families, externalLinks } from '$lib/data/siteSections';
+	import WelcomeDialog from '$lib/components/WelcomeDialog.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
 
@@ -469,6 +470,8 @@
 		</ul>
 	</div>
 {/if}
+
+<WelcomeDialog {lang} />
 
 <main class="page">
 	<section class="hero">
