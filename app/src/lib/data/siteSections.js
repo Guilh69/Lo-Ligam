@@ -206,7 +206,7 @@ export const externalLinks = [
 				label: 'Vòtz',
 				desc_oc: 'Sintèsi vocala occitana',
 				desc_fr: 'Synthèse vocale occitane',
-				href: 'http://votz.eu'
+				href: 'https://votz.eu'
 			}
 		]
 	},

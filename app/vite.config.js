@@ -16,5 +16,19 @@ export default defineConfig({
 			// See https://svelte.dev/docs/kit/adapters for more information about adapters.
 			adapter: adapter()
 		})
-	]
+	],
+
+	test: {
+		// Les tests de logique tournent sans navigateur. Ceux qui rendent un
+		// composant ont besoin d'un DOM simulé, d'où jsdom.
+		environment: 'jsdom',
+		include: ['src/**/*.test.js'],
+		globals: true,
+		// Un seul processus : sur Windows, avec le projet dans OneDrive, les
+		// processus de travail de Vitest expirent avant de répondre. La suite
+		// est courte, la parallélisation n'apporte rien ici.
+		pool: 'threads',
+		poolOptions: { threads: { singleThread: true } },
+		fileParallelism: false
+	}
 });
