@@ -416,8 +416,6 @@
 			</div>
 		</div>
 
-		<!-- Lien de test temporaire, à retirer avant la publication -->
-		<a class="test-link" href="/dev-test-questionnaire">Questionnari (tèst)</a>
 	</div>
 {/if}
 
@@ -695,23 +693,6 @@
 			padding: 0.55rem 0.85rem;
 			font-size: 0.85rem;
 		}
-	}
-
-	.test-link {
-		display: inline-block;
-		margin-top: 0.5rem;
-		font-size: 0.78rem;
-		font-weight: 600;
-		color: var(--color-brick);
-		text-decoration: none;
-		border: 1px dashed rgba(165, 52, 42, 0.4);
-		padding: 0.3rem 0.6rem;
-		border-radius: 999px;
-		white-space: nowrap;
-	}
-
-	.test-link:hover {
-		background: rgba(165, 52, 42, 0.08);
 	}
 
 	.carta-link:hover {
