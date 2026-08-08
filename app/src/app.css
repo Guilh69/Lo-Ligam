@@ -1,3 +1,5 @@
+@import './fonts.css';
+
 :root {
 	/* Chaudes — cœur de marque */
 	--color-terracotta: #c8562e;
@@ -11,7 +13,6 @@
 	--color-olive: #5e7b3a;
 	--color-text: #3a2a20;
 
-	--font-script: 'Caveat', cursive;
 	--font-heading: 'Fredoka', sans-serif;
 	--font-body: 'Inter', system-ui, sans-serif;
 }

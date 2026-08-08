@@ -4,11 +4,23 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+		<!-- Les polices sont hébergées par nos soins (voir src/fonts.css) :
+		     plus aucune requête vers Google, donc plus aucune fuite d'adresse
+		     IP des visiteurs. On précharge les deux fichiers latins, les seuls
+		     utilisés dans l'immense majorité des pages. -->
 		<link
-			href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
-			rel="stylesheet"
+			rel="preload"
+			href="/fonts/fredoka-latin.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="preload"
+			href="/fonts/inter-latin.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin="anonymous"
 		/>
 		%sveltekit.head%
 	</head>

@@ -15,8 +15,10 @@ const csp = {
 		'default-src': ['self'],
 		'script-src': ['self'],
 		// Svelte injecte les styles des composants en ligne : inévitable ici.
-		'style-src': ['self', 'unsafe-inline', 'https://fonts.googleapis.com'],
-		'font-src': ['self', 'https://fonts.gstatic.com'],
+		'style-src': ['self', 'unsafe-inline'],
+		// Les polices sont hébergées par nos soins : plus rien à autoriser
+		// vers l'extérieur.
+		'font-src': ['self'],
 		'img-src': [
 			'self',
 			'data:',
