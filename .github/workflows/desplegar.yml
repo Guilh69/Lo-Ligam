@@ -25,6 +25,7 @@ env:
   # Nom del conteneire Serverless (namespace « ligam-web »). Se lo nom
   # cambia dins la consòla, cal lo cambiar aicí tanben.
   CONTENEIRE: lo-ligam
+  SITE: https://ligamweb62fb7521-lo-ligam.functions.fnc.fr-par.scw.cloud
 
 jobs:
   bastir:
@@ -65,6 +66,7 @@ jobs:
       # de segond secret d'apondre — mas la politica IAM deu autorizar
       # ContainersFullAccess en mai de ContainerRegistryFullAccess.
       - name: Tornar desplegar lo conteneire
+        id: desplegar
         # Facultatiu : tant que la politica IAM autoriza pas
         # ContainersFullAccess, aquesta etapa fracassa sens far tombar la
         # construccion. Lo mai important — bastir e mandar l'imatge — es ja
@@ -91,3 +93,37 @@ jobs:
           curl -sS -X POST -H "X-Auth-Token: $SCW_SECRET_KEY" \
             "$API/containers/$ID/deploy" > /dev/null
           echo "Desplegament demandat. Scaleway carga l'imatge novèla."
+          echo "id=$ID" >> "$GITHUB_OUTPUT"
+
+      # Un desplegament demandat es pas un desplegament capitat. Aicí
+      # s'espèra que Scaleway anóncia « ready », puèi se verifica que lo
+      # site respond vertadièrament. Sens aquò, una imatge copada passariá
+      # en verd sens que degun o veja.
+      - name: Verificar que lo site respond
+        if: steps.desplegar.outcome == 'success'
+        env:
+          SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+          ID: ${{ steps.desplegar.outputs.id }}
+        run: |
+          set -euo pipefail
+          API="https://api.scaleway.com/containers/v1beta1/regions/fr-par"
+
+          for i in $(seq 1 40); do
+            ESTAT=$(curl -sS -H "X-Auth-Token: $SCW_SECRET_KEY" \
+              "$API/containers/$ID" | jq -r '.status')
+            echo "  ($i/40) estat : $ESTAT"
+            case "$ESTAT" in
+              ready) break ;;
+              error) echo "::error::Scaleway anóncia una error de desplegament."; exit 1 ;;
+            esac
+            sleep 10
+          done
+
+          if [ "$ESTAT" != "ready" ]; then
+            echo "::error::Lo conteneire es pas passat « ready » en 400 segondas."
+            exit 1
+          fi
+
+          CODI=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 "$SITE/")
+          echo "Lo site respond : HTTP $CODI"
+          [ "$CODI" = "200" ] || { echo "::error::Lo site respond pas 200."; exit 1; }
