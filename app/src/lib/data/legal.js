@@ -37,10 +37,21 @@ export const hebergeur = {
 export const baseDonnadas = {
 	nom: 'Supabase Inc.',
 	site: 'https://supabase.com',
-	// ⚠ À VÉRIFIER dans le tableau de bord Supabase (Settings → General →
-	// Region). Si la région est hors Union européenne, il faut le dire
-	// explicitement dans la politique de confidentialité.
-	region: 'À_VÉRIFIER_DANS_SUPABASE'
+	// Vérifié par Romain le 2026-08-09 dans le tableau de bord Supabase :
+	// les données sont hébergées dans l'Union européenne.
+	//
+	// ⚠ Nuance à ne pas perdre : la RÉGION est européenne, la SOCIÉTÉ ne
+	// l'est pas. Supabase Inc. est américaine, donc atteignable par le
+	// CLOUD Act quelle que soit la localisation des serveurs. C'est dit
+	// explicitement au visiteur plutôt que masqué derrière « hébergé en
+	// Europe ». Migration vers un service européen étudiée le 2026-08-09 :
+	// aucun candidat mûr et compatible à ce jour (voir §11 du cahier des
+	// charges), à réexaminer.
+	// Bilingue : cette valeur s'affiche au fil du texte, elle doit suivre la
+	// langue choisie plutôt que de planter un mot français au milieu d'une
+	// phrase occitane.
+	region: { oc: 'Union europèa', fr: 'Union européenne' },
+	societatNonEuropea: true
 };
 
 export const dataMiseAJour = '2026-08-08';

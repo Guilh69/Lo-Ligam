@@ -41,12 +41,16 @@
 				'Vos données sont conservées tant que votre compte existe. Si vous demandez sa suppression, elles sont effacées, y compris votre progression.',
 			quiT: 'Qui d’autre y a accès',
 			qui: 'Personne, en dehors des prestataires techniques nécessaires au fonctionnement du site :',
+			juridiccion:
+				'Précision que nous préférons dire clairement : vos données sont stockées sur des serveurs situés dans l’Union européenne, mais la société qui gère la base de données est américaine. Les autorités des États-Unis peuvent donc, en droit, en demander l’accès — c’est ce qu’on appelle le CLOUD Act. L’hébergement du site, lui, est français. Nous cherchons un prestataire européen pour la base de données ; aucun ne réunit à ce jour la maturité et la compatibilité nécessaires.',
 			cookiesT: 'Traceurs et stockage',
 			cookies:
 				'Aucun traceur publicitaire, aucune mesure d’audience. Le site garde seulement quelques réglages dans votre navigateur : la langue choisie, la progression de la leçon d’essai, et le fait que vous ayez déjà vu certains messages d’accueil. Ces informations ne quittent jamais votre appareil et ne servent pas à vous identifier.',
+			roleBasa: 'base de données et authentification',
+			roleAlbergament: 'hébergement',
 			tiersT: 'Ressources chargées depuis d’autres sites',
 			tiers:
-				'Certaines pages chargent des éléments hébergés ailleurs, ce qui transmet votre adresse IP à ces services : les polices de caractères (Google Fonts), les fonds de carte (OpenStreetMap e occitan, ArcGIS), les icônes des ressources occitanes (Google), et la recherche de communes quand vous tapez un lieu (API Adresse, Photon).',
+				'Certaines pages chargent des éléments hébergés ailleurs, ce qui transmet votre adresse IP à ces services : les fonds de carte (OpenStreetMap e occitan, OpenTopoMap, EOX Sentinel-2), la recherche de communes quand vous tapez un lieu (API Adresse, Photon), et les vidéos que vous choisissez de lancer (YouTube en mode sans cookie, Canva). Les polices de caractères et les icônes, elles, sont servies par ce site : aucune requête vers Google.',
 			droitsT: 'Vos droits',
 			droits:
 				'Vous pouvez à tout moment demander à consulter vos données, les corriger, les effacer, les récupérer dans un format lisible, ou retirer votre consentement aux réponses facultatives. Écrivez à {email} : la réponse intervient sous un mois.',
@@ -85,12 +89,16 @@
 				'Vòstras donadas son gardadas tant que vòstre compte existís. Se demandatz sa supression, son escafadas, progression compresa.',
 			quiT: 'Qual mai i a accès',
 			qui: 'Degun, levat los prestataris tecnics necessaris al foncionament del site :',
+			juridiccion:
+				'Precision que valèm mai dire clarament : vòstras donadas son gardadas sus de servidors situats dins l’Union europèa, mas la societat que gerís la basa de donadas es americana. Las autoritats dels Estats-Units pòdon doncas, en drech, ne demandar l’accès — çò que s’apèla lo CLOUD Act. L’albergament del site, el, es francés. Cercam un prestatari europèu per la basa de donadas ; cap reünís pas encara la maduretat e la compatibilitat necessàrias.',
 			cookiesT: 'Pistaires e emmagazinatge',
 			cookies:
 				'Cap de pistaire publicitari, cap de mesura d’audiéncia. Lo site garda solament qualques reglatges dins vòstre navegador : la lenga causida, la progression de la leiçon d’ensag, e lo fach qu’ajatz ja vist certans messatges d’acuèlh. Aquelas informacions quitan pas jamai vòstre aparelh e servisson pas a vos identificar.',
+			roleBasa: 'basa de donadas e autentificacion',
+			roleAlbergament: 'albergament',
 			tiersT: 'Ressorsas cargadas d’autres sites',
 			tiers:
-				'Certanas paginas cargan d’elements albergats endacòm mai, çò que transmet vòstra adreça IP a aquestes servicis : las poliças de caractèrs (Google Fonts), los fonses de carta (OpenStreetMap e occitan, ArcGIS), las icònas de las ressorsas occitanas (Google), e la recèrca de comunas quand tapatz un luòc (API Adresse, Photon).',
+				'Certanas paginas cargan d’elements albergats endacòm mai, çò que transmet vòstra adreça IP a aquestes servicis : los fonses de carta (OpenStreetMap e occitan, OpenTopoMap, EOX Sentinel-2), la recèrca de comunas quand tapatz un luòc (API Adresse, Photon), e las vidèos que causissètz de lançar (YouTube en mòde sens cookies, Canva). Las poliças de caractèrs e las icònas, elas, son servidas per aqueste site : cap de requèsta cap a Google.',
 			droitsT: 'Vòstres dreches',
 			droits:
 				'Podètz a tot moment demandar de consultar vòstras donadas, las corregir, las escafar, las recuperar dins un format legible, o retirar vòstre consentiment a las respònsas facultativas. Escrivètz a {email} : la respònsa arriba jos un mes.',
@@ -154,19 +162,21 @@
 			<p>{tx.qui}</p>
 			<ul>
 				<li>
-					<strong>{baseDonnadas.nom}</strong> — base de données et authentification
-					{#if !baseDonnadas.region.startsWith('À_')}
-						({baseDonnadas.region}){/if}
+					<strong>{baseDonnadas.nom}</strong> — {tx.roleBasa}
+					{#if baseDonnadas.region}({baseDonnadas.region[lang] ?? baseDonnadas.region.fr}){/if}
 					·
 					<a href={baseDonnadas.site} target="_blank" rel="noopener noreferrer">{baseDonnadas.site}</a>
 				</li>
 				<li>
-					<strong>{hebergeur.nom}</strong> — hébergement
+					<strong>{hebergeur.nom}</strong> — {tx.roleAlbergament}
 					{#if hebergeur.region}({hebergeur.region}){/if}
 					·
 					<a href={hebergeur.site} target="_blank" rel="noopener noreferrer">{hebergeur.site}</a>
 				</li>
 			</ul>
+			{#if baseDonnadas.societatNonEuropea}
+				<p class="nuanca">{tx.juridiccion}</p>
+			{/if}
 		</section>
 
 		<section>
@@ -273,5 +283,16 @@
 
 	a {
 		color: var(--color-teal);
+	}
+
+	/* Une nuance que la plupart des sites passent sous silence derrière un
+	   « hébergé en Europe » : elle mérite d'être visible sans faire peur,
+	   d'où le filet discret plutôt qu'un encadré d'avertissement. */
+	.nuanca {
+		margin-top: 0.9rem;
+		padding-left: 0.8rem;
+		border-left: 2px solid var(--color-teal);
+		font-size: 0.95rem;
+		opacity: 0.85;
 	}
 </style>
