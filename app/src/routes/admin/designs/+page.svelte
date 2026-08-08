@@ -106,6 +106,10 @@
 	}
 
 	function causirVideo(e) {
+		// forma vaut null tant qu'aucun formulaire n'est ouvert. Le balisage
+		// empêche normalement d'arriver ici dans ce cas, mais rien ne le
+		// garantit : une garde explicite évite un plantage silencieux.
+		if (!forma) return;
 		const fichier = e.target.files?.[0];
 		if (!fichier) return;
 		if (fichier.type !== 'video/mp4') {
@@ -133,6 +137,7 @@
 	}
 
 	function causirFichier(e) {
+		if (!forma) return;
 		const fichier = e.target.files?.[0];
 		if (!fichier) return;
 		if (fichier.type === 'image/svg+xml') {
@@ -161,6 +166,7 @@
 	// nettoyant ce qui doit l'être. Renvoie l'adresse, ou null si la fiche n'a
 	// pas de vidéo.
 	async function resolverVideo(id) {
+		if (!forma) return null;
 		const camin = `fichas/${id}.mp4`;
 		const ancianaChesNos = esVideoStorage(forma.videoActuala)
 			? caminVideoStorage(forma.videoActuala)
@@ -197,6 +203,7 @@
 	}
 
 	async function enregistrar() {
+		if (!forma) return;
 		msg = null;
 		const titre = forma.titre.trim();
 		if (!titre) {

@@ -168,6 +168,8 @@
 	}
 
 	async function enregistrar() {
+		// forma vaut null tant qu'aucun formulaire n'est ouvert.
+		if (!forma) return;
 		msg = null;
 		const label_oc = forma.label_oc.trim();
 		const label_fr = forma.label_fr.trim();
@@ -304,6 +306,7 @@
 	}
 
 	async function enregistrarDialecte() {
+		if (!formaDialecte) return;
 		const label_oc = formaDialecte.label_oc.trim();
 		if (!label_oc) {
 			msg = { tipe: 'error', text: 'Cal un libellat occitan.' };

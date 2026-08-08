@@ -96,6 +96,8 @@
 	}
 
 	async function enregistrar() {
+		// forma vaut null tant qu'aucun formulaire n'est ouvert.
+		if (!forma) return;
 		const oc = forma.oc.trim();
 		const fr = forma.fr.trim();
 		if (!oc || !fr) {

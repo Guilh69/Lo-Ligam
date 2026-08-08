@@ -69,6 +69,8 @@
 	}
 
 	async function enregistrar() {
+		// forma vaut null tant qu'aucun formulaire n'est ouvert.
+		if (!forma) return;
 		msg = null;
 		const titre = forma.titre.trim();
 		const autor = forma.autor.trim();
