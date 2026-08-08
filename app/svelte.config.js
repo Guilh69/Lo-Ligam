@@ -24,7 +24,6 @@ const csp = {
 			'data:',
 			'blob:',
 			'https://*.supabase.co', // designs, cartes et vidéos téléversés
-			'https://www.google.com', // favicons des ressources externes
 			'https://tile.openstreetmap.bzh', // fond de carte occitan
 			'https://*.tile.openstreetmap.org',
 			'https://server.arcgisonline.com', // fond satellite

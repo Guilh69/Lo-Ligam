@@ -20,6 +20,7 @@
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { families, externalLinks } from '$lib/data/siteSections';
 	import WelcomeDialog from '$lib/components/WelcomeDialog.svelte';
+	import { icona } from '$lib/data/icones';
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
 
@@ -45,15 +46,9 @@
 		openTools ? (externalLinks.find((l) => l.href === openTools) ?? null) : null
 	);
 
-	// Icòna (favicon) de cada site extèrne, per repèrer visualament cada
-	// actor/aplicacion dins la lista de ressorsas, sens aver de logo local
-	// a mantener per cadun.
-	function favicon(href) {
-		try {
-			return `https://www.google.com/s2/favicons?sz=64&domain=${new URL(href).hostname}`;
-		} catch {
-			return '';
-		}
+	// Initiale de repli quand le site ne publie pas d'icône récupérable.
+	function inicial(label) {
+		return (label || '?').trim().charAt(0).toUpperCase();
 	}
 
 	// Textes bilingues de la page d'accueil. Les valeurs écrites ici sont des
@@ -391,7 +386,7 @@
 							onclick={() => (openTools = openTools === l.href ? null : l.href)}
 						>
 							<span class="shine" aria-hidden="true"></span>
-							<img class="external-logo" src={favicon(l.href)} alt="" loading="lazy" />
+							{#if icona(l.href)}<img class="external-logo" src={icona(l.href)} alt="" loading="lazy" />{:else}<span class="external-logo inicial">{inicial(l.label)}</span>{/if}
 							<span class="external-toggle-text">
 								<span class="external-label">{l.label}</span>
 								<span
@@ -403,7 +398,7 @@
 					{:else}
 						<a class="external-card" href={l.href} target="_blank" rel="noopener noreferrer">
 							<span class="shine" aria-hidden="true"></span>
-							<img class="external-logo" src={favicon(l.href)} alt="" loading="lazy" />
+							{#if icona(l.href)}<img class="external-logo" src={icona(l.href)} alt="" loading="lazy" />{:else}<span class="external-logo inicial">{inicial(l.label)}</span>{/if}
 							<span class="external-toggle-text">
 								<span class="external-label">{l.label} ↗</span>
 								<span
@@ -440,7 +435,7 @@
 		transition:fly={{ y: 14, duration: 320, easing: quintOut, opacity: 0 }}
 	>
 		<div class="tools-popover-header">
-			<img class="external-logo" src={favicon(activeLink.href)} alt="" />
+			{#if icona(activeLink.href)}<img class="external-logo" src={icona(activeLink.href)} alt="" />{:else}<span class="external-logo inicial">{inicial(activeLink.label)}</span>{/if}
 			<span class="tools-popover-title">{activeLink.label}</span>
 			<button
 				type="button"
@@ -455,7 +450,7 @@
 			{#each activeLink.tools as tool (tool.href)}
 				<li>
 					<a href={tool.href} target="_blank" rel="noopener noreferrer">
-						<img class="tool-logo" src={favicon(tool.href)} alt="" loading="lazy" />
+						{#if icona(tool.href)}<img class="tool-logo" src={icona(tool.href)} alt="" loading="lazy" />{:else}<span class="tool-logo inicial">{inicial(tool.label)}</span>{/if}
 						<span class="tool-text">
 							<span class="tool-name">{tool.label} ↗</span>
 							<span class="tool-desc"
@@ -941,6 +936,20 @@
 		font: inherit;
 		text-align: left;
 		cursor: pointer;
+	}
+
+	/* Repli quand le site ne publie pas d'icône : son initiale sur pastille,
+	   plutôt qu'une image cassée. */
+	.inicial {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--color-brick);
+		color: var(--color-cream);
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.8rem;
+		line-height: 1;
 	}
 
 	.external-logo {
