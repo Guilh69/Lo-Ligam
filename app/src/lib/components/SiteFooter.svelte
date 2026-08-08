@@ -85,13 +85,11 @@
 	<div class="footer-legal">
 		<p>© 2026 Lo Ligam</p>
 		<div class="footer-legal-links">
-			<span class="soon-inline"
-				><span use:scramble={{ oc: 'Mentions legalas', fr: 'Mentions légales', lang }}
-				></span><em use:scramble={{ oc: '· Lèu', fr: '· Bientôt', lang }}></em></span
+			<a class="footer-legal-link" href="/mencions-legalas"
+				><span use:scramble={{ oc: 'Mentions legalas', fr: 'Mentions légales', lang }}></span></a
 			>
-			<span class="soon-inline"
-				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', lang }}
-				></span><em use:scramble={{ oc: '· Lèu', fr: '· Bientôt', lang }}></em></span
+			<a class="footer-legal-link" href="/confidencialitat"
+				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', lang }}></span></a
 			>
 			<span class="soon-inline"
 				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', lang }}
@@ -258,6 +256,18 @@
 
 	.footer-legal-links .soon-inline {
 		font-size: 0.8rem;
+	}
+
+	.footer-legal-link {
+		font-size: 0.8rem;
+		color: rgba(245, 234, 216, 0.75);
+		text-decoration: none;
+		transition: color 150ms ease;
+	}
+
+	.footer-legal-link:hover {
+		color: var(--color-cream);
+		text-decoration: underline;
 	}
 
 	@media (max-width: 45rem) {
