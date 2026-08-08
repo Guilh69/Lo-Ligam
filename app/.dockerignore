@@ -1,0 +1,10 @@
+# Ce qui n'a rien à faire dans l'image du conteneur.
+node_modules
+build
+.svelte-kit
+.git
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store

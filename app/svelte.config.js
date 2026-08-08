@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 // Politique de sécurité du contenu : le navigateur refuse de charger ce qui
@@ -47,10 +47,22 @@ const csp = {
 	}
 };
 
+// ⚠ CE FICHIER EST LA SEULE SOURCE DE CONFIGURATION.
+// Auparavant, vite.config.js passait aussi une configuration en ligne au
+// greffon sveltekit() : cette configuration-là REMPLACE celle-ci au lieu
+// de s'y ajouter. Résultat, la politique de sécurité définie ici était
+// purement et simplement ignorée. Ne pas réintroduire d'options SvelteKit
+// dans vite.config.js.
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	preprocess: vitePreprocess(),
+	compilerOptions: {
+		// Mode runes pour le projet, sauf pour les bibliothèques.
+		runes: ({ filename }) => (filename.split(/[/\\]/).includes('node_modules') ? undefined : true)
+	},
 	kit: {
+		// adapter-node : produit un serveur Node autonome, mis en conteneur
+		// pour Scaleway.
 		adapter: adapter(),
 		csp
 	}
