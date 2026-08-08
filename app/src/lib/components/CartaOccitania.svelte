@@ -35,17 +35,27 @@
 			attribution:
 				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · rendu per <a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener">OpenStreetMap e occitan</a>'
 		},
+		// Relèu : OpenTopoMap, projècte alemand, servidors en Alemanha.
+		// Remplaça CAWM (University of Iowa, Estats Units).
 		natural: {
-			url: 'https://cawm.lib.uiowa.edu/tiles/{z}/{x}/{y}.png',
-			maxZoom: 11,
+			url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+			maxZoom: 17,
+			subdomains: 'abc',
 			attribution:
-				'Relèu : <a href="https://cawm.lib.uiowa.edu/" target="_blank" rel="noopener">Consortium of Ancient World Mappers</a> / University of Iowa Libraries (CC BY 4.0)'
+				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · relèu <a href="https://opentopomap.org/" target="_blank" rel="noopener">OpenTopoMap</a> (CC BY-SA)'
 		},
+		// Satellit : Sentinel-2, satellit de l'Agéncia espaciala europèa,
+		// servit per EOX (Àustria). Remplaça ArcGIS (Esri, Estats Units).
+		//
+		// L'IGN francés èra l'autra pista, mas cobrís pas que la França :
+		// verificat, tòrna un 404 sul Val d'Aran — justament ont l'occitan
+		// es co-oficial. Sentinel-2 cobrís los tres territòris occitans
+		// (França, Val d'Aran, valadas d'Itàlia).
 		satellite: {
-			url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-			maxZoom: 19,
+			url: 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg',
+			maxZoom: 15,
 			attribution:
-				'Tiles © <a href="https://www.esri.com" target="_blank" rel="noopener">Esri</a> — Esri, Maxar, Earthstar Geographics'
+				'Sentinel-2 cloudless (<a href="https://s2maps.eu" target="_blank" rel="noopener">s2maps.eu</a>) per <a href="https://eox.at" target="_blank" rel="noopener">EOX</a> — donadas <a href="https://www.esa.int" target="_blank" rel="noopener">ESA</a> Copernicus'
 		}
 	};
 
@@ -73,7 +83,10 @@
 		if (currentBaseTileLayer) map.removeLayer(currentBaseTileLayer);
 		currentBaseTileLayer = L.tileLayer(cfg.url, {
 			maxZoom: cfg.maxZoom,
-			attribution: cfg.attribution
+			attribution: cfg.attribution,
+			// OpenTopoMap réparti sa carga sus a/b/c ; los autres fonses ne
+			// pas besonh, l'opcion es alara ignorada.
+			...(cfg.subdomains ? { subdomains: cfg.subdomains } : {})
 		});
 		currentBaseTileLayer._loLigamKey = resolvedKey;
 		currentBaseTileLayer.addTo(map);

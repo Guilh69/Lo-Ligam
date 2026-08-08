@@ -24,10 +24,12 @@ const csp = {
 			'data:',
 			'blob:',
 			'https://*.supabase.co', // designs, cartes et vidéos téléversés
-			'https://tile.openstreetmap.bzh', // fond de carte occitan
+			// Fonds de carte, tous européens : rendu occitan par OSM-bzh,
+			// relief par OpenTopoMap (Allemagne), photos aériennes par l'IGN.
+			'https://tile.openstreetmap.bzh',
 			'https://*.tile.openstreetmap.org',
-			'https://server.arcgisonline.com', // fond satellite
-			'https://cawm.lib.uiowa.edu' // fond relief
+			'https://*.tile.opentopomap.org',
+			'https://tiles.maps.eox.at'
 		],
 		'connect-src': [
 			'self',
