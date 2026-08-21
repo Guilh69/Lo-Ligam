@@ -85,7 +85,8 @@
 			},
 			facts: [
 				{
-					num: '≈ 600 000',
+					// Espacis fins insecables (U+202F) : lo nombre se copa pas.
+					num: '≈ 600 000',
 					oc: 'locutors',
 					fr: 'locuteurs',
 					font_oc: 'Estimacion — enquèsta sociolingüistica OPLO, 2020',
@@ -145,11 +146,14 @@
 		}
 	});
 
-	// Lo riu : las illustracions que davalan lentament jol títol. Doas
-	// bendas en sens opausats ; cada lista es doblada dins lo marcatge per
-	// que la bocla CSS (translateX -50 %) semble infinida.
-	const riuAlt = ['01', '05', '09', '03', '07', '02'];
-	const riuBas = ['07', '02', '01', '09', '05', '03'];
+	// Lo riu : las illustracions que davalan lentament jol títol. La bocla
+	// CSS (translateX -50 %) es invisibla sonque se CADA MITAT de la benda
+	// es al mens tan larga coma l'ecran — sens aquò, de traucs apareisson
+	// sus los ecrans larges (vist per Romain sus son ecran). D'ont las
+	// listas de 12 (6 designs × 2), renduas dos còps : 24 imatges per
+	// benda, e una mitat de ~12 × 9vw > 100vw quina que siá la talha.
+	const riuAlt = ['01', '05', '09', '03', '07', '02', '04', '08', '06', '01', '05', '09'];
+	const riuBas = ['07', '02', '06', '09', '05', '03', '08', '04', '01', '07', '02', '06'];
 
 	// Recopie les textes venus de la base par-dessus les valeurs de secours,
 	// puis — en mode aperçu (?apercebut=1, brouillon posé par /admin/textes
@@ -1151,6 +1155,12 @@
 	.page {
 		position: relative;
 		z-index: 3;
+		/* Jamai de defilament orizontal : las doblonas bilingüas de
+		   l'efècte scramble (las doas lengas superpausadas dins lo títol)
+		   pòdon despassar de qualques pixèls sens se replegar — çò que
+		   fasiá aparéisser una barra orizontala. Se copa aicí, un còp per
+		   totas, per tota la pagina racònte. */
+		overflow-x: clip;
 	}
 
 	/* L'eròi « Lo riu » : compacte e centrat — la frasa pòrta, lo flume
@@ -1222,8 +1232,10 @@
 		width: max-content;
 	}
 
+	/* 12 imatges per mitat de benda : a 9vw la mitat fa ~108vw, donc
+	   totjorn mai larga que l'ecran — cap de trauc possible. */
 	.riu-benda img {
-		width: clamp(130px, 16vw, 200px);
+		width: clamp(120px, 9vw, 330px);
 		border-radius: 14px;
 		box-shadow: 0 6px 18px rgba(58, 42, 32, 0.12);
 	}
@@ -1237,7 +1249,7 @@
 	}
 
 	.riu-benda-bas img {
-		width: clamp(100px, 12vw, 150px);
+		width: clamp(95px, 8.5vw, 300px);
 	}
 
 	@keyframes riu-desfilar {
@@ -1566,11 +1578,15 @@
 		gap: 0.2rem;
 	}
 
+	/* Jamai de retorn a la linha dins un chifra : « ≈ 600 000 » copat en
+	   doas linhas desalinhava las tres colomnas (vist per Romain). La
+	   talha es reducha en consequéncia per que tenga d'una peça. */
 	.fact-num {
 		font-family: var(--font-heading);
-		font-size: clamp(2.4rem, 6vw, 3.6rem);
+		font-size: clamp(1.9rem, 3.4vw, 2.9rem);
 		font-weight: 700;
 		line-height: 1;
+		white-space: nowrap;
 		color: var(--color-gold);
 	}
 
@@ -1590,6 +1606,9 @@
 
 	.lenga-intro {
 		max-width: 40rem;
+		/* Linhas de longors equilibradas : lo paragraf centrat fasiá de
+		   linhas iregularas (« desordonat », disiá Romain amb rason). */
+		text-wrap: balance;
 	}
 
 	/* La citacion del trobador : la votz poetica (Cormorant italica),
