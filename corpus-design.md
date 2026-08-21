@@ -208,6 +208,28 @@ gris interchangeable des templates.
   « respire » en fond de section, les designs en vitrine qui glissent
   lentement — la vie aux moments de récit, le calme aux moments d'étude.
 
+### 5 bis. Chorégraphie du défilement de l'accueil (décidée le 2026-08-22)
+
+Le scénario appliqué à la page d'accueil, réutilisable pour toute page RÉCIT :
+
+1. **Lié au geste, jamais subi** : les apparitions sont pilotées par le
+   progrès du défilement (`animation-timeline: view()`), donc réversibles —
+   remonter rejoue à l'envers. Aucune animation « déclenchée » qui se joue
+   sans qu'on la contrôle.
+2. **Un seul motif d'apparition** : fondu + translation verticale de ~26 px,
+   fenêtre `entry 8% → 42%`. Pas de zoom, pas de rotation, pas de rebond.
+3. **L'échelonnement raconte l'ordre de lecture** : frères décalés de ~8 %
+   de fenêtre chacun (les 4 portes, les 3 chiffres) — la page « s'égrène ».
+4. **Un seul moment signature** : le filet ondulé se **dessine** au passage
+   (`stroke-dashoffset` piloté par le défilement, `pathLength="1"`).
+5. **Les vies indépendantes ne se mélangent pas** : le fleuve de designs
+   défile en continu, indifférent au scroll — c'est le fond vivant, pas un
+   événement.
+6. **Discipline technique** : `transform`/`opacity` uniquement (compositeur,
+   60 fps) ; tout dans `@supports (animation-timeline: view())` — navigateur
+   ancien = page complète sans animation ; `prefers-reduced-motion: reduce`
+   fige tout, fleuve compris.
+
 ---
 
 ## 6. Site vs App — clarification proposée (à valider par Romain)
