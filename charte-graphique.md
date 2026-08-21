@@ -37,6 +37,10 @@ comparées — canvas « Tipografia Lo Ligam ») : trois voix, une par usage.
 - **Fredoka survit uniquement dans le logo** « Lo Ligam » (wordmark). Plus
   aucun titre en Fredoka. Marcellus a été envisagé (jalons) puis écarté :
   trois familles suffisent, la sobriété prime.
+- **Le « g » de Syne est volontairement presque sans queue** : c'est le
+  dessin de la police, pas un bug de rendu. Vérifié et **assumé par Romain
+  le 2026-08-22** (Bricolage Grotesque comparée puis écartée) — ne pas
+  « corriger », ne pas rouvrir.
 - **Auto-hébergées** en woff2, sous-ensemble latin + latin-ext (ç è í ò ü) —
   zéro requête vers Google, comme le reste du site.
 - Graisses strictement limitées à celles du tableau : chaque graisse pèse.
