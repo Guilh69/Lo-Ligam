@@ -143,7 +143,7 @@
 	}
 
 	.footer-brand {
-		font-family: var(--font-heading);
+		font-family: var(--font-logo); /* lo wordmark garda Fredoka (charte §2) */
 		font-weight: 600;
 		font-size: 1.15rem;
 		color: white;

@@ -13,8 +13,13 @@
 	--color-olive: #5e7b3a;
 	--color-text: #3a2a20;
 
-	--font-heading: 'Fredoka', sans-serif;
-	--font-body: 'Inter', system-ui, sans-serif;
+	/* Sistèma tipografic 2026-08-22 (charte §2) : Syne pels títols,
+	   Instrument Sans pel corrent, Cormorant per las solas citacions
+	   poeticas, Fredoka sonque pel wordmark del lògo. */
+	--font-heading: 'Syne', 'Verdana', sans-serif;
+	--font-body: 'Instrument Sans', system-ui, sans-serif;
+	--font-quote: 'Cormorant Garamond', 'Georgia', serif;
+	--font-logo: 'Fredoka', sans-serif;
 }
 
 *,

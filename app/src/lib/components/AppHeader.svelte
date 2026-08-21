@@ -123,7 +123,7 @@
 	}
 
 	.brand-name {
-		font-family: var(--font-heading);
+		font-family: var(--font-logo); /* lo wordmark garda Fredoka (charte §2) */
 		font-weight: 700;
 		font-size: 1.05rem;
 		color: var(--color-text);
