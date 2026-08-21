@@ -25,7 +25,21 @@ Croix occitana (or sur rouge) = signature à réutiliser avec parcimonie.
 
 ## 2. Typographie & ton
 
-- Titres : semi-serif / slab chaleureux, occitan d'abord.
+**Système typographique tranché le 2026-08-22** (Romain, sur maquettes
+comparées — canvas « Tipografia Lo Ligam ») : trois voix, une par usage.
+
+| Voix | Famille | Usage exclusif |
+|---|---|---|
+| Titres | **Syne** (700/800, capitales pour le héros) | h1/h2/h3, la voix principale — moderne, dessinée en France pour un centre d'art |
+| Courant | **Instrument Sans** (400/500/600) | corps de texte, boutons, interface |
+| Poétique | **Cormorant Garamond *italique*** (500) | citations littéraires uniquement (troubadours, poèmes) — jamais pour l'interface |
+
+- **Fredoka survit uniquement dans le logo** « Lo Ligam » (wordmark). Plus
+  aucun titre en Fredoka. Marcellus a été envisagé (jalons) puis écarté :
+  trois familles suffisent, la sobriété prime.
+- **Auto-hébergées** en woff2, sous-ensemble latin + latin-ext (ç è í ò ü) —
+  zéro requête vers Google, comme le reste du site.
+- Graisses strictement limitées à celles du tableau : chaque graisse pèse.
 - Sous-titre : français en *italique*, entre parenthèses.
 - Prononciation phonétique proposée + bouton audio (« escota »).
 - Ton : fier, chaleureux, pédagogique, jamais froid.
