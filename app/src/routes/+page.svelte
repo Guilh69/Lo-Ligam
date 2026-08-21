@@ -668,6 +668,7 @@
 		font-family: var(--font-logo); /* lo wordmark garda Fredoka (charte §2) */
 		font-weight: 600;
 		font-size: 1.15rem;
+		white-space: nowrap; /* « Lo Ligam » se copa pas jamai en doas linhas */
 		color: var(--color-text);
 	}
 
@@ -731,6 +732,14 @@
 		.btn-small {
 			padding: 0.55rem 0.85rem;
 			font-size: 0.85rem;
+		}
+	}
+
+	/* Ecran plan estrech : lo boton « Començar » de la barra fa doblon amb
+	   lo grand boton de l'eròi just en dejós, e fasiá desbordar la barra. */
+	@media (max-width: 26rem) {
+		.topbar .btn-small {
+			display: none;
 		}
 	}
 
@@ -1317,7 +1326,9 @@
 	}
 
 	.welcome {
-		max-width: 34rem;
+		/* Pro large per que « T'ACOMPANHA » en capitalas Syne (≈ 56 px ×
+		   11 letras larjas) tenga SENS despassar sus ordinator. */
+		max-width: min(60rem, 100%);
 		display: flex;
 		flex-direction: column;
 		gap: 0.35rem;
@@ -1328,7 +1339,9 @@
 	.hero-line {
 		margin: 0;
 		font-family: var(--font-heading);
-		font-size: clamp(2.1rem, 5.5vw, 3.5rem);
+		/* Lo minimum seguís l'ecran (vw) : en capitalas Syne 800, lo mot
+		   « T'ACOMPANHA » deu poder ténir dins un telefonet estrech. */
+		font-size: clamp(1.55rem, 5.5vw, 3.5rem);
 		font-weight: 800;
 		line-height: 1.06;
 		letter-spacing: 0.015em;

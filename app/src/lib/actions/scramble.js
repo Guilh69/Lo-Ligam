@@ -34,6 +34,13 @@ function setVisible(layer, visible) {
 export function scramble(node, params) {
 	const stagger = 6;
 	node.style.display = params.inline ? 'inline-grid' : 'grid';
+	// Sens aquò, la colomna implicita de la grasilha se dimensiona sul mot
+	// lo mai long de las doas jaças (min-content) : se aquel mot es mai
+	// large que la boita, la pista despassa e s'ancòra a ESQUÈRRA — lo
+	// tèxte pareis alara decalat cap a drecha (vist per Romain sul títol
+	// « T'ACOMPANHA » en capitalas). Amb una pista de 100 %, lo contengut
+	// tròp large despassa simetricament, coma de tèxte normal centrat.
+	if (!params.inline) node.style.gridTemplateColumns = '100%';
 
 	let oc = params.oc;
 	let fr = params.fr;
