@@ -11,12 +11,9 @@
 	import QuillIcon from '$lib/components/QuillIcon.svelte';
 	import CrossIcon from '$lib/components/CrossIcon.svelte';
 	import EnvelopeIcon from '$lib/components/EnvelopeIcon.svelte';
-	import BgCarousel from '$lib/components/BgCarousel.svelte';
 	import PageBackground from '$lib/components/PageBackground.svelte';
-	import WaveLandscape from '$lib/components/WaveLandscape.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
-	import OfficialitatCarousel from '$lib/components/OfficialitatCarousel.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { families, externalLinks } from '$lib/data/siteSections';
 	import WelcomeDialog from '$lib/components/WelcomeDialog.svelte';
@@ -70,23 +67,55 @@
 				fr: 'Un seul endroit pour tout l’écosystème occitan : apprendre la langue, découvrir le pays, se retrouver.'
 			}
 		},
-		// Chiffres volontairement en XX : le contenu sera produit et vérifié
-		// plus tard par Romain. On pose la forme, pas encore les données.
+		// Décision Romain 2026-08-22 : la page doit être comprise par
+		// quelqu'un qui n'a JAMAIS entendu parler de l'occitan (« lenga
+		// latina »), et les chiffres sont officiels, sourcés, marqués
+		// « estimation ». Source locuteurs : enquête sociolinguistique
+		// OPLO 2020 (~600 000 sur le territoire enquêté, 7 %).
+		// À VALIDER par Romain (dicodòc) avant publication définitive.
 		lenga: {
 			title: { oc: 'L’occitan, uèi', fr: 'L’occitan, aujourd’hui' },
 			lead: {
 				oc: 'Una lenga viva, parlada de l’Atlantic a las Alps.',
 				fr: 'Une langue vivante, parlée de l’Atlantique aux Alpes.'
 			},
+			intro: {
+				oc: 'L’occitan es una lenga latina — sòrre del catalan, cosina del francés, de l’italian e del castelhan. Se parla dins lo tèrç sud de l’Estat francés, dins la Val d’Aran (Espanha) e dins de valadas del Piemont (Itàlia). Es la lenga dels trobadors — e se parla encara uèi.',
+				fr: 'L’occitan est une langue latine — sœur du catalan, cousine du français, de l’italien et du castillan. Il se parle dans le tiers sud de la France, au Val d’Aran (Espagne) et dans des vallées du Piémont (Italie). C’est la langue des troubadours — et il se parle encore aujourd’hui.'
+			},
 			facts: [
-				{ num: 'XX', oc: 'de locutors', fr: 'de locuteurs' },
-				{ num: 'XX', oc: 'despartaments', fr: 'départements' },
-				{ num: 'XX', oc: 'sègles de literatura', fr: 'siècles de littérature' }
-			],
-			note: {
-				oc: 'Chifras d’exemple, de completar.',
-				fr: 'Chiffres d’exemple, à compléter.'
-			}
+				{
+					num: '≈ 600 000',
+					oc: 'locutors',
+					fr: 'locuteurs',
+					font_oc: 'Estimacion — enquèsta sociolingüistica OPLO, 2020',
+					font_fr: 'Estimation — enquête sociolinguistique OPLO, 2020'
+				},
+				{
+					num: '32',
+					oc: 'despartaments',
+					fr: 'départements',
+					font_oc: 'e mai la Val d’Aran e las valadas occitanas d’Itàlia',
+					font_fr: 'plus le Val d’Aran et les vallées occitanes d’Italie'
+				},
+				{
+					num: '10',
+					oc: 'sègles de literatura',
+					fr: 'siècles de littérature',
+					font_oc: 'dempuèi los primièrs trobadors',
+					font_fr: 'depuis les premiers troubadours'
+				}
+			]
+		},
+		// La voix poétique (Cormorant italique, charte §2) : le plus célèbre
+		// chant de troubadour. Le vers reste en occitan dans les deux
+		// langues — c'est la citation qui est bilingue, pas sa traduction.
+		citacion: {
+			texte: {
+				oc: '« Can vei la lauzeta mover de joi sas alas contra·l rai… »',
+				fr: '« Can vei la lauzeta mover de joi sas alas contra·l rai… »'
+			},
+			autor: { oc: 'Bernart de Ventadorn · sègle XII', fr: 'Bernart de Ventadorn · XIIᵉ siècle' }
 		},
 		carta: {
 			title: { oc: 'Lo Mond en occitan', fr: 'Le Monde en occitan' },
@@ -103,11 +132,24 @@
 				fr: 'Co-officielle au Val d’Aran, protégée en Italie, sans statut en France : neuf cartes pour le comprendre.'
 			}
 		},
+		// L'invitation finale (station 6 du camin).
+		comenca: {
+			title: { oc: 'Prèst a començar ?', fr: 'Prêt à commencer ?' },
+			sub: { oc: 'Tres mots uèi, una lenga deman.', fr: 'Trois mots aujourd’hui, une langue demain.' },
+			cta: { oc: 'Començar l’aventura', fr: 'Commencer l’aventure' }
+		},
+		heroCta2: { oc: 'Descobrir la carta', fr: 'Découvrir la carte' },
 		footer: {
 			oc: 'Fach amb amor en Occitània.',
 			fr: 'Fait avec amour en Occitanie.'
 		}
 	});
+
+	// Lo riu : las illustracions que davalan lentament jol títol. Doas
+	// bendas en sens opausats ; cada lista es doblada dins lo marcatge per
+	// que la bocla CSS (translateX -50 %) semble infinida.
+	const riuAlt = ['01', '05', '09', '03', '07', '02'];
+	const riuBas = ['07', '02', '01', '09', '05', '03'];
 
 	// Recopie les textes venus de la base par-dessus les valeurs de secours,
 	// puis — en mode aperçu (?apercebut=1, brouillon posé par /admin/textes
@@ -120,22 +162,40 @@
 		const ciblas = {
 			hero_lead: t.heroLead,
 			hero_sub: t.heroSub,
+			hero_cta2: t.heroCta2,
 			what_title: t.what.title,
 			what_lead: t.what.lead,
 			lenga_title: t.lenga.title,
 			lenga_lead: t.lenga.lead,
-			lenga_note: t.lenga.note,
+			lenga_intro: t.lenga.intro,
+			citacion_texte: t.citacion.texte,
+			citacion_autor: t.citacion.autor,
 			carta_title: t.carta.title,
 			carta_lead: t.carta.lead,
 			carta_cta: t.carta.cta,
 			officialitat_title: t.officialitat.title,
 			officialitat_lead: t.officialitat.lead,
+			comenca_title: t.comenca.title,
+			comenca_sub: t.comenca.sub,
+			comenca_cta: t.comenca.cta,
 			footer_tagline: t.footer
 		};
 		const num = id.match(/^lenga_fact(\d)_num$/);
 		if (num) {
+			// Les « XX » semés en base à l'époque des chiffres provisoires ne
+			// doivent pas recouvrir les valeurs réelles et sourcées du code.
+			if (valors.oc === 'XX') return;
 			const fact = t.lenga.facts[Number(num[1]) - 1];
 			if (fact) fact.num = valors.oc;
+			return;
+		}
+		const font = id.match(/^lenga_fact(\d)_font$/);
+		if (font) {
+			const fact = t.lenga.facts[Number(font[1]) - 1];
+			if (fact) {
+				fact.font_oc = valors.oc;
+				fact.font_fr = valors.fr;
+			}
 			return;
 		}
 		const label = id.match(/^lenga_fact(\d)_label$/);
@@ -172,124 +232,17 @@
 			});
 	});
 
-	let scrollY = $state(0);
-
-	// brandCardEl es lo repère (boita extèrna, JAMAI transformada) que
-	// dòna la posicion naturala del logo dins lo flux normal. Lo contengut
-	// vertadièrament afichat (brand-card-inner) es decalat en seguida per
-	// que son centre tòque exactament lo centre de la renguèra 2 — mesurar
-	// aquesta boita extèrna pas transformada evita tota bogla (mesurar un
-	// element que se decala tot solet fariá derivar lo calcul a cada
-	// mesura successiva).
-	let brandCardEl = $state();
-	let topbarEl = $state();
-	let centerY = $state(300);
-	let topbarBottom = $state(64);
-	// Restat invisible tant que la premièra mesura fisabla (aprèp
-	// cargament complet de las poliças) es pas facha : la poliça Fredoka
-	// carga en async (font-display swap), e càmbia leugièrament la
-	// nautor del kicker un còp cargada — la mesura facha abans aquò es
-	// fausa, e corregir la posicion aprèp qu'òm vege lo logo dona
-	// justament l'impression qu'el "bolega" al cargament/refrescament.
-	let logoReady = $state(false);
-
-	function measureLayout() {
-		if (brandCardEl) {
-			const rect = brandCardEl.getBoundingClientRect();
-			// Element normal dins lo flux : sa getBoundingClientRect() depend
-			// de l'endrech ont la pagina es scrollada al moment de la
-			// mesura. Se tòrna totjorn a la posicion "coma se scrollY=0" per
-			// èsser fisable quina que siá la scroll al moment del montatge
-			// (navigation history de SvelteKit…).
-			centerY = rect.top + window.scrollY + rect.height / 2;
-		}
-		if (topbarEl) {
-			topbarBottom = topbarEl.getBoundingClientRect().bottom;
-		}
-	}
-
-	// La mesura synchròna al montatge (abans lo primièr rendut complet
-	// del navegador) se revèla pas totjorn fisabla — un rAF suplementari
-	// tòrna mesurar aprèp lo primièr vertadièr passatge de mesa en
-	// pagina. Un ResizeObserver pren lo relai per las evolucions
-	// ulterioras (poliça que carga mai tard, redimensionament…).
-	$effect(() => {
-		if (!browser) return;
-		measureLayout();
-		// Lo ResizeObserver se declencha un primièr còp tre l'observacion
-		// (aprèp mesa en pagina), puèi a cada cambiament real de talha
-		// (poliça cargada mai tard, redimensionament…) : pas de pari sul
-		// moment ont las poliças acaban de cargar.
-		const observer = new ResizeObserver(() => {
-			measureLayout();
-			logoReady = true;
-		});
-		if (topbarEl) observer.observe(topbarEl);
-		if (brandCardEl) observer.observe(brandCardEl);
-		// Filet de seguretat : lo logo deu jamai demorar invisible se
-		// l'observador se declenchava pas (navegador exotic, onglet en
-		// rèire plan…).
-		const fallback = setTimeout(() => (logoReady = true), 400);
-		window.addEventListener('resize', measureLayout);
-		return () => {
-			observer.disconnect();
-			clearTimeout(fallback);
-			window.removeEventListener('resize', measureLayout);
-		};
-	});
-
-	let viewportHeight = $state(800);
-
-	$effect(() => {
-		if (!browser) return;
-		const onResize = () => {
-			viewportHeight = window.innerHeight;
-		};
-		onResize();
-		window.addEventListener('resize', onResize);
-		return () => window.removeEventListener('resize', onResize);
-	});
-
-	const buffer = 40;
-	const rowItemHeight = 132;
-	const halfItemHeight = rowItemHeight / 2;
-	// 190px = nautor maximala de .landscape (vaga) + un pichon marge, per
-	// que la renguèra 3 tòque pas jamai la vaga.
-	const waveClearance = 190;
-	// C'est la RANGÉE qui vient sur le logo, pas l'inverse : déplacer le
-	// logo par-dessus la mise en page le faisait recouvrir le titre, et
-	// obligeait à des compensations qui bouclaient. Ici le logo ne bouge
-	// jamais — les rangées sont en position fixe, donc les déplacer ne
-	// gêne personne.
-	let rowTops = $derived.by(() => {
-		const first = topbarBottom + buffer;
-		const last = Math.max(first, viewportHeight - waveClearance - rowItemHeight);
-		// Écarts strictement égaux. On a abandonné la règle « la rangée du
-		// milieu passe par le centre du logo » : depuis que le message
-		// porte la page, le logo est haut placé, et la suivre déséquilibrait
-		// visiblement les trois rangées.
-		const middle = (first + last) / 2;
-		return [first, middle, last];
-	});
-
-
-
 </script>
 
 <svelte:window
-	bind:scrollY
 	onkeydown={(event) => {
 		if (event.key === 'Escape' && openTools) openTools = null;
 	}}
 />
 
-<BgCarousel {rowTops} {scrollY} />
-
 <PageBackground />
 
-<WaveLandscape {scrollY} />
-
-<header class="topbar" bind:this={topbarEl}>
+<header class="topbar">
 	<div class="topbar-brand">
 		<span class="mini-logo"><img src={logo} alt="" /></span>
 		<span class="brand-name">Lo Ligam</span>
@@ -469,17 +422,12 @@
 <WelcomeDialog {lang} />
 
 <main class="page">
+	<!-- L'eròi « Lo riu » (decision del 2026-08-22, cf. cahier §11) : la
+	     frasa granda e centrada, puèi lo flume de designs que davala
+	     lentament. La frasa PORTA la pagina (compreneson), lo flume la fa
+	     VIURE — es lo fons vivent, independent del defilament. -->
 	<section class="hero">
-		<!-- Lo decalatge del logo es PURAMENT visual : jamai de marge, que
-		     cambiariá la reparticion « space-evenly » del hero, donc
-		     desplaçariá l'element mesurat, donc cambiariá lo decalatge…
-		     una bocla que fa derivar las mesuras a cada cicle. -->
-		<div class="brand-card" bind:this={brandCardEl}>
-			<div class="brand-card-inner" style="opacity: {logoReady ? 1 : 0}">
-				<img src={logo} alt="Lo Ligam" />
-			</div>
-		</div>
-
+		<p class="hero-kicker" use:scramble={{ oc: 'Benvenguda', fr: 'Bienvenue', lang }}></p>
 		<div class="welcome">
 			<h1 class="hero-line" use:scramble={{ oc: t.heroLead.oc, fr: t.heroLead.fr, lang }}></h1>
 			<p class="hero-sub" use:scramble={{ oc: t.heroSub.oc, fr: t.heroSub.fr, lang }}></p>
@@ -493,50 +441,121 @@
 				></em>
 			</p>
 		</div>
-
-		<a class="btn-primary" href="/aprene"
-			>{lang === 'oc' ? "Aprèni l'occitan !" : "J'apprends l'occitan !"}</a
-		>
+		<div class="hero-ctas">
+			<a class="btn-primary" href="/aprene">
+				<span use:scramble={{ oc: t.comenca.cta.oc, fr: t.comenca.cta.fr, lang }}></span>
+			</a>
+			<a class="btn-ghost" href="/carta">
+				<span use:scramble={{ oc: t.heroCta2.oc, fr: t.heroCta2.fr, lang }}></span>
+			</a>
+		</div>
 	</section>
 
-	<section class="chapter chapter--what">
-		<p class="chapter-num">01</p>
-		<h2 class="chapter-title" use:scramble={{ oc: t.what.title.oc, fr: t.what.title.fr, lang }}></h2>
-		<p class="chapter-lead" use:scramble={{ oc: t.what.lead.oc, fr: t.what.lead.fr, lang }}></p>
+	<div class="riu" aria-hidden="true">
+		<div class="riu-benda riu-benda-alt">
+			{#each [...riuAlt, ...riuAlt] as n, i (i)}
+				<img src={`/bg/design-${n}.webp`} alt="" loading={i < 4 ? 'eager' : 'lazy'} />
+			{/each}
+		</div>
+		<div class="riu-benda riu-benda-bas">
+			{#each [...riuBas, ...riuBas] as n, i (i)}
+				<img src={`/bg/design-${n}.webp`} alt="" loading="lazy" />
+			{/each}
+		</div>
+	</div>
 
+	<!-- Lo filet ondulat : la signatura. Se DESSENHA al passatge del
+	     defilament (stroke-dashoffset pilotat per view()). -->
+	<div class="filet-onda" aria-hidden="true">
+		<svg viewBox="0 0 1200 30" preserveAspectRatio="none">
+			<path
+				class="filet-linha"
+				pathLength="1"
+				d="M0 16 Q 150 4 300 15 T 600 14 T 900 15 T 1200 13"
+				fill="none"
+			/>
+		</svg>
+	</div>
+
+	<section class="chapter chapter--what">
+		<h2 class="chapter-title reveal" use:scramble={{ oc: t.what.title.oc, fr: t.what.title.fr, lang }}></h2>
+		<p class="chapter-lead reveal" use:scramble={{ oc: t.what.lead.oc, fr: t.what.lead.fr, lang }}></p>
+
+		<!-- Las quatre pòrtas (decision Romain 2026-08-22 : « cartes
+		     cliquables »). Una familha sens cap de pagina viva rend una
+		     carta identica mas SENS ligam ni sageta — pas de faus ligam,
+		     pas de « lèu » grisat (charte §5ter). -->
 		<div class="what-families">
 			{#each families as fam, i (fam.id)}
 				{@const Icon = sectionIcons[fam.icon]}
-				<div class="what-family reveal" style="--section-color: {fam.color}; --step: {i}">
-					<span class="what-icon"><Icon size={26} /></span>
-					<span class="what-name" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
-					<span
-						class="what-tagline"
-						use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}
-					></span>
-				</div>
+				{@const porta = fam.items.find((it) => it.status === 'live')?.href ?? null}
+				{#if porta}
+					<a
+						class="what-family what-porta reveal"
+						href={porta}
+						style="--section-color: {fam.color}; --step: {i}"
+					>
+						<span class="what-head">
+							<span class="what-icon"><Icon size={24} /></span>
+							<span class="what-name" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
+							<svg class="what-sageta" viewBox="0 0 20 20" aria-hidden="true">
+								<path
+									d="M7 4 L13 10 L7 16"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2.4"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</span>
+						<span
+							class="what-tagline"
+							use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}
+						></span>
+					</a>
+				{:else}
+					<div class="what-family reveal" style="--section-color: {fam.color}; --step: {i}">
+						<span class="what-head">
+							<span class="what-icon"><Icon size={24} /></span>
+							<span class="what-name" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
+						</span>
+						<span
+							class="what-tagline"
+							use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}
+						></span>
+					</div>
+				{/if}
 			{/each}
 		</div>
 	</section>
 
 	<section class="chapter chapter--lenga">
-		<p class="chapter-num">02</p>
-		<h2 class="chapter-title" use:scramble={{ oc: t.lenga.title.oc, fr: t.lenga.title.fr, lang }}></h2>
-		<p class="chapter-lead" use:scramble={{ oc: t.lenga.lead.oc, fr: t.lenga.lead.fr, lang }}></p>
+		<p class="chapter-jalon reveal" use:scramble={{ oc: 'Partida una · La lenga', fr: 'Partie une · La langue', lang }}></p>
+		<h2 class="chapter-title reveal" use:scramble={{ oc: t.lenga.title.oc, fr: t.lenga.title.fr, lang }}></h2>
+		<!-- Lo paragraf pel novici complet : la pagina deu èsser compresa
+		     per qualqu'un qu'a JAMAI ausit parlar de l'occitan. -->
+		<p class="chapter-lead lenga-intro reveal" use:scramble={{ oc: t.lenga.intro.oc, fr: t.lenga.intro.fr, lang }}></p>
 
 		<div class="facts">
 			{#each t.lenga.facts as fact, i}
 				<div class="fact reveal" style="--step: {i}">
 					<span class="fact-num">{fact.num}</span>
 					<span class="fact-label" use:scramble={{ oc: fact.oc, fr: fact.fr, lang }}></span>
+					<span class="fact-font" use:scramble={{ oc: fact.font_oc, fr: fact.font_fr, lang }}></span>
 				</div>
 			{/each}
 		</div>
-		<p class="facts-note" use:scramble={{ oc: t.lenga.note.oc, fr: t.lenga.note.fr, lang }}></p>
+
+		<!-- La votz poetica (Cormorant italica, sonque per las citacions). -->
+		<blockquote class="citacion reveal">
+			<p class="citacion-texte">{t.citacion.texte[lang] ?? t.citacion.texte.oc}</p>
+			<cite class="citacion-autor">{t.citacion.autor[lang] ?? t.citacion.autor.oc}</cite>
+		</blockquote>
 	</section>
 
 	<section class="chapter chapter--carta">
-		<p class="chapter-num">03</p>
+		<p class="chapter-jalon reveal" use:scramble={{ oc: 'Partida dos · Lo territòri', fr: 'Partie deux · Le territoire', lang }}></p>
 		<h2 class="chapter-title" use:scramble={{ oc: t.carta.title.oc, fr: t.carta.title.fr, lang }}></h2>
 		<p class="chapter-lead" use:scramble={{ oc: t.carta.lead.oc, fr: t.carta.lead.fr, lang }}></p>
 		<!-- Carte réellement navigable : on peut se déplacer et zoomer sans
@@ -555,17 +574,35 @@
 		</a>
 	</section>
 
+	<!-- Officialitat, ALLEUGERIDA en bendèl (decision Romain 2026-08-22 :
+	     « annexe, à voir ») — lo grand carrossèl es partit, dos visuals e
+	     lo messatge sufisson. -->
 	<section class="chapter chapter--officialitat">
-		<p class="chapter-num">04</p>
-		<h2
-			class="chapter-title"
-			use:scramble={{ oc: t.officialitat.title.oc, fr: t.officialitat.title.fr, lang }}
-		></h2>
-		<p
-			class="chapter-lead"
-			use:scramble={{ oc: t.officialitat.lead.oc, fr: t.officialitat.lead.fr, lang }}
-		></p>
-		<OfficialitatCarousel {lang} />
+		<div class="officialitat-benda reveal">
+			<div class="officialitat-imatges" aria-hidden="true">
+				<img src="/officialitat/1_officialitat.webp" alt="" loading="lazy" />
+				<img src="/officialitat/5_drech.webp" alt="" loading="lazy" />
+			</div>
+			<div class="officialitat-texte">
+				<h2
+					class="officialitat-title"
+					use:scramble={{ oc: t.officialitat.title.oc, fr: t.officialitat.title.fr, lang }}
+				></h2>
+				<p
+					class="officialitat-lead"
+					use:scramble={{ oc: t.officialitat.lead.oc, fr: t.officialitat.lead.fr, lang }}
+				></p>
+			</div>
+		</div>
+	</section>
+
+	<!-- L'invitacion finala (estacion 6 del camin). -->
+	<section class="chapter chapter--comenca">
+		<h2 class="chapter-title reveal" use:scramble={{ oc: t.comenca.title.oc, fr: t.comenca.title.fr, lang }}></h2>
+		<p class="chapter-lead reveal" use:scramble={{ oc: t.comenca.sub.oc, fr: t.comenca.sub.fr, lang }}></p>
+		<a class="btn-primary comenca-btn reveal" href="/aprene">
+			<span use:scramble={{ oc: t.comenca.cta.oc, fr: t.comenca.cta.fr, lang }}></span>
+		</a>
 	</section>
 
 	<SiteFooter tagline={t.footer} />
@@ -691,11 +728,6 @@
 			padding: 0.55rem 0.85rem;
 			font-size: 0.85rem;
 		}
-	}
-
-	.carta-link:hover {
-		background: rgba(31, 95, 99, 0.18);
-		transform: scale(1.06);
 	}
 
 	.lang-toggle {
@@ -1121,86 +1153,155 @@
 		z-index: 3;
 	}
 
-	/* Seul le hero laisse passer la souris jusqu'aux illustrations de fond
-	   (effet de loupe au survol) : il est posé par-dessus elles. Les
-	   chapitres, eux, contiennent du contenu manipulable — carte, carrousel
-	   — et doivent recevoir la souris normalement. Cette règle était
-	   auparavant sur .page entière, ce qui empêchait de faire glisser le
-	   carrousel et de déplacer la carte : ce sont des div, et seuls les
-	   liens et boutons récupéraient les événements. */
+	/* L'eròi « Lo riu » : compacte e centrat — la frasa pòrta, lo flume
+	   (en dejós) fa viure. Fons calme : la color ven dels designs. */
 	.hero {
-		pointer-events: none;
-	}
-
-	.hero .welcome,
-	.hero a,
-	.hero button {
-		pointer-events: auto;
-	}
-
-	/* 4 blocs (Benvenguda / logo / titre+sostítol / bòton) espaçats
-	   regularament sus tota l'nautor del hero — pas sonque centrats amb
-	   un pichon gap fixe, que sarrava tot ensemble. */
-	/* La marge basse réserve la hauteur de la vague (128px, 160px au-delà
-	   de 40rem — mêmes valeurs que WaveLandscape). En CSS statique, pas
-	   calculée en JS : les 4 blocs se répartissent dans la place qui
-	   reste, donc le bouton ne peut ni toucher la vague ni recouvrir le
-	   texte au-dessus. */
-	.hero {
-		min-height: calc(100dvh - 64px);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: space-evenly;
-		gap: 1.5rem;
-		padding: 2rem 1.5rem calc(128px + 1.5rem);
+		gap: 1.1rem;
+		padding: 4.5rem 1.5rem 2.75rem;
 		text-align: center;
 	}
 
-	@media (min-width: 40rem) {
-		.hero {
-			padding-bottom: calc(160px + 1.5rem);
-		}
+	.hero-kicker {
+		margin: 0;
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+		color: var(--color-terracotta);
 	}
 
-	/* brand-card (extèrna) : nòta la posicion naturala/mesurada, jamai
-	   transformada — pas d'overflow:hidden aicí per pas retalhar
-	   brand-card-inner quand se decala. brand-card-inner : rebomb visual
-	   sonque (arredondiment + imatge), decalat via transform per tòcar lo
-	   centre de la renguèra 2. */
-	.brand-card {
-		width: 220px;
-		height: 220px;
+	.hero-ctas {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.75rem;
+		margin-top: 0.5rem;
 	}
 
-	/* Écrans peu hauts (mobile paysage, petits téléphones) : sans ça les
-	   4 blocs + la place réservée à la vague ne tiennent pas dans la
-	   hauteur, et le bouton finit par mordre sur la vague. */
-	@media (max-height: 760px) {
-		.brand-card {
-			width: 150px;
-			height: 150px;
-		}
+	.btn-ghost {
+		display: inline-block;
+		padding: 1rem 1.5rem;
+		border-radius: 999px;
+		border: 1.5px solid rgba(58, 42, 32, 0.3);
+		color: var(--color-text);
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1rem;
+		text-decoration: none;
+		transition:
+			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+			border-color 150ms ease,
+			background-color 150ms ease;
 	}
 
-	/* Logo statique : pas de transition sur le transform, qui ne sert
-	   qu'à caler le logo sur la ligne 2 du fond (voir logoOffset) — un
-	   changement de valeur (chargement, redimensionnement) ne doit jamais
-	   se voir comme une animation du logo. Seul « Benvenguda » doit
-	   apparaître visiblement. */
-	.brand-card-inner {
-		width: 100%;
-		height: 100%;
-		border-radius: 30px;
+	.btn-ghost:hover {
+		transform: translateY(-3px);
+		border-color: var(--color-terracotta);
+		background: rgba(200, 86, 46, 0.06);
+	}
+
+	/* Lo riu : doas bendas que davalan sens fin, cadenciadas lentament
+	   (una respiracion, pas un manètge) e en sens opausats. Independentas
+	   del defilament : es lo fons vivent de la pagina. */
+	.riu {
+		position: relative;
+		z-index: 3;
+		display: flex;
+		flex-direction: column;
+		gap: 0.9rem;
 		overflow: hidden;
-		box-shadow: 0 16px 36px rgba(165, 52, 42, 0.3);
+		padding-bottom: 0.5rem;
 	}
 
-	.brand-card-inner img {
+	.riu-benda {
+		display: flex;
+		gap: 1rem;
+		width: max-content;
+	}
+
+	.riu-benda img {
+		width: clamp(130px, 16vw, 200px);
+		border-radius: 14px;
+		box-shadow: 0 6px 18px rgba(58, 42, 32, 0.12);
+	}
+
+	.riu-benda-alt {
+		animation: riu-desfilar 70s linear infinite;
+	}
+
+	.riu-benda-bas {
+		animation: riu-desfilar-invers 90s linear infinite;
+	}
+
+	.riu-benda-bas img {
+		width: clamp(100px, 12vw, 150px);
+	}
+
+	@keyframes riu-desfilar {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	@keyframes riu-desfilar-invers {
+		from {
+			transform: translateX(-50%);
+		}
+		to {
+			transform: translateX(0);
+		}
+	}
+
+	/* Lo filet ondulat, la signatura : las vagas plenas d'abans, tornadas
+	   en linha fina. Se dessenha al ritme del defilament. */
+	.filet-onda {
+		position: relative;
+		z-index: 3;
+		padding: 1.5rem 0 0.25rem;
+		line-height: 0;
+	}
+
+	.filet-onda svg {
 		width: 100%;
-		height: 100%;
-		object-fit: cover;
+		height: 30px;
 		display: block;
+	}
+
+	.filet-linha {
+		stroke: var(--color-terracotta);
+		stroke-width: 2.5;
+		opacity: 0.75;
+	}
+
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			.filet-linha {
+				stroke-dasharray: 1;
+				stroke-dashoffset: 1;
+				animation: filet-tracar linear both;
+				animation-timeline: view();
+				animation-range: entry 0% entry 90%;
+			}
+		}
+	}
+
+	@keyframes filet-tracar {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.riu-benda-alt,
+		.riu-benda-bas {
+			animation: none;
+		}
 	}
 
 	.welcome {
@@ -1210,15 +1311,16 @@
 		gap: 0.35rem;
 	}
 
-	/* La promesse porte la page : c'est elle qu'on lit en premier, pas le
-	   logo (qui est déjà dans la barre du haut). Deux niveaux — la ligne
-	   forte, puis la ligne d'appui — comme sur les références étudiées. */
+	/* La promesse porte la page : capitales Syne 800, la voix principale
+	   (charte §2). Deux niveaux — la ligne forte, puis la ligne d'appui. */
 	.hero-line {
 		margin: 0;
 		font-family: var(--font-heading);
-		font-size: clamp(2.1rem, 5.5vw, 3.4rem);
-		font-weight: 700;
-		line-height: 1.1;
+		font-size: clamp(2.1rem, 5.5vw, 3.5rem);
+		font-weight: 800;
+		line-height: 1.06;
+		letter-spacing: 0.015em;
+		text-transform: uppercase;
 		color: var(--color-brick);
 		text-wrap: balance;
 		animation: hero-reveal 750ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -1279,18 +1381,9 @@
 		box-shadow: 0 6px 18px rgba(224, 164, 59, 0.45);
 	}
 
-	.btn-primary .arrow {
-		display: inline-block;
-		transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
 	.btn-primary:hover {
 		transform: translateY(-3px) scale(1.03);
 		box-shadow: 0 10px 24px rgba(224, 164, 59, 0.55);
-	}
-
-	.btn-primary:hover .arrow {
-		transform: translateX(4px);
 	}
 
 	.btn-primary:active {
@@ -1324,13 +1417,19 @@
 		color: var(--color-cream);
 	}
 
-	.chapter-num {
-		margin: 0 0 0.5rem;
-		font-family: var(--font-heading);
-		font-size: 0.85rem;
-		font-weight: 700;
-		letter-spacing: 0.25em;
-		opacity: 0.45;
+	/* Los jalons de capítol : pichonas capitalas espaçadas (Instrument
+	   Sans), lo motiu retengut aprèp l'abandon de Marcellus. */
+	.chapter-jalon {
+		margin: 0 0 0.75rem;
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.28em;
+		text-transform: uppercase;
+		color: var(--color-teal);
+	}
+
+	.chapter--lenga .chapter-jalon {
+		color: var(--color-gold);
 	}
 
 	.chapter-title {
@@ -1392,13 +1491,48 @@
 	.what-family {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		gap: 0.35rem;
-		padding: 1.5rem 1rem;
+		align-items: flex-start;
+		gap: 0.4rem;
+		padding: 1.4rem 1.3rem;
 		background: white;
 		border-radius: 16px;
 		border-top: 4px solid var(--section-color);
 		box-shadow: 0 6px 18px rgba(58, 42, 32, 0.08);
+		text-align: left;
+	}
+
+	/* Las pòrtas clicablas : meteissa carta, mai una sageta e un
+	   soslevament al subrevòl. */
+	.what-porta {
+		text-decoration: none;
+		color: inherit;
+		transition:
+			transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+			box-shadow 180ms ease;
+	}
+
+	.what-porta:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 26px rgba(58, 42, 32, 0.14);
+	}
+
+	.what-head {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		width: 100%;
+	}
+
+	.what-sageta {
+		width: 16px;
+		height: 16px;
+		margin-left: auto;
+		color: var(--section-color);
+		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.what-porta:hover .what-sageta {
+		transform: translateX(4px);
 	}
 
 	.what-icon {
@@ -1409,12 +1543,12 @@
 	.what-name {
 		font-family: var(--font-heading);
 		font-weight: 700;
-		font-size: 1.1rem;
+		font-size: 1.15rem;
 		color: var(--section-color);
 	}
 
 	.what-tagline {
-		font-size: 0.82rem;
+		font-size: 0.85rem;
 		opacity: 0.7;
 	}
 
@@ -1445,10 +1579,48 @@
 		opacity: 0.8;
 	}
 
-	.facts-note {
-		margin: 1.75rem 0 0;
-		font-size: 0.78rem;
-		opacity: 0.5;
+	/* La font de cada chifra, JOL chifra : la decision « chiffres
+	   officiels, sourcés, marqués estimation » (cahier §11, 2026-08-22). */
+	.fact-font {
+		margin-top: 0.3rem;
+		font-size: 0.72rem;
+		line-height: 1.4;
+		opacity: 0.55;
+	}
+
+	.lenga-intro {
+		max-width: 40rem;
+	}
+
+	/* La citacion del trobador : la votz poetica (Cormorant italica),
+	   presentada sus un filet daurat — sòbria, pas un panèl. */
+	.citacion {
+		max-width: 36rem;
+		margin: 2.75rem auto 0;
+		padding: 0.4rem 0 0.4rem 1.4rem;
+		border-left: 3px solid var(--color-gold);
+		text-align: left;
+	}
+
+	.citacion-texte {
+		margin: 0;
+		font-family: var(--font-quote);
+		font-style: italic;
+		font-weight: 500;
+		font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+		line-height: 1.4;
+		color: var(--color-cream);
+	}
+
+	.citacion-autor {
+		display: block;
+		margin-top: 0.5rem;
+		font-style: normal;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		opacity: 0.6;
 	}
 
 	/* Carte réellement manipulable depuis l'accueil : on peut se déplacer
@@ -1471,12 +1643,70 @@
 		max-width: min(62rem, 100%);
 	}
 
+	/* Officialitat en bendèl compacte (annexe, decision 2026-08-22). */
 	.chapter--officialitat {
-		background: rgba(255, 255, 255, 0.55);
+		padding: 3rem 1.5rem;
 	}
 
-	.chapter--officialitat .chapter-title {
+	.officialitat-benda {
+		display: flex;
+		align-items: center;
+		gap: 1.4rem;
+		max-width: 46rem;
+		margin: 0 auto;
+		padding: 1.4rem 1.6rem;
+		border-radius: 16px;
+		background: rgba(165, 52, 42, 0.06);
+		text-align: left;
+	}
+
+	.officialitat-imatges {
+		display: flex;
+		gap: 0.6rem;
+		flex-shrink: 0;
+	}
+
+	.officialitat-imatges img {
+		width: 84px;
+		border-radius: 10px;
+		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.12);
+	}
+
+	.officialitat-title {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 1.15rem;
 		color: var(--color-brick);
+	}
+
+	.officialitat-lead {
+		margin: 0.35rem 0 0;
+		font-size: 0.92rem;
+		line-height: 1.55;
+		opacity: 0.85;
+		text-wrap: pretty;
+	}
+
+	@media (max-width: 34rem) {
+		.officialitat-benda {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+
+	/* L'invitacion finala. */
+	.chapter--comenca {
+		background: rgba(200, 86, 46, 0.07);
+	}
+
+	.chapter--comenca .chapter-title {
+		color: var(--color-brick);
+	}
+
+	.comenca-btn {
+		display: inline-block;
+		margin-top: 1.5rem;
 	}
 
 	/* Bouton d'édition réservé à l'administrateur connecté — les visiteurs
