@@ -1,0 +1,198 @@
+<script>
+	// « Remets dans l'ordre » : des tuiles de mots à taper dans le bon ordre,
+	// même mécanique que les lettres de l'essai libre. Mauvaise tuile → elle
+	// tremble ; bonne tuile → elle rejoint la phrase.
+	import { rich } from '$lib/lesson/rich.js';
+
+	let { block, onCorrect = () => {} } = $props();
+
+	function shuffle(arr) {
+		const a = [...arr];
+		for (let i = a.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[a[i], a[j]] = [a[j], a[i]];
+		}
+		return a;
+	}
+
+	let states = $state(
+		block.items.map((item) => ({
+			bank: shuffle(item.tiles.map((t, id) => ({ text: t, id, used: false, wrong: false }))),
+			placed: 0
+		}))
+	);
+	let doneCount = $derived(states.filter((s, i) => s.placed >= block.items[i].tiles.length).length);
+	let visibleCount = $derived(Math.min(doneCount + 1, block.items.length));
+
+	function tap(i, tile) {
+		const st = states[i];
+		const item = block.items[i];
+		if (tile.used || st.placed >= item.tiles.length) return;
+		if (tile.text === item.tiles[st.placed]) {
+			tile.used = true;
+			st.placed += 1;
+			onCorrect();
+		} else {
+			tile.wrong = true;
+			setTimeout(() => (tile.wrong = false), 280);
+		}
+	}
+</script>
+
+<section class="block">
+	<header class="block-head">
+		<h3 class="block-title">{block.title}</h3>
+		<span class="counter" aria-label="Progression de l'exercice">{doneCount}/{block.items.length}</span>
+	</header>
+	{#if block.intro}<p class="intro">{@html rich(block.intro)}</p>{/if}
+
+	{#each block.items.slice(0, visibleCount) as item, i}
+		<div class="item">
+			{#if item.prompt}<p class="question">{@html rich(item.prompt)}</p>{/if}
+			<p class="built" class:complete={states[i].placed >= item.tiles.length}>
+				{item.tiles.slice(0, states[i].placed).join(' ')}
+				{#if states[i].placed < item.tiles.length}<span class="cursor" aria-hidden="true">…</span>{/if}
+			</p>
+			<div class="tiles">
+				{#each states[i].bank as tile (tile.id)}
+					<button
+						type="button"
+						class="tile"
+						class:used={tile.used}
+						class:wrong={tile.wrong}
+						disabled={tile.used}
+						onclick={() => tap(i, tile)}
+					>
+						{tile.text}
+					</button>
+				{/each}
+			</div>
+			{#if states[i].placed >= item.tiles.length && item.explain}
+				<p class="explain">✓ {@html rich(item.explain)}</p>
+			{/if}
+		</div>
+	{/each}
+</section>
+
+<style>
+	.block {
+		background: white;
+		border-radius: 20px;
+		padding: 1.25rem 1.4rem;
+		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+	}
+
+	.block-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.block-title {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: 1.15rem;
+		color: var(--color-brick);
+	}
+
+	.counter {
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--color-teal);
+		white-space: nowrap;
+	}
+
+	.intro {
+		margin: 0.4rem 0 0;
+		font-size: 0.88rem;
+		color: rgba(58, 42, 32, 0.75);
+		line-height: 1.5;
+	}
+
+	.item {
+		margin-top: 1.1rem;
+		animation: fade-in 350ms ease-out;
+	}
+
+	.question {
+		margin: 0 0 0.5rem;
+		line-height: 1.55;
+		color: var(--color-text);
+	}
+
+	.built {
+		min-height: 2.4rem;
+		margin: 0 0 0.6rem;
+		padding: 0.5rem 0.9rem;
+		background: rgba(58, 42, 32, 0.05);
+		border-radius: 12px;
+		font-family: var(--font-heading);
+		font-size: 1.05rem;
+		color: var(--color-text);
+	}
+
+	.built.complete {
+		background: rgba(224, 164, 59, 0.2);
+	}
+
+	.cursor {
+		opacity: 0.4;
+	}
+
+	.tiles {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.tile {
+		border: 1.5px solid rgba(58, 42, 32, 0.18);
+		background: white;
+		border-radius: 12px;
+		padding: 0.45rem 0.8rem;
+		font-size: 0.98rem;
+		color: var(--color-text);
+		cursor: pointer;
+		transition: transform 150ms ease, opacity 150ms ease;
+	}
+
+	.tile:hover:not(:disabled) {
+		transform: translateY(-1px);
+		border-color: var(--color-teal);
+	}
+
+	.tile.used {
+		opacity: 0.25;
+		cursor: default;
+	}
+
+	.tile.wrong {
+		animation: shake 260ms ease;
+		border-color: var(--color-brick);
+	}
+
+	.explain {
+		margin: 0.55rem 0 0;
+		font-size: 0.88rem;
+		color: var(--color-olive, #6b7a3a);
+		line-height: 1.5;
+	}
+
+	@keyframes shake {
+		0%, 100% { transform: translateX(0); }
+		30% { transform: translateX(-4px); }
+		60% { transform: translateX(4px); }
+	}
+
+	@keyframes fade-in {
+		from { opacity: 0; transform: translateY(6px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.item { animation: none; }
+		.tile { transition: none; }
+		.tile.wrong { animation: none; }
+	}
+</style>

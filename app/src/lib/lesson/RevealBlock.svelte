@@ -1,0 +1,135 @@
+<script>
+	// Question ouverte : on répond dans sa tête (ou à voix haute), puis on
+	// révèle le corrigé avec son explication. Sert au Rappel, aux traductions
+	// et au mini-test — la récupération active avant la relecture.
+	import { rich } from '$lib/lesson/rich.js';
+
+	let { block, onCorrect = () => {} } = $props();
+
+	let revealed = $state(block.items.map(() => false));
+	let doneCount = $derived(revealed.filter(Boolean).length);
+	let visibleCount = $derived(Math.min(doneCount + 1, block.items.length));
+
+	function reveal(i) {
+		if (revealed[i]) return;
+		revealed[i] = true;
+		onCorrect();
+	}
+</script>
+
+<section class="block">
+	<header class="block-head">
+		<h3 class="block-title">{block.title}</h3>
+		<span class="counter" aria-label="Progression de l'exercice">{doneCount}/{block.items.length}</span>
+	</header>
+	{#if block.intro}<p class="intro">{@html rich(block.intro)}</p>{/if}
+
+	{#each block.items.slice(0, visibleCount) as item, i}
+		<div class="item">
+			<p class="question"><span class="num">{i + 1}</span> {@html rich(item.q)}</p>
+			{#if revealed[i]}
+				<p class="answer">{@html rich(item.a)}</p>
+			{:else}
+				<button type="button" class="reveal-btn" onclick={() => reveal(i)}>
+					Voir la réponse
+				</button>
+			{/if}
+		</div>
+	{/each}
+</section>
+
+<style>
+	.block {
+		background: white;
+		border-radius: 20px;
+		padding: 1.25rem 1.4rem;
+		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+	}
+
+	.block-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.block-title {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: 1.15rem;
+		color: var(--color-brick);
+	}
+
+	.counter {
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--color-teal);
+		white-space: nowrap;
+	}
+
+	.intro {
+		margin: 0.4rem 0 0;
+		font-size: 0.88rem;
+		color: rgba(58, 42, 32, 0.75);
+		line-height: 1.5;
+	}
+
+	.item {
+		margin-top: 1.1rem;
+		animation: fade-in 350ms ease-out;
+	}
+
+	.question {
+		margin: 0 0 0.5rem;
+		line-height: 1.55;
+		color: var(--color-text);
+	}
+
+	.num {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.4rem;
+		height: 1.4rem;
+		margin-right: 0.35rem;
+		border-radius: 50%;
+		background: rgba(224, 164, 59, 0.25);
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.75rem;
+		color: var(--color-text);
+	}
+
+	.reveal-btn {
+		border: 1.5px dashed rgba(58, 42, 32, 0.3);
+		background: none;
+		border-radius: 12px;
+		padding: 0.45rem 0.9rem;
+		font-size: 0.88rem;
+		color: var(--color-brick);
+		cursor: pointer;
+	}
+
+	.reveal-btn:hover {
+		border-color: var(--color-brick);
+	}
+
+	.answer {
+		margin: 0;
+		padding: 0.6rem 0.9rem;
+		background: rgba(224, 164, 59, 0.14);
+		border-radius: 12px;
+		line-height: 1.55;
+		color: var(--color-text);
+		animation: fade-in 300ms ease-out;
+	}
+
+	@keyframes fade-in {
+		from { opacity: 0; transform: translateY(6px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.item, .answer { animation: none; }
+	}
+</style>
