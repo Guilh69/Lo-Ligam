@@ -269,16 +269,18 @@ Fin de module : célébration + tâche finale → module suivant
 
 ---
 
-## 7. Étape C — Gamification (en cours)
+## 7. Étape C — Gamification (close le 29/08/2026)
 
-Décisions de Romain (29/08) : **còla de personnages qui se débloque** unité
-par unité (chacun porte son pays) · **arbre unique** dont les racines sont la
-langue des anciens (l'Arbre del Ligam fusionne arbre et reconnexion) · usage
-des **crostadas reporté**. Spécification complète, troupe proposée (sourcée)
-et questions restantes : **`gamification.md`**.
+Décisions de Romain : **còla validée** (troupe v0.1, un personnage par unité,
+chacun son pays) · **Arbre del Ligam** (unique, racines = les anciens) ·
+série = **lo Fuòc de l'ostal** (jours pratiqués + stats, foyer majestueux,
+jamais éteint — les braises restent) · **crostadas et badges reportés** à des
+plans spécifiques. Spécification : **`gamification.md`** (v0.2). Consigné au
+§11 du cahier des charges.
 
 ## 8. Prochaine action
 
-Faire réagir Romain sur la còla proposée (choix/veto des personnages), la
-forme de la série qui célèbre, et l'articulation badges/còla — puis clore C
-et ouvrir **l'étape D — Grammaire des exercices**.
+**Étape D — Grammaire des exercices** : le catalogue des mécaniques — chaque
+type justifié par un principe SLA (cadre v0.3 §4) *et* par son rôle de plaisir,
+les nouveaux types permis par les API (§3), leur place dans les 6 étapes d'un
+module. Puis étape E : production en série (module 0 en premier).

@@ -1,8 +1,10 @@
 # Gamification — spécification (étape C)
 
-> Version 0.1 · 29 août 2026 · Livrable de l'étape C de `construction-pedagogique.md`.
-> Décisions de Romain intégrées : còla de personnages qui se débloque · arbre
-> unique (racines = les anciens) · usage des crostadas à trancher plus tard.
+> Version 0.2 · 29 août 2026 · Livrable de l'étape C de `construction-pedagogique.md`.
+> Décisions de Romain intégrées : còla de personnages qui se débloque (troupe
+> v0.1 validée « OK ») · arbre unique (racines = les anciens) · **série = lo
+> Fuòc de l'ostal** (voir §5 bis) · usage des crostadas à trancher plus tard ·
+> badges : plan spécifique ultérieur.
 > Boussole : le manifeste (§5 du doc chantier) et corpus-design §2.3 (« récompenses
 > = progression visible et beauté, pas classements » ; la motivation durable est
 > identitaire et sociale).
@@ -85,15 +87,35 @@ identité méditerranéenne).
 | Unité finie | Nouvelle branche + **déblocage d'un personnage** + capsule culturelle de clôture |
 | Niveau fini (mission) | Grande fête de la còla + certificat/badge culturel (forme à définir) |
 
-## 6. Questions ouvertes (étape C, suite)
+## 5 bis. La série : lo Fuòc de l'ostal (décision Romain, 29/08)
+
+Un **compteur de jours pratiqués, avec statistiques** (jours ce mois-ci, total,
+records — des faits qui valorisent, jamais des reproches), incarné par **un
+foyer** : plus la pratique est régulière, plus le feu devient **majestueux**
+(bougies → belles flammes → grand feu de cheminée qui crépite).
+
+**En cas d'abandon, le feu ne s'éteint jamais complètement : il reste las
+brasas** — les braises rougeoient toujours un peu. *Jamais perdre espoir.*
+Au retour, pas de compteur remis à zéro brandi comme une punition : on
+rallume le feu ensemble — et c'est **l'Ors** (le personnage des réveils, §3)
+qui sort d'hibernation pour fêter ça.
+
+Cohérences : le foyer = *lo canton* de l'ostal occitan (unité 7 du cursus,
+corpus-design « identité méditerranéenne ») ; le feu se nourrit du même
+imaginaire que les fogassas (le four, le pain) — ⚠️ noms occitans exacts
+(*lo fuòc*, *las brasas*, *lo canton*) à valider comme le reste.
+
+---
+
+## 6. Questions ouvertes (étape C — soldées ou reportées)
 
 1. **Crostadas** : usage à trancher plus tard (décision Romain 29/08) — la
    fièra (boutique cosmétique ?) reste au congélateur d'ici là.
-2. **La série** : forme visuelle de la « série qui célèbre » (compteur de jours
-   pratiqués ? flamme du foyer ? semaine en fougasses ?) — à dessiner.
-3. **Badges culturels** vs còla : les personnages débloqués remplacent-ils les
-   badges, ou les deux coexistent-ils (badges = savoir-faire, còla = compagnons) ?
-4. **Design visuel** des personnages et de l'arbre : qui dessine (Romain sur
-   Canva ? génération ? illustrateur ?) — à cadrer avec la conversation design.
+2. ~~La série~~ → tranchée : **lo Fuòc de l'ostal** (§5 bis).
+3. **Badges** : reportés à un **plan spécifique ultérieur** (décision Romain
+   29/08) — d'ici là, la còla est l'unique système de collection.
+4. **Design visuel** des personnages, de l'arbre et du foyer : qui dessine
+   (Romain sur Canva ? génération ? illustrateur ?) — à cadrer avec la
+   conversation design.
 5. **Vérification culturelle** : faire relire la còla (noms, pays, caractères)
    par des connaisseurs du folklore — même exigence que pour la langue.
