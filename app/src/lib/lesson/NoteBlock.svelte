@@ -14,11 +14,23 @@
 		task: '✍️'
 	};
 	let icon = $derived(icons[block.variant] ?? '');
+
+	function play(src) {
+		try {
+			new Audio(src).play();
+		} catch (e) {
+			/* audio indisponible : jamais bloquant */
+		}
+	}
 </script>
 
 <section class="block {block.variant ?? 'info'}">
 	<h3 class="block-title">{#if icon}<span aria-hidden="true">{icon}</span> {/if}{block.title}</h3>
-	{#if block.audio}
+	{#if block.audioSrc}
+		<button type="button" class="listen active" onclick={() => play(block.audioSrc)} aria-label="Escotar">
+			🔊 <span class="listen-label">escotar</span>
+		</button>
+	{:else if block.audio}
 		<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
 			🔊 <span class="listen-label">a venir</span>
 		</button>
@@ -79,6 +91,13 @@
 		font-size: 0.8rem;
 		color: rgba(58, 42, 32, 0.5);
 		cursor: default;
+	}
+
+	.listen.active {
+		color: var(--color-brick);
+		cursor: pointer;
+		background: white;
+		box-shadow: 0 2px 8px rgba(58, 42, 32, 0.15);
 	}
 
 	.listen-label {

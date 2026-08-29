@@ -19,21 +19,21 @@ export const modul11 = {
 	sessions: [
 		// ————————————————————————————————— Etapa 1
 		{
-			title: 'Rappel + Escota',
+			title: 'Échauffement + Escota',
 			minutes: 10,
 			blocks: [
 				{
 					type: 'reveal',
-					title: 'Rappel — de mémoire',
+					title: 'Échauffement — tu en sais déjà plus que tu crois',
 					intro:
-						'Sans rien relire ; si tu sèches, c’est normal, réponds au feeling. Pense ta réponse (ou dis-la à voix haute), puis vérifie.',
+						'Avant d’apprendre quoi que ce soit : cinq questions au feeling. Il n’y a rien à réviser — tout vient de ce que tu connais déjà. Pense ta réponse (ou dis-la à voix haute), puis vérifie.',
 					items: [
 						{
 							q: 'Tu croises quelqu’un à Toulouse qui te lance « Adieu ! » en pleine journée, tout sourire. Il te dit bonjour ou au revoir ?',
 							a: 'Les deux sont possibles ! *Adieu* sert à dire bonjour **et** au revoir — c’est justement le sujet de ce module.'
 						},
 						{
-							q: 'Module 0 : le *ò* avec accent (*bròca, pòrc*) se prononce comme le « o » de… « rose » ou de « bol » ?',
+							q: 'Le *ò* avec accent (*bròca, pòrc*) se prononce comme le « o » de… « rose » ou de « bol » ?',
 							a: 'Celui de « bol » — *ò* = o ouvert ; le *o* sans accent sonne « ou ».'
 						},
 						{
@@ -41,7 +41,7 @@ export const modul11 = {
 							a: 'De l’occitan — tu pars avec des mots d’avance.'
 						},
 						{
-							q: 'Module 0 : *amic* se prononce *amit(s)*, *amib* ou *ami* selon les endroits. Comment s’écrit-il, toujours ?',
+							q: '*amic* se prononce *amit(s)*, *amib* ou *ami* selon les endroits. Comment s’écrit-il, toujours ?',
 							a: '*amic* — l’orthographe note la forme que tous les parlers partagent.'
 						},
 						{
@@ -60,23 +60,23 @@ export const modul11 = {
 							title: 'Lo matin, sul mercat',
 							subtitle: '(le matin, au marché)',
 							lines: [
-								'Bonjorn, Yasmine !',
-								'Adieu, Loís ! Cossí vas ?',
-								'Va plan, mercé. E tu, cossí vas ?',
-								'Va plan, plan mercé !',
-								'A lèu, Yasmine !',
-								'A lèu !'
+								{ oc: 'Bonjorn, Yasmine !', sound: 'boun-DJOUR, yas-MI-ne !' },
+								{ oc: 'Adieu, Loís ! Cossí vas ?', sound: 'a-DIÉU, lou-ÍS ! cou-si BAS ?' },
+								{ oc: 'Va plan, mercé. E tu, cossí vas ?', sound: 'ba PLA, mér-SÉ. é TU, cou-si BAS ?' },
+								{ oc: 'Va plan, plan mercé !', sound: 'ba PLA, pla mér-SÉ !' },
+								{ oc: 'A lèu, Yasmine !', sound: 'a LÈOU, yas-MI-ne !' },
+								{ oc: 'A lèu !', sound: 'a LÈOU !' }
 							]
 						},
 						{
 							title: 'Lo ser, sus la plaça',
 							subtitle: '(le soir, sur la place)',
 							lines: [
-								'Bon ser ! Cossí anatz ?',
-								'Adieu-siatz, Yasmine ! Va plan, mercé. E tu ?',
-								'Va plan !',
-								'A deman, Yasmine !',
-								'A deman ! Adieu-siatz !'
+								{ oc: 'Bon ser ! Cossí anatz ?', sound: 'bou(n) SÉ ! cou-si a-NATS ?' },
+								{ oc: 'Adieu-siatz, Yasmine ! Va plan, mercé. E tu ?', sound: 'a-diéu-SIATS ! ba PLA, mér-SÉ. é TU ?' },
+								{ oc: 'Va plan !', sound: 'ba PLA !' },
+								{ oc: 'A deman, Yasmine !', sound: 'a dé-MA, yas-MI-ne !' },
+								{ oc: 'A deman ! Adieu-siatz !', sound: 'a dé-MA ! a-diéu-SIATS !' }
 							]
 						}
 					],

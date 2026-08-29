@@ -16,12 +16,12 @@ export const modul14 = {
 
 	sessions: [
 		{
-			title: 'Grand Rappel',
+			title: 'Grand Rappel de l’unitat 1',
 			minutes: 9,
 			blocks: [
 				{
 					type: 'reveal',
-					title: 'Toute l’unité, de mémoire',
+					title: 'Tout ce que tu as appris (modules 1.1 à 1.3), de mémoire',
 					intro: 'Rien de nouveau aujourd’hui : on assemble. Réponds à voix haute, puis vérifie.',
 					items: [
 						{ q: 'Le matin, salue ton amie et demande-lui comment ça va.', a: '*Bonjorn ! Cossí vas ?*' },

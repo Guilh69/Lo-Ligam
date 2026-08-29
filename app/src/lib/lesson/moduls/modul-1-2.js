@@ -16,7 +16,7 @@ export const modul12 = {
 
 	sessions: [
 		{
-			title: 'Rappel + Escota',
+			title: 'Rappel de 1.1 + Escota',
 			minutes: 8,
 			blocks: [
 				{
@@ -44,21 +44,21 @@ export const modul12 = {
 							title: 'Scèna 1 — Núria e Loís',
 							subtitle: '(deux jeunes, tutoiement)',
 							lines: [
-								'Adieu ! Cossí te dison ?',
-								'Me dison Loís. E tu, cossí t’apèlas ?',
-								'Ieu, m’apèli Núria.',
-								'Encantat, Núria !',
-								'Encantada !'
+								{ oc: 'Adieu ! Cossí te dison ?', sound: 'a-DIÉU ! cou-si té DI-zoun ?' },
+								{ oc: 'Me dison Loís. E tu, cossí t’apèlas ?', sound: 'mé DI-zoun lou-ÍS. é TU, cou-si ta-PÈ-los ?' },
+								{ oc: 'Ieu, m’apèli Núria.', sound: 'YÈOU, ma-PÈ-li NOU-ria.' },
+								{ oc: 'Encantat, Núria !', sound: 'én-can-TAT !' },
+								{ oc: 'Encantada !', sound: 'én-can-TA-do !' }
 							]
 						},
 						{
 							title: 'Scèna 2 — Marià e Karim',
 							subtitle: '(vouvoiement)',
 							lines: [
-								'Bon ser ! Cossí vos dison ?',
-								'Me dison Karim. E vos ?',
-								'Ieu, me dison Marià. Encantada !',
-								'Encantat !'
+								{ oc: 'Bon ser ! Cossí vos dison ?', sound: 'bou(n) SÉ ! cou-si bous DI-zoun ?' },
+								{ oc: 'Me dison Karim. E vos ?', sound: 'mé DI-zoun ka-RIM. é BOUS ?' },
+								{ oc: 'Ieu, me dison Marià. Encantada !', sound: 'YÈOU, mé DI-zoun ma-ri-A. én-can-TA-do !' },
+								{ oc: 'Encantat !', sound: 'én-can-TAT !' }
 							]
 						}
 					],

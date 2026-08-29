@@ -1,7 +1,15 @@
 <script>
-	// Les chunks à retenir : le mot/l'expression, « ça sonne comme », le sens.
-	// Chaque ligne aura son audio (voix-modèle) — bouton en attente.
+	// Les expressions à retenir : le mot, « ça sonne comme », le sens.
+	// Le bouton audio s'active dès qu'un fichier existe (c.audio).
 	let { block } = $props();
+
+	function play(src) {
+		try {
+			new Audio(src).play();
+		} catch (e) {
+			/* audio indisponible : jamais bloquant */
+		}
+	}
 </script>
 
 <section class="block">
@@ -10,7 +18,11 @@
 	<ul class="chunks">
 		{#each block.items as c}
 			<li class="chunk">
-				<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">🔊</button>
+				{#if c.audio}
+					<button type="button" class="listen active" onclick={() => play(c.audio)} aria-label="Escotar {c.oc}">🔊</button>
+				{:else}
+					<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">🔊</button>
+				{/if}
 				<span class="c-body">
 					<span class="c-oc">{c.oc}</span>
 					<span class="c-sound">{c.sound}</span>
@@ -69,6 +81,13 @@
 		opacity: 0.55;
 		cursor: default;
 		flex-shrink: 0;
+	}
+
+	.listen.active {
+		opacity: 1;
+		cursor: pointer;
+		background: white;
+		box-shadow: 0 2px 8px rgba(58, 42, 32, 0.15);
 	}
 
 	.c-body {
