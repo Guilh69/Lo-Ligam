@@ -1,13 +1,14 @@
 <script>
 	// Le dialogue d'entrée (Escota) : scènes, répliques, glossaire « ça sonne
-	// comme ». Chaque réplique peut porter sa prononciation : un toucher
-	// l'affiche ou la cache. L'audio (voix-modèle + voix native) s'active
-	// automatiquement dès qu'un fichier existe (scene.audio).
+	// comme ». Quand un fichier audio existe (scene.audio) : lecture/pause de
+	// la scène entière, vitesse normale ou lente, et si une réplique porte ses
+	// repères temporels (t: [début, fin] en secondes), un toucher la joue et
+	// affiche sa prononciation en même temps.
+	import { onDestroy } from 'svelte';
 	import { rich } from '$lib/lesson/rich.js';
 
 	let { block } = $props();
 
-	// Répliques : simple chaîne, ou { oc, sound } avec prononciation.
 	function norm(line) {
 		return typeof line === 'string' ? { oc: line, sound: null } : line;
 	}
@@ -15,9 +16,76 @@
 	let hasSounds = $derived(block.scenes.some((s) => s.lines.some((l) => norm(l).sound)));
 
 	let open = $state({});
+	let playingScene = $state(null);
+	let slow = $state(false);
 
-	function toggle(key) {
-		open[key] = !open[key];
+	// Un lecteur par scène, créé au premier usage.
+	const players = {};
+	let stopSegment = null;
+
+	function player(si) {
+		if (!players[si]) {
+			const a = new Audio(block.scenes[si].audio);
+			a.addEventListener('ended', () => {
+				if (playingScene === si) playingScene = null;
+			});
+			players[si] = a;
+		}
+		return players[si];
+	}
+
+	function pauseAll() {
+		for (const a of Object.values(players)) a.pause();
+		if (stopSegment) {
+			stopSegment();
+			stopSegment = null;
+		}
+		playingScene = null;
+	}
+
+	function toggleScene(si) {
+		try {
+			const a = player(si);
+			if (playingScene === si && !a.paused) {
+				pauseAll();
+				return;
+			}
+			pauseAll();
+			a.playbackRate = slow ? 0.75 : 1;
+			a.play();
+			playingScene = si;
+		} catch (e) {
+			/* audio indisponible : jamais bloquant */
+		}
+	}
+
+	function toggleSlow() {
+		slow = !slow;
+		for (const a of Object.values(players)) a.playbackRate = slow ? 0.75 : 1;
+	}
+
+	function tapLine(si, li, l) {
+		open[`${si}-${li}`] = !open[`${si}-${li}`];
+		// Repères temporels + audio de scène : on joue juste cette réplique.
+		if (!l.t || !block.scenes[si].audio || !open[`${si}-${li}`]) return;
+		try {
+			pauseAll();
+			const a = player(si);
+			const [debut, fin] = l.t;
+			a.currentTime = debut;
+			a.playbackRate = slow ? 0.75 : 1;
+			const surveille = () => {
+				if (a.currentTime >= fin) {
+					a.pause();
+					a.removeEventListener('timeupdate', surveille);
+				}
+			};
+			a.addEventListener('timeupdate', surveille);
+			stopSegment = () => a.removeEventListener('timeupdate', surveille);
+			a.play();
+		} catch (e) {
+			/* audio indisponible : jamais bloquant */
+		}
 	}
 
 	function play(src) {
@@ -27,13 +95,15 @@
 			/* audio indisponible : jamais bloquant */
 		}
 	}
+
+	onDestroy(pauseAll);
 </script>
 
 <section class="block">
 	<h3 class="block-title">🎧 {block.title}</h3>
 	{#if block.intro}<p class="intro">{@html rich(block.intro)}</p>{/if}
 	{#if hasSounds}
-		<p class="sound-hint">👆 <em>Touche une phrase pour voir comment elle sonne.</em></p>
+		<p class="sound-hint">👆 <em>Touche une phrase pour voir comment elle sonne{#if block.scenes.some((s) => s.audio && s.lines.some((l) => norm(l).t))}&nbsp;(et l'entendre){/if}.</em></p>
 	{/if}
 
 	{#each block.scenes as scene, si}
@@ -43,9 +113,28 @@
 				{#if scene.subtitle}<span class="scene-sub"><em>{scene.subtitle}</em></span>{/if}
 			</p>
 			{#if scene.audio}
-				<button type="button" class="listen active" onclick={() => play(scene.audio)} aria-label="Escotar la scèna">
-					🔊 <span class="listen-label">escotar</span>
-				</button>
+				<div class="audio-controls">
+					<button
+						type="button"
+						class="listen active"
+						onclick={() => toggleScene(si)}
+						aria-label={playingScene === si ? 'Pausa' : 'Escotar la scèna'}
+					>
+						{playingScene === si ? '⏸' : '🔊'}
+						<span class="listen-label">{playingScene === si ? 'pausa' : 'escotar'}</span>
+					</button>
+					<button
+						type="button"
+						class="speed"
+						class:on={slow}
+						onclick={toggleSlow}
+						aria-pressed={slow}
+						aria-label="Vitesse lente"
+						title={slow ? 'Repasser en vitesse normale' : 'Écouter plus lentement'}
+					>
+						🐢 {slow ? 'lente' : 'normale'}
+					</button>
+				</div>
 			{:else}
 				<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
 					🔊 <span class="listen-label">a venir</span>
@@ -59,9 +148,11 @@
 							type="button"
 							class="line tappable"
 							aria-expanded={!!open[`${si}-${li}`]}
-							onclick={() => toggle(`${si}-${li}`)}
+							onclick={() => tapLine(si, li, l)}
 						>
-							<span class="line-oc">— {@html rich(l.oc)}</span>
+							<span class="line-oc"
+								>— {@html rich(l.oc)}{#if l.t && scene.audio}<span class="line-play" aria-hidden="true"> 🔉</span>{/if}</span
+							>
 							{#if open[`${si}-${li}`]}
 								<span class="line-sound">{l.sound}</span>
 							{/if}
@@ -134,7 +225,7 @@
 		font-family: var(--font-heading);
 		font-weight: 600;
 		color: var(--color-text);
-		padding-right: 5rem;
+		padding-right: 9.5rem;
 	}
 
 	.scene-sub {
@@ -144,10 +235,15 @@
 		color: var(--color-teal);
 	}
 
-	.listen {
+	.audio-controls {
 		position: absolute;
 		top: 0.7rem;
 		right: 0.8rem;
+		display: flex;
+		gap: 0.4rem;
+	}
+
+	.listen {
 		border: none;
 		background: rgba(255, 255, 255, 0.7);
 		border-radius: 999px;
@@ -155,6 +251,12 @@
 		font-size: 0.8rem;
 		color: rgba(58, 42, 32, 0.5);
 		cursor: default;
+	}
+
+	.scene > .listen {
+		position: absolute;
+		top: 0.7rem;
+		right: 0.8rem;
 	}
 
 	.listen.active {
@@ -167,6 +269,21 @@
 	.listen-label {
 		font-size: 0.7rem;
 		font-style: italic;
+	}
+
+	.speed {
+		border: none;
+		background: rgba(255, 255, 255, 0.7);
+		border-radius: 999px;
+		padding: 0.25rem 0.6rem;
+		font-size: 0.72rem;
+		color: var(--color-text);
+		cursor: pointer;
+	}
+
+	.speed.on {
+		background: var(--color-gold);
+		font-weight: 600;
 	}
 
 	.lines {
@@ -207,6 +324,11 @@
 
 	.line-oc {
 		line-height: 1.6;
+	}
+
+	.line-play {
+		font-size: 0.75rem;
+		opacity: 0.6;
 	}
 
 	.line-sound {

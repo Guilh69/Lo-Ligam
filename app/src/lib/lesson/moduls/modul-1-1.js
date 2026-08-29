@@ -34,7 +34,7 @@ export const modul11 = {
 						},
 						{
 							q: 'L’accent du Sud, celui qui chante à la fin des mots : il vient d’où, à ton avis ?',
-							a: 'De l’occitan ! C’est sa musique qui continue de sonner dans le français du Midi. Ici, ton accent est une longueur d’avance.'
+							a: 'De l’occitan ! Sa musique continue de sonner dans le français du Midi. Si tu as cet accent, tu pars avec une longueur d’avance. Si tu ne l’as pas, ne t’inquiète pas : tout s’apprend, et ton oreille va vite se régler.'
 						},
 						{
 							q: '*Fada, cagade, pèga* : ces mots du français du Midi viennent de quelle langue ?',
