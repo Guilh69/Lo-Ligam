@@ -213,9 +213,65 @@ existe, mais bienveillante : elle célèbre, elle ne menace jamais.
 
 ---
 
-## 6. Prochaine action
+## 6. Étape B — Architecture d'expérience (v0.1 · 29/08/2026)
 
-Manifeste v0.2 amendé par Romain (promesse positive, pilier 5 interne, graines
-de gamification consignées). **Étape B — Architecture d'expérience** :
-réconcilier essai libre ↔ cursus ↔ page /aprene, dessiner la boucle d'une
-séance type et la place des révisions espacées.
+### Décisions tranchées (Romain, 29/08 — consignées au §11 du cahier des charges)
+
+1. **Un seul chemin d'apprentissage : le cursus.** L'essai libre actuel sera
+   remplacé par le **module 0 enrichi**, joué sans compte dans le moteur de
+   leçon. Il reste en ligne tel quel d'ici là ; sa mécanique lettre-à-lettre
+   devient un type d'exercice du moteur.
+2. **Rythme au choix de la personne** : une étape par jour (8-10 min) ou un
+   module d'un coup (45-60 min). Le rythme *recommandé* s'appuiera sur
+   l'objectif quotidien du questionnaire (doux / normal / intensif), sans
+   jamais s'imposer.
+
+### Le parcours unifié
+
+```
+Arribada (sens compte, zéro friction)
+   │
+   ▼
+Modul 0 « Tu l'as déjà entendu » — enrichi (décision étape A/B) :
+   philosophie du lieu · ce qu'est la langue · mots survivants du français
+   du Midi · l'accent du Sud · aire géographique (lien carte) · premiers mots
+   │        └── remplace l'essai libre actuel, même rôle de porte d'entrée
+   ▼
+« Garde ta progression » → Compte + questionnaire d'accueil
+   (motivation → cap personnel affiché + rythme recommandé)
+   │
+   ▼
+/aprene = lo Camin — sommaire du cursus : les unités du Cicle A1
+   présentées comme un chemin (1 Adieu ! → 2 D'ont ses ? → 3 La familha …)
+   │
+   ▼
+Modul (5-6 étapes de 8-10 min, moteur en place)
+   ├─ au choix : une étape aujourd'hui, ou tout le module
+   ├─ le bloc Rappel est nourri par les items J+2/J+7/J+30
+   │  des modules précédents (mécanique du cadre v0.3)
+   ▼
+Fin de module : célébration + tâche finale → module suivant
+   (+ plus tard : un espace « Revisar » dédié aux révisions espacées)
+```
+
+### Ce que ça implique (chantiers dérivés, sans date)
+
+- **Rédiger le module 0 enrichi** (étape E — premier de la file, avec 1.2-1.4).
+- **Refondre `/aprene` en Camin** conforme aux unités du cursus — ⚠️ page
+  construite par la conversation « accueil/app » : coordination obligatoire.
+- **Portage de la mécanique lettre-à-lettre** de l'essai libre en bloc du
+  moteur (elle a fait ses preuves : sons, fougasse volante).
+- **Révisions espacées** : l'architecture leur réserve leur place (Rappels
+  nourris par J+2/J+7/J+30, futur espace « Revisar ») ; l'implémentation
+  technique reste volontairement différée.
+- Le **cap personnel** (motivation du questionnaire) devient un élément
+  d'interface visible — à dessiner en étape C/D avec la gamification.
+
+---
+
+## 7. Prochaine action
+
+**Étape C — Gamification** : partir des graines de Romain (§5) et bâtir le
+système complet — fogassas/crostadas, personnages de la mythologie pyrénéenne,
+arbre, reconnexion visible — chaque mécanique justifiée par le manifeste et
+la recherche (corpus-design §2.3), aucune par imitation.
