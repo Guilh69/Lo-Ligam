@@ -101,8 +101,93 @@ RÉCIT/OUTIL du corpus-design.
 
 ---
 
-## 5. Prochaine action
+## 5. Étape A — Le manifeste (v0.1 · 29/08/2026 · à valider par Romain)
 
-**Étape A — Philosophie & accroche.** Questions ouvertes posées à Romain le
-29/08/2026 (réponses attendues avant rédaction du manifeste) : voir la
-conversation « parcours pédagogique ». Le manifeste sera versionné ici même.
+> Rédigé à partir des réponses de Romain aux 5 questions d'ouverture
+> (philosophie du compte Instagram, reconnexion, ton complice, refus, réf. Busuu).
+> C'est la boussole : toute décision de contenu, de gamification ou de design
+> devra pouvoir se justifier par une de ces lignes.
+
+### La promesse
+
+**Aprene l'occitan sens vergonha.** Apprendre l'occitan sans honte — et avec
+le sourire. Tu pars de zéro ? Tu es légitime. Tu le comprenais chez tes
+grands-parents sans jamais le parler ? Tu es légitime. Tu dis *fada*, *cagade*
+et *péguer* depuis toujours ? Alors tu as déjà commencé.
+
+### Les cinq piliers
+
+1. **Legitimitat.** Personne n'a à mériter sa place. L'occitan appartient à
+   qui veut s'en saisir — débutant complet, natif rouillé, néo-arrivant,
+   diaspora. Le premier travail de Lo Ligam est de *lever la honte* héritée,
+   jamais d'en créer une nouvelle (ni celle de « mal parler », ni celle de
+   « pas assez pratiquer »).
+2. **Reconnexion.** Chaque mot appris est un fil renoué avec du réel : le nom
+   de ta rue, l'accent de ta ville, une expression de ta grand-mère, une
+   chanson. L'appli fait sans cesse ce pont — on n'apprend pas une langue
+   abstraite, on remet du sens sur ce qui nous entoure déjà. Chacun vient avec
+   son objectif (parler aux siens, s'ancrer, la toponymie, le travail, le
+   bilinguisme…) : l'outil le reconnaît et s'y adapte, au lieu d'imposer un
+   moule unique.
+3. **Beutat e plaser.** Une expérience aussi belle que ludique : les meilleurs
+   standards de design et d'animation (registres RÉCIT/OUTIL du corpus-design),
+   un ton **complice, un peu drôle, un peu décalé** — l'humour est une
+   signature, pas un vernis. On apprend des choses vraies en s'amusant ;
+   la beauté et la progression visible sont les récompenses, pas la peur de
+   perdre.
+4. **Una lenga plurala, un pòble amassat.** Le languedocien central est notre
+   forme d'apprentissage, jamais « le vrai occitan » : les formes des pays
+   sont nommées et honorées dès leur rencontre (cadre v0.3 §3). Zéro guerre
+   de clocher, zéro guerre de graphie : on se concentre sur ce qui rassemble.
+5. **La vertat sens la rancuna.** Lo Ligam dit la vérité historique — la
+   responsabilité de l'État français dans la situation de la langue (la
+   *vergonha*, l'école de la punition, la relégation) n'est ni tue ni
+   édulcorée. Mais cette vérité ne nourrit ni haine de la France ni
+   séparatisme : elle explique le présent et fonde une fierté tournée vers
+   l'avenir. On raconte pour relier, pas pour dresser.
+
+### Ce que Lo Ligam ne fera jamais
+
+- Suggérer qu'une variante ou une graphie est illégitime (la parole des natifs n'est jamais une « faute »).
+- Culpabiliser : pas de « tu vas perdre ta série ! », pas de notifications anxiogènes, pas de mascotte qui pleure.
+- Faire de la peur ou du manque un moteur : les mécaniques s'appuient sur l'envie, jamais sur l'angoisse.
+- Classements compétitifs entre apprenants : la communauté est une *còla* (une équipe), pas une arène.
+- Dark patterns : pas de fausse urgence, pas d'abonnement caché, pas de friction volontaire.
+- Attiser le ressentiment : ni anti-France, ni folklore-musée qui enferme la langue dans le passé.
+- Publier une forme occitane non vérifiée (moulinette API + Romain + natifs).
+
+### La référence d'expérience
+
+**La structure de Busuu, l'âme de Lo Ligam.** De Busuu (préféré à Duolingo
+par Romain) : le sérieux structurel — parcours CECRL lisible, vraies
+explications de grammaire, dialogues réalistes, correction par des locuteurs
+natifs (notre *Lo conselh dels vièlhs* et la voie communautaire des tâches).
+De Lo Ligam : le ton décalé et complice, l'ancrage culturel charnel, la
+beauté méditerranéenne. En un mot : **aussi solide que Busuu, plus drôle,
+plus enraciné.**
+
+### Le premier quart d'heure (l'accroche)
+
+Avant toute leçon classique, la personne découvre — en s'amusant — que
+l'occitan est déjà chez elle : la philosophie du lieu (pas de honte),
+ce qu'est cette langue (latine, sœur du catalan), les mots qui vivent
+encore dans le français du Midi, l'accent du Sud comme héritage occitan,
+l'aire géographique (32 départements + Val d'Aran + vallées italiennes),
+et ses premiers mots. → C'est exactement le rôle du **module 0
+« Tu l'as déjà entendu »** du cursus, à enrichir d'un temps « philosophie »
+et « aire géographique » (lien avec la carte).
+
+### Pourquoi revenir demain
+
+Pas pour sauver une série : **parce que chaque mot est une reconnexion**, que
+l'objectif personnel déclaré au questionnaire donne un cap visible, et que
+l'expérience est assez belle et drôle pour donner envie en elle-même. La série
+existe, mais bienveillante : elle célèbre, elle ne menace jamais.
+
+---
+
+## 6. Prochaine action
+
+**Valider/amender le manifeste (étape A)**, puis **étape B — Architecture
+d'expérience** : réconcilier essai libre ↔ cursus ↔ page /aprene, dessiner la
+boucle d'une séance type et la place des révisions espacées.
