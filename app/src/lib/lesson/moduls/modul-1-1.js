@@ -33,7 +33,7 @@ export const modul11 = {
 							a: 'Les deux sont possibles ! *Adieu* sert à dire bonjour **et** au revoir : c’est justement le sujet de ce module.'
 						},
 						{
-							q: 'L’accent du Sud, il vient d’où, à ton avis ?',
+							q: 'L’accent du « Sud », il vient d’où, à ton avis ?',
 							a: 'De l’occitan ! Sa musique continue de sonner dans le français du Midi. Si tu as cet accent, tu pars avec une longueur d’avance. Si tu ne l’as pas, ne t’inquiète pas : tout s’apprend, et ton oreille va vite se régler.'
 						},
 						{
