@@ -101,27 +101,29 @@ RÉCIT/OUTIL du corpus-design.
 
 ---
 
-## 5. Étape A — Le manifeste (v0.1 · 29/08/2026 · à valider par Romain)
+## 5. Étape A — Le manifeste (v0.2 · 29/08/2026 · amendé par Romain)
 
 > Rédigé à partir des réponses de Romain aux 5 questions d'ouverture
-> (philosophie du compte Instagram, reconnexion, ton complice, refus, réf. Busuu).
+> (philosophie du compte Instagram, reconnexion, ton complice, refus, réf. Busuu),
+> puis amendé par lui (v0.2 : promesse positive, pilier 5 = boussole interne).
 > C'est la boussole : toute décision de contenu, de gamification ou de design
 > devra pouvoir se justifier par une de ces lignes.
 
 ### La promesse
 
-**Aprene l'occitan sens vergonha.** Apprendre l'occitan sans honte — et avec
-le sourire. Tu pars de zéro ? Tu es légitime. Tu le comprenais chez tes
-grands-parents sans jamais le parler ? Tu es légitime. Tu dis *fada*, *cagade*
-et *péguer* depuis toujours ? Alors tu as déjà commencé.
+**L'occitan per totas e totes.** *(L'occitan pour toutes et tous — ⚠️ forme
+occitane à valider.)* On ouvre par l'invitation, jamais par la honte — même
+pour dire qu'il n'y en aura pas. Tu pars de zéro ? Bienvenue. Tu le comprenais
+chez tes grands-parents sans jamais le parler ? Bienvenue. Tu dis *fada*,
+*cagade* et *péguer* depuis toujours ? Alors tu as déjà commencé.
 
 ### Les cinq piliers
 
 1. **Legitimitat.** Personne n'a à mériter sa place. L'occitan appartient à
    qui veut s'en saisir — débutant complet, natif rouillé, néo-arrivant,
-   diaspora. Le premier travail de Lo Ligam est de *lever la honte* héritée,
-   jamais d'en créer une nouvelle (ni celle de « mal parler », ni celle de
-   « pas assez pratiquer »).
+   diaspora. Le travail silencieux de Lo Ligam est de *lever la honte*
+   héritée sans jamais la nommer en premier, et de n'en créer aucune
+   nouvelle (ni celle de « mal parler », ni celle de « pas assez pratiquer »).
 2. **Reconnexion.** Chaque mot appris est un fil renoué avec du réel : le nom
    de ta rue, l'accent de ta ville, une expression de ta grand-mère, une
    chanson. L'appli fait sans cesse ce pont — on n'apprend pas une langue
@@ -145,6 +147,9 @@ et *péguer* depuis toujours ? Alors tu as déjà commencé.
    édulcorée. Mais cette vérité ne nourrit ni haine de la France ni
    séparatisme : elle explique le présent et fonde une fierté tournée vers
    l'avenir. On raconte pour relier, pas pour dresser.
+   *Portée (amendement Romain, v0.2) : ce pilier est une **boussole interne**
+   — il guide l'écriture des capsules culturelles, mais ne s'affiche pas
+   frontalement en vitrine ; le dosage public se décide au cas par cas.*
 
 ### Ce que Lo Ligam ne fera jamais
 
@@ -184,10 +189,33 @@ l'objectif personnel déclaré au questionnaire donne un cap visible, et que
 l'expérience est assez belle et drôle pour donner envie en elle-même. La série
 existe, mais bienveillante : elle célèbre, elle ne menace jamais.
 
+### Graines pour l'étape C (idées de Romain, 29/08/2026 — à travailler, rien de tranché)
+
+- **Deux ressources gourmandes ?** Les **fogassas** (déjà les points du moteur)
+  et des **crostadas** qui s'accumulent et permettront « d'acheter des trucs »
+  (économie cosmétique). À clarifier en étape C : une seule monnaie ou deux
+  (ex. fogassa = nourriture/progression, crostada = monnaie d'échange) ; ce
+  qu'on peut « acheter » ; et la frontière avec le modèle solidaire de
+  paiement (§6 du cahier des charges) — l'économie du jeu ne doit jamais
+  devenir un dark pattern.
+- **Des personnages de la mythologie des Pyrénées**, qui **se nourrissent de
+  fogassa**. Pistes à explorer culturellement (⚠️ à vérifier, certains sont
+  gascons/catalans — belle occasion de nommer les pays) : Tantugon (protecteur
+  des troupeaux), Joan de l'Ors, las Encantadas (fées des eaux), lo Bécut
+  (le cyclope gascon), los Minairons, l'Ors de las fèstas. Contrainte
+  manifeste : jamais de mascotte qui culpabilise.
+- **Un arbre qui grandit** au fil de l'apprentissage.
+- **Une représentation visible de la reconnexion avec la langue des anciens**
+  (le fil qui se renoue — cœur du pilier 2 ; forme à inventer).
+- Question ouverte : ces quatre images (personnages, arbre, reconnexion,
+  ressources) devront s'articuler en **un seul système lisible** — l'étape C
+  choisira la métaphore-chapiteau et la place de chacune.
+
 ---
 
 ## 6. Prochaine action
 
-**Valider/amender le manifeste (étape A)**, puis **étape B — Architecture
-d'expérience** : réconcilier essai libre ↔ cursus ↔ page /aprene, dessiner la
-boucle d'une séance type et la place des révisions espacées.
+Manifeste v0.2 amendé par Romain (promesse positive, pilier 5 interne, graines
+de gamification consignées). **Étape B — Architecture d'expérience** :
+réconcilier essai libre ↔ cursus ↔ page /aprene, dessiner la boucle d'une
+séance type et la place des révisions espacées.
