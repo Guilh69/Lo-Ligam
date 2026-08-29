@@ -42,7 +42,7 @@ export const modul13 = {
 							lines: [
 								{ oc: 'Núria, d’ont siás ?', sound: 'NOU-ria, d’oun SYOS ?' },
 								{ oc: 'Soi de Barcelona ! E tu, Karim ?', sound: 'souï dé bar-sé-LOU-no ! é TU, ka-RIM ?' },
-								{ oc: 'Ieu, soi de Besièrs. Mas demòri a Tolosa.', sound: 'YÈOU, souï dé bé-ZYÈS. mas dé-MÒ-ri a tou-LOU-zo.' },
+								{ oc: 'Ieu, soi de Besièrs. Mas demòri a Tolosa.', sound: 'YÉOU, souï dé bé-ZYÈS. mas dé-MÒ-ri a tou-LOU-zo.' },
 								{ oc: 'E Loís, d’ont es ?', sound: 'é lou-ÍS, d’oun ÉS ?' },
 								{ oc: 'Loís es del vilatge. Demòra aquí, sus la plaça !', sound: 'lou-ÍS és dél bi-LA-djé. dé-MÒ-ro a-KI, sus la PLA-ço !' },
 								{ oc: 'E Marià es d’aquí ?', sound: 'é ma-ri-A és da-KI ?' },

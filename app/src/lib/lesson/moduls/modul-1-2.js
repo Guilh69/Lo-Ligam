@@ -44,9 +44,9 @@ export const modul12 = {
 							title: 'Scèna 1 — Núria e Loís',
 							subtitle: '(deux jeunes, tutoiement)',
 							lines: [
-								{ oc: 'Adieu ! Cossí te dison ?', sound: 'a-DIÉU ! cou-si té DI-zoun ?' },
+								{ oc: 'Adieu ! Cossí te dison ?', sound: 'a-DIOU ! cou-si té DI-zoun ?' },
 								{ oc: 'Me dison Loís. E tu, cossí t’apèlas ?', sound: 'mé DI-zoun lou-ÍS. é TU, cou-si ta-PÈ-los ?' },
-								{ oc: 'Ieu, m’apèli Núria.', sound: 'YÈOU, ma-PÈ-li NOU-ria.' },
+								{ oc: 'Ieu, m’apèli Núria.', sound: 'YÉOU, ma-PÈ-li NOU-ria.' },
 								{ oc: 'Encantat, Núria !', sound: 'én-can-TAT !' },
 								{ oc: 'Encantada !', sound: 'én-can-TA-do !' }
 							]
@@ -57,13 +57,13 @@ export const modul12 = {
 							lines: [
 								{ oc: 'Bon ser ! Cossí vos dison ?', sound: 'bou(n) SÉ ! cou-si bous DI-zoun ?' },
 								{ oc: 'Me dison Karim. E vos ?', sound: 'mé DI-zoun ka-RIM. é BOUS ?' },
-								{ oc: 'Ieu, me dison Marià. Encantada !', sound: 'YÈOU, mé DI-zoun ma-ri-A. én-can-TA-do !' },
+								{ oc: 'Ieu, me dison Marià. Encantada !', sound: 'YÉOU, mé DI-zoun ma-ri-A. én-can-TA-do !' },
 								{ oc: 'Encantat !', sound: 'én-can-TAT !' }
 							]
 						}
 					],
 					glossary: [
-						{ oc: 'ieu', sound: 'YÈOU', fr: 'moi (pour insister, comme « E tu ? » en 1.1)' },
+						{ oc: 'ieu', sound: 'YÉOU', fr: 'moi (pour insister, comme « E tu ? » en 1.1)' },
 						{ oc: 'la fèsta', sound: 'la FÈS-to', fr: 'la fête' }
 					]
 				}

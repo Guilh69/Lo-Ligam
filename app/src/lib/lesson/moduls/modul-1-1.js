@@ -61,7 +61,7 @@ export const modul11 = {
 							subtitle: '(le matin, au marché)',
 							lines: [
 								{ oc: 'Bonjorn, Yasmine !', sound: 'boun-DJOUR, yas-MI-ne !' },
-								{ oc: 'Adieu, Loís ! Cossí vas ?', sound: 'a-DIÉU, lou-ÍS ! cou-si BAS ?' },
+								{ oc: 'Adieu, Loís ! Cossí vas ?', sound: 'a-DIOU, lou-ÍS ! cou-si BAS ?' },
 								{ oc: 'Va plan, mercé. E tu, cossí vas ?', sound: 'ba PLA, mér-SÉ. é TU, cou-si BAS ?' },
 								{ oc: 'Va plan, plan mercé !', sound: 'ba PLA, pla mér-SÉ !' },
 								{ oc: 'A lèu, Yasmine !', sound: 'a LÈOU, yas-MI-ne !' },
@@ -73,10 +73,10 @@ export const modul11 = {
 							subtitle: '(le soir, sur la place)',
 							lines: [
 								{ oc: 'Bon ser ! Cossí anatz ?', sound: 'bou(n) SÉ ! cou-si a-NATS ?' },
-								{ oc: 'Adieu-siatz, Yasmine ! Va plan, mercé. E tu ?', sound: 'a-diéu-SIATS ! ba PLA, mér-SÉ. é TU ?' },
+								{ oc: 'Adieu-siatz, Yasmine ! Va plan, mercé. E tu ?', sound: 'a-diou-SIATS ! ba PLA, mér-SÉ. é TU ?' },
 								{ oc: 'Va plan !', sound: 'ba PLA !' },
 								{ oc: 'A deman, Yasmine !', sound: 'a dé-MA, yas-MI-ne !' },
-								{ oc: 'A deman ! Adieu-siatz !', sound: 'a dé-MA ! a-diéu-SIATS !' }
+								{ oc: 'A deman ! Adieu-siatz !', sound: 'a dé-MA ! a-diou-SIATS !' }
 							]
 						}
 					],
@@ -230,8 +230,8 @@ export const modul11 = {
 					title: 'À retenir',
 					intro: 'Ça sonne comme — syllabe forte en capitales.',
 					items: [
-						{ oc: 'Adieu', sound: 'a-DIÉU', fr: 'salut (bonjour et au revoir, à une personne qu’on tutoie)' },
-						{ oc: 'Adieu-siatz', sound: 'a-diéu-SIATS', fr: 'pareil, à plusieurs ou en vouvoyant' },
+						{ oc: 'Adieu', sound: 'a-DIOU', fr: 'salut (bonjour et au revoir, à une personne qu’on tutoie)' },
+						{ oc: 'Adieu-siatz', sound: 'a-diou-SIATS', fr: 'pareil, à plusieurs ou en vouvoyant' },
 						{ oc: 'Bonjorn', sound: 'boun-DJOUR', fr: 'bonjour' },
 						{ oc: 'Bon ser', sound: 'bou(n) SÉ', fr: 'bonsoir' },
 						{ oc: 'Cossí vas ?', sound: 'cou-si BAS', fr: 'comment vas-tu ? (le v sonne « b »)' },
