@@ -278,9 +278,18 @@ jamais éteint — les braises restent) · **crostadas et badges reportés** à 
 plans spécifiques. Spécification : **`gamification.md`** (v0.2). Consigné au
 §11 du cahier des charges.
 
-## 8. Prochaine action
+## 8. Étape D — Grammaire des exercices (close le 29/08/2026)
 
-**Étape D — Grammaire des exercices** : le catalogue des mécaniques — chaque
-type justifié par un principe SLA (cadre v0.3 §4) *et* par son rôle de plaisir,
-les nouveaux types permis par les API (§3), leur place dans les 6 étapes d'un
-module. Puis étape E : production en série (module 0 en premier).
+Catalogue écrit et tranché : socle v0.3 (moteur) + 6 nouvelles mécaniques
+validées (l'intrus, jeux de lettres, dialogue à choix, Ont es ?, rimes &
+virelangues, l'oreille des pays) ; **« vrai/inventé » écarté définitivement**
+(plagiat du jeu du Congrès). Voir **`catalogue-exercicis.md`** ; consigné au
+§11. Reste ouvert dans le catalogue : ordre de construction, espace Jòcs.
+
+## 9. Prochaine action
+
+**Étape E — Production en série.** Premier de la file : **le module 0
+enrichi** (« Tu l'as déjà entendu » + philosophie + aire géographique), qui
+remplacera l'essai libre. Puis 1.2 → 1.3 → 1.4 pour boucler l'unité 1.
+Chaîne : rédaction (skill occitan-module) → moulinette API → relecture
+Romain → intégration moteur → test navigateur.
