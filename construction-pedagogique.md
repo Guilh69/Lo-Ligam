@@ -269,9 +269,16 @@ Fin de module : célébration + tâche finale → module suivant
 
 ---
 
-## 7. Prochaine action
+## 7. Étape C — Gamification (en cours)
 
-**Étape C — Gamification** : partir des graines de Romain (§5) et bâtir le
-système complet — fogassas/crostadas, personnages de la mythologie pyrénéenne,
-arbre, reconnexion visible — chaque mécanique justifiée par le manifeste et
-la recherche (corpus-design §2.3), aucune par imitation.
+Décisions de Romain (29/08) : **còla de personnages qui se débloque** unité
+par unité (chacun porte son pays) · **arbre unique** dont les racines sont la
+langue des anciens (l'Arbre del Ligam fusionne arbre et reconnexion) · usage
+des **crostadas reporté**. Spécification complète, troupe proposée (sourcée)
+et questions restantes : **`gamification.md`**.
+
+## 8. Prochaine action
+
+Faire réagir Romain sur la còla proposée (choix/veto des personnages), la
+forme de la série qui célèbre, et l'articulation badges/còla — puis clore C
+et ouvrir **l'étape D — Grammaire des exercices**.
