@@ -4,7 +4,7 @@
 	// tremble ; bonne tuile → elle rejoint la phrase.
 	import { rich } from '$lib/lesson/rich.js';
 
-	let { block, onCorrect = () => {} } = $props();
+	let { block, onCorrect = () => {}, onComplete = () => {} } = $props();
 
 	function shuffle(arr) {
 		const a = [...arr];
@@ -32,6 +32,7 @@
 			tile.used = true;
 			st.placed += 1;
 			onCorrect();
+			if (states.every((s, k) => s.placed >= block.items[k].tiles.length)) onComplete();
 		} else {
 			tile.wrong = true;
 			setTimeout(() => (tile.wrong = false), 280);

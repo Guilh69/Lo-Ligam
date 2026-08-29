@@ -4,7 +4,7 @@
 	// et au mini-test — la récupération active avant la relecture.
 	import { rich } from '$lib/lesson/rich.js';
 
-	let { block, onCorrect = () => {} } = $props();
+	let { block, onCorrect = () => {}, onComplete = () => {} } = $props();
 
 	let revealed = $state(block.items.map(() => false));
 	let doneCount = $derived(revealed.filter(Boolean).length);
@@ -14,6 +14,7 @@
 		if (revealed[i]) return;
 		revealed[i] = true;
 		onCorrect();
+		if (revealed.every(Boolean)) onComplete();
 	}
 </script>
 

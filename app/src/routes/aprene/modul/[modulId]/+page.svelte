@@ -130,22 +130,84 @@
 		}
 	}
 
+	// Déblocage progressif : dans une étape, un bloc interactif (questions,
+	// remise en ordre…) doit être réussi pour révéler la suite ; les blocs de
+	// lecture (dialogue, tableau, notes…) accompagnent sans bloquer.
+	const INTERACTIUS = new Set(['qcm', 'reveal', 'order']);
+	let blockDone = $state([]);
+
+	let visibleBlockCount = $derived.by(() => {
+		if (view === 'list' || !modul) return 0;
+		const blocks = modul.sessions[view].blocks;
+		let n = 0;
+		for (let i = 0; i < blocks.length; i++) {
+			n = i + 1;
+			if (INTERACTIUS.has(blocks[i].type) && !blockDone[i]) break;
+		}
+		return n;
+	});
+
+	let allBlocksDone = $derived.by(() => {
+		if (view === 'list' || !modul) return false;
+		return modul.sessions[view].blocks.every(
+			(b, i) => !INTERACTIUS.has(b.type) || blockDone[i]
+		);
+	});
+
 	function openSession(i) {
 		view = i;
+		// Étape déjà terminée : tout est déverrouillé pour la relecture.
+		blockDone = modul.sessions[i].blocks.map(() => done[i] === true);
 		if (browser) window.scrollTo({ top: 0 });
 	}
 
+	// La fougasse gagnée s'envole du bouton vers le compteur (comme sur
+	// l'essai libre) ; les punts s'ajoutent à son arrivée.
+	let pointsPillEl = $state(null);
+	let finishBtnEl = $state(null);
+	let flyingFogassa = $state(null);
+	let flyId = 0;
+
+	function flyFogassa() {
+		if (!browser || !finishBtnEl || !pointsPillEl) return false;
+		if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return false;
+		const from = finishBtnEl.getBoundingClientRect();
+		const to = pointsPillEl.getBoundingClientRect();
+		flyId += 1;
+		flyingFogassa = {
+			id: flyId,
+			startX: from.left + from.width / 2,
+			startY: from.top + from.height / 2,
+			dx: to.left + to.width / 2 - (from.left + from.width / 2),
+			dy: to.top + to.height / 2 - (from.top + from.height / 2)
+		};
+		const thisFly = flyId;
+		setTimeout(() => {
+			if (flyingFogassa?.id === thisFly) flyingFogassa = null;
+		}, 600);
+		return true;
+	}
+
 	function finishSession(i) {
-		if (!done[i]) {
-			done[i] = true;
+		if (done[i]) {
+			view = 'list';
+			if (browser) window.scrollTo({ top: 0 });
+			return;
+		}
+		done[i] = true;
+		const envol = flyFogassa();
+		const delai = envol ? 520 : 0;
+		setTimeout(() => {
 			points += 10;
 			pillPulse = true;
 			setTimeout(() => (pillPulse = false), 260);
-			if (!muted) setTimeout(playChime, 180);
-		}
-		saveProgress();
-		view = 'list';
-		if (browser) window.scrollTo({ top: 0 });
+			if (!muted) playChime();
+			saveProgress();
+		}, delai);
+		setTimeout(() => {
+			view = 'list';
+			if (browser) window.scrollTo({ top: 0 });
+		}, envol ? 950 : 0);
 	}
 
 	function onCorrect() {
@@ -188,7 +250,7 @@
 				<HomeIcon size={21} />
 			</a>
 			<div class="spacer"></div>
-			<div class="points-pill" class:pulse={pillPulse}>
+			<div class="points-pill" class:pulse={pillPulse} bind:this={pointsPillEl}>
 				<FougasseIcon size={20} /> {points}
 			</div>
 			<button
@@ -259,32 +321,55 @@
 
 			{#key view}
 				<div class="blocks">
-					{#each s.blocks as block}
-						{#if block.type === 'qcm'}
-							<QcmBlock {block} {onCorrect} />
-						{:else if block.type === 'reveal'}
-							<RevealBlock {block} {onCorrect} />
-						{:else if block.type === 'order'}
-							<OrderBlock {block} {onCorrect} />
-						{:else if block.type === 'dialogue'}
-							<DialogueBlock {block} />
-						{:else if block.type === 'chunks'}
-							<ChunksBlock {block} />
-						{:else if block.type === 'table'}
-							<TableBlock {block} />
-						{:else if block.type === 'note'}
-							<NoteBlock {block} />
-						{:else if block.type === 'checklist'}
-							<ChecklistBlock {block} storagePrefix={`lo-ligam-${modul.id}`} />
-						{/if}
+					{#each s.blocks.slice(0, visibleBlockCount) as block, bi}
+						<div class="block-slot">
+							{#if block.type === 'qcm'}
+								<QcmBlock {block} {onCorrect} onComplete={() => (blockDone[bi] = true)} />
+							{:else if block.type === 'reveal'}
+								<RevealBlock {block} {onCorrect} onComplete={() => (blockDone[bi] = true)} />
+							{:else if block.type === 'order'}
+								<OrderBlock {block} {onCorrect} onComplete={() => (blockDone[bi] = true)} />
+							{:else if block.type === 'dialogue'}
+								<DialogueBlock {block} />
+							{:else if block.type === 'chunks'}
+								<ChunksBlock {block} />
+							{:else if block.type === 'table'}
+								<TableBlock {block} />
+							{:else if block.type === 'note'}
+								<NoteBlock {block} />
+							{:else if block.type === 'checklist'}
+								<ChecklistBlock {block} storagePrefix={`lo-ligam-${modul.id}`} />
+							{/if}
+						</div>
 					{/each}
 
-					<button type="button" class="btn-primary finish" onclick={() => finishSession(view)}>
-						{done[view] ? 'Tornar al somari' : 'Acabada ✓'}
-						<span class="finish-sub"><em>{done[view] ? '(retour au sommaire)' : '(étape terminée)'}</em></span>
-					</button>
+					{#if allBlocksDone}
+						<button
+							type="button"
+							class="btn-primary finish"
+							bind:this={finishBtnEl}
+							onclick={() => finishSession(view)}
+						>
+							{done[view] ? 'Tornar al somari' : 'Acabada ✓'}
+							<span class="finish-sub"><em>{done[view] ? '(retour au sommaire)' : '(étape terminée)'}</em></span>
+						</button>
+					{:else}
+						<p class="unlock-hint">La suite se débloque en répondant ci-dessus ↑</p>
+					{/if}
 				</div>
 			{/key}
+
+			{#if flyingFogassa}
+				{#key flyingFogassa.id}
+					<div
+						class="flying-fogassa"
+						style="left:{flyingFogassa.startX}px; top:{flyingFogassa.startY}px; --dx:{flyingFogassa.dx}px; --dy:{flyingFogassa.dy}px;"
+						aria-hidden="true"
+					>
+						<FougasseIcon size={22} />
+					</div>
+				{/key}
+			{/if}
 		{/if}
 	{/if}
 </main>
@@ -620,6 +705,40 @@
 		margin-top: 0.6rem;
 	}
 
+	.block-slot {
+		animation: fade-in 400ms ease-out;
+	}
+
+	.unlock-hint {
+		text-align: center;
+		font-size: 0.85rem;
+		color: rgba(58, 42, 32, 0.55);
+		margin: 0.4rem 0 0;
+	}
+
+	.flying-fogassa {
+		position: fixed;
+		z-index: 60;
+		pointer-events: none;
+		transform: translate(-50%, -50%);
+		animation: fly-to-points 560ms cubic-bezier(0.3, 0, 0.35, 1) forwards;
+	}
+
+	@keyframes fly-to-points {
+		0% {
+			transform: translate(-50%, -50%) scale(1);
+			opacity: 1;
+		}
+		65% {
+			transform: translate(calc(-50% + var(--dx) * 0.7), calc(-50% + var(--dy) * 0.55 - 24px)) scale(1.1);
+			opacity: 1;
+		}
+		100% {
+			transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.35);
+			opacity: 0;
+		}
+	}
+
 	.finish-sub {
 		font-size: 0.72rem;
 		font-weight: 400;
@@ -641,7 +760,9 @@
 		.modul-head,
 		.session-head,
 		.sessions,
-		.blocks {
+		.blocks,
+		.block-slot,
+		.flying-fogassa {
 			animation: none;
 		}
 
