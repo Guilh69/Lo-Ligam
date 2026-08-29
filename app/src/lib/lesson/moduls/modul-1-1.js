@@ -13,6 +13,8 @@ export const modul11 = {
 	cando:
 		'Je peux saluer quelqu’un (le matin ou le soir), demander et dire comment ça va, et prendre congé — en choisissant entre le « tu » et le « vous ».',
 	durada: '~50 min · 6 étapes de 8-10 min',
+	// Prénoms des personnages : ignorés par le script de vérification lexicale.
+	nomsPropris: ['Yasmine', 'Loís', 'Marià', 'Lisa'],
 
 	sessions: [
 		// ————————————————————————————————— Etapa 1

@@ -66,7 +66,11 @@ async function lexiqueDuModul(slug) {
 			}
 		}
 	}
-	return [...mots].sort();
+	// Hors périmètre du Basic : prénoms des personnages, et mots-outils de
+	// 1-2 lettres (articles, pronoms — formes de base d'Alibèrt, et l'API
+	// renvoie une erreur PHP sur les termes trop courts).
+	for (const nom of modul.nomsPropris ?? []) mots.delete(nom.toLowerCase());
+	return [...mots].filter((m) => m.length > 2).sort();
 }
 
 const args = process.argv.slice(2);
@@ -94,13 +98,14 @@ for (const mot of mots) {
 		const data = await res.json();
 		const entradas = data?.query ?? [];
 		if (Array.isArray(entradas) && entradas.length > 0) {
-			// Les formes exactes trouvées, pour repérer une graphie divergente.
+			// Toutes les graphies de l'entrée (côté occitan et côté français),
+			// pour repérer une graphie divergente de la nôtre.
 			const formas = entradas
-				.flatMap((e) => e.forms ?? [])
+				.flatMap((e) => [...(e.forms ?? []), ...(e.trads ?? [])])
 				.map((f) => f.orth)
 				.filter(Boolean);
 			const exact = formas.some((f) => f.toLowerCase() === mot);
-			console.log(`  ✓ ${mot}${exact ? '' : `  (formes du Basic : ${[...new Set(formas)].join(', ')})`}`);
+			console.log(`  ✓ ${mot}${exact ? '' : `  (graphies du Basic : ${[...new Set(formas)].join(', ')})`}`);
 		} else {
 			absents.push(mot);
 			console.log(`  ⚠️  ${mot} — absent du Basic (languedocien)`);
@@ -111,8 +116,45 @@ for (const mot of mots) {
 	await new Promise((r) => setTimeout(r, 400));
 }
 
+// Seconde passe : un mot absent du Basic est peut-être une forme conjuguée
+// (le Basic ne connaît que les lemmes). vèrb'Òc sait remonter à l'infinitif.
+const MODES = { ind: 'indicatif', subj: 'subjonctif', cond: 'conditionnel', imp: 'impératif', inf: 'infinitif', part: 'participe' };
+const TEMPS = { pres: 'présent', pas: 'passé', imp: 'imparfait', fut: 'futur' };
+const inconeguts = [];
+if (absents.length) {
+	console.log(`\n${absents.length} mot(s) absent(s) du Basic → recherche comme forme conjuguée (vèrb'Òc)…\n`);
+	for (const mot of absents) {
+		const url = new URL('https://api.locongres.org/verboc.php');
+		url.searchParams.set('key', clau);
+		url.searchParams.set('form', mot);
+		url.searchParams.set('var', 'lengadoc');
+		try {
+			const res = await fetch(url);
+			const data = await res.json();
+			const formas = (data?.query ?? []).filter((f) => f.inf);
+			if (formas.length > 0) {
+				const descr = formas
+					.slice(0, 3)
+					.map(
+						(f) =>
+							`${f.inf} — ${f.per ?? '?'}${f.num === 'pl' ? ' pl.' : ' sg.'} ${MODES[f.mod] ?? f.mod ?? ''} ${TEMPS[f.tns] ?? f.tns ?? ''}`.trim()
+					)
+					.join(' · ');
+				console.log(`  ✓ ${mot} : forme de ${descr}`);
+			} else {
+				inconeguts.push(mot);
+				console.log(`  ⚠️  ${mot} — inconnu aussi de vèrb'Òc`);
+			}
+		} catch (e) {
+			inconeguts.push(mot);
+			console.log(`  ✗ ${mot} — erreur d'appel : ${e.message}`);
+		}
+		await new Promise((r) => setTimeout(r, 400));
+	}
+}
+
 console.log(
-	absents.length
-		? `\n${absents.length} mot(s) à vérifier à la main sur dicodoc.eu : ${absents.join(', ')}`
-		: '\nTout le lexique est connu du Basic. (Un ✓ ne valide pas le sens ni l’usage : relecture humaine toujours nécessaire.)'
+	inconeguts.length
+		? `\n${inconeguts.length} mot(s) à vérifier à la main sur dicodoc.eu : ${inconeguts.join(', ')}`
+		: '\nTout le lexique est connu du Basic ou de vèrb’Òc. (Un ✓ ne valide pas le sens ni l’usage : relecture humaine toujours nécessaire.)'
 );
