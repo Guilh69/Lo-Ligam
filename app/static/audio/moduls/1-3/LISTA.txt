@@ -1,0 +1,23 @@
+Module 1.3 - fichiers attendus (mp3 ou m4a) :
+
+SCENE DU DIALOGUE
+  dont-setz-totes.mp3   (Nuria, d'ont sias ?... Marià es del pais.)
+
+EXPRESSIONS
+  soi-de.mp3
+  dont-sias.mp3
+  demori-a.mp3
+  ont-demoras.mp3
+  soi-d-aqui.mp3
+  noms-de-vilas.mp3     (Tolosa, Besiers, Montpelhier, Carcassona)
+  vilatge-vila-pais.mp3
+
+GLOSSAIRE
+  oc.mp3
+  mas.mp3
+  aqui.mp3
+  del.mp3
+  lo-pais.mp3
+
+VOIX NATIVE (plus tard)
+  los-que-parlan.mp3

@@ -1,0 +1,26 @@
+Module 1.1 - fichiers attendus (mp3 ou m4a) :
+
+SCENES DU DIALOGUE
+  lo-matin-sul-mercat.mp3   (Bonjorn, Yasmine !... A leu !)
+  lo-ser-sus-la-placa.mp3   (Bon ser !... A deman ! Adieu-siatz !)
+
+EXPRESSIONS (une par fichier)
+  adieu.mp3
+  adieu-siatz.mp3
+  bonjorn.mp3
+  bon-ser.mp3
+  cossi-vas.mp3
+  cossi-anatz.mp3
+  va-plan-e-tu.mp3
+  merce-plan-merce.mp3
+  a-leu.mp3
+  a-deman.mp3
+
+GLOSSAIRE
+  la-placa.mp3
+  lo-mercat.mp3
+  lo-matin.mp3
+  lo-ser.mp3
+
+VOIX NATIVE (plus tard)
+  los-que-parlan.mp3

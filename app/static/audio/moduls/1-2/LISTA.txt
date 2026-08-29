@@ -1,0 +1,20 @@
+Module 1.2 - fichiers attendus (mp3 ou m4a) :
+
+SCENES DU DIALOGUE
+  scena-nuria-e-lois.mp3    (Adieu ! Cossi te dison ?... Encantada !)
+  scena-maria-e-karim.mp3   (Bon ser ! Cossi vos dison ?... Encantat !)
+
+EXPRESSIONS
+  cossi-te-dison.mp3
+  me-dison.mp3
+  cossi-t-apelas.mp3
+  m-apeli.mp3
+  cossi-vos-dison.mp3
+  encantat-encantada.mp3
+
+GLOSSAIRE
+  ieu.mp3
+  la-festa.mp3
+
+VOIX NATIVE (plus tard)
+  los-que-parlan.mp3
