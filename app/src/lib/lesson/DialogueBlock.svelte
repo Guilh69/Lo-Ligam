@@ -129,11 +129,11 @@
 						class:on={slow}
 						onclick={toggleSlow}
 						aria-pressed={slow}
-						aria-label="Velocitat lenta"
+						aria-label="Velocitat lenta ×0,75"
 						title={slow ? 'Tornar a la velocitat normala (revenir à la vitesse normale)' : 'Escotar mai lentament (écouter plus lentement)'}
 					>
 						<span class="speed-icon" aria-hidden="true">🦥</span>
-						{slow ? 'Lenta' : 'Normala'}
+						<span class="speed-rate">×0,75</span>
 					</button>
 				</div>
 			{:else}
@@ -277,15 +277,25 @@
 		font-size: 0.8rem;
 	}
 
+	.speed {
+		padding: 0.25rem 0.7rem;
+	}
+
 	.speed-icon {
-		font-size: 1.05rem;
+		font-size: 1.6rem;
 		line-height: 1;
+	}
+
+	.speed-rate {
+		font-size: 0.82rem;
+		font-weight: 700;
 	}
 
 	.speed.on {
 		background: var(--color-gold);
 		border-color: var(--color-gold);
 		color: var(--color-text);
+		box-shadow: inset 0 1px 4px rgba(58, 42, 32, 0.2);
 	}
 
 	.lines {
