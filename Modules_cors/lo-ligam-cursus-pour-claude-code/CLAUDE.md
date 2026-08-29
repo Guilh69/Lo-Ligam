@@ -8,7 +8,7 @@ Contenu pédagogique du site Lo Ligam (source de vérité : `cursus/`).
 - `cursus/07-carta-del-cursus.md` — carte du cursus : formes d'apprentissage / formes en usage, natifs relecteurs, modules réalisés.
 - `cursus/08-proposition-personas.md`, `personas-retours-bruts.md` — lecture par 10 personas et arbitrages.
 - `cursus/09-fiche-chatbert-lire-occitan.md` — phonétique/orthographe (Chatbèrt) recoupée CLO, intégrée module par module.
-- `cursus/modules/` — modules rédigés hors exemples de niveau (un fichier par module) : `1.1-adieu-cossi-vas.md` (à valider par Romain).
+- `cursus/modules/` — modules rédigés hors exemples de niveau (un fichier par module) : `1.1-adieu-cossi-vas.md`, `1.2-me-dison-m-apeli.md`, `1.3-soi-de.md`, `1.4-tasca-me-presenti.md` (unité 1 complète — à valider par Romain ; lexique et conjugaisons passés par les API lo Congrès le 29/08/2026).
 
 ## Règles non négociables pour tout code ou contenu généré ici
 - Graphie classique, languedocien central ; toute forme douteuse → `⚠️ À VÉRIFIER` (Dicod'òc, Vèrb'òc).
