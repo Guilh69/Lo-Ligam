@@ -7,7 +7,7 @@
 	import FougasseIcon from '$lib/components/FougasseIcon.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { session, authReady } from '$lib/authStore';
-	import { moduls } from '$lib/lesson/moduls/index.js';
+	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
 	import QcmBlock from '$lib/lesson/QcmBlock.svelte';
 	import RevealBlock from '$lib/lesson/RevealBlock.svelte';
@@ -19,6 +19,9 @@
 	import ChecklistBlock from '$lib/lesson/ChecklistBlock.svelte';
 
 	let modul = $derived(moduls[$page.params.modulId]);
+	let posicion = $derived(ordre.indexOf($page.params.modulId));
+	let precedent = $derived(posicion > 0 ? ordre[posicion - 1] : null);
+	let seguent = $derived(posicion >= 0 && posicion < ordre.length - 1 ? ordre[posicion + 1] : null);
 
 	// 'list' = sommaire des étapes ; un nombre = l'étape ouverte.
 	let view = $state('list');
@@ -53,9 +56,10 @@
 		});
 	}
 
-	onMount(async () => {
-		if (!modul) return;
-		done = modul.sessions.map(() => false);
+	async function loadProgress(m) {
+		done = m.sessions.map(() => false);
+		points = 0;
+		view = 'list';
 		if (browser) await waitForAuthReady();
 		const currentSession = get(session);
 		if (currentSession) {
@@ -63,10 +67,10 @@
 				const { data } = await supabase
 					.from('lesson_progress')
 					.select('word_index, points')
-					.eq('module_id', modul.id)
+					.eq('module_id', m.id)
 					.maybeSingle();
 				if (data) {
-					done = fromMask(data.word_index ?? 0, modul.sessions.length);
+					done = fromMask(data.word_index ?? 0, m.sessions.length);
 					points = data.points ?? 0;
 				}
 			} catch (e) {
@@ -76,14 +80,28 @@
 		}
 		if (!browser) return;
 		try {
-			const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+			const saved = JSON.parse(localStorage.getItem(`lo-ligam-${m.id}-progress`) || 'null');
 			if (saved) {
-				done = fromMask(saved.mask ?? 0, modul.sessions.length);
+				done = fromMask(saved.mask ?? 0, m.sessions.length);
 				points = saved.points ?? 0;
 			}
 		} catch (e) {
 			/* stockage indisponible (navigation privée…) : pas bloquant */
 		}
+	}
+
+	// Naviguer de /modul/1-1 vers /modul/1-2 ne remonte pas le composant
+	// (même route) : on recharge la progression quand le module change.
+	let loadedFor = null;
+	$effect(() => {
+		if (modul && loadedFor !== modul.id) {
+			loadedFor = modul.id;
+			loadProgress(modul);
+		}
+	});
+
+	onMount(() => {
+		/* le $effect ci-dessus fait le premier chargement */
 	});
 
 	async function saveProgress() {
@@ -209,7 +227,24 @@
 				<p class="all-done">
 					Modul acabat, òsca ! <em>(module terminé, bravo !)</em>
 				</p>
+				{#if seguent}
+					<a class="btn-primary" href="/aprene/modul/{seguent}">
+						Modul seguent : {moduls[seguent].oc}
+						<span class="finish-sub"><em>(module suivant)</em></span>
+					</a>
+				{/if}
 			{/if}
+
+			<nav class="modul-nav" aria-label="Navigation entre modules">
+				{#if precedent}
+					<a href="/aprene/modul/{precedent}">← {moduls[precedent].nivel.split('·')[1] ?? precedent}</a>
+				{:else}
+					<span></span>
+				{/if}
+				{#if seguent && !allDone}
+					<a href="/aprene/modul/{seguent}">{moduls[seguent].nivel.split('·')[1] ?? seguent} →</a>
+				{/if}
+			</nav>
 
 			<p class="draft-note">
 				⚠️ Contenu en cours de validation linguistique (dicodòc / lo Congrès). L'audio arrive.
@@ -508,6 +543,23 @@
 		font-family: inherit;
 		font-size: 0.85rem;
 		color: var(--color-teal);
+	}
+
+	.modul-nav {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.modul-nav a {
+		font-size: 0.85rem;
+		color: var(--color-teal);
+		text-decoration: none;
+		font-weight: 600;
+	}
+
+	.modul-nav a:hover {
+		text-decoration: underline;
 	}
 
 	.draft-note {

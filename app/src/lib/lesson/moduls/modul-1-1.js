@@ -116,7 +116,7 @@ export const modul11 = {
 								'Marià lance *Adieu-siatz !* en **accueillant** Yasmine. Bonjour et au revoir à la fois.'
 						},
 						{
-							q: 'Chasse au chunk : combien de fois entends-tu *Va plan* dans les deux scènes ?',
+							q: 'Chasse à l’expression : combien de fois entends-tu *Va plan* dans les deux scènes ?',
 							options: ['4 fois', '3 fois', '2 fois'],
 							correct: 0,
 							explain: '4 fois — c’est LA réponse passe-partout : *Va plan* (ça va bien).'
@@ -138,7 +138,7 @@ export const modul11 = {
 					variant: 'info',
 					title: 'Relecture ciblée',
 					paragraphs: [
-						'Réécoute en lisant, chunks en gras :',
+						'Réécoute en lisant, expressions en gras :',
 						'— **Bonjorn**, Yasmine ! · — **Adieu**, Loís ! **Cossí vas ?** · — **Va plan, mercé. E tu** ? · — **Va plan, plan mercé** ! · — **A lèu** ! · — **Bon ser ! Cossí anatz ?** · — **Adieu-siatz** ! · — **A deman** !'
 					]
 				}
@@ -152,7 +152,7 @@ export const modul11 = {
 			blocks: [
 				{
 					type: 'qcm',
-					title: 'Obsèrva — Le bon chunk au bon moment',
+					title: 'Obsèrva — La bonne expression au bon moment',
 					intro:
 						'Choisis (une question à la fois, réponse immédiate). Pense au moment de la journée, et à qui tu parles.',
 					items: [
@@ -227,7 +227,7 @@ export const modul11 = {
 				},
 				{
 					type: 'chunks',
-					title: 'Chunks à retenir',
+					title: 'À retenir',
 					intro: 'Ça sonne comme — syllabe forte en capitales.',
 					items: [
 						{ oc: 'Adieu', sound: 'a-DIÉU', fr: 'salut (bonjour et au revoir, à une personne qu’on tutoie)' },
@@ -253,7 +253,7 @@ export const modul11 = {
 				{
 					type: 'qcm',
 					title: '3a · Bloc court',
-					intro: 'Complète avec le bon chunk. Un item à la fois.',
+					intro: 'Complète avec la bonne expression. Un item à la fois.',
 					items: [
 						{
 							q: 'Le matin : « ___, Loís ! »',
@@ -538,7 +538,7 @@ export const modul11 = {
 					title: 'Réviser plus tard',
 					paragraphs: [
 						'Le site te les resservira — pas besoin de noter :',
-						'**Dans 2 jours** : *Adieu / Adieu-siatz* (tu/vous), *Cossí vas ? → Va plan, mercé. E tu ?* · **Dans 7 jours** : *Bonjorn / Bon ser*, *A lèu / A deman* · **Dans 30 jours** : les 10 chunks au complet.'
+						'**Dans 2 jours** : *Adieu / Adieu-siatz* (tu/vous), *Cossí vas ? → Va plan, mercé. E tu ?* · **Dans 7 jours** : *Bonjorn / Bon ser*, *A lèu / A deman* · **Dans 30 jours** : les 10 expressions au complet.'
 					]
 				}
 			]
