@@ -1,9 +1,9 @@
 # Audio des modules : mode d'emploi pour Romain
 
 > **Depuis le téléphone** : dépose tes enregistrements dans le dossier
-> OneDrive **`Documents/Lo-Ligam-Audios`** (la boîte de dépôt), via l'appli
-> OneDrive ou le menu Partager de ton enregistreur. Pas besoin de renommer :
-> dis à Claude ce que c'est, il classe, branche et met en ligne.
+> **Proton Drive › My files › Lo-Ligam-Audios** (la boîte de dépôt), via
+> l'appli Proton Drive ou le menu Partager de ton enregistreur. Pas besoin
+> de renommer : dis à Claude ce que c'est, il classe, branche et met en ligne.
 
 Les boutons 🔊 du site s'activent dès qu'un fichier audio existe et que son
 chemin est branché dans les données du module. Règle de nommage : **le nom du
