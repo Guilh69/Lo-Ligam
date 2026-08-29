@@ -59,6 +59,7 @@ export const modul11 = {
 						{
 							title: 'Lo matin, sul mercat',
 							subtitle: '(le matin, au marché)',
+							audio: '/audio/moduls/1-1/lo-matin-sul-mercat.m4a',
 							lines: [
 								{ oc: 'Bonjorn, Yasmine !', sound: 'boun-DJOUR, yas-MI-ne !' },
 								{ oc: 'Adieu, Loís ! Cossí vas ?', sound: 'a-DIOU, lou-ÍS ! cou-si BAS ?' },
