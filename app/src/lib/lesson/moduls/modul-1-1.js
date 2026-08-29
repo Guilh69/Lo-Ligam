@@ -1,4 +1,4 @@
-// Module 1.1 · A1 · « Adieu, cossí vas ? » — contenu structuré pour le
+// Module 1.1 · A1 · « Adieu, cossí vas ? » : contenu structuré pour le
 // moteur de leçon. Source de vérité pédagogique :
 // Modules_cors/lo-ligam-cursus-pour-claude-code/cursus/modules/1.1-adieu-cossi-vas.md
 // ⚠️ Occitan à valider par Romain (dicodòc / lo Congrès) avant mise en ligne.
@@ -11,7 +11,7 @@ export const modul11 = {
 	oc: 'Adieu, cossí vas ?',
 	fr: 'Saluer, demander comment ça va, prendre congé',
 	cando:
-		'Je peux saluer quelqu’un (le matin ou le soir), demander et dire comment ça va, et prendre congé — en choisissant entre le « tu » et le « vous ».',
+		'Je peux saluer quelqu’un (le matin ou le soir), demander et dire comment ça va, et prendre congé : en choisissant entre le « tu » et le « vous ».',
 	durada: '~50 min · 6 étapes de 8-10 min',
 	// Prénoms des personnages : ignorés par le script de vérification lexicale.
 	nomsPropris: ['Yasmine', 'Loís', 'Marià', 'Lisa'],
@@ -24,37 +24,37 @@ export const modul11 = {
 			blocks: [
 				{
 					type: 'reveal',
-					title: 'Échauffement — tu en sais déjà plus que tu crois',
+					title: 'Échauffement : tu en sais déjà plus que tu crois',
 					intro:
-						'Avant d’apprendre quoi que ce soit : cinq questions au feeling. Il n’y a rien à réviser — tout vient de ce que tu connais déjà. Pense ta réponse (ou dis-la à voix haute), puis vérifie.',
+						'Avant d’apprendre quoi que ce soit : cinq questions au feeling. Il n’y a rien à réviser, tout vient de ce que tu connais déjà. Pense ta réponse (ou dis-la à voix haute), puis vérifie.',
 					items: [
 						{
 							q: 'Tu croises quelqu’un à Toulouse qui te lance « Adieu ! » en pleine journée, tout sourire. Il te dit bonjour ou au revoir ?',
-							a: 'Les deux sont possibles ! *Adieu* sert à dire bonjour **et** au revoir — c’est justement le sujet de ce module.'
+							a: 'Les deux sont possibles ! *Adieu* sert à dire bonjour **et** au revoir : c’est justement le sujet de ce module.'
 						},
 						{
-							q: 'Le *ò* avec accent (*bròca, pòrc*) se prononce comme le « o » de… « rose » ou de « bol » ?',
-							a: 'Celui de « bol » — *ò* = o ouvert ; le *o* sans accent sonne « ou ».'
+							q: 'L’accent du Sud, celui qui chante à la fin des mots : il vient d’où, à ton avis ?',
+							a: 'De l’occitan ! C’est sa musique qui continue de sonner dans le français du Midi. Ici, ton accent est une longueur d’avance.'
 						},
 						{
-							q: '*Fada, cagade, pèga* — ces mots du français du Midi viennent de quelle langue ?',
-							a: 'De l’occitan — tu pars avec des mots d’avance.'
+							q: '*Fada, cagade, pèga* : ces mots du français du Midi viennent de quelle langue ?',
+							a: 'De l’occitan : tu pars avec des mots d’avance.'
 						},
 						{
 							q: '*amic* se prononce *amit(s)*, *amib* ou *ami* selon les endroits. Comment s’écrit-il, toujours ?',
-							a: '*amic* — l’orthographe note la forme que tous les parlers partagent.'
+							a: '*amic* : l’orthographe note la forme que tous les parlers partagent.'
 						},
 						{
 							q: 'À ton avis (on vérifie dans une minute) : comment dit-on « bonjour » en occitan ?',
-							a: '*Bonjorn* — presque le français, mais prononcé « boun-DJOUR ». Bienvenue dans le module.'
+							a: '*Bonjorn* : presque le français, mais prononcé « boun-DJOUR ». Bienvenue dans le module.'
 						}
 					]
 				},
 				{
 					type: 'dialogue',
-					title: 'Escota — Écoute d’abord, lis ensuite',
+					title: 'Escota : écoute d’abord, lis ensuite',
 					intro:
-						'Jour de marché sur la plaça du village. Le matin, Yasmine croise son ami Loís ; le soir, elle croise Marià, une voisine âgée, avec ses amies — elle les vouvoie. Écoute 2 fois avant de lire.',
+						'Jour de marché sur la plaça du village. Le matin, Yasmine croise son ami Loís ; le soir, elle croise Marià, une voisine âgée, avec ses amies : elle les vouvoie. Écoute 2 fois avant de lire.',
 					scenes: [
 						{
 							title: 'Lo matin, sul mercat',
@@ -105,7 +105,7 @@ export const modul11 = {
 							options: ['Loís, son ami', 'Marià, la voisine âgée', 'le vendeur du marché'],
 							correct: 0,
 							explain:
-								'Le matin : Loís (*Cossí vas ?*, tu). Le soir : Marià et ses amies (*Cossí anatz ?*, vous — et plusieurs personnes).'
+								'Le matin : Loís (*Cossí vas ?*, tu). Le soir : Marià et ses amies (*Cossí anatz ?*, vous, et plusieurs personnes).'
 						},
 						{
 							q: 'Vrai ou faux : *Adieu* et *Adieu-siatz* servent seulement à se quitter.',
@@ -119,7 +119,7 @@ export const modul11 = {
 							q: 'Chasse à l’expression : combien de fois entends-tu *Va plan* dans les deux scènes ?',
 							options: ['4 fois', '3 fois', '2 fois'],
 							correct: 0,
-							explain: '4 fois — c’est LA réponse passe-partout : *Va plan* (ça va bien).'
+							explain: '4 fois ! C’est LA réponse passe-partout : *Va plan* (ça va bien).'
 						}
 					]
 				},
@@ -127,9 +127,9 @@ export const modul11 = {
 					type: 'note',
 					variant: 'natiu',
 					audio: true,
-					title: 'Los que parlan — Josette, Aude (Lengadòc)',
+					title: 'Los que parlan : Josette, Aude (Lengadòc)',
 					paragraphs: [
-						'30 secondes : Josette dit bonjour à sa façon, comme elle l’a toujours dit. Écoute seulement, puis lis la transcription. Tu remarqueras peut-être un mot d’ouverture (*E ben…*) ou un tour différent du modèle : tu n’as rien à corriger, juste à reconnaître — c’est l’occitan de son pays.',
+						'30 secondes : Josette dit bonjour à sa façon, comme elle l’a toujours dit. Écoute seulement, puis lis la transcription. Tu remarqueras peut-être un mot d’ouverture (*E ben…*) ou un tour différent du modèle : tu n’as rien à corriger, juste à reconnaître, c’est l’occitan de son pays.',
 						'*(Enregistrement et transcription à venir.)*'
 					]
 				},
@@ -152,7 +152,7 @@ export const modul11 = {
 			blocks: [
 				{
 					type: 'qcm',
-					title: 'Obsèrva — La bonne expression au bon moment',
+					title: 'Obsèrva : la bonne expression au bon moment',
 					intro:
 						'Choisis (une question à la fois, réponse immédiate). Pense au moment de la journée, et à qui tu parles.',
 					items: [
@@ -189,7 +189,7 @@ export const modul11 = {
 							options: ['Vrai', 'Faux'],
 							correct: 1,
 							noShuffle: true,
-							explain: 'Bonjour ET au revoir — comme *ciao* en italien.'
+							explain: 'Bonjour ET au revoir : comme *ciao* en italien.'
 						},
 						{
 							q: 'Le soir, tu arrives chez des amis.',
@@ -201,7 +201,7 @@ export const modul11 = {
 				},
 				{
 					type: 'table',
-					title: 'L’essentiel — pas de grammaire, des blocs',
+					title: 'L’essentiel : pas de grammaire, des blocs',
 					head: ['', 'à un(e) ami(e) (tu)', 'à plusieurs, ou en vouvoyant'],
 					rows: [
 						['saluer (passe-partout)', '**Adieu !**', '**Adieu-siatz !**'],
@@ -211,7 +211,7 @@ export const modul11 = {
 						['se quitter', '**A lèu !** (à bientôt) · **A deman !** (à demain)', 'pareil, + **Adieu-siatz !**']
 					],
 					notes: [
-						'*Adieu* et *Adieu-siatz* ouvrent **et** ferment la rencontre — comme *ciao* en italien.',
+						'*Adieu* et *Adieu-siatz* ouvrent **et** ferment la rencontre : comme *ciao* en italien.',
 						'*Adieu-siatz*, littéralement « soyez à Dieu ». Rien que ça.',
 						'Merci = *mercé* ; merci beaucoup = *plan mercé* (*plan* = bien, tu le reverras partout).'
 					]
@@ -219,7 +219,7 @@ export const modul11 = {
 				{
 					type: 'note',
 					variant: 'son',
-					title: 'Son du jour — le -a final qui sonne « o »',
+					title: 'Son du jour : le -a final qui sonne « o »',
 					paragraphs: [
 						'Le *-a* final sonne « o » (léger) : *la plaça* → la PLA-ço · *pastra* → PAS-tro · *Castras* → CAS-tros.',
 						'Mais quand le *a* porte l’accent de la voix, il reste « a » : *Va plan* → ba PLA. Une syllabe à la fois, ton oreille fait déjà le tri.'
@@ -228,7 +228,7 @@ export const modul11 = {
 				{
 					type: 'chunks',
 					title: 'À retenir',
-					intro: 'Ça sonne comme — syllabe forte en capitales.',
+					intro: 'Ça sonne comme : syllabe forte en capitales.',
 					items: [
 						{ oc: 'Adieu', sound: 'a-DIOU', fr: 'salut (bonjour et au revoir, à une personne qu’on tutoie)' },
 						{ oc: 'Adieu-siatz', sound: 'a-di-SSIATS', fr: 'pareil, à plusieurs ou en vouvoyant' },
@@ -271,7 +271,7 @@ export const modul11 = {
 							q: 'Réponds que ça va : « ___, mercé. »',
 							options: ['Va plan', 'Bon ser', 'Adieu-siatz'],
 							correct: 0,
-							explain: '*Va plan, mercé* — la réponse passe-partout.'
+							explain: '*Va plan, mercé* : la réponse passe-partout.'
 						},
 						{
 							q: 'Remercie chaleureusement : « ___ ! »',
@@ -311,10 +311,10 @@ export const modul11 = {
 							explain: 'Le soir, en arrivant → *Bon ser*.'
 						},
 						{
-							q: 'Ton ami te lance *Cossí vas ?* — la réponse complète :',
+							q: 'Ton ami te lance *Cossí vas ?* : la réponse complète :',
 							options: ['Va plan, mercé. E tu ?', 'Va plan.', 'Adieu !'],
 							correct: 0,
-							explain: 'Répondre **et** retourner la question — le réflexe complet.'
+							explain: 'Répondre **et** retourner la question : le réflexe complet.'
 						},
 						{
 							q: 'Tu croises ta vieille voisine et ses amies :',
@@ -391,17 +391,17 @@ export const modul11 = {
 				{
 					type: 'order',
 					title: 'Remets dans l’ordre',
-					intro: 'Tape les mots dans l’ordre — mauvais mot, il tremble.',
+					intro: 'Tape les mots dans l’ordre : mauvais mot, il tremble.',
 					items: [
 						{
 							prompt: 'Ça va bien, merci. Et toi ?',
 							tiles: ['Va', 'plan,', 'mercé.', 'E', 'tu ?'],
-							explain: '*Va plan, mercé. E tu ?* — la réponse complète.'
+							explain: '*Va plan, mercé. E tu ?* : la réponse complète.'
 						},
 						{
 							prompt: 'Bonsoir, comment allez-vous ?',
 							tiles: ['Bon', 'ser,', 'cossí', 'anatz ?'],
-							explain: '*Bon ser, cossí anatz ?* — le soir, en vouvoyant.'
+							explain: '*Bon ser, cossí anatz ?* : le soir, en vouvoyant.'
 						}
 					]
 				},
@@ -431,7 +431,7 @@ export const modul11 = {
 						{ q: 'À demain !', a: '*A deman !*' },
 						{
 							q: 'Au revoir ! (à plusieurs personnes)',
-							a: '*Adieu-siatz !* — le *-siatz* dit « vous » / « vous tous ».'
+							a: '*Adieu-siatz !* : le *-siatz* dit « vous » / « vous tous ».'
 						},
 						{ q: 'Salut, à bientôt !', a: '*Adieu, a lèu !*' }
 					]
@@ -439,11 +439,11 @@ export const modul11 = {
 				{
 					type: 'note',
 					variant: 'info',
-					title: 'Va plus vite — sans chrono',
+					title: 'Va plus vite : sans chrono',
 					list: [
 						'**Redis-le trois fois** : ton dialogue A à voix haute ; la 2ᵉ fois un peu plus vite, la 3ᵉ sans regarder.',
 						'**Raconte avec 5 mots-clés** : *Bonjorn – Cossí vas ? – Va plan – A lèu – Adieu-siatz* → rejoue les deux scènes de mémoire.',
-						'**Parle en même temps que l’audio** (voix native — à venir).'
+						'**Parle en même temps que l’audio** (voix native : à venir).'
 					]
 				}
 			]
@@ -457,12 +457,12 @@ export const modul11 = {
 				{
 					type: 'note',
 					variant: 'task',
-					title: 'Tasca finala — À toi',
+					title: 'Tasca finala : À toi',
 					paragraphs: [
-						'Enregistre (ou écris) tes deux mini-dialogues de salutation — un en « tu » (un ami, le matin), un en « vous » (plusieurs personnes ou une personne âgée, le soir). 4 répliques chacun : saluer, demander comment ça va, répondre et retourner la question, prendre congé.',
+						'Enregistre (ou écris) tes deux mini-dialogues de salutation : un en « tu » (un ami, le matin), un en « vous » (plusieurs personnes ou une personne âgée, le soir). 4 répliques chacun : saluer, demander comment ça va, répondre et retourner la question, prendre congé.',
 						'**Voie privée** : enregistre-toi sur ton téléphone, réécoute demain, coche les critères toi-même.',
 						'**Voie communautaire** *(bientôt)* : poste ton audio en commentaire du post Lo Ligam de la semaine.',
-						'**Bonus** : glisse un *Adieu !* de bonjour ET un *Adieu-siatz !* d’au revoir dans le même dialogue — le mot qui ouvre et qui ferme.'
+						'**Bonus** : glisse un *Adieu !* de bonjour ET un *Adieu-siatz !* d’au revoir dans le même dialogue, le mot qui ouvre et qui ferme.'
 					]
 				},
 				{
@@ -489,7 +489,7 @@ export const modul11 = {
 				{
 					type: 'checklist',
 					key: 'bilan',
-					title: 'Bilan — Je peux…',
+					title: 'Bilan : Je peux…',
 					intro: 'Coche seulement ce que tu sais faire **seul**. Le reste reviendra, c’est prévu.',
 					items: [
 						'saluer le matin et le soir',
@@ -516,11 +516,11 @@ export const modul11 = {
 				{
 					type: 'note',
 					variant: 'culture',
-					title: 'Cultura — Adieu paure Carnaval',
+					title: 'Cultura : Adieu paure Carnaval',
 					audio: true,
 					paragraphs: [
-						'Un mot qui salue **et** qui quitte : les Occitans le chantent depuis des générations. À la fin du Carnaval, on brûle Sa Majesté Carnaval en lui chantant *Adieu paure Carnaval* — l’adieu le plus célèbre de la culture occitane. Écoute le refrain : combien de fois entends-tu *adieu* ?',
-						'À Limoux (Aude), le Carnaval dure de janvier à mars — le plus long du monde. Les *fecos* dansent sur la place chaque week-end, et la langue y a sa part.'
+						'Un mot qui salue **et** qui quitte : les Occitans le chantent depuis des générations. À la fin du Carnaval, on brûle Sa Majesté Carnaval en lui chantant *Adieu paure Carnaval*, l’adieu le plus célèbre de la culture occitane. Écoute le refrain : combien de fois entends-tu *adieu* ?',
+						'À Limoux (Aude), le Carnaval dure de janvier à mars : le plus long du monde. Les *fecos* dansent sur la place chaque week-end, et la langue y a sa part.'
 					]
 				},
 				{
@@ -528,7 +528,7 @@ export const modul11 = {
 					variant: 'info',
 					title: 'Se parles catalan / castelhan',
 					paragraphs: [
-						'*Bon dia* ↔ *Bonjorn* ; *Adéu* ↔ *Adieu* — mais l’occitan *Adieu* dit **aussi** bonjour ! *Com vas?* / *¿Cómo vas?* ↔ *Cossí vas ?* : tu as déjà l’oreille.',
+						'*Bon dia* ↔ *Bonjorn* ; *Adéu* ↔ *Adieu* : mais l’occitan *Adieu* dit **aussi** bonjour ! *Com vas?* / *¿Cómo vas?* ↔ *Cossí vas ?* : tu as déjà l’oreille.',
 						'Piège : le *-a* final atone sonne « o » en languedocien (*plaça* PLA-ço), pas « a » ni « e ».'
 					]
 				},
@@ -537,7 +537,7 @@ export const modul11 = {
 					variant: 'info',
 					title: 'Réviser plus tard',
 					paragraphs: [
-						'Le site te les resservira — pas besoin de noter :',
+						'Le site te les resservira : pas besoin de noter :',
 						'**Dans 2 jours** : *Adieu / Adieu-siatz* (tu/vous), *Cossí vas ? → Va plan, mercé. E tu ?* · **Dans 7 jours** : *Bonjorn / Bon ser*, *A lèu / A deman* · **Dans 30 jours** : les 10 expressions au complet.'
 					]
 				}

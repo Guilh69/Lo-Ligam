@@ -85,7 +85,7 @@
 						{/if}
 						<strong class="g-oc">{g.oc}</strong>
 						<span class="g-sound">{g.sound}</span>
-						<span class="g-fr">— {g.fr}</span>
+						<span class="g-fr">{g.fr}</span>
 					</li>
 				{/each}
 			</ul>
@@ -262,6 +262,7 @@
 
 	.g-fr {
 		color: rgba(58, 42, 32, 0.75);
+		margin-left: 0.15rem;
 	}
 
 	@keyframes fade-in {

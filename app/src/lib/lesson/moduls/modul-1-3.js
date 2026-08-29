@@ -1,7 +1,7 @@
-// Module 1.3 · A1 · « Soi de… » — contenu structuré.
+// Module 1.3 · A1 · « Soi de… » : contenu structuré.
 // Source : Modules_cors/…/cursus/modules/1.3-soi-de.md
 // ⚠️ Occitan à valider par Romain (vérifié API 29/08 ; voir notes du md :
-// vèrb'Òc affiche « ès » — décision « siás » maintenue ; país ⚠️).
+// vèrb'Òc affiche « ès » : décision « siás » maintenue ; país ⚠️).
 
 export const modul13 = {
 	id: 'modul-1-3',
@@ -22,7 +22,7 @@ export const modul13 = {
 			blocks: [
 				{
 					type: 'reveal',
-					title: 'Rappel — de mémoire (modules 1.1-1.2)',
+					title: 'Rappel : de mémoire (modules 1.1-1.2)',
 					items: [
 						{ q: 'Demande son nom à quelqu’un que tu vouvoies.', a: '*Cossí vos dison ? / Cossí vos apelatz ?*' },
 						{ q: '« On me dit Loís. »', a: '*Me dison Loís.*' },
@@ -33,8 +33,8 @@ export const modul13 = {
 				},
 				{
 					type: 'dialogue',
-					title: 'Escota — Écoute d’abord, lis ensuite',
-					intro: 'Toujours la fèsta. Núria, Karim et Loís font connaissance — d’où vient chacun ?',
+					title: 'Escota : écoute d’abord, lis ensuite',
+					intro: 'Toujours la fèsta. Núria, Karim et Loís font connaissance : d’où vient chacun ?',
 					scenes: [
 						{
 							title: 'D’ont sètz, totes ?',
@@ -51,10 +51,10 @@ export const modul13 = {
 						}
 					],
 					glossary: [
-						{ oc: 'òc', sound: 'OK', fr: 'oui — le mot qui a donné son nom à la lenga d’òc !' },
+						{ oc: 'òc', sound: 'OK', fr: 'oui : le mot qui a donné son nom à la lenga d’òc !' },
 						{ oc: 'mas', sound: 'MAS', fr: 'mais' },
 						{ oc: 'aquí', sound: 'a-KI', fr: 'ici' },
-						{ oc: 'del', sound: 'dél', fr: 'du (de + lo — tu le reverras en détail plus tard)' },
+						{ oc: 'del', sound: 'dél', fr: 'du (de + lo : tu le reverras en détail plus tard)' },
 						{ oc: 'lo país', sound: 'lou pa-ÍS', fr: 'le pays (le coin, chez nous)' }
 					]
 				}
@@ -118,7 +118,7 @@ export const modul13 = {
 			blocks: [
 				{
 					type: 'qcm',
-					title: 'Obsèrva — La forme te dit qui parle',
+					title: 'Obsèrva : la forme te dit qui parle',
 					intro: 'Regarde la fin du verbe : elle porte la personne.',
 					items: [
 						{
@@ -128,7 +128,7 @@ export const modul13 = {
 							explain: '*soi* = je.'
 						},
 						{
-							q: '*Siás de Tolosa ?* — on parle…',
+							q: '*Siás de Tolosa ?* : on parle…',
 							options: ['à toi', 'de moi', 'de lui'],
 							correct: 0,
 							explain: '*siás* = tu.'
@@ -161,7 +161,7 @@ export const modul13 = {
 				},
 				{
 					type: 'table',
-					title: 'Ton premier point de langue — èsser (être), singulier',
+					title: 'Ton premier point de langue : èsser (être), singulier',
 					head: ['', ''],
 					rows: [
 						['(ieu) **soi**', 'je suis'],
@@ -170,14 +170,14 @@ export const modul13 = {
 					],
 					notes: [
 						'Le pronom est **omis** : *Soi de Nimes.* On l’ajoute pour insister : *Ieu, soi de Besièrs.*',
-						'*Se ditz tanben :* **ès** (Roergue, Albigés, Carcin…) pour « tu es » — tout aussi correct.',
+						'*Se ditz tanben :* **ès** (Roergue, Albigés, Carcin…) pour « tu es » : tout aussi correct.',
 						'Être *de* quelque part ≠ y habiter : *Soi de Besièrs* (origine) / *Demòri a Tolosa* (j’y vis).'
 					]
 				},
 				{
 					type: 'note',
 					variant: 'son',
-					title: 'Son du jour — deux « o »',
+					title: 'Son du jour : deux « o »',
 					paragraphs: [
 						'*o* sans accent sonne « ou » : *Tolosa* = tou-LOU-zo, *poma*, *ostal*.',
 						'*ò* avec accent = « o ouvert » (comme « bol ») : *demòri* = dé-MÒ-ri, *bròca*, *pòrc*. L’accent écrit te dit tout.'
@@ -186,7 +186,7 @@ export const modul13 = {
 				{
 					type: 'chunks',
 					title: 'À retenir',
-					intro: 'Ça sonne comme — syllabe forte en capitales.',
+					intro: 'Ça sonne comme : syllabe forte en capitales.',
 					items: [
 						{ oc: 'Soi de…', sound: 'souï dé', fr: 'je suis de… (origine)' },
 						{ oc: 'D’ont siás ?', sound: 'd’oun SYOS', fr: 'd’où es-tu ?' },
@@ -206,7 +206,7 @@ export const modul13 = {
 			blocks: [
 				{
 					type: 'qcm',
-					title: '3a · Bloc court — soi, siás ou es ?',
+					title: '3a · Bloc court : soi, siás ou es ?',
 					items: [
 						{ q: '(ieu) ___ de Nimes.', options: ['soi', 'siás', 'es'], correct: 0, noShuffle: true, explain: 'Je → *soi*.' },
 						{ q: 'Tu ___ d’ont ?', options: ['soi', 'siás', 'es'], correct: 1, noShuffle: true, explain: 'Tu → *siás*.' },
@@ -255,7 +255,7 @@ export const modul13 = {
 							options: ['Vrai', 'Faux'],
 							correct: 1,
 							noShuffle: true,
-							explain: 'Origine ≠ lieu de vie — Karim : *soi de Besièrs, mas demòri a Tolosa*.'
+							explain: 'Origine ≠ lieu de vie : Karim : *soi de Besièrs, mas demòri a Tolosa*.'
 						},
 						{
 							q: '« Ieu, me ___ Marià. »',
@@ -285,7 +285,7 @@ export const modul13 = {
 							q: '*Siás* ou *ès* : lequel est correct ?',
 							options: ['les deux', 'seulement siás', 'seulement ès'],
 							correct: 0,
-							explain: '*siás* est la forme du cursus, *ès* celle de plusieurs pays (Roergue…) — toutes deux justes.'
+							explain: '*siás* est la forme du cursus, *ès* celle de plusieurs pays (Roergue…) : toutes deux justes.'
 						},
 						{
 							q: 'Salue le groupe et dis d’où tu es :',
@@ -335,9 +335,9 @@ export const modul13 = {
 				{
 					type: 'note',
 					variant: 'info',
-					title: 'Va plus vite — sans chrono',
+					title: 'Va plus vite : sans chrono',
 					list: [
-						'**Dis 3 fois** : ton nom, d’où tu es, où tu habites — de plus en plus fluide.',
+						'**Dis 3 fois** : ton nom, d’où tu es, où tu habites, de plus en plus fluide.',
 						'**5 mots-clés** pour rejouer la scène : *Barcelona – Besièrs – Tolosa – vilatge – país*.'
 					]
 				}
@@ -351,9 +351,9 @@ export const modul13 = {
 				{
 					type: 'note',
 					variant: 'task',
-					title: 'Tasca finala — À toi',
+					title: 'Tasca finala : À toi',
 					paragraphs: [
-						'3-4 phrases enregistrées ou écrites — d’où tu viens, où tu habites (+ éventuellement d’où vient quelqu’un de ta famille), puis pose les deux questions : *D’ont siás ? Ont demòras ?*',
+						'3-4 phrases enregistrées ou écrites : d’où tu viens, où tu habites (+ éventuellement d’où vient quelqu’un de ta famille), puis pose les deux questions : *D’ont siás ? Ont demòras ?*',
 						'**Voie privée** : téléphone, réécoute demain. **Voie communautaire** *(bientôt)* : le post de la semaine.'
 					]
 				},
@@ -381,7 +381,7 @@ export const modul13 = {
 				{
 					type: 'checklist',
 					key: 'bilan',
-					title: 'Bilan — Je peux…',
+					title: 'Bilan : Je peux…',
 					items: [
 						'dire d’où je viens et où j’habite',
 						'le demander (tu)',
@@ -397,15 +397,15 @@ export const modul13 = {
 						{ q: '« D’où es-tu ? »', a: '*D’ont siás ?*' },
 						{ q: '(ela) ___ d’aquí.', a: '*es*' },
 						{ q: '« J’habite à Albi. »', a: '*Demòri a Albi.*' },
-						{ q: '*ès*, c’est correct ?', a: 'Oui — la forme de plusieurs pays pour « tu es ».' }
+						{ q: '*ès*, c’est correct ?', a: 'Oui : la forme de plusieurs pays pour « tu es ».' }
 					]
 				},
 				{
 					type: 'note',
 					variant: 'culture',
-					title: 'Cultura — Ta vila a un nom occitan',
+					title: 'Cultura : Ta vila a un nom occitan',
 					paragraphs: [
-						'*Tolosa, Besièrs, Montpelhièr, Carcassona, Rodés, Albi…* Chaque ville et presque chaque village d’Occitanie a son nom occitan — souvent plus proche de la prononciation locale que le nom français (écoute : *Besièrs*, bé-ZYÈS — le r final se tait).',
+						'*Tolosa, Besièrs, Montpelhièr, Carcassona, Rodés, Albi…* Chaque ville et presque chaque village d’Occitanie a son nom occitan : souvent plus proche de la prononciation locale que le nom français (écoute : *Besièrs*, bé-ZYÈS, le r final se tait).',
 						'Va voir la carte de Lo Ligam : ton coin y a son nom.'
 					]
 				},
@@ -414,7 +414,7 @@ export const modul13 = {
 					variant: 'info',
 					title: 'Se parles catalan / castelhan',
 					paragraphs: [
-						'*Sóc de Barcelona* ↔ *Soi de Barcelona* — presque jumeau ! *D’on ets ?* ↔ *D’ont siás ?* · Le *o* occitan sans accent sonne « ou » là où le catalan dit [o] : *Tolosa* = tou-LOU-zo.'
+						'*Sóc de Barcelona* ↔ *Soi de Barcelona* : presque jumeau ! *D’on ets ?* ↔ *D’ont siás ?* · Le *o* occitan sans accent sonne « ou » là où le catalan dit [o] : *Tolosa* = tou-LOU-zo.'
 					]
 				},
 				{

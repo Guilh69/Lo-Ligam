@@ -16,6 +16,8 @@ Contenu pédagogique du site Lo Ligam (source de vérité : `cursus/`).
 - Chaque module : sessions de 10-15 min, audio à deux voix (modèle + native), tâche en deux voies (privée / communautaire), briques « Los que parlan » et « Lo conselh dels vièlhs ».
 - A1-A2 : pas d'API dans les glossaires (notation « ça sonne comme »).
 - Ne pas inventer de mots ni de règles ; sources hiérarchisées dans cadre §2.
+- **Style des textes apprenants (Romain, 29/08/2026)** : pas de tirets longs « — » (tic d'IA) sauf tirets de dialogue ; pas de jargon anglophone (« chunk » → « expression ») ; ponctuation légère (deux-points, virgules, parenthèses).
+- **Prononciations** : l'usage vivant validé par Romain prime sur fon'Òc (lecture par règles) — ex. *adieu* = « a-DIOU », *adieu-siatz* = « a-di-SSIATS ». Ne pas s'appuyer sur des contrastes du français standard que l'accent du Sud ne fait pas (ex. « rose » vs « bol »).
 
 ## Structure attendue d'un module (gabarit cadre §5)
 En-tête (can-do, forme, lexique, recyclé, durée, sessions) → Session 1 Rappel + Écoute → Session 2 Comprendre + Los que parlan → Session 3 Observe → Session 4 Entraîne-toi (3a/3b) → Session 5 Parle + À toi (3c, fluidité, tâche) → Bilan → Cultura → Se parles catalan/castelhan → Lo conselh dels vièlhs → Notes pour Romain.

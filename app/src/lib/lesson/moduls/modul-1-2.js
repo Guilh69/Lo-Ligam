@@ -1,4 +1,4 @@
-// Module 1.2 · A1 · « Me dison… / M'apèli… » — contenu structuré.
+// Module 1.2 · A1 · « Me dison… / M'apèli… » : contenu structuré.
 // Source : Modules_cors/…/cursus/modules/1.2-me-dison-m-apeli.md
 // ⚠️ Occitan à valider par Romain avant mise en ligne (vérifié API 29/08).
 
@@ -21,13 +21,13 @@ export const modul12 = {
 			blocks: [
 				{
 					type: 'reveal',
-					title: 'Rappel — de mémoire (module 1.1)',
+					title: 'Rappel : de mémoire (module 1.1)',
 					intro: 'Sans rien relire. Pense ta réponse, dis-la à voix haute, puis vérifie.',
 					items: [
-						{ q: 'Le matin, tu croises ton amie : « ___ ! »', a: '*Bonjorn !* — le matin.' },
+						{ q: 'Le matin, tu croises ton amie : « ___ ! »', a: '*Bonjorn !*, le matin.' },
 						{
-							q: 'On te lance *Cossí vas ?* — la réponse complète ?',
-							a: '*Va plan, mercé. E tu ?* — répondre **et** retourner.'
+							q: 'On te lance *Cossí vas ?* : la réponse complète ?',
+							a: '*Va plan, mercé. E tu ?* : répondre **et** retourner.'
 						},
 						{ q: '*Adieu-siatz !* s’adresse à qui ?', a: 'À plusieurs personnes, ou en vouvoyant.' },
 						{ q: 'Le soir, en arrivant : « ___ ! »', a: '*Bon ser !*' },
@@ -36,12 +36,12 @@ export const modul12 = {
 				},
 				{
 					type: 'dialogue',
-					title: 'Escota — Écoute d’abord, lis ensuite',
+					title: 'Escota : écoute d’abord, lis ensuite',
 					intro:
-						'La fèsta du village, sur la plaça. Núria, une Catalane de passage, rencontre Loís ; plus tard, Marià fait connaissance avec Karim — elle le vouvoie. Écoute 2 fois avant de lire.',
+						'La fèsta du village, sur la plaça. Núria, une Catalane de passage, rencontre Loís ; plus tard, Marià fait connaissance avec Karim : elle le vouvoie. Écoute 2 fois avant de lire.',
 					scenes: [
 						{
-							title: 'Scèna 1 — Núria e Loís',
+							title: 'Scèna 1 : Núria e Loís',
 							subtitle: '(deux jeunes, tutoiement)',
 							lines: [
 								{ oc: 'Adieu ! Cossí te dison ?', sound: 'a-DIOU ! cou-si té DI-zoun ?' },
@@ -52,7 +52,7 @@ export const modul12 = {
 							]
 						},
 						{
-							title: 'Scèna 2 — Marià e Karim',
+							title: 'Scèna 2 : Marià e Karim',
 							subtitle: '(vouvoiement)',
 							lines: [
 								{ oc: 'Bon ser ! Cossí vos dison ?', sound: 'bou(n) SÉ ! cou-si bous DI-zoun ?' },
@@ -84,7 +84,7 @@ export const modul12 = {
 							options: ['*Me dison* (« on me dit »)', '*M’apèli*', 'Encantat'],
 							correct: 0,
 							explain:
-								'Loís : *Me dison* ; Núria : *M’apèli*. **Les deux sont parfaitement correctes** — chacun sa préférence.'
+								'Loís : *Me dison* ; Núria : *M’apèli*. **Les deux sont parfaitement correctes**, chacun sa préférence.'
 						},
 						{
 							q: 'Vrai ou faux : *Encantat* et *Encantada* veulent dire deux choses différentes.',
@@ -92,13 +92,13 @@ export const modul12 = {
 							correct: 1,
 							noShuffle: true,
 							explain:
-								'C’est le même « enchanté » — *Encantat* pour un homme, *Encantada* pour une femme (én-can-TA-do).'
+								'C’est le même « enchanté » : *Encantat* pour un homme, *Encantada* pour une femme (én-can-TA-do).'
 						},
 						{
 							q: 'Chasse à l’expression : combien de fois entends-tu *dison* dans les deux scènes ?',
 							options: ['5 fois', '3 fois', '2 fois'],
 							correct: 0,
-							explain: '5 fois — c’est la tournure la plus courante : « on me dit ».'
+							explain: '5 fois : c’est la tournure la plus courante : « on me dit ».'
 						}
 					]
 				},
@@ -108,7 +108,7 @@ export const modul12 = {
 					audio: true,
 					title: 'Los que parlan',
 					paragraphs: [
-						'30 secondes d’un natif : comment on se nomme chez lui — et peut-être son *escais* (surnom) de village. Écoute seulement, puis lis. Tu n’as rien à corriger, juste à reconnaître.',
+						'30 secondes d’un natif : comment on se nomme chez lui, et peut-être son *escais* (surnom) de village. Écoute seulement, puis lis. Tu n’as rien à corriger, juste à reconnaître.',
 						'*(Enregistrement et transcription à venir.)*'
 					]
 				},
@@ -130,7 +130,7 @@ export const modul12 = {
 			blocks: [
 				{
 					type: 'qcm',
-					title: 'Obsèrva — La bonne expression au bon moment',
+					title: 'Obsèrva : la bonne expression au bon moment',
 					items: [
 						{
 							q: '*Me dison Mirelha.* Elle dit…',
@@ -158,14 +158,14 @@ export const modul12 = {
 								'l’une tutoie, l’autre vouvoie'
 							],
 							correct: 0,
-							explain: 'La même question, deux mélodies — toutes deux correctes.'
+							explain: 'La même question, deux mélodies : toutes deux correctes.'
 						},
 						{
 							q: 'Vrai ou faux : *Me dison* signifie mot à mot « on me dit ».',
 							options: ['Vrai', 'Faux'],
 							correct: 0,
 							noShuffle: true,
-							explain: 'Vrai — et c’est charmant.'
+							explain: 'Vrai : et c’est charmant.'
 						},
 						{
 							q: '« Moi, je m’appelle Joan » (en insistant) :',
@@ -177,7 +177,7 @@ export const modul12 = {
 				},
 				{
 					type: 'table',
-					title: 'L’essentiel — deux mélodies au choix',
+					title: 'L’essentiel : deux mélodies au choix',
 					head: ['', 'à quelqu’un qu’on tutoie', 'à plusieurs / en vouvoyant'],
 					rows: [
 						['demander le nom', '**Cossí te dison ?** · **Cossí t’apèlas ?**', '**Cossí vos dison ?** · **Cossí vos apelatz ?**'],
@@ -185,7 +185,7 @@ export const modul12 = {
 						['enchanté·e', '**Encantat !** (homme) · **Encantada !** (femme)', 'pareil']
 					],
 					notes: [
-						'Les deux façons sont **également correctes** — *Me dison* (« on me dit ») est très courante, *M’apèli* te rappellera le français. Choisis ta préférée, comprends les deux.',
+						'Les deux façons sont **également correctes** : *Me dison* (« on me dit ») est très courante, *M’apèli* te rappellera le français. Choisis ta préférée, comprends les deux.',
 						'« Enchanté » se dit aussi *Plan content / Plan contenta de te conéisser*.',
 						'*Ieu* (moi) sert à insister : *Ieu, m’apèli Núria.*'
 					]
@@ -193,7 +193,7 @@ export const modul12 = {
 				{
 					type: 'note',
 					variant: 'son',
-					title: 'Son du jour — le -on qui sonne « oun »',
+					title: 'Son du jour : le -on qui sonne « oun »',
 					paragraphs: [
 						'Le *-on* de *dison* sonne « oun » : *me dison* → mé DI-zoun.',
 						'Et rappel de 1.1 : le *-a* final sonne « o » → *Encantada* = én-can-TA-do.'
@@ -202,7 +202,7 @@ export const modul12 = {
 				{
 					type: 'chunks',
 					title: 'À retenir',
-					intro: 'Ça sonne comme — syllabe forte en capitales.',
+					intro: 'Ça sonne comme : syllabe forte en capitales.',
 					items: [
 						{ oc: 'Cossí te dison ?', sound: 'cou-si té DI-zoun', fr: 'comment t’appelles-tu ? (litt. « comment on te dit »)' },
 						{ oc: 'Me dison…', sound: 'mé DI-zoun', fr: 'je m’appelle (« on me dit »)' },
@@ -296,7 +296,7 @@ export const modul12 = {
 							options: ['Vrai', 'Faux'],
 							correct: 1,
 							noShuffle: true,
-							explain: 'Les deux sont également correctes — décision du cursus : deux façons, même rang.'
+							explain: 'Les deux sont également correctes : décision du cursus : deux façons, même rang.'
 						},
 						{
 							q: 'Réponds à *Cossí vas ?* :',
@@ -305,10 +305,10 @@ export const modul12 = {
 							explain: 'Le réflexe complet de 1.1.'
 						},
 						{
-							q: '« Ieu, ___ Karim. » (deux réponses possibles — choisis-en une)',
+							q: '« Ieu, ___ Karim. » (deux réponses possibles : choisis-en une)',
 							options: ['me dison', 'te dison', 'vos dison'],
 							correct: 0,
-							explain: '*me dison* ou *m’apèli* — les deux marchent.'
+							explain: '*me dison* ou *m’apèli* : les deux marchent.'
 						},
 						{
 							q: 'Tu quittes Núria, vous vous reverrez bientôt : « ___ ! »',
@@ -317,7 +317,7 @@ export const modul12 = {
 							explain: '*A lèu* = à bientôt.'
 						},
 						{
-							q: '*Cossí t’apèlas ?* — on parle à…',
+							q: '*Cossí t’apèlas ?* : on parle à…',
 							options: ['un ami, un proche', 'un groupe', 'quelqu’un qu’on vouvoie'],
 							correct: 0,
 							explain: 'Le *t’* tutoie.'
@@ -384,7 +384,7 @@ export const modul12 = {
 				{
 					type: 'note',
 					variant: 'info',
-					title: 'Va plus vite — sans chrono',
+					title: 'Va plus vite : sans chrono',
 					list: [
 						'**Redis ton dialogue trois fois**, de plus en plus à l’aise.',
 						'**Rejoue les deux scènes** avec 5 mots-clés : *Cossí ? – Me dison – M’apèli – Encantat – E vos ?*',
@@ -401,9 +401,9 @@ export const modul12 = {
 				{
 					type: 'note',
 					variant: 'task',
-					title: 'Tasca finala — À toi',
+					title: 'Tasca finala : À toi',
 					paragraphs: [
-						'Enregistre (ou écris) un dialogue de rencontre complet — salutation (1.1), demande de nom, présentation des deux personnes, « enchanté·e », congé. Une fois en « tu », une fois en « vous ».',
+						'Enregistre (ou écris) un dialogue de rencontre complet : salutation (1.1), demande de nom, présentation des deux personnes, « enchanté·e », congé. Une fois en « tu », une fois en « vous ».',
 						'**Voie privée** : enregistre-toi, réécoute demain, coche les critères.',
 						'**Voie communautaire** *(bientôt)* : poste ton audio sous le post Lo Ligam de la semaine.'
 					]
@@ -432,7 +432,7 @@ export const modul12 = {
 				{
 					type: 'checklist',
 					key: 'bilan',
-					title: 'Bilan — Je peux…',
+					title: 'Bilan : Je peux…',
 					intro: 'Coche seulement ce que tu sais faire **seul**.',
 					items: [
 						'demander son nom à quelqu’un (tu et vous)',
@@ -456,9 +456,9 @@ export const modul12 = {
 				{
 					type: 'note',
 					variant: 'culture',
-					title: 'Cultura — Los escais-noms',
+					title: 'Cultura : Los escais-noms',
 					paragraphs: [
-						'Dans les villages occitans, presque tout le monde avait — et a souvent encore — son *escais-nom* : un surnom affectueux, moqueur ou mystérieux, parfois transmis sur trois générations, au point qu’on oubliait le nom d’état civil.',
+						'Dans les villages occitans, presque tout le monde avait : et a souvent encore, son *escais-nom* : un surnom affectueux, moqueur ou mystérieux, parfois transmis sur trois générations, au point qu’on oubliait le nom d’état civil.',
 						'Demande autour de toi : il y a peut-être un *escais* dans ta famille.'
 					]
 				},
@@ -467,7 +467,7 @@ export const modul12 = {
 					variant: 'info',
 					title: 'Se parles catalan / castelhan',
 					paragraphs: [
-						'*Em dic Joan* ↔ *Me dison Joan* — même logique du « on me dit » ! *Com et dius ?* ↔ *Cossí te dison ?* · *Encantat/-ada* : mot pour mot le même qu’en catalan.'
+						'*Em dic Joan* ↔ *Me dison Joan* : même logique du « on me dit » ! *Com et dius ?* ↔ *Cossí te dison ?* · *Encantat/-ada* : mot pour mot le même qu’en catalan.'
 					]
 				},
 				{

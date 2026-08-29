@@ -1,4 +1,4 @@
-// Module 1.4 · A1 · Tasca « Me presenti ! » — contenu structuré.
+// Module 1.4 · A1 · Tasca « Me presenti ! » : contenu structuré.
 // Source : Modules_cors/…/cursus/modules/1.4-tasca-me-presenti.md
 // Module d'intégration : aucune forme nouvelle, tout est du recyclage 1.1-1.3.
 
@@ -8,9 +8,9 @@ export const modul14 = {
 	unitat: 'Unitat 1 · Adieu !',
 	nivel: 'A1 · Modul 1.4 · Tasca',
 	oc: 'Me presenti !',
-	fr: 'Je me présente — la tâche de l’unité',
+	fr: 'Je me présente : la tâche de l’unité',
 	cando:
-		'Je peux me présenter en 6 phrases — saluer, dire mon nom, d’où je viens, où j’habite, prendre congé — et poser les questions en retour.',
+		'Je peux me présenter en 6 phrases : saluer, dire mon nom, d’où je viens, où j’habite, prendre congé, et poser les questions en retour.',
 	durada: '~35-40 min · 4 étapes de 8-10 min',
 	nomsPropris: ['Karim', 'Núria', 'Loís', 'Marià', 'Lisa', 'Pau'],
 
@@ -31,7 +31,7 @@ export const modul14 = {
 						{ q: 'Une femme dit enchanté : « ___ ! »', a: '*Encantada !*' },
 						{ q: '« D’où es-tu ? »', a: '*D’ont siás ?*' },
 						{ q: '« Je suis de Béziers mais j’habite à Toulouse. »', a: '*Soi de Besièrs mas demòri a Tolosa.*' },
-						{ q: 'Quitte le groupe — vous vous revoyez demain.', a: '*A deman ! Adieu-siatz !*' }
+						{ q: 'Quitte le groupe : vous vous revoyez demain.', a: '*A deman ! Adieu-siatz !*' }
 					]
 				},
 				{
@@ -39,7 +39,7 @@ export const modul14 = {
 					variant: 'info',
 					title: 'Réécoute',
 					paragraphs: [
-						'Rejoue les trois dialogues de l’unité (le marché, la fèsta, les origines) — c’est déjà une petite histoire, et tu comprends tout. *(Les audios arriveront ici.)*'
+						'Rejoue les trois dialogues de l’unité (le marché, la fèsta, les origines) : c’est déjà une petite histoire, et tu comprends tout. *(Les audios arriveront ici.)*'
 					]
 				}
 			]
@@ -69,7 +69,7 @@ export const modul14 = {
 							q: 'Réponds à *Cossí anatz ?* :',
 							options: ['Va plan, mercé. E vos ?', 'Me dison Pau.', 'A deman !'],
 							correct: 0,
-							explain: 'La même réponse *Va plan* — et *E vos ?* pour retourner poliment.'
+							explain: 'La même réponse *Va plan*, et *E vos ?* pour retourner poliment.'
 						},
 						{
 							q: '« Moi, j’habite ici. »',
@@ -89,7 +89,7 @@ export const modul14 = {
 							options: ['Vrai', 'Faux'],
 							correct: 1,
 							noShuffle: true,
-							explain: 'Il ouvre ET ferme la rencontre — depuis le module 1.1 !'
+							explain: 'Il ouvre ET ferme la rencontre, depuis le module 1.1 !'
 						},
 						{
 							q: '« D’ont ___ ? » (tu)',
@@ -133,7 +133,7 @@ export const modul14 = {
 					type: 'reveal',
 					title: 'À toi de dire',
 					items: [
-						{ q: '« Comment t’appelles-tu ? » — les deux façons.', a: '*Cossí te dison ? / Cossí t’apèlas ?*' },
+						{ q: '« Comment t’appelles-tu ? » : les deux façons.', a: '*Cossí te dison ? / Cossí t’apèlas ?*' },
 						{
 							q: 'Présente Karim (il est de Besièrs, il vit à Tolosa) en 2 phrases.',
 							a: '*Karim es de Besièrs. Demòra a Tolosa.*'
@@ -154,10 +154,10 @@ export const modul14 = {
 				{
 					type: 'note',
 					variant: 'info',
-					title: 'Va plus vite — sans chrono, jamais',
+					title: 'Va plus vite : sans chrono, jamais',
 					list: [
-						'**Ta présentation, trois fois** : nom, origine, lieu de vie, salut de départ — la 2ᵉ fois plus vite, la 3ᵉ sans notes.',
-						'**L’entretien de la fèsta** : réponds sans réfléchir aux quatre questions — *Cossí te dison ? D’ont siás ? Ont demòras ? Cossí vas ?* Puis inverse les rôles.',
+						'**Ta présentation, trois fois** : nom, origine, lieu de vie, salut de départ, la 2ᵉ fois plus vite, la 3ᵉ sans notes.',
+						'**L’entretien de la fèsta** : réponds sans réfléchir aux quatre questions, *Cossí te dison ? D’ont siás ? Ont demòras ? Cossí vas ?* Puis inverse les rôles.',
 						'**5 mots-clés** pour tout rejouer : *Bonjorn – Me dison – Soi de – Demòri – A lèu*.'
 					]
 				}
@@ -171,10 +171,10 @@ export const modul14 = {
 				{
 					type: 'note',
 					variant: 'task',
-					title: 'Tasca finala — Me presenti !',
+					title: 'Tasca finala : Me presenti !',
 					paragraphs: [
 						'Enregistre (ou écris) ta présentation complète en **6 phrases** : ① salutation adaptée au moment, ② ton nom, ③ d’où tu viens, ④ où tu habites, ⑤ une question en retour (*E tu ? D’ont siás ?*), ⑥ congé.',
-						'C’est ta première vraie production : **garde-la** — tu la réécouteras dans quelques mois avec un grand sourire.',
+						'C’est ta première vraie production : **garde-la**, tu la réécouteras dans quelques mois avec un grand sourire.',
 						'**Voie privée** : téléphone, réécoute demain. **Voie communautaire** *(bientôt)* : le post de la semaine.',
 						'**Bonus** : ajoute une 7ᵉ phrase avec le nom occitan de ta ville ou de ton village (regarde la carte de Lo Ligam).'
 					]
@@ -186,7 +186,7 @@ export const modul14 = {
 					items: [
 						'Les 6 phrases y sont, dans un ordre naturel',
 						'*soi / demòri* bien employés (origine ≠ lieu de vie)',
-						'*Encantat/Encantada* accordé — et tu/vous cohérent',
+						'*Encantat/Encantada* accordé, et tu/vous cohérent',
 						'Prononciation : *-a* final « o », *o* « ou », *Besièrs* sans r final'
 					]
 				},
@@ -203,7 +203,7 @@ export const modul14 = {
 				{
 					type: 'checklist',
 					key: 'bilan',
-					title: 'Bilan de l’unitat 1 — Je peux…',
+					title: 'Bilan de l’unitat 1 : Je peux…',
 					intro: 'Coche seulement ce que tu sais faire **seul**.',
 					items: [
 						'saluer et prendre congé (matin/soir, tu/vous)',
@@ -228,10 +228,10 @@ export const modul14 = {
 					type: 'note',
 					variant: 'culture',
 					audio: true,
-					title: 'Cultura — Adieu paure Carnaval, ta première chanson',
+					title: 'Cultura : Adieu paure Carnaval, ta première chanson',
 					paragraphs: [
-						'Tu la connais depuis le module 1.1 — maintenant tu peux la chanter en comprenant : *adieu* (il ouvre ET il ferme), *paure* (pauvre). Écoute le refrain une dernière fois, chante par-dessus, et compte les *adieu*.',
-						'C’est l’adieu le plus célèbre de la culture occitane — et ta première chanson.'
+						'Tu la connais depuis le module 1.1 : maintenant tu peux la chanter en comprenant : *adieu* (il ouvre ET il ferme), *paure* (pauvre). Écoute le refrain une dernière fois, chante par-dessus, et compte les *adieu*.',
+						'C’est l’adieu le plus célèbre de la culture occitane : et ta première chanson.'
 					]
 				},
 				{
@@ -239,7 +239,7 @@ export const modul14 = {
 					variant: 'info',
 					title: 'Se parles catalan / castelhan',
 					paragraphs: [
-						'Ta présentation entière est presque du catalan : *Em dic… / Sóc de… / Visc a…* ↔ *Me dison… / Soi de… / Demòri a…* — six phrases, deux langues sœurs.'
+						'Ta présentation entière est presque du catalan : *Em dic… / Sóc de… / Visc a…* ↔ *Me dison… / Soi de… / Demòri a…*, six phrases, deux langues sœurs.'
 					]
 				},
 				{
@@ -247,8 +247,8 @@ export const modul14 = {
 					variant: 'info',
 					title: '🎉 Fin de l’unitat 1 !',
 					paragraphs: [
-						'*Òsca !* Tu sais te présenter en occitan — saluer, te nommer, dire d’où tu viens, prendre congé. La suite du chemin : l’unitat 2, *D’ont ses ?* — origines, langues et nationalités.',
-						'**Dans 2 jours** : ta présentation complète · **Dans 7 jours** : les 4 questions · **Dans 30 jours** : toute l’unité — le site te les resservira.'
+						'*Òsca !* Tu sais te présenter en occitan : saluer, te nommer, dire d’où tu viens, prendre congé. La suite du chemin : l’unitat 2, *D’ont ses ?*, origines, langues et nationalités.',
+						'**Dans 2 jours** : ta présentation complète · **Dans 7 jours** : les 4 questions · **Dans 30 jours** : toute l’unité, le site te les resservira.'
 					]
 				}
 			]
