@@ -129,10 +129,10 @@
 						class:on={slow}
 						onclick={toggleSlow}
 						aria-pressed={slow}
-						aria-label="Vitesse lente"
-						title={slow ? 'Repasser en vitesse normale' : 'Écouter plus lentement'}
+						aria-label="Velocitat lenta"
+						title={slow ? 'Tornar a la velocitat normala (revenir à la vitesse normale)' : 'Escotar mai lentament (écouter plus lentement)'}
 					>
-						🐢 {slow ? 'lente' : 'normale'}
+						🦥 {slow ? 'lenta' : 'normala'}
 					</button>
 				</div>
 			{:else}
