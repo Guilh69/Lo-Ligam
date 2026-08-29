@@ -120,8 +120,8 @@
 						onclick={() => toggleScene(si)}
 						aria-label={playingScene === si ? 'Pausa' : 'Escotar la scèna'}
 					>
-						{playingScene === si ? '⏸' : '🔊'}
-						<span class="listen-label">{playingScene === si ? 'pausa' : 'escotar'}</span>
+						<span class="listen-icon" aria-hidden="true">{playingScene === si ? '⏸' : '▶'}</span>
+						{playingScene === si ? 'Pausa' : 'Escotar'}
 					</button>
 					<button
 						type="button"
@@ -132,13 +132,17 @@
 						aria-label="Velocitat lenta"
 						title={slow ? 'Tornar a la velocitat normala (revenir à la vitesse normale)' : 'Escotar mai lentament (écouter plus lentement)'}
 					>
-						🦥 {slow ? 'lenta' : 'normala'}
+						<span class="speed-icon" aria-hidden="true">🦥</span>
+						{slow ? 'Lenta' : 'Normala'}
 					</button>
 				</div>
 			{:else}
-				<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
-					🔊 <span class="listen-label">a venir</span>
-				</button>
+				<div class="audio-controls">
+					<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
+						<span class="listen-icon" aria-hidden="true">▶</span>
+						Àudio a venir
+					</button>
+				</div>
 			{/if}
 			<div class="lines">
 				{#each scene.lines as line, li}
@@ -221,11 +225,10 @@
 	}
 
 	.scene-title {
-		margin: 0 0 0.5rem;
+		margin: 0 0 0.35rem;
 		font-family: var(--font-heading);
 		font-weight: 600;
 		color: var(--color-text);
-		padding-right: 9.5rem;
 	}
 
 	.scene-sub {
@@ -236,54 +239,53 @@
 	}
 
 	.audio-controls {
-		position: absolute;
-		top: 0.7rem;
-		right: 0.8rem;
 		display: flex;
-		gap: 0.4rem;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 0.35rem 0 0.75rem;
 	}
 
-	.listen {
-		border: none;
-		background: rgba(255, 255, 255, 0.7);
+	.listen,
+	.speed {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		border: 1.5px solid rgba(178, 84, 58, 0.4);
+		background: white;
 		border-radius: 999px;
-		padding: 0.25rem 0.6rem;
-		font-size: 0.8rem;
-		color: rgba(58, 42, 32, 0.5);
+		padding: 0.4rem 0.85rem;
+		font-family: var(--font-heading);
+		font-size: 0.88rem;
+		font-weight: 600;
+		color: var(--color-brick);
+		cursor: pointer;
+	}
+
+	.listen:disabled {
+		border-color: rgba(58, 42, 32, 0.18);
+		color: rgba(58, 42, 32, 0.45);
+		background: rgba(255, 255, 255, 0.55);
 		cursor: default;
 	}
 
-	.scene > .listen {
-		position: absolute;
-		top: 0.7rem;
-		right: 0.8rem;
+	.listen.active:hover,
+	.speed:hover {
+		box-shadow: 0 2px 8px rgba(58, 42, 32, 0.18);
 	}
 
-	.listen.active {
-		color: var(--color-brick);
-		cursor: pointer;
-		background: white;
-		box-shadow: 0 2px 8px rgba(58, 42, 32, 0.15);
+	.listen-icon {
+		font-size: 0.8rem;
 	}
 
-	.listen-label {
-		font-size: 0.7rem;
-		font-style: italic;
-	}
-
-	.speed {
-		border: none;
-		background: rgba(255, 255, 255, 0.7);
-		border-radius: 999px;
-		padding: 0.25rem 0.6rem;
-		font-size: 0.72rem;
-		color: var(--color-text);
-		cursor: pointer;
+	.speed-icon {
+		font-size: 1.05rem;
+		line-height: 1;
 	}
 
 	.speed.on {
 		background: var(--color-gold);
-		font-weight: 600;
+		border-color: var(--color-gold);
+		color: var(--color-text);
 	}
 
 	.lines {
