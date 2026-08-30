@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maqueta — visuals fotos dins la leiçon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+	:root {
+		--color-terracotta: #c8562e;
+		--color-brick: #a5342a;
+		--color-gold: #e0a43b;
+		--color-cream: #f5ead8;
+		--color-teal: #1f5f63;
+		--color-text: #3a2a20;
+		--font-heading: 'Syne', Verdana, sans-serif;
+		--font-body: 'Instrument Sans', system-ui, sans-serif;
+	}
+	* { box-sizing: border-box; }
+	body {
+		margin: 0;
+		padding: 2rem 1.5rem 3rem;
+		background: var(--color-cream);
+		color: var(--color-text);
+		font-family: var(--font-body);
+		-webkit-font-smoothing: antialiased;
+	}
+	.compare {
+		display: flex;
+		gap: 2.5rem;
+		justify-content: center;
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
+	.variant { width: min(430px, 100%); }
+	.variant > h2 {
+		font-family: var(--font-heading);
+		font-size: 1rem;
+		text-align: center;
+		color: var(--color-teal);
+		margin: 0 0 1rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	/* ——— Bloc leiçon (copié de DialogueBlock) ——— */
+	.block {
+		background: white;
+		border-radius: 20px;
+		padding: 1.25rem 1.4rem;
+		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+		overflow: hidden;
+	}
+	.block-title {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-size: 1.15rem;
+		color: var(--color-brick);
+	}
+	.intro {
+		margin: 0.4rem 0 0;
+		font-size: 0.88rem;
+		color: rgba(58, 42, 32, 0.75);
+		line-height: 1.5;
+	}
+	.sound-hint { margin: 0.45rem 0 0; font-size: 0.8rem; color: var(--color-teal); }
+	.scene {
+		position: relative;
+		margin-top: 1.1rem;
+		padding: 0.9rem 1rem;
+		background: rgba(224, 164, 59, 0.09);
+		border-radius: 14px;
+	}
+	.scene-title {
+		margin: 0 0 0.35rem;
+		font-family: var(--font-heading);
+		font-weight: 600;
+	}
+	.scene-sub { display: block; font-size: 0.82rem; font-weight: 400; color: var(--color-teal); }
+	.audio-controls { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.35rem 0 0.75rem; }
+	.listen, .speed {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		border: 1.5px solid rgba(178, 84, 58, 0.4);
+		background: white;
+		border-radius: 999px;
+		padding: 0.4rem 0.85rem;
+		font-family: var(--font-heading);
+		font-size: 0.88rem;
+		font-weight: 600;
+		color: var(--color-brick);
+	}
+	.speed { padding: 0.25rem 0.7rem; }
+	.speed-icon { font-size: 1.6rem; line-height: 1; }
+	.speed-rate { font-size: 0.82rem; font-weight: 700; }
+	.lines { display: flex; flex-direction: column; gap: 0.35rem; }
+	.line { margin: 0; line-height: 1.6; font-size: 1.02rem; }
+
+	/* ——— Nouveautés variante B ——— */
+
+	/* Bandèu paysage en tête du bloc : l'image sort des marges du bloc,
+	   son ciel transparent laisse voir le blanc de la carte. */
+	.bandeu {
+		margin: -1.25rem -1.4rem 0.9rem;
+		height: 170px;
+		overflow: hidden;
+	}
+	.bandeu img {
+		width: 100%;
+		height: 340px;
+		object-fit: cover;
+		object-position: 50% 47%;
+		display: block;
+	}
+
+	/* Vignette personnage : posée à droite de la scène, déborde légèrement. */
+	.scene.with-char { padding-right: 7.8rem; }
+	.char {
+		position: absolute;
+		right: 0.3rem;
+		bottom: 0;
+		width: 7.6rem;
+		pointer-events: none;
+	}
+	.char img { width: 100%; display: block; }
+</style>
+</head>
+<body>
+<div class="compare">
+
+	<div class="variant">
+		<h2>Actualament</h2>
+		<section class="block">
+			<h3 class="block-title">🎧 Escota : écoute d'abord, lis ensuite</h3>
+			<p class="intro">La fèsta du village, sur la plaça. Núria, une Catalane de passage, rencontre Loís. Écoute 2 fois avant de lire.</p>
+			<p class="sound-hint">👆 <em>Touche une phrase pour voir comment elle sonne (et l'entendre).</em></p>
+			<div class="scene">
+				<p class="scene-title">Scèna 1 : Núria e Loís <span class="scene-sub"><em>(deux jeunes, tutoiement)</em></span></p>
+				<div class="audio-controls">
+					<button type="button" class="listen"><span>▶</span> Escotar</button>
+					<button type="button" class="speed"><span class="speed-icon">🦥</span><span class="speed-rate">×0,75</span></button>
+				</div>
+				<div class="lines">
+					<p class="line">— Adieu ! Cossí te dison ? <span style="font-size:.75rem;opacity:.6">🔉</span></p>
+					<p class="line">— Me dison Loís. E tu, cossí t'apèlas ?</p>
+					<p class="line">— Ieu, m'apèli Núria.</p>
+					<p class="line">— Encantat, Núria !</p>
+					<p class="line">— Encantada !</p>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<div class="variant">
+		<h2>Amb los visuals</h2>
+		<section class="block">
+			<div class="bandeu"><img src="extraits/1.png" alt=""></div>
+			<h3 class="block-title">🎧 Escota : écoute d'abord, lis ensuite</h3>
+			<p class="intro">La fèsta du village, sur la plaça. Núria, une Catalane de passage, rencontre Loís. Écoute 2 fois avant de lire.</p>
+			<p class="sound-hint">👆 <em>Touche une phrase pour voir comment elle sonne (et l'entendre).</em></p>
+			<div class="scene with-char">
+				<p class="scene-title">Scèna 1 : Núria e Loís <span class="scene-sub"><em>(deux jeunes, tutoiement)</em></span></p>
+				<div class="audio-controls">
+					<button type="button" class="listen"><span>▶</span> Escotar</button>
+					<button type="button" class="speed"><span class="speed-icon">🦥</span><span class="speed-rate">×0,75</span></button>
+				</div>
+				<div class="lines">
+					<p class="line">— Adieu ! Cossí te dison ? <span style="font-size:.75rem;opacity:.6">🔉</span></p>
+					<p class="line">— Me dison Loís. E tu, cossí t'apèlas ?</p>
+					<p class="line">— Ieu, m'apèli Núria.</p>
+					<p class="line">— Encantat, Núria !</p>
+					<p class="line">— Encantada !</p>
+				</div>
+				<div class="char"><img src="extraits/2.png" alt=""></div>
+			</div>
+		</section>
+	</div>
+
+</div>
+</body>
+</html>
