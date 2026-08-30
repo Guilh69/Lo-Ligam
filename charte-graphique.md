@@ -58,6 +58,42 @@ comparées — canvas « Tipografia Lo Ligam ») : trois voix, une par usage.
 
 ---
 
+## 3bis. Photographies — le système « sang e aur » (décision 2026-08-30)
+
+Les photos de Romain, détourées, avec un **double liseré** aux couleurs occitanes :
+terracotta **#C8562E** à l'intérieur, or **#E0A43B** à l'extérieur, tracé légèrement
+irrégulier (jamais un contour lisse d'ordinateur). Choix de valeurs : authenticité
+plutôt qu'images IA, vrais lieux et vraies personnes du territoire.
+Maquette validée : `design-stock/Fotos/maqueta.html`.
+
+### Trois niveaux d'images
+1. **Couverture de bloc** (bandeau) : introduit une scène ou un module. Paysage ou
+   lieu ; liseré **sur la ligne de crête / silhouette seulement**, ciel supprimé
+   (transparent → blanc de la carte). Le lieu peut être évocateur plutôt que
+   littéral (une fête de village peut « avoir lieu » dans un paysage cévenol).
+2. **Vignette personnage** : personne détourée, liseré **sur tout le tour**, posée
+   en bas d'un encadré de scène (comme un autocollant). Les personnages (Loís,
+   Núria…) sont joués par des proches **volontaires** : recueillir une
+   **autorisation écrite de droit à l'image** avant publication, et tenir la liste
+   des identités attribuées.
+3. **Image de vocabulaire** : un objet ou un thème, détouré, liseré tour complet.
+   À taille moyenne (flashcards, cartes de mots). **En dessous de ~80 px le liseré
+   devient illisible** : les petits pictogrammes restent des emoji/pictos, pas des
+   photos.
+
+### Recette de traitement (Canva)
+Réglages identiques pour toutes les photos (l'œil lit la répétition comme du
+professionnalisme) : Température **+10**, Saturation **−15**, Contraste **+10**,
+Hautes lumières **−10**, Netteté **+5**. Seule la **luminosité** s'ajuste photo par
+photo. Régler une photo de référence puis « Copier le style » (rouleau) sur les
+autres. Export : **PNG fond transparent**, couleurs du liseré saisies par code hexa.
+
+### Poids cibles (sobriété)
+- Bandeau : ~900 px de large, JPEG qualité ~82, ciel aplati en blanc → **≤ 250 Ko**.
+- Vignette/objet : ~300 px, PNG transparent → **≤ 150 Ko**.
+
+---
+
 ## 4. Conventions bilingues (héritées)
 
 Occitan (grand) → français italique → phonétique + audio. À conserver dans les leçons pour la continuité de marque.
