@@ -50,6 +50,7 @@
 | **Ont es ?** — placer la ville, découvrir son nom occitan | P3 (ancrage réel), toponymie | La carte : « ma ville a un nom occitan ! » | S2 / Cultura / unités lieux | top'Òc | nouveau `map-quiz` (avec la carte existante) | **4** (coordination carte) |
 | **Rimes & virelangues** — compléter la comptine, dire de plus en plus vite | P6 (fluidité phonologique) | La musique, le rire du virelangue raté | S5 / Cultura (chanson d'unité) | rimas + fon'Òc | OrderBlock + audio | **5** (avec l'audio) |
 | **L'oreille des pays** — d'où vient cette forme, cet accent ? | P2 (noticing de la variation) | La reconnaissance joyeuse de la pluralité (pilier 4) — jamais noté | S2 (Los que parlan enrichi) | — (audio natif requis) | nouveau `listen-guess` | **6** (après pipeline audio) |
+| **Los parlars sus la carta** — glisser chaque dialecte sur sa zone (demande Romain 30/08, pour le module 0) | P3 (ancrage réel), pilier 4 | La carte devient un jeu ; « mon coin parle quoi ? » | Module 0 · Cultura | — (couches dialectes déjà en base) | nouveau `map-quiz` sur la carte Leaflet existante | **à caler avec le module 0** |
 
 ## 4. Écartée (définitif — ne pas réintroduire)
 
@@ -79,3 +80,21 @@ module, choisies selon le contenu (charge cognitive, cadre v0.3).
    Phase 1 ou plus tard ?
 3. Le `branch-dialogue` (dialogue à choix) : écrire son modèle de données au
    moment du premier module qui en a besoin, pas avant.
+
+## 7. Pistes open source pour élargir la bibliothèque (demande Romain, 30/08)
+
+À évaluer dans une séance dédiée avant toute adoption (poids des pages,
+charte graphique, hébergement européen, licences) :
+
+- **H5P** : la grande bibliothèque libre d'exercices interactifs (glisser les
+  mots, zones sur image, cartes-dialogues, mémory…) — déjà citée comme option
+  dans le cadre v0.3 §10. Peut se jouer dans notre site sans Moodle via un
+  lecteur autonome ; **Lumi**, application de bureau libre, permettrait à
+  Romain de fabriquer ces exercices visuellement, sans code.
+- **Recommandation actuelle** : pour le quiz des dialectes, pas besoin de
+  H5P — notre carte Leaflet et les couches GeoJSON des dialectes existent
+  déjà dans le site ; un bloc maison sera plus léger et sur la charte.
+  H5P/Lumi restent la piste sérieuse si la demande d'exercices « riches »
+  dépasse ce que le moteur maison couvre.
+- Garde-fou : tout ajout externe passe par les critères du projet (sobriété,
+  RGAA, pas de service tiers appelé depuis le site).
