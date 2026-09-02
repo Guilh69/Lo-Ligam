@@ -56,7 +56,7 @@ Titres = ceux de la carte v0.3, sauf ✏️ = ajustement proposé.
 
 | U | Titre (oc) | Thématique | Scène de l'année du village | Còla (⚠️ proposition) | Chanson |
 |---|---|---|---|---|---|
-| 0 | *Tu l'as déjà entendu* | **comprendre de quoi on parle** (précision Romain, 30/08, en écho au cahier des charges) : qu'est-ce que l'occitan, qu'est-ce qu'un dialecte, l'aire géographique + philosophie, mots survivants, l'accent. Avec un **quiz sur la carte : placer les dialectes au bon endroit** (mécanique « Los parlars sus la carta », catalogue §3) | l'arrivée au village | — | — |
+| 0 | *Tu l'as déjà entendu* — titre de travail posé par Romain dans l'Escritòri (30/08) : *« L'occitan, la lenga d'òc, le patois ? Kezako ? »* | **comprendre de quoi on parle** (précision Romain, 30/08, en écho au cahier des charges) : qu'est-ce que l'occitan, qu'est-ce qu'un dialecte, l'aire géographique + philosophie, mots survivants, l'accent. Avec un **quiz sur la carte : placer les dialectes au bon endroit** (mécanique « Los parlars sus la carta », catalogue §3) | l'arrivée au village | — | — |
 | 1 | *Adieu !* | saluer, se nommer, d'où l'on est | la plaça, jour de marché, la fèsta | **Lo Drac** (l'esprit des rivières rôde sur la plaça) | *Adieu paure Carnaval* |
 | 2 | ✏️ *D'ont siás ?* (carte : « D'ont ses ? » — harmoniser avec *siás*) | origines, nationalités, langues parlées | la fèsta continue : le village est un carrefour (Núria la Catalane, Karim…) | **Las Encantadas** (les fées qui parlent toutes les eaux) | à choisir (chant polyglotte ?) |
 | 3 | *La familha* | famille, nombres 0-20, âge | le repas de famille chez Marià | **Joan de l'Ors** (le fils prodigieux des contes) | à choisir (chanson de famille) |
