@@ -286,6 +286,15 @@ virelangues, l'oreille des pays) ; **« vrai/inventé » écarté définitivemen
 (plagiat du jeu du Congrès). Voir **`catalogue-exercicis.md`** ; consigné au
 §11. Reste ouvert dans le catalogue : ordre de construction, espace Jòcs.
 
+## 8 bis. Chantier « parcours de référence » (demande Romain, 31/08/2026)
+
+Trois étapes : (1) état de l'art des parcours en autonomie et fil recommandé
+A1→C2, avec une proposition d'animation par exercice pour arbitrage ;
+(2) adaptation à la culture et à la langue occitanes ; (3) corpus A1→C2.
+**L'étape 1 est livrée** : `etat-de-l-art-parcours.md` (v0.1, cinq
+recherches vérifiées, synthèse, relecture critique consignée en §11 pour la
+v0.2). Les dix questions d'arbitrage sont en §9 de ce document.
+
 ## 9. Prochaine action
 
 **Étape E — Production en série.** Premier de la file : **le module 0
