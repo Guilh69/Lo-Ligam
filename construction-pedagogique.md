@@ -295,6 +295,17 @@ A1→C2, avec une proposition d'animation par exercice pour arbitrage ;
 recherches vérifiées, synthèse, relecture critique consignée en §11 pour la
 v0.2). Les dix questions d'arbitrage sont en §9 de ce document.
 
+**Contrainte structurante (Romain, 03/09/2026) : il est seul derrière
+l'application.** Pas de dizaines de locuteurs ni de correcteurs humains à
+court terme. Toute recommandation se range désormais en deux colonnes :
+- **Phase de lancement** : faisable par Romain et Claude seuls (voix de
+  Romain, corrections automatiques du moteur, corpus libre, révision espacée
+  logicielle, capsules écrites) ;
+- **Évolution possible** : quand des bénévoles, des natifs ou des partenaires
+  arrivent (clips de natifs, cercle de correction humaine, binômes, voix
+  natives sur les dialogues).
+Le plan §8 de `etat-de-l-art-parcours.md` est à relire avec cette grille.
+
 ## 9. Prochaine action
 
 **Étape E — Production en série.** Premier de la file : **le module 0
