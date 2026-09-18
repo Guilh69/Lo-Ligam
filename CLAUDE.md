@@ -23,7 +23,7 @@ Site d'apprentissage de l'occitan (languedocien, norme classique) + plateforme d
 - Périmètre MVP : A1, compte, questionnaire. Cartographie et modèle payant = en cours d'arbitrage, voir `cahier-des-charges.md` §3/§6/§11 avant de supposer l'ancien périmètre.
 
 ## Documents de référence
-`cahier-des-charges.md` (source de vérité + journal des décisions) · `plan-pedagogique-phase1.md` · `parcours-utilisateur-mvp.md` · `charte-graphique.md` · `unitat-1-adieu.md`
+**`PILOTATGE.md` d'abord : l'ouvrir en début de séance, le mettre à jour en fin.** Puis `cahier-des-charges.md` (source de vérité + journal des décisions §11) · `charte-graphique.md` · `corpus-design.md` · `transposicion-racine2.md` · les documents pédagogiques listés dans PILOTATGE.
 
 ## Plusieurs conversations en parallèle
 Romain travaille via plusieurs conversations séparées, une par thème. Elles ne se voient pas : **Git est le seul canal de synchronisation**.

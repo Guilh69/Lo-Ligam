@@ -1,0 +1,124 @@
+# Pilotatge — tableau de bord de Lo Ligam
+
+> **Le document de reprise.** Créé le 2026-09-18 après l'inventaire complet du
+> projet (6 agents, tous les documents et tout l'historique Git relus), à la
+> demande de Romain : « il va falloir que tu m'aides à faire la gestion de ce
+> projet et que je puisse repartir d'une bonne manière. »
+>
+> **Rituel** : toute conversation l'OUVRE en début de séance et le MET À JOUR
+> en fin de séance. Une conversation = un chantier. Les décisions vont au
+> §11 du cahier des charges ; ici, seulement l'état et la prochaine action.
+
+## La photo du projet (2026-09-18)
+
+Le socle est solide : un site en ligne sur infrastructure européenne avec
+déploiement automatique, une unité 1 complète et jouable (4 modules, lexique
+vérifié par les API du Congrès), un cursus A1→C2 cadré, une identité visuelle
+tranchée et appliquée, et une cinquantaine de décisions datées au journal.
+
+L'impression de « tout reprendre à chaque fois » ne vient pas d'un manque de
+décisions : elle vient d'un **défaut de consignation** — des décisions clés
+vivent hors du journal §11, des sections périmées n'ont jamais été barrées,
+et chaque conversation retombe sur des textes qui ne disent plus la vérité.
+Ça se répare en deux séances : un **toilettage documentaire** (Claude) et une
+**séance d'arbitrage** (Romain). Ensuite, la file de production est limpide —
+et l'essentiel de ce qui reste est exactement ce que Romain veut garder pour
+lui : rédiger le module 0 depuis ses livres, enregistrer sa voix, choisir ses
+photos.
+
+## Répartition des rôles (rappel permanent)
+
+- **Romain, et lui seul** : la vision, les livres et ressources, le choix et
+  la prise des photos, la voix, la validation de l'occitan, chaque décision.
+- **Claude** : le code, la recherche, la mise en forme des matériaux de
+  Romain — jamais de contenu inventé à sa place.
+- **Ensemble** : les choix visuels, sur maquettes comparées, une décision à
+  la fois.
+
+## Les chantiers
+
+| # | Chantier | État | Prochaine action (UNE seule) | Qui |
+|---|---|---|---|---|
+| 1 | **Toilettage documentaire** | à faire | Faire redire la vérité aux documents : §11 complété (décision du 03-09 manquante), sections périmées barrées avec bandeau « remplacé par », versions/dates d'en-tête reprises, incohérences de la liste ci-dessous purgées | Claude |
+| 2 | **Séance d'arbitrage** | bloqué | Une séance unique : Claude pose les questions ouvertes une par une, Romain tranche ou classe « plus tard » explicitement ; tout part au §11 | ensemble |
+| 3 | **Module 0** (« L'occitan… Kezako ? ») | bloqué | Romain écrit son brouillon d'intro d'une page, depuis ses livres et sa vision ; Claude met en forme ensuite | Romain |
+| 4 | **Audio de l'unité 1** (sa voix) | bloqué | Enregistrer UNE scène (le soir du 1.1) au téléphone pour relancer la machine — les LISTA.txt de chaque dossier disent quoi enregistrer | Romain |
+| 5 | **Validation occitane** (modules 1.1-1.4 + promesse) | bloqué | Une session dicodòc : relire les 4 modules, trancher les 3 questions de graphie notées dans le 1.1, valider la ligne de promesse | Romain |
+| 6 | **Refonte de /aprene en « Camin »** | à faire | Construire le sommaire du cursus avec la frise du chemin (essai → Modul 0 → A1) et les 4 modules de l'unité 1 visibles | Claude |
+| 7 | **Transposition Racine² sur le site** | à faire | Coder le premier lot : ligne de promesse + ancre héros, pages A prepaus + Contacte, FAQ accordéon, kit de fluidité | Claude |
+| 8 | **Photos « sang e aur »** | bloqué | Romain inventorie ses photos existantes et pressent son casting ; Claude prépare le modèle d'autorisation (droit à l'image et à la voix) | Romain |
+| 9 | **Vidéo et design-stock** (~60 Mo hors Git) | flou | Claude mesure Officialitat.mp4, propose un plafond de poids et une règle écrite « quoi committer / quoi archiver » ; Romain tranche | ensemble |
+| 10 | **Réveil technique** | bloqué | Romain ouvre le tableau de bord Supabase et relance le projet (2 minutes — le plan gratuit se met en pause après inactivité) | Romain |
+| 11 | **Courriels** (Votz/CGU lo Congrès + relance LISN) | bloqué | Claude prépare les deux brouillons ; Romain les envoie de sa boîte | Romain |
+
+## Les décisions déjà prises — à NE PAS rouvrir
+
+(Le §11 du cahier des charges fait foi ; ceci est l'aide-mémoire.)
+
+1. **2026-08-22 — Site vs application : tranché.** Un seul produit, deux
+   registres (RÉCIT expressif / OUTIL sobre), une seule adresse, pas d'app
+   native.
+2. **2026-08-22 — Typographie : tranchée et en production.** Syne (titres),
+   Instrument Sans (courant), Cormorant Garamond italique (citations),
+   Fredoka logo seul.
+3. **2026-08-22 — Accueil** : héros « Lo riu » + 6 stations ; reconfirmé le
+   18-09.
+4. **2026-07-28** — Graphie classique · nom « Lo Ligam » · MVP = A1 òc+fr ·
+   15 ans minimum · questionnaire en minimisation RGPD.
+5. **2026-08-29** — UN seul chemin d'apprentissage (le cursus) ; module 0
+   sans compte remplacera l'essai libre ; rythme au choix de la personne.
+6. **2026-08-29** — Gamification : Arbre del Ligam, còla pyrénéenne, Fuòc de
+   l'ostal, zéro classement ; catalogue d'exercices : socle + 6 mécaniques.
+7. **2026-08-29** — API lo Congrès : conception/vérification seulement,
+   jamais d'appel depuis le site public.
+8. **2026-08-29/30** — Prononciation = l'usage vivant de Romain ; style des
+   textes apprenants fixé.
+9. **2026-08-30** — Photos « sang e aur » : 3 niveaux, double liseré, refus
+   des images IA (charte §3bis).
+10. **2026-08-08/09** — SvelteKit + Supabase (UE, migration reportée
+    sciemment) + Scaleway Paris, déploiement automatique.
+11. **2026-08-03/04/06** — Admin : RLS seul rempart, SVG interdit, MP4 à
+    l'ouverture de fiche, pas de CMS externe, tout texte visible en base.
+12. **2026-09-03** — **Romain est seul** : tout se classe lancement /
+    évolution (grille §8 bis de l'état de l'art des parcours).
+13. **2026-09-18** — Transposition Racine² actée (`transposicion-racine2.md`).
+
+## Les vraies questions ouvertes (pour la séance d'arbitrage)
+
+1. **Modèle économique** : où passe la limite gratuit/payant du parcours
+   autonome ? La logique solidaire est-elle la même qu'en visio ? *(ouverte
+   depuis le 31-07 — conditionne le statut juridique et le périmètre)*
+2. **Combien d'unités A1 pour lancer** ? L'ancien repère (4-6) n'a jamais été
+   confronté au nouveau volume (10 unités + module 0 = 41 modules).
+3. **La cartographie passe-t-elle en premier ?** À trancher avant de
+   réorganiser les phases ; dépend de la réponse du LISN (relance à envoyer).
+4. **Statut juridique** : micro-entreprise ou association ? (verrouille dons
+   et paiement solidaire)
+5. **Les 14 questions d'arbitrage du §9** de l'état de l'art des parcours
+   (répétition espacée, courriel hebdo, animations par défaut…).
+6. **Le nom « Lo Ligam »** : domaine, INPI, stores — vérifiés ou pas ?
+7. **Casting** : qui joue les personnages ? (+ autorisations écrites)
+8. **design-stock** : que committer, qu'archiver ? (~60 Mo hors Git)
+
+## Incohérences à purger (liste de travail du chantier 1)
+
+- En-tête du cahier figé à « v0.5 · 31 juillet » alors que le journal court
+  jusqu'au 18-09.
+- Décision du 03-09 (« Romain est seul ») absente du §11.
+- Trois formulations site/app périmées (§3, §5, ligne du 28-07) contredisent
+  le 22-08.
+- Audio : la ligne « Votz d'abord » du 28-07 contredite par le 29-08 et par
+  la voix de Romain déjà en ligne.
+- §6 présente comme acté un modèle « envisagé, pas tranché ».
+- §13 « Prochaines étapes » périmé ; cases §10 non cochées.
+- Les 4 documents de juillet sans bandeau « remplacé par le cursus v0.3 ».
+- Incohérences internes du cursus (261 vs 258 modules, RS5464 échue, titre
+  unité 2, tableau spiralaire).
+- Charte : bandeau « v0.1 · hex approximatifs » malgré des décisions
+  définitives ; kit de fluidité Racine² à y intégrer.
+- Deux maquettes photo concurrentes (maqueta.html vs maqueta-view.html) —
+  laquelle fait foi ?
+- §8 : « contacter lo Congrès » encore écrit alors que c'est fait ;
+  l'expiration de la clé API Scaleway (2027-08-08) écrite nulle part.
+- L'essai libre « remplacé » par le module 0 mais toujours en ligne sans
+  date de bascule écrite.
