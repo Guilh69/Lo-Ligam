@@ -1,7 +1,8 @@
 # Charte graphique — Lo Ligam
 
 > Dérivée de l'identité **Instagram Lo Ligam** déjà existante. L'app *prolonge* cette marque (même âme visuelle), avec la retenue qu'exige une interface.
-> Couleurs en hex **approximatifs** — à prélever précisément sur les vrais visuels. · v0.1
+> ~~Couleurs en hex **approximatifs** — à prélever précisément sur les vrais visuels. · v0.1~~ *(périmé — les couleurs sont des tokens exacts dans `app/src/app.css` depuis le 2026-07-28, annotation du toilettage 2026-09-18)*
+> **État réel** : les couleurs du §1 sont **exactes** — ce sont les tokens de `app/src/app.css` (`--color-terracotta: #c8562e` · `--color-brick: #a5342a` · `--color-gold: #e0a43b` · `--color-cream: #f5ead8` · `--color-teal: #1f5f63` · `--color-sky: #3e7cb1` · `--color-olive: #5e7b3a` · `--color-text: #3a2a20`). La typographie du §2 est **définitive** (décision du 2026-08-22) ; le système photo du §3bis est **acté** (décision du 2026-08-30). Charte vivante, mais ses décisions datées sont fermes.
 
 ---
 
@@ -18,6 +19,8 @@
 - Bleu ciel : ~#3E7CB1
 - Vert olive : ~#5E7B3A
 - Texte brun foncé : ~#3A2A20
+
+> ⚠️ **Note (toilettage 2026-09-18)** : les « ~ » ci-dessus datent de la v0.1. Ces huit valeurs sont **exactes** depuis le 2026-07-28 : ce sont les tokens de `app/src/app.css` (voir bandeau d'en-tête).
 
 Croix occitana (or sur rouge) = signature à réutiliser avec parcimonie.
 
@@ -128,6 +131,20 @@ L'app n'a aujourd'hui que 2 pôles (Aprendre, Compte), reliés par un simple bou
 - **Ne pas afficher ces sections avant qu'elles existent** (sobriété, pas de promesse non tenue) : pas d'icônes grisées "bientôt" dans l'interface actuelle.
 - **Mais garder l'architecture prête** : `AppHeader.svelte` centralise déjà l'en-tête des écrans internes (au lieu d'un en-tête dupliqué par page) — ajouter une vraie barre de navigation (probablement basse, mobile-first) entre sections quand elles existeront ne demandera pas de tout refaire.
 - **Réserver dès maintenant le style des icônes** de ces 2 futures sections, cohérent avec les motifs déjà identifiés (§3) : par ex. un groupe de toits/ostals pour Comunautat, une plume ou une main pour Contribuir — même langage graphique que `HomeIcon.svelte` (silhouette pleine, traits épais, pas un pictogramme générique).
+
+---
+
+## 5quater. Fluidité (décision 2026-09-18)
+
+Kit de motifs actés lors de la transposition de la référence centre-racine2.com
+(analyse du 2026-09-18) : **blocs-déclarations à mots surlignés** (or/terracotta
+sur crème ou brique) · **carte-héros arrondie** en tête de chaque page feuille ·
+**accordéons souples** · **barre qui se condense** au défilement · **jamais
+d'impasse** (toute page se termine en renvoyant quelque part) · **transitions de
+page** (View Transitions, natif). Toujours : CSS pur, `prefers-reduced-motion`
+respecté, 60 fps (transform/opacity uniquement). Détail et justifications :
+`transposicion-racine2.md` §6 · démo interactive : « Fluiditat Lo Ligam »
+(https://claude.ai/artifact/UfWbWE9UPufi27nHf2pZkF).
 
 ---
 

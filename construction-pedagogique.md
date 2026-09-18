@@ -242,7 +242,7 @@ Modul 0 « Tu l'as déjà entendu » — enrichi (décision étape A/B) :
    │
    ▼
 /aprene = lo Camin — sommaire du cursus : les unités du Cicle A1
-   présentées comme un chemin (1 Adieu ! → 2 D'ont ses ? → 3 La familha …)
+   présentées comme un chemin (1 Adieu ! → 2 D'ont siás ? → 3 La familha …)
    │
    ▼
 Modul (5-6 étapes de 8-10 min, moteur en place)

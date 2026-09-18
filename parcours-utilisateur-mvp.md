@@ -1,5 +1,7 @@
 # Parcours utilisateur — Lo Ligam — MVP (Phase 1)
 
+> ⚠️ **Document de juillet 2026, partiellement remplacé** : restent valables l'objectif d'ensemble (premiers mots dans les 3 premières minutes), la création de compte [C] et le questionnaire d'accueil [D] (périmètre MVP confirmé), ainsi que le principe du parcours en chemin d'unités [E]. L'essai libre [B] est remplacé par le module 0 (« Tu l'as déjà entendu », titre de travail), joué sans compte dans le moteur de leçon — l'essai libre reste en ligne tel quel jusqu'à ce que le module 0 soit prêt — et `/aprene` devient le sommaire du cursus ; le déroulé de leçon [F] est remplacé par le gabarit de module v0.3 en six étapes (Rappel, Escota, Obsèrva, Practica, Fluiditat, Tasca) du cursus (`Modules_cors/lo-ligam-cursus-pour-claude-code/cursus/00-cadre-methodologique.md`) ; les récompenses [G] sont désormais spécifiées dans `gamification.md` (lo Fuòc de l'ostal remplace la série générique ; fogassas, còla, Arbre del Ligam). Décisions du 2026-08-29 au §11 du `cahier-des-charges.md`. Le design de l'écran d'accueil [A] a par ailleurs été tranché le 2026-08-22 (héros « Lo riu », §11).
+
 > Document vivant, rattaché au cahier des charges (étape 2 : spécifications fonctionnelles).
 > Couvre **uniquement** le trajet du premier utilisateur, de l'ouverture à la fin de la leçon 1.
 > Version : 0.1 · 28 juillet 2026

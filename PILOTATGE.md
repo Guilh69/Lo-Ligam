@@ -39,8 +39,9 @@ photos.
 
 | # | Chantier | État | Prochaine action (UNE seule) | Qui |
 |---|---|---|---|---|
-| 1 | **Toilettage documentaire** | à faire | Faire redire la vérité aux documents : §11 complété (décision du 03-09 manquante), sections périmées barrées avec bandeau « remplacé par », versions/dates d'en-tête reprises, incohérences de la liste ci-dessous purgées | Claude |
-| 2 | **Séance d'arbitrage** | bloqué | Une séance unique : Claude pose les questions ouvertes une par une, Romain tranche ou classe « plus tard » explicitement ; tout part au §11 | ensemble |
+| 1 | **Toilettage documentaire** | ✅ fait le 2026-09-18 | 18 corrections vérifiées par relecture de contrôle (cahier v0.6, §11 complété, bandeaux sur les 4 docs de juillet, charte à jour, cursus annoté, §9 question 15 ajoutée, titre unité 2 harmonisé en « D'ont siás ? ») | Claude |
+| 2 | **Séance « Estructura » : blocs & concept** | **prochaine séance (choix de Romain, 18-09)** | Consolider l'ossature avant de remplir : (a) le concept en une page, avec les mots de Romain ; (b) `estructura-site.md` — tous les blocs du site, page par page, chacun avec rôle / état / source de remplissage (livre de Romain, ses photos, sa plume, API, Claude) | ensemble |
+| 2b | **Séance d'arbitrage** (questions ouvertes) | après la séance Estructura | Claude pose les questions une par une, Romain tranche ou classe « plus tard » explicitement ; tout part au §11 | ensemble |
 | 3 | **Module 0** (« L'occitan… Kezako ? ») | bloqué | Romain écrit son brouillon d'intro d'une page, depuis ses livres et sa vision ; Claude met en forme ensuite | Romain |
 | 4 | **Audio de l'unité 1** (sa voix) | bloqué | Enregistrer UNE scène (le soir du 1.1) au téléphone pour relancer la machine — les LISTA.txt de chaque dossier disent quoi enregistrer | Romain |
 | 5 | **Validation occitane** (modules 1.1-1.4 + promesse) | bloqué | Une session dicodòc : relire les 4 modules, trancher les 3 questions de graphie notées dans le 1.1, valider la ligne de promesse | Romain |
@@ -100,7 +101,18 @@ photos.
 7. **Casting** : qui joue les personnages ? (+ autorisations écrites)
 8. **design-stock** : que committer, qu'archiver ? (~60 Mo hors Git)
 
-## Incohérences à purger (liste de travail du chantier 1)
+## Restes du toilettage (2026-09-18) — pour les conversations concernées
+
+- Conversation pédagogie : confirmer la question 15 du §9 (tableau spiralaire
+  vs cartes) et harmoniser les annonces des cartes A2/B1/B2 ; corriger dans
+  `corpus-design.md` l'attribution de la revue Duolingo (Shortt et al. 2021,
+  pas Loewen) ; décider du sort d'`unitat-1-adieu.md` (archive ?).
+- Romain : les deux maquettes photo (`maqueta.html` committée-validée vs
+  `maqueta-view.html` non committée) — laquelle fait foi ?
+- Actions déjà au tableau : courriels (chantier 11), clé Scaleway avant le
+  2027-08-08, réveil Supabase (chantier 10).
+
+## Incohérences purgées le 2026-09-18 (archive du chantier 1)
 
 - En-tête du cahier figé à « v0.5 · 31 juillet » alors que le journal court
   jusqu'au 18-09.

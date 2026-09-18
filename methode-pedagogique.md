@@ -1,5 +1,7 @@
 # Méthode pédagogique — Lo Ligam
 
+> ⚠️ **Document de juillet 2026, partiellement remplacé** : la mécanique de découverte par blocs-lettres (§1, §5) survit comme type d'exercice du moteur (« Lettre-à-lettre », socle du `catalogue-exercicis.md` §2). En revanche, l'essai libre comme parcours séparé (§2) est remplacé par le module 0 joué sans compte — un seul chemin d'apprentissage, le cursus ; les six composantes d'un module (§2) sont remplacées par le gabarit v0.3 (Rappel, Escota, Obsèrva, Practica, Fluiditat, Tasca — `Modules_cors/lo-ligam-cursus-pour-claude-code/cursus/00-cadre-methodologique.md`) ; le contenu de la première leçon (§3) est remplacé par le module 1.1 « Adieu, cossí vas ? » du cursus, vérifié par les API de lo Congrès ; la limite « pas de vrai son » (§4) est levée depuis le premier audio en voix réelle de Romain (en ligne le 2026-08-29). Décisions du 2026-08-29 au §11 du `cahier-des-charges.md`.
+
 > Document vivant, rattaché au plan pédagogique (`plan-pedagogique-phase1.md`). Précise le **mécanisme d'apprentissage** à l'intérieur de chaque module/leçon — apporté par Romain le 30 juillet 2026 (`Modules_occitan.docx`).
 
 ---

@@ -2,7 +2,8 @@
 ### Application d'apprentissage de l'occitan et communauté occitane en ligne
 
 > **Document vivant.** C'est notre source de vérité. On le met à jour à chaque décision tranchée.
-> Version : 0.5 · Dernière mise à jour : 31 juillet 2026
+> Version : 0.6 · Dernière mise à jour : 18 septembre 2026
+> (v0.5 : 31 juillet — l'historique des décisions vit au §11)
 
 ---
 
@@ -37,7 +38,7 @@ Trois valeurs non négociables, inscrites dès la conception (pas ajoutées apr�
 - Module d'apprentissage de l'occitan **languedocien**, gamifié, animé, beau.
 - Création de compte + questionnaire d'accueil.
 - Relais vers les outils existants (lo Congrès, OPLO, etc.).
-- Site web vitrine + version applicative.
+- Site web vitrine + version applicative. *(périmé — remplacé par la décision du 2026-08-22, §11 : un seul produit, deux registres — récit et outil ; « app » désigne le registre outil, pas une application mobile native)*
 - Modèle : apprentissage autonome gratuit, avec possibilité de dons.
 
 ### Phase 2 — La visio et le soutien
@@ -91,13 +92,15 @@ Lo Congrès (organisme de régulation de la langue) met à disposition des API d
 
 ## 5. Onboarding
 
-- **Connexion** : email, Google (Gmail), et autres fournisseurs à définir (Apple obligatoire si publication sur l'App Store, éventuellement France Connect à étudier).
+- **Connexion** : email, Google (Gmail), et autres fournisseurs à définir (Apple obligatoire si publication sur l'App Store *(périmé — la décision du 2026-08-22, §11, écarte l'application mobile native : pas de publication App Store au programme)*, éventuellement France Connect à étudier).
 - **Questionnaire d'accueil** : nom, prénom, âge, lieu de vie, origine (cas des personnes déplacées), motivation.
   - ⚠️ Ces données sont personnelles → obligations RGPD (voir §8). On ne collecte que le nécessaire, avec consentement clair et finalité expliquée.
 
 ---
 
 ## 6. Modèle économique
+
+> ⚠️ **ENVISAGÉ, PAS TRANCHÉ** (requalifié le 2026-07-31) : ce qui suit est une piste de travail, pas une décision. C'est la question n°1 de la séance d'arbitrage — voir `PILOTATGE.md`.
 
 | Volet | Modèle |
 |---|---|
@@ -136,7 +139,7 @@ Lo Congrès (organisme de régulation de la langue) met à disposition des API d
 - **Paiements** : cours en visio + dons → obligations comptables et fiscales liées au statut choisi.
 - **Contenu participatif** : modération des photos et expressions proposées (droit à l'image des lieux/personnes, propos inappropriés).
 - **Mentions des marques/outils tiers** (lo Congrès, OPLO…) : simple relais/lien = ok, mais vérifier s'il y a intérêt à formaliser des partenariats.
-- **API de lo Congrès** : ✅ ressources officielles intéressantes (dico, conjugaison, phonétique, synthèse vocale Votz…). **Action : contacter lo Congrès pour cadrer les conditions d'utilisation** — usage commercial autorisé (l'appli a un volet payant) ? attribution requise ? clés/inscription ? limites de requêtes ? À transformer idéalement en **partenariat**, puisqu'un relais vers eux est déjà prévu.
+- **API de lo Congrès** : ✅ ressources officielles intéressantes (dico, conjugaison, phonétique, synthèse vocale Votz…). **Action : contacter lo Congrès pour cadrer les conditions d'utilisation** *(fait le 2026-08-29, §11 : clé obtenue, 10 API self-service testées, usage limité à la conception/vérification du contenu — pas d'appel depuis le site public ; le courriel CGU formel reste à envoyer, chantier 11 de `PILOTATGE.md`)* — usage commercial autorisé (l'appli a un volet payant) ? attribution requise ? clés/inscription ? limites de requêtes ? À transformer idéalement en **partenariat**, puisqu'un relais vers eux est déjà prévu.
 
 ---
 
@@ -154,9 +157,9 @@ Signer les accords, créer les comptes, héberger, gérer l'argent et les décla
 
 - [x] ~~**Graphie** : classique vs mistralienne~~ → **TRANCHÉ : norme classique.** (voir Journal §11)
 - [x] ~~**Nom** de l'application~~ → **TRANCHÉ : « Lo Ligam »** (« le lien »). Vérifications à faire : domaine, marque INPI, disponibilité stores ; noter la proximité avec l'association occitaniste « Ligams ». (voir Journal §11)
-- [ ] **Technologie** : appli native, web app, ou hybride (une base de code pour web + mobile) ?
+- [x] ~~**Technologie** : appli native, web app, ou hybride (une base de code pour web + mobile) ?~~ → **TRANCHÉ DE FAIT : web app SvelteKit** (adapter-node), pas d'application native (décisions du 2026-08-08 et du 2026-08-22, voir Journal §11)
 - [ ] **Statut juridique** pour les cours et dons (micro-entreprise, association…).
-- [ ] **Hébergeur** définitif.
+- [x] ~~**Hébergeur** définitif.~~ → **TRANCHÉ DE FAIT : Scaleway (Paris, fr-par)**, Vercel en secours ; base Supabase (UE) conservée, migration reportée sciemment (décisions du 2026-08-08 et du 2026-08-09, voir Journal §11)
 - [ ] **Périmètre exact du MVP** : quelles leçons, combien d'unités pour un lancement crédible ?
 
 ---
@@ -174,15 +177,15 @@ Signer les accords, créer les comptes, héberger, gérer l'argent et les décla
 | 2026-07-28 | **Nom de l'appli : « Lo Ligam »** (« le lien ») | Court, mémorisable, occitan authentique, dit la mission (relier à la langue et entre les gens). À vérifier : domaine, marque INPI, stores. Proximité à noter avec l'assoc. occitaniste « Ligams ». |
 | 2026-07-28 | Séquençage des unités fondé sur des principes psycholinguistiques (fréquence, concret→lointain, blocs fonctionnels, grammaire acquise, recyclage) | Base pédagogique solide plutôt qu'un simple découpage thématique |
 | 2026-07-28 | Gamification : exigence d'animations élégantes et fluides (sans sacrifier la sobriété) | Sentiment d'appli haut de gamme, cohérent avec la promesse « belle et fière » |
-| 2026-07-28 | Audio : Votz d'abord, prononciation humaine reportée (« à voir après ») | Démarrer sans lourd chantier d'enregistrement ; option humaine gardée ouverte |
-| 2026-07-28 | Essai libre avant création de compte : OUI | Réduit la friction, crée l'envie avant de demander un compte |
+| 2026-07-28 | Audio : Votz d'abord, prononciation humaine reportée (« à voir après ») *(révisé le 2026-08-29, §11 : la voix de Romain porte les dialogues ; Votz reste un outil de conception/vérification, pas la voix du site)* | Démarrer sans lourd chantier d'enregistrement ; option humaine gardée ouverte |
+| 2026-07-28 | Essai libre avant création de compte : OUI *(précisé le 2026-08-29, §11 : l'essai libre actuel reste en ligne **tant que le module 0 n'est pas publié** ; il est remplacé par le module 0 joué sans compte **à sa mise en ligne**, sa mécanique lettre-à-lettre survivant comme type d'exercice du moteur)* | Réduit la friction, crée l'envie avant de demander un compte |
 | 2026-07-28 | Interface multilingue : occitan par défaut + français, anglais, catalan, espagnol, italien (choix au 1ᵉʳ lancement) | Fierté occitane (langue chez elle) sans perdre les débutants ; langues sœurs + portée |
 | 2026-07-28 | Distinguer langue d'interface (6 langues) et langue du contenu pédagogique (à démarrer plus restreinte) | Traduire tout le contenu en 6 langues = 6× le travail ; élargir progressivement |
 | 2026-07-28 | Parcours structuré CEFR (A1→…), MVP = A1 ; niveau déclaré au départ, test de placement plus tard | Cadre reconnu, progression lisible ; skip vers niveau supérieur possible quand le contenu existera |
 | 2026-07-28 | Questionnaire : minimisation RGPD (nécessaire + utile + facultatif) ; vigilance âge/mineurs (consentement parental <15 ans) | Respect des données, conformité, moins de friction |
 | 2026-07-28 | **Langues au MVP : occitan (défaut) + français**, interface ET contenu. Puis catalan → anglais → espagnol/italien | Démarrer simple pour lancer vite ; élargir langue par langue ; catalan priorisé (marché + langue sœur) |
 | 2026-07-28 | **Âge minimum : 15 ans** | Évite le consentement parental (seuil RGPD France = 15 ans) ; simplifie le MVP |
-| 2026-07-28 | Cibles : application mobile **ET** web, une seule base de code ; commencer par le plus simple | Éviter de construire 2-3 fois ; cf. étape « choix techniques » |
+| 2026-07-28 | Cibles : application mobile **ET** web, une seule base de code ; commencer par le plus simple *(périmé — remplacé par la décision du 2026-08-22, §11 : un seul produit, deux registres, pas d'application mobile native)* | Éviter de construire 2-3 fois ; cf. étape « choix techniques » |
 | 2026-07-28 | **Identité visuelle = celle de l'Instagram Lo Ligam existant** (palette chaude terracotta/or/crème, illustrations troubadour, croix occitana, convention bilingue), adaptée aux règles d'interface | Marque déjà cohérente et reconnue ; l'app la prolonge → charte-graphique.md |
 | 2026-07-28 | **Piliers UX** : animations soignées à chaque interaction (survol, clic, réussite) ; sons associés (désactivables, légers) ; humour fin par touches | Expérience captivante et chaleureuse, fidèle à la marque ; sobriété et accessibilité préservées |
 | 2026-07-31 | Ouvre le site (accueil, carte des modules, essai libre, compte Supabase avec questionnaire) et le déploie en ligne (Vercel, lien privé de test) | Premier aller-retour concret pour tester sur téléphone |
@@ -201,7 +204,7 @@ Signer les accords, créer les comptes, héberger, gérer l'argent et les décla
 | 2026-08-06 | **Textes de l'accueil en base** (`site_textes`, éditables via `/admin/textes`) ; le code ne garde que des valeurs de secours affichées si la base ne répond pas. **Règle pour toutes les conversations : un nouveau texte visible se met dans `site_textes`, pas en dur** | Concrétise la décision ci-dessus. Le semis initial reprend les textes existants → bascule invisible ; une ligne manquante retombe sur le secours, rien ne casse |
 | 2026-08-06 | **Carte pilotée par la base** : còlas, couleurs de dialectes et lieux d'intérêt dans `carta_colas` / `carta_dialectes` / `carta_luocs`, gérés via `/admin/carta` et `/admin/carta/luocs` | Même logique d'autonomie ; les identifiants (`lieusInteres`, `cro`…) restent attendus par le code, d'où édition sans ajout/suppression pour les còlas et dialectes |
 | 2026-08-07 | **Couches de carte GÉNÉRIQUES** (révise la ligne ci-dessus) : création complète de couches depuis `/admin/carta` — type points/zones/lignes, thématique de regroupement, style, **téléversement de GeoJSON** (bucket `cartas`, 5 Mo, WGS84 vérifié), modèle de popup `{champ}`, visibilité par défaut. **uMap écarté** comme produit (iframe hors charte, couches à refaire, export floqué compromis) mais utilisable comme brouillon : le GeoJSON circule entre QGIS/uMap et le site. Restent spéciales (code) : dialèctes, despartaments | Autonomie complète demandée par Romain, qui produit déjà ses tracés dans QGIS ; flux : QGIS/uMap → export GeoJSON EPSG:4326 → téléversement admin → style dans l'admin |
-| 2026-08-08 | **Hébergement migré de Vercel (États-Unis) vers Scaleway (Paris, fr-par)** — Serverless Containers, adapter-node, image construite par GitHub Actions. Adresse actuelle : `https://ligamweb62fb7521-lo-ligam.functions.fnc.fr-par.scw.cloud`. Vercel conservé en secours tant que la base n'est pas migrée | Engagement européen (§7) : Vercel Inc. est une entité américaine soumise au CLOUD Act. Scaleway met le site et son hébergeur sous droit français. Le mettre en œuvre tôt évite une migration sous contrainte plus tard, le site n'ayant pas de date de sortie |
+| 2026-08-08 | **Hébergement migré de Vercel (États-Unis) vers Scaleway (Paris, fr-par)** — Serverless Containers, adapter-node, image construite par GitHub Actions. Adresse actuelle : `https://ligamweb62fb7521-lo-ligam.functions.fnc.fr-par.scw.cloud`. Vercel conservé en secours tant que la base n'est pas migrée. *(Note technique du 2026-09-18 : la clé API Scaleway créée pour ce déploiement expire le **2027-08-08** — à renouveler avant cette date.)* | Engagement européen (§7) : Vercel Inc. est une entité américaine soumise au CLOUD Act. Scaleway met le site et son hébergeur sous droit français. Le mettre en œuvre tôt évite une migration sous contrainte plus tard, le site n'ayant pas de date de sortie |
 | 2026-08-08 | **Configuration SvelteKit uniquement dans `svelte.config.js`** ; `vite.config.js` appelle `sveltekit()` sans options | Une configuration passée en ligne à `sveltekit()` **remplace** `svelte.config.js` au lieu de s'y ajouter. Piège coûteux : la politique de sécurité (CSP) ajoutée le 2026-08-07 était du code mort et n'a jamais été appliquée — invisible en développement, détectable seulement en lançant le serveur construit |
 | 2026-08-08 | **Réglages lus au démarrage** (`$env/dynamic/public`) et non à la construction (`$env/static/public`) | Sans cela l'image du conteneur ne peut pas se construire, aucun réglage n'étant disponible à ce moment. Bénéfice : la même image peut pointer vers une autre base sans reconstruction — utile pour la migration de la base |
 | 2026-08-09 | **Migration de la base de données REPORTÉE** (Supabase conservé). Région vérifiée : Union européenne. Candidats étudiés et écartés : *Eurobase OÜ* (Estonie, sur Scaleway, API proche de Supabase — mais bêta non lancée au 2026-08-09, capital 1 €, non assujettie à la TVA, import Supabase « coming soon ») ; *Nhost* (Suède, établi — mais GraphQL, donc réécriture des 84 requêtes, et l'offre gratuite met le projet en pause après 7 jours d'inactivité). **À réexaminer après le lancement d'Eurobase (26 août 2026) et quelques mois de recul** | Aucun service européen n'est à la fois mûr et compatible avec ce qu'utilise le site. Les alternatives réelles sont : tout réécrire (comptes + 84 règles d'accès à la main, là où naissent les failles, pour un projet mené seul), parier sur un fournisseur pré-lancement, ou auto-héberger — écarté, Romain ne veut pas administrer de serveur. Attendre ne coûte rien : le site n'a pas de date de sortie |
@@ -220,6 +223,7 @@ Signer les accords, créer les comptes, héberger, gérer l'argent et les décla
 | 2026-08-29 | **Gamification tranchée dans ses fondations (étape C)** : l'**Arbre del Ligam** (arbre unique, racines = la langue des anciens, ne fane jamais) · la **còla** de personnages de la mythologie pyrénéenne/occitane qui se débloque unité par unité, chacun portant son pays (troupe v0.1 validée : Drac, Tantugou, Hadas, Becut, Joan de l'Ors, l'Ors, Babau…) · la série = **lo Fuòc de l'ostal** (compteur de jours pratiqués + stats, foyer qui devient majestueux, **jamais éteint** — les braises restent, l'Ors fête les retours) · fogassas = récolte immédiate. Reportés : usage des crostadas, plan badges. Spécification : `gamification.md` | Décisions Romain. Chaque mécanique justifiée par le manifeste et corpus-design §2.3 (motivation identitaire et sociale, pas de peur ni compétition) ; règles non négociables : rien ne meurt, zéro classement, frontière étanche jeu/paiement |
 | 2026-08-29 | **Catalogue des exercices tranché (étape D)** : socle du gabarit v0.3 (déjà dans le moteur) + 6 nouvelles mécaniques validées — l'intrus, jeux de lettres à fréquences réelles, dialogue à choix avec la còla, « Ont es ? » (carte/toponymie), rimes & virelangues, l'oreille des pays. **Écarté définitivement : « vrai mot / mot inventé »** (concept du jeu du Congrès = plagiat, décision Romain ; l'API sembla-mots n'alimente aucun jeu public). Règle d'entrée : chaque mécanique justifiée par un principe SLA **et** un rôle de plaisir. Détail : `catalogue-exercicis.md` | Décisions Romain sur inventaire proposé. Les API restent en conception/vérification ; le plaisir est un critère d'ingénierie, pas un vernis |
 | 2026-08-30 | **Visuels photo : système « sang e aur » à trois niveaux** — photos de Romain détourées au double liseré terracotta #C8562E + or #E0A43B : 1) couverture de bloc (paysage, liseré sur la crête, ciel blanc — le lieu peut être évocateur plutôt que littéral), 2) vignette personnage (tour complet ; Loís, Núria… joués par des proches volontaires, **autorisation écrite de droit à l'image avant publication**), 3) image de vocabulaire (objet/thème, taille moyenne ; en petit on garde les pictos, liseré illisible < ~80 px). Recette complète (réglages Canva, poids cibles) : `charte-graphique.md` §3bis ; maquette validée : `design-stock/Fotos/maqueta.html` | Décision Romain. Refus des images IA (valeurs) sans dépendre d'un illustrateur : authenticité des vrais lieux et vraies personnes, cohérence par traitement identique, sobriété (bandeau ≤ 250 Ko, vignette ≤ 150 Ko). Piste complémentaire étudiée : commande à l'artiste occitane Camp.liure (Laurie Privat) pour les pièces d'identité visuelle |
+| 2026-09-03 | **Contrainte structurante : Romain est seul** derrière l'application (pas de dizaines de locuteurs ni de correcteurs humains à court terme). Toute recommandation se classe désormais en **« phase de lancement »** (Romain + Claude suffisent) ou **« évolution possible »** (bénévoles, natifs, partenaires) ; une recommandation qui suppose une personne de plus que Romain n'est jamais bloquante pour le lancement, elle est notée « évolution » derrière un déclencheur explicite. Grille complète : `etat-de-l-art-parcours.md` §8 bis | La colonne « lancement » suffit à sortir un A1 complet et honnête, sans que rien soit à refaire quand des renforts arriveront |
 | 2026-09-18 | **Transposition de la logique de centre-racine2.com actée** (référence choisie par Romain) → détail complet dans `transposicion-racine2.md` : hub→feuille, entonnoir à deux vitesses, jamais d'impasse, FAQ accordéon sur l'accueil, gabarit unique des pages leçon, frise du chemin dans le hub `/aprene`, pages A prepaus + Contacte à construire ; le kit de fluidité (blocs-déclarations surlignés, carte-héros, accordéons, barre condensée, View Transitions). Décisions du jour : **ligne de promesse** sous le héros (texte de Romain : « L'occitan se parle, s'apprend et se vit. Quel que soit ton objectif, tu es au bon endroit ! »), **second bouton héros = ancre « L'occitan, qu'es aquò ? »** vers la station La lenga, **les entrées « Lèu » du menu restent affichées** même vides (mémoire du cap, site pas publié bientôt) | Analyse 15 agents contre-vérifiée. Les décisions du 2026-08-22 (riu, typo, 6 stations, une maison) ne sont PAS rouvertes : la référence s'y glisse. Le « test de positionnement » et les portraits d'apprenants = évolution ; SEO villes, WhatsApp, compteurs = écartés |
 | — | *(à compléter)* | |
 
@@ -431,7 +435,9 @@ restent dans `site_textes` (les blocs y font référence, rien n'est à refaire)
 
 ## 13. Prochaines étapes proposées
 
-1. Trancher la question de la **graphie** (bloquante pour le contenu).
-2. Définir le **périmètre précis du MVP** (nombre d'unités, thèmes des premières leçons).
-3. Faire une **maquette visuelle** d'un premier écran pour donner le ton (design, animations, identité).
-4. Choisir la **technologie** de développement.
+> ⚠️ **Section périmée (constat du 2026-09-18)** : le pilotage vit désormais dans `PILOTATGE.md`. Contenu conservé pour mémoire.
+
+1. ~~Trancher la question de la **graphie** (bloquante pour le contenu).~~ *(fait — norme classique, §11 du 2026-07-28)*
+2. Définir le **périmètre précis du MVP** (nombre d'unités, thèmes des premières leçons). *(toujours ouvert — question de la séance d'arbitrage, voir `PILOTATGE.md`)*
+3. ~~Faire une **maquette visuelle** d'un premier écran pour donner le ton (design, animations, identité).~~ *(fait — maquettes comparées ayant tranché typographie et héros de l'accueil, §11 du 2026-08-22)*
+4. ~~Choisir la **technologie** de développement.~~ *(tranché de fait — SvelteKit, §11 du 2026-08-08 et voir §10)*

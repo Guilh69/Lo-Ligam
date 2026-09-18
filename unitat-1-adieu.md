@@ -1,5 +1,7 @@
 # Unitat 1 — « Adieu ! » (A1)
 
+> ⚠️ **Document de juillet 2026, remplacé sur le fond** : l'objectif (saluer, se présenter, prendre congé) et l'ancrage de la *plaça del vilatge* demeurent, mais le découpage en leçons et le contenu de ce document sont remplacés par les modules 1.1 à 1.4 de l'unité 1 du cursus (`Modules_cors/lo-ligam-cursus-pour-claude-code/cursus/modules/`), rédigés selon le gabarit v0.3, vérifiés par les API de lo Congrès et jouables dans le moteur de leçon depuis le 2026-08-29. Décisions du 2026-08-29 (chantier « construction pédagogique » ; un seul chemin d'apprentissage : le cursus) au §11 du `cahier-des-charges.md`.
+
 > Contenu du Cicle 1. Formes occitanes (languedocien, norme classique) **à valider via lo Congrès** avant production.
 > Objectif : saluer, demander comment ça va, se présenter, prendre congé.
 > Ancrage : *la plaça del vilatge* — le lieu de la rencontre.
