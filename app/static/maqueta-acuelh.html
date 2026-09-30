@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="oc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maqueta — acuèlh editorial aerat</title>
+<!-- PROPOSITION (2026-09-30, conversation graphismes) : accueil « éditorial
+     aéré » — principes retenus de la référence (marges, titres géants, peu de
+     couleurs, images calmes, scroll fluide), matière 100 % Lo Ligam (charte
+     §1/§1bis/§2). Tout l'occitan de cette page est À VALIDER (dicodòc). -->
+<style>
+	@font-face { font-family: 'Barrio'; src: url('/fonts/barrio.woff2') format('woff2'); font-display: swap; }
+	@font-face { font-family: 'Limelight'; src: url('/fonts/limelight.woff2') format('woff2'); font-display: swap; }
+	@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+	@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+	@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-italic.woff2') format('woff2'); font-style: italic; font-display: swap; }
+
+	:root {
+		--brica: #b53d17;
+		--brica-tinta: #8f2f11;
+		--aur: #eeaf34;
+		--aur-clar: #ffd47f;
+		--crema: #f5ead8;
+		--brun: #3a2a20;
+		--blanc: #fdfaf4;
+		--ease: cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	* { box-sizing: border-box; font-synthesis: none; }
+	html { scroll-behavior: smooth; }
+	body {
+		margin: 0;
+		background: var(--blanc);
+		color: var(--brun);
+		font-family: 'Luciole', system-ui, sans-serif;
+		line-height: 1.6;
+		overflow-x: clip;
+	}
+
+	/* ——— Barre haute, discrète comme un filigrane ——— */
+	.barra {
+		position: fixed;
+		inset: 0 0 auto 0;
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+		padding: 1.1rem clamp(1rem, 4vw, 3rem);
+		font-size: 0.85rem;
+		z-index: 10;
+		mix-blend-mode: multiply;
+	}
+	.barra .marca { display: flex; align-items: center; gap: 0.5rem; font-family: 'Barrio'; font-size: 1rem; color: var(--brica); text-decoration: none; }
+	.barra .marca svg { width: 1.7rem; height: 1.7rem; }
+	.barra .prometa { flex: 1; text-align: center; font-style: italic; opacity: 0.55; }
+	.barra nav { display: flex; gap: 1.4rem; }
+	.barra nav a { color: var(--brun); text-decoration: none; position: relative; }
+	.barra nav a::after {
+		content: ''; position: absolute; left: 0; right: 100%; bottom: -3px;
+		height: 2px; background: var(--brica); transition: right 350ms var(--ease);
+	}
+	.barra nav a:hover::after, .barra nav a:focus-visible::after { right: 0; }
+
+	/* ——— Acte I : lo grand títol sus la crèsta ——— */
+	.eros {
+		min-height: 100svh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		position: relative;
+		padding: 14svh 1rem 38svh;
+	}
+	.eros .quicker {
+		font-size: clamp(0.8rem, 1.4vw, 1rem);
+		letter-spacing: 0.35em;
+		text-transform: uppercase;
+		color: var(--brica);
+		margin: 0 0 1.2rem;
+	}
+	.eros h1 { margin: 0; font-weight: 400; }
+	.eros h1 .linha {
+		display: block;
+		font-family: 'Limelight', serif;
+		font-size: clamp(3rem, 11vw, 9.5rem);
+		line-height: 1.02;
+		text-transform: uppercase;
+		color: var(--brun);
+		cursor: default;
+		/* L'encre qui se verse au survol : brun → brique, remplie par la gauche */
+		background: linear-gradient(90deg, var(--brica) 0 50%, var(--brun) 50% 100%);
+		background-size: 200% 100%;
+		background-position: 100% 0;
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+		transition: background-position 650ms var(--ease);
+	}
+	.eros h1 .linha:hover { background-position: 0 0; }
+	.eros .soslinha { margin: 1.4rem 0 0; font-style: italic; opacity: 0.6; font-size: clamp(0.9rem, 1.6vw, 1.05rem); }
+	.eros .indici { position: absolute; bottom: 34svh; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.4; }
+	/* La crête des Cévennes tient le bas de l'écran ; son ciel blanc fond dans la page */
+	.eros .paisatge {
+		position: absolute; inset: auto 0 0 0;
+		height: 36svh;
+		background: url('/maqueta/paisatge.jpg') 50% 22% / cover no-repeat;
+		z-index: -1;
+	}
+	.eros .paisatge::after { content: ''; position: absolute; inset: 0; background: linear-gradient(#fdfaf4, #fdfaf400 30%); }
+
+	/* ——— Acte II : Adieu ——— */
+	.adieu {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: clamp(5rem, 14vh, 9rem) clamp(1.2rem, 5vw, 3rem);
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 2rem 4rem;
+		align-items: center;
+	}
+	.adieu p { margin: 0; font-size: clamp(1.3rem, 2.6vw, 2rem); line-height: 1.5; max-width: 21em; }
+	.adieu .fr { font-size: clamp(0.85rem, 1.4vw, 1rem); font-style: italic; opacity: 0.55; margin-top: 1.2rem; max-width: 34em; }
+	.adieu img { width: clamp(130px, 16vw, 210px); display: block; }
+	.adieu strong { color: var(--brica); font-weight: 400; }
+
+	/* ——— Acte III : los camins, en lista editoriala ——— */
+	.camins { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.2rem, 5vw, 3rem) clamp(5rem, 12vh, 8rem); }
+	.camins .etiqueta { font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--brica); margin: 0 0 1rem; }
+	.camin {
+		display: grid;
+		grid-template-columns: 3rem 1fr auto 2.5rem;
+		gap: 1.5rem;
+		align-items: center;
+		padding: 1.6rem 1rem;
+		border-top: 1px solid #3a2a2026;
+		text-decoration: none;
+		color: inherit;
+		position: relative;
+		transition: background 450ms var(--ease), padding-left 450ms var(--ease);
+	}
+	.camin:last-of-type { border-bottom: 1px solid #3a2a2026; }
+	.camin .n { font-family: 'Limelight'; font-size: 1rem; opacity: 0.4; }
+	.camin .nom { font-family: 'Limelight'; font-size: clamp(1.6rem, 4.5vw, 3.2rem); line-height: 1.1; }
+	.camin .dich { font-size: 0.9rem; font-style: italic; opacity: 0.55; text-align: right; max-width: 15em; }
+	.camin .sageta { font-size: 1.5rem; color: var(--brica); transform: translateX(-8px); opacity: 0; transition: all 450ms var(--ease); }
+	.camin:hover, .camin:focus-visible { background: var(--crema); padding-left: 2rem; }
+	.camin:hover .sageta, .camin:focus-visible .sageta { transform: none; opacity: 1; }
+	.camin:hover .nom { color: var(--brica); }
+	.camin .nom { transition: color 350ms var(--ease); }
+	.camin.leu .nom { opacity: 0.35; }
+	.camin.leu .dich::after { content: ' · lèu'; color: var(--aur); font-style: normal; }
+
+	/* ——— Acte IV : la benda-paisatge, parallaxe e paraulas blancas ——— */
+	.benda {
+		position: relative;
+		min-height: 72svh;
+		display: grid;
+		place-items: center;
+		overflow: clip;
+		text-align: center;
+		padding: 4rem 1rem;
+	}
+	.benda .fons {
+		position: absolute; inset: -18% 0;
+		background: url('/maqueta/paisatge.jpg') 50% 60% / cover no-repeat;
+		will-change: transform;
+	}
+	.benda .fons::after { content: ''; position: absolute; inset: 0; background: #7c2a0e66; }
+	.benda h2 {
+		position: relative;
+		margin: 0;
+		font-family: 'Limelight';
+		font-weight: 400;
+		font-size: clamp(2.2rem, 7vw, 5.5rem);
+		line-height: 1.1;
+		text-transform: uppercase;
+		color: var(--blanc);
+		max-width: 11em;
+		text-wrap: balance;
+	}
+	.benda .fr { position: relative; color: #fdfaf4cc; font-style: italic; margin-top: 1.2rem; }
+
+	/* ——— Acte V : lo darrièr crit ——— */
+	.crida {
+		text-align: center;
+		padding: clamp(6rem, 18vh, 11rem) 1rem clamp(4rem, 10vh, 7rem);
+		background: var(--crema);
+		position: relative;
+		overflow: clip;
+	}
+	.crida .simbol-fons { position: absolute; width: min(70vw, 560px); opacity: 0.07; inset: 50% auto auto 50%; transform: translate(-50%, -54%); pointer-events: none; }
+	.crida h2 { margin: 0; font-family: 'Limelight'; font-weight: 400; font-size: clamp(2.4rem, 8vw, 6.5rem); line-height: 1.05; text-transform: uppercase; position: relative; }
+	.crida .fr { font-style: italic; opacity: 0.55; margin: 1.2rem 0 2.4rem; position: relative; }
+	.boton {
+		display: inline-block;
+		position: relative;
+		font-family: 'Limelight';
+		font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+		color: var(--brun);
+		background: var(--aur);
+		border-radius: 999px;
+		padding: 1rem 2.6rem;
+		text-decoration: none;
+		transition: transform 350ms var(--ease), box-shadow 350ms var(--ease);
+	}
+	.boton:hover, .boton:focus-visible { transform: translateY(-3px) scale(1.03); box-shadow: 0 14px 30px #b53d1740; }
+	.peu { padding: 2.2rem 1rem; text-align: center; font-size: 0.8rem; opacity: 0.5; background: var(--crema); }
+
+	/* ——— Les apparitions au défilement ——— */
+	.rev { opacity: 0; transform: translateY(42px); transition: opacity 900ms var(--ease), transform 900ms var(--ease); transition-delay: var(--d, 0ms); }
+	.rev.vist { opacity: 1; transform: none; }
+	/* L'entrée du héros, au chargement */
+	.eros .quicker, .eros h1 .linha, .eros .soslinha { opacity: 0; transform: translateY(36px); animation: intrada 1000ms var(--ease) forwards; }
+	.eros h1 .linha:nth-child(1) { animation-delay: 120ms; }
+	.eros h1 .linha:nth-child(2) { animation-delay: 240ms; }
+	.eros h1 .linha:nth-child(3) { animation-delay: 360ms; }
+	.eros .soslinha { animation-delay: 560ms; }
+	@keyframes intrada { to { opacity: 1; transform: none; } }
+
+	@media (prefers-reduced-motion: reduce) {
+		html { scroll-behavior: auto; }
+		.rev, .eros .quicker, .eros h1 .linha, .eros .soslinha { opacity: 1; transform: none; animation: none; transition: none; }
+		.benda .fons { inset: 0; }
+	}
+	@media (max-width: 720px) {
+		.barra .prometa { display: none; }
+		.adieu { grid-template-columns: 1fr; }
+		.adieu img { order: -1; }
+		.camin { grid-template-columns: 2rem 1fr 1.6rem; }
+		.camin .dich { display: none; }
+	}
+</style>
+</head>
+<body>
+
+<header class="barra">
+	<a class="marca" href="/">
+		<svg viewBox="0 0 375 375" aria-hidden="true"><use href="#crotz"/></svg>
+		Lo Ligam
+	</a>
+	<span class="prometa">L'occitan se parle, s'apprend et se vit.</span>
+	<nav>
+		<a href="/aprene">Aprene</a>
+		<a href="/carta">La Carta</a>
+		<a href="/obras">Descobrir</a>
+	</nav>
+</header>
+
+<!-- Acte I — le titre géant posé sur la crête des Cévennes -->
+<section class="eros">
+	<p class="quicker">L'occitan</p>
+	<h1 aria-label="L'occitan se parla, s'apren, se viu.">
+		<span class="linha">Se parla.</span>
+		<span class="linha">S'apren.</span>
+		<span class="linha">Se viu.</span>
+	</h1>
+	<p class="soslinha">(L'occitan se parle, s'apprend et se vit — quel que soit ton objectif, tu es au bon endroit.)</p>
+	<p class="indici">Davala ↓</p>
+	<div class="paisatge" aria-hidden="true"></div>
+</section>
+
+<!-- Acte II — l'accueil intime, comme on se salue au marché -->
+<section class="adieu">
+	<div>
+		<p class="rev">Adieu&nbsp;! Aquí, <strong>la lenga nòstra</strong> s'apren amb de vraies voix, de vrais lieux e <strong>de vraies gens</strong> — pas cap de robòt.</p>
+		<p class="fr rev" style="--d:150ms">(Salut ! Ici, notre langue s'apprend avec de vraies voix, de vrais lieux et de vraies personnes — aucun robot. Textes occitans à valider.)</p>
+	</div>
+	<img class="rev" style="--d:250ms" src="/maqueta/personatge.png" alt="Un aprenent suspren per la fogassa" loading="lazy">
+</section>
+
+<!-- Acte III — les chemins, liste éditoriale façon sommaire de festival -->
+<section class="camins">
+	<p class="etiqueta rev">Los camins</p>
+	<a class="camin rev" href="/aprene">
+		<span class="n">01</span>
+		<span class="nom">Aprene</span>
+		<span class="dich">la lenga, pas a pas, d'A1 fins a C2</span>
+		<span class="sageta">→</span>
+	</a>
+	<a class="camin rev" style="--d:120ms" href="/carta">
+		<span class="n">02</span>
+		<span class="nom">La Carta</span>
+		<span class="dich">lo país que parla, vila per vila</span>
+		<span class="sageta">→</span>
+	</a>
+	<a class="camin rev leu" style="--d:240ms" href="#" aria-disabled="true">
+		<span class="n">03</span>
+		<span class="nom">La Comunautat</span>
+		<span class="dich">los que la fan viure</span>
+		<span class="sageta">→</span>
+	</a>
+</section>
+
+<!-- Acte IV — la bande-paysage, parallaxe douce -->
+<section class="benda">
+	<div class="fons" aria-hidden="true"></div>
+	<h2 class="rev">Una lenga viu tant que se parla</h2>
+	<p class="fr rev" style="--d:150ms">(Une langue vit tant qu'on la parle — texte à valider.)</p>
+</section>
+
+<!-- Acte V — le dernier cri -->
+<section class="crida">
+	<svg class="simbol-fons" viewBox="0 0 375 375" aria-hidden="true"><use href="#crotz-brun"/></svg>
+	<h2 class="rev">Prèst·a per<br>començar&nbsp;?</h2>
+	<p class="fr rev" style="--d:150ms">(Trois mots aujourd'hui, une langue demain.)</p>
+	<a class="boton rev" style="--d:280ms" href="/aprene">Començar l'aventura</a>
+</section>
+<footer class="peu">© 2026 Lo Ligam — maqueta de proposicion, pas lo site vertadièr.</footer>
+
+<!-- La croix-constellation (charte §1 bis), réutilisée par référence -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+	<g id="crotz">
+		<g stroke="#b53d17" fill="none">
+			<g stroke-width="9">
+				<path transform="matrix(0.268014, 0.700477, -0.700477, 0.268014, 64.86348, 183.788938)" d="M 1.376068 17.552014 C 31.817355 -2.514514 62.260322 -2.515953 92.703108 17.552563"/>
+				<path transform="matrix(-0.264462, 0.701826, -0.701826, -0.264462, 90.09249, 126.787067)" d="M 1.362442 17.551517 C 32.215336 -2.517821 63.067305 -2.516403 93.916511 17.550899"/>
+				<path transform="matrix(0.691513, 0.29036, -0.29036, 0.691513, 126.085587, 284.330547)" d="M 1.348645 17.5517 C 32.627018 -2.518593 63.904784 -2.518294 95.186744 17.550581"/>
+				<path transform="matrix(0.693965, -0.284452, 0.284452, 0.693965, 182.144918, 311.278163)" d="M 1.384734 17.548771 C 31.55003 -2.514684 61.715991 -2.516508 91.885462 17.550094"/>
+				<path transform="matrix(0.271321, -0.699203, 0.699203, 0.271321, 284.023404, 247.651683)" d="M 1.451193 17.549063 C 29.632651 -2.515269 57.816365 -2.518569 86.001247 17.550756"/>
+				<path transform="matrix(-0.249767, -0.707189, 0.707189, -0.249767, 307.550843, 193.403865)" d="M 1.370475 17.551954 C 31.989038 -2.516707 62.607047 -2.51822 93.217856 17.550591"/>
+				<path transform="matrix(-0.691743, 0.289812, -0.289812, -0.691743, 190.590153, 63.74593)" d="M 1.38408 17.548767 C 31.566341 -2.518959 61.743885 -2.519346 91.926321 17.551629"/>
+				<path transform="matrix(-0.698452, -0.273248, 0.273248, -0.698452, 248.993103, 90.119833)" d="M 1.376053 17.552315 C 31.806364 -2.517971 62.241936 -2.518033 92.676019 17.549175"/>
+			</g>
+			<g stroke-width="8">
+				<path transform="matrix(0.641948, -0.387818, 0.387818, 0.641948, 73.545424, 252.913812)" d="M 3.999957 3.998973 L 345.757126 3.999943"/>
+				<path transform="matrix(-0.642386, -0.387091, 0.387091, -0.642386, 294.426636, 256.816332)" d="M -0.00130785 4.001866 L 338.79745 3.999582"/>
+				<path transform="matrix(0.385815, -0.643154, 0.643154, 0.385815, 118.61033, 295.77414)" d="M 0.00157877 4.000061 L 339.885894 4.000818"/>
+				<path transform="matrix(-0.384776, -0.643776, 0.643776, -0.384776, 250.14365, 300.072431)" d="M -0.0020904 3.998745 L 343.962972 4.001613"/>
+			</g>
+		</g>
+		<g fill="#b53d17">
+			<circle cx="185.77" cy="188.05" r="17"/>
+			<circle cx="185.77" cy="50.75" r="15"/><circle cx="121.45" cy="78.61" r="15"/><circle cx="252.46" cy="78.61" r="15"/>
+			<circle cx="51.75" cy="189.22" r="15"/><circle cx="77.83" cy="122.14" r="15"/><circle cx="77.83" cy="254.02" r="15"/>
+			<circle cx="323.25" cy="188.05" r="15"/><circle cx="296.89" cy="122.12" r="15"/><circle cx="296.89" cy="253.99" r="15"/>
+			<circle cx="121.45" cy="297.43" r="15"/><circle cx="252.46" cy="297.43" r="15"/><circle cx="185.77" cy="324.25" r="15"/>
+		</g>
+	</g>
+	<g id="crotz-brun"><use href="#crotz" style="color:#3a2a20"/></g>
+</defs></svg>
+
+<script>
+	// Les apparitions au défilement — et rien ne bouge si la personne a
+	// demandé moins d'animations (prefers-reduced-motion).
+	const calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	if (!calme) {
+		const obs = new IntersectionObserver((entries) => {
+			for (const e of entries) if (e.isIntersecting) { e.target.classList.add('vist'); obs.unobserve(e.target); }
+		}, { threshold: 0.18 });
+		document.querySelectorAll('.rev').forEach((el) => obs.observe(el));
+
+		// Parallaxe douce de la bande-paysage (transform seul : pas de re-calcul de page)
+		const fons = document.querySelector('.benda .fons');
+		const benda = document.querySelector('.benda');
+		let tick = false;
+		addEventListener('scroll', () => {
+			if (tick) return;
+			tick = true;
+			requestAnimationFrame(() => {
+				const r = benda.getBoundingClientRect();
+				if (r.bottom > 0 && r.top < innerHeight) {
+					const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+					fons.style.transform = `translateY(${p * -7}%)`;
+				}
+				tick = false;
+			});
+		}, { passive: true });
+	} else {
+		document.querySelectorAll('.rev').forEach((el) => el.classList.add('vist'));
+	}
+</script>
+</body>
+</html>
