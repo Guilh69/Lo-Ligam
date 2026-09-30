@@ -28,22 +28,25 @@ Croix occitana (or sur rouge) = signature à réutiliser avec parcimonie.
 
 ## 2. Typographie & ton
 
-**Système typographique tranché le 2026-08-22** (Romain, sur maquettes
-comparées — canvas « Tipografia Lo Ligam ») : trois voix, une par usage.
+**Système typographique tranché le 2026-09-30** (Romain, sur planches
+comparées pendant le travail du logo — REMPLACE le système Syne /
+Instrument Sans / Cormorant / Fredoka du 2026-08-22) :
 
 | Voix | Famille | Usage exclusif |
 |---|---|---|
-| Titres | **Syne** (700/800, capitales pour le héros) | h1/h2/h3, la voix principale — moderne, dessinée en France pour un centre d'art |
-| Courant | **Instrument Sans** (400/500/600) | corps de texte, boutons, interface |
-| Poétique | **Cormorant Garamond *italique*** (500) | citations littéraires uniquement (troubadours, poèmes) — jamais pour l'interface |
+| Logo | **Barrio** | logo et titres très courts uniquement — capitales seules, graisses irrégulières d'une lettre à l'autre (le « AM » fin) : fatigue l'œil au-delà de quelques mots |
+| Titres | **Limelight** | titres de leçons et de sections (Art déco, une seule graisse) |
+| Courant | **Luciole** ou **Atkinson Hyperlegible** (à trancher) | tout le reste : corps de texte, boutons, interface — deux polices conçues pour la malvoyance, cohérentes avec l'exigence d'accessibilité |
 
-- **Fredoka survit uniquement dans le logo** « Lo Ligam » (wordmark). Plus
-  aucun titre en Fredoka. Marcellus a été envisagé (jalons) puis écarté :
-  trois familles suffisent, la sobriété prime.
-- **Le « g » de Syne est volontairement presque sans queue** : c'est le
-  dessin de la police, pas un bug de rendu. Vérifié et **assumé par Romain
-  le 2026-08-22** (Bricolage Grotesque comparée puis écartée) — ne pas
-  « corriger », ne pas rouvrir.
+- Points encore ouverts : **choisir entre Luciole et Atkinson** (Luciole =
+  française, créée pour les lecteurs malvoyants, auto-hébergeable ;
+  Atkinson Hyperlegible = Braille Institute, très éprouvée) ; et dire si la
+  voix « poétique » (Cormorant italique pour les citations de troubadours)
+  survit ou disparaît.
+- Avant d'appliquer dans le site : vérifier que la police de corps couvre
+  bien les diacritiques de l'occitan (á à ç è é í ï ò ó ú ü).
+- Le site tourne encore sur l'ancien système (`app/src/fonts.css`) : la
+  migration est un chantier de code à part entière, voir PILOTATGE.
 - **Auto-hébergées** en woff2, sous-ensemble latin + latin-ext (ç è í ò ü) —
   zéro requête vers Google, comme le reste du site.
 - Graisses strictement limitées à celles du tableau : chaque graisse pèse.
