@@ -1,12 +1,12 @@
 <script>
 	import '../app.css';
-	import logo from '$lib/assets/logo.png';
+	import favicon from '$lib/assets/favicon.svg';
 
 	let { children } = $props();
 </script>
 
 <svelte:head>
-	<link rel="icon" type="image/png" href={logo} />
+	<link rel="icon" type="image/svg+xml" href={favicon} />
 	<title>Lo Ligam</title>
 </svelte:head>
 

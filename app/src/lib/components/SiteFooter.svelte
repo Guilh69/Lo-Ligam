@@ -1,7 +1,7 @@
 <script>
 	import { scramble } from '$lib/actions/scramble';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import logo from '$lib/assets/logo.png';
+	import logo from '$lib/assets/favicon.svg';
 	import { siteSections, externalLinks } from '$lib/data/siteSections';
 	import BookIcon from '$lib/components/BookIcon.svelte';
 	import OccitaniaIcon from '$lib/components/OccitaniaIcon.svelte';

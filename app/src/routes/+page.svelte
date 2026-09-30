@@ -3,7 +3,7 @@
 	import { fade, fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import { scramble } from '$lib/actions/scramble';
-	import logo from '$lib/assets/logo.png';
+	import logo from '$lib/assets/favicon.svg';
 	import MenuIcon from '$lib/components/MenuIcon.svelte';
 	import BookIcon from '$lib/components/BookIcon.svelte';
 	import OccitaniaIcon from '$lib/components/OccitaniaIcon.svelte';

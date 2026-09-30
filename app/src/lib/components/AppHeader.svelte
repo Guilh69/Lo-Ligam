@@ -1,5 +1,5 @@
 <script>
-	import HomeIcon from './HomeIcon.svelte';
+	import logo from '$lib/assets/favicon.svg';
 	import OccitaniaIcon from './OccitaniaIcon.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { esAdmin } from '$lib/adminStore';
@@ -32,7 +32,7 @@
      qu'elle ouvre. -->
 <header class="top">
 	<a class="brand" href="/" title={tx.acuelhLong} aria-label={tx.acuelhLong}>
-		<HomeIcon size={22} />
+		<img src={logo} alt="" />
 		<span class="brand-name">Lo Ligam</span>
 	</a>
 
@@ -110,11 +110,12 @@
 		transform: scale(1.03);
 	}
 
-	/* L'illustration du mas porte déjà son cercle terracotta : aucun fond
-	   derrière (sinon, cercle dans cercle). */
+	/* La teula du logo porte déjà son fond brique et ses coins arrondis :
+	   aucun fond derrière. */
 	.brand :global(img) {
-		width: 2.2rem;
-		height: 2.2rem;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 8px;
 		transition: box-shadow 150ms ease;
 	}
 
