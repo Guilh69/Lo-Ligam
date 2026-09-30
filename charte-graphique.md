@@ -26,6 +26,29 @@ Croix occitana (or sur rouge) = signature à réutiliser avec parcimonie.
 
 ---
 
+## 1 bis. Logo officiel : la croix-constellation (2026-09-30)
+
+Dessiné par Romain dans Canva (design « Lo ligam », DAGRAv9LPy8). La croix
+occitane redessinée en **points reliés** : 12 pommettes + un moyeu central,
+la croix n'existe que parce que les points sont liés — c'est *Lo Ligam* au
+sens propre. Validé par les tests favicon, une-couleur et réduction.
+
+- **Fichiers vecteurs** : `design-stock/logo/svg/` — 7 formats :
+  `simbol-blanc` (favicon, avatars) · `carrat-color` (carré éditorial,
+  réseaux) · `vertical-color/-blanc` · `orizontal-color/-blanc/-brun`
+  (en-têtes, bannières). Typo du nom : Barrio (voir §2).
+- **Recettes de couleurs** : couleur = points or clair #FFD47F, moyeu
+  #EEAF34, traits et nom blancs, fond brique #B53D17 · une-couleur blanc
+  (fonds foncés/photos) · une-couleur brun #3A2A20 (fonds clairs).
+- ⚠ **Écart à arbitrer** : les couleurs du logo (brique #B53D17, ors
+  #FFD47F/#EEAF34) diffèrent de la palette §1 (#C8562E, #E0A43B). À
+  trancher au moment du redesign : aligner la palette sur le logo, ou
+  l'inverse. Ne pas « corriger » un des deux en douce.
+- Le site utilise encore l'ancien logo Fredoka (`app/src/lib/assets/logo.png`,
+  `favicon.svg`) : migration = chantier PILOTATGE 2d.
+
+---
+
 ## 2. Typographie & ton
 
 **Système typographique tranché le 2026-09-30** (Romain, sur planches
