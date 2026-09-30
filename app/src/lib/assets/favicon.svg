@@ -4,11 +4,13 @@
 	     perque los punts son ligats. Fichièr reconstruit a la man dempuèi
 	     design-stock/logo/svg/simbol-blanc.svg (geometria identica, sens la
 	     tuyautariá Canva) : teula bricalha + simbòl blanc, servís de favicon e
-	     de pastilha de marca. -->
+	     de pastilha de marca. Varianta C causida per Romain lo 30-09 (còntra
+	     l efièch « granda ròda » vist per sa sòrre) : moieu reduch (r 25→17),
+	     arcs espessits (5→9). Lo mèstre Canva es de metre a jorn parièr. -->
 	<rect width="375" height="375" rx="64" fill="#b53d17"/>
 	<g stroke="#ffffff" fill="none">
 		<!-- Los 8 arcs concaus entre las pomètas -->
-		<g stroke-width="5">
+		<g stroke-width="9">
 			<path transform="matrix(0.268014, 0.700477, -0.700477, 0.268014, 64.86348, 183.788938)" d="M 1.376068 17.552014 C 31.817355 -2.514514 62.260322 -2.515953 92.703108 17.552563"/>
 			<path transform="matrix(-0.264462, 0.701826, -0.701826, -0.264462, 90.09249, 126.787067)" d="M 1.362442 17.551517 C 32.215336 -2.517821 63.067305 -2.516403 93.916511 17.550899"/>
 			<path transform="matrix(0.691513, 0.29036, -0.29036, 0.691513, 126.085587, 284.330547)" d="M 1.348645 17.5517 C 32.627018 -2.518593 63.904784 -2.518294 95.186744 17.550581"/>
@@ -28,7 +30,7 @@
 	</g>
 	<!-- Lo moieu e las 12 pomètas -->
 	<g fill="#ffffff">
-		<circle cx="185.77" cy="188.05" r="25"/>
+		<circle cx="185.77" cy="188.05" r="17"/>
 		<circle cx="185.77" cy="50.75" r="15"/>
 		<circle cx="121.45" cy="78.61" r="15"/>
 		<circle cx="252.46" cy="78.61" r="15"/>

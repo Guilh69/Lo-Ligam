@@ -13,13 +13,20 @@
 	--color-olive: #5e7b3a;
 	--color-text: #3a2a20;
 
-	/* Sistèma tipografic 2026-08-22 (charte §2) : Syne pels títols,
-	   Instrument Sans pel corrent, Cormorant per las solas citacions
-	   poeticas, Fredoka sonque pel wordmark del lògo. */
-	--font-heading: 'Syne', 'Verdana', sans-serif;
-	--font-body: 'Instrument Sans', system-ui, sans-serif;
+	/* Sistèma tipografic 2026-09-30 (charte §2, jornal §11) : Limelight
+	   pels títols de leiçons e seccions, Luciole pel corrent (concebuda
+	   per la malvision, CC BY 4.0), Barrio sonque pel lògo e los títols
+	   fòrça corts, Cormorant per las solas citacions poeticas. */
+	--font-heading: 'Limelight', 'Georgia', serif;
+	--font-body: 'Luciole', system-ui, sans-serif;
 	--font-quote: 'Cormorant Garamond', 'Georgia', serif;
-	--font-logo: 'Fredoka', sans-serif;
+	--font-logo: 'Barrio', sans-serif;
+}
+
+/* Barrio e Limelight existisson pas qu'en 400 : cap de fals gras fabricat
+   pel navigator (baveux e inegal), la grais demandada tomba sus la vertadièra. */
+* {
+	font-synthesis: none;
 }
 
 *,

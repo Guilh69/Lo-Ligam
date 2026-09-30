@@ -44,8 +44,15 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
   #FFD47F/#EEAF34) diffèrent de la palette §1 (#C8562E, #E0A43B). À
   trancher au moment du redesign : aligner la palette sur le logo, ou
   l'inverse. Ne pas « corriger » un des deux en douce.
-- Le site utilise encore l'ancien logo Fredoka (`app/src/lib/assets/logo.png`,
-  `favicon.svg`) : migration = chantier PILOTATGE 2d.
+- **Variante C adoptée le 2026-09-30** (après la remarque « grande roue »
+  de la sœur de Romain, variantes comparées) : moyeu réduit (r 25→17) et
+  arcs épaissis (5→9) — la croix reprend le dessus sur la roue. Appliquée
+  dans `app/src/lib/assets/favicon.svg` (fichier reconstruit à la main,
+  3 Ko, qui sert de favicon et de pastille de marque). ⚠ Le master Canva
+  et les 7 SVG de design-stock sont encore en variante A : Romain doit
+  répercuter C dans Canva puis réexporter.
+- Logo intégré au site le 2026-09-30 : favicon, barre d'accueil, en-tête
+  des pages app, pied de page.
 
 ---
 
@@ -63,10 +70,12 @@ Instrument Sans / Cormorant / Fredoka du 2026-08-22) :
 
 - Point encore ouvert : dire si la voix « poétique » (Cormorant italique
   pour les citations de troubadours) survit ou disparaît.
-- Avant d'appliquer dans le site : vérifier que la police de corps couvre
-  bien les diacritiques de l'occitan (á à ç è é í ï ò ó ú ü).
-- Le site tourne encore sur l'ancien système (`app/src/fonts.css`) : la
-  migration est un chantier de code à part entière, voir PILOTATGE.
+- **Migré dans le site le 2026-09-30** (`fonts.css`, `app.css`) : Barrio et
+  Limelight auto-hébergées (woff2, latin + latin-ext), Luciole en 400/700/
+  italique (couvre nativement les diacritiques occitans). `font-synthesis:
+  none` interdit les faux gras (Barrio et Limelight n'ont qu'une graisse).
+- ⚠ Luciole est sous licence **CC BY 4.0** : créditer ses auteurs (CTRDV,
+  L. Bourcellier & J. Perez) sur la future page accessibilité.
 - **Auto-hébergées** en woff2, sous-ensemble latin + latin-ext (ç è í ò ü) —
   zéro requête vers Google, comme le reste du site.
 - Graisses strictement limitées à celles du tableau : chaque graisse pèse.
