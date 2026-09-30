@@ -94,7 +94,7 @@
 		height: 1.4rem;
 		margin-right: 0.35rem;
 		border-radius: 50%;
-		background: rgba(224, 164, 59, 0.25);
+		background: rgba(238, 175, 52, 0.25);
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 0.75rem;
@@ -118,7 +118,7 @@
 	.answer {
 		margin: 0;
 		padding: 0.6rem 0.9rem;
-		background: rgba(224, 164, 59, 0.14);
+		background: rgba(238, 175, 52, 0.14);
 		border-radius: 12px;
 		line-height: 1.55;
 		color: var(--color-text);

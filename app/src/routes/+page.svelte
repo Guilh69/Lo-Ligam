@@ -1219,7 +1219,7 @@
 	.btn-ghost:hover {
 		transform: translateY(-3px);
 		border-color: var(--color-terracotta);
-		background: rgba(200, 86, 46, 0.06);
+		background: rgba(181, 61, 23, 0.06);
 	}
 
 	/* Lo riu : doas bendas que davalan sens fin, cadenciadas lentament
@@ -1403,12 +1403,12 @@
 			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
 			box-shadow 220ms ease,
 			filter 80ms ease;
-		box-shadow: 0 6px 18px rgba(224, 164, 59, 0.45);
+		box-shadow: 0 6px 18px rgba(238, 175, 52, 0.45);
 	}
 
 	.btn-primary:hover {
 		transform: translateY(-3px) scale(1.03);
-		box-shadow: 0 10px 24px rgba(224, 164, 59, 0.55);
+		box-shadow: 0 10px 24px rgba(238, 175, 52, 0.55);
 	}
 
 	.btn-primary:active {
@@ -1420,7 +1420,7 @@
 	.btn-small {
 		padding: 0.55rem 1.15rem;
 		font-size: 0.95rem;
-		box-shadow: 0 4px 12px rgba(224, 164, 59, 0.4);
+		box-shadow: 0 4px 12px rgba(238, 175, 52, 0.4);
 	}
 
 	/* Chapitres numérotés (repris de Ponpon Mania) : chaque section est
@@ -1729,7 +1729,7 @@
 
 	/* L'invitacion finala. */
 	.chapter--comenca {
-		background: rgba(200, 86, 46, 0.07);
+		background: rgba(181, 61, 23, 0.07);
 	}
 
 	.chapter--comenca .chapter-title {

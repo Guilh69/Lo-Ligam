@@ -134,7 +134,7 @@
 	}
 
 	.built.complete {
-		background: rgba(224, 164, 59, 0.2);
+		background: rgba(238, 175, 52, 0.2);
 	}
 
 	.cursor {

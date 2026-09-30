@@ -195,7 +195,7 @@
 		padding: 0.8rem 1.6rem;
 		border-radius: 999px;
 		cursor: pointer;
-		box-shadow: 0 6px 18px rgba(224, 164, 59, 0.45);
+		box-shadow: 0 6px 18px rgba(238, 175, 52, 0.45);
 		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 

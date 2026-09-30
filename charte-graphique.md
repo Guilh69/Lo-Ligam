@@ -8,11 +8,13 @@
 
 ## 1. Palette
 
-**Chaudes (cœur de marque)**
-- Terracotta / rouge-orangé : ~#C8562E
-- Rouge brique : ~#A5342A
-- Or / ocre : ~#E0A43B
-- Crème (fond) : ~#F5EAD8
+**Chaudes (cœur de marque)** — *alignées sur le logo le 2026-09-30 (§11) :
+le logo est le maître des couleurs, plus l'inverse.*
+- Brique du logo (ex-terracotta, token `--color-terracotta`) : **#B53D17** (était #C8562E)
+- Rouge brique (accent texte) : #A5342A (inchangé)
+- Or (token `--color-gold`) : **#EEAF34** (était #E0A43B)
+- Or clair des pommettes (`--color-gold-light`, nouveau) : **#FFD47F**
+- Crème (fond) : #F5EAD8 (inchangé — le fond reste en question pour le redesign)
 
 **Accents**
 - Teal / pétrole : ~#1F5F63
@@ -41,10 +43,9 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
 - **Recettes de couleurs** : couleur = points or clair #FFD47F, moyeu
   #EEAF34, traits et nom blancs, fond brique #B53D17 · une-couleur blanc
   (fonds foncés/photos) · une-couleur brun #3A2A20 (fonds clairs).
-- ⚠ **Écart à arbitrer** : les couleurs du logo (brique #B53D17, ors
-  #FFD47F/#EEAF34) diffèrent de la palette §1 (#C8562E, #E0A43B). À
-  trancher au moment du redesign : aligner la palette sur le logo, ou
-  l'inverse. Ne pas « corriger » un des deux en douce.
+- ✅ **Écart résolu le 2026-09-30** : Romain a tranché — la palette du site
+  s'aligne sur le logo (§1 mis à jour, tokens et 33 occurrences en dur
+  remplacés dans le code).
 - **Variante C adoptée le 2026-09-30** (après la remarque « grande roue »
   de la sœur de Romain, variantes comparées) : moyeu réduit (r 25→17) et
   arcs épaissis (5→9) — la croix reprend le dessus sur la roue. Appliquée

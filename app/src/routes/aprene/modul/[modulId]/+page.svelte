@@ -461,7 +461,7 @@
 		display: flex;
 		align-items: center;
 		gap: 0.3rem;
-		background: rgba(224, 164, 59, 0.18);
+		background: rgba(238, 175, 52, 0.18);
 		color: var(--color-brick);
 		font-family: var(--font-heading);
 		font-weight: 700;

@@ -55,7 +55,7 @@
 	}
 
 	.block.son {
-		background: rgba(224, 164, 59, 0.13);
+		background: rgba(238, 175, 52, 0.13);
 		box-shadow: none;
 	}
 
@@ -70,7 +70,7 @@
 	}
 
 	.block.task {
-		border: 2px solid rgba(224, 164, 59, 0.55);
+		border: 2px solid rgba(238, 175, 52, 0.55);
 	}
 
 	.block-title {

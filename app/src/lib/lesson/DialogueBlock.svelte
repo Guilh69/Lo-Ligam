@@ -220,7 +220,7 @@
 		position: relative;
 		margin-top: 1.1rem;
 		padding: 0.9rem 1rem;
-		background: rgba(224, 164, 59, 0.09);
+		background: rgba(238, 175, 52, 0.09);
 		border-radius: 14px;
 	}
 

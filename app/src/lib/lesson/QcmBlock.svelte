@@ -125,7 +125,7 @@
 		height: 1.4rem;
 		margin-right: 0.35rem;
 		border-radius: 50%;
-		background: rgba(224, 164, 59, 0.25);
+		background: rgba(238, 175, 52, 0.25);
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 0.75rem;
@@ -158,7 +158,7 @@
 	}
 
 	.opt.correct {
-		background: rgba(224, 164, 59, 0.22);
+		background: rgba(238, 175, 52, 0.22);
 		border-color: var(--color-gold);
 		font-weight: 600;
 	}

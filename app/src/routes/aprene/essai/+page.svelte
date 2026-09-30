@@ -824,7 +824,7 @@
 		display: flex;
 		align-items: center;
 		gap: 0.3rem;
-		background: rgba(224, 164, 59, 0.18);
+		background: rgba(238, 175, 52, 0.18);
 		color: var(--color-brick);
 		font-family: var(--font-heading);
 		font-weight: 700;
@@ -1013,7 +1013,7 @@
 		height: 64px;
 		aspect-ratio: 1 / 1;
 		border-radius: 16px;
-		background: linear-gradient(155deg, rgba(224, 164, 59, 0.18), rgba(31, 95, 99, 0.12));
+		background: linear-gradient(155deg, rgba(238, 175, 52, 0.18), rgba(31, 95, 99, 0.12));
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -1210,7 +1210,7 @@
 
 	.fact-toggle {
 		border: none;
-		background: rgba(224, 164, 59, 0.18);
+		background: rgba(238, 175, 52, 0.18);
 		color: var(--color-brick);
 		font-weight: 600;
 		font-size: 0.9rem;
@@ -1221,7 +1221,7 @@
 	}
 
 	.fact-toggle:hover {
-		background: rgba(224, 164, 59, 0.3);
+		background: rgba(238, 175, 52, 0.3);
 	}
 
 	.fact {
@@ -1311,7 +1311,7 @@
 			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
 			box-shadow 220ms ease,
 			filter 80ms ease;
-		box-shadow: 0 6px 18px rgba(224, 164, 59, 0.45);
+		box-shadow: 0 6px 18px rgba(238, 175, 52, 0.45);
 	}
 
 	.btn-primary .arrow {
@@ -1321,7 +1321,7 @@
 
 	.btn-primary:hover {
 		transform: translateY(-3px) scale(1.03);
-		box-shadow: 0 10px 24px rgba(224, 164, 59, 0.55);
+		box-shadow: 0 10px 24px rgba(238, 175, 52, 0.55);
 	}
 
 	.btn-primary:hover .arrow {

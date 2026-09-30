@@ -68,7 +68,7 @@
 		align-items: flex-start;
 		gap: 0.6rem;
 		padding: 0.55rem 0.7rem;
-		background: rgba(224, 164, 59, 0.09);
+		background: rgba(238, 175, 52, 0.09);
 		border-radius: 12px;
 	}
 

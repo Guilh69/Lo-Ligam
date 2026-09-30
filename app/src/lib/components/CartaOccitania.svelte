@@ -162,7 +162,7 @@
 			style: (feature) => {
 				const nivèl = DEPT_NIVELS[deptNivels[feature.properties.code]?.nivèl];
 				const basa = colaOpacitats.departaments ?? 0.45;
-				const color = colaColors.departaments ?? '#c8562e';
+				const color = colaColors.departaments ?? '#b53d17';
 				return {
 					color,
 					weight: 1,
@@ -337,7 +337,7 @@
 						radius: 7,
 						weight: 2,
 						color: '#a5342a',
-						fillColor: colaColors[cid] ?? '#e0a43b',
+						fillColor: colaColors[cid] ?? '#eeaf34',
 						fillOpacity: 0.9
 					}).bindPopup(
 						`<strong>${lieu.nom_oc}</strong>${lieu.descripcion_oc ? `<br>${lieu.descripcion_oc}` : ''}`

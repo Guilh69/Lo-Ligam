@@ -74,7 +74,7 @@
 			tematica_oc: '',
 			tematica_fr: '',
 			tipe: 'punts',
-			color: '#c8562e',
+			color: '#b53d17',
 			opacitat: 0.5,
 			pes_linha: 1.5,
 			linha_puntejada: false,

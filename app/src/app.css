@@ -1,10 +1,12 @@
 @import './fonts.css';
 
 :root {
-	/* Chaudes — cœur de marque */
-	--color-terracotta: #c8562e;
+	/* Chaudes — cœur de marque. Paleta alinhada sul lògo lo 2026-09-30
+	   (jornal §11) : èra #c8562e / #e0a43b abans. */
+	--color-terracotta: #b53d17;
 	--color-brick: #a5342a;
-	--color-gold: #e0a43b;
+	--color-gold: #eeaf34;
+	--color-gold-light: #ffd47f; /* l'aur clar de las pomètas del lògo */
 	--color-cream: #f5ead8;
 
 	/* Accents */
