@@ -33,9 +33,10 @@ occitane redessinée en **points reliés** : 12 pommettes + un moyeu central,
 la croix n'existe que parce que les points sont liés — c'est *Lo Ligam* au
 sens propre. Validé par les tests favicon, une-couleur et réduction.
 
-- **Fichiers vecteurs** : `design-stock/logo/svg/` — 7 formats :
+- **Fichiers vecteurs** : `design-stock/logo/svg/` — 8 formats :
   `simbol-blanc` (favicon, avatars) · `carrat-color` (carré éditorial,
-  réseaux) · `vertical-color/-blanc` · `orizontal-color/-blanc/-brun`
+  réseaux) · `vertical-color/-blanc` · `vertical-arc-color` (nom en arc de
+  cercle : autocollants, tampons) · `orizontal-color/-blanc/-brun`
   (en-têtes, bannières). Typo du nom : Barrio (voir §2).
 - **Recettes de couleurs** : couleur = points or clair #FFD47F, moyeu
   #EEAF34, traits et nom blancs, fond brique #B53D17 · une-couleur blanc
@@ -48,9 +49,9 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
   de la sœur de Romain, variantes comparées) : moyeu réduit (r 25→17) et
   arcs épaissis (5→9) — la croix reprend le dessus sur la roue. Appliquée
   dans `app/src/lib/assets/favicon.svg` (fichier reconstruit à la main,
-  3 Ko, qui sert de favicon et de pastille de marque). ⚠ Le master Canva
-  et les 7 SVG de design-stock sont encore en variante A : Romain doit
-  répercuter C dans Canva puis réexporter.
+  3 Ko, qui sert de favicon et de pastille de marque). Master Canva mis à
+  jour en C et réexporté par Romain le même jour (les 8 SVG de
+  design-stock sont la version C).
 - Logo intégré au site le 2026-09-30 : favicon, barre d'accueil, en-tête
   des pages app, pied de page.
 
