@@ -36,13 +36,10 @@ Instrument Sans / Cormorant / Fredoka du 2026-08-22) :
 |---|---|---|
 | Logo | **Barrio** | logo et titres très courts uniquement — capitales seules, graisses irrégulières d'une lettre à l'autre (le « AM » fin) : fatigue l'œil au-delà de quelques mots |
 | Titres | **Limelight** | titres de leçons et de sections (Art déco, une seule graisse) |
-| Courant | **Luciole** ou **Atkinson Hyperlegible** (à trancher) | tout le reste : corps de texte, boutons, interface — deux polices conçues pour la malvoyance, cohérentes avec l'exigence d'accessibilité |
+| Courant | **Luciole** (choisie le 2026-09-30, contre Atkinson Hyperlegible) | tout le reste : corps de texte, boutons, interface — police française conçue pour les lecteurs malvoyants, cohérente avec l'exigence d'accessibilité et le choix européen |
 
-- Points encore ouverts : **choisir entre Luciole et Atkinson** (Luciole =
-  française, créée pour les lecteurs malvoyants, auto-hébergeable ;
-  Atkinson Hyperlegible = Braille Institute, très éprouvée) ; et dire si la
-  voix « poétique » (Cormorant italique pour les citations de troubadours)
-  survit ou disparaît.
+- Point encore ouvert : dire si la voix « poétique » (Cormorant italique
+  pour les citations de troubadours) survit ou disparaît.
 - Avant d'appliquer dans le site : vérifier que la police de corps couvre
   bien les diacritiques de l'occitan (á à ç è é í ï ò ó ú ü).
 - Le site tourne encore sur l'ancien système (`app/src/fonts.css`) : la
