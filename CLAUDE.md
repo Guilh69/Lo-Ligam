@@ -25,8 +25,9 @@ Site d'apprentissage de l'occitan (languedocien, norme classique) + plateforme d
 ## Documents de référence
 **`PILOTATGE.md` d'abord : l'ouvrir en début de séance, le mettre à jour en fin.** Puis `cahier-des-charges.md` (source de vérité + journal des décisions §11) · `charte-graphique.md` · `corpus-design.md` · `transposicion-racine2.md` · les documents pédagogiques listés dans PILOTATGE.
 
-## Plusieurs conversations en parallèle
-Romain travaille via plusieurs conversations séparées, une par thème. Elles ne se voient pas : **Git est le seul canal de synchronisation**.
+## Plusieurs conversations en parallèle — et plusieurs ordinateurs
+Romain travaille via plusieurs conversations séparées, une par thème, et depuis plusieurs ordinateurs. Rien de tout ça ne se voit : **Git est le seul canal de synchronisation**.
+- **Début de séance : `git pull` d'abord** (l'autre ordinateur a pu pousser) ; fin de séance : tout pousser.
 - Avant une tâche conséquente : `git log --oneline -15` et `git status`.
 - Committer par petits lots, **uniquement les fichiers qu'on a soi-même modifiés**.
 - **Jamais de `git add -A`** sans relire `git status`.
