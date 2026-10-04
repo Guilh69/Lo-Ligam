@@ -306,6 +306,15 @@ court terme. Toute recommandation se range désormais en deux colonnes :
   natives sur les dialogues).
 Le plan §8 de `etat-de-l-art-parcours.md` est à relire avec cette grille.
 
+**Changement de posture (Romain, 04/10/2026).** Romain veut monter en
+compétence lui-même en conception de parcours : « faire tout par IA, c'est
+ne plus réfléchir ». Le parcours d'autoformation est dans
+`autoformation-parcours.md` (huit étapes, A1 → B2 d'abord), ses pages dans
+`carnet-concepcion/`. À partir de cette date, les étapes 2 et 3 du chantier
+« parcours de référence » (§8 bis) ne sont plus lancées par Claude : c'est
+Romain qui les mènera, avec Claude en vérification. Ce document et ses
+livrables (étapes A à D) sont des hypothèses à relire par lui.
+
 ## 9. Prochaine action
 
 **Étape E — Production en série.** Premier de la file : **le module 0

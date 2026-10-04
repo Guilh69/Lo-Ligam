@@ -53,6 +53,7 @@ photos.
 | 9 | **Vidéo et design-stock** (~60 Mo hors Git) | flou | Claude mesure Officialitat.mp4, propose un plafond de poids et une règle écrite « quoi committer / quoi archiver » ; Romain tranche | ensemble |
 | 10 | **Réveil technique** | bloqué | Romain ouvre le tableau de bord Supabase et relance le projet (2 minutes — le plan gratuit se met en pause après inactivité) | Romain |
 | 11 | **Courriels** (Votz/CGU lo Congrès + relance LISN) | bloqué | Claude prépare les deux brouillons ; Romain les envoie de sa boîte | Romain |
+| 12 | **Autoformation de Romain** (décision du 2026-10-04) | **en cours, prioritaire sur 3, 5 et 6** | Suivre `autoformation-parcours.md` étape par étape ; écrire la page de l'étape 1 dans `carnet-concepcion/etapa-1-nivels.md` ; Claude relit avec cinq questions, vérifie, code, ne produit plus de contenu pédagogique à sa place | Romain |
 
 ## Les décisions déjà prises — à NE PAS rouvrir
 
@@ -85,6 +86,10 @@ photos.
 12. **2026-09-03** — **Romain est seul** : tout se classe lancement /
     évolution (grille §8 bis de l'état de l'art des parcours).
 13. **2026-09-18** — Transposition Racine² actée (`transposicion-racine2.md`).
+14. **2026-10-04** — **Romain monte en compétence lui-même** : Claude vérifie,
+    questionne et code ; plus de contenu pédagogique produit à sa place
+    (`autoformation-parcours.md` §2). Les documents pédagogiques existants
+    deviennent des hypothèses à relire par lui.
 
 ## Les vraies questions ouvertes (pour la séance d'arbitrage)
 
