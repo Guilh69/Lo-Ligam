@@ -5,12 +5,6 @@
 	import { scramble } from '$lib/actions/scramble';
 	import logo from '$lib/assets/favicon.svg';
 	import MenuIcon from '$lib/components/MenuIcon.svelte';
-	import BookIcon from '$lib/components/BookIcon.svelte';
-	import OccitaniaIcon from '$lib/components/OccitaniaIcon.svelte';
-	import CommunityIcon from '$lib/components/CommunityIcon.svelte';
-	import QuillIcon from '$lib/components/QuillIcon.svelte';
-	import CrossIcon from '$lib/components/CrossIcon.svelte';
-	import EnvelopeIcon from '$lib/components/EnvelopeIcon.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
@@ -20,15 +14,6 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
 	import Lenis from 'lenis';
-
-	const sectionIcons = {
-		book: BookIcon,
-		occitania: OccitaniaIcon,
-		community: CommunityIcon,
-		quill: QuillIcon,
-		cross: CrossIcon,
-		envelope: EnvelopeIcon
-	};
 
 	// La langue vit maintenant dans un magasin partagé par tout le site,
 	// plus dans l'état local de cette page.
@@ -243,6 +228,16 @@
 			});
 	});
 
+	// Menú dobèrt = la pagina darrièr se bloca (lo vel plen ecran pòrta
+	// son pròpri defilament).
+	$effect(() => {
+		if (!browser) return;
+		document.documentElement.style.overflow = sectionsOpen ? 'hidden' : '';
+		return () => {
+			document.documentElement.style.overflow = '';
+		};
+	});
+
 	// Lo defilament fluid (Lenis — decision Romain 2026-10-05, §11).
 	// Garde-fous : rien si la personne demande moins d'animations, et le
 	// clavier / les lecteurs d'écran gardent le défilement natif (Lenis ne
@@ -257,7 +252,9 @@
 
 <svelte:window
 	onkeydown={(event) => {
-		if (event.key === 'Escape' && openTools) openTools = null;
+		if (event.key !== 'Escape') return;
+		if (openTools) openTools = null;
+		else if (sectionsOpen) sectionsOpen = false;
 	}}
 />
 
@@ -298,92 +295,66 @@
 	</div>
 </header>
 
+<!-- Lo menú plen ecran « editorial » (refonta 2026-10-06, demanda Romain :
+     fini las cartas blancas generiques — de linhas gigantas Limelight que
+     davalan en cascada, de tèxte, d'aire). -->
 {#if sectionsOpen}
-	<div class="sections-panel" role="dialog" aria-modal="true" aria-label="Menú del site">
-		<div class="families-grid">
-			{#each families as fam (fam.id)}
-				{@const Icon = sectionIcons[fam.icon]}
-				<div class="family" style="--section-color: {fam.color}">
-					<div class="family-head">
-						<span class="family-icon"><Icon size={20} /></span>
-						<span class="family-name" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
-						<span
-							class="family-tagline"
-							use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}
-						></span>
-					</div>
-					<ul class="family-items">
-						{#each fam.items as it (it.id)}
-							<li>
-								{#if it.status === 'live'}
-									<a class="family-item" href={it.href} onclick={() => (sectionsOpen = false)}>
-										<span class="shine" aria-hidden="true"></span>
-										<span class="item-name" use:scramble={{ oc: it.oc, fr: it.fr, lang }}></span>
-										<span
-											class="item-desc"
-											use:scramble={{ oc: it.desc_oc, fr: it.desc_fr, lang }}
-										></span>
-									</a>
-								{:else}
-									<div class="family-item soon" aria-disabled="true">
-										<span class="item-name" use:scramble={{ oc: it.oc, fr: it.fr, lang }}></span>
-										<span
-											class="item-desc"
-											use:scramble={{ oc: it.desc_oc, fr: it.desc_fr, lang }}
-										></span>
-										<span class="soon-tag" use:scramble={{ oc: 'Lèu', fr: 'Bientôt', lang }}></span>
+	<div class="menu-vel" role="dialog" aria-modal="true" aria-label="Menú del site">
+		<div class="menu-dedins">
+			<div class="menu-familhas">
+				{#each families as fam, fi (fam.id)}
+					<section class="menu-familha">
+						<p class="menu-jalon" style="--md: {fi * 4}">
+							<span use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
+							<span class="menu-jalon-dich" use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}></span>
+						</p>
+						<ul class="menu-lista">
+							{#each fam.items as it, ii (it.id)}
+								<li class="menu-mask">
+									<div class="menu-linha" style="--md: {fi * 4 + ii + 1}">
+										{#if it.status === 'live'}
+											<a class="menu-ligam" href={it.href} onclick={() => (sectionsOpen = false)}>
+												<span class="menu-nom" use:scramble={{ oc: it.oc, fr: it.fr, lang }}></span>
+												<span class="menu-sageta" aria-hidden="true">→</span>
+											</a>
+										{:else}
+											<span class="menu-ligam leu">
+												<span class="menu-nom" use:scramble={{ oc: it.oc, fr: it.fr, lang }}></span>
+												<em class="menu-leu-tag" use:scramble={{ oc: 'lèu', fr: 'bientôt', lang }}></em>
+											</span>
+										{/if}
 									</div>
-								{/if}
-							</li>
-						{/each}
-					</ul>
-				</div>
-			{/each}
-		</div>
-
-		<div class="sections-external">
-			<p class="external-title" use:scramble={{
-					oc: 'Ressorsas occitanas',
-					fr: 'Ressources occitanes',
-					lang
-				}}></p>
-			<div class="external-links">
-				{#each externalLinks as l (l.href)}
-					{#if l.tools}
-						<button
-							type="button"
-							class="external-card external-card-btn"
-							aria-haspopup="dialog"
-							aria-expanded={openTools === l.href}
-							onclick={() => (openTools = openTools === l.href ? null : l.href)}
-						>
-							<span class="shine" aria-hidden="true"></span>
-							{#if icona(l.href)}<img class="external-logo" src={icona(l.href)} alt="" loading="lazy" />{:else}<span class="external-logo inicial">{inicial(l.label)}</span>{/if}
-							<span class="external-toggle-text">
-								<span class="external-label">{l.label}</span>
-								<span
-									class="external-desc"
-									use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}
-								></span>
-							</span>
-						</button>
-					{:else}
-						<a class="external-card" href={l.href} target="_blank" rel="noopener noreferrer">
-							<span class="shine" aria-hidden="true"></span>
-							{#if icona(l.href)}<img class="external-logo" src={icona(l.href)} alt="" loading="lazy" />{:else}<span class="external-logo inicial">{inicial(l.label)}</span>{/if}
-							<span class="external-toggle-text">
-								<span class="external-label">{l.label} ↗</span>
-								<span
-									class="external-desc"
-									use:scramble={{ oc: l.desc_oc, fr: l.desc_fr, lang }}
-								></span>
-							</span>
-						</a>
-					{/if}
+								</li>
+							{/each}
+						</ul>
+					</section>
 				{/each}
 			</div>
-		</div>
 
+			<div class="menu-ressorsas">
+				<p class="menu-jalon" style="--md: 16" use:scramble={{
+						oc: 'Ressorsas occitanas',
+						fr: 'Ressources occitanes',
+						lang
+					}}></p>
+				<p class="menu-ressorsas-linha" style="--md: 17">
+					{#each externalLinks as l, li (l.href)}
+						{#if li > 0}<span class="menu-punt" aria-hidden="true">·</span>{/if}
+						{#if l.tools}
+							<button
+								type="button"
+								class="menu-ressorsa menu-ressorsa-btn"
+								aria-haspopup="dialog"
+								aria-expanded={openTools === l.href}
+								onclick={() => (openTools = openTools === l.href ? null : l.href)}
+							>{l.label}</button>
+						{:else}
+							<a class="menu-ressorsa" href={l.href} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
+						{/if}
+					{/each}
+				</p>
+			</div>
+		</div>
 	</div>
 {/if}
 
@@ -449,9 +420,9 @@
 	<section class="eros">
 		<p class="eros-kicker" use:scramble={{ oc: t.heroKicker.oc, fr: t.heroKicker.fr, lang }}></p>
 		<h1 class="eros-titol" aria-label="{t.heroKicker[lang]} {t.heroL1[lang]} {t.heroL2[lang]} {t.heroL3[lang]}">
-			<span class="linha" use:scramble={{ oc: t.heroL1.oc, fr: t.heroL1.fr, lang }}></span>
-			<span class="linha" use:scramble={{ oc: t.heroL2.oc, fr: t.heroL2.fr, lang }}></span>
-			<span class="linha" use:scramble={{ oc: t.heroL3.oc, fr: t.heroL3.fr, lang }}></span>
+			<span class="titol-mask"><span class="linha" use:scramble={{ oc: t.heroL1.oc, fr: t.heroL1.fr, lang }}></span></span>
+			<span class="titol-mask"><span class="linha" use:scramble={{ oc: t.heroL2.oc, fr: t.heroL2.fr, lang }}></span></span>
+			<span class="titol-mask"><span class="linha" use:scramble={{ oc: t.heroL3.oc, fr: t.heroL3.fr, lang }}></span></span>
 		</h1>
 		<p class="eros-sub" use:scramble={{ oc: t.heroSub2.oc, fr: t.heroSub2.fr, lang }}></p>
 		<div class="hero-ctas">
@@ -662,6 +633,22 @@
 		backdrop-filter: blur(10px);
 	}
 
+	/* L'ombra de la barra apareis al primièr defilament (CSS natiu,
+	   pilotat pel defilament — pas de JavaScript). */
+	@supports (animation-timeline: scroll()) {
+		.topbar {
+			animation: barra-ombra linear both;
+			animation-timeline: scroll();
+			animation-range: 0 140px;
+		}
+	}
+
+	@keyframes barra-ombra {
+		to {
+			box-shadow: 0 10px 28px rgba(58, 42, 32, 0.12);
+		}
+	}
+
 	.topbar-brand {
 		display: flex;
 		align-items: center;
@@ -803,206 +790,214 @@
 		background: var(--color-sky);
 	}
 
-	.sections-panel {
-		position: sticky;
-		top: 64px;
+	/* Lo menú-vel plen ecran : de linhas gigantas que davalan en cascada,
+	   cada linha dins son pròpri masc (overflow hidden) — la revelacion
+	   « rideau » dels sites de nautas exigéncias. La barra del naut demòra
+	   visibla en dessús (z-index 10 > 9) : son boton ven la crotz ✕. */
+	.menu-vel {
+		position: fixed;
+		inset: 0;
 		z-index: 9;
-		background: rgba(245, 234, 216, 0.98);
-		backdrop-filter: blur(10px);
-		box-shadow: 0 16px 30px rgba(58, 42, 32, 0.15);
-		padding: 1.5rem;
-		animation: card-in 220ms ease-out;
+		background: var(--color-cream);
+		overflow-y: auto;
+		padding: 7.5rem clamp(1.5rem, 6vw, 5rem) 3rem;
+		animation: vel-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
 	}
 
-	/* Quatre familles côte à côte, chacune avec sa couleur et ses entrées.
-	   Le visiteur balaie quatre intentions d'un coup d'œil au lieu de lire
-	   une grille plate de six cartes équivalentes. */
-	.families-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-		gap: 1.25rem 1rem;
-		max-width: 62rem;
+	@keyframes vel-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	.menu-dedins {
+		max-width: 72rem;
 		margin: 0 auto;
 	}
 
-	.family-head {
+	.menu-familhas {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 3rem clamp(2rem, 6vw, 5rem);
+	}
+
+	.menu-jalon {
 		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5rem;
-		padding-bottom: 0.5rem;
-		margin-bottom: 0.6rem;
-		border-bottom: 2px solid var(--section-color, var(--color-terracotta));
-	}
-
-	.family-icon {
-		display: flex;
-		color: var(--section-color, var(--color-terracotta));
-	}
-
-	.family-name {
-		font-family: var(--font-heading);
-		font-size: 1.1rem;
-		color: var(--section-color, var(--color-brick));
-	}
-
-	.family-tagline {
-		flex-basis: 100%;
+		align-items: baseline;
+		gap: 0.7rem;
+		margin: 0 0 0.6rem;
 		font-size: 0.75rem;
-		color: var(--color-text);
-		opacity: 0.6;
+		font-weight: 700;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--color-terracotta);
+		opacity: 0;
+		animation: fade-arriba 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+		animation-delay: calc(var(--md, 0) * 40ms);
 	}
 
-	.family-items {
+	.menu-jalon-dich {
+		font-weight: 400;
+		letter-spacing: normal;
+		text-transform: none;
+		font-style: italic;
+		color: var(--color-text);
+		opacity: 0.55;
+	}
+
+	.menu-lista {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
 	}
 
-	.family-item {
-		position: relative;
+	.menu-mask {
 		overflow: hidden;
+	}
+
+	.menu-linha {
+		transform: translateY(115%);
+		animation: linha-arriba 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+		animation-delay: calc(var(--md, 0) * 40ms);
+	}
+
+	@keyframes linha-arriba {
+		to {
+			transform: none;
+		}
+	}
+
+	@keyframes fade-arriba {
+		from {
+			opacity: 0;
+			transform: translateY(14px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
+	.menu-ligam {
 		display: flex;
-		flex-direction: column;
-		gap: 0.1rem;
-		background: white;
-		border-radius: 12px;
-		padding: 0.6rem 0.8rem;
+		align-items: baseline;
+		gap: 0.8rem;
+		padding: 0.3rem 0;
 		text-decoration: none;
-		color: inherit;
-		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.07);
-		transition:
-			transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
-			box-shadow 180ms ease;
-	}
-
-	.family-item:not(.soon):hover {
-		transform: translateY(-3px);
-		box-shadow: 0 10px 22px rgba(58, 42, 32, 0.14);
-	}
-
-	.family-item.soon {
-		background: rgba(255, 255, 255, 0.45);
-		box-shadow: none;
-		border: 1px dashed rgba(58, 42, 32, 0.16);
-		opacity: 0.75;
-	}
-
-	.item-name {
-		font-family: var(--font-body);
-		font-weight: 700;
-		font-size: 0.95rem;
-		color: var(--color-brick);
-	}
-
-	.item-desc {
-		font-size: 0.78rem;
-		line-height: 1.35;
 		color: var(--color-text);
-		opacity: 0.8;
 	}
 
-	/* Reflet qui balaie TOUTE la carte au survol (pas juste l'icône) :
-	   un dégradé diagonal teinté de la couleur de la section, caché hors
-	   du cadre (overflow:hidden sur .section-card), qui traverse de
-	   gauche à droite lentement quand on passe la souris. Teinté plutôt
-	   que blanc pur pour rester visible même sur le fond blanc de la
-	   carte, pas seulement là où il croise la pastille d'icône colorée. */
-	.shine {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-		background: linear-gradient(
-			115deg,
-			transparent 20%,
-			color-mix(in srgb, var(--section-color, var(--color-terracotta)) 30%, white) 45%,
-			color-mix(in srgb, var(--section-color, var(--color-terracotta)) 30%, white) 58%,
-			transparent 80%
-		);
-		transform: translateX(-130%);
+	.menu-nom {
+		font-family: var(--font-heading);
+		font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+		line-height: 1.15;
+		transition: color 250ms ease;
 	}
 
-	/* Pas de transition sur l'état de repos : au retrait de la souris, le
-	   reflet revient instantanément à son point de départ (hors champ)
-	   plutôt que de rejouer la traversée à l'envers — le mouvement ne va
-	   que dans un sens, gauche → droite. */
-	.family-item:hover .shine,
-	.external-card:hover .shine {
-		transform: translateX(130%);
-		transition: transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+	.menu-sageta {
+		font-size: 1.3rem;
+		color: var(--color-terracotta);
+		opacity: 0;
+		transform: translateX(-8px);
+		transition:
+			opacity 350ms cubic-bezier(0.22, 1, 0.36, 1),
+			transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
-	.soon-tag {
-		margin-top: 0.4rem;
-		align-self: flex-start;
-		font-size: 0.7rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		color: rgba(58, 42, 32, 0.55);
-		background: rgba(58, 42, 32, 0.08);
-		padding: 0.15rem 0.5rem;
-		border-radius: 999px;
+	a.menu-ligam:hover .menu-nom,
+	a.menu-ligam:focus-visible .menu-nom {
+		color: var(--color-terracotta);
 	}
 
-	.sections-external {
-		max-width: 60rem;
-		margin: 1.25rem auto 0;
-		padding-top: 1.25rem;
-		border-top: 1px solid rgba(58, 42, 32, 0.12);
+	a.menu-ligam:hover .menu-sageta,
+	a.menu-ligam:focus-visible .menu-sageta {
+		opacity: 1;
+		transform: none;
 	}
 
-	.external-title {
-		margin: 0 0 0.6rem;
+	.menu-ligam.leu .menu-nom {
+		opacity: 0.32;
+	}
+
+	.menu-leu-tag {
+		font-style: normal;
 		font-size: 0.8rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: var(--color-teal);
+		color: var(--color-gold);
 	}
 
-	.external-links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.6rem;
+	/* Las ressorsas : de tèxte solet, soslinhat d'aur — pas cap de lògo. */
+	.menu-ressorsas {
+		margin-top: 3.5rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(58, 42, 32, 0.15);
 	}
 
-	.external-card {
-		position: relative;
-		overflow: hidden;
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-		background: white;
-		border-radius: 12px;
-		padding: 0.6rem 0.9rem;
+	.menu-ressorsas-linha {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 2.3;
+		opacity: 0;
+		animation: fade-arriba 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+		animation-delay: calc(var(--md, 0) * 40ms);
+	}
+
+	.menu-ressorsa {
+		color: var(--color-text);
 		text-decoration: none;
-		color: var(--color-brick);
-		font-weight: 600;
-		font-size: 0.88rem;
-		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.08);
-		transition: transform 150ms ease;
+		border-bottom: 1.5px solid var(--color-gold);
+		padding-bottom: 0.05rem;
+		transition:
+			color 200ms ease,
+			border-color 200ms ease;
 	}
 
-	.external-card:hover {
-		transform: translateY(-2px);
+	.menu-ressorsa:hover,
+	.menu-ressorsa:focus-visible {
+		color: var(--color-terracotta);
+		border-color: var(--color-terracotta);
 	}
 
-	/* Le bouton « Lo Congrès » (qui ouvre le popover) reprend exactement
-	   la même carte visuelle qu'un lien simple : on ne reset que les
-	   à-côtés natifs d'un <button>. */
-	.external-card-btn {
+	.menu-ressorsa-btn {
+		background: none;
 		border: none;
+		border-bottom: 1.5px solid var(--color-gold);
 		font: inherit;
-		text-align: left;
+		padding: 0 0 0.05rem;
 		cursor: pointer;
 	}
 
+	.menu-punt {
+		margin: 0 0.7rem;
+		opacity: 0.4;
+	}
+
+	@media (max-width: 52rem) {
+		.menu-vel {
+			padding-top: 6rem;
+		}
+
+		.menu-familhas {
+			grid-template-columns: 1fr;
+			gap: 2.2rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.menu-vel,
+		.menu-jalon,
+		.menu-linha,
+		.menu-ressorsas-linha {
+			animation: none;
+			opacity: 1;
+			transform: none;
+		}
+	}
+
 	/* Repli quand le site ne publie pas d'icône : son initiale sur pastille,
-	   plutôt qu'une image cassée. */
+	   plutôt qu'une image cassée (utilisé par le popover des aisinas). */
 	.inicial {
 		display: inline-flex;
 		align-items: center;
@@ -1022,32 +1017,6 @@
 		object-fit: contain;
 		background: white;
 		flex-shrink: 0;
-	}
-
-	.external-toggle-text {
-		display: flex;
-		flex-direction: column;
-		gap: 0.1rem;
-		min-width: 0;
-	}
-
-	/* Le nom de l'acteur doit se voir en premier (gras) ; la description
-	   reste secondaire, jamais en gras. */
-	.external-label {
-		font-weight: 700;
-	}
-
-	.external-desc {
-		display: block;
-		font-weight: 400;
-		font-size: 0.78rem;
-		color: var(--color-text);
-		opacity: 0.75;
-		margin-top: 0.05rem;
-	}
-
-	.external-links a:hover {
-		transform: translateY(-2px);
 	}
 
 	/* Rideau qui assombrit le reste de la page pendant que le popover
@@ -1221,6 +1190,15 @@
 		font-weight: 400;
 	}
 
+	/* Cada linha dins son masc : la revelacion « rideau » — lo tèxte monta
+	   de darrièr una fenèstra invisibla, linha aprèp linha. */
+	.titol-mask {
+		display: block;
+		overflow: hidden;
+		padding: 0.04em 0.1em; /* las letras amb queue (g, ç) se còpan pas */
+		margin: -0.04em -0.1em;
+	}
+
 	.eros-titol .linha {
 		display: block;
 		font-family: var(--font-heading);
@@ -1277,23 +1255,29 @@
 		background: linear-gradient(#ffffff, #ffffff00 35%);
 	}
 
-	/* L'intrada de l'eròi, al cargament. */
+	/* L'intrada de l'eròi, al cargament : las linhas del títol montan de
+	   lor masc (rideau), la rèsta se lèva doçament. */
 	.eros-kicker,
-	.eros-titol .linha,
 	.eros-sub,
 	.eros .hero-ctas,
 	.eros-indici {
 		opacity: 0;
-		transform: translateY(32px);
+		transform: translateY(26px);
 		animation: intrada 950ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 	}
 
-	.eros-titol .linha:nth-child(1) { animation-delay: 110ms; }
-	.eros-titol .linha:nth-child(2) { animation-delay: 220ms; }
-	.eros-titol .linha:nth-child(3) { animation-delay: 330ms; }
-	.eros-sub { animation-delay: 500ms; }
-	.eros .hero-ctas { animation-delay: 620ms; }
-	.eros-indici { animation-delay: 850ms; }
+	.eros-titol .linha {
+		transform: translateY(112%);
+		animation: linha-arriba 1050ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	}
+
+	.titol-mask:nth-child(1) .linha { animation-delay: 150ms; }
+	.titol-mask:nth-child(2) .linha { animation-delay: 280ms; }
+	.titol-mask:nth-child(3) .linha { animation-delay: 410ms; }
+	.eros-kicker { animation-delay: 60ms; }
+	.eros-sub { animation-delay: 650ms; }
+	.eros .hero-ctas { animation-delay: 780ms; }
+	.eros-indici { animation-delay: 1000ms; }
 
 	@keyframes intrada {
 		to {
@@ -1442,6 +1426,7 @@
 	}
 
 	.camin {
+		position: relative;
 		display: grid;
 		grid-template-columns: 3rem 1fr auto 2.5rem;
 		gap: 1.5rem;
@@ -1450,9 +1435,20 @@
 		border-top: 1px solid rgba(58, 42, 32, 0.15);
 		text-decoration: none;
 		color: inherit;
-		transition:
-			background 450ms cubic-bezier(0.22, 1, 0.36, 1),
-			padding-left 450ms cubic-bezier(0.22, 1, 0.36, 1);
+		transition: padding-left 500ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	/* Lo balajatge de crèma : una tela que se desplega d'esquèrra a drecha
+	   al subrevòl (transform solet — pas de recalcul de pagina). */
+	.camin::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: var(--color-cream);
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
+		z-index: -1;
 	}
 
 	.camin:last-of-type {
@@ -1490,8 +1486,21 @@
 
 	a.camin:hover,
 	a.camin:focus-visible {
-		background: var(--color-cream);
 		padding-left: 2rem;
+	}
+
+	a.camin:hover::before,
+	a.camin:focus-visible::before {
+		transform: scaleX(1);
+	}
+
+	a.camin:hover .camin-n {
+		color: var(--color-terracotta);
+		opacity: 1;
+	}
+
+	.camin-n {
+		transition: color 350ms ease, opacity 350ms ease;
 	}
 
 	a.camin:hover .camin-sageta,
@@ -1804,6 +1813,23 @@
 		color: var(--color-terracotta);
 		opacity: 0.07;
 		pointer-events: none;
+	}
+
+	/* La constellacion respira : una rotacion de tres minutas, a la limita
+	   del perceptible. */
+	@media (prefers-reduced-motion: no-preference) {
+		.crida-simbol {
+			animation: simbol-vira 180s linear infinite;
+		}
+	}
+
+	@keyframes simbol-vira {
+		from {
+			transform: translate(-50%, -50%) rotate(0deg);
+		}
+		to {
+			transform: translate(-50%, -50%) rotate(360deg);
+		}
 	}
 
 	.crida-title {

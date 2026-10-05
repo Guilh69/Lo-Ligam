@@ -1,35 +1,19 @@
 <script>
+	// Pied de page « éditorial aéré » (refonte 2026-10-06, demande Romain :
+	// plus de bloc brun, plus d'icônes génériques — du texte, de l'air, la
+	// typographie de la marque). Même source de vérité que le menu.
 	import { scramble } from '$lib/actions/scramble';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import logo from '$lib/assets/favicon.svg';
-	import { siteSections, externalLinks } from '$lib/data/siteSections';
-	import BookIcon from '$lib/components/BookIcon.svelte';
-	import OccitaniaIcon from '$lib/components/OccitaniaIcon.svelte';
-	import CommunityIcon from '$lib/components/CommunityIcon.svelte';
-	import QuillIcon from '$lib/components/QuillIcon.svelte';
-	import CrossIcon from '$lib/components/CrossIcon.svelte';
-	import EnvelopeIcon from '$lib/components/EnvelopeIcon.svelte';
-
-	const sectionIcons = {
-		book: BookIcon,
-		occitania: OccitaniaIcon,
-		community: CommunityIcon,
-		quill: QuillIcon,
-		cross: CrossIcon,
-		envelope: EnvelopeIcon
-	};
+	import { families, externalLinks } from '$lib/data/siteSections';
 
 	let { tagline } = $props();
 	let lang = $derived(langStore.current);
 </script>
 
 <footer class="site-footer">
-	<div class="footer-top">
-		<div class="footer-about">
-			<div class="footer-brand-row">
-				<span class="mini-logo"><img src={logo} alt="" /></span>
-				<span class="footer-brand">Lo Ligam</span>
-			</div>
+	<div class="footer-naut">
+		<div class="footer-marca">
+			<p class="footer-nom">Lo Ligam</p>
 			<p class="footer-tag" use:scramble={{ oc: tagline.oc, fr: tagline.fr, lang }}></p>
 			<a
 				class="footer-social"
@@ -41,45 +25,42 @@
 			</a>
 		</div>
 
-		<div class="footer-col">
-			<p class="footer-col-title" use:scramble={{ oc: 'Explorar', fr: 'Explorer', lang }}></p>
-			<ul>
-				{#each siteSections as s (s.id)}
-					{@const Icon = sectionIcons[s.icon]}
-					<li>
-						{#if s.status === 'live'}
-							<a class="footer-link" href={s.href} style="--section-color: {s.color}">
-								<span class="footer-icon"><Icon size={15} /></span>
-								<span use:scramble={{ oc: s.oc, fr: s.fr, lang }}></span>
-							</a>
-						{:else}
-							<span
-								class="footer-link soon-inline"
-								style="--section-color: {s.color}"
-							>
-								<span class="footer-icon"><Icon size={15} /></span>
-								<span use:scramble={{ oc: s.oc, fr: s.fr, lang }}></span>
-								<em use:scramble={{ oc: '· Lèu', fr: '· Bientôt', lang }}></em>
-							</span>
-						{/if}
-					</li>
-				{/each}
-			</ul>
-		</div>
+		<nav class="footer-colomnas" aria-label="Plan del site">
+			{#each families as fam (fam.id)}
+				<div class="footer-col">
+					<p class="footer-col-title" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></p>
+					<ul>
+						{#each fam.items as it (it.id)}
+							<li>
+								{#if it.status === 'live'}
+									<a class="footer-link" href={it.href}>
+										<span use:scramble={{ oc: it.oc, fr: it.fr, lang }}></span>
+									</a>
+								{:else}
+									<span class="footer-link leu">
+										<span use:scramble={{ oc: it.oc, fr: it.fr, lang }}></span>
+										<em use:scramble={{ oc: 'lèu', fr: 'bientôt', lang }}></em>
+									</span>
+								{/if}
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/each}
 
-		<div class="footer-col">
-			<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', lang }}
-			></p>
-			<ul>
-				{#each externalLinks as l (l.href)}
-					<li>
-						<a class="footer-link" href={l.href} target="_blank" rel="noopener noreferrer"
-							>{l.label} ↗</a
-						>
-					</li>
-				{/each}
-			</ul>
-		</div>
+			<div class="footer-col">
+				<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', lang }}></p>
+				<ul>
+					{#each externalLinks as l (l.href)}
+						<li>
+							<a class="footer-link" href={l.href} target="_blank" rel="noopener noreferrer"
+								>{l.label} ↗</a
+							>
+						</li>
+					{/each}
+				</ul>
+			</div>
+		</nav>
 	</div>
 
 	<div class="footer-legal">
@@ -91,7 +72,7 @@
 			<a class="footer-legal-link" href="/confidencialitat"
 				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', lang }}></span></a
 			>
-			<span class="soon-inline"
+			<span class="footer-legal-leu"
 				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', lang }}
 				></span><em use:scramble={{ oc: '· Lèu', fr: '· Bientôt', lang }}></em></span
 			>
@@ -100,90 +81,73 @@
 </footer>
 
 <style>
-	/* Repris de la barre du haut : le pied de page réaffiche la même
-	   pastille de logo. */
-	.mini-logo {
-		width: 34px;
-		height: 34px;
-		border-radius: 10px;
-		overflow: hidden;
-		display: block;
-		box-shadow: 0 2px 8px rgba(165, 52, 42, 0.25);
-	}
-
-	.mini-logo img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
-	}
-
+	/* Clar, aerat, tipografic : lo pè de pagina es la darrièra frasa de la
+	   pagina, pas una cava escura. Un simple filet sang e aur lo dubrís. */
 	.site-footer {
 		position: relative;
-		background: var(--color-text);
-		color: var(--color-cream);
-		padding: 3rem 1.5rem 8rem;
-		margin-top: 2rem;
+		background: var(--color-cream);
+		color: var(--color-text);
+		padding: clamp(3.5rem, 8vh, 5.5rem) clamp(1.5rem, 5vw, 3rem) 2rem;
+		border-top: 3px solid var(--color-terracotta);
+		box-shadow: inset 0 3px 0 var(--color-gold);
 	}
 
-	.footer-top {
-		max-width: 60rem;
+	.footer-naut {
+		max-width: 72rem;
 		margin: 0 auto;
 		display: grid;
-		grid-template-columns: 1.3fr 1fr 1fr;
-		gap: 2.5rem;
+		grid-template-columns: minmax(14rem, 1.2fr) 2fr;
+		gap: 2.5rem 4rem;
+		align-items: start;
 		text-align: left;
 	}
 
-	.footer-brand-row {
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-		margin-bottom: 0.6rem;
-	}
-
-	.footer-brand {
-		font-family: var(--font-logo); /* lo wordmark garda Fredoka (charte §2) */
-		font-weight: 600;
-		font-size: 1.15rem;
-		color: white;
+	/* Lo nom en Limelight, grand e tranquille : la signatura du bas. */
+	.footer-nom {
+		margin: 0 0 0.5rem;
+		font-family: var(--font-logo);
+		font-size: clamp(2rem, 4vw, 3rem);
+		line-height: 1;
+		color: var(--color-terracotta);
 	}
 
 	.footer-tag {
-		margin: 0 0 0.9rem;
-		font-size: 0.85rem;
-		color: rgba(245, 234, 216, 0.75);
+		margin: 0 0 1rem;
+		font-size: 0.9rem;
+		opacity: 0.7;
 		text-wrap: pretty;
-		max-width: 22rem;
+		max-width: 20rem;
 	}
 
 	.footer-social {
 		display: inline-block;
-		font-size: 0.85rem;
-		font-weight: 600;
-		color: var(--color-gold);
+		font-size: 0.9rem;
+		font-weight: 700;
+		color: var(--color-text);
 		text-decoration: none;
+		border-bottom: 2px solid var(--color-gold);
+		padding-bottom: 0.1rem;
+		transition: border-color 200ms ease, color 200ms ease;
 	}
 
 	.footer-social:hover {
-		text-decoration: underline;
+		color: var(--color-terracotta);
+		border-color: var(--color-terracotta);
+	}
+
+	.footer-colomnas {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+		gap: 2rem 1.5rem;
 	}
 
 	.footer-col-title {
-		margin: 0 0 0.75rem;
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 0.85rem;
+		margin: 0 0 0.8rem;
+		font-size: 0.75rem;
+		font-weight: 700;
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: var(--color-gold);
-	}
-
-	.footer-col-title em {
-		text-transform: none;
-		font-weight: 400;
-		letter-spacing: normal;
-		color: rgba(245, 234, 216, 0.6);
+		letter-spacing: 0.18em;
+		color: var(--color-terracotta);
 	}
 
 	.footer-col ul {
@@ -192,49 +156,40 @@
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 0.55rem;
+		gap: 0.5rem;
 	}
 
 	.footer-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.45rem;
-		color: rgba(245, 234, 216, 0.9);
+		display: inline-block;
+		color: var(--color-text);
 		text-decoration: none;
-		font-size: 0.9rem;
+		font-size: 0.92rem;
+		opacity: 0.85;
+		transition: opacity 180ms ease, color 180ms ease, transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 	}
 
-	.footer-link:hover {
-		color: var(--color-gold);
+	a.footer-link:hover {
+		opacity: 1;
+		color: var(--color-terracotta);
+		transform: translateX(3px);
 	}
 
-	.footer-icon {
-		display: inline-flex;
-		color: var(--section-color, var(--color-gold));
-		flex-shrink: 0;
+	.footer-link.leu {
+		opacity: 0.45;
 	}
 
-	.soon-inline em {
-		font-weight: 400;
+	.footer-link.leu em {
 		font-style: normal;
-		opacity: 0.65;
 		font-size: 0.82em;
+		color: var(--color-gold);
 		margin-left: 0.3em;
 	}
 
-	.soon-inline {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.45rem;
-		font-size: 0.9rem;
-		color: rgba(245, 234, 216, 0.55);
-	}
-
 	.footer-legal {
-		max-width: 60rem;
-		margin: 2.5rem auto 0;
-		padding-top: 1.5rem;
-		border-top: 1px solid rgba(245, 234, 216, 0.15);
+		max-width: 72rem;
+		margin: 3rem auto 0;
+		padding-top: 1.25rem;
+		border-top: 1px solid rgba(58, 42, 32, 0.15);
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
@@ -245,7 +200,7 @@
 	.footer-legal p {
 		margin: 0;
 		font-size: 0.8rem;
-		color: rgba(245, 234, 216, 0.6);
+		opacity: 0.55;
 	}
 
 	.footer-legal-links {
@@ -254,26 +209,34 @@
 		gap: 0.4rem 1.1rem;
 	}
 
-	.footer-legal-links .soon-inline {
-		font-size: 0.8rem;
-	}
-
 	.footer-legal-link {
 		font-size: 0.8rem;
-		color: rgba(245, 234, 216, 0.75);
+		color: var(--color-text);
+		opacity: 0.7;
 		text-decoration: none;
-		transition: color 150ms ease;
+		transition: opacity 150ms ease;
 	}
 
 	.footer-legal-link:hover {
-		color: var(--color-cream);
+		opacity: 1;
 		text-decoration: underline;
 	}
 
-	@media (max-width: 45rem) {
-		.footer-top {
+	.footer-legal-leu {
+		font-size: 0.8rem;
+		opacity: 0.45;
+	}
+
+	.footer-legal-leu em {
+		font-style: normal;
+		font-size: 0.9em;
+		margin-left: 0.2em;
+	}
+
+	@media (max-width: 52rem) {
+		.footer-naut {
 			grid-template-columns: 1fr;
-			gap: 1.75rem;
+			gap: 2rem;
 		}
 	}
 </style>
