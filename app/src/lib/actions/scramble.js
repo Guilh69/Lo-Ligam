@@ -15,7 +15,10 @@ function buildLayer(str, stagger) {
 		const letter = document.createElement('span');
 		letter.textContent = ch;
 		const delay = i * stagger;
-		letter.style.transition = `opacity 560ms ease-in-out ${delay}ms, filter 560ms ease-in-out ${delay}ms`;
+		// La color tanben se propaga letra per letra (24 ms d'escart) : quand
+		// un parent càmbia de color al subrevòl, l'encra S'ESPANDÍS sus la
+		// frasa al luòc d'aparéisser d'un còp (demanda Romain 2026-10-06).
+		letter.style.transition = `opacity 560ms ease-in-out ${delay}ms, filter 560ms ease-in-out ${delay}ms, color 240ms ease ${i * 24}ms`;
 		layer.appendChild(letter);
 		i += 1;
 	}

@@ -304,7 +304,7 @@
 			<div class="menu-familhas">
 				{#each families as fam, fi (fam.id)}
 					<section class="menu-familha">
-						<p class="menu-jalon" style="--md: {fi * 4}">
+						<p class="menu-familha-nom" style="--md: {fi * 4}">
 							<span use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
 							<span class="menu-jalon-dich" use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}></span>
 						</p>
@@ -824,10 +824,25 @@
 		gap: 3rem clamp(2rem, 6vw, 5rem);
 	}
 
-	.menu-jalon {
+	/* La logica tipografica DINS lo menú (invèrsa del primièr jet, demanda
+	   Romain 2026-10-06) : la FAMILHA pòrta la votz Limelight en grand, las
+	   paginas — mai nombrosas, fachas per èsser legidas — son en Luciole. */
+	.menu-familha-nom {
 		display: flex;
 		align-items: baseline;
-		gap: 0.7rem;
+		flex-wrap: wrap;
+		gap: 0.8rem;
+		margin: 0 0 0.7rem;
+		font-family: var(--font-heading);
+		font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+		line-height: 1.1;
+		color: var(--color-terracotta);
+		opacity: 0;
+		animation: fade-arriba 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+		animation-delay: calc(var(--md, 0) * 40ms);
+	}
+
+	.menu-jalon {
 		margin: 0 0 0.6rem;
 		font-size: 0.75rem;
 		font-weight: 700;
@@ -840,6 +855,8 @@
 	}
 
 	.menu-jalon-dich {
+		font-family: var(--font-body);
+		font-size: 0.85rem;
 		font-weight: 400;
 		letter-spacing: normal;
 		text-transform: none;
@@ -884,21 +901,21 @@
 	.menu-ligam {
 		display: flex;
 		align-items: baseline;
-		gap: 0.8rem;
-		padding: 0.3rem 0;
+		gap: 0.7rem;
+		padding: 0.28rem 0;
 		text-decoration: none;
 		color: var(--color-text);
 	}
 
 	.menu-nom {
-		font-family: var(--font-heading);
-		font-size: clamp(1.5rem, 3.2vw, 2.3rem);
-		line-height: 1.15;
-		transition: color 250ms ease;
+		font-family: var(--font-body);
+		font-size: clamp(1rem, 1.6vw, 1.15rem);
+		font-weight: 600;
+		line-height: 1.4;
 	}
 
 	.menu-sageta {
-		font-size: 1.3rem;
+		font-size: 1rem;
 		color: var(--color-terracotta);
 		opacity: 0;
 		transform: translateX(-8px);
@@ -988,6 +1005,7 @@
 	@media (prefers-reduced-motion: reduce) {
 		.menu-vel,
 		.menu-jalon,
+		.menu-familha-nom,
 		.menu-linha,
 		.menu-ressorsas-linha {
 			animation: none;
@@ -1207,10 +1225,9 @@
 		text-transform: uppercase;
 		color: var(--color-text);
 		cursor: default;
-		/* L'encra colorada al subrevòl. (L'ancian efècte background-clip
-		   rendiá visiblas LAS DOAS lengas empiladas per scramble — pas
-		   compatible, testat lo 2026-10-05.) */
-		transition: color 500ms cubic-bezier(0.22, 1, 0.36, 1);
+		/* L'encra que S'ESPANDÍS al subrevòl : la color se propaga letra per
+		   letra (240 ms + 24 ms d'escart per letra, dins scramble.js) — pas
+		   de transicion aicí, son las letras que pòrtan lo movement. */
 	}
 
 	.eros-titol .linha:hover {
@@ -1465,7 +1482,7 @@
 		font-family: var(--font-heading);
 		font-size: clamp(1.5rem, 4.2vw, 2.9rem);
 		line-height: 1.1;
-		transition: color 350ms ease;
+		/* la color se propaga letra per letra (scramble.js) */
 	}
 
 	.camin-dich {
