@@ -11,7 +11,6 @@
 	import QuillIcon from '$lib/components/QuillIcon.svelte';
 	import CrossIcon from '$lib/components/CrossIcon.svelte';
 	import EnvelopeIcon from '$lib/components/EnvelopeIcon.svelte';
-	import PageBackground from '$lib/components/PageBackground.svelte';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
@@ -20,6 +19,7 @@
 	import { icona } from '$lib/data/icones';
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
+	import Lenis from 'lenis';
 
 	const sectionIcons = {
 		book: BookIcon,
@@ -54,10 +54,19 @@
 	// Si la base est injoignable ou une ligne manquante, la page affiche
 	// simplement ceci — rien ne casse.
 	const t = $state({
-		// Promessa d'acuèlh : lo nom de la marca ES lo concèpte (« ligam »
-		// = ligam). « Acompanha » ditz quicòm que las autras formulacions
-		// disián pas : que se daissa pas lo visitaire sol.
+		// L'eròi « editorial aerat » (decision Romain 2026-10-05, §11) : la
+		// linha de promessa del §11 (18-09), desplegada en tres linhas gigantas.
 		// À VALIDER par Romain sur dicodòc avant publication.
+		heroKicker: { oc: 'L’occitan', fr: 'L’occitan' },
+		heroL1: { oc: 'Se parla.', fr: 'Se parle.' },
+		heroL2: { oc: 'S’apren.', fr: 'S’apprend.' },
+		heroL3: { oc: 'Se viu.', fr: 'Se vit.' },
+		heroSub2: {
+			oc: 'Quin que siá ton objectiu, siás al bon endrech.',
+			fr: 'Quel que soit ton objectif, tu es au bon endroit.'
+		},
+		// L'anciana frasa d'eròi ven l'acuèlh intime de l'acte II — sos
+		// identificants site_textes (hero_lead / hero_sub) demòran valids.
 		heroLead: { oc: "Lo Ligam t'acompanha", fr: "Lo Ligam t'accompagne" },
 		heroSub: { oc: "a la descobèrta de l'occitan", fr: "à la découverte de l'occitan" },
 		what: {
@@ -86,7 +95,7 @@
 			facts: [
 				{
 					// Espacis fins insecables (U+202F) : lo nombre se copa pas.
-					num: '≈ 600 000',
+					num: '≈ 600 000',
 					oc: 'locutors',
 					fr: 'locuteurs',
 					font_oc: 'Estimacion — enquèsta sociolingüistica OPLO, 2020',
@@ -111,6 +120,8 @@
 		// La voix poétique (Cormorant italique, charte §2) : le plus célèbre
 		// chant de troubadour. Le vers reste en occitan dans les deux
 		// langues — c'est la citation qui est bilingue, pas sa traduction.
+		// Depuis la refonte 2026-10-05, elle se pose en blanc sur la
+		// bande-paysage des Cévennes (acte IV).
 		citacion: {
 			texte: {
 				oc: '« Can vei la lauzeta mover de joi sas alas contra·l rai… »',
@@ -133,9 +144,9 @@
 				fr: 'Co-officielle au Val d’Aran, protégée en Italie, sans statut en France : neuf cartes pour le comprendre.'
 			}
 		},
-		// L'invitation finale (station 6 du camin).
+		// L'invitacion finala (estacion 6 del camin), ara en « darrièr crit ».
 		comenca: {
-			title: { oc: 'Prèst a començar ?', fr: 'Prêt à commencer ?' },
+			title: { oc: 'Prèst·a per començar ?', fr: 'Prêt·e à commencer ?' },
 			sub: { oc: 'Tres mots uèi, una lenga deman.', fr: 'Trois mots aujourd’hui, une langue demain.' },
 			cta: { oc: 'Començar l’aventura', fr: 'Commencer l’aventure' }
 		},
@@ -146,15 +157,6 @@
 		}
 	});
 
-	// Lo riu : las illustracions que davalan lentament jol títol. La bocla
-	// CSS (translateX -50 %) es invisibla sonque se CADA MITAT de la benda
-	// es al mens tan larga coma l'ecran — sens aquò, de traucs apareisson
-	// sus los ecrans larges (vist per Romain sus son ecran). D'ont las
-	// listas de 12 (6 designs × 2), renduas dos còps : 24 imatges per
-	// benda, e una mitat de ~12 × 9vw > 100vw quina que siá la talha.
-	const riuAlt = ['01', '05', '09', '03', '07', '02', '04', '08', '06', '01', '05', '09'];
-	const riuBas = ['07', '02', '06', '09', '05', '03', '08', '04', '01', '07', '02', '06'];
-
 	// Recopie les textes venus de la base par-dessus les valeurs de secours,
 	// puis — en mode aperçu (?apercebut=1, brouillon posé par /admin/textes
 	// dans CE navigateur) — le brouillon par-dessus tout. Le brouillon ne
@@ -164,6 +166,11 @@
 
 	function aplicarTexte(id, valors) {
 		const ciblas = {
+			hero_kicker: t.heroKicker,
+			hero_l1: t.heroL1,
+			hero_l2: t.heroL2,
+			hero_l3: t.heroL3,
+			hero_sub2: t.heroSub2,
 			hero_lead: t.heroLead,
 			hero_sub: t.heroSub,
 			hero_cta2: t.heroCta2,
@@ -236,6 +243,16 @@
 			});
 	});
 
+	// Lo defilament fluid (Lenis — decision Romain 2026-10-05, §11).
+	// Garde-fous : rien si la personne demande moins d'animations, et le
+	// clavier / les lecteurs d'écran gardent le défilement natif (Lenis ne
+	// touche qu'à la roulette et au tactile).
+	$effect(() => {
+		if (!browser) return;
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const lenis = new Lenis({ autoRaf: true });
+		return () => lenis.destroy();
+	});
 </script>
 
 <svelte:window
@@ -243,8 +260,6 @@
 		if (event.key === 'Escape' && openTools) openTools = null;
 	}}
 />
-
-<PageBackground />
 
 <header class="topbar">
 	<div class="topbar-brand">
@@ -426,16 +441,40 @@
 <WelcomeDialog {lang} />
 
 <main class="page">
-	<!-- L'eròi « Lo riu » (decision del 2026-08-22, cf. cahier §11) : la
-	     frasa granda e centrada, puèi lo flume de designs que davala
-	     lentament. La frasa PORTA la pagina (compreneson), lo flume la fa
-	     VIURE — es lo fons vivent, independent del defilament. -->
-	<section class="hero">
-		<p class="hero-kicker" use:scramble={{ oc: 'Benvenguda', fr: 'Bienvenue', lang }}></p>
-		<div class="welcome">
-			<h1 class="hero-line" use:scramble={{ oc: t.heroLead.oc, fr: t.heroLead.fr, lang }}></h1>
-			<p class="hero-sub" use:scramble={{ oc: t.heroSub.oc, fr: t.heroSub.fr, lang }}></p>
-			<p class="tagline-secondary">
+	<!-- Acte I — l'eròi « editorial aerat » (decision Romain 2026-10-05,
+	     §11, maqueta validada) : la promessa del §11 en tres linhas
+	     gigantas (Limelight), pausada sus la crèsta de las Cevenas al
+	     liseron sang e aur (fòto de Romain, sistèma §3bis). Remplaça
+	     l'eròi « Lo riu » del 2026-08-22. -->
+	<section class="eros">
+		<p class="eros-kicker" use:scramble={{ oc: t.heroKicker.oc, fr: t.heroKicker.fr, lang }}></p>
+		<h1 class="eros-titol" aria-label="{t.heroKicker[lang]} {t.heroL1[lang]} {t.heroL2[lang]} {t.heroL3[lang]}">
+			<span class="linha" use:scramble={{ oc: t.heroL1.oc, fr: t.heroL1.fr, lang }}></span>
+			<span class="linha" use:scramble={{ oc: t.heroL2.oc, fr: t.heroL2.fr, lang }}></span>
+			<span class="linha" use:scramble={{ oc: t.heroL3.oc, fr: t.heroL3.fr, lang }}></span>
+		</h1>
+		<p class="eros-sub" use:scramble={{ oc: t.heroSub2.oc, fr: t.heroSub2.fr, lang }}></p>
+		<div class="hero-ctas">
+			<a class="btn-primary" href="/aprene">
+				<span use:scramble={{ oc: t.comenca.cta.oc, fr: t.comenca.cta.fr, lang }}></span>
+			</a>
+			<a class="btn-ghost" href="/carta">
+				<span use:scramble={{ oc: t.heroCta2.oc, fr: t.heroCta2.fr, lang }}></span>
+			</a>
+		</div>
+		<p class="eros-indici" use:scramble={{ oc: 'Davala ↓', fr: 'Descends ↓', lang }}></p>
+		<div class="eros-paisatge" aria-hidden="true"></div>
+	</section>
+
+	<!-- Acte II — l'acuèlh intime : l'anciana frasa d'eròi (sos tèxtes de
+	     basa hero_lead / hero_sub vivon encara) e lo personatge destorat. -->
+	<section class="adieu">
+		<div class="adieu-tèxte">
+			<p class="adieu-lead reveal">
+				<span use:scramble={{ oc: t.heroLead.oc, fr: t.heroLead.fr, lang }}></span>
+				<span class="adieu-sub" use:scramble={{ oc: t.heroSub.oc, fr: t.heroSub.fr, lang }}></span>
+			</p>
+			<p class="tagline-secondary reveal" style="--step: 1">
 				<em
 					use:scramble={{
 						oc: `(${t.heroLead.fr} ${t.heroSub.fr})`,
@@ -445,100 +484,50 @@
 				></em>
 			</p>
 		</div>
-		<div class="hero-ctas">
-			<a class="btn-primary" href="/aprene">
-				<span use:scramble={{ oc: t.comenca.cta.oc, fr: t.comenca.cta.fr, lang }}></span>
-			</a>
-			<a class="btn-ghost" href="/carta">
-				<span use:scramble={{ oc: t.heroCta2.oc, fr: t.heroCta2.fr, lang }}></span>
-			</a>
-		</div>
+		<img
+			class="adieu-personatge reveal"
+			style="--step: 2"
+			src="/acuelh/personatge.png"
+			alt=""
+			loading="lazy"
+		/>
 	</section>
 
-	<div class="riu" aria-hidden="true">
-		<div class="riu-benda riu-benda-alt">
-			{#each [...riuAlt, ...riuAlt] as n, i (i)}
-				<img src={`/bg/design-${n}.webp`} alt="" loading={i < 4 ? 'eager' : 'lazy'} />
-			{/each}
-		</div>
-		<div class="riu-benda riu-benda-bas">
-			{#each [...riuBas, ...riuBas] as n, i (i)}
-				<img src={`/bg/design-${n}.webp`} alt="" loading="lazy" />
-			{/each}
-		</div>
-	</div>
-
-	<!-- Lo filet ondulat : la signatura. Se DESSENHA al passatge del
-	     defilament (stroke-dashoffset pilotat per view()). -->
-	<div class="filet-onda" aria-hidden="true">
-		<svg viewBox="0 0 1200 30" preserveAspectRatio="none">
-			<path
-				class="filet-linha"
-				pathLength="1"
-				d="M0 16 Q 150 4 300 15 T 600 14 T 900 15 T 1200 13"
-				fill="none"
-			/>
-		</svg>
-	</div>
-
-	<section class="chapter chapter--what">
-		<h2 class="chapter-title reveal" use:scramble={{ oc: t.what.title.oc, fr: t.what.title.fr, lang }}></h2>
-		<p class="chapter-lead reveal" use:scramble={{ oc: t.what.lead.oc, fr: t.what.lead.fr, lang }}></p>
-
-		<!-- Las quatre pòrtas (decision Romain 2026-08-22 : « cartes
-		     cliquables »). Una familha sens cap de pagina viva rend una
-		     carta identica mas SENS ligam ni sageta — pas de faus ligam,
-		     pas de « lèu » grisat (charte §5ter). -->
-		<div class="what-families">
+	<!-- Acte III — los camins : las familhas del site en lista editoriala
+	     numerotada (l'esperit « sommaire de festival » de la maqueta).
+	     Una familha sens cap de pagina viva rend una linha identica mas
+	     SENS ligam ni sageta — pas de faus ligam (charte §5ter). -->
+	<section class="camins">
+		<h2 class="camins-title reveal" use:scramble={{ oc: t.what.title.oc, fr: t.what.title.fr, lang }}></h2>
+		<p class="camins-lead reveal" use:scramble={{ oc: t.what.lead.oc, fr: t.what.lead.fr, lang }}></p>
+		<div class="camins-lista">
 			{#each families as fam, i (fam.id)}
-				{@const Icon = sectionIcons[fam.icon]}
 				{@const porta = fam.items.find((it) => it.status === 'live')?.href ?? null}
 				{#if porta}
-					<a
-						class="what-family what-porta reveal"
-						href={porta}
-						style="--section-color: {fam.color}; --step: {i}"
-					>
-						<span class="what-head">
-							<span class="what-icon"><Icon size={24} /></span>
-							<span class="what-name" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
-							<svg class="what-sageta" viewBox="0 0 20 20" aria-hidden="true">
-								<path
-									d="M7 4 L13 10 L7 16"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2.4"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
-						</span>
-						<span
-							class="what-tagline"
-							use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}
-						></span>
+					<a class="camin reveal" href={porta} style="--step: {i}; --section-color: {fam.color}">
+						<span class="camin-n">{String(i + 1).padStart(2, '0')}</span>
+						<span class="camin-nom" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
+						<span class="camin-dich" use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}></span>
+						<span class="camin-sageta" aria-hidden="true">→</span>
 					</a>
 				{:else}
-					<div class="what-family reveal" style="--section-color: {fam.color}; --step: {i}">
-						<span class="what-head">
-							<span class="what-icon"><Icon size={24} /></span>
-							<span class="what-name" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
+					<div class="camin leu reveal" style="--step: {i}" aria-disabled="true">
+						<span class="camin-n">{String(i + 1).padStart(2, '0')}</span>
+						<span class="camin-nom" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}></span>
+						<span class="camin-dich">
+							<span use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}></span>
+							<span class="camin-leu-tag" use:scramble={{ oc: 'lèu', fr: 'bientôt', lang }}></span>
 						</span>
-						<span
-							class="what-tagline"
-							use:scramble={{ oc: fam.tagline_oc, fr: fam.tagline_fr, lang }}
-						></span>
 					</div>
 				{/if}
 			{/each}
 		</div>
 	</section>
 
+	<!-- La lenga, uèi : l'explica pel novici complet e los chifras sorsats. -->
 	<section class="chapter chapter--lenga">
-		<p class="chapter-jalon reveal" use:scramble={{ oc: 'Partida una · La lenga', fr: 'Partie une · La langue', lang }}></p>
+		<p class="chapter-jalon reveal" use:scramble={{ oc: 'La lenga', fr: 'La langue', lang }}></p>
 		<h2 class="chapter-title reveal" use:scramble={{ oc: t.lenga.title.oc, fr: t.lenga.title.fr, lang }}></h2>
-		<!-- Lo paragraf pel novici complet : la pagina deu èsser compresa
-		     per qualqu'un qu'a JAMAI ausit parlar de l'occitan. -->
 		<p class="chapter-lead lenga-intro reveal" use:scramble={{ oc: t.lenga.intro.oc, fr: t.lenga.intro.fr, lang }}></p>
 
 		<div class="facts">
@@ -550,18 +539,22 @@
 				</div>
 			{/each}
 		</div>
+	</section>
 
-		<!-- La votz poetica (Cormorant italica, sonque per las citacions). -->
-		<blockquote class="citacion reveal">
-			<p class="citacion-texte">{t.citacion.texte[lang] ?? t.citacion.texte.oc}</p>
-			<cite class="citacion-autor">{t.citacion.autor[lang] ?? t.citacion.autor.oc}</cite>
+	<!-- Acte IV — la benda-paisatge : la votz poetica del trobador en blanc
+	     sus las Cevenas (parallaxa doça, pilotada pel defilament natiu). -->
+	<section class="benda">
+		<div class="benda-fons" aria-hidden="true"></div>
+		<blockquote class="citacion">
+			<p class="citacion-texte reveal">{t.citacion.texte[lang] ?? t.citacion.texte.oc}</p>
+			<cite class="citacion-autor reveal" style="--step: 1">{t.citacion.autor[lang] ?? t.citacion.autor.oc}</cite>
 		</blockquote>
 	</section>
 
 	<section class="chapter chapter--carta">
-		<p class="chapter-jalon reveal" use:scramble={{ oc: 'Partida dos · Lo territòri', fr: 'Partie deux · Le territoire', lang }}></p>
-		<h2 class="chapter-title" use:scramble={{ oc: t.carta.title.oc, fr: t.carta.title.fr, lang }}></h2>
-		<p class="chapter-lead" use:scramble={{ oc: t.carta.lead.oc, fr: t.carta.lead.fr, lang }}></p>
+		<p class="chapter-jalon reveal" use:scramble={{ oc: 'Lo territòri', fr: 'Le territoire', lang }}></p>
+		<h2 class="chapter-title reveal" use:scramble={{ oc: t.carta.title.oc, fr: t.carta.title.fr, lang }}></h2>
+		<p class="chapter-lead reveal" use:scramble={{ oc: t.carta.lead.oc, fr: t.carta.lead.fr, lang }}></p>
 		<!-- Carte réellement navigable : on peut se déplacer et zoomer sans
 		     quitter l'accueil. Les dialectes sont le calque par défaut —
 		     c'est ce qui raconte la langue, plus parlant que des points
@@ -579,8 +572,7 @@
 	</section>
 
 	<!-- Officialitat, ALLEUGERIDA en bendèl (decision Romain 2026-08-22 :
-	     « annexe, à voir ») — lo grand carrossèl es partit, dos visuals e
-	     lo messatge sufisson. -->
+	     « annexe, à voir ») — dos visuals e lo messatge sufisson. -->
 	<section class="chapter chapter--officialitat">
 		<div class="officialitat-benda reveal">
 			<div class="officialitat-imatges" aria-hidden="true">
@@ -600,11 +592,39 @@
 		</div>
 	</section>
 
-	<!-- L'invitacion finala (estacion 6 del camin). -->
-	<section class="chapter chapter--comenca">
-		<h2 class="chapter-title reveal" use:scramble={{ oc: t.comenca.title.oc, fr: t.comenca.title.fr, lang }}></h2>
-		<p class="chapter-lead reveal" use:scramble={{ oc: t.comenca.sub.oc, fr: t.comenca.sub.fr, lang }}></p>
-		<a class="btn-primary comenca-btn reveal" href="/aprene">
+	<!-- Acte V — lo darrièr crit (estacion 6 del camin) : lo títol gigant,
+	     la crotz-constellacion en filigrana, lo boton d'aur. -->
+	<section class="crida">
+		<svg class="crida-simbol" viewBox="0 0 375 375" aria-hidden="true">
+			<g stroke="currentColor" fill="none">
+				<g stroke-width="9">
+					<path transform="matrix(0.268014, 0.700477, -0.700477, 0.268014, 64.86348, 183.788938)" d="M 1.376068 17.552014 C 31.817355 -2.514514 62.260322 -2.515953 92.703108 17.552563"/>
+					<path transform="matrix(-0.264462, 0.701826, -0.701826, -0.264462, 90.09249, 126.787067)" d="M 1.362442 17.551517 C 32.215336 -2.517821 63.067305 -2.516403 93.916511 17.550899"/>
+					<path transform="matrix(0.691513, 0.29036, -0.29036, 0.691513, 126.085587, 284.330547)" d="M 1.348645 17.5517 C 32.627018 -2.518593 63.904784 -2.518294 95.186744 17.550581"/>
+					<path transform="matrix(0.693965, -0.284452, 0.284452, 0.693965, 182.144918, 311.278163)" d="M 1.384734 17.548771 C 31.55003 -2.514684 61.715991 -2.516508 91.885462 17.550094"/>
+					<path transform="matrix(0.271321, -0.699203, 0.699203, 0.271321, 284.023404, 247.651683)" d="M 1.451193 17.549063 C 29.632651 -2.515269 57.816365 -2.518569 86.001247 17.550756"/>
+					<path transform="matrix(-0.249767, -0.707189, 0.707189, -0.249767, 307.550843, 193.403865)" d="M 1.370475 17.551954 C 31.989038 -2.516707 62.607047 -2.51822 93.217856 17.550591"/>
+					<path transform="matrix(-0.691743, 0.289812, -0.289812, -0.691743, 190.590153, 63.74593)" d="M 1.38408 17.548767 C 31.566341 -2.518959 61.743885 -2.519346 91.926321 17.551629"/>
+					<path transform="matrix(-0.698452, -0.273248, 0.273248, -0.698452, 248.993103, 90.119833)" d="M 1.376053 17.552315 C 31.806364 -2.517971 62.241936 -2.518033 92.676019 17.549175"/>
+				</g>
+				<g stroke-width="8">
+					<path transform="matrix(0.641948, -0.387818, 0.387818, 0.641948, 73.545424, 252.913812)" d="M 3.999957 3.998973 L 345.757126 3.999943"/>
+					<path transform="matrix(-0.642386, -0.387091, 0.387091, -0.642386, 294.426636, 256.816332)" d="M -0.00130785 4.001866 L 338.79745 3.999582"/>
+					<path transform="matrix(0.385815, -0.643154, 0.643154, 0.385815, 118.61033, 295.77414)" d="M 0.00157877 4.000061 L 339.885894 4.000818"/>
+					<path transform="matrix(-0.384776, -0.643776, 0.643776, -0.384776, 250.14365, 300.072431)" d="M -0.0020904 3.998745 L 343.962972 4.001613"/>
+				</g>
+			</g>
+			<g fill="currentColor">
+				<circle cx="185.77" cy="188.05" r="17"/>
+				<circle cx="185.77" cy="50.75" r="15"/><circle cx="121.45" cy="78.61" r="15"/><circle cx="252.46" cy="78.61" r="15"/>
+				<circle cx="51.75" cy="189.22" r="15"/><circle cx="77.83" cy="122.14" r="15"/><circle cx="77.83" cy="254.02" r="15"/>
+				<circle cx="323.25" cy="188.05" r="15"/><circle cx="296.89" cy="122.12" r="15"/><circle cx="296.89" cy="253.99" r="15"/>
+				<circle cx="121.45" cy="297.43" r="15"/><circle cx="252.46" cy="297.43" r="15"/><circle cx="185.77" cy="324.25" r="15"/>
+			</g>
+		</svg>
+		<h2 class="crida-title reveal" use:scramble={{ oc: t.comenca.title.oc, fr: t.comenca.title.fr, lang }}></h2>
+		<p class="crida-sub reveal" style="--step: 1" use:scramble={{ oc: t.comenca.sub.oc, fr: t.comenca.sub.fr, lang }}></p>
+		<a class="btn-primary crida-btn reveal" style="--step: 2" href="/aprene">
 			<span use:scramble={{ oc: t.comenca.cta.oc, fr: t.comenca.cta.fr, lang }}></span>
 		</a>
 	</section>
@@ -665,8 +685,7 @@
 	}
 
 	.brand-name {
-		font-family: var(--font-logo); /* lo wordmark garda Fredoka (charte §2) */
-		font-weight: 600;
+		font-family: var(--font-logo); /* Limelight, coma lo lògo (jornal §11, 2026-10-05) */
 		font-size: 1.15rem;
 		white-space: nowrap; /* « Lo Ligam » se copa pas jamai en doas linhas */
 		color: var(--color-text);
@@ -692,8 +711,8 @@
 		padding: 0 0.9rem;
 		background: rgba(165, 52, 42, 0.1);
 		color: var(--color-brick);
-		font-family: var(--font-heading);
-		font-weight: 600;
+		font-family: var(--font-body);
+		font-weight: 700;
 		font-size: 0.9rem;
 		cursor: pointer;
 		transition:
@@ -823,7 +842,6 @@
 
 	.family-name {
 		font-family: var(--font-heading);
-		font-weight: 700;
 		font-size: 1.1rem;
 		color: var(--section-color, var(--color-brick));
 	}
@@ -874,8 +892,8 @@
 	}
 
 	.item-name {
-		font-family: var(--font-heading);
-		font-weight: 600;
+		font-family: var(--font-body);
+		font-weight: 700;
 		font-size: 0.95rem;
 		color: var(--color-brick);
 	}
@@ -991,7 +1009,7 @@
 		justify-content: center;
 		background: var(--color-brick);
 		color: var(--color-cream);
-		font-family: var(--font-heading);
+		font-family: var(--font-body);
 		font-weight: 700;
 		font-size: 0.8rem;
 		line-height: 1;
@@ -1083,7 +1101,7 @@
 
 	.tools-popover-title {
 		flex: 1;
-		font-family: var(--font-heading);
+		font-family: var(--font-body);
 		font-weight: 700;
 		font-size: 1.05rem;
 		color: var(--color-brick);
@@ -1161,35 +1179,127 @@
 		opacity: 0.75;
 	}
 
+	/* ————————————————————————————————————————————————————————————————
+	   La pagina racònte « editorial aerat » (decision Romain 2026-10-05) :
+	   marges generosas, títols gigants Limelight, pauc de colors per ecran,
+	   imatges calmes — los principis retenguts de la referéncia, amb la
+	   matèria Lo Ligam. */
 	.page {
 		position: relative;
 		z-index: 3;
 		/* Jamai de defilament orizontal : las doblonas bilingüas de
-		   l'efècte scramble (las doas lengas superpausadas dins lo títol)
-		   pòdon despassar de qualques pixèls sens se replegar — çò que
-		   fasiá aparéisser una barra orizontala. Se copa aicí, un còp per
-		   totas, per tota la pagina racònte. */
+		   l'efècte scramble pòdon despassar de qualques pixèls. */
 		overflow-x: clip;
 	}
 
-	/* L'eròi « Lo riu » : compacte e centrat — la frasa pòrta, lo flume
-	   (en dejós) fa viure. Fons calme : la color ven dels designs. */
-	.hero {
+	/* Acte I — l'eròi. Lo cèl de la fòto es blanc pur : lo fons passa de
+	   la crèma de la barra al blanc, e la crèsta se pausa sens costura. */
+	.eros {
+		min-height: calc(100svh - 64px);
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		align-items: center;
-		gap: 1.1rem;
-		padding: 4.5rem 1.5rem 2.75rem;
 		text-align: center;
+		position: relative;
+		padding: 4svh 1.5rem 30svh;
+		background: linear-gradient(var(--color-cream), #ffffff 55%);
 	}
 
-	.hero-kicker {
-		margin: 0;
-		font-size: 0.85rem;
+	.eros-kicker {
+		margin: 0 0 1rem;
+		font-size: clamp(0.8rem, 1.4vw, 1rem);
 		font-weight: 600;
-		letter-spacing: 0.3em;
+		letter-spacing: 0.35em;
+		text-indent: 0.35em; /* compensa l'espaci fantauma aprèp la darrièra letra */
 		text-transform: uppercase;
 		color: var(--color-terracotta);
+	}
+
+	.eros-titol {
+		margin: 0;
+		font-weight: 400;
+	}
+
+	.eros-titol .linha {
+		display: block;
+		font-family: var(--font-heading);
+		font-size: clamp(2.6rem, 10vw, 8.5rem);
+		line-height: 1.04;
+		text-transform: uppercase;
+		color: var(--color-text);
+		cursor: default;
+		/* L'encra colorada al subrevòl. (L'ancian efècte background-clip
+		   rendiá visiblas LAS DOAS lengas empiladas per scramble — pas
+		   compatible, testat lo 2026-10-05.) */
+		transition: color 500ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.eros-titol .linha:hover {
+		color: var(--color-terracotta);
+	}
+
+	.eros-sub {
+		margin: 1.3rem 0 0;
+		font-size: clamp(0.95rem, 1.7vw, 1.1rem);
+		opacity: 0.7;
+		text-wrap: balance;
+	}
+
+	.eros .hero-ctas {
+		margin-top: 1.8rem;
+	}
+
+	.eros-indici {
+		position: absolute;
+		bottom: 26svh;
+		margin: 0;
+		font-size: 0.78rem;
+		letter-spacing: 0.2em;
+		text-indent: 0.2em;
+		text-transform: uppercase;
+		opacity: 0.45;
+	}
+
+	/* La crèsta de las Cevenas (fòto de Romain, liseron sang e aur §3bis). */
+	.eros-paisatge {
+		position: absolute;
+		inset: auto 0 0 0;
+		height: 24svh;
+		background: url('/acuelh/paisatge.jpg') 50% 30% / cover no-repeat;
+		z-index: 0;
+	}
+
+	.eros-paisatge::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(#ffffff, #ffffff00 35%);
+	}
+
+	/* L'intrada de l'eròi, al cargament. */
+	.eros-kicker,
+	.eros-titol .linha,
+	.eros-sub,
+	.eros .hero-ctas,
+	.eros-indici {
+		opacity: 0;
+		transform: translateY(32px);
+		animation: intrada 950ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	}
+
+	.eros-titol .linha:nth-child(1) { animation-delay: 110ms; }
+	.eros-titol .linha:nth-child(2) { animation-delay: 220ms; }
+	.eros-titol .linha:nth-child(3) { animation-delay: 330ms; }
+	.eros-sub { animation-delay: 500ms; }
+	.eros .hero-ctas { animation-delay: 620ms; }
+	.eros-indici { animation-delay: 850ms; }
+
+	@keyframes intrada {
+		to {
+			opacity: 1;
+			transform: none;
+		}
 	}
 
 	.hero-ctas {
@@ -1197,7 +1307,6 @@
 		flex-wrap: wrap;
 		justify-content: center;
 		gap: 0.75rem;
-		margin-top: 0.5rem;
 	}
 
 	.btn-ghost {
@@ -1206,8 +1315,8 @@
 		border-radius: 999px;
 		border: 1.5px solid rgba(58, 42, 32, 0.3);
 		color: var(--color-text);
-		font-family: var(--font-heading);
-		font-weight: 600;
+		font-family: var(--font-body);
+		font-weight: 700;
 		font-size: 1rem;
 		text-decoration: none;
 		transition:
@@ -1222,171 +1331,6 @@
 		background: rgba(181, 61, 23, 0.06);
 	}
 
-	/* Lo riu : doas bendas que davalan sens fin, cadenciadas lentament
-	   (una respiracion, pas un manètge) e en sens opausats. Independentas
-	   del defilament : es lo fons vivent de la pagina. */
-	.riu {
-		position: relative;
-		z-index: 3;
-		display: flex;
-		flex-direction: column;
-		gap: 0.9rem;
-		overflow: hidden;
-		padding-bottom: 0.5rem;
-	}
-
-	.riu-benda {
-		display: flex;
-		gap: 1rem;
-		width: max-content;
-	}
-
-	/* 12 imatges per mitat de benda : a 9vw la mitat fa ~108vw, donc
-	   totjorn mai larga que l'ecran — cap de trauc possible. */
-	.riu-benda img {
-		width: clamp(120px, 9vw, 330px);
-		border-radius: 14px;
-		box-shadow: 0 6px 18px rgba(58, 42, 32, 0.12);
-	}
-
-	.riu-benda-alt {
-		animation: riu-desfilar 70s linear infinite;
-	}
-
-	.riu-benda-bas {
-		animation: riu-desfilar-invers 90s linear infinite;
-	}
-
-	.riu-benda-bas img {
-		width: clamp(95px, 8.5vw, 300px);
-	}
-
-	@keyframes riu-desfilar {
-		from {
-			transform: translateX(0);
-		}
-		to {
-			transform: translateX(-50%);
-		}
-	}
-
-	@keyframes riu-desfilar-invers {
-		from {
-			transform: translateX(-50%);
-		}
-		to {
-			transform: translateX(0);
-		}
-	}
-
-	/* Lo filet ondulat, la signatura : las vagas plenas d'abans, tornadas
-	   en linha fina. Se dessenha al ritme del defilament. */
-	.filet-onda {
-		position: relative;
-		z-index: 3;
-		padding: 1.5rem 0 0.25rem;
-		line-height: 0;
-	}
-
-	.filet-onda svg {
-		width: 100%;
-		height: 30px;
-		display: block;
-	}
-
-	.filet-linha {
-		stroke: var(--color-terracotta);
-		stroke-width: 2.5;
-		opacity: 0.75;
-	}
-
-	@supports (animation-timeline: view()) {
-		@media (prefers-reduced-motion: no-preference) {
-			.filet-linha {
-				stroke-dasharray: 1;
-				stroke-dashoffset: 1;
-				animation: filet-tracar linear both;
-				animation-timeline: view();
-				animation-range: entry 0% entry 90%;
-			}
-		}
-	}
-
-	@keyframes filet-tracar {
-		to {
-			stroke-dashoffset: 0;
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.riu-benda-alt,
-		.riu-benda-bas {
-			animation: none;
-		}
-	}
-
-	.welcome {
-		/* Pro large per que « T'ACOMPANHA » en capitalas Syne (≈ 56 px ×
-		   11 letras larjas) tenga SENS despassar sus ordinator. */
-		max-width: min(60rem, 100%);
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
-
-	/* La promesse porte la page : capitales Syne 800, la voix principale
-	   (charte §2). Deux niveaux — la ligne forte, puis la ligne d'appui. */
-	.hero-line {
-		margin: 0;
-		font-family: var(--font-heading);
-		/* Lo minimum seguís l'ecran (vw) : en capitalas Syne 800, lo mot
-		   « T'ACOMPANHA » deu poder ténir dins un telefonet estrech. */
-		font-size: clamp(1.55rem, 5.5vw, 3.5rem);
-		font-weight: 800;
-		line-height: 1.06;
-		letter-spacing: 0.015em;
-		text-transform: uppercase;
-		color: var(--color-brick);
-		text-wrap: balance;
-		animation: hero-reveal 750ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
-	}
-
-	.hero-sub {
-		margin: 0.3rem 0 0;
-		font-family: var(--font-heading);
-		font-size: clamp(1.15rem, 2.6vw, 1.6rem);
-		font-weight: 500;
-		line-height: 1.3;
-		color: var(--color-text);
-		text-wrap: balance;
-		animation: hero-reveal 750ms 250ms cubic-bezier(0.22, 1, 0.36, 1) both;
-	}
-
-	@keyframes hero-reveal {
-		from {
-			opacity: 0;
-			transform: translateY(16px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.hero-line,
-		.hero-sub {
-			animation: none;
-		}
-	}
-
-	.tagline-secondary {
-		margin: 0.15rem 0 0;
-		font-size: 0.92rem;
-		color: var(--color-teal);
-		text-wrap: pretty;
-	}
-
 	.btn-primary {
 		display: inline-block;
 		background: var(--color-gold);
@@ -1394,9 +1338,9 @@
 		border: none;
 		padding: 1rem 1.75rem;
 		border-radius: 999px;
-		font-weight: 600;
-		font-family: var(--font-heading);
-		font-size: 1.1rem;
+		font-weight: 700;
+		font-family: var(--font-body);
+		font-size: 1.05rem;
 		text-decoration: none;
 		cursor: pointer;
 		transition:
@@ -1423,58 +1367,207 @@
 		box-shadow: 0 4px 12px rgba(238, 175, 52, 0.4);
 	}
 
-	/* Chapitres numérotés (repris de Ponpon Mania) : chaque section est
-	   une idée, annoncée par son numéro. Bandes pleine largeur alternées
-	   pour donner du rythme, au lieu d'une suite de cartes centrées. */
+	/* Acte II — l'acuèlh intime. */
+	.adieu {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: clamp(4rem, 12vh, 8rem) clamp(1.2rem, 5vw, 3rem);
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 2rem 4rem;
+		align-items: center;
+		background: transparent;
+	}
+
+	.adieu-lead {
+		margin: 0;
+		font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+		line-height: 1.45;
+		max-width: 21em;
+	}
+
+	.adieu-sub {
+		display: block;
+		color: var(--color-terracotta);
+	}
+
+	.tagline-secondary {
+		margin: 1rem 0 0;
+		font-size: 0.95rem;
+		color: var(--color-teal);
+		text-wrap: pretty;
+	}
+
+	.adieu-personatge {
+		width: clamp(130px, 15vw, 200px);
+		display: block;
+	}
+
+	@media (max-width: 720px) {
+		.adieu {
+			grid-template-columns: 1fr;
+			text-align: center;
+		}
+
+		.adieu-personatge {
+			order: -1;
+			margin: 0 auto;
+		}
+	}
+
+	/* Acte III — los camins, en lista editoriala numerotada. */
+	.camins {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 0 clamp(1.2rem, 5vw, 3rem) clamp(4rem, 10vh, 7rem);
+		text-align: left;
+	}
+
+	.camins-title {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: clamp(1.8rem, 4.5vw, 3rem);
+		color: var(--color-brick);
+		text-wrap: balance;
+	}
+
+	.camins-lead {
+		margin: 0.75rem 0 2.2rem;
+		max-width: 36rem;
+		font-size: 1.02rem;
+		line-height: 1.55;
+		opacity: 0.8;
+		text-wrap: pretty;
+	}
+
+	.camin {
+		display: grid;
+		grid-template-columns: 3rem 1fr auto 2.5rem;
+		gap: 1.5rem;
+		align-items: center;
+		padding: 1.5rem 1rem;
+		border-top: 1px solid rgba(58, 42, 32, 0.15);
+		text-decoration: none;
+		color: inherit;
+		transition:
+			background 450ms cubic-bezier(0.22, 1, 0.36, 1),
+			padding-left 450ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.camin:last-of-type {
+		border-bottom: 1px solid rgba(58, 42, 32, 0.15);
+	}
+
+	.camin-n {
+		font-family: var(--font-heading);
+		font-size: 1rem;
+		opacity: 0.4;
+	}
+
+	.camin-nom {
+		font-family: var(--font-heading);
+		font-size: clamp(1.5rem, 4.2vw, 2.9rem);
+		line-height: 1.1;
+		transition: color 350ms ease;
+	}
+
+	.camin-dich {
+		font-size: 0.9rem;
+		font-style: italic;
+		opacity: 0.6;
+		text-align: right;
+		max-width: 16em;
+	}
+
+	.camin-sageta {
+		font-size: 1.5rem;
+		color: var(--color-terracotta);
+		transform: translateX(-8px);
+		opacity: 0;
+		transition: all 450ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	a.camin:hover,
+	a.camin:focus-visible {
+		background: var(--color-cream);
+		padding-left: 2rem;
+	}
+
+	a.camin:hover .camin-sageta,
+	a.camin:focus-visible .camin-sageta {
+		transform: none;
+		opacity: 1;
+	}
+
+	a.camin:hover .camin-nom {
+		color: var(--color-terracotta);
+	}
+
+	.camin.leu {
+		grid-template-columns: 3rem 1fr auto;
+	}
+
+	.camin.leu .camin-nom {
+		opacity: 0.35;
+	}
+
+	.camin-leu-tag {
+		font-style: normal;
+		color: var(--color-gold);
+	}
+
+	@media (max-width: 720px) {
+		.camin {
+			grid-template-columns: 2rem 1fr 1.6rem;
+		}
+
+		.camin.leu {
+			grid-template-columns: 2rem 1fr;
+		}
+
+		.camin-dich {
+			display: none;
+		}
+	}
+
+	/* Los capítols que demòran (lenga, carta, officialitat) : la meteissa
+	   gramatica aerada, títols Limelight. */
 	.chapter {
 		position: relative;
 		z-index: 3;
-		padding: 5rem 1.5rem;
+		padding: clamp(4rem, 11vh, 7rem) 1.5rem;
 		text-align: center;
 	}
 
-	.chapter--what {
-		background: rgba(255, 255, 255, 0.55);
-	}
-
 	.chapter--lenga {
-		background: var(--color-brick);
-		color: var(--color-cream);
+		background: var(--color-cream);
 	}
 
-	/* Los jalons de capítol : pichonas capitalas espaçadas (Instrument
-	   Sans), lo motiu retengut aprèp l'abandon de Marcellus. */
 	.chapter-jalon {
 		margin: 0 0 0.75rem;
 		font-size: 0.8rem;
 		font-weight: 600;
 		letter-spacing: 0.28em;
+		text-indent: 0.28em;
 		text-transform: uppercase;
-		color: var(--color-teal);
-	}
-
-	.chapter--lenga .chapter-jalon {
-		color: var(--color-gold);
+		color: var(--color-terracotta);
 	}
 
 	.chapter-title {
 		margin: 0;
 		font-family: var(--font-heading);
-		font-size: clamp(1.6rem, 3.6vw, 2.4rem);
-		font-weight: 700;
+		font-weight: 400;
+		font-size: clamp(1.9rem, 5vw, 3.4rem);
+		color: var(--color-text);
 		text-wrap: balance;
 	}
 
-	.chapter--what .chapter-title,
-	.chapter--carta .chapter-title {
-		color: var(--color-brick);
-	}
-
 	.chapter-lead {
-		max-width: 34rem;
-		margin: 0.75rem auto 0;
+		max-width: 36rem;
+		margin: 1rem auto 0;
 		font-size: 1.02rem;
-		line-height: 1.5;
+		line-height: 1.6;
 		opacity: 0.85;
 		text-wrap: pretty;
 	}
@@ -1505,84 +1598,12 @@
 		}
 	}
 
-	.what-families {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-		gap: 1rem;
-		max-width: 58rem;
-		margin: 2.5rem auto 0;
-	}
-
-	.what-family {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 0.4rem;
-		padding: 1.4rem 1.3rem;
-		background: white;
-		border-radius: 16px;
-		border-top: 4px solid var(--section-color);
-		box-shadow: 0 6px 18px rgba(58, 42, 32, 0.08);
-		text-align: left;
-	}
-
-	/* Las pòrtas clicablas : meteissa carta, mai una sageta e un
-	   soslevament al subrevòl. */
-	.what-porta {
-		text-decoration: none;
-		color: inherit;
-		transition:
-			transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
-			box-shadow 180ms ease;
-	}
-
-	.what-porta:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 12px 26px rgba(58, 42, 32, 0.14);
-	}
-
-	.what-head {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		width: 100%;
-	}
-
-	.what-sageta {
-		width: 16px;
-		height: 16px;
-		margin-left: auto;
-		color: var(--section-color);
-		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
-	.what-porta:hover .what-sageta {
-		transform: translateX(4px);
-	}
-
-	.what-icon {
-		display: flex;
-		color: var(--section-color);
-	}
-
-	.what-name {
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 1.15rem;
-		color: var(--section-color);
-	}
-
-	.what-tagline {
-		font-size: 0.85rem;
-		opacity: 0.7;
-	}
-
 	.facts {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
 		gap: 1.5rem;
-		max-width: 46rem;
-		margin: 2.5rem auto 0;
+		max-width: 48rem;
+		margin: 3rem auto 0;
 	}
 
 	.fact {
@@ -1592,15 +1613,13 @@
 	}
 
 	/* Jamai de retorn a la linha dins un chifra : « ≈ 600 000 » copat en
-	   doas linhas desalinhava las tres colomnas (vist per Romain). La
-	   talha es reducha en consequéncia per que tenga d'una peça. */
+	   doas linhas desalinhava las tres colomnas (vist per Romain). */
 	.fact-num {
 		font-family: var(--font-heading);
-		font-size: clamp(1.9rem, 3.4vw, 2.9rem);
-		font-weight: 700;
+		font-size: clamp(1.9rem, 3.4vw, 3.1rem);
 		line-height: 1;
 		white-space: nowrap;
-		color: var(--color-gold);
+		color: var(--color-terracotta);
 	}
 
 	.fact-label {
@@ -1624,14 +1643,53 @@
 		text-wrap: balance;
 	}
 
-	/* La citacion del trobador : la votz poetica (Cormorant italica),
-	   presentada sus un filet daurat — sòbria, pas un panèl. */
+	/* Acte IV — la benda-paisatge : la votz poetica en blanc sus las
+	   Cevenas, parallaxa doça pilotada pel defilament (CSS natiu). */
+	.benda {
+		position: relative;
+		min-height: 64svh;
+		display: grid;
+		place-items: center;
+		overflow: clip;
+		text-align: center;
+		padding: 4rem 1.5rem;
+	}
+
+	.benda-fons {
+		position: absolute;
+		inset: -16% 0;
+		background: url('/acuelh/paisatge.jpg') 50% 62% / cover no-repeat;
+	}
+
+	.benda-fons::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: rgba(90, 30, 10, 0.42);
+	}
+
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			.benda-fons {
+				animation: benda-parallaxa linear both;
+				animation-timeline: view();
+			}
+		}
+	}
+
+	@keyframes benda-parallaxa {
+		from {
+			transform: translateY(5%);
+		}
+		to {
+			transform: translateY(-5%);
+		}
+	}
+
 	.citacion {
-		max-width: 36rem;
-		margin: 2.75rem auto 0;
-		padding: 0.4rem 0 0.4rem 1.4rem;
-		border-left: 3px solid var(--color-gold);
-		text-align: left;
+		position: relative;
+		margin: 0;
+		max-width: 15em;
 	}
 
 	.citacion-texte {
@@ -1639,26 +1697,25 @@
 		font-family: var(--font-quote);
 		font-style: italic;
 		font-weight: 500;
-		font-size: clamp(1.3rem, 2.6vw, 1.7rem);
-		line-height: 1.4;
-		color: var(--color-cream);
+		font-size: clamp(1.7rem, 4.2vw, 3rem);
+		line-height: 1.35;
+		color: #fdfaf4;
+		text-wrap: balance;
 	}
 
 	.citacion-autor {
 		display: block;
-		margin-top: 0.5rem;
+		margin-top: 1rem;
 		font-style: normal;
-		font-size: 0.75rem;
+		font-size: 0.78rem;
 		font-weight: 600;
 		letter-spacing: 0.16em;
 		text-transform: uppercase;
-		opacity: 0.6;
+		color: rgba(253, 250, 244, 0.75);
 	}
 
 	/* Carte réellement manipulable depuis l'accueil : on peut se déplacer
-	   et zoomer sur place. Le bouton sous la carte mène à la page pleine,
-	   au lieu d'un lien qui recouvrirait la carte et bloquerait son
-	   utilisation. */
+	   et zoomer sur place. Le bouton sous la carte mène à la page pleine. */
 	.carta-live {
 		max-width: 62rem;
 		height: min(58vh, 26rem);
@@ -1677,7 +1734,7 @@
 
 	/* Officialitat en bendèl compacte (annexe, decision 2026-08-22). */
 	.chapter--officialitat {
-		padding: 3rem 1.5rem;
+		padding: 1rem 1.5rem 3rem;
 	}
 
 	.officialitat-benda {
@@ -1706,7 +1763,7 @@
 
 	.officialitat-title {
 		margin: 0;
-		font-family: var(--font-heading);
+		font-family: var(--font-body);
 		font-weight: 700;
 		font-size: 1.15rem;
 		color: var(--color-brick);
@@ -1727,18 +1784,51 @@
 		}
 	}
 
-	/* L'invitacion finala. */
-	.chapter--comenca {
-		background: rgba(181, 61, 23, 0.07);
+	/* Acte V — lo darrièr crit. */
+	.crida {
+		position: relative;
+		z-index: 3;
+		text-align: center;
+		padding: clamp(6rem, 16vh, 10rem) 1.5rem clamp(4rem, 9vh, 6rem);
+		background: var(--color-cream);
+		overflow: clip;
 	}
 
-	.chapter--comenca .chapter-title {
-		color: var(--color-brick);
+	.crida-simbol {
+		position: absolute;
+		width: min(70vw, 540px);
+		height: auto;
+		left: 50%;
+		top: 46%;
+		transform: translate(-50%, -50%);
+		color: var(--color-terracotta);
+		opacity: 0.07;
+		pointer-events: none;
 	}
 
-	.comenca-btn {
-		display: inline-block;
-		margin-top: 1.5rem;
+	.crida-title {
+		position: relative;
+		margin: 0;
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: clamp(2.3rem, 7.5vw, 5.8rem);
+		line-height: 1.05;
+		text-transform: uppercase;
+		color: var(--color-text);
+		text-wrap: balance;
+	}
+
+	.crida-sub {
+		position: relative;
+		margin: 1.2rem 0 2.2rem;
+		font-style: italic;
+		opacity: 0.6;
+	}
+
+	.crida-btn {
+		position: relative;
+		font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+		padding: 1.05rem 2.4rem;
 	}
 
 	/* Bouton d'édition réservé à l'administrateur connecté — les visiteurs
@@ -1755,8 +1845,8 @@
 		border-radius: 999px;
 		background: var(--color-text);
 		color: var(--color-cream);
-		font-family: var(--font-heading);
-		font-weight: 600;
+		font-family: var(--font-body);
+		font-weight: 700;
 		font-size: 0.85rem;
 		text-decoration: none;
 		box-shadow: 0 8px 22px rgba(58, 42, 32, 0.35);
@@ -1785,8 +1875,8 @@
 		border-radius: 999px;
 		background: var(--color-brick);
 		color: white;
-		font-family: var(--font-heading);
-		font-weight: 600;
+		font-family: var(--font-body);
+		font-weight: 700;
 		font-size: 0.85rem;
 		box-shadow: 0 8px 22px rgba(58, 42, 32, 0.35);
 		white-space: nowrap;
@@ -1798,8 +1888,8 @@
 		padding: 0.35rem 0.8rem;
 		background: rgba(255, 255, 255, 0.9);
 		color: var(--color-brick);
-		font-family: var(--font-heading);
-		font-weight: 600;
+		font-family: var(--font-body);
+		font-weight: 700;
 		font-size: 0.8rem;
 		cursor: pointer;
 	}
@@ -1813,6 +1903,19 @@
 			white-space: normal;
 			width: calc(100% - 2rem);
 			justify-content: space-between;
+		}
+	}
+
+	/* Mens d'animacions demandadas : tot s'aficha, res bolega. */
+	@media (prefers-reduced-motion: reduce) {
+		.eros-kicker,
+		.eros-titol .linha,
+		.eros-sub,
+		.eros .hero-ctas,
+		.eros-indici {
+			animation: none;
+			opacity: 1;
+			transform: none;
 		}
 	}
 </style>

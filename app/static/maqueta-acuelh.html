@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="oc">
 <head>
 <meta charset="utf-8">
@@ -9,7 +9,6 @@
      couleurs, images calmes, scroll fluide), matière 100 % Lo Ligam (charte
      §1/§1bis/§2). Tout l'occitan de cette page est À VALIDER (dicodòc). -->
 <style>
-	@font-face { font-family: 'Barrio'; src: url('/fonts/barrio.woff2') format('woff2'); font-display: swap; }
 	@font-face { font-family: 'Limelight'; src: url('/fonts/limelight.woff2') format('woff2'); font-display: swap; }
 	@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
 	@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
@@ -48,7 +47,7 @@
 		z-index: 10;
 		mix-blend-mode: multiply;
 	}
-	.barra .marca { display: flex; align-items: center; gap: 0.5rem; font-family: 'Barrio'; font-size: 1rem; color: var(--brica); text-decoration: none; }
+	.barra .marca { display: flex; align-items: center; gap: 0.5rem; font-family: 'Limelight'; font-size: 1rem; color: var(--brica); text-decoration: none; }
 	.barra .marca svg { width: 1.7rem; height: 1.7rem; }
 	.barra .prometa { flex: 1; text-align: center; font-style: italic; opacity: 0.55; }
 	.barra nav { display: flex; gap: 1.4rem; }
@@ -73,6 +72,7 @@
 	.eros .quicker {
 		font-size: clamp(0.8rem, 1.4vw, 1rem);
 		letter-spacing: 0.35em;
+		text-indent: 0.35em; /* compense l'espace fantôme après la dernière lettre */
 		text-transform: uppercase;
 		color: var(--brica);
 		margin: 0 0 1.2rem;
@@ -97,7 +97,7 @@
 	}
 	.eros h1 .linha:hover { background-position: 0 0; }
 	.eros .soslinha { margin: 1.4rem 0 0; font-style: italic; opacity: 0.6; font-size: clamp(0.9rem, 1.6vw, 1.05rem); }
-	.eros .indici { position: absolute; bottom: 34svh; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.4; }
+	.eros .indici { position: absolute; bottom: 34svh; font-size: 0.78rem; letter-spacing: 0.2em; text-indent: 0.2em; text-transform: uppercase; opacity: 0.4; }
 	/* La crête des Cévennes tient le bas de l'écran ; son ciel blanc fond dans la page */
 	.eros .paisatge {
 		position: absolute; inset: auto 0 0 0;

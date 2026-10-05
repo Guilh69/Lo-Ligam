@@ -6,12 +6,11 @@
  * personnelles sans base légale. Les servir nous-mêmes règle le problème
  * et supprime au passage toute connexion vers un domaine tiers.
  *
- * Système typographique tranché le 2026-09-30 (charte graphique §2,
- * journal §11 — remplace Syne / Instrument Sans / Fredoka du 22-08) :
- *   - Barrio    → le logo et les titres très courts uniquement (une seule
- *                 graisse, capitales irrégulières : fatigue l'œil au-delà
- *                 de quelques mots)
- *   - Limelight → les titres de leçons et de sections (une seule graisse)
+ * Système typographique tranché le 2026-09-30, simplifié le 2026-10-05
+ * (journal §11 — remplace Syne / Instrument Sans / Fredoka du 22-08 ;
+ * Barrio, d'abord prévue pour le logo, est sortie : le logo réel de
+ * Romain est dessiné en Limelight, vérifié sur planche comparée) :
+ *   - Limelight → le nom « Lo Ligam », les titres de leçons et de sections
  *   - Luciole   → tout le reste (conçue pour les lecteurs malvoyants par
  *                 le CTRDV et Laurent Bourcellier & Jonathan Perez ;
  *                 licence CC BY 4.0 → l'attribution ci-dessus fait foi,
@@ -26,14 +25,6 @@
  * Barrio et Limelight n'existent qu'en graisse 400 : `font-synthesis: none`
  * (app.css) empêche les navigateurs de fabriquer de faux gras baveux.
  */
-
-@font-face {
-	font-family: 'Barrio';
-	font-style: normal;
-	font-weight: 400;
-	font-display: swap;
-	src: url('/fonts/barrio.woff2') format('woff2');
-}
 
 @font-face {
 	font-family: 'Limelight';

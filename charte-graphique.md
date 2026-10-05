@@ -66,8 +66,7 @@ Instrument Sans / Cormorant / Fredoka du 2026-08-22) :
 
 | Voix | Famille | Usage exclusif |
 |---|---|---|
-| Logo | **Barrio** | logo et titres très courts uniquement — capitales seules, graisses irrégulières d'une lettre à l'autre (le « AM » fin) : fatigue l'œil au-delà de quelques mots |
-| Titres | **Limelight** | titres de leçons et de sections (Art déco, une seule graisse) |
+| Logo & titres | **Limelight** | le nom « Lo Ligam », les titres de leçons, de sections et les grands titres éditoriaux (Art déco, une seule graisse). **Barrio est sortie le 2026-10-05** : le logo réel de Romain est dessiné en Limelight (vérifié sur planche comparée), une police de moins à charger |
 | Courant | **Luciole** (choisie le 2026-09-30, contre Atkinson Hyperlegible) | tout le reste : corps de texte, boutons, interface — police française conçue pour les lecteurs malvoyants, cohérente avec l'exigence d'accessibilité et le choix européen |
 
 - Point encore ouvert : dire si la voix « poétique » (Cormorant italique

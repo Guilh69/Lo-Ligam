@@ -15,14 +15,15 @@
 	--color-olive: #5e7b3a;
 	--color-text: #3a2a20;
 
-	/* Sistèma tipografic 2026-09-30 (charte §2, jornal §11) : Limelight
-	   pels títols de leiçons e seccions, Luciole pel corrent (concebuda
-	   per la malvision, CC BY 4.0), Barrio sonque pel lògo e los títols
-	   fòrça corts, Cormorant per las solas citacions poeticas. */
+	/* Sistèma tipografic 2026-09-30, simplificat lo 2026-10-05 (jornal §11) :
+	   Limelight pels títols E pel nom « Lo Ligam » (lo lògo de Romain es
+	   dessenhat en Limelight — verificat sus planca), Luciole pel corrent
+	   (concebuda per la malvision, CC BY 4.0), Cormorant per las solas
+	   citacions poeticas. Barrio es sortida de la carta. */
 	--font-heading: 'Limelight', 'Georgia', serif;
 	--font-body: 'Luciole', system-ui, sans-serif;
 	--font-quote: 'Cormorant Garamond', 'Georgia', serif;
-	--font-logo: 'Barrio', sans-serif;
+	--font-logo: 'Limelight', 'Georgia', serif;
 }
 
 /* Barrio e Limelight existisson pas qu'en 400 : cap de fals gras fabricat
