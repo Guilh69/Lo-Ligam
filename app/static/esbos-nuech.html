@@ -765,89 +765,110 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	// Rius : lo nom seguís lo traçat, letra per letra ; s'ensaja mantun endrech
 	// long de l'aiga e se garda lo que tòca pas res.
 	let plaçament = { clau: null, vilas: [], rius: [] };
-	function plaçar(esc, clau) {
+	function plaçar(esc, clau, zw, zh) {
 		const lonM = (GEO.lon0 + GEO.lon1) / 2, latM = (GEO.lat0 + GEO.lat1) / 2;
 		const loc = (lon, lat) => [(lon - lonM) * GEO.kx * esc, -(lat - latM) * esc];
-		const boitas = [];
-		const tòca = (b) => boitas.some((o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]);
-		const vilas = estelas.filter((e) => e.vila);
-		for (const e of vilas) { const [x, y] = loc(e.lon, e.lat); e.lx = x; e.ly = y; boitas.push([x - 4, y - 4, x + 4, y + 4]); }
 		const res = { clau, vilas: [], rius: [] };
+		// Obstacles dins una grasilha (16 px) : etiquetas e pomètas (pes 5, interdich),
+		// traçats dels rius (pes 1, evitat se se pòt). Cada obstacle a un proprietari :
+		// un riu se destorba pas el meteis.
+		const CEL = 16, grilha = new Map();
+		const cases = (b, fn) => { for (let i = Math.floor(b[0] / CEL); i <= Math.floor(b[2] / CEL); i++) for (let j = Math.floor(b[1] / CEL); j <= Math.floor(b[3] / CEL); j++) fn(i + ',' + j); };
+		const metre = (b, pes, prop) => { const o = { b, pes, prop }; cases(b, (k) => { if (!grilha.has(k)) grilha.set(k, []); grilha.get(k).push(o); }); };
+		const cost = (b, prop) => {
+			const vist = new Set(); let c = 0, fort = 0;
+			cases(b, (k) => { for (const o of grilha.get(k) || []) {
+				if (vist.has(o) || o.prop === prop) continue; vist.add(o);
+				if (b[0] < o.b[2] && b[2] > o.b[0] && b[1] < o.b[3] && b[3] > o.b[1]) { c += o.pes; if (o.pes >= 5) fort++; }
+			} });
+			return [c, fort];
+		};
+		const liss = (pts, n) => { for (let k = 0; k < n; k++) { const q = [pts[0]]; for (let i = 0; i < pts.length - 1; i++) { const a = pts[i], b = pts[i + 1]; q.push([a[0] * 0.75 + b[0] * 0.25, a[1] * 0.75 + b[1] * 0.25], [a[0] * 0.25 + b[0] * 0.75, a[1] * 0.25 + b[1] * 0.75]); } q.push(pts[pts.length - 1]); pts = q; } return pts; };
+
+		// La flècha del nòrd (en naut a esquèrra) es un obstacle tanben
+		metre([-zw / 2, -zh / 2, -zw / 2 + 70, -zh / 2 + 110], 5, 'nòrd');
+		const vilas = estelas.filter((e) => e.vila);
+		for (const e of vilas) { const [x, y] = loc(e.lon, e.lat); e.lx = x; e.ly = y; metre([x - 4, y - 4, x + 4, y + 4], 5, e.nom); }
+		RIUS.forEach(([nom, , l], n) => {
+			const pts = l.map(([lon, lat]) => loc(lon, lat)), prop = nom || 'riu' + n;
+			for (let i = 1; i < pts.length; i++) {
+				const a = pts[i - 1], b = pts[i], L = Math.hypot(b[0] - a[0], b[1] - a[1]);
+				for (let d = 0; d < L; d += 4) { const x = a[0] + ((b[0] - a[0]) * d) / L, y = a[1] + ((b[1] - a[1]) * d) / L; metre([x - 1.5, y - 1.5, x + 1.5, y + 1.5], 1, prop); }
+			}
+		});
+
+		// Vilas : la plaça la mens encombrada entre drecha, esquèrra, naut e bas
 		cx.font = '700 12px Luciole, sans-serif';
 		for (const e of vilas) {
 			const w = cx.measureText(e.nom).width, x = e.lx, y = e.ly;
 			const cand = [
-				{ x: x + 7, y: y + 4, al: 'left', b: [x + 6, y - 7, x + 8 + w, y + 6] },
-				{ x: x - 7, y: y + 4, al: 'right', b: [x - 8 - w, y - 7, x - 6, y + 6] },
-				{ x, y: y - 9, al: 'center', b: [x - w / 2 - 1, y - 20, x + w / 2 + 1, y - 6] },
-				{ x, y: y + 17, al: 'center', b: [x - w / 2 - 1, y + 6, x + w / 2 + 1, y + 20] }
+				{ x: x + 7, y: y + 4, al: 'left', b: [x + 5, y - 8, x + 9 + w, y + 7], bonus: 0 },
+				{ x: x - 7, y: y + 4, al: 'right', b: [x - 9 - w, y - 8, x - 5, y + 7], bonus: 0.4 },
+				{ x, y: y - 9, al: 'center', b: [x - w / 2 - 2, y - 21, x + w / 2 + 2, y - 5], bonus: 0.6 },
+				{ x, y: y + 18, al: 'center', b: [x - w / 2 - 2, y + 5, x + w / 2 + 2, y + 21], bonus: 0.8 }
 			];
-			const c = cand.find((k) => !tòca(k.b)) || cand[0];
-			boitas.push(c.b); res.vilas.push({ e, x: c.x, y: c.y, al: c.al });
+			let c = cand[0], mendre = Infinity;
+			for (const k of cand) { const [v, f] = cost(k.b, e.nom); const sc = v + f * 100 + k.bonus; if (sc < mendre) { mendre = sc; c = k; } }
+			metre(c.b, 5, 'etiqueta'); res.vilas.push({ e, x: c.x, y: c.y, al: c.al });
 		}
-		cx.font = 'italic 16px Cormorant, Georgia, serif';
-		for (const [nom, linhas] of Object.entries(rius_nomenats)) {
-			const larg = [...nom].map((c) => cx.measureText(c).width), tot = larg.reduce((a, b) => a + b, 0) + nom.length * 0.6;
-			let melhor = null, mendre = Infinity;
+
+		// Rius : dels mai grands als mai pichons ; lo nom seguís lo traçat lissat,
+		// en naut o en bas de l'aiga, sus un tròç calm, sens tocar res
+		const rius = Object.entries(rius_nomenats).map(([nom, linhas]) => ({ nom, linhas, pes: Math.max(...RIUS.filter((r) => r[0] === nom).map((r) => r[1])) }))
+			.sort((a, b) => b.pes - a.pes);
+		for (const { nom, linhas, pes } of rius) {
+			const fs = Math.round(12 + pes * 0.75), trac = fs * 0.09;
+			cx.font = 'italic ' + fs + 'px Cormorant, Georgia, serif';
+			const larg = [...nom].map((c) => cx.measureText(c).width), tot = larg.reduce((a, b) => a + b, 0) + trac * (nom.length - 1);
+			const ofs = fs * 0.55 + 3;
+			let melhor = null;
 			for (const l of linhas) {
-				const pts = l.map(([lon, lat]) => loc(lon, lat));
+				const pts = liss(l.map(([lon, lat]) => loc(lon, lat)), 3);
 				const cum = [0];
 				for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
 				const L = cum[cum.length - 1];
-				if (L < tot + 16) continue;
+				if (L < tot + 20) continue;
 				const ponch = (d) => {
 					d = Math.max(0, Math.min(L, d));
-					let i = 1; while (i < cum.length - 1 && cum[i] < d) i++;
-					const f = (d - cum[i - 1]) / (cum[i] - cum[i - 1] || 1);
+					let lo = 1, hi = cum.length - 1;
+					while (lo < hi) { const m = (lo + hi) >> 1; if (cum[m] < d) lo = m + 1; else hi = m; }
+					const i = lo, f = (d - cum[i - 1]) / (cum[i] - cum[i - 1] || 1);
 					return [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f];
 				};
 				for (const frac of [0.5, 0.44, 0.56, 0.38, 0.62, 0.31, 0.69, 0.24, 0.76, 0.17, 0.83, 0.1, 0.9]) {
 					const d0 = frac * L - tot / 2;
-					if (d0 < 4 || d0 + tot > L - 4) continue;
-					// Sens de lectura : d'esquèrra a drecha, totjorn
-					const [ax] = ponch(d0), [bx] = ponch(d0 + tot), inv = bx < ax;
-					const letras = [], bs = [];
-					let d = 0;
-					[...nom].forEach((c, k) => {
-						const mid = d + larg[k] / 2, dd = inv ? d0 + tot - mid : d0 + mid;
-						const [x1, y1] = ponch(dd - 11), [x2, y2] = ponch(dd + 11);
-						let a = Math.atan2(y2 - y1, x2 - x1); if (inv) a += Math.PI;
-						const [px, py] = ponch(dd);
-						const x = px + Math.sin(a) * 6, y = py - Math.cos(a) * 6;
-						letras.push({ c, x, y, a }); bs.push([x - 8, y - 9, x + 8, y + 9]);
-						d += larg[k] + 0.6;
-					});
-					// Corbatura : ni virada sècha entre doas letras, ni nom enrotlat
-					let virMax = 0, virTot = 0;
-					for (let k = 1; k < letras.length; k++) {
-						let dv = letras[k].a - letras[k - 1].a;
-						dv = Math.atan2(Math.sin(dv), Math.cos(dv));
-						virMax = Math.max(virMax, Math.abs(dv)); virTot += dv;
+					if (d0 < 6 || d0 + tot > L - 6) continue;
+					const ax = ponch(d0)[0], bx = ponch(d0 + tot)[0], inv = bx < ax;
+					for (const costat of [-1, 1]) {
+						const letras = [], bs = [];
+						let d = 0;
+						[...nom].forEach((c, k) => {
+							const mid = d + larg[k] / 2, dd = inv ? d0 + tot - mid : d0 + mid;
+							const p1 = ponch(dd - fs * 0.9), p2 = ponch(dd + fs * 0.9);
+							let a = Math.atan2(p2[1] - p1[1], p2[0] - p1[0]); if (inv) a += Math.PI;
+							const pp = ponch(dd);
+							const x = pp[0] + Math.sin(a) * ofs * -costat, y = pp[1] - Math.cos(a) * ofs * -costat;
+							letras.push({ c, x, y, a }); bs.push([x - larg[k] / 2 - 1, y - fs * 0.42, x + larg[k] / 2 + 1, y + fs * 0.42]);
+							d += larg[k] + trac;
+						});
+						// Corbatura doça : ni virada sècha, ni nom enrotlat, ni letras amolonadas
+						let virMax = 0, virTot = 0, sarrat = false;
+						for (let k = 1; k < letras.length; k++) {
+							let dv = letras[k].a - letras[k - 1].a; dv = Math.atan2(Math.sin(dv), Math.cos(dv));
+							virMax = Math.max(virMax, Math.abs(dv)); virTot += dv;
+							if (Math.hypot(letras[k].x - letras[k - 1].x, letras[k].y - letras[k - 1].y) < (larg[k] + larg[k - 1]) * 0.42) sarrat = true;
+						}
+						if (virMax > 0.32 || Math.abs(virTot) > 0.85 || sarrat) continue;
+						let sc = Math.abs(virTot) * 1.5 + Math.abs(frac - 0.5) * 2 + (costat > 0 ? 0.3 : 0), fort = 0;
+						for (const b of bs) { const r = cost(b, nom); sc += r[0]; fort += r[1]; }
+						if (!fort && (!melhor || sc < melhor.sc)) melhor = { letras, bs, sc };
 					}
-					if (virMax > 0.42 || Math.abs(virTot) > 1.1) continue;
-					const conflictes = bs.filter(tòca).length;
-					if (conflictes < mendre) { mendre = conflictes; melhor = { letras, bs }; }
-					if (!conflictes) break;
 				}
-				if (mendre === 0) break;
 			}
-			if (!melhor) {
-				const l = linhas.reduce((a, b) => (b.length > a.length ? b : a));
-				const k = Math.floor(l.length / 2), [ax, ay] = loc(...l[Math.max(0, k - 1)]), [bx, by] = loc(...l[Math.min(l.length - 1, k + 1)]);
-				let a = Math.atan2(by - ay, bx - ax);
-				if (a > Math.PI / 2) a -= Math.PI; else if (a < -Math.PI / 2) a += Math.PI;
-				const x0 = (ax + bx) / 2 + Math.sin(a) * 6, y0 = (ay + by) / 2 - Math.cos(a) * 6;
-				const letras = [], bs = []; let d = -tot / 2;
-				[...nom].forEach((c, i) => {
-					const m = d + larg[i] / 2, x = x0 + Math.cos(a) * m, y = y0 + Math.sin(a) * m;
-					letras.push({ c, x, y, a }); bs.push([x - 8, y - 9, x + 8, y + 9]); d += larg[i] + 0.6;
-				});
-				mendre = bs.filter(tòca).length; melhor = { letras, bs };
-			}
-			if (mendre > 2) continue;
-			boitas.push(...melhor.bs);
+			if (!melhor) continue;
+			for (const b of melhor.bs) metre([b[0] - 2, b[1] - 2, b[2] + 2, b[3] + 2], 5, 'etiqueta');
 			const m = melhor.letras[Math.floor(melhor.letras.length / 2)];
-			res.rius.push({ letras: melhor.letras, cx: m.x, cy: m.y });
+			res.rius.push({ letras: melhor.letras, cx: m.x, cy: m.y, fs });
 		}
 		return res;
 	}
@@ -931,21 +952,23 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		// Las etiquetas : un liseré de nuèch a l'entorn de cada nom per que se destaque
 		// dels rius ; al subrevòl, los noms vesins s'escafan (pas de fotralha).
 		if (W > 700 && (aRiu > 0.8 || aCarta > 0.6)) {
-			const clau = esc.toFixed(1);
-			if (plaçament.clau !== clau) plaçament = plaçar(esc, clau);
+			const clau = esc.toFixed(1) + '|' + Math.round(zr.width) + '|' + Math.round(zr.height);
+			if (plaçament.clau !== clau) plaçament = plaçar(esc, clau, zr.width, zr.height);
 			const escriure = (t, x, y, liseré) => { cx.lineWidth = liseré; cx.strokeText(t, x, y); cx.fillText(t, x, y); };
 			const pres = (x, y) => (pus ? Math.hypot(x - pus.px, y - pus.py) < 150 : false);
 			cx.strokeStyle = 'rgba(18, 9, 6, 0.9)'; cx.lineJoin = 'round';
 			if (aRiu > 0.8) {
 				const ar = ((aRiu - 0.8) / 0.2) * 0.85;
-				cx.font = 'italic 16px Cormorant, Georgia, serif'; cx.fillStyle = '#ffd47f'; cx.textAlign = 'center';
+				cx.fillStyle = '#ffd47f'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
 				for (const r of plaçament.rius) {
+					cx.font = 'italic ' + r.fs + 'px Cormorant, Georgia, serif';
 					cx.globalAlpha = pres(zcx + r.cx, zcy + r.cy) ? ar * 0.12 : ar;
 					cx.lineWidth = 3;
 					for (const pas of ['strokeText', 'fillText']) for (const g of r.letras) {
 						cx.save(); cx.translate(zcx + g.x, zcy + g.y); cx.rotate(g.a); cx[pas](g.c, 0, 0); cx.restore();
 					}
 				}
+				cx.textBaseline = 'alphabetic';
 			}
 			if (aCarta > 0.6) {
 				const av = ((aCarta - 0.6) / 0.4) * 0.92;
@@ -974,15 +997,20 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			escriure(DIALECTES[pus.dia], tx, pus.py + 20, 4);
 			cx.textAlign = 'left';
 		}
-		// La flècha del nòrd : un fil, una mièja punta, una N
+		// La flècha del nòrd, a l'anciana : agulha en losange (mitat plena, mitat
+		// traçada), un anèl fin, una N italica ; dins lo canton sorne en naut a esquèrra
 		if (aCarta > 0.05) {
-			const nx = zr.right - 24, ny = zr.top + 26;
-			cx.globalAlpha = aCarta * 0.85; cx.strokeStyle = '#eeaf34'; cx.fillStyle = '#eeaf34'; cx.lineWidth = 1;
-			cx.beginPath(); cx.moveTo(nx, ny + 46); cx.lineTo(nx, ny + 8); cx.stroke();
-			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx + 5, ny + 14); cx.lineTo(nx, ny + 11); cx.closePath(); cx.fill();
-			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx - 5, ny + 14); cx.lineTo(nx, ny + 11); cx.closePath(); cx.stroke();
-			cx.font = 'italic 17px Cormorant, Georgia, serif'; cx.textAlign = 'center'; cx.fillStyle = '#ffd47f';
-			cx.fillText('N', nx, ny - 6); cx.textAlign = 'left';
+			const nx = zr.left + 34, ny = zr.top + 44, h = 30, l = 5.5;
+			cx.globalAlpha = aCarta * 0.8; cx.strokeStyle = '#eeaf34'; cx.fillStyle = '#eeaf34'; cx.lineWidth = 0.9;
+			cx.beginPath(); cx.arc(nx, ny + h, 10, 0, 6.283); cx.stroke();
+			cx.globalAlpha = aCarta * 0.45;
+			cx.beginPath(); cx.moveTo(nx - 18, ny + h); cx.lineTo(nx + 18, ny + h); cx.stroke();
+			cx.globalAlpha = aCarta * 0.8;
+			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx - l, ny + h); cx.lineTo(nx, ny + h); cx.closePath(); cx.fill();
+			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx + l, ny + h); cx.lineTo(nx, ny + h); cx.closePath(); cx.stroke();
+			cx.beginPath(); cx.moveTo(nx - l, ny + h); cx.lineTo(nx, ny + h * 1.9); cx.lineTo(nx + l, ny + h); cx.stroke();
+			cx.font = 'italic 19px Cormorant, Georgia, serif'; cx.textAlign = 'center'; cx.fillStyle = '#ffd47f';
+			cx.fillText('N', nx, ny - 7); cx.textAlign = 'left';
 		}
 
 		// Los 13 punts del lògo : ressòrt cap a la cibla + repulsion de la mirga
