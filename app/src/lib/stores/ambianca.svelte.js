@@ -27,7 +27,7 @@ function crearEstat() {
 	const e = $state({
 		tema: 'sorne',
 		dalt: false,
-		fons: 1,
+		fons: 0, // Venas d'aur, l'ambiança preferida de Romain (2026-10-07)
 		forçarClar: false,
 		sistèmaClar: false,
 		// Vrai tant qu'une page affiche le fond animé : le choix du fond

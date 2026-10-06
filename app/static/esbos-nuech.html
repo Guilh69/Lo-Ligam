@@ -382,7 +382,8 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .trobador-fenestra img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 56%; transform-origin: 50% 56%; transform: scale(1.3); will-change: transform; }
 .trobador-fenestra::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(18, 9, 6, 0.5), rgba(18, 9, 6, 0.15) 75%), linear-gradient(rgba(18, 9, 6, 0.1), rgba(40, 14, 6, 0.45)); }
 .trobador-vers { position: relative; z-index: 2; text-align: center; padding: 0 var(--marge); }
-.trobador-vers p { max-width: 15em; margin-inline: auto; font-family: var(--votz); font-style: italic; font-size: clamp(2.2rem, 5.6vw, 5.2rem); line-height: 1.08; color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
+/* Lo vèrs ten dins la fenèstra de pèira de la fòto */
+.trobador-vers p { max-width: 12.5em; margin-inline: auto; font-family: var(--votz); font-style: italic; font-size: clamp(1.9rem, 4.2vw, 4rem); line-height: 1.08; color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
 .trobador-vers cite { display: block; margin-top: 1.8rem; font-style: normal; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--aur-clar); }
 
 /* ---------- Acte VII : la crida ---------- */
@@ -445,8 +446,8 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 				</div>
 				<button type="button" class="dalt" data-dalt-boton aria-pressed="false"><span class="dalt-interr" aria-hidden="true"></span><span class="bi"><span class="oc">Colors adaptadas (daltonisme)</span><span class="fr">Couleurs adaptées (daltonisme)</span></span></button>
 				<p class="ambianca-titol"><span class="bi"><span class="oc">Ambiança</span><span class="fr">Ambiance</span></span></p>
-				<label><input type="radio" name="fons" value="1" /><i class="m m1"></i><span class="bi"><span class="oc">Lum e estelas</span><span class="fr">Lumière et étoiles</span></span></label>
 				<label><input type="radio" name="fons" value="0" /><i class="m m0"></i><span class="bi"><span class="oc">Venas d’aur</span><span class="fr">Veines d’or</span></span></label>
+				<label><input type="radio" name="fons" value="1" /><i class="m m1"></i><span class="bi"><span class="oc">Lum e estelas</span><span class="fr">Lumière et étoiles</span></span></label>
 				<label><input type="radio" name="fons" value="2" /><i class="m m2"></i><span class="bi"><span class="oc">Corbas de nivèl</span><span class="fr">Courbes de niveau</span></span></label>
 				<label><input type="radio" name="fons" value="3" /><i class="m m3"></i><span class="bi"><span class="oc">Simple</span><span class="fr">Sobre</span></span></label>
 			</div>
@@ -577,7 +578,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		<div class="trobador-pin">
 			<!-- La vallada de l'Erau vista per una fenèstra de pèira (fòto Romain, 2025) : la fenèstra
 			     de la pagina s'obrís sus una fenèstra vertadièra. -->
-			<div class="trobador-fenestra"><img src="/acuelh/erau.webp" alt="" loading="lazy" decoding="async" width="1500" height="2000" /></div>
+			<div class="trobador-fenestra"><img src="/acuelh/erau.webp" alt="" loading="lazy" decoding="async" width="1500" height="2173" /></div>
 			<blockquote class="trobador-vers">
 				<!-- Max Rouquette (1908-2005), causit per Romain lo 2026-10-06. Doas linhas sonque : tèxte
 				     encara protegit, citacion corta e signada (pensar a las Amis de Max Rouquette). -->
@@ -834,9 +835,9 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	}));
 
 	/* ================= Ambiança del fons (personalizacion) ================= */
-	// 0 Venas d'aur · 1 Lum e estelas (per defaut) · 2 Corbas de nivèl · 3 Simple.
+	// 0 Venas d'aur (per defaut, la preferida de Romain 2026-10-07) · 1 Lum e estelas · 2 Corbas de nivèl · 3 Simple.
 	// D'autras ambiças se pòdon apondre : un cas de mai dins lo shader e una linha aicí.
-	let modeFons = 1;
+	let modeFons = 0;
 	try { const v = localStorage.getItem('lo-ligam-esbos-fons'); if (v !== null) modeFons = +v; } catch {}
 	const ambBoton = document.querySelector('.ambianca-boton'), ambPanel = document.getElementById('ambianca-panel');
 	document.querySelectorAll('input[name="fons"]').forEach((r) => {
@@ -1421,20 +1422,20 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	if (calm) vers.classList.add('vist');
 	const manifest = document.querySelector('[data-emplenar]');
 	const bandel = document.querySelector('.bandel'), bandelPista = document.querySelector('.bandel-pista');
-	let bandelX = 0, bandelSkew = 0, bandelDir = 1, ultimY = scrollY;
+	let bandelX = 0, bandelSkew = 0, ultimY = scrollY;
 
 	function segonDefilament(sy, vel) {
 		// Capçal : s'amaga en davalant, torna en remontant
 		if (!calm && Math.abs(sy - ultimY) > 0.3) head.classList.toggle('amagat', sy > H * 0.7 && sy > ultimY);
 		head.classList.toggle('solid', sy > 40);
-		if (Math.abs(sy - ultimY) > 0.5) bandelDir = sy > ultimY ? 1 : -1;
 		ultimY = sy;
 
 		// Bandèl : sa velocitat e son inclinason seguisson lo defilament
 		const rb = bandel.getBoundingClientRect();
 		if (rb.bottom > 0 && rb.top < H) {
 			const largor = bandelPista.scrollWidth / 2;
-			bandelX -= calm ? 0 : (0.55 + Math.min(Math.abs(vel) * 0.35, 14)) * bandelDir;
+			// Totjorn de drecha a esquèrra (demanda Romain 2026-10-07) : lo defilament l'accelèra sonque
+		bandelX -= calm ? 0 : 0.55 + Math.min(Math.abs(vel) * 0.35, 14);
 			bandelX = ((bandelX % largor) - largor) % largor;
 			bandelSkew = lerp(bandelSkew, calm ? 0 : clamp(vel * 0.4, -9, 9), 0.12);
 			bandelPista.style.transform = `translate3d(${bandelX}px,0,0) skewX(${-bandelSkew}deg)`;

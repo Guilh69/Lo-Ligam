@@ -35,8 +35,8 @@
 		}
 	};
 	let tx = $derived(t[lang]);
-	// Ordre d'affichage : la plus reposante d'abord
-	const ORDRE_FONS = [1, 0, 2, 3];
+	// Ordre d'affichage : l'ambiance par défaut (Venas d'aur) d'abord
+	const ORDRE_FONS = [0, 1, 2, 3];
 
 	$effect(() => {
 		if (!dobèrt) return;
