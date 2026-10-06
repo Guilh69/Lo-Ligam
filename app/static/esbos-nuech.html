@@ -379,8 +379,8 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .trobador { height: 220vh; }
 .trobador-pin { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
 .trobador-fenestra { position: absolute; inset: 0; clip-path: inset(22% 32% round 28px); will-change: clip-path; }
-.trobador-fenestra img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; transform-origin: 50% 100%; transform: scale(1.3); will-change: transform; }
-.trobador-fenestra::after { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(18, 9, 6, 0.25), rgba(60, 18, 6, 0.62)); }
+.trobador-fenestra img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 56%; transform-origin: 50% 56%; transform: scale(1.3); will-change: transform; }
+.trobador-fenestra::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(18, 9, 6, 0.5), rgba(18, 9, 6, 0.15) 75%), linear-gradient(rgba(18, 9, 6, 0.1), rgba(40, 14, 6, 0.45)); }
 .trobador-vers { position: relative; z-index: 2; text-align: center; padding: 0 var(--marge); }
 .trobador-vers p { max-width: 15em; margin-inline: auto; font-family: var(--votz); font-style: italic; font-size: clamp(2.2rem, 5.6vw, 5.2rem); line-height: 1.08; color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
 .trobador-vers cite { display: block; margin-top: 1.8rem; font-style: normal; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--aur-clar); }
@@ -575,7 +575,9 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	<!-- VI. Lo trobador -->
 	<section class="trobador">
 		<div class="trobador-pin">
-			<div class="trobador-fenestra"><img src="/acuelh/paisatge.jpg" alt="" /></div>
+			<!-- La vallada de l'Erau vista per una fenèstra de pèira (fòto Romain, 2025) : la fenèstra
+			     de la pagina s'obrís sus una fenèstra vertadièra. -->
+			<div class="trobador-fenestra"><img src="/acuelh/erau.webp" alt="" loading="lazy" decoding="async" width="1500" height="2000" /></div>
 			<blockquote class="trobador-vers">
 				<!-- Max Rouquette (1908-2005), causit per Romain lo 2026-10-06. Doas linhas sonque : tèxte
 				     encara protegit, citacion corta e signada (pensar a las Amis de Max Rouquette). -->
