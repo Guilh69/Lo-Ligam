@@ -164,6 +164,20 @@ header nav { display: flex; align-items: center; gap: clamp(1rem, 2.6vw, 2.4rem)
 .dalt[aria-pressed='true'] { color: var(--crema); }
 .dalt[aria-pressed='true'] .dalt-interr { background: #2f6fb0; border-color: #2f6fb0; }
 .dalt[aria-pressed='true'] .dalt-interr::after { transform: translateX(14px); background: #fff; }
+/* Tornar amont */
+.amont {
+	position: fixed; z-index: 55; right: var(--marge); bottom: calc(1.4rem + env(safe-area-inset-bottom, 0px));
+	display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border-radius: 50%;
+	border: 1px solid var(--crema-3); background: color-mix(in srgb, var(--nuech) 72%, transparent);
+	backdrop-filter: blur(6px); color: var(--aur); cursor: pointer;
+	opacity: 0; transform: translateY(14px); pointer-events: none;
+	transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), border-color 0.4s;
+}
+.amont svg { width: 22px; height: 22px; transition: transform 0.5s var(--ease); }
+.amont.vist { opacity: 1; transform: none; pointer-events: auto; }
+.amont:hover { border-color: var(--aur); }
+.amont:hover svg { transform: translateY(-3px); }
+.amont:focus-visible { outline: 2px solid var(--aur); outline-offset: 3px; }
 /* Selector d'ambiança */
 .ambianca { position: relative; }
 .ambianca-boton { all: unset; cursor: pointer; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--crema-3); background: rgba(18, 9, 6, 0.5); color: var(--aur-clar); transition: border-color 0.4s, transform 0.8s var(--ease); }
@@ -623,6 +637,11 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	</section>
 </main>
 
+<!-- Tornar amont : un chevron sens tija, apareis après un ecran de defilament -->
+<button type="button" class="amont" aria-label="Tornar amont" title="Tornar amont" tabindex="-1" aria-hidden="true" data-cur>
+	<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>
+</button>
+
 <footer data-revela>
 	<div class="pe-linhas"></div>
 	<div class="pe-nom-masc" aria-hidden="true"><div class="pe-nom"></div></div>
@@ -738,6 +757,8 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 
 	/* ================= Lenga ================= */
 	function metreLenga(l) {
+		const amontTèxt = l === 'fr' ? 'Remonter en haut' : 'Tornar amont';
+		const ba = document.querySelector('.amont'); if (ba) { ba.setAttribute('aria-label', amontTèxt); ba.title = amontTèxt; }
 		doc.classList.toggle('fr', l === 'fr');
 		doc.lang = l;
 		document.querySelectorAll('.bi').forEach((b) => {
@@ -890,6 +911,12 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	/* ================= Defilament doç ================= */
 	let lenis = null;
 	if (!calm && window.Lenis) lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95 });
+	const amont = document.querySelector('.amont');
+	amont.addEventListener('click', () => {
+		if (lenis) lenis.scrollTo(0, { duration: 1.6 });
+		else window.scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' });
+		document.querySelector('.marca').focus({ preventScroll: true });
+	});
 
 	/* ================= Cursor e botons magnetics ================= */
 	let mx = innerWidth * 0.5, my = innerHeight * 0.45, mouVist = false;
@@ -1446,6 +1473,13 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		// Capçal : s'amaga en davalant, torna en remontant
 		if (!calm && Math.abs(sy - ultimY) > 0.3) head.classList.toggle('amagat', sy > H * 0.7 && sy > ultimY);
 		head.classList.toggle('solid', sy > 40);
+		// Tornar amont : visible après un ecran de defilament
+		const amontVist = sy > H * 0.9;
+		if (amontVist !== amont.classList.contains('vist')) {
+			amont.classList.toggle('vist', amontVist);
+			amont.tabIndex = amontVist ? 0 : -1;
+			amont.setAttribute('aria-hidden', !amontVist);
+		}
 		ultimY = sy;
 
 		// Bandèl : sa velocitat e son inclinason seguisson lo defilament

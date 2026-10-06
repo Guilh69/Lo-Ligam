@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import { ambianca, ARMONIZADAS } from '$lib/stores/ambianca.svelte.js';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import TornarAmont from '$lib/components/TornarAmont.svelte';
 
 	let { children } = $props();
 
@@ -29,4 +30,8 @@
 
 {#if ambPè}
 	<SiteFooter />
+{/if}
+
+{#if !id.startsWith('/admin')}
+	<TornarAmont />
 {/if}
