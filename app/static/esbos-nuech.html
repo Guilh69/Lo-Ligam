@@ -130,6 +130,25 @@ header nav { display: flex; align-items: center; gap: clamp(1rem, 2.6vw, 2.4rem)
 .lenga button[aria-pressed='true'] { background: var(--crema); color: var(--nuech); }
 .lenga button:focus-visible { outline: 2px solid var(--aur); }
 @media (max-width: 720px) { .nav-ligam { display: none; } }
+/* ---------- Mòde clar : papièr crèma, tinta bruna, aur escurat per demorar legible ---------- */
+:root[data-tema='clar'] {
+	--nuech: #f5ead8; --nuech-2: #ecdcc3;
+	--crema: #2e1d14; --crema-2: rgba(46, 29, 20, 0.72); --crema-3: rgba(46, 29, 20, 0.16);
+	--aur: #a85d12; --aur-clar: #8a3f12; --terra-viu: #b53d17;
+}
+:root[data-tema='clar'] body { background: var(--nuech); }
+:root[data-tema='clar'] .lenga, :root[data-tema='clar'] .ambianca-boton { background: rgba(245, 234, 216, 0.7); }
+:root[data-tema='clar'] .ambianca-panel { background: rgba(250, 243, 232, 0.97); box-shadow: 0 20px 50px rgba(46, 29, 20, 0.18); }
+:root[data-tema='clar'] .ambianca-panel label:hover { background: rgba(46, 29, 20, 0.06); }
+:root[data-tema='clar'] .bandel-mot { -webkit-text-stroke-color: rgba(46, 29, 20, 0.5); }
+:root[data-tema='clar'] .manifest-tèxt .m { color: rgba(46, 29, 20, 0.15); }
+:root[data-tema='clar'] .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #e7c9a6, var(--nuech-2) 70%); }
+:root[data-tema='clar'] .cur-anel { mix-blend-mode: normal; border-color: var(--crema); }
+:root[data-tema='clar'] .gran { opacity: 0.05; }
+.tema { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 3px; border-radius: 12px; border: 1px solid var(--crema-3); margin-bottom: 1rem; }
+.tema button { all: unset; cursor: pointer; text-align: center; padding: 0.45rem 0.2rem; border-radius: 9px; font-size: 0.82rem; font-weight: 700; color: var(--crema-2); transition: background 0.4s, color 0.4s; }
+.tema button[aria-pressed='true'] { background: var(--crema); color: var(--nuech); }
+.tema button:focus-visible { outline: 2px solid var(--aur); outline-offset: 2px; }
 /* Selector d'ambiança */
 .ambianca { position: relative; }
 .ambianca-boton { all: unset; cursor: pointer; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--crema-3); background: rgba(18, 9, 6, 0.5); color: var(--aur-clar); transition: border-color 0.4s, transform 0.8s var(--ease); }
@@ -400,6 +419,12 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 				<span class="visually-hidden"><span class="bi"><span class="oc">Ambiança del fons</span><span class="fr">Ambiance du fond</span></span></span>
 			</button>
 			<div class="ambianca-panel" id="ambianca-panel" hidden>
+				<p class="ambianca-titol"><span class="bi"><span class="oc">Tèma</span><span class="fr">Thème</span></span></p>
+				<div class="tema" role="group">
+					<button type="button" data-tema-boton="sorne" aria-pressed="true"><span class="bi"><span class="oc">Sorne</span><span class="fr">Sombre</span></span></button>
+					<button type="button" data-tema-boton="clar" aria-pressed="false"><span class="bi"><span class="oc">Clar</span><span class="fr">Clair</span></span></button>
+					<button type="button" data-tema-boton="sistema" aria-pressed="false"><span class="bi"><span class="oc">Sistèma</span><span class="fr">Système</span></span></button>
+				</div>
 				<p class="ambianca-titol"><span class="bi"><span class="oc">Ambiança</span><span class="fr">Ambiance</span></span></p>
 				<label><input type="radio" name="fons" value="1" /><i class="m m1"></i><span class="bi"><span class="oc">Lum e estelas</span><span class="fr">Lumière et étoiles</span></span></label>
 				<label><input type="radio" name="fons" value="0" /><i class="m m0"></i><span class="bi"><span class="oc">Venas d’aur</span><span class="fr">Veines d’or</span></span></label>
@@ -596,7 +621,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		const ns = 'http://www.w3.org/2000/svg';
 		const lin = (d, w) => {
 			const p = document.createElementNS(ns, 'path');
-			p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.setAttribute('stroke', traç);
+			p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.style.stroke = traç;
 			p.setAttribute('stroke-width', w); p.setAttribute('stroke-linecap', 'round');
 			if (dessenh) { p.setAttribute('pathLength', '1'); p.classList.add('tr'); }
 			svg.appendChild(p);
@@ -609,12 +634,12 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		P.forEach(([x, y], i) => {
 			const c = document.createElementNS(ns, 'circle');
 			c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', i === 0 ? 0.124 : 0.109);
-			c.setAttribute('fill', i === 0 && moieu ? moieu : ponch);
+			c.style.fill = i === 0 && moieu ? moieu : ponch;
 			if (dessenh) c.style.transitionDelay = `${600 + i * 50}ms`;
 			svg.appendChild(c);
 		});
 	}
-	document.querySelectorAll('[data-simbol="pichon"]').forEach((s) => simbolSVG(s, { traç: '#eeaf34', ponch: '#f5ead8', espessor: 0.07 }));
+	document.querySelectorAll('[data-simbol="pichon"]').forEach((s) => simbolSVG(s, { traç: 'var(--aur)', ponch: 'var(--crema)', espessor: 0.07 }));
 
 	/* ================= Contengut generat ================= */
 	// Bandèl : vocabulari de basa (A VALIDAR).
@@ -753,6 +778,28 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	});
 	metreLengaCors(lengaCors);
 
+	let forçarFons = true;
+	/* ================= Tèma : sorne, clar, o coma lo sistèma ================= */
+	const TEMAS = {
+		sorne: { estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)', crotzPonch: '#f5ead8', crotzEstret: '#b9822f', crotzCrida: '#6e2e12' },
+		clar: { estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#c98a4a', crotzCrida: '#e6cbaa' }
+	};
+	let TEM = TEMAS.sorne, temaClar = false, temaCausit = 'sorne';
+	const sistèmaClar = matchMedia('(prefers-color-scheme: light)');
+	function aplicarTema() {
+		temaClar = temaCausit === 'clar' || (temaCausit === 'sistema' && sistèmaClar.matches);
+		TEM = temaClar ? TEMAS.clar : TEMAS.sorne;
+		doc.dataset.tema = temaClar ? 'clar' : 'sorne';
+		forçarFons = true;
+		document.querySelectorAll('[data-tema-boton]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.temaBoton === temaCausit));
+	}
+	try { temaCausit = localStorage.getItem('lo-ligam-esbos-tema') || 'sorne'; } catch {}
+	sistèmaClar.addEventListener('change', aplicarTema);
+	document.querySelectorAll('[data-tema-boton]').forEach((b) => b.addEventListener('click', () => {
+		temaCausit = b.dataset.temaBoton; aplicarTema();
+		try { localStorage.setItem('lo-ligam-esbos-tema', temaCausit); } catch {}
+	}));
+
 	/* ================= Ambiança del fons (personalizacion) ================= */
 	// 0 Venas d'aur · 1 Lum e estelas (per defaut) · 2 Corbas de nivèl · 3 Simple.
 	// D'autras ambiças se pòdon apondre : un cas de mai dins lo shader e una linha aicí.
@@ -840,7 +887,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		const frag = (deriv ? '#extension GL_OES_standard_derivatives : enable\n#define DERIV\n' : '') + `
 		precision highp float;
 		uniform vec2 r; uniform float t; uniform vec2 m; uniform float s; uniform float p; uniform float c;
-		uniform sampler2D rel; uniform vec4 g; uniform float ro; uniform float mo;
+		uniform sampler2D rel; uniform vec4 g; uniform float ro; uniform float mo; uniform float cl;
 		float h(vec2 q){ return fract(sin(dot(q, vec2(41.3, 289.1))) * 43758.5453); }
 		float n(vec2 q){ vec2 i = floor(q), f = fract(q); vec2 u = f*f*(3.0-2.0*f);
 			return mix(mix(h(i), h(i+vec2(1,0)), u.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), u.x), u.y); }
@@ -921,6 +968,11 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			}
 			col *= mix(0.62, 1.0, smoothstep(0.0, 0.7, uv.x));
 			col *= smoothstep(1.45, 0.2, length((uv - vec2(0.58, 0.5)) * vec2(1.0, 1.25)));
+			// Mòde clar : çò qu'èra lum sus la nuèch ven tencha terracòta sus lo papièr crèma
+			if (cl > 0.5) {
+				float i = clamp(dot(col - nuech, vec3(0.6, 0.3, 0.1)) * 2.4, 0.0, 1.0);
+				col = mix(vec3(0.961, 0.918, 0.847), vec3(0.76, 0.43, 0.26), i);
+			}
 			gl_FragColor = vec4(col, 1.0);
 		}`;
 		const vert = 'attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }';
@@ -933,7 +985,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
 		const a = gl.getAttribLocation(pr, 'a');
 		gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
-		U = Object.fromEntries(['r', 't', 'm', 's', 'p', 'c', 'rel', 'g', 'ro', 'mo'].map((k) => [k, gl.getUniformLocation(pr, k)]));
+		U = Object.fromEntries(['r', 't', 'm', 's', 'p', 'c', 'rel', 'g', 'ro', 'mo', 'cl'].map((k) => [k, gl.getUniformLocation(pr, k)]));
 	}
 	// Mièja resolucion : lo flou del bruch o perdona, la carta grafica trabalha 4 còps mens.
 	const ESCALA_FONS = 0.5;
@@ -1136,10 +1188,10 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	let cacheEtiq = null;
 	function construirEtiquetas(clau, pusNom, pusLoc, zw, zh) {
 		const M = 220, w = Math.ceil(zw + 2 * M), h = Math.ceil(zh + 2 * M), ox = w / 2, oy = h / 2;
-		const fa = () => { const c = document.createElement('canvas'); c.width = Math.ceil(w * DPR); c.height = Math.ceil(h * DPR); const g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, ox * DPR, oy * DPR); g.strokeStyle = 'rgba(18, 9, 6, 0.9)'; g.lineJoin = 'round'; return [c, g]; };
+		const fa = () => { const c = document.createElement('canvas'); c.width = Math.ceil(w * DPR); c.height = Math.ceil(h * DPR); const g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, ox * DPR, oy * DPR); g.strokeStyle = TEM.liser; g.lineJoin = 'round'; return [c, g]; };
 		const pres = (x, y) => (pusLoc ? Math.hypot(x - pusLoc[0], y - pusLoc[1]) < 150 : false);
 		const [cr, gr] = fa();
-		gr.fillStyle = '#ffd47f'; gr.textAlign = 'center'; gr.textBaseline = 'middle'; gr.lineWidth = 3;
+		gr.fillStyle = TEM.riuTèxt; gr.textAlign = 'center'; gr.textBaseline = 'middle'; gr.lineWidth = 3;
 		for (const r of plaçament.rius) {
 			gr.font = 'italic ' + r.fs + 'px Cormorant, Georgia, serif';
 			gr.globalAlpha = pres(r.cx, r.cy) ? 0.12 : 1;
@@ -1148,13 +1200,13 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			}
 		}
 		const [cv2, gv] = fa();
-		gv.font = '700 12px Luciole, sans-serif'; gv.fillStyle = '#f5ead8'; gv.lineWidth = 4;
+		gv.font = '700 12px Luciole, sans-serif'; gv.fillStyle = TEM.vilaTèxt; gv.lineWidth = 4;
 		for (const v of plaçament.vilas) {
 			if (v.e.nom === pusNom) continue;
 			gv.globalAlpha = pres(v.e.lx, v.e.ly) ? 0.12 : 1;
 			gv.textAlign = v.al; gv.strokeText(v.e.nom, v.x, v.y); gv.fillText(v.e.nom, v.x, v.y);
 		}
-		return { clau, pusNom, dpr: DPR, rius: cr, vilas: cv2, ox, oy, w, h };
+		return { clau, pusNom, dpr: DPR, tema: TEM, rius: cr, vilas: cv2, ox, oy, w, h };
 	}
 
 	function dessenharConstellacion(t, sy) {
@@ -1193,7 +1245,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		const aRiu = easeIO(clamp((aCarta - 0.35) / 0.6));
 		const pX = (lon) => zcx + (lon - lonM) * GEO.kx * esc, pY = (lat) => zcy - (lat - latM) * esc;
 		if (aRiu > 0.01) {
-			cx.strokeStyle = '#eeaf34'; cx.lineCap = 'round'; cx.lineJoin = 'round';
+			cx.strokeStyle = TEM.fil; cx.lineCap = 'round'; cx.lineJoin = 'round';
 			for (const [nom, pes, l] of RIUS) {
 				const k = aRiu * (l.length - 1), n = Math.floor(k);
 				cx.globalAlpha = nom ? 0.75 : 0.25;
@@ -1223,12 +1275,12 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			const x = lerp(x0, mxp, ai), y = lerp(yy0, myp, ai);
 			e.px = x; e.py = y; e.ai = ai;
 			cx.globalAlpha = lerp(0.18 + 0.27 * tw, e.vila ? 1 : 0.55 + 0.35 * tw, ai);
-			cx.fillStyle = '#f5ead8';
+			cx.fillStyle = TEM.estela;
 			cx.beginPath(); cx.arc(x, y, lerp(e.r, e.vila ? 2.8 : 1.35, ai), 0, 6.283); cx.fill();
 			if (mouVist && finPointer) {
 				const dd = Math.hypot(x - mx, y - my);
 				if (dd < rayLigam) {
-					cx.globalAlpha = (1 - dd / rayLigam) * 0.5; cx.strokeStyle = '#eeaf34'; cx.lineWidth = 0.6;
+					cx.globalAlpha = (1 - dd / rayLigam) * 0.5; cx.strokeStyle = TEM.fil; cx.lineWidth = 0.6;
 					cx.beginPath(); cx.moveTo(x, y); cx.lineTo(mx, my); cx.stroke();
 				}
 				// Pas de subrevòl pendent lo defilament : la carta glissa jos la mirga immobila
@@ -1246,7 +1298,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			const clau = esc.toFixed(1) + '|' + Math.round(zr.width) + '|' + Math.round(zr.height);
 			if (plaçament.clau !== clau) plaçament = plaçar(esc, clau, zr.width, zr.height);
 			const pusNom = pus ? pus.nom : '';
-			if (!cacheEtiq || cacheEtiq.clau !== clau || cacheEtiq.pusNom !== pusNom || cacheEtiq.dpr !== DPR)
+			if (!cacheEtiq || cacheEtiq.clau !== clau || cacheEtiq.pusNom !== pusNom || cacheEtiq.dpr !== DPR || cacheEtiq.tema !== TEM)
 				cacheEtiq = construirEtiquetas(clau, pusNom, pus ? [pus.px - zcx, pus.py - zcy] : null, zr.width, zr.height);
 			const c = cacheEtiq;
 			if (aRiu > 0.8) { cx.globalAlpha = ((aRiu - 0.8) / 0.2) * 0.85; cx.drawImage(c.rius, zcx - c.ox, zcy - c.oy, c.w, c.h); }
@@ -1258,15 +1310,15 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			const dreta = pus.px < W - 260;
 			const tx = pus.px + (dreta ? 16 : -16);
 			const vel = cx.createRadialGradient(pus.px, pus.py, 0, pus.px, pus.py, 130);
-			vel.addColorStop(0, 'rgba(18, 9, 6, 0.75)'); vel.addColorStop(1, 'rgba(18, 9, 6, 0)');
+			vel.addColorStop(0, TEM.vel); vel.addColorStop(1, TEM.velFin);
 			cx.globalAlpha = 1; cx.fillStyle = vel;
 			cx.fillRect(pus.px - 130, pus.py - 130, 260, 260);
-			cx.strokeStyle = '#eeaf34'; cx.lineWidth = 1.2;
+			cx.strokeStyle = TEM.fil; cx.lineWidth = 1.2;
 			cx.beginPath(); cx.arc(pus.px, pus.py, 8, 0, 6.283); cx.stroke();
-			cx.textAlign = dreta ? 'left' : 'right'; cx.strokeStyle = 'rgba(18, 9, 6, 0.9)';
-			cx.font = 'italic 26px Cormorant, Georgia, serif'; cx.fillStyle = '#ffd47f';
+			cx.textAlign = dreta ? 'left' : 'right'; cx.strokeStyle = TEM.liser;
+			cx.font = 'italic 26px Cormorant, Georgia, serif'; cx.fillStyle = TEM.riuTèxt;
 			escriure(pus.nom, tx, pus.py + 2, 5);
-			cx.font = '700 11px Luciole, sans-serif'; cx.fillStyle = '#f5ead8'; cx.globalAlpha = 0.8;
+			cx.font = '700 11px Luciole, sans-serif'; cx.fillStyle = TEM.vilaTèxt; cx.globalAlpha = 0.8;
 			escriure(DIALECTES[pus.dia], tx, pus.py + 20, 4);
 			cx.textAlign = 'left';
 		}
@@ -1274,7 +1326,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		// traçada), un anèl fin, una N italica ; dins lo canton sorne en naut a esquèrra
 		if (aCarta > 0.05) {
 			const nx = zr.left + 34, ny = zr.top + 44, h = 30, l = 5.5;
-			cx.globalAlpha = aCarta * 0.8; cx.strokeStyle = '#eeaf34'; cx.fillStyle = '#eeaf34'; cx.lineWidth = 0.9;
+			cx.globalAlpha = aCarta * 0.8; cx.strokeStyle = TEM.fil; cx.fillStyle = TEM.fil; cx.lineWidth = 0.9;
 			cx.beginPath(); cx.arc(nx, ny + h, 10, 0, 6.283); cx.stroke();
 			cx.globalAlpha = aCarta * 0.45;
 			cx.beginPath(); cx.moveTo(nx - 18, ny + h); cx.lineTo(nx + 18, ny + h); cx.stroke();
@@ -1282,7 +1334,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx - l, ny + h); cx.lineTo(nx, ny + h); cx.closePath(); cx.fill();
 			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx + l, ny + h); cx.lineTo(nx, ny + h); cx.closePath(); cx.stroke();
 			cx.beginPath(); cx.moveTo(nx - l, ny + h); cx.lineTo(nx, ny + h * 1.9); cx.lineTo(nx + l, ny + h); cx.stroke();
-			cx.font = 'italic 19px Cormorant, Georgia, serif'; cx.textAlign = 'center'; cx.fillStyle = '#ffd47f';
+			cx.font = 'italic 19px Cormorant, Georgia, serif'; cx.textAlign = 'center'; cx.fillStyle = TEM.riuTèxt;
 			cx.fillText('N', nx, ny - 7); cx.textAlign = 'left';
 		}
 
@@ -1304,7 +1356,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		}
 		const aL = clamp((a - 0.55) / 0.4) * opacitat;
 		if (aL > 0.01) {
-			cx.globalAlpha = aL; cx.strokeStyle = '#eeaf34'; cx.lineCap = 'round';
+			cx.globalAlpha = aL; cx.strokeStyle = TEM.fil; cx.lineCap = 'round';
 			cx.lineWidth = Math.max(1.2, R * 0.05);
 			cx.beginPath();
 			for (const i of BRANCAS) { cx.moveTo(punts[0].x, punts[0].y); cx.lineTo(punts[i].x, punts[i].y); }
@@ -1318,7 +1370,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		// Mòde discret (crida, ecran estrech) : pomètas d'aur amortit e OPACAS,
 		// per que los traçats se vejan pas a travèrs (efièch grisastre).
 		// Darrièr lo títol de la crida, color de braça (lo tèxte daurat demòra legible).
-		cx.fillStyle = enCrida ? '#6e2e12' : estret ? '#b9822f' : '#f5ead8';
+		cx.fillStyle = enCrida ? TEM.crotzCrida : estret ? TEM.crotzEstret : TEM.crotzPonch;
 		punts.forEach((pt, i) => {
 			const rr = lerp(1.6, R * (i === 0 ? 0.124 : 0.109), pt.ai * pt.ai);
 			cx.globalAlpha = lerp(0.6, 1, pt.ai);
@@ -1394,7 +1446,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	}
 
 	/* ================= Una sola bocla ================= */
-	let fotograma = 0, syAbans = scrollY, sySimple = -1, forçarFons = true;
+	let fotograma = 0, syAbans = scrollY, sySimple = -1;
 	function bocla(t) {
 		lenis?.raf(t);
 		const sy = scrollY, vel = lenis ? lenis.velocity : 0;
@@ -1413,6 +1465,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			gl.uniform1f(U.t, calm ? 12 : (t - t0) / 1000);
 			gl.uniform2f(U.m, ax / W, 1 - ay / H);
 			gl.uniform1f(U.mo, modeFons);
+			gl.uniform1f(U.cl, temaClar ? 1 : 0);
 			gl.uniform1f(U.s, sy / H);
 			gl.uniform1f(U.p, sy / maxSy);
 			// La nuèch se calma quand la carta se forma : las venas dauradas s'escafan
@@ -1423,6 +1476,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		}
 		if (!calm) requestAnimationFrame(bocla);
 	}
+	aplicarTema();
 	requestAnimationFrame(bocla);
 	// Mòde calm : un imatge fix, redessenhat sonque quand quicòm càmbia
 	if (calm) ['scroll', 'resize'].forEach((ev) => addEventListener(ev, () => requestAnimationFrame(bocla), { passive: true }));
