@@ -750,7 +750,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	// Ont escriure lo nom de cada riu : al mièg de sa linha mai longa
 	const rius_nomenats = {};
 	for (const [nom, , l] of RIUS) if (nom) (rius_nomenats[nom] ||= []).push(l);
-	let aCartaFons = 0;
+	let aCartaFons = 0, darrierDefil = 0;
 	const punts = P.map(([lx, ly], i) => ({ lx, ly, x: 0, y: 0, vx: 0, vy: 0, retard: i === 0 ? 0 : aleat(0, 0.28), estela: { x: 0, y: 0, f: aleat(0, 6.28) } }));
 	talhar();
 	punts.forEach((pt) => { pt.x = pt.estela.x; pt.y = pt.estela.y; });
@@ -890,6 +890,30 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		return res;
 	}
 
+	let cacheEtiq = null;
+	function construirEtiquetas(clau, pusNom, pusLoc, zw, zh) {
+		const M = 220, w = Math.ceil(zw + 2 * M), h = Math.ceil(zh + 2 * M), ox = w / 2, oy = h / 2;
+		const fa = () => { const c = document.createElement('canvas'); c.width = Math.ceil(w * DPR); c.height = Math.ceil(h * DPR); const g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, ox * DPR, oy * DPR); g.strokeStyle = 'rgba(18, 9, 6, 0.9)'; g.lineJoin = 'round'; return [c, g]; };
+		const pres = (x, y) => (pusLoc ? Math.hypot(x - pusLoc[0], y - pusLoc[1]) < 150 : false);
+		const [cr, gr] = fa();
+		gr.fillStyle = '#ffd47f'; gr.textAlign = 'center'; gr.textBaseline = 'middle'; gr.lineWidth = 3;
+		for (const r of plaçament.rius) {
+			gr.font = 'italic ' + r.fs + 'px Cormorant, Georgia, serif';
+			gr.globalAlpha = pres(r.cx, r.cy) ? 0.12 : 1;
+			for (const pas of ['strokeText', 'fillText']) for (const g of r.letras) {
+				gr.save(); gr.translate(g.x, g.y); gr.rotate(g.a); gr[pas](g.c, 0, 0); gr.restore();
+			}
+		}
+		const [cv2, gv] = fa();
+		gv.font = '700 12px Luciole, sans-serif'; gv.fillStyle = '#f5ead8'; gv.lineWidth = 4;
+		for (const v of plaçament.vilas) {
+			if (v.e.nom === pusNom) continue;
+			gv.globalAlpha = pres(v.e.lx, v.e.ly) ? 0.12 : 1;
+			gv.textAlign = v.al; gv.strokeText(v.e.nom, v.x, v.y); gv.fillText(v.e.nom, v.x, v.y);
+		}
+		return { clau, pusNom, dpr: DPR, rius: cr, vilas: cv2, ox, oy, w, h };
+	}
+
 	function dessenharConstellacion(t, sy) {
 		const temps = (t - t0) / 1000;
 		// Intro : los punts venon s'ajustar (1,8 s), en luòc d'un compte a rebors factici.
@@ -918,7 +942,8 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		if (!reliefDemandat && zr.top < H * 2.5) cargarRelief();
 		const gw = (GEO.lon1 - GEO.lon0) * GEO.kx, gh = GEO.lat1 - GEO.lat0;
 		const esc = Math.min((zr.width * 0.98) / gw, (zr.height * 0.94) / gh);
-		const zcx = zr.left + zr.width / 2, zcy = zr.top + zr.height / 2;
+		// Centre calat sus un pixèl entièr : las letras tremolan pas pendent lo defilament
+		const zcx = Math.round(zr.left + zr.width / 2), zcy = Math.round(zr.top + zr.height / 2);
 		const lonM = (GEO.lon0 + GEO.lon1) / 2, latM = (GEO.lat0 + GEO.lat1) / 2;
 		const rayLigam = lerp(140, 90, aCarta);
 		// Los rius se tràçan de la font a la boca, un pauc après las estelas
@@ -963,42 +988,30 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 					cx.globalAlpha = (1 - dd / rayLigam) * 0.5; cx.strokeStyle = '#eeaf34'; cx.lineWidth = 0.6;
 					cx.beginPath(); cx.moveTo(x, y); cx.lineTo(mx, my); cx.stroke();
 				}
-				if (ai > 0.9 && dd < pusD) { pus = e; pusD = dd; }
+				// Pas de subrevòl pendent lo defilament : la carta glissa jos la mirga immobila
+				// e cada estela traversada fasiá lusir son nom e son vel (clinhaments)
+				if (ai > 0.9 && dd < pusD && performance.now() - darrierDefil > 250) { pus = e; pusD = dd; }
 			}
 		}
 		// Las etiquetas : un liseré de nuèch a l'entorn de cada nom per que se destaque
 		// dels rius ; al subrevòl, los noms vesins s'escafan (pas de fotralha).
+		// Las etiquetas son dessenhadas UN CÒP dins doas imatges en memòria (rius, vilas),
+		// puèi simplament desplaçadas : pas mai de 250 letras viradas de redessenhar
+		// a cada imatge (Firefox o pagava car). Refachas sonque quand l'escala o
+		// l'estela subrevolada càmbian.
 		if (W > 700 && (aRiu > 0.8 || aCarta > 0.6)) {
 			const clau = esc.toFixed(1) + '|' + Math.round(zr.width) + '|' + Math.round(zr.height);
 			if (plaçament.clau !== clau) plaçament = plaçar(esc, clau, zr.width, zr.height);
-			const escriure = (t, x, y, liseré) => { cx.lineWidth = liseré; cx.strokeText(t, x, y); cx.fillText(t, x, y); };
-			const pres = (x, y) => (pus ? Math.hypot(x - pus.px, y - pus.py) < 150 : false);
-			cx.strokeStyle = 'rgba(18, 9, 6, 0.9)'; cx.lineJoin = 'round';
-			if (aRiu > 0.8) {
-				const ar = ((aRiu - 0.8) / 0.2) * 0.85;
-				cx.fillStyle = '#ffd47f'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
-				for (const r of plaçament.rius) {
-					cx.font = 'italic ' + r.fs + 'px Cormorant, Georgia, serif';
-					cx.globalAlpha = pres(zcx + r.cx, zcy + r.cy) ? ar * 0.12 : ar;
-					cx.lineWidth = 3;
-					for (const pas of ['strokeText', 'fillText']) for (const g of r.letras) {
-						cx.save(); cx.translate(zcx + g.x, zcy + g.y); cx.rotate(g.a); cx[pas](g.c, 0, 0); cx.restore();
-					}
-				}
-				cx.textBaseline = 'alphabetic';
-			}
-			if (aCarta > 0.6) {
-				const av = ((aCarta - 0.6) / 0.4) * 0.92;
-				cx.font = '700 12px Luciole, sans-serif'; cx.fillStyle = '#f5ead8';
-				for (const v of plaçament.vilas) if (v.e !== pus) {
-					cx.globalAlpha = pres(v.e.px, v.e.py) ? av * 0.12 : av;
-					cx.textAlign = v.al; escriure(v.e.nom, zcx + v.x, zcy + v.y, 4);
-				}
-			}
-			cx.textAlign = 'left';
+			const pusNom = pus ? pus.nom : '';
+			if (!cacheEtiq || cacheEtiq.clau !== clau || cacheEtiq.pusNom !== pusNom || cacheEtiq.dpr !== DPR)
+				cacheEtiq = construirEtiquetas(clau, pusNom, pus ? [pus.px - zcx, pus.py - zcy] : null, zr.width, zr.height);
+			const c = cacheEtiq;
+			if (aRiu > 0.8) { cx.globalAlpha = ((aRiu - 0.8) / 0.2) * 0.85; cx.drawImage(c.rius, zcx - c.ox, zcy - c.oy, c.w, c.h); }
+			if (aCarta > 0.6) { cx.globalAlpha = ((aCarta - 0.6) / 0.4) * 0.92; cx.drawImage(c.vilas, zcx - c.ox, zcy - c.oy, c.w, c.h); }
 		}
 		// Al subrevòl : lo nom occitan del luòc e son dialècte, sus un vel sorne doç
 		if (pus) {
+			const escriure = (t, x, y, liseré) => { cx.lineWidth = liseré; cx.strokeText(t, x, y); cx.fillText(t, x, y); };
 			const dreta = pus.px < W - 260;
 			const tx = pus.px + (dreta ? 16 : -16);
 			const vel = cx.createRadialGradient(pus.px, pus.py, 0, pus.px, pus.py, 130);
@@ -1138,10 +1151,12 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	}
 
 	/* ================= Una sola bocla ================= */
-	let fotograma = 0;
+	let fotograma = 0, syAbans = scrollY;
 	function bocla(t) {
 		lenis?.raf(t);
 		const sy = scrollY, vel = lenis ? lenis.velocity : 0;
+		if (Math.abs(sy - syAbans) > 0.5) darrierDefil = performance.now();
+		syAbans = sy;
 		ax = lerp(ax, mx, 0.16); ay = lerp(ay, my, 0.16);
 		anel.style.transform = `translate(${ax}px, ${ay}px)`;
 		segonDefilament(sy, vel);
