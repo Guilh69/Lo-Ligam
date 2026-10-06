@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lo Ligam, fonds comparés</title>
+<meta name="robots" content="noindex" />
+<!--
+  PLANCHE DE COMPARAISON (2026-10-06) — trois fonds plus calmes pour l'esbòs de nuèch.
+  Demande de Romain : le fond actuel (veines dorées en mouvement) est « lourdingue et
+  fatigant au bout d'un moment » ; garder le côté ludique, mais plus calme et plus
+  proche de son style et de ses couleurs. Chaque fond ne tourne que lorsqu'il est à
+  l'écran ; tout s'immobilise si « réduire les animations » est activé.
+-->
+<style>
+@font-face { font-family: 'Limelight'; src: url('/fonts/limelight.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Cormorant'; src: url('/fonts/cormorant-italic-latin.woff2') format('woff2'); font-style: italic; font-display: swap; }
+:root { --nuech: #120906; --crema: #f5ead8; --crema-2: rgba(245, 234, 216, 0.7); --terra: #b53d17; --aur: #eeaf34; --aur-clar: #ffd47f; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-synthesis: none; }
+body { background: var(--nuech); color: var(--crema); font-family: 'Luciole', system-ui, sans-serif; }
+.cap { padding: 3rem clamp(1rem, 4vw, 3.4rem) 2rem; max-width: 70ch; }
+.cap h1 { font-family: 'Limelight'; font-weight: 400; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.8rem; }
+.cap p { color: var(--crema-2); line-height: 1.6; }
+.prop { position: relative; height: 92vh; min-height: 560px; overflow: hidden; border-top: 1px solid rgba(245, 234, 216, 0.14); }
+.prop canvas, .prop .calc { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mostra { position: absolute; inset: auto clamp(1rem, 4vw, 3.4rem) 3rem; pointer-events: none; }
+.mostra .k { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.32em; text-transform: uppercase; color: var(--aur); }
+.mostra h2 { font-family: 'Limelight'; font-weight: 400; font-size: clamp(3rem, 9vw, 8rem); line-height: 1; margin: 0.6rem 0 1rem; }
+.mostra h2 span { color: var(--aur); }
+.mostra .d { max-width: 46ch; color: var(--crema-2); line-height: 1.6; }
+.mostra .d b { color: var(--crema); }
+.boton { display: inline-block; margin-top: 1.4rem; padding: 0.9rem 1.8rem; border-radius: 999px; background: var(--crema); color: var(--nuech); font-weight: 700; }
+
+/* C. Lum de candela : taches de lumière lentes + lumière qui suit la souris + grain */
+#prop-c { background: radial-gradient(ellipse at 50% 120%, #2a120a, #140a07 60%); }
+.calc .taca { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.32; will-change: transform; }
+.calc .t1 { width: 46vw; height: 46vw; left: 8%; top: 18%; background: #b53d17; animation: deriva1 38s ease-in-out infinite alternate; }
+.calc .t2 { width: 34vw; height: 34vw; right: 6%; top: 8%; background: #eeaf34; opacity: 0.16; animation: deriva2 46s ease-in-out infinite alternate; }
+.calc .t3 { width: 40vw; height: 40vw; left: 40%; bottom: -12%; background: #8a2c12; animation: deriva3 52s ease-in-out infinite alternate; }
+@keyframes deriva1 { to { transform: translate(14vw, 8vh) scale(1.1); } }
+@keyframes deriva2 { to { transform: translate(-10vw, 14vh) scale(0.9); } }
+@keyframes deriva3 { to { transform: translate(-16vw, -10vh) scale(1.15); } }
+.calc .lum { position: absolute; inset: 0; background: radial-gradient(420px circle at var(--x, 60%) var(--y, 40%), rgba(255, 212, 127, 0.13), transparent 70%); }
+.calc .gran { position: absolute; inset: 0; opacity: 0.07; mix-blend-mode: overlay;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+@media (prefers-reduced-motion: reduce) { .calc .taca { animation: none; } }
+</style>
+</head>
+<body>
+<header class="cap">
+	<h1>Trois fonds plus calmes</h1>
+	<p>Faites défiler et promenez la souris sur chacun. Le texte posé dessus sert à juger la lisibilité. Chaque fond ne tourne que lorsqu'il est à l'écran.</p>
+</header>
+
+<section class="prop" id="prop-a">
+	<canvas></canvas>
+	<div class="mostra">
+		<p class="k">Proposition A · Nuèch estelada</p>
+		<h2>Se parla. <span>Se viu.</span></h2>
+		<p class="d"><b>Un ciel d'étoiles très lent</b>, une lueur terracotta à l'horizon. Ludique : la souris tend des fils d'or vers les étoiles proches. Le plus sobre et le plus léger ; prolonge la carte en étoiles.</p>
+		<span class="boton">Reservar un primièr cors</span>
+	</div>
+</section>
+
+<section class="prop" id="prop-b">
+	<canvas></canvas>
+	<div class="mostra">
+		<p class="k">Proposition B · Corbas de nivèl</p>
+		<h2>Se parla. <span>Se viu.</span></h2>
+		<p class="d"><b>Des courbes de niveau dorées</b>, très fines, qui ondulent à peine. Ludique : la souris soulève le relief comme une colline sous la main. Votre regard d'urbaniste ; fait écho au relief de la carte.</p>
+		<span class="boton">Reservar un primièr cors</span>
+	</div>
+</section>
+
+<section class="prop" id="prop-c">
+	<div class="calc"><div class="taca t1"></div><div class="taca t2"></div><div class="taca t3"></div><div class="lum"></div><div class="gran"></div></div>
+	<div class="mostra">
+		<p class="k">Proposition C · Lum de candela</p>
+		<h2>Se parla. <span>Se viu.</span></h2>
+		<p class="d"><b>De grandes taches de lumière chaude</b> (terracotta, or, brique) qui dérivent lentement, un grain de papier. Ludique : la souris porte une lumière douce, comme une bougie. Le plus chaleureux ; quasiment aucun calcul.</p>
+		<span class="boton">Reservar un primièr cors</span>
+	</div>
+</section>
+
+<script>
+(() => {
+	const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const vis = new Map();
+	const io = new IntersectionObserver((es) => es.forEach((e) => vis.set(e.target.id, e.isIntersecting)), { threshold: 0 });
+	document.querySelectorAll('.prop').forEach((el) => io.observe(el));
+	const sorisDe = (el) => { const o = { x: -999, y: -999, in: false }; el.addEventListener('pointermove', (e) => { const r = el.getBoundingClientRect(); o.x = e.clientX - r.left; o.y = e.clientY - r.top; o.in = true; }); el.addEventListener('pointerleave', () => { o.in = false; }); return o; };
+
+	/* ---------- A. Nuèch estelada ---------- */
+	{
+		const sec = document.getElementById('prop-a'), cv = sec.querySelector('canvas'), cx = cv.getContext('2d'), m = sorisDe(sec);
+		sec.style.background = 'radial-gradient(ellipse at 70% 115%, rgba(181, 61, 23, 0.28), transparent 60%), radial-gradient(ellipse at 20% -10%, rgba(238, 175, 52, 0.06), transparent 50%), #120906';
+		let W, H, st = [];
+		const talh = () => { const d = Math.min(devicePixelRatio || 1, 2); W = sec.clientWidth; H = sec.clientHeight; cv.width = W * d; cv.height = H * d; cx.setTransform(d, 0, 0, d, 0, 0);
+			st = Array.from({ length: 160 }, () => ({ x: Math.random() * W, y: Math.random() * H, r: 0.4 + Math.random() * 1.3, f: Math.random() * 6.3, v: 0.15 + Math.random() * 0.4, dx: (Math.random() - 0.5) * 0.04, dy: (Math.random() - 0.5) * 0.03 })); };
+		talh(); addEventListener('resize', talh);
+		function pas(t) {
+			if (vis.get('prop-a') || !t) {
+				cx.clearRect(0, 0, W, H);
+				for (const s of st) {
+					if (!calm) { s.x = (s.x + s.dx + W) % W; s.y = (s.y + s.dy + H) % H; }
+					cx.globalAlpha = 0.25 + 0.45 * (Math.sin(t / 1000 * s.v + s.f) * 0.5 + 0.5);
+					cx.fillStyle = '#f5ead8'; cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, 6.283); cx.fill();
+					if (m.in) { const d = Math.hypot(s.x - m.x, s.y - m.y); if (d < 140) { cx.globalAlpha = (1 - d / 140) * 0.45; cx.strokeStyle = '#eeaf34'; cx.lineWidth = 0.6; cx.beginPath(); cx.moveTo(s.x, s.y); cx.lineTo(m.x, m.y); cx.stroke(); } }
+				}
+			}
+			if (!calm) requestAnimationFrame(pas);
+		}
+		pas(0); if (!calm) requestAnimationFrame(pas);
+	}
+
+	/* ---------- B. Corbas de nivèl ---------- */
+	{
+		const sec = document.getElementById('prop-b'), cv = sec.querySelector('canvas'), m = sorisDe(sec);
+		sec.style.background = '#120906';
+		const gl = cv.getContext('webgl', { antialias: false, alpha: false }), deriv = gl && gl.getExtension('OES_standard_derivatives');
+		if (gl) {
+			const frag = (deriv ? '#extension GL_OES_standard_derivatives : enable\n' : '') + `
+			precision highp float;
+			uniform vec2 r; uniform float t; uniform vec2 m; uniform float mi;
+			float h(vec2 q){ return fract(sin(dot(q, vec2(41.3, 289.1))) * 43758.5453); }
+			float n(vec2 q){ vec2 i = floor(q), f = fract(q); vec2 u = f*f*(3.0-2.0*f);
+				return mix(mix(h(i), h(i+vec2(1,0)), u.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), u.x), u.y); }
+			float fbm(vec2 q){ float v = 0.0, a = 0.5; for (int i = 0; i < 4; i++){ v += a*n(q); q = q*2.03 + vec2(1.7, 9.2); a *= 0.5; } return v; }
+			void main(){
+				vec2 uv = gl_FragCoord.xy / r; vec2 asp = vec2(r.x / r.y, 1.0);
+				vec2 st = uv * asp * 1.4;
+				float e = fbm(st + vec2(t * 0.006, -t * 0.004));
+				float d = length((uv - m) * asp);
+				e += mi * 0.22 * exp(-d * d * 18.0);   // la colina jos la man
+				float lv = e * 14.0;
+				${deriv ? 'float fw = max(fwidth(lv), 1e-4);' : 'float fw = 0.04;'}
+				float lm = 1.0 - smoothstep(0.0, 1.0, abs(fract(lv - 0.5) - 0.5) / fw);
+				float lM = 1.0 - smoothstep(0.0, 1.3, abs(fract(lv / 5.0 - 0.5) - 0.5) / (fw / 5.0));
+				vec3 col = mix(vec3(0.071, 0.035, 0.024), vec3(0.14, 0.055, 0.03), uv.y * 0.6 + 0.2);
+				col += vec3(0.93, 0.69, 0.20) * (lm * 0.13 + lM * 0.22);
+				col += vec3(0.71, 0.24, 0.09) * 0.12 * exp(-d * 3.0) * mi;
+				gl_FragColor = vec4(col, 1.0);
+			}`;
+			const sh = (ty, src) => { const o = gl.createShader(ty); gl.shaderSource(o, src); gl.compileShader(o); return o; };
+			const pr = gl.createProgram();
+			gl.attachShader(pr, sh(gl.VERTEX_SHADER, 'attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }'));
+			gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, frag)); gl.linkProgram(pr); gl.useProgram(pr);
+			gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+			const a = gl.getAttribLocation(pr, 'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+			const U = Object.fromEntries(['r', 't', 'm', 'mi'].map((k) => [k, gl.getUniformLocation(pr, k)]));
+			const talh = () => { const d = Math.min(devicePixelRatio || 1, 1.5); cv.width = sec.clientWidth * d; cv.height = sec.clientHeight * d; gl.viewport(0, 0, cv.width, cv.height); };
+			talh(); addEventListener('resize', talh);
+			let mx = 0.5, my = 0.5, mi = 0, k = 0;
+			function pas(t) {
+				if ((vis.get('prop-b') || !t) && (k++ & 1) === 0) {
+					const W = sec.clientWidth, H = sec.clientHeight;
+					if (m.in) { mx += (m.x / W - mx) * 0.06; my += (1 - m.y / H - my) * 0.06; }
+					mi += ((m.in ? 1 : 0) - mi) * 0.04;
+					gl.uniform2f(U.r, cv.width, cv.height); gl.uniform1f(U.t, calm ? 20 : t / 1000);
+					gl.uniform2f(U.m, mx, my); gl.uniform1f(U.mi, mi);
+					gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+				}
+				if (!calm) requestAnimationFrame(pas);
+			}
+			pas(0); if (!calm) requestAnimationFrame(pas);
+		}
+	}
+
+	/* ---------- C. Lum de candela ---------- */
+	{
+		const sec = document.getElementById('prop-c'), lum = sec.querySelector('.lum'), m = sorisDe(sec);
+		let x = 0.6, y = 0.4;
+		(function pas() {
+			if (vis.get('prop-c') && m.in) {
+				x += (m.x / sec.clientWidth - x) * (calm ? 1 : 0.05); y += (m.y / sec.clientHeight - y) * (calm ? 1 : 0.05);
+				lum.style.setProperty('--x', (x * 100).toFixed(2) + '%'); lum.style.setProperty('--y', (y * 100).toFixed(2) + '%');
+			}
+			requestAnimationFrame(pas);
+		})();
+	}
+})();
+</script>
+</body>
+</html>
