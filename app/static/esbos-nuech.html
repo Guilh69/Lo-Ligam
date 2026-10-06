@@ -815,18 +815,6 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 				}
 				cx.stroke();
 			}
-			if (aRiu > 0.8 && W > 700) {
-				cx.font = 'italic 15px Cormorant, Georgia, serif'; cx.fillStyle = '#ffd47f';
-				cx.globalAlpha = ((aRiu - 0.8) / 0.2) * 0.85; cx.textAlign = 'center';
-				for (const { nom, a, b } of etiquetasRius) {
-					const ax = pX(a[0]), ay = pY(a[1]), bx = pX(b[0]), by = pY(b[1]);
-					let ang = Math.atan2(by - ay, bx - ax);
-					if (ang > Math.PI / 2) ang -= Math.PI; else if (ang < -Math.PI / 2) ang += Math.PI;
-					cx.save(); cx.translate((ax + bx) / 2, (ay + by) / 2); cx.rotate(ang);
-					cx.fillText(nom, 0, -6); cx.restore();
-				}
-				cx.textAlign = 'left';
-			}
 		}
 		// Correspondéncia pixèl del fons → coordenada de la carta d'altitud
 		{
@@ -855,24 +843,58 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 				if (ai > 0.9 && dd < pusD) { pus = e; pusD = dd; }
 			}
 		}
-		// Las grandas vilas se nomenan solas quand la carta es formada
-		if (aCarta > 0.6 && W > 700) {
-			cx.font = '700 11px Luciole, sans-serif'; cx.fillStyle = '#f5ead8';
-			cx.globalAlpha = ((aCarta - 0.6) / 0.4) * 0.55;
-			for (const e of estelas) if (e.vila && e !== pus) cx.fillText(e.nom, e.px + 7, e.py + 4);
-		}
-		// Al subrevòl : lo nom occitan del luòc e son dialècte
-		if (pus) {
-			cx.globalAlpha = 1; cx.strokeStyle = '#eeaf34'; cx.lineWidth = 1.2;
-			cx.beginPath(); cx.arc(pus.px, pus.py, 8, 0, 6.283); cx.stroke();
-			const dreta = pus.px < W - 260;
-			cx.textAlign = dreta ? 'left' : 'right';
-			const tx = pus.px + (dreta ? 16 : -16);
-			cx.font = 'italic 26px Cormorant, Georgia, serif'; cx.fillStyle = '#ffd47f';
-			cx.fillText(pus.nom, tx, pus.py + 2);
-			cx.font = '700 11px Luciole, sans-serif'; cx.fillStyle = '#f5ead8'; cx.globalAlpha = 0.7;
-			cx.fillText(DIALECTES[pus.dia], tx, pus.py + 20);
+		// Las etiquetas : un liseré de nuèch a l'entorn de cada nom per que se destaque
+		// dels rius ; al subrevòl, los noms vesins s'escafan (pas de fotralha).
+		const pres = (x, y) => (pus ? Math.hypot(x - pus.px, y - pus.py) < 150 : false);
+		const escriure = (t, x, y, liseré) => { cx.lineWidth = liseré; cx.strokeText(t, x, y); cx.fillText(t, x, y); };
+		cx.strokeStyle = 'rgba(18, 9, 6, 0.9)'; cx.lineJoin = 'round';
+		if (aRiu > 0.8 && W > 700) {
+			const ar = ((aRiu - 0.8) / 0.2) * 0.85;
+			cx.font = 'italic 16px Cormorant, Georgia, serif'; cx.fillStyle = '#ffd47f'; cx.textAlign = 'center';
+			for (const { nom, a, b } of etiquetasRius) {
+				const ax = pX(a[0]), ay = pY(a[1]), bx = pX(b[0]), by = pY(b[1]);
+				const mx2 = (ax + bx) / 2, my2 = (ay + by) / 2;
+				let ang = Math.atan2(by - ay, bx - ax);
+				if (ang > Math.PI / 2) ang -= Math.PI; else if (ang < -Math.PI / 2) ang += Math.PI;
+				cx.globalAlpha = pres(mx2, my2) ? ar * 0.12 : ar;
+				cx.save(); cx.translate(mx2, my2); cx.rotate(ang); escriure(nom, 0, -6, 3); cx.restore();
+			}
 			cx.textAlign = 'left';
+		}
+		if (aCarta > 0.6 && W > 700) {
+			const av = ((aCarta - 0.6) / 0.4) * 0.92;
+			cx.font = '700 12px Luciole, sans-serif'; cx.fillStyle = '#f5ead8';
+			for (const e of estelas) if (e.vila && e !== pus) {
+				cx.globalAlpha = pres(e.px, e.py) ? av * 0.12 : av;
+				escriure(e.nom, e.px + 7, e.py + 4, 4);
+			}
+		}
+		// Al subrevòl : lo nom occitan del luòc e son dialècte, sus un vel sorne doç
+		if (pus) {
+			const dreta = pus.px < W - 260;
+			const tx = pus.px + (dreta ? 16 : -16);
+			const vel = cx.createRadialGradient(pus.px, pus.py, 0, pus.px, pus.py, 130);
+			vel.addColorStop(0, 'rgba(18, 9, 6, 0.75)'); vel.addColorStop(1, 'rgba(18, 9, 6, 0)');
+			cx.globalAlpha = 1; cx.fillStyle = vel;
+			cx.fillRect(pus.px - 130, pus.py - 130, 260, 260);
+			cx.strokeStyle = '#eeaf34'; cx.lineWidth = 1.2;
+			cx.beginPath(); cx.arc(pus.px, pus.py, 8, 0, 6.283); cx.stroke();
+			cx.textAlign = dreta ? 'left' : 'right'; cx.strokeStyle = 'rgba(18, 9, 6, 0.9)';
+			cx.font = 'italic 26px Cormorant, Georgia, serif'; cx.fillStyle = '#ffd47f';
+			escriure(pus.nom, tx, pus.py + 2, 5);
+			cx.font = '700 11px Luciole, sans-serif'; cx.fillStyle = '#f5ead8'; cx.globalAlpha = 0.8;
+			escriure(DIALECTES[pus.dia], tx, pus.py + 20, 4);
+			cx.textAlign = 'left';
+		}
+		// La flècha del nòrd : un fil, una mièja punta, una N
+		if (aCarta > 0.05) {
+			const nx = zr.right - 24, ny = zr.top + 26;
+			cx.globalAlpha = aCarta * 0.85; cx.strokeStyle = '#eeaf34'; cx.fillStyle = '#eeaf34'; cx.lineWidth = 1;
+			cx.beginPath(); cx.moveTo(nx, ny + 46); cx.lineTo(nx, ny + 8); cx.stroke();
+			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx + 5, ny + 14); cx.lineTo(nx, ny + 11); cx.closePath(); cx.fill();
+			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx - 5, ny + 14); cx.lineTo(nx, ny + 11); cx.closePath(); cx.stroke();
+			cx.font = 'italic 17px Cormorant, Georgia, serif'; cx.textAlign = 'center'; cx.fillStyle = '#ffd47f';
+			cx.fillText('N', nx, ny - 6); cx.textAlign = 'left';
 		}
 
 		// Los 13 punts del lògo : ressòrt cap a la cibla + repulsion de la mirga
