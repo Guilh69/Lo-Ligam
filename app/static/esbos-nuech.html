@@ -77,7 +77,7 @@ main, header, footer { position: relative; z-index: 2; }
 	border: 1px solid var(--crema); mix-blend-mode: difference;
 	transition: width 0.5s var(--ease), height 0.5s var(--ease), margin 0.5s var(--ease), background 0.4s, opacity 0.4s;
 }
-.cur-anel.gros { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: var(--crema); }
+.cur-anel.gros { width: 84px; height: 84px; margin: -42px 0 0 -42px; border-color: var(--aur); background: rgba(238, 175, 52, 0.08); mix-blend-mode: normal; }
 html.cursor-viu, html.cursor-viu a, html.cursor-viu button { cursor: none; }
 html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 
@@ -256,7 +256,7 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .panel-media { position: relative; overflow: hidden; border-radius: 22px; background: var(--nuech-2); }
 .panel-media img { position: absolute; inset: -8% -14%; width: 128%; height: 116%; object-fit: cover; will-change: transform; }
 /* La fòto a un cèl blanc (sistèma sang e aur) : sus fons de nuèch, l'amagam */
-.panel-media img.sens-cel { top: -48%; height: 154%; object-position: 50% 100%; }
+.panel-media img.sens-cel { top: -74%; height: 180%; object-position: 50% 100%; }
 .panel-media.liseré { box-shadow: 0 0 0 3px var(--terra), 0 0 0 6px var(--aur); }
 .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #4a1a0b, var(--nuech-2) 70%); }
 .panel-media.retrat img { inset: auto 0 0 0; width: 100%; height: 108%; object-fit: contain; object-position: bottom; }
@@ -411,14 +411,14 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			<article class="biai esvani" style="--i: 2">
 				<p class="biai-num" aria-hidden="true">II</p>
 				<h3 class="biai-titol"><span class="bi"><span class="oc">A ton ritme</span><span class="fr">À ton rythme</span></span></h3>
-				<p class="biai-tèxt"><span class="bi"><span class="oc">Un parcors autonòm, leiçon per leiçon, per contunhar entre dos corses.</span><span class="fr">Un parcours autonome, leçon par leçon, pour continuer entre deux cours.</span></span></p>
+				<p class="biai-tèxt"><span class="bi"><span class="oc">Un parcors autonòm, de zèro fins al nivèl B1, leiçon per leiçon, per contunhar entre dos corses.</span><span class="fr">Un parcours autonome, de zéro jusqu’au niveau B1, leçon par leçon, pour continuer entre deux cours.</span></span></p>
 				<a class="biai-ligam" href="/aprene" data-cur><span class="bi"><span class="oc">Començar lo parcors</span><span class="fr">Commencer le parcours</span></span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
 			</article>
 			<article class="biai esvani" style="--i: 3">
 				<p class="biai-num" aria-hidden="true">III</p>
-				<h3 class="biai-titol"><span class="bi"><span class="oc">Ensems</span><span class="fr">Ensemble</span></span></h3>
-				<p class="biai-tèxt"><span class="bi"><span class="oc">De rescontres en linha e en persona, per parlar e far viure la lenga.</span><span class="fr">Des rencontres en ligne et en personne, pour parler et faire vivre la langue.</span></span></p>
-				<span class="biai-ligam leu"><span class="bi"><span class="oc">Lèu</span><span class="fr">Bientôt</span></span></span>
+				<h3 class="biai-titol"><span class="bi"><span class="oc">Sus mesura</span><span class="fr">Sur mesure</span></span></h3>
+				<p class="biai-tèxt"><span class="bi"><span class="oc">Visio, parcors autonòm e rescontres en persona se sèm dins la meteissa vila : ara, soi a Lion.</span><span class="fr">Visio, parcours autonome et rencontres en personne si nous sommes dans la même ville : en ce moment, je suis à Lyon.</span></span></p>
+				<a class="biai-ligam" href="#rendetz-vos" data-cur><span class="bi"><span class="oc">Ne parlar ensems</span><span class="fr">En parler ensemble</span></span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
 			</article>
 		</div>
 	</section>
@@ -522,7 +522,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	const BRANCAS = [2, 3, 5, 6, 8, 9, 11, 12]; // ligadas al moieu
 	const ARCS = [[12, 1], [1, 2], [3, 4], [4, 5], [6, 7], [7, 8], [9, 10], [10, 11]];
 
-	function simbolSVG(svg, { traç = '#fff', ponch = '#fff', espessor = 0.06, dessenh = false } = {}) {
+	function simbolSVG(svg, { traç = '#fff', ponch = '#fff', moieu = null, espessor = 0.06, dessenh = false } = {}) {
 		const ns = 'http://www.w3.org/2000/svg';
 		const lin = (d, w) => {
 			const p = document.createElementNS(ns, 'path');
@@ -539,7 +539,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		P.forEach(([x, y], i) => {
 			const c = document.createElementNS(ns, 'circle');
 			c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', i === 0 ? 0.124 : 0.109);
-			c.setAttribute('fill', ponch);
+			c.setAttribute('fill', i === 0 && moieu ? moieu : ponch);
 			if (dessenh) c.style.transitionDelay = `${600 + i * 50}ms`;
 			svg.appendChild(c);
 		});
@@ -578,7 +578,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	const bi = (oc, fr) => `<span class="bi"><span class="oc">${oc}</span><span class="fr">${fr}</span></span>`;
 	const mediaHTML = (m) => ({
 		retrat: `<div class="panel-media retrat"><img src="/acuelh/personatge.png" alt="" loading="lazy" data-paral /></div>`,
-		paisatge: `<div class="panel-media liseré"><img class="sens-cel" src="/acuelh/paisatge.jpg" alt="" loading="lazy" data-paral /></div>`,
+		paisatge: `<div class="panel-media"><img class="sens-cel" src="/acuelh/paisatge.jpg" alt="" loading="lazy" data-paral /></div>`,
 		tipo: `<div class="panel-media tipo"><span class="gros-mot" lang="oc">ensems</span></div>`,
 		simbol: `<div class="panel-media simbol"><svg viewBox="-1.3 -1.3 2.6 2.6" aria-hidden="true" data-simbol="gros"></svg></div>`
 	})[m];
@@ -596,7 +596,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			</div>
 			${mediaHTML(c.media)}
 		</article>`).join('');
-	document.querySelectorAll('[data-simbol="gros"]').forEach((s) => simbolSVG(s, { espessor: 0.055, dessenh: true }));
+	document.querySelectorAll('[data-simbol="gros"]').forEach((s) => simbolSVG(s, { ponch: '#ffd47f', moieu: '#eeaf34', espessor: 0.055, dessenh: true }));
 
 	// Pè de pagina
 	document.querySelector('.pe-linhas').innerHTML = CAMINS.map((c) => `
