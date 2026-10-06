@@ -2,7 +2,7 @@
 
 > Dictée par Romain le 2026-10-06 (conversation graphismes), remise au propre sans réécriture : ses mots, l'ordre de son récit, sans les hésitations de la dictée.
 > Servira à la future page « Qui suis-je / l'histoire du Ligam ». **Rien n'est à publier tel quel** : Romain relit, complète, puis on met en forme ensemble.
-> À confirmer par Romain : orthographe « Périer » (un seul r, accent sur le e) · « Clermont-l'Hérault » (la dictée a donné « Clermont-Léon »).
+> Confirmé par Romain le 2026-10-06 : « Périer » (un seul r, e accent aigu) · mère née à Clermont-l'Hérault.
 
 ## 1. Présentation
 
