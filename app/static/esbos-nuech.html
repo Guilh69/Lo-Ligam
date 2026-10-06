@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="oc">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lo Ligam, esbòs de nuèch</title>
+<meta name="robots" content="noindex" />
+<!--
+  ESBÒS DE NUÈCH (2026-10-06) — pagina d'ensag liura, fòra del site.
+  Demanda de Romain : la meteissa ambicion que lo tèst Mistral, mas amb
+  l'identitat de Lo Ligam. Idèa centrala : la crotz-constellacion del
+  lògo se forma a l'arribada, s'esparpalha en estelas quand davalam
+  (los parlants esparpalhats), e se torna ligar a la fin (lo ligam).
+  Sobrietat : fons WebGL a mièja resolucion e 30 imatges/s, arrestat
+  quand l'onglet es amagat ; tot immobil se « reduire les animations ».
+  Occitan novèl : A VALIDAR per Romain (dicodòc) abans tota publicacion.
+-->
+<style>
+@font-face { font-family: 'Limelight'; src: url('/fonts/limelight.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Cormorant'; src: url('/fonts/cormorant-italic-latin.woff2') format('woff2'); font-style: italic; font-display: swap; }
+
+:root {
+	--nuech: #120906;
+	--nuech-2: #1d0f0a;
+	--crema: #f5ead8;
+	--crema-2: rgba(245, 234, 216, 0.66);
+	--crema-3: rgba(245, 234, 216, 0.16);
+	--terra: #b53d17;
+	--terra-viu: #e0612f;
+	--aur: #eeaf34;
+	--aur-clar: #ffd47f;
+	--ease: cubic-bezier(0.19, 1, 0.22, 1);
+	--ease-io: cubic-bezier(0.76, 0, 0.24, 1);
+	--titol: 'Limelight', Georgia, serif;
+	--cors: 'Luciole', system-ui, sans-serif;
+	--votz: 'Cormorant', Georgia, serif;
+	--marge: clamp(1rem, 4vw, 3.4rem);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-synthesis: none; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body {
+	background: var(--nuech);
+	color: var(--crema);
+	font-family: var(--cors);
+	overflow-x: clip;
+	-webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+::selection { background: var(--aur); color: var(--nuech); }
+:focus-visible { outline: 2px solid var(--aur); outline-offset: 4px; border-radius: 4px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Fons : shader + constellacion + gran ---------- */
+#fons, #estelas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#fons { z-index: 0; }
+#estelas { z-index: 1; }
+.gran {
+	position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 60; pointer-events: none;
+	opacity: 0.07; mix-blend-mode: overlay;
+	animation: gran 1s steps(6) infinite;
+}
+@keyframes gran {
+	0% { transform: translate(0, 0); } 20% { transform: translate(-4%, 3%); }
+	40% { transform: translate(3%, -5%); } 60% { transform: translate(-2%, -2%); }
+	80% { transform: translate(5%, 4%); } 100% { transform: translate(0, 0); }
+}
+main, header, footer { position: relative; z-index: 2; }
+
+/* ---------- Cursor ---------- */
+.cur-ponch, .cur-anel { position: fixed; top: 0; left: 0; z-index: 90; pointer-events: none; border-radius: 50%; opacity: 0; }
+.cur-ponch { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--aur); }
+.cur-anel {
+	width: 40px; height: 40px; margin: -20px 0 0 -20px;
+	border: 1px solid var(--crema); mix-blend-mode: difference;
+	transition: width 0.5s var(--ease), height 0.5s var(--ease), margin 0.5s var(--ease), background 0.4s, opacity 0.4s;
+}
+.cur-anel.gros { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: var(--crema); }
+html.cursor-viu, html.cursor-viu a, html.cursor-viu button { cursor: none; }
+html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
+
+/* ---------- Bilingüe : doas jaças dins una mascara ---------- */
+.bi { display: inline-grid; overflow: hidden; vertical-align: top; justify-items: start; padding: 0.06em 0.04em 0.12em; margin: -0.06em -0.04em -0.12em; }
+.bi > span { grid-area: 1 / 1; transition: transform 0.95s var(--ease); }
+.bi > .fr { transform: translateY(125%); }
+html.fr .bi > .oc { transform: translateY(-125%); }
+html.fr .bi > .fr { transform: none; }
+.centrat .bi { justify-items: center; }
+[data-lenga] { display: contents; }
+html:not(.fr) [data-lenga='fr'], html.fr [data-lenga='oc'] { display: none; }
+
+/* ---------- Mascaras de revelacion ---------- */
+.masc { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.masc > .masc-in { display: block; transform: translateY(112%); transition: transform 1.3s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
+.vist .masc > .masc-in, .masc.vist > .masc-in { transform: none; }
+.esvani { opacity: 0; transform: translateY(24px); transition: opacity 1.1s var(--ease), transform 1.1s var(--ease); transition-delay: calc(var(--i, 0) * 90ms + 200ms); }
+.vist .esvani, .esvani.vist { opacity: 1; transform: none; }
+
+/* ---------- Banda de capçal ---------- */
+header {
+	position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+	display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+	padding: 1.3rem var(--marge);
+	transition: transform 0.9s var(--ease);
+}
+header.amagat { transform: translateY(-110%); }
+header::before {
+	content: ''; position: absolute; inset: 0; z-index: -1;
+	background: linear-gradient(var(--nuech) 10%, transparent);
+	opacity: 0; transition: opacity 0.6s;
+}
+header.solid::before { opacity: 0.85; }
+.marca { display: flex; align-items: center; gap: 0.7rem; font-family: var(--titol); font-size: 1.35rem; letter-spacing: 0.01em; }
+.marca svg { width: 34px; height: 34px; transition: transform 1.2s var(--ease); }
+.marca:hover svg { transform: rotate(90deg); }
+header nav { display: flex; align-items: center; gap: clamp(1rem, 2.6vw, 2.4rem); }
+.nav-ligam { position: relative; font-size: 0.86rem; font-weight: 700; letter-spacing: 0.04em; padding: 0.3rem 0; }
+.nav-ligam::after {
+	content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--aur);
+	transform: scaleX(0); transform-origin: right; transition: transform 0.7s var(--ease);
+}
+.nav-ligam:hover::after, .nav-ligam:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+.lenga {
+	display: inline-flex; border: 1px solid var(--crema-3); border-radius: 999px; padding: 3px; gap: 2px;
+	background: rgba(18, 9, 6, 0.5); font: 700 0.78rem var(--cors); color: var(--crema);
+}
+.lenga button { all: unset; cursor: pointer; padding: 0.35rem 0.75rem; border-radius: 999px; transition: background 0.5s var(--ease), color 0.5s; }
+.lenga button[aria-pressed='true'] { background: var(--crema); color: var(--nuech); }
+.lenga button:focus-visible { outline: 2px solid var(--aur); }
+@media (max-width: 720px) { .nav-ligam { display: none; } }
+
+/* ---------- Acte I : l'eròi ---------- */
+.eros {
+	min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
+	padding: 8rem var(--marge) 3rem;
+}
+.eros-kicker {
+	display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.4rem;
+	font-size: 0.78rem; font-weight: 700; letter-spacing: 0.32em; text-transform: uppercase; color: var(--aur);
+}
+.eros-kicker::before { content: ''; width: 3.2rem; height: 1px; background: currentColor; transform-origin: left; transform: scaleX(0); transition: transform 1.4s var(--ease) 0.2s; }
+.vist .eros-kicker::before { transform: scaleX(1); }
+.eros-titol { font-family: var(--titol); font-weight: 400; font-size: clamp(3.4rem, 11vw, 12rem); line-height: 1.04; letter-spacing: -0.01em; }
+.linha { display: block; width: fit-content; cursor: default; margin-bottom: 0.03em; }
+.linha:nth-child(2) { padding-left: 0.9em; }
+.linha:nth-child(3) { color: var(--aur); }
+/* L'autra lenga, al subrevòl : un murmuri en Cormorant italica daurada */
+.linha .bi > span { transition-duration: 0.8s; }
+html:not(.fr) .linha .fr, html.fr .linha .oc { font-family: var(--votz); font-style: italic; color: var(--aur-clar); }
+html:not(.fr) .linha:hover .bi > .oc { transform: translateY(-125%); }
+html:not(.fr) .linha:hover .bi > .fr { transform: none; }
+html.fr .linha:hover .bi > .oc { transform: none; }
+html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
+.eros-pe { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; margin-top: 2.6rem; }
+.eros-sub { max-width: 30ch; font-size: clamp(1rem, 1.3vw, 1.18rem); line-height: 1.65; color: var(--crema-2); }
+.eros-accions { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; }
+.davalar { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; color: var(--crema-2); }
+.davalar span { width: 1px; height: 56px; background: var(--crema-3); position: relative; overflow: hidden; }
+.davalar span::after { content: ''; position: absolute; left: 0; top: -100%; width: 100%; height: 100%; background: var(--aur); animation: davala 2s var(--ease-io) infinite; }
+@keyframes davala { to { top: 100%; } }
+.indici { font-size: 0.72rem; color: var(--crema-2); letter-spacing: 0.04em; margin-top: 0.9rem; }
+@media (hover: none) { .indici { display: none; } }
+
+/* ---------- Botons ---------- */
+.boton {
+	position: relative; display: inline-flex; align-items: center; gap: 0.7rem; overflow: hidden; isolation: isolate;
+	padding: 1.15rem 2.2rem; border-radius: 999px; background: var(--crema); color: var(--nuech);
+	font: 700 0.95rem var(--cors); letter-spacing: 0.02em; border: 0;
+	transition: transform 0.6s var(--ease);
+}
+.boton-emplenat {
+	position: absolute; z-index: -1; left: var(--x, 50%); top: var(--y, 50%);
+	width: 260%; aspect-ratio: 1; border-radius: 50%; background: var(--aur);
+	transform: translate(-50%, -50%) scale(0); transition: transform 0.7s var(--ease);
+}
+.boton:hover .boton-emplenat, .boton:focus-visible .boton-emplenat { transform: translate(-50%, -50%) scale(1); }
+.boton-tèxt { display: inline-flex; gap: 0.7rem; transition: transform 0.6s var(--ease); }
+.boton svg { width: 1em; height: 1em; transition: transform 0.6s var(--ease); }
+.boton:hover svg { transform: translateX(4px) rotate(-45deg); }
+.ligam-tèxt { position: relative; font-weight: 700; padding: 0.3rem 0; }
+.ligam-tèxt::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform-origin: left; transition: transform 0.7s var(--ease); }
+.ligam-tèxt:hover::after { transform: scaleX(0); transform-origin: right; }
+
+/* ---------- Acte II : lo bandèl de mots ---------- */
+.bandel { padding: 4.5rem 0; border-block: 1px solid var(--crema-3); overflow: hidden; }
+.bandel-pista { display: flex; width: max-content; will-change: transform; }
+.bandel-mot {
+	display: inline-flex; align-items: baseline; gap: 0.5em; padding-right: 0.9em;
+	font-family: var(--titol); font-size: clamp(2.6rem, 7.5vw, 6.4rem); line-height: 1; white-space: nowrap;
+	color: transparent; -webkit-text-stroke: 1px rgba(245, 234, 216, 0.55);
+	transition: color 0.5s, -webkit-text-stroke-color 0.5s;
+}
+.bandel-mot:nth-child(3n) { color: var(--crema); -webkit-text-stroke-color: transparent; }
+.bandel-mot small { font-family: var(--votz); font-style: italic; font-size: 0.42em; color: var(--aur); -webkit-text-stroke: 0; opacity: 0; transition: opacity 0.5s; }
+.bandel-mot:hover { color: var(--aur); -webkit-text-stroke-color: transparent; }
+.bandel-mot:hover small { opacity: 1; }
+.bandel-mot::after { content: '✦'; font-size: 0.32em; color: var(--terra-viu); -webkit-text-stroke: 0; align-self: center; margin-left: 0.4em; }
+
+/* ---------- Acte III : manifèst que s'emplena ---------- */
+.manifest { padding: 26vh var(--marge) 22vh; }
+.jalon { display: flex; align-items: baseline; gap: 1.2rem; margin-bottom: 3rem; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; }
+.jalon b { color: var(--aur); font-weight: 700; }
+.jalon span { color: var(--crema-2); }
+.manifest-tèxt { max-width: 22ch; font-family: var(--titol); font-size: clamp(2.2rem, 5.6vw, 5.4rem); line-height: 1.08; }
+.manifest-tèxt .m { color: rgba(245, 234, 216, 0.14); transition: color 0.35s; }
+.manifest-tèxt .m.on { color: var(--crema); }
+.manifest-tèxt .m.aur.on { color: var(--aur); }
+
+/* ---------- Acte IV : quatre camins, panèls orizontals ---------- */
+.camins { height: 420vh; }
+.camins-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+.camins-cap { position: absolute; top: 6.4rem; left: var(--marge); right: var(--marge); display: flex; justify-content: space-between; align-items: baseline; }
+.camins-pista { display: flex; gap: 6vw; padding-inline: var(--marge); width: max-content; will-change: transform; }
+.panel {
+	position: relative; width: min(76vw, 1180px); height: min(64svh, 640px);
+	display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: stretch;
+}
+.panel-tèxt { display: flex; flex-direction: column; justify-content: space-between; padding-block: 0.4rem; min-width: 0; }
+.panel-num { font-family: var(--titol); font-size: clamp(3rem, 8vw, 7.5rem); line-height: 0.9; color: transparent; -webkit-text-stroke: 1px var(--aur); }
+.panel-nom { font-family: var(--titol); font-size: clamp(2.6rem, 6vw, 6.6rem); line-height: 0.95; color: var(--crema); }
+.panel-tagline { font-family: var(--votz); font-style: italic; font-size: clamp(1.3rem, 2vw, 1.9rem); color: var(--aur-clar); margin-top: 0.6rem; }
+.panel-items { list-style: none; border-top: 1px solid var(--crema-3); }
+.panel-items li { border-bottom: 1px solid var(--crema-3); }
+.panel-items a, .panel-items .leu {
+	position: relative; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+	padding: 0.95rem 0; font-weight: 700; overflow: hidden;
+}
+.panel-items a::before { content: ''; position: absolute; inset: 0; background: var(--aur); transform: scaleY(0); transform-origin: bottom; transition: transform 0.6s var(--ease); z-index: -1; }
+.panel-items a { z-index: 0; transition: color 0.45s, padding 0.6s var(--ease); }
+.panel-items a:hover { color: var(--nuech); padding-inline: 1rem; }
+.panel-items a:hover::before { transform: scaleY(1); }
+.panel-items .leu { color: var(--crema-2); font-weight: 400; }
+.panel-items .leu em { font-style: normal; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terra-viu); }
+.panel-media { position: relative; overflow: hidden; border-radius: 22px; background: var(--nuech-2); }
+.panel-media img { position: absolute; inset: -8% -14%; width: 128%; height: 116%; object-fit: cover; will-change: transform; }
+/* La fòto a un cèl blanc (sistèma sang e aur) : sus fons de nuèch, l'amagam */
+.panel-media img.sens-cel { top: -48%; height: 154%; object-position: 50% 100%; }
+.panel-media.liseré { box-shadow: 0 0 0 3px var(--terra), 0 0 0 6px var(--aur); }
+.panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #4a1a0b, var(--nuech-2) 70%); }
+.panel-media.retrat img { inset: auto 0 0 0; width: 100%; height: 108%; object-fit: contain; object-position: bottom; }
+.panel-media.tipo { display: grid; place-items: center; border: 1px solid var(--crema-3); background: transparent; }
+.panel-media.tipo .gros-mot { font-family: var(--votz); font-style: italic; font-size: clamp(4rem, 11vw, 10rem); color: var(--aur); line-height: 0.9; text-align: center; }
+.panel-media.simbol { display: grid; place-items: center; background: var(--terra); }
+.panel-media.simbol svg { width: 62%; height: auto; }
+.panel-media.simbol svg .tr { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s var(--ease-io); }
+.panel-media.simbol svg circle { transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform 0.9s var(--ease); }
+.panel-media.simbol.actiu svg .tr { stroke-dashoffset: 0; }
+.panel-media.simbol.actiu svg circle { transform: scale(1); }
+.camins-barra { position: absolute; left: var(--marge); right: var(--marge); bottom: 2.6rem; height: 1px; background: var(--crema-3); }
+.camins-barra i { position: absolute; inset: 0; background: var(--aur); transform-origin: left; transform: scaleX(0); }
+@media (max-width: 860px) {
+	.panel { width: 84vw; height: 72svh; grid-template-columns: 1fr; grid-template-rows: auto 34%; gap: 1.2rem; }
+	.panel-media { order: -1; }
+	.panel-num { display: none; }
+	.camins-cap { top: 5.2rem; }
+}
+
+/* ---------- Acte V : las chifras ---------- */
+.chifras { padding: 24vh var(--marge) 18vh; }
+.chifras-grasilha { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--crema-3); }
+.chifra { padding: 2.6rem 2rem 0 0; }
+.chifra + .chifra { padding-left: 2rem; border-left: 1px solid var(--crema-3); }
+.chifra-num { font-family: var(--titol); font-size: clamp(3rem, 7vw, 6.6rem); line-height: 1; color: var(--aur); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.chifra-nom { font-size: 1.25rem; font-weight: 700; margin-top: 0.8rem; }
+.chifra-font { font-size: 0.82rem; line-height: 1.5; color: var(--crema-2); margin-top: 0.6rem; max-width: 30ch; }
+@media (max-width: 860px) {
+	.chifras-grasilha { grid-template-columns: 1fr; }
+	.chifra + .chifra { padding-left: 0; border-left: 0; border-top: 1px solid var(--crema-3); }
+	.chifra { padding-bottom: 2rem; }
+}
+
+/* ---------- Acte VI : la fenèstra del trobador ---------- */
+.trobador { height: 220vh; }
+.trobador-pin { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.trobador-fenestra { position: absolute; inset: 0; clip-path: inset(22% 32% round 28px); will-change: clip-path; }
+.trobador-fenestra img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; transform-origin: 50% 100%; transform: scale(1.3); will-change: transform; }
+.trobador-fenestra::after { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(18, 9, 6, 0.25), rgba(60, 18, 6, 0.62)); }
+.trobador-vers { position: relative; z-index: 2; text-align: center; padding: 0 var(--marge); }
+.trobador-vers p { max-width: 15em; margin-inline: auto; font-family: var(--votz); font-style: italic; font-size: clamp(2.2rem, 5.6vw, 5.2rem); line-height: 1.08; color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
+.trobador-vers cite { display: block; margin-top: 1.8rem; font-style: normal; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--aur-clar); }
+
+/* ---------- Acte VII : la crida ---------- */
+.crida { min-height: 110svh; display: grid; place-items: center; text-align: center; padding: 18vh var(--marge); }
+.crida-titol { font-family: var(--titol); font-weight: 400; font-size: clamp(3rem, 10.5vw, 10rem); line-height: 0.95; }
+.crida-titol .aur { color: var(--aur); }
+.crida-sub { font-family: var(--votz); font-style: italic; font-size: clamp(1.4rem, 2.4vw, 2.2rem); color: var(--aur-clar); margin: 1.8rem 0 3rem; }
+
+/* ---------- Pè de pagina ---------- */
+footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); overflow: hidden; }
+.pe-linhas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-bottom: 5rem; }
+.pe-linhas h3 { font-family: var(--titol); font-weight: 400; font-size: 1.3rem; color: var(--aur); margin-bottom: 1rem; }
+.pe-linhas a { display: block; padding: 0.3rem 0; color: var(--crema-2); transition: color 0.4s, transform 0.5s var(--ease); }
+.pe-linhas a:hover { color: var(--crema); transform: translateX(6px); }
+.pe-nom { display: flex; justify-content: space-between; font-family: var(--titol); font-size: 19.5vw; line-height: 0.8; color: var(--terra); margin: 0 -0.02em; }
+.pe-nom span { display: inline-block; transform: translateY(105%); transition: transform 1.4s var(--ease); transition-delay: calc(var(--i) * 55ms); }
+.pe-nom-masc { overflow: hidden; padding-top: 0.1em; }
+.vist .pe-nom span { transform: none; }
+.pe-bas { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-top: 1.6rem; font-size: 0.78rem; color: var(--crema-2); }
+@media (max-width: 860px) { .pe-linhas { grid-template-columns: repeat(2, 1fr); } }
+
+/* ---------- Res que boleguèsse se l'utilizaire o demanda ---------- */
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+	.masc > .masc-in, .esvani, .pe-nom span { transform: none !important; opacity: 1 !important; }
+	.trobador-fenestra { clip-path: none; }
+	.trobador-fenestra img { transform: none; }
+	.gran { display: none; }
+}
+</style>
+</head>
+<body>
+<canvas id="fons" aria-hidden="true"></canvas>
+<canvas id="estelas" aria-hidden="true"></canvas>
+<div class="gran" aria-hidden="true"></div>
+<div class="cur-anel" aria-hidden="true"></div>
+<div class="cur-ponch" aria-hidden="true"></div>
+
+<header>
+	<a class="marca" href="/" data-cur>
+		<svg viewBox="-1.25 -1.25 2.5 2.5" aria-hidden="true" data-simbol="pichon"></svg>
+		Lo Ligam
+	</a>
+	<nav aria-label="Navigacion">
+		<a class="nav-ligam" href="/aprene" data-cur><span class="bi"><span class="oc">Aprene</span><span class="fr">Apprendre</span></span></a>
+		<a class="nav-ligam" href="/carta" data-cur><span class="bi"><span class="oc">Descobrir</span><span class="fr">Découvrir</span></span></a>
+		<a class="nav-ligam" href="#crida" data-cur><span class="bi"><span class="oc">Participar</span><span class="fr">Participer</span></span></a>
+		<div class="lenga" role="group" aria-label="Lenga / Langue">
+			<button type="button" data-lenga-boton="oc" aria-pressed="true" lang="oc">Òc</button>
+			<button type="button" data-lenga-boton="fr" aria-pressed="false" lang="fr">Fr</button>
+		</div>
+	</nav>
+</header>
+
+<main>
+	<!-- I. L'eròi -->
+	<section class="eros" data-revela>
+		<p class="eros-kicker"><span class="masc"><span class="masc-in"><span class="bi"><span class="oc">L’occitan</span><span class="fr">L’occitan</span></span></span></span></p>
+		<h1 class="eros-titol">
+			<span class="linha masc"><span class="masc-in" style="--i: 1"><span class="bi"><span class="oc">Se parla.</span><span class="fr">Se parle.</span></span></span></span>
+			<span class="linha masc"><span class="masc-in" style="--i: 2"><span class="bi"><span class="oc">S’apren.</span><span class="fr">S’apprend.</span></span></span></span>
+			<span class="linha masc"><span class="masc-in" style="--i: 3"><span class="bi"><span class="oc">Se viu.</span><span class="fr">Se vit.</span></span></span></span>
+		</h1>
+		<div class="eros-pe">
+			<div class="esvani" style="--i: 5">
+				<p class="eros-sub"><span class="bi"><span class="oc">Quin que siá ton objectiu, siás al bon endrech.</span><span class="fr">Quel que soit ton objectif, tu es au bon endroit.</span></span></p>
+				<p class="indici" aria-hidden="true"><span class="bi"><span class="oc">Passatz la mirga suls tres mots.</span><span class="fr">Survolez les trois mots.</span></span></p>
+			</div>
+			<div class="eros-accions esvani" style="--i: 6">
+				<a class="boton" href="/aprene/essai" data-magnet data-cur>
+					<span class="boton-emplenat"></span>
+					<span class="boton-tèxt"><span class="bi"><span class="oc">Començar</span><span class="fr">Commencer</span></span>
+					<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span>
+				</a>
+				<a class="ligam-tèxt" href="/carta" data-cur><span class="bi"><span class="oc">Descobrir la carta</span><span class="fr">Découvrir la carte</span></span></a>
+			</div>
+			<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
+		</div>
+	</section>
+
+	<!-- II. Lo bandèl de mots -->
+	<div class="bandel" aria-label="Qualques mots">
+		<div class="bandel-pista"></div>
+	</div>
+
+	<!-- III. Lo manifèst -->
+	<section class="manifest">
+		<p class="jalon" data-revela><b>01</b><span class="masc"><span class="masc-in"><span class="bi"><span class="oc">Qu’es aquò, Lo Ligam ?</span><span class="fr">Qu’est-ce que Lo Ligam ?</span></span></span></span></p>
+		<p class="manifest-tèxt" data-emplenar>
+			<span data-lenga="oc"></span><span data-lenga="fr"></span>
+		</p>
+	</section>
+
+	<!-- IV. Quatre camins -->
+	<section class="camins" aria-labelledby="camins-titol">
+		<div class="camins-pin">
+			<div class="camins-cap jalon">
+				<span><b>02</b>&ensp;<span id="camins-titol"><span class="bi"><span class="oc">Quatre camins</span><span class="fr">Quatre chemins</span></span></span></span>
+				<span aria-hidden="true">→</span>
+			</div>
+			<div class="camins-pista"></div>
+			<div class="camins-barra" aria-hidden="true"><i></i></div>
+		</div>
+	</section>
+
+	<!-- V. Las chifras -->
+	<section class="chifras" data-revela>
+		<p class="jalon"><b>03</b><span class="masc"><span class="masc-in"><span class="bi"><span class="oc">L’occitan, uèi</span><span class="fr">L’occitan, aujourd’hui</span></span></span></span></p>
+		<div class="chifras-grasilha">
+			<div class="chifra esvani" style="--i: 1">
+				<p class="chifra-num" data-comptar="600000" data-prefix="≈ ">0</p>
+				<p class="chifra-nom"><span class="bi"><span class="oc">locutors</span><span class="fr">locuteurs</span></span></p>
+				<p class="chifra-font"><span class="bi"><span class="oc">Estimacion, enquèsta sociolingüistica OPLO, 2020</span><span class="fr">Estimation, enquête sociolinguistique OPLO, 2020</span></span></p>
+			</div>
+			<div class="chifra esvani" style="--i: 2">
+				<p class="chifra-num" data-comptar="32">0</p>
+				<p class="chifra-nom"><span class="bi"><span class="oc">despartaments</span><span class="fr">départements</span></span></p>
+				<p class="chifra-font"><span class="bi"><span class="oc">e mai la Val d’Aran e las valadas occitanas d’Itàlia</span><span class="fr">plus le Val d’Aran et les vallées occitanes d’Italie</span></span></p>
+			</div>
+			<div class="chifra esvani" style="--i: 3">
+				<p class="chifra-num" data-comptar="10">0</p>
+				<p class="chifra-nom"><span class="bi"><span class="oc">sègles de literatura</span><span class="fr">siècles de littérature</span></span></p>
+				<p class="chifra-font"><span class="bi"><span class="oc">dempuèi los primièrs trobadors</span><span class="fr">depuis les premiers troubadours</span></span></p>
+			</div>
+		</div>
+	</section>
+
+	<!-- VI. Lo trobador -->
+	<section class="trobador">
+		<div class="trobador-pin">
+			<div class="trobador-fenestra"><img src="/acuelh/paisatge.jpg" alt="" /></div>
+			<blockquote class="trobador-vers">
+				<p lang="oc"><span class="masc"><span class="masc-in">« Can vei la lauzeta</span></span><span class="masc"><span class="masc-in" style="--i: 1">mover de joi sas alas</span></span><span class="masc"><span class="masc-in" style="--i: 2">contra·l rai… »</span></span></p>
+				<cite class="esvani" style="--i: 4"><span class="bi"><span class="oc">Bernart de Ventadorn · sègle XII</span><span class="fr">Bernart de Ventadorn · XIIᵉ siècle</span></span></cite>
+			</blockquote>
+		</div>
+	</section>
+
+	<!-- VII. La crida -->
+	<section class="crida centrat" id="crida" data-revela>
+		<div>
+			<h2 class="crida-titol">
+				<span class="masc"><span class="masc-in"><span class="bi"><span class="oc">Prèst·a per</span><span class="fr">Prêt·e à</span></span></span></span>
+				<span class="masc"><span class="masc-in aur" style="--i: 1"><span class="bi"><span class="oc">començar ?</span><span class="fr">commencer ?</span></span></span></span>
+			</h2>
+			<p class="crida-sub esvani" style="--i: 3"><span class="bi"><span class="oc">Tres mots uèi, una lenga deman.</span><span class="fr">Trois mots aujourd’hui, une langue demain.</span></span></p>
+			<div class="esvani" style="--i: 4">
+				<a class="boton" href="/aprene/essai" data-magnet data-cur>
+					<span class="boton-emplenat"></span>
+					<span class="boton-tèxt"><span class="bi"><span class="oc">Començar l’aventura</span><span class="fr">Commencer l’aventure</span></span>
+					<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span>
+				</a>
+			</div>
+		</div>
+	</section>
+</main>
+
+<footer data-revela>
+	<div class="pe-linhas"></div>
+	<div class="pe-nom-masc" aria-hidden="true"><div class="pe-nom"></div></div>
+	<div class="pe-bas">
+		<span><span class="bi"><span class="oc">Fach amb amor en Occitània.</span><span class="fr">Fait avec amour en Occitanie.</span></span></span>
+		<span>Esbòs de nuèch · pas publicat</span>
+	</div>
+</footer>
+
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+<script>
+(() => {
+	const doc = document.documentElement;
+	const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const finPointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
+	const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+	const lerp = (a, b, t) => a + (b - a) * t;
+	const easeIO = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+	/* ================= Geometria del lògo (favicon.svg, normalizada) ================= */
+	// 0 = moieu ; 1-12 = pomètas dins l'òrdre de las agulhas.
+	const P = [
+		[0, 0],
+		[0, -1], [0.486, -0.797], [0.809, -0.48], [1, 0], [0.809, 0.48], [0.486, 0.797],
+		[0, 0.992], [-0.468, 0.797], [-0.786, 0.48], [-0.976, 0.009], [-0.786, -0.48], [-0.468, -0.797]
+	];
+	const AXES = [1, 4, 7, 10]; // las pomètas del mièg de cada braç
+	const BRANCAS = [2, 3, 5, 6, 8, 9, 11, 12]; // ligadas al moieu
+	const ARCS = [[12, 1], [1, 2], [3, 4], [4, 5], [6, 7], [7, 8], [9, 10], [10, 11]];
+
+	function simbolSVG(svg, { traç = '#fff', ponch = '#fff', espessor = 0.06, dessenh = false } = {}) {
+		const ns = 'http://www.w3.org/2000/svg';
+		const lin = (d, w) => {
+			const p = document.createElementNS(ns, 'path');
+			p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.setAttribute('stroke', traç);
+			p.setAttribute('stroke-width', w); p.setAttribute('stroke-linecap', 'round');
+			if (dessenh) { p.setAttribute('pathLength', '1'); p.classList.add('tr'); }
+			svg.appendChild(p);
+		};
+		BRANCAS.forEach((i) => lin(`M0 0L${P[i][0]} ${P[i][1]}`, espessor * 0.9));
+		ARCS.forEach(([a, b]) => {
+			const [ax, ay] = P[a], [bx, by] = P[b];
+			lin(`M${ax} ${ay}Q${(ax + bx) * 0.415} ${(ay + by) * 0.415} ${bx} ${by}`, espessor);
+		});
+		P.forEach(([x, y], i) => {
+			const c = document.createElementNS(ns, 'circle');
+			c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', i === 0 ? 0.124 : 0.109);
+			c.setAttribute('fill', ponch);
+			if (dessenh) c.style.transitionDelay = `${600 + i * 50}ms`;
+			svg.appendChild(c);
+		});
+	}
+	document.querySelectorAll('[data-simbol="pichon"]').forEach((s) => simbolSVG(s, { traç: '#eeaf34', ponch: '#f5ead8', espessor: 0.07 }));
+
+	/* ================= Contengut generat ================= */
+	// Bandèl : vocabulari de basa (A VALIDAR).
+	const MOTS = [["l’ostal", 'la maison'], ['lo solelh', 'le soleil'], ['la lenga', 'la langue'], ["l’aiga", "l’eau"], ['lo pan', 'le pain'], ['lo vent', 'le vent'], ['la luna', 'la lune'], ['lo camin', 'le chemin'], ["l’amistat", "l’amitié"]];
+	const pista = document.querySelector('.bandel-pista');
+	const motsHTML = MOTS.map(([oc, fr]) => `<span class="bandel-mot" lang="oc">${oc}<small lang="fr">${fr}</small></span>`).join('');
+	pista.innerHTML = motsHTML + motsHTML.replace(/class="bandel-mot"/g, 'class="bandel-mot" aria-hidden="true"');
+
+	// Manifèst : cada mot s'alumena amb lo defilament.
+	const MANIFEST = {
+		oc: [['Un sol endrech per tot l’ecosistèma occitan :'], ['aprene la lenga,', 1], ['descobrir lo país,', 1], ['se retrobar.', 1]],
+		fr: [['Un seul endroit pour tout l’écosystème occitan :'], ['apprendre la langue,', 1], ['découvrir le pays,', 1], ['se retrouver.', 1]]
+	};
+	for (const l of ['oc', 'fr']) {
+		const cont = document.querySelector(`[data-emplenar] [data-lenga="${l}"]`);
+		cont.innerHTML = MANIFEST[l].map(([frasa, aur]) => frasa.split(' ').map((m) => `<span class="m${aur ? ' aur' : ''}">${m}</span>`).join(' ')).join(' ');
+	}
+
+	// Camins : las quatre familhas del site (siteSections.js).
+	const CAMINS = [
+		{ oc: 'Aprene', fr: 'Apprendre', toc: 'L’esquina del site', tfr: 'La colonne vertébrale', media: 'retrat',
+			items: [['Lo parcors', 'Le parcours', '/aprene'], ['Leiçon d’ensag', 'Leçon d’essai', '/aprene/essai'], ['Ma progression', 'Ma progression', '/compte']] },
+		{ oc: 'Descobrir', fr: 'Découvrir', toc: 'Lo país e sa cultura', tfr: 'Le pays et sa culture', media: 'paisatge',
+			items: [['La carta', 'La carte', '/carta'], ['Mots en imatges', 'Mots en images', '/mots'], ['Òbras', 'Œuvres', '/obras']] },
+		{ oc: 'Participar', fr: 'Participer', toc: 'La comunautat', tfr: 'La communauté', media: 'tipo',
+			items: [['Forum', 'Forum'], ['Grops', 'Groupes'], ['Boita d’idèas', 'Boîte à idées']] },
+		{ oc: 'Lo Ligam', fr: 'Lo Ligam', toc: 'Qual sèm', tfr: 'Qui nous sommes', media: 'simbol',
+			items: [['A prepaus', 'À propos'], ['Ressorsas occitanas', 'Ressources occitanes'], ['Contacte', 'Contact']] }
+	];
+	const bi = (oc, fr) => `<span class="bi"><span class="oc">${oc}</span><span class="fr">${fr}</span></span>`;
+	const mediaHTML = (m) => ({
+		retrat: `<div class="panel-media retrat"><img src="/acuelh/personatge.png" alt="" loading="lazy" data-paral /></div>`,
+		paisatge: `<div class="panel-media liseré"><img class="sens-cel" src="/acuelh/paisatge.jpg" alt="" loading="lazy" data-paral /></div>`,
+		tipo: `<div class="panel-media tipo"><span class="gros-mot" lang="oc">ensems</span></div>`,
+		simbol: `<div class="panel-media simbol"><svg viewBox="-1.3 -1.3 2.6 2.6" aria-hidden="true" data-simbol="gros"></svg></div>`
+	})[m];
+	document.querySelector('.camins-pista').innerHTML = CAMINS.map((c, n) => `
+		<article class="panel">
+			<div class="panel-tèxt">
+				<p class="panel-num" aria-hidden="true">0${n + 1}</p>
+				<div>
+					<h3 class="panel-nom">${bi(c.oc, c.fr)}</h3>
+					<p class="panel-tagline">${bi(c.toc, c.tfr)}</p>
+				</div>
+				<ul class="panel-items">${c.items.map(([oc, fr, href]) => href
+					? `<li><a href="${href}" data-cur>${bi(oc, fr)}<span aria-hidden="true">→</span></a></li>`
+					: `<li><span class="leu">${bi(oc, fr)}<em>${bi('Lèu', 'Bientôt')}</em></span></li>`).join('')}</ul>
+			</div>
+			${mediaHTML(c.media)}
+		</article>`).join('');
+	document.querySelectorAll('[data-simbol="gros"]').forEach((s) => simbolSVG(s, { espessor: 0.055, dessenh: true }));
+
+	// Pè de pagina
+	document.querySelector('.pe-linhas').innerHTML = CAMINS.map((c) => `
+		<div><h3>${bi(c.oc, c.fr)}</h3>${c.items.map(([oc, fr, href]) => `<a href="${href || '#'}" data-cur>${bi(oc, fr)}</a>`).join('')}</div>`).join('');
+	document.querySelector('.pe-nom').innerHTML = [...'Lo Ligam'].map((ch, i) => `<span style="--i:${i}">${ch === ' ' ? '&nbsp;' : ch}</span>`).join('');
+
+	/* ================= Lenga ================= */
+	function metreLenga(l) {
+		doc.classList.toggle('fr', l === 'fr');
+		doc.lang = l;
+		document.querySelectorAll('.bi').forEach((b) => {
+			b.querySelector('.oc')?.setAttribute('aria-hidden', l === 'fr');
+			b.querySelector('.fr')?.setAttribute('aria-hidden', l !== 'fr');
+		});
+		document.querySelectorAll('[data-lenga-boton]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.lengaBoton === l));
+		try { localStorage.setItem('lo-ligam-esbos-lenga', l); } catch {}
+	}
+	let lengaInicial = 'oc';
+	try { lengaInicial = localStorage.getItem('lo-ligam-esbos-lenga') || 'oc'; } catch {}
+	metreLenga(lengaInicial);
+	document.querySelectorAll('[data-lenga-boton]').forEach((b) => b.addEventListener('click', () => metreLenga(b.dataset.lengaBoton)));
+
+	/* ================= Revelacions ================= */
+	const io = new IntersectionObserver((es) => es.forEach((e) => {
+		if (!e.isIntersecting) return;
+		e.target.classList.add('vist');
+		io.unobserve(e.target);
+		e.target.querySelectorAll('[data-comptar]').forEach(comptar);
+	}), { threshold: 0.18 });
+	document.querySelectorAll('[data-revela]').forEach((el) => io.observe(el));
+
+	function comptar(el) {
+		const fin = +el.dataset.comptar, pre = el.dataset.prefix || '';
+		const fmt = (n) => pre + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+		if (calm) { el.textContent = fmt(fin); return; }
+		const t0 = performance.now(), dura = 2200;
+		(function pas(t) {
+			const k = clamp((t - t0) / dura);
+			el.textContent = fmt(fin * (1 - Math.pow(2, -10 * k)));
+			if (k < 1) requestAnimationFrame(pas); else el.textContent = fmt(fin);
+		})(t0);
+	}
+
+	/* ================= Defilament doç ================= */
+	let lenis = null;
+	if (!calm && window.Lenis) lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95 });
+
+	/* ================= Cursor e botons magnetics ================= */
+	let mx = innerWidth * 0.5, my = innerHeight * 0.45, mouVist = false;
+	const anel = document.querySelector('.cur-anel'), ponch = document.querySelector('.cur-ponch');
+	let ax = mx, ay = my;
+	addEventListener('pointermove', (e) => {
+		mx = e.clientX; my = e.clientY; mouVist = true;
+		ponch.style.transform = `translate(${mx}px, ${my}px)`;
+	}, { passive: true });
+	if (finPointer && !calm) {
+		doc.classList.add('cursor-viu');
+		document.addEventListener('pointerover', (e) => anel.classList.toggle('gros', !!e.target.closest('[data-cur]')));
+		document.querySelectorAll('[data-magnet]').forEach((el) => {
+			const fill = el.querySelector('.boton-emplenat'), txt = el.querySelector('.boton-tèxt');
+			el.addEventListener('pointerenter', (e) => {
+				const r = el.getBoundingClientRect();
+				fill.style.setProperty('--x', `${e.clientX - r.left}px`);
+				fill.style.setProperty('--y', `${e.clientY - r.top}px`);
+			});
+			el.addEventListener('pointermove', (e) => {
+				const r = el.getBoundingClientRect();
+				const dx = e.clientX - r.left - r.width / 2, dy = e.clientY - r.top - r.height / 2;
+				el.style.transform = `translate(${dx * 0.28}px, ${dy * 0.4}px)`;
+				txt.style.transform = `translate(${dx * 0.12}px, ${dy * 0.16}px)`;
+			});
+			el.addEventListener('pointerleave', (e) => {
+				const r = el.getBoundingClientRect();
+				fill.style.setProperty('--x', `${e.clientX - r.left}px`);
+				fill.style.setProperty('--y', `${e.clientY - r.top}px`);
+				el.style.transform = ''; txt.style.transform = '';
+			});
+		});
+	}
+
+	/* ================= Fons WebGL : las venas d'aur ================= */
+	const fons = document.getElementById('fons');
+	const gl = fons.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
+	let U = null;
+	if (gl) {
+		const frag = `
+		precision highp float;
+		uniform vec2 r; uniform float t; uniform vec2 m; uniform float s; uniform float p;
+		float h(vec2 q){ return fract(sin(dot(q, vec2(41.3, 289.1))) * 43758.5453); }
+		float n(vec2 q){ vec2 i = floor(q), f = fract(q); vec2 u = f*f*(3.0-2.0*f);
+			return mix(mix(h(i), h(i+vec2(1,0)), u.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), u.x), u.y); }
+		float fbm(vec2 q){ float v = 0.0, a = 0.5; for (int i = 0; i < 5; i++){ v += a*n(q); q = q*2.03 + vec2(1.7, 9.2); a *= 0.5; } return v; }
+		void main(){
+			vec2 uv = gl_FragCoord.xy / r;
+			vec2 asp = vec2(r.x / r.y, 1.0);
+			vec2 st = uv * asp * 1.5;
+			float tt = t * 0.045;
+			vec2 dm = (uv - m) * asp; float d = length(dm);
+			st += normalize(dm + 1e-4) * exp(-d * 4.5) * -0.32;
+			vec2 q = vec2(fbm(st + tt), fbm(st + vec2(5.2, 1.3) - tt));
+			vec2 w = vec2(fbm(st + q * 1.7 + vec2(1.7, 9.2) + s * 0.22), fbm(st + q * 1.7 + vec2(8.3, 2.8) - s * 0.12));
+			float v = fbm(st + w * 1.4);
+			vec3 nuech = vec3(0.071, 0.035, 0.024);
+			vec3 brica = vec3(0.27, 0.075, 0.035);
+			vec3 terra = vec3(0.71, 0.24, 0.09);
+			vec3 aur = vec3(0.93, 0.69, 0.20);
+			vec3 col = mix(nuech, brica, smoothstep(0.28, 0.86, v));
+			col = mix(col, terra, smoothstep(0.6, 0.98, v) * (0.28 + 0.42 * p));
+			float f = abs(fract(v * 3.4 + tt * 0.6) - 0.5);
+			float vena = smoothstep(0.045, 0.0, f) * smoothstep(0.38, 0.82, v);
+			col += aur * vena * (0.42 + 0.2 * p);
+			col += vec3(0.42, 0.2, 0.06) * exp(-d * 5.5) * 0.22;
+			col *= mix(0.62, 1.0, smoothstep(0.0, 0.7, uv.x));
+			col *= smoothstep(1.45, 0.2, length((uv - vec2(0.58, 0.5)) * vec2(1.0, 1.25)));
+			gl_FragColor = vec4(col, 1.0);
+		}`;
+		const vert = 'attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }';
+		const sh = (ty, src) => { const o = gl.createShader(ty); gl.shaderSource(o, src); gl.compileShader(o); return o; };
+		const pr = gl.createProgram();
+		gl.attachShader(pr, sh(gl.VERTEX_SHADER, vert));
+		gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, frag));
+		gl.linkProgram(pr); gl.useProgram(pr);
+		gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+		const a = gl.getAttribLocation(pr, 'a');
+		gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+		U = Object.fromEntries(['r', 't', 'm', 's', 'p'].map((k) => [k, gl.getUniformLocation(pr, k)]));
+	}
+	// Mièja resolucion : lo flou del bruch o perdona, la carta grafica trabalha 4 còps mens.
+	const ESCALA_FONS = 0.5;
+
+	/* ================= La constellacion ================= */
+	const cv = document.getElementById('estelas');
+	const cx = cv.getContext('2d');
+	let W = 0, H = 0, DPR = 1;
+	function talhar() {
+		W = innerWidth; H = innerHeight; DPR = Math.min(devicePixelRatio || 1, 2);
+		cv.width = W * DPR; cv.height = H * DPR; cx.setTransform(DPR, 0, 0, DPR, 0, 0);
+		if (gl) { fons.width = Math.round(W * ESCALA_FONS); fons.height = Math.round(H * ESCALA_FONS); gl.viewport(0, 0, fons.width, fons.height); }
+		estelas.forEach(semenar);
+		punts.forEach((pt) => semenar(pt.estela));
+	}
+	const aleat = (a, b) => a + Math.random() * (b - a);
+	function semenar(e) { e.x = aleat(0.04, 0.96) * innerWidth; e.y = aleat(0.04, 0.96) * innerHeight; }
+	const estelas = Array.from({ length: 64 }, () => ({ x: 0, y: 0, r: aleat(0.5, 1.5), f: aleat(0, 6.28), v: aleat(0.2, 0.7) }));
+	const punts = P.map(([lx, ly], i) => ({ lx, ly, x: 0, y: 0, vx: 0, vy: 0, retard: i === 0 ? 0 : aleat(0, 0.28), estela: { x: 0, y: 0, f: aleat(0, 6.28) } }));
+	talhar();
+	punts.forEach((pt) => { pt.x = pt.estela.x; pt.y = pt.estela.y; });
+	addEventListener('resize', talhar);
+
+	const t0 = performance.now();
+	const crida = document.querySelector('.crida');
+	const eros = document.querySelector('.eros');
+
+	function dessenharConstellacion(t, sy) {
+		const temps = (t - t0) / 1000;
+		// Intro : los punts venon s'ajustar (1,8 s), en luòc d'un compte a rebors factici.
+		const intro = calm ? 1 : easeIO(clamp((temps - 0.35) / 1.8));
+		// Ecran estrech : la crotz se fa discreta en naut a drecha, darrièr lo tèxte.
+		const estret = W < 1100;
+		const aEros = intro * clamp(1 - sy / (H * 0.85));
+		const rc = crida.getBoundingClientRect();
+		const aCrida = clamp((H - rc.top) / (H * 0.9));
+		const enCrida = aCrida > aEros;
+		const a = Math.max(aEros, aCrida);
+		const R = enCrida ? Math.min(H * 0.4, W * 0.36) : estret ? Math.min(W * 0.26, H * 0.2) : Math.min(H * 0.26, W * 0.14);
+		const ox = enCrida ? W / 2 : estret ? W * 0.7 : W * 0.8;
+		const oy = enCrida ? rc.top + rc.height / 2 : (estret ? H * 0.27 : H * 0.42) - sy * 0.35;
+		const opacitat = enCrida ? 0.32 : estret ? 0.45 : 1;
+		const rot = temps * 0.015 + sy * 0.0004;
+		const co = Math.cos(rot), si = Math.sin(rot);
+
+		cx.clearRect(0, 0, W, H);
+
+		// Estelas de fons : los parlants esparpalhats
+		for (const e of estelas) {
+			const sc = Math.sin(temps * e.v + e.f);
+			const x = e.x + Math.sin(temps * 0.05 + e.f) * 12, y = e.y + Math.cos(temps * 0.04 + e.f) * 10 - ((sy * 0.08) % H);
+			const yy = ((y % H) + H) % H;
+			cx.globalAlpha = 0.25 + 0.3 * (sc * 0.5 + 0.5);
+			cx.fillStyle = '#f5ead8';
+			cx.beginPath(); cx.arc(x, yy, e.r, 0, 6.283); cx.fill();
+			if (mouVist && finPointer) {
+				const dd = Math.hypot(x - mx, yy - my);
+				if (dd < 150) {
+					cx.globalAlpha = (1 - dd / 150) * 0.5; cx.strokeStyle = '#eeaf34'; cx.lineWidth = 0.6;
+					cx.beginPath(); cx.moveTo(x, yy); cx.lineTo(mx, my); cx.stroke();
+				}
+			}
+		}
+
+		// Los 13 punts del lògo : ressòrt cap a la cibla + repulsion de la mirga
+		for (const pt of punts) {
+			const ai = easeIO(clamp((a * 1.28 - pt.retard)));
+			const ex = pt.estela.x + Math.sin(temps * 0.07 + pt.estela.f) * 30;
+			const ey = pt.estela.y + Math.cos(temps * 0.06 + pt.estela.f) * 24;
+			const lx = (pt.lx * co - pt.ly * si) * R + ox, ly = (pt.lx * si + pt.ly * co) * R + oy;
+			const tx = lerp(ex, lx, ai), ty = lerp(ey, ly, ai);
+			if (calm) { pt.x = tx; pt.y = ty; pt.ai = ai; continue; }
+			pt.vx += (tx - pt.x) * 0.055; pt.vy += (ty - pt.y) * 0.055;
+			if (mouVist) {
+				const dx = pt.x - mx, dy = pt.y - my, dd = Math.hypot(dx, dy);
+				if (dd < 140 && dd > 0.1) { const k = (1 - dd / 140) * 2.4; pt.vx += (dx / dd) * k; pt.vy += (dy / dd) * k; }
+			}
+			pt.vx *= 0.8; pt.vy *= 0.8;
+			pt.x += pt.vx; pt.y += pt.vy; pt.ai = ai;
+		}
+		const aL = clamp((a - 0.55) / 0.4) * opacitat;
+		if (aL > 0.01) {
+			cx.globalAlpha = aL; cx.strokeStyle = '#eeaf34'; cx.lineCap = 'round';
+			cx.lineWidth = Math.max(1.2, R * 0.05);
+			cx.beginPath();
+			for (const i of BRANCAS) { cx.moveTo(punts[0].x, punts[0].y); cx.lineTo(punts[i].x, punts[i].y); }
+			for (const [i, j] of ARCS) {
+				const A = punts[i], B = punts[j], O = punts[0];
+				const mxp = (A.x + B.x) / 2, myp = (A.y + B.y) / 2;
+				cx.moveTo(A.x, A.y); cx.quadraticCurveTo(lerp(mxp, O.x, 0.17), lerp(myp, O.y, 0.17), B.x, B.y);
+			}
+			cx.stroke();
+		}
+		// Mòde discret (crida, ecran estrech) : pomètas d'aur amortit e OPACAS,
+		// per que los traçats se vejan pas a travèrs (efièch grisastre).
+		// Darrièr lo títol de la crida, color de braça (lo tèxte daurat demòra legible).
+		cx.fillStyle = enCrida ? '#6e2e12' : estret ? '#b9822f' : '#f5ead8';
+		punts.forEach((pt, i) => {
+			const rr = lerp(1.6, R * (i === 0 ? 0.124 : 0.109), pt.ai * pt.ai);
+			cx.globalAlpha = lerp(0.6, 1, pt.ai);
+			cx.beginPath(); cx.arc(pt.x, pt.y, rr, 0, 6.283); cx.fill();
+		});
+		cx.globalAlpha = 1;
+	}
+
+	/* ================= Lo defilament pilòta tot ================= */
+	const head = document.querySelector('header');
+	const camins = document.querySelector('.camins'), caminsPista = document.querySelector('.camins-pista'), caminsBarra = document.querySelector('.camins-barra i');
+	const panels = [...document.querySelectorAll('.panel')];
+	const trobador = document.querySelector('.trobador'), fenestra = document.querySelector('.trobador-fenestra'), fenestraImg = fenestra.querySelector('img');
+	const vers = document.querySelector('.trobador-vers');
+	if (calm) vers.classList.add('vist');
+	const manifest = document.querySelector('[data-emplenar]');
+	const bandel = document.querySelector('.bandel'), bandelPista = document.querySelector('.bandel-pista');
+	let bandelX = 0, bandelSkew = 0, bandelDir = 1, ultimY = scrollY;
+
+	function segonDefilament(sy, vel) {
+		// Capçal : s'amaga en davalant, torna en remontant
+		if (!calm && Math.abs(sy - ultimY) > 0.3) head.classList.toggle('amagat', sy > H * 0.7 && sy > ultimY);
+		head.classList.toggle('solid', sy > 40);
+		if (Math.abs(sy - ultimY) > 0.5) bandelDir = sy > ultimY ? 1 : -1;
+		ultimY = sy;
+
+		// Bandèl : sa velocitat e son inclinason seguisson lo defilament
+		const rb = bandel.getBoundingClientRect();
+		if (rb.bottom > 0 && rb.top < H) {
+			const largor = bandelPista.scrollWidth / 2;
+			bandelX -= calm ? 0 : (0.55 + Math.min(Math.abs(vel) * 0.35, 14)) * bandelDir;
+			bandelX = ((bandelX % largor) - largor) % largor;
+			bandelSkew = lerp(bandelSkew, calm ? 0 : clamp(vel * 0.4, -9, 9), 0.12);
+			bandelPista.style.transform = `translate3d(${bandelX}px,0,0) skewX(${-bandelSkew}deg)`;
+		}
+
+		// Manifèst : los mots s'alumenan un per un
+		const rm = manifest.getBoundingClientRect();
+		if (rm.top < H && rm.bottom > 0) {
+			const prog = clamp((H * 0.82 - rm.top) / (rm.height + H * 0.3));
+			const mots = manifest.querySelectorAll(`[data-lenga="${doc.classList.contains('fr') ? 'fr' : 'oc'}"] .m`);
+			const n = Math.floor(prog * (mots.length + 1));
+			mots.forEach((m, i) => m.classList.toggle('on', calm || i < n));
+		}
+
+		// Camins : lo defilament vertical ven orizontal
+		const rc = camins.getBoundingClientRect();
+		if (rc.top < H && rc.bottom > 0) {
+			const prog = clamp(-rc.top / (rc.height - H));
+			const despl = caminsPista.scrollWidth - W;
+			caminsPista.style.transform = `translate3d(${-prog * despl}px,0,0)`;
+			caminsBarra.style.transform = `scaleX(${prog})`;
+			panels.forEach((p) => {
+				const r = p.getBoundingClientRect();
+				const c = (r.left + r.width / 2 - W / 2) / W;
+				const img = p.querySelector('[data-paral]');
+				if (img && !calm) img.style.transform = `translate3d(${c * -12}%,0,0)`;
+				const simb = p.querySelector('.simbol');
+				if (simb && Math.abs(c) < 0.35) simb.classList.add('actiu');
+			});
+		}
+
+		// Trobador : la fenèstra s'obrís fins a tota la pagina
+		const rt = trobador.getBoundingClientRect();
+		if (!calm && rt.top < H && rt.bottom > 0) {
+			const k = easeIO(clamp(-rt.top / (rt.height - H) * 1.25));
+			const iy = lerp(22, 0, k), ix = lerp(32, 0, k), rad = lerp(28, 0, k);
+			fenestra.style.clipPath = `inset(${iy}% ${ix}% round ${rad}px)`;
+			fenestraImg.style.transform = `scale(${lerp(1.3, 1, k)})`;
+			// Lo vèrs apareis sonque quand la fenèstra es pro larga per l'aculhir
+			vers.classList.toggle('vist', k > 0.62);
+		}
+	}
+
+	/* ================= Una sola bocla ================= */
+	let fotograma = 0;
+	function bocla(t) {
+		lenis?.raf(t);
+		const sy = scrollY, vel = lenis ? lenis.velocity : 0;
+		ax = lerp(ax, mx, 0.16); ay = lerp(ay, my, 0.16);
+		anel.style.transform = `translate(${ax}px, ${ay}px)`;
+		segonDefilament(sy, vel);
+		dessenharConstellacion(t, sy);
+		// Fons a 30 imatges/s : las venas van lentament, l'uelh i ve pas res
+		if (gl && (fotograma++ & 1) === 0) {
+			const maxSy = Math.max(1, document.documentElement.scrollHeight - H);
+			gl.uniform2f(U.r, fons.width, fons.height);
+			gl.uniform1f(U.t, calm ? 12 : (t - t0) / 1000);
+			gl.uniform2f(U.m, mx / W, 1 - my / H);
+			gl.uniform1f(U.s, sy / H);
+			gl.uniform1f(U.p, sy / maxSy);
+			gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+		}
+		if (!calm) requestAnimationFrame(bocla);
+	}
+	requestAnimationFrame(bocla);
+	// Mòde calm : un imatge fix, redessenhat sonque quand quicòm càmbia
+	if (calm) ['scroll', 'resize'].forEach((ev) => addEventListener(ev, () => requestAnimationFrame(bocla), { passive: true }));
+
+	// Lo primièr acte se revela tre que las poliças son prèstas
+	document.fonts.ready.then(() => requestAnimationFrame(() => eros.classList.add('vist')));
+})();
+</script>
+</body>
+</html>
