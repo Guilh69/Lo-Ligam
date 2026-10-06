@@ -1116,6 +1116,9 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	// Luòcs nomenats coma las vilas, per que la carta disa tota l'Occitània : la Val
 	// d'Aran (Vielha), las valadas d'Itàlia (Draonier, Val Maira) e Baiona (demanda Romain)
 	const NOMENATS = ['Vielha', 'Draonier', 'Baiona'];
+	// Luòcs de doas lengas : l'etiqueta de dialècte o ditz (Baiona, gascona e basca)
+	const DIAL_ESPECIAL = { Baiona: 'gascon / euskara' };
+	const dialDe = (e) => DIAL_ESPECIAL[e.nom] || DIALECTES[e.dia];
 	for (const l of LUOCS) if (NOMENATS.includes(l[2])) l[3] = 1;
 	const estelas = LUOCS.map(([lon, lat, nom, vila, dia]) => ({
 		lon, lat, nom, vila, dia, x: 0, y: 0, px: 0, py: 0,
@@ -1428,7 +1431,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 				// religada a l'estela per un fial, per que lo pouce l'amague pas
 				const nomF = 'italic 22px Cormorant, Georgia, serif', dialF = '700 11px Luciole, sans-serif';
 				cx.font = nomF; const wn = cx.measureText(pus.nom).width;
-				cx.font = dialF; const wd = cx.measureText(DIALECTES[pus.dia]).width;
+				cx.font = dialF; const wd = cx.measureText(dialDe(pus)).width;
 				const bw = Math.max(wn, wd) + 30, bh = 52;
 				const bx = Math.min(W - bw / 2 - 10, Math.max(bw / 2 + 10, pus.px));
 				const by = Math.max(70 + bh / 2, pus.py - 86);
@@ -1439,7 +1442,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 				cx.lineWidth = 1; cx.stroke();
 				cx.textAlign = 'center';
 				cx.font = nomF; cx.fillStyle = TEM.riuTèxt; cx.fillText(pus.nom, bx, by + 2);
-				cx.font = dialF; cx.fillStyle = TEM.vilaTèxt; cx.globalAlpha = 0.8; cx.fillText(DIALECTES[pus.dia], bx, by + 18);
+				cx.font = dialF; cx.fillStyle = TEM.vilaTèxt; cx.globalAlpha = 0.8; cx.fillText(dialDe(pus), bx, by + 18);
 				cx.textAlign = 'left'; cx.globalAlpha = 1;
 			} else {
 			const dreta = pus.px < W - (telefon ? 150 : 260);
@@ -1454,7 +1457,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			cx.font = (telefon ? 'italic 21px' : 'italic 26px') + ' Cormorant, Georgia, serif'; cx.fillStyle = TEM.riuTèxt;
 			escriure(pus.nom, tx, pus.py + 2, 5);
 			cx.font = '700 11px Luciole, sans-serif'; cx.fillStyle = TEM.vilaTèxt; cx.globalAlpha = 0.8;
-			escriure(DIALECTES[pus.dia], tx, pus.py + 20, 4);
+			escriure(dialDe(pus), tx, pus.py + 20, 4);
 			cx.textAlign = 'left';
 			}
 		}
