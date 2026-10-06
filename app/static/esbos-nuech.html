@@ -250,6 +250,9 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .bandel-mot:hover small { opacity: 1; }
 .bandel-mot::after { content: '✦'; font-size: 0.32em; color: var(--terra-viu); -webkit-text-stroke: 0; align-self: center; margin-left: 0.4em; }
 
+.bandel-font { margin: 0.9rem var(--marge) 0; font-size: 0.78rem; color: var(--crema-2); text-align: right; }
+.bandel-font i { font-family: var(--votz); font-size: 1.05em; }
+
 /* ---------- Acte III : manifèst que s'emplena ---------- */
 .manifest { padding: 26vh var(--marge) 22vh; }
 /* Jalons : la convencion editoriala (pichon subretítol, grand messatge) mas mai legibla (decision Romain 2026-10-07) */
@@ -486,6 +489,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	<div class="bandel" aria-label="Qualques mots">
 		<div class="bandel-pista"></div>
 	</div>
+	<p class="bandel-font"><span class="bi"><span class="oc">Mots del <i>Lexic de Max Roqueta</i>, establit per Joan-Guilhèm Roqueta</span><span class="fr">Mots du <i>Lexique de Max Rouquette</i>, établi par Jean-Guilhem Rouquette</span></span></p>
 
 	<!-- III. Lo manifèst -->
 	<section class="manifest">
@@ -658,8 +662,10 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	document.querySelectorAll('[data-simbol="pichon"]').forEach((s) => simbolSVG(s, { traç: 'var(--aur)', ponch: 'var(--crema)', espessor: 0.07 }));
 
 	/* ================= Contengut generat ================= */
-	// Bandèl : vocabulari de basa (A VALIDAR).
-	const MOTS = [["l’ostal", 'la maison'], ['lo solelh', 'le soleil'], ['la lenga', 'la langue'], ["l’aiga", "l’eau"], ['lo pan', 'le pain'], ['lo vent', 'le vent'], ['la luna', 'la lune'], ['lo camin', 'le chemin'], ["l’amistat", "l’amitié"]];
+	// Bandèl : mots pescats dins lo Lexic de Max Roqueta (establit per Joan-Guilhèm
+	// Roqueta, ed. 2020 ; Modules_cors/Base_donnees_linguistica), revirada del lexic.
+	// Causida de Claude, A VALIDAR per Romain.
+	const MOTS = [['lo risolet', 'le sourire'], ['la rispa', 'la bise'], ['la rogeiròla', 'le ciel rouge du crépuscule'], ['la roèla', 'le coquelicot'], ['la romieva', 'l’oie sauvage'], ['lo rodaire', 'l’errant'], ['lo lindau', 'le seuil'], ['l’abelhòla', 'le guêpier'], ['l’abitarèla', 'le refuge'], ['abelugat', 'étincelant'], ['a l’embrunit', 'à la tombée de la nuit']];
 	const pista = document.querySelector('.bandel-pista');
 	const motsHTML = MOTS.map(([oc, fr]) => `<span class="bandel-mot" lang="oc">${oc}<small lang="fr">${fr}</small></span>`).join('');
 	pista.innerHTML = motsHTML + motsHTML.replace(/class="bandel-mot"/g, 'class="bandel-mot" aria-hidden="true"');
