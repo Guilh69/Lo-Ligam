@@ -243,18 +243,7 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 }
 .lengas-chips input:checked + span { border-color: rgba(245, 234, 216, 0.4); color: #fff; text-shadow: 0 0 6px rgba(18, 9, 6, 0.95), 0 0 2px rgba(18, 9, 6, 0.9); }
 .lengas-chips input:checked + span::before { clip-path: circle(160% at 0% 50%); }
-.lengas-chips span[lang='fr']::before { background: linear-gradient(rgba(18, 9, 6, 0.32), rgba(18, 9, 6, 0.32)), linear-gradient(90deg, #34508f 0 33.4%, #e9e0cf 33.4% 66.6%, #b8473f 66.6%); }
-.lengas-chips span[lang='en']::before { background:
-	linear-gradient(rgba(18, 9, 6, 0.32), rgba(18, 9, 6, 0.32)),
-	linear-gradient(90deg, transparent 45%, #b8473f 45% 55%, transparent 55%),
-	linear-gradient(transparent 38%, #b8473f 38% 62%, transparent 62%),
-	linear-gradient(90deg, transparent 41%, #e9e0cf 41% 59%, transparent 59%),
-	linear-gradient(transparent 30%, #e9e0cf 30% 70%, transparent 70%),
-	linear-gradient(to top right, transparent 45%, #b8473f 47% 50%, #e9e0cf 50% 55%, transparent 55%),
-	linear-gradient(to bottom right, transparent 45%, #e9e0cf 45% 50%, #b8473f 50% 53%, transparent 55%),
-	#2c3f74; }
-.lengas-chips span[lang='es']::before { background: linear-gradient(rgba(18, 9, 6, 0.3), rgba(18, 9, 6, 0.3)), linear-gradient(#a93a32 0 25%, #e6b13e 25% 75%, #a93a32 75%); }
-.lengas-chips span[lang='ca']::before { background: linear-gradient(rgba(18, 9, 6, 0.3), rgba(18, 9, 6, 0.3)), repeating-linear-gradient(#e6b13e 0 11.11%, #b23a30 11.11% 22.22%); }
+.lengas-chips span::before { background: linear-gradient(rgba(18, 9, 6, 0.3), rgba(18, 9, 6, 0.3)), var(--drap, transparent); }
 .lengas-chips input:focus-visible + span { outline: 2px solid var(--aur); outline-offset: 3px; }
 .lengas-consigna { flex-basis: 100%; color: var(--aur-clar); font-size: 0.95rem; min-height: 1.5em; }
 @media (max-width: 860px) {
@@ -677,6 +666,46 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		ca: ['ca', 'Classes des del català. Indica-ho en reservar.']
 	};
 	const consigna = document.querySelector('.lengas-consigna');
+	// Bandièras simplificadas (bandas e crotz, sens emblèmas). Al clic, las
+	// bandièras de païses ont la lenga se parla defilan lèu, puèi s'estabilizan
+	// sus la bandièra de l'origina de la lenga : un clin d'uèlh a las lengas de
+	// colonizacion, que son pas solament las d'un país.
+	const cB = '#34508f', cBc = '#7fa9d4', cW = '#e9e0cf', cR = '#b8473f', cJ = '#e6b13e', cV = '#3f7a4a', cO = '#d9822b', cN = '#1c1714';
+	const v3 = (a, b, c) => 'linear-gradient(90deg,' + a + ' 0 33.4%,' + b + ' 33.4% 66.6%,' + c + ' 66.6%)';
+	const h3 = (a, b, c) => 'linear-gradient(' + a + ' 0 33.4%,' + b + ' 33.4% 66.6%,' + c + ' 66.6%)';
+	const crotz = (fons, c, lv, lh) => 'linear-gradient(' + c + ',' + c + ') center/' + lv + ' no-repeat, linear-gradient(' + c + ',' + c + ') center/' + lh + ' no-repeat, ' + fons;
+	const DRAPEUS = {
+		fr: v3(cB, cW, cR), be: v3(cN, cJ, cR), sn: v3(cV, cJ, cR), ci: v3(cO, cW, cV), ht: 'linear-gradient(' + cB + ' 0 50%,' + cR + ' 50%)',
+		ch: crotz(cR, cW, '8% 60%', '24% 20%'), qc: crotz(cB, cW, '8% 100%', '100% 22%'),
+		en: crotz(cW, cR, '10% 100%', '100% 24%'), us: 'linear-gradient(' + cB + ',' + cB + ') 0 0/42% 54% no-repeat, repeating-linear-gradient(' + cR + ' 0 7.69%,' + cW + ' 7.69% 15.38%)',
+		ie: v3(cV, cW, cO), in: h3(cO, cW, cV), ng: v3(cV, cW, cV), cn: 'linear-gradient(90deg,' + cR + ' 0 25%,' + cW + ' 25% 75%,' + cR + ' 75%)',
+		es: 'linear-gradient(' + cR + ' 0 25%,' + cJ + ' 25% 75%,' + cR + ' 75%)', mx: v3(cV, cW, cR), ar: h3(cBc, cW, cBc), pe: v3(cR, cW, cR),
+		co: 'linear-gradient(' + cJ + ' 0 50%,' + cB + ' 50% 75%,' + cR + ' 75%)', cl: 'linear-gradient(' + cB + ',' + cB + ') 0 0/34% 50% no-repeat, linear-gradient(' + cW + ' 0 50%,' + cR + ' 50%)',
+		ad: v3(cB, cJ, cR), cat: 'repeating-linear-gradient(' + cJ + ' 0 11.11%,' + cR + ' 11.11% 22.22%)'
+	};
+	const SEQ = {
+		fr: ['qc', 'sn', 'be', 'ht', 'ch', 'ci', 'fr'],
+		en: ['us', 'in', 'ng', 'ie', 'cn', 'en'],
+		es: ['mx', 'ar', 'co', 'pe', 'cl', 'es'],
+		ca: ['ad', 'cat']
+	};
+	const chips = {};
+	document.querySelectorAll('input[name="lenga-cors"]').forEach((r) => {
+		chips[r.value] = r.nextElementSibling;
+		const seq = SEQ[r.value]; chips[r.value].style.setProperty('--drap', DRAPEUS[seq[seq.length - 1]]);
+	});
+	let defilada = null;
+	function defilarBandièras(v) {
+		clearInterval(defilada);
+		const seq = SEQ[v], el = chips[v];
+		if (calm || seq.length < 2) { el.style.setProperty('--drap', DRAPEUS[seq[seq.length - 1]]); return; }
+		let k = 0;
+		el.style.setProperty('--drap', DRAPEUS[seq[0]]);
+		defilada = setInterval(() => {
+			k++; el.style.setProperty('--drap', DRAPEUS[seq[k]]);
+			if (k >= seq.length - 1) clearInterval(defilada);
+		}, 170);
+	}
 	function metreLengaCors(v) {
 		const [lg, t] = CONSIGNAS[v] || CONSIGNAS.fr;
 		consigna.lang = lg; consigna.textContent = t;
@@ -686,7 +715,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	try { lengaCors = localStorage.getItem('lo-ligam-esbos-lenga-cors') || 'fr'; } catch {}
 	document.querySelectorAll('input[name="lenga-cors"]').forEach((r) => {
 		r.checked = r.value === lengaCors;
-		r.addEventListener('change', () => metreLengaCors(r.value));
+		r.addEventListener('change', () => { metreLengaCors(r.value); defilarBandièras(r.value); });
 	});
 	metreLengaCors(lengaCors);
 
