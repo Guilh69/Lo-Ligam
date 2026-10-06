@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lo Ligam, ambiance Engenh</title>
+<meta name="robots" content="noindex" />
+<!--
+  PLANCHE « ENGENH » (2026-10-07) — demande de Romain : une ambiance inspirée du
+  steampunk, sans caricature : le végétal et l'esprit d'invention, les Machines
+  de l'île de Nantes, les carnets de Léonard de Vinci. Une option de plus dans
+  le panneau Ambiança, rien n'est supprimé.
+  Idée centrale : la croix-constellation du logo devient un ASTROLABE (anneaux
+  gradués, alidade qui suit la souris), entouré de rouages et de tiges végétales.
+  Trois variantes. Chacune ne tourne que lorsqu'elle est à l'écran ; tout
+  s'immobilise si « réduire les animations » est activé.
+-->
+<style>
+@font-face { font-family: 'Limelight'; src: url('/fonts/limelight.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Cormorant'; src: url('/fonts/cormorant-italic-latin.woff2') format('woff2'); font-style: italic; font-display: swap; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-synthesis: none; }
+body { background: #120906; color: #f5ead8; font-family: 'Luciole', system-ui, sans-serif; }
+.cap { padding: 3rem clamp(1rem, 4vw, 3.4rem) 2rem; max-width: 72ch; }
+.cap h1 { font-family: 'Limelight'; font-weight: 400; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.8rem; }
+.cap p { color: rgba(245, 234, 216, 0.72); line-height: 1.6; }
+.prop { position: relative; height: 94vh; min-height: 600px; overflow: hidden; border-top: 1px solid rgba(245, 234, 216, 0.14); }
+.prop canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mostra { position: absolute; left: clamp(1rem, 4vw, 3.4rem); bottom: 3rem; max-width: 34rem; pointer-events: none; }
+.mostra .k { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; }
+.mostra h2 { font-family: 'Limelight'; font-weight: 400; font-size: clamp(3rem, 8vw, 7rem); line-height: 1; margin: 0.6rem 0 1rem; }
+.mostra .d { line-height: 1.6; }
+.boton { display: inline-block; margin-top: 1.4rem; padding: 0.9rem 1.8rem; border-radius: 999px; font-weight: 700; }
+/* A — Carnet : papier, encre sépia, sanguine */
+#prop-a { color: #3b2516; }
+#prop-a .k { color: #a8452a; }
+#prop-a h2 span { color: #a8452a; }
+#prop-a .d { color: rgba(59, 37, 22, 0.8); }
+#prop-a .boton { background: #3b2516; color: #f3e6cb; }
+/* B — Talhièr de nuèch : laiton et cuivre sur la nuit */
+#prop-b .k { color: #ecc77a; }
+#prop-b h2 span { color: #c9973f; }
+#prop-b .d { color: rgba(245, 234, 216, 0.75); }
+#prop-b .boton { background: #ecc77a; color: #1a0d07; }
+/* C — Erbari mecanic : herbier, tiges et fleurs-rouages */
+#prop-c { color: #2f3520; }
+#prop-c .k { color: #8a6418; }
+#prop-c h2 span { color: #6d7a45; }
+#prop-c .d { color: rgba(47, 53, 32, 0.82); }
+#prop-c .boton { background: #2f3520; color: #f1e8d2; }
+</style>
+</head>
+<body>
+<header class="cap">
+	<h1>Ambiance « Engenh »</h1>
+	<p>Trois variantes de l'univers « inventeur » : promenez la souris sur chacune. L'alidade de l'astrolabe (la règle qui traverse le cadran) suit votre curseur, et les rouages tournent plus vite quand vous vous en approchez.</p>
+</header>
+
+<section class="prop" id="prop-a">
+	<canvas></canvas>
+	<div class="mostra">
+		<p class="k">Variante A · Carnet d'inventor</p>
+		<h2>Se parla. <span>Se viu.</span></h2>
+		<p class="d"><b>Une page de carnet de Léonard</b> : papier ancien, encre sépia et sanguine, lignes de construction, l'astrolabe-croix, des rouages qui s'engrènent, une tige qui pousse dans la marge. Thème clair.</p>
+		<span class="boton">Reservar un primièr cors</span>
+	</div>
+</section>
+
+<section class="prop" id="prop-b">
+	<canvas></canvas>
+	<div class="mostra">
+		<p class="k">Variante B · Talhièr de nuèch</p>
+		<h2>Se parla. <span>Se viu.</span></h2>
+		<p class="d"><b>L'atelier la nuit</b> : rouages de laiton et de cuivre, l'astrolabe doré, des tiges sombres qui grimpent, une lampe qui suit la souris. Thème sombre, cousin de l'esbòs actuel.</p>
+		<span class="boton">Reservar un primièr cors</span>
+	</div>
+</section>
+
+<section class="prop" id="prop-c">
+	<canvas></canvas>
+	<div class="mostra">
+		<p class="k">Variante C · Erbari mecanic</p>
+		<h2>Se parla. <span>Se viu.</span></h2>
+		<p class="d"><b>Un herbier mécanique</b> : le végétal domine, des tiges et des feuilles dont les fleurs sont de petits rouages qui tournent lentement. Pas d'astrolabe, une frise discrète sur les bords. Le plus sobre.</p>
+		<span class="boton">Reservar un primièr cors</span>
+	</div>
+</section>
+
+<script>
+(() => {
+	const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const TAU = Math.PI * 2;
+	const vis = new Map();
+	const io = new IntersectionObserver((es) => es.forEach((e) => vis.set(e.target.id, e.isIntersecting)), { threshold: 0 });
+	document.querySelectorAll('.prop').forEach((el) => io.observe(el));
+
+	// Aleatòri determinista : la meteissa planca a cada cargament
+	const graine = (s) => () => ((s = (s * 16807) % 2147483647) / 2147483647);
+
+	/* ---------- Rodatges ---------- */
+	function rodatge(cx, x, y, r, n, rot, o) {
+		const d = r * (o.prof ?? 0.16), w1 = (Math.PI / n) * 0.62, w2 = (Math.PI / n) * 0.38;
+		cx.beginPath();
+		for (let i = 0; i < n; i++) {
+			const a = rot + (i * TAU) / n;
+			const pts = [[r, a - w1], [r + d, a - w2], [r + d, a + w2], [r, a + w1]];
+			pts.forEach(([rr, aa], k) => { const px = x + Math.cos(aa) * rr, py = y + Math.sin(aa) * rr; if (i === 0 && k === 0) cx.moveTo(px, py); else cx.lineTo(px, py); });
+			cx.arc(x, y, r, a + w1, a + TAU / n - w1);
+		}
+		cx.closePath();
+		if (o.emplenar) {
+			const g = cx.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r + d);
+			g.addColorStop(0, o.clar); g.addColorStop(0.6, o.emplenar); g.addColorStop(1, o.sorne);
+			cx.fillStyle = g; cx.fill();
+		}
+		cx.strokeStyle = o.traç; cx.lineWidth = o.lw ?? 1; cx.stroke();
+		// jant, rais e boton
+		const rj = r * 0.72, rb = r * 0.22, rais = o.rais ?? 5;
+		cx.beginPath(); cx.arc(x, y, rj, 0, TAU); cx.stroke();
+		if (o.fenestras) {
+			for (let i = 0; i < rais; i++) {
+				const a0 = rot + (i * TAU) / rais + 0.22, a1 = rot + ((i + 1) * TAU) / rais - 0.22;
+				cx.beginPath(); cx.arc(x, y, rj * 0.92, a0, a1); cx.arc(x, y, rb * 1.5, a1, a0, true); cx.closePath();
+				cx.fillStyle = o.fenestras; cx.fill(); cx.stroke();
+			}
+		} else {
+			cx.beginPath();
+			for (let i = 0; i < rais; i++) { const a = rot + (i * TAU) / rais; cx.moveTo(x + Math.cos(a) * rb, y + Math.sin(a) * rb); cx.lineTo(x + Math.cos(a) * rj, y + Math.sin(a) * rj); }
+			cx.stroke();
+		}
+		cx.beginPath(); cx.arc(x, y, rb, 0, TAU); if (o.emplenar) { cx.fillStyle = o.sorne; cx.fill(); } cx.stroke();
+		cx.beginPath(); cx.arc(x, y, rb * 0.35, 0, TAU); cx.stroke();
+	}
+
+	/* ---------- L'astrolabi (la crotz-constellacion del lògo) ---------- */
+	const P = [[0, 0], [0, -1], [0.486, -0.797], [0.809, -0.48], [1, 0], [0.809, 0.48], [0.486, 0.797], [0, 0.992], [-0.468, 0.797], [-0.786, 0.48], [-0.976, 0.009], [-0.786, -0.48], [-0.468, -0.797]];
+	const BR = [2, 3, 5, 6, 8, 9, 11, 12], AR = [[12, 1], [1, 2], [3, 4], [4, 5], [6, 7], [7, 8], [9, 10], [10, 11]];
+	function astrolabi(cx, x, y, R, rot, alid, o) {
+		cx.strokeStyle = o.traç; cx.fillStyle = o.traç;
+		// anèls
+		cx.lineWidth = o.lw * 1.6; cx.beginPath(); cx.arc(x, y, R, 0, TAU); cx.stroke();
+		cx.lineWidth = o.lw; cx.beginPath(); cx.arc(x, y, R * 0.9, 0, TAU); cx.stroke();
+		cx.beginPath(); cx.arc(x, y, R * 0.84, 0, TAU); cx.stroke();
+		// graduacions : 72 traits, mai longs cada 30°
+		cx.beginPath();
+		for (let i = 0; i < 72; i++) { const a = rot * 0.2 + (i * TAU) / 72, l = i % 6 === 0 ? 0.1 : 0.05; cx.moveTo(x + Math.cos(a) * R * 0.9, y + Math.sin(a) * R * 0.9); cx.lineTo(x + Math.cos(a) * R * (0.9 + l), y + Math.sin(a) * R * (0.9 + l)); }
+		cx.stroke();
+		// chifras romanas sus l'anèl
+		if (o.chifras) {
+			cx.font = `italic ${Math.max(11, R * 0.07)}px Cormorant, Georgia, serif`; cx.textAlign = 'center'; cx.textBaseline = 'middle';
+			['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'].forEach((t, i) => { const a = rot * 0.2 + (i * TAU) / 12 - Math.PI / 2; cx.fillText(t, x + Math.cos(a) * R * 0.77, y + Math.sin(a) * R * 0.77); });
+		}
+		// rete : un cercle descentrat que vira (l'ecliptica)
+		cx.globalAlpha *= 0.7; cx.beginPath(); cx.arc(x + Math.cos(rot) * R * 0.14, y + Math.sin(rot) * R * 0.14, R * 0.5, 0, TAU); cx.stroke(); cx.globalAlpha /= 0.7;
+		// la crotz-constellacion
+		const S = R * 0.56, c = Math.cos(rot * 0.35), s = Math.sin(rot * 0.35);
+		const q = (i) => [x + (P[i][0] * c - P[i][1] * s) * S, y + (P[i][0] * s + P[i][1] * c) * S];
+		cx.strokeStyle = o.crotz ?? o.traç; cx.lineWidth = o.lw * 1.4; cx.beginPath();
+		for (const i of BR) { const [a, b] = q(0), [e, f] = q(i); cx.moveTo(a, b); cx.lineTo(e, f); }
+		for (const [i, j] of AR) { const [a, b] = q(i), [e, f] = q(j); cx.moveTo(a, b); cx.quadraticCurveTo((a + e) / 2 + (x - (a + e) / 2) * 0.17, (b + f) / 2 + (y - (b + f) / 2) * 0.17, e, f); }
+		cx.stroke();
+		cx.fillStyle = o.ponch ?? o.traç;
+		P.forEach((_, i) => { const [a, b] = q(i); cx.beginPath(); cx.arc(a, b, S * (i ? 0.075 : 0.09), 0, TAU); cx.fill(); });
+		// alidada : la règla que seguís la mirga
+		cx.strokeStyle = o.alidada ?? o.traç; cx.lineWidth = o.lw * 1.3;
+		const ca = Math.cos(alid), sa = Math.sin(alid);
+		cx.beginPath(); cx.moveTo(x - ca * R * 1.02, y - sa * R * 1.02); cx.lineTo(x + ca * R * 1.02, y + sa * R * 1.02); cx.stroke();
+		for (const k of [-1, 1]) { const px = x + ca * R * 0.72 * k, py = y + sa * R * 0.72 * k; cx.save(); cx.translate(px, py); cx.rotate(alid); cx.strokeRect(-3, -7, 6, 14); cx.restore(); }
+		cx.beginPath(); cx.arc(x, y, R * 0.035, 0, TAU); cx.fillStyle = o.alidada ?? o.traç; cx.fill();
+	}
+
+	/* ---------- Tijas vegetalas ---------- */
+	function crearTija(x0, y0, dir, long, rnd, flors) {
+		const pts = [[x0, y0]], fuelhas = [];
+		let a = dir, x = x0, y = y0;
+		const pas = 6, n = Math.floor(long / pas);
+		for (let i = 1; i <= n; i++) {
+			a += (rnd() - 0.5) * 0.22 + Math.sin(i * 0.09) * 0.03;
+			x += Math.cos(a) * pas; y += Math.sin(a) * pas; pts.push([x, y]);
+			if (i % 9 === 0) fuelhas.push({ i, costat: (i / 9) % 2 ? 1 : -1, talha: 9 + rnd() * 9, flor: flors && rnd() < 0.28 });
+		}
+		// vrilhas (pichonas espiralas) a la fin
+		return { pts, fuelhas, a };
+	}
+	function dessenharTija(cx, t, creis, temps, o) {
+		const n = Math.max(2, Math.floor(t.pts.length * creis));
+		cx.strokeStyle = o.tija; cx.lineWidth = o.lwTija; cx.lineCap = 'round';
+		cx.beginPath(); cx.moveTo(...t.pts[0]);
+		for (let i = 1; i < n; i++) cx.lineTo(t.pts[i][0] + Math.sin(temps * 0.6 + i * 0.05) * 0.6, t.pts[i][1]);
+		cx.stroke();
+		for (const f of t.fuelhas) {
+			if (f.i >= n) continue;
+			const [x, y] = t.pts[f.i], [px, py] = t.pts[f.i - 1];
+			const ang = Math.atan2(y - py, x - px) + f.costat * (0.9 + Math.sin(temps * 0.8 + f.i) * 0.08);
+			if (f.flor && o.flor) {
+				const fx = x + Math.cos(ang) * f.talha * 1.3, fy = y + Math.sin(ang) * f.talha * 1.3;
+				cx.beginPath(); cx.moveTo(x, y); cx.lineTo(fx, fy); cx.stroke();
+				rodatge(cx, fx, fy, f.talha * 0.62, 8, temps * 0.5 * f.costat, o.flor);
+				continue;
+			}
+			const L = f.talha, w = L * 0.42;
+			cx.save(); cx.translate(x, y); cx.rotate(ang);
+			cx.beginPath(); cx.moveTo(0, 0); cx.quadraticCurveTo(L * 0.5, -w, L, 0); cx.quadraticCurveTo(L * 0.5, w, 0, 0);
+			if (o.fuelha) { cx.fillStyle = o.fuelha; cx.fill(); }
+			cx.stroke();
+			cx.beginPath(); cx.moveTo(0, 0); cx.lineTo(L * 0.85, 0); cx.globalAlpha *= 0.6; cx.stroke(); cx.globalAlpha /= 0.6;
+			cx.restore();
+		}
+		// vrilha a la poncha
+		if (creis > 0.98) {
+			const [x, y] = t.pts[t.pts.length - 1];
+			cx.beginPath();
+			for (let k = 0; k < 40; k++) { const rr = 9 * (1 - k / 40), aa = t.a + k * 0.32; const px = x + Math.cos(aa) * rr, py = y + Math.sin(aa) * rr; k ? cx.lineTo(px, py) : cx.moveTo(px, py); }
+			cx.stroke();
+		}
+	}
+
+	/* ---------- Papièr : gran e vinheta ---------- */
+	function texturaPapièr(base, taca) {
+		const c = document.createElement('canvas'); c.width = c.height = 220;
+		const g = c.getContext('2d'), rnd = graine(7);
+		g.fillStyle = base; g.fillRect(0, 0, 220, 220);
+		for (let i = 0; i < 2600; i++) { g.fillStyle = `rgba(${taca},${(rnd() * 0.07).toFixed(3)})`; g.fillRect(rnd() * 220, rnd() * 220, 1 + rnd() * 1.5, 1 + rnd() * 1.5); }
+		return c;
+	}
+
+	/* ---------- Lo panèl generic ---------- */
+	function panèl(id, conf) {
+		const sec = document.getElementById(id), cv = sec.querySelector('canvas'), cx = cv.getContext('2d');
+		let W, H, el = {};
+		const m = { x: -1e4, y: -1e4, dins: false };
+		sec.addEventListener('pointermove', (e) => { const r = sec.getBoundingClientRect(); m.x = e.clientX - r.left; m.y = e.clientY - r.top; m.dins = true; });
+		sec.addEventListener('pointerleave', () => { m.dins = false; });
+		const papièr = conf.papièr ? cx.createPattern(texturaPapièr(...conf.papièr), 'repeat') : null;
+		function talh() {
+			const d = Math.min(devicePixelRatio || 1, 2); W = sec.clientWidth; H = sec.clientHeight;
+			cv.width = W * d; cv.height = H * d; cx.setTransform(d, 0, 0, d, 0, 0);
+			el = conf.composar(W, H);
+		}
+		talh(); addEventListener('resize', talh);
+		let alid = -0.6, rot = 0, vit = 1, t0 = performance.now(), fot = 0;
+		function pas(t) {
+			if (vis.get(id) && (fot++ & 1) === 0) {
+				const temps = (t - t0) / 1000, creis = calm ? 1 : Math.min(1, temps / 3.2);
+				// fons
+				if (papièr) { cx.fillStyle = papièr; cx.fillRect(0, 0, W, H); } else { cx.fillStyle = conf.fons; cx.fillRect(0, 0, W, H); }
+				if (conf.vinheta) { const g = cx.createRadialGradient(W * 0.6, H * 0.45, Math.min(W, H) * 0.3, W * 0.5, H * 0.5, Math.max(W, H) * 0.8); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, conf.vinheta); cx.fillStyle = g; cx.fillRect(0, 0, W, H); }
+				if (conf.lampa && m.dins) { const g = cx.createRadialGradient(m.x, m.y, 0, m.x, m.y, 320); g.addColorStop(0, conf.lampa); g.addColorStop(1, 'rgba(0,0,0,0)'); cx.fillStyle = g; cx.fillRect(0, 0, W, H); }
+				// la mirga : los rodatges acceleran quand s'apròcha
+				const a = el.astro;
+				const prop = a ? Math.hypot(m.x - a.x, m.y - a.y) : 1e4;
+				vit += ((m.dins && prop < a.R * 2.2 ? 4 : 1) - vit) * 0.05;
+				if (!calm) rot += 0.004 * vit;
+				if (a && m.dins) { const obj = Math.atan2(m.y - a.y, m.x - a.x); let dd = obj - alid; dd = Math.atan2(Math.sin(dd), Math.cos(dd)); alid += dd * 0.08; }
+				conf.dessenhar(cx, el, { W, H, temps: calm ? 0 : temps, rot, alid, creis });
+			}
+			if (!calm) requestAnimationFrame(pas);
+		}
+		requestAnimationFrame(pas);
+		if (calm) { vis.set(id, true); setTimeout(() => requestAnimationFrame(pas), 300); }
+	}
+
+	// Rodatges engrenats : lo segond vira a l'envèrs, a la velocitat del rapòrt de dents
+	function engrenar(g1, n2, r2, angle) {
+		const dist = g1.r + r2 + (g1.r * 0.16 + r2 * 0.16) * 0.5;
+		return { x: g1.x + Math.cos(angle) * dist, y: g1.y + Math.sin(angle) * dist, r: r2, n: n2, k: -g1.k * (g1.n / n2), fase: angle * (1 + g1.n / n2) + Math.PI / n2 + g1.fase * (g1.n / n2) * -1 };
+	}
+
+	/* ---------- A. Carnet d'inventor ---------- */
+	panèl('prop-a', {
+		papièr: ['#efe3c8', '90,58,34'], vinheta: 'rgba(120,80,40,0.28)',
+		composar(W, H) {
+			const R = Math.min(W, H) * 0.27, ax = W * 0.7, ay = H * 0.42;
+			const g1 = { x: ax - R * 1.05, y: ay + R * 1.02, r: R * 0.42, n: 24, k: 1, fase: 0 };
+			const g2 = engrenar(g1, 14, R * 0.25, -2.2), g3 = engrenar(g2, 9, R * 0.16, -1.2);
+			const rnd = graine(11);
+			const linhas = Array.from({ length: 7 }, () => ({ x: rnd() * W, y: rnd() * H, r: 30 + rnd() * 160 }));
+			const tijas = [crearTija(W * 0.98, H * 0.02, 2.3, H * 0.75, graine(3), false), crearTija(W * 0.02, H, -1.2, H * 0.5, graine(5), false)];
+			return { astro: { x: ax, y: ay, R }, g: [g1, g2, g3], linhas, tijas };
+		},
+		dessenhar(cx, el, s) {
+			const encre = 'rgba(70,44,26,0.75)', sanguina = 'rgba(168,69,42,0.8)';
+			// linhas de construccion
+			cx.strokeStyle = 'rgba(90,58,34,0.16)'; cx.lineWidth = 0.8; cx.setLineDash([4, 6]);
+			for (const l of el.linhas) { cx.beginPath(); cx.arc(l.x, l.y, l.r, 0, TAU); cx.stroke(); }
+			const a = el.astro;
+			cx.beginPath(); cx.moveTo(0, a.y); cx.lineTo(s.W, a.y); cx.moveTo(a.x, 0); cx.lineTo(a.x, s.H); cx.stroke(); cx.setLineDash([]);
+			// letras de plan
+			cx.fillStyle = 'rgba(90,58,34,0.55)'; cx.font = 'italic 15px Cormorant, Georgia, serif';
+			cx.fillText('A', a.x + a.R * 1.08, a.y - 6); cx.fillText('B', el.g[0].x - el.g[0].r * 1.3, el.g[0].y); cx.fillText('C', el.g[2].x + 14, el.g[2].y - el.g[2].r - 10);
+			// tijas
+			cx.globalAlpha = 0.85;
+			for (const t of el.tijas) dessenharTija(cx, t, s.creis, s.temps, { tija: encre, lwTija: 1.1 });
+			cx.globalAlpha = 1;
+			// rodatges e astrolabi
+			for (const g of el.g) rodatge(cx, g.x, g.y, g.r, g.n, g.fase + s.rot * g.k, { traç: encre, lw: 1.1, rais: g.n > 20 ? 6 : 4 });
+			astrolabi(cx, a.x, a.y, a.R, s.rot, s.alid, { traç: encre, lw: 1, chifras: true, crotz: sanguina, ponch: sanguina, alidada: sanguina });
+		}
+	});
+
+	/* ---------- B. Talhièr de nuèch ---------- */
+	panèl('prop-b', {
+		fons: '#140a06', vinheta: 'rgba(0,0,0,0.55)', lampa: 'rgba(255,190,90,0.16)',
+		composar(W, H) {
+			const R = Math.min(W, H) * 0.27, ax = W * 0.7, ay = H * 0.42;
+			const g1 = { x: ax - R * 1.08, y: ay + R * 1.0, r: R * 0.44, n: 26, k: 1, fase: 0 };
+			const g2 = engrenar(g1, 14, R * 0.26, -2.25), g3 = engrenar(g2, 10, R * 0.17, -1.1), g4 = engrenar(g1, 16, R * 0.3, 0.35);
+			const tijas = [crearTija(W * 0.99, H * 0.0, 2.25, H * 0.8, graine(3), true), crearTija(W * 0.0, H * 0.98, -1.15, H * 0.55, graine(5), true), crearTija(W * 0.45, H, -1.7, H * 0.25, graine(9), false)];
+			return { astro: { x: ax, y: ay, R }, g: [g1, g2, g3, g4], tijas };
+		},
+		dessenhar(cx, el, s) {
+			const lauton = { traç: 'rgba(60,32,14,0.9)', lw: 1, emplenar: '#b88934', clar: '#ecc77a', sorne: '#5a3a16', fenestras: 'rgba(20,10,6,0.85)' };
+			const coire = { traç: 'rgba(50,22,10,0.9)', lw: 1, emplenar: '#a85a32', clar: '#e09a6a', sorne: '#4a2210', fenestras: 'rgba(20,10,6,0.85)' };
+			for (const t of el.tijas) dessenharTija(cx, t, s.creis, s.temps, { tija: 'rgba(120,130,70,0.55)', lwTija: 1.4, fuelha: 'rgba(80,90,40,0.35)', flor: { traç: 'rgba(60,32,14,0.9)', lw: 0.8, emplenar: '#b88934', clar: '#ecc77a', sorne: '#5a3a16' } });
+			el.g.forEach((g, i) => rodatge(cx, g.x, g.y, g.r, g.n, g.fase + s.rot * g.k, { ...(i % 2 ? coire : lauton), rais: 5 }));
+			const a = el.astro;
+			cx.save(); cx.shadowColor = 'rgba(238,175,52,0.35)'; cx.shadowBlur = 18;
+			astrolabi(cx, a.x, a.y, a.R, s.rot, s.alid, { traç: 'rgba(236,199,122,0.85)', lw: 1.1, chifras: true, crotz: '#eeaf34', ponch: '#f5ead8', alidada: '#e09a6a' });
+			cx.restore();
+		}
+	});
+
+	/* ---------- C. Erbari mecanic ---------- */
+	panèl('prop-c', {
+		papièr: ['#f1e8d2', '60,70,30'], vinheta: 'rgba(90,90,40,0.18)',
+		composar(W, H) {
+			const tijas = [
+				crearTija(W * 0.99, H * 0.02, 2.4, H * 0.9, graine(21), true),
+				crearTija(W * 0.86, 0, 1.75, H * 0.55, graine(23), true),
+				crearTija(W * 0.62, H, -1.45, H * 0.35, graine(29), true),
+				crearTija(W * 0.0, H * 0.06, 0.55, W * 0.28, graine(31), true)
+			];
+			return { tijas };
+		},
+		dessenhar(cx, el, s) {
+			for (const t of el.tijas) dessenharTija(cx, t, s.creis, s.temps, { tija: 'rgba(63,74,42,0.8)', lwTija: 1.3, fuelha: 'rgba(109,122,69,0.22)', flor: { traç: 'rgba(138,100,24,0.9)', lw: 1, rais: 4 } });
+		}
+	});
+})();
+</script>
+</body>
+</html>
