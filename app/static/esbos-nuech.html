@@ -176,6 +176,7 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 	transform: translate(-50%, -50%) scale(0); transition: transform 0.7s var(--ease);
 }
 .boton:hover .boton-emplenat, .boton:focus-visible .boton-emplenat { transform: translate(-50%, -50%) scale(1); }
+.boton-tèxt { position: relative; }
 .boton-tèxt { display: inline-flex; gap: 0.7rem; transition: transform 0.6s var(--ease); }
 .boton svg { width: 1em; height: 1em; transition: transform 0.6s var(--ease); }
 .boton:hover svg { transform: translateX(4px) rotate(-45deg); }
@@ -207,6 +208,25 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .manifest-tèxt .m { color: rgba(245, 234, 216, 0.14); transition: color 0.35s; }
 .manifest-tèxt .m.on { color: var(--crema); }
 .manifest-tèxt .m.aur.on { color: var(--aur); }
+
+/* ---------- Acte III bis : tres biais d'aprene ---------- */
+.biais { padding: 4vh var(--marge) 22vh; }
+.biais-grasilha { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--crema-3); }
+.biai { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 2.6rem 2.2rem 2.4rem 0; isolation: isolate; }
+.biai + .biai { padding-left: 2.2rem; border-left: 1px solid var(--crema-3); }
+.biai::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(rgba(238, 175, 52, 0.08), transparent 70%); opacity: 0; transition: opacity 0.6s var(--ease); }
+.biai:hover::before { opacity: 1; }
+.biai-num { font-family: var(--votz); font-style: italic; font-size: 1.6rem; color: var(--aur); }
+.biai-titol { font-family: var(--titol); font-weight: 400; font-size: clamp(2rem, 3.4vw, 3.2rem); line-height: 1; }
+.biai-tèxt { color: var(--crema-2); line-height: 1.7; max-width: 34ch; flex: 1; }
+.biai-ligam { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 700; color: var(--aur-clar); width: fit-content; }
+.biai-ligam svg { width: 1em; transition: transform 0.6s var(--ease); }
+.biai-ligam:hover svg { transform: translateX(6px); }
+.biai-ligam.leu { color: var(--terra-viu); font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; }
+@media (max-width: 860px) {
+	.biais-grasilha { grid-template-columns: 1fr; }
+	.biai + .biai { padding-left: 0; border-left: 0; border-top: 1px solid var(--crema-3); }
+}
 
 /* ---------- Acte IV : quatre camins, panèls orizontals ---------- */
 .camins { height: 420vh; }
@@ -260,7 +280,11 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 /* ---------- Acte V : las chifras ---------- */
 .chifras { padding: 24vh var(--marge) 18vh; }
 /* Zòna voida : lo canevàs i dessenha l'Occitània amb las estelas */
-.carta-estelas { height: min(74vh, 60vw); margin: 1rem 0 3.5rem; }
+.carta-estelas { display: block; height: min(74vh, 60vw); margin: 1rem 0 1rem; cursor: pointer; border-radius: 18px; }
+.carta-dobrir { display: flex; justify-content: flex-end; margin-bottom: 3.5rem; }
+.boton-traç { background: transparent; color: var(--aur-clar); box-shadow: inset 0 0 0 1px var(--aur); }
+.boton-traç:hover, .boton-traç:focus-visible { color: var(--nuech); }
+.crida-accions { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
 .chifras-grasilha { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--crema-3); }
 .chifra { padding: 2.6rem 2rem 0 0; }
 .chifra + .chifra { padding-left: 2rem; border-left: 1px solid var(--crema-3); }
@@ -346,16 +370,16 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		</h1>
 		<div class="eros-pe">
 			<div class="esvani" style="--i: 5">
-				<p class="eros-sub"><span class="bi"><span class="oc">Quin que siá ton objectiu, siás al bon endrech.</span><span class="fr">Quel que soit ton objectif, tu es au bon endroit.</span></span></p>
+				<p class="eros-sub"><span class="bi"><span class="oc">De corses en visio amb ieu, un parcors per avançar a ton ritme, e de monde per parlar.</span><span class="fr">Des cours en visio avec moi, un parcours pour avancer à ton rythme, et du monde avec qui parler.</span></span></p>
 				<p class="indici" aria-hidden="true"><span class="bi"><span class="oc">Passatz la mirga suls tres mots.</span><span class="fr">Survolez les trois mots.</span></span></p>
 			</div>
 			<div class="eros-accions esvani" style="--i: 6">
-				<a class="boton" href="/aprene/essai" data-magnet data-cur>
+				<a class="boton" href="#biais" data-magnet data-cur>
 					<span class="boton-emplenat"></span>
-					<span class="boton-tèxt"><span class="bi"><span class="oc">Començar</span><span class="fr">Commencer</span></span>
+					<span class="boton-tèxt"><span class="bi"><span class="oc">Reservar un primièr cors</span><span class="fr">Réserver un premier cours</span></span>
 					<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span>
 				</a>
-				<a class="ligam-tèxt" href="/carta" data-cur><span class="bi"><span class="oc">Descobrir la carta</span><span class="fr">Découvrir la carte</span></span></a>
+				<a class="ligam-tèxt" href="/aprene/essai" data-cur><span class="bi"><span class="oc">Començar sol·a</span><span class="fr">Commencer seul·e</span></span></a>
 			</div>
 			<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
 		</div>
@@ -374,11 +398,36 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		</p>
 	</section>
 
+	<!-- III bis. Tres biais d'aprene : l'ofèrta, dicha clarament -->
+	<section class="biais" id="biais" data-revela>
+		<p class="jalon"><b>02</b><span class="masc"><span class="masc-in"><span class="bi"><span class="oc">Tres biais d’aprene</span><span class="fr">Trois façons d’apprendre</span></span></span></span></p>
+		<div class="biais-grasilha">
+			<article class="biai esvani" style="--i: 1">
+				<p class="biai-num" aria-hidden="true">I</p>
+				<h3 class="biai-titol"><span class="bi"><span class="oc">En visio, amb ieu</span><span class="fr">En visio, avec moi</span></span></h3>
+				<p class="biai-tèxt"><span class="bi"><span class="oc">De corses en dirècte, en pichon grop o sol a sol. Lo primièr es ofèrt.</span><span class="fr">Des cours en direct, en petit groupe ou en tête-à-tête. Le premier est offert.</span></span></p>
+				<a class="biai-ligam" href="#rendetz-vos" data-cur><span class="bi"><span class="oc">Prene rendètz-vos</span><span class="fr">Prendre rendez-vous</span></span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+			</article>
+			<article class="biai esvani" style="--i: 2">
+				<p class="biai-num" aria-hidden="true">II</p>
+				<h3 class="biai-titol"><span class="bi"><span class="oc">A ton ritme</span><span class="fr">À ton rythme</span></span></h3>
+				<p class="biai-tèxt"><span class="bi"><span class="oc">Un parcors autonòm, leiçon per leiçon, per contunhar entre dos corses.</span><span class="fr">Un parcours autonome, leçon par leçon, pour continuer entre deux cours.</span></span></p>
+				<a class="biai-ligam" href="/aprene" data-cur><span class="bi"><span class="oc">Començar lo parcors</span><span class="fr">Commencer le parcours</span></span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+			</article>
+			<article class="biai esvani" style="--i: 3">
+				<p class="biai-num" aria-hidden="true">III</p>
+				<h3 class="biai-titol"><span class="bi"><span class="oc">Ensems</span><span class="fr">Ensemble</span></span></h3>
+				<p class="biai-tèxt"><span class="bi"><span class="oc">De rescontres en linha e en persona, per parlar e far viure la lenga.</span><span class="fr">Des rencontres en ligne et en personne, pour parler et faire vivre la langue.</span></span></p>
+				<span class="biai-ligam leu"><span class="bi"><span class="oc">Lèu</span><span class="fr">Bientôt</span></span></span>
+			</article>
+		</div>
+	</section>
+
 	<!-- IV. Quatre camins -->
 	<section class="camins" aria-labelledby="camins-titol">
 		<div class="camins-pin">
 			<div class="camins-cap jalon">
-				<span><b>02</b>&ensp;<span id="camins-titol"><span class="bi"><span class="oc">Quatre camins</span><span class="fr">Quatre chemins</span></span></span></span>
+				<span><b>03</b>&ensp;<span id="camins-titol"><span class="bi"><span class="oc">Quatre camins</span><span class="fr">Quatre chemins</span></span></span></span>
 				<span aria-hidden="true">→</span>
 			</div>
 			<div class="camins-pista"></div>
@@ -388,8 +437,9 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 
 	<!-- V. Las chifras -->
 	<section class="chifras" data-revela>
-		<p class="jalon"><b>03</b><span class="masc"><span class="masc-in"><span class="bi"><span class="oc">L’occitan, uèi</span><span class="fr">L’occitan, aujourd’hui</span></span></span></span></p>
-		<div class="carta-estelas" role="img" aria-label="Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan"></div>
+		<p class="jalon"><b>04</b><span class="masc"><span class="masc-in"><span class="bi"><span class="oc">L’occitan, uèi</span><span class="fr">L’occitan, aujourd’hui</span></span></span></span></p>
+		<a class="carta-estelas" href="/carta" data-cur aria-label="Carta de l’Occitània en estelas, 304 vilas e vilatges amb lor nom occitan. Dobrir la carta entièra"></a>
+		<div class="carta-dobrir esvani"><a class="boton boton-traç" href="/carta" data-magnet data-cur><span class="boton-emplenat"></span><span class="boton-tèxt"><span class="bi"><span class="oc">Dobrir la carta entièra</span><span class="fr">Ouvrir la carte entière</span></span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a></div>
 		<div class="chifras-grasilha">
 			<div class="chifra esvani" style="--i: 1">
 				<p class="chifra-num" data-comptar="600000" data-prefix="≈ ">0</p>
@@ -429,11 +479,14 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			</h2>
 			<p class="crida-sub esvani" style="--i: 3"><span class="bi"><span class="oc">Tres mots uèi, una lenga deman.</span><span class="fr">Trois mots aujourd’hui, une langue demain.</span></span></p>
 			<div class="esvani" style="--i: 4">
-				<a class="boton" href="/aprene/essai" data-magnet data-cur>
-					<span class="boton-emplenat"></span>
-					<span class="boton-tèxt"><span class="bi"><span class="oc">Començar l’aventura</span><span class="fr">Commencer l’aventure</span></span>
-					<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span>
-				</a>
+				<div class="crida-accions">
+					<a class="boton" href="#rendetz-vos" data-magnet data-cur>
+						<span class="boton-emplenat"></span>
+						<span class="boton-tèxt"><span class="bi"><span class="oc">Reservar un primièr cors</span><span class="fr">Réserver un premier cours</span></span>
+						<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span>
+					</a>
+					<a class="ligam-tèxt" href="/aprene/essai" data-cur><span class="bi"><span class="oc">Començar sol·a</span><span class="fr">Commencer seul·e</span></span></a>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -502,8 +555,9 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 
 	// Manifèst : cada mot s'alumena amb lo defilament.
 	const MANIFEST = {
-		oc: [['Un sol endrech per tot l’ecosistèma occitan :'], ['aprene la lenga,', 1], ['descobrir lo país,', 1], ['se retrobar.', 1]],
-		fr: [['Un seul endroit pour tout l’écosystème occitan :'], ['apprendre la langue,', 1], ['découvrir le pays,', 1], ['se retrouver.', 1]]
+		// PROPOSICION A (frasa-clau de causir per Romain, occitan de validar)
+		oc: [['Aicí, l’occitan s’apren'], ['sens vergonha', 1], ['e'], ['amb benvolença,', 1], ['e cada leiçon fa'], ['ligam.', 1]],
+		fr: [['Ici, l’occitan s’apprend'], ['sans honte', 1], ['et'], ['avec bienveillance,', 1], ['et chaque leçon crée du'], ['lien.', 1]]
 	};
 	for (const l of ['oc', 'fr']) {
 		const cont = document.querySelector(`[data-emplenar] [data-lenga="${l}"]`);
@@ -518,8 +572,8 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			items: [['La carta', 'La carte', '/carta'], ['Mots en imatges', 'Mots en images', '/mots'], ['Òbras', 'Œuvres', '/obras']] },
 		{ oc: 'Participar', fr: 'Participer', toc: 'La comunautat', tfr: 'La communauté', media: 'tipo',
 			items: [['Forum', 'Forum'], ['Grops', 'Groupes'], ['Boita d’idèas', 'Boîte à idées']] },
-		{ oc: 'Lo Ligam', fr: 'Lo Ligam', toc: 'Qual sèm', tfr: 'Qui nous sommes', media: 'simbol',
-			items: [['A prepaus', 'À propos'], ['Ressorsas occitanas', 'Ressources occitanes'], ['Contacte', 'Contact']] }
+		{ oc: 'Lo Ligam', fr: 'Lo Ligam', toc: 'Qual soi', tfr: 'Qui suis-je', media: 'simbol',
+			items: [['Mon istòria', 'Mon histoire'], ['Ressorsas occitanas', 'Ressources occitanes'], ['Contacte', 'Contact']] }
 	];
 	const bi = (oc, fr) => `<span class="bi"><span class="oc">${oc}</span><span class="fr">${fr}</span></span>`;
 	const mediaHTML = (m) => ({
