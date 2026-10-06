@@ -149,6 +149,19 @@ header nav { display: flex; align-items: center; gap: clamp(1rem, 2.6vw, 2.4rem)
 .tema button { all: unset; cursor: pointer; text-align: center; padding: 0.45rem 0.2rem; border-radius: 9px; font-size: 0.82rem; font-weight: 700; color: var(--crema-2); transition: background 0.4s, color 0.4s; }
 .tema button[aria-pressed='true'] { background: var(--crema); color: var(--nuech); }
 .tema button:focus-visible { outline: 2px solid var(--aur); outline-offset: 2px; }
+/* ---------- Colors adaptadas al daltonisme : lo terracòta ven blau, mai de contraste ---------- */
+:root[data-dalt='on'] { --terra: #2f6fb0; --terra-viu: #6fb1ff; --crema-2: rgba(245, 234, 216, 0.86); --crema-3: rgba(245, 234, 216, 0.28); }
+:root[data-tema='clar'][data-dalt='on'] { --terra: #1f5f8f; --terra-viu: #1f5f8f; --aur: #8a4f00; --aur-clar: #6b3a00; --crema-2: rgba(46, 29, 20, 0.88); --crema-3: rgba(46, 29, 20, 0.3); }
+/* lo lògo garda sas colors */
+.panel-media.simbol { background: #b53d17 !important; }
+.dalt { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: 0.7rem; width: 100%; padding: 0.55rem 0.5rem; margin: -0.4rem 0 0.9rem; border-radius: 10px; font-size: 0.85rem; color: var(--crema-2); }
+.dalt:hover { background: rgba(245, 234, 216, 0.06); }
+.dalt:focus-visible { outline: 2px solid var(--aur); }
+.dalt-interr { flex: none; position: relative; width: 34px; height: 20px; border-radius: 999px; border: 1px solid var(--crema-3); transition: background 0.35s; }
+.dalt-interr::after { content: ''; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; border-radius: 50%; background: var(--crema-2); transition: transform 0.35s var(--ease), background 0.35s; }
+.dalt[aria-pressed='true'] { color: var(--crema); }
+.dalt[aria-pressed='true'] .dalt-interr { background: #2f6fb0; border-color: #2f6fb0; }
+.dalt[aria-pressed='true'] .dalt-interr::after { transform: translateX(14px); background: #fff; }
 /* Selector d'ambiança */
 .ambianca { position: relative; }
 .ambianca-boton { all: unset; cursor: pointer; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--crema-3); background: rgba(18, 9, 6, 0.5); color: var(--aur-clar); transition: border-color 0.4s, transform 0.8s var(--ease); }
@@ -320,7 +333,7 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .panel-media img.sens-cel { top: -74%; height: 180%; object-position: 50% 100%; }
 .panel-media.liseré { box-shadow: 0 0 0 3px var(--terra), 0 0 0 6px var(--aur); }
 .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #4a1a0b, var(--nuech-2) 70%); }
-.panel-media.retrat img { inset: auto 0 0 0; width: 100%; height: 108%; object-fit: contain; object-position: bottom; }
+.panel-media.retrat img { inset: auto 0 0 0; width: 100%; height: 92%; object-fit: contain; object-position: bottom; filter: url(#lisere-sang-aur); }
 .panel-media.tipo { display: grid; place-items: center; border: 1px solid var(--crema-3); background: transparent; }
 .panel-media.tipo .gros-mot { font-family: var(--votz); font-style: italic; font-size: clamp(4rem, 11vw, 10rem); color: var(--aur); line-height: 0.9; text-align: center; }
 .panel-media.simbol { display: grid; place-items: center; background: var(--terra); }
@@ -398,6 +411,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="lisere-sang-aur" color-interpolation-filters="sRGB"><feMorphology in="SourceAlpha" operator="dilate" radius="5" result="r1"/><feFlood flood-color="#b53d17"/><feComposite in2="r1" operator="in" result="terra"/><feMorphology in="SourceAlpha" operator="dilate" radius="10" result="r2"/><feFlood flood-color="#eeaf34"/><feComposite in2="r2" operator="in" result="aur"/><feMerge><feMergeNode in="aur"/><feMergeNode in="terra"/><feMergeNode in="SourceGraphic"/></feMerge></filter></svg>
 <canvas id="fons" aria-hidden="true"></canvas>
 <canvas id="estelas" aria-hidden="true"></canvas>
 <div class="gran" aria-hidden="true"></div>
@@ -425,6 +439,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 					<button type="button" data-tema-boton="clar" aria-pressed="false"><span class="bi"><span class="oc">Clar</span><span class="fr">Clair</span></span></button>
 					<button type="button" data-tema-boton="sistema" aria-pressed="false"><span class="bi"><span class="oc">Sistèma</span><span class="fr">Système</span></span></button>
 				</div>
+				<button type="button" class="dalt" data-dalt-boton aria-pressed="false"><span class="dalt-interr" aria-hidden="true"></span><span class="bi"><span class="oc">Colors adaptadas (daltonisme)</span><span class="fr">Couleurs adaptées (daltonisme)</span></span></button>
 				<p class="ambianca-titol"><span class="bi"><span class="oc">Ambiança</span><span class="fr">Ambiance</span></span></p>
 				<label><input type="radio" name="fons" value="1" /><i class="m m1"></i><span class="bi"><span class="oc">Lum e estelas</span><span class="fr">Lumière et étoiles</span></span></label>
 				<label><input type="radio" name="fons" value="0" /><i class="m m0"></i><span class="bi"><span class="oc">Venas d’aur</span><span class="fr">Veines d’or</span></span></label>
@@ -672,7 +687,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	];
 	const bi = (oc, fr) => `<span class="bi"><span class="oc">${oc}</span><span class="fr">${fr}</span></span>`;
 	const mediaHTML = (m) => ({
-		retrat: `<div class="panel-media retrat"><img src="/acuelh/personatge.png" alt="" loading="lazy" data-paral /></div>`,
+		retrat: `<div class="panel-media retrat"><img src="/acuelh/romain.webp" alt="Romain Périer" loading="lazy" width="600" height="620" data-paral /></div>`,
 		paisatge: `<div class="panel-media"><img class="sens-cel" src="/acuelh/paisatge.jpg" alt="" loading="lazy" data-paral /></div>`,
 		tipo: `<div class="panel-media tipo"><span class="gros-mot" lang="oc">ensems</span></div>`,
 		simbol: `<div class="panel-media simbol"><svg viewBox="-1.3 -1.3 2.6 2.6" aria-hidden="true" data-simbol="gros"></svg></div>`
@@ -781,20 +796,29 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	let forçarFons = true;
 	/* ================= Tèma : sorne, clar, o coma lo sistèma ================= */
 	const TEMAS = {
-		sorne: { estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)', crotzPonch: '#f5ead8', crotzEstret: '#b9822f', crotzCrida: '#6e2e12' },
-		clar: { estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#c98a4a', crotzCrida: '#e6cbaa' }
+		sorne: { riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)', crotzPonch: '#f5ead8', crotzEstret: '#b9822f', crotzCrida: '#6e2e12' },
+		clar: { riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#c98a4a', crotzCrida: '#e6cbaa' }
 	};
-	let TEM = TEMAS.sorne, temaClar = false, temaCausit = 'sorne';
+	let TEM = TEMAS.sorne, temaClar = false, temaCausit = 'sorne', daltonisme = false;
+	try { daltonisme = localStorage.getItem('lo-ligam-esbos-dalt') === 'on'; } catch {}
 	const sistèmaClar = matchMedia('(prefers-color-scheme: light)');
 	function aplicarTema() {
 		temaClar = temaCausit === 'clar' || (temaCausit === 'sistema' && sistèmaClar.matches);
-		TEM = temaClar ? TEMAS.clar : TEMAS.sorne;
+		// Daltonisme : los rius e lors noms ven blaus (lo blau se destria de l'aur per
+		// totes los daltonismes roge-verd), lo rèsta de la paleta se fa per CSS
+		TEM = { ...(temaClar ? TEMAS.clar : TEMAS.sorne), ...(daltonisme ? (temaClar ? { riu: '#1f5f8f', riuTèxt: '#174a72' } : { riu: '#6fb1ff', riuTèxt: '#a9d0ff' }) : {}) };
+		doc.dataset.dalt = daltonisme ? 'on' : 'off';
+		const bd = document.querySelector('[data-dalt-boton]'); if (bd) bd.setAttribute('aria-pressed', daltonisme);
 		doc.dataset.tema = temaClar ? 'clar' : 'sorne';
 		forçarFons = true;
 		document.querySelectorAll('[data-tema-boton]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.temaBoton === temaCausit));
 	}
 	try { temaCausit = localStorage.getItem('lo-ligam-esbos-tema') || 'sorne'; } catch {}
 	sistèmaClar.addEventListener('change', aplicarTema);
+	document.querySelector('[data-dalt-boton]').addEventListener('click', () => {
+		daltonisme = !daltonisme; aplicarTema();
+		try { localStorage.setItem('lo-ligam-esbos-dalt', daltonisme ? 'on' : 'off'); } catch {}
+	});
 	document.querySelectorAll('[data-tema-boton]').forEach((b) => b.addEventListener('click', () => {
 		temaCausit = b.dataset.temaBoton; aplicarTema();
 		try { localStorage.setItem('lo-ligam-esbos-tema', temaCausit); } catch {}
@@ -1245,7 +1269,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		const aRiu = easeIO(clamp((aCarta - 0.35) / 0.6));
 		const pX = (lon) => zcx + (lon - lonM) * GEO.kx * esc, pY = (lat) => zcy - (lat - latM) * esc;
 		if (aRiu > 0.01) {
-			cx.strokeStyle = TEM.fil; cx.lineCap = 'round'; cx.lineJoin = 'round';
+			cx.strokeStyle = TEM.riu; cx.lineCap = 'round'; cx.lineJoin = 'round';
 			for (const [nom, pes, l] of RIUS) {
 				const k = aRiu * (l.length - 1), n = Math.floor(k);
 				cx.globalAlpha = nom ? 0.75 : 0.25;
