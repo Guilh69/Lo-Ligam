@@ -29,44 +29,46 @@
 </script>
 
 <header class="top">
-	<a class="brand" href="/" title={tx.acuelhLong} aria-label={tx.acuelhLong}>
-		<Crotz talha={30} />
-		<span class="brand-name">Lo Ligam</span>
-	</a>
+	<div class="top-in">
+		<a class="brand" href="/" title={tx.acuelhLong} aria-label={tx.acuelhLong}>
+			<Crotz talha={30} />
+			<span class="brand-name">Lo Ligam</span>
+		</a>
 
-	<nav class="nav" aria-label={tx.nav}>
-		{#each LIGAMS as l (l.href)}
-			<a class="nav-ligam" href={l.href} aria-current={actiu(l.href) ? 'page' : undefined}
-				>{lang === 'oc' ? l.oc : l.fr}</a
-			>
-		{/each}
-	</nav>
+		<nav class="nav" aria-label={tx.nav}>
+			{#each LIGAMS as l (l.href)}
+				<a class="nav-ligam" href={l.href} aria-current={actiu(l.href) ? 'page' : undefined}
+					>{lang === 'oc' ? l.oc : l.fr}</a
+				>
+			{/each}
+		</nav>
 
-	<div class="header-right">
-		{#if children}
-			<div class="compte">
-				{@render children()}
+		<div class="header-right">
+			{#if children}
+				<div class="compte">
+					{@render children()}
+				</div>
+			{/if}
+
+			<!-- Visible seulement pour un administrateur. C'est du confort, pas une
+			     protection : les verrous sont dans la base (RLS). -->
+			{#if $esAdmin}
+				<a class="admin-link" href="/admin" title={tx.admin}>
+					<span aria-hidden="true">⚙</span>
+					<span class="admin-tèxte">{tx.admin}</span>
+				</a>
+			{/if}
+
+			<AmbiancaPanel />
+
+			<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
+				<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => (langStore.current = 'oc')}
+					>Òc</button
+				>
+				<button type="button" aria-pressed={lang === 'fr'} lang="fr" onclick={() => (langStore.current = 'fr')}
+					>Fr</button
+				>
 			</div>
-		{/if}
-
-		<!-- Visible seulement pour un administrateur. C'est du confort, pas une
-		     protection : les verrous sont dans la base (RLS). -->
-		{#if $esAdmin}
-			<a class="admin-link" href="/admin" title={tx.admin}>
-				<span aria-hidden="true">⚙</span>
-				<span class="admin-tèxte">{tx.admin}</span>
-			</a>
-		{/if}
-
-		<AmbiancaPanel />
-
-		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
-			<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => (langStore.current = 'oc')}
-				>Òc</button
-			>
-			<button type="button" aria-pressed={lang === 'fr'} lang="fr" onclick={() => (langStore.current = 'fr')}
-				>Fr</button
-			>
 		</div>
 	</div>
 </header>
@@ -75,15 +77,44 @@
 	.top {
 		width: 100%;
 		max-width: 40rem;
-		display: flex;
-		align-items: center;
-		gap: 0.6rem 1.2rem;
-		flex-wrap: wrap;
 		color: var(--t-tinta);
 		/* On mesure la largeur DU BANDEAU, pas celle de la fenêtre : le même
 		   bandeau vit contraint à 40 rem (aprene, compte) ou pleine largeur
 		   (carta). */
 		container-type: inline-size;
+	}
+
+	/* Une ligne quand il y a la place : marque · liens · réglages. Sinon deux
+	   lignes nettes : marque et réglages en haut, liens dessous (jamais un
+	   bloc de réglages qui retombe de travers sous les liens). */
+	.top-in {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		grid-template-areas: 'brand nav right';
+		align-items: center;
+		column-gap: 1.6rem;
+		row-gap: 0.9rem;
+	}
+
+	.brand {
+		grid-area: brand;
+	}
+
+	.nav {
+		grid-area: nav;
+	}
+
+	.header-right {
+		grid-area: right;
+	}
+
+	@container (max-width: 52rem) {
+		.top-in {
+			grid-template-columns: auto auto;
+			grid-template-areas:
+				'brand right'
+				'nav nav';
+		}
 	}
 
 	.brand {
@@ -151,7 +182,7 @@
 	}
 
 	.header-right {
-		margin-left: auto;
+		justify-self: end;
 		display: flex;
 		align-items: center;
 		gap: 0.7rem;
@@ -240,10 +271,6 @@
 	@container (max-width: 34rem) {
 		.compte :global(.account-email) {
 			display: none;
-		}
-		.nav {
-			order: 3;
-			width: 100%;
 		}
 	}
 

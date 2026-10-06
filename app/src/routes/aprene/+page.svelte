@@ -238,6 +238,12 @@
 		white-space: nowrap;
 	}
 
+	/* Seul dans la pastille (pas connecté) : pas de séparateur orphelin */
+	.link-btn:first-child {
+		border-left: 0;
+		padding-left: 0;
+	}
+
 	.link-btn:hover {
 		text-decoration: underline;
 	}
