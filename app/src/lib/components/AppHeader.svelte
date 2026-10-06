@@ -1,6 +1,13 @@
 <script>
-	import logo from '$lib/assets/favicon.svg';
-	import OccitaniaIcon from './OccitaniaIcon.svelte';
+	// Bandeau commun à toutes les pages (cadre commun, refonte 2026-10-07 dans
+	// la charte de l'esbòs de nuèch) : la croix-constellation + « Lo Ligam » en
+	// Limelight, quatre liens texte, puis le compte, l'administration, le
+	// réglage d'ambiance et la langue. Couleurs de thème (--t-*) : suit le
+	// sombre, le clair et le daltonisme. Même API qu'avant (le bloc compte
+	// passe en enfant), donc aucune page à modifier.
+	import { page } from '$app/state';
+	import Crotz from './Crotz.svelte';
+	import AmbiancaPanel from './AmbiancaPanel.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { esAdmin } from '$lib/adminStore';
 
@@ -8,41 +15,31 @@
 	let lang = $derived(langStore.current);
 
 	const t = {
-		oc: {
-			acuelh: 'Acuèlh',
-			acuelhLong: "Tornar a l'acuèlh",
-			mond: 'Lo Mond',
-			mondLong: 'Veire lo Mond en occitan — la carta',
-			admin: 'Administracion'
-		},
-		fr: {
-			acuelh: 'Accueil',
-			acuelhLong: "Retour à l'accueil",
-			mond: 'Le Monde',
-			mondLong: 'Voir le Monde en occitan — la carte',
-			admin: 'Administration'
-		}
+		oc: { acuelhLong: "Tornar a l'acuèlh", admin: 'Administracion', nav: 'Navigacion' },
+		fr: { acuelhLong: "Retour à l'accueil", admin: 'Administration', nav: 'Navigation' }
 	};
+	const LIGAMS = [
+		{ href: '/aprene', oc: 'Aprene', fr: 'Apprendre' },
+		{ href: '/carta', oc: 'La carta', fr: 'La carte' },
+		{ href: '/mots', oc: 'Mots', fr: 'Mots' },
+		{ href: '/obras', oc: 'Òbras', fr: 'Œuvres' }
+	];
 	let tx = $derived(t[lang]);
+	const actiu = (href) => page.url.pathname === href || page.url.pathname.startsWith(href + '/');
 </script>
 
-<!-- Trois zones nettes : la marque (qui EST le lien d'accueil), la navigation,
-     puis à droite le compte, l'administration et la langue. Chaque icône porte
-     son libellé écrit, dans la langue choisie : une icône seule ne dit pas ce
-     qu'elle ouvre. -->
 <header class="top">
 	<a class="brand" href="/" title={tx.acuelhLong} aria-label={tx.acuelhLong}>
-		<img src={logo} alt="" />
+		<Crotz talha={30} />
 		<span class="brand-name">Lo Ligam</span>
 	</a>
 
-	<span class="separador" aria-hidden="true"></span>
-
-	<nav class="nav">
-		<a class="nav-ligam" href="/carta" title={tx.mondLong} aria-label={tx.mondLong}>
-			<OccitaniaIcon size={18} />
-			<span>{tx.mond}</span>
-		</a>
+	<nav class="nav" aria-label={tx.nav}>
+		{#each LIGAMS as l (l.href)}
+			<a class="nav-ligam" href={l.href} aria-current={actiu(l.href) ? 'page' : undefined}
+				>{lang === 'oc' ? l.oc : l.fr}</a
+			>
+		{/each}
 	</nav>
 
 	<div class="header-right">
@@ -61,17 +58,14 @@
 			</a>
 		{/if}
 
-		<!-- Selector de lenga present sus TOTAS las paginas que passan per
-		     aqueste entèsta, pas mai sonque sus l'acuèlh. -->
+		<AmbiancaPanel />
+
 		<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
-			<button type="button" class:active={lang === 'oc'} onclick={() => (langStore.current = 'oc')}
+			<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => (langStore.current = 'oc')}
 				>Òc</button
 			>
-			<button
-				type="button"
-				class="fr"
-				class:active={lang === 'fr'}
-				onclick={() => (langStore.current = 'fr')}>Fr</button
+			<button type="button" aria-pressed={lang === 'fr'} lang="fr" onclick={() => (langStore.current = 'fr')}
+				>Fr</button
 			>
 		</div>
 	</div>
@@ -83,96 +77,83 @@
 		max-width: 40rem;
 		display: flex;
 		align-items: center;
-		/* Espacement SERRÉ à l'intérieur d'un groupe, LARGE entre les groupes
-		   (voir .separador et .header-right) : c'est ce qui donne la lecture. */
-		gap: 0.5rem;
+		gap: 0.6rem 1.2rem;
 		flex-wrap: wrap;
-		row-gap: 0.6rem;
+		color: var(--t-tinta);
 		/* On mesure la largeur DU BANDEAU, pas celle de la fenêtre : le même
 		   bandeau vit contraint à 40 rem (aprene, compte) ou pleine largeur
-		   (carta). Une media query sur la fenêtre se tromperait dans un cas
-		   sur deux. */
+		   (carta). */
 		container-type: inline-size;
 	}
 
-	/* La marque entière est le lien d'accueil : le nom sert de libellé à
-	   l'illustration du mas, plus besoin d'un mot « Acuèlh » redondant. */
 	.brand {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.6rem;
 		text-decoration: none;
-		border-radius: 999px;
-		transition: transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+		color: var(--t-tinta);
 	}
 
-	.brand:hover {
-		transform: scale(1.03);
+	.brand :global(svg) {
+		transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
 	}
 
-	/* La teula du logo porte déjà son fond brique et ses coins arrondis :
-	   aucun fond derrière. */
-	.brand :global(img) {
-		width: 2rem;
-		height: 2rem;
-		border-radius: 8px;
-		transition: box-shadow 150ms ease;
-	}
-
-	.brand:hover :global(img) {
-		box-shadow: 0 3px 10px rgba(165, 52, 42, 0.35);
+	.brand:hover :global(svg) {
+		transform: rotate(90deg);
 	}
 
 	.brand-name {
-		font-family: var(--font-logo); /* lo wordmark garda Fredoka (charte §2) */
-		font-weight: 700;
-		font-size: 1.05rem;
-		color: var(--color-text);
+		font-family: var(--font-logo);
+		font-size: 1.3rem;
 		white-space: nowrap;
-	}
-
-	.separador {
-		width: 1px;
-		height: 1.4rem;
-		background: rgba(58, 42, 32, 0.16);
-		margin: 0 0.15rem;
 	}
 
 	.nav {
 		display: flex;
 		align-items: center;
-		gap: 0.35rem;
+		gap: 1.1rem;
 	}
 
+	/* Lien texte, soulignement d'or qui balaie de gauche à droite */
 	.nav-ligam {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		height: 2.2rem;
-		padding: 0 0.8rem;
-		border-radius: 999px;
-		background: rgba(31, 95, 99, 0.1);
-		color: var(--color-teal);
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 0.85rem;
+		position: relative;
+		padding: 0.3rem 0;
+		font-size: 0.86rem;
+		font-weight: 700;
+		letter-spacing: 0.02em;
 		text-decoration: none;
 		white-space: nowrap;
-		transition:
-			background-color 150ms ease,
-			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+		color: var(--t-tinta);
 	}
 
-	.nav-ligam:hover {
-		background: rgba(31, 95, 99, 0.18);
-		transform: scale(1.04);
+	.nav-ligam::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 1px;
+		background: var(--t-aur);
+		transform: scaleX(0);
+		transform-origin: right;
+		transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.nav-ligam:hover::after,
+	.nav-ligam:focus-visible::after,
+	.nav-ligam[aria-current='page']::after {
+		transform: scaleX(1);
+		transform-origin: left;
+	}
+
+	.nav-ligam[aria-current='page'] {
+		color: var(--t-aur);
 	}
 
 	.header-right {
 		margin-left: auto;
 		display: flex;
 		align-items: center;
-		/* Plus large qu'à l'intérieur des groupes : sépare compte / admin / langue. */
 		gap: 0.7rem;
 	}
 
@@ -185,12 +166,10 @@
 		height: 2.2rem;
 		padding: 0 0.75rem;
 		border-radius: 999px;
-		background: rgba(58, 42, 32, 0.05);
+		border: 1px solid var(--t-linha);
 		font-size: 0.82rem;
 	}
 
-	/* Une page peut passer un bloc vide (état de session pas encore connu) :
-	   sans ça, une pastille grise flotterait toute seule dans le bandeau. */
 	.compte:empty {
 		display: none;
 	}
@@ -202,76 +181,59 @@
 		height: 2.2rem;
 		padding: 0 0.75rem;
 		border-radius: 999px;
-		background: rgba(31, 95, 99, 0.12);
-		color: var(--color-teal);
-		font-family: var(--font-heading);
-		font-weight: 600;
+		border: 1px solid var(--t-linha);
+		color: var(--t-tinta);
+		font-weight: 700;
 		font-size: 0.78rem;
 		text-decoration: none;
 		white-space: nowrap;
-		transition: background-color 150ms ease;
+		transition: border-color 0.3s;
 	}
 
 	.admin-link:hover {
-		background: rgba(31, 95, 99, 0.2);
+		border-color: var(--t-aur);
 	}
 
-	/* Même sélecteur de langue que sur l'accueil, pour que le geste soit
-	   identique partout. */
 	.lang-toggle {
-		display: flex;
-		gap: 0.3rem;
-		height: 2.2rem;
-		align-items: center;
-		background: white;
-		padding: 0 0.25rem;
+		display: inline-flex;
+		gap: 2px;
+		padding: 3px;
 		border-radius: 999px;
-		box-shadow: 0 2px 8px rgba(58, 42, 32, 0.12);
+		border: 1px solid var(--t-linha);
 	}
 
 	.lang-toggle button {
-		border: none;
+		border: 0;
 		background: transparent;
-		color: var(--color-text);
-		font-weight: 600;
-		font-size: 0.8rem;
-		padding: 0.3rem 0.6rem;
+		color: var(--t-tinta);
+		font-weight: 700;
+		font-size: 0.78rem;
+		padding: 0.35rem 0.75rem;
 		border-radius: 999px;
 		cursor: pointer;
 		transition:
-			background-color 150ms ease,
-			color 150ms ease,
-			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+			background 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+			color 0.5s;
 	}
 
-	.lang-toggle button:hover {
-		transform: scale(1.08);
+	.lang-toggle button[aria-pressed='true'] {
+		background: var(--t-tinta);
+		color: var(--t-fons);
 	}
 
-	.lang-toggle button:active {
-		transform: scale(0.95);
+	.lang-toggle button:focus-visible,
+	.nav-ligam:focus-visible,
+	.brand:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 3px;
+		border-radius: 6px;
 	}
 
-	.lang-toggle button.active {
-		background: var(--color-terracotta);
-		color: white;
-	}
-
-	.lang-toggle button.fr.active {
-		background: var(--color-sky);
-	}
-
-	/* Dégradation par ordre de sacrifice : on retire d'abord les mots dont
-	   l'icône suffit (l'engrenage dit « administration »), puis le pseudo
-	   (son initiale reste), puis le nom du site. Le libellé de la carte,
-	   lui, ne disparaît jamais : c'est celui qu'on ne devine pas. */
+	/* Dégradation par ordre de sacrifice : d'abord le mot « Administration »
+	   (l'engrenage reste), puis l'e-mail du compte, puis le nom du site. */
 	@container (max-width: 41rem) {
 		.admin-tèxte {
 			display: none;
-		}
-
-		.admin-link {
-			padding: 0 0.6rem;
 		}
 	}
 
@@ -279,13 +241,13 @@
 		.compte :global(.account-email) {
 			display: none;
 		}
+		.nav {
+			order: 3;
+			width: 100%;
+		}
 	}
 
-	@container (max-width: 26rem) {
-		.separador {
-			display: none;
-		}
-
+	@container (max-width: 22rem) {
 		.brand-name {
 			display: none;
 		}

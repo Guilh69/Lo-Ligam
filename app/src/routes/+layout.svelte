@@ -1,8 +1,23 @@
 <script>
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import { page } from '$app/state';
+	import { ambianca, ARMONIZADAS } from '$lib/stores/ambianca.svelte.js';
+	import SiteFooter from '$lib/components/SiteFooter.svelte';
 
 	let { children } = $props();
+
+	// Cadre commun (2026-10-07). Les pages sont harmonisées une à une avec la
+	// charte de l'esbòs de nuèch ; tant qu'une page n'est pas dans ARMONIZADAS
+	// (stores/ambianca), elle reste en thème clair (elle est dessinée pour un
+	// fond crème), sans toucher au choix mémorisé du visiteur.
+	let id = $derived(page.route.id ?? '');
+	$effect(() => {
+		ambianca.forçarClar = !ARMONIZADAS.includes(id);
+	});
+	// Pied de page partout, sauf l'administration et l'accueil (qui a le sien,
+	// avec la phrase éditable depuis /admin/textes).
+	let ambPè = $derived(id !== '/' && !id.startsWith('/admin'));
 </script>
 
 <svelte:head>
@@ -11,3 +26,7 @@
 </svelte:head>
 
 {@render children()}
+
+{#if ambPè}
+	<SiteFooter />
+{/if}

@@ -26,6 +26,52 @@
 	--font-logo: 'Limelight', 'Georgia', serif;
 }
 
+/* Colors de tèma (cadre comun, 2026-10-07, représ de l'esbòs de nuèch) :
+   las components novèlas (bandèl, pè de pagina, panèl d'ambiança) las
+   utilizan ; las ancianas colors (--color-*) demòran per las paginas pas
+   encara armonizadas. Lo tèma es pausat sus <html> per stores/ambianca. */
+:root,
+:root[data-tema='sorne'] {
+	--t-fons: #120906;
+	--t-fons-2: #1d0f0a;
+	--t-tinta: #f5ead8;
+	--t-tinta-2: rgba(245, 234, 216, 0.7);
+	--t-linha: rgba(245, 234, 216, 0.16);
+	--t-vel: rgba(18, 9, 6, 0.72);
+	--t-aur: #eeaf34;
+	--t-aur-clar: #ffd47f;
+	--t-terra: #b53d17;
+	--t-terra-viu: #e0612f;
+}
+:root[data-tema='clar'] {
+	--t-fons: #f5ead8;
+	--t-fons-2: #ecdcc3;
+	--t-tinta: #2e1d14;
+	--t-tinta-2: rgba(46, 29, 20, 0.72);
+	--t-linha: rgba(46, 29, 20, 0.16);
+	--t-vel: rgba(245, 234, 216, 0.8);
+	--t-aur: #a85d12;
+	--t-aur-clar: #8a3f12;
+	--t-terra: #b53d17;
+	--t-terra-viu: #b53d17;
+}
+/* Colors adaptadas al daltonisme : lo terracòta ven blau (se destria de
+   l'aur per totes los daltonismes roge-verd), mai de contraste. */
+:root[data-dalt='on'] {
+	--t-terra: #2f6fb0;
+	--t-terra-viu: #6fb1ff;
+	--t-tinta-2: rgba(245, 234, 216, 0.86);
+	--t-linha: rgba(245, 234, 216, 0.28);
+}
+:root[data-tema='clar'][data-dalt='on'] {
+	--t-terra: #1f5f8f;
+	--t-terra-viu: #1f5f8f;
+	--t-aur: #8a4f00;
+	--t-aur-clar: #6b3a00;
+	--t-tinta-2: rgba(46, 29, 20, 0.88);
+	--t-linha: rgba(46, 29, 20, 0.3);
+}
+
 /* Barrio e Limelight existisson pas qu'en 400 : cap de fals gras fabricat
    pel navigator (baveux e inegal), la grais demandada tomba sus la vertadièra. */
 * {
