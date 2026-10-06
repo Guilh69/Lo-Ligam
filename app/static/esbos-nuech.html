@@ -252,9 +252,10 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 
 /* ---------- Acte III : manifèst que s'emplena ---------- */
 .manifest { padding: 26vh var(--marge) 22vh; }
-.jalon { display: flex; align-items: baseline; gap: 1.2rem; margin-bottom: 3rem; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; }
-.jalon b { color: var(--aur); font-weight: 700; }
-.jalon span { color: var(--crema-2); }
+/* Jalons : la convencion editoriala (pichon subretítol, grand messatge) mas mai legibla (decision Romain 2026-10-07) */
+.jalon { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+.jalon b { font-family: var(--titol); font-weight: 400; font-size: 1.5rem; letter-spacing: 0.04em; color: var(--aur); }
+.jalon span { color: var(--crema); opacity: 0.86; }
 .manifest-tèxt { max-width: 22ch; font-family: var(--titol); font-size: clamp(2.2rem, 5.6vw, 5.4rem); line-height: 1.08; }
 .manifest-tèxt .m { color: rgba(245, 234, 216, 0.14); transition: color 0.35s; }
 .manifest-tèxt .m.on { color: var(--crema); }
