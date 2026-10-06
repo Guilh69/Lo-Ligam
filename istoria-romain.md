@@ -28,8 +28,25 @@ C'est en rentrant en France que je me suis passionné pour l'occitan, et que j'a
 
 Au début, je ne savais pas par où commencer : il n'y a pas de guide officiel, l'information est disparate. J'ai fait mon petit chemin en commençant par le livre Assimil, un livre super, mais où je me suis beaucoup perdu : tant d'exceptions, une langue qui semblait si compliquée que j'ai presque abandonné. Finalement, j'ai tenu. Au fur et à mesure, j'ai commencé à pouvoir m'exprimer en occitan et à rencontrer du monde dans cette langue.
 
+## 7. Retrouver les mots de la famille
+
+J'ai pu reposer des questions à ma famille sur les mots en occitan, commencer à les recueillir, faire des liens, et comprendre que des mots que j'utilisais déjà tous les jours étaient de l'occitan.
+
+J'ai été heureux de pouvoir me reconnecter avec mon papy autour de l'occitan. Lui-même avait du mal à l'appeler « occitan ». Il était un peu interloqué au début, quand je m'y suis intéressé, et il avait un peu honte : il disait qu'il ne parlait pas le vrai occitan, que c'était du patois. Mais au bout d'un moment, je sentais qu'il se décoinçait, qu'il commençait à dire des phrases, à nous raconter de nouveau des histoires en occitan. Je suis très heureux d'avoir pu échanger avec lui sur tout ça jusqu'à la fin de sa vie. Il nous a quittés en 2023.
+
+## 8. Naissance du Ligam (2022)
+
+En 2022, je me suis lancé, sans trop savoir pourquoi, dans un compte Instagram. J'ai saisi l'occasion d'un traducteur automatique, Revirada, qui venait d'être publié avec un générateur de voix, Vòtz. Ça m'a donné envie de publier de jolies illustrations avec des mots simples : le ciel, la montagne, les oiseaux.
+
+Au début, je mettais la voix automatique, parce que je n'osais pas parler. Puis, au fur et à mesure, j'ai pris le coup : des publications sur différentes thématiques, des animations de plus en plus travaillées, avec Canva comme outil principal. Ça a intéressé quelques personnes au début, et je ne m'attendais pas à ce que ça marche aussi bien. Ça m'a encouragé à continuer.
+
+L'idée, c'est d'apprendre en même temps que je partage. Je ne me présente pas comme un guide suprême ou un maître de la langue, mais comme un apprenti qui n'a pas peur de faire des erreurs et qui essaie d'apprendre au mieux une langue qu'il adore. Tout ça a mené à une communauté de plusieurs milliers de personnes.
+
+## 9. Aujourd'hui
+
+Aujourd'hui, j'ai envie de passer à un stade supérieur : enseigner vraiment ce que j'ai appris, partager ma vision de la réalité occitane en France aujourd'hui, dans sa complexité, et surtout créer un espace d'échange.
+
 ## À venir (Romain)
 
-- La suite du parcours : les rencontres, la pratique, le passage à l'enseignement.
-- L'histoire familiale plus en détail (côté maternel, les grands-parents, le « patois »).
-- La naissance du Ligam : le compte Instagram, puis le site.
+- À confirmer : le générateur de voix s'appelle bien « Vòtz » (Lo Congrès) ? La dictée a donné « Vox ».
+- Éventuellement : le passage de l'apprentissage à l'enseignement (premiers cours, premiers élèves), et ce que vous voulez dire sur Lyon aujourd'hui.
