@@ -385,7 +385,9 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 /* ---------- Acte V : las chifras ---------- */
 .chifras { padding: 24vh var(--marge) 18vh; }
 /* Zòna voida : lo canevàs i dessenha l'Occitània amb las estelas */
-.carta-estelas { display: block; height: min(74vh, 60vw); margin: 1rem 0 1rem; cursor: pointer; border-radius: 18px; }
+/* Pas mai un ligam (sonque lo boton dubrís la carta) ; sus telefon, lo det fa aparéisser los noms
+   (tòca o lisa de travèrs : touch-action laissa lo defilament vertical a la pagina) */
+.carta-estelas { display: block; height: min(74vh, 60vw); margin: 1rem 0 1rem; border-radius: 18px; touch-action: pan-y; }
 .carta-dobrir { display: flex; justify-content: flex-end; margin: 1.8rem 0 3.5rem; }
 .boton-traç { background: transparent; color: var(--aur-clar); box-shadow: inset 0 0 0 1px var(--aur); }
 .boton-traç:hover, .boton-traç:focus-visible { color: var(--nuech); }
@@ -579,7 +581,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	<!-- V. Las chifras -->
 	<section class="chifras" data-revela>
 		<p class="jalon"><b>04</b><span class="masc"><span class="masc-in"><span class="bi"><span class="oc">L’occitan, uèi</span><span class="fr">L’occitan, aujourd’hui</span></span></span></span></p>
-		<a class="carta-estelas" href="/carta" data-cur aria-label="Carta de l’Occitània en estelas, 304 vilas e vilatges amb lor nom occitan. Dobrir la carta entièra"></a>
+		<div class="carta-estelas" role="img" aria-label="Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan"></div>
 		<div class="carta-dobrir esvani"><a class="boton boton-traç" href="/carta" data-magnet data-cur><span class="boton-emplenat"></span><span class="boton-tèxt"><span class="bi"><span class="oc">Dobrir la carta entièra</span><span class="fr">Ouvrir la carte entière</span></span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></a></div>
 		<div class="chifras-grasilha">
 			<div class="chifra esvani" style="--i: 1">
@@ -1124,7 +1126,10 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	// Ont escriure lo nom de cada riu : al mièg de sa linha mai longa
 	const rius_nomenats = {};
 	for (const [nom, , l] of RIUS) if (nom) (rius_nomenats[nom] ||= []).push(l);
-	let aCartaFons = 0, darrierDefil = 0;
+	let aCartaFons = 0, darrierDefil = 0, tòcCarta = -1e9;
+	const detCarta = (e) => { if (e.pointerType === 'mouse') return; mx = e.clientX; my = e.clientY; mouVist = true; tòcCarta = performance.now(); };
+	zonaCarta.addEventListener('pointerdown', detCarta);
+	zonaCarta.addEventListener('pointermove', detCarta);
 	const punts = P.map(([lx, ly], i) => ({ lx, ly, x: 0, y: 0, vx: 0, vy: 0, retard: i === 0 ? 0 : aleat(0, 0.28), estela: { x: 0, y: 0, f: aleat(0, 6.28) } }));
 	talhar();
 	punts.forEach((pt) => { pt.x = pt.estela.x; pt.y = pt.estela.y; });
@@ -1139,7 +1144,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	// Rius : lo nom seguís lo traçat, letra per letra ; s'ensaja mantun endrech
 	// long de l'aiga e se garda lo que tòca pas res.
 	let plaçament = { clau: null, vilas: [], rius: [] };
-	function plaçar(esc, clau, zw, zh) {
+	function plaçar(esc, clau, zw, zh, fv = 12) {
 		const lonM = (GEO.lon0 + GEO.lon1) / 2, latM = (GEO.lat0 + GEO.lat1) / 2;
 		const loc = (lon, lat) => [(lon - lonM) * GEO.kx * esc, -(lat - latM) * esc];
 		const res = { clau, vilas: [], rius: [] };
@@ -1159,8 +1164,6 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		};
 		const liss = (pts, n) => { for (let k = 0; k < n; k++) { const q = [pts[0]]; for (let i = 0; i < pts.length - 1; i++) { const a = pts[i], b = pts[i + 1]; q.push([a[0] * 0.75 + b[0] * 0.25, a[1] * 0.75 + b[1] * 0.25], [a[0] * 0.25 + b[0] * 0.75, a[1] * 0.25 + b[1] * 0.75]); } q.push(pts[pts.length - 1]); pts = q; } return pts; };
 
-		// La flècha del nòrd (en naut a esquèrra) es un obstacle tanben
-		metre([-zw / 2, -zh / 2, -zw / 2 + 70, -zh / 2 + 110], 5, 'nòrd');
 		const vilas = estelas.filter((e) => e.vila);
 		for (const e of vilas) { const [x, y] = loc(e.lon, e.lat); e.lx = x; e.ly = y; metre([x - 4, y - 4, x + 4, y + 4], 5, e.nom); }
 		RIUS.forEach(([nom, , l], n) => {
@@ -1172,17 +1175,21 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		});
 
 		// Vilas : la plaça la mens encombrada entre drecha, esquèrra, naut e bas
-		cx.font = '700 12px Luciole, sans-serif';
+		cx.font = '700 ' + fv + 'px Luciole, sans-serif';
+		const k = fv / 12;
 		for (const e of vilas) {
 			const w = cx.measureText(e.nom).width, x = e.lx, y = e.ly;
 			const cand = [
-				{ x: x + 7, y: y + 4, al: 'left', b: [x + 5, y - 8, x + 9 + w, y + 7], bonus: 0 },
-				{ x: x - 7, y: y + 4, al: 'right', b: [x - 9 - w, y - 8, x - 5, y + 7], bonus: 0.4 },
-				{ x, y: y - 9, al: 'center', b: [x - w / 2 - 2, y - 21, x + w / 2 + 2, y - 5], bonus: 0.6 },
-				{ x, y: y + 18, al: 'center', b: [x - w / 2 - 2, y + 5, x + w / 2 + 2, y + 21], bonus: 0.8 }
+				{ x: x + 7 * k, y: y + 4 * k, al: 'left', b: [x + 5 * k, y - 8 * k, x + 9 * k + w, y + 7 * k], bonus: 0 },
+				{ x: x - 7 * k, y: y + 4 * k, al: 'right', b: [x - 9 * k - w, y - 8 * k, x - 5 * k, y + 7 * k], bonus: 0.4 },
+				{ x, y: y - 9 * k, al: 'center', b: [x - w / 2 - 2, y - 21 * k, x + w / 2 + 2, y - 5 * k], bonus: 0.6 },
+				{ x, y: y + 18 * k, al: 'center', b: [x - w / 2 - 2, y + 5 * k, x + w / 2 + 2, y + 21 * k], bonus: 0.8 }
 			];
 			let c = cand[0], mendre = Infinity;
 			for (const k of cand) { const [v, f] = cost(k.b, e.nom); const sc = v + f * 100 + k.bonus; if (sc < mendre) { mendre = sc; c = k; } }
+			// Cap de plaça liura (ciutats sarradas sus telefon) : lo nom se mòstra pas,
+			// puslèu que de se pilar sus un autre ; demòra visible al tòc
+			if (mendre >= 100) continue;
 			metre(c.b, 5, 'etiqueta'); res.vilas.push({ e, x: c.x, y: c.y, al: c.al });
 		}
 
@@ -1265,10 +1272,12 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	}
 
 	let cacheEtiq = null;
-	function construirEtiquetas(clau, pusNom, pusLoc, zw, zh) {
+	function construirEtiquetas(clau, pusNom, pusLoc, zw, zh, fv = 12) {
 		const M = 220, w = Math.ceil(zw + 2 * M), h = Math.ceil(zh + 2 * M), ox = w / 2, oy = h / 2;
 		const fa = () => { const c = document.createElement('canvas'); c.width = Math.ceil(w * DPR); c.height = Math.ceil(h * DPR); const g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, ox * DPR, oy * DPR); g.strokeStyle = TEM.liser; g.lineJoin = 'round'; return [c, g]; };
-		const pres = (x, y) => (pusLoc ? Math.hypot(x - pusLoc[0], y - pusLoc[1]) < 150 : false);
+		// Los noms vesins de l'estela subrevolada s'escafan (mai prèp sus telefon)
+		const rayVesins = fv < 12 ? 60 : 150;
+		const pres = (x, y) => (pusLoc ? Math.hypot(x - pusLoc[0], y - pusLoc[1]) < rayVesins : false);
 		const [cr, gr] = fa();
 		gr.fillStyle = TEM.riuTèxt; gr.textAlign = 'center'; gr.textBaseline = 'middle'; gr.lineWidth = 3;
 		for (const r of plaçament.rius) {
@@ -1279,7 +1288,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			}
 		}
 		const [cv2, gv] = fa();
-		gv.font = '700 12px Luciole, sans-serif'; gv.fillStyle = TEM.vilaTèxt; gv.lineWidth = 4;
+		gv.font = '700 ' + fv + 'px Luciole, sans-serif'; gv.fillStyle = TEM.vilaTèxt; gv.lineWidth = fv < 12 ? 3 : 4;
 		for (const v of plaçament.vilas) {
 			if (v.e.nom === pusNom) continue;
 			gv.globalAlpha = pres(v.e.lx, v.e.ly) ? 0.12 : 1;
@@ -1344,7 +1353,9 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			geoFons = [1 / (ESCALA_FONS * GEO.kx * esc * lw), (lonM - REL.lon0) / lw - zcx / (GEO.kx * esc * lw),
 				-1 / (ESCALA_FONS * esc * lh), (REL.lat1 - latM) / lh + (H - zcy) / (esc * lh)];
 		}
-		let pus = null, pusD = 22;
+		// Sus telefon, lo nom tòcat demòra 5 s, e la zòna de tòc es mai larga que la mirga
+		const detActiu = performance.now() - tòcCarta < 5000;
+		let pus = null, pusD = detActiu ? 30 : 22;
 		for (const e of estelas) {
 			const tw = Math.sin(temps * e.v + e.f) * 0.5 + 0.5;
 			const x0 = e.x + Math.sin(temps * 0.05 + e.f) * 12, y0 = e.y + Math.cos(temps * 0.04 + e.f) * 10 - ((sy * 0.08) % H);
@@ -1356,7 +1367,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			cx.globalAlpha = lerp(0.18 + 0.27 * tw, e.vila ? 1 : 0.55 + 0.35 * tw, ai);
 			cx.fillStyle = TEM.estela;
 			cx.beginPath(); cx.arc(x, y, lerp(e.r, e.vila ? 2.8 : 1.35, ai), 0, 6.283); cx.fill();
-			if (mouVist && finPointer) {
+			if (mouVist && (finPointer || detActiu)) {
 				const dd = Math.hypot(x - mx, y - my);
 				if (dd < rayLigam) {
 					cx.globalAlpha = (1 - dd / rayLigam) * 0.5; cx.strokeStyle = TEM.fil; cx.lineWidth = 0.6;
@@ -1373,20 +1384,21 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		// puèi simplament desplaçadas : pas mai de 250 letras viradas de redessenhar
 		// a cada imatge (Firefox o pagava car). Refachas sonque quand l'escala o
 		// l'estela subrevolada càmbian.
-		if (W > 700 && (aRiu > 0.8 || aCarta > 0.6)) {
-			const clau = esc.toFixed(1) + '|' + Math.round(zr.width) + '|' + Math.round(zr.height);
-			if (plaçament.clau !== clau) plaçament = plaçar(esc, clau, zr.width, zr.height);
+		const telefon = W <= 700, fv = telefon ? 10 : 12;
+		if (aRiu > 0.8 || aCarta > 0.6) {
+			const clau = esc.toFixed(1) + '|' + Math.round(zr.width) + '|' + Math.round(zr.height) + '|' + fv;
+			if (plaçament.clau !== clau) plaçament = plaçar(esc, clau, zr.width, zr.height, fv);
 			const pusNom = pus ? pus.nom : '';
 			if (!cacheEtiq || cacheEtiq.clau !== clau || cacheEtiq.pusNom !== pusNom || cacheEtiq.dpr !== DPR || cacheEtiq.tema !== TEM)
-				cacheEtiq = construirEtiquetas(clau, pusNom, pus ? [pus.px - zcx, pus.py - zcy] : null, zr.width, zr.height);
+				cacheEtiq = construirEtiquetas(clau, pusNom, pus ? [pus.px - zcx, pus.py - zcy] : null, zr.width, zr.height, fv);
 			const c = cacheEtiq;
-			if (aRiu > 0.8) { cx.globalAlpha = ((aRiu - 0.8) / 0.2) * 0.85; cx.drawImage(c.rius, zcx - c.ox, zcy - c.oy, c.w, c.h); }
+			if (aRiu > 0.8 && !telefon) { cx.globalAlpha = ((aRiu - 0.8) / 0.2) * 0.85; cx.drawImage(c.rius, zcx - c.ox, zcy - c.oy, c.w, c.h); }
 			if (aCarta > 0.6) { cx.globalAlpha = ((aCarta - 0.6) / 0.4) * 0.92; cx.drawImage(c.vilas, zcx - c.ox, zcy - c.oy, c.w, c.h); }
 		}
 		// Al subrevòl : lo nom occitan del luòc e son dialècte, sus un vel sorne doç
 		if (pus) {
 			const escriure = (t, x, y, liseré) => { cx.lineWidth = liseré; cx.strokeText(t, x, y); cx.fillText(t, x, y); };
-			const dreta = pus.px < W - 260;
+			const dreta = pus.px < W - (telefon ? 150 : 260);
 			const tx = pus.px + (dreta ? 16 : -16);
 			const vel = cx.createRadialGradient(pus.px, pus.py, 0, pus.px, pus.py, 130);
 			vel.addColorStop(0, TEM.vel); vel.addColorStop(1, TEM.velFin);
@@ -1395,26 +1407,28 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			cx.strokeStyle = TEM.fil; cx.lineWidth = 1.2;
 			cx.beginPath(); cx.arc(pus.px, pus.py, 8, 0, 6.283); cx.stroke();
 			cx.textAlign = dreta ? 'left' : 'right'; cx.strokeStyle = TEM.liser;
-			cx.font = 'italic 26px Cormorant, Georgia, serif'; cx.fillStyle = TEM.riuTèxt;
+			cx.font = (telefon ? 'italic 21px' : 'italic 26px') + ' Cormorant, Georgia, serif'; cx.fillStyle = TEM.riuTèxt;
 			escriure(pus.nom, tx, pus.py + 2, 5);
 			cx.font = '700 11px Luciole, sans-serif'; cx.fillStyle = TEM.vilaTèxt; cx.globalAlpha = 0.8;
 			escriure(DIALECTES[pus.dia], tx, pus.py + 20, 4);
 			cx.textAlign = 'left';
 		}
 		// La flècha del nòrd, a l'anciana : agulha en losange (mitat plena, mitat
-		// traçada), un anèl fin, una N italica ; dins lo canton sorne en naut a esquèrra
+		// traçada), un anèl fin, una N italica ; FÒRA de la carta, dins l'espaci entre
+		// lo jalon « 04 » e lo primièr riu (demanda Romain 2026-10-07)
 		if (aCarta > 0.05) {
-			const nx = zr.left + 34, ny = zr.top + 44, h = 30, l = 5.5;
+			const h = telefon ? 14 : 19, l = h * 0.19, rA = h / 3, bra = h * 0.6;
+			const nx = zr.left + (telefon ? 8 : 12), ny = zr.top - 6 - h * 1.9;
 			cx.globalAlpha = aCarta * 0.8; cx.strokeStyle = TEM.fil; cx.fillStyle = TEM.fil; cx.lineWidth = 0.9;
-			cx.beginPath(); cx.arc(nx, ny + h, 10, 0, 6.283); cx.stroke();
+			cx.beginPath(); cx.arc(nx, ny + h, rA, 0, 6.283); cx.stroke();
 			cx.globalAlpha = aCarta * 0.45;
-			cx.beginPath(); cx.moveTo(nx - 18, ny + h); cx.lineTo(nx + 18, ny + h); cx.stroke();
+			cx.beginPath(); cx.moveTo(nx - bra, ny + h); cx.lineTo(nx + bra, ny + h); cx.stroke();
 			cx.globalAlpha = aCarta * 0.8;
 			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx - l, ny + h); cx.lineTo(nx, ny + h); cx.closePath(); cx.fill();
 			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx + l, ny + h); cx.lineTo(nx, ny + h); cx.closePath(); cx.stroke();
 			cx.beginPath(); cx.moveTo(nx - l, ny + h); cx.lineTo(nx, ny + h * 1.9); cx.lineTo(nx + l, ny + h); cx.stroke();
-			cx.font = 'italic 19px Cormorant, Georgia, serif'; cx.textAlign = 'center'; cx.fillStyle = TEM.riuTèxt;
-			cx.fillText('N', nx, ny - 7); cx.textAlign = 'left';
+			cx.font = 'italic ' + (telefon ? 13 : 16) + 'px Cormorant, Georgia, serif'; cx.textAlign = 'left'; cx.fillStyle = TEM.riuTèxt;
+			cx.fillText('N', nx + bra + 4, ny + h * 0.35);
 		}
 
 		// Los 13 punts del lògo : ressòrt cap a la cibla + repulsion de la mirga

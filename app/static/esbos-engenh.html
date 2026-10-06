@@ -250,7 +250,7 @@ body { background: #120906; color: #f5ead8; font-family: 'Luciole', system-ui, s
 				// la mirga : los rodatges acceleran quand s'apròcha
 				const a = el.astro;
 				const prop = a ? Math.hypot(m.x - a.x, m.y - a.y) : 1e4;
-				vit += ((m.dins && prop < a.R * 2.2 ? 4 : 1) - vit) * 0.05;
+				vit += ((m.dins && a && prop < a.R * 2.2 ? 4 : 1) - vit) * 0.05;
 				if (!calm) rot += 0.004 * vit;
 				if (a && m.dins) { const obj = Math.atan2(m.y - a.y, m.x - a.x); let dd = obj - alid; dd = Math.atan2(Math.sin(dd), Math.cos(dd)); alid += dd * 0.08; }
 				conf.dessenhar(cx, el, { W, H, temps: calm ? 0 : temps, rot, alid, creis });
