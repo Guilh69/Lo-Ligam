@@ -223,6 +223,20 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .biai-ligam svg { width: 1em; transition: transform 0.6s var(--ease); }
 .biai-ligam:hover svg { transform: translateX(6px); }
 .biai-ligam.leu { color: var(--terra-viu); font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; }
+.lengas { border: 0; margin-top: 3rem; display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.6rem; }
+.lengas legend { float: left; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--crema-2); margin-right: 0.4rem; }
+.lengas-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.lengas-chips label { position: relative; cursor: pointer; }
+.lengas-chips input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.lengas-chips span {
+	display: inline-block; padding: 0.6rem 1.25rem; border-radius: 999px; border: 1px solid var(--crema-3);
+	font-family: var(--votz); font-style: italic; font-size: 1.15rem; color: var(--crema);
+	transition: background 0.45s var(--ease), color 0.45s, border-color 0.45s;
+}
+.lengas-chips label:hover span { border-color: var(--aur); }
+.lengas-chips input:checked + span { background: var(--aur); border-color: var(--aur); color: var(--nuech); }
+.lengas-chips input:focus-visible + span { outline: 2px solid var(--aur); outline-offset: 3px; }
+.lengas-consigna { flex-basis: 100%; color: var(--aur-clar); font-size: 0.95rem; min-height: 1.5em; }
 @media (max-width: 860px) {
 	.biais-grasilha { grid-template-columns: 1fr; }
 	.biai + .biai { padding-left: 0; border-left: 0; border-top: 1px solid var(--crema-3); }
@@ -422,6 +436,18 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 				<a class="biai-ligam" href="https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" target="_blank" rel="noopener" data-cur aria-describedby="onglet-nou"><span class="bi"><span class="oc">Ne parlar ensems</span><span class="fr">En parler ensemble</span></span> <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
 			</article>
 		</div>
+		<!-- Los corses se fan dempuèi quatre lengas : cada lenga es nomenada dins ela meteissa,
+		     e la consigna s'escriu dins la lenga causida (aculhir los que parlan pas francés) -->
+		<fieldset class="lengas esvani" style="--i: 4">
+			<legend><span class="bi"><span class="oc">Aprene l’occitan dempuèi :</span><span class="fr">Apprendre l’occitan depuis :</span></span></legend>
+			<div class="lengas-chips">
+				<label><input type="radio" name="lenga-cors" value="fr" checked /><span lang="fr">Français</span></label>
+				<label><input type="radio" name="lenga-cors" value="en" /><span lang="en">English</span></label>
+				<label><input type="radio" name="lenga-cors" value="es" /><span lang="es">Español</span></label>
+				<label><input type="radio" name="lenga-cors" value="ca" /><span lang="ca">Català</span></label>
+			</div>
+			<p class="lengas-consigna" aria-live="polite"></p>
+		</fieldset>
 	</section>
 
 	<!-- IV. Quatre camins -->
@@ -621,6 +647,28 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	try { lengaInicial = localStorage.getItem('lo-ligam-esbos-lenga') || 'oc'; } catch {}
 	metreLenga(lengaInicial);
 	document.querySelectorAll('[data-lenga-boton]').forEach((b) => b.addEventListener('click', () => metreLenga(b.dataset.lengaBoton)));
+
+	/* ================= Lenga de partença dels corses ================= */
+	// Tèxtes en anglés, espanhòl e catalan : A VERIFICAR per un locutor.
+	const CONSIGNAS = {
+		fr: ['fr', 'Cours depuis le français. Précise-le en réservant.'],
+		en: ['en', 'Lessons taught from English. Just mention it when you book.'],
+		es: ['es', 'Clases desde el español. Indícalo al reservar.'],
+		ca: ['ca', 'Classes des del català. Indica-ho en reservar.']
+	};
+	const consigna = document.querySelector('.lengas-consigna');
+	function metreLengaCors(v) {
+		const [lg, t] = CONSIGNAS[v] || CONSIGNAS.fr;
+		consigna.lang = lg; consigna.textContent = t;
+		try { localStorage.setItem('lo-ligam-esbos-lenga-cors', v); } catch {}
+	}
+	let lengaCors = 'fr';
+	try { lengaCors = localStorage.getItem('lo-ligam-esbos-lenga-cors') || 'fr'; } catch {}
+	document.querySelectorAll('input[name="lenga-cors"]').forEach((r) => {
+		r.checked = r.value === lengaCors;
+		r.addEventListener('change', () => metreLengaCors(r.value));
+	});
+	metreLengaCors(lengaCors);
 
 	/* ================= Revelacions ================= */
 	const io = new IntersectionObserver((es) => es.forEach((e) => {
