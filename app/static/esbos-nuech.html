@@ -283,11 +283,14 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .lengas { border: 0; margin-top: 3rem; display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.6rem; }
 .lengas legend { float: left; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--crema-2); margin-right: 0.4rem; }
 .lengas-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-/* Telefon : doas colomnas egalas, lo catalan demòra pas sol sus sa linha */
+/* Telefon : las quatre pastilhas sus una sola linha, mai pichonas, sus tota la largor ; la legenda respira */
 @media (max-width: 560px) {
-	.lengas legend { float: none; margin: 0 0 0.2rem; }
-	.lengas-chips { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
-	.lengas-chips span { display: block; text-align: center; }
+	.lengas { gap: 0; }
+	.lengas legend { float: none; margin: 0 0 0.9rem; }
+	.lengas-chips { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.35rem; flex: 1 1 100%; min-width: 0; }
+	.lengas .lengas-chips label { min-width: 0; }
+	.lengas .lengas-chips span { display: block; text-align: center; padding: 0.5rem 0.1rem; font-size: 0.86rem; white-space: nowrap; }
+	.lengas-consigna { margin-top: 0.9rem; }
 }
 .lengas-chips label { position: relative; cursor: pointer; }
 .lengas-chips input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
@@ -358,8 +361,8 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .camins-barra i { position: absolute; inset: 0; background: var(--aur); transform-origin: left; transform: scaleX(0); }
 @media (max-width: 860px) {
 	/* Telefon : lo títol « 03 · Quatre camins » dins lo flux, al dessús dels panèls (pas mai amagat jos las fòtos) */
-	.camins-pin { justify-content: flex-start; padding-top: 5rem; gap: 1.4rem; }
-	.camins-cap { position: static; padding-inline: var(--marge); }
+	.camins-pin { justify-content: flex-start; padding-top: 5rem; gap: 0.9rem; }
+	.camins-cap { position: static; padding-inline: var(--marge); margin-bottom: 0; }
 	.panel { width: 84vw; height: calc(100svh - 11.5rem); grid-template-columns: 1fr; grid-template-rows: 36% 1fr; gap: 1rem; }
 	.panel-media { order: -1; }
 	.panel-num { display: none; }
@@ -369,7 +372,7 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .chifras { padding: 24vh var(--marge) 18vh; }
 /* Zòna voida : lo canevàs i dessenha l'Occitània amb las estelas */
 .carta-estelas { display: block; height: min(74vh, 60vw); margin: 1rem 0 1rem; cursor: pointer; border-radius: 18px; }
-.carta-dobrir { display: flex; justify-content: flex-end; margin-bottom: 3.5rem; }
+.carta-dobrir { display: flex; justify-content: flex-end; margin: 1.8rem 0 3.5rem; }
 .boton-traç { background: transparent; color: var(--aur-clar); box-shadow: inset 0 0 0 1px var(--aur); }
 .boton-traç:hover, .boton-traç:focus-visible { color: var(--nuech); }
 .crida-accions { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
