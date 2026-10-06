@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lo Ligam, veines d'or comparées</title>
+<meta name="robots" content="noindex" />
+<!--
+  PLANCHE « VENAS D'AUR » (2026-10-07) — Romain préfère l'ambiance aux veines d'or,
+  mais la trouve « un peu triste » : la rendre plus joyeuse, plus proche de ses
+  publications Instagram. Même mouvement que l'esbòs, quatre palettes. Chaque
+  fond ne tourne que lorsqu'il est à l'écran.
+-->
+<style>
+@font-face { font-family: 'Limelight'; src: url('/fonts/limelight.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url('/fonts/luciole-bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-synthesis: none; }
+body { background: #120906; color: #f5ead8; font-family: 'Luciole', system-ui, sans-serif; }
+.cap { padding: 3rem clamp(1rem, 4vw, 3.4rem) 2rem; max-width: 72ch; }
+.cap h1 { font-family: 'Limelight'; font-weight: 400; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 0.8rem; }
+.cap p { color: rgba(245, 234, 216, 0.72); line-height: 1.6; }
+.prop { position: relative; height: 88vh; min-height: 560px; overflow: hidden; border-top: 1px solid rgba(245, 234, 216, 0.14); }
+.prop canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mostra { position: absolute; left: clamp(1rem, 4vw, 3.4rem); bottom: 3rem; max-width: 36rem; pointer-events: none; }
+.mostra .k { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--acc); }
+.mostra h2 { font-family: 'Limelight'; font-weight: 400; font-size: clamp(3rem, 8vw, 7rem); line-height: 1; margin: 0.6rem 0 1rem; }
+.mostra h2 span { color: var(--acc); }
+.mostra .d { line-height: 1.6; color: rgba(255, 245, 230, 0.8); }
+.boton { display: inline-block; margin-top: 1.4rem; padding: 0.9rem 1.8rem; border-radius: 999px; font-weight: 700; background: #fff3dd; color: #1a0d07; }
+</style>
+</head>
+<body>
+<header class="cap">
+	<h1>Les veines d'or, en plus joyeux</h1>
+	<p>Le même mouvement que l'esbòs, quatre palettes. Promenez la souris sur chacune : les veines s'écartent autour du curseur.</p>
+</header>
+
+<section class="prop" data-p="nuech" style="--acc: #eeaf34">
+	<canvas></canvas>
+	<div class="mostra"><p class="k">A · Nuèch (l'actuelle)</p><h2>Se parla. <span>Se viu.</span></h2><p class="d">Brun nuit et veines d'or. La référence, pour comparer.</p><span class="boton">Reservar un primièr cors</span></div>
+</section>
+<section class="prop" data-p="brasa" style="--acc: #ffd47f">
+	<canvas></canvas>
+	<div class="mostra"><p class="k">B · Brasa</p><h2>Se parla. <span>Se viu.</span></h2><p class="d">La braise : un fond terracotta et brique, la couleur de votre logo, des veines d'or vif et des reflets crème. Chaleureux, lumineux.</p><span class="boton">Reservar un primièr cors</span></div>
+</section>
+<section class="prop" data-p="colcant" style="--acc: #ffb36b">
+	<canvas></canvas>
+	<div class="mostra"><p class="k">C · Solelh colcant</p><h2>Se parla. <span>Se viu.</span></h2><p class="d">Le soleil couchant : un fond prune et lie-de-vin, des veines or et corail. Plus festif, une touche de rose.</p><span class="boton">Reservar un primièr cors</span></div>
+</section>
+<section class="prop" data-p="mar" style="--acc: #eeaf34">
+	<canvas></canvas>
+	<div class="mostra"><p class="k">D · Mar e aur</p><h2>Se parla. <span>Se viu.</span></h2><p class="d">La mer et l'or : un fond bleu-vert profond (le sarcelle de votre palette), des veines or et terracotta. Le contraste le plus vif.</p><span class="boton">Reservar un primièr cors</span></div>
+</section>
+
+<script>
+(() => {
+	const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	// [fons sorne, fons mièg, color de las tacas, color de las venas, halo de la mirga]
+	const PALETAS = {
+		nuech: [[0.071, 0.035, 0.024], [0.27, 0.075, 0.035], [0.71, 0.24, 0.09], [0.93, 0.69, 0.20], [0.42, 0.2, 0.06]],
+		brasa: [[0.30, 0.07, 0.03], [0.62, 0.20, 0.07], [0.86, 0.42, 0.16], [1.0, 0.83, 0.42], [0.6, 0.35, 0.12]],
+		colcant: [[0.12, 0.03, 0.08], [0.36, 0.08, 0.18], [0.85, 0.32, 0.30], [1.0, 0.72, 0.36], [0.6, 0.25, 0.25]],
+		mar: [[0.02, 0.09, 0.10], [0.07, 0.27, 0.29], [0.71, 0.24, 0.09], [0.93, 0.69, 0.20], [0.3, 0.3, 0.15]]
+	};
+	const frag = `
+	precision highp float;
+	uniform vec2 r; uniform float t; uniform vec2 m; uniform vec3 c0, c1, c2, c3, c4;
+	float h(vec2 q){ return fract(sin(dot(q, vec2(41.3, 289.1))) * 43758.5453); }
+	float n(vec2 q){ vec2 i = floor(q), f = fract(q); vec2 u = f*f*(3.0-2.0*f);
+		return mix(mix(h(i), h(i+vec2(1,0)), u.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), u.x), u.y); }
+	float fbm(vec2 q){ float v = 0.0, a = 0.5; for (int i = 0; i < 5; i++){ v += a*n(q); q = q*2.03 + vec2(1.7, 9.2); a *= 0.5; } return v; }
+	void main(){
+		vec2 uv = gl_FragCoord.xy / r; vec2 asp = vec2(r.x / r.y, 1.0);
+		vec2 st = uv * asp * 1.5; float tt = t * 0.045;
+		vec2 dm = (uv - m) * asp; float d = length(dm);
+		st += normalize(dm + 1e-4) * exp(-d * 4.5) * -0.32;
+		vec2 q = vec2(fbm(st + tt), fbm(st + vec2(5.2, 1.3) - tt));
+		vec2 w = vec2(fbm(st + q * 1.7 + vec2(1.7, 9.2)), fbm(st + q * 1.7 + vec2(8.3, 2.8)));
+		float v = fbm(st + w * 1.4);
+		vec3 col = mix(c0, c1, smoothstep(0.28, 0.86, v));
+		col = mix(col, c2, smoothstep(0.6, 0.98, v) * 0.5);
+		float f = abs(fract(v * 3.4 + tt * 0.6) - 0.5);
+		float vena = smoothstep(0.045, 0.0, f) * smoothstep(0.38, 0.82, v);
+		col += c3 * vena * 0.55;
+		col += c4 * exp(-d * 5.5) * 0.25;
+		col *= mix(0.7, 1.0, smoothstep(0.0, 0.7, uv.x));
+		col *= smoothstep(1.5, 0.25, length((uv - vec2(0.58, 0.5)) * vec2(1.0, 1.25)));
+		gl_FragColor = vec4(col, 1.0);
+	}`;
+	document.querySelectorAll('.prop').forEach((sec) => {
+		const cv = sec.querySelector('canvas'), gl = cv.getContext('webgl', { antialias: false, alpha: false });
+		if (!gl) return;
+		const sh = (ty, src) => { const o = gl.createShader(ty); gl.shaderSource(o, src); gl.compileShader(o); return o; };
+		const pr = gl.createProgram();
+		gl.attachShader(pr, sh(gl.VERTEX_SHADER, 'attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }'));
+		gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, frag)); gl.linkProgram(pr); gl.useProgram(pr);
+		gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+		const a = gl.getAttribLocation(pr, 'a'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+		const U = Object.fromEntries(['r', 't', 'm', 'c0', 'c1', 'c2', 'c3', 'c4'].map((k) => [k, gl.getUniformLocation(pr, k)]));
+		PALETAS[sec.dataset.p].forEach((c, i) => gl.uniform3f(U['c' + i], ...c));
+		const talh = () => { cv.width = sec.clientWidth * 0.5; cv.height = sec.clientHeight * 0.5; gl.viewport(0, 0, cv.width, cv.height); };
+		talh(); addEventListener('resize', talh);
+		let vis = false, mx = 0.6, my = 0.5, tx = 0.6, ty = 0.5, k = 0;
+		new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe(sec);
+		sec.addEventListener('pointermove', (e) => { const rr = sec.getBoundingClientRect(); tx = (e.clientX - rr.left) / rr.width; ty = 1 - (e.clientY - rr.top) / rr.height; });
+		const t0 = performance.now();
+		(function pas(t) {
+			if ((vis || !t) && (k++ & 1) === 0) {
+				mx += (tx - mx) * 0.08; my += (ty - my) * 0.08;
+				gl.uniform2f(U.r, cv.width, cv.height); gl.uniform1f(U.t, calm ? 12 : (t - t0) / 1000); gl.uniform2f(U.m, mx, my);
+				gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+			}
+			if (!calm) requestAnimationFrame(pas);
+		})(0);
+	});
+})();
+</script>
+</body>
+</html>
