@@ -238,10 +238,10 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
    (un vel de nuèch las adoucís) ; lo tèxte demòra legible gràcias a un liseré sorne. */
 .lengas-chips span { position: relative; overflow: hidden; isolation: isolate; }
 .lengas-chips span::before {
-	content: ''; position: absolute; inset: 0; z-index: -1;
+	content: ''; position: absolute; inset: -1px; z-index: -1;
 	clip-path: circle(0% at 0% 50%); transition: clip-path 0.9s var(--ease);
 }
-.lengas-chips input:checked + span { border-color: rgba(245, 234, 216, 0.4); color: #fff; text-shadow: 0 0 6px rgba(18, 9, 6, 0.95), 0 0 2px rgba(18, 9, 6, 0.9); }
+.lengas-chips input:checked + span { border-color: transparent; color: #fff; text-shadow: 0 0 6px rgba(18, 9, 6, 0.95), 0 0 2px rgba(18, 9, 6, 0.9); }
 .lengas-chips input:checked + span::before { clip-path: circle(160% at 0% 50%); }
 .lengas-chips span::before { background: linear-gradient(rgba(18, 9, 6, 0.3), rgba(18, 9, 6, 0.3)), var(--drap, transparent); }
 .lengas-chips input:focus-visible + span { outline: 2px solid var(--aur); outline-offset: 3px; }
@@ -677,7 +677,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	const DRAPEUS = {
 		fr: v3(cB, cW, cR), be: v3(cN, cJ, cR), sn: v3(cV, cJ, cR), ci: v3(cO, cW, cV), ht: 'linear-gradient(' + cB + ' 0 50%,' + cR + ' 50%)',
 		ch: crotz(cR, cW, '8% 60%', '24% 20%'), qc: crotz(cB, cW, '8% 100%', '100% 22%'),
-		en: crotz(cW, cR, '10% 100%', '100% 24%'), us: 'linear-gradient(' + cB + ',' + cB + ') 0 0/42% 54% no-repeat, repeating-linear-gradient(' + cR + ' 0 7.69%,' + cW + ' 7.69% 15.38%)',
+		uk: 'linear-gradient(90deg, transparent 45%,' + cR + ' 45% 55%, transparent 55%), linear-gradient(transparent 38%,' + cR + ' 38% 62%, transparent 62%), linear-gradient(90deg, transparent 41%,' + cW + ' 41% 59%, transparent 59%), linear-gradient(transparent 30%,' + cW + ' 30% 70%, transparent 70%), linear-gradient(to top right, transparent 45%,' + cR + ' 47% 50%,' + cW + ' 50% 55%, transparent 55%), linear-gradient(to bottom right, transparent 45%,' + cW + ' 45% 50%,' + cR + ' 50% 53%, transparent 55%), #2c3f74', us: 'linear-gradient(' + cB + ',' + cB + ') 0 0/42% 54% no-repeat, repeating-linear-gradient(' + cR + ' 0 7.69%,' + cW + ' 7.69% 15.38%)',
 		ie: v3(cV, cW, cO), in: h3(cO, cW, cV), ng: v3(cV, cW, cV), cn: 'linear-gradient(90deg,' + cR + ' 0 25%,' + cW + ' 25% 75%,' + cR + ' 75%)',
 		es: 'linear-gradient(' + cR + ' 0 25%,' + cJ + ' 25% 75%,' + cR + ' 75%)', mx: v3(cV, cW, cR), ar: h3(cBc, cW, cBc), pe: v3(cR, cW, cR),
 		co: 'linear-gradient(' + cJ + ' 0 50%,' + cB + ' 50% 75%,' + cR + ' 75%)', cl: 'linear-gradient(' + cB + ',' + cB + ') 0 0/34% 50% no-repeat, linear-gradient(' + cW + ' 0 50%,' + cR + ' 50%)',
@@ -685,7 +685,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	};
 	const SEQ = {
 		fr: ['qc', 'sn', 'be', 'ht', 'ch', 'ci', 'fr'],
-		en: ['us', 'in', 'ng', 'ie', 'cn', 'en'],
+		en: ['us', 'in', 'ng', 'ie', 'cn', 'uk'],
 		es: ['mx', 'ar', 'co', 'pe', 'cl', 'es'],
 		ca: ['ad', 'cat']
 	};
