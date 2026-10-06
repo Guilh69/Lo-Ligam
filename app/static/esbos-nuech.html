@@ -130,6 +130,25 @@ header nav { display: flex; align-items: center; gap: clamp(1rem, 2.6vw, 2.4rem)
 .lenga button[aria-pressed='true'] { background: var(--crema); color: var(--nuech); }
 .lenga button:focus-visible { outline: 2px solid var(--aur); }
 @media (max-width: 720px) { .nav-ligam { display: none; } }
+/* Selector d'ambiança */
+.ambianca { position: relative; }
+.ambianca-boton { all: unset; cursor: pointer; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--crema-3); background: rgba(18, 9, 6, 0.5); color: var(--aur-clar); transition: border-color 0.4s, transform 0.8s var(--ease); }
+.ambianca-boton svg { width: 20px; height: 20px; }
+.ambianca-boton:hover, .ambianca-boton[aria-expanded='true'] { border-color: var(--aur); transform: rotate(45deg); }
+.ambianca-boton:focus-visible { outline: 2px solid var(--aur); outline-offset: 3px; }
+.ambianca-panel { position: absolute; right: 0; top: calc(100% + 12px); width: 250px; padding: 1rem; border-radius: 18px; background: rgba(29, 15, 10, 0.94); border: 1px solid var(--crema-3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45); backdrop-filter: blur(8px); }
+.ambianca-titol { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--crema-2); margin: 0 0 0.6rem 0.3rem; }
+.ambianca-panel label { position: relative; display: flex; align-items: center; gap: 0.8rem; padding: 0.5rem; border-radius: 12px; cursor: pointer; font-size: 0.9rem; transition: background 0.3s; }
+.ambianca-panel label:hover { background: rgba(245, 234, 216, 0.06); }
+.ambianca-panel input { position: absolute; opacity: 0; }
+.ambianca-panel input:focus-visible ~ .m { outline: 2px solid var(--aur); outline-offset: 2px; }
+.ambianca-panel input:checked ~ .bi { color: var(--aur-clar); }
+.ambianca-panel .m { flex: none; width: 44px; height: 30px; border-radius: 8px; border: 1px solid var(--crema-3); }
+.ambianca-panel input:checked ~ .m { border-color: var(--aur); box-shadow: 0 0 0 2px rgba(238, 175, 52, 0.35); }
+.m0 { background: radial-gradient(circle at 70% 30%, rgba(238, 175, 52, 0.7) 0 6%, transparent 30%), radial-gradient(ellipse at 30% 70%, #6e2410, transparent 70%), #120906; }
+.m1 { background: radial-gradient(1px 1px at 20% 30%, #f5ead8, transparent), radial-gradient(1px 1px at 75% 60%, #f5ead8, transparent), radial-gradient(1px 1px at 55% 20%, #f5ead8, transparent), radial-gradient(circle at 30% 60%, rgba(181, 61, 23, 0.6), transparent 60%), radial-gradient(circle at 80% 85%, rgba(238, 175, 52, 0.35), transparent 50%), #160b07; }
+.m2 { background: repeating-radial-gradient(circle at 40% 65%, transparent 0 4px, rgba(238, 175, 52, 0.55) 4px 5px), #120906; }
+.m3 { background: linear-gradient(#120906, #2a120a); }
 
 /* ---------- Acte I : l'eròi ---------- */
 .eros {
@@ -375,6 +394,19 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		<a class="nav-ligam" href="/aprene" data-cur><span class="bi"><span class="oc">Aprene</span><span class="fr">Apprendre</span></span></a>
 		<a class="nav-ligam" href="/carta" data-cur><span class="bi"><span class="oc">Descobrir</span><span class="fr">Découvrir</span></span></a>
 		<a class="nav-ligam" href="#crida" data-cur><span class="bi"><span class="oc">Participar</span><span class="fr">Participer</span></span></a>
+		<div class="ambianca">
+			<button type="button" class="ambianca-boton" aria-expanded="false" aria-controls="ambianca-panel" data-cur>
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
+				<span class="visually-hidden"><span class="bi"><span class="oc">Ambiança del fons</span><span class="fr">Ambiance du fond</span></span></span>
+			</button>
+			<div class="ambianca-panel" id="ambianca-panel" hidden>
+				<p class="ambianca-titol"><span class="bi"><span class="oc">Ambiança</span><span class="fr">Ambiance</span></span></p>
+				<label><input type="radio" name="fons" value="1" /><i class="m m1"></i><span class="bi"><span class="oc">Lum e estelas</span><span class="fr">Lumière et étoiles</span></span></label>
+				<label><input type="radio" name="fons" value="0" /><i class="m m0"></i><span class="bi"><span class="oc">Venas d’aur</span><span class="fr">Veines d’or</span></span></label>
+				<label><input type="radio" name="fons" value="2" /><i class="m m2"></i><span class="bi"><span class="oc">Corbas de nivèl</span><span class="fr">Courbes de niveau</span></span></label>
+				<label><input type="radio" name="fons" value="3" /><i class="m m3"></i><span class="bi"><span class="oc">Simple</span><span class="fr">Sobre</span></span></label>
+			</div>
+		</div>
 		<div class="lenga" role="group" aria-label="Lenga / Langue">
 			<button type="button" data-lenga-boton="oc" aria-pressed="true" lang="oc">Òc</button>
 			<button type="button" data-lenga-boton="fr" aria-pressed="false" lang="fr">Fr</button>
@@ -452,7 +484,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			<div class="lengas-chips">
 				<label><input type="radio" name="lenga-cors" value="fr" checked /><span lang="fr">Français</span></label>
 				<label><input type="radio" name="lenga-cors" value="en" /><span lang="en">English</span></label>
-				<label><input type="radio" name="lenga-cors" value="es" /><span lang="es">Español</span></label>
+				<label><input type="radio" name="lenga-cors" value="es" /><span lang="es">Castellano</span></label>
 				<label><input type="radio" name="lenga-cors" value="ca" /><span lang="ca">Català</span></label>
 			</div>
 			<p class="lengas-consigna" aria-live="polite"></p>
@@ -662,7 +694,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	const CONSIGNAS = {
 		fr: ['fr', 'Cours depuis le français. Précise-le en réservant.'],
 		en: ['en', 'Lessons taught from English. Just mention it when you book.'],
-		es: ['es', 'Clases desde el español. Indícalo al reservar.'],
+		es: ['es', 'Clases desde el castellano. Indícalo al reservar.'],
 		ca: ['ca', 'Classes des del català. Indica-ho en reservar.']
 	};
 	const consigna = document.querySelector('.lengas-consigna');
@@ -676,7 +708,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	const crotz = (fons, c, lv, lh) => 'linear-gradient(' + c + ',' + c + ') center/' + lv + ' no-repeat, linear-gradient(' + c + ',' + c + ') center/' + lh + ' no-repeat, ' + fons;
 	const DRAPEUS = {
 		fr: v3(cB, cW, cR), be: v3(cN, cJ, cR), sn: v3(cV, cJ, cR), ci: v3(cO, cW, cV), ht: 'linear-gradient(' + cB + ' 0 50%,' + cR + ' 50%)',
-		ch: crotz(cR, cW, '8% 60%', '24% 20%'), qc: crotz(cB, cW, '8% 100%', '100% 22%'),
+		ch: crotz(cR, cW, '8% 60%', '24% 20%'), qc: 'radial-gradient(circle at 23% 25%,' + cW + ' 0 5%, transparent 5.5%), radial-gradient(circle at 77% 25%,' + cW + ' 0 5%, transparent 5.5%), radial-gradient(circle at 23% 75%,' + cW + ' 0 5%, transparent 5.5%), radial-gradient(circle at 77% 75%,' + cW + ' 0 5%, transparent 5.5%), ' + crotz(cB, cW, '8% 100%', '100% 22%'),
 		uk: 'linear-gradient(90deg, transparent 45%,' + cR + ' 45% 55%, transparent 55%), linear-gradient(transparent 38%,' + cR + ' 38% 62%, transparent 62%), linear-gradient(90deg, transparent 41%,' + cW + ' 41% 59%, transparent 59%), linear-gradient(transparent 30%,' + cW + ' 30% 70%, transparent 70%), linear-gradient(to top right, transparent 45%,' + cR + ' 47% 50%,' + cW + ' 50% 55%, transparent 55%), linear-gradient(to bottom right, transparent 45%,' + cW + ' 45% 50%,' + cR + ' 50% 53%, transparent 55%), #2c3f74', us: 'linear-gradient(' + cB + ',' + cB + ') 0 0/42% 54% no-repeat, repeating-linear-gradient(' + cR + ' 0 7.69%,' + cW + ' 7.69% 15.38%)',
 		ie: v3(cV, cW, cO), in: h3(cO, cW, cV), ng: v3(cV, cW, cV), cn: 'linear-gradient(90deg,' + cR + ' 0 25%,' + cW + ' 25% 75%,' + cR + ' 75%)',
 		es: 'linear-gradient(' + cR + ' 0 25%,' + cJ + ' 25% 75%,' + cR + ' 75%)', mx: v3(cV, cW, cR), ar: h3(cBc, cW, cBc), pe: v3(cR, cW, cR),
@@ -684,7 +716,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		ad: v3(cB, cJ, cR), cat: 'repeating-linear-gradient(' + cJ + ' 0 11.11%,' + cR + ' 11.11% 22.22%)'
 	};
 	const SEQ = {
-		fr: ['qc', 'sn', 'be', 'ht', 'ch', 'ci', 'fr'],
+		fr: ['sn', 'be', 'ht', 'ch', 'ci', 'qc', 'fr'],
 		en: ['us', 'in', 'ng', 'ie', 'cn', 'uk'],
 		es: ['mx', 'ar', 'co', 'pe', 'cl', 'es'],
 		ca: ['ad', 'cat']
@@ -696,15 +728,17 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	});
 	let defilada = null;
 	function defilarBandièras(v) {
-		clearInterval(defilada);
+		clearTimeout(defilada);
 		const seq = SEQ[v], el = chips[v];
 		if (calm || seq.length < 2) { el.style.setProperty('--drap', DRAPEUS[seq[seq.length - 1]]); return; }
 		let k = 0;
 		el.style.setProperty('--drap', DRAPEUS[seq[0]]);
-		defilada = setInterval(() => {
+		// L'avant-darrièra bandièra (lo Quebèc per lo francés) demòra un pauc mai
+		const seguent = () => {
 			k++; el.style.setProperty('--drap', DRAPEUS[seq[k]]);
-			if (k >= seq.length - 1) clearInterval(defilada);
-		}, 170);
+			if (k < seq.length - 1) defilada = setTimeout(seguent, k === seq.length - 2 ? 520 : 170);
+		};
+		defilada = setTimeout(seguent, seq.length === 2 ? 520 : 170);
 	}
 	function metreLengaCors(v) {
 		const [lg, t] = CONSIGNAS[v] || CONSIGNAS.fr;
@@ -718,6 +752,25 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		r.addEventListener('change', () => { metreLengaCors(r.value); defilarBandièras(r.value); });
 	});
 	metreLengaCors(lengaCors);
+
+	/* ================= Ambiança del fons (personalizacion) ================= */
+	// 0 Venas d'aur · 1 Lum e estelas (per defaut) · 2 Corbas de nivèl · 3 Simple.
+	// D'autras ambiças se pòdon apondre : un cas de mai dins lo shader e una linha aicí.
+	let modeFons = 1;
+	try { const v = localStorage.getItem('lo-ligam-esbos-fons'); if (v !== null) modeFons = +v; } catch {}
+	const ambBoton = document.querySelector('.ambianca-boton'), ambPanel = document.getElementById('ambianca-panel');
+	document.querySelectorAll('input[name="fons"]').forEach((r) => {
+		r.checked = +r.value === modeFons;
+		r.addEventListener('change', () => {
+			modeFons = +r.value; forçarFons = true;
+			try { localStorage.setItem('lo-ligam-esbos-fons', r.value); } catch {}
+		});
+	});
+	const dobrirAmb = (o) => { ambPanel.hidden = !o; ambBoton.setAttribute('aria-expanded', o); };
+	ambBoton.addEventListener('click', (e) => { e.stopPropagation(); dobrirAmb(ambPanel.hidden); });
+	ambPanel.addEventListener('click', (e) => e.stopPropagation());
+	document.addEventListener('click', () => dobrirAmb(false));
+	addEventListener('keydown', (e) => { if (e.key === 'Escape' && !ambPanel.hidden) { dobrirAmb(false); ambBoton.focus(); } });
 
 	/* ================= Revelacions ================= */
 	const io = new IntersectionObserver((es) => es.forEach((e) => {
@@ -787,7 +840,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		const frag = (deriv ? '#extension GL_OES_standard_derivatives : enable\n#define DERIV\n' : '') + `
 		precision highp float;
 		uniform vec2 r; uniform float t; uniform vec2 m; uniform float s; uniform float p; uniform float c;
-		uniform sampler2D rel; uniform vec4 g; uniform float ro;
+		uniform sampler2D rel; uniform vec4 g; uniform float ro; uniform float mo;
 		float h(vec2 q){ return fract(sin(dot(q, vec2(41.3, 289.1))) * 43758.5453); }
 		float n(vec2 q){ vec2 i = floor(q), f = fract(q); vec2 u = f*f*(3.0-2.0*f);
 			return mix(mix(h(i), h(i+vec2(1,0)), u.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), u.x), u.y); }
@@ -796,22 +849,59 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 			vec2 uv = gl_FragCoord.xy / r;
 			vec2 asp = vec2(r.x / r.y, 1.0);
 			vec2 st = uv * asp * 1.5;
-			float tt = t * 0.045;
 			vec2 dm = (uv - m) * asp; float d = length(dm);
-			st += normalize(dm + 1e-4) * exp(-d * 4.5) * -0.32;
-			vec2 q = vec2(fbm(st + tt), fbm(st + vec2(5.2, 1.3) - tt));
-			vec2 w = vec2(fbm(st + q * 1.7 + vec2(1.7, 9.2) + s * 0.22), fbm(st + q * 1.7 + vec2(8.3, 2.8) - s * 0.12));
-			float v = fbm(st + w * 1.4);
 			vec3 nuech = vec3(0.071, 0.035, 0.024);
 			vec3 brica = vec3(0.27, 0.075, 0.035);
 			vec3 terra = vec3(0.71, 0.24, 0.09);
 			vec3 aur = vec3(0.93, 0.69, 0.20);
-			vec3 col = mix(nuech, brica, smoothstep(0.28, 0.86, v));
-			col = mix(col, terra, smoothstep(0.6, 0.98, v) * (0.28 + 0.42 * p));
-			float f = abs(fract(v * 3.4 + tt * 0.6) - 0.5);
-			float vena = smoothstep(0.045, 0.0, f) * smoothstep(0.38, 0.82, v);
-			col += aur * vena * (0.42 + 0.2 * p) * (1.0 - 0.8 * c);
-			col *= 1.0 - 0.4 * c;
+			vec3 col;
+			if (mo < 0.5) {
+				// 0. Venas d'aur : l'ambiança d'origina
+				float tt = t * 0.045;
+				st += normalize(dm + 1e-4) * exp(-d * 4.5) * -0.32;
+				vec2 q = vec2(fbm(st + tt), fbm(st + vec2(5.2, 1.3) - tt));
+				vec2 w = vec2(fbm(st + q * 1.7 + vec2(1.7, 9.2) + s * 0.22), fbm(st + q * 1.7 + vec2(8.3, 2.8) - s * 0.12));
+				float v = fbm(st + w * 1.4);
+				col = mix(nuech, brica, smoothstep(0.28, 0.86, v));
+				col = mix(col, terra, smoothstep(0.6, 0.98, v) * (0.28 + 0.42 * p));
+				float f = abs(fract(v * 3.4 + tt * 0.6) - 0.5);
+				float vena = smoothstep(0.045, 0.0, f) * smoothstep(0.38, 0.82, v);
+				col += aur * vena * (0.42 + 0.2 * p) * (1.0 - 0.8 * c);
+				col += vec3(0.42, 0.2, 0.06) * exp(-d * 5.5) * 0.22;
+				col *= 1.0 - 0.4 * c;
+			} else if (mo < 1.5) {
+				// 1. Lum e estelas : grandas tacas de lum cauda que derivan, una candela jos la mirga
+				float T = t * 0.02;
+				col = mix(vec3(0.078, 0.039, 0.027), vec3(0.16, 0.068, 0.04), smoothstep(1.1, -0.2, uv.y));
+				vec2 c1 = vec2(0.25 + 0.12 * sin(T * 1.3), 0.45 + 0.12 * cos(T));
+				vec2 c2 = vec2(0.78 + 0.10 * cos(T * 0.9), 0.75 + 0.08 * sin(T * 1.1));
+				vec2 c3 = vec2(0.55 + 0.15 * sin(T * 0.7), 0.05 + 0.10 * cos(T * 1.2));
+				vec2 e1 = (uv - c1) * asp, e2 = (uv - c2) * asp, e3 = (uv - c3) * asp;
+				col += terra * 0.2 * exp(-dot(e1, e1) * 4.0);
+				col += aur * 0.08 * exp(-dot(e2, e2) * 5.0);
+				col += vec3(0.54, 0.17, 0.07) * 0.18 * exp(-dot(e3, e3) * 3.0);
+				col += vec3(1.0, 0.83, 0.5) * 0.085 * exp(-d * d * 9.0);
+				col += (h(gl_FragCoord.xy) - 0.5) * 0.018;
+				col *= 1.0 - 0.3 * c;
+			} else if (mo < 2.5) {
+				// 2. Corbas de nivèl : un relief imaginari que respira, una colina jos la man
+				float e = fbm(st * 0.93 + vec2(t * 0.006, -t * 0.004)) + 0.18 * exp(-d * d * 18.0);
+				float lv = e * 14.0;
+				#ifdef DERIV
+				float fw = max(fwidth(lv), 1e-4);
+				#else
+				float fw = 0.04;
+				#endif
+				float lm = 1.0 - smoothstep(0.0, 1.0, abs(fract(lv - 0.5) - 0.5) / fw);
+				float lM = 1.0 - smoothstep(0.0, 1.3, abs(fract(lv / 5.0 - 0.5) - 0.5) / (fw / 5.0));
+				col = mix(nuech, vec3(0.14, 0.055, 0.03), uv.y * 0.6 + 0.2);
+				col += aur * (lm * 0.12 + lM * 0.2) * (1.0 - 0.85 * c);
+				col += terra * 0.1 * exp(-d * 3.0);
+			} else {
+				// 3. Simple : una nuèch cauda e immobila, sens floritura
+				col = mix(nuech, vec3(0.15, 0.06, 0.035), smoothstep(1.0, -0.3, uv.y));
+				col *= 1.0 - 0.25 * c;
+			}
 			// Corbas de nivèl vertadièras (cada 200 m, mai marcadas cada 1000 m), sonque amb la carta
 			if (ro > 0.5 && c > 0.001) {
 				vec2 tuv = vec2(gl_FragCoord.x * g.x + g.y, gl_FragCoord.y * g.z + g.w);
@@ -829,7 +919,6 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 				float dens = smoothstep(0.4, 0.1, fw);
 				col += aur * (lm * 0.1 * dens + lM * 0.2 * smoothstep(1.6, 0.4, fw)) * smoothstep(4.0, 40.0, e) * dins * c;
 			}
-			col += vec3(0.42, 0.2, 0.06) * exp(-d * 5.5) * 0.22;
 			col *= mix(0.62, 1.0, smoothstep(0.0, 0.7, uv.x));
 			col *= smoothstep(1.45, 0.2, length((uv - vec2(0.58, 0.5)) * vec2(1.0, 1.25)));
 			gl_FragColor = vec4(col, 1.0);
@@ -844,7 +933,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
 		const a = gl.getAttribLocation(pr, 'a');
 		gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
-		U = Object.fromEntries(['r', 't', 'm', 's', 'p', 'c', 'rel', 'g', 'ro'].map((k) => [k, gl.getUniformLocation(pr, k)]));
+		U = Object.fromEntries(['r', 't', 'm', 's', 'p', 'c', 'rel', 'g', 'ro', 'mo'].map((k) => [k, gl.getUniformLocation(pr, k)]));
 	}
 	// Mièja resolucion : lo flou del bruch o perdona, la carta grafica trabalha 4 còps mens.
 	const ESCALA_FONS = 0.5;
@@ -1305,7 +1394,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	}
 
 	/* ================= Una sola bocla ================= */
-	let fotograma = 0, syAbans = scrollY;
+	let fotograma = 0, syAbans = scrollY, sySimple = -1, forçarFons = true;
 	function bocla(t) {
 		lenis?.raf(t);
 		const sy = scrollY, vel = lenis ? lenis.velocity : 0;
@@ -1316,11 +1405,14 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		segonDefilament(sy, vel);
 		dessenharConstellacion(t, sy);
 		// Fons a 30 imatges/s : las venas van lentament, l'uelh i ve pas res
-		if (gl && (fotograma++ & 1) === 0) {
+		const besonhFons = modeFons !== 3 || sy !== sySimple || forçarFons;
+		if (gl && besonhFons && (fotograma++ & 1) === 0) {
+			sySimple = sy; forçarFons = false;
 			const maxSy = Math.max(1, document.documentElement.scrollHeight - H);
 			gl.uniform2f(U.r, fons.width, fons.height);
 			gl.uniform1f(U.t, calm ? 12 : (t - t0) / 1000);
-			gl.uniform2f(U.m, mx / W, 1 - my / H);
+			gl.uniform2f(U.m, ax / W, 1 - ay / H);
+			gl.uniform1f(U.mo, modeFons);
 			gl.uniform1f(U.s, sy / H);
 			gl.uniform1f(U.p, sy / maxSy);
 			// La nuèch se calma quand la carta se forma : las venas dauradas s'escafan
