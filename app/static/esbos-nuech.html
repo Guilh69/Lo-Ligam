@@ -210,7 +210,7 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 .manifest-tèxt .m.aur.on { color: var(--aur); }
 
 /* ---------- Acte III bis : tres biais d'aprene ---------- */
-.biais { padding: 4vh var(--marge) 22vh; }
+.biais { padding: 4vh var(--marge) 6vh; }
 .biais-grasilha { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--crema-3); }
 .biai { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 2.6rem 2.2rem 2.4rem 0; isolation: isolate; }
 .biai + .biai { padding-left: 2.2rem; border-left: 1px solid var(--crema-3); }
@@ -234,7 +234,27 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 	transition: background 0.45s var(--ease), color 0.45s, border-color 0.45s;
 }
 .lengas-chips label:hover span { border-color: var(--aur); }
-.lengas-chips input:checked + span { background: var(--aur); border-color: var(--aur); color: var(--nuech); }
+/* La bandièra se propaga dempuèi la esquèrra de la pastilha, en colors atenuadas
+   (un vel de nuèch las adoucís) ; lo tèxte demòra legible gràcias a un liseré sorne. */
+.lengas-chips span { position: relative; overflow: hidden; isolation: isolate; }
+.lengas-chips span::before {
+	content: ''; position: absolute; inset: 0; z-index: -1;
+	clip-path: circle(0% at 0% 50%); transition: clip-path 0.9s var(--ease);
+}
+.lengas-chips input:checked + span { border-color: rgba(245, 234, 216, 0.4); color: #fff; text-shadow: 0 0 6px rgba(18, 9, 6, 0.95), 0 0 2px rgba(18, 9, 6, 0.9); }
+.lengas-chips input:checked + span::before { clip-path: circle(160% at 0% 50%); }
+.lengas-chips span[lang='fr']::before { background: linear-gradient(rgba(18, 9, 6, 0.32), rgba(18, 9, 6, 0.32)), linear-gradient(90deg, #34508f 0 33.4%, #e9e0cf 33.4% 66.6%, #b8473f 66.6%); }
+.lengas-chips span[lang='en']::before { background:
+	linear-gradient(rgba(18, 9, 6, 0.32), rgba(18, 9, 6, 0.32)),
+	linear-gradient(90deg, transparent 45%, #b8473f 45% 55%, transparent 55%),
+	linear-gradient(transparent 38%, #b8473f 38% 62%, transparent 62%),
+	linear-gradient(90deg, transparent 41%, #e9e0cf 41% 59%, transparent 59%),
+	linear-gradient(transparent 30%, #e9e0cf 30% 70%, transparent 70%),
+	linear-gradient(to top right, transparent 45%, #b8473f 47% 50%, #e9e0cf 50% 55%, transparent 55%),
+	linear-gradient(to bottom right, transparent 45%, #e9e0cf 45% 50%, #b8473f 50% 53%, transparent 55%),
+	#2c3f74; }
+.lengas-chips span[lang='es']::before { background: linear-gradient(rgba(18, 9, 6, 0.3), rgba(18, 9, 6, 0.3)), linear-gradient(#a93a32 0 25%, #e6b13e 25% 75%, #a93a32 75%); }
+.lengas-chips span[lang='ca']::before { background: linear-gradient(rgba(18, 9, 6, 0.3), rgba(18, 9, 6, 0.3)), repeating-linear-gradient(#e6b13e 0 11.11%, #b23a30 11.11% 22.22%); }
 .lengas-chips input:focus-visible + span { outline: 2px solid var(--aur); outline-offset: 3px; }
 .lengas-consigna { flex-basis: 100%; color: var(--aur-clar); font-size: 0.95rem; min-height: 1.5em; }
 @media (max-width: 860px) {
