@@ -388,6 +388,8 @@ html.fr .linha:hover .bi > .fr { transform: translateY(125%); }
 /* Pas mai un ligam (sonque lo boton dubrís la carta) ; sus telefon, lo det fa aparéisser los noms
    (tòca o lisa de travèrs : touch-action laissa lo defilament vertical a la pagina) */
 .carta-estelas { display: block; height: min(74vh, 60vw); margin: 1rem 0 1rem; border-radius: 18px; touch-action: pan-y; }
+/* Telefon : mai d'aire entre lo jalon « 04 » e la carta, per la flècha del nòrd */
+@media (max-width: 700px) { .carta-estelas { margin-top: 4.6rem; } }
 .carta-dobrir { display: flex; justify-content: flex-end; margin: 1.8rem 0 3.5rem; }
 .boton-traç { background: transparent; color: var(--aur-clar); box-shadow: inset 0 0 0 1px var(--aur); }
 .boton-traç:hover, .boton-traç:focus-visible { color: var(--nuech); }
@@ -1118,6 +1120,7 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 	// Cadre geografic : l'Occitània de Bordèu a Niça, de Lemòtges a Vielha
 	const GEO = { lon0: -1.6, lon1: 7.55, lat0: 42.65, lat1: 46.4, kx: Math.cos((44.5 * Math.PI) / 180) };
 	const zonaCarta = document.querySelector('.carta-estelas');
+	const jalonCarta = document.querySelector('.chifras .jalon');
 	// Los rius : Natural Earth 10 m (domeni public), retalhats e simplificats amb GDAL.
 	// [nom occitan ('' = riu de defòra, sens nom), pes 1-7, [[lon, lat], …]]
 	// Los rius de defòra (Èbre, Pò, Sona…) demòran, mai discrets : l'aiga s'arrèsta
@@ -1164,7 +1167,12 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		};
 		const liss = (pts, n) => { for (let k = 0; k < n; k++) { const q = [pts[0]]; for (let i = 0; i < pts.length - 1; i++) { const a = pts[i], b = pts[i + 1]; q.push([a[0] * 0.75 + b[0] * 0.25, a[1] * 0.75 + b[1] * 0.25], [a[0] * 0.25 + b[0] * 0.75, a[1] * 0.25 + b[1] * 0.75]); } q.push(pts[pts.length - 1]); pts = q; } return pts; };
 
-		const vilas = estelas.filter((e) => e.vila);
+		// Òrdre de plaçament : las primièras causisson lor plaça. Montpelhièr passa
+		// davant (demanda Romain 2026-10-07) ; se cal ne sacrificar una sus telefon,
+		// serà una de las darrièras (Nimes, Ais…), pas jamai Montpelhièr.
+		const PRIORITAT = ['Montpelhièr', 'Tolosa', 'Marselha', 'Bordèu', 'Niça', 'Clarmont-Ferrand', 'Limòtges', 'Avinhon', 'Pau', 'Valença', 'Tolon', 'Nimes', 'Ais de Provença'];
+		const rang = (n) => { const i = PRIORITAT.indexOf(n); return i < 0 ? 99 : i; };
+		const vilas = estelas.filter((e) => e.vila).sort((a, b) => rang(a.nom) - rang(b.nom));
 		for (const e of vilas) { const [x, y] = loc(e.lon, e.lat); e.lx = x; e.ly = y; metre([x - 4, y - 4, x + 4, y + 4], 5, e.nom); }
 		RIUS.forEach(([nom, , l], n) => {
 			const pts = l.map(([lon, lat]) => loc(lon, lat)), prop = nom || 'riu' + n;
@@ -1183,7 +1191,11 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 				{ x: x + 7 * k, y: y + 4 * k, al: 'left', b: [x + 5 * k, y - 8 * k, x + 9 * k + w, y + 7 * k], bonus: 0 },
 				{ x: x - 7 * k, y: y + 4 * k, al: 'right', b: [x - 9 * k - w, y - 8 * k, x - 5 * k, y + 7 * k], bonus: 0.4 },
 				{ x, y: y - 9 * k, al: 'center', b: [x - w / 2 - 2, y - 21 * k, x + w / 2 + 2, y - 5 * k], bonus: 0.6 },
-				{ x, y: y + 18 * k, al: 'center', b: [x - w / 2 - 2, y + 5 * k, x + w / 2 + 2, y + 21 * k], bonus: 0.8 }
+				{ x, y: y + 18 * k, al: 'center', b: [x - w / 2 - 2, y + 5 * k, x + w / 2 + 2, y + 21 * k], bonus: 0.8 },
+				{ x: x + 5 * k, y: y - 7 * k, al: 'left', b: [x + 3 * k, y - 19 * k, x + 7 * k + w, y - 4 * k], bonus: 1 },
+				{ x: x + 5 * k, y: y + 15 * k, al: 'left', b: [x + 3 * k, y + 3 * k, x + 7 * k + w, y + 18 * k], bonus: 1 },
+				{ x: x - 5 * k, y: y - 7 * k, al: 'right', b: [x - 7 * k - w, y - 19 * k, x - 3 * k, y - 4 * k], bonus: 1.2 },
+				{ x: x - 5 * k, y: y + 15 * k, al: 'right', b: [x - 7 * k - w, y + 3 * k, x - 3 * k, y + 18 * k], bonus: 1.2 }
 			];
 			let c = cand[0], mendre = Infinity;
 			for (const k of cand) { const [v, f] = cost(k.b, e.nom); const sc = v + f * 100 + k.bonus; if (sc < mendre) { mendre = sc; c = k; } }
@@ -1417,8 +1429,17 @@ footer { padding: 6rem var(--marge) 2rem; border-top: 1px solid var(--crema-3); 
 		// traçada), un anèl fin, una N italica ; FÒRA de la carta, dins l'espaci entre
 		// lo jalon « 04 » e lo primièr riu (demanda Romain 2026-10-07)
 		if (aCarta > 0.05) {
-			const h = telefon ? 14 : 19, l = h * 0.19, rA = h / 3, bra = h * 0.6;
-			const nx = zr.left + (telefon ? 8 : 12), ny = zr.top - 6 - h * 1.9;
+			// Mesurada a cada talha : l'espaci sorne entre lo bas del jalon « 04 » e lo primièr
+			// element de la carta JUST DEJÓS (riu o vila de la banda esquèrra, sovent la Charanta) ;
+			// la flècha se centra dedins, alinhada sul « 04 »
+			const jr = jalonCarta.getBoundingClientRect();
+			const x0 = jr.left - 10, x1 = jr.left + 120;
+			let nautCarta = zr.top + zr.height * 0.3;
+			for (const [, , l] of RIUS) for (const [lo, la] of l) { const x = pX(lo), y = pY(la); if (x > x0 && x < x1 && y > jr.bottom && y < nautCarta) nautCarta = y; }
+			for (const e of estelas) if (e.ai > 0.5 && e.px > x0 && e.px < x1 && e.py > jr.bottom && e.py < nautCarta) nautCarta = e.py;
+			const espaci = Math.max(30, nautCarta - jr.bottom);
+			const h = Math.max(11, Math.min(telefon ? 15 : 20, espaci * 0.36)), l = h * 0.19, rA = h / 3, bra = h * 0.6;
+			const nx = Math.round(jr.left + bra), ny = jr.bottom + espaci / 2 - h * 0.95;
 			cx.globalAlpha = aCarta * 0.8; cx.strokeStyle = TEM.fil; cx.fillStyle = TEM.fil; cx.lineWidth = 0.9;
 			cx.beginPath(); cx.arc(nx, ny + h, rA, 0, 6.283); cx.stroke();
 			cx.globalAlpha = aCarta * 0.45;
