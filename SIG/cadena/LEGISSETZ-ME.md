@@ -45,6 +45,8 @@ ou corriger les chemins.
    puis `costa-domeni.py` (découpe par la vraie côte, Monaco exclu), puis de nouveau `domeni.mjs`.
 8. Dialectes : `dialectes-vector.py` (corrections de Mende et de la recherche,
    Rhône pour l'auvergnat), copier `dialectes-occitanica.geojson` vers `app/static/data/dialectes.geojson`.
+   Puis `dialectes-traucs.py` : enlève les îlots et les trous de moins de 20 km²
+   (erreurs de lecture de la carte : lettres ou symboles pris pour une couleur).
 9. Dialecte des villes : `node luocs-dial.mjs escriure`.
 10. Territoires hors de France au survol : `node territoris-extra.mjs` ; noms des vallées : `noms-valadas.mjs`.
 11. Zones mixtes et gascon éteint : `mixtas.py` ; bandes de transition : `transicions.py`.
