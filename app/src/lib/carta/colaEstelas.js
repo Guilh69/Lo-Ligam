@@ -16,6 +16,7 @@
 import { LUOCS, RIUS, COSTA, dialDe, rencDe } from '$lib/acuelh/carta-estelas.js';
 import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
 import { VILAS_FICHAS } from './vilasFichas.js';
+import { nomTerritori } from './territoris.js';
 
 // Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam sus un disc sorne
 // liserat d'aur, e una onda que s'espandís doçament, coma un ponch d'interès
@@ -71,12 +72,12 @@ const TÈXTES_FICHA = {
 };
 
 const TEMAS = {
-	sorne: { corba: 'rgba(238, 175, 52, 1)', costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
-	clar: { corba: 'rgba(138, 90, 43, 1)', costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
+	sorne: { lenga: '#e0612f', velDefòra: 'rgba(18, 9, 6, 0.42)', corba: 'rgba(238, 175, 52, 1)', costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
+	clar: { lenga: '#b53d17', velDefòra: 'rgba(245, 234, 216, 0.55)', corba: 'rgba(138, 90, 43, 1)', costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
-	...(dalt ? (clar ? { riu: '#1f5f8f', riuTèxt: '#174a72' } : { riu: '#6fb1ff', riuTèxt: '#a9d0ff' }) : {})
+	...(dalt ? (clar ? { riu: '#1f5f8f', riuTèxt: '#174a72', lenga: '#1f5f8f' } : { riu: '#6fb1ff', riuTèxt: '#a9d0ff', lenga: '#6fb1ff' }) : {})
 });
 
 // Montpelhièr d'abord (demande Romain) ; si une ville doit céder sa place, ce
@@ -537,6 +538,22 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						return { code, nom, cami, centre: centreDe(pa) };
 					});
 				if (this._terFixat && this._terFixat.mena !== menaTerritori(z)) this._terFixat = null;
+				const dom = this._limitsGeo?.domeni;
+				if (dom) {
+					const proj = (a) =>
+						a.map(([lon, lat]) => {
+							const q = map.project([lat, lon], z);
+							return [q.x, q.y];
+						});
+					const cami = new Path2D();
+					for (const a of dom.anels) {
+						const p = proj(a);
+						cami.moveTo(p[0][0], p[0][1]);
+						for (let i = 1; i < p.length; i++) cami.lineTo(p[i][0], p[i][1]);
+						cami.closePath();
+					}
+					this._domeni = { cami, linhas: dom.linhas.map(proj) };
+				}
 				this._regions = projAnels(this._limitsGeo?.regions);
 				this._deps = projAnels(this._limitsGeo?.despartaments);
 				this._corbas = (this._corbasGeo || []).map(([e, l]) => [
@@ -897,6 +914,36 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				}
 			}
 
+			// Le domaine occitan : au-dehors, la carte est légèrement atténuée (un
+			// voile sur le fond, le relief, la côte et les rivières) ; la frontière
+			// linguistique, TERRESTRE seulement, en très fins points terre cuite
+			// (ni administrative ni naturelle : ni crème ni or). Demande de Romain,
+			// 2026-10-07 : reconnaître qu'on sort du domaine occitan.
+			const aDom = clamp((intro - 0.3) / 0.5);
+			if (this._domeni && aDom > 0.01) {
+				cx.save();
+				cx.translate(-o.x, -o.y);
+				const defòra = new Path2D();
+				defòra.rect(o.x - 20, o.y - 20, W + 40, H + 40);
+				defòra.addPath(this._domeni.cami);
+				cx.globalAlpha = aDom;
+				cx.fillStyle = T.velDefòra;
+				cx.fill(defòra, 'evenodd');
+				cx.strokeStyle = T.lenga;
+				cx.lineWidth = 1.5;
+				cx.lineCap = 'round';
+				cx.setLineDash([0.01, 4.2]);
+				cx.globalAlpha = aDom * 0.8;
+				cx.beginPath();
+				for (const l of this._domeni.linhas) {
+					cx.moveTo(l[0][0], l[0][1]);
+					for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0], l[i][1]);
+				}
+				cx.stroke();
+				cx.setLineDash([]);
+				cx.restore();
+			}
+
 			cx.fillStyle = T.estela;
 			for (const e of this._estelas) {
 				const tw = this._calm ? 0.6 : Math.sin(temps * e.v + e.f) * 0.5 + 0.5;
@@ -1030,7 +1077,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					tt = TÈXTES_TER[this._lang] ?? TÈXTES_TER.oc,
 					vis = this._map.getSize(),
 					v0 = this._map.containerPointToLayerPoint([0, 0]).subtract(this._min);
-				const nom = t.nom.toUpperCase(),
+				const nom = nomTerritori(reg ? 'region' : 'despartament', t.code, t.nom, this._lang).toUpperCase(),
 					sota = reg ? tt.region : tt.despartament + ' · ' + t.code;
 				const esp = 'letterSpacing' in cx;
 				if (esp) cx.letterSpacing = '2.5px';

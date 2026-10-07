@@ -5,7 +5,7 @@
 	// le site lui-même : aucun service extérieur, rien ne sort de la page.
 	import { LUOCS, dialDe, rencDe } from '$lib/acuelh/carta-estelas.js';
 	import { NOMS_FRANCES } from '$lib/carta/nomsFrances.js';
-	import { TERRITORIS } from '$lib/carta/territoris.js';
+	import { TERRITORIS, NOMS_OC_TER, nomTerritori } from '$lib/carta/territoris.js';
 
 	let { lang = 'oc', onCausir = () => {} } = $props();
 
@@ -45,7 +45,10 @@
 			const fr = NOMS_FRANCES[nom] ?? null;
 			return { mena: 'luòc', nom, fr, lon, lat, renc: rencDe(nom), dial: dialDe({ nom, dia }), k: [norm(nom), ...(fr ? [norm(fr)] : [])] };
 		}),
-		...TERRITORIS.map((tr) => ({ ...tr, k: [norm(tr.nom)] }))
+		...TERRITORIS.map((tr) => {
+			const oc = NOMS_OC_TER[tr.mena + ':' + tr.code];
+			return { ...tr, k: [norm(tr.nom), ...(oc ? [norm(oc)] : [])] };
+		})
 	];
 
 	function cercar(q) {
@@ -74,9 +77,12 @@
 	let actiu = $state(0);
 	let resultats = $derived(cercar(q));
 
+	// Nom affiché : occitan ou français selon la page, pour les territoires
+	const nomAfichat = (r) => (r.mena === 'luòc' ? r.nom : nomTerritori(r.mena, r.code, r.nom, lang));
+
 	function causir(r) {
 		if (!r) return;
-		q = r.nom;
+		q = nomAfichat(r);
 		dobèrt = false;
 		onCausir(r);
 	}
@@ -148,7 +154,7 @@
 					}}
 					onmouseenter={() => (actiu = i)}
 				>
-					<span class="nom" lang={r.mena === 'luòc' ? 'oc' : 'fr'}>{r.nom}</span>
+					<span class="nom" lang={r.mena === 'luòc' ? 'oc' : lang}>{nomAfichat(r)}</span>
 					<span class="segonda">{segonda(r)}</span>
 				</li>
 			{/each}

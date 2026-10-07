@@ -3,3 +3,57 @@
 // nord] (les contours complets pèsent 800 Ko ; ici quelques Ko). Généré depuis
 // static/data/departements.geojson et regions.geojson (france-geojson, Etalab).
 export const TERRITORIS = [{"nom":"Ain","code":"01","mena":"despartament","bbox":[4.729,45.613,6.17,46.514]},{"nom":"Allier","code":"03","mena":"despartament","bbox":[2.281,45.931,3.998,46.804]},{"nom":"Alpes-de-Haute-Provence","code":"04","mena":"despartament","bbox":[5.499,43.668,6.962,44.659]},{"nom":"Hautes-Alpes","code":"05","mena":"despartament","bbox":[5.419,44.186,7.077,45.127]},{"nom":"Alpes-Maritimes","code":"06","mena":"despartament","bbox":[6.636,43.48,7.716,44.361]},{"nom":"Ardèche","code":"07","mena":"despartament","bbox":[3.863,44.265,4.886,45.366]},{"nom":"Ariège","code":"09","mena":"despartament","bbox":[0.826,42.572,2.176,43.316]},{"nom":"Aude","code":"11","mena":"despartament","bbox":[1.688,42.653,3.241,43.454]},{"nom":"Aveyron","code":"12","mena":"despartament","bbox":[1.84,43.692,3.45,44.937]},{"nom":"Bouches-du-Rhône","code":"13","mena":"despartament","bbox":[4.23,43.163,5.803,43.924]},{"nom":"Cantal","code":"15","mena":"despartament","bbox":[2.063,44.616,3.361,45.478]},{"nom":"Charente","code":"16","mena":"despartament","bbox":[-0.46,45.192,0.943,46.139]},{"nom":"Charente-Maritime","code":"17","mena":"despartament","bbox":[-1.561,45.089,0.006,46.366]},{"nom":"Cher","code":"18","mena":"despartament","bbox":[1.778,46.42,3.079,47.629]},{"nom":"Corrèze","code":"19","mena":"despartament","bbox":[1.227,44.924,2.527,45.755]},{"nom":"Côte-d'Or","code":"21","mena":"despartament","bbox":[4.066,46.901,5.519,48.031]},{"nom":"Creuse","code":"23","mena":"despartament","bbox":[1.375,45.664,2.611,46.455]},{"nom":"Dordogne","code":"24","mena":"despartament","bbox":[-0.04,44.577,1.448,45.715]},{"nom":"Doubs","code":"25","mena":"despartament","bbox":[5.699,46.554,7.062,47.563]},{"nom":"Drôme","code":"26","mena":"despartament","bbox":[4.649,44.116,5.827,45.344]},{"nom":"Corse-du-Sud","code":"2A","mena":"despartament","bbox":[8.552,41.367,9.408,42.381]},{"nom":"Haute-Corse","code":"2B","mena":"despartament","bbox":[8.573,41.832,9.56,43.007]},{"nom":"Gard","code":"30","mena":"despartament","bbox":[3.264,43.46,4.842,44.46]},{"nom":"Haute-Garonne","code":"31","mena":"despartament","bbox":[0.442,42.69,2.048,43.921]},{"nom":"Gers","code":"32","mena":"despartament","bbox":[-0.282,43.311,1.201,44.075]},{"nom":"Gironde","code":"33","mena":"despartament","bbox":[-1.262,44.194,0.315,45.562]},{"nom":"Hérault","code":"34","mena":"despartament","bbox":[2.547,43.213,4.194,43.972]},{"nom":"Indre","code":"36","mena":"despartament","bbox":[0.867,46.347,2.204,47.277]},{"nom":"Indre-et-Loire","code":"37","mena":"despartament","bbox":[0.053,46.737,1.365,47.709]},{"nom":"Isère","code":"38","mena":"despartament","bbox":[4.745,44.696,6.359,45.884]},{"nom":"Jura","code":"39","mena":"despartament","bbox":[5.255,46.261,6.207,47.304]},{"nom":"Landes","code":"40","mena":"despartament","bbox":[-1.525,43.492,0.137,44.532]},{"nom":"Loir-et-Cher","code":"41","mena":"despartament","bbox":[0.581,47.186,2.248,48.133]},{"nom":"Loire","code":"42","mena":"despartament","bbox":[3.691,45.235,4.759,46.276]},{"nom":"Haute-Loire","code":"43","mena":"despartament","bbox":[3.1,44.744,4.49,45.428]},{"nom":"Loire-Atlantique","code":"44","mena":"despartament","bbox":[-2.559,46.86,-0.95,47.835]},{"nom":"Loiret","code":"45","mena":"despartament","bbox":[1.513,47.483,3.128,48.345]},{"nom":"Lot","code":"46","mena":"despartament","bbox":[0.982,44.204,2.207,45.046]},{"nom":"Lot-et-Garonne","code":"47","mena":"despartament","bbox":[-0.141,43.976,1.075,44.762]},{"nom":"Lozère","code":"48","mena":"despartament","bbox":[2.982,44.114,3.998,44.971]},{"nom":"Maine-et-Loire","code":"49","mena":"despartament","bbox":[-1.344,46.976,0.235,47.81]},{"nom":"Morbihan","code":"56","mena":"despartament","bbox":[-3.734,47.283,-2.036,48.203]},{"nom":"Nièvre","code":"58","mena":"despartament","bbox":[2.849,46.652,4.231,47.588]},{"nom":"Puy-de-Dôme","code":"63","mena":"despartament","bbox":[2.388,45.287,3.984,46.254]},{"nom":"Pyrénées-Atlantiques","code":"64","mena":"despartament","bbox":[-1.789,42.778,0.03,43.596]},{"nom":"Hautes-Pyrénées","code":"65","mena":"despartament","bbox":[-0.327,42.675,0.646,43.606]},{"nom":"Pyrénées-Orientales","code":"66","mena":"despartament","bbox":[1.726,42.334,3.174,42.918]},{"nom":"Haut-Rhin","code":"68","mena":"despartament","bbox":[6.846,47.422,7.622,48.31]},{"nom":"Rhône","code":"69","mena":"despartament","bbox":[4.249,45.454,5.159,46.303]},{"nom":"Haute-Saône","code":"70","mena":"despartament","bbox":[5.373,47.254,6.824,48.024]},{"nom":"Saône-et-Loire","code":"71","mena":"despartament","bbox":[3.629,46.157,5.463,47.155]},{"nom":"Savoie","code":"73","mena":"despartament","bbox":[5.623,45.052,7.184,45.938]},{"nom":"Haute-Savoie","code":"74","mena":"despartament","bbox":[5.807,45.684,7.044,46.408]},{"nom":"Deux-Sèvres","code":"79","mena":"despartament","bbox":[-0.892,45.97,0.22,47.108]},{"nom":"Tarn","code":"81","mena":"despartament","bbox":[1.539,43.384,2.935,44.2]},{"nom":"Tarn-et-Garonne","code":"82","mena":"despartament","bbox":[0.738,43.771,1.99,44.393]},{"nom":"Var","code":"83","mena":"despartament","bbox":[5.656,42.983,6.934,43.806]},{"nom":"Vaucluse","code":"84","mena":"despartament","bbox":[4.649,43.659,5.757,44.423]},{"nom":"Vendée","code":"85","mena":"despartament","bbox":[-2.399,46.267,-0.538,47.085]},{"nom":"Vienne","code":"86","mena":"despartament","bbox":[-0.102,46.049,1.211,47.176]},{"nom":"Haute-Vienne","code":"87","mena":"despartament","bbox":[0.63,45.444,1.904,46.4]},{"nom":"Yonne","code":"89","mena":"despartament","bbox":[2.849,47.313,4.34,48.4]},{"nom":"Territoire de Belfort","code":"90","mena":"despartament","bbox":[6.757,47.433,7.136,47.823]},{"nom":"Centre-Val de Loire","code":"24","mena":"region","bbox":[0.053,46.347,3.128,48.941]},{"nom":"Bourgogne-Franche-Comté","code":"27","mena":"region","bbox":[2.849,46.157,7.136,48.4]},{"nom":"Grand Est","code":"44","mena":"region","bbox":[3.388,47.422,8.233,50.161]},{"nom":"Pays de la Loire","code":"52","mena":"region","bbox":[-2.559,46.267,0.914,48.563]},{"nom":"Bretagne","code":"53","mena":"region","bbox":[-5.104,47.283,-1.018,48.868]},{"nom":"Nouvelle-Aquitaine","code":"75","mena":"region","bbox":[-1.789,42.778,2.611,47.176]},{"nom":"Occitanie","code":"76","mena":"region","bbox":[-0.327,42.334,4.842,45.046]},{"nom":"Auvergne-Rhône-Alpes","code":"84","mena":"region","bbox":[2.063,44.116,7.184,46.804]},{"nom":"Provence-Alpes-Côte d'Azur","code":"93","mena":"region","bbox":[4.23,42.983,7.716,45.127]},{"nom":"Corse","code":"94","mena":"region","bbox":[8.552,41.367,9.56,43.007]}];
+
+// Noms occitans des régions et des départements (affichés quand la page est en
+// occitan ; en français sinon). Formes de la norme classique, À VALIDER par
+// Romain (dicodòc / lo Congrès). Les territoires hors du domaine occitan sans
+// nom courant en occitan gardent leur nom français. Clé : « mena:code ».
+export const NOMS_OC_TER = {
+	'region:75': 'Novèla Aquitània',
+	'region:76': 'Occitània',
+	'region:84': 'Auvèrnhe-Ròse-Aups',
+	'region:93': "Provença-Aups-Còsta d'Azur",
+	'despartament:03': 'Alèir',
+	'despartament:04': "Aups d'Auta Provença",
+	'despartament:05': 'Auts Aups',
+	'despartament:06': 'Aups Maritims',
+	'despartament:07': 'Ardecha',
+	'despartament:09': 'Arièja',
+	'despartament:11': 'Aude',
+	'despartament:12': 'Avairon',
+	'despartament:13': 'Bocas de Ròse',
+	'despartament:15': 'Cantal',
+	'despartament:16': 'Charanta',
+	'despartament:17': 'Charanta Maritima',
+	'despartament:19': 'Corrèsa',
+	'despartament:23': 'Crosa',
+	'despartament:24': 'Dordonha',
+	'despartament:26': 'Droma',
+	'despartament:30': 'Gard',
+	'despartament:31': 'Nauta Garona',
+	'despartament:32': 'Gers',
+	'despartament:33': 'Gironda',
+	'despartament:34': 'Erau',
+	'despartament:38': 'Isèra',
+	'despartament:40': 'Lanas',
+	'despartament:42': 'Léger',
+	'despartament:43': 'Naut Léger',
+	'despartament:46': 'Òlt',
+	'despartament:47': 'Òlt e Garona',
+	'despartament:48': 'Losèra',
+	'despartament:63': 'Puèi de Doma',
+	'despartament:64': 'Pirenèus Atlantics',
+	'despartament:65': 'Nauts Pirenèus',
+	'despartament:66': 'Pirenèus Orientals',
+	'despartament:69': 'Ròse',
+	'despartament:73': 'Savòia',
+	'despartament:74': 'Nauta Savòia',
+	'despartament:81': 'Tarn',
+	'despartament:82': 'Tarn e Garona',
+	'despartament:83': 'Var',
+	'despartament:84': 'Vauclusa',
+	'despartament:86': 'Vinhana',
+	'despartament:87': 'Nauta Vinhana'
+};
+/** Nom d'un territoire dans la langue de la page. */
+export const nomTerritori = (mena, code, nomFr, lang) => (lang === 'oc' ? (NOMS_OC_TER[mena + ':' + code] ?? nomFr) : nomFr);
