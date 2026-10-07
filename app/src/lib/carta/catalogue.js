@@ -63,7 +63,7 @@ export const CATALOGUE = [
 			{ id: 'vilas', oc: 'Vilas e vilatges', fr: 'Villes et villages', estat: 'disponible', defaut: true, fons: 'estelas' },
 			{ id: 'regions', oc: 'Regions', fr: 'Régions', estat: 'disponible', defaut: false },
 			{ id: 'despartaments', oc: 'Despartaments', fr: 'Départements', estat: 'disponible', defaut: false },
-			{ id: 'comunas', oc: 'Comunas', fr: 'Communes', estat: 'disponible', defaut: false, nota_oc: "A partir de l'escala de 5 km", nota_fr: "À partir de l'échelle de 5 km" }
+			{ id: 'comunas', oc: 'Comunas', fr: 'Communes', estat: 'disponible', defaut: false, nota_oc: "A partir de l'escala de 7 km", nota_fr: "À partir de l'échelle de 7 km" }
 		]
 	},
 	{

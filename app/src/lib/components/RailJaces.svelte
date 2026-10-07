@@ -24,6 +24,9 @@
 	const T = {
 		oc: {
 			rail: 'Jaces de la carta',
+			desplaçar: 'Desplaçar lo panèl (las sagetas tanben ; doble clic : tornar a sa plaça)',
+			reduire: 'Reduire lo panèl',
+			desplegar: 'Desplegar lo panèl',
 			sus: 'Sus la carta',
 			fons: 'Fons',
 			tampar: 'Tampar',
@@ -52,6 +55,9 @@
 		},
 		fr: {
 			rail: 'Couches de la carte',
+			desplaçar: 'Déplacer le panneau (flèches aussi ; double-clic : le remettre en place)',
+			reduire: 'Réduire le panneau',
+			desplegar: 'Déplier le panneau',
 			sus: 'Sur la carte',
 			fons: 'Fond',
 			tampar: 'Fermer',
@@ -143,7 +149,92 @@
 
 	const RAIL = ['sus', 'lenga', 'administracion', 'cultura', 'istoria', 'natura'];
 	let dobert = $state(null);
-	const alternar = (id) => (dobert = dobert === id ? null : id);
+	const alternar = (id) => {
+		dobert = dobert === id ? null : id;
+		if (dobert) plaçarTirador();
+	};
+
+	// Lo rail se pòt desplaçar (una encòca per lo prene) e reduire (retorn de
+	// Romain) ; per defaut a mièg nautor, pus luènh del capçal. Sa plaça e son
+	// estat demòran d'una visita a l'autra, sus aqueste navigador sonque.
+	const CLAU_RAIL = 'lo-ligam-carta-rail';
+	const clampR = (v, a, b) => Math.max(a, Math.min(b, v));
+	let railEl = $state(null);
+	let railPos = $state(null); // { x, y } en px dins la carta ; null = plaça per defaut
+	let reduch = $state(false);
+	let posT = $state(null); // plaça del tirador, seguís lo rail
+	let tiratge = null;
+	$effect(() => {
+		try {
+			const s = JSON.parse(localStorage.getItem(CLAU_RAIL) ?? 'null');
+			if (s) {
+				railPos = s.pos ?? null;
+				reduch = !!s.reduch;
+			}
+		} catch {}
+	});
+	const gardarRail = () => {
+		try {
+			localStorage.setItem(CLAU_RAIL, JSON.stringify({ pos: railPos, reduch }));
+		} catch {}
+	};
+	// lo tirador s'alanda a costat del rail, del costat ont i a de plaça
+	function plaçarTirador() {
+		const p = railEl?.offsetParent;
+		if (!p) return;
+		const r = railEl.getBoundingClientRect(),
+			pr = p.getBoundingClientRect();
+		const x = r.left - pr.left,
+			y = r.top - pr.top,
+			larg = Math.min(336, pr.width - r.width - 32);
+		const drecha = x + r.width / 2 > pr.width / 2;
+		const top = clampR(y, 8, Math.max(8, pr.height - 420));
+		posT = { x: drecha ? x - larg - 12 : x + r.width + 12, y: top, h: pr.height - top - 16 };
+	}
+	function prene(e) {
+		if (e.button !== 0 || !railEl?.offsetParent) return;
+		const r = railEl.getBoundingClientRect();
+		tiratge = { dx: e.clientX - r.left, dy: e.clientY - r.top, pr: railEl.offsetParent.getBoundingClientRect() };
+		e.currentTarget.setPointerCapture(e.pointerId);
+	}
+	function tirar(e) {
+		if (!tiratge) return;
+		const { dx, dy, pr } = tiratge;
+		railPos = {
+			x: clampR(e.clientX - pr.left - dx, 8, pr.width - railEl.offsetWidth - 8),
+			y: clampR(e.clientY - pr.top - dy, 8, pr.height - railEl.offsetHeight - 8)
+		};
+		if (dobert) plaçarTirador();
+	}
+	function daissar() {
+		if (!tiratge) return;
+		tiratge = null;
+		gardarRail();
+	}
+	// al clavièr : las sagetas desplaçan lo rail
+	function clavièrEncòca(e) {
+		const d = { ArrowLeft: [-20, 0], ArrowRight: [20, 0], ArrowUp: [0, -20], ArrowDown: [0, 20] }[e.key];
+		if (!d || !railEl?.offsetParent) return;
+		e.preventDefault();
+		const r = railEl.getBoundingClientRect(),
+			pr = railEl.offsetParent.getBoundingClientRect();
+		railPos = {
+			x: clampR(r.left - pr.left + d[0], 8, pr.width - r.width - 8),
+			y: clampR(r.top - pr.top + d[1], 8, pr.height - r.height - 8)
+		};
+		gardarRail();
+		if (dobert) plaçarTirador();
+	}
+	function railPerDefaut() {
+		railPos = null;
+		gardarRail();
+		if (dobert) requestAnimationFrame(plaçarTirador);
+	}
+	function alternarReduch() {
+		reduch = !reduch;
+		if (reduch) dobert = null;
+		gardarRail();
+	}
 
 	const totas = $derived(familhas.flatMap((f) => f.jaces));
 	const actiu = (j) => j.estat === 'disponible' && (!j.fons || j.fons === baseLayer);
@@ -245,7 +336,32 @@
 
 <svelte:window onkeydown={onKey} onpointerdown={() => (pret = true)} />
 
-<nav class="rail" aria-label={tx.rail}>
+<nav
+	class="rail"
+	class:desplaçat={!!railPos}
+	class:reduch
+	aria-label={tx.rail}
+	bind:this={railEl}
+	style:--rail-x={railPos ? railPos.x + 'px' : null}
+	style:--rail-y={railPos ? railPos.y + 'px' : null}
+>
+	<div class="encòca">
+		<button
+			type="button"
+			class="prene"
+			aria-label={tx.desplaçar}
+			title={tx.desplaçar}
+			onpointerdown={prene}
+			onpointermove={tirar}
+			onpointerup={daissar}
+			onpointercancel={daissar}
+			onkeydown={clavièrEncòca}
+			ondblclick={railPerDefaut}
+		><span aria-hidden="true"></span></button>
+		<button type="button" class="reduire" aria-expanded={!reduch} aria-label={reduch ? tx.desplegar : tx.reduire} title={reduch ? tx.desplegar : tx.reduire} onclick={alternarReduch}>
+			<svg viewBox="0 0 24 24" aria-hidden="true"><path d={reduch ? 'M6 9l6 6 6-6' : 'M6 15l6-6 6 6'} /></svg>
+		</button>
+	</div>
 	{#each RAIL as id (id)}
 		<button
 			type="button"
@@ -275,6 +391,9 @@
 		id="tirador-jaces"
 		class="tirador"
 		aria-label={nomFam(dobert)}
+		style:--tir-x={posT ? posT.x + 'px' : null}
+		style:--tir-y={posT ? posT.y + 'px' : null}
+		style:--tir-h={posT ? posT.h + 'px' : null}
 		transition:fly={{ x: -14, duration: 260, easing: quintOut }}
 	>
 		<header>
@@ -396,10 +515,13 @@
 	.rail {
 		position: absolute;
 		z-index: 1010; /* dessús la barra de recèrca (1000) */
-		top: 7.2rem;
-		left: var(--marge, 1rem);
+		/* per defaut a mièg nautor, un pauc pus bas (retorn de Romain : collat al
+		   capçal, « ça fait trop cliché ») ; desplaçable per son encòca */
+		top: var(--rail-y, calc(50% + 2rem));
+		left: var(--rail-x, var(--marge, 1rem));
+		transform: translateY(-50%);
 		width: 4.6rem;
-		max-height: calc(100% - 7.2rem - 10rem);
+		max-height: calc(100% - 9rem);
 		overflow-y: auto;
 		scrollbar-width: none;
 		display: grid;
@@ -410,6 +532,73 @@
 		border: 1px solid var(--t-linha);
 		border-radius: 18px;
 		box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+	}
+	.rail.desplaçat {
+		transform: none;
+	}
+	/* l'encòca : de que prene lo panèl, e lo boton per lo reduire */
+	.encòca {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 2px;
+		padding: 0 2px 3px;
+	}
+	.prene {
+		flex: 1;
+		height: 18px;
+		display: grid;
+		place-items: center;
+		border: 0;
+		border-radius: 8px;
+		background: none;
+		cursor: grab;
+		touch-action: none;
+	}
+	.prene:active {
+		cursor: grabbing;
+	}
+	.prene span {
+		width: 22px;
+		height: 6px;
+		background: radial-gradient(circle, var(--t-tinta-2) 1.2px, transparent 1.6px) 0 0 / 5.5px 3px;
+		opacity: 0.7;
+	}
+	.prene:hover span,
+	.prene:focus-visible span {
+		opacity: 1;
+	}
+	.reduire {
+		width: 20px;
+		height: 18px;
+		display: grid;
+		place-items: center;
+		border: 0;
+		border-radius: 6px;
+		background: none;
+		color: var(--t-tinta-2);
+		cursor: pointer;
+	}
+	.reduire svg {
+		width: 14px;
+		height: 14px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+	.prene:focus-visible,
+	.reduire:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 1px;
+	}
+	.rail.reduch .rail-b,
+	.rail.reduch .rail-sep {
+		display: none;
+	}
+	.rail.reduch .encòca {
+		padding-bottom: 0;
 	}
 	.rail-b {
 		position: relative;
@@ -480,10 +669,11 @@
 	.tirador {
 		position: absolute;
 		z-index: 1010;
-		top: 7.2rem;
-		left: calc(var(--marge, 1rem) + 5.2rem);
+		/* a costat del rail, ont que siá (plaçat per plaçarTirador) */
+		top: var(--tir-y, 7.2rem);
+		left: var(--tir-x, calc(var(--marge, 1rem) + 5.2rem));
 		width: min(21rem, calc(100% - var(--marge, 1rem) - 6.2rem));
-		max-height: calc(100% - 7.2rem - 4rem);
+		max-height: var(--tir-h, calc(100% - 7.2rem - 4rem));
 		overflow-y: auto;
 		scrollbar-width: thin;
 		scrollbar-color: var(--t-linha) transparent;
@@ -796,6 +986,17 @@
 			border-width: 1px 0 0;
 			border-radius: 16px 16px 0 0;
 			box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3);
+			transform: none;
+		}
+		/* sul telefon la barra demòra en bas : ni encòca ni reduccion */
+		.encòca {
+			display: none;
+		}
+		.rail.reduch .rail-b {
+			display: grid;
+		}
+		.rail.reduch .rail-sep {
+			display: block;
 		}
 		.rail-b {
 			flex: 1 1 0;

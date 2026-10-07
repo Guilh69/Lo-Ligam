@@ -1,0 +1,261 @@
+dep;i;fr;part_dins_lo_domeni;gardada
+03;03006;Arfeuilles;22 %;non
+03;03008;Arronnes;82 %;oui
+03;03010;Audes;40 %;non
+03;03018;Bayet;22 %;non
+03;03027;Bézenet;29 %;non
+03;03033;Bost;91 %;oui
+03;03042;Le Breuil;37 %;non
+03;03052;Chamblet;71 %;oui
+03;03053;Chantelle;82 %;oui
+03;03066;Châtel-Montagne;54 %;oui
+03;03072;Chazemais;36 %;non
+03;03096;Deneuille-lès-Chantelle;80 %;oui
+03;03104;Doyet;19 %;non
+03;03113;Ferrières-sur-Sichon;26 %;non
+03;03115;Fleuriel;29 %;non
+03;03116;Fourilles;53 %;oui
+03;03125;La Guillermie;75 %;oui
+03;03131;Isserpent;89 %;oui
+03;03165;Le Mayet-de-Montagne;46 %;non
+03;03185;Montluçon;82 %;oui
+03;03186;Montmarault;50 %;oui
+03;03189;Montvicq;91 %;oui
+03;03219;Saint-Bonnet-de-Four;71 %;oui
+03;03223;Saint-Christophe-en-Bourbonnais;77 %;oui
+03;03224;Saint-Clément;16 %;non
+03;03225;Saint-Désiré;49 %;non
+03;03227;Saint-Didier-la-Forêt;22 %;non
+03;03230;Saint-Étienne-de-Vicq;75 %;oui
+03;03236;Saint-Germain-des-Fossés;80 %;oui
+03;03243;Saint-Marcel-en-Murat;73 %;oui
+03;03258;Saint-Rémy-en-Rollat;59 %;oui
+03;03262;Saint-Victor;15 %;non
+03;03273;Seuillet;44 %;non
+03;03281;Le Theil;35 %;non
+03;03301;Vaux;40 %;non
+03;03319;Voussac;80 %;oui
+05;05063;La Grave;77 %;oui
+05;05093;Névache;94 %;oui
+06;06023;Breil-sur-Roya;82 %;oui
+06;06029;Cannes;90 %;oui
+06;06032;Cap-d'Ail;94 %;oui
+06;06035;Castellar;20 %;non
+06;06062;Fontan;85 %;oui
+06;06083;Menton;80 %;oui
+06;06132;Saorge;65 %;oui
+06;06162;La Brigue;11 %;non
+06;06163;Tende;82 %;oui
+07;07089;Félines;54 %;oui
+07;07310;Savas;92 %;oui
+07;07313;Serrières;76 %;oui
+07;07344;Vinzieux;6 %;non
+09;09139;L'Hospitalet-près-l'Andorre;54 %;oui
+09;09189;Mérens-les-Vals;86 %;oui
+11;11047;Le Bousquet;88 %;oui
+11;11104;Counozouls;69 %;oui
+11;11202;Leucate;90 %;oui
+11;11244;Montfort-sur-Boulzane;52 %;oui
+11;11276;Paziols;20 %;non
+11;11401;Tuchan;81 %;oui
+13;13014;Berre-l'Étang;95 %;oui
+16;16003;Agris;88 %;oui
+16;16023;Aunac-sur-Charente;54 %;oui
+16;16024;Aussac-Vadalle;11 %;non
+16;16034;Bazac;47 %;non
+16;16038;Benest;63 %;oui
+16;16052;Bors (Canton de Tude-et-Lavalette);11 %;non
+16;16061;Brie;12 %;non
+16;16076;Champagne-Mouton;56 %;oui
+16;16087;Chassiecq;71 %;oui
+16;16107;Coulgens;65 %;oui
+16;16114;Couture;55 %;oui
+16;16119;Dignac;90 %;oui
+16;16120;Dirac;26 %;non
+16;16146;Garat;49 %;non
+16;16162;Gurat;94 %;oui
+16;16170;Juignac;11 %;non
+16;16184;Lichères;18 %;non
+16;16198;Magnac-lès-Gardes;83 %;oui
+16;16232;Mornac;72 %;oui
+16;16237;Mouton;67 %;oui
+16;16241;Nanclars;62 %;oui
+16;16260;Pillac;88 %;oui
+16;16264;Pleuville;46 %;non
+16;16272;Puyréaux;37 %;non
+16;16282;La Rochette;62 %;oui
+16;16283;Ronsenac;63 %;oui
+16;16284;Rouffiac;39 %;non
+16;16307;Saint-Ciers-sur-Bonnieure;92 %;oui
+16;16310;Saint-Coutant;94 %;oui
+16;16346;Saint-Quentin-de-Chalais;53 %;oui
+16;16347;Saint-Romain;65 %;oui
+16;16356;Saint-Sulpice-de-Ruffec;59 %;oui
+16;16385;Touvre;31 %;non
+18;18083;Culan;38 %;non
+18;18234;Saint-Saturnin;87 %;oui
+23;23070;Crozant;80 %;oui
+23;23130;Méasnes;48 %;non
+23;23239;Saint-Sébastien;95 %;oui
+24;24354;La Roche-Chalais;89 %;oui
+26;26118;Épinouze;79 %;oui
+26;26143;Le Grand-Serre;79 %;oui
+26;26162;Lens-Lestang;79 %;oui
+26;26172;Manthes;78 %;oui
+26;26210;Valherbasse;86 %;oui
+33;33001;Abzac;9 %;non
+33;33018;Val de Virvée;49 %;non
+33;33035;Bayon-sur-Gironde;94 %;oui
+33;33112;Caumont;29 %;non
+33;33117;Cazaugitat;80 %;oui
+33;33132;Comps;57 %;oui
+33;33138;Coutras;18 %;non
+33;33154;Les Églisottes-et-Chalaures;14 %;non
+33;33166;Le Fieu;76 %;oui
+33;33179;Galgon;79 %;oui
+33;33182;Gauriac;35 %;non
+33;33221;Lamothe-Landerron;88 %;oui
+33;33228;Lansac;54 %;oui
+33;33250;Loubens;43 %;non
+33;33287;Mongauzy;83 %;oui
+33;33295;Mouillac;93 %;oui
+33;33325;Plassac;14 %;non
+33;33339;Prignac-et-Marcamps;94 %;oui
+33;33388;Saint-Ciers-de-Canesse;9 %;non
+33;33393;Saint-Denis-de-Pile;52 %;oui
+33;33400;Saint-Ferme;23 %;non
+33;33418;Saint-Hilaire-de-la-Noaille;40 %;non
+33;33425;Saint-Laurent-d'Arce;30 %;non
+33;33443;Saint-Martin-de-Lerm;75 %;oui
+33;33446;Saint-Martin-du-Puy;15 %;non
+33;33447;Saint-Médard-de-Guizières;58 %;oui
+33;33453;Saint-Michel-de-Lapujade;8 %;non
+33;33479;Saint-Sève;94 %;oui
+33;33500;Samonac;69 %;oui
+33;33509;Savignac-de-l'Isle;57 %;oui
+33;33520;Taillecavat;5 %;non
+33;33525;Tauriac;47 %;non
+33;33551;Villeneuve;15 %;non
+33;33553;Virsac;61 %;oui
+36;36001;Aigurande;14 %;non
+36;36060;Crevant;33 %;non
+36;36067;Dunet;45 %;non
+36;36070;Éguzon-Chantôme;7 %;non
+36;36073;Feusines;16 %;non
+36;36094;Lignac;19 %;non
+36;36095;Lignerolles;81 %;oui
+36;36099;Lourdoueix-Saint-Michel;52 %;oui
+36;36150;Parnac;62 %;oui
+36;36163;Pouligny-Notre-Dame;53 %;oui
+36;36177;Sacierges-Saint-Martin;35 %;non
+36;36187;Saint-Civran;65 %;oui
+36;36196;Saint-Gilles;33 %;non
+36;36207;Saint-Plantaire;7 %;non
+36;36208;Sainte-Sévère-sur-Indre;35 %;non
+38;38020;Auris;20 %;non
+38;38036;Beauvoir-en-Royans;47 %;non
+38;38040;Besse;18 %;non
+38;38051;Bougé-Chambalud;48 %;non
+38;38052;Le Bourg-d'Oisans;41 %;non
+38;38072;Chanas;59 %;oui
+38;38073;Chantepérier;59 %;oui
+38;38115;Saint-Martin-de-la-Cluze;69 %;oui
+38;38116;Cognet;31 %;non
+38;38173;Le Freney-d'Oisans;12 %;non
+38;38209;Lentiol;27 %;non
+38;38217;Marcieu;93 %;oui
+38;38224;Mayres-Savel;88 %;oui
+38;38326;Prunières;13 %;non
+38;38333;Rencurel;44 %;non
+38;38349;Sablons;44 %;non
+38;38359;Saint Antoine l'Abbaye;31 %;non
+38;38361;Saint-Arey;80 %;oui
+38;38379;Saint-Clair-sur-Galaure;20 %;non
+38;38413;Saint-Laurent-en-Beaumont;60 %;oui
+38;38436;Saint-Paul-de-Varces;26 %;non
+38;38443;Saint-Pierre-de-Chérennes;15 %;non
+38;38444;Saint-Pierre-de-Méaroz;65 %;oui
+38;38453;Saint-Romans;86 %;oui
+38;38495;La Sône;31 %;non
+38;38518;Valbonnais;89 %;oui
+38;38548;Villard-de-Lans;88 %;oui
+38;38549;Villard-Notre-Dame;44 %;non
+40;40251;Saint-Barthélemy;90 %;oui
+40;40268;Saint-Laurent-de-Gosse;89 %;oui
+40;40273;Saint-Martin-de-Seignanx;87 %;oui
+42;42001;Aboën;73 %;oui
+42;42023;Bourg-Argental;91 %;oui
+42;42050;La Chapelle-en-Lafaye;89 %;oui
+42;42095;Firminy;45 %;non
+42;42099;Fraisses;46 %;non
+42;42126;Luriecq;21 %;non
+42;42224;Saint-Genest-Malifaux;45 %;non
+42;42246;Saint-Julien-Molin-Molette;24 %;non
+42;42262;Saint-Maurice-en-Gourgois;44 %;non
+42;42270;Saint-Paul-en-Cornillon;14 %;non
+42;42286;Saint-Romain-les-Atheux;19 %;non
+42;42310;Thélis-la-Combe;16 %;non
+42;42312;La Tourette;87 %;oui
+42;42329;La Versanne;71 %;oui
+47;47020;Baleyssagues;58 %;oui
+47;47056;Castelnau-sur-Gupie;71 %;oui
+47;47059;Caubon-Saint-Sauveur;93 %;oui
+47;47131;Lagupie;78 %;oui
+47;47147;Lévignac-de-Guyenne;85 %;oui
+47;47236;Sainte-Colombe-de-Duras;42 %;non
+47;47257;Saint-Martin-Petit;43 %;non
+63;63057;Le Brugeron;44 %;non
+63;63066;Celles-sur-Durolle;90 %;oui
+63;63072;Chabreloche;71 %;oui
+63;63104;La Chaulme;93 %;oui
+63;63179;Job;89 %;oui
+63;63267;Palladuc;83 %;oui
+63;63298;La Renaudie;61 %;oui
+63;63319;Saint-Anthème;49 %;non
+63;63331;Saint-Clément-de-Valorgue;92 %;oui
+63;63384;Saint-Pierre-la-Bourlhonne;74 %;oui
+63;63402;Saint-Victor-Montvianeix;88 %;oui
+63;63441;Valcivières;81 %;oui
+63;63463;Viscomtat;73 %;oui
+63;63468;Vollore-Montagne;71 %;oui
+64;64015;Alçay-Alçabéhéty-Sunharette;43 %;non
+64;64024;Anglet;71 %;oui
+64;64045;Arhansus;49 %;non
+64;64051;Arraute-Charritte;54 %;oui
+64;64081;Aussurucq;58 %;oui
+64;64094;Bardos;17 %;non
+64;64102;Bayonne;56 %;oui
+64;64122;Biarritz;62 %;oui
+64;64123;Bidache;87 %;oui
+64;64235;Garris;80 %;oui
+64;64298;Lacarry-Arhan-Charritte-de-Haut;76 %;oui
+64;64316;Larrau;44 %;non
+64;64362;Luxe-Sumberraute;39 %;non
+64;64368;Masparraute;73 %;oui
+64;64411;Musculdy;49 %;non
+64;64424;Ordiarp;79 %;oui
+64;64441;Pagolle;66 %;oui
+64;64493;Saint-Palais;84 %;oui
+64;64539;Uhart-Mixe;82 %;oui
+64;64542;Urdos;87 %;oui
+64;64546;Urt;8 %;non
+65;65192;Gavarnie-Gèdre;93 %;oui
+66;66077;Fenouillet;79 %;oui
+66;66081;Fontrabiouse;32 %;non
+66;66107;Maury;8 %;non
+66;66127;Opoul-Périllos;22 %;non
+66;66154;Puyvalador;41 %;non
+66;66187;Saint-Paul-de-Fenouillet;35 %;non
+66;66190;Salses-le-Château;9 %;non
+83;83069;Hyères;78 %;oui
+86;86015;Availles-Limouzine;69 %;oui
+86;86084;Coulonges-les-Hérolles;56 %;oui
+86;86159;Millac;28 %;non
+86;86172;Mouterre-sur-Blourde;54 %;oui
+86;86200;Pressac;50 %;non
+87;87006;Azat-le-Ris;59 %;oui
+87;87028;Val-d'Oire-et-Gartempe;75 %;oui
+87;87200;Verneuil-Moustiers;67 %;oui
+IT;001025;Bibiana;94 %;oui
+IT;001049;Campiglione-Fenile;10 %;non
+IT;001254;San Secondo di Pinerolo;8 %;non

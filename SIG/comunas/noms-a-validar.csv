@@ -1,0 +1,943 @@
+i;fr;oc_osm;oc_bdtopoc;retengut;motiu
+03016;Barberier;Percenac;Barberier;Percenac;desacòrd
+03056;La Chapelle;La Chapèla;La Chapela;La Chapèla;desacòrd
+03066;Châtel-Montagne;Chastèl Montanha;Chastèlmontanha;Chastèl Montanha;desacòrd
+03125;La Guillermie;La Guilhermia;Guilherm;La Guilhermia;desacòrd
+03136;Lamaids;;;;mancant
+03161;Marcillat-en-Combraille;Marcilhat de Combralha;Marcilhac de Combralha;Marcilhat de Combralha;desacòrd
+03164;Le Mayet-d'École;Le Maiet d'Escòla;Lo Maiet d'Ecòla;Le Maiet d'Escòla;desacòrd
+03174;Molles;Mòlas;Molle;Mòlas;desacòrd
+03201;Nizerolles;Niseròlas;Noseròlas;Niseròlas;desacòrd
+03216;Ronnet;;;;mancant
+03252;Saint-Pont;;;;mancant
+03259;Saint-Sauvier;;;;mancant
+04034;La Brillanne;Lebrinnana;La Brilhana;Lebrinnana;desacòrd
+04069;Demandolx;Mandòus;Demandòus;Mandòus;desacòrd
+04112;Manosque;Manoasca;Manòsca;Manoasca;desacòrd
+05001;Abriès-Ristolas;;;;mancant
+05014;Barret-sur-Méouge;Barret de Meuja;Barret sus Meüja;Barret de Meuja;desacòrd
+05021;Le Bersac;;;;mancant
+05022;Bréziers;;;;mancant
+05023;Briançon;;;;mancant
+05025;Buissard;;;;mancant
+05026;Ceillac;;;;mancant
+05027;Cervières;;;;mancant
+05028;Chabestan;;;;mancant
+05031;Champcella;;;;mancant
+05032;Champoléon;;;;mancant
+05033;Chanousse;;;;mancant
+05035;Châteauneuf-d'Oze;;;;mancant
+05036;Châteauroux-les-Alpes;;;;mancant
+05037;Châteauvieux;;;;mancant
+05038;Château-Ville-Vieille;;;;mancant
+05039;Aubessagne;;;;mancant
+05040;Chorges;;;;mancant
+05044;Crévoux;Crevóls;Crevós;Crevóls;desacòrd
+05045;Crots;;;;mancant
+05046;Embrun;;;;mancant
+05047;Éourres;;;;mancant
+05048;L'Épine;;;;mancant
+05049;Esparron;;;;mancant
+05050;Espinasses;;;;mancant
+05051;Étoile-Saint-Cyrice;;;;mancant
+05052;Eygliers;;;;mancant
+05054;La Fare-en-Champsaur;;;;mancant
+05056;Forest-Saint-Julien;;;;mancant
+05057;Fouillouse;;;;mancant
+05058;Freissinières;;;;mancant
+05060;Furmeyer;;;;mancant
+05061;Gap;;;;mancant
+05062;Le Glaizil;;;;mancant
+05063;La Grave;;;;mancant
+05064;La Chapelle-en-Valgaudémar;;;;mancant
+05065;Guillestre;;;;mancant
+05066;La Haute-Beaume;;;;mancant
+05068;Jarjayes;;;;mancant
+05070;Laragne-Montéglin;;;;mancant
+05071;Lardier-et-Valença;;;;mancant
+05072;Laye;;;;mancant
+05073;Lazer;;;;mancant
+05074;Lettret;;;;mancant
+05075;Manteyer;;;;mancant
+05076;Méreuil;;;;mancant
+05077;Molines-en-Queyras;;;;mancant
+05078;Monêtier-Allemont;;;;mancant
+05079;Le Monêtier-les-Bains;;;;mancant
+05080;Montbrand;;;;mancant
+05081;Montclus;;;;mancant
+05082;Mont-Dauphin;;;;mancant
+05084;Montgardin;;;;mancant
+05086;Montjay;;;;mancant
+05087;Montmaur;;;;mancant
+05089;Montrond;;;;mancant
+05090;La Motte-en-Champsaur;;;;mancant
+05091;Moydans;;;;mancant
+05092;Neffes;;;;mancant
+05094;Nossage-et-Bénévent;;;;mancant
+05095;Le Noyer;;;;mancant
+05097;Orpierre;;;;mancant
+05098;Les Orres;;;;mancant
+05099;Oze;;;;mancant
+05100;Pelleautier;;;;mancant
+05102;La Piarre;;;;mancant
+05104;Poligny;;;;mancant
+05107;Puy-Saint-André;;;;mancant
+05108;Puy-Saint-Eusèbe;;;;mancant
+05109;Puy-Saint-Pierre;;;;mancant
+05110;Puy-Saint-Vincent;;;;mancant
+05111;Puy-Sanières;;;;mancant
+05112;Rabou;;;;mancant
+05113;Rambaud;;;;mancant
+05115;Remollon;;;;mancant
+05116;Réotier;;;;mancant
+05117;Ribeyret;;;;mancant
+05118;Val Buëch-Méouge;Val de Buech e Meuja;Val de Buech e Meuga / Ribiers (BdTopoc : Ribiers);Val de Buech e Meuja;desacòrd
+05119;Risoul;;;;mancant
+05121;Rochebrune;;;;mancant
+05122;La Roche-de-Rame;;;;mancant
+05123;La Roche-des-Arnauds;;;;mancant
+05124;La Rochette;;;;mancant
+05126;Rosans;;;;mancant
+05127;Rousset-Serre-Ponçon;;;;mancant
+05128;Saint-André-d'Embrun;;;;mancant
+05129;Saint-André-de-Rosans;;;;mancant
+05130;Saint-Apollinaire;;;;mancant
+05131;Saint-Auban-d'Oze;;;;mancant
+05133;Saint-Chaffrey;;;;mancant
+05134;Saint-Clément-sur-Durance;;;;mancant
+05135;Sainte-Colombe;;;;mancant
+05136;Saint-Crépin;;;;mancant
+05140;Saint-Étienne-le-Laus;;;;mancant
+05142;Saint-Firmin;;;;mancant
+05145;Saint-Jean-Saint-Nicolas;;;;mancant
+05146;Saint-Julien-en-Beauchêne;;;;mancant
+05147;Saint-Julien-en-Champsaur;;;;mancant
+05148;Saint-Laurent-du-Cros;;;;mancant
+05149;Saint-Léger-les-Mélèzes;;;;mancant
+05151;Saint-Martin-de-Queyrières;;;;mancant
+05152;Saint-Maurice-en-Valgodemard;;;;mancant
+05154;Saint-Pierre-d'Argençon;;;;mancant
+05155;Saint-Pierre-Avez;;;;mancant
+05156;Saint-Sauveur;;;;mancant
+05157;Saint-Véran;;;;mancant
+05159;Saléon;;;;mancant
+05161;La Salle-les-Alpes;;;;mancant
+05162;La Saulce;;;;mancant
+05163;Le Sauze-du-Lac;;;;mancant
+05164;Savines-le-Lac;;;;mancant
+05165;Savournon;;;;mancant
+05166;Serres;;;;mancant
+05167;Sigottier;;;;mancant
+05168;Sigoyer;;;;mancant
+05169;Sorbiers;;;;mancant
+05171;Théus;;;;mancant
+05172;Trescléoux;;;;mancant
+05173;Upaix;;;;mancant
+05174;Val-des-Prés;;;;mancant
+05176;Valserres;;;;mancant
+05177;Vars;;;;mancant
+05178;Ventavon;;;;mancant
+05179;Veynes;;;;mancant
+05181;Villar-d'Arêne;;;;mancant
+05182;Villar-Loubière;;;;mancant
+05183;Villar-Saint-Pancrace;;;;mancant
+05184;Vitrolles;;;;mancant
+06140;Le Tignet;Antinhac;Lo Tinhet;Antinhac;desacòrd
+07051;Champagne;;;;mancant
+07063;Cheminas;;;;mancant
+07084;Eclassan;;;;mancant
+07085;Empurany;;;;mancant
+07089;Félines;;;;mancant
+07165;Belsentes;;;;mancant
+07174;Peyraud;;;;mancant
+07313;Serrières;;;;mancant
+09088;Caychax-et-Senconac;;Caissacs (BdTopoc : Caychax);;mancant
+09334;Val-de-Sos;Val de Sòs;Vic de Sòs (BdTopoc : Vicdessos);Val de Sòs;desacòrd
+12083;Cransac-les-Thermes;;Cransac (BdTopoc : Cransac);;mancant
+12218;Conques-en-Rouergue;Concas de Roergue;Sent Cebrian (BdTopoc : Saint-Cyprien-sur-Dourdou);Concas de Roergue;desacòrd
+12233;Saint-Juéry;;;;mancant
+12249;Saint-Sever-du-Moustier;;;;mancant
+12252;Salles-Courbatiès;;;;mancant
+12281;Toulonjac;;;;mancant
+13020;Cadolive;Ca d'Oliva;Cadoliva;Ca d'Oliva;desacòrd
+13030;Cuges-les-Pins;Cuja dei Pins;Cuja (dei Pins);Cuja dei Pins;desacòrd
+13033;Ensuès-la-Redonne;En Suá e La Redona;Ensuá e La Redona;En Suá e La Redona;desacòrd
+13056;Martigues;Lo Martegue;Le Martegue;Lo Martegue;desacòrd
+13068;Paradou;Paradol;Lo Paradol;Paradol;desacòrd
+13073;Peypin;Puegpin;Peipin;Puegpin;desacòrd
+13075;Plan-de-Cuques;Lo Plan de Cucas;Lo Plan de Cuca;Lo Plan de Cucas;desacòrd
+16023;Aunac-sur-Charente;;Aunac (BdTopoc : Aunac);;mancant
+16093;Chazelles;;;;mancant
+16114;Couture;;;;mancant
+16192;Terres-de-Haute-Charente;;;;mancant
+16198;Magnac-lès-Gardes;;Manhac e Vilars (BdTopoc : Magnac-Lavalette-Villars);;mancant
+16213;Mazerolles;;;;mancant
+16281;La Rochefoucauld-en-Angoumois;;La Ròchafocaud (BdTopoc : La Rochefoucauld);;mancant
+16300;Val-de-Bonnieure;;Sent Angeu (BdTopoc : Saint-Angeau);;mancant
+16346;Saint-Quentin-de-Chalais;;;;mancant
+16356;Saint-Sulpice-de-Ruffec;;;;mancant
+16406;Moulins-sur-Tardoire;;Vilonor (BdTopoc : Vilhonneur);;mancant
+19143;Montaignac-sur-Doustre;;Montanhac e Sent Pòlit (BdTopoc : Montaignac-Saint-Hippolyte);;mancant
+19184;Saint-Bazile-de-Meyssac;;;;mancant
+19248;Les Trois-Saints;;Sanch Ibarch (BdTopoc : Saint-Ybard);;mancant
+23009;Auge;;;;mancant
+23072;Domeyrot;;;;mancant
+23074;Le Donzeil;;;;mancant
+23099;Janaillat;;;;mancant
+23149;Parsac;;;;mancant
+23165;Royère-de-Vassivière;;;;mancant
+24019;Azerat;;;;mancant
+24021;Badefols-d'Ans;;;;mancant
+24325;Pechs-de-l'Espérance;;Pairilhac e Milhac (BdTopoc : Peyrillac-et-Millac);;mancant
+26002;Albon;;;;mancant
+26010;Anneyron;;;;mancant
+26083;Châteauneuf-de-Galaure;;;;mancant
+26107;Crépol;;;;mancant
+26118;Épinouze;;;;mancant
+26143;Le Grand-Serre;;;;mancant
+26148;Hauterives;;;;mancant
+26160;Laveyron;;;;mancant
+26162;Lens-Lestang;;;;mancant
+26167;Luc-en-Diois;;;;mancant
+26170;Malissard;;;;mancant
+26172;Manthes;;;;mancant
+26194;Montchenu;;;;mancant
+26207;Montmiral;;;;mancant
+26210;Valherbasse;;;;mancant
+26213;Moras-en-Valloire;;;;mancant
+26216;Saint-Jean-de-Galaure;;La Mota de Galaura (BdTopoc : La Motte-de-Galaure);;mancant
+26293;Saint-Avit;;;;mancant
+26295;Saint-Barthélemy-de-Vals;;;;mancant
+26298;Saint-Christophe-et-le-Laris;;;;mancant
+26310;Saint-Laurent-d'Onay;;;;mancant
+26314;Saint-Martin-d'Août;;;;mancant
+26325;Saint-Rambert-d'Albon;;;;mancant
+26330;Saint-Sorlin-en-Valloire;;;;mancant
+26349;Tersanne;;;;mancant
+26372;Vers-sur-Méouge;Verds de Meuja;Verds de Meoja;Verds de Meuja;desacòrd
+30013;Argilliers;Argiliers;Argilièrs;Argiliers;desacòrd
+30329;Thoiras-Corbès;;Toiraç (BdTopoc : Thoiras);;mancant
+31453;Rieumajou;;;;mancant
+32002;Ansan;;;;mancant
+32028;Barcugnan;;;;mancant
+32033;Bazian;;;;mancant
+32331;Preignan;;;;mancant
+32341;Réjaumont;;;;mancant
+32354;Sabazan;;;;mancant
+32357;Sainte-Anne;;;;mancant
+32365;Cap d'Astarac;;Sent Blancat (BdTopoc : Saint-Blancard);;mancant
+33014;Les Artigues-de-Lussac;;;;mancant
+33204;Hure;;;;mancant
+33419;Saint-Hilaire-du-Bois;;;;mancant
+33472;Saint-Sauveur-de-Puynormand;;;;mancant
+33488;Saint-Vincent-de-Pertignas;;;;mancant
+33519;Le Taillan-Médoc;;;;mancant
+34144;Lunas-les-Châteaux;;Lunaç (BdTopoc : Lunas);;mancant
+34160;Mons;Mònts;Mòns;Mònts;desacòrd
+34338;Villeneuvette;;;;mancant
+34341;Villeveyrac;Vilamanda;Vilavairac;Vilamanda;desacòrd
+36240;Vijon;;;;mancant
+38072;Chanas;;;;mancant
+38073;Chantepérier;;Chantaloba (BdTopoc : Chantelouve);;mancant
+38187;Le Gua;;;;mancant
+38217;Marcieu;;;;mancant
+38224;Mayres-Savel;;;;mancant
+38361;Saint-Arey;;;;mancant
+40080;Cazères-sur-l'Adour;;;;mancant
+40164;Retjons;;;;mancant
+42091;Estivareilles;Estivarelhas;Estivalelhes;Estivarelhas;desacòrd
+43015;Auvers;;;;mancant
+43016;Auzon;;;;mancant
+43022;Beaumont;;;;mancant
+43024;Beaux;;;;mancant
+43031;Blassac;;;;mancant
+43036;Borne;;;;mancant
+43038;Bournoncle-Saint-Pierre;;;;mancant
+43044;Cerzat;;;;mancant
+43064;Chassignolles;;;;mancant
+43074;Cohade;;;;mancant
+43085;Desges;;;;mancant
+43093;Félines;;;;mancant
+43096;Fontannes;;;;mancant
+43101;Goudet;;;;mancant
+43105;Javaugues;;;;mancant
+43152;Polignac;;;;mancant
+43185;Sainte-Florine;Senta Florina;Santa Florina;Senta Florina;desacòrd
+43215;Saint-Paul-de-Tartas;;;;mancant
+43218;Saint-Pierre-Eynac;;;;mancant
+43232;Salzuit;;;;mancant
+43239;Siaugues-Sainte-Marie;;;;mancant
+43246;Tiranges;;;;mancant
+43254;Vazeilles-Limandre;;;;mancant
+46042;Cahors;Cáors;Caors;Cáors;desacòrd
+46172;Pern-Lhospitalet;;L'Espitalet (BdTopoc : Lhospitalet);;mancant
+46204;Montfaucon;Montfalcon;Montfaucon;Montfalcon;desacòrd
+46311;Sousceyrac-en-Quercy;Sousceïrac de Carcin;Soçairac de Carcin / Soçairac (BdTopoc : Sousceyrac);Sousceïrac de Carcin;desacòrd
+47003;Agnac;;;;mancant
+47004;Aiguillon;;;;mancant
+47007;Allons;;;;mancant
+47008;Ambrus;;;;mancant
+47009;Andiran;;;;mancant
+47011;Anthé;;;;mancant
+47013;Argenton;;;;mancant
+47014;Armillac;;;;mancant
+47016;Aubiac;;;;mancant
+47017;Auradou;;;;mancant
+47018;Auriac-sur-Dropt;;;;mancant
+47019;Bajamont;;;;mancant
+47020;Baleyssagues;;;;mancant
+47022;Bazens;;;;mancant
+47023;Beaugas;;;;mancant
+47025;Beauville;;;;mancant
+47028;Birac-sur-Trec;;;;mancant
+47029;Blanquefort-sur-Briolance;;;;mancant
+47030;Blaymont;;;;mancant
+47032;Bon-Encontre;;;;mancant
+47033;Boudy-de-Beauregard;;;;mancant
+47036;Bourlens;;;;mancant
+47037;Bournel;;;;mancant
+47038;Bourran;;;;mancant
+47039;Boussès;;;;mancant
+47041;Bruch;;;;mancant
+47042;Brugnac;;;;mancant
+47043;Buzet-sur-Baïse;;;;mancant
+47044;Cahuzac;;;;mancant
+47045;Calignac;;;;mancant
+47046;Calonges;;;;mancant
+47048;Cancon;;;;mancant
+47050;Cassignas;;;;mancant
+47051;Castelculier;;;;mancant
+47053;Castella;;;;mancant
+47054;Castelmoron-sur-Lot;;;;mancant
+47055;Castelnaud-de-Gratecambe;;;;mancant
+47057;Castillonnès;;;;mancant
+47059;Caubon-Saint-Sauveur;;;;mancant
+47060;Caudecoste;;;;mancant
+47061;Caumont-sur-Garonne;;;;mancant
+47062;Cauzac;;;;mancant
+47063;Cavarc;;;;mancant
+47064;Cazideroque;;;;mancant
+47065;Clairac;;;;mancant
+47067;Clermont-Soubiran;;;;mancant
+47068;Cocumont;;;;mancant
+47070;Condezaygues;;;;mancant
+47071;Coulx;;;;mancant
+47073;Cours;;;;mancant
+47075;La Croix-Blanche;;;;mancant
+47076;Cuq;;;;mancant
+47077;Cuzorn;;;;mancant
+47079;Dausse;;;;mancant
+47080;Dévillac;;;;mancant
+47081;Dolmayrac;;;;mancant
+47082;Dondas;;;;mancant
+47083;Doudrac;;;;mancant
+47084;Douzains;;;;mancant
+47086;Duras;;;;mancant
+47087;Engayrac;;;;mancant
+47089;Esclottes;;;;mancant
+47090;Espiens;;;;mancant
+47091;Estillac;;;;mancant
+47092;Fals;;;;mancant
+47094;Fauguerolles;;;;mancant
+47096;Ferrensac;;;;mancant
+47097;Feugarolles;;;;mancant
+47098;Fieux;;;;mancant
+47099;Fongrave;;;;mancant
+47100;Foulayronnes;;;;mancant
+47101;Fourques-sur-Garonne;;;;mancant
+47102;Francescas;;;;mancant
+47103;Fréchou;;;;mancant
+47104;Frégimont;;;;mancant
+47105;Frespech;;;;mancant
+47107;Galapian;;;;mancant
+47108;Gaujac;;;;mancant
+47109;Gavaudun;;;;mancant
+47110;Gontaud-de-Nogaret;;;;mancant
+47111;Granges-sur-Lot;;;;mancant
+47113;Grayssas;;;;mancant
+47115;Guérin;;;;mancant
+47117;Hautefage-la-Tour;;;;mancant
+47118;Hautesvignes;;;;mancant
+47120;Jusix;;;;mancant
+47121;Labastide-Castel-Amouroux;;;;mancant
+47122;Labretonie;;;;mancant
+47123;Lacapelle-Biron;;;;mancant
+47124;Lacaussade;;;;mancant
+47125;Lacépède;;;;mancant
+47127;Lafitte-sur-Lot;;;;mancant
+47128;Lafox;;;;mancant
+47129;Lagarrigue;;;;mancant
+47130;Lagruère;;;;mancant
+47132;Lalandusse;;;;mancant
+47133;Lamontjoie;;;;mancant
+47134;Lannes;;;;mancant
+47135;Laparade;;;;mancant
+47136;Laperche;;;;mancant
+47137;Laplume;;;;mancant
+47138;Laroque-Timbaut;;;;mancant
+47139;Lasserre;;;;mancant
+47140;Laugnac;;;;mancant
+47141;Laussou;;;;mancant
+47143;Lavardac;;;;mancant
+47144;Lavergne;;;;mancant
+47145;Layrac;;;;mancant
+47146;Lédat;;;;mancant
+47152;Lougratte;;;;mancant
+47154;Lusignan-Petit;;;;mancant
+47155;Madaillan;;;;mancant
+47158;Marmont-Pachas;;;;mancant
+47160;Masquières;;;;mancant
+47161;Massels;;;;mancant
+47162;Massoulès;;;;mancant
+47164;Mazières-Naresse;;;;mancant
+47165;Meilhan-sur-Garonne;;;;mancant
+47167;Mézin;;;;mancant
+47169;Moirax;;;;mancant
+47170;Monbahus;;;;mancant
+47171;Monbalen;;;;mancant
+47172;Moncaut;;;;mancant
+47173;Monclar;;;;mancant
+47176;Montgaillard-en-Albret;;;;mancant
+47177;Monheurt;;;;mancant
+47178;Monségur;;;;mancant
+47180;Montagnac-sur-Auvignon;;;;mancant
+47181;Montagnac-sur-Lède;;;;mancant
+47182;Montastruc;;;;mancant
+47183;Montauriol;;;;mancant
+47184;Montaut;;;;mancant
+47185;Montayral;;;;mancant
+47186;Montesquieu;;;;mancant
+47187;Monteton;;;;mancant
+47188;Montignac-de-Lauzun;;;;mancant
+47190;Montpezat;;;;mancant
+47191;Montpouillan;;;;mancant
+47192;Monviel;;;;mancant
+47193;Moulinet;;;;mancant
+47195;Nérac;;;;mancant
+47196;Nicole;;;;mancant
+47197;Nomdieu;;;;mancant
+47198;Pailloles;;;;mancant
+47200;Parranquet;;;;mancant
+47202;Paulhiac;;;;mancant
+47204;Peyrière;;;;mancant
+47206;Pinel-Hauterive;;;;mancant
+47207;Pompiey;;;;mancant
+47209;Pont-du-Casse;;;;mancant
+47211;Poudenas;;;;mancant
+47212;Poussignac;;;;mancant
+47213;Prayssas;;;;mancant
+47214;Puch-d'Agenais;;;;mancant
+47216;Puymiclan;;;;mancant
+47217;Puymirol;;;;mancant
+47219;Rayet;;;;mancant
+47220;Razimet;;;;mancant
+47222;La Réunion;;;;mancant
+47223;Rives;;;;mancant
+47224;Romestaing;;;;mancant
+47225;Roquefort;;;;mancant
+47227;Ruffiac;;;;mancant
+47228;Saint-Antoine-de-Ficalba;;;;mancant
+47229;Saint-Astier;;;;mancant
+47230;Saint-Aubin;;;;mancant
+47231;Saint-Avit;;;;mancant
+47232;Saint-Barthélemy-d'Agenais;;;;mancant
+47233;Sainte-Bazeille;;;;mancant
+47234;Saint-Caprais-de-Lerm;;;;mancant
+47235;Saint-Colomb-de-Lauzun;;;;mancant
+47237;Sainte-Colombe-de-Villeneuve;;;;mancant
+47238;Sainte-Colombe-en-Bruilhois;;;;mancant
+47239;Saint-Étienne-de-Fougères;;;;mancant
+47240;Saint-Étienne-de-Villeréal;;;;mancant
+47242;Saint-Front-sur-Lémance;;;;mancant
+47244;Sainte-Gemme-Martaillac;;;;mancant
+47247;Saint-Jean-de-Duras;;;;mancant
+47248;Saint-Jean-de-Thurac;;;;mancant
+47249;Saint-Laurent;;;;mancant
+47250;Saint-Léger;;;;mancant
+47251;Saint-Léon;;;;mancant
+47253;Sainte-Marthe;;;;mancant
+47254;Saint-Martin-Curton;;;;mancant
+47255;Saint-Martin-de-Beauville;;;;mancant
+47256;Saint-Martin-de-Villeréal;;;;mancant
+47258;Sainte-Maure-de-Peyriac;;;;mancant
+47259;Saint-Maurice-de-Lestapel;;;;mancant
+47260;Saint-Maurin;;;;mancant
+47262;Saint-Nicolas-de-la-Balerme;;;;mancant
+47264;Saint-Pardoux-Isaac;;;;mancant
+47265;Saint-Pastour;;;;mancant
+47266;Saint-Pé-Saint-Simon;;;;mancant
+47267;Saint-Pierre-de-Buzet;;;;mancant
+47269;Saint-Pierre-de-Clairac;;;;mancant
+47271;Saint-Pierre-sur-Dropt;;;;mancant
+47272;Saint-Quentin-du-Dropt;;;;mancant
+47273;Saint-Robert;;;;mancant
+47274;Saint-Romain-le-Noble;;;;mancant
+47275;Saint-Salvy;;;;mancant
+47276;Saint-Sardos;;;;mancant
+47277;Saint-Sauveur-de-Meilhan;;;;mancant
+47278;Saint-Sernin;;;;mancant
+47279;Saint-Sixte;;;;mancant
+47281;Saint-Urcisse;;;;mancant
+47282;Saint-Vincent-de-Lamontjoie;;;;mancant
+47283;Saint-Vite;;;;mancant
+47284;Salles;;;;mancant
+47285;Samazan;;;;mancant
+47287;Saumont;;;;mancant
+47288;Sauvagnas;;;;mancant
+47289;La Sauvetat-de-Savères;;;;mancant
+47290;La Sauvetat-du-Dropt;;;;mancant
+47291;La Sauvetat-sur-Lède;;;;mancant
+47292;Sauveterre-la-Lémance;;;;mancant
+47293;Sauveterre-Saint-Denis;;;;mancant
+47294;Savignac-de-Duras;;;;mancant
+47295;Savignac-sur-Leyze;;;;mancant
+47296;Ségalas;;;;mancant
+47297;Sembas;;;;mancant
+47298;Sénestis;;;;mancant
+47299;Sérignac-Péboudou;;;;mancant
+47300;Sérignac-sur-Garonne;;;;mancant
+47302;Sos;;;;mancant
+47303;Soumensac;;;;mancant
+47305;Tayrac;;;;mancant
+47307;Thézac;;;;mancant
+47308;Thouars-sur-Garonne;;;;mancant
+47309;Tombebœuf;;;;mancant
+47311;Tourliac;;;;mancant
+47312;Tournon-d'Agenais;;;;mancant
+47313;Tourtrès;;;;mancant
+47314;Trémons;;;;mancant
+47315;Trentels;;;;mancant
+47316;Varès;;;;mancant
+47317;Verteuil-d'Agenais;;;;mancant
+47318;Vianne;;;;mancant
+47319;Villebramar;;;;mancant
+47320;Villefranche-du-Queyran;;;;mancant
+47321;Villeneuve-de-Duras;;;;mancant
+47324;Villeréal;;;;mancant
+47325;Villeton;;;;mancant
+47326;Virazeil;;;;mancant
+47327;Xaintrailles;;;;mancant
+47328;Saint-Georges;;;;mancant
+63001;Aigueperse;Guiparsa;Guiparsa (Aigaparsa);Guiparsa;desacòrd
+63002;Aix-la-Fayette;La Faieta;Ais de la Faieta;La Faieta;desacòrd
+63005;Antoingt;Entonh;Antonh;Entonh;desacòrd
+63006;Anzat-le-Luguet;Anzac e le Luguet;Antiac dau Luguet;Anzac e le Luguet;desacòrd
+63007;Apchat;Achiac;Apchat;Achiac;desacòrd
+63010;Arlanc;Arlhenc;Arlanc;Arlhenc;desacòrd
+63011;Ars-les-Favets;Ars daus Favets;Ars dels Favets;Ars daus Favets;desacòrd
+63015;Aubusson-d'Auvergne;Aubuçon d'Auvèrnha;Aubuçon d'Auvèrnhe;Aubuçon d'Auvèrnha;desacòrd
+63016;Augerolles;Augeiròlas;Augeròlas;Augeiròlas;desacòrd
+63019;Aulnat;Aunac;Aulnat;Aunac;desacòrd
+63020;Aurières;Aurèira;Aurièira;Aurèira;desacòrd
+63021;Authezat;Autesac;Antesat (e la Sauvetat);Autesac;desacòrd
+63023;Auzelles;v-Ausèla;Ausela;v-Ausèla;desacòrd
+63025;Ayat-sur-Sioule;l-Aiat de Siula;Aiat de Siula;l-Aiat de Siula;desacòrd
+63026;Aydat;Aidac;Aidat;Aidac;desacòrd
+63027;Baffie;Bàfia;Bèfia;Bàfia;desacòrd
+63029;Bansat;Bançac;Bansat;Bançac;desacòrd
+63030;Bas-et-Lezat;Bas e Lesat;Bas de Lezat;Bas e Lesat;desacòrd
+63031;Beaulieu;Bèlluòc;Bèuluòc;Bèlluòc;desacòrd
+63032;Beaumont;Biaumont;Beumont;Biaumont;desacòrd
+63035;Beauregard-Vendon;Biauregard de Vendom;Biauregard de Vendon;Biauregard de Vendom;desacòrd
+63037;Bertignat;Bertinhac;Bertinhat;Bertinhac;desacòrd
+63038;Besse-et-Saint-Anastaise;Bèça;Beça;Bèça;desacòrd
+63039;Beurières;Beurèiras;Beurieras;Beurèiras;desacòrd
+63040;Billom;Bilhòm;Bilhom;Bilhòm;desacòrd
+63041;Biollet;Bioulet;Biollet;Bioulet;desacòrd
+63043;Blot-l'Église;Blòt la Glèisa;Blòt;Blòt la Glèisa;desacòrd
+63044;Bongheat;Bonjac;Bonjat;Bonjac;desacòrd
+63045;Bort-l'Étang;Bòrt de l'Estanh;Bòrt (de l'Estanh);Bòrt de l'Estanh;desacòrd
+63046;Boudes;Bode;Bosdes;Bode;desacòrd
+63048;Bourg-Lastic;Le Borg de Lastic;Lo Borc;Le Borg de Lastic;desacòrd
+63052;Le Breuil-sur-Couze;Le Bruelh de Cosa;Lo Bruelh (de Cosa);Le Bruelh de Cosa;desacòrd
+63053;Briffons;Brifònt;Aprifons;Brifònt;desacòrd
+63054;Le Broc;Le Bròc;Lo Bròc;Le Bròc;desacòrd
+63055;Bromont-Lamothe;Bromont e La Mòta;Beromont e Lamòta;Bromont e La Mòta;desacòrd
+63056;Brousse;Bòrsa;Brossa;Bòrsa;desacòrd
+63059;Busséol;;;;mancant
+63063;Cébazat;Cebasat;Sebasac;Cebasat;desacòrd
+63064;La Celle;;;;mancant
+63066;Celles-sur-Durolle;Cèla de Duròla;Cèla (de Doròla);Cèla de Duròla;desacòrd
+63069;Le Cendre;;;;mancant
+63070;Ceyrat;Seirat;Seirac;Seirat;desacòrd
+63075;Chamalières;Chambalèira;Chamaleiras;Chambalèira;desacòrd
+63076;Chambon-sur-Dolore;Chambon de Dolòra;Vès Chambon de Dolòra;Chambon de Dolòra;desacòrd
+63077;Chambon-sur-Lac;Chambon del Lac;Chambon (del Lac);Chambon del Lac;desacòrd
+63079;Champagnat-le-Jeune;Champanhac le Joine;Champanhac Jove;Champanhac le Joine;desacòrd
+63080;Champeix;Champelhs;Champeilhs;Champelhs;desacòrd
+63081;Champétières;Champestèiras;Champitèiras;Champestèiras;desacòrd
+63083;Chanat-la-Mouteyre;Chanac e la Motèira;Chanat e la Moteira;Chanac e la Motèira;desacòrd
+63084;Chanonat;Chanonac;Charnau;Chanonac;desacòrd
+63087;La Chapelle-Marcousse;;;;mancant
+63088;La Chapelle-sur-Usson;La Chapèla d'Içon;La Chapèla D'Usson;La Chapèla d'Içon;desacòrd
+63090;Chaptuzat;Chatusac;Chaptusat;Chatusac;desacòrd
+63093;Charbonnières-les-Vieilles;Charbonèiras las Vèlhas;(Las) Charboneiras Vielhas;Charbonèiras las Vèlhas;desacòrd
+63094;Charensat;Charençat;Charensat;Charençat;desacòrd
+63097;Chassagne;Chassanhas;Chassanha;Chassanhas;desacòrd
+63099;Châteaugay;Chastèugai;Chasteugai;Chastèugai;desacòrd
+63101;Château-sur-Cher;Chastiau de Char;Lo Chastèl de Char;Chastiau de Char;desacòrd
+63103;Châtel-Guyon;Chastauguion;Chastelguion;Chastauguion;desacòrd
+63104;La Chaulme;La Chal;La Chauma;La Chal;desacòrd
+63105;Chaumont-le-Bourg;Chaumont;Chaumont (del Borc);Chaumont;desacòrd
+63108;Le Cheix-sur-Morge;Le Chèir;Lo Chair (BdTopoc : Le Cheix);Le Chèir;desacòrd
+63109;Les Deux-Rives;;Chidrac (BdTopoc : Chidrac);;mancant
+63110;Cisternes-la-Forêt;Cistarnas e la Forèst;Cisternas;Cistarnas e la Forèst;desacòrd
+63111;Clémensat;Clamençac;Clemensac;Clamençac;desacòrd
+63113;Clermont-Ferrand;Clarmont-Ferrand;Clarmont d'Auvèrnha;Clarmont-Ferrand;desacòrd
+63116;Combronde;Combronde;Combaronda;Combronde;desacòrd
+63119;Condat-lès-Montboissier;Condat de Boissèir;Condat de Montboissèir;Condat de Boissèir;desacòrd
+63120;Corent;Coren;Corent;Coren;desacòrd
+63121;Coudes;Cosde;Còdes;Cosde;desacòrd
+63126;Le Crest;Le Crest;Lo Crest;Le Crest;desacòrd
+63129;Cros;Cròs e La Tartèira;Lo Cròs;Cròs e La Tartèira;desacòrd
+63134;Dauzat-sur-Vodable;Dausac de Vodabla;Dausat de Vodable;Dausac de Vodabla;desacòrd
+63137;Doranges;Dauranjas;Daurangias;Dauranjas;desacòrd
+63139;Dore-l'Église;Dòra la Glèisa;Dòra la Gleisa;Dòra la Glèisa;desacòrd
+63142;Échandelys;Eschandalís;Eschandalis;Eschandalís;desacòrd
+63143;Effiat;;;;mancant
+63144;Égliseneuve-d'Entraigues;Glèisanuèva d'Entraigas;Gleianèva d'Entraigas;Glèisanuèva d'Entraigas;desacòrd
+63145;Égliseneuve-des-Liards;Glèisanòva daus Liards;Glèisanòva;Glèisanòva daus Liards;desacòrd
+63146;Égliseneuve-près-Billom;Gleianuèva de Bilhòm;Gleianèva de Bilhom;Gleianuèva de Bilhòm;desacòrd
+63147;Églisolles;Egliòlas;Egleisòla;Egliòlas;desacòrd
+63148;Ennezat;Nasac;Enesac;Nasac;desacòrd
+63151;Escoutoux;Escotau;Escotós;Escotau;desacòrd
+63153;Espinchal;Espinchaum;Espinchal;Espinchaum;desacòrd
+63154;Espirat;Pirac;Espirac;Pirac;desacòrd
+63155;Estandeuil;Tanduelh;Estanduelh;Tanduelh;desacòrd
+63156;Esteil;v-Èstilh;Estelh;v-Èstilh;desacòrd
+63157;Fayet-le-Château;Faiet le Chastèl;Faiet lo Chastèl;Faiet le Chastèl;desacòrd
+63158;Fayet-Ronaye;Le Faiet e Ronaias;Lo Faiet;Le Faiet e Ronaias;desacòrd
+63159;Fernoël;Farnòl;Fernuel;Farnòl;desacòrd
+63160;Aulhat-Flat;Aulhac e Flac;Aulhat e Flat / Flat (BdTopoc : Flat);Aulhac e Flac;desacòrd
+63161;La Forie;La Fàuria;La Fauria;La Fàuria;desacòrd
+63162;Fournols;Fornòus;Fornòl;Fornòus;desacòrd
+63164;Gerzat;Jarzat;Gerzac;Jarzat;desacòrd
+63167;Gimeaux;Gimiaus;Gimaus;Gimiaus;desacòrd
+63169;La Godivelle;La Gaudivèla;La Gaudivela;La Gaudivèla;desacòrd
+63171;Gouttières;Gotièra;Gotira;Gotièra;desacòrd
+63172;Grandeyrolles;Grandairòls;Grandeirolas;Grandairòls;desacòrd
+63173;Grandrif;;;;mancant
+63175;Herment;l-Ermenc;Erment;l-Ermenc;desacòrd
+63176;Heume-l'Église;Eume la Glèisa;Deume;Eume la Glèisa;desacòrd
+63179;Job;Jòb;Job;Jòb;desacòrd
+63180;Joze;Jause;Jòse;Jause;desacòrd
+63181;Jozerand;Jausarens;Jauserens;Jausarens;desacòrd
+63183;Labessette;La Beceta;La Bèça;La Beceta;desacòrd
+63185;Lamontgie;La Mòngia;La Mongiá;La Mòngia;desacòrd
+63186;Landogne;Landònha;Landonha;Landònha;desacòrd
+63187;Lapeyrouse;Peirosa;La Peirosa;Peirosa;desacòrd
+63188;Laps;;;;mancant
+63189;Laqueuille;La Cuelha;La Cuelha de Perpesac;La Cuelha;desacòrd
+63192;La Tour-d'Auvergne;La Tor d'Auvèrnha;La Tor d'Auvèrnhe;La Tor d'Auvèrnha;desacòrd
+63194;Lempty;Lentic;Lenti;Lentic;desacòrd
+63197;Lisseuil;Lissuele;Lhieseiles;Lissuele;desacòrd
+63198;Loubeyrat;Lobairac;Lobeirac;Lobairac;desacòrd
+63199;Ludesse;Ludèa;Lopdessa;Ludèa;desacòrd
+63200;Lussat;Luçac;Lhuissat;Luçac;desacòrd
+63201;Luzillat;Nusilhac;Lusilhat;Nusilhac;desacòrd
+63207;Marat;Maarat;Marat;Maarat;desacòrd
+63209;Mareugheol;Maruègel;Marajòu;Maruègel;desacòrd
+63210;Maringues;Maringe;Maringas;Maringe;desacòrd
+63213;Les Martres-d'Artière;Las Matres d'Artèira;Las Martras (D'Artiera);Las Matres d'Artèira;desacòrd
+63214;Les Martres-de-Veyre;Las Matres de Vaira;Las Mastras;Las Matres de Vaira;desacòrd
+63218;Mayres;Mairas;Maires;Mairas;desacòrd
+63221;Medeyrolles;Medeiròlas;Medeiròla;Medeiròlas;desacòrd
+63224;Ménétrol;Menestròu;Menestròl;Menestròu;desacòrd
+63225;Messeix;Mecés;Messèir;Mecés;desacòrd
+63228;Miremont;Mirmont;Miremont;Mirmont;desacòrd
+63229;Moissat;Maiçac;Manciac;Maiçac;desacòrd
+63230;Le Monestier;Le Monestèir;Lo Monestier;Le Monestèir;desacòrd
+63233;Montaigut-en-Combraille;Montagut de Combralha;Montagut;Montagut de Combralha;desacòrd
+63234;Montaigut-le-Blanc;Montagut le Blanc;Montagut lo Blanc;Montagut le Blanc;desacòrd
+63235;Montcel;Montcèl;Montcel;Montcèl;desacòrd
+63236;Mont-Dore;Boenhs;Lo Mont Dòr;Boenhs;desacòrd
+63237;Montel-de-Gelat;Le Montelh Dejalat;Le Montelh de Gelat;Le Montelh Dejalat;desacòrd
+63238;Montfermy;Montfermin;Montferm;Montfermin;desacòrd
+63239;Montmorin;Montmaurin;Montmorin;Montmaurin;desacòrd
+63240;Montpensier;Montpencèir;Montpansèir;Montpencèir;desacòrd
+63244;Chambaron sur Morge;Celuele e la Motada;Chambaron de Morga / La Motada (BdTopoc : La Moutade);Celuele e la Motada;desacòrd
+63246;Murat-le-Quaire;Murat e le Caire;Murat e lo Caire;Murat e le Caire;desacòrd
+63247;Murol;Muròu;Muròl;Muròu;desacòrd
+63248;Nébouzat;Nabosac;Nebosac;Nabosac;desacòrd
+63251;Neuf-Église;Nuèglèisa;Nòvaiglisa;Nuèglèisa;desacòrd
+63253;Noalhat;Nulhac;Noalhac;Nulhac;desacòrd
+63256;Novacelles;Nòucèla;Nòvacela;Nòucèla;desacòrd
+63257;Olby;Orbi;Orbie;Orbi;desacòrd
+63260;Olmet;Oumet;Olmet;Oumet;desacòrd
+63264;Orcival;l-Orsivau;Orsivau;l-Orsivau;desacòrd
+63265;Orléat;v-Orlhac;Orleac;v-Orlhac;desacòrd
+63272;Pérignat-lès-Sarliève;Pairinhat de Sarlèiva;Pairinhac de Sarlèiva;Pairinhat de Sarlèiva;desacòrd
+63274;Perpezat;Parpesat;Perpesac;Parpesat;desacòrd
+63275;Perrier;Perèirs;Perrier;Perèirs;desacòrd
+63276;Peschadoires;Peschadoiras;Peschadoira;Peschadoiras;desacòrd
+63277;Peslières;Pailèiras;Pailheiras;Pailèiras;desacòrd
+63278;Pessat-Villeneuve;Pessat e Vianuèva;Pessat e Vilanòva;Pessat e Vianuèva;desacòrd
+63280;Pignols;;;;mancant
+63281;Pionsat;Punçac;Ponsiac;Punçac;desacòrd
+63285;Pontgibaud;;;;mancant
+63287;Les Pradeaux;Los Pradaus;Los Pradòts;Los Pradaus;desacòrd
+63288;Prompsat;Pronsac;Proensac;Pronsac;desacòrd
+63291;Puy-Guillaume;Puèiguilhame;Pueguilhem;Puèiguilhame;desacòrd
+63294;Queuille;Cuelha;Quelha;Cuelha;desacòrd
+63296;Ravel;Ravèl;Ravel;Ravèl;desacòrd
+63298;La Renaudie;La Renaudiá;La Renadiá;La Renaudiá;desacòrd
+63299;Rentières;Rentèiras;Renteiras;Rentèiras;desacòrd
+63302;La Roche-Blanche;La Ròcha Blancha;La Ròchablancha;La Ròcha Blancha;desacòrd
+63305;Rochefort-Montagne;Ròchafòrt Montanha;Rochafòrt (de la Montanha);Ròchafòrt Montanha;desacòrd
+63306;La Roche-Noire;La Ròcha Nèira;La Ròchanèira;La Ròcha Nèira;desacòrd
+63309;Saillant;Salhens;Salhent;Salhens;desacòrd
+63310;Sainte-Agathe;Senta Aga;Santa Agata;Senta Aga;desacòrd
+63311;Saint-Agoulin;Sent Agolin;Sent Agolen;Sent Agolin;desacòrd
+63312;Saint-Alyre-d'Arlanc;Sent Alire d'Arlhenc;Sent Alire d'Arlanc;Sent Alire d'Arlhenc;desacòrd
+63313;Saint-Alyre-ès-Montagne;Sent Alèire;Sent Alire de la Montanha;Sent Alèire;desacòrd
+63314;Saint-Amant-Roche-Savine;Sent Amanç e Ròcha Savina;Sant Amanç de Ròcha Savina;Sent Amanç e Ròcha Savina;desacòrd
+63315;Saint-Amant-Tallende;Sent Amanç de Talende;Sent Amanç;Sent Amanç de Talende;desacòrd
+63318;Saint-Angel;Sent Angèl;Sent Àngel;Sent Angèl;desacòrd
+63321;Saint-Babel;;;;mancant
+63322;Saint-Beauzire;Sent Bausirí;Sant Baudili;Sent Bausirí;desacòrd
+63323;Saint-Bonnet-le-Bourg;Sent Bonet le Borg;Sent Bonet lo Borg;Sent Bonet le Borg;desacòrd
+63324;Saint-Bonnet-le-Chastel;Sent Bonet dau Chastèl;Sant Bonet dau Chastèl;Sent Bonet dau Chastèl;desacòrd
+63327;Saint-Bonnet-près-Riom;Sent Bonet de las Chalms;Sant Bonet de Riòm;Sent Bonet de las Chalms;desacòrd
+63331;Saint-Clément-de-Valorgue;Sent Clamenç de Valòrga;Sent Clemenç de Valòrja;Sent Clamenç de Valòrga;desacòrd
+63332;Saint-Clément-de-Régnat;Sent Clamenç de Renhat;Sent Clemenç de Valòrja;Sent Clamenç de Renhat;desacòrd
+63333;Saint-Denis-Combarnazat;Sent Denin Combarnasac;Sent Danís de Combarnasac;Sent Denin Combarnasac;desacòrd
+63334;Saint-Dier-d'Auvergne;Sant Dièir d'Auvèrnha;Sant Dièir;Sant Dièir d'Auvèrnha;desacòrd
+63335;Saint-Diéry;Sent Dire;Sent Desidri;Sent Dire;desacòrd
+63336;Saint-Donat;Sant Donat;Sent Donat;Sant Donat;desacòrd
+63337;Saint-Éloy-la-Glacière;Sent Alèi de la Glacèira;Sent Alòi de la Glaciera;Sent Alèi de la Glacèira;desacòrd
+63338;Saint-Éloy-les-Mines;Sent Ale las Minas;Sant Alòi de las Minas;Sent Ale las Minas;desacòrd
+63339;Saint-Étienne-des-Champs;Sent Estiène daus Champs;Sant Estève dei Champs;Sent Estiène daus Champs;desacòrd
+63340;Saint-Étienne-sur-Usson;Sent Tiène d'Içon;Sent Estève d'Içon;Sent Tiène d'Içon;desacòrd
+63341;Saint-Ferréol-des-Côtes;Sent Ferriòu de las Còstas;Sent Ferriòu (de ?);Sent Ferriòu de las Còstas;desacòrd
+63344;Saint-Gal-sur-Sioule;Sent Jau de Siula;Sent Jau (de Siola);Sent Jau de Siula;desacòrd
+63345;Saint-Genès-Champanelle;Sent Ginès de Champanèlas;Sent Genèst de Champanela;Sent Ginès de Champanèlas;desacòrd
+63346;Saint-Genès-Champespe;Sant Ginès;Sent Genèst de Champespe;Sant Ginès;desacòrd
+63347;Saint-Genès-du-Retz;Sent Genès de Retz;Sent Genèst de Retz;Sent Genès de Retz;desacòrd
+63348;Saint-Genès-la-Tourette;Sent Ginès e la Torreta;Sent Genèst de la Torreta;Sent Ginès e la Torreta;desacòrd
+63349;Saint-Georges-de-Mons;Sent Jòrge de Monts;Sent Jòrgi de Mons;Sent Jòrge de Monts;desacòrd
+63350;Saint-Georges-sur-Allier;Sent Jòrge d'Alèir;Sent Jòrdi d'Alèir;Sent Jòrge d'Alèir;desacòrd
+63351;Saint-Germain-près-Herment;Sent German de l-Ermenc;Sent German de Erment;Sent German de l-Ermenc;desacòrd
+63352;Saint-Germain-Lembron;Sent German de Lembron;Sant German de Lembron;Sent German de Lembron;desacòrd
+63353;Saint-Germain-l'Herm;Sent Jarman l'Arm;Sant German de l'Erm;Sent Jarman l'Arm;desacòrd
+63354;Saint-Gervais-d'Auvergne;Sent Gervais d'Auvèrnha;Sent Gervès d'Auvèrnha;Sent Gervais d'Auvèrnha;desacòrd
+63355;Saint-Gervais-sous-Meymont;Sent Gervais de Maimont;Sent Gervasi de Maimont;Sent Gervais de Maimont;desacòrd
+63356;Saint-Gervazy;Sent Gervasi;Sant Gervasi;Sent Gervasi;desacòrd
+63357;Saint-Hérent;Sent Erem;Sent Eren;Sent Erem;desacòrd
+63359;Saint-Hilaire-les-Monges;Sent Alari daus Monges;Sent Alari de los Monges;Sent Alari daus Monges;desacòrd
+63360;Saint-Hilaire;Sent Alari;Sant Alari;Sent Alari;desacòrd
+63362;Saint-Ignat;Centinhac;Sent Inhat;Centinhac;desacòrd
+63365;Saint-Jean-des-Ollières;Sent Joan de las Olèiras;Sant Joan de las Olèiras;Sent Joan de las Olèiras;desacòrd
+63366;Saint-Jean-en-Val;Sent Joan en Vau;Sant Joan de la Vau;Sent Joan en Vau;desacòrd
+63367;Saint-Jean-Saint-Gervais;Sent Joan Degolaci;Sant Joan e Sant Gervasi;Sent Joan Degolaci;desacòrd
+63369;Saint-Julien-la-Geneste;Sent Jurian de la Ginèsta;Sant Julian de la Ginesta;Sent Jurian de la Ginèsta;desacòrd
+63372;Saint-Laure;Sent Laure;Sant Laure;Sent Laure;desacòrd
+63373;Saint-Maigner;Sent Manhièr;Sent Manher;Sent Manhièr;desacòrd
+63374;Saint-Martin-des-Olmes;Sent Martin daus Òumes;Sant Martin daus Oumes;Sent Martin daus Òumes;desacòrd
+63375;Saint-Martin-des-Plains;Sent Martin daus Plans;Sant Martin dels Plans;Sent Martin daus Plans;desacòrd
+63376;Saint-Martin-d'Ollières;v-Olèiras;Sant Martin d'Olieras;v-Olèiras;desacòrd
+63377;Saint-Maurice-près-Pionsat;Sent Maurise de Punçac;Sent Maurici de Pionsac;Sent Maurise de Punçac;desacòrd
+63378;Saint-Maurice;Sent Mausirí;Sent Maurici;Sent Mausirí;desacòrd
+63379;Saint-Myon;Sent Miòu;Sent Mion;Sent Miòu;desacòrd
+63380;Saint-Nectaire;Sent Netère;Sent Nectari;Sent Netère;desacòrd
+63381;Saint-Ours;Sent Ors;Sent Ors (de las Ròchas);Sent Ors;desacòrd
+63382;Saint-Pardoux;Sent Pardol;Sent Pardós;Sent Pardol;desacòrd
+63383;Saint-Pierre-Colamine;Lòngprat;Sant Peire de la Colamina;Lòngprat;desacòrd
+63385;Saint-Pierre-le-Chastel;Sent Pèire dau Chastèl;Sant Pèire dau Chastèl;Sent Pèire dau Chastèl;desacòrd
+63391;Saint-Rémy-de-Blot;Sent Ramèi de Blòt;Sent Remesi de Blòt;Sent Ramèi de Blòt;desacòrd
+63392;Saint-Rémy-de-Chargnat;Sent Ramire de Charnhac;Sent Remesi de Charnhac;Sent Ramire de Charnhac;desacòrd
+63393;Saint-Rémy-sur-Durolle;Sant Ramèi de Duròla;Sant Ramèi;Sant Ramèi de Duròla;desacòrd
+63395;Saint-Sandoux;Sent Sandol;Sent Sandós;Sent Sandol;desacòrd
+63396;Saint-Saturnin;Sent Sadornin;Sent Sornin;Sent Sadornin;desacòrd
+63397;Saint-Sauves-d'Auvergne;Sent Sauve d'Auvèrnha;Sent Sauve d'Auvèrnhe;Sent Sauve d'Auvèrnha;desacòrd
+63398;Saint-Sauveur-la-Sagne;Sent Sauvador de la Sanha;Sant Sauvador de la Sanha;Sent Sauvador de la Sanha;desacòrd
+63399;Saint-Sulpice;Sent Saupesi;Sant Sulpici;Sent Saupesi;desacòrd
+63400;Saint-Sylvestre-Pragoulin;Sent Sauvèstre e Pratgolin;Sent Salvèstre e Pratgolin;Sent Sauvèstre e Pratgolin;desacòrd
+63401;Saint-Victor-la-Rivière;Sent Victor de la Ribèira;Sant Victor (de ?);Sent Victor de la Ribèira;desacòrd
+63403;Saint-Vincent;Sent Vincent;Sant Vincent;Sent Vincent;desacòrd
+63407;Saulzet-le-Froid;Sauset le Freid;Sause lo Freid;Sauset le Freid;desacòrd
+63409;Saurier;Sauriás;Saurier;Sauriás;desacòrd
+63411;Sauvagnat-Sainte-Marthe;Sauvanhac e Senta Matra;Sauvanhac e Senta Marta;Sauvanhac e Senta Matra;desacòrd
+63415;Sauxillanges;Sausselenjas;Celsinanja (?);Sausselenjas;desacòrd
+63417;Sayat;Saiac;Salhat;Saiac;desacòrd
+63420;Seychalles;Seschalas;Seichalas;Seschalas;desacòrd
+63422;Solignat;Solanhac;Solenhac;Solanhac;desacòrd
+63425;Tallende;Talende;Tallende;Talende;desacòrd
+63426;Tauves;;;;mancant
+63427;Teilhède;Telhede;Telheda;Telhede;desacòrd
+63431;Thiolières;Teulèiras;Teulieras;Teulèiras;desacòrd
+63433;Tortebesse;Tòrtabèça;Tortabessa;Tòrtabèça;desacòrd
+63435;Tourzel-Ronzières;Torzèl e Rongèiras;Torsèi de Rongiera;Torzèl e Rongèiras;desacòrd
+63436;Tralaigues;Tralaigas;Tras las aigas;Tralaigas;desacòrd
+63437;Trémouille-Saint-Loup;Tramolha e Sent Lop;Tremolha (e Sent Lop);Tramolha e Sent Lop;desacòrd
+63439;Usson;Içon;Usson;Içon;desacòrd
+63441;Valcivières;La Civèira;Vaissivièra;La Civèira;desacòrd
+63442;Valz-sous-Châteauneuf;Enval de Chastiaunòu;Val delh Chastèlnòu;Enval de Chastiaunòu;desacòrd
+63443;Varennes-sur-Morge;Varenas de Mòrja;Varenas de Morja;Varenas de Mòrja;desacòrd
+63444;Varennes-sur-Usson;Varenas d'Içon;Varenas d'Usson;Varenas d'Içon;desacòrd
+63447;Vergheas;Verjac;Verjas;Verjac;desacòrd
+63448;Le Vernet-Chaméane;Le Varnet e Chamiana;Le Vernet e Chameana;Le Varnet e Chamiana;desacòrd
+63449;Le Vernet-Sainte-Marguerite;Le Vernet Senta Margarita;Lo Vernet Santa Marguèita;Le Vernet Senta Margarita;desacòrd
+63450;Verneugheol;Vernuejol;Vernuèjols;Vernuejol;desacòrd
+63454;Vertolaye;Vertolaia;Vertolalha;Vertolaia;desacòrd
+63456;Vichel;Vichèi;Vichel;Vichèi;desacòrd
+63458;Villeneuve;Vialanòva de Lembron;Vilanòva de Lembron;Vialanòva de Lembron;desacòrd
+63459;Villeneuve-les-Cerfs;Vialanòva daus Cèrvs;Vilanòva (de ?);Vialanòva daus Cèrvs;desacòrd
+63460;Villossanges;Vialassenja;Vilosanja;Vialassenja;desacòrd
+63465;Viverols;Vairòus;Veiròl;Vairòus;desacòrd
+63466;Vodable;Vodabla;Vodable;Vodabla;desacòrd
+63467;Voingt;Voenc;Vint;Voenc;desacòrd
+63470;Volvic;Vorvic;Volvic;Vorvic;desacòrd
+63472;Yronde-et-Buron;Ironde e Beron;Ironda e Buron;Ironde e Beron;desacòrd
+63473;Yssac-la-Tourette;La Torreta;Issac de la Toreta;La Torreta;desacòrd
+64012;Ainharp;;;;mancant
+64017;Alos-Sibas-Abense;;;;mancant
+64051;Arraute-Charritte;;;;mancant
+64081;Aussurucq;;;;mancant
+64093;Barcus;;;;mancant
+64115;Berrogain-Laruns;;;;mancant
+64162;Camou-Cihigue;;;;mancant
+64187;Charritte-de-Bas;;;;mancant
+64188;Chéraute;;;;mancant
+64214;Espès-Undurein;;;;mancant
+64222;Etchebar;;;;mancant
+64225;Ance Féas;Ansa e Hiars;Hiars (BdTopoc : Féas);Ansa e Hiars;desacòrd
+64231;Garindein;;;;mancant
+64235;Garris;;;;mancant
+64247;Gotein-Libarrenx;;;;mancant
+64258;Haux;;;;mancant
+64268;Idaux-Mendy;;;;mancant
+64294;Labets-Biscay;;;;mancant
+64298;Lacarry-Arhan-Charritte-de-Haut;;;;mancant
+64303;Laguinge-Restoue;;;;mancant
+64339;Lestelle-Bétharram;;;;mancant
+64340;Lichans-Sunhar;;;;mancant
+64342;Licq-Athérey;;;;mancant
+64378;Menditte;;;;mancant
+64391;Moncayolle-Larrory-Mendibieu;;;;mancant
+64424;Ordiarp;;;;mancant
+64432;Ossas-Suhare;;;;mancant
+64468;Roquiague;;;;mancant
+64475;Sainte-Engrâce;;;;mancant
+64509;Sauguis-Saint-Étienne;;;;mancant
+64533;Tardets-Sorholus;;;;mancant
+64537;Trois-Villes;;;;mancant
+64559;Viodos-Abense-de-Bas;;;;mancant
+81290;Souel;;;;mancant
+82035;Caumont;;;;mancant
+82084;Lacour;;;;mancant
+82153;Saint-Amans-du-Pech;;;;mancant
+84001;Althen-des-Paluds;;;;mancant
+84017;Bédoin;;;;mancant
+84044;Entrechaux;;;;mancant
+84045;Faucon;;;;mancant
+84124;Saumane-de-Vaucluse;;;;mancant
+86011;Asnières-sur-Blour;;;;mancant
+86015;Availles-Limouzine;;;;mancant
+86084;Coulonges-les-Hérolles;;;;mancant
+86138;Luchapt;;;;mancant
+86172;Mouterre-sur-Blourde;;;;mancant
+87001;Aixe-sur-Vienne;;;;mancant
+87008;La Bazeuge;;;;mancant
+87028;Val-d'Oire-et-Gartempe;;Bussiera (BdTopoc : Bussière-Poitevine);;mancant
+87048;Condat-sur-Vienne;;;;mancant
+87051;La Croisille-sur-Briance;;;;mancant
+87052;La Croix-sur-Gartempe;;;;mancant
+87056;Dinsac;;;;mancant
+87059;Le Dorat;;;;mancant
+87066;Flavignac;;;;mancant
+87068;Fromental;;;;mancant
+87085;Limoges;;;;mancant
+87101;Mortemart;;;;mancant
+87108;Nouic;;;;mancant
+87109;Oradour-Saint-Genest;;;;mancant
+87116;Peyrat-de-Bellac;;;;mancant
+87139;Saint-Bonnet-de-Bellac;;;;mancant
+87145;Saint-Georges-les-Landes;;;;mancant
+87163;Saint-Martial-sur-Isop;;;;mancant
+87172;Saint-Ouen-sur-Gartempe;;;;mancant
+87179;Saint-Sornin-la-Marche;;;;mancant
+87195;Tersannes;;;;mancant
+87204;Videix;;;;mancant
+001011;Angrogna;;;;mancant
+001022;Bardonecchia;;;;mancant
+001025;Bibiana;;;;mancant
+001026;Bobbio Pellice;;;;mancant
+001035;Bricherasio;;;;mancant
+001087;Claviere;;;;mancant
+001103;Fenestrelle;;;;mancant
+001122;Inverso Pinasca;;;;mancant
+001139;Luserna San Giovanni;;;;mancant
+001140;Lusernetta;;;;mancant
+001145;Massello;;;;mancant
+001184;Perosa Argentina;;;;mancant
+001186;Perrero;;;;mancant
+001190;Pinasca;;;;mancant
+001198;Pomaretto;;;;mancant
+001200;Porte;;;;mancant
+001201;Pragelato;;;;mancant
+001202;Prali;;;;mancant
+001204;Pramollo;;;;mancant
+001205;Prarostino;;;;mancant
+001226;Rorà;;;;mancant
+001227;Roure;;;;mancant
+001232;Salbertrand;;;;mancant
+001234;Salza di Pinerolo;;;;mancant
+001242;San Germano Chisone;;;;mancant
+001258;Sauze di Cesana;;;;mancant
+001263;Sestriere;;;;mancant
+001275;Torre Pellice;;;;mancant
+001281;Usseaux;;;;mancant
+001306;Villar Pellice;;;;mancant
+001307;Villar Perosa;;;;mancant
+004001;Acceglio;;;;mancant
+004002;Aisone;;;;mancant
+004006;Argentera;;;;mancant
+004017;Bellino;;;;mancant
+004022;Bernezzo;;;;mancant
+004025;Borgo San Dalmazzo;;;;mancant
+004033;Brossasco;;;;mancant
+004038;Canosio;;;;mancant
+004040;Caraglio;;;;mancant
+004044;Cartignano;;;;mancant
+004053;Castelmagno;;;;mancant
+004060;Celle di Macra;;;;mancant
+004077;Crissolo;;;;mancant
+004079;Demonte;;;;mancant
+004083;Elva;;;;mancant
+004084;Entracque;;;;mancant
+004092;Frassino;;;;mancant
+004093;Gaiola;;;;mancant
+004094;Gambasca;;;;mancant
+004103;Isasca;;;;mancant
+004112;Macra;;;;mancant
+004119;Marmora;;;;mancant
+004121;Martiniana Po;;;;mancant
+004122;Melle;;;;mancant
+004123;Moiola;;;;mancant
+004138;Montemale di Cuneo;;;;mancant
+004139;Monterosso Grana;;;;mancant
+004154;Oncino;;;;mancant
+004156;Ostana;;;;mancant
+004157;Paesana;;;;mancant
+004166;Piasco;;;;mancant
+004172;Pontechianale;;;;mancant
+004173;Pradleves;;;;mancant
+004174;Prazzo;;;;mancant
+004181;Rifreddo;;;;mancant
+004182;Rittana;;;;mancant
+004183;Roaschia;;;;mancant
+004185;Robilante;;;;mancant
+004187;Roccabruna;;;;mancant
+004191;Roccasparvera;;;;mancant
+004192;Roccavione;;;;mancant
+004197;Rossana;;;;mancant
+004205;Sampeyre;;;;mancant
+004207;San Damiano Macra;;;;mancant
+004209;Sanfront;;;;mancant
+004224;Stroppo;;;;mancant
+004233;Valdieri;;;;mancant
+004235;Valloriate;;;;mancant
+004237;Venasca;;;;mancant
+004239;Vernante;;;;mancant
+004247;Villar San Costanzo;;;;mancant
+004248;Vinadio;;;;mancant

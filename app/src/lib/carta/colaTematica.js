@@ -52,7 +52,9 @@ const COLORS_GOV = {
 const colorGov = (kod) => COLORS_GOV[kod] ?? '190, 170, 140';
 
 // Seuils (zoom Leaflet ; à 44° N, 11 ≈ « 5 km » sur l'échelle)
-const Z_COMUNAS = 11;
+// comunas a partir de l'escala « 7 km » (causida de Romain) : lo cran de zoom
+// 10,5 (zoomSnap 0,25), lo primièr ont l'escala de 110 px passa a 7 km
+const Z_COMUNAS = 10.5;
 const Z_PROV_MAX = 10.5;
 // governaments de luènh, províncias de prèp : lo cambi se fa entre dos crans de
 // zoom (6,75 e 7 ; zoomSnap 0,25), que cap cran demòre sens nom
@@ -846,11 +848,11 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 
 			/* Comunas : un fil fin, a partir de « 5 km » ; la survolada s'esclaira */
 			if (G.com) {
-				const a = clamp((z - (Z_COMUNAS - 0.4)) / 0.6) * clamp((16 - z) / 1.5);
+				const a = clamp((z - (Z_COMUNAS - 0.2)) / 0.2) * clamp((16 - z) / 1.5);
 				if (a > 0.01) {
 					cx.save();
 					cx.lineJoin = 'round';
-					cx.strokeStyle = `rgba(${T.linha}, ${0.32 * a})`;
+					cx.strokeStyle = `rgba(${T.linha}, ${0.5 * a})`;
 					cx.lineWidth = 0.7;
 					cx.setLineDash([3, 2]);
 					for (const c of G.com) cx.stroke(c.c);
