@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import 'leaflet/dist/leaflet.css';
 	import { supabase } from '$lib/supabaseClient';
-	import { crearColaEstelas, partDetalh, Z_DETALH_MIN } from '$lib/carta/colaEstelas.js';
+	import { crearColaEstelas, opacitatTeules, Z_DETALH_MIN } from '$lib/carta/colaEstelas.js';
 
 	// Contengut e estils venon ara de Supabase (taulas carta_luocs,
 	// carta_colas, carta_dialectes — gerits dins /admin/carta) puslèu que
@@ -121,7 +121,7 @@
 				currentBaseTileLayer._loLigamKey = 'estelas';
 				currentBaseTileLayer.addTo(map);
 			}
-			currentBaseTileLayer.setOpacity(partDetalh(z));
+			currentBaseTileLayer.setOpacity(opacitatTeules(z));
 		} else if (currentBaseTileLayer) {
 			map.removeLayer(currentBaseTileLayer);
 			currentBaseTileLayer = null;
@@ -318,21 +318,16 @@
 			zoomSnap: 0.25,
 			zoomDelta: 0.5,
 			wheelPxPerZoomLevel: 110,
-			minZoom: 4,
+			minZoom: 5,
 			maxZoom: 19,
 			zoomControl: false
 		});
-		// Téléphone : l'Occitanie, large, tient mal dans un écran en hauteur ;
-		// on rogne les marges pour qu'elle reste lisible
-		const estrech = mapEl.clientWidth < 700;
 		map.fitBounds(
 			[
 				[42.65, -1.6],
 				[46.4, 7.55]
 			],
-			estrech
-				? { paddingTopLeft: [30, 130], paddingBottomRight: [30, 70] }
-				: { paddingTopLeft: [64, 100], paddingBottomRight: [64, 30] }
+			{ paddingTopLeft: [16, 96], paddingBottomRight: [16, 24] }
 		);
 
 		setBaseLayer(baseLayer);
@@ -353,8 +348,6 @@
 				supabase.from('carta_dialectes').select('*').order('ordre'),
 				supabase.from('carta_departaments').select('code, nom, nivèl')
 			]);
-		// Pagina quitada pendent l'espèra : la carta es ja destruita
-		if (!map) return;
 
 		for (const c of colasData ?? []) {
 			colaColors[c.id] = c.color;
@@ -464,7 +457,6 @@
 
 	onDestroy(() => {
 		map?.remove();
-		map = null;
 	});
 </script>
 
@@ -597,7 +589,7 @@
 
 	.compass {
 		position: absolute;
-		top: 7.4rem;
+		top: 6.4rem;
 		left: clamp(1rem, 4vw, 3.4rem);
 		z-index: 900;
 		color: var(--t-aur);

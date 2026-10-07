@@ -13,11 +13,11 @@
 // (scintillement, survol), recalé à chaque fin de déplacement, et mis à
 // l'échelle par transformation CSS pendant l'animation de zoom (même méthode
 // que le moteur de rendu canevas de Leaflet).
-import { LUOCS, RIUS, dialDe } from '$lib/acuelh/carta-estelas.js';
+import { LUOCS, RIUS, COSTA, dialDe } from '$lib/acuelh/carta-estelas.js';
 
 const TEMAS = {
-	sorne: { bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
-	clar: { bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
+	sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
+	clar: { costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
@@ -45,6 +45,13 @@ const CORMORANT = '"Cormorant Garamond", Georgia, serif';
 
 /** Part de la carte détaillée à un niveau de zoom (0 = étoiles seules, 1 = détail). */
 export const partDetalh = (z) => clamp((z - Z_DETALH_0) / (Z_DETALH_1 - Z_DETALH_0));
+// Relais sans doublons (remarque de Romain, 2026-10-07) : NOS noms s'effacent
+// d'abord (premier cinquième du passage), et seulement ensuite la carte OSM,
+// qui a ses propres noms, apparaît. Jamais deux noms superposés.
+const PART_NOMS = 0.2;
+const aNoms = (z) => 1 - clamp(partDetalh(z) / PART_NOMS);
+/** Opacité des tuiles détaillées à un niveau de zoom. */
+export const opacitatTeules = (z) => clamp((partDetalh(z) - PART_NOMS) / (1 - PART_NOMS));
 export const Z_DETALH_MIN = Z_DETALH_0;
 
 /* ---------- Placement des noms (repris de l'accueil, en pixels projetés) ---------- */
@@ -253,7 +260,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 			padding: 0.3,
 			// Sources de la couche, affichées avec les crédits de la carte
 			attribution:
-				'Rius : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · noms : © OpenStreetMap'
+				'Rius e còsta : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · noms : © OpenStreetMap'
 		},
 
 		initialize() {
@@ -355,6 +362,12 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 						return [q.x, q.y];
 					})
 				}));
+				this._costa = COSTA.map((l) =>
+					l.map(([lon, lat]) => {
+						const q = map.project([lat, lon], z);
+						return [q.x, q.y];
+					})
+				);
 				this._plaçament = z < Z_DETALH_1 ? this._plaçarTot(z) : { vilas: [], rius: [] };
 				this._zP = z;
 			}
@@ -518,9 +531,29 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 			// Arrivée : les étoiles, éparpillées, viennent dessiner l'Occitanie
 			const intro = this._calm ? 1 : clamp((temps - 0.15) / 1.9);
 			const det = partDetalh(z);
+			// Les points restent en filigrane sur la carte détaillée ; les noms,
+			// les rivières et la côte (que les tuiles ont aussi) s'en vont AVANT
+			// qu'elle apparaisse : jamais de doublon
 			const aGen = 1 - det * 0.85,
-				aEtiq = 1 - det;
+				aRius = aNoms(z),
+				aEtiq = aNoms(z);
 			const gros = 1 + Math.max(0, z - 7) * 0.14;
+
+			// Le trait de côte : un fil très fin qui structure la carte, posé
+			// avant les rivières ; la carte détaillée a le sien, il s'efface avec elle
+			const aCosta = clamp((intro - 0.25) / 0.5) * aRius;
+			if (aCosta > 0.01 && this._costa) {
+				cx.globalAlpha = aCosta;
+				cx.strokeStyle = T.costa;
+				cx.lineWidth = 0.8;
+				cx.lineJoin = 'round';
+				cx.beginPath();
+				for (const l of this._costa) {
+					cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
+					for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
+				}
+				cx.stroke();
+			}
 
 			const aRiu = easeIO(clamp((intro - 0.45) / 0.55));
 			if (aRiu > 0.01 && this._rius) {
@@ -531,7 +564,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 					const l = r.pts,
 						k = aRiu * (l.length - 1),
 						n = Math.floor(k);
-					cx.globalAlpha = (r.nom ? 0.75 : 0.25) * aGen;
+					cx.globalAlpha = (r.nom ? 0.75 : 0.25) * aRius;
 					cx.lineWidth = (0.4 + r.pes * 0.22) * gros;
 					cx.beginPath();
 					cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
