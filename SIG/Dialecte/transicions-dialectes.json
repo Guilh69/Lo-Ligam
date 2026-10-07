@@ -1,0 +1,5893 @@
+{
+ "bandes": [
+  {
+   "id": "bourgeais-libournais",
+   "nom": "Bourgeais, Cubzaguais et Libournais : limite nord du gascon face au saintongeais (gascon éteint ici)",
+   "paire": "oc/oil",
+   "axe": [
+    [
+     -0.64,
+     45.09
+    ],
+    [
+     -0.55,
+     45.07
+    ],
+    [
+     -0.45,
+     45.03
+    ],
+    [
+     -0.35,
+     45.01
+    ],
+    [
+     -0.28,
+     45
+    ],
+    [
+     -0.2,
+     44.98
+    ],
+    [
+     -0.13,
+     45
+    ],
+    [
+     -0.07,
+     45
+    ],
+    [
+     -0.03,
+     44.98
+    ]
+   ],
+   "largeur_km": 5,
+   "villes_transition": [
+    {
+     "nom": "Villeneuve (Gironde)",
+     "lon": -0.64,
+     "lat": 45.08,
+     "classement": "gascon, extrémité ouest de la bande gasconne selon Lartigue (non vérifié) ; hors domaine dans le fichier"
+    },
+    {
+     "nom": "Bourg",
+     "lon": -0.55,
+     "lat": 45.04,
+     "classement": "gascon"
+    },
+    {
+     "nom": "Saint-André-de-Cubzac",
+     "lon": -0.44,
+     "lat": 44.99,
+     "classement": "gascon"
+    },
+    {
+     "nom": "Galgon",
+     "lon": -0.28,
+     "lat": 44.99,
+     "classement": "mixte (extrême limite des parlers gascons, parfois dite gavache)"
+    },
+    {
+     "nom": "Saint-Denis-de-Pile",
+     "lon": -0.18,
+     "lat": 44.99,
+     "classement": "indéterminé (sur l'Isle, au contact de la région de Coutras)"
+    },
+    {
+     "nom": "Lussac",
+     "lon": -0.09,
+     "lat": 44.97,
+     "classement": "gascon"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : le gascon touchait le saintongeais dans les cantons de Bourg, Saint-André-de-Cubzac, Fronsac, Libourne et Lussac (Wikipèdia oc) ; Blayais et région de Coutras saintongeais (Pays Gabay, Nowak) ; recul de la limite après les repeuplements des XVe et XVIe siècles (Higounet). Déduction : tracé le long de l'Isle au nord de Libourne. Non vérifié : bande de 5 à 12 km attribuée à Lartigue. Domaine historique, gascon éteint.",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Gascon (limits del domeni)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    },
+    {
+     "titre": "Wikipédia, Pays Gabay",
+     "url": "https://fr.wikipedia.org/wiki/Pays_Gabay"
+    },
+    {
+     "titre": "Gasconha, Galgon - Ligey",
+     "url": "https://gasconha.com/locs/spip.php?loc10867"
+    },
+    {
+     "titre": "E. Nowak, L'ensemble linguistique poitevin et saintongeais (gasconha)",
+     "url": "https://gasconha.com/spip.php?article55"
+    },
+    {
+     "titre": "Ch. Higounet, Gascogne (Encyclopædia Universalis)",
+     "url": "https://www.universalis.fr/encyclopedie/gascogne/"
+    }
+   ]
+  },
+  {
+   "id": "tayac-gascon-limousin",
+   "nom": "Contact gascon / limousin entre Tayac et Les Salles-de-Castillon",
+   "paire": "gas/lem",
+   "axe": [
+    [
+     -0.03,
+     44.98
+    ],
+    [
+     0,
+     44.96
+    ],
+    [
+     0.02,
+     44.93
+    ],
+    [
+     0.04,
+     44.91
+    ]
+   ],
+   "largeur_km": 5,
+   "villes_transition": [
+    {
+     "nom": "Tayac",
+     "lon": -0.02,
+     "lat": 44.96,
+     "classement": "gascon, au contact du limousin (Wikipèdia oc)"
+    },
+    {
+     "nom": "Les Salles-de-Castillon",
+     "lon": 0.01,
+     "lat": 44.91,
+     "classement": "gascon, au contact du limousin (Wikipèdia oc)"
+    },
+    {
+     "nom": "Villefranche-de-Lonchat",
+     "lon": 0.05,
+     "lat": 44.96,
+     "classement": "mixte limousin / languedocien (canton traversé par la limite, Wikipèdia oc)"
+    }
+   ],
+   "confiance": "faible",
+   "note": "Une seule source explicite (Wikipèdia oc). Concorde avec la ligne limousine Montazeau-Nadaillac de Wikipédia (Dordogne), qui fait toucher le limousin à la Gironde. Axe raccordé par déduction au point de rencontre des trois dialectes (0,04 ; 44,91).",
+   "remarque": "Fin d'axe prolongée de (0.03, 44.90) à (0.04, 44.91) pour rejoindre le point triple commun aux bandes gascon/languedocien et Périgord.",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Gascon (Taiac, Las Salas)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    },
+    {
+     "titre": "Wikipédia, Dordogne (ligne de Montazeau à Nadaillac)",
+     "url": "https://fr.wikipedia.org/wiki/Dordogne_(département)"
+    },
+    {
+     "titre": "Wikipédia, Limousin (occitan)",
+     "url": "https://fr.wikipedia.org/wiki/Limousin_(occitan)"
+    }
+   ]
+  },
+  {
+   "id": "montravel-entre-deux-mers",
+   "nom": "Montravel, Pays foyen et Entre-deux-Mers oriental",
+   "paire": "gas/lan",
+   "axe": [
+    [
+     0.04,
+     44.91
+    ],
+    [
+     0.09,
+     44.9
+    ],
+    [
+     0.13,
+     44.89
+    ],
+    [
+     0.13,
+     44.85
+    ],
+    [
+     0.15,
+     44.81
+    ],
+    [
+     0.15,
+     44.75
+    ],
+    [
+     0.17,
+     44.7
+    ],
+    [
+     0.18,
+     44.64
+    ],
+    [
+     0.2,
+     44.59
+    ],
+    [
+     0.23,
+     44.53
+    ]
+   ],
+   "largeur_km": 8,
+   "villes_transition": [
+    {
+     "nom": "Montcaret",
+     "lon": 0.07,
+     "lat": 44.86,
+     "classement": "gascon (villages gascons du canton de Vélines, Wikipèdia oc)"
+    },
+    {
+     "nom": "Vélines",
+     "lon": 0.12,
+     "lat": 44.85,
+     "classement": "mixte (canton partagé)"
+    },
+    {
+     "nom": "Montazeau",
+     "lon": 0.13,
+     "lat": 44.89,
+     "classement": "languedocien (début de la ligne limousine de Wikipédia Dordogne), sur l'axe"
+    },
+    {
+     "nom": "Saint-Avit-de-Soulège",
+     "lon": 0.12,
+     "lat": 44.81,
+     "classement": "gascon"
+    },
+    {
+     "nom": "Sainte-Foy-la-Grande",
+     "lon": 0.22,
+     "lat": 44.84,
+     "classement": "languedocien (Bésaume, non gascon)"
+    },
+    {
+     "nom": "Pellegrue",
+     "lon": 0.09,
+     "lat": 44.74,
+     "classement": "gascon (canton limitrophe selon Lartigue, non vérifié)"
+    },
+    {
+     "nom": "Duras",
+     "lon": 0.18,
+     "lat": 44.68,
+     "classement": "languedocien"
+    },
+    {
+     "nom": "Lévignac-de-Guyenne",
+     "lon": 0.2,
+     "lat": 44.62,
+     "classement": "languedocien, au contact"
+    },
+    {
+     "nom": "Seyches",
+     "lon": 0.3,
+     "lat": 44.55,
+     "classement": "languedocien (« déjà de parler périgord », gasconha)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : cinq villages du canton de Vélines gascons (Wikipèdia oc) ; limite gascon / non gascon proche de l'ancienne limite des diocèses de Bazas et d'Agen, à une bande de communes près (gasconha, Merger 2016, d'après Bourciez) ; Entre-deux-Mers de tradition gasconne (Wikipédia). Déduction : tracé exact, contournement de la Petite Gavacherie.",
+   "remarque": "Axe prolongé au nord jusqu'au point triple (0.04, 44.91).",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Gascon (canton de Vélines)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    },
+    {
+     "titre": "Gasconha, T. Merger, Le Bésaume agenais est-il gascon ? (2016)",
+     "url": "https://gasconha.com/spip.php?article1621"
+    },
+    {
+     "titre": "Gasconha, Gaby, Le gascon garonnais, quelques spécificités (2019)",
+     "url": "https://gasconha.com/spip.php?article3632"
+    },
+    {
+     "titre": "Wikipédia, Gascon",
+     "url": "https://fr.wikipedia.org/wiki/Gascon"
+    },
+    {
+     "titre": "Wikipédia, Petite Gavacherie",
+     "url": "https://fr.wikipedia.org/wiki/Petite_Gavacherie"
+    }
+   ]
+  },
+  {
+   "id": "garonne-marmande-port-sainte-marie",
+   "nom": "Rive droite gasconne de la Garonne, de Marmande à Port-Sainte-Marie (gascon garonnais)",
+   "paire": "gas/lan",
+   "axe": [
+    [
+     0.23,
+     44.53
+    ],
+    [
+     0.29,
+     44.48
+    ],
+    [
+     0.35,
+     44.43
+    ],
+    [
+     0.41,
+     44.39
+    ],
+    [
+     0.46,
+     44.37
+    ],
+    [
+     0.47,
+     44.31
+    ],
+    [
+     0.49,
+     44.25
+    ]
+   ],
+   "largeur_km": 10,
+   "villes_transition": [
+    {
+     "nom": "Marmande",
+     "lon": 0.17,
+     "lat": 44.5,
+     "classement": "gascon garonnais"
+    },
+    {
+     "nom": "Tonneins",
+     "lon": 0.31,
+     "lat": 44.39,
+     "classement": "gascon garonnais"
+    },
+    {
+     "nom": "Clairac",
+     "lon": 0.39,
+     "lat": 44.37,
+     "classement": "gascon (avancée dans la vallée du Lot)"
+    },
+    {
+     "nom": "Lafitte-sur-Lot",
+     "lon": 0.43,
+     "lat": 44.36,
+     "classement": "gascon (avancée dans la vallée du Lot)"
+    },
+    {
+     "nom": "Port-Sainte-Marie",
+     "lon": 0.39,
+     "lat": 44.25,
+     "classement": "gascon garonnais"
+    },
+    {
+     "nom": "Clermont-Dessous",
+     "lon": 0.45,
+     "lat": 44.25,
+     "classement": "gascon, point où la limite rejoint la Garonne"
+    },
+    {
+     "nom": "Saint-Hilaire-de-Lusignan",
+     "lon": 0.54,
+     "lat": 44.25,
+     "classement": "languedocien"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : gascon garonnais parlé à Tonneins, La Réole, Marmande, Aiguillon, Port-Sainte-Marie jusqu'au début du XXe siècle (Wikipédia) ; frontière à environ 10 km au nord du fleuve, avec avancée jusqu'à Clairac et Lafitte (gasconha, site militant) ; limite à Clermont-Dessous (Wikipèdia oc). Le garonnais est lui-même un gascon peu typé.",
+   "sources": [
+    {
+     "titre": "Wikipédia, Tonneins",
+     "url": "https://fr.wikipedia.org/wiki/Tonneins"
+    },
+    {
+     "titre": "Gasconha, T. Merger, Le Bésaume agenais est-il gascon ? (2016)",
+     "url": "https://gasconha.com/spip.php?article1621"
+    },
+    {
+     "titre": "Gasconha, Port-Sainte-Marie, rive droite gasconne",
+     "url": "https://www.gasconha.com/locs/spip.php?gis2834"
+    },
+    {
+     "titre": "Wikipèdia occitana, Gascon (Clarmont Devath, Sant Ilari de Lusinhan)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    }
+   ]
+  },
+  {
+   "id": "agen-brulhois",
+   "nom": "Garonne agenaise : Agen face au Brulhois",
+   "paire": "gas/lan",
+   "axe": [
+    [
+     0.49,
+     44.25
+    ],
+    [
+     0.55,
+     44.22
+    ],
+    [
+     0.61,
+     44.19
+    ],
+    [
+     0.65,
+     44.15
+    ],
+    [
+     0.72,
+     44.14
+    ],
+    [
+     0.8,
+     44.12
+    ],
+    [
+     0.88,
+     44.09
+    ],
+    [
+     0.93,
+     44.08
+    ]
+   ],
+   "largeur_km": 5,
+   "villes_transition": [
+    {
+     "nom": "Agen",
+     "lon": 0.62,
+     "lat": 44.2,
+     "classement": "languedocien (agenais)"
+    },
+    {
+     "nom": "Layrac",
+     "lon": 0.66,
+     "lat": 44.13,
+     "classement": "gascon (Brulhois)"
+    },
+    {
+     "nom": "Auvillar",
+     "lon": 0.89,
+     "lat": 44.07,
+     "classement": "gascon de transition (Brulhois)"
+    },
+    {
+     "nom": "Valence-d'Agen",
+     "lon": 0.9,
+     "lat": 44.11,
+     "classement": "languedocien (déduction : rive droite, voisine de Malause)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : Brulhois de tradition gasconne, zone de transition qui garde les deux traits principaux du gascon (Wikipédia Brulhois) ; au nord de Toulouse, limite proche de la Garonne (Bec 1995 via Wikipédia). Déduction : la limite suit le fleuve jusqu'à l'aval d'Auvillar.",
+   "sources": [
+    {
+     "titre": "Wikipédia, Brulhois",
+     "url": "https://fr.wikipedia.org/wiki/Brulhois"
+    },
+    {
+     "titre": "Wikipédia, Aquitano-pyrénéen (d'après Bec, La langue occitane, 1995)",
+     "url": "https://fr.wikipedia.org/wiki/Aquitano-pyr%C3%A9n%C3%A9en"
+    },
+    {
+     "titre": "Wikipédia, Languedocien",
+     "url": "https://fr.wikipedia.org/wiki/Languedocien"
+    },
+    {
+     "titre": "Gasconha, A. Dupuy, En Lomagne, l'arrivée du languedocien par la plaine (commentaires de lecteurs)",
+     "url": "https://www.gasconha.com/spip.php?article95"
+    }
+   ]
+  },
+  {
+   "id": "lomagne",
+   "nom": "Lomagne face aux terrasses de la Garonne (Tarn-et-Garonne)",
+   "paire": "gas/lan",
+   "axe": [
+    [
+     0.93,
+     44.08
+    ],
+    [
+     0.91,
+     44.04
+    ],
+    [
+     0.9,
+     44
+    ],
+    [
+     0.92,
+     43.95
+    ],
+    [
+     0.98,
+     43.92
+    ],
+    [
+     1.04,
+     43.9
+    ],
+    [
+     1.1,
+     43.87
+    ],
+    [
+     1.17,
+     43.83
+    ],
+    [
+     1.23,
+     43.79
+    ]
+   ],
+   "largeur_km": 10,
+   "villes_transition": [
+    {
+     "nom": "Castéra-Bouzet",
+     "lon": 0.92,
+     "lat": 44.01,
+     "classement": "languedocien (plaine passée au languedocien, Dupuy)"
+    },
+    {
+     "nom": "Asques",
+     "lon": 0.95,
+     "lat": 44.01,
+     "classement": "languedocien (Dupuy)"
+    },
+    {
+     "nom": "Lavit",
+     "lon": 0.93,
+     "lat": 43.95,
+     "classement": "mixte (bourg de marché au bord des plaines languedocianisées)"
+    },
+    {
+     "nom": "Beaumont-de-Lomagne",
+     "lon": 0.99,
+     "lat": 43.88,
+     "classement": "gascon (indice du nom seulement)"
+    },
+    {
+     "nom": "Garganvillar",
+     "lon": 1.07,
+     "lat": 43.97,
+     "classement": "languedocien (Dupuy)"
+    },
+    {
+     "nom": "Saint-Sardos",
+     "lon": 1.12,
+     "lat": 43.91,
+     "classement": "languedocien (Dupuy)"
+    },
+    {
+     "nom": "Malause",
+     "lon": 0.97,
+     "lat": 44.09,
+     "classement": "languedocien (témoignage de lecteur)"
+    },
+    {
+     "nom": "Verdun-sur-Garonne",
+     "lon": 1.23,
+     "lat": 43.85,
+     "classement": "languedocien (déduction)"
+    },
+    {
+     "nom": "Aucamville (Tarn-et-Garonne)",
+     "lon": 1.23,
+     "lat": 43.79,
+     "classement": "gascon, seul point où le gascon touche la Garonne en Tarn-et-Garonne ; sur l'axe"
+    }
+   ],
+   "confiance": "faible",
+   "note": "Établi : en Tarn-et-Garonne, la limite suit la rive gauche à quelques kilomètres (Wikipèdia oc) ; les plaines basses ont adopté le languedocien, les coteaux restent gascons (Dupuy, revue La Lomagne). Tracé appuyé sur une seule source locale ; article sur l'enquête Coquebert de Montbret non lu (accès refusé).",
+   "sources": [
+    {
+     "titre": "Gasconha, A. Dupuy, En Lomagne, l'arrivée du languedocien par la plaine (revue La Lomagne n° 1)",
+     "url": "https://www.gasconha.com/spip.php?article95"
+    },
+    {
+     "titre": "Wikipèdia occitana, Gascon (Tarn e Garona, Aucamvila)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    },
+    {
+     "titre": "Wikipédia, Beaumont-de-Lomagne",
+     "url": "https://fr.wikipedia.org/wiki/Beaumont-de-Lomagne"
+    }
+   ]
+  },
+  {
+   "id": "toulousain-rive-gauche",
+   "nom": "Toulousain rive gauche (Colomiers, Tournefeuille, Saint-Martin-du-Touch)",
+   "paire": "gas/lan",
+   "axe": [
+    [
+     1.23,
+     43.79
+    ],
+    [
+     1.3,
+     43.77
+    ],
+    [
+     1.34,
+     43.74
+    ],
+    [
+     1.37,
+     43.7
+    ],
+    [
+     1.39,
+     43.66
+    ],
+    [
+     1.39,
+     43.62
+    ],
+    [
+     1.4,
+     43.57
+    ],
+    [
+     1.4,
+     43.53
+    ]
+   ],
+   "largeur_km": 5,
+   "villes_transition": [
+    {
+     "nom": "Saint-Martin-du-Touch (Toulouse)",
+     "lon": 1.37,
+     "lat": 43.6,
+     "classement": "gascon"
+    },
+    {
+     "nom": "Saint-Simon (Toulouse)",
+     "lon": 1.38,
+     "lat": 43.56,
+     "classement": "gascon"
+    },
+    {
+     "nom": "Colomiers",
+     "lon": 1.34,
+     "lat": 43.61,
+     "classement": "gascon"
+    },
+    {
+     "nom": "Tournefeuille",
+     "lon": 1.34,
+     "lat": 43.59,
+     "classement": "gascon (variante orientale)"
+    },
+    {
+     "nom": "Blagnac",
+     "lon": 1.38,
+     "lat": 43.64,
+     "classement": "indéterminé"
+    },
+    {
+     "nom": "Grenade",
+     "lon": 1.29,
+     "lat": 43.77,
+     "classement": "indéterminé (probablement gascon, déduction)"
+    },
+    {
+     "nom": "Portet-sur-Garonne",
+     "lon": 1.4,
+     "lat": 43.53,
+     "classement": "limite (début du tronçon entre Garonne et Ariège)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : le gascon évite Toulouse par l'ouest, Saint-Martin-du-Touch et Saint-Simon sont gascons (Wikipèdia oc) ; Colomiers, Tournefeuille, Muret gascons (Wikipédia). Toulouse languedocienne. Déduction : Blagnac et Grenade.",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Gascon (Sent Martin de Toish, Sent Simon)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    },
+    {
+     "titre": "Wikipédia, Colomiers",
+     "url": "https://fr.wikipedia.org/wiki/Colomiers"
+    },
+    {
+     "titre": "Wikipédia, Tournefeuille",
+     "url": "https://fr.wikipedia.org/wiki/Tournefeuille"
+    },
+    {
+     "titre": "Wikipédia, Muret (Haute-Garonne)",
+     "url": "https://fr.wikipedia.org/wiki/Muret_(Haute-Garonne)"
+    }
+   ]
+  },
+  {
+   "id": "leze-volvestre",
+   "nom": "Lèze et Volvestre (plaine entre Garonne et Ariège)",
+   "paire": "gas/lan",
+   "axe": [
+    [
+     1.4,
+     43.53
+    ],
+    [
+     1.4,
+     43.45
+    ],
+    [
+     1.41,
+     43.38
+    ],
+    [
+     1.41,
+     43.32
+    ],
+    [
+     1.38,
+     43.25
+    ],
+    [
+     1.37,
+     43.18
+    ]
+   ],
+   "largeur_km": 15,
+   "villes_transition": [
+    {
+     "nom": "Mauressac",
+     "lon": 1.43,
+     "lat": 43.32,
+     "classement": "limite (Wikipèdia oc)"
+    },
+    {
+     "nom": "Lézat-sur-Lèze",
+     "lon": 1.35,
+     "lat": 43.28,
+     "classement": "mixte (vallée de la Lèze)"
+    },
+    {
+     "nom": "Saint-Ybars",
+     "lon": 1.39,
+     "lat": 43.24,
+     "classement": "mixte (vallée de la Lèze)"
+    },
+    {
+     "nom": "Le Fossat",
+     "lon": 1.42,
+     "lat": 43.18,
+     "classement": "mixte (vallée de la Lèze)"
+    },
+    {
+     "nom": "Rieux-Volvestre",
+     "lon": 1.21,
+     "lat": 43.26,
+     "classement": "gascon (diocèse historique partagé)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : limite nette en montagne, diffuse dans la plaine, qui suit la vallée de la Lèze ; Bec parle d'une région de transition (Bec 1968, 16 isoglosses phonétiques, 15 morphologiques, 36 planches de cartes, compte rendu de Lagarda) ; de Portet à Mauressac (Wikipèdia oc). Le fichier suit déjà la Lèze : seulement peindre le dégradé.",
+   "remarque": "Axe arrêté à 43,18° N ; la suite (Arize, Séronais) forme une bande à part.",
+   "sources": [
+    {
+     "titre": "C. Lagarda, compte rendu de P. Bec 1968, Lengas 82 (2017)",
+     "url": "https://journals.openedition.org/lengas/1401"
+    },
+    {
+     "titre": "Wikipédia, Aquitano-pyrénéen (d'après Bec 1995)",
+     "url": "https://fr.wikipedia.org/wiki/Aquitano-pyr%C3%A9n%C3%A9en"
+    },
+    {
+     "titre": "Wikipèdia occitana, Gascon (Portèth, Mauressac)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    }
+   ]
+  },
+  {
+   "id": "arize-seronais",
+   "nom": "Arize et Séronais (Le Mas-d'Azil, La Bastide-de-Sérou)",
+   "paire": "gas/lan",
+   "axe": [
+    [
+     1.37,
+     43.18
+    ],
+    [
+     1.33,
+     43.11
+    ],
+    [
+     1.3,
+     43.05
+    ],
+    [
+     1.29,
+     43
+    ],
+    [
+     1.36,
+     42.95
+    ],
+    [
+     1.45,
+     42.9
+    ]
+   ],
+   "largeur_km": 15,
+   "villes_transition": [
+    {
+     "nom": "Le Mas-d'Azil",
+     "lon": 1.36,
+     "lat": 43.08,
+     "classement": "indéterminé (aucune source linguistique)"
+    },
+    {
+     "nom": "La Bastide-de-Sérou",
+     "lon": 1.43,
+     "lat": 43.01,
+     "classement": "indéterminé (limite est du Couserans historique, donnée non linguistique)"
+    }
+   ],
+   "confiance": "faible",
+   "note": "Aucune source ne classe l'Arize ni le Séronais. Déduction : axe posé à peu près sur la limite actuelle du fichier (1,24 à 1,33° E), comme le conseillait le relevé, puis raccordé au col de Port. Dégradé large pour montrer le doute. Petit chevauchement gascon / languedocien du fichier vers Daumazan à nettoyer.",
+   "remarque": "Bande créée par la synthèse : l'ancien axe du Couserans partait de La Bastide-de-Sérou sans source et contredisait le conseil de ne pas déplacer la limite sur l'Arize.",
+   "sources": [
+    {
+     "titre": "C. Lagarda, compte rendu de P. Bec 1968, Lengas 82 (2017)",
+     "url": "https://journals.openedition.org/lengas/1401"
+    },
+    {
+     "titre": "Wikipédia, Couserans",
+     "url": "https://fr.wikipedia.org/wiki/Couserans"
+    }
+   ]
+  },
+  {
+   "id": "massat-haut-couserans",
+   "nom": "Vallée de Massat, col de Port et haut Couserans (limite de montagne)",
+   "paire": "gas/lan",
+   "axe": [
+    [
+     1.45,
+     42.9
+    ],
+    [
+     1.43,
+     42.85
+    ],
+    [
+     1.41,
+     42.81
+    ],
+    [
+     1.38,
+     42.75
+    ],
+    [
+     1.36,
+     42.71
+    ]
+   ],
+   "largeur_km": 5,
+   "villes_transition": [
+    {
+     "nom": "Biert",
+     "lon": 1.31,
+     "lat": 42.89,
+     "classement": "mixte (parler hybride)"
+    },
+    {
+     "nom": "Massat",
+     "lon": 1.35,
+     "lat": 42.89,
+     "classement": "mixte (parler hybride, côté gascon du col de Port)"
+    },
+    {
+     "nom": "Aulus-les-Bains",
+     "lon": 1.34,
+     "lat": 42.79,
+     "classement": "gascon (Couserans, haut Salat)"
+    },
+    {
+     "nom": "Saurat",
+     "lon": 1.51,
+     "lat": 42.88,
+     "classement": "languedocien (pays de Foix, déduction)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : le col de Port sépare le gascon à l'ouest du languedocien à l'est (Chevalier 1989 via Wikipédia) ; Couserans gascon avec haut Salat (Wikipédia) ; parler de la vallée de Massat hybride (Toulze 2023). Déduction : ligne col de Port, port de Lers, crête Garbet / Vicdessos.",
+   "sources": [
+    {
+     "titre": "Wikipédia, Col de Port",
+     "url": "https://fr.wikipedia.org/wiki/Col_de_Port"
+    },
+    {
+     "titre": "Wikipédia, Couserans",
+     "url": "https://fr.wikipedia.org/wiki/Couserans"
+    },
+    {
+     "titre": "C. Lagarda, compte rendu de P. Bec 1968, Lengas 82 (2017)",
+     "url": "https://journals.openedition.org/lengas/1401"
+    },
+    {
+     "titre": "Lexilogos, dictionnaires gascons (notice R. Toulze, parler biertois, 2023)",
+     "url": "https://www.lexilogos.com/gascon_dictionnaire.htm"
+    }
+   ]
+  },
+  {
+   "id": "petite-gavacherie",
+   "nom": "Petite Gavacherie de Monségur (enclave d'oïl en Entre-deux-Mers)",
+   "paire": "oc/oil",
+   "axe": [
+    [
+     -0.06,
+     44.69
+    ],
+    [
+     0.03,
+     44.71
+    ],
+    [
+     0.12,
+     44.7
+    ],
+    [
+     0.18,
+     44.66
+    ],
+    [
+     0.18,
+     44.61
+    ],
+    [
+     0.1,
+     44.57
+    ],
+    [
+     0.03,
+     44.58
+    ],
+    [
+     -0.03,
+     44.63
+    ],
+    [
+     -0.06,
+     44.69
+    ]
+   ],
+   "largeur_km": 3,
+   "villes_transition": [
+    {
+     "nom": "Monségur",
+     "lon": 0.08,
+     "lat": 44.65,
+     "classement": "oïl (saintongeais)"
+    },
+    {
+     "nom": "Castelmoron-d'Albret",
+     "lon": -0.01,
+     "lat": 44.68,
+     "classement": "oïl (saintongeais)"
+    },
+    {
+     "nom": "Saint-Vivien-de-Monségur",
+     "lon": 0.12,
+     "lat": 44.62,
+     "classement": "oïl (saintongeais)"
+    },
+    {
+     "nom": "Taillecavat",
+     "lon": 0.16,
+     "lat": 44.65,
+     "classement": "oïl (saintongeais)"
+    },
+    {
+     "nom": "Saint-Géraud",
+     "lon": 0.16,
+     "lat": 44.62,
+     "classement": "oïl (saintongeais)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : enclave saintongeaise de 16 communes autour de Monségur plus Saint-Géraud, repeuplée après la peste et la guerre de Cent Ans (Bourciez 1895 via Wikipédia ; Nowak). Boucle fermée : contour de l'enclave, entourée de gascon, touchant presque le languedocien du Pays de Duras.",
+   "sources": [
+    {
+     "titre": "Wikipédia, Petite Gavacherie",
+     "url": "https://fr.wikipedia.org/wiki/Petite_Gavacherie"
+    },
+    {
+     "titre": "E. Nowak, L'ensemble linguistique poitevin et saintongeais (gasconha)",
+     "url": "https://gasconha.com/spip.php?article55"
+    }
+   ]
+  },
+  {
+   "id": "verdon-sur-mer",
+   "nom": "Le Verdon-sur-Mer (petite enclave d'oïl à la pointe du Médoc)",
+   "paire": "oc/oil",
+   "axe": [
+    [
+     -1.11,
+     45.53
+    ],
+    [
+     -1.07,
+     45.58
+    ],
+    [
+     -1.03,
+     45.56
+    ],
+    [
+     -1.05,
+     45.52
+    ],
+    [
+     -1.11,
+     45.53
+    ]
+   ],
+   "largeur_km": 2,
+   "villes_transition": [
+    {
+     "nom": "Le Verdon-sur-Mer",
+     "lon": -1.08,
+     "lat": 45.55,
+     "classement": "oïl (saintongeais) selon Nowak"
+    },
+    {
+     "nom": "Soulac-sur-Mer",
+     "lon": -1.12,
+     "lat": 45.51,
+     "classement": "gascon (déduction)"
+    }
+   ],
+   "confiance": "faible",
+   "note": "Une seule source (Nowak). Affichage facultatif : attendre une deuxième source (Bourciez 1895, ALG).",
+   "sources": [
+    {
+     "titre": "E. Nowak, L'ensemble linguistique poitevin et saintongeais (gasconha)",
+     "url": "https://gasconha.com/spip.php?article55"
+    },
+    {
+     "titre": "Wikipedia (en), Le Verdon-sur-Mer",
+     "url": "https://en.wikipedia.org/wiki/Le_Verdon-sur-Mer"
+    }
+   ]
+  },
+  {
+   "id": "gevaudan",
+   "nom": "Gévaudan (Aubrac lozérien, Margeride, mont Lozère)",
+   "paire": "lan/auv",
+   "axe": [
+    [
+     3,
+     44.76
+    ],
+    [
+     3.15,
+     44.7
+    ],
+    [
+     3.3,
+     44.67
+    ],
+    [
+     3.45,
+     44.67
+    ],
+    [
+     3.62,
+     44.65
+    ],
+    [
+     3.78,
+     44.63
+    ],
+    [
+     3.92,
+     44.6
+    ]
+   ],
+   "largeur_km": 35,
+   "villes_transition": [
+    {
+     "nom": "Mende",
+     "lon": 3.5,
+     "lat": 44.52,
+     "classement": "languedocien (gévaudanais type, avec cha) ; affirmé par Romain"
+    },
+    {
+     "nom": "Marvejols",
+     "lon": 3.29,
+     "lat": 44.55,
+     "classement": "languedocien avec cha ; affirmé par Romain"
+    },
+    {
+     "nom": "Chastel-Nouvel",
+     "lon": 3.5,
+     "lat": 44.56,
+     "classement": "languedocien à cha (prononciation attestée)"
+    },
+    {
+     "nom": "Chanac",
+     "lon": 3.34,
+     "lat": 44.47,
+     "classement": "languedocien à cha"
+    },
+    {
+     "nom": "Aumont-Aubrac",
+     "lon": 3.28,
+     "lat": 44.72,
+     "classement": "mixte (auvergnat dans le fichier)"
+    },
+    {
+     "nom": "Nasbinals",
+     "lon": 3.05,
+     "lat": 44.66,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Châteauneuf-de-Randon",
+     "lon": 3.67,
+     "lat": 44.64,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Le Bleymard",
+     "lon": 3.73,
+     "lat": 44.48,
+     "classement": "languedocien probable (déduction)"
+    },
+    {
+     "nom": "Langogne",
+     "lon": 3.86,
+     "lat": 44.73,
+     "classement": "mixte (déduction ; auvergnat dans le fichier)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : gévaudanais palatalisé mais classé languedocien par conservatisme, parler type de Mende (Wikipèdia oc) ; sous-dialecte languedocien de transition vers le nord-occitan ; languedocien septentrional chez Alibert et Sumien. Débattu : toute la Lozère sauf Florac auvergnate selon des auteurs non nommés. Le fichier a déjà Mende et Marvejols en languedocien et une limite proche de l'axe : seulement peindre le dégradé.",
+   "remarque": "Fin d'axe déplacée de (3.9, 44.7) à (3.92, 44.6) pour rejoindre la bande Montagne ardéchoise à La Bastide-Puylaurent ; Langogne reste dans la bande.",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Gavaudanés",
+     "url": "https://oc.wikipedia.org/wiki/Gavaudanés"
+    },
+    {
+     "titre": "Wikipèdia occitana, Nòrd-occitan",
+     "url": "https://oc.wikipedia.org/wiki/Nòrd-occitan"
+    },
+    {
+     "titre": "Wikipédia, Auvergnat",
+     "url": "https://fr.wikipedia.org/wiki/Auvergnat"
+    },
+    {
+     "titre": "Wikipédia, Languedocien",
+     "url": "https://fr.wikipedia.org/wiki/Languedocien"
+    },
+    {
+     "titre": "Wikipédia, Chastel-Nouvel",
+     "url": "https://fr.wikipedia.org/wiki/Chastel-Nouvel"
+    },
+    {
+     "titre": "Wikipédia, Chanac",
+     "url": "https://fr.wikipedia.org/wiki/Chanac"
+    }
+   ]
+  },
+  {
+   "id": "carlades-pierrefort",
+   "nom": "Carladès, haute Cère et ancien canton de Pierrefort",
+   "paire": "lan/auv",
+   "axe": [
+    [
+     2.25,
+     45.08
+    ],
+    [
+     2.45,
+     45.1
+    ],
+    [
+     2.62,
+     45.11
+    ],
+    [
+     2.75,
+     45.09
+    ],
+    [
+     2.82,
+     45.03
+    ],
+    [
+     2.9,
+     44.95
+    ],
+    [
+     2.93,
+     44.86
+    ],
+    [
+     3,
+     44.76
+    ]
+   ],
+   "largeur_km": 10,
+   "villes_transition": [
+    {
+     "nom": "Pierrefort",
+     "lon": 2.84,
+     "lat": 44.92,
+     "classement": "languedocien (ancien canton de Pierrefort) ; auvergnat dans le fichier"
+    },
+    {
+     "nom": "Thiézac",
+     "lon": 2.67,
+     "lat": 45.02,
+     "classement": "languedocien (déduction : arrondissement d'Aurillac)"
+    },
+    {
+     "nom": "Saint-Jacques-des-Blats",
+     "lon": 2.71,
+     "lat": 45.05,
+     "classement": "languedocien (déduction)"
+    },
+    {
+     "nom": "Vic-sur-Cère",
+     "lon": 2.63,
+     "lat": 44.98,
+     "classement": "languedocien"
+    },
+    {
+     "nom": "Saint-Cernin",
+     "lon": 2.42,
+     "lat": 45.06,
+     "classement": "languedocien"
+    },
+    {
+     "nom": "Laroquebrou",
+     "lon": 2.19,
+     "lat": 44.97,
+     "classement": "languedocien"
+    },
+    {
+     "nom": "Chaudes-Aigues",
+     "lon": 3,
+     "lat": 44.85,
+     "classement": "auvergnat (bord de la bande)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi (Wikipédia seulement) : l'aurillacois, languedocien, couvre l'arrondissement d'Aurillac, l'ancien canton de Pierrefort et Mur-de-Barrez ; Dauzat notait un contraste net nord auvergnat / sud languedocien, d'où une bande étroite. Déduction : tracé par le Lioran et le bord est de l'ancien canton de Pierrefort.",
+   "sources": [
+    {
+     "titre": "Wikipédia, Aurillacois (dialecte)",
+     "url": "https://fr.wikipedia.org/wiki/Aurillacois_(dialecte)"
+    },
+    {
+     "titre": "Wikipèdia occitana, Auvernhat",
+     "url": "https://oc.wikipedia.org/wiki/Auvernhat"
+    },
+    {
+     "titre": "Wikipédia, Cantal",
+     "url": "https://fr.wikipedia.org/wiki/Cantal_(département)"
+    }
+   ]
+  },
+  {
+   "id": "haute-correze-creuse",
+   "nom": "Haute-Corrèze, Mauriacois et Creuse orientale (Aubusson, Ussel, Bort, Mauriac)",
+   "paire": "lem/auv",
+   "axe": [
+    [
+     2.17,
+     46.12
+    ],
+    [
+     2.17,
+     45.97
+    ],
+    [
+     2.22,
+     45.82
+    ],
+    [
+     2.28,
+     45.66
+    ],
+    [
+     2.33,
+     45.5
+    ],
+    [
+     2.35,
+     45.36
+    ],
+    [
+     2.31,
+     45.22
+    ],
+    [
+     2.25,
+     45.08
+    ]
+   ],
+   "largeur_km": 35,
+   "villes_transition": [
+    {
+     "nom": "Pontarion",
+     "lon": 1.85,
+     "lat": 45.99,
+     "classement": "limousin (forte influence auvergnate)"
+    },
+    {
+     "nom": "Aubusson",
+     "lon": 2.17,
+     "lat": 45.96,
+     "classement": "mixte, sur l'axe"
+    },
+    {
+     "nom": "Felletin",
+     "lon": 2.17,
+     "lat": 45.88,
+     "classement": "mixte (déduction)"
+    },
+    {
+     "nom": "Crocq",
+     "lon": 2.37,
+     "lat": 45.86,
+     "classement": "mixte penchant auvergnat (déduction)"
+    },
+    {
+     "nom": "Auzances",
+     "lon": 2.5,
+     "lat": 46.03,
+     "classement": "auvergnat ou mixte (bande Bort-Auzances)"
+    },
+    {
+     "nom": "Ussel",
+     "lon": 2.31,
+     "lat": 45.55,
+     "classement": "mixte (contesté)"
+    },
+    {
+     "nom": "Meymac",
+     "lon": 2.15,
+     "lat": 45.54,
+     "classement": "limousin teinté (déduction)"
+    },
+    {
+     "nom": "Neuvic",
+     "lon": 2.27,
+     "lat": 45.38,
+     "classement": "mixte (auvergnat selon Wikipédia Corrèze)"
+    },
+    {
+     "nom": "Bort-les-Orgues",
+     "lon": 2.5,
+     "lat": 45.4,
+     "classement": "auvergnat"
+    },
+    {
+     "nom": "Mauriac",
+     "lon": 2.33,
+     "lat": 45.22,
+     "classement": "mixte (mauriacois à traits limousins)"
+    },
+    {
+     "nom": "Pleaux",
+     "lon": 2.23,
+     "lat": 45.13,
+     "classement": "mixte (déduction)"
+    },
+    {
+     "nom": "Saint-Privat (Xaintrie)",
+     "lon": 2.1,
+     "lat": 45.14,
+     "classement": "limousin (déduction)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi mais contradictoire : limite est du limousin « mens segura », bascule vers l'auvergnat à l'est de Bourganeuf, petite partie auvergnate entre Bort et Auzances, Ussel contesté (Wikipèdia oc) ; Ussel, Neuvic, Bort auvergnats (Wikipédia Corrèze) ; tiers sud-est de la Creuse souvent auvergnat (Wikipédia Auvergnat) ; limousin seul (Wikipédia Creuse). Mauriacois à traits limousins. L'existence de la transition est sûre, sa place exacte non.",
+   "remarque": "Nord de l'axe décalé de 3 à 5 km vers l'est (2,12 à 2,17° E) pour qu'Aubusson, classée mixte, soit sur l'axe et non côté auvergnat.",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Lemosin (dialècte)",
+     "url": "https://oc.wikipedia.org/wiki/Lemosin_(dialècte)"
+    },
+    {
+     "titre": "Wikipédia, Auvergnat",
+     "url": "https://fr.wikipedia.org/wiki/Auvergnat"
+    },
+    {
+     "titre": "Wikipédia, Corrèze",
+     "url": "https://fr.wikipedia.org/wiki/Corrèze_(département)"
+    },
+    {
+     "titre": "Wikipédia, Creuse",
+     "url": "https://fr.wikipedia.org/wiki/Creuse_(département)"
+    },
+    {
+     "titre": "Wikipédia, Aurillacois (dialecte)",
+     "url": "https://fr.wikipedia.org/wiki/Aurillacois_(dialecte)"
+    }
+   ]
+  },
+  {
+   "id": "perigord",
+   "nom": "Périgord, vallée de la Dordogne (Villefranche-de-Lonchat, Vergt, Les Eyzies, Salignac)",
+   "paire": "lem/lan",
+   "axe": [
+    [
+     0.04,
+     44.91
+    ],
+    [
+     0.08,
+     44.93
+    ],
+    [
+     0.3,
+     44.94
+    ],
+    [
+     0.5,
+     44.95
+    ],
+    [
+     0.72,
+     44.96
+    ],
+    [
+     0.93,
+     44.95
+    ],
+    [
+     1.05,
+     44.96
+    ],
+    [
+     1.2,
+     44.98
+    ],
+    [
+     1.32,
+     45
+    ],
+    [
+     1.4,
+     45.03
+    ]
+   ],
+   "largeur_km": 20,
+   "villes_transition": [
+    {
+     "nom": "Montazeau",
+     "lon": 0.13,
+     "lat": 44.89,
+     "classement": "languedocien (début de la ligne de Wikipédia Dordogne)"
+    },
+    {
+     "nom": "Villefranche-de-Lonchat",
+     "lon": 0.05,
+     "lat": 44.96,
+     "classement": "mixte"
+    },
+    {
+     "nom": "La Force",
+     "lon": 0.37,
+     "lat": 44.87,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Villamblard",
+     "lon": 0.55,
+     "lat": 45.02,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Vergt",
+     "lon": 0.72,
+     "lat": 45.03,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Le Bugue",
+     "lon": 0.93,
+     "lat": 44.92,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Les Eyzies",
+     "lon": 1.01,
+     "lat": 44.94,
+     "classement": "languedocien (juste sous la ligne) ; limousin dans le fichier"
+    },
+    {
+     "nom": "Saint-Cyprien",
+     "lon": 1.04,
+     "lat": 44.87,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Sarlat-la-Canéda",
+     "lon": 1.22,
+     "lat": 44.89,
+     "classement": "languedocien (sarladais)"
+    },
+    {
+     "nom": "Salignac-Eyvigues",
+     "lon": 1.32,
+     "lat": 44.98,
+     "classement": "languedocien (juste sous la ligne)"
+    },
+    {
+     "nom": "Carlux",
+     "lon": 1.36,
+     "lat": 44.89,
+     "classement": "languedocien"
+    },
+    {
+     "nom": "Nadaillac",
+     "lon": 1.4,
+     "lat": 45.04,
+     "classement": "mixte (fin de la ligne de Wikipédia Dordogne)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : la limite traverse avec des zones de mélange les cantons de Villefranche-de-Lonchat, La Force, Villamblard, Vergt, Le Bugue, Saint-Cyprien, Sarlat et Carlux, un peu au-dessus de Salignac et des Eyzies (Wikipèdia oc) ; de Montazeau à Nadaillac (Wikipédia Dordogne) ; du sud de Mussidan au sud de Montignac (Wikipédia Limousin). Le fichier suit à 5 km près, sauf à l'ouest et aux Eyzies.",
+   "remarque": "Axe commencé au point triple (0.04, 44.91) au lieu de (0.08, 44.93).",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Lemosin (dialècte)",
+     "url": "https://oc.wikipedia.org/wiki/Lemosin_(dialècte)"
+    },
+    {
+     "titre": "Wikipédia, Limousin (dialecte)",
+     "url": "https://fr.wikipedia.org/wiki/Limousin_(dialecte)"
+    },
+    {
+     "titre": "Wikipédia, Dordogne",
+     "url": "https://fr.wikipedia.org/wiki/Dordogne_(département)"
+    },
+    {
+     "titre": "Wikipédia, Languedocien (classement de Sumien)",
+     "url": "https://fr.wikipedia.org/wiki/Languedocien"
+    }
+   ]
+  },
+  {
+   "id": "haut-quercy-correze",
+   "nom": "Haut-Quercy et sud de la Corrèze (Meyssac, Beaulieu, Xaintrie)",
+   "paire": "lem/lan",
+   "axe": [
+    [
+     1.4,
+     45.03
+    ],
+    [
+     1.52,
+     45.045
+    ],
+    [
+     1.67,
+     45.04
+    ],
+    [
+     1.84,
+     45.04
+    ],
+    [
+     1.97,
+     45.06
+    ],
+    [
+     2.1,
+     45.07
+    ],
+    [
+     2.25,
+     45.08
+    ]
+   ],
+   "largeur_km": 10,
+   "villes_transition": [
+    {
+     "nom": "Meyssac",
+     "lon": 1.68,
+     "lat": 45.06,
+     "classement": "limousin (forme Maiçac)"
+    },
+    {
+     "nom": "Chauffour-sur-Vell",
+     "lon": 1.67,
+     "lat": 45.02,
+     "classement": "languedocien (Wikipédia Corrèze)"
+    },
+    {
+     "nom": "Beaulieu-sur-Dordogne",
+     "lon": 1.84,
+     "lat": 44.98,
+     "classement": "languedocien (Wikipédia Corrèze)"
+    },
+    {
+     "nom": "Goulles",
+     "lon": 2.08,
+     "lat": 45.04,
+     "classement": "languedocien (Wikipédia Corrèze)"
+    },
+    {
+     "nom": "Argentat",
+     "lon": 1.94,
+     "lat": 45.09,
+     "classement": "limousin (déduction)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : languedocien dans la frange sud de la Corrèze, de Chauffour-sur-Vell à Goulles par Beaulieu (Wikipédia Corrèze). Le fichier suit déjà ce tracé : seulement peindre le dégradé. Contradiction : Mercœur, voisine de Goulles, auvergnate selon Wikipédia Auvergnat.",
+   "sources": [
+    {
+     "titre": "Wikipédia, Corrèze",
+     "url": "https://fr.wikipedia.org/wiki/Corrèze_(département)"
+    },
+    {
+     "titre": "Wikipedia (en), Limousin",
+     "url": "https://en.wikipedia.org/wiki/Limousin"
+    },
+    {
+     "titre": "Wikipedia (en), Meyssac",
+     "url": "https://en.wikipedia.org/wiki/Meyssac"
+    },
+    {
+     "titre": "Wikipédia, Languedocien",
+     "url": "https://fr.wikipedia.org/wiki/Languedocien"
+    }
+   ]
+  },
+  {
+   "id": "velay-forez",
+   "nom": "Velay oriental et sud du Forez (Yssingelais, Loire vellave)",
+   "paire": "auv/viv",
+   "axe": [
+    [
+     4.03,
+     45.47
+    ],
+    [
+     4.09,
+     45.38
+    ],
+    [
+     4.12,
+     45.29
+    ],
+    [
+     4.07,
+     45.2
+    ],
+    [
+     4.09,
+     45.1
+    ],
+    [
+     4.14,
+     45.01
+    ],
+    [
+     4.19,
+     44.92
+    ],
+    [
+     4.22,
+     44.84
+    ]
+   ],
+   "largeur_km": 15,
+   "villes_transition": [
+    {
+     "nom": "Saint-Bonnet-le-Château",
+     "lon": 4.07,
+     "lat": 45.42,
+     "classement": "vivaro-alpin (Garnier, Wikipédia) ; auvergnat (Bonnaud)"
+    },
+    {
+     "nom": "Bas-en-Basset",
+     "lon": 4.11,
+     "lat": 45.31,
+     "classement": "mixte (sur la Loire)"
+    },
+    {
+     "nom": "Monistrol-sur-Loire",
+     "lon": 4.17,
+     "lat": 45.29,
+     "classement": "vivaro-alpin probable"
+    },
+    {
+     "nom": "Retournac",
+     "lon": 4.03,
+     "lat": 45.2,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Yssingeaux",
+     "lon": 4.12,
+     "lat": 45.14,
+     "classement": "mixte : vivaro-alpin (Garnier, Wikipédia), auvergnat (Bonnaud), transition (Wikipedia en)"
+    },
+    {
+     "nom": "Saint-Julien-Chapteuil",
+     "lon": 4.06,
+     "lat": 45.04,
+     "classement": "auvergnat probable, en bordure"
+    },
+    {
+     "nom": "Fay-sur-Lignon",
+     "lon": 4.23,
+     "lat": 44.99,
+     "classement": "vivaro-alpin probable"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : vivaro-alpin dans la frange nord-est de la Haute-Loire, borné au plus par la Loire, et autour de Saint-Bonnet-le-Château (Garnier 2020) ; critère : chute du -d- (-ada devient -aa). Débattu : Bonnaud range l'Yssingelais en auvergnat. Non vérifié : extrait de « Géographie paysanne » (La Retornada).",
+   "remarque": "Fin d'axe prolongée du Mézenc (4.19, 44.92) au Gerbier de Jonc (4.22, 44.84), point de rencontre auvergnat, vivaro-alpin, languedocien.",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Le vivaro-alpin : progrès d'une définition, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "Wikipèdia occitana, Vivaroaupenc",
+     "url": "https://oc.wikipedia.org/wiki/Vivaroaupenc"
+    },
+    {
+     "titre": "Wikipédia, Auvergnat (Bonnaud)",
+     "url": "https://fr.wikipedia.org/wiki/Auvergnat"
+    },
+    {
+     "titre": "Wikipédia, Vivaro-alpin",
+     "url": "https://fr.wikipedia.org/wiki/Vivaro-alpin"
+    },
+    {
+     "titre": "Wikipedia (en), Auvergnat",
+     "url": "https://en.wikipedia.org/wiki/Auvergnat"
+    }
+   ]
+  },
+  {
+   "id": "boutieres-coiron",
+   "nom": "Boutières et Coiron (Haut et Bas-Vivarais)",
+   "paire": "viv/lan",
+   "axe": [
+    [
+     4.22,
+     44.84
+    ],
+    [
+     4.35,
+     44.81
+    ],
+    [
+     4.5,
+     44.71
+    ],
+    [
+     4.56,
+     44.66
+    ],
+    [
+     4.63,
+     44.62
+    ],
+    [
+     4.7,
+     44.59
+    ],
+    [
+     4.7,
+     44.53
+    ],
+    [
+     4.7,
+     44.44
+    ]
+   ],
+   "largeur_km": 12,
+   "villes_transition": [
+    {
+     "nom": "Mézilhac",
+     "lon": 4.35,
+     "lat": 44.81,
+     "classement": "mixte (sur la ligne de crête)"
+    },
+    {
+     "nom": "Antraigues-sur-Volane",
+     "lon": 4.35,
+     "lat": 44.73,
+     "classement": "languedocien probable, dans la bande"
+    },
+    {
+     "nom": "Privas",
+     "lon": 4.6,
+     "lat": 44.74,
+     "classement": "vivaro-alpin (Garnier), en bordure"
+    },
+    {
+     "nom": "Rochemaure",
+     "lon": 4.7,
+     "lat": 44.59,
+     "classement": "mixte (extrémité de la ligne)"
+    },
+    {
+     "nom": "Le Teil",
+     "lon": 4.68,
+     "lat": 44.55,
+     "classement": "mixte (languedocien probable, rive droite)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : vivaro-alpin dans la moitié nord de l'Ardèche (Garnier 2020) ; bas-vivarois languedocien dans la moitié sud (BnF, Wikipédia fr et oc ; Sumien via Wikipedia en) ; limite du Mézenc à Rochemaure par la crête du Coiron (Wikipédia, sans référence). Débattu : tout le Coiron vivaro-alpin selon une autre page Wikipédia. Déduction : ligne de partage Eyrieux / Ardèche, puis le Rhône jusqu'à Viviers.",
+   "remarque": "Début d'axe ramené au Gerbier de Jonc ; fin à (4.70, 44.44), nœud avec le provençal vers Viviers et Donzère.",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "Wikipédia, Bas-vivarois",
+     "url": "https://fr.wikipedia.org/wiki/Bas-vivarois"
+    },
+    {
+     "titre": "BnF, notice RAMEAU Bas-vivarois (dialecte)",
+     "url": "https://catalogue.bnf.fr/ark:/12148/cb18267473v"
+    },
+    {
+     "titre": "Wikipédia, Languedocien",
+     "url": "https://fr.wikipedia.org/wiki/Languedocien"
+    },
+    {
+     "titre": "Wikipédia, Vivaro-alpin",
+     "url": "https://fr.wikipedia.org/wiki/Vivaro-alpin"
+    }
+   ]
+  },
+  {
+   "id": "montagne-ardechoise",
+   "nom": "Montagne ardéchoise (rebord du plateau vers les Cévennes)",
+   "paire": "auv/lan",
+   "axe": [
+    [
+     4.22,
+     44.84
+    ],
+    [
+     4.18,
+     44.79
+    ],
+    [
+     4.13,
+     44.72
+    ],
+    [
+     4.07,
+     44.66
+    ],
+    [
+     3.99,
+     44.62
+    ],
+    [
+     3.92,
+     44.6
+    ]
+   ],
+   "largeur_km": 12,
+   "villes_transition": [
+    {
+     "nom": "Sainte-Eulalie",
+     "lon": 4.19,
+     "lat": 44.81,
+     "classement": "mixte (non documenté)"
+    },
+    {
+     "nom": "Burzet",
+     "lon": 4.25,
+     "lat": 44.74,
+     "classement": "languedocien probable (non documenté)"
+    },
+    {
+     "nom": "Montpezat-sous-Bauzon",
+     "lon": 4.2,
+     "lat": 44.71,
+     "classement": "languedocien probable (non documenté)"
+    },
+    {
+     "nom": "Saint-Cirgues-en-Montagne",
+     "lon": 4.09,
+     "lat": 44.76,
+     "classement": "auvergnat probable (non documenté)"
+    },
+    {
+     "nom": "Saint-Étienne-de-Lugdarès",
+     "lon": 3.95,
+     "lat": 44.65,
+     "classement": "mixte (non documenté)"
+    }
+   ],
+   "confiance": "faible",
+   "note": "Établi par Wikipédia seulement : le nord-ouest de l'Ardèche est auvergnat. Déduction : la limite suit le rebord du plateau, Coucouron, Le Béage et Saint-Cirgues auvergnats, pentes cévenoles languedociennes. À vérifier dans l'ALMC (Nauton).",
+   "sources": [
+    {
+     "titre": "Wikipédia, Auvergnat (nord-ouest de l'Ardèche)",
+     "url": "https://fr.wikipedia.org/wiki/Auvergnat"
+    },
+    {
+     "titre": "Wikipédia, Vivarais",
+     "url": "https://fr.wikipedia.org/wiki/Vivarais"
+    },
+    {
+     "titre": "Wikipédia, Bas-vivarois",
+     "url": "https://fr.wikipedia.org/wiki/Bas-vivarois"
+    }
+   ]
+  },
+  {
+   "id": "tricastin-baronnies",
+   "nom": "Tricastin et Baronnies (Drôme provençale)",
+   "paire": "viv/pro",
+   "axe": [
+    [
+     4.7,
+     44.44
+    ],
+    [
+     4.8,
+     44.39
+    ],
+    [
+     4.93,
+     44.37
+    ],
+    [
+     5.07,
+     44.34
+    ],
+    [
+     5.18,
+     44.31
+    ],
+    [
+     5.3,
+     44.28
+    ],
+    [
+     5.42,
+     44.24
+    ],
+    [
+     5.55,
+     44.2
+    ],
+    [
+     5.7,
+     44.18
+    ],
+    [
+     5.9,
+     44.16
+    ]
+   ],
+   "largeur_km": 25,
+   "villes_transition": [
+    {
+     "nom": "Donzère",
+     "lon": 4.71,
+     "lat": 44.44,
+     "classement": "vivaro-alpin probable, près du nœud avec le languedocien"
+    },
+    {
+     "nom": "Pierrelatte",
+     "lon": 4.7,
+     "lat": 44.38,
+     "classement": "mixte (îlot particulier selon Morin)"
+    },
+    {
+     "nom": "Saint-Paul-Trois-Châteaux",
+     "lon": 4.77,
+     "lat": 44.35,
+     "classement": "mixte à dominante provençale (déduction)"
+    },
+    {
+     "nom": "Grignan",
+     "lon": 4.91,
+     "lat": 44.42,
+     "classement": "vivaro-alpin probable, en bordure"
+    },
+    {
+     "nom": "Valréas",
+     "lon": 4.99,
+     "lat": 44.38,
+     "classement": "mixte (non documenté)"
+    },
+    {
+     "nom": "Nyons",
+     "lon": 5.14,
+     "lat": 44.36,
+     "classement": "mixte : vivaro-alpin (Wikipèdia oc), attraction provençale (Morin)"
+    },
+    {
+     "nom": "Mollans-sur-Ouvèze",
+     "lon": 5.19,
+     "lat": 44.24,
+     "classement": "mixte à dominante provençale (déduction)"
+    },
+    {
+     "nom": "Buis-les-Baronnies",
+     "lon": 5.27,
+     "lat": 44.27,
+     "classement": "mixte (sud des Baronnies : provençal pour Garnier, vivaro-alpin pour Morin)"
+    },
+    {
+     "nom": "Séderon",
+     "lon": 5.54,
+     "lat": 44.21,
+     "classement": "mixte (idem)"
+    },
+    {
+     "nom": "Rémuzat",
+     "lon": 5.36,
+     "lat": 44.41,
+     "classement": "vivaro-alpin (nord des Baronnies, Garnier)"
+    },
+    {
+     "nom": "Rosans",
+     "lon": 5.47,
+     "lat": 44.39,
+     "classement": "vivaro-alpin (Hautes-Alpes, Garnier)"
+    },
+    {
+     "nom": "Orpierre",
+     "lon": 5.69,
+     "lat": 44.31,
+     "classement": "vivaro-alpin (Hautes-Alpes, Garnier)"
+    },
+    {
+     "nom": "Laragne-Montéglin",
+     "lon": 5.82,
+     "lat": 44.32,
+     "classement": "vivaro-alpin (Hautes-Alpes, Garnier)"
+    }
+   ],
+   "confiance": "faible",
+   "note": "Établi : vivaro-alpin en Valdaine, au nord du Tricastin et des Baronnies, Hautes-Alpes entièrement (Garnier 2020) ; limite sud à peu près sur la limite Drôme / Vaucluse, attraction provençale à Nyons, îlot de Pierrelatte (Morin 2017) ; Drôme provençale = frange de transition rattachée d'habitude au vivaro-alpin (Wikipèdia oc). Garnier et Morin divergent sur le sud des Baronnies : d'où une bande large.",
+   "remarque": "Fusion des deux relevés (secteur Rhône et secteur alpin), qui se contredisaient : axe de compromis, à mi-chemin entre leurs deux axes à l'est de Nyons, raccordé au nœud de Viviers et Donzère (4.70, 44.44). Largeur portée à 25 km.",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "L. Morin, Paysage linguistique drômois, Géolinguistique 17 (2017)",
+     "url": "https://journals.openedition.org/geolinguistique/395"
+    },
+    {
+     "titre": "Wikipédia, Vivaro-alpin",
+     "url": "https://fr.wikipedia.org/wiki/Vivaro-alpin"
+    },
+    {
+     "titre": "Wikipèdia occitana, Provençau (franjas de transicion)",
+     "url": "https://oc.wikipedia.org/wiki/Proven%C3%A7au"
+    },
+    {
+     "titre": "Wikipèdia occitana, Niom",
+     "url": "https://oc.wikipedia.org/wiki/Niom"
+    },
+    {
+     "titre": "Bouvier, Les parlers provençaux de la Drôme (1976), notice (non consulté)",
+     "url": "https://cir.nii.ac.jp/crid/1130000793893824128"
+    }
+   ]
+  },
+  {
+   "id": "ardeche-meridionale-gard-rhodanien",
+   "nom": "Ardèche méridionale, Cèze et Gard rhodanien",
+   "paire": "lan/pro",
+   "axe": [
+    [
+     4.7,
+     44.44
+    ],
+    [
+     4.62,
+     44.38
+    ],
+    [
+     4.55,
+     44.3
+    ],
+    [
+     4.45,
+     44.22
+    ],
+    [
+     4.33,
+     44.14
+    ],
+    [
+     4.25,
+     44.1
+    ]
+   ],
+   "largeur_km": 20,
+   "villes_transition": [
+    {
+     "nom": "Viviers",
+     "lon": 4.69,
+     "lat": 44.48,
+     "classement": "mixte (près du nœud des trois dialectes)"
+    },
+    {
+     "nom": "Bourg-Saint-Andéol",
+     "lon": 4.64,
+     "lat": 44.37,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Pont-Saint-Esprit",
+     "lon": 4.65,
+     "lat": 44.26,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Bagnols-sur-Cèze",
+     "lon": 4.62,
+     "lat": 44.16,
+     "classement": "provençal probable"
+    },
+    {
+     "nom": "Uzès",
+     "lon": 4.42,
+     "lat": 44.01,
+     "classement": "provençal probable, en bordure"
+    }
+   ],
+   "confiance": "faible",
+   "note": "Établi : transition provençal / languedocien à l'extrême sud-est de l'Ardèche (Wikipèdia oc) ; ouest et nord du Gard languedociens, est du Gard provençal. Aucune commune classée par une source : tracé déduit.",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Provençau"
+    },
+    {
+     "titre": "Wikipédia, Languedocien",
+     "url": "https://fr.wikipedia.org/wiki/Languedocien"
+    },
+    {
+     "titre": "BnF, notice RAMEAU Bas-vivarois (dialecte)",
+     "url": "https://catalogue.bnf.fr/ark:/12148/cb18267473v"
+    }
+   ]
+  },
+  {
+   "id": "vidourle-vaunage",
+   "nom": "Piémont cévenol, Vaunage et Vidourle",
+   "paire": "lan/pro",
+   "axe": [
+    [
+     4.25,
+     44.1
+    ],
+    [
+     4.18,
+     44.02
+    ],
+    [
+     4.12,
+     43.95
+    ],
+    [
+     4.13,
+     43.86
+    ],
+    [
+     4.15,
+     43.78
+    ],
+    [
+     4.19,
+     43.7
+    ],
+    [
+     4.18,
+     43.61
+    ],
+    [
+     4.15,
+     43.53
+    ]
+   ],
+   "largeur_km": 15,
+   "villes_transition": [
+    {
+     "nom": "Calvisson (Vaunage)",
+     "lon": 4.19,
+     "lat": 43.79,
+     "classement": "provençal (vaunageol), en bordure"
+    },
+    {
+     "nom": "Sommières",
+     "lon": 4.09,
+     "lat": 43.78,
+     "classement": "languedocien probable (déduction)"
+    },
+    {
+     "nom": "Lunel",
+     "lon": 4.14,
+     "lat": 43.68,
+     "classement": "languedocien probable"
+    },
+    {
+     "nom": "Vauvert",
+     "lon": 4.28,
+     "lat": 43.69,
+     "classement": "mixte, provençal probable"
+    },
+    {
+     "nom": "Saint-Gilles",
+     "lon": 4.43,
+     "lat": 43.68,
+     "classement": "provençal probable"
+    },
+    {
+     "nom": "Aigues-Mortes",
+     "lon": 4.19,
+     "lat": 43.57,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Le Grau-du-Roi",
+     "lon": 4.14,
+     "lat": 43.54,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Nîmes",
+     "lon": 4.36,
+     "lat": 43.84,
+     "classement": "provençal (hybride d'origine languedocienne selon Wikipèdia oc), hors bande"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : la limite réelle est plus à l'est que le Vidourle souvent montré, la Vaunage étant la zone de rencontre (fonds Revèst, notice sans noms de communes) ; transition à l'ouest de Nîmes (Wikipèdia oc). Déduction : classement de Sommières et Calvisson.",
+   "sources": [
+    {
+     "titre": "Occitanica, Fonds Laurenç Revèst, Enquêtes linguistiques occitanes",
+     "url": "https://www.occitanica.eu/items/show/61296"
+    },
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Provençau"
+    },
+    {
+     "titre": "Wikipèdia occitana, Lengadocian (nimesenc)",
+     "url": "https://oc.wikipedia.org/wiki/Lengadocian"
+    },
+    {
+     "titre": "Wikipédia, Provençal rhodanien",
+     "url": "https://fr.wikipedia.org/wiki/Provençal_rhodanien"
+    }
+   ]
+  },
+  {
+   "id": "digne-sisteron-verdon",
+   "nom": "Préalpes de Digne, Sisteronais et Verdon (zone bas-aupenca)",
+   "paire": "pro/viv",
+   "axe": [
+    [
+     5.9,
+     44.16
+    ],
+    [
+     6.05,
+     44.11
+    ],
+    [
+     6.24,
+     44.07
+    ],
+    [
+     6.4,
+     44.02
+    ],
+    [
+     6.55,
+     43.97
+    ],
+    [
+     6.7,
+     43.93
+    ],
+    [
+     6.82,
+     43.91
+    ]
+   ],
+   "largeur_km": 35,
+   "villes_transition": [
+    {
+     "nom": "Sisteron",
+     "lon": 5.94,
+     "lat": 44.2,
+     "classement": "mixte (vivaro-alpin pour Garnier ; alpin au nord de Sisteron pour Blanchet)"
+    },
+    {
+     "nom": "Forcalquier",
+     "lon": 5.78,
+     "lat": 43.96,
+     "classement": "provençal à traits alpins (bas-aupenc)"
+    },
+    {
+     "nom": "Digne-les-Bains",
+     "lon": 6.24,
+     "lat": 44.09,
+     "classement": "mixte"
+    },
+    {
+     "nom": "La Javie",
+     "lon": 6.35,
+     "lat": 44.17,
+     "classement": "vivaro-alpin (déduction)"
+    },
+    {
+     "nom": "Barrême",
+     "lon": 6.37,
+     "lat": 43.95,
+     "classement": "mixte à dominante provençale (déduction)"
+    },
+    {
+     "nom": "Thorame-Basse",
+     "lon": 6.49,
+     "lat": 44.1,
+     "classement": "vivaro-alpin (haut Verdon, Garnier)"
+    },
+    {
+     "nom": "Saint-André-les-Alpes",
+     "lon": 6.51,
+     "lat": 43.97,
+     "classement": "mixte (déduction)"
+    },
+    {
+     "nom": "Castellane",
+     "lon": 6.51,
+     "lat": 43.85,
+     "classement": "provençal à traits alpins (bas-aupenc)"
+    },
+    {
+     "nom": "Annot",
+     "lon": 6.67,
+     "lat": 43.97,
+     "classement": "mixte à dominante vivaro-alpine (Revèst, seule source)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : Sisteronais, nord des Préalpes de Digne et haut Verdon vivaro-alpins (Garnier 2020) ; région de Digne = frange de transition rattachée d'habitude au vivaro-alpin, zone bas-aupenca plus provençale (Wikipèdia oc, d'après Bec et Ronjat) ; alpin au nord de Sisteron et Digne (Blanchet) ; gavot maritime jusqu'au pays d'Annot (Revèst).",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Proven%C3%A7au"
+    },
+    {
+     "titre": "Ph. Blanchet, Le provençal, Sorosoro",
+     "url": "https://www.sorosoro.org/le-provencal/"
+    },
+    {
+     "titre": "Occitanica, fonds Laurenç Revèst",
+     "url": "https://www.occitanica.eu/items/show/61296"
+    }
+   ]
+  },
+  {
+   "id": "pays-nicois",
+   "nom": "Pays niçois intérieur : Var, Estéron, Tinée, Vésubie, Paillons",
+   "paire": "pro/viv",
+   "axe": [
+    [
+     6.82,
+     43.91
+    ],
+    [
+     6.98,
+     43.88
+    ],
+    [
+     7.12,
+     43.86
+    ],
+    [
+     7.24,
+     43.86
+    ],
+    [
+     7.32,
+     43.83
+    ],
+    [
+     7.37,
+     43.79
+    ],
+    [
+     7.4,
+     43.75
+    ]
+   ],
+   "largeur_km": 25,
+   "villes_transition": [
+    {
+     "nom": "Entrevaux",
+     "lon": 6.81,
+     "lat": 43.95,
+     "classement": "mixte à dominante vivaro-alpine (Revèst)"
+    },
+    {
+     "nom": "Puget-Théniers",
+     "lon": 6.89,
+     "lat": 43.96,
+     "classement": "mixte à dominante vivaro-alpine (Revèst)"
+    },
+    {
+     "nom": "Beuil",
+     "lon": 6.99,
+     "lat": 44.09,
+     "classement": "vivaro-alpin (haut Var, Garnier)"
+    },
+    {
+     "nom": "Roquesteron",
+     "lon": 7,
+     "lat": 43.87,
+     "classement": "mixte (Estéron, Revèst)"
+    },
+    {
+     "nom": "Gilette",
+     "lon": 7.16,
+     "lat": 43.85,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Saint-Sauveur-sur-Tinée",
+     "lon": 7.11,
+     "lat": 44.08,
+     "classement": "vivaro-alpin"
+    },
+    {
+     "nom": "Roquebillière",
+     "lon": 7.31,
+     "lat": 44.01,
+     "classement": "vivaro-alpin"
+    },
+    {
+     "nom": "Lantosque",
+     "lon": 7.31,
+     "lat": 43.97,
+     "classement": "vivaro-alpin"
+    },
+    {
+     "nom": "Utelle",
+     "lon": 7.25,
+     "lat": 43.92,
+     "classement": "vivaro-alpin"
+    },
+    {
+     "nom": "Levens",
+     "lon": 7.23,
+     "lat": 43.86,
+     "classement": "mixte (déduction)"
+    },
+    {
+     "nom": "Lucéram",
+     "lon": 7.36,
+     "lat": 43.88,
+     "classement": "mixte (gavot pour Revèst, niçois pour la tradition)"
+    },
+    {
+     "nom": "L'Escarène",
+     "lon": 7.36,
+     "lat": 43.83,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Contes",
+     "lon": 7.31,
+     "lat": 43.81,
+     "classement": "mixte"
+    },
+    {
+     "nom": "La Turbie",
+     "lon": 7.4,
+     "lat": 43.75,
+     "classement": "mixte (déduction)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : haut Var, Tinée, Vésubie et une frange jusqu'à la mer vivaro-alpins (Garnier 2020) ; Paillons, basse vallée du Var, Estéron, Utelle, Vésubie, sud de la Tinée en gavot maritime (Revèst, seul pour les Paillons) ; haut pays niçois = frange de transition (Wikipèdia oc). Niçois de la côte : provençal pour la plupart, groupé avec le vivaro-alpin chez Sumien, composite pour Del Giudice.",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "Occitanica, fonds Laurenç Revèst (gavot maritime)",
+     "url": "https://www.occitanica.eu/items/show/61296"
+    },
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Proven%C3%A7au"
+    },
+    {
+     "titre": "Del Giudice, Trajectoire diachronique d'un dialecte composite : le niçois, Vox Romanica 80 (2021)",
+     "url": "https://hal.archives-ouvertes.fr/hal-03137348"
+    },
+    {
+     "titre": "Wikipedia (en), Occitan language (classement de Sumien)",
+     "url": "https://en.wikipedia.org/wiki/Occitan_language"
+    }
+   ]
+  },
+  {
+   "id": "roya-mentonnais",
+   "nom": "Roya, Bévéra et Mentonnais (avec la Terre brigasque)",
+   "paire": "oc/lig",
+   "axe": [
+    [
+     7.78,
+     44.2
+    ],
+    [
+     7.6,
+     44.16
+    ],
+    [
+     7.52,
+     44.1
+    ],
+    [
+     7.47,
+     44.02
+    ],
+    [
+     7.47,
+     43.93
+    ],
+    [
+     7.48,
+     43.87
+    ],
+    [
+     7.51,
+     43.8
+    ],
+    [
+     7.53,
+     43.78
+    ]
+   ],
+   "largeur_km": 15,
+   "villes_transition": [
+    {
+     "nom": "Menton",
+     "lon": 7.5,
+     "lat": 43.78,
+     "classement": "occitan (mentonnais, transition vers le ligure)"
+    },
+    {
+     "nom": "Roquebrune-Cap-Martin",
+     "lon": 7.46,
+     "lat": 43.76,
+     "classement": "occitan (mentonnais)"
+    },
+    {
+     "nom": "Castellar",
+     "lon": 7.51,
+     "lat": 43.8,
+     "classement": "occitan (mentonnais)"
+    },
+    {
+     "nom": "Castillon",
+     "lon": 7.46,
+     "lat": 43.84,
+     "classement": "occitan (mentonnais)"
+    },
+    {
+     "nom": "Sospel",
+     "lon": 7.45,
+     "lat": 43.88,
+     "classement": "occitan (mentonnais ou gavot maritime)"
+    },
+    {
+     "nom": "Breil-sur-Roya",
+     "lon": 7.51,
+     "lat": 43.94,
+     "classement": "ligure à traits occitans (royasque)"
+    },
+    {
+     "nom": "Saorge",
+     "lon": 7.55,
+     "lat": 43.99,
+     "classement": "ligure à traits occitans (royasque)"
+    },
+    {
+     "nom": "Fontan",
+     "lon": 7.55,
+     "lat": 44,
+     "classement": "ligure à traits occitans (royasque)"
+    },
+    {
+     "nom": "Tende",
+     "lon": 7.59,
+     "lat": 44.09,
+     "classement": "ligure à traits occitans (royasque)"
+    },
+    {
+     "nom": "La Brigue",
+     "lon": 7.62,
+     "lat": 44.06,
+     "classement": "ligure (brigasque)"
+    },
+    {
+     "nom": "Olivetta San Michele",
+     "lon": 7.51,
+     "lat": 43.88,
+     "classement": "ligure (royasque ; occitan au sens de la loi 482)"
+    },
+    {
+     "nom": "Airole",
+     "lon": 7.55,
+     "lat": 43.87,
+     "classement": "ligure (intémélien, déduction)"
+    },
+    {
+     "nom": "Briga Alta",
+     "lon": null,
+     "lat": null,
+     "classement": "ligure (brigasque ; occitan au sens de la loi 482)"
+    },
+    {
+     "nom": "Realdo (Triora)",
+     "lon": null,
+     "lat": null,
+     "classement": "ligure (brigasque ; occitan au sens de la loi 482)"
+    },
+    {
+     "nom": "Viozene (Ormea)",
+     "lon": null,
+     "lat": null,
+     "classement": "ligure (brigasque ; occitan au sens de la loi 482)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : mentonnais = vivaro-alpin de transition vers le ligure (Wikipédia fr et en, d'après Dalbera 1984 ; Revèst) ; royasque et brigasque = ligure alpin à traits occitans (Wikipédia fr et oc ; Forner et Toso via Wikipédia it ; Garnier) ; pourtant déclarés occitans en Italie (loi 482/1999) et revendiqués localement (Christoph 2025). Débattu : Wikipedia en (Occitan language) dit le mentonnais ligure.",
+   "sources": [
+    {
+     "titre": "Wikipédia, Mentonnais",
+     "url": "https://fr.wikipedia.org/wiki/Mentonnais"
+    },
+    {
+     "titre": "Wikipedia (en), Mentonasc dialect",
+     "url": "https://en.wikipedia.org/wiki/Mentonasc_dialect"
+    },
+    {
+     "titre": "Wikipédia, Royasque",
+     "url": "https://fr.wikipedia.org/wiki/Royasque"
+    },
+    {
+     "titre": "Wikipèdia occitana, Roiasc",
+     "url": "https://oc.wikipedia.org/wiki/Roiasc"
+    },
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "Wikipedia (it), Valli occitane",
+     "url": "https://it.wikipedia.org/wiki/Valli_occitane"
+    },
+    {
+     "titre": "Christoph, Mehr Schein als Sein? (2025), résumé Érudit",
+     "url": "https://releve.erudit.org/en/journals/rtes/2025-n14-rtes010550/1123080ar/abstract/"
+    }
+   ]
+  },
+  {
+   "id": "monaco",
+   "nom": "Monaco (enclave ligure monégasque)",
+   "paire": "oc/lig",
+   "axe": [
+    [
+     7.4,
+     43.75
+    ],
+    [
+     7.42,
+     43.735
+    ],
+    [
+     7.44,
+     43.73
+    ]
+   ],
+   "largeur_km": 3,
+   "villes_transition": [
+    {
+     "nom": "Monaco",
+     "lon": 7.42,
+     "lat": 43.74,
+     "classement": "ligure (monégasque) ; niçois aussi en usage"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : le monégasque est un ligure occidental, distinct du mentonnais (Wikipédia fr) ; le niçois y coexiste (Wikipèdia oc). Petite enclave mixte plutôt qu'une transition en ligne.",
+   "sources": [
+    {
+     "titre": "Wikipédia, Monégasque",
+     "url": "https://fr.wikipedia.org/wiki/Mon%C3%A9gasque"
+    },
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Proven%C3%A7au"
+    }
+   ]
+  },
+  {
+   "id": "val-de-suse",
+   "nom": "Val de Suse et Val Sangone (Chiomonte / Gravere)",
+   "paire": "oc/frp",
+   "axe": [
+    [
+     6.96,
+     45.2
+    ],
+    [
+     7,
+     45.12
+    ],
+    [
+     7.04,
+     45.07
+    ],
+    [
+     7.13,
+     45.04
+    ],
+    [
+     7.22,
+     45.01
+    ]
+   ],
+   "largeur_km": 5,
+   "villes_transition": [
+    {
+     "nom": "Chiomonte",
+     "lon": 6.98,
+     "lat": 45.12,
+     "classement": "vivaro-alpin (affinités francoprovençales et piémontaises, Sibille)"
+    },
+    {
+     "nom": "Gravere",
+     "lon": 7.02,
+     "lat": 45.12,
+     "classement": "francoprovençal"
+    },
+    {
+     "nom": "Susa",
+     "lon": 7.05,
+     "lat": 45.14,
+     "classement": "piémontais et francoprovençal (déduction)"
+    }
+   ],
+   "confiance": "forte",
+   "note": "Établi : Chiomonte est la dernière localité occitanophone vers le nord et l'est, francoprovençal à 3 km, piémontais à 7 km (Sibille 2012, résumé). Le fichier est juste ici : seulement marquer la transition.",
+   "sources": [
+    {
+     "titre": "J. Sibille, L'occitan de Chiomonte, SHS Web of Conferences (2012)",
+     "url": "https://www.shs-conferences.org/10.1051/shsconf/20120100233"
+    },
+    {
+     "titre": "Notice GoTriple de l'article de Sibille",
+     "url": "https://gotriple.eu/documents/oai%3Adoaj.org%2Farticle%3Af2bf27b3f1ff461db2138ed23ec83273"
+    },
+    {
+     "titre": "Wikipedia (it), Valli occitane",
+     "url": "https://it.wikipedia.org/wiki/Valli_occitane"
+    }
+   ]
+  },
+  {
+   "id": "debouche-piemontais",
+   "nom": "Débouché des vallées occitanes d'Italie sur la plaine piémontaise",
+   "paire": "oc/pie",
+   "axe": [
+    [
+     7.24,
+     44.97
+    ],
+    [
+     7.24,
+     44.82
+    ],
+    [
+     7.23,
+     44.69
+    ],
+    [
+     7.3,
+     44.62
+    ],
+    [
+     7.43,
+     44.57
+    ],
+    [
+     7.42,
+     44.52
+    ],
+    [
+     7.34,
+     44.48
+    ],
+    [
+     7.38,
+     44.42
+    ],
+    [
+     7.43,
+     44.37
+    ],
+    [
+     7.5,
+     44.3
+    ],
+    [
+     7.6,
+     44.22
+    ]
+   ],
+   "largeur_km": 8,
+   "villes_transition": [
+    {
+     "nom": "Perosa Argentina",
+     "lon": 7.19,
+     "lat": 44.96,
+     "classement": "vivaro-alpin (parler local éteint)"
+    },
+    {
+     "nom": "Torre Pellice",
+     "lon": 7.22,
+     "lat": 44.82,
+     "classement": "vivaro-alpin (attesté avant 1999)"
+    },
+    {
+     "nom": "Luserna San Giovanni",
+     "lon": 7.25,
+     "lat": 44.81,
+     "classement": "piémontais (occitan par la loi 482 seulement)"
+    },
+    {
+     "nom": "Bricherasio",
+     "lon": 7.3,
+     "lat": 44.82,
+     "classement": "piémontais (loi 482 seulement)"
+    },
+    {
+     "nom": "Ostana",
+     "lon": 7.19,
+     "lat": 44.69,
+     "classement": "vivaro-alpin (attesté avant 1999)"
+    },
+    {
+     "nom": "Paesana",
+     "lon": 7.27,
+     "lat": 44.69,
+     "classement": "piémontais (loi 482 seulement)"
+    },
+    {
+     "nom": "Sanfront",
+     "lon": 7.32,
+     "lat": 44.65,
+     "classement": "piémontais (loi 482 seulement)"
+    },
+    {
+     "nom": "Venasca",
+     "lon": 7.4,
+     "lat": 44.56,
+     "classement": "vivaro-alpin (attesté avant 1999)"
+    },
+    {
+     "nom": "Piasco",
+     "lon": 7.46,
+     "lat": 44.56,
+     "classement": "piémontais (loi 482 seulement)"
+    },
+    {
+     "nom": "Dronero",
+     "lon": 7.36,
+     "lat": 44.47,
+     "classement": "piémontais (loi 482 seulement)"
+    },
+    {
+     "nom": "Caraglio",
+     "lon": 7.43,
+     "lat": 44.42,
+     "classement": "piémontais (loi 482 seulement)"
+    },
+    {
+     "nom": "Borgo San Dalmazzo",
+     "lon": 7.49,
+     "lat": 44.33,
+     "classement": "piémontais (loi 482 seulement)"
+    },
+    {
+     "nom": "Roccavione",
+     "lon": 7.48,
+     "lat": 44.31,
+     "classement": "mixte"
+    },
+    {
+     "nom": "Chiusa di Pesio",
+     "lon": 7.68,
+     "lat": 44.32,
+     "classement": "mixte (parlers mêlés selon Garnier)"
+    },
+    {
+     "nom": "Frabosa Soprana",
+     "lon": 7.81,
+     "lat": 44.29,
+     "classement": "mixte (parlers mêlés selon Garnier)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : trois listes de communes, occitan attesté avant 1999, parler éteint, occitan par la loi seulement (Wikipedia it) ; Pesio, Ellero, Maudagna, Corsaglia inclus par Garnier avec réserve. Déduction : les communes « loi 482 seulement » parlent piémontais. Paire oc/pie hors de la liste prévue : limite de domaine avec le piémontais.",
+   "remarque": "Axe retouché pour respecter les classements du relevé : il laissait Venasca (occitan attesté) côté piémontais et Paesana côté occitan. Raccord avec la bande Roya (entre 7,6 et 7,78° E, Alpes ligures) non tracé, faute de source.",
+   "sources": [
+    {
+     "titre": "Wikipedia (it), Valli occitane",
+     "url": "https://it.wikipedia.org/wiki/Valli_occitane"
+    },
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "Lexilogos, occitan du Piémont",
+     "url": "https://www.lexilogos.com/oc_piemont.htm"
+    }
+   ]
+  },
+  {
+   "id": "isere-vercors-oisans",
+   "nom": "Vercors, Trièves, Valbonnais et Oisans (limite nord du vivaro-alpin en France)",
+   "paire": "oc/frp",
+   "axe": [
+    [
+     5.3,
+     45.12
+    ],
+    [
+     5.5,
+     45.11
+    ],
+    [
+     5.62,
+     45.06
+    ],
+    [
+     5.68,
+     44.98
+    ],
+    [
+     5.72,
+     44.9
+    ],
+    [
+     5.8,
+     44.87
+    ],
+    [
+     5.9,
+     44.91
+    ],
+    [
+     6,
+     44.98
+    ],
+    [
+     6.08,
+     45.04
+    ],
+    [
+     6.25,
+     45.08
+    ],
+    [
+     6.45,
+     45.09
+    ],
+    [
+     6.7,
+     45.13
+    ],
+    [
+     6.96,
+     45.2
+    ]
+   ],
+   "largeur_km": 15,
+   "villes_transition": [
+    {
+     "nom": "Villard-de-Lans",
+     "lon": 5.55,
+     "lat": 45.07,
+     "classement": "vivaro-alpin (frontière juste au nord, Garnier ; CIRDÒC)"
+    },
+    {
+     "nom": "Gresse-en-Vercors",
+     "lon": 5.56,
+     "lat": 44.9,
+     "classement": "vivaro-alpin (CIRDÒC)"
+    },
+    {
+     "nom": "Monestier-de-Clermont",
+     "lon": 5.63,
+     "lat": 44.92,
+     "classement": "vivaro-alpin (déduction : Trièves)"
+    },
+    {
+     "nom": "La Mure",
+     "lon": 5.78,
+     "lat": 44.9,
+     "classement": "francoprovençal (déduction)"
+    },
+    {
+     "nom": "Cordéac",
+     "lon": 5.86,
+     "lat": 44.82,
+     "classement": "vivaro-alpin (CIRDÒC)"
+    },
+    {
+     "nom": "Valbonnais",
+     "lon": 5.9,
+     "lat": 44.9,
+     "classement": "mixte (presque sur la ligne, Gasquet-Cyrus)"
+    },
+    {
+     "nom": "Valjouffrey",
+     "lon": 6.03,
+     "lat": 44.87,
+     "classement": "mixte (zone de transition, Gasquet-Cyrus)"
+    },
+    {
+     "nom": "Bourg-d'Oisans",
+     "lon": 6.03,
+     "lat": 45.06,
+     "classement": "mixte (déduction)"
+    },
+    {
+     "nom": "Venosc",
+     "lon": 6.12,
+     "lat": 45,
+     "classement": "vivaro-alpin (CIRDÒC)"
+    },
+    {
+     "nom": "La Grave",
+     "lon": 6.31,
+     "lat": 45.05,
+     "classement": "vivaro-alpin (Hautes-Alpes)"
+    }
+   ],
+   "confiance": "moyenne",
+   "note": "Établi : frontière avec l'arpitan au nord de Villard-de-Lans ; Trièves, Beaumont, Valbonnais, Oisans occitans (Garnier 2020) ; frange occitane au sud de l'Isère (CIRDÒC) ; parlers de plus en plus teintés de francoprovençal près de la limite, Valjouffrey en transition (Gasquet-Cyrus 2018), ce qui justifie un dégradé. Déduction : Matheysine et bassin de Grenoble francoprovençaux.",
+   "remarque": "Point (5.72, 44.90) ajouté pour que La Mure, classée francoprovençale par le relevé, reste de ce côté de l'axe.",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "CIRDÒC-Mediatèca occitana, Où parle-t-on occitan en Rhône-Alpes ?",
+     "url": "https://www.occitanica.eu/items/show/10721"
+    },
+    {
+     "titre": "M. Gasquet-Cyrus, Frontières linguistiques et glossonymie en zone de transition : le patois de Valjouffrey, ENS Éditions (2018)",
+     "url": "https://books.openedition.org/enseditions/8582"
+    }
+   ]
+  }
+ ],
+ "corrections": [
+  {
+   "id": "mende-marvejols",
+   "description": "Mende, Marvejols, Chanac et la vallée du Lot lozérienne sont languedociens (gévaudanais, avec cha), en transition vers l'auvergnat ; la carte Occitanica d'origine les met en auvergnat. Affirmé par Romain ; concorde avec Wikipèdia oc (Gavaudanés) et avec le classement d'Alibert et de Sumien. Déjà corrigé dans dialectes.geojson (limite vers 44,67° N) : rien à refaire, seulement à garder.",
+   "dialecte": "lan",
+   "operation": "reattribuer",
+   "statut": "deja_appliquee",
+   "ordre": 1,
+   "villes": [
+    {
+     "nom": "Mende",
+     "lon": 3.5,
+     "lat": 44.52
+    },
+    {
+     "nom": "Marvejols",
+     "lon": 3.29,
+     "lat": 44.55
+    },
+    {
+     "nom": "Chanac",
+     "lon": 3.34,
+     "lat": 44.47
+    },
+    {
+     "nom": "Chastel-Nouvel",
+     "lon": 3.5,
+     "lat": 44.56
+    }
+   ],
+   "polygone": [
+    [
+     3.15,
+     44.42
+    ],
+    [
+     3.65,
+     44.42
+    ],
+    [
+     3.65,
+     44.62
+    ],
+    [
+     3.15,
+     44.62
+    ],
+    [
+     3.15,
+     44.42
+    ]
+   ],
+   "confiance": "forte",
+   "sources": [
+    {
+     "titre": "Affirmation de Romain (locuteur)",
+     "url": null
+    },
+    {
+     "titre": "Wikipèdia occitana, Gavaudanés",
+     "url": "https://oc.wikipedia.org/wiki/Gavaudanés"
+    },
+    {
+     "titre": "Wikipédia, Languedocien (Alibert, Sumien)",
+     "url": "https://fr.wikipedia.org/wiki/Languedocien"
+    }
+   ]
+  },
+  {
+   "id": "bordelais-rive-droite",
+   "description": "Le fichier met en languedocien le Bourgeais, le Cubzaguais, le Libournais, l'Entre-deux-Mers et le Montravel (limite à -0,53° de longitude à 44,85° N, 60 km trop à l'ouest). Établi : pays de tradition gasconne (Wikipèdia oc, Nowak, Higounet, Wikipédia Petite Gavacherie). Gascon éteint au nord de la Dordogne : afficher comme domaine historique. Bord nord sur l'axe oc/oïl, bord est sur l'axe gascon/languedocien, bord ouest débordant sans conséquence sur le gascon existant. À appliquer avant le Blayais et la Petite Gavacherie. Écart trop régulier pour une erreur de calage : la carte d'origine avait peut-être une teinte de transition fondue dans le languedocien.",
+   "dialecte": "gas",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 2,
+   "villes": [
+    {
+     "nom": "Lormont",
+     "lon": -0.52,
+     "lat": 44.88
+    },
+    {
+     "nom": "Bourg",
+     "lon": -0.55,
+     "lat": 45.04
+    },
+    {
+     "nom": "Saint-André-de-Cubzac",
+     "lon": -0.44,
+     "lat": 44.99
+    },
+    {
+     "nom": "Galgon",
+     "lon": -0.28,
+     "lat": 44.99
+    },
+    {
+     "nom": "Fronsac",
+     "lon": -0.27,
+     "lat": 44.92
+    },
+    {
+     "nom": "Libourne",
+     "lon": -0.24,
+     "lat": 44.92
+    },
+    {
+     "nom": "Saint-Émilion",
+     "lon": -0.16,
+     "lat": 44.89
+    },
+    {
+     "nom": "Lussac",
+     "lon": -0.09,
+     "lat": 44.97
+    },
+    {
+     "nom": "Tayac",
+     "lon": -0.02,
+     "lat": 44.96
+    },
+    {
+     "nom": "Les Salles-de-Castillon",
+     "lon": 0.01,
+     "lat": 44.91
+    },
+    {
+     "nom": "Castillon-la-Bataille",
+     "lon": -0.04,
+     "lat": 44.85
+    },
+    {
+     "nom": "Montcaret",
+     "lon": 0.07,
+     "lat": 44.86
+    },
+    {
+     "nom": "Saint-Avit-de-Soulège",
+     "lon": 0.12,
+     "lat": 44.81
+    },
+    {
+     "nom": "Créon",
+     "lon": -0.35,
+     "lat": 44.77
+    },
+    {
+     "nom": "Sauveterre-de-Guyenne",
+     "lon": -0.08,
+     "lat": 44.69
+    },
+    {
+     "nom": "Pellegrue",
+     "lon": 0.09,
+     "lat": 44.74
+    },
+    {
+     "nom": "La Réole",
+     "lon": -0.04,
+     "lat": 44.58
+    }
+   ],
+   "polygone": [
+    [
+     -0.64,
+     45.09
+    ],
+    [
+     -0.55,
+     45.07
+    ],
+    [
+     -0.45,
+     45.03
+    ],
+    [
+     -0.35,
+     45.01
+    ],
+    [
+     -0.28,
+     45
+    ],
+    [
+     -0.2,
+     44.98
+    ],
+    [
+     -0.13,
+     45
+    ],
+    [
+     -0.07,
+     45
+    ],
+    [
+     -0.03,
+     44.98
+    ],
+    [
+     0,
+     44.96
+    ],
+    [
+     0.02,
+     44.93
+    ],
+    [
+     0.04,
+     44.91
+    ],
+    [
+     0.09,
+     44.9
+    ],
+    [
+     0.13,
+     44.89
+    ],
+    [
+     0.13,
+     44.85
+    ],
+    [
+     0.15,
+     44.81
+    ],
+    [
+     0.15,
+     44.75
+    ],
+    [
+     0.17,
+     44.7
+    ],
+    [
+     0.18,
+     44.64
+    ],
+    [
+     0.2,
+     44.59
+    ],
+    [
+     0.23,
+     44.53
+    ],
+    [
+     0.21,
+     44.52
+    ],
+    [
+     -0.05,
+     44.52
+    ],
+    [
+     -0.2,
+     44.55
+    ],
+    [
+     -0.45,
+     44.65
+    ],
+    [
+     -0.6,
+     44.8
+    ],
+    [
+     -0.6,
+     44.95
+    ],
+    [
+     -0.6,
+     45
+    ],
+    [
+     -0.62,
+     45.05
+    ],
+    [
+     -0.66,
+     45.09
+    ],
+    [
+     -0.64,
+     45.09
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Gascon",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    },
+    {
+     "titre": "E. Nowak, L'ensemble linguistique poitevin et saintongeais (gasconha)",
+     "url": "https://gasconha.com/spip.php?article55"
+    },
+    {
+     "titre": "Ch. Higounet, Gascogne (Encyclopædia Universalis)",
+     "url": "https://www.universalis.fr/encyclopedie/gascogne/"
+    },
+    {
+     "titre": "Wikipédia, Petite Gavacherie",
+     "url": "https://fr.wikipedia.org/wiki/Petite_Gavacherie"
+    },
+    {
+     "titre": "Gasconha, T. Merger, Le Bésaume agenais est-il gascon ? (2016)",
+     "url": "https://gasconha.com/spip.php?article1621"
+    }
+   ]
+  },
+  {
+   "id": "blayais-hors-domaine",
+   "description": "Le fichier fait remonter une pointe languedocienne jusqu'à 45,2° N à l'est de Blaye et garde du languedocien au nord de l'axe Bourg, Galgon, Lussac. Établi : le Blayais et la région de Coutras jusqu'à l'Isle appartiennent à la Grande Gavacherie, de langue d'oïl (Wikipédia Pays Gabay, Nowak). Retirer du domaine d'oc ce qui est au nord de l'axe. Saint-Denis-de-Pile, sur l'axe, reste indéterminé.",
+   "dialecte": "hors_domaine (oïl saintongeais)",
+   "operation": "retirer_du_domaine",
+   "statut": "a_appliquer",
+   "ordre": 3,
+   "villes": [
+    {
+     "nom": "Saint-Denis-de-Pile",
+     "lon": -0.18,
+     "lat": 44.99
+    }
+   ],
+   "polygone": [
+    [
+     -0.66,
+     45.1
+    ],
+    [
+     -0.64,
+     45.09
+    ],
+    [
+     -0.55,
+     45.07
+    ],
+    [
+     -0.45,
+     45.03
+    ],
+    [
+     -0.35,
+     45.01
+    ],
+    [
+     -0.28,
+     45
+    ],
+    [
+     -0.2,
+     44.98
+    ],
+    [
+     -0.13,
+     45
+    ],
+    [
+     -0.07,
+     45
+    ],
+    [
+     -0.07,
+     45.06
+    ],
+    [
+     -0.3,
+     45.06
+    ],
+    [
+     -0.37,
+     45.06
+    ],
+    [
+     -0.42,
+     45.12
+    ],
+    [
+     -0.5,
+     45.22
+    ],
+    [
+     -0.66,
+     45.22
+    ],
+    [
+     -0.66,
+     45.1
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipédia, Pays Gabay",
+     "url": "https://fr.wikipedia.org/wiki/Pays_Gabay"
+    },
+    {
+     "titre": "E. Nowak, L'ensemble linguistique poitevin et saintongeais (gasconha)",
+     "url": "https://gasconha.com/spip.php?article55"
+    },
+    {
+     "titre": "Wikipèdia occitana, Gascon",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    }
+   ]
+  },
+  {
+   "id": "petite-gavacherie",
+   "description": "Enclave saintongeaise (oïl) de 16 communes autour de Monségur, plus Saint-Géraud (Bourciez 1895 via Wikipédia ; Nowak) ; le fichier la met en languedocien. Creuser un trou hors domaine, entouré de gascon, touchant presque le languedocien du Pays de Duras à l'est. Contour redessiné d'après les coordonnées des communes. À appliquer après bordelais-rive-droite.",
+   "dialecte": "hors_domaine (oïl saintongeais)",
+   "operation": "retirer_du_domaine",
+   "statut": "a_appliquer",
+   "ordre": 4,
+   "villes": [
+    {
+     "nom": "Monségur",
+     "lon": 0.08,
+     "lat": 44.65
+    },
+    {
+     "nom": "Castelmoron-d'Albret",
+     "lon": -0.01,
+     "lat": 44.68
+    },
+    {
+     "nom": "Saint-Vivien-de-Monségur",
+     "lon": 0.12,
+     "lat": 44.62
+    },
+    {
+     "nom": "Taillecavat",
+     "lon": 0.16,
+     "lat": 44.65
+    },
+    {
+     "nom": "Saint-Géraud",
+     "lon": 0.16,
+     "lat": 44.62
+    }
+   ],
+   "polygone": [
+    [
+     -0.06,
+     44.69
+    ],
+    [
+     0.03,
+     44.71
+    ],
+    [
+     0.12,
+     44.7
+    ],
+    [
+     0.18,
+     44.66
+    ],
+    [
+     0.18,
+     44.61
+    ],
+    [
+     0.1,
+     44.57
+    ],
+    [
+     0.03,
+     44.58
+    ],
+    [
+     -0.03,
+     44.63
+    ],
+    [
+     -0.06,
+     44.69
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipédia, Petite Gavacherie",
+     "url": "https://fr.wikipedia.org/wiki/Petite_Gavacherie"
+    },
+    {
+     "titre": "E. Nowak, L'ensemble linguistique poitevin et saintongeais (gasconha)",
+     "url": "https://gasconha.com/spip.php?article55"
+    }
+   ]
+  },
+  {
+   "id": "garonnais-albret",
+   "description": "Le fichier met en languedocien la rive gauche du Lot-et-Garonne jusqu'à Nérac (limite à 0,00 à 0,09° de longitude entre 44,20 et 44,45° N) et la bande gasconne de rive droite. Établi : gascon garonnais à Marmande, Tonneins, Aiguillon, Port-Sainte-Marie (Wikipédia Tonneins) ; frontière à environ 10 km au nord de la Garonne avec avancée jusqu'à Clairac et Lafitte (gasconha, site militant) ; limite à Clermont-Dessous (Wikipèdia oc). Déduction non contestée : Albret, Casteljaloux, Nérac gascons. Seyches et Saint-Hilaire-de-Lusignan restent languedociens.",
+   "dialecte": "gas",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 2,
+   "villes": [
+    {
+     "nom": "Marmande",
+     "lon": 0.17,
+     "lat": 44.5
+    },
+    {
+     "nom": "Tonneins",
+     "lon": 0.31,
+     "lat": 44.39
+    },
+    {
+     "nom": "Aiguillon",
+     "lon": 0.34,
+     "lat": 44.3
+    },
+    {
+     "nom": "Clairac",
+     "lon": 0.39,
+     "lat": 44.37
+    },
+    {
+     "nom": "Lafitte-sur-Lot",
+     "lon": 0.43,
+     "lat": 44.36
+    },
+    {
+     "nom": "Port-Sainte-Marie",
+     "lon": 0.39,
+     "lat": 44.25
+    },
+    {
+     "nom": "Clermont-Dessous",
+     "lon": 0.45,
+     "lat": 44.25
+    },
+    {
+     "nom": "Casteljaloux",
+     "lon": 0.09,
+     "lat": 44.31
+    },
+    {
+     "nom": "Damazan",
+     "lon": 0.28,
+     "lat": 44.29
+    },
+    {
+     "nom": "Le Mas-d'Agenais",
+     "lon": 0.22,
+     "lat": 44.41
+    },
+    {
+     "nom": "Nérac",
+     "lon": 0.34,
+     "lat": 44.14
+    }
+   ],
+   "polygone": [
+    [
+     -0.05,
+     44.52
+    ],
+    [
+     0.21,
+     44.52
+    ],
+    [
+     0.23,
+     44.53
+    ],
+    [
+     0.29,
+     44.48
+    ],
+    [
+     0.35,
+     44.43
+    ],
+    [
+     0.41,
+     44.39
+    ],
+    [
+     0.46,
+     44.37
+    ],
+    [
+     0.47,
+     44.31
+    ],
+    [
+     0.49,
+     44.25
+    ],
+    [
+     0.45,
+     44.15
+    ],
+    [
+     0.48,
+     44.05
+    ],
+    [
+     0.26,
+     44.08
+    ],
+    [
+     0.05,
+     44.15
+    ],
+    [
+     -0.05,
+     44.3
+    ],
+    [
+     -0.08,
+     44.45
+    ],
+    [
+     -0.05,
+     44.52
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipédia, Tonneins",
+     "url": "https://fr.wikipedia.org/wiki/Tonneins"
+    },
+    {
+     "titre": "Gasconha, T. Merger, Le Bésaume agenais est-il gascon ? (2016)",
+     "url": "https://gasconha.com/spip.php?article1621"
+    },
+    {
+     "titre": "Gasconha, Port-Sainte-Marie, rive droite gasconne",
+     "url": "https://www.gasconha.com/locs/spip.php?gis2834"
+    },
+    {
+     "titre": "Wikipèdia occitana, Gascon",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    }
+   ]
+  },
+  {
+   "id": "brulhois",
+   "description": "Le fichier met le Brulhois oriental en languedocien (seul Astaffort est gascon ; limite à 0,48° à 44,10° N). Établi : Layrac, Caudecoste, Dunes, Donzac, Auvillar dans un Brulhois de tradition gasconne, zone de transition (Wikipédia Brulhois) ; au nord de Toulouse, limite proche de la Garonne (Bec 1995 via Wikipédia). Ramener la limite sur le fleuve jusqu'à l'aval d'Auvillar. Agen et Valence-d'Agen restent languedociens.",
+   "dialecte": "gas",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 2,
+   "villes": [
+    {
+     "nom": "Layrac",
+     "lon": 0.66,
+     "lat": 44.13
+    },
+    {
+     "nom": "Caudecoste",
+     "lon": 0.74,
+     "lat": 44.11
+    },
+    {
+     "nom": "Dunes",
+     "lon": 0.77,
+     "lat": 44.09
+    },
+    {
+     "nom": "Donzac",
+     "lon": 0.82,
+     "lat": 44.1
+    },
+    {
+     "nom": "Auvillar",
+     "lon": 0.89,
+     "lat": 44.07
+    }
+   ],
+   "polygone": [
+    [
+     0.49,
+     44.25
+    ],
+    [
+     0.55,
+     44.22
+    ],
+    [
+     0.61,
+     44.19
+    ],
+    [
+     0.65,
+     44.15
+    ],
+    [
+     0.72,
+     44.14
+    ],
+    [
+     0.8,
+     44.12
+    ],
+    [
+     0.88,
+     44.09
+    ],
+    [
+     0.93,
+     44.08
+    ],
+    [
+     0.91,
+     44.04
+    ],
+    [
+     0.9,
+     44
+    ],
+    [
+     0.8,
+     44
+    ],
+    [
+     0.71,
+     44.03
+    ],
+    [
+     0.48,
+     44.05
+    ],
+    [
+     0.45,
+     44.15
+    ],
+    [
+     0.49,
+     44.25
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipédia, Brulhois",
+     "url": "https://fr.wikipedia.org/wiki/Brulhois"
+    },
+    {
+     "titre": "Wikipédia, Aquitano-pyrénéen (d'après Bec 1995)",
+     "url": "https://fr.wikipedia.org/wiki/Aquitano-pyr%C3%A9n%C3%A9en"
+    }
+   ]
+  },
+  {
+   "id": "lomagne-garonne",
+   "description": "Le fichier met en languedocien Beaumont-de-Lomagne, Aucamville, Grenade et Merville (limite à 0,99° à 43,80° N, 1,07° à 43,75° N). Établi : en Tarn-et-Garonne, la limite suit la rive gauche à quelques kilomètres et le gascon touche le fleuve à Aucamville (Wikipèdia oc) ; coteaux de Lomagne gascons, seules les plaines basses passées au languedocien (Dupuy). Déduction : Beaumont (indice du nom seulement), Grenade et Merville (aucune source directe). Aucamville, sur l'axe, sera au milieu du dégradé. Les plaines du nord (Asques, Garganvillar, Saint-Sardos) restent languedociennes.",
+   "dialecte": "gas",
+   "operation": "reattribuer",
+   "statut": "a_trancher",
+   "ordre": 2,
+   "villes": [
+    {
+     "nom": "Beaumont-de-Lomagne",
+     "lon": 0.99,
+     "lat": 43.88
+    },
+    {
+     "nom": "Grenade",
+     "lon": 1.29,
+     "lat": 43.77
+    },
+    {
+     "nom": "Merville",
+     "lon": 1.3,
+     "lat": 43.72
+    }
+   ],
+   "polygone": [
+    [
+     0.9,
+     44
+    ],
+    [
+     0.92,
+     43.95
+    ],
+    [
+     0.98,
+     43.92
+    ],
+    [
+     1.04,
+     43.9
+    ],
+    [
+     1.1,
+     43.87
+    ],
+    [
+     1.17,
+     43.83
+    ],
+    [
+     1.23,
+     43.79
+    ],
+    [
+     1.3,
+     43.77
+    ],
+    [
+     1.34,
+     43.74
+    ],
+    [
+     1.37,
+     43.7
+    ],
+    [
+     1.38,
+     43.68
+    ],
+    [
+     1.2,
+     43.69
+    ],
+    [
+     1.07,
+     43.74
+    ],
+    [
+     0.99,
+     43.8
+    ],
+    [
+     0.95,
+     43.85
+    ],
+    [
+     0.92,
+     43.9
+    ],
+    [
+     0.87,
+     43.95
+    ],
+    [
+     0.8,
+     44
+    ],
+    [
+     0.9,
+     44
+    ]
+   ],
+   "confiance": "faible",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Gascon (Tarn e Garona, Aucamvila)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    },
+    {
+     "titre": "Gasconha, A. Dupuy, En Lomagne, l'arrivée du languedocien par la plaine",
+     "url": "https://www.gasconha.com/spip.php?article95"
+    }
+   ]
+  },
+  {
+   "id": "toulouse-ouest",
+   "description": "Le fichier coupe Colomiers et met en languedocien Saint-Martin-du-Touch, Saint-Simon et Blagnac. Établi : le gascon contourne Toulouse par l'ouest, Saint-Martin-du-Touch et Saint-Simon sont gascons (Wikipèdia oc) ; Colomiers, Tournefeuille, Muret gascons (Wikipédia). Blagnac : aucune source, placé côté gascon par l'axe (déduction). Décaler de 3 à 5 km vers l'est, jusqu'à la Garonne ; Toulouse reste languedocienne.",
+   "dialecte": "gas",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 2,
+   "villes": [
+    {
+     "nom": "Colomiers",
+     "lon": 1.34,
+     "lat": 43.61
+    },
+    {
+     "nom": "Saint-Martin-du-Touch (Toulouse)",
+     "lon": 1.37,
+     "lat": 43.6
+    },
+    {
+     "nom": "Saint-Simon (Toulouse)",
+     "lon": 1.38,
+     "lat": 43.56
+    },
+    {
+     "nom": "Blagnac",
+     "lon": 1.38,
+     "lat": 43.64
+    }
+   ],
+   "polygone": [
+    [
+     1.38,
+     43.68
+    ],
+    [
+     1.39,
+     43.66
+    ],
+    [
+     1.39,
+     43.62
+    ],
+    [
+     1.4,
+     43.57
+    ],
+    [
+     1.4,
+     43.53
+    ],
+    [
+     1.36,
+     43.51
+    ],
+    [
+     1.33,
+     43.56
+    ],
+    [
+     1.3,
+     43.62
+    ],
+    [
+     1.27,
+     43.67
+    ],
+    [
+     1.2,
+     43.69
+    ],
+    [
+     1.38,
+     43.68
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Gascon (Sent Martin de Toish, Sent Simon)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    },
+    {
+     "titre": "Wikipédia, Colomiers",
+     "url": "https://fr.wikipedia.org/wiki/Colomiers"
+    },
+    {
+     "titre": "Wikipédia, Tournefeuille",
+     "url": "https://fr.wikipedia.org/wiki/Tournefeuille"
+    }
+   ]
+  },
+  {
+   "id": "couserans-massat",
+   "description": "Le fichier met la limite vers 1,23 à 1,28° E entre 42,70 et 42,95° N : Biert, Massat, Le Port et Aulus y sont languedociens. Établi : le col de Port sépare le gascon à l'ouest du languedocien à l'est (Chevalier 1989 via Wikipédia) ; Couserans gascon avec le haut Salat (Wikipédia) ; parler de Massat hybride (Toulze 2023). Décaler de 10 à 15 km vers l'est, sur la ligne col de Port, port de Lers, crête Garbet / Vicdessos ; Saurat et le Vicdessos restent languedociens.",
+   "dialecte": "gas",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 2,
+   "villes": [
+    {
+     "nom": "Biert",
+     "lon": 1.31,
+     "lat": 42.89
+    },
+    {
+     "nom": "Massat",
+     "lon": 1.35,
+     "lat": 42.89
+    },
+    {
+     "nom": "Aulus-les-Bains",
+     "lon": 1.34,
+     "lat": 42.79
+    }
+   ],
+   "polygone": [
+    [
+     1.24,
+     43
+    ],
+    [
+     1.29,
+     43
+    ],
+    [
+     1.36,
+     42.95
+    ],
+    [
+     1.45,
+     42.9
+    ],
+    [
+     1.43,
+     42.85
+    ],
+    [
+     1.41,
+     42.81
+    ],
+    [
+     1.38,
+     42.75
+    ],
+    [
+     1.36,
+     42.71
+    ],
+    [
+     1.37,
+     42.66
+    ],
+    [
+     1.25,
+     42.67
+    ],
+    [
+     1.25,
+     42.8
+    ],
+    [
+     1.22,
+     42.95
+    ],
+    [
+     1.24,
+     43
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipédia, Col de Port",
+     "url": "https://fr.wikipedia.org/wiki/Col_de_Port"
+    },
+    {
+     "titre": "Wikipédia, Couserans",
+     "url": "https://fr.wikipedia.org/wiki/Couserans"
+    },
+    {
+     "titre": "Lexilogos, dictionnaires gascons (R. Toulze, parler biertois, 2023)",
+     "url": "https://www.lexilogos.com/gascon_dictionnaire.htm"
+    }
+   ]
+  },
+  {
+   "id": "perigord-ouest",
+   "description": "À l'ouest de 0,2° E, le fichier fait passer la limite limousin / languedocien vers 45,03 à 45,08° N, 8 à 12 km trop au nord, et intercale un coin languedocien entre gascon et limousin. Établi : limousin au nord d'une ligne qui part de Montazeau (Wikipédia Dordogne) ; canton de Villefranche-de-Lonchat traversé par la limite (Wikipèdia oc) ; gascon au contact du limousin entre Tayac et Les Salles (Wikipèdia oc, source unique). Déduction : le limousin descend jusqu'au point de rencontre des trois dialectes (0,04 ; 44,91).",
+   "dialecte": "lem",
+   "operation": "reattribuer",
+   "statut": "a_trancher",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Villefranche-de-Lonchat",
+     "lon": 0.05,
+     "lat": 44.96
+    }
+   ],
+   "polygone": [
+    [
+     -0.03,
+     44.98
+    ],
+    [
+     -0.07,
+     45
+    ],
+    [
+     -0.07,
+     45.06
+    ],
+    [
+     -0.02,
+     45.09
+    ],
+    [
+     0.07,
+     45.07
+    ],
+    [
+     0.23,
+     44.98
+    ],
+    [
+     0.33,
+     44.96
+    ],
+    [
+     0.3,
+     44.94
+    ],
+    [
+     0.08,
+     44.93
+    ],
+    [
+     0.04,
+     44.91
+    ],
+    [
+     0.02,
+     44.93
+    ],
+    [
+     0,
+     44.96
+    ],
+    [
+     -0.03,
+     44.98
+    ]
+   ],
+   "confiance": "faible",
+   "sources": [
+    {
+     "titre": "Wikipédia, Dordogne (ligne de Montazeau à Nadaillac)",
+     "url": "https://fr.wikipedia.org/wiki/Dordogne_(département)"
+    },
+    {
+     "titre": "Wikipèdia occitana, Lemosin (dialècte)",
+     "url": "https://oc.wikipedia.org/wiki/Lemosin_(dialècte)"
+    },
+    {
+     "titre": "Wikipèdia occitana, Gascon (Taiac, Las Salas)",
+     "url": "https://oc.wikipedia.org/wiki/Gascon"
+    }
+   ]
+  },
+  {
+   "id": "eyzies-bugue",
+   "description": "Entre Villamblard et Sarlat, le fichier fait passer la limite limousin / languedocien 3 à 5 km au sud de l'axe : Les Eyzies et Le Bugue y sont limousins. Établi : la limite passe un peu au-dessus de Salignac et des Eyzies (Wikipèdia oc). Recaler la limite sur l'axe ; Le Bugue tombera au milieu du dégradé.",
+   "dialecte": "lan",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Les Eyzies",
+     "lon": 1.01,
+     "lat": 44.94
+    },
+    {
+     "nom": "Le Bugue",
+     "lon": 0.93,
+     "lat": 44.92
+    }
+   ],
+   "polygone": [
+    [
+     0.38,
+     44.93
+    ],
+    [
+     0.5,
+     44.95
+    ],
+    [
+     0.72,
+     44.96
+    ],
+    [
+     0.93,
+     44.95
+    ],
+    [
+     1.05,
+     44.96
+    ],
+    [
+     1.2,
+     44.98
+    ],
+    [
+     1.22,
+     44.96
+    ],
+    [
+     1.05,
+     44.925
+    ],
+    [
+     0.95,
+     44.91
+    ],
+    [
+     0.7,
+     44.9
+    ],
+    [
+     0.5,
+     44.91
+    ],
+    [
+     0.38,
+     44.925
+    ],
+    [
+     0.38,
+     44.93
+    ]
+   ],
+   "confiance": "faible",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Lemosin (dialècte)",
+     "url": "https://oc.wikipedia.org/wiki/Lemosin_(dialècte)"
+    },
+    {
+     "titre": "Wikipédia, Dordogne",
+     "url": "https://fr.wikipedia.org/wiki/Dordogne_(département)"
+    }
+   ]
+  },
+  {
+   "id": "carlades-pierrefort",
+   "description": "Le fichier met en auvergnat l'ancien canton de Pierrefort et la haute vallée de la Cère (Thiézac, Saint-Jacques-des-Blats, Le Lioran). Établi (Wikipédia seulement) : l'aurillacois, languedocien, couvre l'arrondissement d'Aurillac et l'ancien canton de Pierrefort ; Dauzat notait un contraste net entre le nord auvergnat et le sud languedocien du Cantal. Repousser la limite de 5 à 10 km vers l'est et le nord, par le Lioran puis le bord est de l'ancien canton de Pierrefort, vers la Truyère. Murat et Chaudes-Aigues restent auvergnats.",
+   "dialecte": "lan",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Pierrefort",
+     "lon": 2.84,
+     "lat": 44.92
+    },
+    {
+     "nom": "Thiézac",
+     "lon": 2.67,
+     "lat": 45.02
+    },
+    {
+     "nom": "Saint-Jacques-des-Blats",
+     "lon": 2.71,
+     "lat": 45.05
+    }
+   ],
+   "polygone": [
+    [
+     2.45,
+     45.1
+    ],
+    [
+     2.62,
+     45.11
+    ],
+    [
+     2.75,
+     45.09
+    ],
+    [
+     2.82,
+     45.03
+    ],
+    [
+     2.9,
+     44.95
+    ],
+    [
+     2.93,
+     44.86
+    ],
+    [
+     3,
+     44.76
+    ],
+    [
+     2.88,
+     44.75
+    ],
+    [
+     2.85,
+     44.8
+    ],
+    [
+     2.79,
+     44.85
+    ],
+    [
+     2.75,
+     44.9
+    ],
+    [
+     2.71,
+     44.95
+    ],
+    [
+     2.64,
+     45
+    ],
+    [
+     2.52,
+     45.05
+    ],
+    [
+     2.44,
+     45.08
+    ],
+    [
+     2.45,
+     45.1
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipédia, Aurillacois (dialecte)",
+     "url": "https://fr.wikipedia.org/wiki/Aurillacois_(dialecte)"
+    },
+    {
+     "titre": "Wikipèdia occitana, Auvernhat",
+     "url": "https://oc.wikipedia.org/wiki/Auvernhat"
+    }
+   ]
+  },
+  {
+   "id": "creuse-correze-est",
+   "description": "Le fichier met toute la Creuse et la Corrèze en limousin jusqu'au Puy-de-Dôme (limite à 2,45 à 2,69° E ; seul Bort est auvergnat). Sources contradictoires : petite partie auvergnate entre Bort et Auzances, Ussel contesté, bascule vers l'auvergnat à l'est de Bourganeuf (Wikipèdia oc) ; Ussel, Neuvic, Bort auvergnats (Wikipédia Corrèze) ; tiers sud-est de la Creuse souvent auvergnat (Wikipédia Auvergnat) ; limousin seul (Wikipédia Creuse). Proposition : poser la limite sur l'axe (Aubusson, Felletin, Ussel, Mauriac au milieu d'un dégradé de 35 km ; Crocq et Auzances côté auvergnat). Mauriac ne doit pas devenir auvergnat franc.",
+   "dialecte": "auv",
+   "operation": "reattribuer",
+   "statut": "a_trancher",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Crocq",
+     "lon": 2.37,
+     "lat": 45.86
+    },
+    {
+     "nom": "Auzances",
+     "lon": 2.5,
+     "lat": 46.03
+    }
+   ],
+   "polygone": [
+    [
+     2.17,
+     46.12
+    ],
+    [
+     2.17,
+     45.97
+    ],
+    [
+     2.22,
+     45.82
+    ],
+    [
+     2.28,
+     45.66
+    ],
+    [
+     2.33,
+     45.5
+    ],
+    [
+     2.35,
+     45.36
+    ],
+    [
+     2.31,
+     45.22
+    ],
+    [
+     2.25,
+     45.08
+    ],
+    [
+     2.44,
+     45.09
+    ],
+    [
+     2.46,
+     45.2
+    ],
+    [
+     2.5,
+     45.35
+    ],
+    [
+     2.47,
+     45.5
+    ],
+    [
+     2.55,
+     45.6
+    ],
+    [
+     2.61,
+     45.8
+    ],
+    [
+     2.65,
+     45.95
+    ],
+    [
+     2.69,
+     46.05
+    ],
+    [
+     2.65,
+     46.12
+    ],
+    [
+     2.17,
+     46.12
+    ]
+   ],
+   "confiance": "faible",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Lemosin (dialècte)",
+     "url": "https://oc.wikipedia.org/wiki/Lemosin_(dialècte)"
+    },
+    {
+     "titre": "Wikipédia, Corrèze",
+     "url": "https://fr.wikipedia.org/wiki/Corrèze_(département)"
+    },
+    {
+     "titre": "Wikipédia, Auvergnat",
+     "url": "https://fr.wikipedia.org/wiki/Auvergnat"
+    },
+    {
+     "titre": "Wikipédia, Creuse (position contraire)",
+     "url": "https://fr.wikipedia.org/wiki/Creuse_(département)"
+    }
+   ]
+  },
+  {
+   "id": "velay-vivarais-nord",
+   "description": "Erreur majeure. Le fichier met en auvergnat le Velay oriental et presque tout le nord de l'Ardèche : Yssingeaux, Monistrol, Tence, Le Chambon, Saint-Agrève, Le Cheylard, Lamastre, Privas, et Saint-Bonnet-le-Château dans la Loire. Établi : vivaro-alpin dans la moitié nord de l'Ardèche (Boutières, Haut-Vivarais) et dans la frange nord-est de la Haute-Loire jusqu'à la Loire au plus, ainsi qu'autour de Saint-Bonnet-le-Château (Garnier 2020 ; Wikipédia fr et oc). Débattu : Bonnaud range l'Yssingelais en auvergnat. Le Puy et la Montagne ardéchoise restent auvergnats. Bord ouest sur l'axe du Velay, bord sud sur l'axe Boutières-Coiron, bord est débordant sur le vivaro-alpin existant.",
+   "dialecte": "viv",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Saint-Bonnet-le-Château",
+     "lon": 4.07,
+     "lat": 45.42
+    },
+    {
+     "nom": "Monistrol-sur-Loire",
+     "lon": 4.17,
+     "lat": 45.29
+    },
+    {
+     "nom": "Yssingeaux",
+     "lon": 4.12,
+     "lat": 45.14
+    },
+    {
+     "nom": "Tence",
+     "lon": 4.29,
+     "lat": 45.12
+    },
+    {
+     "nom": "Le Chambon-sur-Lignon",
+     "lon": 4.3,
+     "lat": 45.06
+    },
+    {
+     "nom": "Fay-sur-Lignon",
+     "lon": 4.23,
+     "lat": 44.99
+    },
+    {
+     "nom": "Saint-Agrève",
+     "lon": 4.4,
+     "lat": 45.01
+    },
+    {
+     "nom": "Le Cheylard",
+     "lon": 4.42,
+     "lat": 44.91
+    },
+    {
+     "nom": "Lamastre",
+     "lon": 4.58,
+     "lat": 44.99
+    },
+    {
+     "nom": "Privas",
+     "lon": 4.6,
+     "lat": 44.74
+    }
+   ],
+   "polygone": [
+    [
+     4.03,
+     45.47
+    ],
+    [
+     4.09,
+     45.38
+    ],
+    [
+     4.12,
+     45.29
+    ],
+    [
+     4.07,
+     45.2
+    ],
+    [
+     4.09,
+     45.1
+    ],
+    [
+     4.14,
+     45.01
+    ],
+    [
+     4.19,
+     44.92
+    ],
+    [
+     4.22,
+     44.84
+    ],
+    [
+     4.35,
+     44.81
+    ],
+    [
+     4.5,
+     44.71
+    ],
+    [
+     4.56,
+     44.66
+    ],
+    [
+     4.63,
+     44.62
+    ],
+    [
+     4.7,
+     44.59
+    ],
+    [
+     4.72,
+     44.585
+    ],
+    [
+     4.8,
+     44.6
+    ],
+    [
+     4.85,
+     44.85
+    ],
+    [
+     4.85,
+     45.1
+    ],
+    [
+     4.6,
+     45.2
+    ],
+    [
+     4.35,
+     45.35
+    ],
+    [
+     4.2,
+     45.48
+    ],
+    [
+     4.03,
+     45.47
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Le vivaro-alpin : progrès d'une définition, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "Wikipédia, Vivaro-alpin",
+     "url": "https://fr.wikipedia.org/wiki/Vivaro-alpin"
+    },
+    {
+     "titre": "Wikipèdia occitana, Vivaroaupenc",
+     "url": "https://oc.wikipedia.org/wiki/Vivaroaupenc"
+    },
+    {
+     "titre": "Wikipédia, Auvergnat (position de Bonnaud)",
+     "url": "https://fr.wikipedia.org/wiki/Auvergnat"
+    }
+   ]
+  },
+  {
+   "id": "bas-vivarais",
+   "description": "Erreur majeure. Le fichier met en auvergnat tout le bassin de l'Ardèche : Aubenas, Vals, Largentière, Les Vans, Vallon-Pont-d'Arc, Villeneuve-de-Berg, Viviers, et les pentes cévenoles (Burzet, Thueyts, Jaujac). Établi : le bas-vivarois, languedocien, occupe la moitié sud de l'Ardèche (BnF, Wikipédia fr et oc, Sumien via Wikipedia en) ; limite du Mézenc à Rochemaure par la crête du Coiron (Wikipédia, sans référence). Déduction : la Montagne ardéchoise reste auvergnate et la limite suit le rebord du plateau. Bord nord sur les axes Montagne ardéchoise et Boutières-Coiron, bord est sur le Rhône puis l'axe languedocien / provençal.",
+   "dialecte": "lan",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Aubenas",
+     "lon": 4.39,
+     "lat": 44.62
+    },
+    {
+     "nom": "Vals-les-Bains",
+     "lon": 4.37,
+     "lat": 44.67
+    },
+    {
+     "nom": "Largentière",
+     "lon": 4.29,
+     "lat": 44.54
+    },
+    {
+     "nom": "Les Vans",
+     "lon": 4.13,
+     "lat": 44.4
+    },
+    {
+     "nom": "Vallon-Pont-d'Arc",
+     "lon": 4.39,
+     "lat": 44.41
+    },
+    {
+     "nom": "Villeneuve-de-Berg",
+     "lon": 4.5,
+     "lat": 44.56
+    },
+    {
+     "nom": "Burzet",
+     "lon": 4.25,
+     "lat": 44.74
+    },
+    {
+     "nom": "Thueyts",
+     "lon": 4.22,
+     "lat": 44.68
+    },
+    {
+     "nom": "Jaujac",
+     "lon": 4.25,
+     "lat": 44.64
+    },
+    {
+     "nom": "Viviers",
+     "lon": 4.69,
+     "lat": 44.48
+    }
+   ],
+   "polygone": [
+    [
+     3.92,
+     44.6
+    ],
+    [
+     3.99,
+     44.62
+    ],
+    [
+     4.07,
+     44.66
+    ],
+    [
+     4.13,
+     44.72
+    ],
+    [
+     4.18,
+     44.79
+    ],
+    [
+     4.22,
+     44.84
+    ],
+    [
+     4.35,
+     44.81
+    ],
+    [
+     4.5,
+     44.71
+    ],
+    [
+     4.56,
+     44.66
+    ],
+    [
+     4.63,
+     44.62
+    ],
+    [
+     4.7,
+     44.59
+    ],
+    [
+     4.72,
+     44.585
+    ],
+    [
+     4.72,
+     44.45
+    ],
+    [
+     4.7,
+     44.44
+    ],
+    [
+     4.62,
+     44.38
+    ],
+    [
+     4.55,
+     44.3
+    ],
+    [
+     4.45,
+     44.22
+    ],
+    [
+     4.33,
+     44.14
+    ],
+    [
+     4.25,
+     44.1
+    ],
+    [
+     4.2,
+     44.2
+    ],
+    [
+     3.97,
+     44.3
+    ],
+    [
+     3.95,
+     44.45
+    ],
+    [
+     3.92,
+     44.6
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "BnF, notice RAMEAU Bas-vivarois (dialecte)",
+     "url": "https://catalogue.bnf.fr/ark:/12148/cb18267473v"
+    },
+    {
+     "titre": "Wikipédia, Bas-vivarois",
+     "url": "https://fr.wikipedia.org/wiki/Bas-vivarois"
+    },
+    {
+     "titre": "Wikipédia, Languedocien",
+     "url": "https://fr.wikipedia.org/wiki/Languedocien"
+    },
+    {
+     "titre": "Wikipedia (en), Languedocien dialect (classement de Sumien)",
+     "url": "https://en.wikipedia.org/wiki/Languedocien_dialect"
+    },
+    {
+     "titre": "Wikipédia, Auvergnat (nord-ouest de l'Ardèche)",
+     "url": "https://fr.wikipedia.org/wiki/Auvergnat"
+    }
+   ]
+  },
+  {
+   "id": "ardeche-rhodanienne",
+   "description": "Le fichier met Bourg-Saint-Andéol et Pont-Saint-Esprit en auvergnat, ce qui est impossible. Établi : transition provençal / languedocien à l'extrême sud-est de l'Ardèche, est du Gard provençal (Wikipèdia oc). Aucune source ne classe ces communes : les placer côté provençal de l'axe, au milieu d'un dégradé de 20 km (déduction).",
+   "dialecte": "pro",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Bourg-Saint-Andéol",
+     "lon": 4.64,
+     "lat": 44.37
+    },
+    {
+     "nom": "Pont-Saint-Esprit",
+     "lon": 4.65,
+     "lat": 44.26
+    }
+   ],
+   "polygone": [
+    [
+     4.69,
+     44.44
+    ],
+    [
+     4.68,
+     44.36
+    ],
+    [
+     4.68,
+     44.25
+    ],
+    [
+     4.67,
+     44.18
+    ],
+    [
+     4.5,
+     44.18
+    ],
+    [
+     4.45,
+     44.22
+    ],
+    [
+     4.55,
+     44.3
+    ],
+    [
+     4.62,
+     44.38
+    ],
+    [
+     4.69,
+     44.44
+    ]
+   ],
+   "confiance": "faible",
+   "sources": [
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Provençau"
+    },
+    {
+     "titre": "Wikipédia, Languedocien",
+     "url": "https://fr.wikipedia.org/wiki/Languedocien"
+    }
+   ]
+  },
+  {
+   "id": "vidourle",
+   "description": "Le fichier fait passer la limite languedocien / provençal à 4,04 à 4,10° E, à l'ouest du Vidourle : Sommières et Lunel y sont provençaux. Établi : la limite réelle est plus à l'est que le Vidourle, la Vaunage étant la zone de rencontre (fonds Revèst, Occitanica) ; transition à l'ouest de Nîmes (Wikipèdia oc). Décaler de 5 à 10 km vers l'est ; Nîmes et la Vaunage restent provençales.",
+   "dialecte": "lan",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Sommières",
+     "lon": 4.09,
+     "lat": 43.78
+    },
+    {
+     "nom": "Lunel",
+     "lon": 4.14,
+     "lat": 43.68
+    }
+   ],
+   "polygone": [
+    [
+     4.14,
+     44
+    ],
+    [
+     4.12,
+     43.95
+    ],
+    [
+     4.13,
+     43.86
+    ],
+    [
+     4.15,
+     43.78
+    ],
+    [
+     4.19,
+     43.7
+    ],
+    [
+     4.18,
+     43.61
+    ],
+    [
+     4.15,
+     43.53
+    ],
+    [
+     4.05,
+     43.52
+    ],
+    [
+     4.07,
+     43.58
+    ],
+    [
+     4.08,
+     43.65
+    ],
+    [
+     4.06,
+     43.72
+    ],
+    [
+     4.02,
+     43.8
+    ],
+    [
+     4.06,
+     43.86
+    ],
+    [
+     4.08,
+     43.93
+    ],
+    [
+     4.1,
+     43.99
+    ],
+    [
+     4.14,
+     44
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Occitanica, Fonds Laurenç Revèst, Enquêtes linguistiques occitanes",
+     "url": "https://www.occitanica.eu/items/show/61296"
+    },
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Provençau"
+    }
+   ]
+  },
+  {
+   "id": "baronnies-sud",
+   "description": "Le fichier met le sud des Baronnies en vivaro-alpin (Buis, Séderon ; limite à 44,15 à 44,22° N entre 5,2 et 5,55° E) et dessine des marches d'escalier entre Donzère et Nyons. Débattu : Garnier 2020 ne compte que le nord des Baronnies ; Morin 2017 met la limite sur celle de la Drôme et du Vaucluse. Proposition de compromis (déduction) : poser la limite sur l'axe unifié, Buis et Séderon au milieu d'un dégradé de 25 km. Recaler aussi la limite sur l'axe entre Donzère et Nyons (écart de 0 à 3 km), ce qui efface l'escalier.",
+   "dialecte": "pro",
+   "operation": "reattribuer",
+   "statut": "a_trancher",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Buis-les-Baronnies",
+     "lon": 5.27,
+     "lat": 44.27
+    },
+    {
+     "nom": "Mollans-sur-Ouvèze",
+     "lon": 5.19,
+     "lat": 44.24
+    }
+   ],
+   "polygone": [
+    [
+     5.07,
+     44.34
+    ],
+    [
+     5.18,
+     44.31
+    ],
+    [
+     5.3,
+     44.28
+    ],
+    [
+     5.42,
+     44.24
+    ],
+    [
+     5.55,
+     44.2
+    ],
+    [
+     5.65,
+     44.19
+    ],
+    [
+     5.6,
+     44.14
+    ],
+    [
+     5.45,
+     44.12
+    ],
+    [
+     5.3,
+     44.17
+    ],
+    [
+     5.2,
+     44.19
+    ],
+    [
+     5.15,
+     44.25
+    ],
+    [
+     5.1,
+     44.31
+    ],
+    [
+     5.07,
+     44.34
+    ]
+   ],
+   "confiance": "faible",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "L. Morin, Paysage linguistique drômois, Géolinguistique 17 (2017)",
+     "url": "https://journals.openedition.org/geolinguistique/395"
+    },
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Proven%C3%A7au"
+    }
+   ]
+  },
+  {
+   "id": "digne-annot",
+   "description": "Le fichier fait passer la limite provençal / vivaro-alpin vers 44,09 à 44,13° N entre Digne et Entrevaux : Digne, Annot et Entrevaux y sont provençaux. Établi : région de Digne = frange de transition rattachée d'habitude au vivaro-alpin (Wikipèdia oc, d'après Bec et Ronjat) ; nord des Préalpes de Digne et haut Verdon vivaro-alpins (Garnier 2020) ; gavot maritime jusqu'au pays d'Annot (Revèst, seule source). Poser la limite sur l'axe, Digne au milieu d'un dégradé de 35 km ; Castellane et Barrême restent provençaux.",
+   "dialecte": "viv",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Digne-les-Bains",
+     "lon": 6.24,
+     "lat": 44.09
+    },
+    {
+     "nom": "Annot",
+     "lon": 6.67,
+     "lat": 43.97
+    },
+    {
+     "nom": "Entrevaux",
+     "lon": 6.81,
+     "lat": 43.95
+    }
+   ],
+   "polygone": [
+    [
+     6.05,
+     44.11
+    ],
+    [
+     6.24,
+     44.07
+    ],
+    [
+     6.4,
+     44.02
+    ],
+    [
+     6.55,
+     43.97
+    ],
+    [
+     6.7,
+     43.93
+    ],
+    [
+     6.82,
+     43.91
+    ],
+    [
+     6.82,
+     44.11
+    ],
+    [
+     6.7,
+     44.11
+    ],
+    [
+     6.55,
+     44.11
+    ],
+    [
+     6.4,
+     44.14
+    ],
+    [
+     6.24,
+     44.15
+    ],
+    [
+     6.05,
+     44.13
+    ],
+    [
+     6.05,
+     44.11
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Proven%C3%A7au"
+    },
+    {
+     "titre": "Occitanica, fonds Laurenç Revèst",
+     "url": "https://www.occitanica.eu/items/show/61296"
+    }
+   ]
+  },
+  {
+   "id": "vesubie-tinee",
+   "description": "Le fichier met en provençal la Vésubie (Saint-Martin-Vésubie, Roquebillière, Lantosque, Utelle), la moyenne Tinée, Beuil, Puget-Théniers, l'Estéron et les Paillons. Établi : Vésubie, Tinée et haut Var vivaro-alpins (Garnier 2020 et Revèst, d'accord) ; Paillons et Estéron gavots selon Revèst seul. Descendre la limite jusqu'à l'axe : la Vésubie devient vivaro-alpine franche, les Paillons tombent au milieu du dégradé de 25 km, la côte niçoise reste provençale.",
+   "dialecte": "viv",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Saint-Martin-Vésubie",
+     "lon": 7.25,
+     "lat": 44.07
+    },
+    {
+     "nom": "Roquebillière",
+     "lon": 7.31,
+     "lat": 44.01
+    },
+    {
+     "nom": "Lantosque",
+     "lon": 7.31,
+     "lat": 43.97
+    },
+    {
+     "nom": "Utelle",
+     "lon": 7.25,
+     "lat": 43.92
+    },
+    {
+     "nom": "Saint-Sauveur-sur-Tinée",
+     "lon": 7.11,
+     "lat": 44.08
+    },
+    {
+     "nom": "Beuil",
+     "lon": 6.99,
+     "lat": 44.09
+    },
+    {
+     "nom": "Puget-Théniers",
+     "lon": 6.89,
+     "lat": 43.96
+    },
+    {
+     "nom": "Lucéram",
+     "lon": 7.36,
+     "lat": 43.88
+    }
+   ],
+   "polygone": [
+    [
+     6.82,
+     43.91
+    ],
+    [
+     6.98,
+     43.88
+    ],
+    [
+     7.12,
+     43.86
+    ],
+    [
+     7.24,
+     43.86
+    ],
+    [
+     7.32,
+     43.83
+    ],
+    [
+     7.37,
+     43.79
+    ],
+    [
+     7.39,
+     43.78
+    ],
+    [
+     7.39,
+     44.06
+    ],
+    [
+     7.3,
+     44.08
+    ],
+    [
+     7.2,
+     44.14
+    ],
+    [
+     7.1,
+     44.15
+    ],
+    [
+     7,
+     44.12
+    ],
+    [
+     6.82,
+     44.11
+    ],
+    [
+     6.82,
+     43.91
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "Occitanica, fonds Laurenç Revèst (gavot maritime)",
+     "url": "https://www.occitanica.eu/items/show/61296"
+    }
+   ]
+  },
+  {
+   "id": "mentonnais",
+   "description": "Le fichier met le Mentonnais (Menton, Roquebrune, Castellar, Castillon, Sospel, Moulinet) en provençal pur. Établi : le mentonnais est un vivaro-alpin de transition vers le ligure (Wikipédia fr et en, d'après Dalbera 1984 ; Revèst). Le passer en vivaro-alpin ; le dégradé vers le ligure vient de la bande Roya. Monaco est traité à part.",
+   "dialecte": "viv",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Menton",
+     "lon": 7.5,
+     "lat": 43.78
+    },
+    {
+     "nom": "Roquebrune-Cap-Martin",
+     "lon": 7.46,
+     "lat": 43.76
+    },
+    {
+     "nom": "Castellar",
+     "lon": 7.51,
+     "lat": 43.8
+    },
+    {
+     "nom": "Castillon",
+     "lon": 7.46,
+     "lat": 43.84
+    },
+    {
+     "nom": "Sospel",
+     "lon": 7.45,
+     "lat": 43.88
+    },
+    {
+     "nom": "Moulinet",
+     "lon": 7.41,
+     "lat": 43.95
+    }
+   ],
+   "polygone": [
+    [
+     7.39,
+     44.06
+    ],
+    [
+     7.47,
+     44.04
+    ],
+    [
+     7.47,
+     43.93
+    ],
+    [
+     7.48,
+     43.87
+    ],
+    [
+     7.53,
+     43.81
+    ],
+    [
+     7.54,
+     43.78
+    ],
+    [
+     7.52,
+     43.76
+    ],
+    [
+     7.47,
+     43.74
+    ],
+    [
+     7.44,
+     43.745
+    ],
+    [
+     7.44,
+     43.752
+    ],
+    [
+     7.4,
+     43.76
+    ],
+    [
+     7.39,
+     43.8
+    ],
+    [
+     7.39,
+     44.06
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipédia, Mentonnais",
+     "url": "https://fr.wikipedia.org/wiki/Mentonnais"
+    },
+    {
+     "titre": "Wikipedia (en), Mentonasc dialect",
+     "url": "https://en.wikipedia.org/wiki/Mentonasc_dialect"
+    },
+    {
+     "titre": "Occitanica, fonds Laurenç Revèst",
+     "url": "https://www.occitanica.eu/items/show/61296"
+    }
+   ]
+  },
+  {
+   "id": "roya",
+   "description": "Le fichier met Breil, Saorge et Fontan en provençal, Tende en vivaro-alpin, La Brigue hors domaine. Établi : royasque et brigasque de structure ligure à traits occitans (Wikipédia fr et oc ; Forner et Toso via Wikipedia it ; Garnier), mais déclarés et revendiqués occitans. Proposition : hachures « parlers royasques, ligures à traits occitans », ni provençal ni vivaro-alpin plein ; La Brigue peut être ajoutée à la zone hachurée.",
+   "dialecte": "lig (hachures royasque)",
+   "operation": "reattribuer",
+   "statut": "a_trancher",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Breil-sur-Roya",
+     "lon": 7.51,
+     "lat": 43.94
+    },
+    {
+     "nom": "Saorge",
+     "lon": 7.55,
+     "lat": 43.99
+    },
+    {
+     "nom": "Fontan",
+     "lon": 7.55,
+     "lat": 44
+    },
+    {
+     "nom": "Tende",
+     "lon": 7.59,
+     "lat": 44.09
+    },
+    {
+     "nom": "La Brigue",
+     "lon": 7.62,
+     "lat": 44.06
+    }
+   ],
+   "polygone": [
+    [
+     7.47,
+     44.04
+    ],
+    [
+     7.52,
+     44.1
+    ],
+    [
+     7.6,
+     44.16
+    ],
+    [
+     7.7,
+     44.17
+    ],
+    [
+     7.72,
+     44.1
+    ],
+    [
+     7.68,
+     44.03
+    ],
+    [
+     7.6,
+     43.98
+    ],
+    [
+     7.56,
+     43.9
+    ],
+    [
+     7.52,
+     43.86
+    ],
+    [
+     7.48,
+     43.87
+    ],
+    [
+     7.47,
+     43.93
+    ],
+    [
+     7.47,
+     44.04
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipédia, Royasque",
+     "url": "https://fr.wikipedia.org/wiki/Royasque"
+    },
+    {
+     "titre": "Wikipèdia occitana, Roiasc",
+     "url": "https://oc.wikipedia.org/wiki/Roiasc"
+    },
+    {
+     "titre": "Wikipedia (it), Valli occitane (Forner et Toso)",
+     "url": "https://it.wikipedia.org/wiki/Valli_occitane"
+    },
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020), note sur le brigasque et le tendasque",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    }
+   ]
+  },
+  {
+   "id": "monaco",
+   "description": "Le fichier peint Monaco en provençal. Établi : le monégasque est un ligure occidental (Wikipédia fr) ; le niçois y est aussi en usage (Wikipèdia oc). Marquer une petite enclave ligure en hachures. Le polygone déborde un peu sur Beausoleil.",
+   "dialecte": "lig (hachures monégasque)",
+   "operation": "reattribuer",
+   "statut": "a_appliquer",
+   "ordre": 6,
+   "villes": [
+    {
+     "nom": "Monaco",
+     "lon": 7.42,
+     "lat": 43.74
+    }
+   ],
+   "polygone": [
+    [
+     7.405,
+     43.724
+    ],
+    [
+     7.44,
+     43.724
+    ],
+    [
+     7.44,
+     43.752
+    ],
+    [
+     7.405,
+     43.752
+    ],
+    [
+     7.405,
+     43.724
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipédia, Monégasque",
+     "url": "https://fr.wikipedia.org/wiki/Mon%C3%A9gasque"
+    },
+    {
+     "titre": "Wikipèdia occitana, Provençau",
+     "url": "https://oc.wikipedia.org/wiki/Proven%C3%A7au"
+    }
+   ]
+  },
+  {
+   "id": "isere-vercors-oisans",
+   "description": "Le fichier arrête l'occitan juste au nord de Mens et de Clelles (44,83° N) : Villard-de-Lans, Gresse-en-Vercors, Monestier-de-Clermont, Valbonnais et Venosc sont hors domaine. Établi : frontière avec l'arpitan au nord de Villard-de-Lans, Trièves, Beaumont, Valbonnais et Oisans occitans (Garnier 2020) ; frange occitane de Villard-de-Lans, Gresse, Cordéac, Valbonnais, Venosc (CIRDÒC) ; Valjouffrey en transition (Gasquet-Cyrus 2018). AJOUTER cette zone au domaine en vivaro-alpin (c'est la seule correction qui agrandit le domaine). Déduction : La Mure et Vif restent francoprovençaux.",
+   "dialecte": "viv",
+   "operation": "ajouter_au_domaine",
+   "statut": "a_appliquer",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Villard-de-Lans",
+     "lon": 5.55,
+     "lat": 45.07
+    },
+    {
+     "nom": "Gresse-en-Vercors",
+     "lon": 5.56,
+     "lat": 44.9
+    },
+    {
+     "nom": "Monestier-de-Clermont",
+     "lon": 5.63,
+     "lat": 44.92
+    },
+    {
+     "nom": "Cordéac",
+     "lon": 5.86,
+     "lat": 44.82
+    },
+    {
+     "nom": "Valbonnais",
+     "lon": 5.9,
+     "lat": 44.9
+    },
+    {
+     "nom": "Valjouffrey",
+     "lon": 6.03,
+     "lat": 44.87
+    },
+    {
+     "nom": "Venosc",
+     "lon": 6.12,
+     "lat": 45
+    }
+   ],
+   "polygone": [
+    [
+     5.3,
+     45.12
+    ],
+    [
+     5.5,
+     45.11
+    ],
+    [
+     5.62,
+     45.06
+    ],
+    [
+     5.68,
+     44.98
+    ],
+    [
+     5.72,
+     44.9
+    ],
+    [
+     5.8,
+     44.87
+    ],
+    [
+     5.9,
+     44.91
+    ],
+    [
+     6,
+     44.98
+    ],
+    [
+     6.08,
+     45.04
+    ],
+    [
+     6.25,
+     45.08
+    ],
+    [
+     6.22,
+     45.03
+    ],
+    [
+     6.15,
+     44.92
+    ],
+    [
+     6.08,
+     44.86
+    ],
+    [
+     6,
+     44.83
+    ],
+    [
+     5.8,
+     44.79
+    ],
+    [
+     5.6,
+     44.8
+    ],
+    [
+     5.5,
+     44.9
+    ],
+    [
+     5.4,
+     45
+    ],
+    [
+     5.3,
+     45.06
+    ],
+    [
+     5.3,
+     45.12
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    },
+    {
+     "titre": "CIRDÒC-Mediatèca occitana, Où parle-t-on occitan en Rhône-Alpes ?",
+     "url": "https://www.occitanica.eu/items/show/10721"
+    },
+    {
+     "titre": "M. Gasquet-Cyrus, Valjouffrey, ENS Éditions (2018)",
+     "url": "https://books.openedition.org/enseditions/8582"
+    }
+   ]
+  },
+  {
+   "id": "italie-loi-482",
+   "description": "Le bord est du fichier (contours OSM) englobe des communes occitanes seulement au sens de la loi italienne 482 de 1999 (Wikipedia it, troisième liste) : Luserna San Giovanni, Bricherasio, Paesana, Sanfront, Dronero, Caraglio, Borgo San Dalmazzo. Déduction : elles parlent piémontais. Option A : hachures légères « déclarée occitane ». Option B : les retirer du domaine. Venasca, Ostana, Torre Pellice, Monterosso Grana, Vernante, Limone (occitan attesté) restent dedans.",
+   "dialecte": "hors_domaine ou hachures « déclarée occitane »",
+   "operation": "retirer_du_domaine ou hachurer",
+   "statut": "a_trancher",
+   "ordre": 5,
+   "villes": [
+    {
+     "nom": "Luserna San Giovanni",
+     "lon": 7.25,
+     "lat": 44.81
+    },
+    {
+     "nom": "Bricherasio",
+     "lon": 7.3,
+     "lat": 44.82
+    },
+    {
+     "nom": "Paesana",
+     "lon": 7.27,
+     "lat": 44.69
+    },
+    {
+     "nom": "Sanfront",
+     "lon": 7.32,
+     "lat": 44.65
+    },
+    {
+     "nom": "Dronero",
+     "lon": 7.36,
+     "lat": 44.47
+    },
+    {
+     "nom": "Caraglio",
+     "lon": 7.43,
+     "lat": 44.42
+    },
+    {
+     "nom": "Borgo San Dalmazzo",
+     "lon": 7.49,
+     "lat": 44.33
+    }
+   ],
+   "polygone": [
+    [
+     7.24,
+     44.97
+    ],
+    [
+     7.24,
+     44.82
+    ],
+    [
+     7.23,
+     44.69
+    ],
+    [
+     7.3,
+     44.62
+    ],
+    [
+     7.43,
+     44.57
+    ],
+    [
+     7.42,
+     44.52
+    ],
+    [
+     7.34,
+     44.48
+    ],
+    [
+     7.38,
+     44.42
+    ],
+    [
+     7.43,
+     44.37
+    ],
+    [
+     7.5,
+     44.3
+    ],
+    [
+     7.6,
+     44.22
+    ],
+    [
+     7.66,
+     44.25
+    ],
+    [
+     7.6,
+     44.4
+    ],
+    [
+     7.52,
+     44.5
+    ],
+    [
+     7.5,
+     44.62
+    ],
+    [
+     7.42,
+     44.75
+    ],
+    [
+     7.38,
+     44.9
+    ],
+    [
+     7.32,
+     45.02
+    ],
+    [
+     7.24,
+     44.97
+    ]
+   ],
+   "confiance": "moyenne",
+   "sources": [
+    {
+     "titre": "Wikipedia (it), Valli occitane (trois listes de communes)",
+     "url": "https://it.wikipedia.org/wiki/Valli_occitane"
+    },
+    {
+     "titre": "Q. Garnier, Géolinguistique 20 (2020)",
+     "url": "https://journals.openedition.org/geolinguistique/1992"
+    }
+   ]
+  }
+ ]
+}
