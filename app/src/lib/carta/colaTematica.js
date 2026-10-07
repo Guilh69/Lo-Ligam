@@ -333,7 +333,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			cancelAnimationFrame(this._rafIntro);
 			const pas = () => {
 				this._pintar();
-				if ((performance.now() - t0) / 1000 < INTRO.massis[1] + 0.6) this._rafIntro = requestAnimationFrame(pas);
+				if ((performance.now() - t0) / 1000 < INTRO.fin + 0.3) this._rafIntro = requestAnimationFrame(pas); // (fins als noms dels dialèctes, que los noms de las cadenas evitan)
 			};
 			if (!this._calm) this._rafIntro = requestAnimationFrame(pas);
 		},
@@ -614,7 +614,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		// redessenha sovent), puèi tornats prene
 		_etiquetasProv(G, z, a, nomDe, ocupadas, ob) {
 			const c = this._etiCache;
-			if (c && c.n === this._nUpd && c.lang === this._lang && c.ob === ob) {
+			if (c && c.n === this._nUpd && c.lang === this._lang && c.ob.length === ob.length && c.ob.every((x, i) => x === ob[i])) {
 				for (const e of c.lista) ocupadas.push(e.b);
 				return c.lista;
 			}
@@ -753,11 +753,13 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			// los noms de vilas ja pausats per la còla d'estelas, puèi cada nom
 			// pausat aquí : los noms seguents los evitan
 			const ocupadas = [];
-			const ob = obstacles?.();
-			if (ob && this._o) {
-				const k = Math.pow(2, z - ob.z);
-				for (const b of ob.cs) ocupadas.push([b[0] * k - this._o.x, b[1] * k - this._o.y, b[2] * k - this._o.x, b[3] * k - this._o.y]);
-			}
+			// (una lista : los noms de vilas, los noms de dialèctes…)
+			const ob = (obstacles?.() ?? []).filter(Boolean);
+			if (this._o)
+				for (const { z: zo, cs } of ob) {
+					const k = Math.pow(2, z - zo);
+					for (const b of cs) ocupadas.push([b[0] * k - this._o.x, b[1] * k - this._o.y, b[2] * k - this._o.x, b[3] * k - this._o.y]);
+				}
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
 
 			/* Parcs : un aplat leugièr e un contorn ponchejat */
@@ -913,7 +915,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					const pI = easeS(clamp((ti - (INTRO.massis[0] + (r.props.renc - 1) * 0.3)) / 0.8));
 					const al = clamp((z - z0) / 0.6) * clamp((z1 - z) / 0.6) * pI;
 					if (al < 0.01) continue;
-					const [x, y] = r.p;
+					let [x, y] = r.p;
 					if (x < -100 || y < -40 || x > this._W + 100 || y > this._H + 40) continue;
 					const som = r.props.mena === 'som';
 					const nom = nomDe(r.props);
@@ -922,8 +924,19 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					const tèxt = som ? nom : nom.toUpperCase();
 					const w = cx.measureText(tèxt).width + (som ? 12 : 0),
 						h = som ? 13 : 16;
-					const bx = som ? [x - 5, y - h / 2, x + w, y + h / 2] : [x - w / 2, y - h / 2, x + w / 2, y + h / 2];
-					if (pausats.some((b) => b[0] < bx[2] && b[2] > bx[0] && b[1] < bx[3] && b[3] > bx[1])) continue;
+					// un massís se pòt desplaçar un pauc per daissar passar un autre nom
+					// (un dialècte, una vila) ; una cima demòra sus son ponch
+					const tòca = (bx) => pausats.some((b) => b[0] < bx[2] && b[2] > bx[0] && b[1] < bx[3] && b[3] > bx[1]);
+					let bx = null;
+					for (const [dx, dy] of som ? [[0, 0]] : [[0, 0], [0, -14], [0, 14], [-28, 0], [28, 0], [0, -26], [0, 26]]) {
+						const c = som ? [x - 5, y - h / 2, x + w, y + h / 2] : [x + dx - w / 2, y + dy - h / 2, x + dx + w / 2, y + dy + h / 2];
+						if (!tòca(c)) {
+							bx = c;
+							if (!som) (x += dx), (y += dy);
+							break;
+						}
+					}
+					if (!bx) continue;
 					pausats.push(bx);
 					cx.globalAlpha = al * (som ? 0.85 : 0.6);
 					cx.fillStyle = `rgb(${T.linha})`;

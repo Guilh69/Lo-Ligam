@@ -3,7 +3,8 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
-	import { crearColaEstelas, Z_PRECARGA } from '$lib/carta/colaEstelas.js';
+	import { crearColaEstelas, Z_PRECARGA, INTRO } from '$lib/carta/colaEstelas.js';
+	import { sonsIntro } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
 	import { JACES_DONADAS, JACES_TEMATICAS } from '$lib/carta/catalogue.js';
@@ -407,6 +408,8 @@
 			jaces: jacesDonadas(visibility),
 			// un luòc o una vila a ficha jos lo det : lo clic es per las estelas
 			ocupat: (lp) => !!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) || !!colaTematica?.ocupat(lp, true),
+			// los noms de vilas : los noms de dialèctes los evitan
+			obstacles: () => (colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null),
 			onSurvòl: (k, info) => (survòl = info),
 			onCausida: (kods, info) => {
 				causida = info;
@@ -421,7 +424,7 @@
 			// las provincias, que cobrisson tot, cedisson als dialèctes e al Creissent
 			cedirProv: (lp) => !!(map.hasLayer(colaDonadas) && colaDonadas.zonaA(lp)),
 			// los noms de vilas de la carta en estelas : los noms de províncias los evitan
-			obstacles: () => (colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null),
+			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, colaDonadas.caixasNoms()],
 			onSurvòl: (info) => (survòlTem = info)
 		});
 		colaTematica.addTo(map);
@@ -430,7 +433,10 @@
 		// comun a las tres còlas. Un clic, la molèta o una tòca menan a la fin.
 		const t0 = performance.now();
 		for (const c of [colaEstelas, colaDonadas, colaTematica]) c?.setIntro(t0);
+		// (los sons : crayon, calhaus, rajòl ; res se mens de movement es demandat)
+		const copar = matchMedia('(prefers-reduced-motion: reduce)').matches ? () => {} : sonsIntro(INTRO);
 		const acabarIntro = () => {
+			copar();
 			for (const c of [colaEstelas, colaDonadas, colaTematica]) c?.acabarIntro();
 			for (const ev of ['pointerdown', 'wheel', 'keydown']) window.removeEventListener(ev, acabarIntro, true);
 		};

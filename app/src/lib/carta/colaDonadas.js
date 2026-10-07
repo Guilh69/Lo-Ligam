@@ -37,6 +37,9 @@ const temaDe = (clar, dalt) => ({
 	dial: dalt ? COLORS.dalt : clar ? COLORS.clar : COLORS.sorne
 });
 
+// los luòcs ensajats per un nom de dialècte (a partir de son ponch)
+const DECALATGES_NOM = [[0, 0], [0, -16], [0, 16], [-36, 0], [36, 0], [0, -30], [0, 30], [-30, -18], [30, 18], [30, -18], [-30, 18], [0, -44], [0, 44], [-60, 0], [60, 0], [-50, -30], [50, 30], [50, -30], [-50, 30], [0, -58], [0, 58]];
+
 const DURADA = 1700; // ms : difusion d'un dialècte causit
 let dialPromesa = null,
 	creissentPromesa = null,
@@ -49,7 +52,7 @@ const cargarJson = (url) =>
 
 export function crearColaDonadas(
 	L,
-	{ clar = false, dalt = false, lang = 'oc', jaces = {}, ocupat = null, onSurvòl = null, onCausida = null } = {}
+	{ clar = false, dalt = false, lang = 'oc', jaces = {}, ocupat = null, obstacles = null, onSurvòl = null, onCausida = null } = {}
 ) {
 	const Cola = L.Layer.extend({
 		options: {
@@ -256,6 +259,10 @@ export function crearColaDonadas(
 				cx.stroke();
 				cx.restore();
 			}
+		},
+		// las bóstias dels noms de dialèctes pausats (per las autras còlas)
+		caixasNoms() {
+			return this._caixasNoms ?? null;
 		},
 		causir(kods = []) {
 			if (kods.length === this._sels.length && kods.every((k) => this._sels.includes(k))) return;
@@ -845,6 +852,7 @@ export function crearColaDonadas(
 				cx.restore();
 			}
 			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3) * aFinIntro;
+			if (aNoms <= 0.01) this._caixasNoms = null;
 			if (aNoms > 0.01) {
 				const noms = [];
 				if (J.dialectes && G.zonas)
@@ -858,16 +866,43 @@ export function crearColaDonadas(
 				cx.textBaseline = 'middle';
 				cx.shadowColor = T.ombra;
 				cx.shadowBlur = 7;
+				// cada nom a son luòc, o a l'entorn se lo nom d'una vila i es ja
+				// (retorn de Romain : AUVERNHAT sus MASSÍS CENTRAL, VIVAROAUPENC
+				// sus Gap) ; los noms de las cadenas, eles, evitan aqueles
+				const ob = obstacles?.();
+				const o = this._map.getPixelOrigin().add(this._min);
+				const kz = ob ? Math.pow(2, z - ob.z) : 1;
+				const ocup = ob ? ob.cs.map((b) => [b[0] * kz - o.x, b[1] * kz - o.y, b[2] * kz - o.x, b[3] * kz - o.y]) : [];
+				const se = (a, b) => a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1];
+				const caixas = [];
 				for (const [zn, color] of noms) {
 					let a = aNoms;
-					if (an && an.a === zn.kod) a *= clamp((p - 0.25) / 0.4); // lo nom arriba aprèp la color
+					if (an?.ajust === zn.kod) a *= clamp((p - 0.25) / 0.4); // lo nom arriba aprèp la color
 					if (a < 0.01) continue;
 					const t = (this._lang === 'fr' ? zn.props.fr : zn.props.oc).toUpperCase();
+					const w = cx.measureText(t).width + 6,
+						h = fs * 1.5;
+					let b = null;
+					for (const [dx, dy] of DECALATGES_NOM) {
+						const c = [zn.eti[0] + dx - w / 2, zn.eti[1] + dy - h / 2, zn.eti[0] + dx + w / 2, zn.eti[1] + dy + h / 2];
+						// (entre dos noms de dialèctes, una marja : sens ela se tocavan)
+						const cm = [c[0] - 10, c[1] - 9, c[2] + 10, c[3] + 9];
+						if (!ocup.some((q) => se(c, q)) && !caixas.some((q) => se(cm, q))) {
+							b = c;
+							break;
+						}
+					}
+					b ??= [zn.eti[0] - w / 2, zn.eti[1] - h / 2, zn.eti[0] + w / 2, zn.eti[1] + h / 2];
+					caixas.push(b);
 					cx.globalAlpha = a;
 					cx.fillStyle = T.clar ? mesclar(color, '#2e1d14', 0.25) : mesclar(color, '#fff8ec', 0.35);
-					cx.fillText(t, zn.eti[0], zn.eti[1]);
+					cx.fillText(t, (b[0] + b[2]) / 2, (b[1] + b[3]) / 2);
 				}
 				cx.restore();
+				// gardadas (en coordenadas projectadas) per las autras còlas ; un
+				// objècte nòu sonque se càmbian
+				const clau = caixas.map((b) => b.map(Math.round).join(',')).join(';') + '@' + z;
+				if (clau !== this._caixasNoms?.clau) this._caixasNoms = { clau, z, cs: caixas.map((b) => [b[0] + o.x, b[1] + o.y, b[2] + o.x, b[3] + o.y]) };
 			}
 		},
 

@@ -211,6 +211,10 @@ const Z_VOL = 10.5; // niveau où l'on arrive en cliquant sur un lieu
 
 
 /* ---------- Placement des noms (repris de l'accueil, en pixels projetés) ---------- */
+// 0 drecha, 1 esquèrra, 2 dessús, 3 dejós, 4 dessús a drecha, 5 dejós a
+// drecha, 6 dessús a esquèrra, 7 dejós a esquèrra
+const PLAÇA_PREFERIDA = { Marselha: 3, Bordèu: 3, Limòtges: 2, Gap: 5, Pau: 3 };
+
 function plaçar(cx, vilas, rius) {
 	const CEL = 16,
 		grilha = new Map();
@@ -301,9 +305,13 @@ function plaçar(cx, vilas, rius) {
 		// semblava designar l'espilla de dejós) ; un autre costat sonque se un
 		// autre nom empacha
 		const drecha = v.renc <= 2 ? 3 : 0;
+		// qualques vilas grandas an una plaça preferida, per l'estetica (retorn
+		// de Romain : Marselha e Bordèu jos lo ponch, Limòtges e Clarmont pas en
+		// linha, Gap pas sus Valença) ; se i a pas de plaça, la mai liura
+		const pref = cand[PLAÇA_PREFERIDA[v.nom] ?? 0];
 		for (const q of cand) {
 			const [val, f] = cost(q.b, v.nom);
-			const sc = (val - 5 * f) * 0.03 + f * 100 + q.bonus + (q === cand[0] ? 0 : drecha);
+			const sc = (val - 5 * f) * 0.03 + f * 100 + (q === pref ? 0 : q.bonus + drecha);
 			if (sc < mendre) {
 				mendre = sc;
 				c = q;
@@ -617,6 +625,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
 					return [x0 - 2, v.y - v.f, x0 + w + 2, v.y + v.f * 0.3];
 				});
+				// los ponches de las vilas visiblas (VIVAROAUPENC tombava sus Gap)
+				if (this._el.estelas)
+					for (const e of this._estelas) if (this._zoom >= (this._zBase ?? 0) + dzLuòc(e)) cs.push([e.X - 6, e.Y - 6, e.X + 6, e.Y + 6]);
 				// e las letras dels noms de rius, se son afichats
 				if (this._el.nomsRius)
 					for (const r of pl.rius) for (const l of r.letras) cs.push([l.x - r.fs * 0.4, l.y - r.fs * 0.6, l.x + r.fs * 0.4, l.y + r.fs * 0.3]);
