@@ -98,8 +98,7 @@ const OCCITANIA = [
 	[42.65, -1.6],
 	[46.4, 7.55]
 ];
-const Z_DETALH_0 = 8.5; // la carte détaillée commence à se montrer…
-const Z_DETALH_1 = 10; // … et a pris le relais
+const Z_DETALH_1 = 10; // au-delà, plus aucun nom n'est placé (la carte détaillée a les siens)
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -107,16 +106,15 @@ const easeIO = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 const aleat = (a, b) => a + Math.random() * (b - a);
 const CORMORANT = '"Cormorant Garamond", Georgia, serif';
 
-/** Part de la carte détaillée à un niveau de zoom (0 = étoiles seules, 1 = détail). */
-export const partDetalh = (z) => clamp((z - Z_DETALH_0) / (Z_DETALH_1 - Z_DETALH_0));
-// Relais sans doublons (remarque de Romain, 2026-10-07) : NOS noms s'effacent
-// d'abord (premier cinquième du passage), et seulement ensuite la carte OSM,
-// qui a ses propres noms, apparaît. Jamais deux noms superposés.
-const PART_NOMS = 0.2;
-const aNoms = (z) => 1 - clamp(partDetalh(z) / PART_NOMS);
-/** Opacité des tuiles détaillées à un niveau de zoom. */
-export const opacitatTeules = (z) => clamp((partDetalh(z) - PART_NOMS) / (1 - PART_NOMS));
-export const Z_DETALH_MIN = Z_DETALH_0;
+// Relais NET entre la carte en étoiles et la carte OSM (retour de Romain,
+// 2026-10-07) : un fondu étalé sur plusieurs crans de zoom laissait, vers
+// 20 km d'échelle, une carte à moitié vide (nos noms partis, les tuiles encore
+// pâles). Désormais, un seuil : en dessous les étoiles, au-dessus la carte
+// détaillée, et le passage se fait par une courte animation dans le temps.
+export const Z_RELAIS = 8.75;
+export const Z_PRECARGA = 8.25; // les tuiles se chargent, invisibles, un peu avant
+const Z_VOL = 10.5; // niveau où l'on arrive en cliquant sur un lieu
+
 
 /* ---------- Placement des noms (repris de l'accueil, en pixels projetés) ---------- */
 function plaçar(cx, vilas, rius) {
@@ -418,6 +416,12 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._update();
 		},
 
+		// Un lieu trouvé par la recherche : une onde dorée le signale quelques
+		// secondes, une fois la carte arrivée
+		senhalar(lat, lon) {
+			this._senhal = { lat, lon, t0: null };
+		},
+
 		setLenga(l) {
 			this._lang = l;
 		},
@@ -447,6 +451,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._cv.style.width = tal.x + 'px';
 			this._cv.style.height = tal.y + 'px';
 			this._o = map.getPixelOrigin().add(min); // projeté → canevas : soustraire o
+			if (this._senhal && this._senhal.t0 === null) this._senhal.t0 = performance.now();
 
 			const z = this._zoom;
 			if (this._zP !== z) {
@@ -607,7 +612,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		// plus haut que ce nom grossit avec le zoom (à 1 km d'échelle, il
 		// mangeait le « el » de Montpelhièr)
 		_aRepèr() {
-			return opacitatTeules(this._zoom);
+			return this._detA ?? 0;
 		},
 		_posFicha(v) {
 			const z = this._zoom;
@@ -637,7 +642,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._map.getContainer().style.cursor = 'pointer';
 				return;
 			}
-			if (partDetalh(this._zoom) >= 1) {
+			if (this._zoom >= Z_RELAIS) {
 				this._map.getContainer().style.cursor = '';
 				return;
 			}
@@ -662,8 +667,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const f = this._fichaA(e.layerPoint);
 			if (f) {
 				this._pus = null;
-				if (partDetalh(this._zoom) < 0.6) {
-					this._map.flyTo([f.lat, f.lon], Z_DETALH_1 + 0.5, { duration: this._calm ? 0 : 1.8 });
+				if (this._zoom < Z_RELAIS) {
+					this._map.flyTo([f.lat, f.lon], Z_VOL, { duration: this._calm ? 0 : 1.8 });
 				} else if (f.ligam && this._onFicha) {
 					this._onFicha(f);
 				} else {
@@ -686,7 +691,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				return;
 			}
 			this._pus = null;
-			const z = Math.min(Math.max(this._zoom + 2.5, Z_DETALH_1 + 0.5), 12);
+			const z = Math.min(Math.max(this._zoom + 2.5, Z_VOL), 12);
 			this._map.flyTo([lòc.lat, lòc.lon], z, { duration: this._calm ? 0 : 1.8 });
 		},
 
@@ -703,13 +708,18 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const temps = (t - this._t0) / 1000;
 			// Arrivée : les étoiles, éparpillées, viennent dessiner l'Occitanie
 			const intro = this._calm ? 1 : clamp((temps - 0.15) / 1.9);
-			const det = partDetalh(z);
+			// Le relais avance dans le temps (≈ 0,4 s), pas avec le zoom
+			const dt = Math.min(0.1, (t - (this._tPrec ?? t)) / 1000);
+			this._tPrec = t;
+			const cibla = z >= Z_RELAIS ? 1 : 0;
+			this._detA = this._calm || this._detA === undefined ? cibla : this._detA + (cibla - this._detA) * Math.min(1, dt * 7);
+			const det = this._detA;
 			// Les points restent en filigrane sur la carte détaillée ; les noms,
-			// les rivières et la côte (que les tuiles ont aussi) s'en vont AVANT
-			// qu'elle apparaisse : jamais de doublon
+			// les rivières, le relief et la côte (que les tuiles ont aussi) partent
+			// vite : jamais de doublon
 			const aGen = 1 - det * 0.85,
-				aRius = aNoms(z),
-				aEtiq = aNoms(z);
+				aRius = 1 - clamp(det * 1.6),
+				aEtiq = aRius;
 			const gros = 1 + Math.max(0, z - 7) * 0.14;
 
 			// Le relief : courbes de niveau très discrètes, les maîtresses
@@ -865,6 +875,33 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				cx.globalAlpha = fp.ligam ? 1 : 0.7;
 				cx.fillText(acc, bx + 14, by + 39);
 				cx.globalAlpha = 1;
+			}
+
+			// L'onde du lieu trouvé par la recherche (4 s)
+			const sg = this._senhal;
+			if (sg && sg.t0 !== null) {
+				const el = (performance.now() - sg.t0) / 1000;
+				if (el > 4) this._senhal = null;
+				else {
+					const q = this._map.project([sg.lat, sg.lon], z);
+					const sx = q.x - o.x,
+						sy = q.y - o.y,
+						fond = clamp((4 - el) / 0.8);
+					cx.strokeStyle = T.fil;
+					for (const dec of [0, 0.5]) {
+						const ph = this._calm ? 0.3 : (el / 1.6 + dec) % 1;
+						cx.globalAlpha = (1 - ph) * 0.9 * fond;
+						cx.lineWidth = 1.6;
+						cx.beginPath();
+						cx.arc(sx, sy, 10 + ph * 36, 0, 6.283);
+						cx.stroke();
+					}
+					cx.globalAlpha = fond;
+					cx.lineWidth = 2;
+					cx.beginPath();
+					cx.arc(sx, sy, 7, 0, 6.283);
+					cx.stroke();
+				}
 			}
 
 			// La bulle du lieu survolé (ou touché, 5 s)

@@ -3,7 +3,8 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
-	import { crearColaEstelas, opacitatTeules, Z_DETALH_MIN } from '$lib/carta/colaEstelas.js';
+	import { crearColaEstelas, Z_RELAIS, Z_PRECARGA } from '$lib/carta/colaEstelas.js';
+	import CercaCarta from './CercaCarta.svelte';
 
 	// Contengut e estils venon ara de Supabase (taulas carta_luocs,
 	// carta_colas, carta_dialectes — gerits dins /admin/carta) puslèu que
@@ -116,14 +117,15 @@
 	function majDetalh() {
 		if (!map || baseLayer !== 'estelas') return;
 		const z = map.getZoom();
-		if (z >= Z_DETALH_MIN) {
+		if (z >= Z_PRECARGA) {
 			if (!currentBaseTileLayer) {
 				const cfg = baseLayers.occitan;
 				currentBaseTileLayer = L.tileLayer(cfg.url, { maxZoom: cfg.maxZoom, attribution: cfg.attribution, className: 'teules-detalh' });
 				currentBaseTileLayer._loLigamKey = 'estelas';
 				currentBaseTileLayer.addTo(map);
 			}
-			currentBaseTileLayer.setOpacity(opacitatTeules(z));
+			// relais net : invisible sous le seuil, entière au-dessus (fondu CSS)
+			currentBaseTileLayer.setOpacity(z >= Z_RELAIS ? 1 : 0);
 		} else if (currentBaseTileLayer) {
 			map.removeLayer(currentBaseTileLayer);
 			currentBaseTileLayer = null;
@@ -461,6 +463,27 @@
 		colaEstelas?.setLenga(l);
 	});
 
+	// Recherche : un lieu, la carte y vole (et l'y signale) ; un département ou
+	// une région, elle se cadre dessus
+	function anarA(r) {
+		if (!map) return;
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (r.mena === 'luòc') {
+			const z = r.renc <= 2 ? 10.5 : r.renc === 3 ? 11 : 12;
+			map.flyTo([r.lat, r.lon], z, { duration: calm ? 0 : 1.8 });
+			colaEstelas?.senhalar(r.lat, r.lon);
+		} else {
+			const [w, s, e, n] = r.bbox;
+			map.flyToBounds(
+				[
+					[s, w],
+					[n, e]
+				],
+				{ paddingTopLeft: [40, 130], paddingBottomRight: [40, 40], duration: calm ? 0 : 1.6 }
+			);
+		}
+	}
+
 	onDestroy(() => {
 		map?.remove();
 	});
@@ -473,6 +496,8 @@
 		class:nuech={(baseLayer === 'occitan' || baseLayer === 'estelas') && !clar}
 		bind:this={mapEl}
 	></div>
+
+	<CercaCarta {lang} onCausir={anarA} />
 
 	<!-- Flèche du nord à l'ancienne, comme sur l'accueil : aiguille en losange
 	     (moitié pleine, moitié tracée), anneau fin, N italique -->
@@ -568,16 +593,32 @@
 		color: var(--t-aur-clar);
 	}
 
+	/* L'échelle : nette (Leaflet ajoute une ombre blanche décalée d'un pixel
+	   au texte, qui le rendait gras et flou sur fond sombre ; pas de verre
+	   flouté non plus derrière) */
 	.carta :global(.leaflet-control-scale-line) {
-		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
-		backdrop-filter: blur(6px);
+		background: color-mix(in srgb, var(--t-fons) 88%, transparent);
 		border: 1px solid var(--t-aur);
 		border-top: none;
 		color: var(--t-tinta);
-		font-weight: 700;
-		font-size: 0.7rem;
-		padding: 1px 6px;
-		border-radius: 0 0 6px 6px;
+		text-shadow: none;
+		font-weight: 400;
+		font-size: 0.72rem;
+		letter-spacing: 0.03em;
+		line-height: 1.3;
+		padding: 1px 6px 2px;
+		border-radius: 0 0 4px 4px;
+	}
+
+	/* Relais vers la carte détaillée : un fondu court, dans le temps */
+	.carta :global(.teules-detalh) {
+		transition: opacity 0.6s ease;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.carta :global(.teules-detalh) {
+			transition: none;
+		}
 	}
 
 	/* Bulles des lieux et des couches */
