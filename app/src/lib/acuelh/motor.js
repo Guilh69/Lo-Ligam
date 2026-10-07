@@ -10,7 +10,7 @@
 // quitte l'accueil, puisque la navigation ne recharge pas la page.
 import Lenis from 'lenis';
 import { P, BRANCAS, ARCS } from './simbol.js';
-import { LUOCS, RIUS, COSTA, dialDe } from './carta-estelas.js';
+import { LUOCS, RIUS, COSTA, NOMENATS, dialDe, rencDe } from './carta-estelas.js';
 
 // Lo trait de còsta de la carta en estelas (essai demandat per Romain lo
 // 2026-10-07, coma sus /carta), copat a 8,6° E coma los rius : la Còrsega, que
@@ -258,8 +258,11 @@ export function lancarAcuelh(racina, opcions = {}) {
 	}
 	const aleat = (a, b) => a + Math.random() * (b - a);
 	function semenar(e) { e.x = aleat(0.04, 0.96) * innerWidth; e.y = aleat(0.04, 0.96) * innerHeight; }
-	const estelas = LUOCS.map(([lon, lat, nom, vila, dia]) => ({
-		lon, lat, nom, vila, dia, x: 0, y: 0, px: 0, py: 0,
+	// Ierarquia dels noms (coma sus /carta, demanda Romain 2026-10-07) : las
+	// metropòlis en grand, una vila repèr per despartament en retirada ; los
+	// autres luòcs son d'estelas sens nom (visibles al subrevòl)
+	const estelas = LUOCS.map(([lon, lat, nom, , dia]) => ({
+		lon, lat, nom, dia, renc: rencDe(nom), vila: rencDe(nom) <= 2, x: 0, y: 0, px: 0, py: 0,
 		r: aleat(0.5, 1.4), f: aleat(0, 6.28), v: aleat(0.2, 0.7), retard: aleat(0, 0.35)
 	}));
 	// Cadre geografic : l'Occitània de Bordèu a Niça, de Lemòtges a Vielha
@@ -312,7 +315,11 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// serà una de las darrièras (Nimes, Ais…), pas jamai Montpelhièr.
 		const PRIORITAT = ['Montpelhièr', 'Tolosa', 'Marselha', 'Bordèu', 'Niça', 'Clarmont-Ferrand', 'Limòtges', 'Avinhon', 'Baiona', 'Vielha', 'Draonier', 'Pau', 'Valença', 'Tolon', 'Nimes', 'Ais de Provença'];
 		const rang = (n) => { const i = PRIORITAT.indexOf(n); return i < 0 ? 99 : i; };
-		const vilas = estelas.filter((e) => e.vila).sort((a, b) => rang(a.nom) - rang(b.nom));
+		// Sus telefon la carta es pichona : sonque las metropòlis e los luòcs nomenats
+		// (Vielha, Draonier, Baiona) ; las autras vilas se legisson al tòc
+		const vilas = estelas
+			.filter((e) => e.vila && (fv >= 12 || e.renc === 1 || NOMENATS.includes(e.nom)))
+			.sort((a, b) => a.renc - b.renc || rang(a.nom) - rang(b.nom));
 		for (const e of vilas) { const [x, y] = loc(e.lon, e.lat); e.lx = x; e.ly = y; metre([x - 4, y - 4, x + 4, y + 4], 5, e.nom); }
 		RIUS.forEach(([nom, , l], n) => {
 			const pts = l.map(([lon, lat]) => loc(lon, lat)), prop = nom || 'riu' + n;
@@ -323,9 +330,9 @@ export function lancarAcuelh(racina, opcions = {}) {
 		});
 
 		// Vilas : la plaça la mens encombrada entre drecha, esquèrra, naut e bas
-		cx.font = '700 ' + fv + 'px Luciole, sans-serif';
-		const k = fv / 12;
 		for (const e of vilas) {
+			const fe = e.renc === 1 ? fv * 1.35 : fv * 0.92, k = fe / 12;
+			cx.font = '700 ' + fe + 'px Luciole, sans-serif';
 			const w = cx.measureText(e.nom).width, x = e.lx, y = e.ly;
 			const cand = [
 				{ x: x + 7 * k, y: y + 4 * k, al: 'left', b: [x + 5 * k, y - 8 * k, x + 9 * k + w, y + 7 * k], bonus: 0 },
@@ -351,7 +358,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 			// Cap de plaça liura (ciutats sarradas sus telefon) : lo nom se mòstra pas,
 			// puslèu que de se pilar sus un autre ; demòra visible al tòc
 			if (mendre >= 100) continue;
-			metre(c.b, 5, 'etiqueta'); res.vilas.push({ e, x: c.x, y: c.y, al: c.al });
+			metre(c.b, 5, 'etiqueta'); res.vilas.push({ e, x: c.x, y: c.y, al: c.al, f: fe });
 		}
 
 		// Rius : dels mai grands als mai pichons ; lo nom seguís lo traçat lissat,
@@ -449,10 +456,11 @@ export function lancarAcuelh(racina, opcions = {}) {
 			}
 		}
 		const [cv2, gv] = fa();
-		gv.font = '700 ' + fv + 'px Luciole, sans-serif'; gv.fillStyle = TEM.vilaTèxt; gv.lineWidth = fv < 12 ? 3 : 4;
+		gv.fillStyle = TEM.vilaTèxt;
 		for (const v of plaçament.vilas) {
 			if (v.e.nom === pusNom) continue;
-			gv.globalAlpha = pres(v.e.lx, v.e.ly) ? 0.12 : 1;
+			gv.font = '700 ' + v.f + 'px Luciole, sans-serif'; gv.lineWidth = v.e.renc === 1 ? 4.5 : 3.2;
+			gv.globalAlpha = (pres(v.e.lx, v.e.ly) ? 0.12 : 1) * (v.e.renc === 1 ? 1 : 0.85);
 			gv.textAlign = v.al; gv.strokeText(v.e.nom, v.x, v.y); gv.fillText(v.e.nom, v.x, v.y);
 		}
 		return { clau, pusNom, dpr: DPR, tema: TEM, rius: cr, vilas: cv2, ox, oy, w, h };
@@ -541,7 +549,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 			e.px = x; e.py = y; e.ai = ai;
 			cx.globalAlpha = lerp(0.18 + 0.27 * tw, e.vila ? 1 : 0.55 + 0.35 * tw, ai);
 			cx.fillStyle = TEM.estela;
-			cx.beginPath(); cx.arc(x, y, lerp(e.r, e.vila ? 2.8 : 1.35, ai), 0, 6.283); cx.fill();
+			cx.beginPath(); cx.arc(x, y, lerp(e.r, e.renc === 1 ? 3.2 : e.vila ? 2.2 : 1.35, ai), 0, 6.283); cx.fill();
 			if (mouVist && (finPointer || detActiu)) {
 				const dd = Math.hypot(x - mx, y - my);
 				if (dd < rayLigam) {

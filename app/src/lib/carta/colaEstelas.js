@@ -88,7 +88,16 @@ const rang = (n) => {
 };
 
 // Seuils d'échelle (niveaux de zoom Leaflet)
-const Z_VILATGES = 7.25; // les noms des villages apparaissent
+// Les noms se dévoilent par rapport à la VUE D'ENSEMBLE (l'Occitanie
+// entière dans la fenêtre), pas à un niveau fixe : sur un grand écran, la
+// carte s'ouvre déjà plus zoomée, et villages et villes y apparaissaient dès
+// l'arrivée. Vue d'ensemble : métropoles et villes repères seulement.
+const DZ_DEPART = 0.5; // un cran de zoom : les villes importantes de chaque département
+const DZ_VILATGES = 1.25; // un cran de plus : les villages
+const OCCITANIA = [
+	[42.65, -1.6],
+	[46.4, 7.55]
+];
 const Z_DETALH_0 = 8.5; // la carte détaillée commence à se montrer…
 const Z_DETALH_1 = 10; // … et a pris le relais
 
@@ -301,9 +310,13 @@ function plaçar(cx, vilas, rius) {
 		res.rius.push({ letras: melhor.letras, fs });
 	}
 
-	const vilatges = vilas.filter((v) => !v.ciutat);
-	vilatges.forEach(punt);
-	vilatges.forEach(pausarVila);
+	// Les villes importantes du département, puis les villages : chaque niveau
+	// ne voit comme obstacles que les points des niveaux déjà placés
+	for (const nivèl of [3, 4]) {
+		const l = vilas.filter((v) => v.renc === nivèl);
+		l.forEach(punt);
+		l.forEach(pausarVila);
+	}
 	return res;
 }
 
@@ -390,13 +403,19 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				viewreset: this._update,
 				zoom: this._onZoom,
 				moveend: this._update,
-				resize: this._update,
+				resize: this._onTalha,
 				mousemove: this._onMirga,
 				mouseout: this._onSortida,
 				click: this._onClic
 			};
 			if (this._zoomAnimated) ev.zoomanim = this._onAnimZoom;
 			return ev;
+		},
+
+		// La fenêtre change de taille : la vue d'ensemble aussi, donc le placement
+		_onTalha() {
+			this._zP = null;
+			this._update();
 		},
 
 		setLenga(l) {
@@ -469,17 +488,20 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 
 		_plaçarTot(z) {
-			// Trois niveaux de noms : métropoles bien marquées, une ville repère
-			// par département, puis les autres lieux en retrait (à l'approche)
+			// Quatre niveaux de noms : métropoles bien marquées, une ville repère
+			// par département ; en zoomant sur un département, ses villes
+			// importantes (Besièrs, Lodeva…), puis les villages en retrait
 			const telefon = this._map.getSize().x <= 700;
-			const talhas = telefon ? { 1: 14, 2: 10.5, 3: 9 } : { 1: 17, 2: 11.5, 3: 9.5 };
+			const talhas = telefon ? { 1: 14, 2: 10.5, 3: 9.5, 4: 8.5 } : { 1: 17, 2: 11.5, 3: 10.5, 4: 9.5 };
 			const vilas = this._estelas
 				.filter((e) => e.renc <= 2)
 				.sort((a, b) => a.renc - b.renc || rang(a.nom) - rang(b.nom))
 				.map((e) => ({ nom: e.nom, x: e.X, y: e.Y, f: talhas[e.renc], ciutat: true, renc: e.renc }));
-			if (z >= Z_VILATGES)
-				for (const e of this._estelas)
-					if (e.renc === 3) vilas.push({ nom: e.nom, x: e.X, y: e.Y, f: talhas[3], ciutat: false, renc: 3 });
+			const zBase = this._map.getBoundsZoom(OCCITANIA);
+			for (const [nivèl, zMin] of [[3, zBase + DZ_DEPART], [4, zBase + DZ_VILATGES]])
+				if (z >= zMin)
+					for (const e of this._estelas)
+						if (e.renc === nivèl) vilas.push({ nom: e.nom, x: e.X, y: e.Y, f: talhas[nivèl], ciutat: false, renc: nivèl });
 			return plaçar(this._cx, vilas, this._rius);
 		},
 
@@ -527,8 +549,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			g.fillStyle = T.vilaTèxt;
 			for (const v of this._plaçament.vilas) {
 				if (!dins(v.x, v.y) || (p && v.nom === p.nom)) continue;
-				g.font = (v.renc === 3 ? '400 ' : '700 ') + v.f + 'px Luciole, sans-serif';
-				g.lineWidth = v.renc === 3 ? 2.5 : v.renc === 1 ? 4.5 : 3.5;
+				g.font = (v.renc === 4 ? '400 ' : '700 ') + v.f + 'px Luciole, sans-serif';
+				g.lineWidth = { 1: 4.5, 2: 3.5, 3: 3, 4: 2.5 }[v.renc];
 				// distance du lieu survolé au TEXTE (sa boîte), pas à son point d'ancrage
 				let aprèp = false;
 				if (p) {
@@ -538,7 +560,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						dy = Math.max(v.y - v.f - p.Y, 0, p.Y - v.y);
 					aprèp = Math.hypot(dx, dy) < ray;
 				}
-				g.globalAlpha = (v.renc === 1 ? 1 : v.renc === 2 ? 0.85 : 0.55) * (aprèp ? 0.12 : 1);
+				g.globalAlpha = { 1: 1, 2: 0.85, 3: 0.74, 4: 0.55 }[v.renc] * (aprèp ? 0.12 : 1);
 				g.textAlign = v.al;
 				g.strokeText(v.nom, v.x, v.y);
 				g.fillText(v.nom, v.x, v.y);
@@ -572,7 +594,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				bestD = Infinity;
 			for (const e of this._estelas) {
 				const d = Math.hypot(e.X - this._o.x - x, e.Y - this._o.y - y);
-				const sc = d - (e.renc === 1 ? bonus * 1.3 : e.renc === 2 ? bonus : 0);
+				const sc = d - bonus * ({ 1: 1.3, 2: 1, 3: 0.6, 4: 0 }[e.renc]);
 				if (d < ray && sc < bestD) {
 					best = e;
 					bestD = sc;
@@ -755,9 +777,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				const x = lerp(e.sx * W, e.X - o.x, ai),
 					y = lerp(e.sy * H, e.Y - o.y, ai);
 				if (x < -10 || y < -10 || x > W + 10 || y > H + 10) continue;
-				cx.globalAlpha = lerp(0.18 + 0.27 * tw, e.renc <= 2 ? 1 : 0.45 + 0.3 * tw, ai) * aGen;
+				cx.globalAlpha = lerp(0.18 + 0.27 * tw, e.renc <= 2 ? 1 : e.renc === 3 ? 0.85 : 0.45 + 0.3 * tw, ai) * aGen;
 				cx.beginPath();
-				cx.arc(x, y, lerp(e.r, e.renc === 1 ? 3.4 : e.renc === 2 ? 2.4 : 1.3, ai) * gros, 0, 6.283);
+				cx.arc(x, y, lerp(e.r, { 1: 3.4, 2: 2.4, 3: 1.8, 4: 1.3 }[e.renc], ai) * gros, 0, 6.283);
 				cx.fill();
 			}
 

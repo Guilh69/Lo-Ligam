@@ -35,10 +35,14 @@ export const COSTA = [[[10,44.057],[9.989,44.06],[9.981,44.05],[9.963,44.045],[9
 // 1 = métropoles, bien marquées ; 2 = au moins une ville repère par
 // département (la préfecture le plus souvent : dans les zones vides, Cáors ou
 // Rodés comptent comme de grandes villes), plus la Val d'Aran, les vallées
-// d'Italie et le Pays basque ; 3 = tous les autres lieux, en retrait.
+// d'Italie et le Pays basque ; 3 = les villes importantes de chaque
+// département (sous-préfectures et quelques grandes villes : Besièrs et
+// Lodeva dans l'Hérault…), qui ressortent quand on zoome sur un département ;
+// 4 = tous les autres lieux, en retrait.
 // Liste à retoucher librement : un nom ajouté ou retiré suffit.
 export const RENC_VILAS = {
 	1: ['Tolosa', 'Montpelhièr', 'Marselha', 'Niça', 'Bordèu', 'Tolon', 'Clarmont-Ferrand'],
-	2: ['Limòtges', 'Cáors', 'Rodés', 'Albi', 'Montalban', 'Agen', 'Aush', 'Tarba', 'Fois', 'Carcassona', 'Mende', 'Lo Puèi de Velai', 'Orlhac', 'Tula', 'Garait', 'Perigüers', 'Lo Mont de Marçan', 'Pau', 'Baiona', 'Nimes', 'Avinhon', 'Privàs', 'Valença', 'Gap', 'Dinha', 'Ais de Provença', 'Montleçon', 'Vielha', 'Draonier']
+	2: ['Limòtges', 'Cáors', 'Rodés', 'Albi', 'Montalban', 'Agen', 'Aush', 'Tarba', 'Fois', 'Carcassona', 'Mende', 'Lo Puèi de Velai', 'Orlhac', 'Tula', 'Garait', 'Perigüers', 'Lo Mont de Marçan', 'Pau', 'Baiona', 'Nimes', 'Avinhon', 'Privàs', 'Valença', 'Gap', 'Dinha', 'Ais de Provença', 'Montleçon', 'Vielha', 'Draonier'],
+	3: ['Besièrs', 'Lodeva', 'Seta', 'Narbona', 'Limós', 'Arle', 'Istre', 'Alès', 'Lo Vigan', 'Ate', 'Carpentràs', 'Grassa', 'Canas', 'Antíbol', 'Draguinhan', 'Brinhòla', 'Frejul', 'Pàmias', 'Sent Gironç', 'Murèth', 'Sent-Gaudenç', 'Castras', 'Los Sarrasins', 'Fijac', 'Gordon', 'Milhau', 'Vilafranca de Roergue', 'Florac', 'Condòm', 'Marmanda', "Vilanuèva d'Oùt", 'Dacs', 'Auloron e Senta Maria', 'Arcaishon', 'Blaia', 'Lengon', "L'Esparra", 'Liborna', 'Brageirac', 'Nontronh', 'Sarlat e la Canedà', 'Briva (La Galharda)', 'Ussèl', 'Belac', 'Rechoard', 'Mauriac', 'Sant Flor', 'Briude', 'Sinjau', 'Embèrt', 'Soire', 'Riòm', 'Tièrn', 'Vichèi', 'Tornon', 'Niom', 'Montelaimar', "Romans d'Isèra", 'Aubenàs', 'Briançon', 'Barcilona de Provença', 'Castelana', 'Lorda', 'Manoasca', 'Sisteron', 'Ambrun', 'Biàrritz', 'Ortès']
 };
-export const rencDe = (nom) => (RENC_VILAS[1].includes(nom) ? 1 : RENC_VILAS[2].includes(nom) ? 2 : 3);
+export const rencDe = (nom) => (RENC_VILAS[1].includes(nom) ? 1 : RENC_VILAS[2].includes(nom) ? 2 : RENC_VILAS[3].includes(nom) ? 3 : 4);
