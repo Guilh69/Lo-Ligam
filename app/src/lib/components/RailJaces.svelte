@@ -686,6 +686,9 @@
 		overflow-y: auto;
 		scrollbar-width: none;
 		display: grid;
+		/* (la colomna despassa pas jamai lo panèl : los noms longs passan a la
+		   linha en luòc d'èsser copats, retorn de Romain) */
+		grid-template-columns: minmax(0, 1fr);
 		gap: 2px;
 		padding: 6px 5px;
 		background: color-mix(in srgb, var(--t-fons-2) 90%, transparent);
@@ -698,16 +701,19 @@
 		transform: none;
 	}
 	/* l'encòca : de que prene lo panèl, e lo boton per lo reduire */
+	/* (l'encòca e sos dos botons tenon dins la largor del panèl) */
 	.encòca {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 2px;
-		padding: 0 2px 3px;
+		gap: 0;
+		padding: 0 0 3px;
 	}
 	.prene {
 		flex: 1;
+		min-width: 0;
 		height: 18px;
+		padding: 0;
 		display: grid;
 		place-items: center;
 		border: 0;
@@ -720,7 +726,7 @@
 		cursor: grabbing;
 	}
 	.prene span {
-		width: 22px;
+		width: 16.5px;
 		height: 6px;
 		background: radial-gradient(circle, var(--t-tinta-2) 1.2px, transparent 1.6px) 0 0 / 5.5px 3px;
 		opacity: 0.7;
@@ -730,8 +736,10 @@
 		opacity: 1;
 	}
 	.reduire {
-		width: 20px;
+		flex: 0 0 auto;
+		width: 19px;
 		height: 18px;
+		padding: 0;
 		display: grid;
 		place-items: center;
 		border: 0;
