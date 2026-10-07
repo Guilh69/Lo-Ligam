@@ -50,7 +50,8 @@ const DECALATGES_NOM = [[0, 0], [0, -16], [0, 16], [-36, 0], [36, 0], [0, -30], 
 const DURADA = 1700; // ms : difusion d'un dialècte causit
 // l'Occitània unida ↔ los dialèctes : la mescla (s), lo balet (s)
 const DURADA_MESCLA = 1.4,
-	DURADA_BALET = 2.2;
+	DURADA_BALET = 2.2,
+	DURADA_VUÈG = 1.8;
 const easeS = (t) => (1 - Math.cos(Math.PI * t)) / 2;
 let dialPromesa = null,
 	creissentPromesa = null,
@@ -102,6 +103,8 @@ export function crearColaDonadas(
 			this._cx = this._cv.getContext('2d');
 			// imatges en cache (lo dessenh d'una image d'animacion las recòpia)
 			this._imgTotes = document.createElement('canvas');
+			this._imgUni = document.createElement('canvas');
+			this._imgFlo = document.createElement('canvas');
 			this._imgSel = document.createElement('canvas');
 			this._imgCro = document.createElement('canvas');
 			this._imgMix = document.createElement('canvas');
@@ -120,7 +123,7 @@ export function crearColaDonadas(
 		onRemove() {
 			cancelAnimationFrame(this._raf);
 			cancelAnimationFrame(this._rafIntro);
-			cancelAnimationFrame(this._rafUni);
+			cancelAnimationFrame(this._rafRel);
 			L.DomUtil.remove(this._cv);
 		},
 
@@ -314,26 +317,35 @@ export function crearColaDonadas(
 		_majUni() {
 			const n = this._nivèls;
 			if (!n) return;
-			const cibla = this._zoom < n.zDial - 0.17 ? 1 : 0;
-			if (this._uni === undefined || this._calm) {
-				this._uni = this._uniCibla = cibla;
-				this._uniQ = 1;
+			const uni = this._zoom < n.zDial - 0.17 ? 1 : 0;
+			this._relais('uni', uni, uni ? DURADA_MESCLA : DURADA_BALET);
+			// de mai luènh (« 1 000 km »), l'Occitània unida se vuèja : sonque son contorn
+			this._relais('vuèg', this._zoom < n.zVuèg ? 1 : 0, DURADA_VUÈG);
+		},
+		// Un relais dins lo temps (pas amb lo zoom) : una sola bocla d'animacion
+		// per totes, que s'arrèsta quand an totes acabat
+		_relais(clau, cibla, dura) {
+			const R = (this._rel ??= {}),
+				r = R[clau];
+			if (!r || this._calm) {
+				R[clau] = { v: cibla, cibla, q: 1 };
 				return;
 			}
-			if (cibla === this._uniCibla) return;
-			this._uniCibla = cibla;
-			const de = this._uni,
-				t0 = performance.now(),
-				dura = (cibla ? DURADA_MESCLA : DURADA_BALET) * 1000;
-			cancelAnimationFrame(this._rafUni);
+			if (r.cibla === cibla) return;
+			Object.assign(r, { de: r.v, cibla, t0: performance.now(), dura: dura * 1000, q: 0 });
+			if (this._rafRel) return;
 			const pas = () => {
-				const q = clamp((performance.now() - t0) / dura);
-				this._uniQ = q;
-				this._uni = lerp(de, cibla, q);
+				let viu = false;
+				for (const x of Object.values(R))
+					if (x.q < 1) {
+						x.q = clamp((performance.now() - x.t0) / x.dura);
+						x.v = lerp(x.de, x.cibla, x.q);
+						if (x.q < 1) viu = true;
+					}
 				this._pintar();
-				if (q < 1 && this._map) this._rafUni = requestAnimationFrame(pas);
+				this._rafRel = viu && this._map ? requestAnimationFrame(pas) : null;
 			};
-			this._rafUni = requestAnimationFrame(pas);
+			this._rafRel = requestAnimationFrame(pas);
 		},
 		_interactiu() {
 			// (l'Occitània unida, de luènh : los dialèctes se causisson pas)
@@ -722,6 +734,40 @@ export function crearColaDonadas(
 				g.restore();
 			}
 		},
+		// L'Occitània unida : lo roge fondut, preparat un còp per zoom e sonque
+		// quand servís (lo flo recalculat a cada imatge copava la fluiditat :
+		// 60 ms per imatge sus un ecran larg, retorn de Romain)
+		_prepUni() {
+			const G = this._geo,
+				c = this._imgUni;
+			this._uniGeo = G;
+			if (!G?.dom) return;
+			c.width = Math.max(1, Math.round(this._cv.width / 2));
+			c.height = Math.max(1, Math.round(this._cv.height / 2));
+			const g = c.getContext('2d'),
+				k = this._dpr / 2;
+			g.setTransform(1, 0, 0, 1, 0, 0);
+			g.clearRect(0, 0, c.width, c.height);
+			g.setTransform(k, 0, 0, k, 0, 0);
+			g.filter = `blur(${(clamp(2500 / G.mPx, 1, 10) * k).toFixed(1)}px)`;
+			g.fillStyle = this._tem.occitan;
+			g.fill(G.dom, 'evenodd');
+			g.filter = 'none';
+		},
+		// La mescla : los dialèctes fondits, preparats un còp (lo flo a cada
+		// imatge copava la fluiditat sus un ecran larg)
+		_prepFlo() {
+			const c = this._imgFlo,
+				s = this._imgTotes;
+			this._floGeo = this._geo;
+			c.width = Math.max(1, Math.round(s.width / 2));
+			c.height = Math.max(1, Math.round(s.height / 2));
+			const g = c.getContext('2d');
+			g.clearRect(0, 0, c.width, c.height);
+			g.filter = `blur(${Math.round(8 * this._dpr)}px)`;
+			g.drawImage(s, 0, 0, c.width, c.height);
+			g.filter = 'none';
+		},
 		_prepTotes() {
 			if (this._jaces.dialectes && this._geo?.zonas) this._tenchaDins(this._imgTotes, this._geo.zonas);
 		},
@@ -783,9 +829,14 @@ export function crearColaDonadas(
 				aFront = dossa(clamp((13 - z) / 2)) * aDet,
 				aTenchas0 = clamp((13 - z) / 1.5);
 			// u : 0 los dialèctes, 1 l'Occitània unida (relais dins lo temps)
-			const u = this._uni ?? 1 - aDial,
-				balet = this._uniCibla === 0 && u > 0.001,
-				mescla = this._uniCibla === 1 && u > 0.001,
+			const R = this._rel ?? {},
+				ru = R.uni,
+				u = ru ? ru.v : 1 - aDial,
+				qUni = ru?.q ?? 1,
+				balet = ru?.cibla === 0 && u > 0.001,
+				mescla = ru?.cibla === 1 && u > 0.001,
+				flo = mescla ? easeS(clamp(u / 0.6)) : 0,
+				vE = easeS(R.vuèg?.v ?? 0),
 				aMescla = mescla ? 1 - easeS(clamp((u - 0.55) / 0.45)) : 1,
 				aTenchas = aTenchas0 * (1 - u);
 			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas0 * aMescla;
@@ -797,8 +848,6 @@ export function crearColaDonadas(
 				aFinIntro = clamp((ti - (INTRO.dialectes[1] - 0.5)) / 0.8);
 
 			/* Dialèctes */
-			// la mescla : los dialèctes s'enfoscan e se fondon (puèi rogejan, çai-jos)
-			if (mescla) cx.filter = `blur(${(easeS(u) * 16).toFixed(1)}px)`;
 			if (J.dialectes && G.zonas && u < 0.999) {
 				const selDial = this._sels.some((k) => k !== 'cro');
 				// totes : visibles sens causida ; s'esvalisson quand un dialècte es
@@ -810,10 +859,17 @@ export function crearColaDonadas(
 				// lo balet : tornan coma a l'entrada en scèna, en fuòc d'artifici
 				if (balet && !selDial) {
 					const [d0, d1] = INTRO.dialectes;
-					this._introDial(d0 + (this._uniQ ?? 1) * (d1 - d0), aT);
+					this._introDial(d0 + qUni * (d1 - d0), aT);
 				} else if (ti < INTRO.dialectes[1] && !selDial) {
 					if (ti > INTRO.dialectes[0]) this._introDial(ti, aT);
-				} else if (aTotes > 0.01) this._copiar(this._imgTotes, aT * aTotes);
+				} else if (aTotes > 0.01) {
+					// la mescla : los dialèctes s'enfoscan e se fondon (puèi rogejan, çai-jos)
+					if (flo > 0.01) {
+						if (this._floGeo !== G) this._prepFlo();
+						this._copiar(this._imgTotes, aT * aTotes * (1 - flo));
+						this._copiar(this._imgFlo, aT * aTotes * flo);
+					} else this._copiar(this._imgTotes, aT * aTotes);
+				}
 				// sols sus la carta, los dialèctes causits pòdon èsser mai marcats ;
 				// l'apondut se difusa, los levats s'escantisson
 				if (an && ((an.ajust && an.ajust !== 'cro') || an.lev.length)) this._transicion(p, aT * 1.6);
@@ -824,7 +880,6 @@ export function crearColaDonadas(
 				if (!selDial && this._pusDial) this._copiar(this._imgPus, aT * 0.45);
 			}
 			if (mescla) {
-				cx.filter = 'none';
 				// … e rogejan, fins al roge de l'Occitània unida
 				cx.save();
 				cx.setTransform(1, 0, 0, 1, 0, 0);
@@ -837,11 +892,11 @@ export function crearColaDonadas(
 			// lo balet : las limits dels dialèctes se traçan una a una, de lor
 			// color, puèi s'esvanisson dins lo fondut
 			if (balet && J.dialectes && G.zonas) {
-				const q = this._uniQ ?? 1;
+				const q = qUni;
 				cx.save();
 				cx.lineJoin = 'round';
 				cx.lineCap = 'round';
-				cx.lineWidth = 1.4;
+				cx.lineWidth = 0.9;
 				G.zonas.forEach((zn, i) => {
 					const pz = clamp((q - 0.04 - i * 0.07) / 0.6);
 					if (pz <= 0 || pz >= 1) return;
@@ -941,28 +996,46 @@ export function crearColaDonadas(
 			const aUni = (mescla ? easeS(clamp((u - 0.4) / 0.6)) : u) * aFinIntro;
 			if (G.dom && aUni > 0.01) {
 				cx.save();
-				if (J.dialectes && aDet > 0.01) {
-					cx.filter = `blur(${clamp(2500 / G.mPx, 1, 10).toFixed(1)}px)`;
-					cx.globalAlpha = aUni * aDet * T.tencha * 1.6;
-					cx.fillStyle = T.occitan;
-					cx.fill(G.dom, 'evenodd');
-					cx.filter = 'none';
+				// plena fins a « 700 km » ; puèi se vuèja del mitan cap als bòrds,
+				// coma se la color se retirava dins son contorn (retorn de Romain)
+				if (J.dialectes && vE < 0.999) {
+					if (this._uniGeo !== G) this._prepUni();
+					this._copiar(this._imgUni, aUni * T.tencha * 1.6);
+					if (vE > 0.001) {
+						const [cx0, cy0] = G.pt(ETI_OCCITAN),
+							rMax = Math.max(...[[-1.6, 42.65], [7.55, 42.65], [-1.6, 46.4], [7.55, 46.4]].map((q) => Math.hypot(G.pt(q)[0] - cx0, G.pt(q)[1] - cy0))),
+							r = vE * rMax * 1.35;
+						const gr = cx.createRadialGradient(cx0, cy0, 0, cx0, cy0, Math.max(1, r));
+						gr.addColorStop(0, '#000');
+						gr.addColorStop(0.62, '#000');
+						gr.addColorStop(1, 'rgba(0, 0, 0, 0)');
+						cx.save();
+						cx.globalCompositeOperation = 'destination-out';
+						cx.fillStyle = gr;
+						cx.beginPath();
+						cx.arc(cx0, cy0, Math.max(1, r), 0, 6.283);
+						cx.fill();
+						cx.restore();
+					}
 				}
-				cx.globalAlpha = aUni * lerp(0.95, 0.65, aDet);
+				// lo contorn s'afortís un pauc quand la color i es tornada
+				cx.globalAlpha = aUni * lerp(0.7, 0.95, vE);
 				cx.strokeStyle = T.occitan;
-				cx.lineWidth = 1.2;
+				cx.lineWidth = 0.8;
 				cx.lineJoin = 'round';
 				cx.stroke(G.dom);
-				if (J.dialectes && aDet > 0.01) {
+				if (J.dialectes && vE < 0.6) {
 					const [x, y] = G.pt(ETI_OCCITAN);
-					cx.font = '600 15px Luciole, sans-serif';
-					cx.letterSpacing = '6px';
+					// (lo nom se fa pichon amb la region, de luènh)
+					const fsO = clamp(9 + (z - 3.75) * 3, 9, 15);
+					cx.font = `600 ${fsO.toFixed(1)}px Luciole, sans-serif`;
+					cx.letterSpacing = (fsO * 0.4).toFixed(1) + 'px';
 					cx.textAlign = 'center';
 					cx.textBaseline = 'middle';
 					cx.shadowColor = T.ombra;
 					cx.shadowBlur = 8;
 					cx.fillStyle = T.occitanTèxt;
-					cx.globalAlpha = aUni * aDet;
+					cx.globalAlpha = aUni * (1 - easeS(clamp(vE / 0.6)));
 					cx.fillText('OCCITAN', x, y);
 				}
 				cx.restore();
@@ -1042,11 +1115,12 @@ export function crearColaDonadas(
 		},
 
 		_copiar(img, a) {
+			if (a < 0.005) return; // (una còpia invisibla còsta autant qu'una autra)
 			const cx = this._cx;
 			cx.save();
 			cx.setTransform(1, 0, 0, 1, 0, 0);
 			cx.globalAlpha = a;
-			cx.drawImage(img, 0, 0);
+			cx.drawImage(img, 0, 0, this._cv.width, this._cv.height);
 			cx.restore();
 		},
 

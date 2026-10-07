@@ -221,7 +221,8 @@ export function nivèlsDezoom(map) {
 	const zB = map.getBoundsZoom(OCCITANIA);
 	const zDial = Math.min(5.95, zB - 0.5);
 	const z300 = Math.min(5.37, zDial - 0.5);
-	return { zDial, z300, z500: z300 - 0.74 };
+	// l'Occitània demòra plena fins a « 700 km », puèi se vuèja (retorn de Romain)
+	return { zDial, z300, z500: z300 - 0.74, zVuèg: Math.min(3.7, z300 - 1.35) };
 }
 // de 0 a 1 : los dialèctes (0 = l'Occitània unida) ; las jaces de detalh (0 = lo contorn sol)
 export const aDialectes = (n, z) => easeS(clamp((z - (n.zDial - 0.35)) / 0.35));
@@ -714,37 +715,45 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				aCarta = 1 - (this._detA ?? 0); // la carta detalhada pren la relèva
 			const aEu = Math.max(clamp((zB - 0.15 - z) / 0.6), luènh * eEu) * clamp((z - 3.4) / 0.5) * aCarta,
 				aTot = Math.max(clamp((4.0 - z) / 0.5), luènh * (1 - eEu)) * aCarta;
-			const traçar = (païses, a, larg) => {
-				if (!païses || a < 0.01) return;
-				cx.save();
-				cx.globalAlpha = a;
-				cx.strokeStyle = T.costa;
-				cx.lineWidth = larg;
-				cx.lineJoin = 'round';
-				cx.beginPath();
+			// Los contorns son bastits un còp per zoom (un Path2D), pas a cada
+			// imatge : retraçar los 40 000 ponches d'Euròpa a cada imatge costava
+			// 14 ms e copava la fluiditat del dezoom (retorn de Romain)
+			const camin = (païses) => {
+				const c = new Path2D();
 				// (un contorn que travèrsa la linha de cambiament de data sauta d'un
 				// bòrd del mond a l'autre : lo traç es copat a aquel saut)
 				const saut = 256 * Math.pow(2, z) * 0.4;
 				for (const p of païses)
 					for (const pl of p.pts)
 						for (const anel of pl) {
-							cx.moveTo(anel[0][0] - o.x, anel[0][1] - o.y);
+							c.moveTo(anel[0][0], anel[0][1]);
 							let copat = false;
 							for (let i = 1; i < anel.length; i++) {
 								if (Math.abs(anel[i][0] - anel[i - 1][0]) > saut) {
 									copat = true;
-									cx.moveTo(anel[i][0] - o.x, anel[i][1] - o.y);
-								} else cx.lineTo(anel[i][0] - o.x, anel[i][1] - o.y);
+									c.moveTo(anel[i][0], anel[i][1]);
+								} else c.lineTo(anel[i][0], anel[i][1]);
 							}
-							if (!copat) cx.closePath();
+							if (!copat) c.closePath();
 						}
-				cx.stroke();
+				return c;
+			};
+			const traçar = (clau, a, larg) => {
+				if (!M[clau] || a < 0.01) return;
+				const c = (M[clau + 'C'] ??= camin(M[clau]));
+				cx.save();
+				cx.globalAlpha = a;
+				cx.strokeStyle = T.costa;
+				cx.lineWidth = larg;
+				cx.lineJoin = 'round';
+				cx.translate(-o.x, -o.y);
+				cx.stroke(c);
 				cx.restore();
 			};
 			// (en s'aprochant d'un país luènh, lo fil s'afortís un pauc)
 			const fòrt = clamp((z - 4) / 3);
-			traçar(M.tot, aTot * lerp(0.5, 0.75, fòrt), lerp(0.6, 1.1, fòrt));
-			traçar(M.eu, aEu * lerp(0.45, 0.7, fòrt), lerp(0.7, 1.1, fòrt));
+			traçar('tot', aTot * lerp(0.5, 0.75, fòrt), lerp(0.5, 0.8, fòrt));
+			traçar('eu', aEu * lerp(0.45, 0.7, fòrt), lerp(0.55, 0.8, fòrt));
 			// los noms dels païses d'Euròpa, sens se trucar
 			const aNoms = aEu * clamp((z - 3.9) / 0.4);
 			if (aNoms < 0.01 || !M.eu) return;
@@ -765,7 +774,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					y = p.eti[1] - o.y;
 				if (x < -50 || y < -20 || x > W + 50 || y > H + 20) continue;
 				const t = nom.toUpperCase(),
-					w = cx.measureText(t).width;
+					w = ((p.w ??= {})[t] ??= cx.measureText(t).width); // (mesurat un còp)
 				if (p.larg < Math.min(w * 0.6, 40)) continue;
 				const b = [x - w / 2 - 4, y - 8, x + w / 2 + 4, y + 8];
 				if (pausats.some((q) => q[0] < b[2] && q[2] > b[0] && q[1] < b[3] && q[3] > b[1])) continue;
@@ -1227,6 +1236,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const aGen = 1 - 0.85 * easeS(clamp((pr - 0.1) / 0.9)),
 				aRius = 1 - easeIO(clamp(pr / 0.45)),
 				aEtiq = aRius;
+			// a « 200 km », pas pus de rius (retorn de Romain) : s'escantisson doçament
+			const nv = this._nivèls,
+				cRius = nv ? easeS(clamp((z - nv.zDial) / 0.3)) : 1;
+			this._riusZ = this._calm || this._riusZ === undefined ? cRius : this._riusZ + (cRius - this._riusZ) * Math.min(1, dt / 0.35);
+			const aRiu = aRius * this._riusZ;
 			const opTeulas = easeS(clamp((pr - 0.25) / 0.75));
 			if (this._teulas && Math.abs(opTeulas - (this._opTeulas ?? -1)) > 0.004) {
 				this._teulas.setOpacity(opTeulas);
@@ -1352,7 +1366,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// Les rivières : à l'arrivée, l'eau sort de chaque source et descend
 			// jusqu'à la mer (ou à la rivière qu'elle rejoint), à la même vitesse
 			// partout, avec un petit éclat au front
-			if (aRius > 0.01 && this._el.rius && this._rius) {
+			if (aRiu > 0.01 && this._el.rius && this._rius) {
 				const [r0, r1] = INTRO.rius;
 				const fiMax = (this._fiMax ??= Math.max(...this._rius.map((r) => r.o + r.L)));
 				const D = ti >= r1 ? Infinity : Math.max(0, ti - r0) * (fiMax / (r1 - r0));
@@ -1365,7 +1379,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					const l = r.pts,
 						long = D - r.o;
 					if (long <= 0) continue;
-					cx.globalAlpha = (r.nom ? 0.75 : 0.25) * aRius;
+					cx.globalAlpha = (r.nom ? 0.75 : 0.25) * aRiu;
 					cx.lineWidth = (0.4 + r.pes * 0.22) * gros;
 					cx.beginPath();
 					cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
@@ -1394,7 +1408,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					cx.fillStyle = T.riu;
 					cx.shadowColor = T.riu;
 					cx.shadowBlur = 8;
-					cx.globalAlpha = 0.9 * aRius;
+					cx.globalAlpha = 0.9 * aRiu;
 					for (const [x, y, pes] of fronts) {
 						cx.beginPath();
 						cx.arc(x, y, (0.8 + pes * 0.2) * gros, 0, 6.283);
