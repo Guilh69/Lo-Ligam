@@ -18,60 +18,38 @@ export function gardarSons(actius) {
 	} catch {}
 }
 
-// Un papièr que se plega (plegar = true) o se desplega : un fregadís de
-// crussiments brèus (bruch filtrat, de pics aleatòris), e un pichon tuc
-// sord a la fin del plec (al començament del desplec)
+// Un papièr que se plega (plegar = true) o se desplega : un buf d'aire doç,
+// sus lo modèl del « whoosh » validat per Romain pels leçons (lo primièr
+// ensag, amb de crussiments e un tuc, èra « horrible »). Sens aguts : lo
+// bruch passa per un filtre bas, e sa banda davala al plec, monta al desplec.
 export function sonPapièr(plegar = true) {
 	if (!sonsActius()) return;
 	try {
 		ctx ??= new (window.AudioContext || window.webkitAudioContext)();
 		if (ctx.state === 'suspended') ctx.resume();
 		const t0 = ctx.currentTime + 0.01,
-			durada = 0.34,
-			sr = ctx.sampleRate;
-		const n = Math.floor(sr * durada);
-		const buf = ctx.createBuffer(1, n, sr);
+			durada = 0.3,
+			n = Math.floor(ctx.sampleRate * durada);
+		const buf = ctx.createBuffer(1, n, ctx.sampleRate);
 		const d = buf.getChannelData(0);
-		// crussiments : de pics brèus semenats al azard, mai espesses al mitan
-		let pic = 0;
-		for (let i = 0; i < n; i++) {
-			const t = i / n;
-			const densitat = Math.sin(Math.PI * t) ** 1.5;
-			if (Math.random() < 0.0016 * densitat * 4) pic = 0.6 + Math.random() * 0.4;
-			pic *= 0.9965;
-			d[i] = (Math.random() * 2 - 1) * (0.12 * densitat + pic);
-		}
+		for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
 		const font = ctx.createBufferSource();
 		font.buffer = buf;
-		const passaAut = ctx.createBiquadFilter();
-		passaAut.type = 'highpass';
-		passaAut.frequency.value = 900;
 		const banda = ctx.createBiquadFilter();
 		banda.type = 'bandpass';
-		banda.Q.value = 0.8;
-		banda.frequency.setValueAtTime(plegar ? 3400 : 2400, t0);
-		banda.frequency.linearRampToValueAtTime(plegar ? 2200 : 3600, t0 + durada);
+		banda.Q.value = 0.6;
+		banda.frequency.setValueAtTime(plegar ? 1300 : 550, t0);
+		banda.frequency.exponentialRampToValueAtTime(plegar ? 550 : 1300, t0 + durada);
+		const bas = ctx.createBiquadFilter();
+		bas.type = 'lowpass';
+		bas.frequency.value = 1800;
 		const vol = ctx.createGain();
 		vol.gain.setValueAtTime(0.0001, t0);
-		vol.gain.exponentialRampToValueAtTime(0.16, t0 + 0.03);
-		vol.gain.setValueAtTime(0.16, t0 + durada * 0.7);
+		vol.gain.exponentialRampToValueAtTime(0.08, t0 + durada * 0.35);
 		vol.gain.exponentialRampToValueAtTime(0.0001, t0 + durada);
-		font.connect(passaAut).connect(banda).connect(vol).connect(ctx.destination);
+		font.connect(banda).connect(bas).connect(vol).connect(ctx.destination);
 		font.start(t0);
 		font.stop(t0 + durada);
-		// lo tuc : un plec que s'apièja (fin del plec, o començament del desplec)
-		const tt = plegar ? t0 + durada * 0.85 : t0;
-		const osc = ctx.createOscillator();
-		osc.type = 'sine';
-		osc.frequency.setValueAtTime(150, tt);
-		osc.frequency.exponentialRampToValueAtTime(70, tt + 0.08);
-		const vt = ctx.createGain();
-		vt.gain.setValueAtTime(0.0001, tt);
-		vt.gain.exponentialRampToValueAtTime(0.14, tt + 0.008);
-		vt.gain.exponentialRampToValueAtTime(0.0001, tt + 0.1);
-		osc.connect(vt).connect(ctx.destination);
-		osc.start(tt);
-		osc.stop(tt + 0.12);
 	} catch {
 		/* Web Audio indisponible : sens son, jamai blocant */
 	}
