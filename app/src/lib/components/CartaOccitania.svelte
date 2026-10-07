@@ -312,6 +312,8 @@
 		setBaseLayer(baseLayer);
 		colaDonadas = crearColaDonadas(L, { clar, dalt, lang, jaces: jacesDonadas(visibility) });
 		colaDonadas.addTo(map);
+		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
+		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, get colaEstelas() { return colaEstelas; } };
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
 		if (ambToponims(baseLayer)) loadToponymsLayer();

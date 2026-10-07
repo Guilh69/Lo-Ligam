@@ -11,6 +11,11 @@ import { cargarLimits } from './colaEstelas.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
+// mescla de doas colors #rrggbb (t = part de la segonda)
+const mesclar = (a, b, t) => {
+	const h = (c, i) => parseInt(c.slice(1 + 2 * i, 3 + 2 * i), 16);
+	return '#' + [0, 1, 2].map((i) => Math.round(lerp(h(a, i), h(b, i), t)).toString(16).padStart(2, '0')).join('');
+};
 
 // Una color per dialècte, dins l'esperit de la carta d'Occitanica (violet
 // gascon, magenta lengadocian, ròse provençal, irangis del nòrd) ; en
@@ -50,6 +55,11 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 			this._tem = temaDe(clar, dalt);
 			this._lang = lang;
 			this._jaces = { ...jaces };
+			// Variantas en esprova (2026-10-07), causidas per l'adreça de la pagina :
+			// ?noms=gravat|atlas|ensenha & transicion=fondut|penche
+			const q = new URLSearchParams(location.search);
+			this._estilN = q.get('noms') || 'gravat';
+			this._estilT = q.get('transicion') || 'fondut';
 		},
 
 		onAdd(map) {
@@ -57,10 +67,13 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 				const p = map.createPane('donadas');
 				p.style.zIndex = '300';
 				p.style.pointerEvents = 'none';
+				// fondu d'arrivada sul pan, pas sul canavàs : una transicion en linha
+				// sul canavàs remplaçariá la de Leaflet pel zoom (las colors
+				// sautavan al luòc de seguir)
+				p.style.opacity = '0';
+				p.style.transition = 'opacity 0.9s ease';
 			}
 			this._cv = L.DomUtil.create('canvas', 'cola-donadas leaflet-zoom-animated', map.getPane('donadas'));
-			this._cv.style.opacity = '0';
-			this._cv.style.transition = 'opacity 0.9s ease';
 			this._cx = this._cv.getContext('2d');
 			this._fora = document.createElement('canvas');
 			cargarLimits().then((l) => {
@@ -69,6 +82,12 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 			});
 			this._cargar();
 			this._update();
+			// los noms se pintan dins lo canavàs : esperar las polissas
+			Promise.all([
+				document.fonts?.load('16px Limelight'),
+				document.fonts?.load('italic 500 16px "Cormorant Garamond"'),
+				document.fonts?.load('400 12px Luciole')
+			]).then(() => this._update(), () => {});
 		},
 
 		onRemove() {
@@ -170,28 +189,82 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 			const dom = this._limits?.domeni;
 			const camiDom = dom?.anels?.length ? cami(dom.anels) : null;
 
-			/* Dialèctes : tencha fonduda, retalhada pel domeni (còsta e frontièra
-			   netas, sonque las limits intèrnas se fondon) */
+			/* Dialèctes : las zònas, retalhadas pel domeni (còsta e frontièra netas).
+			   Las limits intèrnas son de transicions, doas faiçons en esprova :
+			   « fondut » (degradat large, ~7 km) o « penche » (cada dialècte intra
+			   per rajas dins lo vesin, sus ~8 km) */
 			if (J.dialectes && this._dial) {
+				const zonas = this._dial.features.map((f) => {
+					const c = new Path2D();
+					for (const anels of poligons(f.geometry)) cami(anels, c);
+					return { c, color: T.dial[f.properties.kod] ?? '#888' };
+				});
+				const penche = this._estilT === 'penche';
+				const flo = penche ? clamp(1500 / mPx, 0.8, 12) : clamp(7000 / mPx, 1.5, 60);
 				const off = this._fora;
 				off.width = this._cv.width;
 				off.height = this._cv.height;
 				const g = off.getContext('2d');
 				g.setTransform(dpr, 0, 0, dpr, 0, 0);
-				for (const f of this._dial.features) {
-					g.fillStyle = T.dial[f.properties.kod] ?? '#888';
-					const c = new Path2D();
-					for (const anels of poligons(f.geometry)) cami(anels, c);
-					g.fill(c, 'evenodd');
+				g.lineJoin = 'round';
+				// d'en primièr las zònas espandidas cap a l'exterior (lo fondut se
+				// palís pas sus la còsta), puèi las zònas vertadièras dessús
+				for (const zn of zonas) {
+					g.strokeStyle = zn.color;
+					g.lineWidth = flo * 6;
+					g.stroke(zn.c);
 				}
-				const flo = clamp(3000 / mPx, 1, 30); // fondut d'environ 3 km
+				for (const zn of zonas) {
+					g.fillStyle = zn.color;
+					g.fill(zn.c, 'evenodd');
+				}
+				// de prèp, lo dialècte es pertot : la tencha s'esvalís
+				const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4));
 				cx.save();
 				if (camiDom) cx.clip(camiDom, 'evenodd');
 				cx.setTransform(1, 0, 0, 1, 0, 0);
 				cx.filter = `blur(${(flo * dpr).toFixed(1)}px)`;
-				// de prèp, lo dialècte es pertot : la tencha s'esvalís a mitat
-				cx.globalAlpha = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4));
+				cx.globalAlpha = aT;
 				cx.drawImage(off, 0, 0);
+				cx.filter = 'none';
+				if (penche) {
+					// rajas : per cada zòna, un anèl de ~8 km a l'exterior, rajat
+					const larg = clamp(8000 / mPx, 3, 70);
+					const motiu = document.createElement('canvas');
+					const pas = Math.round(7 * dpr);
+					motiu.width = motiu.height = pas;
+					const m = motiu.getContext('2d');
+					m.strokeStyle = '#000';
+					m.lineWidth = 2.6 * dpr;
+					m.beginPath();
+					// diagonala e sos dos cantons, per que las rajas se seguisson
+					m.moveTo(-1, pas + 1);
+					m.lineTo(pas + 1, -1);
+					m.moveTo(-1, 1);
+					m.lineTo(1, -1);
+					m.moveTo(pas - 1, pas + 1);
+					m.lineTo(pas + 1, pas - 1);
+					m.stroke();
+					for (const zn of zonas) {
+						g.setTransform(1, 0, 0, 1, 0, 0);
+						g.globalCompositeOperation = 'source-over';
+						g.clearRect(0, 0, off.width, off.height);
+						g.setTransform(dpr, 0, 0, dpr, 0, 0);
+						g.fillStyle = g.strokeStyle = zn.color;
+						g.lineWidth = larg * 2;
+						g.fill(zn.c, 'evenodd');
+						g.stroke(zn.c);
+						g.globalCompositeOperation = 'destination-out';
+						g.fill(zn.c, 'evenodd');
+						g.globalCompositeOperation = 'destination-in';
+						g.setTransform(1, 0, 0, 1, 0, 0);
+						g.fillStyle = g.createPattern(motiu, 'repeat');
+						g.fillRect(0, 0, off.width, off.height);
+						g.globalCompositeOperation = 'source-over';
+						cx.globalAlpha = Math.min(1, aT * 2.2);
+						cx.drawImage(off, 0, 0);
+					}
+				}
 				cx.restore();
 			}
 
@@ -277,27 +350,45 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 				const noms = [];
 				if (J.dialectes && this._dial) for (const f of this._dial.features) noms.push([f.properties, T.dial[f.properties.kod]]);
 				if (J.creissent && this._creissent) for (const f of this._creissent.features) noms.push([f.properties, T.lenga]);
-				const fs = clamp(11 + (z - 6) * 1.2, 11, 14);
+				// Sens contorn negre (retorn de Romain) : tres aspèctes en esprova.
+				// gravat : l'italica de las ribièras, lusenta ; atlas : capitalas
+				// espaçadas amb una ombra doça ; ensenha : la Limelight dels títols
+				const E = this._estilN;
+				const clar = T.admin !== TEMAS.sorne.admin;
+				const fs =
+					E === 'atlas' ? clamp(10.5 + (z - 6) * 1.1, 10.5, 13) : E === 'ensenha' ? clamp(14 + (z - 6) * 1.8, 14, 19) : clamp(17 + (z - 6) * 2.4, 17, 24);
 				cx.save();
-				cx.font = `700 ${fs.toFixed(1)}px Luciole, sans-serif`;
-				cx.letterSpacing = (fs * 0.28).toFixed(1) + 'px';
+				cx.font =
+					E === 'atlas'
+						? `400 ${fs.toFixed(1)}px Luciole, sans-serif`
+						: E === 'ensenha'
+							? `${fs.toFixed(1)}px Limelight, Georgia, serif`
+							: `italic 500 ${fs.toFixed(1)}px "Cormorant Garamond", Georgia, serif`;
+				cx.letterSpacing = (fs * (E === 'atlas' ? 0.32 : E === 'ensenha' ? 0.1 : 0.04)).toFixed(1) + 'px';
 				cx.textAlign = 'center';
 				cx.textBaseline = 'middle';
-				cx.lineJoin = 'round';
 				for (const [pr, color] of noms) {
 					const [x, y] = pt(pr.eti);
-					const t = (this._lang === 'fr' ? pr.fr : pr.oc).toUpperCase();
+					let t = this._lang === 'fr' ? pr.fr : pr.oc;
+					t = E === 'atlas' ? t.toUpperCase() : t.charAt(0).toUpperCase() + t.slice(1);
+					const viu = clar ? mesclar(color, '#2e1d14', 0.25) : mesclar(color, '#fff8ec', 0.35);
 					cx.globalAlpha = aNoms;
-					cx.strokeStyle = T.liser;
-					cx.lineWidth = 3.5;
-					cx.strokeText(t, x, y);
-					cx.globalAlpha = aNoms;
-					cx.fillStyle = color;
+					if (E === 'atlas') {
+						cx.shadowColor = clar ? 'rgba(245, 234, 216, 0.95)' : 'rgba(18, 9, 6, 0.9)';
+						cx.shadowBlur = 7;
+					} else {
+						// lo nom lusís de la color de son dialècte
+						cx.shadowColor = clar ? 'rgba(245, 234, 216, 0.9)' : color;
+						cx.shadowBlur = clar ? 6 : 12;
+					}
+					cx.fillStyle = viu;
+					cx.fillText(t, x, y);
+					cx.shadowBlur = 0;
 					cx.fillText(t, x, y);
 				}
 				cx.restore();
 			}
-			if (dom) this._cv.style.opacity = '1';
+			if (dom) map.getPane('donadas').style.opacity = '1';
 		}
 	});
 	return new Cola();
