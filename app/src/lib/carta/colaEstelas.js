@@ -213,9 +213,14 @@ function plaçar(cx, vilas, rius) {
 		];
 		let c = cand[0],
 			mendre = Infinity;
+		// Las vilas grandas e las vilas repèrs : lo nom a drecha del ponch,
+		// coma o vòl l'usatge (retorn de Romain : « Montpelhièr » a esquèrra
+		// semblava designar l'espilla de dejós) ; un autre costat sonque se un
+		// autre nom empacha
+		const drecha = v.renc <= 2 ? 3 : 0;
 		for (const q of cand) {
 			const [val, f] = cost(q.b, v.nom);
-			const sc = (val - 5 * f) * 0.03 + f * 100 + q.bonus;
+			const sc = (val - 5 * f) * 0.03 + f * 100 + q.bonus + (q === cand[0] ? 0 : drecha);
 			if (sc < mendre) {
 				mendre = sc;
 				c = q;
