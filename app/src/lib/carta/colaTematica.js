@@ -12,6 +12,7 @@
 // territòris. Noms occitans de validar per Romain.
 
 import { INTRO, nivèlsDezoom, aDetalh } from './colaEstelas.js';
+import { prepContorn, traçarPart, avançada, estelasDe, TOTAL as TOTAL_APAR } from './aparicion.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const easeS = (t) => (1 - Math.cos(Math.PI * t)) / 2;
@@ -19,12 +20,14 @@ const CORMORANT = '"Cormorant Garamond", Georgia, serif';
 
 const TEMAS = {
 	sorne: {
+		estela: '#ffe9b8',
 		linha: '245, 234, 216',
 		parc: '134, 196, 140',
 		mar: '120, 180, 220',
 		ombra: 'rgba(18, 9, 6, 0.9)'
 	},
 	clar: {
+		estela: '#9a6a1c',
 		linha: '46, 29, 20',
 		parc: '46, 110, 62',
 		mar: '30, 90, 140',
@@ -299,6 +302,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		onRemove() {
 			cancelAnimationFrame(this._raf);
 			cancelAnimationFrame(this._rafIntro);
+			cancelAnimationFrame(this._rafApar);
 			for (const f of this._fontsMesas ?? []) this._map?.attributionControl?.removeAttribution(f);
 			this._fontsMesas = null;
 			L.DomUtil.remove(this._cv);
@@ -507,12 +511,20 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					p: pt(f.geometry.coordinates)
 				}));
 			this._fonts();
+			// las comunas venon d'aparéisser (jaça alucada, o escala passada) : de
+			// constellacions se pausan e ne dessenhan los contorns (demanda de Romain)
+			const visCom = !!J.comunas && z >= Z_COMUNAS;
+			if (visCom && !this._visCom && !this._calm) {
+				this._aparCom = performance.now();
+				this._lançarApar();
+			}
+			this._visCom = visCom;
 			if (J.comunas && z >= Z_COMUNAS - 0.5) {
 				G.com = [];
 				for (const lista of this._deps.values())
 					for (const c of lista ?? []) {
 						const zn = zona(c.poligons);
-						if (dins(zn.bbox)) G.com.push({ ...zn, props: c.props, dep: c.dep });
+						if (dins(zn.bbox)) G.com.push({ ...zn, props: c.props, dep: c.dep, poligons: c.poligons });
 					}
 				this._cargarComunas();
 			}
@@ -584,6 +596,16 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			this._pus = t;
 			onSurvòl?.(this._info(t));
 			this._bocla();
+		},
+		_lançarApar() {
+			if (this._rafApar) return;
+			const pas = () => {
+				this._pintar();
+				const viu = this._aparCom != null && (performance.now() - this._aparCom) / 1000 <= TOTAL_APAR;
+				this._rafApar = viu && this._map ? requestAnimationFrame(pas) : null;
+				if (!viu) this._pintar();
+			};
+			this._rafApar = requestAnimationFrame(pas);
 		},
 		_onMirga(e) {
 			if (e.originalEvent?.pointerType === 'touch') return;
@@ -881,7 +903,42 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			/* Comunas : un fil fin, a partir de « 5 km » ; la survolada s'esclaira */
 			if (G.com) {
 				const a = clamp((z - (Z_COMUNAS - 0.2)) / 0.2) * clamp((16 - z) / 1.5);
-				if (a > 0.01) {
+				const tA = this._aparCom == null ? null : (performance.now() - this._aparCom) / 1000;
+				if (tA != null && tA > TOTAL_APAR) this._aparCom = null;
+				if (a > 0.01 && tA != null && tA <= TOTAL_APAR) {
+					// l'aparicion : las estelas venon d'a costat se pausar suls
+					// contorns, puèi lo fil las religa
+					cx.save();
+					cx.lineJoin = 'round';
+					cx.strokeStyle = `rgba(${T.linha}, ${0.5 * a})`;
+					cx.lineWidth = 0.7;
+					cx.setLineDash([3, 2]);
+					cx.beginPath();
+					const vivas = [];
+					for (const c of G.com) {
+						const ct = (c.ct ??= prepContorn(c.poligons.flat().map((an) => an.map(G.pt))));
+						const q = avançada(tA, ct, this._W, this._H);
+						if (q <= 0) continue;
+						const qT = clamp((q - 0.35) / 0.65);
+						if (qT > 0) traçarPart(cx, ct, easeS(qT));
+						if (q < 1) vivas.push([c, ct, q]);
+					}
+					cx.stroke();
+					cx.setLineDash([]);
+					cx.fillStyle = T.estela;
+					for (const [c, ct, q] of vivas) {
+						const qP = easeS(clamp(q / 0.45)),
+							aE = Math.sin(Math.PI * q) * a;
+						for (const e of (c.est ??= estelasDe(ct))) {
+							const x = e.x + e.dx * (1 - qP),
+								y = e.y + e.dy * (1 - qP);
+							// (cada estela pampalheja a son ritme)
+							cx.globalAlpha = aE * (0.45 + 0.4 * e.f) * (0.75 + 0.25 * Math.sin(tA * 9 + e.f * 40));
+							cx.fillRect(x - 0.9, y - 0.9, 1.8, 1.8);
+						}
+					}
+					cx.restore();
+				} else if (a > 0.01) {
 					cx.save();
 					cx.lineJoin = 'round';
 					cx.strokeStyle = `rgba(${T.linha}, ${0.5 * a})`;
@@ -889,6 +946,10 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					cx.setLineDash([3, 2]);
 					for (const c of G.com) cx.stroke(c.c);
 					cx.setLineDash([]);
+					cx.restore();
+				}
+				if (a > 0.01) {
+					cx.save();
 					for (const [k, v] of this._a) {
 						if (!k.startsWith('com:')) continue;
 						const c = G.com.find((x) => 'com:' + x.props.i === k);

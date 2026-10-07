@@ -620,6 +620,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 
 		// Elements del fons visibles ({ estelas, nomsVilas, rius, nomsRius, corbas, costa })
 		setElements(el) {
+			// lo relèu alucat : las corbas se tornan dessenhar al gredon (demanda de Romain)
+			if (el.corbas && this._el && !this._el.corbas && !this._calm) this._tCorbas = performance.now();
 			this._el = { ...this._el, ...el };
 			// los noms de rius e las vilas jògan sul plaçament dels noms (e sus
 			// las bóstias que las autras còlas evitan) : tot es tornat plaçar
@@ -1314,11 +1316,14 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (aRius > 0.01 && this._el.corbas && this._corbas?.length) {
 				const pas = pasCorbas(z);
 				const [c0, c1] = INTRO.corbas;
+				// (alucadas après l'entrada en scèna : la meteissa montada, tornada jogar)
+				const tiC = this._tCorbas == null ? ti : Math.min(ti, c0 + (t - this._tCorbas) / 1000);
+				if (this._tCorbas != null && tiC >= c1) this._tCorbas = null;
 				cx.strokeStyle = T.corba;
 				cx.lineJoin = 'round';
 				for (const mestra of [false, true]) {
 					cx.lineWidth = mestra ? 0.8 : 0.6;
-					if (ti >= c1) {
+					if (tiC >= c1) {
 						// … e s'escantís quand la darrièra es pausada
 						if (this._sRelèu === 1) (this._sRelèu = 2), this._sons?.relèu(false);
 						cx.globalAlpha = aRius * (mestra ? 0.3 : 0.13);
@@ -1339,14 +1344,19 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						if (e % pas || (e % 1000 === 0) !== mestra) continue;
 						const renc = nivèls.indexOf(e) / Math.max(1, nivèls.length - 1),
 							oèst = clamp((l[0][0] - o.x) / W);
-						const aE = easeS(clamp((ti - (c0 + renc * (c1 - c0 - 0.9) + oèst * 0.45)) / 0.45));
+						// cada corba se dessenha al gredon, d'un cap a l'autre (retorn de
+						// Romain : « pas qu'elles apparaissent en flou »)
+						const aE = clamp((tiC - (c0 + renc * (c1 - c0 - 1.15) + oèst * 0.45)) / 0.7);
 						// la tèrra bramís a partir de la primièra corba que pareis
 						if (aE > 0 && this._sons && !this._sRelèu) (this._sRelèu = 1), this._sons.relèu(true);
-						if (aE < 0.01) continue;
-						cx.globalAlpha = aRius * aE * (mestra ? 0.3 : 0.13);
+						if (aE < 0.005) continue;
+						const kc = easeS(aE) * (l.length - 1),
+							n = Math.floor(kc);
+						cx.globalAlpha = aRius * (mestra ? 0.3 : 0.13) * Math.min(1, 0.4 + aE * 1.5);
 						cx.beginPath();
 						cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
-						for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
+						for (let i = 1; i <= n; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
+						if (n < l.length - 1) cx.lineTo(lerp(l[n][0], l[n + 1][0], kc - n) - o.x, lerp(l[n][1], l[n + 1][1], kc - n) - o.y);
 						cx.stroke();
 					}
 				}
