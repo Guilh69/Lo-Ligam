@@ -1,0 +1,139 @@
+bailliage_id;bailliage_nom;provincia_fr;governament_fr;font_o_nota
+383;Sénéchaussée d'Aix;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+385;Ville et terroire d'Arles;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+386;Sénéchaussée de Marseille;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+387;Sénéchaussée de Draguignan;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+388;Sénéchaussée de Grasse;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+389;Sénéchaussée de Castellane;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+390;Sénéchaussée de Forcalquier;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+391;Sénéchaussée de Digne;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+392;Sénéchaussée de Sisteron;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+394;Sénéchaussée de Toulon;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+395;Sénéchaussée de Brignoles;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+396;Sénéchaussée d'Hyères;Provence;Provence;Rattachement sans ambiguïté (nom et chef-lieu).
+384;Sénéchaussée d'Arles;Provence;Provence;Comprend aussi des terres adjacentes de Provence enclavées en Dauphiné (comté de Grignan).
+393;Sénéchaussée de Barcelonnette;Provence;Provence;Vallée de Barcelonnette, française depuis le traité d'Utrecht (1713), unie à la Provence. Wikipédia (article Barcelonnette) signale un rattachement militaire au Dauphiné en 1717, sans source : à vérifier.
+041;Sénéchaussée de Bordeaux;Guyenne;Guyenne et Gascogne;Guyenne au sens étroit (Bordelais).
+105;Sénéchaussée de Libourne;Guyenne;Guyenne et Gascogne;Guyenne au sens étroit (Bordelais).
+002;Sénéchaussée de Castelmoron;Guyenne;Guyenne et Gascogne;Guyenne au sens étroit (Bordelais).
+001;Sénéchaussée d'Agen;Guyenne;Guyenne et Gascogne;Agenais.
+028;Sénéchaussée de Bazas;Guyenne;Guyenne et Gascogne;Bazadais : rangé tantôt en Guyenne, tantôt en Gascogne ; ici en Guyenne (Wikipédia, article Guyenne). Choix éditorial.
+069;Sénéchaussée de Condom;Guyenne;Guyenne et Gascogne;Condomois : rangé tantôt en Guyenne, tantôt en Gascogne ; ici en Guyenne (Wikipédia, article Guyenne). Choix éditorial.
+003;Sénéchaussée d'Albret;Gascogne;Guyenne et Gascogne;Pays d'Albret.
+004;Sénéchaussée de Casteljaloux;Gascogne;Guyenne et Gascogne;Pays d'Albret.
+005;Sénéchaussée de Tartas;Gascogne;Guyenne et Gascogne;Albret landais (Tartas).
+102;Sénéchaussée de Dax;Gascogne;Guyenne et Gascogne;Sénéchaussée des Lannes (Landes, Chalosse).
+104;Sénéchaussée de Saint-Sever;Gascogne;Guyenne et Gascogne;Sénéchaussée des Lannes (Landes, Chalosse).
+103;Sénéchaussée de Bayonne;Gascogne;Guyenne et Gascogne;Bayonne : siège secondaire de la sénéchaussée des Lannes (rang 3 sous Dax chez Brette), donc rangée en Gascogne et non dans le Labourd.
+133;Sénéchaussée de Mont-de-Marsan;Gascogne;Guyenne et Gascogne;Marsan.
+020;Sénéchaussée d'Armagnac;Gascogne;Guyenne et Gascogne;Sénéchaussée d'Armagnac à Lectoure : comprend la Lomagne, qu'on ne peut pas dessiner à part avec des bailliages entiers.
+021;Sénéchaussée de l'Isle-Jourdain;Gascogne;Guyenne et Gascogne;Comté de L'Isle-Jourdain.
+022;Sénéchaussée d'Auch;Gascogne;Guyenne et Gascogne;Armagnac, Astarac, Fezensac, Pardiac en partie.
+152;Sénéchaussée de Périgueux;Périgord;Guyenne et Gascogne;Rattachement sans ambiguïté (nom et chef-lieu).
+153;Sénéchaussée de Bergerac;Périgord;Guyenne et Gascogne;Rattachement sans ambiguïté (nom et chef-lieu).
+154;Sénéchaussée de Sarlat;Périgord;Guyenne et Gascogne;Rattachement sans ambiguïté (nom et chef-lieu).
+172;Sénéchaussée de Cahors;Quercy;Guyenne et Gascogne;Haut et Bas-Quercy (Montauban compris).
+173;Sénéchaussée de Montauban;Quercy;Guyenne et Gascogne;Haut et Bas-Quercy (Montauban compris).
+174;Sénéchaussée de Gourdon;Quercy;Guyenne et Gascogne;Haut et Bas-Quercy (Montauban compris).
+175;Sénéchaussée de Lauzerte;Quercy;Guyenne et Gascogne;Haut et Bas-Quercy (Montauban compris).
+176;Sénéchaussée de Figeac;Quercy;Guyenne et Gascogne;Haut et Bas-Quercy (Montauban compris).
+177;Siège royal de Martel;Quercy;Guyenne et Gascogne;Haut et Bas-Quercy (Montauban compris).
+179;Sénéchaussée de Rodez;Rouergue;Guyenne et Gascogne;Rattachement sans ambiguïté (nom et chef-lieu).
+180;Bailliage de Millau;Rouergue;Guyenne et Gascogne;Rattachement sans ambiguïté (nom et chef-lieu).
+194;Sénéchaussée de Villefranche-de-Rouergue;Rouergue;Guyenne et Gascogne;Rattachement sans ambiguïté (nom et chef-lieu).
+294;Bailliage d'Ustaritz;Labourd;Guyenne et Gascogne;Rattachement sans ambiguïté (nom et chef-lieu).
+298;Pays de Soule;Soule;Guyenne et Gascogne;Gouvernement à vérifier : Guyenne et Gascogne retenu, car le gouvernement de Navarre et Béarn ne comprenait que le Béarn et la Basse-Navarre (Wikipédia, Gouvernements généraux et particuliers) ; aucune source précise lue pour la Soule.
+301;Pays de Bigorre;Bigorre;Guyenne et Gascogne;Rattachement sans ambiguïté (nom et chef-lieu).
+302;Pays de Rustaing;Bigorre;Guyenne et Gascogne;Pays de Rustaing, rattaché à la Bigorre (rang 3 sous la Bigorre chez Brette).
+023;Pays des Quatre-Vallées;Quatre-Vallées;Guyenne et Gascogne;Aure, Barousse, Magnoac, Neste.
+067;Comté de Comminges;Comminges;Guyenne et Gascogne;Comté de Comminges « assemblé à Muret » : comprend la plus grande partie du Nébouzan (Saint-Gaudens, Lannemezan), qu'on ne peut pas dessiner à part avec des bailliages entiers.
+068;Pays de Couserans;Couserans;Guyenne et Gascogne;Pays de Gascogne (Wikipédia, article Couserans).
+181; GAURE;Rivière-Verdun;Guyenne et Gascogne;Pays de Rivière-Verdun, Gaure, Launac et Marestaing : territoire en plusieurs morceaux ; contient Montréjeau (Nébouzan).
+443;Souveraineté de Béarn;Béarn;Navarre et Béarn;Rattachement sans ambiguïté (nom et chef-lieu).
+311;Royaume de Navarre;Basse-Navarre;Navarre et Béarn;Rattachement sans ambiguïté (nom et chef-lieu).
+299;Sénéchaussée de Pamiers;Comté de Foix;Foix;Sénéchaussée de Pamiers, avec le Donezan (gouvernement de Foix, Donezan et Andorre, Wikipédia). Brette la range dans la généralité d'Auch : ce n'est pas la province.
+240;Sénéchaussée du Haut-Vivarais;Vivarais;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+251;Sénéchaussée du Bas-Vivarais;Vivarais;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+249;Sénéchaussée du Puy-en-Velay;Velay;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+246;Bailliage de Gévaudan;Gévaudan;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+241;Sénéchaussée de Béziers;Languedoc;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+242;Sénéchaussée de Carcassonne;Languedoc;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+243;Sénéchaussée de Lauraguais;Languedoc;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+244;Sénéchaussée de Castres;Languedoc;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+247;Sénéchaussée de Montpellier;Languedoc;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+248;Sénéchaussée de Nîmes;Languedoc;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+250;Sénéchaussée de Toulouse;Languedoc;Languedoc;Rattachement sans ambiguïté (nom et chef-lieu).
+245;Sénéchaussée de Limoux;Languedoc;Languedoc;Comprend le Fenouillèdes, le pays de Sault (Aude) et Mirepoix.
+442A;Élection de Vienne;Dauphiné;Dauphiné;Élections du Dauphiné chez Brette.
+442B;Élection de Romans;Dauphiné;Dauphiné;Élections du Dauphiné chez Brette.
+442C;Élection de Grenoble;Dauphiné;Dauphiné;Élections du Dauphiné chez Brette.
+442D;Élection de Valence;Dauphiné;Dauphiné;Élections du Dauphiné chez Brette.
+442E;Élection de Gap;Dauphiné;Dauphiné;Élections du Dauphiné chez Brette.
+442F;Élection de Montélimar;Dauphiné;Dauphiné;Élections du Dauphiné chez Brette.
+293;Principauté d'Orange;Principauté d'Orange;Dauphiné;Française depuis 1713, rattachée au Dauphiné (Wikipédia, article Principauté d'Orange).
+024;Bailliage de Riom;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+025;Siège royal d'Usson;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+026;Bailliage de Montaigut;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+027;Bailliage de Salers;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+065;Sénéchaussées de Clermont-Ferrand;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+092;Bailliage de Saint-Flour;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+093;Bailliage d'Aurillac;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+094;Bailliage de Vic-en-Carladez;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+095;Bailliage d'Andelat;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+096;Bailliage de Calvinet;Auvergne;Auvergne;Rattachement sans ambiguïté (nom et chef-lieu).
+159;Bailliage de Cusset;Auvergne;Auvergne;Cusset, ville royale de Basse-Auvergne enclavée dans le Bourbonnais (Wikipédia, article Cusset) ; bailliage du ressort de Saint-Pierre-le-Moûtier, généralité de Moulins chez Brette. Rattachement à vérifier.
+106;Sénéchaussée de Limoges;Limousin;Limousin;Gouvernement de Limoges.
+107;Sénéchaussée de Saint-Yrieix;Limousin;Limousin;Gouvernement de Limoges.
+108;Sénéchaussée de Tulle;Limousin;Limousin;Gouvernement de Limoges.
+109;Sénéchaussée de Brives;Limousin;Limousin;Gouvernement de Limoges.
+110;Siège royal d'Uzerches;Limousin;Limousin;Gouvernement de Limoges.
+124;Sénéchausée de Guéret;Marche;Marche;Haute-Marche (Guéret).
+122;Sénéchaussée de Dorat;Marche;Marche;Basse-Marche (Le Dorat, Bellac), classée dans la généralité de Limoges chez Brette.
+123;Siège royal de Bellac;Marche;Marche;Basse-Marche (Le Dorat, Bellac), classée dans la généralité de Limoges chez Brette.
+013;Sénéchaussée d'Angoulême;Angoumois;Saintonge et Angoumois;Rattachement sans ambiguïté (nom et chef-lieu).
+014;Siège royal de Cognac;Angoumois;Saintonge et Angoumois;Rattachement sans ambiguïté (nom et chef-lieu). Hors des 30 km autour du domaine : ajouté pour compléter la province.
+100;Sénéchaussée de Saint-Jean-d'Angely;Saintonge;Saintonge et Angoumois;Rattachement sans ambiguïté (nom et chef-lieu).
+195;Sénéchaussée de Saintes;Saintonge;Saintonge et Angoumois;Rattachement sans ambiguïté (nom et chef-lieu).
+196;Sénéchaussée de Tonnay-Charente;Saintonge;Saintonge et Angoumois;Rattachement sans ambiguïté (nom et chef-lieu). Hors des 30 km autour du domaine : ajouté pour compléter la province.
+198;Sénéchaussée de Pons;Saintonge;Saintonge et Angoumois;Rattachement sans ambiguïté (nom et chef-lieu).
+199;Bailliage de Taillebourg;Saintonge;Saintonge et Angoumois;Rattachement sans ambiguïté (nom et chef-lieu). Hors des 30 km autour du domaine : ajouté pour compléter la province.
+197;Baronnie de l'île d'Oleron;Saintonge;Saintonge et Angoumois;Oléron et Brouage : rangés sous Saintes chez Brette ; gouvernement (Aunis ou Saintonge) à vérifier. Loin du domaine.
+200;Siège royal de Brouage;Saintonge;Saintonge et Angoumois;Oléron et Brouage : rangés sous Saintes chez Brette ; gouvernement (Aunis ou Saintonge) à vérifier. Loin du domaine.
+061;Sénéchaussée de Châtellerault;Poitou;Poitou;Le pays des Marches communes (Poitou-Bretagne) est laissé de côté. Hors des 30 km autour du domaine : ajouté pour compléter la province.
+160;Sénéchaussée de Poitiers;Poitou;Poitou;Le pays des Marches communes (Poitou-Bretagne) est laissé de côté.
+161;Sénéchaussée de Civray;Poitou;Poitou;Le pays des Marches communes (Poitou-Bretagne) est laissé de côté.
+162;Sénéchaussée de Saint-Maixent;Poitou;Poitou;Le pays des Marches communes (Poitou-Bretagne) est laissé de côté.
+163;Sénéchaussée de Fontenay-le-Comte;Poitou;Poitou;Le pays des Marches communes (Poitou-Bretagne) est laissé de côté. Hors des 30 km autour du domaine : ajouté pour compléter la province.
+164;Siège royal de Lusignan;Poitou;Poitou;Le pays des Marches communes (Poitou-Bretagne) est laissé de côté. Hors des 30 km autour du domaine : ajouté pour compléter la province.
+165;Sénéchaussée de Montmorillon;Poitou;Poitou;Le pays des Marches communes (Poitou-Bretagne) est laissé de côté.
+166;Siège royal de Niort;Poitou;Poitou;Le pays des Marches communes (Poitou-Bretagne) est laissé de côté.
+167;Bailliage de Vouvant;Poitou;Poitou;Le pays des Marches communes (Poitou-Bretagne) est laissé de côté. Hors des 30 km autour du domaine : ajouté pour compléter la province.
+031;Bailliage de Bourges;Berry;Berry;Rattachement sans ambiguïté (nom et chef-lieu). Hors des 30 km autour du domaine : ajouté pour compléter la province.
+032;Bailliage de Châteauroux;Berry;Berry;Rattachement sans ambiguïté (nom et chef-lieu).
+033;Bailliage de Concressault;Berry;Berry;Rattachement sans ambiguïté (nom et chef-lieu). Hors des 30 km autour du domaine : ajouté pour compléter la province.
+034;Bailliage de Dun-le-Roi;Berry;Berry;Rattachement sans ambiguïté (nom et chef-lieu).
+035;Baillage d'Issoudun;Berry;Berry;Rattachement sans ambiguïté (nom et chef-lieu).
+036;Bailliage de Mehun-sur-Yèvre;Berry;Berry;Rattachement sans ambiguïté (nom et chef-lieu). Hors des 30 km autour du domaine : ajouté pour compléter la province.
+037;Bailliage de Vierzon;Berry;Berry;Rattachement sans ambiguïté (nom et chef-lieu). Hors des 30 km autour du domaine : ajouté pour compléter la province.
+038;Bailliage d'Henrichemont;Berry;Berry;Rattachement sans ambiguïté (nom et chef-lieu). Hors des 30 km autour du domaine : ajouté pour compléter la province.
+043;Sénéchaussée de Moulins;Bourbonnais;Bourbonnais;Rattachement sans ambiguïté (nom et chef-lieu).
+097;Bailliage de Forez;Forez;Lyonnais, Forez et Beaujolais;Rattachement sans ambiguïté (nom et chef-lieu).
+098;Bailliage de Bourg-Argental;Forez;Lyonnais, Forez et Beaujolais;Rattachement sans ambiguïté (nom et chef-lieu).
+112;Sénéchaussée de Lyon;Lyonnais;Lyonnais, Forez et Beaujolais;Rattachement sans ambiguïté (nom et chef-lieu).
+029;Sénéchaussée de Villefranche-de-Beaujolais;Beaujolais;Lyonnais, Forez et Beaujolais;Rattachement sans ambiguïté (nom et chef-lieu).
+252;Viguerie de Roussillon et Vallespir;Roussillon;Roussillon;Rattachement sans ambiguïté (nom et chef-lieu).
+253;Viguerie de Conflent et Capsir;Roussillon;Roussillon;Rattachement sans ambiguïté (nom et chef-lieu).
+254;Viguerie de Cerdagne;Roussillon;Roussillon;Rattachement sans ambiguïté (nom et chef-lieu).
+262;Bailliage de Semur-en-Brionnois;Bourgogne;Bourgogne;Brionnais.
+270;Bailliage de Charolles;Charolais;Bourgogne;Rattachement sans ambiguïté (nom et chef-lieu).
+271;Bailliage de Mâcon;Mâconnais;Bourgogne;Rattachement sans ambiguïté (nom et chef-lieu).
+213;Bailliage de Tours;Touraine;Touraine;Rattachement sans ambiguïté (nom et chef-lieu).
+214;Bailliage de Châtillon-sur-Indre;Touraine;Touraine;Rattachement sans ambiguïté (nom et chef-lieu).
+terr-I;État d'Avignon;État d'Avignon;hors du royaume;Territoire I de Brette (Avignon, Montfavet, Le Pontet, Morières). Terre du pape.
+terr-II;Comtat Venaissin;Comtat Venaissin;hors du royaume;Territoire II de Brette, avec ses enclaves (Valréas, Bonnieux, villages de la Drôme). Terre du pape.
+terr-III;Souveraineté de Bidache et duché de Gramont;Souveraineté de Bidache;hors du royaume;Territoire III de Brette (Bidache, Bergouey-Viellenave, Escos).
+terr-IX;Comté de Sault;Provence;Provence;Territoire IX du jeu de données, classé hors du royaume et hors des bailliages. Or c'est une terre adjacente de Provence (Wikipédia, Terres adjacentes de Provence, d'après R. Bertrand 2012), passée aux Basses-Alpes en 1790 : rattaché ici à la Provence.
+terr-XIII;Comté de Nice;Comté de Nice;hors du royaume;Territoire XIII du jeu de données, sauf Menton et Roquebrune-Cap-Martin, que le jeu de données y range mais qui appartenaient à la principauté de Monaco. Tende et La Brigue (absentes des points de Cassini) sont comprises.
+terr-mon;Monaco, Menton, Roquebrune;Principauté de Monaco;hors du royaume;Ajouté par nous : Menton et Roquebrune (contours IGN par geo.api.gouv.fr) et Monaco (anneau du trou de Monaco dans limits-carta.json).
+terr-aran;Val d'Aran;Val d'Aran;hors du royaume;Absent de Brette. Partie du domaine occitan hors de France (limits-carta.json). Principauté de Catalogne, monarchie espagnole.
+terr-it;Vallées occitanes d'Italie;Royaume de Sardaigne;hors du royaume;Absent de Brette. Partie du domaine occitan en Italie (limits-carta.json). États de Savoie (royaume de Sardaigne).

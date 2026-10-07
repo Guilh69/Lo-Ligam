@@ -1,0 +1,52 @@
+kod;fr;oc;font;a_validar
+g-guyenne;Guyenne et Gascogne;Guiana e Gasconha;Proposition sans source : assemblage de Guiana (Wikidata Q849324) et Gasconha (Q191085). Absent de la carte tant que non validé.;oui
+g-bearn;Navarre et Béarn;Navarra e Bearn;Proposition sans source : Navarra d'après Reiaume de Navarra (Wikidata Q200262), Bearn (Q213763). Absent de la carte tant que non validé.;oui
+g-foix;Foix;Fois;Wikidata Q184392 (la ville de Foix), comme le français « gouvernement de Foix ».;oui
+g-languedoc;Languedoc;Lengadòc;Même nom que la province : Wikidata Q206221.;oui
+g-provence;Provence;Provença;Même nom que la province : Wikidata Q101081.;oui
+g-dauphine;Dauphiné;Daufinat;Même nom que la province : Wikidata Q151999.;oui
+g-auvergne;Auvergne;Auvèrnhe;Même nom que la province : Wikidata Q1193946 (alias Auvèrnha).;oui
+g-limousin;Limousin;Lemosin;Même nom que la province : Wikidata Q1190 et Q109653972.;oui
+g-marche;Marche;Marcha;Même nom que la province : Wikidata Q921473.;oui
+g-saintonge;Saintonge et Angoumois;Santonge e Engolmés;Proposition sans source : assemblage de Santonge (Wikidata Q1509703) et Engolmés (Q542638). Absent de la carte tant que non validé.;oui
+g-poitou;Poitou;Peitau;Même nom que la province : Wikidata Q954076.;oui
+g-berry;Berry;Berric;Même nom que la province : Wikidata Q827169 (l'article occitan s'appelle « Berrí ») : à trancher.;oui
+g-bourbonnais;Bourbonnais;Borbonés;Même nom que la province : Wikidata Q591233 (duché de Bourbon).;oui
+g-lyonnais;Lyonnais, Forez et Beaujolais;Lionés, Forés e Beaujolés;Proposition sans source : Lionés (Wikidata Q1142571), Forés (Q1437284), « Beaujolés » sans source trouvée. Absent de la carte tant que non validé.;oui
+guyenne;Guyenne;Guiana;Wikidata Q849324.;oui
+gascogne;Gascogne;Gasconha;Wikidata Q191085.;oui
+perigord;Périgord;Peiregòrd;Wikidata Q850620, alias (libellé principal Perigòrd, autre alias Peirigòrd) : à trancher.;oui
+quercy;Quercy;Carcin;Wikidata Q1895719.;oui
+rouergue;Rouergue;Roergue;Wikidata Q590016.;oui
+labourd;Labourd;Labord;Wikidata Q671023.;oui
+soule;Soule;Sola;Wikidata Q673040.;oui
+bigorre;Bigorre;Bigòrra;Wikidata Q859779 (« sosregion de Gasconha ») ; l'élément du comté (Q2067314) n'a pas de libellé occitan.;oui
+quatre-vallees;Quatre-Vallées;Quatre Valadas;Proposition sans source (Wikidata Q2736783 sans libellé occitan). Absent de la carte tant que non validé.;oui
+comminges;Comminges;Comenge;Wikidata Q640024.;oui
+couserans;Couserans;Coserans;Wikidata Q1137876.;oui
+riviere-verdun;Rivière-Verdun;Ribèra-Verdun;Proposition sans source (Wikidata Q3433589 sans libellé occitan). Absent de la carte tant que non validé.;oui
+bearn;Béarn;Bearn;Wikidata Q213763 (alias Biarn).;oui
+navarre;Basse-Navarre;Baisha Navarra;Wikidata Q638503 (alias Bassa Navarra).;oui
+foix;Comté de Foix;Comtat de Fois;Wikidata Q3752613, alias (libellé principal País de Fois, autre alias Comtat de Foish) ; l'élément du comté (Q1481436) n'a pas de libellé occitan.;oui
+languedoc;Languedoc;Lengadòc;Wikidata Q206221.;oui
+vivarais;Vivarais;Vivarés;Wikidata Q1968100.;oui
+velay;Velay;Velai;Wikidata Q1588777.;oui
+gevaudan;Gévaudan;Gavaudan;Wikidata Q514081.;oui
+provence;Provence;Provença;Wikidata Q101081 (alias Prouvènço).;oui
+dauphine;Dauphiné;Daufinat;Wikidata Q151999 (OpenHistoricalMap : lo Daufinat).;oui
+orange;Principauté d'Orange;Principat d'Aurenja;Wikidata Q2281221 (même forme dans OpenHistoricalMap).;oui
+auvergne;Auvergne;Auvèrnhe;Wikidata Q1193946, province historique (alias Auvèrnha).;oui
+limousin;Limousin;Lemosin;Wikidata Q1190 et Q109653972 ; l'élément de la province (Q55597938) n'a pas de libellé occitan.;oui
+marche;Marche;Marcha;Wikidata Q921473 ; la forme « la Marca » n'a pas de source trouvée.;oui
+angoumois;Angoumois;Engolmés;Wikidata Q542638.;oui
+poitou;Poitou;Peitau;Wikidata Q954076.;oui
+berry;Berry;Berric;Wikidata Q827169 (l'article occitan s'appelle « Berrí ») : à trancher.;oui
+bourbonnais;Bourbonnais;Borbonés;Wikidata Q591233 (duché de Bourbon).;oui
+forez;Forez;Forés;Wikidata Q1437284.;oui
+avignon;État d'Avignon;Estat d'Avinhon;Proposition sans source : Avinhon vient de Wikidata Q6397 (la ville). Absent de la carte tant que non validé.;oui
+comtat;Comtat Venaissin;Comtat Venaicin;Wikidata Q1122980 ; OpenHistoricalMap écrit « Comtat Venessin » : à trancher.;oui
+nice;Comté de Nice;Comtat de Niça;Wikidata Q706553 (alias Coumtat de Nissa).;oui
+monaco;Principauté de Monaco;Principat de Mónegue;Wikidata Q235, alias (libellé principal Mónegue, autre alias Principat de Mónego).;oui
+bidache;Souveraineté de Bidache;Sobeiranetat de Bidaishe;Proposition sans source : Bidaishe vient de Wikidata Q197008 (la commune). Absent de la carte tant que non validé.;oui
+aran;Val d'Aran;Val d'Aran;Wikidata Q12602 (nom officiel).;oui
+sardaigne;Royaume de Sardaigne;Reiaume de Sardenha;Wikidata Q2577303 (même forme dans OpenHistoricalMap).;oui

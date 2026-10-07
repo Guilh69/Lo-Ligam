@@ -16,8 +16,18 @@ const easeS = (t) => (1 - Math.cos(Math.PI * t)) / 2;
 const CORMORANT = '"Cormorant Garamond", Georgia, serif';
 
 const TEMAS = {
-	sorne: { linha: '245, 234, 216', parc: '134, 196, 140', mar: '120, 180, 220', ombra: 'rgba(18, 9, 6, 0.9)' },
-	clar: { linha: '46, 29, 20', parc: '46, 110, 62', mar: '30, 90, 140', ombra: 'rgba(245, 234, 216, 0.95)' }
+	sorne: {
+		linha: '245, 234, 216',
+		parc: '134, 196, 140',
+		mar: '120, 180, 220',
+		ombra: 'rgba(18, 9, 6, 0.9)'
+	},
+	clar: {
+		linha: '46, 29, 20',
+		parc: '46, 110, 62',
+		mar: '30, 90, 140',
+		ombra: 'rgba(245, 234, 216, 0.95)'
+	}
 };
 
 // Una color per governament general de 1789 (retorn de Romain : que se
@@ -44,6 +54,9 @@ const colorGov = (kod) => COLORS_GOV[kod] ?? '190, 170, 140';
 // Seuils (zoom Leaflet ; à 44° N, 11 ≈ « 5 km » sur l'échelle)
 const Z_COMUNAS = 11;
 const Z_PROV_MAX = 10.5;
+// governaments de luènh, províncias de prèp : lo cambi se fa entre dos crans de
+// zoom (6,75 e 7 ; zoomSnap 0,25), que cap cran demòre sens nom
+const Z_GOV_PROV = 6.875;
 
 const TÈXTES = {
 	oc: {
@@ -120,9 +133,15 @@ const linhasDe = (nom, max = 13) =>
 			const i = sp.reduce((a, b) => (Math.abs(b - l.length / 2) < Math.abs(a - l.length / 2) ? b : a));
 			return [l.slice(0, i), l.slice(i + 1)];
 		});
+// Los luòcs ensajats per un nom de zòna, en fraccions del ray del cercle
+// inscrit : del mitan cap a l'exterior, pus luènh al long de l'axe (las zònas
+// longas coma Lengadòc an de plaça) que de travèrs
+const DECALATGES_MITAN = [0, 0.35, -0.35, 0.7, -0.7, 1.05, -1.05, 1.4, -1.4, 1.8, -1.8]
+	.flatMap((u) => [0, 0.3, -0.3, 0.55, -0.55].map((v) => [u, v]))
+	.sort((p, q) => p[0] ** 2 + 2 * p[1] ** 2 - (q[0] ** 2 + 2 * q[1] ** 2));
+// Los governaments que pausan lor nom sus una de lors províncias
+const FORMA_ETIQUETA = { 'g-languedoc': 'languedoc' };
 const se = (a, b) => a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1];
-// Las posicions ensajadas per un nom, a partir de son ponch (lo primièr liure ganha)
-const DECALATGES = [[0, 0], [0, -18], [0, 18], [-45, 0], [45, 0], [0, -34], [0, 34], [-40, -22], [40, 22], [40, -22], [-40, 22], [-80, 0], [80, 0]];
 
 const poligonsDe = (g) => (g.type === 'Polygon' ? [g.coordinates] : g.type === 'MultiPolygon' ? g.coordinates : []);
 
@@ -210,7 +229,10 @@ function axe(a) {
 		vxy = sxy / (24 * A) - cx * cy;
 	const m = (vxx + vyy) / 2,
 		r = Math.sqrt(((vxx - vyy) / 2) ** 2 + vxy * vxy);
-	return { ang: 0.5 * Math.atan2(2 * vxy, vxx - vyy), along: Math.sqrt((m + r) / Math.max(1e-9, m - r)) };
+	return {
+		ang: 0.5 * Math.atan2(2 * vxy, vxx - vyy),
+		along: Math.sqrt((m + r) / Math.max(1e-9, m - r))
+	};
 }
 const airaAnel = (a) => a.reduce((s, [x0, y0], i) => s + x0 * a[(i + 1) % a.length][1] - a[(i + 1) % a.length][0] * y0, 0) / 2;
 // Calculada un còp (en Mercator al zoom 8, valent per totes los zooms) :
@@ -241,7 +263,6 @@ function analisarForma(map, geometry) {
 	return { ll: [ll.lng, ll.lat], r8: r, ang: incl };
 }
 
-
 export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, cedirProv = null, obstacles = null, onSurvòl = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: { pane: 'tematica', padding: 0.3 },
@@ -266,7 +287,10 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			this._cx = this._cv.getContext('2d');
 			this._cargar();
 			this._update();
-			Promise.all([document.fonts?.load(`italic 500 14px ${CORMORANT}`), document.fonts?.load('14px Limelight')]).then(() => this._pintar(), () => {});
+			Promise.all([document.fonts?.load(`italic 500 14px ${CORMORANT}`), document.fonts?.load('14px Limelight')]).then(
+				() => this._pintar(),
+				() => {}
+			);
 		},
 		onRemove() {
 			cancelAnimationFrame(this._raf);
@@ -363,7 +387,10 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				this._deps.set(d.d, null);
 				cargar(`/data/comunas/${d.d}.json`).then((topo) => {
 					if (!topo) return;
-					this._deps.set(d.d, decodarTopo(topo, 'comunas').map((c) => ({ ...c, dep: d.d })));
+					this._deps.set(
+						d.d,
+						decodarTopo(topo, 'comunas').map((c) => ({ ...c, dep: d.d }))
+					);
 					this._update();
 				});
 			}
@@ -423,19 +450,33 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			const J = this._jaces;
 			const G = (this._geo = { pt });
 			if (this._prov && !this._govs) {
-				this._govs = new Map(this._prov.features.filter((f) => f.properties.nivel === 'governament').map((f) => [f.properties.kod, { props: f.properties, n: 0 }]));
-				for (const f of this._prov.features) if (f.properties.nivel === 'provincia') this._govs.get(f.properties.governament) && this._govs.get(f.properties.governament).n++;
+				this._govs = new Map(
+					this._prov.features.filter((f) => f.properties.nivel === 'governament').map((f) => [f.properties.kod, { props: f.properties, n: 0 }])
+				);
+				for (const f of this._prov.features)
+					if (f.properties.nivel === 'provincia') this._govs.get(f.properties.governament) && this._govs.get(f.properties.governament).n++;
 			}
 			if (J.provincias && this._prov && z < Z_PROV_MAX + 0.5)
 				G.prov = this._prov.features
-					.map((f) => ({ ...zona(poligonsDe(f.geometry)), props: f.properties, eti: f.properties.eti && pt(f.properties.eti) }))
+					.map((f) => ({
+						...zona(poligonsDe(f.geometry)),
+						props: f.properties,
+						eti: f.properties.eti && pt(f.properties.eti)
+					}))
 					.filter((x) => dins(x.bbox));
 			if (J.parcs && this._parcs && z >= 6)
 				G.parcs = this._parcs.features
-					.map((f) => ({ ...zona(poligonsDe(f.geometry)), props: f.properties, eti: f.properties.eti && pt(f.properties.eti) }))
+					.map((f) => ({
+						...zona(poligonsDe(f.geometry)),
+						props: f.properties,
+						eti: f.properties.eti && pt(f.properties.eti)
+					}))
 					.filter((x) => dins(x.bbox));
 			if (J.massis && this._releu)
-				G.releu = this._releu.features.map((f) => ({ props: f.properties, p: pt(f.geometry.coordinates) }));
+				G.releu = this._releu.features.map((f) => ({
+					props: f.properties,
+					p: pt(f.geometry.coordinates)
+				}));
 			this._fonts();
 			if (J.comunas && z >= Z_COMUNAS - 0.5) {
 				G.com = [];
@@ -469,7 +510,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			}
 			if (G.prov && z < Z_PROV_MAX && !cedirProv?.(lp)) {
 				// de luènh, los governaments ; de prèp, las provincias
-				const nivèl = z < 7 ? 'governament' : 'provincia';
+				const nivèl = z < Z_GOV_PROV ? 'governament' : 'provincia';
 				const lista = G.prov.filter((p) => p.props.nivel === nivèl || p.props.nivel === 'fora');
 				const p = lista.find(dins);
 				if (p) return { mena: 'prov', kod: p.props.kod, props: p.props };
@@ -481,7 +522,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			const tx = TÈXTES[this._lang] ?? TÈXTES.oc,
 				fr = this._lang === 'fr';
 			const p = t.props;
-			const nom = fr ? p.fr : p.oc ?? p.fr;
+			const nom = fr ? p.fr : (p.oc ?? p.fr);
 			let sota;
 			if (t.mena === 'com') {
 				sota = tx.comuna + (t.dep && /^\d|^2[AB]$/.test(t.dep) ? ` (${t.dep})` : '');
@@ -492,14 +533,21 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			} else {
 				// (la nòta de la font es longa e en francés : l'encastre demòra d'una linha)
 				const g = this._govs?.get(p.governament);
-				if (p.nivel === 'provincia' && g && g.n > 1) sota = `${tx.provincia} · ${tx.gov} : ${fr ? g.props.fr : g.props.oc ?? g.props.fr}`;
+				if (p.nivel === 'provincia' && g && g.n > 1) sota = `${tx.provincia} · ${tx.gov} : ${fr ? g.props.fr : (g.props.oc ?? g.props.fr)}`;
 				else if (p.nivel === 'governament') {
 					const n = this._govs?.get(p.kod)?.n ?? 0;
 					sota = n > 1 ? `${tx.governament} · ${n} ${tx.provs}` : tx.unica;
 				} else if (p.nivel === 'provincia' && g) sota = tx.unica;
 				else sota = tx[p.nivel] ?? tx.provincia;
 			}
-			return { kod: t.mena + ':' + t.kod, oc: nom, fr: nom, sota_oc: sota, sota_fr: sota, mix: true };
+			return {
+				kod: t.mena + ':' + t.kod,
+				oc: nom,
+				fr: nom,
+				sota_oc: sota,
+				sota_fr: sota,
+				mix: true
+			};
 		},
 		_survòl(t) {
 			const clau = t ? t.mena + ':' + t.kod : null;
@@ -580,11 +628,15 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				// (retorn de Romain : « DAUFINAT » e « Daufinat » se crosavan al
 				// meteis luòc ; los dos noms se seguisson ara sens se crosar, al
 				// meteis zoom que lo survòl càmbia de nivèl)
-				const al = gov ? a * clamp((7 - z) / 0.4) : a * clamp((z - 7) / 0.4) * clamp((10 - z) / 0.8);
+				const al = gov ? a * clamp((Z_GOV_PROV - z) / 0.125) : a * clamp((z - Z_GOV_PROV) / 0.125) * clamp((10 - z) / 0.8);
 				if (al < 0.01) continue;
-				const f = this._formas?.get(pv.props.kod);
+				// la forma que pòrta lo nom : la zòna meteissa, levat qualques
+				// governaments ont lo nom se pausa melhor sus la província del meteis
+				// nom (Lengadòc : al long del litoral, demanda de Romain)
+				const f = this._formas?.get(FORMA_ETIQUETA[pv.props.kod] ?? pv.props.kod);
 				if (!f) continue;
-				const [px, py] = G.pt(f.ll);
+				const [px0, py0] = G.pt(f.ll);
+				const r = f.r8 * Math.pow(2, z - 8);
 				const nom = nomDe(pv.props);
 				const tèxt = gov ? nom.toUpperCase() : nom;
 				const espac = gov ? '0.16em' : '0.08em';
@@ -601,33 +653,46 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				const l2 = linhasDe(tèxt, gov ? 12 : 14);
 				if (l2.length > 1) variantas.push(l2);
 				const tMax = gov ? Math.round(clamp(14 + (z - 5.5) * 4, 14, 24)) : 17;
-				let tròp = null;
-				cèrca: for (let talha = tMax; talha >= 9; talha--) {
-					cx.font = `${talha}px Limelight, Georgia, serif`;
-					if (esp) cx.letterSpacing = espac;
-					for (const linhas of variantas) {
-						const lh = talha * 1.12;
-						const w0 = Math.max(...linhas.map((l) => cx.measureText(l).width));
-						for (const ambSota of sotaGov ? [true, false] : [false]) {
+				// de luòcs ensajats a l'entorn del mitan (al long de l'axe e de travèrs) :
+				// lo nom pren lo primièr que cap dins la zòna sens èsser acapat per un
+				// nom de vila ; a defaut, lo mens acapat
+				const ca = Math.cos(f.ang),
+					sa = Math.sin(f.ang);
+				const luòcs = DECALATGES_MITAN.map(([u, v]) => [px0 + (u * ca - v * sa) * r, py0 + (u * sa + v * ca) * r]);
+				let tròp = null,
+					melhor = null;
+				// lo governament en dejós passa d'en primièr (que se veja que la
+				// província n'es una subdivision), tant que lo nom fa 10 px o mai
+				cèrca: for (const ambSota of sotaGov ? [true, false] : [false])
+					for (let talha = tMax; talha >= (ambSota ? 10 : 8); talha--) {
+						cx.font = `${talha}px Limelight, Georgia, serif`;
+						if (esp) cx.letterSpacing = espac;
+						for (const linhas of variantas) {
+							const lh = talha * 1.12;
+							const w0 = Math.max(...linhas.map((l) => cx.measureText(l).width));
 							const w = Math.max(w0, ambSota ? sotaW : 0),
 								h = linhas.length * lh + (ambSota ? 13 : 0);
-							if (!this._dins(pv.c, px, py, w + 6, h + 4, f.ang)) continue;
-							tròp = { talha, linhas, lh, w, h, ambSota };
-							break cèrca;
+							const bw = w * Math.abs(ca) + h * Math.abs(sa),
+								bh = w * Math.abs(sa) + h * Math.abs(ca);
+							for (const [x, y] of luòcs) {
+								if (!this._dins(pv.c, x, y, w + 6, h + 4, f.ang)) continue;
+								const b = [x - bw / 2, y - bh / 2, x + bw / 2, y + bh / 2];
+								if (pausadas.some((o) => se(b, o))) continue;
+								const n = ocupadas.reduce((t, o) => t + se(b, o), 0);
+								const c = { talha, linhas, lh, w, h, ambSota, x, y, b, n };
+								if (!n) {
+									tròp = c;
+									break cèrca;
+								}
+								if (!melhor || n < melhor.n) melhor = c;
+							}
 						}
 					}
-				}
+				tròp ??= melhor;
 				// pas de plaça dins la zòna : lo nom espèra un zoom mai prèp (lo
 				// survòl lo dona totjorn)
 				if (!tròp) continue;
-				const cs = Math.abs(Math.cos(f.ang)),
-					sn = Math.abs(Math.sin(f.ang));
-				const bw = tròp.w * cs + tròp.h * sn,
-					bh = tròp.w * sn + tròp.h * cs;
-				const b = [px - bw / 2, py - bh / 2, px + bw / 2, py + bh / 2];
-				// dos noms de províncias se trucan pas (los noms de vilas, eles, passan
-				// dessús : son dins lo pan de dessús, amb lor ombra)
-				if (pausadas.some((o) => se(b, o))) continue;
+				const { x: px, y: py, b } = tròp;
 				pausadas.push(b);
 				ocupadas.push(b);
 				lista.push({
@@ -661,7 +726,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				fr = this._lang === 'fr';
 			cx.setTransform(dpr, 0, 0, dpr, 0, 0);
 			cx.clearRect(0, 0, this._W, this._H);
-			const nomDe = (p) => (fr ? p.fr : p.oc ?? p.fr);
+			const nomDe = (p) => (fr ? p.fr : (p.oc ?? p.fr));
 			const survòl = (kod) => easeS(this._a.get(kod)?.p ?? 0);
 			// los noms de vilas ja pausats per la còla d'estelas, puèi cada nom
 			// pausat aquí : los noms seguents los evitan
@@ -672,21 +737,6 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				for (const b of ob.cs) ocupadas.push([b[0] * k - this._o.x, b[1] * k - this._o.y, b[2] * k - this._o.x, b[3] * k - this._o.y]);
 			}
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
-			// cèrca d'una plaça liura per un blòc de tèxt (larg × naut) a l'entorn
-			// de (x, y), dins sa zòna ; tòrna lo centre, o null s'i a pas de plaça
-			// (lo nom espèra un zoom mai prèp ; lo survòl lo dona totjorn)
-			const plaçar = (x, y, w, h, zona) => {
-				let melhor = null;
-				for (const [dx, dy] of DECALATGES) {
-					const b = [x + dx - w / 2, y + dy - h / 2, x + dx + w / 2, y + dy + h / 2];
-					const n = ocupadas.reduce((t, o) => t + se(b, o), 0) + (zona && !this._cxTest.isPointInPath(zona, x + dx, y + dy, 'evenodd') ? 3 : 0);
-					if (!melhor || n < melhor.n) melhor = { n, b, x: x + dx, y: y + dy };
-					if (n === 0) break;
-				}
-				if (melhor.n > 0) return null;
-				ocupadas.push(melhor.b);
-				return melhor;
-			};
 
 			/* Parcs : un aplat leugièr e un contorn ponchejat */
 			if (G.parcs) {
