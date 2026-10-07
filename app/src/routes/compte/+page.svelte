@@ -75,10 +75,10 @@
 	<AppHeader />
 
 	<section class="card">
-		<div class="tabs" role="tablist">
+		<div class="tabs">
 			<button
 				type="button"
-				role="tab"
+				aria-pressed={mode === 'login'}
 				class:active={mode === 'login'}
 				onclick={() => (mode = 'login')}
 			>
@@ -86,7 +86,7 @@
 			</button>
 			<button
 				type="button"
-				role="tab"
+				aria-pressed={mode === 'signup'}
 				class:active={mode === 'signup'}
 				onclick={() => (mode = 'signup')}
 			>
@@ -112,7 +112,7 @@
 				<input type="password" bind:value={password} autocomplete={mode === 'signup' ? 'new-password' : 'current-password'} required />
 			</label>
 
-			{#if errorMsg}<p class="msg error">{errorMsg}</p>{/if}
+			{#if errorMsg}<p class="msg error" role="alert">{errorMsg}</p>{/if}
 			{#if infoMsg}<p class="msg info">{infoMsg}</p>{/if}
 
 			<button type="submit" class="btn-primary" disabled={loading}>
@@ -247,7 +247,7 @@
 		font-size: 1rem;
 		padding: 0.65rem 0.8rem;
 		border-radius: 12px;
-		border: 1.5px solid rgba(58, 42, 32, 0.15);
+		border: 1.5px solid rgba(58, 42, 32, 0.55); /* contraste 3:1 (WCAG 1.4.11) */
 		background: var(--color-cream);
 		color: var(--color-text);
 	}

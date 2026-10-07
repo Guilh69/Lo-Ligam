@@ -207,7 +207,7 @@
 		font-weight: 400;
 		padding: 0.65rem 0.8rem;
 		border-radius: 12px;
-		border: 1.5px solid rgba(58, 42, 32, 0.15);
+		border: 1.5px solid rgba(58, 42, 32, 0.55); /* contraste 3:1 (WCAG 1.4.11) */
 		background: var(--color-cream);
 		color: var(--color-text);
 	}

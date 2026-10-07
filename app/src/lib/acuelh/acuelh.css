@@ -79,6 +79,8 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 	transition: transform 0.9s var(--ease);
 }
 .acuelh .capçal.amagat { transform: translateY(-110%); }
+/* al clavièr, lo bandèu amagat torna quand un de sos ligams pren lo focus */
+.acuelh .capçal.amagat:focus-within { transform: none; }
 .acuelh .capçal::before {
 	content: ''; position: absolute; inset: 0; z-index: -1;
 	background: linear-gradient(var(--nuech) 10%, transparent);

@@ -237,6 +237,7 @@
 						<input
 							type="text"
 							class="interest-other"
+							aria-label={main('Precisa', 'Précise')}
 							bind:value={interestOther}
 							placeholder={main('Precisa se vòles…', 'Précise si tu veux…')}
 							maxlength="120"
@@ -244,7 +245,7 @@
 					{/if}
 				</fieldset>
 
-				{#if errorMsg}<p class="msg error">{errorMsg}</p>{/if}
+				{#if errorMsg}<p class="msg error" role="alert">{errorMsg}</p>{/if}
 
 				<button type="submit" class="btn-primary" disabled={loading}>
 					{loading ? '…' : main('Contunhar', 'Continuer')} <span class="arrow">→</span>
@@ -365,7 +366,7 @@
 		font-weight: 400;
 		padding: 0.65rem 0.8rem;
 		border-radius: 12px;
-		border: 1.5px solid rgba(58, 42, 32, 0.15);
+		border: 1.5px solid rgba(58, 42, 32, 0.55); /* contraste 3:1 (WCAG 1.4.11) */
 		background: var(--color-cream);
 		color: var(--color-text);
 	}
