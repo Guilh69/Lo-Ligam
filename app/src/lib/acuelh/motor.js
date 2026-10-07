@@ -10,7 +10,12 @@
 // quitte l'accueil, puisque la navigation ne recharge pas la page.
 import Lenis from 'lenis';
 import { P, BRANCAS, ARCS } from './simbol.js';
-import { LUOCS, RIUS, dialDe } from './carta-estelas.js';
+import { LUOCS, RIUS, COSTA, dialDe } from './carta-estelas.js';
+
+// Lo trait de còsta de la carta en estelas (essai demandat per Romain lo
+// 2026-10-07, coma sus /carta), copat a 8,6° E coma los rius : la Còrsega, que
+// tombariá fòra de la zòna de la carta sus l'acuèlh, es pas dessenhada.
+const COSTA_ACUELH = COSTA.map((l) => l.filter(([lon]) => lon <= 8.6)).filter((l) => l.length > 1);
 
 export function lancarAcuelh(racina, opcions = {}) {
 	let viu = true, idRaf = 0;
@@ -25,8 +30,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 	let forçarFons = true;
 	/* ================= Tèma : sorne, clar, o coma lo sistèma ================= */
 	const TEMAS = {
-		sorne: { bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)', crotzPonch: '#f5ead8', crotzEstret: '#b9822f', crotzCrida: '#6e2e12' },
-		clar: { bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#c98a4a', crotzCrida: '#e6cbaa' }
+		sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)', crotzPonch: '#f5ead8', crotzEstret: '#b9822f', crotzCrida: '#6e2e12' },
+		clar: { costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#c98a4a', crotzCrida: '#e6cbaa' }
 	};
 	let TEM = TEMAS.sorne, temaClar = false;
 	function aplicarTema(clar, dalt) {
@@ -488,6 +493,17 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// Los rius se tràçan de la font a la boca, un pauc après las estelas
 		const aRiu = easeIO(clamp((aCarta - 0.35) / 0.6));
 		const pX = (lon) => zcx + (lon - lonM) * GEO.kx * esc, pY = (lat) => zcy - (lat - latM) * esc;
+		// Lo fial de còsta : apareis un pauc abans los rius, fin e discret
+		const aCosta = clamp((aCarta - 0.25) / 0.5);
+		if (aCosta > 0.01) {
+			cx.globalAlpha = aCosta; cx.strokeStyle = TEM.costa; cx.lineWidth = 0.8; cx.lineJoin = 'round';
+			cx.beginPath();
+			for (const l of COSTA_ACUELH) {
+				cx.moveTo(pX(l[0][0]), pY(l[0][1]));
+				for (let i = 1; i < l.length; i++) cx.lineTo(pX(l[i][0]), pY(l[i][1]));
+			}
+			cx.stroke();
+		}
 		if (aRiu > 0.01) {
 			cx.strokeStyle = TEM.riu; cx.lineCap = 'round'; cx.lineJoin = 'round';
 			for (const [nom, pes, l] of RIUS) {
