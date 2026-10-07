@@ -12,12 +12,19 @@ name: Bastir e desplegar
 on:
   push:
     branches: [master]
-    # Inutile de reconstruire pour une modification de documentation.
-    paths-ignore:
-      - '**.md'
-      - 'design-stock/**'
+    # Sonque çò que va dins l'imatge (app/) e aqueste fichièr : la
+    # documentacion, SIG/, design-stock/ o Modules_cors/ tòcan pas lo site.
+    paths:
+      - 'app/**'
+      - '!app/**.md'
+      - '.github/workflows/desplegar.yml'
   # Permet aussi de lancer la construction à la main depuis l'onglet Actions.
   workflow_dispatch:
+
+# Lo jeton de GitHub a pas besonh que de legir lo depaus : l'imatge
+# es mandada amb la clau Scaleway.
+permissions:
+  contents: read
 
 env:
   REGISTRE: rg.fr-par.scw.cloud/lo-ligam

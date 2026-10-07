@@ -15,7 +15,9 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build && npm prune --omit=dev
+# Les tests passent avant la construction : une régression détectée bloque
+# la mise en ligne, l'ancienne version reste en place (audit du 2026-10-08).
+RUN npm test && npm run build && npm prune --omit=dev
 
 # ---
 

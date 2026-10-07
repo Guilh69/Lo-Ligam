@@ -13,11 +13,12 @@ export default defineConfig({
 		environment: 'jsdom',
 		include: ['src/**/*.test.js'],
 		globals: true,
-		// Un seul processus : sur Windows, avec le projet dans OneDrive, les
-		// processus de travail de Vitest expirent avant de répondre. La suite
-		// est courte, la parallélisation n'apporte rien ici.
+		// Un seul processus : sur Windows, avec le projet dans un dossier
+		// synchronisé, les processus de travail de Vitest expirent avant de
+		// répondre. La suite est courte, la parallélisation n'apporte rien ici.
+		// (Vitest 4 : poolOptions.threads.singleThread est devenu maxWorkers.)
 		pool: 'threads',
-		poolOptions: { threads: { singleThread: true } },
+		maxWorkers: 1,
 		fileParallelism: false
 	}
 });

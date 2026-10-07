@@ -1,42 +1,33 @@
-# sv
+# Lo Ligam : le site
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Application SvelteKit 2 (Svelte 5), servie par Node (`adapter-node`) dans un
+conteneur Scaleway. Base de données et comptes : Supabase (Union européenne).
+Le pilotage du projet est dans `../PILOTATGE.md`.
 
-## Creating a project
+## Commandes (dans ce dossier `app/`)
 
-If you're seeing this, you've probably already done this step. Congrats!
+| Commande | Effet |
+|---|---|
+| `npm install` | installe les dépendances (une fois) |
+| `npm run dev` | site en local sur http://localhost:5173 (les esquisses `esbos-*.html` y restent visibles) |
+| `npm test` | tests automatiques (fiches, sections du site) |
+| `npm run build` | construit la version en ligne dans `build/`, compresse les `.geojson` et retire les esquisses |
 
-```sh
-# create a new project
-npx sv create my-app
-```
+## Variables d'environnement
 
-To recreate this project with the same configuration:
+Lues au démarrage du serveur (`$env/dynamic/public`), pas à la construction :
+l'image Docker n'en contient aucune.
 
-```sh
-# recreate this project
-npx sv@0.16.6 create --template minimal --types jsdoc --install npm app
-```
+| Variable | Où la renseigner | Rôle |
+|---|---|---|
+| `PUBLIC_SUPABASE_URL` | `app/.env` en local, variables du conteneur Scaleway en ligne | adresse du projet Supabase |
+| `PUBLIC_SUPABASE_ANON_KEY` | idem | clé publique (anon) : les droits sont tenus par les règles RLS de la base |
+| `LOCONGRES_API_KEY` | `app/.env` seulement | vérification du lexique des modules par les scripts, jamais envoyée au navigateur |
 
-## Developing
+Modèle : `.env.example`.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Mise en ligne
 
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Chaque envoi sur `master` qui touche `app/` déclenche
+`.github/workflows/desplegar.yml` : GitHub construit l'image (tests compris),
+l'envoie au registre Scaleway et redéploie le conteneur.
