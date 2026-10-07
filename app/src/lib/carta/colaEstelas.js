@@ -333,6 +333,19 @@ const cargarCorbas = () =>
 const pasCorbas = (z) => (z < 6.75 ? 1000 : z < 7.75 ? 400 : 200);
 const CLAU_AJUDA = 'lo-ligam-carta-ajuda-repèr';
 
+// Limites des départements et des régions (france-geojson / Etalab, simplifiés
+// avec GDAL : 55 Ko compressés, chargés seulement avec la carte). Elles se
+// devinent selon l'échelle (demande de Romain, 2026-10-07) : les régions vers
+// « 50 km » (niveaux 7 à 8), les départements vers « 30 km » (8 à 8,75, juste
+// avant la carte détaillée). Format : [code, nom, [anneaux [[lon, lat], …]]].
+let limitsPromesa = null;
+const cargarLimits = () =>
+	(limitsPromesa ??= fetch('/data/limits-carta.json')
+		.then((r) => (r.ok ? r.json() : null))
+		.then((d) => d ?? { despartaments: [], regions: [] })
+		.catch(() => ({ despartaments: [], regions: [] })));
+const bomba = (z, a0, a1, b0, b1) => clamp((z - a0) / (a1 - a0)) * (1 - clamp((z - b0) / (b1 - b0)));
+
 /* ---------- La couche ---------- */
 export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null } = {}) {
 	const Cola = L.Layer.extend({
@@ -370,6 +383,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._pus = null;
 			this._zP = null;
 			this._update();
+			cargarLimits().then((l) => {
+				this._limitsGeo = l;
+				this._zP = null;
+				this._update();
+			});
 			cargarCorbas().then((c) => {
 				this._corbasGeo = c;
 				this._zP = null;
@@ -473,6 +491,20 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					v.X = q.x;
 					v.Y = q.y;
 				}
+				const projAnels = (lista) =>
+					(lista || []).map(([code, nom, anels], i) => ({
+						code,
+						nom,
+						i,
+						anels: anels.map((a) =>
+							a.map(([lon, lat]) => {
+								const q = map.project([lat, lon], z);
+								return [q.x, q.y];
+							})
+						)
+					}));
+				this._regions = projAnels(this._limitsGeo?.regions);
+				this._deps = projAnels(this._limitsGeo?.despartaments);
 				this._corbas = (this._corbasGeo || []).map(([e, l]) => [
 					e,
 					l.map(([lon, lat]) => {
@@ -721,6 +753,43 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				aRius = 1 - clamp(det * 1.6),
 				aEtiq = aRius;
 			const gros = 1 + Math.max(0, z - 7) * 0.14;
+
+			// Les territoires : une surface à peine teintée (trois tons qui alternent,
+			// pour que deux voisins se distinguent) et un liseré fin ; les régions
+			// vers « 50 km », les départements vers « 30 km »
+			const aReg = bomba(z, 6.7, 7.1, 7.95, 8.3) * aRius,
+				aDep = clamp((z - 7.9) / 0.35) * aRius;
+			for (const [lista, a, punchat] of [
+				[this._regions, aReg, false],
+				[this._deps, aDep, true]
+			]) {
+				if (a < 0.01 || !lista?.length) continue;
+				const traçar = (t) => {
+					cx.beginPath();
+					for (const anel of t.anels) {
+						cx.moveTo(anel[0][0] - o.x, anel[0][1] - o.y);
+						for (let i = 1; i < anel.length; i++) cx.lineTo(anel[i][0] - o.x, anel[i][1] - o.y);
+						cx.closePath();
+					}
+				};
+				cx.fillStyle = T.estela;
+				for (const t of lista) {
+					cx.globalAlpha = a * [0.03, 0.05, 0.07][t.i % 3];
+					traçar(t);
+					cx.fill('evenodd');
+				}
+				// Limites humaines en crème (l'or est pour l'eau et le relief) : tiret
+				// long pour les régions, pointillé court pour les départements
+				cx.strokeStyle = T.estela;
+				cx.lineWidth = punchat ? 0.8 : 1.1;
+				cx.setLineDash(punchat ? [2.5, 3] : [8, 5]);
+				cx.globalAlpha = a * (punchat ? 0.24 : 0.34);
+				for (const t of lista) {
+					traçar(t);
+					cx.stroke();
+				}
+				cx.setLineDash([]);
+			}
 
 			// Le relief : courbes de niveau très discrètes, les maîtresses
 			// (tous les 1 000 m) un peu plus marquées

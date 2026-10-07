@@ -655,10 +655,14 @@
 		pointer-events: none;
 	}
 
+	/* La flèche du nord rejoint les outils de lecture de la carte, en bas à
+	   gauche : centrée au-dessus du bouton des calques (2,8 rem, à 3,5 rem du
+	   bas), avec le même souffle entre chaque élément. En haut, elle collait au
+	   logo du bandeau (retour de Romain, 2026-10-07). */
 	.compass {
 		position: absolute;
-		top: 6.4rem;
-		left: clamp(1rem, 4vw, 3.4rem);
+		bottom: 7.5rem;
+		left: calc(var(--marge, 1rem) + 1.4rem - 15px);
 		z-index: 900;
 		color: var(--t-aur);
 		opacity: 0.85;
