@@ -151,7 +151,8 @@
 		height: min(80vh, 44rem);
 		overflow: hidden;
 		border-radius: 20px;
-		background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.55), transparent 68%);
+		/* Un halo d'or au fond du tunnel (couleurs du thème, sombre ou clair) */
+		background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--t-aur) 16%, transparent), transparent 68%);
 		cursor: grab;
 		touch-action: none;
 	}
@@ -189,6 +190,6 @@
 		width: 100%;
 		display: block;
 		border-radius: 14px;
-		box-shadow: 0 18px 44px rgba(58, 42, 32, 0.32);
+		box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
 	}
 </style>

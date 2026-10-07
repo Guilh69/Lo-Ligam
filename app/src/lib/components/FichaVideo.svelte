@@ -153,16 +153,19 @@
 		width: 2.6rem;
 		height: 2.6rem;
 		border-radius: 999px;
-		border: none;
-		background: rgba(255, 255, 255, 0.92);
-		box-shadow: 0 4px 14px rgba(58, 42, 32, 0.28);
+		/* Verre sombre et liseré, comme les boutons ronds du site (charte 2026-10-07) */
+		border: 1px solid var(--t-linha);
+		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
+		backdrop-filter: blur(6px);
+		color: var(--t-aur-clar);
 		cursor: pointer;
 		font-size: 1.1rem;
 		line-height: 1;
+		transition: border-color 0.4s;
 	}
 
 	.son:hover {
-		background: white;
+		border-color: var(--t-aur);
 	}
 
 	.faciada {
@@ -183,21 +186,22 @@
 		width: 4rem;
 		height: 4rem;
 		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.94);
-		box-shadow: 0 8px 24px rgba(58, 42, 32, 0.35);
+		border: 1px solid var(--t-aur);
+		background: color-mix(in srgb, var(--t-fons) 80%, transparent);
+		backdrop-filter: blur(6px);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 1.4rem;
-		color: var(--color-terracotta);
+		color: var(--t-aur-clar);
 		padding-left: 0.2rem;
 	}
 
 	.avis {
 		margin: 0;
 		font-size: 0.75rem;
-		color: white;
-		opacity: 0.85;
+		color: var(--t-tinta-2);
 		text-align: center;
 		max-width: 26rem;
 	}
