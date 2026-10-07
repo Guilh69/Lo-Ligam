@@ -61,7 +61,7 @@ export function sonPapièr(plegar = true) {
 //   - crayon(true / false) : lo gredon, del primièr tròç de còsta al darrièr ;
 //   - calhau(u) : una pèira pausada, a cada nivèl d'altitud que pareis
 //     (u de 0 a 1 : de las planas als cims, del grave a l'agut, sus una
-//     gama doça, a la faiçon de Tiny Glade) ;
+//     gama doça, a la faiçon de Tiny Glade) : en espèra d'un enregistrament ;
 //   - aiga(n) : un riu que raja, tant fòrt coma i a de rius que corron ;
 //     s'escantís quand lo darrièr a tocat la mar (n = 0) ;
 //   - copar() : tot s'arrèsta (un clic mena a la fin).
@@ -148,87 +148,45 @@ export function sonsEntrada() {
 	}
 
 	// --- las pèiras ---
-	const GAMA = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24];
-	const tuc = bruch(0.02);
-	function calhau(u) {
-		const t = c.currentTime + 0.005;
-		const semi = GAMA[Math.round(Math.max(0, Math.min(1, u)) * (GAMA.length - 1))] + (Math.random() - 0.5) * 0.3;
-		const f0 = 140 * Math.pow(2, semi / 12);
-		// lo còrs de la pèira : doas modas amortidas
-		for (const [mult, dec, vol] of [[1, 0.16, 0.05], [2.76, 0.06, 0.018]]) {
-			const o = c.createOscillator(),
-				g = c.createGain();
-			o.type = 'sine';
-			o.frequency.setValueAtTime(f0 * mult * 1.03, t);
-			o.frequency.exponentialRampToValueAtTime(f0 * mult, t + 0.03);
-			g.gain.setValueAtTime(0.0001, t);
-			g.gain.exponentialRampToValueAtTime(vol, t + 0.004);
-			g.gain.exponentialRampToValueAtTime(0.0001, t + dec);
-			o.connect(g);
-			sortida(g);
-			o.start(t);
-			o.stop(t + dec + 0.02);
-		}
-		// lo tòc : un brieu de bruch clar
-		const s = c.createBufferSource();
-		s.buffer = tuc;
-		const bp = c.createBiquadFilter();
-		bp.type = 'bandpass';
-		bp.frequency.value = 2400 + Math.random() * 1200;
-		bp.Q.value = 1.5;
-		const g = c.createGain();
-		g.gain.setValueAtTime(0.0001, t);
-		g.gain.exponentialRampToValueAtTime(0.012, t + 0.002);
-		g.gain.exponentialRampToValueAtTime(0.0001, t + 0.025);
-		s.connect(bp).connect(g);
-		sortida(g);
-		s.start(t);
-		s.stop(t + 0.03);
-	}
+	// (los sons fabricats sonavan coma d'aiga dins una botelha : en espèra
+	// d'un enregistrament vertadièr, pas res)
+	function calhau() {}
 
-	// --- l'aiga ---
+	// --- l'aiga : un enregistrament vertadièr (Biofonik, CC0, static/sons/FONTS.md),
+	// pas tròp fòrt (demanda de Romain) ; s'escantís quand lo darrièr riu a
+	// tocat la mar ---
+	let bufRiu = null;
+	fetch('/sons/riu.mp3')
+		.then((r) => (r.ok ? r.arrayBuffer() : null))
+		.then((b) => b && c.decodeAudioData(b))
+		.then((d) => (bufRiu = d))
+		.catch(() => {});
 	let riu = null;
 	function aiga(n) {
 		const t = c.currentTime;
 		if (n > 0 && !riu) {
-			// lo fons : un bruch suau, filtrat (ni agut ni sord)
-			const f = bocla(bruch(3));
-			const hp = c.createBiquadFilter();
-			hp.type = 'highpass';
-			hp.frequency.value = 220;
-			const lp = c.createBiquadFilter();
-			lp.type = 'lowpass';
-			lp.frequency.value = 1500;
-			const fons = c.createGain();
-			fons.gain.value = 0.35;
-			f.connect(hp).connect(lp).connect(fons);
-			// lo gargolh : de filtres estreches que se desplaçan a l'azard
-			const babil = c.createGain();
-			babil.gain.value = 1;
-			for (let i = 0; i < 4; i++) {
-				const bp = c.createBiquadFilter();
-				bp.type = 'bandpass';
-				bp.Q.value = 9;
-				bp.frequency.value = 400 + Math.random() * 600;
-				for (let u = 0; u < 9; u += 0.07 + Math.random() * 0.08) bp.frequency.setTargetAtTime(330 + Math.random() * 750, t + u, 0.03);
-				f.connect(bp).connect(babil);
-			}
+			if (!bufRiu) return; // pas encara cargat : res
+			const f = c.createBufferSource();
+			f.buffer = bufRiu;
+			f.loop = true;
+			f.start(t, 1);
+			fonts.push(f);
 			const g = c.createGain();
 			g.gain.setValueAtTime(0.0001, t);
-			fons.connect(g);
-			babil.connect(g);
-			sortida(g);
+			f.connect(g);
+			sortida(g, false);
 			riu = { f, g, n: 0 };
 		}
 		if (!riu) return;
 		if (n > 0) {
-			// mai de rius, mai d'aiga (doçament)
-			if (n !== riu.n) riu.g.gain.setTargetAtTime(Math.min(0.09, 0.035 + 0.012 * Math.sqrt(n)), t, 0.25);
+			// mai de rius, un pauc mai d'aiga
+			// (l'enregistrament es discret : un nivèl ausible mas doç, jos lo gredon)
+			if (n !== riu.n) riu.g.gain.setTargetAtTime(Math.min(0.8, 0.5 + 0.05 * Math.sqrt(n)), t, riu.n ? 0.4 : 0.25);
 			riu.n = n;
 		} else if (riu.n > 0) {
-			riu.g.gain.setTargetAtTime(0.0001, t, 0.35);
+			riu.g.gain.setTargetAtTime(0.0001, t, 0.5);
 			const f = riu.f;
-			setTimeout(() => f.stop(), 2000);
+			setTimeout(() => f.stop(), 3000);
 			riu.n = 0;
 		}
 	}
