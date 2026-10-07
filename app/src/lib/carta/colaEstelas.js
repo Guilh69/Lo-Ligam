@@ -17,18 +17,20 @@ import { LUOCS, RIUS, COSTA, dialDe } from '$lib/acuelh/carta-estelas.js';
 import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
 import { VILAS_FICHAS } from './vilasFichas.js';
 
-// Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam en pichon, sus un
-// disc sorne liserat d'aur, per demorar legibla sus la carta detalhada
-function dessenharRepèr(cx, x, y, R, T, a, pols) {
+// Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam sus un disc sorne
+// liserat d'aur, amb una pastilha « ? » (i a quicòm de saber aicí) e una onda
+// que s'espandís doçament, coma un ponch d'interès de descobrir (retorn de
+// Romain 2026-10-07)
+function dessenharRepèr(cx, x, y, R, T, a, onda) {
 	cx.save();
-	cx.globalAlpha = a * (0.22 + 0.12 * pols);
-	const h = cx.createRadialGradient(x, y, 0, x, y, R * 2.6);
-	h.addColorStop(0, T.fil);
-	h.addColorStop(1, 'rgba(238, 175, 52, 0)');
-	cx.fillStyle = h;
-	cx.beginPath();
-	cx.arc(x, y, R * 2.6, 0, 6.283);
-	cx.fill();
+	if (onda >= 0) {
+		cx.globalAlpha = a * 0.55 * (1 - onda);
+		cx.strokeStyle = T.fil;
+		cx.lineWidth = 1.2;
+		cx.beginPath();
+		cx.arc(x, y, R * (1.45 + onda * 1.6), 0, 6.283);
+		cx.stroke();
+	}
 	cx.globalAlpha = a;
 	cx.fillStyle = T.bulla;
 	cx.strokeStyle = T.fil;
@@ -37,6 +39,7 @@ function dessenharRepèr(cx, x, y, R, T, a, pols) {
 	cx.arc(x, y, R * 1.45, 0, 6.283);
 	cx.fill();
 	cx.stroke();
+	cx.save();
 	cx.translate(x, y);
 	cx.lineCap = 'round';
 	cx.lineWidth = Math.max(1, R * 0.1);
@@ -59,6 +62,23 @@ function dessenharRepèr(cx, x, y, R, T, a, pols) {
 		cx.fill();
 	});
 	cx.restore();
+	// La pastilha « ? », en naut a drecha del disc
+	const bx = x + R * 1.2,
+		by = y - R * 1.15,
+		br = R * 0.66;
+	cx.fillStyle = T.alerta;
+	cx.strokeStyle = T.bulla;
+	cx.lineWidth = 1.5;
+	cx.beginPath();
+	cx.arc(bx, by, br, 0, 6.283);
+	cx.fill();
+	cx.stroke();
+	cx.fillStyle = '#fff';
+	cx.font = '700 ' + Math.round(br * 1.45) + 'px Luciole, sans-serif';
+	cx.textAlign = 'center';
+	cx.textBaseline = 'middle';
+	cx.fillText('?', bx, by + 0.5);
+	cx.restore();
 }
 
 const TÈXTES_FICHA = {
@@ -67,12 +87,12 @@ const TÈXTES_FICHA = {
 };
 
 const TEMAS = {
-	sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
-	clar: { costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
+	sorne: { alerta: '#e0612f', costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
+	clar: { alerta: '#b53d17', costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
-	...(dalt ? (clar ? { riu: '#1f5f8f', riuTèxt: '#174a72' } : { riu: '#6fb1ff', riuTèxt: '#a9d0ff' }) : {})
+	...(dalt ? (clar ? { riu: '#1f5f8f', riuTèxt: '#174a72', alerta: '#1f5f8f' } : { riu: '#6fb1ff', riuTèxt: '#a9d0ff', alerta: '#2f6fb0' }) : {})
 });
 
 // Montpelhièr d'abord (demande Romain) ; si une ville doit céder sa place, ce
@@ -546,13 +566,19 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			return best;
 		},
-		// Position du repère d'une ville à fiche : sur son étoile en vue
-		// d'ensemble, juste au-dessus du nom OSM sur la carte détaillée
+		// Le repère d'une ville à fiche n'apparaît qu'avec la carte détaillée (de
+		// loin, on clique sur l'étoile) ; il flotte au-dessus du nom OSM, d'autant
+		// plus haut que ce nom grossit avec le zoom (à 1 km d'échelle, il
+		// mangeait le « el » de Montpelhièr)
+		_aRepèr() {
+			return opacitatTeules(this._zoom);
+		},
 		_posFicha(v) {
-			const det = partDetalh(this._zoom);
-			return { x: v.X - this._o.x, y: v.Y - this._o.y - det * 26, R: lerp(6.5, 9, det) };
+			const z = this._zoom;
+			return { x: v.X - this._o.x, y: v.Y - this._o.y - (26 + Math.max(0, z - 10) * 6), R: 9 };
 		},
 		_fichaA(lp) {
+			if (this._aRepèr() < 0.3) return null;
 			const x = lp.x - this._min.x,
 				y = lp.y - this._min.y;
 			for (const v of this._fichas) {
@@ -598,7 +624,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const f = this._fichaA(e.layerPoint);
 			if (f) {
 				this._pus = null;
-				if (partDetalh(this._zoom) < 0.5) {
+				if (partDetalh(this._zoom) < 0.6) {
 					this._map.flyTo([f.lat, f.lon], Z_DETALH_1 + 0.5, { duration: this._calm ? 0 : 1.8 });
 				} else if (f.ligam && this._onFicha) {
 					this._onFicha(f);
@@ -705,19 +731,20 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 
 			// Les repères des villes à fiche, au-dessus de tout (même de la carte détaillée)
-			if (this._fichas.length && intro > 0.5) {
-				const aF = clamp((intro - 0.5) / 0.4),
-					pols = this._calm ? 0.5 : Math.sin(temps * 1.6) * 0.5 + 0.5;
+			const aF = this._aRepèr();
+			if (this._fichas.length && aF > 0.01) {
+				// une onde toutes les 2,6 s ; aucune si l'on a demandé moins d'animations
+				const onda = this._calm ? -1 : (temps % 2.6) / 2.6;
 				for (const v of this._fichas) {
 					const p = this._posFicha(v);
-					dessenharRepèr(cx, p.x, p.y, p.R * (v === this._fichaPus ? 1.15 : 1), T, aF, pols);
+					dessenharRepèr(cx, p.x, p.y, p.R * (v === this._fichaPus ? 1.12 : 1), T, aF, onda);
 				}
 			}
 			if (this._fichaDet && performance.now() - this._fichaTòc > 4000) {
 				this._fichaDet = false;
 				this._fichaPus = null;
 			}
-			const fp = this._fichaPus;
+			const fp = aF > 0.3 ? this._fichaPus : null;
 			if (fp) {
 				const p = this._posFicha(fp),
 					tx = TÈXTES_FICHA[this._lang] ?? TÈXTES_FICHA.oc;

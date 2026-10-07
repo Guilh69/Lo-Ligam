@@ -526,9 +526,30 @@
 		font: 400 1.2rem var(--font-body);
 	}
 
-	.carta :global(.leaflet-bar a:hover) {
+	/* Pas de surlignage bleu après un clic ou un toucher (navigateurs), ni de
+	   texte sélectionné quand on clique vite plusieurs fois sur + ou − */
+	.carta :global(.leaflet-bar a) {
+		-webkit-tap-highlight-color: transparent;
+		user-select: none;
+	}
+
+	.carta :global(.leaflet-control-container) {
+		user-select: none;
+	}
+
+	.carta :global(.leaflet-bar a:hover),
+	.carta :global(.leaflet-bar a:focus) {
 		background: var(--t-fons-2);
 		color: var(--t-aur);
+	}
+
+	.carta :global(.leaflet-bar a:focus:not(:focus-visible)) {
+		outline: none;
+	}
+
+	.carta :global(.leaflet-bar a:focus-visible) {
+		outline: 2px solid var(--t-aur);
+		outline-offset: -2px;
 	}
 
 	.carta :global(.leaflet-bar a.leaflet-disabled) {
