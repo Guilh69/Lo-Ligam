@@ -151,6 +151,8 @@
 		flex-wrap: wrap;
 		gap: 0.8rem 1.6rem;
 		margin-top: 1.6rem;
+		/* place pour le bouton « Tornar amont » (46 px, fixé en bas à droite) */
+		padding-right: 3.6rem;
 		font-size: 0.8rem;
 		color: var(--t-tinta-2);
 	}
