@@ -218,6 +218,7 @@ export function crearColaDonadas(
 		_survòl(k) {
 			if (k === this._pus) return;
 			this._pus = k;
+			this._prepPus();
 			onSurvòl?.(k, this._nomDe(k));
 			this._pintar();
 		},
@@ -349,6 +350,7 @@ export function crearColaDonadas(
 			};
 			this._prepTotes();
 			this._prepSel();
+			this._prepPus();
 			if (this._jaces.creissent) this._prepCro();
 			if (this._jaces.dialectes || this._jaces.frontiera) this._prepMix();
 			this._pintar();
@@ -536,6 +538,18 @@ export function crearColaDonadas(
 		_prepTotes() {
 			if (this._jaces.dialectes && this._geo?.zonas) this._tenchaDins(this._imgTotes, this._geo.zonas);
 		},
+		// Lo dialècte survolat : meteissa tencha fonduda que la causida
+		_prepPus() {
+			const G = this._geo,
+				k = this._pus;
+			const zn = k && G?.zonas ? G.zonas.find((x) => x.kod === k) : null;
+			this._pusDial = !!zn;
+			if (!zn) return;
+			this._imgPus ??= document.createElement('canvas');
+			this._imgPus.width = this._cv.width;
+			this._imgPus.height = this._cv.height;
+			this._tenchaDins(this._imgPus, [zn], true);
+		},
 		// Lo dialècte causit, sol : son fondut cap als vesins se ditz transicion
 		_prepSel() {
 			const G = this._geo;
@@ -584,18 +598,10 @@ export function crearColaDonadas(
 					if (an && an.a === selDial) this._difusar(selDial, p, aT * 1.6);
 					else this._copiar(this._imgSel, aT * 1.6);
 				}
-				// survòl (sens causida) : la zòna s'esclarzís un pauc
-				if (!selDial && this._pus && this._pus !== 'cro') {
-					const zn = G.zonas.find((x) => x.kod === this._pus);
-					if (zn) {
-						cx.save();
-						if (G.dom) cx.clip(G.dom, 'evenodd');
-						cx.globalAlpha = 0.12;
-						cx.fillStyle = T.dial[zn.kod];
-						cx.fill(zn.c, 'evenodd');
-						cx.restore();
-					}
-				}
+				// survòl (sens causida) : la zòna s'esclarzís un pauc, amb lo meteis
+				// fondut que la causida (retorn de Romain : un emplenatge net fasiá de
+				// bòrds tròp nets ; nets sonque sus la frontièra e la còsta)
+				if (!selDial && this._pusDial) this._copiar(this._imgPus, aT * 0.45);
 			}
 
 			/* Zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes */
