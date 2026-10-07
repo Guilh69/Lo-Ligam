@@ -6,6 +6,7 @@
 	// qu'es afichat, per l'escantir d'un còp d'uèlh ; « Fons » règla lo fons
 	// (fons « Contorns », occitan, natural, satellit, e colors) ; los elements
 	// (vilas, noms, rius, relèu) son de jaces dins lors familhas.
+	import { untrack } from 'svelte';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 
@@ -37,6 +38,10 @@
 			colors: 'Colors',
 			colorDe: { costa: 'Trach de còsta', riu: 'Rius', estela: 'Vilas e noms', corba: 'Relèu' },
 			sonqueContorns: 'Sonque los contorns',
+			anullar: 'Anullar',
+			anullarTitol: 'Anullar la darrièra manipulacion (Ctrl+Z)',
+			netejar: 'Netejar la carta',
+			netejarTitol: 'Escantir totas las jaces e tornar partir de zèro',
 			sonqueFons: 'Sonque sul fons Contorns',
 			totTornar: 'Tot tornar',
 			colorsTema: 'Colors del tèma',
@@ -61,6 +66,10 @@
 			colors: 'Couleurs',
 			colorDe: { costa: 'Trait de côte', riu: 'Rivières', estela: 'Villes et noms', corba: 'Relief' },
 			sonqueContorns: 'Seulement les contours',
+			anullar: 'Annuler',
+			anullarTitol: 'Annuler la dernière manipulation (Ctrl+Z)',
+			netejar: 'Vider la carte',
+			netejarTitol: 'Éteindre toutes les couches et repartir de zéro',
 			sonqueFons: 'Seulement sur le fond Contours',
 			totTornar: 'Tout remettre',
 			colorsTema: 'Couleurs du thème',
@@ -190,12 +199,52 @@
 		for (const j of totas) visibility[j.id] = !!j.defaut;
 		dialecte = null;
 	}
+	// Istoric de las manipulacions (demanda de Romain) : cada cambiament de la
+	// carta (jaces, dialècte causit, fons, colors) es gardat, per lo poder
+	// anullar ; tant del panèl coma d'un clic sus la carta
+	let istoric = $state([]);
+	let darrièr = null,
+		anullant = false,
+		pret = false; // l'istoric comença al primièr gèst (pas al cargament de la basa)
+	$effect(() => {
+		const estat = JSON.stringify({ v: $state.snapshot(visibility), d: dialecte, b: baseLayer, c: $state.snapshot(colors) });
+		untrack(() => {
+			if (pret && darrièr && estat !== darrièr && !anullant) istoric = [...istoric.slice(-39), darrièr];
+			anullant = false;
+			darrièr = estat;
+		});
+	});
+	function anullar() {
+		const e = istoric.at(-1);
+		if (!e) return;
+		istoric = istoric.slice(0, -1);
+		anullant = true;
+		const s = JSON.parse(e);
+		for (const k of Object.keys({ ...visibility, ...s.v })) visibility[k] = !!s.v[k];
+		dialecte = s.d;
+		baseLayer = s.b;
+		colors = s.c;
+	}
+	// Netejar : totas las jaces escantidas, sens dialècte causit (lo fons e las
+	// colors demòran) ; anullable
+	function netejar() {
+		for (const j of totas) if (visibility[j.id]) visibility[j.id] = false;
+		dialecte = null;
+	}
 	function onKey(e) {
+		pret = true;
+		if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z' && !/^(INPUT|TEXTAREA)$/.test(e.target?.tagName ?? '')) {
+			if (istoric.length) {
+				e.preventDefault();
+				anullar();
+			}
+			return;
+		}
 		if (e.key === 'Escape' && dobert) dobert = null;
 	}
 </script>
 
-<svelte:window onkeydown={onKey} />
+<svelte:window onkeydown={onKey} onpointerdown={() => (pret = true)} />
 
 <nav class="rail" aria-label={tx.rail}>
 	{#each RAIL as id (id)}
@@ -236,6 +285,13 @@
 
 		{#if dobert === 'sus'}
 			<p class="sota">{tx.afichadas(afichadas.length)} · {tx.fonsCarta.toLowerCase()} : {tx.basemaps[baseLayer] ?? baseLayer}</p>
+			<div class="botons botons-sus">
+				<button type="button" class="boton" onclick={anullar} disabled={!istoric.length} title={tx.anullarTitol}>
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+					{tx.anullar}
+				</button>
+				<button type="button" class="boton" onclick={netejar} disabled={!afichadas.length} title={tx.netejarTitol}>{tx.netejar}</button>
+			</div>
 			{#if !afichadas.length}
 				<p class="res">{tx.res}</p>
 			{/if}
@@ -667,6 +723,22 @@
 			radial-gradient(ellipse at 40% 60%, #3d5130, transparent 60%),
 			radial-gradient(ellipse at 80% 20%, #6b6046, transparent 50%),
 			#1f2a2e;
+	}
+	.botons-sus {
+		margin: 0 0 0.4rem;
+	}
+	.boton {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+	}
+	.boton svg {
+		width: 15px;
+		height: 15px;
+	}
+	.boton:disabled {
+		opacity: 0.4;
+		cursor: default;
 	}
 	.botons {
 		display: flex;

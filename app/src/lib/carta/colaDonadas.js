@@ -432,7 +432,14 @@ export function crearColaDonadas(
 			cx.clearRect(0, 0, this._cv.width, this._cv.height);
 			cx.setTransform(dpr, 0, 0, dpr, 0, 0);
 			// de prèp, lo dialècte es pertot : la tencha s'esvalís
-			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4));
+			// Fòrt de prèp (escala d'una carrièra), sonque lo fons (retorn de Romain) :
+			// los contorns simplificats se decalarián de las tuèlas e la frontièra
+			// de la lenga pretendriá una precision qu'a pas. Contorns administratius
+			// escantits de 10 a 11, frontièra de 11 a 12, tenchas de 11,5 a 12,5.
+			const aAdmin = clamp(11 - z),
+				aFront = clamp(12 - z),
+				aTenchas = clamp(12.5 - z);
+			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas;
 			const an = this._anim,
 				p = an ? clamp((performance.now() - an.t0) / DURADA) : 1;
 
@@ -475,7 +482,7 @@ export function crearColaDonadas(
 				a *= lerp(1, 0.35, clamp((z - 8) / 3));
 				cx.save();
 				if (an && an.a === 'cro') this._mascaDifusion(G.cro, p); // clip progressiu
-				this._copiar(this._imgCro, a);
+				this._copiar(this._imgCro, a * aTenchas);
 				cx.restore();
 			}
 
@@ -489,15 +496,15 @@ export function crearColaDonadas(
 				for (const c of lista) cx.stroke(c);
 				cx.restore();
 			};
-			if (G.deps) contorns(G.deps, 0.7, [], 0.28);
-			if (G.regions) contorns(G.regions, 1.2, [6, 4], 0.45);
+			if (G.deps && aAdmin > 0.01) contorns(G.deps, 0.7, [], 0.28 * aAdmin);
+			if (G.regions && aAdmin > 0.01) contorns(G.regions, 1.2, [6, 4], 0.45 * aAdmin);
 
 			/* La frontièra de la lenga (demanda de Romain, 2026-10-07) : SONQUE de
 			   ponches tèrra cuècha, lo fons demòra lo meteis d'un costat e de
 			   l'autre. De prèp, sabèm pas al quilomètre près ont passa : los
 			   ponches palisson e una benda difusa de quauques quilomètres ditz
 			   « per aquí ». */
-			if (J.frontiera && G.linhas) {
+			if (J.frontiera && G.linhas && aFront > 0.01) {
 				const vague = clamp((z - 7.5) / 2.5);
 				const traçar = () => {
 					cx.beginPath();
@@ -514,14 +521,14 @@ export function crearColaDonadas(
 					const larg = Math.max(4, 4000 / G.mPx);
 					traçar();
 					for (const [k, al] of [[1, 0.05], [0.55, 0.06]]) {
-						cx.globalAlpha = vague * al;
+						cx.globalAlpha = vague * al * aFront;
 						cx.lineWidth = larg * k;
 						cx.stroke();
 					}
 				}
 				cx.setLineDash([0.01, 4.2 + vague * 3]);
 				cx.lineWidth = 1.4 + vague * 0.6;
-				cx.globalAlpha = lerp(0.8, 0.3, vague);
+				cx.globalAlpha = lerp(0.8, 0.3, vague) * aFront;
 				traçar();
 				cx.stroke();
 				cx.restore();
