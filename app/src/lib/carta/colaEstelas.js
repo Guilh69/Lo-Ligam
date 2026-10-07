@@ -545,7 +545,16 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 							const q = map.project([lat, lon], z);
 							return [q.x, q.y];
 						});
-					this._domeni = { linhas: dom.linhas.map(proj) };
+					// le domaine en surface : la teinte d'un territoire révélé ne couvre
+					// que sa partie occitanophone
+					const cami = new Path2D();
+					for (const a of dom.anels || []) {
+						const p = proj(a);
+						cami.moveTo(p[0][0], p[0][1]);
+						for (let i = 1; i < p.length; i++) cami.lineTo(p[i][0], p[i][1]);
+						cami.closePath();
+					}
+					this._domeni = { linhas: dom.linhas.map(proj), cami: dom.anels?.length ? cami : null };
 				}
 				this._regions = projAnels(this._limitsGeo?.regions);
 				this._deps = projAnels(this._limitsGeo?.despartaments);
@@ -835,9 +844,15 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						reg = cibla2.mena === 'region';
 					cx.save();
 					cx.translate(-o.x, -o.y);
-					cx.globalAlpha = a * 0.09;
+					// La teinte seulement sur la partie occitanophone du territoire
+					// (demande de Romain : le reste garde le fond du nord de la
+					// France) ; le contour en pointillé, lui, fait tout le territoire
+					cx.save();
+					if (this._domeni?.cami) cx.clip(this._domeni.cami, 'evenodd');
+					cx.globalAlpha = a * 0.11;
 					cx.fillStyle = T.estela;
 					cx.fill(t.cami, 'evenodd');
+					cx.restore();
 					cx.globalAlpha = a * 0.6;
 					cx.strokeStyle = T.estela;
 					cx.lineWidth = reg ? 1.3 : 1.1;
