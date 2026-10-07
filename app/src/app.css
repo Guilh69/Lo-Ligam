@@ -113,3 +113,32 @@ button {
 a {
 	color: inherit;
 }
+
+/* Transitions de vue (Mots, 2026-10-07) : la vignette d'un thème
+   s'agrandit jusqu'au carrousel et y revient ; son nom la suit. Même courbe
+   que l'accueil, assez longue pour qu'on voie l'image voyager. */
+::view-transition-group(ficha-cuberta),
+::view-transition-group(tema-titol) {
+	animation-duration: 0.85s;
+	animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 0.45s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}
+
+/* Une fiche ouverte : la page derrière ne défile plus (la gouttière de la
+   barre de défilement est gardée, pour que rien ne saute) */
+html.post-dobert {
+	overflow: hidden;
+	scrollbar-gutter: stable;
+}

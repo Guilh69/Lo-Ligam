@@ -5,6 +5,14 @@
 	// pastilles mais un SOMMAIRE : colonne fixe à gauche quand il y a la
 	// place, une seule ligne qu'on fait glisser sinon. Pas de fond animé ici
 	// (sobriété) : la vitrine, c'est l'accueil.
+	//
+	// Par défaut, les fiches sont REGROUPÉES PAR THÈME, comme un profil
+	// Instagram : une vignette par thème (sa première fiche). Au clic, la
+	// vignette s'agrandit et devient le carrousel du thème (transition de vue
+	// du navigateur, à la manière de Léo Parpeix / Locomotive), et y revient
+	// en refermant. Sans cette fonction (vieux navigateurs) ou si l'on a
+	// demandé moins d'animations, le carrousel s'ouvre simplement.
+	import { tick } from 'svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import FichaTunnel from '$lib/components/FichaTunnel.svelte';
 	import FichaVideo from '$lib/components/FichaVideo.svelte';
@@ -21,6 +29,7 @@
 	const t = {
 		oc: {
 			kicker: 'Descobrir',
+			tema: 'Tèma',
 			title: 'Mots en imatges',
 			lead: 'Cada ficha : un tèma, los mots en occitan, lor prononciacion e lor revirada.',
 			fichas: 'fichas',
@@ -34,6 +43,7 @@
 		},
 		fr: {
 			kicker: 'Découvrir',
+			tema: 'Thème',
 			title: 'Mots en images',
 			lead: 'Chaque fiche : un thème, les mots en occitan, leur prononciation et leur traduction.',
 			fichas: 'fiches',
@@ -73,25 +83,135 @@
 		}
 	}
 
-	// Visionneuse partagée par les trois modes.
-	let openIndex = $state(-1);
-	let openFicha = $derived(openIndex >= 0 ? visibles[openIndex] : null);
+	// Regroupement par thème (vue par défaut : mosaïque, tous les thèmes)
+	let grops = $derived(
+		categories
+			.map((c) => ({ cat: c, fichas: fichas.filter((f) => f.cat === c.id) }))
+			.filter((g) => g.fichas.length)
+	);
+	let agropat = $derived(view === 'mosaica' && activeCat === 'all');
+	const nomCat = (c) => (lang === 'oc' ? c.oc : c.fr);
 
-	function openItem(item) {
-		openIndex = visibles.findIndex((f) => f.id === item.id);
+	/* ---------- Le carrousel d'un thème (« post ») ---------- */
+	let paginaEl = $state();
+	let diaposEl = $state();
+	let tamparEl = $state();
+	let post = $state(null); // { cat } quand un thème est ouvert
+	let postActiu = $state(0);
+	let senseVT = $state(false); // ouverture sans transition de vue : animation CSS de repli
+	let fichasPost = $derived(post ? fichas.filter((f) => f.cat === post.cat) : []);
+	let catPost = $derived(post ? categories.find((c) => c.id === post.cat) : null);
+	let numPost = $derived(post ? String(categories.findIndex((c) => c.id === post.cat) + 1).padStart(2, '0') : '');
+	let tornarFocus = null;
+
+	// Deux éléments « voyagent » d'une vue à l'autre : l'image et le nom du thème
+	const VT_IMG = 'ficha-cuberta',
+		VT_TITOL = 'tema-titol';
+	const nomar = (el, n) => el?.style.setProperty('view-transition-name', n);
+	const desnomar = (...els) => els.forEach((el) => el?.style.removeProperty('view-transition-name'));
+
+	function transicion(fn) {
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (!document.startViewTransition || calm) {
+			senseVT = !calm;
+			fn();
+			return null;
+		}
+		senseVT = false;
+		const vt = document.startViewTransition(fn);
+		// Transition sautée (onglet caché, autre transition en cours) : le
+		// changement se fait quand même, sans animation ; rien à signaler.
+		vt.ready.catch(() => {});
+		return vt;
 	}
-	function close() {
-		openIndex = -1;
+
+	// La grande image est demandée tout de suite ; on lui laisse un instant pour
+	// arriver, afin que l'agrandissement montre une image nette (sinon la
+	// vignette, déjà chargée, sert de doublure le temps qu'elle arrive).
+	function precargar(src) {
+		const im = new Image();
+		im.src = src;
+		return Promise.race([im.decode().catch(() => {}), new Promise((r) => setTimeout(r, 220))]);
 	}
-	function step(d) {
-		if (openIndex < 0) return;
-		openIndex = (openIndex + d + visibles.length) % visibles.length;
+
+	async function dobrir(cat, index, img = null, titol = null) {
+		const liste = fichas.filter((f) => f.cat === cat);
+		if (!liste.length) return;
+		tornarFocus = document.activeElement;
+		await precargar(liste[index]?.grand);
+		nomar(img, VT_IMG);
+		nomar(titol, VT_TITOL);
+		const vt = transicion(async () => {
+			desnomar(img, titol);
+			document.documentElement.classList.add('post-dobert');
+			post = { cat };
+			postActiu = index;
+			await tick();
+			if (diaposEl) diaposEl.scrollLeft = index * diaposEl.clientWidth;
+		});
+		if (!vt) desnomar(img, titol);
+		(vt ? vt.finished : Promise.resolve()).finally(() => tamparEl?.focus({ preventScroll: true }));
 	}
+
+	function dobrirFicha(f, el) {
+		const index = fichas.filter((x) => x.cat === f.cat).findIndex((x) => x.id === f.id);
+		dobrir(f.cat, Math.max(0, index), el?.querySelector('img'));
+	}
+
+	// En refermant, l'image revient à la fiche d'où l'on vient (ou à la vignette
+	// du thème), seulement si elle est à l'écran : sinon, simple fondu.
+	function cibla(cat, id) {
+		const visible = (el) => {
+			const r = el?.getBoundingClientRect();
+			return r && r.width > 0 && r.bottom > 0 && r.top < innerHeight;
+		};
+		const fiche = paginaEl?.querySelector(`[data-ficha="${CSS.escape(id ?? '')}"] img`);
+		if (visible(fiche)) return { img: fiche, titol: null };
+		const vinheta = paginaEl?.querySelector(`[data-tema="${CSS.escape(cat)}"]`);
+		const img = vinheta?.querySelector('img');
+		return visible(img) ? { img, titol: vinheta.querySelector('.tile-nom') } : null;
+	}
+
+	function tampar() {
+		if (!post) return;
+		const c = cibla(post.cat, fichasPost[postActiu]?.id);
+		const vt = transicion(async () => {
+			post = null;
+			document.documentElement.classList.remove('post-dobert');
+			await tick();
+			nomar(c?.img, VT_IMG);
+			nomar(c?.titol, VT_TITOL);
+		});
+		const netejar = () => {
+			desnomar(c?.img, c?.titol);
+			tornarFocus?.focus?.({ preventScroll: true });
+		};
+		if (vt) vt.finished.finally(netejar);
+		else netejar();
+	}
+
+	// Si l'on quitte la page fiche ouverte, la page suivante doit pouvoir défiler
+	$effect(() => () => document.documentElement.classList.remove('post-dobert'));
+
+	function anar(d) {
+		if (!diaposEl) return;
+		const i = Math.max(0, Math.min(fichasPost.length - 1, postActiu + d));
+		anarA(i);
+	}
+	function anarA(i) {
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		diaposEl?.scrollTo({ left: i * diaposEl.clientWidth, behavior: calm ? 'auto' : 'smooth' });
+	}
+	function onDiapos() {
+		if (!diaposEl) return;
+		postActiu = Math.round(diaposEl.scrollLeft / (diaposEl.clientWidth || 1));
+	}
+
 	function onKey(e) {
-		if (openIndex < 0) return;
-		if (e.key === 'Escape') close();
-		else if (e.key === 'ArrowRight') step(1);
-		else if (e.key === 'ArrowLeft') step(-1);
+		if (!post) return;
+		if (e.key === 'Escape') tampar();
+		else if (e.key === 'ArrowRight') anar(1);
+		else if (e.key === 'ArrowLeft') anar(-1);
 	}
 
 	// Carrousel : glissement + centrage.
@@ -168,7 +288,7 @@
 
 <svelte:window onkeydown={onKey} />
 
-<div class="pagina">
+<div class="pagina" bind:this={paginaEl}>
 	<div class="capçal">
 		<AppHeader />
 	</div>
@@ -219,8 +339,8 @@
 			<section class="fichas" bind:this={cimEl} aria-labelledby="tema-actiu">
 				<div class="barra">
 					<div class="jalon">
-						<b>{visibles.length}</b>
-						<span>{tx.fichas}</span>
+						<b>{agropat ? grops.length : visibles.length}</b>
+						<span>{agropat ? tx.temas : tx.fichas}</span>
 					</div>
 					<h2 id="tema-actiu" class="tema-actiu">{nomActiu}</h2>
 					<div class="views" role="group" aria-label={tx.vista}>
@@ -232,11 +352,44 @@
 					</div>
 				</div>
 
-				{#if view === 'mosaica'}
+				{#if agropat}
+					<!-- Un thème = une publication : sa première fiche en vignette, le
+					     paquet des autres derrière, l'icône « carrousel » d'Instagram -->
+					<ul class="grid grid-temas">
+						{#each grops as g, i (g.cat.id)}
+							<li style:--i={Math.min(i, 16)}>
+								<button
+									type="button"
+									class="tile"
+									data-tema={g.cat.id}
+									style:--cat={g.cat.color}
+									onclick={(e) => dobrir(g.cat.id, 0, e.currentTarget.querySelector('img'), e.currentTarget.querySelector('.tile-nom'))}
+								>
+									<span class="tile-pila">
+										<img src={g.fichas[0].mini} alt="" loading="lazy" />
+										{#if g.fichas.length > 1}
+											<svg class="tile-icona" viewBox="0 0 24 24" aria-hidden="true"
+												><path d="M19 7H9a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z" fill="currentColor" /><path
+													d="M4 16V6a2 2 0 0 1 2-2h10"
+													fill="none"
+													stroke="currentColor"
+													stroke-width="2"
+													stroke-linecap="round"
+												/></svg
+											>
+										{/if}
+									</span>
+									<span class="tile-nom">{nomCat(g.cat)}</span>
+									<span class="tile-n">{g.fichas.length} {tx.fichas}</span>
+								</button>
+							</li>
+						{/each}
+					</ul>
+				{:else if view === 'mosaica'}
 					<ul class="grid">
 						{#each visibles as f, i (f.id)}
 							<li style:--i={Math.min(i, 16)}>
-								<button type="button" class="card" onclick={() => (openIndex = i)}>
+								<button type="button" class="card" data-ficha={f.id} onclick={(e) => dobrirFicha(f, e.currentTarget)}>
 									<img src={f.mini} alt="" loading="lazy" />
 									<span class="card-name">{f.titre}</span>
 								</button>
@@ -260,8 +413,9 @@
 								<button
 									type="button"
 									class="slide"
+									data-ficha={f.id}
 									bind:this={slideEls[i]}
-									onclick={() => moved <= 6 && (openIndex = i)}
+									onclick={(e) => moved <= 6 && dobrirFicha(f, e.currentTarget)}
 								>
 									<img src={f.mini} alt="" loading="lazy" draggable="false" />
 									<span class="card-name">{f.titre}</span>
@@ -283,26 +437,75 @@
 						</div>
 					</div>
 				{:else}
-					<FichaTunnel items={visibles} onOpen={openItem} />
+					<FichaTunnel items={visibles} onOpen={(f) => dobrirFicha(f, null)} />
 				{/if}
 			</section>
 		</div>
 	</main>
 </div>
 
-{#if openFicha}
-	<div class="viewer" role="dialog" aria-modal="true" aria-label={openFicha.titre}>
-		<button type="button" class="backdrop" onclick={close} aria-label={tx.close}></button>
-		<figure>
-			<!-- La vidéo ne joue qu'ici, à l'ouverture d'une fiche : une seule à la
-			     fois. C'est ce qui garde le poids maîtrisé (décision du 2026-08-04,
-			     §11). Sans vidéo, la grande image est affichée. -->
-			<FichaVideo ficha={openFicha} {lang} />
-			<figcaption>{openFicha.titre}</figcaption>
-		</figure>
-		<button type="button" class="rond nav prev" onclick={() => step(-1)} aria-label={tx.prev}>←</button>
-		<button type="button" class="rond nav next" onclick={() => step(1)} aria-label={tx.next}>→</button>
-		<button type="button" class="rond close" onclick={close} aria-label={tx.close}>×</button>
+{#if post && catPost}
+	<div class="post" class:sens-vt={senseVT} role="dialog" aria-modal="true" aria-labelledby="post-titol">
+		<button type="button" class="post-fons" onclick={tampar} aria-label={tx.close} tabindex="-1"></button>
+
+		<div class="post-cors">
+			<div class="post-media">
+				<div class="diapos" bind:this={diaposEl} onscroll={onDiapos} aria-roledescription="carrossèl">
+					{#each fichasPost as f, i (f.id)}
+						<!-- La vidéo ne joue que sur la fiche affichée : une seule à la fois
+						     (poids maîtrisé, décision du 2026-08-04, §11). La vignette sert de
+						     doublure le temps que la grande image arrive. -->
+						<div
+							class="diapo"
+							style:background-image="url({f.mini})"
+							style:view-transition-name={i === postActiu ? VT_IMG : null}
+							aria-label="{i + 1} / {fichasPost.length}"
+						>
+							{#if i === postActiu}
+								<FichaVideo ficha={f} {lang} />
+							{:else}
+								<img src={f.grand} alt="" loading="lazy" />
+							{/if}
+						</div>
+					{/each}
+				</div>
+				{#if fichasPost.length > 1}
+					<button type="button" class="rond post-prev" onclick={() => anar(-1)} disabled={postActiu === 0} aria-label={tx.prev}
+						>←</button
+					>
+					<button
+						type="button"
+						class="rond post-next"
+						onclick={() => anar(1)}
+						disabled={postActiu === fichasPost.length - 1}
+						aria-label={tx.next}>→</button
+					>
+					<div class="ponches" aria-hidden="true">
+						{#each fichasPost as f, i (f.id)}<i class:on={i === postActiu}></i>{/each}
+					</div>
+				{/if}
+			</div>
+
+			<div class="post-tèxt">
+				<p class="post-kicker revela" style="--i: 0">{tx.tema} {numPost}</p>
+				<h2 id="post-titol" class="post-titol" style:view-transition-name={VT_TITOL}>{nomCat(catPost)}</h2>
+				<p class="post-n revela" style="--i: 1">
+					<b>{postActiu + 1}</b> / {fichasPost.length}
+					{tx.fichas}
+				</p>
+				<ol class="post-lista">
+					{#each fichasPost as f, i (f.id)}
+						<li class="revela" style:--i={Math.min(i + 2, 14)}>
+							<button type="button" aria-current={i === postActiu ? 'true' : undefined} onclick={() => anarA(i)}
+								>{f.titre}</button
+							>
+						</li>
+					{/each}
+				</ol>
+			</div>
+		</div>
+
+		<button type="button" class="rond post-tampar" bind:this={tamparEl} onclick={tampar} aria-label={tx.close}>×</button>
 	</div>
 {/if}
 
@@ -799,81 +1002,444 @@
 		cursor: default;
 	}
 
-	/* ---------- Visionneuse ---------- */
-	.viewer {
+	/* ---------- Vignettes de thème (vue par défaut) ---------- */
+	/* Au moins deux colonnes, même sur téléphone (comme un profil Instagram) */
+	.grid-temas {
+		grid-template-columns: repeat(auto-fill, minmax(min(12.5rem, calc(50% - 0.6rem)), 1fr));
+		gap: 2.4rem 1.8rem;
+	}
+
+	@container (max-width: 40rem) {
+		.grid-temas {
+			gap: 1.8rem 1.2rem;
+		}
+
+		.tile-nom {
+			font-size: 1.05rem;
+		}
+
+		.tile-n {
+			font-size: 0.62rem;
+			letter-spacing: 0.14em;
+		}
+	}
+
+	.tile {
+		width: 100%;
+		padding: 0;
+		border: none;
+		background: none;
+		color: inherit;
+		cursor: pointer;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		text-align: left;
+	}
+
+	.tile:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 6px;
+		border-radius: 14px;
+	}
+
+	/* Le paquet : deux fiches fantômes derrière la vignette, liserées de la
+	   couleur du thème ; au survol, elles s'ouvrent en éventail */
+	.tile-pila {
+		position: relative;
+		display: block;
+		aspect-ratio: 1;
+		margin-bottom: 0.55rem;
+		isolation: isolate;
+	}
+
+	.tile-pila::before,
+	.tile-pila::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		border-radius: 14px;
+		background: var(--t-fons-2);
+		box-shadow: 0 0 0 1px color-mix(in srgb, var(--cat, var(--t-aur)) 55%, transparent);
+		transform-origin: 50% 100%;
+		transition: transform 0.8s var(--ease);
+	}
+
+	.tile-pila::before {
+		transform: translate(5px, -5px);
+	}
+
+	.tile-pila::after {
+		transform: translate(10px, -10px);
+		opacity: 0.55;
+	}
+
+	.tile:hover .tile-pila::before,
+	.tile:focus-visible .tile-pila::before {
+		transform: translate(8px, -6px) rotate(4deg);
+	}
+
+	.tile:hover .tile-pila::after,
+	.tile:focus-visible .tile-pila::after {
+		transform: translate(16px, -9px) rotate(8deg);
+	}
+
+	.tile-pila img {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 14px;
+		box-shadow: 0 0 0 1px var(--t-linha);
+		transition:
+			transform 0.8s var(--ease),
+			box-shadow 0.4s;
+	}
+
+	.tile:hover .tile-pila img {
+		transform: rotate(-1.5deg) translateY(-4px);
+		box-shadow:
+			0 0 0 2px var(--t-aur),
+			0 18px 34px rgba(0, 0, 0, 0.35);
+	}
+
+	/* L'icône « carrousel » d'Instagram : plusieurs fiches dans ce thème */
+	.tile-icona {
+		position: absolute;
+		top: 0.55rem;
+		right: 0.55rem;
+		width: 1.75rem;
+		height: 1.75rem;
+		padding: 0.3rem;
+		border-radius: 7px;
+		/* pastille sombre : l'icône reste visible sur les fiches à fond blanc */
+		background: rgba(18, 9, 6, 0.55);
+		backdrop-filter: blur(4px);
+		color: #fff;
+	}
+
+	.tile-nom {
+		width: fit-content;
+		font-family: var(--font-heading);
+		font-size: 1.25rem;
+		line-height: 1.1;
+		color: var(--t-tinta);
+		transition: color 0.3s;
+	}
+
+	.tile:hover .tile-nom {
+		color: var(--t-aur);
+	}
+
+	.tile-n {
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--t-tinta-2);
+	}
+
+	/* ---------- Le carrousel d'un thème, ouvert ---------- */
+	.post {
 		position: fixed;
 		inset: 0;
 		z-index: 60;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 1.5rem;
+		display: grid;
+		place-items: center;
+		padding: clamp(1rem, 4vw, 3rem);
 		color: var(--t-tinta);
+		overflow-y: auto;
+		overscroll-behavior: contain;
 	}
 
-	.backdrop {
-		position: absolute;
+	.post-fons {
+		position: fixed;
 		inset: 0;
 		border: none;
 		padding: 0;
-		background: color-mix(in srgb, var(--t-fons) 90%, transparent);
-		backdrop-filter: blur(6px);
-		cursor: pointer;
+		background: color-mix(in srgb, var(--t-fons) 94%, transparent);
+		backdrop-filter: blur(10px);
+		cursor: zoom-out;
 	}
 
-	figure {
+	.post-cors {
 		position: relative;
-		margin: 0;
-		max-width: min(38rem, 100%);
+		display: grid;
+		grid-template-columns: auto minmax(14rem, 21rem);
+		align-items: center;
+		gap: clamp(2rem, 4vw, 4rem);
+	}
+
+	.post-media {
+		position: relative;
+		width: min(78vh, calc(100vw - 32rem), 46rem);
+	}
+
+	.diapos {
 		display: flex;
-		flex-direction: column;
-		gap: 0.8rem;
+		aspect-ratio: 1;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+		border-radius: 18px;
+		box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
 	}
 
-	figcaption {
-		text-align: center;
-		font-family: var(--font-heading);
-		font-size: 1.5rem;
-		color: var(--t-tinta);
+	.diapos::-webkit-scrollbar {
+		display: none;
 	}
 
-	.nav {
+	.diapo {
+		flex: 0 0 100%;
+		display: grid;
+		place-items: center;
+		scroll-snap-align: center;
+		overflow: hidden;
+		border-radius: 18px;
+		background: var(--t-fons-2) center / contain no-repeat;
+	}
+
+	/* La fiche remplit la diapo ; fond transparent pour laisser voir la
+	   doublure (vignette) tant que la grande image n'est pas arrivée */
+	.diapo > img,
+	.diapo :global(img),
+	.diapo :global(video) {
+		width: 100%;
+		height: 100%;
+		max-height: none;
+		object-fit: contain;
+		border-radius: 0;
+		background: transparent;
+	}
+
+	.diapo :global(.envolopa) {
+		height: 100%;
+	}
+
+	.post-prev,
+	.post-next {
 		position: absolute;
 		top: 50%;
+		translate: 0 -50%;
 		width: 2.9rem;
 		height: 2.9rem;
-		font-size: 1.2rem;
-		transform: translateY(-50%);
 	}
 
-	.prev {
-		left: 1rem;
+	.post-prev {
+		left: -1.45rem;
 	}
 
-	.next {
-		right: 1rem;
+	.post-next {
+		right: -1.45rem;
 	}
 
-	.close {
-		position: absolute;
-		top: 1rem;
-		right: 1rem;
+	/* Les points d'Instagram */
+	.ponches {
+		display: flex;
+		justify-content: center;
+		gap: 6px;
+		margin-top: 1.1rem;
+	}
+
+	.ponches i {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--t-linha);
+		transition:
+			background 0.4s,
+			transform 0.4s var(--ease);
+	}
+
+	.ponches i.on {
+		background: var(--t-aur);
+		transform: scale(1.35);
+	}
+
+	.post-kicker {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		margin: 0 0 1rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.3em;
+		text-transform: uppercase;
+		color: var(--t-aur);
+	}
+
+	.post-kicker::before {
+		content: '';
+		width: 2.4rem;
+		height: 1px;
+		background: currentColor;
+	}
+
+	.post-titol {
+		width: fit-content;
+		margin: 0 0 1.1rem;
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: clamp(2.1rem, 3.3vw, 3.4rem);
+		line-height: 1.02;
+	}
+
+	.post-n {
+		margin: 0;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--t-tinta-2);
+	}
+
+	.post-n b {
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: 1.5rem;
+		letter-spacing: 0;
+		color: var(--t-aur);
+	}
+
+	.post-lista {
+		list-style: none;
+		margin: 1.6rem 0 0;
+		padding: 0;
+		max-height: 42vh;
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: var(--t-linha) transparent;
+		border-top: 1px solid var(--t-linha);
+		counter-reset: n;
+	}
+
+	.post-lista button {
+		width: 100%;
+		display: flex;
+		align-items: baseline;
+		gap: 0.8rem;
+		padding: 0.55rem 0;
+		border: none;
+		border-bottom: 1px solid var(--t-linha);
+		background: none;
+		color: var(--t-tinta-2);
+		font: 700 0.9rem var(--font-body);
+		text-align: left;
+		cursor: pointer;
+		transition:
+			color 0.3s,
+			padding 0.5s var(--ease);
+	}
+
+	.post-lista button::before {
+		counter-increment: n;
+		content: counter(n, decimal-leading-zero);
+		min-width: 1.7rem;
+		font-family: var(--font-quote);
+		font-style: italic;
+		font-weight: 500;
+		font-size: 1.05rem;
+		color: var(--t-aur);
+	}
+
+	.post-lista button:hover {
+		color: var(--t-aur-clar);
+	}
+
+	.post-lista button[aria-current='true'] {
+		color: var(--t-tinta);
+		padding-left: 0.5rem;
+	}
+
+	.post-lista button:focus-visible,
+	.post-tampar:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 2px;
+	}
+
+	.post-tampar {
+		position: fixed;
+		top: 1.2rem;
+		right: 1.2rem;
 		font-size: 1.4rem;
 	}
 
-	@media (max-width: 30rem) {
-		.nav {
+	/* Le texte arrive en cascade pendant que l'image s'agrandit */
+	.revela {
+		animation: post-monta 0.9s var(--ease) both;
+		animation-delay: calc(0.28s + var(--i, 0) * 55ms);
+	}
+
+	@keyframes post-monta {
+		from {
+			opacity: 0;
+			transform: translateY(22px);
+		}
+	}
+
+	/* Repli sans transition de vue : le fond se lève, la fiche s'avance */
+	.post.sens-vt .post-fons {
+		animation: post-fons 0.5s ease both;
+	}
+
+	.post.sens-vt .post-media,
+	.post.sens-vt .post-titol {
+		animation: post-avança 0.8s var(--ease) both;
+	}
+
+	@keyframes post-fons {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@keyframes post-avança {
+		from {
+			opacity: 0;
+			transform: scale(0.94) translateY(16px);
+		}
+	}
+
+	/* Téléphone : la fiche en haut sur toute la largeur, le texte dessous ;
+	   on fait glisser du doigt (pas de flèches) */
+	@media (max-width: 760px) {
+		.post {
+			place-items: start center;
+			padding: 4.4rem 1rem 2rem;
+		}
+
+		.post-cors {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 1.6rem;
+		}
+
+		.post-media {
+			width: calc(100vw - 2rem);
+		}
+
+		.post-prev,
+		.post-next {
 			display: none;
+		}
+
+		.post-lista {
+			max-height: none;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.grid li {
+		.grid li,
+		.revela {
 			animation: none;
 		}
 
 		.card img,
-		.tema {
+		.tema,
+		.tile-pila img,
+		.tile-pila::before,
+		.tile-pila::after {
 			transition: none;
 		}
 	}
