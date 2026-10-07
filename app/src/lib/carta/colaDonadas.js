@@ -8,7 +8,7 @@
 // de traches mas de fonduts larges (causida de Romain : las parlars se
 // mesclan). Un dialècte (o lo Creissent) se pòt causir : sol el demòra, e sa
 // color se difusa sus son territòri a partir de son còr.
-import { cargarLimits, INTRO } from './colaEstelas.js';
+import { cargarLimits, INTRO, nivèlsDezoom, aDialectes, aDetalh } from './colaEstelas.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -28,8 +28,8 @@ const COLORS = {
 	dalt: { gas: '#0072b2', lan: '#d55e00', pro: '#cc79a7', lem: '#e69f00', auv: '#009e73', viv: '#56b4e9' }
 };
 const TEMAS = {
-	sorne: { lenga: '#e0612f', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: 0.3 },
-	clar: { lenga: '#b53d17', admin: '46, 29, 20', ombra: 'rgba(245, 234, 216, 0.95)', clar: true, tencha: 0.22 }
+	sorne: { lenga: '#e0612f', occitan: '#d9343f', occitanTèxt: '#ffc2b8', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: 0.3 },
+	clar: { lenga: '#b53d17', occitan: '#b0202c', occitanTèxt: '#7e121c', admin: '46, 29, 20', ombra: 'rgba(245, 234, 216, 0.95)', clar: true, tencha: 0.22 }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
@@ -40,12 +40,18 @@ const temaDe = (clar, dalt) => ({
 // Lo luòc del nom d'un dialècte, quand lo de las donadas va pas : lo
 // lengadocian, al mitan de sa zòna, tombava sus las Cevenas (retorn de
 // Romain : « un peu plus en haut, il y a de l'espace »)
+// lo nom de l'Occitània unida, de luènh (vers Rodés, al mitan)
+const ETI_OCCITAN = [2.5, 44.3];
 const ETI_NOM = { lan: [2.2, 43.95] };
 
 // los luòcs ensajats per un nom de dialècte (a partir de son ponch)
 const DECALATGES_NOM = [[0, 0], [0, -16], [0, 16], [-36, 0], [36, 0], [0, -30], [0, 30], [-30, -18], [30, 18], [30, -18], [-30, 18], [0, -44], [0, 44], [-60, 0], [60, 0], [-50, -30], [50, 30], [50, -30], [-50, 30], [0, -58], [0, 58]];
 
 const DURADA = 1700; // ms : difusion d'un dialècte causit
+// l'Occitània unida ↔ los dialèctes : la mescla (s), lo balet (s)
+const DURADA_MESCLA = 1.4,
+	DURADA_BALET = 2.2;
+const easeS = (t) => (1 - Math.cos(Math.PI * t)) / 2;
 let dialPromesa = null,
 	creissentPromesa = null,
 	mixPromesa = null,
@@ -114,6 +120,7 @@ export function crearColaDonadas(
 		onRemove() {
 			cancelAnimationFrame(this._raf);
 			cancelAnimationFrame(this._rafIntro);
+			cancelAnimationFrame(this._rafUni);
 			L.DomUtil.remove(this._cv);
 		},
 
@@ -299,7 +306,38 @@ export function crearColaDonadas(
 		},
 
 		/* ---------- Survòl e causida ---------- */
+		// L'Occitània unida ↔ los dialèctes (demanda de Romain) : un relais dins
+		// lo temps, pas amb lo zoom (coma las estelas e las tuèlas). Cap a
+		// l'Occitània unida, los dialèctes se mesclan (s'enfoscan e rogejan)
+		// fins al roge unit ; cap als dialèctes, tornan coma a l'entrada en
+		// scèna, en fuòc d'artifici, e lors limits se traçan una a una.
+		_majUni() {
+			const n = this._nivèls;
+			if (!n) return;
+			const cibla = this._zoom < n.zDial - 0.17 ? 1 : 0;
+			if (this._uni === undefined || this._calm) {
+				this._uni = this._uniCibla = cibla;
+				this._uniQ = 1;
+				return;
+			}
+			if (cibla === this._uniCibla) return;
+			this._uniCibla = cibla;
+			const de = this._uni,
+				t0 = performance.now(),
+				dura = (cibla ? DURADA_MESCLA : DURADA_BALET) * 1000;
+			cancelAnimationFrame(this._rafUni);
+			const pas = () => {
+				const q = clamp((performance.now() - t0) / dura);
+				this._uniQ = q;
+				this._uni = lerp(de, cibla, q);
+				this._pintar();
+				if (q < 1 && this._map) this._rafUni = requestAnimationFrame(pas);
+			};
+			this._rafUni = requestAnimationFrame(pas);
+		},
 		_interactiu() {
+			// (l'Occitània unida, de luènh : los dialèctes se causisson pas)
+			if (this._nivèls && aDialectes(this._nivèls, this._zoom) < 0.5) return false;
 			return !!(this._jaces.dialectes && this._dial) || !!(this._jaces.creissent && this._creissent);
 		},
 		// Una enclava (Pichona Gavachariá) se dessenha amb la frontièra tanben :
@@ -432,6 +470,8 @@ export function crearColaDonadas(
 			const tal = size.multiplyBy(1 + 2 * p).round();
 			this._center = map.getCenter();
 			this._zoom = map.getZoom();
+			this._nivèls = nivèlsDezoom(map);
+			this._majUni();
 			this._min = min;
 			L.DomUtil.setPosition(this._cv, min);
 			const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -733,10 +773,22 @@ export function crearColaDonadas(
 			// mai d'un nivèl (retorn de Romain : una disparicion d'un sol còp de
 			// zoom fasiá una cassura) : contorns administratius de 10 a 11,5,
 			// frontièra de 11 a 13, tenchas de 11,5 a 13.
-			const aAdmin = clamp((11.5 - z) / 1.5),
-				aFront = dossa(clamp((13 - z) / 2)),
-				aTenchas = clamp((13 - z) / 1.5);
-			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas;
+			// Lo dezoom (demandas de Romain, 2026-10-08) : vers « 200 km » los
+			// dialèctes se fondon dins l'Occitània unida ; a partir de « 300 km »
+			// las autras jaces s'escantisson, a « 500 km » demòra lo contorn sol
+			const nv = this._nivèls ?? nivèlsDezoom(this._map),
+				aDial = aDialectes(nv, z),
+				aDet = aDetalh(nv, z);
+			const aAdmin = clamp((11.5 - z) / 1.5) * aDet,
+				aFront = dossa(clamp((13 - z) / 2)) * aDet,
+				aTenchas0 = clamp((13 - z) / 1.5);
+			// u : 0 los dialèctes, 1 l'Occitània unida (relais dins lo temps)
+			const u = this._uni ?? 1 - aDial,
+				balet = this._uniCibla === 0 && u > 0.001,
+				mescla = this._uniCibla === 1 && u > 0.001,
+				aMescla = mescla ? 1 - easeS(clamp((u - 0.55) / 0.45)) : 1,
+				aTenchas = aTenchas0 * (1 - u);
+			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas0 * aMescla;
 			const an = this._anim,
 				p = an ? clamp((performance.now() - an.t0) / DURADA) : 1;
 			// l'entrada en scèna : las zònas a part (Creissent, zònas mixtas) e los
@@ -745,7 +797,9 @@ export function crearColaDonadas(
 				aFinIntro = clamp((ti - (INTRO.dialectes[1] - 0.5)) / 0.8);
 
 			/* Dialèctes */
-			if (J.dialectes && G.zonas) {
+			// la mescla : los dialèctes s'enfoscan e se fondon (puèi rogejan, çai-jos)
+			if (mescla) cx.filter = `blur(${(easeS(u) * 16).toFixed(1)}px)`;
+			if (J.dialectes && G.zonas && u < 0.999) {
 				const selDial = this._sels.some((k) => k !== 'cro');
 				// totes : visibles sens causida ; s'esvalisson quand un dialècte es
 				// causit, tornan quand lo darrièr se descausís
@@ -753,7 +807,11 @@ export function crearColaDonadas(
 				if (an && an.de.length && !an.a.length) aTotes = dossa(clamp(p / 0.6));
 				if (an && an.a.length && !an.de.length) aTotes = an.totesAvant ? 1 - dossa(clamp(p / 0.35)) : 0;
 				// a l'arribada, los dialèctes se difusan a la fin de l'entrada en scèna
-				if (ti < INTRO.dialectes[1] && !selDial) {
+				// lo balet : tornan coma a l'entrada en scèna, en fuòc d'artifici
+				if (balet && !selDial) {
+					const [d0, d1] = INTRO.dialectes;
+					this._introDial(d0 + (this._uniQ ?? 1) * (d1 - d0), aT);
+				} else if (ti < INTRO.dialectes[1] && !selDial) {
 					if (ti > INTRO.dialectes[0]) this._introDial(ti, aT);
 				} else if (aTotes > 0.01) this._copiar(this._imgTotes, aT * aTotes);
 				// sols sus la carta, los dialèctes causits pòdon èsser mai marcats ;
@@ -764,6 +822,37 @@ export function crearColaDonadas(
 				// fondut que la causida (retorn de Romain : un emplenatge net fasiá de
 				// bòrds tròp nets ; nets sonque sus la frontièra e la còsta)
 				if (!selDial && this._pusDial) this._copiar(this._imgPus, aT * 0.45);
+			}
+			if (mescla) {
+				cx.filter = 'none';
+				// … e rogejan, fins al roge de l'Occitània unida
+				cx.save();
+				cx.setTransform(1, 0, 0, 1, 0, 0);
+				cx.globalCompositeOperation = 'source-atop';
+				cx.globalAlpha = easeS(clamp(u / 0.7)) * 0.85;
+				cx.fillStyle = T.occitan;
+				cx.fillRect(0, 0, this._cv.width, this._cv.height);
+				cx.restore();
+			}
+			// lo balet : las limits dels dialèctes se traçan una a una, de lor
+			// color, puèi s'esvanisson dins lo fondut
+			if (balet && J.dialectes && G.zonas) {
+				const q = this._uniQ ?? 1;
+				cx.save();
+				cx.lineJoin = 'round';
+				cx.lineCap = 'round';
+				cx.lineWidth = 1.4;
+				G.zonas.forEach((zn, i) => {
+					const pz = clamp((q - 0.04 - i * 0.07) / 0.6);
+					if (pz <= 0 || pz >= 1) return;
+					const [x0, y0, x1, y1] = zn.bbox,
+						L = (x1 - x0 + y1 - y0) * 3.2;
+					cx.setLineDash([L * easeS(clamp(pz / 0.65)), L]);
+					cx.strokeStyle = T.dial[zn.kod] ?? T.lenga;
+					cx.globalAlpha = Math.sin(Math.PI * pz) * 0.9;
+					cx.stroke(zn.c);
+				});
+				cx.restore();
 			}
 
 			/* Zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes */
@@ -846,6 +935,39 @@ export function crearColaDonadas(
 				cx.restore();
 			}
 
+			/* L'Occitània unida (demanda de Romain) : de luènh, una sola lenga,
+			   « OCCITAN », en roge ; a « 500 km », sonque son contorn */
+			// (pendent la mescla, lo roge unit ven a la fin ; pendent lo balet, s'esvanís)
+			const aUni = (mescla ? easeS(clamp((u - 0.4) / 0.6)) : u) * aFinIntro;
+			if (G.dom && aUni > 0.01) {
+				cx.save();
+				if (J.dialectes && aDet > 0.01) {
+					cx.filter = `blur(${clamp(2500 / G.mPx, 1, 10).toFixed(1)}px)`;
+					cx.globalAlpha = aUni * aDet * T.tencha * 1.6;
+					cx.fillStyle = T.occitan;
+					cx.fill(G.dom, 'evenodd');
+					cx.filter = 'none';
+				}
+				cx.globalAlpha = aUni * lerp(0.95, 0.65, aDet);
+				cx.strokeStyle = T.occitan;
+				cx.lineWidth = 1.2;
+				cx.lineJoin = 'round';
+				cx.stroke(G.dom);
+				if (J.dialectes && aDet > 0.01) {
+					const [x, y] = G.pt(ETI_OCCITAN);
+					cx.font = '600 15px Luciole, sans-serif';
+					cx.letterSpacing = '6px';
+					cx.textAlign = 'center';
+					cx.textBaseline = 'middle';
+					cx.shadowColor = T.ombra;
+					cx.shadowBlur = 8;
+					cx.fillStyle = T.occitanTèxt;
+					cx.globalAlpha = aUni * aDet;
+					cx.fillText('OCCITAN', x, y);
+				}
+				cx.restore();
+			}
+
 			/* Noms : capitalas espaçadas, una ombra doça (causida de Romain : pas
 			   de contorn negre). De luènh sonque : de prèp, la carta es plena de
 			   noms de vilas. Quand un dialècte es causit, sonque son nom. */
@@ -864,7 +986,7 @@ export function crearColaDonadas(
 				for (const zm of G.mix) if (zm.enclava) cx.fillText(this._lang === 'fr' ? 'Gavacherie (oïl)' : 'Gavachariá (oïl)', zm.eti[0], zm.eti[1]);
 				cx.restore();
 			}
-			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3) * aFinIntro;
+			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3) * aFinIntro * (1 - u);
 			if (aNoms <= 0.01) this._caixasNoms = null;
 			if (aNoms > 0.01) {
 				const noms = [];

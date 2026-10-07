@@ -3,7 +3,7 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
-	import { crearColaEstelas, Z_PRECARGA } from '$lib/carta/colaEstelas.js';
+	import { crearColaEstelas, Z_PRECARGA, nivèlsDezoom, aDetalh } from '$lib/carta/colaEstelas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
@@ -537,6 +537,11 @@
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
+		// de luènh (« 500 km »), los ponches (luòcs, librarias, Calandretas)
+		// s'escantisson amb las autras jaces : demòra lo contorn de l'Occitània
+		const luènh = () => mapEl?.classList.toggle('luenh', aDetalh(nivèlsDezoom(map), map.getZoom()) < 0.5);
+		map.on('zoomend', luènh);
+		luènh();
 		if (ambToponims(baseLayer)) loadToponymsLayer();
 
 		L.control.zoom({ position: 'bottomright' }).addTo(map);
@@ -1055,6 +1060,14 @@
 	}
 	.carta :global(.lenga-franca:focus-visible span) {
 		outline: 2px solid var(--t-aur);
+	}
+	/* de luènh, los ponches s'escantisson (las lengas de França demòran) */
+	.carta :global(.leaflet-marker-pane > :not(.lenga-franca)) {
+		transition: opacity 0.45s;
+	}
+	.carta:global(.luenh) :global(.leaflet-marker-pane > :not(.lenga-franca)) {
+		opacity: 0;
+		pointer-events: none;
 	}
 	/* d'outra mar sonque quand se dezooma fins al mond, e l'invèrse */
 	.carta:not(:global(.zoom-mond)) :global(.lenga-franca.outremer),

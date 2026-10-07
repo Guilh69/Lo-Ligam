@@ -11,7 +11,7 @@
 // Al survòl (o al tòc), l'encastre d'en bas dona lo nom e sa natura, coma pels
 // territòris. Noms occitans de validar per Romain.
 
-import { INTRO } from './colaEstelas.js';
+import { INTRO, nivèlsDezoom, aDetalh } from './colaEstelas.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const easeS = (t) => (1 - Math.cos(Math.PI * t)) / 2;
@@ -430,6 +430,11 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			const tal = size.multiplyBy(1 + 2 * p).round();
 			this._center = map.getCenter();
 			this._zoom = map.getZoom();
+			// lo dezoom : a partir de « 300 km » aquestas jaces s'escantisson,
+			// a « 500 km » an desaparegut (demanda de Romain, 2026-10-08)
+			this._aDet = aDetalh(nivèlsDezoom(map), this._zoom);
+			this._cv.style.transition = 'opacity 0.45s';
+			this._cv.style.opacity = this._aDet.toFixed(3);
 			this._min = min;
 			L.DomUtil.setPosition(this._cv, min);
 			const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -582,6 +587,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		},
 		_onMirga(e) {
 			if (e.originalEvent?.pointerType === 'touch') return;
+			if ((this._aDet ?? 1) < 0.5) return this._survòl(null);
 			this._survòl(this._ciblaA(e.layerPoint));
 		},
 		_onSortida() {

@@ -180,6 +180,35 @@ function escriure(entrada, sortida, dec, bbox, ambNoms) {
 
 const eu = escriure('countries-50m.json', 'mond-europa.json', 2, [-25, 27, 50, 72], true);
 escriure('countries-110m.json', 'mond.json', 1, null, false);
+
+// L'outra mar (retorn de Romain : « dommage de les faire disparaître ») : a
+// 1:110 M, Guadalope, Martinica, la Reünion, Maiòta, la Polinesia… i son
+// pas. Venon de 1:50 M, a 0,01° : los tròces de França fòra d'Euròpa (levat
+// la Guiana, ja dins 1:110 M) e los territòris nomenats a despart.
+const OUTRA_MAR = ['St. Pierre and Miquelon', 'Wallis and Futuna Is.', 'St-Martin', 'St-Barthélemy', 'Fr. Polynesia', 'Fr. S. Antarctic Lands'];
+{
+	const p50 = decodar(JSON.parse(fs.readFileSync(path.join(BRUT, 'countries-50m.json'), 'utf8')));
+	const fòraEuròpa = (pl) => pl[0].every(([x, y]) => x < -25 || x > 50 || y < 27 || y > 72);
+	const guiana = (pl) => pl[0].every(([x, y]) => x > -55 && x < -51 && y > 1.5 && y < 6.5);
+	const mond = JSON.parse(fs.readFileSync(path.join(DATA, 'mond.json'), 'utf8'));
+	let n = 0;
+	for (const p of p50) {
+		let pols = null;
+		if (p.nom === 'France') pols = p.poligons.filter((pl) => fòraEuròpa(pl) && !guiana(pl));
+		else if (OUTRA_MAR.includes(p.nom)) pols = p.poligons;
+		if (!pols?.length) continue;
+		const r = pols
+			.map((pl) => pl.map((a) => a.map(([x, y]) => [arr(x, 2), arr(y, 2)]).filter((q, i, t) => !i || q[0] !== t[i - 1][0] || q[1] !== t[i - 1][1])).filter((a) => a.length >= 4))
+			.filter((pl) => pl.length);
+		if (!r.length) continue;
+		const gros = r.reduce((m, pl) => (aira(pl[0]) > aira(m[0]) ? pl : m), r[0]);
+		const e = ponchEti(gros);
+		mond.païses.push({ n: p.nom + ' (outra mar)', oc: null, fr: null, eti: [arr(e[0], 2), arr(e[1], 2)], p: r });
+		n += r.length;
+	}
+	fs.writeFileSync(path.join(DATA, 'mond.json'), JSON.stringify(mond));
+	console.log('outra mar :', n, 'tròces apondus ; mond.json', fs.statSync(path.join(DATA, 'mond.json')).size, 'octets');
+}
 fs.mkdirSync(path.join(SIG, 'mond'), { recursive: true });
 fs.writeFileSync(
 	path.join(SIG, 'mond/noms-a-validar.csv'),
