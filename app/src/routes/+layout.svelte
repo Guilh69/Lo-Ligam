@@ -16,9 +16,9 @@
 	$effect(() => {
 		ambianca.forçarClar = !ARMONIZADAS.includes(id);
 	});
-	// Pied de page partout, sauf l'administration et l'accueil (qui a le sien,
-	// avec la phrase éditable depuis /admin/textes).
-	let ambPè = $derived(id !== '/' && !id.startsWith('/admin'));
+	// Pied de page partout, sauf l'administration (l'accueil l'a aussi depuis
+	// qu'il est passé dans le cadre commun, 2026-10-07).
+	let ambPè = $derived(!id.startsWith('/admin'));
 </script>
 
 <svelte:head>

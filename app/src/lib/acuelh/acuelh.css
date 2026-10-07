@@ -1,0 +1,326 @@
+/* Accueil (porté de l'esbòs de nuèch, app/static/esbos-nuech.html, 2026-10-07).
+   Généré par un script depuis le CSS de l'esbòs puis relu : tout est limité à
+   .acuelh (sauf les classes que Lenis et le curseur posent sur <html>), et ce
+   que le cadre commun fournit (bandeau, réglage d'ambiance, retour en haut,
+   pied de page) a été retiré. Les couleurs suivent les jetons de thème --t-*
+   (app.css) : sombre, clair, daltonisme. */
+.acuelh {
+	--nuech: var(--t-fons);
+	--nuech-2: var(--t-fons-2);
+	--crema: var(--t-tinta);
+	--crema-2: var(--t-tinta-2);
+	--crema-3: var(--t-linha);
+	--terra: var(--t-terra);
+	--terra-viu: var(--t-terra-viu);
+	--aur: var(--t-aur);
+	--aur-clar: var(--t-aur-clar);
+	--ease: cubic-bezier(0.19, 1, 0.22, 1);
+	--ease-io: cubic-bezier(0.76, 0, 0.24, 1);
+	--titol: var(--font-heading);
+	--cors: var(--font-body);
+	--votz: var(--font-quote);
+	--marge: clamp(1rem, 4vw, 3.4rem);
+	min-height: 100vh;
+}
+/* Le bandeau commun, posé sur le fond vivant : pleine largeur, sans fond propre */
+.acuelh .capçal .top { max-width: none; }
+.acuelh main * { margin: 0; padding: 0; box-sizing: border-box; font-synthesis: none; }
+/* Pas de surlusiment blau al tòc sus telefon (vist per Romain lo 2026-10-07) */
+.acuelh * { -webkit-tap-highlight-color: transparent; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.acuelh {
+	background: var(--nuech);
+	color: var(--crema);
+	font-family: var(--cors);
+	overflow-x: clip;
+	-webkit-font-smoothing: antialiased;
+}
+.acuelh a { color: inherit; text-decoration: none; }
+.acuelh ::selection { background: var(--aur); color: var(--nuech); }
+.acuelh :focus-visible { outline: 2px solid var(--aur); outline-offset: 4px; border-radius: 4px; }
+.acuelh .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* ---------- Fons : shader + constellacion + gran ---------- */
+.acuelh #fons, .acuelh #estelas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.acuelh #fons { z-index: 0; }
+.acuelh #estelas { z-index: 1; }
+.acuelh main, .acuelh .capçal { position: relative; z-index: 2; }
+/* ---------- Cursor ---------- */
+.acuelh .cur-ponch, .acuelh .cur-anel { position: fixed; top: 0; left: 0; z-index: 90; pointer-events: none; border-radius: 50%; opacity: 0; }
+.acuelh .cur-ponch { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--aur); }
+.acuelh .cur-anel {
+	width: 40px; height: 40px; margin: -20px 0 0 -20px;
+	border: 1px solid var(--crema); mix-blend-mode: difference;
+	transition: width 0.5s var(--ease), height 0.5s var(--ease), margin 0.5s var(--ease), background 0.4s, opacity 0.4s;
+}
+.acuelh .cur-anel.gros { width: 84px; height: 84px; margin: -42px 0 0 -42px; border-color: var(--aur); background: rgba(238, 175, 52, 0.08); mix-blend-mode: normal; }
+html.cursor-viu, html.cursor-viu a, html.cursor-viu button { cursor: none; }
+html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
+/* ---------- Bilingüe : doas jaças dins una mascara ---------- */
+.acuelh .bi { display: inline-grid; overflow: hidden; vertical-align: top; justify-items: start; padding: 0.06em 0.04em 0.12em; margin: -0.06em -0.04em -0.12em; }
+.acuelh .bi > span { grid-area: 1 / 1; transition: transform 0.95s var(--ease); }
+.acuelh .bi > .fr { transform: translateY(125%); }
+.acuelh.fr .bi > .oc { transform: translateY(-125%); }
+.acuelh.fr .bi > .fr { transform: none; }
+.acuelh .centrat .bi { justify-items: center; }
+.acuelh [data-lenga] { display: contents; }
+.acuelh:not(.fr) [data-lenga='fr'], .acuelh.fr [data-lenga='oc'] { display: none; }
+/* ---------- Mascaras de revelacion ---------- */
+.acuelh .masc { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.acuelh .masc > .masc-in { display: block; transform: translateY(112%); transition: transform 1.3s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
+.acuelh .vist .masc > .masc-in, .acuelh .masc.vist > .masc-in { transform: none; }
+.acuelh .esvani { opacity: 0; transform: translateY(24px); transition: opacity 1.1s var(--ease), transform 1.1s var(--ease); transition-delay: calc(var(--i, 0) * 90ms + 200ms); }
+.acuelh .vist .esvani, .acuelh .esvani.vist { opacity: 1; transform: none; }
+/* ---------- Banda de capçal ---------- */
+.acuelh .capçal {
+	position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+	display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+	padding: 1.3rem var(--marge);
+	transition: transform 0.9s var(--ease);
+}
+.acuelh .capçal.amagat { transform: translateY(-110%); }
+.acuelh .capçal::before {
+	content: ''; position: absolute; inset: 0; z-index: -1;
+	background: linear-gradient(var(--nuech) 10%, transparent);
+	opacity: 0; transition: opacity 0.6s;
+}
+.acuelh .capçal.solid::before { opacity: 0.85; }
+/* Écran étroit : le bandeau commun passe sur deux lignes (liens dessous), le
+   dégradé doit couvrir les deux pour que le texte qui défile derrière ne
+   gêne pas la lecture */
+@media (max-width: 900px) {
+	.acuelh .capçal::before { background: linear-gradient(var(--nuech) 62%, transparent); }
+	.acuelh .capçal.solid::before { opacity: 0.94; }
+}
+:root[data-tema='clar'] .acuelh .bandel-mot { -webkit-text-stroke-color: rgba(46, 29, 20, 0.5); }
+:root[data-tema='clar'] .acuelh .manifest-tèxt .m { color: rgba(46, 29, 20, 0.15); }
+:root[data-tema='clar'] .acuelh .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #e7c9a6, var(--nuech-2) 70%); }
+:root[data-tema='clar'] .acuelh .cur-anel { mix-blend-mode: normal; border-color: var(--crema); }
+/* lo lògo garda sas colors */
+.acuelh .panel-media.simbol { background: #b53d17 !important; }
+/* ---------- Acte I : l'eròi ---------- */
+.acuelh .eros {
+	min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
+	padding: 8rem var(--marge) 3rem;
+}
+.acuelh .eros-kicker {
+	display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.4rem;
+	font-size: 0.78rem; font-weight: 700; letter-spacing: 0.32em; text-transform: uppercase; color: var(--aur);
+}
+.acuelh .eros-kicker::before { content: ''; width: 3.2rem; height: 1px; background: currentColor; transform-origin: left; transform: scaleX(0); transition: transform 1.4s var(--ease) 0.2s; }
+.acuelh .vist .eros-kicker::before { transform: scaleX(1); }
+.acuelh .eros-titol { font-family: var(--titol); font-weight: 400; font-size: clamp(3.4rem, 11vw, 12rem); line-height: 1.04; letter-spacing: -0.01em; }
+.acuelh .linha { display: block; width: fit-content; cursor: default; margin-bottom: 0.03em; }
+.acuelh .linha:nth-child(2) { padding-left: 0.9em; }
+.acuelh .linha:nth-child(3) { color: var(--aur); }
+/* L'autra lenga, al subrevòl : un murmuri en Cormorant italica daurada */
+.acuelh .linha .bi > span { transition-duration: 0.8s; }
+.acuelh:not(.fr) .linha .fr, .acuelh.fr .linha .oc { font-family: var(--votz); font-style: italic; color: var(--aur-clar); }
+.acuelh:not(.fr) .linha:hover .bi > .oc { transform: translateY(-125%); }
+.acuelh:not(.fr) .linha:hover .bi > .fr { transform: none; }
+.acuelh.fr .linha:hover .bi > .oc { transform: none; }
+.acuelh.fr .linha:hover .bi > .fr { transform: translateY(125%); }
+.acuelh .eros-pe { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; margin-top: 2.6rem; }
+.acuelh .eros-sub { max-width: 30ch; font-size: clamp(1rem, 1.3vw, 1.18rem); line-height: 1.65; color: var(--crema-2); }
+.acuelh .eros-accions { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; }
+.acuelh .davalar { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; color: var(--crema-2); }
+.acuelh .davalar span { width: 1px; height: 56px; background: var(--crema-3); position: relative; overflow: hidden; }
+.acuelh .davalar span::after { content: ''; position: absolute; left: 0; top: -100%; width: 100%; height: 100%; background: var(--aur); animation: acuelh-davala 2s var(--ease-io) infinite; }
+@keyframes acuelh-davala { to { top: 100%; } }
+.acuelh .indici { font-size: 0.72rem; color: var(--crema-2); letter-spacing: 0.04em; margin-top: 0.9rem; }
+@media (hover: none) {
+	.acuelh .indici { display: none; }
+}
+/* ---------- Botons ---------- */
+.acuelh .boton {
+	position: relative; display: inline-flex; align-items: center; gap: 0.7rem; overflow: hidden; isolation: isolate;
+	padding: 1.15rem 2.2rem; border-radius: 999px; background: var(--crema); color: var(--nuech);
+	font: 700 0.95rem var(--cors); letter-spacing: 0.02em; border: 0;
+	transition: transform 0.6s var(--ease);
+}
+.acuelh .boton-emplenat {
+	position: absolute; z-index: -1; left: var(--x, 50%); top: var(--y, 50%);
+	width: 260%; aspect-ratio: 1; border-radius: 50%; background: var(--aur);
+	transform: translate(-50%, -50%) scale(0); transition: transform 0.7s var(--ease);
+}
+.acuelh .boton:hover .boton-emplenat, .acuelh .boton:focus-visible .boton-emplenat { transform: translate(-50%, -50%) scale(1); }
+.acuelh .boton-tèxt { position: relative; }
+.acuelh .boton-tèxt { display: inline-flex; gap: 0.7rem; transition: transform 0.6s var(--ease); }
+.acuelh .boton svg { width: 1em; height: 1em; transition: transform 0.6s var(--ease); }
+.acuelh .boton:hover svg { transform: translateX(4px) rotate(-45deg); }
+.acuelh .ligam-tèxt { position: relative; font-weight: 700; padding: 0.3rem 0; }
+.acuelh .ligam-tèxt::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform-origin: left; transition: transform 0.7s var(--ease); }
+.acuelh .ligam-tèxt:hover::after { transform: scaleX(0); transform-origin: right; }
+/* ---------- Acte II : lo bandèl de mots ---------- */
+.acuelh .bandel { padding: 4.5rem 0; border-block: 1px solid var(--crema-3); overflow: hidden; }
+.acuelh .bandel-pista { display: flex; width: max-content; will-change: transform; }
+.acuelh .bandel-mot {
+	display: inline-flex; align-items: baseline; gap: 0.5em; padding-right: 0.9em;
+	font-family: var(--titol); font-size: clamp(2.6rem, 7.5vw, 6.4rem); line-height: 1; white-space: nowrap;
+	color: transparent; -webkit-text-stroke: 1px rgba(245, 234, 216, 0.55);
+	transition: color 0.5s, -webkit-text-stroke-color 0.5s;
+}
+.acuelh .bandel-mot:nth-child(3n) { color: var(--crema); -webkit-text-stroke-color: transparent; }
+.acuelh .bandel-mot small { font-family: var(--votz); font-style: italic; font-size: 0.42em; color: var(--aur); -webkit-text-stroke: 0; opacity: 0; transition: opacity 0.5s; }
+.acuelh .bandel-mot:hover { color: var(--aur); -webkit-text-stroke-color: transparent; }
+.acuelh .bandel-mot:hover small { opacity: 1; }
+.acuelh .bandel-mot::after { content: '✦'; font-size: 0.32em; color: var(--terra-viu); -webkit-text-stroke: 0; align-self: center; margin-left: 0.4em; }
+.acuelh .bandel-font { margin: 0.9rem var(--marge) 0; font-size: 0.78rem; color: var(--crema-2); text-align: right; }
+.acuelh .bandel-font i { font-family: var(--votz); font-size: 1.05em; }
+/* ---------- Acte III : manifèst que s'emplena ---------- */
+.acuelh .manifest { padding: 26vh var(--marge) 22vh; }
+/* Jalons : la convencion editoriala (pichon subretítol, grand messatge) mas mai legibla (decision Romain 2026-10-07) */
+.acuelh .jalon { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+.acuelh .jalon b { font-family: var(--titol); font-weight: 400; font-size: 1.5rem; letter-spacing: 0.04em; color: var(--aur); }
+.acuelh .jalon span { color: var(--crema); opacity: 0.86; }
+.acuelh .manifest-tèxt { max-width: 22ch; font-family: var(--titol); font-size: clamp(2.2rem, 5.6vw, 5.4rem); line-height: 1.08; }
+.acuelh .manifest-tèxt .m { color: rgba(245, 234, 216, 0.14); transition: color 0.35s; }
+.acuelh .manifest-tèxt .m.on { color: var(--crema); }
+.acuelh .manifest-tèxt .m.aur.on { color: var(--aur); }
+/* ---------- Acte III bis : tres biais d'aprene ---------- */
+.acuelh .biais { padding: 4vh var(--marge) 6vh; }
+.acuelh .biais-grasilha { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--crema-3); }
+.acuelh .biai { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 2.6rem 2.2rem 2.4rem 0; isolation: isolate; }
+.acuelh .biai + .biai { padding-left: 2.2rem; border-left: 1px solid var(--crema-3); }
+.acuelh .biai::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(rgba(238, 175, 52, 0.08), transparent 70%); opacity: 0; transition: opacity 0.6s var(--ease); }
+.acuelh .biai:hover::before { opacity: 1; }
+.acuelh .biai-num { font-family: var(--votz); font-style: italic; font-size: 1.6rem; color: var(--aur); }
+.acuelh .biai-titol { font-family: var(--titol); font-weight: 400; font-size: clamp(2rem, 3.4vw, 3.2rem); line-height: 1; }
+.acuelh .biai-tèxt { color: var(--crema-2); line-height: 1.7; max-width: 34ch; flex: 1; }
+.acuelh .biai-ligam { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 700; color: var(--aur-clar); width: fit-content; }
+.acuelh .biai-ligam svg { width: 1em; transition: transform 0.6s var(--ease); }
+.acuelh .biai-ligam:hover svg { transform: translateX(6px); }
+.acuelh .biai-ligam.leu { color: var(--terra-viu); font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; }
+.acuelh .lengas { border: 0; margin-top: 3rem; display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.6rem; }
+.acuelh .lengas legend { float: left; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--crema-2); margin-right: 0.4rem; }
+.acuelh .lengas-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+/* Telefon : las quatre pastilhas sus una sola linha, mai pichonas, sus tota la largor ; la legenda respira */
+@media (max-width: 560px) {
+	.acuelh .lengas { gap: 0; }
+	.acuelh .lengas legend { float: none; margin: 0 0 0.9rem; }
+	.acuelh .lengas-chips { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.35rem; flex: 1 1 100%; min-width: 0; }
+	.acuelh .lengas .lengas-chips label { min-width: 0; }
+	.acuelh .lengas .lengas-chips span { display: block; text-align: center; padding: 0.5rem 0.1rem; font-size: 0.86rem; white-space: nowrap; }
+	.acuelh .lengas-consigna { margin-top: 0.9rem; }
+}
+.acuelh .lengas-chips label { position: relative; cursor: pointer; }
+.acuelh .lengas-chips input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.acuelh .lengas-chips span {
+	display: inline-block; padding: 0.6rem 1.25rem; border-radius: 999px; border: 1px solid var(--crema-3);
+	font-family: var(--votz); font-style: italic; font-size: 1.15rem; color: var(--crema);
+	transition: background 0.45s var(--ease), color 0.45s, border-color 0.45s;
+}
+.acuelh .lengas-chips label:hover span { border-color: var(--aur); }
+/* La bandièra se propaga dempuèi la esquèrra de la pastilha, en colors atenuadas
+   (un vel de nuèch las adoucís) ; lo tèxte demòra legible gràcias a un liseré sorne. */
+.acuelh .lengas-chips span { position: relative; overflow: hidden; isolation: isolate; }
+.acuelh .lengas-chips span::before {
+	content: ''; position: absolute; inset: -1px; z-index: -1;
+	clip-path: circle(0% at 0% 50%); transition: clip-path 0.9s var(--ease);
+}
+.acuelh .lengas-chips input:checked + span { border-color: transparent; color: #fff; text-shadow: 0 0 6px rgba(18, 9, 6, 0.95), 0 0 2px rgba(18, 9, 6, 0.9); }
+.acuelh .lengas-chips input:checked + span::before { clip-path: circle(160% at 0% 50%); }
+.acuelh .lengas-chips span::before { background: linear-gradient(rgba(18, 9, 6, 0.3), rgba(18, 9, 6, 0.3)), var(--drap, transparent); }
+.acuelh .lengas-chips input:focus-visible + span { outline: 2px solid var(--aur); outline-offset: 3px; }
+.acuelh .lengas-consigna { flex-basis: 100%; color: var(--aur-clar); font-size: 0.95rem; min-height: 1.5em; }
+@media (max-width: 860px) {
+	.acuelh .biais-grasilha { grid-template-columns: 1fr; }
+	.acuelh .biai + .biai { padding-left: 0; border-left: 0; border-top: 1px solid var(--crema-3); }
+}
+/* ---------- Acte IV : quatre camins, panèls orizontals ---------- */
+.acuelh .camins { height: 420vh; }
+.acuelh .camins-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+.acuelh .camins-cap { position: absolute; top: 6.4rem; left: var(--marge); right: var(--marge); display: flex; justify-content: space-between; align-items: baseline; }
+.acuelh .camins-pista { display: flex; gap: 6vw; padding-inline: var(--marge); width: max-content; will-change: transform; }
+.acuelh .panel {
+	position: relative; width: min(76vw, 1180px); height: min(64svh, 640px);
+	display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: stretch;
+}
+.acuelh .panel-tèxt { display: flex; flex-direction: column; justify-content: space-between; padding-block: 0.4rem; min-width: 0; }
+.acuelh .panel-num { font-family: var(--titol); font-size: clamp(3rem, 8vw, 7.5rem); line-height: 0.9; color: transparent; -webkit-text-stroke: 1px var(--aur); }
+.acuelh .panel-nom { font-family: var(--titol); font-size: clamp(2.6rem, 6vw, 6.6rem); line-height: 0.95; color: var(--crema); }
+.acuelh .panel-tagline { font-family: var(--votz); font-style: italic; font-size: clamp(1.3rem, 2vw, 1.9rem); color: var(--aur-clar); margin-top: 0.6rem; }
+.acuelh .panel-items { list-style: none; border-top: 1px solid var(--crema-3); }
+.acuelh .panel-items li { border-bottom: 1px solid var(--crema-3); }
+.acuelh .panel-items a, .acuelh .panel-items .leu {
+	position: relative; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+	padding: 0.95rem 0; font-weight: 700; overflow: hidden;
+}
+.acuelh .panel-items a::before { content: ''; position: absolute; inset: 0; background: var(--aur); transform: scaleY(0); transform-origin: bottom; transition: transform 0.6s var(--ease); z-index: -1; }
+.acuelh .panel-items a { z-index: 0; transition: color 0.45s, padding 0.6s var(--ease); }
+.acuelh .panel-items a:hover { color: var(--nuech); padding-inline: 1rem; }
+.acuelh .panel-items a:hover::before { transform: scaleY(1); }
+.acuelh .panel-items .leu { color: var(--crema-2); font-weight: 400; }
+.acuelh .panel-items .leu em { font-style: normal; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terra-viu); }
+.acuelh .panel-media { position: relative; overflow: hidden; border-radius: 22px; background: var(--nuech-2); }
+.acuelh .panel-media img { position: absolute; inset: -8% -14%; width: 128%; height: 116%; object-fit: cover; will-change: transform; }
+/* La fòto a un cèl blanc (sistèma sang e aur) : sus fons de nuèch, l'amagam */
+.acuelh .panel-media img.sens-cel { top: -74%; height: 180%; object-position: 50% 100%; }
+.acuelh .panel-media.liseré { box-shadow: 0 0 0 3px var(--terra), 0 0 0 6px var(--aur); }
+.acuelh .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #4a1a0b, var(--nuech-2) 70%); }
+.acuelh .panel-media.retrat img { inset: auto 0 0 0; width: 100%; height: 92%; object-fit: contain; object-position: bottom; }
+.acuelh .panel-media.tipo { display: grid; place-items: center; border: 1px solid var(--crema-3); background: transparent; }
+.acuelh .panel-media.tipo .gros-mot { font-family: var(--votz); font-style: italic; font-size: clamp(4rem, 11vw, 10rem); color: var(--aur); line-height: 0.9; text-align: center; }
+.acuelh .panel-media.simbol { display: grid; place-items: center; background: var(--terra); }
+.acuelh .panel-media.simbol svg { width: 62%; height: auto; }
+.acuelh .panel-media.simbol svg .tr { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s var(--ease-io); }
+.acuelh .panel-media.simbol svg circle { transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform 0.9s var(--ease); }
+.acuelh .panel-media.simbol.actiu svg .tr { stroke-dashoffset: 0; }
+.acuelh .panel-media.simbol.actiu svg circle { transform: scale(1); }
+.acuelh .camins-barra { position: absolute; left: var(--marge); right: var(--marge); bottom: 2.6rem; height: 1px; background: var(--crema-3); }
+.acuelh .camins-barra i { position: absolute; inset: 0; background: var(--aur); transform-origin: left; transform: scaleX(0); }
+@media (max-width: 860px) {
+	/* Telefon : lo títol « 03 · Quatre camins » dins lo flux, al dessús dels panèls (pas mai amagat jos las fòtos) */
+	.acuelh .camins-pin { justify-content: flex-start; padding-top: 5rem; gap: 0.9rem; }
+	.acuelh .camins-cap { position: static; padding-inline: var(--marge); margin-bottom: 0; }
+	.acuelh .panel { width: 84vw; height: calc(100svh - 11.5rem); grid-template-columns: 1fr; grid-template-rows: 36% 1fr; gap: 1rem; }
+	.acuelh .panel-media { order: -1; }
+	.acuelh .panel-num { display: none; }
+}
+/* ---------- Acte V : las chifras ---------- */
+.acuelh .chifras { padding: 24vh var(--marge) 18vh; }
+/* Zòna voida : lo canevàs i dessenha l'Occitània amb las estelas */
+/* Pas mai un ligam (sonque lo boton dubrís la carta) ; sus telefon, lo det fa aparéisser los noms
+   (tòca o lisa de travèrs : touch-action laissa lo defilament vertical a la pagina) */
+.acuelh .carta-estelas { display: block; height: min(74vh, 60vw); margin: 1rem 0 1rem; border-radius: 18px; touch-action: pan-y; }
+/* Telefon : mai d'aire entre lo jalon « 04 » e la carta, per la flècha del nòrd */
+@media (max-width: 700px) {
+	.acuelh .carta-estelas { margin-top: 4.6rem; }
+}
+.acuelh .carta-dobrir { display: flex; justify-content: flex-end; margin: 1.8rem 0 3.5rem; }
+.acuelh .boton-traç { background: transparent; color: var(--aur-clar); box-shadow: inset 0 0 0 1px var(--aur); }
+.acuelh .boton-traç:hover, .acuelh .boton-traç:focus-visible { color: var(--nuech); }
+.acuelh .crida-accions { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+.acuelh .chifras-grasilha { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--crema-3); }
+.acuelh .chifra { padding: 2.6rem 2rem 0 0; }
+.acuelh .chifra + .chifra { padding-left: 2rem; border-left: 1px solid var(--crema-3); }
+.acuelh .chifra-num { font-family: var(--titol); font-size: clamp(3rem, 7vw, 6.6rem); line-height: 1; color: var(--aur); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.acuelh .chifra-nom { font-size: 1.25rem; font-weight: 700; margin-top: 0.8rem; }
+.acuelh .chifra-font { font-size: 0.82rem; line-height: 1.5; color: var(--crema-2); margin-top: 0.6rem; max-width: 30ch; }
+@media (max-width: 860px) {
+	.acuelh .chifras-grasilha { grid-template-columns: 1fr; }
+	.acuelh .chifra + .chifra { padding-left: 0; border-left: 0; border-top: 1px solid var(--crema-3); }
+	.acuelh .chifra { padding-bottom: 2rem; }
+}
+/* ---------- Acte VI : la fenèstra del trobador ---------- */
+.acuelh .trobador { height: 220vh; }
+.acuelh .trobador-pin { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.acuelh .trobador-fenestra { position: absolute; inset: 0; clip-path: inset(22% 32% round 28px); will-change: clip-path; }
+.acuelh .trobador-fenestra img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 56%; transform-origin: 50% 56%; transform: scale(1.3); will-change: transform; }
+.acuelh .trobador-fenestra::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(18, 9, 6, 0.5), rgba(18, 9, 6, 0.15) 75%), linear-gradient(rgba(18, 9, 6, 0.1), rgba(40, 14, 6, 0.45)); }
+.acuelh .trobador-vers { position: relative; z-index: 2; text-align: center; padding: 0 var(--marge); }
+/* Lo vèrs ten dins la fenèstra de pèira de la fòto */
+.acuelh .trobador-vers p { max-width: 12.5em; margin-inline: auto; font-family: var(--votz); font-style: italic; font-size: clamp(1.9rem, 4.2vw, 4rem); line-height: 1.08; color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
+.acuelh .trobador-vers cite { display: block; margin-top: 1.8rem; font-style: normal; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--aur-clar); }
+/* ---------- Acte VII : la crida ---------- */
+.acuelh .crida { min-height: 110svh; display: grid; place-items: center; text-align: center; padding: 18vh var(--marge); }
+.acuelh .crida-titol { font-family: var(--titol); font-weight: 400; font-size: clamp(3rem, 10.5vw, 10rem); line-height: 0.95; }
+.acuelh .crida-titol .aur { color: var(--aur); }
+.acuelh .crida-sub { font-family: var(--votz); font-style: italic; font-size: clamp(1.4rem, 2.4vw, 2.2rem); color: var(--aur-clar); margin: 1.8rem 0 3rem; }
+/* ---------- Res que boleguèsse se l'utilizaire o demanda ---------- */
+@media (prefers-reduced-motion: reduce) {
+	.acuelh *, .acuelh *::before, .acuelh *::after { animation: none !important; transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+	.acuelh .masc > .masc-in, .acuelh .esvani { transform: none !important; opacity: 1 !important; }
+	.acuelh .trobador-fenestra { clip-path: none; }
+	.acuelh .trobador-fenestra img { transform: none; }
+}

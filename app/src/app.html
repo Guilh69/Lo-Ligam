@@ -8,9 +8,9 @@
 		     clignotent sur une page claire le temps que l'appli démarre).
 		     Liste des pages harmonisées : COPIE de ARMONIZADAS dans
 		     src/lib/stores/ambianca.svelte.js, à tenir identique. -->
-		<script>
+		<script nonce="%sveltekit.nonce%">
 			try {
-				var ARMONIZADAS = [];
+				var ARMONIZADAS = ['/'];
 				var d = document.documentElement.dataset;
 				var t = localStorage.getItem('lo-ligam-tema') || 'sorne';
 				var clar =

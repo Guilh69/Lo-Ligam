@@ -79,6 +79,8 @@
 <style>
 	.site-footer {
 		position: relative;
+		/* Au-dessus des fonds fixes en canevas (accueil : z-index 0 et 1) */
+		z-index: 2;
 		overflow: hidden;
 		margin-top: 4rem;
 		padding: clamp(3.5rem, 8vh, 5.5rem) clamp(1rem, 4vw, 3.4rem) 1.6rem;
