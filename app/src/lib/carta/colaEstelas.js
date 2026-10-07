@@ -384,7 +384,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			padding: 0.3,
 			// Sources de la couche, affichées avec les crédits de la carte
 			attribution:
-				'Rius e còsta : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · noms : © OpenStreetMap'
+				'Rius e còsta : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · domeni de la lenga : <a href="https://www.occitanica.eu/" target="_blank" rel="noopener">Occitanica</a> · noms : © OpenStreetMap'
 		},
 
 		initialize() {
