@@ -1216,7 +1216,6 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (aRius > 0.01 && this._el.corbas && this._corbas?.length) {
 				const pas = pasCorbas(z);
 				const [c0, c1] = INTRO.corbas;
-				const eMax = (this._eMax ??= Math.max(...this._corbas.map(([e]) => e)));
 				cx.strokeStyle = T.corba;
 				cx.lineJoin = 'round';
 				for (const mestra of [false, true]) {

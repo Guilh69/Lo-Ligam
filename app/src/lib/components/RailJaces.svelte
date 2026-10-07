@@ -419,8 +419,6 @@
 			? { estela: '#6b3a22', riu: '#b06a14', corba: '#8a5a2b', costa: '#2e1d14' }
 			: { estela: '#f5ead8', riu: '#eeaf34', corba: '#eeaf34', costa: '#f5ead8' }
 	);
-	// una jaça pintada sonque pel fons Contorns (vilas, noms, rius, relèu)
-	const dinsFons = (j) => !j.fons || j.fons === baseLayer;
 	// Sonque los contorns : la còsta e la frontièra de la lenga, res mai
 	function sonqueContorns() {
 		for (const j of totas) if (visibility[j.id] && j.id !== 'frontiera') visibility[j.id] = false;
@@ -597,7 +595,7 @@
 			{#each COLORS_FONS as k (k)}
 				<div class="linha">
 					<span class="apercebut" style:color={colors[k] ?? colorBasa[k]}
-						><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(APERCEBUT_COLOR[k], colors[k] ?? colorBasa[k])}</svg></span
+						><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(APERCEBUT_COLOR[k])}</svg></span
 					>
 					<div class="cos"><b>{tx.colorDe[k]}</b></div>
 					<label class="mostra" title={tx.color(tx.colorDe[k])}>

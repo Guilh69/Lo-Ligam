@@ -7,7 +7,6 @@
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import RailJaces from '$lib/components/RailJaces.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
-	import LayersIcon from '$lib/components/LayersIcon.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
@@ -24,34 +23,14 @@
 			intro: 'Fons de carta en occitan, realizat per',
 			introEnd: "amb l'Institut d'Estudis Occitans.",
 			close: 'Tampar',
-			more: 'Saber mai sus lo Mond en occitan',
-			layers: 'Jaces',
-			layersLabel: 'Jaces de la carta',
-			basemap: 'Fons de carta',
-			basemapEstelas: 'Estelas',
-			basemapOccitan: 'Occitan',
-			basemapNatural: 'Natural',
-			basemapSatellite: 'Satellit',
-			adminLink: "Modificar dins l'admin",
-			aVenir: 'A venir',
-			indisponible: 'Indisponibla per ara'
+			more: 'Saber mai sus lo Mond en occitan'
 		},
 		fr: {
 			title: 'Le Monde en occitan',
 			intro: 'Fond de carte en occitan, réalisé par',
 			introEnd: "avec l'Institut d'Études Occitanes.",
 			close: 'Fermer',
-			more: 'En savoir plus sur le Monde en occitan',
-			layers: 'Calques',
-			layersLabel: 'Calques de la carte',
-			basemap: 'Fond de carte',
-			basemapEstelas: 'Étoiles',
-			basemapOccitan: 'Occitan',
-			basemapNatural: 'Naturel',
-			basemapSatellite: 'Satellite',
-			adminLink: "Modifier dans l'admin",
-			aVenir: 'À venir',
-			indisponible: "Indisponible pour l'instant"
+			more: 'En savoir plus sur le Monde en occitan'
 		}
 	};
 	let tx = $derived(t[lang]);
@@ -71,8 +50,6 @@
 	// Par défaut, la carte en étoiles de l'accueil (2026-10-07) : la carte
 	// détaillée en occitan se découvre dessous en s'approchant.
 	let baseLayer = $state('estelas');
-
-	const baseLayerOptions = ['estelas', 'occitan', 'natural', 'satellite'];
 
 	// Lo catalògue de las jaces (lib/carta/catalogue.js) : cinc familhas, que
 	// valon per totes los fonses. La basa (taula carta_colas, gerida dins
@@ -219,8 +196,7 @@
 	}
 
 	/* ---------- Verre sombre commun aux panneaux et boutons ---------- */
-	.info-card,
-	.layers-panel {
+	.info-card {
 		position: absolute;
 		z-index: 1000;
 		background: color-mix(in srgb, var(--t-fons-2) 92%, transparent);
@@ -232,7 +208,6 @@
 	}
 
 	.info-trigger,
-	.layers-trigger,
 	.info-close {
 		display: grid;
 		place-items: center;
@@ -249,15 +224,12 @@
 	}
 
 	.info-trigger:hover,
-	.layers-trigger:hover,
 	.info-close:hover {
 		border-color: var(--t-aur);
 	}
 
 	.info-trigger:focus-visible,
-	.layers-trigger:focus-visible,
-	.info-close:focus-visible,
-	.admin-link:focus-visible {
+	.info-close:focus-visible {
 		outline: 2px solid var(--t-aur);
 		outline-offset: 3px;
 	}
