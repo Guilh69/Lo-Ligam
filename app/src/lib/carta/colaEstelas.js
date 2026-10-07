@@ -116,7 +116,7 @@ export const INTRO = {
 // dialècte (demanda de Romain) ; las autras venon en s'aprochant
 const CAPITALAS = ['Bordèu', 'Pau', 'Tolosa', 'Montpelhièr', 'Marselha', 'Niça', 'Limòtges', 'Clarmont-Ferrand', 'Valença', 'Gap'];
 // a partir de quin zoom (relatiu a la vista d'ensemble) un luòc se mòstra
-const dzLuòc = (e) => (CAPITALAS.includes(e.nom) ? -99 : e.renc <= 2 ? DZ_DEPART : e.renc === 3 ? 0.9 : DZ_VILATGES);
+const dzLuòc = (e) => (CAPITALAS.includes(e.nom) ? -1 : e.renc <= 2 ? DZ_DEPART : e.renc === 3 ? 0.9 : DZ_VILATGES);
 
 // Lo sens dels rius : las donadas mesclan los sens (la Garona va de la mar a
 // sa font) e copan un riu en mantun tròç. Los tròces d'un meteis riu son
@@ -174,6 +174,10 @@ function orientarRius(rius, costa) {
 	return sortida;
 }
 let riusOrientats = null;
+
+// Los fichièrs d'Euròpa e del mond, cargats un còp
+const promesasMond = {};
+const cargarMond = (u) => (promesasMond[u] ??= fetch(u).then((r) => (r.ok ? r.json() : null)).catch(() => null));
 
 const OCCITANIA = [
 	[42.65, -1.6],
@@ -641,6 +645,97 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		setIntro(t0) {
 			this._tIntro = t0;
 		},
+		// Las donadas d'Euròpa (1:50 M) e del mond (1:110 M) : cargadas sonque
+		// quand se dezooma, projectadas al zoom actual
+		_projMond(z) {
+			const map = this._map;
+			const zB = this._zBase ?? 6.5;
+			if (z < zB - 0.2 && !this._mondEu) cargarMond('/data/mond-europa.json').then((d) => d && ((this._mondEu = d), (this._zP = null), this._update()));
+			if (z < 4.2 && !this._mondTot) cargarMond('/data/mond.json').then((d) => d && ((this._mondTot = d), (this._zP = null), this._update()));
+			const proj = ([lon, lat]) => {
+				const q = map.project([lat, lon], z);
+				return [q.x, q.y];
+			};
+			const preparar = (d) =>
+				d.païses.map((p) => {
+					const pts = p.p.map((pl) => pl.map((a) => a.map(proj)));
+					// la largor del país a l'ecran (los pichons estats se nomenan pas de luènh)
+					const xs = pts.flatMap((pl) => pl[0].map((q) => q[0]));
+					return { oc: p.oc, fr: p.fr, eti: proj(p.eti), pts, larg: Math.max(...xs) - Math.min(...xs) };
+				});
+			return {
+				eu: this._mondEu && z < zB && z >= 3.2 ? preparar(this._mondEu) : null,
+				tot: this._mondTot && z < 4.4 ? preparar(this._mondTot) : null
+			};
+		},
+		_dessenharMond(cx, o, z, ti) {
+			const M = this._mondPx;
+			if (!M || (!M.eu && !M.tot)) return;
+			const T = this._tem,
+				zB = this._zBase ?? 6.5,
+				W = this._W,
+				H = this._H;
+			const aEu = clamp((zB - 0.15 - z) / 0.6) * clamp((z - 3.4) / 0.5),
+				aTot = clamp((4.0 - z) / 0.5);
+			const traçar = (païses, a, larg) => {
+				if (!païses || a < 0.01) return;
+				cx.save();
+				cx.globalAlpha = a;
+				cx.strokeStyle = T.costa;
+				cx.lineWidth = larg;
+				cx.lineJoin = 'round';
+				cx.beginPath();
+				// (un contorn que travèrsa la linha de cambiament de data sauta d'un
+				// bòrd del mond a l'autre : lo traç es copat a aquel saut)
+				const saut = 256 * Math.pow(2, z) * 0.4;
+				for (const p of païses)
+					for (const pl of p.pts)
+						for (const anel of pl) {
+							cx.moveTo(anel[0][0] - o.x, anel[0][1] - o.y);
+							let copat = false;
+							for (let i = 1; i < anel.length; i++) {
+								if (Math.abs(anel[i][0] - anel[i - 1][0]) > saut) {
+									copat = true;
+									cx.moveTo(anel[i][0] - o.x, anel[i][1] - o.y);
+								} else cx.lineTo(anel[i][0] - o.x, anel[i][1] - o.y);
+							}
+							if (!copat) cx.closePath();
+						}
+				cx.stroke();
+				cx.restore();
+			};
+			traçar(M.tot, aTot * 0.5, 0.6);
+			traçar(M.eu, aEu * 0.45, 0.7);
+			// los noms dels païses d'Euròpa, sens se trucar
+			const aNoms = aEu * clamp((z - 3.9) / 0.4);
+			if (aNoms < 0.01 || !M.eu) return;
+			const fr = this._lang === 'fr';
+			cx.save();
+			cx.font = '600 10px Luciole, sans-serif';
+			if ('letterSpacing' in cx) cx.letterSpacing = '0.22em';
+			cx.textAlign = 'center';
+			cx.textBaseline = 'middle';
+			cx.fillStyle = T.estela;
+			cx.shadowColor = T.ombra ?? 'rgba(18, 9, 6, 0.9)';
+			cx.shadowBlur = 5;
+			const pausats = [];
+			for (const p of M.eu) {
+				const nom = fr ? p.fr : p.oc;
+				if (!nom) continue;
+				const x = p.eti[0] - o.x,
+					y = p.eti[1] - o.y;
+				if (x < -50 || y < -20 || x > W + 50 || y > H + 20) continue;
+				const t = nom.toUpperCase(),
+					w = cx.measureText(t).width;
+				if (p.larg < Math.min(w * 0.6, 40)) continue;
+				const b = [x - w / 2 - 4, y - 8, x + w / 2 + 4, y + 8];
+				if (pausats.some((q) => q[0] < b[2] && q[2] > b[0] && q[1] < b[3] && q[3] > b[1])) continue;
+				pausats.push(b);
+				cx.globalAlpha = aNoms * 0.6;
+				cx.fillText(t, x, y);
+			}
+			cx.restore();
+		},
 		// las donadas de l'entrada en scèna (limits, corbas, polissas) son aquí
 		prèsta() {
 			return Promise.all([cargarLimits(), cargarCorbas(), document.fonts?.load('italic 500 16px "Cormorant Garamond"')]);
@@ -770,6 +865,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						return [q.x, q.y];
 					})
 				]);
+				// Euròpa e lo mond (pel dezoom) : projectats sonque quand se veson
+				this._mondPx = this._projMond(z);
 				this._costa = COSTA.map((l) =>
 					l.map(([lon, lat]) => {
 						const q = map.project([lat, lon], z);
@@ -1151,6 +1248,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					}
 				}
 			}
+
+			// Europa, puèi lo mond, quand se dezooma (demanda de Romain) : los
+			// contorns dels païses en fil fin coma la còsta, lors noms en
+			// capitalas espaçadas ; l'Occitània demòra al mitan
+			this._dessenharMond(cx, o, z, ti);
 
 			// Le trait de côte : un fil très fin qui structure la carte, posé
 			// avant les rivières ; la carte détaillée a le sien, il s'efface avec

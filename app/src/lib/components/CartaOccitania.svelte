@@ -388,7 +388,7 @@
 			zoomSnap: 0.25,
 			zoomDelta: 0.5,
 			wheelPxPerZoomLevel: 110,
-			minZoom: 5,
+			minZoom: 2, // fins al mond (dezoom : Euròpa, puèi lo mond)
 			maxZoom: 19,
 			zoomControl: false
 		});
