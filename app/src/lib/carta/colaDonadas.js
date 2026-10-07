@@ -239,7 +239,7 @@ export function crearColaDonadas(
 		},
 		_nomDe(k) {
 			if (!k) return null;
-			if (k.startsWith('mix-')) {
+			if (k.startsWith('mix-') || k.startsWith('ist-')) {
 				const m = this._mix?.features.find((x) => x.properties.kod === k)?.properties;
 				return m ? { kod: k, oc: m.oc, fr: m.fr, sota_oc: m.sota_oc, sota_fr: m.sota_fr, mix: true } : null;
 			}
@@ -332,7 +332,7 @@ export function crearColaDonadas(
 				linhas: dom ? dom.linhas.map((l) => l.map(pt)) : null,
 				zonas: this._dial ? this._dial.features.map(zona) : null,
 				cro: this._creissent ? zona(this._creissent.features[0]) : null,
-				mix: this._mix && this._jaces.dialectes ? this._mix.features.map(zona) : null,
+				mix: this._mix && this._jaces.dialectes ? this._mix.features.map((f) => ({ ...zona(f), istoric: f.properties.mena === 'istoric' })) : null,
 				bandas:
 					this._bandas && this._jaces.dialectes
 						? this._bandas.features.map((f) => {
@@ -503,7 +503,7 @@ export function crearColaDonadas(
 			g.filter = `blur(${(clamp(1500 / G.mPx, 0.8, 20) * dpr).toFixed(1)}px)`;
 			g.setTransform(dpr, 0, 0, dpr, 0, 0);
 			g.fillStyle = '#000';
-			for (const zm of G.mix) g.fill(zm.c, 'evenodd');
+			for (const zm of G.mix) if (!zm.istoric) g.fill(zm.c, 'evenodd');
 			g.restore();
 			g.globalCompositeOperation = 'source-in';
 			g.fillStyle = g.createPattern(motiu, 'repeat');
@@ -578,6 +578,17 @@ export function crearColaDonadas(
 			/* Zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes */
 			if (J.dialectes && G.mix) {
 				const pus = this._pus?.startsWith('mix-');
+				// domeni istoric (gascon escantit) : la tencha pus palla, sens asclas
+				const ist = G.mix.filter((zm) => zm.istoric);
+				if (ist.length && J.dialectes) {
+					cx.save();
+					cx.globalCompositeOperation = 'destination-out';
+					cx.filter = `blur(${clamp(2500 / G.mPx, 1, 30).toFixed(1)}px)`;
+					cx.globalAlpha = this._pus?.startsWith('ist-') ? 0.35 : 0.55;
+					cx.fillStyle = '#000';
+					for (const zm of ist) cx.fill(zm.c, 'evenodd');
+					cx.restore();
+				}
 				this._copiar(this._imgMix, (this._sel ? 0.25 : pus ? 0.75 : 0.5) * aTenchas);
 			}
 
