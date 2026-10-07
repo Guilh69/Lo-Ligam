@@ -156,6 +156,7 @@
 				colaEstelas.setElements(elements);
 				colaEstelas.setColors(colors);
 				colaEstelas.setModeDialectes(!!visibility.dialectes);
+				colaEstelas.setTerritoris({ regions: !!visibility.regions, despartaments: !!visibility.despartaments });
 			}
 			colaEstelas.addTo(map);
 			majDetalh();
@@ -631,6 +632,8 @@
 		const nextBaseLayer = baseLayer;
 		if (!map || !L) return;
 		colaDonadas?.setJaces(jacesDonadas(vis));
+		// lo territòri survolat o clicat seguís las jaces alucadas (region o despartament)
+		colaEstelas?.setTerritoris({ regions: !!vis.regions, despartaments: !!vis.despartaments });
 		colaTematica?.setJaces(jacesTematicas(vis));
 		if (vis.calandretas) cargarCalandretas();
 		if (vis.lengasFranca) cargarLengas();

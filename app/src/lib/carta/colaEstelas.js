@@ -886,7 +886,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						}
 						return { code, nom, cami, centre: centreDe(pa) };
 					});
-				if (this._terFixat && this._terFixat.mena !== menaTerritori(z)) this._terFixat = null;
+				if (this._terFixat && this._terFixat.mena !== this._mena(z)) this._terFixat = null;
 				const dom = this._limitsGeo?.domeni;
 				if (dom) {
 					const proj = (a) =>
@@ -1080,10 +1080,27 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			return null;
 		},
-		// Le territoire (région ou département, selon l'échelle) sous un point
+		// Région ou département ? Selon l'échelle, sauf si une seule des deux
+		// couches est cochée : c'est alors elle (retour de Romain : avec les
+		// départements seuls cochés, le clic montrait la région)
+		_mena(z) {
+			const m = menaTerritori(z);
+			if (!m) return null;
+			const { regions, despartaments } = this._terJaces ?? {};
+			if (regions && !despartaments) return 'region';
+			if (despartaments && !regions) return 'despartament';
+			return m;
+		},
+		setTerritoris(t) {
+			const a = this._terJaces;
+			if (a && a.regions === t.regions && a.despartaments === t.despartaments) return;
+			this._terJaces = t;
+			this._terFixat = this._terPus = null;
+		},
+		// Le territoire (région ou département) sous un point
 		_territoriA(lp) {
 			if (this._modeDial || this._cedir?.(lp)) return null;
-			const mena = menaTerritori(this._zoom);
+			const mena = this._mena(this._zoom);
 			const lista = mena === 'region' ? this._regions : mena === 'despartament' ? this._deps : null;
 			if (!lista?.length) return null;
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
@@ -1255,7 +1272,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// Romain : « plus fluide, agréable ») : chacun a son propre fondu
 			this._legendaT = [];
 			const cibla2 = this._terFixat ?? this._terPus;
-			const clauT = cibla2 && menaTerritori(z) === cibla2.mena ? cibla2.mena + cibla2.code : null;
+			const clauT = cibla2 && this._mena(z) === cibla2.mena ? cibla2.mena + cibla2.code : null;
 			this._terVists ??= new Map();
 			if (clauT && !this._terVists.has(clauT)) this._terVists.set(clauT, { mena: cibla2.mena, code: cibla2.code, p: 0 });
 			for (const [clau, v] of this._terVists) {
