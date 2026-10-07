@@ -291,4 +291,28 @@
 		height: 2.6rem;
 	}
 
+	/* Telefon (retorn de Romain : lo rail espotissiá la barra de recèrca) :
+	   las jaces passan dins una barra en bas, a portada del det ; la recèrca
+	   pren tota la largor en naut, lo boton d'informacion a son costat ; las
+	   aisinas de lectura (escala, bossòla, zoom, fonts) se lèvan sus la barra */
+	/* (capçal sus doas linhas : lo boton s'aliniá pas pus amb la recèrca) */
+	@media (max-width: 760px) {
+		.info-trigger,
+		.info-card {
+			top: 7.5rem;
+		}
+	}
+	@container carta (max-width: 600px) {
+		.carta-wrap {
+			--barra-bas: calc(3.9rem + env(safe-area-inset-bottom, 0px));
+		}
+		.info-trigger {
+			right: 0.75rem;
+		}
+		.info-card {
+			right: 0.75rem;
+			width: calc(100% - 1.5rem);
+		}
+	}
+
 </style>

@@ -780,15 +780,65 @@
 			height: 20px;
 		}
 	}
-	/* Telefon : rail mai estrech, tirador a costat sus tota la largor */
-	@container carta (max-width: 520px) {
+	/* Telefon : lo rail ven una barra en bas (a portada del det, liura la
+	   recèrca en naut) ; lo tirador s'alanda de la barra, sus tota la largor */
+	@container carta (max-width: 600px) {
 		.rail {
-			width: 3.9rem;
-			left: 0.6rem;
+			top: auto;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			width: auto;
+			height: var(--barra-bas, 3.9rem);
+			max-height: none;
+			overflow: visible;
+			display: flex;
+			align-items: stretch;
+			gap: 0;
+			padding: 3px 4px env(safe-area-inset-bottom, 0px);
+			border-width: 1px 0 0;
+			border-radius: 16px 16px 0 0;
+			box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3);
+		}
+		.rail-b {
+			flex: 1 1 0;
+			min-width: 0;
+			padding: 5px 0 3px;
+			font-size: 9.5px;
+			line-height: 1.1;
+		}
+		.rail-b svg {
+			width: 20px;
+			height: 20px;
+		}
+		.punt {
+			right: calc(50% - 15px);
+		}
+		.compte {
+			right: calc(50% - 22px);
+		}
+		.rail-sep {
+			width: 1px;
+			height: auto;
+			margin: 10px 2px;
 		}
 		.tirador {
-			left: 4.9rem;
-			width: calc(100% - 5.5rem);
+			top: auto;
+			left: 0;
+			right: 0;
+			bottom: calc(var(--barra-bas, 3.9rem) - 1px);
+			width: auto;
+			max-height: min(60%, calc(100% - 10rem));
+			border-radius: 18px 18px 0 0;
+			border-width: 1px 0 0;
+			box-shadow: 0 -12px 34px rgba(0, 0, 0, 0.4);
+			animation: tirador-pujar 0.28s cubic-bezier(0.19, 1, 0.22, 1);
+		}
+	}
+	@keyframes tirador-pujar {
+		from {
+			transform: translateY(24px);
+			opacity: 0;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
@@ -796,6 +846,9 @@
 		.basc,
 		.basc::after {
 			transition: none;
+		}
+		.tirador {
+			animation: none;
 		}
 	}
 </style>

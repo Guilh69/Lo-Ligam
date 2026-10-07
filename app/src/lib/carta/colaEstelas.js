@@ -556,6 +556,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._center = map.getCenter();
 			this._zoom = map.getZoom();
 			this._zCibla = null;
+			// sul telefon, la barra de las jaces en bas : l'etiqueta del territòri
+			// se lèva d'autant (los cantons de Leaflet son ja levats en CSS)
+			this._barraBas = parseFloat(getComputedStyle(map._controlCorners.bottomleft).bottom) || 0;
 			L.DomUtil.setPosition(this._cv, min);
 			this._dpr = Math.min(devicePixelRatio || 1, 2);
 			this._W = tal.x;
@@ -1182,7 +1185,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					bh = 34,
 					cxM = v0.x + vis.x / 2,
 					bx = cxM - bw / 2,
-					by = v0.y + vis.y - 96;
+					by = v0.y + vis.y - 96 - (this._barraBas ?? 0);
 				const fixat = lg.some((l) => l.fixat);
 				cx.globalAlpha = aMax * (fixat ? 1 : 0.88);
 				cx.fillStyle = T.bulla;

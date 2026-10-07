@@ -303,12 +303,12 @@
 		white-space: nowrap;
 	}
 
-	/* Écran étroit : le bandeau a deux lignes ; le champ se range entre la
-	   flèche du nord (à gauche) et le bouton d'information (à droite) */
+	/* Écran étroit : le bandeau a deux lignes ; le champ se range entre le
+	   rail des couches (à gauche) et le bouton d'information (à droite) */
 	@media (max-width: 760px) {
 		.cerca {
 			top: 7.5rem;
-			left: 3.4rem;
+			left: calc(var(--marge, 1rem) + 5.3rem); /* après le rail des couches */
 			right: 4.4rem;
 			width: auto;
 			transform: none;
@@ -316,6 +316,17 @@
 
 		.segonda {
 			display: none;
+		}
+	}
+	/* Telefon : las jaces son en bas, la recèrca pren tota la largor (levat
+	   lo boton d'informacion a drecha) */
+	@container carta (max-width: 600px) {
+		.cerca {
+			top: 7.5rem;
+			left: 0.75rem;
+			right: 3.95rem;
+			width: auto;
+			transform: none;
 		}
 	}
 </style>

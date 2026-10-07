@@ -643,7 +643,7 @@
 		position: absolute;
 		z-index: 900;
 		left: 50%;
-		bottom: 62px;
+		bottom: calc(62px + var(--barra-bas, 0px));
 		transform: translateX(-50%);
 		display: flex;
 		align-items: center;
@@ -837,6 +837,17 @@
 		color: var(--t-aur);
 		opacity: 0.85;
 		pointer-events: none;
+	}
+
+	/* Telefon : las aisinas de lectura se lèvan sus la barra de las jaces */
+	.carta :global(.leaflet-bottom) {
+		bottom: var(--barra-bas, 0px);
+	}
+	@container carta (max-width: 600px) {
+		.compass {
+			bottom: calc(var(--barra-bas, 0px) + 2.9rem);
+			left: 0.85rem;
+		}
 	}
 
 	.compass text {
