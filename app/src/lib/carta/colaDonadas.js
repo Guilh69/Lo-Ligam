@@ -138,6 +138,9 @@ export function crearColaDonadas(
 		},
 
 		setJaces(j) {
+			// la jaça dels dialèctes ven d'èsser alucada (sovent pel meteis clic
+			// qu'una pastilha) : sas zònas totas se mòstran pas abans la difusion
+			if (j.dialectes && !this._jaces.dialectes) this._dialAlucat = performance.now();
 			this._jaces = { ...j };
 			// una zòna causida dont la jaça s'escantís es pas pus causida
 			if (this._sel && !(this._sel === 'cro' ? j.creissent : j.dialectes)) this._causir(null, false);
@@ -223,9 +226,13 @@ export function crearColaDonadas(
 		_causir(k, anim) {
 			const de = this._sel;
 			this._sel = k;
-			this._anim = anim && !this._calm ? { de, a: k, t0: performance.now() } : null;
+			// las zònas totas èran visiblas abans la causida ? (sonque alara se
+			// fondon ; se la jaça ven d'èsser alucada, lo dialècte se difusa sol)
+			const totesAvant = !de && !!this._dial && performance.now() - (this._dialAlucat ?? 0) > 400;
+			this._anim = anim && !this._calm ? { de, a: k, t0: performance.now(), totesAvant } : null;
 			this._prepSel();
 			onCausida?.(k, this._nomDe(k));
+			this._pintar(); // tot d'ora : remplaça un dessenh de totas las zònas fach just abans
 			this._bocla();
 		},
 		_bocla() {
@@ -381,7 +388,7 @@ export function crearColaDonadas(
 				// causit, tornan quand se descausís
 				let aTotes = selDial ? 0 : 1;
 				if (an && !an.a) aTotes = dossa(clamp(p / 0.6));
-				if (an && an.a && !an.de) aTotes = 1 - dossa(clamp(p / 0.35));
+				if (an && an.a && !an.de) aTotes = an.totesAvant ? 1 - dossa(clamp(p / 0.35)) : 0;
 				if (aTotes > 0.01) this._copiar(this._imgTotes, aT * aTotes);
 				// sol sus la carta, lo dialècte causit pòt èsser mai marcat
 				if (selDial) {

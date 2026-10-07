@@ -69,11 +69,12 @@ export const NOMS_OC_TER = {
 };
 
 // Territòris occitans fòra de França (2026-10-07) : revelats al survòl coma un
-// despartament ; la legenda ditz lor país al luòc de « Despartament · code ».
+// despartament ; la legenda ditz lor region e lor país al luòc de
+// « Despartament · code » (demanda de Romain : meteissa forma per totes).
 // Contorns OpenStreetMap (ODbL). Noms occitans de validar per Romain.
 export const SOTA_TER = {
-	ARAN: { oc: 'Catalonha', fr: 'Catalogne' },
-	VALADAS: { oc: 'Itàlia', fr: 'Italie' }
+	ARAN: { oc: 'Catalonha · Espanha', fr: 'Catalogne · Espagne' },
+	VALADAS: { oc: 'Piemont · Itàlia', fr: 'Piémont · Italie' }
 };
 export const sotaTerritori = (code, lang) => (SOTA_TER[code] ?? (code.startsWith('V-') ? SOTA_TER.VALADAS : null))?.[lang === 'fr' ? 'fr' : 'oc'] ?? null;
 /** Nom d'un territoire dans la langue de la page. */

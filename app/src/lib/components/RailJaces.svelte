@@ -4,7 +4,8 @@
 	// clic dobrís lo tirador de la familha ; un segond clic sus la meteissa
 	// icòna lo tampa (l'icòna se bolega pas). « Sus la carta » mòstra tot çò
 	// qu'es afichat, per l'escantir d'un còp d'uèlh ; « Fons » règla lo fons
-	// (elements e colors), per exemple per gardar sonque lo trach de còsta.
+	// (fons « Contorns », occitan, natural, satellit, e colors) ; los elements
+	// (vilas, noms, rius, relèu) son de jaces dins lors familhas.
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 
@@ -12,7 +13,6 @@
 		familhas = [],
 		visibility = $bindable({}),
 		baseLayer = $bindable('estelas'),
-		elements = $bindable({}),
 		colors = $bindable({}),
 		dialecte = $bindable(null),
 		clar = false,
@@ -33,17 +33,11 @@
 			res: 'Pas cap de jaça : la carta es nusa. Causissètz-ne una dins una familha.',
 			afichadas: (n) => `${n} ${n > 1 ? 'jaces afichadas' : 'jaça afichada'}`,
 			fonsCarta: 'Fons de carta',
-			basemaps: { estelas: 'Estelas', occitan: 'Occitan', natural: 'Natural', satellite: 'Satellit' },
-			elementsFons: 'Çò que mòstra lo fons',
-			el: {
-				estelas: 'Estelas (los luòcs)',
-				nomsVilas: 'Noms de las vilas',
-				rius: 'Rius',
-				nomsRius: 'Noms dels rius',
-				corbas: 'Corbas de nivèl',
-				costa: 'Trach de còsta'
-			},
-			sonqueCosta: 'Sonque la còsta',
+			basemaps: { estelas: 'Contorns', occitan: 'Occitan', natural: 'Natural', satellite: 'Satellit' },
+			colors: 'Colors',
+			colorDe: { costa: 'Trach de còsta', riu: 'Rius', estela: 'Vilas e noms', corba: 'Relèu' },
+			sonqueContorns: 'Sonque los contorns',
+			sonqueFons: 'Sonque sul fons Contorns',
 			totTornar: 'Tot tornar',
 			colorsTema: 'Colors del tèma',
 			color: (n) => `Color : ${n}`,
@@ -63,17 +57,11 @@
 			res: 'Aucune couche : la carte est nue. Choisissez-en une dans une famille.',
 			afichadas: (n) => `${n} ${n > 1 ? 'couches affichées' : 'couche affichée'}`,
 			fonsCarta: 'Fond de carte',
-			basemaps: { estelas: 'Étoiles', occitan: 'Occitan', natural: 'Naturel', satellite: 'Satellite' },
-			elementsFons: 'Ce que montre le fond',
-			el: {
-				estelas: 'Étoiles (les lieux)',
-				nomsVilas: 'Noms des villes',
-				rius: 'Rivières',
-				nomsRius: 'Noms des rivières',
-				corbas: 'Courbes de niveau',
-				costa: 'Trait de côte'
-			},
-			sonqueCosta: 'Seulement la côte',
+			basemaps: { estelas: 'Contours', occitan: 'Occitan', natural: 'Naturel', satellite: 'Satellite' },
+			colors: 'Couleurs',
+			colorDe: { costa: 'Trait de côte', riu: 'Rivières', estela: 'Villes et noms', corba: 'Relief' },
+			sonqueContorns: 'Seulement les contours',
+			sonqueFons: 'Seulement sur le fond Contours',
 			totTornar: 'Tout remettre',
 			colorsTema: 'Couleurs du thème',
 			color: (n) => `Couleur : ${n}`,
@@ -134,12 +122,14 @@
 			bacins: '<path d="M26 34 V 20 M26 20 L14 8 M26 20 L40 10 M20 14 L12 18 M34 14 L44 18" stroke="#eeaf34" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
 			estelas: '<circle cx="10" cy="12" r="1.6" fill="currentColor"/><circle cx="24" cy="24" r="2.2" fill="currentColor"/><circle cx="38" cy="10" r="1.3" fill="currentColor"/><circle cx="44" cy="27" r="1.6" fill="currentColor"/><circle cx="17" cy="29" r="1" fill="currentColor"/>',
 			nomsVilas: '<text x="26" y="23" text-anchor="middle" font-family="Limelight, Georgia, serif" font-size="13" fill="currentColor">Tolosa</text>',
-			rius: '<path d="M2 28 C 14 18, 22 30, 32 18 S 46 8, 52 10" fill="none" stroke="#eeaf34" stroke-width="1.8" stroke-linecap="round"/>',
-			nomsRius: '<text x="26" y="23" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="14" fill="#eeaf34">Garona</text>',
-			corbas: '<path d="M2 30 Q 20 12 50 26 M6 34 Q 24 18 52 32 M4 24 Q 20 6 48 18" fill="none" stroke="#eeaf34" stroke-width=".8" opacity=".6"/>',
+			rius: '<path d="M2 28 C 14 18, 22 30, 32 18 S 46 8, 52 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+			nomsRius: '<text x="26" y="23" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="14" fill="currentColor">Garona</text>',
+			corbas: '<path d="M2 30 Q 20 12 50 26 M6 34 Q 24 18 52 32 M4 24 Q 20 6 48 18" fill="none" stroke="currentColor" stroke-width=".8" opacity=".6"/>',
 			costa: '<path d="M30 0 C 26 10, 34 14, 28 22 S 20 32, 26 36" fill="none" stroke="currentColor" stroke-width="1" opacity=".75"/>'
 		};
-		return A[id] ?? '';
+		// las jaces del fons Contorns reprenon los apercebuts de lors elements
+		const ALIAS = { vilas: 'estelas', toponimia: 'nomsVilas' };
+		return A[ALIAS[id] ?? id] ?? '';
 	};
 
 	const RAIL = ['sus', 'lenga', 'administracion', 'cultura', 'istoria', 'natura'];
@@ -147,12 +137,16 @@
 	const alternar = (id) => (dobert = dobert === id ? null : id);
 
 	const totas = $derived(familhas.flatMap((f) => f.jaces));
-	const actiu = (j) => j.estat === 'disponible';
+	const actiu = (j) => j.estat === 'disponible' && (!j.fons || j.fons === baseLayer);
 	const afichadas = $derived(totas.filter((j) => actiu(j) && visibility[j.id]));
 	const familhaActiva = (f) => f.jaces.some((j) => actiu(j) && visibility[j.id]);
 	const nomJ = (j) => (lang === 'oc' ? j.oc : (j.fr ?? j.oc));
 	const notaJ = (j) =>
-		j.estat === 'basa' ? tx.indisponible : ((lang === 'oc' ? j.nota_oc : (j.nota_fr ?? j.nota_oc)) ?? (actiu(j) ? null : tx.aVenir));
+		j.estat === 'basa'
+			? tx.indisponible
+			: j.estat === 'disponible' && j.fons && j.fons !== baseLayer
+				? tx.sonqueFons
+				: ((lang === 'oc' ? j.nota_oc : (j.nota_fr ?? j.nota_oc)) ?? (actiu(j) ? null : tx.aVenir));
 	const nomFam = (id) => {
 		if (id === 'sus') return tx.sus;
 		if (id === 'fons') return tx.fons;
@@ -175,22 +169,26 @@
 		dialecte = dialecte === k ? null : k;
 	}
 
-	const ELEMENTS = ['estelas', 'nomsVilas', 'rius', 'nomsRius', 'corbas', 'costa'];
-	// las colors que l'internauta pòt cambiar, e lor valor de basa segon lo tèma
-	const COLOR_DE = { estelas: 'estela', rius: 'riu', corbas: 'corba', costa: 'costa' };
-	const colorBasa = $derived(
+	// Colors del fons que l'internauta pòt cambiar, e lor valor de basa segon lo tèma
+	const COLORS_FONS = ['costa', 'riu', 'estela', 'corba'];
+	const APERCEBUT_COLOR = { costa: 'costa', riu: 'rius', estela: 'estelas', corba: 'corbas' };
+	const colorBasa = (
 		clar
 			? { estela: '#6b3a22', riu: '#b06a14', corba: '#8a5a2b', costa: '#2e1d14' }
 			: { estela: '#f5ead8', riu: '#eeaf34', corba: '#eeaf34', costa: '#f5ead8' }
 	);
-	const elOn = (k) => elements[k] !== false;
-	function sonqueCosta() {
-		elements = Object.fromEntries(ELEMENTS.map((k) => [k, k === 'costa']));
-		for (const j of totas) if (visibility[j.id]) visibility[j.id] = false;
+	// una jaça pintada sonque pel fons Contorns (vilas, noms, rius, relèu)
+	const dinsFons = (j) => !j.fons || j.fons === baseLayer;
+	// Sonque los contorns : la còsta e la frontièra de la lenga, res mai
+	function sonqueContorns() {
+		for (const j of totas) if (visibility[j.id] && j.id !== 'frontiera') visibility[j.id] = false;
+		visibility.frontiera = true;
 		dialecte = null;
 	}
+	// Tot tornar : las jaces per defaut del catalògue
 	function totTornar() {
-		elements = Object.fromEntries(ELEMENTS.map((k) => [k, true]));
+		for (const j of totas) visibility[j.id] = !!j.defaut;
+		dialecte = null;
 	}
 	function onKey(e) {
 		if (e.key === 'Escape' && dobert) dobert = null;
@@ -259,44 +257,30 @@
 					</button>
 				{/each}
 			</div>
-			{#if baseLayer === 'estelas'}
-				<p class="titolet">{tx.elementsFons}</p>
-				{#each ELEMENTS as k (k)}
-					<div class="linha" class:escantida={!elOn(k)}>
-						<span class="apercebut" style:color={COLOR_DE[k] ? (colors[COLOR_DE[k]] ?? colorBasa[COLOR_DE[k]]) : null}
-							><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(k)}</svg></span
-						>
-						<div class="cos"><b>{tx.el[k]}</b></div>
-						<div class="accions">
-							{#if COLOR_DE[k]}
-								<label class="mostra" title={tx.color(tx.el[k])}>
-									<input
-										type="color"
-										value={colors[COLOR_DE[k]] ?? colorBasa[COLOR_DE[k]]}
-										oninput={(e) => (colors = { ...colors, [COLOR_DE[k]]: e.currentTarget.value })}
-										aria-label={tx.color(tx.el[k])}
-									/>
-								</label>
-							{/if}
-							<button
-								type="button"
-								class="basc"
-								role="switch"
-								aria-checked={elOn(k)}
-								aria-label={tx.el[k]}
-								onclick={() => (elements = { ...elements, [k]: !elOn(k) })}
-							></button>
-						</div>
-					</div>
-				{/each}
-				<div class="botons">
-					<button type="button" class="boton" onclick={sonqueCosta}>{tx.sonqueCosta}</button>
-					<button type="button" class="boton" onclick={totTornar}>{tx.totTornar}</button>
-					{#if Object.keys(colors).length}
-						<button type="button" class="boton" onclick={() => (colors = {})}>{tx.colorsTema}</button>
-					{/if}
+			<p class="titolet">{tx.colors}</p>
+			{#each COLORS_FONS as k (k)}
+				<div class="linha">
+					<span class="apercebut" style:color={colors[k] ?? colorBasa[k]}
+						><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(APERCEBUT_COLOR[k], colors[k] ?? colorBasa[k])}</svg></span
+					>
+					<div class="cos"><b>{tx.colorDe[k]}</b></div>
+					<label class="mostra" title={tx.color(tx.colorDe[k])}>
+						<input
+							type="color"
+							value={colors[k] ?? colorBasa[k]}
+							oninput={(e) => (colors = { ...colors, [k]: e.currentTarget.value })}
+							aria-label={tx.color(tx.colorDe[k])}
+						/>
+					</label>
 				</div>
-			{/if}
+			{/each}
+			<div class="botons">
+				<button type="button" class="boton" onclick={sonqueContorns}>{tx.sonqueContorns}</button>
+				<button type="button" class="boton" onclick={totTornar}>{tx.totTornar}</button>
+				{#if Object.keys(colors).length}
+					<button type="button" class="boton" onclick={() => (colors = {})}>{tx.colorsTema}</button>
+				{/if}
+			</div>
 		{:else}
 			{@const f = familhas.find((x) => x.id === dobert)}
 			{#if f}
@@ -330,9 +314,11 @@
 							onclick={() => causirDial(k)}
 						><i style:background={DIAL[k]}></i>{lang === 'oc' ? oc : fr}</button>
 					{/each}
-					<button type="button" class="pastilha" aria-pressed={dialecte === 'cro'} onclick={() => causirDial('cro')}
-						><i class="cro"></i>{lang === 'oc' ? 'creissent' : 'croissant'}</button
-					>
+					{#if totas.find((x) => x.id === 'creissent')?.estat === 'disponible'}
+						<button type="button" class="pastilha" aria-pressed={dialecte === 'cro'} onclick={() => causirDial('cro')}
+							><i class="cro"></i>{lang === 'oc' ? 'creissent' : 'croissant'}</button
+						>
+					{/if}
 					{#if dialecte}
 						<button type="button" class="pastilha totes" onclick={() => (dialecte = null)}>{tx.dialecteTotes}</button>
 					{/if}
@@ -662,10 +648,7 @@
 		box-shadow: inset 0 0 0 1px var(--t-aur);
 	}
 	.fons-estelas {
-		background:
-			radial-gradient(circle at 30% 40%, #ffd47f 0 1px, transparent 2px) 0 0 / 9px 9px,
-			radial-gradient(circle at 70% 60%, #f5ead8 0 0.8px, transparent 1.6px) 0 0 / 13px 11px,
-			#1d0f0a;
+		background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 34'%3E%3Cpath d='M38 0c-3 6 4 9 0 15s-9 7-6 12 8 4 5 7' fill='none' stroke='%23f5ead8' stroke-width='.8' opacity='.8'/%3E%3Cpath d='M6 30c8-3 14 2 20-3' fill='none' stroke='%23e0612f' stroke-width='1.2' stroke-dasharray='.1 2.6' stroke-linecap='round'/%3E%3C/svg%3E") center / cover, #1d0f0a;
 	}
 	.fons-occitan {
 		background:

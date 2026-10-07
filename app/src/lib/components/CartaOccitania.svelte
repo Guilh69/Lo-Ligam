@@ -6,6 +6,7 @@
 	import { crearColaEstelas, Z_RELAIS, Z_PRECARGA } from '$lib/carta/colaEstelas.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { JACES_DONADAS } from '$lib/carta/catalogue.js';
+	import { ICONAS } from '$lib/carta/iconas.js';
 	import CercaCarta from './CercaCarta.svelte';
 
 	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
@@ -408,19 +409,30 @@
 			(perCola[cid] ??= []).push(luoc);
 		}
 
+		// Cada punt : una pastilha de veire amb l'icòna de sa jaça (Tabler Icons,
+		// MIT), de la color de la jaça ; las colors de basa venon del tèma
+		const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', festas: 'confetti', limsi: 'microphone-2' };
+		// una jaça apondida dins l'admin pren sa color de la basa
+		const estilPunt = (cid) => (colaColors[cid] && !(cid in ICONA_COLA) ? ` style="--ponch:${escapeHtml(colaColors[cid])}"` : '');
+		const iconaPunt = (cid) =>
+			L.divIcon({
+				className: 'ponch-jaça ponch-jaça-' + cid,
+				html: `<span class="ponch"${estilPunt(cid)}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[ICONA_COLA[cid] ?? 'building-arch']}</svg></span><i class="ponch-cueta"${estilPunt(cid)}></i>`,
+				// una espilla : la pastilha se ten al dessús del luòc, que son nom
+				// (a costat del ponch) demòre legible
+				iconSize: [26, 34],
+				iconAnchor: [13, 34],
+				popupAnchor: [0, -32]
+			});
 		for (const [cid, luocs] of Object.entries(perCola)) {
 			pointLayers[cid] = L.layerGroup(
-				luocs.map((lieu) =>
-					L.circleMarker([lieu.latitud, lieu.longitud], {
-						radius: 7,
-						weight: 2,
-						color: '#a5342a',
-						fillColor: colaColors[cid] ?? '#eeaf34',
-						fillOpacity: 0.9
-					}).bindPopup(
-						`<strong>${lieu.nom_oc}</strong>${lieu.descripcion_oc ? `<br>${lieu.descripcion_oc}` : ''}`
-					)
-				)
+				luocs.map((lieu) => {
+					const nom = (lang === 'fr' && lieu.nom_fr) || lieu.nom_oc;
+					const desc = (lang === 'fr' && lieu.descripcion_fr) || lieu.descripcion_oc;
+					return L.marker([lieu.latitud, lieu.longitud], { icon: iconaPunt(cid), title: nom, keyboard: true }).bindPopup(
+						`<strong>${escapeHtml(nom)}</strong>${desc ? `<br>${escapeHtml(desc)}` : ''}`
+					);
+				})
 			);
 			if (visibility[cid]) pointLayers[cid].addTo(map);
 		}
@@ -568,6 +580,51 @@
 </div>
 
 <style>
+	/* Los punts de las jaces (luòcs d'interès, librariás…) : pastilha de veire,
+	   icòna e liseret de la color de la jaça */
+	:global(.ponch-jaça) {
+		--ponch: var(--t-aur);
+		display: grid;
+		justify-items: center;
+		background: none;
+		border: 0;
+	}
+	:global(.ponch-cueta) {
+		display: block;
+		width: 1.5px;
+		height: 8px;
+		background: var(--ponch);
+	}
+	:global(.ponch-jaça-librarias) {
+		--ponch: var(--t-terra-viu);
+	}
+	:global(.ponch) {
+		display: grid;
+		place-items: center;
+		width: 26px;
+		height: 26px;
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--t-fons-2) 88%, transparent);
+		border: 1.5px solid var(--ponch);
+		color: var(--ponch);
+		box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+		transition: transform 0.2s;
+		transform-origin: 50% 100%;
+	}
+	:global(.ponch svg) {
+		width: 15px;
+		height: 15px;
+	}
+	:global(.leaflet-marker-icon:hover .ponch),
+	:global(.leaflet-marker-icon:focus-visible .ponch) {
+		transform: scale(1.12);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		:global(.ponch) {
+			transition: none;
+		}
+	}
+
 	/* L'etiqueta del dialècte survolat o causit : la meteissa que pels
 	   territòris (pintada dins lo canavàs de las estelas), en bas al centre */
 	.legenda-dial {

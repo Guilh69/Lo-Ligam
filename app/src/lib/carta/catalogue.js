@@ -1,6 +1,8 @@
-// Catalogue des jaces de donadas de la carta (2026-10-07). Las jaces valon per
-// TOTES los fonses (estelas, occitan, natural, satellit) : son pas pintadas
-// dins lo fons, mas per dessús.
+// Catalogue des jaces de donadas de la carta (2026-10-07). Lo fons de basa
+// es « Contorns » : la còsta sola, en traç fin (demanda de Romain) ; tot lo
+// rèsta es de jaces rengadas per familha. Las jaces valon per totes los fonses,
+// levat las marcadas fons: 'estelas' (vilas, noms, rius, relèu), pintadas pel
+// fons Contorns sol.
 //
 // Aquel catalògue es la basa : la carta lo mòstra quitament se Supabase
 // respond pas (projècte gratuit en pausa). La taula carta_colas (gerida dins
@@ -26,13 +28,23 @@ export const CATALOGUE = [
 			},
 			{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', estat: 'disponible', defaut: false },
 			{
+				id: 'toponimia',
+				oc: 'Noms occitans de las vilas',
+				fr: 'Noms occitans des villes',
+				estat: 'disponible',
+				defaut: true,
+				fons: 'estelas'
+			},
+			{
+				// l'ancian traçat veniá del fons de l'Atlas LISN (CC BY-NC-SA) : retirat
+				// lo 2026-10-07, en espèra d'un traçat nòstre a partir de fonts liuras
 				id: 'creissent',
 				oc: 'Lo Creissent',
 				fr: 'Le Croissant',
-				estat: 'disponible',
+				estat: 'a venir',
 				defaut: false,
-				nota_oc: "Zòna de transicion entre l'occitan e la lenga d'oïl",
-				nota_fr: "Zone de transition entre l'occitan et la langue d'oïl"
+				nota_oc: "Zòna de transicion amb la lenga d'oïl : traçat en preparacion",
+				nota_fr: "Zone de transition avec la langue d'oïl : tracé en préparation"
 			},
 			{
 				id: 'departaments',
@@ -56,6 +68,7 @@ export const CATALOGUE = [
 		oc: 'Administracion',
 		fr: 'Administration',
 		jaces: [
+			{ id: 'vilas', oc: 'Vilas e vilatges', fr: 'Villes et villages', estat: 'disponible', defaut: true, fons: 'estelas' },
 			{ id: 'regions', oc: 'Regions', fr: 'Régions', estat: 'disponible', defaut: false },
 			{ id: 'despartaments', oc: 'Despartaments', fr: 'Départements', estat: 'disponible', defaut: false },
 			{ id: 'comunas', oc: 'Comunas', fr: 'Communes', estat: 'a venir' }
@@ -87,12 +100,19 @@ export const CATALOGUE = [
 		oc: 'Natura',
 		fr: 'Nature',
 		jaces: [
+			{ id: 'rius', oc: 'Rius', fr: 'Rivières', estat: 'disponible', defaut: true, fons: 'estelas' },
+			{ id: 'nomsRius', oc: 'Noms dels rius', fr: 'Noms des rivières', estat: 'disponible', defaut: true, fons: 'estelas' },
+			{ id: 'corbas', oc: 'Relèu', fr: 'Relief', estat: 'disponible', defaut: true, fons: 'estelas', nota_oc: 'Corbas de nivèl', nota_fr: 'Courbes de niveau' },
 			{ id: 'parcs', oc: 'Parcs naturals', fr: 'Parcs naturels', estat: 'a venir' },
 			{ id: 'massis', oc: 'Massís e montanhas', fr: 'Massifs et montagnes', estat: 'a venir' },
 			{ id: 'bacins', oc: 'Bacins dels rius', fr: 'Bassins des rivières', estat: 'a venir' }
 		]
 	}
 ];
+
+// Las jaces pintadas pel fons « Contorns » (colaEstelas.js) : son pas pintadas
+// sus los autres fonses (las tuèlas an las lors). Jaça → element del fons.
+export const JACES_FONS = { vilas: 'estelas', toponimia: 'nomsVilas', rius: 'rius', nomsRius: 'nomsRius', corbas: 'corbas' };
 
 // Las jaces que pinta la còla de donadas (colaDonadas.js) ; las autras son de
 // jaces Leaflet (punts e zònas de la basa)

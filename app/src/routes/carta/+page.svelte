@@ -12,7 +12,7 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { CATALOGUE, fusionarCatalogue } from '$lib/carta/catalogue.js';
+	import { CATALOGUE, fusionarCatalogue, JACES_FONS } from '$lib/carta/catalogue.js';
 
 	let lang = $derived(langStore.current);
 
@@ -60,7 +60,11 @@
 
 	let showInfo = $state(false);
 	// elements e colors del fons, dialècte causit (rail de las jaces)
-	let elements = $state({});
+	// los elements del fons Contorns seguisson lors jaces (vilas, noms, rius…)
+	const elements = $derived({
+		...Object.fromEntries(Object.entries(JACES_FONS).map(([jaça, el]) => [el, !!layerVisibility[jaça]])),
+		costa: true
+	});
 	let colors = $state({});
 	let dialecte = $state(null);
 	// Par défaut, la carte en étoiles de l'accueil (2026-10-07) : la carte
@@ -149,7 +153,6 @@
 			{familhas}
 			bind:visibility={layerVisibility}
 			bind:baseLayer
-			bind:elements
 			bind:colors
 			bind:dialecte
 			clar={ambianca.clar}
