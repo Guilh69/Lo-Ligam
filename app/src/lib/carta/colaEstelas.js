@@ -13,7 +13,7 @@
 // (scintillement, survol), recalé à chaque fin de déplacement, et mis à
 // l'échelle par transformation CSS pendant l'animation de zoom (même méthode
 // que le moteur de rendu canevas de Leaflet).
-import { LUOCS, RIUS, COSTA, dialDe } from '$lib/acuelh/carta-estelas.js';
+import { LUOCS, RIUS, COSTA, dialDe, rencDe } from '$lib/acuelh/carta-estelas.js';
 import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
 import { VILAS_FICHAS } from './vilasFichas.js';
 
@@ -205,7 +205,7 @@ function plaçar(cx, vilas, rius) {
 		}
 		if (mendre >= 100) return; // pas de place : le nom reste visible au survol
 		metre(c.b, 5, 'etiqueta');
-		res.vilas.push({ nom: v.nom, x: c.x, y: c.y, al: c.al, f: v.f, ciutat: v.ciutat });
+		res.vilas.push({ nom: v.nom, x: c.x, y: c.y, al: c.al, f: v.f, ciutat: v.ciutat, renc: v.renc });
 	};
 	for (const v of vilas) if (v.ciutat) pausarVila(v);
 
@@ -340,7 +340,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._fichas = VILAS_FICHAS.map((v) => ({ ...v, X: 0, Y: 0 }));
 			this._calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 			this._estelas = LUOCS.map(([lon, lat, nom, vila, dia]) => ({
-				lon, lat, nom, vila, dia,
+				lon, lat, nom, vila, dia, renc: rencDe(nom),
 				r: aleat(0.5, 1.4), f: aleat(0, 6.28), v: aleat(0.2, 0.7), retard: aleat(0, 0.35),
 				sx: Math.random(), sy: Math.random(), X: 0, Y: 0
 			}));
@@ -469,14 +469,17 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 
 		_plaçarTot(z) {
+			// Trois niveaux de noms : métropoles bien marquées, une ville repère
+			// par département, puis les autres lieux en retrait (à l'approche)
 			const telefon = this._map.getSize().x <= 700;
-			const fv = telefon ? 10.5 : 12;
+			const talhas = telefon ? { 1: 14, 2: 10.5, 3: 9 } : { 1: 17, 2: 11.5, 3: 9.5 };
 			const vilas = this._estelas
-				.filter((e) => e.vila)
-				.sort((a, b) => rang(a.nom) - rang(b.nom))
-				.map((e) => ({ nom: e.nom, x: e.X, y: e.Y, f: fv, ciutat: true }));
+				.filter((e) => e.renc <= 2)
+				.sort((a, b) => a.renc - b.renc || rang(a.nom) - rang(b.nom))
+				.map((e) => ({ nom: e.nom, x: e.X, y: e.Y, f: talhas[e.renc], ciutat: true, renc: e.renc }));
 			if (z >= Z_VILATGES)
-				for (const e of this._estelas) if (!e.vila) vilas.push({ nom: e.nom, x: e.X, y: e.Y, f: fv - 1.5, ciutat: false });
+				for (const e of this._estelas)
+					if (e.renc === 3) vilas.push({ nom: e.nom, x: e.X, y: e.Y, f: talhas[3], ciutat: false, renc: 3 });
 			return plaçar(this._cx, vilas, this._rius);
 		},
 
@@ -524,8 +527,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			g.fillStyle = T.vilaTèxt;
 			for (const v of this._plaçament.vilas) {
 				if (!dins(v.x, v.y) || (p && v.nom === p.nom)) continue;
-				g.font = '700 ' + v.f + 'px Luciole, sans-serif';
-				g.lineWidth = v.f < 11 ? 3 : 4;
+				g.font = (v.renc === 3 ? '400 ' : '700 ') + v.f + 'px Luciole, sans-serif';
+				g.lineWidth = v.renc === 3 ? 2.5 : v.renc === 1 ? 4.5 : 3.5;
 				// distance du lieu survolé au TEXTE (sa boîte), pas à son point d'ancrage
 				let aprèp = false;
 				if (p) {
@@ -535,7 +538,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						dy = Math.max(v.y - v.f - p.Y, 0, p.Y - v.y);
 					aprèp = Math.hypot(dx, dy) < ray;
 				}
-				g.globalAlpha = (v.ciutat ? 1 : 0.82) * (aprèp ? 0.12 : 1);
+				g.globalAlpha = (v.renc === 1 ? 1 : v.renc === 2 ? 0.85 : 0.55) * (aprèp ? 0.12 : 1);
 				g.textAlign = v.al;
 				g.strokeText(v.nom, v.x, v.y);
 				g.fillText(v.nom, v.x, v.y);
@@ -569,7 +572,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				bestD = Infinity;
 			for (const e of this._estelas) {
 				const d = Math.hypot(e.X - this._o.x - x, e.Y - this._o.y - y);
-				const sc = d - (e.vila ? bonus : 0);
+				const sc = d - (e.renc === 1 ? bonus * 1.3 : e.renc === 2 ? bonus : 0);
 				if (d < ray && sc < bestD) {
 					best = e;
 					bestD = sc;
@@ -752,9 +755,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				const x = lerp(e.sx * W, e.X - o.x, ai),
 					y = lerp(e.sy * H, e.Y - o.y, ai);
 				if (x < -10 || y < -10 || x > W + 10 || y > H + 10) continue;
-				cx.globalAlpha = lerp(0.18 + 0.27 * tw, e.vila ? 1 : 0.55 + 0.35 * tw, ai) * aGen;
+				cx.globalAlpha = lerp(0.18 + 0.27 * tw, e.renc <= 2 ? 1 : 0.45 + 0.3 * tw, ai) * aGen;
 				cx.beginPath();
-				cx.arc(x, y, lerp(e.r, e.vila ? 2.8 : 1.35, ai) * gros, 0, 6.283);
+				cx.arc(x, y, lerp(e.r, e.renc === 1 ? 3.4 : e.renc === 2 ? 2.4 : 1.3, ai) * gros, 0, 6.283);
 				cx.fill();
 			}
 
