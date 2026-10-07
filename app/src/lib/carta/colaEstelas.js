@@ -18,9 +18,9 @@ import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
 import { VILAS_FICHAS } from './vilasFichas.js';
 
 // Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam sus un disc sorne
-// liserat d'aur, amb una pastilha « ? » (i a quicòm de saber aicí) e una onda
-// que s'espandís doçament, coma un ponch d'interès de descobrir (retorn de
-// Romain 2026-10-07)
+// liserat d'aur, e una onda que s'espandís doçament, coma un ponch d'interès
+// de descobrir. (La pastilha « ? » roja fasiá pensar a una error : levada,
+// retorn de Romain 2026-10-07 ; a la primièra vesita, una bulla d'ajuda.)
 function dessenharRepèr(cx, x, y, R, T, a, onda) {
 	cx.save();
 	if (onda >= 0) {
@@ -62,37 +62,21 @@ function dessenharRepèr(cx, x, y, R, T, a, onda) {
 		cx.fill();
 	});
 	cx.restore();
-	// La pastilha « ? », en naut a drecha del disc
-	const bx = x + R * 1.2,
-		by = y - R * 1.15,
-		br = R * 0.66;
-	cx.fillStyle = T.alerta;
-	cx.strokeStyle = T.bulla;
-	cx.lineWidth = 1.5;
-	cx.beginPath();
-	cx.arc(bx, by, br, 0, 6.283);
-	cx.fill();
-	cx.stroke();
-	cx.fillStyle = '#fff';
-	cx.font = '700 ' + Math.round(br * 1.45) + 'px Luciole, sans-serif';
-	cx.textAlign = 'center';
-	cx.textBaseline = 'middle';
-	cx.fillText('?', bx, by + 0.5);
 	cx.restore();
 }
 
 const TÈXTES_FICHA = {
-	oc: { dobrir: 'Descobrir la vila  →', leu: 'Lèu' },
-	fr: { dobrir: 'Découvrir la ville  →', leu: 'Bientôt' }
+	oc: { dobrir: 'Descobrir la vila  →', leu: 'Lèu', ajuda: 'Clicatz per descobrir la vila' },
+	fr: { dobrir: 'Découvrir la ville  →', leu: 'Bientôt', ajuda: 'Cliquez pour découvrir la ville' }
 };
 
 const TEMAS = {
-	sorne: { alerta: '#e0612f', costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
-	clar: { alerta: '#b53d17', costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
+	sorne: { corba: 'rgba(238, 175, 52, 1)', costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
+	clar: { corba: 'rgba(138, 90, 43, 1)', costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
-	...(dalt ? (clar ? { riu: '#1f5f8f', riuTèxt: '#174a72', alerta: '#1f5f8f' } : { riu: '#6fb1ff', riuTèxt: '#a9d0ff', alerta: '#2f6fb0' }) : {})
+	...(dalt ? (clar ? { riu: '#1f5f8f', riuTèxt: '#174a72' } : { riu: '#6fb1ff', riuTèxt: '#a9d0ff' }) : {})
 });
 
 // Montpelhièr d'abord (demande Romain) ; si une ville doit céder sa place, ce
@@ -323,6 +307,21 @@ function plaçar(cx, vilas, rius) {
 	return res;
 }
 
+// Courbes de niveau (Mapzen Terrarium, données ouvertes ; gdal_contour tous
+// les 200 m, simplifiées à 600 m) : [[altitude, [[lon, lat], …]], …], 61 Ko
+// compressés, chargées seulement avec la carte.
+let corbasPromesa = null;
+const cargarCorbas = () =>
+	(corbasPromesa ??= fetch('/data/corbas-nivel.json')
+		.then((r) => (r.ok ? r.json() : []))
+		// une ligne mal formée est ignorée plutôt que de bloquer toute la carte
+		.then((d) => d.filter(([e, l]) => typeof e === 'number' && Array.isArray(l) && l.length > 1 && typeof l[0][0] === 'number'))
+		.catch(() => []));
+// Une courbe tous les 1 000 m en vue d'ensemble (sinon les Alpes font une
+// tache), tous les 400 m en s'approchant, tous les 200 m de près
+const pasCorbas = (z) => (z < 6.75 ? 1000 : z < 7.75 ? 400 : 200);
+const CLAU_AJUDA = 'lo-ligam-carta-ajuda-repèr';
+
 /* ---------- La couche ---------- */
 export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null } = {}) {
 	const Cola = L.Layer.extend({
@@ -360,6 +359,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._pus = null;
 			this._zP = null;
 			this._update();
+			cargarCorbas().then((c) => {
+				this._corbasGeo = c;
+				this._zP = null;
+				this._update();
+			});
 			// Les noms de rivières sont en Cormorant : on attend la police pour les placer
 			document.fonts?.load('italic 500 16px "Cormorant Garamond"').then(() => {
 				this._zP = null;
@@ -445,6 +449,13 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					v.X = q.x;
 					v.Y = q.y;
 				}
+				this._corbas = (this._corbasGeo || []).map(([e, l]) => [
+					e,
+					l.map(([lon, lat]) => {
+						const q = map.project([lat, lon], z);
+						return [q.x, q.y];
+					})
+				]);
 				this._costa = COSTA.map((l) =>
 					l.map(([lon, lat]) => {
 						const q = map.project([lat, lon], z);
@@ -590,7 +601,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		_onMirga(e) {
 			if (e.originalEvent?.pointerType === 'touch') return;
 			const f = this._fichaA(e.layerPoint);
-			this._fichaPus = f;
+			// la bulle d'aide (ou touchée) reste ses quelques secondes, même si la
+			// souris bouge ailleurs
+			if (f || !this._fichaDet) this._fichaPus = f;
 			if (f) {
 				if (this._pus) {
 					this._pus = null;
@@ -674,6 +687,26 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				aEtiq = aNoms(z);
 			const gros = 1 + Math.max(0, z - 7) * 0.14;
 
+			// Le relief : courbes de niveau très discrètes, les maîtresses
+			// (tous les 1 000 m) un peu plus marquées
+			const aCorbas = clamp((intro - 0.35) / 0.5) * aRius;
+			if (aCorbas > 0.01 && this._corbas?.length) {
+				const pas = pasCorbas(z);
+				cx.strokeStyle = T.corba;
+				cx.lineJoin = 'round';
+				for (const mestra of [false, true]) {
+					cx.globalAlpha = aCorbas * (mestra ? 0.3 : 0.13);
+					cx.lineWidth = mestra ? 0.8 : 0.6;
+					cx.beginPath();
+					for (const [e, l] of this._corbas) {
+						if (e % pas || (e % 1000 === 0) !== mestra) continue;
+						cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
+						for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
+					}
+					cx.stroke();
+				}
+			}
+
 			// Le trait de côte : un fil très fin qui structure la carte, posé
 			// avant les rivières ; la carte détaillée a le sien, il s'efface avec elle
 			const aCosta = clamp((intro - 0.25) / 0.5) * aRius;
@@ -740,15 +773,48 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					dessenharRepèr(cx, p.x, p.y, p.R * (v === this._fichaPus ? 1.12 : 1), T, aF, onda);
 				}
 			}
+			// Première rencontre avec un repère : la bulle s'ouvre d'elle-même
+			// quelques secondes pour dire qu'on peut cliquer (une seule fois)
+			if (aF > 0.6 && !this._ajudaVista) {
+				if (this._ajudaDeja === undefined) {
+					try {
+						this._ajudaDeja = localStorage.getItem(CLAU_AJUDA) === '1';
+					} catch {
+						this._ajudaDeja = false;
+					}
+				}
+				const s = this._map.getSize();
+				const v = this._ajudaDeja
+					? null
+					: this._fichas.find((u) => {
+							const p = this._posFicha(u);
+							const c = this._map.layerPointToContainerPoint([p.x + this._min.x, p.y + this._min.y]);
+							return c.x > 0 && c.y > 80 && c.x < s.x - 200 && c.y < s.y;
+						});
+				if (this._ajudaDeja) this._ajudaVista = true;
+				else if (v) {
+					this._ajudaVista = true;
+					try {
+						localStorage.setItem(CLAU_AJUDA, '1');
+					} catch {
+						// stockage indisponible : l'aide reviendra à la prochaine visite
+					}
+					this._fichaPus = v;
+					this._fichaDet = true;
+					this._ajuda = true;
+					this._fichaTòc = performance.now() + 3000;
+				}
+			}
 			if (this._fichaDet && performance.now() - this._fichaTòc > 4000) {
 				this._fichaDet = false;
 				this._fichaPus = null;
+				this._ajuda = false;
 			}
 			const fp = aF > 0.3 ? this._fichaPus : null;
 			if (fp) {
 				const p = this._posFicha(fp),
 					tx = TÈXTES_FICHA[this._lang] ?? TÈXTES_FICHA.oc;
-				const acc = fp.ligam ? tx.dobrir : tx.leu;
+				const acc = this._ajuda ? tx.ajuda : fp.ligam ? tx.dobrir : tx.leu;
 				cx.font = 'italic 500 21px ' + CORMORANT;
 				const wn = cx.measureText(fp.nom).width;
 				cx.font = '700 11px Luciole, sans-serif';
