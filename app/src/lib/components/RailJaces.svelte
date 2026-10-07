@@ -26,7 +26,7 @@
 		oc: {
 			rail: 'Jaces de la carta',
 			sons: (on) => (on ? 'Sons de la carta : alucats' : 'Sons de la carta : amudits'),
-			desplaçar: 'Desplaçar lo panèl (las sagetas tanben ; doble clic : tornar a sa plaça)',
+			desplaçar: 'Desplaçar lo panèl (las sagetas tanben ; doble clic o tòca Origina : tornar a sa plaça)',
 			reduire: 'Reduire lo panèl',
 			enBas: 'Metre lo panèl en bas, a l’orizontala',
 			costat: 'Metre lo panèl sul costat',
@@ -60,7 +60,7 @@
 		fr: {
 			rail: 'Couches de la carte',
 			sons: (on) => (on ? 'Sons de la carte : activés' : 'Sons de la carte : coupés'),
-			desplaçar: 'Déplacer le panneau (flèches aussi ; double-clic : le remettre en place)',
+			desplaçar: 'Déplacer le panneau (flèches aussi ; double-clic ou touche Origine : le remettre en place)',
 			reduire: 'Réduire le panneau',
 			enBas: 'Mettre le panneau en bas, à l’horizontale',
 			costat: 'Mettre le panneau sur le côté',
@@ -163,12 +163,33 @@
 		dobert = dobert === id ? null : id;
 		if (dobert) plaçarTirador();
 	};
+	// en tampant un tirador, lo focus torna al boton del rail que l'aviá
+	// dobèrt (al clavièr, se perdiá al començament de la pagina)
+	let botons = $state({});
+	async function tamparTirador() {
+		const id = dobert;
+		dobert = null;
+		await tick();
+		botons[id]?.focus();
+	}
 
 	// Lo rail se pòt desplaçar (una encòca per lo prene) e reduire (retorn de
 	// Romain) ; per defaut a mièg nautor, pus luènh del capçal. Sa plaça e son
 	// estat demòran d'una visita a l'autra, sus aqueste navigador sonque.
 	const CLAU_RAIL = 'lo-ligam-carta-rail';
 	const clampR = (v, a, b) => Math.max(a, Math.min(b, v));
+	// lo bas del capçal (variabla --cap-bas de la pagina) : lo rail e los
+	// tiradors demòran dejós, ont se pòdon totjorn prene
+	const capBas = (p) => parseFloat(getComputedStyle(p).getPropertyValue('--cap-bas')) || 0;
+	function borner(pos) {
+		const p = railEl?.offsetParent;
+		if (!p || !pos) return pos;
+		const pr = p.getBoundingClientRect();
+		return {
+			x: clampR(pos.x, 8, pr.width - railEl.offsetWidth - 8),
+			y: clampR(pos.y, capBas(p) + 8, pr.height - railEl.offsetHeight - 8)
+		};
+	}
 	let railEl = $state(null);
 	let railPos = $state(null); // { x, y } en px dins la carta ; null = plaça per defaut
 	let reduch = $state(false);
@@ -191,6 +212,20 @@
 	$effect(() => {
 		const o = orizontal;
 		railEl?.offsetParent?.classList.toggle('jaces-orizontalas', o);
+	});
+	// la plaça gardada es tornada borner a la talha de la fenèstra (una
+	// fenèstra mai pichona podiá l'amagar)
+	$effect(() => {
+		const p = railEl?.offsetParent;
+		if (!p) return;
+		const ro = new ResizeObserver(() => {
+			// (sonque pel panèl vertical d'un ecran larg : en bas, la plaça gardada
+			// servís pas e se deu pas tocar)
+			if (railPos && !orizontal && p.clientWidth > 600) railPos = borner(railPos);
+			if (dobert) plaçarTirador();
+		});
+		ro.observe(p);
+		return () => ro.disconnect();
 	});
 	const gardarRail = () => {
 		try {
@@ -218,7 +253,8 @@
 			return;
 		}
 		const drecha = x + r.width / 2 > pr.width / 2;
-		const top = clampR(y, 8, Math.max(8, pr.height - 420));
+		const naut = capBas(p) + 8;
+		const top = clampR(y, naut, Math.max(naut, pr.height - 420));
 		posT = { x: drecha ? x - larg - 12 : x + r.width + 12, y: top, h: pr.height - top - 16 };
 	}
 	function prene(e) {
@@ -230,10 +266,7 @@
 	function tirar(e) {
 		if (!tiratge) return;
 		const { dx, dy, pr } = tiratge;
-		railPos = {
-			x: clampR(e.clientX - pr.left - dx, 8, pr.width - railEl.offsetWidth - 8),
-			y: clampR(e.clientY - pr.top - dy, 8, pr.height - railEl.offsetHeight - 8)
-		};
+		railPos = borner({ x: e.clientX - pr.left - dx, y: e.clientY - pr.top - dy });
 		if (dobert) plaçarTirador();
 	}
 	function daissar() {
@@ -243,15 +276,16 @@
 	}
 	// al clavièr : las sagetas desplaçan lo rail
 	function clavièrEncòca(e) {
+		if (e.key === 'Home') {
+			e.preventDefault();
+			return railPerDefaut();
+		}
 		const d = { ArrowLeft: [-20, 0], ArrowRight: [20, 0], ArrowUp: [0, -20], ArrowDown: [0, 20] }[e.key];
 		if (!d || !railEl?.offsetParent) return;
 		e.preventDefault();
 		const r = railEl.getBoundingClientRect(),
 			pr = railEl.offsetParent.getBoundingClientRect();
-		railPos = {
-			x: clampR(r.left - pr.left + d[0], 8, pr.width - r.width - 8),
-			y: clampR(r.top - pr.top + d[1], 8, pr.height - r.height - 8)
-		};
+		railPos = borner({ x: r.left - pr.left + d[0], y: r.top - pr.top + d[1] });
 		gardarRail();
 		if (dobert) plaçarTirador();
 	}
@@ -439,7 +473,10 @@
 			}
 			return;
 		}
-		if (e.key === 'Escape' && dobert) dobert = null;
+		if (e.key === 'Escape' && dobert) {
+			if (document.getElementById('tirador-jaces')?.contains(document.activeElement)) tamparTirador();
+			else dobert = null;
+		}
 	}
 </script>
 
@@ -488,6 +525,7 @@
 		<button
 			type="button"
 			class="rail-b"
+			bind:this={botons[id]}
 			aria-expanded={dobert === id}
 			aria-controls="tirador-jaces"
 			onclick={() => alternar(id)}
@@ -502,7 +540,7 @@
 		</button>
 	{/each}
 	<span class="rail-sep" aria-hidden="true"></span>
-	<button type="button" class="rail-b" aria-expanded={dobert === 'fons'} aria-controls="tirador-jaces" onclick={() => alternar('fons')}>
+	<button type="button" class="rail-b" bind:this={botons.fons} aria-expanded={dobert === 'fons'} aria-controls="tirador-jaces" onclick={() => alternar('fons')}>
 		<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC.fons}</svg>
 		<span class="lib">{tx.fons}</span>
 	</button>
@@ -522,7 +560,7 @@
 	>
 		<header>
 			<h2>{nomFam(dobert)}</h2>
-			<button type="button" class="tampar" onclick={() => (dobert = null)} aria-label={tx.tampar}>×</button>
+			<button type="button" class="tampar" onclick={tamparTirador} aria-label={tx.tampar}>×</button>
 		</header>
 
 		{#if dobert === 'sus'}

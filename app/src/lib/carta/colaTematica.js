@@ -298,6 +298,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		},
 		onRemove() {
 			cancelAnimationFrame(this._raf);
+			cancelAnimationFrame(this._rafIntro);
 			for (const f of this._fontsMesas ?? []) this._map?.attributionControl?.removeAttribution(f);
 			this._fontsMesas = null;
 			L.DomUtil.remove(this._cv);
@@ -324,6 +325,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		},
 		setTema(c) {
 			this._tem = c ? TEMAS.clar : TEMAS.sorne;
+			// las etiquetas de las províncias pòrtan la color del tèma
+			this._etiCache = null;
 			this._pintar();
 		},
 		// L'entrada en scèna : los noms de las cadenas apareisson aprèp las

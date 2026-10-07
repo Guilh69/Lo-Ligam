@@ -1,6 +1,7 @@
-// Sons de la carta : discrets, fabricats pel navegador (cap de fichièr a
-// telecargar), e desactivables (interruptor dins lo tirador « Fons »,
-// memorizat sus aqueste navegador).
+// Sons de la carta : discrets, fabricats pel navegador o tirats de dos
+// enregistraments liures (CC0 : static/sons/, veire FONTS.md), e
+// desactivables (interruptor dins lo tirador « Fons », memorizat sus
+// aqueste navegador).
 
 const CLAU_SONS = 'lo-ligam-carta-sons';
 let ctx = null;
@@ -117,6 +118,10 @@ export function sonsEntrada() {
 			g.gain.linearRampToValueAtTime(0.018, t + 0.06);
 			// la man que tremola : lo frec monta e davala doçament
 			for (let u = 0.06; u < 4; u += 0.05) g.gain.setTargetAtTime(0.011 + Math.random() * 0.012, t + u, 0.02);
+			// seguretat : se lo dessenh dona pas lo senhal de fin, lo gredon se
+			// tai sol aprèp 4 s (la còsta se traça en mens d'una segonda e mièja)
+			g.gain.setTargetAtTime(0.0001, t + 4, 0.1);
+			f.stop(t + 4.6);
 			f.connect(hp).connect(bp).connect(lp).connect(g);
 			sortida(g);
 			gredon = { f, g };
@@ -124,7 +129,11 @@ export function sonsEntrada() {
 			gredon.g.gain.cancelScheduledValues(t);
 			gredon.g.gain.setTargetAtTime(0.0001, t, 0.04);
 			const f = gredon.f;
-			setTimeout(() => f.stop(), 400);
+			setTimeout(() => {
+				try {
+					f.stop();
+				} catch {}
+			}, 400);
 			gredon = null;
 		}
 	}

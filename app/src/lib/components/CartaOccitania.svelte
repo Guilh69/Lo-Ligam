@@ -40,7 +40,7 @@
 			url: 'https://tile.openstreetmap.bzh/oc/{z}/{x}/{y}.png',
 			maxZoom: 17,
 			attribution:
-				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · rendu per <a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener">OpenStreetMap e occitan</a>'
+				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · realizat per <a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener">OpenStreetMap e occitan</a>'
 		},
 		// Relèu : OpenTopoMap, projècte alemand, servidors en Alemanha.
 		// Remplaça CAWM (University of Iowa, Estats Units).
@@ -62,7 +62,7 @@
 			url: 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg',
 			maxZoom: 15,
 			attribution:
-				'Sentinel-2 cloudless (<a href="https://s2maps.eu" target="_blank" rel="noopener">s2maps.eu</a>) per <a href="https://eox.at" target="_blank" rel="noopener">EOX</a> — donadas <a href="https://www.esa.int" target="_blank" rel="noopener">ESA</a> Copernicus'
+				'Sentinel-2 cloudless (<a href="https://s2maps.eu" target="_blank" rel="noopener">s2maps.eu</a>) per <a href="https://eox.at" target="_blank" rel="noopener">EOX</a> · donadas <a href="https://www.esa.int" target="_blank" rel="noopener">ESA</a> Copernicus'
 		}
 	};
 
@@ -108,6 +108,29 @@
 
 	let mapEl;
 	let map;
+	// Los tèxtes de Leaflet (botons de zoom, boton que tampa las bulles) dins
+	// la lenga de la pagina : Leaflet los a en anglés (occitan de validar)
+	const TÈXTES_LEAFLET = {
+		oc: { mai: 'Apropar', mens: 'Alunhar', tampar: 'Tampar', carta: "Carta de l'occitan" },
+		fr: { mai: 'Zoom avant', mens: 'Zoom arrière', tampar: 'Fermer', carta: "Carte de l'occitan" }
+	};
+	function tèxtesLeaflet() {
+		if (!map) return;
+		const t = TÈXTES_LEAFLET[lang] ?? TÈXTES_LEAFLET.oc,
+			c = map.getContainer();
+		c.setAttribute('aria-label', t.carta);
+		for (const [sel, tx] of [
+			['.leaflet-control-zoom-in', t.mai],
+			['.leaflet-control-zoom-out', t.mens],
+			['.leaflet-popup-close-button', t.tampar]
+		])
+			for (const b of c.querySelectorAll(sel)) {
+				b.title = tx;
+				b.setAttribute('aria-label', tx);
+			}
+	}
+	// arrèst de l'entrada en scèna (sons, escotas) quand se quita la pagina
+	let quitarIntro = null;
 	let L;
 	let pointLayers = {};
 	let geoLayers = {};
@@ -478,8 +501,19 @@
 			colaEstelas?.setSons(null);
 			for (const c of [colaEstelas, colaDonadas, colaTematica]) c?.acabarIntro();
 			for (const ev of escotas) window.removeEventListener(ev, acabarIntro, true);
+			document.removeEventListener('visibilitychange', amagada);
 		};
+		// un onglet amagat suspend lo dessenh mas pas los sons : l'entrada en
+		// scèna va a la fin
+		const amagada = () => document.hidden && acabarIntro();
+		document.addEventListener('visibilitychange', amagada);
 		for (const ev of escotas) window.addEventListener(ev, acabarIntro, true);
+		quitarIntro = () => {
+			acabada = true;
+			sons?.copar();
+			for (const ev of escotas) window.removeEventListener(ev, acabarIntro, true);
+			document.removeEventListener('visibilitychange', amagada);
+		};
 		Promise.race([
 			Promise.all([colaEstelas?.prèsta(), colaDonadas.prèsta()]),
 			new Promise((r) => setTimeout(r, 4000))
@@ -506,6 +540,9 @@
 		if (ambToponims(baseLayer)) loadToponymsLayer();
 
 		L.control.zoom({ position: 'bottomright' }).addTo(map);
+		map.attributionControl?.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
+		tèxtesLeaflet();
+		map.on('popupopen', tèxtesLeaflet);
 		// Échelle : Leaflet n'arrondit qu'à 1, 2, 3 ou 5, si bien que deux crans
 		// de zoom affichaient le même « 50 km » (retour de Romain). Des paliers
 		// intermédiaires la font changer à chaque cran ; virgule à la française.
@@ -640,6 +677,7 @@
 		colaEstelas?.setLenga(l);
 		colaDonadas?.setLenga(l);
 		colaTematica?.setLenga(l);
+		tèxtesLeaflet();
 	});
 	// Elements e colors del fons, dialècte causit dempuèi lo panèl
 	$effect(() => {
@@ -677,6 +715,7 @@
 	}
 
 	onDestroy(() => {
+		quitarIntro?.();
 		map?.remove();
 	});
 </script>
@@ -780,23 +819,30 @@
 		bottom: calc(62px + var(--barra-bas, 0px));
 		transform: translateX(-50%);
 		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
 		align-items: center;
-		gap: 10px;
-		height: 34px;
-		padding: 0 18px;
+		gap: 4px 10px;
+		/* (los noms longs e las causidas multiplas passan a la linha en
+		   demorant dins l'ecran) */
+		width: max-content;
+		max-width: calc(100% - 2rem);
+		min-height: 34px;
+		padding: 7px 18px;
+		box-sizing: border-box;
 		border-radius: 17px;
+		text-align: center;
 		border: 1px solid color-mix(in srgb, var(--t-tinta) 70%, transparent);
 		background: color-mix(in srgb, var(--t-fons-2) 94%, transparent);
 		color: var(--t-tinta);
 		pointer-events: none;
-		white-space: nowrap;
 		animation: legenda-dial 0.25s ease-out;
 	}
 	.legenda-dial.fixada {
 		border-color: var(--t-aur);
 	}
 	.legenda-dial .nom {
-		font: 700 12.5px/1 var(--font-body);
+		font: 700 12.5px/1.35 var(--font-body);
 		letter-spacing: 2.5px;
 		text-transform: uppercase;
 	}

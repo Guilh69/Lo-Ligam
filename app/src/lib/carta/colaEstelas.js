@@ -494,7 +494,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			padding: 0.3,
 			// Sources de la couche, affichées avec les crédits de la carte
 			attribution:
-				'Rius e còsta : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · noms : © OpenStreetMap'
+				'Rius, còsta e païses : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · corbas de nivèl : d’aprèp <a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" target="_blank" rel="noopener">Mapzen Terrain Tiles</a> (Copernicus EU-DEM, USGS, NOAA) · noms : © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a>'
 		},
 
 		initialize() {
@@ -603,7 +603,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		// Elements del fons visibles ({ estelas, nomsVilas, rius, nomsRius, corbas, costa })
 		setElements(el) {
 			this._el = { ...this._el, ...el };
-			this._construirEtiquetas();
+			// los noms de rius e las vilas jògan sul plaçament dels noms (e sus
+			// las bóstias que las autras còlas evitan) : tot es tornat plaçar
+			this._zP = null;
+			this._caixas = null;
+			this._update();
 		},
 		// Colors causidas per l'internauta ({ riu, costa, estela, corba }) : per
 		// dessús del tèma ; una valor nulla torna a la del tèma
@@ -902,7 +906,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		   puis simplement recopiés à chaque image (pas des centaines de textes
 		   tournés à redessiner en continu) */
 		_construirEtiquetas() {
-			if (!this._W || !this._plaçament) return;
+			// (la còla pòt èsser levada de la carta : un autre fons es actiu ; son
+			// estat es gardat e servirà quand tornarà)
+			if (!this._map || !this._W || !this._plaçament) return;
 			const c = this._etiq,
 				g = c.getContext('2d'),
 				T = this._tem,
@@ -1259,7 +1265,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// elle. À l'arrivée, il se trace comme un trait de plume.
 			const fCosta = easeIO(fase(INTRO.costa));
 			// lo gredon : del primièr tròç de còsta al darrièr
-			if (this._sons && ti < 99) {
+			// (l'arrèst se fa quin que siá ti : un onglet amagat suspend lo dessenh,
+			// pas lo son)
+			if (this._sons) {
 				if (fCosta > 0 && fCosta < 1 && !this._sCosta) (this._sCosta = 1), this._sons.crayon(true);
 				else if (fCosta >= 1 && this._sCosta === 1) (this._sCosta = 2), this._sons.crayon(false);
 			}

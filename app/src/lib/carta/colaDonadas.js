@@ -66,7 +66,7 @@ export function crearColaDonadas(
 			attribution:
 				// « Carte linguistique de l'Occitanie », CIRDÒC – Institut occitan de
 				// cultura, Licence Ouverte (verificat lo 2026-10-07) : citar la font
-				`Lenga e dialèctes : d'aprèp <a href="https://www.occitanica.eu/items/show/21242" target="_blank" rel="noopener">CIRDÒC – Occitanica</a> (Licéncia dobèrta) · Creissent : d'aprèp Tourtoulon e Bringuier (1876)`
+				`Lenga e dialèctes : d'aprèp <a href="https://www.occitanica.eu/items/show/21242" target="_blank" rel="noopener">CIRDÒC – Occitanica</a> (Licéncia dobèrta) · Creissent : d'aprèp Tourtoulon e Bringuier (1876) · Aran e valadas : © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL) · regions e despartaments : IGN e INSEE via <a href="https://github.com/gregoiredavid/france-geojson" target="_blank" rel="noopener">france-geojson</a> (Licéncia dobèrta)`
 		},
 
 		initialize() {
@@ -113,6 +113,7 @@ export function crearColaDonadas(
 
 		onRemove() {
 			cancelAnimationFrame(this._raf);
+			cancelAnimationFrame(this._rafIntro);
 			L.DomUtil.remove(this._cv);
 		},
 
