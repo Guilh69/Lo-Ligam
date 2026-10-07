@@ -8,6 +8,11 @@
 > **Rituel** : toute conversation l'OUVRE en début de séance et le MET À JOUR
 > en fin de séance. Une conversation = un chantier. Les décisions vont au
 > §11 du cahier des charges ; ici, seulement l'état et la prochaine action.
+>
+> **Dernier point d'étape : `BILAN-2026-10-08.md`** (révision complète de la
+> carte et du site, nuit du 7 au 8 octobre : 52 corrections, 94 constats
+> restants, ce que Romain peut faire seul, ce qui concerne chaque
+> conversation). À lire avant de reprendre un chantier.
 
 ## La photo du projet (2026-09-18)
 
@@ -50,10 +55,11 @@ photos.
 | 6 | **Refonte de /aprene en « Camin »** | à faire | Construire le sommaire du cursus avec la frise du chemin (essai → Modul 0 → A1) et les 4 modules de l'unité 1 visibles | Claude |
 | 7 | **Transposition Racine² sur le site** | à faire | Coder le premier lot : ligne de promesse + ancre héros, pages A prepaus + Contacte, FAQ accordéon, kit de fluidité | Claude |
 | 8 | **Photos « sang e aur »** | bloqué | Romain inventorie ses photos existantes et pressent son casting ; Claude prépare le modèle d'autorisation (droit à l'image et à la voix) | Romain |
-| 9 | **Vidéo et design-stock** (~60 Mo hors Git) | flou | Claude mesure Officialitat.mp4, propose un plafond de poids et une règle écrite « quoi committer / quoi archiver » ; Romain tranche | ensemble |
+| 9 | **Vidéo et design-stock** (103 Mo de PNG dans Git + 91 Mo hors Git, mesuré le 08-10) | flou | Claude mesure Officialitat.mp4, propose un plafond de poids et une règle écrite « quoi committer / quoi archiver » ; Romain tranche | ensemble |
 | 10 | **Réveil technique** | bloqué | Romain ouvre le tableau de bord Supabase et relance le projet (2 minutes — le plan gratuit se met en pause après inactivité) | Romain |
 | 11 | **Courriels** (Votz/CGU lo Congrès + relance LISN) | bloqué | Claude prépare les deux brouillons ; Romain les envoie de sa boîte | Romain |
 | 12 | **Autoformation de Romain** (décision du 2026-10-04) | **en cours, prioritaire sur 3, 5 et 6** | Suivre `autoformation-parcours.md` étape par étape ; écrire la page de l'étape 1 dans `carnet-concepcion/etapa-1-nivels.md` ; Claude relit avec cinq questions, vérifie, code, ne produit plus de contenu pédagogique à sa place | Romain |
+| 13 | **Carte /carta** (chantier principal depuis octobre) | en ligne : entrée en scène, couches publiques, Europe et monde au dézoom, « Autras lengas », panneau sur le côté ou en bas ; révision du 08-10 traitée (`BILAN-2026-10-08.md`) ; détail des données dans `SIG/cadena/LEGISSETZ-ME.md` | Romain valide `SIG/provincias/noms-oc.csv` (les autres listes à valider : bilan §7) | Romain |
 
 ## Les décisions déjà prises — à NE PAS rouvrir
 
@@ -62,11 +68,11 @@ photos.
 1. **2026-08-22 — Site vs application : tranché.** Un seul produit, deux
    registres (RÉCIT expressif / OUTIL sobre), une seule adresse, pas d'app
    native.
-2. **2026-08-22 — Typographie : tranchée et en production.** Syne (titres),
-   Instrument Sans (courant), Cormorant Garamond italique (citations),
-   Fredoka logo seul.
-3. **2026-08-22 — Accueil** : héros « Lo riu » + 6 stations ; reconfirmé le
-   18-09.
+2. **2026-09-30 / 10-05 — Typographie** (remplace celle du 22-08) :
+   Limelight (titres et logo), Luciole (texte courant), Cormorant Garamond
+   (citations). Seules ces trois polices sont chargées (`app/src/fonts.css`).
+3. **2026-10-06 / 07 — Accueil** (remplace « Lo riu » du 22-08) : l'« esbòs
+   de nuèch », porté dans `app/src/lib/acuelh`.
 4. **2026-07-28** — Graphie classique · nom « Lo Ligam » · MVP = A1 òc+fr ·
    15 ans minimum · questionnaire en minimisation RGPD.
 5. **2026-08-29** — UN seul chemin d'apprentissage (le cursus) ; module 0
@@ -82,7 +88,10 @@ photos.
 10. **2026-08-08/09** — SvelteKit + Supabase (UE, migration reportée
     sciemment) + Scaleway Paris, déploiement automatique.
 11. **2026-08-03/04/06** — Admin : RLS seul rempart, SVG interdit, MP4 à
-    l'ouverture de fiche, pas de CMS externe, tout texte visible en base.
+    l'ouverture de fiche, pas de CMS externe, tout texte visible en base
+    (exception provisoire : les textes de l'accueil sont en dur, à
+    rebrancher ; la page d'admin « Tèxtes » n'alimente plus rien, bilan du
+    08-10).
 12. **2026-09-03** — **Romain est seul** : tout se classe lancement /
     évolution (grille §8 bis de l'état de l'art des parcours).
 13. **2026-09-18** — Transposition Racine² actée (`transposicion-racine2.md`).
@@ -99,7 +108,9 @@ photos.
 2. **Combien d'unités A1 pour lancer** ? L'ancien repère (4-6) n'a jamais été
    confronté au nouveau volume (10 unités + module 0 = 41 modules).
 3. **La cartographie passe-t-elle en premier ?** À trancher avant de
-   réorganiser les phases ; dépend de la réponse du LISN (relance à envoyer).
+   réorganiser les phases. (Plus de dépendance au LISN depuis le 07-10 : la
+   carte s'appuie sur Occitanica, Licence Ouverte. Dans les faits, la carte
+   est le chantier principal depuis début octobre, voir chantier 13.)
 4. **Statut juridique** : micro-entreprise ou association ? (verrouille dons
    et paiement solidaire)
 5. **Les 14 questions d'arbitrage du §9** de l'état de l'art des parcours

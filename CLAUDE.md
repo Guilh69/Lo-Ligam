@@ -1,6 +1,6 @@
 # Lo Ligam
 
-Site d'apprentissage de l'occitan (languedocien, norme classique) + plateforme de l'écosystème occitan. Prolonge la marque Instagram « Lo Ligam ».
+Site d'apprentissage de l'occitan (languedocien, norme classique), support des cours en visio de Romain (repositionnement du 2026-10-06, cahier §11). Prolonge la marque Instagram « Lo Ligam ».
 
 ## Travailler avec Romain
 - **Non développeur.** Expliquer en français simple, une étape à la fois, dire quoi cliquer.
@@ -19,6 +19,7 @@ Site d'apprentissage de l'occitan (languedocien, norme classique) + plateforme d
 
 ## Contenu
 - L'occitan produit par Claude est **toujours à valider par Romain** (dicodòc / lo Congrès) avant publication.
+- Depuis le 2026-10-04, Claude ne produit plus de contenu pédagogique à la place de Romain : il questionne, vérifie et code (cahier §11).
 - UX : animations soignées, sons discrets et désactivables, humour fin par touches.
 - Périmètre MVP : A1, compte, questionnaire. Cartographie et modèle payant = en cours d'arbitrage, voir `cahier-des-charges.md` §3/§6/§11 avant de supposer l'ancien périmètre.
 
