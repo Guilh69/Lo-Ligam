@@ -140,7 +140,7 @@ export function crearColaDonadas(
 					this._update();
 				});
 			// zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes
-			if (this._jaces.dialectes && !this._mix)
+			if ((this._jaces.dialectes || this._jaces.frontiera) && !this._mix)
 				(mixPromesa ??= cargarJson('/data/zonas-mixtas.geojson')).then((d) => {
 					this._mix = d;
 					this._update();
@@ -232,6 +232,9 @@ export function crearColaDonadas(
 		},
 		_onClic(e) {
 			if (!this._interactiu() || ocupat?.(e.layerPoint)) return;
+			// una enclava (fòra del domeni) : lo clic o lo tòc mòstra sa legenda
+			const kEnc = this._zonaA(e.layerPoint, true);
+			if (kEnc?.startsWith('enc-')) return this._survòl(kEnc);
 			// una zòna mixta se causís pas : lo clic va al dialècte de dejós
 			const k = this._zonaA(e.layerPoint, false);
 			// un clic sus la zòna causida o defòra : totes los dialèctes tornan
@@ -239,7 +242,7 @@ export function crearColaDonadas(
 		},
 		_nomDe(k) {
 			if (!k) return null;
-			if (k.startsWith('mix-') || k.startsWith('ist-')) {
+			if (k.startsWith('mix-') || k.startsWith('ist-') || k.startsWith('enc-')) {
 				const m = this._mix?.features.find((x) => x.properties.kod === k)?.properties;
 				return m ? { kod: k, oc: m.oc, fr: m.fr, sota_oc: m.sota_oc, sota_fr: m.sota_fr, mix: true } : null;
 			}
@@ -332,7 +335,7 @@ export function crearColaDonadas(
 				linhas: dom ? dom.linhas.map((l) => l.map(pt)) : null,
 				zonas: this._dial ? this._dial.features.map(zona) : null,
 				cro: this._creissent ? zona(this._creissent.features[0]) : null,
-				mix: this._mix && this._jaces.dialectes ? this._mix.features.map((f) => ({ ...zona(f), istoric: f.properties.mena === 'istoric' })) : null,
+				mix: this._mix && (this._jaces.dialectes || this._jaces.frontiera) ? this._mix.features.map((f) => ({ ...zona(f), istoric: f.properties.mena === 'istoric', enclava: f.properties.mena === 'enclava' })) : null,
 				bandas:
 					this._bandas && this._jaces.dialectes
 						? this._bandas.features.map((f) => {
@@ -347,7 +350,7 @@ export function crearColaDonadas(
 			this._prepTotes();
 			this._prepSel();
 			if (this._jaces.creissent) this._prepCro();
-			if (this._jaces.dialectes) this._prepMix();
+			if (this._jaces.dialectes || this._jaces.frontiera) this._prepMix();
 			this._pintar();
 			if (dom) map.getPane('donadas').style.opacity = '1';
 		},
@@ -503,12 +506,32 @@ export function crearColaDonadas(
 			g.filter = `blur(${(clamp(1500 / G.mPx, 0.8, 20) * dpr).toFixed(1)}px)`;
 			g.setTransform(dpr, 0, 0, dpr, 0, 0);
 			g.fillStyle = '#000';
-			for (const zm of G.mix) if (!zm.istoric) g.fill(zm.c, 'evenodd');
+			// (las zònas mixtas, amb los dialèctes sonque)
+			if (this._jaces.dialectes) for (const zm of G.mix) if (!zm.istoric && !zm.enclava) g.fill(zm.c, 'evenodd');
 			g.restore();
 			g.globalCompositeOperation = 'source-in';
 			g.fillStyle = g.createPattern(motiu, 'repeat');
 			g.fillRect(0, 0, c.width, c.height);
 			g.globalCompositeOperation = 'source-over';
+			// enclavas d'una autra lenga (Pichona Gavachariá) : un ponchejat leugièr
+			const enc = G.mix.filter((zm) => zm.enclava);
+			if (enc.length) {
+				const p = document.createElement('canvas');
+				const pp = Math.round(6 * dpr);
+				p.width = p.height = pp;
+				const pg = p.getContext('2d');
+				pg.fillStyle = `rgba(${this._tem.admin}, 0.8)`;
+				pg.beginPath();
+				pg.arc(pp / 2, pp / 2, 0.9 * dpr, 0, 6.283);
+				pg.fill();
+				g.save();
+				g.setTransform(dpr, 0, 0, dpr, 0, 0);
+				for (const zm of enc) g.clip(zm.c, 'evenodd');
+				g.setTransform(1, 0, 0, 1, 0, 0);
+				g.fillStyle = g.createPattern(p, 'repeat');
+				g.fillRect(0, 0, c.width, c.height);
+				g.restore();
+			}
 		},
 		_prepTotes() {
 			if (this._jaces.dialectes && this._geo?.zonas) this._tenchaDins(this._imgTotes, this._geo.zonas);
@@ -576,8 +599,8 @@ export function crearColaDonadas(
 			}
 
 			/* Zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes */
-			if (J.dialectes && G.mix) {
-				const pus = this._pus?.startsWith('mix-');
+			if (G.mix) {
+				const pus = this._pus?.startsWith('mix-') || this._pus?.startsWith('enc-');
 				// domeni istoric (gascon escantit) : la tencha pus palla, sens asclas
 				const ist = G.mix.filter((zm) => zm.istoric);
 				if (ist.length && J.dialectes) {
@@ -658,6 +681,21 @@ export function crearColaDonadas(
 			/* Noms : capitalas espaçadas, una ombra doça (causida de Romain : pas
 			   de contorn negre). De luènh sonque : de prèp, la carta es plena de
 			   noms de vilas. Quand un dialècte es causit, sonque son nom. */
+			// Lo nom d'una enclava (Pichona Gavachariá) : que lo trauc del domeni
+			// s'explique sens survòl (retorn de Romain)
+			const aEnc = clamp((z - 7.6) / 0.5) * clamp(11.5 - z);
+			if (aEnc > 0.01 && G.mix && (J.frontiera || J.dialectes)) {
+				cx.save();
+				cx.font = `italic 400 ${clamp(10 + (z - 8) * 1.5, 10, 13).toFixed(1)}px Luciole, sans-serif`;
+				cx.textAlign = 'center';
+				cx.textBaseline = 'middle';
+				cx.shadowColor = T.ombra;
+				cx.shadowBlur = 6;
+				cx.fillStyle = `rgba(${T.admin}, 0.9)`;
+				cx.globalAlpha = aEnc;
+				for (const zm of G.mix) if (zm.enclava) cx.fillText(this._lang === 'fr' ? 'Gavacherie (oïl)' : 'Gavachariá (oïl)', zm.eti[0], zm.eti[1]);
+				cx.restore();
+			}
 			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3);
 			if (aNoms > 0.01) {
 				const noms = [];

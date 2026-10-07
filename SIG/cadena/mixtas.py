@@ -55,8 +55,14 @@ declaradas = declaradas.Buffer(50).Buffer(-50)
 # Fronsadés, Liburnés fins a Lussac (recèrca : gascon recuolat fàcia al
 # saintongés dempuèi lo sègle XVI) ; contorn aproximatiu, arredondit
 istoric = poli([[-0.66, 45.10], [-0.55, 45.09], [-0.45, 45.065], [-0.30, 45.05], [-0.15, 45.04], [-0.03, 45.01], [0.0, 44.96], [-0.08, 44.92], [-0.20, 44.915], [-0.27, 44.93], [-0.37, 44.955], [-0.48, 44.985], [-0.56, 45.01], [-0.63, 45.05]]).Buffer(1500, 16).Buffer(-1500, 16)
+# Pichona Gavachariá : enclava de lenga d'oïl (saintongés) a l'entorn de
+# Montségur, poblada al sègle XV-XVI per de colons de Saintonja, Peitau e
+# Engolmés (recèrca : Bourciez 1895, Nowak) ; fòra del domeni, explicada al survòl
+gav = [c for c in R if c['id'] == 'petite-gavacherie'][0]['polygone']
+gavacharia = poli(gav)
 feats = []
 for kod, g, oc, fr, sota_oc, sota_fr in [
+    ('enc-gavacharia', gavacharia, 'La Pichona Gavachariá', 'La Petite Gavacherie', "enclava de lenga d'oïl (saintongés), dempuèi lo sègle XVI", "enclave de langue d'oïl (saintongeais), depuis le XVIe siècle"),
     ('ist-gascon', istoric, 'Gascon', 'Gascon', 'domeni istoric, parlar escantit', 'domaine historique, parler éteint'),
     ('mix-roia', roia, 'Ròia e Briga', 'Roya et Brigue', 'parlar ligur de traches occitans', 'parler ligure à traits occitans'),
     ('mix-monegue', monegue, 'Mónegue', 'Monaco', 'ligur (monegasc), niçard tanben', 'ligure (monégasque), niçois aussi'),
@@ -68,7 +74,7 @@ for kod, g, oc, fr, sota_oc, sota_fr in [
     gj = json.loads(g.ExportToJson())
     def arr(c): return [arr(x) for x in c] if isinstance(c[0], list) else [round(c[0], 4), round(c[1], 4)]
     gj['coordinates'] = arr(gj['coordinates'])
-    feats.append({'type': 'Feature', 'properties': {'kod': kod, 'mena': 'istoric' if kod.startswith('ist-') else 'mixta', 'oc': oc, 'fr': fr, 'sota_oc': sota_oc, 'sota_fr': sota_fr, 'eti': [round(eti.GetX(), 3), round(eti.GetY(), 3)]}, 'geometry': gj})
+    feats.append({'type': 'Feature', 'properties': {'kod': kod, 'mena': 'istoric' if kod.startswith('ist-') else 'enclava' if kod.startswith('enc-') else 'mixta', 'oc': oc, 'fr': fr, 'sota_oc': sota_oc, 'sota_fr': sota_fr, 'eti': [round(eti.GetX(), 3), round(eti.GetY(), 3)]}, 'geometry': gj})
     print(kod, gj['type'])
 json.dump({'type': 'FeatureCollection', 'font': "Recèrca suls transicions (SIG/Dialecte/transicions-dialectes.md) ; comunas : OpenStreetMap (ODbL)", 'features': feats},
           open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/zonas-mixtas.geojson', 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
