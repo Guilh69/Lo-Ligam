@@ -739,11 +739,23 @@
 		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
 	}
 
+	/* Las fonts : una sola linha que daissa la plaça a l'escala (retorn de
+	   Romain : l'escala èra jos lo bandèu), desplegada al survòl o al tòc */
 	.carta :global(.leaflet-control-attribution) {
+		max-width: calc(100vw - 10rem);
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 		background: color-mix(in srgb, var(--t-fons) 70%, transparent);
 		color: var(--t-tinta-2);
 		font-size: 0.68rem;
 		border-radius: 8px 0 0 0;
+		cursor: default;
+	}
+	.carta :global(.leaflet-control-attribution:hover),
+	.carta :global(.leaflet-control-attribution:focus-within) {
+		white-space: normal;
+		background: color-mix(in srgb, var(--t-fons) 92%, transparent);
 	}
 
 	.carta :global(.leaflet-control-attribution a) {

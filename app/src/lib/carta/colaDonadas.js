@@ -434,11 +434,13 @@ export function crearColaDonadas(
 			// de prèp, lo dialècte es pertot : la tencha s'esvalís
 			// Fòrt de prèp (escala d'una carrièra), sonque lo fons (retorn de Romain) :
 			// los contorns simplificats se decalarián de las tuèlas e la frontièra
-			// de la lenga pretendriá una precision qu'a pas. Contorns administratius
-			// escantits de 10 a 11, frontièra de 11 a 12, tenchas de 11,5 a 12,5.
-			const aAdmin = clamp(11 - z),
-				aFront = clamp(12 - z),
-				aTenchas = clamp(12.5 - z);
+			// de la lenga pretendriá una precision qu'a pas. Escantits doçament, sus
+			// mai d'un nivèl (retorn de Romain : una disparicion d'un sol còp de
+			// zoom fasiá una cassura) : contorns administratius de 10 a 11,5,
+			// frontièra de 11 a 13, tenchas de 11,5 a 13.
+			const aAdmin = clamp((11.5 - z) / 1.5),
+				aFront = dossa(clamp((13 - z) / 2)),
+				aTenchas = clamp((13 - z) / 1.5);
 			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas;
 			const an = this._anim,
 				p = an ? clamp((performance.now() - an.t0) / DURADA) : 1;
