@@ -40,7 +40,8 @@ const temaDe = (clar, dalt) => ({
 const DURADA = 1700; // ms : difusion d'un dialècte causit
 let dialPromesa = null,
 	creissentPromesa = null,
-	mixPromesa = null;
+	mixPromesa = null,
+	bandasPromesa = null;
 const cargarJson = (url) =>
 	fetch(url)
 		.then((r) => (r.ok ? r.json() : null))
@@ -131,6 +132,12 @@ export function crearColaDonadas(
 					this._dial = d;
 					this._update();
 					tornarCausir(false);
+				});
+			// bendas de transicion (largor del fondut segon la recèrca) : amb los dialèctes
+			if (this._jaces.dialectes && !this._bandas)
+				(bandasPromesa ??= cargarJson('/data/transicions.geojson')).then((d) => {
+					this._bandas = d;
+					this._update();
 				});
 			// zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes
 			if (this._jaces.dialectes && !this._mix)
@@ -326,6 +333,14 @@ export function crearColaDonadas(
 				zonas: this._dial ? this._dial.features.map(zona) : null,
 				cro: this._creissent ? zona(this._creissent.features[0]) : null,
 				mix: this._mix && this._jaces.dialectes ? this._mix.features.map(zona) : null,
+				bandas:
+					this._bandas && this._jaces.dialectes
+						? this._bandas.features.map((f) => {
+								const c = new Path2D();
+								for (const anels of poligons(f.geometry)) cami(anels, c);
+								return { c, larg: f.properties.larg };
+							})
+						: null,
 				regions: this._jaces.regions ? (this._limits?.regions || []).map(([, , anels]) => cami(anels)) : null,
 				deps: this._jaces.despartaments ? (this._limits?.despartaments || []).map(([, , anels]) => cami(anels)) : null
 			};
@@ -385,6 +400,41 @@ export function crearColaDonadas(
 			g.filter = `blur(${(flo * dpr).toFixed(1)}px)`;
 			g.drawImage(t, 0, 0);
 			g.restore();
+			// Nuancièr : dins las bendas de transicion de la recèrca, lo fondut pren
+			// la largor relevada (5 a 35 km) ; tres classas de largor, cada una
+			// vista a travèrs de sas bendas fondudas (pas de cassura al bòrd)
+			if (!sola && G.bandas?.length) {
+				const t2 = (this._trab2 ??= document.createElement('canvas'));
+				t2.width = c.width;
+				t2.height = c.height;
+				const g2 = t2.getContext('2d');
+				for (const [l0, l1] of [[0, 12], [12, 24], [24, 99]]) {
+					const bs = G.bandas.filter((b) => b.larg > l0 && b.larg <= l1);
+					if (!bs.length) continue;
+					const sig = clamp((Math.max(...bs.map((b) => b.larg)) * 250) / G.mPx, 1, 90);
+					if (sig <= flo * 1.05) continue; // pas pus larg que lo fondut de basa
+					g2.setTransform(1, 0, 0, 1, 0, 0);
+					g2.globalCompositeOperation = 'source-over';
+					g2.clearRect(0, 0, t2.width, t2.height);
+					g2.save();
+					g2.filter = `blur(${(sig * 0.6 * dpr).toFixed(1)}px)`;
+					g2.setTransform(dpr, 0, 0, dpr, 0, 0);
+					g2.fillStyle = '#000';
+					for (const b of bs) g2.fill(b.c);
+					g2.restore();
+					g2.globalCompositeOperation = 'source-in';
+					g2.filter = `blur(${(sig * dpr).toFixed(1)}px)`;
+					g2.drawImage(t, 0, 0);
+					g2.filter = 'none';
+					g2.globalCompositeOperation = 'source-over';
+					g.save();
+					g.setTransform(dpr, 0, 0, dpr, 0, 0);
+					if (G.dom) g.clip(G.dom, 'evenodd');
+					g.setTransform(1, 0, 0, 1, 0, 0);
+					g.drawImage(t2, 0, 0);
+					g.restore();
+				}
+			}
 		},
 		// Lo Creissent : asclas vistas a travèrs d'una masca fonduda (bòrd flo
 		// d'environ 4 km, pas cap de contorn : es una transicion, pas una limita)
