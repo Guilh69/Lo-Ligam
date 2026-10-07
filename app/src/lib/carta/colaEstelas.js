@@ -648,7 +648,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		// los sons de l'entrada en scèna (sons.js) : menats pel dessenh
 		setSons(s) {
 			this._sons = s;
-			this._eSonats = new Set();
+			this._sCosta = this._sRelèu = this._sAiga = 0;
 		},
 		acabarIntro() {
 			this._tIntro = performance.now() - 60000;
@@ -1119,6 +1119,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				for (const mestra of [false, true]) {
 					cx.lineWidth = mestra ? 0.8 : 0.6;
 					if (ti >= c1) {
+						// … e s'escantís quand la darrièra es pausada
+						if (this._sRelèu === 1) (this._sRelèu = 2), this._sons?.relèu(false);
 						cx.globalAlpha = aRius * (mestra ? 0.3 : 0.13);
 						cx.beginPath();
 						for (const [e, l] of this._corbas) {
@@ -1138,16 +1140,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						const renc = nivèls.indexOf(e) / Math.max(1, nivèls.length - 1),
 							oèst = clamp((l[0][0] - o.x) / W);
 						const aE = easeS(clamp((ti - (c0 + renc * (c1 - c0 - 0.9) + oèst * 0.45)) / 0.45));
-						// una pèira pausada quand una corba pareis (pas mai d'una cada
-						// 55 ms : un ritme de construccion, pas una ramada)
-						if (aE > 0 && this._sons && !this._eSonats.has(k)) {
-							this._eSonats.add(k);
-							const ara = performance.now();
-							if (ara - (this._darrièraPèira ?? 0) > 55) {
-								this._darrièraPèira = ara;
-								this._sons.calhau(clamp(e / eMax + (Math.random() - 0.5) * 0.12));
-							}
-						}
+						// la tèrra bramís a partir de la primièra corba que pareis
+						if (aE > 0 && this._sons && !this._sRelèu) (this._sRelèu = 1), this._sons.relèu(true);
 						if (aE < 0.01) continue;
 						cx.globalAlpha = aRius * aE * (mestra ? 0.3 : 0.13);
 						cx.beginPath();

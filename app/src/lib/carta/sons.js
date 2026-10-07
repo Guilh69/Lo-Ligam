@@ -59,9 +59,8 @@ export function sonPapièr(plegar = true) {
 // meteis (pas per un relòtge fixat a l'avança : lo primièr ensag se
 // descalava de l'animacion) :
 //   - crayon(true / false) : lo gredon, del primièr tròç de còsta al darrièr ;
-//   - calhau(u) : una pèira pausada, a cada nivèl d'altitud que pareis
-//     (u de 0 a 1 : de las planas als cims, del grave a l'agut, sus una
-//     gama doça, a la faiçon de Tiny Glade) : en espèra d'un enregistrament ;
+//   - relèu(true / false) : la tèrra que bramís, del primièr nivèl d'altitud
+//     que pareis al darrièr ;
 //   - aiga(n) : un riu que raja, tant fòrt coma i a de rius que corron ;
 //     s'escantís quand lo darrièr a tocat la mar (n = 0) ;
 //   - copar() : tot s'arrèsta (un clic mena a la fin).
@@ -80,24 +79,7 @@ export function sonsEntrada() {
 	const sr = c.sampleRate;
 	const mèstre = c.createGain();
 	mèstre.connect(c.destination);
-	// un pauc d'espaci : una reverberacion corta (bruch que s'amortís)
-	const rev = c.createConvolver();
-	{
-		const n = Math.floor(sr * 1.3),
-			b = c.createBuffer(2, n, sr);
-		for (let k = 0; k < 2; k++) {
-			const d = b.getChannelData(k);
-			for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
-		}
-		rev.buffer = b;
-	}
-	const umid = c.createGain();
-	umid.gain.value = 0.32;
-	rev.connect(umid).connect(mèstre);
-	const sortida = (nòde, ambRev = true) => {
-		nòde.connect(mèstre);
-		if (ambRev) nòde.connect(rev);
-	};
+	const sortida = (nòde) => nòde.connect(mèstre);
 	const bruch = (s) => {
 		const b = c.createBuffer(1, Math.floor(sr * s), sr),
 			d = b.getChannelData(0);
@@ -136,7 +118,7 @@ export function sonsEntrada() {
 			// la man que tremola : lo frec monta e davala doçament
 			for (let u = 0.06; u < 4; u += 0.05) g.gain.setTargetAtTime(0.011 + Math.random() * 0.012, t + u, 0.02);
 			f.connect(hp).connect(bp).connect(lp).connect(g);
-			sortida(g, false);
+			sortida(g);
 			gredon = { f, g };
 		} else if (!on && gredon) {
 			gredon.g.gain.cancelScheduledValues(t);
@@ -147,20 +129,46 @@ export function sonsEntrada() {
 		}
 	}
 
-	// --- las pèiras ---
-	// (los sons fabricats sonavan coma d'aiga dins una botelha : en espèra
-	// d'un enregistrament vertadièr, pas res)
-	function calhau() {}
+	// --- lo relèu : las montanhas que susson, un bramadís de tèrra
+	// (EKVelika, CC0, static/sons/FONTS.md) que monta amb las corbas de nivèl e
+	// s'escantís quand la darrièra es pausada (los « calhaus » fabricats
+	// sonavan coma d'aiga dins una botelha) ---
+	const cargar = (u) =>
+		fetch(u)
+			.then((r) => (r.ok ? r.arrayBuffer() : null))
+			.then((b) => b && c.decodeAudioData(b))
+			.catch(() => null);
+	let bufRelèu = null;
+	cargar('/sons/releu.mp3').then((d) => (bufRelèu = d));
+	let relèuEnCors = null;
+	function relèu(on) {
+		const t = c.currentTime;
+		if (on && !relèuEnCors && bufRelèu) {
+			const f = c.createBufferSource();
+			f.buffer = bufRelèu;
+			f.start(t);
+			fonts.push(f);
+			const g = c.createGain();
+			g.gain.setValueAtTime(0.0001, t);
+			g.gain.linearRampToValueAtTime(0.3, t + 1.3);
+			f.connect(g);
+			sortida(g);
+			relèuEnCors = { f, g };
+		} else if (!on && relèuEnCors) {
+			relèuEnCors.g.gain.cancelScheduledValues(t);
+			relèuEnCors.g.gain.setValueAtTime(relèuEnCors.g.gain.value, t);
+			relèuEnCors.g.gain.setTargetAtTime(0.0001, t, 0.3);
+			const f = relèuEnCors.f;
+			setTimeout(() => f.stop(), 1800);
+			relèuEnCors = null;
+		}
+	}
 
 	// --- l'aiga : un enregistrament vertadièr (Biofonik, CC0, static/sons/FONTS.md),
 	// pas tròp fòrt (demanda de Romain) ; s'escantís quand lo darrièr riu a
 	// tocat la mar ---
 	let bufRiu = null;
-	fetch('/sons/riu.mp3')
-		.then((r) => (r.ok ? r.arrayBuffer() : null))
-		.then((b) => b && c.decodeAudioData(b))
-		.then((d) => (bufRiu = d))
-		.catch(() => {});
+	cargar('/sons/riu.mp3').then((d) => (bufRiu = d));
 	let riu = null;
 	function aiga(n) {
 		const t = c.currentTime;
@@ -174,7 +182,7 @@ export function sonsEntrada() {
 			const g = c.createGain();
 			g.gain.setValueAtTime(0.0001, t);
 			f.connect(g);
-			sortida(g, false);
+			sortida(g);
 			riu = { f, g, n: 0 };
 		}
 		if (!riu) return;
@@ -203,5 +211,5 @@ export function sonsEntrada() {
 			mèstre.disconnect();
 		}, 500);
 	}
-	return { crayon, calhau, aiga, copar };
+	return { crayon, relèu, aiga, copar };
 }
