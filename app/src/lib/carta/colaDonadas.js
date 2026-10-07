@@ -65,7 +65,9 @@ export function crearColaDonadas(
 			this._tem = temaDe(clar, dalt);
 			this._lang = lang;
 			this._jaces = { ...jaces };
-			this._sel = null; // dialècte causit (còdi) o 'cro' pel Creissent
+			// las zònas causidas (retorn de Romain : se'n pòt causir mantuna) :
+			// còdis de dialèctes, e 'cro' pel Creissent, dins l'òrdre de la causida
+			this._sels = [];
 			this._pus = null; // zòna jos lo cursor
 			this._anim = null;
 			this._calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -125,7 +127,10 @@ export function crearColaDonadas(
 			// una zòna causida abans que sas donadas arriben (pastilha del panèl) :
 			// sa difusion e son nom venon un còp las donadas aquí
 			const tornarCausir = (cro) => {
-				if (this._sel && (this._sel === 'cro') === cro) this._causir(this._sel, true);
+				const totas = this._sels;
+				if (!totas.some((k) => (k === 'cro') === cro)) return;
+				this._sels = totas.filter((k) => (k === 'cro') !== cro);
+				this._aplicar(totas, true);
 			};
 			if (this._jaces.dialectes && !this._dial)
 				(dialPromesa ??= cargarJson('/data/dialectes.geojson')).then((d) => {
@@ -159,7 +164,8 @@ export function crearColaDonadas(
 			if (j.dialectes && !this._jaces.dialectes) this._dialAlucat = performance.now();
 			this._jaces = { ...j };
 			// una zòna causida dont la jaça s'escantís es pas pus causida
-			if (this._sel && !(this._sel === 'cro' ? j.creissent : j.dialectes)) this._causir(null, false);
+			const resta = this._sels.filter((k) => (k === 'cro' ? j.creissent : j.dialectes));
+			if (resta.length !== this._sels.length) this._aplicar(resta, false);
 			if (this._pus && !(this._pus === 'cro' ? j.creissent : j.dialectes)) this._survòl(null);
 			this._cargar();
 			this._update();
@@ -172,9 +178,11 @@ export function crearColaDonadas(
 			this._lang = l;
 			this._pintar();
 		},
-		// Causida venguda de defòra (lo panèl) : un dialècte, 'cro', o null
-		causir(kod) {
-			if (kod !== this._sel) this._causir(kod, true);
+		// Causida venguda de defòra (lo panèl) : la lista de las zònas causidas
+		// (dialèctes e 'cro' pel Creissent), voida per totas
+		causir(kods = []) {
+			if (kods.length === this._sels.length && kods.every((k) => this._sels.includes(k))) return;
+			this._aplicar([...kods], true);
 		},
 
 		_onAnimZoom(e) {
@@ -262,8 +270,10 @@ export function crearColaDonadas(
 			if (!this._interactiu()) return;
 			// una zòna mixta se causís pas : lo clic va al dialècte de dejós
 			const k = this._zonaA(e.layerPoint, false);
-			// un clic sus la zòna causida o defòra : totes los dialèctes tornan
-			this._causir(k && k !== this._sel ? k : null, true);
+			// un clic sus una zòna l'apond a la causida, o l'en leva se i èra ; un
+			// clic defòra : totes los dialèctes tornan
+			if (!k) return this._aplicar([], true);
+			this._aplicar(this._sels.includes(k) ? this._sels.filter((x) => x !== k) : [...this._sels, k], true);
 		},
 		_nomDe(k) {
 			if (!k) return null;
@@ -274,15 +284,30 @@ export function crearColaDonadas(
 			const f = (k === 'cro' ? this._creissent : this._dial)?.features.find((x) => x.properties.kod === k);
 			return f ? { kod: k, oc: f.properties.oc, fr: f.properties.fr, cro: k === 'cro' } : null;
 		},
-		_causir(k, anim) {
-			const de = this._sel;
-			this._sel = k;
+		// Novèla causida : una zòna apondida se difusa a partir de son còr, una
+		// zòna levada s'escantís, la darrièra levada fa tornar totas las zònas
+		_aplicar(sels, anim) {
+			const de = this._sels;
+			this._sels = sels;
+			const dial = (l) => l.filter((k) => k !== 'cro');
+			const ajust = sels.filter((k) => !de.includes(k));
+			const lev = de.filter((k) => !sels.includes(k));
 			// las zònas totas èran visiblas abans la causida ? (sonque alara se
 			// fondon ; se la jaça ven d'èsser alucada, lo dialècte se difusa sol)
-			const totesAvant = !de && !!this._dial && performance.now() - (this._dialAlucat ?? 0) > 400;
-			this._anim = anim && !this._calm ? { de, a: k, t0: performance.now(), totesAvant } : null;
+			const totesAvant = !dial(de).length && !!this._dial && performance.now() - (this._dialAlucat ?? 0) > 400;
+			this._anim =
+				anim && !this._calm && (ajust.length || lev.length)
+					? { de: dial(de), a: dial(sels), ajust: ajust.length === 1 ? ajust[0] : null, lev: dial(lev), t0: performance.now(), totesAvant }
+					: null;
 			this._prepSel();
-			onCausida?.(k, this._nomDe(k));
+			// l'encastre d'en bas : la zòna causida, o totas se n'i a mantuna
+			const noms = sels.map((k) => this._nomDe(k)).filter(Boolean);
+			onCausida?.(
+				[...sels],
+				noms.length > 1
+					? { kod: sels.join('+'), oc: noms.map((n) => n.oc).join(' · '), fr: noms.map((n) => n.fr).join(' · '), sota_oc: 'zònas causidas', sota_fr: 'zones choisies', mix: true }
+					: (noms[0] ?? null)
+			);
 			this._pintar(); // tot d'ora : remplaça un dessenh de totas las zònas fach just abans
 			this._bocla();
 		},
@@ -293,6 +318,7 @@ export function crearColaDonadas(
 				if (this._anim && performance.now() - this._anim.t0 < DURADA + 50) this._raf = requestAnimationFrame(pas);
 				else {
 					this._anim = null;
+					this._prepSel(); // la zòna apondida rejonh las autras
 					this._pintar();
 				}
 			};
@@ -574,12 +600,28 @@ export function crearColaDonadas(
 			this._imgPus.height = this._cv.height;
 			this._tenchaDins(this._imgPus, [zn], true);
 		},
-		// Lo dialècte causit, sol : son fondut cap als vesins se ditz transicion
+		// Los dialèctes causits, sols : fonduts entre eles, e cap als autres se
+		// ditz transicion. Pendent l'animacion, la zòna apondida (que se difusa)
+		// e las levadas (que s'escantisson) an lor imatge a despart.
 		_prepSel() {
 			const G = this._geo;
-			if (!G || !this._sel || this._sel === 'cro' || !G.zonas) return;
-			const zn = G.zonas.find((x) => x.kod === this._sel);
-			if (zn) this._tenchaDins(this._imgSel, [zn], true);
+			if (!G || !G.zonas) return;
+			const an = this._anim;
+			const zonas = (l) => G.zonas.filter((x) => l.includes(x.kod));
+			const sels = this._sels.filter((k) => k !== 'cro' && k !== an?.ajust);
+			this._tenchaDins(this._imgSel, zonas(sels), true);
+			if (an?.ajust && an.ajust !== 'cro') {
+				this._imgNòu ??= document.createElement('canvas');
+				this._imgNòu.width = this._cv.width;
+				this._imgNòu.height = this._cv.height;
+				this._tenchaDins(this._imgNòu, zonas([an.ajust]), true);
+			}
+			if (an?.lev?.length) {
+				this._imgLev ??= document.createElement('canvas');
+				this._imgLev.width = this._cv.width;
+				this._imgLev.height = this._cv.height;
+				this._tenchaDins(this._imgLev, zonas(an.lev), true);
+			}
 		},
 
 		/* ---------- Dessenh (a cada recalatge, e a cada image d'una animacion) ---------- */
@@ -610,18 +652,18 @@ export function crearColaDonadas(
 
 			/* Dialèctes */
 			if (J.dialectes && G.zonas) {
-				const selDial = this._sel && this._sel !== 'cro' ? this._sel : null;
+				const selDial = this._sels.some((k) => k !== 'cro');
 				// totes : visibles sens causida ; s'esvalisson quand un dialècte es
-				// causit, tornan quand se descausís
+				// causit, tornan quand lo darrièr se descausís
 				let aTotes = selDial ? 0 : 1;
-				if (an && !an.a) aTotes = dossa(clamp(p / 0.6));
-				if (an && an.a && !an.de) aTotes = an.totesAvant ? 1 - dossa(clamp(p / 0.35)) : 0;
+				if (an && an.de.length && !an.a.length) aTotes = dossa(clamp(p / 0.6));
+				if (an && an.a.length && !an.de.length) aTotes = an.totesAvant ? 1 - dossa(clamp(p / 0.35)) : 0;
 				if (aTotes > 0.01) this._copiar(this._imgTotes, aT * aTotes);
-				// sol sus la carta, lo dialècte causit pòt èsser mai marcat
-				if (selDial) {
-					if (an && an.a === selDial) this._difusar(selDial, p, aT * 1.6);
-					else this._copiar(this._imgSel, aT * 1.6);
-				}
+				// sols sus la carta, los dialèctes causits pòdon èsser mai marcats ;
+				// l'apondut se difusa, los levats s'escantisson
+				if (selDial) this._copiar(this._imgSel, aT * 1.6);
+				if (an?.ajust && an.ajust !== 'cro' && this._imgNòu) this._difusar(an.ajust, p, aT * 1.6, this._imgNòu);
+				if (an?.lev?.length && this._imgLev) this._copiar(this._imgLev, aT * 1.6 * (1 - dossa(p)));
 				// survòl (sens causida) : la zòna s'esclarzís un pauc, amb lo meteis
 				// fondut que la causida (retorn de Romain : un emplenatge net fasiá de
 				// bòrds tròp nets ; nets sonque sus la frontièra e la còsta)
@@ -642,20 +684,20 @@ export function crearColaDonadas(
 					for (const zm of ist) cx.fill(zm.c, 'evenodd');
 					cx.restore();
 				}
-				this._copiar(this._imgMix, (this._sel ? 0.25 : pus ? 0.75 : 0.5) * aTenchas);
+				this._copiar(this._imgMix, (this._sels.length ? 0.25 : pus ? 0.75 : 0.5) * aTenchas);
 			}
 
 			/* Lo Creissent : zòna de transicion, en asclas */
 			if (J.creissent && G.cro) {
-				const causit = this._sel === 'cro';
-				const autreCausit = this._sel && !causit;
+				const causit = this._sels.includes('cro');
+				const autreCausit = this._sels.length > 0 && !causit;
 				let a = autreCausit ? 0.2 : this._pus === 'cro' || causit ? 1 : 0.75;
-				if (an && an.a === 'cro') a = 1;
+				if (an?.ajust === 'cro') a = 1;
 				// de prèp, la zòna de transicion s'esvalís (es una nocion d'escala
 				// regionala : sos bòrds son pas de traches)
 				a *= lerp(1, 0.35, clamp((z - 8) / 3));
 				cx.save();
-				if (an && an.a === 'cro') this._mascaDifusion(G.cro, p); // clip progressiu
+				if (an?.ajust === 'cro') this._mascaDifusion(G.cro, p); // clip progressiu
 				this._copiar(this._imgCro, a * aTenchas);
 				cx.restore();
 			}
@@ -730,8 +772,8 @@ export function crearColaDonadas(
 			if (aNoms > 0.01) {
 				const noms = [];
 				if (J.dialectes && G.zonas)
-					for (const zn of G.zonas) if (!this._sel || this._sel === zn.kod) noms.push([zn, T.dial[zn.kod]]);
-				if (J.creissent && G.cro && (!this._sel || this._sel === 'cro')) noms.push([G.cro, T.lenga]);
+					for (const zn of G.zonas) if (!this._sels.length || this._sels.includes(zn.kod)) noms.push([zn, T.dial[zn.kod]]);
+				if (J.creissent && G.cro && (!this._sels.length || this._sels.includes('cro'))) noms.push([G.cro, T.lenga]);
 				const fs = clamp(10.5 + (z - 6) * 1.1, 10.5, 13);
 				cx.save();
 				cx.font = `400 ${fs.toFixed(1)}px Luciole, sans-serif`;
@@ -781,7 +823,7 @@ export function crearColaDonadas(
 		// La difusion : la tencha del dialècte causit, vista a travèrs d'una taca
 		// que creis (masca dessenhada en pichon puèi agrandida : vòra doça a
 		// bon mercat), e un front lusent que s'esvalís
-		_difusar(kod, p, aT) {
+		_difusar(kod, p, aT, img = this._imgSel) {
 			const G = this._geo,
 				zn = G.zonas.find((x) => x.kod === kod);
 			if (!zn) return;
@@ -806,7 +848,7 @@ export function crearColaDonadas(
 			tg.setTransform(1, 0, 0, 1, 0, 0);
 			tg.globalCompositeOperation = 'source-over';
 			tg.clearRect(0, 0, t.width, t.height);
-			tg.drawImage(this._imgSel, 0, 0);
+			tg.drawImage(img, 0, 0);
 			tg.globalCompositeOperation = 'destination-in';
 			tg.imageSmoothingQuality = 'high';
 			tg.drawImage(m, 0, 0, t.width, t.height);

@@ -15,7 +15,7 @@
 		visibility = $bindable({}),
 		baseLayer = $bindable('estelas'),
 		colors = $bindable({}),
-		dialecte = $bindable(null),
+		causits = $bindable([]),
 		clar = false,
 		lang = 'oc',
 		esAdmin = false
@@ -47,7 +47,7 @@
 			colorsTema: 'Colors del tèma',
 			color: (n) => `Color : ${n}`,
 			dialecteTotes: 'Totes',
-			causirDial: 'Afichar sonque un dialècte',
+			causirDial: 'Causir un o mantun dialècte',
 			admin: "Modificar dins l'admin"
 		},
 		fr: {
@@ -75,7 +75,7 @@
 			colorsTema: 'Couleurs du thème',
 			color: (n) => `Couleur : ${n}`,
 			dialecteTotes: 'Tous',
-			causirDial: 'Afficher un seul dialecte',
+			causirDial: 'Choisir un ou plusieurs dialectes',
 			admin: "Modifier dans l'admin"
 		}
 	};
@@ -168,14 +168,13 @@
 
 	function bascular(id, on) {
 		visibility[id] = on;
-		if (id === 'dialectes' && !on && dialecte && dialecte !== 'cro') dialecte = null;
-		if (id === 'creissent' && !on && dialecte === 'cro') dialecte = null;
+		if (id === 'dialectes' && !on) causits = [];
 	}
-	// Una pastilha de dialècte : aluca la jaça e causís (o descausís) lo dialècte
+	// Una pastilha de dialècte (o del Creissent) : aluca la jaça e apond la zòna
+	// a la causida, o l'en leva se i èra (retorn de Romain : mantuna a l'encòp)
 	function causirDial(k) {
-		if (k === 'cro') visibility.creissent = true;
-		else if (k) visibility.dialectes = true;
-		dialecte = dialecte === k ? null : k;
+		visibility.dialectes = true;
+		causits = causits.includes(k) ? causits.filter((x) => x !== k) : [...causits, k];
 	}
 
 	// Colors del fons que l'internauta pòt cambiar, e lor valor de basa segon lo tèma
@@ -192,12 +191,12 @@
 	function sonqueContorns() {
 		for (const j of totas) if (visibility[j.id] && j.id !== 'frontiera') visibility[j.id] = false;
 		visibility.frontiera = true;
-		dialecte = null;
+		causits = [];
 	}
 	// Tot tornar : las jaces per defaut del catalògue
 	function totTornar() {
 		for (const j of totas) visibility[j.id] = !!j.defaut;
-		dialecte = null;
+		causits = [];
 	}
 	// Istoric de las manipulacions (demanda de Romain) : cada cambiament de la
 	// carta (jaces, dialècte causit, fons, colors) es gardat, per lo poder
@@ -207,7 +206,7 @@
 		anullant = false,
 		pret = false; // l'istoric comença al primièr gèst (pas al cargament de la basa)
 	$effect(() => {
-		const estat = JSON.stringify({ v: $state.snapshot(visibility), d: dialecte, b: baseLayer, c: $state.snapshot(colors) });
+		const estat = JSON.stringify({ v: $state.snapshot(visibility), d: causits, b: baseLayer, c: $state.snapshot(colors) });
 		untrack(() => {
 			if (pret && darrièr && estat !== darrièr && !anullant) istoric = [...istoric.slice(-39), darrièr];
 			anullant = false;
@@ -221,7 +220,7 @@
 		anullant = true;
 		const s = JSON.parse(e);
 		for (const k of Object.keys({ ...visibility, ...s.v })) visibility[k] = !!s.v[k];
-		dialecte = s.d;
+		causits = Array.isArray(s.d) ? s.d : s.d ? [s.d] : [];
 		baseLayer = s.b;
 		colors = s.c;
 	}
@@ -229,7 +228,7 @@
 	// colors demòran) ; anullable
 	function netejar() {
 		for (const j of totas) if (visibility[j.id]) visibility[j.id] = false;
-		dialecte = null;
+		causits = [];
 	}
 	function onKey(e) {
 		pret = true;
@@ -366,17 +365,15 @@
 						<button
 							type="button"
 							class="pastilha"
-							aria-pressed={dialecte === k}
+							aria-pressed={causits.includes(k)}
 							onclick={() => causirDial(k)}
 						><i style:background={DIAL[k]}></i>{lang === 'oc' ? oc : fr}</button>
 					{/each}
-					{#if totas.find((x) => x.id === 'creissent')?.estat === 'disponible'}
-						<button type="button" class="pastilha" aria-pressed={dialecte === 'cro'} onclick={() => causirDial('cro')}
-							><i class="cro"></i>{lang === 'oc' ? 'creissent' : 'croissant'}</button
-						>
-					{/if}
-					{#if dialecte}
-						<button type="button" class="pastilha totes" onclick={() => (dialecte = null)}>{tx.dialecteTotes}</button>
+					<button type="button" class="pastilha" aria-pressed={causits.includes('cro')} onclick={() => causirDial('cro')}
+						><i class="cro"></i>{lang === 'oc' ? 'creissent' : 'croissant'}</button
+					>
+					{#if causits.length}
+						<button type="button" class="pastilha totes" onclick={() => (causits = [])}>{tx.dialecteTotes}</button>
 					{/if}
 				</div>
 			{/if}

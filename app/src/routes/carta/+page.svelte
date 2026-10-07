@@ -66,7 +66,8 @@
 		costa: true
 	});
 	let colors = $state({});
-	let dialecte = $state(null);
+	// las zònas dialectalas causidas (mantuna se pòt)
+	let causits = $state([]);
 	// Par défaut, la carte en étoiles de l'accueil (2026-10-07) : la carte
 	// détaillée en occitan se découvre dessous en s'approchant.
 	let baseLayer = $state('estelas');
@@ -117,7 +118,7 @@
 			{lang}
 			{elements}
 			{colors}
-			bind:dialecte
+			bind:causits
 		/>
 
 		{#if showInfo}
@@ -154,7 +155,7 @@
 			bind:visibility={layerVisibility}
 			bind:baseLayer
 			bind:colors
-			bind:dialecte
+			bind:causits
 			clar={ambianca.clar}
 			{lang}
 			esAdmin={$esAdmin}

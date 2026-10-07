@@ -85,7 +85,7 @@
 		colors = {},
 		// lo dialècte causit (còdi, 'cro' pel Creissent, o null) : de la carta al
 		// panèl e del panèl a la carta
-		dialecte = $bindable(null)
+		causits = $bindable([])
 	} = $props();
 	// la zòna dialectala survolada o causida, dins la legenda d'en bas
 	let survòl = $state(null);
@@ -97,7 +97,8 @@
 	// Jaces del catalògue pintadas pel site (frontièra, dialèctes, Creissent,
 	// regions, despartaments) : sus totes los fonses
 	let colaDonadas;
-	const jacesDonadas = (vis) => Object.fromEntries(JACES_DONADAS.map((id) => [id, !!vis[id]]));
+	// (lo Creissent es una pastilha dels dialèctes : se mòstra amb eles)
+	const jacesDonadas = (vis) => ({ ...Object.fromEntries(JACES_DONADAS.map((id) => [id, !!vis[id]])), creissent: !!vis.dialectes });
 	// Jaces de fonts publicas (comunas, provincias, parcs, relèu) : colaTematica.js
 	let colaTematica;
 	const jacesTematicas = (vis) => Object.fromEntries(JACES_TEMATICAS.map((id) => [id, !!vis[id]]));
@@ -130,7 +131,7 @@
 				});
 				colaEstelas.setElements(elements);
 				colaEstelas.setColors(colors);
-				colaEstelas.setModeDialectes(!!(visibility.dialectes || visibility.creissent));
+				colaEstelas.setModeDialectes(!!visibility.dialectes);
 			}
 			colaEstelas.addTo(map);
 			majDetalh();
@@ -407,9 +408,9 @@
 			// un luòc o una vila a ficha jos lo det : lo clic es per las estelas
 			ocupat: (lp) => !!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) || !!colaTematica?.ocupat(lp, true),
 			onSurvòl: (k, info) => (survòl = info),
-			onCausida: (k, info) => {
+			onCausida: (kods, info) => {
 				causida = info;
-				dialecte = k;
+				causits = kods;
 			}
 		});
 		colaDonadas.addTo(map);
@@ -517,7 +518,7 @@
 		colaTematica?.setJaces(jacesTematicas(vis));
 		if (vis.calandretas) cargarCalandretas();
 		// dialèctes o Creissent visibles : lo survòl e lo clic son per eles
-		colaEstelas?.setModeDialectes(!!(vis.dialectes || vis.creissent));
+		colaEstelas?.setModeDialectes(!!vis.dialectes);
 
 		for (const [cid, layer] of Object.entries(pointLayers)) {
 			if (vis[cid]) {
@@ -575,8 +576,8 @@
 		colaEstelas?.setColors(c);
 	});
 	$effect(() => {
-		const k = dialecte;
-		colaDonadas?.causir(k);
+		const kods = [...causits];
+		colaDonadas?.causir(kods);
 	});
 
 	// Recherche : un lieu, la carte y vole (et l'y signale) ; un département ou

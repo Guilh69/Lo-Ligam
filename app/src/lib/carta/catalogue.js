@@ -26,7 +26,7 @@ export const CATALOGUE = [
 				estat: 'disponible',
 				defaut: true
 			},
-			{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', estat: 'disponible', defaut: false },
+			{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', estat: 'disponible', defaut: false, nota_oc: "Se'n pòt causir mantun, lo Creissent tanben", nota_fr: 'On peut en choisir plusieurs, le Croissant aussi' },
 			{
 				id: 'toponimia',
 				oc: 'Noms occitans de las vilas',
@@ -35,17 +35,9 @@ export const CATALOGUE = [
 				defaut: true,
 				fons: 'estelas'
 			},
-			{
-				// traçat nòstre (2026-10-07) d'aprèp Tourtoulon e Bringuier (1876, domeni
-				// public) e Ronjat (1930) ; l'ancian veniá de l'Atlas LISN (CC BY-NC-SA)
-				id: 'creissent',
-				oc: 'Lo Creissent',
-				fr: 'Le Croissant',
-				estat: 'disponible',
-				defaut: false,
-				nota_oc: "Transicion amb l'oïl · traçat aproximatiu d'aprèp Tourtoulon (1876)",
-				nota_fr: "Transition avec l'oïl · tracé approximatif d'après Tourtoulon (1876)"
-			},
+			// Lo Creissent (traçat nòstre d'aprèp Tourtoulon e Bringuier 1876 e Ronjat
+			// 1930) es pas pus una jaça a despart : es una pastilha dels dialèctes,
+			// causissabla coma eles (retorn de Romain : « un seul endroit »)
 			{
 				id: 'departaments',
 				oc: 'Despartaments occitanofòns',
