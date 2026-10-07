@@ -14,6 +14,57 @@
 // l'échelle par transformation CSS pendant l'animation de zoom (même méthode
 // que le moteur de rendu canevas de Leaflet).
 import { LUOCS, RIUS, COSTA, dialDe } from '$lib/acuelh/carta-estelas.js';
+import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
+import { VILAS_FICHAS } from './vilasFichas.js';
+
+// Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam en pichon, sus un
+// disc sorne liserat d'aur, per demorar legibla sus la carta detalhada
+function dessenharRepèr(cx, x, y, R, T, a, pols) {
+	cx.save();
+	cx.globalAlpha = a * (0.22 + 0.12 * pols);
+	const h = cx.createRadialGradient(x, y, 0, x, y, R * 2.6);
+	h.addColorStop(0, T.fil);
+	h.addColorStop(1, 'rgba(238, 175, 52, 0)');
+	cx.fillStyle = h;
+	cx.beginPath();
+	cx.arc(x, y, R * 2.6, 0, 6.283);
+	cx.fill();
+	cx.globalAlpha = a;
+	cx.fillStyle = T.bulla;
+	cx.strokeStyle = T.fil;
+	cx.lineWidth = 1.2;
+	cx.beginPath();
+	cx.arc(x, y, R * 1.45, 0, 6.283);
+	cx.fill();
+	cx.stroke();
+	cx.translate(x, y);
+	cx.lineCap = 'round';
+	cx.lineWidth = Math.max(1, R * 0.1);
+	cx.beginPath();
+	for (const i of BRANCAS) {
+		cx.moveTo(0, 0);
+		cx.lineTo(P[i][0] * R, P[i][1] * R);
+	}
+	for (const [i, j] of ARCS) {
+		const [ax, ay] = P[i],
+			[bx, by] = P[j];
+		cx.moveTo(ax * R, ay * R);
+		cx.quadraticCurveTo((ax + bx) * 0.415 * R, (ay + by) * 0.415 * R, bx * R, by * R);
+	}
+	cx.stroke();
+	P.forEach(([px, py], i) => {
+		cx.fillStyle = i === 0 ? T.fil : T.estela;
+		cx.beginPath();
+		cx.arc(px * R, py * R, (i === 0 ? 0.15 : 0.12) * R, 0, 6.283);
+		cx.fill();
+	});
+	cx.restore();
+}
+
+const TÈXTES_FICHA = {
+	oc: { dobrir: 'Descobrir la vila  →', leu: 'Lèu' },
+	fr: { dobrir: 'Découvrir la ville  →', leu: 'Bientôt' }
+};
 
 const TEMAS = {
 	sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
@@ -253,7 +304,7 @@ function plaçar(cx, vilas, rius) {
 }
 
 /* ---------- La couche ---------- */
-export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
+export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: {
 			pane: 'estelas',
@@ -265,6 +316,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 
 		initialize() {
 			this._tem = temaDe(clar, dalt);
+			this._lang = lang;
+			this._onFicha = onFicha;
+			this._fichas = VILAS_FICHAS.map((v) => ({ ...v, X: 0, Y: 0 }));
 			this._calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 			this._estelas = LUOCS.map(([lon, lat, nom, vila, dia]) => ({
 				lon, lat, nom, vila, dia,
@@ -321,6 +375,10 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 			return ev;
 		},
 
+		setLenga(l) {
+			this._lang = l;
+		},
+
 		setTema(c, d) {
 			this._tem = temaDe(c, d);
 			this._construirEtiquetas();
@@ -362,6 +420,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 						return [q.x, q.y];
 					})
 				}));
+				for (const v of this._fichas) {
+					const q = map.project([v.lat, v.lon], z);
+					v.X = q.x;
+					v.Y = q.y;
+				}
 				this._costa = COSTA.map((l) =>
 					l.map(([lon, lat]) => {
 						const q = map.project([lat, lon], z);
@@ -483,14 +546,44 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 			}
 			return best;
 		},
+		// Position du repère d'une ville à fiche : sur son étoile en vue
+		// d'ensemble, juste au-dessus du nom OSM sur la carte détaillée
+		_posFicha(v) {
+			const det = partDetalh(this._zoom);
+			return { x: v.X - this._o.x, y: v.Y - this._o.y - det * 26, R: lerp(6.5, 9, det) };
+		},
+		_fichaA(lp) {
+			const x = lp.x - this._min.x,
+				y = lp.y - this._min.y;
+			for (const v of this._fichas) {
+				const p = this._posFicha(v);
+				if (Math.hypot(p.x - x, p.y - y) < p.R * 1.45 + 8) return v;
+			}
+			return null;
+		},
 		_onMirga(e) {
-			if (e.originalEvent?.pointerType === 'touch' || partDetalh(this._zoom) >= 1) return;
+			if (e.originalEvent?.pointerType === 'touch') return;
+			const f = this._fichaA(e.layerPoint);
+			this._fichaPus = f;
+			if (f) {
+				if (this._pus) {
+					this._pus = null;
+					this._construirEtiquetas();
+				}
+				this._map.getContainer().style.cursor = 'pointer';
+				return;
+			}
+			if (partDetalh(this._zoom) >= 1) {
+				this._map.getContainer().style.cursor = '';
+				return;
+			}
 			this._pus = this._pròche(e.layerPoint, 22, 6);
 			this._det = false;
 			if (this._pus !== this._etiqPus) this._construirEtiquetas();
 			this._map.getContainer().style.cursor = this._pus ? 'pointer' : '';
 		},
 		_onSortida() {
+			if (!this._fichaDet) this._fichaPus = null;
 			if (this._det) return;
 			this._pus = null;
 			if (this._etiqPus) this._construirEtiquetas();
@@ -500,6 +593,22 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 		// second sur le même lieu y emmène.
 		_onClic(e) {
 			const tactil = e.originalEvent?.pointerType === 'touch' || !matchMedia('(hover: hover)').matches;
+			// Une ville à fiche : de loin, on y vole ; de près, on ouvre sa page
+			// (ou la bulle dit « Lèu » tant qu'elle n'est pas écrite)
+			const f = this._fichaA(e.layerPoint);
+			if (f) {
+				this._pus = null;
+				if (partDetalh(this._zoom) < 0.5) {
+					this._map.flyTo([f.lat, f.lon], Z_DETALH_1 + 0.5, { duration: this._calm ? 0 : 1.8 });
+				} else if (f.ligam && this._onFicha) {
+					this._onFicha(f);
+				} else {
+					this._fichaPus = f;
+					this._fichaDet = true;
+					this._fichaTòc = performance.now();
+				}
+				return;
+			}
 			const lòc = this._pròche(e.layerPoint, tactil ? 34 : 22, tactil ? 18 : 6);
 			if (!lòc) {
 				if (tactil) this._pus = null;
@@ -593,6 +702,51 @@ export function crearColaEstelas(L, { clar = false, dalt = false } = {}) {
 			if (intro > 0.7 && aEtiq > 0.01) {
 				cx.globalAlpha = ((intro - 0.7) / 0.3) * aEtiq * 0.92;
 				cx.drawImage(this._etiq, 0, 0, W, H);
+			}
+
+			// Les repères des villes à fiche, au-dessus de tout (même de la carte détaillée)
+			if (this._fichas.length && intro > 0.5) {
+				const aF = clamp((intro - 0.5) / 0.4),
+					pols = this._calm ? 0.5 : Math.sin(temps * 1.6) * 0.5 + 0.5;
+				for (const v of this._fichas) {
+					const p = this._posFicha(v);
+					dessenharRepèr(cx, p.x, p.y, p.R * (v === this._fichaPus ? 1.15 : 1), T, aF, pols);
+				}
+			}
+			if (this._fichaDet && performance.now() - this._fichaTòc > 4000) {
+				this._fichaDet = false;
+				this._fichaPus = null;
+			}
+			const fp = this._fichaPus;
+			if (fp) {
+				const p = this._posFicha(fp),
+					tx = TÈXTES_FICHA[this._lang] ?? TÈXTES_FICHA.oc;
+				const acc = fp.ligam ? tx.dobrir : tx.leu;
+				cx.font = 'italic 500 21px ' + CORMORANT;
+				const wn = cx.measureText(fp.nom).width;
+				cx.font = '700 11px Luciole, sans-serif';
+				const wa = cx.measureText(acc).width;
+				const bw = Math.max(wn, wa) + 28,
+					bh = 50,
+					bx = p.x + p.R * 1.45 + 10,
+					by = p.y - bh / 2;
+				cx.globalAlpha = 1;
+				cx.fillStyle = T.bulla;
+				cx.strokeStyle = T.fil;
+				cx.lineWidth = 1;
+				cx.beginPath();
+				cx.roundRect(bx, by, bw, bh, 14);
+				cx.fill();
+				cx.stroke();
+				cx.textAlign = 'left';
+				cx.font = 'italic 500 21px ' + CORMORANT;
+				cx.fillStyle = T.riuTèxt;
+				cx.fillText(fp.nom, bx + 14, by + 22);
+				cx.font = '700 11px Luciole, sans-serif';
+				cx.fillStyle = fp.ligam ? T.fil : T.vilaTèxt;
+				cx.globalAlpha = fp.ligam ? 1 : 0.7;
+				cx.fillText(acc, bx + 14, by + 39);
+				cx.globalAlpha = 1;
 			}
 
 			// La bulle du lieu survolé (ou touché, 5 s)

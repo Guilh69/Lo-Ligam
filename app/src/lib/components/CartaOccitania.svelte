@@ -1,6 +1,7 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
 	import 'leaflet/dist/leaflet.css';
+	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
 	import { crearColaEstelas, opacitatTeules, Z_DETALH_MIN } from '$lib/carta/colaEstelas.js';
 
@@ -68,7 +69,7 @@
 	// Fons « estelas » (per defaut dempuèi lo 2026-10-07) : la carta en estelas
 	// de l'acuèlh ; las tuèlas OSM en occitan se descobrisson dejós sonque quand
 	// s'aprèpa (nivèl 8,5 e mai), e son pas telecargadas abans.
-	let { visibility = {}, baseLayer = 'estelas', clar = false, dalt = false } = $props();
+	let { visibility = {}, baseLayer = 'estelas', clar = false, dalt = false, lang = 'oc' } = $props();
 	let colaEstelas;
 	// Fonses sens noms occitans : las etiquetas de toponims i son apondudas
 	const ambToponims = (k) => k === 'natural' || k === 'satellite';
@@ -88,7 +89,8 @@
 		if (key === 'estelas') {
 			if (currentBaseTileLayer) map.removeLayer(currentBaseTileLayer);
 			currentBaseTileLayer = null;
-			colaEstelas ??= crearColaEstelas(L, { clar, dalt });
+			// Clic sur le repère d'une ville à fiche (de près) : sa page
+			colaEstelas ??= crearColaEstelas(L, { clar, dalt, lang, onFicha: (v) => goto(v.ligam) });
 			colaEstelas.addTo(map);
 			majDetalh();
 			return;
@@ -453,6 +455,10 @@
 		const c = clar,
 			d = dalt;
 		colaEstelas?.setTema(c, d);
+	});
+	$effect(() => {
+		const l = lang;
+		colaEstelas?.setLenga(l);
 	});
 
 	onDestroy(() => {

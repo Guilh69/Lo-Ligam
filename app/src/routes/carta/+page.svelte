@@ -133,7 +133,7 @@
 	</div>
 
 	<main class="carta-wrap">
-		<CartaOccitania visibility={layerVisibility} {baseLayer} clar={ambianca.clar} dalt={ambianca.dalt} />
+		<CartaOccitania visibility={layerVisibility} {baseLayer} clar={ambianca.clar} dalt={ambianca.dalt} {lang} />
 
 		{#if showInfo}
 			<div class="info-card" transition:fly={{ y: -12, duration: 260, easing: quintOut }}>
