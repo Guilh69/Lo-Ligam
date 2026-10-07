@@ -71,7 +71,24 @@
 	// Fons « estelas » (per defaut dempuèi lo 2026-10-07) : la carta en estelas
 	// de l'acuèlh ; las tuèlas OSM en occitan se descobrisson dejós sonque quand
 	// s'aprèpa (nivèl 8,5 e mai), e son pas telecargadas abans.
-	let { visibility = {}, baseLayer = 'estelas', clar = false, dalt = false, lang = 'oc' } = $props();
+	let {
+		visibility = {},
+		baseLayer = 'estelas',
+		clar = false,
+		dalt = false,
+		lang = 'oc',
+		// elements del fons en estelas ({ estelas, nomsVilas, rius, nomsRius, corbas, costa })
+		elements = {},
+		// colors causidas per l'internauta ({ riu, costa, estela, corba })
+		colors = {},
+		// lo dialècte causit (còdi, 'cro' pel Creissent, o null) : de la carta al
+		// panèl e del panèl a la carta
+		dialecte = $bindable(null)
+	} = $props();
+	// la zòna dialectala survolada o causida, dins la legenda d'en bas
+	let survòl = $state(null);
+	let causida = $state(null);
+	const legendaDial = $derived(causida ?? survòl);
 	let colaEstelas;
 	// Jaces del catalògue pintadas pel site (frontièra, dialèctes, Creissent,
 	// regions, despartaments) : sus totes los fonses
@@ -96,7 +113,12 @@
 			if (currentBaseTileLayer) map.removeLayer(currentBaseTileLayer);
 			currentBaseTileLayer = null;
 			// Clic sur le repère d'une ville à fiche (de près) : sa page
-			colaEstelas ??= crearColaEstelas(L, { clar, dalt, lang, onFicha: (v) => goto(v.ligam) });
+			if (!colaEstelas) {
+				colaEstelas = crearColaEstelas(L, { clar, dalt, lang, onFicha: (v) => goto(v.ligam) });
+				colaEstelas.setElements(elements);
+				colaEstelas.setColors(colors);
+				colaEstelas.setModeDialectes(!!(visibility.dialectes || visibility.creissent));
+			}
 			colaEstelas.addTo(map);
 			majDetalh();
 			return;
@@ -310,7 +332,19 @@
 		);
 
 		setBaseLayer(baseLayer);
-		colaDonadas = crearColaDonadas(L, { clar, dalt, lang, jaces: jacesDonadas(visibility) });
+		colaDonadas = crearColaDonadas(L, {
+			clar,
+			dalt,
+			lang,
+			jaces: jacesDonadas(visibility),
+			// un luòc o una vila a ficha jos lo det : lo clic es per las estelas
+			ocupat: (lp) => !!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)),
+			onSurvòl: (k, info) => (survòl = info),
+			onCausida: (k, info) => {
+				causida = info;
+				dialecte = k;
+			}
+		});
 		colaDonadas.addTo(map);
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, get colaEstelas() { return colaEstelas; } };
@@ -406,6 +440,8 @@
 		const nextBaseLayer = baseLayer;
 		if (!map || !L) return;
 		colaDonadas?.setJaces(jacesDonadas(vis));
+		// dialèctes o Creissent visibles : lo survòl e lo clic son per eles
+		colaEstelas?.setModeDialectes(!!(vis.dialectes || vis.creissent));
 
 		for (const [cid, layer] of Object.entries(pointLayers)) {
 			if (vis[cid]) {
@@ -451,6 +487,19 @@
 		colaEstelas?.setLenga(l);
 		colaDonadas?.setLenga(l);
 	});
+	// Elements e colors del fons, dialècte causit dempuèi lo panèl
+	$effect(() => {
+		const el = { ...elements };
+		colaEstelas?.setElements(el);
+	});
+	$effect(() => {
+		const c = { ...colors };
+		colaEstelas?.setColors(c);
+	});
+	$effect(() => {
+		const k = dialecte;
+		colaDonadas?.causir(k);
+	});
 
 	// Recherche : un lieu, la carte y vole (et l'y signale) ; un département ou
 	// une région, elle se cadre dessus
@@ -488,6 +537,22 @@
 
 	<CercaCarta {lang} onCausir={anarA} />
 
+	<!-- Lo dialècte survolat o causit : meteissa etiqueta que los territòris -->
+	{#if legendaDial}
+		<div class="legenda-dial" class:fixada={!!causida} aria-live="polite">
+			<span class="nom">{lang === 'fr' ? legendaDial.fr : legendaDial.oc}</span>
+			<span class="sota"
+				>{legendaDial.cro
+					? lang === 'fr'
+						? 'zone de transition'
+						: 'zòna de transicion'
+					: lang === 'fr'
+						? 'dialecte'
+						: 'dialècte'}</span
+			>
+		</div>
+	{/if}
+
 	<!-- Flèche du nord à l'ancienne, comme sur l'accueil : aiguille en losange
 	     (moitié pleine, moitié tracée), anneau fin, N italique -->
 	<div class="compass" aria-hidden="true">
@@ -503,6 +568,52 @@
 </div>
 
 <style>
+	/* L'etiqueta del dialècte survolat o causit : la meteissa que pels
+	   territòris (pintada dins lo canavàs de las estelas), en bas al centre */
+	.legenda-dial {
+		position: absolute;
+		z-index: 900;
+		left: 50%;
+		bottom: 62px;
+		transform: translateX(-50%);
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		height: 34px;
+		padding: 0 18px;
+		border-radius: 17px;
+		border: 1px solid color-mix(in srgb, var(--t-tinta) 70%, transparent);
+		background: color-mix(in srgb, var(--t-fons-2) 94%, transparent);
+		color: var(--t-tinta);
+		pointer-events: none;
+		white-space: nowrap;
+		animation: legenda-dial 0.25s ease-out;
+	}
+	.legenda-dial.fixada {
+		border-color: var(--t-aur);
+	}
+	.legenda-dial .nom {
+		font: 700 12.5px/1 var(--font-body);
+		letter-spacing: 2.5px;
+		text-transform: uppercase;
+	}
+	.legenda-dial .sota {
+		font: 400 11px/1 var(--font-body);
+		letter-spacing: 0.5px;
+		color: var(--t-aur-clar);
+	}
+	@keyframes legenda-dial {
+		from {
+			opacity: 0;
+			transform: translate(-50%, 4px);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.legenda-dial {
+			animation: none;
+		}
+	}
+
 	.carta-root {
 		position: relative;
 		width: 100%;

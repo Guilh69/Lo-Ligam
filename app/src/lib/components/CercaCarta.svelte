@@ -5,7 +5,7 @@
 	// le site lui-même : aucun service extérieur, rien ne sort de la page.
 	import { LUOCS, dialDe, rencDe } from '$lib/acuelh/carta-estelas.js';
 	import { NOMS_FRANCES } from '$lib/carta/nomsFrances.js';
-	import { TERRITORIS, NOMS_OC_TER, nomTerritori } from '$lib/carta/territoris.js';
+	import { TERRITORIS, NOMS_OC_TER, nomTerritori, sotaTerritori } from '$lib/carta/territoris.js';
 
 	let { lang = 'oc', onCausir = () => {} } = $props();
 
@@ -107,9 +107,8 @@
 	const segonda = (r) =>
 		r.mena === 'luòc'
 			? [r.fr && r.fr !== r.nom ? r.fr : null, r.dial].filter(Boolean).join(' · ')
-			: r.mena === 'despartament'
-				? `${tx.despartament} · ${r.code}`
-				: tx.region;
+			: (sotaTerritori(r.code, lang) ??
+				(r.mena === 'despartament' ? `${tx.despartament} · ${r.code}` : tx.region));
 </script>
 
 <div class="cerca" role="search">

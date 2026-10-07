@@ -5,6 +5,7 @@
 	import { quintOut } from 'svelte/easing';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
+	import RailJaces from '$lib/components/RailJaces.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import LayersIcon from '$lib/components/LayersIcon.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
@@ -58,7 +59,10 @@
 	const SEEN_KEY = 'lo-ligam-carta-info-seen';
 
 	let showInfo = $state(false);
-	let layersPanelOpen = $state(false);
+	// elements e colors del fons, dialècte causit (rail de las jaces)
+	let elements = $state({});
+	let colors = $state({});
+	let dialecte = $state(null);
 	// Par défaut, la carte en étoiles de l'accueil (2026-10-07) : la carte
 	// détaillée en occitan se découvre dessous en s'approchant.
 	let baseLayer = $state('estelas');
@@ -101,7 +105,16 @@
 	</div>
 
 	<main class="carta-wrap">
-		<CartaOccitania visibility={layerVisibility} {baseLayer} clar={ambianca.clar} dalt={ambianca.dalt} {lang} />
+		<CartaOccitania
+			visibility={layerVisibility}
+			{baseLayer}
+			clar={ambianca.clar}
+			dalt={ambianca.dalt}
+			{lang}
+			{elements}
+			{colors}
+			bind:dialecte
+		/>
 
 		{#if showInfo}
 			<div class="info-card" transition:fly={{ y: -12, duration: 260, easing: quintOut }}>
@@ -132,83 +145,17 @@
 			</button>
 		{/if}
 
-		{#if layersPanelOpen}
-			<div class="layers-panel" transition:fly={{ y: 12, duration: 260, easing: quintOut }}>
-				<div class="layers-head">
-					<h2>{tx.layers}</h2>
-					<button
-						type="button"
-						class="info-close"
-						onclick={() => (layersPanelOpen = false)}
-						aria-label={tx.close}>×</button
-					>
-				</div>
-
-				<div class="basemap-section">
-					<p class="basemap-label">{tx.basemap}</p>
-					<div class="basemap-options" role="radiogroup" aria-label={tx.basemap}>
-						{#each baseLayerOptions as option (option)}
-							<label class="basemap-option">
-								<input
-									type="radio"
-									name="basemap"
-									value={option}
-									checked={baseLayer === option}
-									onchange={() => (baseLayer = option)}
-								/>
-								{tx[
-									'basemap' + option.charAt(0).toUpperCase() + option.slice(1)
-								]}
-							</label>
-						{/each}
-					</div>
-				</div>
-
-				<hr class="layers-divider" />
-
-				{#each familhas as familha (familha.id)}
-					<p class="grop-titol">{lang === 'oc' ? familha.oc : familha.fr}</p>
-					<ul>
-						{#each familha.jaces as jaça (jaça.id)}
-							{@const actiu = jaça.estat === 'disponible'}
-							{@const nota =
-								jaça.estat === 'basa'
-									? tx.indisponible
-									: (lang === 'oc' ? jaça.nota_oc : (jaça.nota_fr ?? jaça.nota_oc)) ??
-										(actiu ? null : tx.aVenir)}
-							<li class:disabled={!actiu}>
-								<label>
-									<input
-										type="checkbox"
-										disabled={!actiu}
-										checked={actiu && layerVisibility[jaça.id]}
-										onchange={(e) => (layerVisibility[jaça.id] = e.currentTarget.checked)}
-									/>
-									{lang === 'oc' ? jaça.oc : jaça.fr}
-								</label>
-								{#if nota}
-									<p class="layer-note">{nota}</p>
-								{/if}
-							</li>
-						{/each}
-					</ul>
-				{/each}
-
-				{#if $esAdmin}
-					<a class="admin-link" href="/admin/carta">{tx.adminLink} →</a>
-				{/if}
-			</div>
-		{:else}
-			<button
-				type="button"
-				class="layers-trigger"
-				onclick={() => (layersPanelOpen = true)}
-				aria-label={tx.layersLabel}
-				transition:fly={{ y: 12, duration: 220, easing: quintOut }}
-			>
-				<LayersIcon size={20} />
-			</button>
-		{/if}
+		<RailJaces
+			{familhas}
+			bind:visibility={layerVisibility}
+			bind:baseLayer
+			bind:elements
+			bind:colors
+			bind:dialecte
+			clar={ambianca.clar}
+			{lang}
+			esAdmin={$esAdmin}
+		/>
 	</main>
 </div>
 
@@ -221,6 +168,7 @@
 		--ease: cubic-bezier(0.19, 1, 0.22, 1);
 		position: relative;
 		height: 100dvh;
+		container: carta / size;
 		overflow: hidden;
 		color: var(--t-tinta);
 		background: var(--t-fons);
@@ -340,160 +288,4 @@
 		height: 2.6rem;
 	}
 
-	/* ---------- Calques ---------- */
-	.layers-trigger {
-		position: absolute;
-		z-index: 1000;
-		bottom: 3.5rem;
-		left: var(--marge);
-		width: 2.8rem;
-		height: 2.8rem;
-	}
-
-	.layers-trigger:hover {
-		transform: rotate(-8deg);
-	}
-
-	.layers-panel {
-		bottom: 3.5rem;
-		left: var(--marge);
-		width: min(19rem, calc(100vw - 2rem));
-		max-height: calc(100dvh - 12rem);
-		overflow-y: auto;
-		scrollbar-width: thin;
-		scrollbar-color: var(--t-linha) transparent;
-		padding: 1rem 1.1rem 1.1rem;
-	}
-
-	.layers-head {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 0.6rem;
-	}
-
-	.layers-head h2 {
-		margin: 0;
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: 1.35rem;
-	}
-
-	.layers-head .info-close {
-		position: static;
-	}
-
-	.basemap-label,
-	.grop-titol {
-		margin: 0.9rem 0 0.4rem;
-		font-size: 0.68rem;
-		font-weight: 700;
-		letter-spacing: 0.26em;
-		text-transform: uppercase;
-		color: var(--t-tinta-2);
-	}
-
-	.basemap-label {
-		margin-top: 0.2rem;
-	}
-
-	/* Les fonds : un sélecteur à cases, comme le choix de thème */
-	.basemap-options {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 4px;
-		padding: 3px;
-		border: 1px solid var(--t-linha);
-		border-radius: 12px;
-	}
-
-	.basemap-option {
-		position: relative;
-		display: grid;
-		place-items: center;
-		padding: 0.45rem 0.3rem;
-		border-radius: 9px;
-		font-size: 0.82rem;
-		font-weight: 700;
-		color: var(--t-tinta-2);
-		cursor: pointer;
-		transition:
-			background 0.35s,
-			color 0.35s;
-	}
-
-	.basemap-option input {
-		position: absolute;
-		opacity: 0;
-		pointer-events: none;
-	}
-
-	.basemap-option:has(input:checked) {
-		background: var(--t-tinta);
-		color: var(--t-fons);
-	}
-
-	.basemap-option:has(input:focus-visible) {
-		outline: 2px solid var(--t-aur);
-		outline-offset: 2px;
-	}
-
-	.layers-divider {
-		border: none;
-		border-top: 1px solid var(--t-linha);
-		margin: 1rem 0 0.2rem;
-	}
-
-	.layers-panel ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
-
-	.layers-panel li {
-		padding: 0.3rem 0;
-	}
-
-	.layers-panel label {
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-		font-size: 0.88rem;
-		cursor: pointer;
-	}
-
-	.layers-panel li.disabled label {
-		color: var(--t-tinta-2);
-		opacity: 0.6;
-		cursor: default;
-	}
-
-	.layers-panel input[type='checkbox'] {
-		width: 1rem;
-		height: 1rem;
-		margin: 0;
-		accent-color: var(--t-aur);
-	}
-
-	.layer-note {
-		margin: 0.15rem 0 0 1.6rem;
-		font-size: 0.72rem;
-		line-height: 1.35;
-		color: var(--t-tinta-2);
-	}
-
-	.admin-link {
-		display: block;
-		margin-top: 0.9rem;
-		padding-top: 0.7rem;
-		border-top: 1px solid var(--t-linha);
-		font-size: 0.82rem;
-		font-weight: 700;
-		color: var(--t-aur-clar);
-		text-decoration: none;
-	}
-
-	.admin-link:hover {
-		color: var(--t-aur);
-	}
 </style>

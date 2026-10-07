@@ -4,13 +4,15 @@
 // valon per totes los fonses, e demòran jos los noms de la carta en estelas.
 //
 // Dialèctes (2026-10-07) : zònas de la carta d'Occitanica, calada en
-// Lambert-93. Las limits entre dialèctes son pas de traches : de luènh son
-// netas, de prèp se fondon sus quauques quilomètres (las parlars se mesclan,
-// e lo calatge es precis a 3-6 km près).
+// Lambert-93, corregidas (Gevaudan, còsta). Las limits entre dialèctes son pas
+// de traches mas de fonduts larges (causida de Romain : las parlars se
+// mesclan). Un dialècte (o lo Creissent) se pòt causir : sol el demòra, e sa
+// color se difusa sus son territòri a partir de son còr.
 import { cargarLimits } from './colaEstelas.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
+const dossa = (t) => 1 - Math.pow(1 - t, 3); // arribada doça
 // mescla de doas colors #rrggbb (t = part de la segonda)
 const mesclar = (a, b, t) => {
 	const h = (c, i) => parseInt(c.slice(1 + 2 * i, 3 + 2 * i), 16);
@@ -26,8 +28,8 @@ const COLORS = {
 	dalt: { gas: '#0072b2', lan: '#d55e00', pro: '#cc79a7', lem: '#e69f00', auv: '#009e73', viv: '#56b4e9' }
 };
 const TEMAS = {
-	sorne: { lenga: '#e0612f', admin: '245, 234, 216', liser: 'rgba(18, 9, 6, 0.85)', tencha: 0.3 },
-	clar: { lenga: '#b53d17', admin: '46, 29, 20', liser: 'rgba(245, 234, 216, 0.9)', tencha: 0.22 }
+	sorne: { lenga: '#e0612f', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: 0.3 },
+	clar: { lenga: '#b53d17', admin: '46, 29, 20', ombra: 'rgba(245, 234, 216, 0.95)', clar: true, tencha: 0.22 }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
@@ -35,6 +37,7 @@ const temaDe = (clar, dalt) => ({
 	dial: dalt ? COLORS.dalt : clar ? COLORS.clar : COLORS.sorne
 });
 
+const DURADA = 1700; // ms : difusion d'un dialècte causit
 let dialPromesa = null,
 	creissentPromesa = null;
 const cargarJson = (url) =>
@@ -42,7 +45,10 @@ const cargarJson = (url) =>
 		.then((r) => (r.ok ? r.json() : null))
 		.catch(() => null);
 
-export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', jaces = {} } = {}) {
+export function crearColaDonadas(
+	L,
+	{ clar = false, dalt = false, lang = 'oc', jaces = {}, ocupat = null, onSurvòl = null, onCausida = null } = {}
+) {
 	const Cola = L.Layer.extend({
 		options: {
 			pane: 'donadas',
@@ -55,11 +61,10 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 			this._tem = temaDe(clar, dalt);
 			this._lang = lang;
 			this._jaces = { ...jaces };
-			// Variantas en esprova (2026-10-07), causidas per l'adreça de la pagina :
-			// ?noms=gravat|atlas|ensenha & transicion=fondut|penche
-			const q = new URLSearchParams(location.search);
-			this._estilN = q.get('noms') || 'gravat';
-			this._estilT = q.get('transicion') || 'fondut';
+			this._sel = null; // dialècte causit (còdi) o 'cro' pel Creissent
+			this._pus = null; // zòna jos lo cursor
+			this._anim = null;
+			this._calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		},
 
 		onAdd(map) {
@@ -75,27 +80,36 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 			}
 			this._cv = L.DomUtil.create('canvas', 'cola-donadas leaflet-zoom-animated', map.getPane('donadas'));
 			this._cx = this._cv.getContext('2d');
-			this._fora = document.createElement('canvas');
+			// imatges en cache (lo dessenh d'una image d'animacion las recòpia)
+			this._imgTotes = document.createElement('canvas');
+			this._imgSel = document.createElement('canvas');
+			this._masca = document.createElement('canvas');
+			this._trab = document.createElement('canvas');
 			cargarLimits().then((l) => {
 				this._limits = l;
 				this._update();
 			});
 			this._cargar();
 			this._update();
-			// los noms se pintan dins lo canavàs : esperar las polissas
-			Promise.all([
-				document.fonts?.load('16px Limelight'),
-				document.fonts?.load('italic 500 16px "Cormorant Garamond"'),
-				document.fonts?.load('400 12px Luciole')
-			]).then(() => this._update(), () => {});
+			// los noms se pintan dins lo canavàs : esperar la polissa
+			document.fonts?.load('400 12px Luciole').then(() => this._pintar(), () => {});
 		},
 
 		onRemove() {
+			cancelAnimationFrame(this._raf);
 			L.DomUtil.remove(this._cv);
 		},
 
 		getEvents() {
-			const ev = { viewreset: this._update, moveend: this._update, resize: this._update, zoom: this._onZoom };
+			const ev = {
+				viewreset: this._update,
+				moveend: this._update,
+				resize: this._update,
+				zoom: this._onZoom,
+				mousemove: this._onMirga,
+				mouseout: this._onSortida,
+				click: this._onClic
+			};
 			if (this._zoomAnimated) ev.zoomanim = this._onAnimZoom;
 			return ev;
 		},
@@ -116,6 +130,9 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 
 		setJaces(j) {
 			this._jaces = { ...j };
+			// una zòna causida dont la jaça s'escantís es pas pus causida
+			if (this._sel && !(this._sel === 'cro' ? j.creissent : j.dialectes)) this._causir(null, false);
+			if (this._pus && !(this._pus === 'cro' ? j.creissent : j.dialectes)) this._survòl(null);
 			this._cargar();
 			this._update();
 		},
@@ -125,7 +142,11 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 		},
 		setLenga(l) {
 			this._lang = l;
-			this._update();
+			this._pintar();
+		},
+		// Causida venguda de defòra (lo panèl) : un dialècte, 'cro', o null
+		causir(kod) {
+			if (kod !== this._sel) this._causir(kod, true);
 		},
 
 		_onAnimZoom(e) {
@@ -144,6 +165,74 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 			L.DomUtil.setTransform(this._cv, topLeftOffset, scale);
 		},
 
+		/* ---------- Survòl e causida ---------- */
+		_interactiu() {
+			return !!(this._jaces.dialectes && this._dial) || !!(this._jaces.creissent && this._creissent);
+		},
+		// La zòna jos un ponch : lo Creissent d'en primièr (es dessús), puèi
+		// los dialèctes ; quand un dialècte es causit, sonque el
+		_zonaA(lp) {
+			const g = this._geo;
+			if (!g || !this._interactiu()) return null;
+			this._cxTest ??= document.createElement('canvas').getContext('2d');
+			const x = lp.x - this._min.x,
+				y = lp.y - this._min.y;
+			if (this._jaces.creissent && g.cro && this._cxTest.isPointInPath(g.cro.c, x, y, 'evenodd')) return 'cro';
+			if (this._jaces.dialectes && g.zonas) {
+				// hors du domaine : rien (les zones sont découpées par lui)
+				if (g.dom && !this._cxTest.isPointInPath(g.dom, x, y, 'evenodd')) return null;
+				for (const zn of g.zonas) if (this._cxTest.isPointInPath(zn.c, x, y, 'evenodd')) return zn.kod;
+			}
+			return null;
+		},
+		_survòl(k) {
+			if (k === this._pus) return;
+			this._pus = k;
+			onSurvòl?.(k, this._nomDe(k));
+			this._pintar();
+		},
+		_onMirga(e) {
+			if (e.originalEvent?.pointerType === 'touch' || !this._interactiu()) return;
+			const k = ocupat?.(e.layerPoint) ? null : this._zonaA(e.layerPoint);
+			this._survòl(k);
+			if (k) this._map.getContainer().style.cursor = 'pointer';
+		},
+		_onSortida() {
+			this._survòl(null);
+		},
+		_onClic(e) {
+			if (!this._interactiu() || ocupat?.(e.layerPoint)) return;
+			const k = this._zonaA(e.layerPoint);
+			// un clic sus la zòna causida o defòra : totes los dialèctes tornan
+			this._causir(k && k !== this._sel ? k : null, true);
+		},
+		_nomDe(k) {
+			if (!k) return null;
+			const f = (k === 'cro' ? this._creissent : this._dial)?.features.find((x) => x.properties.kod === k);
+			return f ? { kod: k, oc: f.properties.oc, fr: f.properties.fr, cro: k === 'cro' } : null;
+		},
+		_causir(k, anim) {
+			const de = this._sel;
+			this._sel = k;
+			this._anim = anim && !this._calm ? { de, a: k, t0: performance.now() } : null;
+			this._prepSel();
+			onCausida?.(k, this._nomDe(k));
+			this._bocla();
+		},
+		_bocla() {
+			cancelAnimationFrame(this._raf);
+			const pas = () => {
+				this._pintar();
+				if (this._anim && performance.now() - this._anim.t0 < DURADA + 50) this._raf = requestAnimationFrame(pas);
+				else {
+					this._anim = null;
+					this._pintar();
+				}
+			};
+			this._raf = requestAnimationFrame(pas);
+		},
+
+		/* ---------- Geometria (a cada recalatge) ---------- */
 		_update() {
 			const map = this._map;
 			if (!map || !this._cv) return;
@@ -153,14 +242,18 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 			const tal = size.multiplyBy(1 + 2 * p).round();
 			this._center = map.getCenter();
 			this._zoom = map.getZoom();
+			this._min = min;
 			L.DomUtil.setPosition(this._cv, min);
 			const dpr = Math.min(devicePixelRatio || 1, 2);
-			const W = tal.x,
-				H = tal.y;
-			this._cv.width = Math.round(W * dpr);
-			this._cv.height = Math.round(H * dpr);
-			this._cv.style.width = W + 'px';
-			this._cv.style.height = H + 'px';
+			this._dpr = dpr;
+			this._W = tal.x;
+			this._H = tal.y;
+			for (const c of [this._cv, this._imgTotes, this._imgSel, this._trab]) {
+				c.width = Math.round(tal.x * dpr);
+				c.height = Math.round(tal.y * dpr);
+			}
+			this._cv.style.width = tal.x + 'px';
+			this._cv.style.height = tal.y + 'px';
 			const o = map.getPixelOrigin().add(min);
 			const z = this._zoom;
 			const pt = ([lon, lat]) => {
@@ -180,96 +273,131 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 				return c;
 			};
 			const poligons = (g) => (g.type === 'Polygon' ? [g.coordinates] : g.coordinates);
-			const cx = this._cx,
-				T = this._tem,
-				J = this._jaces;
-			cx.setTransform(dpr, 0, 0, dpr, 0, 0);
-			cx.clearRect(0, 0, W, H);
-			const mPx = 112600 / Math.pow(2, z); // mètres par pixel vers 44° N
-			const dom = this._limits?.domeni;
-			const camiDom = dom?.anels?.length ? cami(dom.anels) : null;
-
-			/* Dialèctes : las zònas, retalhadas pel domeni (còsta e frontièra netas).
-			   Las limits intèrnas son de transicions, doas faiçons en esprova :
-			   « fondut » (degradat large, ~7 km) o « penche » (cada dialècte intra
-			   per rajas dins lo vesin, sus ~8 km) */
-			if (J.dialectes && this._dial) {
-				const zonas = this._dial.features.map((f) => {
-					const c = new Path2D();
-					for (const anels of poligons(f.geometry)) cami(anels, c);
-					return { c, color: T.dial[f.properties.kod] ?? '#888' };
-				});
-				const penche = this._estilT === 'penche';
-				const flo = penche ? clamp(1500 / mPx, 0.8, 12) : clamp(7000 / mPx, 1.5, 60);
-				const off = this._fora;
-				off.width = this._cv.width;
-				off.height = this._cv.height;
-				const g = off.getContext('2d');
-				g.setTransform(dpr, 0, 0, dpr, 0, 0);
-				g.lineJoin = 'round';
-				// d'en primièr las zònas espandidas cap a l'exterior (lo fondut se
-				// palís pas sus la còsta), puèi las zònas vertadièras dessús
-				for (const zn of zonas) {
-					g.strokeStyle = zn.color;
-					g.lineWidth = flo * 6;
-					g.stroke(zn.c);
-				}
-				for (const zn of zonas) {
-					g.fillStyle = zn.color;
-					g.fill(zn.c, 'evenodd');
-				}
-				// de prèp, lo dialècte es pertot : la tencha s'esvalís
-				const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4));
-				cx.save();
-				if (camiDom) cx.clip(camiDom, 'evenodd');
-				cx.setTransform(1, 0, 0, 1, 0, 0);
-				cx.filter = `blur(${(flo * dpr).toFixed(1)}px)`;
-				cx.globalAlpha = aT;
-				cx.drawImage(off, 0, 0);
-				cx.filter = 'none';
-				if (penche) {
-					// rajas : per cada zòna, un anèl de ~8 km a l'exterior, rajat
-					const larg = clamp(8000 / mPx, 3, 70);
-					const motiu = document.createElement('canvas');
-					const pas = Math.round(7 * dpr);
-					motiu.width = motiu.height = pas;
-					const m = motiu.getContext('2d');
-					m.strokeStyle = '#000';
-					m.lineWidth = 2.6 * dpr;
-					m.beginPath();
-					// diagonala e sos dos cantons, per que las rajas se seguisson
-					m.moveTo(-1, pas + 1);
-					m.lineTo(pas + 1, -1);
-					m.moveTo(-1, 1);
-					m.lineTo(1, -1);
-					m.moveTo(pas - 1, pas + 1);
-					m.lineTo(pas + 1, pas - 1);
-					m.stroke();
-					for (const zn of zonas) {
-						g.setTransform(1, 0, 0, 1, 0, 0);
-						g.globalCompositeOperation = 'source-over';
-						g.clearRect(0, 0, off.width, off.height);
-						g.setTransform(dpr, 0, 0, dpr, 0, 0);
-						g.fillStyle = g.strokeStyle = zn.color;
-						g.lineWidth = larg * 2;
-						g.fill(zn.c, 'evenodd');
-						g.stroke(zn.c);
-						g.globalCompositeOperation = 'destination-out';
-						g.fill(zn.c, 'evenodd');
-						g.globalCompositeOperation = 'destination-in';
-						g.setTransform(1, 0, 0, 1, 0, 0);
-						g.fillStyle = g.createPattern(motiu, 'repeat');
-						g.fillRect(0, 0, off.width, off.height);
-						g.globalCompositeOperation = 'source-over';
-						cx.globalAlpha = Math.min(1, aT * 2.2);
-						cx.drawImage(off, 0, 0);
+			const zona = (f) => {
+				const c = new Path2D();
+				let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+				for (const anels of poligons(f.geometry)) {
+					cami(anels, c);
+					for (const [lon, lat] of anels[0]) {
+						const [x, y] = pt([lon, lat]);
+						x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y);
 					}
 				}
-				cx.restore();
+				return { kod: f.properties.kod, c, eti: pt(f.properties.eti), props: f.properties, bbox: [x0, y0, x1, y1] };
+			};
+			const dom = this._limits?.domeni;
+			this._geo = {
+				pt,
+				mPx: 112600 / Math.pow(2, z), // mètres par pixel vers 44° N
+				dom: dom?.anels?.length ? cami(dom.anels) : null,
+				linhas: dom ? dom.linhas.map((l) => l.map(pt)) : null,
+				zonas: this._dial ? this._dial.features.map(zona) : null,
+				cro: this._creissent ? zona(this._creissent.features[0]) : null,
+				regions: this._jaces.regions ? (this._limits?.regions || []).map(([, , anels]) => cami(anels)) : null,
+				deps: this._jaces.despartaments ? (this._limits?.despartaments || []).map(([, , anels]) => cami(anels)) : null
+			};
+			this._prepTotes();
+			this._prepSel();
+			this._pintar();
+			if (dom) map.getPane('donadas').style.opacity = '1';
+		},
+
+		// Una zòna (o totas) en tencha fonduda, dins un canavàs de la talha del
+		// principal : las zònas espandidas d'en primièr cap a l'exterior (lo
+		// fondut se palís pas sus la còsta), puèi las vertadièras dessús
+		_tenchaDins(c, zonas) {
+			const g = c.getContext('2d'),
+				G = this._geo,
+				T = this._tem,
+				dpr = this._dpr;
+			g.setTransform(1, 0, 0, 1, 0, 0);
+			g.clearRect(0, 0, c.width, c.height);
+			if (!zonas.length) return;
+			const flo = clamp(7000 / G.mPx, 1.5, 60); // fondut d'environ 7 km
+			const t = this._trab,
+				tg = t.getContext('2d');
+			tg.setTransform(1, 0, 0, 1, 0, 0);
+			tg.clearRect(0, 0, t.width, t.height);
+			tg.setTransform(dpr, 0, 0, dpr, 0, 0);
+			tg.lineJoin = 'round';
+			for (const zn of zonas) {
+				tg.strokeStyle = T.dial[zn.kod];
+				tg.lineWidth = flo * 6;
+				tg.stroke(zn.c);
+			}
+			for (const zn of zonas) {
+				tg.fillStyle = T.dial[zn.kod];
+				tg.fill(zn.c, 'evenodd');
+			}
+			g.save();
+			g.setTransform(dpr, 0, 0, dpr, 0, 0);
+			if (G.dom) g.clip(G.dom, 'evenodd');
+			g.setTransform(1, 0, 0, 1, 0, 0);
+			g.filter = `blur(${(flo * dpr).toFixed(1)}px)`;
+			g.drawImage(t, 0, 0);
+			g.restore();
+		},
+		_prepTotes() {
+			if (this._jaces.dialectes && this._geo?.zonas) this._tenchaDins(this._imgTotes, this._geo.zonas);
+		},
+		// Lo dialècte causit, sol : son fondut cap als vesins se ditz transicion
+		_prepSel() {
+			const G = this._geo;
+			if (!G || !this._sel || this._sel === 'cro' || !G.zonas) return;
+			const zn = G.zonas.find((x) => x.kod === this._sel);
+			if (zn) this._tenchaDins(this._imgSel, [zn]);
+		},
+
+		/* ---------- Dessenh (a cada recalatge, e a cada image d'una animacion) ---------- */
+		_pintar() {
+			const G = this._geo;
+			if (!G || !this._cv) return;
+			const cx = this._cx,
+				T = this._tem,
+				J = this._jaces,
+				dpr = this._dpr,
+				z = this._zoom;
+			cx.setTransform(1, 0, 0, 1, 0, 0);
+			cx.clearRect(0, 0, this._cv.width, this._cv.height);
+			cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+			// de prèp, lo dialècte es pertot : la tencha s'esvalís
+			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4));
+			const an = this._anim,
+				p = an ? clamp((performance.now() - an.t0) / DURADA) : 1;
+
+			/* Dialèctes */
+			if (J.dialectes && G.zonas) {
+				const selDial = this._sel && this._sel !== 'cro' ? this._sel : null;
+				// totes : visibles sens causida ; s'esvalisson quand un dialècte es
+				// causit, tornan quand se descausís
+				let aTotes = selDial ? 0 : 1;
+				if (an && !an.a) aTotes = dossa(clamp(p / 0.6));
+				if (an && an.a && !an.de) aTotes = 1 - dossa(clamp(p / 0.35));
+				if (aTotes > 0.01) this._copiar(this._imgTotes, aT * aTotes);
+				if (selDial) {
+					if (an && an.a === selDial) this._difusar(selDial, p, aT);
+					else this._copiar(this._imgSel, aT);
+				}
+				// survòl (sens causida) : la zòna s'esclarzís un pauc
+				if (!selDial && this._pus && this._pus !== 'cro') {
+					const zn = G.zonas.find((x) => x.kod === this._pus);
+					if (zn) {
+						cx.save();
+						if (G.dom) cx.clip(G.dom, 'evenodd');
+						cx.globalAlpha = 0.12;
+						cx.fillStyle = T.dial[zn.kod];
+						cx.fill(zn.c, 'evenodd');
+						cx.restore();
+					}
+				}
 			}
 
 			/* Lo Creissent : zòna de transicion, en asclas */
-			if (J.creissent && this._creissent) {
+			if (J.creissent && G.cro) {
+				const causit = this._sel === 'cro';
+				const autreCausit = this._sel && !causit;
+				let a = autreCausit ? 0.15 : this._pus === 'cro' || causit ? 0.75 : 0.45;
+				if (an && an.a === 'cro') a = 0.75;
 				const motiu = document.createElement('canvas');
 				motiu.width = motiu.height = 9;
 				const m = motiu.getContext('2d');
@@ -279,19 +407,16 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 				m.moveTo(-1, 10);
 				m.lineTo(10, -1);
 				m.stroke();
-				for (const f of this._creissent.features) {
-					const c = new Path2D();
-					for (const anels of poligons(f.geometry)) cami(anels, c);
-					cx.save();
-					cx.globalAlpha = 0.45;
-					cx.fillStyle = cx.createPattern(motiu, 'repeat');
-					cx.fill(c, 'evenodd');
-					cx.globalAlpha = 0.5;
-					cx.strokeStyle = T.lenga;
-					cx.lineWidth = 0.8;
-					cx.stroke(c);
-					cx.restore();
-				}
+				cx.save();
+				if (an && an.a === 'cro') this._mascaDifusion(G.cro, p); // clip progressiu
+				cx.globalAlpha = a;
+				cx.fillStyle = cx.createPattern(motiu, 'repeat');
+				cx.fill(G.cro.c, 'evenodd');
+				cx.globalAlpha = a * 0.9;
+				cx.strokeStyle = T.lenga;
+				cx.lineWidth = 0.8;
+				cx.stroke(G.cro.c);
+				cx.restore();
 			}
 
 			/* Contorns administratius : regions en tirets, despartaments fins */
@@ -301,23 +426,22 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 				cx.lineWidth = larg;
 				cx.setLineDash(dash);
 				cx.lineJoin = 'round';
-				for (const [, , anels] of lista || []) cx.stroke(cami(anels));
+				for (const c of lista) cx.stroke(c);
 				cx.restore();
 			};
-			if (J.despartaments) contorns(this._limits?.despartaments, 0.7, [], 0.28);
-			if (J.regions) contorns(this._limits?.regions, 1.2, [6, 4], 0.45);
+			if (G.deps) contorns(G.deps, 0.7, [], 0.28);
+			if (G.regions) contorns(G.regions, 1.2, [6, 4], 0.45);
 
 			/* La frontièra de la lenga (demanda de Romain, 2026-10-07) : SONQUE de
 			   ponches tèrra cuècha, lo fons demòra lo meteis d'un costat e de
 			   l'autre. De prèp, sabèm pas al quilomètre près ont passa : los
 			   ponches palisson e una benda difusa de quauques quilomètres ditz
 			   « per aquí ». */
-			if (J.frontiera && dom) {
+			if (J.frontiera && G.linhas) {
 				const vague = clamp((z - 7.5) / 2.5);
-				const linhas = dom.linhas.map((l) => l.map(pt));
 				const traçar = () => {
 					cx.beginPath();
-					for (const l of linhas) {
+					for (const l of G.linhas) {
 						cx.moveTo(l[0][0], l[0][1]);
 						for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0], l[i][1]);
 					}
@@ -327,7 +451,7 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 				cx.lineCap = 'round';
 				cx.lineJoin = 'round';
 				if (vague > 0.01) {
-					const larg = Math.max(4, 4000 / mPx);
+					const larg = Math.max(4, 4000 / G.mPx);
 					traçar();
 					for (const [k, al] of [[1, 0.05], [0.55, 0.06]]) {
 						cx.globalAlpha = vague * al;
@@ -343,52 +467,127 @@ export function crearColaDonadas(L, { clar = false, dalt = false, lang = 'oc', j
 				cx.restore();
 			}
 
-			/* Noms dels dialèctes e del Creissent : de luènh sonque (de prèp, la
-			   carta es plena de noms de vilas) */
-			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3); // ni tròp luènh (noms mesclats) ni tròp prèp
+			/* Noms : capitalas espaçadas, una ombra doça (causida de Romain : pas
+			   de contorn negre). De luènh sonque : de prèp, la carta es plena de
+			   noms de vilas. Quand un dialècte es causit, sonque son nom. */
+			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3);
 			if (aNoms > 0.01) {
 				const noms = [];
-				if (J.dialectes && this._dial) for (const f of this._dial.features) noms.push([f.properties, T.dial[f.properties.kod]]);
-				if (J.creissent && this._creissent) for (const f of this._creissent.features) noms.push([f.properties, T.lenga]);
-				// Sens contorn negre (retorn de Romain) : tres aspèctes en esprova.
-				// gravat : l'italica de las ribièras, lusenta ; atlas : capitalas
-				// espaçadas amb una ombra doça ; ensenha : la Limelight dels títols
-				const E = this._estilN;
-				const clar = T.admin !== TEMAS.sorne.admin;
-				const fs =
-					E === 'atlas' ? clamp(10.5 + (z - 6) * 1.1, 10.5, 13) : E === 'ensenha' ? clamp(14 + (z - 6) * 1.8, 14, 19) : clamp(17 + (z - 6) * 2.4, 17, 24);
+				if (J.dialectes && G.zonas)
+					for (const zn of G.zonas) if (!this._sel || this._sel === zn.kod) noms.push([zn, T.dial[zn.kod]]);
+				if (J.creissent && G.cro && (!this._sel || this._sel === 'cro')) noms.push([G.cro, T.lenga]);
+				const fs = clamp(10.5 + (z - 6) * 1.1, 10.5, 13);
 				cx.save();
-				cx.font =
-					E === 'atlas'
-						? `400 ${fs.toFixed(1)}px Luciole, sans-serif`
-						: E === 'ensenha'
-							? `${fs.toFixed(1)}px Limelight, Georgia, serif`
-							: `italic 500 ${fs.toFixed(1)}px "Cormorant Garamond", Georgia, serif`;
-				cx.letterSpacing = (fs * (E === 'atlas' ? 0.32 : E === 'ensenha' ? 0.1 : 0.04)).toFixed(1) + 'px';
+				cx.font = `400 ${fs.toFixed(1)}px Luciole, sans-serif`;
+				cx.letterSpacing = (fs * 0.32).toFixed(1) + 'px';
 				cx.textAlign = 'center';
 				cx.textBaseline = 'middle';
-				for (const [pr, color] of noms) {
-					const [x, y] = pt(pr.eti);
-					let t = this._lang === 'fr' ? pr.fr : pr.oc;
-					t = E === 'atlas' ? t.toUpperCase() : t.charAt(0).toUpperCase() + t.slice(1);
-					const viu = clar ? mesclar(color, '#2e1d14', 0.25) : mesclar(color, '#fff8ec', 0.35);
-					cx.globalAlpha = aNoms;
-					if (E === 'atlas') {
-						cx.shadowColor = clar ? 'rgba(245, 234, 216, 0.95)' : 'rgba(18, 9, 6, 0.9)';
-						cx.shadowBlur = 7;
-					} else {
-						// lo nom lusís de la color de son dialècte
-						cx.shadowColor = clar ? 'rgba(245, 234, 216, 0.9)' : color;
-						cx.shadowBlur = clar ? 6 : 12;
-					}
-					cx.fillStyle = viu;
-					cx.fillText(t, x, y);
-					cx.shadowBlur = 0;
-					cx.fillText(t, x, y);
+				cx.shadowColor = T.ombra;
+				cx.shadowBlur = 7;
+				for (const [zn, color] of noms) {
+					let a = aNoms;
+					if (an && an.a === zn.kod) a *= clamp((p - 0.25) / 0.4); // lo nom arriba aprèp la color
+					if (a < 0.01) continue;
+					const t = (this._lang === 'fr' ? zn.props.fr : zn.props.oc).toUpperCase();
+					cx.globalAlpha = a;
+					cx.fillStyle = T.clar ? mesclar(color, '#2e1d14', 0.25) : mesclar(color, '#fff8ec', 0.35);
+					cx.fillText(t, zn.eti[0], zn.eti[1]);
 				}
 				cx.restore();
 			}
-			if (dom) map.getPane('donadas').style.opacity = '1';
+		},
+
+		_copiar(img, a) {
+			const cx = this._cx;
+			cx.save();
+			cx.setTransform(1, 0, 0, 1, 0, 0);
+			cx.globalAlpha = a;
+			cx.drawImage(img, 0, 0);
+			cx.restore();
+		},
+
+		// Contorn organic d'una taca d'encre que s'espandís : un cercle
+		// trebolat per quauques sinusas lentas, que viran doçament
+		_contornTaca(zn, p) {
+			const [ex, ey] = zn.eti,
+				[x0, y0, x1, y1] = zn.bbox;
+			const Rmax = Math.max(Math.hypot(x0 - ex, y0 - ey), Math.hypot(x1 - ex, y0 - ey), Math.hypot(x0 - ex, y1 - ey), Math.hypot(x1 - ex, y1 - ey)) * 1.12;
+			const R = Rmax * dossa(p),
+				fase = p * 1.4,
+				pts = [];
+			for (let i = 0; i < 120; i++) {
+				const th = (i / 120) * 6.2832;
+				const r = R * (1 + 0.1 * Math.sin(3 * th + 1.3 + fase) + 0.06 * Math.sin(7 * th + 4.1 - fase * 1.7) + 0.035 * Math.sin(13 * th + 2.2 + fase * 2.3));
+				pts.push([ex + r * Math.cos(th), ey + r * Math.sin(th)]);
+			}
+			return pts;
+		},
+		// La difusion : la tencha del dialècte causit, vista a travèrs d'una taca
+		// que creis (masca dessenhada en pichon puèi agrandida : vòra doça a
+		// bon mercat), e un front lusent que s'esvalís
+		_difusar(kod, p, aT) {
+			const G = this._geo,
+				zn = G.zonas.find((x) => x.kod === kod);
+			if (!zn) return;
+			const pts = this._contornTaca(zn, p);
+			const t = this._trab,
+				tg = t.getContext('2d'),
+				dpr = this._dpr;
+			// masca en pichon (1/6)
+			const m = this._masca,
+				k = 1 / 6;
+			m.width = Math.max(1, Math.round(t.width * k));
+			m.height = Math.max(1, Math.round(t.height * k));
+			const mg = m.getContext('2d');
+			mg.clearRect(0, 0, m.width, m.height);
+			mg.setTransform(dpr * k, 0, 0, dpr * k, 0, 0);
+			mg.fillStyle = '#000';
+			mg.beginPath();
+			pts.forEach(([x, y], i) => (i ? mg.lineTo(x, y) : mg.moveTo(x, y)));
+			mg.closePath();
+			mg.fill();
+			// tencha × masca
+			tg.setTransform(1, 0, 0, 1, 0, 0);
+			tg.globalCompositeOperation = 'source-over';
+			tg.clearRect(0, 0, t.width, t.height);
+			tg.drawImage(this._imgSel, 0, 0);
+			tg.globalCompositeOperation = 'destination-in';
+			tg.imageSmoothingQuality = 'high';
+			tg.drawImage(m, 0, 0, t.width, t.height);
+			tg.globalCompositeOperation = 'source-over';
+			this._copiar(t, aT);
+			// lo front : una linha lusenta, dins la zòna sonque, que s'esvalís
+			const cx = this._cx,
+				T = this._tem,
+				aF = (1 - dossa(p)) * 0.9;
+			if (aF > 0.02) {
+				cx.save();
+				cx.clip(zn.c, 'evenodd');
+				if (G.dom) cx.clip(G.dom, 'evenodd');
+				cx.beginPath();
+				pts.forEach(([x, y], i) => (i ? cx.lineTo(x, y) : cx.moveTo(x, y)));
+				cx.closePath();
+				const color = T.dial[kod];
+				cx.strokeStyle = T.clar ? color : mesclar(color, '#fff8ec', 0.45);
+				cx.shadowColor = color;
+				cx.shadowBlur = 14;
+				cx.globalAlpha = aF;
+				cx.lineWidth = 2.2;
+				cx.stroke();
+				cx.globalAlpha = aF * 0.35;
+				cx.lineWidth = 9;
+				cx.stroke();
+				cx.restore();
+			}
+		},
+		// Pel Creissent (en asclas) : la taca serv de clip
+		_mascaDifusion(zn, p) {
+			const cx = this._cx,
+				pts = this._contornTaca(zn, p);
+			cx.beginPath();
+			pts.forEach(([x, y], i) => (i ? cx.lineTo(x, y) : cx.moveTo(x, y)));
+			cx.closePath();
+			cx.clip();
 		}
 	});
 	return new Cola();

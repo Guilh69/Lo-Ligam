@@ -16,7 +16,7 @@
 import { LUOCS, RIUS, COSTA, dialDe, rencDe } from '$lib/acuelh/carta-estelas.js';
 import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
 import { VILAS_FICHAS } from './vilasFichas.js';
-import { nomTerritori } from './territoris.js';
+import { nomTerritori, sotaTerritori } from './territoris.js';
 
 // Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam sus un disc sorne
 // liserat d'aur, e una onda que s'espandís doçament, coma un ponch d'interès
@@ -106,6 +106,16 @@ const lerp = (a, b, t) => a + (b - a) * t;
 const easeIO = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const aleat = (a, b) => a + Math.random() * (b - a);
 const CORMORANT = '"Cormorant Garamond", Georgia, serif';
+// Polissa d'un nom de vila segon son reng (demanda de Romain, 2026-10-07) :
+// la Limelight del lògo per las grandas vilas, la Luciole grassa pels
+// cap-lòcs, l'italica per las vilas pus pichonas. Lo nom survolat garda la
+// polissa de son reng (abans, una italica Cormorant que i pegava pas).
+const polissaVila = (renc, f) =>
+	renc === 1
+		? `${(f * 1.04).toFixed(1)}px Limelight, Georgia, serif`
+		: renc === 2
+			? `700 ${f}px Luciole, sans-serif`
+			: `italic 400 ${renc === 3 ? f * 1.04 : f}px Luciole, sans-serif`;
 
 // Relais NET entre la carte en étoiles et la carte OSM (retour de Romain,
 // 2026-10-07) : un fondu étalé sur plusieurs crans de zoom laissait, vers
@@ -186,7 +196,7 @@ function plaçar(cx, vilas, rius) {
 	// peut croiser une rivière (son liseré le détache), jamais un autre nom
 	// Ordre : villes, puis noms de rivières, puis villages dans la place qui reste
 	const pausarVila = (v) => {
-		cx.font = '700 ' + v.f + 'px Luciole, sans-serif';
+		cx.font = polissaVila(v.renc, v.f);
 		const k = v.f / 12,
 			w = cx.measureText(v.nom).width,
 			x = v.x,
@@ -388,8 +398,16 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 
 		initialize() {
+			this._temaBasa = [clar, dalt];
+			this._colors = {};
 			this._tem = temaDe(clar, dalt);
 			this._lang = lang;
+			// Elements del fons que l'internauta pòt escantir (famílha « Fons » del
+			// panèl) : per exemple sonque lo trach de còsta
+			this._el = { estelas: true, nomsVilas: true, rius: true, nomsRius: true, corbas: true, costa: true };
+			// quand la jaça dels dialèctes es alucada, lo clic e lo survòl son per
+			// ela : los territòris se revèlan pas
+			this._modeDial = false;
 			this._onFicha = onFicha;
 			this._fichas = VILAS_FICHAS.map((v) => ({ ...v, X: 0, Y: 0 }));
 			this._calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -475,8 +493,39 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 
 		setTema(c, d) {
-			this._tem = temaDe(c, d);
+			this._temaBasa = [c, d];
+			this._tem = { ...temaDe(c, d), ...this._colors };
 			this._construirEtiquetas();
+		},
+
+		// Elements del fons visibles ({ estelas, nomsVilas, rius, nomsRius, corbas, costa })
+		setElements(el) {
+			this._el = { ...this._el, ...el };
+			this._construirEtiquetas();
+		},
+		// Colors causidas per l'internauta ({ riu, costa, estela, corba }) : per
+		// dessús del tèma ; una valor nulla torna a la del tèma
+		setColors(c) {
+			this._colors = Object.fromEntries(Object.entries(c || {}).filter(([, v]) => v));
+			if (this._colors.riu) this._colors.riuTèxt = this._colors.riu;
+			if (this._colors.estela) this._colors.vilaTèxt = this._colors.estela;
+			this.setTema(...this._temaBasa);
+		},
+		setModeDialectes(on) {
+			this._modeDial = !!on;
+			if (on) {
+				this._terPus = null;
+				this._terFixat = null;
+			}
+		},
+		// I a quicòm de clicable (un luòc, una vila a ficha) jos aqueste ponch ?
+		// (la còla de donadas cedís alara lo clic)
+		ocupat(lp) {
+			if (!this._map || !this._min) return false;
+			if (this._fichaA(lp)) return true;
+			if (this._zoom >= Z_RELAIS) return false;
+			const tactil = !matchMedia('(hover: hover)').matches;
+			return !!this._pròche(lp, tactil ? 34 : 22, tactil ? 18 : 6);
 		},
 
 		/* Recalage : le canevas couvre la vue + une marge, en coordonnées « layer » */
@@ -621,7 +670,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				ray = this._map.getSize().x <= 700 ? 70 : 150;
 			const prèp = (x, y) => (p ? Math.hypot(x - p.X, y - p.Y) < ray : false);
 			this._etiqPus = p;
-			for (const r of this._plaçament.rius) {
+			for (const r of this._el.nomsRius ? this._plaçament.rius : []) {
 				if (!dins(r.letras[0].x, r.letras[0].y)) continue;
 				const m = r.letras[Math.floor(r.letras.length / 2)];
 				g.globalAlpha = prèp(m.x, m.y) ? 0.12 : 1;
@@ -637,9 +686,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			g.textBaseline = 'alphabetic';
 			g.fillStyle = T.vilaTèxt;
-			for (const v of this._plaçament.vilas) {
+			for (const v of this._el.nomsVilas ? this._plaçament.vilas : []) {
 				if (!dins(v.x, v.y) || (p && v.nom === p.nom)) continue;
-				g.font = (v.renc === 4 ? '400 ' : '700 ') + v.f + 'px Luciole, sans-serif';
+				g.font = polissaVila(v.renc, v.f);
 				g.lineWidth = { 1: 4.5, 2: 3.5, 3: 3, 4: 2.5 }[v.renc];
 				// distance du lieu survolé au TEXTE (sa boîte), pas à son point d'ancrage
 				let aprèp = false;
@@ -678,6 +727,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 
 		/* Survol et toucher : le lieu le plus proche, les villes passent devant */
 		_pròche(lp, ray, bonus) {
+			// ni estelas ni noms : pas res a pausar lo det dessús
+			if (!this._el.estelas && !this._el.nomsVilas) return null;
 			const x = lp.x - this._min.x,
 				y = lp.y - this._min.y;
 			let best = null,
@@ -715,6 +766,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 		// Le territoire (région ou département, selon l'échelle) sous un point
 		_territoriA(lp) {
+			if (this._modeDial) return null;
 			const mena = menaTerritori(this._zoom);
 			const lista = mena === 'region' ? this._regions : mena === 'despartament' ? this._deps : null;
 			if (!lista?.length) return null;
@@ -867,7 +919,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// Le relief : courbes de niveau très discrètes, les maîtresses
 			// (tous les 1 000 m) un peu plus marquées
 			const aCorbas = clamp((intro - 0.35) / 0.5) * aRius;
-			if (aCorbas > 0.01 && this._corbas?.length) {
+			if (aCorbas > 0.01 && this._el.corbas && this._corbas?.length) {
 				const pas = pasCorbas(z);
 				cx.strokeStyle = T.corba;
 				cx.lineJoin = 'round';
@@ -887,7 +939,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// Le trait de côte : un fil très fin qui structure la carte, posé
 			// avant les rivières ; la carte détaillée a le sien, il s'efface avec elle
 			const aCosta = clamp((intro - 0.25) / 0.5) * aRius;
-			if (aCosta > 0.01 && this._costa) {
+			if (aCosta > 0.01 && this._el.costa && this._costa) {
 				cx.globalAlpha = aCosta;
 				cx.strokeStyle = T.costa;
 				cx.lineWidth = 0.8;
@@ -901,7 +953,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 
 			const aRiu = easeIO(clamp((intro - 0.45) / 0.55));
-			if (aRiu > 0.01 && this._rius) {
+			if (aRiu > 0.01 && this._el.rius && this._rius) {
 				cx.strokeStyle = T.riu;
 				cx.lineCap = 'round';
 				cx.lineJoin = 'round';
@@ -926,7 +978,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// (colaDonadas.js), sous les étoiles : elle vaut pour tous les fonds.
 
 			cx.fillStyle = T.estela;
-			for (const e of this._estelas) {
+			for (const e of this._el.estelas ? this._estelas : []) {
 				const tw = this._calm ? 0.6 : Math.sin(temps * e.v + e.f) * 0.5 + 0.5;
 				const ai = easeIO(clamp(intro * 1.35 - e.retard));
 				const x = lerp(e.sx * W, e.X - o.x, ai),
@@ -995,7 +1047,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				const p = this._posFicha(fp),
 					tx = TÈXTES_FICHA[this._lang] ?? TÈXTES_FICHA.oc;
 				const acc = this._ajuda ? tx.ajuda : fp.ligam ? tx.dobrir : tx.leu;
-				cx.font = 'italic 500 21px ' + CORMORANT;
+				cx.font = polissaVila(1, 19);
 				const wn = cx.measureText(fp.nom).width;
 				cx.font = '700 11px Luciole, sans-serif';
 				const wa = cx.measureText(acc).width;
@@ -1012,7 +1064,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				cx.fill();
 				cx.stroke();
 				cx.textAlign = 'left';
-				cx.font = 'italic 500 21px ' + CORMORANT;
+				cx.font = polissaVila(1, 19);
 				cx.fillStyle = T.riuTèxt;
 				cx.fillText(fp.nom, bx + 14, by + 22);
 				cx.font = '700 11px Luciole, sans-serif';
@@ -1059,7 +1111,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					vis = this._map.getSize(),
 					v0 = this._map.containerPointToLayerPoint([0, 0]).subtract(this._min);
 				const nom = nomTerritori(reg ? 'region' : 'despartament', t.code, t.nom, this._lang).toUpperCase(),
-					sota = reg ? tt.region : tt.despartament + ' · ' + t.code;
+					sota = sotaTerritori(t.code, this._lang) ?? (reg ? tt.region : tt.despartament + ' · ' + t.code);
 				const esp = 'letterSpacing' in cx;
 				if (esp) cx.letterSpacing = '2.5px';
 				cx.font = '700 12.5px Luciole, sans-serif';
@@ -1113,7 +1165,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				const vis = this._map.getSize(),
 					v0 = this._map.containerPointToLayerPoint([0, 0]).subtract(this._min);
 				if (this._det) {
-					const nomF = 'italic 500 22px ' + CORMORANT,
+					const nomF = polissaVila(p.renc, 19),
 						dialF = '700 11px Luciole, sans-serif';
 					cx.font = nomF;
 					const wn = cx.measureText(p.nom).width;
@@ -1162,7 +1214,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					const tx = px + (dreta ? 16 : -16);
 					cx.textAlign = dreta ? 'left' : 'right';
 					cx.strokeStyle = T.liser;
-					cx.font = 'italic 500 26px ' + CORMORANT;
+					cx.font = polissaVila(p.renc, 23);
 					cx.fillStyle = T.riuTèxt;
 					escriure(p.nom, tx, py + 2, 5);
 					cx.font = '700 11px Luciole, sans-serif';
