@@ -340,9 +340,21 @@
 		if (ambToponims(baseLayer)) loadToponymsLayer();
 
 		L.control.zoom({ position: 'bottomright' }).addTo(map);
-		L.control
-			.scale({ position: 'bottomleft', metric: true, imperial: false, maxWidth: 110 })
-			.addTo(map);
+		// Échelle : Leaflet n'arrondit qu'à 1, 2, 3 ou 5, si bien que deux crans
+		// de zoom affichaient le même « 50 km » (retour de Romain). Des paliers
+		// intermédiaires la font changer à chaque cran ; virgule à la française.
+		const escala = L.control.scale({ position: 'bottomleft', metric: true, imperial: false, maxWidth: 110 });
+		escala._getRoundNum = (num) => {
+			const pow10 = Math.pow(10, String(Math.floor(num)).length - 1);
+			const d = num / pow10;
+			return pow10 * ([10, 7, 5, 4, 3, 2, 1.5, 1].find((v) => d >= v) ?? 1);
+		};
+		escala._updateMetric = function (maxMeters) {
+			const m = this._getRoundNum(maxMeters);
+			const label = m < 1000 ? m + ' m' : (m / 1000).toLocaleString('fr-FR') + ' km';
+			this._updateScale(this._mScale, label, m / maxMeters);
+		};
+		escala.addTo(map);
 
 		// Puèi las donadas de la basa (luòcs, còlas, dialèctes, despartaments)
 		const [{ data: luocsData }, { data: colasData }, { data: dialectesData }, { data: deptData }] =

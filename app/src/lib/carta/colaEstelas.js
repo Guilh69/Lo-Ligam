@@ -334,17 +334,46 @@ const pasCorbas = (z) => (z < 6.75 ? 1000 : z < 7.75 ? 400 : 200);
 const CLAU_AJUDA = 'lo-ligam-carta-ajuda-repèr';
 
 // Limites des départements et des régions (france-geojson / Etalab, simplifiés
-// avec GDAL : 55 Ko compressés, chargés seulement avec la carte). Elles se
-// devinent selon l'échelle (demande de Romain, 2026-10-07) : les régions vers
-// « 50 km » (niveaux 7 à 8), les départements vers « 30 km » (8 à 8,75, juste
-// avant la carte détaillée). Format : [code, nom, [anneaux [[lon, lat], …]]].
+// avec GDAL : 55 Ko compressés, chargés seulement avec la carte). Elles ne
+// s'affichent PAS d'office (retour de Romain, 2026-10-07) : le territoire sous
+// la souris se révèle (au doigt : en touchant un vide), et un clic dans un
+// vide le fixe avec son nom. Régions de « 50 km » à presque « 30 km »,
+// départements de « 30 km » à « 10 km » environ (aussi sur la carte
+// détaillée). Format : [code, nom, [anneaux [[lon, lat], …]]].
+const Z_REG_0 = 6.9,
+	Z_DEP_0 = 8.3,
+	Z_DEP_1 = 10.75;
+const menaTerritori = (z) => (z < Z_REG_0 ? null : z < Z_DEP_0 ? 'region' : z < Z_DEP_1 ? 'despartament' : null);
+const TÈXTES_TER = { oc: { region: 'Region', despartament: 'Despartament' }, fr: { region: 'Région', despartament: 'Département' } };
+// centre (pondéré) du plus grand anneau : là où s'écrit le nom
+const centreDe = (anels) => {
+	let best = null,
+		bestA = 0;
+	for (const a of anels) {
+		let A = 0,
+			sx = 0,
+			sy = 0;
+		for (let i = 0, j = a.length - 1; i < a.length; j = i++) {
+			const k = a[j][0] * a[i][1] - a[i][0] * a[j][1];
+			A += k;
+			sx += (a[j][0] + a[i][0]) * k;
+			sy += (a[j][1] + a[i][1]) * k;
+		}
+		A /= 2;
+		if (Math.abs(A) > bestA) {
+			bestA = Math.abs(A);
+			best = [sx / (6 * A), sy / (6 * A)];
+		}
+	}
+	return best;
+};
 let limitsPromesa = null;
 const cargarLimits = () =>
 	(limitsPromesa ??= fetch('/data/limits-carta.json')
 		.then((r) => (r.ok ? r.json() : null))
 		.then((d) => d ?? { despartaments: [], regions: [] })
 		.catch(() => ({ despartaments: [], regions: [] })));
-const bomba = (z, a0, a1, b0, b1) => clamp((z - a0) / (a1 - a0)) * (1 - clamp((z - b0) / (b1 - b0)));
+
 
 /* ---------- La couche ---------- */
 export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null } = {}) {
@@ -492,17 +521,22 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					v.Y = q.y;
 				}
 				const projAnels = (lista) =>
-					(lista || []).map(([code, nom, anels], i) => ({
-						code,
-						nom,
-						i,
-						anels: anels.map((a) =>
+					(lista || []).map(([code, nom, anels]) => {
+						const pa = anels.map((a) =>
 							a.map(([lon, lat]) => {
 								const q = map.project([lat, lon], z);
 								return [q.x, q.y];
 							})
-						)
-					}));
+						);
+						const cami = new Path2D();
+						for (const a of pa) {
+							cami.moveTo(a[0][0], a[0][1]);
+							for (let i = 1; i < a.length; i++) cami.lineTo(a[i][0], a[i][1]);
+							cami.closePath();
+						}
+						return { code, nom, cami, centre: centreDe(pa) };
+					});
+				if (this._terFixat && this._terFixat.mena !== menaTerritori(z)) this._terFixat = null;
 				this._regions = projAnels(this._limitsGeo?.regions);
 				this._deps = projAnels(this._limitsGeo?.despartaments);
 				this._corbas = (this._corbasGeo || []).map(([e, l]) => [
@@ -660,8 +694,22 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			return null;
 		},
+		// Le territoire (région ou département, selon l'échelle) sous un point
+		_territoriA(lp) {
+			const mena = menaTerritori(this._zoom);
+			const lista = mena === 'region' ? this._regions : mena === 'despartament' ? this._deps : null;
+			if (!lista?.length) return null;
+			this._cxTest ??= document.createElement('canvas').getContext('2d');
+			const po = this._map.getPixelOrigin(),
+				x = lp.x + po.x,
+				y = lp.y + po.y;
+			for (const t of lista) if (this._cxTest.isPointInPath(t.cami, x, y, 'evenodd')) return { mena, code: t.code };
+			return null;
+		},
 		_onMirga(e) {
 			if (e.originalEvent?.pointerType === 'touch') return;
+			const ter = this._territoriA(e.layerPoint);
+			if (ter?.code !== this._terPus?.code || ter?.mena !== this._terPus?.mena) this._terPus = ter;
 			const f = this._fichaA(e.layerPoint);
 			// la bulle d'aide (ou touchée) reste ses quelques secondes, même si la
 			// souris bouge ailleurs
@@ -684,6 +732,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._map.getContainer().style.cursor = this._pus ? 'pointer' : '';
 		},
 		_onSortida() {
+			this._terPus = null;
 			if (!this._fichaDet) this._fichaPus = null;
 			if (this._det) return;
 			this._pus = null;
@@ -713,6 +762,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const lòc = this._pròche(e.layerPoint, tactil ? 34 : 22, tactil ? 18 : 6);
 			if (!lòc) {
 				if (tactil) this._pus = null;
+				// Un clic dans un vide : le département (ou la région) se révèle et
+				// reste, avec son nom ; un second clic dessus le libère
+				const ter = this._territoriA(e.layerPoint);
+				const meme = ter && this._terFixat && ter.code === this._terFixat.code && ter.mena === this._terFixat.mena;
+				this._terFixat = ter && !meme ? ter : null;
 				return;
 			}
 			if (tactil && this._pus !== lòc) {
@@ -754,41 +808,35 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				aEtiq = aRius;
 			const gros = 1 + Math.max(0, z - 7) * 0.14;
 
-			// Les territoires : une surface à peine teintée (trois tons qui alternent,
-			// pour que deux voisins se distinguent) et un liseré fin ; les régions
-			// vers « 50 km », les départements vers « 30 km »
-			const aReg = bomba(z, 6.7, 7.1, 7.95, 8.3) * aRius,
-				aDep = clamp((z - 7.9) / 0.35) * aRius;
-			for (const [lista, a, punchat] of [
-				[this._regions, aReg, false],
-				[this._deps, aDep, true]
-			]) {
-				if (a < 0.01 || !lista?.length) continue;
-				const traçar = (t) => {
-					cx.beginPath();
-					for (const anel of t.anels) {
-						cx.moveTo(anel[0][0] - o.x, anel[0][1] - o.y);
-						for (let i = 1; i < anel.length; i++) cx.lineTo(anel[i][0] - o.x, anel[i][1] - o.y);
-						cx.closePath();
-					}
-				};
-				cx.fillStyle = T.estela;
-				for (const t of lista) {
-					cx.globalAlpha = a * [0.03, 0.05, 0.07][t.i % 3];
-					traçar(t);
-					cx.fill('evenodd');
+			// Le territoire révélé (survolé, ou fixé par un clic dans un vide) :
+			// surface à peine teintée, liseré crème, et son nom en petites capitales
+			this._legendaT = null;
+			const cibla2 = this._terFixat ?? this._terPus;
+			const clauT = cibla2 ? cibla2.mena + cibla2.code : null;
+			if (clauT !== this._terClau) {
+				this._terClau = clauT;
+				this._terA = 0;
+			}
+			if (cibla2 && menaTerritori(z) === cibla2.mena) {
+				this._terA = this._calm ? 1 : Math.min(1, (this._terA ?? 0) + dt * 5);
+				const t = (cibla2.mena === 'region' ? this._regions : this._deps)?.find((x) => x.code === cibla2.code);
+				if (t) {
+					const a = this._terA,
+						reg = cibla2.mena === 'region';
+					cx.save();
+					cx.translate(-o.x, -o.y);
+					cx.globalAlpha = a * 0.09;
+					cx.fillStyle = T.estela;
+					cx.fill(t.cami, 'evenodd');
+					cx.globalAlpha = a * 0.6;
+					cx.strokeStyle = T.estela;
+					cx.lineWidth = reg ? 1.3 : 1.1;
+					cx.setLineDash(reg ? [8, 5] : [3, 3]);
+					cx.stroke(t.cami);
+					cx.restore();
+					// son nom s'écrit en dernier (au-dessus des noms de lieux), voir plus bas
+					this._legendaT = { t, reg, fixat: cibla2 === this._terFixat, a };
 				}
-				// Limites humaines en crème (l'or est pour l'eau et le relief) : tiret
-				// long pour les régions, pointillé court pour les départements
-				cx.strokeStyle = T.estela;
-				cx.lineWidth = punchat ? 0.8 : 1.1;
-				cx.setLineDash(punchat ? [2.5, 3] : [8, 5]);
-				cx.globalAlpha = a * (punchat ? 0.24 : 0.34);
-				for (const t of lista) {
-					traçar(t);
-					cx.stroke();
-				}
-				cx.setLineDash([]);
 			}
 
 			// Le relief : courbes de niveau très discrètes, les maîtresses
@@ -971,6 +1019,50 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					cx.arc(sx, sy, 7, 0, 6.283);
 					cx.stroke();
 				}
+			}
+
+			// Le nom du territoire révélé, dans une étiquette fixe en bas au centre
+			// de la vue, au-dessus de tout (au centre du territoire, il chevauchait
+			// les noms des villes)
+			const lg = this._legendaT;
+			if (lg) {
+				const { t, reg, fixat, a } = lg,
+					tt = TÈXTES_TER[this._lang] ?? TÈXTES_TER.oc,
+					vis = this._map.getSize(),
+					v0 = this._map.containerPointToLayerPoint([0, 0]).subtract(this._min);
+				const nom = t.nom.toUpperCase(),
+					sota = reg ? tt.region : tt.despartament + ' · ' + t.code;
+				const esp = 'letterSpacing' in cx;
+				if (esp) cx.letterSpacing = '2.5px';
+				cx.font = '700 12.5px Luciole, sans-serif';
+				const wn = cx.measureText(nom).width;
+				if (esp) cx.letterSpacing = '0.5px';
+				cx.font = '400 11px Luciole, sans-serif';
+				const ws = cx.measureText(sota).width;
+				const bw = wn + ws + 46,
+					bh = 34,
+					bx = v0.x + vis.x / 2 - bw / 2,
+					by = v0.y + vis.y - 96;
+				cx.globalAlpha = a * (fixat ? 1 : 0.88);
+				cx.fillStyle = T.bulla;
+				cx.strokeStyle = fixat ? T.fil : T.estela;
+				cx.lineWidth = 1;
+				cx.beginPath();
+				cx.roundRect(bx, by, bw, bh, 17);
+				cx.fill();
+				cx.stroke();
+				cx.textAlign = 'left';
+				cx.textBaseline = 'middle';
+				if (esp) cx.letterSpacing = '2.5px';
+				cx.font = '700 12.5px Luciole, sans-serif';
+				cx.fillStyle = T.estela;
+				cx.fillText(nom, bx + 18, by + bh / 2 + 1);
+				if (esp) cx.letterSpacing = '0.5px';
+				cx.font = '400 11px Luciole, sans-serif';
+				cx.fillStyle = T.riuTèxt;
+				cx.fillText(sota, bx + 28 + wn, by + bh / 2 + 1);
+				if (esp) cx.letterSpacing = '0px';
+				cx.textBaseline = 'alphabetic';
 			}
 
 			// La bulle du lieu survolé (ou touché, 5 s)
