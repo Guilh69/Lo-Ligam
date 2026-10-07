@@ -85,6 +85,7 @@ export function crearColaDonadas(
 			// imatges en cache (lo dessenh d'una image d'animacion las recòpia)
 			this._imgTotes = document.createElement('canvas');
 			this._imgSel = document.createElement('canvas');
+			this._imgCro = document.createElement('canvas');
 			this._masca = document.createElement('canvas');
 			this._trab = document.createElement('canvas');
 			cargarLimits().then((l) => {
@@ -314,14 +315,18 @@ export function crearColaDonadas(
 			};
 			this._prepTotes();
 			this._prepSel();
+			if (this._jaces.creissent) this._prepCro();
 			this._pintar();
 			if (dom) map.getPane('donadas').style.opacity = '1';
 		},
 
 		// Una zòna (o totas) en tencha fonduda, dins un canavàs de la talha del
 		// principal : las zònas espandidas d'en primièr cap a l'exterior (lo
-		// fondut se palís pas sus la còsta), puèi las vertadièras dessús
-		_tenchaDins(c, zonas) {
+		// fondut se palís pas sus la còsta), puèi las vertadièras dessús.
+		// Una zòna sola (dialècte causit) : l'espandiment demòra en mar e a
+		// l'estrangièr, e son fondut se fa DINS sa zòna (retorn de Romain : lo
+		// lengadocian causit desbordava sus Bordèu, qu'es gascon)
+		_tenchaDins(c, zonas, sola = false) {
 			const g = c.getContext('2d'),
 				G = this._geo,
 				T = this._tem,
@@ -329,7 +334,7 @@ export function crearColaDonadas(
 			g.setTransform(1, 0, 0, 1, 0, 0);
 			g.clearRect(0, 0, c.width, c.height);
 			if (!zonas.length) return;
-			const flo = clamp(7000 / G.mPx, 1.5, 60); // fondut d'environ 7 km
+			const flo = clamp(5000 / G.mPx, 1.2, 45); // fondut d'environ 5 km
 			const t = this._trab,
 				tg = t.getContext('2d');
 			tg.setTransform(1, 0, 0, 1, 0, 0);
@@ -345,6 +350,17 @@ export function crearColaDonadas(
 				tg.fillStyle = T.dial[zn.kod];
 				tg.fill(zn.c, 'evenodd');
 			}
+			if (sola && G.zonas) {
+				tg.save();
+				tg.globalCompositeOperation = 'destination-out';
+				for (const o of G.zonas) {
+					if (zonas.includes(o)) continue;
+					tg.fill(o.c, 'evenodd'); // res sus los vesins
+					tg.lineWidth = flo * 2.4; // e un recul d'un fondut long de lor limita
+					tg.stroke(o.c);
+				}
+				tg.restore();
+			}
 			g.save();
 			g.setTransform(dpr, 0, 0, dpr, 0, 0);
 			if (G.dom) g.clip(G.dom, 'evenodd');
@@ -352,6 +368,45 @@ export function crearColaDonadas(
 			g.filter = `blur(${(flo * dpr).toFixed(1)}px)`;
 			g.drawImage(t, 0, 0);
 			g.restore();
+		},
+		// Lo Creissent : asclas vistas a travèrs d'una masca fonduda (bòrd flo
+		// d'environ 4 km, pas cap de contorn : es una transicion, pas una limita)
+		_prepCro() {
+			const G = this._geo,
+				c = this._imgCro,
+				dpr = this._dpr;
+			if (!G?.cro) return;
+			c.width = this._cv.width;
+			c.height = this._cv.height;
+			const g = c.getContext('2d');
+			const motiu = document.createElement('canvas');
+			const pas = Math.round(9 * dpr);
+			motiu.width = motiu.height = pas;
+			const m = motiu.getContext('2d');
+			m.strokeStyle = this._tem.lenga;
+			m.lineWidth = 1.5 * dpr;
+			m.beginPath();
+			m.moveTo(-1, pas + 1);
+			m.lineTo(pas + 1, -1);
+			m.moveTo(-1, 1);
+			m.lineTo(1, -1);
+			m.moveTo(pas - 1, pas + 1);
+			m.lineTo(pas + 1, pas - 1);
+			m.stroke();
+			g.setTransform(1, 0, 0, 1, 0, 0);
+			g.clearRect(0, 0, c.width, c.height);
+			// masca : la zòna, fonduda
+			g.save();
+			g.filter = `blur(${(clamp(4000 / G.mPx, 1.5, 40) * dpr).toFixed(1)}px)`;
+			g.setTransform(dpr, 0, 0, dpr, 0, 0);
+			g.fillStyle = '#000';
+			g.fill(G.cro.c, 'evenodd');
+			g.restore();
+			// asclas dins la masca
+			g.globalCompositeOperation = 'source-in';
+			g.fillStyle = g.createPattern(motiu, 'repeat');
+			g.fillRect(0, 0, c.width, c.height);
+			g.globalCompositeOperation = 'source-over';
 		},
 		_prepTotes() {
 			if (this._jaces.dialectes && this._geo?.zonas) this._tenchaDins(this._imgTotes, this._geo.zonas);
@@ -361,7 +416,7 @@ export function crearColaDonadas(
 			const G = this._geo;
 			if (!G || !this._sel || this._sel === 'cro' || !G.zonas) return;
 			const zn = G.zonas.find((x) => x.kod === this._sel);
-			if (zn) this._tenchaDins(this._imgSel, [zn]);
+			if (zn) this._tenchaDins(this._imgSel, [zn], true);
 		},
 
 		/* ---------- Dessenh (a cada recalatge, e a cada image d'una animacion) ---------- */
@@ -413,26 +468,14 @@ export function crearColaDonadas(
 			if (J.creissent && G.cro) {
 				const causit = this._sel === 'cro';
 				const autreCausit = this._sel && !causit;
-				let a = autreCausit ? 0.15 : this._pus === 'cro' || causit ? 0.75 : 0.45;
-				if (an && an.a === 'cro') a = 0.75;
-				const motiu = document.createElement('canvas');
-				motiu.width = motiu.height = 9;
-				const m = motiu.getContext('2d');
-				m.strokeStyle = T.lenga;
-				m.lineWidth = 1.2;
-				m.beginPath();
-				m.moveTo(-1, 10);
-				m.lineTo(10, -1);
-				m.stroke();
+				let a = autreCausit ? 0.2 : this._pus === 'cro' || causit ? 1 : 0.75;
+				if (an && an.a === 'cro') a = 1;
+				// de prèp, la zòna de transicion s'esvalís (es una nocion d'escala
+				// regionala : sos bòrds son pas de traches)
+				a *= lerp(1, 0.35, clamp((z - 8) / 3));
 				cx.save();
 				if (an && an.a === 'cro') this._mascaDifusion(G.cro, p); // clip progressiu
-				cx.globalAlpha = a;
-				cx.fillStyle = cx.createPattern(motiu, 'repeat');
-				cx.fill(G.cro.c, 'evenodd');
-				cx.globalAlpha = a * 0.9;
-				cx.strokeStyle = T.lenga;
-				cx.lineWidth = 0.8;
-				cx.stroke(G.cro.c);
+				this._copiar(this._imgCro, a);
 				cx.restore();
 			}
 
