@@ -369,7 +369,7 @@ const centreDe = (anels) => {
 	return best;
 };
 let limitsPromesa = null;
-const cargarLimits = () =>
+export const cargarLimits = () =>
 	(limitsPromesa ??= fetch('/data/limits-carta.json')
 		.then((r) => (r.ok ? r.json() : null))
 		.then((d) => d ?? { despartaments: [], regions: [] })
@@ -384,7 +384,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			padding: 0.3,
 			// Sources de la couche, affichées avec les crédits de la carte
 			attribution:
-				'Rius e còsta : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · domeni de la lenga : <a href="https://www.occitanica.eu/" target="_blank" rel="noopener">Occitanica</a> · noms : © OpenStreetMap'
+				'Rius e còsta : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · noms : © OpenStreetMap'
 		},
 
 		initialize() {
@@ -393,8 +393,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._onFicha = onFicha;
 			this._fichas = VILAS_FICHAS.map((v) => ({ ...v, X: 0, Y: 0 }));
 			this._calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-			this._estelas = LUOCS.map(([lon, lat, nom, vila, dia]) => ({
-				lon, lat, nom, vila, dia, renc: rencDe(nom),
+			this._estelas = LUOCS.map(([lon, lat, nom, vila, dia, dia2]) => ({
+				lon, lat, nom, vila, dia, dia2, renc: rencDe(nom),
 				r: aleat(0.5, 1.4), f: aleat(0, 6.28), v: aleat(0.2, 0.7), retard: aleat(0, 0.35),
 				sx: Math.random(), sy: Math.random(), X: 0, Y: 0
 			}));
@@ -922,44 +922,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				}
 			}
 
-			// La frontière linguistique (demande de Romain, 2026-10-07) : SEULEMENT
-			// des points terre cuite (ni administratifs en crème, ni nature en or) ;
-			// le fond reste le même des deux côtés. Terrestre, elle touche la mer.
-			// De près, on ne sait pas où elle passe au kilomètre près : les points
-			// pâlissent et une bande diffuse de quelques kilomètres dit « par ici ».
-			const aDom = clamp((intro - 0.3) / 0.5);
-			if (this._domeni && aDom > 0.01) {
-				const mPx = 112600 / Math.pow(2, z); // mètres par pixel vers 44° N
-				const vague = clamp((z - 7.5) / 2.5);
-				const traçar = () => {
-					cx.beginPath();
-					for (const l of this._domeni.linhas) {
-						cx.moveTo(l[0][0], l[0][1]);
-						for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0], l[i][1]);
-					}
-				};
-				cx.save();
-				cx.translate(-o.x, -o.y);
-				cx.strokeStyle = T.lenga;
-				cx.lineCap = 'round';
-				cx.lineJoin = 'round';
-				if (vague > 0.01) {
-					const larg = Math.max(4, 4000 / mPx);
-					traçar();
-					for (const [k, al] of [[1, 0.05], [0.55, 0.06]]) {
-						cx.globalAlpha = aDom * vague * al;
-						cx.lineWidth = larg * k;
-						cx.stroke();
-					}
-				}
-				cx.setLineDash([0.01, 4.2 + vague * 3]);
-				cx.lineWidth = 1.4 + vague * 0.6;
-				cx.globalAlpha = aDom * lerp(0.8, 0.3, vague);
-				traçar();
-				cx.stroke();
-				cx.setLineDash([]);
-				cx.restore();
-			}
+			// La frontière linguistique est dessinée par la còla de donadas
+			// (colaDonadas.js), sous les étoiles : elle vaut pour tous les fonds.
 
 			cx.fillStyle = T.estela;
 			for (const e of this._estelas) {

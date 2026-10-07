@@ -41,9 +41,9 @@
 			.trim();
 
 	const INDEX = [
-		...LUOCS.map(([lon, lat, nom, , dia]) => {
+		...LUOCS.map(([lon, lat, nom, , dia, dia2]) => {
 			const fr = NOMS_FRANCES[nom] ?? null;
-			return { mena: 'luòc', nom, fr, lon, lat, renc: rencDe(nom), dial: dialDe({ nom, dia }), k: [norm(nom), ...(fr ? [norm(fr)] : [])] };
+			return { mena: 'luòc', nom, fr, lon, lat, renc: rencDe(nom), dial: dialDe({ nom, dia, dia2 }), k: [norm(nom), ...(fr ? [norm(fr)] : [])] };
 		}),
 		...TERRITORIS.map((tr) => {
 			const oc = NOMS_OC_TER[tr.mena + ':' + tr.code];

@@ -11,6 +11,7 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
+	import { CATALOGUE, fusionarCatalogue } from '$lib/carta/catalogue.js';
 
 	let lang = $derived(langStore.current);
 
@@ -30,7 +31,9 @@
 			basemapOccitan: 'Occitan',
 			basemapNatural: 'Natural',
 			basemapSatellite: 'Satellit',
-			adminLink: "Modificar dins l'admin"
+			adminLink: "Modificar dins l'admin",
+			aVenir: 'A venir',
+			indisponible: 'Indisponibla per ara'
 		},
 		fr: {
 			title: 'Le Monde en occitan',
@@ -45,7 +48,9 @@
 			basemapOccitan: 'Occitan',
 			basemapNatural: 'Naturel',
 			basemapSatellite: 'Satellite',
-			adminLink: "Modifier dans l'admin"
+			adminLink: "Modifier dans l'admin",
+			aVenir: 'À venir',
+			indisponible: "Indisponible pour l'instant"
 		}
 	};
 	let tx = $derived(t[lang]);
@@ -60,58 +65,21 @@
 
 	const baseLayerOptions = ['estelas', 'occitan', 'natural', 'satellite'];
 
-	let layerVisibility = $state({
-		lieusInteres: true,
-		librarias: true,
-		dialectes: false,
-		departaments: false,
-		regions: false,
-		provincias: false,
-		limsi: false
-	});
-
-	// Registre des còlas — vient ara de Supabase (taula carta_colas, gerida
-	// dins /admin/carta) puslèu que d'èsser escrich en dur : Romain pòt
-	// cambiar los libellats, las nòtas, las tematicas e la disponibilitat
-	// sens tocar al còdi.
-	let layerDefs = $state([]);
-
-	// Gropa las còlas per tematica, dins l'òrdre d'aparicion. Las còlas sens
-	// tematica van dins un grop mut (sens títol) en tèsta.
-	let layerGroups = $derived.by(() => {
-		const grops = [];
-		const perClau = new Map();
-		for (const def of layerDefs) {
-			const clau = def.tematica_oc ?? '';
-			let grop = perClau.get(clau);
-			if (!grop) {
-				grop = { tematica_oc: def.tematica_oc, tematica_fr: def.tematica_fr, defs: [] };
-				perClau.set(clau, grop);
-				grops.push(grop);
-			}
-			grop.defs.push(def);
-		}
-		return grops;
-	});
+	// Lo catalògue de las jaces (lib/carta/catalogue.js) : cinc familhas, que
+	// valon per totes los fonses. La basa (taula carta_colas, gerida dins
+	// /admin/carta) pòt renomenar una jaça o n'apondre ; se respond pas
+	// (projècte gratuit en pausa), lo catalògue s'aficha parièr.
+	let familhas = $state(fusionarCatalogue([]));
+	let layerVisibility = $state(
+		Object.fromEntries(CATALOGUE.flatMap((f) => f.jaces.map((j) => [j.id, !!j.defaut])))
+	);
 
 	onMount(async () => {
 		const { data } = await supabase.from('carta_colas').select('*').order('ordre');
-		layerDefs = (data ?? []).map((row) => ({
-			id: row.id,
-			oc: row.label_oc,
-			fr: row.label_fr,
-			available: row.disponible,
-			note_oc: row.nòta_oc,
-			note_fr: row.nòta_fr,
-			tematica_oc: row.tematica_oc ?? null,
-			tematica_fr: row.tematica_fr ?? null
-		}));
-
-		// La visibilitat per defaut ven ara de la basa (colomna « visibla »,
-		// reglabla dins l'admin). Abans la migracion, la colomna existís pas
-		// e los defauts escriches çai-subre demòran.
-		for (const row of data ?? []) {
-			if (typeof row.visibla === 'boolean') layerVisibility[row.id] = row.visibla;
+		if (data?.length) {
+			familhas = fusionarCatalogue(data);
+			// visibilitat per defaut reglabla dins l'admin (colomna « visibla »)
+			for (const f of familhas) for (const j of f.jaces) if (!(j.id in layerVisibility) || data.some((r) => r.id === j.id && typeof r.visibla === 'boolean')) layerVisibility[j.id] = !!j.defaut;
 		}
 
 		if (!browser) return;
@@ -198,24 +166,28 @@
 
 				<hr class="layers-divider" />
 
-				{#each layerGroups as grop (grop.tematica_oc ?? '')}
-					{#if grop.tematica_oc}
-						<p class="grop-titol">{lang === 'oc' ? grop.tematica_oc : (grop.tematica_fr ?? grop.tematica_oc)}</p>
-					{/if}
+				{#each familhas as familha (familha.id)}
+					<p class="grop-titol">{lang === 'oc' ? familha.oc : familha.fr}</p>
 					<ul>
-						{#each grop.defs as layer (layer.id)}
-							<li class:disabled={!layer.available}>
+						{#each familha.jaces as jaça (jaça.id)}
+							{@const actiu = jaça.estat === 'disponible'}
+							{@const nota =
+								jaça.estat === 'basa'
+									? tx.indisponible
+									: (lang === 'oc' ? jaça.nota_oc : (jaça.nota_fr ?? jaça.nota_oc)) ??
+										(actiu ? null : tx.aVenir)}
+							<li class:disabled={!actiu}>
 								<label>
 									<input
 										type="checkbox"
-										disabled={!layer.available}
-										checked={layerVisibility[layer.id]}
-										onchange={(e) => (layerVisibility[layer.id] = e.currentTarget.checked)}
+										disabled={!actiu}
+										checked={actiu && layerVisibility[jaça.id]}
+										onchange={(e) => (layerVisibility[jaça.id] = e.currentTarget.checked)}
 									/>
-									{lang === 'oc' ? layer.oc : layer.fr}
+									{lang === 'oc' ? jaça.oc : jaça.fr}
 								</label>
-								{#if layer.note_oc}
-									<p class="layer-note">{lang === 'oc' ? layer.note_oc : layer.note_fr}</p>
+								{#if nota}
+									<p class="layer-note">{nota}</p>
 								{/if}
 							</li>
 						{/each}

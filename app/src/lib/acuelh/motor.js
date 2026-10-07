@@ -261,8 +261,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 	// Ierarquia dels noms (coma sus /carta, demanda Romain 2026-10-07) : las
 	// metropòlis en grand, una vila repèr per despartament en retirada ; los
 	// autres luòcs son d'estelas sens nom (visibles al subrevòl)
-	const estelas = LUOCS.map(([lon, lat, nom, , dia]) => ({
-		lon, lat, nom, dia, renc: rencDe(nom), vila: rencDe(nom) <= 2, x: 0, y: 0, px: 0, py: 0,
+	const estelas = LUOCS.map(([lon, lat, nom, , dia, dia2]) => ({
+		lon, lat, nom, dia, dia2, renc: rencDe(nom), vila: rencDe(nom) <= 2, x: 0, y: 0, px: 0, py: 0,
 		r: aleat(0.5, 1.4), f: aleat(0, 6.28), v: aleat(0.2, 0.7), retard: aleat(0, 0.35)
 	}));
 	// Cadre geografic : l'Occitània de Bordèu a Niça, de Lemòtges a Vielha

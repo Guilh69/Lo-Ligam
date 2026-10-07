@@ -4,10 +4,12 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
 	import { crearColaEstelas, Z_RELAIS, Z_PRECARGA } from '$lib/carta/colaEstelas.js';
+	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
+	import { JACES_DONADAS } from '$lib/carta/catalogue.js';
 	import CercaCarta from './CercaCarta.svelte';
 
-	// Contengut e estils venon ara de Supabase (taulas carta_luocs,
-	// carta_colas, carta_dialectes — gerits dins /admin/carta) puslèu que
+	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
+	// carta_colas, carta_departaments — geridas dins /admin/carta) puslèu que
 	// d'èsser escriches en dur aicí. Cargats dins onMount, abans de bastir la
 	// carta, per evitar tota corsa entre l'afichatge e las donadas.
 	//
@@ -16,7 +18,6 @@
 	// còdi novèl serà de besonh, sonque una linha dins carta_colas e de punts.
 	let colaColors = {};
 	let colaOpacitats = {};
-	let dialectStyles = {};
 	let deptNivels = {};
 
 	// Los tres nivèls de la còla « Despartaments occitans » (definits per
@@ -72,6 +73,10 @@
 	// s'aprèpa (nivèl 8,5 e mai), e son pas telecargadas abans.
 	let { visibility = {}, baseLayer = 'estelas', clar = false, dalt = false, lang = 'oc' } = $props();
 	let colaEstelas;
+	// Jaces del catalògue pintadas pel site (frontièra, dialèctes, Creissent,
+	// regions, despartaments) : sus totes los fonses
+	let colaDonadas;
+	const jacesDonadas = (vis) => Object.fromEntries(JACES_DONADAS.map((id) => [id, !!vis[id]]));
 	// Fonses sens noms occitans : las etiquetas de toponims i son apondudas
 	const ambToponims = (k) => k === 'natural' || k === 'satellite';
 
@@ -136,8 +141,9 @@
 	// — GENERICAS : descrichas entièrament dins carta_colas (tipe, fichièr
 	//   geojson_url, color, opacitat, pes de linha, puntejat, plantilha de
 	//   popup) — creablas dempuèi /admin/carta sens cap de còdi ;
-	// — ESPECIALAS : dialèctes e despartaments, qu'an un compòrtament pròpri
-	//   (colors per zòna, nivèls), rendudas pel còdi çai-jos.
+	// — ESPECIALAS : los despartaments occitanofòns (nivèls), renduts pel
+	//   còdi çai-jos. Los dialèctes, la frontièra, lo Creissent e los contorns
+	//   administratius son pintats per la còla de donadas (colaDonadas.js).
 	// Lo registre final (geoDefs) es bastit dins onMount, un còp la basa legida.
 	let geoDefs = {};
 
@@ -178,20 +184,6 @@
 	}
 
 	const SPECIAL_GEO = {
-		dialectes: {
-			url: '/data/dialectes.geojson',
-			style: (feature) => {
-				const info = dialectStyles[feature.properties.name];
-				return {
-					color: info?.color ?? '#3a2a20',
-					weight: 1.5,
-					fillColor: info?.color ?? '#3a2a20',
-					fillOpacity: info?.opacitat ?? 0.35
-				};
-			},
-			popup: (feature) =>
-				dialectStyles[feature.properties.name]?.label ?? feature.properties.name
-		},
 		departaments: {
 			url: '/data/departements.geojson',
 			attribution:
@@ -216,23 +208,6 @@
 				return `<strong>${feature.properties.nom}</strong>${nivèl ? `<br>${nivèl.label}` : ''}`;
 			}
 		}
-	};
-
-	// Filet de seguretat abans la migracion « generica » : tant que la linha
-	// « regions » de carta_colas a pas encara son geojson_url, la còla garda
-	// son anciana definicion escricha aicí.
-	const REGIONS_FALLBACK = {
-		url: '/data/regions.geojson',
-		attribution:
-			'Contorns : <a href="https://github.com/gregoiredavid/france-geojson" target="_blank" rel="noopener">france-geojson</a> / Etalab (Licéncia Dobèrta)',
-		style: () => ({
-			color: colaColors.regions ?? '#3a2a20',
-			weight: 1.3,
-			dashArray: '4 3',
-			fillColor: colaColors.regions ?? '#3a2a20',
-			fillOpacity: colaOpacitats.regions ?? 0.04
-		}),
-		popup: (feature) => feature.properties.nom
 	};
 
 	async function loadGeoLayer(gid) {
@@ -335,6 +310,8 @@
 		);
 
 		setBaseLayer(baseLayer);
+		colaDonadas = crearColaDonadas(L, { clar, dalt, lang, jaces: jacesDonadas(visibility) });
+		colaDonadas.addTo(map);
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
 		if (ambToponims(baseLayer)) loadToponymsLayer();
@@ -357,11 +334,10 @@
 		escala.addTo(map);
 
 		// Puèi las donadas de la basa (luòcs, còlas, dialèctes, despartaments)
-		const [{ data: luocsData }, { data: colasData }, { data: dialectesData }, { data: deptData }] =
+		const [{ data: luocsData }, { data: colasData }, { data: deptData }] =
 			await Promise.all([
 				supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
 				supabase.from('carta_colas').select('*').order('ordre'),
-				supabase.from('carta_dialectes').select('*').order('ordre'),
 				supabase.from('carta_departaments').select('code, nom, nivèl')
 			]);
 
@@ -381,13 +357,9 @@
 		// generica omonima), e « regions » garda son filet tant que la basa
 		// es pas migrada.
 		Object.assign(geoDefs, SPECIAL_GEO);
-		if (!geoDefs.regions && (colasData ?? []).some((c) => c.id === 'regions')) {
-			geoDefs.regions = REGIONS_FALLBACK;
-		}
+		// Las jaces de la còla de donadas son pas de jaces Leaflet
+		for (const id of JACES_DONADAS) delete geoDefs[id];
 
-		for (const d of dialectesData ?? []) {
-			dialectStyles[d.kòd] = { color: d.color, opacitat: d.opacitat, label: d.label_oc };
-		}
 		for (const d of deptData ?? []) {
 			deptNivels[d.code] = d;
 		}
@@ -431,6 +403,7 @@
 		const vis = { ...visibility };
 		const nextBaseLayer = baseLayer;
 		if (!map || !L) return;
+		colaDonadas?.setJaces(jacesDonadas(vis));
 
 		for (const [cid, layer] of Object.entries(pointLayers)) {
 			if (vis[cid]) {
@@ -469,10 +442,12 @@
 		const c = clar,
 			d = dalt;
 		colaEstelas?.setTema(c, d);
+		colaDonadas?.setTema(c, d);
 	});
 	$effect(() => {
 		const l = lang;
 		colaEstelas?.setLenga(l);
+		colaDonadas?.setLenga(l);
 	});
 
 	// Recherche : un lieu, la carte y vole (et l'y signale) ; un département ou
