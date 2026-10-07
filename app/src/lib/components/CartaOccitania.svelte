@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import 'leaflet/dist/leaflet.css';
 	import { supabase } from '$lib/supabaseClient';
+	import { crearColaEstelas, partDetalh, Z_DETALH_MIN } from '$lib/carta/colaEstelas.js';
 
 	// Contengut e estils venon ara de Supabase (taulas carta_luocs,
 	// carta_colas, carta_dialectes — gerits dins /admin/carta) puslèu que
@@ -64,7 +65,13 @@
 	// una vista alunhada.
 	const TOWN_MIN_ZOOM = 9;
 
-	let { visibility = {}, baseLayer = 'occitan' } = $props();
+	// Fons « estelas » (per defaut dempuèi lo 2026-10-07) : la carta en estelas
+	// de l'acuèlh ; las tuèlas OSM en occitan se descobrisson dejós sonque quand
+	// s'aprèpa (nivèl 8,5 e mai), e son pas telecargadas abans.
+	let { visibility = {}, baseLayer = 'estelas', clar = false, dalt = false } = $props();
+	let colaEstelas;
+	// Fonses sens noms occitans : las etiquetas de toponims i son apondudas
+	const ambToponims = (k) => k === 'natural' || k === 'satellite';
 
 	let mapEl;
 	let map;
@@ -78,6 +85,15 @@
 	let toponymsLoading = false;
 
 	function setBaseLayer(key) {
+		if (key === 'estelas') {
+			if (currentBaseTileLayer) map.removeLayer(currentBaseTileLayer);
+			currentBaseTileLayer = null;
+			colaEstelas ??= crearColaEstelas(L, { clar, dalt });
+			colaEstelas.addTo(map);
+			majDetalh();
+			return;
+		}
+		if (colaEstelas) map.removeLayer(colaEstelas);
 		const resolvedKey = baseLayers[key] ? key : 'occitan';
 		const cfg = baseLayers[resolvedKey];
 		if (currentBaseTileLayer) map.removeLayer(currentBaseTileLayer);
@@ -90,6 +106,26 @@
 		});
 		currentBaseTileLayer._loLigamKey = resolvedKey;
 		currentBaseTileLayer.addTo(map);
+	}
+
+	// Fons « estelas » : la carta detalhada (tuèlas OSM en occitan) apareis e
+	// las estelas s'escafan a mesura que s'aprèpa ; en dejós del lindal, cap de
+	// tuèla es pas demandada (sobrietat).
+	function majDetalh() {
+		if (!map || baseLayer !== 'estelas') return;
+		const z = map.getZoom();
+		if (z >= Z_DETALH_MIN) {
+			if (!currentBaseTileLayer) {
+				const cfg = baseLayers.occitan;
+				currentBaseTileLayer = L.tileLayer(cfg.url, { maxZoom: cfg.maxZoom, attribution: cfg.attribution, className: 'teules-detalh' });
+				currentBaseTileLayer._loLigamKey = 'estelas';
+				currentBaseTileLayer.addTo(map);
+			}
+			currentBaseTileLayer.setOpacity(partDetalh(z));
+		} else if (currentBaseTileLayer) {
+			map.removeLayer(currentBaseTileLayer);
+			currentBaseTileLayer = null;
+		}
 	}
 
 	// Jaces de zònas e de linhas. Doas menas :
@@ -256,7 +292,7 @@
 
 	function applyToponymVisibility() {
 		if (!map || !toponymCities) return;
-		if (baseLayer !== 'occitan') {
+		if (ambToponims(baseLayer)) {
 			toponymCities.addTo(map);
 			if (map.getZoom() >= TOWN_MIN_ZOOM) {
 				toponymTowns.addTo(map);
@@ -270,6 +306,46 @@
 	}
 
 	onMount(async () => {
+		// La carta e las estelas s'afichan TRE ARA, sens esperar la basa : se
+		// Supabase respond pas (projècte gratuit en pausa, ret copada), la carta
+		// demòra utilizabla ; las còlas de l'admin s'apondon quand arriban.
+		L = (await import('leaflet')).default;
+
+		// Zoom par quarts de niveau : la traversée des échelles est plus douce,
+		// et l'Occitanie entière tient juste dans la fenêtre à l'arrivée (même
+		// cadre que la carte en étoiles de l'accueil).
+		map = L.map(mapEl, {
+			zoomSnap: 0.25,
+			zoomDelta: 0.5,
+			wheelPxPerZoomLevel: 110,
+			minZoom: 4,
+			maxZoom: 19,
+			zoomControl: false
+		});
+		// Téléphone : l'Occitanie, large, tient mal dans un écran en hauteur ;
+		// on rogne les marges pour qu'elle reste lisible
+		const estrech = mapEl.clientWidth < 700;
+		map.fitBounds(
+			[
+				[42.65, -1.6],
+				[46.4, 7.55]
+			],
+			estrech
+				? { paddingTopLeft: [30, 130], paddingBottomRight: [30, 70] }
+				: { paddingTopLeft: [64, 100], paddingBottomRight: [64, 30] }
+		);
+
+		setBaseLayer(baseLayer);
+		map.on('zoomend', applyToponymVisibility);
+		map.on('zoomend', majDetalh);
+		if (ambToponims(baseLayer)) loadToponymsLayer();
+
+		L.control.zoom({ position: 'bottomright' }).addTo(map);
+		L.control
+			.scale({ position: 'bottomleft', metric: true, imperial: false, maxWidth: 110 })
+			.addTo(map);
+
+		// Puèi las donadas de la basa (luòcs, còlas, dialèctes, despartaments)
 		const [{ data: luocsData }, { data: colasData }, { data: dialectesData }, { data: deptData }] =
 			await Promise.all([
 				supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
@@ -277,6 +353,8 @@
 				supabase.from('carta_dialectes').select('*').order('ordre'),
 				supabase.from('carta_departaments').select('code, nom, nivèl')
 			]);
+		// Pagina quitada pendent l'espèra : la carta es ja destruita
+		if (!map) return;
 
 		for (const c of colasData ?? []) {
 			colaColors[c.id] = c.color;
@@ -312,23 +390,6 @@
 			const cid = luoc.cola_id ?? 'lieusInteres';
 			(perCola[cid] ??= []).push(luoc);
 		}
-
-		L = (await import('leaflet')).default;
-
-		map = L.map(mapEl, {
-			center: [43.95, 2.4],
-			zoom: 7,
-			minZoom: 5,
-			maxZoom: 19
-		});
-
-		setBaseLayer(baseLayer);
-		map.on('zoomend', applyToponymVisibility);
-		if (baseLayer !== 'occitan') loadToponymsLayer();
-
-		L.control
-			.scale({ position: 'bottomleft', metric: true, imperial: false, maxWidth: 110 })
-			.addTo(map);
 
 		for (const [cid, luocs] of Object.entries(perCola)) {
 			pointLayers[cid] = L.layerGroup(
@@ -382,31 +443,50 @@
 			}
 		}
 
-		if (currentBaseTileLayer?._loLigamKey !== nextBaseLayer) {
+		const actiu = colaEstelas && map.hasLayer(colaEstelas) ? 'estelas' : currentBaseTileLayer?._loLigamKey;
+		if (actiu !== nextBaseLayer) {
 			setBaseLayer(nextBaseLayer);
 		}
 
 		if (toponymCities) {
 			applyToponymVisibility();
-		} else if (nextBaseLayer !== 'occitan' && !toponymsLoading) {
+		} else if (ambToponims(nextBaseLayer) && !toponymsLoading) {
 			loadToponymsLayer();
 		}
 	});
 
+	// Thème (sombre / clair / daltonisme) : la couche en étoiles suit
+	$effect(() => {
+		const c = clar,
+			d = dalt;
+		colaEstelas?.setTema(c, d);
+	});
+
 	onDestroy(() => {
 		map?.remove();
+		map = null;
 	});
 </script>
 
 <div class="carta-root">
-	<div class="carta" class:muted={baseLayer === 'occitan'} bind:this={mapEl}></div>
+	<div
+		class="carta"
+		class:muted={baseLayer === 'occitan' && clar}
+		class:nuech={(baseLayer === 'occitan' || baseLayer === 'estelas') && !clar}
+		bind:this={mapEl}
+	></div>
 
+	<!-- Flèche du nord à l'ancienne, comme sur l'accueil : aiguille en losange
+	     (moitié pleine, moitié tracée), anneau fin, N italique -->
 	<div class="compass" aria-hidden="true">
-		<svg viewBox="0 0 24 24" width="18" height="18">
-			<polygon points="12,2 15.2,12 12,10.2 8.8,12" fill="#a5342a" />
-			<polygon points="12,22 15.2,12 12,13.8 8.8,12" fill="#3a2a20" fill-opacity="0.55" />
+		<svg viewBox="-12 -16 34 40" width="30" height="36">
+			<circle cx="0" cy="4" r="5.5" fill="none" stroke="currentColor" stroke-width="0.9" />
+			<line x1="-9" y1="4" x2="9" y2="4" stroke="currentColor" stroke-width="0.9" opacity="0.5" />
+			<path d="M0 -14L-3 4L0 4Z" fill="currentColor" />
+			<path d="M0 -14L3 4L0 4Z" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linejoin="round" />
+			<path d="M-3 4L0 20L3 4" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linejoin="round" />
+			<text x="8" y="-6">N</text>
 		</svg>
-		<span>N</span>
 	</div>
 </div>
 
@@ -417,61 +497,132 @@
 		height: 100%;
 	}
 
+	/* La nuit sous les étoiles (ou le papier crème en thème clair), avec une
+	   chaleur de braise : Leaflet met du gris par défaut */
 	.carta {
 		width: 100%;
 		height: 100%;
+		background:
+			radial-gradient(ellipse 60% 55% at 45% 55%, color-mix(in srgb, var(--t-terra) 16%, transparent), transparent 75%),
+			var(--t-fons);
+		font-family: var(--font-body);
+	}
+
+	/* Contrôles Leaflet (zoom, échelle, crédits) dans la charte : verre sombre,
+	   liseré, or */
+	.carta :global(.leaflet-bar) {
+		border: 1px solid var(--t-linha);
+		border-radius: 14px;
+		overflow: hidden;
+		box-shadow: none;
+	}
+
+	.carta :global(.leaflet-bar a) {
+		width: 2.4rem;
+		height: 2.4rem;
+		line-height: 2.4rem;
+		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
+		backdrop-filter: blur(6px);
+		color: var(--t-aur-clar);
+		border-bottom-color: var(--t-linha);
+		font: 400 1.2rem var(--font-body);
+	}
+
+	.carta :global(.leaflet-bar a:hover) {
+		background: var(--t-fons-2);
+		color: var(--t-aur);
+	}
+
+	.carta :global(.leaflet-bar a.leaflet-disabled) {
+		color: var(--t-linha);
+		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
 	}
 
 	.carta :global(.leaflet-control-attribution) {
-		font-family: var(--font-body);
-		font-size: 0.7rem;
+		background: color-mix(in srgb, var(--t-fons) 70%, transparent);
+		color: var(--t-tinta-2);
+		font-size: 0.68rem;
+		border-radius: 8px 0 0 0;
+	}
+
+	.carta :global(.leaflet-control-attribution a) {
+		color: var(--t-aur-clar);
 	}
 
 	.carta :global(.leaflet-control-scale-line) {
-		background: rgba(245, 234, 216, 0.85);
+		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
 		backdrop-filter: blur(6px);
-		border: 2px solid var(--color-text);
+		border: 1px solid var(--t-aur);
 		border-top: none;
-		color: var(--color-text);
-		font-family: var(--font-body);
-		font-weight: 600;
-		font-size: 0.72rem;
+		color: var(--t-tinta);
+		font-weight: 700;
+		font-size: 0.7rem;
 		padding: 1px 6px;
-		border-radius: 0 0 8px 8px;
+		border-radius: 0 0 6px 6px;
+	}
+
+	/* Bulles des lieux et des couches */
+	.carta :global(.leaflet-popup-content-wrapper),
+	.carta :global(.leaflet-popup-tip) {
+		background: var(--t-fons-2);
+		color: var(--t-tinta);
+		box-shadow:
+			0 0 0 1px var(--t-linha),
+			0 14px 34px rgba(0, 0, 0, 0.4);
+	}
+
+	.carta :global(.leaflet-popup-content-wrapper) {
+		border-radius: 14px;
+	}
+
+	.carta :global(.leaflet-popup-content) {
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+
+	.carta :global(.leaflet-popup-content strong) {
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: 1.15rem;
+		color: var(--t-aur-clar);
+	}
+
+	.carta :global(.leaflet-popup-close-button) {
+		color: var(--t-tinta-2) !important;
+	}
+
+	.carta :global(.cola-estelas) {
+		pointer-events: none;
 	}
 
 	.compass {
 		position: absolute;
-		top: 1rem;
-		left: 4.5rem;
+		top: 7.4rem;
+		left: clamp(1rem, 4vw, 3.4rem);
 		z-index: 900;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.1rem;
-		width: 2.2rem;
-		height: 2.2rem;
-		justify-content: center;
-		border-radius: 999px;
-		background: rgba(245, 234, 216, 0.88);
-		backdrop-filter: blur(8px);
-		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.16);
+		color: var(--t-aur);
+		opacity: 0.85;
+		pointer-events: none;
 	}
 
-	.compass span {
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 0.6rem;
-		color: var(--color-text);
-		line-height: 1;
+	.compass text {
+		font-family: var(--font-quote);
+		font-style: italic;
+		font-weight: 500;
+		font-size: 11px;
+		fill: var(--t-aur-clar);
 	}
 
-	/* Atenua lo fons OSM (rotas colorejadas en roge/irange) sens tocar las
-	   jaces (dialèctes, luòcs) que rèstan dins un autre pan Leaflet, pas
-	   afectat per aqueste filtre. Pas aplicat als autres fonses (natural,
-	   satellit), qu'an ja de colors naturalas que cal pas amortir. */
+	/* Thème clair, fond OSM : on atténue les routes colorées sans toucher aux
+	   couches (dialectes, lieux), qui sont dans un autre pan Leaflet. */
 	.carta.muted :global(.leaflet-tile-pane) {
 		filter: grayscale(65%) brightness(1.08) contrast(0.92);
+	}
+
+	/* Thème sombre : la carte OSM passe « de nuit » (couleurs inversées puis
+	   réchauffées vers la braise), pour se fondre sous les étoiles */
+	.carta.nuech :global(.leaflet-tile-pane) {
+		filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) sepia(0.35) saturate(0.75);
 	}
 
 	/* Etiquetas dels noms occitans, per las mostrar suls fonses Natural e

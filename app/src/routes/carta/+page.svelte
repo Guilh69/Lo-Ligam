@@ -10,6 +10,7 @@
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
+	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 
 	let lang = $derived(langStore.current);
 
@@ -25,6 +26,7 @@
 			layers: 'Jaces',
 			layersLabel: 'Jaces de la carta',
 			basemap: 'Fons de carta',
+			basemapEstelas: 'Estelas',
 			basemapOccitan: 'Occitan',
 			basemapNatural: 'Natural',
 			basemapSatellite: 'Satellit',
@@ -39,6 +41,7 @@
 			layers: 'Calques',
 			layersLabel: 'Calques de la carte',
 			basemap: 'Fond de carte',
+			basemapEstelas: 'Étoiles',
 			basemapOccitan: 'Occitan',
 			basemapNatural: 'Naturel',
 			basemapSatellite: 'Satellite',
@@ -51,9 +54,11 @@
 
 	let showInfo = $state(false);
 	let layersPanelOpen = $state(false);
-	let baseLayer = $state('occitan');
+	// Par défaut, la carte en étoiles de l'accueil (2026-10-07) : la carte
+	// détaillée en occitan se découvre dessous en s'approchant.
+	let baseLayer = $state('estelas');
 
-	const baseLayerOptions = ['occitan', 'natural', 'satellite'];
+	const baseLayerOptions = ['estelas', 'occitan', 'natural', 'satellite'];
 
 	let layerVisibility = $state({
 		lieusInteres: true,
@@ -118,14 +123,17 @@
 </script>
 
 <svelte:head>
-	<title>{tx.title} — Lo Ligam</title>
+	<title>{tx.title} · Lo Ligam</title>
 </svelte:head>
 
 <div class="screen">
-	<AppHeader />
+	<!-- Le bandeau commun flotte sur la carte, dans un dégradé de nuit -->
+	<div class="capçal">
+		<AppHeader />
+	</div>
 
 	<main class="carta-wrap">
-		<CartaOccitania visibility={layerVisibility} {baseLayer} />
+		<CartaOccitania visibility={layerVisibility} {baseLayer} clar={ambianca.clar} dalt={ambianca.dalt} />
 
 		{#if showInfo}
 			<div class="info-card" transition:fly={{ y: -12, duration: 260, easing: quintOut }}>
@@ -233,259 +241,287 @@
 </div>
 
 <style>
+	/* Carte plein écran, harmonisée avec la charte de l'accueil (2026-10-07) :
+	   la carte occupe toute la fenêtre, le bandeau et les panneaux flottent
+	   dessus en verre sombre (ou crème en thème clair). */
 	.screen {
+		--marge: clamp(1rem, 4vw, 3.4rem);
+		--ease: cubic-bezier(0.19, 1, 0.22, 1);
 		position: relative;
 		height: 100dvh;
-		display: flex;
-		flex-direction: column;
 		overflow: hidden;
+		color: var(--t-tinta);
+		background: var(--t-fons);
 	}
 
-	.screen :global(.top) {
+	.capçal {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 1100;
+		padding: 1.3rem var(--marge) 2.4rem;
+		background: linear-gradient(var(--t-fons) 35%, color-mix(in srgb, var(--t-fons) 70%, transparent) 65%, transparent);
+		pointer-events: none;
+	}
+
+	.capçal :global(.top) {
 		max-width: none;
-		padding: 0.9rem 1.5rem;
-		background: rgba(245, 234, 216, 0.9);
-		backdrop-filter: blur(10px);
-		flex-shrink: 0;
-		z-index: 2;
+		pointer-events: auto;
 	}
 
 	.carta-wrap {
-		position: relative;
-		flex: 1;
-		min-height: 0;
+		position: absolute;
+		inset: 0;
 	}
 
-	.info-card {
+	/* ---------- Verre sombre commun aux panneaux et boutons ---------- */
+	.info-card,
+	.layers-panel {
 		position: absolute;
-		top: 1rem;
-		right: 1rem;
 		z-index: 1000;
-		max-width: min(22rem, calc(100% - 2rem));
-		background: rgba(245, 234, 216, 0.92);
+		background: color-mix(in srgb, var(--t-fons-2) 92%, transparent);
 		backdrop-filter: blur(10px);
-		border-radius: 16px;
-		padding: 1rem 1.25rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.18);
-		transform-origin: top right;
+		border: 1px solid var(--t-linha);
+		border-radius: 18px;
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+		color: var(--t-tinta);
+	}
+
+	.info-trigger,
+	.layers-trigger,
+	.info-close {
+		display: grid;
+		place-items: center;
+		padding: 0;
+		border: 1px solid var(--t-linha);
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
+		backdrop-filter: blur(6px);
+		color: var(--t-aur-clar);
+		cursor: pointer;
+		transition:
+			border-color 0.4s,
+			transform 0.6s var(--ease);
+	}
+
+	.info-trigger:hover,
+	.layers-trigger:hover,
+	.info-close:hover {
+		border-color: var(--t-aur);
+	}
+
+	.info-trigger:focus-visible,
+	.layers-trigger:focus-visible,
+	.info-close:focus-visible,
+	.admin-link:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 3px;
+	}
+
+	/* ---------- Carte d'information ---------- */
+	.info-card {
+		top: 6.4rem;
+		right: var(--marge);
+		width: min(22rem, calc(100vw - 2rem));
+		padding: 1.3rem 1.4rem 1.2rem;
 	}
 
 	.info-card h1 {
-		font-size: 1.3rem;
-		margin: 0 2rem 0.4rem 0;
+		margin: 0 2rem 0.6rem 0;
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: 1.7rem;
+		line-height: 1.05;
 	}
 
 	.info-card p {
 		margin: 0;
-		font-size: 0.85rem;
-		line-height: 1.45;
-		color: var(--color-teal);
+		font-size: 0.88rem;
+		line-height: 1.55;
+		color: var(--t-tinta-2);
 	}
 
 	.info-card a {
-		color: inherit;
+		color: var(--t-aur-clar);
 		text-decoration: underline;
+		text-decoration-color: color-mix(in srgb, var(--t-aur) 50%, transparent);
+		text-underline-offset: 3px;
 	}
 
 	.info-close {
 		position: absolute;
-		top: 0.6rem;
-		right: 0.6rem;
-		width: 1.6rem;
-		height: 1.6rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border: none;
-		border-radius: 999px;
-		background: rgba(58, 42, 32, 0.08);
-		color: var(--color-text);
+		top: 0.7rem;
+		right: 0.7rem;
+		width: 2rem;
+		height: 2rem;
 		font-size: 1.1rem;
 		line-height: 1;
-		cursor: pointer;
-		transition: background-color 150ms ease;
-	}
-
-	.info-close:hover {
-		background: rgba(58, 42, 32, 0.16);
 	}
 
 	.info-trigger {
 		position: absolute;
-		top: 1rem;
-		right: 1rem;
 		z-index: 1000;
+		top: 6.4rem;
+		right: var(--marge);
 		width: 2.6rem;
 		height: 2.6rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border: none;
-		border-radius: 999px;
-		background: rgba(245, 234, 216, 0.92);
-		backdrop-filter: blur(10px);
-		color: var(--color-teal);
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.18);
-		cursor: pointer;
-		transition:
-			background-color 150ms ease,
-			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 
-	.info-trigger:hover {
-		background: rgba(245, 234, 216, 1);
-		transform: scale(1.06);
-	}
-
+	/* ---------- Calques ---------- */
 	.layers-trigger {
 		position: absolute;
-		bottom: 3.5rem;
-		left: 1rem;
 		z-index: 1000;
-		width: 2.6rem;
-		height: 2.6rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border: none;
-		border-radius: 999px;
-		background: rgba(245, 234, 216, 0.92);
-		backdrop-filter: blur(10px);
-		color: var(--color-olive);
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.18);
-		cursor: pointer;
-		transition:
-			background-color 150ms ease,
-			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+		bottom: 3.5rem;
+		left: var(--marge);
+		width: 2.8rem;
+		height: 2.8rem;
 	}
 
 	.layers-trigger:hover {
-		background: rgba(245, 234, 216, 1);
-		transform: scale(1.06);
+		transform: rotate(-8deg);
 	}
 
 	.layers-panel {
-		position: absolute;
 		bottom: 3.5rem;
-		left: 1rem;
-		z-index: 1000;
-		width: min(17rem, calc(100% - 2rem));
-		background: rgba(245, 234, 216, 0.92);
-		backdrop-filter: blur(10px);
-		border-radius: 16px;
-		padding: 0.9rem 1.1rem 1.1rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.18);
-		transform-origin: bottom left;
+		left: var(--marge);
+		width: min(19rem, calc(100vw - 2rem));
+		max-height: calc(100dvh - 12rem);
+		overflow-y: auto;
+		scrollbar-width: thin;
+		scrollbar-color: var(--t-linha) transparent;
+		padding: 1rem 1.1rem 1.1rem;
 	}
 
 	.layers-head {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		margin-bottom: 0.5rem;
+		margin-bottom: 0.6rem;
 	}
 
 	.layers-head h2 {
-		font-size: 1rem;
-		color: var(--color-olive);
+		margin: 0;
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: 1.35rem;
+	}
+
+	.layers-head .info-close {
+		position: static;
+	}
+
+	.basemap-label,
+	.grop-titol {
+		margin: 0.9rem 0 0.4rem;
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.26em;
+		text-transform: uppercase;
+		color: var(--t-tinta-2);
 	}
 
 	.basemap-label {
-		margin: 0 0 0.4rem;
-		font-size: 0.72rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		color: var(--color-olive);
+		margin-top: 0.2rem;
 	}
 
+	/* Les fonds : un sélecteur à cases, comme le choix de thème */
 	.basemap-options {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem 0.9rem;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 4px;
+		padding: 3px;
+		border: 1px solid var(--t-linha);
+		border-radius: 12px;
 	}
 
 	.basemap-option {
-		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-		font-size: 0.85rem;
+		position: relative;
+		display: grid;
+		place-items: center;
+		padding: 0.45rem 0.3rem;
+		border-radius: 9px;
+		font-size: 0.82rem;
+		font-weight: 700;
+		color: var(--t-tinta-2);
 		cursor: pointer;
+		transition:
+			background 0.35s,
+			color 0.35s;
 	}
 
-	.basemap-option input[type='radio'] {
-		accent-color: var(--color-olive);
-		width: 0.95rem;
-		height: 0.95rem;
+	.basemap-option input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.basemap-option:has(input:checked) {
+		background: var(--t-tinta);
+		color: var(--t-fons);
+	}
+
+	.basemap-option:has(input:focus-visible) {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 2px;
 	}
 
 	.layers-divider {
 		border: none;
-		border-top: 1px solid rgba(58, 42, 32, 0.14);
-		margin: 0.75rem 0;
+		border-top: 1px solid var(--t-linha);
+		margin: 1rem 0 0.2rem;
 	}
 
 	.layers-panel ul {
 		list-style: none;
 		margin: 0;
 		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.55rem;
+	}
+
+	.layers-panel li {
+		padding: 0.3rem 0;
 	}
 
 	.layers-panel label {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.9rem;
+		gap: 0.6rem;
+		font-size: 0.88rem;
 		cursor: pointer;
 	}
 
 	.layers-panel li.disabled label {
-		color: var(--color-text);
-		opacity: 0.55;
-		cursor: not-allowed;
+		color: var(--t-tinta-2);
+		opacity: 0.6;
+		cursor: default;
 	}
 
 	.layers-panel input[type='checkbox'] {
-		accent-color: var(--color-olive);
 		width: 1rem;
 		height: 1rem;
+		margin: 0;
+		accent-color: var(--t-aur);
 	}
 
 	.layer-note {
-		margin: 0.15rem 0 0 1.5rem;
+		margin: 0.15rem 0 0 1.6rem;
 		font-size: 0.72rem;
-		line-height: 1.3;
-		color: var(--color-teal);
-	}
-
-	.grop-titol {
-		margin: 0.8rem 0 0.35rem;
-		font-size: 0.7rem;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: var(--color-olive);
-	}
-
-	.grop-titol:first-of-type {
-		margin-top: 0.2rem;
+		line-height: 1.35;
+		color: var(--t-tinta-2);
 	}
 
 	.admin-link {
 		display: block;
-		margin-top: 0.85rem;
+		margin-top: 0.9rem;
 		padding-top: 0.7rem;
-		border-top: 1px solid rgba(58, 42, 32, 0.14);
-		font-size: 0.8rem;
-		font-weight: 600;
-		color: var(--color-brick);
+		border-top: 1px solid var(--t-linha);
+		font-size: 0.82rem;
+		font-weight: 700;
+		color: var(--t-aur-clar);
 		text-decoration: none;
 	}
 
 	.admin-link:hover {
-		text-decoration: underline;
+		color: var(--t-aur);
 	}
 </style>
