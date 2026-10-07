@@ -601,26 +601,19 @@ export function crearColaDonadas(
 			this._tenchaDins(this._imgPus, [zn], true);
 		},
 		// Los dialèctes causits, sols : fonduts entre eles, e cap als autres se
-		// ditz transicion. Pendent l'animacion, la zòna apondida (que se difusa)
-		// e las levadas (que s'escantisson) an lor imatge a despart.
+		// ditz transicion. Pendent l'animacion, l'imatge d'abans es gardat a
+		// despart (_transicion passa de l'un a l'autre).
 		_prepSel() {
 			const G = this._geo;
 			if (!G || !G.zonas) return;
 			const an = this._anim;
 			const zonas = (l) => G.zonas.filter((x) => l.includes(x.kod));
-			const sels = this._sels.filter((k) => k !== 'cro' && k !== an?.ajust);
-			this._tenchaDins(this._imgSel, zonas(sels), true);
-			if (an?.ajust && an.ajust !== 'cro') {
-				this._imgNòu ??= document.createElement('canvas');
-				this._imgNòu.width = this._cv.width;
-				this._imgNòu.height = this._cv.height;
-				this._tenchaDins(this._imgNòu, zonas([an.ajust]), true);
-			}
-			if (an?.lev?.length) {
-				this._imgLev ??= document.createElement('canvas');
-				this._imgLev.width = this._cv.width;
-				this._imgLev.height = this._cv.height;
-				this._tenchaDins(this._imgLev, zonas(an.lev), true);
+			this._tenchaDins(this._imgSel, zonas(this._sels.filter((k) => k !== 'cro')), true);
+			if (an && ((an.ajust && an.ajust !== 'cro') || an.lev.length)) {
+				const c = (this._imgAvant ??= document.createElement('canvas'));
+				c.width = this._cv.width;
+				c.height = this._cv.height;
+				this._tenchaDins(c, zonas(an.de), true);
 			}
 		},
 
@@ -661,9 +654,8 @@ export function crearColaDonadas(
 				if (aTotes > 0.01) this._copiar(this._imgTotes, aT * aTotes);
 				// sols sus la carta, los dialèctes causits pòdon èsser mai marcats ;
 				// l'apondut se difusa, los levats s'escantisson
-				if (selDial) this._copiar(this._imgSel, aT * 1.6);
-				if (an?.ajust && an.ajust !== 'cro' && this._imgNòu) this._difusar(an.ajust, p, aT * 1.6, this._imgNòu);
-				if (an?.lev?.length && this._imgLev) this._copiar(this._imgLev, aT * 1.6 * (1 - dossa(p)));
+				if (an && ((an.ajust && an.ajust !== 'cro') || an.lev.length)) this._transicion(p, aT * 1.6);
+				else if (selDial) this._copiar(this._imgSel, aT * 1.6);
 				// survòl (sens causida) : la zòna s'esclarzís un pauc, amb lo meteis
 				// fondut que la causida (retorn de Romain : un emplenatge net fasiá de
 				// bòrds tròp nets ; nets sonque sus la frontièra e la còsta)
@@ -820,52 +812,83 @@ export function crearColaDonadas(
 			}
 			return pts;
 		},
-		// La difusion : la tencha del dialècte causit, vista a travèrs d'una taca
-		// que creis (masca dessenhada en pichon puèi agrandida : vòra doça a
-		// bon mercat), e un front lusent que s'esvalís
-		_difusar(kod, p, aT, img = this._imgSel) {
-			const G = this._geo,
-				zn = G.zonas.find((x) => x.kod === kod);
-			if (!zn) return;
-			const pts = this._contornTaca(zn, p);
-			const t = this._trab,
-				tg = t.getContext('2d'),
+		// Lo passatge d'una causida a l'autra (retorn de Romain : sens trauc ni
+		// susimpression a la limita de doas zònas que se tòcan) : l'imatge
+		// d'abans e lo d'aprèp, cadun dins sa part d'una masca (la taca que se
+		// difusa a partir del dialècte apondut ; un fondut simple quand un
+		// dialècte es levat), somats sens se recobrir. Al començament, exactament
+		// l'imatge d'abans ; a la fin, exactament lo d'aprèp.
+		_transicion(p, a) {
+			const an = this._anim,
+				G = this._geo,
 				dpr = this._dpr;
-			// masca en pichon (1/6)
+			const zn = an.ajust && an.ajust !== 'cro' ? G.zonas.find((x) => x.kod === an.ajust) : null;
+			const t = this._trab,
+				tg = t.getContext('2d');
+			const t2 = (this._trab2 ??= document.createElement('canvas'));
+			t2.width = t.width;
+			t2.height = t.height;
+			const g2 = t2.getContext('2d');
+			// la masca, en pichon (1/6) puèi agrandida : vòra doça a bon mercat
 			const m = this._masca,
 				k = 1 / 6;
 			m.width = Math.max(1, Math.round(t.width * k));
 			m.height = Math.max(1, Math.round(t.height * k));
 			const mg = m.getContext('2d');
+			mg.setTransform(1, 0, 0, 1, 0, 0);
 			mg.clearRect(0, 0, m.width, m.height);
-			mg.setTransform(dpr * k, 0, 0, dpr * k, 0, 0);
 			mg.fillStyle = '#000';
-			mg.beginPath();
-			pts.forEach(([x, y], i) => (i ? mg.lineTo(x, y) : mg.moveTo(x, y)));
-			mg.closePath();
-			mg.fill();
-			// tencha × masca
+			const pts = zn ? this._contornTaca(zn, p) : null;
+			if (pts) {
+				mg.setTransform(dpr * k, 0, 0, dpr * k, 0, 0);
+				mg.beginPath();
+				pts.forEach(([x, y], i) => (i ? mg.lineTo(x, y) : mg.moveTo(x, y)));
+				mg.closePath();
+				mg.fill();
+				mg.setTransform(1, 0, 0, 1, 0, 0);
+			}
+			// a la fin (o tot lo long, per un dialècte levat) la masca s'emplís
+			// pertot : lo darrièr imatge es exactament lo d'aprèp
+			const g = pts ? dossa(clamp((p - 0.75) / 0.25)) : dossa(p);
+			if (g > 0) {
+				mg.globalAlpha = g;
+				mg.fillRect(0, 0, m.width, m.height);
+				mg.globalAlpha = 1;
+			}
+			// aprèp × masca
 			tg.setTransform(1, 0, 0, 1, 0, 0);
 			tg.globalCompositeOperation = 'source-over';
 			tg.clearRect(0, 0, t.width, t.height);
-			tg.drawImage(img, 0, 0);
+			tg.drawImage(this._imgSel, 0, 0);
 			tg.globalCompositeOperation = 'destination-in';
 			tg.imageSmoothingQuality = 'high';
 			tg.drawImage(m, 0, 0, t.width, t.height);
+			// abans × (1 − masca)
+			g2.setTransform(1, 0, 0, 1, 0, 0);
+			g2.globalCompositeOperation = 'source-over';
+			g2.clearRect(0, 0, t2.width, t2.height);
+			if (this._imgAvant) g2.drawImage(this._imgAvant, 0, 0);
+			g2.globalCompositeOperation = 'destination-out';
+			g2.imageSmoothingQuality = 'high';
+			g2.drawImage(m, 0, 0, t2.width, t2.height);
+			g2.globalCompositeOperation = 'source-over';
+			// la soma (additiva : las doas parts son complementàrias)
+			tg.globalCompositeOperation = 'lighter';
+			tg.drawImage(t2, 0, 0);
 			tg.globalCompositeOperation = 'source-over';
-			this._copiar(t, aT);
+			this._copiar(t, a);
 			// lo front : una linha lusenta, dins la zòna sonque, que s'esvalís
 			const cx = this._cx,
 				T = this._tem,
 				aF = (1 - dossa(p)) * 0.9;
-			if (aF > 0.02) {
+			if (pts && aF > 0.02) {
 				cx.save();
 				cx.clip(zn.c, 'evenodd');
 				if (G.dom) cx.clip(G.dom, 'evenodd');
 				cx.beginPath();
 				pts.forEach(([x, y], i) => (i ? cx.lineTo(x, y) : cx.moveTo(x, y)));
 				cx.closePath();
-				const color = T.dial[kod];
+				const color = T.dial[zn.kod];
 				cx.strokeStyle = T.clar ? color : mesclar(color, '#fff8ec', 0.45);
 				cx.shadowColor = color;
 				cx.shadowBlur = 14;
