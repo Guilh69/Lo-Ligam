@@ -83,6 +83,23 @@
 		Object.fromEntries(CATALOGUE.flatMap((f) => f.jaces.map((j) => [j.id, !!j.defaut])))
 	);
 
+	// Lo bas real del capçal (una o doas linhas segon la largor) : la recèrca
+	// e lo boton d'informacion se plaçan just dejós (retorn de Romain : la
+	// barra tocava « Mots » e « Òbras »)
+	let capçalEl = $state(null);
+	let capBas = $state(0);
+	$effect(() => {
+		if (!capçalEl) return;
+		const mesurar = () => {
+			const t = capçalEl.firstElementChild?.getBoundingClientRect();
+			if (t) capBas = Math.round(t.bottom - capçalEl.getBoundingClientRect().top);
+		};
+		mesurar();
+		const ro = new ResizeObserver(mesurar);
+		ro.observe(capçalEl);
+		return () => ro.disconnect();
+	});
+
 	onMount(async () => {
 		const { data } = await supabase.from('carta_colas').select('*').order('ordre');
 		if (data?.length) {
@@ -103,9 +120,9 @@
 	<title>{tx.title} · Lo Ligam</title>
 </svelte:head>
 
-<div class="screen">
+<div class="screen" style:--cap-bas={capBas ? capBas + 'px' : null}>
 	<!-- Le bandeau commun flotte sur la carte, dans un dégradé de nuit -->
-	<div class="capçal">
+	<div class="capçal" bind:this={capçalEl}>
 		<AppHeader />
 	</div>
 
@@ -245,7 +262,7 @@
 
 	/* ---------- Carte d'information ---------- */
 	.info-card {
-		top: 6.4rem;
+		top: calc(var(--cap-bas, 5.4rem) + 18px);
 		right: var(--marge);
 		width: min(22rem, calc(100vw - 2rem));
 		padding: 1.3rem 1.4rem 1.2rem;
@@ -286,7 +303,7 @@
 	.info-trigger {
 		position: absolute;
 		z-index: 1000;
-		top: 6.4rem;
+		top: calc(var(--cap-bas, 5.4rem) + 18px);
 		right: var(--marge);
 		width: 2.6rem;
 		height: 2.6rem;
@@ -300,7 +317,7 @@
 	@media (max-width: 760px) {
 		.info-trigger,
 		.info-card {
-			top: 7.5rem;
+			top: calc(var(--cap-bas, 6.4rem) + 18px);
 		}
 	}
 	@container carta (max-width: 600px) {

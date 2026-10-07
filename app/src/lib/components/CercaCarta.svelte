@@ -168,7 +168,7 @@
 	.cerca {
 		position: absolute;
 		z-index: 1000;
-		top: 6.3rem;
+		top: calc(var(--cap-bas, 5.3rem) + 18px); /* just dejós lo capçal */
 		left: 50%;
 		transform: translateX(-50%);
 		width: min(25rem, calc(100% - 10rem));
@@ -307,7 +307,7 @@
 	   rail des couches (à gauche) et le bouton d'information (à droite) */
 	@media (max-width: 760px) {
 		.cerca {
-			top: 7.5rem;
+			top: calc(var(--cap-bas, 6.4rem) + 18px);
 			left: calc(var(--marge, 1rem) + 5.3rem); /* après le rail des couches */
 			right: 4.4rem;
 			width: auto;
@@ -322,7 +322,7 @@
 	   lo boton d'informacion a drecha) */
 	@container carta (max-width: 600px) {
 		.cerca {
-			top: 7.5rem;
+			top: calc(var(--cap-bas, 6.4rem) + 18px);
 			left: 0.75rem;
 			right: 3.95rem;
 			width: auto;

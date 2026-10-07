@@ -6,7 +6,8 @@
 	// qu'es afichat, per l'escantir d'un còp d'uèlh ; « Fons » règla lo fons
 	// (fons « Contorns », occitan, natural, satellit, e colors) ; los elements
 	// (vilas, noms, rius, relèu) son de jaces dins lors familhas.
-	import { untrack } from 'svelte';
+	import { untrack, tick } from 'svelte';
+	import { sonPapièr, sonsActius, gardarSons } from '$lib/carta/sons.js';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 
@@ -24,6 +25,7 @@
 	const T = {
 		oc: {
 			rail: 'Jaces de la carta',
+			sons: (on) => (on ? 'Sons de la carta : alucats' : 'Sons de la carta : amudits'),
 			desplaçar: 'Desplaçar lo panèl (las sagetas tanben ; doble clic : tornar a sa plaça)',
 			reduire: 'Reduire lo panèl',
 			desplegar: 'Desplegar lo panèl',
@@ -55,6 +57,7 @@
 		},
 		fr: {
 			rail: 'Couches de la carte',
+			sons: (on) => (on ? 'Sons de la carte : activés' : 'Sons de la carte : coupés'),
 			desplaçar: 'Déplacer le panneau (flèches aussi ; double-clic : le remettre en place)',
 			reduire: 'Réduire le panneau',
 			desplegar: 'Déplier le panneau',
@@ -230,9 +233,88 @@
 		gardarRail();
 		if (dobert) requestAnimationFrame(plaçarTirador);
 	}
-	function alternarReduch() {
-		reduch = !reduch;
-		if (reduch) dobert = null;
+	// Plegar o desplegar lo panèl coma un papièr (retorn de Romain : « une
+	// animation très satisfaisante » e un bruch de papièr) : los botons se
+	// viran un per un, del bas cap al naut, e lo panèl se sarra amb un pichon
+	// rebond ; l'encòca demòra a sa plaça. Sens animacion se lo sistèma o
+	// demanda (movement reduch).
+	// los sons de la carta (papièr del panèl) : desactivables, memorizats
+	let sons = $state(true);
+	$effect(() => {
+		sons = sonsActius();
+	});
+	function alternarSons() {
+		sons = !sons;
+		gardarSons(sons);
+	}
+	let plegant = false;
+	async function alternarReduch() {
+		if (plegant || !railEl) return;
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const plegar = !reduch;
+		sonPapièr(plegar);
+		// lo panèl centrat se fixa ont es, que l'encòca bolegue pas
+		if (!railPos && railEl.offsetParent) {
+			const r = railEl.getBoundingClientRect(),
+				pr = railEl.offsetParent.getBoundingClientRect();
+			railPos = { x: r.left - pr.left, y: r.top - pr.top };
+			await tick();
+		}
+		const cs = getComputedStyle(railEl);
+		const hEncòca = () =>
+			railEl.querySelector('.encòca').offsetHeight +
+			['paddingTop', 'paddingBottom', 'borderTopWidth', 'borderBottomWidth'].reduce((s, k) => s + parseFloat(cs[k]), 0);
+		const plecs = () => [...railEl.querySelectorAll('.rail-b, .rail-sep')];
+		const virar = (els, de, a, òrdre) =>
+			els.forEach((el, i) =>
+				el.animate(
+					[
+						{ transform: `perspective(260px) rotateX(${de}deg)`, opacity: de ? 0 : 1, transformOrigin: '50% 0' },
+						{ transform: `perspective(260px) rotateX(${a}deg)`, opacity: a ? 0 : 1, transformOrigin: '50% 0' }
+					],
+					{ duration: 240, delay: òrdre(i, els.length) * 32, easing: de ? 'cubic-bezier(.2,.8,.3,1)' : 'cubic-bezier(.55,0,.75,.2)', fill: 'both' }
+				)
+			);
+		if (plegar) {
+			dobert = null;
+			if (!calm) {
+				plegant = true;
+				const h0 = railEl.offsetHeight,
+					h1 = hEncòca(),
+					els = plecs();
+				railEl.style.overflow = 'hidden';
+				virar(els, 0, -95, (i, n) => n - 1 - i);
+				await railEl.animate(
+					[{ height: h0 + 'px' }, { height: h1 * 0.9 + 'px', offset: 0.86 }, { height: h1 + 'px' }],
+					{ duration: 300 + els.length * 32, easing: 'cubic-bezier(.6,0,.3,1)' }
+				).finished;
+				els.forEach((el) => el.getAnimations().forEach((a) => a.cancel()));
+				railEl.style.overflow = '';
+				plegant = false;
+			}
+			reduch = true;
+		} else {
+			const h1 = railEl.offsetHeight;
+			reduch = false;
+			await tick();
+			// desplegat, lo panèl deu demorar dins la carta
+			const pr = railEl.offsetParent?.getBoundingClientRect();
+			if (pr && railPos) railPos = { ...railPos, y: Math.min(railPos.y, Math.max(8, pr.height - railEl.offsetHeight - 8)) };
+			if (!calm) {
+				plegant = true;
+				const h0 = railEl.offsetHeight,
+					els = plecs();
+				railEl.style.overflow = 'hidden';
+				virar(els, 95, 0, (i) => i);
+				await railEl.animate(
+					[{ height: h1 + 'px' }, { height: h0 * 1.03 + 'px', offset: 0.8 }, { height: h0 + 'px' }],
+					{ duration: 320 + els.length * 32, easing: 'cubic-bezier(.2,.7,.3,1)' }
+				).finished;
+				els.forEach((el) => el.getAnimations().forEach((a) => a.cancel()));
+				railEl.style.overflow = '';
+				plegant = false;
+			}
+		}
 		gardarRail();
 	}
 
@@ -451,6 +533,7 @@
 			<div class="botons">
 				<button type="button" class="boton" onclick={sonqueContorns}>{tx.sonqueContorns}</button>
 				<button type="button" class="boton" onclick={totTornar}>{tx.totTornar}</button>
+				<button type="button" class="boton" aria-pressed={sons} onclick={alternarSons}>{tx.sons(sons)}</button>
 				{#if Object.keys(colors).length}
 					<button type="button" class="boton" onclick={() => (colors = {})}>{tx.colorsTema}</button>
 				{/if}
