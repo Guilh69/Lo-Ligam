@@ -301,6 +301,39 @@
 		if (visibility.calandretas) pointLayers.calandretas.addTo(map);
 	}
 
+	// Las autras lengas de França (demanda de Romain) : una etiqueta per
+	// lenga, a sa region, e una ficha corta al clic. Las d'outra mar se veson
+	// quand se dezooma fins al mond, las de França metropolitana de mai prèp.
+	let lengasCargadas = false;
+	async function cargarLengas() {
+		if (lengasCargadas || !map) return;
+		lengasCargadas = true;
+		const d = await fetch('/data/lengas-franca.json')
+			.then((r) => (r.ok ? r.json() : null))
+			.catch(() => null);
+		if (!d?.lengas) return (lengasCargadas = false);
+		const fr = lang === 'fr';
+		pointLayers.lengasFranca = L.layerGroup(
+			d.lengas.map((q) =>
+				L.marker([q.lat, q.lon], {
+					icon: L.divIcon({
+						className: 'lenga-franca' + (q.outremer ? ' outremer' : ''),
+						html: `<span>${escapeHtml(q.endo)}</span>`,
+						iconSize: null
+					}),
+					title: `${q.endo} : ${fr ? q.fr : q.oc}`,
+					keyboard: true
+				}).bindPopup(
+					`<strong>${escapeHtml(q.endo)}</strong><br>${escapeHtml(fr ? q.fr : q.oc)} · ${escapeHtml(fr ? q.familha_fr : q.familha_oc)}<br><small>${escapeHtml(fr ? q.zona_fr : q.zona_oc)}</small>`
+				)
+			)
+		);
+		const zoomMond = () => mapEl?.classList.toggle('zoom-mond', map.getZoom() < 4.6);
+		map.on('zoomend', zoomMond);
+		zoomMond();
+		if (visibility.lengasFranca) pointLayers.lengasFranca.addTo(map);
+	}
+
 	async function loadGeoLayer(gid) {
 		const def = geoDefs[gid];
 		if (!def || geoLayers[gid] || geoLoading[gid]) return;
@@ -558,6 +591,7 @@
 		colaDonadas?.setJaces(jacesDonadas(vis));
 		colaTematica?.setJaces(jacesTematicas(vis));
 		if (vis.calandretas) cargarCalandretas();
+		if (vis.lengasFranca) cargarLengas();
 		// dialèctes o Creissent visibles : lo survòl e lo clic son per eles
 		colaEstelas?.setModeDialectes(!!vis.dialectes);
 
@@ -948,6 +982,38 @@
 			bottom: calc(var(--barra-bas, 0px) + 2.9rem);
 			left: 0.85rem;
 		}
+	}
+
+	/* Las autras lengas de França : lor nom dins la lenga meteissa, en
+	   capitalas espaçadas, de la color de l'aur ; un clic dona la ficha */
+	.carta :global(.lenga-franca) {
+		width: auto !important;
+		height: auto !important;
+		background: none;
+		border: 0;
+	}
+	.carta :global(.lenga-franca span) {
+		display: inline-block;
+		transform: translate(-50%, -50%);
+		padding: 2px 6px;
+		border-radius: 10px;
+		font: 600 11px/1.2 var(--font-body);
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		white-space: nowrap;
+		color: var(--t-aur-clar);
+		text-shadow:
+			0 0 4px var(--t-fons),
+			0 0 8px var(--t-fons);
+		cursor: pointer;
+	}
+	.carta :global(.lenga-franca:focus-visible span) {
+		outline: 2px solid var(--t-aur);
+	}
+	/* d'outra mar sonque quand se dezooma fins al mond, e l'invèrse */
+	.carta:not(:global(.zoom-mond)) :global(.lenga-franca.outremer),
+	.carta:global(.zoom-mond) :global(.lenga-franca:not(.outremer)) {
+		display: none;
 	}
 
 	.compass text {

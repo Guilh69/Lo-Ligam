@@ -102,6 +102,26 @@ export const CATALOGUE = [
 	}
 ];
 
+// Las autras lengas de França (demanda de Romain, 2026-10-08) : una familha a
+// despart, per las far descobrir e far de ponts ; mens provesida que l'occitan
+// (una etiqueta per lenga e una ficha corta), de completar
+CATALOGUE.push({
+	id: 'lengas',
+	oc: 'Autras lengas',
+	fr: 'Autres langues',
+	jaces: [
+		{
+			id: 'lengasFranca',
+			oc: 'Lengas de França',
+			fr: 'Langues de France',
+			estat: 'disponible',
+			defaut: false,
+			nota_oc: 'Catalan, basc, breton, arpitan, alsacian, còrs, lengas d’oïl, d’outra mar…',
+			nota_fr: 'Catalan, basque, breton, arpitan, alsacien, corse, langues d’oïl, d’outre-mer…'
+		}
+	]
+});
+
 // Las jaces pintadas pel fons « Contorns » (colaEstelas.js) : son pas pintadas
 // sus los autres fonses (las tuèlas an las lors). Jaça → element del fons.
 export const JACES_FONS = { vilas: 'estelas', toponimia: 'nomsVilas', rius: 'rius', nomsRius: 'nomsRius', corbas: 'corbas' };
