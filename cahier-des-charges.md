@@ -159,7 +159,7 @@ Signer les accords, créer les comptes, héberger, gérer l'argent et les décla
 - [x] ~~**Nom** de l'application~~ → **TRANCHÉ : « Lo Ligam »** (« le lien »). Vérifications à faire : domaine, marque INPI, disponibilité stores ; noter la proximité avec l'association occitaniste « Ligams ». (voir Journal §11)
 - [x] ~~**Technologie** : appli native, web app, ou hybride (une base de code pour web + mobile) ?~~ → **TRANCHÉ DE FAIT : web app SvelteKit** (adapter-node), pas d'application native (décisions du 2026-08-08 et du 2026-08-22, voir Journal §11)
 - [ ] **Statut juridique** pour les cours et dons (micro-entreprise, association…).
-- [x] ~~**Hébergeur** définitif.~~ → **TRANCHÉ DE FAIT : Scaleway (Paris, fr-par)**, Vercel en secours ; base Supabase (UE) conservée, migration reportée sciemment (décisions du 2026-08-08 et du 2026-08-09, voir Journal §11)
+- [x] ~~**Hébergeur** définitif.~~ → **TRANCHÉ DE FAIT : Scaleway (Paris, fr-par)**, Vercel supprimé le 2026-10-07 ; base Supabase (UE) conservée, migration reportée sciemment (décisions du 2026-08-08 et du 2026-08-09, voir Journal §11)
 - [ ] **Périmètre exact du MVP** : quelles leçons, combien d'unités pour un lancement crédible ?
 
 ---
@@ -253,7 +253,7 @@ Signer les accords, créer les comptes, héberger, gérer l'argent et les décla
 | 2026-10-07 | **Zones mixtes en quadrillage clair** (Romain) : Roya et La Brigue (ligure à traits occitans), Monaco (ligure, niçois aussi), communes italiennes déclarées occitanes par la loi 482 mais de parler piémontais (Luserna, Bricherasio, Paesana, Sanfront, Dronero, Caraglio, Borgo San Dalmazzo). Restent dans le domaine (Monaco hors), légende au survol. | Romain |
 | 2026-10-07 | **Limites débattues : conseils de la recherche suivis** (Romain) : est de la Creuse et de la Corrèze auvergnat (Crocq, Auzances), sud des Baronnies provençal (compromis), limousin jusqu'au gascon vers Tayac ; Lomagne inchangée en attendant une source. **Nuancier** : la largeur du fondu entre dialectes suit les 22 bandes de transition relevées (5 à 35 km). Restent : gascon éteint (Bourgeais, Libournais) à montrer plus pâle ? Verdon-sur-Mer non affiché. | Romain |
 | 2026-10-07 | **Sept petites corrections appliquées** (Romain) : ouest de Toulouse et vallée de Massat gascons ; Carladès et rive du Vidourle languedociens ; Digne, Annot, Entrevaux vivaro-alpins ; Petite Gavacherie (enclave d'oïl autour de Monségur) et Blayais hors domaine. Reste à trancher : montrer le gascon éteint (Bourgeais, Libournais) plus pâle ; Lomagne en attente d'une source. | Romain |
-| 2026-10-07 | **Vercel débranché de GitHub** (Romain) : fin des échecs de déploiement à chaque envoi. Constat : le « secours » Vercel ne marchait plus depuis le 08-08 (site construit pour un conteneur), il ne montrait que l'ancienne version. Suppression complète du projet Vercel et lien « About » de GitHub à repointer vers Scaleway : à faire par Romain | Les croix rouges sur GitHub n'étaient que du bruit ; le vrai site (Scaleway) était en ligne |
+| 2026-10-07 | **Vercel débranché de GitHub** (Romain) : fin des échecs de déploiement à chaque envoi. Constat : le « secours » Vercel ne marchait plus depuis le 08-08 (site construit pour un conteneur), il ne montrait que l'ancienne version. Le même jour, projet Vercel supprimé et lien « About » de GitHub repointé vers Scaleway | Les croix rouges sur GitHub n'étaient que du bruit ; le vrai site (Scaleway) était en ligne |
 | — | *(à compléter)* | |
 
 ---
