@@ -731,9 +731,18 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (!this._el.estelas && !this._el.nomsVilas) return null;
 			const x = lp.x - this._min.x,
 				y = lp.y - this._min.y;
+			// Sonque los luòcs dont lo nom es afichat a aquesta escala se pòdon
+			// pausar (retorn de Romain) : de luènh, las vilas grandas e una vila
+			// repèr per despartament ; los vilatges sens nom (Lo Vigan, Sant
+			// Africa…) agachan pas lo survòl de las regions. Meteisses paliers que
+			// los noms (_plaçarTot).
+			const zBase = this._map.getBoundsZoom(OCCITANIA),
+				z = this._zoom;
+			const rencMax = z >= zBase + DZ_VILATGES ? 4 : z >= zBase + DZ_DEPART ? 3 : 2;
 			let best = null,
 				bestD = Infinity;
 			for (const e of this._estelas) {
+				if (e.renc > rencMax) continue;
 				const d = Math.hypot(e.X - this._o.x - x, e.Y - this._o.y - y);
 				const sc = d - bonus * ({ 1: 1.3, 2: 1, 3: 0.6, 4: 0 }[e.renc]);
 				if (d < ray && sc < bestD) {
