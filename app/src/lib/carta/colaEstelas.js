@@ -72,8 +72,8 @@ const TÈXTES_FICHA = {
 };
 
 const TEMAS = {
-	sorne: { lenga: '#e0612f', velDefòra: 'rgba(18, 9, 6, 0.42)', corba: 'rgba(238, 175, 52, 1)', costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
-	clar: { lenga: '#b53d17', velDefòra: 'rgba(245, 234, 216, 0.55)', corba: 'rgba(138, 90, 43, 1)', costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
+	sorne: { lenga: '#e0612f', corba: 'rgba(238, 175, 52, 1)', costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(29, 15, 10, 0.94)', riu: '#eeaf34', estela: '#f5ead8', liser: 'rgba(18, 9, 6, 0.9)', fil: '#eeaf34', riuTèxt: '#ffd47f', vilaTèxt: '#f5ead8', vel: 'rgba(18, 9, 6, 0.75)', velFin: 'rgba(18, 9, 6, 0)' },
+	clar: { lenga: '#b53d17', corba: 'rgba(138, 90, 43, 1)', costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)' }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
@@ -545,14 +545,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 							const q = map.project([lat, lon], z);
 							return [q.x, q.y];
 						});
-					const cami = new Path2D();
-					for (const a of dom.anels) {
-						const p = proj(a);
-						cami.moveTo(p[0][0], p[0][1]);
-						for (let i = 1; i < p.length; i++) cami.lineTo(p[i][0], p[i][1]);
-						cami.closePath();
-					}
-					this._domeni = { cami, linhas: dom.linhas.map(proj) };
+					this._domeni = { linhas: dom.linhas.map(proj) };
 				}
 				this._regions = projAnels(this._limitsGeo?.regions);
 				this._deps = projAnels(this._limitsGeo?.despartaments);
@@ -914,31 +907,40 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				}
 			}
 
-			// Le domaine occitan : au-dehors, la carte est légèrement atténuée (un
-			// voile sur le fond, le relief, la côte et les rivières) ; la frontière
-			// linguistique, TERRESTRE seulement, en très fins points terre cuite
-			// (ni administrative ni naturelle : ni crème ni or). Demande de Romain,
-			// 2026-10-07 : reconnaître qu'on sort du domaine occitan.
+			// La frontière linguistique (demande de Romain, 2026-10-07) : SEULEMENT
+			// des points terre cuite (ni administratifs en crème, ni nature en or) ;
+			// le fond reste le même des deux côtés. Terrestre, elle touche la mer.
+			// De près, on ne sait pas où elle passe au kilomètre près : les points
+			// pâlissent et une bande diffuse de quelques kilomètres dit « par ici ».
 			const aDom = clamp((intro - 0.3) / 0.5);
 			if (this._domeni && aDom > 0.01) {
+				const mPx = 112600 / Math.pow(2, z); // mètres par pixel vers 44° N
+				const vague = clamp((z - 7.5) / 2.5);
+				const traçar = () => {
+					cx.beginPath();
+					for (const l of this._domeni.linhas) {
+						cx.moveTo(l[0][0], l[0][1]);
+						for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0], l[i][1]);
+					}
+				};
 				cx.save();
 				cx.translate(-o.x, -o.y);
-				const defòra = new Path2D();
-				defòra.rect(o.x - 20, o.y - 20, W + 40, H + 40);
-				defòra.addPath(this._domeni.cami);
-				cx.globalAlpha = aDom;
-				cx.fillStyle = T.velDefòra;
-				cx.fill(defòra, 'evenodd');
 				cx.strokeStyle = T.lenga;
-				cx.lineWidth = 1.5;
 				cx.lineCap = 'round';
-				cx.setLineDash([0.01, 4.2]);
-				cx.globalAlpha = aDom * 0.8;
-				cx.beginPath();
-				for (const l of this._domeni.linhas) {
-					cx.moveTo(l[0][0], l[0][1]);
-					for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0], l[i][1]);
+				cx.lineJoin = 'round';
+				if (vague > 0.01) {
+					const larg = Math.max(4, 4000 / mPx);
+					traçar();
+					for (const [k, al] of [[1, 0.05], [0.55, 0.06]]) {
+						cx.globalAlpha = aDom * vague * al;
+						cx.lineWidth = larg * k;
+						cx.stroke();
+					}
 				}
+				cx.setLineDash([0.01, 4.2 + vague * 3]);
+				cx.lineWidth = 1.4 + vague * 0.6;
+				cx.globalAlpha = aDom * lerp(0.8, 0.3, vague);
+				traçar();
 				cx.stroke();
 				cx.setLineDash([]);
 				cx.restore();
