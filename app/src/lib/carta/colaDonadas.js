@@ -184,7 +184,7 @@ export function crearColaDonadas(
 			// qu'una pastilha) : sas zònas totas se mòstran pas abans la difusion
 			if (j.dialectes && !this._jaces.dialectes) this._dialAlucat = performance.now();
 			// regions e despartaments alucats : d'estelas ne fan lo torn (demanda de Romain)
-			for (const k of ['regions', 'despartaments'])
+			for (const k of ['regions', 'despartaments', 'frontiera'])
 				if (j[k] && !this._jaces[k] && !this._calm) {
 					(this._apar ??= {})[k] = performance.now();
 					this._lançarApar();
@@ -1023,8 +1023,23 @@ export function crearColaDonadas(
 			   « per aquí ». */
 			if (J.frontiera && G.linhas && aFront > 0.01) {
 				const vague = clamp((z - 7.5) / 2.5);
+				// l'aparicion : los ponches se pausan al long de la frontièra, una
+				// estela en cap (coma los contorns dels territòris)
+				const tF = this._tApar('frontiera'),
+					ctsF = tF == null ? null : (G.linhasTr ??= G.linhas.map((l) => prepContorn([l]))),
+					capsF = [];
 				const traçar = () => {
 					cx.beginPath();
+					if (ctsF) {
+						capsF.length = 0;
+						for (const ct of ctsF) {
+							const q = avançada(tF, ct, this._W, this._H);
+							if (q <= 0) continue;
+							traçarPart(cx, ct, easeS(q));
+							if (q < 1) capsF.push([ct, easeS(q), Math.sin(Math.PI * q)]);
+						}
+						return;
+					}
 					for (const l of G.linhas) {
 						cx.moveTo(l[0][0], l[0][1]);
 						for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0], l[i][1]);
@@ -1048,6 +1063,8 @@ export function crearColaDonadas(
 				cx.globalAlpha = lerp(0.8, 0.3, vague) * aFront;
 				traçar();
 				cx.stroke();
+				cx.setLineDash([]);
+				for (const [ct, pp, aC] of capsF) estelaCap(cx, ct, pp, T.estela, aC * aFront * 0.9);
 				cx.restore();
 			}
 

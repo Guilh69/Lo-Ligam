@@ -11,8 +11,8 @@
 // Al survòl (o al tòc), l'encastre d'en bas dona lo nom e sa natura, coma pels
 // territòris. Noms occitans de validar per Romain.
 
-import { INTRO, nivèlsDezoom, aDetalh } from './colaEstelas.js';
-import { prepContorn, traçarPart, avançada, estelasDe, TOTAL as TOTAL_APAR } from './aparicion.js';
+import { INTRO, nivèlsDezoom, aDetalh, Z_COMUNAS } from './colaEstelas.js';
+import { prepContorn, traçarPart, estelasDe, estelaCap, avançada, DURADA as DURADA_APAR, ONDA, TOTAL as TOTAL_APAR } from './aparicion.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const easeS = (t) => (1 - Math.cos(Math.PI * t)) / 2;
@@ -59,7 +59,7 @@ const colorGov = (kod) => COLORS_GOV[kod] ?? '190, 170, 140';
 // Seuils (zoom Leaflet ; à 44° N, 11 ≈ « 5 km » sur l'échelle)
 // comunas a partir de l'escala « 7 km » (causida de Romain) : lo cran de zoom
 // 10,5 (zoomSnap 0,25), lo primièr ont l'escala de 110 px passa a 7 km
-const Z_COMUNAS = 10.5;
+// (Z_COMUNAS : dins colaEstelas, que lo survòl dels territòris i cedís)
 const Z_PROV_MAX = 10.5;
 // governaments de luènh, províncias de prèp : lo cambi se fa entre dos crans de
 // zoom (6,75 e 7 ; zoomSnap 0,25), que cap cran demòre sens nom
@@ -322,6 +322,15 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		},
 
 		setJaces(j) {
+			// parcs, províncias, noms dels massís alucats : lor aparicion (demanda
+			// de Romain : una animacion per jaça, la mai adaptada a sas donadas)
+			const ara = performance.now();
+			for (const k of ['parcs', 'provincias', 'massis'])
+				if (j[k] && !this._jaces[k] && !this._calm) {
+					(this._aparJ ??= {})[k] = ara;
+					this._aparFins = Math.max(this._aparFins ?? 0, ara + (TOTAL_APAR + 0.9) * 1000);
+					this._lançarApar();
+				}
 			this._jaces = { ...j };
 			if (this._pus && !this._jaçaDe(this._pus.mena)) this._survòl(null);
 			this._cargar();
@@ -493,6 +502,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				G.prov = this._prov.features
 					.map((f) => ({
 						...zona(poligonsDe(f.geometry)),
+						poligons: poligonsDe(f.geometry),
 						props: f.properties,
 						eti: f.properties.eti && pt(f.properties.eti)
 					}))
@@ -501,6 +511,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				G.parcs = this._parcs.features
 					.map((f) => ({
 						...zona(poligonsDe(f.geometry)),
+						poligons: poligonsDe(f.geometry),
 						props: f.properties,
 						eti: f.properties.eti && pt(f.properties.eti)
 					}))
@@ -511,14 +522,6 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					p: pt(f.geometry.coordinates)
 				}));
 			this._fonts();
-			// las comunas venon d'aparéisser (jaça alucada, o escala passada) : de
-			// constellacions se pausan e ne dessenhan los contorns (demanda de Romain)
-			const visCom = !!J.comunas && z >= Z_COMUNAS;
-			if (visCom && !this._visCom && !this._calm) {
-				this._aparCom = performance.now();
-				this._lançarApar();
-			}
-			this._visCom = visCom;
 			if (J.comunas && z >= Z_COMUNAS - 0.5) {
 				G.com = [];
 				for (const lista of this._deps.values())
@@ -528,6 +531,11 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					}
 				this._cargarComunas();
 			}
+			// las comunas que dintran dins la vista (jaça alucada, escala passada,
+			// carta desplaçada) : lor constellacion se pausa ; sonque çò qu'es a
+			// l'ecran (retorn de Romain : alleujar, e al fur e a mesura)
+			if (G.com && z >= Z_COMUNAS) this._vistas(G);
+			else this._comVistas?.clear();
 			this._pintar();
 		},
 
@@ -597,11 +605,50 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			onSurvòl?.(this._info(t));
 			this._bocla();
 		},
+		// Las comunas novèlament vistas : la primièra fornada part en onda del
+		// mitan de la vista ; las seguentas (en se desplaçant), a pauc a pauc
+		_vistas(G) {
+			const ara = performance.now(),
+				m = (this._comVistas ??= new Map()),
+				prima = m.size === 0;
+			const W = this._W,
+				H = this._H,
+				pd = this.options.padding,
+				k = 1 + 2 * pd;
+			const v = [(W * pd) / k, (H * pd) / k, (W * (1 + pd)) / k, (H * (1 + pd)) / k],
+				R = 0.5 * Math.hypot(v[2] - v[0], v[3] - v[1]);
+			let fins = this._aparFins ?? 0;
+			for (const c of G.com) {
+				const id = c.props.i;
+				if (m.has(id)) continue;
+				const [x0, y0, x1, y1] = c.bbox;
+				if (x1 < v[0] || x0 > v[2] || y1 < v[1] || y0 > v[3]) continue;
+				const h = [...String(id)].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) | 0, 7),
+					f = ((h >>> 0) % 1000) / 1000;
+				const retard = prima ? ONDA * Math.min(1, Math.hypot((x0 + x1) / 2 - W / 2, (y0 + y1) / 2 - H / 2) / R) : 0.35 * f;
+				const t0 = this._calm ? -Infinity : ara + retard * 1000;
+				m.set(id, t0);
+				if (t0 > -Infinity) fins = Math.max(fins, t0 + DURADA_APAR * 1000);
+			}
+			this._aparFins = fins;
+			if (fins > ara) this._lançarApar();
+		},
+		// Lo temps (s) dempuèi l'alucatge d'una jaça, se son aparicion es en cors
+		_tApar(k) {
+			const t0 = this._aparJ?.[k];
+			if (t0 == null) return null;
+			const t = (performance.now() - t0) / 1000;
+			if (t > TOTAL_APAR + 0.9) {
+				delete this._aparJ[k];
+				return null;
+			}
+			return t;
+		},
 		_lançarApar() {
 			if (this._rafApar) return;
 			const pas = () => {
 				this._pintar();
-				const viu = this._aparCom != null && (performance.now() - this._aparCom) / 1000 <= TOTAL_APAR;
+				const viu = performance.now() <= (this._aparFins ?? 0);
 				this._rafApar = viu && this._map ? requestAnimationFrame(pas) : null;
 				if (!viu) this._pintar();
 			};
@@ -797,18 +844,44 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			/* Parcs : un aplat leugièr e un contorn ponchejat */
 			if (G.parcs) {
 				const a = clamp((z - 6) / 0.8) * clamp((15 - z) / 1.5);
+				// l'aparicion : una estela fa lo torn de cada parc, puèi sa color
+				// s'espandís del mitan coma la vegetacion (demanda de Romain)
+				const tP = this._tApar('parcs'),
+					caps = [];
 				for (const pc of G.parcs) {
 					const m = pc.props.mena,
 						col = m === 'pnm' ? T.mar : T.parc;
 					const s = survòl('parc:' + pc.props.kod);
-					cx.fillStyle = `rgba(${col}, ${(m === 'pn-adesion' ? 0.06 : m === 'pn-cor' ? 0.2 : 0.12) * a + s * 0.12})`;
-					cx.fill(pc.c, 'evenodd');
+					const ct = tP == null ? null : (pc.ct ??= prepContorn(pc.poligons.flat().map((an) => an.map(G.pt))));
+					const q = ct ? avançada(tP, ct, this._W, this._H) : 1;
+					const qF = easeS(clamp((q - 0.45) / 0.55));
+					if (qF > 0) {
+						cx.save();
+						if (qF < 1) {
+							const [x0, y0, x1, y1] = pc.bbox;
+							cx.beginPath();
+							cx.arc(ct.x, ct.y, qF * Math.hypot(x1 - x0, y1 - y0), 0, 6.283);
+							cx.clip();
+						}
+						cx.fillStyle = `rgba(${col}, ${(m === 'pn-adesion' ? 0.06 : m === 'pn-cor' ? 0.2 : 0.12) * a + s * 0.12})`;
+						cx.fill(pc.c, 'evenodd');
+						cx.restore();
+					}
 					cx.strokeStyle = `rgba(${col}, ${(0.55 + s * 0.35) * a})`;
 					cx.lineWidth = m === 'pn-cor' ? 1.3 : 0.9;
 					cx.setLineDash(m === 'pn-adesion' ? [2, 3] : m === 'pnm' ? [5, 3] : []);
-					cx.stroke(pc.c);
+					if (q >= 1) cx.stroke(pc.c);
+					else if (q > 0) {
+						const pp = easeS(clamp(q / 0.8));
+						cx.beginPath();
+						traçarPart(cx, ct, pp);
+						cx.stroke();
+						caps.push([ct, pp, Math.sin(Math.PI * clamp(q / 0.8))]);
+					}
 				}
 				cx.setLineDash([]);
+				for (const [ct, pp, aC] of caps) estelaCap(cx, ct, pp, T.estela, aC * a * 0.9);
+				cx.globalAlpha = 1;
 				// noms dels parcs, a escala mejana
 				const aNom = clamp((z - 7.6) / 0.6) * clamp((11.5 - z) / 1);
 				if (aNom > 0.01) {
@@ -836,13 +909,29 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				const a = clamp((Z_PROV_MAX - z) / 1);
 				const aProv = a * clamp((z - 6.4) / 0.8);
 				const pusGov = this._pus?.mena === 'prov' ? (this._pus.props.nivel === 'governament' ? this._pus.kod : this._pus.props.governament) : null;
+				// l'aparicion : las estelas traçan los governaments e las províncias
+				// coma una pluma sus un pergamin ; los aplats e los noms venon aprèp
+				const tV = this._tApar('provincias'),
+					qDe = (pv) => (tV == null ? 1 : avançada(tV, (pv.ct ??= prepContorn(pv.poligons.flat().map((an) => an.map(G.pt)))), this._W, this._H)),
+					capsV = [];
+				const traçV = (pv) => {
+					const q = qDe(pv);
+					if (q >= 1) return cx.stroke(pv.c);
+					if (q <= 0) return;
+					const pp = easeS(clamp(q / 0.8));
+					cx.beginPath();
+					traçarPart(cx, pv.ct, pp);
+					cx.stroke();
+					capsV.push([pv.ct, pp, Math.sin(Math.PI * clamp(q / 0.8))]);
+				};
+				const aNV = tV == null ? 1 : easeS(clamp((tV - 1.4) / 0.8));
 				cx.save();
 				cx.lineJoin = 'round';
 				// aplats : un per governament
 				for (const pv of G.prov) {
 					if (pv.props.nivel !== 'governament') continue;
 					const s = survòl('prov:' + pv.props.kod) + (pusGov === pv.props.kod ? 0.4 : 0);
-					cx.fillStyle = `rgba(${colorGov(pv.props.kod)}, ${(0.1 + 0.06 * s) * a})`;
+					cx.fillStyle = `rgba(${colorGov(pv.props.kod)}, ${(0.1 + 0.06 * s) * a * easeS(clamp((qDe(pv) - 0.5) / 0.5))})`;
 					cx.fill(pv.c, 'evenodd');
 				}
 				// províncias : fin ponchejat crèma, la survolada s'esclaira
@@ -856,7 +945,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					cx.strokeStyle = `rgba(${T.linha}, ${0.3 * aProv + s * 0.4})`;
 					cx.lineWidth = 0.8 + s * 0.4;
 					cx.setLineDash([4, 3]);
-					cx.stroke(pv.c);
+					traçV(pv);
 				}
 				// governaments (e territòris de defòra) : traç plen, de lor color
 				for (const pv of G.prov) {
@@ -866,9 +955,11 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					cx.strokeStyle = fora ? `rgba(${T.linha}, ${0.45 * a})` : `rgba(${colorGov(pv.props.kod)}, ${clamp(0.75 + s * 0.25) * a})`;
 					cx.lineWidth = fora ? 1 : 2.2 + s * 0.6;
 					cx.setLineDash(fora ? [2, 3] : []);
-					cx.stroke(pv.c);
+					traçV(pv);
 				}
 				cx.setLineDash([]);
+				for (const [ct, pp, aC] of capsV) estelaCap(cx, ct, pp, T.estela, aC * a * 0.9);
+				cx.globalAlpha = 1;
 				// noms : de luènh los governaments, de prèp las províncias amb, en
 				// dejós, lor governament en pichonas capitalas (s'a un autre nom).
 				// Cada nom al mitan de sa zòna, inclinat se la zòna es longa, de la
@@ -882,14 +973,14 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					cx.save();
 					cx.translate(e.x, e.y);
 					if (e.ang) cx.rotate(e.ang);
-					cx.globalAlpha = e.al * 0.9;
+					cx.globalAlpha = e.al * 0.9 * aNV;
 					cx.fillStyle = e.color;
 					cx.font = `${e.talha}px Limelight, Georgia, serif`;
 					if (esp) cx.letterSpacing = e.esp;
 					const y0 = -e.h / 2 + e.lh / 2;
 					e.linhas.forEach((l, i) => cx.fillText(l, 0, y0 + i * e.lh));
 					if (e.sotaGov) {
-						cx.globalAlpha = e.al * 0.75;
+						cx.globalAlpha = e.al * 0.75 * aNV;
 						cx.fillStyle = e.colorGov;
 						cx.font = '600 8.5px Luciole, sans-serif';
 						if (esp) cx.letterSpacing = '0.16em';
@@ -903,49 +994,48 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			/* Comunas : un fil fin, a partir de « 5 km » ; la survolada s'esclaira */
 			if (G.com) {
 				const a = clamp((z - (Z_COMUNAS - 0.2)) / 0.2) * clamp((16 - z) / 1.5);
-				const tA = this._aparCom == null ? null : (performance.now() - this._aparCom) / 1000;
-				if (tA != null && tA > TOTAL_APAR) this._aparCom = null;
-				if (a > 0.01 && tA != null && tA <= TOTAL_APAR) {
-					// l'aparicion : las estelas venon d'a costat se pausar suls
-					// contorns, puèi lo fil las religa
+				if (a > 0.01) {
+					// cada comuna a son temps d'aparicion : las estelas venon d'a
+					// costat se pausar suls contorns, puèi lo fil las religa ; las
+					// que son pas encara estadas vistas se dessenhan pas
+					const m = this._comVistas,
+						ara = performance.now();
 					cx.save();
 					cx.lineJoin = 'round';
 					cx.strokeStyle = `rgba(${T.linha}, ${0.5 * a})`;
 					cx.lineWidth = 0.7;
 					cx.setLineDash([3, 2]);
-					cx.beginPath();
 					const vivas = [];
 					for (const c of G.com) {
-						const ct = (c.ct ??= prepContorn(c.poligons.flat().map((an) => an.map(G.pt))));
-						const q = avançada(tA, ct, this._W, this._H);
-						if (q <= 0) continue;
-						const qT = clamp((q - 0.35) / 0.65);
-						if (qT > 0) traçarPart(cx, ct, easeS(qT));
-						if (q < 1) vivas.push([c, ct, q]);
+						const t0 = m?.get(c.props.i);
+						if (t0 === undefined) continue;
+						const q = clamp((ara - t0) / 1000 / DURADA_APAR);
+						if (q >= 1) cx.stroke(c.c);
+						else if (q > 0) vivas.push([c, q]);
 					}
-					cx.stroke();
+					if (vivas.length) {
+						cx.beginPath();
+						for (const [c, q] of vivas) {
+							const qT = clamp((q - 0.35) / 0.65);
+							if (qT > 0) traçarPart(cx, (c.ct ??= prepContorn(c.poligons.flat().map((an) => an.map(G.pt)))), easeS(qT));
+						}
+						cx.stroke();
+					}
 					cx.setLineDash([]);
 					cx.fillStyle = T.estela;
-					for (const [c, ct, q] of vivas) {
+					for (const [c, q] of vivas) {
+						const ct = (c.ct ??= prepContorn(c.poligons.flat().map((an) => an.map(G.pt))));
 						const qP = easeS(clamp(q / 0.45)),
-							aE = Math.sin(Math.PI * q) * a;
+							aE = Math.sin(Math.PI * q) * a,
+							tq = (ara - m.get(c.props.i)) / 1000;
 						for (const e of (c.est ??= estelasDe(ct))) {
 							const x = e.x + e.dx * (1 - qP),
 								y = e.y + e.dy * (1 - qP);
 							// (cada estela pampalheja a son ritme)
-							cx.globalAlpha = aE * (0.45 + 0.4 * e.f) * (0.75 + 0.25 * Math.sin(tA * 9 + e.f * 40));
+							cx.globalAlpha = aE * (0.45 + 0.4 * e.f) * (0.75 + 0.25 * Math.sin(tq * 9 + e.f * 40));
 							cx.fillRect(x - 0.9, y - 0.9, 1.8, 1.8);
 						}
 					}
-					cx.restore();
-				} else if (a > 0.01) {
-					cx.save();
-					cx.lineJoin = 'round';
-					cx.strokeStyle = `rgba(${T.linha}, ${0.5 * a})`;
-					cx.lineWidth = 0.7;
-					cx.setLineDash([3, 2]);
-					for (const c of G.com) cx.stroke(c.c);
-					cx.setLineDash([]);
 					cx.restore();
 				}
 				if (a > 0.01) {
@@ -976,6 +1066,9 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				};
 				const pausats = ocupadas;
 				const lista = G.releu.slice().sort((x, y) => x.props.renc - y.props.renc);
+				// (alucats aprèp l'entrada en scèna : lor arribada, tornada jogar)
+				const tM = this._tApar('massis'),
+					tiM = tM == null ? ti : Math.min(ti, INTRO.massis[0] + tM);
 				cx.save();
 				cx.shadowColor = T.ombra;
 				cx.shadowBlur = 5;
@@ -983,7 +1076,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				for (const r of lista) {
 					const [z0, z1] = fenèstras[r.props.mena]?.[r.props.renc] ?? [9, 13];
 					// (a l'arribada : las cadenas grandas d'en primièr)
-					const pI = easeS(clamp((ti - (INTRO.massis[0] + (r.props.renc - 1) * 0.3)) / 0.8));
+					const pI = easeS(clamp((tiM - (INTRO.massis[0] + (r.props.renc - 1) * 0.3)) / 0.8));
 					const al = clamp((z - z0) / 0.6) * clamp((z1 - z) / 0.6) * pI;
 					if (al < 0.01) continue;
 					let [x, y] = r.p;

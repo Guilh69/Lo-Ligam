@@ -227,7 +227,9 @@ export function nivèlsDezoom(map) {
 // de 0 a 1 : los dialèctes (0 = l'Occitània unida) ; las jaces de detalh (0 = lo contorn sol)
 export const aDialectes = (n, z) => easeS(clamp((z - (n.zDial - 0.35)) / 0.35));
 export const aDetalh = (n, z) => easeS(clamp((z - n.z500) / (n.z300 - n.z500)));
-export const Z_PRECARGA = 8.25; // les tuiles se chargent, invisibles, un peu avant
+export const Z_PRECARGA = 8.25;
+// las comunas se mòstran a partir de l'escala « 7 km » (causida de Romain)
+export const Z_COMUNAS = 10.5; // les tuiles se chargent, invisibles, un peu avant
 const DURADA_RELAIS = 1.2; // secondes
 const Z_VOL = 10.5; // niveau où l'on arrive en cliquant sur un lieu
 
@@ -622,6 +624,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		setElements(el) {
 			// lo relèu alucat : las corbas se tornan dessenhar al gredon (demanda de Romain)
 			if (el.corbas && this._el && !this._el.corbas && !this._calm) this._tCorbas = performance.now();
+			// … los rius tornan rajar de la font a la mar, las vilas s'alucan una a una
+			if (el.rius && this._el && !this._el.rius && !this._calm) this._tRius = performance.now();
+			if (el.estelas && this._el && !this._el.estelas && !this._calm) this._tVilas = performance.now();
 			this._el = { ...this._el, ...el };
 			// los noms de rius e las vilas jògan sul plaçament dels noms (e sus
 			// las bóstias que las autras còlas evitan) : tot es tornat plaçar
@@ -1082,20 +1087,26 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			return null;
 		},
-		// Région ou département ? Selon l'échelle, sauf si une seule des deux
-		// couches est cochée : c'est alors elle (retour de Romain : avec les
-		// départements seuls cochés, le clic montrait la région)
+		// Région ou département ? Le survol montre la couche cochée la plus fine
+		// à cette échelle (retours de Romain : départements seuls cochés, le
+		// clic montrait la région ; communes cochées, il montrait le département).
+		// Rien de coché : selon l'échelle, pour explorer.
 		_mena(z) {
 			const m = menaTerritori(z);
 			if (!m) return null;
-			const { regions, despartaments } = this._terJaces ?? {};
-			if (regions && !despartaments) return 'region';
-			if (despartaments && !regions) return 'despartament';
+			const { regions, despartaments, comunas } = this._terJaces ?? {};
+			// la commune (couche thématique) prend le dessus dès qu'elle se voit
+			if (comunas && z >= Z_COMUNAS - 0.2) return null;
+			if (regions && despartaments) return m;
+			if (despartaments) return 'despartament';
+			if (regions) return 'region';
+			// communes seules cochées : rien avant leur échelle
+			if (comunas) return null;
 			return m;
 		},
 		setTerritoris(t) {
 			const a = this._terJaces;
-			if (a && a.regions === t.regions && a.despartaments === t.despartaments) return;
+			if (a && a.regions === t.regions && a.despartaments === t.despartaments && a.comunas === t.comunas) return;
 			this._terJaces = t;
 			this._terFixat = this._terPus = null;
 		},
@@ -1395,8 +1406,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// partout, avec un petit éclat au front
 			if (aRiu > 0.01 && this._el.rius && this._rius) {
 				const [r0, r1] = INTRO.rius;
+				// (alucats aprèp l'entrada en scèna : l'aiga torna rajar de la font a la mar)
+				const tiR = this._tRius == null ? ti : Math.min(ti, r0 + (t - this._tRius) / 1000);
+				if (this._tRius != null && tiR >= r1) this._tRius = null;
 				const fiMax = (this._fiMax ??= Math.max(...this._rius.map((r) => r.o + r.L)));
-				const D = ti >= r1 ? Infinity : Math.max(0, ti - r0) * (fiMax / (r1 - r0));
+				const D = tiR >= r1 ? Infinity : Math.max(0, tiR - r0) * (fiMax / (r1 - r0));
 				cx.strokeStyle = T.riu;
 				cx.lineCap = 'round';
 				cx.lineJoin = 'round';
@@ -1453,7 +1467,10 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// s'allument une à une, avec un halo qui s'ouvre.
 			cx.fillStyle = T.estela;
 			const zBase = this._zBase ?? 0;
-			const aAutras = fase([INTRO.vilas[0], INTRO.vilas[1]]);
+			// (alucadas aprèp l'entrada en scèna : la meteissa arribada, tornada jogar)
+			const tiV = this._tVilas == null ? ti : Math.min(ti, INTRO.vilas[0] + (t - this._tVilas) / 1000);
+			if (this._tVilas != null && tiV > INTRO.vilas[1] + 1.2) this._tVilas = null;
+			const faseV = ([a, b]) => clamp((tiV - a) / (b - a));
 			for (const e of this._el.estelas ? this._estelas : []) {
 				const aLuòc = clamp((z - (zBase + dzLuòc(e)) + 0.3) / 0.3);
 				if (aLuòc < 0.01) continue;
@@ -1462,11 +1479,13 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				if (x < -10 || y < -10 || x > W + 10 || y > H + 10) continue;
 				const tw = this._calm ? 0.6 : Math.sin(temps * e.v + e.f) * 0.5 + 0.5;
 				const ic = CAPITALAS.indexOf(e.nom);
-				const pI = ic < 0 ? aAutras : clamp((ti - (INTRO.vilas[0] + ic * 0.11)) / 0.55);
+				// las capitalas d'en primièr, puèi cada vilatge a son moment, coma
+				// d'estelas que s'alucan una a una (retorn de Romain)
+				const pI = ic < 0 ? clamp((tiV - (INTRO.vilas[0] + 0.25 + ((e.f / 6.283) % 1) * 0.9)) / 0.35) : clamp((tiV - (INTRO.vilas[0] + ic * 0.11)) / 0.55);
 				if (pI < 0.01) continue;
 				const rB = ic >= 0 ? 3.4 : { 1: 3.4, 2: 2.4, 3: 1.8, 4: 1.3 }[e.renc];
 				// léger dépassement à l'allumage
-				const s = ic >= 0 && pI < 1 ? 1 + Math.sin(pI * Math.PI) * 0.45 : 1;
+				const s = pI < 1 ? 1 + Math.sin(pI * Math.PI) * (ic >= 0 ? 0.45 : 0.6) : 1;
 				cx.globalAlpha = (ic >= 0 || e.renc <= 2 ? 1 : e.renc === 3 ? 0.85 : 0.45 + 0.3 * tw) * aGen * aLuòc * Math.min(1, pI * 1.6);
 				cx.beginPath();
 				cx.arc(x, y, rB * s * gros, 0, 6.283);
@@ -1483,7 +1502,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				}
 			}
 
-			const aNomsV = fase([INTRO.vilas[0] + 0.3, INTRO.vilas[1] + 0.3]);
+			const aNomsV = faseV([INTRO.vilas[0] + 0.3, INTRO.vilas[1] + 0.3]);
 			if (aNomsV > 0.01 && aEtiq > 0.01) {
 				cx.globalAlpha = aNomsV * aEtiq * 0.92;
 				cx.drawImage(this._etiq, 0, 0, W, H);

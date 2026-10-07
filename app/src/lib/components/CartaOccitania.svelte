@@ -156,7 +156,7 @@
 				colaEstelas.setElements(elements);
 				colaEstelas.setColors(colors);
 				colaEstelas.setModeDialectes(!!visibility.dialectes);
-				colaEstelas.setTerritoris({ regions: !!visibility.regions, despartaments: !!visibility.despartaments });
+				colaEstelas.setTerritoris({ regions: !!visibility.regions, despartaments: !!visibility.despartaments, comunas: !!visibility.comunas });
 			}
 			colaEstelas.addTo(map);
 			majDetalh();
@@ -277,11 +277,12 @@
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
 	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', festas: 'confetti', limsi: 'microphone-2' };
 	// una jaça apondida dins l'admin pren sa color de la basa
-	const estilPunt = (cid) => (colaColors[cid] && !(cid in ICONA_COLA) ? ` style="--ponch:${escapeHtml(colaColors[cid])}"` : '');
-	const iconaPunt = (cid) =>
+	// (cada ponch s'aluca a son moment : un pichon retard a l'azard)
+	const estilPunt = (cid) => ` style="--retard:${Math.round(Math.random() * 900)}ms;${colaColors[cid] && !(cid in ICONA_COLA) ? `--ponch:${escapeHtml(colaColors[cid])}` : ''}"`;
+	const iconaPunt = (cid, st = estilPunt(cid)) =>
 		L.divIcon({
 			className: 'ponch-jaça ponch-jaça-' + cid,
-			html: `<span class="ponch"${estilPunt(cid)}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[ICONA_COLA[cid] ?? 'building-arch']}</svg></span><i class="ponch-cueta"${estilPunt(cid)}></i>`,
+			html: `<span class="ponch"${st}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[ICONA_COLA[cid] ?? 'building-arch']}</svg></span><i class="ponch-cueta"${st}></i>`,
 			// una espilla : la pastilha se ten al dessús del luòc, que son nom
 			// (a costat del ponch) demòre legible
 			iconSize: [26, 34],
@@ -342,7 +343,7 @@
 				L.marker([q.lat, q.lon], {
 					icon: L.divIcon({
 						className: 'lenga-franca' + (q.outremer ? ' outremer' : ''),
-						html: `<span>${escapeHtml(q.endo)}</span>`,
+						html: `<span style="--retard:${Math.round(Math.random() * 700)}ms">${escapeHtml(q.endo)}</span>`,
 						iconSize: null
 					}),
 					title: `${q.endo} : ${fr ? q.fr : q.oc}`,
@@ -633,7 +634,7 @@
 		if (!map || !L) return;
 		colaDonadas?.setJaces(jacesDonadas(vis));
 		// lo territòri survolat o clicat seguís las jaces alucadas (region o despartament)
-		colaEstelas?.setTerritoris({ regions: !!vis.regions, despartaments: !!vis.despartaments });
+		colaEstelas?.setTerritoris({ regions: !!vis.regions, despartaments: !!vis.despartaments, comunas: !!vis.comunas });
 		colaTematica?.setJaces(jacesTematicas(vis));
 		if (vis.calandretas) cargarCalandretas();
 		if (vis.lengasFranca) cargarLengas();
@@ -787,6 +788,43 @@
 		width: 1.5px;
 		height: 8px;
 		background: var(--ponch);
+	}
+	/* L'aparicion d'un ponch (demanda de Romain : una animacion per jaça, la
+	   mai adaptada a sas donadas) : s'aluca coma una estela, a son moment */
+	:global(.ponch-jaça .ponch),
+	:global(.ponch-jaça .ponch-cueta) {
+		animation: ponch-aluca 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.3) backwards;
+		animation-delay: var(--retard, 0ms);
+	}
+	@keyframes ponch-aluca {
+		0% {
+			opacity: 0;
+			transform: scale(0.2);
+			filter: brightness(2.4) drop-shadow(0 0 6px var(--t-aur-clar));
+		}
+		55% {
+			opacity: 1;
+			filter: brightness(1.7) drop-shadow(0 0 5px var(--t-aur-clar));
+		}
+	}
+	/* los noms de las autras lengas : lors letras se sarran, coma los noms dels massís */
+	.carta :global(.lenga-franca span) {
+		animation: lenga-ven 0.9s cubic-bezier(0.2, 0.8, 0.3, 1) backwards;
+		animation-delay: var(--retard, 0ms);
+	}
+	@keyframes lenga-ven {
+		0% {
+			opacity: 0;
+			letter-spacing: 0.7em;
+			filter: blur(2px);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		:global(.ponch-jaça .ponch),
+		:global(.ponch-jaça .ponch-cueta),
+		.carta :global(.lenga-franca span) {
+			animation: none;
+		}
 	}
 	:global(.ponch-jaça-librarias) {
 		--ponch: var(--t-terra-viu);
