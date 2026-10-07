@@ -56,7 +56,7 @@ export function crearColaDonadas(
 			attribution:
 				// « Carte linguistique de l'Occitanie », CIRDÒC – Institut occitan de
 				// cultura, Licence Ouverte (verificat lo 2026-10-07) : citar la font
-				`Lenga e dialèctes : d'aprèp <a href="https://www.occitanica.eu/items/show/21242" target="_blank" rel="noopener">CIRDÒC – Occitanica</a> (Licéncia dobèrta)`
+				`Lenga e dialèctes : d'aprèp <a href="https://www.occitanica.eu/items/show/21242" target="_blank" rel="noopener">CIRDÒC – Occitanica</a> (Licéncia dobèrta) · Creissent : d'aprèp Tourtoulon e Bringuier (1876)`
 		},
 
 		initialize() {

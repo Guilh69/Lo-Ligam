@@ -36,15 +36,15 @@ export const CATALOGUE = [
 				fons: 'estelas'
 			},
 			{
-				// l'ancian traçat veniá del fons de l'Atlas LISN (CC BY-NC-SA) : retirat
-				// lo 2026-10-07, en espèra d'un traçat nòstre a partir de fonts liuras
+				// traçat nòstre (2026-10-07) d'aprèp Tourtoulon e Bringuier (1876, domeni
+				// public) e Ronjat (1930) ; l'ancian veniá de l'Atlas LISN (CC BY-NC-SA)
 				id: 'creissent',
 				oc: 'Lo Creissent',
 				fr: 'Le Croissant',
-				estat: 'a venir',
+				estat: 'disponible',
 				defaut: false,
-				nota_oc: "Zòna de transicion amb la lenga d'oïl : traçat en preparacion",
-				nota_fr: "Zone de transition avec la langue d'oïl : tracé en préparation"
+				nota_oc: "Transicion amb l'oïl · traçat aproximatiu d'aprèp Tourtoulon (1876)",
+				nota_fr: "Transition avec l'oïl · tracé approximatif d'après Tourtoulon (1876)"
 			},
 			{
 				id: 'departaments',
