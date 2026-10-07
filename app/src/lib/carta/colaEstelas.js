@@ -392,7 +392,7 @@ export const cargarLimits = () =>
 
 
 /* ---------- La couche ---------- */
-export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null } = {}) {
+export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: {
 			pane: 'estelas',
@@ -414,6 +414,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// ela : los territòris se revèlan pas
 			this._modeDial = false;
 			this._onFicha = onFicha;
+			// una autra còla a quicòm d'explicar jos aqueste ponch (una enclava) : lo
+			// territòri se mòstra pas
+			this._cedir = cedir;
 			this._fichas = VILAS_FICHAS.map((v) => ({ ...v, X: 0, Y: 0 }));
 			this._calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 			this._estelas = LUOCS.map(([lon, lat, nom, vila, dia, dia2]) => ({
@@ -780,7 +783,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 		// Le territoire (région ou département, selon l'échelle) sous un point
 		_territoriA(lp) {
-			if (this._modeDial) return null;
+			if (this._modeDial || this._cedir?.(lp)) return null;
 			const mena = menaTerritori(this._zoom);
 			const lista = mena === 'region' ? this._regions : mena === 'despartament' ? this._deps : null;
 			if (!lista?.length) return null;

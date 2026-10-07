@@ -197,17 +197,33 @@ export function crearColaDonadas(
 		_interactiu() {
 			return !!(this._jaces.dialectes && this._dial) || !!(this._jaces.creissent && this._creissent);
 		},
-		// La zòna jos un ponch : lo Creissent d'en primièr (es dessús), puèi
+		// Una enclava (Pichona Gavachariá) se dessenha amb la frontièra tanben :
+		// son encastre al survòl o al tòc, coma un despartament (retorn de Romain)
+		_enclavas() {
+			return this._geo?.mix && this._map?.getZoom() < 13 ? this._geo.mix.filter((zm) => zm.enclava) : [];
+		},
+		enclavaA(lp) {
+			const enc = this._enclavas();
+			if (!enc.length || !this._min) return null;
+			this._cxTest ??= document.createElement('canvas').getContext('2d');
+			const x = lp.x - this._min.x,
+				y = lp.y - this._min.y;
+			return enc.find((zm) => this._cxTest.isPointInPath(zm.c, x, y, 'evenodd'))?.kod ?? null;
+		},
+		// La zòna jos un ponch : l'enclava, lo Creissent (es dessús), puèi
 		// las zònas mixtas (pel survòl sonque), puèi los dialèctes
 		_zonaA(lp, ambMix = true) {
 			const g = this._geo;
-			if (!g || !this._interactiu()) return null;
+			if (!g) return null;
+			const kEnc = this.enclavaA(lp);
+			if (kEnc) return kEnc;
+			if (!this._interactiu()) return null;
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
 			const x = lp.x - this._min.x,
 				y = lp.y - this._min.y;
 			if (this._jaces.creissent && g.cro && this._cxTest.isPointInPath(g.cro.c, x, y, 'evenodd')) return 'cro';
 			if (ambMix && this._jaces.dialectes && g.mix)
-				for (const zm of g.mix) if (this._cxTest.isPointInPath(zm.c, x, y, 'evenodd')) return zm.kod;
+				for (const zm of g.mix) if (!zm.enclava && this._cxTest.isPointInPath(zm.c, x, y, 'evenodd')) return zm.kod;
 			if (this._jaces.dialectes && g.zonas) {
 				// hors du domaine : rien (les zones sont découpées par lui)
 				if (g.dom && !this._cxTest.isPointInPath(g.dom, x, y, 'evenodd')) return null;
@@ -223,7 +239,8 @@ export function crearColaDonadas(
 			this._pintar();
 		},
 		_onMirga(e) {
-			if (e.originalEvent?.pointerType === 'touch' || !this._interactiu()) return;
+			if (e.originalEvent?.pointerType === 'touch') return;
+			if (!this._interactiu() && !this._enclavas().length) return this._survòl(null);
 			const k = ocupat?.(e.layerPoint) ? null : this._zonaA(e.layerPoint);
 			this._survòl(k);
 			if (k) this._map.getContainer().style.cursor = 'pointer';
@@ -232,10 +249,13 @@ export function crearColaDonadas(
 			this._survòl(null);
 		},
 		_onClic(e) {
-			if (!this._interactiu() || ocupat?.(e.layerPoint)) return;
+			if (ocupat?.(e.layerPoint)) return;
 			// una enclava (fòra del domeni) : lo clic o lo tòc mòstra sa legenda
-			const kEnc = this._zonaA(e.layerPoint, true);
-			if (kEnc?.startsWith('enc-')) return this._survòl(kEnc);
+			const kEnc = this.enclavaA(e.layerPoint);
+			if (kEnc) return this._survòl(kEnc);
+			// al det, lo survòl demòra : un tòc endacòm mai l'escafa
+			if (this._pus?.startsWith('enc-')) this._survòl(null);
+			if (!this._interactiu()) return;
 			// una zòna mixta se causís pas : lo clic va al dialècte de dejós
 			const k = this._zonaA(e.layerPoint, false);
 			// un clic sus la zòna causida o defòra : totes los dialèctes tornan

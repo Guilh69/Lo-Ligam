@@ -115,7 +115,13 @@
 			currentBaseTileLayer = null;
 			// Clic sur le repère d'une ville à fiche (de près) : sa page
 			if (!colaEstelas) {
-				colaEstelas = crearColaEstelas(L, { clar, dalt, lang, onFicha: (v) => goto(v.ligam) });
+				colaEstelas = crearColaEstelas(L, {
+					clar,
+					dalt,
+					lang,
+					onFicha: (v) => goto(v.ligam),
+					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp))
+				});
 				colaEstelas.setElements(elements);
 				colaEstelas.setColors(colors);
 				colaEstelas.setModeDialectes(!!(visibility.dialectes || visibility.creissent));
