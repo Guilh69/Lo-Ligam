@@ -522,6 +522,30 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (this._colors.estela) this._colors.vilaTèxt = this._colors.estela;
 			this.setTema(...this._temaBasa);
 		},
+		// Las bóstias dels noms de vilas pausats, en coordenadas projectadas al
+		// zoom de la còla : las autras còlas (noms de províncias…) los evitan.
+		// Res sus la carta detalhada (sas tuèlas an lors pròpris noms).
+		caixasNoms() {
+			const pl = this._plaçament;
+			if (!pl || !this._el.nomsVilas || !this._cx || (this._detA ?? 0) > 0.5) return null;
+			if (this._caixas?.pl !== pl) {
+				const g = this._cx;
+				g.save();
+				if ('letterSpacing' in g) g.letterSpacing = '0px';
+				const cs = pl.vilas.map((v) => {
+					g.font = polissaVila(v.renc, v.f);
+					const w = g.measureText(v.nom).width,
+						x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
+					return [x0 - 2, v.y - v.f, x0 + w + 2, v.y + v.f * 0.3];
+				});
+				// e las letras dels noms de rius, se son afichats
+				if (this._el.nomsRius)
+					for (const r of pl.rius) for (const l of r.letras) cs.push([l.x - r.fs * 0.4, l.y - r.fs * 0.6, l.x + r.fs * 0.4, l.y + r.fs * 0.3]);
+				g.restore();
+				this._caixas = { pl, z: this._zoom, cs };
+			}
+			return this._caixas;
+		},
 		// Les tuiles de la carte détaillée : leur opacité suit le relais
 		setTeulas(layer) {
 			this._teulas = layer;

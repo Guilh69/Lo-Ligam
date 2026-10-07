@@ -71,7 +71,7 @@ export const CATALOGUE = [
 			{ id: 'vilas', oc: 'Vilas e vilatges', fr: 'Villes et villages', estat: 'disponible', defaut: true, fons: 'estelas' },
 			{ id: 'regions', oc: 'Regions', fr: 'Régions', estat: 'disponible', defaut: false },
 			{ id: 'despartaments', oc: 'Despartaments', fr: 'Départements', estat: 'disponible', defaut: false },
-			{ id: 'comunas', oc: 'Comunas', fr: 'Communes', estat: 'a venir' }
+			{ id: 'comunas', oc: 'Comunas', fr: 'Communes', estat: 'disponible', defaut: false, nota_oc: "A partir de l'escala de 5 km", nota_fr: "À partir de l'échelle de 5 km" }
 		]
 	},
 	{
@@ -81,7 +81,7 @@ export const CATALOGUE = [
 		jaces: [
 			{ id: 'lieusInteres', oc: "Luòcs d'interès", fr: "Lieux d'intérêt", estat: 'basa', defaut: true },
 			{ id: 'librarias', oc: 'Librariás', fr: 'Librairies', estat: 'basa', defaut: true },
-			{ id: 'calandretas', oc: 'Calandretas e escòlas', fr: 'Calandretas et écoles', estat: 'a venir' },
+			{ id: 'calandretas', oc: 'Calandretas', fr: 'Calandretas', estat: 'disponible', defaut: false, nota_oc: "Escòlas, collègis e licèu (annuari de l'educacion)", nota_fr: "Écoles, collèges et lycée (annuaire de l'éducation)" },
 			{ id: 'festas', oc: 'Fèstas e eveniments', fr: 'Fêtes et événements', estat: 'a venir' }
 		]
 	},
@@ -90,7 +90,7 @@ export const CATALOGUE = [
 		oc: 'Istòria',
 		fr: 'Histoire',
 		jaces: [
-			{ id: 'provincias', oc: 'Provincias istoricas', fr: 'Provinces historiques', estat: 'a venir' },
+			{ id: 'provincias', oc: 'Provincias istoricas', fr: 'Provinces historiques', estat: 'disponible', defaut: false, nota_oc: 'En 1789 : governaments e provincias', nota_fr: 'En 1789 : gouvernements et provinces' },
 			{ id: 'paises', oc: 'Païses tradicionals', fr: 'Pays traditionnels', estat: 'a venir' },
 			{ id: 'isolas', oc: 'Illòts lingüistics', fr: 'Îlots linguistiques', estat: 'a venir' }
 		]
@@ -103,8 +103,8 @@ export const CATALOGUE = [
 			{ id: 'rius', oc: 'Rius', fr: 'Rivières', estat: 'disponible', defaut: true, fons: 'estelas' },
 			{ id: 'nomsRius', oc: 'Noms dels rius', fr: 'Noms des rivières', estat: 'disponible', defaut: true, fons: 'estelas' },
 			{ id: 'corbas', oc: 'Relèu', fr: 'Relief', estat: 'disponible', defaut: true, fons: 'estelas', nota_oc: 'Corbas de nivèl', nota_fr: 'Courbes de niveau' },
-			{ id: 'parcs', oc: 'Parcs naturals', fr: 'Parcs naturels', estat: 'a venir' },
-			{ id: 'massis', oc: 'Massís e montanhas', fr: 'Massifs et montagnes', estat: 'a venir' },
+			{ id: 'parcs', oc: 'Parcs naturals', fr: 'Parcs naturels', estat: 'disponible', defaut: false, nota_oc: 'Regionals, nacionals e marins', nota_fr: 'Régionaux, nationaux et marins' },
+			{ id: 'massis', oc: 'Massís e montanhas', fr: 'Massifs et montagnes', estat: 'disponible', defaut: false, nota_oc: 'Noms dels massís e de las cimas', nota_fr: 'Noms des massifs et des sommets' },
 			{ id: 'bacins', oc: 'Bacins dels rius', fr: 'Bassins des rivières', estat: 'a venir' }
 		]
 	}
@@ -117,6 +117,9 @@ export const JACES_FONS = { vilas: 'estelas', toponimia: 'nomsVilas', rius: 'riu
 // Las jaces que pinta la còla de donadas (colaDonadas.js) ; las autras son de
 // jaces Leaflet (punts e zònas de la basa)
 export const JACES_DONADAS = ['frontiera', 'dialectes', 'creissent', 'regions', 'despartaments'];
+
+// Las jaces que pinta la còla tematica (colaTematica.js), de fonts publicas
+export const JACES_TEMATICAS = ['comunas', 'provincias', 'parcs', 'massis'];
 
 // Tematica de la basa → familha del catalògue, per las jaces apondudas dins l'admin
 const TEMATICA_FAMILHA = { Luòcs: 'cultura', Lenga: 'lenga', Referéncia: 'administracion' };

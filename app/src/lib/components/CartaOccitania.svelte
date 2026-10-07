@@ -5,7 +5,8 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { crearColaEstelas, Z_PRECARGA } from '$lib/carta/colaEstelas.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
-	import { JACES_DONADAS } from '$lib/carta/catalogue.js';
+	import { crearColaTematica } from '$lib/carta/colaTematica.js';
+	import { JACES_DONADAS, JACES_TEMATICAS } from '$lib/carta/catalogue.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
 	import CercaCarta from './CercaCarta.svelte';
 
@@ -89,12 +90,17 @@
 	// la zòna dialectala survolada o causida, dins la legenda d'en bas
 	let survòl = $state(null);
 	let causida = $state(null);
-	const legendaDial = $derived(causida ?? survòl);
+	// una comuna, un parc o una província survolada passa davant
+	let survòlTem = $state(null);
+	const legendaDial = $derived(survòlTem ?? causida ?? survòl);
 	let colaEstelas;
 	// Jaces del catalògue pintadas pel site (frontièra, dialèctes, Creissent,
 	// regions, despartaments) : sus totes los fonses
 	let colaDonadas;
 	const jacesDonadas = (vis) => Object.fromEntries(JACES_DONADAS.map((id) => [id, !!vis[id]]));
+	// Jaces de fonts publicas (comunas, provincias, parcs, relèu) : colaTematica.js
+	let colaTematica;
+	const jacesTematicas = (vis) => Object.fromEntries(JACES_TEMATICAS.map((id) => [id, !!vis[id]]));
 	// Fonses sens noms occitans : las etiquetas de toponims i son apondudas
 	const ambToponims = (k) => k === 'natural' || k === 'satellite';
 
@@ -120,7 +126,7 @@
 					dalt,
 					lang,
 					onFicha: (v) => goto(v.ligam),
-					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp))
+					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp)
 				});
 				colaEstelas.setElements(elements);
 				colaEstelas.setColors(colors);
@@ -241,6 +247,58 @@
 		}
 	};
 
+	// Cada punt : una pastilha de veire amb l'icòna de sa jaça (Tabler Icons,
+	// MIT), de la color de la jaça ; las colors de basa venon del tèma
+	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', festas: 'confetti', limsi: 'microphone-2' };
+	// una jaça apondida dins l'admin pren sa color de la basa
+	const estilPunt = (cid) => (colaColors[cid] && !(cid in ICONA_COLA) ? ` style="--ponch:${escapeHtml(colaColors[cid])}"` : '');
+	const iconaPunt = (cid) =>
+		L.divIcon({
+			className: 'ponch-jaça ponch-jaça-' + cid,
+			html: `<span class="ponch"${estilPunt(cid)}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[ICONA_COLA[cid] ?? 'building-arch']}</svg></span><i class="ponch-cueta"${estilPunt(cid)}></i>`,
+			// una espilla : la pastilha se ten al dessús del luòc, que son nom
+			// (a costat del ponch) demòre legible
+			iconSize: [26, 34],
+			iconAnchor: [13, 34],
+			popupAnchor: [0, -32]
+		});
+
+	// Las Calandretas (annuari de l'educacion, Licéncia dobèrta) : un fichièr
+	// estatic, cargat a la primièra activacion de la jaça
+	let calandretasCargadas = false;
+	const MENA_ESCÒLA = {
+		oc: { escòla: 'escòla', collègi: 'collègi', licèu: 'licèu' },
+		fr: { escòla: 'école', collègi: 'collège', licèu: 'lycée' }
+	};
+	async function cargarCalandretas() {
+		if (calandretasCargadas || !map) return;
+		calandretasCargadas = true;
+		const d = await fetch('/data/calandretas.geojson')
+			.then((r) => (r.ok ? r.json() : null))
+			.catch(() => null);
+		if (!d?.features) return (calandretasCargadas = false);
+		const mena = MENA_ESCÒLA[lang] ?? MENA_ESCÒLA.oc;
+		pointLayers.calandretas = L.layerGroup(
+			d.features.map((f) => {
+				const [lon, lat] = f.geometry.coordinates;
+				const q = f.properties;
+				// lo site de l'escòla se n'a un, siquenon lo contacte que dona lo
+				// ministèri dins l'annuari (retorn de Romain)
+				const ligam = /^https?:\/\//.test(q.ligam ?? '')
+					? `<br><a href="${escapeHtml(q.ligam)}" target="_blank" rel="noopener">Site ↗</a>`
+					: [
+							q.corrièl ? `<br><a href="mailto:${escapeHtml(q.corrièl)}">${escapeHtml(q.corrièl)}</a>` : '',
+							q.telefon ? `<br><a href="tel:${escapeHtml(q.telefon.replace(/\s/g, ''))}">${escapeHtml(q.telefon)}</a>` : ''
+						].join('');
+				return L.marker([lat, lon], { icon: iconaPunt('calandretas'), title: q.nom, keyboard: true }).bindPopup(
+					`<strong>${escapeHtml(q.nom)}</strong><br>${escapeHtml(mena[q.mena] ?? q.mena)} · ${escapeHtml(q.comuna)}${ligam}`
+				);
+			})
+		);
+		if (d.font) map.attributionControl?.addAttribution(d.font);
+		if (visibility.calandretas) pointLayers.calandretas.addTo(map);
+	}
+
 	async function loadGeoLayer(gid) {
 		const def = geoDefs[gid];
 		if (!def || geoLayers[gid] || geoLoading[gid]) return;
@@ -347,7 +405,7 @@
 			lang,
 			jaces: jacesDonadas(visibility),
 			// un luòc o una vila a ficha jos lo det : lo clic es per las estelas
-			ocupat: (lp) => !!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)),
+			ocupat: (lp) => !!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) || !!colaTematica?.ocupat(lp, true),
 			onSurvòl: (k, info) => (survòl = info),
 			onCausida: (k, info) => {
 				causida = info;
@@ -355,8 +413,19 @@
 			}
 		});
 		colaDonadas.addTo(map);
+		colaTematica = crearColaTematica(L, {
+			clar,
+			lang,
+			jaces: jacesTematicas(visibility),
+			// las provincias, que cobrisson tot, cedisson als dialèctes e al Creissent
+			cedirProv: (lp) => !!(map.hasLayer(colaDonadas) && colaDonadas.zonaA(lp)),
+			// los noms de vilas de la carta en estelas : los noms de províncias los evitan
+			obstacles: () => (colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null),
+			onSurvòl: (info) => (survòlTem = info)
+		});
+		colaTematica.addTo(map);
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
-		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, get colaEstelas() { return colaEstelas; } };
+		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
 		if (ambToponims(baseLayer)) loadToponymsLayer();
@@ -417,21 +486,6 @@
 			(perCola[cid] ??= []).push(luoc);
 		}
 
-		// Cada punt : una pastilha de veire amb l'icòna de sa jaça (Tabler Icons,
-		// MIT), de la color de la jaça ; las colors de basa venon del tèma
-		const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', festas: 'confetti', limsi: 'microphone-2' };
-		// una jaça apondida dins l'admin pren sa color de la basa
-		const estilPunt = (cid) => (colaColors[cid] && !(cid in ICONA_COLA) ? ` style="--ponch:${escapeHtml(colaColors[cid])}"` : '');
-		const iconaPunt = (cid) =>
-			L.divIcon({
-				className: 'ponch-jaça ponch-jaça-' + cid,
-				html: `<span class="ponch"${estilPunt(cid)}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[ICONA_COLA[cid] ?? 'building-arch']}</svg></span><i class="ponch-cueta"${estilPunt(cid)}></i>`,
-				// una espilla : la pastilha se ten al dessús del luòc, que son nom
-				// (a costat del ponch) demòre legible
-				iconSize: [26, 34],
-				iconAnchor: [13, 34],
-				popupAnchor: [0, -32]
-			});
 		for (const [cid, luocs] of Object.entries(perCola)) {
 			pointLayers[cid] = L.layerGroup(
 				luocs.map((lieu) => {
@@ -460,6 +514,8 @@
 		const nextBaseLayer = baseLayer;
 		if (!map || !L) return;
 		colaDonadas?.setJaces(jacesDonadas(vis));
+		colaTematica?.setJaces(jacesTematicas(vis));
+		if (vis.calandretas) cargarCalandretas();
 		// dialèctes o Creissent visibles : lo survòl e lo clic son per eles
 		colaEstelas?.setModeDialectes(!!(vis.dialectes || vis.creissent));
 
@@ -501,11 +557,13 @@
 			d = dalt;
 		colaEstelas?.setTema(c, d);
 		colaDonadas?.setTema(c, d);
+		colaTematica?.setTema(c);
 	});
 	$effect(() => {
 		const l = lang;
 		colaEstelas?.setLenga(l);
 		colaDonadas?.setLenga(l);
+		colaTematica?.setLenga(l);
 	});
 	// Elements e colors del fons, dialècte causit dempuèi lo panèl
 	$effect(() => {

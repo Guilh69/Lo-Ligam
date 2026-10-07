@@ -210,6 +210,10 @@ export function crearColaDonadas(
 				y = lp.y - this._min.y;
 			return enc.find((zm) => this._cxTest.isPointInPath(zm.c, x, y, 'evenodd'))?.kod ?? null;
 		},
+		// (per las autras còlas : las provincias de 1789 cedisson als dialèctes)
+		zonaA(lp) {
+			return this._zonaA(lp);
+		},
 		// La zòna jos un ponch : l'enclava, lo Creissent (es dessús), puèi
 		// las zònas mixtas (pel survòl sonque), puèi los dialèctes
 		_zonaA(lp, ambMix = true) {

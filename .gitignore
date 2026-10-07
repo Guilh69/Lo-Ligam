@@ -1,3 +1,7 @@
 # Sources brutes des visuels (photos/SVG bruts, souvent volumineux — Canva, exports).
 # Les versions optimisées utilisées par l'appli vivent dans app/static/ et app/src/lib/assets/.
 /Photo/
+
+# Données SIG brutes téléchargées (IGN, OSM, Dataverse…) : refaisables par les
+# scripts de SIG/cadena, trop lourdes pour le dépôt.
+/SIG/brut/
