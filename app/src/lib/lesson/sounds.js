@@ -4,11 +4,16 @@ import { browser } from '$app/environment';
 // l'oreille par Romain sur /aprene/essai : le « whoosh » d'air pour une
 // bonne réponse, la note douce pour une réussite plus grande. L'appelant
 // vérifie lui-même le mode muet avant d'appeler.
+//
+// Un seul contexte audio pour toute la page : le navigateur en limite le
+// nombre, et une leçon joue des dizaines de sons (audit du 2026-10-08).
+let ctxAudio;
 
 export function playTick() {
 	if (!browser) return;
 	try {
-		const ctx = new (window.AudioContext || window.webkitAudioContext)();
+		const ctx = (ctxAudio ??= new (window.AudioContext || window.webkitAudioContext)());
+		if (ctx.state === 'suspended') ctx.resume();
 		const now = ctx.currentTime;
 		const duration = 0.18;
 
@@ -43,7 +48,8 @@ export function playTick() {
 export function playChime() {
 	if (!browser) return;
 	try {
-		const ctx = new (window.AudioContext || window.webkitAudioContext)();
+		const ctx = (ctxAudio ??= new (window.AudioContext || window.webkitAudioContext)());
+		if (ctx.state === 'suspended') ctx.resume();
 		const now = ctx.currentTime;
 		const freq = 1567.98; // G6 : aigu, clair
 

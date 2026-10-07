@@ -310,10 +310,13 @@
 
 	// Petit "whoosh" d'air quand une lettre se pose dans la bonne case
 	// (touche, aide ou clic sur tuile) : bruit blanc filtré, balayage de fréquence.
+	// un seul contexte audio pour toute la page (le navigateur en limite le nombre)
+	let ctxAudio;
 	function playTick() {
 		if (muted || !browser) return;
 		try {
-			const ctx = new (window.AudioContext || window.webkitAudioContext)();
+			const ctx = (ctxAudio ??= new (window.AudioContext || window.webkitAudioContext)());
+			if (ctx.state === 'suspended') ctx.resume();
 			const now = ctx.currentTime;
 			const duration = 0.18;
 
@@ -351,7 +354,8 @@
 	function playChime() {
 		if (muted || !browser) return;
 		try {
-			const ctx = new (window.AudioContext || window.webkitAudioContext)();
+			const ctx = (ctxAudio ??= new (window.AudioContext || window.webkitAudioContext)());
+			if (ctx.state === 'suspended') ctx.resume();
 			const now = ctx.currentTime;
 			const freq = 1567.98; // G6 : aigu, clair
 
@@ -436,6 +440,10 @@
 		}
 	}
 </script>
+
+<svelte:head>
+	<title>Leiçon d’ensag · Lo Ligam</title>
+</svelte:head>
 
 {#snippet speakerIcon(active)}
 	<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">

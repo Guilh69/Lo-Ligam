@@ -74,7 +74,7 @@
 </script>
 
 <svelte:head>
-	<title>{tx.title} — Lo Ligam</title>
+	<title>{tx.title} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Musicas, libres e filmes en occitan, causits e comentats per Lo Ligam."

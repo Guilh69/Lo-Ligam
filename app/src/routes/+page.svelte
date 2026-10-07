@@ -355,21 +355,21 @@
 			</div>
 			<div class="chifras-grasilha">
 				<div class="chifra esvani" style="--i: 1">
-					<p class="chifra-num" data-comptar="600000" data-prefix="≈ ">0</p>
+					<p class="chifra-num" data-comptar="600000" data-prefix="≈ ">≈ 600 000</p>
 					<p class="chifra-nom">{@render bi('locutors', 'locuteurs')}</p>
 					<p class="chifra-font">
 						{@render bi('Estimacion, enquèsta sociolingüistica OPLO, 2020', 'Estimation, enquête sociolinguistique OPLO, 2020')}
 					</p>
 				</div>
 				<div class="chifra esvani" style="--i: 2">
-					<p class="chifra-num" data-comptar="32">0</p>
+					<p class="chifra-num" data-comptar="32">32</p>
 					<p class="chifra-nom">{@render bi('despartaments', 'départements')}</p>
 					<p class="chifra-font">
 						{@render bi('e mai la Val d’Aran e las valadas occitanas d’Itàlia', 'plus le Val d’Aran et les vallées occitanes d’Italie')}
 					</p>
 				</div>
 				<div class="chifra esvani" style="--i: 3">
-					<p class="chifra-num" data-comptar="10">0</p>
+					<p class="chifra-num" data-comptar="10">10</p>
 					<p class="chifra-nom">{@render bi('sègles de literatura', 'siècles de littérature')}</p>
 					<p class="chifra-font">{@render bi('dempuèi los primièrs trobadors', 'depuis les premiers troubadours')}</p>
 				</div>

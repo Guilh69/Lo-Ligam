@@ -62,6 +62,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{mode === 'signup' ? "S'inscriure" : 'Se connectar'} · Lo Ligam</title>
+</svelte:head>
+
 <div class="page-bg" aria-hidden="true">
 	<span class="blob blob-gold"></span>
 	<span class="blob blob-teal"></span>
@@ -105,7 +109,7 @@
 			</label>
 			<label>
 				Mot de pas <em>(mot de passe)</em>
-				<input type="password" bind:value={password} autocomplete="current-password" required />
+				<input type="password" bind:value={password} autocomplete={mode === 'signup' ? 'new-password' : 'current-password'} required />
 			</label>
 
 			{#if errorMsg}<p class="msg error">{errorMsg}</p>{/if}

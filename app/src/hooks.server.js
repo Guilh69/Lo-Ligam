@@ -1,4 +1,4 @@
-// En-têtes de sécurité posés sur chaque réponse. Vercel ne les met pas
+// En-têtes de sécurité posés sur chaque réponse. Scaleway ne les met pas
 // tout seul, et la politique de contenu (définie dans svelte.config.js)
 // ne couvre pas ces aspects-là.
 export async function handle({ event, resolve }) {

@@ -156,6 +156,11 @@
 
 	function openSession(i) {
 		view = i;
+		// Retour au sommaire (bouton ×) : pas d'étape à préparer
+		if (i === 'list') {
+			if (browser) window.scrollTo({ top: 0 });
+			return;
+		}
 		// Étape déjà terminée : tout est déverrouillé pour la relecture.
 		blockDone = modul.sessions[i].blocks.map(() => done[i] === true);
 		if (browser) window.scrollTo({ top: 0 });
@@ -214,6 +219,10 @@
 		if (!muted) playTick();
 	}
 </script>
+
+<svelte:head>
+	<title>{[typeof view === 'number' ? modul?.sessions?.[view]?.title : null, modul?.oc, 'Lo Ligam'].filter(Boolean).join(' · ')}</title>
+</svelte:head>
 
 {#snippet speakerIcon(active)}
 	<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">

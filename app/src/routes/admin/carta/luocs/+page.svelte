@@ -261,7 +261,7 @@
 					</label>
 				</div>
 				<p class="ajuda">
-					Cercar las coordenadas sus <a href="https://www.openstreetmap.org" target="_blank"
+					Cercar las coordenadas sus <a href="https://www.openstreetmap.org" target="_blank" rel="noopener noreferrer"
 						>openstreetmap.org</a
 					>
 					— clic dre sus lo luòc → « Mostrar l'adreça ». <em>(Clic droit → « Afficher l'adresse ».)</em

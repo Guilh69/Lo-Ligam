@@ -121,6 +121,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{main('Fasèm coneissença', 'Faisons connaissance')} · Lo Ligam</title>
+</svelte:head>
+
 <div class="page-bg" aria-hidden="true">
 	<span class="blob blob-gold"></span>
 	<span class="blob blob-teal"></span>

@@ -84,6 +84,10 @@
 	let counter = 0;
 </script>
 
+<svelte:head>
+	<title>{lang === 'fr' ? 'Les modules' : 'Los moduls'} · Lo Ligam</title>
+</svelte:head>
+
 <div class="page-bg" aria-hidden="true">
 	<span class="blob blob-gold"></span>
 	<span class="blob blob-teal"></span>

@@ -18,13 +18,15 @@
 			hebergeurT: 'Albergador',
 			proprietatT: 'Proprietat intellectuala',
 			proprietat:
-				'Los contenguts d’aqueste site — tèxtes, illustracions, fichas de vocabulari — son l’òbra de l’editor, levat mencion contrària. Tota reproduccion demanda son acòrd.',
+				'Los contenguts d’aqueste site (tèxtes, illustracions, fichas de vocabulari) son l’òbra de l’editor, levat mencion contrària. Tota reproduccion demanda son acòrd.',
 			ligamsT: 'Ligams extèrnes',
 			ligams:
 				'Aqueste site mena cap a de sites tèrces (Lo Congrès, OPLO, CIRDOC e autres). Sèm pas responsables de lor contengut.',
 			cartaT: 'Fons de carta',
 			carta:
 				'Lo fons de carta occitan ven d’OpenStreetMap e occitan, amb l’Institut d’Estudis Occitans. Las donadas cartograficas son jos licéncia ODbL.',
+			tipoT: 'Tipografia',
+			tipo: 'Lo site utiliza la poliça Luciole © Laurent Bourcellier e Jonathan Perez (CTRDV), jos licéncia CC BY 4.0.',
 			donadasT: 'Donadas personalas',
 			donadas: 'La gestion de vòstras donadas es detalhada sus la pagina dedicada :',
 			donadasLink: 'Politica de confidencialitat'
@@ -38,13 +40,15 @@
 			hebergeurT: 'Hébergeur',
 			proprietatT: 'Propriété intellectuelle',
 			proprietat:
-				'Les contenus de ce site — textes, illustrations, fiches de vocabulaire — sont l’œuvre de l’éditeur, sauf mention contraire. Toute reproduction nécessite son accord.',
+				'Les contenus de ce site (textes, illustrations, fiches de vocabulaire) sont l’œuvre de l’éditeur, sauf mention contraire. Toute reproduction nécessite son accord.',
 			ligamsT: 'Liens externes',
 			ligams:
 				'Ce site renvoie vers des sites tiers (Lo Congrès, OPLO, CIRDOC et autres). Nous ne sommes pas responsables de leur contenu.',
 			cartaT: 'Fond de carte',
 			carta:
 				'Le fond de carte occitan provient d’OpenStreetMap e occitan, avec l’Institut d’Études Occitanes. Les données cartographiques sont sous licence ODbL.',
+			tipoT: 'Typographie',
+			tipo: 'Le site utilise la police Luciole © Laurent Bourcellier et Jonathan Perez (CTRDV), sous licence CC BY 4.0.',
 			donadasT: 'Données personnelles',
 			donadas: 'La gestion de vos données est détaillée sur la page dédiée :',
 			donadasLink: 'Politique de confidentialité'
@@ -60,7 +64,7 @@
 </script>
 
 <svelte:head>
-	<title>{tx.titre} — Lo Ligam</title>
+	<title>{tx.titre} · Lo Ligam</title>
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
@@ -110,6 +114,11 @@
 		<section>
 			<h2>{tx.cartaT}</h2>
 			<p>{tx.carta}</p>
+		</section>
+
+		<section>
+			<h2>{tx.tipoT}</h2>
+			<p>{tx.tipo}</p>
 		</section>
 
 		<section>

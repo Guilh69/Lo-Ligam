@@ -114,7 +114,7 @@
 </script>
 
 <svelte:head>
-	<title>{tx.titre} — Lo Ligam</title>
+	<title>{tx.titre} · Lo Ligam</title>
 </svelte:head>
 
 <div class="page-bg" aria-hidden="true"></div>

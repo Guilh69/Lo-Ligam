@@ -55,6 +55,9 @@ export function lancarAcuelh(racina, opcions = {}) {
 		e.target.querySelectorAll('[data-comptar]').forEach(comptar);
 	}), { threshold: 0.18 });
 	racina.querySelectorAll('[data-revela]').forEach((el) => io.observe(el));
+	// La valor vertadièra es dins l'HTML (legibla sens JavaScript e pels
+	// lectors d'ecran, audit del 2026-10-08) : lo comptatge torna partir de 0.
+	if (!calm) racina.querySelectorAll('[data-comptar]').forEach((el) => (el.textContent = (el.dataset.prefix || '') + '0'));
 
 	function comptar(el) {
 		const fin = +el.dataset.comptar, pre = el.dataset.prefix || '';
