@@ -335,7 +335,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				this._pintar();
 				if ((performance.now() - t0) / 1000 < INTRO.fin + 0.3) this._rafIntro = requestAnimationFrame(pas); // (fins als noms dels dialèctes, que los noms de las cadenas evitan)
 			};
-			if (!this._calm) this._rafIntro = requestAnimationFrame(pas);
+			if (!this._calm && Number.isFinite(t0)) this._rafIntro = requestAnimationFrame(pas);
+			else this._pintar();
 		},
 		acabarIntro() {
 			cancelAnimationFrame(this._rafIntro);
@@ -929,7 +930,11 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					const tòca = (bx) => pausats.some((b) => b[0] < bx[2] && b[2] > bx[0] && b[1] < bx[3] && b[3] > bx[1]);
 					let bx = null;
 					for (const [dx, dy] of som ? [[0, 0]] : [[0, 0], [0, -14], [0, 14], [-28, 0], [28, 0], [0, -26], [0, 26]]) {
-						const c = som ? [x - 5, y - h / 2, x + w, y + h / 2] : [x + dx - w / 2, y + dy - h / 2, x + dx + w / 2, y + dy + h / 2];
+						// (un nom en biais ocupa sa bóstia virada : CEVENAS passava sus LENGADOCIAN)
+						const ra = ((r.props.ang ?? 0) * Math.PI) / 180,
+							bw = w * Math.abs(Math.cos(ra)) + h * Math.abs(Math.sin(ra)),
+							bh = w * Math.abs(Math.sin(ra)) + h * Math.abs(Math.cos(ra));
+						const c = som ? [x - 5, y - h / 2, x + w, y + h / 2] : [x + dx - bw / 2, y + dy - bh / 2, x + dx + bw / 2, y + dy + bh / 2];
 						if (!tòca(c)) {
 							bx = c;
 							if (!som) (x += dx), (y += dy);

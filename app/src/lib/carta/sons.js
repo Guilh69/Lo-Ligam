@@ -55,142 +55,195 @@ export function sonPapièr(plegar = true) {
 	}
 }
 
-// Los sons de l'entrada en scèna (demanda de Romain) : un gredon leugièr
-// quand la còsta se traça, de pichons calhaus quand lo relèu monta, un
-// rajòl leugièr quand los rius corron. Totes doces e baisses ; se copan
-// d'un còp se l'entrada en scèna es acabada per un clic. Lo navegador los
-// daissa partir sonque aprèp un gèst (lo clic sul ligam de la carta).
-// Tòrna una foncion que los copa.
-export function sonsIntro(INTRO) {
-	if (!sonsActius()) return () => {};
+// Los sons de l'entrada en scèna (demanda de Romain), menats pel dessenh
+// meteis (pas per un relòtge fixat a l'avança : lo primièr ensag se
+// descalava de l'animacion) :
+//   - crayon(true / false) : lo gredon, del primièr tròç de còsta al darrièr ;
+//   - calhau(u) : una pèira pausada, a cada nivèl d'altitud que pareis
+//     (u de 0 a 1 : de las planas als cims, del grave a l'agut, sus una
+//     gama doça, a la faiçon de Tiny Glade) ;
+//   - aiga(n) : un riu que raja, tant fòrt coma i a de rius que corron ;
+//     s'escantís quand lo darrièr a tocat la mar (n = 0) ;
+//   - copar() : tot s'arrèsta (un clic mena a la fin).
+// Lo navegador daissa partir los sons sonque aprèp un gèst (lo clic sul
+// ligam de la carta).
+export function sonsEntrada() {
+	if (!sonsActius()) return null;
+	let c;
 	try {
 		ctx ??= new (window.AudioContext || window.webkitAudioContext)();
 		if (ctx.state === 'suspended') ctx.resume();
-		const t0 = ctx.currentTime + 0.05,
-			sr = ctx.sampleRate;
-		const mèstre = ctx.createGain();
-		mèstre.gain.value = 1;
-		mèstre.connect(ctx.destination);
-		const bruch = (s) => {
-			const b = ctx.createBuffer(1, Math.floor(sr * s), sr),
-				d = b.getChannelData(0);
-			for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-			return b;
-		};
-		const font = (buf, t, s) => {
-			const f = ctx.createBufferSource();
-			f.buffer = buf;
-			f.start(t);
-			f.stop(t + s);
-			return f;
-		};
-
-		// lo gredon : de traches brèus de bruch aut e fin, un pauc irregulars
-		{
-			const [a, b] = INTRO.costa;
-			const buf = bruch(b - a + 0.3);
-			const f = font(buf, t0 + a, b - a + 0.3);
-			const bp = ctx.createBiquadFilter();
-			bp.type = 'bandpass';
-			bp.frequency.value = 3200;
-			bp.Q.value = 1.1;
-			const lp = ctx.createBiquadFilter();
-			lp.type = 'lowpass';
-			lp.frequency.value = 6000;
-			const g = ctx.createGain();
-			g.gain.setValueAtTime(0.0001, t0 + a);
-			for (let t = a; t < b; ) {
-				const d = 0.12 + Math.random() * 0.16;
-				g.gain.linearRampToValueAtTime(0.022 + Math.random() * 0.012, t0 + t + 0.03);
-				g.gain.linearRampToValueAtTime(0.004, t0 + t + d);
-				t += d + 0.02 + Math.random() * 0.05;
-			}
-			g.gain.linearRampToValueAtTime(0.0001, t0 + b + 0.2);
-			f.connect(bp).connect(lp).connect(g).connect(mèstre);
-		}
-
-		// los calhaus : de pichons tucs mats (bruch brèu dins un ressonador),
-		// mai espesses al mitan, sus un fons de tèrra fòrça leugièr
-		{
-			const [a, b] = INTRO.corbas;
-			const buf = bruch(0.04);
-			const n = 34;
-			for (let i = 0; i < n; i++) {
-				const u = Math.random();
-				const t = t0 + a + (b - a) * (0.5 + (u < 0.5 ? -1 : 1) * Math.pow(Math.abs(u - 0.5) * 2, 0.7) * 0.5);
-				const f = font(buf, t, 0.04);
-				const bp = ctx.createBiquadFilter();
-				bp.type = 'bandpass';
-				bp.frequency.value = 700 + Math.random() * 1300;
-				bp.Q.value = 6;
-				const g = ctx.createGain();
-				g.gain.setValueAtTime(0.0001, t);
-				g.gain.exponentialRampToValueAtTime(0.05 + Math.random() * 0.04, t + 0.004);
-				g.gain.exponentialRampToValueAtTime(0.0001, t + 0.05 + Math.random() * 0.04);
-				f.connect(bp).connect(g).connect(mèstre);
-			}
-			const f = font(bruch(b - a + 0.4), t0 + a, b - a + 0.4);
-			const lp = ctx.createBiquadFilter();
-			lp.type = 'lowpass';
-			lp.frequency.value = 260;
-			const g = ctx.createGain();
-			g.gain.setValueAtTime(0.0001, t0 + a);
-			g.gain.linearRampToValueAtTime(0.03, t0 + (a + b) / 2);
-			g.gain.linearRampToValueAtTime(0.0001, t0 + b + 0.4);
-			f.connect(lp).connect(g).connect(mèstre);
-		}
-
-		// lo rajòl : un bruch suau (filtrat bas) que tremola doçament, e de
-		// pichonas bolhas
-		{
-			const [a, b] = INTRO.rius;
-			const s = b - a + 0.6;
-			const f = font(bruch(s), t0 + a, s);
-			const lp = ctx.createBiquadFilter();
-			lp.type = 'lowpass';
-			lp.frequency.value = 1100;
-			const bp = ctx.createBiquadFilter();
-			bp.type = 'bandpass';
-			bp.frequency.value = 650;
-			bp.Q.value = 0.5;
-			const g = ctx.createGain();
-			g.gain.setValueAtTime(0.0001, t0 + a);
-			g.gain.linearRampToValueAtTime(0.035, t0 + a + 0.8);
-			g.gain.setValueAtTime(0.035, t0 + b - 0.5);
-			g.gain.linearRampToValueAtTime(0.0001, t0 + b + 0.6);
-			const lfo = ctx.createOscillator(),
-				lg = ctx.createGain();
-			lfo.frequency.value = 2.3;
-			lg.gain.value = 0.01;
-			lfo.connect(lg).connect(g.gain);
-			lfo.start(t0 + a);
-			lfo.stop(t0 + b + 0.6);
-			f.connect(lp).connect(bp).connect(g).connect(mèstre);
-			for (let t = a + 0.3; t < b; t += 0.06 + Math.random() * 0.14) {
-				const o = ctx.createOscillator(),
-					og = ctx.createGain();
-				const f0 = 500 + Math.random() * 700;
-				o.type = 'sine';
-				o.frequency.setValueAtTime(f0, t0 + t);
-				o.frequency.exponentialRampToValueAtTime(f0 * 1.8, t0 + t + 0.04);
-				og.gain.setValueAtTime(0.0001, t0 + t);
-				og.gain.exponentialRampToValueAtTime(0.012, t0 + t + 0.008);
-				og.gain.exponentialRampToValueAtTime(0.0001, t0 + t + 0.05);
-				o.connect(og).connect(mèstre);
-				o.start(t0 + t);
-				o.stop(t0 + t + 0.06);
-			}
-		}
-
-		return () => {
-			try {
-				mèstre.gain.cancelScheduledValues(ctx.currentTime);
-				mèstre.gain.setValueAtTime(mèstre.gain.value, ctx.currentTime);
-				mèstre.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.25);
-				setTimeout(() => mèstre.disconnect(), 400);
-			} catch {}
-		};
+		c = ctx;
 	} catch {
-		return () => {};
+		return null;
 	}
+	const sr = c.sampleRate;
+	const mèstre = c.createGain();
+	mèstre.connect(c.destination);
+	// un pauc d'espaci : una reverberacion corta (bruch que s'amortís)
+	const rev = c.createConvolver();
+	{
+		const n = Math.floor(sr * 1.3),
+			b = c.createBuffer(2, n, sr);
+		for (let k = 0; k < 2; k++) {
+			const d = b.getChannelData(k);
+			for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3);
+		}
+		rev.buffer = b;
+	}
+	const umid = c.createGain();
+	umid.gain.value = 0.32;
+	rev.connect(umid).connect(mèstre);
+	const sortida = (nòde, ambRev = true) => {
+		nòde.connect(mèstre);
+		if (ambRev) nòde.connect(rev);
+	};
+	const bruch = (s) => {
+		const b = c.createBuffer(1, Math.floor(sr * s), sr),
+			d = b.getChannelData(0);
+		for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+		return b;
+	};
+	const fonts = [];
+	const bocla = (buf) => {
+		const f = c.createBufferSource();
+		f.buffer = buf;
+		f.loop = true;
+		f.start();
+		fonts.push(f);
+		return f;
+	};
+
+	// --- lo gredon ---
+	let gredon = null;
+	function crayon(on) {
+		const t = c.currentTime;
+		if (on && !gredon) {
+			const f = bocla(bruch(2));
+			const hp = c.createBiquadFilter();
+			hp.type = 'highpass';
+			hp.frequency.value = 1400;
+			const bp = c.createBiquadFilter();
+			bp.type = 'bandpass';
+			bp.frequency.value = 2800;
+			bp.Q.value = 0.7;
+			const lp = c.createBiquadFilter();
+			lp.type = 'lowpass';
+			lp.frequency.value = 5200;
+			const g = c.createGain();
+			g.gain.setValueAtTime(0.0001, t);
+			g.gain.linearRampToValueAtTime(0.018, t + 0.06);
+			// la man que tremola : lo frec monta e davala doçament
+			for (let u = 0.06; u < 4; u += 0.05) g.gain.setTargetAtTime(0.011 + Math.random() * 0.012, t + u, 0.02);
+			f.connect(hp).connect(bp).connect(lp).connect(g);
+			sortida(g, false);
+			gredon = { f, g };
+		} else if (!on && gredon) {
+			gredon.g.gain.cancelScheduledValues(t);
+			gredon.g.gain.setTargetAtTime(0.0001, t, 0.04);
+			const f = gredon.f;
+			setTimeout(() => f.stop(), 400);
+			gredon = null;
+		}
+	}
+
+	// --- las pèiras ---
+	const GAMA = [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24];
+	const tuc = bruch(0.02);
+	function calhau(u) {
+		const t = c.currentTime + 0.005;
+		const semi = GAMA[Math.round(Math.max(0, Math.min(1, u)) * (GAMA.length - 1))] + (Math.random() - 0.5) * 0.3;
+		const f0 = 140 * Math.pow(2, semi / 12);
+		// lo còrs de la pèira : doas modas amortidas
+		for (const [mult, dec, vol] of [[1, 0.16, 0.05], [2.76, 0.06, 0.018]]) {
+			const o = c.createOscillator(),
+				g = c.createGain();
+			o.type = 'sine';
+			o.frequency.setValueAtTime(f0 * mult * 1.03, t);
+			o.frequency.exponentialRampToValueAtTime(f0 * mult, t + 0.03);
+			g.gain.setValueAtTime(0.0001, t);
+			g.gain.exponentialRampToValueAtTime(vol, t + 0.004);
+			g.gain.exponentialRampToValueAtTime(0.0001, t + dec);
+			o.connect(g);
+			sortida(g);
+			o.start(t);
+			o.stop(t + dec + 0.02);
+		}
+		// lo tòc : un brieu de bruch clar
+		const s = c.createBufferSource();
+		s.buffer = tuc;
+		const bp = c.createBiquadFilter();
+		bp.type = 'bandpass';
+		bp.frequency.value = 2400 + Math.random() * 1200;
+		bp.Q.value = 1.5;
+		const g = c.createGain();
+		g.gain.setValueAtTime(0.0001, t);
+		g.gain.exponentialRampToValueAtTime(0.012, t + 0.002);
+		g.gain.exponentialRampToValueAtTime(0.0001, t + 0.025);
+		s.connect(bp).connect(g);
+		sortida(g);
+		s.start(t);
+		s.stop(t + 0.03);
+	}
+
+	// --- l'aiga ---
+	let riu = null;
+	function aiga(n) {
+		const t = c.currentTime;
+		if (n > 0 && !riu) {
+			// lo fons : un bruch suau, filtrat (ni agut ni sord)
+			const f = bocla(bruch(3));
+			const hp = c.createBiquadFilter();
+			hp.type = 'highpass';
+			hp.frequency.value = 220;
+			const lp = c.createBiquadFilter();
+			lp.type = 'lowpass';
+			lp.frequency.value = 1500;
+			const fons = c.createGain();
+			fons.gain.value = 0.35;
+			f.connect(hp).connect(lp).connect(fons);
+			// lo gargolh : de filtres estreches que se desplaçan a l'azard
+			const babil = c.createGain();
+			babil.gain.value = 1;
+			for (let i = 0; i < 4; i++) {
+				const bp = c.createBiquadFilter();
+				bp.type = 'bandpass';
+				bp.Q.value = 9;
+				bp.frequency.value = 400 + Math.random() * 600;
+				for (let u = 0; u < 9; u += 0.07 + Math.random() * 0.08) bp.frequency.setTargetAtTime(330 + Math.random() * 750, t + u, 0.03);
+				f.connect(bp).connect(babil);
+			}
+			const g = c.createGain();
+			g.gain.setValueAtTime(0.0001, t);
+			fons.connect(g);
+			babil.connect(g);
+			sortida(g);
+			riu = { f, g, n: 0 };
+		}
+		if (!riu) return;
+		if (n > 0) {
+			// mai de rius, mai d'aiga (doçament)
+			if (n !== riu.n) riu.g.gain.setTargetAtTime(Math.min(0.09, 0.035 + 0.012 * Math.sqrt(n)), t, 0.25);
+			riu.n = n;
+		} else if (riu.n > 0) {
+			riu.g.gain.setTargetAtTime(0.0001, t, 0.35);
+			const f = riu.f;
+			setTimeout(() => f.stop(), 2000);
+			riu.n = 0;
+		}
+	}
+
+	function copar() {
+		const t = c.currentTime;
+		mèstre.gain.setTargetAtTime(0, t, 0.06);
+		setTimeout(() => {
+			for (const f of fonts) {
+				try {
+					f.stop();
+				} catch {}
+			}
+			mèstre.disconnect();
+		}, 500);
+	}
+	return { crayon, calhau, aiga, copar };
 }

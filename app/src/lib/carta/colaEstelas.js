@@ -641,6 +641,15 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		setIntro(t0) {
 			this._tIntro = t0;
 		},
+		// las donadas de l'entrada en scèna (limits, corbas, polissas) son aquí
+		prèsta() {
+			return Promise.all([cargarLimits(), cargarCorbas(), document.fonts?.load('italic 500 16px "Cormorant Garamond"')]);
+		},
+		// los sons de l'entrada en scèna (sons.js) : menats pel dessenh
+		setSons(s) {
+			this._sons = s;
+			this._eSonats = new Set();
+		},
 		acabarIntro() {
 			this._tIntro = performance.now() - 60000;
 		},
@@ -1026,7 +1035,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const temps = (t - this._t0) / 1000;
 						// lo relòtge de l'entrada en scèna (en segondas ; tot es fach se lo
 			// sistèma demanda mens de movement)
-			const ti = this._calm ? 99 : (t - (this._tIntro ?? this._t0)) / 1000;
+			const ti = this._calm ? 99 : (t - (this._tIntro ?? -1e12)) / 1000;
 			const fase = ([a, b]) => clamp((ti - a) / (b - a));
 			// Le relais avance dans le temps, pas avec le zoom (jamais les deux
 			// cartes à moitié). Retour de Romain, « trop brutal » : ≈ 1 s, en trois
@@ -1120,9 +1129,25 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						cx.stroke();
 						continue;
 					}
-					for (const [e, l] of this._corbas) {
+					// cada corba a son torn : nivèl per nivèl (dels basses als cims), e
+					// d'oèst en èst dins un nivèl, sus tota la durada de la montada
+					const nivèls = [...new Set(this._corbas.filter(([e]) => e % pas === 0).map(([e]) => e))].sort((a, b) => a - b);
+					for (let k = 0; k < this._corbas.length; k++) {
+						const [e, l] = this._corbas[k];
 						if (e % pas || (e % 1000 === 0) !== mestra) continue;
-						const aE = easeS(clamp((ti - (c0 + (e / eMax) * (c1 - c0 - 0.6))) / 0.6));
+						const renc = nivèls.indexOf(e) / Math.max(1, nivèls.length - 1),
+							oèst = clamp((l[0][0] - o.x) / W);
+						const aE = easeS(clamp((ti - (c0 + renc * (c1 - c0 - 0.9) + oèst * 0.45)) / 0.45));
+						// una pèira pausada quand una corba pareis (pas mai d'una cada
+						// 55 ms : un ritme de construccion, pas una ramada)
+						if (aE > 0 && this._sons && !this._eSonats.has(k)) {
+							this._eSonats.add(k);
+							const ara = performance.now();
+							if (ara - (this._darrièraPèira ?? 0) > 55) {
+								this._darrièraPèira = ara;
+								this._sons.calhau(clamp(e / eMax + (Math.random() - 0.5) * 0.12));
+							}
+						}
 						if (aE < 0.01) continue;
 						cx.globalAlpha = aRius * aE * (mestra ? 0.3 : 0.13);
 						cx.beginPath();
@@ -1137,6 +1162,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// avant les rivières ; la carte détaillée a le sien, il s'efface avec
 			// elle. À l'arrivée, il se trace comme un trait de plume.
 			const fCosta = easeIO(fase(INTRO.costa));
+			// lo gredon : del primièr tròç de còsta al darrièr
+			if (this._sons && ti < 99) {
+				if (fCosta > 0 && fCosta < 1 && !this._sCosta) (this._sCosta = 1), this._sons.crayon(true);
+				else if (fCosta >= 1 && this._sCosta === 1) (this._sCosta = 2), this._sons.crayon(false);
+			}
 			if (fCosta > 0.001 && aRius > 0.01 && this._el.costa && this._costa) {
 				cx.globalAlpha = aRius;
 				cx.strokeStyle = T.costa;
@@ -1164,6 +1194,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				cx.lineCap = 'round';
 				cx.lineJoin = 'round';
 				const fronts = [];
+				let enCors = 0; // rius (nomenats o pas) que corron encara
 				for (const r of this._rius) {
 					const l = r.pts,
 						long = D - r.o;
@@ -1175,6 +1206,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					let i = 1;
 					for (; i < l.length && r.cum[i] <= long; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
 					if (i < l.length) {
+						enCors++;
 						const f = (long - r.cum[i - 1]) / (r.cum[i] - r.cum[i - 1] || 1);
 						const x = lerp(l[i - 1][0], l[i][0], f) - o.x,
 							y = lerp(l[i - 1][1], l[i][1], f) - o.y;
@@ -1182,6 +1214,14 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						if (r.nom) fronts.push([x, y, r.pes]);
 					}
 					cx.stroke();
+				}
+				// l'aiga : tant fòrta coma i a de rius que corron, fins que lo
+				// darrièr a tocat la mar
+				if (this._sons && this._sAiga !== 2) {
+					const n = D === Infinity ? 0 : enCors;
+					if (n > 0) this._sAiga = 1;
+					if (this._sAiga === 1) this._sons.aiga(n);
+					if (this._sAiga === 1 && n === 0) this._sAiga = 2;
 				}
 				if (fronts.length) {
 					cx.save();

@@ -37,6 +37,11 @@ const temaDe = (clar, dalt) => ({
 	dial: dalt ? COLORS.dalt : clar ? COLORS.clar : COLORS.sorne
 });
 
+// Lo luòc del nom d'un dialècte, quand lo de las donadas va pas : lo
+// lengadocian, al mitan de sa zòna, tombava sus las Cevenas (retorn de
+// Romain : « un peu plus en haut, il y a de l'espace »)
+const ETI_NOM = { lan: [2.2, 43.95] };
+
 // los luòcs ensajats per un nom de dialècte (a partir de son ponch)
 const DECALATGES_NOM = [[0, 0], [0, -16], [0, 16], [-36, 0], [36, 0], [0, -30], [0, 30], [-30, -18], [30, 18], [30, -18], [-30, 18], [0, -44], [0, 44], [-60, 0], [60, 0], [-50, -30], [50, 30], [50, -30], [-50, 30], [0, -58], [0, 58]];
 
@@ -192,7 +197,14 @@ export function crearColaDonadas(
 				this._pintar();
 				if ((performance.now() - t0) / 1000 < INTRO.fin) this._rafIntro = requestAnimationFrame(pas);
 			};
-			if (!this._calm) this._rafIntro = requestAnimationFrame(pas);
+			// (t0 infinit : en espèra de las donadas, res se dessenha)
+			if (!this._calm && Number.isFinite(t0)) this._rafIntro = requestAnimationFrame(pas);
+			else this._pintar();
+		},
+		// las donadas dels dialèctes son aquí e lors tenchas preparadas (lo
+		// primièr calcul es long : l'entrada en scèna l'espèra)
+		prèsta() {
+			return Promise.all([dialPromesa, bandasPromesa, mixPromesa, creissentPromesa].filter(Boolean));
 		},
 		acabarIntro() {
 			cancelAnimationFrame(this._rafIntro);
@@ -460,7 +472,7 @@ export function crearColaDonadas(
 						x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y);
 					}
 				}
-				return { kod: f.properties.kod, c, eti: pt(f.properties.eti), props: f.properties, bbox: [x0, y0, x1, y1] };
+				return { kod: f.properties.kod, c, eti: pt(ETI_NOM[f.properties.kod] ?? f.properties.eti), props: f.properties, bbox: [x0, y0, x1, y1] };
 			};
 			const dom = this._limits?.domeni;
 			this._geo = {

@@ -3,8 +3,8 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
-	import { crearColaEstelas, Z_PRECARGA, INTRO } from '$lib/carta/colaEstelas.js';
-	import { sonsIntro } from '$lib/carta/sons.js';
+	import { crearColaEstelas, Z_PRECARGA } from '$lib/carta/colaEstelas.js';
+	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
 	import { JACES_DONADAS, JACES_TEMATICAS } from '$lib/carta/catalogue.js';
@@ -431,19 +431,41 @@
 		// L'entrada en scèna (demanda de Romain) : còsta, corbas de nivèl, noms
 		// de las cadenas, rius, vilas grandas, puèi los dialèctes ; un relòtge
 		// comun a las tres còlas. Un clic, la molèta o una tòca menan a la fin.
-		const t0 = performance.now();
-		for (const c of [colaEstelas, colaDonadas, colaTematica]) c?.setIntro(t0);
-		// (los sons : crayon, calhaus, rajòl ; res se mens de movement es demandat)
-		const copar = matchMedia('(prefers-reduced-motion: reduce)').matches ? () => {} : sonsIntro(INTRO);
+		// L'entrada en scèna part quand las donadas son aquí e preparadas (lo
+		// primièr calcul de las tenchas blocava lo navegador doas segondas : las
+		// estapas e los sons sautavan), al mai tard aprèp 4 s. Fins alara las
+		// còlas son voidas.
+		for (const c of [colaEstelas, colaDonadas, colaTematica]) c?.setIntro(Infinity);
+		let sons = null,
+			acabada = false;
+		const escotas = ['pointerdown', 'wheel', 'keydown'];
 		const acabarIntro = () => {
-			copar();
+			acabada = true;
+			sons?.copar();
+			colaEstelas?.setSons(null);
 			for (const c of [colaEstelas, colaDonadas, colaTematica]) c?.acabarIntro();
-			for (const ev of ['pointerdown', 'wheel', 'keydown']) window.removeEventListener(ev, acabarIntro, true);
+			for (const ev of escotas) window.removeEventListener(ev, acabarIntro, true);
 		};
-		for (const ev of ['pointerdown', 'wheel', 'keydown']) window.addEventListener(ev, acabarIntro, true);
-		setTimeout(() => {
-			for (const ev of ['pointerdown', 'wheel', 'keydown']) window.removeEventListener(ev, acabarIntro, true);
-		}, 10000);
+		for (const ev of escotas) window.addEventListener(ev, acabarIntro, true);
+		Promise.race([
+			Promise.all([colaEstelas?.prèsta(), colaDonadas.prèsta()]),
+			new Promise((r) => setTimeout(r, 4000))
+		]).then(() =>
+			requestAnimationFrame(() =>
+				requestAnimationFrame(() => {
+					if (acabada) return;
+					const t0 = performance.now();
+					// los sons (gredon, pèiras, aiga), menats pel dessenh de la carta
+					// en estelas ; res se mens de movement es demandat
+					sons = matchMedia('(prefers-reduced-motion: reduce)').matches ? null : sonsEntrada();
+					colaEstelas?.setSons(sons);
+					for (const c of [colaEstelas, colaDonadas, colaTematica]) c?.setIntro(t0);
+					setTimeout(() => {
+						for (const ev of escotas) window.removeEventListener(ev, acabarIntro, true);
+					}, 10000);
+				})
+			)
+		);
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
 		map.on('zoomend', applyToponymVisibility);
