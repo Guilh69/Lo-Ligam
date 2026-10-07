@@ -160,6 +160,9 @@
 		return f ? (lang === 'oc' ? f.oc : f.fr) : id;
 	};
 
+	// mots longs del rail : copats amb un tiret, pas al mièg d'una sillaba
+	const cesura = (t) => t.replace(/^Adminis(tra)/, 'Adminis­$1');
+
 	function bascular(id, on) {
 		visibility[id] = on;
 		if (id === 'dialectes' && !on && dialecte && dialecte !== 'cro') dialecte = null;
@@ -206,7 +209,7 @@
 			onclick={() => alternar(id)}
 		>
 			<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC[id]}</svg>
-			<span class="lib">{nomFam(id)}</span>
+			<span class="lib">{cesura(nomFam(id))}</span>
 			{#if id === 'sus' && afichadas.length}
 				<span class="compte" aria-label={tx.afichadas(afichadas.length)}>{afichadas.length}</span>
 			{:else if id !== 'sus' && familhas.find((f) => f.id === id) && familhaActiva(familhas.find((f) => f.id === id))}
@@ -353,7 +356,7 @@
 	   capçal ; s'arrèsta abans la bossòla */
 	.rail {
 		position: absolute;
-		z-index: 1000;
+		z-index: 1010; /* dessús la barra de recèrca (1000) */
 		top: 7.2rem;
 		left: var(--marge, 1rem);
 		width: 4.6rem;
@@ -405,8 +408,7 @@
 		outline-offset: 2px;
 	}
 	.lib {
-		hyphens: auto;
-		overflow-wrap: anywhere;
+		hyphens: manual;
 	}
 	.punt {
 		position: absolute;
@@ -438,7 +440,7 @@
 	/* Lo tirador, a costat del rail */
 	.tirador {
 		position: absolute;
-		z-index: 999;
+		z-index: 1010;
 		top: 7.2rem;
 		left: calc(var(--marge, 1rem) + 5.2rem);
 		width: min(21rem, calc(100% - var(--marge, 1rem) - 6.2rem));

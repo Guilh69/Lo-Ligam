@@ -54,7 +54,9 @@ export function crearColaDonadas(
 			pane: 'donadas',
 			padding: 0.3,
 			attribution:
-				'Lenga e dialèctes : <a href="https://www.occitanica.eu/" target="_blank" rel="noopener">Occitanica</a>'
+				// « Carte linguistique de l'Occitanie », CIRDÒC – Institut occitan de
+				// cultura, Licence Ouverte (verificat lo 2026-10-07) : citar la font
+				`Lenga e dialèctes : d'aprèp <a href="https://www.occitanica.eu/items/show/21242" target="_blank" rel="noopener">CIRDÒC – Occitanica</a> (Licéncia dobèrta)`
 		},
 
 		initialize() {
@@ -116,15 +118,22 @@ export function crearColaDonadas(
 
 		// Las donadas d'una jaça se telecargan sonque quand es alucada
 		_cargar() {
+			// una zòna causida abans que sas donadas arriben (pastilha del panèl) :
+			// sa difusion e son nom venon un còp las donadas aquí
+			const tornarCausir = (cro) => {
+				if (this._sel && (this._sel === 'cro') === cro) this._causir(this._sel, true);
+			};
 			if (this._jaces.dialectes && !this._dial)
 				(dialPromesa ??= cargarJson('/data/dialectes.geojson')).then((d) => {
 					this._dial = d;
 					this._update();
+					tornarCausir(false);
 				});
 			if (this._jaces.creissent && !this._creissent)
 				(creissentPromesa ??= cargarJson('/data/creissent.geojson')).then((d) => {
 					this._creissent = d;
 					this._update();
+					tornarCausir(true);
 				});
 		},
 
@@ -374,9 +383,10 @@ export function crearColaDonadas(
 				if (an && !an.a) aTotes = dossa(clamp(p / 0.6));
 				if (an && an.a && !an.de) aTotes = 1 - dossa(clamp(p / 0.35));
 				if (aTotes > 0.01) this._copiar(this._imgTotes, aT * aTotes);
+				// sol sus la carta, lo dialècte causit pòt èsser mai marcat
 				if (selDial) {
-					if (an && an.a === selDial) this._difusar(selDial, p, aT);
-					else this._copiar(this._imgSel, aT);
+					if (an && an.a === selDial) this._difusar(selDial, p, aT * 1.6);
+					else this._copiar(this._imgSel, aT * 1.6);
 				}
 				// survòl (sens causida) : la zòna s'esclarzís un pauc
 				if (!selDial && this._pus && this._pus !== 'cro') {
