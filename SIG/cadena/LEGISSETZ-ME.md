@@ -51,6 +51,24 @@ ou corriger les chemins.
 10. Territoires hors de France au survol : `node territoris-extra.mjs` ; noms des vallées : `noms-valadas.mjs`.
 11. Zones mixtes et gascon éteint : `mixtas.py` ; bandes de transition : `transicions.py`.
 
+## Couches de sources publiques (2026-10-07 et 08)
+
+Ces scripts-là utilisent des chemins relatifs au dépôt. Les données brutes
+téléchargées vont dans `SIG/brut/` (ignoré par Git, refait par les scripts).
+
+| Couche | Commande | Sortie |
+|---|---|---|
+| Communes | `node SIG/cadena/comunas.mjs` (appelle `comunas.py` ; `--sens-noms-osm` si Overpass est saturé) | `app/static/data/comunas/<dep>.json` et `index.json` ; à valider : `SIG/comunas/noms-a-validar.csv` |
+| Calandretas | `node SIG/cadena/calandretas.mjs` (annuaire de l'éducation) | `app/static/data/calandretas.geojson` ; manquantes : `SIG/calandretas/escolas-mancantas.md` |
+| Provinces de 1789 | `python-qgis.bat SIG/cadena/provincias.py` | `app/static/data/provincias-1789.json` ; table : `SIG/provincias/taula-bailliages.csv` |
+| Parcs | `node SIG/cadena/parcs.mjs` (appelle `parcs.py`) | `app/static/data/parcs.json` |
+| Massifs et sommets | `node SIG/cadena/releu-noms.mjs` | `app/static/data/releu-noms.json` |
+| Noms occitans (provinces, parcs) | `node SIG/cadena/noms-oc-jaces.mjs`, à relancer après une correction des tables `SIG/provincias/noms-oc.csv` et `SIG/natura/noms-parcs-oc.csv` | les deux fichiers ci-dessus |
+| Sons de la carte | `node SIG/cadena/sons-copar.mjs entree.mp3 sortie.mp3 debut fin` (découpe sans réencoder) | `app/static/sons/`, crédits dans `FONTS.md` |
+
+Après une nouvelle fabrication des provinces ou des parcs, relancer
+`noms-oc-jaces.mjs` (les scripts réécrivent les noms occitans de la source).
+
 ## Contrôles
 
 Après chaque passage, vérifier les villes témoins (voir l'historique Git du
