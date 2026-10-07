@@ -11,6 +11,8 @@
 // Al survòl (o al tòc), l'encastre d'en bas dona lo nom e sa natura, coma pels
 // territòris. Noms occitans de validar per Romain.
 
+import { INTRO } from './colaEstelas.js';
+
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const easeS = (t) => (1 - Math.cos(Math.PI * t)) / 2;
 const CORMORANT = '"Cormorant Garamond", Georgia, serif';
@@ -322,6 +324,22 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		},
 		setTema(c) {
 			this._tem = c ? TEMAS.clar : TEMAS.sorne;
+			this._pintar();
+		},
+		// L'entrada en scèna : los noms de las cadenas apareisson aprèp las
+		// corbas de nivèl (demanda de Romain), lors letras se sarran
+		setIntro(t0) {
+			this._tIntro = t0;
+			cancelAnimationFrame(this._rafIntro);
+			const pas = () => {
+				this._pintar();
+				if ((performance.now() - t0) / 1000 < INTRO.massis[1] + 0.6) this._rafIntro = requestAnimationFrame(pas);
+			};
+			if (!this._calm) this._rafIntro = requestAnimationFrame(pas);
+		},
+		acabarIntro() {
+			cancelAnimationFrame(this._rafIntro);
+			this._tIntro = null;
 			this._pintar();
 		},
 		setLenga(l) {
@@ -722,6 +740,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			const cx = this._cx,
 				G = this._geo;
 			if (!cx || !G) return;
+			// segondas dempuèi l'arribada (sens entrada en scèna : tot es fach)
+			const ti = this._tIntro == null || this._calm ? 99 : (performance.now() - this._tIntro) / 1000;
 			const T = this._tem,
 				z = this._zoom,
 				dpr = this._dpr,
@@ -889,14 +909,16 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				const esp = 'letterSpacing' in cx;
 				for (const r of lista) {
 					const [z0, z1] = fenèstras[r.props.mena]?.[r.props.renc] ?? [9, 13];
-					const al = clamp((z - z0) / 0.6) * clamp((z1 - z) / 0.6);
+					// (a l'arribada : las cadenas grandas d'en primièr)
+					const pI = easeS(clamp((ti - (INTRO.massis[0] + (r.props.renc - 1) * 0.3)) / 0.8));
+					const al = clamp((z - z0) / 0.6) * clamp((z1 - z) / 0.6) * pI;
 					if (al < 0.01) continue;
 					const [x, y] = r.p;
 					if (x < -100 || y < -40 || x > this._W + 100 || y > this._H + 40) continue;
 					const som = r.props.mena === 'som';
 					const nom = nomDe(r.props);
 					cx.font = som ? `500 10.5px Luciole, sans-serif` : `italic 500 ${{ 1: 15, 2: 13, 3: 11.5 }[r.props.renc] ?? 12}px ${CORMORANT}`;
-					if (esp) cx.letterSpacing = som ? '0px' : r.props.renc === 1 ? '0.32em' : '0.2em';
+					if (esp) cx.letterSpacing = som ? '0px' : ((r.props.renc === 1 ? 0.32 : 0.2) + (1 - pI) * 0.6).toFixed(3) + 'em';
 					const tèxt = som ? nom : nom.toUpperCase();
 					const w = cx.measureText(tèxt).width + (som ? 12 : 0),
 						h = som ? 13 : 16;

@@ -8,7 +8,7 @@
 // de traches mas de fonduts larges (causida de Romain : las parlars se
 // mesclan). Un dialècte (o lo Creissent) se pòt causir : sol el demòra, e sa
 // color se difusa sus son territòri a partir de son còr.
-import { cargarLimits } from './colaEstelas.js';
+import { cargarLimits, INTRO } from './colaEstelas.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -180,6 +180,83 @@ export function crearColaDonadas(
 		},
 		// Causida venguda de defòra (lo panèl) : la lista de las zònas causidas
 		// (dialèctes e 'cro' pel Creissent), voida per totas
+		// L'entrada en scèna : a la fin, totes los dialèctes se difusan
+		// ensems, cadun a partir de son còr (demanda de Romain)
+		setIntro(t0) {
+			this._tIntro = t0;
+			cancelAnimationFrame(this._rafIntro);
+			const pas = () => {
+				this._pintar();
+				if ((performance.now() - t0) / 1000 < INTRO.fin) this._rafIntro = requestAnimationFrame(pas);
+			};
+			if (!this._calm) this._rafIntro = requestAnimationFrame(pas);
+		},
+		acabarIntro() {
+			cancelAnimationFrame(this._rafIntro);
+			this._tIntro = null;
+			this._pintar();
+		},
+		// segondas dempuèi l'arribada (sens entrada en scèna : tot es fach)
+		_ti() {
+			return this._tIntro == null || this._calm ? 99 : (performance.now() - this._tIntro) / 1000;
+		},
+		// totas las zònas, vistas a travèrs de lors tacas que creisson (masca en
+		// pichon puèi agrandida), e lors fronts lusents
+		_introDial(ti, a) {
+			const G = this._geo,
+				dpr = this._dpr,
+				[d0, d1] = INTRO.dialectes;
+			const t = this._trab,
+				tg = t.getContext('2d');
+			const m = this._masca,
+				k = 1 / 6;
+			m.width = Math.max(1, Math.round(t.width * k));
+			m.height = Math.max(1, Math.round(t.height * k));
+			const mg = m.getContext('2d');
+			mg.setTransform(dpr * k, 0, 0, dpr * k, 0, 0);
+			mg.clearRect(0, 0, m.width / (dpr * k), m.height / (dpr * k));
+			mg.fillStyle = '#000';
+			const tacas = G.zonas.map((zn, i) => {
+				const p = clamp((ti - (d0 + i * 0.12)) / (d1 - d0 - 0.6));
+				const pts = p > 0 ? this._contornTaca(zn, p) : null;
+				if (pts) {
+					mg.beginPath();
+					pts.forEach(([x, y], j) => (j ? mg.lineTo(x, y) : mg.moveTo(x, y)));
+					mg.closePath();
+					mg.fill();
+				}
+				return { zn, p, pts };
+			});
+			tg.setTransform(1, 0, 0, 1, 0, 0);
+			tg.globalCompositeOperation = 'source-over';
+			tg.clearRect(0, 0, t.width, t.height);
+			tg.drawImage(this._imgTotes, 0, 0);
+			tg.globalCompositeOperation = 'destination-in';
+			tg.imageSmoothingQuality = 'high';
+			tg.drawImage(m, 0, 0, t.width, t.height);
+			tg.globalCompositeOperation = 'source-over';
+			this._copiar(t, a);
+			const cx = this._cx,
+				T = this._tem;
+			for (const { zn, p, pts } of tacas) {
+				const aF = pts ? (1 - dossa(p)) * 0.8 : 0;
+				if (aF < 0.02) continue;
+				cx.save();
+				cx.clip(zn.c, 'evenodd');
+				if (G.dom) cx.clip(G.dom, 'evenodd');
+				cx.beginPath();
+				pts.forEach(([x, y], j) => (j ? cx.lineTo(x, y) : cx.moveTo(x, y)));
+				cx.closePath();
+				const color = T.dial[zn.kod];
+				cx.strokeStyle = T.clar ? color : mesclar(color, '#fff8ec', 0.45);
+				cx.shadowColor = color;
+				cx.shadowBlur = 14;
+				cx.globalAlpha = aF;
+				cx.lineWidth = 2;
+				cx.stroke();
+				cx.restore();
+			}
+		},
 		causir(kods = []) {
 			if (kods.length === this._sels.length && kods.every((k) => this._sels.includes(k))) return;
 			this._aplicar([...kods], true);
@@ -642,6 +719,10 @@ export function crearColaDonadas(
 			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas;
 			const an = this._anim,
 				p = an ? clamp((performance.now() - an.t0) / DURADA) : 1;
+			// l'entrada en scèna : las zònas a part (Creissent, zònas mixtas) e los
+			// noms venon quand los dialèctes an acabat de se difusar
+			const ti = this._ti(),
+				aFinIntro = clamp((ti - (INTRO.dialectes[1] - 0.5)) / 0.8);
 
 			/* Dialèctes */
 			if (J.dialectes && G.zonas) {
@@ -651,7 +732,10 @@ export function crearColaDonadas(
 				let aTotes = selDial ? 0 : 1;
 				if (an && an.de.length && !an.a.length) aTotes = dossa(clamp(p / 0.6));
 				if (an && an.a.length && !an.de.length) aTotes = an.totesAvant ? 1 - dossa(clamp(p / 0.35)) : 0;
-				if (aTotes > 0.01) this._copiar(this._imgTotes, aT * aTotes);
+				// a l'arribada, los dialèctes se difusan a la fin de l'entrada en scèna
+				if (ti < INTRO.dialectes[1] && !selDial) {
+					if (ti > INTRO.dialectes[0]) this._introDial(ti, aT);
+				} else if (aTotes > 0.01) this._copiar(this._imgTotes, aT * aTotes);
 				// sols sus la carta, los dialèctes causits pòdon èsser mai marcats ;
 				// l'apondut se difusa, los levats s'escantisson
 				if (an && ((an.ajust && an.ajust !== 'cro') || an.lev.length)) this._transicion(p, aT * 1.6);
@@ -676,7 +760,7 @@ export function crearColaDonadas(
 					for (const zm of ist) cx.fill(zm.c, 'evenodd');
 					cx.restore();
 				}
-				this._copiar(this._imgMix, (this._sels.length ? 0.25 : pus ? 0.75 : 0.5) * aTenchas);
+				this._copiar(this._imgMix, (this._sels.length ? 0.25 : pus ? 0.75 : 0.5) * aTenchas * aFinIntro);
 			}
 
 			/* Lo Creissent : zòna de transicion, en asclas */
@@ -690,7 +774,7 @@ export function crearColaDonadas(
 				a *= lerp(1, 0.35, clamp((z - 8) / 3));
 				cx.save();
 				if (an?.ajust === 'cro') this._mascaDifusion(G.cro, p); // clip progressiu
-				this._copiar(this._imgCro, a * aTenchas);
+				this._copiar(this._imgCro, a * aTenchas * aFinIntro);
 				cx.restore();
 			}
 
@@ -760,7 +844,7 @@ export function crearColaDonadas(
 				for (const zm of G.mix) if (zm.enclava) cx.fillText(this._lang === 'fr' ? 'Gavacherie (oïl)' : 'Gavachariá (oïl)', zm.eti[0], zm.eti[1]);
 				cx.restore();
 			}
-			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3);
+			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3) * aFinIntro;
 			if (aNoms > 0.01) {
 				const noms = [];
 				if (J.dialectes && G.zonas)

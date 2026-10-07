@@ -95,6 +95,86 @@ const rang = (n) => {
 // l'arrivée. Vue d'ensemble : métropoles et villes repères seulement.
 const DZ_DEPART = 0.5; // un cran de zoom : les villes importantes de chaque département
 const DZ_VILATGES = 1.25; // un cran de plus : les villages
+
+// L'entrada en scèna de la carta (demanda de Romain, 2026-10-07), en
+// segondas dempuèi l'arribada : la còsta se traça, las corbas de nivèl
+// montan, los noms de las cadenas apareisson, los rius rajan de lor font
+// cap a la mar, las vilas grandas s'alucan, puèi los dialèctes se difusan.
+// Un clic (o la molèta, una tòca) mena tot d'un còp a la fin ; res se lo
+// sistèma demanda mens de movement.
+export const INTRO = {
+	costa: [0.15, 1.5],
+	corbas: [1.1, 2.9],
+	massis: [2.6, 3.6],
+	rius: [3.4, 6.2],
+	vilas: [5.8, 7.0],
+	dialectes: [6.8, 8.8],
+	fin: 9.4
+};
+
+// Sus la vista d'ensemble, sonque las vilas grandas : una o doas per
+// dialècte (demanda de Romain) ; las autras venon en s'aprochant
+const CAPITALAS = ['Bordèu', 'Pau', 'Tolosa', 'Montpelhièr', 'Marselha', 'Niça', 'Limòtges', 'Clarmont-Ferrand', 'Valença', 'Gap'];
+// a partir de quin zoom (relatiu a la vista d'ensemble) un luòc se mòstra
+const dzLuòc = (e) => (CAPITALAS.includes(e.nom) ? -99 : e.renc <= 2 ? DZ_DEPART : e.renc === 3 ? 0.9 : DZ_VILATGES);
+
+// Lo sens dels rius : las donadas mesclan los sens (la Garona va de la mar a
+// sa font) e copan un riu en mantun tròç. Los tròces d'un meteis riu son
+// cadenats ; l'embocadura es lo cap que tòca la mar o un autre riu ; cada
+// tròç sap a quina distància de la font comença (en km), que l'aiga avance
+// a la meteissa velocitat de la font a la mar.
+function orientarRius(rius, costa) {
+	const km = ([x0, y0], [x1, y1]) => Math.hypot((x1 - x0) * 111 * Math.cos((((y0 + y1) / 2) * Math.PI) / 180), (y1 - y0) * 111);
+	const long = (l) => l.reduce((s, p, i) => (i ? s + km(l[i - 1], p) : 0), 0);
+	const pròp = (p, linhas, max) => linhas.some((l) => l.some((q) => km(p, q) < max));
+	const grops = new Map();
+	rius.forEach(([nom, pes, l], i) => {
+		const k = nom ?? '#' + i;
+		if (!grops.has(k)) grops.set(k, { nom, pes, tròces: [] });
+		grops.get(k).tròces.push(l.slice());
+	});
+	const sortida = [];
+	for (const [k, g] of grops) {
+		const autres = [...grops].filter(([k2]) => k2 !== k).flatMap(([, g2]) => g2.tròces);
+		// cadenas de tròces que se tòcan (cap a cap, a mens de 2 km)
+		const rèsta = g.tròces.slice();
+		while (rèsta.length) {
+			let cadena = [rèsta.shift()];
+			let crescut = true;
+			while (crescut) {
+				crescut = false;
+				for (let i = 0; i < rèsta.length; i++) {
+					const t = rèsta[i],
+						a = cadena[0][0],
+						b = cadena.at(-1).at(-1);
+					if (km(b, t[0]) < 2) cadena.push(t);
+					else if (km(b, t.at(-1)) < 2) cadena.push(t.reverse());
+					else if (km(a, t.at(-1)) < 2) cadena.unshift(t);
+					else if (km(a, t[0]) < 2) cadena.unshift(t.reverse());
+					else continue;
+					rèsta.splice(i, 1);
+					crescut = true;
+					break;
+				}
+			}
+			// l'embocadura : lo cap pus pròche de la mar o d'un autre riu
+			const ponch = (p) => Math.min(...costa.flatMap((l) => l.map((q) => km(p, q))), pròp(p, autres, 3) ? 0 : Infinity);
+			const [debut, fin] = [cadena[0][0], cadena.at(-1).at(-1)];
+			if (ponch(debut) < ponch(fin)) cadena = cadena.reverse().map((t) => t.reverse());
+			let o = 0;
+			for (const l of cadena) {
+				const L = long(l);
+				const cum = l.map((p, i) => (i ? 0 : 0));
+				for (let i = 1; i < l.length; i++) cum[i] = cum[i - 1] + km(l[i - 1], l[i]);
+				sortida.push({ nom: g.nom, pes: g.pes, l, o, L, cum });
+				o += L;
+			}
+		}
+	}
+	return sortida;
+}
+let riusOrientats = null;
+
 const OCCITANIA = [
 	[42.65, -1.6],
 	[46.4, 7.55]
@@ -424,8 +504,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 			this._estelas = LUOCS.map(([lon, lat, nom, vila, dia, dia2]) => ({
 				lon, lat, nom, vila, dia, dia2, renc: rencDe(nom),
-				r: aleat(0.5, 1.4), f: aleat(0, 6.28), v: aleat(0.2, 0.7), retard: aleat(0, 0.35),
-				sx: Math.random(), sy: Math.random(), X: 0, Y: 0
+				f: aleat(0, 6.28), v: aleat(0.2, 0.7), X: 0, Y: 0
 			}));
 		},
 
@@ -546,6 +625,14 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			return this._caixas;
 		},
+		// L'entrada en scèna : son relòtge (comun a totas las còlas), e sa fin
+		// d'un còp (un clic)
+		setIntro(t0) {
+			this._tIntro = t0;
+		},
+		acabarIntro() {
+			this._tIntro = performance.now() - 60000;
+		},
 		// Les tuiles de la carte détaillée : leur opacité suit le relais
 		setTeulas(layer) {
 			this._teulas = layer;
@@ -580,6 +667,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._center = map.getCenter();
 			this._zoom = map.getZoom();
 			this._zCibla = null;
+			this._zBase = map.getBoundsZoom(OCCITANIA);
 			// sul telefon, la barra de las jaces en bas : l'etiqueta del territòri
 			// se lèva d'autant (los cantons de Leaflet son ja levats en CSS)
 			this._barraBas = parseFloat(getComputedStyle(map._controlCorners.bottomleft).bottom) || 0;
@@ -601,9 +689,13 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					e.X = q.x;
 					e.Y = q.y;
 				}
-				this._rius = RIUS.map(([nom, pes, l]) => ({
+				riusOrientats ??= orientarRius(RIUS, COSTA);
+				this._rius = riusOrientats.map(({ nom, pes, l, o, L, cum }) => ({
 					nom,
 					pes,
+					o,
+					L,
+					cum,
 					pts: l.map(([lon, lat]) => {
 						const q = map.project([lat, lon], z);
 						return [q.x, q.y];
@@ -679,15 +771,13 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// importantes (Besièrs, Lodeva…), puis les villages en retrait
 			const telefon = this._map.getSize().x <= 700;
 			const talhas = telefon ? { 1: 14, 2: 10.5, 3: 9.5, 4: 8.5 } : { 1: 17, 2: 11.5, 3: 10.5, 4: 9.5 };
-			const vilas = this._estelas
-				.filter((e) => e.renc <= 2)
-				.sort((a, b) => a.renc - b.renc || rang(a.nom) - rang(b.nom))
-				.map((e) => ({ nom: e.nom, x: e.X, y: e.Y, f: talhas[e.renc], ciutat: true, renc: e.renc }));
+			// (de luènh, sonque las vilas grandas, una o doas per dialècte)
 			const zBase = this._map.getBoundsZoom(OCCITANIA);
-			for (const [nivèl, zMin] of [[3, zBase + DZ_DEPART], [4, zBase + DZ_VILATGES]])
-				if (z >= zMin)
-					for (const e of this._estelas)
-						if (e.renc === nivèl) vilas.push({ nom: e.nom, x: e.X, y: e.Y, f: talhas[nivèl], ciutat: false, renc: nivèl });
+			const renc = (e) => (CAPITALAS.includes(e.nom) ? 1 : e.renc);
+			const vilas = this._estelas
+				.filter((e) => z >= zBase + dzLuòc(e))
+				.sort((a, b) => renc(a) - renc(b) || rang(a.nom) - rang(b.nom))
+				.map((e) => ({ nom: e.nom, x: e.X, y: e.Y, f: talhas[renc(e)], ciutat: renc(e) <= 2, renc: renc(e) }));
 			return plaçar(this._cx, vilas, this._rius);
 		},
 
@@ -787,11 +877,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// los noms (_plaçarTot).
 			const zBase = this._map.getBoundsZoom(OCCITANIA),
 				z = this._zoom;
-			const rencMax = z >= zBase + DZ_VILATGES ? 4 : z >= zBase + DZ_DEPART ? 3 : 2;
+
 			let best = null,
 				bestD = Infinity;
 			for (const e of this._estelas) {
-				if (e.renc > rencMax) continue;
+				if (z < zBase + dzLuòc(e)) continue;
 				const d = Math.hypot(e.X - this._o.x - x, e.Y - this._o.y - y);
 				const sc = d - bonus * ({ 1: 1.3, 2: 1, 3: 0.6, 4: 0 }[e.renc]);
 				if (d < ray && sc < bestD) {
@@ -923,8 +1013,10 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			cx.setTransform(this._dpr, 0, 0, this._dpr, 0, 0);
 			cx.clearRect(0, 0, W, H);
 			const temps = (t - this._t0) / 1000;
-			// Arrivée : les étoiles, éparpillées, viennent dessiner l'Occitanie
-			const intro = this._calm ? 1 : clamp((temps - 0.15) / 1.9);
+						// lo relòtge de l'entrada en scèna (en segondas ; tot es fach se lo
+			// sistèma demanda mens de movement)
+			const ti = this._calm ? 99 : (t - (this._tIntro ?? this._t0)) / 1000;
+			const fase = ([a, b]) => clamp((ti - a) / (b - a));
 			// Le relais avance dans le temps, pas avec le zoom (jamais les deux
 			// cartes à moitié). Retour de Romain, « trop brutal » : ≈ 1 s, en trois
 			// temps qui se chevauchent, chacun accéléré puis ralenti : les noms, les
@@ -996,81 +1088,146 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 
 			// Le relief : courbes de niveau très discrètes, les maîtresses
-			// (tous les 1 000 m) un peu plus marquées
-			const aCorbas = clamp((intro - 0.35) / 0.5) * aRius;
-			if (aCorbas > 0.01 && this._el.corbas && this._corbas?.length) {
+			// (tous les 1 000 m) un peu plus marquées. À l'arrivée, elles montent
+			// comme une marée : les basses d'abord, les sommets ensuite.
+			if (aRius > 0.01 && this._el.corbas && this._corbas?.length) {
 				const pas = pasCorbas(z);
+				const [c0, c1] = INTRO.corbas;
+				const eMax = (this._eMax ??= Math.max(...this._corbas.map(([e]) => e)));
 				cx.strokeStyle = T.corba;
 				cx.lineJoin = 'round';
 				for (const mestra of [false, true]) {
-					cx.globalAlpha = aCorbas * (mestra ? 0.3 : 0.13);
 					cx.lineWidth = mestra ? 0.8 : 0.6;
-					cx.beginPath();
+					if (ti >= c1) {
+						cx.globalAlpha = aRius * (mestra ? 0.3 : 0.13);
+						cx.beginPath();
+						for (const [e, l] of this._corbas) {
+							if (e % pas || (e % 1000 === 0) !== mestra) continue;
+							cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
+							for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
+						}
+						cx.stroke();
+						continue;
+					}
 					for (const [e, l] of this._corbas) {
 						if (e % pas || (e % 1000 === 0) !== mestra) continue;
+						const aE = easeS(clamp((ti - (c0 + (e / eMax) * (c1 - c0 - 0.6))) / 0.6));
+						if (aE < 0.01) continue;
+						cx.globalAlpha = aRius * aE * (mestra ? 0.3 : 0.13);
+						cx.beginPath();
 						cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
 						for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
+						cx.stroke();
 					}
-					cx.stroke();
 				}
 			}
 
 			// Le trait de côte : un fil très fin qui structure la carte, posé
-			// avant les rivières ; la carte détaillée a le sien, il s'efface avec elle
-			const aCosta = clamp((intro - 0.25) / 0.5) * aRius;
-			if (aCosta > 0.01 && this._el.costa && this._costa) {
-				cx.globalAlpha = aCosta;
+			// avant les rivières ; la carte détaillée a le sien, il s'efface avec
+			// elle. À l'arrivée, il se trace comme un trait de plume.
+			const fCosta = easeIO(fase(INTRO.costa));
+			if (fCosta > 0.001 && aRius > 0.01 && this._el.costa && this._costa) {
+				cx.globalAlpha = aRius;
 				cx.strokeStyle = T.costa;
 				cx.lineWidth = 0.8;
 				cx.lineJoin = 'round';
 				cx.beginPath();
 				for (const l of this._costa) {
+					const k = fCosta * (l.length - 1),
+						n = Math.floor(k);
 					cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
-					for (let i = 1; i < l.length; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
+					for (let i = 1; i <= n; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
+					if (n < l.length - 1) cx.lineTo(lerp(l[n][0], l[n + 1][0], k - n) - o.x, lerp(l[n][1], l[n + 1][1], k - n) - o.y);
 				}
 				cx.stroke();
 			}
 
-			const aRiu = easeIO(clamp((intro - 0.45) / 0.55));
-			if (aRiu > 0.01 && this._el.rius && this._rius) {
+			// Les rivières : à l'arrivée, l'eau sort de chaque source et descend
+			// jusqu'à la mer (ou à la rivière qu'elle rejoint), à la même vitesse
+			// partout, avec un petit éclat au front
+			if (aRius > 0.01 && this._el.rius && this._rius) {
+				const [r0, r1] = INTRO.rius;
+				const fiMax = (this._fiMax ??= Math.max(...this._rius.map((r) => r.o + r.L)));
+				const D = ti >= r1 ? Infinity : Math.max(0, ti - r0) * (fiMax / (r1 - r0));
 				cx.strokeStyle = T.riu;
 				cx.lineCap = 'round';
 				cx.lineJoin = 'round';
+				const fronts = [];
 				for (const r of this._rius) {
 					const l = r.pts,
-						k = aRiu * (l.length - 1),
-						n = Math.floor(k);
+						long = D - r.o;
+					if (long <= 0) continue;
 					cx.globalAlpha = (r.nom ? 0.75 : 0.25) * aRius;
 					cx.lineWidth = (0.4 + r.pes * 0.22) * gros;
 					cx.beginPath();
 					cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
-					for (let i = 1; i <= n; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
-					if (n < l.length - 1) {
-						const f = k - n;
-						cx.lineTo(lerp(l[n][0], l[n + 1][0], f) - o.x, lerp(l[n][1], l[n + 1][1], f) - o.y);
+					let i = 1;
+					for (; i < l.length && r.cum[i] <= long; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
+					if (i < l.length) {
+						const f = (long - r.cum[i - 1]) / (r.cum[i] - r.cum[i - 1] || 1);
+						const x = lerp(l[i - 1][0], l[i][0], f) - o.x,
+							y = lerp(l[i - 1][1], l[i][1], f) - o.y;
+						cx.lineTo(x, y);
+						if (r.nom) fronts.push([x, y, r.pes]);
 					}
 					cx.stroke();
+				}
+				if (fronts.length) {
+					cx.save();
+					cx.fillStyle = T.riu;
+					cx.shadowColor = T.riu;
+					cx.shadowBlur = 8;
+					cx.globalAlpha = 0.9 * aRius;
+					for (const [x, y, pes] of fronts) {
+						cx.beginPath();
+						cx.arc(x, y, (0.8 + pes * 0.2) * gros, 0, 6.283);
+						cx.fill();
+					}
+					cx.restore();
 				}
 			}
 
 			// La frontière linguistique est dessinée par la còla de donadas
 			// (colaDonadas.js), sous les étoiles : elle vaut pour tous les fonds.
 
+			// Les lieux : de loin, seulement les grandes villes ; les autres
+			// viennent en s'approchant. À l'arrivée, les grandes villes
+			// s'allument une à une, avec un halo qui s'ouvre.
 			cx.fillStyle = T.estela;
+			const zBase = this._zBase ?? 0;
+			const aAutras = fase([INTRO.vilas[0], INTRO.vilas[1]]);
 			for (const e of this._el.estelas ? this._estelas : []) {
-				const tw = this._calm ? 0.6 : Math.sin(temps * e.v + e.f) * 0.5 + 0.5;
-				const ai = easeIO(clamp(intro * 1.35 - e.retard));
-				const x = lerp(e.sx * W, e.X - o.x, ai),
-					y = lerp(e.sy * H, e.Y - o.y, ai);
+				const aLuòc = clamp((z - (zBase + dzLuòc(e)) + 0.3) / 0.3);
+				if (aLuòc < 0.01) continue;
+				const x = e.X - o.x,
+					y = e.Y - o.y;
 				if (x < -10 || y < -10 || x > W + 10 || y > H + 10) continue;
-				cx.globalAlpha = lerp(0.18 + 0.27 * tw, e.renc <= 2 ? 1 : e.renc === 3 ? 0.85 : 0.45 + 0.3 * tw, ai) * aGen;
+				const tw = this._calm ? 0.6 : Math.sin(temps * e.v + e.f) * 0.5 + 0.5;
+				const ic = CAPITALAS.indexOf(e.nom);
+				const pI = ic < 0 ? aAutras : clamp((ti - (INTRO.vilas[0] + ic * 0.11)) / 0.55);
+				if (pI < 0.01) continue;
+				const rB = ic >= 0 ? 3.4 : { 1: 3.4, 2: 2.4, 3: 1.8, 4: 1.3 }[e.renc];
+				// léger dépassement à l'allumage
+				const s = ic >= 0 && pI < 1 ? 1 + Math.sin(pI * Math.PI) * 0.45 : 1;
+				cx.globalAlpha = (ic >= 0 || e.renc <= 2 ? 1 : e.renc === 3 ? 0.85 : 0.45 + 0.3 * tw) * aGen * aLuòc * Math.min(1, pI * 1.6);
 				cx.beginPath();
-				cx.arc(x, y, lerp(e.r, { 1: 3.4, 2: 2.4, 3: 1.8, 4: 1.3 }[e.renc], ai) * gros, 0, 6.283);
+				cx.arc(x, y, rB * s * gros, 0, 6.283);
 				cx.fill();
+				if (ic >= 0 && pI < 1) {
+					cx.save();
+					cx.strokeStyle = T.estela;
+					cx.globalAlpha = (1 - pI) * 0.7 * aGen;
+					cx.lineWidth = 1.2;
+					cx.beginPath();
+					cx.arc(x, y, rB * gros * (1 + pI * 5), 0, 6.283);
+					cx.stroke();
+					cx.restore();
+				}
 			}
 
-			if (intro > 0.7 && aEtiq > 0.01) {
-				cx.globalAlpha = ((intro - 0.7) / 0.3) * aEtiq * 0.92;
+			const aNomsV = fase([INTRO.vilas[0] + 0.3, INTRO.vilas[1] + 0.3]);
+			if (aNomsV > 0.01 && aEtiq > 0.01) {
+				cx.globalAlpha = aNomsV * aEtiq * 0.92;
 				cx.drawImage(this._etiq, 0, 0, W, H);
 			}
 

@@ -347,7 +347,7 @@
 					: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan'}
 			></div>
 			<div class="carta-dobrir esvani">
-				<a class="boton boton-traç" href="/carta?vista=dialectes" data-magnet
+				<a class="boton boton-traç" href="/carta" data-magnet
 					><span class="boton-emplenat"></span><span class="boton-tèxt"
 						>{@render bi('Dobrir la carta entièra', 'Ouvrir la carte entière')} {@render sageta()}</span
 					></a

@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { page } from '$app/state';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import AppHeader from '$lib/components/AppHeader.svelte';
@@ -80,16 +79,8 @@
 	// /admin/carta) pòt renomenar una jaça o n'apondre ; se respond pas
 	// (projècte gratuit en pausa), lo catalògue s'aficha parièr.
 	let familhas = $state(fusionarCatalogue([]));
-	// Una vista d'arribada (?vista=…) : venent de l'acuèlh, la carta se dobrís
-	// amb los dialèctes sols e lors noms (demanda de Romain), ni rius ni vilas
-	const VISTAS = { dialectes: ['dialectes'] };
-	const vista = VISTAS[page.url.searchParams.get('vista')] ?? null;
-	const aplicarVista = (vis) => {
-		if (vista) for (const k of Object.keys(vis)) vis[k] = vista.includes(k);
-		return vis;
-	};
 	let layerVisibility = $state(
-		aplicarVista(Object.fromEntries(CATALOGUE.flatMap((f) => f.jaces.map((j) => [j.id, !!j.defaut]))))
+		Object.fromEntries(CATALOGUE.flatMap((f) => f.jaces.map((j) => [j.id, !!j.defaut])))
 	);
 
 	// Lo bas real del capçal (una o doas linhas segon la largor) : la recèrca
@@ -113,9 +104,10 @@
 		const { data } = await supabase.from('carta_colas').select('*').order('ordre');
 		if (data?.length) {
 			familhas = fusionarCatalogue(data);
-			// visibilitat per defaut reglabla dins l'admin (colomna « visibla »)
-			for (const f of familhas) for (const j of f.jaces) if (!(j.id in layerVisibility) || data.some((r) => r.id === j.id && typeof r.visibla === 'boolean')) layerVisibility[j.id] = !!j.defaut;
-			aplicarVista(layerVisibility);
+			// visibilitat per defaut reglabla dins l'admin (colomna « visibla »),
+			// sonque per las jaces apondudas dins l'admin : las del catalògue
+			// seguisson la vista d'arribada (l'entrada en scèna, demanda de Romain)
+			for (const f of familhas) for (const j of f.jaces) if (!(j.id in layerVisibility)) layerVisibility[j.id] = !!j.defaut;
 		}
 
 		if (!browser) return;

@@ -425,6 +425,19 @@
 			onSurvòl: (info) => (survòlTem = info)
 		});
 		colaTematica.addTo(map);
+		// L'entrada en scèna (demanda de Romain) : còsta, corbas de nivèl, noms
+		// de las cadenas, rius, vilas grandas, puèi los dialèctes ; un relòtge
+		// comun a las tres còlas. Un clic, la molèta o una tòca menan a la fin.
+		const t0 = performance.now();
+		for (const c of [colaEstelas, colaDonadas, colaTematica]) c?.setIntro(t0);
+		const acabarIntro = () => {
+			for (const c of [colaEstelas, colaDonadas, colaTematica]) c?.acabarIntro();
+			for (const ev of ['pointerdown', 'wheel', 'keydown']) window.removeEventListener(ev, acabarIntro, true);
+		};
+		for (const ev of ['pointerdown', 'wheel', 'keydown']) window.addEventListener(ev, acabarIntro, true);
+		setTimeout(() => {
+			for (const ev of ['pointerdown', 'wheel', 'keydown']) window.removeEventListener(ev, acabarIntro, true);
+		}, 10000);
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
 		map.on('zoomend', applyToponymVisibility);
