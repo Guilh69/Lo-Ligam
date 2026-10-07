@@ -3,7 +3,7 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
-	import { crearColaEstelas, Z_RELAIS, Z_PRECARGA } from '$lib/carta/colaEstelas.js';
+	import { crearColaEstelas, Z_PRECARGA } from '$lib/carta/colaEstelas.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { JACES_DONADAS } from '$lib/carta/catalogue.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
@@ -154,15 +154,17 @@
 		if (z >= Z_PRECARGA) {
 			if (!currentBaseTileLayer) {
 				const cfg = baseLayers.occitan;
-				currentBaseTileLayer = L.tileLayer(cfg.url, { maxZoom: cfg.maxZoom, attribution: cfg.attribution, className: 'teules-detalh' });
+				currentBaseTileLayer = L.tileLayer(cfg.url, { maxZoom: cfg.maxZoom, attribution: cfg.attribution, className: 'teules-detalh', opacity: 0 });
 				currentBaseTileLayer._loLigamKey = 'estelas';
 				currentBaseTileLayer.addTo(map);
 			}
-			// relais net : invisible sous le seuil, entière au-dessus (fondu CSS)
-			currentBaseTileLayer.setOpacity(z >= Z_RELAIS ? 1 : 0);
+			// invisibles sous le seuil ; le fondu du relais, c'est la còla
+			// d'estelas qui le mène (en même temps que ses noms s'effacent)
+			colaEstelas?.setTeulas(currentBaseTileLayer);
 		} else if (currentBaseTileLayer) {
 			map.removeLayer(currentBaseTileLayer);
 			currentBaseTileLayer = null;
+			colaEstelas?.setTeulas(null);
 		}
 	}
 
@@ -787,17 +789,6 @@
 		line-height: 1.3;
 		padding: 1px 6px 2px;
 		border-radius: 0 0 4px 4px;
-	}
-
-	/* Relais vers la carte détaillée : un fondu court, dans le temps */
-	.carta :global(.teules-detalh) {
-		transition: opacity 0.6s ease;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.carta :global(.teules-detalh) {
-			transition: none;
-		}
 	}
 
 	/* Bulles des lieux et des couches */

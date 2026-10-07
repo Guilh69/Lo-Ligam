@@ -104,6 +104,8 @@ const Z_DETALH_1 = 10; // au-delà, plus aucun nom n'est placé (la carte détai
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 const easeIO = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+// plus doux que easeIO au milieu (pente max 1,6 au lieu de 3) : pour les fondus longs
+const easeS = (t) => (1 - Math.cos(Math.PI * t)) / 2;
 const aleat = (a, b) => a + Math.random() * (b - a);
 const CORMORANT = '"Cormorant Garamond", Georgia, serif';
 // Polissa d'un nom de vila segon son reng (demanda de Romain, 2026-10-07) :
@@ -124,6 +126,7 @@ const polissaVila = (renc, f) =>
 // détaillée, et le passage se fait par une courte animation dans le temps.
 export const Z_RELAIS = 8.75;
 export const Z_PRECARGA = 8.25; // les tuiles se chargent, invisibles, un peu avant
+const DURADA_RELAIS = 1.2; // secondes
 const Z_VOL = 10.5; // niveau où l'on arrive en cliquant sur un lieu
 
 
@@ -519,6 +522,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (this._colors.estela) this._colors.vilaTèxt = this._colors.estela;
 			this.setTema(...this._temaBasa);
 		},
+		// Les tuiles de la carte détaillée : leur opacité suit le relais
+		setTeulas(layer) {
+			this._teulas = layer;
+			this._opTeulas = null;
+		},
 		setModeDialectes(on) {
 			this._modeDial = !!on;
 			if (on) {
@@ -547,6 +555,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._min = min;
 			this._center = map.getCenter();
 			this._zoom = map.getZoom();
+			this._zCibla = null;
 			L.DomUtil.setPosition(this._cv, min);
 			this._dpr = Math.min(devicePixelRatio || 1, 2);
 			this._W = tal.x;
@@ -632,6 +641,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._zP = z;
 			}
 			this._construirEtiquetas();
+			// L'échelle a changé sous une souris immobile (région → département) :
+			// le territoire sous elle se révèle sans attendre qu'elle bouge
+			if (this._mirgaCP && !this._modeDial) this._terPus = this._territoriA(map.containerPointToLayerPoint(this._mirgaCP));
 		},
 
 		_plaçarTot(z) {
@@ -718,9 +730,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		/* Animation de zoom : on étire le canevas comme Leaflet le fait pour ses
 		   propres couches, puis on redessine net à la fin */
 		_onAnimZoom(e) {
+			this._zCibla = e.zoom; // le relais part avec le mouvement
 			this._transformar(e.center, e.zoom);
 		},
 		_onZoom() {
+			this._zCibla = this._map.getZoom(); // pincement au doigt : idem
 			this._transformar(this._map.getCenter(), this._map.getZoom());
 		},
 		_transformar(center, zoom) {
@@ -796,6 +810,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 		_onMirga(e) {
 			if (e.originalEvent?.pointerType === 'touch') return;
+			this._mirgaCP = e.containerPoint;
 			const ter = this._territoriA(e.layerPoint);
 			if (ter?.code !== this._terPus?.code || ter?.mena !== this._terPus?.mena) this._terPus = ter;
 			const f = this._fichaA(e.layerPoint);
@@ -821,6 +836,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 		_onSortida() {
 			this._terPus = null;
+			this._mirgaCP = null;
 			if (!this._fichaDet) this._fichaPus = null;
 			if (this._det) return;
 			this._pus = null;
@@ -882,35 +898,54 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const temps = (t - this._t0) / 1000;
 			// Arrivée : les étoiles, éparpillées, viennent dessiner l'Occitanie
 			const intro = this._calm ? 1 : clamp((temps - 0.15) / 1.9);
-			// Le relais avance dans le temps (≈ 0,4 s), pas avec le zoom
+			// Le relais avance dans le temps, pas avec le zoom (jamais les deux
+			// cartes à moitié). Retour de Romain, « trop brutal » : ≈ 1 s, en trois
+			// temps qui se chevauchent, chacun accéléré puis ralenti : les noms, les
+			// rivières, le relief et la côte (que les tuiles ont aussi) s'en vont
+			// d'abord, puis les tuiles montent pendant que les points passent en
+			// filigrane. Jamais deux jeux de noms ensemble.
 			const dt = Math.min(0.1, (t - (this._tPrec ?? t)) / 1000);
 			this._tPrec = t;
-			const cibla = z >= Z_RELAIS ? 1 : 0;
-			this._detA = this._calm || this._detA === undefined ? cibla : this._detA + (cibla - this._detA) * Math.min(1, dt * 7);
-			const det = this._detA;
-			// Les points restent en filigrane sur la carte détaillée ; les noms,
-			// les rivières, le relief et la côte (que les tuiles ont aussi) partent
-			// vite : jamais de doublon
-			const aGen = 1 - det * 0.85,
-				aRius = 1 - clamp(det * 1.6),
+			// (dès le début du mouvement de zoom, pas à sa fin)
+			const cibla = (this._zCibla ?? z) >= Z_RELAIS ? 1 : 0;
+			const pr = (this._relais =
+				this._calm || this._relais === undefined
+					? cibla
+					: cibla > this._relais
+						? Math.min(cibla, this._relais + dt / DURADA_RELAIS)
+						: Math.max(cibla, this._relais - dt / DURADA_RELAIS));
+			this._detA = easeIO(pr);
+			const aGen = 1 - 0.85 * easeS(clamp((pr - 0.1) / 0.9)),
+				aRius = 1 - easeIO(clamp(pr / 0.45)),
 				aEtiq = aRius;
+			const opTeulas = easeS(clamp((pr - 0.25) / 0.75));
+			if (this._teulas && Math.abs(opTeulas - (this._opTeulas ?? -1)) > 0.004) {
+				this._teulas.setOpacity(opTeulas);
+				this._opTeulas = opTeulas;
+			}
 			const gros = 1 + Math.max(0, z - 7) * 0.14;
 
 			// Le territoire révélé (survolé, ou fixé par un clic dans un vide) :
 			// surface à peine teintée, liseré crème, et son nom en petites capitales
-			this._legendaT = null;
+			// D'un territoire à l'autre, et d'une région à ses départements quand
+			// l'échelle change, l'un s'efface pendant que l'autre vient (retour de
+			// Romain : « plus fluide, agréable ») : chacun a son propre fondu
+			this._legendaT = [];
 			const cibla2 = this._terFixat ?? this._terPus;
-			const clauT = cibla2 ? cibla2.mena + cibla2.code : null;
-			if (clauT !== this._terClau) {
-				this._terClau = clauT;
-				this._terA = 0;
+			const clauT = cibla2 && menaTerritori(z) === cibla2.mena ? cibla2.mena + cibla2.code : null;
+			this._terVists ??= new Map();
+			if (clauT && !this._terVists.has(clauT)) this._terVists.set(clauT, { mena: cibla2.mena, code: cibla2.code, p: 0 });
+			for (const [clau, v] of this._terVists) {
+				const cib = clau === clauT ? 1 : 0;
+				v.p = this._calm ? cib : cib > v.p ? Math.min(1, v.p + dt / 0.35) : Math.max(0, v.p - dt / 0.45);
+				v.fixat = cib === 1 && cibla2 === this._terFixat;
+				if (!cib && v.p <= 0) this._terVists.delete(clau);
 			}
-			if (cibla2 && menaTerritori(z) === cibla2.mena) {
-				this._terA = this._calm ? 1 : Math.min(1, (this._terA ?? 0) + dt * 5);
-				const t = (cibla2.mena === 'region' ? this._regions : this._deps)?.find((x) => x.code === cibla2.code);
+			for (const v of this._terVists.values()) {
+				const t = (v.mena === 'region' ? this._regions : this._deps)?.find((x) => x.code === v.code);
 				if (t) {
-					const a = this._terA,
-						reg = cibla2.mena === 'region';
+					const a = easeIO(v.p),
+						reg = v.mena === 'region';
 					cx.save();
 					cx.translate(-o.x, -o.y);
 					// La teinte seulement sur la partie occitanophone du territoire
@@ -929,7 +964,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					cx.stroke(t.cami);
 					cx.restore();
 					// son nom s'écrit en dernier (au-dessus des noms de lieux), voir plus bas
-					this._legendaT = { t, reg, fixat: cibla2 === this._terFixat, a };
+					this._legendaT.push({ t, reg, fixat: v.fixat, a });
 				}
 			}
 
@@ -1121,26 +1156,35 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// Le nom du territoire révélé, dans une étiquette fixe en bas au centre
 			// de la vue, au-dessus de tout (au centre du territoire, il chevauchait
 			// les noms des villes)
+			// Pendant un fondu, une seule étiquette : sa largeur glisse de l'un à
+			// l'autre et les deux noms se fondent, centrés
 			const lg = this._legendaT;
-			if (lg) {
-				const { t, reg, fixat, a } = lg,
-					tt = TÈXTES_TER[this._lang] ?? TÈXTES_TER.oc,
+			if (lg.length) {
+				const tt = TÈXTES_TER[this._lang] ?? TÈXTES_TER.oc,
 					vis = this._map.getSize(),
 					v0 = this._map.containerPointToLayerPoint([0, 0]).subtract(this._min);
-				const nom = nomTerritori(reg ? 'region' : 'despartament', t.code, t.nom, this._lang).toUpperCase(),
-					sota = sotaTerritori(t.code, this._lang) ?? (reg ? tt.region : tt.despartament + ' · ' + t.code);
 				const esp = 'letterSpacing' in cx;
-				if (esp) cx.letterSpacing = '2.5px';
-				cx.font = '700 12.5px Luciole, sans-serif';
-				const wn = cx.measureText(nom).width;
-				if (esp) cx.letterSpacing = '0.5px';
-				cx.font = '400 11px Luciole, sans-serif';
-				const ws = cx.measureText(sota).width;
-				const bw = wn + ws + 46,
+				const mesura = (l) => {
+					l.nom = nomTerritori(l.reg ? 'region' : 'despartament', l.t.code, l.t.nom, this._lang).toUpperCase();
+					l.sota = sotaTerritori(l.t.code, this._lang) ?? (l.reg ? tt.region : tt.despartament + ' · ' + l.t.code);
+					if (esp) cx.letterSpacing = '2.5px';
+					cx.font = '700 12.5px Luciole, sans-serif';
+					l.wn = cx.measureText(l.nom).width;
+					if (esp) cx.letterSpacing = '0.5px';
+					cx.font = '400 11px Luciole, sans-serif';
+					l.ws = cx.measureText(l.sota).width;
+					l.bw = l.wn + l.ws + 46;
+				};
+				lg.forEach(mesura);
+				const aMax = Math.max(...lg.map((l) => l.a)),
+					sumA = lg.reduce((s, l) => s + l.a, 0) || 1;
+				const bw = lg.reduce((s, l) => s + l.bw * l.a, 0) / sumA,
 					bh = 34,
-					bx = v0.x + vis.x / 2 - bw / 2,
+					cxM = v0.x + vis.x / 2,
+					bx = cxM - bw / 2,
 					by = v0.y + vis.y - 96;
-				cx.globalAlpha = a * (fixat ? 1 : 0.88);
+				const fixat = lg.some((l) => l.fixat);
+				cx.globalAlpha = aMax * (fixat ? 1 : 0.88);
 				cx.fillStyle = T.bulla;
 				cx.strokeStyle = fixat ? T.fil : T.estela;
 				cx.lineWidth = 1;
@@ -1150,14 +1194,18 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				cx.stroke();
 				cx.textAlign = 'left';
 				cx.textBaseline = 'middle';
-				if (esp) cx.letterSpacing = '2.5px';
-				cx.font = '700 12.5px Luciole, sans-serif';
-				cx.fillStyle = T.estela;
-				cx.fillText(nom, bx + 18, by + bh / 2 + 1);
-				if (esp) cx.letterSpacing = '0.5px';
-				cx.font = '400 11px Luciole, sans-serif';
-				cx.fillStyle = T.riuTèxt;
-				cx.fillText(sota, bx + 28 + wn, by + bh / 2 + 1);
+				for (const l of lg) {
+					const x0 = cxM - l.bw / 2;
+					cx.globalAlpha = l.a;
+					if (esp) cx.letterSpacing = '2.5px';
+					cx.font = '700 12.5px Luciole, sans-serif';
+					cx.fillStyle = T.estela;
+					cx.fillText(l.nom, x0 + 18, by + bh / 2 + 1);
+					if (esp) cx.letterSpacing = '0.5px';
+					cx.font = '400 11px Luciole, sans-serif';
+					cx.fillStyle = T.riuTèxt;
+					cx.fillText(l.sota, x0 + 28 + l.wn, by + bh / 2 + 1);
+				}
 				if (esp) cx.letterSpacing = '0px';
 				cx.textBaseline = 'alphabetic';
 			}
