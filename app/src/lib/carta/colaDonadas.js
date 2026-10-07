@@ -39,7 +39,8 @@ const temaDe = (clar, dalt) => ({
 
 const DURADA = 1700; // ms : difusion d'un dialècte causit
 let dialPromesa = null,
-	creissentPromesa = null;
+	creissentPromesa = null,
+	mixPromesa = null;
 const cargarJson = (url) =>
 	fetch(url)
 		.then((r) => (r.ok ? r.json() : null))
@@ -86,6 +87,7 @@ export function crearColaDonadas(
 			this._imgTotes = document.createElement('canvas');
 			this._imgSel = document.createElement('canvas');
 			this._imgCro = document.createElement('canvas');
+			this._imgMix = document.createElement('canvas');
 			this._masca = document.createElement('canvas');
 			this._trab = document.createElement('canvas');
 			cargarLimits().then((l) => {
@@ -129,6 +131,12 @@ export function crearColaDonadas(
 					this._dial = d;
 					this._update();
 					tornarCausir(false);
+				});
+			// zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes
+			if (this._jaces.dialectes && !this._mix)
+				(mixPromesa ??= cargarJson('/data/zonas-mixtas.geojson')).then((d) => {
+					this._mix = d;
+					this._update();
 				});
 			if (this._jaces.creissent && !this._creissent)
 				(creissentPromesa ??= cargarJson('/data/creissent.geojson')).then((d) => {
@@ -183,14 +191,16 @@ export function crearColaDonadas(
 			return !!(this._jaces.dialectes && this._dial) || !!(this._jaces.creissent && this._creissent);
 		},
 		// La zòna jos un ponch : lo Creissent d'en primièr (es dessús), puèi
-		// los dialèctes ; quand un dialècte es causit, sonque el
-		_zonaA(lp) {
+		// las zònas mixtas (pel survòl sonque), puèi los dialèctes
+		_zonaA(lp, ambMix = true) {
 			const g = this._geo;
 			if (!g || !this._interactiu()) return null;
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
 			const x = lp.x - this._min.x,
 				y = lp.y - this._min.y;
 			if (this._jaces.creissent && g.cro && this._cxTest.isPointInPath(g.cro.c, x, y, 'evenodd')) return 'cro';
+			if (ambMix && this._jaces.dialectes && g.mix)
+				for (const zm of g.mix) if (this._cxTest.isPointInPath(zm.c, x, y, 'evenodd')) return zm.kod;
 			if (this._jaces.dialectes && g.zonas) {
 				// hors du domaine : rien (les zones sont découpées par lui)
 				if (g.dom && !this._cxTest.isPointInPath(g.dom, x, y, 'evenodd')) return null;
@@ -215,12 +225,17 @@ export function crearColaDonadas(
 		},
 		_onClic(e) {
 			if (!this._interactiu() || ocupat?.(e.layerPoint)) return;
-			const k = this._zonaA(e.layerPoint);
+			// una zòna mixta se causís pas : lo clic va al dialècte de dejós
+			const k = this._zonaA(e.layerPoint, false);
 			// un clic sus la zòna causida o defòra : totes los dialèctes tornan
 			this._causir(k && k !== this._sel ? k : null, true);
 		},
 		_nomDe(k) {
 			if (!k) return null;
+			if (k.startsWith('mix-')) {
+				const m = this._mix?.features.find((x) => x.properties.kod === k)?.properties;
+				return m ? { kod: k, oc: m.oc, fr: m.fr, sota_oc: m.sota_oc, sota_fr: m.sota_fr, mix: true } : null;
+			}
 			const f = (k === 'cro' ? this._creissent : this._dial)?.features.find((x) => x.properties.kod === k);
 			return f ? { kod: k, oc: f.properties.oc, fr: f.properties.fr, cro: k === 'cro' } : null;
 		},
@@ -310,12 +325,14 @@ export function crearColaDonadas(
 				linhas: dom ? dom.linhas.map((l) => l.map(pt)) : null,
 				zonas: this._dial ? this._dial.features.map(zona) : null,
 				cro: this._creissent ? zona(this._creissent.features[0]) : null,
+				mix: this._mix && this._jaces.dialectes ? this._mix.features.map(zona) : null,
 				regions: this._jaces.regions ? (this._limits?.regions || []).map(([, , anels]) => cami(anels)) : null,
 				deps: this._jaces.despartaments ? (this._limits?.despartaments || []).map(([, , anels]) => cami(anels)) : null
 			};
 			this._prepTotes();
 			this._prepSel();
 			if (this._jaces.creissent) this._prepCro();
+			if (this._jaces.dialectes) this._prepMix();
 			this._pintar();
 			if (dom) map.getPane('donadas').style.opacity = '1';
 		},
@@ -408,6 +425,41 @@ export function crearColaDonadas(
 			g.fillRect(0, 0, c.width, c.height);
 			g.globalCompositeOperation = 'source-over';
 		},
+		// Zònas mixtas : un quadrilhatge fin e clar (pas cap de dialècte sol),
+		// a bòrd flo d'environ 1,5 km
+		_prepMix() {
+			const G = this._geo,
+				c = this._imgMix,
+				dpr = this._dpr;
+			if (!G?.mix) return;
+			c.width = this._cv.width;
+			c.height = this._cv.height;
+			const g = c.getContext('2d');
+			const motiu = document.createElement('canvas');
+			const pas = Math.round(7 * dpr);
+			motiu.width = motiu.height = pas;
+			const m = motiu.getContext('2d');
+			m.strokeStyle = `rgba(${this._tem.admin}, 0.7)`;
+			m.lineWidth = 0.8 * dpr;
+			m.beginPath();
+			m.moveTo(-1, pas + 1);
+			m.lineTo(pas + 1, -1);
+			m.moveTo(-1, -1);
+			m.lineTo(pas + 1, pas + 1);
+			m.stroke();
+			g.setTransform(1, 0, 0, 1, 0, 0);
+			g.clearRect(0, 0, c.width, c.height);
+			g.save();
+			g.filter = `blur(${(clamp(1500 / G.mPx, 0.8, 20) * dpr).toFixed(1)}px)`;
+			g.setTransform(dpr, 0, 0, dpr, 0, 0);
+			g.fillStyle = '#000';
+			for (const zm of G.mix) g.fill(zm.c, 'evenodd');
+			g.restore();
+			g.globalCompositeOperation = 'source-in';
+			g.fillStyle = g.createPattern(motiu, 'repeat');
+			g.fillRect(0, 0, c.width, c.height);
+			g.globalCompositeOperation = 'source-over';
+		},
 		_prepTotes() {
 			if (this._jaces.dialectes && this._geo?.zonas) this._tenchaDins(this._imgTotes, this._geo.zonas);
 		},
@@ -471,6 +523,12 @@ export function crearColaDonadas(
 						cx.restore();
 					}
 				}
+			}
+
+			/* Zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes */
+			if (J.dialectes && G.mix) {
+				const pus = this._pus?.startsWith('mix-');
+				this._copiar(this._imgMix, (this._sel ? 0.25 : pus ? 0.75 : 0.5) * aTenchas);
 			}
 
 			/* Lo Creissent : zòna de transicion, en asclas */

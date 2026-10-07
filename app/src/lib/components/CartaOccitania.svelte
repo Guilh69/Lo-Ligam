@@ -554,7 +554,11 @@
 		<div class="legenda-dial" class:fixada={!!causida} aria-live="polite">
 			<span class="nom">{lang === 'fr' ? legendaDial.fr : legendaDial.oc}</span>
 			<span class="sota"
-				>{legendaDial.cro
+				>{legendaDial.mix
+					? lang === 'fr'
+						? legendaDial.sota_fr
+						: legendaDial.sota_oc
+					: legendaDial.cro
 					? lang === 'fr'
 						? 'zone de transition'
 						: 'zòna de transicion'
