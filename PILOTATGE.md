@@ -59,7 +59,7 @@ photos.
 | 10 | **Réveil technique** | bloqué | Romain ouvre le tableau de bord Supabase et relance le projet (2 minutes — le plan gratuit se met en pause après inactivité) | Romain |
 | 11 | **Courriels** (Votz/CGU lo Congrès + relance LISN) | bloqué | Claude prépare les deux brouillons ; Romain les envoie de sa boîte | Romain |
 | 12 | **Autoformation de Romain** (décision du 2026-10-04) | **en cours, prioritaire sur 3, 5 et 6** | Suivre `autoformation-parcours.md` étape par étape ; écrire la page de l'étape 1 dans `carnet-concepcion/etapa-1-nivels.md` ; Claude relit avec cinq questions, vérifie, code, ne produit plus de contenu pédagogique à sa place | Romain |
-| 13 | **Carte /carta** (chantier principal depuis octobre) | en ligne : entrée en scène, couches publiques, Europe et monde au dézoom, « Autras lengas », panneau sur le côté ou en bas ; révision du 08-10 traitée (`BILAN-2026-10-08.md`) ; détail des données dans `SIG/cadena/LEGISSETZ-ME.md` | Romain valide `SIG/provincias/noms-oc.csv` (les autres listes à valider : bilan §7) | Romain |
+| 13 | **Carte /carta** (chantier principal depuis octobre) | en ligne : entrée en scène, couches publiques, Europe et monde au dézoom, « Autras lengas », panneau sur le côté ou en bas ; révision du 08-10 traitée (`BILAN-2026-10-08.md`) ; détail des données dans `SIG/cadena/LEGISSETZ-ME.md` | Claude corrige les 6 points prioritaires de la relecture du dézoom (`BILAN-2026-10-08.md`, « Fin de nuit ») ; Romain valide `SIG/provincias/noms-oc.csv` (autres listes : bilan §7) | Claude, puis Romain |
 
 ## Les décisions déjà prises — à NE PAS rouvrir
 
