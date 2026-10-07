@@ -28,6 +28,8 @@
 			sons: (on) => (on ? 'Sons de la carta : alucats' : 'Sons de la carta : amudits'),
 			desplaçar: 'Desplaçar lo panèl (las sagetas tanben ; doble clic : tornar a sa plaça)',
 			reduire: 'Reduire lo panèl',
+			enBas: 'Metre lo panèl en bas, a l’orizontala',
+			costat: 'Metre lo panèl sul costat',
 			desplegar: 'Desplegar lo panèl',
 			sus: 'Sus la carta',
 			fons: 'Fons',
@@ -60,6 +62,8 @@
 			sons: (on) => (on ? 'Sons de la carte : activés' : 'Sons de la carte : coupés'),
 			desplaçar: 'Déplacer le panneau (flèches aussi ; double-clic : le remettre en place)',
 			reduire: 'Réduire le panneau',
+			enBas: 'Mettre le panneau en bas, à l’horizontale',
+			costat: 'Mettre le panneau sur le côté',
 			desplegar: 'Déplier le panneau',
 			sus: 'Sur la carte',
 			fons: 'Fond',
@@ -170,21 +174,36 @@
 	let reduch = $state(false);
 	let posT = $state(null); // plaça del tirador, seguís lo rail
 	let tiratge = null;
+	// lo panèl sul costat (vertical) o en bas a l'orizontala (causida de Romain)
+	let orizontal = $state(false);
 	$effect(() => {
 		try {
 			const s = JSON.parse(localStorage.getItem(CLAU_RAIL) ?? 'null');
 			if (s) {
 				railPos = s.pos ?? null;
 				reduch = !!s.reduch;
+				orizontal = !!s.orizontal;
 			}
 		} catch {}
 	});
+	// en bas, la barra leva l'escala, lo zoom e las fonts de la carta (classa
+	// sul contenidor : sa variabla --barra-bas)
+	$effect(() => {
+		const o = orizontal;
+		railEl?.offsetParent?.classList.toggle('jaces-orizontalas', o);
+	});
 	const gardarRail = () => {
 		try {
-			localStorage.setItem(CLAU_RAIL, JSON.stringify({ pos: railPos, reduch }));
+			localStorage.setItem(CLAU_RAIL, JSON.stringify({ pos: railPos, reduch, orizontal }));
 		} catch {}
 	};
-	// lo tirador s'alanda a costat del rail, del costat ont i a de plaça
+	function alternarOrientacion() {
+		orizontal = !orizontal;
+		dobert = null;
+		gardarRail();
+	}
+	// lo tirador s'alanda a costat del rail, del costat ont i a de plaça ; en
+	// bas, al dessús de la barra
 	function plaçarTirador() {
 		const p = railEl?.offsetParent;
 		if (!p) return;
@@ -193,6 +212,11 @@
 		const x = r.left - pr.left,
 			y = r.top - pr.top,
 			larg = Math.min(336, pr.width - r.width - 32);
+		if (orizontal) {
+			// (ancorat pel bas : just al dessús de la barra, quina que siá sa nautor)
+			posT = { x: clampR(x, 8, pr.width - 344), bas: pr.height - y + 12, h: Math.max(160, y - 130) };
+			return;
+		}
 		const drecha = x + r.width / 2 > pr.width / 2;
 		const top = clampR(y, 8, Math.max(8, pr.height - 420));
 		posT = { x: drecha ? x - larg - 12 : x + r.width + 12, y: top, h: pr.height - top - 16 };
@@ -423,8 +447,9 @@
 
 <nav
 	class="rail"
-	class:desplaçat={!!railPos}
+	class:desplaçat={!!railPos && !orizontal}
 	class:reduch
+	class:orizontal
 	aria-label={tx.rail}
 	bind:this={railEl}
 	style:--rail-x={railPos ? railPos.x + 'px' : null}
@@ -445,6 +470,18 @@
 		><span aria-hidden="true"></span></button>
 		<button type="button" class="reduire" aria-expanded={!reduch} aria-label={reduch ? tx.desplegar : tx.reduire} title={reduch ? tx.desplegar : tx.reduire} onclick={alternarReduch}>
 			<svg viewBox="0 0 24 24" aria-hidden="true"><path d={reduch ? 'M6 9l6 6 6-6' : 'M6 15l6-6 6 6'} /></svg>
+		</button>
+		<button
+			type="button"
+			class="reduire"
+			aria-pressed={orizontal}
+			aria-label={orizontal ? tx.costat : tx.enBas}
+			title={orizontal ? tx.costat : tx.enBas}
+			onclick={alternarOrientacion}
+		>
+			<svg viewBox="0 0 24 24" aria-hidden="true"
+				>{#if orizontal}<path d="M5 4v16M5 4h4v16H5" />{:else}<path d="M4 19h16M4 19v-4h16v4" />{/if}</svg
+			>
 		</button>
 	</div>
 	{#each RAIL as id (id)}
@@ -479,7 +516,9 @@
 		style:--tir-x={posT ? posT.x + 'px' : null}
 		style:--tir-y={posT ? posT.y + 'px' : null}
 		style:--tir-h={posT ? posT.h + 'px' : null}
-		transition:fly={{ x: -14, duration: 260, easing: quintOut }}
+		style:--tir-bas={posT?.bas != null ? posT.bas + 'px' : null}
+		class:amont={orizontal}
+		transition:fly={orizontal ? { y: 14, duration: 260, easing: quintOut } : { x: -14, duration: 260, easing: quintOut }}
 	>
 		<header>
 			<h2>{nomFam(dobert)}</h2>
@@ -1043,6 +1082,46 @@
 	}
 
 	/* Pichona nautor (telefon en païsatge, fenèstra corta) : rail mai sarrat */
+	/* Lo panèl en bas, a l'orizontala (causida de Romain) : centrat, al dessús
+	   de las fonts ; los tiradors s'alandan al dessús d'el. Sul telefon, la
+	   barra es ja en bas : res de cambiat. */
+	@container carta (min-width: 601px) {
+		.rail.orizontal {
+			top: auto;
+			left: 50%;
+			bottom: 1.9rem;
+			transform: translateX(-50%);
+			width: auto;
+			max-height: none;
+			overflow: visible;
+			display: flex;
+			align-items: stretch;
+			gap: 2px;
+			padding: 4px 8px 4px 4px;
+		}
+		.rail.orizontal .encòca {
+			flex-direction: column;
+			justify-content: center;
+			gap: 3px;
+			padding: 0 4px 0 2px;
+		}
+		.rail.orizontal .prene {
+			flex: 0 0 auto;
+			width: 20px;
+		}
+		.rail.orizontal .rail-b {
+			width: 4.6rem;
+		}
+		.rail.orizontal .rail-sep {
+			width: 1px;
+			height: auto;
+			margin: 8px 3px;
+		}
+		.tirador.amont {
+			top: auto;
+			bottom: var(--tir-bas, 6.5rem);
+		}
+	}
 	@container carta (max-height: 720px) {
 		.rail-b {
 			padding: 6px 2px 5px;

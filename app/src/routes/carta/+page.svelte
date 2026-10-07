@@ -322,6 +322,13 @@
 			top: calc(var(--cap-bas, 6.4rem) + 18px);
 		}
 	}
+	/* lo panèl de las jaces en bas a l'orizontala (sus un ecran larg) : las
+	   aisinas de lectura se lèvan sus el */
+	@container carta (min-width: 601px) {
+		.carta-wrap:global(.jaces-orizontalas) {
+			--barra-bas: 5.6rem;
+		}
+	}
 	@container carta (max-width: 600px) {
 		.carta-wrap {
 			--barra-bas: calc(3.9rem + env(safe-area-inset-bottom, 0px));
