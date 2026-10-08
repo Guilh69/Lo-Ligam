@@ -446,8 +446,13 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			// lo dezoom : a partir de « 300 km » aquestas jaces s'escantisson,
 			// a « 500 km » an desaparegut (demanda de Romain, 2026-10-08)
 			this._aDet = aDetalh(nivèlsDezoom(map), this._zoom);
-			this._cv.style.transition = 'opacity 0.45s';
-			this._cv.style.opacity = this._aDet.toFixed(3);
+			// (sul vòlet : una transicion en linha sul canavàs remplaçava la de
+			// Leaflet pel zoom, e los noms dels massís sautavan a cada cran)
+			const vòlet = map.getPane('tematica');
+			vòlet.style.transition = 'opacity 0.45s';
+			vòlet.style.opacity = this._aDet.toFixed(3);
+			// de luènh, invisibla : res a calcular ni a pintar (sobrietat)
+			if (this._aDet <= 0.001) return;
 			this._min = min;
 			L.DomUtil.setPosition(this._cv, min);
 			const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -656,7 +661,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		},
 		_onMirga(e) {
 			if (e.originalEvent?.pointerType === 'touch') return;
-			if ((this._aDet ?? 1) < 0.5) return this._survòl(null);
+			if ((this._aDet ?? 1) < 0.25) return this._survòl(null);
 			this._survòl(this._ciblaA(e.layerPoint));
 		},
 		_onSortida() {
@@ -664,6 +669,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		},
 		// al det : un tòc mòstra l'encastre, un tòc endacòm mai l'escafa
 		_onClic(e) {
+			if ((this._aDet ?? 1) < 0.25) return this._survòl(null); // (de luènh, invisibla)
 			const tactil = e.originalEvent?.pointerType === 'touch' || !matchMedia('(hover: hover)').matches;
 			if (tactil) this._survòl(this._ciblaA(e.layerPoint));
 		},

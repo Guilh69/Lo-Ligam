@@ -34,7 +34,7 @@ const TEMAS = {
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
-	...(dalt ? { lenga: clar ? '#1f5f8f' : '#6fb1ff' } : {}),
+	...(dalt ? { lenga: clar ? '#1f5f8f' : '#6fb1ff', occitan: clar ? '#1f5f8f' : '#4a90d9', occitanTèxt: clar ? '#123a57' : '#cfe4ff' } : {}),
 	dial: dalt ? COLORS.dalt : clar ? COLORS.clar : COLORS.sorne
 });
 
@@ -244,8 +244,9 @@ export function crearColaDonadas(
 				tg = t.getContext('2d');
 			const m = this._masca,
 				k = 1 / 6;
-			m.width = Math.max(1, Math.round(t.width * k));
-			m.height = Math.max(1, Math.round(t.height * k));
+			const mw = Math.max(1, Math.round(t.width * k)),
+				mh = Math.max(1, Math.round(t.height * k));
+			if (m.width !== mw || m.height !== mh) (m.width = mw), (m.height = mh);
 			const mg = m.getContext('2d');
 			mg.setTransform(dpr * k, 0, 0, dpr * k, 0, 0);
 			mg.clearRect(0, 0, m.width / (dpr * k), m.height / (dpr * k));
@@ -325,29 +326,50 @@ export function crearColaDonadas(
 		_majUni() {
 			const n = this._nivèls;
 			if (!n) return;
+			// un grand saut de zoom (una recèrca, la vista d'ensemble) : pas de
+			// coregrafia a l'arribada, l'estat final dirèctament
+			const salt = this._zPrec != null && Math.abs(this._zoom - this._zPrec) > 1.5;
+			this._zPrec = this._zoom;
 			const uni = this._zoom < n.zDial - 0.17 ? 1 : 0;
-			this._relais('uni', uni, uni ? DURADA_MESCLA : DURADA_BALET);
+			this._relais('uni', uni, (c) => (c ? DURADA_MESCLA : DURADA_BALET), salt);
 			// de mai luènh (« 1 000 km »), l'Occitània unida se vuèja : sonque son contorn
-			this._relais('vuèg', this._zoom < n.zVuèg ? 1 : 0, DURADA_VUÈG);
+			this._relais('vuèg', this._zoom < n.zVuèg ? 1 : 0, DURADA_VUÈG, salt);
+			// l'escantiment de las jaces segon l'escala, dins lo temps (pas per saumets)
+			this._relais('det', aDetalh(n, this._zoom), 0.45, salt);
 		},
 		// Un relais dins lo temps (pas amb lo zoom) : una sola bocla d'animacion
 		// per totes, que s'arrèsta quand an totes acabat
-		_relais(clau, cibla, dura) {
+		_relais(clau, cibla, dura, immediat = false) {
 			const R = (this._rel ??= {}),
-				r = R[clau];
-			if (!r || this._calm) {
+				r = R[clau],
+				ara = performance.now(),
+				ms = (c) => (typeof dura === 'function' ? dura(c) : dura) * 1000;
+			if (!r || this._calm || immediat) {
 				R[clau] = { v: cibla, cibla, q: 1 };
 				return;
 			}
-			if (r.cibla === cibla) return;
-			Object.assign(r, { de: r.v, cibla, t0: performance.now(), dura: dura * 1000, q: 0 });
+			if (r.cibla === cibla && r.attend === undefined) return;
+			if (r.attend !== undefined && cibla === r.cibla) {
+				r.attend = undefined; // (tornat al sens d'abans : res a esperar)
+				return;
+			}
+			if (clau === 'uni' && r.q < 1) {
+				// inversion en cors de mescla o de balet : tornar en arrièr fasiá
+				// sautar l'imatge ; l'animacion en cors s'acaba en 0,35 s, puèi l'autra
+				r.attend = cibla;
+				r.duraA = ms(cibla);
+				r.dura = 350 / Math.max(0.02, 1 - r.q);
+				r.t0 = ara - r.q * r.dura;
+			} else Object.assign(r, { de: r.v, cibla, t0: ara, dura: ms(cibla), q: 0 });
 			if (this._rafRel) return;
 			const pas = () => {
 				let viu = false;
+				const t = performance.now();
 				for (const x of Object.values(R))
 					if (x.q < 1) {
-						x.q = clamp((performance.now() - x.t0) / x.dura);
+						x.q = clamp((t - x.t0) / x.dura);
 						x.v = lerp(x.de, x.cibla, x.q);
+						if (x.q >= 1 && x.attend !== undefined) Object.assign(x, { de: x.v, cibla: x.attend, t0: t, dura: x.duraA, q: 0, attend: undefined });
 						if (x.q < 1) viu = true;
 					}
 				this._pintar();
@@ -605,11 +627,9 @@ export function crearColaDonadas(
 				regionsAnels: this._jaces.regions ? (this._limits?.regions || []).map(([, , anels]) => anels) : null,
 				depsAnels: this._jaces.despartaments ? (this._limits?.despartaments || []).map(([, , anels]) => anels) : null
 			};
-			this._prepTotes();
-			this._prepSel();
-			this._prepPus();
-			if (this._jaces.creissent) this._prepCro();
-			if (this._jaces.dialectes || this._jaces.frontiera) this._prepMix();
+			// las tenchas fondudas (lo flo es car) : preparadas sonque quand
+			// servisson, al primièr dessenh que n'a besonh (çai-jos, _pintar)
+			this._tenchasGeo = null;
 			this._pintar();
 			if (dom) map.getPane('donadas').style.opacity = '1';
 		},
@@ -882,7 +902,7 @@ export function crearColaDonadas(
 			// las autras jaces s'escantisson, a « 500 km » demòra lo contorn sol
 			const nv = this._nivèls ?? nivèlsDezoom(this._map),
 				aDial = aDialectes(nv, z),
-				aDet = aDetalh(nv, z);
+				aDet = this._rel?.det?.v ?? aDetalh(nv, z);
 			const aAdmin = clamp((11.5 - z) / 1.5) * aDet,
 				aFront = dossa(clamp((13 - z) / 2)) * aDet,
 				aTenchas0 = clamp((13 - z) / 1.5);
@@ -905,6 +925,15 @@ export function crearColaDonadas(
 			const ti = this._ti(),
 				aFinIntro = clamp((ti - (INTRO.dialectes[1] - 0.5)) / 0.8);
 
+			// (l'Occitània unida e acabada : las tenchas dels dialèctes servisson pas)
+			if (this._tenchasGeo !== G && u < 0.999) {
+				this._tenchasGeo = G;
+				this._prepTotes();
+				this._prepSel();
+				this._prepPus();
+				if (J.creissent) this._prepCro();
+				if (J.dialectes || J.frontiera) this._prepMix();
+			}
 			/* Dialèctes */
 			if (J.dialectes && G.zonas && u < 0.999) {
 				const selDial = this._sels.some((k) => k !== 'cro');
@@ -956,7 +985,8 @@ export function crearColaDonadas(
 				cx.lineCap = 'round';
 				cx.lineWidth = 0.9;
 				G.zonas.forEach((zn, i) => {
-					const pz = clamp((q - 0.04 - i * 0.07) / 0.6);
+					if (this._sels.some((k) => k !== 'cro') && !this._sels.includes(zn.kod)) return;
+					const pz = clamp((q - 0.04 - i * 0.15) / 0.22);
 					if (pz <= 0 || pz >= 1) return;
 					const [x0, y0, x1, y1] = zn.bbox,
 						L = (x1 - x0 + y1 - y0) * 3.2;
@@ -1021,7 +1051,8 @@ export function crearColaDonadas(
 			   l'autre. De prèp, sabèm pas al quilomètre près ont passa : los
 			   ponches palisson e una benda difusa de quauques quilomètres ditz
 			   « per aquí ». */
-			if (J.frontiera && G.linhas && aFront > 0.01) {
+			const aFrontU = aFront * (1 - (this._rel?.uni?.v ?? 0));
+			if (J.frontiera && G.linhas && aFrontU > 0.01) {
 				const vague = clamp((z - 7.5) / 2.5);
 				// l'aparicion : los ponches se pausan al long de la frontièra, una
 				// estela en cap (coma los contorns dels territòris)
@@ -1053,18 +1084,18 @@ export function crearColaDonadas(
 					const larg = Math.max(4, 4000 / G.mPx);
 					traçar();
 					for (const [k, al] of [[1, 0.05], [0.55, 0.06]]) {
-						cx.globalAlpha = vague * al * aFront;
+						cx.globalAlpha = vague * al * aFrontU;
 						cx.lineWidth = larg * k;
 						cx.stroke();
 					}
 				}
 				cx.setLineDash([0.01, 4.2 + vague * 3]);
 				cx.lineWidth = 1.4 + vague * 0.6;
-				cx.globalAlpha = lerp(0.8, 0.3, vague) * aFront;
+				cx.globalAlpha = lerp(0.8, 0.3, vague) * aFrontU;
 				traçar();
 				cx.stroke();
 				cx.setLineDash([]);
-				for (const [ct, pp, aC] of capsF) estelaCap(cx, ct, pp, T.estela, aC * aFront * 0.9);
+				for (const [ct, pp, aC] of capsF) estelaCap(cx, ct, pp, T.estela, aC * aFrontU * 0.9);
 				cx.restore();
 			}
 
@@ -1072,29 +1103,42 @@ export function crearColaDonadas(
 			   « OCCITAN », en roge ; a « 500 km », sonque son contorn */
 			// (pendent la mescla, lo roge unit ven a la fin ; pendent lo balet, s'esvanís)
 			const aUni = (mescla ? easeS(clamp((u - 0.4) / 0.6)) : u) * aFinIntro;
+			let caixaOc = null;
 			if (G.dom && aUni > 0.01) {
 				cx.save();
 				// plena fins a « 700 km » ; puèi se vuèja del mitan cap als bòrds,
 				// coma se la color se retirava dins son contorn (retorn de Romain)
 				if (J.dialectes && vE < 0.999) {
 					if (this._uniGeo !== G) this._prepUni();
-					this._copiar(this._imgUni, aUni * T.tencha * 1.6);
+					let img = this._imgUni;
 					if (vE > 0.001) {
+						// (lo vuèg se fa dins una còpia del roge : sus lo canavàs, escafava
+						// tot çò qu'èra dessenhat abans, dialèctes e frontièra compresos)
+						const c = (this._imgVuèg ??= document.createElement('canvas'));
+						if (c.width !== img.width || c.height !== img.height) (c.width = img.width), (c.height = img.height);
+						const g = c.getContext('2d'),
+							k = this._dpr * (img.width / this._cv.width);
+						g.setTransform(1, 0, 0, 1, 0, 0);
+						g.globalCompositeOperation = 'source-over';
+						g.clearRect(0, 0, c.width, c.height);
+						g.drawImage(img, 0, 0);
 						const [cx0, cy0] = G.pt(ETI_OCCITAN),
 							rMax = Math.max(...[[-1.6, 42.65], [7.55, 42.65], [-1.6, 46.4], [7.55, 46.4]].map((q) => Math.hypot(G.pt(q)[0] - cx0, G.pt(q)[1] - cy0))),
-							r = vE * rMax * 1.35;
-						const gr = cx.createRadialGradient(cx0, cy0, 0, cx0, cy0, Math.max(1, r));
+							r = Math.max(1, vE * rMax * 1.35);
+						g.setTransform(k, 0, 0, k, 0, 0);
+						const gr = g.createRadialGradient(cx0, cy0, 0, cx0, cy0, r);
 						gr.addColorStop(0, '#000');
 						gr.addColorStop(0.62, '#000');
 						gr.addColorStop(1, 'rgba(0, 0, 0, 0)');
-						cx.save();
-						cx.globalCompositeOperation = 'destination-out';
-						cx.fillStyle = gr;
-						cx.beginPath();
-						cx.arc(cx0, cy0, Math.max(1, r), 0, 6.283);
-						cx.fill();
-						cx.restore();
+						g.globalCompositeOperation = 'destination-out';
+						g.fillStyle = gr;
+						g.beginPath();
+						g.arc(cx0, cy0, r, 0, 6.283);
+						g.fill();
+						g.globalCompositeOperation = 'source-over';
+						img = c;
 					}
+					this._copiar(img, aUni * T.tencha * 1.6);
 				}
 				// lo contorn s'afortís un pauc quand la color i es tornada
 				cx.globalAlpha = aUni * lerp(0.7, 0.95, vE);
@@ -1115,6 +1159,11 @@ export function crearColaDonadas(
 					cx.fillStyle = T.occitanTèxt;
 					cx.globalAlpha = aUni * (1 - easeS(clamp(vE / 0.6)));
 					cx.fillText('OCCITAN', x, y);
+					if (cx.globalAlpha > 0.3) {
+						const w = cx.measureText('OCCITAN').width / 2 + 6,
+							o = this._map.getPixelOrigin().add(this._min);
+						caixaOc = [x - w + o.x, y - fsO + o.y, x + w + o.x, y + fsO + o.y].map(Math.round);
+					}
 				}
 				cx.restore();
 			}
@@ -1138,7 +1187,11 @@ export function crearColaDonadas(
 				cx.restore();
 			}
 			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3) * aFinIntro * (1 - u);
-			if (aNoms <= 0.01) this._caixasNoms = null;
+			if (aNoms <= 0.01) {
+				// (una bóstia establa : las autras còlas gardan lors etiquetas en cache)
+				const clau = caixaOc ? 'oc:' + caixaOc.join(',') : null;
+				if (clau !== this._caixasNoms?.clau) this._caixasNoms = caixaOc ? { clau, z, cs: [caixaOc] } : null;
+			}
 			if (aNoms > 0.01) {
 				const noms = [];
 				if (J.dialectes && G.zonas)
@@ -1238,8 +1291,9 @@ export function crearColaDonadas(
 			// la masca, en pichon (1/6) puèi agrandida : vòra doça a bon mercat
 			const m = this._masca,
 				k = 1 / 6;
-			m.width = Math.max(1, Math.round(t.width * k));
-			m.height = Math.max(1, Math.round(t.height * k));
+			const mw = Math.max(1, Math.round(t.width * k)),
+				mh = Math.max(1, Math.round(t.height * k));
+			if (m.width !== mw || m.height !== mh) (m.width = mw), (m.height = mh);
 			const mg = m.getContext('2d');
 			mg.setTransform(1, 0, 0, 1, 0, 0);
 			mg.clearRect(0, 0, m.width, m.height);

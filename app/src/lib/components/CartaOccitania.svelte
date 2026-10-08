@@ -541,7 +541,14 @@
 		map.on('zoomend', majDetalh);
 		// de luènh (« 500 km »), los ponches (luòcs, librarias, Calandretas)
 		// s'escantisson amb las autras jaces : demòra lo contorn de l'Occitània
-		const luènh = () => mapEl?.classList.toggle('luenh', aDetalh(nivèlsDezoom(map), map.getZoom()) < 0.5);
+		const luènh = () => {
+			const l = aDetalh(nivèlsDezoom(map), map.getZoom()) < 0.25;
+			mapEl?.classList.toggle('luenh', l);
+			// (invisibles : pas mai atenhables al clavièr, e lor bulla se tampa)
+			for (const el of map.getPane('markerPane').children)
+				if (!el.classList.contains('lenga-franca') && el.hasAttribute('tabindex')) el.tabIndex = l ? -1 : 0;
+			if (l) map.closePopup();
+		};
 		map.on('zoomend', luènh);
 		luènh();
 		if (ambToponims(baseLayer)) loadToponymsLayer();
@@ -1102,16 +1109,20 @@
 	.carta :global(.lenga-franca:focus-visible span) {
 		outline: 2px solid var(--t-aur);
 	}
-	/* de luènh, los ponches s'escantisson (las lengas de França demòran) */
-	.carta :global(.leaflet-marker-pane > :not(.lenga-franca)) {
+	/* de luènh, los ponches s'escantisson (las lengas de França demòran). Lo
+	   fondut va suls enfants : la raiç de l'icòna garda la transicion de
+	   Leaflet pel zoom (los ponches sautavan a cada cran) */
+	.carta :global(.leaflet-marker-pane > :not(.lenga-franca) > *) {
 		transition: opacity 0.45s;
 	}
 	.carta:global(.luenh) :global(.leaflet-marker-pane > :not(.lenga-franca)) {
-		opacity: 0;
 		pointer-events: none;
 	}
-	/* d'outra mar sonque quand se dezooma fins al mond, e l'invèrse */
-	.carta:not(:global(.zoom-mond)) :global(.lenga-franca.outremer),
+	.carta:global(.luenh) :global(.leaflet-marker-pane > :not(.lenga-franca) > *) {
+		opacity: 0;
+	}
+	/* las lengas d'outra mar demòran visiblas en s'aprochant de lor illa ; las
+	   de França s'amagan sonque a l'escala del mond */
 	.carta:global(.zoom-mond) :global(.lenga-franca:not(.outremer)) {
 		display: none;
 	}

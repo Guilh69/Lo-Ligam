@@ -218,8 +218,10 @@ export const Z_RELAIS = 8.75;
 // Sus un pichon ecran, la vista d'arribada (l'Occitània entièra) es ja vers
 // « 200 km » : los nivèls i davalan, per arribar totjorn suls dialèctes.
 export function nivèlsDezoom(map) {
-	const zB = map.getBoundsZoom(OCCITANIA);
-	const zDial = Math.min(5.95, zB - 0.5);
+	// (amb la meteissa marja que l'arribada, fitBounds de CartaOccitania : sens
+	// ela, un telefon en païsatge arribava sus l'Occitània unida)
+	const zB = map.getBoundsZoom(OCCITANIA, false, [32, 120]);
+	const zDial = Math.min(5.95, zB - 0.25);
 	const z300 = Math.min(5.37, zDial - 0.5);
 	// l'Occitània demòra plena fins a « 700 km », puèi se vuèja (retorn de Romain)
 	return { zDial, z300, z500: z300 - 0.74, zVuèg: Math.min(3.7, z300 - 1.35) };
@@ -662,7 +664,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				if (this._el.estelas)
 					for (const e of this._estelas) if (this._zoom >= (this._zBase ?? 0) + dzLuòc(e)) cs.push([e.X - 6, e.Y - 6, e.X + 6, e.Y + 6]);
 				// e las letras dels noms de rius, se son afichats
-				if (this._el.nomsRius)
+				if (this._el.nomsRius && this._zoom >= (this._nivèls?.zDial ?? 0) + 0.15)
 					for (const r of pl.rius) for (const l of r.letras) cs.push([l.x - r.fs * 0.4, l.y - r.fs * 0.6, l.x + r.fs * 0.4, l.y + r.fs * 0.3]);
 				g.restore();
 				this._caixas = { pl, z: this._zoom, cs };
@@ -759,8 +761,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			};
 			// (en s'aprochant d'un país luènh, lo fil s'afortís un pauc)
 			const fòrt = clamp((z - 4) / 3);
-			traçar('tot', aTot * lerp(0.5, 0.75, fòrt), lerp(0.5, 0.8, fòrt));
-			traçar('eu', aEu * lerp(0.45, 0.7, fòrt), lerp(0.55, 0.8, fòrt));
+			traçar('tot', aTot * lerp(0.62, 0.8, fòrt), lerp(0.55, 0.8, fòrt));
+			traçar('eu', aEu * lerp(0.58, 0.75, fòrt), lerp(0.6, 0.8, fòrt));
 			// los noms dels païses d'Euròpa, sens se trucar
 			const aNoms = aEu * clamp((z - 3.9) / 0.4);
 			if (aNoms < 0.01 || !M.eu) return;
@@ -982,7 +984,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				ray = this._map.getSize().x <= 700 ? 70 : 150;
 			const prèp = (x, y) => (p ? Math.hypot(x - p.X, y - p.Y) < ray : false);
 			this._etiqPus = p;
-			for (const r of this._el.nomsRius ? this._plaçament.rius : []) {
+			for (const r of this._el.nomsRius && this._map.getZoom() >= (this._nivèls?.zDial ?? 0) + 0.15 ? this._plaçament.rius : []) {
 				if (!dins(r.letras[0].x, r.letras[0].y)) continue;
 				const m = r.letras[Math.floor(r.letras.length / 2)];
 				g.globalAlpha = prèp(m.x, m.y) ? 0.12 : 1;
@@ -1126,7 +1128,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		_onMirga(e) {
 			if (e.originalEvent?.pointerType === 'touch') return;
 			// de luènh (carta simplificada), pas cap de survòl
-			if (this._nivèls && aDetalh(this._nivèls, this._zoom) < 0.5) {
+			if (this._nivèls && aDetalh(this._nivèls, this._zoom) < 0.25) {
 				this._terPus = this._fichaPus = null;
 				this._map.getContainer().style.cursor = '';
 				return;
@@ -1167,7 +1169,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		// premier toucher montre le nom (dans une bulle au-dessus du doigt), un
 		// second sur le même lieu y emmène.
 		_onClic(e) {
-			if (this._nivèls && aDetalh(this._nivèls, this._zoom) < 0.5) return;
+			if (this._nivèls && aDetalh(this._nivèls, this._zoom) < 0.25) return;
 			const tactil = e.originalEvent?.pointerType === 'touch' || !matchMedia('(hover: hover)').matches;
 			// Une ville à fiche : de loin, on y vole ; de près, on ouvre sa page
 			// (ou la bulle dit « Lèu » tant qu'elle n'est pas écrite)
@@ -1208,14 +1210,26 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 
 		_dessenhar(t) {
-			this._dessenharDetalh(t);
 			const cx = this._cx;
 			if (!cx || !this._W) return;
 			// Al dezoom, las jaces de detalh s'escantisson (a « 500 km » demòra
 			// sonque lo contorn de l'Occitània, pintat per la còla dels
-			// dialèctes) ; los païses se pintan per dessús
+			// dialèctes) ; los païses se pintan per dessús. L'escantiment avança
+			// dins lo temps, pas de cran en cran (se fasiá per saumets).
 			const z = this._zoom,
-				aDet = this._nivèls ? aDetalh(this._nivèls, z) : 1;
+				dtD = Math.min(0.1, (t - (this._tPrecD ?? t)) / 1000),
+				cib = this._nivèls ? aDetalh(this._nivèls, z) : 1;
+			this._tPrecD = t;
+			this._aDetL = this._calm || this._aDetL === undefined ? cib : this._aDetL + (cib - this._aDetL) * Math.min(1, dtD / 0.3);
+			if (Math.abs(this._aDetL - cib) < 0.002) this._aDetL = cib;
+			const aDet = this._aDetL;
+			// de luènh, quand res bolèga pas, l'imatge demòra : pas besonh de la
+			// tornar pintar 60 còps per segonda (sobrietat)
+			const tiE = this._calm ? 99 : (t - (this._tIntro ?? -1e12)) / 1000;
+			const clau = aDet <= 0.001 && tiE > INTRO.fin ? [z, this._min?.x, this._min?.y, this._W, this._H, !!this._mondEu, !!this._mondTot, this._lang, this._tem?.costa, this._detA].join('|') : null;
+			if (clau && clau === this._clauEstatica) return;
+			this._clauEstatica = clau;
+			this._dessenharDetalh(t);
 			if (aDet < 0.999) {
 				cx.save();
 				cx.setTransform(1, 0, 0, 1, 0, 0);
@@ -1268,7 +1282,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				aEtiq = aRius;
 			// a « 200 km », pas pus de rius (retorn de Romain) : s'escantisson doçament
 			const nv = this._nivèls,
-				cRius = nv ? easeS(clamp((z - nv.zDial) / 0.3)) : 1;
+				cRius = nv ? easeS(clamp((z - nv.zDial + 0.05) / 0.2)) : 1;
 			this._riusZ = this._calm || this._riusZ === undefined ? cRius : this._riusZ + (cRius - this._riusZ) * Math.min(1, dt / 0.35);
 			const aRiu = aRius * this._riusZ;
 			const opTeulas = easeS(clamp((pr - 0.25) / 0.75));
