@@ -331,7 +331,8 @@ export function crearColaDonadas(
 			// coregrafia a l'arribada, l'estat final dirèctament
 			const salt = this._zPrec != null && Math.abs(this._zoom - this._zPrec) > 1.5;
 			this._zPrec = this._zoom;
-			const uni = this._zoom < n.zDial - 0.17 ? 1 : 0;
+			// (l'occitan unificat a totas las escalas, se la jaça es alucada)
+			const uni = this._jaces.unificat || this._zoom < n.zDial - 0.17 ? 1 : 0;
 			this._relais('uni', uni, (c) => (c ? DURADA_MESCLA : DURADA_BALET), salt);
 			// de mai luènh (« 1 000 km »), l'Occitània unida se vuèja : sonque son contorn
 			this._relais('vuèg', this._zoom < n.zVuèg ? 1 : 0, DURADA_VUÈG, salt);
@@ -434,8 +435,8 @@ export function crearColaDonadas(
 			this._pintar();
 		},
 		_interactiu() {
-			// (l'Occitània unida, de luènh : los dialèctes se causisson pas)
-			if (this._nivèls && aDialectes(this._nivèls, this._zoom) < 0.5) return false;
+			// (l'Occitània unida, de luènh o causida : los dialèctes se causisson pas)
+			if (this._jaces.unificat || (this._nivèls && aDialectes(this._nivèls, this._zoom) < 0.5)) return false;
 			return !!(this._jaces.dialectes && this._dial) || !!(this._jaces.creissent && this._creissent);
 		},
 		// Una enclava (Pichona Gavachariá) se dessenha amb la frontièra tanben :
@@ -1131,7 +1132,7 @@ export function crearColaDonadas(
 				cx.save();
 				// plena fins a « 700 km » ; puèi se vuèja del mitan cap als bòrds,
 				// coma se la color se retirava dins son contorn (retorn de Romain)
-				if (J.dialectes && vE < 0.999) {
+				if ((J.dialectes || J.unificat) && vE < 0.999) {
 					if (this._uniGeo !== G) this._prepUni();
 					let img = this._imgUni;
 					if (vE > 0.001) {
@@ -1161,15 +1162,16 @@ export function crearColaDonadas(
 						g.globalCompositeOperation = 'source-over';
 						img = c;
 					}
-					this._copiar(img, aUni * T.tencha * 1.6);
+					// (de fòrt prèp, coma las tenchas dels dialèctes, s'esvanís)
+					this._copiar(img, aUni * T.tencha * 1.6 * aTenchas0);
 				}
 				// lo contorn s'afortís un pauc quand la color i es tornada
-				cx.globalAlpha = aUni * lerp(0.7, 0.95, vE);
+				cx.globalAlpha = aUni * lerp(0.7, 0.95, vE) * aTenchas0;
 				cx.strokeStyle = T.occitan;
 				cx.lineWidth = 0.8;
 				cx.lineJoin = 'round';
 				cx.stroke(G.dom);
-				if (J.dialectes && vE < 0.6) {
+				if ((J.dialectes || J.unificat) && vE < 0.6) {
 					const [x, y] = G.pt(ETI_OCCITAN);
 					// (lo nom se fa pichon amb la region, de luènh)
 					const fsO = clamp(9 + (z - 3.75) * 3, 9, 15);

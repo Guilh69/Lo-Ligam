@@ -27,6 +27,8 @@ export const CATALOGUE = [
 				defaut: false
 			},
 			{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', estat: 'disponible', defaut: true, nota_oc: "Se'n pòt causir mantun, lo Creissent tanben", nota_fr: 'On peut en choisir plusieurs, le Croissant aussi' },
+			// l'occitan unificat a totas las escalas, coma de luènh (retorn de Romain, 2026-10-08)
+			{ id: 'unificat', oc: 'Occitan unificat', fr: 'Occitan unifié', estat: 'disponible', defaut: false, nota_oc: 'La lenga sola, sens los dialèctes, a totas las escalas', nota_fr: 'La langue seule, sans les dialectes, à toutes les échelles' },
 			{
 				id: 'toponimia',
 				oc: 'Noms occitans de las vilas',
@@ -128,7 +130,7 @@ export const JACES_FONS = { vilas: 'estelas', toponimia: 'nomsVilas', rius: 'riu
 
 // Las jaces que pinta la còla de donadas (colaDonadas.js) ; las autras son de
 // jaces Leaflet (punts e zònas de la basa)
-export const JACES_DONADAS = ['frontiera', 'dialectes', 'creissent', 'regions', 'despartaments'];
+export const JACES_DONADAS = ['frontiera', 'dialectes', 'unificat', 'creissent', 'regions', 'despartaments'];
 
 // Las jaces que pinta la còla tematica (colaTematica.js), de fonts publicas
 export const JACES_TEMATICAS = ['comunas', 'provincias', 'parcs', 'massis'];
