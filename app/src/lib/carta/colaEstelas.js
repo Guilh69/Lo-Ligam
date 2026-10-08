@@ -217,6 +217,18 @@ export const Z_RELAIS = 8.75;
 //     lingüistica, sus la carta dels païses.
 // Sus un pichon ecran, la vista d'arribada (l'Occitània entièra) es ja vers
 // « 200 km » : los nivèls i davalan, per arribar totjorn suls dialèctes.
+// Lo fons de la carta (CartaOccitania : color de fons e alo terra cuècha),
+// reproduch sus la tela de revelacion per que se veja pas cap de cordura
+const rgbDe = (c) => {
+	const h = (c || '').trim().replace('#', '');
+	if (!/^[0-9a-f]{3}([0-9a-f]{3})?$/i.test(h)) return null;
+	const n = h.length === 3 ? h.replace(/./g, 'export function nivèlsDezoom(map) {export function nivèlsDezoom(map) {') : h;
+	return [0, 2, 4].map((i) => parseInt(n.slice(i, i + 2), 16)).join(', ');
+};
+function fonsDe(el) {
+	const cs = getComputedStyle(el);
+	return { fons: cs.getPropertyValue('--t-fons').trim() || cs.backgroundColor, terra: rgbDe(cs.getPropertyValue('--t-terra')) };
+}
 export function nivèlsDezoom(map) {
 	// (amb la meteissa marja que l'arribada, fitBounds de CartaOccitania : sens
 	// ela, un telefon en païsatge arribava sus l'Occitània unida)
@@ -232,7 +244,7 @@ export const aDetalh = (n, z) => easeS(clamp((z - n.z500) / (n.z300 - n.z500)));
 export const Z_PRECARGA = 8.25;
 // las comunas se mòstran a partir de l'escala « 7 km » (causida de Romain)
 export const Z_COMUNAS = 10.5; // les tuiles se chargent, invisibles, un peu avant
-const DURADA_RELAIS = 1.2; // secondes
+const DURADA_RELAIS = 1.7; // secondes (la revelacion en tacas d'encre, retorn de Romain)
 const Z_VOL = 10.5; // niveau où l'on arrive en cliquant sur un lieu
 
 
@@ -550,6 +562,16 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			this._cv = L.DomUtil.create('canvas', 'cola-estelas leaflet-zoom-animated', map.getPane('estelas'));
 			this._cx = this._cv.getContext('2d');
+			// la tela de la revelacion de la carta detalhada : dessús las tuèlas
+			// (200), jos los dialèctes (300)
+			if (!map.getPane('revelacion')) {
+				const p = map.createPane('revelacion');
+				p.style.zIndex = '250';
+				p.style.pointerEvents = 'none';
+			}
+			this._cvR = L.DomUtil.create('canvas', 'cola-revelacion leaflet-zoom-animated', map.getPane('revelacion'));
+			this._cxR = this._cvR.getContext('2d');
+			this._revAct = false;
 			this._etiq = document.createElement('canvas');
 			this._t0 = performance.now();
 			this._pus = null;
@@ -583,6 +605,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._viu = false;
 			cancelAnimationFrame(this._raf);
 			L.DomUtil.remove(this._cv);
+			if (this._cvR) L.DomUtil.remove(this._cvR);
+			this._cvR = this._cxR = null;
 			this._map.getContainer().style.cursor = '';
 		},
 
@@ -618,6 +642,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 
 		setTema(c, d) {
 			this._temaBasa = [c, d];
+			this._fonsCarta = null; // (lo fons de la tela de revelacion)
 			this._tem = { ...temaDe(c, d), ...this._colors };
 			this._construirEtiquetas();
 		},
@@ -807,6 +832,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 		// Les tuiles de la carte détaillée : leur opacité suit le relais
 		setTeulas(layer) {
+			if (layer === this._teulas) return;
 			this._teulas = layer;
 			this._opTeulas = null;
 		},
@@ -852,6 +878,13 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._cv.height = Math.round(tal.y * this._dpr);
 			this._cv.style.width = tal.x + 'px';
 			this._cv.style.height = tal.y + 'px';
+			if (this._cvR) {
+				L.DomUtil.setPosition(this._cvR, min);
+				this._cvR.width = this._cv.width;
+				this._cvR.height = this._cv.height;
+				this._cvR.style.width = tal.x + 'px';
+				this._cvR.style.height = tal.y + 'px';
+			}
 			this._o = map.getPixelOrigin().add(min); // projeté → canevas : soustraire o
 			if (this._senhal && this._senhal.t0 === null) this._senhal.t0 = performance.now();
 
@@ -1023,6 +1056,124 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 
 		/* Animation de zoom : on étire le canevas comme Leaflet le fait pour ses
 		   propres couches, puis on redessine net à la fin */
+		// Las tacas d'encre de la revelacion : una a l'endrech zoomat (o al mitan),
+		// d'autras a las vilas grandas de la vista, que partisson un pauc aprèp e
+		// se rejonhon ; un liseret d'aur e d'estelas sus lor bòrd. Las posicions
+		// son gardadas en ponches absoluts, al zoom de partença : las tacas
+		// sautan pas a la fin del zoom. En se dezoomant, l'encre se retira.
+		_revelar(pr, t, cibla) {
+			const c = this._cxR,
+				cv = this._cvR,
+				map = this._map;
+			if (!c || !map) return;
+			if (pr <= 0.001 || pr >= 0.999 || this._calm) {
+				if (this._revAct) {
+					c.setTransform(1, 0, 0, 1, 0, 0);
+					c.clearRect(0, 0, cv.width, cv.height);
+					this._revAct = false;
+				}
+				this._revCibla = cibla;
+				return;
+			}
+			if (!this._revAct || this._revCibla !== cibla) {
+				this._revAct = true;
+				this._revCibla = cibla;
+				const zR = this._zoom,
+					size = map.getSize(),
+					cp = this._mirgaCP ?? size.divideBy(2),
+					pd = this.options.padding,
+					// (dins lo repèri de la tela, al zoom de partença : pendent un zoom
+					// animat, Leaflet a ja passat sos repèris al zoom d'arribada)
+					v0 = L.point(this._o.x + size.x * pd, this._o.y + size.y * pd),
+					P = v0.add(cp);
+				// (la taca màger cobrís tota la vista d'arribada)
+				const zf = Math.max(zR, this._zCibla ?? zR),
+					dMax = Math.max(Math.hypot(cp.x, cp.y), Math.hypot(size.x - cp.x, cp.y), Math.hypot(cp.x, size.y - cp.y), Math.hypot(size.x - cp.x, size.y - cp.y));
+				const vis = { min: v0, max: v0.add(size) };
+				const vilas = (this._estelas ?? [])
+					.filter((e) => e.renc <= 3 && e.X > vis.min.x && e.X < vis.max.x && e.Y > vis.min.y && e.Y < vis.max.y && Math.hypot(e.X - P.x, e.Y - P.y) > 80)
+					.sort((a, b) => a.renc - b.renc)
+					.slice(0, 6);
+				this._rev = {
+					zR,
+					Rmax: (dMax * 1.15) / Math.pow(2, zf - zR),
+					semenas: [{ x: P.x, y: P.y, d: 0, k: 1, ph: 0.7 }, ...vilas.map((e, i) => ({ x: e.X, y: e.Y, d: 0.1 + i * 0.07, k: 0.4, ph: e.f }))]
+				};
+			}
+			const R = this._rev,
+				s = Math.pow(2, this._zoom - R.zR),
+				o = this._o,
+				W = this._W,
+				H = this._H,
+				T = this._tem,
+				f = (this._fonsCarta ??= fonsDe(map.getContainer())),
+				size = map.getSize(),
+				pd = this.options.padding,
+				tt = t / 1000;
+			c.setTransform(1, 0, 0, 1, 0, 0);
+			c.globalCompositeOperation = 'source-over';
+			c.globalAlpha = 1;
+			c.clearRect(0, 0, cv.width, cv.height);
+			c.setTransform(this._dpr, 0, 0, this._dpr, 0, 0);
+			// lo fons de la carta : sa color e son alo terra cuècha
+			c.fillStyle = f.fons;
+			c.fillRect(0, 0, W, H);
+			if (f.terra) {
+				c.save();
+				c.translate(size.x * pd + size.x * 0.45, size.y * pd + size.y * 0.55);
+				c.scale(size.x * 0.6, size.y * 0.55);
+				const g = c.createRadialGradient(0, 0, 0, 0, 0, 1);
+				g.addColorStop(0, `rgba(${f.terra}, 0.16)`);
+				g.addColorStop(0.75, `rgba(${f.terra}, 0)`);
+				c.fillStyle = g;
+				c.fillRect(-2, -2, 4, 4);
+				c.restore();
+			}
+			// las tacas : un cercle trebolat per de sinusas lentas, que viran
+			const bòrds = [];
+			c.beginPath();
+			for (const sm of R.semenas) {
+				const q = sm.d ? easeS(clamp((pr - sm.d) / 0.7)) : easeIO(pr);
+				if (q <= 0.001) continue;
+				const x = sm.x * s - o.x,
+					y = sm.y * s - o.y,
+					r = q * R.Rmax * s * sm.k,
+					n = 90,
+					pts = [];
+				for (let k = 0; k <= n; k++) {
+					const a = (k / n) * 6.2832;
+					const rr = r * (1 + 0.07 * Math.sin(3 * a + sm.ph + tt * 0.5) + 0.045 * Math.sin(5 * a - sm.ph * 1.7 + tt * 0.8) + 0.025 * Math.sin(11 * a + sm.ph * 2.3));
+					const px = x + Math.cos(a) * rr,
+						py = y + Math.sin(a) * rr;
+					if (k) c.lineTo(px, py);
+					else c.moveTo(px, py);
+					if (k % 5 === 0) pts.push([px, py, k]);
+				}
+				c.closePath();
+				bòrds.push(pts);
+			}
+			c.globalCompositeOperation = 'destination-out';
+			c.fill();
+			// lo liseret d'aur, que s'aluca al mitan de la revelacion
+			c.globalCompositeOperation = 'source-over';
+			const aL = Math.sin(Math.PI * pr);
+			c.strokeStyle = T.fil;
+			c.lineWidth = 1.3;
+			c.lineJoin = 'round';
+			c.shadowColor = T.fil;
+			c.shadowBlur = 10;
+			c.globalAlpha = 0.85 * aL;
+			c.stroke();
+			c.shadowBlur = 0;
+			// e d'estelas que pampalhejan sus lo bòrd
+			c.fillStyle = T.estela;
+			for (const pts of bòrds)
+				for (const [x, y, k] of pts) {
+					c.globalAlpha = aL * (0.35 + 0.35 * Math.sin(tt * 7 + k * 1.7));
+					c.fillRect(x - 0.9, y - 0.9, 1.8, 1.8);
+				}
+			c.globalAlpha = 1;
+		},
 		_onAnimZoom(e) {
 			this._zCibla = e.zoom; // le relais part avec le mouvement
 			this._transformar(e.center, e.zoom);
@@ -1039,6 +1190,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				currentCenterPoint = map.project(this._center, zoom),
 				topLeftOffset = viewHalf.multiplyBy(-scale).add(currentCenterPoint).subtract(map._getNewPixelOrigin(center, zoom));
 			L.DomUtil.setTransform(this._cv, topLeftOffset, scale);
+			if (this._cvR) L.DomUtil.setTransform(this._cvR, topLeftOffset, scale);
 		},
 
 		/* Survol et toucher : le lieu le plus proche, les villes passent devant */
@@ -1270,11 +1422,19 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._tPrec = t;
 			// (dès le début du mouvement de zoom, pas à sa fin)
 			const cibla = (this._zCibla ?? z) >= Z_RELAIS ? 1 : 0;
+			// la revelacion espèra que las tuèlas sián cargadas (al mai 1,5 s) : sens
+			// aquò, las tacas descobrissián un fons void e las tuèlas susissián aprèp
+			const cargan = cibla === 1 && this._relais < 1 && !!this._teulas?.isLoading?.();
+			if (!cargan) this._esperaDe = null;
+			else this._esperaDe ??= t;
+			const espèra = cargan && t - this._esperaDe < 1500;
 			const pr = (this._relais =
 				this._calm || this._relais === undefined
 					? cibla
 					: cibla > this._relais
-						? Math.min(cibla, this._relais + dt / DURADA_RELAIS)
+						? espèra
+							? this._relais
+							: Math.min(cibla, this._relais + dt / DURADA_RELAIS)
 						: Math.max(cibla, this._relais - dt / DURADA_RELAIS));
 			this._detA = easeIO(pr);
 			const aGen = 1 - 0.85 * easeS(clamp((pr - 0.1) / 0.9)),
@@ -1285,7 +1445,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				cRius = nv ? easeS(clamp((z - nv.zDial + 0.05) / 0.2)) : 1;
 			this._riusZ = this._calm || this._riusZ === undefined ? cRius : this._riusZ + (cRius - this._riusZ) * Math.min(1, dt / 0.35);
 			const aRiu = aRius * this._riusZ;
-			const opTeulas = easeS(clamp((pr - 0.25) / 0.75));
+			// La revelacion de la carta detalhada (retorn de Romain : « plus
+			// soignée et impressionne ») : las tuèlas son descobèrtas per de tacas
+			// d'encre que s'espandisson de l'endrech zoomat e de las vilas grandas
+			this._revelar(pr, t, cibla);
+			const opTeulas = this._cxR && !this._calm ? (pr > 0.001 ? 1 : 0) : easeS(clamp((pr - 0.25) / 0.75));
 			if (this._teulas && Math.abs(opTeulas - (this._opTeulas ?? -1)) > 0.004) {
 				this._teulas.setOpacity(opTeulas);
 				this._opTeulas = opTeulas;
