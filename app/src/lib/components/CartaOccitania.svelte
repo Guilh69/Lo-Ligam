@@ -1146,6 +1146,14 @@
 	.carta.nuech :global(.leaflet-tile-pane) {
 		filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) sepia(0.35) saturate(0.75);
 	}
+	/* la revelacion de la carta detalhada : del flo al net, coma en sortent
+	   dels nívols (lo flo sonque pendent la revelacion) */
+	.carta:global(.revelant) :global(.leaflet-tile-pane) {
+		filter: blur(var(--teulas-flo, 0px));
+	}
+	.carta.nuech:global(.revelant) :global(.leaflet-tile-pane) {
+		filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) sepia(0.35) saturate(0.75) blur(var(--teulas-flo, 0px));
+	}
 
 	/* Etiquetas dels noms occitans, per las mostrar suls fonses Natural e
 	   Satellit. Contorn clar (text-stroke) per rèstar legibles sus de fonses

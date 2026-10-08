@@ -244,7 +244,7 @@ export const aDetalh = (n, z) => easeS(clamp((z - n.z500) / (n.z300 - n.z500)));
 export const Z_PRECARGA = 8.25;
 // las comunas se mòstran a partir de l'escala « 7 km » (causida de Romain)
 export const Z_COMUNAS = 10.5; // les tuiles se chargent, invisibles, un peu avant
-const DURADA_RELAIS = 1.7; // secondes (la revelacion en tacas d'encre, retorn de Romain)
+const DURADA_RELAIS = 2.0; // secondes (la revelacion « dels nívols a la tèrra », retorn de Romain)
 const Z_VOL = 10.5; // niveau où l'on arrive en cliquant sur un lieu
 
 
@@ -1056,20 +1056,27 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 
 		/* Animation de zoom : on étire le canevas comme Leaflet le fait pour ses
 		   propres couches, puis on redessine net à la fin */
-		// Las tacas d'encre de la revelacion : una a l'endrech zoomat (o al mitan),
-		// d'autras a las vilas grandas de la vista, que partisson un pauc aprèp e
-		// se rejonhon ; un liseret d'aur e d'estelas sus lor bòrd. Las posicions
-		// son gardadas en ponches absoluts, al zoom de partença : las tacas
-		// sautan pas a la fin del zoom. En se dezoomant, l'encre se retira.
+		// La revelacion, coma s'arribàvem dels nívols cap a la tèrra (retorn de
+		// Romain : « plus discret, soigné, élégant », pas de tacas anarquicas) :
+		// un sol rond, fondut, s'espandís de l'endrech zoomat e descobrís la
+		// carta detalhada, sonque sus la tèrra occitana (seguís la jaça colorada,
+		// desborda pas sus la mar) ; la mar e las tèrras vesinas se desnivolan a
+		// la fin, d'un fondut egal ; la carta passa del flo al net. La posicion es
+		// gardada en ponch absolut al zoom de partença : sauta pas a la fin del
+		// zoom. En se dezoomant, los nívols tornan.
 		_revelar(pr, t, cibla) {
 			const c = this._cxR,
 				cv = this._cvR,
 				map = this._map;
 			if (!c || !map) return;
+			const el = map.getContainer();
 			if (pr <= 0.001 || pr >= 0.999 || this._calm) {
 				if (this._revAct) {
 					c.setTransform(1, 0, 0, 1, 0, 0);
 					c.clearRect(0, 0, cv.width, cv.height);
+					el.classList.remove('revelant');
+					el.style.removeProperty('--teulas-flo');
+					this._revFlo = null;
 					this._revAct = false;
 				}
 				this._revCibla = cibla;
@@ -1078,44 +1085,33 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (!this._revAct || this._revCibla !== cibla) {
 				this._revAct = true;
 				this._revCibla = cibla;
+				el.classList.add('revelant');
 				const zR = this._zoom,
 					size = map.getSize(),
 					cp = this._mirgaCP ?? size.divideBy(2),
 					pd = this.options.padding,
 					// (dins lo repèri de la tela, al zoom de partença : pendent un zoom
 					// animat, Leaflet a ja passat sos repèris al zoom d'arribada)
-					v0 = L.point(this._o.x + size.x * pd, this._o.y + size.y * pd),
-					P = v0.add(cp);
-				// (la taca màger cobrís tota la vista d'arribada)
+					P = L.point(this._o.x + size.x * pd + cp.x, this._o.y + size.y * pd + cp.y);
 				const zf = Math.max(zR, this._zCibla ?? zR),
 					dMax = Math.max(Math.hypot(cp.x, cp.y), Math.hypot(size.x - cp.x, cp.y), Math.hypot(cp.x, size.y - cp.y), Math.hypot(size.x - cp.x, size.y - cp.y));
-				const vis = { min: v0, max: v0.add(size) };
-				const vilas = (this._estelas ?? [])
-					.filter((e) => e.renc <= 3 && e.X > vis.min.x && e.X < vis.max.x && e.Y > vis.min.y && e.Y < vis.max.y && Math.hypot(e.X - P.x, e.Y - P.y) > 80)
-					.sort((a, b) => a.renc - b.renc)
-					.slice(0, 6);
-				this._rev = {
-					zR,
-					Rmax: (dMax * 1.15) / Math.pow(2, zf - zR),
-					semenas: [{ x: P.x, y: P.y, d: 0, k: 1, ph: 0.7 }, ...vilas.map((e, i) => ({ x: e.X, y: e.Y, d: 0.1 + i * 0.07, k: 0.4, ph: e.f }))]
-				};
+				// (lo rond, a sa talha finala, cobrís tota la vista d'arribada)
+				this._rev = { zR, x: P.x, y: P.y, Rmax: (dMax * 1.12) / 0.55 / Math.pow(2, zf - zR) };
 			}
 			const R = this._rev,
 				s = Math.pow(2, this._zoom - R.zR),
 				o = this._o,
 				W = this._W,
 				H = this._H,
-				T = this._tem,
-				f = (this._fonsCarta ??= fonsDe(map.getContainer())),
+				f = (this._fonsCarta ??= fonsDe(el)),
 				size = map.getSize(),
-				pd = this.options.padding,
-				tt = t / 1000;
+				pd = this.options.padding;
 			c.setTransform(1, 0, 0, 1, 0, 0);
 			c.globalCompositeOperation = 'source-over';
 			c.globalAlpha = 1;
 			c.clearRect(0, 0, cv.width, cv.height);
 			c.setTransform(this._dpr, 0, 0, this._dpr, 0, 0);
-			// lo fons de la carta : sa color e son alo terra cuècha
+			// los nívols : lo fons de la carta, sa color e son alo terra cuècha
 			c.fillStyle = f.fons;
 			c.fillRect(0, 0, W, H);
 			if (f.terra) {
@@ -1129,50 +1125,38 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				c.fillRect(-2, -2, 4, 4);
 				c.restore();
 			}
-			// las tacas : un cercle trebolat per de sinusas lentas, que viran
-			const bòrds = [];
-			c.beginPath();
-			for (const sm of R.semenas) {
-				const q = sm.d ? easeS(clamp((pr - sm.d) / 0.7)) : easeIO(pr);
-				if (q <= 0.001) continue;
-				const x = sm.x * s - o.x,
-					y = sm.y * s - o.y,
-					r = q * R.Rmax * s * sm.k,
-					n = 90,
-					pts = [];
-				for (let k = 0; k <= n; k++) {
-					const a = (k / n) * 6.2832;
-					const rr = r * (1 + 0.07 * Math.sin(3 * a + sm.ph + tt * 0.5) + 0.045 * Math.sin(5 * a - sm.ph * 1.7 + tt * 0.8) + 0.025 * Math.sin(11 * a + sm.ph * 2.3));
-					const px = x + Math.cos(a) * rr,
-						py = y + Math.sin(a) * rr;
-					if (k) c.lineTo(px, py);
-					else c.moveTo(px, py);
-					if (k % 5 === 0) pts.push([px, py, k]);
-				}
-				c.closePath();
-				bòrds.push(pts);
-			}
 			c.globalCompositeOperation = 'destination-out';
-			c.fill();
-			// lo liseret d'aur, que s'aluca al mitan de la revelacion
+			// lo rond que s'espandís, sonque sus la tèrra occitana
+			const r = Math.max(1, easeIO(pr) * R.Rmax * s),
+				x = R.x * s - o.x,
+				y = R.y * s - o.y;
+			c.save();
+			if (this._domeni?.cami) {
+				c.translate(-o.x, -o.y);
+				c.clip(this._domeni.cami, 'evenodd');
+				c.translate(o.x, o.y);
+			}
+			const g = c.createRadialGradient(x, y, r * 0.55, x, y, r);
+			g.addColorStop(0, '#000');
+			g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+			c.fillStyle = g;
+			c.fillRect(0, 0, W, H);
+			c.restore();
+			// la mar e las tèrras vesinas : se desnivolan a la fin, egalament
+			const aRèsta = easeS(clamp((pr - 0.45) / 0.55));
+			if (aRèsta > 0.001) {
+				c.globalAlpha = aRèsta;
+				c.fillStyle = '#000';
+				c.fillRect(0, 0, W, H);
+				c.globalAlpha = 1;
+			}
 			c.globalCompositeOperation = 'source-over';
-			const aL = Math.sin(Math.PI * pr);
-			c.strokeStyle = T.fil;
-			c.lineWidth = 1.3;
-			c.lineJoin = 'round';
-			c.shadowColor = T.fil;
-			c.shadowBlur = 10;
-			c.globalAlpha = 0.85 * aL;
-			c.stroke();
-			c.shadowBlur = 0;
-			// e d'estelas que pampalhejan sus lo bòrd
-			c.fillStyle = T.estela;
-			for (const pts of bòrds)
-				for (const [x, y, k] of pts) {
-					c.globalAlpha = aL * (0.35 + 0.35 * Math.sin(tt * 7 + k * 1.7));
-					c.fillRect(x - 0.9, y - 0.9, 1.8, 1.8);
-				}
-			c.globalAlpha = 1;
+			// del flo al net, coma en sortent dels nívols
+			const flo = (5 * (1 - easeS(pr))).toFixed(1);
+			if (flo !== this._revFlo) {
+				el.style.setProperty('--teulas-flo', flo + 'px');
+				this._revFlo = flo;
+			}
 		},
 		_onAnimZoom(e) {
 			this._zCibla = e.zoom; // le relais part avec le mouvement
