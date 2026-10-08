@@ -12,6 +12,7 @@
 // territòris. Noms occitans de validar per Romain.
 
 import { INTRO, nivèlsDezoom, aDetalh, Z_COMUNAS } from './colaEstelas.js';
+import { proj0 } from './projeccion.js';
 import { prepContorn, traçarPart, estelasDe, estelaCap, avançada, DURADA as DURADA_APAR, ONDA, TOTAL as TOTAL_APAR } from './aparicion.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -471,6 +472,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				const q = map.project([lat, lon], z);
 				return [q.x - o.x, q.y - o.y];
 			};
+			const s2 = Math.pow(2, z);
 			// un poligòn → camin + bóstia (pel tèst rapid del survòl)
 			const zona = (poligons) => {
 				const c = new Path2D();
@@ -480,8 +482,11 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					y1 = -Infinity;
 				for (const anels of poligons)
 					for (const a of anels) {
+						// (cada anèl projectat un còp al zoom 0, puèi multiplicat : projeccion.js)
+						const f = proj0(map, a);
 						for (let i = 0; i < a.length; i++) {
-							const [x, y] = pt(a[i]);
+							const x = f[2 * i] * s2 - o.x,
+								y = f[2 * i + 1] * s2 - o.y;
 							if (i) c.lineTo(x, y);
 							else c.moveTo(x, y);
 							if (x < x0) x0 = x;

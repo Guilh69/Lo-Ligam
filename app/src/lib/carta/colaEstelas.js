@@ -17,6 +17,7 @@ import { LUOCS, RIUS, COSTA, dialDe, rencDe } from '$lib/acuelh/carta-estelas.js
 import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
 import { VILAS_FICHAS } from './vilasFichas.js';
 import { nomTerritori, sotaTerritori } from './territoris.js';
+import { proj0, projectar, projPonch } from './projeccion.js';
 
 // Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam sus un disc sorne
 // liserat d'aur, e una onda que s'espandís doçament, coma un ponch d'interès
@@ -256,12 +257,12 @@ const Z_VOL = 10.5; // niveau où l'on arrive en cliquant sur un lieu
 // drecha, 6 dessús a esquèrra, 7 dejós a esquèrra
 const PLAÇA_PREFERIDA = { Marselha: 3, Bordèu: 3, Limòtges: 2, Gap: 5, Pau: 3 };
 
-function plaçar(cx, vilas, rius) {
+function plaçar(cx, vilas, rius, ambNomsRius = true) {
 	const CEL = 16,
 		grilha = new Map();
 	const cases = (b, fn) => {
 		for (let i = Math.floor(b[0] / CEL); i <= Math.floor(b[2] / CEL); i++)
-			for (let j = Math.floor(b[1] / CEL); j <= Math.floor(b[3] / CEL); j++) fn(i + ',' + j);
+			for (let j = Math.floor(b[1] / CEL); j <= Math.floor(b[3] / CEL); j++) fn(i * 131072 + j);
 	};
 	const metre = (b, pes, prop) => {
 		const o = { b, pes, prop };
@@ -368,7 +369,8 @@ function plaçar(cx, vilas, rius) {
 	// ajusté sur le tracé lissé, au-dessus ou au-dessous de l'eau, sans rien toucher
 	const perNom = {};
 	for (const r of rius) if (r.nom) (perNom[r.nom] ||= { nom: r.nom, pes: 0, linhas: [] }).linhas.push(r.pts), (perNom[r.nom].pes = Math.max(perNom[r.nom].pes, r.pes));
-	for (const { nom, linhas, pes } of Object.values(perNom).sort((a, b) => b.pes - a.pes)) {
+	// (los noms de rius, sonque se son afichats : lor plaçament es lo pus car)
+	if (ambNomsRius) for (const { nom, linhas, pes } of Object.values(perNom).sort((a, b) => b.pes - a.pes)) {
 		const fs = Math.round(12 + pes * 0.75),
 			trac = fs * 0.09;
 		cx.font = 'italic 500 ' + fs + 'px ' + CORMORANT;
@@ -718,7 +720,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			};
 			const preparar = (d) =>
 				d.païses.map((p) => {
-					const pts = p.p.map((pl) => pl.map((a) => a.map(proj)));
+					const pts = p.p.map((pl) => pl.map((a) => projectar(map, a, z)));
 					// la largor del país a l'ecran (los pichons estats se nomenan pas de luènh)
 					const xs = pts.flatMap((pl) => pl[0].map((q) => q[0]));
 					return { oc: p.oc, fr: p.fr, eti: proj(p.eti), pts, larg: Math.max(...xs) - Math.min(...xs) };
@@ -896,11 +898,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 
 			const z = this._zoom;
 			if (this._zP !== z) {
-				for (const e of this._estelas) {
-					const q = map.project([e.lat, e.lon], z);
-					e.X = q.x;
-					e.Y = q.y;
-				}
+				for (const e of this._estelas) [e.X, e.Y] = projPonch(map, e, z);
 				riusOrientats ??= orientarRius(RIUS, COSTA);
 				this._rius = riusOrientats.map(({ nom, pes, l, o, L, cum }) => ({
 					nom,
@@ -908,24 +906,12 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					o,
 					L,
 					cum,
-					pts: l.map(([lon, lat]) => {
-						const q = map.project([lat, lon], z);
-						return [q.x, q.y];
-					})
+					pts: projectar(map, l, z)
 				}));
-				for (const v of this._fichas) {
-					const q = map.project([v.lat, v.lon], z);
-					v.X = q.x;
-					v.Y = q.y;
-				}
+				for (const v of this._fichas) [v.X, v.Y] = projPonch(map, v, z);
 				const projAnels = (lista) =>
 					(lista || []).map(([code, nom, anels]) => {
-						const pa = anels.map((a) =>
-							a.map(([lon, lat]) => {
-								const q = map.project([lat, lon], z);
-								return [q.x, q.y];
-							})
-						);
+						const pa = anels.map((a) => projectar(map, a, z));
 						const cami = new Path2D();
 						for (const a of pa) {
 							cami.moveTo(a[0][0], a[0][1]);
@@ -937,11 +923,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				if (this._terFixat && this._terFixat.mena !== this._mena(z)) this._terFixat = null;
 				const dom = this._limitsGeo?.domeni;
 				if (dom) {
-					const proj = (a) =>
-						a.map(([lon, lat]) => {
-							const q = map.project([lat, lon], z);
-							return [q.x, q.y];
-						});
+					const proj = (a) => projectar(map, a, z);
 					// le domaine en surface : la teinte d'un territoire révélé ne couvre
 					// que sa partie occitanophone
 					const cami = new Path2D();
@@ -955,21 +937,10 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				}
 				this._regions = projAnels(this._limitsGeo?.regions);
 				this._deps = projAnels(this._limitsGeo?.despartaments);
-				this._corbas = (this._corbasGeo || []).map(([e, l]) => [
-					e,
-					l.map(([lon, lat]) => {
-						const q = map.project([lat, lon], z);
-						return [q.x, q.y];
-					})
-				]);
+				this._corbas = (this._corbasGeo || []).map(([e, l]) => [e, projectar(map, l, z)]);
 				// Euròpa e lo mond (pel dezoom) : projectats sonque quand se veson
 				this._mondPx = this._projMond(z);
-				this._costa = COSTA.map((l) =>
-					l.map(([lon, lat]) => {
-						const q = map.project([lat, lon], z);
-						return [q.x, q.y];
-					})
-				);
+				this._costa = COSTA.map((l) => projectar(map, l, z));
 				this._plaçament = z < Z_DETALH_1 ? this._plaçarTot(z) : { vilas: [], rius: [] };
 				this._zP = z;
 			}
@@ -992,7 +963,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				.filter((e) => z >= zBase + dzLuòc(e))
 				.sort((a, b) => renc(a) - renc(b) || rang(a.nom) - rang(b.nom))
 				.map((e) => ({ nom: e.nom, x: e.X, y: e.Y, f: talhas[renc(e)], ciutat: renc(e) <= 2, renc: renc(e) }));
-			return plaçar(this._cx, vilas, this._rius);
+			return plaçar(this._cx, vilas, this._rius, !!this._el.nomsRius);
 		},
 
 		/* Les noms sont dessinés UNE fois par recalage dans une image en mémoire,
@@ -1007,8 +978,14 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				T = this._tem,
 				o = this._o,
 				dpr = this._dpr;
-			c.width = this._cv.width;
-			c.height = this._cv.height;
+			// (tela pas reallocada se sa talha cambia pas : un escafatge basta)
+			if (c.width !== this._cv.width || c.height !== this._cv.height) (c.width = this._cv.width), (c.height = this._cv.height);
+			else {
+				g.setTransform(1, 0, 0, 1, 0, 0);
+				g.clearRect(0, 0, c.width, c.height);
+			}
+			// (voida : pas besonh de la recopiar a cada imatge)
+			this._etiqVuèg = !((this._el.nomsVilas && this._plaçament.vilas.length) || (this._el.nomsRius && this._plaçament.rius.length));
 			g.setTransform(dpr, 0, 0, dpr, -o.x * dpr, -o.y * dpr);
 			g.strokeStyle = T.liser;
 			g.lineJoin = 'round';
@@ -1703,7 +1680,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 
 			const aNomsV = faseV([INTRO.vilas[0] + 0.3, INTRO.vilas[1] + 0.3]);
-			if (aNomsV > 0.01 && aEtiq > 0.01) {
+			if (aNomsV > 0.01 && aEtiq > 0.01 && !this._etiqVuèg) {
 				cx.globalAlpha = aNomsV * aEtiq * 0.92;
 				cx.drawImage(this._etiq, 0, 0, W, H);
 			}

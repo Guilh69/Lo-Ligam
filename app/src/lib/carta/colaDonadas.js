@@ -10,6 +10,7 @@
 // color se difusa sus son territòri a partir de son còr.
 import { cargarLimits, INTRO, nivèlsDezoom, aDialectes, aDetalh } from './colaEstelas.js';
 import { prepContorn, traçarPart, estelaCap, avançada, TOTAL as TOTAL_APAR } from './aparicion.js';
+import { proj0, projectar } from './projeccion.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -212,8 +213,8 @@ export function crearColaDonadas(
 		setIntro(t0) {
 			this._tIntro = t0;
 			cancelAnimationFrame(this._rafIntro);
-			const pas = () => {
-				this._pintar();
+			const pas = (ts) => {
+				this._pintarA(ts);
 				if ((performance.now() - t0) / 1000 < INTRO.fin) this._rafIntro = requestAnimationFrame(pas);
 			};
 			// (t0 infinit : en espèra de las donadas, res se dessenha)
@@ -360,19 +361,20 @@ export function crearColaDonadas(
 				r.duraA = ms(cibla);
 				r.dura = 350 / Math.max(0.02, 1 - r.q);
 				r.t0 = ara - r.q * r.dura;
-			} else Object.assign(r, { de: r.v, cibla, t0: ara, dura: ms(cibla), q: 0 });
+			} else Object.assign(r, { de: r.v, cibla, t0: null, dura: ms(cibla), q: 0 });
 			if (this._rafRel) return;
-			const pas = () => {
+			const pas = (ts) => {
 				let viu = false;
 				const t = performance.now();
 				for (const x of Object.values(R))
 					if (x.q < 1) {
+						x.t0 ??= t;
 						x.q = clamp((t - x.t0) / x.dura);
 						x.v = lerp(x.de, x.cibla, x.q);
 						if (x.q >= 1 && x.attend !== undefined) Object.assign(x, { de: x.v, cibla: x.attend, t0: t, dura: x.duraA, q: 0, attend: undefined });
 						if (x.q < 1) viu = true;
 					}
-				this._pintar();
+				this._pintarA(ts);
 				this._rafRel = viu && this._map ? requestAnimationFrame(pas) : null;
 			};
 			this._rafRel = requestAnimationFrame(pas);
@@ -390,8 +392,8 @@ export function crearColaDonadas(
 		},
 		_lançarApar() {
 			if (this._rafApar) return;
-			const pas = () => {
-				this._pintar();
+			const pas = (ts) => {
+				this._pintarA(ts);
 				const viu = Object.values(this._apar ?? {}).some((t0) => (performance.now() - t0) / 1000 <= TOTAL_APAR);
 				this._rafApar = viu && this._map ? requestAnimationFrame(pas) : null;
 				if (!viu) this._pintar(); // (lo darrièr estat, sens estelas)
@@ -423,6 +425,13 @@ export function crearColaDonadas(
 			cx.setLineDash([]);
 			for (const [ct, p, a] of caps) estelaCap(cx, ct, p, T.estela, a * 0.9);
 			cx.restore();
+		},
+		// (mantuna bocla d'animacion — entrada en scèna, relais, aparicions,
+		// causida — pòdon demandar un dessenh dins la meteissa imatge : un sol)
+		_pintarA(ts) {
+			if (ts === this._tsPintat) return;
+			this._tsPintat = ts;
+			this._pintar();
 		},
 		_interactiu() {
 			// (l'Occitània unida, de luènh : los dialèctes se causisson pas)
@@ -537,8 +546,8 @@ export function crearColaDonadas(
 		},
 		_bocla() {
 			cancelAnimationFrame(this._raf);
-			const pas = () => {
-				this._pintar();
+			const pas = (ts) => {
+				this._pintarA(ts);
 				if (this._anim && performance.now() - this._anim.t0 < DURADA + 50) this._raf = requestAnimationFrame(pas);
 				else {
 					this._anim = null;
@@ -579,14 +588,13 @@ export function crearColaDonadas(
 				const q = map.project([lat, lon], z);
 				return [q.x - o.x, q.y - o.y];
 			};
+			// (cada anèl projectat un còp al zoom 0, puèi multiplicat : projeccion.js)
+			const s2 = Math.pow(2, z);
 			const cami = (anels, c = new Path2D()) => {
 				for (const a of anels) {
-					const p0 = pt(a[0]);
-					c.moveTo(p0[0], p0[1]);
-					for (let i = 1; i < a.length; i++) {
-						const q = pt(a[i]);
-						c.lineTo(q[0], q[1]);
-					}
+					const f = proj0(map, a);
+					c.moveTo(f[0] * s2 - o.x, f[1] * s2 - o.y);
+					for (let i = 1; i < a.length; i++) c.lineTo(f[2 * i] * s2 - o.x, f[2 * i + 1] * s2 - o.y);
 					c.closePath();
 				}
 				return c;
@@ -597,8 +605,10 @@ export function crearColaDonadas(
 				let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
 				for (const anels of poligons(f.geometry)) {
 					cami(anels, c);
-					for (const [lon, lat] of anels[0]) {
-						const [x, y] = pt([lon, lat]);
+					const f0 = proj0(map, anels[0]);
+					for (let i = 0; i < anels[0].length; i++) {
+						const x = f0[2 * i] * s2 - o.x,
+							y = f0[2 * i + 1] * s2 - o.y;
 						x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y);
 					}
 				}
@@ -609,7 +619,7 @@ export function crearColaDonadas(
 				pt,
 				mPx: 112600 / Math.pow(2, z), // mètres par pixel vers 44° N
 				dom: dom?.anels?.length ? cami(dom.anels) : null,
-				linhas: dom ? dom.linhas.map((l) => l.map(pt)) : null,
+				linhas: dom ? dom.linhas.map((l) => projectar(map, l, z, o.x, o.y)) : null,
 				zonas: this._dial ? this._dial.features.map(zona) : null,
 				cro: this._creissent ? zona(this._creissent.features[0]) : null,
 				mix: this._mix && (this._jaces.dialectes || this._jaces.frontiera) ? this._mix.features.map((f) => ({ ...zona(f), istoric: f.properties.mena === 'istoric', enclava: f.properties.mena === 'enclava' })) : null,
@@ -1004,12 +1014,25 @@ export function crearColaDonadas(
 				// domeni istoric (gascon escantit) : la tencha pus palla, sens asclas
 				const ist = G.mix.filter((zm) => zm.istoric);
 				if (ist.length && J.dialectes) {
+					// (lo flo es preparat un còp per zoom, pas a cada imatge)
+					if (this._istGeo !== G) {
+						this._istGeo = G;
+						const t = (this._imgIst ??= document.createElement('canvas'));
+						if (t.width !== this._cv.width || t.height !== this._cv.height) (t.width = this._cv.width), (t.height = this._cv.height);
+						const g = t.getContext('2d');
+						g.setTransform(1, 0, 0, 1, 0, 0);
+						g.clearRect(0, 0, t.width, t.height);
+						g.setTransform(this._dpr, 0, 0, this._dpr, 0, 0);
+						g.filter = `blur(${clamp(2500 / G.mPx, 1, 30).toFixed(1)}px)`;
+						g.fillStyle = '#000';
+						for (const zm of ist) g.fill(zm.c, 'evenodd');
+						g.filter = 'none';
+					}
 					cx.save();
 					cx.globalCompositeOperation = 'destination-out';
-					cx.filter = `blur(${clamp(2500 / G.mPx, 1, 30).toFixed(1)}px)`;
+					cx.setTransform(1, 0, 0, 1, 0, 0);
 					cx.globalAlpha = this._pus?.startsWith('ist-') ? 0.35 : 0.55;
-					cx.fillStyle = '#000';
-					for (const zm of ist) cx.fill(zm.c, 'evenodd');
+					cx.drawImage(this._imgIst, 0, 0);
 					cx.restore();
 				}
 				this._copiar(this._imgMix, (this._sels.length ? 0.25 : pus ? 0.75 : 0.5) * aTenchas * aFinIntro);
