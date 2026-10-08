@@ -236,12 +236,34 @@ const CORMORANT = '"Cormorant Garamond", Georgia, serif';
 // la Limelight del lògo per las grandas vilas, la Luciole grassa pels
 // cap-lòcs, l'italica per las vilas pus pichonas. Lo nom survolat garda la
 // polissa de son reng (abans, una italica Cormorant que i pegava pas).
-const polissaVila = (renc, f) =>
-	renc === 1
-		? `${(f * 1.04).toFixed(1)}px Limelight, Georgia, serif`
-		: renc === 2
-			? `700 ${f}px Luciole, sans-serif`
-			: `italic 400 ${renc === 3 ? f * 1.04 : f}px Luciole, sans-serif`;
+// Los noms de las vilas (retorn de Romain, 2026-10-08 : lo contorn negre de
+// las vilas grandas, « pas fan », « plus haut de gamme, plus raffiné ») : pas
+// pus de contorn dur, un alo doç de la color del fons. Estil « Atlas », causit
+// per Romain entre tres : las metropòlis en Limelight finament espaçat, las
+// vilas en pichonas capitalas espaçadas, los borgs e vilatges en Cormorant
+// italic. Per renc : [polissa(f), espaçament (en f), capitalas]
+const ESTIL_VILAS = {
+	1: [(f) => `${f.toFixed(1)}px Limelight, Georgia, serif`, 0.05, false],
+	2: [(f) => `400 ${(f * 0.84).toFixed(1)}px Luciole, sans-serif`, 0.16, true],
+	3: [(f) => `italic 500 ${(f * 1.25).toFixed(1)}px ${CORMORANT}`, 0.01, false],
+	4: [(f) => `italic 500 ${(f * 1.15).toFixed(1)}px ${CORMORANT}`, 0, false]
+};
+const estilVila = (renc, f) => {
+	const [polissa, esp, majus] = ESTIL_VILAS[renc] ?? ESTIL_VILAS[4];
+	return { font: polissa(f), esp: esp * f, majus };
+};
+// la polissa sola (bullas, repèrs)
+const polissaVila = (renc, f) => estilVila(renc, f).font;
+// la polissa e l'espaçament sus un contèxte ; torna lo tèxte de dessenhar
+const aplicarVila = (g, renc, f, nom) => {
+	const e = estilVila(renc, f);
+	g.font = e.font;
+	if ('letterSpacing' in g) g.letterSpacing = e.esp.toFixed(2) + 'px';
+	return e.majus ? nom.toUpperCase() : nom;
+};
+const sensEspaci = (g) => {
+	if ('letterSpacing' in g) g.letterSpacing = '0px';
+};
 
 // Relais NET entre la carte en étoiles et la carte OSM (retour de Romain,
 // 2026-10-07) : un fondu étalé sur plusieurs crans de zoom laissait, vers
@@ -364,9 +386,8 @@ function plaçar(cx, vilas, rius, ambNomsRius = true) {
 	// peut croiser une rivière (son liseré le détache), jamais un autre nom
 	// Ordre : villes, puis noms de rivières, puis villages dans la place qui reste
 	const pausarVila = (v) => {
-		cx.font = polissaVila(v.renc, v.f);
 		const k = v.f / 12,
-			w = cx.measureText(v.nom).width,
+			w = cx.measureText(aplicarVila(cx, v.renc, v.f, v.nom)).width,
 			x = v.x,
 			y = v.y;
 		const cand = [
@@ -398,6 +419,7 @@ function plaçar(cx, vilas, rius, ambNomsRius = true) {
 				c = q;
 			}
 		}
+		sensEspaci(cx);
 		if (mendre >= 100) return; // pas de place : le nom reste visible au survol
 		metre(c.b, 5, 'etiqueta');
 		res.vilas.push({ nom: v.nom, x: c.x, y: c.y, al: c.al, f: v.f, ciutat: v.ciutat, renc: v.renc });
@@ -725,8 +747,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				g.save();
 				if ('letterSpacing' in g) g.letterSpacing = '0px';
 				const cs = pl.vilas.map((v) => {
-					g.font = polissaVila(v.renc, v.f);
-					const w = g.measureText(v.nom).width,
+					const w = g.measureText(aplicarVila(g, v.renc, v.f, v.nom)).width,
 						x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
 					return [x0 - 2, v.y - v.f, x0 + w + 2, v.y + v.f * 0.3];
 				});
@@ -1057,12 +1078,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			g.fillStyle = T.vilaTèxt;
 			for (const v of this._el.nomsVilas ? this._plaçament.vilas : []) {
 				if (!dins(v.x, v.y) || (p && v.nom === p.nom)) continue;
-				g.font = polissaVila(v.renc, v.f);
-				g.lineWidth = { 1: 4.5, 2: 3.5, 3: 3, 4: 2.5 }[v.renc];
+				const tv = aplicarVila(g, v.renc, v.f, v.nom);
 				// distance du lieu survolé au TEXTE (sa boîte), pas à son point d'ancrage
 				let aprèp = false;
 				if (p) {
-					const w = g.measureText(v.nom).width,
+					const w = g.measureText(tv).width,
 						x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
 					const dx = Math.max(x0 - p.X, 0, p.X - (x0 + w)),
 						dy = Math.max(v.y - v.f - p.Y, 0, p.Y - v.y);
@@ -1070,9 +1090,16 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				}
 				g.globalAlpha = { 1: 1, 2: 0.85, 3: 0.74, 4: 0.55 }[v.renc] * (aprèp ? 0.12 : 1);
 				g.textAlign = v.al;
-				g.strokeText(v.nom, v.x, v.y);
-				g.fillText(v.nom, v.x, v.y);
+				// un alo doç de la color del fons (doas passadas), puèi la letra neta
+				g.shadowColor = T.liser;
+				g.shadowBlur = 3 + v.f * 0.35;
+				g.fillText(tv, v.x, v.y);
+				g.fillText(tv, v.x, v.y);
+				g.shadowBlur = 0;
+				g.fillText(tv, v.x, v.y);
 			}
+			g.shadowColor = 'transparent';
+			sensEspaci(g);
 			g.globalAlpha = 1;
 		},
 
@@ -1897,9 +1924,14 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (p) {
 				const px = p.X - o.x,
 					py = p.Y - o.y;
+				// (meteis alo doç que los noms de la carta, pas de contorn dur)
 				const escriure = (s, x, y, l) => {
-					cx.lineWidth = l;
-					cx.strokeText(s, x, y);
+					cx.save();
+					cx.shadowColor = T.liser;
+					cx.shadowBlur = l * 1.6;
+					cx.fillText(s, x, y);
+					cx.fillText(s, x, y);
+					cx.restore();
 					cx.fillText(s, x, y);
 				};
 				cx.globalAlpha = 1;
