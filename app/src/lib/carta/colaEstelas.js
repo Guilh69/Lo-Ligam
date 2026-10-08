@@ -245,6 +245,9 @@ export const Z_PRECARGA = 8.25;
 // las comunas se mòstran a partir de l'escala « 7 km » (causida de Romain)
 export const Z_COMUNAS = 10.5; // les tuiles se chargent, invisibles, un peu avant
 const DURADA_RELAIS = 2.0; // secondes (la revelacion « dels nívols a la tèrra », retorn de Romain)
+// la tela dels nívols es un degradat doç : pintada al quart de la resolucion
+// (16 còps mens de ponches a cada imatge), lo navegador l'agrandís
+const K_REV = 0.25;
 const Z_VOL = 10.5; // niveau où l'on arrive en cliquant sur un lieu
 
 
@@ -643,6 +646,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		setTema(c, d) {
 			this._temaBasa = [c, d];
 			this._fonsCarta = null; // (lo fons de la tela de revelacion)
+			this._revCache = null;
 			this._tem = { ...temaDe(c, d), ...this._colors };
 			this._construirEtiquetas();
 		},
@@ -880,10 +884,12 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._cv.style.height = tal.y + 'px';
 			if (this._cvR) {
 				L.DomUtil.setPosition(this._cvR, min);
-				this._cvR.width = this._cv.width;
-				this._cvR.height = this._cv.height;
+				const rw = Math.max(1, Math.round(tal.x * K_REV)),
+					rh = Math.max(1, Math.round(tal.y * K_REV));
+				if (this._cvR.width !== rw || this._cvR.height !== rh) (this._cvR.width = rw), (this._cvR.height = rh);
 				this._cvR.style.width = tal.x + 'px';
 				this._cvR.style.height = tal.y + 'px';
+				this._revCache = null; // (fons e masca del domeni de tornar preparar)
 			}
 			this._o = map.getPixelOrigin().add(min); // projeté → canevas : soustraire o
 			if (this._senhal && this._senhal.t0 === null) this._senhal.t0 = performance.now();
@@ -1074,89 +1080,121 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				if (this._revAct) {
 					c.setTransform(1, 0, 0, 1, 0, 0);
 					c.clearRect(0, 0, cv.width, cv.height);
-					el.classList.remove('revelant');
-					el.style.removeProperty('--teulas-flo');
-					this._revFlo = null;
+					el.classList.remove('revelant', 'net');
 					this._revAct = false;
 				}
 				this._revCibla = cibla;
 				return;
 			}
 			if (!this._revAct || this._revCibla !== cibla) {
+				const debuta = !this._revAct;
 				this._revAct = true;
 				this._revCibla = cibla;
-				el.classList.add('revelant');
-				const zR = this._zoom,
-					size = map.getSize(),
-					cp = this._mirgaCP ?? size.divideBy(2),
-					pd = this.options.padding,
-					// (dins lo repèri de la tela, al zoom de partença : pendent un zoom
-					// animat, Leaflet a ja passat sos repèris al zoom d'arribada)
-					P = L.point(this._o.x + size.x * pd + cp.x, this._o.y + size.y * pd + cp.y);
-				const zf = Math.max(zR, this._zCibla ?? zR),
-					dMax = Math.max(Math.hypot(cp.x, cp.y), Math.hypot(size.x - cp.x, cp.y), Math.hypot(cp.x, size.y - cp.y), Math.hypot(size.x - cp.x, size.y - cp.y));
-				// (lo rond, a sa talha finala, cobrís tota la vista d'arribada)
-				this._rev = { zR, x: P.x, y: P.y, Rmax: (dMax * 1.12) / 0.55 / Math.pow(2, zf - zR) };
+				// lo flo de las tuèlas : una transicion CSS que lo navegador mena sol
+				// (pas de calcul a cada imatge) ; vèrs lo net en s'aprochant, vèrs lo
+				// flo en se dezoomant
+				el.style.setProperty('--rev-dur', DURADA_RELAIS * (cibla ? 1 - pr : pr) + 's');
+				if (debuta) {
+					el.classList.add('revelant');
+					el.classList.toggle('net', !cibla);
+					void el.offsetWidth; // (l'estat de partença pren efièch abans la transicion)
+				}
+				el.classList.toggle('net', !!cibla);
+				if (debuta) {
+					const zR = this._zoom,
+						size = map.getSize(),
+						cp = this._mirgaCP ?? size.divideBy(2),
+						pd = this.options.padding,
+						// (dins lo repèri de la tela, al zoom de partença : pendent un zoom
+						// animat, Leaflet a ja passat sos repèris al zoom d'arribada)
+						P = L.point(this._o.x + size.x * pd + cp.x, this._o.y + size.y * pd + cp.y);
+					const zf = Math.max(zR, this._zCibla ?? zR),
+						dMax = Math.max(Math.hypot(cp.x, cp.y), Math.hypot(size.x - cp.x, cp.y), Math.hypot(cp.x, size.y - cp.y), Math.hypot(size.x - cp.x, size.y - cp.y));
+					// (lo rond, a sa talha finala, cobrís tota la vista d'arribada)
+					this._rev = { zR, x: P.x, y: P.y, Rmax: (dMax * 1.12) / 0.55 / Math.pow(2, zf - zR) };
+				}
 			}
 			const R = this._rev,
 				s = Math.pow(2, this._zoom - R.zR),
 				o = this._o,
 				W = this._W,
 				H = this._H,
-				f = (this._fonsCarta ??= fonsDe(el)),
-				size = map.getSize(),
-				pd = this.options.padding;
+				w = cv.width,
+				h = cv.height,
+				k = w / W;
+			// lo fons dels nívols e la masca de la tèrra occitana : preparats un còp
+			// per posicion de la carta, pas a cada imatge
+			const Q = (this._revCache ??= this._prepRev(w, h, k));
+			// los nívols…
 			c.setTransform(1, 0, 0, 1, 0, 0);
-			c.globalCompositeOperation = 'source-over';
 			c.globalAlpha = 1;
-			c.clearRect(0, 0, cv.width, cv.height);
-			c.setTransform(this._dpr, 0, 0, this._dpr, 0, 0);
-			// los nívols : lo fons de la carta, sa color e son alo terra cuècha
-			c.fillStyle = f.fons;
-			c.fillRect(0, 0, W, H);
-			if (f.terra) {
-				c.save();
-				c.translate(size.x * pd + size.x * 0.45, size.y * pd + size.y * 0.55);
-				c.scale(size.x * 0.6, size.y * 0.55);
-				const g = c.createRadialGradient(0, 0, 0, 0, 0, 1);
-				g.addColorStop(0, `rgba(${f.terra}, 0.16)`);
-				g.addColorStop(0.75, `rgba(${f.terra}, 0)`);
-				c.fillStyle = g;
-				c.fillRect(-2, -2, 4, 4);
-				c.restore();
-			}
-			c.globalCompositeOperation = 'destination-out';
-			// lo rond que s'espandís, sonque sus la tèrra occitana
+			c.globalCompositeOperation = 'copy';
+			c.drawImage(Q.fons, 0, 0);
+			// … traucats per un rond fondut, sonque sus la tèrra occitana
 			const r = Math.max(1, easeIO(pr) * R.Rmax * s),
 				x = R.x * s - o.x,
-				y = R.y * s - o.y;
-			c.save();
-			if (this._domeni?.cami) {
-				c.translate(-o.x, -o.y);
-				c.clip(this._domeni.cami, 'evenodd');
-				c.translate(o.x, o.y);
+				y = R.y * s - o.y,
+				g = Q.trab.getContext('2d');
+			g.setTransform(1, 0, 0, 1, 0, 0);
+			g.globalCompositeOperation = 'copy';
+			const gr = g.createRadialGradient(x * k, y * k, r * k * 0.55, x * k, y * k, r * k);
+			gr.addColorStop(0, '#000');
+			gr.addColorStop(1, 'rgba(0, 0, 0, 0)');
+			g.fillStyle = gr;
+			g.fillRect(0, 0, w, h);
+			if (Q.dom) {
+				g.globalCompositeOperation = 'destination-in';
+				g.drawImage(Q.dom, 0, 0);
 			}
-			const g = c.createRadialGradient(x, y, r * 0.55, x, y, r);
-			g.addColorStop(0, '#000');
-			g.addColorStop(1, 'rgba(0, 0, 0, 0)');
-			c.fillStyle = g;
-			c.fillRect(0, 0, W, H);
-			c.restore();
+			c.globalCompositeOperation = 'destination-out';
+			c.drawImage(Q.trab, 0, 0);
 			// la mar e las tèrras vesinas : se desnivolan a la fin, egalament
 			const aRèsta = easeS(clamp((pr - 0.45) / 0.55));
 			if (aRèsta > 0.001) {
 				c.globalAlpha = aRèsta;
 				c.fillStyle = '#000';
-				c.fillRect(0, 0, W, H);
+				c.fillRect(0, 0, w, h);
 				c.globalAlpha = 1;
 			}
 			c.globalCompositeOperation = 'source-over';
-			// del flo al net, coma en sortent dels nívols
-			const flo = (5 * (1 - easeS(pr))).toFixed(1);
-			if (flo !== this._revFlo) {
-				el.style.setProperty('--teulas-flo', flo + 'px');
-				this._revFlo = flo;
+		},
+		// Lo fons dels nívols (la color e l'alo de la carta) e la masca de la
+		// tèrra occitana, a la resolucion de la tela
+		_prepRev(w, h, k) {
+			const map = this._map,
+				f = (this._fonsCarta ??= fonsDe(map.getContainer())),
+				size = map.getSize(),
+				pd = this.options.padding,
+				o = this._o;
+			const tela = () => {
+				const t = document.createElement('canvas');
+				t.width = w;
+				t.height = h;
+				return t;
+			};
+			const fons = tela(),
+				gf = fons.getContext('2d');
+			gf.fillStyle = f.fons;
+			gf.fillRect(0, 0, w, h);
+			if (f.terra) {
+				gf.setTransform(k, 0, 0, k, 0, 0);
+				gf.translate(size.x * pd + size.x * 0.45, size.y * pd + size.y * 0.55);
+				gf.scale(size.x * 0.6, size.y * 0.55);
+				const g = gf.createRadialGradient(0, 0, 0, 0, 0, 1);
+				g.addColorStop(0, `rgba(${f.terra}, 0.16)`);
+				g.addColorStop(0.75, `rgba(${f.terra}, 0)`);
+				gf.fillStyle = g;
+				gf.fillRect(-2, -2, 4, 4);
 			}
+			let dom = null;
+			if (this._domeni?.cami) {
+				dom = tela();
+				const gd = dom.getContext('2d');
+				gd.setTransform(k, 0, 0, k, -o.x * k, -o.y * k);
+				gd.fillStyle = '#000';
+				gd.fill(this._domeni.cami, 'evenodd');
+			}
+			return { fons, dom, trab: tela() };
 		},
 		_onAnimZoom(e) {
 			this._zCibla = e.zoom; // le relais part avec le mouvement

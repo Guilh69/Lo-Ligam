@@ -1147,12 +1147,21 @@
 		filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) sepia(0.35) saturate(0.75);
 	}
 	/* la revelacion de la carta detalhada : del flo al net, coma en sortent
-	   dels nívols (lo flo sonque pendent la revelacion) */
+	   dels nívols. Una transicion CSS que lo navegador mena sol (pas de calcul
+	   a cada imatge) ; lo flo sonque pendent la revelacion */
 	.carta:global(.revelant) :global(.leaflet-tile-pane) {
-		filter: blur(var(--teulas-flo, 0px));
+		filter: blur(5px);
+		transition: filter var(--rev-dur, 2s) cubic-bezier(0.45, 0, 0.55, 1);
+		will-change: filter;
+	}
+	.carta:global(.revelant.net) :global(.leaflet-tile-pane) {
+		filter: blur(0px);
 	}
 	.carta.nuech:global(.revelant) :global(.leaflet-tile-pane) {
-		filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) sepia(0.35) saturate(0.75) blur(var(--teulas-flo, 0px));
+		filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) sepia(0.35) saturate(0.75) blur(5px);
+	}
+	.carta.nuech:global(.revelant.net) :global(.leaflet-tile-pane) {
+		filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) sepia(0.35) saturate(0.75) blur(0px);
 	}
 
 	/* Etiquetas dels noms occitans, per las mostrar suls fonses Natural e
