@@ -62,7 +62,9 @@ gav = [c for c in R if c['id'] == 'petite-gavacherie'][0]['polygone']
 gavacharia = poli(gav)
 feats = []
 for kod, g, oc, fr, sota_oc, sota_fr in [
-    ('enc-gavacharia', gavacharia, 'La Pichona Gavachariá', 'La Petite Gavacherie', "enclava de lenga d'oïl (saintongés), dempuèi lo sègle XVI", "enclave de langue d'oïl (saintongeais), depuis le XVIe siècle"),
+    # (2026-10-08, retorn de Romain : l'illòt a desaparegut al sègle XX ; zòna
+    # particulara dins lo gascon, pas pus enclava ; puèi : node SIG/cadena/gavacharia.mjs)
+    ('mix-gavacharia', gavacharia, 'La Pichona Gavachariá', 'La Petite Gavacherie', "ancian illòt de lenga d'oïl (saintongés), del sègle XV al sègle XX", "ancien îlot de langue d'oïl (saintongeais), du XVe au XXe siècle"),
     ('ist-gascon', istoric, 'Gascon', 'Gascon', 'domeni istoric, parlar escantit', 'domaine historique, parler éteint'),
     ('mix-roia', roia, 'Ròia e Briga', 'Roya et Brigue', 'parlar ligur de traches occitans', 'parler ligure à traits occitans'),
     ('mix-monegue', monegue, 'Mónegue', 'Monaco', 'ligur (monegasc), niçard tanben', 'ligure (monégasque), niçois aussi'),

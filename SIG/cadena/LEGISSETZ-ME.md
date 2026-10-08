@@ -50,6 +50,9 @@ ou corriger les chemins.
 9. Dialecte des villes : `node luocs-dial.mjs escriure`.
 10. Territoires hors de France au survol : `node territoris-extra.mjs` ; noms des vallées : `noms-valadas.mjs`.
 11. Zones mixtes et gascon éteint : `mixtas.py` ; bandes de transition : `transicions.py`.
+    Puis `node SIG/cadena/gavacharia.mjs` (après `domeni.mjs` et `mixtas.py`) : la Petite
+    Gavacherie, îlot d'oïl éteint au XXe siècle, n'est plus un trou du domaine mais une
+    zone particulière hachurée dans le gascon, expliquée au survol (Romain, 2026-10-08).
 
 ## Couches de sources publiques (2026-10-07 et 08)
 

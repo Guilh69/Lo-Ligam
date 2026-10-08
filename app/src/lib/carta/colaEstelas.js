@@ -124,6 +124,15 @@ const dzLuòc = (e) => (CAPITALAS.includes(e.nom) ? -1 : e.renc <= 2 ? DZ_DEPART
 // cadenats ; l'embocadura es lo cap que tòca la mar o un autre riu ; cada
 // tròç sap a quina distància de la font comença (en km), que l'aiga avance
 // a la meteissa velocitat de la font a la mar.
+// Lo Ròse grand s'arrèsta al cap de l'estuari que la còsta dessenha (Salin) :
+// son lèit es prolongat fins a la mar, a Port-Sant-Loís (retorn de Romain,
+// 2026-10-08)
+const PROLONGAMENTS = [
+	{
+		cap: [4.695, 43.579],
+		seguida: [[4.704, 43.574], [4.734, 43.54], [4.736, 43.49], [4.736, 43.455], [4.75, 43.423], [4.79, 43.391], [4.828, 43.366], [4.838, 43.345]]
+	}
+];
 function orientarRius(rius, costa) {
 	const km = ([x0, y0], [x1, y1]) => Math.hypot((x1 - x0) * 111 * Math.cos((((y0 + y1) / 2) * Math.PI) / 180), (y1 - y0) * 111);
 	const long = (l) => l.reduce((s, p, i) => (i ? s + km(l[i - 1], p) : 0), 0);
@@ -162,6 +171,36 @@ function orientarRius(rius, costa) {
 			const ponch = (p) => Math.min(...costa.flatMap((l) => l.map((q) => km(p, q))), pròp(p, autres, 3) ? 0 : Infinity);
 			const [debut, fin] = [cadena[0][0], cadena.at(-1).at(-1)];
 			if (ponch(debut) < ponch(fin)) cadena = cadena.reverse().map((t) => t.reverse());
+			// l'embocadura tòca la mar : un estuari conegut es seguit fins a la
+			// mar ; un riu que s'arrèsta a mens de 6 km de la còsta i es menat
+			// (lo Ròse pichon s'arrestava 2 km abans las Santas Marias)
+			const cap = cadena.at(-1).at(-1);
+			if (!pròp(cap, autres, 3)) {
+				const pl = PROLONGAMENTS.find((x) => km(x.cap, cap) < 1.5);
+				if (pl) cadena.at(-1).push(...pl.seguida);
+				else {
+					let melhor = null,
+						dm = Infinity;
+					for (const l of costa)
+						for (let i = 1; i < l.length; i++) {
+							// lo ponch del tròç de còsta lo mai pròche (planisfèri local, en km)
+							const [a, b] = [l[i - 1], l[i]],
+								cs = Math.cos((cap[1] * Math.PI) / 180),
+								ax = (a[0] - cap[0]) * cs,
+								ay = a[1] - cap[1],
+								bx = (b[0] - cap[0]) * cs,
+								by = b[1] - cap[1],
+								dx = bx - ax,
+								dy = by - ay,
+								L2 = dx * dx + dy * dy,
+								t = L2 ? Math.max(0, Math.min(1, -(ax * dx + ay * dy) / L2)) : 0,
+								q = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t],
+								d = km(cap, q);
+							if (d < dm) (dm = d), (melhor = q);
+						}
+					if (melhor && dm > 0.2 && dm < 6) cadena.at(-1).push(melhor);
+				}
+			}
 			let o = 0;
 			for (const l of cadena) {
 				const L = long(l);

@@ -1194,8 +1194,8 @@ export function crearColaDonadas(
 			/* Noms : capitalas espaçadas, una ombra doça (causida de Romain : pas
 			   de contorn negre). De luènh sonque : de prèp, la carta es plena de
 			   noms de vilas. Quand un dialècte es causit, sonque son nom. */
-			// Lo nom d'una enclava (Pichona Gavachariá) : que lo trauc del domeni
-			// s'explique sens survòl (retorn de Romain)
+			// Lo nom d'una zòna particulara (la Pichona Gavachariá, ancian illòt
+			// de lenga d'oïl) : que sa rajadura s'explique sens survòl (retorn de Romain)
 			const aEnc = clamp((z - 7.6) / 0.5) * clamp(11.5 - z);
 			if (aEnc > 0.01 && G.mix && (J.frontiera || J.dialectes)) {
 				cx.save();
@@ -1206,7 +1206,7 @@ export function crearColaDonadas(
 				cx.shadowBlur = 6;
 				cx.fillStyle = `rgba(${T.admin}, 0.9)`;
 				cx.globalAlpha = aEnc;
-				for (const zm of G.mix) if (zm.enclava) cx.fillText(this._lang === 'fr' ? 'Gavacherie (oïl)' : 'Gavachariá (oïl)', zm.eti[0], zm.eti[1]);
+				for (const zm of G.mix) if (zm.props.etiqueta) cx.fillText(zm.props.etiqueta[this._lang === 'fr' ? 'fr' : 'oc'], zm.eti[0], zm.eti[1]);
 				cx.restore();
 			}
 			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3) * aFinIntro * (1 - u);
