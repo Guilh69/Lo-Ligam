@@ -3,6 +3,7 @@
 Site d'apprentissage de l'occitan (languedocien, norme classique), support des cours en visio de Romain (repositionnement du 2026-10-06, cahier §11). Prolonge la marque Instagram « Lo Ligam ».
 
 ## Travailler avec Romain
+- **Toujours en français**, sans exception : réponses, messages d'avancement, légendes de captures, questions. Jamais d'anglais (Romain s'en est agacé plusieurs fois).
 - **Non développeur.** Expliquer en français simple, une étape à la fois, dire quoi cliquer.
 - **Ne jamais demander de clé API** : il utilise son abonnement.
 - Contredire quand c'est justifié ; signaler coûts, risques et dérives de périmètre.
