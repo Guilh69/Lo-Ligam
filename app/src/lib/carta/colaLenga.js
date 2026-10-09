@@ -9,7 +9,7 @@
 //
 // Una còla per lenga, dins son pan (entre los dialèctes occitans, 300, e las
 // jaces tematicas, 320) ; las donadas se cargan sonque quand la jaça s'aluca.
-import { nivèlsDezoom, aDialectes, aDetalh } from './colaEstelas.js';
+import { nivèlsDezoom, aDialectes, aDetalh } from './escalas.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
 

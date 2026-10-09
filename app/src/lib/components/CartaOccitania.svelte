@@ -4,7 +4,9 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
-	import { crearColaEstelas, Z_PRECARGA, Z_RELAIS, nivèlsDezoom, aDetalh, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
+	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
+	import { Z, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
+	const { RELAIS: Z_RELAIS, PRECARGA: Z_PRECARGA, ICONAS: Z_ICONAS } = Z;
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
@@ -648,7 +650,6 @@
 
 	// de luènh, los ponches son d'estelas (la carta d'estelas de l'entrada) ;
 	// l'icòna espelís en s'aprochant (causida de Romain, 2026-10-09)
-	const Z_ICONAS = 10;
 	let degatRaf = 0;
 	function programarDegatjament() {
 		cancelAnimationFrame(degatRaf);
@@ -936,6 +937,8 @@
 			],
 			{ paddingTopLeft: [16, 96], paddingBottomRight: [16, 24] }
 		);
+		// (un grand ecran arriba pas dirèctament sul satellit : 30 km al mai, escalas.js)
+		if (map.getZoom() > Z.ARRIBADA_MAX) map.setZoom(Z.ARRIBADA_MAX, { animate: false });
 
 		setBaseLayer(baseLayer);
 		colaDonadas = crearColaDonadas(L, {

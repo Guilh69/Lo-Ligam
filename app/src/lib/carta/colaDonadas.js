@@ -8,7 +8,8 @@
 // de traches mas de fonduts larges (causida de Romain : las parlars se
 // mesclan). Un dialècte (o lo Creissent) se pòt causir : sol el demòra, e sa
 // color se difusa sus son territòri a partir de son còr.
-import { cargarLimits, INTRO, nivèlsDezoom, aDialectes, aDetalh } from './colaEstelas.js';
+import { cargarLimits, INTRO } from './colaEstelas.js';
+import { nivèlsDezoom, aDialectes, aDetalh } from './escalas.js';
 import { prepContorn, traçarPart, estelaCap, avançada, TOTAL as TOTAL_APAR } from './aparicion.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';

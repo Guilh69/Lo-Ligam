@@ -18,6 +18,7 @@ import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
 import { VILAS_FICHAS } from './vilasFichas.js';
 import { nomTerritori, sotaTerritori } from './territoris.js';
 import { proj0, projectar, projPonch } from './projeccion.js';
+import { Z, KM, zDès, nivèlsDezoom, aDetalh } from './escalas.js';
 import { emprèsa } from './centrar.js';
 
 // Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam sus un disc sorne
@@ -90,13 +91,6 @@ const rang = (n) => {
 	return i < 0 ? 99 : i;
 };
 
-// Seuils d'échelle (niveaux de zoom Leaflet)
-// Les noms se dévoilent par rapport à la VUE D'ENSEMBLE (l'Occitanie
-// entière dans la fenêtre), pas à un niveau fixe : sur un grand écran, la
-// carte s'ouvre déjà plus zoomée, et villages et villes y apparaissaient dès
-// l'arrivée. Vue d'ensemble : métropoles et villes repères seulement.
-const DZ_DEPART = 0.5; // un cran de zoom : les villes importantes de chaque département
-const DZ_VILATGES = 1.25; // un cran de plus : les villages
 
 // L'entrada en scèna de la carta (demanda de Romain, 2026-10-07), en
 // segondas dempuèi l'arribada : la còsta se traça, las corbas de nivèl
@@ -117,9 +111,27 @@ export const INTRO = {
 // Sus la vista d'ensemble, sonque las vilas grandas : una o doas per
 // dialècte (demanda de Romain) ; las autras venon en s'aprochant
 const CAPITALAS = ['Bordèu', 'Pau', 'Tolosa', 'Montpelhièr', 'Marselha', 'Niça', 'Limòtges', 'Clarmont-Ferrand', 'Valença', 'Gap'];
-// a partir de quin zoom (relatiu a la vista d'ensemble) un luòc se mòstra
-// (las vilas d'una autra lenga pòrtan lor sulhet : sas vilas grandas, coma las capitalas)
-const dzLuòc = (e) => e.dz ?? (CAPITALAS.includes(e.nom) ? -1 : e.renc <= 2 ? DZ_DEPART : e.renc === 3 ? 0.9 : DZ_VILATGES);
+// a partir de quin zoom un luòc se mòstra : una valor de la barra, parièra
+// sus totes los ecrans (escalas.js : capitalas a 200 km, vilas a 40 km,
+// mejanas a 30 km ; las vilas grandas d'una autra lenga, coma las capitalas)
+const capitala = (e) => CAPITALAS.includes(e.nom) || e.dz === -1;
+const zLuòc = (e, n) => (capitala(e) ? n.zCapitalas : e.renc <= 2 ? n.zVilas : e.renc === 3 ? n.zVilasMejanas : n.zVilatges);
+// (lo nom d'una capitala ven un cran aprèp son estela)
+const zNomLuòc = (e, n) => (capitala(e) ? n.zNomsCapitalas : zLuòc(e, n));
+// Lo retard (s) de l'alucatge d'una estela : las capitalas una a una, las
+// autras cadun a son moment, coma d'estelas que s'alucan
+const retardLuòc = (e) => {
+	const ic = CAPITALAS.indexOf(e.nom);
+	return ic >= 0 ? ic * 0.11 : 0.25 + ((e.f / 6.283) % 1) * 0.9;
+};
+const ESC_LUÒC = 600; // ms : una estela (e son nom) que se'n va s'escantís
+// l'opacitat del nom d'un luòc : arriba aprèp son estela, se'n va amb ela
+function aNomLuòc(e, t) {
+	if (!e) return 1;
+	if (!e.visNom) return e.tNomEsc == null ? 0 : 1 - easeS(clamp((t - e.tNomEsc) / ESC_LUÒC));
+	if (e.tNom == null) return 1;
+	return easeS(clamp(((t - e.tNom) / 1000 - retardLuòc(e) - 0.2) / 0.7));
+}
 // lo dialècte d'un luòc, dins la bulla (los de las autras lengas lo pòrtan),
 // e son sotdialècte quand es plan particular (lo niçard, lo bearnés…)
 const dialLuòc = (e, lang = 'oc') => {
@@ -278,7 +290,6 @@ const OCCITANIA = [
 	[42.65, -1.6],
 	[46.4, 7.55]
 ];
-const Z_DETALH_1 = 10; // au-delà, plus aucun nom n'est placé (la carte détaillée a les siens)
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -323,22 +334,8 @@ const sensEspaci = (g) => {
 	if ('letterSpacing' in g) g.letterSpacing = '0px';
 };
 
-// Relais NET entre la carte en étoiles et la carte OSM (retour de Romain,
-// 2026-10-07) : un fondu étalé sur plusieurs crans de zoom laissait, vers
-// 20 km d'échelle, une carte à moitié vide (nos noms partis, les tuiles encore
-// pâles). Désormais, un seuil : en dessous les étoiles, au-dessus la carte
-// détaillée, et le passage se fait par une courte animation dans le temps.
-export const Z_RELAIS = 8.75;
-// Lo dezoom (demandas de Romain, 2026-10-08), segon la valor de la barra
-// d'escala (en bas a esquèrra) :
-//   - « 100 km » e mens : los dialèctes ; « 150 km » e mai : las lengas
-//     unidas (« OCCITAN » en roge, « CATALÀ » en aur…) ;
-//   - a « 200 km » los rius s'escantisson ;
-//   - a partir de « 300 km » la carta se simplifica (las autras jaces
-//     s'escantisson) ; a « 500 km » demòra sonque lo contorn de las lengas,
-//     sus la carta dels païses.
-// Los sulhets son los meteisses sus totes los ecrans (uniformitat demandada
-// per Romain) : un telefon arriba donc sus l'Occitània unida.
+// Los sulhets d'escala (relais estelas → satellit, comunas, vol…) : escalas.js
+const { RELAIS: Z_RELAIS, PRECARGA: Z_PRECARGA, COMUNAS: Z_COMUNAS, VOL: Z_VOL, DETALH_1: Z_DETALH_1, REG_0: Z_REG_0, DEP_0: Z_DEP_0, DEP_1: Z_DEP_1 } = Z;
 // Lo fons de la carta (CartaOccitania : color de fons e alo terra cuècha),
 // reproduch sus la tela de revelacion per que se veja pas cap de cordura
 const rgbDe = (c) => {
@@ -351,31 +348,10 @@ function fonsDe(el) {
 	const cs = getComputedStyle(el);
 	return { fons: cs.getPropertyValue('--t-fons').trim() || cs.backgroundColor, terra: rgbDe(cs.getPropertyValue('--t-terra')) };
 }
-// Lo zoom ont la barra d'escala passa a la valor km (vers mai pichona) : la
-// barra (CartaOccitania, 110 px al mai) aficha la valor arredondida per
-// dejós de la distància de 110 px al centre de la carta (Leaflet : Tèrra de
-// 6 371 km)
-export const ESCALA_PX = 110;
-export const zÈscala = (km, lat) => Math.log2((ESCALA_PX * ((2 * Math.PI * 6371000) / 256) * Math.cos((lat * Math.PI) / 180)) / (km * 1000));
-export function nivèlsDezoom(map) {
-	const lat = map.getCenter?.().lat ?? 44;
-	const zDial = zÈscala(150, lat); // « 100 km » al delà : los dialèctes
-	const zRius = zÈscala(200, lat); // « 150 km » al delà : los rius
-	const z300 = zÈscala(300, lat);
-	// l'Occitània demòra plena fins a « 700 km », puèi se vuèja (retorn de Romain)
-	return { zDial, zRius, z300, z500: zÈscala(500, lat), zVuèg: zÈscala(950, lat) };
-}
-// de 0 a 1 : los dialèctes (0 = la lenga unida) ; las jaces de detalh (0 = lo contorn sol)
-export const aDialectes = (n, z) => easeS(clamp((z - n.zDial + 0.1) / 0.1));
-export const aDetalh = (n, z) => easeS(clamp((z - n.z500) / (n.z300 - n.z500)));
-export const Z_PRECARGA = 8.25;
-// las comunas se mòstran a partir de l'escala « 7 km » (causida de Romain)
-export const Z_COMUNAS = 10.5; // les tuiles se chargent, invisibles, un peu avant
 const DURADA_RELAIS = 2.0; // secondes (la revelacion « dels nívols a la tèrra », retorn de Romain)
 // la tela dels nívols es un degradat doç : pintada al quart de la resolucion
 // (16 còps mens de ponches a cada imatge), lo navegador l'agrandís
 const K_REV = 0.25;
-const Z_VOL = 10.5; // niveau où l'on arrive en cliquant sur un lieu
 
 
 /* ---------- Placement des noms (repris de l'accueil, en pixels projetés) ---------- */
@@ -487,7 +463,7 @@ function plaçar(cx, vilas, rius, ambNomsRius = true) {
 		sensEspaci(cx);
 		if (mendre >= 100) return; // pas de place : le nom reste visible au survol
 		metre(c.b, 5, 'etiqueta');
-		res.vilas.push({ nom: v.nom, x: c.x, y: c.y, al: c.al, f: v.f, ciutat: v.ciutat, renc: v.renc });
+		res.vilas.push({ nom: v.nom, x: c.x, y: c.y, al: c.al, f: v.f, ciutat: v.ciutat, renc: v.renc, e: v.e });
 	};
 	for (const v of vilas) if (v.ciutat) pausarVila(v);
 
@@ -616,9 +592,6 @@ const CLAU_AJUDA = 'lo-ligam-carta-ajuda-repèr';
 // vide le fixe avec son nom. Régions de « 50 km » à presque « 30 km »,
 // départements de « 30 km » à « 10 km » environ (aussi sur la carte
 // détaillée). Format : [code, nom, [anneaux [[lon, lat], …]]].
-const Z_REG_0 = 6.9,
-	Z_DEP_0 = 8.3,
-	Z_DEP_1 = 10.75;
 const menaTerritori = (z) => (z < Z_REG_0 ? null : z < Z_DEP_0 ? 'region' : z < Z_DEP_1 ? 'despartament' : null);
 const TÈXTES_TER = { oc: { region: 'Region', despartament: 'Despartament' }, fr: { region: 'Région', despartament: 'Département' } };
 // centre (pondéré) du plus grand anneau : là où s'écrit le nom
@@ -844,7 +817,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				const ponchs = [];
 				if (this._el.estelas)
 					for (const e of this._estelas)
-						if (this._zoom >= (this._zBase ?? 0) + dzLuòc(e)) {
+						if (e.vis) {
 							cs.push([e.X - 6, e.Y - 6, e.X + 6, e.Y + 6]);
 							ponchs.push([e.X, e.Y]);
 						}
@@ -865,8 +838,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		// quand se dezooma, projectadas al zoom actual
 		_projMond(z) {
 			const map = this._map;
-			const zB = this._zBase ?? 6.5;
-			if (z < zB - 0.2 && !this._mondEu) cargarMond('/data/mond-europa.json').then((d) => d && ((this._mondEu = d), (this._zP = null), this._update()));
+			const zE = (this._nivèls ?? nivèlsDezoom(map)).zEuropa;
+			if (z < zE + 0.15 && !this._mondEu) cargarMond('/data/mond-europa.json').then((d) => d && ((this._mondEu = d), (this._zP = null), this._update()));
 			if (z < 4.2 && !this._mondTot) cargarMond('/data/mond.json').then((d) => d && ((this._mondTot = d), (this._zP = null), this._update()));
 			const proj = ([lon, lat]) => {
 				const q = map.project([lat, lon], z);
@@ -892,7 +865,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const M = this._mondPx;
 			if (!M || (!M.eu && !M.tot)) return;
 			const T = this._tem,
-				zB = this._zBase ?? 6.5,
+				zE = this._nivèls?.zEuropa ?? 7.45,
 				W = this._W,
 				H = this._H;
 			// Luènh de l'Occitània (Austràlia, outra mar…), los païses demòran
@@ -909,7 +882,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				c = map.getCenter(),
 				eEu = clamp(Math.min(c.lng + 25, 50 - c.lng, c.lat - 27, 72 - c.lat) / 4),
 				aCarta = 1 - (this._detA ?? 0); // la carta detalhada pren la relèva
-			const aEu = Math.max(clamp((zB - 0.15 - z) / 0.6), luènh * eEu) * clamp((z - 3.4) / 0.5) * aCarta,
+			const aEu = Math.max(clamp((zE + 0.15 - z) / 0.6), luènh * eEu) * clamp((z - 3.4) / 0.5) * aCarta,
 				aTot = Math.max(clamp((4.0 - z) / 0.5), luènh * (1 - eEu)) * aCarta;
 			// Los contorns son bastits un còp per zoom (un Path2D), pas a cada
 			// imatge : retraçar los 40 000 ponches d'Euròpa a cada imatge costava
@@ -1051,6 +1024,35 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			return !!this._pròche(lp, tactil ? 34 : 22, tactil ? 18 : 6);
 		},
 
+		// Cada luòc vesible o pas a aqueste zoom (escalas.js) ; quand cambia, son
+		// estela s'aluca (coma a l'arribada) o s'escantís, e son nom la seguís
+		// (demanda de Romain, 2026-10-09 : « de manière élégante, pas d'un coup »)
+		_majLuòcs() {
+			const n = this._nivèls,
+				z = this._zoom,
+				ara = performance.now();
+			if (!n || !this._estelas) return;
+			// (a la primièra vista, l'entrada en scèna o l'arribada fan lo trabalh)
+			const anim = (e) => e.vis !== undefined && !this._calm;
+			for (const e of this._estelas) {
+				const v = z >= zLuòc(e, n),
+					vn = v && z >= zNomLuòc(e, n);
+				if (vn !== e.visNom) {
+					if (anim(e)) {
+						if (vn) (e.tNom = ara), (e.tNomEsc = null);
+						else e.tNomEsc = ara;
+					}
+					e.visNom = vn;
+				}
+				if (v === e.vis) continue;
+				if (anim(e)) {
+					if (v) (e.tAluc = ara), (e.tEsc = null);
+					else e.tEsc = ara;
+				}
+				e.vis = v;
+			}
+		},
+
 		/* Recalage : le canevas couvre la vue + une marge, en coordonnées « layer » */
 		_update() {
 			const map = this._map;
@@ -1063,8 +1065,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._center = map.getCenter();
 			this._zoom = map.getZoom();
 			this._zCibla = null;
-			this._zBase = map.getBoundsZoom(OCCITANIA);
 			this._nivèls = nivèlsDezoom(map);
+			this._majLuòcs();
 			// sul telefon, la barra de las jaces en bas : l'etiqueta del territòri
 			// se lèva d'autant (los cantons de Leaflet son ja levats en CSS)
 			this._barraBas = parseFloat(getComputedStyle(map._controlCorners.bottomleft).bottom) || 0;
@@ -1163,13 +1165,14 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// importantes (Besièrs, Lodeva…), puis les villages en retrait
 			const telefon = this._map.getSize().x <= 700;
 			const talhas = telefon ? { 1: 14, 2: 10.5, 3: 9.5, 4: 8.5 } : { 1: 17, 2: 11.5, 3: 10.5, 4: 9.5 };
-			// (de luènh, sonque las vilas grandas, una o doas per dialècte)
-			const zBase = this._map.getBoundsZoom(OCCITANIA);
-			const renc = (e) => (CAPITALAS.includes(e.nom) || e.dz === -1 ? 1 : e.renc);
+			// (de luènh, sonque las vilas grandas, una o doas per dialècte ; las
+			// que s'escantisson gardan lor plaça lo temps de partir)
+			const renc = (e) => (capitala(e) ? 1 : e.renc);
+			const ara = performance.now();
 			const vilas = this._estelas
-				.filter((e) => z >= zBase + dzLuòc(e))
+				.filter((e) => e.visNom || (e.tNomEsc != null && ara - e.tNomEsc < ESC_LUÒC))
 				.sort((a, b) => renc(a) - renc(b) || rang(a.nom) - rang(b.nom))
-				.map((e) => ({ nom: e.nom, x: e.X, y: e.Y, f: talhas[renc(e)], ciutat: renc(e) <= 2, renc: renc(e) }));
+				.map((e) => ({ nom: e.nom, x: e.X, y: e.Y, f: talhas[renc(e)], ciutat: renc(e) <= 2, renc: renc(e), e }));
 			return plaçar(this._cx, vilas, this._rius, !!this._el.nomsRius);
 		},
 
@@ -1223,8 +1226,14 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			g.textBaseline = 'alphabetic';
 			g.fillStyle = T.vilaTèxt;
+			const ara = performance.now();
+			let enCamin = false;
 			for (const v of this._el.nomsVilas ? this._plaçament.vilas : []) {
 				if (!dins(v.x, v.y) || (p && v.nom === p.nom)) continue;
+				// (un nom qu'arriba aprèp son estela, o que se'n va amb ela)
+				const aN = aNomLuòc(v.e, ara);
+				if (v.e && (v.e.visNom ? aN < 1 && v.e.tNom != null : aN > 0)) enCamin = true;
+				if (aN < 0.01) continue;
 				const tv = aplicarVila(g, v.renc, v.f, v.nom);
 				// distance du lieu survolé au TEXTE (sa boîte), pas à son point d'ancrage
 				let aprèp = false;
@@ -1235,7 +1244,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						dy = Math.max(v.y - v.f - p.Y, 0, p.Y - v.y);
 					aprèp = Math.hypot(dx, dy) < ray;
 				}
-				g.globalAlpha = { 1: 1, 2: 0.85, 3: 0.74, 4: 0.55 }[v.renc] * (aprèp ? 0.12 : 1);
+				g.globalAlpha = { 1: 1, 2: 0.85, 3: 0.74, 4: 0.55 }[v.renc] * (aprèp ? 0.12 : 1) * aN;
 				g.textAlign = v.al;
 				// un alo doç de la color del fons (doas passadas), puèi la letra neta
 				g.shadowColor = T.liser;
@@ -1245,6 +1254,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				g.shadowBlur = 0;
 				g.fillText(tv, v.x, v.y);
 			}
+			this._etiqAnim = enCamin;
 			g.shadowColor = 'transparent';
 			sensEspaci(g);
 			g.globalAlpha = 1;
@@ -1418,13 +1428,10 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// repèr per despartament ; los vilatges sens nom (Lo Vigan, Sant
 			// Africa…) agachan pas lo survòl de las regions. Meteisses paliers que
 			// los noms (_plaçarTot).
-			const zBase = this._map.getBoundsZoom(OCCITANIA),
-				z = this._zoom;
-
 			let best = null,
 				bestD = Infinity;
 			for (const e of this._estelas) {
-				if (z < zBase + dzLuòc(e)) continue;
+				if (!e.visNom) continue;
 				const d = Math.hypot(e.X - this._o.x - x, e.Y - this._o.y - y);
 				const sc = d - bonus * ({ 1: 1.3, 2: 1, 3: 0.6, 4: 0 }[e.renc]);
 				if (d < ray && sc < bestD) {
@@ -1596,6 +1603,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		_dessenhar(t) {
 			const cx = this._cx;
 			if (!cx || !this._W) return;
+			// (de noms de vilas qu'arriban o se'n van : l'imatge dels noms se refa)
+			if (this._etiqAnim) this._construirEtiquetas();
 			// Al dezoom, las jaces de detalh s'escantisson (a « 500 km » demòra
 			// sonque lo contorn de l'Occitània, pintat per la còla dels
 			// dialèctes) ; los païses se pintan per dessús. L'escantiment avança
@@ -1876,13 +1885,12 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// viennent en s'approchant. À l'arrivée, les grandes villes
 			// s'allument une à une, avec un halo qui s'ouvre.
 			cx.fillStyle = T.estela;
-			const zBase = this._zBase ?? 0;
 			// (alucadas aprèp l'entrada en scèna : la meteissa arribada, tornada jogar)
 			const tiV = this._tVilas == null ? ti : Math.min(ti, INTRO.vilas[0] + (t - this._tVilas) / 1000);
 			if (this._tVilas != null && tiV > INTRO.vilas[1] + 1.2) this._tVilas = null;
 			const faseV = ([a, b]) => clamp((tiV - a) / (b - a));
 			for (const e of this._el.estelas ? this._estelas : []) {
-				const aLuòc = clamp((z - (zBase + dzLuòc(e)) + 0.3) / 0.3);
+				const aLuòc = e.vis ? 1 : e.tEsc == null ? 0 : 1 - easeS(clamp((t - e.tEsc) / ESC_LUÒC));
 				if (aLuòc < 0.01) continue;
 				const x = e.X - o.x,
 					y = e.Y - o.y;

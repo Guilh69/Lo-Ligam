@@ -11,7 +11,8 @@
 // Al survòl (o al tòc), l'encastre d'en bas dona lo nom e sa natura, coma pels
 // territòris. Noms occitans de validar per Romain.
 
-import { INTRO, nivèlsDezoom, aDetalh, Z_COMUNAS } from './colaEstelas.js';
+import { INTRO } from './colaEstelas.js';
+import { nivèlsDezoom, aDetalh, Z } from './escalas.js';
 import { proj0 } from './projeccion.js';
 import { prepContorn, traçarPart, estelasDe, estelaCap, avançada, DURADA as DURADA_APAR, ONDA, TOTAL as TOTAL_APAR } from './aparicion.js';
 
@@ -57,14 +58,10 @@ const COLORS_GOV = {
 };
 const colorGov = (kod) => COLORS_GOV[kod] ?? '190, 170, 140';
 
-// Seuils (zoom Leaflet ; à 44° N, 11 ≈ « 5 km » sur l'échelle)
-// comunas a partir de l'escala « 7 km » (causida de Romain) : lo cran de zoom
-// 10,5 (zoomSnap 0,25), lo primièr ont l'escala de 110 px passa a 7 km
-// (Z_COMUNAS : dins colaEstelas, que lo survòl dels territòris i cedís)
-const Z_PROV_MAX = 10.5;
-// governaments de luènh, províncias de prèp : lo cambi se fa entre dos crans de
-// zoom (6,75 e 7 ; zoomSnap 0,25), que cap cran demòre sens nom
-const Z_GOV_PROV = 6.875;
+// Los sulhets (escalas.js) : comunas a 7 km (causida de Romain) ; províncias
+// de 1789 fins a 7 km ; governaments de luènh, províncias de prèp, lo cambi
+// entre dos crans de zoom (6,75 e 7), que cap cran demòre sens nom
+const { COMUNAS: Z_COMUNAS, PROV_MAX: Z_PROV_MAX, GOV_PROV: Z_GOV_PROV } = Z;
 
 const TÈXTES = {
 	oc: {
