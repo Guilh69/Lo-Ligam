@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from mar import RAIC, enL93, rect, unir, versL93, versWGS, vesin  # noqa: E402
 
 ogr.UseExceptions()
-EMPRESA = (-3.2, 41.3, 10.0, 47.2)  # o, s, e, n : la de l'ancian trait (meteissa dins mond.mjs, EMPRESA_COSTA)
+EMPRESA = (-5.6, 41.3, 10.0, 51.3)  # o, s, e, n : tota la França (2026-10-10, retorn de Romain : la còsta del nòrd èra la de Natural Earth, trop simplificada) ; meteissa dins mond.mjs, EMPRESA_COSTA
 SIMPL = 100  # m
 MIN = 2e6  # m² : illas de mens de 2 km², invisiblas de luènh
 Q = 1000

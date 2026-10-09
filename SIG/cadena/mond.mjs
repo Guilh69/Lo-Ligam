@@ -159,7 +159,7 @@ const arr = (v, d) => Math.round(v * 10 ** d) / 10 ** d;
 // Romain, 2026-10-09). Una sola referéncia per la còsta : aquí, los contorns
 // d'Euròpa la perdon e gardan sonque lors frontièras terrèstras (los segments
 // partejats entre dos païses, que son los meteisses arcs TopoJSON).
-const EMPRESA_COSTA = [-3.2, 41.3, 10.0, 47.2]; // o, s, e, n : la de costa-estelas.py
+const EMPRESA_COSTA = [-5.6, 41.3, 10.0, 51.3]; // o, s, e, n : la de costa-estelas.py (tota la França dempuèi lo 2026-10-10)
 const dinsCosta = ([x, y]) => x >= EMPRESA_COSTA[0] && x <= EMPRESA_COSTA[2] && y >= EMPRESA_COSTA[1] && y <= EMPRESA_COSTA[3];
 const clauSeg = (a, b) => {
 	const k1 = a[0] + ',' + a[1],
