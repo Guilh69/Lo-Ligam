@@ -672,6 +672,21 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		_onSortida() {
 			this._survòl(null);
 		},
+		// lo cadre de la comuna, del parc o de la província jos lo ponch (doble
+		// clic : centrar.js) : son emprèsa en pixèls, tornada en lat/lon
+		cadreA(lp) {
+			if ((this._aDet ?? 1) < 0.25) return null;
+			const t = this._ciblaA(lp),
+				G = this._geo;
+			if (!t || !G) return null;
+			const lista = t.mena === 'parc' ? G.parcs : t.mena === 'com' ? G.com : G.prov;
+			const zn = lista?.find((x) => (t.mena === 'com' ? x.props.i : x.props.kod) === t.kod && x.props === t.props);
+			if (!zn) return null;
+			const m = this._min,
+				a = this._map.layerPointToLatLng([zn.bbox[0] + m.x, zn.bbox[3] + m.y]),
+				b = this._map.layerPointToLatLng([zn.bbox[2] + m.x, zn.bbox[1] + m.y]);
+			return { bounds: [[a.lat, a.lng], [b.lat, b.lng]] };
+		},
 		// al det : un tòc mòstra l'encastre, un tòc endacòm mai l'escafa
 		_onClic(e) {
 			if ((this._aDet ?? 1) < 0.25) return this._survòl(null); // (de luènh, invisibla)

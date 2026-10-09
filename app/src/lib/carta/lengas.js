@@ -62,9 +62,10 @@ export const LENGAS = {
 		nom: { oc: 'arpitan', fr: 'arpitan', endo: 'arpetan' },
 		// (entre Liyon e Geneva)
 		eti: [5.65, 45.95],
-		// violet : luènh del roge occitan e de l'aur catalan
-		color: { sorne: '#b58cff', clar: '#5b3aa8', dalt: '#cc79a7' },
-		tèxt: { sorne: '#e6d8ff', clar: '#3a2370', dalt: '#f2d2e4' },
+		// verd, coma sus las cartas de las lengas de França (Romain, 2026-10-09) ;
+		// lo basc aurà un verd pus escur (sorne #2f8a57, clar #1b5e20, dalt #004d40)
+		color: { sorne: '#6dbf73', clar: '#2e7d32', dalt: '#009e73' },
+		tèxt: { sorne: '#d6f5d8', clar: '#1b4d20', dalt: '#c8f0e2' },
 		// violets e malvas : luènh de la paleta occitana cauda (roge auvernhat e
 		// jaune vivaroaupenc vesins) e dels blaus-verds del catalan
 		dial: {
@@ -109,6 +110,8 @@ export function fonsLenga(lenga, d) {
 			renc,
 			dialTèxt: nomDial[dia] ?? lenga.nom.endo
 		})),
-		costa: d.costa || null
+		costa: d.costa || null,
+		// (la revelacion del satellit se fa tanben sus son domeni, Romain 2026-10-09)
+		domeni: d.domeni?.anels?.length ? d.domeni.anels : null
 	};
 }

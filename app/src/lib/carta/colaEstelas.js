@@ -18,6 +18,7 @@ import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
 import { VILAS_FICHAS } from './vilasFichas.js';
 import { nomTerritori, sotaTerritori } from './territoris.js';
 import { proj0, projectar, projPonch } from './projeccion.js';
+import { emprèsa } from './centrar.js';
 
 // Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam sus un disc sorne
 // liserat d'aur, e una onda que s'espandís doçament, coma un ponch d'interès
@@ -981,6 +982,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if ((ls[kod] ?? null) === vilas) return;
 			ls[kod] = vilas;
 			(this._costasLengas ??= {})[kod] = fons?.costa ?? null;
+			// son domeni : los nívols de la revelacion s'i dobrisson coma sus l'occitan
+			(this._domLengas ??= {})[kod] = fons?.domeni ?? null;
+			this._revCache = null;
 			this._costaExtra = Object.values(this._costasLengas).filter(Boolean).flat();
 			if (vilas)
 				fach[kod] ??= vilas.map((v) => ({
@@ -1090,6 +1094,20 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					}
 					this._domeni = { linhas: dom.linhas.map(proj), cami: dom.anels?.length ? cami : null };
 				}
+				// los domenis de las autras lengas alucadas (un camin per lenga,
+				// pintat en « evenodd » : lors traucs, coma lo Leman, demòran)
+				this._domLengasCami = Object.values(this._domLengas || {})
+					.filter(Boolean)
+					.map((anels) => {
+						const c = new Path2D();
+						for (const a of anels) {
+							const p = projectar(map, a, z);
+							c.moveTo(p[0][0], p[0][1]);
+							for (let i = 1; i < p.length; i++) c.lineTo(p[i][0], p[i][1]);
+							c.closePath();
+						}
+						return c;
+					});
 				this._regions = projAnels(this._limitsGeo?.regions);
 				this._deps = projAnels(this._limitsGeo?.despartaments);
 				this._corbas = (this._corbasGeo || []).map(([e, l]) => [e, projectar(map, l, z)]);
@@ -1324,13 +1342,15 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				gf.fillStyle = g;
 				gf.fillRect(-2, -2, 4, 4);
 			}
+			// (la tèrra occitana e la de las autras lengas alucadas)
 			let dom = null;
-			if (this._domeni?.cami) {
+			const camins = [this._domeni?.cami, ...(this._domLengasCami || [])].filter(Boolean);
+			if (camins.length) {
 				dom = tela();
 				const gd = dom.getContext('2d');
 				gd.setTransform(k, 0, 0, k, -o.x * k, -o.y * k);
 				gd.fillStyle = '#000';
-				gd.fill(this._domeni.cami, 'evenodd');
+				for (const c of camins) gd.fill(c, 'evenodd');
 			}
 			return { fons, dom, trab: tela() };
 		},
@@ -1480,7 +1500,25 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		// Clic sur un lieu : la carte y vole et s'en approche. Au doigt, un
 		// premier toucher montre le nom (dans une bulle au-dessus du doigt), un
 		// second sur le même lieu y emmène.
+		// Doble clic (centrar.js) : una vila a ficha o un luòc jos lo ponch
+		// (ponches), o lo territòri revelat (despartament o region)
+		ponchA(lp) {
+			if (!this._map || !this._min) return null;
+			const tactil = !matchMedia('(hover: hover)').matches;
+			const f = this._fichaA(lp) ?? (this._zoom < Z_RELAIS ? this._pròche(lp, tactil ? 34 : 22, tactil ? 18 : 6) : null);
+			return f ? { centre: [f.lat, f.lon] } : null;
+		},
+		cadreA(lp) {
+			if (!this._map || !this._min || (this._nivèls && aDetalh(this._nivèls, this._zoom) < 0.25)) return null;
+			const ter = this._territoriA(lp);
+			const lista = ter && this._limitsGeo?.[ter.mena === 'region' ? 'regions' : 'despartaments'];
+			const r = lista?.find((x) => x[0] === ter.code);
+			const b = r && emprèsa(r[2]);
+			return b ? { bounds: b } : null;
+		},
 		_onClic(e) {
+			// (lo segond clic d'un doble clic : la vista se centra, lo territòri demòra)
+			if (e.originalEvent?.detail > 1) return;
 			if (this._nivèls && aDetalh(this._nivèls, this._zoom) < 0.25) return;
 			const tactil = e.originalEvent?.pointerType === 'touch' || !matchMedia('(hover: hover)').matches;
 			// Une ville à fiche : de loin, on y vole ; de près, on ouvre sa page

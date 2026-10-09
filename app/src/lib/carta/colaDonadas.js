@@ -11,6 +11,7 @@
 import { cargarLimits, INTRO, nivèlsDezoom, aDialectes, aDetalh } from './colaEstelas.js';
 import { prepContorn, traçarPart, estelaCap, avançada, TOTAL as TOTAL_APAR } from './aparicion.js';
 import { proj0, projectar } from './projeccion.js';
+import { cadreDe } from './centrar.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -494,7 +495,17 @@ export function crearColaDonadas(
 		_onSortida() {
 			this._survòl(null);
 		},
+		// lo cadre de la zòna jos lo ponch (doble clic : centrar.js)
+		cadreA(lp) {
+			if (ocupat?.(lp)) return null;
+			const k = this._zonaA(lp);
+			if (!k) return null;
+			const fc = k.startsWith('mix-') || k.startsWith('ist-') || k.startsWith('enc-') ? this._mix : k === 'cro' ? this._creissent : this._dial;
+			return cadreDe(fc?.features.find((x) => x.properties.kod === k));
+		},
 		_onClic(e) {
+			// (lo segond clic d'un doble clic : la vista se centra, la causida demòra)
+			if (e.originalEvent?.detail > 1) return;
 			if (ocupat?.(e.layerPoint)) return;
 			// una enclava (fòra del domeni) : lo clic o lo tòc mòstra sa legenda
 			const kEnc = this.enclavaA(e.layerPoint);

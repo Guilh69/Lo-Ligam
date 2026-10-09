@@ -442,7 +442,7 @@
 				].join('');
 				const ligam = accions ? `<span class="accions-bulla">${accions}</span>` : '';
 				const cap = `<strong>${escapeHtml(q.nom)}</strong><br>${escapeHtml(mena[q.mena] ?? q.mena)} · ${escapeHtml(lang === 'fr' ? q.comuna : comunaOc(q.comuna))}`;
-				const m = L.marker([lat, lon], { icon: iconaPunt('calandretas'), title: q.nom, keyboard: true }).bindPopup(cap + ligam);
+				const m = dobleClicSus(L.marker([lat, lon], { icon: iconaPunt('calandretas'), title: q.nom, keyboard: true }).bindPopup(cap + ligam));
 				// (per la mai pròcha : la distància s'insertís jos lo nom)
 				calandretas.push({ lat, lon, m, cap, ligam });
 				return m;
@@ -794,6 +794,21 @@
 		if (visibility.lengasFranca) pointLayers.lengasFranca.addTo(map);
 	}
 
+	// Lo doble clic sus una donada : la vista se centra dessús (una zòna se
+	// cadra, un ponch se centra un pauc pus prèp)
+	function centrarSus({ bounds, centre }) {
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches,
+			opts = { animate: !calm, duration: calm ? 0 : 1.2 };
+		if (bounds) map.flyToBounds(bounds, { ...opts, paddingTopLeft: [100, 90], paddingBottomRight: [40, 60], maxZoom: 13 });
+		else map.flyTo(centre, Math.min(Math.max(map.getZoom() + 1, 8), 15), opts);
+	}
+	// (los marcaires e las entitats GeoJSON de Leaflet : lor doble clic los centra)
+	const dobleClicSus = (layer) =>
+		layer.on('dblclick', (ev) => {
+			L.DomEvent.stop(ev);
+			centrarSus(layer.getBounds ? { bounds: layer.getBounds() } : { centre: layer.getLatLng() });
+		});
+
 	async function loadGeoLayer(gid) {
 		const def = geoDefs[gid];
 		if (!def || geoLayers[gid] || geoLoading[gid]) return;
@@ -804,11 +819,10 @@
 			style: def.style,
 			filter: def.filter,
 			attribution: def.attribution,
-			onEachFeature: def.popup
-				? (feature, layer) => {
-						layer.bindPopup(def.popup(feature));
-					}
-				: undefined
+			onEachFeature: (feature, layer) => {
+				if (def.popup) layer.bindPopup(def.popup(feature));
+				dobleClicSus(layer);
+			}
 		});
 		geoLoading[gid] = false;
 		if (visibility[gid]) geoLayers[gid].addTo(map);
@@ -958,6 +972,30 @@
 			onSurvòl: (info) => (survòlTem = info)
 		});
 		colaTematica.addTo(map);
+		// Lo doble clic centra la vista sus la donada jos lo ponteiro (Romain,
+		// 2026-10-09) : un ponch (vila a ficha, luòc), puèi una zòna (comuna,
+		// parc, província, dialècte d'una autra lenga, dialècte occitan,
+		// despartament o region) ; endacòm mai, lo zoom de Leaflet. Lo segond
+		// clic es ignorat per las còlas : la causida del primièr demòra.
+		map.doubleClickZoom.disable();
+		// (un clic sus una vila o un luòc i vòla ja : lo doble clic ajusta pas res)
+		let tClic = -1e9,
+			tMov = -1e9;
+		map.on('click', () => (tClic = performance.now()));
+		map.on('movestart', () => (tMov = performance.now()));
+		map.on('dblclick', (e) => {
+			if (tMov >= tClic && tMov - tClic < 600) return;
+			const lp = e.layerPoint,
+				v = (c) => c && map.hasLayer(c);
+			const cad =
+				(v(colaEstelas) && colaEstelas.ponchA(lp)) ||
+				(v(colaTematica) && colaTematica.cadreA(lp)) ||
+				Object.values(colasLengas).reduce((r, c) => r || (v(c) && c.cadreA(lp)), null) ||
+				(v(colaDonadas) && colaDonadas.cadreA(lp)) ||
+				(v(colaEstelas) && colaEstelas.cadreA(lp));
+			if (cad) centrarSus(cad);
+			else map.setZoomAround(e.containerPoint, map.getZoom() + (e.originalEvent?.shiftKey ? -1 : 1));
+		});
 		// L'entrada en scèna (demanda de Romain) : còsta, corbas de nivèl, noms
 		// de las cadenas, rius, vilas grandas, puèi los dialèctes ; un relòtge
 		// comun a las tres còlas. Un clic, la molèta o una tòca menan a la fin.
@@ -1117,7 +1155,7 @@
 						/^https:\/\//.test(lieu.ligam ?? '') ? accionBulla('world', lieu.ligam, txAccions().site, true) : '',
 						accionsNav(lieu.latitud, lieu.longitud, nom)
 					].join('');
-					return L.marker([lieu.latitud, lieu.longitud], { icon: iconaPunt(cid), title: nom, keyboard: true }).bindPopup(
+					return dobleClicSus(L.marker([lieu.latitud, lieu.longitud], { icon: iconaPunt(cid), title: nom, keyboard: true })).bindPopup(
 						`<strong>${escapeHtml(nom)}</strong>${desc ? `<br>${escapeHtml(desc)}` : ''}${accions ? `<span class="accions-bulla">${accions}</span>` : ''}`
 					);
 				})

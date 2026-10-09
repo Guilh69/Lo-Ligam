@@ -11,6 +11,7 @@
 // jaces tematicas, 320) ; las donadas se cargan sonque quand la jaça s'aluca.
 import { nivèlsDezoom, aDialectes, aDetalh } from './colaEstelas.js';
 import { proj0, projectar } from './projeccion.js';
+import { cadreDe } from './centrar.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -296,7 +297,14 @@ export function crearColaLenga(
 		_onSortida() {
 			this._survòl(null);
 		},
+		// lo cadre de la zòna jos lo ponch (doble clic : centrar.js)
+		cadreA(lp) {
+			const k = this.zonaA(lp, true);
+			return k ? cadreDe(this._d?.features.find((x) => x.properties.kod === k)) : null;
+		},
 		_onClic(e) {
+			// (lo segond clic d'un doble clic : la vista se centra, la causida demòra)
+			if (e.originalEvent?.detail > 1) return;
 			if (!this._interactiu() || ocupat?.(e.layerPoint)) return;
 			// un clic sus una zòna l'apond a la causida, o l'en leva ; defòra,
 			// totes los dialèctes tornan
