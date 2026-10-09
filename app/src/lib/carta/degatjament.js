@@ -18,9 +18,10 @@ export const placeVisible = (pop, z) => (pop ?? 0) >= popMin(z);
 // boîte exacte d'un nom dessiné par la carte elle-même
 export const zonaCaixa = (b) => ({ x0: b[0], y0: b[1], x1: b[2], y1: b[3], poids: 1.5 });
 
-export function zonaEtiqueta(x, y, nom, pop) {
+export function zonaEtiqueta(x, y, nom, pop, z = 11) {
 	const gran = pop >= 100000;
-	const f = gran ? 21 : pop >= 20000 ? 15 : pop >= 3000 ? 13 : 11.5;
+	// (les noms des grandes villes grossissent avec le zoom)
+	const f = gran ? 21 + Math.max(0, z - 11) * 2 : pop >= 20000 ? 15 : pop >= 3000 ? 13 : 11.5;
 	const w = nom.length * f * (gran ? 0.8 : 0.55);
 	if (pop >= 50000) return { x0: x - w / 2 - 4, x1: x + w / 2 + 4, y0: y - f * 0.6 - 2, y1: y + f * 0.6 + 2, poids: 1.5 };
 	// (place incertaine : au-dessus, à droite ou centré : on y tient moins)
@@ -46,7 +47,8 @@ const CANDIDATS = RAYONS.flatMap((r) =>
 );
 
 // points : [{x, y}] positions à l'écran ; zones : étiquettes estimées.
-// Renvoie, pour chaque point, le décalage [dx, dy] du centre de son ponch.
+// Renvoie, pour chaque point, le décalage [dx, dy] du centre de son ponch et
+// s'il a la place (sinon il reste une étoile jusqu'à ce qu'on s'approche).
 export function degatjar(points, zones) {
 	const posats = [];
 	return points.map((p) => {
@@ -69,7 +71,8 @@ export function degatjar(points, zones) {
 				if (nota === 0) break;
 			}
 		}
-		posats.push({ x: p.x + melhor[0], y: p.y + melhor[1] });
-		return melhor;
+		const plaça = melhorNota < 40;
+		if (plaça) posats.push({ x: p.x + melhor[0], y: p.y + melhor[1] });
+		return [melhor[0], melhor[1], plaça];
 	});
 }

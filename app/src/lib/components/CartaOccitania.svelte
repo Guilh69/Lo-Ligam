@@ -323,7 +323,7 @@
 	const iconaPunt = (cid, st = estilPunt(cid)) =>
 		L.divIcon({
 			className: 'ponch-jaça ponch-jaça-' + cid,
-			html: `<span class="ponch-fil"><i class="ponch-cueta"${st}></i></span><span class="ponch-pos"><span class="ponch"${st}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[ICONA_COLA[cid] ?? 'building-arch']}</svg></span></span>`,
+			html: `<span class="ponch-estela"${st}></span><span class="ponch-fil"><i class="ponch-cueta"${st}></i></span><span class="ponch-pos"><span class="ponch"${st}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[ICONA_COLA[cid] ?? 'building-arch']}</svg></span></span>`,
 			// l'icòna es sul luòc (talha nula) : sa pastilha se ten al dessús, o se
 			// descala amb un fil quand amaga un nom de vila (degatjarPonchs)
 			iconSize: [0, 0],
@@ -528,6 +528,9 @@
 	// la plaça de cada nom se n'estima amb la lista de las comunas). Un ponch
 	// que n'amagariá un se descala, ligat al luòc per un fil. Se torna calcular
 	// a cada zoom e quand una jaça s'aluca o s'atudís.
+	// de luènh, los ponches son d'estelas (la carta d'estelas de l'entrada) ;
+	// l'icòna espelís en s'aprochant (causida de Romain, 2026-10-09)
+	const Z_ICONAS = 10;
 	let degatRaf = 0;
 	function programarDegatjament() {
 		cancelAnimationFrame(degatRaf);
@@ -540,6 +543,13 @@
 		for (const [id, g] of Object.entries(pointLayers))
 			if (id !== 'lengasFranca' && map.hasLayer(g)) g.eachLayer((m) => m._icon && vue.contains(m.getLatLng()) && ms.push(m));
 		if (!ms.length) return;
+		if (map.getZoom() < Z_ICONAS) {
+			for (const m of ms) {
+				m.options.icon.options.popupAnchor = [0, -6];
+				m._icon.classList.remove('ponch-sol-estela');
+			}
+			return;
+		}
 		cargarNomsComunas();
 		const z = map.getZoom();
 		const pts = ms.map((m) => map.latLngToContainerPoint(m.getLatLng()));
@@ -569,18 +579,26 @@
 				}
 				if (melhor) ancòras[i] = melhor;
 			});
-		} else if (nomsComunas?.length) {
+		}
+		// los noms de las tuèlas (la carta detalhada se mescla amb la nòstra)
+		if (nomsComunas?.length) {
 			const b = vue.pad(0.15);
 			const s = b.getSouth(), n = b.getNorth(), w = b.getWest(), e = b.getEast();
 			for (const c of nomsComunas) {
 				if (c.lat < s || c.lat > n || c.lon < w || c.lon > e || !placeVisible(c.pop, z)) continue;
-				const q = map.latLngToContainerPoint([c.lat, c.lon]);
-				zonas.push(zonaEtiqueta(q.x, q.y, c.oc || c.fr, c.pop));
+				// una granda vila : son nom es a son centre (lo de la carta), pas al
+				// mièg de la comuna (Montpelhièr : 1,5 km d'escart)
+				const v = c.pop >= 50000 && POS_VILAS[c.oc];
+				const q = map.latLngToContainerPoint(v ? [v[1], v[0]] : [c.lat, c.lon]);
+				zonas.push(zonaEtiqueta(q.x, q.y, c.oc || c.fr, c.pop, z));
 			}
 		}
 		const desc = degatjar(ancòras, zonas);
 		ms.forEach((m, i) => {
-			const [dx, dy] = desc[i];
+			const [dx, dy, plaça] = desc[i];
+			// pas de plaça sens amagar un nom o una autra icòna : demòra estela
+			m._icon.classList.toggle('ponch-sol-estela', !plaça);
+			if (!plaça) return void (m.options.icon.options.popupAnchor = [0, -6]);
 			const ox = ancòras[i].x - pts[i].x, oy = ancòras[i].y - pts[i].y;
 			const d = Math.hypot(dx, dy);
 			const st = m._icon.style;
@@ -906,6 +924,9 @@
 		};
 		map.on('zoomend', luènh);
 		luènh();
+		const estelas = () => mapEl?.classList.toggle('ponchs-estelas', map.getZoom() < Z_ICONAS);
+		map.on('zoomend', estelas);
+		estelas();
 		if (ambToponims(baseLayer)) loadToponymsLayer();
 
 		L.control.zoom({ position: 'bottomright' }).addTo(map);
@@ -1769,7 +1790,66 @@
 	   fondut va suls enfants : la raiç de l'icòna garda la transicion de
 	   Leaflet pel zoom (los ponches sautavan a cada cran) */
 	.carta :global(.leaflet-marker-pane > :not(.lenga-franca) > *) {
-		transition: opacity 0.45s;
+		transition:
+			opacity 0.45s,
+			visibility 0.45s,
+			transform 0.4s cubic-bezier(0.2, 0.8, 0.3, 1.2),
+			height 0.3s;
+	}
+	/* de luènh, cada ponch es una estela de la color de sa jaça, que
+	   lusís doçament ; en s'aprochant, l'estela s'esvanís e l'icòna espelís */
+	.carta :global(.ponch-estela) {
+		position: absolute;
+		left: -4px;
+		top: -4px;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--ponch);
+		box-shadow: 0 0 6px 2px color-mix(in srgb, var(--ponch) 55%, transparent);
+		opacity: 0;
+		visibility: hidden;
+		transform: scale(0.3);
+	}
+	.carta :global(.ponch-estela::after) {
+		content: '';
+		position: absolute;
+		inset: -7px;
+	}
+	.carta:global(.ponchs-estelas) :global(.ponch-estela),
+	.carta :global(.ponch-sol-estela .ponch-estela) {
+		opacity: 1;
+		visibility: visible;
+		transform: scale(1);
+		animation: estela-lusis 3.2s ease-in-out infinite alternate;
+		animation-delay: var(--retard, 0ms);
+	}
+	@keyframes estela-lusis {
+		to {
+			box-shadow: 0 0 11px 4px color-mix(in srgb, var(--ponch) 75%, transparent);
+		}
+	}
+	.carta:global(.ponchs-estelas) :global(.ponch-pos),
+	.carta:global(.ponchs-estelas) :global(.ponch-fil),
+	.carta :global(.ponch-sol-estela .ponch-pos),
+	.carta :global(.ponch-sol-estela .ponch-fil) {
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+	}
+	.carta:global(.ponchs-estelas) :global(.ponch-jaça .ponch),
+	.carta :global(.ponch-sol-estela .ponch) {
+		transform: scale(0.2);
+	}
+	.carta :global(.ponch-jaça:focus-visible .ponch-estela) {
+		outline: 2px solid var(--t-aur-clar);
+		outline-offset: 3px;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.carta:global(.ponchs-estelas) :global(.ponch-estela),
+		.carta :global(.ponch-sol-estela .ponch-estela) {
+			animation: none;
+		}
 	}
 	.carta:global(.luenh) :global(.leaflet-marker-pane > :not(.lenga-franca)) {
 		pointer-events: none;
