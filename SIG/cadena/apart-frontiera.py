@@ -121,8 +121,6 @@ for fic, vesins in LENGAS.items():
     dom = evenodd(d['domeni']['anels'])
     estr = ogr.Geometry(ogr.wkbMultiPolygon)
     for n in vesins:
-        for q in païs(n).Buffer(ESPAND, 4).Difference(franca):
-            pass
         for q in valid(païs(n).Buffer(ESPAND, 4).Difference(franca)):
             estr.AddGeometry(q.Clone())
     estr = valid(estr.UnaryUnion())
