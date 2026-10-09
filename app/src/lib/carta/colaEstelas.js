@@ -812,14 +812,20 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
 					return [x0 - 2, v.y - v.f, x0 + w + 2, v.y + v.f * 0.3];
 				});
-				// los ponches de las vilas visiblas (VIVAROAUPENC tombava sus Gap)
+				// los ponches de las vilas visiblas (VIVAROAUPENC tombava sus Gap) ;
+				// las icònas de las jaces s'i estacan (ponchs)
+				const ponchs = [];
 				if (this._el.estelas)
-					for (const e of this._estelas) if (this._zoom >= (this._zBase ?? 0) + dzLuòc(e)) cs.push([e.X - 6, e.Y - 6, e.X + 6, e.Y + 6]);
+					for (const e of this._estelas)
+						if (this._zoom >= (this._zBase ?? 0) + dzLuòc(e)) {
+							cs.push([e.X - 6, e.Y - 6, e.X + 6, e.Y + 6]);
+							ponchs.push([e.X, e.Y]);
+						}
 				// e las letras dels noms de rius, se son afichats
 				if (this._el.nomsRius && this._zoom >= (this._nivèls?.zRius ?? 0) + 0.15)
 					for (const r of pl.rius) for (const l of r.letras) cs.push([l.x - r.fs * 0.4, l.y - r.fs * 0.6, l.x + r.fs * 0.4, l.y + r.fs * 0.3]);
 				g.restore();
-				this._caixas = { pl, z: this._zoom, cs };
+				this._caixas = { pl, z: this._zoom, cs, ponchs };
 			}
 			return this._caixas;
 		},

@@ -15,6 +15,9 @@ const popMin = (z) => (z >= 13 ? 0 : z >= 12 ? 100 : z >= 11 ? 400 : z >= 10 ? 2
 export const placeVisible = (pop, z) => (pop ?? 0) >= popMin(z);
 
 // zone estimée de l'étiquette d'une commune dont le point est en (x, y)
+// boîte exacte d'un nom dessiné par la carte elle-même
+export const zonaCaixa = (b) => ({ x0: b[0], y0: b[1], x1: b[2], y1: b[3], poids: 1.5 });
+
 export function zonaEtiqueta(x, y, nom, pop) {
 	const gran = pop >= 100000;
 	const f = gran ? 21 : pop >= 20000 ? 15 : pop >= 3000 ? 13 : 11.5;
@@ -35,7 +38,9 @@ function recouvrement(cx, cy, z) {
 // candidats : d'abord au-dessus, puis à côté, puis en dessous ; ensuite plus
 // loin (le trait s'allonge). Rayon 21 = juste à côté du lieu.
 const ANGLES = [-90, -45, -135, 0, 180, 45, 135, 90];
-const RAYONS = [21, 38, 56, 76];
+// (un sol rayon : l'icône reste toujours collée à son lieu, jamais au bout
+// d'un long trait)
+const RAYONS = [21];
 const CANDIDATS = RAYONS.flatMap((r) =>
 	ANGLES.map((a) => [Math.round(r * Math.cos((a * Math.PI) / 180)), Math.round(r * Math.sin((a * Math.PI) / 180))])
 );

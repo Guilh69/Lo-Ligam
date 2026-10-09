@@ -11,7 +11,7 @@
 	import { LENGAS, esOccitan, fonsLenga } from '$lib/carta/lengas.js';
 	import { JACES_DONADAS, JACES_TEMATICAS, JACES_LENGAS } from '$lib/carta/catalogue.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
-	import { degatjar, zonaEtiqueta, placeVisible, DEFAUT } from '$lib/carta/degatjament.js';
+	import { degatjar, zonaEtiqueta, zonaCaixa, placeVisible, DEFAUT } from '$lib/carta/degatjament.js';
 	import { NOMS_FRANCES } from '$lib/carta/nomsFrances.js';
 	import { LUOCS } from '$lib/acuelh/carta-estelas.js';
 	import CercaCarta from './CercaCarta.svelte';
@@ -544,7 +544,32 @@
 		const z = map.getZoom();
 		const pts = ms.map((m) => map.latLngToContainerPoint(m.getLatLng()));
 		const zonas = [];
-		if (nomsComunas?.length) {
+		// de luènh, la carta dessina sos pròpris noms : sas bóstias son exactas,
+		// e l'icòna s'estaca al ponch de la vila quand n'es tocant
+		const estelas = colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null;
+		const ancòras = pts.map((p) => p);
+		if (estelas) {
+			const o = map.getPixelOrigin();
+			const cp = (x, y, kz) => map.layerPointToContainerPoint(L.point(x * kz - o.x, y * kz - o.y));
+			for (const ob of [estelas, colaDonadas?.caixasNoms(), ...Object.values(colasLengas).map((c) => c.caixasNoms())]) {
+				if (!ob) continue;
+				const kz = Math.pow(2, z - ob.z);
+				for (const b of ob.cs) {
+					const a = cp(b[0], b[1], kz), c = cp(b[2], b[3], kz);
+					zonas.push(zonaCaixa([a.x, a.y, c.x, c.y]));
+				}
+			}
+			const kz = Math.pow(2, z - estelas.z);
+			const vilas = (estelas.ponchs ?? []).map(([x, y]) => cp(x, y, kz));
+			pts.forEach((p, i) => {
+				let melhor = null, dm = 14;
+				for (const v of vilas) {
+					const d = Math.hypot(v.x - p.x, v.y - p.y);
+					if (d < dm) (dm = d), (melhor = v);
+				}
+				if (melhor) ancòras[i] = melhor;
+			});
+		} else if (nomsComunas?.length) {
 			const b = vue.pad(0.15);
 			const s = b.getSouth(), n = b.getNorth(), w = b.getWest(), e = b.getEast();
 			for (const c of nomsComunas) {
@@ -553,16 +578,19 @@
 				zonas.push(zonaEtiqueta(q.x, q.y, c.oc || c.fr, c.pop));
 			}
 		}
-		const desc = degatjar(pts, zonas);
+		const desc = degatjar(ancòras, zonas);
 		ms.forEach((m, i) => {
 			const [dx, dy] = desc[i];
+			const ox = ancòras[i].x - pts[i].x, oy = ancòras[i].y - pts[i].y;
 			const d = Math.hypot(dx, dy);
 			const st = m._icon.style;
+			st.setProperty('--ox', ox + 'px');
+			st.setProperty('--oy', oy + 'px');
 			st.setProperty('--dx', dx + 'px');
 			st.setProperty('--dy', dy + 'px');
 			st.setProperty('--ang', Math.atan2(-dx, dy) + 'rad');
 			st.setProperty('--fil', Math.max(0, d - 13) + 'px');
-			m.options.icon.options.popupAnchor = [dx, dy - 11];
+			m.options.icon.options.popupAnchor = [ox + dx, oy + dy - 11];
 		});
 	}
 	async function cargarNomsComunas() {
@@ -1208,13 +1236,13 @@
 		position: absolute;
 		left: 0;
 		top: 0;
-		transform: translate(calc(var(--dx, 0px) - 13px), calc(var(--dy, -21px) - 13px));
+		transform: translate(calc(var(--ox, 0px) + var(--dx, 0px) - 13px), calc(var(--oy, 0px) + var(--dy, -21px) - 13px));
 		transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
 	}
 	:global(.ponch-fil) {
 		position: absolute;
-		left: -0.75px;
-		top: 0;
+		left: calc(var(--ox, 0px) - 0.75px);
+		top: var(--oy, 0px);
 		width: 1.5px;
 		height: var(--fil, 8px);
 		transform-origin: 0 0;
