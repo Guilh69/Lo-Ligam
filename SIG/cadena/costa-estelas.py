@@ -23,7 +23,7 @@ import sys
 from osgeo import ogr
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from mar import PRECIS, RAIC, enL93, precis, rect, unir, versL93, versWGS  # noqa: E402
+from mar import RAIC, enL93, rect, unir, versL93, versWGS, vesin  # noqa: E402
 
 ogr.UseExceptions()
 EMPRESA = (-3.2, 41.3, 10.0, 47.2)  # o, s, e, n : la de l'ancian trait
@@ -49,11 +49,7 @@ def principal():
             continue
         g = f.GetGeometryRef().Clone()
         g.Transform(versL93)
-        if nom in PRECIS:
-            p = precis(PRECIS[nom], SIMPL)
-            tèrra.append(p)
-            g = g.Difference(p.Buffer(5000))
-        tèrra.append(g)
+        tèrra += vesin(nom, g, SIMPL, 0)
     mar = zL.Difference(unir(tèrra))
     # sonque la mar dobèrta, que tòca lo bòrd de l'emprèsa (pas los interstices
     # entre la França de l'IGN e los vesins de Natural Earth, long de las

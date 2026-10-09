@@ -91,6 +91,21 @@ def precis(cami, simpl):
     return g.SimplifyPreserveTopology(simpl)
 
 
+def vesin(nom, g, simpl, alarg):
+    """Las tèrras d'un païs vesin (g : Natural Earth, en Lambert-93). Se n'avèm
+    un contorn precís (PRECIS, per exemple la Catalonha), aqueste ; e lo demai
+    de Natural Earth, alargat de alarg. Natural Earth es levat sonque prèp de
+    la còsta precisa, pas long de las frontièras terrèstras (i daissariá un
+    interstici pres per de mar : retorn de Romain, una doble linha long de
+    la frontièra entre Catalonha e Aragon)."""
+    if nom not in PRECIS:
+        return [g.Buffer(alarg) if alarg else g]
+    p = precis(PRECIS[nom], simpl)
+    còsta = p.Buffer(5000).Difference(g.Buffer(-5000))
+    demai = g.Difference(còsta)
+    return [p, demai.Buffer(alarg) if alarg else demai]
+
+
 def tèrra_e_aiga(simpl=SIMPL):
     """La referéncia tèrra / aiga de la carta, per zòna, en Lambert-93 :
     {'zona', 'zL', 'tèrra' : las comunas de França unidas e simplificadas,
@@ -118,11 +133,7 @@ def tèrra_e_aiga(simpl=SIMPL):
                 continue
             g = f.GetGeometryRef().Clone()
             g.Transform(versL93)
-            if f.GetField('name') in PRECIS:
-                p = precis(PRECIS[f.GetField('name')], simpl)
-                est.append(p)
-                g = g.Difference(p.Buffer(5 * ESTRANGIER))
-            est.append(g.Buffer(ESTRANGIER))
+            est += vesin(f.GetField('name'), g, simpl, ESTRANGIER)
         nel.SetSpatialFilter(None)
         print(zona, len(comunas), 'comunas,', len(est), 'païses vesins')
         res.append({'zona': zona, 'zL': zL, 'tèrra': tèrra, 'aiga': zL.Difference(unir([tèrra, *est])), 'comunas': comunas})
