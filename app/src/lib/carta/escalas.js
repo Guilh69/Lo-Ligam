@@ -102,21 +102,65 @@ export function zPlaja(id, z, lat = LAT_REF) {
 	return null;
 }
 
-// Los zooms fixes (meteis zoom sus totes los ecrans ; la barra varia un pauc
-// amb la latitud : la valor indicada es al mitan de l'Occitània)
+// Los zooms de la grilha, calculats a la latitud del centre de la carta
+// (CartaOccitania la balha a cada movement, fixarLatEscala) : « 20 km » es
+// 20 km a la barra, al nòrd coma al sud (retorn de Romain, 2026-10-09 : las
+// comunas, a zoom fix, s'amagavan al Cantal). Las valors entre parentèsis son
+// los zooms d'abans, al mitan de l'Occitània.
+let latEscala = LAT_REF;
+export const fixarLatEscala = (lat) => {
+	if (Number.isFinite(lat)) latEscala = lat;
+};
 export const Z = {
-	RELAIS: 8.75, // 20 km : las estelas cedisson al satellit
-	PRECARGA: 8.25, // 40 km : las tuèlas del satellit se cargan, invisiblas
-	ICONAS: 10, // 10 km : l'icòna dels ponches espelís de son estela
-	DETALH_1: 10, // 10 km : pas pus de noms de vilas pausats (lo fons a los sieus)
-	COMUNAS: 10.5, // 7 km : las comunas (causida de Romain)
-	VOL: 10.5, // 7 km : ont se va en clicant un luòc
-	PROV_MAX: 10.5, // 7 km : las províncias de 1789 s'escantisson
-	GOV_PROV: 6.875, // entre 100 e 70 km : governaments, puèi províncias
-	REG_0: 6.9, // 70 km : lo survòl de las regions
-	DEP_0: 8.3, // 30 km : lo dels despartaments
-	DEP_1: 10.75, // 7 km : pas pus de survòl de territòri
-	ARRIBADA_MAX: zCran(30) // un grand ecran arriba pas dirèctament sul satellit
+	// las estelas cedisson al satellit quand la barra marca 20 km (8,75)
+	get RELAIS() {
+		return zCran(20, latEscala);
+	},
+	// las tuèlas del satellit se cargan, invisiblas, un cran de zoom avant (8,25)
+	get PRECARGA() {
+		return this.RELAIS - 0.5;
+	},
+	// l'icòna dels ponches espelís de son estela a 10 km (10 ; ara lo primièr cran de 10 km)
+	get ICONAS() {
+		return zCran(10, latEscala);
+	},
+	// pas pus de noms de vilas pausats per las estelas a 10 km (10)
+	get DETALH_1() {
+		return zCran(10, latEscala);
+	},
+	// las comunas a 7 km (10,5)
+	get COMUNAS() {
+		return zCran(KM.comunas, latEscala);
+	},
+	// ont se va en clicant un luòc : 7 km (10,5)
+	get VOL() {
+		return zCran(7, latEscala);
+	},
+	// las províncias de 1789 s'escantisson fins a 7 km (10,5)
+	get PROV_MAX() {
+		return zCran(7, latEscala);
+	},
+	// governaments de luènh (100 km), províncias de prèp (70 km) (6,875)
+	get GOV_PROV() {
+		return zDès(70, latEscala) - 0.06;
+	},
+	// lo survòl : regions a partir de 70 km (6,9), despartaments de 30 km (8,3)
+	// fins a 7 km (10,75)
+	get REG_0() {
+		return zDès(70, latEscala);
+	},
+	get DEP_0() {
+		return zDès(30, latEscala);
+	},
+	get DEP_1() {
+		return zDès(5, latEscala);
+	},
+	// los parcs a partir de 150 km (6)
+	get PARCS() {
+		return zDès(150, latEscala);
+	},
+	// un grand ecran arriba pas dirèctament sul satellit (8,5)
+	ARRIBADA_MAX: zCran(30)
 };
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));

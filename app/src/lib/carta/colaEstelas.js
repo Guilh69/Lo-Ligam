@@ -335,7 +335,6 @@ const sensEspaci = (g) => {
 };
 
 // Los sulhets d'escala (relais estelas → satellit, comunas, vol…) : escalas.js
-const { RELAIS: Z_RELAIS, PRECARGA: Z_PRECARGA, COMUNAS: Z_COMUNAS, VOL: Z_VOL, DETALH_1: Z_DETALH_1, REG_0: Z_REG_0, DEP_0: Z_DEP_0, DEP_1: Z_DEP_1 } = Z;
 // Lo fons de la carta (CartaOccitania : color de fons e alo terra cuècha),
 // reproduch sus la tela de revelacion per que se veja pas cap de cordura
 const rgbDe = (c) => {
@@ -592,7 +591,7 @@ const CLAU_AJUDA = 'lo-ligam-carta-ajuda-repèr';
 // vide le fixe avec son nom. Régions de « 50 km » à presque « 30 km »,
 // départements de « 30 km » à « 10 km » environ (aussi sur la carte
 // détaillée). Format : [code, nom, [anneaux [[lon, lat], …]]].
-const menaTerritori = (z) => (z < Z_REG_0 ? null : z < Z_DEP_0 ? 'region' : z < Z_DEP_1 ? 'despartament' : null);
+const menaTerritori = (z) => (z < Z.REG_0 ? null : z < Z.DEP_0 ? 'region' : z < Z.DEP_1 ? 'despartament' : null);
 const TÈXTES_TER = { oc: { region: 'Region', despartament: 'Despartament' }, fr: { region: 'Région', despartament: 'Département' } };
 // centre (pondéré) du plus grand anneau : là où s'écrit le nom
 const centreDe = (anels) => {
@@ -863,8 +862,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			return {
 				// (fins a la carta detalhada : luènh de l'Occitània, los païses
 				// demòran quand s'apròcha, retorn de Romain)
-				eu: this._mondEu && z >= 3.2 && z < Z_RELAIS + 0.75 ? preparar(this._mondEu) : null,
-				tot: this._mondTot && z < Z_RELAIS + 0.75 ? preparar(this._mondTot) : null
+				eu: this._mondEu && z >= 3.2 && z < Z.RELAIS + 0.75 ? preparar(this._mondEu) : null,
+				tot: this._mondTot && z < Z.RELAIS + 0.75 ? preparar(this._mondTot) : null
 			};
 		},
 		_dessenharMond(cx, o, z, ti) {
@@ -1025,7 +1024,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		ocupat(lp) {
 			if (!this._map || !this._min) return false;
 			if (this._fichaA(lp)) return true;
-			if (this._zoom >= Z_RELAIS) return false;
+			if (this._zoom >= Z.RELAIS) return false;
 			const tactil = !matchMedia('(hover: hover)').matches;
 			return !!this._pròche(lp, tactil ? 34 : 22, tactil ? 18 : 6);
 		},
@@ -1178,7 +1177,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._mondPx = this._projMond(z);
 				const costa = this._costaFina ?? COSTA;
 				this._costa = (this._costaExtra?.length ? [...costa, ...this._costaExtra] : costa).map((l) => projectar(map, l, z));
-				this._plaçament = z < Z_DETALH_1 ? this._plaçarTot(z) : { vilas: [], rius: [] };
+				this._plaçament = z < Z.DETALH_1 ? this._plaçarTot(z) : { vilas: [], rius: [] };
 				this._zP = z;
 			}
 			this._construirEtiquetas();
@@ -1502,7 +1501,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (!m) return null;
 			const { regions, despartaments, comunas } = this._terJaces ?? {};
 			// la commune (couche thématique) prend le dessus dès qu'elle se voit
-			if (comunas && z >= (this._nivèls?.zComunas ?? Z_COMUNAS) - 0.01) return null;
+			if (comunas && z >= (this._nivèls?.zComunas ?? Z.COMUNAS) - 0.01) return null;
 			if (regions && despartaments) return m;
 			if (despartaments) return 'despartament';
 			if (regions) return 'region';
@@ -1552,7 +1551,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._map.getContainer().style.cursor = 'pointer';
 				return;
 			}
-			if (this._zoom >= Z_RELAIS) {
+			if (this._zoom >= Z.RELAIS) {
 				this._map.getContainer().style.cursor = '';
 				return;
 			}
@@ -1577,7 +1576,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		ponchA(lp) {
 			if (!this._map || !this._min) return null;
 			const tactil = !matchMedia('(hover: hover)').matches;
-			const f = this._fichaA(lp) ?? (this._zoom < Z_RELAIS ? this._pròche(lp, tactil ? 34 : 22, tactil ? 18 : 6) : null);
+			const f = this._fichaA(lp) ?? (this._zoom < Z.RELAIS ? this._pròche(lp, tactil ? 34 : 22, tactil ? 18 : 6) : null);
 			return f ? { centre: [f.lat, f.lon] } : null;
 		},
 		cadreA(lp) {
@@ -1598,8 +1597,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const f = this._fichaA(e.layerPoint);
 			if (f) {
 				this._pus = null;
-				if (this._zoom < Z_RELAIS) {
-					this._map.flyTo([f.lat, f.lon], Z_VOL, { duration: this._calm ? 0 : 1.8 });
+				if (this._zoom < Z.RELAIS) {
+					this._map.flyTo([f.lat, f.lon], Z.VOL, { duration: this._calm ? 0 : 1.8 });
 				} else if (f.ligam && this._onFicha) {
 					this._onFicha(f);
 				} else {
@@ -1627,7 +1626,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				return;
 			}
 			this._pus = null;
-			const z = Math.min(Math.max(this._zoom + 2.5, Z_VOL), 12);
+			const z = Math.min(Math.max(this._zoom + 2.5, Z.VOL), 12);
 			this._map.flyTo([lòc.lat, lòc.lon], z, { duration: this._calm ? 0 : 1.8 });
 		},
 
@@ -1695,7 +1694,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const dt = Math.min(0.1, (t - (this._tPrec ?? t)) / 1000);
 			this._tPrec = t;
 			// (dès le début du mouvement de zoom, pas à sa fin)
-			const cibla = (this._zCibla ?? z) >= Z_RELAIS ? 1 : 0;
+			const cibla = (this._zCibla ?? z) >= Z.RELAIS ? 1 : 0;
 			// la revelacion espèra que las tuèlas sián cargadas (al mai 1,5 s) : sens
 			// aquò, las tacas descobrissián un fons void e las tuèlas susissián aprèp
 			const cargan = cibla === 1 && this._relais < 1 && !!this._teulas?.isLoading?.();

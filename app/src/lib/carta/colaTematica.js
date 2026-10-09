@@ -61,7 +61,6 @@ const colorGov = (kod) => COLORS_GOV[kod] ?? '190, 170, 140';
 // Los sulhets (escalas.js) : comunas a 7 km (causida de Romain) ; províncias
 // de 1789 fins a 7 km ; governaments de luènh, províncias de prèp, lo cambi
 // entre dos crans de zoom (6,75 e 7), que cap cran demòre sens nom
-const { PROV_MAX: Z_PROV_MAX, GOV_PROV: Z_GOV_PROV } = Z;
 
 const TÈXTES = {
 	oc: {
@@ -520,7 +519,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				for (const f of this._prov.features)
 					if (f.properties.nivel === 'provincia') this._govs.get(f.properties.governament) && this._govs.get(f.properties.governament).n++;
 			}
-			if (J.provincias && this._prov && z < Z_PROV_MAX + 0.5)
+			if (J.provincias && this._prov && z < Z.PROV_MAX + 0.5)
 				G.prov = this._prov.features
 					.map((f) => ({
 						...zona(poligonsDe(f.geometry)),
@@ -580,9 +579,9 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				const c = G.com.find(dins);
 				if (c) return { mena: 'com', kod: c.props.i, props: c.props, dep: c.dep };
 			}
-			if (G.prov && z < Z_PROV_MAX && !cedirProv?.(lp)) {
+			if (G.prov && z < Z.PROV_MAX && !cedirProv?.(lp)) {
 				// de luènh, los governaments ; de prèp, las provincias
-				const nivèl = z < Z_GOV_PROV ? 'governament' : 'provincia';
+				const nivèl = z < Z.GOV_PROV ? 'governament' : 'provincia';
 				const lista = G.prov.filter((p) => p.props.nivel === nivèl || p.props.nivel === 'fora');
 				const p = lista.find(dins);
 				if (p) return { mena: 'prov', kod: p.props.kod, props: p.props };
@@ -766,7 +765,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				// (retorn de Romain : « DAUFINAT » e « Daufinat » se crosavan al
 				// meteis luòc ; los dos noms se seguisson ara sens se crosar, al
 				// meteis zoom que lo survòl càmbia de nivèl)
-				const al = gov ? a * clamp((Z_GOV_PROV - z) / 0.125) : a * clamp((z - Z_GOV_PROV) / 0.125) * clamp((10 - z) / 0.8);
+				const al = gov ? a * clamp((Z.GOV_PROV - z) / 0.125) : a * clamp((z - Z.GOV_PROV) / 0.125) * clamp((10 - z) / 0.8);
 				if (al < 0.01) continue;
 				// la forma que pòrta lo nom : la zòna meteissa, levat qualques
 				// governaments ont lo nom se pausa melhor sus la província del meteis
@@ -907,7 +906,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 
 			/* Parcs : un aplat leugièr e un contorn ponchejat */
 			if (G.parcs) {
-				const a = this._doç('parcs', clamp((z - 6) / 0.8) * clamp((15 - z) / 1.5)) * this._aJ('parcs');
+				const a = this._doç('parcs', clamp((z - Z.PARCS) / 0.8) * clamp((15 - z) / 1.5)) * this._aJ('parcs');
 				// l'aparicion : una estela fa lo torn de cada parc, puèi sa color
 				// s'espandís del mitan coma la vegetacion (demanda de Romain)
 				const tP = this._tApar('parcs'),
@@ -970,7 +969,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			   en fin ponchejat (retorn de Romain : « rendre plus clair les grandes
 			   provinces » e lors subdivisions) */
 			if (G.prov) {
-				const a = this._doç('prov', clamp((Z_PROV_MAX - z) / 1)) * this._aJ('provincias');
+				const a = this._doç('prov', clamp((Z.PROV_MAX - z) / 1)) * this._aJ('provincias');
 				const aProv = a * this._doç('provFinas', clamp((z - 6.4) / 0.8));
 				const pusGov = this._pus?.mena === 'prov' ? (this._pus.props.nivel === 'governament' ? this._pus.kod : this._pus.props.governament) : null;
 				// l'aparicion : las estelas traçan los governaments e las províncias

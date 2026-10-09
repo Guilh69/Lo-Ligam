@@ -5,8 +5,7 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, palièrDe, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
-	const { RELAIS: Z_RELAIS, PRECARGA: Z_PRECARGA, ICONAS: Z_ICONAS } = Z;
+	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, palièrDe, fixarLatEscala, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
@@ -263,14 +262,14 @@
 	// Fons « estelas » : la carta detalhada (tuèlas OSM en occitan) apareis e
 	// las estelas s'escafan a mesura que s'aprèpa ; en dejós del lindal, cap de
 	// tuèla es pas demandada (sobrietat).
-	// Fons « estelas » : en s'aprochant (vèrs 20 km, Z_RELAIS), lo plan
+	// Fons « estelas » : en s'aprochant (vèrs 20 km, Z.RELAIS), lo plan
 	// estelat cedís la plaça al satellit, sens passar per la carta OSM
 	// (demanda de Romain, 2026-10-09) ; nòstres noms occitans passan al
 	// dessús. En dejós del lindal, cap de tuèla es pas demandada (sobrietat).
 	function majDetalh() {
 		if (!map || baseLayer !== 'estelas') return;
 		const z = map.getZoom();
-		if (z >= Z_PRECARGA) {
+		if (z >= Z.PRECARGA) {
 			if (!currentBaseTileLayer) {
 				currentBaseTileLayer = crearSatellit({ opacity: 0 });
 				currentBaseTileLayer._loLigamKey = 'estelas';
@@ -617,7 +616,7 @@
 	}
 	function majNomsComunas() {
 		if (!map) return;
-		if (baseLayer !== 'estelas' || map.getZoom() < Z_RELAIS) {
+		if (baseLayer !== 'estelas' || map.getZoom() < Z.RELAIS) {
 			if (capaNoms) map.removeLayer(capaNoms);
 			capaNoms = null;
 			nomsAfichats.clear();
@@ -676,7 +675,7 @@
 		for (const [id, g] of Object.entries(pointLayers))
 			if (id !== 'lengasFranca' && map.hasLayer(g)) g.eachLayer((m) => m._icon && vue.contains(m.getLatLng()) && ms.push(m));
 		if (!ms.length) return;
-		if (map.getZoom() < Z_ICONAS) {
+		if (map.getZoom() < Z.ICONAS) {
 			for (const m of ms) {
 				m.options.icon.options.popupAnchor = [0, -6];
 				m._icon.classList.remove('ponch-sol-estela');
@@ -944,6 +943,8 @@
 			maxZoom: 19,
 			zoomControl: false
 		});
+		// la grilha de las escalas seguís la latitud del centre (escalas.js)
+		map.on('move', () => fixarLatEscala(map.getCenter().lat));
 		map.fitBounds(
 			[
 				[42.65, -1.6],
@@ -1108,7 +1109,7 @@
 		};
 		map.on('zoomend', luènh);
 		luènh();
-		const estelas = () => mapEl?.classList.toggle('ponchs-estelas', map.getZoom() < Z_ICONAS);
+		const estelas = () => mapEl?.classList.toggle('ponchs-estelas', map.getZoom() < Z.ICONAS);
 		map.on('zoomend', estelas);
 		estelas();
 		if (ambToponims(baseLayer)) loadToponymsLayer();
