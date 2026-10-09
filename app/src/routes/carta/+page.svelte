@@ -146,7 +146,7 @@
 			bind:causits
 			{visualizacion}
 			onVisualizacion={basculaVisualizacion}
-			onAlucar={(k) => (layerVisibility[k] = true)}
+			onAlucar={(k, v = true) => (layerVisibility[k] = v)}
 		/>
 
 		{#if showInfo}

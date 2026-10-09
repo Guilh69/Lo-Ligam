@@ -41,6 +41,7 @@
 			disponiblas: (n) => `${n} ${n > 1 ? 'jaces disponiblas' : 'jaça disponibla'}`,
 			venir: (n) => `${n} a venir`,
 			res: 'Pas cap de jaça : la carta es nusa. Causissètz-ne una dins una familha.',
+			afichatOc: "Afichar l'occitan",
 			afichadas: (n) => `${n} ${n > 1 ? 'jaces afichadas' : 'jaça afichada'}`,
 			fonsCarta: 'Fons de carta',
 			basemaps: { estelas: 'Contorns', occitan: 'Occitan', natural: 'Natural', satellite: 'Satellit' },
@@ -76,6 +77,7 @@
 			disponiblas: (n) => `${n} ${n > 1 ? 'couches disponibles' : 'couche disponible'}`,
 			venir: (n) => `${n} à venir`,
 			res: 'Aucune couche : la carte est nue. Choisissez-en une dans une famille.',
+			afichatOc: "Afficher l'occitan",
 			afichadas: (n) => `${n} ${n > 1 ? 'couches affichées' : 'couche affichée'}`,
 			fonsCarta: 'Fond de carte',
 			basemaps: { estelas: 'Contours', occitan: 'Occitan', natural: 'Naturel', satellite: 'Satellite' },
@@ -467,6 +469,11 @@
 		visibility.frontiera = true;
 		causits = [];
 	}
+	// L'occitan tornat (demanda de Romain, 2026-10-09) : las jaces de la lenga
+	// per defaut (domeni, dialèctes, noms de las vilas) ; la carta i vòla (CartaOccitania)
+	function afichatOccitan() {
+		for (const j of familhas.find((f) => f.id === 'lenga')?.jaces ?? []) if (j.defaut && actiu(j)) visibility[j.id] = true;
+	}
 	// Tot tornar : las jaces per defaut del catalògue
 	function totTornar() {
 		for (const j of totas) visibility[j.id] = !!j.defaut;
@@ -616,6 +623,10 @@
 			</div>
 			{#if !afichadas.length}
 				<p class="res">{tx.res}</p>
+			{/if}
+			<!-- la lenga occitana levada (« Netejar la carta ») : la tornar d'un clic -->
+			{#if !visibility.dialectes && !visibility.unificat}
+				<button type="button" class="boton boton-oc" onclick={afichatOccitan}>{tx.afichatOc}</button>
 			{/if}
 			<!-- la legenda de sa carta, rengada per tematica (demanda de Romain, 2026-10-09) -->
 			{#each familhas.filter((f) => f.jaces.some((j) => afichadas.includes(j))) as f (f.id)}
@@ -1249,6 +1260,12 @@
 	.boton:disabled {
 		opacity: 0.4;
 		cursor: default;
+	}
+	/* « Afichar l'occitan » : en aur, pus visible que los autres */
+	.boton-oc {
+		margin-top: 0.6rem;
+		border-color: var(--t-aur);
+		font-weight: 700;
 	}
 	.botons {
 		display: flex;

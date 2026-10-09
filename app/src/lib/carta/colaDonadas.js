@@ -219,6 +219,12 @@ export function crearColaDonadas(
 			this._relais('uni', 0, DURADA_BALET);
 			R.uni.net = true;
 		},
+		// lo fuòc d'artifici demandat d'en defòra (lo boton « Tornar a l'Occitània »)
+		demandarBalet() {
+			if (this._calm) return;
+			this._baletDemandat = true;
+			this._lançarBalet();
+		},
 		// lo cadre d'un dialècte (la carta i vòla quand se causís de luènh)
 		cadreDialècte(k) {
 			return cadreDe(this._dial?.features.find((x) => x.properties.kod === k));

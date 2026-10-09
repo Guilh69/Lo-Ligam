@@ -210,6 +210,30 @@
 		lang;
 		majPlen();
 	});
+	// Tornar a l'Occitània (demanda de Romain, 2026-10-09) : un boton al costat
+	// del plen ecran e del zoom ; quin que siá l'endrech, la vista d'ensemble,
+	// lo domeni e los dialèctes, en fuòc d'artifici. L'icòna : lo contorn del
+	// domeni occitan, simplificat (limits-carta.json)
+	const ICONA_OC =
+		'M16.0 15.7L14.1 15.1L12.3 16.2L12.0 17.2L9.3 18.1L4.1 17.4L2.9 15.4L2.0 15.4L2.8 11.7L3.3 11.8L2.7 11.8L3.1 8.9L4.1 10.6L5.3 10.7L6.5 7.3L8.1 6.2L10.5 5.9L13.6 7.1L13.5 8.2L14.4 9.5L16.6 9.8L18.0 11.1L19.0 10.3L21.3 10.7L21.0 11.4L22.0 13.5L19.9 16.2L18.1 16.6L16.4 15.7L16.8 15.3L16.3 15.1L16.0 15.7Z';
+	let botonOc = null;
+	function majTornarOc() {
+		if (!botonOc) return;
+		const tx = lang === 'fr' ? "Revenir à l'Occitanie" : "Tornar a l'Occitània";
+		botonOc.title = tx;
+		botonOc.setAttribute('aria-label', tx);
+	}
+	$effect(() => {
+		lang;
+		majTornarOc();
+	});
+	function tornarALOccitan() {
+		onAlucar?.('unificat', false);
+		onAlucar?.('frontiera');
+		onAlucar?.('dialectes');
+		colaDonadas?.demandarBalet();
+		anarALaVistaOccitana('dialectes');
+	}
 	// arrèst de l'entrada en scèna (sons, escotas) quand se quita la pagina
 	let quitarIntro = null;
 	let L;
@@ -388,20 +412,25 @@
 	}
 	function vesinaA(ll) {
 		if (!vesinas) return null;
-		for (const [k, anels] of Object.entries(vesinas)) if (LENGAS[k] && !visibility[k] && dinsAnels(anels, ll.lng, ll.lat)) return k;
+		for (const [k, anels] of Object.entries(vesinas)) if (amagada(k) && dinsAnels(anels, ll.lng, ll.lat)) return k;
 		return null;
 	}
+	// una lenga pas afichada : lo catalan, l'arpitan… decochats ; l'occitan, quand
+	// sos dialèctes e l'occitan unificat son levats (« Netejar la carta »)
+	const amagada = (k) => (k === 'occitan' ? !visibility.dialectes && !visibility.unificat : LENGAS[k] && !visibility[k]);
 	// (noms de validar per Romain)
 	const vocala = (t) => /^[aeiouàèéíòóúh]/i.test(t);
 	const descVesina = (k) => {
-		const n = LENGAS[k].nom;
+		const n = LENGAS[k]?.nom ?? { oc: 'occitan', fr: 'occitan', endo: 'occitan' };
 		return { kod: k, endo: n.endo, oc: 'Descobrir ' + (vocala(n.oc) ? "l'" : 'lo ') + n.oc, fr: 'Découvrir ' + (vocala(n.fr) ? "l'" : 'le ') + n.fr };
 	};
 	function alucarVesina(k) {
 		vesina = null;
 		colaEstelas?.amagarLegenda(false);
 		mapEl?.classList.remove('sus-vesina');
-		onAlucar?.(k);
+		// (l'occitan : son domeni e sos dialèctes, la vista d'ensemble, lo fuòc d'artifici)
+		if (k === 'occitan') tornarALOccitan();
+		else onAlucar?.(k);
 	}
 	// Lo palièr de la grilha de las escalas (escalas.js), al costat de la barra
 	let elPalièr = null,
@@ -1199,6 +1228,24 @@
 			}
 		});
 		new PlenEcran().addTo(map);
+		const TornarOc = L.Control.extend({
+			options: { position: 'bottomright' },
+			onAdd() {
+				const c = L.DomUtil.create('div', 'leaflet-bar tornar-oc');
+				botonOc = L.DomUtil.create('a', '', c);
+				botonOc.href = '#';
+				botonOc.setAttribute('role', 'button');
+				botonOc.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="${ICONA_OC}" fill="currentColor" fill-opacity="0.35" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>`;
+				L.DomEvent.disableClickPropagation(c);
+				L.DomEvent.on(botonOc, 'click', (e) => {
+					L.DomEvent.preventDefault(e);
+					tornarALOccitan();
+				});
+				majTornarOc();
+				return c;
+			}
+		});
+		new TornarOc().addTo(map);
 		map.attributionControl?.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
 		tèxtesLeaflet();
 		map.on('popupopen', tèxtesLeaflet);
@@ -1439,8 +1486,12 @@
 		visAbans = vis;
 		if (!abans) return;
 		const nòvas = Object.keys(vis).filter((k) => vis[k] && !abans[k]);
-		// (sonque una jaça cochada a la man : « Tot tornar » bolega pas la carta)
-		if (nòvas.length !== 1) return;
+		// (mantuna jaça d'un còp — « Tot tornar », « Afichar l'occitan » : se los
+		// dialèctes i son, la vista de l'Occitània ; si que non, la carta bolega pas)
+		if (nòvas.length !== 1) {
+			if (nòvas.includes('dialectes')) anarALaVistaOccitana('dialectes');
+			return;
+		}
 		// (una jaça occitana : la vista de l'Occitània ; los dialèctes i jògan
 		// lor fuòc d'artifici ; las autras : l'escala vesibla la mai pròcha)
 		const id = nòvas[0];
@@ -1562,7 +1613,7 @@
 
 	{#if vesina && !legendaDial}
 		<button type="button" class="legenda-dial vesina" onclick={() => alucarVesina(vesina.kod)}>
-			<span class="nom" lang={LENGAS[vesina.kod]?.lang}>{vesina.endo}</span>
+			<span class="nom" lang={LENGAS[vesina.kod]?.lang ?? 'oc'}>{vesina.endo}</span>
 			<span class="sota">{lang === 'fr' ? vesina.fr : vesina.oc} →</span>
 		</button>
 	{/if}
@@ -1839,7 +1890,8 @@
 		outline-offset: -2px;
 	}
 
-	.carta :global(.plen-ecran a) {
+	.carta :global(.plen-ecran a),
+	.carta :global(.tornar-oc a) {
 		display: flex;
 		align-items: center;
 		justify-content: center;

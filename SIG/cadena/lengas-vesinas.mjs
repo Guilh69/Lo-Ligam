@@ -10,6 +10,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const DATA = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../app/static/data');
 const LENGAS = ['catalan', 'arpitan']; // (lo basc e las lengas d'oïl : quand lor domeni serà traçat)
+// l'occitan tanben : quand sas jaces son levadas (« Netejar la carta »), son
+// survòl prepausa de lo tornar descobrir (domeni : limits-carta.json)
+const FONTS = { occitan: 'limits-carta.json' };
 const TOL = 0.01; // grau
 const arr = (v) => Math.round(v * 100) / 100;
 
@@ -44,8 +47,8 @@ function simplificarAnel(a, tol) {
 }
 
 const sortida = {};
-for (const k of LENGAS) {
-	const d = JSON.parse(fs.readFileSync(path.join(DATA, k + '.json'), 'utf8'));
+for (const k of [...LENGAS, ...Object.keys(FONTS)]) {
+	const d = JSON.parse(fs.readFileSync(path.join(DATA, FONTS[k] ?? k + '.json'), 'utf8'));
 	sortida[k] = d.domeni.anels
 		.map((a) => simplificarAnel(a, TOL).map(([x, y]) => [arr(x), arr(y)]))
 		.filter((a) => a.length >= 4);
