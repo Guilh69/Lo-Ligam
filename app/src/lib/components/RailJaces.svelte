@@ -612,8 +612,12 @@
 			{#if !afichadas.length}
 				<p class="res">{tx.res}</p>
 			{/if}
-			{#each afichadas as j (j.id)}
-				{@render linha(j)}
+			<!-- la legenda de sa carta, rengada per tematica (demanda de Romain, 2026-10-09) -->
+			{#each familhas.filter((f) => f.jaces.some((j) => afichadas.includes(j))) as f (f.id)}
+				<p class="titolet">{nomFam(f.id)}</p>
+				{#each f.jaces.filter((j) => afichadas.includes(j)) as j (j.id)}
+					{@render linha(j)}
+				{/each}
 			{/each}
 		{:else if dobert === 'fons'}
 			<p class="titolet">{tx.fonsCarta}</p>
