@@ -11,6 +11,7 @@
 	import { LENGAS, esOccitan, fonsLenga } from '$lib/carta/lengas.js';
 	import { JACES_DONADAS, JACES_TEMATICAS, JACES_LENGAS } from '$lib/carta/catalogue.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
+	import { degatjar, zonaEtiqueta, placeVisible, DEFAUT } from '$lib/carta/degatjament.js';
 	import { NOMS_FRANCES } from '$lib/carta/nomsFrances.js';
 	import { LUOCS } from '$lib/acuelh/carta-estelas.js';
 	import CercaCarta from './CercaCarta.svelte';
@@ -322,12 +323,12 @@
 	const iconaPunt = (cid, st = estilPunt(cid)) =>
 		L.divIcon({
 			className: 'ponch-jaça ponch-jaça-' + cid,
-			html: `<span class="ponch"${st}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[ICONA_COLA[cid] ?? 'building-arch']}</svg></span><i class="ponch-cueta"${st}></i>`,
-			// una espilla : la pastilha se ten al dessús del luòc, que son nom
-			// (a costat del ponch) demòre legible
-			iconSize: [26, 34],
-			iconAnchor: [13, 34],
-			popupAnchor: [0, -32]
+			html: `<span class="ponch-fil"><i class="ponch-cueta"${st}></i></span><span class="ponch-pos"><span class="ponch"${st}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[ICONA_COLA[cid] ?? 'building-arch']}</svg></span></span>`,
+			// l'icòna es sul luòc (talha nula) : sa pastilha se ten al dessús, o se
+			// descala amb un fil quand amaga un nom de vila (degatjarPonchs)
+			iconSize: [0, 0],
+			iconAnchor: [0, 0],
+			popupAnchor: [DEFAUT[0], DEFAUT[1] - 11]
 		});
 
 	// Las accions d'una bulla (retorn de Romain, 2026-10-08 : pas d'adreça
@@ -523,6 +524,47 @@
 			q = oc && POS_VILAS[oc];
 		return q && km(lat, lon, q[1], q[0]) < 15 ? oc : null;
 	};
+	// Los ponches amagan pas los noms de las vilas (los noms son dins las tuèlas :
+	// la plaça de cada nom se n'estima amb la lista de las comunas). Un ponch
+	// que n'amagariá un se descala, ligat al luòc per un fil. Se torna calcular
+	// a cada zoom e quand una jaça s'aluca o s'atudís.
+	let degatRaf = 0;
+	function programarDegatjament() {
+		cancelAnimationFrame(degatRaf);
+		degatRaf = requestAnimationFrame(degatjarPonchs);
+	}
+	function degatjarPonchs() {
+		if (!map) return;
+		const ms = [];
+		const vue = map.getBounds().pad(0.15);
+		for (const [id, g] of Object.entries(pointLayers))
+			if (id !== 'lengasFranca' && map.hasLayer(g)) g.eachLayer((m) => m._icon && vue.contains(m.getLatLng()) && ms.push(m));
+		if (!ms.length) return;
+		cargarNomsComunas();
+		const z = map.getZoom();
+		const pts = ms.map((m) => map.latLngToContainerPoint(m.getLatLng()));
+		const zonas = [];
+		if (nomsComunas?.length) {
+			const b = vue.pad(0.15);
+			const s = b.getSouth(), n = b.getNorth(), w = b.getWest(), e = b.getEast();
+			for (const c of nomsComunas) {
+				if (c.lat < s || c.lat > n || c.lon < w || c.lon > e || !placeVisible(c.pop, z)) continue;
+				const q = map.latLngToContainerPoint([c.lat, c.lon]);
+				zonas.push(zonaEtiqueta(q.x, q.y, c.oc || c.fr, c.pop));
+			}
+		}
+		const desc = degatjar(pts, zonas);
+		ms.forEach((m, i) => {
+			const [dx, dy] = desc[i];
+			const d = Math.hypot(dx, dy);
+			const st = m._icon.style;
+			st.setProperty('--dx', dx + 'px');
+			st.setProperty('--dy', dy + 'px');
+			st.setProperty('--ang', Math.atan2(-dx, dy) + 'rad');
+			st.setProperty('--fil', Math.max(0, d - 13) + 'px');
+			m.options.icon.options.popupAnchor = [dx, dy - 11];
+		});
+	}
 	async function cargarNomsComunas() {
 		if (nomsComunas) return;
 		nomsComunas = [];
@@ -535,6 +577,7 @@
 			return { fr, oc, lon, lat, pop, dep, k: [normC(fr), ...(oc ? [normC(oc)] : []), ...(oc0 && oc0 !== oc ? [normC(oc0)] : [])] };
 		});
 		if (qComuna) cercarComuna(qComuna);
+		programarDegatjament();
 	}
 	function cercarComuna(q) {
 		const n = normC(q);
@@ -820,6 +863,7 @@
 		);
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
+		map.on('moveend layeradd layerremove', programarDegatjament);
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
 		// de luènh (« 500 km »), los ponches (luòcs, librarias, Calandretas)
@@ -1153,16 +1197,40 @@
 	   icòna e liseret de la color de la jaça */
 	:global(.ponch-jaça) {
 		--ponch: var(--t-aur);
-		display: grid;
-		justify-items: center;
 		background: none;
 		border: 0;
+		outline: none;
+	}
+	/* la pastille et son fil se placent par rapport au lieu (taille nulle de
+	   l'icône) ; --dx, --dy, --ang et --fil viennent de degatjarPonchs, qui
+	   décale la pastille quand elle cacherait un nom de ville */
+	:global(.ponch-pos) {
+		position: absolute;
+		left: 0;
+		top: 0;
+		transform: translate(calc(var(--dx, 0px) - 13px), calc(var(--dy, -21px) - 13px));
+		transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
+	}
+	:global(.ponch-fil) {
+		position: absolute;
+		left: -0.75px;
+		top: 0;
+		width: 1.5px;
+		height: var(--fil, 8px);
+		transform-origin: 0 0;
+		transform: rotate(var(--ang, 3.14159rad));
+		transition: height 0.3s, transform 0.3s;
+		pointer-events: none;
 	}
 	:global(.ponch-cueta) {
 		display: block;
-		width: 1.5px;
-		height: 8px;
+		width: 100%;
+		height: 100%;
 		background: var(--ponch);
+	}
+	:global(.ponch-jaça:focus-visible .ponch) {
+		outline: 2px solid var(--t-aur-clar);
+		outline-offset: 2px;
 	}
 	/* L'aparicion d'un ponch (demanda de Romain : una animacion per jaça, la
 	   mai adaptada a sas donadas) : s'aluca coma una estela, a son moment */
@@ -1226,7 +1294,9 @@
 		transform: scale(1.12);
 	}
 	@media (prefers-reduced-motion: reduce) {
-		:global(.ponch) {
+		:global(.ponch),
+		:global(.ponch-pos),
+		:global(.ponch-fil) {
 			transition: none;
 		}
 	}
