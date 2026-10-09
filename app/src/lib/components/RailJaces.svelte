@@ -620,8 +620,8 @@
 				{@const js = f.jaces.filter((j) => afichadas.includes(j))}
 				{@const dobèrt = !enrotlats.includes(f.id)}
 				<button type="button" class="titolet tèma" aria-expanded={dobèrt} onclick={() => virarTèma(f.id)}>
-					<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
 					{nomFam(f.id)}<span class="tèma-n">{js.length}</span>
+					<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
 				</button>
 				{#if dobèrt}
 					<div class="tèma-cos" transition:slide={{ duration: 220 }}>
@@ -983,7 +983,6 @@
 		padding: 0.25rem 0;
 		background: none;
 		border: 0;
-		border-bottom: 1px solid color-mix(in srgb, var(--t-tinta-2) 25%, transparent);
 		font-family: inherit;
 		text-align: left;
 		cursor: pointer;
@@ -999,6 +998,9 @@
 	}
 	.titolet.tèma[aria-expanded='false'] svg {
 		transform: rotate(-90deg);
+	}
+	.tèma-cos > .linha:first-child {
+		border-top: 0;
 	}
 	.tèma-n {
 		margin-left: auto;
