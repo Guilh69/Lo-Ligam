@@ -1349,7 +1349,7 @@
 		map.flyTo(c, z, { animate: !calm, duration: calm ? 0 : 1.2 });
 	}
 	// Una jaça occitana cochada : la vista d'ensemble de l'Occitània, lo meteis
-	// cadratge sus totes los aparelhs (70 km sus un ecran de 1 830 px), mai
+	// cadratge sus totes los aparelhs (50 km sus un ecran de 1 830 px), mai
 	// pròche se la jaça se vei pas d'aquí (los dialèctes, a 100 km al mai)
 	const OCCITANIA_VISTA = [
 		[42.65, -1.6],
