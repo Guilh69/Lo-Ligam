@@ -64,6 +64,36 @@ export const KM = {
 	europa: 50 // los contorns d'Euròpa s'escantisson de 70 a 50 km
 };
 
+// La plaja ont cada jaça se vei : [de luènh, de prèp], en km de barra (0 :
+// fins al pus prèp). Una jaça cochada en defòra de sa plaja mena la carta a
+// l'escala vesibla la mai pròcha (demanda de Romain, 2026-10-09 : « toutes
+// les données doivent zoomer sur le niveau le plus proche de visualisation »)
+export const PLAJAS = {
+	frontiera: [200, 0],
+	dialectes: [100, 0],
+	regions: [300, 5],
+	despartaments: [300, 5],
+	comunas: [7, 0],
+	lieusInteres: [300, 0],
+	librarias: [300, 0],
+	calandretas: [300, 0],
+	festas: [300, 0],
+	provincias: [300, 10],
+	parcs: [150, 0.5],
+	massis: [200, 2],
+	nomsRius: [150, 20],
+	corbas: [300, 20],
+	lengasFranca: [400, 30]
+};
+// lo zoom ont anar per veire una jaça (null : se vei ja)
+export function zPlaja(id, z, lat = LAT_REF) {
+	const pl = PLAJAS[id];
+	if (!pl) return null;
+	if (z < zDès(pl[0], lat)) return zCran(pl[0], lat);
+	if (pl[1] && z > zÈscala(pl[1], lat)) return Math.floor(zÈscala(pl[1], lat) / PAS_ZOOM) * PAS_ZOOM;
+	return null;
+}
+
 // Los zooms fixes (meteis zoom sus totes los ecrans ; la barra varia un pauc
 // amb la latitud : la valor indicada es al mitan de l'Occitània)
 export const Z = {

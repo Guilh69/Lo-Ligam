@@ -5,7 +5,7 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, KM, zDès, zCran, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
+	import { Z, KM, zDès, zCran, zPlaja, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
 	const { RELAIS: Z_RELAIS, PRECARGA: Z_PRECARGA, ICONAS: Z_ICONAS } = Z;
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
@@ -1306,7 +1306,7 @@
 	// Los dialèctes cochats, o un dialècte causit, de mai luènh que 100 km : la
 	// carta i vòla, a 100 km (demanda de Romain, 2026-10-09 ; lo fuòc
 	// d'artifici se jòga a l'arribada, colaDonadas)
-	let dialAbans = null,
+	let visAbans = null,
 		causitsAbans = null;
 	function anarAlsDialectes(kod) {
 		if (!map || !L) return;
@@ -1317,11 +1317,29 @@
 		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		map.flyTo(c, zCran(KM.dialectes, c.lat), { animate: !calm, duration: calm ? 0 : 1.4 });
 	}
+	// Una jaça cochada en defòra de sa plaja d'escalas : la carta va a
+	// l'escala vesibla la mai pròcha (escalas.js, PLAJAS), sens cambiar de
+	// centre se l'Occitània es a l'ecran
+	function anarALaPlaja(id) {
+		if (!map || !L) return;
+		const z = zPlaja(id, map.getZoom(), map.getCenter().lat);
+		if (z == null) return;
+		const occ = L.latLng(44.5, 2.97),
+			c = map.getBounds().contains(occ) ? map.getCenter() : occ,
+			calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		map.flyTo(c, z, { animate: !calm, duration: calm ? 0 : 1.2 });
+	}
 	$effect(() => {
-		const d = !!visibility.dialectes,
-			abans = dialAbans;
-		dialAbans = d;
-		if (abans === false && d) anarAlsDialectes(null);
+		const vis = { ...visibility },
+			abans = visAbans;
+		visAbans = vis;
+		if (!abans) return;
+		const nòvas = Object.keys(vis).filter((k) => vis[k] && !abans[k]);
+		// (sonque una jaça cochada a la man : « Tot tornar » bolega pas la carta)
+		if (nòvas.length !== 1) return;
+		// (los dialèctes : lor vòl a 100 km e lor fuòc d'artifici)
+		if (nòvas.includes('dialectes')) anarAlsDialectes(null);
+		else anarALaPlaja(nòvas[nòvas.length - 1]);
 	});
 
 	// Recherche : un lieu, la carte y vole (et l'y signale) ; un département ou
