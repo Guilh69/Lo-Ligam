@@ -84,7 +84,8 @@
 		// las inversa) : una fotografia s'escurcís sens s'inversar
 		if (!map.getPane('satellit')) {
 			const p = map.createPane('satellit');
-			p.style.zIndex = 250;
+			// (jos los nívols de la revelacion, 250, coma las tuèlas OSM)
+			p.style.zIndex = 210;
 			p.classList.add('pan-satellit');
 		}
 		const cs = SATELLIT.map(({ url, bounds, attribution }) => L.tileLayer(url, { maxZoom: 19, bounds, attribution, pane: 'satellit', ...opts }));
@@ -2065,6 +2066,16 @@
 			0 0 3px rgba(250, 242, 228, 0.95),
 			0 0 7px rgba(250, 242, 228, 0.7);
 		animation: nom-ven 0.9s ease 0.35s backwards;
+	}
+	/* coma los noms de las tuèlas d'abans : pendent la revelacion (los nívols
+	   que se dissipan), cap de nom ; arriban un còp la tèrra descobèrta, e se
+	   n'anan tre que l'on se recula (jamai dos jòcs de noms ensems) */
+	.carta :global(.nom-comuna) {
+		transition: opacity 0.8s ease 0.15s;
+	}
+	.carta:global(.revelant) :global(.nom-comuna) {
+		opacity: 0;
+		transition: opacity 0.25s ease;
 	}
 	.carta.nuech :global(.nom-comuna span) {
 		color: #f5ead8;
