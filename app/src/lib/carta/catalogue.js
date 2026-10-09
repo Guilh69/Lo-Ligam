@@ -158,12 +158,20 @@ CATALOGUE.push({
 		{ id: 'alsacian', oc: 'Alsacian e francic', fr: 'Alsacien et francique', estat: 'a venir' },
 		{ id: 'flamenc', oc: 'Flamenc occidental', fr: 'Flamand occidental', estat: 'a venir' },
 		{ id: 'cors', oc: 'Còrs', fr: 'Corse', estat: 'a venir' },
-		{ id: 'oil', oc: 'Lengas d’oïl', fr: 'Langues d’oïl', estat: 'a venir' }
+		{
+			id: 'oil',
+			oc: 'Lengas d’oïl',
+			fr: 'Langues d’oïl',
+			estat: 'disponible',
+			defaut: false,
+			nota_oc: 'Una familha de lengas : picard, normand, galò, peitavin-santongés, campanés, lorren…',
+			nota_fr: 'Une famille de langues : picard, normand, gallo, poitevin-saintongeais, champenois, lorrain…'
+		}
 	]
 });
 
 // Las jaces de lengas pintadas per una còla de lenga (colaLenga.js, lengas.js)
-export const JACES_LENGAS = ['catalan', 'arpitan', 'basc'];
+export const JACES_LENGAS = ['catalan', 'arpitan', 'basc', 'oil'];
 
 // Las jaces pintadas pel fons « Contorns » (colaEstelas.js) : son pas pintadas
 // sus los autres fonses (las tuèlas an las lors). Jaça → element del fons.

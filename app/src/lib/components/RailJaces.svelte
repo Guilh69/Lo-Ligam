@@ -58,7 +58,7 @@
 			color: (n) => `Color : ${n}`,
 			dialecteTotes: 'Totes',
 			causirDial: 'Causir un o mantun dialècte',
-			causirLenga: (l) => `Causir una zòna ${/^[aeiouàèéòóíú]/i.test(l) ? "de l'" : "del "}${l}`,
+			causirLenga: (l) => `Causir una zòna ${/^lengas /.test(l) ? 'de las ' + l : /^[aeiouàèéòóíú]/i.test(l) ? "de l'" + l : 'del ' + l}`,
 			admin: "Modificar dins l'admin"
 		},
 		fr: {
@@ -94,7 +94,7 @@
 			color: (n) => `Couleur : ${n}`,
 			dialecteTotes: 'Tous',
 			causirDial: 'Choisir un ou plusieurs dialectes',
-			causirLenga: (l) => `Choisir une zone ${/^[aeiouàâéèêîôû]/i.test(l) ? "de l'" : "du "}${l}`,
+			causirLenga: (l) => `Choisir une zone ${/^langues /.test(l) ? 'des ' + l : /^[aeiouàâéèêîôû]/i.test(l) ? "de l'" + l : 'du ' + l}`,
 			admin: "Modifier dans l'admin"
 		}
 	};
@@ -163,7 +163,7 @@
 				})
 			),
 			...Object.fromEntries(
-				[['basc', 'EUSKARA'], ['breton', 'BREZHONEG'],['alsacian', 'ELSÄSSISCH'], ['flamenc', 'VLAEMSCH'], ['cors', 'CORSU'], ['oil', 'GALLO']].map(([k, t]) => [
+				[['basc', 'EUSKARA'], ['breton', 'BREZHONEG'],['alsacian', 'ELSÄSSISCH'], ['flamenc', 'VLAEMSCH'], ['cors', 'CORSU']].map(([k, t]) => [
 					k,
 					`<text x="26" y="22" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1" fill="currentColor">${t}</text>`
 				])
@@ -742,7 +742,7 @@
 							title={lang === 'oc' ? oc : fr}
 							aria-pressed={causits.includes(lg.pref + k)}
 							onclick={() => causirLenga(j.id, k)}
-						><i class:apart style:background={apart ? null : colorPastilha(j.id, k)}></i>{q[lg.lang] ?? q.ca}</button>
+						><i class:apart style:background={apart ? null : colorPastilha(j.id, k)}></i>{q[lg.lang] ?? (lg.lang === 'fr' ? fr : q.ca)}</button>
 					{/each}
 					{#if causits.some((k) => k.startsWith(lg.pref))}
 						<button type="button" class="pastilha totes" onclick={() => (causits = causits.filter((k) => !k.startsWith(lg.pref)))}

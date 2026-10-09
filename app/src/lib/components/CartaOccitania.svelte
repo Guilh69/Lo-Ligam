@@ -422,7 +422,9 @@
 	const vocala = (t) => /^[aeiouàèéíòóúh]/i.test(t);
 	const descVesina = (k) => {
 		const n = LENGAS[k]?.nom ?? { oc: 'occitan', fr: 'occitan', endo: 'occitan' };
-		return { kod: k, endo: n.endo, oc: 'Descobrir ' + (vocala(n.oc) ? "l'" : 'lo ') + n.oc, fr: 'Découvrir ' + (vocala(n.fr) ? "l'" : 'le ') + n.fr };
+		// (un plural, « lengas d'oïl » : « las », « les »)
+		const art = (t, pl, v, m) => (/^(lengas|langues) /.test(t) ? pl : vocala(t) ? v : m);
+		return { kod: k, endo: n.endo, oc: 'Descobrir ' + art(n.oc, 'las ', "l'", 'lo ') + n.oc, fr: 'Découvrir ' + art(n.fr, 'les ', "l'", 'le ') + n.fr };
 	};
 	function alucarVesina(k) {
 		vesina = null;

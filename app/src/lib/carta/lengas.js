@@ -128,6 +128,65 @@ export const LENGAS = {
 		nomCarta: 'EUSKARA',
 		atribucion:
 			'Basc : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), comunas d\'Espanha © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL), zònas de la lei navarresa de 1986, dialèctes d\'aprèp Koldo Zuazo (2008) e la Viquipèdia en basc'
+	},
+	// Las lengas d'oïl (Romain, 2026-10-09, cahier §11) : una familha de lengas,
+	// pas una lenga amb de dialèctes. De luènh una sola zòna ; de prèp las 9
+	// lengas de la lista oficiala e los parlars del Centre e de l'Oèst, cada
+	// comuna amb lo parlar de son canton dins la carta dels Archius nacionals
+	// (SIG/oil/FONTS.md). Los noms son en francés (pas de lenga d'escritura
+	// comuna) ; los noms occitans son de validar.
+	oil: {
+		kod: 'oil',
+		pref: 'oil-',
+		lang: 'fr',
+		url: '/data/oil.json',
+		nom: { oc: 'lengas d’oïl', fr: 'langues d’oïl', endo: 'langues d’oïl' },
+		// (entre París e Orleans)
+		eti: [2.1, 48.3],
+		// lo blau de las cartas de las lengas de França, luènh del blau de la mar
+		color: { sorne: '#8a9cf0', clar: '#3a4fb0', dalt: '#0072b2' },
+		tèxt: { sorne: '#e1e6ff', clar: '#1c2766', dalt: '#cfe4ff' },
+		// quatre familhas de blaus, una per grope : indigò al Nòrd (picard,
+		// normand, valon), blau petròli a l'Èst (lo franc-comtés tira cap al verd
+		// arpitan), ardesa a l'Oèst (lo galò pus escur), blauet pus viu pel
+		// peitavin-santongés a despart ; lo Centre, pervenca palla
+		dial: {
+			sorne: {
+				picard: '#6b78ff', wallon: '#a48cff', normand: '#3f5bff',
+				champenois: '#2fb4f0', lorrain: '#1588d8', bourguignon: '#6fd6ff', franc_comtois: '#1fd6c0',
+				gallo: '#4f7fd0', oest: '#62a0ea', poitevin_saintongeais: '#3fc0ff', centre: '#7f9cff'
+			},
+			clar: {
+				picard: '#3348e8', wallon: '#6a4fe0', normand: '#1f2fc0',
+				champenois: '#0a8fd0', lorrain: '#0063b0', bourguignon: '#2bb0e0', franc_comtois: '#00a08f',
+				gallo: '#2f5fb0', oest: '#4a8ad8', poitevin_saintongeais: '#0098d8', centre: '#5a6ff0'
+			},
+			// (Okabe-Ito : 8 colors per 11 zònas, doas vesinas jamai parièras)
+			dalt: {
+				picard: '#0072b2', wallon: '#999999', normand: '#56b4e9',
+				champenois: '#009e73', lorrain: '#56b4e9', bourguignon: '#f0e442', franc_comtois: '#cc79a7',
+				gallo: '#d55e00', oest: '#999999', poitevin_saintongeais: '#e69f00', centre: '#dddddd'
+			}
+		},
+		// del nòrd al sud, grope per grope
+		pastilhas: [
+			{ k: 'picard', fr: 'picard', oc: 'picard' },
+			{ k: 'wallon', fr: 'wallon', oc: 'valon' },
+			{ k: 'normand', fr: 'normand', oc: 'normand' },
+			{ k: 'champenois', fr: 'champenois', oc: 'campanés' },
+			{ k: 'lorrain', fr: 'lorrain', oc: 'lorren' },
+			{ k: 'bourguignon', fr: 'bourguignon-morvandiau', oc: 'borgonhon-morvandèl' },
+			{ k: 'franc_comtois', fr: 'franc-comtois', oc: 'franc-comtés' },
+			{ k: 'gallo', fr: 'gallo', oc: 'galò' },
+			{ k: 'oest', fr: 'parlers de l’Ouest', oc: 'parlars de l’Oèst' },
+			{ k: 'poitevin_saintongeais', fr: 'poitevin-saintongeais', oc: 'peitavin-santongés' },
+			{ k: 'centre', fr: 'parlers du Centre', oc: 'parlars del Centre' }
+		],
+		sota: { oc: 'lenga d’oïl', fr: 'langue d’oïl' },
+		sotaApart: { oc: 'lenga d’oïl', fr: 'langue d’oïl' },
+		nomCarta: 'LANGUES D’OÏL',
+		atribucion:
+			'Lengas d\'oïl : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), parlars d\'aprèp la <a href="https://www.archives-nationales.culture.gouv.fr/centres-de-recherche/carte-linguistique-de-la-france" target="_blank" rel="noopener">Carta lingüistica de França</a> dels Archius nacionals (P.-H. Billy, S. Nadiras, J.-F. Moufflet), lista de las lengas Cerquiglini (1999)'
 	}
 };
 
