@@ -116,6 +116,14 @@ Sources, règles et points à valider : `SIG/basc/FONTS.md`. Dans l'ordre :
 6 bis. Côte du Pays basque espagnol : contour OSM d'Euskadi et de Navarre ajouté à `PRECIS` dans `mar.py` ; relancer `mar.py`, `costa-estelas.py` (`costa.json`) puis `costa-ref.py`.
 7. `node SIG/cadena/lengas-vesinas.mjs` : contours de « Découvrir le basque ».
 
+## Langues d'oïl (2026-10-10)
+
+Une famille de 9 langues (liste Cerquiglini) et les parlers du Centre et de l'Ouest (cahier §11 du 2026-10-09). Sources et regroupement : `SIG/oil/FONTS.md`, `SIG/oil/lengas-oil.json` (noms, groupes, couleurs). À relancer **après** l'occitan et l'arpitan : leur frontière est reprise point par point.
+
+1. Données brutes : la couche des cantons de la carte linguistique des Archives nationales, extraite de leur carte en ligne (`layers/Cantons0.js`, voir FONTS.md) dans `SIG/brut/oil/an-cantons-2013.geojson`.
+2. `python-qgis.bat -s -P SIG/cadena/oil.py` : `app/static/data/oil.json` (13 min 30, 195 Ko). Chaque commune IGN prend le parler du canton qui contient son point intérieur ; les terres que les Archives mettent en occitan ou en arpitan mais hors de nos domaines vont à la langue d'oïl voisine.
+3. `node SIG/cadena/lengas-vesinas.mjs` : contours de « Découvrir les langues d'oïl ».
+
 ## Bord de mer et mer du satellite (2026-10-09)
 
 Une seule référence terre / eau pour toute la carte : les communes de l'IGN (`SIG/brut/comunas/ADE-COG-CARTO_2026.gpkg`), qui suivent la côte à quelques mètres (Hérault : 70 % du bord à moins de 10 m de la limite terre-mer Shom-IGN). Le bord de mer fabriqué à l'étape 7 (côte Natural Earth élargie de 1,5 km) est recalé dessus en fin de chaîne.

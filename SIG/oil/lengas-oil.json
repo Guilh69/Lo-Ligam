@@ -1,0 +1,24 @@
+{
+  "font": "Lengas d'oïl : comunas IGN ADMIN EXPRESS COG CARTO 2026 (Licéncia dobèrta 2.0), parlars de las comunas d'aprèp lo canton de la Carta lingüistica de França dels Archius nacionals (P.-H. Billy, S. Nadiras, J.-F. Moufflet, 2013), regropats en 9 lengas d'aprèp la lista Cerquiglini (1999) e del ministèri de la Cultura",
+  "a_validar": "noms occitans (oc) de las lengas e dels gropes, colors, rengament del torangés amb l'Oèst : propausas, de validar per Romain",
+  "gropes": [
+    { "k": "nord", "fr": "Nord", "oc": "Nòrd" },
+    { "k": "est", "fr": "Est", "oc": "Èst" },
+    { "k": "oest", "fr": "Ouest", "oc": "Oèst" },
+    { "k": "sud-oest", "fr": "Sud-Ouest", "oc": "Sud-Oèst" },
+    { "k": "centre", "fr": "Centre", "oc": "Centre" }
+  ],
+  "lengas": [
+    { "kod": "picard", "grope": "nord", "fr": "picard", "oc": "picard", "zonas": ["1.3"], "color": "#7f8af2" },
+    { "kod": "wallon", "grope": "nord", "fr": "wallon", "oc": "valon", "zonas": ["1.2"], "color": "#b2b9ff" },
+    { "kod": "normand", "grope": "nord", "fr": "normand", "oc": "normand", "zonas": ["1.4"], "color": "#5a6ae0" },
+    { "kod": "champenois", "grope": "est", "fr": "champenois", "oc": "campanés", "zonas": ["1.16"], "color": "#56a8cc" },
+    { "kod": "lorrain", "grope": "est", "fr": "lorrain", "oc": "lorren", "zonas": ["1.17"], "color": "#2f8bb0" },
+    { "kod": "bourguignon", "grope": "est", "fr": "bourguignon-morvandiau", "oc": "borgonhon-morvandèl", "zonas": ["1.15"], "color": "#8ccbe0" },
+    { "kod": "franc_comtois", "grope": "est", "fr": "franc-comtois", "oc": "franc-comtés", "zonas": ["1.18"], "color": "#45b8ad" },
+    { "kod": "gallo", "grope": "oest", "fr": "gallo", "oc": "galò", "zonas": ["1.5"], "color": "#71879e" },
+    { "kod": "oest", "grope": "oest", "fr": "parlers de l'Ouest", "oc": "parlars de l'Oèst", "zonas": ["1.6", "1.7", "1.10"], "color": "#a2b4c8" },
+    { "kod": "poitevin_saintongeais", "grope": "sud-oest", "fr": "poitevin-saintongeais", "oc": "peitavin-santongés", "zonas": ["1.8", "1.9"], "color": "#8fa8f0" },
+    { "kod": "centre", "grope": "centre", "fr": "parlers du Centre", "oc": "parlars del Centre", "zonas": ["1.1", "1.12", "1.13", "1.14", "1.11"], "color": "#c9cff5" }
+  ]
+}
