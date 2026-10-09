@@ -1502,7 +1502,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (!m) return null;
 			const { regions, despartaments, comunas } = this._terJaces ?? {};
 			// la commune (couche thématique) prend le dessus dès qu'elle se voit
-			if (comunas && z >= Z_COMUNAS - 0.2) return null;
+			if (comunas && z >= (this._nivèls?.zComunas ?? Z_COMUNAS) - 0.01) return null;
 			if (regions && despartaments) return m;
 			if (despartaments) return 'despartament';
 			if (regions) return 'region';

@@ -12,7 +12,7 @@
 // territòris. Noms occitans de validar per Romain.
 
 import { INTRO } from './colaEstelas.js';
-import { nivèlsDezoom, aDetalh, Z } from './escalas.js';
+import { nivèlsDezoom, aDetalh, zDès, KM, Z } from './escalas.js';
 import { proj0 } from './projeccion.js';
 import { prepContorn, traçarPart, estelasDe, estelaCap, avançada, DURADA as DURADA_APAR, ONDA, TOTAL as TOTAL_APAR } from './aparicion.js';
 
@@ -61,7 +61,7 @@ const colorGov = (kod) => COLORS_GOV[kod] ?? '190, 170, 140';
 // Los sulhets (escalas.js) : comunas a 7 km (causida de Romain) ; províncias
 // de 1789 fins a 7 km ; governaments de luènh, províncias de prèp, lo cambi
 // entre dos crans de zoom (6,75 e 7), que cap cran demòre sens nom
-const { COMUNAS: Z_COMUNAS, PROV_MAX: Z_PROV_MAX, GOV_PROV: Z_GOV_PROV } = Z;
+const { PROV_MAX: Z_PROV_MAX, GOV_PROV: Z_GOV_PROV } = Z;
 
 const TÈXTES = {
 	oc: {
@@ -409,19 +409,28 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			if (J.provincias && !this._prov) cargar('/data/provincias-1789.json').then((d) => ((this._prov = d), this._update()));
 			if (J.parcs && !this._parcs) cargar('/data/parcs.json').then((d) => ((this._parcs = d), this._update()));
 			if (J.massis && !this._releu) cargar('/data/releu-noms.json').then((d) => ((this._releu = d), this._update()));
-			if (J.comunas && !this._index) cargar('/data/comunas/index.json').then((d) => ((this._index = d), this._cargarComunas()));
+			if (J.comunas && !this._index)
+				cargar('/data/comunas/index.json').then((d) => (d ? ((this._index = d), this._cargarComunas()) : delete promesas['/data/comunas/index.json']));
 		},
 		// Los despartaments visibles, a partir de l'escala de las comunas
 		_cargarComunas() {
 			const map = this._map;
-			if (!map || !this._jaces.comunas || !this._index || map.getZoom() < Z_COMUNAS - 0.5) return;
+			if (!map || !this._jaces.comunas || !this._index || map.getZoom() < zDès(KM.comunas, map.getCenter().lat) - 0.3) return;
 			const b = map.getBounds().pad(0.2);
 			for (const d of this._index.deps) {
 				const [w, s, e, n] = d.bbox;
 				if (this._deps.has(d.d) || e < b.getWest() || w > b.getEast() || n < b.getSouth() || s > b.getNorth()) continue;
 				this._deps.set(d.d, null);
-				cargar(`/data/comunas/${d.d}.json`).then((topo) => {
-					if (!topo) return;
+				const url = `/data/comunas/${d.d}.json`;
+				cargar(url).then((topo) => {
+					// (un fichièr pas recebut — ret, servidor ocupat — se tornarà
+					// demandar al movement seguent : sens aquò, lo despartament
+					// demorava void tota la visita ; retorn de Romain, 2026-10-09)
+					if (!topo) {
+						delete promesas[url];
+						this._deps.delete(d.d);
+						return;
+					}
 					this._deps.set(
 						d.d,
 						decodarTopo(topo, 'comunas').map((c) => ({ ...c, dep: d.d }))
@@ -443,7 +452,11 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			this._zoom = map.getZoom();
 			// lo dezoom : a partir de « 300 km » aquestas jaces s'escantisson,
 			// a « 500 km » an desaparegut (demanda de Romain, 2026-10-08)
-			this._aDet = aDetalh(nivèlsDezoom(map), this._zoom);
+			const nv = nivèlsDezoom(map);
+			this._aDet = aDetalh(nv, this._zoom);
+			// las comunas : quand la barra marca 7 km, a la latitud del centre (un
+			// zoom fix las amagava al nòrd, ont la barra i arriba un cran pus lèu)
+			this._zCom = nv.zComunas;
 			// (sul vòlet : una transicion en linha sul canavàs remplaçava la de
 			// Leaflet pel zoom, e los noms dels massís sautavan a cada cran)
 			const vòlet = map.getPane('tematica');
@@ -532,7 +545,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					p: pt(f.geometry.coordinates)
 				}));
 			this._fonts();
-			if (J.comunas && z >= Z_COMUNAS - 0.75) {
+			if (J.comunas && z >= this._zCom - 0.75) {
 				G.com = [];
 				for (const lista of this._deps.values())
 					for (const c of lista ?? []) {
@@ -544,7 +557,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			// las comunas que dintran dins la vista (jaça alucada, escala passada,
 			// carta desplaçada) : lor constellacion se pausa ; sonque çò qu'es a
 			// l'ecran (retorn de Romain : alleujar, e al fur e a mesura)
-			if (G.com && z >= Z_COMUNAS) this._vistas(G);
+			if (G.com && z >= this._zCom) this._vistas(G);
 			else this._comVistas?.clear();
 			this._pintar();
 		},
@@ -563,7 +576,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				const p = G.parcs.filter(dins).sort((a, b) => (a.props.mena === 'pn-adesion') - (b.props.mena === 'pn-adesion'))[0];
 				if (p) return { mena: 'parc', kod: p.props.kod, props: p.props };
 			}
-			if (G.com && z >= Z_COMUNAS) {
+			if (G.com && z >= this._zCom) {
 				const c = G.com.find(dins);
 				if (c) return { mena: 'com', kod: c.props.i, props: c.props, dep: c.dep };
 			}
@@ -1044,7 +1057,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 
 			/* Comunas : un fil fin, a partir de « 5 km » ; la survolada s'esclaira */
 			if (G.com) {
-				const a = this._doç('comunas', clamp((z - (Z_COMUNAS - 0.2)) / 0.2) * clamp((16 - z) / 1.5)) * this._aJ('comunas');
+				const a = this._doç('comunas', (z >= this._zCom ? 1 : 0) * clamp((16 - z) / 1.5)) * this._aJ('comunas');
 				if (a > 0.01) {
 					// cada comuna a son temps d'aparicion : las estelas venon d'a
 					// costat se pausar suls contorns, puèi lo fil las religa ; las

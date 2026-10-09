@@ -61,7 +61,8 @@ export const KM = {
 	vilas: 40, // las vilas importantas de cada despartament
 	vilasMejanas: 30,
 	vilatges: 15, // (de fach, laissats al satellit, que pren lo relais a 20 km)
-	europa: 50 // los contorns d'Euròpa s'escantisson de 70 a 50 km
+	europa: 50, // los contorns d'Euròpa s'escantisson de 70 a 50 km
+	comunas: 7 // las comunas (causida de Romain), segon la barra a la latitud vertadièra
 };
 
 // La plaja ont cada jaça se vei : [de luènh, de prèp], en km de barra (0 :
@@ -136,7 +137,8 @@ export function nivèlsDezoom(map) {
 		zNomsCapitalas: zDès(KM.nomsCapitalas, lat),
 		zVilas: zDès(KM.vilas, lat),
 		zVilasMejanas: zDès(KM.vilasMejanas, lat),
-		zVilatges: zDès(KM.vilatges, lat)
+		zVilatges: zDès(KM.vilatges, lat),
+		zComunas: zDès(KM.comunas, lat)
 	};
 }
 // de 0 a 1 : los dialèctes (0 = la lenga unida) ; las jaces de detalh (0 = lo contorn sol)
