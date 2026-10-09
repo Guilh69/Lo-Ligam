@@ -210,7 +210,7 @@
 		lang;
 		majPlen();
 	});
-	// Tornar a l'Occitània (demanda de Romain, 2026-10-09) : un boton al costat
+	// « Cap a l'Occitània » (demanda de Romain, 2026-10-09) : un boton al costat
 	// del plen ecran e del zoom ; quin que siá l'endrech, la vista d'ensemble,
 	// lo domeni e los dialèctes, en fuòc d'artifici. L'icòna : lo contorn del
 	// domeni occitan, simplificat (limits-carta.json)
@@ -219,7 +219,7 @@
 	let botonOc = null;
 	function majTornarOc() {
 		if (!botonOc) return;
-		const tx = lang === 'fr' ? "Revenir à l'Occitanie" : "Tornar a l'Occitània";
+		const tx = lang === 'fr' ? "Cap sur l'Occitanie" : "Cap a l'Occitània"; // (causit per Romain)
 		botonOc.title = tx;
 		botonOc.setAttribute('aria-label', tx);
 	}
