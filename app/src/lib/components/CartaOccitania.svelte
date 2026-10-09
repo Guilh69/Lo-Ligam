@@ -399,6 +399,7 @@
 	};
 	function alucarVesina(k) {
 		vesina = null;
+		colaEstelas?.amagarLegenda(false);
 		mapEl?.classList.remove('sus-vesina');
 		onAlucar?.(k);
 	}
@@ -1074,19 +1075,24 @@
 			if (!vesinas) return void cargarVesinas();
 			const k = survòl || survòlLenga || survòlTem ? null : vesinaA(e.latlng);
 			if (k !== (vesina?.kod ?? null)) vesina = k ? descVesina(k) : null;
+			colaEstelas?.amagarLegenda(!!k);
 			mapEl?.classList.toggle('sus-vesina', !!k);
 		});
 		map.on('mouseout', () => {
 			vesina = null;
+			colaEstelas?.amagarLegenda(false);
 			mapEl?.classList.remove('sus-vesina');
 		});
 		map.on('click', async (e) => {
 			await cargarVesinas();
 			if (survòl || survòlLenga || survòlTem) return;
 			const k = vesinaA(e.latlng);
-			if (!k) return void (matchMedia('(hover: hover)').matches || (vesina = null));
+			if (!k) return void (matchMedia('(hover: hover)').matches || ((vesina = null), colaEstelas?.amagarLegenda(false)));
 			if (matchMedia('(hover: hover)').matches) alucarVesina(k);
-			else vesina = descVesina(k);
+			else {
+				vesina = descVesina(k);
+				colaEstelas?.amagarLegenda(true);
+			}
 		});
 		map.on('movestart', () => (tMov = performance.now()));
 		map.on('dblclick', (e) => {

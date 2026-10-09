@@ -1051,6 +1051,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		_aEl(k, dura = 0.7) {
 			return this._doç('el-' + k, this._el?.[k] ? 1 : 0, dura);
 		},
+		// L'etiqueta del territòri survolat, amagada quand la carta mòstra
+		// autra causa al meteis endrech (l'invitacion a descobrir una lenga vesina)
+		amagarLegenda(b) {
+			this._legendaAmagada = !!b;
+		},
 		// Cada luòc vesible o pas a aqueste zoom (escalas.js) ; quand cambia, son
 		// estela s'aluca (coma a l'arribada) o s'escantís, e son nom la seguís
 		// (demanda de Romain, 2026-10-09 : « de manière élégante, pas d'un coup »)
@@ -2075,7 +2080,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// Pendant un fondu, une seule étiquette : sa largeur glisse de l'un à
 			// l'autre et les deux noms se fondent, centrés
 			const lg = this._legendaT;
-			if (lg.length) {
+			// (l'invitacion a descobrir una lenga vesina es al meteis endrech : passa d'en primièr)
+			if (lg.length && !this._legendaAmagada) {
 				const tt = TÈXTES_TER[this._lang] ?? TÈXTES_TER.oc,
 					vis = this._map.getSize(),
 					v0 = this._map.containerPointToLayerPoint([0, 0]).subtract(this._min);
