@@ -782,6 +782,12 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// … los rius tornan rajar de la font a la mar, las vilas s'alucan una a una
 			if (el.rius && this._el && !this._el.rius && !this._calm) this._tRius = performance.now();
 			if (el.estelas && this._el && !this._el.estelas && !this._calm) this._tVilas = performance.now();
+			// los noms de vilas : arriban un a un (coma al zoom), se'n van un a un
+			if (this._el && !this._calm && !!el.nomsVilas !== !!this._el.nomsVilas) {
+				const ara = performance.now();
+				if (el.nomsVilas) for (const e of this._estelas ?? []) e.visNom && (e.tNom = ara);
+				else this._tNomsOff = ara;
+			}
 			this._el = { ...this._el, ...el };
 			// los noms de rius e las vilas jògan sul plaçament dels noms (e sus
 			// las bóstias que las autras còlas evitan) : tot es tornat plaçar
@@ -1041,6 +1047,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			return d.v;
 		},
+		// Un element del fons (rius, relèu, vilas, noms…) cochat o decochat :
+		// arriba e se'n va dins lo temps, pas d'un còp (demanda de Romain, 2026-10-09)
+		_aEl(k, dura = 0.7) {
+			return this._doç('el-' + k, this._el?.[k] ? 1 : 0, dura);
+		},
 		// Cada luòc vesible o pas a aqueste zoom (escalas.js) ; quand cambia, son
 		// estela s'aluca (coma a l'arribada) o s'escantís, e son nom la seguís
 		// (demanda de Romain, 2026-10-09 : « de manière élégante, pas d'un coup »)
@@ -1212,7 +1223,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				g.clearRect(0, 0, c.width, c.height);
 			}
 			// (voida : pas besonh de la recopiar a cada imatge)
-			this._etiqVuèg = !((this._el.nomsVilas && this._plaçament.vilas.length) || (this._el.nomsRius && this._plaçament.rius.length));
+			const ara = performance.now(),
+				// (los noms de vilas decochats s'escantisson un a un, en 1,1 s)
+				nomsOff = !this._el.nomsVilas && this._tNomsOff != null && ara - this._tNomsOff < 1100,
+				aNomsRius = this._aEl('nomsRius');
+			this._etiqVuèg = !(((this._el.nomsVilas || nomsOff) && this._plaçament.vilas.length) || (aNomsRius > 0.01 && this._plaçament.rius.length));
 			g.setTransform(dpr, 0, 0, dpr, -o.x * dpr, -o.y * dpr);
 			g.strokeStyle = T.liser;
 			g.lineJoin = 'round';
@@ -1227,10 +1242,10 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				ray = this._map.getSize().x <= 700 ? 70 : 150;
 			const prèp = (x, y) => (p ? Math.hypot(x - p.X, y - p.Y) < ray : false);
 			this._etiqPus = p;
-			for (const r of this._el.nomsRius && this._map.getZoom() >= (this._nivèls?.zRius ?? 0) + 0.15 ? this._plaçament.rius : []) {
+			for (const r of aNomsRius > 0.01 && this._map.getZoom() >= (this._nivèls?.zRius ?? 0) + 0.15 ? this._plaçament.rius : []) {
 				if (!dins(r.letras[0].x, r.letras[0].y)) continue;
 				const m = r.letras[Math.floor(r.letras.length / 2)];
-				g.globalAlpha = prèp(m.x, m.y) ? 0.12 : 1;
+				g.globalAlpha = (prèp(m.x, m.y) ? 0.12 : 1) * aNomsRius;
 				g.font = 'italic 500 ' + r.fs + 'px ' + CORMORANT;
 				for (const pas of ['strokeText', 'fillText'])
 					for (const l of r.letras) {
@@ -1243,12 +1258,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			g.textBaseline = 'alphabetic';
 			g.fillStyle = T.vilaTèxt;
-			const ara = performance.now();
-			let enCamin = false;
-			for (const v of this._el.nomsVilas ? this._plaçament.vilas : []) {
+			let enCamin = nomsOff || (aNomsRius > 0.001 && aNomsRius < 0.999);
+			for (const v of this._el.nomsVilas || nomsOff ? this._plaçament.vilas : []) {
 				if (!dins(v.x, v.y) || (p && v.nom === p.nom)) continue;
 				// (un nom qu'arriba aprèp son estela, o que se'n va amb ela)
-				const aN = aNomLuòc(v.e, ara);
+				const aN = aNomLuòc(v.e, ara) * (nomsOff ? 1 - easeS(clamp(((ara - this._tNomsOff) / 1000 - (v.e ? retardLuòc(v.e) * 0.35 : 0)) / 0.45)) : 1);
 				if (v.e && (v.e.visNom ? aN < 1 && v.e.tNom != null : aN > 0)) enCamin = true;
 				if (aN < 0.01) continue;
 				const tv = aplicarVila(g, v.renc, v.f, v.nom);
@@ -1762,7 +1776,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// Le relief : courbes de niveau très discrètes, les maîtresses
 			// (tous les 1 000 m) un peu plus marquées. À l'arrivée, elles montent
 			// comme une marée : les basses d'abord, les sommets ensuite.
-			if (aRius > 0.01 && this._el.corbas && this._corbas?.length) {
+			const aCorb = aRius * this._aEl('corbas');
+			if (aCorb > 0.01 && this._corbas?.length) {
 				const pas = pasCorbas(z);
 				const [c0, c1] = INTRO.corbas;
 				// (alucadas après l'entrada en scèna : la meteissa montada, tornada jogar)
@@ -1775,7 +1790,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					if (tiC >= c1) {
 						// … e s'escantís quand la darrièra es pausada
 						if (this._sRelèu === 1) (this._sRelèu = 2), this._sons?.relèu(false);
-						cx.globalAlpha = aRius * (mestra ? 0.3 : 0.13);
+						cx.globalAlpha = aCorb * (mestra ? 0.3 : 0.13);
 						cx.beginPath();
 						for (const [e, l] of this._corbas) {
 							if (e % pas || (e % 1000 === 0) !== mestra) continue;
@@ -1801,7 +1816,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						if (aE < 0.005) continue;
 						const kc = easeS(aE) * (l.length - 1),
 							n = Math.floor(kc);
-						cx.globalAlpha = aRius * (mestra ? 0.3 : 0.13) * Math.min(1, 0.4 + aE * 1.5);
+						cx.globalAlpha = aCorb * (mestra ? 0.3 : 0.13) * Math.min(1, 0.4 + aE * 1.5);
 						cx.beginPath();
 						cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
 						for (let i = 1; i <= n; i++) cx.lineTo(l[i][0] - o.x, l[i][1] - o.y);
@@ -1842,7 +1857,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// Les rivières : à l'arrivée, l'eau sort de chaque source et descend
 			// jusqu'à la mer (ou à la rivière qu'elle rejoint), à la même vitesse
 			// partout, avec un petit éclat au front
-			if (aRiu > 0.01 && this._el.rius && this._rius) {
+			const aRiuE = aRiu * this._aEl('rius');
+			if (aRiuE > 0.01 && this._rius) {
 				const [r0, r1] = INTRO.rius;
 				// (alucats aprèp l'entrada en scèna : l'aiga torna rajar de la font a la mar)
 				const tiR = this._tRius == null ? ti : Math.min(ti, r0 + (t - this._tRius) / 1000);
@@ -1858,7 +1874,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					const l = r.pts,
 						long = D - r.o;
 					if (long <= 0) continue;
-					cx.globalAlpha = (r.nom ? 0.75 : 0.25) * aRiu;
+					cx.globalAlpha = (r.nom ? 0.75 : 0.25) * aRiuE;
 					cx.lineWidth = (0.4 + r.pes * 0.22) * gros;
 					cx.beginPath();
 					cx.moveTo(l[0][0] - o.x, l[0][1] - o.y);
@@ -1887,7 +1903,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					cx.fillStyle = T.riu;
 					cx.shadowColor = T.riu;
 					cx.shadowBlur = 8;
-					cx.globalAlpha = 0.9 * aRiu;
+					cx.globalAlpha = 0.9 * aRiuE;
 					for (const [x, y, pes] of fronts) {
 						cx.beginPath();
 						cx.arc(x, y, (0.8 + pes * 0.2) * gros, 0, 6.283);
@@ -1908,8 +1924,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const tiV = this._tVilas == null ? ti : Math.min(ti, INTRO.vilas[0] + (t - this._tVilas) / 1000);
 			if (this._tVilas != null && tiV > INTRO.vilas[1] + 1.2) this._tVilas = null;
 			const faseV = ([a, b]) => clamp((tiV - a) / (b - a));
-			for (const e of this._el.estelas ? this._estelas : []) {
-				const aLuòc = e.vis ? 1 : e.tEsc == null ? 0 : 1 - easeS(clamp((t - e.tEsc) / ESC_LUÒC));
+			const aEstelas = this._aEl('estelas');
+			for (const e of aEstelas > 0.01 ? this._estelas : []) {
+				const aLuòc = (e.vis ? 1 : e.tEsc == null ? 0 : 1 - easeS(clamp((t - e.tEsc) / ESC_LUÒC))) * aEstelas;
 				if (aLuòc < 0.01) continue;
 				const x = e.X - o.x,
 					y = e.Y - o.y;

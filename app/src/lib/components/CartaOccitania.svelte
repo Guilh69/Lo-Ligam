@@ -1568,7 +1568,8 @@
 	/* En s'anant (jaça decochada), cada ponch s'escantís a son moment */
 	:global(.ponch-se-va .ponch),
 	:global(.ponch-se-va .ponch-cueta),
-	:global(.ponch-se-va .ponch-estela) {
+	:global(.ponch-se-va .ponch-estela),
+	:global(.ponch-se-va.lenga-franca span) {
 		animation: ponch-part 0.45s cubic-bezier(0.5, 0, 0.8, 0.4) forwards;
 		animation-delay: calc(var(--retard, 0ms) * 0.5);
 	}

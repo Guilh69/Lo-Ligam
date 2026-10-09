@@ -670,11 +670,11 @@ export function crearColaDonadas(
 								return { c, larg: f.properties.larg };
 							})
 						: null,
-				regions: this._jaces.regions ? (this._limits?.regions || []).map(([, , anels]) => cami(anels)) : null,
-				deps: this._jaces.despartaments ? (this._limits?.despartaments || []).map(([, , anels]) => cami(anels)) : null,
+				regions: this._jacesVivas('regions') ? (this._limits?.regions || []).map(([, , anels]) => cami(anels)) : null,
+				deps: this._jacesVivas('despartaments') ? (this._limits?.despartaments || []).map(([, , anels]) => cami(anels)) : null,
 				// (los ponches, per l'aparicion en estelas : calculats sonque se cal)
-				regionsAnels: this._jaces.regions ? (this._limits?.regions || []).map(([, , anels]) => anels) : null,
-				depsAnels: this._jaces.despartaments ? (this._limits?.despartaments || []).map(([, , anels]) => anels) : null
+				regionsAnels: this._jacesVivas('regions') ? (this._limits?.regions || []).map(([, , anels]) => anels) : null,
+				depsAnels: this._jacesVivas('despartaments') ? (this._limits?.despartaments || []).map(([, , anels]) => anels) : null
 			};
 			// las tenchas fondudas (lo flo es car) : preparadas sonque quand
 			// servisson, al primièr dessenh que n'a besonh (çai-jos, _pintar)
@@ -983,7 +983,10 @@ export function crearColaDonadas(
 				vE = easeS(R.vuèg?.v ?? 0),
 				aMescla = mescla ? 1 - easeS(clamp((u - 0.55) / 0.45)) : 1,
 				aTenchas = aTenchas0 * (1 - u);
-			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas0 * aMescla;
+			// (dialèctes e Creissent decochats : s'escantisson dins lo temps)
+			const aJDial = this._aJ('dialectes'),
+				aJCro = this._aJ('creissent');
+			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas0 * aMescla * aJDial;
 			const an = this._anim,
 				p = an ? clamp((performance.now() - an.t0) / DURADA) : 1;
 			// l'entrada en scèna : las zònas a part (Creissent, zònas mixtas) e los
@@ -1001,7 +1004,7 @@ export function crearColaDonadas(
 				if (J.dialectes || J.frontiera) this._prepMix();
 			}
 			/* Dialèctes */
-			if (J.dialectes && G.zonas && u < 0.999) {
+			if (aJDial > 0.01 && G.zonas && u < 0.999) {
 				const selDial = this._sels.some((k) => k !== 'cro');
 				// totes : visibles sens causida ; s'esvalisson quand un dialècte es
 				// causit, tornan quand lo darrièr se descausís
@@ -1095,7 +1098,7 @@ export function crearColaDonadas(
 			}
 
 			/* Lo Creissent : zòna de transicion, en asclas */
-			if (J.creissent && G.cro) {
+			if (aJCro > 0.01 && G.cro) {
 				const causit = this._sels.includes('cro');
 				const autreCausit = this._sels.length > 0 && !causit;
 				let a = autreCausit ? 0.2 : this._pus === 'cro' || causit ? 1 : 0.75;
@@ -1103,6 +1106,7 @@ export function crearColaDonadas(
 				// de prèp, la zòna de transicion s'esvalís (es una nocion d'escala
 				// regionala : sos bòrds son pas de traches)
 				a *= lerp(1, 0.35, clamp((z - 8) / 3));
+				a *= aJCro;
 				cx.save();
 				if (an?.ajust === 'cro') this._mascaDifusion(G.cro, p); // clip progressiu
 				this._copiar(this._imgCro, a * aTenchas * aFinIntro);
@@ -1122,8 +1126,11 @@ export function crearColaDonadas(
 			// a l'aparicion, d'estelas ne fan lo torn e los traçan
 			const tD = this._tApar('despartaments'),
 				tR = this._tApar('regions');
-			if (G.deps && aAdmin > 0.01) tD == null ? contorns(G.deps, 0.7, [], 0.28 * aAdmin) : this._traçEstelat(G, 'deps', tD, 0.7, [], 0.28 * aAdmin);
-			if (G.regions && aAdmin > 0.01) tR == null ? contorns(G.regions, 1.2, [6, 4], 0.45 * aAdmin) : this._traçEstelat(G, 'regions', tR, 1.2, [6, 4], 0.45 * aAdmin);
+			// (decochats : s'escantisson dins lo temps)
+			const aDeps = aAdmin * this._aJ('despartaments', 'deps'),
+				aRegs = aAdmin * this._aJ('regions', 'regions');
+			if (G.deps && aDeps > 0.01) tD == null ? contorns(G.deps, 0.7, [], 0.28 * aDeps) : this._traçEstelat(G, 'deps', tD, 0.7, [], 0.28 * aDeps);
+			if (G.regions && aRegs > 0.01) tR == null ? contorns(G.regions, 1.2, [6, 4], 0.45 * aRegs) : this._traçEstelat(G, 'regions', tR, 1.2, [6, 4], 0.45 * aRegs);
 
 			/* La frontièra de la lenga (demanda de Romain, 2026-10-07) : SONQUE de
 			   ponches tèrra cuècha, lo fons demòra lo meteis d'un costat e de
@@ -1132,9 +1139,9 @@ export function crearColaDonadas(
 			   « per aquí ». */
 			// Lo domeni occitan (demanda de Romain, 2026-10-09) : de 200 km fins al
 			// pus prèp, tanben sus l'occitan unificat (dessenhat aprèp el, dessús)
-			const aFrontU = aFront;
+			const aFrontU = aFront * this._aJ('frontiera');
 			const dessenharFront = () => {
-				if (!(J.frontiera && G.linhas && aFrontU > 0.01)) return;
+				if (!(G.linhas && aFrontU > 0.01)) return;
 				const vague = clamp((z - 7.5) / 2.5);
 				// l'aparicion : los ponches se pausan al long de la frontièra, una
 				// estela en cap (coma los contorns dels territòris)
@@ -1279,9 +1286,9 @@ export function crearColaDonadas(
 			}
 			if (aNoms > 0.01) {
 				const noms = [];
-				if (J.dialectes && G.zonas)
-					for (const zn of G.zonas) if (!this._sels.length || this._sels.includes(zn.kod)) noms.push([zn, T.dial[zn.kod]]);
-				if (J.creissent && G.cro && (!this._sels.length || this._sels.includes('cro'))) noms.push([G.cro, T.lenga]);
+				if (aJDial > 0.01 && G.zonas)
+					for (const zn of G.zonas) if (!this._sels.length || this._sels.includes(zn.kod)) noms.push([zn, T.dial[zn.kod], aJDial]);
+				if (aJCro > 0.01 && G.cro && (!this._sels.length || this._sels.includes('cro'))) noms.push([G.cro, T.lenga, aJCro]);
 				const fs = clamp(10.5 + (z - 6) * 1.1, 10.5, 13);
 				cx.save();
 				cx.font = `400 ${fs.toFixed(1)}px Luciole, sans-serif`;
@@ -1299,28 +1306,33 @@ export function crearColaDonadas(
 				const ocup = ob ? ob.cs.map((b) => [b[0] * kz - o.x, b[1] * kz - o.y, b[2] * kz - o.x, b[3] * kz - o.y]) : [];
 				const se = (a, b) => a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1];
 				const caixas = [];
-				for (const [zn, color] of noms) {
-					let a = aNoms;
+				for (const [zn, color, aJ] of noms) {
+					let a = aNoms * aJ;
 					if (an?.ajust === zn.kod) a *= clamp((p - 0.25) / 0.4); // lo nom arriba aprèp la color
 					if (a < 0.01) continue;
 					const t = (this._lang === 'fr' ? zn.props.fr : zn.props.oc).toUpperCase();
 					const w = cx.measureText(t).width + 6,
 						h = fs * 1.5;
-					let b = null;
+					let b = null,
+						dec = [0, 0];
 					for (const [dx, dy] of DECALATGES_NOM) {
 						const c = [zn.eti[0] + dx - w / 2, zn.eti[1] + dy - h / 2, zn.eti[0] + dx + w / 2, zn.eti[1] + dy + h / 2];
 						// (entre dos noms de dialèctes, una marja : sens ela se tocavan)
 						const cm = [c[0] - 10, c[1] - 9, c[2] + 10, c[3] + 9];
 						if (!ocup.some((q) => se(c, q)) && !caixas.some((q) => se(cm, q))) {
 							b = c;
+							dec = [dx, dy];
 							break;
 						}
 					}
 					b ??= [zn.eti[0] - w / 2, zn.eti[1] - h / 2, zn.eti[0] + w / 2, zn.eti[1] + h / 2];
 					caixas.push(b);
+					// un nom que se deu desplaçar (lo d'una vila ven d'arribar sus el) i
+					// glissa, sens sautar (retorn de Romain, 2026-10-09 : PROVENÇAL)
+					const [gx, gy] = this._glissar(zn.kod, dec);
 					cx.globalAlpha = a;
 					cx.fillStyle = T.clar ? mesclar(color, '#2e1d14', 0.25) : mesclar(color, '#fff8ec', 0.35);
-					cx.fillText(t, (b[0] + b[2]) / 2, (b[1] + b[3]) / 2);
+					cx.fillText(t, zn.eti[0] + gx, zn.eti[1] + gy);
 				}
 				cx.restore();
 				// gardadas (en coordenadas projectadas) per las autras còlas ; un
@@ -1330,6 +1342,34 @@ export function crearColaDonadas(
 			}
 		},
 
+		// Una jaça cochada o decochada (domeni, regions, despartaments) : arriba
+		// e se'n va dins lo temps (demanda de Romain, 2026-10-09) ; una vegada
+		// escantida, sas donadas son levadas
+		_jacesVivas(k) {
+			return this._jaces[k] || (this._doces?.['jaça-' + k]?.v ?? 0) > 0.01;
+		},
+		_aJ(k, clauG) {
+			const a = this._doç('jaça-' + k, this._jaces[k] ? 1 : 0, 0.6);
+			if (clauG && !this._jaces[k] && a <= 0.01 && this._geo?.[clauG]) queueMicrotask(() => this._update());
+			return a;
+		},
+		// La posicion afichada d'un nom de dialècte (decalatge en px) : rejonh sa
+		// novèla plaça en 0,6 s
+		_glissar(k, [dx, dy]) {
+			const D = (this._decNoms ??= {}),
+				ara = performance.now();
+			let d = D[k];
+			if (!d || this._calm) d = D[k] = { x: dx, y: dy, cx: dx, cy: dy };
+			else if (d.cx !== dx || d.cy !== dy) Object.assign(d, { x0: d.x, y0: d.y, cx: dx, cy: dy, t0: ara });
+			if (d.x !== d.cx || d.y !== d.cy) {
+				const q = clamp((ara - d.t0) / 600),
+					e = easeS(q);
+				d.x = q >= 1 ? d.cx : d.x0 + (d.cx - d.x0) * e;
+				d.y = q >= 1 ? d.cy : d.y0 + (d.cy - d.y0) * e;
+				if (q < 1) this._rafDoç ??= requestAnimationFrame((ts) => ((this._rafDoç = null), this._pintarA(ts)));
+			}
+			return [d.x, d.y];
+		},
 		_copiar(img, a) {
 			if (a < 0.005) return; // (una còpia invisibla còsta autant qu'una autra)
 			const cx = this._cx;
