@@ -226,8 +226,19 @@ def domeni_evenodd(anels):
 
 lim_oc = json.load(open(os.path.join(DATA, 'limits-carta.json'), encoding='utf-8'))['domeni']
 lim_frp = json.load(open(os.path.join(DATA, 'arpitan.json'), encoding='utf-8'))['domeni']
-oc_ll = unir([domeni_evenodd(lim_oc['anels']), domeni_evenodd(lim_frp['anels'])])
-VÈRT_OC = {(x, y) for a in lim_oc['anels'] + lim_frp['anels'] for x, y in a}
+# las lengas traçadas comuna per comuna aprèp l'oïl (2026-10-10) : l'oïl s'arrèsta
+# sus lor frontièra ; las comunas que los Archius i metan e que son defòra
+# prenon la lenga d'oïl vesina (zònas dels Archius : 6 breton, 7.1 flamenc,
+# 7.2 a 7.5 alemanic e francic)
+VESINAS = {'breton.json': ('6',), 'flamenc.json': ('7.1',), 'alsacian.json': ('7.2', '7.3', '7.4', '7.5')}
+anels_v, ZONAS_V = [], ()
+for fic, zs in VESINAS.items():
+    if os.path.exists(os.path.join(DATA, fic)):
+        anels_v += json.load(open(os.path.join(DATA, fic), encoding='utf-8'))['domeni']['anels']
+        ZONAS_V += zs
+print('Barrièra : occitan, arpitan%s' % ''.join(', ' + f[:-5] for f in VESINAS if os.path.exists(os.path.join(DATA, f))))
+oc_ll = unir([domeni_evenodd(lim_oc['anels']), domeni_evenodd(lim_frp['anels'])] + ([domeni_evenodd(anels_v)] if anels_v else []))
+VÈRT_OC = {(x, y) for a in lim_oc['anels'] + lim_frp['anels'] + anels_v for x, y in a}
 oc_m = en_m(oc_ll)
 
 # ------------------------------------------------- 2. union per clau
@@ -253,7 +264,7 @@ for k in CLAUS:
 # Las comunas que los Archius metan dins l'occitan o l'arpitan (o sens canton)
 # mas que son defòra de nòstres domenis : a la lenga d'oïl vesina, de man en
 # man (una tèrra pus luènha pren la lenga de sas vesinas ja rengadas)
-autras = [geo[c] for c, z in zona_de.items() if z is None or z[0] in '23']
+autras = [geo[c] for c, z in zona_de.items() if z is None or z[0] in '23' or z in ZONAS_V]
 autras_m = unir(autras)
 comunas_tot = unir([dom_brut, autras_m])
 resta = valid(autras_m.Difference(oc_m).Difference(pres))

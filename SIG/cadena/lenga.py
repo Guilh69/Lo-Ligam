@@ -1,0 +1,742 @@
+# Una lenga vesina sus la carta, d'aprèp son tablèu de classament comuna per
+# comuna (2026-10-10 : breton, alsacian e francic, flamenc, còrs...). Lo meteis
+# biais que basc.py e oil.py : union de las comunas per dialècte, simplificacion
+# topologica (arcs partejats, sens fenda ni recobriment), frontièra de las
+# lengas ja traçadas represa ponch per ponch (« barrièra »), zòna francesa a
+# despart, zònas de transicion en asclas.
+#
+#   "C:/Program Files/QGIS 4.2.3/bin/python-qgis.bat" -s -P SIG/cadena/lenga.py <lenga> [tolerància en mètres, 300 per defaut]
+#
+# Entradas : SIG/<lenga>/carta.json (reglatges : endo = clau del nom dins la
+# lenga, doms = domenis gardats, deps = despartaments franceses de cargar,
+# paises = país Natural Earth pel tèst còsta / tèrra, barrièra = fichièrs
+# app/static/data/*.json de las lengas vesinas, apart = zònas a despart,
+# sortida), SIG/<lenga>/dialectes-<lenga>.csv e .json, comunas IGN
+# (SIG/brut/comunas/ADE-COG-CARTO_2026.gpkg) e SIG/brut/<lenga>/*.geojson
+# (comunas dels autres país, proprietat « codi »).
+# Sortida : app/static/data/<lenga>.json, meteis format que basc.json.
+import csv, glob, json, math, os, re, sys
+from collections import defaultdict
+from osgeo import gdal, ogr, osr
+
+ogr.UseExceptions()
+osr.UseExceptions()
+gdal.PushErrorHandler('CPLQuietErrorHandler')
+
+AQUI = os.path.dirname(os.path.abspath(__file__))
+SIG = os.path.normpath(os.path.join(AQUI, '..'))
+DATA = os.path.normpath(os.path.join(SIG, '..', 'app', 'static', 'data'))
+
+L = sys.argv[1]
+CONF = json.load(open(os.path.join(SIG, L, 'carta.json'), encoding='utf-8'))
+BRUT = os.path.join(SIG, 'brut', L)
+SORTIDA = os.path.join(DATA, CONF.get('sortida', L + '.json'))
+TOL = float(sys.argv[2]) if len(sys.argv) > 2 else 300.0
+B = 150.0  # tampon que barra las fendas (m)
+
+wgs, laea = osr.SpatialReference(), osr.SpatialReference()
+wgs.ImportFromEPSG(4326)
+laea.ImportFromEPSG(3035)
+for s in (wgs, laea):
+    s.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
+versM = osr.CoordinateTransformation(wgs, laea)
+versW = osr.CoordinateTransformation(laea, wgs)
+
+
+# ---------------------------------------------------------------- utilitaris
+# (los meteisses que dins catalan.py)
+
+def valid(g):
+    m = ogr.Geometry(ogr.wkbMultiPolygon)
+    if g is None or g.IsEmpty():
+        return m
+    if not g.IsValid():
+        g = g.MakeValid()
+    def apondre(p):
+        t = ogr.GT_Flatten(p.GetGeometryType())
+        if t == ogr.wkbPolygon:
+            if not p.IsEmpty():
+                m.AddGeometry(p)
+        elif t in (ogr.wkbMultiPolygon, ogr.wkbGeometryCollection):
+            for i in range(p.GetGeometryCount()):
+                apondre(p.GetGeometryRef(i))
+    apondre(g)
+    return m
+
+
+def tròces(g):
+    t = ogr.GT_Flatten(g.GetGeometryType())
+    if t == ogr.wkbPolygon:
+        return [g]
+    return [g.GetGeometryRef(i) for i in range(g.GetGeometryCount())]
+
+
+def unir(geoms):
+    m = ogr.Geometry(ogr.wkbMultiPolygon)
+    for g in geoms:
+        for p in tròces(g):
+            m.AddGeometry(p)
+    return valid(m.UnaryUnion())
+
+
+def aira(g):
+    t = ogr.GT_Flatten(g.GetGeometryType())
+    return g.GetArea() if t in (ogr.wkbPolygon, ogr.wkbMultiPolygon, ogr.wkbGeometryCollection) else 0.0
+
+
+def km2(g):
+    return g.GetArea() / 1e6
+
+
+def ponch(x, y):
+    p = ogr.Geometry(ogr.wkbPoint)
+    p.AddPoint_2D(x, y)
+    return p
+
+
+def poligon_ll(anel):
+    r = ogr.Geometry(ogr.wkbLinearRing)
+    for x, y in anel:
+        r.AddPoint_2D(x, y)
+    r.CloseRings()
+    p = ogr.Geometry(ogr.wkbPolygon)
+    p.AddGeometry(r)
+    return p
+
+
+def en_m(g):
+    c = g.Clone()
+    c.Transform(versM)
+    return c
+
+
+def en_ll(g):
+    c = g.Clone()
+    c.Transform(versW)
+    return c
+
+
+def a_lonlat(t):
+    c = t.PointOnSurface()
+    c.Transform(versW)
+    return '%.3f, %.3f' % (c.GetX(), c.GetY())
+
+
+# ------------------------------------------------- 1. unitats e classament
+
+classa = json.load(open(os.path.join(SIG, L, 'dialectes-%s.json' % L), encoding='utf-8'))
+ENDO = CONF['endo']
+DIAL = {d['kod']: d for d in classa['dialectes']}
+ORDRE = [d['kod'] for d in classa['dialectes']]
+DOMS = tuple(CONF['doms'])
+TRANS = {(t.get('clau') or t['kod']): t for t in (classa.get('transicions') or [])}
+linhas_csv = list(csv.DictReader(open(os.path.join(SIG, L, 'dialectes-%s.csv' % L), encoding='utf-8-sig'), delimiter=';'))
+per_codi = {r['codi']: r for r in linhas_csv if r.get('codi')}
+PAS = 20000.0
+
+
+def es_fr(c):
+    return bool(re.fullmatch(r'[0-9][0-9AB][0-9]{3}', c))
+
+
+# França : las comunas IGN dels despartaments de CONF['deps'] (lo domeni e la
+# tèrra a l'entorn, pel tèst còsta / tèrra)
+geo = {}
+l93 = osr.SpatialReference()
+l93.ImportFromEPSG(2154)
+l93.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
+l93_laea = osr.CoordinateTransformation(l93, laea)
+gp = ogr.Open(os.path.join(SIG, 'brut', 'comunas', 'ADE-COG-CARTO_2026.gpkg'))
+cm = gp.GetLayerByName('commune')
+deps = CONF.get('deps', [])
+cm.SetAttributeFilter('code_insee_du_departement IN (%s)' % ','.join("'%s'" % d for d in deps) if deps else '1 = 0')
+for f in cm:
+    g = f.GetGeometryRef().Clone()
+    g.Transform(l93_laea)
+    geo[f.GetField('code_insee')] = valid(g)
+n_fr = len(geo)
+# Los autres país : SIG/brut/<lenga>/*.geojson, proprietat « codi » (la del CSV)
+n_ext = 0
+for fic in sorted(glob.glob(os.path.join(BRUT, '*.geojson'))):
+    try:
+        d = json.load(open(fic, encoding='utf-8'))
+    except Exception:
+        continue
+    for f in d.get('features', []):
+        c = (f.get('properties') or {}).get('codi')
+        if not c or c not in per_codi or es_fr(c) or not f.get('geometry'):
+            continue
+        geo[c] = valid(en_m(ogr.CreateGeometryFromJson(json.dumps(f['geometry']))))
+        n_ext += 1
+print('Contorns : %d comunas francesas, %d d\'autres país' % (n_fr, n_ext))
+
+unitats = []
+sens_geo = []
+for c, r in per_codi.items():
+    if r['domeni'] not in DOMS:
+        continue
+    if c not in geo:
+        sens_geo.append('%s (%s)' % (r.get('nom_oficial', ''), c))
+        continue
+    k = r['dialecte'] + ('|FR' if es_fr(c) else '')
+    t = (r.get('transicio') or '').strip()
+    if r['domeni'] == 'mixta' and not t:
+        t = 'mixta'
+    if t:
+        k += '|T' + t
+    unitats.append({'codi': c, 'nom': r.get('nom_oficial', ''), 'dial': r['dialecte'], 'domeni': r['domeni'], 'clau': k, 'g': geo[c]})
+manca_d = sorted({u['dial'] for u in unitats} - set(ORDRE))
+if manca_d:
+    raise SystemExit('Dialèctes del CSV absents del JSON : %s' % manca_d)
+print('Unitats : %d (%s) ; sens contorn : %d %s' % (len(unitats), ', '.join('%s %d' % (k, sum(u['dial'] == k for u in unitats)) for k in ORDRE),
+      len(sens_geo), ', '.join(sens_geo[:12])))
+
+
+# La barrièra : los domenis de las lengas ja traçadas que tòcan aquesta (anèls
+# « evenodd ») ; lors ponches seràn gardats tal quals
+def domeni_evenodd(anels):
+    g = ogr.Geometry(ogr.wkbPolygon)
+    for a in anels:
+        g = g.SymDifference(valid(poligon_ll(a)))
+    return valid(g)
+
+
+anels_b = []
+for fic in CONF.get('barrièra', []):
+    anels_b += json.load(open(os.path.join(DATA, fic), encoding='utf-8'))['domeni']['anels']
+oc_ll = unir([domeni_evenodd([a]) for a in []]) if not anels_b else domeni_evenodd(anels_b)
+VÈRT_OC = {(x, y) for a in anels_b for x, y in a}
+oc_m = en_m(oc_ll)
+
+# ------------------------------------------------- 2. union per clau
+
+CLAUS = sorted({u['clau'] for u in unitats}, key=lambda k: (ORDRE.index(k.split('|')[0]), k))
+print('Claus :', ', '.join(CLAUS))
+dom_brut = unir([u['g'] for u in unitats])
+oc_local = valid(oc_m.Intersection(dom_brut.Buffer(20000, 4))) if anels_b else ogr.Geometry(ogr.wkbMultiPolygon)
+brut = {}
+pres = ogr.Geometry(ogr.wkbMultiPolygon)
+rapòrt = []
+for k in CLAUS:
+    g = unir([u['g'] for u in unitats if u['clau'] == k])
+    if anels_b:
+        r = valid(g.Intersection(oc_local))
+        if km2(r) > 0.01:
+            rapòrt.append('%s : %.1f km2 dins la barrièra, levats' % (k, km2(r)))
+        g = valid(g.Difference(oc_local))
+    if not pres.IsEmpty():
+        g = valid(g.Difference(pres))
+    brut[k] = g
+    pres = unir([pres, g])
+pròche = dom_brut.Buffer(3000, 4)
+comunas_tot = unir([g for g in geo.values() if g.Intersects(pròche)])
+if anels_b:
+    # las fendas finas (mens de 2 B_OC) entre las comunas e la barrièra, al ras
+    # de la linha : a la clau que ne tòca mai
+    B_OC = 400.0
+    tot = valid(unir([pres, oc_local]).Intersection(oc_local.Buffer(3000, 4)))
+    fendas_oc = valid(valid(valid(tot.Buffer(B_OC, 8).Buffer(-B_OC, 8)).Difference(tot)).Intersection(oc_local.Buffer(1500, 4)))
+    apond = defaultdict(list)
+    for q in tròces(fendas_oc):
+        qb = q.Buffer(10, 2)
+        c = {k: aira(qb.Intersection(brut[k])) if qb.Intersects(brut[k]) else 0 for k in CLAUS}
+        k = max(c, key=c.get)
+        if c[k] > 0:
+            apond[k].append(q.Clone())
+    for k in CLAUS:
+        if apond[k]:
+            brut[k] = valid(unir([brut[k]] + apond[k]).Difference(oc_local))
+    rapòrt.append('fendas amb la barrièra tampadas : %.2f km2' % sum(km2(q) for v in apond.values() for q in v))
+
+
+# fendas intèrnas (entre doas fonts, Soïssa contra França, Itàlia...) : a la
+# clau que ne tòca mai ; los traucs de mai de 1,5 km2 (lacs) demòran
+P = dict(brut)
+tot = unir(list(P.values()))
+fendas = valid(valid(tot.Buffer(B, 8).Buffer(-B, 8)).Difference(tot).Difference(oc_local))
+n_f = 0
+for q in tròces(fendas):
+    if q.GetArea() < 500:
+        continue
+    qb = q.Buffer(10, 2)
+    c = {k: aira(qb.Intersection(P[k])) if qb.Intersects(P[k]) else 0 for k in CLAUS}
+    k = max(c, key=c.get)
+    if c[k] > 0:
+        P[k] = unir([P[k], q.Clone()])
+        n_f += 1
+rapòrt.append('fendas intèrnas tampadas : %d tròces, %.2f km2' % (n_f, km2(fendas)))
+for r in rapòrt:
+    print('  ' + r)
+
+# ------------------------------------------------- 3. simplificacion topologica
+
+
+def anèls(g):
+    for p in tròces(g):
+        for k in range(p.GetGeometryCount()):
+            yield p.GetGeometryRef(k)
+
+
+# l'occitan entra dins la particion coma clau « OC » (los arcs de sa frontièra
+# son pas simplificats, per gardar sos ponches)
+OC_CLAU = valid(oc_local.Intersection(unir(list(P.values())).Buffer(5000, 4)))
+CLAUS_P = CLAUS + ['OC']
+P['OC'] = OC_CLAU
+tòtas = ogr.Geometry(ogr.wkbMultiLineString)
+for d in CLAUS_P:
+    for a in anèls(P[d]):
+        l = ogr.Geometry(ogr.wkbLineString)
+        for k in range(a.GetPointCount()):
+            l.AddPoint_2D(a.GetX(k), a.GetY(k))
+        tòtas.AddGeometry(l)
+nosat = tòtas.UnaryUnion()
+segs = [[(nosat.GetGeometryRef(k).GetX(j), nosat.GetGeometryRef(k).GetY(j)) for j in range(nosat.GetGeometryRef(k).GetPointCount())] for k in range(nosat.GetGeometryCount())]
+cap = defaultdict(list)
+for k, s in enumerate(segs):
+    cap[s[0]].append(k)
+    cap[s[-1]].append(k)
+usats = set()
+arcs = []
+for k in range(len(segs)):
+    if k in usats:
+        continue
+    usats.add(k)
+    arc = list(segs[k])
+    for sens in (0, 1):
+        while True:
+            p = arc[-1]
+            if len(cap[p]) != 2 or (len(arc) > 2 and arc[0] == p):
+                break
+            seg = [j for j in cap[p] if j not in usats]
+            if not seg:
+                break
+            j = seg[0]
+            usats.add(j)
+            s = segs[j]
+            arc += s[1:] if s[0] == p else s[::-1][1:]
+        arc.reverse()
+    arcs.append(arc)
+oc_bòrd_m = OC_CLAU.GetBoundary()
+
+
+def sus_oc(arc):
+    """L'arc seguís la frontièra occitana (sos ponches de mitan i son)."""
+    if OC_CLAU.IsEmpty():
+        return False
+    mids = [arc[len(arc) // 2]] + ([((arc[0][0] + arc[1][0]) / 2, (arc[0][1] + arc[1][1]) / 2)] if len(arc) > 1 else [])
+    return all(oc_bòrd_m.Distance(ponch(x, y)) < 0.5 for x, y in mids)
+
+
+ml_s, ml_f = ogr.Geometry(ogr.wkbMultiLineString), ogr.Geometry(ogr.wkbMultiLineString)
+n_oc = 0
+for a in arcs:
+    l = ogr.Geometry(ogr.wkbLineString)
+    for x, y in a:
+        l.AddPoint_2D(x, y)
+    if sus_oc(a):
+        ml_f.AddGeometry(l)
+        n_oc += 1
+    else:
+        ml_s.AddGeometry(l)
+simple = ml_s.SimplifyPreserveTopology(TOL)
+for k in range(ml_f.GetGeometryCount()):
+    simple.AddGeometry(ml_f.GetGeometryRef(k).Clone())
+print('Arcs : %d, dont %d sus la frontièra occitana (pas simplificats) ; %d ponches -> %d' % (
+    len(arcs), n_oc, sum(len(a) for a in arcs), sum(simple.GetGeometryRef(k).GetPointCount() for k in range(simple.GetGeometryCount()))))
+facias = simple.UnaryUnion().Polygonize()
+fac_d, traucs = [], []
+for k in range(facias.GetGeometryCount()):
+    f = facias.GetGeometryRef(k).Clone()
+    cobs = {d: (aira(f.Intersection(P[d])) if f.Intersects(P[d]) else 0) for d in CLAUS_P}
+    if sum(cobs.values()) < 0.5 * f.GetArea():
+        traucs.append(f)
+    else:
+        fac_d.append([f, max(cobs, key=cobs.get)])
+
+
+def vesins(f):
+    fb = f.Buffer(5, 2)
+    v = defaultdict(float)
+    for f2, d2 in fac_d:
+        if f2 is not f and d2 not in (None, 'OC') and fb.Intersects(f2):
+            v[d2] += aira(fb.Intersection(f2))
+    return v
+
+
+traucs_gardats = []
+for f in traucs:
+    # (retorn de Romain, 2026-10-09 : « pourquoi des trous sur des zones non
+    # habitées ? ») : tot trau enviroutat pel domeni pren la zòna de sos vesins,
+    # quina que siá sa talha : enclavas non vascofònas de la zòna mixta de Navarra
+    # (Guirguillano, Uterga, Úcar...), tèrras pas cobèrtas per las comunas d'OSM
+    # en Araba, enclava cantabra de Villaverde dins las Encartacions
+    v = vesins(f)
+    if v:
+        fac_d.append([f, max(v, key=v.get)])
+    else:
+        traucs_gardats.append(f)
+for e in sorted(fac_d, key=lambda e: e[0].GetArea()):
+    f = e[0]
+    if f.GetArea() >= 1e6:
+        break
+    if e[1] == 'OC':
+        continue
+    v = vesins(f)
+    if v:
+        e[1] = max(v, key=v.get)
+    elif f.GetArea() < 0.3e6:
+        e[1] = None
+FIN = {d: unir([f for f, d2 in fac_d if d2 == d]) for d in CLAUS}
+
+# ------------------------------------------------- 4. lon/lat, domeni e frontièras
+
+
+def fmt(pts):
+    """Ponches [lon, lat] : los de la frontièra occitana tal quals (coma dins
+    limits-carta.json), los autres a 4 decimalas, sens doblons. Los ponches
+    alinhats amb lors vesins (a mens de 0,5 m de la drecha), coma los
+    crosaments de las limitas comunalas amb la linha occitana, son levats
+    abans l'arredondiment : la forma cambia pas (geojson_ll repara las
+    geometrias que l'arredondiment rend invalidas)."""
+    def alinhat(a, b, c):
+        kx = 111320 * math.cos(math.radians(b[1]))
+        ax, ay, cx, cy = (b[0] - a[0]) * kx, (b[1] - a[1]) * 110570, (c[0] - a[0]) * kx, (c[1] - a[1]) * 110570
+        L = math.hypot(cx, cy)
+        if L == 0:
+            return True
+        t = (ax * cx + ay * cy) / (L * L)
+        return 0 <= t <= 1 and abs(ax * cy - ay * cx) / L < 0.5
+    gard = []
+    for i, p in enumerate(pts):
+        if gard and 0 < i < len(pts) - 1 and p not in VÈRT_OC and alinhat(gard[-1], p, pts[i + 1]):
+            continue
+        gard.append(p)
+    out = []
+    for x, y in gard:
+        q = [x, y] if (x, y) in VÈRT_OC else [round(x, 4), round(y, 4)]
+        if not out or q != out[-1]:
+            out.append(q)
+    return out
+
+
+# Lo ponch occitan pus pròche (a mens de 1e-6 gra) remplaça lo ponch tornat
+# projectar : la frontièra repren exactament las coordenadas occitanas
+grilha = defaultdict(list)
+for x, y in VÈRT_OC:
+    grilha[(round(x, 3), round(y, 3))].append((x, y))
+
+
+def aimantar(x, y):
+    best, bd = None, 1e-6
+    cx, cy = round(x, 3), round(y, 3)
+    for i in (-1, 0, 1):
+        for j in (-1, 0, 1):
+            for p in grilha.get((round(cx + i * 0.001, 3), round(cy + j * 0.001, 3)), ()):
+                d = abs(p[0] - x) + abs(p[1] - y)
+                if d < bd:
+                    best, bd = p, d
+    return best or (x, y)
+
+
+def geom_ll(g_m):
+    """Geometria en mètres -> lon/lat, ponches aimantats a la frontièra
+    occitana, autres arredondits a 4 decimalas."""
+    gj = json.loads(valid(en_ll(valid(g_m))).ExportToJson())
+    m = ogr.Geometry(ogr.wkbMultiPolygon)
+    for pol in gj['coordinates']:
+        p = ogr.Geometry(ogr.wkbPolygon)
+        for a in pol:
+            r = ogr.Geometry(ogr.wkbLinearRing)
+            for x, y in a:
+                q = aimantar(x, y)
+                if q == (x, y):
+                    q = (round(x, 4), round(y, 4))
+                r.AddPoint_2D(*q)
+            r.CloseRings()
+            if r.GetPointCount() >= 4:
+                p.AddGeometry(r)
+        if p.GetGeometryCount():
+            m.AddGeometry(p)
+    return valid(m)
+
+
+CLAU_LL = {k: geom_ll(FIN[k]) for k in CLAUS}
+# lo domeni occitan es levat (las coordenadas arredondidas pòdon i mordre de
+# qualques mètres), sens tornar simplificar
+for k in CLAUS:
+    CLAU_LL[k] = valid(CLAU_LL[k].Difference(oc_ll))
+# los vuèges que la simplificacion daissa entre lo basc e la linha occitana,
+# dins las comunas conegudas : a la clau que ne tòca mai
+comunas_ll = valid(en_ll(comunas_tot.SimplifyPreserveTopology(TOL)))
+zona_ll = valid(en_ll(oc_local.Buffer(3000, 4)).Intersection(en_ll(dom_brut.Buffer(3000, 4))))
+vuèg_ll = valid(zona_ll.Intersection(comunas_ll).Difference(oc_ll).Difference(unir(list(CLAU_LL.values()))))
+vuèg_ll = unir([q for q in tròces(vuèg_ll) if km2(en_m(q)) < 1])  # (los grands : pas de tampar, signalats)
+n_v = 0
+for q in tròces(vuèg_ll):
+    qb = q.Buffer(2e-5, 2)
+    c = {k: aira(qb.Intersection(CLAU_LL[k])) if qb.Intersects(CLAU_LL[k]) else 0 for k in CLAUS}
+    k = max(c, key=c.get)
+    if c[k] > 0:
+        CLAU_LL[k] = valid(unir([CLAU_LL[k], q.Clone()]).Difference(oc_ll))
+        n_v += 1
+print('Vuèges amb l\'occitan tampats aprèp simplificacion : %d tròces, %.2f km2' % (n_v, km2(en_m(vuèg_ll))))
+pres_ll = ogr.Geometry(ogr.wkbMultiPolygon)
+for k in CLAUS:  # (sens recobriment entre claus aprèp lo tampatge)
+    CLAU_LL[k] = valid(CLAU_LL[k].Difference(pres_ll))
+    pres_ll = unir([pres_ll, CLAU_LL[k]])
+# Netejatge del bòrd occitan : los comblaments daissan de pichons zigzags al
+# ras de la linha occitana. Cada clau es espandida de ESPAND (sonque dins una
+# benda de ESPAND a l'entorn de la linha occitana), puèi lo domeni occitan e
+# las claus ja passadas ne son levats : los zigzags passan darrièr la linha,
+# e lo bòrd seguís exactament sos sommets.
+ESPAND = 0.0007  # gra (environ 55 m en longitud, 78 m en latitud)
+benda_oc = valid(oc_ll.Buffer(ESPAND, 2)).Difference(oc_ll)
+pres_ll = ogr.Geometry(ogr.wkbMultiPolygon)
+a_e = 0.0
+for k in CLAUS:
+    abans_k = km2(en_m(CLAU_LL[k]))
+    g = unir([CLAU_LL[k], valid(CLAU_LL[k].Buffer(ESPAND, 1).Intersection(benda_oc))])
+    CLAU_LL[k] = valid(g.Difference(oc_ll).Difference(pres_ll))
+    a_e += km2(en_m(CLAU_LL[k])) - abans_k
+    pres_ll = unir([pres_ll, CLAU_LL[k]])
+print('Netejatge del bòrd occitan : %.2f km2 apondut al ras de la linha' % a_e)
+# los illòts isolats de mens de 1 km2 (tròces de bocatge dins l'Alèir...) son levats
+illòts = [p.Clone() for p in tròces(unir(list(CLAU_LL.values()))) if km2(en_m(p)) < 1]
+if illòts:
+    ill = unir(illòts)
+    for k in CLAUS:
+        CLAU_LL[k] = valid(CLAU_LL[k].Difference(ill.Buffer(1e-6, 1)))
+    print('Illòts levats : %d (%.2f km2)' % (len(illòts), sum(km2(en_m(p)) for p in illòts)))
+DIAL_LL = {d: unir([CLAU_LL[k] for k in CLAUS if k.split('|')[0] == d]) for d in ORDRE}
+FR_LL = unir([CLAU_LL[k] for k in CLAUS if '|FR' in k])
+TRANS_LL = {t: unir([CLAU_LL[k] for k in CLAUS if ('T' + t) in k.split('|')[1:]]) for t in TRANS}
+domeni_ll = unir(list(DIAL_LL.values()))
+
+# La tèrra a l'entorn : Natural Earth (Espanha, França), rosigada de 1,5 km
+# (sa còsta es generalizada), e las comunas precisas defòra del domeni
+topo = json.load(open(os.path.join(SIG, 'brut', 'mond', 'countries-50m.json'), encoding='utf-8'))
+sc, trn = topo['transform']['scale'], topo['transform']['translate']
+arcs_ne = []
+for a in topo['arcs']:
+    x = y = 0
+    pts = []
+    for dx, dy in a:
+        x += dx
+        y += dy
+        pts.append((x * sc[0] + trn[0], y * sc[1] + trn[1]))
+    arcs_ne.append(pts)
+
+
+def anel_ne(idxs):
+    pts = []
+    for i in idxs:
+        a = arcs_ne[i] if i >= 0 else arcs_ne[~i][::-1]
+        pts += a if not pts else a[1:]
+    return pts
+
+
+dom_m = en_m(domeni_ll)
+zonaT = dom_m.Buffer(30000, 4)
+ne = []
+for o in topo['objects']['countries']['geometries']:
+    if o.get('properties', {}).get('name') in CONF.get('paises', ['France']):
+        for p in (o['arcs'] if o['type'] == 'MultiPolygon' else [o['arcs']]):
+            q = valid(en_m(valid(poligon_ll(anel_ne(p[0])))))
+            if q.Intersects(zonaT):
+                ne.append(valid(q.Intersection(zonaT)))
+# (las comunas que son pas del domeni : tèrra a l'entorn)
+precisas = [g for c, g in geo.items() if per_codi.get(c, {}).get('domeni') not in DOMS and g.Intersects(zonaT)]
+# (coma pel catalan : las comunas precisas a 300 m o 1 km ; Natural Earth
+# sonque a 2 km E a 6 km, que sa còsta escafa las calas e las rias)
+tèrra_p = valid(unir(precisas).Difference(dom_m.Buffer(10, 4)))
+tèrra_ne = valid(valid(unir(ne).Buffer(-1500, 4)).Difference(dom_m.Buffer(10, 4)))
+oc_b_ll = oc_ll.GetBoundary()
+ox0, ox1, oy0, oy1 = oc_ll.GetEnvelope()
+anels_dom, linhas = [], []
+n_seg = defaultdict(int)
+for p, k in [(p, k) for p in tròces(domeni_ll) for k in range(p.GetGeometryCount())]:
+    a = p.GetGeometryRef(k)
+    pll = [(a.GetX(j), a.GetY(j)) for j in range(a.GetPointCount())]
+    pts = []
+    for x, y in pll:
+        q = ponch(x, y)
+        q.Transform(versM)
+        pts.append((q.GetX(), q.GetY()))
+    s = sum(pts[j][0] * pts[j + 1][1] - pts[j + 1][0] * pts[j][1] for j in range(len(pts) - 1))
+    sgn = (1 if s > 0 else -1) * (1 if k == 0 else -1)
+    mena = []
+    for j in range(len(pts) - 1):
+        mx_ll, my_ll = (pll[j][0] + pll[j + 1][0]) / 2, (pll[j][1] + pll[j + 1][1]) / 2
+        if anels_b and ox0 - 0.01 <= mx_ll <= ox1 + 0.01 and oy0 - 0.01 <= my_ll <= oy1 + 0.01 and oc_b_ll.Distance(ponch(mx_ll, my_ll)) < 1e-6:
+            mena.append('oc')
+            continue
+        (x0, y0), (x1, y1) = pts[j], pts[j + 1]
+        L = math.hypot(x1 - x0, y1 - y0) or 1
+        nx, ny = sgn * (y1 - y0) / L, -sgn * (x1 - x0) / L
+        mx, my = (x0 + x1) / 2, (y0 + y1) / 2
+        if any(oc_m.Contains(ponch(mx + nx * e, my + ny * e)) for e in (100, 400)):
+            mena.append('oc')
+        elif k > 0 or any(tèrra_p.Contains(ponch(mx + nx * e, my + ny * e)) for e in (300, 1000)) or all(tèrra_ne.Contains(ponch(mx + nx * e, my + ny * e)) for e in (2000, 6000)):
+            mena.append('tèrra')
+        else:
+            mena.append('mar')
+    n = len(mena)
+    if n > 2:
+        mena = [mena[(j - 1) % n] if mena[(j - 1) % n] == mena[(j + 1) % n] != mena[j] else mena[j] for j in range(n)]
+    for m in mena:
+        n_seg[m] += 1
+    anels_dom.append(fmt(pll))
+    if all(m == 'tèrra' for m in mena):
+        linhas.append(fmt(pll))
+        continue
+    if 'tèrra' not in mena:
+        continue
+    k0 = next(j for j in range(n) if mena[j] != 'tèrra') + 1
+    cur = []
+    for jj in range(n):
+        j = (k0 + jj) % n
+        if mena[j] == 'tèrra':
+            if not cur:
+                cur.append(pll[j])
+            cur.append(pll[j + 1])
+        elif cur:
+            linhas.append(fmt(cur))
+            cur = []
+    if cur:
+        linhas.append(fmt(cur))
+linhas = [l for l in linhas if len(l) > 1]
+anels_dom = [a for a in anels_dom if len(a) >= 4]
+
+# ------------------------------------------------- 5. etiquetas e escritura
+
+
+def eti(g):
+    p = max(tròces(g), key=lambda q: q.GetArea())
+    lo, hi, melhor = 0.0, math.sqrt(p.GetArea()), p.PointOnSurface()
+    for _ in range(16):
+        m = (lo + hi) / 2
+        b = p.Buffer(-m, 4)
+        if b.IsEmpty():
+            hi = m
+        else:
+            lo = m
+            melhor = max(tròces(b), key=lambda q: q.GetArea()).PointOnSurface()
+    c = melhor.Clone()
+    c.Transform(versW)
+    return [round(c.GetX(), 3), round(c.GetY(), 3)]
+
+
+def geojson_ll(g):
+    pols = []
+    for p in tròces(g):
+        anels = [fmt([(a.GetX(j), a.GetY(j)) for j in range(a.GetPointCount())]) for a in (p.GetGeometryRef(k) for k in range(p.GetGeometryCount()))]
+        anels = [a for a in anels if len(a) >= 4]
+        if anels:
+            pols.append(anels)
+    gj = {'type': 'MultiPolygon', 'coordinates': pols}
+    r = ogr.CreateGeometryFromJson(json.dumps(gj))
+    if not r.IsValid():  # (anèls que se tòcan aprèp l'arredondiment)
+        gj = json.loads(valid(r).ExportToJson())
+        gj = {'type': 'MultiPolygon', 'coordinates': gj['coordinates'] if gj['type'] == 'MultiPolygon' else [gj['coordinates']]}
+    return gj
+
+
+def nom_endo(x):
+    return x.get(ENDO) or x.get('endo') or x.get('nom') or x['fr']
+
+
+def props_dial(x):
+    p = {'kod': x['kod'], ENDO: nom_endo(x), 'fr': x['fr'], 'oc': x.get('oc') or x['fr']}
+    for k in ('istoric', 'grope', 'sota_fr', 'sota_oc', 'color', 'de'):
+        if k in x:
+            p[k] = x[k]
+    return p
+
+
+def nom_parlar(p):
+    return (p.get(ENDO) or p.get('endo') or p.get('nom') or p.get('fr') or p.get('kod')) if isinstance(p, dict) else p
+
+
+feats = []
+for d in ORDRE:
+    if DIAL_LL[d].IsEmpty():
+        continue
+    x = DIAL[d]
+    feats.append({'type': 'Feature', 'properties': {**props_dial(x), 'eti': x.get('eti') or eti(en_m(DIAL_LL[d])),
+                  'parlars': [nom_parlar(p) for p in x.get('parlars', [])]}, 'geometry': geojson_ll(DIAL_LL[d])})
+# las zònas « a despart » : la part francesa (filtre FR) o un regropament de dialèctes
+for a in CONF.get('apart', []):
+    if a.get('filtre') == 'FR':
+        dins = [d for d in ORDRE if any(k.split('|')[0] == d and '|FR' in k for k in CLAUS)]
+        g = FR_LL
+    else:
+        dins = a['dins']
+        g = unir([DIAL_LL[d] for d in dins])
+    if g.IsEmpty() or not dins:
+        continue
+    feats.append({'type': 'Feature', 'properties': {'kod': a['kod'], ENDO: a.get(ENDO) or a['fr'], 'fr': a['fr'], 'oc': a.get('oc') or a['fr'],
+                  'color': DIAL[dins[0]].get('color'), 'eti': eti(en_m(g)), 'apart': True, 'dins': dins}, 'geometry': geojson_ll(g)})
+for t, x in TRANS.items():
+    if t not in TRANS_LL or TRANS_LL[t].IsEmpty():
+        continue
+    feats.append({'type': 'Feature', 'properties': {'kod': x.get('kod') or t, 'transicio': True, ENDO: nom_endo(x), 'fr': x['fr'], 'oc': x.get('oc') or x['fr'], 'oc_a_validar': True,
+                  'entre': x.get('entre', []), 'nota': x.get('nota', ''), **({k: x[k] for k in ('mescla', 'encadrat', 'nota_oc') if k in x}),
+                  'eti': eti(en_m(TRANS_LL[t]))}, 'geometry': geojson_ll(TRANS_LL[t])})
+sortida = {
+    'type': 'FeatureCollection',
+    'font': classa['font'],
+    'a_validar': classa['a_validar'],
+    'domeni': {'anels': anels_dom, 'linhas': linhas},
+    'features': feats,
+}
+json.dump(sortida, open(SORTIDA, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+
+# ------------------------------------------------- 6. rapòrt
+
+print('\nTolerància %g m' % TOL)
+tot_p = 0
+for f in feats:
+    n = sum(len(a) for p in f['geometry']['coordinates'] for a in p)
+    tot_p += n
+    g = valid(ogr.CreateGeometryFromJson(json.dumps(f['geometry'])))
+    print('  %-18s %8.0f km2 %5d tròces %6d ponches' % (f['properties']['kod'], km2(en_m(g)), len(f['geometry']['coordinates']), n))
+n_a = sum(len(a) for a in anels_dom)
+print('domeni : %.0f km2, %d anèls (%d ponches) ; %d linhas (%d ponches) ; segments : %s' % (
+    km2(en_m(domeni_ll)), len(anels_dom), n_a, len(linhas), sum(len(l) for l in linhas), dict(n_seg)))
+print('traucs gardats (lacs, enclavas) : %s' % (', '.join('%.1f km2 a %s' % (km2(t), a_lonlat(t)) for t in traucs_gardats) or 'cap'))
+print('fichièr : %.1f Ko (%d ponches)' % (os.path.getsize(SORTIDA) / 1024, tot_p + n_a))
+
+# Verificacions
+rel = json.load(open(SORTIDA, encoding='utf-8'))
+G = {}
+for f in rel['features']:
+    g = ogr.CreateGeometryFromJson(json.dumps(f['geometry']))
+    if not g.IsValid():
+        print('  ATENCION : geometria invalida per', f['properties']['kod'])
+    G[f['properties']['kod']] = valid(g)
+    if not g.Contains(ponch(*f['properties']['eti'])):
+        print('  ATENCION : etiqueta defòra per', f['properties']['kod'])
+rec = sum(km2(en_m(valid(G[a].Intersection(G[b])))) for i, a in enumerate(ORDRE) for b in ORDRE[i + 1:] if G[a].Intersects(G[b]))
+u_ll = unir([G[d] for d in ORDRE])
+rec_oc = km2(en_m(valid(u_ll.Intersection(oc_ll))))
+zona = valid(en_ll(oc_local.Buffer(3000, 4)).Intersection(en_ll(dom_brut.Buffer(3000, 4))))
+vuèg = valid(valid(valid(valid(zona).Difference(oc_ll)).Difference(u_ll)).Intersection(valid(en_ll(comunas_tot))))
+print('\nVerificacion : recobriments entre dialèctes %.4f km2 ; recobriment amb l\'occitan %.4f km2 ; vuèges amb l\'occitan (dins de comunas) %.3f km2 (%d de mai de 0,1 km2)' % (
+    rec, rec_oc, km2(en_m(vuèg)), sum(1 for q in tròces(vuèg) if km2(en_m(q)) > 0.1)))
+for q in tròces(vuèg):
+    if km2(en_m(q)) > 0.1:
+        print('  vuèg %.2f km2 a %s' % (km2(en_m(q)), a_lonlat(en_m(q))))
+n_v = sum(1 for d in ORDRE for p in rel['features'][ORDRE.index(d)]['geometry']['coordinates'] for a in p for x, y in a if (x, y) in VÈRT_OC)
+print('ponches de la frontièra occitana represes tal quals : %d' % n_v)
+for d in ORDRE:
+    pp = sorted(tròces(en_m(G[d])), key=lambda q: -q.GetArea())
+    for q in pp[1:]:
+        if km2(q) > 1:
+            print('  tròç segondari %s : %.1f km2 a %s' % (d, km2(q), a_lonlat(q)))
+# los vuèges defòra de las comunas conegudas, entre lo basc e l'occitan
+# (lo domeni occitan de la carta que s'arrèsta abans lo despartament)
+ext = valid(zona_ll.Difference(oc_ll).Difference(u_ll).Difference(comunas_ll))
+grands = sorted([q for q in tròces(ext) if km2(en_m(q)) > 1], key=lambda q: -q.GetArea())
+print('Vuèges defòra de las comunas conegudas, de mai de 1 km2 : %d (%.0f km2)' % (len(grands), sum(km2(en_m(q)) for q in grands)))
+for q in grands[:12]:
+    print('  %.1f km2 a %s' % (km2(en_m(q)), a_lonlat(en_m(q))))
