@@ -16,8 +16,9 @@
 export const CATALOGUE = [
 	{
 		id: 'lenga',
-		oc: 'Lenga',
-		fr: 'Langue',
+		// « Lenga nòstra » (causida de Romain, 2026-10-09 ; nòstra : lo Basic de lo Congrès)
+		oc: 'Lenga nòstra',
+		fr: 'Notre langue',
 		jaces: [
 			{
 				// lo domeni occitan, cochat d'ofici, visible de 200 km fins al pus
