@@ -1,0 +1,962 @@
+regio;unitat;mena;nom_ca;nom_oficial;codi;dialecte;subdialecte;transicio;nota;font
+Catalunya;Catalunya;comarca;l'Alt Camp;Alt Camp;idescat:01;central;tarragoni;non;;VQ-CEN
+Catalunya;Catalunya;comarca;l'Alt Empordà;Alt Empordà;idescat:02;central;septentrional_transicio;si;Bande de transition vers le septentrional (catalan septentrional de transition, rangé dans le central par Veny). Cadaqués : parler « salat ».;VQ-CEN VQ-STR
+Catalunya;Catalunya;comarca;l'Alt Penedès;Alt Penedès;idescat:03;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;l'Alt Urgell;Alt Urgell;idescat:04;nordoccidental;;non;Parler urgellenc, proche du pallarès. Transition vers l'oriental à l'extrême est (Tuixent, la Vansa).;VQ-NOC
+Catalunya;Catalunya;comarca;l'Alta Ribagorça;Alta Ribagorça;idescat:05;nordoccidental;ribagorca;non;Ribagorçan côté catalan (el Pont de Suert). La transition avec l'aragonais concerne la Ribagorce aragonaise, pas cette comarque.;VQ-NOC VQ-RIB
+Catalunya;Catalunya;comarca;l'Anoia;Anoia;idescat:06;central;;si;Le nord-ouest (Calaf, Pujalt, els Prats de Rei : Alta Segarra) a des traits de transition vers le nord-occidental.;VQ-CEN
+Catalunya;Catalunya;comarca;el Bages;Bages;idescat:07;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Baix Camp;Baix Camp;idescat:08;central;tarragoni;si;Reus : tarragonais. Les villages de montagne de l'ouest (Prades, Capafonts, Arbolí, l'Argentera...) sont de transition vers le nord-occidental.;VQ-CEN
+Catalunya;Catalunya;comarca;el Baix Ebre;Baix Ebre;idescat:09;tortosi;tortosi;non;Tortosa, capitale du tortosin.;VQ-TORT
+Catalunya;Catalunya;comarca;el Baix Empordà;Baix Empordà;idescat:10;central;salat;non;Article « salat » (es, sa) sur la Costa Brava.;VQ-CEN
+Catalunya;Catalunya;comarca;el Baix Llobregat;Baix Llobregat;idescat:11;central;barceloni;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Baix Penedès;Baix Penedès;idescat:12;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Barcelonès;Barcelonès;idescat:13;central;barceloni;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Berguedà;Berguedà;idescat:14;central;;non;Gósol et l'ouest du haut Berguedà ont quelques traits nord-occidentaux.;VQ-CEN
+Catalunya;Catalunya;comarca;la Cerdanya;Cerdanya;idescat:15;central;septentrional_transicio;si;Parler cerdan commun avec l'Alta Cerdanya (France). Septentrional de transition.;VQ-CEN VQ-STR
+Catalunya;Catalunya;comarca;la Conca de Barberà;Conca de Barberà;idescat:16;central;xipella;si;Zone de transition (xipella : Sarral, Solivella, Blancafort, Barberà, Rocafort de Queralt). L'ouest (Vimbodí i Poblet, Vallclara, Vilanova de Prades, en partie l'Espluga de Francolí) penche vers le nord-occidental. Rangée dans le central selon l'usage le plus courant.;VQ-CEN VQ-XIP
+Catalunya;Catalunya;comarca;el Garraf;Garraf;idescat:17;central;;non;Parler de Vilanova i la Geltrú (vilanoví) parfois distingué.;VQ-CEN
+Catalunya;Catalunya;comarca;les Garrigues;Garrigues;idescat:18;nordoccidental;lleidata;non;Lleidatan au sens strict sur environ la moitié de la comarque, transition vers le sud-est.;VQ-NOC
+Catalunya;Catalunya;comarca;la Garrotxa;Garrotxa;idescat:19;central;septentrional_transicio;si;Septentrional de transition (Olot).;VQ-CEN VQ-STR
+Catalunya;Catalunya;comarca;el Gironès;Gironès;idescat:20;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Maresme;Maresme;idescat:21;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Montsià;Montsià;idescat:22;tortosi;tortosi;non;;VQ-TORT
+Catalunya;Catalunya;comarca;la Noguera;Noguera;idescat:23;nordoccidental;lleidata;non;Le nord de la comarque penche vers le pallarès.;VQ-NOC
+Catalunya;Catalunya;comarca;Osona;Osona;idescat:24;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Pallars Jussà;Pallars Jussà;idescat:25;nordoccidental;pallares;non;;VQ-NOC VQ-PAL
+Catalunya;Catalunya;comarca;el Pallars Sobirà;Pallars Sobirà;idescat:26;nordoccidental;pallares;non;;VQ-NOC VQ-PAL
+Catalunya;Catalunya;comarca;el Pla d'Urgell;Pla d'Urgell;idescat:27;nordoccidental;lleidata;non;;VQ-NOC
+Catalunya;Catalunya;comarca;el Pla de l'Estany;Pla de l'Estany;idescat:28;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Priorat;Priorat;idescat:29;nordoccidental;;si;Comarque de transition : le sud (vers la Ribera d'Ebre) est tortosin, Cornudella de Montsant relève de la xipella. Rangée dans le nord-occidental selon l'usage le plus courant.;VQ-NOC
+Catalunya;Catalunya;comarca;la Ribera d'Ebre;Ribera d'Ebre;idescat:30;tortosi;tortosi;si;Le nord (Flix, Riba-roja d'Ebre, la Palma d'Ebre) penche vers le nord-occidental. Rangée dans le tortosin (Viquipèdia, article Tortosí).;VQ-TORT
+Catalunya;Catalunya;comarca;el Ripollès;Ripollès;idescat:31;central;septentrional_transicio;si;Septentrional de transition.;VQ-CEN VQ-STR
+Catalunya;Catalunya;comarca;la Segarra;Segarra;idescat:32;nordoccidental;;si;Transition nord-occidental / central : l'est de la comarque (les Oluges, Torà, Sant Guim) a des traits de xipella ou centraux (étude Boladeras 1999). Rangée dans le nord-occidental.;VQ-NOC
+Catalunya;Catalunya;comarca;el Segrià;Segrià;idescat:33;nordoccidental;lleidata;non;Lleida, capitale du nord-occidental.;VQ-NOC
+Catalunya;Catalunya;comarca;la Selva;Selva;idescat:34;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Solsonès;Solsonès;idescat:35;nordoccidental;solsoni;si;Parler solsonin, de transition vers le central (Odèn : xipella). Rangé dans le nord-occidental de transition (classement Viquipèdia).;VQ-NOC
+Catalunya;Catalunya;comarca;el Tarragonès;Tarragonès;idescat:36;central;tarragoni;non;;VQ-CEN
+Catalunya;Catalunya;comarca;la Terra Alta;Terra Alta;idescat:37;tortosi;tortosi;non;Le nord (Batea, la Pobla de Massaluca) est proche du nord-occidental.;VQ-TORT
+Catalunya;Catalunya;comarca;l'Urgell;Urgell;idescat:38;nordoccidental;lleidata;non;L'est (vallée du Corb) a des traits de transition.;VQ-NOC
+Catalunya;Catalunya;comarca;Aran;Aran;idescat:39;exclos;;non;Occitan (aranais, gascon). Déjà dans le domaine occitan de la carte.;VQ-ARAN
+Catalunya;Catalunya;comarca;el Vallès Occidental;Vallès Occidental;idescat:40;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Vallès Oriental;Vallès Oriental;idescat:41;central;;non;;VQ-CEN
+Catalunya;Catalunya;comarca;el Moianès;Moianès;idescat:42;central;;non;Comarque créée en 2015.;VQ-CEN
+Catalunya;Catalunya;comarca;el Lluçanès;Lluçanès;idescat:43;central;;non;Comarque créée en 2023 (communes prises à Osona et au Berguedà). Absente des fonds de carte antérieurs.;VQ-CEN
+Andorra;Andorra;pais;Andorra;Principat d'Andorra;AD;nordoccidental;;non;Les sept paroisses. Parler andorran proche du pallarès et de l'Alt Urgell.;VQ-NOC
+Catalunya del Nord;Vallespir;comuna_fr;l'Albera;L'Albère;66001;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Alenyà;Alénya;66002;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;els Banys i Palaldà;Amélie-les-Bains-Palalda;66003;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Capcir;comuna_fr;els Angles;Les Angles;66004;rossellones;capcines;non;Capcinès, variété archaïsante du septentrional.;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Angostrina i Vilanova de les Escaldes;Angoustrine-Villeneuve-des-Escaldes;66005;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Ansinyà;Ansignan;66006;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Conflent;comuna_fr;Arboçols;Arboussols;66007;rossellones;rossellones;si;Village catalan au contact du Fenouillèdes (canton occitan de Sournia).;VQ-CN VQ-SEPT VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Argelers;Argelès-sur-Mer;66008;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Arles;Arles-sur-Tech;66009;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Aiguatèbia i Talau;Ayguatébia-Talau;66010;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Bages de Rosselló;Bages;66011;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Bao;Baho;66012;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Vallestàvia;Baillestavy;66013;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Baixàs;Baixas;66014;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Banyuls dels Aspres;Banyuls-dels-Aspres;66015;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Banyuls de la Marenda;Banyuls-sur-Mer;66016;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;el Barcarès;Le Barcarès;66017;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;la Bastida;La Bastide;66018;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Bellestar;Bélesta;66019;exclos;;si;Occitan (languedocien) de transition vers le catalan. À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Bolquera;Bolquère;66020;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Bompàs;Bompas;66021;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Bula d'Amunt;Boule-d'Amont;66022;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Bulaternera;Bouleternère;66023;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;el Voló;Le Boulou;66024;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;la Guingueta d'Ix;Bourg-Madame;66025;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Brullà;Brouilla;66026;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;la Cabanassa;La Cabanasse;66027;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Cabestany;Cabestany;66028;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Queixàs;Caixas;66029;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Calce;Calce;66030;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Calmella;Calmeilles;66032;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Cameles;Camélas;66033;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Campome;Campôme;66034;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Campossí;Campoussy;66035;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Conflent;comuna_fr;Canavelles;Canaveilles;66036;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Canet de Rosselló;Canet-en-Roussillon;66037;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Cànoes;Canohès;66038;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Caramany;Caramany;66039;exclos;;si;Occitan (languedocien) de transition vers le catalan. À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Casafabre;Casefabre;66040;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Cases de Pena;Cases-de-Pène;66041;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Cassanyes;Cassagnes;66042;exclos;;si;Occitan (languedocien) de transition vers le catalan. À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Conflent;comuna_fr;Castell de Vernet;Casteil;66043;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Castellnou dels Aspres;Castelnou;66044;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Catllà;Catllar;66045;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Caudiers de Fenollet;Caudiès-de-Fenouillèdes;66046;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Conflent;comuna_fr;Caudiers de Conflent;Caudiès-de-Conflent;66047;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Cervera de la Marenda;Cerbère;66048;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Ceret;Céret;66049;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Clairà;Claira;66050;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Clarà i Villerac;Clara-Villerach;66051;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Codalet;Codalet;66052;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Cotlliure;Collioure;66053;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Conat;Conat;66054;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Corbera;Corbère;66055;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Corbera la Cabana;Corbère-les-Cabanes;66056;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Cornellà de Conflent;Corneilla-de-Conflent;66057;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Cornellà de la Ribera;Corneilla-la-Rivière;66058;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Cornellà del Bercol;Corneilla-del-Vercol;66059;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Cortsaví;Corsavy;66060;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Costoja;Coustouges;66061;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Dorres;Dorres;66062;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Vallespir;comuna_fr;les Cluses;Les Cluses;66063;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Èguet;Égat;66064;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Elna;Elne;66065;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Enveig;Enveitg;66066;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Er;Err;66067;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Conflent;comuna_fr;Escaró;Escaro;66068;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Espirà de l'Aglí;Espira-de-l'Agly;66069;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Espirà de Conflent;Espira-de-Conflent;66070;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Estagell;Estagel;66071;rossellones;rossellones;si;Catalan, à la limite linguistique avec le Fenouillèdes (plaine partagée avec la Tor de França).;VQ-CN VQ-SEPT VQ-FEN
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Estavar;Estavar;66072;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Conflent;comuna_fr;Estoer;Estoher;66073;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Eus;Eus;66074;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Eina;Eyne;66075;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Felluns;Feilluns;66076;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Fenollet;Fenouillet;66077;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Conflent;comuna_fr;Fillols;Fillols;66078;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Finestret;Finestret;66079;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Fontpedrosa;Fontpédrouse;66080;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Capcir;comuna_fr;Font-rabiosa;Fontrabiouse;66081;rossellones;capcines;non;Capcinès, variété archaïsante du septentrional.;VQ-CN VQ-SEPT
+Catalunya del Nord;Capcir;comuna_fr;Formiguera;Formiguères;66082;rossellones;capcines;non;Capcinès, variété archaïsante du septentrional.;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Fossa;Fosse;66083;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Forques;Fourques;66084;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Fullà;Fuilla;66085;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Glorianes;Glorianes;66086;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Illa;Ille-sur-Têt;66088;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Jóc;Joch;66089;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Jújols;Jujols;66090;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;la Menera;Lamanère;66091;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Lançac;Lansac;66092;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;la Roca d'Albera;Laroque-des-Albères;66093;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;la Torre d'Elna;Latour-Bas-Elne;66094;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;la Tor de Querol;Latour-de-Carol;66095;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;la Tor de França;Latour-de-France;66096;exclos;;si;Occitan (languedocien) de transition vers le catalan. À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;l'Esquerda;Lesquerde;66097;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Capcir;comuna_fr;la Llaguna;La Llagonne;66098;rossellones;capcines;non;Capcinès, variété archaïsante du septentrional.;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Llauró;Llauro;66099;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Llo;Llo;66100;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Llupià;Llupia;66101;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Mentet;Mantet;66102;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Marqueixanes;Marquixanes;66103;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;els Masos;Los Masos;66104;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Capcir;comuna_fr;Matamala;Matemale;66105;rossellones;capcines;non;Capcinès, variété archaïsante du septentrional.;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Morellàs i les Illes;Maureillas-las-Illas;66106;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Maurí;Maury;66107;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Millars;Millas;66108;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Molig;Molitg-les-Bains;66109;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Montalbà del Castell;Montalba-le-Château;66111;exclos;;si;Occitan (languedocien) de transition vers le catalan. À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Montoriol;Montauriol;66112;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Montboló;Montbolo;66113;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Montescot;Montescot;66114;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Montesquiu d'Albera;Montesquieu-des-Albères;66115;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Montferrer;Montferrer;66116;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Montlluís;Mont-Louis;66117;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Montner;Montner;66118;rossellones;rossellones;si;Catalan, à la limite linguistique avec le Fenouillèdes.;VQ-CN VQ-SEPT VQ-FEN
+Catalunya del Nord;Conflent;comuna_fr;Mosset;Mosset;66119;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Naüja;Nahuja;66120;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Nefiac;Néfiach;66121;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Noedes;Nohèdes;66122;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Nyer;Nyer;66123;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Font-romeu, Odelló i Vià;Font-Romeu-Odeillo-Via;66124;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Conflent;comuna_fr;Oleta i Èvol;Olette;66125;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Oms;Oms;66126;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Òpol i Perellós;Opoul-Périllos;66127;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Orellà;Oreilla;66128;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Ortafà;Ortaffa;66129;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Oceja;Osséja;66130;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Palau de Cerdanya;Palau-de-Cerdagne;66132;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Palau del Vidre;Palau-del-Vidre;66133;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Paçà;Passa;66134;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Perpinyà;Perpignan;66136;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;el Pertús;Le Perthus;66137;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Paretstortes;Peyrestortes;66138;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Pesillà de Conflent;Pézilla-de-Conflent;66139;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Pesillà de la Ribera;Pézilla-la-Rivière;66140;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Pià;Pia;66141;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Planès;Planès;66142;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Planeses;Planèzes;66143;exclos;;si;Occitan (languedocien) de transition vers le catalan. À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Pollestres;Pollestres;66144;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Pontellà;Ponteilla;66145;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Porta;Porta;66146;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Portè;Porté-Puymorens;66147;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Portvendres;Port-Vendres;66148;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Prada;Prades;66149;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Prats de Molló i la Presta;Prats-de-Mollo-la-Preste;66150;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Prats de Sornià;Prats-de-Sournia;66151;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Prunyanes;Prugnanes;66152;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Prunet i Bellpuig;Prunet-et-Belpuig;66153;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Capcir;comuna_fr;Puigbalador;Puyvalador;66154;rossellones;capcines;non;Capcinès, variété archaïsante du septentrional.;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Pi de Conflent;Py;66155;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Rebollet;Rabouillet;66156;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Conflent;comuna_fr;Ralleu;Railleu;66157;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Rasigueres;Rasiguères;66158;exclos;;si;Occitan (languedocien) de transition vers le catalan. À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Capcir;comuna_fr;Real;Réal;66159;rossellones;capcines;non;Capcinès, variété archaïsante du septentrional.;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Reiners;Reynès;66160;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Rià i Cirac;Ria-Sirach;66161;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Rigardà;Rigarda;66162;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Ribesaltes;Rivesaltes;66164;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Rodès;Rodès;66165;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Saorra;Sahorre;66166;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Sallagosa;Saillagouse;66167;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Sant Andreu de Sureda;Saint-André;66168;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Centernac;Saint-Arnac;66169;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Santa Coloma de Tuïr;Sainte-Colombe-de-la-Commanderie;66170;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Cebrià de Rosselló;Saint-Cyprien;66171;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Esteve del Monestir;Saint-Estève;66172;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Feliu d'Amunt;Saint-Féliu-d'Amont;66173;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Feliu d'Avall;Saint-Féliu-d'Avall;66174;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Genís de Fontanes;Saint-Génis-des-Fontaines;66175;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Hipòlit de la Salanca;Saint-Hippolyte;66176;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Joan la Cella;Saint-Jean-Lasseille;66177;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Sant Joan de Pladecorts;Saint-Jean-Pla-de-Corts;66178;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Sant Llorenç de Cerdans;Saint-Laurent-de-Cerdans;66179;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Llorenç de la Salanca;Saint-Laurent-de-la-Salanque;66180;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Santa Llocaia;Sainte-Léocadie;66181;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Santa Maria la Mar;Sainte-Marie-la-Mer;66182;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Marçal;Saint-Marsal;66183;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Sant Martí de Fenollet;Saint-Martin-de-Fenouillet;66184;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Sant Miquel de Llotes;Saint-Michel-de-Llotes;66185;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sant Nazari de Rosselló;Saint-Nazaire;66186;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Sant Pau de Fenollet;Saint-Paul-de-Fenouillet;66187;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Sant Pere dels Forcats;Saint-Pierre-dels-Forcats;66188;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Salelles;Saleilles;66189;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Salses;Salses-le-Château;66190;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Censà;Sansa;66191;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Sautó;Sauto;66192;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Serdinyà;Serdinya;66193;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Vallespir;comuna_fr;Serrallonga;Serralongue;66194;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;el Soler;Le Soler;66195;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Sureda;Sorède;66196;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Soanyes;Souanyas;66197;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Sornià;Sournia;66198;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Tellet;Taillet;66199;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Tarerac;Tarerach;66201;rossellones;rossellones;si;Village catalan au contact du Fenouillèdes (canton occitan de Sournia).;VQ-CN VQ-SEPT VQ-FEN
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Targasona;Targasonne;66202;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Rosselló;comuna_fr;Teulís;Taulis;66203;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Taurinyà;Taurinya;66204;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Talteüll;Tautavel;66205;rossellones;rossellones;si;Catalan, à la limite linguistique (même vallée que Maury, occitan).;VQ-CN VQ-SEPT VQ-FEN
+Catalunya del Nord;Vallespir;comuna_fr;el Tec;Le Tech;66206;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Terrats;Terrats;66207;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Tesà;Théza;66208;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Toès i Entrevalls;Thuès-Entre-Valls;66209;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Tuïr;Thuir;66210;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Torderes;Tordères;66211;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Torrelles de la Salanca;Torreilles;66212;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Toluges;Toulouges;66213;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Trasserra;Tresserre;66214;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Trevillac;Trévillach;66215;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Trillà;Trilla;66216;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Trullars;Trouillas;66217;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Ur;Ur;66218;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Conflent;comuna_fr;Orbanyà;Urbanya;66219;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Alta Cerdanya;comuna_fr;Vallcebollera;Valcebollère;66220;central;septentrional_transicio;si;Cerdagne entière en central, septentrional de transition (même parler des deux côtés de la frontière d'État, Veny range ce parler dans le central) : décision de Romain du 2026-10-08 (avant : roussillonnais, cerdan). Parler cerdan, commun avec la Cerdanya espagnole (septentrional de transition).;VQ-CN VQ-SEPT VQ-STR
+Catalunya del Nord;Conflent;comuna_fr;Vallmanya;Valmanya;66221;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Vernet;Vernet-les-Bains;66222;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Vilafranca de Conflent;Villefranche-de-Conflent;66223;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Vilallonga de la Salanca;Villelongue-de-la-Salanque;66224;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Vilallonga dels Monts;Villelongue-dels-Monts;66225;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Vilamulaca;Villemolaque;66226;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Vilanova de Raò;Villeneuve-de-la-Raho;66227;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Vilanova de la Ribera;Villeneuve-la-Rivière;66228;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Conflent;comuna_fr;Vinçà;Vinça;66230;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Rosselló;comuna_fr;Vingrau;Vingrau;66231;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;Virà;Vira;66232;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Catalunya del Nord;Rosselló;comuna_fr;Vivers;Vivès;66233;rossellones;rossellones;non;;VQ-CN VQ-SEPT
+Catalunya del Nord;Fenolledès (Fenouillèdes);comuna_fr;el Viver;Le Vivier;66234;exclos;;non;Occitan (languedocien, Fenouillèdes). À exclure du domaine catalan.;VQ-FEN
+Franja de Ponent (Aragó);la Ribagorça;municipi;Areny de Noguera;Arén;22035;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Benavarri;Benabarre;22053;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Bonansa;Bonansa;22067;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Castigaleu;Castigaleu;22087;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Estopanyà;Estopiñán del Castillo;22105;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Isàvena (la Pobla de Roda);Isábena;22129;nordoccidental;ribagorca;si;Parler de transition (IEC).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Lasquarri;Lascuarre;22142;nordoccidental;ribagorca;si;Parler de transition (IEC).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;les Paüls;Laspaúles;22143;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Monesma i Queixigar;Monesma y Cajigar;22155;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Montanui;Montanuy;22157;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;el Pont de Montanyana;Puente de Montañana;22188;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Sopeira;Sopeira;22223;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Tolba;Tolva;22229;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Tor-la-ribera;Torre la Ribera;22233;nordoccidental;ribagorca;si;Comptée par la GREC, pas par l'IEC. Contact avec l'aragonais.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;la Vall de Lierp;Valle de Lierp;22244;nordoccidental;ribagorca;si;Contact avec l'aragonais (vallée de l'Isàvena), ribagorçan de transition.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Beranui;Beranuy;22246;nordoccidental;ribagorca;si;Contact avec l'aragonais, ribagorçan de transition.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Viacamp i Lliterà;Viacamp y Litera;22247;nordoccidental;ribagorca;non;;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Benasc;Benasque;22054;nordoccidental;ribagorca;si;Benasquès : parler de transition aragonais / catalan. Compté par la GREC, pas par l'IEC. À trancher par Romain (inclure en hachuré ?).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Bissaürri;Bisaurri;22062;nordoccidental;ribagorca;si;Benasquès : parler de transition aragonais / catalan. Compté par la GREC, pas par l'IEC. À trancher par Romain (inclure en hachuré ?).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Castilló de Sos;Castejón de Sos;22084;nordoccidental;ribagorca;si;Benasquès : parler de transition aragonais / catalan. Compté par la GREC, pas par l'IEC. À trancher par Romain (inclure en hachuré ?).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Gia;Chía;22095;nordoccidental;ribagorca;si;Benasquès : parler de transition aragonais / catalan. Compté par la GREC, pas par l'IEC. À trancher par Romain (inclure en hachuré ?).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Saünc;Sahún;22200;nordoccidental;ribagorca;si;Benasquès : parler de transition aragonais / catalan. Compté par la GREC, pas par l'IEC. À trancher par Romain (inclure en hachuré ?).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Sessué;Sesué;22221;nordoccidental;ribagorca;si;Benasquès : parler de transition aragonais / catalan. Compté par la GREC, pas par l'IEC. À trancher par Romain (inclure en hachuré ?).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Ribagorça;municipi;Vilanova d'Éssera;Villanova;22249;nordoccidental;ribagorca;si;Benasquès : parler de transition aragonais / catalan. Compté par la GREC, pas par l'IEC. À trancher par Romain (inclure en hachuré ?).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Albelda;Albelda;22009;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;el Campell;Alcampell;22016;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;el Torricó;Altorricón;22025;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Sanui i Alins;Azanuy-Alins;22040;nordoccidental;ribagorca;si;Parler de transition (IEC), statut mixte.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Baells;Baélls;22043;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Valdellou;Baldellou;22045;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Camporrells;Camporrélls;22075;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Castellonroi;Castillonroy;22089;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Peralta i Calassanç;Peralta de Calasanz;22175;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Sant Esteve de Llitera;San Esteban de Litera;22205;nordoccidental;ribagorca;si;Parler de transition (IEC).;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Tamarit de Llitera;Tamarite de Litera;22225;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);la Llitera;municipi;Vensilló;Vencillón;22909;nordoccidental;ribagorca;non;Lliterà, rangé dans le ribagorçan (Viquipèdia). Le sud (Tamarit, Altorricó, Albelda) penche vers le lleidatan.;VQ-FRANJA VQ-RIB
+Franja de Ponent (Aragó);el Baix Cinca;municipi;Fraga;Fraga;22112;nordoccidental;lleidata;non;Parler fragatí.;VQ-FRANJA
+Franja de Ponent (Aragó);el Baix Cinca;municipi;Mequinensa;Mequinenza;50165;nordoccidental;lleidata;non;;VQ-FRANJA
+Franja de Ponent (Aragó);el Baix Cinca;municipi;Torrent de Cinca;Torrente de Cinca;22234;nordoccidental;lleidata;non;;VQ-FRANJA
+Franja de Ponent (Aragó);el Baix Cinca;municipi;Vilella de Cinca;Velilla de Cinca;22245;nordoccidental;lleidata;non;;VQ-FRANJA
+Franja de Ponent (Aragó);el Baix Cinca;municipi;Saidí;Zaidín;22254;nordoccidental;lleidata;non;;VQ-FRANJA
+Franja de Ponent (Aragó);el Baix Aragó-Casp;municipi;Favara de Matarranya;Fabara;50102;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó-Casp;municipi;Faió;Fayón;50105;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó-Casp;municipi;Maella;Maella;50152;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó-Casp;municipi;Nonasp;Nonaspe;50189;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Arenys de Lledó;Arens de Lledó;44027;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Beseit;Beceite;44037;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Calaceit;Calaceite;44049;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Cretes;Cretas;44086;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Fórnols de Matarranya;Fórnoles;44105;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Fondespatla;Fuentespalda;44114;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;la Freixneda;La Fresneda;44108;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Lledó d'Algars;Lledó;44141;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Massalió;Mazaleón;44147;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Mont-roig de Tastavins;Monroyo;44154;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Pena-roja;Peñarroya de Tastavins;44179;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;la Portellada;La Portellada;44187;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Ràfels;Ráfales;44194;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Torredarques;Torre de Arcas;44223;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;la Torre del Comte;Torre del Compte;44225;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;la Vall de Tormo;Valdeltormo;44245;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Vall-de-roures;Valderrobres;44246;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Matarranya;municipi;Valljunquera;Valjunquera;44247;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó;municipi;Aiguaviva de Bergantes;Aguaviva;44004;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó;municipi;Bellmunt de Mesquí;Belmonte de San José;44038;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó;municipi;la Canyada de Beric;La Cañada de Verich;44061;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó;municipi;la Sorollera;La Cerollera;44077;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó;municipi;la Codonyera;La Codoñera;44080;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó;municipi;la Ginebrosa;La Ginebrosa;44118;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);el Baix Aragó;municipi;la Torre de Vilella;Torrevelilla;44230;tortosi;tortosi;si;Parlers de transition nord-occidental / tortosin (Matarranya).;VQ-FRANJA VQ-TORT
+Franja de Ponent (Aragó);la Ribagorça;municipi;Graus;Graus;22117;exclos;;si;Commune aragonaise / castillane. Seuls les hameaux de Güel, Torres del Bisbe et Jusseu sont catalanophones (GREC).;VQ-FRANJA
+Franja de Ponent (Aragó);la Ribagorça;municipi;Capella;Capella;22080;exclos;;si;Commune aragonaise / castillane. Seul le hameau de Llaguarres est catalanophone (GREC).;VQ-FRANJA
+Franja de Ponent (Aragó);la Ribagorça;municipi;la Foradada del Toscar;Foradada del Toscar;22111;exclos;;si;Commune aragonaise. Les hameaux d'Espluga et Vacamorta sont catalanophones (Viquipèdia ca).;VQ-FRANJA
+País Valencià;Alacantí;municipi;Agost;Agost;03002;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Comtat;municipi;Agres;Agres;03003;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alacantí;municipi;Aigües;Aigües;03004;valencia;alacanti;si;Limite nord de l'alacantin (ALV). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Alacantí;municipi;Alacant;Alacant / Alicante;03014;valencia;alacanti;non;Alacant : usage social surtout castillan. Demande municipale de 2025 de reclassement en zone castillane, sans suite législative. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Segura;municipi;Albatera;Albatera;03005;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;Alcalalí;Alcalalí;03006;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alcoià;municipi;Alcoi;Alcoi / Alcoy;03009;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Alcoleja;Alcoleja;03008;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Alcosser;Alcosser;03007;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Alfafara;Alfafara;03010;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;l'Alfàs del Pi;l'Alfàs del Pi;03011;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Algorfa;Algorfa;03012;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vinalopó Mitjà;municipi;l'Alguenya;Algueña;03013;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Segura;municipi;Almoradí;Almoradí;03015;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Comtat;municipi;Almudaina;Almudaina;03016;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;l'Alqueria d'Asnar;l'Alqueria d'Asnar;03017;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Altea;Altea;03018;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vinalopó Mitjà;municipi;Asp;Aspe;03019;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;l'Atzúbia;l'Atzúbia;03001;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Balones;Balones;03020;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alcoià;municipi;Banyeres de Mariola;Banyeres de Mariola;03021;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Benasau;Benasau;03022;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alt Vinalopó;municipi;Beneixama;Beneixama;03023;valencia;meridional;si;Au nord de la ligne Biar-la Canyada, dernière localité alacantine (ALV) : rangé dans le méridional. Incertain. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Benejússer;Benejúzar;03024;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Segura;municipi;Benferri;Benferri;03025;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;Beniarbeig;Beniarbeig;03026;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Beniardà;Beniardà;03027;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Beniarrés;Beniarrés;03028;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Benidoleig;Benidoleig;03030;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Benidorm;Benidorm;03031;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alcoià;municipi;Benifallim;Benifallim;03032;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Benifato;Benifato;03033;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Benigembla;Benigembla;03029;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Benijòfer;Benijófar;03034;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Comtat;municipi;Benilloba;Benilloba;03035;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Benillup;Benillup;03036;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Benimantell;Benimantell;03037;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Benimarfull;Benimarfull;03038;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Benimassot;Benimassot;03039;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Benimeli;Benimeli;03040;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Benissa;Benissa;03041;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alt Vinalopó;municipi;Biar;Biar;03043;valencia;alacanti;si;Limite nord de l'alacantin (ALV). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Segura;municipi;Bigastre;Bigastro;03044;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Baixa;municipi;Bolulla;Bolulla;03045;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alacantí;municipi;Busot;Busot;03046;valencia;alacanti;si;Limite nord de l'alacantin (ALV). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Segura;municipi;Callosa de Segura;Callosa de Segura;03049;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Baixa;municipi;Callosa d'en Sarrià;Callosa d'en Sarrià;03048;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Calp;Calp;03047;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alt Vinalopó;municipi;el Camp de Mirra;el Camp de Mirra / Campo de Mirra;03051;valencia;meridional;si;Au nord de la ligne Biar-la Canyada (ALV) : rangé dans le méridional. Incertain. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alacantí;municipi;el Campello;el Campello;03050;valencia;alacanti;si;Limite nord de l'alacantin (ALV). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Alt Vinalopó;municipi;la Canyada;Cañada;03052;valencia;alacanti;si;Limite nord de l'alacantin (ALV). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Alcoià;municipi;Castalla;Castalla;03053;valencia;alacanti;non;Foia de Castalla : alacantin. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Marina Alta;municipi;Castell de Castells;Castell de Castells;03054;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;el Castell de Guadalest;el Castell de Guadalest;03075;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Catral;Catral;03055;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Comtat;municipi;Cocentaina;Cocentaina;03056;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Confrides;Confrides;03057;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Coix;Cox;03058;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Vinalopó;municipi;Crevillent;Crevillent;03059;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Segura;municipi;Daia Nova;Daya Nueva;03061;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Segura;municipi;Daia Vella;Daya Vieja;03062;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;Dénia;Dénia;03063;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Dolors;Dolores;03064;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vinalopó Mitjà;municipi;Elda;Elda;03066;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Vinalopó;municipi;Elx;Elx / Elche;03065;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Comtat;municipi;Fageca;Fageca;03067;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Famorca;Famorca;03068;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Finestrat;Finestrat;03069;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vinalopó Mitjà;municipi;el Fondó de les Neus;el Fondó de les Neus / Hondón de las Nieves;03077;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Segura;municipi;Formentera del Segura;Formentera del Segura;03070;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Comtat;municipi;Gaianes;Gaianes;03072;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Gata de Gorgos;Gata de Gorgos;03071;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Gorga;Gorga;03073;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;la Granja de Rocamora;Granja de Rocamora;03074;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Segura;municipi;Guardamar del Segura;Guardamar del Segura;03076;valencia;alacanti;non;Seule commune valencianophone du Baix Segura (enclave). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Vinalopó Mitjà;municipi;el Fondó dels Frares;Hondón de los Frailes;03078;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Alcoià;municipi;Ibi;Ibi;03079;valencia;alacanti;non;Foia de Castalla : alacantin. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Segura;municipi;Xacarella;Jacarilla;03080;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;Llíber;Llíber;03085;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Millena;Millena;03086;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vinalopó Mitjà;municipi;Montfort;Monforte del Cid;03088;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vinalopó Mitjà;municipi;Monòver;Monòver / Monóvar;03089;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Segura;municipi;Los Montesinos;Los Montesinos;03903;exclos;;non;Créée en 1990 (séparée d'Almoradí, art. 36) : castillan par héritage. Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;Murla;Murla;03091;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Muro d'Alcoi;Muro de Alcoy;03092;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alacantí;municipi;Mutxamel;Mutxamel;03090;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Vinalopó Mitjà;municipi;Novelda;Novelda;03093;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Marina Baixa;municipi;la Nucia;la Nucia;03094;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Ondara;Ondara;03095;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alcoià;municipi;Onil;Onil;03096;valencia;alacanti;non;Foia de Castalla : alacantin. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Marina Alta;municipi;Orba;Orba;03097;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Oriola;Orihuela;03099;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Comtat;municipi;l'Orxa;l'Orxa / Lorcha;03084;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Orxeta;Orxeta;03098;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Parcent;Parcent;03100;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Pedreguer;Pedreguer;03101;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Pego;Pego;03102;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alcoià;municipi;Penàguila;Penàguila;03103;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vinalopó Mitjà;municipi;Petrer;Petrer;03104;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Segura;municipi;el Pilar de la Foradada;Pilar de la Horadada;03902;exclos;;non;Créée en 1986 (séparée d'Orihuela, art. 36) : castillan par héritage. Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vinalopó Mitjà;municipi;el Pinós;el Pinós / Pinoso;03105;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Comtat;municipi;Planes;Planes;03106;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;el Poble Nou de Benitatxell;el Poble Nou de Benitatxell / Benitachell;03042;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;els Poblets;els Poblets;03901;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Polop;Polop;03107;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Comtat;municipi;Quatretondeta;Quatretondeta;03060;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Rafal;Rafal;03109;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;el Ràfol d'Almúnia;el Ràfol d'Almúnia;03110;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Redovà;Redován;03111;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Baixa;municipi;Relleu;Relleu;03112;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Rojals;Rojales;03113;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vinalopó Mitjà;municipi;la Romana;la Romana;03114;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Marina Alta;municipi;Sagra;Sagra;03115;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alt Vinalopó;municipi;Salines;Salinas;03116;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Segura;municipi;Sant Fulgenci;San Fulgencio;03118;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Segura;municipi;Sant Isidre;San Isidro;03904;exclos;;non;Créée en 1993 (séparée d'Albatera, art. 36) : castillan par héritage. Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Segura;municipi;Sant Miquel de les Salines;San Miguel de Salinas;03120;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;Sanet i els Negrals;Sanet y Negrals;03117;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alacantí;municipi;Sant Joan d'Alacant;Sant Joan d'Alacant;03119;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Alacantí;municipi;Sant Vicent del Raspeig;Sant Vicent del Raspeig / San Vicente del Raspeig;03122;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Baix Vinalopó;municipi;Santa Pola;Santa Pola;03121;valencia;alacanti;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Alt Vinalopó;municipi;Saix;Sax;03123;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Baixa;municipi;Sella;Sella;03124;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Senija;Senija;03125;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;Tàrbena;Tàrbena;03127;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Teulada;Teulada;03128;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alcoià;municipi;Tibi;Tibi;03129;valencia;alacanti;si;Foia de Castalla. Limite nord de l'alacantin (ALV). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Comtat;municipi;Tollos;Tollos;03130;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Tormos;Tormos;03131;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alacantí;municipi;la Torre de les Maçanes;la Torre de les Maçanes / Torremanzanas;03132;valencia;meridional;si;La Torre de les Maçanes : exclue de l'alacantin (Viquipèdia). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Baix Segura;municipi;Torrevella;Torrevieja;03133;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;la Vall d'Alcalà;la Vall d'Alcalà;03134;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;la Vall de Gallinera;la Vall de Gallinera;03136;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;la Vall de Laguar;la Vall de Laguar;03137;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;la Vall d'Ebo;la Vall d'Ebo;03135;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;el Verger;el Verger;03138;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Baixa;municipi;la Vila Joiosa;la Vila Joiosa / Villajoyosa;03139;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alt Vinalopó;municipi;Villena;Villena;03140;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Marina Alta;municipi;Xàbia;Xàbia / Jávea;03082;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Marina Alta;municipi;Xaló;Xaló;03081;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Alacantí;municipi;Xixona;Xixona / Jijona;03083;valencia;alacanti;si;Limite nord de l'alacantin (ALV). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VALA
+País Valencià;Plana Baixa;municipi;Aín;Aín;12002;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Maestrat;municipi;Albocàsser;Albocàsser;12003;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Baix Maestrat;municipi;Alcalà de Xivert;Alcalà de Xivert;12004;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alcalatén;municipi;l'Alcora;l'Alcora;12005;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Baixa;municipi;l'Alcúdia de Veo;Alcudia de Veo;12006;valencia;castellonenc;si;Seul le noyau valencianophone (l'Alcúdia) est de prédominance valencienne (art. 35). Les hameaux castillanophones (Veo, Benitandús) sont à exclure. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Baixa;municipi;Alfondeguilla;Alfondeguilla;12007;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Palància;municipi;Algímia d'Almonesir;Algimia de Almonacid;12008;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Alta;municipi;Almassora;Almassora;12009;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Palància;municipi;Almedíxer;Almedíjar;12010;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Baixa;municipi;Almenara;Almenara;12011;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Baixa;municipi;les Alqueries;les Alqueries / Alquerías del Niño Perdido;12901;valencia;castellonenc;non;Créée en 1995 (séparée de Vila-real, art. 35) : valencien par héritage. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Palància;municipi;Altura;Altura;12012;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Millars;municipi;Aranyel;Arañuel;12013;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Maestrat;municipi;Ares del Maestrat;Ares del Maestrat;12014;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Millars;municipi;Argeleta;Argelita;12015;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Baixa;municipi;Artana;Artana;12016;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Maestrat;municipi;Atzeneta del Maestrat;Atzeneta del Maestrat;12001;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Millars;municipi;Aiòder;Ayódar;12017;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Palància;municipi;Assuévar;Azuébar;12018;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Palància;municipi;Barraques;Barracas;12020;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Palància;municipi;Begís;Bejís;12022;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Palància;municipi;Benafer;Benafer;12024;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Maestrat;municipi;Benafigos;Benafigos;12025;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Maestrat;municipi;Benassal;Benassal;12026;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Baix Maestrat;municipi;Benicarló;Benicarló;12027;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Alta;municipi;Benicàssim;Benicàssim / Benicasim;12028;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Alta;municipi;Benlloc;Benlloc;12029;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Baixa;municipi;Betxí;Betxí;12021;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Baixa;municipi;Borriana;Borriana / Burriana;12032;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Alta;municipi;Borriol;Borriol;12031;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Alta;municipi;Cabanes;Cabanes;12033;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Baix Maestrat;municipi;Càlig;Càlig;12034;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Baix Maestrat;municipi;Canet lo Roig;Canet lo Roig;12036;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Baix Maestrat;municipi;Castell de Cabres;Castell de Cabres;12037;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Ports;municipi;Castellfort;Castellfort;12038;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Castellnou;Castellnovo;12039;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Alta;municipi;Castelló de la Plana;Castelló de la Plana / Castellón de la Plana;12040;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Millars;municipi;el Castell de Vilamalefa;Castillo de Villamalefa;12041;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Maestrat;municipi;Catí;Catí;12042;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Caudiel;Caudiel;12043;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Maestrat;municipi;Cervera del Maestrat;Cervera del Maestre;12044;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Baixa;municipi;Xilxes;Chilches / Xilxes;12053;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Palància;municipi;Xóvar;Chóvar;12056;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ports;municipi;Cinctorres;Cinctorres;12045;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Millars;municipi;Cirat;Cirat;12046;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Millars;municipi;Cortes d'Arenós;Cortes de Arenoso;12048;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alcalatén;municipi;Costur;Costur;12049;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Alta;municipi;les Coves de Vinromà;les Coves de Vinromà;12050;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Maestrat;municipi;Culla;Culla;12051;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Baixa;municipi;Eslida;Eslida;12057;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Millars;municipi;Espadella;Espadilla;12058;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Millars;municipi;Fanzara;Fanzara;12059;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alcalatén;municipi;Figueroles;Figueroles;12060;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Ports;municipi;el Forcall;Forcall;12061;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Millars;municipi;la Font de la Reina;Fuente la Reina;12063;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Millars;municipi;les Fonts d'Aiòder;Fuentes de Ayódar;12064;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Palància;municipi;Gaibiel;Gaibiel;12065;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Palància;municipi;Geldo;Geldo;12067;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ports;municipi;Herbers;Herbers;12068;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Figueres;Higueras;12069;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Maestrat;municipi;la Jana;la Jana;12070;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Xèrica;Jérica;12071;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Baixa;municipi;La Llosa;la Llosa;12074;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alcalatén;municipi;Llucena;Llucena / Lucena del Cid;12072;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Millars;municipi;Lludient;Ludiente;12073;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ports;municipi;la Mata de Morella;la Mata de Morella;12075;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Matet;Matet;12076;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Baixa;municipi;Moncofa;Moncofa;12077;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Millars;municipi;Montant;Montán;12078;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Millars;municipi;Montanejos;Montanejos;12079;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ports;municipi;Morella;Morella;12080;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Navaixes;Navajas;12081;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Baixa;municipi;Nules;Nules;12082;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Ports;municipi;Olocau del Rei;Olocau del Rey;12083;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Baixa;municipi;Onda;Onda;12084;valencia;apitxat;si;Onda : traits apitxats (Viquipèdia, Valencià central). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Plana Alta;municipi;Orpesa;Orpesa / Oropesa del Mar;12085;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Ports;municipi;Palanques;Palanques;12087;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Pavies;Pavías;12088;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Maestrat;municipi;Peníscola;Peníscola / Peñíscola;12089;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Pina;Pina de Montalgrao;12090;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Maestrat;municipi;la Pobla de Benifassà;la Pobla de Benifassà;12093;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Alta;municipi;la Pobla Tornesa;la Pobla Tornesa;12094;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Ports;municipi;Portell de Morella;Portell de Morella;12091;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Millars;municipi;la Pobla d'Arenós;Puebla de Arenoso;12092;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Baixa;municipi;Ribesalbes;Ribesalbes;12095;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Baix Maestrat;municipi;Rossell;Rossell;12096;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Sacanyet;Sacañet;12097;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Maestrat;municipi;la Salzadella;la Salzadella;12098;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Baix Maestrat;municipi;Sant Rafel del Riu;San Rafael del Río;12101;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Alta;municipi;Sant Joan de Moró;Sant Joan de Moró;12902;valencia;castellonenc;non;Créée en 1991 (séparée de Vilafamés, art. 35) : valencien par héritage. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Baix Maestrat;municipi;Sant Jordi;Sant Jordi / San Jorge;12099;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Baix Maestrat;municipi;Sant Mateu;Sant Mateu;12100;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Baix Maestrat;municipi;Santa Magdalena de Polpís;Santa Magdalena de Pulpis;12102;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Palància;municipi;Sogorb;Segorbe;12104;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Maestrat;municipi;la Serratella;la Serratella;12103;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Alta;municipi;la Serra d'en Galceran;Sierra Engarcerán;12105;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Palància;municipi;Soneja;Soneja;12106;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Palància;municipi;Sot de Ferrer;Sot de Ferrer;12107;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Baixa;municipi;Suera;Suera / Sueras;12108;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Baixa;municipi;Tales;Tales;12109;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Palància;municipi;Teresa;Teresa;12110;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Maestrat;municipi;Tírig;Tírig;12111;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Ports;municipi;la Todolella;Todolella;12112;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Millars;municipi;Toga;Toga;12113;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Palància;municipi;Toràs;Torás;12114;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Palància;municipi;el Toro;El Toro;12115;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Millars;municipi;Torralba;Torralba del Pinar;12116;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Maestrat;municipi;la Torre d'en Besora;la Torre d'en Besora;12119;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Alta;municipi;la Torre d'en Doménec;la Torre d'en Doménec;12120;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Alta;municipi;Torreblanca;Torreblanca;12117;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Millars;municipi;Torre-xiva;Torrechiva;12118;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Maestrat;municipi;Traiguera;Traiguera;12121;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alcalatén;municipi;les Useres;les Useres / Useras;12122;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Alta;municipi;la Vall d'Alba;Vall d'Alba;12124;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Palància;municipi;la Vall d'Almonesir;Vall de Almonacid;12125;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana Baixa;municipi;la Vall d'Uixó;la Vall d'Uixó;12126;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Millars;municipi;Vallat;Vallat;12123;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ports;municipi;Vallibona;Vallibona;12127;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Alta;municipi;Vilafamés;Vilafamés;12128;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Ports;municipi;Vilafranca;Vilafranca / Villafranca del Cid;12129;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Alta;municipi;Vilanova d'Alcolea;Vilanova d'Alcolea;12132;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Maestrat;municipi;Vilar de Canes;Vilar de Canes;12134;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Plana Baixa;municipi;Vila-real;Vila-real;12135;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Plana Baixa;municipi;la Vilavella;la Vilavella;12136;valencia;castellonenc;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP
+País Valencià;Alt Millars;municipi;Vilafermosa;Villahermosa del Río;12130;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Millars;municipi;Vilamalur;Villamalur;12131;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Alt Millars;municipi;Vilanova de Viver;Villanueva de Viver;12133;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ports;municipi;Villores;Villores;12137;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Baix Maestrat;municipi;Vinaròs;Vinaròs;12138;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alcalatén;municipi;Vistabella del Maestrat;Vistabella del Maestrat;12139;tortosi;valencia_transicio;si;Rattachée au tortosin (valencien de transition), comme Xodos, sa voisine : recommandation de la vérification du 2026-10-08, DÉCISION À VALIDER PAR ROMAIN (avant : valencien castellonenc). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VSEP VQ-TORT
+País Valencià;Alt Palància;municipi;Viver;Viver;12140;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Baix Maestrat;municipi;Xert;Xert;12052;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alcalatén;municipi;Xodos;Xodos / Chodos;12055;tortosi;valencia_transicio;si;Xodos : exclu du castellonenc par Viquipèdia (Valencià septentrional), rattaché au valencien de transition. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Ports;municipi;Sorita;Zorita del Maestrazgo;12141;tortosi;valencia_transicio;si;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-TORT
+País Valencià;Alt Millars;municipi;Sucaina;Zucaina;12142;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Racó d'Ademús;municipi;Ademús;Ademuz;46001;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Safor;municipi;Ador;Ador;46002;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Agullent;Agullent;46004;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Aielo de Malferit;Aielo de Malferit;46042;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Aielo de Rugat;Aielo de Rugat;46043;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Sud;municipi;Alaquàs;Alaquàs;46005;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Albaida;Albaida;46006;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Sud;municipi;Albal;Albal;46007;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Baixa;municipi;Albalat de la Ribera;Albalat de la Ribera;46008;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Albalat dels Sorells;Albalat dels Sorells;46009;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Morvedre;municipi;Albalat dels Tarongers;Albalat dels Tarongers;46010;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Alberic;Alberic;46011;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Foia de Bunyol;municipi;Alboraig;Alborache;46012;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Horta Nord;municipi;Alboraia;Alboraia / Alboraya;46013;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Albuixec;Albuixech;46014;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Alcàntera de Xúquer;Alcàntera de Xúquer;46016;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Alcàsser;Alcàsser;46015;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Serrans;municipi;les Alcubles;Alcublas;46018;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Costera;municipi;l'Alcúdia de Crespins;l'Alcúdia de Crespins;46020;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;l'Alcúdia;l'Alcúdia;46019;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Aldaia;Aldaia;46021;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Alfafar;Alfafar;46022;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Morvedre;municipi;Alfara de la Baronia;Alfara de la Baronia;46024;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Alfara del Patriarca;Alfara del Patriarca;46025;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Alfarb;Alfarb;46026;valencia;meridional;si;Alfarb : enclave non apitxat dans la Ribera (Viquipèdia, Valencià central). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Alfarrasí;Alfarrasí;46027;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;Alfauir;Alfauir;46023;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Morvedre;municipi;Algar de Palància;Algar de Palància;46028;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Algemesí;Algemesí;46029;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Morvedre;municipi;Algímia d'Alfara;Algímia d'Alfara;46030;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Alginet;Alginet;46031;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Almàssera;Almàssera;46032;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Almiserà;Almiserà;46033;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;Almoines;Almoines;46034;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Baixa;municipi;Almussafes;Almussafes;46035;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Serrans;municipi;Alpont;Alpuente;46036;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Safor;municipi;l'Alqueria de la Comtessa;l'Alqueria de la Comtessa;46037;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;Alzira;Alzira;46017;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Serrans;municipi;Andilla;Andilla;46038;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Canal de Navarrés;municipi;Anna;Anna;46039;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Alta;municipi;Antella;Antella;46040;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Serrans;municipi;Ares dels Oms;Aras de los Olmos;46041;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vall d'Albaida;municipi;Atzeneta d'Albaida;Atzeneta d'Albaida;46003;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall de Cofrents;municipi;Aiora;Ayora;46044;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Safor;municipi;Barx;Barx;46046;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Costera;municipi;Barxeta;Barxeta;46045;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Bèlgida;Bèlgida;46047;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;Bellreguard;Bellreguard;46048;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Bellús;Bellús;46049;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Serrans;municipi;Benaixeve;Benagéber;46050;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Camp de Túria;municipi;Benaguasil;Benaguasil;46051;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Morvedre;municipi;Benavites;Benavites;46052;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Beneixida;Beneixida;46053;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Benetússer;Benetússer;46054;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Beniarjó;Beniarjó;46055;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Beniatjar;Beniatjar;46056;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Benicolet;Benicolet;46057;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Baixa;municipi;Benicull de Xúquer;Benicull de Xúquer;46904;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Créée en 2003 (séparée de Polinyà de Xúquer, art. 35) : valencien par héritage. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Benifaió;Benifaió;46060;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Benifairó de la Valldigna;Benifairó de la Valldigna;46059;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Morvedre;municipi;Benifairó de les Valls;Benifairó de les Valls;46058;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Beniflà;Beniflá;46061;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Benigànim;Benigànim;46062;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;Benimodo;Benimodo;46063;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Benimuslem;Benimuslem;46064;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Beniparrell;Beniparrell;46065;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Benirredrà;Benirredrà;46066;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Túria;municipi;Benissanó;Benissanó;46067;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Benissoda;Benissoda;46068;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Benissuera;Benissuera;46069;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Túria;municipi;Bétera;Bétera;46070;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Canal de Navarrés;municipi;Bicorb;Bicorp;46071;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vall d'Albaida;municipi;Bocairent;Bocairent;46072;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Canal de Navarrés;municipi;Bolbait;Bolbaite;46073;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Horta Nord;municipi;Bonrepòs i Mirambell;Bonrepòs i Mirambell;46074;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Bufali;Bufali;46075;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Serrans;municipi;Bugarra;Bugarra;46076;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Foia de Bunyol;municipi;Bunyol;Buñol;46077;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Horta Nord;municipi;Burjassot;Burjassot;46078;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Serrans;municipi;Calles;Calles;46079;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana d'Utiel;municipi;Camporrobles;Camporrobles;46080;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Costera;municipi;Canals;Canals;46081;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Morvedre;municipi;Canet d'en Berenguer;Canet d'En Berenguer;46082;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Carcaixent;Carcaixent;46083;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Càrcer;Càrcer;46084;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Carlet;Carlet;46085;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Carrícola;Carrícola;46086;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Racó d'Ademús;municipi;Cases Altes;Casas Altas;46087;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Racó d'Ademús;municipi;Cases Baixes;Casas Bajas;46088;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Camp de Túria;municipi;Casinos;Casinos;46089;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Castelló;Castelló;46257;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Castelló de Rugat;Castelló de Rugat;46090;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;Castellonet de la Conquesta;Castellonet de la Conquesta;46091;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Racó d'Ademús;municipi;Castellfabib;Castielfabib;46092;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Alta;municipi;Catadau;Catadau;46093;valencia;meridional;si;Catadau : enclave non apitxat dans la Ribera (Viquipèdia, Valencià central). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Sud;municipi;Catarroja;Catarroja;46094;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Plana d'Utiel;municipi;Caudete de las Fuentes;Caudete de las Fuentes;46095;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Costera;municipi;Cerdà;Cerdà;46096;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Canal de Navarrés;municipi;Xella;Chella;46107;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Serrans;municipi;Xelva;Chelva;46106;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana d'Utiel;municipi;Xera;Chera;46108;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Foia de Bunyol;municipi;Xest;Cheste;46109;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Foia de Bunyol;municipi;Xiva;Chiva;46111;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Serrans;municipi;Xulilla;Chulilla;46112;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vall de Cofrents;municipi;Cofrents;Cofrentes;46097;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Baixa;municipi;Corbera;Corbera;46098;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall de Cofrents;municipi;Cortes de Pallars;Cortes de Pallás;46099;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Alta;municipi;Cotes;Cotes;46100;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Baixa;municipi;Cullera;Cullera;46105;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Daimús;Daimús;46113;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Serrans;municipi;Domenyo;Domeño;46114;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Foia de Bunyol;municipi;Dosaigües;Dos Aguas;46115;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Camp de Túria;municipi;l'Eliana;l'Eliana;46116;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Emperador;Emperador;46117;valencia;apitxat;non;Emperador : absent du texte publié de la loi (oubli), commune valencianophone de l'Horta Nord. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Canal de Navarrés;municipi;Énguera;Enguera;46118;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Alta;municipi;l'Énova;l'Énova;46119;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Morvedre;municipi;Estivella;Estivella;46120;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Costera;municipi;Estubeny;Estubeny;46121;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Morvedre;municipi;Faura;Faura;46122;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Baixa;municipi;Favara;Favara;46123;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Foios;Foios;46126;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Costera;municipi;la Font de la Figuera;la Font de la Figuera;46128;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;la Font d'en Carròs;la Font d'en Carròs;46127;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Fontanars dels Alforins;Fontanars dels Alforins;46124;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Baixa;municipi;Fortaleny;Fortaleny;46125;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Plana d'Utiel;municipi;Fuenterrobles;Fuenterrobles;46129;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Safor;municipi;Gandia;Gandia;46131;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Túria;municipi;Gàtova;Gátova;46902;exclos;;non;Gàtova : listée dans la province de Castelló (art. 36) en 1983, rattachée depuis à València. Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Alta;municipi;Gavarda;Gavarda;46130;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Costera;municipi;el Genovés;el Genovés;46132;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Serrans;municipi;Xestalgar;Gestalgar;46133;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Camp de Morvedre;municipi;Gilet;Gilet;46134;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Godella;Godella;46135;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Foia de Bunyol;municipi;Godelleta;Godelleta;46136;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Costera;municipi;la Granja de la Costera;la Granja de la Costera;46137;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Guadasséquies;Guadasséquies;46138;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;Guadassuar;Guadassuar;46139;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Guardamar de la Safor;Guardamar de la Safor;46140;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Serrans;municipi;Figueroles de Domenyo;Higueruelas;46141;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vall de Cofrents;municipi;Xalans;Jalance;46142;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vall de Cofrents;municipi;Xarafull;Jarafuel;46144;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Costera;municipi;Llanera de Ranes;Llanera de Ranes;46154;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Baixa;municipi;Llaurí;Llaurí;46155;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Túria;municipi;Llíria;Llíria;46147;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Llocnou de la Corona;Llocnou de la Corona;46152;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Llocnou de Sant Jeroni;Llocnou de Sant Jeroni;46153;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Costera;municipi;Llocnou d'en Fenollet;Llocnou d'En Fenollet;46151;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;Llombai;Llombai;46156;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Costera;municipi;la Llosa de Ranes;la Llosa de Ranes;46157;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Llutxent;Llutxent;46150;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Túria;municipi;Loriguilla;Loriguilla;46148;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Serrans;municipi;la Llosa del Bisbe;Losa del Obispo;46149;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Foia de Bunyol;municipi;Macastre;Macastre;46158;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Horta Sud;municipi;Manises;Manises;46159;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Manuel;Manuel;46160;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Túria;municipi;Marines;Marines;46161;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Alta;municipi;Massalavés;Massalavés;46162;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Massalfassar;Massalfassar;46163;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Massamagrell;Massamagrell;46164;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Massanassa;Massanassa;46165;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Meliana;Meliana;46166;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Canal de Navarrés;municipi;Millars;Millares;46167;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Safor;municipi;Miramar;Miramar;46168;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Sud;municipi;Mislata;Mislata;46169;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Costera;municipi;Moixent;Moixent / Mogente;46170;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Nord;municipi;Montcada;Montcada / Moncada;46171;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Montaverner;Montaverner;46173;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Costera;municipi;Montesa;Montesa;46174;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Montitxelvo;Montitxelvo / Montichelvo;46175;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;Montroi;Montroi / Montroy;46176;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Montserrat;Montserrat;46172;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Museros;Museros;46177;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Túria;municipi;Nàquera;Nàquera / Náquera;46178;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Canal de Navarrés;municipi;Navarrés;Navarrés;46179;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Costera;municipi;Novetlè;Novetlè;46180;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;Oliva;Oliva;46181;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;l'Olleria;l'Olleria;46183;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Túria;municipi;Olocau;Olocau;46182;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Ontinyent;Ontinyent;46184;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Otos;Otos;46185;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Sud;municipi;Paiporta;Paiporta;46186;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Palma de Gandia;Palma de Gandía;46187;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;Palmera;Palmera;46188;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;el Palomar;el Palomar;46189;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Nord;municipi;Paterna;Paterna;46190;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Serrans;municipi;Pedralba;Pedralba;46191;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Camp de Morvedre;municipi;Petrés;Petrés;46192;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Picanya;Picanya;46193;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Picassent;Picassent;46194;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Piles;Piles;46195;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Pinet;Pinet;46196;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Nord;municipi;la Pobla de Farnals;la Pobla de Farnals;46199;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Túria;municipi;la Pobla de Vallbona;la Pobla de Vallbona;46202;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;la Pobla del Duc;la Pobla del Duc;46200;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;la Pobla Llarga;la Pobla Llarga;46203;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Baixa;municipi;Polinyà de Xúquer;Polinyà de Xúquer;46197;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Potries;Potries;46198;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Nord;municipi;Puçol;Puçol;46205;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Racó d'Ademús;municipi;la Pobla de Sant Miquel;Puebla de San Miguel;46201;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Horta Nord;municipi;el Puig de Santa Maria;el Puig de Santa Maria;46204;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Morvedre;municipi;Quart de les Valls;Quart de les Valls;46101;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Quart de Poblet;Quart de Poblet;46102;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Morvedre;municipi;Quartell;Quartell;46103;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Quatretonda;Quatretonda;46104;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Canal de Navarrés;municipi;Quesa;Quesa;46206;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Horta Nord;municipi;Rafelbunyol;Rafelbunyol;46207;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Rafelcofer;Rafelcofer;46208;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;Rafelguaraf;Rafelguaraf;46209;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;el Ràfol de Salem;Ráfol de Salem;46210;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;Real;Real;46212;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;el Real de Gandia;el Real de Gandia;46211;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Plana d'Utiel;municipi;Requena;Requena;46213;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Camp de Túria;municipi;Riba-roja de Túria;Riba-roja de Túria;46214;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Baixa;municipi;Riola;Riola;46215;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Rocafort;Rocafort;46216;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Costera;municipi;Rotglà i Corberà;Rotglà i Corberà;46217;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;Ròtova;Ròtova;46218;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall d'Albaida;municipi;Rugat;Rugat;46219;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Morvedre;municipi;Sagunt;Sagunt / Sagunto;46220;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Salem;Salem;46221;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Túria;municipi;Sant Antoni de Benaixeve;San Antonio de Benagéber;46903;valencia;apitxat;si;Créée en 1997 (séparée de Paterna, art. 35). Absente de la loi. Viquipèdia la donne castillanophone. Incertain.;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Sant Joanet;Sant Joanet;46222;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Sud;municipi;Sedaví;Sedaví;46223;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Morvedre;municipi;Segart;Segart;46224;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Sellent;Sellent;46225;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Vall d'Albaida;municipi;Sempere;Sempere;46226;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Ribera Alta;municipi;Senyera;Senyera;46227;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Túria;municipi;Serra;Serra;46228;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Foia de Bunyol;municipi;Setaigües;Siete Aguas;46229;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Horta Sud;municipi;Silla;Silla;46230;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Simat de la Valldigna;Simat de la Valldigna;46231;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Plana d'Utiel;municipi;Sinarques;Sinarcas;46232;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Baixa;municipi;Sollana;Sollana;46233;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Serrans;municipi;Sot de Xera;Sot de Chera;46234;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Baixa;municipi;Sueca;Sueca;46235;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud (Favara, Llaurí). Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Sumacàrcer;Sumacàrcer;46236;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Horta Nord;municipi;Tavernes Blanques;Tavernes Blanques;46237;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Safor;municipi;Tavernes de la Valldigna;Tavernes de la Valldigna;46238;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Vall de Cofrents;municipi;Teresa de Cofrents;Teresa de Cofrentes;46239;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vall d'Albaida;municipi;Terrateig;Terrateig;46240;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Serrans;municipi;Titaigües;Titaguas;46241;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Racó d'Ademús;municipi;Torrebaixa;Torrebaja;46242;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Costera;municipi;Torrella;Torrella;46243;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Sud;municipi;Torrent;Torrent;46244;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Camp de Morvedre;municipi;Torres Torres;Torres Torres;46245;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Ribera Alta;municipi;Tous;Tous;46246;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Serrans;municipi;Toixa;Tuéjar;46247;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Ribera Alta;municipi;Torís;Turís;46248;valencia;apitxat;si;Ribera : apitxat majoritaire, transition vers le méridional au sud. Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Plana d'Utiel;municipi;Utiel;Utiel;46249;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;València;municipi;València;València;46250;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Costera;municipi;Vallada;Vallada;46251;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Racó d'Ademús;municipi;Vallanca;Vallanca;46252;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Costera;municipi;Vallés;Vallés;46253;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Plana d'Utiel;municipi;Venta del Moro;Venta del Moro;46254;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Safor;municipi;Vilallonga;Vilallonga / Villalonga;46255;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Camp de Túria;municipi;Vilamarxant;Vilamarxant;46256;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Serrans;municipi;el Villar;Villar del Arzobispo;46258;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Plana d'Utiel;municipi;Villargordo del Cabriel;Villargordo del Cabriel;46259;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Horta Nord;municipi;Vinalesa;Vinalesa;46260;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Costera;municipi;Xàtiva;Xàtiva;46145;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;Xeraco;Xeraco;46143;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Safor;municipi;Xeresa;Xeresa;46146;valencia;meridional;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VMER
+País Valencià;Horta Sud;municipi;Xirivella;Xirivella;46110;valencia;apitxat;non;Prédominance valencienne (art. 35).;LUEV VQ-PV VQ-VCEN
+País Valencià;Foia de Bunyol;municipi;Iàtova;Yátova;46261;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Serrans;municipi;la Iessa;La Yesa;46262;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+País Valencià;Vall de Cofrents;municipi;Zarra;Zarra;46263;exclos;;non;Prédominance castillane (Llei 4/1983, art. 36).;LUEV VQ-PV
+Illes Balears;Menorca;municipi;Alaior;Alaior;07002;balear;menorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Alaró;Alaró;07001;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Alcúdia;Alcúdia;07003;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Algaida;Algaida;07004;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Andratx;Andratx;07005;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Ariany;Ariany;07901;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Artà;Artà;07006;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Banyalbufar;Banyalbufar;07007;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Binissalem;Binissalem;07008;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Búger;Búger;07009;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Bunyola;Bunyola;07010;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Calvià;Calvià;07011;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Campanet;Campanet;07012;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Campos;Campos;07013;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Capdepera;Capdepera;07014;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Menorca;municipi;es Castell;es Castell;07064;balear;menorqui;non;;VQ-BAL
+Illes Balears;Menorca;municipi;Ciutadella de Menorca;Ciutadella de Menorca;07015;balear;menorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Consell;Consell;07016;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Costitx;Costitx;07017;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Deià;Deià;07018;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Eivissa;municipi;Eivissa;Eivissa;07026;balear;eivissenc;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Escorca;Escorca;07019;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Esporles;Esporles;07020;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Estellencs;Estellencs;07021;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Felanitx;Felanitx;07022;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Menorca;municipi;Ferreries;Ferreries;07023;balear;menorqui;non;;VQ-BAL
+Illes Balears;Formentera;municipi;Formentera;Formentera;07024;balear;eivissenc;non;Formenterer, rangé avec l'eivissenc (Viquipèdia le compte parfois à part).;VQ-BAL
+Illes Balears;Mallorca;municipi;Fornalutx;Fornalutx;07025;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Inca;Inca;07027;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Lloret de Vistalegre;Lloret de Vistalegre;07028;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Lloseta;Lloseta;07029;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Llubí;Llubí;07030;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Llucmajor;Llucmajor;07031;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Manacor;Manacor;07033;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Mancor de la Vall;Mancor de la Vall;07034;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Menorca;municipi;Maó;Maó;07032;balear;menorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Maria de la Salut;Maria de la Salut;07035;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Marratxí;Marratxí;07036;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Menorca;municipi;es Mercadal;es Mercadal;07037;balear;menorqui;non;;VQ-BAL
+Illes Balears;Menorca;municipi;es Migjorn Gran;es Migjorn Gran;07902;balear;menorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Montuïri;Montuïri;07038;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Muro;Muro;07039;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Palma;Palma;07040;balear;mallorqui;non;Palma. La commune inclut l'archipel de Cabrera (parler majorquin, inhabité).;VQ-BAL
+Illes Balears;Mallorca;municipi;Petra;Petra;07041;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;sa Pobla;sa Pobla;07044;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Pollença;Pollença;07042;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Porreres;Porreres;07043;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Puigpunyent;Puigpunyent;07045;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;ses Salines;ses Salines;07059;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Eivissa;municipi;Sant Antoni de Portmany;Sant Antoni de Portmany;07046;balear;eivissenc;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Sant Joan;Sant Joan;07049;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Eivissa;municipi;Sant Joan de Labritja;Sant Joan de Labritja;07050;balear;eivissenc;non;;VQ-BAL
+Illes Balears;Eivissa;municipi;Sant Josep de sa Talaia;Sant Josep de sa Talaia;07048;balear;eivissenc;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Sant Llorenç des Cardassar;Sant Llorenç des Cardassar;07051;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Menorca;municipi;Sant Lluís;Sant Lluís;07052;balear;menorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Santa Eugènia;Santa Eugènia;07053;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Eivissa;municipi;Santa Eulària des Riu;Santa Eulària des Riu;07054;balear;eivissenc;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Santa Margalida;Santa Margalida;07055;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Santa Maria del Camí;Santa María del Camí;07056;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Santanyí;Santanyí;07057;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Selva;Selva;07058;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Sencelles;Sencelles;07047;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Sineu;Sineu;07060;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Sóller;Sóller;07061;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Son Servera;Son Servera;07062;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Valldemossa;Valldemossa;07063;balear;mallorqui;non;;VQ-BAL
+Illes Balears;Mallorca;municipi;Vilafranca de Bonany;Vilafranca de Bonany;07065;balear;mallorqui;non;;VQ-BAL
+l'Alguer (Sardenya);Sàsser;municipi;l'Alguer;Alghero;istat:090003;algueres;algueres;non;Seule la ville. Code ISTAT 090003 (Wikidata donne aussi 112001 après la réforme des provinces sardes : à vérifier selon le fond de carte). Centre lat 40.560, lon 8.315.;VQ-ALG WD
+el Carxe (Múrcia);Iecla (Yecla);nucli;el Raspai;Raspay;30043;valencia;alacanti;non;Hameau valencianophone (environ 800 hab. pour tout le Carxe en 2025, tous ne parlent pas valencien). Codi = commune INE. lat 38.4432, lon -1.0900.;VQ-CARXE VQ-VALA WD
+el Carxe (Múrcia);Jumella (Jumilla);nucli;la Canyada del Trigo;Cañada del Trigo;30022;valencia;alacanti;non;Hameau valencianophone (environ 800 hab. pour tout le Carxe en 2025, tous ne parlent pas valencien). Codi = commune INE. lat 38.3475, lon -1.0919.;VQ-CARXE VQ-VALA WD
+el Carxe (Múrcia);Jumella (Jumilla);nucli;la Torre del Rico;Torre del Rico;30022;valencia;alacanti;non;Hameau valencianophone (environ 800 hab. pour tout le Carxe en 2025, tous ne parlent pas valencien). Codi = commune INE. lat 38.3644, lon -1.1125.;VQ-CARXE VQ-VALA WD
+el Carxe (Múrcia);Jumella (Jumilla);nucli;l'Alberquilla;La Alberquilla;30022;valencia;alacanti;non;Hameau valencianophone (environ 800 hab. pour tout le Carxe en 2025, tous ne parlent pas valencien). Codi = commune INE. lat 38.4028, lon -1.1168.;VQ-CARXE VQ-VALA WD
+el Carxe (Múrcia);Jumella (Jumilla);nucli;la Raixa;La Raja;30022;valencia;alacanti;non;Hameau valencianophone (environ 800 hab. pour tout le Carxe en 2025, tous ne parlent pas valencien). Codi = commune INE. coordonnées non trouvées, dans la zone du Carxe.;VQ-CARXE VQ-VALA 
+el Carxe (Múrcia);Jumella (Jumilla);nucli;la Sarsa;La Zarza;30022;valencia;alacanti;non;Hameau valencianophone (environ 800 hab. pour tout le Carxe en 2025, tous ne parlent pas valencien). Codi = commune INE. coordonnées non trouvées (hameau partagé avec Abanilla).;VQ-CARXE VQ-VALA 
+el Carxe (Múrcia);Favanella (Abanilla);nucli;la Canyada de l'Alenya;Cañada de la Leña;30001;valencia;alacanti;non;Hameau valencianophone (environ 800 hab. pour tout le Carxe en 2025, tous ne parlent pas valencien). Codi = commune INE. lat 38.3173, lon -1.0555.;VQ-CARXE VQ-VALA WD
+el Carxe (Múrcia);Favanella (Abanilla);nucli;el Collado dels Gabriels;El Collado de los Gabrieles;30001;valencia;alacanti;non;Hameau valencianophone (environ 800 hab. pour tout le Carxe en 2025, tous ne parlent pas valencien). Codi = commune INE. coordonnées non trouvées, dans la zone du Carxe.;VQ-CARXE VQ-VALA 

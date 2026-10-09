@@ -53,6 +53,12 @@ ou corriger les chemins.
     Puis `node SIG/cadena/gavacharia.mjs` (après `domeni.mjs` et `mixtas.py`) : la Petite
     Gavacherie, îlot d'oïl éteint au XXe siècle, n'est plus un trou du domaine mais une
     zone particulière hachurée dans le gascon, expliquée au survol (Romain, 2026-10-08).
+12. Frontière avec le catalan : `python-qgis.bat -s -P SIG/cadena/fenolhedes.py` (après
+    `gavacharia.mjs`, avant `catalan.py`). Dans les Pyrénées-Orientales, le domaine et le
+    languedocien suivent les communes IGN : le Fenouillèdes (28 communes occitanes, liste
+    dans `SIG/catalan/dialectes-catalan.csv`) et la bande voisine de l'Aude et de l'Ariège y
+    entrent, les communes catalanes en sortent. Les deux langues se touchent sans trou
+    (Romain, 2026-10-08). Avec un dossier en argument, le script écrit un essai sans rien toucher.
 
 ## Couches de sources publiques (2026-10-07 et 08)
 
@@ -64,6 +70,7 @@ téléchargées vont dans `SIG/brut/` (ignoré par Git, refait par les scripts).
 | Communes | `node SIG/cadena/comunas.mjs` (appelle `comunas.py` ; `--sens-noms-osm` si Overpass est saturé) | `app/static/data/comunas/<dep>.json` et `index.json` ; à valider : `SIG/comunas/noms-a-validar.csv` |
 | Calandretas | `node SIG/cadena/calandretas.mjs` (annuaire de l'éducation) | `app/static/data/calandretas.geojson` ; manquantes : `SIG/calandretas/escolas-mancantas.md` |
 | Provinces de 1789 | `python-qgis.bat SIG/cadena/provincias.py` | `app/static/data/provincias-1789.json` ; table : `SIG/provincias/taula-bailliages.csv` |
+| Pays traditionnels (juridictions de 1789) | `python-qgis.bat SIG/cadena/paises.py` (se sert de `provincias.py` ; noms occitans pris dans sa propre table, `noms-oc-jaces.mjs` n'y touche pas) | `app/static/data/paises-1789.json` ; table : `SIG/paises/taula-paises.csv` ; sources et doutes : `SIG/paises/FONTS.md` |
 | Parcs | `node SIG/cadena/parcs.mjs` (appelle `parcs.py`) | `app/static/data/parcs.json` |
 | Massifs et sommets | `node SIG/cadena/releu-noms.mjs` | `app/static/data/releu-noms.json` |
 | Noms occitans (provinces, parcs) | `node SIG/cadena/noms-oc-jaces.mjs`, à relancer après une correction des tables `SIG/provincias/noms-oc.csv` et `SIG/natura/noms-parcs-oc.csv` | les deux fichiers ci-dessus |

@@ -1,0 +1,485 @@
+{
+  "descripcion": "Dialectes du catalan pour la carte de Lo Ligam. Les codes (kod) sont ceux de la colonne dialecte de dialectes-catalan.csv. Coordonnées [lon, lat] des centres-villes (Wikidata, sauf celles marquées aproximativa).",
+  "a_validar": "Tous les noms occitans (champ oc, y compris dans subdialectes) sont des propositions de Claude, à valider par Romain (dicodòc, Lo Congrès).",
+  "paleta_occitana_d_evitar": {
+    "gas": "#9d7dff",
+    "lan": "#ff3f86",
+    "pro": "#ffb0dc",
+    "lem": "#ffa22e",
+    "auv": "#e8482a",
+    "viv": "#ffe27a"
+  },
+  "principi_de_colors": "Bloc oriental en bleus, bloc occidental en verts : tons froids, loin de la palette occitane chaude. Suggestions à essayer sur la carte.",
+  "dialectes": [
+    {
+      "kod": "rossellones",
+      "ca": "català septentrional (rossellonès)",
+      "fr": "catalan septentrional (roussillonnais)",
+      "oc": "catalan septentrional (rossellonés)",
+      "oc_a_validar": true,
+      "bloc": "oriental",
+      "color": "#5ab0ff",
+      "territori": "Catalogne du Nord : Roussillon, Vallespir, Conflent, Capcir (sans le Fenouillèdes, occitan, ni la Haute-Cerdagne, rangée en central avec toute la Cerdagne depuis le 2026-10-08).",
+      "capitales": [
+        {
+          "ca": "Perpinyà",
+          "fr": "Perpignan",
+          "lon": 2.8947,
+          "lat": 42.6975
+        },
+        {
+          "ca": "Prada",
+          "fr": "Prades",
+          "lon": 2.4219,
+          "lat": 42.6172
+        }
+      ],
+      "subdialectes": [
+        {
+          "kod": "rossellones",
+          "ca": "rossellonès",
+          "fr": "roussillonnais",
+          "oc": "rossellonés",
+          "capitala": {
+            "ca": "Perpinyà",
+            "fr": "Perpignan",
+            "lon": 2.8947,
+            "lat": 42.6975
+          }
+        },
+        {
+          "kod": "capcines",
+          "ca": "capcinès",
+          "fr": "capcinois",
+          "oc": "capcinés",
+          "capitala": {
+            "ca": "Formiguera",
+            "fr": "Formiguères",
+            "lon": 2.1017,
+            "lat": 42.6144
+          }
+        }
+      ]
+    },
+    {
+      "kod": "central",
+      "ca": "català central",
+      "fr": "catalan central",
+      "oc": "catalan central",
+      "oc_a_validar": true,
+      "bloc": "oriental",
+      "color": "#2f5fd0",
+      "territori": "Catalogne orientale : provinces de Barcelone et de Gérone, Camp de Tarragona. Inclut le septentrional de transition (Alt Empordà, Garrotxa, Ripollès, Cerdanya), rangé dans le central par les dernières éditions de Veny. Depuis le 2026-10-08 (décision de Romain), toute la Cerdagne : Alta Cerdanya française, Baixa Cerdanya et Llívia (même parler des deux côtés de la frontière).",
+      "capitales": [
+        {
+          "ca": "Barcelona",
+          "fr": "Barcelone",
+          "lon": 2.1769,
+          "lat": 41.3825
+        },
+        {
+          "ca": "Girona",
+          "fr": "Gérone",
+          "lon": 2.8167,
+          "lat": 41.9833
+        }
+      ],
+      "subdialectes": [
+        {
+          "kod": "barceloni",
+          "ca": "barceloní",
+          "fr": "barcelonais",
+          "oc": "barcelonés",
+          "capitala": {
+            "ca": "Barcelona",
+            "fr": "Barcelone",
+            "lon": 2.1769,
+            "lat": 41.3825
+          }
+        },
+        {
+          "kod": "tarragoni",
+          "ca": "tarragoní",
+          "fr": "tarragonais",
+          "oc": "tarragonés",
+          "capitala": {
+            "ca": "Tarragona",
+            "fr": "Tarragone",
+            "lon": 1.2528,
+            "lat": 41.1175
+          }
+        },
+        {
+          "kod": "xipella",
+          "ca": "xipella (de transició)",
+          "fr": "xipella (de transition)",
+          "oc": "xipella (de transicion)",
+          "capitala": {
+            "ca": "Montblanc",
+            "fr": "Montblanc",
+            "lon": 1.1639,
+            "lat": 41.3764
+          }
+        },
+        {
+          "kod": "salat",
+          "ca": "parlar salat (Costa Brava)",
+          "fr": "parler « salat » (Costa Brava)",
+          "oc": "parlar « salat »",
+          "capitala": {
+            "ca": "Palafrugell",
+            "fr": "Palafrugell",
+            "lon": 3.163,
+            "lat": 41.9182
+          }
+        },
+        {
+          "kod": "septentrional_transicio",
+          "ca": "septentrional de transició",
+          "fr": "septentrional de transition",
+          "oc": "septentrional de transicion",
+          "capitala": {
+            "ca": "Olot",
+            "fr": "Olot",
+            "lon": 2.489,
+            "lat": 42.1822
+          }
+        },
+        {
+          "kod": "cerda",
+          "ca": "cerdà (de transició)",
+          "fr": "cerdan (de transition)",
+          "oc": "cerdan (de transicion)",
+          "capitala": {
+            "ca": "Puigcerdà",
+            "fr": "Puigcerda",
+            "lon": 1.9283,
+            "lat": 42.4317
+          },
+          "nota": "Rangé dans le septentrional de transition (central) depuis le 2026-10-08 : toute la Cerdagne, des deux côtés de la frontière, et Llívia (décision de Romain)."
+        }
+      ]
+    },
+    {
+      "kod": "balear",
+      "ca": "balear",
+      "fr": "baléare",
+      "oc": "balear",
+      "oc_a_validar": true,
+      "bloc": "oriental",
+      "color": "#36c5d0",
+      "territori": "Îles Baléares : Majorque, Minorque, Ibiza, Formentera (et Cabrera, inhabitée).",
+      "capitales": [
+        {
+          "ca": "Palma",
+          "fr": "Palma",
+          "lon": 2.6497,
+          "lat": 39.5667
+        },
+        {
+          "ca": "Maó",
+          "fr": "Mahón",
+          "lon": 4.2642,
+          "lat": 39.8894
+        }
+      ],
+      "subdialectes": [
+        {
+          "kod": "mallorqui",
+          "ca": "mallorquí",
+          "fr": "majorquin",
+          "oc": "mallorquin",
+          "capitala": {
+            "ca": "Palma",
+            "fr": "Palma",
+            "lon": 2.6497,
+            "lat": 39.5667
+          }
+        },
+        {
+          "kod": "menorqui",
+          "ca": "menorquí",
+          "fr": "minorquin",
+          "oc": "menorquin",
+          "capitala": {
+            "ca": "Maó",
+            "fr": "Mahón",
+            "lon": 4.2642,
+            "lat": 39.8894
+          },
+          "autra_vila": {
+            "ca": "Ciutadella",
+            "fr": "Ciutadella",
+            "lon": 3.8364,
+            "lat": 40.0014
+          }
+        },
+        {
+          "kod": "eivissenc",
+          "ca": "eivissenc (i formenterer)",
+          "fr": "ibicenc (et formenterais)",
+          "oc": "eivissenc",
+          "capitala": {
+            "ca": "Eivissa",
+            "fr": "Ibiza",
+            "lon": 1.4329,
+            "lat": 38.9089,
+            "aproximativa": true
+          }
+        }
+      ]
+    },
+    {
+      "kod": "algueres",
+      "ca": "alguerès",
+      "fr": "alguérois",
+      "oc": "alguerés",
+      "oc_a_validar": true,
+      "bloc": "oriental",
+      "color": "#b9e4c9",
+      "territori": "La seule ville d'Alghero (Sardaigne). Classement discuté : souvent rangé dans le bloc oriental, mais parler mixte (central, valencien, roussillonnais, baléare).",
+      "capitales": [
+        {
+          "ca": "l'Alguer",
+          "fr": "Alghero",
+          "lon": 8.315,
+          "lat": 40.56
+        }
+      ],
+      "subdialectes": []
+    },
+    {
+      "kod": "nordoccidental",
+      "ca": "català nord-occidental",
+      "fr": "catalan nord-occidental",
+      "oc": "catalan nòrd-occidental",
+      "oc_a_validar": true,
+      "bloc": "occidental",
+      "color": "#3faa4f",
+      "territori": "Ponent (province de Lleida sauf Aran), Andorre, Franja de Ponent (Ribagorce, Llitera, Baix Cinca), Priorat.",
+      "capitales": [
+        {
+          "ca": "Lleida",
+          "fr": "Lérida",
+          "lon": 0.6333,
+          "lat": 41.6167
+        },
+        {
+          "ca": "Andorra la Vella",
+          "fr": "Andorre-la-Vieille",
+          "lon": 1.5222,
+          "lat": 42.5072
+        }
+      ],
+      "subdialectes": [
+        {
+          "kod": "lleidata",
+          "ca": "lleidatà",
+          "fr": "léridan",
+          "oc": "lheidatan",
+          "capitala": {
+            "ca": "Lleida",
+            "fr": "Lérida",
+            "lon": 0.6333,
+            "lat": 41.6167
+          }
+        },
+        {
+          "kod": "pallares",
+          "ca": "pallarès",
+          "fr": "pallarais",
+          "oc": "pallarés",
+          "capitala": {
+            "ca": "Sort",
+            "fr": "Sort",
+            "lon": 1.1287,
+            "lat": 42.4101
+          },
+          "autra_vila": {
+            "ca": "Tremp",
+            "fr": "Tremp",
+            "lon": 0.8946,
+            "lat": 42.1667
+          }
+        },
+        {
+          "kod": "ribagorca",
+          "ca": "ribagorçà",
+          "fr": "ribagorçan",
+          "oc": "ribagorçan",
+          "capitala": {
+            "ca": "el Pont de Suert",
+            "fr": "El Pont de Suert",
+            "lon": 0.7417,
+            "lat": 42.4082
+          },
+          "autra_vila": {
+            "ca": "Benavarri",
+            "fr": "Benabarre",
+            "lon": 0.4833,
+            "lat": 42.1167
+          }
+        },
+        {
+          "kod": "solsoni",
+          "ca": "solsoní (de transició)",
+          "fr": "solsonais (de transition)",
+          "oc": "solsonin (de transicion)",
+          "capitala": {
+            "ca": "Solsona",
+            "fr": "Solsona",
+            "lon": 1.5178,
+            "lat": 41.9944
+          }
+        }
+      ]
+    },
+    {
+      "kod": "tortosi",
+      "ca": "tortosí",
+      "fr": "tortosin",
+      "oc": "tortosin",
+      "oc_a_validar": true,
+      "bloc": "occidental",
+      "transicio": "entre le nord-occidental et le valencien",
+      "color": "#a3c93a",
+      "territori": "Terres de l'Ebre (Baix Ebre, Montsià, Terra Alta, Ribera d'Ebre), Matarranya et Bas-Aragon catalanophone, Ports et Maestrat (valencien de transition).",
+      "capitales": [
+        {
+          "ca": "Tortosa",
+          "fr": "Tortosa",
+          "lon": 0.5211,
+          "lat": 40.8125
+        },
+        {
+          "ca": "Vinaròs",
+          "fr": "Vinaròs",
+          "lon": 0.4754,
+          "lat": 40.4704
+        }
+      ],
+      "subdialectes": [
+        {
+          "kod": "tortosi",
+          "ca": "tortosí (Catalunya i Aragó)",
+          "fr": "tortosin (Catalogne et Aragon)",
+          "oc": "tortosin",
+          "capitala": {
+            "ca": "Tortosa",
+            "fr": "Tortosa",
+            "lon": 0.5211,
+            "lat": 40.8125
+          }
+        },
+        {
+          "kod": "valencia_transicio",
+          "ca": "valencià de transició",
+          "fr": "valencien de transition",
+          "oc": "valencian de transicion",
+          "capitala": {
+            "ca": "Morella",
+            "fr": "Morella",
+            "lon": -0.1006,
+            "lat": 40.6192
+          },
+          "autra_vila": {
+            "ca": "Vinaròs",
+            "fr": "Vinaròs",
+            "lon": 0.4754,
+            "lat": 40.4704
+          }
+        }
+      ]
+    },
+    {
+      "kod": "valencia",
+      "ca": "valencià",
+      "fr": "valencien",
+      "oc": "valencian",
+      "oc_a_validar": true,
+      "bloc": "occidental",
+      "color": "#1f9e89",
+      "territori": "Pays valencien (communes de prédominance valencienne, loi 4/1983 art. 35) sauf Ports et Maestrat (tortosin), plus el Carxe (Murcie).",
+      "capitales": [
+        {
+          "ca": "València",
+          "fr": "Valence",
+          "lon": -0.3764,
+          "lat": 39.47
+        },
+        {
+          "ca": "Alacant",
+          "fr": "Alicante",
+          "lon": -0.4831,
+          "lat": 38.3453
+        }
+      ],
+      "subdialectes": [
+        {
+          "kod": "castellonenc",
+          "ca": "valencià septentrional (castellonenc)",
+          "fr": "valencien septentrional (castellonnais)",
+          "oc": "valencian septentrional (castelhonenc)",
+          "capitala": {
+            "ca": "Castelló de la Plana",
+            "fr": "Castellón de la Plana",
+            "lon": -0.0374,
+            "lat": 39.986
+          }
+        },
+        {
+          "kod": "apitxat",
+          "ca": "valencià central (apitxat)",
+          "fr": "valencien central (apitxat)",
+          "oc": "valencian central (apichat)",
+          "capitala": {
+            "ca": "València",
+            "fr": "Valence",
+            "lon": -0.3764,
+            "lat": 39.47
+          }
+        },
+        {
+          "kod": "meridional",
+          "ca": "valencià meridional",
+          "fr": "valencien méridional",
+          "oc": "valencian meridional",
+          "capitala": {
+            "ca": "Gandia",
+            "fr": "Gandia",
+            "lon": -0.1822,
+            "lat": 38.9667
+          },
+          "autra_vila": {
+            "ca": "Xàtiva",
+            "fr": "Xàtiva",
+            "lon": -0.5192,
+            "lat": 38.9887
+          }
+        },
+        {
+          "kod": "alacanti",
+          "ca": "valencià alacantí",
+          "fr": "valencien alicantin",
+          "oc": "valencian alacantin",
+          "capitala": {
+            "ca": "Alacant",
+            "fr": "Alicante",
+            "lon": -0.4831,
+            "lat": 38.3453
+          },
+          "autra_vila": {
+            "ca": "Elx",
+            "fr": "Elche",
+            "lon": -0.6983,
+            "lat": 38.2669
+          }
+        }
+      ]
+    }
+  ],
+  "exclos": {
+    "kod": "exclos",
+    "descripcion": "Lignes du CSV à exclure du domaine catalan : Aran (occitan), Fenouillèdes (occitan), communes valenciennes de prédominance castillane (loi 4/1983 art. 36), Graus, Capella et la Foradada del Toscar (seuls quelques hameaux catalanophones)."
+  }
+}

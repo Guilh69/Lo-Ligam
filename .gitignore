@@ -5,3 +5,5 @@
 # Données SIG brutes téléchargées (IGN, OSM, Dataverse…) : refaisables par les
 # scripts de SIG/cadena, trop lourdes pour le dépôt.
 /SIG/brut/
+# Carte de l'Atlas sonore (LIMSI/LISN, CC BY-NC-SA) : contrôle seulement, pas republiée
+/SIG/Limsi/
