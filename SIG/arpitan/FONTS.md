@@ -46,19 +46,22 @@ Pour la carte des dialectes que Romain avait trouvée (`Arpitan_et_ses_dialectes
 - **Piémont**, comme pour les vallées occitanes : les communes déclarées des vallées, plus 6 communes non déclarées de la basse vallée de Suse (Bussoleno, Bruzolo, San Didero, Borgone Susa, Caprie, Chiusa di San Michele) ; Avigliana et Giaveno, déclarées mais au débouché des vallées et hors de la carte arpitania.eu, sont **hachurées** (parler à vérifier, piémontais ?) ; Castagnole Piemonte, déclarée mais en plaine, est **exclue** (comme Barge pour l'occitan).
 - **Contact avec l'occitan** : l'arpitan prend aussi, jusqu'à la ligne occitane, les morceaux hors du domaine occitan des communes occitanes voisines (45 km²) : ni chevauchement ni vide dans les communes connues.
 - **Lacs** : le Léman est un trou du domaine (pas de frontière dessinée sur ses rives).
+- **Frontière avec l'occitan, deuxième version** (retour de Romain, 2026-10-09 : « des trous identifiés ») : le domaine occitan suit désormais les communes au contact de l'arpitan (`SIG/cadena/raccord-arpitan.py`, comme le Fenouillèdes). Les communes occitanes voisines y entrent entières : les 79 de la bande hachurée, celles du Puy-de-Dôme (monts du Forez : Saint-Anthème, Arconsat, Le Brugeron…) et des Hautes-Alpes (La Grave, Névache) ; les communes arpitanes en sortent (165 km²). Vides restants entre les deux langues : 0,03 km².
+- **Montagne bourbonnaise** (Allier) : sources contradictoires (arpitan pour Wikipédia en français, occitan influencé par l'arpitan pour Wikipedia en anglais). Décision de Romain : bande de transition hachurée, comme l'Ardèche et la Drôme. Arfeuilles, La Chabanne, Châtel-Montagne, Ferrières-sur-Sichon, La Guillermie, Laprugne, Lavoine et Saint-Nicolas-des-Biefs entrent dans l'auvergnat et portent les hachures arpitanes. Le Bourbonnais d'oïl au nord (Lapalisse) reste hors des deux langues.
+- **Zone « Arpitania de France »** : domaine moins l'étranger, découpé sur la frontière des départements de la carte (`SIG/cadena/apart-frontiera.py`, aussi pour la Catalogne Nord).
 
 ## À valider par Romain
 
 1. Les noms arpitans des 3 groupes inventés (`brêssan-jurassien`, `romand`, `alpin`), de la zone à part (« Arpitania de France ») et des parlers des vallées du Piémont (`valadas`).
 2. Tous les noms occitans (`oc`) : lionés, bressan-jurassian, delfinenc, savoiard, romand, alpenc, faetar, arpitan de França, et ceux des transitions (Avilhana, Giavèn…).
-3. Les couleurs (violets et mauves), à essayer sur la carte.
+3. Les couleurs : langue unifiée en vert (choix de Romain, comme sur les cartes des langues de France ; le basque aura un vert plus foncé), dialectes en violets et mauves, à essayer.
 4. Le nom de la langue (révision des échelles, décision n° 8 : arpitan ou francoprovençal) : la carte dit « arpitan », le panneau « Arpitan (francoprovençal) ».
 
 ## Incertitudes et suites
 
 - **Licence** : le domaine en France est fait de communes IGN choisies d'après une carte CC BY-SA 3.0, et la Suisse et l'Italie viennent d'OSM (ODbL). Le crédit est affiché sur la carte. Comme pour Occitanica, Romain devra vérifier qu'on peut réutiliser ce classement (la compatibilité entre CC BY-SA et ODbL n'est pas garantie).
-- **Vides hors des communes connues** (169 km²) : dans les monts du Forez (Puy-de-Dôme, environ 120 km²) et au nord des Hautes-Alpes (Arves, Névache, 45 km²), le domaine occitan de la carte s'arrête quelques kilomètres avant la limite du département. Le remède cohérent serait de prolonger le domaine occitan jusqu'à cette limite (comme le Fenouillèdes pour le catalan) : c'est une retouche de la couche occitane, à décider.
+- **Vides hors des communes connues** : fermés le 2026-10-09 (voir « Frontière avec l'occitan, deuxième version »).
 - **Parlers rangés à grands traits** : tout le Doubs en burgondan et tout le Jura en jurassien ; le nord de l'Ardèche (Annonay) et de la Haute-Loire en forésien (bande hachurée seulement) ; Gex en genevês.
 - **Enclave du Mâconnais en Bresse** : 49 km² de communes à l'est de la Saône relevant du bailliage de Mâcon (vers Cuisery) forment un morceau détaché du lyonnais (mâconês). C'est historique, à confirmer.
-- **Non traités** : sud-est de l'Allier (quelques communes arpitanes selon Wikipédia, la carte arpitania.eu les effleure à peine) ; La Neuveville (canton de Berne) ; Valchiusella et haut Canavese.
+- **Non traités** : La Neuveville (canton de Berne) ; Valchiusella et haut Canavese.
 - **Limite nord** (oïl) : elle ne repose que sur la carte arpitania.eu ; 83 communes de bordure (moins de 50 % dedans) sont listées comme exclues, avec leur part, pour une relecture.

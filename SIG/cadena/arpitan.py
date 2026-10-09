@@ -160,6 +160,22 @@ for fic, codi in FICS:
         else:
             geo[c] = g
 
+# las comunas francesas del classament que son pas dins los fichièrs bruts
+# (Montanha borbonesa, Alèir) : presas dins lo GeoPackage de l'IGN
+mancan = [r['codi'] for r in linhas_csv if r['regio'] == 'France' and r['domeni'] in ('arpitan', 'occitan') and r['codi'] not in geo]
+if mancan:
+    l93 = osr.SpatialReference()
+    l93.ImportFromEPSG(2154)
+    l93.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
+    l93_laea = osr.CoordinateTransformation(l93, laea)
+    gp = ogr.Open(os.path.join(SIG, 'brut', 'comunas', 'ADE-COG-CARTO_2026.gpkg'))
+    cm = gp.GetLayerByName('commune')
+    cm.SetAttributeFilter('code_insee IN (%s)' % ','.join("'%s'" % c for c in mancan))
+    for f in cm:
+        g = f.GetGeometryRef().Clone()
+        g.Transform(l93_laea)
+        geo[f.GetField('code_insee')] = valid(g)
+
 unitats = []  # {codi, nom, dial, clau, g}
 sens_geo = []
 for r in linhas_csv:
@@ -217,7 +233,8 @@ resta = valid(unir(contacte).Difference(oc_local).Difference(pres))
 # qualques km abans lo despartament) son signalats, pas preses per l'arpitan
 comunas_tot = unir([g for g in geo.values() if g.Intersects(pròche)])
 tot = unir([pres, oc_local])
-fendas_oc = valid(valid(tot.Buffer(B, 8).Buffer(-B, 8)).Difference(tot))
+B_OC = 400.0  # m : la linha occitana es simplificada a 300 m (raccord-arpitan.py) : de fendas fins a 800 m
+fendas_oc = valid(valid(tot.Buffer(B_OC, 8).Buffer(-B_OC, 8)).Difference(tot))
 resta = unir([resta, fendas_oc])
 apond = defaultdict(list)
 daissats = []
@@ -372,10 +389,26 @@ FIN = {d: unir([f for f, d2 in fac_d if d2 == d]) for d in CLAUS}
 
 def fmt(pts):
     """Ponches [lon, lat] : los de la frontièra occitana tal quals (coma dins
-    limits-carta.json), los autres a 4 decimalas, sens doblons (geojson_ll
-    repara las geometrias que l'arredondiment rend invalidas)."""
+    limits-carta.json), los autres a 4 decimalas, sens doblons. Los ponches
+    alinhats amb lors vesins (a mens de 0,5 m de la drecha), coma los
+    crosaments de las limitas comunalas amb la linha occitana, son levats
+    abans l'arredondiment : la forma cambia pas (geojson_ll repara las
+    geometrias que l'arredondiment rend invalidas)."""
+    def alinhat(a, b, c):
+        kx = 111320 * math.cos(math.radians(b[1]))
+        ax, ay, cx, cy = (b[0] - a[0]) * kx, (b[1] - a[1]) * 110570, (c[0] - a[0]) * kx, (c[1] - a[1]) * 110570
+        L = math.hypot(cx, cy)
+        if L == 0:
+            return True
+        t = (ax * cx + ay * cy) / (L * L)
+        return 0 <= t <= 1 and abs(ax * cy - ay * cx) / L < 0.5
+    gard = []
+    for i, p in enumerate(pts):
+        if gard and 0 < i < len(pts) - 1 and p not in VÈRT_OC and alinhat(gard[-1], p, pts[i + 1]):
+            continue
+        gard.append(p)
     out = []
-    for x, y in pts:
+    for x, y in gard:
         q = [x, y] if (x, y) in VÈRT_OC else [round(x, 4), round(y, 4)]
         if not out or q != out[-1]:
             out.append(q)
@@ -447,6 +480,29 @@ pres_ll = ogr.Geometry(ogr.wkbMultiPolygon)
 for k in CLAUS:  # (sens recobriment entre claus aprèp lo tampatge)
     CLAU_LL[k] = valid(CLAU_LL[k].Difference(pres_ll))
     pres_ll = unir([pres_ll, CLAU_LL[k]])
+# Netejatge del bòrd occitan : los comblaments daissan de pichons zigzags al
+# ras de la linha occitana. Cada clau es espandida de ESPAND (sonque dins una
+# benda de ESPAND a l'entorn de la linha occitana), puèi lo domeni occitan e
+# las claus ja passadas ne son levats : los zigzags passan darrièr la linha,
+# e lo bòrd seguís exactament sos sommets.
+ESPAND = 0.0007  # gra (environ 55 m en longitud, 78 m en latitud)
+benda_oc = valid(oc_ll.Buffer(ESPAND, 2)).Difference(oc_ll)
+pres_ll = ogr.Geometry(ogr.wkbMultiPolygon)
+a_e = 0.0
+for k in CLAUS:
+    abans_k = km2(en_m(CLAU_LL[k]))
+    g = unir([CLAU_LL[k], valid(CLAU_LL[k].Buffer(ESPAND, 1).Intersection(benda_oc))])
+    CLAU_LL[k] = valid(g.Difference(oc_ll).Difference(pres_ll))
+    a_e += km2(en_m(CLAU_LL[k])) - abans_k
+    pres_ll = unir([pres_ll, CLAU_LL[k]])
+print('Netejatge del bòrd occitan : %.2f km2 apondut al ras de la linha' % a_e)
+# los illòts isolats de mens de 1 km2 (tròces de bocatge dins l'Alèir...) son levats
+illòts = [p.Clone() for p in tròces(unir(list(CLAU_LL.values()))) if km2(en_m(p)) < 1]
+if illòts:
+    ill = unir(illòts)
+    for k in CLAUS:
+        CLAU_LL[k] = valid(CLAU_LL[k].Difference(ill.Buffer(1e-6, 1)))
+    print('Illòts levats : %d (%.2f km2)' % (len(illòts), sum(km2(en_m(p)) for p in illòts)))
 DIAL_LL = {d: unir([CLAU_LL[k] for k in CLAUS if k.split('|')[0] == d]) for d in ORDRE}
 FR_LL = unir([CLAU_LL[k] for k in CLAUS if '|FR' in k])
 DINS_FR = [d for d in ORDRE if any(k.split('|')[0] == d and '|FR' in k for k in CLAUS)]
@@ -512,6 +568,7 @@ for p, k in [(p, k) for p in tròces(domeni_ll) for k in range(p.GetGeometryCoun
     if cur:
         linhas.append(fmt(cur))
 linhas = [l for l in linhas if len(l) > 1]
+anels_dom = [a for a in anels_dom if len(a) >= 4]
 
 # ------------------------------------------------- 5. etiquetas e escritura
 
@@ -598,7 +655,7 @@ rec = sum(km2(en_m(valid(G[a].Intersection(G[b])))) for i, a in enumerate(ORDRE)
 u_ll = unir([G[d] for d in ORDRE])
 rec_oc = km2(en_m(valid(u_ll.Intersection(oc_ll))))
 zona = valid(en_ll(oc_local.Buffer(3000, 4)).Intersection(en_ll(dom_brut.Buffer(3000, 4))))
-vuèg = valid(zona.Difference(oc_ll).Difference(u_ll).Intersection(en_ll(unir(contacte + [dom_brut]))))
+vuèg = valid(valid(valid(valid(zona).Difference(oc_ll)).Difference(u_ll)).Intersection(valid(en_ll(unir(contacte + [dom_brut])))))
 print('\nVerificacion : recobriments entre dialèctes %.4f km2 ; recobriment amb l\'occitan %.4f km2 ; vuèges amb l\'occitan (dins de comunas) %.3f km2 (%d de mai de 0,1 km2)' % (
     rec, rec_oc, km2(en_m(vuèg)), sum(1 for q in tròces(vuèg) if km2(en_m(q)) > 0.1)))
 for q in tròces(vuèg):

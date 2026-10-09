@@ -84,11 +84,15 @@ Après une nouvelle fabrication des provinces ou des parcs, relancer
 Sources, règles et points à valider : `SIG/arpitan/FONTS.md`. Dans l'ordre :
 
 1. `node SIG/cadena/arpitan-brut.mjs` : contours bruts (France IGN, Suisse et Italie OSM) dans `SIG/brut/arpitan/`.
+1 bis. `python-qgis.bat -s -P SIG/cadena/raccord-arpitan.py` (une fois le classement fait, étape 4, puis relancer 2 à 6) : le domaine occitan au contact de l'arpitan suit les communes, comme le Fenouillèdes : les communes occitanes voisines (bande hachurée, Puy-de-Dôme, Hautes-Alpes, Montagne bourbonnaise) y entrent entières, les communes arpitanes en sortent (simplification 300 m). Réécrit `limits-carta.json` et `dialectes.geojson` ; à lancer sur les fichiers d'avant (`git checkout`), pas deux fois de suite.
 2. `node SIG/cadena/arpitan-carta.cjs` : calage de la carte arpitania.eu (`SIG/arpitan/gcp-arpitania.csv`), masque, part de chaque commune dans la carte et dans le domaine occitan (`SIG/brut/arpitan/parts-comunas.json`).
 3. `python-qgis.bat -s -P SIG/cadena/arpitan-bailliages.py` : bailliage de 1789 et arrondissement de chaque commune française.
 4. `node SIG/cadena/arpitan-classament.mjs` : domaine, dialecte et parler de chaque commune (`SIG/arpitan/dialectes-arpitan.csv`). La liste OFS (`ofs-regions-linguisticas.csv`) et celle de la loi 482 (`piemont-482.pdf`) sont dans `SIG/arpitan/` ; les communes piémontaises sont écrites dans le script.
 5. `python-qgis.bat -s -P SIG/cadena/arpitan.py` : `app/static/data/arpitan.json` (1 min 40).
 6. `node SIG/cadena/arpitan-app.mjs` : ajoute les villes.
+7. `python-qgis.bat -s -P SIG/cadena/apart-frontiera.py` : les zones à part (Catalunya Nord, Arpitania de France) suivent exactement la frontière nationale des départements de la carte. À relancer aussi après `catalan.py`.
+
+Principe (Romain, 2026-10-09) : ce n'est pas une science exacte. Entre deux données, on se cale sur la plus sûre (une limite bien délimitée : frontière d'État, communes) ; à précision égale, les géométries se recouvrent plutôt que de laisser un vide ; de près, la carte montre le mélange (fondu, hachures), pas une coupure.
 
 Après une retouche du domaine occitan (`limits-carta.json`), relancer à partir de l'étape 2.
 

@@ -121,6 +121,13 @@ for (const r of parts) {
 	}
 	if (r.src === 'polha-comunas') L({ regio: 'Italie', unitat: 'Pouilles', mena: 'comuna_it', nom_oficial: r.nom, codi: 'istat:' + r.id, ...base, domeni: 'arpitan', dialecte: 'faetar', parlar: 'faétâre', transicio: '', nota: 'Îlot arpitan des Pouilles (loi 482).', font: 'L482 VQ' });
 }
+// Montanha borbonesa (Alèir) : las fonts se contradison (comunas arpitanas
+// per la Wikipèdia francesa, occitan influenciat per l'arpitan per l'anglesa) ;
+// decision de Romain (2026-10-09) : benda de transicion, coma Ardècha e Dròma
+// (domeni occitan, asclas). Comunas que tòcan l'arpitan, levat lo Borbonés d'oïl al nòrd.
+const MONTANHA = { '03006': 'Arfeuilles', '03050': 'La Chabanne', '03066': 'Châtel-Montagne', '03113': 'Ferrières-sur-Sichon', '03125': 'La Guillermie', '03139': 'Laprugne', '03141': 'Lavoine', '03248': 'Saint-Nicolas-des-Biefs' };
+for (const [codi, nom] of Object.entries(MONTANHA))
+	L({ regio: 'France', unitat: 'Allier', mena: 'comuna_fr', nom_oficial: nom, codi, part_carta: '', part_oc: '', domeni: 'occitan', dialecte: 'lyonnais', parlar: 'rouanês', transicio: 'oc', nota: "Montagne bourbonnaise : arpitan pour Wikipédia (fr), occitan influencé par l'arpitan pour Wikipedia (en) ; dans le domaine occitan, hachurée (décision de Romain, 2026-10-09).", font: 'VQ OCC' });
 for (const n of PLANA) L({ regio: 'Italie', unitat: 'Piémont', mena: 'comuna_it', nom_oficial: n, codi: '', part_carta: '', part_oc: '', domeni: 'exclos', dialecte: '', parlar: '', transicio: '', nota: 'Déclarée arpitane (loi 482) mais en plaine, loin des vallées : laissée de côté, comme Barge pour l’occitan.', font: 'L482' });
 const manca = [...DECLARADAS, ...VALADA_NON_DECLARADAS].filter((n) => !vistas.has(n) && !PLANA.includes(n));
 if (manca.length) console.log('comunas piemontesas sens contorn :', manca);
