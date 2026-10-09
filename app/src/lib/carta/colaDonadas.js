@@ -557,7 +557,7 @@ export function crearColaDonadas(
 			if (!k) return null;
 			if (k.startsWith('mix-') || k.startsWith('ist-') || k.startsWith('enc-')) {
 				const m = this._mix?.features.find((x) => x.properties.kod === k)?.properties;
-				return m ? { kod: k, oc: m.oc, fr: m.fr, sota_oc: m.sota_oc, sota_fr: m.sota_fr, mix: true } : null;
+				return m ? { kod: k, oc: m.oc, fr: m.fr, sota_oc: m.sota_oc, sota_fr: m.sota_fr, encadrat: m.encadrat, mix: true } : null;
 			}
 			const f = (k === 'cro' ? this._creissent : this._dial)?.features.find((x) => x.properties.kod === k);
 			return f ? { kod: k, oc: f.properties.oc, fr: f.properties.fr, cro: k === 'cro' } : null;
@@ -847,6 +847,45 @@ export function crearColaDonadas(
 			g.fillStyle = g.createPattern(motiu, 'repeat');
 			g.fillRect(0, 0, c.width, c.height);
 			g.globalCompositeOperation = 'source-over';
+			// zònas de contacte amb una autra lenga (Baiona e lo basc) : de bendas
+			// largas de la color del dialècte (lo gascon), que s'entremesclan amb la
+			// tencha de l'autra lenga quand es alucada (retorn de Romain, 2026-10-09)
+			const mesc = this._jaces.dialectes ? G.mix.filter((zm) => zm.props.mescla && this._tem.dial[zm.props.mescla]) : [];
+			if (mesc.length) {
+				const t = (this._imgMixMescla ??= document.createElement('canvas'));
+				t.width = c.width;
+				t.height = c.height;
+				const tg = t.getContext('2d');
+				for (const zm of mesc) {
+					const p = document.createElement('canvas');
+					const pp = Math.round(8 * dpr);
+					p.width = p.height = pp;
+					const pg = p.getContext('2d');
+					pg.strokeStyle = this._tem.dial[zm.props.mescla];
+					pg.lineWidth = 2.8 * dpr;
+					pg.beginPath();
+					pg.moveTo(-1, pp + 1);
+					pg.lineTo(pp + 1, -1);
+					pg.moveTo(-1, 1);
+					pg.lineTo(1, -1);
+					pg.moveTo(pp - 1, pp + 1);
+					pg.lineTo(pp + 1, pp - 1);
+					pg.stroke();
+					tg.setTransform(1, 0, 0, 1, 0, 0);
+					tg.clearRect(0, 0, t.width, t.height);
+					tg.save();
+					tg.filter = `blur(${(clamp(1500 / G.mPx, 0.8, 20) * dpr).toFixed(1)}px)`;
+					tg.setTransform(dpr, 0, 0, dpr, 0, 0);
+					tg.fillStyle = '#000';
+					tg.fill(zm.c, 'evenodd');
+					tg.restore();
+					tg.globalCompositeOperation = 'source-in';
+					tg.fillStyle = tg.createPattern(p, 'repeat');
+					tg.fillRect(0, 0, t.width, t.height);
+					tg.globalCompositeOperation = 'source-over';
+					g.drawImage(t, 0, 0);
+				}
+			}
 			// enclavas d'una autra lenga (Pichona Gavachariá) : un ponchejat leugièr
 			const enc = G.mix.filter((zm) => zm.enclava);
 			if (enc.length) {

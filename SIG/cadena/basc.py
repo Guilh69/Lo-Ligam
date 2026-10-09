@@ -133,6 +133,7 @@ DIAL = {d['kod']: d for d in classa['dialectes']}
 ORDRE = [d['kod'] for d in classa['dialectes']]
 TRANSICIONS = {t['clau']: t for t in classa['transicions']}
 DOMS = ('basc', 'mixta', 'desaparegut')
+GROPE_OC = {c: t['clau'] for t in classa['transicions'] if 'comunas' in t for c in t['comunas']}
 per_codi = {r['codi']: r for r in linhas_csv if r['codi']}
 
 
@@ -183,8 +184,10 @@ for r0 in linhas_csv:
     k = r['dialecte'] + ('|FR' if r['regio'] == 'France' else '')
     if r['domeni'] == 'mixta':
         k += '|Tmixta'
-    elif r['transicio'] in ('es', 'oc'):
-        k += '|T' + r['transicio']
+    elif r['transicio'] == 'es':
+        k += '|Tes'
+    elif r['transicio'] == 'oc':
+        k += '|' + GROPE_OC[r['codi']]  # (tres zònas de contacte, cadun son tèxt)
     unitats.append({'codi': r['codi'], 'nom': r['nom_oficial'], 'dial': r['dialecte'], 'domeni': r['domeni'], 'clau': k, 'g': geo[r['codi']]})
 print('Unitats : %d (basc %d, mixta %d, desaparegut %d) ; sens contorn : %s' % (
     len(unitats), sum(u['domeni'] == 'basc' for u in unitats), sum(u['domeni'] == 'mixta' for u in unitats),
@@ -364,7 +367,12 @@ def vesins(f):
 
 traucs_gardats = []
 for f in traucs:
-    v = vesins(f) if f.GetArea() < 1.5e6 else None
+    # (retorn de Romain, 2026-10-09 : « pourquoi des trous sur des zones non
+    # habitées ? ») : tot trau enviroutat pel domeni pren la zòna de sos vesins,
+    # quina que siá sa talha : enclavas non vascofònas de la zòna mixta de Navarra
+    # (Guirguillano, Uterga, Úcar...), tèrras pas cobèrtas per las comunas d'OSM
+    # en Araba, enclava cantabra de Villaverde dins las Encartacions
+    v = vesins(f)
     if v:
         fac_d.append([f, max(v, key=v.get)])
     else:
@@ -656,7 +664,7 @@ for t, x in TRANSICIONS.items():
     if TRANS_LL[t].IsEmpty():
         continue
     feats.append({'type': 'Feature', 'properties': {'kod': x['kod'], 'transicio': True, 'eu': x['eu'], 'fr': x['fr'], 'oc': x['oc'], 'oc_a_validar': True,
-                  'entre': x['entre'], 'nota': x['nota'], 'eti': eti(en_m(TRANS_LL[t]))}, 'geometry': geojson_ll(TRANS_LL[t])})
+                  'entre': x['entre'], 'nota': x['nota'], **({'mescla': x['mescla']} if 'mescla' in x else {}), **({k: x[k] for k in ('encadrat', 'nota_oc') if k in x}), 'eti': eti(en_m(TRANS_LL[t]))}, 'geometry': geojson_ll(TRANS_LL[t])})
 sortida = {
     'type': 'FeatureCollection',
     'font': classa['font'],

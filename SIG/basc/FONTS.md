@@ -43,12 +43,12 @@ La carte de Zuazo n'est **pas** recopiée (pas de licence libre) : seul son clas
 
 ## Règles particulières
 
-- **Raccord avec l'occitan** (`raccord-basc.py`) : le domaine d'Occitanica passait trop à l'ouest dans le 64 (toute la Soule et l'Amikuze en gascon, Mauléon et Saint-Palais à 100 %). Le domaine occitan suit désormais les communes : les 159 communes basques en sortent (980 km²), les communes occitanes voisines y entrent entières (Saint-Martin-de-Seignanx, Saint-Laurent-de-Gosse…). Les 14 communes de tradition gasconne deviennent une **zone mixte** de la carte occitane (`zonas-mixtas.geojson`, « mix-baiona », hachures comme Roya ou Monaco) et portent aussi les hachures « tradition gasconne » dans le basque.
+- **Raccord avec l'occitan** (`raccord-basc.py`) : le domaine d'Occitanica passait trop à l'ouest dans le 64 (toute la Soule et l'Amikuze en gascon, Mauléon et Saint-Palais à 100 %). Le domaine occitan suit désormais les communes : les 159 communes basques en sortent (980 km²), les communes occitanes voisines y entrent entières (Saint-Martin-de-Seignanx, Saint-Laurent-de-Gosse…). Les 14 communes de tradition gasconne forment **trois zones de contact** (retours de Romain) : Bayonne-Anglet-Biarritz-Le Boucau ; Bidache et l'Adour (Came, Sames, Guiche, Arancou, Bergouey-Viellenave, Urt, La Bastide-Clairence) ; Esquiule et Lichos. Chacune a son **encadré** au survol, et des bandes de la couleur du gascon qui s'entremêlent au vert basque, sur la carte basque comme sur la carte occitane (zones mixtes, `basc-mixtas.py`), sans étiquette (le nom « Baiona » de la zone se superposait à la ville).
+- **Trous** : aucun. Tout trou entouré par le domaine prend la zone de ses voisins (retour de Romain : « pourquoi des trous sur des zones non habitées ? ») : les enclaves non bascophones de la zone mixte navarraise (Guirguillano, Uterga, Úcar…), des terres non couvertes par les communes d'OSM en Alava, l'enclave cantabre de Villaverde (hachurée avec les Encartaciones).
 - **Zone mixte de Navarre** : basque en hachures, dialecte haut-navarrais du sud (le basque y a reculé au XIXe siècle). Les 44 communes passées en zone mixte en 2017 (Tafalla, Olite, Sangüesa…) le sont par choix politique : la note le dit dans le CSV.
 - **Encartaciones** (ouest de la Biscaye) : basque officiel mais castillan depuis le Moyen Âge : hachurées.
 - **Basque éteint, plus pâle** : l'alavais (Alava sauf Aramaio et Legutio, où le basque ne s'est jamais perdu, et Treviño) et le navarrais oriental (Roncal, éteint en 1991 ; Salazar). Dessin : `colaLenga.js`, zones « istoric ».
 - **Terres communes** (facerías, Bardenas, Urbasa, Aralar…) : rangées avec la commune voisine qui a la plus longue limite commune.
-- **Trous gardés** : l'enclave cantabre de Villaverde et quelques communes navarraises non bascophones entourées par la zone mixte (vallée d'Elorz…).
 - **Villes** : de loin (rang 1), une grande ville tous les 35 km au moins (Bilbo, Gasteiz, Donostia, Iruña, Baiona) ; rang 2 tous les 18 km, avec les chefs-lieux historiques (Maule, Donibane-Garazi, Donapaleu, Uztaritze, Gernika) ; rang 3 tous les 8 km. Tolosa (Guipuscoa) au rang 3, pour ne pas croiser Toulouse.
 
 ## À valider par Romain
@@ -57,7 +57,8 @@ La carte de Zuazo n'est **pas** recopiée (pas de licence libre) : seul son clas
 2. Les noms basques des groupes : on a pris ceux de Zuazo (mendebalekoa, erdialdekoa…). Un relecteur bascophone serait utile, ainsi que pour Iruña (forme officielle) ou Iruñea (forme de l'Académie).
 3. Les couleurs : une famille de verts (du vert olive à l'aigue-marine), loin du violet gascon voisin.
 4. La liste des 14 communes de tradition gasconne, surtout **Urt** et **Lichos**, et l'absence de Montory et d'Osserain-Rivareyte (rangées en basque).
-5. La licence : communes OSM (ODbL) et IGN, classement d'après Zuazo (cité, pas recopié).
+5. Les trois encadrés (Bayonne, Bidache et l'Adour, Esquiule et Lichos), textes occitans vérifiés mot à mot sauf les noms propres (Ador, Bidosa, Bearn, Sola, Gramont) ; les noms des communes sont ceux de la table des communes de la carte.
+6. La licence : communes OSM (ODbL) et IGN, classement d'après Zuazo (cité, pas recopié).
 
 ## Incertitudes et suites
 

@@ -2,29 +2,302 @@
 	"font": "Basc : comunas IGN ADMIN EXPRESS COG CARTO 2026 (Licéncia dobèrta 2.0), comunas d'Espanha © contributors OpenStreetMap (ODbL), zònas de la lei navarresa 18/1986 (2017), dialèctes d'aprèp Koldo Zuazo (2008) e la Viquipèdia en basc",
 	"a_validar": "noms basques, franceses e occitans (oc) dels dialèctes e de las zònas, colors : propausas, de validar per Romain",
 	"dialectes": [
-		{ "kod": "mendebalekoa", "eu": "mendebaleko euskara", "eu_alt": "bizkaiera", "fr": "biscayen", "oc": "biscaïn", "color": "#3fae6a", "eti": [-2.66, 43.12],
-		  "parlars": [ { "kod": "sartaldekoa", "eu": "sartaldekoa", "fr": "occidental" }, { "kod": "tartekoa", "eu": "tartekoa", "fr": "intermédiaire" }, { "kod": "sortaldekoa", "eu": "sortaldekoa", "fr": "oriental" } ] },
-		{ "kod": "erdialdekoa", "eu": "erdialdeko euskara", "eu_alt": "gipuzkera", "fr": "guipuscoan", "oc": "gipuscoan", "color": "#8fd14f", "eti": [-2.13, 43.0],
-		  "parlars": [ { "kod": "goierrikoa", "eu": "Goierrikoa", "fr": "Goierri" }, { "kod": "urolaldekoa", "eu": "Urolaldekoa", "fr": "vallée de l'Urola" }, { "kod": "beterrikoa", "eu": "Beterrikoa", "fr": "Beterri (Saint-Sébastien)" }, { "kod": "tolosaldekoa", "eu": "Tolosaldekoa", "fr": "Tolosaldea" }, { "kod": "oiartzun_bidasoa", "eu": "Oiartzun eta Bidasokoa", "fr": "Oiartzun et Bidassoa" }, { "kod": "nafarroakoa", "eu": "Nafarroakoa", "fr": "de Navarre (Araitz, Larraun)" }, { "kod": "burunda", "eu": "Burundakoa", "fr": "Burunda" } ] },
-		{ "kod": "nafarra", "eu": "goi-nafarrera", "fr": "haut-navarrais", "oc": "naut navarrés", "color": "#c9d66b",
-		  "parlars": [ { "kod": "iparraldekoa", "eu": "iparraldekoa", "fr": "du nord" }, { "kod": "hegoaldekoa", "eu": "hegoaldekoa", "fr": "du sud" }, { "kod": "aezkera", "eu": "aezkera", "fr": "d'Aezkoa" } ] },
-		{ "kod": "nafar_lapurtera", "eu": "nafar-lapurtera", "fr": "navarro-labourdin", "oc": "navarrés-labordin", "color": "#2fb8a0",
-		  "parlars": [ { "kod": "sartaldekoa", "eu": "sartaldekoa", "fr": "labourdin de l'ouest" }, { "kod": "kostatarra", "eu": "kostatarra", "fr": "de la côte" }, { "kod": "erdigunekoa", "eu": "erdigunekoa", "fr": "du centre du Labourd" }, { "kod": "sortaldekoa", "eu": "sortaldekoa", "fr": "oriental (bas-navarrais)" }, { "kod": "amikuzekoa", "eu": "amikuzekoa", "fr": "de Mixe (Amikuze)" } ] },
-		{ "kod": "zuberera", "eu": "zuberera", "fr": "souletin", "oc": "soletin", "color": "#6fd6c6", "parlars": [] },
-		{ "kod": "ekialdeko_nafarra", "eu": "ekialdeko nafarrera", "fr": "navarrais oriental", "oc": "navarrés oriental", "color": "#9db8a0", "istoric": true,
-		  "sota_fr": "éteint : le roncalais en 1991, le salazarais peu après", "sota_oc": "escantit",
-		  "parlars": [ { "kod": "erronkariera", "eu": "erronkariera", "fr": "roncalais" }, { "kod": "zaraitzuera", "eu": "zaraitzuera", "fr": "salazarais" } ] },
-		{ "kod": "arabakoa", "eu": "Arabako euskara", "fr": "alavais", "oc": "alavés", "color": "#a8c49a", "istoric": true,
-		  "sota_fr": "basque disparu vers la fin du XVIIIe siècle", "sota_oc": "basc escantit",
-		  "parlars": [] }
+		{
+			"kod": "mendebalekoa",
+			"eu": "mendebaleko euskara",
+			"eu_alt": "bizkaiera",
+			"fr": "biscayen",
+			"oc": "biscaïn",
+			"color": "#3fae6a",
+			"eti": [
+				-2.66,
+				43.12
+			],
+			"parlars": [
+				{
+					"kod": "sartaldekoa",
+					"eu": "sartaldekoa",
+					"fr": "occidental"
+				},
+				{
+					"kod": "tartekoa",
+					"eu": "tartekoa",
+					"fr": "intermédiaire"
+				},
+				{
+					"kod": "sortaldekoa",
+					"eu": "sortaldekoa",
+					"fr": "oriental"
+				}
+			]
+		},
+		{
+			"kod": "erdialdekoa",
+			"eu": "erdialdeko euskara",
+			"eu_alt": "gipuzkera",
+			"fr": "guipuscoan",
+			"oc": "gipuscoan",
+			"color": "#8fd14f",
+			"eti": [
+				-2.13,
+				43
+			],
+			"parlars": [
+				{
+					"kod": "goierrikoa",
+					"eu": "Goierrikoa",
+					"fr": "Goierri"
+				},
+				{
+					"kod": "urolaldekoa",
+					"eu": "Urolaldekoa",
+					"fr": "vallée de l'Urola"
+				},
+				{
+					"kod": "beterrikoa",
+					"eu": "Beterrikoa",
+					"fr": "Beterri (Saint-Sébastien)"
+				},
+				{
+					"kod": "tolosaldekoa",
+					"eu": "Tolosaldekoa",
+					"fr": "Tolosaldea"
+				},
+				{
+					"kod": "oiartzun_bidasoa",
+					"eu": "Oiartzun eta Bidasokoa",
+					"fr": "Oiartzun et Bidassoa"
+				},
+				{
+					"kod": "nafarroakoa",
+					"eu": "Nafarroakoa",
+					"fr": "de Navarre (Araitz, Larraun)"
+				},
+				{
+					"kod": "burunda",
+					"eu": "Burundakoa",
+					"fr": "Burunda"
+				}
+			]
+		},
+		{
+			"kod": "nafarra",
+			"eu": "goi-nafarrera",
+			"fr": "haut-navarrais",
+			"oc": "naut navarrés",
+			"color": "#c9d66b",
+			"parlars": [
+				{
+					"kod": "iparraldekoa",
+					"eu": "iparraldekoa",
+					"fr": "du nord"
+				},
+				{
+					"kod": "hegoaldekoa",
+					"eu": "hegoaldekoa",
+					"fr": "du sud"
+				},
+				{
+					"kod": "aezkera",
+					"eu": "aezkera",
+					"fr": "d'Aezkoa"
+				}
+			]
+		},
+		{
+			"kod": "nafar_lapurtera",
+			"eu": "nafar-lapurtera",
+			"fr": "navarro-labourdin",
+			"oc": "navarrés-labordin",
+			"color": "#2fb8a0",
+			"parlars": [
+				{
+					"kod": "sartaldekoa",
+					"eu": "sartaldekoa",
+					"fr": "labourdin de l'ouest"
+				},
+				{
+					"kod": "kostatarra",
+					"eu": "kostatarra",
+					"fr": "de la côte"
+				},
+				{
+					"kod": "erdigunekoa",
+					"eu": "erdigunekoa",
+					"fr": "du centre du Labourd"
+				},
+				{
+					"kod": "sortaldekoa",
+					"eu": "sortaldekoa",
+					"fr": "oriental (bas-navarrais)"
+				},
+				{
+					"kod": "amikuzekoa",
+					"eu": "amikuzekoa",
+					"fr": "de Mixe (Amikuze)"
+				}
+			]
+		},
+		{
+			"kod": "zuberera",
+			"eu": "zuberera",
+			"fr": "souletin",
+			"oc": "soletin",
+			"color": "#6fd6c6",
+			"parlars": []
+		},
+		{
+			"kod": "ekialdeko_nafarra",
+			"eu": "ekialdeko nafarrera",
+			"fr": "navarrais oriental",
+			"oc": "navarrés oriental",
+			"color": "#9db8a0",
+			"istoric": true,
+			"sota_fr": "éteint : le roncalais en 1991, le salazarais peu après",
+			"sota_oc": "escantit",
+			"parlars": [
+				{
+					"kod": "erronkariera",
+					"eu": "erronkariera",
+					"fr": "roncalais"
+				},
+				{
+					"kod": "zaraitzuera",
+					"eu": "zaraitzuera",
+					"fr": "salazarais"
+				}
+			]
+		},
+		{
+			"kod": "arabakoa",
+			"eu": "Arabako euskara",
+			"fr": "alavais",
+			"oc": "alavés",
+			"color": "#a8c49a",
+			"istoric": true,
+			"sota_fr": "basque disparu vers la fin du XVIIIe siècle",
+			"sota_oc": "basc escantit",
+			"parlars": []
+		}
 	],
-	"apart": { "kod": "basc-franca", "eu": "Iparralde", "fr": "Pays basque nord", "oc": "País Basc del Nòrd" },
+	"apart": {
+		"kod": "basc-franca",
+		"eu": "Iparralde",
+		"fr": "Pays basque nord",
+		"oc": "País Basc del Nòrd"
+	},
 	"transicions": [
-		{ "clau": "Tmixta", "kod": "trans-mixta", "eu": "eremu mistoa", "fr": "zone mixte de Navarre", "oc": "zòna mixta de Navarra", "entre": ["nafarra", "castillan"],
-		  "nota": "zone mixte de la loi navarraise de 1986 (élargie en 2017) : basque traditionnel perdu au XIXe siècle, minorité bascophone aujourd'hui" },
-		{ "clau": "Tes", "kod": "trans-es", "eu": "Enkarterriak", "fr": "Encartaciones", "oc": "Encartacions", "entre": ["mendebalekoa", "castillan"],
-		  "nota": "basque langue officielle (Biscaye), mais castillan depuis le Moyen Âge" },
-		{ "clau": "Toc", "kod": "trans-oc", "eu": "gaskoi eragina", "fr": "tradition gasconne", "oc": "tradicion gascona", "entre": ["nafar_lapurtera", "occitan"],
-		  "nota": "Bayonne, Anglet, Biarritz, Boucau, pays de Bidache, Urt, La Bastide-Clairence, Lichos, Esquiule : basque aujourd'hui, de tradition gasconne" }
+		{
+			"clau": "Tmixta",
+			"kod": "trans-mixta",
+			"eu": "eremu mistoa",
+			"fr": "zone mixte de Navarre",
+			"oc": "zòna mixta de Navarra",
+			"entre": [
+				"nafarra",
+				"castillan"
+			],
+			"nota": "zone mixte de la loi navarraise de 1986 (élargie en 2017) : basque traditionnel perdu au XIXe siècle, minorité bascophone aujourd'hui",
+			"nota_oc": "zòna mixta de la lei navarresa : una minoritat parla basc"
+		},
+		{
+			"clau": "Tes",
+			"kod": "trans-es",
+			"eu": "Enkarterriak",
+			"fr": "Encartaciones",
+			"oc": "Encartacions",
+			"entre": [
+				"mendebalekoa",
+				"castillan"
+			],
+			"nota": "basque langue officielle (Biscaye), mais castillan depuis le Moyen Âge",
+			"nota_oc": "basc oficial, mas castelhan dempuèi l'Edat Mejana"
+		},
+		{
+			"clau": "Toc1",
+			"kod": "trans-oc-baiona",
+			"eu": "Baiona eta ingurua",
+			"fr": "Bayonne, Anglet, Biarritz",
+			"oc": "Baiona, Anglet, Biàrritz",
+			"comunas": [
+				"64102",
+				"64024",
+				"64122",
+				"64140"
+			],
+			"encadrat": {
+				"oc": "Baiona, Anglet, Biàrritz e lo Bocau : de vilas de tradicion gascona al còr del País Basc. Pendent de sègles, lo gascon i foguèt la lenga de la carrièra e dels actes ; lo basc i èra tanben parlat. Ara, lo basc se i transmet subretot per l'escòla. En 2018, l'aglomeracion del País Basc a reconegut lo gascon, al costat del basc.",
+				"fr": "Bayonne, Anglet, Biarritz et Le Boucau : des villes de tradition gasconne au cœur du Pays basque. Pendant des siècles, le gascon y a été la langue de la rue et des actes ; le basque y était aussi parlé. Aujourd'hui, le basque s'y transmet surtout par l'école. En 2018, l'agglomération Pays basque a reconnu officiellement le gascon, à côté du basque."
+			},
+			"entre": [
+				"nafar_lapurtera",
+				"occitan"
+			],
+			"nota": "basque aujourd'hui, de tradition gasconne",
+			"nota_oc": "basc ara, de tradicion gascona",
+			"mescla": {
+				"sorne": "#9d7dff",
+				"clar": "#6a45d0",
+				"dalt": "#0072b2"
+			}
+		},
+		{
+			"clau": "Toc2",
+			"kod": "trans-oc-bidaishe",
+			"eu": "Bidaxune eta Aturri ondoa",
+			"fr": "Pays de Bidache et bords de l'Adour",
+			"oc": "Bidaishe e l'Ador",
+			"comunas": [
+				"64123",
+				"64161",
+				"64502",
+				"64250",
+				"64031",
+				"64113",
+				"64546",
+				"64289"
+			],
+			"encadrat": {
+				"oc": "Bidaishe, Guishe, Samas, Urt e lors vesins, sus las ribas de l'Ador e de la Bidosa : de vilatges de tradicion gascona, al limit del basc. Abans la Revolucion, Bidaishe foguèt la capitala d'una pichona principautat, la dels Gramont. Aquelas comunas son dins l'aglomeracion del País Basc dempuèi sa creacion, en 2017.",
+				"fr": "Bidache, Came, Sames, Guiche, Urt et leurs voisins, au bord de l'Adour et de la Bidouze : des villages de tradition gasconne, à la limite du basque. Avant la Révolution, Bidache était la capitale d'une petite principauté, celle des Gramont. Ces communes font partie de l'agglomération Pays basque depuis sa création, en 2017."
+			},
+			"entre": [
+				"nafar_lapurtera",
+				"occitan"
+			],
+			"nota": "basque aujourd'hui, de tradition gasconne",
+			"nota_oc": "basc ara, de tradicion gascona",
+			"mescla": {
+				"sorne": "#9d7dff",
+				"clar": "#6a45d0",
+				"dalt": "#0072b2"
+			}
+		},
+		{
+			"clau": "Toc3",
+			"kod": "trans-oc-sola",
+			"eu": "Eskiula eta Lixoze",
+			"fr": "Esquiule et Lichos",
+			"oc": "Esquiula e Lishòs",
+			"comunas": [
+				"64217",
+				"64341"
+			],
+			"encadrat": {
+				"oc": "Esquiula e Lishòs, entre Sola e Bearn. Esquiula es un vilatge bearnés de lenga basca ; Lishòs, vilatge bearnés de lenga gascona, es dins l'aglomeracion del País Basc.",
+				"fr": "Esquiule et Lichos, entre la Soule et le Béarn. Esquiule est un village béarnais de langue basque ; Lichos, village béarnais de langue gasconne, fait partie de l'agglomération Pays basque."
+			},
+			"entre": [
+				"nafar_lapurtera",
+				"occitan"
+			],
+			"nota": "basque aujourd'hui, de tradition gasconne",
+			"nota_oc": "basc ara, de tradicion gascona",
+			"mescla": {
+				"sorne": "#9d7dff",
+				"clar": "#6a45d0",
+				"dalt": "#0072b2"
+			}
+		}
 	]
 }

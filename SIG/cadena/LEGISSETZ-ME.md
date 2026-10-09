@@ -109,7 +109,8 @@ Sources, règles et points à valider : `SIG/basc/FONTS.md`. Dans l'ordre :
 1. `node SIG/cadena/basc-brut.mjs` : communes du 64 (IGN) et d'Espagne (Euskadi, Navarre, Treviño : OSM) dans `SIG/brut/basc/`. Les listes sources (agglomération, loi navarraise, comarques) sont dans `SIG/basc/fonts/`.
 2. `python-qgis.bat -s -P SIG/cadena/basc-comunas-fr.py` : bailliage de 1789 et part occitane de chaque commune du 64.
 3. `node SIG/cadena/basc-classament.mjs` : domaine, dialecte et parler de chaque commune (`SIG/basc/dialectes-basc.csv`).
-4. `python-qgis.bat -s -P SIG/cadena/raccord-basc.py` (après `raccord-arpitan.py`, une seule fois, sur les fichiers d'avant) : le domaine occitan suit les communes au contact du basque ; ajoute la zone mixte « mix-baiona ». Réécrit `limits-carta.json`, `dialectes.geojson`, `zonas-mixtas.geojson`. Puis relancer `costa-ref.py`.
+4. `python-qgis.bat -s -P SIG/cadena/raccord-basc.py` (après `raccord-arpitan.py`, une seule fois, sur les fichiers d'avant) : le domaine occitan suit les communes au contact du basque. Réécrit `limits-carta.json` et `dialectes.geojson`. Puis relancer `costa-ref.py`.
+4 bis. `python-qgis.bat -s -P SIG/cadena/basc-mixtas.py` (se relance sans risque) : les trois zones mixtes occitanes de tradition gasconne (Bayonne, Bidache et l'Adour, Esquiule et Lichos), leurs encadrés au survol et leurs bandes de couleur gasconne, d'après `SIG/basc/dialectes-basc.json`.
 5. `python-qgis.bat -s -P SIG/cadena/basc.py` : `app/static/data/basc.json` (50 s).
 6. `node SIG/cadena/basc-vilas.mjs` puis `node SIG/cadena/basc-app.mjs` : les villes (rangs éclaircis) et la côte espagnole pour la carte en étoiles.
 7. `node SIG/cadena/lengas-vesinas.mjs` : contours de « Découvrir le basque ».

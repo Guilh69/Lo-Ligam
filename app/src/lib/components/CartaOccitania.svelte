@@ -1032,7 +1032,13 @@
 			lang,
 			jaces: jacesDonadas(visibility),
 			// un luòc o una vila a ficha jos lo det : lo clic es per las estelas
-			ocupat: (lp) => !!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) || !!colaTematica?.ocupat(lp, true) || zonaLengaA(lp),
+			// (una zòna mixta occitana, coma Baiona amb lo basc, garda lo survòl :
+			// es ela que conta lo contacte ; sens aquò las doas còlas se cedavan
+			// l'una a l'autra e res s'afichava)
+			ocupat: (lp) =>
+				!!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) ||
+				!!colaTematica?.ocupat(lp, true) ||
+				(zonaLengaA(lp) && !colaDonadas?.zonaA(lp)?.startsWith('mix-')),
 			// los noms de vilas : los noms de dialèctes los evitan
 			obstacles: () => (colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null),
 			onSurvòl: (k, info) => (survòl = info),
@@ -1593,7 +1599,7 @@
 
 	<!-- Lo dialècte survolat o causit : meteissa etiqueta que los territòris -->
 	{#if legendaDial}
-		<div class="legenda-dial" class:fixada={!!(causida ?? causidaLenga)} aria-live="polite">
+		<div class="legenda-dial" class:fixada={!!(causida ?? causidaLenga)} class:amb-encadrat={!!legendaDial.encadrat} aria-live="polite">
 			<span class="nom" lang={legendaDial.lang}>{lang === 'fr' ? legendaDial.fr : legendaDial.oc}</span>
 			<span class="sota"
 				>{legendaDial.mix
@@ -1608,6 +1614,10 @@
 						? 'dialecte'
 						: 'dialècte'}</span
 			>
+			<!-- un encadrat, per las zònas que demandan una explicacion (Baiona) -->
+			{#if legendaDial.encadrat}
+				<p class="encadrat" lang={lang === 'fr' ? 'fr' : 'oc'}>{lang === 'fr' ? legendaDial.encadrat.fr : legendaDial.encadrat.oc}</p>
+			{/if}
 		</div>
 	{/if}
 
@@ -1814,6 +1824,21 @@
 		font: 400 11px/1 var(--font-body);
 		letter-spacing: 0.5px;
 		color: var(--t-aur-clar);
+	}
+	.legenda-dial.amb-encadrat {
+		/* (una largor fixa : lo tèxt passa jos lo nom) */
+		width: min(27rem, calc(100% - 2rem));
+		border-radius: 12px;
+	}
+	.legenda-dial .encadrat {
+		flex-basis: 100%;
+		max-width: 26rem;
+		margin: 4px auto 2px;
+		padding-top: 7px;
+		border-top: 1px solid color-mix(in srgb, var(--t-tinta) 25%, transparent);
+		font: 400 12.5px/1.45 var(--font-body);
+		text-align: left;
+		white-space: normal;
 	}
 	@keyframes legenda-dial {
 		from {

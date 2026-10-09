@@ -55,6 +55,7 @@ export function crearColaLenga(
 			clar: c,
 			tencha: c ? 0.22 : 0.3,
 			ombra: c ? 'rgba(245, 234, 216, 0.95)' : 'rgba(18, 9, 6, 0.9)',
+			mòde: m,
 			color: lenga.color[m],
 			tèxt: lenga.tèxt[m],
 			dial
@@ -323,8 +324,10 @@ export function crearColaLenga(
 					oc: endo(p) ?? p.oc,
 					fr: endo(p) ?? p.fr,
 					lang: lenga.lang,
-					sota_oc: `${p.oc ? p.oc + ' · ' : ''}${p.nota ?? 'parlar de transicion'}`,
-					sota_fr: `${p.fr ? p.fr + ' · ' : ''}${p.nota_fr ?? 'parler de transition'}`,
+					// (la nòta es en francés : sonque dins l'interfàcia francesa)
+					sota_oc: `${p.oc ? p.oc + ' · ' : ''}${p.nota_oc ?? 'parlar de transicion'}`,
+					sota_fr: `${p.fr ? p.fr + ' · ' : ''}${p.nota_fr ?? p.nota ?? 'parler de transition'}`,
+					encadrat: p.encadrat,
 					mix: true
 				};
 			const sota = p.apart ? lenga.sotaApart : lenga.sota;
@@ -539,20 +542,53 @@ export function crearColaLenga(
 		// vistas a travèrs de lor zòna fonduda (bòrd flo d'environ 3 km, pas cap
 		// de contorn : es una transicion, pas una limita), coma lo Creissent
 		_prepTrans() {
-			const G = this._geo,
-				dpr = this._dpr;
+			const G = this._geo;
 			this._transGeo = G;
+			this._transPus = undefined;
 			if (!G?.trans?.length) return;
-			const c = (this._imgTrans ??= document.createElement('canvas'));
+			this._imgTrans ??= document.createElement('canvas');
+			this._pintarTrans(this._imgTrans, G.trans);
+		},
+		// la zòna de transicion survolada, sola (retorn de Romain, 2026-10-09 :
+		// lo survòl d'una zòna alucava tanben las autras)
+		_prepTransPus() {
+			const G = this._geo;
+			this._transPus = this._pus;
+			const zn = G?.trans?.find((x) => x.kod === this._pus);
+			if (!zn) return;
+			this._imgTransPus ??= document.createElement('canvas');
+			this._pintarTrans(this._imgTransPus, [zn]);
+		},
+		// Cada zòna a son motiu : d'asclas finas de la color de la lenga ; una
+		// zòna « mescla » (contacte basc-gascon : retorn de Romain, « que les
+		// couleurs du gascon et du basque s'entremêlent ») a de bendas largas de
+		// la color de l'autra lenga, que s'entremesclan amb la tencha de la lenga
+		_pintarTrans(c, zonas) {
+			const G = this._geo;
 			c.width = this._cv.width;
 			c.height = this._cv.height;
+			const g = c.getContext('2d');
+			g.setTransform(1, 0, 0, 1, 0, 0);
+			g.clearRect(0, 0, c.width, c.height);
+			const t = (this._imgTransZona ??= document.createElement('canvas'));
+			t.width = c.width;
+			t.height = c.height;
+			for (const zn of zonas) {
+				this._pintarTransZona(t, zn);
+				g.drawImage(t, 0, 0);
+			}
+		},
+		_pintarTransZona(c, zn) {
+			const G = this._geo,
+				dpr = this._dpr;
 			const g = c.getContext('2d');
 			const motiu = document.createElement('canvas');
 			const pas = Math.round(8 * dpr);
 			motiu.width = motiu.height = pas;
 			const m = motiu.getContext('2d');
-			m.strokeStyle = this._tem.clar ? this._tem.color : mesclar(this._tem.color, '#fff8ec', 0.25);
-			m.lineWidth = 1.3 * dpr;
+			const autra = zn.props.mescla?.[this._tem.mòde];
+			m.strokeStyle = autra ?? (this._tem.clar ? this._tem.color : mesclar(this._tem.color, '#fff8ec', 0.25));
+			m.lineWidth = (autra ? 2.8 : 1.3) * dpr;
 			m.beginPath();
 			m.moveTo(-1, pas + 1);
 			m.lineTo(pas + 1, -1);
@@ -567,11 +603,11 @@ export function crearColaLenga(
 			g.filter = `blur(${(clamp(3000 / G.mPx, 1.5, 30) * dpr).toFixed(1)}px)`;
 			g.setTransform(dpr, 0, 0, dpr, 0, 0);
 			g.fillStyle = '#000';
-			for (const zn of G.trans) g.fill(zn.c, 'evenodd');
+			g.fill(zn.c, 'evenodd');
 			g.restore();
 			// (pas defòra del domeni, levat las zònas « defora » : la benda de
 			// contacte de l'arpitan es dins lo domeni occitan, Romain 2026-10-09)
-			const defora = G.trans.filter((zn) => zn.props.defora);
+			const defora = zn.props.defora ? [zn] : [];
 			if (G.dom && defora.length) {
 				const m = (this._imgTransMasca ??= document.createElement('canvas'));
 				m.width = c.width;
@@ -719,8 +755,13 @@ export function crearColaLenga(
 				// los parlars de transicion, en asclas (mai marcadas al survòl)
 				if (G.trans.length && !sel) {
 					if (this._transGeo !== G) this._prepTrans();
-					const pusT = this._pus && G.trans.some((zn) => zn.kod === this._pus);
-					this._copiar(this._imgTrans, (pusT ? 0.95 : 0.6) * aTenchas0 * aDialU * Math.min(1, tA / APAR));
+					const aTr = aTenchas0 * aDialU * Math.min(1, tA / APAR);
+					this._copiar(this._imgTrans, 0.6 * aTr);
+					// (la zòna survolada sola, mai marcada)
+					if (this._pus && G.trans.some((zn) => zn.kod === this._pus)) {
+						if (this._transPus !== this._pus) this._prepTransPus();
+						this._copiar(this._imgTransPus, 0.35 * aTr);
+					}
 				}
 				// … e prenon la color de la lenga unida (la mescla sonque)
 				if (mescla) {

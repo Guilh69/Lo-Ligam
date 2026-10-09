@@ -8,11 +8,10 @@
 # Las comunas basquas : las de SIG/basc/dialectes-basc.csv (domeni « basc »,
 # França). Baiona, Anglet, Biàrritz e las autras comunas d'influéncia gascona
 # ne fan partida (decision de Romain : demòran dins lo basc) ; son marcadas del
-# costat occitan per una zòna mixta (zonas-mixtas.geojson, « mix-baiona »),
-# en asclas coma Ròia o Mónegue.
+# costat occitan per tres zònas mixtas (basc-mixtas.py), en asclas coma Ròia o Mónegue.
 #
 # Entradas : SIG/brut/comunas/ADE-COG-CARTO_2026.gpkg, SIG/basc/dialectes-basc.csv.
-# S'aplica APRÈP raccord-arpitan.py e ABANS basc.py ; puèi tornar lançar
+# S'aplica APRÈP raccord-arpitan.py e ABANS basc-mixtas.py e basc.py ; puèi tornar lançar
 # costa-ref.py (bòrd de mar). Sus los fichièrs d'abans (git checkout), pas dos
 # còps de seguida.
 #
@@ -246,26 +245,10 @@ for f in D['features']:
         print('  dialècte %s : %+.1f km2' % (k, km2(g) - a0))
     f['geometry'] = en_geojson(g)
 
-# --- zòna mixta : las comunas basquas d'influéncia gascona
-pM = os.path.join(DATA, 'zonas-mixtas.geojson')
-M = json.load(open(pM, encoding='utf8'))
-M['features'] = [f for f in M['features'] if f['properties'].get('kod') != 'mix-baiona']
-gasc = unir([geo[c][3] for c in GASC]).SimplifyPreserveTopology(120)
-gran = max(GASC, key=lambda c: geo[c][2])
-M['features'].append({'type': 'Feature', 'properties': {
-    'kod': 'mix-baiona', 'mena': 'mixta',
-    'oc': 'Gascon del País Basc', 'fr': 'Gascon du Pays basque',
-    'sota_oc': 'basc ara, de tradicion gascona', 'sota_fr': 'basque aujourd\'hui, de tradition gasconne',
-    'oc_a_validar': True,
-    'eti': eti(geo[gran][3]),
-    'etiqueta': {'oc': 'Baiona', 'fr': 'Bayonne'},
-}, 'geometry': en_geojson(gasc)})
-print('zòna mixta « mix-baiona » : %d comunas, %.0f km2' % (len(GASC), km2(gasc)))
-
 os.makedirs(SORTIDA, exist_ok=True)
 L['domeni']['anels'] = anels
 L['domeni']['linhas'] = linhas
-for nom, obj in (('limits-carta.json', L), ('dialectes.geojson', D), ('zonas-mixtas.geojson', M)):
+for nom, obj in (('limits-carta.json', L), ('dialectes.geojson', D)):
     with open(os.path.join(SORTIDA, nom), 'w', encoding='utf8') as o:
         json.dump(obj, o, ensure_ascii=False, separators=(',', ':'))
 print('abans :', abans)
