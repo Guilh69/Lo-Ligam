@@ -1,0 +1,30 @@
+{
+	"font": "Basc : comunas IGN ADMIN EXPRESS COG CARTO 2026 (Licéncia dobèrta 2.0), comunas d'Espanha © contributors OpenStreetMap (ODbL), zònas de la lei navarresa 18/1986 (2017), dialèctes d'aprèp Koldo Zuazo (2008) e la Viquipèdia en basc",
+	"a_validar": "noms basques, franceses e occitans (oc) dels dialèctes e de las zònas, colors : propausas, de validar per Romain",
+	"dialectes": [
+		{ "kod": "mendebalekoa", "eu": "mendebaleko euskara", "eu_alt": "bizkaiera", "fr": "biscayen", "oc": "biscaïn", "color": "#3fae6a", "eti": [-2.66, 43.12],
+		  "parlars": [ { "kod": "sartaldekoa", "eu": "sartaldekoa", "fr": "occidental" }, { "kod": "tartekoa", "eu": "tartekoa", "fr": "intermédiaire" }, { "kod": "sortaldekoa", "eu": "sortaldekoa", "fr": "oriental" } ] },
+		{ "kod": "erdialdekoa", "eu": "erdialdeko euskara", "eu_alt": "gipuzkera", "fr": "guipuscoan", "oc": "gipuscoan", "color": "#8fd14f", "eti": [-2.13, 43.0],
+		  "parlars": [ { "kod": "goierrikoa", "eu": "Goierrikoa", "fr": "Goierri" }, { "kod": "urolaldekoa", "eu": "Urolaldekoa", "fr": "vallée de l'Urola" }, { "kod": "beterrikoa", "eu": "Beterrikoa", "fr": "Beterri (Saint-Sébastien)" }, { "kod": "tolosaldekoa", "eu": "Tolosaldekoa", "fr": "Tolosaldea" }, { "kod": "oiartzun_bidasoa", "eu": "Oiartzun eta Bidasokoa", "fr": "Oiartzun et Bidassoa" }, { "kod": "nafarroakoa", "eu": "Nafarroakoa", "fr": "de Navarre (Araitz, Larraun)" }, { "kod": "burunda", "eu": "Burundakoa", "fr": "Burunda" } ] },
+		{ "kod": "nafarra", "eu": "goi-nafarrera", "fr": "haut-navarrais", "oc": "naut navarrés", "color": "#c9d66b",
+		  "parlars": [ { "kod": "iparraldekoa", "eu": "iparraldekoa", "fr": "du nord" }, { "kod": "hegoaldekoa", "eu": "hegoaldekoa", "fr": "du sud" }, { "kod": "aezkera", "eu": "aezkera", "fr": "d'Aezkoa" } ] },
+		{ "kod": "nafar_lapurtera", "eu": "nafar-lapurtera", "fr": "navarro-labourdin", "oc": "navarrés-labordin", "color": "#2fb8a0",
+		  "parlars": [ { "kod": "sartaldekoa", "eu": "sartaldekoa", "fr": "labourdin de l'ouest" }, { "kod": "kostatarra", "eu": "kostatarra", "fr": "de la côte" }, { "kod": "erdigunekoa", "eu": "erdigunekoa", "fr": "du centre du Labourd" }, { "kod": "sortaldekoa", "eu": "sortaldekoa", "fr": "oriental (bas-navarrais)" }, { "kod": "amikuzekoa", "eu": "amikuzekoa", "fr": "de Mixe (Amikuze)" } ] },
+		{ "kod": "zuberera", "eu": "zuberera", "fr": "souletin", "oc": "soletin", "color": "#6fd6c6", "parlars": [] },
+		{ "kod": "ekialdeko_nafarra", "eu": "ekialdeko nafarrera", "fr": "navarrais oriental", "oc": "navarrés oriental", "color": "#9db8a0", "istoric": true,
+		  "sota_fr": "éteint : le roncalais en 1991, le salazarais peu après", "sota_oc": "escantit",
+		  "parlars": [ { "kod": "erronkariera", "eu": "erronkariera", "fr": "roncalais" }, { "kod": "zaraitzuera", "eu": "zaraitzuera", "fr": "salazarais" } ] },
+		{ "kod": "arabakoa", "eu": "Arabako euskara", "fr": "alavais", "oc": "alavés", "color": "#a8c49a", "istoric": true,
+		  "sota_fr": "basque disparu vers la fin du XVIIIe siècle", "sota_oc": "basc escantit",
+		  "parlars": [] }
+	],
+	"apart": { "kod": "basc-franca", "eu": "Iparralde", "fr": "Pays basque nord", "oc": "País Basc del Nòrd" },
+	"transicions": [
+		{ "clau": "Tmixta", "kod": "trans-mixta", "eu": "eremu mistoa", "fr": "zone mixte de Navarre", "oc": "zòna mixta de Navarra", "entre": ["nafarra", "castillan"],
+		  "nota": "zone mixte de la loi navarraise de 1986 (élargie en 2017) : basque traditionnel perdu au XIXe siècle, minorité bascophone aujourd'hui" },
+		{ "clau": "Tes", "kod": "trans-es", "eu": "Enkarterriak", "fr": "Encartaciones", "oc": "Encartacions", "entre": ["mendebalekoa", "castillan"],
+		  "nota": "basque langue officielle (Biscaye), mais castillan depuis le Moyen Âge" },
+		{ "clau": "Toc", "kod": "trans-oc", "eu": "gaskoi eragina", "fr": "tradition gasconne", "oc": "tradicion gascona", "entre": ["nafar_lapurtera", "occitan"],
+		  "nota": "Bayonne, Anglet, Biarritz, Boucau, pays de Bidache, Urt, La Bastide-Clairence, Lichos, Esquiule : basque aujourd'hui, de tradition gasconne" }
+	]
+}

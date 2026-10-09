@@ -1,0 +1,760 @@
+﻿regio;unitat;mena;nom_oficial;nom_eu;codi;domeni;dialecte;parlar;transicio;part_oc;nota;font
+France;Basse-Navarre;comuna_fr;Ahaxe-Alciette-Bascassan;;64008;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Ahetze;;64009;basc;nafar_lapurtera;sartaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Aïcirits-Camou-Suhast;;64010;basc;nafar_lapurtera;amikuzekoa;zub;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Aincille;;64011;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Ainharp;;64012;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Ainhice-Mongelos;;64013;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Ainhoa;;64014;basc;nafar_lapurtera;sartaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Alçay-Alçabéhéty-Sunharette;;64015;basc;zuberera;;;0.43;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Aldudes;;64016;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Alos-Sibas-Abense;;64017;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Amendeuix-Oneix;;64018;basc;nafar_lapurtera;amikuzekoa;zub;0.966;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Amorots-Succos;;64019;basc;nafar_lapurtera;amikuzekoa;zub;0;;CAPB Z08
+France;Labourd;comuna_fr;Anglet;;64024;basc;nafar_lapurtera;sortaldekoa;oc;0.713;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Basse-Navarre;comuna_fr;Anhaux;;64026;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;dax;comuna_fr;Arancou;;64031;basc;nafar_lapurtera;sortaldekoa;oc;1;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Basse-Navarre;comuna_fr;Arbérats-Sillègue;;64034;basc;nafar_lapurtera;amikuzekoa;zub;1;;CAPB Z08
+France;Labourd;comuna_fr;Arbonne;;64035;basc;nafar_lapurtera;kostatarra;erd;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Arbouet-Sussaute;;64036;basc;nafar_lapurtera;amikuzekoa;zub;1;;CAPB Z08
+France;Labourd;comuna_fr;Arcangues;;64038;basc;nafar_lapurtera;kostatarra;erd;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Arhansus;;64045;basc;nafar_lapurtera;sortaldekoa;;0.494;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Armendarits;;64046;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Arnéguy;;64047;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Aroue-Ithorots-Olhaïby;;64049;basc;nafar_lapurtera;amikuzekoa;zub;1;Nord-ouest de la Soule : parler amikuzien (Zuazo).;CAPB Z08
+France;Soule;comuna_fr;Arrast-Larrebieu;;64050;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Arraute-Charritte;;64051;basc;nafar_lapurtera;amikuzekoa;zub;0.537;;CAPB Z08
+France;Labourd;comuna_fr;Ascain;;64065;basc;nafar_lapurtera;kostatarra;erd;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Ascarat;;64066;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Aussurucq;;64081;basc;zuberera;;;0.584;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Ayherre;;64086;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Banca;;64092;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Barcus;;64093;basc;zuberera;;;1;;CAPB Z08
+France;Labourd;comuna_fr;Bardos;;64094;basc;nafar_lapurtera;amikuzekoa;zub;0.173;;CAPB Z08
+France;Labourd;comuna_fr;Bassussarry;;64100;basc;nafar_lapurtera;kostatarra;erd;0;;CAPB Z08
+France;bayonne;comuna_fr;Bayonne;;64102;basc;nafar_lapurtera;sortaldekoa;oc;0.558;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Basse-Navarre;comuna_fr;Béguios;;64105;basc;nafar_lapurtera;amikuzekoa;zub;0.009;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Béhasque-Lapiste;;64106;basc;nafar_lapurtera;amikuzekoa;zub;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Béhorléguy;;64107;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;;comuna_fr;Bergouey-Viellenave;;64113;basc;nafar_lapurtera;sortaldekoa;oc;1;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Soule;comuna_fr;Berrogain-Laruns;;64115;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Beyrie-sur-Joyeuse;;64120;basc;nafar_lapurtera;amikuzekoa;zub;0.011;;CAPB Z08
+France;Labourd;comuna_fr;Biarritz;;64122;basc;nafar_lapurtera;sortaldekoa;oc;0.621;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;;comuna_fr;Bidache;;64123;basc;nafar_lapurtera;sortaldekoa;oc;0.869;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Basse-Navarre;comuna_fr;Bidarray;;64124;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Bidart;;64125;basc;nafar_lapurtera;kostatarra;erd;0.017;;CAPB Z08
+France;Labourd;comuna_fr;Biriatou;;64130;basc;nafar_lapurtera;sartaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Bonloc;;64134;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;tartas;comuna_fr;Boucau;;64140;basc;nafar_lapurtera;sortaldekoa;oc;1;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Labourd;comuna_fr;Briscous;;64147;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Bunus;;64150;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Bussunarits-Sarrasquette;;64154;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Bustince-Iriberry;;64155;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Cambo-les-Bains;;64160;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;dax;comuna_fr;Came;;64161;basc;nafar_lapurtera;sortaldekoa;oc;1;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Soule;comuna_fr;Camou-Cihigue;;64162;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Caro;;64166;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Charritte-de-Bas;;64187;basc;zuberera;;;1;;CAPB Z08
+France;Soule;comuna_fr;Chéraute;;64188;basc;zuberera;;;1;;CAPB Z08
+France;Labourd;comuna_fr;Ciboure;;64189;basc;nafar_lapurtera;kostatarra;erd;0;;CAPB Z08
+France;Soule;comuna_fr;Domezain-Berraute;;64202;basc;nafar_lapurtera;amikuzekoa;zub;1;Nord-ouest de la Soule : parler amikuzien (Zuazo).;CAPB Z08
+France;Labourd;comuna_fr;Espelette;;64213;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Espès-Undurein;;64214;basc;zuberera;;;1;;CAPB Z08
+France;bearn;comuna_fr;Esquiule;;64217;basc;zuberera;;oc;1;Village bascophone du Béarn (hors agglomération) : basque et gascon.;CAPB Z08 GASC
+France;Basse-Navarre;comuna_fr;Estérençuby;;64218;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Etcharry;;64221;basc;nafar_lapurtera;amikuzekoa;zub;1;Nord-ouest de la Soule : parler amikuzien (Zuazo).;CAPB Z08
+France;Soule;comuna_fr;Etchebar;;64222;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Gabat;;64228;basc;nafar_lapurtera;amikuzekoa;zub;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Gamarthe;;64229;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Garindein;;64231;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Garris;;64235;basc;nafar_lapurtera;amikuzekoa;zub;0.797;;CAPB Z08
+France;Soule;comuna_fr;Gotein-Libarrenx;;64247;basc;zuberera;;;1;;CAPB Z08
+France;Labourd;comuna_fr;Guéthary;;64249;basc;nafar_lapurtera;kostatarra;erd;0;;CAPB Z08
+France;Labourd;comuna_fr;Guiche;;64250;basc;nafar_lapurtera;sortaldekoa;oc;0.994;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Labourd;comuna_fr;Halsou;;64255;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Hasparren;;64256;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Haux;;64258;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Hélette;;64259;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;bayonne;comuna_fr;Hendaye;;64260;basc;nafar_lapurtera;kostatarra;erd;0;;CAPB Z08
+France;Soule;comuna_fr;L'Hôpital-Saint-Blaise;;64264;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Hosta;;64265;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Ibarrolle;;64267;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Idaux-Mendy;;64268;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Iholdy;;64271;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Ilharre;;64272;basc;nafar_lapurtera;amikuzekoa;zub;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Irissarry;;64273;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Irouléguy;;64274;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Ispoure;;64275;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Isturits;;64277;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Itxassou;;64279;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Jatxou;;64282;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Jaxu;;64283;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Juxue;;64285;basc;nafar_lapurtera;sortaldekoa;;0.023;;CAPB Z08
+France;Basse-Navarre;comuna_fr;La Bastide-Clairence;;64289;basc;nafar_lapurtera;sortaldekoa;oc;0;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Basse-Navarre;comuna_fr;Labets-Biscay;;64294;basc;nafar_lapurtera;amikuzekoa;zub;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Lacarre;;64297;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Lacarry-Arhan-Charritte-de-Haut;;64298;basc;zuberera;;;0.757;;CAPB Z08
+France;Soule;comuna_fr;Laguinge-Restoue;;64303;basc;zuberera;;;1;;CAPB Z08
+France;Labourd;comuna_fr;Lahonce;;64304;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Lantabat;;64313;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Larceveau-Arros-Cibits;;64314;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Larrau;;64316;basc;zuberera;;;0.44;;CAPB Z08
+France;Labourd;comuna_fr;Larressore;;64317;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Larribar-Sorhapuru;;64319;basc;nafar_lapurtera;amikuzekoa;zub;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Lasse;;64322;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Lecumberry;;64327;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Lichans-Sunhar;;64340;basc;zuberera;;;1;;CAPB Z08
+France;bearn;comuna_fr;Lichos;;64341;basc;nafar_lapurtera;amikuzekoa;oc;1;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Soule;comuna_fr;Licq-Athérey;;64342;basc;zuberera;;;1;;CAPB Z08
+France;Soule;comuna_fr;Lohitzun-Oyhercq;;64345;basc;nafar_lapurtera;amikuzekoa;zub;1;Nord-ouest de la Soule : parler amikuzien (Zuazo).;CAPB Z08
+France;Labourd;comuna_fr;Louhossoa;;64350;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Luxe-Sumberraute;;64362;basc;nafar_lapurtera;amikuzekoa;zub;0.394;;CAPB Z08
+France;Labourd;comuna_fr;Macaye;;64364;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Masparraute;;64368;basc;nafar_lapurtera;amikuzekoa;zub;0.731;;CAPB Z08
+France;Soule;comuna_fr;Mauléon-Licharre;;64371;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Méharin;;64375;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Mendionde;;64377;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Menditte;;64378;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Mendive;;64379;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Moncayolle-Larrory-Mendibieu;;64391;basc;zuberera;;;1;;CAPB Z08
+France;Soule;comuna_fr;Montory;;64404;basc;zuberera;;;1;;CAPB Z08
+France;Labourd;comuna_fr;Mouguerre;;64407;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Musculdy;;64411;basc;zuberera;;;0.486;;CAPB Z08
+France;Soule;comuna_fr;Ordiarp;;64424;basc;zuberera;;;0.79;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Orègue;;64425;basc;nafar_lapurtera;amikuzekoa;zub;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Orsanco;;64429;basc;nafar_lapurtera;amikuzekoa;zub;0.039;;CAPB Z08
+France;Soule;comuna_fr;Ossas-Suhare;;64432;basc;zuberera;;;1;;CAPB Z08
+France;Soule;comuna_fr;Osserain-Rivareyte;;64435;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Ossès;;64436;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Ostabat-Asme;;64437;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Pagolle;;64441;basc;nafar_lapurtera;amikuzekoa;zub;0.663;Nord-ouest de la Soule : parler amikuzien (Zuazo).;CAPB Z08
+France;Soule;comuna_fr;Roquiague;;64468;basc;zuberera;;;1;;CAPB Z08
+France;Soule;comuna_fr;Sainte-Engrâce;;64475;basc;zuberera;;;0.966;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Saint-Esteben;;64476;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Saint-Étienne-de-Baïgorry;;64477;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Saint-Jean-de-Luz;;64483;basc;nafar_lapurtera;kostatarra;erd;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Saint-Jean-le-Vieux;;64484;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Saint-Jean-Pied-de-Port;;64485;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Saint-Just-Ibarre;;64487;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Saint-Martin-d'Arberoue;;64489;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Saint-Martin-d'Arrossa;;64490;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Saint-Michel;;64492;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Saint-Palais;;64493;basc;nafar_lapurtera;amikuzekoa;zub;0.837;;CAPB Z08
+France;Labourd;comuna_fr;Saint-Pée-sur-Nivelle;;64495;basc;nafar_lapurtera;sartaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Saint-Pierre-d'Irube;;64496;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;dax;comuna_fr;Sames;;64502;basc;nafar_lapurtera;sortaldekoa;oc;1;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Labourd;comuna_fr;Sare;;64504;basc;nafar_lapurtera;sartaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Sauguis-Saint-Étienne;;64509;basc;zuberera;;;1;;CAPB Z08
+France;Labourd;comuna_fr;Souraïde;;64527;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Suhescun;;64528;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Tardets-Sorholus;;64533;basc;zuberera;;;1;;CAPB Z08
+France;Soule;comuna_fr;Trois-Villes;;64537;basc;zuberera;;;1;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Uhart-Cize;;64538;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Uhart-Mixe;;64539;basc;nafar_lapurtera;amikuzekoa;zub;0.817;;CAPB Z08
+France;Labourd;comuna_fr;Urcuit;;64540;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Basse-Navarre;comuna_fr;Urepel;;64543;basc;nafar_lapurtera;sortaldekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Urrugne;;64545;basc;nafar_lapurtera;kostatarra;erd;0;;CAPB Z08
+France;Labourd;comuna_fr;Urt;;64546;basc;nafar_lapurtera;sortaldekoa;oc;0.076;"Influence gasconne historique ; dans le basque aujourd'hui (choix de Romain).";CAPB Z08 GASC
+France;Labourd;comuna_fr;Ustaritz;;64547;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Labourd;comuna_fr;Villefranque;;64558;basc;nafar_lapurtera;erdigunekoa;;0;;CAPB Z08
+France;Soule;comuna_fr;Viodos-Abense-de-Bas;;64559;basc;zuberera;;;1;;CAPB Z08
+Euskadi;Duranguesado;municipio;Durango;;ine:48027;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Dima;;ine:48026;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Zeberio;Zeberio;ine:48025;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Artea;;ine:48023;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Busturia;;ine:48021;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Bilbao;Bilbao;ine:48020;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Araba;municipio;Kuartango;Kuartango;ine:01020;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Elburgo / Burgelu;Burgelu;ine:01021;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Elciego;Eltziego;ine:01022;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Busturialdea - Urdaibai;municipio;Ea;;ine:48028;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Tudela;Tutera;ine:31232;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Tulebras;;ine:31233;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Torralba del Río;Torralba del Río;ine:31230;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Torres del Río;;ine:31231;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Ultzama;Ultzama;ine:31236;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Unciti;Untzitibar;ine:31237;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Úcar;;ine:31234;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Ujué / Uxue;Uxue;ine:31235;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Urdazubi / Urdax;Urdazubi;ine:31239;basc;nafar_lapurtera;sartaldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Lekunberri;Lekunberri;ine:31908;basc;erdialdekoa;nafarroakoa;naf;;;LFN Z08
+Navarre;Navarra;municipio;Irurtzun;Irurtzun;ine:31904;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Beriáin;;ine:31905;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Orkoien;Orkoien;ine:31906;mixta;nafarra;hegoaldekoa;;;Zone mixte (2010). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Zizur Mayor / Zizur Nagusia;Zizur Nagusia;ine:31907;mixta;nafarra;hegoaldekoa;;;Zone mixte (2010). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Barañáin / Barañain;Barañain;ine:31901;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Berrioplano / Berriobeiti;Berriobeiti;ine:31902;mixta;nafarra;hegoaldekoa;;;Zone mixte (2010). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Berriozar;;ine:31903;mixta;nafarra;hegoaldekoa;;;Zone mixte (2010). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Euskadi;Duranguesado;municipio;Iurreta;Iurreta;ine:48910;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Araba;municipio;Okondo;Okondo;ine:01042;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Oyón-Oion;Oion;ine:01043;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Navaridas;;ine:01041;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Erriberagoitia / Ribera Alta;Erriberagoitia;ine:01046;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Ribera Baja / Erriberabeitia;Erriberabeitia;ine:01047;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Peñacerrada-Urizaharra;Urizaharra;ine:01044;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Añana;Añana;ine:01049;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Uribe;municipio;Lemoiz;;ine:48056;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Lea Artibai;municipio;Lekeitio;Lekeitio;ine:48057;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Leioa;Leioa;ine:48054;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Lemoa;Lemoa;ine:48055;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Larrabetzu;Larrabetzu;ine:48052;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Laukiz;;ine:48053;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Izurtza;Izurtza;ine:48050;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Las Encartaciones;municipio;Lanestosa;;ine:48051;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Mallabia;;ine:48058;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Mañaria;;ine:48059;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Sansol;;ine:31219;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Roncal / Erronkari;Erronkari;ine:31210;mixta;ekialdeko_nafarra;erronkariera;;;Zone mixte (1986). Roncalais, éteint en 1991.;LFN Z08
+Navarre;Navarra;municipio;Sada;;ine:31212;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Saldias;Saldias;ine:31213;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Salinas de Oro / Jaitz;Jaitz;ine:31214;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;San Adrián;;ine:31215;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Sangüesa / Zangoza;Zangoza;ine:31216;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;San Martín de Unx;Donamartiri-Untz;ine:31217;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Araba;municipio;Elvillar / Bilar;Bilar;ine:01023;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Navarre;Navarra;municipio;Carcastillo;Zarrakaztelu;ine:31067;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Cárcar;;ine:31066;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Caparroso;;ine:31065;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Cadreita;;ine:31064;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Aibar / Oibar;Oibar;ine:31009;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Aguilar de Codés;Aguilar Kodes;ine:31008;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Aberin;Aberin;ine:31005;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Abaurrepea / Abaurrea Baja;Abaurrepea;ine:31004;basc;nafarra;aezkera;nl;;Aezkoa : entre haut-navarrais, navarro-labourdin et navarrais oriental (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Adiós;Adios;ine:31007;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Ablitas;Ablitas;ine:31006;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Abáigar;Abaigar;ine:31001;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Abaurregaina / Abaurrea Alta;Abaurregaina;ine:31003;basc;nafarra;aezkera;nl;;Aezkoa : entre haut-navarrais, navarro-labourdin et navarrais oriental (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Abárzuza / Abartzuza;Abartzuza;ine:31002;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Euskadi;Araba;municipio;Yécora / Iekora;Iekora;ine:01060;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Zalduondo;;ine:01061;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Zambrana;;ine:01062;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Zuia;Zuia;ine:01063;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Gran Bilbao;municipio;Portugalete;;ine:48078;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Errigoiti;Errigoiti;ine:48079;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Urduña / Orduña;Urduña;ine:48074;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Sukarrieta;;ine:48076;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Plentzia;;ine:48077;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Lea Artibai;municipio;Aulesti;;ine:48070;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Muskiz;Muskiz;ine:48071;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Otxandio;Otxandio;ine:48072;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Unzué / Untzue;Untzue;ine:31238;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Arce / Artzi;Artzi;ine:31028;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Aranguren;Aranguren;ine:31023;mixta;nafarra;hegoaldekoa;;;Zone mixte (2010). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Arantza;Arantza;ine:31022;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Aranarache / Aranaratxe;Aranaratxe;ine:31021;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Araitz;Araitz;ine:31020;basc;erdialdekoa;nafarroakoa;;;;LFN Z08
+Navarre;Navarra;municipio;Arbizu;Arbizu;ine:31027;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Arakil;Arakil;ine:31025;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Arano;Arano;ine:31024;basc;erdialdekoa;oiartzun_bidasoa;;;;LFN Z08
+Euskadi;Urola Costa;municipio;Aia;Aia;ine:20016;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Lea Artibai;municipio;Berriatua;Berriatua;ine:48018;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Berriz;Berriz;ine:48019;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Bakio;Bakio;ine:48012;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Barakaldo;Barakaldo;ine:48013;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Arrieta;;ine:48010;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Arrigorriaga;;ine:48011;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Berango;;ine:48016;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Bermeo;;ine:48017;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Barrika;;ine:48014;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Basauri;;ine:48015;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Murueta;;ine:48908;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Nabarniz;;ine:48909;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Derio;;ine:48901;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Sondika;Sondika;ine:48904;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Basaburua;;ine:31049;basc;erdialdekoa;nafarroakoa;naf;;;LFN Z08
+Navarre;Navarra;municipio;Barillas;;ine:31048;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Uribe;municipio;Gamiz-Fika;;ine:48038;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Garai;;ine:48039;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Zumaia;Zumaia;ine:20081;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Zumarraga;Zumarraga;ine:20080;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Araba;municipio;Agurain / Salvatierra;Agurain;ine:01051;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Navarre;Navarra;municipio;Oláibar;Olaibar;ine:31188;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Olazti / Olazagutía;Olazti;ine:31189;basc;erdialdekoa;burunda;naf;;Burunda : traits du guipuscoan et du biscayen (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Oco;;ine:31184;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Ochagavía / Otsagabia;Otsagabia;ine:31185;mixta;ekialdeko_nafarra;zaraitzuera;;;Zone mixte (1986). Salazarais, éteint à la fin du XXe siècle.;LFN Z08
+Navarre;Navarra;municipio;Odieta;;ine:31186;mixta;nafarra;iparraldekoa;;;Zone mixte (1986).;LFN Z08
+Navarre;Navarra;municipio;Oiz;Oiz;ine:31187;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Muruzábal;;ine:31180;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Navascués / Nabaskoze;Nabaskoze;ine:31181;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Nazar;;ine:31182;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Obanos;;ine:31183;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Euskadi;terres communes;faceria;Gipuzkoa eta Arabako Partzuergo Orokorra;Gipuzkoa eta Arabako Partzuergo Orokorra;osm:340988;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;Navarra;municipio;Desojo;;ine:31079;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Castejón;;ine:31070;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Castillonuevo / Gazteluberri;Gazteluberri;ine:31071;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Cintruénigo;;ine:31072;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Ziordia;;ine:31073;basc;erdialdekoa;burunda;naf;;Burunda : traits du guipuscoan et du biscayen (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Cirauqui / Zirauki;Zirauki;ine:31074;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Ciriza / Ziritza;Ziritza;ine:31075;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Cizur;;ine:31076;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Los Arcos;Los Arcos;ine:31029;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Cáseda;Kaseda;ine:31069;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Cascante;;ine:31068;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Cabanillas;;ine:31062;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;El Busto;;ine:31061;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Burlada / Burlata;Burlata;ine:31060;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Ribaforada;;ine:31208;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Peralta / Azkoien;Azkoien;ine:31202;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Arratia-Nervión;municipio;Zeanuri;Zeanuri;ine:48024;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Cabredo;;ine:31063;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Euskadi;Lea Artibai;municipio;Etxebarria;;ine:48030;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Legaria;;ine:31148;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Gran Bilbao;municipio;Etxebarri;Etxebarri;ine:48029;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Las Encartaciones;municipio;Balmaseda;Balmaseda;ine:48090;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Euskadi;Las Encartaciones;municipio;Zalla;;ine:48096;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Isaba / Izaba;Izaba;ine:31128;mixta;ekialdeko_nafarra;erronkariera;;;Zone mixte (1986). Roncalais, éteint en 1991.;LFN Z08
+Navarre;Navarra;municipio;Ituren;;ine:31129;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Imotz;;ine:31126;basc;erdialdekoa;nafarroakoa;naf;;;LFN Z08
+Navarre;Navarra;municipio;Irañeta;;ine:31127;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Ibargoiti;;ine:31124;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Igúzquiza;;ine:31125;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Huarte / Uharte;Uharte;ine:31122;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Uharte Arakil;Uharte Arakil;ine:31123;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Guesálaz / Gesalatz;Gesalatz;ine:31120;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Guirguillano;Girgillao;ine:31121;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Araba;municipio;Lantarón;Lantaron;ine:01902;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Iruña Oka / Iruña de Oca;Iruña Oka;ine:01901;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Goyerri;municipio;Ordizia;Ordizia;ine:20076;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Urretxu;Urretxu;ine:20077;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Alto Deva;municipio;Bergara;Bergara;ine:20074;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Villabona;Villabona-Amasa;ine:20075;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Urnieta;;ine:20072;basc;erdialdekoa;beterrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Usurbil;Usurbil;ine:20073;basc;erdialdekoa;beterrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Segura;;ine:20070;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Tolosa;Tolosa;ine:20071;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Zaldibia;Zaldibia;ine:20078;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Zarautz;Zarautz;ine:20079;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Falces;Faltzes;ine:31104;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Fitero;;ine:31105;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Fontellas;;ine:31106;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Funes;;ine:31107;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Eulate;;ine:31100;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Ezcabarte;Ezkabarte;ine:31101;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Ezkurra;;ine:31102;basc;nafarra;iparraldekoa;erd;;;LFN Z08
+Navarre;Navarra;municipio;Ezprogui;Ezporogi;ine:31103;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Fustiñana;;ine:31108;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Galar;;ine:31109;mixta;nafarra;hegoaldekoa;;;Zone mixte (2010). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Orreaga / Roncesvalles;Orreaga;ine:31211;basc;nafarra;hegoaldekoa;;;;LFN Z08
+Navarre;terres communes;faceria;Bardenas Reales;Errege Bardea;osm:342322;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Aralar mendia;Aralar mendia;osm:342324;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;46. fazeria;46. fazeria;osm:342325;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;53. fazeria;53. fazeria;osm:342326;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;62. fazeria;62. fazeria;osm:342327;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Urbasa mendia;Urbasa mendia;osm:342332;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;Gran Bilbao;municipio;Valle de Trápaga-Trapagaran;Trapagaran;ine:48080;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Olaberria;;ine:20058;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Alto Deva;municipio;Oñati;Oñati;ine:20059;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Lizartza;Lizartza;ine:20054;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Alto Deva;municipio;Arrasate / Mondragón;Arrasate;ine:20055;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Bajo Deva;municipio;Mutriku;Mutriku;ine:20056;basc;mendebalekoa;sortaldekoa;erd;;Entre biscayen et guipuscoan (Zuazo 2008).;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Mutiloa;;ine:20057;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Leaburu;Leaburu;ine:20050;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Legazpi;Legazpi;ine:20051;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Legorreta;Legorreta;ine:20052;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Lezo;;ine:20053;basc;erdialdekoa;oiartzun_bidasoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Arratzu;Arratzu;ine:48914;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Zierbena;;ine:48913;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Alonsotegi;Alonsotegi;ine:48912;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Marañón;;ine:31162;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Marcilla;Martzilla;ine:31163;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Luquin;Lukin;ine:31160;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Mañeru;;ine:31161;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Mendaza;;ine:31166;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Mendigorria;Mendigorria;ine:31167;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Mélida;;ine:31164;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Mendavia;Mendabia;ine:31165;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Metauten;;ine:31168;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Milagro;;ine:31169;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Goyerri;municipio;Gabiria;Gabiria;ine:20038;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Getaria;Getaria;ine:20039;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Bajo Deva;municipio;Elgoibar;;ine:20032;basc;mendebalekoa;sortaldekoa;erd;;Entre biscayen et guipuscoan (Zuazo 2008).;LEU Z08 VQ-ES
+Euskadi;Alto Deva;municipio;Elgeta;Elgeta;ine:20033;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Bajo Deva;municipio;Eibar;Eibar;ine:20030;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Elduain;Elduain;ine:20031;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Bidasoa-Chingudi;municipio;Hondarribia;Hondarribia;ine:20036;basc;erdialdekoa;oiartzun_bidasoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Gaintza;Gaintza;ine:20037;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Alto Deva;municipio;Eskoriatza;Eskoriatza;ine:20034;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Ezkio-Itsaso;Ezkio-Itsaso;ine:20035;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Leitza;Leitza;ine:31149;basc;nafarra;iparraldekoa;erd;;;LFN Z08
+Navarre;Navarra;municipio;Lantz;Lantz;ine:31140;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Lapoblación;;ine:31141;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Larraga;;ine:31142;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Larraona;;ine:31143;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Larraun;;ine:31144;basc;erdialdekoa;nafarroakoa;naf;;;LFN Z08
+Navarre;Navarra;municipio;Lazagurría;Elizagorria;ine:31145;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Leache / Leatxe;Leatxe;ine:31146;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Legarda;;ine:31147;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Tolosaldea;municipio;Anoeta;Anoeta;ine:20010;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Arama;;ine:20012;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Alto Deva;municipio;Aretxabaleta;Aretxabaleta;ine:20013;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Ataun;;ine:20015;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Azpeitia;Azpeitia;ine:20018;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Beasain;Beasain;ine:20019;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Alto Deva;municipio;Antzuola;Antzuola;ine:20011;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Asteasu;Asteasu;ine:20014;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Azkoitia;Azkoitia;ine:20017;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Zúñiga;;ine:31265;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Zugarramurdi;;ine:31264;basc;nafar_lapurtera;sartaldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Yesa;Esa;ine:31261;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Valle de Yerri / Deierri;Deierri;ine:31260;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Zubieta;;ine:31263;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Zabalza / Zabaltza;Zabaltza;ine:31262;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Corella;;ine:31077;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Araba;municipio;Iruraiz-Gauna;Iruraitz-Gauna;ine:01027;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Navarre;Navarra;municipio;Espronceda;;ine:31096;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Estella-Lizarra;Lizarra;ine:31097;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Eslava;Eslaba;ine:31094;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Erro;;ine:31092;basc;nafarra;hegoaldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Ezcároz / Ezkaroze;Ezkaroze;ine:31093;mixta;ekialdeko_nafarra;zaraitzuera;;;Zone mixte (1986). Salazarais, éteint à la fin du XXe siècle.;LFN Z08
+Navarre;Navarra;municipio;Eratsun;;ine:31090;basc;nafarra;iparraldekoa;erd;;;LFN Z08
+Navarre;Navarra;municipio;Ergoiena;;ine:31091;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Esteribar;;ine:31098;basc;nafarra;hegoaldekoa;;;;LFN Z08
+Euskadi;Araba;municipio;Labastida / Bastida;Bastida;ine:01028;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Kripan;Kripan;ine:01019;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Zigoitia;Zigoitia;ine:01018;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Berantevilla;;ine:01014;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Campezo / Kanpezu;Kanpezu;ine:01017;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Bernedo;;ine:01016;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Baños de Ebro / Mañueta;Mañueta;ine:01011;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Ayala / Aiara;Aiara;ine:01010;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Barrundia;;ine:01013;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Navarre;Navarra;municipio;Valtierra;;ine:31249;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Luzaide / Valcarlos;Luzaide;ine:31248;basc;nafar_lapurtera;sortaldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Urroz-Villa;Urrotz-Hiria;ine:31243;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Urraúl Bajo;Urraulbeiti;ine:31242;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Urraúl Alto;Urraulgoiti;ine:31241;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Urdiain;Urdiain;ine:31240;basc;erdialdekoa;burunda;naf;;Burunda : traits du guipuscoan et du biscayen (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Uztárroz / Uztarroze;Uztarroze;ine:31247;mixta;ekialdeko_nafarra;erronkariera;;;Zone mixte (1986). Roncalais, éteint en 1991.;LFN Z08
+Navarre;Navarra;municipio;Uterga;;ine:31246;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Urzainqui / Urzainki;Urzainki;ine:31245;mixta;ekialdeko_nafarra;erronkariera;;;Zone mixte (1986). Roncalais, éteint en 1991.;LFN Z08
+Navarre;Navarra;municipio;Urroz;Urroz;ine:31244;basc;nafarra;iparraldekoa;;;;LFN Z08
+Euskadi;Las Encartaciones;municipio;Sopuerta;;ine:48086;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Urduliz;;ine:48089;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Ubide;Ubide;ine:48088;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Atxondo;;ine:48091;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Igorre;Igorre;ine:48094;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Elantxobe;;ine:48031;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Ermua;;ine:48034;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Fruiz;Fruiz;ine:48035;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Las Encartaciones;municipio;Galdames;;ine:48037;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Euskadi;Araba;municipio;Moreda de Álava / Moreda Araba;Moreda Araba;ine:01039;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Lapuebla de Labarca;Lapuebla de Labarca;ine:01033;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Lanciego / Lantziego;Lantziego;ine:01032;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Laguardia;Guardia;ine:01031;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Lagrán;Lagran;ine:01030;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Arraia-Maeztu;Arraia-Maeztu;ine:01037;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Leza;;ine:01034;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Arratia-Nervión;municipio;Orozko;Orozko;ine:48075;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Doneztebe / Santesteban;Doneztebe;ine:31221;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Santacara;Santakara;ine:31220;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Sartaguda;;ine:31223;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Sarriés / Sartze;Sartze;ine:31222;mixta;ekialdeko_nafarra;zaraitzuera;;;Zone mixte (1986). Salazarais, éteint à la fin du XXe siècle.;LFN Z08
+Navarre;Navarra;municipio;Sorlada;;ine:31225;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Sesma;;ine:31224;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Tafalla;;ine:31227;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Sunbilla;Sunbilla;ine:31226;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Tirapu;;ine:31229;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Tiebas-Muruarte de Reta;Tebas-Muru Artederreta;ine:31228;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Euskadi;Lea Artibai;municipio;Ondarroa;;ine:48073;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Araba;municipio;San Millán / Donemiliaga;Donemiliaga;ine:01053;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Samaniego;;ine:01052;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Valdegovía / Gaubea;Gaubea;ine:01055;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Urkabustaiz;Urkabustaiz;ine:01054;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Villabuena de Álava / Eskuernaga;Eskuernaga;ine:01057;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Vitoria-Gasteiz;Gasteiz;ine:01059;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Legutio;Legutio;ine:01058;basc;mendebalekoa;tartekoa;;;Basque toujours parlé (Zuazo).;LEU Z08
+Euskadi;Las Encartaciones;municipio;Güeñes;;ine:48045;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Getxo;Getxo;ine:48044;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Lea Artibai;municipio;Gizaburuaga;;ine:48047;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Gernika-Lumo;Gernika-Lumo;ine:48046;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Gautegiz Arteaga;;ine:48041;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Gatika;;ine:48040;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Gorliz;;ine:48043;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Las Encartaciones;municipio;Gordexola;Gordexola;ine:48042;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Euskadi;Lea Artibai;municipio;Ispaster;Ispaster;ine:48049;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Ibarrangelu;;ine:48048;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Romanzado / Erromantzatua;Erromantzatua;ine:31209;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Pueyo / Puiu;Puiu;ine:31207;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Puente la Reina / Gares;Gares;ine:31206;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Pitillas;;ine:31205;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Piedramillera;;ine:31204;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Petilla de Aragón;Petilla Aragoi;ine:31203;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Pamplona / Iruña;Iruña;ine:31201;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Oteiza;Oteitza;ine:31200;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Euskadi;Lea Artibai;municipio;Mendexa;Mendexa;ine:48063;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Mendata;;ine:48062;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Maruri-Jatabe;;ine:48061;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Lea Artibai;municipio;Markina-Xemein;Markina-Xemein;ine:48060;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Muxika;Muxika;ine:48067;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Morga;;ine:48066;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Ugao-Miraballes;Ugao;ine:48065;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Meñaka;;ine:48064;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Mungia;;ine:48069;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Mundaka;Mundaka;ine:48068;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Bedia;Bedia;ine:48092;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Areatza;Areatza;ine:48093;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Zaratamo;Zaratamo;ine:48097;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Zaldibar;;ine:48095;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Añorbe;Añorbe;ine:31018;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Aoiz / Agoitz;Agoitz;ine:31019;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Ansoáin / Antsoain;Antsoain;ine:31016;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Anue;Anue;ine:31017;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Ancín / Antzin;Antzin;ine:31014;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Andosilla;Andosilla;ine:31015;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Allo;Allo;ine:31012;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Améscoa Baja;Ameskoabarrena;ine:31013;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Altsasu / Alsasua;Altsasu;ine:31010;basc;erdialdekoa;burunda;naf;;Burunda : traits du guipuscoan et du biscayen (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Allín / Allin;Allin;ine:31011;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Euskadi;Arratia-Nervión;municipio;Arrankudiaga-Zollo;Arrankudiaga-Zollo;ine:48009;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Las Encartaciones;municipio;Artzentales;Artzentales;ine:48008;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Abadiño;;ine:48001;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Duranguesado;municipio;Amorebieta-Etxano;Zornotza;ine:48003;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Abanto y Ciérvana-Abanto Zierbena;Abanto-Zierbena;ine:48002;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Arakaldo;Arakaldo;ine:48005;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Lea Artibai;municipio;Amoroto;;ine:48004;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Lea Artibai;municipio;Munitibar-Arbatzegi Gerrikaitz;Munitibar;ine:48007;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Arratia-Nervión;municipio;Arantzazu;Arantzazu;ine:48006;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Armañanzas;;ine:31035;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Artajona;Artaxoa;ine:31038;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Artazu;;ine:31039;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Euskadi;Duranguesado;municipio;Elorrio;;ine:48032;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Las Encartaciones;municipio;Karrantza Harana / Valle de Carranza;Karrantza;ine:48022;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Ereño;;ine:48033;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Cendea de Olza / Oltza Zendea;Oltza Zendea;ine:31193;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Olóriz / Oloritz;Oloritz;ine:31192;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Olite / Erriberri;Erriberri;ine:31191;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Olejua;;ine:31190;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Orísoain;Orisoain;ine:31197;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Orbara;;ine:31196;basc;nafarra;aezkera;nl;;Aezkoa : entre haut-navarrais, navarro-labourdin et navarrais oriental (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Orbaizeta;Orbaizeta;ine:31195;basc;nafarra;aezkera;nl;;Aezkoa : entre haut-navarrais, navarro-labourdin et navarrais oriental (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Valle de Ollo / Ollaran;Ollaran;ine:31194;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Oroz-Betelu / Orotz-Betelu;Orotz-Betelu;ine:31199;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Oronz / Orontze;Orontze;ine:31198;mixta;ekialdeko_nafarra;zaraitzuera;;;Zone mixte (1986). Salazarais, éteint à la fin du XXe siècle.;LFN Z08
+Navarre;Navarra;municipio;Belascoáin;;ine:31052;mixta;nafarra;hegoaldekoa;;;Zone mixte (2010). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Beire;;ine:31051;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Biurrun-Olcoz;Biurrun-Olkotz;ine:31056;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Buñuel;;ine:31057;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Burgui / Burgi;Burgi;ine:31059;mixta;ekialdeko_nafarra;erronkariera;;;Zone mixte (1986). Roncalais, éteint en 1991.;LFN Z08
+Navarre;Navarra;municipio;Esparza de Salazar / Espartza Zaraitzu;Espartza Zaraitzu;ine:31095;mixta;ekialdeko_nafarra;zaraitzuera;;;Zone mixte (1986). Salazarais, éteint à la fin du XXe siècle.;LFN Z08
+Navarre;Navarra;municipio;Etayo;;ine:31099;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Cortes;;ine:31078;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Aras;Aras;ine:31026;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Las Encartaciones;municipio;Trucios-Turtzioz;Turtzioz;ine:48087;basc;mendebalekoa;sartaldekoa;es;;Encartaciones : langue officielle (loi), mais castillan depuis le Moyen Âge.;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Lana;;ine:31139;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Lakuntza;;ine:31138;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Javier;Xabier;ine:31135;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Jaurrieta;;ine:31134;mixta;ekialdeko_nafarra;zaraitzuera;;;Zone mixte (1986). Salazarais, éteint à la fin du XXe siècle.;LFN Z08
+Navarre;Navarra;municipio;Beintza-Labaien;Beintza-Labaien;ine:31137;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Juslapeña / Txulapain;Txulapain;ine:31136;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Iza / Itza;Itza;ine:31131;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Iturmendi;;ine:31130;basc;erdialdekoa;burunda;naf;;Burunda : traits du guipuscoan et du biscayen (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Izalzu / Itzaltzu;Itzaltzu;ine:31133;mixta;ekialdeko_nafarra;zaraitzuera;;;Zone mixte (1986). Salazarais, éteint à la fin du XXe siècle.;LFN Z08
+Navarre;Navarra;municipio;Izagaondoa;;ine:31132;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Aribe;;ine:31034;basc;nafarra;aezkera;nl;;Aezkoa : entre haut-navarrais, navarro-labourdin et navarrais oriental (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Arróniz;Arroitz;ine:31036;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Arruazu;;ine:31037;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Arellano;;ine:31030;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Areso;;ine:31031;basc;erdialdekoa;nafarroakoa;;;;LFN Z08
+Navarre;Navarra;municipio;Arguedas;;ine:31032;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Aria;;ine:31033;basc;nafarra;aezkera;nl;;Aezkoa : entre haut-navarrais, navarro-labourdin et navarrais oriental (Zuazo).;LFN Z08
+Euskadi;Bajo Deva;municipio;Soraluze-Placencia de las Armas;Soraluze;ine:20065;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Pasaia;Pasaia;ine:20064;basc;erdialdekoa;beterrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Errenteria;Errenteria;ine:20067;basc;erdialdekoa;oiartzun_bidasoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Errezil;Errezil;ine:20066;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Orio;Orio;ine:20061;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Orexa;Orexa;ine:20060;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Oiartzun;Oiartzun;ine:20063;basc;erdialdekoa;oiartzun_bidasoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Ormaiztegi;Ormaiztegi;ine:20062;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Donostia / San Sebastián;Donostia;ine:20069;basc;erdialdekoa;beterrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Alto Deva;municipio;Leintz-Gatzaga;Leintz Gatzaga;ine:20068;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Güesa / Gorza;Gorza;ine:31119;mixta;ekialdeko_nafarra;zaraitzuera;;;Zone mixte (1986). Salazarais, éteint à la fin du XXe siècle.;LFN Z08
+Navarre;Navarra;municipio;Val de Goñi / Goñerri;Goñerri;ine:31118;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Garde;;ine:31113;mixta;ekialdeko_nafarra;erronkariera;;;Zone mixte (1986). Roncalais, éteint en 1991.;LFN Z08
+Navarre;Navarra;municipio;Garaioa;;ine:31112;basc;nafarra;aezkera;nl;;Aezkoa : entre haut-navarrais, navarro-labourdin et navarrais oriental (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Gallués / Galoze;Galoze;ine:31111;mixta;ekialdeko_nafarra;zaraitzuera;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Salazarais, éteint à la fin du XXe siècle.;LFN Z08
+Navarre;Navarra;municipio;Gallipienzo / Galipentzu;Galipentzu;ine:31110;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Goizueta;;ine:31117;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Genevilla;;ine:31116;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Garralda;;ine:31115;basc;nafarra;aezkera;nl;;Aezkoa : entre haut-navarrais, navarro-labourdin et navarrais oriental (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Garínoain;Garinoain;ine:31114;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;terres communes;faceria;Facería 29;29. fazeria;osm:346536;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;49. fazeria;49. fazeria;osm:346537;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;18. fazeria;18. fazeria;osm:346538;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;Goyerri;municipio;Idiazabal;;ine:20043;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Hernialde;Hernialde;ine:20041;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Hernani;;ine:20040;basc;erdialdekoa;beterrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Itsasondo;;ine:20047;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Irura;Irura;ine:20046;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Bidasoa-Chingudi;municipio;Irun;Irun;ine:20045;basc;erdialdekoa;oiartzun_bidasoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Lazkao;Lazkao;ine:20049;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Larraul;Larraul;ine:20048;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Miranda de Arga;Miranda Arga;ine:31171;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Mirafuentes;Iturriaga;ine:31170;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Monteagudo;;ine:31173;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Monreal / Elo;Elo;ine:31172;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Mues;;ine:31175;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Morentin;;ine:31174;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Murieta;;ine:31177;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Murchante;;ine:31176;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Murillo el Fruto;;ine:31179;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Murillo el Cuende;;ine:31178;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Goyerri;municipio;Altzaga;Altzaga;ine:20906;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Gaztelu;Gaztelu;ine:20907;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Baliarrain;Baliarrain;ine:20904;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Orendain;Orendain;ine:20905;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Bajo Deva;municipio;Mendaro;;ine:20901;basc;mendebalekoa;sortaldekoa;erd;;Entre biscayen et guipuscoan (Zuazo 2008).;LEU Z08 VQ-ES
+Euskadi;Bajo Deva;municipio;Deba;Deba;ine:20029;basc;mendebalekoa;sortaldekoa;erd;;Entre biscayen et guipuscoan (Zuazo 2008).;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Zizurkil;Zizurkil;ine:20028;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Belauntza;Belauntza;ine:20021;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Beizama;Beizama;ine:20020;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Berrobi;;ine:20023;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Berastegi;Berastegi;ine:20022;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Zegama;;ine:20025;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Bidania-Goiatz;Bidania-Goiatz;ine:20024;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Zestoa;Zestoa;ine:20027;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Goyerri;municipio;Zerain;;ine:20026;basc;erdialdekoa;goierrikoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Ayegui / Aiegi;Aiegi;ine:31041;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Atetz;Atetz;ine:31040;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Azuelo;;ine:31043;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Azagra;;ine:31042;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Barásoain;Barasoain;ine:31045;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Bakaiku;;ine:31044;basc;erdialdekoa;burunda;naf;;Burunda : traits du guipuscoan et du biscayen (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Bargota;;ine:31047;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Barbarin;;ine:31046;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Gran Bilbao;municipio;Erandio;;ine:48902;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Loiu;Loiu;ine:48903;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Zamudio;;ine:48905;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Forua;;ine:48906;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Kortezubi;Kortezubi;ine:48907;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Navarre;Navarra;municipio;Lumbier;Irunberri;ine:31159;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Lónguida / Longida;Longida;ine:31158;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Lodosa;;ine:31157;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Lizoain-Arriasgoiti / Lizoainibar-Arriasgoiti;Lizoainibar-Arriasgoiti;ine:31156;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Liédena;Ledea;ine:31155;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Lezaun;Lezaun;ine:31154;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Lesaka;Lesaka;ine:31153;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Lerín;Lerin;ine:31152;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Lerga;;ine:31151;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Leoz / Leotz;Leotz;ine:31150;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Euskadi;Tolosaldea;municipio;Altzo;Altzo;ine:20007;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Alkiza;Alkiza;ine:20006;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Alegia;Alegia;ine:20005;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Albiztur;Albiztur;ine:20004;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Urola Costa;municipio;Aizarnazabal;Aizarnazabal;ine:20003;basc;erdialdekoa;urolaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Aduna;Aduna;ine:20002;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Abaltzisketa;Abaltzisketa;ine:20001;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Andoain;;ine:20009;basc;erdialdekoa;beterrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Amezketa;Amezketa;ine:20008;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Ibarra;Ibarra;ine:20042;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Tolosaldea;municipio;Ikaztegieta;Ikaztegieta;ine:20044;basc;erdialdekoa;tolosaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Busturialdea - Urdaibai;municipio;Ajangiz;Ajangiz;ine:48911;basc;mendebalekoa;tartekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Galdakao;Galdakao;ine:48036;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Araba;municipio;Harana / Valle de Arana;Harana;ine:01056;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Navarre;Navarra;municipio;Etxauri;;ine:31085;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Etxarri Aranatz;Etxarri Aranatz;ine:31084;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Elgorriaga;;ine:31087;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Valle de Egüés / Eguesibar;Eguesibar;ine:31086;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Donamaria;;ine:31081;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Dicastillo;Deikaztelu;ine:31080;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Echarri / Etxarri;Etxarri;ine:31083;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Etxalar;Etxalar;ine:31082;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Enériz / Eneritz;Eneritz;ine:31089;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Valle de Elorz / Elortzibar;Elortzibar;ine:31088;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Euskadi;Araba;municipio;Llodio;Laudio;ine:01036;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Navarre;Navarra;municipio;Berbinzana;Berbintzana;ine:31053;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Baztan;Baztan;ine:31050;basc;nafar_lapurtera;sortaldekoa;naf;;"Baztan : mélange de haut-navarrais et de navarro-labourdin ; Oronoz-Mugairi en haut-navarrais.";LFN Z08
+Navarre;Navarra;municipio;Bertizarana;Bertizarana;ine:31054;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Betelu;;ine:31055;basc;erdialdekoa;nafarroakoa;;;;LFN Z08
+Navarre;Navarra;municipio;Auritz / Burguete;Auritz;ine:31058;basc;nafarra;hegoaldekoa;;;;LFN Z08
+Euskadi;Araba;municipio;Arratzua-Ubarrundia;Arratzua-Ubarrundia;ine:01008;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Asparrena;Asparrena;ine:01009;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Armiñón;Armiñon;ine:01006;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Artziniega;Artziniega;ine:01004;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Amurrio;Amurrio;ine:01002;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Euskadi;Araba;municipio;Aramaio;Aramaio;ine:01003;basc;mendebalekoa;sortaldekoa;;;Seule commune d'Alava où le basque ne s'est jamais perdu.;LEU Z08
+Euskadi;Araba;municipio;Alegría-Dulantzi;Dulantzi;ine:01001;desaparegut;arabakoa;;;;Basque alavais, disparu vers la fin du XVIIIe siècle (choix de Romain : teinte à part).;Z08
+Navarre;Navarra;municipio;Villafranca;Alesbes;ine:31254;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Villamayor de Monjardín;;ine:31255;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Hiriberri / Villanueva de Aezkoa;Hiriberri;ine:31256;basc;nafarra;aezkera;nl;;Aezkoa : entre haut-navarrais, navarro-labourdin et navarrais oriental (Zuazo).;LFN Z08
+Navarre;Navarra;municipio;Villatuerta;Bilatorta;ine:31257;mixta;nafarra;hegoaldekoa;;;Zone mixte depuis 2017 (choix politique, non vascophone avant). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Bera;Bera;ine:31250;basc;nafarra;iparraldekoa;;;;LFN Z08
+Navarre;Navarra;municipio;Viana;;ine:31251;exclos;;;;;Zone non vascophone (loi de 1986).;LFN
+Navarre;Navarra;municipio;Vidángoz / Bidankoze;Bidankoze;ine:31252;mixta;ekialdeko_nafarra;erronkariera;;;Zone mixte (1986). Roncalais, éteint en 1991.;LFN Z08
+Navarre;Navarra;municipio;Bidaurreta;;ine:31253;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Villava / Atarrabia;Atarrabia;ine:31258;mixta;nafarra;hegoaldekoa;;;Zone mixte (1986). Basque traditionnel, perdu au XIXe siècle (haut-navarrais du sud).;LFN Z08
+Navarre;Navarra;municipio;Igantzi;;ine:31259;basc;nafarra;iparraldekoa;;;;LFN Z08
+Euskadi;Comarca de San Sebastián;municipio;Lasarte-Oria;;ine:20902;basc;erdialdekoa;beterrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Comarca de San Sebastián;municipio;Astigarraga;;ine:20903;basc;erdialdekoa;beterrikoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Lezama;;ine:48081;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Ortuella;;ine:48083;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Santurtzi;Santurtzi;ine:48082;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Uribe;municipio;Sopela;;ine:48085;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Gran Bilbao;municipio;Sestao;;ine:48084;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;Lea Artibai;municipio;Ziortza-Bolibar;Ziortza-Bolibar;ine:48915;basc;mendebalekoa;sortaldekoa;;;;LEU Z08 VQ-ES
+Euskadi;terres communes;faceria;Enirio-Aralarko Mankomunitatea;Enirio-Aralarko Mankomunitatea;osm:2854004;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;terres communes;faceria;Gipuzkoako Partzuergo Txikia;Gipuzkoako Partzuergo Txikia;osm:2854005;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 31;31. fazeria;osm:3584116;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 67;67. fazeria;osm:3652951;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;terres communes;faceria;Entziako partzuergoa;Entziako partzuergoa;osm:4118250;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;terres communes;faceria;Comunidad de la Sierra Brava de Badaya / Badaiako Mendilerroko Erkidegoa;Badaiako Mendilerroko Erkidegoa;osm:7278919;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 75;75. fazeria;osm:10305068;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 32;32. fazeria;osm:10305069;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 30;30. fazeria;osm:10305085;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;24. fazeria;24. fazeria;osm:10305106;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;21. fazeria;21. fazeria;osm:10305118;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 108;108. fazeria;osm:10305119;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;35. fazeria;35. fazeria;osm:10305146;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;63. fazeria;63. fazeria;osm:10305147;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;44. fazeria;44. fazeria;osm:10305150;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;43. fazeria;43. fazeria;osm:10305151;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;84. fazeria;84. fazeria;osm:10305156;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;79. fazeria;79. fazeria;osm:10305171;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;41. fazeria;41. fazeria;osm:10305183;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;40. fazeria;40. fazeria;osm:10305184;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;39. fazeria;39. fazeria;osm:10305185;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;45. fazeria;45. fazeria;osm:10305186;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;103. fazeria;103. fazeria;osm:10305187;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;85. fazeria;85. fazeria;osm:10305188;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;56. fazeria;56. fazeria;osm:10305235;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;55. fazeria;55. fazeria;osm:10305236;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;50. fazeria;50. fazeria;osm:10305242;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;52. fazeria;52. fazeria;osm:10305244;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;17. fazeria;17. fazeria;osm:10305249;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;14. fazeria;14. fazeria;osm:10305250;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 107;107. fazeria;osm:10305257;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 106;106. fazeria;osm:10305258;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 8;8. fazeria;osm:10305262;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;28. fazeria;28. fazeria;osm:10305272;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 26;26. fazeria;osm:10305273;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;38. fazeria;38. fazeria;osm:10305299;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;83. fazeria;83. fazeria;osm:10305300;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 36;36. fazeria;osm:10305329;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 37;37. fazeria;osm:10305330;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;82. fazeria;82. fazeria;osm:10305348;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;81. fazeria;81. fazeria;osm:10305349;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 71;71. fazeria;osm:10305384;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 76;76. fazeria;osm:10305385;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 74;74. fazeria;osm:10305386;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 15;15. fazeria;osm:10305528;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Facería 11;11. fazeria;osm:10305529;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;92. fazeria;92. fazeria;osm:10305530;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;9. fazeria;9. fazeria;osm:10305546;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;10. fazeria;10. fazeria;osm:10305574;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;2. fazeria;2. fazeria;osm:10305575;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;16. fazeria;16. fazeria;osm:10305580;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;88. fazeria;88. fazeria;osm:10305589;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;86. fazeria;86. fazeria;osm:10305598;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;91. fazeria;91. fazeria;osm:10305605;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;87. fazeria;87. fazeria;osm:10305606;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;70. fazeria;70. fazeria;osm:10305619;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;22. fazeria;22. fazeria;osm:10305674;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;104. fazeria;104. fazeria;osm:10305675;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Navarre;terres communes;faceria;Andia mendia;Andia mendia;osm:10305682;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;terres communes;faceria;Atxuriko partzuergoa;Atxuriko partzuergoa;osm:11179951;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;terres communes;faceria;Iturrietako partzuergoa;Iturrietako partzuergoa;osm:11179952;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;Gran Bilbao;municipio;Usansolo;;ine:48916;basc;mendebalekoa;sartaldekoa;;;;LEU Z08 VQ-ES
+Navarre;terres communes;faceria;105. fazeria;105. fazeria;osm:15982779;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;terres communes;faceria;Gipuzkoarro-Nazazarrako partzuergoa;Gipuzkoarro-Nazazarrako partzuergoa;osm:18642298;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Euskadi;terres communes;faceria;Alegiako mugak;;osm:19047449;vesina;;;;;Terres communes sans commune : rangées avec leur voisine la plus longue.;OSM
+Burgos;Treviño;municipio;Condado de Treviño;Trebiñu;ine:09109;desaparegut;arabakoa;;;;Enclave de Burgos dans l'Alava : basque alavais disparu, comme l'Alava.;Z08
+Burgos;Treviño;municipio;La Puebla de Arganzón;Argantzon;ine:09276;desaparegut;arabakoa;;;;Enclave de Burgos dans l'Alava : basque alavais disparu, comme l'Alava.;Z08

@@ -90,6 +90,44 @@ export const LENGAS = {
 		nomCarta: 'ARPETAN',
 		atribucion:
 			'Arpitan : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), comunas de Soïssa e d\'Itàlia © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL), lengas de las comunas OFS, domeni d\'aprèp <a href="https://commons.wikimedia.org/wiki/File:Arpitan_francoprovencal_map.jpg" target="_blank" rel="noopener">arpitania.eu</a> (CC BY-SA 3.0), parlars d\'aprèp la Vouiquipèdia'
+	},
+	// Lo basc (Romain, 2026-10-09) : estat actual de la lenga (CAPB en França,
+	// la lei en Espanha, zòna mixta de Navarra en asclas), Araba e navarrés
+	// oriental escantits (pus pallas), dialèctes de Zuazo (SIG/basc/FONTS.md)
+	basc: {
+		kod: 'basc',
+		pref: 'eu-',
+		lang: 'eu',
+		url: '/data/basc.json',
+		nom: { oc: 'basc', fr: 'basque', endo: 'euskara' },
+		// (entre Donostia e Iruña)
+		eti: [-1.95, 43.08],
+		// lo verd pus escur de las cartas de las lengas de França (Romain, 2026-10-09)
+		color: { sorne: '#2f8a57', clar: '#1b5e20', dalt: '#004d40' },
+		tèxt: { sorne: '#cdeedc', clar: '#0f3d1a', dalt: '#c8f0e2' },
+		// de verds, de l'oliva a l'aiga-marina : luènh del violet gascon vesin
+		dial: {
+			sorne: { mendebalekoa: '#3fae6a', erdialdekoa: '#8fd14f', nafarra: '#c9d66b', nafar_lapurtera: '#2fb8a0', zuberera: '#6fd6c6', ekialdeko_nafarra: '#9db8a0', arabakoa: '#a8c49a' },
+			clar: { mendebalekoa: '#1f7a45', erdialdekoa: '#4f8a1f', nafarra: '#7d8a1f', nafar_lapurtera: '#13786a', zuberera: '#2f8f84', ekialdeko_nafarra: '#5f7a64', arabakoa: '#6a8060' },
+			dalt: { mendebalekoa: '#e69f00', erdialdekoa: '#009e73', nafarra: '#f0e442', nafar_lapurtera: '#d55e00', zuberera: '#cc79a7', ekialdeko_nafarra: '#999999', arabakoa: '#bbbbbb' }
+		},
+		apart: { 'basc-franca': { dins: ['nafar_lapurtera', 'zuberera'] } },
+		// noms basques (Zuazo, Euskaltzaindia) ; los occitans son de validar
+		pastilhas: [
+			{ k: 'basc-franca', eu: 'Iparralde', oc: 'País Basc del Nòrd', fr: 'Pays basque nord' },
+			{ k: 'nafar_lapurtera', eu: 'nafar-lapurtera', oc: 'navarrés-labordin', fr: 'navarro-labourdin' },
+			{ k: 'zuberera', eu: 'zuberera', oc: 'soletin', fr: 'souletin' },
+			{ k: 'mendebalekoa', eu: 'mendebalekoa', long: 'mendebaleko euskara', oc: 'biscaïn', fr: 'biscayen' },
+			{ k: 'erdialdekoa', eu: 'erdialdekoa', long: 'erdialdeko euskara', oc: 'gipuscoan', fr: 'guipuscoan' },
+			{ k: 'nafarra', eu: 'goi-nafarrera', oc: 'naut navarrés', fr: 'haut-navarrais' },
+			{ k: 'ekialdeko_nafarra', eu: 'ekialdeko nafarrera', oc: 'navarrés oriental', fr: 'navarrais oriental' },
+			{ k: 'arabakoa', eu: 'Arabako euskara', oc: 'alavés', fr: 'alavais' }
+		],
+		sota: { oc: 'dialècte basc', fr: 'dialecte basque' },
+		sotaApart: { oc: 'basc de França', fr: 'basque de France' },
+		nomCarta: 'EUSKARA',
+		atribucion:
+			'Basc : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), comunas d\'Espanha © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL), zònas de la lei navarresa de 1986, dialèctes d\'aprèp Koldo Zuazo (2008) e la Viquipèdia en basc'
 	}
 };
 

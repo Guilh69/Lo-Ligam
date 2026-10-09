@@ -25,6 +25,7 @@ const mesclar = (a, b, t) => {
 
 const DURADA = 1700; // ms : difusion d'un dialècte causit
 const APAR = 1.9; // s : las tacas de l'aparicion, quand la jaça s'aluca
+const PALLA = 0.55; // part de la color levada a una lenga escantida (zònas « istoric »)
 // los dialèctes ↔ la lenga unida (s), lo vuèg de luènh (s)
 const DURADA_MESCLA = 1.4,
 	DURADA_TORN = 2.2, // (lo balet, coma l'occitan)
@@ -475,6 +476,12 @@ export function crearColaLenga(
 				tg.fillStyle = color(zn);
 				tg.fill(zn.c, 'evenodd');
 			}
+			// (lenga escantida : pus palla, vejatz _prepUni)
+			tg.save();
+			tg.globalCompositeOperation = 'destination-out';
+			tg.globalAlpha = PALLA;
+			for (const zn of zonas) if (zn.props.istoric) tg.fill(zn.c, 'evenodd');
+			tg.restore();
 			if (sola) {
 				// (una zòna a despart recòbre de dialèctes : aqueles demòran)
 				const dins = new Set(zonas.flatMap((zn) => zn.props.dins || []));
@@ -606,6 +613,13 @@ export function crearColaLenga(
 			g.filter = `blur(${(clamp(2500 / G.mPx, 1, 10) * k).toFixed(1)}px)`;
 			g.fillStyle = this._tem.color;
 			g.fill(G.dom, 'evenodd');
+			// (las zònas « istoric », lenga escantida : l'alavés, lo navarrés
+			// oriental, pus pallas, coma lo gascon escantit de l'occitan)
+			g.globalCompositeOperation = 'destination-out';
+			g.globalAlpha = PALLA;
+			for (const zn of G.zonas) if (zn.props.istoric) g.fill(zn.c, 'evenodd');
+			g.globalAlpha = 1;
+			g.globalCompositeOperation = 'source-over';
 			g.filter = 'none';
 		},
 		// los dialèctes fonduts (la mescla cap a la lenga unida), preparats un còp
