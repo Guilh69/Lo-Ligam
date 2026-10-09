@@ -1,0 +1,31 @@
+{
+  "descripcion": "Dialectes de l'arpitan pour la carte de Lo Ligam (décision de Romain du 2026-10-09 : 7 dialectes, les parlers de la Vouiquipèdia en sous-dialectes, même lecture que le catalan). Les codes (kod) sont ceux de la colonne dialecte de dialectes-arpitan.csv ; les clés des parlers, ceux de la colonne parlar.",
+  "a_validar": "Noms arpitans des 7 dialectes (frp) : seuls ceux qui reprennent un parler viennent de la Vouiquipèdia ; les autres (bressan-jurassien, romand, alpin) sont des propositions. Tous les noms occitans (oc) sont des propositions de Claude. À valider par Romain.",
+  "font": "Comunas : IGN ADMIN EXPRESS COG CARTO 2026 (Licéncia dobèrta 2.0), Soïssa e Itàlia © contributors OpenStreetMap (ODbL) ; lengas de las comunas soïssas : OFS ; Piemont : lista de la Region (lei 482/1999) ; domeni en França : carta d'arpitania.eu (Savoyerli, Wikimedia Commons, CC BY-SA 3.0) ; parlars : Vouiquipèdia en arpitan, país istorics de 1789 (Brette, Gay e al. 2024, CC BY 4.0) ; frontièra amb l'occitan : domeni occitan de la carta (limits-carta.json)",
+  "principi_de_colors": "Violets et mauves : loin de la palette occitane chaude (rouge auvergnat et jaune vivaro-alpin voisins) et des bleus-verts du catalan. Suggestions à essayer sur la carte.",
+  "dialectes": [
+    {"kod": "lyonnais", "frp": "liyonês", "fr": "lyonnais", "oc": "lionés", "color": "#c08bff",
+     "parlars": [{"frp": "liyonês", "fr": "lyonnais"}, {"frp": "biôjolês", "fr": "beaujolais"}, {"frp": "forésien", "fr": "forézien"}, {"frp": "rouanês", "fr": "roannais"}, {"frp": "mâconês", "fr": "mâconnais", "transicio": "oïl"}, {"frp": "brionês-charolês", "fr": "brionnais-charolais", "transicio": "oïl"}]},
+    {"kod": "bressan_jurassien", "frp": "brêssan-jurassien", "frp_a_validar": true, "fr": "bressan-jurassien", "oc": "bressan-jurassian", "color": "#8f7dff",
+     "parlars": [{"frp": "brêssan", "fr": "bressan"}, {"frp": "dombisto", "fr": "dombiste"}, {"frp": "bugisto", "fr": "bugiste"}, {"frp": "jurassien", "fr": "jurassien"}, {"frp": "burgondan", "fr": "burgondan (Haut-Doubs)"}]},
+    {"kod": "dauphinois", "frp": "dârfenouès", "fr": "dauphinois", "oc": "delfinenc", "color": "#e07ad6",
+     "parlars": [{"frp": "dârfenouès", "fr": "dauphinois"}]},
+    {"kod": "savoyard", "frp": "savoyârd", "fr": "savoyard", "oc": "savoiard", "color": "#a95ce0",
+     "parlars": [{"frp": "savoyârd", "fr": "savoyard"}, {"frp": "genevês", "fr": "genevois"}]},
+    {"kod": "romand", "frp": "romand", "frp_a_validar": true, "fr": "romand", "oc": "romand", "color": "#6f8bff",
+     "parlars": [{"frp": "vôdouès", "fr": "vaudois"}, {"frp": "friborgês", "fr": "fribourgeois"}, {"frp": "nôchâtelês", "fr": "neuchâtelois"}]},
+    {"kod": "alpin", "frp": "alpin", "frp_a_validar": true, "fr": "alpin", "oc": "alpenc", "color": "#d6b4ff",
+     "parlars": [{"frp": "valêsan", "fr": "valaisan"}, {"frp": "vâldoten", "fr": "valdôtain"}, {"frp": "valadas", "fr": "parlers des vallées du Piémont", "frp_a_validar": true}, {"frp": "vâlsoanin", "fr": "valsoanin"}]},
+    {"kod": "faetar", "frp": "faétâre", "fr": "faetar", "oc": "faetar", "color": "#ff8fc8",
+     "parlars": [{"frp": "faétâre", "fr": "faetar"}]}
+  ],
+  "apart": {"kod": "arpitan-franca", "frp": "Arpitania de France", "frp_a_validar": true, "fr": "arpitan de France", "oc": "arpitan de França"},
+  "transicions": [
+    {"clau": "Toc", "kod": "trans-oc", "defora": true, "frp": "parlars de passâjo vers l'occitan", "frp_a_validar": true, "fr": "transition avec l'occitan", "oc": "transicion amb l'occitan", "entre": ["dauphinois", "occitan"],
+     "nota": "communes occitanes pour la carte d'Occitanica et arpitanes pour celle d'arpitania.eu (nord de l'Ardèche et de la Drôme, Trièves, Beaumont, sud de la Loire) : dans le domaine occitan, hachurées"},
+    {"clau": "Toil", "kod": "trans-oil", "frp": "mâconês e brionês-charolês", "fr": "mâconnais et brionnais-charolais", "oc": "mâconés e brionés-charolés", "entre": ["lyonnais", "oïl"],
+     "nota": "parlers de passage vers l'oïl (Vouiquipèdia)"},
+    {"clau": "Tpms", "kod": "trans-pms", "frp": "Avelhana e Giavèno", "frp_a_validar": true, "fr": "Avigliana et Giaveno", "oc": "Avilhana e Giavèn", "entre": ["alpin", "piémontais"],
+     "nota": "communes déclarées arpitanes (loi 482) au débouché des vallées, hors de la carte arpitania.eu : parler à vérifier"}
+  ]
+}

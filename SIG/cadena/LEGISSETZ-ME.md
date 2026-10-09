@@ -79,6 +79,19 @@ téléchargées vont dans `SIG/brut/` (ignoré par Git, refait par les scripts).
 Après une nouvelle fabrication des provinces ou des parcs, relancer
 `noms-oc-jaces.mjs` (les scripts réécrivent les noms occitans de la source).
 
+## Arpitan (2026-10-09)
+
+Sources, règles et points à valider : `SIG/arpitan/FONTS.md`. Dans l'ordre :
+
+1. `node SIG/cadena/arpitan-brut.mjs` : contours bruts (France IGN, Suisse et Italie OSM) dans `SIG/brut/arpitan/`.
+2. `node SIG/cadena/arpitan-carta.cjs` : calage de la carte arpitania.eu (`SIG/arpitan/gcp-arpitania.csv`), masque, part de chaque commune dans la carte et dans le domaine occitan (`SIG/brut/arpitan/parts-comunas.json`).
+3. `python-qgis.bat -s -P SIG/cadena/arpitan-bailliages.py` : bailliage de 1789 et arrondissement de chaque commune française.
+4. `node SIG/cadena/arpitan-classament.mjs` : domaine, dialecte et parler de chaque commune (`SIG/arpitan/dialectes-arpitan.csv`). La liste OFS (`ofs-regions-linguisticas.csv`) et celle de la loi 482 (`piemont-482.pdf`) sont dans `SIG/arpitan/` ; les communes piémontaises sont écrites dans le script.
+5. `python-qgis.bat -s -P SIG/cadena/arpitan.py` : `app/static/data/arpitan.json` (1 min 40).
+6. `node SIG/cadena/arpitan-app.mjs` : ajoute les villes.
+
+Après une retouche du domaine occitan (`limits-carta.json`), relancer à partir de l'étape 2.
+
 ## Contrôles
 
 Après chaque passage, vérifier les villes témoins (voir l'historique Git du

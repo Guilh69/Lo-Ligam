@@ -107,6 +107,13 @@ const EXTRACCIONS = [
 		sortidas: { 'piemont-comunas': { admin_level: '8', prefix: { 'ref:ISTAT': ['001'] } } },
 	},
 	{
+		nom: 'piemont-extra',
+		// Carema (declarada arpitana per la lei 482, a l'èst de l'empresa de las valadas)
+		pre: 'rel(44874);map_to_area->.a;',
+		sel: 'rel(area.a)["boundary"="administrative"]["admin_level"="8"]["name"="Carema"];',
+		sortidas: { 'piemont-extra-comunas': { admin_level: '8', prefix: { 'ref:ISTAT': ['001'] } } },
+	},
+	{
 		nom: 'polha',
 		// Faeto (41210, ISTAT 071023), Celle di San Vito (41233, ISTAT 071019)
 		sel: 'rel(41210);rel(41233);',
