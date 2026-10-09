@@ -1,4 +1,5 @@
 <script>
+	import { PLAJAS } from '$lib/carta/escalas.js';
 	// Rail de las jaces (causida de Romain, 2026-10-07, « panèl C ») : un rail
 	// totjorn visible al bòrd de la carta, una icòna nomenada per familha. Un
 	// clic dobrís lo tirador de la familha ; un segond clic sus la meteissa
@@ -410,6 +411,15 @@
 			: j.estat === 'disponible' && j.fons && j.fons !== baseLayer
 				? tx.sonqueFons
 				: ((lang === 'oc' ? j.nota_oc : (j.nota_fr ?? j.nota_oc)) ?? (actiu(j) ? null : tx.aVenir));
+	// a quina escala la jaça se vei, escrich quand es cochada (demanda de
+	// Romain, 2026-10-09 ; occitan de validar)
+	const kmTèxt = (k) => (k < 1 ? k * 1000 + ' m' : String(k).replace('.', ',') + ' km');
+	const escalaJ = (j) => {
+		const pl = PLAJAS[j.id];
+		if (!pl) return null;
+		if (lang === 'oc') return pl[1] ? `Vesibla de ${kmTèxt(pl[0])} a ${kmTèxt(pl[1])}` : `Vesibla a partir de ${kmTèxt(pl[0])}`;
+		return pl[1] ? `Visible de ${kmTèxt(pl[0])} à ${kmTèxt(pl[1])}` : `Visible à partir de ${kmTèxt(pl[0])}`;
+	};
 	const nomFam = (id) => {
 		if (id === 'sus') return tx.sus;
 		if (id === 'fons') return tx.fons;
@@ -668,6 +678,7 @@
 		<div class="cos">
 			<b>{nomJ(j)}</b>
 			{#if notaJ(j)}<small>{notaJ(j)}</small>{/if}
+			{#if visibility[j.id] && actiu(j) && escalaJ(j)}<small class="escala-j">{escalaJ(j)}</small>{/if}
 			{#if j.id === 'dialectes' && actiu(j)}
 				<div class="pastilhas" role="group" aria-label={tx.causirDial}>
 					{#each NOMS_DIAL as [k, oc, fr] (k)}
@@ -986,6 +997,10 @@
 		font-size: 0.72rem;
 		line-height: 1.35;
 		color: var(--t-tinta-2);
+	}
+	.cos small.escala-j {
+		font-style: italic;
+		color: var(--t-aur);
 	}
 	.accions {
 		display: flex;

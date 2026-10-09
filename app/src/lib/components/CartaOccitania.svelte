@@ -5,7 +5,7 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, KM, zDès, zCran, zPlaja, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
+	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
 	const { RELAIS: Z_RELAIS, PRECARGA: Z_PRECARGA, ICONAS: Z_ICONAS } = Z;
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
@@ -1329,6 +1329,25 @@
 			calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		map.flyTo(c, z, { animate: !calm, duration: calm ? 0 : 1.2 });
 	}
+	// Una jaça occitana cochada : la vista d'ensemble de l'Occitània, lo meteis
+	// cadratge sus totes los aparelhs (70 km sus un ecran de 1 830 px), mai
+	// pròche se la jaça se vei pas d'aquí (los dialèctes, a 100 km al mai)
+	const OCCITANIA_VISTA = [
+		[42.65, -1.6],
+		[46.4, 7.55]
+	];
+	function anarALaVistaOccitana(id) {
+		if (!map || !L) return;
+		const b = L.latLngBounds(OCCITANIA_VISTA),
+			c = b.getCenter();
+		let z = Math.floor(map.getBoundsZoom(b, false, L.point(32, 120)) / PAS_ZOOM) * PAS_ZOOM - RECUOL_VISTA;
+		const pl = PLAJAS[id];
+		if (pl) z = Math.max(z, zCran(pl[0], c.lat));
+		z = Math.min(z, Z.ARRIBADA_MAX);
+		if (Math.abs(map.getZoom() - z) < 0.01 && map.getBounds().contains(c)) return;
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		map.flyTo(c, z, { animate: !calm, duration: calm ? 0 : 1.4 });
+	}
 	$effect(() => {
 		const vis = { ...visibility },
 			abans = visAbans;
@@ -1337,9 +1356,11 @@
 		const nòvas = Object.keys(vis).filter((k) => vis[k] && !abans[k]);
 		// (sonque una jaça cochada a la man : « Tot tornar » bolega pas la carta)
 		if (nòvas.length !== 1) return;
-		// (los dialèctes : lor vòl a 100 km e lor fuòc d'artifici)
-		if (nòvas.includes('dialectes')) anarAlsDialectes(null);
-		else anarALaPlaja(nòvas[nòvas.length - 1]);
+		// (una jaça occitana : la vista de l'Occitània ; los dialèctes i jògan
+		// lor fuòc d'artifici ; las autras : l'escala vesibla la mai pròcha)
+		const id = nòvas[0];
+		if (OCCITANAS.has(id)) anarALaVistaOccitana(id);
+		else anarALaPlaja(id);
 	});
 
 	// Recherche : un lieu, la carte y vole (et l'y signale) ; un département ou
