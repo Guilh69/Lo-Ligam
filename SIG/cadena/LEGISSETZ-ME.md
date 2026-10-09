@@ -110,8 +110,8 @@ Une seule référence terre / eau pour toute la carte : les communes de l'IGN (`
 2. `python-qgis.bat SIG/cadena/mar.py` : `app/static/data/mar.json`, la mer posée sur les photos aériennes au zoom proche (l'IGN y est blanc), en fondu de 500 m jusqu'à la côte. `mar.py` contient aussi la référence terre / eau (`tèrra_e_aiga`) dont se sert `costa-ref.py`.
 
 3. `python-qgis.bat SIG/cadena/costa-estelas.py` : `app/static/data/costa.json`, le trait de côte « au crayon » de la carte en étoiles de /carta, recalé sur la même référence (simplifié à 100 m, 10 Ko compressés). La carte en étoiles de l'accueil garde `COSTA` (Natural Earth, dans `carta-estelas.js`) : à son échelle la différence ne se voit pas.
-- `node SIG/cadena/lengas-vesinas.mjs` : `app/static/data/lengas-vesinas.json` (12 Ko), le contour simplifié des langues voisines (catalan, arpitan) pour l'invitation « Découvrir… » au survol ; à relancer quand un domaine change.
 4. `node SIG/cadena/costa-osm.mjs` : la côte OpenStreetMap des pays voisins (dans `SIG/brut/costa-osm/`), à brancher dans `PRECIS` de `mar.py` une fois téléchargée.
+5. `node SIG/cadena/lengas-vesinas.mjs` : `app/static/data/lengas-vesinas.json` (12 Ko), le contour simplifié des langues voisines (catalan, arpitan) pour l'invitation « Découvrir… » au survol ; à relancer quand un domaine change.
 
 L'étang de Berre, le bassin d'Arcachon et l'estuaire de la Gironde sont hors communes : sans teinte, et pas peints par la mer (rectangles `DINS` de `mar.py`). Hors de France (Espagne, Italie, Monaco), faute de trait de côte précis, une marge de 2 km protège la terre : la mer et le recalage n'y touchent pas.
 
