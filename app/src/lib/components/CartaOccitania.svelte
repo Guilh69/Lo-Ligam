@@ -3,6 +3,7 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
+	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, Z_PRECARGA, Z_RELAIS, nivèlsDezoom, aDetalh, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
@@ -100,8 +101,10 @@
 				if (n > 4) return;
 				setTimeout(() => tile.isConnected && (tile.src = c.getTileUrl(coords) + '&essai=' + n), 300 * 2 ** n + Math.random() * 400);
 			});
-		const g = L.layerGroup(cs);
-		g.setOpacity = (o) => (cs.forEach((c) => c.setOpacity(o)), g);
+		// la mar al larg, en fondut fins a la còsta (l'IGN i es blanc de prèp)
+		const mar = crearColaMar(L).setOpacity(opts.opacity ?? 1);
+		const g = L.layerGroup([...cs, mar]);
+		g.setOpacity = (o) => (cs.forEach((c) => c.setOpacity(o)), mar.setOpacity(o), g);
 		g.isLoading = () => cs.some((c) => c.isLoading?.());
 		return g;
 	}
