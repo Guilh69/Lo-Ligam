@@ -49,7 +49,7 @@ La carte de Zuazo n'est **pas** recopiée (pas de licence libre) : seul son clas
 - **Encartaciones** (ouest de la Biscaye) : basque officiel mais castillan depuis le Moyen Âge : hachurées.
 - **Basque éteint, plus pâle** : l'alavais (Alava sauf Aramaio et Legutio, où le basque ne s'est jamais perdu, et Treviño) et le navarrais oriental (Roncal, éteint en 1991 ; Salazar). Dessin : `colaLenga.js`, zones « istoric ».
 - **Terres communes** (facerías, Bardenas, Urbasa, Aralar…) : rangées avec la commune voisine qui a la plus longue limite commune.
-- **Villes** : de loin (rang 1), une grande ville tous les 35 km au moins (Bilbo, Gasteiz, Donostia, Iruña, Baiona) ; rang 2 tous les 18 km, avec les chefs-lieux historiques (Maule, Donibane-Garazi, Donapaleu, Uztaritze, Gernika) ; rang 3 tous les 8 km. Tolosa (Guipuscoa) au rang 3, pour ne pas croiser Toulouse.
+- **Villes** : de loin (rang 1), une grande ville tous les 70 km au moins (Bilbo, Iruña, Baiona ; retour de Romain : « trop de bruit textuel » à 70 km) ; Gasteiz et Donostia au rang 2 ; rang 2 tous les 18 km, avec les chefs-lieux historiques (Maule, Donibane-Garazi, Donapaleu, Uztaritze, Gernika) ; rang 3 tous les 8 km. Tolosa (Guipuscoa) au rang 3, pour ne pas croiser Toulouse.
 
 ## À valider par Romain
 

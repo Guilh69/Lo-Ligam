@@ -141,7 +141,7 @@ const gardadas = vilas.filter((v, i) => i < MAX || CAP1.includes(v.nom_eu) || CA
 // autras davalan d'un renc. Tolosa (Gipuscoa) davala al renc 3 : son nom es
 // lo de Tolosa de Lengadòc, capitala de la carta.
 const km = (p, q) => Math.hypot((p.lon - q.lon) * 111.32 * Math.cos((p.lat * Math.PI) / 180), (p.lat - q.lat) * 110.57);
-const LUÈNH = { 1: 35, 2: 18, 3: 8 };
+const LUÈNH = { 1: 70, 2: 18, 3: 8 }; // (de luènh, 70 km : retorn de Romain, « trop de bruit textuel » a 70 km)
 const ESTRANH = ['Tolosa'];
 const vòl = (v) => (CAP1.includes(v.nom_eu) ? 1 : ESTRANH.includes(v.nom_eu) ? 3 : v.pop >= 100000 ? 1 : v.pop >= 20000 || CAP2.includes(v.nom_oficial) ? 2 : v.pop >= 7000 ? 3 : 4);
 const forçat = (v) => CAP1.includes(v.nom_eu) || CAP2.includes(v.nom_oficial);

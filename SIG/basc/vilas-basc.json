@@ -1,8 +1,8 @@
 [
 {"nom_eu":"Bilbo","nom_oficial":"Bilbao","ine":"48020","lon":-2.9350039,"lat":43.2630018,"pop":350975,"estat":"ES","font":"OSM (comuna : name:eu, population ; ponch del vilatge cap-luòc)","renc":1},
-{"nom_eu":"Gasteiz","nom_oficial":"Vitoria-Gasteiz","ine":"01059","lon":-2.6724025,"lat":42.8465088,"pop":260402,"estat":"ES","font":"OSM (comuna : name:eu, population ; ponch del vilatge cap-luòc)","renc":1},
+{"nom_eu":"Gasteiz","nom_oficial":"Vitoria-Gasteiz","ine":"01059","lon":-2.6724025,"lat":42.8465088,"pop":260402,"estat":"ES","font":"OSM (comuna : name:eu, population ; ponch del vilatge cap-luòc)","renc":2},
 {"nom_eu":"Iruña","nom_oficial":"Pamplona / Iruña","ine":"31201","lon":-1.6440089,"lat":42.8181992,"pop":209676,"estat":"ES","font":"OSM (comuna : name:eu, population ; ponch del vilatge cap-luòc)","renc":1},
-{"nom_eu":"Donostia","nom_oficial":"Donostia / San Sebastián","ine":"20069","lon":-1.9838889,"lat":43.3224219,"pop":189507,"estat":"ES","font":"OSM (comuna : name:eu, population ; ponch del vilatge cap-luòc)","renc":1},
+{"nom_eu":"Donostia","nom_oficial":"Donostia / San Sebastián","ine":"20069","lon":-1.9838889,"lat":43.3224219,"pop":189507,"estat":"ES","font":"OSM (comuna : name:eu, population ; ponch del vilatge cap-luòc)","renc":2},
 {"nom_eu":"Barakaldo","nom_oficial":"Barakaldo","ine":"48013","lon":-2.9887476,"lat":43.2949177,"pop":103084,"estat":"ES","font":"OSM (comuna : name:eu, population ; ponch del vilatge cap-luòc)","renc":4},
 {"nom_eu":"Getxo","nom_oficial":"Getxo","ine":"48044","lon":-3.0078627,"lat":43.3431164,"pop":75967,"estat":"ES","font":"OSM (comuna : name:eu, population ; ponch del vilatge cap-luòc)","renc":3},
 {"nom_eu":"Irun","nom_oficial":"Irun","ine":"20045","lon":-1.7888095,"lat":43.3383176,"pop":63737,"estat":"ES","font":"OSM (comuna : name:eu, population ; ponch del vilatge cap-luòc)","renc":3},

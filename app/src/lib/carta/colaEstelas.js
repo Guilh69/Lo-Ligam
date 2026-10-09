@@ -114,14 +114,17 @@ const CAPITALAS = ['Bordèu', 'Pau', 'Tolosa', 'Montpelhièr', 'Marselha', 'Niç
 // a partir de quin zoom un luòc se mòstra : una valor de la barra, parièra
 // sus totes los ecrans (escalas.js : capitalas a 200 km, vilas a 40 km,
 // mejanas a 30 km ; las vilas grandas d'una autra lenga, coma las capitalas)
-const capitala = (e) => CAPITALAS.includes(e.nom) || e.dz === -1;
+// (una vila d'una autra lenga es pas una capitala occitana per son nom :
+// Tolosa de Gipuscoa èra presa per Tolosa de Lengadòc)
+const capOc = (e) => !e.lenga && CAPITALAS.includes(e.nom);
+const capitala = (e) => capOc(e) || e.dz === -1;
 const zLuòc = (e, n) => (capitala(e) ? n.zCapitalas : e.renc <= 2 ? n.zVilas : e.renc === 3 ? n.zVilasMejanas : n.zVilatges);
 // (lo nom d'una capitala ven un cran aprèp son estela)
 const zNomLuòc = (e, n) => (capitala(e) ? n.zNomsCapitalas : zLuòc(e, n));
 // Lo retard (s) de l'alucatge d'una estela : las capitalas una a una, las
 // autras cadun a son moment, coma d'estelas que s'alucan
 const retardLuòc = (e) => {
-	const ic = CAPITALAS.indexOf(e.nom);
+	const ic = e.lenga ? -1 : CAPITALAS.indexOf(e.nom);
 	return ic >= 0 ? ic * 0.11 : 0.25 + ((e.f / 6.283) % 1) * 0.9;
 };
 const ESC_LUÒC = 600; // ms : una estela (e son nom) que se'n va s'escantís
@@ -1000,6 +1003,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			if (vilas)
 				fach[kod] ??= vilas.map((v) => ({
 					...v,
+					lenga: kod,
 					dz: v.renc === 1 ? -1 : undefined,
 					f: aleat(0, 6.28), v: aleat(0.2, 0.7), X: 0, Y: 0
 				}));
@@ -1942,7 +1946,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					y = e.Y - o.y;
 				if (x < -10 || y < -10 || x > W + 10 || y > H + 10) continue;
 				const tw = this._calm ? 0.6 : Math.sin(temps * e.v + e.f) * 0.5 + 0.5;
-				const ic = CAPITALAS.indexOf(e.nom);
+				const ic = e.lenga ? -1 : CAPITALAS.indexOf(e.nom);
 				// las capitalas d'en primièr, puèi cada vilatge a son moment, coma
 				// d'estelas que s'alucan una a una (retorn de Romain)
 				// (las vilas d'una lenga alucada aprèp : son relòtge a elas, las autras bolegan pas)

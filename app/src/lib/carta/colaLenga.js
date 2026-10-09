@@ -931,6 +931,11 @@ export function crearColaLenga(
 					const t = (endo(zn.props) ?? (this._lang === 'fr' ? zn.props.fr : zn.props.oc)).toUpperCase();
 					const w = cx.measureText(t).width + 6,
 						h = fs * 1.5;
+					// (retorn de Romain, 2026-10-09 : « trop de bruit textuel » sul basc
+					// a 70 km) : sens causida, un nom s'aficha sonque se sa zòna es pro
+					// larga per el, e se tròba una plaça liura ; si que non arriba en
+					// s'apropchant
+					if (!sel && zn.bbox[2] - zn.bbox[0] < w * 0.75) continue;
 					let b = null;
 					for (const [dx, dy] of DECALATGES_NOM) {
 						const c = [zn.eti[0] + dx - w / 2, zn.eti[1] + dy - h / 2, zn.eti[0] + dx + w / 2, zn.eti[1] + dy + h / 2];
@@ -940,6 +945,7 @@ export function crearColaLenga(
 							break;
 						}
 					}
+					if (!b && !sel) continue;
 					b ??= [zn.eti[0] - w / 2, zn.eti[1] - h / 2, zn.eti[0] + w / 2, zn.eti[1] + h / 2];
 					caixas.push(b);
 					const color = zn.props.apart ? T.color : (T.dial[zn.kod] ?? T.color);
