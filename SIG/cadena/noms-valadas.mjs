@@ -1,6 +1,8 @@
 // Noms occitans e entradas de recèrca de las valadas d'Itàlia dins territoris.js
 import fs from 'fs';
-const S = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/osm/';
+import { fileURLToPath } from 'url';
+// entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+const S = fileURLToPath(new URL('../brut/cadena-entradas/osm/', import.meta.url));
 const F = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/src/lib/carta/territoris.js';
 const v = JSON.parse(fs.readFileSync(S + 'valadas.json', 'utf8'));
 const OC = {

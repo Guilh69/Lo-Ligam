@@ -6,10 +6,13 @@
 # la bande étant retirée à moins de 7 km des frontières terrestres de la
 # langue (sinon elle passait la frontière le long de la mer : Salses,
 # Menton, côte basque).
+import os
 import json
 from osgeo import ogr, osr
 ogr.UseExceptions()
-base = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/'
+# entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
+base = ENTRADAS
 wgs, l93 = osr.SpatialReference(), osr.SpatialReference()
 wgs.ImportFromEPSG(4326); l93.ImportFromEPSG(2154)
 for s in (wgs, l93): s.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)

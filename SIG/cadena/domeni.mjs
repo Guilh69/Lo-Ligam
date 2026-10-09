@@ -2,9 +2,11 @@
 // TERRESTRE (les tronçons qui longent la mer sont retirés : le trait de côte
 // existe déjà). Ajouté à app/static/data/limits-carta.json sous « domeni ».
 import fs from 'fs';
-import { COSTA } from 'file:///C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/src/lib/acuelh/carta-estelas.js';
+import { fileURLToPath } from 'url';
+import { COSTA } from '../../app/src/lib/acuelh/carta-estelas.js';
 
-const dir = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/limits/';
+// entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+const dir = fileURLToPath(new URL('../brut/cadena-entradas/limits/', import.meta.url));
 const sortida = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/limits-carta.json';
 const SEUIL_KM = Number(process.argv[2] ?? 4);
 

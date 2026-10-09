@@ -1,10 +1,13 @@
 # Zones de dialectes : masques par classe -> polygones (calage polynomial),
 # fusion de la bande sombre du Rhône dans l'auvergnat, découpe par le domaine
 # final (avec vallées d'Italie et côte), lacunes rendues à la zone voisine.
+import os
 import json, subprocess, sys
 from osgeo import ogr, osr
 ogr.UseExceptions()
-d = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/'
+# entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
+d = ENTRADAS
 CL = {1: 'gas', 2: 'lan', 3: 'pro', 4: 'lem', 5: 'auv', 6: 'viv', 7: 'auv'}
 wgs, l93 = osr.SpatialReference(), osr.SpatialReference()
 wgs.ImportFromEPSG(4326); l93.ImportFromEPSG(2154)

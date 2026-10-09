@@ -4,10 +4,13 @@
 # plana de parlar piemontés (Barge, Saluzzo, Boves…) ; de validar per Romain.
 # Sortida : valadas.json { valadas: [[code, nomFr, anels]], totas: anels },
 # e valadas.geojson (union, pel domeni de la lenga).
+import os
 import json
 from osgeo import ogr, osr
 ogr.UseExceptions()
-S = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/osm/'
+# entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
+S = ENTRADAS + 'osm/'
 
 VALADAS = [
     ('V-SUSA', 'Haute vallée de Suse', ['Bardonecchia', 'Oulx', 'Cesana Torinese', 'Claviere', 'Sauze di Cesana', "Sauze d'Oulx", 'Salbertrand', 'Exilles', 'Chiomonte']),

@@ -1,10 +1,13 @@
 # Domaine occitan final : celui de la carte Occitanica (France, Val d'Aran),
 # plus les vallées occitanes d'Italie reprises de l'ancienne carte des dialectes
 # (Occitanica ne les colorie pas, elle les nomme seulement).
+import os
 import json
 from osgeo import ogr
 ogr.UseExceptions()
-dir_ = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/'
+# entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
+dir_ = ENTRADAS
 nou = ogr.CreateGeometryFromJson(json.dumps(json.load(open(dir_ + 'occitanica/domeni-occitanica.geojson'))['features'][0]['geometry']))
 vielh = ogr.CreateGeometryFromJson(json.dumps(json.load(open(dir_ + 'limits/domeni.geojson'))['features'][0]['geometry']))
 # Vallées occitanes d'Italie et Val d'Aran : contours OpenStreetMap (ODbL),

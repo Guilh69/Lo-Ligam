@@ -2,10 +2,13 @@
 # comuna per comuna dins Tourtoulon e Bringuier (1876, domeni public ; mitat
 # oèst, contra-verificada) e Ronjat (1930, d'aprèp las nòtas de Tourtoulon ;
 # mitat èst). Aproximatiu : poligòn liscat (2 km), de validar per Romain.
+import os
 import json
 from osgeo import ogr, osr
 ogr.UseExceptions()
-S = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/osm/'
+# entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
+S = ENTRADAS + 'osm/'
 D = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/creissent.geojson'
 d = json.load(open(S + 'creissent-nostre.json', encoding='utf-8'))
 wgs, l93 = osr.SpatialReference(), osr.SpatialReference()

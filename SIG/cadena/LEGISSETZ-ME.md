@@ -19,6 +19,12 @@ ou corriger les chemins.
 
 ## Entrées qui ne sont pas ici
 
+Les fichiers de travail de la chaîne sont dans `SIG/brut/cadena-entradas/`
+(hors Git, rangés le 2026-10-09 depuis un ancien dossier temporaire) :
+`limits/` (domaine), `ne/` (côte Natural Earth), `occitanica/` (dialectes en
+pixels et vectorisés), `osm/` (communes d'Italie, vallées, Aran). Les scripts
+y accèdent par un chemin relatif.
+
 - La carte Occitanica : `Modules_cors/Base_donnees_linguistica/Carta_occitanica.jpg`
   (« Carte linguistique de l'Occitanie », CIRDÒC, fiche 21242, Licence Ouverte).
   `treball.png` en est la version de travail (4000 px de large).

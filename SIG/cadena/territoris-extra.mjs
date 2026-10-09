@@ -2,7 +2,9 @@
 // (e una region) : Val d'Aran ; valadas d'Itàlia (se lo fichièr es aquí).
 // Contorns OpenStreetMap (ODbL), simplificats (~150 m) e arredondits (3 decimalas).
 import fs from 'fs';
-const S = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/osm/';
+import { fileURLToPath } from 'url';
+// entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+const S = fileURLToPath(new URL('../brut/cadena-entradas/osm/', import.meta.url));
 const F = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/limits-carta.json';
 
 // Douglas-Peucker sus un anèl (tolerància en grases, ~ 0,0015° ≈ 150 m)

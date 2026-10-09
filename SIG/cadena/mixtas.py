@@ -2,10 +2,13 @@
 # domeni o a son bòrd, amb una nòta al survòl. Ròia e Briga (ligur de traches
 # occitans), Mónegue (ligur, niçard tanben), comunas italianas declaradas
 # occitanas per la lei 482 mas de parlar piemontés. Noms occitans de validar.
+import os
 import json
 from osgeo import ogr, osr
 ogr.UseExceptions()
-S = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/osm/'
+# entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
+S = ENTRADAS + 'osm/'
 R = json.load(open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['corrections']
 wgs, m = osr.SpatialReference(), osr.SpatialReference()
 wgs.ImportFromEPSG(4326); m.ImportFromEPSG(3035)

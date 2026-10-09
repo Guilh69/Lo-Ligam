@@ -1,7 +1,9 @@
 // Dialècte de cada luòc de la carta en estelas, d'après las zònas Occitanica
 // (ponch dins lo poligòn ; defòra : la zòna mai pròcha).
 import fs from 'fs';
-const S = 'C:/Users/perie/AppData/Local/Temp/claude/C--Users-perie-Documents-6-Projectes-Lo-Ligam/0e63bbde-6a7e-4082-97fe-1ae56a3855ba/scratchpad/occitanica/';
+import { fileURLToPath } from 'url';
+// entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
+const S = fileURLToPath(new URL('../brut/cadena-entradas/occitanica/', import.meta.url));
 const F = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/src/lib/acuelh/carta-estelas.js';
 const g = JSON.parse(fs.readFileSync(S + 'dialectes-occitanica.geojson', 'utf8'));
 const ORDRE = ['gas', 'lan', 'pro', 'lem', 'auv', 'viv'];
