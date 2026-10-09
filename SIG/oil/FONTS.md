@@ -35,6 +35,18 @@ Autres couches du même export, utiles pour les limites extérieures : aire celt
 - `Modules_cors/Autras_lengas/Oil/Langues_d'oïl_et_Croissant.png` : Wikimedia Commons, Vida Nova, 2021, CC BY-SA 4.0,
   mais **dérivée de l'Atlas sonore (LISN/LIMSI)**, sous CC BY-NC-SA → même statut que l'atlas : contrôle, pas base.
 
+## Dialectes du picard (2026-10-10, demande de Romain)
+Pas de carte ouverte des dialectes picards au niveau des communes (référence savante : Atlas linguistique et ethnographique picard, Carton et Lebègue, 1989-1998). Base retenue (choix de Romain) : la « Carte des variétés du picard » de Wikipédia (Epi2025, Wikimedia Commons, CC BY-SA 4.0), copie dans `Modules_cors/Autras_lengas/Oil/Picard_carte_wiki.png`, 21 parlers en trois familles (rouchi, autres parlers picards, picard gagné sur le flamand).
+- `SIG/cadena/picard-carta.py` : calage affine sur 22 points (`SIG/oil/gcp-picard.csv` : embouchures de la côte, villes qui donnent leur nom aux parlers), écart moyen 7 km (pire 16 km, Lille) : la carte est schématique. Zones de couleur découpées par les traits blancs ; une zone à plusieurs noms est partagée au nom le plus proche. Sortie `SIG/oil/parlars-picards.csv` (parler de chaque commune).
+- Regroupement sur la carte : **ch'ti** = Chti/Artésien urbain + Chti/Douaisien (216 communes) ; **rouchi** = Lillois, Valenciennois, Kimberlot, Avesnois (+ Tournaisien, Borain en Belgique) (399) ; **picard** = les autres parlers (2 293). « Langue picarde » entière sélectionnable à part.
+- Communes de la carte des Archives classées picardes mais à plus de 15 km des zones colorées : picard sans parler.
+
+## Noms des villes dans la langue du lieu (2026-10-10)
+- Picard, normand, wallon : titres des articles des Wikipédias pcd (≈ 1 900 communes françaises), nrm (≈ 290, surtout le Cotentin) et wa (≈ 30 en France), via Wikidata (requête SPARQL sur les liens de site, données CC0) → `SIG/brut/oil/wd-*.csv`. Un nom n'est pris que dans la langue de la zone de la commune (la Wikipédia wallonne nomme aussi Rouen « Rouwan »).
+- OpenStreetMap : name:pcd 694, name:nrf 363, name:wa 2401 objets (pas encore utilisés) ; rien pour le gallo, le champenois, le lorrain, le bourguignon, le franc-comtois, le poitevin-saintongeais.
+- Gallo : répertoires de Chubri (« Noms en gallo de chefs-lieux de canton de Haute-Bretagne », 2015 ; livrets 44 et 56, 2014 ; graphie Moga), lus avec pdftotext (`SIG/cadena/gallo-noms.py`, 220 noms, liste dans `SIG/brut/oil/` hors Git). Les livrets portent « tous droits réservés » ; décision de Romain (2026-10-10) : un nom attesté appartient à tout le monde ; seuls les noms des villes affichées vont sur la carte, avec la source citée.
+- Autres langues : introduction de l'article de la Wikipédia en français (« … en poitevin »), 3 noms trouvés (Beane, Brsuire, Leneinvile), à vérifier ; sinon nom officiel. Bilan : 210 villes (`SIG/cadena/oil-vilas.py`, espacement 22 à 30 km, pas de banlieues en grappe), dont 62 avec un nom local.
+
 ## À trouver
 - Belgique : wallon (4 dialectes), picard, lorrain (gaumais), champenois (décret de la Communauté française, 1990).
 - Îles Anglo-Normandes : jèrriais, guernesiais (normand).

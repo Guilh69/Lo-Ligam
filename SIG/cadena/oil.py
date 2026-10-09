@@ -153,7 +153,8 @@ for i, (_, _, g) in enumerate(cantons):
 PARLARS = defaultdict(set)
 for z, dia, _ in cantons:
     if z in ZONA:
-        PARLARS[ZONA[z]].add('île-de-France' if dia == 'francien' else dia)
+        if ZONA[z] != 'picard':
+            PARLARS[ZONA[z]].add('île-de-France' if dia == 'francien' else dia)
 
 
 def canton_de(pt):
@@ -195,7 +196,21 @@ for f in cm:
         sens_canton.append(nom_de[c])
 print('Comunas : %d ; sens canton a mens de 5 km : %d (%s)' % (len(geo), len(sens_canton), ', '.join(sens_canton[:10]) or 'cap'))
 
-unitats = [{'codi': c, 'nom': nom_de[c], 'dial': ZONA[z], 'domeni': 'oil', 'clau': ZONA[z], 'g': geo[c]}
+# Los dialèctes picards (Romain, 2026-10-10) : lo parlar de cada comuna
+# d'aprèp la carta dels parlars picards de Wikipèdia (picard-carta.py) ; ch'ti
+# (Artesian urban, Doaisian), rochi (Lillés, Valencianés, Cambresin...),
+# picard pels autres
+PIC = {r['insee']: r for r in csv.DictReader(open(os.path.join(SIG, 'oil', 'parlars-picards.csv'), encoding='utf-8'), delimiter=';')}
+
+
+def clau_de(c, k):
+    if k == 'picard' and c in PIC and float(PIC[c]['dist_km']) <= 15:
+        PARLARS[PIC[c]['zona']].add(PIC[c]['parlar'])
+        return PIC[c]['zona']
+    return k
+
+
+unitats = [{'codi': c, 'nom': nom_de[c], 'dial': ZONA[z], 'domeni': 'oil', 'clau': clau_de(c, ZONA[z]), 'g': geo[c]}
            for c, z in zona_de.items() if z in ZONA]
 print('Unitats : %d comunas d\'oïl (%s)' % (len(unitats), ', '.join('%s %d' % (k, sum(u['clau'] == k for u in unitats)) for k in ORDRE)))
 
@@ -691,7 +706,11 @@ def geojson_ll(g):
 
 
 def props_dial(x):
-    return {'kod': x['kod'], 'fr': x['fr'], 'oc': x['oc'], 'color': x['color'], 'grope': x['grope']}
+    p = {'kod': x['kod'], 'fr': x['fr'], 'oc': x['oc'], 'color': x['color'], 'grope': x['grope']}
+    for k in ('de', 'sota_fr', 'sota_oc'):
+        if k in x:
+            p[k] = x[k]
+    return p
 
 
 feats = []
@@ -700,6 +719,10 @@ for d in ORDRE:
     # (etiqueta : la del JSON se n'i a una, plaçada luènh de las vilas ; si que non, lo mitan pus larg de la zòna)
     feats.append({'type': 'Feature', 'properties': {**props_dial(x), 'eti': x.get('eti') or eti(en_m(DIAL_LL[d])),
                   'parlars': sorted(PARLARS[d])}, 'geometry': geojson_ll(DIAL_LL[d])})
+a = classa['apart']
+AP_LL = unir([DIAL_LL[d] for d in a['dins']])
+feats.append({'type': 'Feature', 'properties': {'kod': a['kod'], 'fr': a['fr'], 'oc': a['oc'], 'color': DIAL[a['dins'][0]]['color'],
+              'eti': eti(en_m(AP_LL)), 'apart': True, 'dins': a['dins']}, 'geometry': geojson_ll(AP_LL)})
 sortida = {
     'type': 'FeatureCollection',
     'font': classa['font'],
