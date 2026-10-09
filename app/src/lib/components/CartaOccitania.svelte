@@ -136,7 +136,9 @@
 		visualizacion = false,
 		onVisualizacion = null,
 		// (una lenga vesina a alucar, quand se clica sus son domeni)
-		onAlucar = null
+		onAlucar = null,
+		// (lo boton « Netejar la carta », dessús lo de l'Occitània)
+		onNetejar = null
 	} = $props();
 	// la zòna dialectala survolada o causida, dins la legenda d'en bas
 	let survòl = $state(null);
@@ -226,6 +228,17 @@
 	$effect(() => {
 		lang;
 		majTornarOc();
+	});
+	let botonNet = null;
+	function majNetejar() {
+		if (!botonNet) return;
+		const tx = lang === 'fr' ? 'Vider la carte : éteindre toutes les couches' : 'Netejar la carta : escantir totas las jaces';
+		botonNet.title = tx;
+		botonNet.setAttribute('aria-label', tx);
+	}
+	$effect(() => {
+		lang;
+		majNetejar();
 	});
 	function tornarALOccitan() {
 		onAlucar?.('unificat', false);
@@ -1254,6 +1267,26 @@
 			}
 		});
 		new TornarOc().addTo(map);
+		// « Netejar la carta » en acorchi (demanda de Romain, 2026-10-10) :
+		// dessús l'icòna occitana, lo meteis gèst que dins « Sus la carta »
+		const Netejar = L.Control.extend({
+			options: { position: 'bottomright' },
+			onAdd() {
+				const c = L.DomUtil.create('div', 'leaflet-bar netejar-carta');
+				botonNet = L.DomUtil.create('a', '', c);
+				botonNet.href = '#';
+				botonNet.setAttribute('role', 'button');
+				botonNet.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 3 8.5l9 4.5 9-4.5z" fill="currentColor" fill-opacity="0.25"/><path d="m3 12.5 9 4.5 9-4.5" opacity=".55"/><path d="M4 20 20 4"/></svg>';
+				L.DomEvent.disableClickPropagation(c);
+				L.DomEvent.on(botonNet, 'click', (e) => {
+					L.DomEvent.preventDefault(e);
+					onNetejar?.();
+				});
+				majNetejar();
+				return c;
+			}
+		});
+		new Netejar().addTo(map);
 		map.attributionControl?.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
 		tèxtesLeaflet();
 		map.on('popupopen', tèxtesLeaflet);
@@ -1918,7 +1951,8 @@
 	}
 
 	.carta :global(.plen-ecran a),
-	.carta :global(.tornar-oc a) {
+	.carta :global(.tornar-oc a),
+	.carta :global(.netejar-carta a) {
 		display: flex;
 		align-items: center;
 		justify-content: center;

@@ -147,6 +147,11 @@
 			{visualizacion}
 			onVisualizacion={basculaVisualizacion}
 			onAlucar={(k, v = true) => (layerVisibility[k] = v)}
+			onNetejar={() => {
+				// (coma « Netejar la carta » del panèl : las jaces de las familhas, pas los reglatges)
+				for (const f of familhas) for (const j of f.jaces) if (layerVisibility[j.id]) layerVisibility[j.id] = false;
+				causits = [];
+			}}
 		/>
 
 		{#if showInfo}

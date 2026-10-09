@@ -330,7 +330,8 @@ export function crearColaLenga(
 					encadrat: p.encadrat,
 					mix: true
 				};
-			const sota = p.apart ? lenga.sotaApart : lenga.sota;
+			// (un dialècte d'una lenga de la familha, coma lo ch'ti : son sostítol)
+			const sota = p.apart ? lenga.sotaApart : p.sota_fr ? { oc: p.sota_oc, fr: p.sota_fr } : lenga.sota;
 			// lo nom dins la lenga ; dejós, l'occitan (o lo francés) se n'es un autre
 			const nom = endo(p) ?? p.oc;
 			const amb = (n, s) => (n && n.toLowerCase() !== nom.toLowerCase() ? `${n} · ${s}` : s);
