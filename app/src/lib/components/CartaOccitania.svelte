@@ -5,7 +5,7 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
+	import { Z, KM, zDès, zCran, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
 	const { RELAIS: Z_RELAIS, PRECARGA: Z_PRECARGA, ICONAS: Z_ICONAS } = Z;
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
@@ -1283,6 +1283,30 @@
 		const kods = [...causits];
 		colaDonadas?.causir(kods.filter(esOccitan));
 		for (const cl of Object.values(colasLengas)) cl.causir(kods);
+		const nòus = causitsAbans ? kods.filter((k) => !causitsAbans.includes(k)) : [];
+		causitsAbans = kods;
+		if (nòus.length) anarAlsDialectes(nòus.find(esOccitan) ?? null);
+	});
+
+	// Los dialèctes cochats, o un dialècte causit, de mai luènh que 100 km : la
+	// carta i vòla, a 100 km (demanda de Romain, 2026-10-09 ; lo fuòc
+	// d'artifici se jòga a l'arribada, colaDonadas)
+	let dialAbans = null,
+		causitsAbans = null;
+	function anarAlsDialectes(kod) {
+		if (!map || !L) return;
+		if (map.getZoom() >= zDès(KM.dialectes, map.getCenter().lat)) return;
+		const cadre = kod ? colaDonadas?.cadreDialècte(kod) : null,
+			occ = L.latLng(44.5, 2.97);
+		const c = cadre ? L.latLngBounds(cadre.bounds).getCenter() : map.getBounds().contains(occ) ? map.getCenter() : occ;
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		map.flyTo(c, zCran(KM.dialectes, c.lat), { animate: !calm, duration: calm ? 0 : 1.4 });
+	}
+	$effect(() => {
+		const d = !!visibility.dialectes,
+			abans = dialAbans;
+		dialAbans = d;
+		if (abans === false && d) anarAlsDialectes(null);
 	});
 
 	// Recherche : un lieu, la carte y vole (et l'y signale) ; un département ou

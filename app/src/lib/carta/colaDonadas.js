@@ -185,7 +185,12 @@ export function crearColaDonadas(
 		setJaces(j) {
 			// la jaça dels dialèctes ven d'èsser alucada (sovent pel meteis clic
 			// qu'una pastilha) : sas zònas totas se mòstran pas abans la difusion
-			if (j.dialectes && !this._jaces.dialectes) this._dialAlucat = performance.now();
+			if (j.dialectes && !this._jaces.dialectes) {
+				this._dialAlucat = performance.now();
+				// a cada còp que se cochan, los dialèctes arriban en fuòc
+				// d'artifici (demanda de Romain, 2026-10-09)
+				if (!this._calm) this._baletDemandat = true;
+			}
 			// regions e despartaments alucats : d'estelas ne fan lo torn (demanda de Romain)
 			for (const k of ['regions', 'despartaments', 'frontiera'])
 				if (j[k] && !this._jaces[k] && !this._calm) {
@@ -199,6 +204,24 @@ export function crearColaDonadas(
 			if (this._pus && !(this._pus === 'cro' ? j.creissent : j.dialectes)) this._survòl(null);
 			this._cargar();
 			this._update();
+			this._lançarBalet();
+		},
+		// Lo fuòc d'artifici dels dialèctes, demandat en los cochant : sonque a
+		// l'escala dels dialèctes (de pus luènh, la carta i vòla e lo jòga a
+		// l'arribada), e sens lo roge de l'occitan unificat que s'esvaniriá
+		_lançarBalet() {
+			const n = this._nivèls;
+			if (!this._baletDemandat || !n || this._jaces.unificat || !this._jaces.dialectes) return;
+			if (this._zoom < n.zDial) return;
+			this._baletDemandat = false;
+			const R = (this._rel ??= {});
+			R.uni = { v: 1, cibla: 1, q: 1 };
+			this._relais('uni', 0, DURADA_BALET);
+			R.uni.net = true;
+		},
+		// lo cadre d'un dialècte (la carta i vòla quand se causís de luènh)
+		cadreDialècte(k) {
+			return cadreDe(this._dial?.features.find((x) => x.properties.kod === k));
 		},
 		setTema(c, d) {
 			this._tem = temaDe(c, d);
@@ -335,7 +358,10 @@ export function crearColaDonadas(
 			this._zPrec = this._zoom;
 			// (l'occitan unificat a totas las escalas, se la jaça es alucada)
 			const uni = this._jaces.unificat || this._zoom < n.zDial ? 1 : 0;
-			this._relais('uni', uni, (c) => (c ? DURADA_MESCLA : DURADA_BALET), salt);
+			// (los dialèctes venon d'èsser cochats : lor fuòc d'artifici, quin que
+			// siá lo saut de zoom per i arribar)
+			if (this._baletDemandat && !uni) this._lançarBalet();
+			else this._relais('uni', uni, (c) => (c ? DURADA_MESCLA : DURADA_BALET), salt);
 			// de mai luènh (« 1 000 km »), l'Occitània unida se vuèja : sonque son contorn
 			this._relais('vuèg', this._zoom < n.zVuèg ? 1 : 0, DURADA_VUÈG, salt);
 			// l'escantiment de las jaces segon l'escala, dins lo temps (pas per saumets)
@@ -364,7 +390,7 @@ export function crearColaDonadas(
 				r.duraA = ms(cibla);
 				r.dura = 350 / Math.max(0.02, 1 - r.q);
 				r.t0 = ara - r.q * r.dura;
-			} else Object.assign(r, { de: r.v, cibla, t0: null, dura: ms(cibla), q: 0 });
+			} else Object.assign(r, { de: r.v, cibla, t0: null, dura: ms(cibla), q: 0, net: false });
 			if (this._rafRel) return;
 			const pas = (ts) => {
 				let viu = false;
@@ -1141,7 +1167,8 @@ export function crearColaDonadas(
 			/* L'Occitània unida (demanda de Romain) : de luènh, una sola lenga,
 			   « OCCITAN », en roge ; a « 500 km », sonque son contorn */
 			// (pendent la mescla, lo roge unit ven a la fin ; pendent lo balet, s'esvanís)
-			const aUni = (mescla ? easeS(clamp((u - 0.4) / 0.6)) : u) * aFinIntro;
+			// (un fuòc d'artifici demandat en cochant los dialèctes : sens lo roge)
+			const aUni = (mescla ? easeS(clamp((u - 0.4) / 0.6)) : u) * aFinIntro * (balet && ru?.net ? 0 : 1);
 			let caixaOc = null;
 			if (G.dom && aUni > 0.01) {
 				cx.save();
