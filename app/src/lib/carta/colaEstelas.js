@@ -875,9 +875,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const preparar = (d) =>
 				d.païses.map((p) => {
 					const pts = p.p.map((pl) => pl.map((a) => projectar(map, a, z)));
+					// (linhas dobèrtas : los contorns sens lor còsta, ont /carta a la siá, mond.mjs)
+					const lns = (p.l || []).map((a) => projectar(map, a, z));
 					// la largor del país a l'ecran (los pichons estats se nomenan pas de luènh)
-					const xs = pts.flatMap((pl) => pl[0].map((q) => q[0]));
-					return { oc: p.oc, fr: p.fr, eti: proj(p.eti), pts, larg: Math.max(...xs) - Math.min(...xs) };
+					const xs = [...pts.flatMap((pl) => pl[0].map((q) => q[0])), ...lns.flatMap((a) => a.map((q) => q[0]))];
+					return { oc: p.oc, fr: p.fr, eti: proj(p.eti), pts, lns, larg: Math.max(...xs) - Math.min(...xs) };
 				});
 			return {
 				// (fins a la carta detalhada : luènh de l'Occitània, los païses
@@ -930,6 +932,11 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 							}
 							if (!copat) c.closePath();
 						}
+				for (const p of païses)
+					for (const a of p.lns) {
+						c.moveTo(a[0][0], a[0][1]);
+						for (let i = 1; i < a.length; i++) c.lineTo(a[i][0], a[i][1]);
+					}
 				return c;
 			};
 			const traçar = (clau, a, larg) => {

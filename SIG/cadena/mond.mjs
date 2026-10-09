@@ -153,32 +153,102 @@ function ponchEti(anels) {
 }
 
 const arr = (v, d) => Math.round(v * 10 ** d) / 10 ** d;
-function escriure(entrada, sortida, dec, bbox, ambNoms) {
+
+// Dins l'emprèsa del trait de còsta de /carta (costa-estelas.py, calat sus
+// l'IGN), la còsta de Natural Earth se dobdava amb el, de luènh (retorn de
+// Romain, 2026-10-09). Una sola referéncia per la còsta : aquí, los contorns
+// d'Euròpa la perdon e gardan sonque lors frontièras terrèstras (los segments
+// partejats entre dos païses, que son los meteisses arcs TopoJSON).
+const EMPRESA_COSTA = [-3.2, 41.3, 10.0, 47.2]; // o, s, e, n : la de costa-estelas.py
+const dinsCosta = ([x, y]) => x >= EMPRESA_COSTA[0] && x <= EMPRESA_COSTA[2] && y >= EMPRESA_COSTA[1] && y <= EMPRESA_COSTA[3];
+const clauSeg = (a, b) => {
+	const k1 = a[0] + ',' + a[1],
+		k2 = b[0] + ',' + b[1];
+	return k1 < k2 ? k1 + ';' + k2 : k2 + ';' + k1;
+};
+// un anèl, copat als segments de còsta dins l'emprèsa : null se res es levat,
+// si que non las linhas dobèrtas que demòran
+function copatCosta(anel, frontièras) {
+	const n = anel.length - 1; // (anèl barrat : lo darrièr ponch es lo primièr)
+	const levat = (i) => dinsCosta(anel[i]) && dinsCosta(anel[i + 1]) && !frontièras.has(clauSeg(anel[i], anel[i + 1]));
+	let d = -1;
+	for (let i = 0; i < n && d < 0; i++) if (levat(i)) d = i;
+	if (d < 0) return null;
+	const linhas = [];
+	let cur = null;
+	for (let k = 1; k <= n; k++) {
+		const i = (d + k) % n;
+		if (levat(i)) {
+			if (cur) linhas.push(cur);
+			cur = null;
+		} else {
+			cur ??= [anel[i]];
+			cur.push(anel[i + 1]);
+		}
+	}
+	if (cur) linhas.push(cur);
+	return linhas;
+}
+
+function escriure(entrada, sortida, dec, bbox, ambNoms, sensCòsta = false) {
 	const païses = decodar(JSON.parse(fs.readFileSync(path.join(BRUT, entrada), 'utf8')));
-	const out = [];
-	for (const p of païses) {
-		let pols = p.poligons.filter((pl) => pl[0].length >= 4);
-		if (bbox) pols = pols.filter((pl) => pl[0].some(([x, y]) => x >= bbox[0] && x <= bbox[2] && y >= bbox[1] && y <= bbox[3]));
-		if (!pols.length) continue;
-		const r = pols
+	const arrondits = païses.map((p) => ({
+		nom: p.nom,
+		pols: p.poligons
+			.filter((pl) => pl[0].length >= 4)
 			.map((pl) =>
 				pl
 					.map((a) => a.map(([x, y]) => [arr(x, dec), arr(y, dec)]).filter((q, i, t) => !i || q[0] !== t[i - 1][0] || q[1] !== t[i - 1][1]))
 					.filter((a) => a.length >= 4)
 			)
-			.filter((pl) => pl.length);
-		if (!r.length) continue;
-		const gros = r.reduce((m, pl) => (aira(pl[0]) > aira(m[0]) ? pl : m), r[0]);
-		const [oc, fr] = (ambNoms && NOMS[p.nom]) || [null, null];
-		const e = ponchEti(gros);
-		out.push({ n: p.nom, oc, fr, eti: [arr(e[0], 2), arr(e[1], 2)], p: r });
+			.filter((pl) => pl.length)
+	}));
+	// los segments presents dins doas païses : las frontièras terrèstras
+	const frontièras = new Set();
+	if (sensCòsta) {
+		const vist = new Set();
+		for (const p of arrondits)
+			for (const pl of p.pols)
+				for (const a of pl)
+					for (let i = 0; i + 1 < a.length; i++) {
+						const k = clauSeg(a[i], a[i + 1]);
+						if (vist.has(k)) frontièras.add(k);
+						else vist.add(k);
+					}
 	}
+	const out = [];
+	let nLevats = 0;
+	for (const p of arrondits) {
+		let r = p.pols;
+		if (bbox) r = r.filter((pl) => pl[0].some(([x, y]) => x >= bbox[0] && x <= bbox[2] && y >= bbox[1] && y <= bbox[3]));
+		if (!r.length) continue;
+		// (l'etiqueta se calcula sus los tròces entièrs, abans lo copatge)
+		const gros = r.reduce((m, pl) => (aira(pl[0]) > aira(m[0]) ? pl : m), r[0]);
+		const e = ponchEti(gros);
+		const l = [];
+		if (sensCòsta)
+			r = r
+				.map((pl) =>
+					pl.filter((a) => {
+						const c = copatCosta(a, frontièras);
+						if (!c) return true;
+						nLevats++;
+						l.push(...c.filter((x) => x.length >= 2));
+						return false;
+					})
+				)
+				.filter((pl) => pl.length);
+		if (!r.length && !l.length) continue;
+		const [oc, fr] = (ambNoms && NOMS[p.nom]) || [null, null];
+		out.push({ n: p.nom, oc, fr, eti: [arr(e[0], 2), arr(e[1], 2)], p: r, ...(l.length ? { l } : {}) });
+	}
+	if (sensCòsta) console.log(sortida, ':', nLevats, 'anèls copats a la còsta de /carta');
 	fs.writeFileSync(path.join(DATA, sortida), JSON.stringify({ font: 'Natural Earth (domeni public), via world-atlas', païses: out }));
 	console.log(sortida, out.length, 'païses', fs.statSync(path.join(DATA, sortida)).size, 'octets');
 	return out;
 }
 
-const eu = escriure('countries-50m.json', 'mond-europa.json', 2, [-25, 27, 50, 72], true);
+const eu = escriure('countries-50m.json', 'mond-europa.json', 2, [-25, 27, 50, 72], true, true);
 escriure('countries-110m.json', 'mond.json', 1, null, false);
 
 // L'outra mar (retorn de Romain : « dommage de les faire disparaître ») : a
