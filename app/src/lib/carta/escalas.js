@@ -85,10 +85,11 @@ export const PLAJAS = {
 	corbas: [300, 20],
 	lengasFranca: [400, 30]
 };
-// Las jaces vertadièrament occitanas : cochadas, menan a la vista
+// Las jaces vertadièrament occitanas (e las regions e despartaments, demanda
+// de Romain del meteis jorn) : cochadas, menan a la vista
 // d'ensemble de l'Occitània (70 km sus l'ordenador de Romain, un cadratge
 // parièr suls autres aparelhs ; demanda de Romain, 2026-10-09)
-export const OCCITANAS = new Set(['frontiera', 'dialectes', 'departaments', 'toponimia', 'calandretas', 'librarias', 'lieusInteres', 'festas']);
+export const OCCITANAS = new Set(['frontiera', 'dialectes', 'departaments', 'toponimia', 'calandretas', 'librarias', 'lieusInteres', 'festas', 'regions', 'despartaments']);
 // (la vista d'ensemble : l'Occitània dins l'ecran, un cran de mai de recuol que l'arribada)
 export const RECUOL_VISTA = 0.5;
 // lo zoom ont anar per veire una jaça (null : se vei ja)
