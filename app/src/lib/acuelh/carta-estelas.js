@@ -46,6 +46,20 @@ export const SOTDIALECTES = {
 // forma occitana, e la francesa per la version francesa ; sourçats dins
 // SIG/vilas/sobrenoms-a-validar.csv e validats per Romain
 export const SOBRENOMS = {
+	// (Wikipèdia, « Liste de périphrases désignant des villes », causida de Romain lo 2026-10-09 ; occitan a validar)
+	"Limòtges": {"oc":"la capitala de la porcelana","fr":"la capitale de la porcelaine"},
+	"Clarmont-Ferrand": {"oc":"lo diamant negre","fr":"le diamant noir"},
+	"Agen": {"oc":"la capitala de la pruna","fr":"la capitale du pruneau"},
+	"Orlhac": {"oc":"la capitala del parapluèja","fr":"la capitale du parapluie"},
+	"Tula": {"oc":"la capitala de l'acordeon","fr":"la capitale de l'accordéon"},
+	"Montelaimar": {"oc":"la capitala del nogat","fr":"la capitale du nougat"},
+	"Privàs": {"oc":"la capitala de la castanha confida","fr":"la capitale du marron glacé"},
+	"Grassa": {"oc":"la capitala mondiala dau perfum","fr":"la capitale mondiale du parfum"},
+	"Baiona": {"oc":"la capitala deu chocolat","fr":"la capitale du chocolat"},
+	"Alès": {"oc":"la capitala de las Cevenas","fr":"la capitale des Cévennes"},
+	"Dacs": {"oc":"la capitala deu termalisme","fr":"la capitale du thermalisme"},
+	"Lo Mont de Marçan": {"oc":"la vila de las tres arribèras","fr":"la ville aux trois rivières"},
+	"Gap": {"oc":"la capitala doça","fr":"la capitale douce"},
 	"Bordèu": {"oc":"lo Pòrt de la Lua","fr":"le port de la Lune"},
 	"Tolosa": {"oc":"la Vila Ròsa","fr":"la Ville rose"},
 	"Montpelhièr": {"oc":"lo Clapàs","fr":"le Clapas"},
@@ -59,7 +73,7 @@ export const SOBRENOMS = {
 	"Vichèi": {"oc":"la Reina de las vilas d'aigas","fr":"la reine des villes d'eaux"},
 	"Lo Martegue": {"oc":"la Venècia Provençala","fr":"la Venise provençale"},
 	"L'Illa de Venisse": {"oc":"la Venècia Comtadina","fr":"la Venise comtadine"},
-	"Limòtges": {"oc":"la Vila Roja","fr":"la Ville rouge"},
+
 	"Seta": {"oc":"l'Illa Singulara","fr":"l'île singulière"},
 	"Menton": {"oc":"la Pèrla de França","fr":"la perle de la France"},
 	"Biàrritz": {"oc":"la reina de las plajas","fr":"la reine des plages"},
