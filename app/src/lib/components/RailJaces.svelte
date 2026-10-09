@@ -417,12 +417,12 @@
 				? tx.sonqueFons
 				: ((lang === 'oc' ? j.nota_oc : (j.nota_fr ?? j.nota_oc)) ?? (actiu(j) ? null : tx.aVenir));
 	// a quina escala la jaça se vei, escrich quand es cochada (demanda de
-	// Romain, 2026-10-09 ; occitan de validar)
+	// Romain, 2026-10-09 ; « visible » : lo Basic de lo Congrès, oc general)
 	const kmTèxt = (k) => (k < 1 ? k * 1000 + ' m' : String(k).replace('.', ',') + ' km');
 	const escalaJ = (j) => {
 		const pl = PLAJAS[j.id];
 		if (!pl) return null;
-		if (lang === 'oc') return pl[1] ? `Vesibla de ${kmTèxt(pl[0])} a ${kmTèxt(pl[1])}` : `Vesibla a partir de ${kmTèxt(pl[0])}`;
+		if (lang === 'oc') return pl[1] ? `Visibla de ${kmTèxt(pl[0])} a ${kmTèxt(pl[1])}` : `Visibla a partir de ${kmTèxt(pl[0])}`;
 		return pl[1] ? `Visible de ${kmTèxt(pl[0])} à ${kmTèxt(pl[1])}` : `Visible à partir de ${kmTèxt(pl[0])}`;
 	};
 	const nomFam = (id) => {

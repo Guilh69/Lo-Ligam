@@ -2,6 +2,7 @@
 //
 //   node scripts/verificar-oc.mjs --modul 1-1
 //   node scripts/verificar-oc.mjs adieu bonjorn mercé
+//   node scripts/verificar-oc.mjs --fr vers visible   (del francés cap a l'occitan)
 //
 // Nécessite LOCONGRES_API_KEY dans app/.env (voir .env.example). Le script
 // interroge l'API mot par mot (pause de 400 ms entre deux appels, par
@@ -75,6 +76,25 @@ async function lexiqueDuModul(slug) {
 
 const args = process.argv.slice(2);
 let mots;
+// Del francés cap a l'occitan : las traduccions del Basic, amb lor varietat
+//   node scripts/verificar-oc.mjs --fr vers « revenir à »
+if (args[0] === '--fr' && args.length > 1) {
+	for (const term of args.slice(1)) {
+		const url = new URL('https://api.locongres.org/basic.php');
+		url.searchParams.set('key', clau);
+		url.searchParams.set('lang', 'fr');
+		url.searchParams.set('term', term);
+		try {
+			const data = await (await fetch(url)).json();
+			const trads = (data?.query ?? []).flatMap((e) => (e.trads ?? []).map((t) => `${t.orth} (${t.var})`));
+			console.log(`  ${term} → ${trads.length ? [...new Set(trads)].join(', ') : 'pas de traduction dans lo Basic'}`);
+		} catch (e) {
+			console.log(`  ${term} → erreur : ${e.message}`);
+		}
+		await new Promise((r) => setTimeout(r, 400));
+	}
+	process.exit(0);
+}
 if (args[0] === '--modul' && args[1]) {
 	mots = await lexiqueDuModul(args[1]);
 } else if (args.length > 0) {
