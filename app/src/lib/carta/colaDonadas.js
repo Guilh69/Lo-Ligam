@@ -928,6 +928,23 @@ export function crearColaDonadas(
 		},
 
 		/* ---------- Dessenh (a cada recalatge, e a cada image d'una animacion) ---------- */
+		// Una opacitat que rejonh sa cibla dins lo temps, pas d'un còp a cada cran
+		// de zoom (demanda de Romain, 2026-10-09) ; tant que se mòu, la tela se
+		// tòrna pintar a l'imatge seguent
+		_doç(clau, cibla, dura = 0.55) {
+			const D = (this._doces ??= {}),
+				t = performance.now();
+			if (this._calm) return cibla;
+			let d = D[clau];
+			if (!d) d = D[clau] = { v: cibla, cibla };
+			else if (d.cibla !== cibla) Object.assign(d, { de: d.v, cibla, t0: t });
+			if (d.v !== d.cibla) {
+				const q = clamp((t - d.t0) / (dura * 1000));
+				d.v = q >= 1 ? d.cibla : d.de + (d.cibla - d.de) * easeS(q);
+				if (q < 1) this._rafDoç ??= requestAnimationFrame((ts) => ((this._rafDoç = null), this._pintarA(ts)));
+			}
+			return d.v;
+		},
 		_pintar() {
 			const G = this._geo;
 			if (!G || !this._cv) return;
@@ -952,7 +969,7 @@ export function crearColaDonadas(
 			const nv = this._nivèls ?? nivèlsDezoom(this._map),
 				aDial = aDialectes(nv, z),
 				aDet = this._rel?.det?.v ?? aDetalh(nv, z);
-			const aAdmin = clamp((11.5 - z) / 1.5) * aDet,
+			const aAdmin = this._doç('admin', clamp((11.5 - z) / 1.5)) * aDet,
 				aFront = dossa(clamp((13 - z) / 2)) * aDet,
 				aTenchas0 = clamp((13 - z) / 1.5);
 			// u : 0 los dialèctes, 1 l'Occitània unida (relais dins lo temps)
@@ -1241,7 +1258,7 @@ export function crearColaDonadas(
 			   noms de vilas. Quand un dialècte es causit, sonque son nom. */
 			// Lo nom d'una zòna particulara (la Pichona Gavachariá, ancian illòt
 			// de lenga d'oïl) : que sa rajadura s'explique sens survòl (retorn de Romain)
-			const aEnc = clamp((z - 7.6) / 0.5) * clamp(11.5 - z);
+			const aEnc = this._doç('enc', clamp((z - 7.6) / 0.5) * clamp(11.5 - z));
 			if (aEnc > 0.01 && G.mix && (J.frontiera || J.dialectes)) {
 				cx.save();
 				cx.font = `italic 400 ${clamp(10 + (z - 8) * 1.5, 10, 13).toFixed(1)}px Luciole, sans-serif`;
@@ -1254,7 +1271,7 @@ export function crearColaDonadas(
 				for (const zm of G.mix) if (zm.props.etiqueta) cx.fillText(zm.props.etiqueta[this._lang === 'fr' ? 'fr' : 'oc'], zm.eti[0], zm.eti[1]);
 				cx.restore();
 			}
-			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3) * aFinIntro * (1 - u);
+			const aNoms = this._doç('noms', clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3)) * aFinIntro * (1 - u);
 			if (aNoms <= 0.01) {
 				// (una bóstia establa : las autras còlas gardan lors etiquetas en cache)
 				const clau = caixaOc ? 'oc:' + caixaOc.join(',') : null;

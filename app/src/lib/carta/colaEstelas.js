@@ -882,8 +882,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				c = map.getCenter(),
 				eEu = clamp(Math.min(c.lng + 25, 50 - c.lng, c.lat - 27, 72 - c.lat) / 4),
 				aCarta = 1 - (this._detA ?? 0); // la carta detalhada pren la relèva
-			const aEu = Math.max(clamp((zE + 0.15 - z) / 0.6), luènh * eEu) * clamp((z - 3.4) / 0.5) * aCarta,
-				aTot = Math.max(clamp((4.0 - z) / 0.5), luènh * (1 - eEu)) * aCarta;
+			const aEu = this._doç('europa', Math.max(clamp((zE + 0.15 - z) / 0.6), luènh * eEu) * clamp((z - 3.4) / 0.5)) * aCarta,
+				aTot = this._doç('mond', Math.max(clamp((4.0 - z) / 0.5), luènh * (1 - eEu))) * aCarta;
 			// Los contorns son bastits un còp per zoom (un Path2D), pas a cada
 			// imatge : retraçar los 40 000 ponches d'Euròpa a cada imatge costava
 			// 14 ms e copava la fluiditat del dezoom (retorn de Romain)
@@ -929,7 +929,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			traçar('tot', aTot * lerp(0.62, 0.8, fòrt), lerp(0.55, 0.8, fòrt));
 			traçar('eu', aEu * lerp(0.58, 0.75, fòrt), lerp(0.6, 0.8, fòrt));
 			// los noms dels païses d'Euròpa, sens se trucar
-			const aNoms = aEu * clamp((z - 3.9) / 0.4);
+			const aNoms = aEu * this._doç('nomsPaïses', clamp((z - 3.9) / 0.4));
 			if (aNoms < 0.01 || !M.eu) return;
 			const fr = this._lang === 'fr';
 			cx.save();
@@ -1024,6 +1024,23 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			return !!this._pròche(lp, tactil ? 34 : 22, tactil ? 18 : 6);
 		},
 
+		// Una opacitat que rejonh sa cibla dins lo temps, pas d'un còp a cada cran
+		// de zoom (demanda de Romain, 2026-10-09) ; la bocla d'animacion la seguís
+		// (e l'imatge estatic de luènh espèra qu'aja acabat)
+		_doç(clau, cibla, dura = 0.55) {
+			const D = (this._doces ??= {}),
+				t = performance.now();
+			if (this._calm) return cibla;
+			let d = D[clau];
+			if (!d) d = D[clau] = { v: cibla, cibla };
+			else if (d.cibla !== cibla) Object.assign(d, { de: d.v, cibla, t0: t });
+			if (d.v !== d.cibla) {
+				const q = clamp((t - d.t0) / (dura * 1000));
+				d.v = q >= 1 ? d.cibla : d.de + (d.cibla - d.de) * easeS(q);
+				if (q < 1) this._doçViu = true;
+			}
+			return d.v;
+		},
 		// Cada luòc vesible o pas a aqueste zoom (escalas.js) ; quand cambia, son
 		// estela s'aluca (coma a l'arribada) o s'escantís, e son nom la seguís
 		// (demanda de Romain, 2026-10-09 : « de manière élégante, pas d'un coup »)
@@ -1619,7 +1636,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// de luènh, quand res bolèga pas, l'imatge demòra : pas besonh de la
 			// tornar pintar 60 còps per segonda (sobrietat)
 			const tiE = this._calm ? 99 : (t - (this._tIntro ?? -1e12)) / 1000;
-			const clau = aDet <= 0.001 && tiE > INTRO.fin ? [z, this._min?.x, this._min?.y, this._W, this._H, !!this._mondEu, !!this._mondTot, this._lang, this._tem?.costa, this._detA].join('|') : null;
+			const doçViu = this._doçViu;
+			this._doçViu = false;
+			const clau = aDet <= 0.001 && tiE > INTRO.fin && !doçViu ? [z, this._min?.x, this._min?.y, this._W, this._H, !!this._mondEu, !!this._mondTot, this._lang, this._tem?.costa, this._detA].join('|') : null;
 			if (clau && clau === this._clauEstatica) return;
 			this._clauEstatica = clau;
 			this._dessenharDetalh(t);
@@ -1683,7 +1702,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				aEtiq = aRius;
 			// a « 200 km », pas pus de rius (retorn de Romain) : s'escantisson doçament
 			const nv = this._nivèls,
-				cRius = nv ? easeS(clamp((z - nv.zRius + 0.05) / 0.2)) : 1;
+				cRius = nv ? this._doç('rius', easeS(clamp((z - nv.zRius + 0.05) / 0.2))) : 1;
 			this._riusZ = this._calm || this._riusZ === undefined ? cRius : this._riusZ + (cRius - this._riusZ) * Math.min(1, dt / 0.35);
 			const aRiu = aRius * this._riusZ;
 			// La revelacion de la carta detalhada (retorn de Romain : « plus

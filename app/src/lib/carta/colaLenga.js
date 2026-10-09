@@ -623,6 +623,23 @@ export function crearColaLenga(
 		},
 
 		/* ---------- Dessenh (a cada recalatge, e a cada image d'una animacion) ---------- */
+		// Una opacitat que rejonh sa cibla dins lo temps, pas d'un còp a cada cran
+		// de zoom (demanda de Romain, 2026-10-09) ; tant que se mòu, la tela se
+		// tòrna pintar a l'imatge seguent
+		_doç(clau, cibla, dura = 0.55) {
+			const D = (this._doces ??= {}),
+				t = performance.now();
+			if (this._calm) return cibla;
+			let d = D[clau];
+			if (!d) d = D[clau] = { v: cibla, cibla };
+			else if (d.cibla !== cibla) Object.assign(d, { de: d.v, cibla, t0: t });
+			if (d.v !== d.cibla) {
+				const q = clamp((t - d.t0) / (dura * 1000));
+				d.v = q >= 1 ? d.cibla : d.de + (d.cibla - d.de) * easeS(q);
+				if (q < 1) this._rafDoç ??= requestAnimationFrame((ts) => ((this._rafDoç = null), this._pintarA(ts)));
+			}
+			return d.v;
+		},
 		_pintar() {
 			const G = this._geo;
 			if (!G || !this._cv || !this._actiu) return;
@@ -831,7 +848,7 @@ export function crearColaLenga(
 
 			/* Noms dels dialèctes : capitalas espaçadas, de lor color (coma
 			   l'occitan) ; de luènh sonque. Quand de zònas son causidas, lors noms. */
-			const aNoms = clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3) * (1 - u) * aFinApar;
+			const aNoms = this._doç('noms', clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3)) * (1 - u) * aFinApar;
 			const caixas = [];
 			if (aNoms > 0.01) {
 				const noms = sel ? this._zonasDe(this._sels) : G.zonas;

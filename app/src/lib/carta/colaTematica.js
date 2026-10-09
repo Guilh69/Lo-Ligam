@@ -514,7 +514,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 						eti: f.properties.eti && pt(f.properties.eti)
 					}))
 					.filter((x) => dins(x.bbox));
-			if (J.parcs && this._parcs && z >= 6)
+			// (un pauc avant son sulhet : que se pòsca escantir doçament)
+			if (J.parcs && this._parcs && z >= 5.25)
 				G.parcs = this._parcs.features
 					.map((f) => ({
 						...zona(poligonsDe(f.geometry)),
@@ -529,7 +530,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					p: pt(f.geometry.coordinates)
 				}));
 			this._fonts();
-			if (J.comunas && z >= Z_COMUNAS - 0.5) {
+			if (J.comunas && z >= Z_COMUNAS - 0.75) {
 				G.com = [];
 				for (const lista of this._deps.values())
 					for (const c of lista ?? []) {
@@ -838,6 +839,24 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		},
 
 		/* ---------- Dessenh ---------- */
+		// Una opacitat que rejonh sa cibla dins lo temps, pas d'un còp a cada cran
+		// de zoom (demanda de Romain, 2026-10-09 : « quand elles s'effacent et
+		// quand elles arrivent, il faut que ce soit joli ») ; tant que se mòu, la
+		// tela se tòrna pintar a l'imatge seguent
+		_doç(clau, cibla, dura = 0.55) {
+			const D = (this._doces ??= {}),
+				t = performance.now();
+			let d = D[clau];
+			if (this._calm) return cibla;
+			if (!d) d = D[clau] = { v: 0, de: 0, cibla, t0: t };
+			else if (d.cibla !== cibla) Object.assign(d, { de: d.v, cibla, t0: t });
+			if (d.v !== d.cibla) {
+				const q = clamp((t - d.t0) / (dura * 1000));
+				d.v = q >= 1 ? d.cibla : d.de + (d.cibla - d.de) * easeS(q);
+				if (q < 1) this._rafDoç ??= requestAnimationFrame(() => ((this._rafDoç = null), this._pintar()));
+			}
+			return d.v;
+		},
 		_pintar() {
 			const cx = this._cx,
 				G = this._geo;
@@ -866,7 +885,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 
 			/* Parcs : un aplat leugièr e un contorn ponchejat */
 			if (G.parcs) {
-				const a = clamp((z - 6) / 0.8) * clamp((15 - z) / 1.5);
+				const a = this._doç('parcs', clamp((z - 6) / 0.8) * clamp((15 - z) / 1.5));
 				// l'aparicion : una estela fa lo torn de cada parc, puèi sa color
 				// s'espandís del mitan coma la vegetacion (demanda de Romain)
 				const tP = this._tApar('parcs'),
@@ -906,7 +925,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				for (const [ct, pp, aC] of caps) estelaCap(cx, ct, pp, T.estela, aC * a * 0.9);
 				cx.globalAlpha = 1;
 				// noms dels parcs, a escala mejana
-				const aNom = clamp((z - 7.6) / 0.6) * clamp((11.5 - z) / 1);
+				const aNom = this._doç('nomsParcs', clamp((z - 7.6) / 0.6) * clamp((11.5 - z) / 1));
 				if (aNom > 0.01) {
 					cx.save();
 					cx.font = `italic 500 ${clamp(11 + (z - 8) * 1.2, 11, 14).toFixed(1)}px ${CORMORANT}`;
@@ -929,8 +948,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			   en fin ponchejat (retorn de Romain : « rendre plus clair les grandes
 			   provinces » e lors subdivisions) */
 			if (G.prov) {
-				const a = clamp((Z_PROV_MAX - z) / 1);
-				const aProv = a * clamp((z - 6.4) / 0.8);
+				const a = this._doç('prov', clamp((Z_PROV_MAX - z) / 1));
+				const aProv = a * this._doç('provFinas', clamp((z - 6.4) / 0.8));
 				const pusGov = this._pus?.mena === 'prov' ? (this._pus.props.nivel === 'governament' ? this._pus.kod : this._pus.props.governament) : null;
 				// l'aparicion : las estelas traçan los governaments e las províncias
 				// coma una pluma sus un pergamin ; los aplats e los noms venon aprèp
@@ -1016,7 +1035,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 
 			/* Comunas : un fil fin, a partir de « 5 km » ; la survolada s'esclaira */
 			if (G.com) {
-				const a = clamp((z - (Z_COMUNAS - 0.2)) / 0.2) * clamp((16 - z) / 1.5);
+				const a = this._doç('comunas', clamp((z - (Z_COMUNAS - 0.2)) / 0.2) * clamp((16 - z) / 1.5));
 				if (a > 0.01) {
 					// cada comuna a son temps d'aparicion : las estelas venon d'a
 					// costat se pausar suls contorns, puèi lo fil las religa ; las
@@ -1100,7 +1119,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					const [z0, z1] = fenèstras[r.props.mena]?.[r.props.renc] ?? [9, 13];
 					// (a l'arribada : las cadenas grandas d'en primièr)
 					const pI = easeS(clamp((tiM - (INTRO.massis[0] + (r.props.renc - 1) * 0.3)) / 0.8));
-					const al = clamp((z - z0) / 0.6) * clamp((z1 - z) / 0.6) * pI;
+					const al = this._doç('releu-' + r.props.mena + r.props.renc, clamp((z - z0) / 0.6) * clamp((z1 - z) / 0.6)) * pI;
 					if (al < 0.01) continue;
 					let [x, y] = r.p;
 					if (x < -100 || y < -40 || x > this._W + 100 || y > this._H + 40) continue;
