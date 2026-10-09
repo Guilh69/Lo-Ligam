@@ -96,6 +96,15 @@ Principe (Romain, 2026-10-09) : ce n'est pas une science exacte. Entre deux donn
 
 Après une retouche du domaine occitan (`limits-carta.json`), relancer à partir de l'étape 2.
 
+## Bord de mer et mer du satellite (2026-10-09)
+
+Une seule référence terre / eau pour toute la carte : les communes de l'IGN (`SIG/brut/comunas/ADE-COG-CARTO_2026.gpkg`), qui suivent la côte à quelques mètres (Hérault : 70 % du bord à moins de 10 m de la limite terre-mer Shom-IGN). Le bord de mer fabriqué à l'étape 7 (côte Natural Earth élargie de 1,5 km) est recalé dessus en fin de chaîne.
+
+1. `python-qgis.bat SIG/cadena/costa-ref.py` (30 s), **à lancer en dernier**, après `apart-frontiera.py` : domaine occitan et catalan sans l'eau, terre côtière oubliée (lidos, ports, îles) rendue à la langue et au dialecte majoritaires de sa commune, extrémités des frontières menées au rivage. Les frontières terrestres et les sommets partagés ne bougent pas ; un second passage ne change rien (fichiers identiques).
+2. `python-qgis.bat SIG/cadena/mar.py` : `app/static/data/mar.json`, la mer posée sur les photos aériennes au zoom proche (l'IGN y est blanc), en fondu de 500 m jusqu'à la côte. `mar.py` contient aussi la référence terre / eau (`tèrra_e_aiga`) dont se sert `costa-ref.py`.
+
+L'étang de Berre, le bassin d'Arcachon et l'estuaire de la Gironde sont hors communes : sans teinte, et pas peints par la mer (rectangles `DINS` de `mar.py`). Hors de France (Espagne, Italie, Monaco), faute de trait de côte précis, une marge de 2 km protège la terre : la mer et le recalage n'y touchent pas.
+
 ## Contrôles
 
 Après chaque passage, vérifier les villes témoins (voir l'historique Git du
