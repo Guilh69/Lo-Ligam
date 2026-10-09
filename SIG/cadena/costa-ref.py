@@ -291,11 +291,18 @@ def principal():
     for nom, dial in (('limits-carta.json', 'dialectes.geojson'), ('catalan.json', None)):
         donadas = json.load(open(os.path.join(DATA, nom), encoding='utf-8'))
         dom = donadas['domeni']
-        g = anèlsEnGeom(dom['anels'])
-        g2, oblits = recalar(g, dom['linhas'], aiga, tèrra, benda, comunas)
-        print('%s : %.1f km² levats en aiga, %.2f km² aponduts' % (nom, g.Intersection(aiga).GetArea() / 1e6 if g2 else 0, sum(o.GetArea() for _, o in oblits) / 1e6))
-        if g2 is not None:
+        # (fins a un ponch fix, arredondit comprés : un tròç qu'una lèva
+        # descobrís se lèva al torn seguent, e un segond passatge cambia pas res)
+        oblits, levat = [], 0
+        for _ in range(4):
+            g = anèlsEnGeom(dom['anels'])
+            g2, ob = recalar(g, dom['linhas'], aiga, tèrra, benda, comunas)
+            if g2 is None:
+                break
+            levat += g.Intersection(aiga).GetArea()
+            oblits += ob
             dom['anels'] = [a for p in geomEnPoligònes(g2, 4, ancians(dom['anels'])) for a in p]
+        print('%s : %.1f km² levats en aiga, %.2f km² aponduts' % (nom, levat / 1e6, sum(o.GetArea() for _, o in oblits) / 1e6))
         dom['linhas'] = recalarLinhas(dom['linhas'], aiga, ribatge)
         sortidas[nom] = donadas
         if dial:

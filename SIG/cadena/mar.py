@@ -39,6 +39,9 @@ ESTRANGIER = 2000  # m
 SIMPL = 8  # m (invisible jos un fondut de 500 m)
 Q = 100000
 # aigas dins las tèrras, que l'IGN compta coma mar : o, s, e, n
+# un païs vesin a sa còsta precisa quand l'avèm (limits OpenStreetMap, que
+# seguisson lo ribatge) ; endacòm mai, Natural Earth alargat de ESTRANGIER
+PRECIS = {'Spain': os.path.join(RAIC, 'SIG', 'brut', 'catalan', 'geojson', 'catalonha-limit.geojson')}
 DINS = [(4.96, 43.415, 5.26, 43.57), (-1.24, 44.59, -0.98, 44.79), (-1.07, 45.03, -0.53, 45.60)]
 
 wgs, l93 = osr.SpatialReference(), osr.SpatialReference()
@@ -79,6 +82,15 @@ def unir(gs):
     return m.UnionCascaded()
 
 
+def precis(cami, simpl):
+    """Un contorn precís de païs vesin (GeoJSON en graus) → Lambert-93,
+    simplificat coma las comunas."""
+    d = ogr.Open(cami)
+    g = unir([f.GetGeometryRef().Clone() for f in d.GetLayer(0)])
+    g.Transform(versL93)
+    return g.SimplifyPreserveTopology(simpl)
+
+
 def tèrra_e_aiga(simpl=SIMPL):
     """La referéncia tèrra / aiga de la carta, per zòna, en Lambert-93 :
     {'zona', 'zL', 'tèrra' : las comunas de França unidas e simplificadas,
@@ -106,6 +118,10 @@ def tèrra_e_aiga(simpl=SIMPL):
                 continue
             g = f.GetGeometryRef().Clone()
             g.Transform(versL93)
+            if f.GetField('name') in PRECIS:
+                p = precis(PRECIS[f.GetField('name')], simpl)
+                est.append(p)
+                g = g.Difference(p.Buffer(5 * ESTRANGIER))
             est.append(g.Buffer(ESTRANGIER))
         nel.SetSpatialFilter(None)
         print(zona, len(comunas), 'comunas,', len(est), 'païses vesins')

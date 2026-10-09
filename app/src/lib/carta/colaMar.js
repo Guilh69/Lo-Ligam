@@ -7,7 +7,7 @@
 // l'IGN al zoom 12, transparenta a la còsta e plena a 500 m : l'IGN a de fòto
 // fins a 850 m del ribatge al mens (mesurat de Gruissan a Biarritz). La mar
 // ven de SIG/cadena/mar.py : la zòna levada de las tèrras (comunas de l'IGN,
-// païses vesins alargats de 2 km) e de las aigas dins las tèrras (Berre,
+// païses vesins : Catalonha precisa, autres alargats de 2 km) e de las aigas dins las tèrras (Berre,
 // Arcaishon, la Gironda), copada en cases de 0,25°. Los bòrds de las cases
 // son pas de còsta : i a pas de fondut.
 
@@ -149,7 +149,8 @@ export function crearColaMar(L) {
 			// sus la còsta, plen a D.
 			ctx.globalCompositeOperation = 'destination-out';
 			ctx.lineJoin = ctx.lineCap = 'round';
-			const N = Math.max(2, Math.min(12, Math.round(D / 6)));
+			// (de bendas de 4 ponches al mai : lo fondut se vei pas en escalièrs)
+			const N = Math.max(2, Math.min(24, Math.round(D / 4)));
 			const f = (t) => t * t * (3 - 2 * t);
 			for (let k = N; k >= 1; k--) {
 				ctx.globalAlpha = 1 - f((k - 1) / N) / f(k / N);
