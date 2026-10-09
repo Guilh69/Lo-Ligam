@@ -18,7 +18,7 @@ export const CATALOGUE = [
 		id: 'lenga',
 		// « Lenga nòstra » (causida de Romain, 2026-10-09 ; nòstra : lo Basic de lo Congrès)
 		oc: 'Lenga nòstra',
-		fr: 'Notre langue',
+		fr: 'Lenga nòstra', // (un subrenom : demòra en occitan dins l'interfàcia francesa)
 		jaces: [
 			{
 				// lo domeni occitan, cochat d'ofici, visible de 200 km fins al pus
