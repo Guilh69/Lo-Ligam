@@ -25,11 +25,13 @@ const csp = {
 			'blob:',
 			'https://*.supabase.co', // designs, cartes et vidéos téléversés
 			// Fonds de carte, tous européens : rendu occitan par OSM-bzh,
-			// relief par OpenTopoMap (Allemagne), photos aériennes par l'IGN.
+			// relief par OpenTopoMap (Allemagne), photos aériennes par l'IGN
+			// (France) et le PNOA (Espagne). EOX retiré : licence non commerciale.
 			'https://tile.openstreetmap.bzh',
 			'https://*.tile.openstreetmap.org',
 			'https://*.tile.opentopomap.org',
-			'https://tiles.maps.eox.at'
+			'https://data.geopf.fr',
+			'https://www.ign.es'
 		],
 		'connect-src': [
 			'self',

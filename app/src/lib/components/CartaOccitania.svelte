@@ -56,20 +56,43 @@
 			attribution:
 				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · relèu <a href="https://opentopomap.org/" target="_blank" rel="noopener">OpenTopoMap</a> (CC BY-SA)'
 		},
-		// Satellit : Sentinel-2, satellit de l'Agéncia espaciala europèa,
-		// servit per EOX (Àustria). Remplaça ArcGIS (Esri, Estats Units).
-		//
-		// L'IGN francés èra l'autra pista, mas cobrís pas que la França :
-		// verificat, tòrna un 404 sul Val d'Aran — justament ont l'occitan
-		// es co-oficial. Sentinel-2 cobrís los tres territòris occitans
-		// (França, Val d'Aran, valadas d'Itàlia).
-		satellite: {
-			url: 'https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg',
-			maxZoom: 15,
-			attribution:
-				'Sentinel-2 cloudless (<a href="https://s2maps.eu" target="_blank" rel="noopener">s2maps.eu</a>) per <a href="https://eox.at" target="_blank" rel="noopener">EOX</a> · donadas <a href="https://www.esa.int" target="_blank" rel="noopener">ESA</a> Copernicus'
-		}
+		// Satellit : fotografias aerianas publicas (crearSatellit)
+		satellite: { satellit: true }
 	};
+
+	// Lo satellit : las fotografias aerianas liuras mai polidas, una per
+	// país — IGN (França, Licéncia dobèrta 2.0) e PNOA (Espanha : Val d'Aran,
+	// Catalonha ; CC BY 4.0). Pas mai d'EOX (Sentinel-2) : sa licéncia es non
+	// comerciala, e una carta gratuita que mena a de corses pagants i
+	// escaparà pas (decision de Romain, 2026-10-09). Las valadas d'Itàlia
+	// gardan la carta OSM tant qu'una font liura i es pas verificada.
+	// (l'IGN tòrna un 404 defòra França : lo PNOA, dejós, pren lo relais)
+	const SATELLIT = [
+		{
+			url: 'https://www.ign.es/wmts/pnoa-ma?request=GetTile&service=WMTS&VERSION=1.0.0&Layer=OI.OrthoimageCoverage&Style=default&Format=image/jpeg&TileMatrixSet=GoogleMapsCompatible&TileMatrix={z}&TileRow={y}&TileCol={x}',
+			bounds: [[40.5, 0.15], [42.87, 3.33]],
+			attribution: 'PNOA © <a href="https://www.scne.es" target="_blank" rel="noopener">IGN España</a> (CC BY 4.0)'
+		},
+		{
+			url: 'https://data.geopf.fr/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&TILEMATRIXSET=PM&FORMAT=image/jpeg&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}',
+			bounds: [[41.3, -5.2], [51.1, 9.6]],
+			attribution: 'Fotografias aerianas © <a href="https://geoservices.ign.fr" target="_blank" rel="noopener">IGN</a> (Licéncia dobèrta 2.0)'
+		}
+	];
+	function crearSatellit(opts = {}) {
+		// son pròpri plan, defòra del filtre « de nuèch » de las tuèlas OSM (que
+		// las inversa) : una fotografia s'escurcís sens s'inversar
+		if (!map.getPane('satellit')) {
+			const p = map.createPane('satellit');
+			p.style.zIndex = 250;
+			p.classList.add('pan-satellit');
+		}
+		const cs = SATELLIT.map(({ url, bounds, attribution }) => L.tileLayer(url, { maxZoom: 19, bounds, attribution, pane: 'satellit', ...opts }));
+		const g = L.layerGroup(cs);
+		g.setOpacity = (o) => (cs.forEach((c) => c.setOpacity(o)), g);
+		g.isLoading = () => cs.some((c) => c.isLoading?.());
+		return g;
+	}
 
 	// Nivèl de zoom a partir d'ont apareisson los borgs (en mai de las vilas,
 	// totjorn vesedoiras) : evita d'encombrar la carta amb 354 etiquetas a
@@ -204,16 +227,19 @@
 			return;
 		}
 		if (colaEstelas) map.removeLayer(colaEstelas);
+		if (teulasSatellit) majSatellit(-1);
 		const resolvedKey = baseLayers[key] ? key : 'occitan';
 		const cfg = baseLayers[resolvedKey];
 		if (currentBaseTileLayer) map.removeLayer(currentBaseTileLayer);
-		currentBaseTileLayer = L.tileLayer(cfg.url, {
-			maxZoom: cfg.maxZoom,
-			attribution: cfg.attribution,
-			// OpenTopoMap réparti sa carga sus a/b/c ; los autres fonses ne
-			// pas besonh, l'opcion es alara ignorada.
-			...(cfg.subdomains ? { subdomains: cfg.subdomains } : {})
-		});
+		currentBaseTileLayer = cfg.satellit
+			? crearSatellit()
+			: L.tileLayer(cfg.url, {
+					maxZoom: cfg.maxZoom,
+					attribution: cfg.attribution,
+					// OpenTopoMap réparti sa carga sus a/b/c ; los autres fonses ne
+					// pas besonh, l'opcion es alara ignorada.
+					...(cfg.subdomains ? { subdomains: cfg.subdomains } : {})
+				});
 		currentBaseTileLayer._loLigamKey = resolvedKey;
 		currentBaseTileLayer.addTo(map);
 	}
@@ -221,9 +247,31 @@
 	// Fons « estelas » : la carta detalhada (tuèlas OSM en occitan) apareis e
 	// las estelas s'escafan a mesura que s'aprèpa ; en dejós del lindal, cap de
 	// tuèla es pas demandada (sobrietat).
+	// Vèrs 15 km, la carta detalhada se fond dins lo satellit (demanda de
+	// Romain, 2026-10-09) : nòstres noms occitans passan al dessús
+	const Z_SATELLIT = 10;
+	let teulasSatellit = null;
+	function majSatellit(z) {
+		if (z >= Z_SATELLIT - 0.75) {
+			if (!teulasSatellit) {
+				teulasSatellit = crearSatellit({ className: 'teules-satellit', opacity: 0, zIndex: 2 });
+				teulasSatellit.addTo(map);
+			}
+			teulasSatellit.setOpacity(Math.min(1, Math.max(0, z - (Z_SATELLIT - 0.5))));
+		} else if (teulasSatellit) {
+			map.removeLayer(teulasSatellit);
+			teulasSatellit = null;
+		}
+		applyToponymVisibility();
+	}
 	function majDetalh() {
-		if (!map || baseLayer !== 'estelas') return;
+		if (!map) return;
+		if (baseLayer !== 'estelas') {
+			if (teulasSatellit) majSatellit(-1);
+			return;
+		}
 		const z = map.getZoom();
+		majSatellit(z);
 		if (z >= Z_PRECARGA) {
 			if (!currentBaseTileLayer) {
 				const cfg = baseLayers.occitan;
@@ -756,8 +804,10 @@
 	}
 
 	function applyToponymVisibility() {
-		if (!map || !toponymCities) return;
-		if (ambToponims(baseLayer)) {
+		if (!map) return;
+		const ambNoms = ambToponims(baseLayer) || (baseLayer === 'estelas' && map.getZoom() >= Z_SATELLIT - 0.5);
+		if (!toponymCities) return void (ambNoms && loadToponymsLayer());
+		if (ambNoms) {
 			toponymCities.addTo(map);
 			if (map.getZoom() >= TOWN_MIN_ZOOM) {
 				toponymTowns.addTo(map);
@@ -1244,6 +1294,10 @@
 <style>
 	/* Los punts de las jaces (luòcs d'interès, librariás…) : pastilha de veire,
 	   icòna e liseret de la color de la jaça */
+	/* lo satellit se lèva doçament sus la carta detalhada */
+	.carta :global(.teules-satellit) {
+		transition: opacity 0.9s ease;
+	}
 	:global(.ponch-jaça) {
 		--ponch: var(--t-aur);
 		background: none;
@@ -1881,6 +1935,10 @@
 	   réchauffées vers la braise), pour se fondre sous les étoiles */
 	.carta.nuech :global(.leaflet-tile-pane) {
 		filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) sepia(0.35) saturate(0.75);
+	}
+	/* lo satellit de nuèch : la fotografia s'escurcís e se rescalfa un pauc */
+	.carta.nuech :global(.pan-satellit) {
+		filter: brightness(0.72) contrast(1.06) saturate(0.85) sepia(0.18);
 	}
 	/* la revelacion de la carta detalhada : del flo al net, coma en sortent
 	   dels nívols. Una transicion CSS que lo navegador mena sol (pas de calcul
