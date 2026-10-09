@@ -643,6 +643,23 @@ const centreDe = (anels) => {
 	}
 	return best;
 };
+// Lo trait de còsta de /carta, calat sus las comunas de l'IGN coma las tenchas
+// (SIG/cadena/costa-estelas.py ; en entièrs de 1e-3 grau, en diferéncias). En
+// esperant, COSTA (Natural Earth), lo de l'acuèlh, ont la diferéncia se vei pas.
+let costaPromesa = null;
+const cargarCosta = () =>
+	(costaPromesa ??= fetch('/data/costa.json')
+		.then((r) => (r.ok ? r.json() : null))
+		.then(
+			(d) =>
+				d &&
+				d.l.map((r) => {
+					const l = [];
+					for (let k = 0, x = 0, y = 0; k < r.length; k += 2) l.push([(x += r[k]) / d.q, (y += r[k + 1]) / d.q]);
+					return l;
+				})
+		)
+		.catch(() => null));
 let limitsPromesa = null;
 export const cargarLimits = () =>
 	(limitsPromesa ??= fetch('/data/limits-carta.json')
@@ -715,6 +732,12 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			});
 			cargarCorbas().then((c) => {
 				this._corbasGeo = c;
+				this._zP = null;
+				this._update();
+			});
+			cargarCosta().then((c) => {
+				if (!c) return;
+				this._costaFina = c;
 				this._zP = null;
 				this._update();
 			});
@@ -955,9 +978,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			cx.restore();
 		},
-		// las donadas de l'entrada en scèna (limits, corbas, polissas) son aquí
+		// las donadas de l'entrada en scèna (limits, corbas, còsta, polissas) son aquí
 		prèsta() {
-			return Promise.all([cargarLimits(), cargarCorbas(), document.fonts?.load('italic 500 16px "Cormorant Garamond"')]);
+			return Promise.all([cargarLimits(), cargarCorbas(), cargarCosta(), document.fonts?.load('italic 500 16px "Cormorant Garamond"')]);
 		},
 		// los sons de l'entrada en scèna (sons.js) : menats pel dessenh
 		setSons(s) {
@@ -1116,7 +1139,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._corbas = (this._corbasGeo || []).map(([e, l]) => [e, projectar(map, l, z)]);
 				// Euròpa e lo mond (pel dezoom) : projectats sonque quand se veson
 				this._mondPx = this._projMond(z);
-				this._costa = (this._costaExtra?.length ? [...COSTA, ...this._costaExtra] : COSTA).map((l) => projectar(map, l, z));
+				const costa = this._costaFina ?? COSTA;
+				this._costa = (this._costaExtra?.length ? [...costa, ...this._costaExtra] : costa).map((l) => projectar(map, l, z));
 				this._plaçament = z < Z_DETALH_1 ? this._plaçarTot(z) : { vilas: [], rius: [] };
 				this._zP = z;
 			}
