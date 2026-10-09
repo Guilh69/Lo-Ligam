@@ -134,7 +134,9 @@
 		// lo mòde visualizacion (plen ecran) : la pagina lo gerís, lo boton es
 		// sus la carta
 		visualizacion = false,
-		onVisualizacion = null
+		onVisualizacion = null,
+		// (una lenga vesina a alucar, quand se clica sus son domeni)
+		onAlucar = null
 	} = $props();
 	// la zòna dialectala survolada o causida, dins la legenda d'en bas
 	let survòl = $state(null);
@@ -362,6 +364,44 @@
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
 	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', festas: 'confetti', limsi: 'microphone-2' };
 	// una jaça apondida dins l'admin pren sa color de la basa
+	// Las lengas vesinas (demanda de Romain, 2026-10-09 : « une incitation à
+	// découvrir ce qui se passe à côté ») : al survòl (o al tòc) d'una lenga pas
+	// alucada, la carta prepausa de la descobrir ; un clic l'aluca. Sonque lo
+	// contorn leugièr de lor domeni (lengas-vesinas.json, 12 Ko), pas tota la jaça
+	let vesinas = null,
+		vesinasPromesa = null,
+		vesina = $state(null);
+	const cargarVesinas = () =>
+		(vesinasPromesa ??= fetch('/data/lengas-vesinas.json')
+			.then((r) => (r.ok ? r.json() : null))
+			.then((d) => (vesinas = d))
+			.catch(() => null));
+	function dinsAnels(anels, x, y) {
+		let d = false;
+		for (const a of anels)
+			for (let i = 0, j = a.length - 1; i < a.length; j = i++) {
+				const [xi, yi] = a[i],
+					[xj, yj] = a[j];
+				if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) d = !d;
+			}
+		return d;
+	}
+	function vesinaA(ll) {
+		if (!vesinas) return null;
+		for (const [k, anels] of Object.entries(vesinas)) if (LENGAS[k] && !visibility[k] && dinsAnels(anels, ll.lng, ll.lat)) return k;
+		return null;
+	}
+	// (noms de validar per Romain)
+	const vocala = (t) => /^[aeiouàèéíòóúh]/i.test(t);
+	const descVesina = (k) => {
+		const n = LENGAS[k].nom;
+		return { kod: k, endo: n.endo, oc: 'Descobrir ' + (vocala(n.oc) ? "l'" : 'lo ') + n.oc, fr: 'Découvrir ' + (vocala(n.fr) ? "l'" : 'le ') + n.fr };
+	};
+	function alucarVesina(k) {
+		vesina = null;
+		mapEl?.classList.remove('sus-vesina');
+		onAlucar?.(k);
+	}
 	// Lo palièr de la grilha de las escalas (escalas.js), al costat de la barra
 	let elPalièr = null,
 		kmEscala = null;
@@ -1028,6 +1068,26 @@
 		let tClic = -1e9,
 			tMov = -1e9;
 		map.on('click', () => (tClic = performance.now()));
+		// las lengas vesinas : al survòl, l'invitacion ; al clic, la lenga s'aluca
+		// (al det, lo primièr tòc mòstra l'invitacion, que se tòca per alucar)
+		map.on('mousemove', (e) => {
+			if (!vesinas) return void cargarVesinas();
+			const k = survòl || survòlLenga || survòlTem ? null : vesinaA(e.latlng);
+			if (k !== (vesina?.kod ?? null)) vesina = k ? descVesina(k) : null;
+			mapEl?.classList.toggle('sus-vesina', !!k);
+		});
+		map.on('mouseout', () => {
+			vesina = null;
+			mapEl?.classList.remove('sus-vesina');
+		});
+		map.on('click', async (e) => {
+			await cargarVesinas();
+			if (survòl || survòlLenga || survòlTem) return;
+			const k = vesinaA(e.latlng);
+			if (!k) return void (matchMedia('(hover: hover)').matches || (vesina = null));
+			if (matchMedia('(hover: hover)').matches) alucarVesina(k);
+			else vesina = descVesina(k);
+		});
 		map.on('movestart', () => (tMov = performance.now()));
 		map.on('dblclick', (e) => {
 			if (tMov >= tClic && tMov - tClic < 600) return;
@@ -1494,6 +1554,13 @@
 		</div>
 	{/if}
 
+	{#if vesina && !legendaDial}
+		<button type="button" class="legenda-dial vesina" onclick={() => alucarVesina(vesina.kod)}>
+			<span class="nom" lang={LENGAS[vesina.kod]?.lang}>{vesina.endo}</span>
+			<span class="sota">{lang === 'fr' ? vesina.fr : vesina.oc} →</span>
+		</button>
+	{/if}
+
 	<!-- Flèche du nord à l'ancienne, comme sur l'accueil : aiguille en losange
 	     (moitié pleine, moitié tracée), anneau fin, N italique -->
 	<div class="compass" aria-hidden="true">
@@ -1664,6 +1731,22 @@
 	}
 	.legenda-dial.fixada {
 		border-color: var(--t-aur);
+	}
+	/* l'invitacion a descobrir una lenga vesina : un boton */
+	.legenda-dial.vesina {
+		pointer-events: auto;
+		cursor: pointer;
+		font: inherit;
+		border-color: var(--t-aur);
+	}
+	.legenda-dial.vesina:hover,
+	.legenda-dial.vesina:focus-visible {
+		background: color-mix(in srgb, var(--t-aur) 18%, var(--t-fons-2));
+		outline: none;
+	}
+	.carta:global(.sus-vesina.leaflet-grab),
+	.carta:global(.sus-vesina) :global(.leaflet-interactive) {
+		cursor: pointer;
 	}
 	.legenda-dial .nom {
 		font: 700 12.5px/1.35 var(--font-body);
