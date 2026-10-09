@@ -38,7 +38,10 @@ const csp = {
 			'https://*.supabase.co',
 			'wss://*.supabase.co',
 			'https://api-adresse.data.gouv.fr', // autocomplétion des lieux
-			'https://photon.komoot.io'
+			'https://photon.komoot.io',
+			// photos aériennes : savoir si une tuile manque (404, la mer au large)
+			'https://data.geopf.fr',
+			'https://www.ign.es'
 		],
 		'media-src': ['self', 'https://*.supabase.co'],
 		'frame-src': ['https://www.youtube-nocookie.com', 'https://www.canva.com'],
