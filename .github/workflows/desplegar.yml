@@ -26,6 +26,13 @@ on:
 permissions:
   contents: read
 
+# Un sol desplegament a la vegada : un mandadís novèl arrèsta los que son
+# en cors. Se que non, quand se'n relança mantun a la vegada, lo darrièr
+# acabat demòra en linha, e pòt èsser lo pus vièlh (2026-10-10).
+concurrency:
+  group: desplegar
+  cancel-in-progress: true
+
 env:
   REGISTRE: rg.fr-par.scw.cloud/lo-ligam
   IMATGE: lo-ligam
