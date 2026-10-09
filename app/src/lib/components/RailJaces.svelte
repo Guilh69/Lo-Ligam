@@ -157,7 +157,7 @@
 			// las lengas : lors colors, o lor nom dins la lenga (las de venir)
 			...Object.fromEntries(
 				Object.keys(LENGAS).map((id) => {
-					const dz = LENGAS[id].pastilhas.filter(({ k }) => LENGAS[id].dial.sorne[k]);
+					const dz = LENGAS[id].pastilhas.filter(({ k, de }) => LENGAS[id].dial.sorne[k] && !de);
 					const w = 52 / dz.length;
 					return [id, dz.map(({ k }, i) => `<rect x="${(i * w).toFixed(1)}" y="0" width="${(w + 0.5).toFixed(1)}" height="36" fill="${colorPastilha(id, k)}" opacity=".75"/>`).join('')];
 				})
@@ -454,7 +454,10 @@
 	function causirLenga(id, k) {
 		visibility[id] = true;
 		const kod = LENGAS[id].pref + k;
-		causits = causits.includes(kod) ? causits.filter((x) => x !== kod) : [...causits, kod];
+		// (un dialècte d'una lenga de la familha, coma lo ch'ti : remplaça sa lenga)
+		const de = LENGAS[id].pastilhas.find((q) => q.k === k)?.de;
+		const b = de ? causits.filter((x) => x !== LENGAS[id].pref + de) : causits;
+		causits = b.includes(kod) ? b.filter((x) => x !== kod) : [...b, kod];
 	}
 
 	// Colors del fons que l'internauta pòt cambiar, e lor valor de basa segon lo tèma
@@ -732,12 +735,13 @@
 				{@const lg = LENGAS[j.id]}
 				<div class="pastilhas" role="group" aria-label={tx.causirLenga(lang === 'fr' ? lg.nom.fr : lg.nom.oc)}>
 					<!-- los noms dins la lenga ; l'occitan (o lo francés) en infobulla -->
-					{#each lg.pastilhas as { k, oc, fr, ...q } (k)}
+					{#each lg.pastilhas.filter((q) => !q.de || causits.includes(lg.pref + q.de) || lg.pastilhas.some((s) => s.de === q.de && causits.includes(lg.pref + s.k))) as { k, oc, fr, de, ...q } (k)}
 						{@const apart = !!lg.apart?.[k]}
 						<button
 							type="button"
 							class="pastilha"
 							class:apart
+							class:sota={!!de}
 							lang={lg.lang}
 							title={lang === 'oc' ? oc : fr}
 							aria-pressed={causits.includes(lg.pref + k)}
@@ -1160,6 +1164,12 @@
 		flex-wrap: wrap;
 		gap: 4px;
 		margin-top: 0.45rem;
+	}
+	/* un dialècte d'una lenga de la familha (lo ch'ti dins lo picard) : en retrait */
+	.pastilha.sota {
+		margin-left: 12px;
+		font-size: 0.68rem;
+		border-style: dashed;
 	}
 	.pastilha {
 		display: inline-flex;

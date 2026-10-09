@@ -37,8 +37,8 @@
       "zonas": [],
       "de": "picard",
       "color": "#5f6cff",
-      "sota_fr": "langue picarde · langue d'oïl",
-      "sota_oc": "lenga picarda · lenga d'oïl"
+      "sota_fr": "dialecte du picard · langue d'oïl",
+      "sota_oc": "dialècte del picard · lenga d'oïl"
     },
     {
       "kod": "rouchi",
@@ -48,8 +48,8 @@
       "zonas": [],
       "de": "picard",
       "color": "#8a7dff",
-      "sota_fr": "langue picarde · langue d'oïl",
-      "sota_oc": "lenga picarda · lenga d'oïl"
+      "sota_fr": "dialecte du picard · langue d'oïl",
+      "sota_oc": "dialècte del picard · lenga d'oïl"
     },
     {
       "kod": "picard",
@@ -59,9 +59,7 @@
       "zonas": [
         "1.3"
       ],
-      "color": "#7f95ff",
-      "sota_fr": "langue picarde · langue d'oïl",
-      "sota_oc": "lenga picarda · lenga d'oïl"
+      "color": "#7f95ff"
     },
     {
       "kod": "wallon",
@@ -170,15 +168,5 @@
       ],
       "color": "#c9cff5"
     }
-  ],
-  "apart": {
-    "kod": "picard-tot",
-    "fr": "langue picarde",
-    "oc": "lenga picarda",
-    "dins": [
-      "chti",
-      "rouchi",
-      "picard"
-    ]
-  }
+  ]
 }

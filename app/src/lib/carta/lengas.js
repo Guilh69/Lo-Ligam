@@ -152,31 +152,30 @@ export const LENGAS = {
 		// peitavin-santongés a despart ; lo Centre, pervenca palla
 		dial: {
 			sorne: {
-				chti: '#5f6cff', rouchi: '#8a7dff', picard: '#7f95ff', wallon: '#a48cff', normand: '#3f5bff',
+				picard: '#7f95ff', chti: '#3fe0b8', rouchi: '#ff9f5a', wallon: '#a48cff', normand: '#3f5bff',
 				champenois: '#2fb4f0', lorrain: '#1588d8', bourguignon: '#6fd6ff', franc_comtois: '#1fd6c0',
 				gallo: '#4f7fd0', oest: '#62a0ea', poitevin_saintongeais: '#3fc0ff', centre: '#7f9cff'
 			},
 			clar: {
-				chti: '#3348e8', rouchi: '#5a3fd8', picard: '#4a66f0', wallon: '#6a4fe0', normand: '#1f2fc0',
+				picard: '#4a66f0', chti: '#0f9f86', rouchi: '#d0661a', wallon: '#6a4fe0', normand: '#1f2fc0',
 				champenois: '#0a8fd0', lorrain: '#0063b0', bourguignon: '#2bb0e0', franc_comtois: '#00a08f',
 				gallo: '#2f5fb0', oest: '#4a8ad8', poitevin_saintongeais: '#0098d8', centre: '#5a6ff0'
 			},
 			// (Okabe-Ito : 8 colors per 11 zònas, doas vesinas jamai parièras)
 			dalt: {
-				chti: '#0072b2', rouchi: '#cc79a7', picard: '#e69f00', wallon: '#999999', normand: '#56b4e9',
+				picard: '#e69f00', chti: '#009e73', rouchi: '#d55e00', wallon: '#999999', normand: '#56b4e9',
 				champenois: '#009e73', lorrain: '#56b4e9', bourguignon: '#f0e442', franc_comtois: '#cc79a7',
 				gallo: '#d55e00', oest: '#999999', poitevin_saintongeais: '#f0e442', centre: '#dddddd'
 			}
 		},
-		// lo picard entièr, causit a despart (coma la Catalonha del Nòrd), e sos
-		// tres dialèctes segon l'usatge dels noms (Romain, 2026-10-10)
-		apart: { 'picard-tot': { dins: ['chti', 'rouchi', 'picard'] } },
+		// lo ch'ti e lo rochi : de dialèctes del picard, pas de lengas (Romain,
+		// 2026-10-10) ; lors pastilhas (« de ») e lors zònas apareisson quand lo
+		// picard es causit ; colors vivas, per se destriar dins lo picard
 		// del nòrd al sud, grope per grope
 		pastilhas: [
-			{ k: 'picard-tot', fr: 'langue picarde', oc: 'lenga picarda' },
-			{ k: 'chti', fr: 'ch’ti', oc: 'ch’ti' },
-			{ k: 'rouchi', fr: 'rouchi', oc: 'rochi' },
 			{ k: 'picard', fr: 'picard', oc: 'picard' },
+			{ k: 'chti', fr: 'ch’ti', oc: 'ch’ti', de: 'picard' },
+			{ k: 'rouchi', fr: 'rouchi', oc: 'rochi', de: 'picard' },
 			{ k: 'wallon', fr: 'wallon', oc: 'valon' },
 			{ k: 'normand', fr: 'normand', oc: 'normand' },
 			{ k: 'champenois', fr: 'champenois', oc: 'campanés' },

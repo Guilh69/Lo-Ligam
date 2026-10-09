@@ -586,6 +586,13 @@ if illòts:
     print('Illòts levats : %d (%.2f km2)' % (len(illòts), sum(km2(en_m(p)) for p in illòts)))
 DIAL_LL = {d: unir([CLAU_LL[k] for k in CLAUS if k.split('|')[0] == d]) for d in ORDRE}
 domeni_ll = unir(list(DIAL_LL.values()))
+# Los dialèctes d'una lenga de la familha (ch'ti e rochi dins lo picard,
+# retorn de Romain 2026-10-10 : « pas au même niveau qu'une autre langue
+# d'oïl ») : la lenga los recòbre ; la carta los mòstra quand es causida
+SOTS = [d for d in ORDRE if DIAL[d].get('de')]
+for d in SOTS:
+    DIAL_LL[DIAL[d]['de']] = unir([DIAL_LL[DIAL[d]['de']], DIAL_LL[d]])
+NIV1 = [d for d in ORDRE if d not in SOTS]
 
 # La tèrra a l'entorn : Natural Earth (Espanha, França), rosigada de 1,5 km
 # (sa còsta es generalizada), e las comunas precisas defòra del domeni
@@ -730,10 +737,6 @@ for d in ORDRE:
     # (etiqueta : la del JSON se n'i a una, plaçada luènh de las vilas ; si que non, lo mitan pus larg de la zòna)
     feats.append({'type': 'Feature', 'properties': {**props_dial(x), 'eti': x.get('eti') or eti(en_m(DIAL_LL[d])),
                   'parlars': sorted(PARLARS[d])}, 'geometry': geojson_ll(DIAL_LL[d])})
-a = classa['apart']
-AP_LL = unir([DIAL_LL[d] for d in a['dins']])
-feats.append({'type': 'Feature', 'properties': {'kod': a['kod'], 'fr': a['fr'], 'oc': a['oc'], 'color': DIAL[a['dins'][0]]['color'],
-              'eti': eti(en_m(AP_LL)), 'apart': True, 'dins': a['dins']}, 'geometry': geojson_ll(AP_LL)})
 sortida = {
     'type': 'FeatureCollection',
     'font': classa['font'],
@@ -769,7 +772,7 @@ for f in rel['features']:
     G[f['properties']['kod']] = valid(g)
     if not g.Contains(ponch(*f['properties']['eti'])):
         print('  ATENCION : etiqueta defòra per', f['properties']['kod'])
-rec = sum(km2(en_m(valid(G[a].Intersection(G[b])))) for i, a in enumerate(ORDRE) for b in ORDRE[i + 1:] if G[a].Intersects(G[b]))
+rec = sum(km2(en_m(valid(G[a].Intersection(G[b])))) for i, a in enumerate(NIV1) for b in NIV1[i + 1:] if G[a].Intersects(G[b]))
 u_ll = unir([G[d] for d in ORDRE])
 rec_oc = km2(en_m(valid(u_ll.Intersection(oc_ll))))
 zona = valid(en_ll(oc_local.Buffer(3000, 4)).Intersection(en_ll(dom_brut.Buffer(3000, 4))))

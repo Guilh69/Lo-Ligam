@@ -278,6 +278,11 @@ export function crearColaLenga(
 				y = lp.y - this._min.y;
 			if (G.dom && !tc.isPointInPath(G.dom, x, y, 'evenodd')) return null;
 			if (ambTrans) for (const zn of G.trans) if (tc.isPointInPath(zn.c, x, y, 'evenodd')) return zn.kod;
+			// (los dialèctes d'una lenga causida, o d'un dialècte frair causit)
+			for (const zn of G.sots) {
+				const par = lenga.pref + zn.props.de;
+				if ((this._sels.includes(par) || G.sots.some((s) => s.props.de === zn.props.de && this._sels.includes(s.kod))) && tc.isPointInPath(zn.c, x, y, 'evenodd')) return zn.kod;
+			}
 			for (const zn of G.apart) if (this._sels.includes(zn.kod) && tc.isPointInPath(zn.c, x, y, 'evenodd')) return zn.kod;
 			for (const zn of G.zonas) if (tc.isPointInPath(zn.c, x, y, 'evenodd')) return zn.kod;
 			return null;
@@ -312,6 +317,12 @@ export function crearColaLenga(
 			// totes los dialèctes tornan
 			const k = this.zonaA(e.layerPoint);
 			if (!k) return this._sels.length && this._aplicar([], true);
+			// un dialècte d'una lenga causida : remplaça la lenga dins la causida
+			const sot = this._geo.sots.find((s) => s.kod === k);
+			if (sot) {
+				const b = this._sels.filter((x) => x !== lenga.pref + sot.props.de);
+				return this._aplicar(b.includes(k) ? b.filter((x) => x !== k) : [...b, k], true);
+			}
 			this._aplicar(this._sels.includes(k) ? this._sels.filter((x) => x !== k) : [...this._sels, k], true);
 		},
 		_nomDe(k) {
@@ -439,7 +450,10 @@ export function crearColaLenga(
 				mPx: 112600 / Math.pow(2, z), // mètres per pixel (environ)
 				dom: dom?.anels?.length ? cami(dom.anels) : null,
 				linhas: (dom?.linhas || []).map((l) => projectar(map, l, z, o.x, o.y)),
-				zonas: fs.filter((f) => !f.properties.apart && !f.properties.transicio).map(zona),
+				zonas: fs.filter((f) => !f.properties.apart && !f.properties.transicio && !f.properties.de).map(zona),
+				// los dialèctes d'una lenga de la familha (lo ch'ti e lo rochi dins lo
+				// picard : retorn de Romain, 2026-10-10) : mostrats quand la lenga es causida
+				sots: fs.filter((f) => f.properties.de && !f.properties.apart && !f.properties.transicio).map(zona),
 				apart: fs.filter((f) => f.properties.apart).map(zona),
 				// (los parlars de transicion, sus los dialèctes)
 				// (sonque las transicions amb una autra lenga, coma lo benasqués : las d'entre
@@ -489,6 +503,8 @@ export function crearColaLenga(
 			if (sola) {
 				// (una zòna a despart recòbre de dialèctes : aqueles demòran)
 				const dins = new Set(zonas.flatMap((zn) => zn.props.dins || []));
+				// (un dialècte causit sol : sa lenga, que lo recòbre, es pas escafada)
+				for (const zn of zonas) if (zn.props.de) dins.add(lenga.pref + zn.props.de);
 				tg.save();
 				tg.globalCompositeOperation = 'destination-out';
 				for (const v of G.zonas) {
@@ -516,7 +532,10 @@ export function crearColaLenga(
 		},
 		_zonasDe(l) {
 			const G = this._geo;
-			return [...G.zonas, ...G.apart].filter((x) => l.includes(x.kod));
+			const z = [...G.zonas, ...G.apart, ...G.sots].filter((x) => l.includes(x.kod));
+			// una lenga causida : sos dialèctes dessús
+			for (const s of G.sots) if (!z.includes(s) && l.includes(lenga.pref + s.props.de)) z.push(s);
+			return z;
 		},
 		_prepSel() {
 			if (!this._geo) return;
