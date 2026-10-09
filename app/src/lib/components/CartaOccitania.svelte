@@ -3,7 +3,7 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
-	import { crearColaEstelas, Z_PRECARGA, nivèlsDezoom, aDetalh } from '$lib/carta/colaEstelas.js';
+	import { crearColaEstelas, Z_PRECARGA, Z_RELAIS, nivèlsDezoom, aDetalh } from '$lib/carta/colaEstelas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
@@ -227,7 +227,6 @@
 			return;
 		}
 		if (colaEstelas) map.removeLayer(colaEstelas);
-		if (teulasSatellit) majSatellit(-1);
 		const resolvedKey = baseLayers[key] ? key : 'occitan';
 		const cfg = baseLayers[resolvedKey];
 		if (currentBaseTileLayer) map.removeLayer(currentBaseTileLayer);
@@ -247,35 +246,16 @@
 	// Fons « estelas » : la carta detalhada (tuèlas OSM en occitan) apareis e
 	// las estelas s'escafan a mesura que s'aprèpa ; en dejós del lindal, cap de
 	// tuèla es pas demandada (sobrietat).
-	// Vèrs 15 km, la carta detalhada se fond dins lo satellit (demanda de
-	// Romain, 2026-10-09) : nòstres noms occitans passan al dessús
-	const Z_SATELLIT = 10;
-	let teulasSatellit = null;
-	function majSatellit(z) {
-		if (z >= Z_SATELLIT - 0.75) {
-			if (!teulasSatellit) {
-				teulasSatellit = crearSatellit({ className: 'teules-satellit', opacity: 0, zIndex: 2 });
-				teulasSatellit.addTo(map);
-			}
-			teulasSatellit.setOpacity(Math.min(1, Math.max(0, z - (Z_SATELLIT - 0.5))));
-		} else if (teulasSatellit) {
-			map.removeLayer(teulasSatellit);
-			teulasSatellit = null;
-		}
-		applyToponymVisibility();
-	}
+	// Fons « estelas » : en s'aprochant (vèrs 20 km, Z_RELAIS), lo plan
+	// estelat cedís la plaça al satellit, sens passar per la carta OSM
+	// (demanda de Romain, 2026-10-09) ; nòstres noms occitans passan al
+	// dessús. En dejós del lindal, cap de tuèla es pas demandada (sobrietat).
 	function majDetalh() {
-		if (!map) return;
-		if (baseLayer !== 'estelas') {
-			if (teulasSatellit) majSatellit(-1);
-			return;
-		}
+		if (!map || baseLayer !== 'estelas') return;
 		const z = map.getZoom();
-		majSatellit(z);
 		if (z >= Z_PRECARGA) {
 			if (!currentBaseTileLayer) {
-				const cfg = baseLayers.occitan;
-				currentBaseTileLayer = L.tileLayer(cfg.url, { maxZoom: cfg.maxZoom, attribution: cfg.attribution, className: 'teules-detalh', opacity: 0 });
+				currentBaseTileLayer = crearSatellit({ opacity: 0 });
 				currentBaseTileLayer._loLigamKey = 'estelas';
 				currentBaseTileLayer.addTo(map);
 			}
@@ -576,6 +556,61 @@
 	// la plaça de cada nom se n'estima amb la lista de las comunas). Un ponch
 	// que n'amagariá un se descala, ligat al luòc per un fil. Se torna calcular
 	// a cada zoom e quand una jaça s'aluca o s'atudís.
+	// Los noms de totas las comunas en occitan, sus lo satellit (demanda de
+	// Romain, 2026-10-09) : sonque los de la vista, las comunas mai pobladas
+	// d'en primièr, sens que dos noms se tòquen. Los ponches los evitan.
+	let capaNoms = null;
+	const nomsAfichats = new Map();
+	let bóstiasNoms = [];
+	const popNoms = (z) => (z >= 12.5 ? 0 : z >= 11.5 ? 100 : z >= 10.5 ? 500 : z >= 9.5 ? 2000 : 8000);
+	const talhaNom = (pop) => (pop >= 100000 ? 17 : pop >= 20000 ? 14 : pop >= 3000 ? 12.5 : 11.5);
+	function majNomsComunas() {
+		if (!map) return;
+		if (baseLayer !== 'estelas' || map.getZoom() < Z_RELAIS) {
+			if (capaNoms) map.removeLayer(capaNoms);
+			capaNoms = null;
+			nomsAfichats.clear();
+			bóstiasNoms = [];
+			return;
+		}
+		if (!nomsComunas?.length) return void cargarNomsComunas();
+		capaNoms ??= L.layerGroup().addTo(map);
+		const z = map.getZoom();
+		const b = map.getBounds().pad(0.1);
+		const s = b.getSouth(), n = b.getNorth(), w = b.getWest(), e = b.getEast();
+		const pm = popNoms(z);
+		const cands = nomsComunas.filter((c) => c.pop >= pm && c.lat > s && c.lat < n && c.lon > w && c.lon < e);
+		cands.sort((a, c) => c.pop - a.pop);
+		const vòl = new Set();
+		bóstiasNoms = [];
+		for (const c of cands) {
+			if (bóstiasNoms.length >= 260) break;
+			const nom = c.oc || c.fr;
+			const f = talhaNom(c.pop);
+			const q = map.latLngToContainerPoint([c.lat, c.lon]);
+			const wd = nom.length * f * 0.56 + 6;
+			const bx = [q.x - wd / 2, q.y - f * 0.7, q.x + wd / 2, q.y + f * 0.7];
+			if (bóstiasNoms.some((o) => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1])) continue;
+			bóstiasNoms.push(bx);
+			const k = c.fr + c.dep;
+			vòl.add(k);
+			if (!nomsAfichats.has(k)) {
+				const m = L.marker([c.lat, c.lon], {
+					icon: L.divIcon({ className: 'nom-comuna', html: `<span style="font-size:${f}px">${escapeHtml(nom)}</span>`, iconSize: [0, 0], iconAnchor: [0, 0] }),
+					interactive: false,
+					keyboard: false
+				});
+				capaNoms.addLayer(m);
+				nomsAfichats.set(k, m);
+			}
+		}
+		for (const [k, m] of nomsAfichats)
+			if (!vòl.has(k)) {
+				capaNoms.removeLayer(m);
+				nomsAfichats.delete(k);
+			}
+	}
+
 	// de luènh, los ponches son d'estelas (la carta d'estelas de l'entrada) ;
 	// l'icòna espelís en s'aprochant (causida de Romain, 2026-10-09)
 	const Z_ICONAS = 10;
@@ -628,8 +663,10 @@
 				if (melhor) ancòras[i] = melhor;
 			});
 		}
-		// los noms de las tuèlas (la carta detalhada se mescla amb la nòstra)
-		if (nomsComunas?.length) {
+		// sus lo satellit, nòstres noms de comunas (bóstias exactas) ; suls autres
+		// fonses, los noms de las tuèlas, estimats
+		if (bóstiasNoms.length) for (const bx of bóstiasNoms) zonas.push(zonaCaixa(bx));
+		else if (nomsComunas?.length) {
 			const b = vue.pad(0.15);
 			const s = b.getSouth(), n = b.getNorth(), w = b.getWest(), e = b.getEast();
 			for (const c of nomsComunas) {
@@ -671,6 +708,7 @@
 			return { fr, oc, lon, lat, pop, dep, k: [normC(fr), ...(oc ? [normC(oc)] : []), ...(oc0 && oc0 !== oc ? [normC(oc0)] : [])] };
 		});
 		if (qComuna) cercarComuna(qComuna);
+		majNomsComunas();
 		programarDegatjament();
 	}
 	function cercarComuna(q) {
@@ -805,7 +843,7 @@
 
 	function applyToponymVisibility() {
 		if (!map) return;
-		const ambNoms = ambToponims(baseLayer) || (baseLayer === 'estelas' && map.getZoom() >= Z_SATELLIT - 0.5);
+		const ambNoms = ambToponims(baseLayer);
 		if (!toponymCities) return void (ambNoms && loadToponymsLayer());
 		if (ambNoms) {
 			toponymCities.addTo(map);
@@ -959,6 +997,7 @@
 		);
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
+		map.on('moveend', majNomsComunas);
 		map.on('moveend layeradd layerremove', programarDegatjament);
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
@@ -1294,10 +1333,6 @@
 <style>
 	/* Los punts de las jaces (luòcs d'interès, librariás…) : pastilha de veire,
 	   icòna e liseret de la color de la jaça */
-	/* lo satellit se lèva doçament sus la carta detalhada */
-	.carta :global(.teules-satellit) {
-		transition: opacity 0.9s ease;
-	}
 	:global(.ponch-jaça) {
 		--ponch: var(--t-aur);
 		background: none;
@@ -1860,7 +1895,6 @@
 		height: 8px;
 		border-radius: 50%;
 		background: var(--ponch);
-		box-shadow: 0 0 6px 2px color-mix(in srgb, var(--ponch) 55%, transparent);
 		opacity: 0;
 		visibility: hidden;
 		transform: scale(0.3);
@@ -1870,17 +1904,31 @@
 		position: absolute;
 		inset: -7px;
 	}
+	/* lo lusiment : un alo precalculat que sonque son opacitat càmbia (la
+	   carta grafica o fa sola ; animar l'ombra fasiá tot redessenhar) */
+	.carta :global(.ponch-estela::before) {
+		content: '';
+		position: absolute;
+		inset: -8px;
+		border-radius: 50%;
+		background: radial-gradient(circle, color-mix(in srgb, var(--ponch) 70%, transparent) 0%, transparent 65%);
+		opacity: 0.35;
+		will-change: opacity;
+	}
 	.carta:global(.ponchs-estelas) :global(.ponch-estela),
 	.carta :global(.ponch-sol-estela .ponch-estela) {
 		opacity: 1;
 		visibility: visible;
 		transform: scale(1);
+	}
+	.carta:global(.ponchs-estelas) :global(.ponch-estela::before),
+	.carta :global(.ponch-sol-estela .ponch-estela::before) {
 		animation: estela-lusis 3.2s ease-in-out infinite alternate;
 		animation-delay: var(--retard, 0ms);
 	}
 	@keyframes estela-lusis {
 		to {
-			box-shadow: 0 0 11px 4px color-mix(in srgb, var(--ponch) 75%, transparent);
+			opacity: 1;
 		}
 	}
 	.carta:global(.ponchs-estelas) :global(.ponch-pos),
@@ -1900,8 +1948,8 @@
 		outline-offset: 3px;
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.carta:global(.ponchs-estelas) :global(.ponch-estela),
-		.carta :global(.ponch-sol-estela .ponch-estela) {
+		.carta:global(.ponchs-estelas) :global(.ponch-estela::before),
+		.carta :global(.ponch-sol-estela .ponch-estela::before) {
 			animation: none;
 		}
 	}
@@ -1957,6 +2005,21 @@
 	.carta.nuech:global(.revelant.net) :global(.leaflet-tile-pane) {
 		filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) sepia(0.35) saturate(0.75) blur(0px);
 	}
+	/* la meteissa revelacion pel satellit (son pròpri plan) */
+	.carta:global(.revelant) :global(.pan-satellit) {
+		filter: blur(5px);
+		transition: filter var(--rev-dur, 2s) cubic-bezier(0.45, 0, 0.55, 1);
+		will-change: filter;
+	}
+	.carta:global(.revelant.net) :global(.pan-satellit) {
+		filter: blur(0px);
+	}
+	.carta.nuech:global(.revelant) :global(.pan-satellit) {
+		filter: brightness(0.72) contrast(1.06) saturate(0.85) sepia(0.18) blur(5px);
+	}
+	.carta.nuech:global(.revelant.net) :global(.pan-satellit) {
+		filter: brightness(0.72) contrast(1.06) saturate(0.85) sepia(0.18) blur(0px);
+	}
 
 	/* Etiquetas dels noms occitans, per las mostrar suls fonses Natural e
 	   Satellit. Contorn clar (text-stroke) per rèstar legibles sus de fonses
@@ -1974,6 +2037,39 @@
 
 	.carta :global(.oc-label-city) {
 		font-size: 0.82rem;
+	}
+
+	/* los noms de las comunas sul satellit : la letra clara de la carta
+	   estelada, amb un alo doç ; arriban aprèp las estelas */
+	.carta :global(.nom-comuna span) {
+		position: absolute;
+		transform: translate(-50%, -50%);
+		white-space: nowrap;
+		pointer-events: none;
+		font-family: var(--font-body);
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		color: #2a1a12;
+		text-shadow:
+			0 0 3px rgba(250, 242, 228, 0.95),
+			0 0 7px rgba(250, 242, 228, 0.7);
+		animation: nom-ven 0.9s ease 0.35s backwards;
+	}
+	.carta.nuech :global(.nom-comuna span) {
+		color: #f5ead8;
+		text-shadow:
+			0 0 3px rgba(18, 9, 6, 0.95),
+			0 0 8px rgba(18, 9, 6, 0.75);
+	}
+	@keyframes nom-ven {
+		from {
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.carta :global(.nom-comuna span) {
+			animation: none;
+		}
 	}
 
 	.carta :global(.oc-label-town) {
