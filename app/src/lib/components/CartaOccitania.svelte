@@ -5,7 +5,7 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
+	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, palièrDe, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
 	const { RELAIS: Z_RELAIS, PRECARGA: Z_PRECARGA, ICONAS: Z_ICONAS } = Z;
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
@@ -363,6 +363,18 @@
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
 	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', festas: 'confetti', limsi: 'microphone-2' };
 	// una jaça apondida dins l'admin pren sa color de la basa
+	// Lo palièr de la grilha de las escalas (escalas.js), al costat de la barra
+	let elPalièr = null,
+		kmEscala = null;
+	function majPalièr() {
+		if (!elPalièr || kmEscala == null) return;
+		const p = palièrDe(kmEscala);
+		elPalièr.textContent = lang === 'fr' ? p.fr : p.oc;
+	}
+	$effect(() => {
+		lang;
+		majPalièr();
+	});
 	// (los ponches d'una jaça que se decocha, en camin de partir)
 	const partidas = {};
 	// (cada ponch s'aluca a son moment : un pichon retard a l'azard)
@@ -1136,8 +1148,14 @@
 			const m = this._getRoundNum(maxMeters);
 			const label = m < 1000 ? m + ' m' : (m / 1000).toLocaleString('fr-FR') + ' km';
 			this._updateScale(this._mScale, label, m / maxMeters);
+			kmEscala = m / 1000;
+			majPalièr();
 		};
 		escala.addTo(map);
+		// lo nom del palièr, al costat de la barra (« 50 km · Los dialèctes »),
+		// dins un element a part : dins la barra, desbordava e la barra mesurava pas pus res
+		elPalièr = L.DomUtil.create('span', 'palièr-escala', escala.getContainer());
+		majPalièr();
 
 		// Puèi las donadas de la basa (luòcs, còlas, dialèctes, despartaments)
 		const [{ data: luocsData }, { data: colasData }, { data: deptData }] =
@@ -1778,6 +1796,24 @@
 		line-height: 1.3;
 		padding: 1px 6px 2px;
 		border-radius: 0 0 4px 4px;
+	}
+
+	/* lo palièr, just al dessús de la barra (al costat, tustava las mencions de la carta) */
+	.carta :global(.leaflet-control-scale) {
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: flex-start;
+	}
+	.carta :global(.palièr-escala) {
+		font-size: 0.72rem;
+		font-style: italic;
+		line-height: 1.3;
+		padding: 0 0 1px 2px;
+		color: var(--t-aur);
+		text-shadow:
+			0 0 4px var(--t-fons),
+			0 0 8px var(--t-fons);
+		white-space: nowrap;
 	}
 
 	/* Bulles des lieux et des couches */
