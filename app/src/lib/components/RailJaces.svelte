@@ -9,7 +9,7 @@
 	// (vilas, noms, rius, relèu) son de jaces dins lors familhas.
 	import { untrack, tick } from 'svelte';
 	import { sonPapièr, sonsActius, gardarSons } from '$lib/carta/sons.js';
-	import { fly } from 'svelte/transition';
+	import { fly, slide } from 'svelte/transition';
 	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
 	import { quintOut } from 'svelte/easing';
 
@@ -180,6 +180,9 @@
 
 	const RAIL = ['sus', 'lenga', 'administracion', 'cultura', 'istoria', 'natura', 'lengas'];
 	let dobert = $state(null);
+	// los tèmas de « Sus la carta » enrotlats (demanda de Romain, 2026-10-09)
+	let enrotlats = $state([]);
+	const virarTèma = (id) => (enrotlats = enrotlats.includes(id) ? enrotlats.filter((x) => x !== id) : [...enrotlats, id]);
 	const alternar = (id) => {
 		dobert = dobert === id ? null : id;
 		if (dobert) plaçarTirador();
@@ -614,10 +617,19 @@
 			{/if}
 			<!-- la legenda de sa carta, rengada per tematica (demanda de Romain, 2026-10-09) -->
 			{#each familhas.filter((f) => f.jaces.some((j) => afichadas.includes(j))) as f (f.id)}
-				<p class="titolet">{nomFam(f.id)}</p>
-				{#each f.jaces.filter((j) => afichadas.includes(j)) as j (j.id)}
-					{@render linha(j)}
-				{/each}
+				{@const js = f.jaces.filter((j) => afichadas.includes(j))}
+				{@const dobèrt = !enrotlats.includes(f.id)}
+				<button type="button" class="titolet tèma" aria-expanded={dobèrt} onclick={() => virarTèma(f.id)}>
+					<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+					{nomFam(f.id)}<span class="tèma-n">{js.length}</span>
+				</button>
+				{#if dobèrt}
+					<div class="tèma-cos" transition:slide={{ duration: 220 }}>
+						{#each js as j (j.id)}
+							{@render linha(j)}
+						{/each}
+					</div>
+				{/if}
 			{/each}
 		{:else if dobert === 'fons'}
 			<p class="titolet">{tx.fonsCarta}</p>
@@ -961,6 +973,42 @@
 		letter-spacing: 0.24em;
 		text-transform: uppercase;
 		color: var(--t-tinta-2);
+	}
+	/* un tèma de la legenda : son títol l'enròtla o lo desròtla */
+	.titolet.tèma {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		width: 100%;
+		padding: 0.25rem 0;
+		background: none;
+		border: 0;
+		border-bottom: 1px solid color-mix(in srgb, var(--t-tinta-2) 25%, transparent);
+		font-family: inherit;
+		text-align: left;
+		cursor: pointer;
+	}
+	.titolet.tèma:hover,
+	.titolet.tèma:focus-visible {
+		color: var(--t-aur);
+	}
+	.titolet.tèma svg {
+		width: 0.8rem;
+		height: 0.8rem;
+		transition: transform 0.2s;
+	}
+	.titolet.tèma[aria-expanded='false'] svg {
+		transform: rotate(-90deg);
+	}
+	.tèma-n {
+		margin-left: auto;
+		letter-spacing: 0;
+		font-weight: 600;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.titolet.tèma svg {
+			transition: none;
+		}
 	}
 	.linha {
 		display: grid;
