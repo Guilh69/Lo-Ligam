@@ -565,6 +565,7 @@
 		<button
 			type="button"
 			class="rail-b"
+			class:rail-sus={id === 'sus'}
 			bind:this={botons[id]}
 			aria-expanded={dobert === id}
 			aria-controls="tirador-jaces"
@@ -578,6 +579,7 @@
 				<span class="punt" aria-hidden="true"></span>
 			{/if}
 		</button>
+		{#if id === 'sus'}<span class="rail-sep" aria-hidden="true"></span>{/if}
 	{/each}
 	<span class="rail-sep" aria-hidden="true"></span>
 	<button type="button" class="rail-b" bind:this={botons.fons} aria-expanded={dobert === 'fons'} aria-controls="tirador-jaces" onclick={() => alternar('fons')}>
@@ -885,6 +887,27 @@
 	}
 	.lib {
 		hyphens: manual;
+	}
+	/* « Sus la carta », lo còr de l'organizacion de sa carta (demanda de
+	   Romain, 2026-10-09) : una tèula a part, cerclada d'aur, pus granda */
+	.rail-b.rail-sus {
+		margin: 2px 3px 0;
+		padding: 10px 2px 8px;
+		color: var(--t-aur-clar);
+		background: color-mix(in srgb, var(--t-aur) 10%, transparent);
+		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--t-aur) 55%, transparent);
+		font-weight: 700;
+	}
+	.rail-b.rail-sus svg {
+		width: 27px;
+		height: 27px;
+	}
+	.rail-b.rail-sus:hover {
+		background: color-mix(in srgb, var(--t-aur) 18%, transparent);
+	}
+	.rail-b.rail-sus[aria-expanded='true'] {
+		background: color-mix(in srgb, var(--t-aur) 24%, transparent);
+		box-shadow: inset 0 0 0 1.5px var(--t-aur);
 	}
 	.punt {
 		position: absolute;
@@ -1302,6 +1325,13 @@
 			padding: 6px 2px 5px;
 			font-size: 9.5px;
 		}
+		.rail-b.rail-sus {
+			padding: 7px 2px 5px;
+		}
+		.rail-b.rail-sus svg {
+			width: 24px;
+			height: 24px;
+		}
 		.rail-b svg {
 			width: 20px;
 			height: 20px;
@@ -1344,6 +1374,15 @@
 			padding: 5px 0 3px;
 			font-size: 9.5px;
 			line-height: 1.1;
+		}
+		/* (sus la barra del telefon : la tèula garda la nautor de las autras) */
+		.rail-b.rail-sus {
+			margin: 0;
+			padding: 5px 0 3px;
+		}
+		.rail-b.rail-sus svg {
+			width: 22px;
+			height: 22px;
 		}
 		.rail-b svg {
 			width: 20px;
