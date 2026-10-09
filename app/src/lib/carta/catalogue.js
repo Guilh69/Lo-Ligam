@@ -133,9 +133,17 @@ CATALOGUE.push({
 			nota_oc: 'Sos dialèctes, de Salses a Guardamar e a l’Alguer ; la Catalonha del Nòrd a despart',
 			nota_fr: 'Ses dialectes, de Salses à Guardamar et à Alghero ; la Catalogne nord à part'
 		},
+		{
+			id: 'arpitan',
+			oc: 'Arpitan',
+			fr: 'Arpitan (francoprovençal)',
+			estat: 'disponible',
+			defaut: false,
+			nota_oc: 'Sos dialèctes, de Liyon a Nôchâtél, a Aoûta e a Faeto ; la part de França a despart',
+			nota_fr: 'Ses dialectes, de Lyon à Neuchâtel, à Aoste et à Faeto ; la partie française à part'
+		},
 		{ id: 'basc', oc: 'Basc', fr: 'Basque', estat: 'a venir' },
 		{ id: 'breton', oc: 'Breton', fr: 'Breton', estat: 'a venir' },
-		{ id: 'arpitan', oc: 'Arpitan', fr: 'Arpitan (francoprovençal)', estat: 'a venir' },
 		{ id: 'alsacian', oc: 'Alsacian e francic', fr: 'Alsacien et francique', estat: 'a venir' },
 		{ id: 'flamenc', oc: 'Flamenc occidental', fr: 'Flamand occidental', estat: 'a venir' },
 		{ id: 'cors', oc: 'Còrs', fr: 'Corse', estat: 'a venir' },
@@ -144,7 +152,7 @@ CATALOGUE.push({
 });
 
 // Las jaces de lengas pintadas per una còla de lenga (colaLenga.js, lengas.js)
-export const JACES_LENGAS = ['catalan'];
+export const JACES_LENGAS = ['catalan', 'arpitan'];
 
 // Las jaces pintadas pel fons « Contorns » (colaEstelas.js) : son pas pintadas
 // sus los autres fonses (las tuèlas an las lors). Jaça → element del fons.

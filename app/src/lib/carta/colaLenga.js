@@ -554,8 +554,23 @@ export function crearColaLenga(
 			g.fillStyle = '#000';
 			for (const zn of G.trans) g.fill(zn.c, 'evenodd');
 			g.restore();
-			// (pas defòra del domeni)
-			if (G.dom) {
+			// (pas defòra del domeni, levat las zònas « defora » : la benda de
+			// contacte de l'arpitan es dins lo domeni occitan, Romain 2026-10-09)
+			const defora = G.trans.filter((zn) => zn.props.defora);
+			if (G.dom && defora.length) {
+				const m = (this._imgTransMasca ??= document.createElement('canvas'));
+				m.width = c.width;
+				m.height = c.height;
+				const mg = m.getContext('2d');
+				mg.setTransform(dpr, 0, 0, dpr, 0, 0);
+				mg.fillStyle = '#000';
+				mg.fill(G.dom, 'evenodd');
+				for (const zn of defora) mg.fill(zn.c, 'evenodd');
+				g.save();
+				g.globalCompositeOperation = 'destination-in';
+				g.drawImage(m, 0, 0);
+				g.restore();
+			} else if (G.dom) {
 				g.save();
 				g.setTransform(dpr, 0, 0, dpr, 0, 0);
 				g.globalCompositeOperation = 'destination-in';

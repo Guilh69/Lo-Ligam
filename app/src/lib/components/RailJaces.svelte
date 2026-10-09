@@ -56,7 +56,7 @@
 			color: (n) => `Color : ${n}`,
 			dialecteTotes: 'Totes',
 			causirDial: 'Causir un o mantun dialècte',
-			causirLenga: (l) => `Causir una zòna del ${l}`,
+			causirLenga: (l) => `Causir una zòna ${/^[aeiouàèéòóíú]/i.test(l) ? "de l'" : "del "}${l}`,
 			admin: "Modificar dins l'admin"
 		},
 		fr: {
@@ -91,7 +91,7 @@
 			color: (n) => `Couleur : ${n}`,
 			dialecteTotes: 'Tous',
 			causirDial: 'Choisir un ou plusieurs dialectes',
-			causirLenga: (l) => `Choisir une zone du ${l}`,
+			causirLenga: (l) => `Choisir une zone ${/^[aeiouàâéèêîôû]/i.test(l) ? "de l'" : "du "}${l}`,
 			admin: "Modifier dans l'admin"
 		}
 	};
@@ -117,10 +117,8 @@
 			: { gas: '#9d7dff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' }
 	);
 	// Las autras lengas (lengas.js) : lors pastilhas e lors colors
-	const CA = LENGAS.catalan;
 	// la color d'una pastilha d'una lenga (sa color de dialècte segon lo tèma)
 	const colorPastilha = (id, k) => LENGAS[id].dial[clar ? 'clar' : 'sorne'][k] ?? LENGAS[id].color[clar ? 'clar' : 'sorne'];
-	const DIAL_CA = $derived(Object.fromEntries(CA.pastilhas.map(({ k }) => [k, CA.dial[clar ? 'clar' : 'sorne'][k] ?? CA.color[clar ? 'clar' : 'sorne']])));
 	const NOMS_DIAL = [
 		['gas', 'gascon', 'gascon'],
 		['lan', 'lengadocian', 'languedocien'],
@@ -152,12 +150,15 @@
 			parcs: '<path d="M6 30 Q 10 8 26 13 T 48 19 L 45 32 Z" fill="#86c48c" fill-opacity=".22" stroke="#86c48c" stroke-width="1.2"/>',
 			massis: '<path d="M8 27 l5 -9 l5 9z" fill="currentColor" opacity=".85"/><text x="34" y="16" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="8.5" letter-spacing="1.4" fill="currentColor" opacity=".75">AUBRAC</text>',
 			// las lengas : lors colors, o lor nom dins la lenga (las de venir)
-			catalan: CA.pastilhas
-				.filter(({ k }) => CA.dial.sorne[k])
-				.map(({ k }, i) => `<rect x="${i * 7.5}" y="0" width="8" height="36" fill="${DIAL_CA[k]}" opacity=".75"/>`)
-				.join(''),
 			...Object.fromEntries(
-				[['basc', 'EUSKARA'], ['breton', 'BREZHONEG'], ['arpitan', 'ARPITAN'], ['alsacian', 'ELSÄSSISCH'], ['flamenc', 'VLAEMSCH'], ['cors', 'CORSU'], ['oil', 'GALLO']].map(([k, t]) => [
+				Object.keys(LENGAS).map((id) => {
+					const dz = LENGAS[id].pastilhas.filter(({ k }) => LENGAS[id].dial.sorne[k]);
+					const w = 52 / dz.length;
+					return [id, dz.map(({ k }, i) => `<rect x="${(i * w).toFixed(1)}" y="0" width="${(w + 0.5).toFixed(1)}" height="36" fill="${colorPastilha(id, k)}" opacity=".75"/>`).join('')];
+				})
+			),
+			...Object.fromEntries(
+				[['basc', 'EUSKARA'], ['breton', 'BREZHONEG'],['alsacian', 'ELSÄSSISCH'], ['flamenc', 'VLAEMSCH'], ['cors', 'CORSU'], ['oil', 'GALLO']].map(([k, t]) => [
 					k,
 					`<text x="26" y="22" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1" fill="currentColor">${t}</text>`
 				])
@@ -423,7 +424,7 @@
 		visibility[id] = on;
 		// (una jaça escantida : sas zònas son pas pus causidas, las de las autras demòran)
 		if (id === 'dialectes' && !on) causits = causits.filter((k) => !esOccitan(k));
-		if (id === 'catalan' && !on) causits = causits.filter((k) => !k.startsWith(CA.pref));
+		if (LENGAS[id] && !on) causits = causits.filter((k) => !k.startsWith(LENGAS[id].pref));
 	}
 	// Una pastilha de dialècte (o del Creissent) : aluca la jaça e apond la zòna
 	// a la causida, o l'en leva se i èra (retorn de Romain : mantuna a l'encòp)

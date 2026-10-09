@@ -50,6 +50,45 @@ export const LENGAS = {
 		nomCarta: 'CATALÀ',
 		atribucion:
 			'Catalan : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), comarcas e municipalitats © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL), dialèctes d\'aprèp la Viquipèdia (classament de Veny)'
+	},
+	// L'arpitan (Romain, 2026-10-09) : 7 dialèctes coma lo catalan, los parlars
+	// de la Vouiquipèdia dedins ; la frontièra amb l'occitan es la de la carta
+	// occitana, e la benda de contacte es en asclas (SIG/arpitan/FONTS.md)
+	arpitan: {
+		kod: 'arpitan',
+		pref: 'frp-',
+		lang: 'frp',
+		url: '/data/arpitan.json',
+		nom: { oc: 'arpitan', fr: 'arpitan', endo: 'arpetan' },
+		// (entre Liyon e Geneva)
+		eti: [5.65, 45.95],
+		// violet : luènh del roge occitan e de l'aur catalan
+		color: { sorne: '#b58cff', clar: '#5b3aa8', dalt: '#cc79a7' },
+		tèxt: { sorne: '#e6d8ff', clar: '#3a2370', dalt: '#f2d2e4' },
+		// violets e malvas : luènh de la paleta occitana cauda (roge auvernhat e
+		// jaune vivaroaupenc vesins) e dels blaus-verds del catalan
+		dial: {
+			sorne: { lyonnais: '#c08bff', bressan_jurassien: '#8f7dff', dauphinois: '#e07ad6', savoyard: '#a95ce0', romand: '#6f8bff', alpin: '#d6b4ff', faetar: '#ff8fc8' },
+			clar: { lyonnais: '#7a3fc4', bressan_jurassien: '#4b3fb8', dauphinois: '#a33a99', savoyard: '#6a2a9c', romand: '#2f4fc0', alpin: '#8a62b8', faetar: '#c2457f' },
+			dalt: { lyonnais: '#cc79a7', bressan_jurassien: '#0072b2', dauphinois: '#d55e00', savoyard: '#009e73', romand: '#56b4e9', alpin: '#f0e442', faetar: '#e69f00' }
+		},
+		apart: { 'arpitan-franca': { dins: ['lyonnais', 'bressan_jurassien', 'dauphinois', 'savoyard'] } },
+		// noms arpitans (ORB, Vouiquipèdia) ; los dels gropes son de validar
+		pastilhas: [
+			{ k: 'arpitan-franca', frp: 'Arpitania de France', oc: 'arpitan de França', fr: 'arpitan de France' },
+			{ k: 'bressan_jurassien', frp: 'brêssan-jurassien', oc: 'bressan-jurassian', fr: 'bressan-jurassien' },
+			{ k: 'romand', frp: 'romand', oc: 'romand', fr: 'romand' },
+			{ k: 'lyonnais', frp: 'liyonês', oc: 'lionés', fr: 'lyonnais' },
+			{ k: 'savoyard', frp: 'savoyârd', oc: 'savoiard', fr: 'savoyard' },
+			{ k: 'alpin', frp: 'alpin', oc: 'alpenc', fr: 'alpin' },
+			{ k: 'dauphinois', frp: 'dârfenouès', oc: 'delfinenc', fr: 'dauphinois' },
+			{ k: 'faetar', frp: 'faétâre', oc: 'faetar', fr: 'faetar' }
+		],
+		sota: { oc: 'dialècte arpitan', fr: 'dialecte arpitan' },
+		sotaApart: { oc: 'arpitan de França', fr: 'arpitan de France' },
+		nomCarta: 'ARPETAN',
+		atribucion:
+			'Arpitan : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), comunas de Soïssa e d\'Itàlia © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL), lengas de las comunas OFS, domeni d\'aprèp <a href="https://commons.wikimedia.org/wiki/File:Arpitan_francoprovencal_map.jpg" target="_blank" rel="noopener">arpitania.eu</a> (CC BY-SA 3.0), parlars d\'aprèp la Vouiquipèdia'
 	}
 };
 
@@ -61,7 +100,7 @@ export const esOccitan = (k) => !PREFIXES.some((p) => k.startsWith(p));
 // Çò que la carta en estelas pren d'una lenga : sas vilas (nom dins la lenga,
 // renc, dialècte per la bulla) e sa còsta, quand son fichièr las a
 export function fonsLenga(lenga, d) {
-	const nomDial = Object.fromEntries((lenga.pastilhas || []).map((p) => [p.k, p.long ?? p.ca]));
+	const nomDial = Object.fromEntries((lenga.pastilhas || []).map((p) => [p.k, p.long ?? p[lenga.lang] ?? p.ca]));
 	return {
 		vilas: (d.vilas || []).map(([lon, lat, nom, renc, dia]) => ({
 			lon,
