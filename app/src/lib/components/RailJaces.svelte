@@ -9,6 +9,7 @@
 	import { untrack, tick } from 'svelte';
 	import { sonPapièr, sonsActius, gardarSons } from '$lib/carta/sons.js';
 	import { fly } from 'svelte/transition';
+	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
 	import { quintOut } from 'svelte/easing';
 
 	let {
@@ -55,6 +56,7 @@
 			color: (n) => `Color : ${n}`,
 			dialecteTotes: 'Totes',
 			causirDial: 'Causir un o mantun dialècte',
+			causirLenga: (l) => `Causir una zòna del ${l}`,
 			admin: "Modificar dins l'admin"
 		},
 		fr: {
@@ -89,6 +91,7 @@
 			color: (n) => `Couleur : ${n}`,
 			dialecteTotes: 'Tous',
 			causirDial: 'Choisir un ou plusieurs dialectes',
+			causirLenga: (l) => `Choisir une zone du ${l}`,
 			admin: "Modifier dans l'admin"
 		}
 	};
@@ -113,6 +116,11 @@
 			? { gas: '#6a45d0', lan: '#c2185b', pro: '#e573ad', lem: '#e07b00', auv: '#a8321a', viv: '#c9a227' }
 			: { gas: '#9d7dff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' }
 	);
+	// Las autras lengas (lengas.js) : lors pastilhas e lors colors
+	const CA = LENGAS.catalan;
+	// la color d'una pastilha d'una lenga (sa color de dialècte segon lo tèma)
+	const colorPastilha = (id, k) => LENGAS[id].dial[clar ? 'clar' : 'sorne'][k] ?? LENGAS[id].color[clar ? 'clar' : 'sorne'];
+	const DIAL_CA = $derived(Object.fromEntries(CA.pastilhas.map(({ k }) => [k, CA.dial[clar ? 'clar' : 'sorne'][k] ?? CA.color[clar ? 'clar' : 'sorne']])));
 	const NOMS_DIAL = [
 		['gas', 'gascon', 'gascon'],
 		['lan', 'lengadocian', 'languedocien'],
@@ -143,6 +151,17 @@
 			isolas: '<circle cx="18" cy="18" r="6" fill="none" stroke="#e0612f" stroke-width="1.6"/><circle cx="36" cy="14" r="4" fill="none" stroke="#e0612f" stroke-width="1.6"/>',
 			parcs: '<path d="M6 30 Q 10 8 26 13 T 48 19 L 45 32 Z" fill="#86c48c" fill-opacity=".22" stroke="#86c48c" stroke-width="1.2"/>',
 			massis: '<path d="M8 27 l5 -9 l5 9z" fill="currentColor" opacity=".85"/><text x="34" y="16" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="8.5" letter-spacing="1.4" fill="currentColor" opacity=".75">AUBRAC</text>',
+			// las lengas : lors colors, o lor nom dins la lenga (las de venir)
+			catalan: CA.pastilhas
+				.filter(({ k }) => CA.dial.sorne[k])
+				.map(({ k }, i) => `<rect x="${i * 7.5}" y="0" width="8" height="36" fill="${DIAL_CA[k]}" opacity=".75"/>`)
+				.join(''),
+			...Object.fromEntries(
+				[['basc', 'EUSKARA'], ['breton', 'BREZHONEG'], ['arpitan', 'ARPITAN'], ['alsacian', 'ELSÄSSISCH'], ['flamenc', 'VLAEMSCH'], ['cors', 'CORSU'], ['oil', 'GALLO']].map(([k, t]) => [
+					k,
+					`<text x="26" y="22" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1" fill="currentColor">${t}</text>`
+				])
+			),
 			lengasFranca: '<text x="26" y="21" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7.5" letter-spacing="1.2" fill="currentColor">BREZHONEG</text><text x="26" y="30" text-anchor="middle" font-family="Luciole, sans-serif" font-size="6" letter-spacing="0.8" fill="currentColor" opacity=".6">EUSKARA</text>',
 			bacins: '<path d="M26 34 V 20 M26 20 L14 8 M26 20 L40 10 M20 14 L12 18 M34 14 L44 18" stroke="#eeaf34" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
 			estelas: '<circle cx="10" cy="12" r="1.6" fill="currentColor"/><circle cx="24" cy="24" r="2.2" fill="currentColor"/><circle cx="38" cy="10" r="1.3" fill="currentColor"/><circle cx="44" cy="27" r="1.6" fill="currentColor"/><circle cx="17" cy="29" r="1" fill="currentColor"/>',
@@ -402,13 +421,22 @@
 
 	function bascular(id, on) {
 		visibility[id] = on;
-		if (id === 'dialectes' && !on) causits = [];
+		// (una jaça escantida : sas zònas son pas pus causidas, las de las autras demòran)
+		if (id === 'dialectes' && !on) causits = causits.filter((k) => !esOccitan(k));
+		if (id === 'catalan' && !on) causits = causits.filter((k) => !k.startsWith(CA.pref));
 	}
 	// Una pastilha de dialècte (o del Creissent) : aluca la jaça e apond la zòna
 	// a la causida, o l'en leva se i èra (retorn de Romain : mantuna a l'encòp)
 	function causirDial(k) {
 		visibility.dialectes = true;
 		causits = causits.includes(k) ? causits.filter((x) => x !== k) : [...causits, k];
+	}
+
+	// Una pastilha d'una autra lenga : aluca sa jaça e apond la zòna
+	function causirLenga(id, k) {
+		visibility[id] = true;
+		const kod = LENGAS[id].pref + k;
+		causits = causits.includes(kod) ? causits.filter((x) => x !== kod) : [...causits, kod];
 	}
 
 	// Colors del fons que l'internauta pòt cambiar, e lor valor de basa segon lo tèma
@@ -652,8 +680,31 @@
 					<button type="button" class="pastilha" aria-pressed={causits.includes('cro')} onclick={() => causirDial('cro')}
 						><i class="cro"></i>{lang === 'oc' ? 'creissent' : 'croissant'}</button
 					>
-					{#if causits.length}
-						<button type="button" class="pastilha totes" onclick={() => (causits = [])}>{tx.dialecteTotes}</button>
+					{#if causits.some(esOccitan)}
+						<button type="button" class="pastilha totes" onclick={() => (causits = causits.filter((k) => !esOccitan(k)))}>{tx.dialecteTotes}</button>
+					{/if}
+				</div>
+			{/if}
+			{#if LENGAS[j.id] && actiu(j)}
+				{@const lg = LENGAS[j.id]}
+				<div class="pastilhas" role="group" aria-label={tx.causirLenga(lang === 'fr' ? lg.nom.fr : lg.nom.oc)}>
+					<!-- los noms dins la lenga ; l'occitan (o lo francés) en infobulla -->
+					{#each lg.pastilhas as { k, oc, fr, ...q } (k)}
+						{@const apart = !!lg.apart?.[k]}
+						<button
+							type="button"
+							class="pastilha"
+							class:apart
+							lang={lg.lang}
+							title={lang === 'oc' ? oc : fr}
+							aria-pressed={causits.includes(lg.pref + k)}
+							onclick={() => causirLenga(j.id, k)}
+						><i class:apart style:background={apart ? null : colorPastilha(j.id, k)}></i>{q[lg.lang] ?? q.ca}</button>
+					{/each}
+					{#if causits.some((k) => k.startsWith(lg.pref))}
+						<button type="button" class="pastilha totes" onclick={() => (causits = causits.filter((k) => !k.startsWith(lg.pref)))}
+							>{tx.dialecteTotes}</button
+						>
 					{/if}
 				</div>
 			{/if}
@@ -1024,6 +1075,16 @@
 	.pastilha i.cro {
 		border-radius: 2px;
 		background: repeating-linear-gradient(45deg, var(--t-terra-viu) 0 1.5px, transparent 1.5px 3.5px);
+	}
+	/* una zòna a despart (la Catalonha del Nòrd) : un contorn en ponchs, pas una color */
+	.pastilha.apart {
+		flex-basis: 100%;
+		max-width: max-content;
+	}
+	.pastilha i.apart {
+		border-radius: 2px;
+		border: 1.5px dashed var(--t-aur);
+		background: none;
 	}
 	.pastilha[aria-pressed='true'] {
 		border-color: var(--t-aur);

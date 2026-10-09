@@ -5,6 +5,7 @@
 // Clé = nom occitan tel qu'il est dans les données de la carte.
 export const NOMS_FRANCES = {
 	Tolosa: 'Toulouse',
+	Solhac: 'Souillac',
 	Montpelhièr: 'Montpellier',
 	Marselha: 'Marseille',
 	Niça: 'Nice',

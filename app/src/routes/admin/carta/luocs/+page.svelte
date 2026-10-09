@@ -19,6 +19,9 @@
 	// aquela migracion, se ditz pas dins las escrituras (senon la basa las
 	// refusariá).
 	let teColaId = $derived(luocs.length ? 'cola_id' in luocs[0] : colas.length > 1);
+	// lo site d'un luòc (colomna apondida per supabase-carta-luocs-ligam.sql) :
+	// lo camp s'enregistra sonque se la basa a ja la colomna
+	let teLigam = $derived(luocs.length > 0 && 'ligam' in luocs[0]);
 
 	function nomCola(id) {
 		return colas.find((c) => c.id === id)?.label_oc ?? id;
@@ -61,6 +64,7 @@
 			nom_fr: '',
 			descripcion_oc: '',
 			descripcion_fr: '',
+			ligam: '',
 			latitud: '',
 			longitud: '',
 			publicat: true
@@ -82,6 +86,7 @@
 			nom_fr: l.nom_fr ?? '',
 			descripcion_oc: l.descripcion_oc ?? '',
 			descripcion_fr: l.descripcion_fr ?? '',
+			ligam: l.ligam ?? '',
 			latitud: String(l.latitud),
 			longitud: String(l.longitud),
 			publicat: l.publicat
@@ -109,12 +114,19 @@
 			return;
 		}
 
+		const ligam = forma.ligam.trim();
+		if (ligam && !/^https:\/\/[^\s/]+\.[^\s]+$/.test(ligam)) {
+			msg = { tipe: 'error', text: 'Lo site deu començar per https:// (ex. https://www.ieo-oc.org).' };
+			return;
+		}
+
 		const camps = {
 			...(teColaId ? { cola_id: forma.cola_id } : {}),
 			nom_oc,
 			nom_fr: forma.nom_fr.trim() || null,
 			descripcion_oc: forma.descripcion_oc.trim() || null,
 			descripcion_fr: forma.descripcion_fr.trim() || null,
+			...(teLigam ? { ligam: ligam || null } : {}),
 			latitud,
 			longitud,
 			publicat: forma.publicat
@@ -249,6 +261,12 @@
 					Descripcion francesa
 					<textarea bind:value={forma.descripcion_fr} rows="2" maxlength="300"></textarea>
 				</label>
+				{#if teLigam}
+					<label>
+						Site internet <em>(se n'a un)</em>
+						<input type="url" bind:value={forma.ligam} maxlength="300" placeholder="https://…" />
+					</label>
+				{/if}
 
 				<div class="doble">
 					<label class="estrech">

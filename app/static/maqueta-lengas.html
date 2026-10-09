@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Maquette langues et échelles</title>
+<!-- Maquette du 2026-10-08 : planches de choix pour Romain (carte : langues,
+     échelles, frontières), d'après revisions/2026-10-08-lengas-escalas.md.
+     Aucun fichier de l'application n'est modifié. Tout l'occitan est À VALIDER
+     (dicodòc, Congrès) ; les noms catalans, basques, alsaciens sont à faire
+     relire par des locuteurs. Page locale seulement : scripts/levar-esbos.mjs
+     la retire de la version en ligne. Aucune ressource externe. -->
+<style>
+@font-face{font-family:'Limelight';src:url('/fonts/limelight.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Luciole';src:url('/fonts/luciole-regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Luciole';src:url('/fonts/luciole-bold.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Luciole';src:url('/fonts/luciole-italic.woff2') format('woff2');font-style:italic;font-display:swap}
+
+/* Jetons du thème sombre du site (app.css, data-tema=sorne) et couleurs de la carte */
+:root{
+	--t-fons:#120906;--t-fons-2:#1d0f0a;--t-tinta:#f5ead8;--t-tinta-2:rgba(245,234,216,.72);
+	--t-linha:rgba(245,234,216,.16);--t-aur:#eeaf34;--t-aur-clar:#ffd47f;--t-terra:#b53d17;--t-terra-viu:#e0612f;
+	--estela:#ffe9b8;--oc:#d9343f;--ca:#f2b632;
+	--gas:#9d7dff;--lan:#ff3f86;--pro:#ffb0dc;--lem:#ffa22e;--auv:#e8482a;--viv:#ffe27a;
+	--ros:#5ab0ff;--cen:#4a7dff;--bal:#36c5d0;--alg:#b9e4c9;--noc:#4fc25f;--tor:#b5d94a;--val:#22b39b;
+	--eu1:#3fc6a0;--eu2:#9be37a;--al:#5fb7e6;--pl:#8fd18a;
+	--fb:'Luciole',system-ui,sans-serif;--fh:'Limelight',Georgia,serif;
+	--ease:cubic-bezier(.22,1,.36,1);
+	color-scheme:dark;
+}
+*{box-sizing:border-box;font-synthesis:none}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--t-fons);color:var(--t-tinta);font:400 15px/1.55 var(--fb);padding-bottom:9rem;overflow-x:clip}
+a{color:var(--t-aur-clar)}
+:focus-visible{outline:2px solid var(--t-aur);outline-offset:2px}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.sautar{position:absolute;left:1rem;top:-4rem;padding:.5rem 1rem;background:var(--t-aur);color:var(--t-fons);border-radius:8px;z-index:99}
+.sautar:focus{top:1rem}
+/* langue de l'interface de la maquette */
+.if-fr .i-oc,body:not(.if-fr) .i-fr{display:none}
+.p-fr{display:none}
+body.if-fr[data-oc=b9] .p-fr{display:inline}
+body.if-fr[data-oc=b9] .p-oc{display:none}
+
+.wrap{max-width:1760px;margin:0 auto;padding:0 clamp(16px,3vw,48px)}
+.cap{padding:3rem 0 1.6rem}
+.sur{margin:0;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--t-tinta-2)}
+h1{margin:.4rem 0 .8rem;font:400 clamp(2rem,4.4vw,3.6rem)/1.05 var(--fh);color:var(--t-aur-clar)}
+h2{margin:0 0 .4rem;font:400 clamp(1.6rem,2.6vw,2.4rem)/1.1 var(--fh)}
+h2 .lettra{color:var(--t-aur);margin-right:.35em}
+h3{margin:0;font:700 1rem/1.35 var(--fb)}
+.intro{max-width:78ch;margin:.2rem 0 1.4rem;color:var(--t-tinta-2)}
+.intro b{color:var(--t-tinta)}
+.cap-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:2rem;align-items:start}
+.carnet{padding:1rem 1.2rem;border:1px solid var(--t-linha);border-radius:14px;background:var(--t-fons-2);font-size:.86rem}
+.carnet h2{font:700 .8rem/1.3 var(--fb);letter-spacing:.2em;text-transform:uppercase;color:var(--t-tinta-2);margin:0 0 .5rem}
+.carnet ul{margin:0;padding-left:1.1rem}
+.carnet li{margin:.2rem 0}
+.somari{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0 0;padding:0;list-style:none}
+.somari a{display:inline-block;padding:.35rem .9rem;border:1px solid var(--t-linha);border-radius:999px;text-decoration:none;color:var(--t-tinta)}
+.somari a:hover{border-color:var(--t-aur);color:var(--t-aur-clar)}
+.cod{display:inline-grid;place-items:center;min-width:2.3em;height:1.55em;padding:0 .4em;margin-right:.45em;border-radius:.45em;background:var(--t-aur);color:var(--t-fons);font:700 .82em/1 var(--fb);vertical-align:.08em}
+.rec{display:inline-block;margin-left:.35rem;padding:0 .55rem;border:1px solid var(--t-aur);border-radius:999px;color:var(--t-aur-clar);font-size:.7rem;font-weight:700;white-space:nowrap;vertical-align:.12em}
+.validar{color:var(--t-aur-clar);font-style:italic}
+.planca{padding:2.6rem 0 3rem;border-top:1px solid var(--t-linha)}
+.pichon{font-size:.8rem;color:var(--t-tinta-2)}
+
+/* ——— A. Icônes ——— */
+.op-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15.5rem,1fr));gap:1rem}
+.opcion{display:grid;gap:.7rem;align-content:start;padding:1rem;border:1px solid var(--t-linha);border-radius:16px;background:linear-gradient(180deg,rgba(245,234,216,.03),transparent)}
+.opcion.ara{border-color:var(--t-aur);box-shadow:inset 0 0 0 1px var(--t-aur)}
+.opcion p{margin:0;font-size:.82rem;color:var(--t-tinta-2)}
+.proba{display:flex;flex-wrap:wrap;gap:.9rem;align-items:flex-start}
+.proba figure{margin:0;display:grid;gap:.35rem;justify-items:center}
+.proba figcaption{font-size:.7rem;color:var(--t-tinta-2)}
+.tuiles{display:grid;gap:.5rem}
+.tuile{grid-template-columns:2.6rem auto;justify-items:start!important;align-items:center}
+.tuile svg{display:block;box-sizing:content-box;padding:.5rem;border-radius:10px;color:var(--t-tinta-2);border:1px solid var(--t-linha)}
+.tuile.obert svg{color:var(--t-aur-clar);background:color-mix(in srgb,var(--t-aur) 16%,transparent);border-color:transparent}
+.tuile.clar svg{background:#f5ead8;color:rgba(46,29,20,.8);border-color:transparent}
+.essai{display:flex;align-items:center;gap:.45rem;font-size:.8rem;cursor:pointer}
+.essai input{accent-color:var(--t-aur);width:1rem;height:1rem}
+
+/* Rail (copie du style de RailJaces.svelte) */
+.rail{width:4.6rem;margin:0;padding:6px 5px;list-style:none;display:grid;grid-template-columns:minmax(0,1fr);gap:2px;background:color-mix(in srgb,var(--t-fons-2) 90%,transparent);border:1px solid var(--t-linha);border-radius:18px;box-shadow:0 16px 40px rgba(0,0,0,.35);flex:none}
+.rb{position:relative;display:grid;justify-items:center;gap:4px;padding:9px 2px 7px;border-radius:12px;color:var(--t-tinta-2);font:400 10.5px/1.15 var(--fb);text-align:center;hyphens:manual}
+.rb svg{width:var(--ic,22px);height:var(--ic,22px)}
+.rb.cibla{color:var(--t-tinta);background:color-mix(in srgb,var(--t-tinta) 6%,transparent);outline:1.5px dashed color-mix(in srgb,var(--t-aur) 75%,transparent);outline-offset:-2px}
+.rb.obert{color:var(--t-aur-clar);background:color-mix(in srgb,var(--t-aur) 16%,transparent)}
+.rail .sep{height:1px;margin:4px 10px;background:var(--t-linha)}
+.rb .punt,.rb .anel{position:absolute;top:7px;right:13px;width:7px;height:7px;border-radius:50%}
+.rb .punt{background:var(--t-terra-viu)}
+.rb .anel{border:1.5px solid var(--t-terra-viu)}
+
+/* ——— B. Panneau ——— */
+.b-grid{display:grid;grid-template-columns:minmax(0,35rem) minmax(0,1fr);gap:2rem;align-items:start}
+.cel{background:
+	radial-gradient(circle at 20% 30%,rgba(255,233,184,.85) .7px,transparent 1.3px) 0 0/53px 47px,
+	radial-gradient(circle at 70% 60%,rgba(255,233,184,.5) .6px,transparent 1.1px) 0 0/31px 37px,
+	radial-gradient(circle at 40% 80%,rgba(255,233,184,.35) .5px,transparent 1px) 0 0/19px 23px,
+	radial-gradient(120% 90% at 75% 10%,#22120b,#0b0503 70%)}
+.mapa{position:relative;display:flex;gap:.6rem;align-items:flex-start;padding:1.2rem 1rem 4.2rem;border:1px solid var(--t-linha);border-radius:18px;overflow:hidden}
+.mapa .c3{position:absolute;left:1rem;bottom:1rem}
+.tirador{flex:1;min-width:0;max-width:21rem;padding:1rem 1.05rem 1.1rem;background:color-mix(in srgb,var(--t-fons-2) 93%,transparent);border:1px solid var(--t-linha);border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.tir-cap{display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+.tir-titol{font:400 1.45rem/1.1 var(--fh)}
+.tampar{display:grid;place-items:center;width:2rem;height:2rem;border:1px solid var(--t-linha);border-radius:50%;color:var(--t-aur-clar);font-size:1.1rem}
+.sota{margin:.25rem 0 .6rem;font-size:.76rem;color:var(--t-tinta-2)}
+.titolet{margin:.8rem 0 .2rem;font-size:.64rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--t-tinta-2)}
+.grop{position:relative;border-top:1px solid var(--t-linha);padding:.5rem 0 .2rem}
+.grop>details>summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:.1rem .55rem;padding:.3rem 3rem .3rem 0;border-radius:8px;cursor:pointer;list-style:none}
+.grop>details>summary::-webkit-details-marker,.sosgrop>summary::-webkit-details-marker{display:none}
+.grop>details>summary::before,.sosgrop>summary::before{content:'';flex:none;width:.45rem;height:.45rem;margin:0 .15rem 0 .1rem;border-right:1.6px solid var(--t-aur-clar);border-bottom:1.6px solid var(--t-aur-clar);transform:rotate(-45deg);transition:transform .2s;align-self:center}
+.grop>details[open]>summary::before,.sosgrop[open]>summary::before{transform:rotate(45deg)}
+.grop-nom{font-weight:700;font-size:.95rem}
+.grop-compte{font-size:.72rem;color:var(--t-tinta-2)}
+.grop>.basc{position:absolute;top:.85rem;right:0}
+.grop.futur .grop-nom{color:var(--t-tinta-2)}
+.grop-cos{padding:0 0 .2rem}
+.vista-l{padding:.1rem 0 .4rem 1.1rem}
+.linha{display:grid;grid-template-columns:auto 1fr auto;gap:.7rem;align-items:start;padding:.6rem 0;border-top:1px solid var(--t-linha)}
+.apercebut{display:block;width:52px;height:36px;border-radius:8px;overflow:hidden;background:var(--t-fons);border:1px solid var(--t-linha)}
+.apercebut svg{display:block;width:100%;height:100%}
+.cos{min-width:0}
+.cos b{font-size:.88rem;font-weight:700}
+.trad{font-size:.76rem;color:var(--t-tinta-2)}
+.cos small{display:block;font-size:.72rem;line-height:1.35;color:var(--t-tinta-2)}
+.basc{position:relative;flex:none;width:34px;height:20px;margin-top:.1rem;padding:0;border:0;border-radius:999px;background:color-mix(in srgb,var(--t-tinta) 20%,transparent);cursor:pointer;transition:background .2s}
+.basc::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--t-tinta);transition:transform .2s}
+.basc[aria-checked=true]{background:var(--t-aur)}
+.basc[aria-checked=true]::after{transform:translateX(14px);background:var(--t-fons)}
+.pastilhas{display:flex;flex-wrap:wrap;gap:4px;margin-top:.45rem}
+.pastilha{display:inline-flex;align-items:center;gap:5px;padding:3px 9px 3px 6px;border:1px solid var(--t-linha);border-radius:999px;background:none;color:var(--t-tinta);font:400 .72rem/1.2 var(--fb);cursor:pointer}
+.pastilha i{flex:none;width:9px;height:9px;border-radius:50%}
+.pastilha i.cro{border-radius:2px;background:repeating-linear-gradient(45deg,var(--t-terra-viu) 0 1.5px,transparent 1.5px 3.5px)}
+.pastilha.apart{flex-basis:100%;max-width:max-content}
+.pastilha i.apart{border-radius:2px;border:1.5px dashed var(--t-aur);background:none}
+.pastilha[aria-pressed=true]{border-color:var(--t-aur);background:color-mix(in srgb,var(--t-aur) 16%,transparent)}
+.pastilha .tard{font-size:.62rem;color:var(--t-tinta-2);font-style:italic}
+.escala-c{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .5rem;margin-top:.45rem}
+.regleta{display:inline-flex;gap:2px}
+.regleta i{width:13px;height:7px;border-radius:2px;border:1px solid rgba(245,234,216,.3)}
+.regleta i.ple{background:var(--t-tinta-2);border-color:transparent}
+.regleta i.ara{outline:1.5px solid var(--t-aur);outline-offset:1.5px}
+.gauge{position:relative;width:7.5rem;height:6px;border-radius:3px;background:rgba(245,234,216,.18)}
+.gauge .plena{position:absolute;top:0;bottom:0;border-radius:3px;background:var(--t-tinta-2)}
+.gauge .cursor{position:absolute;top:-3px;width:2px;height:12px;margin-left:-1px;border-radius:1px;background:var(--t-aur)}
+body[data-esc=b1] .gauge,body[data-esc=b2] .gauge,body[data-esc=b2] .regleta,body[data-esc=b3] .regleta{display:none}
+.escala-t{font-size:.7rem;color:var(--t-tinta-2)}
+.ianar{padding:2px 9px;border:1px solid var(--t-aur);border-radius:10px;text-align:left;line-height:1.35;background:none;color:var(--t-aur-clar);font:inherit;cursor:pointer}
+.venir{margin:.2rem 0 0;padding:0;list-style:none}
+.venir li{display:flex;justify-content:space-between;gap:.5rem;padding:.34rem 0;border-top:1px solid var(--t-linha);font-size:.8rem;color:var(--t-tinta-2)}
+.venir b{color:var(--t-tinta);opacity:.85}
+.venir .av{flex:none;font-size:.7rem;font-style:italic}
+.sosgrop{border-top:1px solid var(--t-linha);padding:.3rem 0}
+.sosgrop>summary{display:flex;align-items:baseline;gap:.5rem;list-style:none;cursor:pointer;font-size:.84rem;font-weight:700;padding:.15rem 0;border-radius:6px}
+.sosgrop p{margin:.3rem 0 .2rem 1.1rem;font-size:.75rem;color:var(--t-tinta-2)}
+body[data-grop=b6] .grop.futur{display:none}
+.reglatges{display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:1rem;align-items:start}
+fieldset{margin:0;padding:.8rem 1rem 1rem;border:1px solid var(--t-linha);border-radius:14px;background:var(--t-fons-2)}
+legend{padding:0 .4rem;font-weight:700;font-size:.9rem}
+.ch{display:grid;grid-template-columns:auto 1fr;gap:.1rem .55rem;align-items:start;padding:.4rem .2rem;border-radius:8px;cursor:pointer;font-size:.82rem}
+.ch input{margin:.2rem 0 0;accent-color:var(--t-aur);width:1rem;height:1rem}
+.ch small{grid-column:2;color:var(--t-tinta-2);font-size:.75rem}
+.ch:has(input:checked){background:color-mix(in srgb,var(--t-aur) 10%,transparent)}
+.ch:has(input:focus-visible){outline:2px solid var(--t-aur)}
+.paliers-r{display:flex;flex-wrap:wrap;gap:.3rem}
+.paliers-r .ch{grid-template-columns:auto auto;border:1px solid var(--t-linha)}
+.agachar{margin:0;padding-left:1.15rem;font-size:.82rem;color:var(--t-tinta-2)}
+.agachar li{margin:.3rem 0}
+.agachar b{color:var(--t-tinta)}
+
+/* contrôle d'échelle (C3) */
+.c3{display:flex;align-items:flex-end;gap:.5rem}
+.linha-esc{display:inline-block;min-width:60px;padding:1px 6px 2px;border:1px solid var(--t-aur);border-top:none;background:color-mix(in srgb,var(--t-fons) 88%,transparent);font-size:.72rem;letter-spacing:.03em;transition:width .3s}
+.palier-nom{padding:1px 8px;border-radius:999px;background:color-mix(in srgb,var(--t-fons) 88%,transparent);border:1px solid var(--t-linha);font-size:.72rem;color:var(--t-aur-clar)}
+
+/* ——— C. Échelles ——— */
+.frisa-w{overflow-x:auto;padding:0 0 .5rem;border:1px solid var(--t-linha);border-radius:16px;background:var(--t-fons-2)}
+.frisa{--lab:14.5rem;position:relative;min-width:1440px;display:grid;grid-template-columns:var(--lab) repeat(20,minmax(0,1fr));padding:2rem 0 3.6rem;font-size:.72rem}
+.frisa>*{position:relative;z-index:1}
+.f-lab{padding:.35rem .8rem;color:var(--t-tinta-2);border-top:1px solid var(--t-linha);display:flex;align-items:center}
+.f-cap{padding:.3rem .4rem;text-align:center;border-left:1px solid var(--t-linha)}
+.f-cap b{font:400 1rem/1.1 var(--fh);color:var(--t-tinta)}
+.f-cap small{display:block;color:var(--t-tinta-2)}
+.f-km{display:flex;justify-content:center;padding:.2rem 0 .5rem}
+.f-km span{padding:0 5px 1px;border:1px solid var(--t-aur);border-top:none;white-space:nowrap;font-size:.7rem}
+.f-km.arr span{background:var(--t-aur);color:var(--t-fons);font-weight:700}
+.f-grop{padding:.7rem .8rem .2rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:.62rem;color:var(--t-aur-clar);border-top:1px solid var(--t-linha)}
+.seg{margin:3px 1px;padding:.2rem .35rem;border-radius:6px;line-height:1.2;display:flex;align-items:center;min-height:1.9rem;color:var(--t-tinta);overflow:hidden}
+.s-on{background:color-mix(in srgb,var(--t-aur) 30%,transparent)}
+.s-contorn{border:1.5px dashed rgba(255,233,184,.7)}
+.s-uni{background:linear-gradient(90deg,color-mix(in srgb,var(--oc) 70%,transparent),color-mix(in srgb,var(--ca) 60%,transparent));font-weight:700;letter-spacing:.04em}
+.s-dial{background:linear-gradient(90deg,var(--gas),var(--lan),var(--pro),var(--lem),var(--auv),var(--viv),var(--ros),var(--noc));color:#120906;font-weight:700}
+.s-pal{background:linear-gradient(90deg,rgba(157,125,255,.38),rgba(255,63,134,.38),rgba(255,162,46,.38),rgba(90,176,255,.38));color:var(--t-tinta)}
+.s-vel{background:rgba(255,63,134,.14)}
+.s-fond{background:linear-gradient(90deg,rgba(245,234,216,.28),transparent)}
+.s-futur{border:1.5px dotted rgba(245,234,216,.5);color:var(--t-tinta-2);font-style:italic}
+.s-mond{background:rgba(245,234,216,.08)}
+.s-euro{background:rgba(245,234,216,.14)}
+.s-estel{background:radial-gradient(circle,rgba(255,233,184,.8) .7px,transparent 1.2px) 0 0/11px 9px,#0b0503;border:1px solid var(--t-linha)}
+.s-detalh{background:linear-gradient(135deg,#d9c7a6,#c9b28a);color:#2e1d14;font-weight:700}
+.s-sol{background:repeating-linear-gradient(45deg,rgba(217,199,166,.22) 0 4px,transparent 4px 8px);color:var(--t-tinta-2)}
+.s-monta{background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--t-aur) 30%,transparent))}
+.s-nou{border:1.5px solid var(--t-aur);color:var(--t-aur-clar);font-weight:700}
+.f-band{position:absolute;top:2rem;bottom:3.6rem;z-index:0;pointer-events:none}
+.f-band.imp{background:rgba(245,234,216,.035)}
+.f-basc,.f-arr,.f-cur{position:absolute;z-index:2;pointer-events:none}
+.f-basc{top:2rem;bottom:1.5rem;border-left:2px dashed var(--t-terra-viu)}
+.f-basc span{position:absolute;bottom:0;left:.35rem;white-space:nowrap;color:#ff9c74;font-weight:700}
+.f-arr{top:4.6rem;bottom:3.4rem;border-left:1.5px dotted rgba(255,212,127,.6)}
+.f-lec{margin:.6rem 0 0;font-size:.8rem;color:var(--t-tinta-2)}
+.f-lec b{color:var(--t-tinta)}
+.f-cur{top:.2rem;bottom:3.4rem;width:0;border-left:2px solid var(--t-aur);transition:left 1.2s var(--ease)}
+.f-cur span{position:absolute;top:0;left:-.1rem;transform:translateX(-50%);padding:0 .45rem;border-radius:999px;background:var(--t-aur);color:var(--t-fons);font-weight:700;white-space:nowrap}
+#escala{width:calc(100% - 100% / 20);margin:.6rem calc(100% / 40) 0;accent-color:var(--t-aur)}
+.c-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:1rem;margin-top:1.2rem}
+.carta-op{padding:1rem;border:1px solid var(--t-linha);border-radius:14px;background:var(--t-fons-2);font-size:.84rem}
+.carta-op p{margin:.45rem 0 0;color:var(--t-tinta-2)}
+.carta-op .fig{margin-top:.8rem;padding:1rem;border-radius:12px;display:flex;align-items:flex-end;gap:.8rem;min-height:7.5rem}
+.zoom{display:grid;border:1px solid var(--t-linha);border-radius:10px;overflow:hidden;background:color-mix(in srgb,var(--t-fons-2) 92%,transparent)}
+.zoom span{display:grid;place-items:center;width:2rem;height:2rem;font-size:1.1rem;color:var(--t-tinta)}
+.zoom span+span{border-top:1px solid var(--t-linha)}
+.escaleta{display:grid;gap:3px}
+.escaleta button{padding:2px 8px;border:1px solid var(--t-linha);border-radius:6px;background:color-mix(in srgb,var(--t-fons-2) 92%,transparent);color:var(--t-tinta-2);font:400 .68rem/1.3 var(--fb);text-align:left;cursor:pointer}
+.escaleta button[aria-pressed=true]{border-color:var(--t-aur);color:var(--t-aur-clar);background:color-mix(in srgb,var(--t-aur) 16%,transparent)}
+.demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:1.4rem;margin-top:1.4rem;padding:1.2rem;border:1px solid var(--t-linha);border-radius:16px;background:var(--t-fons-2)}
+.mapeta{display:block;width:100%;max-width:560px;height:auto;margin-top:.6rem;border-radius:12px}
+#fenestra{transition:transform 1.2s var(--ease)}
+.net #fenestra,.net .f-cur{transition:none}
+.scen{display:grid;gap:.45rem;margin-top:.8rem}
+.scen button{display:grid;grid-template-columns:auto 1fr;gap:.6rem;align-items:center;padding:.5rem .7rem;border:1px solid var(--t-linha);border-radius:10px;background:none;color:var(--t-tinta);font:400 .84rem/1.35 var(--fb);text-align:left;cursor:pointer}
+.scen button:hover{border-color:var(--t-aur)}
+.jornal{min-height:3.2em;margin:.8rem 0 0;padding:.6rem .8rem;border-left:3px solid var(--t-aur);background:rgba(238,175,52,.07);font-size:.84rem}
+
+/* ——— D. Frontières ——— */
+.d-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(26rem,1fr));gap:1.2rem}
+.esq-f{margin:0;padding:1rem;border:1px solid var(--t-linha);border-radius:16px;background:var(--t-fons-2)}
+.esq-f figcaption{font-size:.82rem;color:var(--t-tinta-2)}
+.esq-f figcaption h3{color:var(--t-tinta);margin-bottom:.25rem}
+.esq-f ul{margin:.5rem 0 0;padding-left:1.1rem}
+.esquema{display:block;width:100%;height:auto;margin:.7rem 0;border-radius:10px}
+.esquema .mar{fill:#0a0d14}
+.esquema .terra{fill:#21140e}
+.esquema .estat{fill:none;stroke:rgba(245,234,216,.6);stroke-width:1.2}
+.esquema .limit{fill:none;stroke:var(--t-terra-viu);stroke-width:2.2;stroke-dasharray:.1 4.5;stroke-linecap:round}
+.esquema .apart{fill:none;stroke:var(--t-aur);stroke-width:1.6;stroke-dasharray:5 3}
+.esquema .z{transition:opacity .4s}
+.esquema .z path,.esquema .z ellipse{fill-opacity:.45}
+.esquema text{font-family:var(--fb);paint-order:stroke;stroke:#120906;stroke-width:3px;stroke-linejoin:round}
+.esquema .nd{font-size:10.5px;fill:var(--t-tinta)}
+.esquema .terr{font-size:11px;font-style:italic;fill:var(--t-aur-clar)}
+.esquema .gran{font-size:18px;letter-spacing:4px;fill:#ffe2a0;font-weight:700}
+.esquema .vila{font-size:10px;fill:var(--estela)}
+.esquema .nota{font-size:9px;font-style:italic;fill:rgba(245,234,216,.62)}
+.esquema .punt-v{fill:var(--estela)}
+.esquema [data-n]{cursor:help}
+.esquema .z [data-n]:hover{fill-opacity:.7}
+#d5.sens-ca .z-ca,#d5.sens-oc .z-oc{opacity:0}
+#d5.sens-ca .n-ca,#d5:not(.sens-ca) .n-oc0{display:none}
+.alucs{display:flex;flex-wrap:wrap;gap:.4rem 1.2rem;margin:.6rem 0 0}
+.aluc{display:flex;align-items:center;gap:.5rem;font-size:.82rem}
+.matriu{display:grid;grid-template-columns:9rem repeat(2,minmax(0,1fr));gap:.8rem;margin-top:1rem}
+.m-cap{align-self:end;font-size:.8rem;font-weight:700;color:var(--t-tinta-2)}
+.m-row{align-self:center}
+.matriu figure{margin:0;padding:.7rem;border:1px solid var(--t-linha);border-radius:14px;background:var(--t-fons-2)}
+.matriu figure.rec-f{border-color:var(--t-aur)}
+.matriu figcaption{font-size:.8rem;color:var(--t-tinta-2)}
+.vista{display:block;width:100%;max-width:500px;height:auto;margin:0 auto .4rem}
+.v-neutre{--c-oc:#ffe9b8;--c-ca:#ffe9b8;--t-oc:#ffe9b8;--t-ca:#ffe9b8;--t-x:#ffe9b8}
+.v-color{--c-oc:#d9343f;--c-ca:#f2b632;--t-oc:#ffc2b8;--t-ca:#ffe2a0;--t-br:#8cc4ff;--t-eu:#7fe0b6;--t-co:#ffa77a;--t-al:#8fd0ff;--t-vl:#ffd96b;--t-frp:#c9a6ff;--t-pl:#b6e38c}
+.v-pale{--op-fr:.34;--op-ext:.09;--op-lx:.5}
+.v-egal{--op-fr:.34;--op-ext:.34;--op-lx:1}
+
+/* ——— Barre du bas ——— */
+.barra{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;display:grid;justify-items:center;gap:6px;width:max-content;max-width:calc(100% - 32px);pointer-events:none}
+.info{display:flex;flex-direction:column;align-items:center;gap:1px;min-height:34px;padding:7px 18px;border-radius:17px;border:1px solid color-mix(in srgb,var(--t-tinta) 70%,transparent);background:color-mix(in srgb,var(--t-fons-2) 94%,transparent);text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.info.fixada{border-color:var(--t-aur)}
+.info .n1{font:700 16px/1.3 var(--fb);letter-spacing:.04em}
+.info .n2{font:400 12px/1.35 var(--fb);color:var(--t-aur-clar)}
+.info.indic .n1{font-weight:400;font-size:13px;letter-spacing:0;color:var(--t-tinta-2)}
+body[data-barra=b5] .info{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:4px 10px}
+body[data-barra=b5] .info .n1{font-size:12.5px;letter-spacing:2.5px;text-transform:uppercase}
+body[data-barra=b5] .info .n2{font-size:11px;letter-spacing:.5px}
+body[data-barra=b5] .info.indic .n1{text-transform:none;letter-spacing:0}
+.messatge{display:flex;align-items:center;gap:.6rem;padding:6px 8px 6px 16px;border-radius:17px;border:1px solid var(--t-aur);background:color-mix(in srgb,var(--t-fons-2) 96%,transparent);font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.5);pointer-events:auto}
+.messatge[hidden]{display:none}
+.messatge button{padding:3px 12px;border:0;border-radius:999px;background:var(--t-aur);color:var(--t-fons);font:700 12px/1.3 var(--fb);cursor:pointer}
+@media (prefers-reduced-motion:no-preference){.info,.messatge{animation:leva .25s ease-out}}
+@keyframes leva{from{opacity:0;transform:translateY(4px)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+@media (max-width:900px){
+	.cap-grid,.b-grid,.demo{grid-template-columns:minmax(0,1fr)}
+	.matriu{grid-template-columns:minmax(0,1fr)}
+	.m-cap{display:none}
+	.mapa{flex-direction:column}
+	.d-grid{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+</head>
+<body data-esc="b1" data-barra="b4" data-grop="b7" data-oc="b8">
+<a class="sautar" href="#a">Aller aux planches</a>
+
+<!-- Motifs partagés par les schémas -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+	<defs>
+		<pattern id="h-mix" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="6" fill="#9d7dff" fill-opacity=".6"/><rect x="3" width="3" height="6" fill="#3fc6a0" fill-opacity=".6"/></pattern>
+		<pattern id="h-al" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.6" height="7" fill="#5fb7e6" fill-opacity=".55"/></pattern>
+		<pattern id="h-pl" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.6" height="7" fill="#8fd18a" fill-opacity=".55"/></pattern>
+		<linearGradient id="g-eu" gradientUnits="userSpaceOnUse" x1="0" y1="150" x2="0" y2="232"><stop offset="0" stop-color="#3fc6a0" stop-opacity=".5"/><stop offset="1" stop-color="#3fc6a0" stop-opacity="0"/></linearGradient>
+		<!-- Vue d'ensemble « Langues de France », réutilisée par D1 à D4 -->
+		<symbol id="vista" viewBox="0 0 300 320">
+			<rect width="300" height="320" fill="#0a0d14"/>
+			<path d="M64 254L148 270L176 304L162 320H0V244Z" fill="#1a110c"/>
+			<path d="M262 150L300 136V320H286L250 246Z" fill="#1a110c"/>
+			<path d="M150 18L248 66L262 150L246 196L240 236L196 250L160 262L148 270L64 254L76 170L18 112L58 94L100 82Z" fill="#26170f"/>
+			<ellipse cx="278" cy="270" rx="7" ry="14" fill="#26170f"/>
+			<path d="M100 251L86 232L78 182L112 168L150 150L196 160L236 176L246 196L240 234L196 248L160 260L148 262L132 258Z" style="fill:var(--c-oc);fill-opacity:var(--op-fr)"/>
+			<path d="M106 266l12 -1l3 9l-11 4z" style="fill:var(--c-oc);fill-opacity:var(--op-ext)"/>
+			<path d="M252 196l13 -6l6 22l-13 6z" style="fill:var(--c-oc);fill-opacity:var(--op-ext)"/>
+			<path d="M132 259L156 262L150 270L134 268Z" style="fill:var(--c-ca);fill-opacity:var(--op-fr)"/>
+			<path d="M134 268L150 270L174 302L162 320H112L104 292L120 276Z" style="fill:var(--c-ca);fill-opacity:var(--op-ext)"/>
+			<ellipse cx="196" cy="312" rx="11" ry="4" style="fill:var(--c-ca);fill-opacity:var(--op-ext)"/>
+			<path d="M150 18L248 66L262 150L246 196L240 236L196 250L160 262L148 270L64 254L76 170L18 112L58 94L100 82Z" fill="none" stroke="rgba(245,234,216,.55)" stroke-width="1"/>
+			<g font-family="Luciole, sans-serif" font-weight="700" text-anchor="middle" letter-spacing="1.5">
+				<text x="166" y="214" font-size="15" letter-spacing="3" style="fill:var(--t-oc)">OCCITAN</text>
+				<text x="140" y="300" font-size="11" style="fill:var(--t-ca);opacity:var(--op-lx)">CATALÀ</text>
+				<text x="52" y="124" font-size="8" style="fill:var(--t-br,var(--t-x))">BREZHONEG</text>
+				<text x="62" y="272" font-size="7" style="fill:var(--t-eu,var(--t-x))">EUSKARA</text>
+				<text x="278" y="296" font-size="7" style="fill:var(--t-co,var(--t-x))">CORSU</text>
+				<text x="226" y="106" font-size="6.5" letter-spacing=".8" style="fill:var(--t-al,var(--t-x))">ELSÄSSERDITSCH</text>
+				<text x="214" y="82" font-size="7" style="fill:var(--t-pl,var(--t-x))">PLATT</text>
+				<text x="152" y="36" font-size="7" style="fill:var(--t-vl,var(--t-x))">VLAEMSCH</text>
+				<text x="218" y="152" font-size="6.5" letter-spacing=".6" style="fill:var(--t-frp,var(--t-x))">FRANCOPROVENÇAL</text>
+				<text x="140" y="112" font-size="9" font-weight="400" font-style="italic" letter-spacing="0" fill="rgba(245,234,216,.55)">lengas d’oïl</text>
+			</g>
+		</symbol>
+	</defs>
+</svg>
+
+<header class="cap wrap">
+	<p class="sur">Lo Ligam · carte · maquette du 8 octobre 2026</p>
+	<h1>Langues, échelles, frontières</h1>
+	<div class="cap-grid">
+		<div>
+			<p class="intro">Quatre planches pour choisir, d'après la synthèse <code>revisions/2026-10-08-lengas-escalas.md</code>. <b>Chaque option porte un code</b> : il suffit de répondre « je prends A1, B1, B4… ». Le badge <span class="rec">recommandé</span> signale la proposition de la synthèse.</p>
+			<p class="intro"><b>La barre en bas de l'écran joue le rôle de la barre du bas de la carte</b> : survole une pastille, une ville ou une zone des schémas (ou passe dessus au clavier), sa traduction s'y affiche. C'est ta première demande.</p>
+			<p class="intro"><span class="validar">Tout l'occitan de cette page est à valider</span> (dicodòc, Congrès). Les noms catalans, basques, alsaciens sont à faire relire par des locuteurs. Rien n'est branché sur la vraie carte : ce sont des maquettes.</p>
+			<ul class="somari">
+				<li><a href="#a">A · L'icône</a></li>
+				<li><a href="#b">B · Le panneau</a></li>
+				<li><a href="#c">C · Les échelles</a></li>
+				<li><a href="#d">D · France et frontières</a></li>
+			</ul>
+		</div>
+		<aside class="carnet" aria-labelledby="carnet-t">
+			<h2 id="carnet-t">Correspondance avec la synthèse</h2>
+			<ul>
+				<li><b>A0 à A4</b> : décision 1 (l'icône)</li>
+				<li><b>B1 à B3</b> : comment chaque couche dit son échelle</li>
+				<li><b>B4, B5</b> : la barre du bas (une ou deux lignes)</li>
+				<li><b>B6, B7</b> : décision 9 (groupes Italie et Afrique)</li>
+				<li><b>B8, B9</b> : décision 4 (pastilles occitanes en interface française)</li>
+				<li><b>C1, C2</b> : décision 2 (la grille des paliers) · <b>C3, C4</b> : le nom du palier près de la barre d'échelle</li>
+				<li><b>D1 à D4</b> : décisions 6 et 7 (couleurs et au-delà de la frontière) · <b>D8 à D10</b> : décision 5 (ouvrir à la France)</li>
+				<li>Non montrée ici : la décision 3 (arrivée sur téléphone), qui demande une vraie capture.</li>
+			</ul>
+		</aside>
+	</div>
+</header>
+
+<main>
+<!-- ═══════════════ A ═══════════════ -->
+<section class="planca wrap" id="a" aria-labelledby="a-t">
+	<h2 id="a-t"><span class="lettra">A</span>L'icône des « Autres langues »</h2>
+	<p class="intro">Chaque option est posée dans un rail factice, à côté des vraies icônes du site, à <b>20 px</b> et <b>24 px</b> (le site les affiche à 22 px). Dessous : l'état ouvert, le thème clair et une taille réduite. La case en pointillés or est celle qui change. Coche « Essayer en B » pour voir l'icône dans la maquette du panneau.</p>
+	<div class="op-grid">
+		<article class="opcion" data-op="A0">
+			<h3><span class="cod">A0</span>Actuelle : deux écritures</h3>
+			<p>Pour comparaison. Elle parle d'alphabets (une lettre latine, un idéogramme) : peu juste pour les langues de France, presque toutes en alphabet latin.</p>
+			<div class="proba"></div>
+			<label class="essai"><input type="radio" name="icona" value="A0"> Essayer en B</label>
+		</article>
+		<article class="opcion" data-op="A1">
+			<h3><span class="cod">A1</span><span lang="oc">Granda e pichona</span><span class="rec">recommandée</span></h3>
+			<p>Une grande bulle et une petite qui se répondent : une grande langue et une langue minoritaire, sans hiérarchie d'écriture. Va avec la bulle carrée de la famille Lenga.</p>
+			<div class="proba"></div>
+			<label class="essai"><input type="radio" name="icona" value="A1" checked> Essayer en B</label>
+		</article>
+		<article class="opcion" data-op="A2">
+			<h3><span class="cod">A2</span><span lang="oc">Doas bocas</span></h3>
+			<p>Deux bulles qui se chevauchent : le dialogue, les ponts. La plus lisible à 20 px, mais elle ne dit pas « minoritaire » et peut évoquer une messagerie.</p>
+			<div class="proba"></div>
+			<label class="essai"><input type="radio" name="icona" value="A2"> Essayer en B</label>
+		</article>
+		<article class="opcion" data-op="A3">
+			<h3><span class="cod">A3</span><span lang="oc">Constellacion</span></h3>
+			<p>Des étoiles de tailles inégales, reliées : le « ligam », en écho au fond étoilé. La plus artistique, mais seule elle peut se lire comme un graphique.</p>
+			<div class="proba"></div>
+			<label class="essai"><input type="radio" name="icona" value="A3"> Essayer en B</label>
+		</article>
+		<article class="opcion" data-op="A4">
+			<h3><span class="cod">A4</span><span lang="oc">Granda e pichona</span>, la petite pleine</h3>
+			<p>Variante nouvelle de A1 : la petite langue est pleine, mise en lumière. C'est l'idée « donner de la visibilité ». Plus présente à 20 px, un peu plus lourde dans le rail.</p>
+			<div class="proba"></div>
+			<label class="essai"><input type="radio" name="icona" value="A4"> Essayer en B</label>
+		</article>
+	</div>
+</section>
+
+<!-- ═══════════════ B ═══════════════ -->
+<section class="planca wrap" id="b" aria-labelledby="b-t">
+	<h2 id="b-t"><span class="lettra">B</span>Le panneau déplié</h2>
+	<p class="intro">Autres langues, puis le groupe « Langues de France » qui se déplie, le catalan et ses pastilles <b>dans sa langue</b>, les langues à venir en simple texte, et un groupe futur replié. Tout fonctionne : déplie, coche, clique les pastilles, change l'échelle à droite.</p>
+	<div class="b-grid">
+		<div class="mapa cel">
+			<div id="rail-b"></div>
+			<div class="tirador" role="region" aria-labelledby="tir-t">
+				<div class="tir-cap">
+					<h3 class="tir-titol" id="tir-t"><span class="i-oc" lang="oc">Autras lengas</span><span class="i-fr">Autres langues</span></h3>
+					<span class="tampar" aria-hidden="true">×</span>
+				</div>
+				<p class="sota"><span class="i-oc" lang="oc">Las lengas de França e d'endacòm mai, per far de ponts.</span><span class="i-fr">Les langues de France et d'ailleurs, pour faire des ponts.</span></p>
+
+				<div class="grop">
+					<details open>
+						<summary>
+							<span class="grop-nom" id="nom-lf"><span class="i-oc" lang="oc">Lengas de França</span><span class="i-fr">Langues de France</span></span>
+							<span class="grop-compte"><span class="i-oc" lang="oc">2 disponiblas · 9 a venir</span><span class="i-fr">2 disponibles · 9 à venir</span></span>
+						</summary>
+						<div class="grop-cos">
+							<div class="vista-l" id="r-vista" data-c0="4" data-c1="12" data-anar="6" data-sw="sw-vista" data-oc="las lengas de França" data-fr="les langues de France">
+								<small class="trad"><span class="i-oc" lang="oc">Vista d'ensemble</span><span class="i-fr">Vue d'ensemble</span></small>
+								<div class="escala-c"></div>
+							</div>
+
+							<p class="titolet"><span class="i-oc" lang="oc">França metropolitana</span><span class="i-fr">France métropolitaine</span></p>
+
+							<div class="linha" id="r-oc" data-c0="2" data-c1="19" data-oc="l'occitan" data-fr="l'occitan">
+								<span class="apercebut"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true"><rect width="9" height="36" fill="#9d7dff" opacity=".75"/><rect x="8.6" width="9" height="36" fill="#ff3f86" opacity=".75"/><rect x="17.2" width="9" height="36" fill="#ffb0dc" opacity=".75"/><rect x="25.8" width="9" height="36" fill="#ffa22e" opacity=".75"/><rect x="34.4" width="9" height="36" fill="#e8482a" opacity=".75"/><rect x="43" width="9" height="36" fill="#ffe27a" opacity=".75"/></svg></span>
+								<div class="cos">
+									<b lang="oc" id="nom-oc" data-n="Occitan" data-l="oc" data-fr="occitan" data-toc="lenga romanica" data-tfr="langue romane">Occitan</b>
+									<small><span class="i-oc" lang="oc">Se'n pòt causir mantun, lo Creissent tanben</span><span class="i-fr">On peut en choisir plusieurs, le Croissant aussi</span></small>
+									<div class="pastilhas" role="group" aria-label="Occitan">
+										<button type="button" class="pastilha apart" aria-pressed="false" lang="oc" data-n="Val d'Aran" data-l="oc" data-fr="Val d'Aran" data-toc="Catalonha · Espanha" data-tfr="Catalogne · Espagne"><i class="apart"></i>Val d'Aran <span class="tard">(plus tard)</span></button>
+										<button type="button" class="pastilha apart" aria-pressed="false" lang="oc" data-n="Valadas occitanas" data-l="oc" data-fr="Vallées occitanes" data-toc="Piemont · Itàlia" data-tfr="Piémont · Italie"><i class="apart"></i>Valadas occitanas <span class="tard">(plus tard)</span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-n="gascon" data-l="oc" data-fr="gascon" data-toc="dialècte occitan" data-tfr="dialecte occitan"><i style="background:var(--gas)"></i><span class="p-oc" lang="oc">gascon</span><span class="p-fr">gascon</span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-n="lengadocian" data-l="oc" data-fr="languedocien" data-toc="dialècte occitan" data-tfr="dialecte occitan"><i style="background:var(--lan)"></i><span class="p-oc" lang="oc">lengadocian</span><span class="p-fr">languedocien</span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-n="provençal" data-l="oc" data-fr="provençal" data-toc="dialècte occitan" data-tfr="dialecte occitan"><i style="background:var(--pro)"></i><span class="p-oc" lang="oc">provençal</span><span class="p-fr">provençal</span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-n="lemosin" data-l="oc" data-fr="limousin" data-toc="dialècte occitan" data-tfr="dialecte occitan"><i style="background:var(--lem)"></i><span class="p-oc" lang="oc">lemosin</span><span class="p-fr">limousin</span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-n="auvernhat" data-l="oc" data-fr="auvergnat" data-toc="dialècte occitan" data-tfr="dialecte occitan"><i style="background:var(--auv)"></i><span class="p-oc" lang="oc">auvernhat</span><span class="p-fr">auvergnat</span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-n="vivaroaupenc" data-l="oc" data-fr="vivaro-alpin" data-toc="dialècte occitan" data-tfr="dialecte occitan"><i style="background:var(--viv)"></i><span class="p-oc" lang="oc">vivaroaupenc</span><span class="p-fr">vivaro-alpin</span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-n="creissent" data-l="oc" data-fr="croissant" data-toc="zòna de transicion" data-tfr="zone de transition"><i class="cro"></i><span class="p-oc" lang="oc">creissent</span><span class="p-fr">croissant</span></button>
+									</div>
+									<div class="escala-c"></div>
+								</div>
+								<button type="button" class="basc" role="switch" aria-checked="true" aria-labelledby="nom-oc"></button>
+							</div>
+
+							<div class="linha" id="r-ca" data-c0="2" data-c1="19" data-oc="lo catalan" data-fr="le catalan">
+								<span class="apercebut"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true"><rect width="8" height="36" fill="#5ab0ff" opacity=".75"/><rect x="7.5" width="8" height="36" fill="#4a7dff" opacity=".75"/><rect x="15" width="8" height="36" fill="#4fc25f" opacity=".75"/><rect x="22.5" width="8" height="36" fill="#b5d94a" opacity=".75"/><rect x="30" width="8" height="36" fill="#22b39b" opacity=".75"/><rect x="37.5" width="8" height="36" fill="#36c5d0" opacity=".75"/><rect x="45" width="8" height="36" fill="#b9e4c9" opacity=".75"/></svg></span>
+								<div class="cos">
+									<span id="nom-ca"><b lang="ca" data-n="Català" data-l="ca" data-oc="catalan" data-fr="catalan" data-toc="lenga romanica" data-tfr="langue romane">Català</b> <span class="trad">· <span class="i-oc" lang="oc">catalan</span><span class="i-fr">catalan</span></span></span>
+									<small><span class="i-oc" lang="oc">Sos dialèctes, de Salses a Guardamar e a l'Alguer ; la Catalonha del Nòrd a despart</span><span class="i-fr">Ses dialectes, de Salses à Guardamar et à Alghero ; la Catalogne nord à part</span></small>
+									<div class="pastilhas" role="group" aria-label="Català">
+										<button type="button" class="pastilha apart" aria-pressed="false" data-vista="tolosa" data-anar-oc="la Catalonha del Nòrd" data-anar-fr="la Catalogne nord" data-n="Catalunya Nord" data-l="ca" data-oc="Catalonha del Nòrd" data-fr="Catalogne nord" data-toc="territòri a despart" data-tfr="territoire à part"><i class="apart"></i><span lang="ca">Catalunya Nord</span><span class="vh">, <span class="i-oc" lang="oc">Catalonha del Nòrd</span><span class="i-fr">Catalogne nord</span></span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-vista="tolosa" data-n="rossellonès" data-l="ca" data-oc="rossellonés" data-fr="roussillonnais" data-toc="dialècte catalan" data-tfr="dialecte catalan"><i style="background:var(--ros)"></i><span lang="ca">rossellonès</span><span class="vh">, <span class="i-oc" lang="oc">rossellonés</span><span class="i-fr">roussillonnais</span></span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-vista="tolosa" data-anar-oc="lo catalan central" data-anar-fr="le catalan central" data-n="central" data-l="ca" data-oc="central" data-fr="central" data-toc="dialècte catalan" data-tfr="dialecte catalan"><i style="background:var(--cen)"></i><span lang="ca">central</span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-vista="tolosa" data-n="nord-occidental" data-l="ca" data-oc="nòrd-occidental" data-fr="nord-occidental" data-toc="dialècte catalan" data-tfr="dialecte catalan"><i style="background:var(--noc)"></i><span lang="ca">nord-occidental</span><span class="vh">, <span class="i-oc" lang="oc">nòrd-occidental</span><span class="i-fr">nord-occidental</span></span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-vista="valencia" data-n="tortosí" data-l="ca" data-oc="tortosin" data-fr="tortosin" data-toc="dialècte catalan" data-tfr="dialecte catalan"><i style="background:var(--tor)"></i><span lang="ca">tortosí</span><span class="vh">, <span class="i-oc" lang="oc">tortosin</span><span class="i-fr">tortosin</span></span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-vista="valencia" data-anar-oc="lo valencian" data-anar-fr="le valencien" data-n="valencià" data-l="ca" data-oc="valencian" data-fr="valencien" data-toc="dialècte catalan" data-tfr="dialecte catalan"><i style="background:var(--val)"></i><span lang="ca">valencià</span><span class="vh">, <span class="i-oc" lang="oc">valencian</span><span class="i-fr">valencien</span></span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-vista="valencia" data-anar-oc="lo balear" data-anar-fr="le baléare" data-n="balear" data-l="ca" data-oc="balear" data-fr="baléare" data-toc="dialècte catalan" data-tfr="dialecte catalan"><i style="background:var(--bal)"></i><span lang="ca">balear</span><span class="vh">, <span class="i-fr">baléare</span></span></button>
+										<button type="button" class="pastilha" aria-pressed="false" data-vista="alguer" data-anar-oc="l'alguerés" data-anar-fr="l'alguérois" data-n="alguerès" data-l="ca" data-oc="alguerés" data-fr="alguérois" data-toc="dialècte catalan" data-tfr="dialecte catalan"><i style="background:var(--alg)"></i><span lang="ca">alguerès</span><span class="vh">, <span class="i-oc" lang="oc">alguerés</span><span class="i-fr">alguérois</span></span></button>
+									</div>
+									<div class="escala-c"></div>
+								</div>
+								<button type="button" class="basc" role="switch" aria-checked="false" aria-labelledby="nom-ca"></button>
+							</div>
+
+							<ul class="venir" aria-label="À venir">
+								<li data-n="Elsässerditsch" data-l="gsw" data-oc="alsacian" data-fr="alsacien" data-toc="lenga germanica" data-tfr="langue germanique"><span><b lang="gsw">Elsässerditsch</b> · <span class="i-oc" lang="oc">alsacian</span><span class="i-fr">alsacien</span></span><span class="av"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></li>
+								<li data-n="Euskara" data-l="eu" data-oc="basc" data-fr="basque" data-toc="lenga isolada" data-tfr="langue isolée"><span><b lang="eu">Euskara</b> · <span class="i-oc" lang="oc">basc</span><span class="i-fr">basque</span></span><span class="av"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></li>
+								<li data-n="Brezhoneg" data-l="br" data-oc="breton" data-fr="breton" data-toc="lenga celtica" data-tfr="langue celtique"><span><b lang="br">Brezhoneg</b> · breton</span><span class="av"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></li>
+								<li data-n="Corsu" data-l="co" data-oc="còrs" data-fr="corse" data-toc="lenga romanica" data-tfr="langue romane"><span><b lang="co">Corsu</b> · <span class="i-oc" lang="oc">còrs</span><span class="i-fr">corse</span></span><span class="av"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></li>
+								<li data-n="Vlaemsch" data-l="vls" data-oc="flamenc occidental" data-fr="flamand occidental" data-toc="lenga germanica" data-tfr="langue germanique"><span><b lang="vls">Vlaemsch</b> · <span class="i-oc" lang="oc">flamenc occidental</span><span class="i-fr">flamand occidental</span></span><span class="av"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></li>
+								<li data-n="Platt" data-oc="francic" data-fr="francique" data-toc="lenga germanica" data-tfr="langue germanique"><span><b>Platt</b> · <span class="i-oc" lang="oc">francic</span><span class="i-fr">francique</span></span><span class="av"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></li>
+								<li data-n="Francoprovençal" data-l="frp" data-oc="francoprovençal" data-fr="francoprovençal (arpitan)" data-toc="lenga romanica" data-tfr="langue romane · nom à trancher"><span><b lang="frp">Francoprovençal</b> · <span class="i-oc" lang="oc">arpitan ?</span><span class="i-fr">arpitan ?</span></span><span class="av"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></li>
+								<li data-n="Lengas d'oïl" data-l="oc" data-fr="langues d'oïl" data-toc="picard, gallo, normand, lorrain…" data-tfr="picard, gallo, normand, lorrain…"><span><b class="i-oc" lang="oc">Lengas d'oïl</b><b class="i-fr">Langues d'oïl</b> · <span class="i-oc" lang="oc">en pastilhas</span><span class="i-fr">en pastilles</span></span><span class="av"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></li>
+								<li data-n="Parlars ligurians" data-l="oc" data-fr="parlers liguriens" data-toc="Bonifaci, Menton ?" data-tfr="Bonifacio, Roya à vérifier"><span><b class="i-oc" lang="oc">Parlars ligurians</b><b class="i-fr">Parlers liguriens</b></span><span class="av"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></li>
+							</ul>
+
+							<details class="sosgrop">
+								<summary><span class="i-oc" lang="oc">Outra mar</span><span class="i-fr">Outre-mer</span> <span class="grop-compte">7</span></summary>
+								<p>Antilles, Guyane (12 langues), La Réunion, Mayotte, Nouvelle-Calédonie (environ 28), Polynésie, Wallis-et-Futuna : une ligne par territoire, ses langues en pastilles. <span class="validar">Noms occitans à proposer.</span></p>
+							</details>
+							<p class="pichon"><i>Plus tard : <span lang="oc">Sens territòri</span> · <span lang="oc">Lenga dels signes</span> (fiches sans carte).</i></p>
+						</div>
+					</details>
+					<button type="button" class="basc" id="sw-vista" role="switch" aria-checked="false" aria-labelledby="nom-lf"></button>
+				</div>
+
+				<div class="grop futur">
+					<details>
+						<summary><span class="grop-nom"><span class="i-oc" lang="oc">Lengas d'Itàlia</span><span class="i-fr">Langues d'Italie</span></span><span class="grop-compte"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></summary>
+						<p class="sota">Occitan, català, francoprovençal… : <b>le même interrupteur</b> que dans « Langues de France » (loi 482/1999), puis les autres langues d'Italie, en points.</p>
+					</details>
+				</div>
+				<div class="grop futur">
+					<details>
+						<summary><span class="grop-nom"><span class="i-oc" lang="oc">Lengas d'Africa</span><span class="i-fr">Langues d'Afrique</span></span><span class="grop-compte"><span class="i-oc" lang="oc">a venir</span><span class="i-fr">à venir</span></span></summary>
+						<p class="sota">Un point par langue (Glottolog, Wikidata), une voix plus tard (Lingua Libre).</p>
+					</details>
+				</div>
+			</div>
+			<div class="c3" aria-hidden="true"><span class="linha-esc"></span><span class="palier-nom"></span></div>
+		</div>
+
+		<div class="reglatges">
+			<fieldset>
+				<legend>Pour regarder</legend>
+				<p class="pichon" style="margin:.2rem 0 .4rem">Langue de l'interface du site (les pastilles catalanes restent en catalan dans les deux) :</p>
+				<div class="paliers-r">
+					<label class="ch"><input type="radio" name="interf" value="oc" checked><span lang="oc">Occitan</span></label>
+					<label class="ch"><input type="radio" name="interf" value="fr"><span>Français</span></label>
+				</div>
+				<p class="pichon" style="margin:.8rem 0 .4rem">Échelle de la carte (palier) :</p>
+				<div class="paliers-r" id="paliers-r"></div>
+				<ol class="agachar">
+					<li><b>Les noms</b> : pastilles catalanes en catalan ; survole-les, la traduction vient dans la barre du bas. Clique : la pastille est choisie, la barre se fixe (bord or).</li>
+					<li><b>L'interrupteur du groupe</b> est à côté du titre, pas dedans. Allume-le : vue d'ensemble, et la carte se recadre sur la France (message « Revenir » en bas).</li>
+					<li><b>La ligne Occitan</b> partage l'interrupteur de « Dialèctes » (famille Lenga) : pas de copie.</li>
+					<li><b>Les langues à venir</b> : du texte, sans interrupteur inerte.</li>
+					<li><b>Mets l'échelle sur « Lo mond » ou « La tèrra »</b> : une couche allumée hors de sa plage n'est pas grisée, son texte devient « I anar ». Dans le rail, le point devient un anneau.</li>
+				</ol>
+			</fieldset>
+			<fieldset>
+				<legend>Échelle sur chaque couche</legend>
+				<label class="ch"><input type="radio" name="esc" value="b1" checked><span><span class="cod">B1</span>Réglette à cinq cases + texte <span class="rec">recommandé</span></span><small>Une case par palier, pleine si la couche s'y voit ; la case du palier en cours est entourée (lisible sans la couleur).</small></label>
+				<label class="ch"><input type="radio" name="esc" value="b2"><span><span class="cod">B2</span>Texte seul</span><small>« Visibla de 700 km a 1,5 km ». Le plus sobre, moins parlant d'un coup d'œil.</small></label>
+				<label class="ch"><input type="radio" name="esc" value="b3"><span><span class="cod">B3</span>Jauge continue + texte</span><small>Une barre du monde (à gauche) au village (à droite), la plage visible remplie, un trait or pour « ici ».</small></label>
+			</fieldset>
+			<fieldset>
+				<legend>La barre du bas</legend>
+				<label class="ch"><input type="radio" name="barra" value="b4" checked><span><span class="cod">B4</span>Deux lignes <span class="rec">recommandé</span></span><small>En grand, le nom dans la langue ; dessous, en petit : l'occitan, le français (interface française), la nature.</small></label>
+				<label class="ch"><input type="radio" name="barra" value="b5"><span><span class="cod">B5</span>Une ligne, comme aujourd'hui</span><small>Nom en capitales espacées, la suite à côté en or.</small></label>
+			</fieldset>
+			<fieldset>
+				<legend>Groupes à venir (Italie, Afrique)</legend>
+				<label class="ch"><input type="radio" name="grop" value="b6"><span><span class="cod">B6</span>Cachés jusqu'à la première langue prête <span class="rec">recommandé</span></span><small>Un groupe vide marqué « à venir » fait amateur.</small></label>
+				<label class="ch"><input type="radio" name="grop" value="b7" checked><span><span class="cod">B7</span>Visibles, repliés, « a venir »</span><small>Annonce l'intention (affiché par défaut ici pour que tu le voies).</small></label>
+			</fieldset>
+			<fieldset>
+				<legend>Pastilles occitanes, interface française</legend>
+				<p class="pichon" style="margin:0 0 .3rem">Passe l'interface en français pour voir la différence.</p>
+				<label class="ch"><input type="radio" name="oc" value="b8" checked><span><span class="cod">B8</span>En occitan, le français dans la barre du bas <span class="rec">recommandé</span></span><small>Ta règle des noms, appliquée à l'occitan comme au catalan.</small></label>
+				<label class="ch"><input type="radio" name="oc" value="b9"><span><span class="cod">B9</span>Traduites en français (comme aujourd'hui)</span><small>Les pastilles catalanes, elles, restent en catalan : incohérence à assumer.</small></label>
+			</fieldset>
+		</div>
+	</div>
+</section>
+
+<!-- ═══════════════ C ═══════════════ -->
+<section class="planca wrap" id="c" aria-labelledby="c-t">
+	<h2 id="c-t"><span class="lettra">C</span>La grammaire des échelles</h2>
+	<p class="intro">« <span lang="oc">Del cèl a la tèrra</span> » : cinq paliers, les mêmes partout, et trois grandes bascules seulement (traits rouges). Chaque ligne montre de quand à quand on voit une donnée. Le trait or est l'échelle actuelle : déplace-la avec la réglette en bas de la frise, avec la maquette B, ou avec les scénarios de recadrage plus bas. Les kilomètres sont ceux de la barre au milieu de l'Occitanie, arrondis.</p>
+	<div class="frisa-w"><div class="frisa" id="frisa"></div></div>
+	<p class="f-lec"><b>★ 50 km</b> : ton arrivée sur la carte (pointillé or) · <b>traits rouges</b> : les trois bascules, fondu de 1 à 2 s · <b>trait or plein</b> : l'échelle actuelle. Sur un petit écran, la frise défile de côté.</p>
+
+	<div class="c-grid">
+		<div class="carta-op">
+			<h3><span class="cod">C1</span>Seuils figés sur ton écran <span class="rec">recommandé</span></h3>
+			<p>La frise ci-dessus. Sur ton écran (1830 × 950), rien ne bouge : langue unie à 200 km, simplification à 300 km, contour seul au-delà. Le téléphone s'aligne sur toi.</p>
+		</div>
+		<div class="carta-op">
+			<h3><span class="cod">C2</span>Seuils arrondis plus réguliers</h3>
+			<p>Le contour seul passerait de 500 à 400 km, et la côte arriverait un cran plus tard. Plus « propre » sur le papier, mais tu perds des seuils déjà validés.</p>
+		</div>
+		<div class="carta-op">
+			<h3><span class="cod">C3</span>Le nom du palier à côté de la barre <span class="rec">maintenant</span></h3>
+			<p>Dans un petit élément à part (sinon le texte déborde et la barre ne mesure plus rien).</p>
+			<div class="fig cel"><div class="c3" aria-hidden="true"><span class="linha-esc"></span><span class="palier-nom"></span></div></div>
+		</div>
+		<div class="carta-op">
+			<h3><span class="cod">C4</span>Une échelle des paliers près du zoom <span class="rec">plus tard</span></h3>
+			<p>Cinq crans cliquables à côté de + et −, pour sauter d'un palier à l'autre. Essaie : ils pilotent la frise.</p>
+			<div class="fig cel" style="justify-content:flex-end">
+				<div class="escaleta" role="group" aria-label="Paliers" id="escaleta"></div>
+				<div class="zoom" aria-hidden="true"><span>+</span><span>−</span></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="demo" id="demo">
+		<div>
+			<h3><span class="cod">C5</span>Le recadrage automatique, en scénarios</h3>
+			<p class="pichon">Seulement quand tu <b>allumes</b> quelque chose. Jamais au chargement, ni sur « Annuler », ni quand on éteint. Le rectangle or est ton écran ; il vole, la frise suit. Message « Revenir » en bas, <b>sans minuterie</b>, jusqu'au geste suivant. <i>Schéma, pas à l'échelle.</i></p>
+			<svg class="mapeta" viewBox="0 0 360 290" role="img" aria-labelledby="mapeta-t">
+				<title id="mapeta-t">Schéma : la fenêtre de la carte (rectangle or) au-dessus de la France et de l'Espagne</title>
+				<rect width="360" height="290" fill="#0a0d14"/>
+				<path d="M120 214L192 222L206 238L186 262L176 290H10V230L60 222Z" fill="#2a1a11"/>
+				<path d="M180 20L258 58L270 128L256 170L262 196L226 206L200 208L192 222L120 214L126 150L70 104L104 92L150 74Z" fill="#33200f" stroke="rgba(245,234,216,.5)" stroke-width="1"/>
+				<path d="M132 205L190 214L200 208L226 206L252 190L250 168L210 160L160 164L130 180Z" fill="#d9343f" fill-opacity=".28"/>
+				<ellipse cx="284" cy="212" rx="5" ry="11" fill="#33200f"/>
+				<ellipse cx="290" cy="248" rx="8" ry="17" fill="#2a1a11"/>
+				<ellipse cx="226" cy="262" rx="11" ry="4" fill="#2a1a11"/>
+				<g fill="#ffe9b8" font-family="Luciole, sans-serif" font-size="9">
+					<circle cx="160" cy="190" r="2.2"/><text x="146" y="186" text-anchor="end">Tolosa</text>
+					<circle cx="186" cy="214" r="2"/><text x="190" y="226">Perpinyà</text>
+					<circle cx="196" cy="234" r="2"/><text x="204" y="240">Barcelona</text>
+					<circle cx="170" cy="262" r="2"/><text x="164" y="266" text-anchor="end">València</text>
+					<circle cx="78" cy="104" r="2"/><text x="72" y="96" text-anchor="end">Brest</text>
+					<circle cx="283" cy="242" r="1.8"/><text x="300" y="270">l'Alguer</text>
+				</g>
+				<g id="fenestra" style="transform:translate(165px,190px) scale(1)">
+					<rect x="-60" y="-31" width="120" height="62" rx="3" fill="rgba(238,175,52,.09)" stroke="#eeaf34" stroke-width="2" vector-effect="non-scaling-stroke"/>
+				</g>
+			</svg>
+		</div>
+		<div>
+			<div class="scen" role="group" aria-label="Scénarios de recadrage">
+				<button type="button" data-scen="a"><span class="cod">C5a</span><span>À l'arrivée (50 km, Tolosa), allumer le catalan</span></button>
+				<button type="button" data-scen="b"><span class="cod">C5b</span><span>À 5 km, cocher « Provinces de 1789 » (visibles jusqu'à 10 km)</span></button>
+				<button type="button" data-scen="c"><span class="cod">C5c</span><span>Sur Tolosa, choisir la pastille « valencià »</span></button>
+				<button type="button" data-scen="d"><span class="cod">C5d</span><span>Allumer le groupe « Langues de France »</span></button>
+				<button type="button" data-scen="e"><span class="cod">C5e</span><span>Glisser jusqu'en Bretagne avec seul le catalan allumé</span></button>
+			</div>
+			<p class="jornal" id="jornal" aria-live="polite">Choisis un scénario : la carte part de son état de départ, puis le geste est joué.</p>
+		</div>
+	</div>
+</section>
+
+<!-- ═══════════════ D ═══════════════ -->
+<section class="planca wrap" id="d" aria-labelledby="d-t">
+	<h2 id="d-t"><span class="lettra">D</span>France et frontières</h2>
+	<p class="intro">« <span lang="oc">Una lenga, un domeni ; un domeni, de territòris.</span> » Une langue allumée se montre entière, de part et d'autre des frontières. La frontière d'État est un trait fin et neutre, jamais coloré par une langue ; la partie française est un territoire à part, sélectionnable. Schémas simplifiés, pas de vraie carte. Survole les zones et les villes.</p>
+
+	<div class="d-grid">
+		<figure class="esq-f">
+			<figcaption>
+				<h3><span class="cod">D5</span>Le catalan allumé (avec l'occitan)</h3>
+				Deux langues allumées : chaque ville prend le nom de la langue de sa zone. Éteins le catalan : Perpinyà redevient Perpinhan.
+			</figcaption>
+			<div class="alucs">
+				<span class="aluc"><button type="button" class="basc" role="switch" aria-checked="true" id="d5-oc" aria-labelledby="d5-oc-l"></button><span id="d5-oc-l" lang="oc">Occitan</span></span>
+				<span class="aluc"><button type="button" class="basc" role="switch" aria-checked="true" id="d5-ca" aria-labelledby="d5-ca-l"></button><span id="d5-ca-l" lang="ca">Català</span></span>
+			</div>
+			<svg class="esquema" id="d5" viewBox="0 0 560 360" role="img" aria-labelledby="d5-t">
+				<title id="d5-t">Schéma : le domaine catalan entier, des deux côtés des Pyrénées, la Catalogne du Nord en territoire à part, l'occitan au nord avec le Val d'Aran</title>
+				<rect class="mar" width="560" height="360"/>
+				<path class="terra" d="M0 0H360L372 60L380 110L360 160L330 215L290 260L270 300L250 360H0Z"/>
+				<g class="z z-oc">
+					<path fill="#9d7dff" d="M0 0H140L160 60L190 111L140 118L100 123L50 116L0 120Z" data-n="gascon" data-l="oc" data-fr="gascon" data-toc="dialècte occitan" data-tfr="dialecte occitan"/>
+					<path fill="#ff3f86" d="M140 0H360L370 48L330 50L305 66L280 64L262 54L250 72L225 80L215 110L190 111L160 60Z" data-n="lengadocian" data-l="oc" data-fr="languedocien" data-toc="dialècte occitan" data-tfr="dialecte occitan"/>
+					<path fill="#9d7dff" d="M112 122L138 119L148 138L130 150L114 140Z" data-n="Val d'Aran" data-l="oc" data-fr="Val d'Aran" data-toc="gascon (aranés), oficial en Catalonha" data-tfr="gascon (aranais), officiel en Catalogne"/>
+					<path fill="#ff3f86" style="fill-opacity:0" d="M262 54L280 64L305 66L330 50L300 40Z" data-n="Fenolhedés" data-l="oc" data-fr="Fenouillèdes" data-toc="occitan dins los Pirenèus Orientals" data-tfr="occitan, dans les Pyrénées-Orientales"/>
+					<text class="nd" x="60" y="62" lang="oc">gascon</text>
+					<text class="nd" x="226" y="28" lang="oc">lengadocian</text>
+					<text class="terr" x="131" y="166" text-anchor="middle" lang="oc">Val d'Aran</text>
+				</g>
+				<g class="z z-ca">
+					<path fill="#4fc25f" d="M170 114L190 111L235 109L245 150L230 200L215 250L195 262L172 262L160 170Z" data-n="nord-occidental" data-l="ca" data-oc="nòrd-occidental" data-fr="nord-occidental" data-toc="dialècte catalan" data-tfr="dialecte catalan"/>
+					<path fill="#4a7dff" d="M235 109L280 116L330 110L380 110L360 160L330 215L300 240L260 225L230 200L245 150Z" data-n="central" data-l="ca" data-oc="central" data-fr="central" data-toc="dialècte catalan" data-tfr="dialecte catalan"/>
+					<path fill="#b5d94a" d="M172 262L195 262L215 250L230 200L260 225L300 240L290 260L278 286L166 286Z" data-n="tortosí" data-l="ca" data-oc="tortosin" data-fr="tortosin" data-toc="dialècte catalan" data-tfr="dialecte catalan"/>
+					<path fill="#22b39b" d="M166 286L278 286L270 300L250 360H172L162 300Z" data-n="valencià" data-l="ca" data-oc="valencian" data-fr="valencien" data-toc="dialècte catalan" data-tfr="dialecte catalan"/>
+					<path fill="#5ab0ff" d="M215 110L225 80L250 72L262 54L280 64L305 66L330 50L370 48L372 60L380 110L330 110L280 116L235 109Z" data-n="Catalunya Nord" data-l="ca" data-oc="Catalonha del Nòrd" data-fr="Catalogne nord" data-toc="rossellonés · sens lo Fenolhedés, occitan" data-tfr="roussillonnais · sans le Fenouillèdes, occitan"/>
+					<ellipse fill="#36c5d0" cx="420" cy="290" rx="30" ry="12" data-n="balear" data-l="ca" data-oc="balear" data-fr="baléare" data-toc="dialècte catalan" data-tfr="dialecte catalan"/>
+					<ellipse fill="#36c5d0" cx="465" cy="268" rx="12" ry="6"/>
+					<ellipse fill="#36c5d0" cx="372" cy="322" rx="10" ry="6"/>
+					<rect x="448" y="14" width="104" height="110" rx="8" fill="#0a0d14" stroke="rgba(245,234,216,.25)" stroke-dasharray="3 3"/>
+					<path d="M488 28l22 2l8 28l-6 34l-20 4l-8 -30z" fill="#21140e" style="fill-opacity:1"/>
+					<path fill="#b9e4c9" d="M486 50l12 -4l3 16l-12 4z" data-n="alguerès" data-l="ca" data-oc="alguerés" data-fr="alguérois" data-toc="dialècte catalan, en Sardenha" data-tfr="dialecte catalan, en Sardaigne"/>
+					<path class="apart" d="M215 110L225 80L250 72L262 54L280 64L305 66L330 50L370 48L372 60L380 110L330 110L280 116L235 109Z"/>
+					<text class="terr" x="292" y="86" text-anchor="middle" lang="ca">Catalunya Nord</text>
+					<text class="nd" x="262" y="103" text-anchor="middle" lang="ca">rossellonès</text>
+					<text class="nd" x="196" y="205" text-anchor="middle" font-size="9" lang="ca">nord-occidental</text>
+					<text class="nd" x="300" y="165" text-anchor="middle" lang="ca">central</text>
+					<text class="gran" x="232" y="248" text-anchor="middle" lang="ca">CATALÀ</text>
+					<text class="nd" x="226" y="276" text-anchor="middle" lang="ca">tortosí</text>
+					<text class="nd" x="205" y="306" text-anchor="middle" lang="ca">valencià</text>
+					<text class="nd" x="420" y="316" text-anchor="middle" lang="ca">balear</text>
+					<text class="nd" x="500" y="110" text-anchor="middle" lang="ca">alguerès</text>
+					<text class="nota" x="500" y="121" text-anchor="middle">(Sardaigne)</text>
+				</g>
+				<path class="apart" d="M112 122L138 119L148 138L130 150L114 140Z"/>
+				<path class="limit" d="M170 114L160 170L172 262L162 300L172 360"/>
+				<path class="limit" d="M215 110L225 80L250 72L262 54L280 64L305 66L330 50L370 48"/>
+				<path class="estat" d="M0 120L50 116L100 123L140 118L190 111L235 109L280 116L330 110L380 110"/>
+				<path class="estat" d="M226 111L244 108L250 118L240 126L228 122Z" data-n="Andorra" data-l="ca" data-oc="Andòrra" data-fr="Andorre" data-toc="Estat · nòrd-occidental" data-tfr="État · nord-occidental"/>
+				<text class="nota" x="8" y="113">frontière d'État (trait fin, neutre)</text>
+				<text class="nota" x="8" y="136">France ↑   Espagne ↓</text>
+				<path d="M318 38L294 58" stroke="rgba(245,234,216,.5)" stroke-width=".8"/>
+				<text class="terr" x="320" y="36" font-size="10" lang="oc">Fenolhedés</text>
+				<g class="vilas">
+					<circle class="punt-v" cx="330" cy="14" r="2.4"/><text class="vila" x="336" y="18" lang="oc" data-n="Narbona" data-l="oc" data-fr="Narbonne" data-toc="lengadocian" data-tfr="languedocien">Narbona</text>
+					<circle class="punt-v" cx="356" cy="92" r="2.6"/>
+					<text class="vila n-ca" x="350" y="102" text-anchor="end" lang="ca" data-n="Perpinyà" data-l="ca" data-oc="Perpinhan" data-fr="Perpignan" data-toc="rossellonès" data-tfr="rossellonès">Perpinyà</text>
+					<text class="vila n-oc0" x="350" y="102" text-anchor="end" lang="oc" data-n="Perpinhan" data-l="oc" data-fr="Perpignan" data-toc="Catalonha del Nòrd" data-tfr="Catalogne nord">Perpinhan</text>
+					<circle class="punt-v" cx="200" cy="182" r="2.2"/>
+					<text class="vila n-ca" x="206" y="180" lang="ca" data-n="Lleida" data-l="ca" data-oc="Lhèida" data-fr="Lérida" data-toc="nord-occidental" data-tfr="nord-occidental">Lleida</text>
+					<text class="vila n-oc0" x="206" y="180" lang="oc" data-n="Lhèida" data-l="oc" data-fr="Lérida" data-toc="vila catalana" data-tfr="ville catalane">Lhèida</text>
+					<circle class="punt-v" cx="318" cy="212" r="2.6"/><text class="vila" x="312" y="210" text-anchor="end" lang="ca" data-n="Barcelona" data-l="ca" data-oc="Barcelona" data-fr="Barcelone" data-toc="central" data-tfr="central">Barcelona</text>
+					<circle class="punt-v" cx="252" cy="330" r="2.6"/>
+					<text class="vila n-ca" x="246" y="334" text-anchor="end" lang="ca" data-n="València" data-l="ca" data-oc="Valéncia" data-fr="Valence (Espagne)" data-toc="valencià" data-tfr="valencià">València</text>
+					<text class="vila n-oc0" x="246" y="334" text-anchor="end" lang="oc" data-n="Valéncia" data-l="oc" data-fr="Valence (Espagne)" data-toc="vila catalana" data-tfr="ville catalane">Valéncia</text>
+				</g>
+			</svg>
+			<ul class="pichon">
+				<li>Trait fin gris : frontière d'État. Pointillé rouge : limite de la langue, <b>une seule ligne</b> entre occitan et catalan (ni chevauchement ni vide).</li>
+				<li>Tirets or : territoire à part, sélectionnable en pastille (Catalunya Nord ; côté occitan, Val d'Aran).</li>
+				<li>Le Fenolhedés est occitan. <b>Aujourd'hui c'est un trou dans les données</b> (ni occitan ni catalan) : à corriger avant tout travail sur les frontières.</li>
+				<li><span class="validar">À valider :</span> Lhèida, Valéncia, Andòrra, « territòri a despart », « lenga romanica ».</li>
+			</ul>
+		</figure>
+
+		<figure class="esq-f">
+			<figcaption>
+				<h3><span class="cod">D6</span>Le basque allumé : quand les données s'arrêtent avant la langue</h3>
+				Données faciles côté France (communes IGN), pas encore côté Espagne. La teinte <b>s'évanouit</b> sur environ 15 km au lieu d'être coupée net à la frontière, et la barre du bas dit « <span lang="oc">la lenga contunha · dadas a venir</span> ».
+			</figcaption>
+			<svg class="esquema" id="d6" viewBox="0 0 560 340" role="img" aria-labelledby="d6-t">
+				<title id="d6-t">Schéma : le basque, Iparralde en territoire à part, la zone mêlée de Bayonne, et une teinte qui s'évanouit au sud de la frontière faute de données</title>
+				<rect class="mar" width="560" height="340"/>
+				<path class="terra" d="M150 0H560V340H0V160L60 150L120 160L178 150L167.5 94L161 60Z"/>
+				<g class="z">
+					<path fill="#9d7dff" d="M150 0H560V215L460 210L400 195L342 199L352 150L315 104L255 90L205 72L196 64L161 60Z" data-n="gascon" data-l="oc" data-fr="gascon" data-toc="dialècte occitan" data-tfr="dialecte occitan"/>
+					<path fill="url(#h-mix)" style="fill-opacity:1" d="M161 60L196 64L198 88L167.5 94Z" data-n="Baiona, Angelet, Biàrritz" data-l="oc" data-fr="Bayonne, Anglet, Biarritz" data-toc="zòna mesclada gascon e basc" data-tfr="zone mêlée, gascon et basque"/>
+					<path fill="#3fc6a0" d="M178 150L167.5 94L198 88L196 64L205 72L255 90L288 98L290 185L230 165Z" data-n="nafar-lapurtera" data-l="eu" data-oc="navarrés-labordin" data-fr="navarro-labourdin" data-toc="dialècte basc" data-tfr="dialecte basque"/>
+					<path fill="#9be37a" d="M288 98L315 104L352 150L342 199L290 185Z" data-n="zuberera" data-l="eu" data-oc="soletin" data-fr="souletin" data-toc="dialècte basc" data-tfr="dialecte basque"/>
+					<path fill="url(#g-eu)" style="fill-opacity:1" d="M0 160L60 150L120 160L178 150L230 165L290 185L342 199L342 240L290 226L230 206L178 192L120 202L60 192L0 202Z" data-n="Euskara" data-l="eu" data-oc="basc" data-fr="basque" data-toc="la lenga contunha · dadas a venir" data-tfr="la langue continue · données à venir"/>
+				</g>
+				<path class="apart" d="M178 150L167.5 94L161 60L196 64L205 72L255 90L315 104L352 150L342 199L290 185L230 165Z"/>
+				<path class="limit" d="M161 60L196 64L205 72L255 90L315 104L352 150L342 199"/>
+				<path class="estat" d="M178 150L230 165L290 185L342 199L400 195L460 210L560 215"/>
+				<text class="nd" x="430" y="60" lang="oc">gascon</text>
+				<text class="terr" x="242" y="120" text-anchor="middle" lang="eu">Iparralde</text>
+				<text class="nd" x="230" y="140" text-anchor="middle" lang="eu">nafar-lapurtera</text>
+				<text class="nd" x="318" y="160" text-anchor="middle" lang="eu">zuberera</text>
+				<text class="terr i-oc" x="180" y="262" text-anchor="middle" lang="oc">la lenga contunha · dadas a venir</text>
+				<text class="terr i-fr" x="180" y="262" text-anchor="middle">la langue continue · données à venir</text>
+				<text class="nota" x="460" y="232" text-anchor="middle">frontière d'État</text>
+				<text class="nota" x="40" y="40">océan</text>
+				<circle class="punt-v" cx="176" cy="76" r="2.6"/><text class="vila" x="202" y="68" lang="oc" data-n="Baiona" data-l="oc" data-fr="Bayonne" data-toc="zòna mesclada · Baiona tanben en basc" data-tfr="zone mêlée · Baiona aussi en basque">Baiona</text>
+				<circle class="punt-v" cx="470" cy="120" r="2.6"/><text class="vila" x="476" y="124" lang="oc" data-n="Pau" data-l="oc" data-fr="Pau" data-toc="gascon" data-tfr="gascon">Pau</text>
+			</svg>
+			<ul class="pichon">
+				<li>Hachures des deux couleurs : zone vraiment mêlée (Bayonne, Anglet, Biarritz), et une seule ligne de limite entre gascon et basque.</li>
+				<li>Jamais de langue coupée à une frontière d'État par simple manque de données.</li>
+				<li><span class="validar">À faire relire :</span> nafar-lapurtera, zuberera (classement de Zuazo) ; à valider en occitan : navarrés-labordin, soletin, Angelet, Biàrritz.</li>
+			</ul>
+		</figure>
+
+		<figure class="esq-f">
+			<figcaption>
+				<h3><span class="cod">D7</span>Alsacien et francique : les parlers apparentés au-delà</h3>
+				Au-delà du Rhin et de la frontière nord, le continuum continue mais <b>diverge</b> : hachures pâles « <span lang="oc">parlars aparentats</span> », pas la même teinte.
+			</figcaption>
+			<svg class="esquema" id="d7" viewBox="0 0 560 300" role="img" aria-labelledby="d7-t">
+				<title id="d7-t">Schéma : l'alsacien et le francique en teinte pleine en France, les parlers apparentés d'Allemagne et du Luxembourg en hachures pâles</title>
+				<rect class="terra" width="560" height="300"/>
+				<g class="z">
+					<path fill="url(#h-al)" style="fill-opacity:1" d="M380 58L560 40V300H395L392 240L384 180L386 120Z" data-n="parlars aparentats" data-l="oc" data-fr="parlers apparentés" data-toc="alemanic de Bade" data-tfr="alémanique de Bade"/>
+					<path fill="url(#h-pl)" style="fill-opacity:1" d="M60 0H560V40L380 58L320 66L250 80L180 70L120 58L60 62Z" data-n="parlars aparentats" data-l="oc" data-fr="parlers apparentés" data-toc="Luxemborg, Sarre, Palatinat" data-tfr="Luxembourg, Sarre, Palatinat"/>
+					<path fill="#5fb7e6" d="M280 74L320 66L380 58L386 120L384 180L392 240L395 300H300L290 220L276 150Z" data-n="Elsässerditsch" data-l="gsw" data-oc="alsacian" data-fr="alsacien" data-toc="lenga germanica" data-tfr="langue germanique"/>
+					<path fill="#8fd18a" d="M160 66L180 70L250 80L280 74L276 150L230 150L170 118Z" data-n="Platt" data-oc="francic" data-fr="francique" data-toc="lenga germanica" data-tfr="langue germanique"/>
+				</g>
+				<path class="limit" d="M160 66L170 118L230 150L276 150L290 220L300 300"/>
+				<path class="estat" d="M0 70L60 62L120 58L180 70L250 80L320 66L380 58L386 120L384 180L392 240L395 300M60 0V62M150 0V60"/>
+				<text class="nd" x="338" y="200" text-anchor="middle" lang="gsw">Elsässerditsch</text>
+				<text class="nd" x="222" y="112" text-anchor="middle">Platt</text>
+				<text class="terr i-oc" x="476" y="170" text-anchor="middle" lang="oc">parlars aparentats</text>
+				<text class="terr i-fr" x="476" y="170" text-anchor="middle">parlers apparentés</text>
+				<text class="terr i-oc" x="320" y="30" text-anchor="middle" lang="oc">parlars aparentats</text>
+				<text class="terr i-fr" x="320" y="30" text-anchor="middle">parlers apparentés</text>
+				<text class="nota" x="100" y="200" text-anchor="middle">langues d'oïl (lorrain roman)</text>
+				<text class="nota" x="104" y="30" text-anchor="middle">Luxembourg</text>
+				<text class="nota" x="470" y="290" text-anchor="middle">Allemagne · frontière d'État : le Rhin</text>
+				<circle class="punt-v" cx="372" cy="168" r="2.6"/><text class="vila" x="366" y="164" text-anchor="end" lang="gsw" data-n="Strossburi" data-l="gsw" data-oc="Estrasborg" data-fr="Strasbourg" data-toc="elsässerditsch" data-tfr="elsässerditsch">Strossburi</text>
+			</svg>
+			<ul class="pichon">
+				<li>Même traitement plus tard pour le corse (Gallura et Sassari en hachures) et le flamand occidental (Belgique, Pays-Bas).</li>
+				<li><span class="validar">À valider :</span> Estrasborg, Luxemborg, alemanic ; Strossburi à faire relire.</li>
+			</ul>
+		</figure>
+	</div>
+
+	<h3 style="margin-top:2.4rem;font:400 1.5rem/1.2 var(--fh)">La vue d'ensemble « Langues de France » : deux décisions croisées</h3>
+	<p class="intro">Lignes : la couleur (décision 6). Colonnes : l'au-delà de la frontière (décision 7). Seuls l'occitan et le catalan ont un périmètre tracé ; les autres langues n'ont <b>que leur étiquette, sans fausse surface</b>.</p>
+	<div class="matriu">
+		<div aria-hidden="true"></div>
+		<div class="m-cap">7a · France pleine, au-delà pâle</div>
+		<div class="m-cap">7b · Domaines égaux des deux côtés</div>
+		<div class="m-cap m-row">6a · Un même ton neutre ; une langue prend sa couleur quand on l'allume</div>
+		<figure class="rec-f">
+			<svg class="vista v-neutre v-pale" viewBox="0 0 300 320" role="img" aria-label="Ton neutre, France pleine, au-delà pâle"><use href="#vista"/></svg>
+			<figcaption><span class="cod">D1</span>Neutre, au-delà pâle <span class="rec">recommandé</span><br>La couleur veut dire « langue choisie ». Sobre, tient avec des dizaines de langues. Aran et les vallées d'Italie pâlissent dans cette vue seulement.</figcaption>
+		</figure>
+		<figure>
+			<svg class="vista v-neutre v-egal" viewBox="0 0 300 320" role="img" aria-label="Ton neutre, domaines égaux des deux côtés"><use href="#vista"/></svg>
+			<figcaption><span class="cod">D2</span>Neutre, domaines égaux<br>Le plus fidèle, « sans nationalisme », mais il faut les données hors de France tout de suite.</figcaption>
+		</figure>
+		<div class="m-cap m-row">6b · Une couleur par langue</div>
+		<figure>
+			<svg class="vista v-color v-pale" viewBox="0 0 300 320" role="img" aria-label="Une couleur par langue, France pleine, au-delà pâle"><use href="#vista"/></svg>
+			<figcaption><span class="cod">D3</span>Couleurs, au-delà pâle<br>Plus spectaculaire ; la palette sature au-delà de cinq ou six langues et se lit mal pour les daltoniens.</figcaption>
+		</figure>
+		<figure>
+			<svg class="vista v-color v-egal" viewBox="0 0 300 320" role="img" aria-label="Une couleur par langue, domaines égaux"><use href="#vista"/></svg>
+			<figcaption><span class="cod">D4</span>Couleurs, domaines égaux<br>Cumule les deux exigences : données étrangères et palette.</figcaption>
+		</figure>
+	</div>
+
+	<h3 style="margin-top:2.4rem;font:400 1.5rem/1.2 var(--fh)">Ouvrir la carte à toute la France (décision 5)</h3>
+	<div class="c-grid">
+		<div class="carta-op" style="border-color:var(--t-aur)">
+			<h3><span class="cod">D8</span>L'interrupteur du groupe d'abord <span class="rec">recommandé</span></h3>
+			<p>Maintenant : allumer « Langues de France » recadre sur toute la France au palier Lengas (scénario C5d). Ensuite : au dézoom, les noms des langues voisines en étiquettes pâles et cliquables (« <span lang="oc">Afichar lo breton</span> »).</p>
+		</div>
+		<div class="carta-op">
+			<h3><span class="cod">D9</span>Tout de suite les deux</h3>
+			<p>Étiquettes pâles affichées par défaut dès maintenant, même sans rien cocher. Plus de visibilité immédiate pour les langues peu connues, plus de travail d'un coup.</p>
+		</div>
+		<div class="carta-op">
+			<h3><span class="cod">D10</span>Trois vues nommées</h3>
+			<p>Boutons « Occitanie », « France », « Europe ». Moins utile une fois le recadrage automatique en place.</p>
+		</div>
+	</div>
+</section>
+</main>
+
+<footer class="wrap pichon" style="padding:1rem 0 2rem;border-top:1px solid var(--t-linha)">Maquette locale (static/maqueta-lengas.html), retirée de la version en ligne par scripts/levar-esbos.mjs. Polices du site, aucun script ni ressource externes.</footer>
+
+<!-- Barre du bas (comme la légende de la carte) -->
+<div class="barra" id="barra">
+	<div class="messatge" id="messatge" hidden><span id="m-t"></span><button type="button" id="m-b"></button></div>
+	<div class="info indic" id="info" aria-hidden="true"><span class="n1" id="n1"></span><span class="n2" id="n2"></span></div>
+</div>
+<div class="vh" aria-live="polite" id="anonci"></div>
+
+<script>
+'use strict';
+(() => {
+	const B = document.body;
+	const $ = (s, r = document) => r.querySelector(s);
+	const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+	const fr = () => B.classList.contains('if-fr');
+	const bi = (oc, f) => `<span class="i-oc" lang="oc">${oc}</span><span class="i-fr">${f}</span>`;
+
+	/* ── Icônes (celles de RailJaces.svelte, et les options) ── */
+	const S = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+	const IC = {
+		sus: `<path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" ${S}/><circle cx="12" cy="12" r="2.8" ${S}/>`,
+		lenga: `<path d="M4 5h16v10H9l-5 4z" ${S}/><path d="M8 9h8M8 12h5" ${S}/>`,
+		administracion: `<path d="M4 6l5-2 6 2 5-2v14l-5 2-6-2-5 2z" ${S}/><path d="M9 4v14M15 6v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"/>`,
+		cultura: `<path d="M4 6c3-1 5-1 8 1 3-2 5-2 8-1v12c-3-1-5-1-8 1-3-2-5-2-8-1z" ${S}/><path d="M12 7v12" fill="none" stroke="currentColor" stroke-width="1.4"/>`,
+		istoria: `<path d="M5 20h14M6 20V10M10 20V10M14 20V10M18 20V10M4 10h16L12 4z" ${S}/>`,
+		natura: `<path d="M3 19l6-10 4 6 3-4 5 8z" ${S}/><circle cx="17" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.5"/>`,
+		fons: `<path d="M12 4l9 5-9 5-9-5z" ${S}/><path d="M3 13l9 5 9-5" ${S}/>`
+	};
+	const GRANDA = 'M2.5 22v-7.5a3 3 0 0 1 3 -3h6.5a3 3 0 0 1 3 3v2.5a3 3 0 0 1 -3 3h-5.5z';
+	const PICHONA = 'M14.5 2h4.5a2.5 2.5 0 0 1 2.5 2.5v3a2.5 2.5 0 0 1 -2.5 2.5v2.5l-3 -2.5h-1.5a2.5 2.5 0 0 1 -2.5 -2.5v-3a2.5 2.5 0 0 1 2.5 -2.5z';
+	const OP = {
+		A0: `<path d="M4 5h7M9 3v2c0 4.4-2.2 8-5 8M5 9c0 2.1 3 3.9 6.7 4M12 20l4-9 4 9M19.1 18h-6.2" ${S}/>`,
+		A1: `<path d="${GRANDA}" ${S}/><path d="${PICHONA}" ${S}/>`,
+		A2: `<path d="M4 21v-10a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v5a2 2 0 0 1 -2 2h-6z" ${S}/><path d="M9 9v-4a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v10l-3 -3h-3" ${S}/>`,
+		A3: `<g ${S}><circle cx="4.5" cy="18.5" r="1.3"/><circle cx="7" cy="5.5" r="1.3"/><circle cx="17.5" cy="7" r="2.3"/><circle cx="18.5" cy="18.5" r="1.3"/><path d="M5.03 15.75L6.47 8.25"/><path d="M9.77 5.9L13.74 6.46"/><path d="M17.83 10.79L18.26 15.71"/><path d="M6.6 16.64L14.65 9.52"/></g>`,
+		A4: `<path d="${GRANDA}" ${S}/><path d="${PICHONA}" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>`
+	};
+	const RAIL = [['sus', 'Sus la carta', 'Sur la carte'], ['lenga', 'Lenga', 'Langue'], ['administracion', 'Adminis­tracion', 'Adminis­tration'], ['cultura', 'Cultura', 'Culture'], ['istoria', 'Istòria', 'Histoire'], ['natura', 'Natura', 'Nature'], ['lengas', 'Autras lengas', 'Autres langues']];
+	const MARCA = { punt: 'une couche visible', anel: 'allumée, mais hors échelle ici' };
+	function rail(op, px, cl = ' cibla', marca = '') {
+		const li = (svg, oc, f, c = '', x = '') => `<li class="rb${c}"><svg viewBox="0 0 24 24" aria-hidden="true">${svg}</svg><span class="lib">${bi(oc, f)}</span>${x}</li>`;
+		return `<ul class="rail" style="--ic:${px}px">` +
+			RAIL.map(([id, oc, f]) => id === 'lengas' ? li(OP[op], oc, f, cl, marca ? `<span class="${marca}"><span class="vh">${MARCA[marca]}</span></span>` : '') : li(IC[id], oc, f)).join('') +
+			'<li class="sep" aria-hidden="true"></li>' + li(IC.fons, 'Fons', 'Fond') + '</ul>';
+	}
+	$$('.opcion').forEach((el) => {
+		const op = el.dataset.op;
+		$('.proba', el).innerHTML =
+			`<figure><figcaption>20 px</figcaption>${rail(op, 20)}</figure><figure><figcaption>24 px</figcaption>${rail(op, 24)}</figure><div class="tuiles">` +
+			[['obert', 'ouvert · 22 px', 22], ['clar', 'thème clair · 20 px', 20], ['pic', 'réduite · 16 px', 16]]
+				.map(([c, t, px]) => `<figure class="tuile ${c}"><svg viewBox="0 0 24 24" width="${px}" height="${px}" aria-hidden="true">${OP[op]}</svg><figcaption>${t}</figcaption></figure>`).join('') + '</div>';
+	});
+
+	/* ── État : échelle (colonne de la frise) et vue ── */
+	const KM = ['2 000', '1 000', '700', '500', '400', '300', '200', '150', '100', '70', '50', '40', '30', '20', '15', '10', '7', '5', '4', '1,5'];
+	const ZM = [2.75, 3.5, 3.75, 4.25, 4.6, 5.1, 5.75, 6, 6.5, 7, 7.75, 8, 8.5, 8.75, 9.5, 10.25, 10.5, 11, 11.25, 12.5];
+	const PAL = [
+		{ oc: 'Lo mond', fr: 'Le monde', c0: 0, c1: 1, rep: 1 },
+		{ oc: 'Las lengas', fr: 'Les langues', c0: 2, c1: 6, rep: 6 },
+		{ oc: 'Los dialèctes', fr: 'Les dialectes', c0: 7, c1: 12, rep: 10 },
+		{ oc: 'La tèrra', fr: 'Le sol', c0: 13, c1: 15, rep: 14 },
+		{ oc: 'Las comunas', fr: 'Les communes', c0: 16, c1: 19, rep: 17 }
+	];
+	const VISTAS = { tolosa: [165, 190], valencia: [170, 256], franca: [165, 122], brest: [80, 104], alguer: [288, 244] };
+	const palDe = (c) => PAL.findIndex((p) => c >= p.c0 && c <= p.c1);
+	let st = { col: 10, vista: 'tolosa' }, prev = null, msg = null, causit = null, icona = 'A1';
+
+	/* ── Frise des échelles ── */
+	const pos = (c) => `calc(var(--lab) + (100% - var(--lab)) * ${c / 20})`;
+	const larg = (n) => `calc((100% - var(--lab)) * ${n / 20})`;
+	const ROWS = [
+		{ g: 'Langues' },
+		{ n: 'Une langue allumée (occitan, catalan…)', s: [[0, 1, 'contorn', 'contour vide'], [2, 6, 'uni', 'nappe unie et son nom : OCCITAN, CATALÀ'], [7, 12, 'dial', 'dialectes en teintes'], [13, 15, 'pal', 'teintes pâles, limite en bande floue'], [16, 17, 'vel', 'voile léger'], [18, 19, 'fond', 's’efface']] },
+		{ n: 'Noms des dialectes', s: [[7, 12, 'on', 'arrivent avec leurs teintes'], [13, 14, 'fond', 's’effacent, puis au survol']] },
+		{ n: 'Étiquettes des langues de France', s: [[4, 12, 'on', 'vue d’ensemble ; cachée quand la langue elle-même est allumée']] },
+		{ n: 'Plus tard : Italie, Afrique', s: [[0, 6, 'futur', 'un point par langue']] },
+		{ g: 'Fond de carte' },
+		{ n: 'Fond', s: [[0, 1, 'mond', 'contours du monde'], [2, 6, 'euro', 'pays d’Europe et leurs noms'], [7, 12, 'estel', 'étoiles ; l’Europe s’efface de 70 à 50 km'], [13, 19, 'detalh', 'carte détaillée en occitan']] },
+		{ n: 'Côte et relief de l’Occitanie', s: [[4, 6, 'monta', 'se dessinent'], [7, 12, 'on', '']] },
+		{ n: 'Rivières', s: [[7, 12, 'on', 'dès 150 km'], [13, 19, 'sol', 'dans la carte détaillée']] },
+		{ n: 'Villes : capitales', s: [[8, 12, 'on', 'nommées dès 100 km'], [13, 15, 'sol', 'en filigrane']] },
+		{ n: 'Villes de rang 2', s: [[11, 12, 'on', 'dès 40 km']] },
+		{ n: 'Villes de rang 3 (villages ?)', s: [[12, 12, 'nou', 'nouveau']] },
+		{ g: 'Couches à cocher' },
+		{ n: 'Points : lieux, librairies, Calandretas', s: [[5, 19, 'on', 'dès 300 km ; avec leurs icônes au sol']] },
+		{ n: 'Régions, gouvernements de 1789', s: [[4, 14, 'on', 'dès 400 km'], [15, 18, 'fond', 's’effacent de 10 à 4 km']] },
+		{ n: 'Départements', s: [[7, 14, 'on', 'dès 150 km (plus serrés avant)'], [15, 18, 'fond', '']] },
+		{ n: 'Provinces de 1789', s: [[8, 15, 'on', 'de 100 à 10 km']] },
+		{ n: 'Massifs et sommets', s: [[6, 8, 'on', 'rang 1'], [9, 12, 'on', 'rang 2'], [13, 19, 'on', 'rang 3, sommets']] },
+		{ n: 'Communes', s: [[16, 19, 'on', 'dès 7 km, avec leur nom']] }
+	];
+	(function frisa() {
+		let h = '<div class="f-lab" style="grid-row:1;grid-column:1;border-top:0">Paliers</div>';
+		PAL.forEach((p) => (h += `<div class="f-cap" style="grid-row:1;grid-column:${p.c0 + 2}/${p.c1 + 3}"><b lang="oc">${p.oc}</b><small>${p.fr}</small></div>`));
+		h += '<div class="f-lab" style="grid-row:2;grid-column:1;border-top:0">Barre d’échelle (km)</div>';
+		KM.forEach((k, i) => (h += `<div class="f-km${i === 10 ? ' arr' : ''}" style="grid-row:2;grid-column:${i + 2}"><span>${i === 10 ? '★ ' : ''}${k}</span></div>`));
+		let r = 3;
+		for (const x of ROWS) {
+			if (x.g) { h += `<div class="f-grop" style="grid-row:${r};grid-column:1/-1">${x.g}</div>`; r++; continue; }
+			h += `<div class="f-lab" style="grid-row:${r};grid-column:1">${x.n}</div>`;
+			for (const [a, b, t, txt] of x.s)
+				h += `<div class="seg s-${t}" style="grid-row:${r};grid-column:${a + 2}/${b + 3}"><span class="vh">${a === b ? KM[a] + ' km' : 'de ' + KM[a] + ' à ' + KM[b] + ' km'} : </span>${txt}</div>`;
+			r++;
+		}
+		h += `<label class="f-lab" for="escala" style="grid-row:${r};grid-column:1">Déplacer l’échelle</label><input type="range" id="escala" min="0" max="19" step="1" value="10" style="grid-row:${r};grid-column:2/-1">`;
+		PAL.forEach((p, i) => (h += `<div class="f-band${i % 2 ? ' imp' : ''}" style="left:${pos(p.c0)};width:${larg(p.c1 - p.c0 + 1)}" aria-hidden="true"></div>`));
+		[[2, '1 · vide ↔ plein'], [7, '2 · langue unie ↔ dialectes'], [13, '3 · étoiles ↔ carte détaillée']].forEach(([c, t]) => (h += `<div class="f-basc" style="left:${pos(c)}" aria-hidden="true"><span>bascule ${t}</span></div>`));
+		h += `<div class="f-arr" style="left:${pos(10.5)}" aria-hidden="true"></div><div class="f-cur" id="f-cur" aria-hidden="true"><span id="f-cur-t"></span></div>`;
+		$('#frisa').innerHTML = h;
+	})();
+
+	/* paliers : boutons radio (B) et échelle cliquable (C4) */
+	$('#paliers-r').innerHTML = PAL.map((p, i) => `<label class="ch"><input type="radio" name="palier" value="${i}"><span><span lang="oc">${p.oc}</span> <small style="display:inline">${KM[p.rep]} km</small></span></label>`).join('');
+	$('#escaleta').innerHTML = PAL.slice().reverse().map((p) => `<button type="button" data-p="${PAL.indexOf(p)}" aria-pressed="false" lang="oc">${p.oc}</button>`).join('');
+
+	/* ── Barre du bas ── */
+	const n1 = $('#n1'), n2 = $('#n2'), info = $('#info');
+	function pintar(el, fixada) {
+		info.classList.remove('indic');
+		info.classList.toggle('fixada', !!fixada);
+		const d = el.dataset, f = fr();
+		n1.textContent = d.n;
+		n1.lang = d.l || '';
+		const vus = new Set([d.n]);
+		const parts = [[d.oc, 'oc'], f ? [d.fr, 'fr'] : null, f ? [d.tfr, 'fr'] : [d.toc, 'oc']].filter((x) => x && x[0] && !vus.has(x[0]) && vus.add(x[0]));
+		n2.replaceChildren(...parts.flatMap(([t, l], i) => {
+			const s = document.createElement('span');
+			s.lang = l; s.textContent = t;
+			return i ? [' · ', s] : [s];
+		}));
+		return [d.n, ...parts.map((p) => p[0])].join(', ');
+	}
+	function repaus() {
+		if (causit) return pintar(causit, true);
+		info.classList.add('indic');
+		info.classList.remove('fixada');
+		n1.lang = 'fr';
+		n1.textContent = 'Survole une pastille, une ville ou une zone : sa traduction s’affiche ici.';
+		n2.textContent = '';
+	}
+	const anonci = (t) => { const a = $('#anonci'); a.textContent = ''; setTimeout(() => (a.textContent = t), 30); };
+	document.addEventListener('pointerover', (e) => { const el = e.target.closest('[data-n]'); if (el) pintar(el); });
+	document.addEventListener('pointerout', (e) => { const el = e.target.closest('[data-n]'); if (el && !el.contains(e.relatedTarget)) repaus(); });
+	document.addEventListener('focusin', (e) => { const el = e.target.closest('[data-n]'); if (el) anonci(pintar(el)); });
+	document.addEventListener('focusout', (e) => { if (e.target.closest('[data-n]')) repaus(); });
+
+	/* messages de recadrage, sans minuterie */
+	function messatge() {
+		const m = $('#messatge');
+		if (!msg) { m.hidden = true; return; }
+		m.hidden = false;
+		if (msg.buida) {
+			$('#m-t').innerHTML = bi('Res d’alucat se vei aicí', 'Rien d’allumé ne se voit ici');
+			$('#m-b').innerHTML = bi('Anar al catalan', 'Aller au catalan');
+		} else {
+			$('#m-t').innerHTML = bi('Carta desplaçada per veire ' + msg.oc, 'Carte déplacée pour voir ' + msg.fr);
+			$('#m-b').innerHTML = bi('Tornar', 'Revenir');
+		}
+	}
+	$('#m-b').addEventListener('click', () => {
+		if (msg && msg.buida) { st.vista = 'tolosa'; st.col = 10; }
+		else if (prev) st = { ...prev };
+		prev = null; msg = null;
+		journal('Retour à la vue d’avant.');
+		refresh();
+	});
+	function recadrar(next, oc, f) {
+		prev = { ...st };
+		Object.assign(st, next);
+		msg = { oc, fr: f };
+		anonci(fr() ? 'Carte déplacée pour voir ' + f : 'Carta desplaçada per veire ' + oc);
+	}
+	const geste = () => { msg = null; prev = null; };
+
+	/* ── Panneau B : réglettes, « I anar », rail ── */
+	const escalaTxt = (c0, c1, col, on) => {
+		const a = KM[c0], b = KM[c1];
+		if (on && col < c0) return `<button type="button" class="ianar">${bi(`Visibla a partir de ${a} km · I anar`, `Visible à partir de ${a} km · Y aller`)}</button>`;
+		if (on && col > c1) return `<button type="button" class="ianar">${bi(`Visibla fins a ${b} km · I anar`, `Visible jusqu’à ${b} km · Y aller`)}</button>`;
+		return bi(`Visibla de ${a} km a ${b} km`, `Visible de ${a} km à ${b} km`);
+	};
+	const linhas = () => $$('#r-vista, #r-oc, #r-ca');
+	const sw = (r) => (r.dataset.sw ? document.getElementById(r.dataset.sw) : $(':scope > .basc', r));
+	const alucada = (r) => sw(r).getAttribute('aria-checked') === 'true';
+	function refresh() {
+		const p = palDe(st.col);
+		let marca = '';
+		for (const r of linhas()) {
+			const c0 = +r.dataset.c0, c1 = +r.dataset.c1, on = alucada(r), dins = st.col >= c0 && st.col <= c1;
+			if (on) marca = dins ? 'punt' : marca || 'anel';
+			const z = $('.escala-c', r), p0 = palDe(c0), p1 = palDe(c1);
+			const h = `<span class="regleta" aria-hidden="true">${PAL.map((_, k) => `<i class="${k >= p0 && k <= p1 ? 'ple' : ''}${k === p ? ' ara' : ''}"></i>`).join('')}</span>` +
+				`<span class="gauge" aria-hidden="true"><i class="plena" style="left:${(c0 / 20) * 100}%;width:${((c1 - c0 + 1) / 20) * 100}%"></i><i class="cursor" style="left:${((st.col + 0.5) / 20) * 100}%"></i></span>` +
+				`<span class="escala-t">${escalaTxt(c0, c1, st.col, on)}</span>`;
+			if (z.dataset.h !== h) { z.innerHTML = h; z.dataset.h = h; }
+		}
+		$('#rail-b').innerHTML = rail(icona, 22, ' obert', marca);
+		// échelle partout
+		const pal = PAL[p];
+		$$('.linha-esc').forEach((e) => { e.textContent = KM[st.col] + ' km'; e.style.width = 60 + (st.col % 3) * 16 + 'px'; });
+		$$('.palier-nom').forEach((e) => (e.innerHTML = `<span lang="oc">${pal.oc}</span>`));
+		$$('input[name=palier]').forEach((i) => (i.checked = +i.value === p));
+		$$('#escaleta button').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.p === p)));
+		const sl = $('#escala');
+		sl.value = st.col;
+		sl.setAttribute('aria-valuetext', `${KM[st.col]} km, ${pal.oc}`);
+		const cur = $('#f-cur');
+		cur.style.left = pos(st.col + 0.5);
+		$('#f-cur-t').textContent = `ici : ${KM[st.col]} km`;
+		const [x, y] = VISTAS[st.vista];
+		const s = Math.min(3, Math.max(0.12, 2 ** ((ZM[10] - ZM[st.col]) * 0.75)));
+		$('#fenestra').style.transform = `translate(${x}px,${y}px) scale(${s})`;
+		messatge();
+	}
+
+	document.addEventListener('click', (e) => {
+		const t = e.target;
+		// interrupteurs du panneau B
+		const s = t.closest('#b .basc[role=switch]');
+		if (s) {
+			const on = s.getAttribute('aria-checked') !== 'true';
+			s.setAttribute('aria-checked', String(on));
+			const r = s.id === 'sw-vista' ? $('#r-vista') : s.closest('.linha');
+			if (on) allumer(r);
+			refresh();
+			return;
+		}
+		// « I anar »
+		const ia = t.closest('.ianar');
+		if (ia) {
+			const r = ia.closest('[data-c0]'), c0 = +r.dataset.c0, c1 = +r.dataset.c1;
+			recadrar({ col: st.col < c0 ? c0 : c1 }, r.dataset.oc, r.dataset.fr);
+			refresh();
+			sw(r).focus();
+			return;
+		}
+		// pastilles
+		const pa = t.closest('.pastilha');
+		if (pa) {
+			const on = pa.getAttribute('aria-pressed') !== 'true';
+			pa.setAttribute('aria-pressed', String(on));
+			if (on) {
+				causit = pa;
+				const r = pa.closest('.linha'), w = sw(r);
+				if (w.getAttribute('aria-checked') !== 'true') { w.setAttribute('aria-checked', 'true'); allumer(r); }
+				// visible ici ? sinon vol vers elle, au palier Dialèctes (jamais sous 30 km)
+				const v = pa.dataset.vista, vis = v === st.vista || (v === 'tolosa' && st.vista === 'franca');
+				const oc = pa.dataset.anarOc || 'lo ' + pa.dataset.oc, f = pa.dataset.anarFr || 'le ' + pa.dataset.fr;
+				if (v && !vis) recadrar({ vista: v, col: Math.min(Math.max(st.col, 7), 12) }, oc, f);
+				else if (v && st.col < 7) recadrar({ col: 7 }, oc, f);
+				anonci(pintar(pa, true));
+			} else if (causit === pa) { causit = null; repaus(); }
+			refresh();
+			return;
+		}
+		// C4
+		const es = t.closest('#escaleta button');
+		if (es) { geste(); st.col = PAL[+es.dataset.p].rep; refresh(); }
+	});
+	function allumer(r) {
+		const c0 = +r.dataset.c0, c1 = +r.dataset.c1;
+		if (r.dataset.anar) {
+			if (!(st.vista === 'franca' && st.col === +r.dataset.anar)) recadrar({ col: +r.dataset.anar, vista: 'franca' }, r.dataset.oc, r.dataset.fr);
+		} else if (st.col < c0 || st.col > c1) recadrar({ col: st.col < c0 ? c0 : c1 }, r.dataset.oc, r.dataset.fr);
+	}
+
+	/* réglages */
+	B.addEventListener('change', (e) => {
+		const i = e.target;
+		if (i.name === 'interf') { B.classList.toggle('if-fr', i.value === 'fr'); repaus(); }
+		else if (i.name === 'palier') { geste(); st.col = PAL[+i.value].rep; }
+		else if (i.name === 'esc') B.dataset.esc = i.value;
+		else if (i.name === 'barra') B.dataset.barra = i.value;
+		else if (i.name === 'grop') B.dataset.grop = i.value;
+		else if (i.name === 'oc') B.dataset.oc = i.value;
+		else if (i.name === 'icona') {
+			icona = i.value;
+			$$('.opcion').forEach((o) => o.classList.toggle('ara', o.dataset.op === icona));
+		}
+		refresh();
+	});
+	$('#escala').addEventListener('input', (e) => { geste(); st.col = +e.target.value; refresh(); });
+
+	/* ── C5 : scénarios ── */
+	const journal = (t) => ($('#jornal').textContent = t);
+	const SCEN = {
+		a: { de: { col: 10, vista: 'tolosa' }, f() { journal('C5a · Cas 1 : le catalan est déjà à l’écran (Catalogne du Nord) et visible à 50 km. On ne bouge pas, aucun message.'); } },
+		b: { de: { col: 17, vista: 'tolosa' }, f() { recadrar({ col: 15 }, 'las provincias de 1789', 'les provinces de 1789'); journal('C5b · Cas 2 : à l’écran mais hors de son échelle. On garde le centre et on remonte au bord le plus proche de sa plage : 10 km.'); } },
+		c: { de: { col: 10, vista: 'tolosa' }, f() { recadrar({ vista: 'valencia' }, 'lo valencian', 'le valencien'); journal('C5c · Cas 3 : hors de l’écran. Vol de 1,2 s vers le Pays valencien, au palier Dialèctes (jamais sous 30 km).'); } },
+		d: { de: { col: 10, vista: 'tolosa' }, f() { recadrar({ col: 6, vista: 'franca' }, 'las lengas de França', 'les langues de France'); journal('C5d · Cas 4 : le groupe montre toute la France au palier Lengas, sur tous les écrans (200 km chez toi, 300 km sur téléphone).'); } },
+		e: { de: { col: 10, vista: 'tolosa' }, f() { st.vista = 'brest'; msg = { buida: true }; prev = null; journal('C5e · Carte vide : après un déplacement à la main, plus rien d’allumé ne se voit. La barre du bas propose d’y aller.'); } }
+	};
+	$$('[data-scen]').forEach((b) => b.addEventListener('click', () => {
+		const sc = SCEN[b.dataset.scen];
+		const demo = $('#demo'), fr_ = $('#frisa');
+		demo.classList.add('net'); fr_.classList.add('net');
+		st = { ...sc.de }; msg = null; prev = null;
+		refresh();
+		void demo.offsetWidth;
+		demo.classList.remove('net'); fr_.classList.remove('net');
+		setTimeout(() => { sc.f(); refresh(); }, 450);
+	}));
+
+	/* ── D5 : allumer / éteindre ── */
+	$$('#d5-oc, #d5-ca').forEach((b) => b.addEventListener('click', () => {
+		const on = b.getAttribute('aria-checked') !== 'true';
+		b.setAttribute('aria-checked', String(on));
+		$('#d5').classList.toggle(b.id === 'd5-ca' ? 'sens-ca' : 'sens-oc', !on);
+	}));
+
+	$$('.opcion').forEach((o) => o.classList.toggle('ara', o.dataset.op === icona));
+	repaus();
+	refresh();
+})();
+</script>
+</body>
+</html>

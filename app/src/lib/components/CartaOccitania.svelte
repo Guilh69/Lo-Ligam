@@ -7,8 +7,12 @@
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
-	import { JACES_DONADAS, JACES_TEMATICAS } from '$lib/carta/catalogue.js';
+	import { crearColaLenga } from '$lib/carta/colaLenga.js';
+	import { LENGAS, esOccitan, fonsLenga } from '$lib/carta/lengas.js';
+	import { JACES_DONADAS, JACES_TEMATICAS, JACES_LENGAS } from '$lib/carta/catalogue.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
+	import { NOMS_FRANCES } from '$lib/carta/nomsFrances.js';
+	import { LUOCS } from '$lib/acuelh/carta-estelas.js';
 	import CercaCarta from './CercaCarta.svelte';
 
 	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
@@ -86,18 +90,33 @@
 		colors = {},
 		// lo dialècte causit (còdi, 'cro' pel Creissent, o null) : de la carta al
 		// panèl e del panèl a la carta
-		causits = $bindable([])
+		causits = $bindable([]),
+		// lo mòde visualizacion (plen ecran) : la pagina lo gerís, lo boton es
+		// sus la carta
+		visualizacion = false,
+		onVisualizacion = null
 	} = $props();
 	// la zòna dialectala survolada o causida, dins la legenda d'en bas
 	let survòl = $state(null);
 	let causida = $state(null);
+	// lo meteis per las autras lengas (lo catalan, l'arpitan…), una per lenga
+	let survòlsLengas = $state({});
+	let causidasLengas = $state({});
+	const survòlLenga = $derived(Object.values(survòlsLengas).find(Boolean) ?? null);
+	const causidaLenga = $derived(Object.values(causidasLengas).find(Boolean) ?? null);
 	// una comuna, un parc o una província survolada passa davant
 	let survòlTem = $state(null);
-	const legendaDial = $derived(survòlTem ?? causida ?? survòl);
+	const legendaDial = $derived(survòlTem ?? causida ?? causidaLenga ?? survòl ?? survòlLenga);
 	let colaEstelas;
 	// Jaces del catalògue pintadas pel site (frontièra, dialèctes, Creissent,
 	// regions, despartaments) : sus totes los fonses
 	let colaDonadas;
+	// Las autras lengas (lo catalan, l'arpitan…) : una còla per lenga declarada
+	const colasLengas = {};
+	// las vilas e la còsta de cada lenga (de sas donadas), per la carta en estelas
+	const fonsLengas = {};
+	// (una zòna d'una autra lenga jos lo ponch ; sauf : la lenga que demanda)
+	const zonaLengaA = (lp, sauf = null) => Object.entries(colasLengas).some(([id, c]) => id !== sauf && map?.hasLayer(c) && !!c.zonaA(lp));
 	// (lo Creissent es una pastilha dels dialèctes : se mòstra amb eles)
 	const jacesDonadas = (vis) => ({ ...Object.fromEntries(JACES_DONADAS.map((id) => [id, !!vis[id]])), creissent: !!vis.dialectes });
 	// Jaces de fonts publicas (comunas, provincias, parcs, relèu) : colaTematica.js
@@ -111,8 +130,8 @@
 	// Los tèxtes de Leaflet (botons de zoom, boton que tampa las bulles) dins
 	// la lenga de la pagina : Leaflet los a en anglés (occitan de validar)
 	const TÈXTES_LEAFLET = {
-		oc: { mai: 'Apropar', mens: 'Alunhar', tampar: 'Tampar', carta: "Carta de l'occitan" },
-		fr: { mai: 'Zoom avant', mens: 'Zoom arrière', tampar: 'Fermer', carta: "Carte de l'occitan" }
+		oc: { mai: 'Apropar', mens: 'Alunhar', tampar: 'Tampar', carta: "Carta de l'occitan", plen: 'Carta en plen ecran', sortir: 'Quitar lo plen ecran' },
+		fr: { mai: 'Zoom avant', mens: 'Zoom arrière', tampar: 'Fermer', carta: "Carte de l'occitan", plen: 'Carte en plein écran', sortir: 'Quitter le plein écran' }
 	};
 	function tèxtesLeaflet() {
 		if (!map) return;
@@ -129,6 +148,26 @@
 				b.setAttribute('aria-label', tx);
 			}
 	}
+	// lo boton del plen ecran : son icòna e son tèxte seguisson lo mòde
+	let botonPlen = null;
+	const ICONA_PLEN = {
+		dintrar: '<path d="M4 8v-2a2 2 0 0 1 2 -2h2"/><path d="M4 16v2a2 2 0 0 0 2 2h2"/><path d="M16 4h2a2 2 0 0 1 2 2v2"/><path d="M16 20h2a2 2 0 0 0 2 -2v-2"/>',
+		sortir: '<path d="M15 19v-2a2 2 0 0 1 2 -2h2"/><path d="M15 5v2a2 2 0 0 0 2 2h2"/><path d="M5 15h2a2 2 0 0 1 2 2v2"/><path d="M5 9h2a2 2 0 0 0 2 -2v-2"/>'
+	};
+	function majPlen() {
+		if (!botonPlen) return;
+		const t = TÈXTES_LEAFLET[lang] ?? TÈXTES_LEAFLET.oc,
+			tx = visualizacion ? t.sortir : t.plen;
+		botonPlen.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${visualizacion ? ICONA_PLEN.sortir : ICONA_PLEN.dintrar}</svg>`;
+		botonPlen.title = tx;
+		botonPlen.setAttribute('aria-label', tx);
+		botonPlen.setAttribute('aria-pressed', String(!!visualizacion));
+	}
+	$effect(() => {
+		visualizacion;
+		lang;
+		majPlen();
+	});
 	// arrèst de l'entrada en scèna (sons, escotas) quand se quita la pagina
 	let quitarIntro = null;
 	let L;
@@ -151,8 +190,9 @@
 					dalt,
 					lang,
 					onFicha: (v) => goto(v.ligam),
-					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp)
+					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp)
 				});
+				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
 				colaEstelas.setElements(elements);
 				colaEstelas.setColors(colors);
 				colaEstelas.setModeDialectes(!!visibility.dialectes);
@@ -290,9 +330,48 @@
 			popupAnchor: [0, -32]
 		});
 
+	// Las accions d'una bulla (retorn de Romain, 2026-10-08 : pas d'adreça
+	// brutla, mas çò que fa lo clic, « Contactar aquesta Calandreta ») : una
+	// icòna e un vèrb ; un ligam cap a defòra s'obrís dins una novèla fenèstra
+	// e o ditz (RGAA)
+	const TÈXTES_ACCIONS = {
+		oc: { novèla: 's’obrís dins una novèla fenèstra', site: 'Veire lo site', nav: 'Dobrir dins mon aplicacion de navigacion', osm: 'Veire sus OpenStreetMap', osmTanben: 'o sus OpenStreetMap' },
+		fr: { novèla: 's’ouvre dans une nouvelle fenêtre', site: 'Voir le site', nav: 'Ouvrir dans mon application de navigation', osm: 'Voir sur OpenStreetMap', osmTanben: 'ou sur OpenStreetMap' }
+	};
+	const txAccions = () => TÈXTES_ACCIONS[lang] ?? TÈXTES_ACCIONS.oc;
+	const accionBulla = (icona, href, tèxt, defòra = false) =>
+		`<a class="accion-bulla" href="${escapeHtml(href)}"${
+			defòra ? ` target="_blank" rel="noopener" title="${escapeHtml(tèxt + ' (' + txAccions().novèla + ')')}"` : ''
+		}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONAS[icona]}</svg><span>${escapeHtml(tèxt)}</span></a>`;
+
+	// Localizar un luòc dins l'aplicacion de navigacion de la persona : sus
+	// Android, un ligam geo: (lo sistèma prepausa las aplicacions installadas :
+	// Organic Maps, OsmAnd, Google…) ; sus iPhone e iPad, Plans d'Apple (dins
+	// l'UE, l'aplicacion de navigacion causida per defaut) ; sus ordenador,
+	// OpenStreetMap. Cap de servici de pistatge. Sus mobil, un ligam OpenStreetMap
+	// en mai, se cap d'aplicacion respond. (Recèrca verificada lo 2026-10-08.)
+	const encNom = (t) => encodeURIComponent(String(t).normalize('NFC').trim()).replace(/[!'()*]/g, (c) => '%' + c.charCodeAt(0).toString(16).toUpperCase());
+	function accionsNav(lat, lon, nom) {
+		if (!Number.isFinite(+lat) || !Number.isFinite(+lon)) return '';
+		const la = Number(lat).toFixed(6),
+			lo = Number(lon).toFixed(6),
+			n = encNom(nom),
+			ua = navigator.userAgent,
+			t = txAccions();
+		const osm = `https://www.openstreetmap.org/?mlat=${la}&mlon=${lo}#map=18/${la}/${lo}`;
+		const android = /Android/i.test(ua) || (/Linux/.test(ua) && !/CrOS/.test(ua) && navigator.maxTouchPoints > 0);
+		const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+		if (!android && !ios) return accionBulla('map-pin', osm, t.osm, true);
+		const href = android ? `geo:${la},${lo}?q=${la},${lo}(${n})` : `https://maps.apple.com/place?coordinate=${la},${lo}&name=${n}`;
+		return accionBulla('map-pin', href, t.nav) + `<a class="accion-bulla segonda" href="${escapeHtml(osm)}" target="_blank" rel="noopener">${escapeHtml(t.osmTanben)}</a>`;
+	}
+
 	// Las Calandretas (annuari de l'educacion, Licéncia dobèrta) : un fichièr
 	// estatic, cargat a la primièra activacion de la jaça
 	let calandretasCargadas = false;
+	// la comuna de l'annuari (en francés) en occitan, quand la carta coneis son nom
+	const OC_DE_FR = Object.fromEntries(Object.entries(NOMS_FRANCES).map(([oc, fr]) => [fr, oc]));
+	const comunaOc = (c) => OC_DE_FR[(c ?? '').replace(/ \d+(e|er) Arrondissement$/, '')] ?? c;
 	const MENA_ESCÒLA = {
 		oc: { escòla: 'escòla', collègi: 'collègi', licèu: 'licèu' },
 		fr: { escòla: 'école', collègi: 'collège', licèu: 'lycée' }
@@ -305,26 +384,195 @@
 			.catch(() => null);
 		if (!d?.features) return (calandretasCargadas = false);
 		const mena = MENA_ESCÒLA[lang] ?? MENA_ESCÒLA.oc;
+		calandretas = [];
 		pointLayers.calandretas = L.layerGroup(
 			d.features.map((f) => {
 				const [lon, lat] = f.geometry.coordinates;
 				const q = f.properties;
-				// lo site de l'escòla se n'a un, siquenon lo contacte que dona lo
-				// ministèri dins l'annuari (retorn de Romain)
-				const ligam = /^https?:\/\//.test(q.ligam ?? '')
-					? `<br><a href="${escapeHtml(q.ligam)}" target="_blank" rel="noopener">Site ↗</a>`
-					: [
-							q.corrièl ? `<br><a href="mailto:${escapeHtml(q.corrièl)}">${escapeHtml(q.corrièl)}</a>` : '',
-							q.telefon ? `<br><a href="tel:${escapeHtml(q.telefon.replace(/\s/g, ''))}">${escapeHtml(q.telefon)}</a>` : ''
-						].join('');
-				return L.marker([lat, lon], { icon: iconaPunt('calandretas'), title: q.nom, keyboard: true }).bindPopup(
-					`<strong>${escapeHtml(q.nom)}</strong><br>${escapeHtml(mena[q.mena] ?? q.mena)} · ${escapeHtml(q.comuna)}${ligam}`
-				);
+				// Contactar l'escòla (retorn de Romain : pas l'adreça brutla, mas
+				// « Contactar aquesta Calandreta ») : son corrièl (lo de l'annuari
+				// del ministèri), son telefòn, e son site se n'a un
+				const fr = lang === 'fr';
+				const accions = [
+					q.corrièl ? accionBulla('mail', 'mailto:' + q.corrièl, fr ? 'Contacter cette Calandreta' : 'Contactar aquesta Calandreta') : '',
+					q.telefon ? accionBulla('phone', 'tel:' + q.telefon.replace(/\s/g, ''), (fr ? 'Appeler' : 'Sonar') + ' (' + q.telefon + ')') : '',
+					/^https:\/\//.test(q.ligam ?? '') ? accionBulla('world', q.ligam, fr ? 'Voir son site' : 'Veire son site', true) : '',
+					accionsNav(lat, lon, q.nom + ' ' + q.comuna)
+				].join('');
+				const ligam = accions ? `<span class="accions-bulla">${accions}</span>` : '';
+				const cap = `<strong>${escapeHtml(q.nom)}</strong><br>${escapeHtml(mena[q.mena] ?? q.mena)} · ${escapeHtml(lang === 'fr' ? q.comuna : comunaOc(q.comuna))}`;
+				const m = L.marker([lat, lon], { icon: iconaPunt('calandretas'), title: q.nom, keyboard: true }).bindPopup(cap + ligam);
+				// (per la mai pròcha : la distància s'insertís jos lo nom)
+				calandretas.push({ lat, lon, m, cap, ligam });
+				return m;
 			})
 		);
 		if (d.font) map.attributionControl?.addAttribution(d.font);
 		if (visibility.calandretas) pointLayers.calandretas.addTo(map);
 	}
+
+	// La Calandreta mai pròcha (demanda de Romain, 2026-10-08) : a partir de
+	// la posicion de l'internauta (lo navegador la demanda ; demòra dins la
+	// pagina, es pas mandada endacòm) o de sa comuna, cercada dins un indèx
+	// dels noms de las comunas (cargat sonque a la primièra recèrca, cap de
+	// servici de defòra). La carta mòstra los dos ponches, la bulla ditz la
+	// distància a vòl d'aucèl.
+	let calandretas = [];
+	let menuPròcha = $state(false);
+	let mesPròcha = $state(null); // un messatge (posicion refusada…)
+	let ponchUsatgièr = null;
+	const TÈXTES_PRÒCHA = {
+		oc: {
+			boton: 'La Calandreta mai pròcha',
+			titol: 'Trobar la Calandreta mai pròcha',
+			posicion: 'De ma posicion',
+			comuna: 'O cercatz vòstra comuna',
+			exemple: 'Rodés, Pau, Agen…',
+			cap: 'Cap de comuna trobada',
+			privat: 'Vòstra posicion demòra dins vòstre navegador : es pas mandada endacòm.',
+			cerca: 'Cerca de vòstra posicion…',
+			refusada: 'Vòstra posicion es pas disponibla : cercatz vòstra comuna.',
+			distancia: (km) => `A ${km} a vòl d’aucèl`,
+			vos: 'Vos sètz aquí',
+			tampar: 'Tampar'
+		},
+		fr: {
+			boton: 'La Calandreta la plus proche',
+			titol: 'Trouver la Calandreta la plus proche',
+			posicion: 'Depuis ma position',
+			comuna: 'Ou cherchez votre commune',
+			exemple: 'Rodez, Pau, Agen…',
+			cap: 'Aucune commune trouvée',
+			privat: 'Votre position reste dans votre navigateur : elle n’est envoyée nulle part.',
+			cerca: 'Recherche de votre position…',
+			refusada: 'Votre position n’est pas disponible : cherchez votre commune.',
+			distancia: (km) => `À ${km} à vol d’oiseau`,
+			vos: 'Vous êtes ici',
+			tampar: 'Fermer'
+		}
+	};
+	const txPròcha = $derived(TÈXTES_PRÒCHA[lang] ?? TÈXTES_PRÒCHA.oc);
+	// distància (km) entre dos ponches, sus la Tèrra
+	const km = (a, b, c, d) => {
+		const r = Math.PI / 180,
+			x = Math.sin(((c - a) * r) / 2) ** 2 + Math.cos(a * r) * Math.cos(c * r) * Math.sin(((d - b) * r) / 2) ** 2;
+		return 12742 * Math.asin(Math.sqrt(x));
+	};
+	// (etiqueta : « Vos sètz aquí », o lo nom de la comuna cercada)
+	async function trobarPròcha(lat, lon, etiqueta) {
+		if (!calandretas.length) await cargarCalandretas();
+		if (!calandretas.length || !map) return;
+		let mai = null,
+			dMai = Infinity;
+		for (const c of calandretas) {
+			const dk = km(lat, lon, c.lat, c.lon);
+			if (dk < dMai) (mai = c), (dMai = dk);
+		}
+		menuPròcha = false;
+		mesPròcha = null;
+		ponchUsatgièr?.remove();
+		ponchUsatgièr = L.circleMarker([lat, lon], { radius: 7, className: 'ponch-usatgièr', weight: 2, fillOpacity: 0.9, interactive: false })
+			.bindTooltip(etiqueta, { direction: 'top', offset: [0, -8] })
+			.addTo(map);
+		const dTèxt = dMai < 10 ? dMai.toFixed(1).replace('.', ',') + ' km' : Math.round(dMai) + ' km';
+		mai.m.setPopupContent(`${mai.cap}<br><em class="distancia">${escapeHtml(txPròcha.distancia(dTèxt))}</em>${mai.ligam}`);
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		// los dos ponches dins la vista (sens sortir de l'escala d'una vila)
+		map.flyToBounds(
+			[
+				[lat, lon],
+				[mai.lat, mai.lon]
+			],
+			{ paddingTopLeft: [60, 170], paddingBottomRight: [60, 120], maxZoom: 13, duration: calm ? 0 : 1.6 }
+		);
+		map.once('moveend', () => {
+			mai.m.openPopup();
+			ponchUsatgièr?.openTooltip();
+		});
+		// la bulla tampada : la distància se'n va (lo ponch tanben)
+		mai.m.once('popupclose', () => mai.m.setPopupContent(mai.cap + mai.ligam));
+	}
+	function deMaPosicion() {
+		if (!('geolocation' in navigator)) return (mesPròcha = txPròcha.refusada);
+		mesPròcha = txPròcha.cerca;
+		navigator.geolocation.getCurrentPosition(
+			(pos) => trobarPròcha(pos.coords.latitude, pos.coords.longitude, txPròcha.vos),
+			() => (mesPròcha = txPròcha.refusada),
+			{ enableHighAccuracy: false, timeout: 12000, maximumAge: 300000 }
+		);
+	}
+	// La recèrca d'una comuna : nom francés o occitan, sens comptar los
+	// accents ; las comunas que començan pel tèxte d'en primièr, puèi las
+	// mai pobladas (dins lo domeni occitan : 10 000 comunas, 155 Ko compressats)
+	let nomsComunas = null;
+	let qComuna = $state('');
+	let comunasTrobadas = $state([]);
+	let comunaActiva = $state(-1);
+	const normC = (t) =>
+		t
+			.normalize('NFD')
+			.replace(/\p{M}/gu, '')
+			.toLowerCase()
+			.replace(/[-'’()]/g, ' ')
+			.replace(/\s+/g, ' ')
+			.trim();
+	// lo nom occitan d'una vila de la carta (sonque la meteissa : i a doas Valença)
+	const POS_VILAS = Object.fromEntries(LUOCS.map(([lon, lat, nom]) => [nom, [lon, lat]]));
+	const vilaCarta = (fr, lon, lat) => {
+		const oc = OC_DE_FR[fr],
+			q = oc && POS_VILAS[oc];
+		return q && km(lat, lon, q[1], q[0]) < 15 ? oc : null;
+	};
+	async function cargarNomsComunas() {
+		if (nomsComunas) return;
+		nomsComunas = [];
+		const d = await fetch('/data/comunas/noms.json')
+			.then((r) => (r.ok ? r.json() : null))
+			.catch(() => null);
+		// (las vilas de la carta gardan lor nom : « Rodés », pas « Rodès »)
+		nomsComunas = (d?.c ?? []).map(([fr, oc0, lon, lat, pop, dep]) => {
+			const oc = vilaCarta(fr, lon, lat) ?? (oc0 || null);
+			return { fr, oc, lon, lat, pop, dep, k: [normC(fr), ...(oc ? [normC(oc)] : []), ...(oc0 && oc0 !== oc ? [normC(oc0)] : [])] };
+		});
+		if (qComuna) cercarComuna(qComuna);
+	}
+	function cercarComuna(q) {
+		const n = normC(q);
+		comunaActiva = -1;
+		if (n.length < 2 || !nomsComunas?.length) return (comunasTrobadas = []);
+		const nota = (c) => {
+			let m = 0;
+			for (const k of c.k) m = Math.max(m, k === n ? 3 : k.startsWith(n) ? 2 : k.includes(' ' + n) ? 1 : 0);
+			return m;
+		};
+		comunasTrobadas = nomsComunas
+			.map((c) => [c, nota(c)])
+			.filter(([, m]) => m > 0)
+			.sort((a, b) => b[1] - a[1] || b[0].pop - a[0].pop)
+			.slice(0, 6)
+			.map(([c]) => c);
+	}
+	const nomComuna = (c) => (lang === 'fr' ? c.fr : (c.oc ?? c.fr));
+	function causirComuna(c) {
+		qComuna = nomComuna(c);
+		comunasTrobadas = [];
+		trobarPròcha(c.lat, c.lon, nomComuna(c));
+	}
+	function claveComuna(e) {
+		const n = comunasTrobadas.length;
+		if (e.key === 'ArrowDown' && n) (comunaActiva = (comunaActiva + 1) % n), e.preventDefault();
+		else if (e.key === 'ArrowUp' && n) (comunaActiva = (comunaActiva - 1 + n) % n), e.preventDefault();
+		else if (e.key === 'Enter' && n) causirComuna(comunasTrobadas[Math.max(0, comunaActiva)]), e.preventDefault();
+		else if (e.key === 'Escape') (comunasTrobadas.length ? (comunasTrobadas = []) : (menuPròcha = false)), e.preventDefault();
+	}
+	// la jaça escantida : lo ponch de l'usatgièr se'n va
+	$effect(() => {
+		if (!visibility.calandretas) {
+			ponchUsatgièr?.remove();
+			ponchUsatgièr = null;
+			menuPròcha = false;
+		}
+	});
 
 	// Las autras lengas de França (demanda de Romain) : una etiqueta per
 	// lenga, a sa region, e una ficha corta al clic. Las d'outra mar se veson
@@ -465,24 +713,59 @@
 			lang,
 			jaces: jacesDonadas(visibility),
 			// un luòc o una vila a ficha jos lo det : lo clic es per las estelas
-			ocupat: (lp) => !!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) || !!colaTematica?.ocupat(lp, true),
+			ocupat: (lp) => !!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) || !!colaTematica?.ocupat(lp, true) || zonaLengaA(lp),
 			// los noms de vilas : los noms de dialèctes los evitan
 			obstacles: () => (colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null),
 			onSurvòl: (k, info) => (survòl = info),
 			onCausida: (kods, info) => {
 				causida = info;
-				causits = kods;
+				// (las zònas causidas de las autras lengas demòran)
+				causits = [...kods, ...causits.filter((k) => !esOccitan(k))];
 			}
 		});
 		colaDonadas.addTo(map);
+		// Las autras lengas (demanda de Romain, 2026-10-08) : meteissa lectura
+		// que l'occitan ; lors vilas grandas venon sus la carta en estelas amb elas
+		for (const id of JACES_LENGAS) {
+			const lg = LENGAS[id];
+			if (!lg) continue;
+			colasLengas[id] = crearColaLenga(L, lg, {
+				clar,
+				dalt,
+				lang,
+				actiu: !!visibility[id],
+				ocupat: (lp) =>
+					!!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) ||
+					!!colaTematica?.ocupat(lp, true) ||
+					!!colaDonadas.zonaA(lp) ||
+					zonaLengaA(lp, id),
+				obstacles: () => [
+					colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null,
+					colaDonadas.caixasNoms(),
+					...Object.entries(colasLengas)
+						.filter(([o]) => o !== id)
+						.map(([, c]) => c.caixasNoms())
+				],
+				onSurvòl: (k, info) => (survòlsLengas = { ...survòlsLengas, [id]: info }),
+				onCausida: (kods, info) => {
+					causidasLengas = { ...causidasLengas, [id]: info };
+					causits = [...causits.filter((k) => !k.startsWith(lg.pref)), ...kods];
+				},
+				onDonadas: (d) => {
+					fonsLengas[id] = fonsLenga(lg, d);
+					colaEstelas?.setLengaFons(id, visibility[id] ? fonsLengas[id] : null);
+				}
+			});
+			colasLengas[id].addTo(map);
+		}
 		colaTematica = crearColaTematica(L, {
 			clar,
 			lang,
 			jaces: jacesTematicas(visibility),
 			// las provincias, que cobrisson tot, cedisson als dialèctes e al Creissent
-			cedirProv: (lp) => !!(map.hasLayer(colaDonadas) && colaDonadas.zonaA(lp)),
+			cedirProv: (lp) => !!(map.hasLayer(colaDonadas) && colaDonadas.zonaA(lp)) || zonaLengaA(lp),
 			// los noms de vilas de la carta en estelas : los noms de províncias los evitan
-			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, colaDonadas.caixasNoms()],
+			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, colaDonadas.caixasNoms(), ...Object.values(colasLengas).map((c) => c.caixasNoms())],
 			onSurvòl: (info) => (survòlTem = info)
 		});
 		colaTematica.addTo(map);
@@ -536,7 +819,7 @@
 			)
 		);
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
-		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
+		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
 		// de luènh (« 500 km »), los ponches (luòcs, librarias, Calandretas)
@@ -554,6 +837,24 @@
 		if (ambToponims(baseLayer)) loadToponymsLayer();
 
 		L.control.zoom({ position: 'bottomright' }).addTo(map);
+		// Lo plen ecran (demanda de Romain) : un boton al dessús del zoom
+		const PlenEcran = L.Control.extend({
+			options: { position: 'bottomright' },
+			onAdd() {
+				const c = L.DomUtil.create('div', 'leaflet-bar plen-ecran');
+				botonPlen = L.DomUtil.create('a', '', c);
+				botonPlen.href = '#';
+				botonPlen.setAttribute('role', 'button');
+				L.DomEvent.disableClickPropagation(c);
+				L.DomEvent.on(botonPlen, 'click', (e) => {
+					L.DomEvent.preventDefault(e);
+					onVisualizacion?.(!visualizacion);
+				});
+				majPlen();
+				return c;
+			}
+		});
+		new PlenEcran().addTo(map);
 		map.attributionControl?.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
 		tèxtesLeaflet();
 		map.on('popupopen', tèxtesLeaflet);
@@ -598,7 +899,7 @@
 		// es pas migrada.
 		Object.assign(geoDefs, SPECIAL_GEO);
 		// Las jaces de la còla de donadas son pas de jaces Leaflet
-		for (const id of JACES_DONADAS) delete geoDefs[id];
+		for (const id of [...JACES_DONADAS, ...JACES_LENGAS]) delete geoDefs[id];
 
 		for (const d of deptData ?? []) {
 			deptNivels[d.code] = d;
@@ -617,8 +918,13 @@
 				luocs.map((lieu) => {
 					const nom = (lang === 'fr' && lieu.nom_fr) || lieu.nom_oc;
 					const desc = (lang === 'fr' && lieu.descripcion_fr) || lieu.descripcion_oc;
+					// son site (colomna ligam, se la basa l'a) e lo ligam de navigacion
+					const accions = [
+						/^https:\/\//.test(lieu.ligam ?? '') ? accionBulla('world', lieu.ligam, txAccions().site, true) : '',
+						accionsNav(lieu.latitud, lieu.longitud, nom)
+					].join('');
 					return L.marker([lieu.latitud, lieu.longitud], { icon: iconaPunt(cid), title: nom, keyboard: true }).bindPopup(
-						`<strong>${escapeHtml(nom)}</strong>${desc ? `<br>${escapeHtml(desc)}` : ''}`
+						`<strong>${escapeHtml(nom)}</strong>${desc ? `<br>${escapeHtml(desc)}` : ''}${accions ? `<span class="accions-bulla">${accions}</span>` : ''}`
 					);
 				})
 			);
@@ -640,6 +946,10 @@
 		const nextBaseLayer = baseLayer;
 		if (!map || !L) return;
 		colaDonadas?.setJaces(jacesDonadas(vis));
+		for (const [id, c] of Object.entries(colasLengas)) {
+			c.setActiu(!!vis[id]);
+			colaEstelas?.setLengaFons(id, vis[id] ? (fonsLengas[id] ?? null) : null);
+		}
 		// lo territòri survolat o clicat seguís las jaces alucadas (region o despartament)
 		colaEstelas?.setTerritoris({ regions: !!vis.regions, despartaments: !!vis.despartaments, comunas: !!vis.comunas });
 		colaTematica?.setJaces(jacesTematicas(vis));
@@ -686,12 +996,14 @@
 			d = dalt;
 		colaEstelas?.setTema(c, d);
 		colaDonadas?.setTema(c, d);
+		for (const cl of Object.values(colasLengas)) cl.setTema(c, d);
 		colaTematica?.setTema(c);
 	});
 	$effect(() => {
 		const l = lang;
 		colaEstelas?.setLenga(l);
 		colaDonadas?.setLenga(l);
+		for (const cl of Object.values(colasLengas)) cl.setLenga(l);
 		colaTematica?.setLenga(l);
 		tèxtesLeaflet();
 	});
@@ -706,7 +1018,8 @@
 	});
 	$effect(() => {
 		const kods = [...causits];
-		colaDonadas?.causir(kods);
+		colaDonadas?.causir(kods.filter(esOccitan));
+		for (const cl of Object.values(colasLengas)) cl.causir(kods);
 	});
 
 	// Recherche : un lieu, la carte y vole (et l'y signale) ; un département ou
@@ -736,7 +1049,7 @@
 	});
 </script>
 
-<div class="carta-root">
+<div class="carta-root" class:visualizacion>
 	<div
 		class="carta"
 		class:muted={baseLayer === 'occitan' && clar}
@@ -744,12 +1057,67 @@
 		bind:this={mapEl}
 	></div>
 
-	<CercaCarta {lang} onCausir={anarA} />
+	{#if !visualizacion}<CercaCarta {lang} onCausir={anarA} />{/if}
+
+	<!-- La Calandreta mai pròcha : quand la jaça es alucada -->
+	{#if visibility.calandretas && !visualizacion}
+		<div class="procha" class:dobert={menuPròcha}>
+			{#if menuPròcha}
+				<div class="procha-menut" role="dialog" aria-label={txPròcha.titol}>
+					<p class="procha-titol">{txPròcha.titol}</p>
+					<button type="button" onclick={deMaPosicion}>
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0M12 2v2M12 20v2M20 12h2M2 12h2" /></svg>
+						{txPròcha.posicion}
+					</button>
+					<label class="procha-comuna">
+						<span>{txPròcha.comuna}</span>
+						<input
+							type="search"
+							role="combobox"
+							autocomplete="off"
+							aria-autocomplete="list"
+							aria-expanded={comunasTrobadas.length > 0}
+							aria-controls="procha-lista"
+							aria-activedescendant={comunaActiva >= 0 ? 'procha-op-' + comunaActiva : undefined}
+							placeholder={txPròcha.exemple}
+							bind:value={qComuna}
+							onfocus={cargarNomsComunas}
+							oninput={() => cercarComuna(qComuna)}
+							onkeydown={claveComuna}
+						/>
+					</label>
+					{#if comunasTrobadas.length}
+						<ul class="procha-lista" id="procha-lista" role="listbox" aria-label={txPròcha.comuna}>
+							{#each comunasTrobadas as c, i (c.fr + c.dep + i)}
+								<li
+									id={'procha-op-' + i}
+									role="option"
+									aria-selected={i === comunaActiva}
+									class:activa={i === comunaActiva}
+									onmousedown={(e) => (e.preventDefault(), causirComuna(c))}
+								>
+									{nomComuna(c)}{#if lang !== 'fr' && c.oc && c.oc !== c.fr}<small> {c.fr}</small>{/if}<small class="dep">{c.dep}</small>
+								</li>
+							{/each}
+						</ul>
+					{:else if normC(qComuna).length >= 2 && nomsComunas?.length}
+						<p class="procha-mes">{txPròcha.cap}</p>
+					{/if}
+					{#if mesPròcha}<p class="procha-mes" aria-live="polite">{mesPròcha}</p>{/if}
+					<p class="procha-privat">{txPròcha.privat}</p>
+				</div>
+			{/if}
+			<button type="button" class="procha-boton" aria-expanded={menuPròcha} onclick={() => ((menuPròcha = !menuPròcha), (mesPròcha = null))}>
+				<svg viewBox="0 0 24 24" aria-hidden="true">{@html ICONAS.school}</svg>
+				{menuPròcha ? txPròcha.tampar : txPròcha.boton}
+			</button>
+		</div>
+	{/if}
 
 	<!-- Lo dialècte survolat o causit : meteissa etiqueta que los territòris -->
 	{#if legendaDial}
-		<div class="legenda-dial" class:fixada={!!causida} aria-live="polite">
-			<span class="nom">{lang === 'fr' ? legendaDial.fr : legendaDial.oc}</span>
+		<div class="legenda-dial" class:fixada={!!(causida ?? causidaLenga)} aria-live="polite">
+			<span class="nom" lang={legendaDial.lang}>{lang === 'fr' ? legendaDial.fr : legendaDial.oc}</span>
 			<span class="sota"
 				>{legendaDial.mix
 					? lang === 'fr'
@@ -979,6 +1347,11 @@
 		outline-offset: -2px;
 	}
 
+	.carta :global(.plen-ecran a) {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 	.carta :global(.leaflet-bar a.leaflet-disabled) {
 		color: var(--t-linha);
 		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
@@ -1052,6 +1425,191 @@
 
 	.carta :global(.leaflet-popup-close-button) {
 		color: var(--t-tinta-2) !important;
+	}
+	/* La Calandreta mai pròcha : un boton en bas, al mièg, al dessús de la
+	   legenda ; son menut se desplega cap amont */
+	.procha {
+		position: absolute;
+		z-index: 950;
+		left: 50%;
+		bottom: calc(108px + var(--barra-bas, 0px));
+		transform: translateX(-50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		font-family: var(--font-body);
+	}
+	.procha-boton,
+	.procha-menut {
+		background: color-mix(in srgb, var(--t-fons-2) 92%, transparent);
+		backdrop-filter: blur(10px);
+		box-shadow:
+			0 0 0 1px var(--t-linha),
+			0 10px 28px rgba(0, 0, 0, 0.35);
+		color: var(--t-tinta);
+	}
+	.procha-boton {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 8px 16px;
+		border: 0;
+		border-radius: 999px;
+		font: 500 0.85rem/1.2 var(--font-body);
+		cursor: pointer;
+	}
+	.procha-boton:hover,
+	.procha-boton:focus-visible {
+		color: var(--t-aur-clar);
+	}
+	.procha svg {
+		width: 18px;
+		height: 18px;
+		flex: none;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.8;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+	.procha-menut {
+		width: min(19rem, calc(100vw - 2rem));
+		padding: 12px 14px;
+		border-radius: 14px;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+	.procha-menut button {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.55rem;
+		width: 100%;
+		padding: 8px 10px;
+		border: 1px solid var(--t-linha);
+		border-radius: 10px;
+		background: none;
+		color: inherit;
+		font: 500 0.88rem/1.3 var(--font-body);
+		text-align: left;
+		cursor: pointer;
+	}
+	.procha-menut button:hover,
+	.procha-menut button:focus-visible {
+		border-color: var(--t-aur);
+		color: var(--t-aur-clar);
+	}
+	.procha-comuna {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		margin-top: 4px;
+		font-size: 0.8rem;
+		color: var(--t-tinta-2);
+	}
+	.procha-comuna input {
+		width: 100%;
+		padding: 7px 10px;
+		border: 1px solid var(--t-linha);
+		border-radius: 10px;
+		background: color-mix(in srgb, var(--t-fons) 70%, transparent);
+		color: var(--t-tinta);
+		font: 400 0.9rem/1.3 var(--font-body);
+	}
+	.procha-comuna input:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 1px;
+	}
+	.procha-lista {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border: 1px solid var(--t-linha);
+		border-radius: 10px;
+		overflow: hidden;
+	}
+	.procha-lista li {
+		display: flex;
+		align-items: baseline;
+		gap: 0.4rem;
+		padding: 6px 10px;
+		font-size: 0.88rem;
+		cursor: pointer;
+	}
+	.procha-lista li + li {
+		border-top: 1px solid var(--t-linha);
+	}
+	.procha-lista li:hover,
+	.procha-lista li.activa {
+		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
+		color: var(--t-aur-clar);
+	}
+	.procha-lista small {
+		font-size: 0.75rem;
+		color: var(--t-tinta-2);
+	}
+	.procha-lista .dep {
+		margin-left: auto;
+	}
+	.procha-titol {
+		margin: 0 0 2px;
+		font: 400 1.05rem/1.2 var(--font-heading);
+		color: var(--t-aur-clar);
+	}
+	.procha-mes {
+		margin: 2px 0 0;
+		font-size: 0.8rem;
+		color: var(--t-aur-clar);
+	}
+	.procha-privat {
+		margin: 2px 0 0;
+		font-size: 0.72rem;
+		line-height: 1.35;
+		color: var(--t-tinta-2);
+	}
+	.carta :global(.ponch-usatgièr) {
+		stroke: var(--t-fons);
+		fill: var(--t-aur-clar);
+	}
+	.carta :global(.leaflet-popup-content .distancia) {
+		color: var(--t-aur-clar);
+	}
+
+	/* las accions d'una bulla : un vèrb amb son icòna, una per linha */
+	.carta :global(.accions-bulla) {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 2px;
+		margin-top: 0.5rem;
+	}
+	.carta :global(.accion-bulla) {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 3px 0;
+		color: var(--t-aur-clar);
+		text-decoration: none;
+	}
+	.carta :global(.accion-bulla svg) {
+		width: 16px;
+		height: 16px;
+		flex: none;
+	}
+	.carta :global(.accion-bulla span) {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 3px;
+	}
+	.carta :global(.accion-bulla.segonda) {
+		padding: 0 0 0 calc(16px + 0.4rem);
+		font-size: 0.78rem;
+		color: var(--t-tinta-2);
+	}
+	.carta :global(.accion-bulla:hover span),
+	.carta :global(.accion-bulla:focus-visible span) {
+		text-decoration-thickness: 2px;
 	}
 
 	.carta :global(.cola-estelas) {

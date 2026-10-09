@@ -64,6 +64,35 @@
 	// e lo boton d'informacion se plaçan just dejós (retorn de Romain : la
 	// barra tocava « Mots » e « Òbras »)
 	let capçalEl = $state(null);
+	// La carta en plen ecran, en mòde visualizacion (demanda de Romain,
+	// 2026-10-08) : lo bandèu, lo catalògue e la recèrca s'amagan (amagats e
+	// pas levats : lo panèl garda son estat) ; lo navegador passa en plen
+	// ecran quand o sap far (pas sus iPhone : lo mòde demòra). Escap ne sortís.
+	let visualizacion = $state(false);
+	let screenEl = $state(null);
+	function basculaVisualizacion(on) {
+		visualizacion = on;
+		if (on) screenEl?.requestFullscreen?.().catch(() => {});
+		else if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+	}
+	$effect(() => {
+		const quitar = () => {
+			if (!document.fullscreenElement && visualizacion) visualizacion = false;
+		};
+		const escap = (e) => {
+			if (e.key === 'Escape' && visualizacion && !document.fullscreenElement) visualizacion = false;
+		};
+		// (sens plen ecran del navegador, la pagina defila pas cap al pè de pagina)
+		if (visualizacion) window.scrollTo(0, 0);
+		document.documentElement.style.overflow = visualizacion ? 'hidden' : '';
+		document.addEventListener('fullscreenchange', quitar);
+		window.addEventListener('keydown', escap);
+		return () => {
+			document.removeEventListener('fullscreenchange', quitar);
+			window.removeEventListener('keydown', escap);
+			document.documentElement.style.overflow = '';
+		};
+	});
 	let capBas = $state(0);
 	$effect(() => {
 		if (!capçalEl) return;
@@ -99,7 +128,7 @@
 	<title>{tx.title} · Lo Ligam</title>
 </svelte:head>
 
-<div class="screen" style:--cap-bas={capBas ? capBas + 'px' : null}>
+<div class="screen" class:visualizacion bind:this={screenEl} style:--cap-bas={capBas ? capBas + 'px' : null}>
 	<!-- Le bandeau commun flotte sur la carte, dans un dégradé de nuit -->
 	<div class="capçal" bind:this={capçalEl}>
 		<AppHeader />
@@ -115,6 +144,8 @@
 			{elements}
 			{colors}
 			bind:causits
+			{visualizacion}
+			onVisualizacion={basculaVisualizacion}
 		/>
 
 		{#if showInfo}
@@ -174,6 +205,14 @@
 		background: var(--t-fons);
 	}
 
+	/* lo mòde visualizacion : sonque la carta e sos aisinas de lectura */
+	.screen.visualizacion .capçal,
+	.screen.visualizacion :global(.info-trigger),
+	.screen.visualizacion :global(.info-card),
+	.screen.visualizacion :global(.rail),
+	.screen.visualizacion :global(.tirador) {
+		display: none !important;
+	}
 	.capçal {
 		position: absolute;
 		top: 0;

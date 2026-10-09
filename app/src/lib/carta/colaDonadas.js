@@ -332,7 +332,7 @@ export function crearColaDonadas(
 			const salt = this._zPrec != null && Math.abs(this._zoom - this._zPrec) > 1.5;
 			this._zPrec = this._zoom;
 			// (l'occitan unificat a totas las escalas, se la jaça es alucada)
-			const uni = this._jaces.unificat || this._zoom < n.zDial - 0.17 ? 1 : 0;
+			const uni = this._jaces.unificat || this._zoom < n.zDial ? 1 : 0;
 			this._relais('uni', uni, (c) => (c ? DURADA_MESCLA : DURADA_BALET), salt);
 			// de mai luènh (« 1 000 km »), l'Occitània unida se vuèja : sonque son contorn
 			this._relais('vuèg', this._zoom < n.zVuèg ? 1 : 0, DURADA_VUÈG, salt);

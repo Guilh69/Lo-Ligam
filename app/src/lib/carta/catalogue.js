@@ -120,9 +120,31 @@ CATALOGUE.push({
 			defaut: false,
 			nota_oc: 'Catalan, basc, breton, arpitan, alsacian, còrs, lengas d’oïl, d’outra mar…',
 			nota_fr: 'Catalan, basque, breton, arpitan, alsacien, corse, langues d’oïl, d’outre-mer…'
-		}
+		},
+		// Cada lenga, alucada coma l'occitan, amb sos dialèctes (retorn de
+		// Romain, 2026-10-08 : « un menu qui liste les langues de France ») ; lo
+		// catalan d'en primièr, las autras quand lor perimètre serà traçat
+		{
+			id: 'catalan',
+			oc: 'Catalan',
+			fr: 'Catalan',
+			estat: 'disponible',
+			defaut: false,
+			nota_oc: 'Sos dialèctes, de Salses a Guardamar e a l’Alguer ; la Catalonha del Nòrd a despart',
+			nota_fr: 'Ses dialectes, de Salses à Guardamar et à Alghero ; la Catalogne nord à part'
+		},
+		{ id: 'basc', oc: 'Basc', fr: 'Basque', estat: 'a venir' },
+		{ id: 'breton', oc: 'Breton', fr: 'Breton', estat: 'a venir' },
+		{ id: 'arpitan', oc: 'Arpitan', fr: 'Arpitan (francoprovençal)', estat: 'a venir' },
+		{ id: 'alsacian', oc: 'Alsacian e francic', fr: 'Alsacien et francique', estat: 'a venir' },
+		{ id: 'flamenc', oc: 'Flamenc occidental', fr: 'Flamand occidental', estat: 'a venir' },
+		{ id: 'cors', oc: 'Còrs', fr: 'Corse', estat: 'a venir' },
+		{ id: 'oil', oc: 'Lengas d’oïl', fr: 'Langues d’oïl', estat: 'a venir' }
 	]
 });
+
+// Las jaces de lengas pintadas per una còla de lenga (colaLenga.js, lengas.js)
+export const JACES_LENGAS = ['catalan'];
 
 // Las jaces pintadas pel fons « Contorns » (colaEstelas.js) : son pas pintadas
 // sus los autres fonses (las tuèlas an las lors). Jaça → element del fons.
@@ -150,8 +172,12 @@ export function fusionarCatalogue(linhas = []) {
 			// que lo site sap pintar sol
 			if (r.label_oc) j.oc = r.label_oc;
 			if (r.label_fr) j.fr = r.label_fr;
-			if (r.nòta_oc) j.nota_oc = r.nòta_oc;
-			if (r.nòta_fr) j.nota_fr = r.nòta_fr;
+			// (una linha d'abans que lo site sapièsse pintar la jaça, « A venir »,
+			// es passada : sa nòta contradiriá la jaça disponibla, retorn de Romain
+			// sus las provincias istoricas, 2026-10-08)
+			const passada = j.estat === 'disponible' && (r.disponible === false || /^\s*[aà] venir\s*$/i.test(r.nòta_oc ?? ''));
+			if (r.nòta_oc && !passada) j.nota_oc = r.nòta_oc;
+			if (r.nòta_fr && !passada) j.nota_fr = r.nòta_fr;
 			if (j.estat === 'basa') j.estat = r.disponible ? 'disponible' : 'a venir';
 			if (typeof r.visibla === 'boolean') j.defaut = r.visibla;
 			continue;
