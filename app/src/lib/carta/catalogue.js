@@ -20,11 +20,13 @@ export const CATALOGUE = [
 		fr: 'Langue',
 		jaces: [
 			{
+				// lo domeni occitan, cochat d'ofici, visible de 200 km fins al pus
+				// prèp (demanda de Romain, 2026-10-09 ; nom occitan de validar)
 				id: 'frontiera',
-				oc: 'Frontièra de la lenga',
-				fr: 'Limite de la langue',
+				oc: 'Domeni occitan',
+				fr: 'Domaine occitan',
 				estat: 'disponible',
-				defaut: false
+				defaut: true
 			},
 			{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', estat: 'disponible', defaut: true, nota_oc: "Se'n pòt causir mantun, lo Creissent tanben", nota_fr: 'On peut en choisir plusieurs, le Croissant aussi' },
 			// l'occitan unificat a totas las escalas, coma de luènh (retorn de Romain, 2026-10-08)

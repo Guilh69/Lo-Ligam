@@ -1087,8 +1087,11 @@ export function crearColaDonadas(
 			   l'autre. De prèp, sabèm pas al quilomètre près ont passa : los
 			   ponches palisson e una benda difusa de quauques quilomètres ditz
 			   « per aquí ». */
-			const aFrontU = aFront * (1 - (this._rel?.uni?.v ?? 0));
-			if (J.frontiera && G.linhas && aFrontU > 0.01) {
+			// Lo domeni occitan (demanda de Romain, 2026-10-09) : de 200 km fins al
+			// pus prèp, tanben sus l'occitan unificat (dessenhat aprèp el, dessús)
+			const aFrontU = aFront;
+			const dessenharFront = () => {
+				if (!(J.frontiera && G.linhas && aFrontU > 0.01)) return;
 				const vague = clamp((z - 7.5) / 2.5);
 				// l'aparicion : los ponches se pausan al long de la frontièra, una
 				// estela en cap (coma los contorns dels territòris)
@@ -1133,7 +1136,7 @@ export function crearColaDonadas(
 				cx.setLineDash([]);
 				for (const [ct, pp, aC] of capsF) estelaCap(cx, ct, pp, T.estela, aC * aFrontU * 0.9);
 				cx.restore();
-			}
+			};
 
 			/* L'Occitània unida (demanda de Romain) : de luènh, una sola lenga,
 			   « OCCITAN », en roge ; a « 500 km », sonque son contorn */
@@ -1204,6 +1207,7 @@ export function crearColaDonadas(
 				}
 				cx.restore();
 			}
+			dessenharFront();
 
 			/* Noms : capitalas espaçadas, una ombra doça (causida de Romain : pas
 			   de contorn negre). De luènh sonque : de prèp, la carta es plena de
