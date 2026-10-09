@@ -303,10 +303,13 @@ const ESTIL_VILAS = {
 	3: [(f) => `italic 500 ${(f * 1.25).toFixed(1)}px ${CORMORANT}`, 0.01, false],
 	4: [(f) => `italic 500 ${(f * 1.15).toFixed(1)}px ${CORMORANT}`, 0, false]
 };
-const estilVila = (renc, f) => {
+export const estilVila = (renc, f) => {
 	const [polissa, esp, majus] = ESTIL_VILAS[renc] ?? ESTIL_VILAS[4];
 	return { font: polissa(f), esp: esp * f, majus };
 };
+// lo reng afichat d'un luòc occitan (las capitalas son de metropòlis), per
+// que los noms de las comunas sul satellit seguisson la meteissa tièra
+export const rencVila = (nom) => (CAPITALAS.includes(nom) ? 1 : rencDe(nom));
 // la polissa sola (bullas, repèrs)
 const polissaVila = (renc, f) => estilVila(renc, f).font;
 // la polissa e l'espaçament sus un contèxte ; torna lo tèxte de dessenhar

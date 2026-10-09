@@ -3,7 +3,7 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
-	import { crearColaEstelas, Z_PRECARGA, Z_RELAIS, nivèlsDezoom, aDetalh } from '$lib/carta/colaEstelas.js';
+	import { crearColaEstelas, Z_PRECARGA, Z_RELAIS, nivèlsDezoom, aDetalh, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
@@ -575,7 +575,27 @@
 	const nomsAfichats = new Map();
 	let bóstiasNoms = [];
 	const popNoms = (z) => (z >= 12.5 ? 0 : z >= 11.5 ? 100 : z >= 10.5 ? 500 : z >= 9.5 ? 2000 : 8000);
-	const talhaNom = (pop) => (pop >= 100000 ? 17 : pop >= 20000 ? 14 : pop >= 3000 ? 12.5 : 11.5);
+	// La polissa d'un nom segon lo reng de la vila, coma sus la carta estelada
+	// (estil « Atlas », 2026-10-08) : Limelight per las metropòlis, capitalas
+	// espaçadas per las vilas repèrs, italica per las autras. Las comunas fòra
+	// la tièra son de vilatges ; lor talha seguís lor populacion.
+	// (l'italica a de delhats fins : un pauc mai granda que sus las estelas)
+	const talhaNom = (renc, pop) => ({ 1: 18, 2: 13, 3: 12.5 })[renc] ?? (pop >= 20000 ? 12 : pop >= 3000 ? 11.5 : 11);
+	let cxMesura = null;
+	function estilNom(c) {
+		const e = estilVila(c.renc, talhaNom(c.renc, c.pop));
+		const nom = c.oc || c.fr;
+		const g = (cxMesura ??= document.createElement('canvas').getContext('2d'));
+		g.font = e.font;
+		if ('letterSpacing' in g) g.letterSpacing = e.esp.toFixed(2) + 'px';
+		const px = parseFloat(e.font.match(/([\d.]+)px/)[1]);
+		return {
+			nom,
+			px,
+			w: g.measureText(e.majus ? nom.toUpperCase() : nom).width,
+			css: `font:${e.font.replace(/"/g, "'")};letter-spacing:${e.esp.toFixed(2)}px${e.majus ? ';text-transform:uppercase' : ''}`
+		};
+	}
 	function majNomsComunas() {
 		if (!map) return;
 		if (baseLayer !== 'estelas' || map.getZoom() < Z_RELAIS) {
@@ -591,24 +611,24 @@
 		const b = map.getBounds().pad(0.1);
 		const s = b.getSouth(), n = b.getNorth(), w = b.getWest(), e = b.getEast();
 		const pm = popNoms(z);
-		const cands = nomsComunas.filter((c) => c.pop >= pm && c.lat > s && c.lat < n && c.lon > w && c.lon < e);
-		cands.sort((a, c) => c.pop - a.pop);
+		// (las vilas de la tièra se mòstran totjorn, coma sus la carta estelada)
+		const cands = nomsComunas.filter((c) => (c.renc <= 3 || c.pop >= pm) && c.lat > s && c.lat < n && c.lon > w && c.lon < e);
+		cands.sort((a, c) => a.renc - c.renc || c.pop - a.pop);
 		const vòl = new Set();
 		bóstiasNoms = [];
 		for (const c of cands) {
 			if (bóstiasNoms.length >= 260) break;
-			const nom = c.oc || c.fr;
-			const f = talhaNom(c.pop);
+			const st = (c.estil ??= estilNom(c));
 			const q = map.latLngToContainerPoint([c.lat, c.lon]);
-			const wd = nom.length * f * 0.56 + 6;
-			const bx = [q.x - wd / 2, q.y - f * 0.7, q.x + wd / 2, q.y + f * 0.7];
+			const wd = st.w + 6;
+			const bx = [q.x - wd / 2, q.y - st.px * 0.62, q.x + wd / 2, q.y + st.px * 0.62];
 			if (bóstiasNoms.some((o) => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1])) continue;
 			bóstiasNoms.push(bx);
 			const k = c.fr + c.dep;
 			vòl.add(k);
 			if (!nomsAfichats.has(k)) {
 				const m = L.marker([c.lat, c.lon], {
-					icon: L.divIcon({ className: 'nom-comuna', html: `<span style="font-size:${f}px">${escapeHtml(nom)}</span>`, iconSize: [0, 0], iconAnchor: [0, 0] }),
+					icon: L.divIcon({ className: 'nom-comuna', html: `<span style="${st.css}">${escapeHtml(st.nom)}</span>`, iconSize: [0, 0], iconAnchor: [0, 0] }),
 					interactive: false,
 					keyboard: false
 				});
@@ -711,13 +731,18 @@
 	async function cargarNomsComunas() {
 		if (nomsComunas) return;
 		nomsComunas = [];
-		const d = await fetch('/data/comunas/noms.json')
-			.then((r) => (r.ok ? r.json() : null))
-			.catch(() => null);
+		// (las polissas dels noms, cargadas abans de mesurar la plaça de cada nom)
+		const [d] = await Promise.all([
+			fetch('/data/comunas/noms.json')
+				.then((r) => (r.ok ? r.json() : null))
+				.catch(() => null),
+			Promise.all(['18px Limelight', "italic 500 14px 'Cormorant Garamond'", '400 12px Luciole'].map((f) => document.fonts?.load(f))).catch(() => {})
+		]);
 		// (las vilas de la carta gardan lor nom : « Rodés », pas « Rodès »)
 		nomsComunas = (d?.c ?? []).map(([fr, oc0, lon, lat, pop, dep]) => {
-			const oc = vilaCarta(fr, lon, lat) ?? (oc0 || null);
-			return { fr, oc, lon, lat, pop, dep, k: [normC(fr), ...(oc ? [normC(oc)] : []), ...(oc0 && oc0 !== oc ? [normC(oc0)] : [])] };
+			const v = vilaCarta(fr, lon, lat);
+			const oc = v ?? (oc0 || null);
+			return { fr, oc, lon, lat, pop, dep, renc: v ? rencVila(v) : 4, k: [normC(fr), ...(oc ? [normC(oc)] : []), ...(oc0 && oc0 !== oc ? [normC(oc0)] : [])] };
 		});
 		if (qComuna) cercarComuna(qComuna);
 		majNomsComunas();
@@ -2089,20 +2114,19 @@
 		font-size: 0.82rem;
 	}
 
-	/* los noms de las comunas sul satellit : la letra clara de la carta
-	   estelada, amb un alo doç ; arriban aprèp las estelas */
+	/* los noms de las comunas sul satellit : la letra de la carta estelada
+	   (polissa segon lo reng, en linha), amb un alo doç ; arriban aprèp las estelas */
 	.carta :global(.nom-comuna span) {
 		position: absolute;
 		transform: translate(-50%, -50%);
 		white-space: nowrap;
 		pointer-events: none;
-		font-family: var(--font-body);
-		font-weight: 600;
-		letter-spacing: 0.02em;
-		color: #2a1a12;
+		/* letra clara e alo sorne amb los dos tèmas : lo fons es la fòto, pas
+		   lo tèma (en sorne sus clar, l'italica fina dels vilatges s'i perdiá) */
+		color: #f5ead8;
 		text-shadow:
-			0 0 3px rgba(250, 242, 228, 0.95),
-			0 0 7px rgba(250, 242, 228, 0.7);
+			0 0 3px rgba(18, 9, 6, 0.95),
+			0 0 8px rgba(18, 9, 6, 0.75);
 		animation: nom-ven 0.9s ease 0.35s backwards;
 	}
 	/* coma los noms de las tuèlas d'abans : pendent la revelacion (los nívols
@@ -2114,12 +2138,6 @@
 	.carta:global(.revelant) :global(.nom-comuna) {
 		opacity: 0;
 		transition: opacity 0.25s ease;
-	}
-	.carta.nuech :global(.nom-comuna span) {
-		color: #f5ead8;
-		text-shadow:
-			0 0 3px rgba(18, 9, 6, 0.95),
-			0 0 8px rgba(18, 9, 6, 0.75);
 	}
 	@keyframes nom-ven {
 		from {
