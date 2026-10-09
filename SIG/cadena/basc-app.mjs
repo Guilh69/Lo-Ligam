@@ -1,5 +1,5 @@
 // Lo basc per la carta : apond al fichièr de la carta (app/static/data/basc.json,
-// fabricat per basc.py) sas vilas e son trach de còsta (Romain, 2026-10-09, sul
+// fabricat per basc.py) sas vilas (Romain, 2026-10-09, sul
 // modèl de l'arpitan e del catalan).
 //
 //   node SIG/cadena/basc-app.mjs
@@ -8,9 +8,7 @@
 // renc, dialècte] ; lo dialècte es lo de la carta (ponch dins polígon) ; una
 // vila defòra (bòrd de la simplificacion) pren la zòna pus pròcha a mens de
 // 2 km ; las autras (Tutera, Miranda d'Ebre…) son pas gardadas e son listadas.
-// La còsta : los anèls del domeni a l'oèst de Hendaia (la carta a ja la còsta
-// francesa), levats los tròces que seguisson una frontièra terrèstra
-// (domeni.linhas, a mens de 400 m).
+// La còsta : pas aicí (costa.json).
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -65,25 +63,13 @@ d.vilas = vilas
 		return [r4(v.lon), r4(v.lat), v.nom_eu, v.renc, dia];
 	})
 	.filter(Boolean);
-const segs = [];
-for (const l of d.domeni?.linhas || []) for (let i = 1; i < l.length; i++) segs.push([l[i - 1], l[i]]);
-const terrèstre = (q) => segs.some(([a, b]) => dSeg(q, a, b) < 400);
-const costa = [];
-for (const anel of d.domeni?.anels || []) {
-	let cur = [];
-	const fin = () => {
-		if (cur.length > 1) costa.push(cur);
-		cur = [];
-	};
-	for (const q of anel) {
-		if (q[0] < -1.78 && q[1] > 43.2 && !terrèstre(q)) cur.push([r4(q[0]), r4(q[1])]);
-		else fin();
-	}
-	fin();
-}
-d.costa = costa;
+// (pas de còsta pròpria : la còsta del País Basc d'Espanha es dins costa.json,
+// calada sus lo contorn precís d'OSM, costa-estelas.py e mar.py PRECIS ; doas
+// còstas se dobdavan : retorn de Romain, 2026-10-09, « pb de côte »)
+delete d.costa;
+
 fs.writeFileSync(FIC, JSON.stringify(d));
-console.log(`còsta : ${costa.length} tròces, ${costa.reduce((s, l) => s + l.length, 0)} ponches`);
+
 console.log(`vilas : ${d.vilas.length} ; per dialècte : ${JSON.stringify(per)} ; fichièr : ${(fs.statSync(FIC).size / 1024).toFixed(1)} Ko`);
 console.log(`defòra de tota zòna, presa la pus pròcha (< 2 km) : ${pròchas.length}${pròchas.length ? ' : ' + pròchas.join(', ') : ''}`);
 console.log(`defòra del domeni (pas gardadas) : ${defòra.length}${defòra.length ? ' : ' + defòra.join(', ') : ''}`);

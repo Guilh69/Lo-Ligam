@@ -1003,7 +1003,13 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					dz: v.renc === 1 ? -1 : undefined,
 					f: aleat(0, 6.28), v: aleat(0.2, 0.7), X: 0, Y: 0
 				}));
-			this._estelas = [...this._estelasOc, ...Object.keys(ls).filter((k) => ls[k]).flatMap((k) => fach[k])];
+			// una vila de la carta occitana al meteis endrech qu'una vila d'una lenga
+			// alucada (Baiona, Biàrritz dins lo basc) s'escafa : un sol nom, dins la
+			// lenga del luòc (retorn de Romain, 2026-10-09 : « deux Baiona qui se
+			// chevauchent ») ; torna quand la lenga s'escantís
+			const autras = Object.keys(ls).filter((k) => ls[k]).flatMap((k) => fach[k]);
+			const doblon = (e) => autras.some((v) => Math.abs(v.lat - e.lat) < 0.014 && Math.abs(v.lon - e.lon) < 0.019);
+			this._estelas = [...this._estelasOc.filter((e) => !doblon(e)), ...autras];
 			if (this._map) {
 				for (const e of this._estelas) [e.X, e.Y] = projPonch(this._map, e, this._zoom);
 				if (vilas) for (const e of fach[kod]) e.tAluc = performance.now();

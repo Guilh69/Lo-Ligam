@@ -41,7 +41,10 @@ Q = 100000
 # aigas dins las tèrras, que l'IGN compta coma mar : o, s, e, n
 # un païs vesin a sa còsta precisa quand l'avèm (limits OpenStreetMap, que
 # seguisson lo ribatge) ; endacòm mai, Natural Earth alargat de ESTRANGIER
-PRECIS = {'Spain': os.path.join(RAIC, 'SIG', 'brut', 'catalan', 'geojson', 'catalonha-limit.geojson')}
+# (un païs pòt aver mai d'un contorn precís : la Catalonha, e lo País Basc e
+# Navarra, OSM, basc-brut.mjs : retorn de Romain, 2026-10-09, « pb de côte »)
+PRECIS = {'Spain': [os.path.join(RAIC, 'SIG', 'brut', 'catalan', 'geojson', 'catalonha-limit.geojson'),
+                    os.path.join(RAIC, 'SIG', 'brut', 'basc', 'espanha-comunitats.geojson')]}
 DINS = [(4.96, 43.415, 5.26, 43.57), (-1.24, 44.59, -0.98, 44.79), (-1.07, 45.03, -0.53, 45.60)]
 
 wgs, l93 = osr.SpatialReference(), osr.SpatialReference()
@@ -100,7 +103,7 @@ def vesin(nom, g, simpl, alarg):
     la frontièra entre Catalonha e Aragon)."""
     if nom not in PRECIS:
         return [g.Buffer(alarg) if alarg else g]
-    p = precis(PRECIS[nom], simpl)
+    p = unir([precis(c, simpl) for c in PRECIS[nom] if os.path.exists(c)])
     còsta = p.Buffer(5000).Difference(g.Buffer(-5000))
     demai = g.Difference(còsta)
     return [p, demai.Buffer(alarg) if alarg else demai]

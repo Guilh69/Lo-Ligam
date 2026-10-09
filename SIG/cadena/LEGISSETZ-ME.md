@@ -112,7 +112,8 @@ Sources, règles et points à valider : `SIG/basc/FONTS.md`. Dans l'ordre :
 4. `python-qgis.bat -s -P SIG/cadena/raccord-basc.py` (après `raccord-arpitan.py`, une seule fois, sur les fichiers d'avant) : le domaine occitan suit les communes au contact du basque. Réécrit `limits-carta.json` et `dialectes.geojson`. Puis relancer `costa-ref.py`.
 4 bis. `python-qgis.bat -s -P SIG/cadena/basc-mixtas.py` (se relance sans risque) : les trois zones mixtes occitanes de tradition gasconne (Bayonne, Bidache et l'Adour, Esquiule et Lichos), leurs encadrés au survol et leurs bandes de couleur gasconne, d'après `SIG/basc/dialectes-basc.json`.
 5. `python-qgis.bat -s -P SIG/cadena/basc.py` : `app/static/data/basc.json` (50 s).
-6. `node SIG/cadena/basc-vilas.mjs` puis `node SIG/cadena/basc-app.mjs` : les villes (rangs éclaircis) et la côte espagnole pour la carte en étoiles.
+6. `node SIG/cadena/basc-vilas.mjs` puis `node SIG/cadena/basc-app.mjs` : les villes (rangs éclaircis). Sur la carte en étoiles, une ville occitane au même endroit qu'une ville basque s'efface tant que le basque est allumé.
+6 bis. Côte du Pays basque espagnol : contour OSM d'Euskadi et de Navarre ajouté à `PRECIS` dans `mar.py` ; relancer `mar.py`, `costa-estelas.py` (`costa.json`) puis `costa-ref.py`.
 7. `node SIG/cadena/lengas-vesinas.mjs` : contours de « Découvrir le basque ».
 
 ## Bord de mer et mer du satellite (2026-10-09)
