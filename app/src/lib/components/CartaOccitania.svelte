@@ -363,6 +363,8 @@
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
 	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', festas: 'confetti', limsi: 'microphone-2' };
 	// una jaça apondida dins l'admin pren sa color de la basa
+	// (los ponches d'una jaça que se decocha, en camin de partir)
+	const partidas = {};
 	// (cada ponch s'aluca a son moment : un pichon retard a l'azard)
 	const estilPunt = (cid) => ` style="--retard:${Math.round(Math.random() * 900)}ms;${colaColors[cid] && !(cid in ICONA_COLA) ? `--ponch:${escapeHtml(colaColors[cid])}` : ''}"`;
 	const iconaPunt = (cid, st = estilPunt(cid)) =>
@@ -1223,9 +1225,22 @@
 
 		for (const [cid, layer] of Object.entries(pointLayers)) {
 			if (vis[cid]) {
+				clearTimeout(partidas[cid]);
+				partidas[cid] = null;
+				layer.eachLayer((m) => m._icon?.classList.remove('ponch-se-va'));
 				layer.addTo(map);
-			} else {
-				map.removeLayer(layer);
+			} else if (map.hasLayer(layer) && !partidas[cid]) {
+				// los ponches s'escantisson un a un abans de partir (demanda de
+				// Romain, 2026-10-09 : « quand elles s'effacent, il faut que ce soit joli »)
+				if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+					map.removeLayer(layer);
+					continue;
+				}
+				layer.eachLayer((m) => m._icon?.classList.add('ponch-se-va'));
+				partidas[cid] = setTimeout(() => {
+					partidas[cid] = null;
+					map?.removeLayer(layer);
+				}, 1000);
 			}
 		}
 
@@ -1493,6 +1508,19 @@
 			filter: brightness(1.7) drop-shadow(0 0 5px var(--t-aur-clar));
 		}
 	}
+	/* En s'anant (jaça decochada), cada ponch s'escantís a son moment */
+	:global(.ponch-se-va .ponch),
+	:global(.ponch-se-va .ponch-cueta),
+	:global(.ponch-se-va .ponch-estela) {
+		animation: ponch-part 0.45s cubic-bezier(0.5, 0, 0.8, 0.4) forwards;
+		animation-delay: calc(var(--retard, 0ms) * 0.5);
+	}
+	@keyframes ponch-part {
+		to {
+			opacity: 0;
+			transform: scale(0.2);
+		}
+	}
 	/* los noms de las autras lengas : lors letras se sarran, coma los noms dels massís */
 	.carta :global(.lenga-franca span) {
 		animation: lenga-ven 0.9s cubic-bezier(0.2, 0.8, 0.3, 1) backwards;
@@ -1508,6 +1536,9 @@
 	@media (prefers-reduced-motion: reduce) {
 		:global(.ponch-jaça .ponch),
 		:global(.ponch-jaça .ponch-cueta),
+		:global(.ponch-se-va .ponch),
+		:global(.ponch-se-va .ponch-cueta),
+		:global(.ponch-se-va .ponch-estela),
 		.carta :global(.lenga-franca span) {
 			animation: none;
 		}
@@ -2048,14 +2079,47 @@
 	.carta :global(.ponch-sol-estela .ponch) {
 		transform: scale(0.2);
 	}
+	/* Al zoom, pas tot d'un còp (demanda de Romain, 2026-10-09 : « comme des
+	   pops jolis, un mouvement organique ») : cada ponch a son moment
+	   (--retard, a l'azard). Las estelas espelisson en venent de luènh e
+	   s'escantisson una a una en i tornant ; l'icòna tòrna espelir quand
+	   l'estela li laissa la plaça (l'animacion es levada en mòde estela, e
+	   se torna jogar quand aquel mòde s'acaba) */
+	.carta :global(.leaflet-marker-pane .ponch-jaça > .ponch-estela) {
+		transition-delay: calc(var(--retard, 0ms) * 0.6);
+	}
+	.carta:global(.ponchs-estelas:not(.luenh)) :global(.ponch-estela) {
+		animation: estela-espelis 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.4) backwards;
+		animation-delay: calc(var(--retard, 0ms) * 0.7);
+	}
+	@keyframes estela-espelis {
+		0% {
+			opacity: 0;
+			transform: scale(0);
+		}
+		60% {
+			opacity: 1;
+			transform: scale(1.7);
+		}
+	}
+	.carta:global(.ponchs-estelas) :global(.ponch-jaça .ponch),
+	.carta:global(.ponchs-estelas) :global(.ponch-jaça .ponch-cueta),
+	.carta :global(.ponch-sol-estela .ponch),
+	.carta :global(.ponch-sol-estela .ponch-cueta) {
+		animation: none;
+	}
 	.carta :global(.ponch-jaça:focus-visible .ponch-estela) {
 		outline: 2px solid var(--t-aur-clar);
 		outline-offset: 3px;
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.carta:global(.ponchs-estelas) :global(.ponch-estela::before),
-		.carta :global(.ponch-sol-estela .ponch-estela::before) {
+		.carta :global(.ponch-sol-estela .ponch-estela::before),
+		.carta:global(.ponchs-estelas:not(.luenh)) :global(.ponch-estela) {
 			animation: none;
+		}
+		.carta :global(.leaflet-marker-pane .ponch-jaça > .ponch-estela) {
+			transition-delay: 0ms;
 		}
 	}
 	.carta:global(.luenh) :global(.leaflet-marker-pane > :not(.lenga-franca)) {
