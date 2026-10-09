@@ -88,6 +88,17 @@
 			p.classList.add('pan-satellit');
 		}
 		const cs = SATELLIT.map(({ url, bounds, attribution }) => L.tileLayer(url, { maxZoom: 19, bounds, attribution, pane: 'satellit', ...opts }));
+		// lo servidor de l'IGN refusa una part de las demandas quand ne recep
+		// fòrça d'un còp (un grand ecran, un zoom) : una tuèla mancada se
+		// torna demandar, de mai en mai tard, puslèu que de daissar un trauc
+		// (una adreça un pauc cambiada : lo navegador gardava l'error en
+		// memòria e tornava pas demandar)
+		for (const c of cs)
+			c.on('tileerror', ({ tile, coords }) => {
+				const n = (tile._essais = (tile._essais ?? 0) + 1);
+				if (n > 4) return;
+				setTimeout(() => tile.isConnected && (tile.src = c.getTileUrl(coords) + '&essai=' + n), 300 * 2 ** n + Math.random() * 400);
+			});
 		const g = L.layerGroup(cs);
 		g.setOpacity = (o) => (cs.forEach((c) => c.setOpacity(o)), g);
 		g.isLoading = () => cs.some((c) => c.isLoading?.());
