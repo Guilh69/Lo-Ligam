@@ -79,174 +79,6 @@
 			attribution: 'Fotografias aerianas © <a href="https://geoservices.ign.fr" target="_blank" rel="noopener">IGN</a> (Licéncia dobèrta 2.0)'
 		}
 	];
-	// La mar al larg : a partir d'un cèrt zoom, l'IGN tòrna una tuèla blanca,
-	// puèi pus res. A un zoom mai bas, la mar i es blava : la tuèla se
-	// remplaça per son tròç de la tuèla d'un zoom mai bas, agrandit, se i a
-	// pas de blanc (sus la tèrra d'Espanha, lo PNOA dejós demòra vesedor).
-	let cxBlanc = null;
-	// (blanc o quasi : la compression grisa las bendas finas, 235 a 250)
-	const blanc = (d, k) => d[k] >= 235 && d[k + 1] >= 235 && d[k + 2] >= 235;
-	// Lo blanc (lo « res » de l'IGN) d'un tròç d'imatge, a sa resolucion :
-	// la pus longa seguida de blanc sus un bòrd (lo « res » es un grand
-	// rectangle : dins una tuèla, tòca totjorn un bòrd ; un teulat blanc,
-	// rarament), puèi, se cal, sa part. De bendas de 2 ponches i passan pas.
-	function blancor(img, sx, sy, sw, sh, totjorn = false) {
-		const g = (cxBlanc ??= Object.assign(document.createElement('canvas'), { width: 256, height: 256 }).getContext('2d', { willReadFrequently: true }));
-		const w = Math.round(sw),
-			h = Math.round(sh);
-		try {
-			g.clearRect(0, 0, w, h);
-			g.drawImage(img, sx, sy, sw, sh, 0, 0, w, h);
-			const seguida = (d) => {
-				let r = 0,
-					m = 0;
-				for (let k = 0; k < d.length; k += 4) m = Math.max(m, (r = blanc(d, k) ? r + 1 : 0));
-				return m;
-			};
-			// (los 3 ponches de cada bòrd : una benda pòt arribar a un ponch del bòrd)
-			const linhas = [0, 1, 2].flatMap((o) => [[0, o, w, 1], [0, h - 1 - o, w, 1], [o, 0, 1, h], [w - 1 - o, 0, 1, h]]);
-			const bòrd = Math.max(...linhas.map((r) => seguida(g.getImageData(...r).data)));
-			if (!bòrd && !totjorn) return { bòrd, part: 0 };
-			const d = g.getImageData(0, 0, w, h).data;
-			let n = 0;
-			for (let k = 0; k < d.length; k += 4) if (blanc(d, k)) n++;
-			return { bòrd, part: n / (w * h) };
-		} catch {
-			return { bòrd: 0, part: 0 };
-		}
-	}
-	// 16 × 16 ponches d'un imatge (sens lissatge)
-	function mostras(img) {
-		const g = (cxBlanc ??= Object.assign(document.createElement('canvas'), { width: 256, height: 256 }).getContext('2d', { willReadFrequently: true }));
-		g.clearRect(0, 0, 16, 16);
-		g.imageSmoothingEnabled = false;
-		g.drawImage(img, 0, 0, 256, 256, 0, 0, 16, 16);
-		g.imageSmoothingEnabled = true;
-		return g.getImageData(0, 0, 16, 16).data;
-	}
-	// La fòto de dejós mòstra quicòm jos lo blanc de la tuèla de dessús ?
-	// Un fons sens fòto es uniform (lo PNOA met un escur sus la mar de França) :
-	// pas mai de 12 de diferéncia de luminositat suls ponches jos lo blanc
-	function mostraQuicòm(dessús, dejós) {
-		try {
-			// (sens tuèla de dessús, un 404 : totes los ponches)
-			const a = dessús && mostras(dessús),
-				b = mostras(dejós);
-			let min = 255,
-				max = 0,
-				n = 0;
-			for (let k = 0; k < b.length; k += 4) {
-				if (a && !blanc(a, k)) continue;
-				const l = (b[k] + b[k + 1] + b[k + 2]) / 3;
-				if (l < min) min = l;
-				if (l > max) max = l;
-				n++;
-			}
-			return n > 0 && max - min > 12;
-		} catch {
-			return false;
-		}
-	}
-	const imatgesAvis = new Map();
-	const cargarImatge = (url) => {
-		if (imatgesAvis.size > 200) imatgesAvis.clear();
-		if (!imatgesAvis.has(url))
-			imatgesAvis.set(
-				url,
-				new Promise((res) => {
-					const i = new Image();
-					i.crossOrigin = 'anonymous';
-					i.onload = () => res(i);
-					i.onerror = () => res(null);
-					i.src = url;
-				})
-			);
-		return imatgesAvis.get(url);
-	};
-	// Rend transparent (dins los ponches d'una tuèla de 256) lo blanc que se
-	// tòca amb lo « res » del bòrd (una plaja, un teulat blanc demòran),
-	// alargat de 2 ponches : lo bòrd de la fòto, gastat per la compression,
-	// fasiá una lisieira clara
-	function escafarBlanc(d) {
-		const clar = new Uint8Array(65536),
-			b = new Uint8Array(65536),
-			h = new Uint8Array(65536);
-		for (let q = 0; q < 65536; q++) clar[q] = Math.min(d[q * 4], d[q * 4 + 1], d[q * 4 + 2]) > 220 ? 1 : 0;
-		// (partença : las seguidas de 12 ponches clars o mai sus las 3 linhas de cada bòrd)
-		const pila = [];
-		for (const [q0, pas] of [0, 1, 2].flatMap((o) => [[o * 256, 1], [65280 - o * 256, 1], [o, 256], [255 - o, 256]]))
-			for (let k = 0, r = 0; k <= 256; k++) {
-				if (k < 256 && clar[q0 + k * pas]) r++;
-				else {
-					if (r >= 12) for (let j = k - r; j < k; j++) pila.push(q0 + j * pas);
-					r = 0;
-				}
-			}
-		while (pila.length) {
-			const q = pila.pop();
-			if (!clar[q] || b[q]) continue;
-			b[q] = 1;
-			const x0 = q & 255;
-			if (x0 > 0) pila.push(q - 1);
-			if (x0 < 255) pila.push(q + 1);
-			if (q >= 256) pila.push(q - 256);
-			if (q < 65280) pila.push(q + 256);
-		}
-		for (let q = 0; q < 65536; q++) {
-			const x0 = q & 255;
-			h[q] = b[q] | (x0 > 0 && b[q - 1]) | (x0 > 1 && b[q - 2]) | (x0 < 255 && b[q + 1]) | (x0 < 254 && b[q + 2]);
-		}
-		for (let q = 0; q < 65536; q++) if (h[q] | h[q - 256] | h[q - 512] | h[q + 256] | h[q + 512]) d[q * 4 + 3] = 0;
-	}
-	// Una tuèla a mitat blanca (la limita de las fòtos la traversa) : la tuèla
-	// d'un zoom mai bas passa dejós, e sonque lo blanc ven transparent
-	async function tuèlaAvi(url, tile, { x, y, z }, partiala = false, dejós = false) {
-		tile._avi = true;
-		// una autra fòto dejós (lo PNOA en Aran e en Catalonha) : lo blanc ven
-		// transparent, sens la tuèla d'avant (l'IGN agrandit, mai flo)
-		if (dejós) {
-			if (!partiala) return void (tile.style.visibility = 'hidden');
-			const t = Object.assign(document.createElement('canvas'), { width: 256, height: 256 }).getContext('2d', { willReadFrequently: true });
-			t.drawImage(tile, 0, 0, 256, 256);
-			const id = t.getImageData(0, 0, 256, 256);
-			escafarBlanc(id.data);
-			t.putImageData(id, 0, 0);
-			tile.src = t.canvas.toDataURL('image/png');
-			return;
-		}
-		// (d'en primièr lo zoom 12, lo mai naut ont la mar es tota blava : un
-		// sol blau per totas las tuèlas, e de tuèlas partejadas)
-		for (let dz = Math.max(1, z - 12); dz <= Math.max(1, z - 12) + 4 && z - dz >= 6; dz++) {
-			const k = 2 ** dz,
-				ax = Math.floor(x / k),
-				ay = Math.floor(y / k);
-			const img = await cargarImatge(L.Util.template(url, { x: ax, y: ay, z: z - dz }));
-			if (!tile.isConnected) return;
-			const s = 256 / k,
-				sx = (x - ax * k) * s,
-				sy = (y - ay * k) * s;
-			// (lo tròç de la tuèla d'avant deu èsser sens cap de blanc)
-			if (!img) continue;
-			const bl = blancor(img, sx, sy, s, s, true);
-			if (bl.bòrd >= 3 || bl.part > 0.002) continue;
-			const cv = Object.assign(document.createElement('canvas'), { width: 256, height: 256 });
-			const g = cv.getContext('2d');
-			g.drawImage(img, sx, sy, s, s, 0, 0, 256, 256);
-			if (partiala) {
-				const t = Object.assign(document.createElement('canvas'), { width: 256, height: 256 }).getContext('2d', { willReadFrequently: true });
-				t.drawImage(tile, 0, 0, 256, 256);
-				const id = t.getImageData(0, 0, 256, 256);
-				escafarBlanc(id.data);
-				t.putImageData(id, 0, 0);
-				g.drawImage(t.canvas, 0, 0);
-			}
-			tile.src = cv.toDataURL('image/jpeg', 0.85);
-			return;
-		}
-		// pas res de segur : un 404 fa un trauc (lo fons, o lo PNOA dejós) ;
-		// una tuèla blanca demòra (la nèu, que se pòt confondre)
-		if (tile._fin) tile.style.visibility = 'hidden';
-	}
 	function crearSatellit(opts = {}) {
 		// son pròpri plan, defòra del filtre « de nuèch » de las tuèlas OSM (que
 		// las inversa) : una fotografia s'escurcís sens s'inversar
@@ -256,59 +88,18 @@
 			p.style.zIndex = 210;
 			p.classList.add('pan-satellit');
 		}
-		// (crossOrigin : los dos servidors o permeton, per poder legir la color d'una tuèla)
-		const cs = SATELLIT.map(({ url, bounds, attribution }) => L.tileLayer(url, { maxZoom: 19, bounds, attribution, pane: 'satellit', crossOrigin: 'anonymous', ...opts }));
+		const cs = SATELLIT.map(({ url, bounds, attribution }) => L.tileLayer(url, { maxZoom: 19, bounds, attribution, pane: 'satellit', ...opts }));
 		// lo servidor de l'IGN refusa una part de las demandas quand ne recep
 		// fòrça d'un còp (un grand ecran, un zoom) : una tuèla mancada se
 		// torna demandar, de mai en mai tard, puslèu que de daissar un trauc
 		// (una adreça un pauc cambiada : lo navegador gardava l'error en
-		// memòria e tornava pas demandar). Un 404 es definitiu (la mar al
-		// larg) : la tuèla d'un zoom mai bas pren lo relais.
-		cs.forEach((c, i) => {
-			// una autra fòto dejós aqueste tuèla, que mòstra quicòm (lo PNOA en
-			// Aran e en Catalonha ; sus la mar de França, met un fons escur uniform) ?
-			const dejós = async (coords, tile) => {
-				const ll = map.unproject([(coords.x + 0.5) * 256, (coords.y + 0.5) * 256], coords.z);
-				for (let j = i - 1; j >= 0; j--) {
-					if (!L.latLngBounds(SATELLIT[j].bounds).contains(ll)) continue;
-					const t = cs[j]._tiles?.[cs[j]._tileCoordsToKey(coords)];
-					if (!t) continue;
-					if (!t.loaded)
-						await new Promise((res) => {
-							t.el.addEventListener('load', res, { once: true });
-							t.el.addEventListener('error', res, { once: true });
-							setTimeout(res, 5000);
-						});
-					if (t.el.complete && t.el.naturalWidth && mostraQuicòm(tile, t.el)) return true;
-				}
-				return false;
-			};
+		// memòria e tornava pas demandar)
+		for (const c of cs)
 			c.on('tileerror', ({ tile, coords }) => {
-				if (tile._avi) return;
 				const n = (tile._essais = (tile._essais ?? 0) + 1);
-				// (aprèp un segond fracàs : un servidor saturat respond a la segonda)
-				if (n === 2)
-					fetch(c.getTileUrl(coords))
-						.then((r) => {
-							if (r.status !== 404) return;
-							tile._fin = true;
-							// (una autra fòto dejós : lo trauc li daissa la plaça)
-							dejós(coords).then((d) => tuèlaAvi(SATELLIT[i].url, tile, coords, false, d));
-						})
-						.catch(() => {});
 				if (n > 4) return;
-				setTimeout(() => tile.isConnected && !tile._fin && !tile._avi && (tile.src = c.getTileUrl(coords) + '&essai=' + n), 300 * 2 ** n + Math.random() * 400);
+				setTimeout(() => tile.isConnected && (tile.src = c.getTileUrl(coords) + '&essai=' + n), 300 * 2 ** n + Math.random() * 400);
 			});
-			// la mar al larg, de prèp : una tuèla tota blanca (retorn de Romain,
-			// « garder le bleu ») se remplaça tanben
-			c.on('tileload', ({ tile, coords }) => {
-				if (tile._avi) return;
-				const b = blancor(tile, 0, 0, 256, 256);
-				if (b.bòrd < 12) return;
-				tile._avi = true;
-				dejós(coords, tile).then((d) => tuèlaAvi(SATELLIT[i].url, tile, coords, b.part < 0.98, d));
-			});
-		});
 		const g = L.layerGroup(cs);
 		g.setOpacity = (o) => (cs.forEach((c) => c.setOpacity(o)), g);
 		g.isLoading = () => cs.some((c) => c.isLoading?.());
