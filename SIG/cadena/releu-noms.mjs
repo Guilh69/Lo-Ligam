@@ -290,7 +290,8 @@ const slug = s =>s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replac
 // cada forma amb l'article que l'atèsta, totas de validar per Romain. Los
 // mots generics (mont, massís, pic, plan) son verificats amb lo Congrès.
 const WIKIPEDIA_OC = {
-  'alpes-maritimes': ['Alps Maritims', 'Wikipèdia oc « Aups Maritims » (var. Alps Maritims)'],
+  // (en provençal e en vivaroaupenc : « Aups », grafia classica, pas « Alps »)
+  'alpes-maritimes': ['Aups Maritims', 'Wikipèdia oc « Aups Maritims »'],
   'monts-du-vivarais': ['Monts de Vivarés', 'Wikipèdia oc « Laurac (Vivarés) » : « comuna occitana de Vivarés »'],
   'plantaurel': ['Plantaurèl', 'Wikipèdia oc « Montagut de Plantaurèl »'],
   'massif-de-l-arize': ["Massís d'Arisa", "Wikipèdia oc « Campanha d'Arisa »"],
@@ -306,7 +307,27 @@ const WIKIPEDIA_OC = {
 const w = await wikidata();
 const pics = await osm();
 const sortie = [];
-const revision = [['kod', 'fr', 'oc', 'font', 'nota']];
+// Lo dialècte de cada nom (Romain, 2026-10-10 : un nom s'escriu dins la forma
+// de son dialècte, en grafia classica, jamai fonetica) : la zòna de
+// dialectes.geojson ont tomba son etiqueta, per verificar la forma
+const DIALS = JSON.parse(fs.readFileSync(path.join(DATA, 'dialectes.geojson'), 'utf8')).features;
+const dinsPoli = ([x, y], poli) => {
+  let d = false;
+  for (const a of poli)
+    for (let i = 0, j = a.length - 1; i < a.length; j = i++) {
+      const [xi, yi] = a[i], [xj, yj] = a[j];
+      if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) d = !d;
+    }
+  return d;
+};
+const dialècteDe = (pos) => {
+  for (const f of DIALS) {
+    const polis = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
+    if (polis.some((p) => dinsPoli(pos, p))) return f.properties.oc;
+  }
+  return '';
+};
+const revision = [['kod', 'fr', 'oc', 'dialècte', 'font', 'nota']];
 const ecartes = [];
 let nOsm = 0;
 for (const [qid, mena, renc, o] of LISTA) {
@@ -337,6 +358,14 @@ for (const [qid, mena, renc, o] of LISTA) {
     }
   }
   if (!oc && WIKIPEDIA_OC[slug(fr)]) [oc, font] = WIKIPEDIA_OC[slug(fr)];
+  // (en provençal e en vivaroaupenc, « Aups » e pas « Alps » : coma « Auts Aups »,
+  // Wikidata Q3125, e « Aups d'Auta Provença », Q3131 ; grafia classica)
+  const dial = dialècteDe(pos);
+  if (oc && ['provençal', 'vivaroaupenc'].includes(dial) && /\bAlps\b/.test(oc)) {
+    notes.push('« Alps » → « Aups » (forme provençale et vivaro-alpine, comme « Auts Aups », Wikidata Q3125)');
+    oc = oc.replace(/\bAlps\b/g, 'Aups');
+  }
+  if (oc && dial && dial !== 'lengadocian' && /\b(dels|del)\b/.test(oc)) notes.push('article languedocien « dels / del » en zone ' + dial + ' : forme dialectale à confirmer');
   if (oc && fr && oc.toLowerCase() === fr.toLowerCase()) notes.push('identique au nom français : forme à vérifier');
   if (oc) notes.push('à valider (graphie et dialecte)');
   else notes.push('aucun nom occitan dans les sources : à écrire par Romain');
@@ -348,7 +377,7 @@ for (const [qid, mena, renc, o] of LISTA) {
     properties: { kod, mena, fr, oc: oc ?? null, alt, renc, ang: o.ang ?? null },
     geometry: { type: 'Point', coordinates: [r4(pos[0]), r4(pos[1])] },
   });
-  revision.push([kod, fr, oc ?? '', font, notes.join(' ; ')]);
+  revision.push([kod, fr, oc ?? '', dialècteDe(pos), font, notes.join(' ; ')]);
 }
 
 const ORDRE = { cadena: 0, massis: 1, plan: 2, som: 3 };

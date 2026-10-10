@@ -1,5 +1,5 @@
 {"type":"FeatureCollection","font":"Wikidata (CC0) : positions, altitudes et noms occitans ; OpenStreetMap (ODbL) : 3 noms occitans de sommets ; liste et positions des étiquettes de massifs : Lo Ligam","features":[
-{"type":"Feature","properties":{"kod":"alpes","mena":"cadena","fr":"Alpes","oc":"Alps","alt":null,"renc":1,"ang":60},"geometry":{"type":"Point","coordinates":[6.55,44.55]}},
+{"type":"Feature","properties":{"kod":"alpes","mena":"cadena","fr":"Alpes","oc":"Aups","alt":null,"renc":1,"ang":60},"geometry":{"type":"Point","coordinates":[6.55,44.55]}},
 {"type":"Feature","properties":{"kod":"pyrenees","mena":"cadena","fr":"Pyrénées","oc":"Pirenèus","alt":null,"renc":1,"ang":9},"geometry":{"type":"Point","coordinates":[0.45,42.88]}},
 {"type":"Feature","properties":{"kod":"cevennes","mena":"massis","fr":"Cévennes","oc":"Cevenas","alt":null,"renc":1,"ang":-45},"geometry":{"type":"Point","coordinates":[3.75,44.22]}},
 {"type":"Feature","properties":{"kod":"massif-central","mena":"massis","fr":"Massif central","oc":"Massís Central","alt":null,"renc":1,"ang":null},"geometry":{"type":"Point","coordinates":[3.35,45.3]}},
@@ -13,8 +13,8 @@
 {"type":"Feature","properties":{"kod":"puy-de-dome","mena":"som","fr":"Puy de Dôme","oc":"Puèi de Doma","alt":1465,"renc":1,"ang":null},"geometry":{"type":"Point","coordinates":[2.9624,45.772]}},
 {"type":"Feature","properties":{"kod":"puy-de-sancy","mena":"som","fr":"Puy de Sancy","oc":"Puèi de Sant Circ","alt":1885,"renc":1,"ang":null},"geometry":{"type":"Point","coordinates":[2.8142,45.5283]}},
 {"type":"Feature","properties":{"kod":"vignemale","mena":"som","fr":"Vignemale","oc":"Vinhamala","alt":3299,"renc":1,"ang":null},"geometry":{"type":"Point","coordinates":[-0.1475,42.7739]}},
-{"type":"Feature","properties":{"kod":"alpes-cottiennes","mena":"cadena","fr":"Alpes cottiennes","oc":"Alps Còcias","alt":null,"renc":2,"ang":-80},"geometry":{"type":"Point","coordinates":[6.98,44.92]}},
-{"type":"Feature","properties":{"kod":"alpes-maritimes","mena":"cadena","fr":"Alpes maritimes","oc":"Alps Maritims","alt":null,"renc":2,"ang":20},"geometry":{"type":"Point","coordinates":[7.45,44.28]}},
+{"type":"Feature","properties":{"kod":"alpes-cottiennes","mena":"cadena","fr":"Alpes cottiennes","oc":"Aups Còcias","alt":null,"renc":2,"ang":-80},"geometry":{"type":"Point","coordinates":[6.98,44.92]}},
+{"type":"Feature","properties":{"kod":"alpes-maritimes","mena":"cadena","fr":"Alpes maritimes","oc":"Aups Maritims","alt":null,"renc":2,"ang":20},"geometry":{"type":"Point","coordinates":[7.45,44.28]}},
 {"type":"Feature","properties":{"kod":"chaine-des-puys","mena":"cadena","fr":"Chaîne des Puys","oc":"Monts Domats","alt":null,"renc":2,"ang":-85},"geometry":{"type":"Point","coordinates":[2.9,45.86]}},
 {"type":"Feature","properties":{"kod":"alpilles","mena":"massis","fr":"Alpilles","oc":"Aupilhas","alt":null,"renc":2,"ang":null},"geometry":{"type":"Point","coordinates":[4.8261,43.7547]}},
 {"type":"Feature","properties":{"kod":"corbieres","mena":"massis","fr":"Corbières","oc":"Corbièras","alt":null,"renc":2,"ang":null},"geometry":{"type":"Point","coordinates":[2.55,43]}},
