@@ -285,6 +285,24 @@ const mots_nom = s => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLower
 const slug = s =>s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 // ------------------------------------------------------------------- main
+// Formas relevadas dins Wikipèdia en occitan (Romain, 2026-10-10 : « n'oublie
+// pas Wikipédia comme source »), quand Wikidata e OpenStreetMap an pas res ;
+// cada forma amb l'article que l'atèsta, totas de validar per Romain. Los
+// mots generics (mont, massís, pic, plan) son verificats amb lo Congrès.
+const WIKIPEDIA_OC = {
+  'alpes-maritimes': ['Alps Maritims', 'Wikipèdia oc « Aups Maritims » (var. Alps Maritims)'],
+  'monts-du-vivarais': ['Monts de Vivarés', 'Wikipèdia oc « Laurac (Vivarés) » : « comuna occitana de Vivarés »'],
+  'plantaurel': ['Plantaurèl', 'Wikipèdia oc « Montagut de Plantaurèl »'],
+  'massif-de-l-arize': ["Massís d'Arisa", "Wikipèdia oc « Campanha d'Arisa »"],
+  'monts-du-livradois': ['Monts de Liuradés', 'Wikipèdia oc « Marçac de Liuradés »'],
+  'plateau-du-coiron': ['Plan de Coiron', 'Wikipèdia oc « Sant Gineis en Coiron »'],
+  'mont-bouquet': ['Mont Boquet', 'Wikipèdia oc « Boquet »'],
+  'sommet-de-finiels': ['Pic de Finiels', 'Wikipèdia oc « Mont Losera » : « pic de Finiels »'],
+  'l-olan': ["L'Olan", "Wikipèdia oc « Vau Gaudemar » : « l'Olan »"],
+  'bric-froid': ['Bric Froid', 'Wikipèdia oc « Alps Còcis » : « Bric Froid »'],
+  'mont-chaberton': ['Mont Chaberton', 'Wikipèdia oc « Alps Còcis » : « Chaberton »'],
+  'mont-thabor': ['Mont Tabor', 'Wikipèdia oc « Alps Còcis » : « Tabor »']
+};
 const w = await wikidata();
 const pics = await osm();
 const sortie = [];
@@ -318,6 +336,7 @@ for (const [qid, mena, renc, o] of LISTA) {
       if (!oc) { oc = p.oc; font = s; nOsm++; } else if (p.oc !== oc) notes.push(`autre forme dans ${s} : « ${p.oc} »`);
     }
   }
+  if (!oc && WIKIPEDIA_OC[slug(fr)]) [oc, font] = WIKIPEDIA_OC[slug(fr)];
   if (oc && fr && oc.toLowerCase() === fr.toLowerCase()) notes.push('identique au nom français : forme à vérifier');
   if (oc) notes.push('à valider (graphie et dialecte)');
   else notes.push('aucun nom occitan dans les sources : à écrire par Romain');
