@@ -234,6 +234,11 @@ for v in cands:
     gard.append(v)
 for v in gard:
     del v['x'], v['y']
+# (una vila al mens per lenga o dialècte a 70 km, retorn de Romain : « il faut au
+# moins Poitiers ») : la pus poblada de cada zòna passa al renc 1
+for z in {v['zona'] for v in gard}:
+    if not any(v['renc'] == 1 for v in gard if v['zona'] == z):
+        max((v for v in gard if v['zona'] == z), key=lambda v: v['pop'])['renc'] = 1
 d['vilas'] = [[v['lon'], v['lat'], v['nom'], v['renc'], v['zona']] for v in gard]
 json.dump(d, open(FIC, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 json.dump(gard, open(os.path.join(R, 'SIG', L, 'vilas-%s.json' % L), 'w', encoding='utf-8'), ensure_ascii=False, indent=0)

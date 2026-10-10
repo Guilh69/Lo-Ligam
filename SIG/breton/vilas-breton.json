@@ -23,7 +23,7 @@
 "pop": 64385,
 "zona": "kerneveg",
 "estat": "FR",
-"renc": 2
+"renc": 1
 },
 {
 "codi": "56121",
@@ -36,7 +36,7 @@
 "pop": 58329,
 "zona": "gwenedeg",
 "estat": "FR",
-"renc": 2
+"renc": 1
 },
 {
 "codi": "56260",
@@ -62,7 +62,7 @@
 "pop": 20315,
 "zona": "tregerieg",
 "estat": "FR",
-"renc": 3
+"renc": 1
 },
 {
 "codi": "29151",
@@ -153,7 +153,7 @@
 "pop": 4173,
 "zona": "gwenrann",
 "estat": "FR",
-"renc": 4
+"renc": 1
 },
 {
 "codi": "29197",

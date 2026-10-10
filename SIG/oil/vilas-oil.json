@@ -213,7 +213,7 @@
 "lat": 46.5801,
 "pop": 89916,
 "zona": "poitevin_saintongeais",
-"renc": 2
+"renc": 1
 },
 {
 "insee": "17300",
@@ -513,7 +513,7 @@
 "lat": 50.3578,
 "pop": 43468,
 "zona": "rouchi",
-"renc": 2
+"renc": 1
 },
 {
 "insee": "51108",
@@ -597,7 +597,7 @@
 "lat": 50.3678,
 "pop": 40250,
 "zona": "chti",
-"renc": 2
+"renc": 1
 },
 {
 "insee": "28085",
@@ -1749,7 +1749,7 @@
 "lat": 50.1364,
 "pop": 6364,
 "zona": "wallon",
-"renc": 4
+"renc": 1
 },
 {
 "insee": "89025",
