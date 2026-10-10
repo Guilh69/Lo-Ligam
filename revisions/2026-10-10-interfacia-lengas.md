@@ -34,6 +34,9 @@ Demandes de Romain du 2026-10-10 (dictées), à mener dans une conversation neuv
 - ✅ **Étapes 1 et 2 faites (2026-10-10)** dans `RailJaces.svelte` : « Autras lengas » fait entrer dans le mode ; l'état de la carte occitane est mis de côté, les familles Cultura et Istòria s'effacent ; rail du mode = « ‹ Occitan » (retour, restaure la carte comme avant), « Sus la carta », « Lengas » ; panneau « Lengas de França » sans onglets, toutes les langues dans une liste (A→Z sur le nom occitan, ou par locuteurs), l'occitan dedans avec ses dialectes (ligne simple : pas encore de fiche sourcée). Même chose sur téléphone (barre du bas).
 - **Reste** : étape 3 (« Voir la langue dans son environnement linguistique ») ; étape 4 (« Donadas » : écoles bilingues et limites historiques du breton, puis écoles en corse) ; une fiche sourcée pour l'occitan (locuteurs, statut UNESCO, sources) ; mots occitans à trancher : « França » (absent de l'API toponymique), « Donadas » (l'API ne connaît que le participe).
 
+- ✅ **Icônes des langues** (2026-10-10) : dans la silhouette, la partie française en plein, le reste en clair (contour de la France : régions IGN, `SIG/cadena/lengas-vesinas.mjs`).
+- **Étape 3, idée de Romain (2026-10-10)** : une langue allumée ne montre d'abord que sa partie française ; survoler la partie claire de son icône affiche « Voir la langue dans son environnement linguistique », un clic allume le reste sur la carte ; la liste des dialectes se range en trois groupes : **en France**, **transfrontaliers**, **hors de France**.
+
 ## Questions encore ouvertes (une à la fois)
 
 1. ✅ Icône « Autres langues » : **deux bulles de discussion**, une pleine et une au trait (Romain, 2026-10-10, d'après son modèle ; en place dans `RailJaces.svelte`).
