@@ -1,3 +1,5 @@
+import { dev } from '$app/environment';
+
 // En-têtes de sécurité posés sur chaque réponse. Scaleway ne les met pas
 // tout seul, et la politique de contenu (définie dans svelte.config.js)
 // ne couvre pas ces aspects-là.
@@ -22,7 +24,8 @@ export async function handle({ event, resolve }) {
 
 	// Double sécurité avec frame-ancestors de la CSP, pour les vieux
 	// navigateurs qui ignorent cette directive.
-	response.headers.set('X-Frame-Options', 'DENY');
+	// (en développement : SAMEORIGIN, pour les maquettes posées sur la carte)
+	response.headers.set('X-Frame-Options', dev ? 'SAMEORIGIN' : 'DENY');
 
 	// Force le HTTPS pendant deux ans. En développement le site est servi
 	// en clair : l'en-tête n'aurait pas de sens et gênerait les tests.

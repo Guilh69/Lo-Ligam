@@ -45,7 +45,10 @@ const csp = {
 		'object-src': ['none'],
 		'base-uri': ['self'],
 		'form-action': ['self'],
-		'frame-ancestors': ['none'] // interdit d'enfermer le site dans une iframe
+		// interdit d'enfermer le site dans une iframe ; en développement
+		// seulement, ses propres pages peuvent le faire (maquettes posées sur
+		// la vraie carte). Tout autre cas, y compris un mode inconnu : 'none'.
+		'frame-ancestors': [process.env.NODE_ENV === 'development' ? 'self' : 'none']
 	}
 };
 

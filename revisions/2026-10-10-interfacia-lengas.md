@@ -24,6 +24,12 @@ Demandes de Romain du 2026-10-10 (dictées), à mener dans une conversation neuv
 - `SIG/cadena/breton-istoric.py` : script écrit, **pas encore lancé** (Romain a interrompu : à décider si ces deux données vont dans la couche bretonne ou dans les données du mode).
 - Écoles en corse : source à chercher.
 
+## Suite (2026-10-10)
+
+- Plan en 4 étapes : entrée dans le mode, liste unique, « Voir la langue dans son environnement linguistique », rubrique Données. Romain a choisi **une maquette d'essai d'abord** pour l'étape 1.
+- **En pause** : Romain veut d'abord monter en gamme le rail et le catalogue de données (références de sites haut de gamme, puis choix d'une direction). La maquette du mode viendra ensuite, dans la direction retenue.
+- Mots de la maquette vérifiés (lo Congrès) : lenga, tornar, escòla, bilingüe, limit, istoric, veire, dins, lingüistic (environament), causir, vesin, frontièra, locutor, grèu, dangièr. Non confirmés par l'API : França (absent des toponymes), donadas (seulement participe), celtic, germanic, alsacian, francic, arpitan.
+
 ## Questions encore ouvertes (une à la fois)
 
 1. ✅ Icône « Autres langues » : **deux bulles de discussion**, une pleine et une au trait (Romain, 2026-10-10, d'après son modèle ; en place dans `RailJaces.svelte`).

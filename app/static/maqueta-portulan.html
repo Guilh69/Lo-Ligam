@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="oc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Portulan modèrne</title>
+<!-- Maquette du 2026-10-10 : rail et catalogue de la carte en « portulan
+     moderne » (direction 1, l'atelier du cartographe, touche A, choix de
+     Romain). La vraie carte tourne en fond (iframe) ; son rail et son panneau
+     sont masqués et remplacés par l'essai. Catalogue et icônes lus dans le
+     code du site (Vite, page locale seulement) : rien n'est recopié.
+     scripts/levar-esbos.mjs la retire de la version en ligne. -->
+<style>
+@font-face{font-family:'Limelight';src:url('/fonts/limelight.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Luciole';src:url('/fonts/luciole-regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Luciole';src:url('/fonts/luciole-bold.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Cormorant';src:url('/fonts/cormorant-italic-latin.woff2') format('woff2');font-style:italic;font-display:swap}
+:root{--fons:#120906;--veire:rgba(22,11,7,.72);--tinta:#f5ead8;--tinta2:rgba(245,234,216,.72);--tinta3:rgba(245,234,216,.46);
+--linha:rgba(245,234,216,.13);--aur:#eeaf34;--aur2:#ffd47f;--vermelh:#e0533a;--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--fons);color:var(--tinta);font:15px/1.45 Luciole,system-ui,sans-serif;overflow:hidden}
+iframe{position:fixed;inset:0;width:100%;height:100%;border:0}
+button{font:inherit;color:inherit}
+
+/* ——— Lo rail : una regla de carta, bòrd en barras alternadas (lo cadre de las cartas ancianas) ——— */
+.rail{position:fixed;z-index:20;left:1rem;top:calc(50% + 2rem);transform:translateY(-50%);width:5.1rem;
+ padding:.55rem .35rem;display:grid;gap:.15rem;background:var(--veire);backdrop-filter:blur(14px) saturate(1.2);
+ border:1px solid var(--linha);border-radius:10px}
+.rb{position:relative;display:grid;justify-items:center;gap:4px;padding:.55rem .1rem .45rem;border:0;background:none;
+ color:var(--tinta2);font-size:10.5px;line-height:1.15;text-align:center;cursor:pointer;border-radius:2px;transition:color .25s}
+.rb svg{width:22px;height:22px;transition:transform .5s var(--ease)}
+.rb:hover{color:var(--tinta)}.rb:hover svg{transform:translateY(-1px)}
+.rb[aria-pressed=true]{color:var(--aur2)}
+.rb[aria-pressed=true]::before{content:'';position:absolute;left:-.35rem;top:22%;bottom:22%;width:2px;background:var(--vermelh)}
+.rb:focus-visible{outline:1px solid var(--aur);outline-offset:2px}
+.rosa{padding:.3rem 0 .6rem;margin-bottom:.2rem;border-bottom:1px solid var(--linha)}
+.rosa svg{width:24px;height:24px}
+.rosa .agulha{transform-origin:20px 20px;transition:transform .9s var(--ease)}
+.sep{height:1px;background:var(--linha);margin:.2rem .4rem}
+
+/* ——— Lo panèl : un cartolari ——— */
+.panel{position:fixed;z-index:19;left:7.3rem;top:calc(50% + 2rem);transform:translateY(-50%);width:23rem;max-height:calc(100% - 9rem);
+ overflow:hidden auto;scrollbar-width:thin;scrollbar-color:var(--linha) transparent;
+ background:var(--veire);backdrop-filter:blur(10px) saturate(1.15);border:1px solid var(--linha);border-radius:10px;
+ padding:1.15rem 1.2rem 1rem;opacity:0;pointer-events:none;translate:-8px 0;transition:opacity .35s var(--ease),translate .45s var(--ease)}
+.panel.dobert{opacity:1;pointer-events:auto;translate:0 0}
+.rumbs,.escala,.pe{display:none}
+.cap{position:relative;display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:0 0 .75rem;margin:0 0 .35rem;border-bottom:1px solid var(--linha)}
+.cap h2{margin:0;font:700 1.1rem/1.2 Luciole,system-ui,sans-serif;color:var(--tinta)}
+.cap .compte{font:400 12px/1 Luciole;color:var(--tinta2);font-variant-numeric:tabular-nums}
+.cap .compte b{color:var(--aur);font-weight:700}
+
+.j{position:relative;display:grid;grid-template-columns:58px 1fr auto;align-items:center;gap:.8rem;padding:.55rem .4rem .55rem .5rem;
+ margin:0 -.4rem 0 -.5rem;border-radius:2px;cursor:pointer;transition:background .25s}
+.j:hover{background:rgba(245,234,216,.045)}
+.j.venir{cursor:default;opacity:.45}
+.ap{width:58px;height:38px;border-radius:4px;background:rgba(245,234,216,.05);display:grid;place-items:center;overflow:hidden;
+ filter:saturate(.35);opacity:.7;transition:filter .5s var(--ease),opacity .5s var(--ease)}
+.ap svg{width:52px;height:36px;color:var(--tinta)}
+.j.on .ap{filter:none;opacity:1}
+.j.on::before{content:'';position:absolute;left:0;top:18%;bottom:18%;width:2px;border-radius:1px;background:var(--vermelh);animation:tic .35s var(--ease)}
+@keyframes tic{from{transform:scaleY(0)}}
+.nom{font-size:15px;line-height:1.3}
+.nota{display:block;font-size:12.5px;color:var(--tinta2);margin-top:2px;line-height:1.35}
+.venir .nota::before{content:'· ';color:var(--vermelh)}
+/* l'interruptor : clar e net */
+.sw{position:relative;width:32px;height:18px;border-radius:9px;background:rgba(245,234,216,.18);transition:background .3s}
+.sw::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--tinta);transition:translate .35s var(--ease)}
+.sw svg{display:none}
+.j.on .sw{background:var(--aur)}
+.j.on .sw::after{translate:14px 0;background:#1d0f0a}
+.dial{display:flex;flex-wrap:wrap;gap:.3rem;margin:.1rem 0 .5rem 4.1rem}
+.dial span{font-size:12px;padding:.2rem .55rem .2rem .45rem;border:1px solid var(--linha);border-radius:4px;color:var(--tinta2);display:inline-flex;align-items:center;gap:.35rem}
+.dial span i{width:8px;height:8px;border-radius:1px}
+
+/* ——— Selector de version (maqueta sola) ——— */
+.maq{position:fixed;z-index:30;right:1rem;bottom:1rem;background:var(--veire);border:1px solid var(--linha);border-radius:3px;padding:.4rem .6rem;font-size:12px;color:var(--tinta2)}
+
+/* ——— Telefòn : lo rail ven una barra en bas, lo panèl una fuèlha que monta ——— */
+@media (max-width:720px){
+ .rail{top:auto;bottom:0;left:0;right:0;transform:none;width:auto;display:flex;justify-content:space-around;padding:.35rem .3rem calc(.35rem + env(safe-area-inset-bottom));border-radius:0;border-width:1px 0 0}
+ .rail::after{top:-4px;bottom:auto;left:0;right:0;width:auto;height:3px;background:repeating-linear-gradient(to right,var(--aur) 0 14px,transparent 14px 28px)}
+ .rosa{border:0;padding:0;margin:0}.rosa svg{width:26px;height:26px}.sep{display:none}
+ .rb{font-size:9.5px;padding:.35rem .1rem}.rb svg{width:20px;height:20px}
+ .rb[aria-pressed=true]::before{left:22%;right:22%;top:-.35rem;bottom:auto;width:auto;height:2px}
+ .panel{left:0;right:0;top:auto;bottom:3.9rem;transform:none;width:auto;max-height:62vh;border-radius:10px 10px 0 0;translate:0 12px;padding-top:1.5rem}
+ .panel.dobert{translate:0 0}
+ .panel .ansa{position:absolute;top:.5rem;left:50%;width:38px;height:4px;margin-left:-19px;border-radius:2px;background:var(--tinta3)}
+ .maq{display:none}
+}
+</style>
+</head>
+<body>
+<iframe id="carta" src="/carta" title="Carta"></iframe>
+
+<nav class="rail" id="rail" aria-label="Familhas de jaces"></nav>
+<section class="panel" id="panel" aria-live="polite">
+ <span class="ansa" aria-hidden="true"></span>
+ <svg class="rumbs" viewBox="0 0 368 600" preserveAspectRatio="xMaxYMin slice" aria-hidden="true"><g id="rumbs" fill="none" stroke="#eeaf34" stroke-width=".7"></g></svg>
+ <div id="contengut"></div>
+</section>
+
+<script type="module">
+// lo catalògue e las icònas del site, legits dins lo còdi (Vite) : pas cap de còpia
+const { CATALOGUE } = await import('/src/lib/carta/catalogue.js');
+const font = (await import('/src/lib/components/RailJaces.svelte?raw')).default;
+const linhas = (desde, fins) => {
+	const a = font.indexOf(desde), b = font.indexOf(fins, a);
+	const o = {};
+	for (const m of font.slice(a, b).matchAll(/^\t+(\w+): '(<.*?)',?\s*$/gm)) o[m[1]] = m[2];
+	return o;
+};
+const IC = linhas('const IC = {', '};');
+const AP = linhas('const A = {', 'const ALIAS');
+const DIAL = [['#9d7dff', 'gascon'], ['#ff3f86', 'lengadocian'], ['#ffb0dc', 'provençal'], ['#ffa22e', 'lemosin'], ['#e8482a', 'auvernhat'], ['#ffe27a', 'vivaroaupenc']];
+AP.toponimia = AP.nomsVilas; AP.vilas = AP.estelas;
+AP.dialectes = DIAL.map(([c], i) => `<rect x="${i * 9}" y="0" width="9.5" height="36" fill="${c}" opacity=".75"/>`).join('');
+
+// la rosa dels vents : 16 rumbs, l'agulha vira cap a la familha dobèrta
+const rosa = `<svg viewBox="0 0 40 40" aria-hidden="true">
+ <circle cx="20" cy="20" r="17.5" fill="none" stroke="currentColor" stroke-width=".6" opacity=".5"/>
+ <circle cx="20" cy="20" r="13" fill="none" stroke="currentColor" stroke-width=".4" opacity=".35"/>
+ ${Array.from({ length: 16 }, (_, i) => `<path d="M20 ${i % 4 ? 5 : 2.5}V8" stroke="currentColor" stroke-width="${i % 4 ? .5 : .9}" transform="rotate(${i * 22.5} 20 20)"/>`).join('')}
+ <g class="agulha"><path d="M20 4.5 23 20h-6z" fill="#e0533a"/><path d="M20 35.5 17 20h6z" fill="currentColor" opacity=".8"/><circle cx="20" cy="20" r="1.6" fill="#120906" stroke="currentColor" stroke-width=".6"/></g>
+</svg>`;
+
+// los rumbs en filigrana dins lo panèl, d'un punt en naut a drecha
+document.getElementById('rumbs').innerHTML = Array.from({ length: 32 }, (_, i) => {
+	const a = (i * 11.25 * Math.PI) / 180, x = 330, y = 40;
+	return `<path d="M${x} ${y}L${(x + Math.cos(a) * 900).toFixed(0)} ${(y + Math.sin(a) * 900).toFixed(0)}" style="animation-delay:${(i * 18) % 300}ms"/>`;
+}).join('');
+
+const RAIL = ['lenga', 'administracion', 'cultura', 'istoria', 'natura', 'lengas'];
+const fam = Object.fromEntries(CATALOGUE.map((f) => [f.id, f]));
+const actius = new Set(CATALOGUE.flatMap((f) => f.jaces.filter((j) => j.defaut).map((j) => j.id)));
+let dobert = 'lenga';
+
+const rail = document.getElementById('rail');
+rail.innerHTML = `<button class="rb rosa" data-f="sus" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true">${IC.sus ?? ''}</svg><span>Sus la carta</span></button>` +
+	RAIL.map((id) => `${id === 'lengas' ? '<span class="sep"></span>' : ''}<button class="rb" data-f="${id}" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true">${IC[id] ?? ''}</svg><span>${fam[id]?.oc ?? id}</span></button>`).join('');
+
+const agulha = rail.querySelector('.agulha');
+function orientar() {
+	// l'agulha mòstra lo boton dobèrt (quina que siá sa plaça dins lo rail)
+	const b = rail.querySelector(`[data-f="${dobert}"]`), r = rail.querySelector('.rosa svg');
+	if (!agulha) return;
+	if (!b || !r) return agulha.style.transform = 'rotate(0deg)';
+	const p = r.getBoundingClientRect(), q = b.getBoundingClientRect();
+	const ang = (Math.atan2(q.top + q.height / 2 - (p.top + p.height / 2), q.left + q.width / 2 - (p.left + p.width / 2)) * 180) / Math.PI + 90;
+	agulha.style.transform = `rotate(${ang.toFixed(1)}deg)`;
+}
+
+const panel = document.getElementById('panel'), cont = document.getElementById('contengut');
+const agulhaSw = '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1 9 7H5z"/><path d="M7 13 5 7h4z"/></svg>';
+function jaça(j) {
+	const venir = j.estat === 'a venir';
+	return `<div class="j ${actius.has(j.id) ? 'on' : ''} ${venir ? 'venir' : ''}" data-j="${j.id}" role="switch" aria-checked="${actius.has(j.id)}" tabindex="${venir ? -1 : 0}">
+	 <span class="ap"><svg viewBox="0 0 52 36" aria-hidden="true">${AP[j.id] ?? ''}</svg></span>
+	 <span class="nom">${j.oc}${j.nota_oc ? `<span class="nota">${j.nota_oc}</span>` : ''}</span>
+	 ${venir ? '' : `<span class="sw">${agulhaSw}</span>`}
+	</div>${j.id === 'dialectes' && actius.has('dialectes') ? `<div class="dial">${DIAL.map(([c, n]) => `<span><i style="background:${c}"></i>${n}</span>`).join('')}</div>` : ''}`;
+}
+function render() {
+	rail.querySelectorAll('.rb').forEach((b) => b.setAttribute('aria-pressed', b.dataset.f === dobert));
+	orientar();
+	if (!dobert) return panel.classList.remove('dobert');
+	let titol, jaces;
+	if (dobert === 'sus') {
+		titol = 'Sus la carta';
+		jaces = CATALOGUE.flatMap((f) => f.jaces).filter((j) => actius.has(j.id));
+	} else {
+		titol = fam[dobert].oc;
+		jaces = fam[dobert].jaces;
+	}
+	const n = jaces.filter((j) => actius.has(j.id)).length;
+	cont.innerHTML = `<div class="cap"><h2>${titol}</h2><span class="compte"><b>${n}</b> / ${jaces.length}</span></div>
+	 <div class="escala" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+	 ${jaces.map(jaça).join('')}
+`;
+	// tornar lançar lo traçat dels rumbs a cada dobertura
+	panel.classList.remove('dobert'); void panel.offsetWidth; panel.classList.add('dobert');
+}
+rail.addEventListener('click', (e) => {
+	const b = e.target.closest('.rb'); if (!b) return;
+	dobert = dobert === b.dataset.f ? null : b.dataset.f;
+	render();
+});
+cont.addEventListener('click', (e) => {
+	const j = e.target.closest('.j:not(.venir)'); if (!j) return;
+	actius.has(j.dataset.j) ? actius.delete(j.dataset.j) : actius.add(j.dataset.j);
+	const sc = panel.scrollTop; render(); panel.scrollTop = sc;
+});
+cont.addEventListener('keydown', (e) => { if ((e.key === ' ' || e.key === 'Enter') && e.target.closest('.j')) { e.preventDefault(); e.target.click(); } });
+addEventListener('resize', orientar);
+render();
+
+// la carta de fons : son rail e son panèl amagats, l'entrada en scèna sautada
+const carta = document.getElementById('carta');
+carta.addEventListener('load', () => {
+	const d = carta.contentDocument, s = d.createElement('style');
+	s.textContent = 'nav.rail,.tirador{display:none!important}';
+	d.head.append(s);
+});
+</script>
+</body>
+</html>
