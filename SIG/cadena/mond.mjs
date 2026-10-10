@@ -249,6 +249,114 @@ function escriure(entrada, sortida, dec, bbox, ambNoms, sensCòsta = false) {
 }
 
 const eu = escriure('countries-50m.json', 'mond-europa.json', 2, [-25, 27, 50, 72], true, true);
+
+// La frontièra terrèstra de França, precisa (Romain, 2026-10-10 : « reprends
+// l'ensemble du tracé français et des pays limitrophes de manière précise ») :
+// la de l'IGN (franca.json, fach per franca-contorn.py, 200 m), la meteissa que
+// retalha las lengas dins lo mòde « Lengas de França ». Los segments de Natural
+// Earth partejats amb França son levats de totes los païses ; los anèls IGN,
+// levada la còsta, los remplaçan. De tornar aviar aprèp franca-contorn.py.
+{
+	const fEu = path.join(DATA, 'mond-europa.json');
+	const m = JSON.parse(fs.readFileSync(fEu, 'utf8'));
+	const fr = m.païses.find((p) => p.n === 'France');
+	const guida = [...(fr.l ?? []), ...(fr.p ?? []).flat()];
+	const segFr = new Set();
+	for (const a of guida) for (let i = 0; i + 1 < a.length; i++) segFr.add(clauSeg(a[i], a[i + 1]));
+	// un anèl o una linha copats als segments de França : las linhas que demòran
+	const copar = (a, barrat) => {
+		const linhas = [];
+		let cur = null;
+		for (let i = 0; i + 1 < a.length; i++) {
+			if (segFr.has(clauSeg(a[i], a[i + 1]))) {
+				if (cur) linhas.push(cur);
+				cur = null;
+			} else {
+				cur ??= [a[i]];
+				cur.push(a[i + 1]);
+			}
+		}
+		if (cur) linhas.push(cur);
+		// (un anèl barrat : la primièra e la darrièra linha se rejonhon)
+		if (barrat && linhas.length > 1 && linhas[0][0] === a[0] && linhas.at(-1).at(-1) === a.at(-1)) linhas[0] = [...linhas.pop(), ...linhas[0].slice(1)];
+		return linhas;
+	};
+	let nCopats = 0;
+	for (const p of m.païses) {
+		if (p === fr) continue;
+		const l = [];
+		for (const a of p.l ?? []) l.push(...(a.some((q, i) => i && segFr.has(clauSeg(a[i - 1], q))) ? (nCopats++, copar(a, false)) : [a]));
+		p.p = (p.p ?? [])
+			.map((pl) =>
+				pl.filter((a) => {
+					if (!a.some((q, i) => i && segFr.has(clauSeg(a[i - 1], q)))) return true;
+					nCopats++;
+					l.push(...copar(a, true).filter((x) => x.length >= 2));
+					return false;
+				})
+			)
+			.filter((pl) => pl.length);
+		if (l.length) p.l = l;
+		else delete p.l;
+	}
+	// la frontièra IGN : los ponches dels anèls de França que son pas sus la
+	// còsta (costa.json, IGN, a mens d'1 km) ; la còsta, ela, ven de costa.json
+	const cj = JSON.parse(fs.readFileSync(path.join(DATA, 'costa.json'), 'utf8'));
+	const costa = cj.l.map((v) => {
+		const pts = [];
+		let x = 0,
+			y = 0;
+		for (let i = 0; i + 1 < v.length; i += 2) (x += v[i]), (y += v[i + 1]), pts.push([x / cj.q, y / cj.q]);
+		return pts;
+	});
+	const CEL = 0.05,
+		grilha = new Map();
+	const clauC = (x, y) => Math.floor(x / CEL) + ':' + Math.floor(y / CEL);
+	for (const a of costa)
+		for (let i = 1; i < a.length; i++) {
+			const [ax, ay] = a[i - 1],
+				[bx, by] = a[i];
+			for (let cx = Math.floor(Math.min(ax, bx) / CEL); cx <= Math.floor(Math.max(ax, bx) / CEL); cx++)
+				for (let cy = Math.floor(Math.min(ay, by) / CEL); cy <= Math.floor(Math.max(ay, by) / CEL); cy++) {
+					const k = cx + ':' + cy;
+					if (!grilha.has(k)) grilha.set(k, []);
+					grilha.get(k).push([a[i - 1], a[i]]);
+				}
+		}
+	const dSeg = ([px, py], [ax, ay], [bx, by]) => {
+		const dx = bx - ax,
+			dy = by - ay,
+			t = Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy || 1e-12)));
+		return Math.hypot(px - ax - t * dx, py - ay - t * dy);
+	};
+	const susCosta = ([x, y]) => {
+		for (let i = -1; i <= 1; i++)
+			for (let j = -1; j <= 1; j++) for (const [a, b] of grilha.get(Math.floor(x / CEL) + i + ':' + (Math.floor(y / CEL) + j)) ?? []) if (dSeg([x, y], a, b) < 0.012) return true;
+		return false;
+	};
+	const ign = JSON.parse(fs.readFileSync(path.join(DATA, 'franca.json'), 'utf8')).aneis;
+	const linhasIgn = [];
+	for (const anel of ign) {
+		const ok = anel.map((q) => !susCosta(q));
+		const n = anel.length;
+		const d = ok.indexOf(false);
+		if (d < 0) {
+			linhasIgn.push(anel.map((q) => q.map((v) => arr(v, 3))));
+			continue;
+		}
+		let cur = null;
+		for (let k = 1; k <= n; k++) {
+			const i = (d + k) % n;
+			if (ok[i]) (cur ??= [anel[(i - 1 + n) % n].map((v) => arr(v, 3))]).push(anel[i].map((v) => arr(v, 3)));
+			else if (cur) cur.push(anel[i].map((v) => arr(v, 3))), linhasIgn.push(cur), (cur = null);
+		}
+		if (cur) linhasIgn.push(cur);
+	}
+	fr.l = linhasIgn.filter((a) => a.length >= 2);
+	fr.p = [];
+	fs.writeFileSync(fEu, JSON.stringify(m));
+	console.log('frontièra IGN de França :', fr.l.length, 'linhas,', fr.l.reduce((s, a) => s + a.length, 0), 'ponches ;', nCopats, 'contorns vesins copats ;', fs.statSync(fEu).size, 'octets');
+}
 escriure('countries-110m.json', 'mond.json', 1, null, false);
 
 // L'outra mar (retorn de Romain : « dommage de les faire disparaître ») : a

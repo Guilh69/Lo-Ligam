@@ -537,7 +537,9 @@ export function crearColaLenga(
 				for (const zn of zonas) if (zn.props.de) dins.add(lenga.pref + zn.props.de);
 				tg.save();
 				tg.globalCompositeOperation = 'destination-out';
-				for (const v of G.zonas) {
+				// (los sots-dialèctes fraires tanben : lo rouchi causit escafa lo ch'ti,
+				// que son fondut recobrissiá ; retorn de Romain, 2026-10-10)
+				for (const v of [...G.zonas, ...(G.sots ?? [])]) {
 					if (zonas.includes(v) || dins.has(v.kod)) continue;
 					tg.fill(v.c, 'evenodd');
 					tg.lineWidth = flo * 2.4;
@@ -553,6 +555,13 @@ export function crearColaLenga(
 			if (apart.length && apart.length === zonas.length) {
 				const p = new Path2D();
 				for (const zn of apart) p.addPath(zn.c);
+				g.clip(p, 'evenodd');
+			}
+			// (un sot-dialècte causit sol, lo rouchi : sa color demòra dins son territòri,
+			// sa lenga mairala que lo recòbre la daissariá correr pertot)
+			else if (sola && zonas.every((zn) => zn.props.de)) {
+				const p = new Path2D();
+				for (const zn of zonas) p.addPath(zn.c);
 				g.clip(p, 'evenodd');
 			}
 			g.setTransform(1, 0, 0, 1, 0, 0);
