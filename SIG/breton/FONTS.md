@@ -96,3 +96,52 @@ Par département : Finistère 277 (toutes ses communes) ; Côtes-d'Armor 166 + 5
 5. Les **noms occitans** (propositions, absentes du Basic, API de lo Congrès le 2026-10-10) : leonés, tregorés, cornoalhés, vanetés, galo. Vérifiés : breton, dialècte, zòna, mixta, contacte, transicion, illa, parlar, comuna, vesina, escantit (participe d'escantir), amb, de. « lo » et « la » renvoient une erreur de l'API.
 6. Les **noms bretons** des parlers (Goueloù, Ar Gerveur, Brezhoneg Gwenrann, Enizenac'h…) et des communes : relecture par un brittophone, ou comparaison avec KerOfis.
 7. **Licences** : Sébillot (domaine public) et IGN (Licence ouverte) sans réserve ; listes de Wikipédia (CC BY-SA) citées comme sources de faits ; noms bretons Wikidata (CC0) ; 7 noms OSM (ODbL, attribution « © contributeurs OpenStreetMap » à prévoir si on les garde).
+
+## Ajout du 2026-10-10 : extension historique et présence actuelle
+
+### `breton-istoric.csv` (3 100 lignes, `insee;nom;limit;font`, UTF-8 avec BOM)
+
+Communes des départements 22, 35, 44 et 56 situées à l'intérieur de chaque limite ancienne (le Finistère est entièrement dedans à toutes les époques). Toutes les communes intérieures sont listées, y compris celles du domaine de 1886 : pour les hachures sur le gallo, ne garder que celles qui ne sont pas `breton` ou `mixta` dans `dialectes-breton.csv`.
+
+| limit | communes | hors domaine 1886 | source du tracé |
+|---|---|---|---|
+| `IXe-Loth` (vers 900, extension maximale, « ligne Loth ») | 779 | 463 | TL02, d'après Joseph Loth (*L'émigration bretonne en Armorique*, 1883) |
+| `XIIe` | 688 | 372 | FL82 |
+| `XIIIe` | 495 | 179 | FL82, BRK79 |
+| `XIVe` | 393 | 77 | FL82, BRK79 |
+| `1588-Argentre` (le plus proche de « 1500 ») | 384 | 68 | ARG1588 |
+| `1806-Coquebert` | 361 | 45 | CDM1806 |
+
+Sources (codes) :
+- **SEMHUR** : Sémhur (Ivan d'Hostingue), « Frontière linguistique du breton map-fr.svg », Wikimedia Commons, 2020, **CC BY-SA 4.0** : https://commons.wikimedia.org/wiki/File:Fronti%C3%A8re_linguistique_du_breton_map-fr.svg (copie : `SIG/brut/breton/istoric/semhur-frontiera.svg`). Carte vectorielle faite sous QGIS, une couche par époque.
+- **TL02** : Bernard Tanguy et Michel Lagrée, *Atlas d'histoire de Bretagne*, Skol Vreizh, 2002, carte 72, p. 158-159. **FL82** : Léon Fleuriot, « Le gallo et les langues celtiques », *Les cahiers du LERG* 1, 1982. **BRK79** : Yann Brekilien, *Histoire de la Bretagne*, 1979. **ARG1588** : Bertrand d'Argentré, *Histoire de Bretagne*, 1588. **CDM1806** : enquête linguistique de Coquebert de Montbret, 1806. Ouvrages cités par Sémhur, non consultés directement (sous droits pour les trois premiers).
+
+Méthode (scripts dans le bloc-notes de la séance, à ranger dans `SIG/cadena/` si on garde la chaîne) : lecture des chemins SVG ; calage affine sur les limites des 9 départements dessinés (22, 29, 35, 44, 56, 50, 53, 49, 85), centroïdes puis ajustement itératif sur 18 288 sommets des limites IGN ; une commune est dedans si **au moins la moitié de sa surface** est à l'intérieur du polygone de l'époque (îles comprises). Polygones calés : `SIG/brut/breton/istoric/semhur-limits-l93.geojson`.
+
+**Écart du calage** : médiane 10 m, 90 % des sommets à moins de 70 m (moins de 230 m pour chaque département). Le calage n'est donc pas la source d'erreur : c'est le tracé des historiens, dessiné à petite échelle, qui l'est (plusieurs kilomètres).
+
+Contrôles :
+- La couche 1886 de Sémhur, comparée à notre liste Sébillot commune par commune : 7 désaccords sur 1 132 communes (5 `vesina`, Lantic, Le Croisic), soit la marge d'une commune le long de la limite.
+- Textes (Wikipédia, « Frontière linguistique bretonne ») : IXe, breton jusqu'à Dol, Montfort-sur-Meu, Blain et Donges, Rennes et Nantes en dehors : conforme ; XIIe, Dinan et Pornichet dedans : conforme ; 1806, Saint-Caradec, Questembert, Pénestin, Camoël, Batz dedans : conforme (Férel 48 %, Péaule 72 %).
+
+Incertitudes :
+1. **Pas de limite « 1500 »** publiée : `1588-Argentre` (et `XIVe`, presque identique) en tient lieu.
+2. **XIVe contesté** : Erwan Vallerie (1995) fait passer la limite du début du XIVe siècle par Pléhérel, Plédéliac, Merdrignac, Gaël, Plélan-le-Grand, Maure, Sixt, Avessac, Missillac, Herbignac et Escoublac, c'est-à-dire près de notre `XIIe`, bien plus à l'est que la ligne de Fleuriot et Brekilien.
+3. La « ligne Loth » est discutée pour le haut Moyen Âge (limite de la toponymie bretonne, pas forcément d'une langue parlée par tous).
+4. Une trentaine de communes par époque sont coupées (entre 10 et 90 % de surface) : la règle de la moitié tranche.
+5. Jean-Yves Le Moing (*Les noms de lieux bretons de Haute-Bretagne*, 1990) et les autres travaux de Tanguy ne sont pas en accès libre : non utilisés directement.
+6. Licence : la liste dérive d'une carte CC BY-SA 4.0. Mention à prévoir : « d'après Sémhur, Wikimedia Commons, CC BY-SA 4.0 ».
+
+### `breton-actual.csv` (1 248 lignes, `insee;nom;indicador;valor;annada;font;url`, UTF-8 avec BOM)
+
+215 communes ayant une offre d'enseignement bilingue en 2025 (Finistère 82, Morbihan 59, Côtes-d'Armor 43, Ille-et-Vilaine 25, Loire-Atlantique 6), 19 978 élèves. Indicateurs : `eleves_bilingues` (toujours présent), `eleves_maternelle`, `eleves_elementaire`, `eleves_college`, `eleves_lycee`, `eleves_public`, `eleves_catholique`, `eleves_diwan`, `etablissements`, `etablissements_diwan` (lignes à zéro omises).
+
+Source **OPLB2025** : Office public de la langue bretonne, page « Données libres de droits » (https://www.fr.brezhoneg.bzh/212-donnees-libres-de-droits.htm), fichiers « Effectifs de l'enseignement bilingue par commune en 2025 » et « par établissement en 2025 », **licence ODbL** (attribution et partage à l'identique de la base). Copies : `SIG/brut/breton/oplb/` (encodage Windows-1252). Tous les codes INSEE existent dans le COG 2026 ; les sommes par filière égalent le total de chaque commune.
+
+Hors du domaine de 1886 : **53 communes, 4 511 élèves** (Rennes 1 012, Nantes 533, Saint-Herblain 325, Saint-Brieuc 184, Bruz 144, Questembert 142, Redon 138…).
+
+Incertitudes et manques :
+1. `etablissements` compte des numéros UAI : une école maternelle et une école élémentaire voisines comptent pour deux.
+2. **Cours pour adultes** : aucune donnée ouverte à la commune trouvée (l'OPLB ne publie que des graphiques par département, pays et intercommunalité). Non inclus.
+3. Les options de breton en collège et lycée hors filière bilingue ne sont pas dans ces fichiers.
+4. Piste non exploitée : la base KerOfis (noms bretons officiels, CSV du 2026-09-25, même page, ODbL) répondrait au point 7 des incertitudes ci-dessus.
