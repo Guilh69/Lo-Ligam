@@ -324,7 +324,38 @@
 	}
 	// lo tirador s'alanda a costat del rail, del costat ont i a de plaça ; en
 	// bas, al dessús de la barra
+	// Lo fons de carta es sortit del rail (decision de Romain, 2026-10-10) : son
+	// boton es amb los de la carta (CartaOccitania, eveniment « carta-fons ») e
+	// lo tirador s'ancora a costat d'el, pel bas
+	function dobrirFons(e) {
+		if (e.detail?.boton) botons.fons = e.detail.boton;
+		if (dobert === 'fons') return (dobert = null);
+		dobert = 'fons';
+		plaçarTirador();
+	}
+	$effect(() => {
+		addEventListener('carta-fons', dobrirFons);
+		return () => removeEventListener('carta-fons', dobrirFons);
+	});
+	$effect(() => {
+		botons.fons?.setAttribute?.('aria-expanded', String(dobert === 'fons'));
+	});
+	function plaçarTiradorFons() {
+		const p = railEl?.offsetParent,
+			b = botons.fons;
+		if (!p || !b?.isConnected) return false;
+		const r = b.getBoundingClientRect(),
+			pr = p.getBoundingClientRect(),
+			larg = Math.min(336, pr.width - 16);
+		posT = {
+			x: clampR(r.left - pr.left - larg - 12, 8, pr.width - larg - 8),
+			bas: Math.max(8, pr.bottom - r.bottom),
+			h: Math.max(160, r.bottom - pr.top - capBas(p) - 16)
+		};
+		return true;
+	}
 	function plaçarTirador() {
+		if (dobert === 'fons' && plaçarTiradorFons()) return;
 		const p = railEl?.offsetParent;
 		if (!p) return;
 		const r = railEl.getBoundingClientRect(),
@@ -467,7 +498,8 @@
 	const totas = $derived(familhas.flatMap((f) => f.jaces));
 	const actiu = (j) => j.estat === 'disponible' && (!j.fons || j.fons === baseLayer);
 	const afichadas = $derived(totas.filter((j) => actiu(j) && visibility[j.id]));
-	const familhaActiva = (f) => f.jaces.some((j) => actiu(j) && visibility[j.id]);
+	// lo nombre de jaces alucadas d'una familha (la chifra del rail)
+	const nAlucadas = (id) => familhas.find((f) => f.id === id)?.jaces.filter((j) => actiu(j) && visibility[j.id]).length ?? 0;
 	const nomJ = (j) => (lang === 'oc' ? j.oc : (j.fr ?? j.oc));
 	const notaJ = (j) =>
 		j.estat === 'basa'
@@ -577,7 +609,7 @@
 	// tirador, e las bullas d'informacion
 	$effect(() => {
 		if (!dobert) return;
-		return tampaDefòra((t) => !!t.closest('#tirador-jaces, .rail'), () => (dobert = null));
+		return tampaDefòra((t) => !!t.closest('#tirador-jaces, .rail, .fons-carta'), () => (dobert = null));
 	});
 	function clicDefòra(e) {
 		pret = true;
@@ -642,6 +674,7 @@
 		</button>
 	</div>
 	{#each RAIL as id (id)}
+		{#if id === 'lengas'}<span class="rail-sep" aria-hidden="true"></span>{/if}
 		<button
 			type="button"
 			class="rail-b"
@@ -655,17 +688,13 @@
 			<span class="lib">{cesura(nomFam(id))}</span>
 			{#if id === 'sus' && afichadas.length}
 				<span class="compte" aria-label={tx.afichadas(afichadas.length)}>{afichadas.length}</span>
-			{:else if id !== 'sus' && familhas.find((f) => f.id === id) && familhaActiva(familhas.find((f) => f.id === id))}
-				<span class="punt" aria-hidden="true"></span>
+			{:else if id !== 'sus' && nAlucadas(id)}
+				<!-- una pichona chifra, pas pus un ponch irange (decision de Romain, 2026-10-10) -->
+				<span class="nombre" aria-label={tx.afichadas(nAlucadas(id))}>{nAlucadas(id)}</span>
 			{/if}
 		</button>
 		{#if id === 'sus'}<span class="rail-sep" aria-hidden="true"></span>{/if}
 	{/each}
-	<span class="rail-sep" aria-hidden="true"></span>
-	<button type="button" class="rail-b" bind:this={botons.fons} aria-expanded={dobert === 'fons'} aria-controls="tirador-jaces" onclick={() => alternar('fons')}>
-		<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC.fons}</svg>
-		<span class="lib">{tx.fons}</span>
-	</button>
 </nav>
 
 {#if dobert}
@@ -677,8 +706,8 @@
 		style:--tir-y={posT ? posT.y + 'px' : null}
 		style:--tir-h={posT ? posT.h + 'px' : null}
 		style:--tir-bas={posT?.bas != null ? posT.bas + 'px' : null}
-		class:amont={orizontal}
-		transition:fly={orizontal ? { y: 14, duration: 260, easing: quintOut } : { x: -14, duration: 260, easing: quintOut }}
+		class:amont={orizontal || (dobert === 'fons' && posT?.bas != null)}
+		transition:fly={orizontal || dobert === 'fons' ? { y: 14, duration: 260, easing: quintOut } : { x: -14, duration: 260, easing: quintOut }}
 	>
 		<header>
 			<h2>{nomFam(dobert)}</h2>
@@ -1111,13 +1140,25 @@
 		background: color-mix(in srgb, var(--t-aur) 24%, transparent);
 		box-shadow: inset 0 0 0 1.5px var(--t-aur);
 	}
-	.punt {
+	/* la chifra d'una familha : pichona, sens pastilha (decision de Romain, 2026-10-10) */
+	.nombre {
 		position: absolute;
-		top: 7px;
-		right: 13px;
-		width: 7px;
-		height: 7px;
-		border-radius: 50%;
+		top: 6px;
+		right: 9px;
+		font: 700 10px/1 var(--font-body);
+		font-variant-numeric: tabular-nums;
+		color: color-mix(in srgb, var(--t-aur) 75%, transparent);
+	}
+	/* la tòca mediterranèa : una linha fina a esquèrra de la familha dobèrta,
+	   e pas endacòm mai (decision de Romain, 2026-10-10) */
+	.rail-b[aria-expanded='true']::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 24%;
+		bottom: 24%;
+		width: 2px;
+		border-radius: 1px;
 		background: var(--t-terra-viu);
 	}
 	.compte {
@@ -1919,8 +1960,17 @@
 			width: 20px;
 			height: 20px;
 		}
-		.punt {
-			right: calc(50% - 15px);
+		.nombre {
+			right: calc(50% - 20px);
+		}
+		/* (barra orizontala : la linha passa dessús) */
+		.rail-b[aria-expanded='true']::before {
+			left: 24%;
+			right: 24%;
+			top: 0;
+			bottom: auto;
+			width: auto;
+			height: 2px;
 		}
 		.compte {
 			right: calc(50% - 22px);

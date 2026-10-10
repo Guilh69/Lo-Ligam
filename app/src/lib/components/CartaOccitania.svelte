@@ -241,6 +241,17 @@
 		lang;
 		majNetejar();
 	});
+	let botonFons = null;
+	function majFons() {
+		if (!botonFons) return;
+		const tx = lang === 'fr' ? 'Fond de carte' : 'Fons de carta';
+		botonFons.title = tx;
+		botonFons.setAttribute('aria-label', tx);
+	}
+	$effect(() => {
+		lang;
+		majFons();
+	});
 	function tornarALOccitan() {
 		onAlucar?.('unificat', false);
 		onAlucar?.('frontiera');
@@ -1298,6 +1309,29 @@
 			}
 		});
 		new Netejar().addTo(map);
+		// Lo fons de carta (decision de Romain, 2026-10-10) : sortit del rail,
+		// amont dels autres botons de la carta ; dobrís lo tirador « Fons » de
+		// RailJaces, plaçat al costat d'aqueste boton
+		const FonsCarta = L.Control.extend({
+			options: { position: 'bottomright' },
+			onAdd() {
+				const c = L.DomUtil.create('div', 'leaflet-bar fons-carta');
+				botonFons = L.DomUtil.create('a', '', c);
+				botonFons.href = '#';
+				botonFons.setAttribute('role', 'button');
+				botonFons.setAttribute('aria-expanded', 'false');
+				botonFons.setAttribute('aria-controls', 'tirador-jaces');
+				botonFons.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 4l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg>';
+				L.DomEvent.disableClickPropagation(c);
+				L.DomEvent.on(botonFons, 'click', (e) => {
+					L.DomEvent.preventDefault(e);
+					window.dispatchEvent(new CustomEvent('carta-fons', { detail: { boton: botonFons } }));
+				});
+				majFons();
+				return c;
+			}
+		});
+		new FonsCarta().addTo(map);
 		map.attributionControl?.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
 		tèxtesLeaflet();
 		map.on('popupopen', tèxtesLeaflet);
@@ -1963,10 +1997,16 @@
 
 	.carta :global(.plen-ecran a),
 	.carta :global(.tornar-oc a),
-	.carta :global(.netejar-carta a) {
+	.carta :global(.netejar-carta a),
+	.carta :global(.fons-carta a) {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+	/* lo boton del fons, quand son tirador es dobèrt (coma dins lo rail) */
+	.carta :global(.fons-carta a[aria-expanded='true']) {
+		color: var(--t-aur-clar);
+		background: color-mix(in srgb, var(--t-aur) 22%, var(--t-fons-2));
 	}
 	.carta :global(.leaflet-bar a.leaflet-disabled) {
 		color: var(--t-linha);

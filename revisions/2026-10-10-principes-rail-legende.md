@@ -90,7 +90,7 @@ Le rail devient la barre du bas (déjà fait). Le panneau devient une feuille qu
 
 Par lots, chacun vérifié en capture à 1830 px et sur téléphone, sans retirer aucune fonction :
 
-1. **Rail** : « Fons » près des boutons de zoom ; « Territòri » ; chiffres discrets à la place des points ; trait vermillon sur la famille ouverte.
+1. ✅ **Rail** (fait le 2026-10-10) : « Fons » près des boutons de zoom (son panneau s'ouvre à côté du bouton, au-dessus de la barre sur téléphone) ; « Territòri » ; chiffres discrets à la place des points ; trait vermillon sur la famille ouverte ; espace avant « Autras lengas ».
 2. **Panneau** : grille d'espacement, typographie, translucidité, or réservé à « allumé », deux niveaux de texte par ligne.
 3. **Comportements** : ligne entière cliquable, échelle seulement quand elle sert (« I anar » à confirmer), aperçu au survol.
 4. **Téléphone** : feuille à trois hauteurs avec poignée.

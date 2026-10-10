@@ -62,8 +62,10 @@ export const CATALOGUE = [
 	},
 	{
 		id: 'administracion',
-		oc: 'Administracion',
-		fr: 'Administration',
+		// « Territòri » (decision de Romain, 2026-10-10) : « Administracion »
+		// desbordava del rail ; l'id demòra lo meteis
+		oc: 'Territòri',
+		fr: 'Territoire',
 		jaces: [
 			{ id: 'vilas', oc: 'Vilas e vilatges', fr: 'Villes et villages', estat: 'disponible', defaut: true, fons: 'estelas' },
 			{ id: 'regions', oc: 'Regions', fr: 'Régions', estat: 'disponible', defaut: false },
