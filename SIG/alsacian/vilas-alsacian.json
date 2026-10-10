@@ -26,32 +26,6 @@
 "renc": 1
 },
 {
-"codi": "de:08222000",
-"nom_oficial": "Mannheim",
-"nom": "Manne",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 8.5123,
-"lat": 49.5008,
-"pop": 318035,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 1
-},
-{
-"codi": "de:08212000",
-"nom_oficial": "Karlsruhe",
-"nom": "Karlsrueh",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 8.4099,
-"lat": 49.0159,
-"pop": 309050,
-"zona": "sudfrankisch",
-"estat": "DE",
-"renc": 1
-},
-{
 "codi": "67482",
 "nom_oficial": "Strasbourg",
 "nom": "Strosbùri",
@@ -78,32 +52,6 @@
 "renc": 1
 },
 {
-"codi": "de:07315000",
-"nom_oficial": "Mainz",
-"nom": "Mainz",
-"local": false,
-"font": "nom oficial",
-"lon": 8.2571,
-"lat": 49.9654,
-"pop": 224684,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 1
-},
-{
-"codi": "de:10041100",
-"nom_oficial": "Saarbrücken",
-"nom": "Saarbrücken",
-"local": false,
-"font": "nom oficial",
-"lon": 6.9969,
-"lat": 49.2471,
-"pop": 182971,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 1
-},
-{
 "codi": "ch:2701",
 "nom_oficial": "Basel",
 "nom": "Basel",
@@ -114,32 +62,6 @@
 "pop": 176329,
 "zona": "niederalemannisch",
 "estat": "CH",
-"renc": 1
-},
-{
-"codi": "de:08221000",
-"nom_oficial": "Heidelberg",
-"nom": "Heidelbärg",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 8.7142,
-"lat": 49.4061,
-"pop": 155756,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 1
-},
-{
-"codi": "lu:0304",
-"nom_oficial": "Luxembourg",
-"nom": "Lëtzebuerg",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.1349,
-"lat": 49.6079,
-"pop": 137678,
-"zona": "letzebuergesch",
-"estat": "LU",
 "renc": 1
 },
 {
@@ -165,19 +87,6 @@
 "lat": 48.8747,
 "pop": 134912,
 "zona": "schwabisch",
-"estat": "DE",
-"renc": 1
-},
-{
-"codi": "de:08121000",
-"nom_oficial": "Heilbronn",
-"nom": "Hailbrunn",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 9.2006,
-"lat": 49.1518,
-"pop": 131986,
-"zona": "sudfrankisch",
 "estat": "DE",
 "renc": 1
 },
@@ -221,19 +130,6 @@
 "renc": 1
 },
 {
-"codi": "de:07111000",
-"nom_oficial": "Koblenz",
-"nom": "Koblänz",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 7.5841,
-"lat": 50.3468,
-"pop": 113378,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 1
-},
-{
 "codi": "68224",
 "nom_oficial": "Mulhouse",
 "nom": "Mìlhüüsa",
@@ -244,32 +140,6 @@
 "pop": 104978,
 "zona": "niederalemannisch",
 "estat": "FR",
-"renc": 1
-},
-{
-"codi": "de:07211000",
-"nom_oficial": "Trier",
-"nom": "Tréier",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.6686,
-"lat": 49.7785,
-"pop": 104342,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 1
-},
-{
-"codi": "de:07312000",
-"nom_oficial": "Kaiserslautern",
-"nom": "Kaiserslautern",
-"local": false,
-"font": "nom oficial",
-"lon": 7.7588,
-"lat": 49.4267,
-"pop": 100426,
-"zona": "rheinfrankisch",
-"estat": "DE",
 "renc": 1
 },
 {
@@ -295,19 +165,6 @@
 "lat": 47.7082,
 "pop": 86919,
 "zona": "niederalemannisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:07319000",
-"nom_oficial": "Worms",
-"nom": "Worms",
-"local": false,
-"font": "nom oficial",
-"lon": 8.3219,
-"lat": 49.6608,
-"pop": 86753,
-"zona": "rheinfrankisch",
 "estat": "DE",
 "renc": 2
 },
@@ -403,32 +260,6 @@
 "renc": 2
 },
 {
-"codi": "de:07133006",
-"nom_oficial": "Bad Kreuznach",
-"nom": "Bad Kreuznach",
-"local": false,
-"font": "nom oficial",
-"lon": 7.8536,
-"lat": 49.8348,
-"pop": 54168,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:07316000",
-"nom_oficial": "Neustadt an der Weinstraße",
-"nom": "Neustadt an der Weinstraße",
-"local": false,
-"font": "nom oficial",
-"lon": 8.1156,
-"lat": 49.3484,
-"pop": 52945,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 2
-},
-{
 "codi": "de:08317065",
 "nom_oficial": "Lahr/Schwarzwald",
 "nom": "Lohr",
@@ -481,45 +312,6 @@
 "renc": 2
 },
 {
-"codi": "de:10045114",
-"nom_oficial": "Homburg",
-"nom": "Homburg",
-"local": false,
-"font": "nom oficial",
-"lon": 7.3451,
-"lat": 49.3174,
-"pop": 43382,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "57672",
-"nom_oficial": "Thionville",
-"nom": "Diddenuewen",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.1682,
-"lat": 49.3577,
-"pop": 42658,
-"zona": "letzebuergesch",
-"estat": "FR",
-"renc": 2
-},
-{
-"codi": "de:08127076",
-"nom_oficial": "Schwäbisch Hall",
-"nom": "Schwäbisch Hall",
-"local": false,
-"font": "nom oficial",
-"lon": 9.7814,
-"lat": 49.1067,
-"pop": 42598,
-"zona": "sudfrankisch",
-"estat": "DE",
-"renc": 2
-},
-{
 "codi": "de:08116033",
 "nom_oficial": "Kirchheim unter Teck",
 "nom": "Kirche",
@@ -529,19 +321,6 @@
 "lat": 48.6404,
 "pop": 42299,
 "zona": "schwabisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:07317000",
-"nom_oficial": "Pirmasens",
-"nom": "Pirmasens",
-"local": false,
-"font": "nom oficial",
-"lon": 7.5911,
-"lat": 49.1882,
-"pop": 39761,
-"zona": "rheinfrankisch",
 "estat": "DE",
 "renc": 2
 },
@@ -568,19 +347,6 @@
 "lat": 47.9792,
 "pop": 37109,
 "zona": "schwabisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:08226085",
-"nom_oficial": "Sinsheim",
-"nom": "Sinsheim",
-"local": false,
-"font": "nom oficial",
-"lon": 8.8991,
-"lat": 49.2342,
-"pop": 37036,
-"zona": "sudfrankisch",
 "estat": "DE",
 "renc": 2
 },
@@ -620,58 +386,6 @@
 "lat": 48.5998,
 "pop": 34192,
 "zona": "schwabisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:10042113",
-"nom_oficial": "Merzig",
-"nom": "Mäerzeg",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.6207,
-"lat": 49.4511,
-"pop": 31697,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "be:81001",
-"nom_oficial": "Arlon",
-"nom": "Arel",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 5.78,
-"lat": 49.6745,
-"pop": 30818,
-"zona": "letzebuergesch",
-"estat": "BE",
-"renc": 2
-},
-{
-"codi": "de:07134045",
-"nom_oficial": "Idar-Oberstein",
-"nom": "Idar-Oberstein",
-"local": false,
-"font": "nom oficial",
-"lon": 7.345,
-"lat": 49.702,
-"pop": 30170,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:07131007",
-"nom_oficial": "Bad Neuenahr-Ahrweiler",
-"nom": "Bad Neuenahr-Ahrweiler",
-"local": false,
-"font": "nom oficial",
-"lon": 7.1231,
-"lat": 50.5317,
-"pop": 27961,
-"zona": "moselfrankisch",
 "estat": "DE",
 "renc": 2
 },
@@ -728,19 +442,6 @@
 "renc": 2
 },
 {
-"codi": "de:08215106",
-"nom_oficial": "Waghäusel",
-"nom": "Waghäusel",
-"local": false,
-"font": "nom oficial",
-"lon": 8.5361,
-"lat": 49.2295,
-"pop": 22466,
-"zona": "sudfrankisch",
-"estat": "DE",
-"renc": 2
-},
-{
 "codi": "de:08336081",
 "nom_oficial": "Schopfheim",
 "nom": "Schopfe",
@@ -754,28 +455,15 @@
 "renc": 2
 },
 {
-"codi": "be:63023",
-"nom_oficial": "Eupen",
-"nom": "Eupen",
+"codi": "de:08118076",
+"nom_oficial": "Sachsenheim",
+"nom": "Sachsenheim",
 "local": false,
 "font": "nom oficial",
-"lon": 6.0907,
-"lat": 50.6104,
-"pop": 19254,
-"zona": "limburgisch",
-"estat": "BE",
-"renc": 3
-},
-{
-"codi": "de:07231134",
-"nom_oficial": "Wittlich",
-"nom": "Wittlech",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.9135,
-"lat": 49.993,
-"pop": 19049,
-"zona": "moselfrankisch",
+"lon": 9.0331,
+"lat": 48.9939,
+"pop": 18638,
+"zona": "schwabisch",
 "estat": "DE",
 "renc": 3
 },
@@ -806,19 +494,6 @@
 "renc": 3
 },
 {
-"codi": "57606",
-"nom_oficial": "Saint-Avold",
-"nom": "Sänt Avor",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.7059,
-"lat": 49.1043,
-"pop": 14755,
-"zona": "rheinfrankisch",
-"estat": "FR",
-"renc": 3
-},
-{
 "codi": "de:08437088",
 "nom_oficial": "Pfullendorf",
 "nom": "Pfulladorf",
@@ -842,32 +517,6 @@
 "pop": 13109,
 "zona": "hochstalemannisch",
 "estat": "CH",
-"renc": 3
-},
-{
-"codi": "de:10046118",
-"nom_oficial": "Tholey",
-"nom": "Tholey",
-"local": false,
-"font": "nom oficial",
-"lon": 7.0105,
-"lat": 49.4818,
-"pop": 12358,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 3
-},
-{
-"codi": "57630",
-"nom_oficial": "Sarrebourg",
-"nom": "Saarbuerj",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 7.0564,
-"lat": 48.734,
-"pop": 12170,
-"zona": "rheinfrankisch",
-"estat": "FR",
 "renc": 3
 },
 {
@@ -897,55 +546,16 @@
 "renc": 3
 },
 {
-"codi": "de:07141029",
-"nom_oficial": "Diez",
-"nom": "Diez",
-"local": false,
-"font": "nom oficial",
-"lon": 8.0258,
-"lat": 50.36,
-"pop": 11428,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 3
-},
-{
-"codi": "de:07132006",
-"nom_oficial": "Betzdorf",
-"nom": "Betzdorf",
-"local": false,
-"font": "nom oficial",
-"lon": 7.8692,
-"lat": 50.7829,
-"pop": 10363,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 3
-},
-{
-"codi": "lu:0605",
-"nom_oficial": "Ettelbruck",
-"nom": "Ettelbréck",
+"codi": "67437",
+"nom_oficial": "Saverne",
+"nom": "Zàwere",
 "local": true,
 "font": "noms-locals.csv",
-"lon": 6.0898,
-"lat": 49.8508,
-"pop": 10212,
-"zona": "letzebuergesch",
-"estat": "LU",
-"renc": 3
-},
-{
-"codi": "be:63067",
-"nom_oficial": "Sankt Vith",
-"nom": "Sankt Väit",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.1004,
-"lat": 50.2914,
-"pop": 9481,
-"zona": "moselfrankisch",
-"estat": "BE",
+"lon": 7.3624,
+"lat": 48.7411,
+"pop": 11460,
+"zona": "niederalemannisch",
+"estat": "FR",
 "renc": 3
 },
 {
@@ -959,58 +569,6 @@
 "pop": 9366,
 "zona": "hochalemannisch",
 "estat": "CH",
-"renc": 3
-},
-{
-"codi": "de:07337005",
-"nom_oficial": "Bad Bergzabern",
-"nom": "Bad Bergzabern",
-"local": false,
-"font": "nom oficial",
-"lon": 7.9996,
-"lat": 49.1106,
-"pop": 8724,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 3
-},
-{
-"codi": "de:07140144",
-"nom_oficial": "Simmern/Hunsrück",
-"nom": "Simmern/Hunsrück",
-"local": false,
-"font": "nom oficial",
-"lon": 7.533,
-"lat": 49.9864,
-"pop": 8195,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 3
-},
-{
-"codi": "de:07138003",
-"nom_oficial": "Asbach",
-"nom": "Asbach",
-"local": false,
-"font": "nom oficial",
-"lon": 7.4288,
-"lat": 50.6554,
-"pop": 7807,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 3
-},
-{
-"codi": "de:07233026",
-"nom_oficial": "Gerolstein",
-"nom": "Gerolstein",
-"local": false,
-"font": "nom oficial",
-"lon": 6.6345,
-"lat": 50.2104,
-"pop": 7210,
-"zona": "moselfrankisch",
-"estat": "DE",
 "renc": 3
 },
 {
@@ -1066,19 +624,6 @@
 "renc": 4
 },
 {
-"codi": "de:08127071",
-"nom_oficial": "Rot am See",
-"nom": "Rot am See",
-"local": false,
-"font": "nom oficial",
-"lon": 10.0829,
-"lat": 49.2721,
-"pop": 5531,
-"zona": "sudfrankisch",
-"estat": "DE",
-"renc": 4
-},
-{
 "codi": "ch:785",
 "nom_oficial": "Meiringen",
 "nom": "Meiringe",
@@ -1092,42 +637,16 @@
 "renc": 4
 },
 {
-"codi": "de:08128039",
-"nom_oficial": "Freudenberg",
-"nom": "Freudenberg",
+"codi": "de:08127012",
+"nom_oficial": "Bühlertann",
+"nom": "Bühlertann",
 "local": false,
 "font": "nom oficial",
-"lon": 9.3626,
-"lat": 49.7412,
-"pop": 3615,
-"zona": "rheinfrankisch",
+"lon": 9.9307,
+"lat": 49.0306,
+"pop": 3075,
+"zona": "schwabisch",
 "estat": "DE",
-"renc": 4
-},
-{
-"codi": "de:07135045",
-"nom_oficial": "Kaisersesch",
-"nom": "Kaisersesch",
-"local": false,
-"font": "nom oficial",
-"lon": 7.1525,
-"lat": 50.2325,
-"pop": 3256,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 4
-},
-{
-"codi": "57589",
-"nom_oficial": "Rohrbach-lès-Bitche",
-"nom": "Roerbach",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 7.2671,
-"lat": 49.0454,
-"pop": 2301,
-"zona": "rheinfrankisch",
-"estat": "FR",
 "renc": 4
 }
 ]

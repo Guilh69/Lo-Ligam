@@ -1,5 +1,5 @@
 {
-  "font": "Lengas d'oïl : comunas IGN ADMIN EXPRESS COG CARTO 2026 (Licéncia dobèrta 2.0), parlars de las comunas d'aprèp lo canton de la Carta lingüistica de França dels Archius nacionals (P.-H. Billy, S. Nadiras, J.-F. Moufflet, 2013), regropats en 9 lengas d'aprèp la lista Cerquiglini (1999) e del ministèri de la Cultura ; parlars picards d'aprèp la « Carte des variétés du picard » (Epi2025, Wikimedia Commons, CC BY-SA 4.0), calada (escart mejan 7 km)",
+  "font": "Lengas d'oïl : comunas IGN ADMIN EXPRESS COG CARTO 2026 (Licéncia dobèrta 2.0), parlars de las comunas d'aprèp lo canton de la Carta lingüistica de França dels Archius nacionals (P.-H. Billy, S. Nadiras, J.-F. Moufflet, 2013), regropats en 9 lengas d'aprèp la lista Cerquiglini (1999) e del ministèri de la Cultura ; parlars picards d'aprèp la « Carte des variétés du picard » (Epi2025, Wikimedia Commons, CC BY-SA 4.0), calada (escart mejan 7 km) ; Belgica romana d'aprèp la carta de L. Chapeau (Wikimedia Commons, CC BY-SA 4.0), contrarotlada per Pierret (1984)",
   "a_validar": "noms occitans (oc) de las lengas e dels gropes, colors, rengament del torangés amb l'Oèst : propausas, de validar per Romain ; dialèctes picards : carta esquematica, calatge a 7 km",
   "gropes": [
     {
@@ -70,6 +70,46 @@
         "1.2"
       ],
       "color": "#b2b9ff"
+    },
+    {
+      "kod": "valon_lieges",
+      "grope": "nord",
+      "fr": "liégeois (wallon de l'Est)",
+      "oc": "liegés",
+      "zonas": [],
+      "de": "wallon",
+      "sota_fr": "dialecte du wallon · langue d'oïl",
+      "sota_oc": "dialècte del valon · lenga d'oïl"
+    },
+    {
+      "kod": "valon_namures",
+      "grope": "nord",
+      "fr": "namurois (wallon central)",
+      "oc": "namurés",
+      "zonas": [],
+      "de": "wallon",
+      "sota_fr": "dialecte du wallon · langue d'oïl",
+      "sota_oc": "dialècte del valon · lenga d'oïl"
+    },
+    {
+      "kod": "valon_oest",
+      "grope": "nord",
+      "fr": "wallon de l'Ouest",
+      "oc": "valon de l'oèst",
+      "zonas": [],
+      "de": "wallon",
+      "sota_fr": "dialecte du wallon · langue d'oïl",
+      "sota_oc": "dialècte del valon · lenga d'oïl"
+    },
+    {
+      "kod": "valon_sud",
+      "grope": "nord",
+      "fr": "wallon du Sud",
+      "oc": "valon del sud",
+      "zonas": [],
+      "de": "wallon",
+      "sota_fr": "dialecte du wallon · langue d'oïl",
+      "sota_oc": "dialècte del valon · lenga d'oïl"
     },
     {
       "kod": "normand",

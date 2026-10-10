@@ -58,6 +58,7 @@
 			locutors: 'locutors',
 			nDial: (n, sub) => `${n} ${sub ? 'lengas e parlars' : 'dialèctes'}`,
 			dialDe: (l) => `Dialèctes del ${l}`,
+			fonts: 'Fonts :',
 			netejarTitol: 'Escantir totas las jaces e tornar partir de zèro',
 			sonqueFons: 'Sonque sul fons Contorns',
 			totTornar: 'Tot tornar',
@@ -100,6 +101,7 @@
 			locutors: 'locuteurs',
 			nDial: (n, sub) => `${n} ${sub ? 'langues et parlers' : 'dialectes'}`,
 			dialDe: (l) => `Dialectes du ${l}`,
+			fonts: 'Sources :',
 			netejarTitol: 'Éteindre toutes les couches et repartir de zéro',
 			sonqueFons: 'Seulement sur le fond Contours',
 			totTornar: 'Tout remettre',
@@ -750,10 +752,11 @@
 				<span class="endo" lang={lg.lang}>{lg.nom.endo.charAt(0).toUpperCase() + lg.nom.endo.slice(1)}</span>
 				<span class="nom-lg">{nomLg}</span>
 				{#if notaJ(j)}<p class="desc">{notaJ(j)}</p>{/if}
+				<!-- cada informacion amb sa font al survòl (demanda de Romain : cercaires o institucions) -->
 				<p class="meta">
-					{#if fi.locutors}<span title={fi.font ?? ''}><b>{fi.locutors}</b> {tx.locutors}</span>{/if}
-					{#if fi.familha}<span>{fi.familha[lang] ?? fi.familha.fr}</span>{/if}
-					{#if fi.vital}<span class="vital"><i style:background={VITALITAT[fi.vital.k] ?? '#999'}></i>{fi.vital[lang] ?? fi.vital.fr}</span>{/if}
+					{#if fi.locutors}{@render infoFont(fi.fontLocutors, `<b>${fi.locutors}</b> ${tx.locutors}`)}{/if}
+					{#if fi.familha}{@render infoFont(fi.fontFamilha, fi.familha[lang] ?? fi.familha.fr)}{/if}
+					{#if fi.vital}{@render infoFont({ t: fi.vital.t, url: 'https://unesdoc.unesco.org/ark:/48223/pf0000187026' }, `<i style="background:${VITALITAT[fi.vital.k] ?? '#999'}"></i>${fi.vital[lang] ?? fi.vital.fr}`, 'vital')}{/if}
 				</p>
 			</div>
 			<button
@@ -765,9 +768,12 @@
 				onclick={() => bascular(j.id, !visibility[j.id])}
 			></button>
 		</div>
-		<button type="button" class="desplegar" aria-expanded={dob} onclick={() => virarDials(j.id)}
-			><span class="chev" aria-hidden="true">▸</span>{tx.nDial(dz.length, j.id === 'oil')}</button
-		>
+		<div class="desplegar-l">
+			<button type="button" class="desplegar" aria-expanded={dob} onclick={() => virarDials(j.id)}
+				><span class="chev" aria-hidden="true">▸</span>{tx.nDial(dz.length, j.id === 'oil')}</button
+			>
+			{#if fi.fontDialectes}{@render infoFont(fi.fontDialectes, 'ⓘ', 'sol')}{/if}
+		</div>
 		{#if dob}
 			<ul class="albre" role="group" aria-label={tx.causirLenga(nomLg)} transition:slide={{ duration: 200 }}>
 				{#each lg.pastilhas.filter((q) => !q.de) as q (q.k)}
@@ -787,6 +793,13 @@
 			</ul>
 		{/if}
 	</div>
+{/snippet}
+
+{#snippet infoFont(font, html, cl = '')}
+	<span class="info {cl}" tabindex="0">{@html html}{#if font}<span class="bulla" role="tooltip"
+				><b>{tx.fonts}</b> {font.t}{#if font.url} <a href={font.url} target="_blank" rel="noopener">→</a>{/if}</span
+			>{/if}</span
+	>
 {/snippet}
 
 {#snippet dialLenga(j, lg, q)}
@@ -1275,6 +1288,58 @@
 		flex-wrap: wrap;
 		gap: 4px;
 		margin-top: 0.45rem;
+	}
+	/* las fonts al survòl : una pichona bulla, amb un ligam */
+	.info {
+		position: relative;
+		cursor: help;
+		border-bottom: 1px dotted color-mix(in srgb, var(--t-tinta) 30%, transparent);
+	}
+	.info.sol {
+		border: 0;
+		margin-left: 4px;
+		color: color-mix(in srgb, var(--t-tinta) 55%, transparent);
+		font-size: 0.72rem;
+	}
+	.info :global(i) {
+		display: inline-block;
+		width: 7px;
+		height: 7px;
+		margin-right: 4px;
+		border-radius: 50%;
+	}
+	.info .bulla {
+		position: absolute;
+		left: 0;
+		bottom: calc(100% + 6px);
+		z-index: 5;
+		width: max-content;
+		max-width: 240px;
+		padding: 6px 8px;
+		border: 1px solid var(--t-linha);
+		border-radius: 8px;
+		background: var(--t-fons-2);
+		color: var(--t-tinta);
+		font: 400 0.64rem/1.35 var(--font-body);
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+		opacity: 0;
+		pointer-events: none;
+		transform: translateY(3px);
+		transition: opacity 0.15s, transform 0.15s;
+	}
+	.info:hover .bulla,
+	.info:focus-within .bulla,
+	.info:focus .bulla {
+		opacity: 1;
+		pointer-events: auto;
+		transform: none;
+	}
+	.info .bulla a {
+		color: var(--t-aur);
+	}
+	.desplegar-l {
+		display: flex;
+		align-items: center;
 	}
 	/* ---------- Opcion A : las fichas de las lengas ---------- */
 	.onglets {

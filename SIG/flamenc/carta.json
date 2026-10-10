@@ -1,0 +1,98 @@
+{
+  "endo": "vls",
+  "doms": [
+    "neerlandes",
+    "bassaxon",
+    "frison"
+  ],
+  "deps": [
+    "59",
+    "62"
+  ],
+  "paises": [
+    "France",
+    "Belgium",
+    "Netherlands",
+    "Germany",
+    "Luxembourg"
+  ],
+  "barrièra": [
+    "alsacian.json"
+  ],
+  "trans_props": {
+    "fr": {
+      "entre": [
+        "brabancon",
+        "frances"
+      ]
+    },
+    "pcd": {
+      "entre": [
+        "flamenc_occidental",
+        "picard"
+      ]
+    },
+    "ripuari": {
+      "entre": [
+        "limborgues",
+        "ripuari"
+      ]
+    }
+  },
+  "props_dial": {
+    "gronings": {
+      "sota_fr": "bas-saxon, autre langue",
+      "sota_oc": "bas saxon, autra lenga"
+    },
+    "stellingwerfs": {
+      "sota_fr": "bas-saxon, autre langue",
+      "sota_oc": "bas saxon, autra lenga"
+    },
+    "drents": {
+      "sota_fr": "bas-saxon, autre langue",
+      "sota_oc": "bas saxon, autra lenga"
+    },
+    "twents": {
+      "sota_fr": "bas-saxon, autre langue",
+      "sota_oc": "bas saxon, autra lenga"
+    },
+    "gelders_overijssels": {
+      "sota_fr": "bas-saxon, autre langue",
+      "sota_oc": "bas saxon, autra lenga"
+    },
+    "veluws": {
+      "sota_fr": "bas-saxon, autre langue",
+      "sota_oc": "bas saxon, autra lenga"
+    },
+    "frison": {
+      "sota_fr": "frison, autre langue",
+      "sota_oc": "frison, autra lenga"
+    }
+  },
+  "apart": [
+    {
+      "kod": "frans_vlaams",
+      "vls": "Frans-Vlaams",
+      "fr": "flamand de France (Westhoek)",
+      "oc": "flamenc de França",
+      "filtre": "FR"
+    }
+  ],
+  "sortida": "flamenc.json",
+  "vilas_max": 160,
+  "noms_props": [
+    "nom_local"
+  ],
+  "sens_dialecte": "flevoland",
+  "dialectes_mai": [
+    {
+      "kod": "flevoland",
+      "vls": "Flevoland",
+      "fr": "polders du Flevoland (sans dialecte traditionnel)",
+      "oc": "pòlders del Flevoland",
+      "istoric": true,
+      "sota_fr": "polders du XXe siècle, sans dialecte traditionnel",
+      "sota_oc": "pòlders del sègle XX, sens dialècte tradicional"
+    }
+  ]
+}

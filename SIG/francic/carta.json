@@ -1,0 +1,63 @@
+{
+  "endo": "de",
+  "doms": [
+    "francic",
+    "mixta"
+  ],
+  "deps": [
+    "54",
+    "57",
+    "67",
+    "68",
+    "88",
+    "90",
+    "25",
+    "70"
+  ],
+  "paises": [
+    "France",
+    "Germany",
+    "Switzerland",
+    "Luxembourg",
+    "Belgium",
+    "Austria",
+    "Liechtenstein",
+    "Netherlands"
+  ],
+  "barrièra": [
+    "arpitan.json",
+    "alsacian.json"
+  ],
+  "trans_map": {
+    "mixta": "mixta-roman-germanic"
+  },
+  "trans_kod": "trans-{dial}-{t}",
+  "apart": [
+    {
+      "kod": "francic-franca",
+      "de": "Deitsch-Lothringen",
+      "fr": "Moselle germanophone",
+      "oc": "Mosèla germanofòna",
+      "filtre": "FR"
+    }
+  ],
+  "sortida": "francic.json",
+  "vilas_max": 120,
+  "osm_noms": [
+    "name:gsw",
+    "name:lb",
+    "name:als"
+  ],
+  "noms_props": [
+    "nom_lb"
+  ],
+  "font_lenga": "alsacian",
+  "dialectes": [
+    "letzebuergesch",
+    "moselfrankisch",
+    "rheinfrankisch",
+    "sudfrankisch",
+    "ripuarisch",
+    "limburgisch"
+  ]
+}

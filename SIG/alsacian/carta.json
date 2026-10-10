@@ -2,7 +2,6 @@
   "endo": "gsw",
   "doms": [
     "alemanic",
-    "francic",
     "mixta"
   ],
   "deps": [
@@ -35,14 +34,14 @@
   "apart": [
     {
       "kod": "alsacian-franca",
-      "gsw": "Elsass un Deitsch-Lothringe",
-      "fr": "Alsace et Moselle germanophone",
-      "oc": "Alsàcia e Mosèla germanofònas",
+      "gsw": "Elsass",
+      "fr": "Alsace",
+      "oc": "Alsàcia",
       "filtre": "FR"
     }
   ],
   "sortida": "alsacian.json",
-  "vilas_max": 220,
+  "vilas_max": 140,
   "osm_noms": [
     "name:gsw",
     "name:lb",
@@ -50,5 +49,11 @@
   ],
   "noms_props": [
     "nom_lb"
+  ],
+  "dialectes": [
+    "niederalemannisch",
+    "hochalemannisch",
+    "hochstalemannisch",
+    "schwabisch"
   ]
 }

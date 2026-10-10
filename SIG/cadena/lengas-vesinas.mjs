@@ -9,7 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const DATA = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../app/static/data');
-const LENGAS = ['catalan', 'arpitan', 'basc', 'oil', 'alsacian', 'breton', 'cors'];
+const LENGAS = ['catalan', 'arpitan', 'basc', 'oil', 'alsacian', 'francic', 'breton', 'cors', 'flamenc'];
 // l'occitan tanben : quand sas jaces son levadas (« Netejar la carta »), son
 // survòl prepausa de lo tornar descobrir (domeni : limits-carta.json)
 const FONTS = { occitan: 'limits-carta.json' };

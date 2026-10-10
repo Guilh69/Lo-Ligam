@@ -1,0 +1,692 @@
+{
+	"font": "Flamenc e neerlandés : comunas CBS Wijk- en Buurtkaart 2025 (tèrra, PDOK), SPF Finanças INSPIRE 2025 (Belgica, còsta copada per OpenStreetMap, ODbL), IGN ADMIN EXPRESS COG CARTO 2026 ; dialèctes d'aprèp Jo Daan e D. P. Blok (1969) per la carta « Dutch-dialects.svg » (Jeroen, Wikimedia Commons, CC BY-SA 3.0), parlars del brabançon e del limborgés d'aprèp « Dutch dialects map - fr.svg » (Treehill, Wikimedia Commons, CC BY-SA 4.0) ; Flandres francesa : Alex Vanneste, Ons Erfdeel 15 (1972), cartas de 1856 (Bocave / de Coussemaker 1857), 1900 (Kurth), 1932 (Celen), 1971 ; Brunot, Histoire de la langue française IX (1927) ; noms locals : Wikidata (CC0), títols de las Wikipèdias vls, zea, li, nds-nl, fy",
+	"a_validar": "noms occitans (oc) : propausas, la màger part absentas del Basic de lo Congrès (verificacion 2026-10-10, camp oc_verificat) ; classament de las comunas a la termièra de dos dialèctes (camp nota, « incert ») ; limit istoric del flamenc en França (1856) e tractament de Dunkerque",
+	"domenis": {
+		"neerlandes": {
+			"endo": "Nederlands",
+			"fr": "néerlandais",
+			"oc": "neerlandés",
+			"oc_verificat": "òc"
+		},
+		"bassaxon": {
+			"endo": "Nedersaksisch",
+			"fr": "bas-saxon",
+			"oc": "bas saxon",
+			"oc_verificat": "bas òc, saxon absent del Basic"
+		},
+		"frison": {
+			"endo": "Frysk",
+			"fr": "frison occidental",
+			"oc": "frison",
+			"oc_verificat": "non"
+		}
+	},
+	"gropes": {
+		"A": {
+			"endo": "Zuidwestelijke groep (Zeeuws/West-Vlaams)",
+			"fr": "groupe sud-occidental"
+		},
+		"B": {
+			"endo": "Noordwestelijke groep (Hollands)",
+			"fr": "groupe nord-occidental"
+		},
+		"C": {
+			"endo": "Noordoostelijke groep (Nedersaksisch)",
+			"fr": "groupe nord-oriental (bas-saxon)"
+		},
+		"D": {
+			"endo": "Noordelijk-centrale groep",
+			"fr": "groupe central nord"
+		},
+		"E": {
+			"endo": "Zuidelijk-centrale groep",
+			"fr": "groupe central sud"
+		},
+		"F": {
+			"endo": "Zuidoostelijke groep (Limburgs)",
+			"fr": "groupe sud-oriental (limbourgeois)"
+		}
+	},
+	"dialectes": [
+		{
+			"kod": "flamenc_occidental",
+			"domeni": "neerlandes",
+			"grope_daan": "A",
+			"endo": "West-Vlaams",
+			"fr": "flamand occidental",
+			"oc": "flamenc occidental",
+			"oc_verificat": "òc (flamenc, occidental)",
+			"comunas": 164,
+			"parlars": [
+				{
+					"kod": "frans-vlaams",
+					"nom": "frans-vlaams",
+					"font": "Daan",
+					"comunas": 102
+				},
+				{
+					"kod": "west-vlaams",
+					"nom": "west-vlaams",
+					"font": "Daan",
+					"comunas": 60
+				},
+				{
+					"kod": "zeeuws-vlaams",
+					"nom": "zeeuws-vlaams",
+					"font": "Daan",
+					"comunas": 2
+				}
+			]
+		},
+		{
+			"kod": "zelandes",
+			"domeni": "neerlandes",
+			"grope_daan": "A",
+			"endo": "Zeeuws",
+			"fr": "zélandais",
+			"oc": "zelandés",
+			"oc_verificat": "non (absent del Basic ; format sus olandés)",
+			"comunas": 11,
+			"parlars": [
+				{
+					"kod": "zeeuws",
+					"nom": "zeeuws",
+					"font": "Daan",
+					"comunas": 11
+				}
+			]
+		},
+		{
+			"kod": "olandes",
+			"domeni": "neerlandes",
+			"grope_daan": "B",
+			"endo": "Hollands",
+			"fr": "hollandais",
+			"oc": "olandés",
+			"oc_verificat": "òc (lengadocian)",
+			"comunas": 86,
+			"parlars": [
+				{
+					"kod": "bildts, midslands, stadsfries, amelands",
+					"nom": "bildts, midslands, stadsfries, amelands",
+					"font": "Daan",
+					"comunas": 2
+				},
+				{
+					"kod": "kennemerlands",
+					"nom": "kennemerlands",
+					"font": "Daan",
+					"comunas": 5
+				},
+				{
+					"kod": "waterlands en volendams",
+					"nom": "waterlands en volendams",
+					"font": "Daan",
+					"comunas": 5
+				},
+				{
+					"kod": "west-fries",
+					"nom": "west-fries",
+					"font": "Daan",
+					"comunas": 14
+				},
+				{
+					"kod": "zaans",
+					"nom": "zaans",
+					"font": "Daan",
+					"comunas": 3
+				},
+				{
+					"kod": "zuid-hollands",
+					"nom": "zuid-hollands",
+					"font": "Daan",
+					"comunas": 57
+				}
+			]
+		},
+		{
+			"kod": "utrechtes",
+			"domeni": "neerlandes",
+			"grope_daan": "D",
+			"endo": "Utrechts-Alblasserwaards",
+			"fr": "utrechtois-alblasserwaardais",
+			"oc": "utrechtés",
+			"oc_verificat": "non",
+			"comunas": 38,
+			"parlars": [
+				{
+					"kod": "utrechts-alblasserwaards",
+					"nom": "utrechts-alblasserwaards",
+					"font": "Daan",
+					"comunas": 38
+				}
+			]
+		},
+		{
+			"kod": "zuid_gelders",
+			"domeni": "neerlandes",
+			"grope_daan": "E",
+			"endo": "Zuid-Gelders",
+			"fr": "gueldrois méridional",
+			"oc": "gueldrés meridional",
+			"oc_verificat": "non (meridional òc)",
+			"comunas": 18,
+			"parlars": [
+				{
+					"kod": "zuid-gelders",
+					"nom": "zuid-gelders",
+					"font": "Daan",
+					"comunas": 18
+				}
+			]
+		},
+		{
+			"kod": "brabancon",
+			"domeni": "neerlandes",
+			"grope_daan": "E",
+			"endo": "Brabants",
+			"fr": "brabançon",
+			"oc": "brabançon",
+			"oc_verificat": "non",
+			"comunas": 224,
+			"parlars": [
+				{
+					"kod": "brabants",
+					"nom": "brabants",
+					"font": "Daan",
+					"comunas": 14
+				},
+				{
+					"kod": "brabançon alostois",
+					"nom": "brabançon alostois",
+					"font": "Treehill",
+					"comunas": 22
+				},
+				{
+					"kod": "brabançon anversois",
+					"nom": "brabançon anversois",
+					"font": "Treehill",
+					"comunas": 67
+				},
+				{
+					"kod": "brabançon de Louvain",
+					"nom": "brabançon de Louvain",
+					"font": "Treehill",
+					"comunas": 27
+				},
+				{
+					"kod": "brabançon occidental",
+					"nom": "brabançon occidental",
+					"font": "Treehill",
+					"comunas": 21
+				},
+				{
+					"kod": "brabançon oriental",
+					"nom": "brabançon oriental",
+					"font": "Treehill",
+					"comunas": 42
+				},
+				{
+					"kod": "brussels",
+					"nom": "brussels",
+					"font": "Daan",
+					"comunas": 19
+				},
+				{
+					"kod": "noord-brabants en noord-limburgs",
+					"nom": "noord-brabants en noord-limburgs",
+					"font": "Daan",
+					"comunas": 12
+				}
+			]
+		},
+		{
+			"kod": "flamenc_oriental",
+			"domeni": "neerlandes",
+			"grope_daan": "E",
+			"endo": "Oost-Vlaams",
+			"fr": "flamand oriental",
+			"oc": "flamenc oriental",
+			"oc_verificat": "òc (flamenc, oriental)",
+			"comunas": 50,
+			"parlars": [
+				{
+					"kod": "oost-vlaams",
+					"nom": "oost-vlaams",
+					"font": "Daan",
+					"comunas": 50
+				}
+			]
+		},
+		{
+			"kod": "limborgues",
+			"domeni": "neerlandes",
+			"grope_daan": "F",
+			"endo": "Limburgs",
+			"fr": "limbourgeois",
+			"oc": "limborgés",
+			"oc_verificat": "non (format sus luxemborgés, verificat)",
+			"comunas": 64,
+			"parlars": [
+				{
+					"kod": "limbourgeois méridional",
+					"nom": "limbourgeois méridional",
+					"font": "Treehill",
+					"comunas": 18
+				},
+				{
+					"kod": "limbourgeois occidental",
+					"nom": "limbourgeois occidental",
+					"font": "Treehill",
+					"comunas": 19
+				},
+				{
+					"kod": "limbourgeois oriental",
+					"nom": "limbourgeois oriental",
+					"font": "Treehill",
+					"comunas": 7
+				},
+				{
+					"kod": "limbourgeois septentrional",
+					"nom": "limbourgeois septentrional",
+					"font": "Treehill",
+					"comunas": 14
+				},
+				{
+					"kod": "limburgs",
+					"nom": "limburgs",
+					"font": "Daan",
+					"comunas": 5
+				},
+				{
+					"kod": "oost-limburgs (platdiets)",
+					"nom": "oost-limburgs (platdiets)",
+					"font": "Daan",
+					"comunas": 1
+				}
+			]
+		},
+		{
+			"kod": "gronings",
+			"domeni": "bassaxon",
+			"grope_daan": "C",
+			"endo": "Gronings (Grunnegs)",
+			"fr": "groningois",
+			"oc": "gronings",
+			"oc_verificat": "nom neerlandés gardat",
+			"comunas": 12,
+			"parlars": [
+				{
+					"kod": "gronings en noord-drents",
+					"nom": "gronings en noord-drents",
+					"font": "Daan",
+					"comunas": 11
+				},
+				{
+					"kod": "kollumerlands",
+					"nom": "kollumerlands",
+					"font": "Daan",
+					"comunas": 1
+				}
+			]
+		},
+		{
+			"kod": "stellingwerfs",
+			"domeni": "bassaxon",
+			"grope_daan": "C",
+			"endo": "Stellingwerfs",
+			"fr": "stellingwerfois",
+			"oc": "stellingwerfs",
+			"oc_verificat": "nom neerlandés gardat",
+			"comunas": 4,
+			"parlars": [
+				{
+					"kod": "stellingwerfs",
+					"nom": "stellingwerfs",
+					"font": "Daan",
+					"comunas": 4
+				}
+			]
+		},
+		{
+			"kod": "drents",
+			"domeni": "bassaxon",
+			"grope_daan": "C",
+			"endo": "Drents",
+			"fr": "drenthois",
+			"oc": "drents",
+			"oc_verificat": "nom neerlandés gardat",
+			"comunas": 10,
+			"parlars": [
+				{
+					"kod": "midden-drents",
+					"nom": "midden-drents",
+					"font": "Daan",
+					"comunas": 2
+				},
+				{
+					"kod": "zuid-drents",
+					"nom": "zuid-drents",
+					"font": "Daan",
+					"comunas": 8
+				}
+			]
+		},
+		{
+			"kod": "twents",
+			"domeni": "bassaxon",
+			"grope_daan": "C",
+			"endo": "Twents",
+			"fr": "twentois",
+			"oc": "twents",
+			"oc_verificat": "nom neerlandés gardat",
+			"comunas": 14,
+			"parlars": [
+				{
+					"kod": "twents",
+					"nom": "twents",
+					"font": "Daan",
+					"comunas": 7
+				},
+				{
+					"kod": "twents-graafschaps",
+					"nom": "twents-graafschaps",
+					"font": "Daan",
+					"comunas": 7
+				}
+			]
+		},
+		{
+			"kod": "gelders_overijssels",
+			"domeni": "bassaxon",
+			"grope_daan": "C",
+			"endo": "Gelders-Overijssels (Achterhoeks, Sallands)",
+			"fr": "gueldrois-overijsselois",
+			"oc": "gelders-overijssels",
+			"oc_verificat": "nom neerlandés gardat",
+			"comunas": 25,
+			"parlars": [
+				{
+					"kod": "gelders-overijssels",
+					"nom": "gelders-overijssels",
+					"font": "Daan",
+					"comunas": 24
+				},
+				{
+					"kod": "urkers",
+					"nom": "urkers",
+					"font": "Daan",
+					"comunas": 1
+				}
+			]
+		},
+		{
+			"kod": "veluws",
+			"domeni": "bassaxon",
+			"grope_daan": "C",
+			"endo": "Veluws",
+			"fr": "veluwois",
+			"oc": "veluws",
+			"oc_verificat": "nom neerlandés gardat",
+			"comunas": 10,
+			"parlars": [
+				{
+					"kod": "veluws",
+					"nom": "veluws",
+					"font": "Daan",
+					"comunas": 10
+				}
+			]
+		},
+		{
+			"kod": "frison",
+			"domeni": "frison",
+			"grope_daan": "",
+			"endo": "Frysk",
+			"fr": "frison occidental",
+			"oc": "frison",
+			"oc_verificat": "non (absent del Basic)",
+			"comunas": 13,
+			"parlars": []
+		}
+	],
+	"apart": {
+		"kod": "frans_vlaams",
+		"domeni": "neerlandes",
+		"dialecte": "flamenc_occidental",
+		"endo": "Frans-Vlaams",
+		"fr": "flamand de France (Westhoek)",
+		"oc": "flamenc de França",
+		"oc_verificat": "flamenc òc ; França absent del Basic",
+		"nota": "Lo flamenc occidental de França, separat de Belgica per la frontièra d'Estat : domeni = comunas flamencas en 1856 (carta de Bocave, publicada per de Coussemaker en 1857, recopiada per Vanneste en 1972), amb las comunas bilingüas a majoritat francesa en 1856 e las comunas flamencas en 1806 vengudas francesas en 1856 (Dunkerque, Coudekerque-Branche…) en zòna de transicion. En 1971 (Vanneste) pas mai cap de comuna unilingüa flamenca.",
+		"comunas": [
+			"59016",
+			"59018",
+			"59043",
+			"59046",
+			"59054",
+			"59067",
+			"59073",
+			"59082",
+			"59083",
+			"59084",
+			"59086",
+			"59087",
+			"59089",
+			"59091",
+			"59094",
+			"59107",
+			"59110",
+			"59111",
+			"59119",
+			"59120",
+			"59130",
+			"59131",
+			"59135",
+			"59155",
+			"59159",
+			"59162",
+			"59180",
+			"59182",
+			"59183",
+			"59184",
+			"59189",
+			"59200",
+			"59210",
+			"59237",
+			"59260",
+			"59262",
+			"59271",
+			"59282",
+			"59295",
+			"59305",
+			"59307",
+			"59308",
+			"59309",
+			"59318",
+			"59319",
+			"59326",
+			"59337",
+			"59338",
+			"59340",
+			"59358",
+			"59359",
+			"59366",
+			"59397",
+			"59399",
+			"59401",
+			"59402",
+			"59416",
+			"59433",
+			"59436",
+			"59443",
+			"59448",
+			"59453",
+			"59454",
+			"59463",
+			"59469",
+			"59478",
+			"59497",
+			"59499",
+			"59516",
+			"59532",
+			"59535",
+			"59536",
+			"59538",
+			"59539",
+			"59546",
+			"59568",
+			"59570",
+			"59576",
+			"59577",
+			"59578",
+			"59579",
+			"59580",
+			"59582",
+			"59587",
+			"59588",
+			"59605",
+			"59615",
+			"59628",
+			"59634",
+			"59641",
+			"59647",
+			"59655",
+			"59657",
+			"59662",
+			"59663",
+			"59664",
+			"59665",
+			"59666",
+			"59667",
+			"59668",
+			"59669",
+			"62225"
+		]
+	},
+	"transicions": [
+		{
+			"kod": "pcd",
+			"fr": "flamand / français (picard) : bilingue à majorité française en 1856, ou flamand en 1806 et français en 1856",
+			"oc": "flamenc / picard",
+			"comunas": [
+				"59084",
+				"59087",
+				"59094",
+				"59155",
+				"59159",
+				"59180",
+				"59183",
+				"59271",
+				"59307",
+				"59359",
+				"59497",
+				"59532",
+				"59538",
+				"59539",
+				"59647",
+				"62225"
+			]
+		},
+		{
+			"kod": "istoric",
+			"fr": "flamand attesté au XIXe siècle (1806-1845), hors du domaine de 1856",
+			"oc": "flamenc istoric",
+			"comunas": [
+				"59656",
+				"62645",
+				"62730",
+				"62748",
+				"62765",
+				"62766",
+				"62852"
+			]
+		},
+		{
+			"kod": "fr",
+			"fr": "Bruxelles-Capitale : région bilingue, français majoritaire, brabançon (brussels) historique",
+			"oc": "Brussèlas, bilingüe",
+			"comunas": [
+				"be:21001",
+				"be:21002",
+				"be:21003",
+				"be:21004",
+				"be:21005",
+				"be:21006",
+				"be:21007",
+				"be:21008",
+				"be:21009",
+				"be:21010",
+				"be:21011",
+				"be:21012",
+				"be:21013",
+				"be:21014",
+				"be:21015",
+				"be:21016",
+				"be:21017",
+				"be:21018",
+				"be:21019"
+			]
+		},
+		{
+			"kod": "ripuari",
+			"fr": "Kerkrade, Simpelveld, Vaals : dialectes ripuaires (allemands) dans le Limbourg néerlandais",
+			"oc": "ripuari",
+			"comunas": [
+				"nl:GM0928",
+				"nl:GM0965",
+				"nl:GM0981"
+			]
+		},
+		{
+			"kod": "dialecte",
+			"fr": "commune partagée entre deux zones de Daan (25 % ou plus dans la seconde) : le champ transicio donne le second dialecte",
+			"oc": "transicion entre dialèctes",
+			"comunas": [
+				"be:24028",
+				"be:24059",
+				"be:24130",
+				"be:34042",
+				"be:41018",
+				"be:43010",
+				"be:44081",
+				"be:71034",
+				"nl:GM0059",
+				"nl:GM0093",
+				"nl:GM0114",
+				"nl:GM0160",
+				"nl:GM0200",
+				"nl:GM0209",
+				"nl:GM0221",
+				"nl:GM0222",
+				"nl:GM0225",
+				"nl:GM0228",
+				"nl:GM0269",
+				"nl:GM0275",
+				"nl:GM0277",
+				"nl:GM0294",
+				"nl:GM0313",
+				"nl:GM0340",
+				"nl:GM0512",
+				"nl:GM0668",
+				"nl:GM0715",
+				"nl:GM0983",
+				"nl:GM1509",
+				"nl:GM1586",
+				"nl:GM1680",
+				"nl:GM1681",
+				"nl:GM1700",
+				"nl:GM1706",
+				"nl:GM1709",
+				"nl:GM1742",
+				"nl:GM1859",
+				"nl:GM1891",
+				"nl:GM1901",
+				"nl:GM1931",
+				"nl:GM1949",
+				"nl:GM1960",
+				"nl:GM1970"
+			]
+		}
+	]
+}

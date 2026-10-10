@@ -130,7 +130,12 @@ def a_lonlat(t):
 
 # ------------------------------------------------- 1. unitats e classament
 
-classa = json.load(open(os.path.join(SIG, L, 'dialectes-%s.json' % L), encoding='utf-8'))
+# (CONF['font_lenga'] : lo tablèu d'una autra lenga, coma lo francic tirat del
+# tablèu de l'alsacian ; CONF['dialectes'] : sonque aqueles dialèctes)
+FL = CONF.get('font_lenga', L)
+classa = json.load(open(os.path.join(SIG, FL, 'dialectes-%s.json' % FL), encoding='utf-8'))
+if CONF.get('dialectes'):
+    classa['dialectes'] = [d for d in classa['dialectes'] if d['kod'] in CONF['dialectes']]
 ENDO = CONF['endo']
 # (CONF['dialectes_mai'] : de dialèctes apondus, coma una zòna escantida a part)
 classa['dialectes'] = classa['dialectes'] + CONF.get('dialectes_mai', [])
@@ -147,7 +152,16 @@ def clau_t(t):
 # las transicions en asclas : pas las zònas defòra del domeni ni las ignoradas
 TRANS = {clau_t(t): t for t in (classa.get('transicions') or [])
          if not t.get('defora') and t.get('domeni') not in ('vesina', 'desaparegut') and clau_t(t) not in CONF.get('trans_ignorar', [])}
-linhas_csv = list(csv.DictReader(open(os.path.join(SIG, L, 'dialectes-%s.csv' % L), encoding='utf-8-sig'), delimiter=';'))
+# (CONF['trans_props'] : de proprietats apondudas, coma « entre » per las asclas)
+if CONF.get('dialectes'):
+    TRANS = {t: x for t, x in TRANS.items() if not x.get('entre') or any(k in CONF['dialectes'] for k in x['entre'])}
+for t, x in CONF.get('trans_props', {}).items():
+    if t in TRANS:
+        TRANS[t] = {**TRANS[t], **x}
+linhas_csv = list(csv.DictReader(open(os.path.join(SIG, FL, 'dialectes-%s.csv' % FL), encoding='utf-8-sig'), delimiter=';'))
+if CONF.get('dialectes'):
+    # (una comuna mixta sens dialècte : la colomna « transicio » lo dona)
+    linhas_csv = [r for r in linhas_csv if (r['dialecte'] or (r.get('transicio') or '').strip()) in CONF['dialectes'] or r['domeni'] not in CONF['doms']]
 per_codi = {r['codi']: r for r in linhas_csv if r.get('codi')}
 PAS = 20000.0
 
@@ -156,6 +170,7 @@ def es_fr(c):
     return bool(re.fullmatch(r'[0-9][0-9AB][0-9]{3}', c))
 
 
+BRUT = os.path.join(SIG, 'brut', FL)
 # França : las comunas IGN dels despartaments de CONF['deps'] (lo domeni e la
 # tèrra a l'entorn, pel tèst còsta / tèrra)
 geo = {}
@@ -199,6 +214,8 @@ for c, r in per_codi.items():
     # (una comuna mixta sens dialècte : la colomna « transicio » dona lo de la lenga)
     d0 = r['dialecte'] or ((r.get('transicio') or '').strip() if (r.get('transicio') or '').strip() in DIAL else '')
     d0 = CONF.get('domeni_dialecte', {}).get(r['domeni'], d0)
+    # (una tèrra sens dialècte tradicional, coma los pòlders del Flevoland)
+    d0 = d0 or CONF.get('sens_dialecte', '')
     if not d0:
         sens_geo.append('%s (sens dialècte)' % r.get('nom_oficial', c))
         continue
@@ -297,8 +314,16 @@ u_fr = unir([u['g'] for u in unitats if es_fr(u['codi'])])
 u_ext = unir([u['g'] for u in unitats if not es_fr(u['codi'])])
 fonts_ext = {u['codi'].split(':')[0] for u in unitats if not es_fr(u['codi'])}
 if n_ext and (len(fonts_ext) > 1 or (not u_fr.IsEmpty() and u_fr.Buffer(1000, 2).Intersects(u_ext))):
-    tot = unir(list(P.values()))
-    fendas = valid(valid(tot.Buffer(B, 8).Buffer(-B, 8)).Difference(tot).Difference(oc_local))
+    # sonque dins la benda de contacte entre doas fonts (pas sus las còstas)
+    per_font = defaultdict(list)
+    for u in unitats:
+        per_font['fr' if es_fr(u['codi']) else u['codi'].split(':')[0]].append(u['g'])
+    U = {f: unir(gs) for f, gs in per_font.items()}
+    bendas = [valid(U[a].Buffer(3 * B, 2).Intersection(U[b].Buffer(3 * B, 2))) for i, a in enumerate(U) for b in list(U)[i + 1:]]
+    benda_c = unir([x for x in bendas if not x.IsEmpty()]) if any(not x.IsEmpty() for x in bendas) else ogr.Geometry(ogr.wkbMultiPolygon)
+    tot = valid(unir(list(P.values())).Intersection(benda_c.Buffer(4 * B, 2)))
+    fendas = valid(valid(valid(tot.Buffer(B, 8).Buffer(-B, 8)).Difference(tot).Difference(oc_local)).Intersection(benda_c))
+    marca('benda de contacte entre fonts : %.0f km2' % km2(benda_c))
 else:
     fendas = ogr.Geometry(ogr.wkbMultiPolygon)
 n_f = 0
@@ -703,6 +728,7 @@ def nom_endo(x):
 
 
 def props_dial(x):
+    x = {**x, **CONF.get('props_dial', {}).get(x['kod'], {})}
     p = {'kod': x['kod'], ENDO: nom_endo(x), 'fr': x['fr'], 'oc': x.get('oc') or x['fr']}
     for k in ('istoric', 'grope', 'sota_fr', 'sota_oc', 'color', 'de'):
         if k in x:

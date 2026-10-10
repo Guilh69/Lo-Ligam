@@ -165,14 +165,31 @@ CATALOGUE.push({
 		},
 		{
 			id: 'alsacian',
-			oc: 'Alsacian e francic',
-			fr: 'Alsacien et francique',
+			oc: 'Alsacian',
+			fr: 'Alsacien',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Lo continuum alemanic e francic, d’Estrasborg a Zuric e a Luxemborg ; Alsàcia e Mosèla a despart',
-			nota_fr: 'Le continuum alémanique et francique, de Strasbourg à Zurich et à Luxembourg ; Alsace et Moselle à part'
+			nota_oc: 'Lo continuum alemanic, d’Estrasborg a Basilèa e a Zuric ; Alsàcia a despart',
+			nota_fr: 'Le continuum alémanique, de Strasbourg à Bâle et à Zurich ; l’Alsace à part'
 		},
-		{ id: 'flamenc', oc: 'Flamenc occidental', fr: 'Flamand occidental', estat: 'a venir' },
+		{
+			id: 'francic',
+			oc: 'Francic (platt)',
+			fr: 'Francique (platt)',
+			estat: 'disponible',
+			defaut: false,
+			nota_oc: 'Lo platt de Mosèla e sos vesins, fins a Luxemborg e a la Sarra ; Mosèla germanofòna a despart',
+			nota_fr: 'Le platt de Moselle et ses voisins, jusqu’au Luxembourg et à la Sarre ; la Moselle germanophone à part'
+		},
+		{
+			id: 'flamenc',
+			oc: 'Flamenc e neerlandés',
+			fr: 'Flamand et néerlandais',
+			estat: 'disponible',
+			defaut: false,
+			nota_oc: 'Del Westhoek als Païses Basses, lo continuum dels dialèctes neerlandeses ; Flandres de França a despart',
+			nota_fr: 'Du Westhoek aux Pays-Bas, le continuum des dialectes néerlandais ; la Flandre française à part'
+		},
 		{
 			id: 'cors',
 			oc: 'Còrs',
@@ -195,7 +212,7 @@ CATALOGUE.push({
 });
 
 // Las jaces de lengas pintadas per una còla de lenga (colaLenga.js, lengas.js)
-export const JACES_LENGAS = ['catalan', 'arpitan', 'basc', 'oil', 'alsacian', 'breton', 'cors'];
+export const JACES_LENGAS = ['catalan', 'arpitan', 'basc', 'oil', 'alsacian', 'francic', 'breton', 'cors', 'flamenc'];
 
 // Las jaces pintadas pel fons « Contorns » (colaEstelas.js) : son pas pintadas
 // sus los autres fonses (las tuèlas an las lors). Jaça → element del fons.

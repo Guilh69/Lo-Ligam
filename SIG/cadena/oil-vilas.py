@@ -43,6 +43,16 @@ for l in ('pcd', 'nrm', 'wa'):
 # lo galò : repertòris de Chubri (gallo-noms.py), per nom oficial e departament
 GALO = {(r['fr'], r['dep']): r['gallo'] for r in csv.DictReader(open(os.path.join(R, 'SIG', 'brut', 'oil', 'noms-gallo.csv'), encoding='utf-8'), delimiter=';')}
 
+LENGAS_ZONA = {'poitevin_saintongeais': ('poitevin-saintongeais', 'saintongeais', 'poitevin'), 'franc_comtois': ('franc-comtois',),
+               'gallo': ('gallo',), 'bourguignon': ('morvandiau', 'bourguignon'), 'lorrain': ('lorrain',), 'champenois': ('champenois',),
+               'centre': ('berrichon', 'orléanais', 'bourbonnais'), 'oest': ('mayennais', 'angevin', 'manceau', 'tourangeau')}
+LOC_OIL = {}
+F_LOC = os.path.join(R, 'SIG', 'oil', 'noms-oil-locals.csv')
+if os.path.exists(F_LOC):
+    for r in csv.DictReader(open(F_LOC, encoding='utf-8-sig'), delimiter=';'):
+        if r.get('nom_local') and 'DOUTEUX' not in (r.get('nota') or ''):
+            LOC_OIL[r['insee']] = (r['nom_local'].strip(), r['lenga_de_la_font'].strip(), r.get('font', ''))
+
 wgs, l93 = osr.SpatialReference(), osr.SpatialReference()
 wgs.ImportFromEPSG(4326)
 l93.ImportFromEPSG(2154)
@@ -75,6 +85,10 @@ for f in cm:
     font = ('Viquipèdia ' + w) if nl else 'nom oficial (IGN)'
     if kod == 'gallo' and (f.GetField('nom_officiel'), c[:2]) in GALO:
         nl, font = GALO[(f.GetField('nom_officiel'), c[:2])], 'Chubri'
+    # (los noms trobats per la recèrca, SIG/oil/noms-oil-locals.csv : sonque dins
+    # la lenga de la zòna de la vila, e pas los noms marcats « DOUTEUX »)
+    if not nl and c in LOC_OIL and LOC_OIL[c][1] in LENGAS_ZONA.get(kod, ()):
+        nl, font = LOC_OIL[c][0], 'recèrca : ' + LOC_OIL[c][2][:80]
     cands.append({'insee': c, 'nom_oficial': f.GetField('nom_officiel'), 'nom': nl or f.GetField('nom_officiel'),
                   'local': bool(nl), 'font': font,
                   'lon': round(lon, 4), 'lat': round(lat, 4), 'x': x, 'y': y, 'pop': pop, 'zona': kod,

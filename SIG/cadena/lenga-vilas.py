@@ -47,7 +47,7 @@ def zona_de(lon, lat):
 
 # noms locals per còdi
 locals_ = {}
-for fic in glob.glob(os.path.join(R, 'SIG', L, 'noms-*.csv')):
+for fic in glob.glob(os.path.join(R, 'SIG', CONF.get('font_lenga', L), 'noms-*.csv')):
     for r in csv.DictReader(open(fic, encoding='utf-8-sig'), delimiter=';'):
         c = r.get('codi') or r.get('insee')
         n = r.get('nom_local') or next((r[k] for k in r if k and k.startswith('nom_') and k != 'nom_oficial' and r[k]), None)
@@ -87,8 +87,8 @@ if deps:
                       'pop': f.GetField('population') or 0, 'zona': kod, 'estat': 'FR'})
 # Los autres país : las comunas de SIG/brut/<lenga>/*.geojson (ponch, populacion ;
 # la populacion que manca, de Wikidata P1082 per l'identificant « wikidata »)
-ext, sens_pop, sens_istat = [], {}, {}
-for fic in sorted(glob.glob(os.path.join(R, 'SIG', 'brut', L, '*.geojson'))):
+ext, sens_pop, sens_istat, sens_nis = [], {}, {}, {}
+for fic in sorted(glob.glob(os.path.join(R, 'SIG', 'brut', CONF.get('font_lenga', L), '*.geojson'))):
     try:
         dj = json.load(open(fic, encoding='utf-8'))
     except Exception:
@@ -109,12 +109,16 @@ for fic in sorted(glob.glob(os.path.join(R, 'SIG', 'brut', L, '*.geojson'))):
         kod = zona_de(lon, lat)
         if not kod:
             continue
-        v = {'codi': c, 'p': p, 'lon': round(lon, 4), 'lat': round(lat, 4), 'zona': kod, 'pop': p.get('populacion')}
+        v = {'codi': c, 'p': p, 'lon': round(lon, 4), 'lat': round(lat, 4), 'zona': kod, 'pop': p.get('populacion') or p.get('pop')}
+        if not p.get('nom') and p.get('nom_oficial'):
+            p['nom'] = p['nom_oficial']
         ext.append(v)
         if not v['pop'] and p.get('wikidata'):
             sens_pop[p['wikidata']] = v
         elif not v['pop'] and c.startswith('it:'):
             sens_istat[c[3:]] = v
+        elif (not v['pop'] or not p.get('nom')) and c.startswith('be:'):
+            sens_nis[c[3:]] = v
 ids = list(sens_pop)
 for i in range(0, len(ids), 150):
     q = 'SELECT ?i (MAX(?p) AS ?pop) WHERE { VALUES ?i { %s } ?i wdt:P1082 ?p } GROUP BY ?i' % ' '.join('wd:' + x for x in ids[i:i + 150])
@@ -147,6 +151,20 @@ for i in range(0, len(noms_i), 100):
     except Exception as e:
         print('Wikidata (noms italians) : %s' % e)
 print('Itàlia : %d comunas, %d sens populacion' % (len(sens_istat), sum(1 for v in sens_istat.values() if not v['pop'])))
+# (Belgica : populacion e nom per lo còdi INS, Wikidata P1567)
+nis = list(sens_nis)
+for i in range(0, len(nis), 150):
+    q = 'SELECT ?c (MAX(?p) AS ?pop) (SAMPLE(?l) AS ?nom) WHERE { VALUES ?c { %s } ?i wdt:P1567 ?c ; wdt:P1082 ?p . OPTIONAL { ?i rdfs:label ?l FILTER(LANG(?l) = "nl") } } GROUP BY ?c' % ' '.join('"%s"' % x for x in nis[i:i + 150])
+    try:
+        req = urllib.request.Request('https://query.wikidata.org/sparql?' + urllib.parse.urlencode({'query': q, 'format': 'json'}), headers=UA)
+        for b_ in json.load(urllib.request.urlopen(req, timeout=180))['results']['bindings']:
+            v = sens_nis[b_['c']['value']]
+            v['pop'] = v['pop'] or int(float(b_['pop']['value']))
+            if 'nom' in b_ and not v['p'].get('nom'):
+                v['p']['nom'] = b_['nom']['value']
+    except Exception as e:
+        print('Wikidata (INS) : %s' % e)
+print('Belgica : %d comunas, %d sens populacion' % (len(sens_nis), sum(1 for v in sens_nis.values() if not v['pop'])))
 for v in ext:
     p = v['p']
     if not v['pop'] or v['pop'] < 2000:

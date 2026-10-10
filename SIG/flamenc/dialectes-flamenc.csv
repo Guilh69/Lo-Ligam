@@ -1,0 +1,766 @@
+﻿regio;unitat;mena;nom_oficial;nom_local;codi;domeni;dialecte;parlar;transicio;part_oc;nota;font
+France;Audruicq;comuna_fr;Oye-Plage;Ooie;62645;exclos;;;istoric;0;"1806 ? ; 1856 ? ; 1900 ? ; 1932 ? ; 1971 ? ; flamand en 1845 ; AN 2013 : canton Audruicq, zone 1.3";CFF57 AN13
+France;Audruicq;comuna_fr;Ruminghem;;62730;exclos;;;istoric;0;"1806 ? ; 1856 ? ; 1900 ? ; 1932 ? ; 1971 ? ; flamand en 1807 et 1845 ; AN 2013 : canton Audruicq, zone 1.3";CFF57 AN13
+France;Audruicq;comuna_fr;Saint-Folquin;;62748;exclos;;;istoric;0;"1806 ? ; 1856 ? ; 1900 ? ; 1932 ? ; 1971 ? ; flamand en 1845 ; AN 2013 : canton Audruicq, zone 1.3";CFF57 AN13
+France;Audruicq;comuna_fr;Saint-Omer-Capelle;;62766;exclos;;;istoric;0;"1806 ? ; 1856 ? ; 1900 ? ; 1932 ? ; 1971 ? ; flamand en 1845 ; AN 2013 : canton Audruicq, zone 1.3";CFF57 AN13
+France;Audruicq;comuna_fr;Vieille-Église;;62852;exclos;;;istoric;0;"1806 ? ; 1856 ? ; 1900 ? ; 1932 ? ; 1971 ? ; flamand en 1845 ; AN 2013 : canton Audruicq, zone 1.3";CFF57 AN13
+France;Bailleul;comuna_fr;Bailleul;Belle;59043;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 V2 ; 1971 V2 (55 %) ; lecture de carte incertaine : 1971 ; AN 2013 : canton Bailleul, zone 7.1";VAN72 AN13
+France;Bailleul;comuna_fr;Berthen;Berten;59073;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (76 %) ; AN 2013 : canton Bailleul, zone 7.1";VAN72 AN13
+France;Bailleul;comuna_fr;Flêtre;Vleeter;59237;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (80 %) ; AN 2013 : canton Bailleul, zone 7.1";VAN72 AN13
+France;Bailleul;comuna_fr;Merris;Merris;59399;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V2 ; 1971 F2 ; AN 2013 : canton Bailleul, zone 7.1";VAN72 AN13
+France;Bailleul;comuna_fr;Méteren;Metern;59401;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (72 %) ; AN 2013 : canton Bailleul, zone 7.1";VAN72 AN13
+France;Bailleul;comuna_fr;Nieppe;;59431;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 (0 %) ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Bailleul, zone 7.1";VAN72 AN13
+France;Bailleul;comuna_fr;Saint-Jans-Cappel;Sint-Janskappel;59535;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Bailleul, zone 7.1";VAN72 AN13
+France;Bailleul;comuna_fr;Steenwerck;;59581;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Bailleul, zone 7.1";VAN72 AN13
+France;Bailleul;comuna_fr;Vieux-Berquin;Noordberkin;59615;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 F1 ; 1971 F1 (18 %) ; lecture de carte incertaine : 1932, 1971 ; AN 2013 : canton Bailleul, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Armbouts-Cappel;Armboutskapelle;59016;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Bergues;Bergn;59067;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 ≈50 % (F2) (50 %) ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Bierne;Biern;59082;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Bissezeele;Bussezeele;59083;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Crochte;Krochte;59162;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Eringhem;Eringem;59200;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 ≈50 % (V2) (50 %) ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Hoymille;Ooimille;59319;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (82 %) ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Pitgam;Pitgham;59463;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 (20 %) ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Quaëdypre;Kaedyper;59478;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Socx;Soks;59570;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Steene;Steëne;59579;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;West-Cappel;Westkappel;59657;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bergues;comuna_fr;Wylder;Wilder;59665;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Bergues, zone 7.1";VAN72 AN13
+France;Bourbourg;comuna_fr;Bourbourg;Broekburg;59094;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 (5 %) ; bilingue, français majoritaire en 1856 (Bocave) ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Bourbourg;comuna_fr;Brouckerque;Broekkerke;59110;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Bourbourg;comuna_fr;Cappelle-Brouck;Kapellebroek;59130;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 V2 ; 1971 F2 ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Bourbourg;comuna_fr;Drincham;Drinkam;59182;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Bourbourg;comuna_fr;Holque;Olke;59307;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 mixt ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 ; bilingue, français majoritaire en 1856 (Bocave) ; français et flamand en 1806 (Brunot) ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 BRU27 AN13
+France;Bourbourg;comuna_fr;Looberghe;Loberge;59358;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Bourbourg;comuna_fr;Millam;Millam;59402;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Bourbourg;comuna_fr;Saint-Momelin;Sint-Momelingn;59538;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 mixt ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 ; bilingue, français majoritaire en 1856 (Bocave) ; français et flamand en 1806 (Brunot) ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 BRU27 AN13
+France;Bourbourg;comuna_fr;Saint-Pierre-Brouck;Sint-Pieters-Broek;59539;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 ; bilingue, français majoritaire en 1856 (Bocave) ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Bourbourg;comuna_fr;Spycker;Spyker;59576;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Bourbourg;comuna_fr;Watten;Woatn;59647;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 (3 %) ; bilingue, français majoritaire en 1856 (Bocave) ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Bourbourg;comuna_fr;Wulverdinghe;Wulverdinge;59664;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Bourbourg, zone 1.3";VAN72 AN13
+France;Cassel;comuna_fr;Arnèke;Arnyke;59018;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 ≈50 % (F2) (39 %) ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Bavinchove;Baevekhoove;59054;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Buysscheure;Buusscheure;59119;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Cassel;Kassel;59135;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V2 ; 1971 F2 (20 %) ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Hardifort;Harrevôorde;59282;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Noordpeene;Nôordpene;59436;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (60 %) ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Ochtezeele;Ochtezele;59443;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Oxelaëre;Osselaere;59454;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 (18 %) ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Rubrouck;Rubroek;59516;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Sainte-Marie-Cappel;Maerkappel;59536;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Wemaers-Cappel;Blaeuwkappel;59655;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Zermezeele;Zermezeele;59667;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Cassel;comuna_fr;Zuytpeene;Zuudpeëne;59669;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Cassel, zone 7.1";VAN72 AN13
+France;Coudekerque-Branche;comuna_fr;Coudekerque-Branche;Nieuw-Koukerke;59155;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F1 ; 1900 V1 ; 1932 F2 ; 1971 F1 ; flamand en 1806 (Brunot), unilingue français en 1856 (Bocave) ; AN 2013 : canton Coudekerque-Branche, zone 7.1";VAN72 BRU27 AN13
+France;Dunkerque;comuna_fr;Bray-Dunes;Bray-Duunn;59107;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 F2 ; 1971 F1 ; lecture de carte incertaine : 1932 ; AN 2013 : canton Dunkerque, zone 1.3";VAN72 AN13
+France;Dunkerque;comuna_fr;Cappelle-la-Grande;Kapelle-de-Groote;59131;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 F2 ; 1971 F1 (4 %) ; AN 2013 : canton Dunkerque, zone 1.3";VAN72 AN13
+France;Dunkerque;comuna_fr;Dunkerque;Duunkerke;59183;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 ; flamand en 1806 (Brunot), unilingue français en 1856 (Bocave) ; comprend Malo-les-Bains, Rosendaël, Petite-Synthe (fusionnées vers 1970), Saint-Pol-sur-Mer, Mardyck et Fort-Mardyck (associées) ; Mardyck français en 1806 (Brunot) ; lecture de carte incertaine : 1900, 1932 ; AN 2013 : canton Dunkerque, zone 1.3";VAN72 BRU27 AN13
+France;Dunkerque;comuna_fr;Leffrinckoucke;Leffrinkoeke;59340;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 F2 ; 1971 F1 ; AN 2013 : canton Dunkerque, zone 1.3";VAN72 AN13
+France;Dunkerque;comuna_fr;Téteghem-Coudekerque-Village;Tetegem-Koukerke;59588;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F1 (13 %) ; Téteghem et Coudekerque-Village (fusion 2016) : 1971 Téteghem 13 %, Coudekerque-Village bilingue français ; AN 2013 : canton Dunkerque, zone 1.3";VAN72 AN13
+France;Dunkerque;comuna_fr;Uxem;Oeschem;59605;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; lecture de carte incertaine : 1971 ; AN 2013 : canton Dunkerque, zone 1.3";VAN72 AN13
+France;Dunkerque;comuna_fr;Zuydcoote;Zuudkoote;59668;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 F2 ; 1971 F1 ; AN 2013 : canton Dunkerque, zone 1.3";VAN72 AN13
+France;Grande-Synthe;comuna_fr;Grande-Synthe;Groot-Sintn;59271;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 ; bilingue, français majoritaire en 1856 (Bocave) ; AN 2013 : canton Grande-Synthe, zone 1.3";VAN72 AN13
+France;Gravelines;comuna_fr;Craywick;Kroaiwyk;59159;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F2 ; 1900 F1 ; 1932 F1 ; 1971 F1 ; bilingue, français majoritaire en 1856 (Bocave) ; lecture de carte incertaine : 1932 ; AN 2013 : canton Gravelines, zone 1.3";VAN72 AN13
+France;Gravelines;comuna_fr;Grand-Fort-Philippe;;59272;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Gravelines, zone 1.3";VAN72 AN13
+France;Gravelines;comuna_fr;Gravelines;;59273;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Gravelines, zone 1.3";VAN72 AN13
+France;Gravelines;comuna_fr;Loon-Plage;Loon;59359;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FR ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 ; bilingue, français majoritaire en 1856 (Bocave) ; AN 2013 : canton Gravelines, zone 1.3";VAN72 AN13
+France;Gravelines;comuna_fr;Saint-Georges-sur-l'Aa;Sint-Joris;59532;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 (0 %) ; flamand en 1806 (Brunot), unilingue français en 1856 (Bocave) ; AN 2013 : canton Gravelines, zone 1.3";VAN72 BRU27 AN13
+France;Hazebrouck;comuna_fr;Blaringhem;Bloaringem;59084;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FR ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 ; bilingue, français majoritaire en 1856 (Bocave) ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Borre;Borre;59091;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Boëseghem;Boezegem;59087;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FR ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 ; bilingue, français majoritaire en 1856 (Bocave) ; lecture de carte incertaine : 1856, 1900 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Caëstre;Kaester;59120;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Ebblinghem;Appelghem;59184;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 F2 ; 1971 F1 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Hazebrouck;Haezebroek;59295;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 V2 ; 1971 F2 (10 %) ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Hondeghem;Hondeghem;59308;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Lynde;Linde;59366;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; lecture de carte incertaine : 1971 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Morbecque;Moerbeke;59416;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 F1 ; 1971 F2 (22 %) ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Pradelles;Pradeels;59469;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Renescure;Ruuscheure;59497;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 (0 %) ; bilingue, français majoritaire en 1856 (Bocave) ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Sercus;Zerkel;59568;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; lecture de carte incertaine : 1971 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Staple;Stoapel;59577;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Steenbecque;Steënbeeke;59578;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V2 ; 1900 V1 ; 1932 V2 ; 1971 V2 (53 %) ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Strazeele;Stroazele;59582;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Thiennes;;59590;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hazebrouck;comuna_fr;Wallon-Cappel;Woals-Kapel;59634;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 (22 %) ; AN 2013 : canton Hazebrouck, zone 7.1";VAN72 AN13
+France;Hondschoote;comuna_fr;Bambecque;Bambeeke;59046;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Hondschoote, zone 7.1";VAN72 AN13
+France;Hondschoote;comuna_fr;Ghyvelde;Gyvelde;59260;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; avec Les Moëres (associée, 1971 : 77 % de flamandophones) ; AN 2013 : canton Hondschoote, zone 7.1";VAN72 AN13
+France;Hondschoote;comuna_fr;Hondschoote;Oundschote;59309;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 (33 %) ; AN 2013 : canton Hondschoote, zone 7.1";VAN72 AN13
+France;Hondschoote;comuna_fr;Killem;Killem;59326;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Hondschoote, zone 7.1";VAN72 AN13
+France;Hondschoote;comuna_fr;Oost-Cappel;Oostkappel;59448;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (80 %) ; AN 2013 : canton Hondschoote, zone 7.1";VAN72 AN13
+France;Hondschoote;comuna_fr;Rexpoëde;Respoeë;59499;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Hondschoote, zone 7.1";VAN72 AN13
+France;Hondschoote;comuna_fr;Warhem;Warrem;59641;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Hondschoote, zone 7.1";VAN72 AN13
+France;Merville;comuna_fr;Estaires;;59212;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 (0 %) ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Merville, zone 1.3";VAN72 AN13
+France;Merville;comuna_fr;Haverskerque;;59293;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 (0 %) ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Merville, zone 1.3";VAN72 AN13
+France;Merville;comuna_fr;La Gorgue;;59268;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Merville, zone 1.3";VAN72 AN13
+France;Merville;comuna_fr;Le Doulieu;Zoetestede;59180;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 FL ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 (1 %) ; flamand en 1806 (Brunot), unilingue français en 1856 (Bocave) ; AN 2013 : canton Merville, zone 1.3";VAN72 BRU27 AN13
+France;Merville;comuna_fr;Merville;;59400;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Merville, zone 1.3";VAN72 AN13
+France;Merville;comuna_fr;Neuf-Berquin;;59423;exclos;;;;0;"1806 FR ; 1856 F1 ; 1900 F1 ; 1932 F1 ; 1971 F1 ; unilingue français en 1856 (Bocave) et en 1806 (Brunot) ; AN 2013 : canton Merville, zone 1.3";VAN72 AN13
+France;Quesnoy-sur-Deûle;comuna_fr;Wervicq-Sud;Wervik-Zuud;59656;exclos;;;istoric;0;"1806 FL ; 1856 ? ; 1900 ? ; 1932 ? ; 1971 ? ; flamand en 1806, seule commune flamande de l'arrondissement de Lille (Brunot 1927) ; AN 2013 : canton Quesnoy-sur-Deûle, zone 1.3";BRU27 AN13
+France;Saint-Omer;comuna_fr;Clairmarais;Cleremeersch;62225;neerlandes;flamenc_occidental;frans-vlaams;pcd;0;"1806 ? ; 1856 F2 ; 1900 F1 ; 1932 F2 ; 1971 F1 ; bilingue, français majoritaire en 1856 (Bocave) ; flamand en 1807 et 1845 ; AN 2013 : canton Saint-Omer, zone 1.3";VAN72 CFF57 AN13
+France;Saint-Omer;comuna_fr;Saint-Omer;;62765;exclos;;;istoric;0;"1806 ? ; 1856 ? ; 1900 ? ; 1932 ? ; 1971 ? ; faubourgs du Haut-Pont et de Lyzel flamands en 1807 et 1845 ; 75 % des maraîchers parlent flamand en 1911 (Doncker 2022) ; AN 2013 : canton Saint-Omer, zone 1.3";CFF57 AN13
+France;Steenvoorde;comuna_fr;Boeschepe;Boeschepe;59086;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (54 %) ; AN 2013 : canton Steenvoorde, zone 7.1";VAN72 AN13
+France;Steenvoorde;comuna_fr;Eecke;Eke;59189;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 (29 %) ; AN 2013 : canton Steenvoorde, zone 7.1";VAN72 AN13
+France;Steenvoorde;comuna_fr;Godewaersvelde;Godsvelde;59262;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (76 %) ; AN 2013 : canton Steenvoorde, zone 7.1";VAN72 AN13
+France;Steenvoorde;comuna_fr;Houtkerque;Outkerke;59318;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (84 %) ; lecture de carte incertaine : 1971 ; AN 2013 : canton Steenvoorde, zone 7.1";VAN72 AN13
+France;Steenvoorde;comuna_fr;Oudezeele;Oudezele;59453;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Steenvoorde, zone 7.1";VAN72 AN13
+France;Steenvoorde;comuna_fr;Saint-Sylvestre-Cappel;Sint-Silvester-Kapel;59546;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Steenvoorde, zone 7.1";VAN72 AN13
+France;Steenvoorde;comuna_fr;Steenvoorde;Stêenvôorde;59580;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 (23 %) ; AN 2013 : canton Steenvoorde, zone 7.1";VAN72 AN13
+France;Steenvoorde;comuna_fr;Terdeghem;Terdegem;59587;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Steenvoorde, zone 7.1";VAN72 AN13
+France;Steenvoorde;comuna_fr;Winnezeele;Winnezele;59662;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; lecture de carte incertaine : 1971 ; AN 2013 : canton Steenvoorde, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Bollezeele;Bollezele;59089;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 (28 %) ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Broxeele;Broksele;59111;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Esquelbecq;Eëkelsbeeke;59210;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 ≈50 % (V2) (50 %) ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Herzeele;Herzel;59305;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Lederzeele;Lederzele;59337;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 (85 %) ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Ledringhem;Ledringem;59338;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 ≈50 % (V2) (52 %) ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Merckeghem;Merghem;59397;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 F2 ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Nieurlet;Nieuwerleet;59433;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V2 ; 1971 F1 ; lecture de carte incertaine : 1971 ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Volckerinckhove;Volkerinkove;59628;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Wormhout;Wormhout;59663;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 ≈50 % (V2) (50 %) ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+France;Wormhout;comuna_fr;Zegerscappel;Zeskappel;59666;neerlandes;flamenc_occidental;frans-vlaams;;0;"1806 FL ; 1856 V1 ; 1900 V1 ; 1932 V1 ; 1971 V2 ; AN 2013 : canton Wormhout, zone 7.1";VAN72 AN13
+Vlaanderen;Antwerpen;comuna_be;Aartselaar;;be:11001;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Antwerpen;;be:11002;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Arendonk;;be:13001;neerlandes;brabancon;brabançon oriental;;0;incert : 60 % sola dins la zòna de Daan;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Baarle-Hertog;;be:13002;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Balen;;be:13003;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Beerse;;be:13004;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Berlaar;;be:12002;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Boechout;;be:11004;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Bonheiden;;be:12005;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Boom;;be:11005;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Bornem;;be:12007;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Brasschaat;;be:11008;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Brecht;;be:11009;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Dessel;;be:13006;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Duffel;;be:12009;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Edegem;;be:11013;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Essen;;be:11016;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Geel;;be:13008;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Grobbendonk;;be:13010;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Heist-op-den-Berg;;be:12014;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Hemiksem;;be:11018;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Herentals;;be:13011;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Herenthout;;be:13012;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Herselt;;be:13013;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Hoogstraten;;be:13014;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Hove;;be:11021;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Hulshout;;be:13016;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Kalmthout;;be:11022;neerlandes;brabancon;brabançon anversois;;0;incert : 52 % sola dins la zòna de Daan;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Kapellen;;be:11023;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Kasterlee;;be:13017;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Kontich;;be:11024;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Laakdal;;be:13053;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Lier;;be:12021;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Lille;;be:13019;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Lint;;be:11025;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Malle;;be:11057;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Mechelen;;be:12025;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Meerhout;;be:13021;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Merksplas;;be:13023;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Mol;;be:13025;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Mortsel;;be:11029;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Niel;;be:11030;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Nijlen;;be:12026;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Olen;;be:13029;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Oud-Turnhout;;be:13031;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Putte;;be:12029;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Puurs-Sint-Amands;;be:12041;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Ranst;;be:11035;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Ravels;;be:13035;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Retie;;be:13036;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Rijkevorsel;;be:13037;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Rumst;;be:11037;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Schelle;;be:11038;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Schilde;;be:11039;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Schoten;;be:11040;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Sint-Katelijne-Waver;;be:12035;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Stabroek;;be:11044;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Turnhout;;be:13040;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Vorselaar;;be:13044;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Vosselaar;;be:13046;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Westerlo;;be:13049;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Wijnegem;;be:11050;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Willebroek;;be:12040;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Wommelgem;;be:11052;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Wuustwezel;;be:11053;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Zandhoven;;be:11054;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Antwerpen;comuna_be;Zoersel;;be:11055;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Alken;Alleke;be:73001;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;As;As;be:71002;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Beringen;Berringe;be:71004;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Bilzen-Hoeselt;Bilze-Hoeiselt;be:73110;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Bocholt;Bóggetj;be:72003;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Bree;Bree;be:72004;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Diepenbeek;Diepenbik;be:71011;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Dilsen-Stokkem;Dilse-Stokkem;be:72041;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Genk;Genk;be:71016;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Gingelom;Gingelom;be:71017;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Halen;;be:71020;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Limburg;comuna_be;Hamont-Achel;Haëmet-Achel;be:72037;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Hasselt;Hasselt;be:71072;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Hechtel-Eksel;Hechtel-Eksel;be:72038;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Heers;Hieër;be:73022;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Herk-de-Stad;Herk;be:71024;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Herstappe;Herstap;be:73028;neerlandes;limborgues;limburgs;;0;tròp pichona per la carta de Daan : zòna 24 tot a l'entorn;DB69 man
+Vlaanderen;Limburg;comuna_be;Heusden-Zolder;Heuze-Zolder;be:71070;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Houthalen-Helchteren;Hôtele-Helichtre;be:72039;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Kinrooi;Kinder;be:72018;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Lanaken;Laoneke;be:73042;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Leopoldsburg;Leopolsbörch;be:71034;neerlandes;limborgues;limbourgeois occidental;brabancon;0;Daan : 69 % limburgs, 31 % brabants;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Lommel;;be:72020;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Lummen;Leume;be:71037;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Maaseik;Mezeik;be:72021;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Maasmechelen;Mechele;be:73107;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Nieuwerkerken;Noërekirke;be:71045;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Oudsbergen;Audsberge;be:72042;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Peer;Peer;be:72030;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Pelt;Pelt;be:72043;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Riemst;Riems;be:73066;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Sint-Truiden;Sintruin;be:71053;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Tessenderlo-Ham;;be:71071;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (99 %);DB69 TH22
+Vlaanderen;Limburg;comuna_be;Tongeren-Borgloon;Tóngere-Loeën;be:73111;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Voeren;Voere;be:73109;neerlandes;limborgues;oost-limburgs (platdiets);;0;"enclau defòra la carta de Daan ; Treehill : limbourgeois oriental";DB69 man
+Vlaanderen;Limburg;comuna_be;Wellen;Wille;be:73098;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Zonhoven;Zoneve;be:71066;neerlandes;limborgues;limbourgeois occidental;;0;;DB69 TH22
+Vlaanderen;Limburg;comuna_be;Zutendaal;Zietendaol;be:71067;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Aalst;;be:41002;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Aalter;;be:44084;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Assenede;;be:43002;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Berlare;;be:42003;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Beveren-Kruibeke-Zwijndrecht;;be:46030;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Brakel;;be:45059;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Buggenhout;;be:42004;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Deinze;;be:44083;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Denderleeuw;;be:41011;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Dendermonde;;be:42006;neerlandes;flamenc_oriental;oost-vlaams;;0;Treehill : brabançon alostois (71 %);DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Destelbergen;;be:44013;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Eeklo;;be:43005;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Erpe-Mere;;be:41082;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Evergem;;be:44019;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Gavere;;be:44020;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Gent;;be:44021;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Geraardsbergen;;be:41018;neerlandes;brabancon;brabançon alostois;flamenc_oriental;0;"Daan : 57 % brabants, 43 % oost-vlaams ; incert : 57 % sola dins la zòna de Daan";DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Haaltert;;be:41024;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Hamme;;be:42008;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Herzele;;be:41027;neerlandes;flamenc_oriental;oost-vlaams;;0;Treehill : brabançon alostois (65 %);DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Horebeke;;be:45062;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Kaprijke;;be:43007;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Kluisbergen;;be:45060;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Kruisem;;be:45068;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Laarne;;be:42010;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Lebbeke;;be:42011;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Lede;;be:41034;neerlandes;flamenc_oriental;oost-vlaams;;0;Treehill : brabançon alostois (62 %);DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Lierde;;be:45063;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Lievegem;;be:44085;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Lochristi;;be:44087;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Lokeren;;be:46029;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Maarkedal;;be:45064;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Maldegem;Moaldegem;be:43010;neerlandes;flamenc_occidental;west-vlaams;flamenc_oriental;0;"Daan : 55 % west-vlaams en zeeuws-vlaams, 45 % oost-vlaams ; Treehill : flamand oriental (82 %) ; incert : 55 % sola dins la zòna de Daan";DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Merelbeke-Melle;;be:44088;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Nazareth-De Pinte;;be:44086;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Ninove;;be:41048;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Oost-Vlaanderen;comuna_be;Oosterzele;;be:44052;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Oudenaarde;;be:45035;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Ronse;;be:45041;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Sint-Gillis-Waas;;be:46020;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Sint-Laureins;;be:43014;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Sint-Lievens-Houtem;;be:41063;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Sint-Martens-Latem;;be:44064;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Sint-Niklaas;;be:46021;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Stekene;;be:46024;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Temse;;be:46025;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Waasmunster;;be:42023;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Wetteren;;be:42025;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Wichelen;;be:42026;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Wortegem-Petegem;;be:45061;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Zele;;be:42028;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Zelzate;;be:43018;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Zottegem;;be:41081;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Zulte;;be:44081;neerlandes;flamenc_oriental;oost-vlaams;flamenc_occidental;0;"Daan : 58 % oost-vlaams, 42 % west-vlaams en zeeuws-vlaams ; incert : 58 % sola dins la zòna de Daan";DB69
+Vlaanderen;Oost-Vlaanderen;comuna_be;Zwalm;;be:45065;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;Vlaams-Brabant;comuna_be;Aarschot;;be:24001;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Affligem;;be:23105;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Asse;;be:23002;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Beersel;;be:23003;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Begijnendijk;;be:24007;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Bekkevoort;;be:24008;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Bertem;;be:24009;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Bever;;be:23009;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Bierbeek;;be:24011;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Boortmeerbeek;;be:24014;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Boutersem;;be:24016;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Diest;;be:24020;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Dilbeek;;be:23016;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Drogenbos;;be:23098;neerlandes;brabancon;brabançon alostois;;0;comuna amb facilitats pels francofòns;DB69 TH22 LEG
+Vlaanderen;Vlaams-Brabant;comuna_be;Geetbets;Bets;be:24028;neerlandes;limborgues;limbourgeois occidental;brabancon;0;Daan : 75 % limburgs, 25 % brabants;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Glabbeek;;be:24137;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Grimbergen;;be:23025;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Haacht;;be:24033;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Halle;;be:23027;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Herent;;be:24038;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Hoegaarden;;be:24041;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Hoeilaart;;be:23033;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Holsbeek;;be:24043;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Huldenberg;;be:24045;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Kampenhout;;be:23038;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Kapelle-op-den-Bos;;be:23039;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Keerbergen;;be:24048;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Kortenaken;;be:24054;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Kortenberg;;be:24055;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Kraainem;;be:23099;neerlandes;brabancon;brabançon de Louvain;;0;comuna amb facilitats pels francofòns;DB69 TH22 LEG
+Vlaanderen;Vlaams-Brabant;comuna_be;Landen;Lande;be:24059;neerlandes;limborgues;limbourgeois occidental;brabancon;0;Daan : 68 % limburgs, 32 % brabants;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Lennik;;be:23104;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Leuven;;be:24062;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Liedekerke;;be:23044;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Linkebeek;;be:23100;neerlandes;brabancon;brabançon alostois;;0;comuna amb facilitats pels francofòns;DB69 TH22 LEG
+Vlaanderen;Vlaams-Brabant;comuna_be;Linter;;be:24133;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Londerzeel;;be:23045;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Lubbeek;;be:24066;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (84 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Machelen;;be:23047;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Meise;;be:23050;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Merchtem;;be:23052;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Opwijk;;be:23060;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Oud-Heverlee;;be:24086;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Overijse;;be:23062;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Pajottegem;;be:23106;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Pepingen;;be:23064;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Roosdaal;;be:23097;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Rotselaar;;be:24094;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Scherpenheuvel-Zichem;;be:24134;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (78 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Sint-Genesius-Rode;;be:23101;neerlandes;brabancon;brabançon alostois;;0;comuna amb facilitats pels francofòns;DB69 TH22 LEG
+Vlaanderen;Vlaams-Brabant;comuna_be;Sint-Pieters-Leeuw;;be:23077;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Steenokkerzeel;;be:23081;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Ternat;;be:23086;neerlandes;brabancon;brabançon alostois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Tervuren;;be:24104;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Tielt-Winge;;be:24135;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (88 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Tienen;;be:24107;neerlandes;brabancon;brabants;;0;Treehill : limbourgeois occidental (100 %);DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Tremelo;;be:24109;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Vilvoorde;;be:23088;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Wemmel;;be:23102;neerlandes;brabancon;brabançon de Louvain;;0;comuna amb facilitats pels francofòns;DB69 TH22 LEG
+Vlaanderen;Vlaams-Brabant;comuna_be;Wezembeek-Oppem;;be:23103;neerlandes;brabancon;brabançon de Louvain;;0;comuna amb facilitats pels francofòns;DB69 TH22 LEG
+Vlaanderen;Vlaams-Brabant;comuna_be;Zaventem;;be:23094;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Zemst;;be:23096;neerlandes;brabancon;brabançon de Louvain;;0;;DB69 TH22
+Vlaanderen;Vlaams-Brabant;comuna_be;Zoutleeuw;Liejef;be:24130;neerlandes;limborgues;limbourgeois occidental;brabancon;0;Daan : 62 % limburgs, 38 % brabants;DB69 TH22
+Vlaanderen;West-Vlaanderen;comuna_be;Alveringem;Oalveringem;be:38002;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Anzegem;;be:34002;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Ardooie;Ardôoie;be:37020;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Avelgem;;be:34003;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Beernem;Beirnem;be:31003;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Blankenberge;Blanknberge;be:31004;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Bredene;Brèinienge;be:35002;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Brugge;Brugge;be:31005;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Damme;Damme;be:31006;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;De Haan;D'n Oane;be:35029;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;De Panne;De Panne;be:38008;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Deerlijk;Deirlyk;be:34009;neerlandes;flamenc_occidental;west-vlaams;;0;Treehill : flamand oriental (100 %);DB69 TH22
+Vlaanderen;West-Vlaanderen;comuna_be;Dentergem;Dentergem;be:37002;neerlandes;flamenc_occidental;west-vlaams;;0;Treehill : flamand oriental (92 %);DB69 TH22
+Vlaanderen;West-Vlaanderen;comuna_be;Diksmuide;Diksmude;be:32003;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Gistel;Gistel;be:35005;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Harelbeke;Oarelbeke;be:34013;neerlandes;flamenc_occidental;west-vlaams;;0;Treehill : flamand oriental (72 %);DB69 TH22
+Vlaanderen;West-Vlaanderen;comuna_be;Heuvelland;Heuvelland;be:33039;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Hooglede;Ooglee;be:36006;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Houthulst;Outulst;be:32006;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Ichtegem;Ichtegem;be:35006;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Ieper;Yper;be:33011;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Ingelmunster;Iengelmunstr;be:36007;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Izegem;Yzegem;be:36008;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Jabbeke;Jabbeke;be:31012;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Knokke-Heist;Knokke-Heist;be:31043;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Koekelare;Kookloare;be:32010;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Koksijde;Koksyde;be:38014;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Kortemark;Kortemark;be:32011;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Kortrijk;Kortrik;be:34022;neerlandes;flamenc_occidental;west-vlaams;;0;Treehill : flamand oriental (81 %);DB69 TH22
+Vlaanderen;West-Vlaanderen;comuna_be;Kuurne;Kuurne;be:34023;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Langemark-Poelkapelle;Langemark-Poelkapelle;be:33040;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Ledegem;Legem;be:36010;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Lendelede;Lendlee;be:34025;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Lichtervelde;Lichtervelde;be:36011;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Lo-Reninge;Lo-Rênienge;be:32030;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Menen;Mêenn;be:34027;neerlandes;flamenc_occidental;west-vlaams;;0;Treehill : flamand oriental (59 %);DB69 TH22
+Vlaanderen;West-Vlaanderen;comuna_be;Mesen;Mêesn;be:33016;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Middelkerke;Middelkerke;be:35011;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Moorslede;Môoslee;be:36012;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Nieuwpoort;Nieuwpôort;be:38016;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Oostende;Ostende;be:35013;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Oostkamp;Ôostkamp;be:31022;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Oostrozebeke;Ôostrôzebeke;be:37010;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Oudenburg;Oednburg;be:35014;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Pittem;Pittem;be:37011;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Poperinge;Poperienge;be:33021;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Roeselare;Roeseloare;be:36015;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Spiere-Helkijn;;be:34043;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Staden;Stoan;be:36019;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Tielt;Tielt;be:37022;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Torhout;Toeroet;be:31033;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Veurne;Veurn;be:38025;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Vleteren;Vletern;be:33041;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Waregem;Woaregem;be:34040;neerlandes;flamenc_occidental;west-vlaams;;0;Treehill : flamand oriental (100 %);DB69 TH22
+Vlaanderen;West-Vlaanderen;comuna_be;Wervik;Wervik;be:33029;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Wevelgem;Wevelgem;be:34041;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Wielsbeke;Wielsbeke;be:37017;neerlandes;flamenc_occidental;west-vlaams;;0;Treehill : flamand oriental (100 %);DB69 TH22
+Vlaanderen;West-Vlaanderen;comuna_be;Wingene;Wiengne;be:37021;neerlandes;flamenc_occidental;west-vlaams;;0;Treehill : flamand oriental (57 %);DB69 TH22
+Vlaanderen;West-Vlaanderen;comuna_be;Zedelgem;Zilleghem;be:31040;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Zonnebeke;Zunnebeke;be:33037;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Zuienkerke;Zuunkerke;be:31042;neerlandes;flamenc_occidental;west-vlaams;;0;;DB69
+Vlaanderen;West-Vlaanderen;comuna_be;Zwevegem;Zwevegem;be:34042;neerlandes;flamenc_occidental;west-vlaams;flamenc_oriental;0;"Daan : 56 % west-vlaams en zeeuws-vlaams, 44 % oost-vlaams ; Treehill : flamand oriental (100 %) ; incert : 56 % sola dins la zòna de Daan";DB69 TH22
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Anderlecht / Anderlecht;;be:21001;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Auderghem / Oudergem;;be:21002;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Berchem-Sainte-Agathe / Sint-Agatha-Berchem;;be:21003;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Bruxelles / Brussel;;be:21004;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Etterbeek / Etterbeek;;be:21005;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Evere / Evere;;be:21006;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Forest / Vorst;;be:21007;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Ganshoren / Ganshoren;;be:21008;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Ixelles / Elsene;;be:21009;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Jette / Jette;;be:21010;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Koekelberg / Koekelberg;;be:21011;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Molenbeek-Saint-Jean / Sint-Jans-Molenbeek;;be:21012;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Saint-Gilles / Sint-Gillis;;be:21013;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Saint-Josse-ten-Noode / Sint-Joost-ten-Node;;be:21014;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Schaerbeek / Schaarbeek;;be:21015;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Uccle / Ukkel;;be:21016;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Watermael-Boitsfort / Watermaal-Bosvoorde;;be:21017;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Woluwe-Saint-Lambert / Sint-Lambrechts-Woluwe;;be:21018;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Brussel;Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest;comuna_be;Woluwe-Saint-Pierre / Sint-Pieters-Woluwe;;be:21019;neerlandes;brabancon;brussels;fr;0;"Region de Brussèlas-Capitala, bilingüe ; francés majoritari, brabançon (brussels) istoric";DB69 TH22 LEG
+Nederland;Drenthe;comuna_nl;Aa en Hunze;Aa en Hunze;nl:GM1680;bassaxon;drents;midden-drents;gronings;0;"Daan : 52 % midden-drents, 48 % gronings en noord-drents ; incert : 52 % sola dins la zòna de Daan";DB69
+Nederland;Drenthe;comuna_nl;Assen;Assen;nl:GM0106;bassaxon;drents;midden-drents;;0;;DB69
+Nederland;Drenthe;comuna_nl;Borger-Odoorn;Börger-Oring;nl:GM1681;bassaxon;drents;zuid-drents;gronings;0;"Daan : 50 % zuid-drents, 38 % gronings en noord-drents ; incert : 50 % sola dins la zòna de Daan";DB69
+Nederland;Drenthe;comuna_nl;Coevorden;Coevern;nl:GM0109;bassaxon;drents;zuid-drents;;0;;DB69
+Nederland;Drenthe;comuna_nl;De Wolden;De Wolden;nl:GM1690;bassaxon;drents;zuid-drents;;0;;DB69
+Nederland;Drenthe;comuna_nl;Emmen;Emmen;nl:GM0114;bassaxon;drents;zuid-drents;gronings;0;Daan : 62 % zuid-drents, 38 % gronings en noord-drents;DB69
+Nederland;Drenthe;comuna_nl;Hoogeveen;'t Ogeveine;nl:GM0118;bassaxon;drents;zuid-drents;;0;;DB69
+Nederland;Drenthe;comuna_nl;Meppel;Möppelt;nl:GM0119;bassaxon;drents;zuid-drents;;0;Treehill : stellingwerfsch (100 %);DB69 TH22
+Nederland;Drenthe;comuna_nl;Midden-Drenthe;Midden-Drenthe;nl:GM1731;bassaxon;drents;zuid-drents;;0;;DB69
+Nederland;Drenthe;comuna_nl;Noordenveld;Noordenveld;nl:GM1699;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Drenthe;comuna_nl;Tynaarlo;Tynaorl;nl:GM1730;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Drenthe;comuna_nl;Westerveld;Westerveld;nl:GM1701;bassaxon;stellingwerfs;stellingwerfs;;0;;DB69
+Nederland;Flevoland;comuna_nl;Almere;;nl:GM0034;neerlandes;;flevoland;;0;Treehill : hollandais du nord (100 %);DB69 TH22
+Nederland;Flevoland;comuna_nl;Dronten;;nl:GM0303;neerlandes;;flevoland;;0;Treehill : hollandais du nord (100 %);DB69 TH22
+Nederland;Flevoland;comuna_nl;Lelystad;;nl:GM0995;neerlandes;;flevoland;;0;Treehill : hollandais du nord (100 %);DB69 TH22
+Nederland;Flevoland;comuna_nl;Noordoostpolder;;nl:GM0171;neerlandes;;flevoland;;0;Treehill : stellingwerfsch (97 %);DB69 TH22
+Nederland;Flevoland;comuna_nl;Urk;Urk;nl:GM0184;bassaxon;gelders_overijssels;urkers;;0;"Daan : zòna 17 « Gelders-Overijssels en Urkers » ; Treehill : « urkois » a part";DB69 man
+Nederland;Flevoland;comuna_nl;Zeewolde;;nl:GM0050;neerlandes;;flevoland;;0;Treehill : hollandais du nord (97 %);DB69 TH22
+Nederland;Friesland;comuna_nl;Achtkarspelen;Achtkarspelen;nl:GM0059;frison;frison;;bassaxon;0;Daan : 26 % de la comuna en zòna 10 (kollumerlands);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Ameland;;nl:GM0060;neerlandes;olandes;bildts, midslands, stadsfries, amelands;;0;Daan zòna 9 (amelands);DB69 man
+Nederland;Friesland;comuna_nl;Dantumadiel;Dantumadiel;nl:GM1891;frison;frison;;olandes;0;Daan : 24 % de la comuna en zòna 9 (bildts, midslands, stadsfries, amelands);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;De Fryske Marren;De Fryske Marren;nl:GM1940;frison;frison;;;0;Daan : 3 % de la comuna en zòna 9 (bildts, midslands, stadsfries, amelands), vila o vilatge sol (ronds de la carta);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Harlingen;Harns;nl:GM0072;frison;frison;;;0;Daan : 8 % de la comuna en zòna 9 (bildts, midslands, stadsfries, amelands), vila o vilatge sol (ronds de la carta);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Heerenveen;It Hearrenfean;nl:GM0074;frison;frison;;;0;Daan : 18 % de la comuna en zòna 9 (bildts, midslands, stadsfries, amelands), vila o vilatge sol (ronds de la carta);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Leeuwarden;Ljouwert;nl:GM0080;frison;frison;;;0;Daan : 16 % de la comuna en zòna 9 (bildts, midslands, stadsfries, amelands), vila o vilatge sol (ronds de la carta);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Noardeast-Fryslân;Noardeast-Fryslân;nl:GM1970;frison;frison;;bassaxon;0;Daan : 29 % de la comuna en zòna 10 (kollumerlands);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Ooststellingwerf;Ooststellingwarf;nl:GM0085;bassaxon;stellingwerfs;stellingwerfs;;0;;DB69
+Nederland;Friesland;comuna_nl;Opsterland;Opsterlân;nl:GM0086;frison;frison;;;0;Daan : 0 % de la comuna en zòna 9 (bildts, midslands, stadsfries, amelands), vila o vilatge sol (ronds de la carta);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Schiermonnikoog;Skiermûntseach;nl:GM0088;frison;frison;;;0;"illa ; frison de Schiermonnikoog (Treehill : frison)";DB69 DB69-blanc man
+Nederland;Friesland;comuna_nl;Smallingerland;Smellingerlân;nl:GM0090;frison;frison;;;0;;DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Súdwest-Fryslân;Súdwest-Fryslân;nl:GM1900;frison;frison;;;0;Daan : 16 % de la comuna en zòna 9 (bildts, midslands, stadsfries, amelands), vila o vilatge sol (ronds de la carta);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Terschelling;;nl:GM0093;neerlandes;olandes;bildts, midslands, stadsfries, amelands;frison;0;"Daan : 31 % de la comuna en zòna 9 (bildts, midslands, stadsfries, amelands) ; Daan zòna 9 (midslands) ; los vilatges de l'èst parlan frison (aasters), non cartografiat";DB69 DB69-blanc man
+Nederland;Friesland;comuna_nl;Tytsjerksteradiel;Tytsjerksteradiel;nl:GM0737;frison;frison;;;0;;DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Vlieland;;nl:GM0096;neerlandes;olandes;west-fries;;0;"illa : sageta de Daan cap a Texel ; Treehill : « flevisch »";DB69 man
+Nederland;Friesland;comuna_nl;Waadhoeke;De Waadhoeke;nl:GM1949;frison;frison;;olandes;0;Daan : 45 % de la comuna en zòna 9 (bildts, midslands, stadsfries, amelands);DB69 DB69-blanc
+Nederland;Friesland;comuna_nl;Weststellingwerf;Weststellingwarf;nl:GM0098;bassaxon;stellingwerfs;stellingwerfs;;0;;DB69
+Nederland;Gelderland;comuna_nl;Aalten;Aalten;nl:GM0197;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Gelderland;comuna_nl;Apeldoorn;Apeldoorne;nl:GM0200;bassaxon;veluws;veluws;gelders_overijssels;0;Daan : 66 % veluws, 34 % gelders-overijssels;DB69
+Nederland;Gelderland;comuna_nl;Arnhem;;nl:GM0202;neerlandes;zuid_gelders;zuid-gelders;;0;;DB69
+Nederland;Gelderland;comuna_nl;Barneveld;Barreveld;nl:GM0203;bassaxon;veluws;veluws;;0;;DB69
+Nederland;Gelderland;comuna_nl;Berg en Dal;;nl:GM1945;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Berkelland;Berkelland;nl:GM1859;bassaxon;twents;twents-graafschaps;gelders_overijssels;0;"Daan : 72 % twents-graafschaps, 26 % gelders-overijssels ; Treehill : gueldrois d'Overijssel (100 %)";DB69 TH22
+Nederland;Gelderland;comuna_nl;Beuningen;;nl:GM0209;neerlandes;zuid_gelders;zuid-gelders;brabancon;0;"Daan : 63 % zuid-gelders, 37 % noord-brabants en noord-limburgs ; Treehill : limbourgeois gueldrois (100 %)";DB69 TH22
+Nederland;Gelderland;comuna_nl;Bronckhorst;Bronckhorst;nl:GM1876;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Gelderland;comuna_nl;Brummen;Brummen;nl:GM0213;bassaxon;gelders_overijssels;gelders-overijssels;;0;Treehill : moyen gueldrois (100 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Buren;;nl:GM0214;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : brabançon occidental (91 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Culemborg;;nl:GM0216;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Gelderland;comuna_nl;Doesburg;Doezebarg;nl:GM0221;bassaxon;gelders_overijssels;gelders-overijssels;zuid_gelders;0;"Daan : 52 % gelders-overijssels, 48 % zuid-gelders ; Treehill : moyen gueldrois (100 %) ; incert : 52 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Gelderland;comuna_nl;Doetinchem;;nl:GM0222;neerlandes;zuid_gelders;zuid-gelders;gelders_overijssels;0;"Daan : 59 % zuid-gelders, 41 % gelders-overijssels ; Treehill : gueldrois d'Overijssel (75 %) ; incert : 59 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Gelderland;comuna_nl;Druten;;nl:GM0225;neerlandes;brabancon;noord-brabants en noord-limburgs;zuid_gelders;0;"Daan : 60 % noord-brabants en noord-limburgs, 40 % zuid-gelders ; Treehill : limbourgeois gueldrois (61 %) ; incert : 60 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Gelderland;comuna_nl;Duiven;;nl:GM0226;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Ede;;nl:GM0228;neerlandes;utrechtes;utrechts-alblasserwaards;veluws;0;"Daan : 49 % utrechts-alblasserwaards, 48 % veluws ; Treehill : veluwsch (77 %) ; incert : 49 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Gelderland;comuna_nl;Elburg;Elburg;nl:GM0230;bassaxon;veluws;veluws;;0;;DB69
+Nederland;Gelderland;comuna_nl;Epe;Epe;nl:GM0232;bassaxon;gelders_overijssels;gelders-overijssels;;0;Treehill : veluwsch (57 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Ermelo;Armelo;nl:GM0233;bassaxon;veluws;veluws;;0;;DB69
+Nederland;Gelderland;comuna_nl;Harderwijk;Harderwiek;nl:GM0243;bassaxon;veluws;veluws;;0;;DB69
+Nederland;Gelderland;comuna_nl;Hattem;Attem;nl:GM0244;bassaxon;gelders_overijssels;gelders-overijssels;;0;Treehill : stellingwerfsch (81 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Heerde;Heerde;nl:GM0246;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Gelderland;comuna_nl;Heumen;;nl:GM0252;neerlandes;brabancon;noord-brabants en noord-limburgs;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Lingewaard;;nl:GM1705;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Lochem;Lochem;nl:GM0262;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Gelderland;comuna_nl;Maasdriel;;nl:GM0263;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Gelderland;comuna_nl;Montferland;;nl:GM1955;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : limbourgeois gueldrois (87 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Neder-Betuwe;;nl:GM1740;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : limbourgeois gueldrois (58 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Nijkerk;Niekark;nl:GM0267;bassaxon;veluws;veluws;;0;;DB69
+Nederland;Gelderland;comuna_nl;Nijmegen;;nl:GM0268;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Nunspeet;Nunspeet;nl:GM0302;bassaxon;veluws;veluws;;0;;DB69
+Nederland;Gelderland;comuna_nl;Oldebroek;Oldebroek;nl:GM0269;bassaxon;gelders_overijssels;gelders-overijssels;veluws;0;"Daan : 74 % gelders-overijssels, 26 % veluws ; Treehill : stellingwerfsch (90 %)";DB69 TH22
+Nederland;Gelderland;comuna_nl;Oost Gelre;Oost Gelre;nl:GM1586;bassaxon;gelders_overijssels;gelders-overijssels;twents;0;Daan : 70 % gelders-overijssels, 30 % twents-graafschaps;DB69
+Nederland;Gelderland;comuna_nl;Oude IJsselstreek;Olde Iesselstreek;nl:GM1509;bassaxon;gelders_overijssels;gelders-overijssels;zuid_gelders;0;Daan : 65 % gelders-overijssels, 35 % zuid-gelders;DB69
+Nederland;Gelderland;comuna_nl;Overbetuwe;;nl:GM1734;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : limbourgeois gueldrois (95 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Putten;Putten;nl:GM0273;bassaxon;veluws;veluws;;0;;DB69
+Nederland;Gelderland;comuna_nl;Renkum;;nl:GM0274;neerlandes;zuid_gelders;zuid-gelders;;0;;DB69
+Nederland;Gelderland;comuna_nl;Rheden;Rheden;nl:GM0275;bassaxon;veluws;veluws;zuid_gelders;0;"Daan : 56 % veluws, 41 % zuid-gelders ; Treehill : moyen gueldrois (93 %) ; incert : 56 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Gelderland;comuna_nl;Rozendaal;Rozendaal;nl:GM0277;bassaxon;veluws;veluws;zuid_gelders;0;"Daan : 62 % veluws, 36 % zuid-gelders ; Treehill : moyen gueldrois (99 %)";DB69 TH22
+Nederland;Gelderland;comuna_nl;Scherpenzeel;;nl:GM0279;neerlandes;utrechtes;utrechts-alblasserwaards;;0;Treehill : veluwsch (100 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Tiel;;nl:GM0281;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : brabançon occidental (92 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Voorst;Voorst;nl:GM0285;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Gelderland;comuna_nl;Wageningen;;nl:GM0289;neerlandes;zuid_gelders;zuid-gelders;;0;;DB69
+Nederland;Gelderland;comuna_nl;West Betuwe;;nl:GM1960;neerlandes;zuid_gelders;zuid-gelders;brabancon;0;"Daan : 68 % zuid-gelders, 28 % noord-brabants en noord-limburgs ; Treehill : brabançon occidental (94 %)";DB69 TH22
+Nederland;Gelderland;comuna_nl;West Maas en Waal;;nl:GM0668;neerlandes;brabancon;brabançon oriental;zuid_gelders;0;Daan : 66 % noord-brabants en noord-limburgs, 34 % zuid-gelders;DB69 TH22
+Nederland;Gelderland;comuna_nl;Westervoort;;nl:GM0293;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Wijchen;;nl:GM0296;neerlandes;brabancon;noord-brabants en noord-limburgs;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Winterswijk;Wenters;nl:GM0294;bassaxon;twents;twents-graafschaps;gelders_overijssels;0;"Daan : 69 % twents-graafschaps, 31 % gelders-overijssels ; Treehill : gueldrois d'Overijssel (100 %)";DB69 TH22
+Nederland;Gelderland;comuna_nl;Zaltbommel;;nl:GM0297;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Gelderland;comuna_nl;Zevenaar;;nl:GM0299;neerlandes;zuid_gelders;zuid-gelders;;0;Treehill : limbourgeois gueldrois (95 %);DB69 TH22
+Nederland;Gelderland;comuna_nl;Zutphen;;nl:GM0301;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Groningen;comuna_nl;Eemsdelta;Emsdelta;nl:GM1979;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Groningen;comuna_nl;Groningen;Grunnen;nl:GM0014;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Groningen;comuna_nl;Het Hogeland;T Hoogelaand;nl:GM1966;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Groningen;comuna_nl;Midden-Groningen;Midden-Grunnen;nl:GM1952;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Groningen;comuna_nl;Oldambt;Oldambt;nl:GM1895;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Groningen;comuna_nl;Pekela;De Pekel;nl:GM0765;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Groningen;comuna_nl;Stadskanaal;Knoal;nl:GM0037;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Groningen;comuna_nl;Veendam;Veendaam;nl:GM0047;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Groningen;comuna_nl;Westerkwartier;Westerkertier;nl:GM1969;bassaxon;gronings;kollumerlands;;0;incert : 55 % sola dins la zòna de Daan;DB69
+Nederland;Groningen;comuna_nl;Westerwolde;Westerwoolde;nl:GM1950;bassaxon;gronings;gronings en noord-drents;;0;;DB69
+Nederland;Limburg;comuna_nl;Beek (L.);Baek;nl:GM0888;neerlandes;limborgues;limbourgeois oriental;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Beekdaelen;Baekdale;nl:GM1954;neerlandes;limborgues;limbourgeois oriental;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Beesel;Bezel;nl:GM0889;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Bergen (L.);;nl:GM0893;neerlandes;brabancon;noord-brabants en noord-limburgs;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Limburg;comuna_nl;Brunssum;Broensem;nl:GM0899;neerlandes;limborgues;limburgs;;0;;DB69
+Nederland;Limburg;comuna_nl;Echt-Susteren;Ech-Zöstere;nl:GM1711;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Eijsden-Margraten;Èèsjde-Mergraote;nl:GM1903;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Gennep;;nl:GM0907;neerlandes;brabancon;noord-brabants en noord-limburgs;;0;Treehill : limbourgeois gueldrois (98 %);DB69 TH22
+Nederland;Limburg;comuna_nl;Gulpen-Wittem;Gulpe-Wittem;nl:GM1729;neerlandes;limborgues;limbourgeois oriental;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Heerlen;Heële;nl:GM0917;neerlandes;limborgues;limbourgeois oriental;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Horst aan de Maas;;nl:GM1507;neerlandes;brabancon;noord-brabants en noord-limburgs;;0;Treehill : limbourgeois septentrional (81 %);DB69 TH22
+Nederland;Limburg;comuna_nl;Kerkrade;Kirchroa;nl:GM0928;neerlandes;limborgues;limburgs;ripuari;0;kerkraads, bocholtzer, vaalser : dialèctes ripuaris segon la Wikipèdia neerlandesa (« Nederlandse dialecten »), fòra del limborgés;DB69 WPNL
+Nederland;Limburg;comuna_nl;Landgraaf;Lankgraaf;nl:GM0882;neerlandes;limborgues;limburgs;;0;Treehill : drenthois (100 %);DB69 TH22
+Nederland;Limburg;comuna_nl;Leudal;Leudaal;nl:GM1640;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Maasgouw;Maasgoew;nl:GM1641;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Maastricht;Mestreech;nl:GM0935;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Meerssen;Meersje;nl:GM0938;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Mook en Middelaar;;nl:GM0944;neerlandes;brabancon;noord-brabants en noord-limburgs;;0;Treehill : limbourgeois gueldrois (98 %);DB69 TH22
+Nederland;Limburg;comuna_nl;Nederweert;Ni-jwieërt;nl:GM0946;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Peel en Maas;Pieël en Maas;nl:GM1894;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Roerdalen;Roerdale;nl:GM1669;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Roermond;;nl:GM0957;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Simpelveld;Zumpelveld;nl:GM0965;neerlandes;limborgues;limbourgeois oriental;ripuari;0;kerkraads, bocholtzer, vaalser : dialèctes ripuaris segon la Wikipèdia neerlandesa (« Nederlandse dialecten »), fòra del limborgés;DB69 TH22 WPNL
+Nederland;Limburg;comuna_nl;Sittard-Geleen;Zittert-Gelaen;nl:GM1883;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Stein (L.);Stein;nl:GM0971;neerlandes;limborgues;limbourgeois oriental;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Vaals;Vols;nl:GM0981;neerlandes;limborgues;limburgs;ripuari;0;kerkraads, bocholtzer, vaalser : dialèctes ripuaris segon la Wikipèdia neerlandesa (« Nederlandse dialecten »), fòra del limborgés;DB69 WPNL
+Nederland;Limburg;comuna_nl;Valkenburg aan de Geul;Valkeberg aan de Geul;nl:GM0994;neerlandes;limborgues;limbourgeois méridional;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Venlo;;nl:GM0983;neerlandes;brabancon;noord-brabants en noord-limburgs;limborgues;0;"Daan : 52 % noord-brabants en noord-limburgs, 48 % limburgs ; Treehill : limbourgeois septentrional (100 %) ; incert : 52 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Limburg;comuna_nl;Venray;;nl:GM0984;neerlandes;brabancon;noord-brabants en noord-limburgs;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Limburg;comuna_nl;Voerendaal;Voelender;nl:GM0986;neerlandes;limborgues;limbourgeois oriental;;0;;DB69 TH22
+Nederland;Limburg;comuna_nl;Weert;Wieërt;nl:GM0988;neerlandes;limborgues;limbourgeois septentrional;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;'s-Hertogenbosch;;nl:GM0796;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Alphen-Chaam;;nl:GM1723;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Altena;;nl:GM1959;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Asten;;nl:GM0743;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Baarle-Nassau;;nl:GM0744;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Bergeijk;;nl:GM1724;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Bergen op Zoom;;nl:GM0748;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Bernheze;;nl:GM1721;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Best;;nl:GM0753;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Bladel;;nl:GM1728;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Boekel;;nl:GM0755;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Boxtel;;nl:GM0757;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Breda;;nl:GM0758;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Cranendonck;Kraonendónk;nl:GM1706;neerlandes;limborgues;limbourgeois septentrional;brabancon;0;Daan : 67 % limburgs, 33 % noord-brabants en noord-limburgs;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Deurne;;nl:GM0762;neerlandes;brabancon;noord-brabants en noord-limburgs;;0;Treehill : limbourgeois gueldrois (65 %);DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Dongen;;nl:GM0766;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Drimmelen;;nl:GM1719;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Eersel;;nl:GM0770;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Eindhoven;;nl:GM0772;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Etten-Leur;;nl:GM0777;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Geertruidenberg;;nl:GM0779;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Geldrop-Mierlo;;nl:GM1771;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Gemert-Bakel;;nl:GM1652;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Gilze en Rijen;;nl:GM0784;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Goirle;;nl:GM0785;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Halderberge;;nl:GM1655;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Heeze-Leende;;nl:GM1658;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Helmond;;nl:GM0794;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Heusden;;nl:GM0797;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Hilvarenbeek;;nl:GM0798;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Laarbeek;;nl:GM1659;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Land van Cuijk;;nl:GM1982;neerlandes;brabancon;noord-brabants en noord-limburgs;;0;Treehill : limbourgeois gueldrois (100 %);DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Loon op Zand;;nl:GM0809;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Maashorst;;nl:GM1991;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Meierijstad;;nl:GM1948;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Moerdijk;;nl:GM1709;neerlandes;brabancon;noord-brabants en noord-limburgs;olandes;0;"Daan : 54 % noord-brabants en noord-limburgs, 46 % westhoeks ; Treehill : vieil hollandais (62 %) ; incert : 54 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Nuenen, Gerwen en Nederwetten;;nl:GM0820;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Oirschot;;nl:GM0823;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Oisterwijk;;nl:GM0824;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Oosterhout;;nl:GM0826;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Oss;;nl:GM0828;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Reusel-De Mierden;;nl:GM1667;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Roosendaal;;nl:GM1674;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Rucphen;;nl:GM0840;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Sint-Michielsgestel;;nl:GM0845;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Someren;;nl:GM0847;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Son en Breugel;;nl:GM0848;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Steenbergen;;nl:GM0851;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Tilburg;;nl:GM0855;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Valkenswaard;;nl:GM0858;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Veldhoven;;nl:GM0861;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Vught;;nl:GM0865;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Waalre;;nl:GM0866;neerlandes;brabancon;brabançon oriental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Waalwijk;;nl:GM0867;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Woensdrecht;;nl:GM0873;neerlandes;brabancon;brabançon occidental;;0;;DB69 TH22
+Nederland;Noord-Brabant;comuna_nl;Zundert;;nl:GM0879;neerlandes;brabancon;brabançon anversois;;0;;DB69 TH22
+Nederland;Noord-Holland;comuna_nl;Aalsmeer;;nl:GM0358;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Alkmaar;;nl:GM0361;neerlandes;olandes;west-fries;;0;incert : 57 % sola dins la zòna de Daan;DB69
+Nederland;Noord-Holland;comuna_nl;Amstelveen;;nl:GM0362;neerlandes;olandes;zuid-hollands;;0;Treehill : utrechtois (100 %);DB69 TH22
+Nederland;Noord-Holland;comuna_nl;Amsterdam;;nl:GM0363;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Bergen (NH.);;nl:GM0373;neerlandes;olandes;kennemerlands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Beverwijk;;nl:GM0375;neerlandes;olandes;kennemerlands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Blaricum;;nl:GM0376;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Bloemendaal;;nl:GM0377;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Castricum;;nl:GM0383;neerlandes;olandes;kennemerlands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Den Helder;;nl:GM0400;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Diemen;;nl:GM0384;neerlandes;olandes;zuid-hollands;;0;Treehill : utrechtois (89 %);DB69 TH22
+Nederland;Noord-Holland;comuna_nl;Dijk en Waard;;nl:GM1980;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Drechterland;;nl:GM0498;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Edam-Volendam;;nl:GM0385;neerlandes;olandes;waterlands en volendams;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Enkhuizen;;nl:GM0388;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Gooise Meren;;nl:GM1942;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Haarlem;;nl:GM0392;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Haarlemmermeer;;nl:GM0394;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Heemskerk;;nl:GM0396;neerlandes;olandes;kennemerlands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Heemstede;;nl:GM0397;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Heiloo;;nl:GM0399;neerlandes;olandes;kennemerlands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Hilversum;;nl:GM0402;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Hollands Kroon;;nl:GM1911;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Hoorn;;nl:GM0405;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Huizen;;nl:GM0406;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Koggenland;;nl:GM1598;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Landsmeer;;nl:GM0415;neerlandes;olandes;waterlands en volendams;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Laren (NH.);;nl:GM0417;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Medemblik;;nl:GM0420;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Oostzaan;;nl:GM0431;neerlandes;olandes;waterlands en volendams;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Opmeer;;nl:GM0432;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Ouder-Amstel;;nl:GM0437;neerlandes;olandes;zuid-hollands;;0;Treehill : utrechtois (100 %);DB69 TH22
+Nederland;Noord-Holland;comuna_nl;Purmerend;;nl:GM0439;neerlandes;olandes;waterlands en volendams;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Schagen;;nl:GM0441;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Stede Broec;;nl:GM0532;neerlandes;olandes;west-fries;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Texel;;nl:GM0448;neerlandes;olandes;west-fries;;0;illa : sageta de Daan cap al nòrd de l'Olanda (zòna 8);DB69 man
+Nederland;Noord-Holland;comuna_nl;Uitgeest;;nl:GM0450;neerlandes;olandes;zaans;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Uithoorn;;nl:GM0451;neerlandes;olandes;zuid-hollands;;0;Treehill : utrechtois (100 %);DB69 TH22
+Nederland;Noord-Holland;comuna_nl;Velsen;;nl:GM0453;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Waterland;;nl:GM0852;neerlandes;olandes;waterlands en volendams;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Wijdemeren;;nl:GM1696;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Wormerland;;nl:GM0880;neerlandes;olandes;zaans;;0;incert : 54 % sola dins la zòna de Daan;DB69
+Nederland;Noord-Holland;comuna_nl;Zaanstad;;nl:GM0479;neerlandes;olandes;zaans;;0;;DB69
+Nederland;Noord-Holland;comuna_nl;Zandvoort;;nl:GM0473;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Overijssel;comuna_nl;Almelo;Almelo;nl:GM0141;bassaxon;twents;twents-graafschaps;;0;Treehill : gueldrois d'Overijssel (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Borne;Boorn;nl:GM0147;bassaxon;twents;twents;;0;Treehill : gueldrois d'Overijssel (99 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Dalfsen;Dalsen;nl:GM0148;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Overijssel;comuna_nl;Deventer;Daeventer;nl:GM0150;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Overijssel;comuna_nl;Dinkelland;Deenkellaand;nl:GM1774;bassaxon;twents;twents;;0;Treehill : gueldrois d'Overijssel (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Enschede;;nl:GM0153;bassaxon;twents;twents;;0;Treehill : gueldrois d'Overijssel (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Haaksbergen;Hoksebarge;nl:GM0158;bassaxon;twents;twents-graafschaps;;0;Treehill : gueldrois d'Overijssel (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Hardenberg;Hardenbarg;nl:GM0160;bassaxon;gelders_overijssels;gelders-overijssels;drents;0;Daan : 64 % gelders-overijssels, 36 % zuid-drents;DB69
+Nederland;Overijssel;comuna_nl;Hellendoorn;Heldern;nl:GM0163;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Overijssel;comuna_nl;Hengelo (O.);Hengel;nl:GM0164;bassaxon;twents;twents;;0;Treehill : gueldrois d'Overijssel (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Hof van Twente;Hof van Tweante;nl:GM1735;bassaxon;twents;twents-graafschaps;;0;Treehill : gueldrois d'Overijssel (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Kampen;;nl:GM0166;bassaxon;gelders_overijssels;gelders-overijssels;;0;Treehill : stellingwerfsch (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Losser;Loster;nl:GM0168;bassaxon;twents;twents;;0;Treehill : gueldrois d'Overijssel (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Oldenzaal;Oldnzel;nl:GM0173;bassaxon;twents;twents;;0;Treehill : gueldrois d'Overijssel (99 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Olst-Wijhe;Olst-Wieje;nl:GM1773;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Overijssel;comuna_nl;Ommen;Ommen;nl:GM0175;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Overijssel;comuna_nl;Raalte;Raolte;nl:GM0177;bassaxon;gelders_overijssels;gelders-overijssels;;0;;DB69
+Nederland;Overijssel;comuna_nl;Rijssen-Holten;Riesn-Hooltn;nl:GM1742;bassaxon;gelders_overijssels;gelders-overijssels;twents;0;Daan : 73 % gelders-overijssels, 27 % twents-graafschaps;DB69
+Nederland;Overijssel;comuna_nl;Staphorst;Stappest;nl:GM0180;bassaxon;drents;zuid-drents;;0;Treehill : stellingwerfsch (70 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Steenwijkerland;Stienwiekerlaand;nl:GM1708;bassaxon;stellingwerfs;stellingwerfs;;0;;DB69
+Nederland;Overijssel;comuna_nl;Tubbergen;Tubbige;nl:GM0183;bassaxon;twents;twents;;0;Treehill : gueldrois d'Overijssel (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Twenterand;Tweanteraand;nl:GM1700;bassaxon;twents;twents-graafschaps;gelders_overijssels;0;"Daan : 56 % twents-graafschaps, 44 % gelders-overijssels ; Treehill : gueldrois d'Overijssel (81 %) ; incert : 56 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Overijssel;comuna_nl;Wierden;Wierdn;nl:GM0189;bassaxon;twents;twents-graafschaps;;0;Treehill : gueldrois d'Overijssel (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Zwartewaterland;Zwärtewäterlaand;nl:GM1896;bassaxon;gelders_overijssels;gelders-overijssels;;0;Treehill : stellingwerfsch (100 %);DB69 TH22
+Nederland;Overijssel;comuna_nl;Zwolle;Zwolle;nl:GM0193;bassaxon;gelders_overijssels;gelders-overijssels;;0;Treehill : stellingwerfsch (61 %);DB69 TH22
+Nederland;Utrecht;comuna_nl;Amersfoort;;nl:GM0307;neerlandes;utrechtes;utrechts-alblasserwaards;;0;Treehill : veluwsch (98 %);DB69 TH22
+Nederland;Utrecht;comuna_nl;Baarn;;nl:GM0308;neerlandes;utrechtes;utrechts-alblasserwaards;;0;Treehill : veluwsch (70 %);DB69 TH22
+Nederland;Utrecht;comuna_nl;Bunnik;;nl:GM0312;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Bunschoten;;nl:GM0313;neerlandes;utrechtes;utrechts-alblasserwaards;veluws;0;"Daan : 72 % utrechts-alblasserwaards, 28 % veluws ; Treehill : veluwsch (79 %)";DB69 TH22
+Nederland;Utrecht;comuna_nl;De Bilt;;nl:GM0310;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;De Ronde Venen;;nl:GM0736;neerlandes;olandes;zuid-hollands;;0;Treehill : utrechtois (100 %);DB69 TH22
+Nederland;Utrecht;comuna_nl;Eemnes;;nl:GM0317;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Houten;;nl:GM0321;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;IJsselstein;;nl:GM0353;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Leusden;;nl:GM0327;neerlandes;utrechtes;utrechts-alblasserwaards;;0;Treehill : veluwsch (88 %);DB69 TH22
+Nederland;Utrecht;comuna_nl;Lopik;;nl:GM0331;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Montfoort;;nl:GM0335;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Nieuwegein;;nl:GM0356;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Oudewater;;nl:GM0589;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Renswoude;;nl:GM0339;neerlandes;utrechtes;utrechts-alblasserwaards;;0;Treehill : veluwsch (100 %);DB69 TH22
+Nederland;Utrecht;comuna_nl;Rhenen;;nl:GM0340;neerlandes;zuid_gelders;zuid-gelders;utrechtes;0;"Daan : 68 % zuid-gelders, 32 % utrechts-alblasserwaards ; Treehill : utrechtois (56 %)";DB69 TH22
+Nederland;Utrecht;comuna_nl;Soest;;nl:GM0342;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Stichtse Vecht;;nl:GM1904;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Utrecht;;nl:GM0344;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Utrechtse Heuvelrug;;nl:GM1581;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Veenendaal;;nl:GM0345;neerlandes;utrechtes;utrechts-alblasserwaards;;0;Treehill : moyen gueldrois (50 %);DB69 TH22
+Nederland;Utrecht;comuna_nl;Vijfheerenlanden;;nl:GM1961;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Wijk bij Duurstede;;nl:GM0352;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Woerden;;nl:GM0632;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Utrecht;comuna_nl;Woudenberg;;nl:GM0351;neerlandes;utrechtes;utrechts-alblasserwaards;;0;Treehill : veluwsch (78 %);DB69 TH22
+Nederland;Utrecht;comuna_nl;Zeist;;nl:GM0355;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Zeeland;comuna_nl;Borsele;Bossele;nl:GM0654;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zeeland;comuna_nl;Goes;Goes;nl:GM0664;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zeeland;comuna_nl;Hulst;;nl:GM0677;neerlandes;flamenc_oriental;oost-vlaams;;0;;DB69
+Nederland;Zeeland;comuna_nl;Kapelle;Kapelle;nl:GM0678;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zeeland;comuna_nl;Middelburg (Z.);Middelburg;nl:GM0687;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zeeland;comuna_nl;Noord-Beveland;Noôrd-Beveland;nl:GM1695;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zeeland;comuna_nl;Reimerswaal;Reimerswaol;nl:GM0703;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zeeland;comuna_nl;Schouwen-Duiveland;Schouwen-Duveland;nl:GM1676;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zeeland;comuna_nl;Sluis;Sluus;nl:GM1714;neerlandes;flamenc_occidental;zeeuws-vlaams;;0;;DB69
+Nederland;Zeeland;comuna_nl;Terneuzen;Terneuzen;nl:GM0715;neerlandes;flamenc_occidental;zeeuws-vlaams;flamenc_oriental;0;"Daan : 65 % west-vlaams en zeeuws-vlaams, 35 % oost-vlaams ; Treehill : zélandais (56 %)";DB69 TH22
+Nederland;Zeeland;comuna_nl;Tholen;Tole;nl:GM0716;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zeeland;comuna_nl;Veere;Ter Veere;nl:GM0717;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zeeland;comuna_nl;Vlissingen;Vlissienge;nl:GM0718;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;'s-Gravenhage;;nl:GM0518;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Alblasserdam;;nl:GM0482;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Albrandswaard;;nl:GM0613;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Alphen aan den Rijn;;nl:GM0484;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Barendrecht;;nl:GM0489;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Bodegraven-Reeuwijk;;nl:GM1901;neerlandes;olandes;zuid-hollands;utrechtes;0;Daan : 66 % zuid-hollands, 34 % utrechts-alblasserwaards;DB69
+Nederland;Zuid-Holland;comuna_nl;Capelle aan den IJssel;;nl:GM0502;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Delft;;nl:GM0503;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Dordrecht;;nl:GM0505;neerlandes;olandes;zuid-hollands;;0;Treehill : brabançon occidental (57 %);DB69 TH22
+Nederland;Zuid-Holland;comuna_nl;Goeree-Overflakkee;Goereê-Overflakkeê;nl:GM1924;neerlandes;zelandes;zeeuws;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Gorinchem;;nl:GM0512;neerlandes;utrechtes;utrechts-alblasserwaards;brabancon;0;"Daan : 58 % utrechts-alblasserwaards, 42 % noord-brabants en noord-limburgs ; Treehill : brabançon occidental (61 %) ; incert : 58 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Zuid-Holland;comuna_nl;Gouda;;nl:GM0513;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Hardinxveld-Giessendam;;nl:GM0523;neerlandes;utrechtes;utrechts-alblasserwaards;;0;Treehill : vieil hollandais (66 %);DB69 TH22
+Nederland;Zuid-Holland;comuna_nl;Hendrik-Ido-Ambacht;;nl:GM0531;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Hillegom;;nl:GM0534;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Hoeksche Waard;;nl:GM1963;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Kaag en Braassem;;nl:GM1884;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Katwijk;;nl:GM0537;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Krimpen aan den IJssel;;nl:GM0542;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Krimpenerwaard;;nl:GM1931;neerlandes;utrechtes;utrechts-alblasserwaards;olandes;0;"Daan : 56 % utrechts-alblasserwaards, 44 % zuid-hollands ; Treehill : vieil hollandais (93 %) ; incert : 56 % sola dins la zòna de Daan";DB69 TH22
+Nederland;Zuid-Holland;comuna_nl;Lansingerland;;nl:GM1621;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Leiden;;nl:GM0546;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Leiderdorp;;nl:GM0547;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Leidschendam-Voorburg;;nl:GM1916;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Lisse;;nl:GM0553;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Maassluis;;nl:GM0556;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Midden-Delfland;;nl:GM1842;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Molenlanden;;nl:GM1978;neerlandes;utrechtes;utrechts-alblasserwaards;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Nieuwkoop;;nl:GM0569;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Nissewaard;;nl:GM1930;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Noordwijk;;nl:GM0575;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Oegstgeest;;nl:GM0579;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Papendrecht;;nl:GM0590;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Pijnacker-Nootdorp;;nl:GM1926;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Ridderkerk;;nl:GM0597;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Rijswijk (ZH.);;nl:GM0603;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Rotterdam;;nl:GM0599;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Schiedam;;nl:GM0606;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Sliedrecht;;nl:GM0610;neerlandes;utrechtes;utrechts-alblasserwaards;;0;Treehill : vieil hollandais (100 %);DB69 TH22
+Nederland;Zuid-Holland;comuna_nl;Teylingen;;nl:GM1525;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Vlaardingen;;nl:GM0622;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Voorne aan Zee;;nl:GM1992;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Voorschoten;;nl:GM0626;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Waddinxveen;;nl:GM0627;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Wassenaar;;nl:GM0629;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Westland;;nl:GM1783;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Zoetermeer;;nl:GM0637;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Zoeterwoude;;nl:GM0638;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Zuidplas;;nl:GM1892;neerlandes;olandes;zuid-hollands;;0;;DB69
+Nederland;Zuid-Holland;comuna_nl;Zwijndrecht;;nl:GM0642;neerlandes;olandes;zuid-hollands;;0;;DB69

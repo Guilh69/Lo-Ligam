@@ -1,0 +1,262 @@
+﻿regio;unitat;mena;nom_oficial;nom_local;codi;domeni;dialecte;parlar;transicio;part_oc;nota;font
+Wallonie;Brabant wallon;comuna_be;Beauvechain;Bôvetchén;be:25005;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Braine-l'Alleud;Brinne-l'-Alou;be:25014;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Braine-le-Château;Brinne-Tchestea;be:25015;oil;valon;oest_valon;picard;0;zòna de transicion « capia » de la carta (81 % de la comuna jos l'etiqueta : classament extrapolat);CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Chastre;Tchåsse;be:25117;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Chaumont-Gistoux;Tchåmont-Djistou;be:25018;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Court-Saint-Étienne;Coû-Sint-Stiene;be:25023;oil;valon;namures;;0;Pierret : wallo_picard (82 %);CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Genappe;Djinape;be:25031;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Grez-Doiceau;Gré;be:25037;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Hélécine;Élessene;be:25118;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Incourt;Incoû;be:25043;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Ittre;Ite;be:25044;oil;valon;oest_valon;picard;0;zòna de transicion « capia » de la carta (93 % de la comuna jos l'etiqueta : classament extrapolat);CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Jodoigne;Djodogne;be:25048;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;La Hulpe;L' Elpe;be:25050;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Lasne;Lane;be:25119;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Mont-Saint-Guibert;Mont-Sint-Wubert;be:25068;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Nivelles;Nivele;be:25072;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Orp-Jauche;Oû-Djåce;be:25120;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Ottignies-Louvain-la-Neuve;Ocgniye-Li Noû Lovén;be:25121;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Perwez;Perwé;be:25084;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Ramillies;Ramiêye;be:25122;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Rebecq;;be:25123;oil;picard;borain;valon;0;"parlar picard : Borain (rouchi) ; Chapeau : 58 % picard, 42 % oest_valon ; zòna de transicion « capia » de la carta (86 % de la comuna jos l'etiqueta : classament extrapolat) ; incert : 58 % sola dins la zòna de Chapeau";CHAP22 EPI25
+Wallonie;Brabant wallon;comuna_be;Rixensart;Ricsinsåt;be:25091;oil;valon;namures;;0;Pierret : wallo_picard (82 %);CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Tubize;Tubize;be:25105;oil;valon;oest_valon;picard;0;"zòna de transicion « capia » de la carta (63 % de la comuna jos l'etiqueta : classament extrapolat) ; Pierret : fòra del valon";CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Villers-la-Ville;Viyé-l'-Veye;be:25107;oil;valon;namures;;0;Pierret : wallo_picard (98 %);CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Walhain;Walin;be:25124;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Waterloo;Waterlô;be:25110;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Brabant wallon;comuna_be;Wavre;Åve-el-Roman-Payis;be:25112;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Aiseau-Presles;Åjhô-Préle;be:52074;oil;valon;namures;;0;Pierret : wallo_picard (65 %);CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Anderlues;Anderluwe;be:56001;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Antoing;Antweon;be:57003;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Ath;Ât;be:51004;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Beaumont;Biômont;be:56005;oil;picard;borain;valon;0;"parlar picard : Borain (rouchi) ; Chapeau : 69 % picard, 31 % oest_valon";CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Belœil;Beuleul;be:51008;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Bernissart;;be:51009;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Binche;Binche;be:58002;oil;picard;borain;valon;0;"parlar picard : Borain (rouchi) ; Chapeau : 73 % picard, 27 % oest_valon";CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Boussu;Boussu;be:53014;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Braine-le-Comte;Brinne-in-Hénau;be:55004;oil;picard;borain;valon;0;"parlar picard : Borain (rouchi) ; zòna de transicion « capia » de la carta (37 % de la comuna jos l'etiqueta : classament extrapolat)";CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Brugelette;Brujlete;be:51012;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Brunehaut;Brunéo;be:57093;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Celles;;be:57018;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Chapelle-lez-Herlaimont;El Tchapele;be:52010;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Charleroi;Tchålerwè;be:52011;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Chimay;Chimai;be:56016;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Chièvres;Chieuve;be:51014;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Châtelet;Tcheslet;be:52012;oil;valon;oest_valon;namures;0;Chapeau : 67 % oest_valon, 33 % namures;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Colfontaine;Colfontinne;be:53082;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Comines-Warneton;Comène-Warneuton;be:57097;oil;picard;circum-lillois;;0;"parlar picard : Circum-Lillois (picard), a 2.2 km de la zòna colorada ; facilitats pels neerlandofòns";CHAP22 EPI25 LEG
+Wallonie;Hainaut;comuna_be;Courcelles;Courcele;be:52015;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Dour;Doû;be:53020;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Ellezelles;Elzîle;be:51017;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi), a 0.8 km de la zòna colorada;CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Enghien;;be:51067;oil;picard;borain;valon;0;"parlar picard : Borain (rouchi) ; zòna de transicion « capia » de la carta (36 % de la comuna jos l'etiqueta : classament extrapolat) ; facilitats pels neerlandofòns";CHAP22 EPI25 LEG
+Wallonie;Hainaut;comuna_be;Erquelinnes;;be:56022;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Estaimpuis;Timpu;be:57027;oil;picard;circum-lillois;;0;parlar picard : Circum-Lillois (picard), a 0.2 km de la zòna colorada;CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Estinnes;;be:58003;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Farciennes;Fårcene;be:52018;oil;valon;namures;;0;Pierret : wallo_picard (83 %);CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Fleurus;Fleuru;be:52021;oil;valon;namures;;0;Pierret : wallo_picard (64 %);CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Flobecq;;be:51019;oil;picard;tournaisien;;0;"parlar picard : Tournaisien (rouchi), a 1.6 km de la zòna colorada ; facilitats pels neerlandofòns";CHAP22 EPI25 LEG
+Wallonie;Hainaut;comuna_be;Fontaine-l'Évêque;Fontinne-l'-Eveke;be:52022;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Frameries;Framrie;be:53028;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Frasnes-lez-Anvaing;Frîn·ne-d'léz-Anving;be:51065;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Froidchapelle;Frèchecapelle;be:56029;oil;picard;borain;valon;0;"parlar picard : Borain (rouchi), a 0.5 km de la zòna colorada ; Chapeau : 52 % picard, 48 % oest_valon ; zòna de transicion « tchapiô » de la carta (48 % de la comuna jos l'etiqueta : classament extrapolat) ; incert : 52 % sola dins la zòna de Chapeau";CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Gerpinnes;Djerpene;be:52025;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Ham-sur-Heure-Nalinnes;Han-Nålene;be:56086;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Hensies;Hinzi;be:53039;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Honnelles;;be:53083;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Jurbise;Djurbize;be:53044;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;La Louvière;El Lovire;be:58001;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Le Rœulx;;be:55035;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Lens;Linse;be:53046;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Les Bons Villers;Les Bons Viyés;be:52075;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Lessines;Lissene;be:51069;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Leuze-en-Hainaut;Leuze-in-Hénau;be:57094;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Lobbes;Lôbe;be:56044;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Manage;Manadje;be:55086;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Merbes-le-Château;;be:56049;oil;picard;borain;valon;0;"parlar picard : Borain (rouchi) ; Chapeau : 72 % picard, 28 % oest_valon";CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Momignies;;be:56051;oil;picard;borain;;0;parlar picard : Borain (rouchi), a 0.2 km de la zòna colorada;CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Mons;Mon;be:53053;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Mont-de-l'Enclus;;be:57095;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi), a 0.2 km de la zòna colorada;CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Montigny-le-Tilleul;Montniye-Tiyoû;be:52048;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Morlanwelz;Marlanwé;be:58004;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Mouscron;Moucron;be:57096;oil;picard;circum-lillois;;0;"parlar picard : Circum-Lillois (picard) ; facilitats pels neerlandofòns";CHAP22 EPI25 LEG
+Wallonie;Hainaut;comuna_be;Pecq;Pècq;be:57062;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Pont-à-Celles;Pont-a-Cele;be:52055;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Péruwelz;Piérwé;be:57064;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Quaregnon;Couargnon;be:53065;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Quiévrain;Kiévrin;be:53068;oil;picard;valenciennois;;0;parlar picard : Valenciennois (rouchi), a 0.2 km de la zòna colorada;CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Quévy;;be:53084;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Rumes;;be:57072;oil;picard;lillois;;0;parlar picard : Lillois (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Saint-Ghislain;Saint-Guilagne;be:53070;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Seneffe;Sinefe;be:55085;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Silly;;be:51068;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Sivry-Rance;Chevri-Rance;be:56088;oil;picard;avesnois;valon;0;"parlar picard : Avesnois (rouchi), a 0.2 km de la zòna colorada ; zòna de transicion « tchapiô » de la carta (62 % de la comuna jos l'etiqueta : classament extrapolat)";CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Soignies;Sougniye;be:55040;oil;picard;borain;;0;parlar picard : Borain (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Thuin;Twin;be:56078;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Hainaut;comuna_be;Tournai;Tornai;be:57081;oil;picard;tournaisien;;0;parlar picard : Tournaisien (rouchi);CHAP22 EPI25
+Wallonie;Hainaut;comuna_be;Écaussinnes;Lès Scaussènes;be:55050;oil;valon;oest_valon;picard;0;"Chapeau : 51 % oest_valon, 49 % picard ; Pierret : fòra del valon ; incert : 51 % sola dins la zòna de Chapeau";CHAP22 PIE84
+Wallonie;Liège;comuna_be;Amay;Ama;be:61003;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Amel;;be:63001;germanic;francic_mosellan;;;0;"Comunautat germanofòna ; francic mosellan o ripuari : incert";CHAP22 WPDE
+Wallonie;Liège;comuna_be;Ans;Anse;be:62003;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Anthisnes;Antene;be:61079;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Aubel;Ååbel;be:63003;oil;valon;lieges;germanic;0;"Chapeau : 72 % lieges, 28 % germanic ; aira germanica vesina (Fouron/Voeren, parlars platdiets) : decalatge possible de la carta, de verificar ; Pierret : fòra del valon";CHAP22 PIE84
+Wallonie;Liège;comuna_be;Awans;Awan;be:62006;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Aywaille;Aiwêye;be:62009;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Baelen;;be:63004;germanic;platdiets;;;0;facilitats dormentas (Plattdeutsche Gemeinden);CHAP22 WPDE
+Wallonie;Liège;comuna_be;Bassenge;Bassindje;be:62011;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Berloz;Bierlô;be:64008;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Beyne-Heusay;Binne-Heuzea;be:62015;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Blegny;Blegné;be:62119;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Braives;;be:64015;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Burdinne;Beûrdéne;be:61010;oil;valon;namures;;0;Pierret : liegeois (78 %);CHAP22 PIE84
+Wallonie;Liège;comuna_be;Burg-Reuland;;be:63087;germanic;francic_mosellan;;;0;Comunautat germanofòna;CHAP22 WPDE
+Wallonie;Liège;comuna_be;Büllingen;;be:63012;germanic;ripuari;;;0;"Comunautat germanofòna ; « mitan » de l'aira germanofòna, ripuari o francic mosellan : incert";CHAP22 WPDE
+Wallonie;Liège;comuna_be;Bütgenbach;;be:63013;germanic;ripuari;;valon;0;"Comunautat germanofòna ; « mitan » de l'aira germanofòna, ripuari o francic mosellan : incert ; Chapeau : 70 % germanic, 30 % lieges";CHAP22 WPDE
+Wallonie;Liège;comuna_be;Chaudfontaine;Tchôfontinne;be:62022;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Clavier;Clavir;be:61012;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Comblain-au-Pont;Comblin-å-Pont;be:62026;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Crisnée;Crusnêye;be:64021;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Dalhem;Dålem;be:62027;oil;valon;lieges;germanic;0;"Chapeau : 65 % lieges, 35 % germanic ; aira germanica vesina (Fouron/Voeren, parlars platdiets) : decalatge possible de la carta, de verificar";CHAP22 PIE84
+Wallonie;Liège;comuna_be;Dison;Dizon;be:63020;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Donceel;Doncél;be:64023;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Engis;Indji;be:61080;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Esneux;Esneu;be:62032;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Eupen;;be:63023;germanic;platdiets;;;0;"Comunautat germanofòna ; parlar d'Eupen, ripuari segon d'autras fonts";CHAP22 WPDE
+Wallonie;Liège;comuna_be;Faimes;Faime;be:64076;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Ferrières;Ferire;be:61019;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Fexhe-le-Haut-Clocher;Fexhe-å-Hôt-Clokî;be:64025;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Flémalle;Flémåle;be:62120;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Fléron;Fléron;be:62038;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Geer;Djer;be:64029;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Grâce-Hollogne;Gråce-Hologne;be:62118;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Hamoir;Hamwer;be:61024;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Hannut;Hanu;be:64034;oil;valon;namures;lieges;0;"Chapeau : 64 % namures, 36 % lieges ; Pierret : liegeois (67 %)";CHAP22 PIE84
+Wallonie;Liège;comuna_be;Herstal;Hesta;be:62051;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Herve;Heve;be:63035;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Huy;Hu;be:61031;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Héron;Héron;be:61028;oil;valon;namures;;0;Pierret : liegeois (86 %);CHAP22 PIE84
+Wallonie;Liège;comuna_be;Jalhay;Djalhé;be:63038;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Juprelle;Djouprele;be:62060;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Kelmis;;be:63040;germanic;platdiets;;;0;Comunautat germanofòna;CHAP22 WPDE
+Wallonie;Liège;comuna_be;Lierneux;Lierneu;be:63045;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Limbourg;Limbôr;be:63046;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Lincent;Lîssin;be:64047;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Liège;Lidje;be:62063;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Lontzen;;be:63048;germanic;platdiets;;;0;Comunautat germanofòna;CHAP22 WPDE
+Wallonie;Liège;comuna_be;Malmedy;Måmdiy;be:63049;oil;valon;lieges;;0;"facilitats pels germanofòns ; minoritat germanofòna istorica";CHAP22 LEG PIE84
+Wallonie;Liège;comuna_be;Marchin;Mårcin;be:61039;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Modave;Modåve;be:61041;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Nandrin;Nandrin;be:61043;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Neupré;Li Noûpré;be:62121;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Olne;Ône;be:63057;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Oreye;Oreye;be:64056;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Ouffet;Oufet;be:61048;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Oupeye;Oûpêye;be:62079;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Pepinster;Pepinster;be:63058;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Plombières;;be:63088;germanic;platdiets;;;0;"parlar de Plombières/Bleyberg ; facilitats dormentas (Plattdeutsche Gemeinden)";CHAP22 WPDE
+Wallonie;Liège;comuna_be;Raeren;;be:63061;germanic;ripuari;;;0;Comunautat germanofòna;CHAP22 WPDE
+Wallonie;Liège;comuna_be;Remicourt;Remicoû;be:64063;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Saint-Georges-sur-Meuse;Sint-Djôr-so-Mouze;be:64065;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Saint-Nicolas;Sint-Nicolai-dlé-Lidje;be:62093;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Sankt Vith;;be:63067;germanic;francic_mosellan;;;0;Comunautat germanofòna;CHAP22 WPDE
+Wallonie;Liège;comuna_be;Seraing;Serè;be:62096;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Soumagne;Soûmagne;be:62099;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Spa;Spå;be:63072;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Sprimont;Sprimont;be:62100;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Stavelot;Ståvleu;be:63073;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Stoumont;Stoumont;be:63075;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Theux;Teu;be:63076;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Thimister-Clermont;Timister-Clairmont;be:63089;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Tinlot;Tinlot;be:61081;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Trois-Ponts;Troes-Ponts;be:63086;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Trooz;Li Trô;be:62122;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Verlaine;Verlinne;be:61063;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Verviers;Vervî;be:63079;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Villers-le-Bouillet;Viyé-l'-Boulet;be:61068;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Visé;Vizé;be:62108;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Waimes;Waime;be:63080;oil;valon;lieges;germanic;0;"Chapeau : 71 % lieges, 29 % germanic ; aira germanica vesina (Fouron/Voeren, parlars platdiets) : decalatge possible de la carta, de verificar ; facilitats pels germanofòns ; minoritat germanofòna istorica";CHAP22 LEG PIE84
+Wallonie;Liège;comuna_be;Wanze;Wonze;be:61072;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Waremme;Wareme;be:64074;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Wasseiges;Wazedje;be:64075;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Liège;comuna_be;Welkenraedt;;be:63084;germanic;platdiets;;;0;facilitats dormentas (Plattdeutsche Gemeinden);CHAP22 WPDE
+Wallonie;Luxembourg;comuna_be;Arlon;Arel;be:81001;germanic;luxemborgues;;lorren;0;"Areler Land ; vila d'Arlon francofòna en majoritat ; Chapeau : 68 % germanic, 32 % gaumes";CHAP22 WPDE
+Wallonie;Luxembourg;comuna_be;Attert;Atert;be:81003;germanic;luxemborgues;;valon;0;"Areler Land ; Chapeau : 61 % germanic, 26 % sud_valon";CHAP22 WPDE
+Wallonie;Luxembourg;comuna_be;Aubange;Éibeng;be:81004;germanic;luxemborgues;;lorren;0;"Areler Land ; Chapeau : gaumés (Halanzy, Aubange) ; Athus e lo sud-èst luxemborgés";CHAP22 WPDE
+Wallonie;Luxembourg;comuna_be;Bastogne;Bastogne;be:82039;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Bertrix;Bietris;be:84009;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Bouillon;Bouyon;be:84010;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Chiny;Tchini;be:85007;oil;valon;sud_valon;lorren;0;"Chapeau : 52 % sud_valon, 48 % gaumes ; Pierret : fòra del valon ; incert : 52 % sola dins la zòna de Chapeau";CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Daverdisse;Davdisse;be:84016;oil;valon;sud_valon;namures;0;Chapeau : 68 % sud_valon, 32 % namures;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Durbuy;Derbu;be:83012;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Fauvillers;Faiviè;be:82009;oil;valon;sud_valon;germanic;0;"Chapeau : 74 % sud_valon, 26 % germanic ; aira germanica vesina (Fouron/Voeren, parlars platdiets) : decalatge possible de la carta, de verificar ; seccion de Tintange (Tintingen) : luxemborgés (Areler Land)";CHAP22 WPDE PIE84
+Wallonie;Luxembourg;comuna_be;Florenville;;be:85011;oil;lorren;gaumes;valon;0;"Chapeau : 55 % gaumes, 45 % sud_valon ; incert : 55 % sola dins la zòna de Chapeau";CHAP22
+Wallonie;Luxembourg;comuna_be;Gouvy;Gouvi;be:82037;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Habay;Habâ;be:85046;oil;valon;sud_valon;lorren;0;"Chapeau : 73 % sud_valon, 27 % gaumes ; seccion de Hachy (Herzig) : luxemborgés (Areler Land, Luxemburger Wörterbuch) ; Pierret : fòra del valon";CHAP22 WPDE PIE84
+Wallonie;Luxembourg;comuna_be;Herbeumont;Arbûmont;be:84029;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Hotton;Houton;be:83028;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Houffalize;Oufalijhe;be:82014;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;La Roche-en-Ardenne;Li Rotche;be:83031;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Libin;Libin;be:84035;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Libramont-Chevigny;Libråmont;be:84077;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Léglise;Leglijhe;be:84033;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Manhay;Manhé;be:83055;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Marche-en-Famenne;Måtche-el-Fåmene;be:83034;oil;valon;sud_valon;;0;incert : 57 % sola dins la zòna de Chapeau;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Martelange;Martelange;be:81013;germanic;luxemborgues;;valon;0;"Areler Land ; Chapeau : 69 % germanic, 31 % sud_valon";CHAP22 WPDE
+Wallonie;Luxembourg;comuna_be;Meix-devant-Virton;;be:85024;oil;lorren;gaumes;;0;;CHAP22
+Wallonie;Luxembourg;comuna_be;Messancy;Messancy;be:81015;germanic;luxemborgues;;lorren;0;"Areler Land ; Chapeau : mitat gaumés ; incert : 50 % sola dins la zòna de Chapeau";CHAP22 WPDE
+Wallonie;Luxembourg;comuna_be;Musson;;be:85026;oil;lorren;gaumes;;0;;CHAP22
+Wallonie;Luxembourg;comuna_be;Nassogne;Nassogne;be:83040;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Neufchâteau;Li Tchestea;be:84043;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Paliseul;Palijhoû;be:84050;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Rendeux;Rindeu;be:83044;oil;valon;lieges;sud_valon;0;"Chapeau : 51 % lieges, 49 % sud_valon ; incert : 51 % sola dins la zòna de Chapeau";CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Rouvroy;;be:85047;oil;lorren;gaumes;;0;;CHAP22
+Wallonie;Luxembourg;comuna_be;Saint-Hubert;Sint-Houbert;be:84059;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Saint-Léger;;be:85034;oil;lorren;gaumes;;0;;CHAP22
+Wallonie;Luxembourg;comuna_be;Sainte-Ode;Sinte-Oude;be:82038;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Tellin;Telin;be:84068;oil;valon;sud_valon;namures;0;"Chapeau : 56 % sud_valon, 44 % namures ; Pierret : namurois (93 %) ; incert : 56 % sola dins la zòna de Chapeau";CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Tenneville;Tniveye;be:83049;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Tintigny;;be:85039;oil;lorren;gaumes;;0;;CHAP22
+Wallonie;Luxembourg;comuna_be;Vaux-sur-Sûre;El Vå-so-Seure;be:82036;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Vielsalm;Li Viye Såm;be:82032;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Virton;;be:85045;oil;lorren;gaumes;;0;;CHAP22
+Wallonie;Luxembourg;comuna_be;Wellin;Welin;be:84075;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Érezée;Erezêye;be:83013;oil;valon;lieges;;0;;CHAP22 PIE84
+Wallonie;Luxembourg;comuna_be;Étalle;;be:85009;oil;lorren;gaumes;;0;;CHAP22
+Wallonie;Namur;comuna_be;Andenne;Andene;be:92003;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Anhée;Anyêye;be:91005;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Assesse;Assesse;be:92006;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Beauraing;Biarin;be:91013;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Bièvre;Bive;be:91015;oil;valon;sud_valon;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Cerfontaine;Cerfontinne;be:93010;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Ciney;Cînè;be:91030;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Couvin;Couvén;be:93014;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Dinant;Dinant;be:91034;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Doische;Dweche;be:93018;oil;valon;namures;oest_valon;0;"Chapeau : 69 % namures, 31 % oest_valon ; Pierret : wallo_picard (79 %)";CHAP22 PIE84
+Wallonie;Namur;comuna_be;Fernelmont;Ferneamont;be:92138;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Floreffe;Florefe;be:92045;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Florennes;Florene;be:93022;oil;valon;namures;oest_valon;0;"Chapeau : 64 % namures, 36 % oest_valon ; Pierret : wallo_picard (74 %)";CHAP22 PIE84
+Wallonie;Namur;comuna_be;Fosses-la-Ville;Fosse-li-Veye;be:92048;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Gedinne;Djedene;be:91054;oil;valon;namures;;0;Pierret : wallo_lorrain (86 %);CHAP22 PIE84
+Wallonie;Namur;comuna_be;Gembloux;Djiblou;be:92142;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Gesves;Djeve;be:92054;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Hamois;Hamwè;be:91059;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Hastière;Astire;be:91142;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Havelange;Havlondje;be:91064;oil;valon;lieges;namures;0;"Chapeau : 55 % lieges, 45 % namures ; incert : 55 % sola dins la zòna de Chapeau";CHAP22 PIE84
+Wallonie;Namur;comuna_be;Houyet;Houyet;be:91072;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Jemeppe-sur-Sambre;Djimepe-so-Sambe;be:92140;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;La Bruyère;Les Brouyires;be:92141;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Mettet;Metet;be:92087;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Namur;Nameur;be:92094;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Ohey;Ohè;be:92097;oil;valon;namures;;0;Pierret : liegeois (77 %);CHAP22 PIE84
+Wallonie;Namur;comuna_be;Onhaye;Onwaye;be:91103;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Philippeville;Flipvile;be:93056;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Profondeville;Parfondveye;be:92101;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Rochefort;Rotchfoirt;be:91114;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Sambreville;Sambveye;be:92137;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Sombreffe;Sombrefe;be:92114;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Somme-Leuze;Some-Leuze;be:91120;oil;valon;lieges;namures;0;Chapeau : 65 % lieges, 35 % namures;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Viroinval;Virwinvå;be:93090;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Vresse-sur-Semois;Vresse;be:91143;oil;valon;sud_valon;campanes;0;"Chapeau : 60 % sud_valon, 40 % champanes ; Pierret : fòra del valon ; incert : 60 % sola dins la zòna de Chapeau";CHAP22 PIE84
+Wallonie;Namur;comuna_be;Walcourt;Walcoû;be:93088;oil;valon;oest_valon;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Yvoir;Uwar;be:91141;oil;valon;namures;;0;;CHAP22 PIE84
+Wallonie;Namur;comuna_be;Éghezée;Inguezêye;be:92035;oil;valon;namures;;0;;CHAP22 PIE84

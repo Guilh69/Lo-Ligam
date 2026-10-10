@@ -1,0 +1,235 @@
+{
+	"font": "Belgica romana : comunas SPF Finanças INSPIRE 2025 ; dialèctes d'aprèp la « Carte dialectale de la Belgique romane - Chapeau » (Reptilien.19831209BE1, 2022, d'aprèp « Mape tchapea.jpg », Lucyin, 2017, Wikimedia Commons, CC BY-SA 4.0), contraròtle per « Wallonie-linguistique-fr.svg » (David Descamps, 2006, domeni public, d'aprèp J.-M. Pierret, Le grand livre d'Ardenne et de Gaume, 1984) ; parlars picards d'aprèp la « Carte des variétés du picard » (Epi2025, CC BY-SA 4.0) ; parlars germanics d'aprèp la Wikipèdia alemanda ; noms locals : Wikidata (CC0), títols de las Wikipèdias wa, pcd, lb",
+	"a_validar": "noms occitans (oc) dels parlars valons e germanics, absents del Basic ; parlars germanics comuna per comuna (font generala, pas una carta) ; las comunas jos las etiquetas « capia » e « tchapiô » ; endonims valons : solament los títols de la Wikipèdia valona (walon do Coûtchant, walon do Mitan), pas d'endonim trobat pel liegés e lo sud-valon",
+	"domenis": {
+		"oil": {
+			"fr": "langues d'oïl",
+			"oc": "lengas d'oïl"
+		},
+		"germanic": {
+			"fr": "parlers germaniques (Communauté germanophone, pays d'Arlon, Platdiets)",
+			"oc": "parlars germanics",
+			"oc_verificat": "germanic absent del Basic"
+		}
+	},
+	"dialectes": [
+		{
+			"kod": "picard",
+			"domeni": "oil",
+			"endo": "picard",
+			"fr": "picard",
+			"oc": "picard",
+			"oc_verificat": "ja dins lengas-oil.json",
+			"comunas": 50,
+			"parlars": [
+				{
+					"kod": "tournaisien",
+					"endo": "",
+					"fr": "tournaisien",
+					"oc": "",
+					"comunas": 13
+				},
+				{
+					"kod": "borain",
+					"endo": "",
+					"fr": "borain",
+					"oc": "",
+					"comunas": 31
+				},
+				{
+					"kod": "lillois",
+					"endo": "",
+					"fr": "lillois",
+					"oc": "",
+					"comunas": 1
+				},
+				{
+					"kod": "circum-lillois",
+					"endo": "",
+					"fr": "circum-lillois",
+					"oc": "",
+					"comunas": 3
+				},
+				{
+					"kod": "valenciennois",
+					"endo": "",
+					"fr": "valenciennois",
+					"oc": "",
+					"comunas": 1
+				},
+				{
+					"kod": "avesnois",
+					"endo": "",
+					"fr": "avesnois",
+					"oc": "",
+					"comunas": 1
+				}
+			]
+		},
+		{
+			"kod": "valon",
+			"domeni": "oil",
+			"endo": "walon",
+			"fr": "wallon",
+			"oc": "valon",
+			"oc_verificat": "òc",
+			"comunas": 186,
+			"parlars": [
+				{
+					"kod": "oest_valon",
+					"endo": "walon do Coûtchant",
+					"fr": "ouest-wallon (wallo-picard chez Pierret)",
+					"oc": "valon de l'oèst",
+					"comunas": 31
+				},
+				{
+					"kod": "namures",
+					"endo": "walon do Mitan",
+					"fr": "namurois (wallon central)",
+					"oc": "namurés",
+					"comunas": 55
+				},
+				{
+					"kod": "lieges",
+					"endo": "",
+					"fr": "liégeois (wallon oriental)",
+					"oc": "liegés",
+					"comunas": 76
+				},
+				{
+					"kod": "sud_valon",
+					"endo": "",
+					"fr": "sud-wallon (wallo-lorrain chez Pierret, wallon méridional)",
+					"oc": "valon del sud",
+					"comunas": 24
+				}
+			]
+		},
+		{
+			"kod": "lorren",
+			"domeni": "oil",
+			"endo": "gåmès (gaumais)",
+			"fr": "lorrain (gaumais)",
+			"oc": "lorren",
+			"oc_verificat": "ja dins lengas-oil.json",
+			"comunas": 8,
+			"parlars": [
+				{
+					"kod": "gaumes",
+					"endo": "gåmès",
+					"fr": "gaumais",
+					"oc": "gaumés",
+					"comunas": 8
+				}
+			]
+		},
+		{
+			"kod": "campanes",
+			"domeni": "oil",
+			"endo": "tchampnwès",
+			"fr": "champenois",
+			"oc": "campanés",
+			"oc_verificat": "ja dins lengas-oil.json (absent del Basic)",
+			"comunas": 0,
+			"parlars": []
+		},
+		{
+			"kod": "platdiets",
+			"domeni": "germanic",
+			"endo": "Platdiets / Plattdeutsch",
+			"fr": "platdiets (bas-francique de transition limbourgeois-ripuaire)",
+			"oc": "platdiets",
+			"oc_verificat": "nom neerlandés gardat",
+			"comunas": 6,
+			"parlars": []
+		},
+		{
+			"kod": "ripuari",
+			"domeni": "germanic",
+			"endo": "Ripuarisch",
+			"fr": "ripuaire",
+			"oc": "ripuari",
+			"oc_verificat": "non (absent del Basic)",
+			"comunas": 3,
+			"parlars": []
+		},
+		{
+			"kod": "francic_mosellan",
+			"domeni": "germanic",
+			"endo": "Moselfränkisch",
+			"fr": "francique mosellan",
+			"oc": "francic mosellan",
+			"oc_verificat": "non (absent del Basic)",
+			"comunas": 3,
+			"parlars": []
+		},
+		{
+			"kod": "luxemborgues",
+			"domeni": "germanic",
+			"endo": "Lëtzebuergesch",
+			"fr": "luxembourgeois",
+			"oc": "luxemborgés",
+			"oc_verificat": "òc",
+			"comunas": 5,
+			"parlars": []
+		}
+	],
+	"transicions": [
+		{
+			"kod": "capia_tchapio",
+			"fr": "zones de transition picard / ouest-wallon de la carte (« capia » vers Soignies-Nivelles, « tchapiô » vers Chimay)",
+			"oc": "picard / valon",
+			"comunas": [
+				"be:25015",
+				"be:25044",
+				"be:25105",
+				"be:25123",
+				"be:51067",
+				"be:55004",
+				"be:56029",
+				"be:56088"
+			]
+		},
+		{
+			"kod": "lenga",
+			"fr": "commune partagée entre deux langues sur la carte (25 % ou plus de la seconde) : transicio = seconde langue",
+			"oc": "transicion entre lengas",
+			"comunas": [
+				"be:55050",
+				"be:56005",
+				"be:56049",
+				"be:58002",
+				"be:62027",
+				"be:63003",
+				"be:63013",
+				"be:63080",
+				"be:81001",
+				"be:81003",
+				"be:81004",
+				"be:81013",
+				"be:81015",
+				"be:82009",
+				"be:85007",
+				"be:85011",
+				"be:85046",
+				"be:91143"
+			]
+		},
+		{
+			"kod": "parlar",
+			"fr": "commune partagée entre deux sous-zones wallonnes (30 % ou plus de la seconde)",
+			"oc": "transicion entre parlars valons",
+			"comunas": [
+				"be:52012",
+				"be:64034",
+				"be:83044",
+				"be:84016",
+				"be:84068",
+				"be:91064",
+				"be:91120",
+				"be:93018",
+				"be:93022"
+			]
+		}
+	]
+}

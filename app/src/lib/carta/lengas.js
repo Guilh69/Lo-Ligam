@@ -129,55 +129,138 @@ export const LENGAS = {
 		atribucion:
 			'Basc : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), comunas d\'Espanha © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL), zònas de la lei navarresa de 1986, dialèctes d\'aprèp Koldo Zuazo (2008) e la Viquipèdia en basc'
 	},
-	// L'alsacian e lo francic (2026-10-10) : lo continuum alemanic e francic
-	// d'Alsàcia, de Mosèla e dels país vesins (Luxemborg, Belgica, Alemanha,
-	// Soïssa) ; Alsàcia e Mosèla germanofònas a despart (SIG/alsacian/FONTS.md)
+	// L'alsacian (2026-10-10) : lo continuum alemanic d'Alsàcia, del Bade, de
+	// Soïssa e de Soàbia ; Alsàcia a despart. Lo francic (Platt) es una autra
+	// lenga (lista del ministèri de la Cultura, causida de Romain) : jaça
+	// seguenta. Tablèu comun : SIG/alsacian/FONTS.md
 	alsacian: {
 		kod: 'alsacian',
 		pref: 'gsw-',
 		lang: 'gsw',
 		url: '/data/alsacian.json',
-		nom: { oc: 'alsacian e francic', fr: 'alsacien et francique', endo: 'Elsässisch un Platt' },
-		// (entre Estrasborg e Basilèa : dins lo domeni, de luènh)
-		eti: [8.3, 48.35],
-		// alemanic en roges e irangets (las colors d'Alsàcia), francic en violets e
-		// ròses : luènh del blau del lorren roman e del verd arpitan vesins
-		color: { sorne: '#ef6f86', clar: '#b0304a', dalt: '#cc79a7' },
-		tèxt: { sorne: '#ffe0e6', clar: '#5c1222', dalt: '#ffe0f0' },
+		nom: { oc: 'alsacian', fr: 'alsacien', endo: 'Elsässisch' },
+		// (en Alsàcia : lo nom de luènh, causida de Romain)
+		eti: [7.55, 48.45],
+		// roges e irangets, las colors d'Alsàcia : luènh del blau lorren e del verd arpitan
+		color: { sorne: '#ef6f5f', clar: '#b0301f', dalt: '#d55e00' },
+		tèxt: { sorne: '#ffe0da', clar: '#5c1208', dalt: '#ffe8d8' },
 		dial: {
-			sorne: {
-				niederalemannisch: '#ff6b5a', hochalemannisch: '#ff9a4d', hochstalemannisch: '#ffc44d', schwabisch: '#e0484f',
-				letzebuergesch: '#e85d9f', moselfrankisch: '#c86bff', rheinfrankisch: '#9a7bff', sudfrankisch: '#ff8fd0', ripuarisch: '#b04fd0', limburgisch: '#d68fff'
-			},
-			clar: {
-				niederalemannisch: '#c2351f', hochalemannisch: '#c2621a', hochstalemannisch: '#a8780f', schwabisch: '#9a1f2a',
-				letzebuergesch: '#b0246a', moselfrankisch: '#8a2fc4', rheinfrankisch: '#5a3fc4', sudfrankisch: '#c2458f', ripuarisch: '#7a1f9a', limburgisch: '#9a4fc4'
-			},
-			dalt: {
-				niederalemannisch: '#d55e00', hochalemannisch: '#e69f00', hochstalemannisch: '#f0e442', schwabisch: '#009e73',
-				letzebuergesch: '#cc79a7', moselfrankisch: '#0072b2', rheinfrankisch: '#56b4e9', sudfrankisch: '#f0e442', ripuarisch: '#999999', limburgisch: '#bbbbbb'
-			}
+			sorne: { niederalemannisch: '#ff6b5a', hochalemannisch: '#ff9a4d', hochstalemannisch: '#ffc44d', schwabisch: '#e0484f' },
+			clar: { niederalemannisch: '#c2351f', hochalemannisch: '#c2621a', hochstalemannisch: '#a8780f', schwabisch: '#9a1f2a' },
+			dalt: { niederalemannisch: '#d55e00', hochalemannisch: '#e69f00', hochstalemannisch: '#f0e442', schwabisch: '#009e73' }
 		},
-		apart: { 'alsacian-franca': { dins: ['niederalemannisch', 'hochalemannisch', 'letzebuergesch', 'moselfrankisch', 'rheinfrankisch', 'sudfrankisch'] } },
+		apart: { 'alsacian-franca': { dins: ['niederalemannisch', 'hochalemannisch'] } },
 		// noms dins la lenga ; los occitans son de validar
 		pastilhas: [
-			{ k: 'alsacian-franca', gsw: 'Elsass un Deitsch-Lothringe', oc: 'Alsàcia e Mosèla germanofònas', fr: 'Alsace et Moselle germanophone' },
-			{ k: 'niederalemannisch', gsw: 'Elsässisch', long: 'Niederalemannisch (Elsässisch)', oc: 'bas alemanic (alsacian)', fr: 'bas-alémanique (alsacien)' },
+			{ k: 'alsacian-franca', gsw: 'Elsass', oc: 'Alsàcia', fr: 'Alsace' },
+			{ k: 'niederalemannisch', gsw: 'Niederalemannisch', long: 'Niederalemannisch (Elsässisch)', oc: 'bas alemanic', fr: 'bas-alémanique' },
 			{ k: 'hochalemannisch', gsw: 'Hochalemannisch', oc: 'naut alemanic', fr: 'haut-alémanique' },
 			{ k: 'hochstalemannisch', gsw: 'Höchstalemannisch', oc: 'alemanic superior', fr: 'alémanique supérieur' },
-			{ k: 'schwabisch', gsw: 'Schwäbisch', oc: 'soabe', fr: 'souabe' },
-			{ k: 'letzebuergesch', gsw: 'Lëtzebuergesch', oc: 'luxemborgés', fr: 'luxembourgeois' },
-			{ k: 'moselfrankisch', gsw: 'Moselfränkisch', oc: 'francic mosellan', fr: 'francique mosellan' },
-			{ k: 'rheinfrankisch', gsw: 'Rheinfränkisch', oc: 'francic renan', fr: 'francique rhénan' },
-			{ k: 'sudfrankisch', gsw: 'Südfränkisch', oc: 'francic meridional', fr: 'francique méridional' },
-			{ k: 'ripuarisch', gsw: 'Ripuarisch', oc: 'ripuari', fr: 'ripuaire' },
-			{ k: 'limburgisch', gsw: 'Platdiets', oc: 'limborgés', fr: 'limbourgeois' }
+			{ k: 'schwabisch', gsw: 'Schwäbisch', oc: 'soabe', fr: 'souabe' }
 		],
-		sota: { oc: 'parlar alemanic o francic', fr: 'parler alémanique ou francique' },
-		sotaApart: { oc: 'alsacian e francic de França', fr: 'alsacien et francique de France' },
-		nomCarta: 'ELSÄSSISCH · PLATT',
+		sota: { oc: 'dialècte alemanic', fr: 'dialecte alémanique' },
+		sotaApart: { oc: 'alsacian de França', fr: 'alsacien de France' },
+		nomCarta: 'ELSÄSSISCH',
 		atribucion:
-			'Alsacian e francic : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), BKG VG250 (dl-de/by-2-0), swisstopo, © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL) ; limits d\'aprèp Wenker, Constant This (1887) e las cartas « Sprachen in Elsass-Lothringen », « Rheinischer Fächer », « Alemannic dialects » de Wikimedia Commons (CC BY-SA)'
+			'Alsacian : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), BKG VG250 (dl-de/by-2-0), swisstopo ; limits d\'aprèp Wenker, Constant This (1887) e las cartas « Sprachen in Elsass-Lothringen » e « Alemannic dialects » de Wikimedia Commons (CC BY-SA)'
+	},
+	// Lo francic (Platt) (2026-10-10) : mosellan, renan, meridional,
+	// luxemborgés, del País germanofòn de Mosèla al Luxemborg, a la Sarra e al
+	// Palatinat ; Mosèla germanofòna a despart (tablèu de SIG/alsacian)
+	francic: {
+		kod: 'francic',
+		pref: 'frk-',
+		lang: 'de',
+		url: '/data/francic.json',
+		nom: { oc: 'francic (platt)', fr: 'francique (platt)', endo: 'Platt' },
+		// (en Mosèla, retorn de Romain : « le Platt devrait être sur la Moselle »)
+		eti: [6.75, 49.08],
+		// violets e ròses : luènh del blau lorren e del roge alsacian vesins
+		color: { sorne: '#b77bff', clar: '#6a2fc4', dalt: '#cc79a7' },
+		tèxt: { sorne: '#efe0ff', clar: '#30125c', dalt: '#ffe0f0' },
+		dial: {
+			sorne: { letzebuergesch: '#e85d9f', moselfrankisch: '#c86bff', rheinfrankisch: '#9a7bff', sudfrankisch: '#ff8fd0', ripuarisch: '#b04fd0', limburgisch: '#d68fff' },
+			clar: { letzebuergesch: '#b0246a', moselfrankisch: '#8a2fc4', rheinfrankisch: '#5a3fc4', sudfrankisch: '#c2458f', ripuarisch: '#7a1f9a', limburgisch: '#9a4fc4' },
+			dalt: { letzebuergesch: '#cc79a7', moselfrankisch: '#0072b2', rheinfrankisch: '#56b4e9', sudfrankisch: '#f0e442', ripuarisch: '#999999', limburgisch: '#bbbbbb' }
+		},
+		apart: { 'francic-franca': { dins: ['letzebuergesch', 'moselfrankisch', 'rheinfrankisch', 'sudfrankisch'] } },
+		pastilhas: [
+			{ k: 'francic-franca', de: 'Deitsch-Lothringen', oc: 'Mosèla germanofòna', fr: 'Moselle germanophone' },
+			{ k: 'letzebuergesch', de: 'Lëtzebuergesch', oc: 'luxemborgés', fr: 'luxembourgeois' },
+			{ k: 'moselfrankisch', de: 'Moselfränkisch', oc: 'francic mosellan', fr: 'francique mosellan' },
+			{ k: 'rheinfrankisch', de: 'Rheinfränkisch', oc: 'francic renan', fr: 'francique rhénan' },
+			{ k: 'sudfrankisch', de: 'Südfränkisch', oc: 'francic meridional', fr: 'francique méridional' },
+			{ k: 'ripuarisch', de: 'Ripuarisch', oc: 'ripuari', fr: 'ripuaire' },
+			{ k: 'limburgisch', de: 'Platdiets', oc: 'limborgés', fr: 'limbourgeois' }
+		],
+		sota: { oc: 'dialècte francic', fr: 'dialecte francique' },
+		sotaApart: { oc: 'francic de França', fr: 'francique de France' },
+		nomCarta: 'PLATT',
+		atribucion:
+			'Francic : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), BKG VG250 (dl-de/by-2-0), data.public.lu, © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL) ; limits d\'aprèp Wenker, Constant This (1887), las isoglòssas de Mosèla e la carta « Rheinischer Fächer » de Wikimedia Commons (CC BY-SA)'
+	},
+	// Lo flamenc e lo neerlandés (2026-10-10, Romain : « le flamand, ce n'est
+	// pas un trou, c'est une autre langue », amb son continuum en Belgica e als
+	// Païses Basses) : Westhoek d'aprèp Vanneste (1856), dialèctes de Daan e
+	// Blok (1969) ; lo bas saxon e lo frison, d'autras lengas, dins la meteissa
+	// jaça per pas daissar de vuèg ; Flandres de França a despart (SIG/flamenc/FONTS.md)
+	flamenc: {
+		kod: 'flamenc',
+		pref: 'nl-',
+		lang: 'vls',
+		url: '/data/flamenc.json',
+		nom: { oc: 'flamenc e neerlandés', fr: 'flamand et néerlandais', endo: 'Vlaams en Nederlands' },
+		eti: [4.9, 51.75],
+		// irangets (los Païses Basses) per lo neerlandés, bruns pel bas saxon,
+		// turquesa pel frison : luènh del blau picard vesin
+		color: { sorne: '#ff9a3c', clar: '#b35a00', dalt: '#e69f00' },
+		tèxt: { sorne: '#ffe6cc', clar: '#5c2e00', dalt: '#fff0d0' },
+		dial: {
+			sorne: {
+				flamenc_occidental: '#ff9a3c', flamenc_oriental: '#ffbf4d', zelandes: '#ff7a5a', brabancon: '#ffd166', limborgues: '#e8b04a',
+				olandes: '#ff6a3d', utrechtes: '#ffb38a', zuid_gelders: '#f0a060',
+				gronings: '#c8a27a', stellingwerfs: '#b89a7a', drents: '#d4b48a', twents: '#a8845a', gelders_overijssels: '#bf9a6a', veluws: '#caa880',
+				frison: '#4fc8d8', flevoland: '#d8c8b0'
+			},
+			clar: {
+				flamenc_occidental: '#b35a00', flamenc_oriental: '#a8700a', zelandes: '#b03a1a', brabancon: '#8a6a00', limborgues: '#8a5a10',
+				olandes: '#a82a0a', utrechtes: '#a85a3a', zuid_gelders: '#9a5a1a',
+				gronings: '#7a5a3a', stellingwerfs: '#6a5a4a', drents: '#7a6a4a', twents: '#5a4a2a', gelders_overijssels: '#6a5030', veluws: '#7a6040',
+				frison: '#0f7a8a', flevoland: '#8a7a60'
+			},
+			dalt: {
+				flamenc_occidental: '#e69f00', flamenc_oriental: '#f0e442', zelandes: '#d55e00', brabancon: '#cc79a7', limborgues: '#009e73',
+				olandes: '#0072b2', utrechtes: '#56b4e9', zuid_gelders: '#999999',
+				gronings: '#bbbbbb', stellingwerfs: '#999999', drents: '#dddddd', twents: '#bbbbbb', gelders_overijssels: '#999999', veluws: '#dddddd',
+				frison: '#56b4e9', flevoland: '#eeeeee'
+			}
+		},
+		apart: { frans_vlaams: { dins: ['flamenc_occidental'] } },
+		// noms dins la lenga ; los occitans son de validar
+		pastilhas: [
+			{ k: 'frans_vlaams', vls: 'Frans-Vlaams', oc: 'flamenc de França', fr: 'flamand de France' },
+			{ k: 'flamenc_occidental', vls: 'West-Vlaams', oc: 'flamenc occidental', fr: 'flamand occidental' },
+			{ k: 'flamenc_oriental', vls: 'Oost-Vlaams', oc: 'flamenc oriental', fr: 'flamand oriental' },
+			{ k: 'zelandes', vls: 'Zeeuws', oc: 'zelandés', fr: 'zélandais' },
+			{ k: 'brabancon', vls: 'Brabants', oc: 'brabançon', fr: 'brabançon' },
+			{ k: 'limborgues', vls: 'Limburgs', oc: 'limborgés', fr: 'limbourgeois' },
+			{ k: 'olandes', vls: 'Hollands', oc: 'olandés', fr: 'hollandais' },
+			{ k: 'utrechtes', vls: 'Utrechts', oc: 'utrechtés', fr: 'utrechtois' },
+			{ k: 'zuid_gelders', vls: 'Zuid-Gelders', oc: 'gueldrés meridional', fr: 'gueldrois méridional' },
+			{ k: 'gronings', vls: 'Grunnegs', oc: 'gronings', fr: 'groningois' },
+			{ k: 'stellingwerfs', vls: 'Stellingwerfs', oc: 'stellingwerfs', fr: 'stellingwerfois' },
+			{ k: 'drents', vls: 'Drents', oc: 'drents', fr: 'drenthois' },
+			{ k: 'twents', vls: 'Twents', oc: 'twents', fr: 'twentois' },
+			{ k: 'gelders_overijssels', vls: 'Achterhoeks, Sallands', oc: 'gueldrés-overijssels', fr: 'gueldrois-overijsselois' },
+			{ k: 'veluws', vls: 'Veluws', oc: 'veluws', fr: 'veluwois' },
+			{ k: 'frison', vls: 'Frysk', oc: 'frison', fr: 'frison' },
+			{ k: 'flevoland', vls: 'Flevoland', oc: 'pòlders del Flevoland', fr: 'polders du Flevoland' }
+		],
+		sota: { oc: 'dialècte neerlandés', fr: 'dialecte néerlandais' },
+		sotaApart: { oc: 'flamenc de França', fr: 'flamand de France' },
+		nomCarta: 'VLAAMS · NEDERLANDS',
+		atribucion:
+			'Flamenc e neerlandés : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), CBS / PDOK 2025 (CC BY 4.0), SPF Finanças, © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL) ; Westhoek d\'aprèp A. Vanneste (1972), dialèctes d\'aprèp Daan e Blok (1969) via Wikimedia Commons (CC BY-SA)'
 	},
 	// Lo còrs (2026-10-10) : los dialèctes de Corsega (cartas de Wikimedia
 	// Commons calada), lo galurés e lo sassarés de Sardenha (leis regionalas
@@ -272,18 +355,18 @@ export const LENGAS = {
 		// peitavin-santongés a despart ; lo Centre, pervenca palla
 		dial: {
 			sorne: {
-				picard: '#7f95ff', chti: '#3fe0b8', rouchi: '#ff9f5a', wallon: '#a48cff', normand: '#3f5bff',
+				picard: '#7f95ff', chti: '#3fe0b8', rouchi: '#ff9f5a', wallon: '#a48cff', valon_lieges: '#ff6fa0', valon_namures: '#ffd24a', valon_oest: '#62e0a0', valon_sud: '#c58cff', normand: '#3f5bff',
 				champenois: '#2fb4f0', lorrain: '#1588d8', bourguignon: '#6fd6ff', franc_comtois: '#1fd6c0',
 				gallo: '#4f7fd0', oest: '#62a0ea', poitevin_saintongeais: '#3fc0ff', centre: '#7f9cff'
 			},
 			clar: {
-				picard: '#4a66f0', chti: '#0f9f86', rouchi: '#d0661a', wallon: '#6a4fe0', normand: '#1f2fc0',
+				picard: '#4a66f0', chti: '#0f9f86', rouchi: '#d0661a', wallon: '#6a4fe0', valon_lieges: '#c2306a', valon_namures: '#a8840a', valon_oest: '#1f8f5a', valon_sud: '#7a3fc4', normand: '#1f2fc0',
 				champenois: '#0a8fd0', lorrain: '#0063b0', bourguignon: '#2bb0e0', franc_comtois: '#00a08f',
 				gallo: '#2f5fb0', oest: '#4a8ad8', poitevin_saintongeais: '#0098d8', centre: '#5a6ff0'
 			},
 			// (Okabe-Ito : 8 colors per 11 zònas, doas vesinas jamai parièras)
 			dalt: {
-				picard: '#e69f00', chti: '#009e73', rouchi: '#d55e00', wallon: '#999999', normand: '#56b4e9',
+				picard: '#e69f00', chti: '#009e73', rouchi: '#d55e00', wallon: '#999999', valon_lieges: '#cc79a7', valon_namures: '#f0e442', valon_oest: '#009e73', valon_sud: '#0072b2', normand: '#56b4e9',
 				champenois: '#009e73', lorrain: '#56b4e9', bourguignon: '#f0e442', franc_comtois: '#cc79a7',
 				gallo: '#d55e00', oest: '#999999', poitevin_saintongeais: '#f0e442', centre: '#dddddd'
 			}
@@ -297,6 +380,10 @@ export const LENGAS = {
 			{ k: 'chti', fr: 'ch’ti', oc: 'ch’ti', de: 'picard' },
 			{ k: 'rouchi', fr: 'rouchi', oc: 'rochi', de: 'picard' },
 			{ k: 'wallon', fr: 'wallon', oc: 'valon' },
+			{ k: 'valon_lieges', fr: 'liégeois', oc: 'liegés', de: 'wallon' },
+			{ k: 'valon_namures', fr: 'namurois', oc: 'namurés', de: 'wallon' },
+			{ k: 'valon_oest', fr: 'wallon de l’Ouest', oc: 'valon de l’oèst', de: 'wallon' },
+			{ k: 'valon_sud', fr: 'wallon du Sud', oc: 'valon del sud', de: 'wallon' },
 			{ k: 'normand', fr: 'normand', oc: 'normand' },
 			{ k: 'champenois', fr: 'champenois', oc: 'campanés' },
 			{ k: 'lorrain', fr: 'lorrain', oc: 'lorren' },

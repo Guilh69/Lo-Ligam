@@ -212,6 +212,27 @@ def clau_de(c, k):
 
 unitats = [{'codi': c, 'nom': nom_de[c], 'dial': ZONA[z], 'domeni': 'oil', 'clau': clau_de(c, ZONA[z]), 'g': geo[c]}
            for c, z in zona_de.items() if z in ZONA]
+# La Belgica romana (2026-10-10, SIG/oil-belgica/FONTS.md) : valon e sos
+# quatre dialèctes (en sosdialèctes del valon, coma lo ch'ti dins lo picard),
+# picard, gaumés (lorren), campanés ; contorns terrèstres de SIG/brut/flamenc
+BEL = os.path.join(SIG, 'oil-belgica', 'dialectes-oil-belgica.csv')
+BEG = os.path.join(SIG, 'brut', 'flamenc', 'be-comunas.geojson')
+MAP_BE = {'valon': 'wallon', 'picard': 'picard', 'lorren': 'lorrain', 'campanes': 'champenois'}
+SOT_BE = {'lieges': 'valon_lieges', 'namures': 'valon_namures', 'oest_valon': 'valon_oest', 'sud_valon': 'valon_sud'}
+n_be = 0
+if os.path.exists(BEL) and os.path.exists(BEG):
+    geo_be = {f['properties']['codi']: f['geometry'] for f in json.load(open(BEG, encoding='utf-8'))['features'] if f.get('geometry')}
+    for r in csv.DictReader(open(BEL, encoding='utf-8-sig'), delimiter=';'):
+        if r['domeni'] != 'oil' or r['dialecte'] not in MAP_BE or r['codi'] not in geo_be:
+            continue
+        k = MAP_BE[r['dialecte']]
+        if k == 'wallon' and r['parlar'] in SOT_BE:
+            k = SOT_BE[r['parlar']]
+        g = valid(en_m(ogr.CreateGeometryFromJson(json.dumps(geo_be[r['codi']]))))
+        geo[r['codi']] = g
+        unitats.append({'codi': r['codi'], 'nom': r['nom_oficial'], 'dial': k, 'domeni': 'oil', 'clau': k, 'g': g})
+        n_be += 1
+print('Belgica romana : %d comunas' % n_be, flush=True)
 print('Unitats : %d comunas d\'oïl (%s)' % (len(unitats), ', '.join('%s %d' % (k, sum(u['clau'] == k for u in unitats)) for k in ORDRE)))
 
 
@@ -230,7 +251,7 @@ lim_frp = json.load(open(os.path.join(DATA, 'arpitan.json'), encoding='utf-8'))[
 # sus lor frontièra ; las comunas que los Archius i metan e que son defòra
 # prenon la lenga d'oïl vesina (zònas dels Archius : 6 breton, 7.1 flamenc,
 # 7.2 a 7.5 alemanic e francic)
-VESINAS = {'breton.json': ('6',), 'flamenc.json': ('7.1',), 'alsacian.json': ('7.2', '7.3', '7.4', '7.5')}
+VESINAS = {'breton.json': ('6',), 'flamenc.json': ('7.1',), 'alsacian.json': ('7.4', '7.5'), 'francic.json': ('7.2', '7.3')}
 anels_v, ZONAS_V = [], ()
 for fic, zs in VESINAS.items():
     if os.path.exists(os.path.join(DATA, fic)):
@@ -265,6 +286,18 @@ for k in CLAUS:
 # mas que son defòra de nòstres domenis : a la lenga d'oïl vesina, de man en
 # man (una tèrra pus luènha pren la lenga de sas vesinas ja rengadas)
 autras = [geo[c] for c, z in zona_de.items() if z is None or z[0] in '23' or z in ZONAS_V]
+# lo Jura soís (Ajoie, Delémont, Jura bernés : franc-comtés, retorn de Romain
+# 2026-10-10) : las comunas de JU, BE, NE e SO que son ni arpitanas ni
+# alemanicas prenon la lenga d'oïl vesina (SIG/brut/alsacian/ch-comunas.geojson,
+# swisstopo)
+CH = os.path.join(SIG, 'brut', 'alsacian', 'ch-comunas.geojson')
+n_ch = 0
+if os.path.exists(CH):
+    for f in json.load(open(CH, encoding='utf-8'))['features']:
+        if (f['properties'].get('unitat') in ('JU', 'BE', 'NE', 'SO')) and f.get('geometry'):
+            autras.append(valid(en_m(ogr.CreateGeometryFromJson(json.dumps(f['geometry'])))))
+            n_ch += 1
+print('Comunas soïssas del Jura e a l entorn : %d' % n_ch, flush=True)
 autras_m = unir(autras)
 comunas_tot = unir([dom_brut, autras_m])
 resta = valid(autras_m.Difference(oc_m).Difference(pres))
@@ -630,8 +663,14 @@ for o in topo['objects']['countries']['geometries']:
 precisas = [geo[c] for c, z in zona_de.items() if z and z[0] in '4567' and geo[c].Intersects(zonaT)]
 # (coma pel catalan : las comunas precisas a 300 m o 1 km ; Natural Earth
 # sonque a 2 km E a 6 km, que sa còsta escafa las calas e las rias)
-tèrra_p = valid(unir(precisas).Difference(dom_m.Buffer(10, 4)))
-tèrra_ne = valid(valid(unir(ne).Buffer(-1500, 4)).Difference(dom_m.Buffer(10, 4)))
+# (sonque una benda a l'entorn del bòrd del domeni : los tèsts se fan a 300 m
+# e 1 km (comunas), 2 e 6 km (Natural Earth) ; los polígons entièrs fasián
+# durar lo calcul mai d'una ora)
+bòrd_dom = dom_m.Boundary()
+benda_p, benda_ne = bòrd_dom.Buffer(1500, 2), bòrd_dom.Buffer(7000, 2)
+tèrra_p = valid(valid(unir([g for g in precisas if g.Intersects(benda_p)]).Intersection(benda_p)).Difference(dom_m.Buffer(10, 4)))
+tèrra_ne = valid(valid(valid(unir(ne).Buffer(-1500, 4)).Intersection(benda_ne)).Difference(dom_m.Buffer(10, 4)))
+print('Tèrra a l entorn : %d comunas dins la benda' % sum(1 for g in precisas if g.Intersects(benda_p)), flush=True)
 oc_b_ll = oc_ll.GetBoundary()
 ox0, ox1, oy0, oy1 = oc_ll.GetEnvelope()
 anels_dom, linhas = [], []
