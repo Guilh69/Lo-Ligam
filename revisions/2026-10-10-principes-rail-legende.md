@@ -91,7 +91,7 @@ Le rail devient la barre du bas (déjà fait). Le panneau devient une feuille qu
 Par lots, chacun vérifié en capture à 1830 px et sur téléphone, sans retirer aucune fonction :
 
 1. ✅ **Rail** (fait le 2026-10-10) : « Fons » près des boutons de zoom (son panneau s'ouvre à côté du bouton, au-dessus de la barre sur téléphone) ; « Territòri » ; chiffres discrets à la place des points ; trait vermillon sur la famille ouverte ; espace avant « Autras lengas ».
-2. **Panneau** : grille d'espacement, typographie, translucidité, or réservé à « allumé », deux niveaux de texte par ligne.
+2. ✅ **Panneau** (fait le 2026-10-10) : marges et espacements sur la grille de 4 px, lignes d'au moins 48 px, titre en Luciole 18 px gras, noms 15 px, notes 13 px, titres de thème 12 px ; fond translucide (72 %) et flouté ; l'or réservé à « allumé » (boutons et échelle en couleur neutre) ; lignes hautes alignées en haut ; pastille de « Sus la carta » adoucie (sombre cerclée d'or), toujours plus visible que les chiffres des familles.
 3. **Comportements** : ligne entière cliquable, échelle seulement quand elle sert (« I anar » à confirmer), aperçu au survol.
 4. **Téléphone** : feuille à trois hauteurs avec poignée.
 

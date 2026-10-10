@@ -1165,13 +1165,16 @@
 		position: absolute;
 		top: 4px;
 		right: 8px;
-		min-width: 17px;
-		height: 17px;
+		min-width: 16px;
+		height: 16px;
 		padding: 0 4px;
-		border-radius: 9px;
-		background: var(--t-terra-viu);
-		color: var(--t-fons);
-		font: 700 10px/17px var(--font-body);
+		border-radius: 8px;
+		/* (escura amb un contorn d'aur : se vei sus lo boton d'aur) */
+		background: var(--t-fons-2);
+		box-shadow: inset 0 0 0 1px var(--t-aur);
+		color: var(--t-aur-clar);
+		font: 700 9.5px/16px var(--font-body);
+		font-variant-numeric: tabular-nums;
 	}
 	.rail-sep {
 		height: 1px;
@@ -1191,11 +1194,12 @@
 		overflow-y: auto;
 		scrollbar-width: thin;
 		scrollbar-color: var(--t-linha) transparent;
-		padding: 1rem 1.05rem 1.1rem;
-		background: color-mix(in srgb, var(--t-fons-2) 93%, transparent);
-		backdrop-filter: blur(10px);
+		padding: 16px;
+		background: color-mix(in srgb, var(--t-fons-2) 72%, transparent);
+		backdrop-filter: blur(10px) saturate(1.15);
+		-webkit-backdrop-filter: blur(10px) saturate(1.15);
 		border: 1px solid var(--t-linha);
-		border-radius: 18px;
+		border-radius: 10px;
 		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 		color: var(--t-tinta);
 	}
@@ -1207,7 +1211,7 @@
 	}
 	h2 {
 		margin: 0;
-		font: 400 1.45rem/1.1 var(--font-heading);
+		font: 700 1.125rem/1.25 var(--font-body);
 	}
 	.tampar {
 		display: grid;
@@ -1218,13 +1222,17 @@
 		border: 1px solid var(--t-linha);
 		border-radius: 50%;
 		background: none;
-		color: var(--t-aur-clar);
+		color: var(--t-tinta-2);
 		font-size: 1.1rem;
 		cursor: pointer;
 	}
+	.tampar:hover {
+		color: var(--t-aur-clar);
+		border-color: var(--t-aur);
+	}
 	.sota {
-		margin: 0.2rem 0 0.6rem;
-		font-size: 0.76rem;
+		margin: 4px 0 12px;
+		font-size: 0.8125rem;
 		color: var(--t-tinta-2);
 	}
 	.res {
@@ -1233,10 +1241,10 @@
 		color: var(--t-tinta-2);
 	}
 	.titolet {
-		margin: 0.9rem 0 0.45rem;
-		font-size: 0.66rem;
+		margin: 24px 0 8px;
+		font-size: 0.75rem;
 		font-weight: 700;
-		letter-spacing: 0.24em;
+		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--t-tinta-2);
 	}
@@ -1246,7 +1254,7 @@
 		align-items: center;
 		gap: 0.4rem;
 		width: 100%;
-		padding: 0.25rem 0;
+		padding: 4px 0;
 		background: none;
 		border: 0;
 		font-family: inherit;
@@ -1281,10 +1289,15 @@
 	.linha {
 		display: grid;
 		grid-template-columns: auto 1fr auto;
-		gap: 0.7rem;
+		gap: 12px;
 		align-items: center;
-		padding: 0.55rem 0;
-		border-top: 1px solid var(--t-linha);
+		min-height: 48px;
+		padding: 8px 0;
+		border-top: 1px solid color-mix(in srgb, var(--t-linha) 55%, transparent);
+	}
+	/* una linha nauta (pastilhas dels dialèctes) : apercebut e interruptor en naut, al nivèl del nom */
+	.linha:has(.pastilhas) {
+		align-items: start;
 	}
 	.linha.escantida {
 		opacity: 0.55;
@@ -1293,7 +1306,7 @@
 		display: block;
 		width: 52px;
 		height: 36px;
-		border-radius: 8px;
+		border-radius: 6px;
 		overflow: hidden;
 		background: var(--t-fons);
 		border: 1px solid var(--t-linha);
@@ -1309,18 +1322,20 @@
 	}
 	.cos b {
 		display: block;
-		font-size: 0.88rem;
+		font-size: 0.9375rem;
+		line-height: 1.3;
 		font-weight: 700;
 	}
 	.cos small {
 		display: block;
-		font-size: 0.72rem;
-		line-height: 1.35;
+		margin-top: 2px;
+		font-size: 0.8125rem;
+		line-height: 1.4;
 		color: var(--t-tinta-2);
 	}
+	/* (l'aur vòl dire « alucat », pas res mai : l'escala es en gris) */
 	.cos small.escala-j {
-		font-style: italic;
-		color: var(--t-aur);
+		color: var(--t-tinta-2);
 	}
 	.accions {
 		display: flex;
@@ -1833,12 +1848,13 @@
 		border: 1px solid var(--t-linha);
 		border-radius: 999px;
 		background: none;
-		color: var(--t-aur-clar);
-		font: 700 0.75rem/1.2 var(--font-body);
+		color: var(--t-tinta);
+		font: 700 0.8125rem/1.2 var(--font-body);
 		cursor: pointer;
 	}
 	.boton:hover {
 		border-color: var(--t-aur);
+		color: var(--t-aur-clar);
 	}
 	.admin {
 		display: block;
