@@ -146,9 +146,9 @@
 {
 "insee": "25056",
 "nom_oficial": "Besançon",
-"nom": "Besançon",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "B'sançon",
+"local": true,
+"font": "recèrca : Wikipédia fr, article « Franc-comtois », §Toponymie (tableau du Doubs), et intro",
 "lon": 6.0239,
 "lat": 47.2377,
 "pop": 118489,
@@ -206,9 +206,9 @@
 {
 "insee": "86194",
 "nom_oficial": "Poitiers",
-"nom": "Poitiers",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Poetàe",
+"local": true,
+"font": "recèrca : Wikipédia en (intro) / carte Pivetea / Lexilogos, page Poitou-Charentes",
 "lon": 0.3412,
 "lat": 46.5801,
 "pop": 89916,
@@ -216,23 +216,11 @@
 "renc": 2
 },
 {
-"insee": "59183",
-"nom_oficial": "Dunkerque",
-"nom": "Dunkèke",
-"local": true,
-"font": "Viquipèdia pcd",
-"lon": 2.3764,
-"lat": 51.0377,
-"pop": 86263,
-"zona": "picard",
-"renc": 2
-},
-{
 "insee": "17300",
 "nom_oficial": "La Rochelle",
-"nom": "La Rochelle",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "La Rochéle",
+"local": true,
+"font": "recèrca : Wikipédia en (intro) / carte Pivetea / Lexilogos",
 "lon": -1.1513,
 "lat": 46.1596,
 "pop": 79851,
@@ -254,9 +242,9 @@
 {
 "insee": "44184",
 "nom_oficial": "Saint-Nazaire",
-"nom": "Saint-Nazaire",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Saint-Nâzére",
+"local": true,
+"font": "recèrca : Institut du galo, Rolée des qemunes de Haote-Bertègn (2021) / Wikipédia en (intr",
 "lon": -2.2139,
 "lat": 47.2733,
 "pop": 74568,
@@ -326,9 +314,9 @@
 {
 "insee": "79191",
 "nom_oficial": "Niort",
-"nom": "Niort",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Niàu",
+"local": true,
+"font": "recèrca : Wikipédia en (intro, « Poitevin: Niàu »)",
 "lon": -0.4648,
 "lat": 46.3237,
 "pop": 59854,
@@ -362,9 +350,9 @@
 {
 "insee": "85191",
 "nom_oficial": "La Roche-sur-Yon",
-"nom": "La Roche-sur-Yon",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "La Roche-su-Yun",
+"local": true,
+"font": "recèrca : Carte des régions avec le nom des villes en poitevin (Pivetea)",
 "lon": -1.4291,
 "lat": 46.6704,
 "pop": 54849,
@@ -398,9 +386,9 @@
 {
 "insee": "85194",
 "nom_oficial": "Les Sables-d'Olonne",
-"nom": "Les Sables-d'Olonne",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Lés Sablles-d'Oloune",
+"local": true,
+"font": "recèrca : Wikipédia en (intro, « Lés Sablles d'Oloune ») / carte Pivetea",
 "lon": -1.7843,
 "lat": 46.4969,
 "pop": 49603,
@@ -458,9 +446,9 @@
 {
 "insee": "90010",
 "nom_oficial": "Belfort",
-"nom": "Belfort",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Béfoûe",
+"local": true,
+"font": "recèrca : Vautherin, Glossaire du patois de Châtenois (1896) : « Bîefoûe, Béfô ou Béfôe » ",
 "lon": 6.8629,
 "lat": 47.6377,
 "pop": 45912,
@@ -566,9 +554,9 @@
 {
 "insee": "16015",
 "nom_oficial": "Angoulême",
-"nom": "Angoulême",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Engoulaeme",
+"local": true,
+"font": "recèrca : Wikipédia en (intro) / carte Pivetea / Lexilogos",
 "lon": 0.1561,
 "lat": 45.6485,
 "pop": 41908,
@@ -621,7 +609,7 @@
 "lat": 48.4439,
 "pop": 38324,
 "zona": "centre",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "60175",
@@ -633,7 +621,7 @@
 "lat": 49.2606,
 "pop": 36301,
 "zona": "centre",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "89024",
@@ -645,7 +633,7 @@
 "lat": 47.796,
 "pop": 35097,
 "zona": "champenois",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "78621",
@@ -657,19 +645,19 @@
 "lat": 48.776,
 "pop": 34689,
 "zona": "centre",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "58194",
 "nom_oficial": "Nevers",
-"nom": "Nevers",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "N'var",
+"local": true,
+"font": "recèrca : Chambure, Glossaire du Morvan (1878), article « ÉTÉ » : « i seu u ou eu ai N'var",
 "lon": 3.1576,
 "lat": 46.9879,
 "pop": 33085,
 "zona": "bourguignon",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "88160",
@@ -681,7 +669,7 @@
 "lat": 48.1754,
 "pop": 32251,
 "zona": "lorrain",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "28134",
@@ -693,31 +681,19 @@
 "lat": 48.736,
 "pop": 31543,
 "zona": "centre",
-"renc": 2
-},
-{
-"insee": "59122",
-"nom_oficial": "Cambrai",
-"nom": "Kimbré",
-"local": true,
-"font": "Viquipèdia pcd",
-"lon": 3.2349,
-"lat": 50.1762,
-"pop": 31134,
-"zona": "chti",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "86066",
 "nom_oficial": "Châtellerault",
-"nom": "Châtellerault",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Chateleràud",
+"local": true,
+"font": "recèrca : Wikipédia en (intro, « Châteulrô/Chateleràud ») / carte Pivetea",
 "lon": 0.5466,
 "lat": 46.818,
 "pop": 31003,
 "zona": "poitevin_saintongeais",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "59392",
@@ -729,7 +705,7 @@
 "lat": 50.2803,
 "pop": 28767,
 "zona": "rouchi",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "76217",
@@ -741,7 +717,7 @@
 "lat": 49.9229,
 "pop": 28496,
 "zona": "normand",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "02722",
@@ -753,7 +729,7 @@
 "lat": 49.3837,
 "pop": 28046,
 "zona": "champenois",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "89387",
@@ -765,7 +741,7 @@
 "lat": 48.1989,
 "pop": 27106,
 "zona": "champenois",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "91223",
@@ -777,7 +753,7 @@
 "lat": 48.4345,
 "pop": 26857,
 "zona": "centre",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "49328",
@@ -789,7 +765,7 @@
 "lat": 47.2601,
 "pop": 26241,
 "zona": "oest",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "61001",
@@ -801,19 +777,19 @@
 "lat": 48.4302,
 "pop": 25490,
 "zona": "normand",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "17415",
 "nom_oficial": "Saintes",
-"nom": "Saintes",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Sénte",
+"local": true,
+"font": "recèrca : Wikipédia en (intro) / carte Pivetea / Lexilogos",
 "lon": -0.6337,
 "lat": 45.7441,
 "pop": 25363,
 "zona": "poitevin_saintongeais",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "62119",
@@ -825,7 +801,7 @@
 "lat": 50.5307,
 "pop": 25224,
 "zona": "picard",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "18279",
@@ -837,7 +813,7 @@
 "lat": 47.2213,
 "pop": 25068,
 "zona": "centre",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "02408",
@@ -849,7 +825,7 @@
 "lat": 49.5651,
 "pop": 24220,
 "zona": "champenois",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "39198",
@@ -861,7 +837,7 @@
 "lat": 47.0909,
 "pop": 23840,
 "zona": "franc_comtois",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "17299",
@@ -873,31 +849,19 @@
 "lat": 45.9368,
 "pop": 23460,
 "zona": "poitevin_saintongeais",
-"renc": 2
-},
-{
-"insee": "77390",
-"nom_oficial": "Roissy-en-Brie",
-"nom": "Roissy-en-Brie",
-"local": false,
-"font": "nom oficial (IGN)",
-"lon": 2.6545,
-"lat": 48.7908,
-"pop": 23229,
-"zona": "champenois",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "85047",
 "nom_oficial": "Challans",
-"nom": "Challans",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Chaland",
+"local": true,
+"font": "recèrca : Carte Pivetea",
 "lon": -1.8792,
 "lat": 46.8448,
 "pop": 22943,
 "zona": "poitevin_saintongeais",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "52448",
@@ -909,7 +873,7 @@
 "lat": 48.6376,
 "pop": 22858,
 "zona": "champenois",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "80001",
@@ -921,7 +885,7 @@
 "lat": 50.1058,
 "pop": 22395,
 "zona": "picard",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "77305",
@@ -933,19 +897,7 @@
 "lat": 48.3848,
 "pop": 22279,
 "zona": "champenois",
-"renc": 2
-},
-{
-"insee": "51230",
-"nom_oficial": "Épernay",
-"nom": "Épernay",
-"local": false,
-"font": "nom oficial (IGN)",
-"lon": 3.9587,
-"lat": 49.0438,
-"pop": 22174,
-"zona": "champenois",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "85146",
@@ -957,7 +909,7 @@
 "lat": 46.9743,
 "pop": 21134,
 "zona": "poitevin_saintongeais",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "52121",
@@ -969,7 +921,7 @@
 "lat": 48.111,
 "pop": 20827,
 "zona": "champenois",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "71153",
@@ -981,7 +933,7 @@
 "lat": 46.8054,
 "pop": 20509,
 "zona": "bourguignon",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "21054",
@@ -993,7 +945,7 @@
 "lat": 47.0259,
 "pop": 20352,
 "zona": "bourguignon",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "35115",
@@ -1005,7 +957,7 @@
 "lat": 48.3515,
 "pop": 20307,
 "zona": "gallo",
-"renc": 2
+"renc": 3
 },
 {
 "insee": "79049",
@@ -1046,9 +998,9 @@
 {
 "insee": "17306",
 "nom_oficial": "Royan",
-"nom": "Royan",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Roeyan",
+"local": true,
+"font": "recèrca : Wikipédia en (intro, « Roeyan in the Saintongeais dialect ») / carte Pivetea",
 "lon": -1.0432,
 "lat": 45.6229,
 "pop": 19425,
@@ -1226,9 +1178,9 @@
 {
 "insee": "70550",
 "nom_oficial": "Vesoul",
-"nom": "Vesoul",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Vzou",
+"local": true,
+"font": "recèrca : Wikipédia fr, article « Franc-comtois », §Toponymie (tableau de la Haute-Saône),",
 "lon": 6.1543,
 "lat": 47.6198,
 "pop": 15078,
@@ -1298,9 +1250,9 @@
 {
 "insee": "85092",
 "nom_oficial": "Fontenay-le-Comte",
-"nom": "Fontenay-le-Comte",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Funtenaes-le-Cunte",
+"local": true,
+"font": "recèrca : Carte Pivetea / Wikipédia en (intro) / page « Parlanjhe » du site Pivetea (« à F",
 "lon": -0.8061,
 "lat": 46.4656,
 "pop": 14059,
@@ -1310,13 +1262,25 @@
 {
 "insee": "79329",
 "nom_oficial": "Thouars",
-"nom": "Thouars",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Touars",
+"local": true,
+"font": "recèrca : Carte Pivetea",
 "lon": -0.2167,
 "lat": 46.976,
 "pop": 13891,
 "zona": "poitevin_saintongeais",
+"renc": 3
+},
+{
+"insee": "59139",
+"nom_oficial": "Caudry",
+"nom": "Caudry",
+"local": false,
+"font": "nom oficial (IGN)",
+"lon": 3.4102,
+"lat": 50.1244,
+"pop": 13833,
+"zona": "rouchi",
 "renc": 3
 },
 {
@@ -1514,9 +1478,9 @@
 {
 "insee": "44015",
 "nom_oficial": "Blain",
-"nom": "Blain",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Bllain",
+"local": true,
+"font": "recèrca : Institut du galo, Rolée des qemunes de Haote-Bertègn (2021) / Wikipédia en (intr",
 "lon": -1.7671,
 "lat": 47.4779,
 "pop": 10376,
@@ -1538,9 +1502,9 @@
 {
 "insee": "79202",
 "nom_oficial": "Parthenay",
-"nom": "Parthenay",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Partenaes",
+"local": true,
+"font": "recèrca : Carte Pivetea / Wikipédia en (intro)",
 "lon": -0.2514,
 "lat": 46.6488,
 "pop": 10140,
@@ -1569,7 +1533,7 @@
 "lat": 48.1765,
 "pop": 9987,
 "zona": "gallo",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "18197",
@@ -1581,19 +1545,7 @@
 "lat": 46.7213,
 "pop": 9899,
 "zona": "centre",
-"renc": 3
-},
-{
-"insee": "27056",
-"nom_oficial": "Bernay",
-"nom": "Bernay",
-"local": false,
-"font": "nom oficial (IGN)",
-"lon": 0.5978,
-"lat": 49.0892,
-"pop": 9765,
-"zona": "normand",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "58086",
@@ -1605,7 +1557,7 @@
 "lat": 47.4103,
 "pop": 9733,
 "zona": "bourguignon",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "35236",
@@ -1617,7 +1569,7 @@
 "lat": 47.6507,
 "pop": 9542,
 "zona": "gallo",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "80016",
@@ -1629,19 +1581,7 @@
 "lat": 50.0012,
 "pop": 9521,
 "zona": "picard",
-"renc": 3
-},
-{
-"insee": "85128",
-"nom_oficial": "Luçon",
-"nom": "Luçon",
-"local": false,
-"font": "nom oficial (IGN)",
-"lon": -1.1702,
-"lat": 46.4555,
-"pop": 9417,
-"zona": "poitevin_saintongeais",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "28280",
@@ -1653,7 +1593,7 @@
 "lat": 48.3217,
 "pop": 9292,
 "zona": "centre",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "71342",
@@ -1665,7 +1605,7 @@
 "lat": 46.452,
 "pop": 9291,
 "zona": "bourguignon",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "45252",
@@ -1677,7 +1617,7 @@
 "lat": 48.1733,
 "pop": 8856,
 "zona": "centre",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "33138",
@@ -1689,7 +1629,7 @@
 "lat": 45.0406,
 "pop": 8678,
 "zona": "poitevin_saintongeais",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "85051",
@@ -1701,79 +1641,7 @@
 "lat": 46.687,
 "pop": 8557,
 "zona": "poitevin_saintongeais",
-"renc": 3
-},
-{
-"insee": "50147",
-"nom_oficial": "Coutances",
-"nom": "Couotaunches",
-"local": true,
-"font": "Viquipèdia nrm",
-"lon": -1.4457,
-"lat": 49.0475,
-"pop": 8321,
-"zona": "normand",
-"renc": 3
-},
-{
-"insee": "37072",
-"nom_oficial": "Chinon",
-"nom": "Chinon",
-"local": false,
-"font": "nom oficial (IGN)",
-"lon": 0.2402,
-"lat": 47.1667,
-"pop": 8144,
-"zona": "oest",
-"renc": 3
-},
-{
-"insee": "70310",
-"nom_oficial": "Lure",
-"nom": "Lure",
-"local": false,
-"font": "nom oficial (IGN)",
-"lon": 6.4942,
-"lat": 47.6863,
-"pop": 7877,
-"zona": "franc_comtois",
-"renc": 3
-},
-{
-"insee": "49373",
-"nom_oficial": "Lys-Haut-Layon",
-"nom": "Lys-Haut-Layon",
-"local": false,
-"font": "nom oficial (IGN)",
-"lon": -0.5356,
-"lat": 47.145,
-"pop": 7748,
-"zona": "oest",
-"renc": 3
-},
-{
-"insee": "27016",
-"nom_oficial": "Les Andelys",
-"nom": "Les Aundelys",
-"local": true,
-"font": "Viquipèdia nrm",
-"lon": 1.4193,
-"lat": 49.2465,
-"pop": 7706,
-"zona": "normand",
-"renc": 3
-},
-{
-"insee": "35012",
-"nom_oficial": "Bain-de-Bretagne",
-"nom": "Bouèn",
-"local": true,
-"font": "Chubri",
-"lon": -1.683,
-"lat": 47.8427,
-"pop": 7674,
-"zona": "gallo",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "61214",
@@ -1785,7 +1653,7 @@
 "lat": 48.7646,
 "pop": 7663,
 "zona": "normand",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "08362",
@@ -1797,19 +1665,7 @@
 "lat": 49.5089,
 "pop": 7444,
 "zona": "champenois",
-"renc": 3
-},
-{
-"insee": "44005",
-"nom_oficial": "Chaumes-en-Retz",
-"nom": "Chaumes-en-Retz",
-"local": false,
-"font": "nom oficial (IGN)",
-"lon": -1.9422,
-"lat": 47.116,
-"pop": 7440,
-"zona": "gallo",
-"renc": 3
+"renc": 4
 },
 {
 "insee": "52269",
@@ -1821,7 +1677,19 @@
 "lat": 47.8655,
 "pop": 7421,
 "zona": "champenois",
-"renc": 3
+"renc": 4
+},
+{
+"insee": "35176",
+"nom_oficial": "Guipry-Messac",
+"nom": "Guipry-Messac",
+"local": false,
+"font": "nom oficial (IGN)",
+"lon": -1.807,
+"lat": 47.8248,
+"pop": 7354,
+"zona": "gallo",
+"renc": 4
 },
 {
 "insee": "88321",
@@ -1994,13 +1862,25 @@
 {
 "insee": "25047",
 "nom_oficial": "Baume-les-Dames",
-"nom": "Baume-les-Dames",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Bâmes",
+"local": true,
+"font": "recèrca : Wikipédia fr, article « Franc-comtois », §Toponymie (tableau du Doubs) / Roussey",
 "lon": 6.3619,
 "lat": 47.3526,
 "pop": 5155,
 "zona": "franc_comtois",
+"renc": 4
+},
+{
+"insee": "56143",
+"nom_oficial": "Muzillac",
+"nom": "Muziya",
+"local": true,
+"font": "Chubri",
+"lon": -2.4829,
+"lat": 47.5551,
+"pop": 5089,
+"zona": "gallo",
 "renc": 4
 },
 {
@@ -2018,9 +1898,9 @@
 {
 "insee": "33058",
 "nom_oficial": "Blaye",
-"nom": "Blaye",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Bllaye",
+"local": true,
+"font": "recèrca : Carte Pivetea",
 "lon": -0.663,
 "lat": 45.1268,
 "pop": 5066,
@@ -2160,6 +2040,18 @@
 "renc": 4
 },
 {
+"insee": "85163",
+"nom_oficial": "Noirmoutier-en-l'Île",
+"nom": "Noirmoutier-en-l'Île",
+"local": false,
+"font": "nom oficial (IGN)",
+"lon": -2.2444,
+"lat": 47.0002,
+"pop": 4505,
+"zona": "poitevin_saintongeais",
+"renc": 4
+},
+{
 "insee": "41106",
 "nom_oficial": "Lamotte-Beuvron",
 "nom": "Lamotte-Beuvron",
@@ -2181,6 +2073,18 @@
 "lat": 50.3729,
 "pop": 4480,
 "zona": "picard",
+"renc": 4
+},
+{
+"insee": "27049",
+"nom_oficial": "Mesnil-en-Ouche",
+"nom": "Mesnil-en-Ouche",
+"local": false,
+"font": "nom oficial (IGN)",
+"lon": 0.7053,
+"lat": 49.0126,
+"pop": 4414,
+"zona": "normand",
 "renc": 4
 },
 {
@@ -2222,9 +2126,9 @@
 {
 "insee": "25356",
 "nom_oficial": "Maîche",
-"nom": "Maîche",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Maitche",
+"local": true,
+"font": "recèrca : Wikipédia fr, article « Franc-comtois », §Toponymie (tableau du Doubs)",
 "lon": 6.8016,
 "lat": 47.2523,
 "pop": 4254,
@@ -2292,6 +2196,18 @@
 "renc": 4
 },
 {
+"insee": "70245",
+"nom_oficial": "Fougerolles-Saint-Valbert",
+"nom": "Fougerolles-Saint-Valbert",
+"local": false,
+"font": "nom oficial (IGN)",
+"lon": 6.4048,
+"lat": 47.8857,
+"pop": 3764,
+"zona": "franc_comtois",
+"renc": 4
+},
+{
 "insee": "58079",
 "nom_oficial": "Clamecy",
 "nom": "Clamecy",
@@ -2304,11 +2220,23 @@
 "renc": 4
 },
 {
-"insee": "16292",
-"nom_oficial": "Ruffec",
-"nom": "Ruffec",
+"insee": "77107",
+"nom_oficial": "Chaumes-en-Brie",
+"nom": "Chaumes-en-Brie",
 "local": false,
 "font": "nom oficial (IGN)",
+"lon": 2.8422,
+"lat": 48.6648,
+"pop": 3503,
+"zona": "champenois",
+"renc": 4
+},
+{
+"insee": "16292",
+"nom_oficial": "Ruffec",
+"nom": "Rufée",
+"local": true,
+"font": "recèrca : Carte Pivetea",
 "lon": 0.1993,
 "lat": 46.0284,
 "pop": 3449,
@@ -2325,6 +2253,18 @@
 "lat": 48.6191,
 "pop": 3183,
 "zona": "normand",
+"renc": 4
+},
+{
+"insee": "85294",
+"nom_oficial": "La Tranche-sur-Mer",
+"nom": "La Tranche-sur-Mer",
+"local": false,
+"font": "nom oficial (IGN)",
+"lon": -1.4376,
+"lat": 46.3431,
+"pop": 3136,
+"zona": "poitevin_saintongeais",
 "renc": 4
 },
 {
@@ -2426,9 +2366,9 @@
 {
 "insee": "22185",
 "nom_oficial": "Plénée-Jugon",
-"nom": "Plénée-Jugon",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Pllenée",
+"local": true,
+"font": "recèrca : Institut du galo, Rolée des qemunes de Haote-Bertègn (2021)",
 "lon": -2.4,
 "lat": 48.3635,
 "pop": 2579,
@@ -2474,9 +2414,9 @@
 {
 "insee": "21584",
 "nom_oficial": "Saulieu",
-"nom": "Saulieu",
-"local": false,
-"font": "nom oficial (IGN)",
+"nom": "Sauleu",
+"local": true,
+"font": "recèrca : Chambure, Glossaire du Morvan (1878), entrée « SAULEU pour Saulieu, ville fronti",
 "lon": 4.2287,
 "lat": 47.2795,
 "pop": 2216,
