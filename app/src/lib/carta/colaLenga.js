@@ -72,7 +72,7 @@ export function crearColaLenga(
 		};
 	};
 	const Cola = L.Layer.extend({
-		options: { pane: pan, padding: 0.3, attribution: lenga.atribucion },
+		options: { pane: pan, padding: 0.3 },
 
 		initialize() {
 			this._tem = temaDe(clar, dalt);
@@ -105,12 +105,15 @@ export function crearColaLenga(
 			for (const k of ['_imgTotes', '_imgSel', '_imgUni', '_imgFlo', '_trab', '_masca']) this[k] = document.createElement('canvas');
 			this._cargar();
 			this._update();
+			this._fonts();
 			document.fonts?.load('400 12px Luciole').then(() => this._pintar(), () => {});
 		},
 
 		onRemove() {
 			for (const r of ['_raf', '_rafRel', '_rafApar']) cancelAnimationFrame(this[r]);
 			clearTimeout(this._tEscafar);
+			if (this._fontMesa) this._map?.attributionControl?.removeAttribution(this._fontMesa);
+			this._fontMesa = null;
 			L.DomUtil.remove(this._cv);
 			this._noms?.levar();
 			this._noms = null;
@@ -128,6 +131,19 @@ export function crearColaLenga(
 			};
 			if (this._zoomAnimated) ev.zoomanim = this._onAnimZoom;
 			return ev;
+		},
+
+		// La font de la lenga dins lo panèl « Fonts », sonque quand es alucada :
+		// la del fichièr de donadas (completa : autors, licéncias, ligams),
+		// siquenon la de lengas.js (audit del 2026-10-10 : una sola font de vertat)
+		_fonts() {
+			const ctl = this._map?.attributionControl;
+			if (!ctl) return;
+			const t = this._actiu && this._map ? (this._d?.font ?? lenga.atribucion ?? null) : null;
+			if (this._fontMesa === t) return;
+			if (this._fontMesa) ctl.removeAttribution(this._fontMesa);
+			this._fontMesa = t;
+			if (t) ctl.addAttribution(t);
 		},
 
 		// Las donadas se telecargan sonque quand la jaça es alucada
@@ -156,6 +172,7 @@ export function crearColaLenga(
 				// (la prioritat del nom lonhdan : l'emprèsa del domeni)
 				this._prio = (x1 - x0) * (y1 - y0);
 				this._d = d;
+				this._fonts();
 				onDonadas?.(d);
 				this._rel = null; // (l'escala d'ara, sens animacion)
 				if (this._actiu) this._tAluc = performance.now();
@@ -172,6 +189,7 @@ export function crearColaLenga(
 			on = !!on;
 			if (on === this._actiu) return;
 			this._actiu = on;
+			this._fonts();
 			const p = this._map?.getPane(pan);
 			if (p) p.style.opacity = on ? '1' : '0';
 			clearTimeout(this._tEscafar);

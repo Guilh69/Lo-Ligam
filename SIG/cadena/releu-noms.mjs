@@ -290,6 +290,21 @@ const slug = s =>s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replac
 // pas Wikipédia comme source »), quand Wikidata e OpenStreetMap an pas res ;
 // cada forma amb l'article que l'atèsta, totas de validar per Romain. Los
 // mots generics (mont, massís, pic, plan) son verificats amb lo Congrès.
+const CORRECCIONS = {
+  "puy-pariou": [
+    null,
+    "libellé Wikidata recopié du français : masqué (audit du 2026-10-10)"
+  ],
+  "pays-de-sault": [
+    "País de Saut",
+    "qualificatif de Wikidata retiré (audit du 2026-10-10)"
+  ],
+  "pic-des-trois-seigneurs": [
+    "Pic dels Tres Senhors",
+    "majuscules de l'article de la Wikipèdia occitana (audit du 2026-10-10)"
+  ]
+};
+
 const WIKIPEDIA_OC = {
   // (en provençal e en vivaroaupenc : « Aups », grafia classica, pas « Alps »)
   'alpes-maritimes': ['Aups Maritims', 'Wikipèdia oc « Aups Maritims »'],
@@ -359,6 +374,15 @@ for (const [qid, mena, renc, o] of LISTA) {
     }
   }
   if (!oc && WIKIPEDIA_OC[slug(fr)]) [oc, font] = WIKIPEDIA_OC[slug(fr)];
+  // correccions aprèp l'audit del 2026-10-10 (revisions/2026-10-10-audit-donadas.md) :
+  // una forma francesa recopiada dins Wikidata se masca (« quand tu ne sais pas,
+  // tu effaces », Romain) ; lo qualificatiu de Wikidata se lèva ; las majusculas
+  // seguisson l'article de la Wikipèdia occitana
+  if (CORRECCIONS[slug(fr)]) {
+    const [c, n] = CORRECCIONS[slug(fr)];
+    oc = c;
+    notes.push(n);
+  }
   // (en provençal e en vivaroaupenc, « Aups » e pas « Alps » : coma « Auts Aups »,
   // Wikidata Q3125, e « Aups d'Auta Provença », Q3131 ; grafia classica)
   const dial = dialècteDe(pos);

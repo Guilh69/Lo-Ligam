@@ -61,7 +61,7 @@
 			maxZoom: 17,
 			subdomains: 'abc',
 			attribution:
-				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · relèu <a href="https://opentopomap.org/" target="_blank" rel="noopener">OpenTopoMap</a> (CC BY-SA)'
+				'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> · SRTM · relèu © <a href="https://opentopomap.org/" target="_blank" rel="noopener">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA</a>)'
 		},
 		// Satellit : fotografias aerianas publicas (crearSatellit)
 		satellite: { satellit: true }

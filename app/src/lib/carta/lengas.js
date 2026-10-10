@@ -162,7 +162,7 @@ export const LENGAS = {
 		sotaApart: { oc: 'alsacian de França', fr: 'alsacien de France' },
 		nomCarta: 'ELSÄSSISCH',
 		atribucion:
-			'Alsacian : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), BKG VG250 (dl-de/by-2-0), swisstopo ; limits d\'aprèp Wenker, Constant This (1887) e las cartas « Sprachen in Elsass-Lothringen » e « Alemannic dialects » de Wikimedia Commons (CC BY-SA)'
+			'Alsacian : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), BKG VG250 (© <a href="https://www.bkg.bund.de" target="_blank" rel="noopener">BKG</a> 2026, <a href="https://www.govdata.de/dl-de/by-2-0" target="_blank" rel="noopener">dl-de/by-2-0</a>), swisstopo ; limits d\'aprèp Wenker, Constant This (1887) e las cartas « Sprachen in Elsass-Lothringen » e « Alemannic dialects » de Wikimedia Commons (CC BY-SA)'
 	},
 	// Lo francic (Platt) (2026-10-10) : mosellan, renan, meridional,
 	// luxemborgés, del País germanofòn de Mosèla al Luxemborg, a la Sarra e al
@@ -198,7 +198,7 @@ export const LENGAS = {
 		sotaApart: { oc: 'francic de França', fr: 'francique de France' },
 		nomCarta: 'PLATT',
 		atribucion:
-			'Francic : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), BKG VG250 (dl-de/by-2-0), data.public.lu, © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL) ; limits d\'aprèp Wenker, Constant This (1887), las isoglòssas de Mosèla e la carta « Rheinischer Fächer » de Wikimedia Commons (CC BY-SA)'
+			'Francic : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), BKG VG250 (© <a href="https://www.bkg.bund.de" target="_blank" rel="noopener">BKG</a> 2026, <a href="https://www.govdata.de/dl-de/by-2-0" target="_blank" rel="noopener">dl-de/by-2-0</a>), data.public.lu, © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL) ; limits d\'aprèp Wenker, Constant This (1887), las isoglòssas de Mosèla e la carta « Rheinischer Fächer » de Wikimedia Commons (CC BY-SA)'
 	},
 	// Lo flamenc e lo neerlandés (2026-10-10, Romain : « le flamand, ce n'est
 	// pas un trou, c'est une autre langue », amb son continuum en Belgica e als

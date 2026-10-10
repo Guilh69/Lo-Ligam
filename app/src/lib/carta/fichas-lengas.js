@@ -30,7 +30,7 @@ export const FICHAS = {
   },
   "fontFamilha": {
    "t": "Classement : indo-européen › roman › gallo-roman › francoprovençal (Glottolog, Institut Max Planck)",
-   "url": "https://glottolog.org/glottolog?search=Franco-Provencal"
+   "url": "https://glottolog.org/glottolog?search=Francoprovencalic"
   },
   "fontDialectes": {
    "t": "Domaine : carte d'arpitania.eu ; Suisse : Office fédéral de la statistique ; Italie : loi 482/1999 ; dialectes : Vouiquipèdia",

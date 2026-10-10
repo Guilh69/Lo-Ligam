@@ -10,7 +10,7 @@ import json, os
 R = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 F = {x['kod']: x for x in json.load(open(os.path.join(R, 'SIG', 'lengas-fichas.json'), encoding='utf-8'))}
 # jaça de la carta -> fiche de la recèrca ; nom anglés per Glottolog (Institut Max Planck)
-JACAS = {'catalan': ('catalan', 'Catalan'), 'arpitan': ('arpitan', 'Franco-Provencal'), 'basc': ('basc', 'Basque'),
+JACAS = {'catalan': ('catalan', 'Catalan'), 'arpitan': ('arpitan', 'Francoprovencalic'), 'basc': ('basc', 'Basque'),
          'oil': ('oil', 'Oil'), 'alsacian': ('alsacian', 'Alemannic'), 'francic': ('francique', 'Moselle Franconian'),
          'breton': ('breton', 'Breton'), 'cors': ('cors', 'Corsican'), 'flamenc': ('flamenc', 'Vlaams')}
 FAM = {'catalan': ('romana', 'romane'), 'arpitan': ('romana', 'romane'), 'basc': ('isolat', 'isolat'), 'oil': ('romanas, una familha', 'romanes, une famille'),

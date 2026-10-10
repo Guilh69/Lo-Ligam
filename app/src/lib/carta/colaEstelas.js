@@ -657,7 +657,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			padding: 0.3,
 			// Sources de la couche, affichées avec les crédits de la carte
 			attribution:
-				'Rius, còsta e païses : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · corbas de nivèl : d’aprèp <a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" target="_blank" rel="noopener">Mapzen Terrain Tiles</a> (Copernicus EU-DEM, USGS, NOAA) · noms : © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a>'
+				'Rius, còsta e païses : <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a> · corbas de nivèl : d’aprèp <a href="https://github.com/tilezen/joerd/blob/master/docs/attribution.md" target="_blank" rel="noopener">Mapzen Terrain Tiles</a> : « Europe terrain data produced using Copernicus data and information funded by the European Union - EU-DEM layers » ; « SRTM data courtesy of the U.S. Geological Survey » · noms : © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a>'
 		},
 
 		initialize() {
