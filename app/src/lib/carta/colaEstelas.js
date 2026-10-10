@@ -1023,13 +1023,16 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			(this._domLengas ??= {})[kod] = fons?.domeni ?? null;
 			this._revCache = null;
 			this._costaExtra = Object.values(this._costasLengas).filter(Boolean).flat();
-			if (vilas)
-				fach[kod] ??= vilas.map((v) => ({
+			// (una lista nòva, la part francesa sola puèi tota la lenga dins lo mòde Lengas : recalculada)
+			if (vilas && (this._fachDe ??= {})[kod] !== vilas) {
+				this._fachDe[kod] = vilas;
+				fach[kod] = vilas.map((v) => ({
 					...v,
 					lenga: kod,
 					dz: v.renc === 1 ? -1 : undefined,
 					f: aleat(0, 6.28), v: aleat(0.2, 0.7), X: 0, Y: 0
 				}));
+			}
 			// una vila de la carta occitana al meteis endrech qu'una vila d'una lenga
 			// alucada (Baiona, Biàrritz dins lo basc) s'escafa : un sol nom, dins la
 			// lenga del luòc (retorn de Romain, 2026-10-09 : « deux Baiona qui se

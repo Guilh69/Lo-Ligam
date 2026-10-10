@@ -1,5 +1,6 @@
 <script>
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, untrack } from 'svelte';
+	import { cargarFranca, francaCargada, dinsFranca } from '$lib/carta/franca.js';
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
@@ -1116,7 +1117,8 @@
 				},
 				onDonadas: (d) => {
 					fonsLengas[id] = fonsLenga(lg, d);
-					colaEstelas?.setLengaFons(id, visibility[id] ? fonsLengas[id] : null);
+					delete fonsFr[id];
+					colaEstelas?.setLengaFons(id, visibility[id] ? fonsDe(id) : null);
 				}
 			});
 			colasLengas[id].addTo(map);
@@ -1439,7 +1441,7 @@
 		colaDonadas?.setJaces(jacesDonadas(vis));
 		for (const [id, c] of Object.entries(colasLengas)) {
 			c.setActiu(!!vis[id]);
-			colaEstelas?.setLengaFons(id, vis[id] ? (fonsLengas[id] ?? null) : null);
+			colaEstelas?.setLengaFons(id, vis[id] ? fonsDe(id) : null);
 		}
 		// lo territòri survolat o clicat seguís las jaces alucadas (region o despartament)
 		colaEstelas?.setTerritoris({ regions: !!vis.regions, despartaments: !!vis.despartaments, comunas: !!vis.comunas });
@@ -1555,6 +1557,32 @@
 			calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		map.flyTo(c, z, { animate: !calm, duration: calm ? 0 : 1.2 });
 	}
+	// Lo mòde « Lengas de França » (Romain, 2026-10-10) : cada lenga mòstra
+	// d'en primièr sa part francesa (sa jaça retalhada al contorn de França, sas
+	// vilas d'estrangièr escafadas) ; « Veire la lenga dins son environament
+	// lingüistic » (estatCarta.environament) mòstra la rèsta
+	const nomésFrança = (id) => estatCarta.mòde === 'lengas' && !estatCarta.environament.includes(id);
+	const fonsFr = {};
+	const fonsDe = (id) => {
+		const f = fonsLengas[id] ?? null;
+		if (!f || !nomésFrança(id) || !francaCargada()) return f;
+		return (fonsFr[id] ??= { ...f, vilas: f.vilas?.filter((v) => dinsFranca(v.lat, v.lon)) ?? null });
+	};
+	$effect(() => {
+		const m = estatCarta.mòde,
+			env = [...estatCarta.environament];
+		if (!map) return;
+		const aplicar = () =>
+			untrack(() => {
+				colaDonadas?.setFranca?.(m === 'lengas' && !env.includes('occitan'));
+				for (const [id, c] of Object.entries(colasLengas)) {
+					c.setFranca?.(m === 'lengas' && !env.includes(id));
+					if (visibility[id]) colaEstelas?.setLengaFons(id, fonsDe(id));
+				}
+			});
+		if (m === 'lengas') cargarFranca().then(aplicar);
+		else aplicar();
+	});
 	// « I anar » del rail : una jaça alucada mas pas vesibla a aquesta escala
 	$effect(() => {
 		const anar = (e) => e.detail?.id && anarALaPlaja(e.detail.id);

@@ -13,6 +13,7 @@ import { nivèlsDezoom, aDialectes, aDetalh } from './escalas.js';
 import { prepContorn, traçarPart, estelaCap, avançada, TOTAL as TOTAL_APAR } from './aparicion.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
+import { cargarFranca, francaCargada, dinsFranca, retalharFranca } from './franca.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -183,6 +184,15 @@ export function crearColaDonadas(
 				});
 		},
 
+		// Lo mòde « Lengas de França » : l'occitan coma las autras lengas, sonque
+		// sa part francesa tant que son environament es pas causit (Romain, 2026-10-10)
+		setFranca(on) {
+			on = !!on;
+			if (on === this._franca) return;
+			this._franca = on;
+			if (on) cargarFranca().then(() => this._map && this._pintar());
+			else if (this._map) this._pintar();
+		},
 		setJaces(j) {
 			// la jaça dels dialèctes ven d'èsser alucada (sovent pel meteis clic
 			// qu'una pastilha) : sas zònas totas se mòstran pas abans la difusion
@@ -496,6 +506,10 @@ export function crearColaDonadas(
 		_zonaA(lp, ambMix = true) {
 			const g = this._geo;
 			if (!g) return null;
+			if (this._franca) {
+				const ll = this._map.layerPointToLatLng(lp);
+				if (!dinsFranca(ll.lat, ll.lng)) return null;
+			}
 			const kEnc = this.enclavaA(lp);
 			if (kEnc) return kEnc;
 			if (!this._interactiu()) return null;
@@ -992,6 +1006,11 @@ export function crearColaDonadas(
 			return d.v;
 		},
 		_pintar() {
+			this._retalhat = false;
+			this._pintarCòs();
+			if (this._retalhat) this._cx.restore();
+		},
+		_pintarCòs() {
 			const G = this._geo;
 			if (!G || !this._cv) return;
 			const cx = this._cx,
@@ -1002,6 +1021,12 @@ export function crearColaDonadas(
 			cx.setTransform(1, 0, 0, 1, 0, 0);
 			cx.clearRect(0, 0, this._cv.width, this._cv.height);
 			cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+			// (la part francesa sola : retalhat aprèp l'escafament)
+			if (this._franca && francaCargada()) {
+				cx.save();
+				retalharFranca(cx, this._map, z, this._map.getPixelOrigin().add(this._min));
+				this._retalhat = true;
+			}
 			// de prèp, lo dialècte es pertot : la tencha s'esvalís
 			// Fòrt de prèp (escala d'una carrièra), sonque lo fons (retorn de Romain) :
 			// los contorns simplificats se decalarián de las tuèlas e la frontièra

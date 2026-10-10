@@ -12,6 +12,7 @@
 import { nivèlsDezoom as nivèlsComuns, aDialectes, aDetalh, zDès } from './escalas.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
+import { cargarFranca, francaCargada, dinsFranca, retalharFranca } from './franca.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -178,6 +179,16 @@ export function crearColaLenga(
 				this._tEscafar = setTimeout(() => !this._actiu && this._cx && this._cx.clearRect(0, 0, this._cv.width, this._cv.height), 700);
 			}
 		},
+		// Lo mòde « Lengas de França » : sonque la part francesa (retalhada al
+		// contorn de França), tant que « Veire la lenga dins son environament
+		// lingüistic » es pas causit (Romain, 2026-10-10)
+		setFranca(on) {
+			on = !!on;
+			if (on === this._franca) return;
+			this._franca = on;
+			if (on) cargarFranca().then(() => this._actiu && this._pintar());
+			else if (this._actiu) this._pintar();
+		},
 		setTema(c, d) {
 			this._tem = temaDe(c, d);
 			this._tenchasGeo = null;
@@ -283,6 +294,10 @@ export function crearColaLenga(
 		zonaA(lp, ambTrans = false) {
 			const G = this._geo;
 			if (!this._interactiu()) return null;
+			if (this._franca) {
+				const ll = this._map.layerPointToLatLng(lp);
+				if (!dinsFranca(ll.lat, ll.lng)) return null;
+			}
 			const tc = (this._cxTest ??= document.createElement('canvas').getContext('2d'));
 			const x = lp.x - this._min.x,
 				y = lp.y - this._min.y;
@@ -721,6 +736,11 @@ export function crearColaLenga(
 			return d.v;
 		},
 		_pintar() {
+			this._retalhat = false;
+			this._pintarCòs();
+			if (this._retalhat) this._cx.restore();
+		},
+		_pintarCòs() {
 			const G = this._geo;
 			if (!G || !this._cv || !this._actiu) return;
 			const cx = this._cx,
@@ -730,6 +750,12 @@ export function crearColaLenga(
 			cx.setTransform(1, 0, 0, 1, 0, 0);
 			cx.clearRect(0, 0, this._cv.width, this._cv.height);
 			cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+			// (la part francesa sola : retalhat aprèp l'escafament)
+			if (this._franca && francaCargada()) {
+				cx.save();
+				retalharFranca(cx, this._map, z, this._map.getPixelOrigin().add(this._min));
+				this._retalhat = true;
+			}
 			// Las escalas coma l'occitan : vers « 200 km » los dialèctes se fondon
 			// dins la lenga unida, a « 500 km » demòra lo contorn ; de fòrt prèp,
 			// las tenchas s'esvanisson (los contorns simplificats se decalarián)

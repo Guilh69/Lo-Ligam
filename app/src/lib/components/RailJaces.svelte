@@ -15,6 +15,7 @@
 	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
 	import { quintOut } from 'svelte/easing';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
+	import { cargarFranca, dinsFranca } from '$lib/carta/franca.js';
 
 	let {
 		familhas = [],
@@ -77,6 +78,9 @@
 			fuelhaAgrandir: 'Agrandir lo panèl',
 			totDetalh: 'Tot lo detalh',
 			tornarOc: "Tornar a l'occitan",
+			environament: 'Veire la lenga dins son environament lingüistic',
+			// (« francesa » : validat per Romain, 2026-10-10)
+			amagarRèsta: 'Sonque la part francesa',
 			occitan: 'Occitan',
 			lengas: 'Lengas',
 			lengasFranca: 'Lengas de França',
@@ -132,6 +136,8 @@
 			fuelhaAgrandir: 'Agrandir le panneau',
 			totDetalh: 'Tout le détail',
 			tornarOc: "Revenir à l'occitan",
+			environament: 'Voir la langue dans son environnement linguistique',
+			amagarRèsta: 'Seulement la partie française',
 			occitan: 'Occitan',
 			lengas: 'Langues',
 			lengasFranca: 'Langues de France',
@@ -254,6 +260,14 @@
 	let silhoetas = $state({});
 	// la part francesa de cada silhoeta (lo contorn de França, meteissa escala)
 	let silhoetasFr = $state({});
+	// las lengas que desbòrdan de França (mai de 5 % de lor contorn defòra)
+	let estrangièr = $state({});
+	function alternarEnvironament(id) {
+		const env = estatCarta.environament;
+		estatCarta.environament = env.includes(id) ? env.filter((x) => x !== id) : [...env, id];
+		const jid = id === 'occitan' ? 'dialectes' : id;
+		if (!visibility[jid]) bascular(jid, true);
+	}
 	let silhPromesa = null;
 	$effect(() => {
 		if (dobert !== 'lengas' || silhPromesa) return;
@@ -275,6 +289,17 @@
 				}
 				silhoetas = out;
 				silhoetasFr = outFr;
+				cargarFranca().then(() => {
+					const e = {};
+					for (const [k, anels] of Object.entries(d)) {
+						if (k === 'franca') continue;
+						let n = 0,
+							o = 0;
+						for (const a of anels) for (const [x, y] of a) (n++, dinsFranca(y, x) || o++);
+						e[k] = n > 0 && o / n > 0.05;
+					}
+					estrangièr = e;
+				});
 			})
 			.catch(() => {});
 	});
@@ -294,6 +319,8 @@
 		for (const fm of familhas) if (FAMILHAS_OC.includes(fm.id)) for (const j of fm.jaces) if (visibility[j.id]) visibility[j.id] = false;
 		banda = null;
 		mòde = 'lengas';
+		estatCarta.environament = [];
+		estatCarta.mòde = 'lengas';
 		dobert = 'lengas';
 		plaçarTirador();
 	}
@@ -304,6 +331,8 @@
 		}
 		salvat = null;
 		mòde = null;
+		estatCarta.mòde = null;
+		estatCarta.environament = [];
 		dobert = null;
 	}
 	const alternar = (id) => {
@@ -1073,6 +1102,38 @@
 <!-- La ficha de l'occitan dins lo mòde, a egalitat amb las autras (retorn de
      Romain, 2026-10-10 : « que siá coerent ») ; sa jaça es la dels dialèctes.
      Pas de locutors ni d'estat UNESCO tant que n'an pas una font. -->
+<!-- La silhoeta d'una lenga : sa part francesa en plen, la rèsta en clar ; se
+     desbòrda de França, es un boton : « Veire la lenga dins son environament
+     lingüistic » aluca la rèsta sus la carta (Romain, 2026-10-10) -->
+{#snippet silhoeta(id, color)}
+	{#if silhoetas[id]}
+		{@const tota = !estrangièr[id] || estatCarta.environament.includes(id)}
+		{#if mòde && estrangièr[id]}
+			<button
+				type="button"
+				class="silh-b"
+				aria-pressed={tota}
+				aria-label={tota ? tx.amagarRèsta : tx.environament}
+				title={tota ? tx.amagarRèsta : tx.environament}
+				onclick={() => alternarEnvironament(id)}>{@render dessenhSilh(id, color, tota)}</button
+			>
+		{:else}
+			{@render dessenhSilh(id, color, tota)}
+		{/if}
+	{/if}
+{/snippet}
+{#snippet dessenhSilh(id, color, tota)}
+	<svg class="silh" viewBox="0 0 40 40" aria-hidden="true"
+		><defs><clipPath id={'silh-fr-' + id}><path d={silhoetasFr[id] ?? ''} /></clipPath></defs
+		><path d={silhoetas[id]} fill={color} fill-opacity={tota ? 1 : 0.28} fill-rule="evenodd" />{#if !tota}<path
+				d={silhoetas[id]}
+				fill={color}
+				fill-rule="evenodd"
+				clip-path={silhoetasFr[id] ? `url(#silh-fr-${id})` : null}
+			/>{/if}</svg
+	>
+{/snippet}
+
 {#snippet fichaOccitan()}
 	{@const dob = dialsDob.includes('occitan')}
 	{@const on = !!visibility.dialectes}
@@ -1089,18 +1150,7 @@
 			</div>
 			<div class="ficha-dreita">
 				<button type="button" class="basc" role="switch" aria-checked={on} aria-label={tx.occitan} onclick={() => bascular('dialectes', !on)}></button>
-				<!-- la part francesa en plen, la rèsta de la lenga en clar (demanda de Romain, 2026-10-10) -->
-				{#if silhoetas.occitan}
-					<svg class="silh" viewBox="0 0 40 40" aria-hidden="true"
-						><defs><clipPath id={'silh-fr-' + 'occitan'}><path d={silhoetasFr['occitan'] ?? ''} /></clipPath></defs
-						><path d={silhoetas.occitan} fill={clar ? '#b0202c' : '#d9343f'} fill-opacity="0.28" fill-rule="evenodd" /><path
-							d={silhoetas.occitan}
-							fill={clar ? '#b0202c' : '#d9343f'}
-							fill-rule="evenodd"
-							clip-path={silhoetasFr['occitan'] ? `url(#silh-fr-${'occitan'})` : null}
-						/></svg
-					>
-				{/if}
+				{@render silhoeta('occitan', clar ? '#b0202c' : '#d9343f')}
 			</div>
 		</div>
 		<div class="desplegar-l">
@@ -1157,18 +1207,7 @@
 					aria-label={nomJ(j)}
 					onclick={() => bascular(j.id, !visibility[j.id])}
 				></button>
-				<!-- la part francesa en plen, la rèsta de la lenga en clar (demanda de Romain, 2026-10-10) -->
-				{#if silhoetas[j.id]}
-					<svg class="silh" viewBox="0 0 40 40" aria-hidden="true"
-						><defs><clipPath id={'silh-fr-' + j.id}><path d={silhoetasFr[j.id] ?? ''} /></clipPath></defs
-						><path d={silhoetas[j.id]} fill={lg.color[clar ? 'clar' : 'sorne']} fill-opacity="0.28" fill-rule="evenodd" /><path
-							d={silhoetas[j.id]}
-							fill={lg.color[clar ? 'clar' : 'sorne']}
-							fill-rule="evenodd"
-							clip-path={silhoetasFr[j.id] ? `url(#silh-fr-${j.id})` : null}
-						/></svg
-					>
-				{/if}
+				{@render silhoeta(j.id, lg.color[clar ? 'clar' : 'sorne'])}
 			</div>
 		</div>
 		<div class="desplegar-l">
@@ -1506,6 +1545,25 @@
 		height: 1px;
 		margin: 4px 10px;
 		background: var(--t-linha);
+	}
+
+	/* la silhoeta-boton : veire la lenga dins son environament */
+	.silh-b {
+		display: block;
+		padding: 2px;
+		border: 1px solid transparent;
+		border-radius: 8px;
+		background: none;
+		cursor: pointer;
+		transition: border-color 0.2s, background 0.2s;
+	}
+	.silh-b:hover,
+	.silh-b:focus-visible {
+		border-color: var(--t-aur);
+		background: color-mix(in srgb, var(--t-aur) 10%, transparent);
+	}
+	.silh-b .silh {
+		display: block;
 	}
 
 	/* lo mòde : lo boton per tornar a l'occitan */
