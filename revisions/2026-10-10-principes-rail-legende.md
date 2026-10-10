@@ -77,12 +77,23 @@ Le rail devient la barre du bas (déjà fait). Le panneau devient une feuille qu
 
 ## 4. Les décisions à prendre (une à la fois)
 
-1. **Rail à 7 entrées** : sortir « Fons » du rail et le placer près des boutons de zoom, comme dans les applications de cartes ? Ou le garder en bas du rail, séparé ?
-2. **Libellés entiers** : élargir un peu le rail, ou raccourcir les libellés ?
-3. **Ligne entière cliquable** et **aperçu au survol** : oui ou non ?
-4. **Échelle seulement quand elle sert**, avec « Y aller » : oui ou non ?
-5. **Points orange du rail** : les remplacer par un petit chiffre ?
-6. **Touche méditerranéenne** : le trait vermillon sur la famille ouverte seulement, ou aucune touche ?
+1. ✅ **Rail à 7 entrées** : « Fons » sort du rail et va près des boutons de zoom, comme dans les applications de cartes (Romain, 2026-10-10).
+2. ✅ **Libellés entiers** : seul « Administracion » débordait (86 px pour 52) ; la famille devient **« Territòri » / « Territoire »** (47 px, vérifié lo Congrès), rail inchangé (Romain, 2026-10-10).
+3. ✅ **Ligne entière cliquable** et **aperçu au survol** (Romain, 2026-10-10). Précautions : pastilles, bulles et réglages d'une ligne gardent leur propre clic ; aperçu pâle après environ 0,3 s d'arrêt de la souris ; pas d'aperçu pour les couches lourdes (communes).
+4. ✅ **Échelle seulement quand elle sert** (Romain, 2026-10-10) : ligne grisée « Visible à partir de… » et bouton « Y aller » quand la couche allumée n'est pas visible au zoom actuel. Occitan proposé « I anar » : lo Congrès ne traduit pas l'expression, **tournure à confirmer par Romain**.
+5. ✅ **Points orange du rail** remplacés par un petit chiffre (nombre de couches allumées dans la famille), **vraiment discret** : petit, sans pastille pleine, couleur atténuée (Romain, 2026-10-10).
+6. ✅ **Touche méditerranéenne** : un trait vermillon fin à gauche de la famille ouverte dans le rail, nulle part ailleurs (Romain, 2026-10-10).
+
+**Idée pour plus tard (Romain, 2026-10-10)** : un **thème d'ambiance méditerranéen** pour le site, comme une maison épurée du Sud : couleurs chaudes, éléments naturels qui évoquent la Grèce ou la côte italienne, très minimaliste. À traiter comme un thème à part (à côté des ambiances existantes), pas dans ce chantier.
+
+## 6. Mise en œuvre (après les décisions)
+
+Par lots, chacun vérifié en capture à 1830 px et sur téléphone, sans retirer aucune fonction :
+
+1. **Rail** : « Fons » près des boutons de zoom ; « Territòri » ; chiffres discrets à la place des points ; trait vermillon sur la famille ouverte.
+2. **Panneau** : grille d'espacement, typographie, translucidité, or réservé à « allumé », deux niveaux de texte par ligne.
+3. **Comportements** : ligne entière cliquable, échelle seulement quand elle sert (« I anar » à confirmer), aperçu au survol.
+4. **Téléphone** : feuille à trois hauteurs avec poignée.
 
 ## 5. Qui fait quoi
 
