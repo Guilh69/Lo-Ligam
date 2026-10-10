@@ -53,5 +53,16 @@ for (const k of [...LENGAS, ...Object.keys(FONTS)]) {
 		.map((a) => simplificarAnel(a, TOL).map(([x, y]) => [arr(x), arr(y)]))
 		.filter((a) => a.length >= 4);
 }
+// lo contorn de França (metropòla e Corsega), per pintar en plen la part
+// francesa de cada lenga dins sa silhoeta (demanda de Romain, 2026-10-10) :
+// las 13 regions (SIG/brut/regions.geojson, IGN), lors anèls exteriors ; a la
+// talha d'una icòna (40 px), un pixel fa ~30 km : simplificadas a 0,08°
+{
+	const g = JSON.parse(fs.readFileSync(path.resolve(DATA, '../../../SIG/brut/regions.geojson'), 'utf8'));
+	const polis = g.features.flatMap((f) => (f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates));
+	sortida.franca = polis
+		.map((poli) => simplificarAnel(poli[0], 0.08).map(([x, y]) => [arr(x), arr(y)]))
+		.filter((a) => a.length >= 4);
+}
 fs.writeFileSync(path.join(DATA, 'lengas-vesinas.json'), JSON.stringify(sortida));
 console.log('lengas-vesinas.json', fs.statSync(path.join(DATA, 'lengas-vesinas.json')).size, 'octets', Object.fromEntries(Object.entries(sortida).map(([k, v]) => [k, v.length + ' anèls'])));

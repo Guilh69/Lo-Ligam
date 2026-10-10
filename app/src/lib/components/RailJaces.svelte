@@ -252,6 +252,8 @@
 	// La silhoeta de l'aira de cada lenga dins sa ficha (los contorns leugièrs de
 	// « Descobrir… », ja en cache) : cargada a la dobertura del panèl
 	let silhoetas = $state({});
+	// la part francesa de cada silhoeta (lo contorn de França, meteissa escala)
+	let silhoetasFr = $state({});
 	let silhPromesa = null;
 	$effect(() => {
 		if (dobert !== 'lengas' || silhPromesa) return;
@@ -259,16 +261,20 @@
 			.then((r) => (r.ok ? r.json() : null))
 			.then((d) => {
 				if (!d) return;
-				const out = {};
+				const out = {},
+					outFr = {};
 				for (const [k, anels] of Object.entries(d)) {
+					if (k === 'franca') continue;
 					let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
 					for (const a of anels) for (const [x, y] of a) (x0 = Math.min(x0, x)), (x1 = Math.max(x1, x)), (y0 = Math.min(y0, y)), (y1 = Math.max(y1, y));
 					const kx = Math.cos((((y0 + y1) / 2) * Math.PI) / 180);
 					const e = 36 / Math.max((x1 - x0) * kx, y1 - y0, 1e-6);
 					const ox = (40 - (x1 - x0) * kx * e) / 2, oy = (40 - (y1 - y0) * e) / 2;
 					out[k] = anels.map((a) => 'M' + a.map(([x, y]) => ((x - x0) * kx * e + ox).toFixed(1) + ' ' + ((y1 - y) * e + oy).toFixed(1)).join('L') + 'Z').join('');
+					if (d.franca) outFr[k] = d.franca.map((a) => 'M' + a.map(([x, y]) => ((x - x0) * kx * e + ox).toFixed(1) + ' ' + ((y1 - y) * e + oy).toFixed(1)).join('L') + 'Z').join('');
 				}
 				silhoetas = out;
+				silhoetasFr = outFr;
 			})
 			.catch(() => {});
 	});
@@ -1083,9 +1089,16 @@
 			</div>
 			<div class="ficha-dreita">
 				<button type="button" class="basc" role="switch" aria-checked={on} aria-label={tx.occitan} onclick={() => bascular('dialectes', !on)}></button>
+				<!-- la part francesa en plen, la rèsta de la lenga en clar (demanda de Romain, 2026-10-10) -->
 				{#if silhoetas.occitan}
 					<svg class="silh" viewBox="0 0 40 40" aria-hidden="true"
-						><path d={silhoetas.occitan} fill={clar ? '#b0202c' : '#d9343f'} fill-rule="evenodd" /></svg
+						><defs><clipPath id={'silh-fr-' + 'occitan'}><path d={silhoetasFr['occitan'] ?? ''} /></clipPath></defs
+						><path d={silhoetas.occitan} fill={clar ? '#b0202c' : '#d9343f'} fill-opacity="0.28" fill-rule="evenodd" /><path
+							d={silhoetas.occitan}
+							fill={clar ? '#b0202c' : '#d9343f'}
+							fill-rule="evenodd"
+							clip-path={silhoetasFr['occitan'] ? `url(#silh-fr-${'occitan'})` : null}
+						/></svg
 					>
 				{/if}
 			</div>
@@ -1144,9 +1157,16 @@
 					aria-label={nomJ(j)}
 					onclick={() => bascular(j.id, !visibility[j.id])}
 				></button>
+				<!-- la part francesa en plen, la rèsta de la lenga en clar (demanda de Romain, 2026-10-10) -->
 				{#if silhoetas[j.id]}
 					<svg class="silh" viewBox="0 0 40 40" aria-hidden="true"
-						><path d={silhoetas[j.id]} fill={lg.color[clar ? 'clar' : 'sorne']} fill-rule="evenodd" /></svg
+						><defs><clipPath id={'silh-fr-' + j.id}><path d={silhoetasFr[j.id] ?? ''} /></clipPath></defs
+						><path d={silhoetas[j.id]} fill={lg.color[clar ? 'clar' : 'sorne']} fill-opacity="0.28" fill-rule="evenodd" /><path
+							d={silhoetas[j.id]}
+							fill={lg.color[clar ? 'clar' : 'sorne']}
+							fill-rule="evenodd"
+							clip-path={silhoetasFr[j.id] ? `url(#silh-fr-${j.id})` : null}
+						/></svg
 					>
 				{/if}
 			</div>
