@@ -198,7 +198,9 @@ render();
 // la carta de fons : son rail e son panèl amagats, l'entrada en scèna sautada
 const carta = document.getElementById('carta');
 carta.addEventListener('load', () => {
-	const d = carta.contentDocument, s = d.createElement('style');
+	const d = carta.contentDocument;
+	if (!d?.head) return console.warn('carta de fons blocada (frame-ancestors ?)');
+	const s = d.createElement('style');
 	s.textContent = 'nav.rail,.tirador{display:none!important}';
 	d.head.append(s);
 });

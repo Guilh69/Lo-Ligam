@@ -24,8 +24,13 @@ export async function handle({ event, resolve }) {
 
 	// Double sécurité avec frame-ancestors de la CSP, pour les vieux
 	// navigateurs qui ignorent cette directive.
-	// (en développement : SAMEORIGIN, pour les maquettes posées sur la carte)
+	// En développement seulement, les pages du site peuvent l'encadrer
+	// (maquettes posées sur la vraie carte). Fait ici et pas dans
+	// svelte.config.js : une compilation réécrit la configuration partagée
+	// avec le serveur local et remettait 'none' (2026-10-10).
 	response.headers.set('X-Frame-Options', dev ? 'SAMEORIGIN' : 'DENY');
+	const csp = dev && response.headers.get('content-security-policy');
+	if (csp) response.headers.set('content-security-policy', csp.replace("frame-ancestors 'none'", "frame-ancestors 'self'"));
 
 	// Force le HTTPS pendant deux ans. En développement le site est servi
 	// en clair : l'en-tête n'aurait pas de sens et gênerait les tests.
