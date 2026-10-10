@@ -1,5 +1,5 @@
 {
-  "endo": "de",
+  "endo": "lb",
   "doms": [
     "francic",
     "mixta"
@@ -35,10 +35,10 @@
   "apart": [
     {
       "kod": "francic-franca",
-      "de": "Deitsch-Lothringen",
       "fr": "Moselle germanophone",
       "oc": "Mosèla germanofòna",
-      "filtre": "FR"
+      "filtre": "FR",
+      "lb": "Deitsch-Lothringen"
     }
   ],
   "sortida": "francic.json",

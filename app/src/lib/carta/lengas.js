@@ -170,7 +170,8 @@ export const LENGAS = {
 	francic: {
 		kod: 'francic',
 		pref: 'frk-',
-		lang: 'de',
+		// (« lb » : la clau del nom dins la lenga ; « de » es la de la lenga maire d'un sosdialècte)
+		lang: 'lb',
 		url: '/data/francic.json',
 		nom: { oc: 'francic (platt)', fr: 'francique (platt)', endo: 'Platt' },
 		// (en Mosèla, retorn de Romain : « le Platt devrait être sur la Moselle »)
@@ -185,13 +186,13 @@ export const LENGAS = {
 		},
 		apart: { 'francic-franca': { dins: ['letzebuergesch', 'moselfrankisch', 'rheinfrankisch', 'sudfrankisch'] } },
 		pastilhas: [
-			{ k: 'francic-franca', de: 'Deitsch-Lothringen', oc: 'Mosèla germanofòna', fr: 'Moselle germanophone' },
-			{ k: 'letzebuergesch', de: 'Lëtzebuergesch', oc: 'luxemborgés', fr: 'luxembourgeois' },
-			{ k: 'moselfrankisch', de: 'Moselfränkisch', oc: 'francic mosellan', fr: 'francique mosellan' },
-			{ k: 'rheinfrankisch', de: 'Rheinfränkisch', oc: 'francic renan', fr: 'francique rhénan' },
-			{ k: 'sudfrankisch', de: 'Südfränkisch', oc: 'francic meridional', fr: 'francique méridional' },
-			{ k: 'ripuarisch', de: 'Ripuarisch', oc: 'ripuari', fr: 'ripuaire' },
-			{ k: 'limburgisch', de: 'Platdiets', oc: 'limborgés', fr: 'limbourgeois' }
+			{ k: 'francic-franca', lb: 'Deitsch-Lothringen', oc: 'Mosèla germanofòna', fr: 'Moselle germanophone' },
+			{ k: 'letzebuergesch', lb: 'Lëtzebuergesch', oc: 'luxemborgés', fr: 'luxembourgeois' },
+			{ k: 'moselfrankisch', lb: 'Moselfränkisch', oc: 'francic mosellan', fr: 'francique mosellan' },
+			{ k: 'rheinfrankisch', lb: 'Rheinfränkisch', oc: 'francic renan', fr: 'francique rhénan' },
+			{ k: 'sudfrankisch', lb: 'Südfränkisch', oc: 'francic meridional', fr: 'francique méridional' },
+			{ k: 'ripuarisch', lb: 'Ripuarisch', oc: 'ripuari', fr: 'ripuaire' },
+			{ k: 'limburgisch', lb: 'Platdiets', oc: 'limborgés', fr: 'limbourgeois' }
 		],
 		sota: { oc: 'dialècte francic', fr: 'dialecte francique' },
 		sotaApart: { oc: 'francic de França', fr: 'francique de France' },

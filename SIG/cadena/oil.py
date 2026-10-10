@@ -763,7 +763,7 @@ def geojson_ll(g):
 
 
 def props_dial(x):
-    p = {'kod': x['kod'], 'fr': x['fr'], 'oc': x['oc'], 'color': x['color'], 'grope': x['grope']}
+    p = {'kod': x['kod'], 'fr': x['fr'], 'oc': x['oc'], 'color': x.get('color', '#a48cff'), 'grope': x['grope']}
     for k in ('de', 'sota_fr', 'sota_oc'):
         if k in x:
             p[k] = x[k]
