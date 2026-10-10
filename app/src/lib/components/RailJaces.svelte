@@ -538,7 +538,7 @@
 	// La jaça es alucada mas pas vesibla a l'escala actuala
 	const foraEscala = (j) => estatCarta.z != null && zPlaja(j.id, estatCarta.z, estatCarta.lat) != null;
 	const anarPlaja = (id) => dispatchEvent(new CustomEvent('carta-anar-plaja', { detail: { id } }));
-	// L'apercebut al survòl (decision de Romain, 2026-10-10) : aprèp 0,3 s
+	// L'apercebut al survòl (decision de Romain, 2026-10-10) : aprèp 3 s
 	// sus una linha, la jaça s'aluca un moment, sens bolegar la carta ;
 	// pas per las jaças pesugas o amb son pròpri espectacle, ni fòra escala
 	const SENS_APERCEBUT = new Set(['comunas', 'dialectes', 'creissent', 'lengasFranca', 'frontiera', 'unificat']);
@@ -554,7 +554,7 @@
 			if (visibility[j.id]) return;
 			estatCarta.apercebut = j.id;
 			visibility[j.id] = true;
-		}, 300);
+		}, 3000); // (3 s : demanda de Romain, 2026-10-10)
 	}
 	function sortirLinha() {
 		clearTimeout(minutaApercebut);
