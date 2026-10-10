@@ -30,6 +30,10 @@ Demandes de Romain du 2026-10-10 (dictées), à mener dans une conversation neuv
 - **En pause** : Romain veut d'abord monter en gamme le rail et le catalogue de données (références de sites haut de gamme, puis choix d'une direction). La maquette du mode viendra ensuite, dans la direction retenue.
 - Mots de la maquette vérifiés (lo Congrès) : lenga, tornar, escòla, bilingüe, limit, istoric, veire, dins, lingüistic (environament), causir, vesin, frontièra, locutor, grèu, dangièr. Non confirmés par l'API : França (absent des toponymes), donadas (seulement participe), celtic, germanic, alsacian, francic, arpitan.
 
+- **Reprise (2026-10-10, après le chantier rail et légende)** : entrée dans le mode choisie par Romain, **option A, le rail se transforme**.
+- ✅ **Étapes 1 et 2 faites (2026-10-10)** dans `RailJaces.svelte` : « Autras lengas » fait entrer dans le mode ; l'état de la carte occitane est mis de côté, les familles Cultura et Istòria s'effacent ; rail du mode = « ‹ Occitan » (retour, restaure la carte comme avant), « Sus la carta », « Lengas » ; panneau « Lengas de França » sans onglets, toutes les langues dans une liste (A→Z sur le nom occitan, ou par locuteurs), l'occitan dedans avec ses dialectes (ligne simple : pas encore de fiche sourcée). Même chose sur téléphone (barre du bas).
+- **Reste** : étape 3 (« Voir la langue dans son environnement linguistique ») ; étape 4 (« Donadas » : écoles bilingues et limites historiques du breton, puis écoles en corse) ; une fiche sourcée pour l'occitan (locuteurs, statut UNESCO, sources) ; mots occitans à trancher : « França » (absent de l'API toponymique), « Donadas » (l'API ne connaît que le participe).
+
 ## Questions encore ouvertes (une à la fois)
 
 1. ✅ Icône « Autres langues » : **deux bulles de discussion**, une pleine et une au trait (Romain, 2026-10-10, d'après son modèle ; en place dans `RailJaces.svelte`).

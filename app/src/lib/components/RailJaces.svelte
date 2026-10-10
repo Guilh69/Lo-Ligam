@@ -76,6 +76,10 @@
 			anar: 'I anar',
 			fuelhaAgrandir: 'Agrandir lo panèl',
 			totDetalh: 'Tot lo detalh',
+			tornarOc: "Tornar a l'occitan",
+			occitan: 'Occitan',
+			lengas: 'Lengas',
+			lengasFranca: 'Lengas de França',
 			tornarFamilhas: (f) => `${f} : tornar a las familhas`,
 			fuelhaReduire: 'Reduire lo panèl',
 			anarTitol: "Anar a l'escala ont la jaça se vei"
@@ -127,6 +131,10 @@
 			anar: 'Y aller',
 			fuelhaAgrandir: 'Agrandir le panneau',
 			totDetalh: 'Tout le détail',
+			tornarOc: "Revenir à l'occitan",
+			occitan: 'Occitan',
+			lengas: 'Langues',
+			lengasFranca: 'Langues de France',
 			tornarFamilhas: (f) => `${f} : revenir aux familles`,
 			fuelhaReduire: 'Réduire le panneau',
 			anarTitol: "Aller à l'échelle où la couche est visible"
@@ -232,6 +240,14 @@
 		f.jaces
 			.filter((j) => LENGAS[j.id] && actiu(j) && (FICHAS[j.id]?.onglet ?? 'franca') === onglet)
 			.sort((a, b) => (ordre === 'loc' ? (FICHAS[b.id]?.n ?? -1) - (FICHAS[a.id]?.n ?? -1) : 0) || nomOrd(a.id).localeCompare(nomOrd(b.id)));
+	// dins lo mòde : totas las lengas d'una lista, l'occitan dedins (sas
+	// pastilhas de dialèctes), per òrdre alfabetic o de locutors
+	const OCCITAN_J = { id: 'dialectes', estat: 'disponible' };
+	const lengasMòde = (f) => {
+		const ls = f.jaces.filter((j) => LENGAS[j.id] && actiu(j)).map((j) => ({ j, nom: nomOrd(j.id), n: FICHAS[j.id]?.n ?? -1 }));
+		ls.push({ j: OCCITAN_J, oc: true, nom: tx.occitan, n: -1 });
+		return ls.sort((a, b) => (ordre === 'loc' ? b.n - a.n : 0) || a.nom.localeCompare(b.nom));
+	};
 	let dialsDob = $state([]);
 	// La silhoeta de l'aira de cada lenga dins sa ficha (los contorns leugièrs de
 	// « Descobrir… », ja en cache) : cargada a la dobertura del panèl
@@ -258,7 +274,34 @@
 	});
 	const virarDials = (id) => (dialsDob = dialsDob.includes(id) ? dialsDob.filter((x) => x !== id) : [...dialsDob, id]);
 	const virarTèma = (id) => (enrotlats = enrotlats.includes(id) ? enrotlats.filter((x) => x !== id) : [...enrotlats, id]);
+	// Lo mòde « Lengas de França » (decision de Romain, 2026-10-10 ; opcion A,
+	// lo rail se transforma) : « Autras lengas » fa entrar dins una autra
+	// vista. Las donadas occitanas (cultura, istòria) s'escafan ; lo rail
+	// ven : tornar a l'occitan, Sus la carta, Lengas ; la lista es unica, e
+	// l'occitan i es a egalitat amb las autras. En tornant a l'occitan, la
+	// carta es restablida coma èra.
+	let mòde = $state(null);
+	let salvat = null;
+	const FAMILHAS_OC = ['cultura', 'istoria'];
+	function dintrarMòde() {
+		salvat = { v: $state.snapshot(visibility), d: [...causits] };
+		for (const fm of familhas) if (FAMILHAS_OC.includes(fm.id)) for (const j of fm.jaces) if (visibility[j.id]) visibility[j.id] = false;
+		banda = null;
+		mòde = 'lengas';
+		dobert = 'lengas';
+		plaçarTirador();
+	}
+	function sortirMòde() {
+		if (salvat) {
+			for (const k of Object.keys({ ...visibility, ...salvat.v })) visibility[k] = !!salvat.v[k];
+			causits = salvat.d;
+		}
+		salvat = null;
+		mòde = null;
+		dobert = null;
+	}
 	const alternar = (id) => {
+		if (id === 'lengas' && !mòde) return dintrarMòde();
 		// (sus un ecran estrech, una familha del catalògue dobrís sa banda)
 		if (estreit && id !== 'sus' && id !== 'lengas' && id !== 'fons' && banda !== id) {
 			banda = id;
@@ -537,6 +580,7 @@
 		return pl[1] ? `Visible de ${kmTèxt(pl[0])} à ${kmTèxt(pl[1])}` : `Visible à partir de ${kmTèxt(pl[0])}`;
 	};
 	const nomFam = (id) => {
+		if (id === 'lengas' && mòde) return tx.lengasFranca;
 		if (id === 'sus') return tx.sus;
 		if (id === 'fons') return tx.fons;
 		const f = familhas.find((x) => x.id === id);
@@ -797,7 +841,31 @@
 			>
 		</button>
 	</div>
-	{#if estreit && banda}
+	{#if mòde}
+		<!-- lo mòde : tornar a l'occitan, en naut -->
+		<button type="button" class="rail-b retorn" aria-label={tx.tornarOc} title={tx.tornarOc} onclick={sortirMòde}>
+			<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC.lenga}</svg>
+			<span class="lib">{tx.occitan}</span>
+		</button>
+		<span class="rail-sep" aria-hidden="true"></span>
+		{#each ['sus', 'lengas'] as id (id)}
+			<button
+				type="button"
+				class="rail-b"
+				class:rail-sus={id === 'sus'}
+				bind:this={botons[id]}
+				aria-expanded={dobert === id}
+				aria-controls="tirador-jaces"
+				onclick={() => alternar(id)}
+			>
+				<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC[id]}</svg>
+				<span class="lib">{id === 'lengas' ? tx.lengas : nomFam(id)}</span>
+				{#if id === 'sus' && afichadas.length}
+					<span class="compte" aria-label={tx.afichadas(afichadas.length)}>{afichadas.length}</span>
+				{/if}
+			</button>
+		{/each}
+	{:else if estreit && banda}
 		<button type="button" class="rail-b banda-fam" aria-expanded="true" aria-label={tx.tornarFamilhas(nomFam(banda))} onclick={sortirBanda}>
 			<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC[banda]}</svg>
 			<span class="lib">{nomFam(banda)}</span>
@@ -952,7 +1020,19 @@
 			{@const f = familhas.find((x) => x.id === dobert)}
 			{#if f}
 				{@const dispo = f.jaces.filter(actiu).length}
-				{#if f.id === 'lengas'}
+				{#if f.id === 'lengas' && mòde}
+					<div class="ordre" role="radiogroup" aria-label={tx.ordreTit}>
+						{#each tx.ordres as [k, nom] (k)}
+							<button type="button" role="radio" aria-checked={ordre === k} onclick={() => (ordre = k)}>{nom}</button>
+						{/each}
+					</div>
+					{#each f.jaces.filter((j) => !LENGAS[j.id]) as j (j.id)}{@render linha(j)}{/each}
+					{#each lengasMòde(f) as l, i (l.j.id)}
+						<div class="ficha-arr" style:--i={i}>
+							{#if l.oc}{@render linha({ ...OCCITAN_J, oc: tx.occitan, fr: tx.occitan })}{:else}{@render fichaLenga(l.j)}{/if}
+						</div>
+					{/each}
+				{:else if f.id === 'lengas'}
 					<div class="onglets" role="tablist" aria-label={nomFam(f.id)}>
 						{#each tx.onglets as [k, nom] (k)}
 							<button type="button" role="tab" aria-selected={onglet === k} class:on={onglet === k} disabled={!['franca', 'trans'].includes(k)} onclick={() => (onglet = k)}
@@ -1355,6 +1435,23 @@
 		height: 1px;
 		margin: 4px 10px;
 		background: var(--t-linha);
+	}
+
+	/* lo mòde : lo boton per tornar a l'occitan */
+	.rail-b.retorn {
+		color: var(--t-tinta);
+	}
+	.rail-b.retorn::after {
+		content: '‹';
+		position: absolute;
+		left: 4px;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 1rem;
+		color: var(--t-terra-viu);
+	}
+	.rail-b.retorn svg {
+		color: var(--t-terra-viu);
 	}
 
 	/* La banda del telefòn : la familha a esquèrra, sas jaças en pastilhas */
