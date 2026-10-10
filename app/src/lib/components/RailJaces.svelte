@@ -75,6 +75,8 @@
 			// (« I anar » : causit per Romain, 2026-10-10)
 			anar: 'I anar',
 			fuelhaAgrandir: 'Agrandir lo panèl',
+			totDetalh: 'Tot lo detalh',
+			tornarFamilhas: (f) => `${f} : tornar a las familhas`,
 			fuelhaReduire: 'Reduire lo panèl',
 			anarTitol: "Anar a l'escala ont la jaça se vei"
 		},
@@ -124,6 +126,8 @@
 			admin: "Modifier dans l'admin",
 			anar: 'Y aller',
 			fuelhaAgrandir: 'Agrandir le panneau',
+			totDetalh: 'Tout le détail',
+			tornarFamilhas: (f) => `${f} : revenir aux familles`,
 			fuelhaReduire: 'Réduire le panneau',
 			anarTitol: "Aller à l'échelle où la couche est visible"
 		}
@@ -255,6 +259,12 @@
 	const virarDials = (id) => (dialsDob = dialsDob.includes(id) ? dialsDob.filter((x) => x !== id) : [...dialsDob, id]);
 	const virarTèma = (id) => (enrotlats = enrotlats.includes(id) ? enrotlats.filter((x) => x !== id) : [...enrotlats, id]);
 	const alternar = (id) => {
+		// (sus un ecran estrech, una familha del catalògue dobrís sa banda)
+		if (estreit && id !== 'sus' && id !== 'lengas' && id !== 'fons' && banda !== id) {
+			banda = id;
+			dobert = null;
+			return;
+		}
 		dobert = dobert === id ? null : id;
 		if (dobert) plaçarTirador();
 	};
@@ -605,6 +615,29 @@
 		plena = h > p * 0.6;
 	}
 
+	// La banda del telefòn (decision de Romain, 2026-10-10) : sus un ecran
+	// estrech, tocar una familha la plaça a esquèrra de la barra e sas jaças
+	// desfilan a drecha, en pastilhas que s'alucan en las tocant ; « ⋯ »
+	// dobrís la fuèlha amb tot lo detalh ; tornar tocar la familha torna a
+	// las familhas. « Sus la carta » e « Autras lengas » gardan la fuèlha.
+	let estreit = $state(false);
+	let banda = $state(null);
+	$effect(() => {
+		const ecran = railEl?.closest('.screen') ?? railEl?.offsetParent;
+		if (!ecran) return;
+		const ro = new ResizeObserver(([e]) => (estreit = e.contentRect.width <= 600));
+		ro.observe(ecran);
+		return () => ro.disconnect();
+	});
+	$effect(() => {
+		if (!estreit) banda = null;
+	});
+	const familhaDe = (id) => familhas.find((f) => f.id === id);
+	function sortirBanda() {
+		banda = null;
+		dobert = null;
+	}
+
 	// mots longs del rail : copats amb un tiret, pas al mièg d'una sillaba
 	const cesura = (t) => t.replace(/^Adminis(tra)/, 'Adminis­$1');
 
@@ -764,6 +797,29 @@
 			>
 		</button>
 	</div>
+	{#if estreit && banda}
+		<button type="button" class="rail-b banda-fam" aria-expanded="true" aria-label={tx.tornarFamilhas(nomFam(banda))} onclick={sortirBanda}>
+			<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC[banda]}</svg>
+			<span class="lib">{nomFam(banda)}</span>
+		</button>
+		<div class="banda" role="group" aria-label={nomFam(banda)}>
+			{#each familhaDe(banda)?.jaces ?? [] as j (j.id)}
+				<button
+					type="button"
+					class="chip"
+					class:on={actiu(j) && visibility[j.id]}
+					class:fora={actiu(j) && visibility[j.id] && foraEscala(j)}
+					role="switch"
+					aria-checked={actiu(j) && !!visibility[j.id]}
+					disabled={!actiu(j)}
+					onclick={() => bascular(j.id, !visibility[j.id])}
+				>
+					<span class="chip-ap"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>{nomJ(j)}
+				</button>
+			{/each}
+			<button type="button" class="chip mai" aria-label={tx.totDetalh} title={tx.totDetalh} aria-expanded={dobert === banda} aria-controls="tirador-jaces" onclick={() => alternar(banda)}>⋯</button>
+		</div>
+	{:else}
 	{#each RAIL as id (id)}
 		{#if id === 'lengas'}<span class="rail-sep" aria-hidden="true"></span>{/if}
 		<button
@@ -786,6 +842,7 @@
 		</button>
 		{#if id === 'sus'}<span class="rail-sep" aria-hidden="true"></span>{/if}
 	{/each}
+	{/if}
 </nav>
 
 {#if dobert}
@@ -1298,6 +1355,84 @@
 		height: 1px;
 		margin: 4px 10px;
 		background: var(--t-linha);
+	}
+
+	/* La banda del telefòn : la familha a esquèrra, sas jaças en pastilhas */
+	.rail-b.banda-fam {
+		flex: 0 0 4.4rem;
+		color: var(--t-aur-clar);
+		border-right: 1px solid var(--t-linha);
+		border-radius: 0;
+	}
+	.rail-b.banda-fam::after {
+		content: '‹';
+		position: absolute;
+		left: 4px;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 1rem;
+		color: var(--t-tinta-2);
+	}
+	.banda {
+		flex: 1 1 auto;
+		min-width: 0;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 0 8px;
+		overflow-x: auto;
+		scrollbar-width: none;
+		overscroll-behavior-x: contain;
+		mask-image: linear-gradient(90deg, #000 88%, transparent);
+	}
+	.banda::-webkit-scrollbar {
+		display: none;
+	}
+	.chip {
+		flex: 0 0 auto;
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		height: 36px;
+		padding: 0 12px 0 5px;
+		border: 1px solid var(--t-linha);
+		border-radius: 18px;
+		background: none;
+		color: var(--t-tinta);
+		font: 700 0.8125rem/1 var(--font-body);
+		white-space: nowrap;
+		cursor: pointer;
+	}
+	.chip-ap {
+		display: block;
+		width: 26px;
+		height: 18px;
+		border-radius: 9px 4px 4px 9px;
+		overflow: hidden;
+		background: var(--t-fons);
+	}
+	.chip-ap svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.chip.on {
+		border-color: var(--t-aur);
+		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
+		color: var(--t-aur-clar);
+	}
+	/* alucada mas pas vesibla a aquesta escala */
+	.chip.fora {
+		border-style: dashed;
+	}
+	.chip:disabled {
+		opacity: 0.4;
+		cursor: default;
+	}
+	.chip.mai {
+		padding: 0 14px;
+		font-size: 1.1rem;
+		letter-spacing: 1px;
 	}
 
 	/* l'ansa de la fuèlha : pas qu'al telefòn */
