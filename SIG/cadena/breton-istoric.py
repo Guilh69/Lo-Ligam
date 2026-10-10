@@ -1,14 +1,16 @@
-# Breton : las limitas istoricas (sègle IX a 1806) e las escòlas bilingüas
-# defòra del domeni de 1886, apondudas a app/static/data/breton.json
+# Breton : las limitas istoricas (sègle IX a 1806) e l'ensenhament bilingüe
+# per comuna, dins app/static/data/breton-donadas.json : la rubrica « Donadas »
+# del mòde « Lengas de França », a despart de la jaça bretona (decision de
+# Romain, 2026-10-10)
 #
 # - limitas : per epòca, lo contorn de (domeni de 1886 + comunas de l'epòca,
 #   SIG/breton/breton-istoric.csv, d'après la carta de Sémhur), sens la còsta
 #   e sens los tròces que seguisson la limita de 1886 : demòra lo traç dins lo
 #   país galo
-# - escòlas : comunas amb d'escolans bilingües (OPLB 2025, SIG/breton/
-#   breton-actual.csv) defòra del domeni breton (Rennes, Nantes…)
+# - escòlas : totas las comunas amb d'escolans bilingües (OPLB 2025,
+#   SIG/breton/breton-actual.csv) : [lon, lat, escolans, nom fr, nom br,
+#   Diwan, establiments, dins lo domeni de 1886 (1/0)]
 #
-# Aviar aprèp lenga.py breton (que tòrna escriure breton.json) :
 #   "C:/Program Files/QGIS 4.2.3/bin/python-qgis.bat" -s -u -P SIG/cadena/breton-istoric.py
 import csv, json, os
 from collections import defaultdict
@@ -17,7 +19,7 @@ from osgeo import ogr, osr
 AQUI = os.path.dirname(os.path.abspath(__file__))
 SIG = os.path.normpath(os.path.join(AQUI, '..'))
 BR = os.path.join(SIG, 'breton')
-SORTIDA = os.path.join(SIG, '..', 'app', 'static', 'data', 'breton.json')
+SORTIDA = os.path.join(SIG, '..', 'app', 'static', 'data', 'breton-donadas.json')
 
 l93 = osr.SpatialReference(); l93.ImportFromEPSG(2154); l93.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
 wgs = osr.SpatialReference(); wgs.ImportFromEPSG(4326); wgs.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
@@ -88,24 +90,27 @@ for clau, oc, fr, an in EPÒCAS:
 
 # ------------------------------------------------- las escòlas
 noms_br = {r['insee']: r['nom_br'] for r in csv.DictReader(open(os.path.join(BR, 'noms-br.csv'), encoding='utf-8-sig'), delimiter=';')}
-escolans = {}
+ind = defaultdict(dict)
 noms_fr = {}
 for r in csv.DictReader(open(os.path.join(BR, 'breton-actual.csv'), encoding='utf-8-sig'), delimiter=';'):
-    if r['indicador'] == 'eleves_bilingues':
-        escolans[r['insee']] = int(r['valor'])
-        noms_fr[r['insee']] = r['nom']
+    try:
+        ind[r['insee']][r['indicador']] = int(r['valor'])
+    except ValueError:
+        continue
+    noms_fr[r['insee']] = r['nom']
 escòlas = []
-for c, n in sorted(escolans.items(), key=lambda x: -x[1]):
-    if classa.get(c) in ('breton', 'mixta') or c not in geo:
+for c, v in sorted(ind.items(), key=lambda x: -x[1].get('eleves_bilingues', 0)):
+    n = v.get('eleves_bilingues', 0)
+    if not n or c not in geo:
         continue
     p = geo[c].PointOnSurface(); p.Transform(a_ll)
-    escòlas.append([round(p.GetX(), 4), round(p.GetY(), 4), n, noms_fr[c], noms_br.get(c) or None])
-print('Escòlas defòra del domeni : %d comunas, %d escolans' % (len(escòlas), sum(e[2] for e in escòlas)))
+    dins = 1 if classa.get(c) in ('breton', 'mixta') else 0
+    escòlas.append([round(p.GetX(), 4), round(p.GetY(), 4), n, noms_fr[c], noms_br.get(c) or None, v.get('eleves_diwan', 0), v.get('etablissements', 0), dins])
+print('Escòlas : %d comunas, %d escolans (%d defòra del domeni de 1886)' % (len(escòlas), sum(e[2] for e in escòlas), sum(1 for e in escòlas if not e[7])))
 
-d = json.load(open(SORTIDA, encoding='utf-8'))
-d['istoric'] = istoric
-d['escolas'] = escòlas
-FONT = " ; limites anciennes d'après Sémhur, Wikimedia Commons, CC BY-SA 4.0 (Tanguy et Lagrée 2002, Fleuriot 1982, Brekilien 1979), calées sur les communes ; écoles bilingues : Office public de la langue bretonne, rentrée 2025 (ODbL)"
-d['font'] = d['font'].split(" ; limites anciennes")[0] + FONT
-json.dump(d, open(SORTIDA, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+FONT = {
+    'istoric': "Limites anciennes d'après Sémhur, Wikimedia Commons, CC BY-SA 4.0 (Tanguy et Lagrée 2002, Fleuriot 1982, Brekilien 1979), calées sur les communes IGN",
+    'escolas': 'Office public de la langue bretonne, enseignement bilingue par commune, rentrée 2025 (ODbL)'
+}
+json.dump({'font': FONT, 'istoric': istoric, 'escolas': escòlas}, open(SORTIDA, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 print('Escrich :', os.path.getsize(SORTIDA), 'octets')

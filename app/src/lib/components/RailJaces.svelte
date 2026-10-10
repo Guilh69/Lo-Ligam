@@ -165,6 +165,8 @@
 		// 2026-10-10) ; l'espaci entre las doas es una masca (mask), pas la color
 		// del fons : demòra just sus totes los estats del boton
 		lengas: '<mask id="masc-lengas"><rect width="24" height="24" fill="#fff"/><path d="M19.19 14.6A5.6 5.6 0 1 0 15.87 16.51L20.6 19z" fill="none" stroke="#000" stroke-width="3.6" stroke-linejoin="round"/><circle cx="5.9" cy="11" r=".95"/><circle cx="8.3" cy="11" r=".95"/></mask><path mask="url(#masc-lengas)" d="M4.81 14.6A5.6 5.6 0 1 1 8.13 16.51L3.4 19z" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/><path d="M19.19 14.6A5.6 5.6 0 1 0 15.87 16.51L20.6 19z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="13.3" cy="11" r=".95" fill="currentColor"/><circle cx="15.7" cy="11" r=".95" fill="currentColor"/><circle cx="18.1" cy="11" r=".95" fill="currentColor"/>',
+		// las donadas del mòde « Lengas de França » : tres barras
+		donadas: '<path d="M4 20h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7 17V11M12 17V6M17 17V9" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
 		fons: '<path d="M12 4l9 5-9 5-9-5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>'
 	};
 
@@ -217,6 +219,10 @@
 			isolas: '<circle cx="18" cy="18" r="6" fill="none" stroke="#e0612f" stroke-width="1.6"/><circle cx="36" cy="14" r="4" fill="none" stroke="#e0612f" stroke-width="1.6"/>',
 			parcs: '<path d="M6 30 Q 10 8 26 13 T 48 19 L 45 32 Z" fill="#86c48c" fill-opacity=".22" stroke="#86c48c" stroke-width="1.2"/>',
 			massis: '<path d="M8 27 l5 -9 l5 9z" fill="currentColor" opacity=".85"/><text x="34" y="16" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="8.5" letter-spacing="1.4" fill="currentColor" opacity=".75">AUBRAC</text>',
+			// las donadas del mòde : cercles proporcionals, limits datats
+			escolasBreton: '<circle cx="15" cy="19" r="9" fill="#4fd1b0" fill-opacity=".28" stroke="#4fd1b0"/><circle cx="33" cy="13" r="5.5" fill="#4fd1b0" fill-opacity=".28" stroke="#4fd1b0"/><circle cx="42" cy="26" r="3.2" fill="#4fd1b0" fill-opacity=".28" stroke="#4fd1b0"/>',
+			limitsBreton: '<path d="M14 2 C 18 14, 10 22, 16 34" fill="none" stroke="#e9d7b0" stroke-width="1" stroke-dasharray="4 3" opacity=".45"/><path d="M26 2 C 30 14, 22 22, 28 34" fill="none" stroke="#e9d7b0" stroke-width="1.4" stroke-dasharray="4 3" opacity=".65"/><path d="M38 2 C 42 14, 34 22, 40 34" fill="none" stroke="#e9d7b0" stroke-width="2" opacity=".9"/>',
+			escolasCors: '<circle cx="18" cy="18" r="7" fill="currentColor" fill-opacity=".15" stroke="currentColor" opacity=".6"/><circle cx="36" cy="20" r="4" fill="currentColor" fill-opacity=".15" stroke="currentColor" opacity=".6"/>',
 			// las lengas : lors colors, o lor nom dins la lenga (las de venir)
 			...Object.fromEntries(
 				Object.keys(LENGAS).map((id) => {
@@ -344,7 +350,7 @@
 	const alternar = (id) => {
 		if (id === 'lengas' && !mòde) return dintrarMòde();
 		// (sus un ecran estrech, una familha del catalògue dobrís sa banda)
-		if (estreit && id !== 'sus' && id !== 'lengas' && id !== 'fons' && banda !== id) {
+		if (estreit && !mòde && id !== 'sus' && id !== 'lengas' && id !== 'fons' && banda !== id) {
 			banda = id;
 			dobert = null;
 			return;
@@ -889,7 +895,7 @@
 			<span class="lib">{tx.occitan}</span>
 		</button>
 		<span class="rail-sep" aria-hidden="true"></span>
-		{#each ['sus', 'lengas'] as id (id)}
+		{#each ['sus', 'lengas', 'donadas'] as id (id)}
 			<button
 				type="button"
 				class="rail-b"

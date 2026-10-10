@@ -1,6 +1,7 @@
 <script>
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { cargarFranca, francaCargada, dinsFranca } from '$lib/carta/franca.js';
+	import { crearDonadasLengas } from '$lib/carta/donadasLengas.js';
 	import { fly } from 'svelte/transition';
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
@@ -1707,6 +1708,31 @@
 			});
 		}, 450);
 	}
+	// La rubrica « Donadas » del mòde « Lengas de França » (etapa 4) : creada
+	// a la primièra jaça alucada ; l'alucar mena la carta sus sas donadas
+	let donadasLengas = null;
+	$effect(() => {
+		const e = !!visibility.escolasBreton,
+			l = !!visibility.limitsBreton;
+		if (!map || (!e && !l && !donadasLengas)) return;
+		donadasLengas ??= crearDonadasLengas(L, map, {
+			color: untrack(() => LENGAS.breton?.color?.[clar ? 'clar' : 'sorne']),
+			// (los limits istorics en ivòri, a despart del verd de las escòlas)
+			colorLimits: untrack(() => (clar ? '#6b4e1f' : '#e9d7b0')),
+			lang: untrack(() => lang),
+			pad: () => {
+				const estrech = map.getSize().x <= 600;
+				// (la largor vertadièra del panèl, se es dobèrt)
+				const tir = document.getElementById('tirador-jaces')?.getBoundingClientRect();
+				return [estrech ? 16 : tir ? tir.right - map.getContainer().getBoundingClientRect().left + 28 : 110, estrech ? 110 : 90];
+			}
+		});
+		donadasLengas.mostrar({ escolas: e, limits: l });
+	});
+	$effect(() => {
+		const l = lang;
+		untrack(() => donadasLengas?.setLang(l));
+	});
 	let envAbans = '';
 	$effect(() => {
 		const m = estatCarta.mòde,
@@ -2510,6 +2536,36 @@
 		font-size: 0.72rem;
 		line-height: 1.35;
 		color: var(--t-tinta-2);
+	}
+	/* las donadas del mòde « Lengas de França » */
+	.carta :global(.bulla-donada) {
+		padding: 7px 10px;
+		border: 1px solid var(--t-linha);
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--t-fons-2) 92%, transparent);
+		color: var(--t-tinta);
+		font: 0.8125rem/1.4 var(--font-body);
+		box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+	}
+	.carta :global(.bulla-donada::before) {
+		display: none;
+	}
+	.carta :global(.bulla-donada .sota) {
+		color: var(--t-tinta-2);
+	}
+	.carta :global(.etiqueta-limit) {
+		padding: 0;
+		border: 0;
+		background: none;
+		box-shadow: none;
+		color: var(--t-tinta);
+		font: italic 600 0.75rem/1 var(--font-body);
+		text-shadow:
+			0 0 3px var(--t-fons),
+			0 0 7px var(--t-fons);
+	}
+	.carta :global(.etiqueta-limit::before) {
+		display: none;
 	}
 	.carta :global(.ponch-usatgièr) {
 		stroke: var(--t-fons);

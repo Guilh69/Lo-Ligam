@@ -215,6 +215,21 @@ CATALOGUE.push({
 });
 
 // Las jaces de lengas pintadas per una còla de lenga (colaLenga.js, lengas.js)
+// La rubrica « Donadas » del mòde « Lengas de França » (etapa 4, Romain,
+// 2026-10-10) : de donadas pròpias a las lengas, a despart de lors jaces ;
+// visibla sonque dins lo mòde (lo rail ordinari la mòstra pas). Dessenhadas
+// per donadasLengas.js
+CATALOGUE.push({
+	id: 'donadas',
+	oc: 'Donadas',
+	fr: 'Données',
+	jaces: [
+		{ id: 'escolasBreton', oc: 'Ensenhament bilingüe en breton', fr: 'Enseignement bilingue en breton', estat: 'disponible', defaut: false, nota_oc: 'Escolans per comuna, dintrada 2025', nota_fr: 'Élèves par commune, rentrée 2025' },
+		{ id: 'limitsBreton', oc: 'Limits del breton', fr: 'Limites du breton', estat: 'disponible', defaut: false, nota_oc: 'Del sègle IX a 1806', nota_fr: 'Du IXe siècle à 1806' },
+		{ id: 'escolasCors', oc: 'Ensenhament bilingüe en còrs', fr: 'Enseignement bilingue en corse', estat: 'a venir' }
+	]
+});
+
 export const JACES_LENGAS = ['catalan', 'arpitan', 'basc', 'oil', 'alsacian', 'francic', 'breton', 'cors', 'flamenc'];
 
 // Las jaces pintadas pel fons « Contorns » (colaEstelas.js) : son pas pintadas
