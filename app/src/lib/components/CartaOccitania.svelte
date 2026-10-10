@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
+	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
 	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, palièrDe, fixarLatEscala, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
@@ -1249,6 +1250,13 @@
 		luènh();
 		const estelas = () => mapEl?.classList.toggle('ponchs-estelas', map.getZoom() < Z.ICONAS);
 		map.on('zoomend', estelas);
+		// la vista actuala, per lo rail (escalas de las jaças alucadas)
+		const difusarVista = () => {
+			estatCarta.z = map.getZoom();
+			estatCarta.lat = map.getCenter().lat;
+		};
+		map.on('moveend', difusarVista);
+		difusarVista();
 		estelas();
 		if (ambToponims(baseLayer)) loadToponymsLayer();
 
@@ -1547,6 +1555,12 @@
 			calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		map.flyTo(c, z, { animate: !calm, duration: calm ? 0 : 1.2 });
 	}
+	// « I anar » del rail : una jaça alucada mas pas vesibla a aquesta escala
+	$effect(() => {
+		const anar = (e) => e.detail?.id && anarALaPlaja(e.detail.id);
+		addEventListener('carta-anar-plaja', anar);
+		return () => removeEventListener('carta-anar-plaja', anar);
+	});
 	// Una jaça occitana cochada : la vista d'ensemble de l'Occitània, lo meteis
 	// cadratge sus totes los aparelhs (50 km sus un ecran de 1 830 px), mai
 	// pròche se la jaça se vei pas d'aquí (los dialèctes, a 100 km al mai)
@@ -1572,6 +1586,8 @@
 		visAbans = vis;
 		if (!abans) return;
 		const nòvas = Object.keys(vis).filter((k) => vis[k] && !abans[k]);
+		// (una jaça en apercebut al survòl : la carta bolega pas)
+		if (estatCarta.apercebut && nòvas.includes(estatCarta.apercebut)) return;
 		// (mantuna jaça d'un còp — « Tot tornar », « Afichar l'occitan » : se los
 		// dialèctes i son, la vista de l'Occitània ; si que non, la carta bolega pas)
 		if (nòvas.length !== 1) {

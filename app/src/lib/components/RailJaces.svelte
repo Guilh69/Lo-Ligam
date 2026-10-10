@@ -1,5 +1,6 @@
 <script>
-	import { PLAJAS } from '$lib/carta/escalas.js';
+	import { PLAJAS, zPlaja } from '$lib/carta/escalas.js';
+	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 	// Rail de las jaces (causida de Romain, 2026-10-07, « panèl C ») : un rail
 	// totjorn visible al bòrd de la carta, una icòna nomenada per familha. Un
 	// clic dobrís lo tirador de la familha ; un segond clic sus la meteissa
@@ -70,7 +71,10 @@
 			dialecteTotes: 'Totes',
 			causirDial: 'Causir un o mantun dialècte',
 			causirLenga: (l) => `Causir una zòna ${/^lengas /.test(l) ? 'de las ' + l : /^[aeiouàèéòóíú]/i.test(l) ? "de l'" + l : 'del ' + l}`,
-			admin: "Modificar dins l'admin"
+			admin: "Modificar dins l'admin",
+			// (« I anar » : tornada de confirmar per Romain)
+			anar: 'I anar',
+			anarTitol: "Anar a l'escala ont la jaça se vei"
 		},
 		fr: {
 			rail: 'Couches de la carte',
@@ -115,7 +119,9 @@
 			dialecteTotes: 'Tous',
 			causirDial: 'Choisir un ou plusieurs dialectes',
 			causirLenga: (l) => `Choisir une zone ${/^langues /.test(l) ? 'des ' + l : /^[aeiouàâéèêîôû]/i.test(l) ? "de l'" + l : 'du ' + l}`,
-			admin: "Modifier dans l'admin"
+			admin: "Modifier dans l'admin",
+			anar: 'Y aller',
+			anarTitol: "Aller à l'échelle où la couche est visible"
 		}
 	};
 	let tx = $derived(T[lang] ?? T.oc);
@@ -523,10 +529,56 @@
 		return f ? (lang === 'oc' ? f.oc : f.fr) : id;
 	};
 
+	// Tota la linha aluca o escantís sa jaça (decision de Romain, 2026-10-10) ;
+	// los botons, pastilhas, bullas e reglatges de la linha gardan lor clic
+	function clicLinha(e, j) {
+		if (!actiu(j) || e.target.closest('button, a, input, select, label, .info, .pastilhas, [role="button"], [role="switch"]')) return;
+		bascular(j.id, !visibility[j.id]);
+	}
+	// La jaça es alucada mas pas vesibla a l'escala actuala
+	const foraEscala = (j) => estatCarta.z != null && zPlaja(j.id, estatCarta.z, estatCarta.lat) != null;
+	const anarPlaja = (id) => dispatchEvent(new CustomEvent('carta-anar-plaja', { detail: { id } }));
+	// L'apercebut al survòl (decision de Romain, 2026-10-10) : aprèp 0,3 s
+	// sus una linha, la jaça s'aluca un moment, sens bolegar la carta ;
+	// pas per las jaças pesugas o amb son pròpri espectacle, ni fòra escala
+	const SENS_APERCEBUT = new Set(['comunas', 'dialectes', 'creissent', 'lengasFranca', 'frontiera', 'unificat']);
+	let minutaApercebut = null;
+	const podApercebre = (j) =>
+		actiu(j) && j.estat === 'disponible' && !visibility[j.id] && !SENS_APERCEBUT.has(j.id) && !LENGAS[j.id] &&
+		!(j.fons && j.fons !== baseLayer) && estatCarta.z != null && zPlaja(j.id, estatCarta.z, estatCarta.lat) == null;
+	function entrarLinha(e, j) {
+		if (e.pointerType !== 'mouse') return;
+		sortirLinha();
+		if (!podApercebre(j)) return;
+		minutaApercebut = setTimeout(() => {
+			if (visibility[j.id]) return;
+			estatCarta.apercebut = j.id;
+			visibility[j.id] = true;
+		}, 300);
+	}
+	function sortirLinha() {
+		clearTimeout(minutaApercebut);
+		const id = estatCarta.apercebut;
+		if (!id) return;
+		visibility[id] = false;
+		estatCarta.apercebut = null;
+	}
+	$effect(() => {
+		if (!dobert) untrack(sortirLinha);
+	});
+
 	// mots longs del rail : copats amb un tiret, pas al mièg d'una sillaba
 	const cesura = (t) => t.replace(/^Adminis(tra)/, 'Adminis­$1');
 
 	function bascular(id, on) {
+		// (un clic pendent l'apercebut : la jaça demòra, e aqueste còp compta
+		// dins l'istoric ; lo doble cambiament relança l'efièch de l'istoric)
+		if (estatCarta.apercebut === id) {
+			estatCarta.apercebut = null;
+			visibility[id] = false;
+			visibility[id] = true;
+			return;
+		}
 		visibility[id] = on;
 		// (una jaça escantida : sas zònas son pas pus causidas, las de las autras demòran)
 		if (id === 'dialectes' && !on) causits = causits.filter((k) => !esOccitan(k));
@@ -583,6 +635,7 @@
 	$effect(() => {
 		const estat = JSON.stringify({ v: $state.snapshot(visibility), d: causits, b: baseLayer, c: $state.snapshot(colors) });
 		untrack(() => {
+			if (estatCarta.apercebut) return; // (un apercebut al survòl : pas dins l'istoric)
 			if (pret && darrièr && estat !== darrièr && !anullant) istoric = [...istoric.slice(-39), darrièr];
 			anullant = false;
 			darrièr = estat;
@@ -918,12 +971,25 @@
 {/snippet}
 
 {#snippet linha(j)}
-	<div class="linha" class:escantida={!actiu(j)}>
+	<!-- (tota la linha es clicabla a la mirga ; al clavièr, l'interruptor) -->
+	<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
+	<div
+		class="linha"
+		class:escantida={!actiu(j)}
+		class:fora={visibility[j.id] && actiu(j) && foraEscala(j)}
+		class:apercebuda={estatCarta.apercebut === j.id}
+		onclick={(e) => clicLinha(e, j)}
+		onpointerenter={(e) => entrarLinha(e, j)}
+		onpointerleave={sortirLinha}
+	>
 		<span class="apercebut"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>
 		<div class="cos">
 			<b>{nomJ(j)}</b>
 			{#if notaJ(j)}<small>{notaJ(j)}</small>{/if}
-			{#if visibility[j.id] && actiu(j) && escalaJ(j)}<small class="escala-j">{escalaJ(j)}</small>{/if}
+			<!-- l'escala, sonque quand la jaça alucada se vei pas d'aquí (decision de Romain, 2026-10-10) -->
+			{#if visibility[j.id] && actiu(j) && escalaJ(j) && foraEscala(j) && estatCarta.apercebut !== j.id}
+				<small class="escala-j">{escalaJ(j)}<button type="button" class="anar" title={tx.anarTitol} onclick={() => anarPlaja(j.id)}>{tx.anar}</button></small>
+			{/if}
 			{#if j.id === 'dialectes' && actiu(j)}
 				<div class="pastilhas" role="group" aria-label={tx.causirDial}>
 					{#each NOMS_DIAL as [k, oc, fr] (k)}
@@ -1298,6 +1364,32 @@
 	/* una linha nauta (pastilhas dels dialèctes) : apercebut e interruptor en naut, al nivèl del nom */
 	.linha:has(.pastilhas) {
 		align-items: start;
+	}
+	.linha:not(.escantida) {
+		cursor: pointer;
+	}
+	.linha:not(.escantida):hover {
+		background: color-mix(in srgb, var(--t-tinta) 4%, transparent);
+	}
+	/* alucada mas pas vesibla a aquesta escala : l'apercebut s'esvanís */
+	.linha.fora .apercebut {
+		opacity: 0.45;
+	}
+	.linha.apercebuda .apercebut {
+		box-shadow: 0 0 0 1px var(--t-aur);
+	}
+	.anar {
+		margin-left: 8px;
+		padding: 2px 9px;
+		border: 1px solid var(--t-aur);
+		border-radius: 999px;
+		background: none;
+		color: var(--t-aur-clar);
+		font: 700 0.75rem/1.3 var(--font-body);
+		cursor: pointer;
+	}
+	.anar:hover {
+		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
 	}
 	.linha.escantida {
 		opacity: 0.55;
