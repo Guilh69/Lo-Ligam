@@ -100,11 +100,18 @@
 		// torna demandar, de mai en mai tard, puslèu que de daissar un trauc
 		// (una adreça un pauc cambiada : lo navegador gardava l'error en
 		// memòria e tornava pas demandar)
+		// Entretant, la tuèla del nivèl de dessús (ja dins lo cache) cobrís lo
+		// trauc : un pauc mai flo, mas pas un carrat de color sul negre
 		for (const c of cs)
 			c.on('tileerror', ({ tile, coords }) => {
 				const n = (tile._essais = (tile._essais ?? 0) + 1);
-				if (n > 4) return;
-				setTimeout(() => tile.isConnected && (tile.src = c.getTileUrl(coords) + '&essai=' + n), 300 * 2 ** n + Math.random() * 400);
+				if (n === 1 && coords.z > 0) {
+					const paire = L.Util.template(c._url, { ...c.options, x: coords.x >> 1, y: coords.y >> 1, z: coords.z - 1 });
+					tile.style.background = `url("${paire}") ${coords.x & 1 ? '100%' : '0'} ${coords.y & 1 ? '100%' : '0'} / 200% 200%`;
+					tile.classList.add('leaflet-tile-loaded');
+				}
+				if (n > 5) return;
+				setTimeout(() => tile.isConnected && (tile.src = c.getTileUrl(coords) + '&essai=' + n), 200 * 2 ** n + Math.random() * 300);
 			});
 		// la mar al larg, en fondut fins a la còsta (l'IGN i es blanc de prèp)
 		const mar = crearColaMar(L).setOpacity(opts.opacity ?? 1);
@@ -730,6 +737,26 @@
 	let capaNoms = null;
 	const nomsAfichats = new Map();
 	let bóstiasNoms = [];
+	// Un òrdre per totes los tèxtes de la carta (retorn de Romain, 2026-10-10 :
+	// Ais de Provença jos lo Mont Ventor, de comunas sus los massís) : las
+	// vilas d'en primièr ; los noms de dialèctes e del relèu las evitan ; los
+	// vilatges, al darrièr, evitan tot. (bóstias de las vilas en coordenadas
+	// projectadas, coma las de las còlas)
+	let caixasVilasDOM = null;
+	function caixasDeCòlas(z) {
+		const o = map.getPixelOrigin(),
+			res = [];
+		for (const ob of [colaDonadas?.caixasNoms(), ...Object.values(colasLengas).map((c) => c.caixasNoms()), colaTematica?.caixasNoms()]) {
+			if (!ob) continue;
+			const kz = Math.pow(2, z - ob.z);
+			for (const b of ob.cs) {
+				const a = map.layerPointToContainerPoint(L.point(b[0] * kz - o.x, b[1] * kz - o.y)),
+					c = map.layerPointToContainerPoint(L.point(b[2] * kz - o.x, b[3] * kz - o.y));
+				res.push([a.x, a.y, c.x, c.y]);
+			}
+		}
+		return res;
+	}
 	const popNoms = (z) => (z >= 12.5 ? 0 : z >= 11.5 ? 100 : z >= 10.5 ? 500 : z >= 9.5 ? 2000 : 8000);
 	// La polissa d'un nom segon lo reng de la vila, coma sus la carta estelada
 	// (estil « Atlas », 2026-10-08) : Limelight per las metropòlis, capitalas
@@ -759,6 +786,10 @@
 			capaNoms = null;
 			nomsAfichats.clear();
 			bóstiasNoms = [];
+			if (caixasVilasDOM) {
+				caixasVilasDOM = null;
+				colaTematica?._pintar();
+			}
 			return;
 		}
 		if (!nomsComunas?.length) return void cargarNomsComunas();
@@ -772,13 +803,33 @@
 		cands.sort((a, c) => a.renc - c.renc || c.pop - a.pop);
 		const vòl = new Set();
 		bóstiasNoms = [];
+		const tòca = (bx, lista) => lista.some((o) => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1]);
+		// (las vilas pausadas, las autras còlas tornan plaçar lors noms)
+		let còlas = null;
+		const pausarVilas = () => {
+			const o = map.getPixelOrigin();
+			const proj = (x, y) => map.containerPointToLayerPoint([x, y]).add(o);
+			const cs = bóstiasNoms.map(([x0, y0, x1, y1]) => {
+				const a = proj(x0, y0),
+					b = proj(x1, y1);
+				return [a.x, a.y, b.x, b.y];
+			});
+			caixasVilasDOM = cs.length ? { z, cs } : null;
+			if (z < 9.8) colaDonadas?._pintar();
+			for (const c of Object.values(colasLengas)) c._pintar?.();
+			colaTematica?._pintar();
+			còlas = caixasDeCòlas(z);
+		};
 		for (const c of cands) {
 			if (bóstiasNoms.length >= 260) break;
+			if (c.renc > 3 && !còlas) pausarVilas();
 			const st = (c.estil ??= estilNom(c));
 			const q = map.latLngToContainerPoint([c.lat, c.lon]);
 			const wd = st.w + 6;
 			const bx = [q.x - wd / 2, q.y - st.px * 0.62, q.x + wd / 2, q.y + st.px * 0.62];
-			if (bóstiasNoms.some((o) => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1])) continue;
+			// (un pauc d'aire a l'entorn dels noms de las autras còlas)
+			const bxA = [bx[0] - 4, bx[1] - 3, bx[2] + 4, bx[3] + 3];
+			if (tòca(bx, bóstiasNoms) || (còlas && tòca(bxA, còlas))) continue;
 			bóstiasNoms.push(bx);
 			const k = c.fr + c.dep;
 			vòl.add(k);
@@ -792,10 +843,13 @@
 				nomsAfichats.set(k, m);
 			}
 		}
+		if (!còlas) pausarVilas();
+		// (un nom que se'n va s'escantís, coma los de las còlas)
 		for (const [k, m] of nomsAfichats)
 			if (!vòl.has(k)) {
-				capaNoms.removeLayer(m);
 				nomsAfichats.delete(k);
+				m.getElement()?.classList.add('partent');
+				setTimeout(() => capaNoms?.removeLayer(m), 380);
 			}
 	}
 
@@ -1113,7 +1167,7 @@
 				!!colaTematica?.ocupat(lp, true) ||
 				(zonaLengaA(lp) && !colaDonadas?.zonaA(lp)?.startsWith('mix-')),
 			// los noms de vilas : los noms de dialèctes los evitan
-			obstacles: () => (colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null),
+			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, caixasVilasDOM],
 			onSurvòl: (k, info) => (survòl = info),
 			onCausida: (kods, info) => {
 				causida = info;
@@ -1139,6 +1193,7 @@
 					zonaLengaA(lp, id),
 				obstacles: () => [
 					colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null,
+					caixasVilasDOM,
 					colaDonadas.caixasNoms(),
 					...Object.entries(colasLengas)
 						.filter(([o]) => o !== id)
@@ -1164,7 +1219,7 @@
 			// las provincias, que cobrisson tot, cedisson als dialèctes e al Creissent
 			cedirProv: (lp) => !!(map.hasLayer(colaDonadas) && colaDonadas.zonaA(lp)) || zonaLengaA(lp),
 			// los noms de vilas de la carta en estelas : los noms de províncias los evitan
-			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, colaDonadas.caixasNoms(), ...Object.values(colasLengas).map((c) => c.caixasNoms())],
+			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, caixasVilasDOM, colaDonadas.caixasNoms(), ...Object.values(colasLengas).map((c) => c.caixasNoms())],
 			onSurvòl: (info) => (survòlTem = info)
 		});
 		colaTematica.addTo(map);
@@ -2772,6 +2827,10 @@
 	   n'anan tre que l'on se recula (jamai dos jòcs de noms ensems) */
 	.carta :global(.nom-comuna) {
 		transition: opacity 0.8s ease 0.15s;
+	}
+	.carta :global(.nom-comuna.partent) {
+		opacity: 0;
+		transition: opacity 0.35s ease;
 	}
 	.carta:global(.revelant) :global(.nom-comuna) {
 		opacity: 0;

@@ -1389,10 +1389,14 @@ export function crearColaDonadas(
 				// cada nom a son luòc, o a l'entorn se lo nom d'una vila i es ja
 				// (retorn de Romain : AUVERNHAT sus MASSÍS CENTRAL, VIVAROAUPENC
 				// sus Gap) ; los noms de las cadenas, eles, evitan aqueles
-				const ob = obstacles?.();
 				const o = this._map.getPixelOrigin().add(this._min);
-				const kz = ob ? Math.pow(2, z - ob.z) : 1;
-				const ocup = ob ? ob.cs.map((b) => [b[0] * kz - o.x, b[1] * kz - o.y, b[2] * kz - o.x, b[3] * kz - o.y]) : [];
+				const ocup = [obstacles?.()]
+					.flat()
+					.filter(Boolean)
+					.flatMap((ob) => {
+						const kz = Math.pow(2, z - ob.z);
+						return ob.cs.map((b) => [b[0] * kz - o.x, b[1] * kz - o.y, b[2] * kz - o.x, b[3] * kz - o.y]);
+					});
 				const se = (a, b) => a[0] < b[2] && a[2] > b[0] && a[1] < b[3] && a[3] > b[1];
 				const caixas = [];
 				for (const [zn, color, aJ] of noms) {

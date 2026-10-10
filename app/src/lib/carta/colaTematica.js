@@ -391,6 +391,11 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			this._fontsMesas = voladas;
 		},
 
+		// las bóstias dels noms pausats aquí (relèu, províncias), en
+		// coordenadas projectadas : los noms de comunas los evitan
+		caixasNoms() {
+			return this._caixasNoms ?? null;
+		},
 		_onAnimZoom(e) {
 			this._transformar(e.center, e.zoom);
 		},
@@ -920,6 +925,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					const k = Math.pow(2, z - zo);
 					for (const b of cs) ocupadas.push([b[0] * k - this._o.x, b[1] * k - this._o.y, b[2] * k - this._o.x, b[3] * k - this._o.y]);
 				}
+			const nObstacles = ocupadas.length;
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
 
 			/* Parcs : un aplat leugièr e un contorn ponchejat */
@@ -1159,8 +1165,10 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					const [z0, z1] = fenèstras[r.props.mena]?.[r.props.renc] ?? [9, 13];
 					// (a l'arribada : las cadenas grandas d'en primièr)
 					const pI = easeS(clamp((tiM - (INTRO.massis[0] + (r.props.renc - 1) * 0.3)) / 0.8));
-					const al = this._doç('releu-' + r.props.mena + r.props.renc, clamp((z - z0) / 0.6) * clamp((z1 - z) / 0.6)) * pI * aMassis;
-					if (al < 0.01) continue;
+					const vòl = clamp((z - z0) / 0.6) * clamp((z1 - z) / 0.6);
+					const al = this._doç('releu-' + r.props.mena + r.props.renc, vòl) * pI * aMassis;
+					// (un nom qu'arriba garda ja sa plaça : los noms de comunas l'evitan)
+					if (al < 0.01 && vòl * aMassis < 0.01) continue;
 					let [x, y] = r.p;
 					if (x < -100 || y < -40 || x > this._W + 100 || y > this._H + 40) continue;
 					const som = r.props.mena === 'som';
@@ -1189,6 +1197,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					}
 					if (!bx) continue;
 					pausats.push(bx);
+					if (al < 0.01) continue;
 					cx.globalAlpha = al * (som ? 0.85 : 0.6);
 					cx.fillStyle = `rgb(${T.linha})`;
 					if (som) {
@@ -1219,6 +1228,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				if (esp) cx.letterSpacing = '0px';
 				cx.restore();
 			}
+			const pròpias = this._o ? ocupadas.slice(nObstacles).map((b) => [b[0] + this._o.x, b[1] + this._o.y, b[2] + this._o.x, b[3] + this._o.y]) : [];
+			this._caixasNoms = pròpias.length ? { z, cs: pròpias } : null;
 		}
 	});
 	return new Cola();
