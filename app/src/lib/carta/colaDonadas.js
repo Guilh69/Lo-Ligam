@@ -27,8 +27,9 @@ const mesclar = (a, b, t) => {
 // gascon, magenta lengadocian, ròse provençal, irangis del nòrd) ; en
 // daltonisme, la paleta Okabe-Ito
 const COLORS = {
-	sorne: { gas: '#9d7dff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' },
-	clar: { gas: '#6a45d0', lan: '#c2185b', pro: '#e573ad', lem: '#e07b00', auv: '#a8321a', viv: '#c9a227' },
+	// lo gascon en blau prigond, l'« otramar » (causida de Romain, 2026-10-10 ; abans violet)
+	sorne: { gas: '#5b7fff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' },
+	clar: { gas: '#2350d8', lan: '#c2185b', pro: '#e573ad', lem: '#e07b00', auv: '#a8321a', viv: '#c9a227' },
 	dalt: { gas: '#0072b2', lan: '#d55e00', pro: '#cc79a7', lem: '#e69f00', auv: '#009e73', viv: '#56b4e9' }
 };
 const TEMAS = {

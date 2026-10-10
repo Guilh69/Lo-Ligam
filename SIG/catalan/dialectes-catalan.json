@@ -2,7 +2,7 @@
   "descripcion": "Dialectes du catalan pour la carte de Lo Ligam. Les codes (kod) sont ceux de la colonne dialecte de dialectes-catalan.csv. Coordonnées [lon, lat] des centres-villes (Wikidata, sauf celles marquées aproximativa).",
   "a_validar": "Tous les noms occitans (champ oc, y compris dans subdialectes) sont des propositions de Claude, à valider par Romain (dicodòc, Lo Congrès).",
   "paleta_occitana_d_evitar": {
-    "gas": "#9d7dff",
+    "gas": "#5b7fff",
     "lan": "#ff3f86",
     "pro": "#ffb0dc",
     "lem": "#ffa22e",

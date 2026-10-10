@@ -140,8 +140,8 @@
 	// Colors dels dialèctes (las de la carta, colaDonadas.js)
 	const DIAL = $derived(
 		clar
-			? { gas: '#6a45d0', lan: '#c2185b', pro: '#e573ad', lem: '#e07b00', auv: '#a8321a', viv: '#c9a227' }
-			: { gas: '#9d7dff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' }
+			? { gas: '#2350d8', lan: '#c2185b', pro: '#e573ad', lem: '#e07b00', auv: '#a8321a', viv: '#c9a227' }
+			: { gas: '#5b7fff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' }
 	);
 	// Las autras lengas (lengas.js) : lors pastilhas e lors colors
 	// la color d'una pastilha d'una lenga (sa color de dialècte segon lo tèma)
