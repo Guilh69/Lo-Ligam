@@ -13,6 +13,7 @@
 	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
 	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
 	import { quintOut } from 'svelte/easing';
+	import { tampaDefòra } from '$lib/tampaDefora.js';
 
 	let {
 		familhas = [],
@@ -572,6 +573,17 @@
 		for (const j of totas) if (visibility[j.id]) visibility[j.id] = false;
 		causits = [];
 	}
+	// Un clic defòra tampa (principi del site, $lib/tampaDefora.js) : lo
+	// tirador, e las bullas d'informacion
+	$effect(() => {
+		if (!dobert) return;
+		return tampaDefòra((t) => !!t.closest('#tirador-jaces, .rail'), () => (dobert = null));
+	});
+	function clicDefòra(e) {
+		pret = true;
+		const info = document.activeElement?.closest?.('.info');
+		if (info && e.target instanceof Element && !info.contains(e.target)) info.blur();
+	}
 	function onKey(e) {
 		pret = true;
 		if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z' && !/^(INPUT|TEXTAREA)$/.test(e.target?.tagName ?? '')) {
@@ -588,7 +600,7 @@
 	}
 </script>
 
-<svelte:window onkeydown={onKey} onpointerdown={() => (pret = true)} />
+<svelte:window onkeydown={onKey} onpointerdowncapture={clicDefòra} />
 
 <nav
 	class="rail"

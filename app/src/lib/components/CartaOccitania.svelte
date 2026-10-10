@@ -3,6 +3,7 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
+	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
 	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, palièrDe, fixarLatEscala, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
@@ -884,6 +885,11 @@
 		else if (e.key === 'Enter' && n) causirComuna(comunasTrobadas[Math.max(0, comunaActiva)]), e.preventDefault();
 		else if (e.key === 'Escape') (comunasTrobadas.length ? (comunasTrobadas = []) : (menuPròcha = false)), e.preventDefault();
 	}
+	// un clic defòra tampa la lista (principi del site, $lib/tampaDefora.js)
+	$effect(() => {
+		if (!menuPròcha) return;
+		return tampaDefòra((t) => !!t.closest('.procha'), () => (menuPròcha = false));
+	});
 	// la jaça escantida : lo ponch de l'usatgièr se'n va
 	$effect(() => {
 		if (!visibility.calandretas) {
