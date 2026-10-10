@@ -3,13 +3,21 @@
 // francesa ; « Veire la lenga dins son environament lingüistic » mòstra la
 // rèsta. Cargat sonque quand cal (34 Ko).
 let aneis = null,
+	estrangier = [],
 	promesa = null;
 
 export const cargarFranca = () =>
 	(promesa ??= fetch('/data/franca.json')
 		.then((r) => (r.ok ? r.json() : []))
-		.then((a) => (aneis = a))
+		.then((d) => {
+			aneis = d.aneis ?? d;
+			estrangier = d.estrangier ?? [];
+		})
 		.catch(() => (aneis = [])));
+
+// las lengas que desbòrdan de França (calculat per franca-contorn.py : mai de
+// 1 % de lor domeni en defòra ; lo breton, tot en França, n'es pas)
+export const lengasEstrangièr = () => estrangier;
 
 export const francaCargada = () => !!aneis?.length;
 

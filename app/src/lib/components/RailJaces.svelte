@@ -15,7 +15,7 @@
 	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
 	import { quintOut } from 'svelte/easing';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { cargarFranca, dinsFranca } from '$lib/carta/franca.js';
+	import { cargarFranca, lengasEstrangièr } from '$lib/carta/franca.js';
 
 	let {
 		familhas = [],
@@ -78,7 +78,8 @@
 			fuelhaAgrandir: 'Agrandir lo panèl',
 			totDetalh: 'Tot lo detalh',
 			tornarOc: "Tornar a l'occitan",
-			environament: 'Veire la lenga dins son environament lingüistic',
+			// (una familha de lengas, las d'oïl : al plural, retorn de Romain)
+			environament: (pl) => (pl ? 'Veire las lengas dins lor environament lingüistic' : 'Veire la lenga dins son environament lingüistic'),
 			// (« francesa » : validat per Romain, 2026-10-10)
 			amagarRèsta: 'Sonque la part francesa',
 			occitan: 'Occitan',
@@ -136,7 +137,7 @@
 			fuelhaAgrandir: 'Agrandir le panneau',
 			totDetalh: 'Tout le détail',
 			tornarOc: "Revenir à l'occitan",
-			environament: 'Voir la langue dans son environnement linguistique',
+			environament: (pl) => (pl ? 'Voir les langues dans leur environnement linguistique' : 'Voir la langue dans son environnement linguistique'),
 			amagarRèsta: 'Seulement la partie française',
 			occitan: 'Occitan',
 			lengas: 'Langues',
@@ -260,7 +261,7 @@
 	let silhoetas = $state({});
 	// la part francesa de cada silhoeta (lo contorn de França, meteissa escala)
 	let silhoetasFr = $state({});
-	// las lengas que desbòrdan de França (mai de 5 % de lor contorn defòra)
+	// las lengas que desbòrdan de França (franca.json, calculat per franca-contorn.py)
 	let estrangièr = $state({});
 	function alternarEnvironament(id) {
 		const env = estatCarta.environament;
@@ -289,17 +290,7 @@
 				}
 				silhoetas = out;
 				silhoetasFr = outFr;
-				cargarFranca().then(() => {
-					const e = {};
-					for (const [k, anels] of Object.entries(d)) {
-						if (k === 'franca') continue;
-						let n = 0,
-							o = 0;
-						for (const a of anels) for (const [x, y] of a) (n++, dinsFranca(y, x) || o++);
-						e[k] = n > 0 && o / n > 0.05;
-					}
-					estrangièr = e;
-				});
+				cargarFranca().then(() => (estrangièr = Object.fromEntries(lengasEstrangièr().map((k) => [k, true]))));
 			})
 			.catch(() => {});
 	});
@@ -1113,8 +1104,8 @@
 				type="button"
 				class="silh-b"
 				aria-pressed={tota}
-				aria-label={tota ? tx.amagarRèsta : tx.environament}
-				title={tota ? tx.amagarRèsta : tx.environament}
+				aria-label={tota ? tx.amagarRèsta : tx.environament(id === 'oil')}
+				title={tota ? tx.amagarRèsta : tx.environament(id === 'oil')}
 				onclick={() => alternarEnvironament(id)}>{@render dessenhSilh(id, color, tota)}</button
 			>
 		{:else}

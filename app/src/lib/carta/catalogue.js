@@ -109,7 +109,8 @@ export const CATALOGUE = [
 	}
 ];
 
-// Las autras lengas de França (demanda de Romain, 2026-10-08) : una familha a
+// Las autras lengas de França (demanda de Romain, 2026-10-08) ; lors nòtas parlan
+// d'en primièr de la part francesa (Romain, 2026-10-10) : una familha a
 // despart, per las far descobrir e far de ponts ; mens provesida que l'occitan
 // (una etiqueta per lenga e una ficha corta), de completar
 CATALOGUE.push({
@@ -135,8 +136,8 @@ CATALOGUE.push({
 			fr: 'Catalan',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Sos dialèctes, de Salses a Guardamar e a l’Alguer ; la Catalonha del Nòrd a despart',
-			nota_fr: 'Ses dialectes, de Salses à Guardamar et à Alghero ; la Catalogne nord à part'
+			nota_oc: 'En França, la Catalonha del Nòrd, de Salses a Perpinyà ; se perlonga en Espanha, en Andòrra e fins a l’Alguer',
+			nota_fr: 'En France, la Catalogne nord, de Salses à Perpignan ; il se prolonge en Espagne, en Andorre et jusqu’à Alghero'
 		},
 		{
 			id: 'arpitan',
@@ -144,8 +145,8 @@ CATALOGUE.push({
 			fr: 'Arpitan (francoprovençal)',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Sos dialèctes, de Liyon a Nôchâtél, a Aoûta e a Faeto ; la part de França a despart',
-			nota_fr: 'Ses dialectes, de Lyon à Neuchâtel, à Aoste et à Faeto ; la partie française à part'
+			nota_oc: 'En França, de Liyon a Chambèri ; se perlonga en Soïssa romanda (Nôchâtél) e dins la val d’Aoûta',
+			nota_fr: 'En France, de Lyon à Chambéry ; il se prolonge en Suisse romande (Neuchâtel) et dans le Val d’Aoste'
 		},
 		{
 			id: 'basc',
@@ -153,8 +154,8 @@ CATALOGUE.push({
 			fr: 'Basque',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Sos dialèctes, de Bilbo a Maule e a Iruña ; Iparralde a despart',
-			nota_fr: 'Ses dialectes, de Bilbao à Mauléon et à Pampelune ; le Pays basque nord à part'
+			nota_oc: 'En França, Iparralde, de Baiona a Maule ; se perlonga en Espanha, de Bilbo a Iruña',
+			nota_fr: 'En France, le Pays basque nord, de Bayonne à Mauléon ; il se prolonge en Espagne, de Bilbao à Pampelune'
 		},
 		{
 			id: 'breton',
@@ -171,8 +172,8 @@ CATALOGUE.push({
 			fr: 'Alsacien',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Lo continuum alemanic, d’Estrasborg a Basilèa e a Zuric ; Alsàcia a despart',
-			nota_fr: 'Le continuum alémanique, de Strasbourg à Bâle et à Zurich ; l’Alsace à part'
+			nota_oc: 'En Alsàcia, a l’entorn d’Estrasborg ; fa partida del continuum alemanic, que s’espandís en Alemanha e en Soïssa, fins a Basilèa e Zuric',
+			nota_fr: 'En Alsace, autour de Strasbourg ; il fait partie du continuum alémanique, qui s’étend en Allemagne et en Suisse, jusqu’à Bâle et Zurich'
 		},
 		{
 			id: 'francic',
@@ -180,8 +181,8 @@ CATALOGUE.push({
 			fr: 'Francique (platt)',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Lo platt de Mosèla e sos vesins, fins a Luxemborg e a la Sarra ; Mosèla germanofòna a despart',
-			nota_fr: 'Le platt de Moselle et ses voisins, jusqu’au Luxembourg et à la Sarre ; la Moselle germanophone à part'
+			nota_oc: 'En Mosèla germanofòna, lo platt ; se perlonga al Luxemborg e dins la Sarra',
+			nota_fr: 'En Moselle germanophone, le platt ; il se prolonge au Luxembourg et dans la Sarre'
 		},
 		{
 			id: 'flamenc',
@@ -189,8 +190,8 @@ CATALOGUE.push({
 			fr: 'Flamand et néerlandais',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Del Westhoek als Païses Basses, lo continuum dels dialèctes neerlandeses ; Flandres de França a despart',
-			nota_fr: 'Du Westhoek aux Pays-Bas, le continuum des dialectes néerlandais ; la Flandre française à part'
+			nota_oc: 'En França, lo flamenc del Westhoek ; fa partida del continuum dels dialèctes neerlandeses, fins als Païses Basses',
+			nota_fr: 'En France, le flamand du Westhoek ; il fait partie du continuum des dialectes néerlandais, jusqu’aux Pays-Bas'
 		},
 		{
 			id: 'cors',
@@ -198,8 +199,8 @@ CATALOGUE.push({
 			fr: 'Corse',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Sos parlars, del Cap Còrs a Bonifacio, e lo gallurés e lo sassarés de Sardenha ; Corsega a despart',
-			nota_fr: 'Ses parlers, du Cap Corse à Bonifacio, et le gallurais et le sassarais de Sardaigne ; la Corse à part'
+			nota_oc: 'En Corsega, sos parlars, del Cap Còrs a Bonifacio ; en Sardenha, lo gallurés e lo sassarés ne son pròches',
+			nota_fr: 'En Corse, ses parlers, du Cap Corse à Bonifacio ; en Sardaigne, le gallurais et le sassarais en sont proches'
 		},
 		{
 			id: 'oil',
@@ -207,8 +208,8 @@ CATALOGUE.push({
 			fr: 'Langues d’oïl',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Una familha de lengas : picard, normand, galò, peitavin-santongés, campanés, lorren…',
-			nota_fr: 'Une famille de langues : picard, normand, gallo, poitevin-saintongeais, champenois, lorrain…'
+			nota_oc: 'Una familha de lengas, del nòrd a l’oèst de França : picard, normand, galò, peitavin-santongés, campanés, lorren… ; tanben en Bèlgica e en Soïssa',
+			nota_fr: 'Une famille de langues, du nord à l’ouest de la France : picard, normand, gallo, poitevin-saintongeais, champenois, lorrain… ; aussi en Belgique et en Suisse'
 		}
 	]
 });

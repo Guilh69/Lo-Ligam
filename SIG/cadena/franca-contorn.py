@@ -37,6 +37,29 @@ for p in polis:
     if len(pts) >= 4 and p.GetArea() > 0.0005:  # (los ilhòts minuscules : pas besonh)
         aneis.append(pts)
 
+# Las lengas que desbòrdan de França : la part de lor domeni (lengas-vesinas.json)
+# en defòra de França espandida d'1 km (la còsta e sa simplificacion comptan pas),
+# mai de 1 % de lor susfàcia (lo breton, tot en França, a pas de boton « environament »)
+franca_larga = union.UnionCascaded().Buffer(0.01)
+vesinas = json.load(open(os.path.join(RAIC, 'app', 'static', 'data', 'lengas-vesinas.json'), encoding='utf-8'))
+estrangier = []
+for k, anels in vesinas.items():
+    if k == 'franca':
+        continue
+    dom = None
+    for a in anels:
+        anel = ogr.Geometry(ogr.wkbLinearRing)
+        for x, y in a:
+            anel.AddPoint_2D(x, y)
+        p = ogr.Geometry(ogr.wkbPolygon)
+        p.AddGeometry(anel)
+        p = p.Buffer(0)  # (un anèl simplificat que se copa el meteis : reparat)
+        dom = p if dom is None else dom.Union(p)
+    part = dom.Difference(franca_larga).GetArea() / max(dom.GetArea(), 1e-12)
+    print(f'  {k} : {part:.1%} en defòra de França')
+    if part > 0.01:
+        estrangier.append(k)
+
 with open(SORTIDA, 'w', encoding='utf-8') as s:
-    json.dump(aneis, s, separators=(',', ':'))
-print('franca.json', os.path.getsize(SORTIDA), 'octets,', len(aneis), 'anèls,', sum(len(a) for a in aneis), 'ponches')
+    json.dump({'aneis': aneis, 'estrangier': estrangier}, s, separators=(',', ':'))
+print('franca.json', os.path.getsize(SORTIDA), 'octets,', len(aneis), 'anèls,', sum(len(a) for a in aneis), 'ponches ; desbòrdan :', ', '.join(estrangier))
