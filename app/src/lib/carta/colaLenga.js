@@ -135,6 +135,8 @@ export function crearColaLenga(
 				for (const a of d.domeni?.anels || [])
 					for (const [x, y] of a) (x0 = Math.min(x0, x)), (y0 = Math.min(y0, y)), (x1 = Math.max(x1, x)), (y1 = Math.max(y1, y));
 				this._caixaDom = [[x0, y0], [x1, y0], [x0, y1], [x1, y1]];
+				// (la prioritat del nom lonhdan : l'emprèsa del domeni)
+				this._prio = (x1 - x0) * (y1 - y0);
 				this._d = d;
 				onDonadas?.(d);
 				this._rel = null; // (l'escala d'ara, sens animacion)
@@ -900,23 +902,57 @@ export function crearColaLenga(
 				cx.lineJoin = 'round';
 				cx.stroke(G.dom);
 				if (vE < 0.6) {
-					const [x, y] = G.pt(lenga.eti);
-					const fsO = clamp(9 + (z - 3.75) * 3, 9, 15);
-					const t = lenga.nomCarta ?? lenga.nom.endo.toUpperCase();
-					cx.font = `600 ${fsO.toFixed(1)}px Luciole, sans-serif`;
-					cx.letterSpacing = (fsO * 0.4).toFixed(1) + 'px';
-					cx.textAlign = 'center';
-					cx.textBaseline = 'middle';
-					cx.shadowColor = T.ombra;
-					cx.shadowBlur = 8;
-					cx.fillStyle = T.tèxt;
-					cx.globalAlpha = aUni * (1 - easeS(clamp(vE / 0.6)));
-					cx.fillText(t, x, y);
-					if (cx.globalAlpha > 0.3) {
-						const w = cx.measureText(t).width / 2 + 6,
-							o = this._map.getPixelOrigin().add(this._min);
-						caixaL = [x - w + o.x, y - fsO + o.y, x + w + o.x, y + fsO + o.y].map(Math.round);
+					const fsO0 = clamp(9 + (z - 3.75) * 3, 9, 15);
+					// (una lenga pòt aver mantun nom lonhdan : ELSÄSSISCH en Alsàcia, PLATT en Mosèla)
+					const etis = lenga.nomsCarta ?? [{ t: lenga.nomCarta ?? lenga.nom.endo.toUpperCase(), eti: lenga.eti }];
+					// Los noms lonhdans de las lengas s'evitan (retorn de Romain : « BREZHONEG »
+					// sus « LANGUES D'OÏL ») : la lenga pus larga garda sa plaça, las autras
+					// se desplaçan dins lor domeni (dessús, dejós, als costats), puèi lor nom
+					// se fa pus pichon, o s'escafa
+					const o = this._map.getPixelOrigin().add(this._min);
+					const autres = [];
+					for (const ob of obstacles?.() || []) {
+						if (!ob?.L || !(ob.prio > (this._prio ?? 0))) continue;
+						const kz = Math.pow(2, z - ob.z);
+						for (const L of ob.L) autres.push([L[0] * kz - o.x, L[1] * kz - o.y, L[2] * kz - o.x, L[3] * kz - o.y]);
 					}
+					const tc = (this._cxTest ??= document.createElement('canvas').getContext('2d'));
+					caixaL = [];
+					for (const { t, eti } of etis) {
+					const [x0, y0] = G.pt(eti);
+					let pos = null;
+					for (const esc of [1, 0.82]) {
+						const fs = fsO0 * esc;
+						cx.font = `600 ${fs.toFixed(1)}px Luciole, sans-serif`;
+						cx.letterSpacing = (fs * 0.4).toFixed(1) + 'px';
+						const w = cx.measureText(t).width / 2 + 6;
+						for (const [dx, dy] of [[0, 0], [0, -2.2], [0, 2.2], [0, -4.4], [0, 4.4], [-1, 0], [1, 0], [-1, -2.2], [1, 2.2], [1, -2.2], [-1, 2.2]]) {
+							const px = x0 + dx * w,
+								py = y0 + dy * fs;
+							if (autres.some((b) => px - w < b[2] && px + w > b[0] && py - fs < b[3] && py + fs > b[1])) continue;
+							if (G.dom && (dx || dy) && !tc.isPointInPath(G.dom, px, py, 'evenodd')) continue;
+							pos = { x: px, y: py, fs, w };
+							break;
+						}
+						if (pos) break;
+					}
+					if (pos) {
+						const { x, y, fs: fsO, w } = pos;
+						cx.textAlign = 'center';
+						cx.textBaseline = 'middle';
+						cx.shadowColor = T.ombra;
+						cx.shadowBlur = 8;
+						cx.fillStyle = T.tèxt;
+						cx.globalAlpha = aUni * (1 - easeS(clamp(vE / 0.6)));
+						cx.fillText(t, x, y);
+						if (cx.globalAlpha > 0.3) {
+							const bx = [x - w + o.x, y - fsO + o.y, x + w + o.x, y + fsO + o.y].map(Math.round);
+							caixaL.push(bx);
+							autres.push([bx[0] - o.x, bx[1] - o.y, bx[2] - o.x, bx[3] - o.y]);
+						}
+					}
+					}
+					if (!caixaL.length) caixaL = null;
 				}
 				cx.restore();
 			}
@@ -977,9 +1013,9 @@ export function crearColaLenga(
 				for (const b of caixas) (b[0] += o.x), (b[1] += o.y), (b[2] += o.x), (b[3] += o.y);
 			}
 			// (gardadas en coordenadas projectadas ; un objècte nòu sonque se càmbian)
-			if (caixaL) caixas.push(caixaL);
+			if (caixaL) caixas.push(...caixaL);
 			const clau = caixas.map((b) => b.map(Math.round).join(',')).join(';') + '@' + z;
-			if (clau !== this._caixasNoms?.clau) this._caixasNoms = caixas.length ? { clau, z, cs: caixas } : null;
+			if (clau !== this._caixasNoms?.clau) this._caixasNoms = caixas.length ? { clau, z, cs: caixas, L: caixaL, prio: this._prio ?? 0 } : null;
 		},
 
 		_copiar(img, a) {

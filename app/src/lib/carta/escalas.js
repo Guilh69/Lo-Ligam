@@ -56,7 +56,7 @@ export const KM = {
 	detalh: [400, 200], // las autras jaces arriban de 400 a 200 km (a 500 km, sonque las lengas)
 	rius: 150,
 	dialectes: 100, // 150 km e mai : las lengas unidas
-	capitalas: 200, // las estelas de las vilas grandas, una o doas per dialècte (causida de Romain, 2026-10-09)
+	capitalas: 150, // las estelas de las vilas grandas, una o doas per dialècte (causida de Romain, 2026-10-09) ; pas pus a 200 km (retorn de Romain, 2026-10-10 : « à cette échelle il ne faut plus voir les points »)
 	nomsCapitalas: 150, // lors noms (a 200 km, se sarravan sus « OCCITAN »)
 	vilas: 40, // las vilas importantas de cada despartament
 	vilasMejanas: 30,
