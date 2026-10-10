@@ -137,6 +137,9 @@ classa = json.load(open(os.path.join(SIG, FL, 'dialectes-%s.json' % FL), encodin
 if CONF.get('dialectes'):
     classa['dialectes'] = [d for d in classa['dialectes'] if d['kod'] in CONF['dialectes']]
 ENDO = CONF['endo']
+# (clau resèrvada : « de » es la lenga maire d'un sosdialècte, lo francic s'i èra pres)
+if ENDO in ('de', 'kod', 'apart', 'dins', 'color', 'fr', 'oc'):
+    raise SystemExit('Clau de nom resèrvada : %s (causir un autre còdi ISO)' % ENDO)
 # (CONF['dialectes_mai'] : de dialèctes apondus, coma una zòna escantida a part)
 classa['dialectes'] = classa['dialectes'] + CONF.get('dialectes_mai', [])
 DIAL = {d['kod']: d for d in classa['dialectes']}
