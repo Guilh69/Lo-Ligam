@@ -763,7 +763,7 @@
 					{#if onglet === 'franca'}
 						{#each f.jaces.filter((j) => !LENGAS[j.id]) as j (j.id)}{@render linha(j)}{/each}
 					{/if}
-					{#each lengasOnglet(f) as j (j.id)}{@render fichaLenga(j)}{/each}
+					{#each lengasOnglet(f) as j, i (j.id)}<div class="ficha-arr" style:--i={i}>{@render fichaLenga(j)}</div>{/each}
 				{:else}
 					<p class="sota">{tx.disponiblas(dispo)}{f.jaces.length - dispo ? ' · ' + tx.venir(f.jaces.length - dispo) : ''}</p>
 					{#each f.jaces as j (j.id)}
@@ -1426,6 +1426,22 @@
 		transform: scale(1.06);
 	}
 	/* ---------- Opcion A : las fichas de las lengas ---------- */
+	/* las fichas arriban una a una a la dobertura (en cascada, coma los dialèctes) */
+	.ficha-arr {
+		animation: ficha-arr 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+		animation-delay: calc(var(--i, 0) * 45ms);
+	}
+	@keyframes ficha-arr {
+		from {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.ficha-arr {
+			animation: none;
+		}
+	}
 	/* quatre onglets en grasilha 2 × 2 : « Transfrontalièras » tenia pas sus una linha */
 	.onglets {
 		display: grid;
