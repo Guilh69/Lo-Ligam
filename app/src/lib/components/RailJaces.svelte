@@ -1040,7 +1040,7 @@
 			type="button"
 			class="basc"
 			role="switch"
-			aria-checked={actiu(j) && !!visibility[j.id]}
+			aria-checked={actiu(j) && !!visibility[j.id] && estatCarta.apercebut !== j.id}
 			aria-label={nomJ(j)}
 			disabled={!actiu(j)}
 			onclick={() => bascular(j.id, !visibility[j.id])}
@@ -1469,6 +1469,22 @@
 	.basc:disabled {
 		opacity: 0.35;
 		cursor: default;
+	}
+	/* en apercebut : ni alucat ni escantit, un contorn d'aur, lo boton al
+	   mièg que bat doçament (demanda de Romain, 2026-10-10) */
+	.linha.apercebuda .basc {
+		background: transparent;
+		box-shadow: inset 0 0 0 1.5px var(--t-aur);
+	}
+	.linha.apercebuda .basc::after {
+		transform: translateX(7px);
+		background: var(--t-aur);
+		animation: batre 1.2s ease-in-out infinite;
+	}
+	@keyframes batre {
+		50% {
+			opacity: 0.4;
+		}
 	}
 
 	/* color : una pastilha que dobrís lo selector del sistèma */
@@ -2112,6 +2128,7 @@
 		.basc,
 		.basc::after {
 			transition: none;
+			animation: none !important;
 		}
 		.tirador {
 			animation: none;
