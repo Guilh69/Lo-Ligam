@@ -95,6 +95,32 @@ if (args[0] === '--fr' && args.length > 1) {
 	}
 	process.exit(0);
 }
+// Los noms de luòcs (API top'Òc de lo Congrès) : vila o país, del francés cap a l'occitan
+//   node scripts/verificar-oc.mjs --topo Strasbourg:city Pays-Bas:country Auch:32 64001
+// (nom:city, nom:country, nom:despartament, o un còdi de comuna INSEE sol)
+if (args[0] === '--topo' && args.length > 1) {
+	for (const a of args.slice(1)) {
+		const url = new URL('https://api.locongres.org/topoc.php');
+		url.searchParams.set('key', clau);
+		const [nom, t] = a.split(':');
+		if (/^\d[\dAB]\d{3}$/.test(a)) url.searchParams.set('code', a);
+		else {
+			url.searchParams.set('name', nom);
+			url.searchParams.set('lang', 'fr');
+			if (/^\d{2}$/.test(t ?? '')) url.searchParams.set('dep', t);
+			else url.searchParams.set('type', t || 'city');
+		}
+		try {
+			const data = await (await fetch(url)).json();
+			const r = (data?.query ?? []).map((e) => `${e.oc} (fr : ${e.fr})`);
+			console.log(`  ${a} → ${r.length ? [...new Set(r)].join(', ') : data?.error?.text ?? 'pas trobat dins top’Òc'}`);
+		} catch (e) {
+			console.log(`  ${a} → erreur : ${e.message}`);
+		}
+		await new Promise((r) => setTimeout(r, 400));
+	}
+	process.exit(0);
+}
 if (args[0] === '--modul' && args[1]) {
 	mots = await lexiqueDuModul(args[1]);
 } else if (args.length > 0) {
