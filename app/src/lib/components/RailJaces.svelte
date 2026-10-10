@@ -72,8 +72,10 @@
 			causirDial: 'Causir un o mantun dialècte',
 			causirLenga: (l) => `Causir una zòna ${/^lengas /.test(l) ? 'de las ' + l : /^[aeiouàèéòóíú]/i.test(l) ? "de l'" + l : 'del ' + l}`,
 			admin: "Modificar dins l'admin",
-			// (« I anar » : tornada de confirmar per Romain)
+			// (« I anar » : causit per Romain, 2026-10-10)
 			anar: 'I anar',
+			fuelhaAgrandir: 'Agrandir lo panèl',
+			fuelhaReduire: 'Reduire lo panèl',
 			anarTitol: "Anar a l'escala ont la jaça se vei"
 		},
 		fr: {
@@ -121,6 +123,8 @@
 			causirLenga: (l) => `Choisir une zone ${/^langues /.test(l) ? 'des ' + l : /^[aeiouàâéèêîôû]/i.test(l) ? "de l'" + l : 'du ' + l}`,
 			admin: "Modifier dans l'admin",
 			anar: 'Y aller',
+			fuelhaAgrandir: 'Agrandir le panneau',
+			fuelhaReduire: 'Réduire le panneau',
 			anarTitol: "Aller à l'échelle où la couche est visible"
 		}
 	};
@@ -567,6 +571,40 @@
 		if (!dobert) untrack(sortirLinha);
 	});
 
+	// La fuèlha del telefòn (lòt 4, decision de Romain, 2026-10-10) : tocar
+	// l'ansa la fa passar de mitat a plena e tornar ; tirada, se pausa a
+	// la nautor mai pròcha (tampada, a mitat, plena)
+	let plena = $state(false);
+	let tiratgeF = $state(null);
+	$effect(() => {
+		if (!dobert) plena = false;
+	});
+	function prenerAnsa(e) {
+		const t = document.getElementById('tirador-jaces');
+		if (!t || e.button > 0) return;
+		tiratgeF = { y0: e.clientY, h0: t.getBoundingClientRect().height, h: null, mogut: false };
+		e.currentTarget.setPointerCapture(e.pointerId);
+	}
+	function tirarAnsa(e) {
+		if (!tiratgeF) return;
+		const dy = e.clientY - tiratgeF.y0;
+		if (Math.abs(dy) > 6) tiratgeF.mogut = true;
+		if (tiratgeF.mogut) tiratgeF.h = Math.max(60, tiratgeF.h0 - dy);
+	}
+	function daissarAnsa() {
+		if (!tiratgeF) return;
+		const { mogut, h } = tiratgeF;
+		tiratgeF = null;
+		if (!mogut) return (plena = !plena);
+		// (aprèp un tiratge, lo clic que seguís tomba pas sus çò de dejós)
+		const avalar = (ev) => (ev.stopPropagation(), ev.preventDefault());
+		addEventListener('click', avalar, { capture: true, once: true });
+		setTimeout(() => removeEventListener('click', avalar, { capture: true }), 350);
+		const p = railEl?.offsetParent?.getBoundingClientRect().height ?? innerHeight;
+		if (h < p * 0.22) return tamparTirador();
+		plena = h > p * 0.6;
+	}
+
 	// mots longs del rail : copats amb un tiret, pas al mièg d'una sillaba
 	const cesura = (t) => t.replace(/^Adminis(tra)/, 'Adminis­$1');
 
@@ -760,8 +798,22 @@
 		style:--tir-h={posT ? posT.h + 'px' : null}
 		style:--tir-bas={posT?.bas != null ? posT.bas + 'px' : null}
 		class:amont={orizontal || (dobert === 'fons' && posT?.bas != null)}
+		class:plena
+		class:tirat={tiratgeF?.h != null}
+		style:--fuelha-h={tiratgeF?.h != null ? tiratgeF.h + 'px' : null}
 		transition:fly={orizontal || dobert === 'fons' ? { y: 14, duration: 260, easing: quintOut } : { x: -14, duration: 260, easing: quintOut }}
 	>
+		<!-- l'ansa de la fuèlha (telefòn sonque) ; al clavièr, Entrada l'agrandís o la reduch -->
+		<button
+			type="button"
+			class="ansa"
+			aria-label={plena ? tx.fuelhaReduire : tx.fuelhaAgrandir}
+			onpointerdown={prenerAnsa}
+			onpointermove={tirarAnsa}
+			onpointerup={daissarAnsa}
+			onpointercancel={daissarAnsa}
+			onclick={(e) => e.detail === 0 && (plena = !plena)}
+		></button>
 		<header>
 			<h2>{nomFam(dobert)}</h2>
 			<button type="button" class="tampar" onclick={tamparTirador} aria-label={tx.tampar}>×</button>
@@ -1246,6 +1298,11 @@
 		height: 1px;
 		margin: 4px 10px;
 		background: var(--t-linha);
+	}
+
+	/* l'ansa de la fuèlha : pas qu'al telefòn */
+	.ansa {
+		display: none;
 	}
 
 	/* Lo tirador, a costat del rail */
@@ -2110,11 +2167,52 @@
 			right: 0;
 			bottom: calc(var(--barra-bas, 3.9rem) - 1px);
 			width: auto;
-			max-height: min(60%, calc(100% - 10rem));
+			max-height: min(52%, calc(100% - 10rem));
+			padding-top: 0;
 			border-radius: 18px 18px 0 0;
 			border-width: 1px 0 0;
 			box-shadow: 0 -12px 34px rgba(0, 0, 0, 0.4);
 			animation: tirador-pujar 0.28s cubic-bezier(0.19, 1, 0.22, 1);
+			transition: max-height 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+		}
+		/* sus telefòn, una fuèlha : a mitat, plena, o tirada al det */
+		.tirador.plena {
+			height: calc(100% - var(--barra-bas, 3.9rem) - var(--cap-bas, 0px) - 8px);
+			max-height: calc(100% - var(--barra-bas, 3.9rem) - var(--cap-bas, 0px) - 8px);
+		}
+		.tirador.tirat {
+			height: var(--fuelha-h);
+			max-height: calc(100% - var(--barra-bas, 3.9rem) - var(--cap-bas, 0px) - 8px);
+			transition: none;
+		}
+		/* l'ansa demòra en naut quand lo contengut desfila */
+		.ansa {
+			display: block;
+			position: sticky;
+			top: 0;
+			z-index: 3;
+			width: calc(100% + 32px);
+			height: 26px;
+			margin: 0 -16px 2px;
+			padding: 0;
+			border: 0;
+			border-radius: 18px 18px 0 0;
+			background: color-mix(in srgb, var(--t-fons-2) 92%, transparent);
+			cursor: grab;
+			touch-action: none;
+		}
+		.ansa::after {
+			content: '';
+			position: absolute;
+			top: 10px;
+			left: calc(50% - 20px);
+			width: 40px;
+			height: 4px;
+			border-radius: 2px;
+			background: color-mix(in srgb, var(--t-tinta) 40%, transparent);
+		}
+		.ansa:focus-visible::after {
+			background: var(--t-aur);
 		}
 	}
 	@keyframes tirador-pujar {
