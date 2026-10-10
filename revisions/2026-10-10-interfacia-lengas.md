@@ -37,6 +37,10 @@ Demandes de Romain du 2026-10-10 (dictées), à mener dans une conversation neuv
 - ✅ **Icônes des langues** (2026-10-10) : dans la silhouette, la partie française en plein, le reste en clair (contour de la France : régions IGN, `SIG/cadena/lengas-vesinas.mjs`).
 - **Étape 3, idée de Romain (2026-10-10)** : une langue allumée ne montre d'abord que sa partie française ; survoler la partie claire de son icône affiche « Voir la langue dans son environnement linguistique », un clic allume le reste sur la carte ; la liste des dialectes se range en trois groupes : **en France**, **transfrontaliers**, **hors de France**.
 
+- ✅ **Étape 3, première moitié (2026-10-10)** : dans le mode, chaque langue (occitan compris) ne montre que sa partie française : couche découpée au contour de la France (`app/static/data/franca.json`, fabriqué par `SIG/cadena/franca-contorn.py`, chargé seulement dans le mode), villes d'au-delà masquées (choix A de Romain), survol et clic hors de France ignorés. L'icône d'une langue qui déborde est un bouton « Veire la lenga dins son environament lingüistic » / « Sonque la part francesa ». Vérifié avec le catalan (Roussillon seul, puis tout le domaine). « francesa » validé par Romain.
+- **Reste de l'étape 3** : ranger les dialectes en trois groupes (en France, transfrontaliers, hors de France).
+- **Idée pour plus tard (Romain, 2026-10-10)** : la galerie des silhouettes des langues, grandes, avec seulement leur nom (partie française pleine, reste clair) ; pour une future encyclopédie ou un wiki, ou en ouverture du mode.
+
 ## Questions encore ouvertes (une à la fois)
 
 1. ✅ Icône « Autres langues » : **deux bulles de discussion**, une pleine et une au trait (Romain, 2026-10-10, d'après son modèle ; en place dans `RailJaces.svelte`).
