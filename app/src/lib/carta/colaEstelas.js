@@ -20,6 +20,7 @@ import { nomTerritori, sotaTerritori } from './territoris.js';
 import { proj0, projectar, projPonch } from './projeccion.js';
 import { Z, KM, zDès, nivèlsDezoom, aDetalh } from './escalas.js';
 import { emprèsa } from './centrar.js';
+import { EtiquetasVivas } from './etiquetasVivas.js';
 
 // Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam sus un disc sorne
 // liserat d'aur, e una onda que s'espandís doçament, coma un ponch d'interès
@@ -98,6 +99,11 @@ const rang = (n) => {
 // cap a la mar, las vilas grandas s'alucan, puèi los dialèctes se difusan.
 // Un clic (o la molèta, una tòca) mena tot d'un còp a la fin ; res se lo
 // sistèma demanda mens de movement.
+const escalaCSS = (el) => {
+	const m = getComputedStyle(el).transform;
+	return !m || m === 'none' ? 1 : new DOMMatrixReadOnly(m).a;
+};
+
 export const INTRO = {
 	costa: [0.15, 1.5],
 	corbas: [1.1, 2.9],
@@ -696,6 +702,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._cxR = this._cvR.getContext('2d');
 			this._revAct = false;
 			this._etiq = document.createElement('canvas');
+			this._viv = new EtiquetasVivas();
 			this._t0 = performance.now();
 			this._pus = null;
 			this._zP = null;
@@ -1156,6 +1163,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._revCache = null; // (fons e masca del domeni de tornar preparar)
 			}
 			this._o = map.getPixelOrigin().add(min); // projeté → canevas : soustraire o
+			this._viv?.geometria(this._o, this._zoom, this._dpr);
 			if (this._senhal && this._senhal.t0 === null) this._senhal.t0 = performance.now();
 
 			const z = this._zoom;
@@ -1269,6 +1277,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				aNomsRius = this._aEl('nomsRius');
 			this._etiqVuèg = !(((this._el.nomsVilas || nomsOff) && this._plaçament.vilas.length) || (aNomsRius > 0.01 && this._plaçament.rius.length));
 			g.setTransform(dpr, 0, 0, dpr, -o.x * dpr, -o.y * dpr);
+			this._viv.començar(g);
 			g.strokeStyle = T.liser;
 			g.lineJoin = 'round';
 			g.textAlign = 'center';
@@ -1325,6 +1334,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				g.shadowBlur = 0;
 				g.fillText(tv, v.x, v.y);
 			}
+			this._viv.acabar();
+			this._viv.pintar(g, 1, 1, true);
 			this._etiqAnim = enCamin;
 			g.shadowColor = 'transparent';
 			sensEspaci(g);
@@ -1999,9 +2010,15 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 
 			const aNomsV = faseV([INTRO.vilas[0] + 0.3, INTRO.vilas[1] + 0.3]);
-			if (aNomsV > 0.01 && aEtiq > 0.01 && !this._etiqVuèg) {
-				cx.globalAlpha = aNomsV * aEtiq * 0.92;
-				cx.drawImage(this._etiq, 0, 0, W, H);
+			if (aNomsV > 0.01 && aEtiq > 0.01 && (!this._etiqVuèg || this._viv.enCors())) {
+				// pendent lo zoom e la transicion que seguís, los noms son tornats
+				// pintar un a un (talha constanta, glissada) ; si que non, l'imatge
+				const s = this._zCibla != null ? escalaCSS(this._cv) : 1;
+				if (Math.abs(s - 1) > 1e-3 || this._viv.enCors()) this._viv.pintar(cx, s, aNomsV * aEtiq * 0.92);
+				else {
+					cx.globalAlpha = aNomsV * aEtiq * 0.92;
+					cx.drawImage(this._etiq, 0, 0, W, H);
+				}
 			}
 
 			// Les repères des villes à fiche, au-dessus de tout (même de la carte détaillée)

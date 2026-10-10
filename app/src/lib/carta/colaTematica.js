@@ -14,6 +14,7 @@
 import { INTRO } from './colaEstelas.js';
 import { nivèlsDezoom, aDetalh, zDès, KM, Z } from './escalas.js';
 import { proj0 } from './projeccion.js';
+import { telaNoms } from './etiquetasVivas.js';
 import { prepContorn, traçarPart, estelasDe, estelaCap, avançada, DURADA as DURADA_APAR, ONDA, TOTAL as TOTAL_APAR } from './aparicion.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -289,6 +290,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			}
 			this._cv = L.DomUtil.create('canvas', 'cola-tematica leaflet-zoom-animated', map.getPane('tematica'));
 			this._cx = this._cv.getContext('2d');
+			// (los noms, sus lor tela : etiquetasVivas.js)
+			this._noms = telaNoms(L, this._cv, map);
 			this._cargar();
 			this._update();
 			Promise.all([document.fonts?.load(`italic 500 14px ${CORMORANT}`), document.fonts?.load('14px Limelight')]).then(
@@ -303,6 +306,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			for (const f of this._fontsMesas ?? []) this._map?.attributionControl?.removeAttribution(f);
 			this._fontsMesas = null;
 			L.DomUtil.remove(this._cv);
+			this._noms?.levar();
+			this._noms = null;
 		},
 		getEvents() {
 			const ev = {
@@ -400,6 +405,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				currentCenterPoint = map.project(this._center, zoom),
 				topLeftOffset = viewHalf.multiplyBy(-scale).add(currentCenterPoint).subtract(map._getNewPixelOrigin(center, zoom));
 			L.DomUtil.setTransform(this._cv, topLeftOffset, scale);
+			this._noms?.transformar(topLeftOffset, scale);
 		},
 
 		/* ---------- Cargament : sonque çò que se vei ---------- */
@@ -473,6 +479,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			this._cv.height = Math.round(tal.y * dpr);
 			this._cv.style.width = tal.x + 'px';
 			this._cv.style.height = tal.y + 'px';
+			this._noms?.ajustar(this._cv, min, map.getPixelOrigin().add(min), this._zoom, dpr);
 			const o = map.getPixelOrigin().add(min);
 			this._o = o;
 			this._nUpd = (this._nUpd ?? 0) + 1;
@@ -880,6 +887,14 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			return a;
 		},
 		_pintar() {
+			this._noms?.començar(this._cx);
+			try {
+				this._pintarCòs();
+			} finally {
+				this._noms?.acabar();
+			}
+		},
+		_pintarCòs() {
 			const cx = this._cx,
 				G = this._geo;
 			if (!cx || !G) return;

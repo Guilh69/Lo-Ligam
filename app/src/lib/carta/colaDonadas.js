@@ -13,6 +13,7 @@ import { nivèlsDezoom, aDialectes, aDetalh } from './escalas.js';
 import { prepContorn, traçarPart, estelaCap, avançada, TOTAL as TOTAL_APAR } from './aparicion.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
+import { telaNoms } from './etiquetasVivas.js';
 import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranca } from './franca.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -107,6 +108,12 @@ export function crearColaDonadas(
 			}
 			this._cv = L.DomUtil.create('canvas', 'cola-donadas leaflet-zoom-animated', map.getPane('donadas'));
 			this._cx = this._cv.getContext('2d');
+			// (los noms, sus lor tela : etiquetasVivas.js)
+			this._noms = telaNoms(L, this._cv, map, (cx) => {
+				if (!(this._franca && francaCargada() && this._min)) return;
+				cx.setTransform(this._dpr, 0, 0, this._dpr, 0, 0);
+				retalharFranca(cx, this._map, this._zoom, this._map.getPixelOrigin().add(this._min));
+			});
 			// imatges en cache (lo dessenh d'una image d'animacion las recòpia)
 			this._imgTotes = document.createElement('canvas');
 			this._imgUni = document.createElement('canvas');
@@ -132,6 +139,8 @@ export function crearColaDonadas(
 			cancelAnimationFrame(this._rafRel);
 			cancelAnimationFrame(this._rafApar);
 			L.DomUtil.remove(this._cv);
+			this._noms?.levar();
+			this._noms = null;
 		},
 
 		getEvents() {
@@ -362,6 +371,7 @@ export function crearColaDonadas(
 				currentCenterPoint = map.project(this._center, zoom),
 				topLeftOffset = viewHalf.multiplyBy(-scale).add(currentCenterPoint).subtract(map._getNewPixelOrigin(center, zoom));
 			L.DomUtil.setTransform(this._cv, topLeftOffset, scale);
+			this._noms?.transformar(topLeftOffset, scale);
 		},
 
 		/* ---------- Survòl e causida ---------- */
@@ -646,6 +656,7 @@ export function crearColaDonadas(
 			}
 			this._cv.style.width = tal.x + 'px';
 			this._cv.style.height = tal.y + 'px';
+			this._noms?.ajustar(this._cv, min, map.getPixelOrigin().add(min), this._zoom, dpr);
 			const o = map.getPixelOrigin().add(min);
 			const z = this._zoom;
 			const pt = ([lon, lat]) => {
@@ -1010,7 +1021,12 @@ export function crearColaDonadas(
 			return d.v;
 		},
 		_pintar() {
-			pintarAmbFranca(this);
+			this._noms?.començar(this._cx);
+			try {
+				pintarAmbFranca(this);
+			} finally {
+				this._noms?.acabar();
+			}
 		},
 		_pintarCòs() {
 			const G = this._geo;
