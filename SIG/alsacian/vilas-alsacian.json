@@ -335,7 +335,7 @@
 "pop": 38818,
 "zona": "schwabisch",
 "estat": "DE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "de:08327050",
@@ -348,7 +348,7 @@
 "pop": 37109,
 "zona": "schwabisch",
 "estat": "DE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "67180",
@@ -361,7 +361,7 @@
 "pop": 36391,
 "zona": "niederalemannisch",
 "estat": "FR",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "de:08426021",
@@ -374,7 +374,7 @@
 "pop": 34576,
 "zona": "schwabisch",
 "estat": "DE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "de:08115021",
@@ -387,33 +387,7 @@
 "pop": 34192,
 "zona": "schwabisch",
 "estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:08425033",
-"nom_oficial": "Ehingen (Donau)",
-"nom": "Eegne",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 9.6586,
-"lat": 48.2845,
-"pop": 27764,
-"zona": "schwabisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:08237040",
-"nom_oficial": "Horb am Neckar",
-"nom": "Horb",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 8.6625,
-"lat": 48.4527,
-"pop": 25651,
-"zona": "schwabisch",
-"estat": "DE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "de:08337126",
@@ -426,7 +400,20 @@
 "pop": 25019,
 "zona": "hochalemannisch",
 "estat": "DE",
-"renc": 2
+"renc": 3
+},
+{
+"codi": "de:08237028",
+"nom_oficial": "Freudenstadt",
+"nom": "Fraidestadt",
+"local": true,
+"font": "noms-locals.csv",
+"lon": 8.4419,
+"lat": 48.4898,
+"pop": 24464,
+"zona": "schwabisch",
+"estat": "DE",
+"renc": 3
 },
 {
 "codi": "ch:4001",
@@ -439,20 +426,7 @@
 "pop": 22710,
 "zona": "hochalemannisch",
 "estat": "CH",
-"renc": 2
-},
-{
-"codi": "de:08336081",
-"nom_oficial": "Schopfheim",
-"nom": "Schopfe",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 7.8656,
-"lat": 47.674,
-"pop": 20332,
-"zona": "hochalemannisch",
-"estat": "DE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "de:08118076",
@@ -491,6 +465,19 @@
 "pop": 15500,
 "zona": "hochalemannisch",
 "estat": "CH",
+"renc": 3
+},
+{
+"codi": "de:08415053",
+"nom_oficial": "Münsingen",
+"nom": "Mensenga",
+"local": true,
+"font": "noms-locals.csv",
+"lon": 9.4947,
+"lat": 48.3794,
+"pop": 14772,
+"zona": "schwabisch",
+"estat": "DE",
 "renc": 3
 },
 {
@@ -569,7 +556,7 @@
 "pop": 9366,
 "zona": "hochalemannisch",
 "estat": "CH",
-"renc": 3
+"renc": 4
 },
 {
 "codi": "67021",
@@ -582,7 +569,7 @@
 "pop": 7057,
 "zona": "niederalemannisch",
 "estat": "FR",
-"renc": 3
+"renc": 4
 },
 {
 "codi": "ch:843",
@@ -608,19 +595,6 @@
 "pop": 6023,
 "zona": "hochstalemannisch",
 "estat": "CH",
-"renc": 4
-},
-{
-"codi": "de:08317145",
-"nom_oficial": "Wolfach",
-"nom": "Wolfä",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 8.2631,
-"lat": 48.2944,
-"pop": 5571,
-"zona": "niederalemannisch",
-"estat": "DE",
 "renc": 4
 },
 {

@@ -120,7 +120,7 @@ export function crearColaLenga(
 				this._cargant = false;
 				if (!d?.features) return;
 				// (còdis prefixats : « ca-central », distints dels dialèctes occitans)
-				const noms = Object.fromEntries((lenga.pastilhas || []).map((q) => [lenga.pref + q.k, { [lenga.lang]: q[lenga.lang] ?? q.ca, oc: q.oc, fr: q.fr }]));
+				const noms = Object.fromEntries((lenga.pastilhas || []).map((q) => [lenga.pref + q.k, { [lenga.lang]: q.endo ?? q[lenga.lang] ?? q.ca, oc: q.oc, fr: q.fr }]));
 				for (const f of d.features) {
 					const p = f.properties;
 					if (!p.kod.startsWith(lenga.pref)) p.kod = lenga.pref + p.kod;

@@ -374,24 +374,25 @@ export const LENGAS = {
 		// lo ch'ti e lo rochi : de dialèctes del picard, pas de lengas (Romain,
 		// 2026-10-10) ; lors pastilhas (« de ») e lors zònas apareisson quand lo
 		// picard es causit ; colors vivas, per se destriar dins lo picard
-		// del nòrd al sud, grope per grope
+		// del nòrd al sud, grope per grope ; « endo » : lo nom dins la lenga (SIG/oil/noms-lengas-endo.csv,
+		// sonque las formas sorsadas ; champaignat causit per Romain ; Lorin, pas pro segur, es pas pres)
 		pastilhas: [
 			{ k: 'picard', fr: 'picard', oc: 'picard' },
 			{ k: 'chti', fr: 'ch’ti', oc: 'ch’ti', de: 'picard' },
 			{ k: 'rouchi', fr: 'rouchi', oc: 'rochi', de: 'picard' },
-			{ k: 'wallon', fr: 'wallon', oc: 'valon' },
-			{ k: 'valon_lieges', fr: 'liégeois', oc: 'liegés', de: 'wallon' },
-			{ k: 'valon_namures', fr: 'namurois', oc: 'namurés', de: 'wallon' },
-			{ k: 'valon_oest', fr: 'wallon de l’Ouest', oc: 'valon de l’oèst', de: 'wallon' },
-			{ k: 'valon_sud', fr: 'wallon du Sud', oc: 'valon del sud', de: 'wallon' },
-			{ k: 'normand', fr: 'normand', oc: 'normand' },
-			{ k: 'champenois', fr: 'champenois', oc: 'campanés' },
+			{ k: 'wallon', endo: 'walon', fr: 'wallon', oc: 'valon' },
+			{ k: 'valon_lieges', endo: 'lidjwès', fr: 'liégeois', oc: 'liegés', de: 'wallon' },
+			{ k: 'valon_namures', endo: 'namurwès', fr: 'namurois', oc: 'namurés', de: 'wallon' },
+			{ k: 'valon_oest', endo: 'walon do Coûtchant', fr: 'wallon de l’Ouest', oc: 'valon de l’oèst', de: 'wallon' },
+			{ k: 'valon_sud', endo: 'walon nonnrece', fr: 'wallon du Sud', oc: 'valon del sud', de: 'wallon' },
+			{ k: 'normand', endo: 'normaund', fr: 'normand', oc: 'normand' },
+			{ k: 'champenois', endo: 'champaignat', fr: 'champenois', oc: 'campanés' },
 			{ k: 'lorrain', fr: 'lorrain', oc: 'lorren' },
-			{ k: 'bourguignon', fr: 'bourguignon-morvandiau', oc: 'borgonhon-morvandèl' },
-			{ k: 'franc_comtois', fr: 'franc-comtois', oc: 'franc-comtés' },
-			{ k: 'gallo', fr: 'gallo', oc: 'galò' },
+			{ k: 'bourguignon', endo: 'borguignon', fr: 'bourguignon-morvandiau', oc: 'borgonhon-morvandèl' },
+			{ k: 'franc_comtois', endo: 'frainc-comtou', fr: 'franc-comtois', oc: 'franc-comtés' },
+			{ k: 'gallo', endo: 'galo', fr: 'gallo', oc: 'galò' },
 			{ k: 'oest', fr: 'parlers de l’Ouest', oc: 'parlars de l’Oèst' },
-			{ k: 'poitevin_saintongeais', fr: 'poitevin-saintongeais', oc: 'peitavin-santongés' },
+			{ k: 'poitevin_saintongeais', endo: 'parlanjhe', fr: 'poitevin-saintongeais', oc: 'peitavin-santongés' },
 			{ k: 'centre', fr: 'parlers du Centre', oc: 'parlars del Centre' }
 		],
 		sota: { oc: 'lenga d’oïl', fr: 'langue d’oïl' },

@@ -62,7 +62,7 @@
 "pop": 20315,
 "zona": "tregerieg",
 "estat": "FR",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "29151",
@@ -101,7 +101,7 @@
 "pop": 7412,
 "zona": "kerneveg",
 "estat": "FR",
-"renc": 3
+"renc": 4
 },
 {
 "codi": "22162",
@@ -114,20 +114,7 @@
 "pop": 7341,
 "zona": "tregerieg",
 "estat": "FR",
-"renc": 3
-},
-{
-"codi": "22070",
-"nom_oficial": "Guingamp",
-"nom": "Gwengamp",
-"local": true,
-"font": "noms-br.csv",
-"lon": -3.1481,
-"lat": 48.5612,
-"pop": 7111,
-"zona": "tregerieg",
-"estat": "FR",
-"renc": 3
+"renc": 4
 },
 {
 "codi": "29004",
@@ -204,6 +191,19 @@
 "lat": 48.6171,
 "pop": 2281,
 "zona": "leoneg",
+"estat": "FR",
+"renc": 4
+},
+{
+"codi": "22013",
+"nom_oficial": "Bourbriac",
+"nom": "Boulvriag",
+"local": true,
+"font": "noms-br.csv",
+"lon": -3.1884,
+"lat": 48.4739,
+"pop": 2145,
+"zona": "tregerieg",
 "estat": "FR",
 "renc": 4
 }

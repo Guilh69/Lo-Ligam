@@ -208,32 +208,6 @@
 "renc": 2
 },
 {
-"codi": "de:07317000",
-"nom_oficial": "Pirmasens",
-"nom": "Pirmasens",
-"local": false,
-"font": "nom oficial",
-"lon": 7.5911,
-"lat": 49.1882,
-"pop": 39761,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:08226085",
-"nom_oficial": "Sinsheim",
-"nom": "Sinsheim",
-"local": false,
-"font": "nom oficial",
-"lon": 8.8991,
-"lat": 49.2342,
-"pop": 37036,
-"zona": "sudfrankisch",
-"estat": "DE",
-"renc": 2
-},
-{
 "codi": "de:10042113",
 "nom_oficial": "Merzig",
 "nom": "Mäerzeg",
@@ -244,7 +218,7 @@
 "pop": 31697,
 "zona": "moselfrankisch",
 "estat": "DE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "be:81001",
@@ -257,7 +231,7 @@
 "pop": 30818,
 "zona": "letzebuergesch",
 "estat": "BE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "de:07134045",
@@ -270,7 +244,7 @@
 "pop": 30170,
 "zona": "moselfrankisch",
 "estat": "DE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "de:07131007",
@@ -283,20 +257,7 @@
 "pop": 27961,
 "zona": "moselfrankisch",
 "estat": "DE",
-"renc": 2
-},
-{
-"codi": "de:08215106",
-"nom_oficial": "Waghäusel",
-"nom": "Waghäusel",
-"local": false,
-"font": "nom oficial",
-"lon": 8.5361,
-"lat": 49.2295,
-"pop": 22466,
-"zona": "sudfrankisch",
-"estat": "DE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "be:63023",
@@ -335,6 +296,19 @@
 "pop": 14755,
 "zona": "rheinfrankisch",
 "estat": "FR",
+"renc": 3
+},
+{
+"codi": "de:08215097",
+"nom_oficial": "Kraichtal",
+"nom": "Kraichtal",
+"local": false,
+"font": "nom oficial",
+"lon": 8.7371,
+"lat": 49.1311,
+"pop": 14602,
+"zona": "sudfrankisch",
+"estat": "DE",
 "renc": 3
 },
 {
@@ -413,20 +387,7 @@
 "pop": 9481,
 "zona": "moselfrankisch",
 "estat": "BE",
-"renc": 3
-},
-{
-"codi": "de:07337005",
-"nom_oficial": "Bad Bergzabern",
-"nom": "Bad Bergzabern",
-"local": false,
-"font": "nom oficial",
-"lon": 7.9996,
-"lat": 49.1106,
-"pop": 8724,
-"zona": "rheinfrankisch",
-"estat": "DE",
-"renc": 3
+"renc": 4
 },
 {
 "codi": "de:07140144",
@@ -439,20 +400,20 @@
 "pop": 8195,
 "zona": "rheinfrankisch",
 "estat": "DE",
-"renc": 3
+"renc": 4
 },
 {
-"codi": "de:07138003",
-"nom_oficial": "Asbach",
-"nom": "Asbach",
-"local": false,
-"font": "nom oficial",
-"lon": 7.4288,
-"lat": 50.6554,
-"pop": 7807,
-"zona": "moselfrankisch",
-"estat": "DE",
-"renc": 3
+"codi": "67544",
+"nom_oficial": "Wissembourg",
+"nom": "Waisseburch",
+"local": true,
+"font": "noms-locals.csv",
+"lon": 7.9445,
+"lat": 49.0369,
+"pop": 7566,
+"zona": "sudfrankisch",
+"estat": "FR",
+"renc": 4
 },
 {
 "codi": "de:07233026",
@@ -465,7 +426,7 @@
 "pop": 7210,
 "zona": "moselfrankisch",
 "estat": "DE",
-"renc": 3
+"renc": 4
 },
 {
 "codi": "de:08127071",
@@ -478,6 +439,19 @@
 "pop": 5531,
 "zona": "sudfrankisch",
 "estat": "DE",
+"renc": 4
+},
+{
+"codi": "57089",
+"nom_oficial": "Bitche",
+"nom": "Bitsch",
+"local": true,
+"font": "noms-locals.csv",
+"lon": 7.4274,
+"lat": 49.0504,
+"pop": 4966,
+"zona": "rheinfrankisch",
+"estat": "FR",
 "renc": 4
 },
 {
@@ -504,19 +478,6 @@
 "pop": 3256,
 "zona": "moselfrankisch",
 "estat": "DE",
-"renc": 4
-},
-{
-"codi": "57589",
-"nom_oficial": "Rohrbach-lès-Bitche",
-"nom": "Roerbach",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 7.2671,
-"lat": 49.0454,
-"pop": 2301,
-"zona": "rheinfrankisch",
-"estat": "FR",
 "renc": 4
 }
 ]

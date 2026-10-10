@@ -216,6 +216,29 @@
 			.filter((j) => LENGAS[j.id] && actiu(j) && (FICHAS[j.id]?.onglet ?? 'franca') === onglet)
 			.sort((a, b) => (ordre === 'loc' ? (FICHAS[b.id]?.n ?? -1) - (FICHAS[a.id]?.n ?? -1) : 0) || nomOrd(a.id).localeCompare(nomOrd(b.id)));
 	let dialsDob = $state([]);
+	// La silhoeta de l'aira de cada lenga dins sa ficha (los contorns leugièrs de
+	// « Descobrir… », ja en cache) : cargada a la dobertura del panèl
+	let silhoetas = $state({});
+	let silhPromesa = null;
+	$effect(() => {
+		if (dobert !== 'lengas' || silhPromesa) return;
+		silhPromesa = fetch('/data/lengas-vesinas.json')
+			.then((r) => (r.ok ? r.json() : null))
+			.then((d) => {
+				if (!d) return;
+				const out = {};
+				for (const [k, anels] of Object.entries(d)) {
+					let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
+					for (const a of anels) for (const [x, y] of a) (x0 = Math.min(x0, x)), (x1 = Math.max(x1, x)), (y0 = Math.min(y0, y)), (y1 = Math.max(y1, y));
+					const kx = Math.cos((((y0 + y1) / 2) * Math.PI) / 180);
+					const e = 36 / Math.max((x1 - x0) * kx, y1 - y0, 1e-6);
+					const ox = (40 - (x1 - x0) * kx * e) / 2, oy = (40 - (y1 - y0) * e) / 2;
+					out[k] = anels.map((a) => 'M' + a.map(([x, y]) => ((x - x0) * kx * e + ox).toFixed(1) + ' ' + ((y1 - y) * e + oy).toFixed(1)).join('L') + 'Z').join('');
+				}
+				silhoetas = out;
+			})
+			.catch(() => {});
+	});
 	const virarDials = (id) => (dialsDob = dialsDob.includes(id) ? dialsDob.filter((x) => x !== id) : [...dialsDob, id]);
 	const virarTèma = (id) => (enrotlats = enrotlats.includes(id) ? enrotlats.filter((x) => x !== id) : [...enrotlats, id]);
 	const alternar = (id) => {
@@ -776,14 +799,21 @@
 					{#if fi.vital}{@render infoFont({ t: fi.vital.t, url: 'https://unesdoc.unesco.org/ark:/48223/pf0000187026' }, `<i style="background:${VITALITAT[fi.vital.k] ?? '#999'}"></i>${fi.vital[lang] ?? fi.vital.fr}`, 'vital')}{/if}
 				</p>
 			</div>
-			<button
-				type="button"
-				class="basc"
-				role="switch"
-				aria-checked={!!visibility[j.id]}
-				aria-label={nomJ(j)}
-				onclick={() => bascular(j.id, !visibility[j.id])}
-			></button>
+			<div class="ficha-dreita">
+				<button
+					type="button"
+					class="basc"
+					role="switch"
+					aria-checked={!!visibility[j.id]}
+					aria-label={nomJ(j)}
+					onclick={() => bascular(j.id, !visibility[j.id])}
+				></button>
+				{#if silhoetas[j.id]}
+					<svg class="silh" viewBox="0 0 40 40" aria-hidden="true"
+						><path d={silhoetas[j.id]} fill={lg.color[clar ? 'clar' : 'sorne']} fill-rule="evenodd" /></svg
+					>
+				{/if}
+			</div>
 		</div>
 		<div class="desplegar-l">
 			<button type="button" class="desplegar" aria-expanded={dob} onclick={() => virarDials(j.id)}
@@ -821,7 +851,7 @@
 
 {#snippet dialLenga(j, lg, q)}
 	{@const apart = !!lg.apart?.[q.k]}
-	{@const endo = q[lg.lang] ?? (lg.lang === 'fr' ? q.fr : q.ca)}
+	{@const endo = q.endo ?? q[lg.lang] ?? (lg.lang === 'fr' ? q.fr : q.ca)}
 	{@const trad = lang === 'fr' ? q.fr : q.oc}
 	<button type="button" class="d" class:apart aria-pressed={causits.includes(lg.pref + q.k)} lang={lg.lang} onclick={() => causirLenga(j.id, q.k)}
 		><i class:apart style:background={apart ? null : colorPastilha(j.id, q.k)}></i><span class="e">{endo}</span
@@ -1376,6 +1406,24 @@
 	.ordre button[aria-checked='true'] {
 		color: var(--t-aur);
 		background: color-mix(in srgb, var(--t-aur) 12%, transparent);
+	}
+	.ficha-dreita {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 8px;
+	}
+	.ficha .silh {
+		width: 40px;
+		height: 40px;
+		opacity: 0.45;
+		transition: opacity 0.25s, transform 0.25s;
+	}
+	.ficha.alucada .silh {
+		opacity: 0.95;
+	}
+	.ficha:hover .silh {
+		transform: scale(1.06);
 	}
 	/* ---------- Opcion A : las fichas de las lengas ---------- */
 	/* quatre onglets en grasilha 2 × 2 : « Transfrontalièras » tenia pas sus una linha */

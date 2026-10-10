@@ -676,19 +676,6 @@
 "renc": 2
 },
 {
-"codi": "be:41048",
-"nom_oficial": "Ninove",
-"nom": "Ninove",
-"local": false,
-"font": "nom oficial",
-"lon": 4.0037,
-"lat": 50.8215,
-"pop": 39626,
-"zona": "brabancon",
-"estat": "BE",
-"renc": 2
-},
-{
 "codi": "nl:GM1895",
 "nom_oficial": "Oldambt",
 "nom": "Oldambt",
@@ -699,20 +686,7 @@
 "pop": 39586,
 "zona": "gronings",
 "estat": "NL",
-"renc": 2
-},
-{
-"codi": "nl:GM0119",
-"nom_oficial": "Meppel",
-"nom": "Möppelt",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.1786,
-"lat": 52.7205,
-"pop": 36271,
-"zona": "drents",
-"estat": "NL",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "be:33011",
@@ -725,20 +699,7 @@
 "pop": 35039,
 "zona": "flamenc_occidental",
 "estat": "BE",
-"renc": 2
-},
-{
-"codi": "nl:GM1676",
-"nom_oficial": "Schouwen-Duiveland",
-"nom": "Schouwen-Duveland",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 3.9604,
-"lat": 51.6778,
-"pop": 34412,
-"zona": "zelandes",
-"estat": "NL",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "be:72020",
@@ -751,72 +712,20 @@
 "pop": 34044,
 "zona": "brabancon",
 "estat": "BE",
-"renc": 2
+"renc": 3
 },
 {
-"codi": "nl:GM0762",
-"nom_oficial": "Deurne",
-"nom": "Deurne",
+"codi": "be:41018",
+"nom_oficial": "Geraardsbergen",
+"nom": "Geraardsbergen",
 "local": false,
 "font": "nom oficial",
-"lon": 5.8281,
-"lat": 51.4282,
-"pop": 33387,
+"lon": 3.9291,
+"lat": 50.7822,
+"pop": 33403,
 "zona": "brabancon",
-"estat": "NL",
-"renc": 2
-},
-{
-"codi": "be:45035",
-"nom_oficial": "Oudenaarde",
-"nom": "Oudenaarde",
-"local": false,
-"font": "nom oficial",
-"lon": 3.6312,
-"lat": 50.847,
-"pop": 31866,
-"zona": "flamenc_oriental",
 "estat": "BE",
-"renc": 2
-},
-{
-"codi": "nl:GM0086",
-"nom_oficial": "Opsterland",
-"nom": "Opsterlân",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.0951,
-"lat": 53.0468,
-"pop": 30012,
-"zona": "frison",
-"estat": "NL",
-"renc": 2
-},
-{
-"codi": "nl:GM0214",
-"nom_oficial": "Buren",
-"nom": "Buren",
-"local": false,
-"font": "nom oficial",
-"lon": 5.42,
-"lat": 51.9296,
-"pop": 27978,
-"zona": "zuid_gelders",
-"estat": "NL",
-"renc": 2
-},
-{
-"codi": "nl:GM0189",
-"nom_oficial": "Wierden",
-"nom": "Wierdn",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 6.5434,
-"lat": 52.3433,
-"pop": 25342,
-"zona": "twents",
-"estat": "NL",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "be:13049",
@@ -829,33 +738,20 @@
 "pop": 24884,
 "zona": "brabancon",
 "estat": "BE",
-"renc": 2
+"renc": 3
 },
 {
-"codi": "nl:GM0703",
-"nom_oficial": "Reimerswaal",
-"nom": "Reimerswaol",
-"local": true,
+"codi": "nl:GM1690",
+"nom_oficial": "De Wolden",
+"nom": "De Wolden",
+"local": false,
 "font": "noms-locals.csv",
-"lon": 4.0538,
-"lat": 51.4473,
-"pop": 23335,
-"zona": "zelandes",
+"lon": 6.339,
+"lat": 52.7056,
+"pop": 24672,
+"zona": "drents",
 "estat": "NL",
-"renc": 2
-},
-{
-"codi": "be:38014",
-"nom_oficial": "Koksijde",
-"nom": "Koksyde",
-"local": true,
-"font": "noms-locals.csv",
-"lon": 2.6744,
-"lat": 51.1132,
-"pop": 21957,
-"zona": "flamenc_occidental",
-"estat": "BE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "59295",
@@ -868,33 +764,20 @@
 "pop": 21912,
 "zona": "flamenc_occidental",
 "estat": "FR",
-"renc": 2
+"renc": 3
 },
 {
-"codi": "be:12035",
-"nom_oficial": "Sint-Katelijne-Waver",
-"nom": "Sint-Katelijne-Waver",
+"codi": "be:35011",
+"nom_oficial": "Middelkerke",
+"nom": "Middelkerke",
 "local": false,
-"font": "nom oficial",
-"lon": 4.5375,
-"lat": 51.0622,
-"pop": 20870,
-"zona": "brabancon",
-"estat": "BE",
-"renc": 2
-},
-{
-"codi": "be:31033",
-"nom_oficial": "Torhout",
-"nom": "Toeroet",
-"local": true,
 "font": "noms-locals.csv",
-"lon": 3.0912,
-"lat": 51.0588,
-"pop": 20530,
+"lon": 2.8462,
+"lat": 51.1473,
+"pop": 19371,
 "zona": "flamenc_occidental",
 "estat": "BE",
-"renc": 2
+"renc": 3
 },
 {
 "codi": "be:24059",

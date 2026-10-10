@@ -9,7 +9,7 @@
 # Nom local, dins aqueste òrdre : SIG/<lenga>/noms-locals.csv (o noms-br.csv...)
 # per còdi de comuna (França), puèi las etiquetas OSM de CONF['osm_noms']
 # (ex. name:br), si que non lo nom oficial (« local »: false).
-# Renc : 1 = mai de 100 000 abitants ; 2 = mai de 20 000 ; 3 = mai de 7 000 ;
+# Renc : 1 = mai de 100 000 abitants ; 2 = mai de 40 000 ; 3 = mai de 10 000 (2026-10-10 : pas tant de vilas a 40 km) ;
 # 4 = los autres (mai de 2 000). Espaçament : 15 km (renc 1 : Mulhouse a 28 km de Basilèa demòra), 22, 25, 28 km :
 # pas de mantèl de banlègas (retorn de Romain : pas de bruch textual).
 # Sortida : « vilas » dins app/static/data/<lenga>.json e SIG/<lenga>/vilas-<lenga>.json.
@@ -208,7 +208,7 @@ if CONF.get('osm_vilas', False) and CONF.get('paises', ['France']) != ['France']
                       'pop': pop, 'zona': kod, 'estat': cc or '?'})
 
 for v in cands:
-    v['renc'] = 1 if v['pop'] >= 100000 else 2 if v['pop'] >= 20000 else 3 if v['pop'] >= 7000 else 4
+    v['renc'] = 1 if v['pop'] >= 100000 else 2 if v['pop'] >= 40000 else 3 if v['pop'] >= 10000 else 4
     p = ogr.Geometry(ogr.wkbPoint)
     p.AddPoint_2D(v['lon'], v['lat'])
     p.Transform(vers93)

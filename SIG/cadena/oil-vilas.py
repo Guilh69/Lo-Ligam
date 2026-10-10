@@ -13,7 +13,7 @@
 # vilas que mancan : l'introduccion de l'article de la Viquipèdia en francés
 # (« Resnn en gallo ») ; si que non, nom oficial, marcat « local: false ».
 #
-# Renc : 1 = mai de 100 000 abitants ; 2 = mai de 20 000 ; 3 = mai de 7 000 ;
+# Renc : 1 = mai de 100 000 abitants ; 2 = mai de 40 000 ; 3 = mai de 10 000 (2026-10-10 : pas tant de vilas a 40 km) ;
 # 4 = los autres. Una vila es gardada se cap de vila pus granda es pas a mens
 # de 15 km (renc 1), 22 km (renc 2), 25 km (renc 3) o 28 km (renc 4) : pas de mantèl de
 # banlègas a l'entorn de París (retorn de Romain : pas de bruch textual) ; 250 vilas al pus.
@@ -92,7 +92,7 @@ for f in cm:
     cands.append({'insee': c, 'nom_oficial': f.GetField('nom_officiel'), 'nom': nl or f.GetField('nom_officiel'),
                   'local': bool(nl), 'font': font,
                   'lon': round(lon, 4), 'lat': round(lat, 4), 'x': x, 'y': y, 'pop': pop, 'zona': kod,
-                  'renc': 1 if pop >= 100000 else 2 if pop >= 20000 else 3 if pop >= 7000 else 4})
+                  'renc': 1 if pop >= 100000 else 2 if pop >= 40000 else 3 if pop >= 10000 else 4})
 
 cands.sort(key=lambda v: -v['pop'])
 gard = []
