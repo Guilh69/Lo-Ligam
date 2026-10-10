@@ -11,6 +11,7 @@
 	import { sonPapièr, sonsActius, gardarSons } from '$lib/carta/sons.js';
 	import { fly, slide } from 'svelte/transition';
 	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
+	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
 	import { quintOut } from 'svelte/easing';
 
 	let {
@@ -51,6 +52,12 @@
 			anullar: 'Anullar',
 			anullarTitol: 'Anullar la darrièra manipulacion (Ctrl+Z)',
 			netejar: 'Netejar la carta',
+			onglets: [['franca', 'França'], ['europa', 'Euròpa'], ['mond', 'Mond']],
+			nLengas: (n) => `${n} lengas`,
+			deVenir: 'de venir',
+			locutors: 'locutors',
+			nDial: (n, sub) => `${n} ${sub ? 'lengas e parlars' : 'dialèctes'}`,
+			dialDe: (l) => `Dialèctes del ${l}`,
 			netejarTitol: 'Escantir totas las jaces e tornar partir de zèro',
 			sonqueFons: 'Sonque sul fons Contorns',
 			totTornar: 'Tot tornar',
@@ -87,6 +94,12 @@
 			anullar: 'Annuler',
 			anullarTitol: 'Annuler la dernière manipulation (Ctrl+Z)',
 			netejar: 'Vider la carte',
+			onglets: [['franca', 'France'], ['europa', 'Europe'], ['mond', 'Monde']],
+			nLengas: (n) => `${n} langues`,
+			deVenir: 'à venir',
+			locutors: 'locuteurs',
+			nDial: (n, sub) => `${n} ${sub ? 'langues et parlers' : 'dialectes'}`,
+			dialDe: (l) => `Dialectes du ${l}`,
 			netejarTitol: 'Éteindre toutes les couches et repartir de zéro',
 			sonqueFons: 'Seulement sur le fond Contours',
 			totTornar: 'Tout remettre',
@@ -163,7 +176,7 @@
 				})
 			),
 			...Object.fromEntries(
-				[['basc', 'EUSKARA'], ['breton', 'BREZHONEG'],['alsacian', 'ELSÄSSISCH'], ['flamenc', 'VLAEMSCH'], ['cors', 'CORSU']].map(([k, t]) => [
+				[['basc', 'EUSKARA'], ['breton', 'BREZHONEG'],['alsacian', 'ELSÄSSISCH'], ['francic', 'PLATT'], ['flamenc', 'VLAEMSCH'], ['cors', 'CORSU']].map(([k, t]) => [
 					k,
 					`<text x="26" y="22" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1" fill="currentColor">${t}</text>`
 				])
@@ -186,6 +199,11 @@
 	let dobert = $state(null);
 	// los tèmas de « Sus la carta » enrotlats (demanda de Romain, 2026-10-09)
 	let enrotlats = $state([]);
+	// L'opcion A del panèl « Autras lengas » (causida de Romain, 2026-10-10) :
+	// onglets França / Euròpa / Mond, una ficha per lenga, dialèctes desplegables
+	let onglet = $state('franca');
+	let dialsDob = $state([]);
+	const virarDials = (id) => (dialsDob = dialsDob.includes(id) ? dialsDob.filter((x) => x !== id) : [...dialsDob, id]);
 	const virarTèma = (id) => (enrotlats = enrotlats.includes(id) ? enrotlats.filter((x) => x !== id) : [...enrotlats, id]);
 	const alternar = (id) => {
 		dobert = dobert === id ? null : id;
@@ -693,10 +711,23 @@
 			{@const f = familhas.find((x) => x.id === dobert)}
 			{#if f}
 				{@const dispo = f.jaces.filter(actiu).length}
-				<p class="sota">{tx.disponiblas(dispo)}{f.jaces.length - dispo ? ' · ' + tx.venir(f.jaces.length - dispo) : ''}</p>
-				{#each f.jaces as j (j.id)}
-					{@render linha(j)}
-				{/each}
+				{#if f.id === 'lengas'}
+					<div class="onglets" role="tablist" aria-label={nomFam(f.id)}>
+						{#each tx.onglets as [k, nom] (k)}
+							<button type="button" role="tab" aria-selected={onglet === k} class:on={onglet === k} disabled={k !== 'franca'} onclick={() => (onglet = k)}
+								>{nom}<small>{k === 'franca' ? tx.nLengas(f.jaces.filter((j) => LENGAS[j.id] && actiu(j)).length) : tx.deVenir}</small></button
+							>
+						{/each}
+					</div>
+					{#each f.jaces as j (j.id)}
+						{#if LENGAS[j.id] && actiu(j)}{@render fichaLenga(j)}{:else}{@render linha(j)}{/if}
+					{/each}
+				{:else}
+					<p class="sota">{tx.disponiblas(dispo)}{f.jaces.length - dispo ? ' · ' + tx.venir(f.jaces.length - dispo) : ''}</p>
+					{#each f.jaces as j (j.id)}
+						{@render linha(j)}
+					{/each}
+				{/if}
 			{/if}
 		{/if}
 
@@ -705,6 +736,68 @@
 		{/if}
 	</section>
 {/if}
+
+{#snippet fichaLenga(j)}
+	{@const lg = LENGAS[j.id]}
+	{@const fi = FICHAS[j.id] ?? {}}
+	{@const dz = lg.pastilhas.filter((q) => lg.dial.sorne[q.k] && !q.de)}
+	{@const dob = dialsDob.includes(j.id)}
+	{@const nomLg = lang === 'fr' ? lg.nom.fr : lg.nom.oc}
+	<div class="ficha" class:alucada={!!visibility[j.id]}>
+		<div class="ficha-cap">
+			<span class="banda" style:background={`linear-gradient(${dz.map((q) => colorPastilha(j.id, q.k)).join(', ')})`}></span>
+			<div class="ficha-cos">
+				<span class="endo" lang={lg.lang}>{lg.nom.endo.charAt(0).toUpperCase() + lg.nom.endo.slice(1)}</span>
+				<span class="nom-lg">{nomLg}</span>
+				{#if notaJ(j)}<p class="desc">{notaJ(j)}</p>{/if}
+				<p class="meta">
+					{#if fi.locutors}<span title={fi.font ?? ''}><b>{fi.locutors}</b> {tx.locutors}</span>{/if}
+					{#if fi.familha}<span>{fi.familha[lang] ?? fi.familha.fr}</span>{/if}
+					{#if fi.vital}<span class="vital"><i style:background={VITALITAT[fi.vital.k] ?? '#999'}></i>{fi.vital[lang] ?? fi.vital.fr}</span>{/if}
+				</p>
+			</div>
+			<button
+				type="button"
+				class="basc"
+				role="switch"
+				aria-checked={!!visibility[j.id]}
+				aria-label={nomJ(j)}
+				onclick={() => bascular(j.id, !visibility[j.id])}
+			></button>
+		</div>
+		<button type="button" class="desplegar" aria-expanded={dob} onclick={() => virarDials(j.id)}
+			><span class="chev" aria-hidden="true">▸</span>{tx.nDial(dz.length, j.id === 'oil')}</button
+		>
+		{#if dob}
+			<ul class="albre" role="group" aria-label={tx.causirLenga(nomLg)} transition:slide={{ duration: 200 }}>
+				{#each lg.pastilhas.filter((q) => !q.de) as q (q.k)}
+					{@const sots = lg.pastilhas.filter((x) => x.de === q.k)}
+					<li>
+						{@render dialLenga(j, lg, q)}
+						{#if sots.length}
+							<div class="sots">
+								<p class="sots-tit">{tx.dialDe(lang === 'fr' ? q.fr : q.oc)}</p>
+								<ul class="albre">
+									{#each sots as x (x.k)}<li>{@render dialLenga(j, lg, x)}</li>{/each}
+								</ul>
+							</div>
+						{/if}
+					</li>
+				{/each}
+			</ul>
+		{/if}
+	</div>
+{/snippet}
+
+{#snippet dialLenga(j, lg, q)}
+	{@const apart = !!lg.apart?.[q.k]}
+	{@const endo = q[lg.lang] ?? (lg.lang === 'fr' ? q.fr : q.ca)}
+	{@const trad = lang === 'fr' ? q.fr : q.oc}
+	<button type="button" class="d" class:apart aria-pressed={causits.includes(lg.pref + q.k)} lang={lg.lang} onclick={() => causirLenga(j.id, q.k)}
+		><i class:apart style:background={apart ? null : colorPastilha(j.id, q.k)}></i><span class="e">{endo}</span
+		>{#if trad && trad.toLowerCase() !== endo.toLowerCase()}<span class="f" lang={lang}>{trad}</span>{/if}</button
+	>
+{/snippet}
 
 {#snippet pastilhaLenga(j, lg, q, nSots, obèrt)}
 	{@const apart = !!lg.apart?.[q.k]}
@@ -1182,6 +1275,197 @@
 		flex-wrap: wrap;
 		gap: 4px;
 		margin-top: 0.45rem;
+	}
+	/* ---------- Opcion A : las fichas de las lengas ---------- */
+	.onglets {
+		display: flex;
+		gap: 4px;
+		padding: 3px;
+		margin: 2px 0 10px;
+		border: 1px solid var(--t-linha);
+		border-radius: 999px;
+	}
+	.onglets button {
+		flex: 1;
+		border: 0;
+		background: none;
+		color: var(--t-tinta-2);
+		font: 600 0.74rem/1 var(--font-body);
+		padding: 6px 0 5px;
+		border-radius: 999px;
+		cursor: pointer;
+	}
+	.onglets button small {
+		display: block;
+		margin-top: 2px;
+		font-weight: 400;
+		font-size: 0.6rem;
+		opacity: 0.75;
+	}
+	.onglets button.on {
+		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
+		color: var(--t-aur);
+	}
+	.onglets button:disabled {
+		cursor: default;
+		opacity: 0.55;
+	}
+	.ficha {
+		border-top: 1px solid var(--t-linha);
+		padding: 10px 2px 8px;
+	}
+	.ficha-cap {
+		display: grid;
+		grid-template-columns: 5px 1fr auto;
+		gap: 10px;
+		align-items: start;
+	}
+	.ficha .banda {
+		align-self: stretch;
+		border-radius: 4px;
+		opacity: 0.55;
+		transition: opacity 0.25s;
+	}
+	.ficha.alucada .banda {
+		opacity: 1;
+	}
+	.ficha .endo {
+		display: block;
+		font: italic 400 1.3rem/1 'Cormorant Garamond', Georgia, serif;
+	}
+	.ficha .nom-lg {
+		display: block;
+		margin-top: 3px;
+		font: 600 0.62rem/1 var(--font-body);
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--t-tinta-2);
+	}
+	.ficha .desc {
+		margin: 6px 0 0;
+		font-size: 0.72rem;
+		line-height: 1.38;
+		color: var(--t-tinta-2);
+	}
+	.ficha .meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 12px;
+		margin: 6px 0 0;
+		font-size: 0.66rem;
+		color: color-mix(in srgb, var(--t-tinta) 55%, transparent);
+	}
+	.ficha .meta b {
+		color: var(--t-tinta);
+	}
+	.ficha .vital i {
+		display: inline-block;
+		width: 7px;
+		height: 7px;
+		margin-right: 4px;
+		border-radius: 50%;
+	}
+	.desplegar {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin: 7px 0 0 15px;
+		padding: 3px 0;
+		border: 0;
+		background: none;
+		color: var(--t-aur);
+		font: 600 0.7rem/1 var(--font-body);
+		cursor: pointer;
+	}
+	.desplegar .chev {
+		display: inline-block;
+		transition: transform 0.2s;
+	}
+	.desplegar[aria-expanded='true'] .chev {
+		transform: rotate(90deg);
+	}
+	/* l'arborescéncia : traits fins, nosèls rounds */
+	.albre {
+		list-style: none;
+		margin: 4px 0 2px 15px;
+		padding: 0;
+	}
+	.albre li {
+		position: relative;
+		padding: 2px 0 2px 16px;
+	}
+	.albre li::before {
+		content: '';
+		position: absolute;
+		left: 4px;
+		top: 0;
+		bottom: 0;
+		border-left: 1px solid var(--t-linha);
+	}
+	.albre li:last-child::before {
+		bottom: calc(100% - 13px);
+	}
+	.albre li::after {
+		content: '';
+		position: absolute;
+		left: 4px;
+		top: 13px;
+		width: 9px;
+		border-top: 1px solid var(--t-linha);
+	}
+	.d {
+		display: flex;
+		align-items: baseline;
+		gap: 7px;
+		width: 100%;
+		padding: 3px 8px 3px 4px;
+		border: 0;
+		border-radius: 8px;
+		background: none;
+		color: var(--t-tinta);
+		text-align: left;
+		cursor: pointer;
+	}
+	.d:hover {
+		background: color-mix(in srgb, var(--t-tinta) 6%, transparent);
+	}
+	.d[aria-pressed='true'] {
+		background: color-mix(in srgb, var(--t-aur) 13%, transparent);
+		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--t-aur) 40%, transparent);
+	}
+	.d i {
+		flex: none;
+		width: 9px;
+		height: 9px;
+		border-radius: 3px;
+		align-self: center;
+	}
+	.d i.apart {
+		border: 1px dashed currentColor;
+	}
+	.d .e {
+		font: italic 400 1rem/1.15 'Cormorant Garamond', Georgia, serif;
+	}
+	.d .f {
+		font-size: 0.64rem;
+		color: color-mix(in srgb, var(--t-tinta) 50%, transparent);
+	}
+	.sots {
+		margin: 2px 0 3px 2px;
+		padding: 6px 6px 3px;
+		border: 1px dashed var(--t-linha);
+		border-radius: 10px;
+		background: color-mix(in srgb, var(--t-tinta) 3.5%, transparent);
+	}
+	.sots .albre {
+		margin-left: 2px;
+	}
+	.sots-tit {
+		margin: 0 0 3px 4px;
+		font: 600 0.58rem/1 var(--font-body);
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--t-tinta) 50%, transparent);
 	}
 	/* una lenga e sos dialèctes (lo picard : ch'ti, rochi) : una linha sola,
 	   los dialèctes dejós, estacats per un trait coma una arborescéncia */
