@@ -1,6 +1,7 @@
 <script>
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { cargarFranca, francaCargada, dinsFranca } from '$lib/carta/franca.js';
+	import { fly } from 'svelte/transition';
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
@@ -242,6 +243,35 @@
 	$effect(() => {
 		lang;
 		majNetejar();
+	});
+	// Las fonts de la carta (retorn de Romain, 2026-10-10 : « illisible ») : una
+	// linha corta totjorn vesibla (© OpenStreetMap, obligatòri) e un boton
+	// « Fonts » que dobrís la lista completa de las jaces afichadas, rengada per
+	// tèma (« Rius, còsta e païses : Natural Earth · noms : © OpenStreetMap »)
+	let fontsCarta = $state([]),
+		fontsDobèrtas = $state(false);
+	const fontsPerTèma = $derived.by(() => {
+		const tèmas = new Map();
+		for (const html of fontsCarta)
+			for (const tròç of html.split(/\s+·\s+/)) {
+				const m = tròç.match(/^([^<:]{2,60}?)\s*:\s*([\s\S]+)$/);
+				const tèma = m ? m[1].trim() : '';
+				const font = (m ? m[2] : tròç).trim();
+				const k = tèma.toLowerCase();
+				if (!tèmas.has(k)) tèmas.set(k, { tèma: tèma ? tèma[0].toUpperCase() + tèma.slice(1) : '', fonts: [] });
+				if (!tèmas.get(k).fonts.includes(font)) tèmas.get(k).fonts.push(font);
+			}
+		return [...tèmas.values()].sort((a, b) => (!a.tèma) - (!b.tèma));
+	});
+	$effect(() => {
+		if (!fontsDobèrtas) return;
+		const lèva = tampaDefòra((t) => !!t.closest('.fonts-carta, .fonts-b'), () => (fontsDobèrtas = false));
+		const tòca = (e) => e.key === 'Escape' && (fontsDobèrtas = false);
+		document.addEventListener('keydown', tòca);
+		return () => {
+			lèva();
+			document.removeEventListener('keydown', tòca);
+		};
 	});
 	let botonFons = null;
 	function majFons() {
@@ -1359,6 +1389,23 @@
 		});
 		new FonsCarta().addTo(map);
 		map.attributionControl?.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
+		{
+			const ctl = map.attributionControl;
+			if (ctl) {
+				ctl._update = function () {
+					if (!this._map) return;
+					fontsCarta = Object.keys(this._attributions).filter((k) => this._attributions[k]);
+					const tx = lang === 'fr' ? 'Sources' : 'Fonts';
+					this._container.innerHTML = `<button type="button" class="fonts-b" aria-haspopup="dialog">${tx}</button><span aria-hidden="true"> · </span>© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>`;
+					this._container.querySelector('.fonts-b').onclick = (e) => {
+						e.preventDefault();
+						fontsDobèrtas = !fontsDobèrtas;
+					};
+				};
+				L.DomEvent.disableClickPropagation(ctl.getContainer());
+				ctl._update();
+			}
+		}
 		tèxtesLeaflet();
 		map.on('popupopen', tèxtesLeaflet);
 		// Échelle : Leaflet n'arrondit qu'à 1, 2, 3 ou 5, si bien que deux crans
@@ -1378,10 +1425,9 @@
 			majPalièr();
 		};
 		escala.addTo(map);
-		// lo nom del palièr, al costat de la barra (« 50 km · Los dialèctes »),
-		// dins un element a part : dins la barra, desbordava e la barra mesurava pas pus res
-		elPalièr = L.DomUtil.create('span', 'palièr-escala', escala.getContainer());
-		majPalièr();
+		// (lo nom del palièr, « Las comunas » sus « 5 km », se legissiá coma una
+		// mesura e Romain sabiá pas çò que voliá dire, 2026-10-10 : levat ; la
+		// barra mòstra sonque la distància)
 
 		// Puèi las donadas de la basa (luòcs, còlas, dialèctes, despartaments)
 		const [{ data: luocsData }, { data: colasData }, { data: deptData }] =
@@ -1810,6 +1856,23 @@
 		</div>
 	{/if}
 
+	{#if fontsDobèrtas}
+		<section class="fonts-carta" role="dialog" aria-label={lang === 'fr' ? 'Sources de la carte' : 'Fonts de la carta'} transition:fly={{ y: 10, duration: 220 }}>
+			<header>
+				<h2>{lang === 'fr' ? 'Sources de la carte' : 'Fonts de la carta'}</h2>
+				<button type="button" class="tampar-fonts" aria-label={lang === 'fr' ? 'Fermer' : 'Tampar'} onclick={() => (fontsDobèrtas = false)}>×</button>
+			</header>
+			<dl>
+				{#each fontsPerTèma as g (g.tèma)}
+					<dt>{g.tèma || (lang === 'fr' ? 'Carte' : 'Carta')}</dt>
+					{#each g.fonts as font (font)}<dd>{@html font}</dd>{/each}
+				{/each}
+				<dt>{lang === 'fr' ? 'Affichage' : 'Afichatge'}</dt>
+				<dd><a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a></dd>
+			</dl>
+		</section>
+	{/if}
+
 	{#if vesina && !legendaDial}
 		<button type="button" class="legenda-dial vesina" onclick={() => alucarVesina(vesina.kod)}>
 			<span class="nom" lang={LENGAS[vesina.kod.replace('rèsta:', '')]?.lang ?? 'oc'}>{vesina.endo}</span>
@@ -2122,8 +2185,75 @@
 		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
 	}
 
-	/* Las fonts : una sola linha que daissa la plaça a l'escala (retorn de
-	   Romain : l'escala èra jos lo bandèu), desplegada al survòl o al tòc */
+	/* Las fonts : una linha corta (© OpenStreetMap e lo boton « Fonts ») ; la
+	   lista completa dins un panèl rengat per tèma (Romain, 2026-10-10) */
+	.carta :global(.fonts-b) {
+		padding: 0;
+		border: 0;
+		background: none;
+		color: var(--t-aur-clar);
+		font: inherit;
+		font-weight: 700;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+		cursor: pointer;
+	}
+	.fonts-carta {
+		position: absolute;
+		z-index: 1200;
+		right: 12px;
+		bottom: 30px;
+		width: min(26rem, calc(100% - 24px));
+		max-height: min(60%, 30rem);
+		overflow-y: auto;
+		padding: 14px 16px 12px;
+		border: 1px solid var(--t-linha);
+		border-radius: 10px;
+		background: color-mix(in srgb, var(--t-fons-2) 90%, transparent);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+		color: var(--t-tinta);
+	}
+	.fonts-carta header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 8px;
+	}
+	.fonts-carta h2 {
+		margin: 0;
+		font: 700 1rem/1.25 var(--font-body);
+	}
+	.tampar-fonts {
+		width: 28px;
+		height: 28px;
+		border: 1px solid var(--t-linha);
+		border-radius: 50%;
+		background: none;
+		color: var(--t-tinta-2);
+		cursor: pointer;
+	}
+	.fonts-carta dl {
+		margin: 0;
+	}
+	.fonts-carta dt {
+		margin: 12px 0 4px;
+		font: 700 0.72rem/1.3 var(--font-body);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--t-tinta-2);
+	}
+	.fonts-carta dd {
+		margin: 0 0 4px;
+		font-size: 0.84rem;
+		line-height: 1.45;
+	}
+	.fonts-carta :global(a) {
+		color: var(--t-aur-clar);
+	}
+
+	/* (la linha corta) */
 	.carta :global(.leaflet-control-attribution) {
 		max-width: calc(100vw - 10rem);
 		overflow: hidden;
