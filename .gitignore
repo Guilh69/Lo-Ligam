@@ -7,3 +7,6 @@
 /SIG/brut/
 # Carte de l'Atlas sonore (LIMSI/LISN, CC BY-NC-SA) : contrôle seulement, pas republiée
 /SIG/Limsi/
+
+# Python : fichièrs compilats
+__pycache__/

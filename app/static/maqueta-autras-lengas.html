@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="oc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Panèl Autras lengas</title>
+<!-- Maquette du 2026-10-10 (demande de Romain : « ranger les langues », fiches
+     courtes, dialectes dépliables, sous-dialectes plus qualitatifs). Deux
+     organisations à comparer. Aucun fichier de l'application n'est modifié.
+     Chiffres de locuteurs : EN COURS DE VÉRIFICATION (agent de recherche),
+     remplacés ici par « ? ». Occitan à valider. Page locale seulement :
+     scripts/levar-esbos.mjs la retire de la version en ligne. -->
+<style>
+@font-face{font-family:'Limelight';src:url('/fonts/limelight.woff2') format('woff2');font-display:swap}
+@font-face{font-family:'Luciole';src:url('/fonts/luciole-regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Luciole';src:url('/fonts/luciole-bold.woff2') format('woff2');font-weight:700;font-display:swap}
+@font-face{font-family:'Cormorant';src:url('/fonts/cormorant-italic-latin.woff2') format('woff2');font-style:italic;font-display:swap}
+:root{--fons:#120906;--fons2:#1d0f0a;--veire:rgba(29,15,10,.92);--tinta:#f5ead8;--tinta2:rgba(245,234,216,.7);--tinta3:rgba(245,234,216,.48);
+--linha:rgba(245,234,216,.14);--aur:#eeaf34;--aur2:#ffd47f}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 60% 30%,#2a140c,#120906 70%);color:var(--tinta);font:15px/1.45 Luciole,system-ui,sans-serif;min-height:100vh}
+header.intro{max-width:1100px;margin:0 auto;padding:28px 20px 6px}
+header.intro h1{font:400 30px/1.1 Limelight,serif;margin:0 0 6px;letter-spacing:.02em}
+header.intro p{margin:0;color:var(--tinta2);max-width:70ch;font-size:14px}
+.planchas{display:flex;flex-wrap:wrap;gap:36px;justify-content:center;padding:24px 16px 60px}
+.plancha{width:340px}
+.plancha>h2{font:400 20px/1.2 Limelight,serif;margin:0 0 4px;color:var(--aur2)}
+.plancha>p.nota{margin:0 0 14px;color:var(--tinta2);font-size:13px;min-height:3.9em}
+.panel{background:var(--veire);border:1px solid var(--linha);border-radius:16px;padding:14px 14px 10px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.panel h3{font:400 17px/1 Limelight,serif;margin:2px 4px 10px;letter-spacing:.03em}
+/* segments França / Euròpa / Mond */
+.segs{display:flex;gap:4px;padding:3px;border:1px solid var(--linha);border-radius:999px;margin:0 0 12px}
+.segs button{flex:1;border:0;background:none;color:var(--tinta2);font:600 12px/1 Luciole;padding:7px 0;border-radius:999px;cursor:pointer}
+.segs button.on{background:rgba(238,175,52,.16);color:var(--aur2)}
+.segs button small{display:block;font-weight:400;font-size:9.5px;opacity:.7;margin-top:2px}
+/* ---------- Option A : fichas ---------- */
+.ficha{border-top:1px solid var(--linha);padding:10px 4px 10px}
+.ficha:first-of-type{border-top:0}
+.ficha .cap{display:grid;grid-template-columns:6px 1fr auto;gap:10px;align-items:start}
+.ficha .banda{width:6px;align-self:stretch;border-radius:4px}
+.ficha .endo{font:italic 400 21px/1 Cormorant,Georgia,serif;letter-spacing:.01em}
+.ficha .nom{font:600 10.5px/1 Luciole;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta2);margin-top:3px}
+.ficha .desc{font-size:12px;color:var(--tinta2);margin:6px 0 0;line-height:1.38}
+.ficha .meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:7px;font-size:11px;color:var(--tinta3)}
+.ficha .meta b{color:var(--tinta);font-weight:700}
+.vital{display:inline-flex;align-items:center;gap:5px}
+.vital i{width:7px;height:7px;border-radius:50%;display:inline-block}
+.switch{width:34px;height:20px;border-radius:999px;border:1px solid var(--linha);background:rgba(245,234,216,.08);position:relative;cursor:pointer;margin-top:2px;flex:none}
+.switch::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--tinta2);transition:.2s}
+.switch.on{background:var(--aur);border-color:var(--aur)}
+.switch.on::after{left:16px;background:#1d0f0a}
+.desplegar{display:flex;align-items:center;gap:6px;margin:8px 0 0 16px;background:none;border:0;color:var(--aur2);font:600 11.5px/1 Luciole;cursor:pointer;padding:4px 0}
+.desplegar .chev{display:inline-block;transition:transform .2s}
+.ficha.dob .desplegar .chev{transform:rotate(90deg)}
+.dials{display:none;margin:6px 0 2px 16px}
+.ficha.dob .dials{display:block}
+/* l'arborescéncia : traits fins, nœuds ronds */
+.albre{list-style:none;margin:0;padding:0}
+.albre li{position:relative;padding:3px 0 3px 18px}
+.albre li::before{content:'';position:absolute;left:5px;top:0;bottom:0;border-left:1px solid var(--linha)}
+.albre li:last-child::before{bottom:calc(100% - 13px)}
+.albre li::after{content:'';position:absolute;left:5px;top:13px;width:9px;border-top:1px solid var(--linha)}
+.d{display:flex;align-items:center;gap:8px;padding:3px 8px 3px 4px;border-radius:8px;cursor:pointer}
+.d:hover{background:rgba(245,234,216,.06)}
+.d.on{background:rgba(238,175,52,.13);box-shadow:inset 0 0 0 1px rgba(238,175,52,.4)}
+.d i{width:10px;height:10px;border-radius:3px;flex:none}
+.d .e{font:italic 16px/1.1 Cormorant,Georgia,serif}
+.d .f{font-size:10.5px;color:var(--tinta3)}
+.d .n{margin-left:auto;font-size:10px;color:var(--tinta3)}
+.albre .albre{margin:2px 0 4px}
+.albre .sots{margin:2px 0 2px 2px;padding:6px 6px 4px;border-radius:10px;background:rgba(245,234,216,.035);border:1px dashed rgba(245,234,216,.13)}
+.sots-tit{font:600 9.5px/1 Luciole;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta3);margin:0 0 4px 4px}
+/* ---------- Option B : per familha ---------- */
+.fam{margin:4px 0 10px}
+.fam-cap{display:flex;align-items:baseline;gap:8px;margin:10px 4px 6px}
+.fam-cap h4{margin:0;font:600 10.5px/1 Luciole;letter-spacing:.16em;text-transform:uppercase;color:var(--aur2)}
+.fam-cap span{font-size:10.5px;color:var(--tinta3)}
+.fam-cap::after{content:'';flex:1;border-top:1px solid var(--linha);transform:translateY(-3px)}
+.l{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;padding:7px 8px;border-radius:10px;cursor:pointer}
+.l:hover{background:rgba(245,234,216,.05)}
+.l .t{display:flex;align-items:baseline;gap:8px;min-width:0}
+.l .endo{font:italic 19px/1.05 Cormorant,Georgia,serif;white-space:nowrap}
+.l .nom{font-size:10.5px;color:var(--tinta3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.l .barra{grid-column:1;display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--tinta3)}
+.l .barra span.b{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--c1),var(--c2));min-width:4px}
+.l.dob{background:rgba(245,234,216,.05)}
+.l-dob{display:none;margin:2px 4px 8px 12px;padding:8px 8px 6px 10px;border-left:2px solid var(--c,var(--linha))}
+.l.dob+.l-dob{display:block}
+.l-dob p{margin:0 0 6px;font-size:11.5px;color:var(--tinta2)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px 3px 6px;border:1px solid var(--linha);border-radius:999px;font:400 11.5px/1.2 Luciole;cursor:pointer}
+.chip i{width:8px;height:8px;border-radius:50%}
+.chip.on{border-color:var(--aur);background:rgba(238,175,52,.14)}
+.chip-grop{flex-basis:100%;display:grid;grid-template-columns:auto 1fr;gap:6px;align-items:start;margin:2px 0}
+.chip-grop .sotchips{display:flex;flex-wrap:wrap;gap:5px;padding:5px 0 3px 10px;border-left:1px solid var(--linha);margin-left:4px;grid-column:1 / -1}
+.avenir{opacity:.45}
+.legenda{font-size:10.5px;color:var(--tinta3);margin:10px 4px 2px}
+</style>
+</head>
+<body>
+<header class="intro">
+	<h1>Panèl « Autras lengas » : doas organizacions</h1>
+	<p>Deux façons de ranger les langues, à comparer. Clique sur « 3 dialèctes ▸ » ou sur une langue pour déplier ; le picard montre ses dialectes (ch'ti, rouchi) en arborescence. Les nombres de locuteurs sont en cours de vérification (« ? »). Tout l'occitan est à valider.</p>
+</header>
+<div class="planchas">
+
+<!-- ============ A ============ -->
+<section class="plancha">
+	<h2>A · Fichas</h2>
+	<p class="nota">Trois onglets (France, Europe, monde). Chaque langue est une fiche : nom dans la langue, une ligne de présentation, famille, locuteurs. Les dialectes se déplient en arborescence, les sous-dialectes dans un encadré.</p>
+	<div class="panel">
+		<h3>Autras lengas</h3>
+		<div class="segs"><button class="on">França<small>8 lengas</small></button><button>Euròpa<small>de venir</small></button><button>Mond<small>de venir</small></button></div>
+
+		<div class="ficha" data-dob>
+			<div class="cap">
+				<span class="banda" style="background:linear-gradient(#5ab0ff,#4a7dff,#4fc25f,#22b39b)"></span>
+				<div><div class="endo">Català</div><div class="nom">catalan</div>
+					<p class="desc">Lenga romana parlada de Salses a Guardamar e a las Balears, cooficiala en Catalonha.</p>
+					<div class="meta"><span><b>?</b> locutors</span><span>romana</span><span class="vital"><i style="background:#7fd67a"></i>viva</span></div></div>
+				<span class="switch on"></span>
+			</div>
+			<button class="desplegar"><span class="chev">▸</span>7 dialèctes</button>
+			<div class="dials"><ul class="albre">
+				<li><div class="d"><i style="background:#5ab0ff"></i><span class="e">rossellonès</span><span class="f">rossellonés</span></div></li>
+				<li><div class="d on"><i style="background:#4a7dff"></i><span class="e">central</span><span class="f">central</span></div></li>
+				<li><div class="d"><i style="background:#4fc25f"></i><span class="e">nord-occidental</span></div></li>
+				<li><div class="d"><i style="background:#22b39b"></i><span class="e">valencià</span><span class="f">valencian</span></div></li>
+				<li><div class="d"><i style="background:#36c5d0"></i><span class="e">balear</span></div></li>
+			</ul></div>
+		</div>
+
+		<div class="ficha dob" data-dob>
+			<div class="cap">
+				<span class="banda" style="background:linear-gradient(#7f95ff,#3f5bff,#2fb4f0,#1fd6c0,#62a0ea,#3fc0ff)"></span>
+				<div><div class="endo">Langues d'oïl</div><div class="nom">lengas d'oïl · una familha</div>
+					<p class="desc">Nòu lengas romanas del nòrd de França e de Belgica, sòrres del francés.</p>
+					<div class="meta"><span><b>?</b> locutors</span><span>romanas</span><span class="vital"><i style="background:#ffb35c"></i>en dangièr</span></div></div>
+				<span class="switch on"></span>
+			</div>
+			<button class="desplegar"><span class="chev">▸</span>11 lengas e parlars</button>
+			<div class="dials"><ul class="albre">
+				<li><div class="d on"><i style="background:#7f95ff"></i><span class="e">picard</span><span class="n">3 dialèctes</span></div>
+					<ul class="albre"><li class="sots"><div class="sots-tit">Dialèctes del picard</div>
+						<ul class="albre">
+							<li><div class="d"><i style="background:#3fe0b8"></i><span class="e">ch'ti</span><span class="f">bacin minièr, Doai</span></div></li>
+							<li><div class="d"><i style="background:#ff9f5a"></i><span class="e">rouchi</span><span class="f">Lila, Valenciennas</span></div></li>
+							<li><div class="d"><i style="background:#7f95ff"></i><span class="e">picard</span><span class="f">los autres parlars</span></div></li>
+						</ul></li></ul></li>
+				<li><div class="d"><i style="background:#3f5bff"></i><span class="e">normand</span></div></li>
+				<li><div class="d"><i style="background:#a48cff"></i><span class="e">wallon</span><span class="f">valon</span></div></li>
+				<li><div class="d"><i style="background:#2fb4f0"></i><span class="e">champenois</span><span class="f">campanés</span></div></li>
+				<li><div class="d"><i style="background:#4f7fd0"></i><span class="e">gallo</span><span class="f">galò</span></div></li>
+				<li><div class="d"><i style="background:#3fc0ff"></i><span class="e">poitevin-saintongeais</span></div></li>
+			</ul></div>
+		</div>
+
+		<div class="ficha" data-dob>
+			<div class="cap">
+				<span class="banda" style="background:linear-gradient(#59d9a9,#2fc4c4,#7fd67a,#c8e070)"></span>
+				<div><div class="endo">Brezhoneg</div><div class="nom">breton</div>
+					<p class="desc">Lenga celtica de Bretanha bassa, parenta del galés e del cornic.</p>
+					<div class="meta"><span><b>?</b> locutors</span><span>celtica</span><span class="vital"><i style="background:#ff6b5a"></i>en dangièr grèu</span></div></div>
+				<span class="switch"></span>
+			</div>
+			<button class="desplegar"><span class="chev">▸</span>4 dialèctes</button>
+			<div class="dials"></div>
+		</div>
+
+		<div class="ficha" data-dob>
+			<div class="cap">
+				<span class="banda" style="background:linear-gradient(#2f8a57,#8fd14f)"></span>
+				<div><div class="endo">Euskara</div><div class="nom">basc</div>
+					<p class="desc">Sola lenga d'Euròpa occidentala sens parentat coneguda, d'Iparralde a Bilbo.</p>
+					<div class="meta"><span><b>?</b> locutors</span><span>isolat</span><span class="vital"><i style="background:#ffb35c"></i>vulnerabla</span></div></div>
+				<span class="switch"></span>
+			</div>
+			<button class="desplegar"><span class="chev">▸</span>7 dialèctes</button>
+			<div class="dials"></div>
+		</div>
+		<p class="legenda">Locutors : font e annada al survòl del nombre.</p>
+	</div>
+</section>
+
+<!-- ============ B ============ -->
+<section class="plancha">
+	<h2>B · Per familha</h2>
+	<p class="nota">Les langues rangées par famille (romanes, celtiques, germaniques, isolat), en lignes compactes avec une barre de locuteurs. Un clic déplie la fiche et les dialectes en pastilles ; une langue à dialectes ouvre un groupe.</p>
+	<div class="panel">
+		<h3>Autras lengas</h3>
+		<div class="segs"><button class="on">França<small>8 lengas</small></button><button>Euròpa<small>de venir</small></button><button>Mond<small>de venir</small></button></div>
+
+		<div class="fam"><div class="fam-cap"><h4>Romanas</h4><span>coma l'occitan</span></div>
+			<div class="l" style="--c1:#5ab0ff;--c2:#22b39b"><div class="t"><span class="endo">Català</span><span class="nom">catalan</span></div><span class="switch on"></span>
+				<div class="barra"><span class="b" style="width:120px"></span>? locutors</div></div>
+			<div class="l" style="--c1:#c08bff;--c2:#6dbf73"><div class="t"><span class="endo">Arpetan</span><span class="nom">arpitan</span></div><span class="switch"></span>
+				<div class="barra"><span class="b" style="width:30px"></span>? locutors</div></div>
+			<div class="l dob" style="--c1:#7f95ff;--c2:#3fc0ff;--c:#7f95ff"><div class="t"><span class="endo">Langues d'oïl</span><span class="nom">9 lengas</span></div><span class="switch on"></span>
+				<div class="barra"><span class="b" style="width:60px"></span>? locutors</div></div>
+			<div class="l-dob" style="--c:#7f95ff"><p>Nòu lengas romanas del nòrd de França e de Belgica, sòrres del francés.</p>
+				<div class="chips">
+					<div class="chip-grop"><span class="chip on"><i style="background:#7f95ff"></i>picard ▾</span>
+						<div class="sotchips"><span class="chip"><i style="background:#3fe0b8"></i>ch'ti</span><span class="chip"><i style="background:#ff9f5a"></i>rouchi</span></div></div>
+					<span class="chip"><i style="background:#3f5bff"></i>normand</span><span class="chip"><i style="background:#a48cff"></i>wallon</span>
+					<span class="chip"><i style="background:#2fb4f0"></i>champenois</span><span class="chip"><i style="background:#1588d8"></i>lorrain</span>
+					<span class="chip"><i style="background:#4f7fd0"></i>gallo</span><span class="chip"><i style="background:#3fc0ff"></i>poitevin-saintongeais</span>
+				</div></div>
+			<div class="l avenir" style="--c1:#c77;--c2:#a55"><div class="t"><span class="endo">Corsu</span><span class="nom">còrs</span></div><span class="switch"></span>
+				<div class="barra"><span class="b" style="width:24px"></span>de venir</div></div>
+		</div>
+		<div class="fam"><div class="fam-cap"><h4>Celticas</h4></div>
+			<div class="l" style="--c1:#59d9a9;--c2:#c8e070"><div class="t"><span class="endo">Brezhoneg</span><span class="nom">breton</span></div><span class="switch"></span>
+				<div class="barra"><span class="b" style="width:22px"></span>? locutors</div></div></div>
+		<div class="fam"><div class="fam-cap"><h4>Germanicas</h4></div>
+			<div class="l avenir" style="--c1:#d6a;--c2:#a6d"><div class="t"><span class="endo">Elsässisch, Platt</span><span class="nom">alsacian, francic</span></div><span class="switch"></span>
+				<div class="barra"><span class="b" style="width:40px"></span>de venir</div></div>
+			<div class="l avenir" style="--c1:#f93;--c2:#fc6"><div class="t"><span class="endo">Vlaemsch</span><span class="nom">flamenc</span></div><span class="switch"></span>
+				<div class="barra"><span class="b" style="width:14px"></span>de venir</div></div></div>
+		<div class="fam"><div class="fam-cap"><h4>Isolat</h4></div>
+			<div class="l" style="--c1:#2f8a57;--c2:#8fd14f"><div class="t"><span class="endo">Euskara</span><span class="nom">basc</span></div><span class="switch"></span>
+				<div class="barra"><span class="b" style="width:46px"></span>? locutors</div></div></div>
+	</div>
+</section>
+</div>
+<script>
+for (const b of document.querySelectorAll('.desplegar')) b.onclick = () => b.closest('.ficha').classList.toggle('dob');
+for (const l of document.querySelectorAll('.l')) l.onclick = (e) => { if (!e.target.classList.contains('switch')) l.classList.toggle('dob'); };
+for (const s of document.querySelectorAll('.switch')) s.onclick = (e) => { e.stopPropagation(); s.classList.toggle('on'); };
+for (const s of document.querySelectorAll('.segs button')) s.onclick = () => { s.parentNode.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === s)); };
+</script>
+</body>
+</html>
