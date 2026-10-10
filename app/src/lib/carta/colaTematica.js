@@ -775,6 +775,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				const [px0, py0] = G.pt(f.ll);
 				const r = f.r8 * Math.pow(2, z - 8);
 				const nom = nomDe(pv.props);
+				if (!nom) continue;
 				const tèxt = gov ? nom.toUpperCase() : nom;
 				const espac = gov ? '0.16em' : '0.08em';
 				const g = !gov && this._govs?.get(pv.props.governament);
@@ -890,7 +891,9 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				fr = this._lang === 'fr';
 			cx.setTransform(dpr, 0, 0, dpr, 0, 0);
 			cx.clearRect(0, 0, this._W, this._H);
-			const nomDe = (p) => (fr ? p.fr : (p.oc ?? p.fr));
+			// (sens forma occitana coneguda, lo nom s'aficha pas sus la carta occitana :
+			// pas de francés en luòc de l'occitan ; Romain, 2026-10-10)
+			const nomDe = (p) => (fr ? p.fr : (p.oc ?? null));
 			const survòl = (kod) => easeS(this._a.get(kod)?.p ?? 0);
 			// los noms de vilas ja pausats per la còla d'estelas, puèi cada nom
 			// pausat aquí : los noms seguents los evitan
@@ -955,7 +958,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					cx.shadowColor = T.ombra;
 					cx.shadowBlur = 5;
 					for (const pc of G.parcs) {
-						if (!pc.eti || pc.props.mena === 'pn-adesion') continue;
+						if (!pc.eti || pc.props.mena === 'pn-adesion' || !nomDe(pc.props)) continue;
 						cx.globalAlpha = aNom * 0.9;
 						cx.fillStyle = `rgb(${pc.props.mena === 'pnm' ? T.mar : T.parc})`;
 						cx.fillText(nomDe(pc.props), pc.eti[0], pc.eti[1]);
@@ -1147,6 +1150,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					if (x < -100 || y < -40 || x > this._W + 100 || y > this._H + 40) continue;
 					const som = r.props.mena === 'som';
 					const nom = nomDe(r.props);
+					if (!nom) continue;
 					cx.font = som ? `500 10.5px Luciole, sans-serif` : `italic 500 ${{ 1: 15, 2: 13, 3: 11.5 }[r.props.renc] ?? 12}px ${CORMORANT}`;
 					if (esp) cx.letterSpacing = som ? '0px' : ((r.props.renc === 1 ? 0.32 : 0.2) + (1 - pI) * 0.6).toFixed(3) + 'em';
 					const tèxt = som ? nom : nom.toUpperCase();
