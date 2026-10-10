@@ -1328,6 +1328,13 @@
 		map.on('moveend layeradd layerremove', programarDegatjament);
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
+		// una bulla de luòc se tampa al clic endacòm mai (la recèrca, lo rail,
+		// lo capçal), coma la rèsta del site ; sus la carta, lo clic que la tampa
+		// fa pas res mai (principi de navigacion, 2026-10-10)
+		map.on('popupopen', () => {
+			const lèva = tampaDefòra((t) => !!t.closest('.leaflet-popup'), () => map?.closePopup());
+			map.once('popupclose', lèva);
+		});
 		// de luènh (« 500 km »), los ponches (luòcs, librarias, Calandretas)
 		// s'escantisson amb las autras jaces : demòra lo contorn de l'Occitània
 		const luènh = () => {
@@ -1811,6 +1818,7 @@
 	// une région, elle se cadre dessus
 	function anarA(r) {
 		if (!map) return;
+		map.closePopup();
 		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (r.mena === 'luòc') {
 			const z = r.renc <= 2 ? 10.5 : r.renc === 3 ? 11 : 12;
