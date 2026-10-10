@@ -706,6 +706,21 @@
 	</section>
 {/if}
 
+{#snippet pastilhaLenga(j, lg, q, nSots, obèrt)}
+	{@const apart = !!lg.apart?.[q.k]}
+	<button
+		type="button"
+		class="pastilha"
+		class:apart
+		class:sota={!!q.de}
+		lang={lg.lang}
+		title={lang === 'oc' ? q.oc : q.fr}
+		aria-pressed={causits.includes(lg.pref + q.k)}
+		onclick={() => causirLenga(j.id, q.k)}
+	><i class:apart style:background={apart ? null : colorPastilha(j.id, q.k)}></i>{q[lg.lang] ?? (lg.lang === 'fr' ? q.fr : q.ca)}{#if nSots}<span class="chevron" aria-hidden="true">{obèrt ? '▾' : '▸'}</span>{/if}</button
+	>
+{/snippet}
+
 {#snippet linha(j)}
 	<div class="linha" class:escantida={!actiu(j)}>
 		<span class="apercebut"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>
@@ -735,18 +750,21 @@
 				{@const lg = LENGAS[j.id]}
 				<div class="pastilhas" role="group" aria-label={tx.causirLenga(lang === 'fr' ? lg.nom.fr : lg.nom.oc)}>
 					<!-- los noms dins la lenga ; l'occitan (o lo francés) en infobulla -->
-					{#each lg.pastilhas.filter((q) => !q.de || causits.includes(lg.pref + q.de) || lg.pastilhas.some((s) => s.de === q.de && causits.includes(lg.pref + s.k))) as { k, oc, fr, de, ...q } (k)}
-						{@const apart = !!lg.apart?.[k]}
-						<button
-							type="button"
-							class="pastilha"
-							class:apart
-							class:sota={!!de}
-							lang={lg.lang}
-							title={lang === 'oc' ? oc : fr}
-							aria-pressed={causits.includes(lg.pref + k)}
-							onclick={() => causirLenga(j.id, k)}
-						><i class:apart style:background={apart ? null : colorPastilha(j.id, k)}></i>{q[lg.lang] ?? (lg.lang === 'fr' ? fr : q.ca)}</button>
+					<!-- una lenga amb de dialèctes (lo picard : ch'ti, rochi) : quand es causida,
+					     sos dialèctes s'afichan dejós, en arborescéncia (retorn de Romain) -->
+					{#each lg.pastilhas.filter((q) => !q.de) as q (q.k)}
+						{@const sots = lg.pastilhas.filter((x) => x.de === q.k)}
+						{@const obèrt = sots.length > 0 && (causits.includes(lg.pref + q.k) || sots.some((x) => causits.includes(lg.pref + x.k)))}
+						{#if obèrt}
+							<div class="grope-sots">
+								{@render pastilhaLenga(j, lg, q, sots.length, true)}
+								<div class="sots" role="group" aria-label={lang === 'fr' ? `Dialectes du ${q.fr}` : `Dialèctes del ${q.oc}`}>
+									{#each sots as x (x.k)}{@render pastilhaLenga(j, lg, x, 0, false)}{/each}
+								</div>
+							</div>
+						{:else}
+							{@render pastilhaLenga(j, lg, q, sots.length, false)}
+						{/if}
 					{/each}
 					{#if causits.some((k) => k.startsWith(lg.pref))}
 						<button type="button" class="pastilha totes" onclick={() => (causits = causits.filter((k) => !k.startsWith(lg.pref)))}
@@ -1165,11 +1183,30 @@
 		gap: 4px;
 		margin-top: 0.45rem;
 	}
-	/* un dialècte d'una lenga de la familha (lo ch'ti dins lo picard) : en retrait */
+	/* una lenga e sos dialèctes (lo picard : ch'ti, rochi) : una linha sola,
+	   los dialèctes dejós, estacats per un trait coma una arborescéncia */
+	.grope-sots {
+		flex-basis: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 5px;
+	}
+	.sots {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 5px;
+		margin-left: 11px;
+		padding: 2px 0 2px 12px;
+		border-left: 1px solid var(--t-linha);
+	}
 	.pastilha.sota {
-		margin-left: 12px;
 		font-size: 0.68rem;
-		border-style: dashed;
+	}
+	.pastilha .chevron {
+		margin-left: 3px;
+		font-size: 0.62rem;
+		opacity: 0.6;
 	}
 	.pastilha {
 		display: inline-flex;
