@@ -112,7 +112,7 @@ export const INTRO = {
 // dialècte (demanda de Romain) ; las autras venon en s'aprochant
 const CAPITALAS = ['Bordèu', 'Pau', 'Tolosa', 'Montpelhièr', 'Marselha', 'Niça', 'Limòtges', 'Clarmont-Ferrand', 'Valença', 'Gap'];
 // a partir de quin zoom un luòc se mòstra : una valor de la barra, parièra
-// sus totes los ecrans (escalas.js : capitalas a 200 km, vilas a 40 km,
+// sus totes los ecrans (escalas.js : capitalas a 70 km, vilas a 40 km,
 // mejanas a 30 km ; las vilas grandas d'una autra lenga, coma las capitalas)
 // (una vila d'una autra lenga es pas una capitala occitana per son nom :
 // Tolosa de Gipuscoa èra presa per Tolosa de Lengadòc)
