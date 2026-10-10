@@ -204,6 +204,8 @@
 		const A = {
 			frontiera: '<path d="M4 26 C 16 10, 30 30, 48 8" fill="none" stroke="#e0612f" stroke-width="2.4" stroke-dasharray="0.1 5" stroke-linecap="round"/>',
 			dialectes: NOMS_DIAL.map(([k], i) => `<rect x="${i * 9}" y="0" width="9.5" height="36" fill="${d[k]}" opacity=".75"/>`).join(''),
+			// la lenga unida : una sola color, son nom
+			unificat: '<rect width="52" height="36" fill="#c4553f" opacity=".72"/><text x="26" y="21.5" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1.2" fill="#fff8ec">OCCITAN</text>',
 			creissent: '<defs><pattern id="ap-h" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.6" height="5" fill="#e0612f"/></pattern></defs><path d="M0 22 Q 26 4 52 20 V 36 H 0z" fill="url(#ap-h)" opacity=".8"/>',
 			departaments: '<rect x="3" y="4" width="14" height="13" fill="#e0612f" opacity=".85"/><rect x="19" y="4" width="14" height="13" fill="#e0612f" opacity=".5"/><rect x="35" y="4" width="14" height="13" fill="#e0612f" opacity=".22"/><rect x="3" y="19" width="22" height="13" fill="#e0612f" opacity=".5"/><rect x="27" y="19" width="22" height="13" fill="#e0612f" opacity=".85"/>',
 			limsi: '<circle cx="14" cy="18" r="3" fill="#3e7cb1"/><path d="M20 12a8 8 0 0 1 0 12M24 8a13 13 0 0 1 0 20" fill="none" stroke="#3e7cb1" stroke-width="1.6"/>',
