@@ -129,8 +129,10 @@
 		cultura: '<path d="M4 6c3-1 5-1 8 1 3-2 5-2 8-1v12c-3-1-5-1-8 1-3-2-5-2-8-1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 7v12" stroke="currentColor" stroke-width="1.4"/>',
 		istoria: '<path d="M5 20h14M6 20V10M10 20V10M14 20V10M18 20V10M4 10h16L12 4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>',
 		natura: '<path d="M3 19l6-10 4 6 3-4 5 8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="17" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.5"/>',
-		// (Tabler Icons « language », MIT)
-		lengas: '<path d="M4 5h7M9 3v2c0 4.4-2.2 8-5 8M5 9c0 2.1 3 3.9 6.7 4M12 20l4-9 4 9M19.1 18h-6.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>',
+		// doas bofigas de discussion, una plena e una al traç (causida de Romain,
+		// 2026-10-10) ; lo liseret entre las doas es una mascara, pas la color del
+		// fons : demòra just sus totes los estats del boton
+		lengas: '<mask id="masc-lengas"><rect width="24" height="24" fill="#fff"/><path d="M19.19 14.6A5.6 5.6 0 1 0 15.87 16.51L20.6 19z" fill="none" stroke="#000" stroke-width="3.6" stroke-linejoin="round"/><circle cx="5.9" cy="11" r=".95"/><circle cx="8.3" cy="11" r=".95"/></mask><path mask="url(#masc-lengas)" d="M4.81 14.6A5.6 5.6 0 1 1 8.13 16.51L3.4 19z" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/><path d="M19.19 14.6A5.6 5.6 0 1 0 15.87 16.51L20.6 19z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="13.3" cy="11" r=".95" fill="currentColor"/><circle cx="15.7" cy="11" r=".95" fill="currentColor"/><circle cx="18.1" cy="11" r=".95" fill="currentColor"/>',
 		fons: '<path d="M12 4l9 5-9 5-9-5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>'
 	};
 
