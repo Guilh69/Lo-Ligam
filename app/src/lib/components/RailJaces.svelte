@@ -15,7 +15,7 @@
 	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
 	import { quintOut } from 'svelte/easing';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { cargarFranca, lengasEstrangièr } from '$lib/carta/franca.js';
+	import { cargarFranca, lengasEstrangièr, dialèctesFranca } from '$lib/carta/franca.js';
 
 	let {
 		familhas = [],
@@ -71,6 +71,7 @@
 			color: (n) => `Color : ${n}`,
 			dialecteTotes: 'Totes',
 			causirDial: 'Causir un o mantun dialècte',
+			gropeDial: { fr: 'En França', frontiera: 'Sus la frontièra', defora: 'Fòra de França' },
 			causirLenga: (l) => `Causir una zòna ${/^lengas /.test(l) ? 'de las ' + l : /^[aeiouàèéòóíú]/i.test(l) ? "de l'" + l : 'del ' + l}`,
 			admin: "Modificar dins l'admin",
 			// (« I anar » : causit per Romain, 2026-10-10)
@@ -131,6 +132,7 @@
 			color: (n) => `Couleur : ${n}`,
 			dialecteTotes: 'Tous',
 			causirDial: 'Choisir un ou plusieurs dialectes',
+			gropeDial: { fr: 'En France', frontiera: 'Transfrontaliers', defora: 'Hors de France' },
 			causirLenga: (l) => `Choisir une zone ${/^langues /.test(l) ? 'des ' + l : /^[aeiouàâéèêîôû]/i.test(l) ? "de l'" + l : 'du ' + l}`,
 			admin: "Modifier dans l'admin",
 			anar: 'Y aller',
@@ -175,6 +177,16 @@
 	// Las autras lengas (lengas.js) : lors pastilhas e lors colors
 	// la color d'una pastilha d'una lenga (sa color de dialècte segon lo tèma)
 	const colorPastilha = (id, k) => LENGAS[id].dial[clar ? 'clar' : 'sorne'][k] ?? LENGAS[id].color[clar ? 'clar' : 'sorne'];
+	// Mòde « Lengas de França » : los dialèctes d'una lenga en tres gropes, en
+	// França, sus la frontièra, fòra de França (demanda de Romain, 2026-10-10 ;
+	// classas calculadas per franca-contorn.py). Un sol grope : pas de títol.
+	let classesDial = $state({});
+	const gropesDial = (id, lista, kod) => {
+		if (!mòde) return [{ g: '', lista }];
+		const cl = classesDial[id] ?? {};
+		const gs = ['fr', 'frontiera', 'defora'].map((g) => ({ g, lista: lista.filter((q) => (cl[kod(q)] ?? 'fr') === g) })).filter((x) => x.lista.length);
+		return gs.length > 1 ? gs : [{ g: '', lista }];
+	};
 	const NOMS_DIAL = [
 		['gas', 'gascon', 'gascon'],
 		['lan', 'lengadocian', 'languedocien'],
@@ -290,7 +302,10 @@
 				}
 				silhoetas = out;
 				silhoetasFr = outFr;
-				cargarFranca().then(() => (estrangièr = Object.fromEntries(lengasEstrangièr().map((k) => [k, true]))));
+				cargarFranca().then(() => {
+					estrangièr = Object.fromEntries(lengasEstrangièr().map((k) => [k, true]));
+					classesDial = dialèctesFranca();
+				});
 			})
 			.catch(() => {});
 	});
@@ -1152,12 +1167,15 @@
 		</div>
 		{#if dob}
 			<ul class="albre" role="group" aria-label={tx.causirDial} transition:slide={{ duration: 200 }}>
-				{#each NOMS_DIAL as [k, oc, fr] (k)}
-					<li>
-						<button type="button" class="d" aria-pressed={causits.includes(k)} lang="oc" onclick={() => causirDial(k)}
-							><i style:background={DIAL[k]}></i><span class="e">{oc}</span>{#if lang === 'fr' && fr !== oc}<span class="f" lang="fr">{fr}</span>{/if}</button
-						>
-					</li>
+				{#each gropesDial('occitan', NOMS_DIAL, (d) => d[0]) as G (G.g)}
+					{#if G.g}<li class="grope-tit">{tx.gropeDial[G.g]}</li>{/if}
+					{#each G.lista as [k, oc, fr] (k)}
+						<li>
+							<button type="button" class="d" aria-pressed={causits.includes(k)} lang="oc" onclick={() => causirDial(k)}
+								><i style:background={DIAL[k]}></i><span class="e">{oc}</span>{#if lang === 'fr' && fr !== oc}<span class="f" lang="fr">{fr}</span>{/if}</button
+							>
+						</li>
+					{/each}
 				{/each}
 				<li>
 					<button type="button" class="d" aria-pressed={causits.includes('cro')} lang="oc" onclick={() => causirDial('cro')}
@@ -1209,19 +1227,22 @@
 		</div>
 		{#if dob}
 			<ul class="albre" role="group" aria-label={tx.causirLenga(nomLg)} transition:slide={{ duration: 200 }}>
-				{#each lg.pastilhas.filter((q) => !q.de) as q (q.k)}
-					{@const sots = lg.pastilhas.filter((x) => x.de === q.k)}
-					<li>
-						{@render dialLenga(j, lg, q)}
-						{#if sots.length}
-							<div class="sots">
-								<p class="sots-tit">{tx.dialDe(lang === 'fr' ? q.fr : q.oc)}</p>
-								<ul class="albre">
-									{#each sots as x (x.k)}<li>{@render dialLenga(j, lg, x)}</li>{/each}
-								</ul>
-							</div>
-						{/if}
-					</li>
+				{#each gropesDial(j.id, lg.pastilhas.filter((q) => !q.de), (q) => q.k) as G (G.g)}
+					{#if G.g}<li class="grope-tit">{tx.gropeDial[G.g]}</li>{/if}
+					{#each G.lista as q (q.k)}
+						{@const sots = lg.pastilhas.filter((x) => x.de === q.k)}
+						<li>
+							{@render dialLenga(j, lg, q)}
+							{#if sots.length}
+								<div class="sots">
+									<p class="sots-tit">{tx.dialDe(lang === 'fr' ? q.fr : q.oc)}</p>
+									<ul class="albre">
+										{#each sots as x (x.k)}<li>{@render dialLenga(j, lg, x)}</li>{/each}
+									</ul>
+								</div>
+							{/if}
+						</li>
+					{/each}
 				{/each}
 			</ul>
 		{/if}
@@ -2213,6 +2234,17 @@
 	}
 	.sots .albre {
 		margin-left: 2px;
+	}
+	/* los tres gropes del mòde « Lengas de França » */
+	.grope-tit {
+		margin: 10px 0 2px 2px;
+		font: 700 0.62rem/1.2 var(--font-body);
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--t-tinta) 62%, transparent);
+	}
+	.grope-tit:first-child {
+		margin-top: 2px;
 	}
 	.sots-tit {
 		margin: 0 0 3px 4px;

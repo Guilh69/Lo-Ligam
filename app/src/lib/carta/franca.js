@@ -4,6 +4,7 @@
 // rèsta. Cargat sonque quand cal (34 Ko).
 let aneis = null,
 	estrangier = [],
+	dialectes = {},
 	promesa = null;
 
 export const cargarFranca = () =>
@@ -12,6 +13,7 @@ export const cargarFranca = () =>
 		.then((d) => {
 			aneis = d.aneis ?? d;
 			estrangier = d.estrangier ?? [];
+			dialectes = d.dialectes ?? {};
 		})
 		.catch(() => (aneis = [])));
 
@@ -20,6 +22,10 @@ export const cargarFranca = () =>
 export const lengasEstrangièr = () => estrangier;
 
 export const francaCargada = () => !!aneis?.length;
+
+// cada dialècte : 'fr' (en França), 'frontiera' (de cada band), 'defora'
+// ({ lenga: { kod: classa } }, calculat per franca-contorn.py)
+export const dialèctesFranca = () => dialectes;
 
 // un ponch es en França ? (raia e parelh ; tant que lo contorn es pas cargat : òc)
 export function dinsFranca(lat, lon) {

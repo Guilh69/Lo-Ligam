@@ -60,6 +60,33 @@ for k, anels in vesinas.items():
     if part > 0.01:
         estrangier.append(k)
 
+# Los dialèctes de cada lenga : en França (mai de 98,5 % de lor zòna), sus la
+# frontièra, o defòra (mens de 1,5 %) ; lo mòde « Lengas de França » los rènga
+# en tres gropes (demanda de Romain, 2026-10-10). Lo lindal d'1,5 % passa
+# lo bruch dels traçats (còsta simplificada, frontièra a 1 km pròche : fins a
+# 1,3 %) ; la Val d'Aran (2 %) o la ponta de Givet (1,9 %) i passan.
+DATA = os.path.join(RAIC, 'app', 'static', 'data')
+dialectes = {}
+pcts = {}
+for k, fic in [(k, k + '.json') for k in vesinas if k != 'franca'] + [('occitan', 'dialectes.geojson')]:
+    cami = os.path.join(DATA, fic)
+    if not os.path.exists(cami):
+        continue
+    res = {}
+    for f in json.load(open(cami, encoding='utf-8'))['features']:
+        if not f.get('geometry'):
+            continue
+        g = ogr.CreateGeometryFromJson(json.dumps(f['geometry'])).Buffer(0)
+        a = g.GetArea()
+        if a <= 0:
+            continue
+        dins = g.Intersection(franca_larga).GetArea() / a
+        res[f['properties']['kod']] = 'fr' if dins > 0.985 else 'defora' if dins < 0.015 else 'frontiera'
+        pcts[k + ':' + f['properties']['kod']] = dins
+    dialectes[k] = res
+    print(f'  {k} :', ', '.join(f'{d} {c}' for d, c in res.items()))
+
+print('  dins França :', ', '.join(f'{d} {p:.2%}' for d, p in pcts.items() if 0.001 < p < 0.999))
 with open(SORTIDA, 'w', encoding='utf-8') as s:
-    json.dump({'aneis': aneis, 'estrangier': estrangier}, s, separators=(',', ':'))
+    json.dump({'aneis': aneis, 'estrangier': estrangier, 'dialectes': dialectes}, s, separators=(',', ':'))
 print('franca.json', os.path.getsize(SORTIDA), 'octets,', len(aneis), 'anèls,', sum(len(a) for a in aneis), 'ponches ; desbòrdan :', ', '.join(estrangier))
