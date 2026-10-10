@@ -77,13 +77,36 @@ const NOMS = {
 	Jordan: ['Jordania', 'Jordanie']
 };
 
-function decodar(topo) {
+// Douglas-Peucker sus un arc (sas extremitats demòran : doas païses vesins
+// gardan la meteissa frontièra)
+function simplificarArc(l, tol) {
+	if (l.length < 3) return l;
+	const [ax, ay] = l[0],
+		[bx, by] = l[l.length - 1];
+	let dm = 0,
+		im = 0;
+	for (let i = 1; i < l.length - 1; i++) {
+		const [px, py] = l[i];
+		const dx = bx - ax,
+			dy = by - ay,
+			n = Math.hypot(dx, dy) || 1e-12;
+		const d = n > 1e-12 ? Math.abs(dy * px - dx * py + bx * ay - by * ax) / n : Math.hypot(px - ax, py - ay);
+		if (d > dm) (dm = d), (im = i);
+	}
+	if (dm <= tol) return [l[0], l[l.length - 1]];
+	return [...simplificarArc(l.slice(0, im + 1), tol).slice(0, -1), ...simplificarArc(l.slice(im), tol)];
+}
+
+function decodar(topo, tol = 0) {
 	const t = topo.transform;
 	const arcs = topo.arcs.map((arc) => {
-		if (!t) return arc;
-		let x = 0,
-			y = 0;
-		return arc.map(([dx, dy]) => [(x += dx) * t.scale[0] + t.translate[0], (y += dy) * t.scale[1] + t.translate[1]]);
+		let pts = arc;
+		if (t) {
+			let x = 0,
+				y = 0;
+			pts = arc.map(([dx, dy]) => [(x += dx) * t.scale[0] + t.translate[0], (y += dy) * t.scale[1] + t.translate[1]]);
+		}
+		return tol ? simplificarArc(pts, tol) : pts;
 	});
 	const anel = (idx) => {
 		const pts = [];
@@ -190,8 +213,8 @@ function copatCosta(anel, frontièras) {
 	return linhas;
 }
 
-function escriure(entrada, sortida, dec, bbox, ambNoms, sensCòsta = false) {
-	const païses = decodar(JSON.parse(fs.readFileSync(path.join(BRUT, entrada), 'utf8')));
+function escriure(entrada, sortida, dec, bbox, ambNoms, sensCòsta = false, tol = 0) {
+	const païses = decodar(JSON.parse(fs.readFileSync(path.join(BRUT, entrada), 'utf8')), tol);
 	const arrondits = païses.map((p) => ({
 		nom: p.nom,
 		pols: p.poligons
@@ -248,7 +271,11 @@ function escriure(entrada, sortida, dec, bbox, ambNoms, sensCòsta = false) {
 	return out;
 }
 
-const eu = escriure('countries-50m.json', 'mond-europa.json', 2, [-25, 27, 50, 72], true, true);
+// Euròpa : Natural Earth 1:10 M (telecargat lo 2026-10-10, accòrd de Romain ;
+// curl -L -o SIG/brut/mond-10m/countries-10m.json https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-10m.json ;
+// frontièras precisas entre los païses vesins), simplificat a 0,01° (~1 km :
+// lo fichièr demòra leugièr) e arredondit a 0,01°
+const eu = escriure('../mond-10m/countries-10m.json', 'mond-europa.json', 2, [-25, 27, 50, 72], true, true, 0.01);
 
 // La frontièra terrèstra de França, precisa (Romain, 2026-10-10 : « reprends
 // l'ensemble du tracé français et des pays limitrophes de manière précise ») :
