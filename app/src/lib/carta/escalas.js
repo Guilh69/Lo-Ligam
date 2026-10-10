@@ -40,16 +40,6 @@ export function kmBarra(z, lat = LAT_REF) {
 	return (p * (CRANS.find((v) => d >= v) ?? 1)) / 1000;
 }
 
-// Los cinc palièrs « Del cèl a la tèrra » : cadun comença a sa valor `dès`
-export const PALIÈRS = [
-	{ id: 'mond', oc: 'Lo mond', fr: 'Le monde', dès: Infinity },
-	{ id: 'lengas', oc: 'Las lengas', fr: 'Les langues', dès: 700 },
-	{ id: 'dialectes', oc: 'Los dialèctes', fr: 'Les dialectes', dès: 100 },
-	{ id: 'terra', oc: 'La tèrra', fr: 'Le sol', dès: 20 },
-	{ id: 'comunas', oc: 'Las comunas', fr: 'Les communes', dès: 7 }
-];
-export const palièrDe = (km) => PALIÈRS.reduce((p, q) => (km <= q.dès ? q : p), PALIÈRS[0]);
-
 // Los sulhets, en km de barra (« dès » : a partir d'aquela valor en s'aprochant)
 export const KM = {
 	plenas: 700, // las lengas son plenas fins a 700 km ; a 1 000 km, sonque lor contorn

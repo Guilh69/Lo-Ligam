@@ -9,7 +9,7 @@
 	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, palièrDe, fixarLatEscala, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
+	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, fixarLatEscala, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
@@ -512,18 +512,6 @@
 		if (k === 'occitan') tornarALOccitan();
 		else onAlucar?.(k);
 	}
-	// Lo palièr de la grilha de las escalas (escalas.js), al costat de la barra
-	let elPalièr = null,
-		kmEscala = null;
-	function majPalièr() {
-		if (!elPalièr || kmEscala == null) return;
-		const p = palièrDe(kmEscala);
-		elPalièr.textContent = lang === 'fr' ? p.fr : p.oc;
-	}
-	$effect(() => {
-		lang;
-		majPalièr();
-	});
 	// (los ponches d'una jaça que se decocha, en camin de partir)
 	const partidas = {};
 	// (cada ponch s'aluca a son moment : un pichon retard a l'azard)
@@ -1421,8 +1409,6 @@
 			const m = this._getRoundNum(maxMeters);
 			const label = m < 1000 ? m + ' m' : (m / 1000).toLocaleString('fr-FR') + ' km';
 			this._updateScale(this._mScale, label, m / maxMeters);
-			kmEscala = m / 1000;
-			majPalièr();
 		};
 		escala.addTo(map);
 		// (lo nom del palièr, « Las comunas » sus « 5 km », se legissiá coma una
@@ -2297,17 +2283,6 @@
 		display: flex;
 		flex-direction: column-reverse;
 		align-items: flex-start;
-	}
-	.carta :global(.palièr-escala) {
-		font-size: 0.72rem;
-		font-style: italic;
-		line-height: 1.3;
-		padding: 0 0 1px 2px;
-		color: var(--t-aur);
-		text-shadow:
-			0 0 4px var(--t-fons),
-			0 0 8px var(--t-fons);
-		white-space: nowrap;
 	}
 
 	/* Bulles des lieux et des couches */
