@@ -31,15 +31,16 @@ const UA = 'LoLigam-carta/0.1 (preparation de donnees pour une carte de la langu
 // renc : 1 très grand ensemble ou sommet très connu, 2 majeur, 3 secondaire
 // options : fr (nom français affiché, si le libellé Wikidata ne convient pas),
 //   pos [lon, lat] (position de l'étiquette choisie à la main, quand Wikidata
-//   donne le point culminant ou un point hors du domaine), ang (angle de
+//   donne le point culminant ou un point hors du domaine), corba (lo nom d'una
+//   cadena seguís aquela corba : debuta, ponch de contraròtle, fin), ang (angle de
 //   l'étiquette en degrés, sens des aiguilles d'une montre comme CSS rotate() :
 //   positif = le texte descend vers la droite), nota (pour la liste à valider).
 const LISTA = [
   // grands ensembles
-  ['Q12431', 'cadena', 1, { pos: [0.45, 42.88], ang: 9, nota: 'position choisie dans les Pyrénées occitanes' }],
-  ['Q1286', 'cadena', 1, { fr: 'Alpes', pos: [6.55, 44.55], ang: 60, nota: 'position choisie dans les Alpes occitanes' }],
+  ['Q12431', 'cadena', 1, { pos: [0.45, 42.88], ang: 9, nota: 'position choisie dans les Pyrénées occitanes', corba: [[-1.2,43.05],[0.6,42.7],[2.3,42.78]] }],
+  ['Q1286', 'cadena', 1, { fr: 'Alpes', pos: [6.55, 44.55], ang: 60, nota: 'position choisie dans les Alpes occitanes', corba: [[6.25,45.05],[6.45,44.45],[7.05,44.1]] }],
   ['Q190695', 'massis', 1, { pos: [3.35, 45.3], nota: "position choisie au centre du massif, à l'écart des monts du Cantal" }],
-  ['Q626655', 'massis', 1, { pos: [3.75, 44.22], ang: -45, nota: 'Wikidata place les Cévennes au sommet du mont Lozère : étiquette déplacée entre Lozère et Aigoual' }],
+  ['Q626655', 'massis', 1, { pos: [3.75, 44.22], ang: -45, nota: 'Wikidata place les Cévennes au sommet du mont Lozère : étiquette déplacée entre Lozère et Aigoual', corba: [[3.45,44.02],[3.8,44.17],[4.1,44.5]] }],
   // Massif central
   ['Q1276372', 'massis', 2, { pos: [2.80, 45.14], nota: 'Wikidata place le massif au puy Mary : étiquette décalée' }],
   ['Q1475954', 'massis', 2, { pos: [2.86, 45.58], nota: 'étiquette décalée du puy de Sancy' }],
@@ -54,7 +55,7 @@ const LISTA = [
   ['Q1051626', 'plan', 3, {}],
   ['Q944251', 'plan', 3, {}],
   ['Q2943162', 'plan', 3, {}],
-  ['Q1509963', 'massis', 2, { pos: [2.35, 43.43], ang: -12, nota: 'Wikidata place le massif au pic de Nore : étiquette décalée' }],
+  ['Q1509963', 'massis', 2, { pos: [2.35, 43.43], ang: -12, nota: 'Wikidata place le massif au pic de Nore : étiquette décalée', corba: [[1.95,43.38],[2.35,43.42],[2.8,43.5]] }],
   ['Q1998742', 'massis', 3, {}],
   ['Q827405', 'massis', 3, { fr: 'Monts de l\'Espinouse', pos: [2.88, 43.63], nota: 'élément Wikidata « Caroux-Espinouse » ; étiquette décalée du mont Caroux' }],
   ['Q1998725', 'massis', 3, {}],
@@ -62,7 +63,7 @@ const LISTA = [
   ['Q3297683', 'plan', 3, { fr: 'Devès' }],
   ['Q1368135', 'plan', 3, {}],
   ['Q3514968', 'massis', 3, {}],
-  ['Q3323158', 'massis', 2, { pos: [4.40, 45.0], ang: -50, nota: 'étiquette décalée du mont Mézenc et du Gerbier' }],
+  ['Q3323158', 'massis', 2, { pos: [4.40, 45.0], ang: -50, nota: 'étiquette décalée du mont Mézenc et du Gerbier', corba: [[4.15,44.75],[4.35,44.98],[4.7,45.25]] }],
   ['Q3323161', 'massis', 3, { pos: [3.85, 45.55], ang: -85, nota: 'étiquette décalée de Pierre-sur-Haute' }],
   ['Q31638932', 'massis', 3, {}],
   ['Q1907628', 'massis', 3, {}],
@@ -85,7 +86,7 @@ const LISTA = [
   ['Q1518970', 'massis', 2, {}],
   ['Q581005', 'massis', 2, {}],
   ['Q2107098', 'massis', 2, { fr: 'Alpilles' }],
-  ['Q1761198', 'massis', 2, { ang: -20 }],
+  ['Q1761198', 'massis', 2, { ang: -20, corba: [[6.05,43.2],[6.4,43.26],[6.7,43.38]] }],
   ['Q1369923', 'massis', 2, {}],
   ['Q2933615', 'massis', 3, { fr: 'Massif des Calanques' }],
   ['Q2935247', 'plan', 3, {}],
@@ -93,7 +94,7 @@ const LISTA = [
   ['Q1189890', 'massis', 3, {}],
   // Alpes
   ['Q3297688', 'massis', 2, { fr: 'Mercantour-Argentera', pos: [6.95, 44.2], ang: 30, nota: 'Wikidata place le massif à la cime du Gélas : étiquette décalée côté français' }],
-  ['Q2451856', 'cadena', 2, { pos: [7.45, 44.28], ang: 20, nota: 'étiquette posée côté italien (vallées Gesso et Vermenagna)' }],
+  ['Q2451856', 'cadena', 2, { pos: [7.45, 44.28], ang: 20, nota: 'étiquette posée côté italien (vallées Gesso et Vermenagna)', corba: [[7,44.4],[7.45,44.33],[7.85,44.1]] }],
   ['Q1251', 'cadena', 2, { pos: [6.98, 44.92], ang: -80, nota: 'Wikidata place la chaîne au mont Viso : étiquette décalée' }],
   ['Q2326825', 'massis', 3, {}],
   ['Q1435063', 'massis', 2, {}],
@@ -374,7 +375,7 @@ for (const [qid, mena, renc, o] of LISTA) {
   if (sortie.some(f => f.properties.kod === kod)) throw new Error('kod en double : ' + kod);
   sortie.push({
     type: 'Feature',
-    properties: { kod, mena, fr, oc: oc ?? null, alt, renc, ang: o.ang ?? null },
+    properties: { kod, mena, fr, oc: oc ?? null, alt, renc, ang: o.ang ?? null, ...(o.corba ? { corba: o.corba } : {}) },
     geometry: { type: 'Point', coordinates: [r4(pos[0]), r4(pos[1])] },
   });
   revision.push([kod, fr, oc ?? '', dialècteDe(pos), font, notes.join(' ; ')]);

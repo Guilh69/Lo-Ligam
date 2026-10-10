@@ -268,6 +268,40 @@ function analisarForma(map, geometry) {
 	return { ll: [ll.lng, ll.lat], r8: r, ang: incl };
 }
 
+// Un nom de cadena que seguís sa corba (retorn de Romain, 2026-10-10 : « des
+// noms qui suivent la forme ») : las letras pausadas una a una sus una corba
+// quadratica (debuta, ponch de contraròtle, fin, en px de la tela), centradas
+// sus son mitan, legiblas d'esquèrra a dreita. Tròp long per la corba : null
+// (lo nom tòrna drech).
+function letrasSusCorba(cx, tèxt, [a, c, b], esp) {
+	if (b[0] < a[0]) [a, b] = [b, a];
+	const N = 48,
+		pts = [],
+		cum = [0];
+	for (let i = 0; i <= N; i++) {
+		const t = i / N,
+			u = 1 - t;
+		pts.push([u * u * a[0] + 2 * u * t * c[0] + t * t * b[0], u * u * a[1] + 2 * u * t * c[1] + t * t * b[1]]);
+		if (i) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+	}
+	const L = cum[N],
+		cars = [...tèxt],
+		ws = cars.map((ch) => cx.measureText(ch).width),
+		tot = ws.reduce((x, w) => x + w, 0) + esp * (cars.length - 1);
+	if (tot > L * 0.92) return null;
+	let s = (L - tot) / 2,
+		k = 1;
+	return cars.map((ch, i) => {
+		const m = s + ws[i] / 2;
+		while (k < N && cum[k] < m) k++;
+		const q = (m - cum[k - 1]) / (cum[k] - cum[k - 1] || 1),
+			[x0, y0] = pts[k - 1],
+			[x1, y1] = pts[k];
+		s += ws[i] + esp;
+		return { c: ch, x: x0 + (x1 - x0) * q, y: y0 + (y1 - y0) * q, a: Math.atan2(y1 - y0, x1 - x0) };
+	});
+}
+
 export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, cedirProv = null, obstacles = null, onSurvòl = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: { pane: 'tematica', padding: 0.3 },
@@ -553,7 +587,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			if (J.massis && this._releu)
 				G.releu = this._releu.features.map((f) => ({
 					props: f.properties,
-					p: pt(f.geometry.coordinates)
+					p: pt(f.geometry.coordinates),
+					corba: f.properties.corba?.map(pt)
 				}));
 			this._fonts();
 			if (J.comunas && z >= this._zCom - 0.75) {
@@ -1182,8 +1217,21 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					// un massís se pòt desplaçar un pauc per daissar passar un autre nom
 					// (un dialècte, una vila) ; una cima demòra sus son ponch
 					const tòca = (bx) => pausats.some((b) => b[0] < bx[2] && b[2] > bx[0] && b[1] < bx[3] && b[3] > bx[1]);
-					let bx = null;
-					for (const [dx, dy] of som ? [[0, 0]] : [[0, 0], [0, -14], [0, 14], [-28, 0], [28, 0], [0, -26], [0, 26]]) {
+					let bx = null,
+						letras = null;
+					if (!som && r.corba) {
+						const fs = parseFloat(cx.font.match(/([\d.]+)px/)[1]),
+							espPx = ((r.props.renc === 1 ? 0.32 : 0.2) + (1 - pI) * 0.6) * fs;
+						if (esp) cx.letterSpacing = '0px';
+						const ll = letrasSusCorba(cx, tèxt, r.corba, espPx);
+						// (una bóstia per letra : una corba ocupa pas tot son rectangle)
+						const cs = ll?.map((l) => [l.x - fs * 0.5, l.y - fs * 0.6, l.x + fs * 0.5, l.y + fs * 0.6]);
+						if (cs && !cs.some(tòca)) {
+							letras = ll;
+							bx = cs;
+						} else if (esp) cx.letterSpacing = ((r.props.renc === 1 ? 0.32 : 0.2) + (1 - pI) * 0.6).toFixed(3) + 'em';
+					}
+					for (const [dx, dy] of bx || som ? (som ? [[0, 0]] : []) : [[0, 0], [0, -14], [0, 14], [-28, 0], [28, 0], [0, -26], [0, 26]]) {
 						// (un nom en biais ocupa sa bóstia virada : CEVENAS passava sus LENGADOCIAN)
 						const ra = ((r.props.ang ?? 0) * Math.PI) / 180,
 							bw = w * Math.abs(Math.cos(ra)) + h * Math.abs(Math.sin(ra)),
@@ -1196,7 +1244,8 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 						}
 					}
 					if (!bx) continue;
-					pausats.push(bx);
+					if (letras) pausats.push(...bx);
+					else pausats.push(bx);
 					if (al < 0.01) continue;
 					cx.globalAlpha = al * (som ? 0.85 : 0.6);
 					cx.fillStyle = `rgb(${T.linha})`;
@@ -1214,6 +1263,16 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 							cx.globalAlpha = al * 0.6;
 							cx.font = `400 9.5px Luciole, sans-serif`;
 							cx.fillText(`${r.props.alt} m`, x + 7, y + 11);
+						}
+					} else if (letras) {
+						cx.textAlign = 'center';
+						cx.textBaseline = 'middle';
+						for (const l of letras) {
+							cx.save();
+							cx.translate(l.x, l.y);
+							cx.rotate(l.a);
+							cx.fillText(l.c, 0, 0);
+							cx.restore();
 						}
 					} else {
 						cx.save();
