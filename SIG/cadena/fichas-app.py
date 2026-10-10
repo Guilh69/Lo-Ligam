@@ -39,14 +39,18 @@ def xifra(n):
     return '{:,}'.format(int(n)).replace(',', ' ')
 
 
+# l'onglet del panèl (Romain, 2026-10-10) : lengas de França, lengas transfrontalièras
+ONGLET = {'breton': 'franca', 'oil': 'franca', 'cors': 'franca'}
 out = {}
 for j, (k, en) in JACAS.items():
     x = F.get(k, {})
     o = {'familha': {'oc': FAM[j][0], 'fr': FAM[j][1]},
          'fontFamilha': {'t': 'Classement : ' + (x.get('famille') or '') + ' (Glottolog, Institut Max Planck)', 'url': 'https://glottolog.org/glottolog?search=' + en.replace(' ', '+')},
          'fontDialectes': {'t': DIAL[j][0], 'url': DIAL[j][1]}}
+    o['onglet'] = ONGLET.get(j, 'trans')
     l = x.get('locuteurs') or {}
     if l.get('nombre'):
+        o['n'] = l['nombre']
         o['locutors'] = '≈ ' + xifra(l['nombre'])
         o['fontLocutors'] = {'t': '%s ; %s, %s' % (l.get('affichage') or l.get('mesure') or '', l.get('source') or '', l.get('annee') or ''), 'url': l.get('url') or ''}
     u = x.get('unesco') or {}
@@ -61,5 +65,4 @@ js = ('// Generat per SIG/cadena/fichas-app.py a partir de SIG/lengas-fichas.jso
       'export const FICHAS = ' + json.dumps(out, ensure_ascii=False, indent=1) + ';\n\n'
       "export const VITALITAT = { vulnerabla: '#7fd67a', en_dangier: '#ffb35c', en_dangier_greu: '#ff6b5a', critica: '#d0304a' };\n")
 open(os.path.join(R, 'app', 'src', 'lib', 'carta', 'fichas-lengas.js'), 'w', encoding='utf-8', newline='\n').write(js)
-for j, o in out.items():
-    print(j, o.get('locutors'), (o.get('vital') or {}).get('fr'))
+print(len(out), 'fichas')

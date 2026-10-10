@@ -15,6 +15,8 @@ export const FICHAS = {
    "t": "Classement de Joan Veny (Institut d'Estudis Catalans), via la Viquipèdia",
    "url": "https://ca.wikipedia.org/wiki/Dialectes_del_catal%C3%A0"
   },
+  "onglet": "trans",
+  "n": 10100000,
   "locutors": "≈ 10,1 M",
   "fontLocutors": {
    "t": "10,1 millions savent le parler, 12,8 millions le comprennent ; Xarxa CRUSCAT (Institut d’Estudis Catalans), Informe sobre la situació de la llengua catalana 2012, conclusions publiées le 13 novembre 2013, 2012",
@@ -34,6 +36,7 @@ export const FICHAS = {
    "t": "Domaine : carte d'arpitania.eu ; Suisse : Office fédéral de la statistique ; Italie : loi 482/1999 ; dialectes : Vouiquipèdia",
    "url": "https://www.bfs.admin.ch/"
   },
+  "onglet": "trans",
   "vital": {
    "k": "en_dangier",
    "oc": "en dangièr",
@@ -54,6 +57,8 @@ export const FICHAS = {
    "t": "Koldo Zuazo (2008), classement repris par l'Académie de la langue basque (Euskaltzaindia)",
    "url": "https://www.euskaltzaindia.eus/"
   },
+  "onglet": "trans",
+  "n": 809341,
   "locutors": "≈ 809 000",
   "fontLocutors": {
    "t": "809 341 (30,2 %) ; Gouvernement basque, Gouvernement de Navarre et Office public de la langue basque, VIIe enquête sociolinguistique 2021, 2021",
@@ -79,6 +84,8 @@ export const FICHAS = {
    "t": "Carte linguistique de la France, Archives nationales (P.-H. Billy, S. Nadiras) ; liste des langues : rapport Cerquiglini (1999) et ministère de la Culture ; picard : carte des parlers de Wikipédia ; Belgique : L. Chapeau, contrôle Pierret (1984)",
    "url": "https://www.archives-nationales.culture.gouv.fr/centres-de-recherche/carte-linguistique-de-la-france"
   },
+  "onglet": "franca",
+  "n": 204000,
   "locutors": "≈ 204 000",
   "fontLocutors": {
    "t": "204 000 ; Insee, enquête Famille 1999, dans Héran, Filhon et Deprez, Population et Sociétés n° 376, Ined, février 2002, 1999",
@@ -98,6 +105,8 @@ export const FICHAS = {
    "t": "Georg Wenker, Constant This (1887), cartes « Sprachen in Elsass-Lothringen » et « Alemannic dialects » (Wikimedia Commons)",
    "url": "https://www.olcalsace.org/"
   },
+  "onglet": "trans",
+  "n": 700000,
   "locutors": "≈ 700 000",
   "fontLocutors": {
    "t": "environ 700 000 (46 % des adultes) ; Collectivité européenne d’Alsace, étude sociolinguistique sur l’alsacien et l’allemand (4 001 personnes, février et mars 2022) ; nombre arrondi donné par l’OLCA, 2022",
@@ -123,6 +132,8 @@ export const FICHAS = {
    "t": "Constant This (1887), isoglosses de Moselle, carte « Rheinischer Fächer » (Wikimedia Commons)",
    "url": "https://www.olcalsace.org/"
   },
+  "onglet": "trans",
+  "n": 190000,
   "locutors": "≈ 190 000",
   "fontLocutors": {
    "t": "190 000 (160 000 à 220 000) ; DRAC Grand Est, enquête sociolinguistique 2024 (TMO, 4 003 personnes de 18 ans et plus, avril et mai 2024), 2024",
@@ -148,6 +159,8 @@ export const FICHAS = {
    "t": "Limite : Paul Sébillot (1886) ; dialectes : anciens évêchés (Léon, Trégor, Cornouaille, Vannes)",
    "url": "https://www.fr.brezhoneg.bzh/"
   },
+  "onglet": "franca",
+  "n": 107000,
   "locutors": "≈ 107 000",
   "fontLocutors": {
    "t": "107 000 (93 000 à 120 500) ; Région Bretagne, enquête sociolinguistique 2024 (TMO, 8 336 personnes de 15 ans et plus, août à novembre 2024), présentée le 20 janvier 2025, 2024",
@@ -173,6 +186,8 @@ export const FICHAS = {
    "t": "Cartes des parlers de Corse (Wikimedia Commons), contrôle : M.-J. Dalbera-Stefanaggi ; Sardaigne : lois régionales 26/1997 et 22/2018",
    "url": "https://www.isula.corsica/"
   },
+  "onglet": "franca",
+  "n": 105500,
   "locutors": "≈ 106 000",
   "fontLocutors": {
    "t": "105 500 (99 000 à 112 000) ; Collectivité de Corse (Direzzione Lingua Corsa), enquête sociolinguistique 2021 (entretiens en face à face, mai à juillet 2021), 2021",
@@ -198,6 +213,7 @@ export const FICHAS = {
    "t": "Westhoek : Alex Vanneste (1972) ; Belgique et Pays-Bas : Jo Daan et Dirk Blok (1969)",
    "url": "https://nl.wikipedia.org/wiki/Nederlandse_dialecten"
   },
+  "onglet": "trans",
   "vital": {
    "k": "vulnerabla",
    "oc": "vulnerabla",

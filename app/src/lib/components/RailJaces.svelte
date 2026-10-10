@@ -52,7 +52,9 @@
 			anullar: 'Anullar',
 			anullarTitol: 'Anullar la darrièra manipulacion (Ctrl+Z)',
 			netejar: 'Netejar la carta',
-			onglets: [['franca', 'França'], ['europa', 'Euròpa'], ['mond', 'Mond']],
+			onglets: [['franca', 'França'], ['trans', 'Transfrontalièras'], ['europa', 'Euròpa'], ['mond', 'Mond']],
+			ordres: [['alfa', 'A → Z'], ['loc', 'Locutors']],
+			ordreTit: 'Rengar las lengas',
 			nLengas: (n) => `${n} lengas`,
 			deVenir: 'de venir',
 			locutors: 'locutors',
@@ -95,7 +97,9 @@
 			anullar: 'Annuler',
 			anullarTitol: 'Annuler la dernière manipulation (Ctrl+Z)',
 			netejar: 'Vider la carte',
-			onglets: [['franca', 'France'], ['europa', 'Europe'], ['mond', 'Monde']],
+			onglets: [['franca', 'France'], ['trans', 'Transfrontalières'], ['europa', 'Europe'], ['mond', 'Monde']],
+			ordres: [['alfa', 'A → Z'], ['loc', 'Locuteurs']],
+			ordreTit: 'Ranger les langues',
 			nLengas: (n) => `${n} langues`,
 			deVenir: 'à venir',
 			locutors: 'locuteurs',
@@ -204,6 +208,13 @@
 	// L'opcion A del panèl « Autras lengas » (causida de Romain, 2026-10-10) :
 	// onglets França / Euròpa / Mond, una ficha per lenga, dialèctes desplegables
 	let onglet = $state('franca');
+	// (rengadas per òrdre alfabetic, o per nombre de locutors : causida de Romain)
+	let ordre = $state('alfa');
+	const nomOrd = (id) => (lang === 'fr' ? LENGAS[id].nom.fr : LENGAS[id].nom.oc).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+	const lengasOnglet = (f) =>
+		f.jaces
+			.filter((j) => LENGAS[j.id] && actiu(j) && (FICHAS[j.id]?.onglet ?? 'franca') === onglet)
+			.sort((a, b) => (ordre === 'loc' ? (FICHAS[b.id]?.n ?? -1) - (FICHAS[a.id]?.n ?? -1) : 0) || nomOrd(a.id).localeCompare(nomOrd(b.id)));
 	let dialsDob = $state([]);
 	const virarDials = (id) => (dialsDob = dialsDob.includes(id) ? dialsDob.filter((x) => x !== id) : [...dialsDob, id]);
 	const virarTèma = (id) => (enrotlats = enrotlats.includes(id) ? enrotlats.filter((x) => x !== id) : [...enrotlats, id]);
@@ -716,14 +727,20 @@
 				{#if f.id === 'lengas'}
 					<div class="onglets" role="tablist" aria-label={nomFam(f.id)}>
 						{#each tx.onglets as [k, nom] (k)}
-							<button type="button" role="tab" aria-selected={onglet === k} class:on={onglet === k} disabled={k !== 'franca'} onclick={() => (onglet = k)}
-								>{nom}<small>{k === 'franca' ? tx.nLengas(f.jaces.filter((j) => LENGAS[j.id] && actiu(j)).length) : tx.deVenir}</small></button
+							<button type="button" role="tab" aria-selected={onglet === k} class:on={onglet === k} disabled={!['franca', 'trans'].includes(k)} onclick={() => (onglet = k)}
+								>{nom}<small>{['franca', 'trans'].includes(k) ? tx.nLengas(f.jaces.filter((j) => LENGAS[j.id] && actiu(j) && (FICHAS[j.id]?.onglet ?? 'franca') === k).length) : tx.deVenir}</small></button
 							>
 						{/each}
 					</div>
-					{#each f.jaces as j (j.id)}
-						{#if LENGAS[j.id] && actiu(j)}{@render fichaLenga(j)}{:else}{@render linha(j)}{/if}
-					{/each}
+					<div class="ordre" role="radiogroup" aria-label={tx.ordreTit}>
+						{#each tx.ordres as [k, nom] (k)}
+							<button type="button" role="radio" aria-checked={ordre === k} onclick={() => (ordre = k)}>{nom}</button>
+						{/each}
+					</div>
+					{#if onglet === 'franca'}
+						{#each f.jaces.filter((j) => !LENGAS[j.id]) as j (j.id)}{@render linha(j)}{/each}
+					{/if}
+					{#each lengasOnglet(f) as j (j.id)}{@render fichaLenga(j)}{/each}
 				{:else}
 					<p class="sota">{tx.disponiblas(dispo)}{f.jaces.length - dispo ? ' · ' + tx.venir(f.jaces.length - dispo) : ''}</p>
 					{#each f.jaces as j (j.id)}
@@ -1341,14 +1358,35 @@
 		display: flex;
 		align-items: center;
 	}
-	/* ---------- Opcion A : las fichas de las lengas ---------- */
-	.onglets {
+	.ordre {
 		display: flex;
-		gap: 4px;
+		justify-content: flex-end;
+		gap: 2px;
+		margin: -4px 0 6px;
+	}
+	.ordre button {
+		border: 0;
+		background: none;
+		color: color-mix(in srgb, var(--t-tinta) 55%, transparent);
+		font: 600 0.62rem/1 var(--font-body);
+		padding: 4px 7px;
+		border-radius: 999px;
+		cursor: pointer;
+	}
+	.ordre button[aria-checked='true'] {
+		color: var(--t-aur);
+		background: color-mix(in srgb, var(--t-aur) 12%, transparent);
+	}
+	/* ---------- Opcion A : las fichas de las lengas ---------- */
+	/* quatre onglets en grasilha 2 × 2 : « Transfrontalièras » tenia pas sus una linha */
+	.onglets {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 3px;
 		padding: 3px;
 		margin: 2px 0 10px;
 		border: 1px solid var(--t-linha);
-		border-radius: 999px;
+		border-radius: 14px;
 	}
 	.onglets button {
 		flex: 1;
@@ -1356,8 +1394,8 @@
 		background: none;
 		color: var(--t-tinta-2);
 		font: 600 0.74rem/1 var(--font-body);
-		padding: 6px 0 5px;
-		border-radius: 999px;
+		padding: 6px 4px 5px;
+		border-radius: 11px;
 		cursor: pointer;
 	}
 	.onglets button small {
