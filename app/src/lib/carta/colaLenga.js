@@ -61,7 +61,7 @@ export function crearColaLenga(
 		for (const [k, v] of Object.entries(lenga.dial[m])) dial[lenga.pref + k] = v;
 		return {
 			clar: c,
-			tencha: c ? 0.22 : 0.3,
+			tencha: c ? 0.36 : 0.3, // (tèma clar : coma colaDonadas.js)
 			ombra: c ? 'rgba(245, 234, 216, 0.95)' : 'rgba(18, 9, 6, 0.9)',
 			mòde: m,
 			color: lenga.color[m],
@@ -973,7 +973,7 @@ export function crearColaLenga(
 				const noms = sel ? this._zonasDe(this._sels) : G.zonas;
 				const fs = clamp(10.5 + (z - 6) * 1.1, 10.5, 13);
 				cx.save();
-				cx.font = `400 ${fs.toFixed(1)}px Luciole, sans-serif`;
+				cx.font = `${T.clar ? 700 : 400} ${fs.toFixed(1)}px Luciole, sans-serif`; // (en gras sul fons clar)
 				cx.letterSpacing = (fs * 0.32).toFixed(1) + 'px';
 				cx.textAlign = 'center';
 				cx.textBaseline = 'middle';
@@ -1015,7 +1015,7 @@ export function crearColaLenga(
 					caixas.push(b);
 					const color = zn.props.apart ? T.color : (T.dial[zn.kod] ?? T.color);
 					cx.globalAlpha = a;
-					cx.fillStyle = T.clar ? mesclar(color, '#2e1d14', 0.25) : mesclar(color, '#fff8ec', 0.35);
+					cx.fillStyle = T.clar ? mesclar(color, '#2e1d14', 0.7) : mesclar(color, '#fff8ec', 0.35);
 					cx.fillText(t, (b[0] + b[2]) / 2, (b[1] + b[3]) / 2);
 				}
 				cx.restore();

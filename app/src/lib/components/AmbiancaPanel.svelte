@@ -4,6 +4,7 @@
 	// daltonisme, fond animé. Les réglages vivent dans stores/ambianca.
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { tampaDefòra } from '$lib/tampaDefora.js';
 
 	let lang = $derived(langStore.current);
 	let dobèrt = $state(false);
@@ -38,21 +39,20 @@
 	// Ordre d'affichage : l'ambiance par défaut (Venas d'aur) d'abord
 	const ORDRE_FONS = [0, 1, 2, 3];
 
+	// un clic defòra tampa ; sus la carta, tampa sonque (principi del site,
+	// $lib/tampaDefora.js : abans, lo clic causissiá tanben un dialècte)
 	$effect(() => {
 		if (!dobèrt) return;
-		const clic = (e) => {
-			if (!panel?.contains(e.target) && !boton?.contains(e.target)) dobèrt = false;
-		};
+		const lèva = tampaDefòra((t) => !!(panel?.contains(t) || boton?.contains(t)), () => (dobèrt = false));
 		const tòca = (e) => {
 			if (e.key === 'Escape') {
 				dobèrt = false;
 				boton?.focus();
 			}
 		};
-		document.addEventListener('click', clic);
 		document.addEventListener('keydown', tòca);
 		return () => {
-			document.removeEventListener('click', clic);
+			lèva();
 			document.removeEventListener('keydown', tòca);
 		};
 	});
