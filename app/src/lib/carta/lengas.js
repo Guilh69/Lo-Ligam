@@ -350,8 +350,9 @@ export const LENGAS = {
 		// (entre París e Orleans)
 		eti: [2.1, 48.3],
 		// lo blau de las cartas de las lengas de França, luènh del blau de la mar
-		color: { sorne: '#8a9cf0', clar: '#3a4fb0', dalt: '#0072b2' },
-		tèxt: { sorne: '#e1e6ff', clar: '#1c2766', dalt: '#cfe4ff' },
+		// lo blau de Suècia (lo del drapèl, #006aa7 ; a l'ecran sus lo fons sorne, lo #005073 que Romain a mandat, 2026-10-10 : pas mai de blau violet)
+		color: { sorne: '#006aa7', clar: '#006aa7', dalt: '#0072b2' },
+		tèxt: { sorne: '#d6ebf8', clar: '#003a5c', dalt: '#cfe4ff' },
 		// quatre familhas de blaus, una per grope : indigò al Nòrd (picard,
 		// normand, valon), blau petròli a l'Èst (lo franc-comtés tira cap al verd
 		// arpitan), ardesa a l'Oèst (lo galò pus escur), blauet pus viu pel
