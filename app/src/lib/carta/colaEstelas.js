@@ -936,6 +936,29 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const fòrt = clamp((z - 4) / 3);
 			traçar('tot', aTot * lerp(0.62, 0.8, fòrt), lerp(0.55, 0.8, fòrt));
 			traçar('eu', aEu * lerp(0.58, 0.75, fòrt), lerp(0.6, 0.8, fòrt));
+			// la còsta precisa (França) : los contorns d'Euròpa l'an pas dins son
+			// emprèsa ; quand la carta de prèp s'escantís (400 → 200 km), es aicí
+			// que demòra (retorn de Romain : « à 500 un bout de la côte disparaît »)
+			const aCostaL = (1 - (this._aDetL ?? 0)) * aCarta * (this._el?.costa === false ? 0 : 1);
+			if (aCostaL > 0.01 && this._costa?.length) {
+				if (this._costaCamiDe !== this._costa) {
+					const c = new Path2D();
+					for (const l of this._costa) {
+						c.moveTo(l[0][0], l[0][1]);
+						for (let i = 1; i < l.length; i++) c.lineTo(l[i][0], l[i][1]);
+					}
+					this._costaCami = c;
+					this._costaCamiDe = this._costa;
+				}
+				cx.save();
+				cx.globalAlpha = aCostaL * lerp(0.58, 0.75, fòrt);
+				cx.strokeStyle = T.costa;
+				cx.lineWidth = lerp(0.6, 0.8, fòrt);
+				cx.lineJoin = 'round';
+				cx.translate(-o.x, -o.y);
+				cx.stroke(this._costaCami);
+				cx.restore();
+			}
 			// los noms dels païses d'Euròpa, sens se trucar
 			const aNoms = aEu * this._doç('nomsPaïses', clamp((z - 3.9) / 0.4));
 			if (aNoms < 0.01 || !M.eu) return;

@@ -9,7 +9,7 @@
 //
 // Una còla per lenga, dins son pan (entre los dialèctes occitans, 300, e las
 // jaces tematicas, 320) ; las donadas se cargan sonque quand la jaça s'aluca.
-import { nivèlsDezoom, aDialectes, aDetalh } from './escalas.js';
+import { nivèlsDezoom as nivèlsComuns, aDialectes, aDetalh, zDès } from './escalas.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
 
@@ -46,7 +46,15 @@ export function crearColaLenga(
 ) {
 	const pan = 'lenga-' + lenga.kod;
 	// lo nom d'una zòna dins la lenga (ca, frp…)
-	const endo = (pr) => pr[lenga.lang] ?? pr.endo ?? pr.ca ?? null;
+	// lo nom dins la lenga del luòc : « endo » d'abòrd (las lengas d'oïl, que lor lenga
+	// de referéncia es lo francés, an lor nom dins aquesta clau)
+	const endo = (pr) => pr.endo ?? pr[lenga.lang] ?? pr.ca ?? null;
+	// una familha de lengas (l'oïl) demòra separada mai luènh que los dialèctes d'una lenga
+	const nivèlsDezoom = (map) => {
+		const n = nivèlsComuns(map);
+		if (lenga.dialDès) n.zDial = zDès(lenga.dialDès, n.lat);
+		return n;
+	};
 	const temaDe = (c, d) => {
 		const m = d ? 'dalt' : c ? 'clar' : 'sorne';
 		const dial = {};
@@ -120,7 +128,7 @@ export function crearColaLenga(
 				this._cargant = false;
 				if (!d?.features) return;
 				// (còdis prefixats : « ca-central », distints dels dialèctes occitans)
-				const noms = Object.fromEntries((lenga.pastilhas || []).map((q) => [lenga.pref + q.k, { [lenga.lang]: q.endo ?? q[lenga.lang] ?? q.ca, oc: q.oc, fr: q.fr }]));
+				const noms = Object.fromEntries((lenga.pastilhas || []).map((q) => [lenga.pref + q.k, { [lenga.lang]: q[lenga.lang] ?? q.ca, endo: q.endo ?? q[lenga.lang] ?? q.ca, oc: q.oc, fr: q.fr }]));
 				for (const f of d.features) {
 					const p = f.properties;
 					if (!p.kod.startsWith(lenga.pref)) p.kod = lenga.pref + p.kod;
@@ -959,7 +967,7 @@ export function crearColaLenga(
 
 			/* Noms dels dialèctes : capitalas espaçadas, de lor color (coma
 			   l'occitan) ; de luènh sonque. Quand de zònas son causidas, lors noms. */
-			const aNoms = this._doç('noms', clamp((9.6 - z) / 1.2) * clamp((z - 6.35) / 0.3)) * (1 - u) * aFinApar;
+			const aNoms = this._doç('noms', clamp((9.6 - z) / 1.2) * clamp((z - (lenga.dialDès ? nv.zDial - 0.07 : 6.35)) / 0.3)) * (1 - u) * aFinApar;
 			const caixas = [];
 			if (aNoms > 0.01) {
 				const noms = sel ? this._zonasDe(this._sels) : G.zonas;
@@ -984,7 +992,8 @@ export function crearColaLenga(
 					let a = aNoms;
 					if (an?.ajust === zn.kod) a *= clamp((p - 0.25) / 0.4); // lo nom arriba aprèp la color
 					if (a < 0.01) continue;
-					const t = (endo(zn.props) ?? (this._lang === 'fr' ? zn.props.fr : zn.props.oc)).toUpperCase();
+					// (en occitan, lo nom local ; en francés, las lengas d'oïl gardan lor nom francés : retorn de Romain)
+					const t = ((this._lang === 'fr' && lenga.lang === 'fr' ? zn.props.fr : endo(zn.props)) ?? (this._lang === 'fr' ? zn.props.fr : zn.props.oc)).toUpperCase();
 					const w = cx.measureText(t).width + 6,
 						h = fs * 1.5;
 					// (retorn de Romain, 2026-10-09 : « trop de bruit textuel » sul basc

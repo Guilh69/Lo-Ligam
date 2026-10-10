@@ -425,6 +425,11 @@
 	}
 	function vesinaA(ll) {
 		if (!vesinas) return null;
+		// de prèp (40 km e mens), lo clic es pels despartaments e las vilas, pas
+		// per l'invitacion (retorn de Romain, 2026-10-10)
+		if (map && map.getZoom() >= zDès(40, map.getCenter().lat) - 0.01) return null;
+		// un despartament o una region afichats jos lo ponteiro passan d'abòrd
+		if (colaEstelas && map?.hasLayer(colaEstelas) && colaEstelas._territoriA?.(map.latLngToLayerPoint(ll))) return null;
 		for (const [k, anels] of Object.entries(vesinas)) if (amagada(k) && dinsAnels(anels, ll.lng, ll.lat)) return k;
 		return null;
 	}

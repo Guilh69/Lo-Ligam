@@ -145,13 +145,14 @@ export const Z = {
 	get GOV_PROV() {
 		return zDès(70, latEscala) - 0.06;
 	},
-	// lo survòl : regions a partir de 70 km (6,9), despartaments de 30 km (8,3)
+	// lo survòl : regions a partir de 70 km (6,9), despartaments de 40 km (èra 30 :
+	// retorn de Romain, 2026-10-10, « en dessous de 40 on devrait pouvoir cliquer sur les départements »)
 	// fins a 7 km (10,75)
 	get REG_0() {
 		return zDès(70, latEscala);
 	},
 	get DEP_0() {
-		return zDès(30, latEscala);
+		return zDès(40, latEscala);
 	},
 	get DEP_1() {
 		return zDès(5, latEscala);

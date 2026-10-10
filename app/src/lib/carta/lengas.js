@@ -344,6 +344,8 @@ export const LENGAS = {
 		pref: 'oil-',
 		lang: 'fr',
 		url: '/data/oil.json',
+		// las lengas d'oïl separadas fins a 150 km, unidas a 200 (l'occitan s'unís a 150 : retorn de Romain, 2026-10-10)
+		dialDès: 150,
 		nom: { oc: 'lengas d’oïl', fr: 'langues d’oïl', endo: 'langues d’oïl' },
 		// (entre París e Orleans)
 		eti: [2.1, 48.3],
