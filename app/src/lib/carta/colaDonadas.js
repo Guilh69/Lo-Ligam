@@ -13,7 +13,7 @@ import { nivèlsDezoom, aDialectes, aDetalh } from './escalas.js';
 import { prepContorn, traçarPart, estelaCap, avançada, TOTAL as TOTAL_APAR } from './aparicion.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
-import { cargarFranca, francaCargada, dinsFranca, retalharFranca } from './franca.js';
+import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranca } from './franca.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -190,8 +190,12 @@ export function crearColaDonadas(
 			on = !!on;
 			if (on === this._franca) return;
 			this._franca = on;
-			if (on) cargarFranca().then(() => this._map && this._pintar());
-			else if (this._map) this._pintar();
+			if (on) cargarFranca().then(() => (this._fondutFr = performance.now()) && this._map && this._pintar());
+			else if (this._map) {
+				// (la rèsta apareis : lo fuòc d'artifici dels dialèctes, coma quand se cochan)
+				this.demandarBalet();
+				this._pintar();
+			}
 		},
 		setJaces(j) {
 			// la jaça dels dialèctes ven d'èsser alucada (sovent pel meteis clic
@@ -1006,9 +1010,7 @@ export function crearColaDonadas(
 			return d.v;
 		},
 		_pintar() {
-			this._retalhat = false;
-			this._pintarCòs();
-			if (this._retalhat) this._cx.restore();
+			pintarAmbFranca(this);
 		},
 		_pintarCòs() {
 			const G = this._geo;

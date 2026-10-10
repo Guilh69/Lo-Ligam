@@ -12,7 +12,7 @@
 import { nivèlsDezoom as nivèlsComuns, aDialectes, aDetalh, zDès } from './escalas.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
-import { cargarFranca, francaCargada, dinsFranca, retalharFranca } from './franca.js';
+import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranca } from './franca.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -186,7 +186,7 @@ export function crearColaLenga(
 			on = !!on;
 			if (on === this._franca) return;
 			this._franca = on;
-			if (on) cargarFranca().then(() => this._actiu && this._pintar());
+			if (on) cargarFranca().then(() => (this._fondutFr = performance.now()) && this._actiu && this._pintar());
 			else if (this._actiu) {
 				// (la rèsta de la lenga apareis : lo fuòc d'artifici, coma quand s'aluca)
 				this._tAluc = performance.now();
@@ -750,9 +750,7 @@ export function crearColaLenga(
 			return d.v;
 		},
 		_pintar() {
-			this._retalhat = false;
-			this._pintarCòs();
-			if (this._retalhat) this._cx.restore();
+			pintarAmbFranca(this);
 		},
 		_pintarCòs() {
 			const G = this._geo;
