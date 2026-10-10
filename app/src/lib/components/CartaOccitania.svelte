@@ -439,6 +439,11 @@
 	}
 	function vesinaA(ll) {
 		if (!vesinas) return null;
+		// dins lo mòde Lengas : la part d'a l'estrangièr d'una lenga afichada sonque
+		// en França prepausa de descobrir la rèsta, a totas las escalas (Romain, 2026-10-10)
+		if (estatCarta.mòde === 'lengas' && francaCargada() && !dinsFranca(ll.lat, ll.lng))
+			for (const [k, anels] of Object.entries(vesinas))
+				if (k !== 'franca' && !amagada(k) && nomésFrança(k) && dinsAnels(anels, ll.lng, ll.lat)) return 'rèsta:' + k;
 		// de prèp (40 km e mens), lo clic es pels despartaments e las vilas, pas
 		// per l'invitacion (retorn de Romain, 2026-10-10)
 		if (map && map.getZoom() >= zDès(40, map.getCenter().lat) - 0.01) return null;
@@ -452,16 +457,27 @@
 	const amagada = (k) => (k === 'occitan' ? !visibility.dialectes && !visibility.unificat : LENGAS[k] && !visibility[k]);
 	// (noms de validar per Romain)
 	const vocala = (t) => /^[aeiouàèéíòóúh]/i.test(t);
-	const descVesina = (k) => {
+	const descVesina = (kod) => {
+		const rèsta = kod.startsWith('rèsta:'),
+			k = rèsta ? kod.slice(6) : kod;
 		const n = LENGAS[k]?.nom ?? { oc: 'occitan', fr: 'occitan', endo: 'occitan' };
 		// (un plural, « lengas d'oïl » : « las », « les »)
 		const art = (t, pl, v, m) => (/^(lengas|langues) /.test(t) ? pl : vocala(t) ? v : m);
+		if (rèsta)
+			return {
+				kod,
+				endo: n.endo,
+				oc: 'Descobrir la rèsta ' + art(n.oc, 'de las ', "de l'", 'del ') + n.oc,
+				fr: 'Découvrir le reste ' + art(n.fr, 'des ', "de l'", 'du ') + n.fr
+			};
 		return { kod: k, endo: n.endo, oc: 'Descobrir ' + art(n.oc, 'las ', "l'", 'lo ') + n.oc, fr: 'Découvrir ' + art(n.fr, 'les ', "l'", 'le ') + n.fr };
 	};
 	function alucarVesina(k) {
 		vesina = null;
 		colaEstelas?.amagarLegenda(false);
 		mapEl?.classList.remove('sus-vesina');
+		// (la rèsta d'una lenga afichada en França : son environament)
+		if (k.startsWith('rèsta:')) return void (estatCarta.environament = [...estatCarta.environament, k.slice(6)]);
 		// (l'occitan : son domeni e sos dialèctes, la vista d'ensemble, lo fuòc d'artifici)
 		if (k === 'occitan') tornarALOccitan();
 		else onAlucar?.(k);
@@ -1568,10 +1584,56 @@
 		if (!f || !nomésFrança(id) || !francaCargada()) return f;
 		return (fonsFr[id] ??= { ...f, vilas: f.vilas?.filter((v) => dinsFranca(v.lat, v.lon)) ?? null });
 	};
+	// La carta va sus las lengas que venon d'èsser alucadas (Romain, 2026-10-10) :
+	// sonque lor part francesa o tota la lenga ; mantuna alucadas l'una aprèp
+	// l'autra : un sol vòl, un moment aprèp lo darrièr clic, que las mòstra
+	// totas (lo panèl a esquèrra, la barra en bas sul telefòn)
+	let minutaVòl = null;
+	const recentas = new Set();
+	function anarALasLengas(nòvas = []) {
+		for (const k of nòvas) recentas.add(k === 'dialectes' ? 'occitan' : k);
+		clearTimeout(minutaVòl);
+		minutaVòl = setTimeout(async () => {
+			const ids = [...recentas].filter((id) => (id === 'occitan' ? visibility.dialectes : visibility[id]));
+			recentas.clear();
+			if (!map || !L || !ids.length) return;
+			await Promise.all([cargarVesinas(), cargarFranca()]);
+			if (!vesinas) return;
+			let b = null;
+			for (const id of ids)
+				for (const a of vesinas[id] ?? [])
+					for (const [x, y] of a) {
+						if (nomésFrança(id) && !dinsFranca(y, x)) continue;
+						b = b ? b.extend([y, x]) : L.latLngBounds([y, x], [y, x]);
+					}
+			if (!b) return;
+			const estrech = map.getSize().x <= 600,
+				panèl = !!document.getElementById('tirador-jaces'),
+				calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+			map.flyToBounds(b, {
+				// (la plaça del panèl, sonque se es dobèrt)
+				paddingTopLeft: L.point(estrech ? 16 : panèl ? 420 : 110, estrech ? 110 : 90),
+				paddingBottomRight: L.point(estrech ? 16 : 70, estrech ? 90 : 50),
+				// (pas pus prèp que ~40 km : lo fons demòra lo de las lengas, pas lo satellit)
+				maxZoom: Math.floor(zDès(40, b.getCenter().lat) / 0.25) * 0.25,
+				duration: calm ? 0 : 1.3
+			});
+		}, 450);
+	}
+	let envAbans = '';
 	$effect(() => {
 		const m = estatCarta.mòde,
 			env = [...estatCarta.environament];
 		if (!map) return;
+		// (« environament » o « part francesa » cambiat : la carta i va)
+		const clau = m + ':' + env.join(',');
+		if (m === 'lengas' && envAbans && clau !== envAbans && envAbans.startsWith('lengas')) {
+			// (la lenga que son environament càmbia)
+			const abans = envAbans.slice(7).split(',').filter(Boolean);
+			const cambiadas = [...env.filter((k) => !abans.includes(k)), ...abans.filter((k) => !env.includes(k))];
+			untrack(() => anarALasLengas(cambiadas));
+		}
+		envAbans = clau;
 		const aplicar = () =>
 			untrack(() => {
 				colaDonadas?.setFranca?.(m === 'lengas' && !env.includes('occitan'));
@@ -1616,6 +1678,9 @@
 		const nòvas = Object.keys(vis).filter((k) => vis[k] && !abans[k]);
 		// (una jaça en apercebut al survòl : la carta bolega pas)
 		if (estatCarta.apercebut && nòvas.includes(estatCarta.apercebut)) return;
+		// (lo mòde Lengas : una lenga alucada, la carta i va)
+		if (estatCarta.mòde === 'lengas' && nòvas.some((k) => LENGAS[k] || k === 'dialectes'))
+			return untrack(() => anarALasLengas(nòvas.filter((k) => LENGAS[k] || k === 'dialectes')));
 		// (mantuna jaça d'un còp — « Tot tornar », « Afichar l'occitan » : se los
 		// dialèctes i son, la vista de l'Occitània ; si que non, la carta bolega pas)
 		if (nòvas.length !== 1) {
@@ -1747,7 +1812,7 @@
 
 	{#if vesina && !legendaDial}
 		<button type="button" class="legenda-dial vesina" onclick={() => alucarVesina(vesina.kod)}>
-			<span class="nom" lang={LENGAS[vesina.kod]?.lang ?? 'oc'}>{vesina.endo}</span>
+			<span class="nom" lang={LENGAS[vesina.kod.replace('rèsta:', '')]?.lang ?? 'oc'}>{vesina.endo}</span>
 			<span class="sota">{lang === 'fr' ? vesina.fr : vesina.oc} →</span>
 		</button>
 	{/if}

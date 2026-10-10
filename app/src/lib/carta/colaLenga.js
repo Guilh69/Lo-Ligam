@@ -187,7 +187,12 @@ export function crearColaLenga(
 			if (on === this._franca) return;
 			this._franca = on;
 			if (on) cargarFranca().then(() => this._actiu && this._pintar());
-			else if (this._actiu) this._pintar();
+			else if (this._actiu) {
+				// (la rèsta de la lenga apareis : lo fuòc d'artifici, coma quand s'aluca)
+				this._tAluc = performance.now();
+				this._lançarApar();
+				this._pintar();
+			}
 		},
 		setTema(c, d) {
 			this._tem = temaDe(c, d);
