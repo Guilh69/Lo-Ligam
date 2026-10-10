@@ -870,7 +870,7 @@
 			<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC[banda]}</svg>
 			<span class="lib">{nomFam(banda)}</span>
 		</button>
-		<div class="banda" role="group" aria-label={nomFam(banda)}>
+		<div class="banda-jaces" role="group" aria-label={nomFam(banda)}>
 			{#each familhaDe(banda)?.jaces ?? [] as j (j.id)}
 				<button
 					type="button"
@@ -1029,7 +1029,7 @@
 					{#each f.jaces.filter((j) => !LENGAS[j.id]) as j (j.id)}{@render linha(j)}{/each}
 					{#each lengasMòde(f) as l, i (l.j.id)}
 						<div class="ficha-arr" style:--i={i}>
-							{#if l.oc}{@render linha({ ...OCCITAN_J, oc: tx.occitan, fr: tx.occitan })}{:else}{@render fichaLenga(l.j)}{/if}
+							{#if l.oc}{@render fichaOccitan()}{:else}{@render fichaLenga(l.j)}{/if}
 						</div>
 					{/each}
 				{:else if f.id === 'lengas'}
@@ -1063,6 +1063,57 @@
 		{/if}
 	</section>
 {/if}
+
+<!-- La ficha de l'occitan dins lo mòde, a egalitat amb las autras (retorn de
+     Romain, 2026-10-10 : « que siá coerent ») ; sa jaça es la dels dialèctes.
+     Pas de locutors ni d'estat UNESCO tant que n'an pas una font. -->
+{#snippet fichaOccitan()}
+	{@const dob = dialsDob.includes('occitan')}
+	{@const on = !!visibility.dialectes}
+	<div class="ficha" class:alucada={on}>
+		<div class="ficha-cap">
+			<span class="banda" style:background={`linear-gradient(${NOMS_DIAL.map(([k]) => DIAL[k]).join(', ')})`}></span>
+			<div class="ficha-cos">
+				<span class="endo" lang="oc">Occitan</span>
+				<span class="nom-lg">{lang === 'fr' ? 'occitan' : 'occitan'}</span>
+				<p class="desc">{lang === 'fr' ? "Ses six dialectes, de Bordeaux à Nice ; le Val d'Aran et des vallées d'Italie aussi" : "Sos sièis dialèctes, de Bordèu a Niça ; la Val d'Aran e de valadas d'Itàlia tanben"}</p>
+				<p class="meta">
+					{@render infoFont({ t: 'Classement : indo-européen › roman › gallo-roman › occitano-roman (Glottolog, Institut Max Planck)', url: 'https://glottolog.org/glottolog?search=Occitan' }, lang === 'fr' ? 'romane' : 'romana')}
+				</p>
+			</div>
+			<div class="ficha-dreita">
+				<button type="button" class="basc" role="switch" aria-checked={on} aria-label={tx.occitan} onclick={() => bascular('dialectes', !on)}></button>
+				{#if silhoetas.occitan}
+					<svg class="silh" viewBox="0 0 40 40" aria-hidden="true"
+						><path d={silhoetas.occitan} fill={clar ? '#b0202c' : '#d9343f'} fill-rule="evenodd" /></svg
+					>
+				{/if}
+			</div>
+		</div>
+		<div class="desplegar-l">
+			<button type="button" class="desplegar" aria-expanded={dob} onclick={() => virarDials('occitan')}
+				><span class="chev" aria-hidden="true">▸</span>{tx.nDial(NOMS_DIAL.length, false)}</button
+			>
+			{@render infoFont({ t: "Dialèctes d'après la carte d'Occitanica (CIRDÒC), recalée sur les communes", url: 'https://www.occitanica.eu' }, 'ⓘ', 'sol')}
+		</div>
+		{#if dob}
+			<ul class="albre" role="group" aria-label={tx.causirDial} transition:slide={{ duration: 200 }}>
+				{#each NOMS_DIAL as [k, oc, fr] (k)}
+					<li>
+						<button type="button" class="d" aria-pressed={causits.includes(k)} lang="oc" onclick={() => causirDial(k)}
+							><i style:background={DIAL[k]}></i><span class="e">{oc}</span>{#if lang === 'fr' && fr !== oc}<span class="f" lang="fr">{fr}</span>{/if}</button
+						>
+					</li>
+				{/each}
+				<li>
+					<button type="button" class="d" aria-pressed={causits.includes('cro')} lang="oc" onclick={() => causirDial('cro')}
+						><i class="cro"></i><span class="e">creissent</span>{#if lang === 'fr'}<span class="f" lang="fr">croissant</span>{/if}</button
+					>
+				</li>
+			</ul>
+		{/if}
+	</div>
+{/snippet}
 
 {#snippet fichaLenga(j)}
 	{@const lg = LENGAS[j.id]}
@@ -1470,7 +1521,7 @@
 		font-size: 1rem;
 		color: var(--t-tinta-2);
 	}
-	.banda {
+	.banda-jaces {
 		flex: 1 1 auto;
 		min-width: 0;
 		display: flex;
@@ -1482,7 +1533,7 @@
 		overscroll-behavior-x: contain;
 		mask-image: linear-gradient(90deg, #000 88%, transparent);
 	}
-	.banda::-webkit-scrollbar {
+	.banda-jaces::-webkit-scrollbar {
 		display: none;
 	}
 	.chip {
@@ -1951,7 +2002,7 @@
 	.ficha-cap {
 		display: grid;
 		grid-template-columns: 5px 1fr auto;
-		gap: 10px;
+		gap: 14px; /* (lo tèxte pas tròp pròche de la banda, retorn de Romain) */
 		align-items: start;
 	}
 	.ficha .banda {
@@ -2143,7 +2194,8 @@
 		height: 9px;
 		border-radius: 50%;
 	}
-	.pastilha i.cro {
+	.pastilha i.cro,
+	.d i.cro {
 		border-radius: 2px;
 		background: repeating-linear-gradient(45deg, var(--t-terra-viu) 0 1.5px, transparent 1.5px 3.5px);
 	}
