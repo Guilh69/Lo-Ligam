@@ -26,6 +26,6 @@ Demandes de Romain du 2026-10-10 (dictées), à mener dans une conversation neuv
 
 ## Questions encore ouvertes (une à la fois)
 
-1. Quelle nouvelle icône pour « Autres langues » (trois propositions dessinées à montrer) ?
-2. Où vont les limites historiques du breton : dans la couche bretonne ou comme donnée à part ?
-3. Les onglets Europe et Monde restent-ils dans le mode ?
+1. ✅ Icône « Autres langues » : **deux bulles de discussion**, une pleine et une au trait (Romain, 2026-10-10, d'après son modèle ; en place dans `RailJaces.svelte`).
+2. ✅ Limites historiques du breton : **donnée à part du mode**, rubrique « Données » à côté des écoles bilingues ; l'allumer cale la vue sur la Bretagne (Romain, 2026-10-10).
+3. ✅ Onglets Europe et Monde : **retirés**. Le mode est une seule liste « Langues de France », sans onglets ; Europe et Monde reviendront plus tard avec leur propre entrée, quand il y aura des données (Romain, 2026-10-10).
