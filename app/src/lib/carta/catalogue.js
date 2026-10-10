@@ -155,7 +155,15 @@ CATALOGUE.push({
 			nota_fr: 'Ses dialectes, de Bilbao à Mauléon et à Pampelune ; le Pays basque nord à part'
 		},
 		{ id: 'breton', oc: 'Breton', fr: 'Breton', estat: 'a venir' },
-		{ id: 'alsacian', oc: 'Alsacian e francic', fr: 'Alsacien et francique', estat: 'a venir' },
+		{
+			id: 'alsacian',
+			oc: 'Alsacian e francic',
+			fr: 'Alsacien et francique',
+			estat: 'disponible',
+			defaut: false,
+			nota_oc: 'Lo continuum alemanic e francic, d’Estrasborg a Zuric e a Luxemborg ; Alsàcia e Mosèla a despart',
+			nota_fr: 'Le continuum alémanique et francique, de Strasbourg à Zurich et à Luxembourg ; Alsace et Moselle à part'
+		},
 		{ id: 'flamenc', oc: 'Flamenc occidental', fr: 'Flamand occidental', estat: 'a venir' },
 		{ id: 'cors', oc: 'Còrs', fr: 'Corse', estat: 'a venir' },
 		{
@@ -171,7 +179,7 @@ CATALOGUE.push({
 });
 
 // Las jaces de lengas pintadas per una còla de lenga (colaLenga.js, lengas.js)
-export const JACES_LENGAS = ['catalan', 'arpitan', 'basc', 'oil'];
+export const JACES_LENGAS = ['catalan', 'arpitan', 'basc', 'oil', 'alsacian'];
 
 // Las jaces pintadas pel fons « Contorns » (colaEstelas.js) : son pas pintadas
 // sus los autres fonses (las tuèlas an las lors). Jaça → element del fons.

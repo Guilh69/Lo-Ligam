@@ -15,7 +15,7 @@
 #
 # Renc : 1 = mai de 100 000 abitants ; 2 = mai de 20 000 ; 3 = mai de 7 000 ;
 # 4 = los autres. Una vila es gardada se cap de vila pus granda es pas a mens
-# de 30 km (renc 1), 22 km (renc 2), 25 km (renc 3) o 28 km (renc 4) : pas de mantèl de
+# de 15 km (renc 1), 22 km (renc 2), 25 km (renc 3) o 28 km (renc 4) : pas de mantèl de
 # banlègas a l'entorn de París (retorn de Romain : pas de bruch textual) ; 250 vilas al pus.
 #
 # Sortida : « vilas » dins oil.json ([lon, lat, nom, renc, zòna]) e
@@ -27,7 +27,7 @@ ogr.UseExceptions()
 R = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 FIC = os.path.join(R, 'app', 'static', 'data', 'oil.json')
 MAX = 250
-ESPAÇ = {1: 30000, 2: 22000, 3: 25000, 4: 28000}
+ESPAÇ = {1: 15000, 2: 22000, 3: 25000, 4: 28000}
 WIKI = {'chti': 'pcd', 'rouchi': 'pcd', 'picard': 'pcd', 'normand': 'nrm', 'wallon': 'wa'}
 
 d = json.load(open(FIC, encoding='utf-8'))

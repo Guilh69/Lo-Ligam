@@ -129,6 +129,89 @@ export const LENGAS = {
 		atribucion:
 			'Basc : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), comunas d\'Espanha © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL), zònas de la lei navarresa de 1986, dialèctes d\'aprèp Koldo Zuazo (2008) e la Viquipèdia en basc'
 	},
+	// L'alsacian e lo francic (2026-10-10) : lo continuum alemanic e francic
+	// d'Alsàcia, de Mosèla e dels país vesins (Luxemborg, Belgica, Alemanha,
+	// Soïssa) ; Alsàcia e Mosèla germanofònas a despart (SIG/alsacian/FONTS.md)
+	alsacian: {
+		kod: 'alsacian',
+		pref: 'gsw-',
+		lang: 'gsw',
+		url: '/data/alsacian.json',
+		nom: { oc: 'alsacian e francic', fr: 'alsacien et francique', endo: 'Elsässisch un Platt' },
+		// (entre Estrasborg e Basilèa : dins lo domeni, de luènh)
+		eti: [8.3, 48.35],
+		// alemanic en roges e irangets (las colors d'Alsàcia), francic en violets e
+		// ròses : luènh del blau del lorren roman e del verd arpitan vesins
+		color: { sorne: '#ef6f86', clar: '#b0304a', dalt: '#cc79a7' },
+		tèxt: { sorne: '#ffe0e6', clar: '#5c1222', dalt: '#ffe0f0' },
+		dial: {
+			sorne: {
+				niederalemannisch: '#ff6b5a', hochalemannisch: '#ff9a4d', hochstalemannisch: '#ffc44d', schwabisch: '#e0484f',
+				letzebuergesch: '#e85d9f', moselfrankisch: '#c86bff', rheinfrankisch: '#9a7bff', sudfrankisch: '#ff8fd0', ripuarisch: '#b04fd0', limburgisch: '#d68fff'
+			},
+			clar: {
+				niederalemannisch: '#c2351f', hochalemannisch: '#c2621a', hochstalemannisch: '#a8780f', schwabisch: '#9a1f2a',
+				letzebuergesch: '#b0246a', moselfrankisch: '#8a2fc4', rheinfrankisch: '#5a3fc4', sudfrankisch: '#c2458f', ripuarisch: '#7a1f9a', limburgisch: '#9a4fc4'
+			},
+			dalt: {
+				niederalemannisch: '#d55e00', hochalemannisch: '#e69f00', hochstalemannisch: '#f0e442', schwabisch: '#009e73',
+				letzebuergesch: '#cc79a7', moselfrankisch: '#0072b2', rheinfrankisch: '#56b4e9', sudfrankisch: '#f0e442', ripuarisch: '#999999', limburgisch: '#bbbbbb'
+			}
+		},
+		apart: { 'alsacian-franca': { dins: ['niederalemannisch', 'hochalemannisch', 'letzebuergesch', 'moselfrankisch', 'rheinfrankisch', 'sudfrankisch'] } },
+		// noms dins la lenga ; los occitans son de validar
+		pastilhas: [
+			{ k: 'alsacian-franca', gsw: 'Elsass un Deitsch-Lothringe', oc: 'Alsàcia e Mosèla germanofònas', fr: 'Alsace et Moselle germanophone' },
+			{ k: 'niederalemannisch', gsw: 'Elsässisch', long: 'Niederalemannisch (Elsässisch)', oc: 'bas alemanic (alsacian)', fr: 'bas-alémanique (alsacien)' },
+			{ k: 'hochalemannisch', gsw: 'Hochalemannisch', oc: 'naut alemanic', fr: 'haut-alémanique' },
+			{ k: 'hochstalemannisch', gsw: 'Höchstalemannisch', oc: 'alemanic superior', fr: 'alémanique supérieur' },
+			{ k: 'schwabisch', gsw: 'Schwäbisch', oc: 'soabe', fr: 'souabe' },
+			{ k: 'letzebuergesch', gsw: 'Lëtzebuergesch', oc: 'luxemborgés', fr: 'luxembourgeois' },
+			{ k: 'moselfrankisch', gsw: 'Moselfränkisch', oc: 'francic mosellan', fr: 'francique mosellan' },
+			{ k: 'rheinfrankisch', gsw: 'Rheinfränkisch', oc: 'francic renan', fr: 'francique rhénan' },
+			{ k: 'sudfrankisch', gsw: 'Südfränkisch', oc: 'francic meridional', fr: 'francique méridional' },
+			{ k: 'ripuarisch', gsw: 'Ripuarisch', oc: 'ripuari', fr: 'ripuaire' },
+			{ k: 'limburgisch', gsw: 'Platdiets', oc: 'limborgés', fr: 'limbourgeois' }
+		],
+		sota: { oc: 'parlar alemanic o francic', fr: 'parler alémanique ou francique' },
+		sotaApart: { oc: 'alsacian e francic de França', fr: 'alsacien et francique de France' },
+		nomCarta: 'ELSÄSSISCH · PLATT',
+		atribucion:
+			'Alsacian e francic : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), BKG VG250 (dl-de/by-2-0), swisstopo, © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL) ; limits d\'aprèp Wenker, Constant This (1887) e las cartas « Sprachen in Elsass-Lothringen », « Rheinischer Fächer », « Alemannic dialects » de Wikimedia Commons (CC BY-SA)'
+	},
+	// Lo breton (2026-10-10) : limit de Sébillot (1886, estat istoric coma per
+	// l'occitan), quatre dialèctes d'aprèp los ancians evescats, breton escantit
+	// del país de Guerranda pus palle, zòna mixta en asclas (SIG/breton/FONTS.md)
+	breton: {
+		kod: 'breton',
+		pref: 'br-',
+		lang: 'br',
+		url: '/data/breton.json',
+		nom: { oc: 'breton', fr: 'breton', endo: 'brezhoneg' },
+		// (al mitan de Bretanha)
+		eti: [-3.25, 48.2],
+		// turquesa e verds : luènh del blau ardesa del galò vesin
+		color: { sorne: '#4fd1b0', clar: '#1b7f66', dalt: '#009e73' },
+		tèxt: { sorne: '#d3f7ec', clar: '#0f4a3b', dalt: '#c8f0e2' },
+		dial: {
+			sorne: { leoneg: '#59d9a9', tregerieg: '#2fc4c4', kerneveg: '#7fd67a', gwenedeg: '#c8e070', gwenrann: '#c8e070' },
+			clar: { leoneg: '#1f8f6a', tregerieg: '#13808a', kerneveg: '#3f8f3a', gwenedeg: '#7d8f1f', gwenrann: '#7d8f1f' },
+			dalt: { leoneg: '#009e73', tregerieg: '#56b4e9', kerneveg: '#e69f00', gwenedeg: '#f0e442', gwenrann: '#bbbbbb' }
+		},
+		// noms bretons ; los occitans son de validar
+		pastilhas: [
+			{ k: 'leoneg', br: 'leoneg', oc: 'leonés', fr: 'léonard' },
+			{ k: 'tregerieg', br: 'tregerieg', oc: 'tregorés', fr: 'trégorrois' },
+			{ k: 'kerneveg', br: 'kerneveg', oc: 'cornoalhés', fr: 'cornouaillais' },
+			{ k: 'gwenedeg', br: 'gwenedeg', oc: 'vanetés', fr: 'vannetais' },
+			{ k: 'gwenrann', br: 'brezhoneg Gwenrann', oc: 'breton escantit', fr: 'breton de Guérande (éteint)' }
+		],
+		sota: { oc: 'dialècte breton', fr: 'dialecte breton' },
+		sotaApart: { oc: 'breton', fr: 'breton' },
+		nomCarta: 'BREZHONEG',
+		atribucion:
+			'Breton : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), limit d\'aprèp Paul Sébillot (1886, domeni public), dialèctes d\'aprèp los ancians evescats, noms bretons de la Wikipèdia en breton'
+	},
 	// Las lengas d'oïl (Romain, 2026-10-09, cahier §11) : una familha de lengas,
 	// pas una lenga amb de dialèctes. De luènh una sola zòna ; de prèp las 9
 	// lengas de la lista oficiala e los parlars del Centre e de l'Oèst, cada

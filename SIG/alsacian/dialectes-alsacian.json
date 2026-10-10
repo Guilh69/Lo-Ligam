@@ -1,0 +1,628 @@
+{
+	"font": "Alsacian e francic : comunas IGN Admin Express COG Carto 2026 (Licéncia dobèrta 2.0), BKG VG250-EW (dl-de/by-2-0), OFS (limits e regions lingüisticas), © contributors OpenStreetMap (ODbL) ; dialèctes d'aprèp « Sprachen in Elsass-Lothringen » (Furfur 2023, CC BY-SA 3.0, d'aprèp Rosss 2010 e lo Digitaler Wenker-Atlas), Constant This (1887), « Grenzorte des alemannischen Dialektraums » e autres articles de Wikipèdia (CC BY-SA 4.0), « Rheinischer Fächer » (Hans Erren 2021, CC BY-SA 3.0), « Alemannic-Dialects-Map » (Pyrokrat 2010, CC BY-SA 3.0) ; noms locals Wikidata (CC0) e OSM",
+	"a_validar": "noms dels dialèctes en occitan (oc) e en francés, noms locals (noms-locals.csv), limits a l'escala de la comuna (cartas esquematicas calibradas), comunas mixtas : propausas de validar per Romain",
+	"dialectes": [
+		{
+			"kod": "letzebuergesch",
+			"endo": "Lëtzebuergesch",
+			"fr": "luxembourgeois (francique luxembourgeois)",
+			"oc": "luxemborgés",
+			"grope": "francique",
+			"parlars": [],
+			"comunas": {
+				"France": 83,
+				"Luxembourg": 100,
+				"Belgique": 7
+			}
+		},
+		{
+			"kod": "moselfrankisch",
+			"endo": "Moselfränkisch (Platt)",
+			"fr": "francique mosellan",
+			"oc": "francic mosellan",
+			"grope": "francique",
+			"parlars": [
+				{
+					"kod": "nord",
+					"fr": "mosellan du Nord (op)",
+					"oc": "mosellan del Nòrd"
+				},
+				{
+					"kod": "sud",
+					"fr": "mosellan du Sud (of)",
+					"oc": "mosellan del Sud"
+				}
+			],
+			"comunas": {
+				"France": 70,
+				"Belgique": 3,
+				"Allemagne": 1498
+			}
+		},
+		{
+			"kod": "rheinfrankisch",
+			"endo": "Rheinfränkisch (Platt)",
+			"fr": "francique rhénan",
+			"oc": "francic renan",
+			"grope": "francique",
+			"parlars": [
+				{
+					"kod": "lorrain",
+					"fr": "francique rhénan lorrain",
+					"oc": "francic renan de Lorena"
+				},
+				{
+					"kod": "alsace_bossue",
+					"fr": "francique rhénan d'Alsace bossue",
+					"oc": "francic renan d'Alsàcia boçuda"
+				}
+			],
+			"comunas": {
+				"France": 276,
+				"Allemagne": 868
+			}
+		},
+		{
+			"kod": "sudfrankisch",
+			"endo": "Südfränkisch",
+			"fr": "francique méridional (francique rhénan méridional)",
+			"oc": "francic meridional",
+			"grope": "francique",
+			"parlars": [],
+			"comunas": {
+				"France": 35,
+				"Allemagne": 145
+			}
+		},
+		{
+			"kod": "ripuarisch",
+			"endo": "Ripuarisch (Platt)",
+			"fr": "ripuaire",
+			"oc": "ripuari",
+			"grope": "francique",
+			"parlars": [],
+			"comunas": {
+				"Belgique": 3
+			}
+		},
+		{
+			"kod": "limburgisch",
+			"endo": "Platt, Platdiets",
+			"fr": "francique rhéno-mosan (limbourgeois)",
+			"oc": "limborgés",
+			"grope": "francique",
+			"parlars": [],
+			"comunas": {
+				"Belgique": 7
+			}
+		},
+		{
+			"kod": "niederalemannisch",
+			"endo": "Niederalemannisch (Elsässisch)",
+			"fr": "bas-alémanique (alsacien)",
+			"oc": "bas alemanic (alsacian)",
+			"grope": "alémanique",
+			"parlars": [
+				{
+					"kod": "nord",
+					"fr": "bas-alémanique du Nord",
+					"oc": "bas alemanic del Nòrd"
+				},
+				{
+					"kod": "sud",
+					"fr": "bas-alémanique du Sud",
+					"oc": "bas alemanic del Sud"
+				},
+				{
+					"kod": "strasbourgeois",
+					"endo": "Strossburjerisch",
+					"fr": "strasbourgeois",
+					"oc": "estrasborgés"
+				},
+				{
+					"kod": "oberrhein",
+					"endo": "Oberrheinalemannisch",
+					"fr": "alémanique du Rhin supérieur (Bade)",
+					"oc": "alemanic del Rin superior"
+				},
+				{
+					"kod": "bodensee",
+					"endo": "Bodenseealemannisch",
+					"fr": "alémanique du lac de Constance",
+					"oc": "alemanic del lac de Constança"
+				},
+				{
+					"kod": "basel",
+					"endo": "Baseldytsch",
+					"fr": "bâlois",
+					"oc": "basilés"
+				}
+			],
+			"comunas": {
+				"France": 674,
+				"Allemagne": 193,
+				"Suisse": 1
+			}
+		},
+		{
+			"kod": "hochalemannisch",
+			"endo": "Hochalemannisch",
+			"fr": "haut-alémanique",
+			"oc": "naut alemanic",
+			"grope": "alémanique",
+			"parlars": [],
+			"comunas": {
+				"France": 76,
+				"Allemagne": 95,
+				"Suisse": 1003
+			}
+		},
+		{
+			"kod": "hochstalemannisch",
+			"endo": "Höchstalemannisch",
+			"fr": "alémanique supérieur (très haut alémanique)",
+			"oc": "alemanic superior",
+			"grope": "alémanique",
+			"parlars": [],
+			"comunas": {
+				"Suisse": 194
+			}
+		},
+		{
+			"kod": "schwabisch",
+			"endo": "Schwäbisch",
+			"fr": "souabe",
+			"oc": "soabe",
+			"grope": "alémanique",
+			"parlars": [],
+			"comunas": {
+				"Allemagne": 543
+			}
+		}
+	],
+	"apart": {
+		"kod": "alsacian-franca",
+		"endo": "Elsass un Deitsch-Lothringe",
+		"fr": "Alsace et Moselle germanophone",
+		"oc": "Alsàcia e Mosèla germanofòna",
+		"comunas": 1220
+	},
+	"transicions": [
+		{
+			"kod": "trans-sudfrankisch-ostfrankisch",
+			"fr": "sudfrankisch avec des traits de ostfrankisch",
+			"entre": [
+				"sudfrankisch",
+				"ostfrankisch"
+			],
+			"comunas": [
+				"de:08126011",
+				"de:08126028",
+				"de:08126039",
+				"de:08126046",
+				"de:08126047",
+				"de:08126058",
+				"de:08126060",
+				"de:08126066",
+				"de:08126069",
+				"de:08126085",
+				"de:08126086",
+				"de:08126094",
+				"de:08225033",
+				"de:08225042",
+				"de:08225067",
+				"de:08127008",
+				"de:08127009",
+				"de:08127014",
+				"de:08127023",
+				"de:08127103",
+				"de:08127025",
+				"de:08127032",
+				"de:08127043",
+				"de:08127046",
+				"de:08127101",
+				"de:08127047",
+				"de:08127052",
+				"de:08127056",
+				"de:08127059",
+				"de:08127062",
+				"de:08127063",
+				"de:08127100",
+				"de:08127071",
+				"de:08127073",
+				"de:08127076",
+				"de:08127086",
+				"de:08127089",
+				"de:08127091",
+				"de:08127099"
+			]
+		},
+		{
+			"kod": "trans-rheinfrankisch-sudfrankisch",
+			"fr": "rheinfrankisch avec des traits de sudfrankisch",
+			"entre": [
+				"rheinfrankisch",
+				"sudfrankisch"
+			],
+			"comunas": [
+				"de:07334001",
+				"de:07334004",
+				"de:07334009",
+				"de:07334025",
+				"de:07334030",
+				"de:07334034",
+				"de:07337005",
+				"de:07337006",
+				"de:07337007",
+				"de:07337008",
+				"de:07337013",
+				"de:07337019",
+				"de:07337029",
+				"de:07337037",
+				"de:07337038",
+				"de:07337039",
+				"de:07337040",
+				"de:07337044",
+				"de:07337045",
+				"de:07337049",
+				"de:07337055",
+				"de:07337058",
+				"de:07337062",
+				"de:07337068",
+				"de:07337074",
+				"de:07340001",
+				"de:07340502",
+				"de:07340010",
+				"de:07340033",
+				"de:07340034"
+			]
+		},
+		{
+			"kod": "trans-hochalemannisch-niederalemannisch",
+			"fr": "hochalemannisch avec des traits de niederalemannisch",
+			"entre": [
+				"hochalemannisch",
+				"niederalemannisch"
+			],
+			"comunas": [
+				"de:08315014",
+				"de:08315028",
+				"de:08315098",
+				"de:08315102",
+				"de:08315107",
+				"de:08335025",
+				"de:08335035",
+				"de:08336087",
+				"ch:2762",
+				"ch:2764",
+				"ch:2765",
+				"ch:2767",
+				"ch:2771",
+				"ch:2774",
+				"ch:2775",
+				"ch:2481",
+				"ch:4646",
+				"ch:4651",
+				"ch:4671",
+				"ch:4696"
+			]
+		},
+		{
+			"kod": "trans-rheinfrankisch-moselfrankisch",
+			"fr": "rheinfrankisch avec des traits de moselfrankisch",
+			"entre": [
+				"rheinfrankisch",
+				"moselfrankisch"
+			],
+			"comunas": [
+				"57008",
+				"de:07133010",
+				"de:07133041",
+				"de:07133073",
+				"de:07134008",
+				"de:07336050",
+				"de:07140025",
+				"de:07140068",
+				"de:07140134",
+				"de:07140144",
+				"de:07141015",
+				"de:07141074",
+				"de:07141133",
+				"de:07143285",
+				"de:10041516",
+				"de:10046111",
+				"de:10046117"
+			]
+		},
+		{
+			"kod": "trans-moselfrankisch-rheinfrankisch",
+			"fr": "moselfrankisch avec des traits de rheinfrankisch",
+			"entre": [
+				"moselfrankisch",
+				"rheinfrankisch"
+			],
+			"comunas": [
+				"57550",
+				"de:07133202",
+				"de:07134005",
+				"de:07336044",
+				"de:07140023",
+				"de:07140050",
+				"de:07140056",
+				"de:07140077",
+				"de:07140092",
+				"de:07140133",
+				"de:07141037",
+				"de:07141079",
+				"de:07141121",
+				"de:07143271",
+				"de:10043112"
+			]
+		},
+		{
+			"kod": "trans-niederalemannisch-rheinfrankisch",
+			"fr": "niederalemannisch avec des traits de rheinfrankisch",
+			"entre": [
+				"niederalemannisch",
+				"rheinfrankisch"
+			],
+			"comunas": [
+				"67083",
+				"67126",
+				"67265",
+				"67353",
+				"67392",
+				"67535",
+				"57033",
+				"57046",
+				"57168",
+				"57244",
+				"57298",
+				"57334",
+				"57541"
+			]
+		},
+		{
+			"kod": "mixta-roman-germanic",
+			"fr": "communes partagées entre parler roman et parler germanique",
+			"oc": "comunas partejadas entre roman e germanic",
+			"entre": [
+				"roman",
+				"germanic"
+			],
+			"comunas": [
+				"68014",
+				"68052",
+				"68298",
+				"57003",
+				"57011",
+				"57186",
+				"57647",
+				"57683",
+				"be:81004",
+				"be:82009",
+				"be:85046",
+				"ch:371",
+				"ch:372"
+			]
+		},
+		{
+			"kod": "trans-schwabisch-sudfrankisch",
+			"fr": "schwabisch avec des traits de sudfrankisch",
+			"entre": [
+				"schwabisch",
+				"sudfrankisch"
+			],
+			"comunas": [
+				"de:08235033",
+				"de:08236072",
+				"de:08125056",
+				"de:08125074",
+				"de:08125098",
+				"de:08215007",
+				"de:08215059",
+				"de:08119024",
+				"de:08119044",
+				"de:08119069",
+				"de:08127012",
+				"de:08127104"
+			]
+		},
+		{
+			"kod": "trans-schwabisch-niederalemannisch",
+			"fr": "schwabisch avec des traits de niederalemannisch",
+			"entre": [
+				"schwabisch",
+				"niederalemannisch"
+			],
+			"comunas": [
+				"de:08335096",
+				"de:08216017",
+				"de:08436083",
+				"de:08436087",
+				"de:08325050",
+				"de:08325053",
+				"de:08326061",
+				"de:08437124"
+			]
+		},
+		{
+			"kod": "trans-hochstalemannisch-roman",
+			"fr": "hochstalemannisch avec des traits de roman",
+			"entre": [
+				"hochstalemannisch",
+				"roman"
+			],
+			"comunas": [
+				"ch:2293",
+				"ch:2138",
+				"ch:2300",
+				"ch:2303",
+				"ch:2307",
+				"ch:6112",
+				"ch:6113",
+				"ch:6116"
+			]
+		},
+		{
+			"kod": "trans-niederalemannisch-sudfrankisch",
+			"fr": "niederalemannisch avec des traits de sudfrankisch",
+			"entre": [
+				"niederalemannisch",
+				"sudfrankisch"
+			],
+			"comunas": [
+				"67075",
+				"67482",
+				"67537",
+				"de:08216002",
+				"de:08216009",
+				"de:08216015",
+				"de:08216033"
+			]
+		},
+		{
+			"kod": "trans-niederalemannisch-hochalemannisch",
+			"fr": "niederalemannisch avec des traits de hochalemannisch",
+			"entre": [
+				"niederalemannisch",
+				"hochalemannisch"
+			],
+			"comunas": [
+				"68098",
+				"68305",
+				"68340",
+				"de:08315015",
+				"de:08335055",
+				"de:08335080",
+				"ch:2701"
+			]
+		},
+		{
+			"kod": "trans-sudfrankisch-schwabisch",
+			"fr": "sudfrankisch avec des traits de schwabisch",
+			"entre": [
+				"sudfrankisch",
+				"schwabisch"
+			],
+			"comunas": [
+				"de:08236071",
+				"de:08125026",
+				"de:08125059",
+				"de:08215082",
+				"de:08119075",
+				"de:08127063"
+			]
+		},
+		{
+			"kod": "trans-hochalemannisch-roman",
+			"fr": "hochalemannisch avec des traits de roman",
+			"entre": [
+				"hochalemannisch",
+				"roman"
+			],
+			"comunas": [
+				"ch:496",
+				"ch:437",
+				"ch:498",
+				"ch:715",
+				"ch:2250",
+				"ch:2261"
+			]
+		},
+		{
+			"kod": "trans-hochalemannisch-hochstalemannisch",
+			"fr": "hochalemannisch avec des traits de hochstalemannisch",
+			"entre": [
+				"hochalemannisch",
+				"hochstalemannisch"
+			],
+			"comunas": [
+				"ch:855",
+				"ch:939",
+				"ch:944",
+				"ch:2296",
+				"ch:1301",
+				"ch:1331"
+			]
+		},
+		{
+			"kod": "trans-niederalemannisch-schwabisch",
+			"fr": "niederalemannisch avec des traits de schwabisch",
+			"entre": [
+				"niederalemannisch",
+				"schwabisch"
+			],
+			"comunas": [
+				"de:08237075",
+				"de:08335021",
+				"de:08317126",
+				"de:08326041",
+				"de:08437056"
+			]
+		},
+		{
+			"kod": "trans-moselfrankisch-ripuarisch",
+			"fr": "moselfrankisch avec des traits de ripuarisch",
+			"entre": [
+				"moselfrankisch",
+				"ripuarisch"
+			],
+			"comunas": [
+				"de:07131011",
+				"de:07131033",
+				"de:07131036",
+				"de:07131040",
+				"de:07138080"
+			]
+		},
+		{
+			"kod": "trans-rheinfrankisch-niederalemannisch",
+			"fr": "rheinfrankisch avec des traits de niederalemannisch",
+			"entre": [
+				"rheinfrankisch",
+				"niederalemannisch"
+			],
+			"comunas": [
+				"57163",
+				"57540",
+				"de:07340045"
+			]
+		},
+		{
+			"kod": "trans-hochstalemannisch-hochalemannisch",
+			"fr": "hochstalemannisch avec des traits de hochalemannisch",
+			"entre": [
+				"hochstalemannisch",
+				"hochalemannisch"
+			],
+			"comunas": [
+				"ch:932",
+				"ch:1343",
+				"ch:1370"
+			]
+		},
+		{
+			"kod": "trans-moselfrankisch-letzebuergesch",
+			"fr": "moselfrankisch avec des traits de letzebuergesch",
+			"entre": [
+				"moselfrankisch",
+				"letzebuergesch"
+			],
+			"comunas": [
+				"57025"
+			]
+		},
+		{
+			"kod": "trans-sudfrankisch-niederalemannisch",
+			"fr": "sudfrankisch avec des traits de niederalemannisch",
+			"entre": [
+				"sudfrankisch",
+				"niederalemannisch"
+			],
+			"comunas": [
+				"de:07334002"
+			]
+		}
+	]
+}

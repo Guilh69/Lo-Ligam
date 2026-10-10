@@ -15,7 +15,13 @@
 # (SIG/brut/comunas/ADE-COG-CARTO_2026.gpkg) e SIG/brut/<lenga>/*.geojson
 # (comunas dels autres país, proprietat « codi »).
 # Sortida : app/static/data/<lenga>.json, meteis format que basc.json.
-import csv, glob, json, math, os, re, sys
+import csv, glob, json, math, os, re, sys, time
+T0 = time.time()
+
+
+def marca(m):
+    print('[%4.0f s] %s' % (time.time() - T0, m), flush=True)
+
 from collections import defaultdict
 from osgeo import gdal, ogr, osr
 
@@ -126,10 +132,21 @@ def a_lonlat(t):
 
 classa = json.load(open(os.path.join(SIG, L, 'dialectes-%s.json' % L), encoding='utf-8'))
 ENDO = CONF['endo']
+# (CONF['dialectes_mai'] : de dialèctes apondus, coma una zòna escantida a part)
+classa['dialectes'] = classa['dialectes'] + CONF.get('dialectes_mai', [])
 DIAL = {d['kod']: d for d in classa['dialectes']}
 ORDRE = [d['kod'] for d in classa['dialectes']]
 DOMS = tuple(CONF['doms'])
-TRANS = {(t.get('clau') or t['kod']): t for t in (classa.get('transicions') or [])}
+
+
+def clau_t(t):
+    c = t.get('codi_csv') or t.get('clau') or t['kod']
+    return 'mixta' if t.get('domeni') == 'mixta' else (c[1:] if c.startswith('T') and c[1:2].islower() else c)
+
+
+# las transicions en asclas : pas las zònas defòra del domeni ni las ignoradas
+TRANS = {clau_t(t): t for t in (classa.get('transicions') or [])
+         if not t.get('defora') and t.get('domeni') not in ('vesina', 'desaparegut') and clau_t(t) not in CONF.get('trans_ignorar', [])}
 linhas_csv = list(csv.DictReader(open(os.path.join(SIG, L, 'dialectes-%s.csv' % L), encoding='utf-8-sig'), delimiter=';'))
 per_codi = {r['codi']: r for r in linhas_csv if r.get('codi')}
 PAS = 20000.0
@@ -178,13 +195,31 @@ for c, r in per_codi.items():
     if c not in geo:
         sens_geo.append('%s (%s)' % (r.get('nom_oficial', ''), c))
         continue
-    k = r['dialecte'] + ('|FR' if es_fr(c) else '')
-    t = (r.get('transicio') or '').strip()
-    if r['domeni'] == 'mixta' and not t:
-        t = 'mixta'
-    if t:
+    # (una comuna ont la lenga s'es escantida : lo dialècte « istoric » de CONF)
+    # (una comuna mixta sens dialècte : la colomna « transicio » dona lo de la lenga)
+    d0 = r['dialecte'] or ((r.get('transicio') or '').strip() if (r.get('transicio') or '').strip() in DIAL else '')
+    if not d0:
+        sens_geo.append('%s (sens dialècte)' % r.get('nom_oficial', c))
+        continue
+    dial = CONF['desaparegut'] if r['domeni'] == 'desaparegut' and CONF.get('desaparegut') else d0
+    # (un domeni distint, coma lo ligur de Bonifacio : son dialècte de CONF)
+    dial = CONF.get('domeni_dialecte', {}).get(r['domeni'], dial)
+    k = dial + ('|FR' if es_fr(c) else '')
+    t = 'mixta' if r['domeni'] == 'mixta' else (r.get('transicio') or '').strip()
+    # (un meteis còdi de transicion per doas zònas, segon lo dialècte : Calvi, Aiacciu)
+    tm = CONF.get('trans_map', {}).get(t)
+    if isinstance(tm, dict):
+        t = tm.get(dial, t)
+    elif isinstance(tm, str):
+        t = tm
+    # (la colomna « transicio » dona l'autre dialècte : la zòna se ditz
+    # « trans-<dialècte>-<autre> », coma dins lo JSON de l'alsacian)
+    if t and t not in TRANS and CONF.get('trans_kod'):
+        t2 = CONF['trans_kod'].format(dial=dial, t=t.split()[0])
+        t = t2 if t2 in TRANS else t
+    if t and t in TRANS:
         k += '|T' + t
-    unitats.append({'codi': c, 'nom': r.get('nom_oficial', ''), 'dial': r['dialecte'], 'domeni': r['domeni'], 'clau': k, 'g': geo[c]})
+    unitats.append({'codi': c, 'nom': r.get('nom_oficial', ''), 'dial': dial, 'domeni': r['domeni'], 'clau': k, 'g': geo[c]})
 manca_d = sorted({u['dial'] for u in unitats} - set(ORDRE))
 if manca_d:
     raise SystemExit('Dialèctes del CSV absents del JSON : %s' % manca_d)
@@ -228,6 +263,7 @@ for k in CLAUS:
         g = valid(g.Difference(pres))
     brut[k] = g
     pres = unir([pres, g])
+marca('union per clau facha')
 pròche = dom_brut.Buffer(3000, 4)
 comunas_tot = unir([g for g in geo.values() if g.Intersects(pròche)])
 if anels_b:
@@ -251,6 +287,7 @@ if anels_b:
 
 # fendas intèrnas (entre doas fonts, Soïssa contra França, Itàlia...) : a la
 # clau que ne tòca mai ; los traucs de mai de 1,5 km2 (lacs) demòran
+marca("benda e comunas a l'entorn")
 P = dict(brut)
 tot = unir(list(P.values()))
 fendas = valid(valid(tot.Buffer(B, 8).Buffer(-B, 8)).Difference(tot).Difference(oc_local))
@@ -268,6 +305,7 @@ rapòrt.append('fendas intèrnas tampadas : %d tròces, %.2f km2' % (n_f, km2(fe
 for r in rapòrt:
     print('  ' + r)
 
+marca('fendas intèrnas')
 # ------------------------------------------------- 3. simplificacion topologica
 
 
@@ -289,6 +327,7 @@ for d in CLAUS_P:
         for k in range(a.GetPointCount()):
             l.AddPoint_2D(a.GetX(k), a.GetY(k))
         tòtas.AddGeometry(l)
+marca('arcs')
 nosat = tòtas.UnaryUnion()
 segs = [[(nosat.GetGeometryRef(k).GetX(j), nosat.GetGeometryRef(k).GetY(j)) for j in range(nosat.GetGeometryRef(k).GetPointCount())] for k in range(nosat.GetGeometryCount())]
 cap = defaultdict(list)
@@ -343,6 +382,7 @@ for k in range(ml_f.GetGeometryCount()):
     simple.AddGeometry(ml_f.GetGeometryRef(k).Clone())
 print('Arcs : %d, dont %d sus la frontièra occitana (pas simplificats) ; %d ponches -> %d' % (
     len(arcs), n_oc, sum(len(a) for a in arcs), sum(simple.GetGeometryRef(k).GetPointCount() for k in range(simple.GetGeometryCount()))))
+marca('simplificacion')
 facias = simple.UnaryUnion().Polygonize()
 fac_d, traucs = [], []
 for k in range(facias.GetGeometryCount()):
@@ -548,8 +588,14 @@ for o in topo['objects']['countries']['geometries']:
 precisas = [g for c, g in geo.items() if per_codi.get(c, {}).get('domeni') not in DOMS and g.Intersects(zonaT)]
 # (coma pel catalan : las comunas precisas a 300 m o 1 km ; Natural Earth
 # sonque a 2 km E a 6 km, que sa còsta escafa las calas e las rias)
-tèrra_p = valid(unir(precisas).Difference(dom_m.Buffer(10, 4)))
-tèrra_ne = valid(valid(unir(ne).Buffer(-1500, 4)).Difference(dom_m.Buffer(10, 4)))
+# (sonque una benda a l'entorn del bòrd del domeni : los tèsts se fan a 300 m
+# e 1 km (comunas), 2 e 6 km (Natural Earth) ; los polígons entièrs fasián
+# durar lo calcul mai d'una ora)
+bòrd_dom = dom_m.Boundary()
+benda_p, benda_ne = bòrd_dom.Buffer(1500, 2), bòrd_dom.Buffer(7000, 2)
+tèrra_p = valid(valid(unir([g for g in precisas if g.Intersects(benda_p)]).Intersection(benda_p)).Difference(dom_m.Buffer(10, 4)))
+tèrra_ne = valid(valid(valid(unir(ne).Buffer(-1500, 4)).Intersection(benda_ne)).Difference(dom_m.Buffer(10, 4)))
+print('Tèrra a l entorn : %d comunas dins la benda' % sum(1 for g in precisas if g.Intersects(benda_p)), flush=True)
 oc_b_ll = oc_ll.GetBoundary()
 ox0, ox1, oy0, oy1 = oc_ll.GetEnvelope()
 anels_dom, linhas = [], []
@@ -678,6 +724,9 @@ for a in CONF.get('apart', []):
                   'color': DIAL[dins[0]].get('color'), 'eti': eti(en_m(g)), 'apart': True, 'dins': dins}, 'geometry': geojson_ll(g)})
 for t, x in TRANS.items():
     if t not in TRANS_LL or TRANS_LL[t].IsEmpty():
+        continue
+    # (una transicion entre dos dialèctes de la lenga es pas dessenhada per la carta : pas escrita)
+    if x.get('entre') and all(k in DIAL for k in x['entre']):
         continue
     feats.append({'type': 'Feature', 'properties': {'kod': x.get('kod') or t, 'transicio': True, ENDO: nom_endo(x), 'fr': x['fr'], 'oc': x.get('oc') or x['fr'], 'oc_a_validar': True,
                   'entre': x.get('entre', []), 'nota': x.get('nota', ''), **({k: x[k] for k in ('mescla', 'encadrat', 'nota_oc') if k in x}),

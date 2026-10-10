@@ -1,0 +1,54 @@
+{
+  "endo": "gsw",
+  "doms": [
+    "alemanic",
+    "francic",
+    "mixta"
+  ],
+  "deps": [
+    "54",
+    "57",
+    "67",
+    "68",
+    "88",
+    "90",
+    "25",
+    "70"
+  ],
+  "paises": [
+    "France",
+    "Germany",
+    "Switzerland",
+    "Luxembourg",
+    "Belgium",
+    "Austria",
+    "Liechtenstein",
+    "Netherlands"
+  ],
+  "barrièra": [
+    "arpitan.json"
+  ],
+  "trans_map": {
+    "mixta": "mixta-roman-germanic"
+  },
+  "trans_kod": "trans-{dial}-{t}",
+  "apart": [
+    {
+      "kod": "alsacian-franca",
+      "gsw": "Elsass un Deitsch-Lothringe",
+      "fr": "Alsace et Moselle germanophone",
+      "oc": "Alsàcia e Mosèla germanofònas",
+      "filtre": "FR"
+    }
+  ],
+  "sortida": "alsacian.json",
+  "vilas_max": 220,
+  "osm_noms": [
+    "name:gsw",
+    "name:lb",
+    "name:als"
+  ],
+  "noms_props": [
+    "nom_lb"
+  ]
+}

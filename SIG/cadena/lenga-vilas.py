@@ -10,7 +10,7 @@
 # per còdi de comuna (França), puèi las etiquetas OSM de CONF['osm_noms']
 # (ex. name:br), si que non lo nom oficial (« local »: false).
 # Renc : 1 = mai de 100 000 abitants ; 2 = mai de 20 000 ; 3 = mai de 7 000 ;
-# 4 = los autres (mai de 2 000). Espaçament : 30 km (renc 1), 22, 25, 28 km :
+# 4 = los autres (mai de 2 000). Espaçament : 15 km (renc 1 : Mulhouse a 28 km de Basilèa demòra), 22, 25, 28 km :
 # pas de mantèl de banlègas (retorn de Romain : pas de bruch textual).
 # Sortida : « vilas » dins app/static/data/<lenga>.json e SIG/<lenga>/vilas-<lenga>.json.
 import csv, glob, json, math, os, sys, time, urllib.parse, urllib.request
@@ -22,7 +22,7 @@ L = sys.argv[1]
 CONF = json.load(open(os.path.join(R, 'SIG', L, 'carta.json'), encoding='utf-8'))
 FIC = os.path.join(R, 'app', 'static', 'data', CONF.get('sortida', L + '.json'))
 MAX = CONF.get('vilas_max', 200)
-ESPAÇ = {1: 30000, 2: 22000, 3: 25000, 4: 28000}
+ESPAÇ = {1: 15000, 2: 22000, 3: 25000, 4: 28000}
 OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter',
             'https://overpass.private.coffee/api/interpreter']
 UA = {'User-Agent': 'LoLigam-carta/1.0 (preparacion de donadas)'}
@@ -85,8 +85,50 @@ if deps:
         cands.append({'codi': c, 'nom_oficial': f.GetField('nom_officiel'), 'nom': nl[0] if nl else f.GetField('nom_officiel'),
                       'local': bool(nl), 'font': nl[1] if nl else 'nom oficial (IGN)', 'lon': round(p.GetX(), 4), 'lat': round(p.GetY(), 4),
                       'pop': f.GetField('population') or 0, 'zona': kod, 'estat': 'FR'})
-if CONF.get('osm_vilas', True) and CONF.get('paises', ['France']) != ['France']:
-    q = '[out:json][timeout:180];node["place"~"^(city|town)$"]["population"](%f,%f,%f,%f);out tags qt;' % (Y0, X0, Y1, X1)
+# Los autres país : las comunas de SIG/brut/<lenga>/*.geojson (ponch, populacion ;
+# la populacion que manca, de Wikidata P1082 per l'identificant « wikidata »)
+ext, sens_pop = [], {}
+for fic in sorted(glob.glob(os.path.join(R, 'SIG', 'brut', L, '*.geojson'))):
+    try:
+        dj = json.load(open(fic, encoding='utf-8'))
+    except Exception:
+        continue
+    for f in dj.get('features', []):
+        p = f.get('properties') or {}
+        c = p.get('codi') or ''
+        if not c or ':' not in c or not p.get('ponch'):
+            continue
+        lon, lat = (float(x) for x in str(p['ponch']).split(','))
+        kod = zona_de(lon, lat)
+        if not kod:
+            continue
+        v = {'codi': c, 'p': p, 'lon': round(lon, 4), 'lat': round(lat, 4), 'zona': kod, 'pop': p.get('populacion')}
+        ext.append(v)
+        if not v['pop'] and p.get('wikidata'):
+            sens_pop[p['wikidata']] = v
+ids = list(sens_pop)
+for i in range(0, len(ids), 150):
+    q = 'SELECT ?i (MAX(?p) AS ?pop) WHERE { VALUES ?i { %s } ?i wdt:P1082 ?p } GROUP BY ?i' % ' '.join('wd:' + x for x in ids[i:i + 150])
+    try:
+        req = urllib.request.Request('https://query.wikidata.org/sparql?' + urllib.parse.urlencode({'query': q, 'format': 'json'}), headers=UA)
+        for b in json.load(urllib.request.urlopen(req, timeout=120))['results']['bindings']:
+            sens_pop[b['i']['value'].rsplit('/', 1)[1]]['pop'] = int(float(b['pop']['value']))
+    except Exception as e:
+        print('Wikidata : %s' % e)
+for v in ext:
+    p = v['p']
+    if not v['pop'] or v['pop'] < 2000:
+        continue
+    nl = locals_.get(v['codi'])
+    nom_p = next((p[k] for k in CONF.get('noms_props', []) if p.get(k)), None)
+    nom = nl[0] if nl else (nom_p or p.get('nom', ''))
+    cands.append({'codi': v['codi'], 'nom_oficial': p.get('nom', ''), 'nom': nom, 'local': bool(nl or nom_p) and nom != p.get('nom'),
+                  'font': nl[1] if nl else ('fichièr de comunas' if nom_p else 'nom oficial'), 'lon': v['lon'], 'lat': v['lat'],
+                  'pop': v['pop'], 'zona': v['zona'], 'estat': v['codi'].split(':')[0].upper()})
+print('Comunas dels autres país dins lo domeni : %d (%d sens populacion, %d completadas per Wikidata)' % (
+    len(ext), len(sens_pop), sum(1 for v in sens_pop.values() if v['pop'])))
+if CONF.get('osm_vilas', False) and CONF.get('paises', ['France']) != ['France']:
+    q = '[out:json][timeout:180];node["place"~"^(city|town)$"]["population"](%f,%f,%f,%f);out qt;' % (Y0, X0, Y1, X1)
     r = None
     for u in OVERPASS:
         try:
