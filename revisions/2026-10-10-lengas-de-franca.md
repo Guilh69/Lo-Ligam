@@ -44,6 +44,7 @@ Chaîne commune : `SIG/cadena/lenga.py <lenga>` (réglages `SIG/<lenga>/carta.js
 
 ## Reste à faire
 
+- **Alléger `oil.json` (422 Ko, 55 Ko compressé)** : les communes belges détaillées ne coïncident pas avec la frontière déjà simplifiée du flamand et créent 16 000 petits arcs ; simplifier les arcs de frontière n'y change rien (essayé, 424 Ko) : il faut caler les communes belges sur la frontière flamande avant le calcul.
 - Frontières d'États précises (Natural Earth 1:50 M trop grossier de près).
 - Fleuves au-delà de l'Occitanie (`RIUS` s'arrête à 47°).
 - Zone « oïl de France » à part.
