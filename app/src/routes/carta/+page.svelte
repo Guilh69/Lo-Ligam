@@ -7,6 +7,7 @@
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import RailJaces from '$lib/components/RailJaces.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
+	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
@@ -38,6 +39,18 @@
 	const SEEN_KEY = 'lo-ligam-carta-info-seen';
 
 	let showInfo = $state(false);
+	// la pancarta se tampa d'un clic defòra o amb Escapar (principi del site,
+	// $lib/tampaDefora.js)
+	$effect(() => {
+		if (!showInfo) return;
+		const lèva = tampaDefòra((t) => !!t.closest('.info-card'), () => (showInfo = false));
+		const tòca = (e) => e.key === 'Escape' && (showInfo = false);
+		document.addEventListener('keydown', tòca);
+		return () => {
+			lèva();
+			document.removeEventListener('keydown', tòca);
+		};
+	});
 	// elements e colors del fons, dialècte causit (rail de las jaces)
 	// los elements del fons Contorns seguisson lors jaces (vilas, noms, rius…)
 	const elements = $derived({
