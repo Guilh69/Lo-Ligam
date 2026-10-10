@@ -1,0 +1,63 @@
+{
+  "endo": "co",
+  "doms": [
+    "cors",
+    "ligure",
+    "desaparegut"
+  ],
+  "deps": [
+    "2A",
+    "2B"
+  ],
+  "paises": [
+    "France",
+    "Italy"
+  ],
+  "barrièra": [],
+  "desaparegut": "capraiese",
+  "domeni_dialecte": {
+    "ligure": "bunifazzinu"
+  },
+  "trans_map": {
+    "lij": {
+      "cismuntincu": "lij1",
+      "transizione": "lij2"
+    }
+  },
+  "dialectes_mai": [
+    {
+      "kod": "bunifazzinu",
+      "co": "bunifazzinu",
+      "fr": "bonifacien (ligure)",
+      "oc": "bonifacenc (ligur)",
+      "sota_fr": "parler ligure de Corse",
+      "sota_oc": "parlar ligur de Corsega"
+    },
+    {
+      "kod": "capraiese",
+      "co": "capraiese",
+      "fr": "parler de Capraia (éteint)",
+      "oc": "parlar de Capraia (escantit)",
+      "istoric": true,
+      "sota_fr": "corse éteint",
+      "sota_oc": "còrs escantit"
+    }
+  ],
+  "apart": [
+    {
+      "kod": "cors-franca",
+      "co": "Corsica",
+      "fr": "Corse",
+      "oc": "Corsega",
+      "filtre": "FR"
+    }
+  ],
+  "sortida": "cors.json",
+  "vilas_max": 90,
+  "osm_noms": [
+    "name:co"
+  ],
+  "noms_props": [
+    "nom_local"
+  ]
+}

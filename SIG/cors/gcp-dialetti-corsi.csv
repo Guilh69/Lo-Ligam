@@ -1,0 +1,17 @@
+nom;codi;lon;lat;px_x;px_y;nota
+Bastia;2B033;9.45191;42.70229;897.41;216.45;centre du point noir de la carte SVG (unités SVG), lon/lat : chef-lieu IGN
+Calvi;2B050;8.75688;42.56753;636.40;282.14;
+Corte;2B096;9.14927;42.30954;796.38;373.71;
+Aléria;2B009;9.51316;42.11487;925.50;501.13;chef-lieu Cateraggio
+Ajaccio;2A004;8.73912;41.91935;639.82;592.76;
+Sartène;2A272;8.97192;41.62108;732.00;742.50;
+Porto-Vecchio;2A247;9.27881;41.59143;840.13;761.75;
+Bonifacio;2A041;9.15569;41.38729;805.54;861.10;point magenta (ligure)
+Capraia Isola;it:049005;9.8403;43.0487;1038.21;39.24;lon/lat Wikidata Q157733
+La Maddalena;it:113012;9.40833;41.21424;887.77;943.81;lon/lat Wikidata Q340757
+Olbia;it:113017;9.5;40.916667;921.88;1087.25;lon/lat Wikidata Q13630
+Tempio Pausania;it:113025;9.1043615;40.9014795;772.13;1091.88;lon/lat Wikidata Q13645
+Castelsardo;it:112016;8.712778;40.914444;624.42;1094.94;lon/lat Wikidata Q233797
+Sassari;it:112050;8.559167;40.726667;543.00;1171.72;lon/lat Wikidata Q13629
+Luras;it:113015;9.174722;40.935833;824.15;1067.42;point gris (sarde), lon/lat Wikidata Q340916
+Alghero;it:112001;8.315;40.56;488.19;1257.84;point brun (catalan), lon/lat Wikidata Q166282

@@ -87,7 +87,7 @@ if deps:
                       'pop': f.GetField('population') or 0, 'zona': kod, 'estat': 'FR'})
 # Los autres país : las comunas de SIG/brut/<lenga>/*.geojson (ponch, populacion ;
 # la populacion que manca, de Wikidata P1082 per l'identificant « wikidata »)
-ext, sens_pop = [], {}
+ext, sens_pop, sens_istat = [], {}, {}
 for fic in sorted(glob.glob(os.path.join(R, 'SIG', 'brut', L, '*.geojson'))):
     try:
         dj = json.load(open(fic, encoding='utf-8'))
@@ -96,9 +96,16 @@ for fic in sorted(glob.glob(os.path.join(R, 'SIG', 'brut', L, '*.geojson'))):
     for f in dj.get('features', []):
         p = f.get('properties') or {}
         c = p.get('codi') or ''
-        if not c or ':' not in c or not p.get('ponch'):
+        if not c or ':' not in c:
             continue
-        lon, lat = (float(x) for x in str(p['ponch']).split(','))
+        if p.get('ponch'):
+            lon, lat = (float(x) for x in str(p['ponch']).split(','))
+        elif f.get('geometry'):
+            # (sens ponch : un ponch dins lo contorn de la comuna)
+            q = ogr.CreateGeometryFromJson(json.dumps(f['geometry'])).PointOnSurface()
+            lon, lat = q.GetX(), q.GetY()
+        else:
+            continue
         kod = zona_de(lon, lat)
         if not kod:
             continue
@@ -106,6 +113,8 @@ for fic in sorted(glob.glob(os.path.join(R, 'SIG', 'brut', L, '*.geojson'))):
         ext.append(v)
         if not v['pop'] and p.get('wikidata'):
             sens_pop[p['wikidata']] = v
+        elif not v['pop'] and c.startswith('it:'):
+            sens_istat[c[3:]] = v
 ids = list(sens_pop)
 for i in range(0, len(ids), 150):
     q = 'SELECT ?i (MAX(?p) AS ?pop) WHERE { VALUES ?i { %s } ?i wdt:P1082 ?p } GROUP BY ?i' % ' '.join('wd:' + x for x in ids[i:i + 150])
@@ -115,6 +124,29 @@ for i in range(0, len(ids), 150):
             sens_pop[b['i']['value'].rsplit('/', 1)[1]]['pop'] = int(float(b['pop']['value']))
     except Exception as e:
         print('Wikidata : %s' % e)
+# (Itàlia : la populacion per lo còdi ISTAT, Wikidata P635)
+ist = list(sens_istat)
+for i in range(0, len(ist), 150):
+    q = 'SELECT ?c (MAX(?p) AS ?pop) WHERE { VALUES ?c { %s } ?i wdt:P635 ?c ; wdt:P1082 ?p } GROUP BY ?c' % ' '.join('"%s"' % x for x in ist[i:i + 150])
+    try:
+        req = urllib.request.Request('https://query.wikidata.org/sparql?' + urllib.parse.urlencode({'query': q, 'format': 'json'}), headers=UA)
+        for b in json.load(urllib.request.urlopen(req, timeout=120))['results']['bindings']:
+            sens_istat[b['c']['value']]['pop'] = int(float(b['pop']['value']))
+    except Exception as e:
+        print('Wikidata (ISTAT) : %s' % e)
+# (los còdis ISTAT sards cambièron en 2025, Wikidata garda los vièlhs : per lo nom
+# italian, comuna d'Itàlia Q747074)
+manca_i = {v['p'].get('nom'): v for v in sens_istat.values() if not v['pop'] and v['p'].get('nom')}
+noms_i = list(manca_i)
+for i in range(0, len(noms_i), 100):
+    q = 'SELECT ?n (MAX(?p) AS ?pop) WHERE { VALUES ?n { %s } ?i rdfs:label ?l ; wdt:P31 wd:Q747074 ; wdt:P1082 ?p . FILTER(STR(?l) = ?n && LANG(?l) = "it") } GROUP BY ?n' % ' '.join(json.dumps(x) for x in noms_i[i:i + 100])
+    try:
+        req = urllib.request.Request('https://query.wikidata.org/sparql?' + urllib.parse.urlencode({'query': q, 'format': 'json'}), headers=UA)
+        for b in json.load(urllib.request.urlopen(req, timeout=180))['results']['bindings']:
+            manca_i[b['n']['value']]['pop'] = int(float(b['pop']['value']))
+    except Exception as e:
+        print('Wikidata (noms italians) : %s' % e)
+print('Itàlia : %d comunas, %d sens populacion' % (len(sens_istat), sum(1 for v in sens_istat.values() if not v['pop'])))
 for v in ext:
     p = v['p']
     if not v['pop'] or v['pop'] < 2000:

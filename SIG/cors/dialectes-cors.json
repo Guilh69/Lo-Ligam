@@ -1,0 +1,199 @@
+{
+	"font": "Còrs : comunas IGN ADMIN EXPRESS COG CARTO 2026 (Licéncia dobèrta 2.0) ; comunas italianas ISTAT 2026 (CC BY 4.0) ; cartas « Parlers de Corse » (Gcapadovani, 2018, CC BY-SA 4.0) e « Dialetti corsi » (Jkens, Snowdog, Lokiseinchef, 2006, CC BY-SA 3.0), Wikimedia Commons ; Wikipèdia (it, fr, co ; CC BY-SA) ; leis sardas 26/1997 e 22/2018 ; noms còrses de la Collectivitat de Corsega (Licéncia dobèrta 2.0)",
+	"a_validar": "noms occitans (oc) : « còrs del nòrd », « parlars de transicion », « còrs del sud » verificats mot per mot (API de lo Congrès, 2026-10-10) ; « gallurés », « sassarés », « Corsega » absents del Basic. Noms còrses dels grops : formas de las fonts (vejatz FONTS.md). Tot es de validar per Romain.",
+	"descripcion": "Corse et continuum corso-sarde. Trois groupes en Corse (nord, transition, sud) d'après les deux cartes libres de Commons, la carte G servant de base et la carte J départageant le Cap Corse et le sud ; le texte d'it.wiki « Lingua corsa » tranche les écarts entre cartes. En Sardaigne, la loi (LR 22/2018 : gallurais avec ses variétés castellanese et isulanu ; sassarese) et les listes de communes d'it.wiki. Détail commune par commune : dialectes-cors.csv ; sources et incertitudes : FONTS.md.",
+	"dialectes": [
+		{
+			"kod": "cismuntincu",
+			"co": "cismuntincu",
+			"co_alt": ["corsu supranu (co.wiki)", "supranacciu (it.wiki)", "cismunticu (carte G)"],
+			"it": "cismontano",
+			"fr": "cismontain (corse du Nord)",
+			"oc": "còrs del nòrd",
+			"comunas": 228,
+			"parlars": [
+				{"kod": "capicursinu", "co": "capicursinu", "fr": "du Cap Corse (18 communes de la communauté de communes)", "comunas": 18},
+				{"kod": "nordicu", "co": "cismunticu nordicu", "fr": "du Nord-Est : Bastia, Nebbiu, Casinca, Castagniccia (zone « nord-orientale » de Dalbera-Stefanaggi)", "comunas": 128},
+				{"kod": "cismunticu", "co": "cismunticu", "fr": "du centre et de l'ouest : Balagne, Niolu, Corte, Venacais (zone « centro-septentrionale » de Dalbera-Stefanaggi)", "comunas": 81},
+				{"kod": "capraiese", "co": "capraiese", "fr": "de Capraia (Toscane), éteint", "comunas": 1, "desaparegut": true}
+			],
+			"parlars_citats": [
+				{"co": "bastiacciu", "fr": "Bastia", "font": "it.wiki"},
+				{"co": "balaninu", "fr": "Balagne (36 communes du Pays de Balagne)", "font": "it.wiki"},
+				{"co": "niulincu", "fr": "Niolu (5 communes)", "font": "it.wiki"},
+				{"it": "dialetto di Cervioni", "fr": "Cervione", "font": "it.wiki"},
+				{"it": "dialetto di Corte", "fr": "Corte", "font": "it.wiki"}
+			]
+		},
+		{
+			"kod": "transizione",
+			"co": "pumunticu di transizione",
+			"co_alt": ["transizione (co.wiki)"],
+			"it": "zona di transizione ; transizione cismontano/oltramontano (carte J)",
+			"fr": "parlers de transition",
+			"oc": "parlars de transicion",
+			"comunas": 64,
+			"nota": "la carte G les range dans le sud (« pumunticu »), it.wiki les partage entre les deux groupes de part et d'autre de la ligne Ajaccio - Calcatoggio - nord de Bocognano - col de Vizzavona - sud de Ghisoni - sud de Ghisonaccia ; ici, groupe à part comme sur les deux cartes. Correspond à peu près à la zone « taravaise » de Dalbera-Stefanaggi, qui y joint le Taravo.",
+			"parlars": [
+				{"kod": "transizione", "co": "pumunticu di transizione", "fr": "de Piana à Ajaccio, Cinarca, Gravona, Bastelica, Ghisoni, Fiumorbo, Solenzara", "comunas": 64}
+			],
+			"parlars_citats": [
+				{"co": "aiaccinu", "fr": "Ajaccio (base méridionale, influence ligure)", "font": "it.wiki, fr.wiki"},
+				{"it": "bastelicaccio", "fr": "Bastelica", "font": "it.wiki"},
+				{"co": "fiumorbacciu", "fr": "Fiumorbo", "font": "it.wiki"},
+				{"it": "dialetti della Gravona", "fr": "vallée de la Gravona (11 communes)", "font": "it.wiki"},
+				{"it": "Cinarca con Vizzavona", "fr": "Cinarca (8 communes), hameau de Vizzavona", "font": "it.wiki"},
+				{"it": "zona tra Piana e Calcatoggio", "fr": "côte de Piana à Calcatoggio", "font": "it.wiki"},
+				{"it": "dialetto di Solenzara", "fr": "Solenzara", "font": "it.wiki"}
+			]
+		},
+		{
+			"kod": "oltramuntincu",
+			"co": "pumuntincu",
+			"co_alt": ["corsu suttanu (co.wiki)", "suttanacciu (it.wiki)", "pumunticu (carte G)", "oltramuntincu (forme de la demande, non trouvée dans les sources lues)"],
+			"it": "oltramontano",
+			"fr": "ultramontain (corse du Sud)",
+			"oc": "còrs del sud",
+			"comunas": 68,
+			"parlars": [
+				{"kod": "taravesu", "co": "taravesu", "fr": "Taravo, Ornano, Valinco (« oltramontano » de la carte J)", "comunas": 40},
+				{"kod": "sartinesu", "co": "sartinesu", "fr": "Sartenais, Alta Rocca, Porto-Vecchio, campagne de Bonifacio (« oltramontano sartenese » de la carte J)", "comunas": 28}
+			],
+			"parlars_citats": [
+				{"co": "taravesu", "fr": "vallée du Taravo (22 communes)", "font": "it.wiki, co.wiki"},
+				{"co": "sartinesu", "fr": "Sartène", "font": "it.wiki, co.wiki"},
+				{"co": "rucchisgianu", "fr": "Alta Rocca (16 communes)", "font": "it.wiki"},
+				{"co": "portivechjacciu", "fr": "Porto-Vecchio et l'arrière-pays de Bonifacio", "font": "it.wiki"}
+			]
+		},
+		{
+			"kod": "gadduresu",
+			"co": "gadduresu",
+			"it": "gallurese",
+			"fr": "gallurais",
+			"oc": "gallurés",
+			"oc_a_validar": true,
+			"comunas": 25,
+			"nota": "Sardaigne : langue reconnue par la loi régionale 26/1997 (art. 2, al. 4 : « dialetto gallurese ») puis 22/2018 (art. 2 et 8 : « il gallurese con le sue varietà castellanese e isulanu dell'Arcipelago di La Maddalena »). Pour Retali-Medori (2024), zone corso-gallurienne avec le sud de la Corse.",
+			"parlars": [
+				{"kod": "isulanu", "co": "isulanu", "it": "maddalenino", "fr": "de La Maddalena (corse du Sud pour la dialectologie)", "comunas": 1},
+				{"kod": "castiddanesu", "co": "castiddanesu", "it": "castellanese", "fr": "de Castelsardo, Sedini (sedinese), Tergu : passage vers le sassarais", "comunas": 3}
+			],
+			"parlars_citats": [
+				{"co": "timpiesu", "fr": "Tempio, variété de référence", "font": "it.wiki"},
+				{"co": "caragnanesu", "fr": "Calangianus, Sant'Antonio di Gallura", "font": "it.wiki"},
+				{"co": "agghjesu", "fr": "Aggius, Badesi, Trinità d'Agultu e Vignola, Viddalba, Valledoria", "font": "it.wiki"},
+				{"it": "variante di Bortigiadas", "fr": "Bortigiadas", "font": "it.wiki"},
+				{"co": "cuzinesu", "fr": "Santa Maria Coghinas", "font": "it.wiki"},
+				{"co": "lungunesu", "it": "teresino", "fr": "bourg de Santa Teresa Gallura", "font": "it.wiki"}
+			]
+		},
+		{
+			"kod": "sassaresu",
+			"co": "sassaresu",
+			"it": "sassarese",
+			"fr": "sassarais",
+			"oc": "sassarés",
+			"oc_a_validar": true,
+			"comunas": 4,
+			"nota": "Sassari, Porto Torres, Sorso, Stintino (it.wiki) ; loi régionale 26/1997 (« dialetto sassarese ») et 22/2018. Parenté étroite avec la zone taravaise (Retali-Medori 2024).",
+			"parlars": [],
+			"parlars_citats": [
+				{"it": "sassarese cittadino", "fr": "ville de Sassari", "font": "it.wiki"},
+				{"it": "varietà provinciali", "fr": "Sorso, Porto Torres, Stintino", "font": "it.wiki"}
+			]
+		}
+	],
+	"apart": {
+		"kod": "cors-franca",
+		"co": "Corsica",
+		"fr": "Corse",
+		"oc": "Corsega",
+		"oc_a_validar": true,
+		"comunas": "les 360 communes des départements 2A et 2B (regio = Corsica dans le CSV)"
+	},
+	"domenis_distints": [
+		{
+			"kod": "ligure",
+			"comunas": ["2A041"],
+			"lij": "bunifazzin",
+			"co": "bunifazzinu",
+			"it": "bonifacino",
+			"fr": "ligure de Bonifacio",
+			"oc": "ligur de Bunifaziu",
+			"nota": "parler ligure de la ville, de moins en moins parlé (it.wiki, Retali-Medori 2024) ; la campagne de la commune est corsophone (sartinesu sur les deux cartes) : hachures possibles avec le sud."
+		}
+	],
+	"transicions": [
+		{
+			"clau": "Tlij1",
+			"kod": "trans-lij-calvi",
+			"co": "corsu-ligure calvese",
+			"fr": "Calvi : ancien parler ligure",
+			"oc": "Calvi : ligur ancian",
+			"entre": ["cismuntincu", "ligure"],
+			"comunas": ["2B050"],
+			"nota": "ligure de Calvi éteint (it.wiki) ; « corsu-ligure calvese » sur la carte G"
+		},
+		{
+			"clau": "Tlij2",
+			"kod": "trans-lij-aiacciu",
+			"co": "corsu-ligure aghjaccinu",
+			"fr": "Ajaccio : influence ligure",
+			"oc": "Aiacciu : influéncia del ligur",
+			"entre": ["transizione", "ligure"],
+			"comunas": ["2A004"],
+			"nota": "« influencé par le ligure, sans que celui-ci prenne le dessus » (fr.wiki) ; base méridionale (it.wiki)"
+		},
+		{
+			"clau": "Tel",
+			"kod": "trans-el",
+			"co": "grecu di Carghjese",
+			"fr": "Cargèse : tradition grecque",
+			"oc": "Carghjese : tradicion del grèc",
+			"entre": ["transizione", "grec"],
+			"comunas": ["2A065"],
+			"nota": "colonie grecque de 1676 ; le grec ne sert plus qu'à la liturgie (it.wiki)"
+		},
+		{
+			"clau": "Tsc",
+			"kod": "trans-sc",
+			"co": "Tarranoa è Figari",
+			"fr": "Olbia et Golfo Aranci : villes de tradition sarde",
+			"oc": "vila de tradicion sarda",
+			"entre": ["gadduresu", "sarde"],
+			"comunas": ["it:113017", "it:113011"],
+			"nota": "centres historiquement de langue sarde (logudorais), gallurais dans les campagnes (it.wiki, co.wiki) ; à Olbia, 39,9 % de locuteurs actifs du gallurais et 44,6 % du sarde (Oppo 2007, cité par it.wiki)"
+		},
+		{
+			"clau": "Tsas",
+			"kod": "trans-sas",
+			"co": "castiddanesu",
+			"it": "castellanese",
+			"fr": "castellanese : passage du gallurais au sassarais",
+			"oc": "passatge al sassarés",
+			"oc_a_validar": true,
+			"entre": ["gadduresu", "sassaresu"],
+			"comunas": ["it:112016", "it:112051", "it:112057", "it:112064"],
+			"nota": "Castelsardo, Sedini, Tergu ; Valledoria (hameaux de La Muddizza et La Ciaccia)"
+		},
+		{
+			"clau": "Tgal",
+			"kod": "trans-gal",
+			"defora": true,
+			"fr": "gallurais sur une partie du territoire",
+			"oc": "gallurés sus una part del territòri",
+			"oc_a_validar": true,
+			"entre": ["sarde", "gadduresu"],
+			"comunas": ["it:113009", "it:112043", "it:112061", "it:113019", "it:113018"],
+			"nota": "Budoni, Perfugas, Tula, Padru, Oschiri : communes de langue sarde (domeni = vesina), gallurais dans une partie des campagnes (it.wiki, co.wiki)"
+		}
+	],
+	"desaparegut": {
+		"comunas": ["it:049005"],
+		"fr": "Capraia : parler corse éteint au XXe siècle",
+		"oc": "Capraia : còrs escantit",
+		"nota": "comme l'alavais pour le basque : teinte à part"
+	},
+	"vesinas": "23 communes sardes (et Alghero, catalane) voisines du domaine, domeni = vesina, pour fermer la zone ; Luras, enclave de langue sarde au milieu de la Gallura, est une vraie enclave (trou ou hachures : à trancher)."
+}

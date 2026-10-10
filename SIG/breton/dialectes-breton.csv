@@ -1,0 +1,622 @@
+﻿regio;unitat;mena;nom_oficial;nom_local;codi;domeni;dialecte;parlar;transicio;part_oc;nota;font
+France;Tréguier;comuna_fr;Bégard;Bear;22004;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Belle-Isle-en-Terre;Benac'h;22005;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Berhet;Berc'hed;22006;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Boqueho;Boskazoù;22011;vesina;tregerieg;;galo;;Boqueho : entièrement française, à part deux ou trois familles bretonnantes au village de Saint-Laurent;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Bourbriac;Boulvriag;22013;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Île-de-Bréhat;Enez-Vriad;22016;breton;tregerieg;enez-vriad;;;île : domaine d'après la carte AN (zone 6) et Sébillot | enclave de l'évêché de Dol, rangée avec son entourage (Saint-Brieuc);SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Brélidy;Brelidi;22018;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Bringolo;Brengoloù;22019;breton;tregerieg;;galo;;"Bringolo : bretonnante, un tiers parle aussi bien le français ; prédication en breton et en français";SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Bulat-Pestivien;Bulad-Pestivien;22023;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Calanhel;Kalanel;22024;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Callac;Kallag;22025;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Camlez;Kamlez;22028;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Canihuel;Kanuhel;22029;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Caouënnec-Lanvézéac;Kaouenneg-Lanvezeeg;22030;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Carnoët;Karnoed;22031;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Caurel;Kaorel;22033;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Cavan;Kawan;22034;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;La Chapelle-Neuve;Ar Chapel-Nevez;22037;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Coadout;Koadoud;22040;breton;tregerieg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Tréguier);SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Coatascorn;Koadaskorn;22041;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Coatréven;Koatreven;22042;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Corlay;Korle;22047;breton;kerneveg;;galo;;"Corlay : presque entièrement bretonnante (limite à Kernion) ; prédication en breton";SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Duault;Duaod;22052;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Le Faouët;Ar Faved;22057;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Glomel;Groñvel;22061;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Gommenec'h;Gouanac'h;22063;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Gouarec;Gwareg;22064;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Goudelin;Goudelin;22065;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Grâces;Gras-Gwengamp;22067;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Guingamp;Gwengamp;22070;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Gurunhuel;Gurunuhel;22072;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Le Haut-Corlay;Ar Gozh-Korle;22074;breton;kerneveg;;galo;;"Le Haut-Corlay : la limite entre dans la commune par les villages bretons de Kerchouan, la Ville-Jouan, Pertuga, la Salle, la Croix de Corlay ; prédication en breton";SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Hémonstoir;Henvoustoer;22075;vesina;kerneveg;;galo;;"Hémonstoir : la limite passe à Réguly ; prédication en français";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Kerbors;Kerborzh;22085;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Kerfot;Kerfod;22086;breton;tregerieg;goelo;;;Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Kergrist-Moëlou;Kergrist-Moeloù;22087;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Kerien;Kerien-Boulvriag;22088;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Kermaria-Sulard;Kervaria-Sular;22090;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Kermoroc'h;Kervoroc'h;22091;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Kerpert;Kerbêr;22092;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Landebaëron;Landebaeron;22095;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Langoat;Langoad;22101;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Bon Repos sur Blavet;Berrepoz-ar-Blavezh;22107;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Lanleff;Lanleñv;22108;breton;tregerieg;goelo;;;enclave de l'évêché de Dol, rangée avec son entourage (Saint-Brieuc);SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Lanloup;Sant-Loup;22109;breton;tregerieg;goelo;;;enclave de l'évêché de Dol, rangée avec son entourage (Saint-Brieuc);SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Lanmérin;Lanvilin;22110;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Lanmodez;Lanvaodez;22111;breton;tregerieg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Tréguier);SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Lannebert;Lannebeur;22112;breton;tregerieg;goelo;;;Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Lannion;Lannuon;22113;breton;tregerieg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Tréguier);SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Lanrivain;Larruen;22115;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Lanrodec;Lanrodeg;22116;breton;tregerieg;;galo;;"Lanrodec : aucun village exclusivement français, le français presque aussi usité que le breton ; prédication en breton";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Lanvellec;Lanvaeleg;22119;breton;tregerieg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Tréguier);SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Lanvollon;Lannolon;22121;breton;tregerieg;goelo;;;enclave de l'évêché de Dol, rangée avec son entourage (Saint-Brieuc);SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Lescouët-Gouarec;Leskoed-Gwareg;22124;breton;gwenedeg;;kerneveg-gwenedeg;;"pays Pourlet, évêché de Vannes (articles Mellionnec et Plélauff) ; mais pour Sébillot le vannetais « n'est parlé que dans le Morbihan » : à vérifier";SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Lézardrieux;Lezardrev;22127;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Locarn;Lokarn;22128;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Loc-Envel;Lokenvel;22129;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Loguivy-Plougras;Logivi-Plougraz;22131;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Lohuec;Lohueg;22132;breton;tregerieg;;;;trève de Plougras, évêché de Tréguier (article de la commune);SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Louannec;Louaneg;22134;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Louargat;Louergad;22135;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Maël-Carhaix;Mêl-Karaez;22137;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Maël-Pestivien;Mael-Pestivien;22138;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Magoar;Magor;22139;breton;kerneveg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Cornouaille);SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Mantallot;Mantallod;22141;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Mellionnec;Melioneg;22146;breton;gwenedeg;;kerneveg-gwenedeg;;"pays Pourlet, évêché de Vannes (articles Mellionnec et Plélauff) ; mais pour Sébillot le vannetais « n'est parlé que dans le Morbihan » : à vérifier";SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Le Merzer;Ar Merzher;22150;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Minihy-Tréguier;Ar Vinic'hi;22152;breton;tregerieg;;;;Minihy de Tréguier;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Moustéru;Mousteruz;22156;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Le Moustoir;Ar Vouster;22157;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Guerlédan;Gwerledan;22158;mixta;kerneveg;;galo;;"Mûr : derniers villages bretons Kerbotin et le Botrain, prédication en breton et en français ; Saint-Guen (réunie en 2017 dans Guerlédan) : française";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Pabu;Pabu;22161;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Paimpol;Pempoull;22162;breton;tregerieg;goelo;;;enclave de l'évêché de Dol, rangée avec son entourage (Saint-Brieuc);SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Paule;Paoul;22163;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Pédernec;Pederneg;22164;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Penvénan;Perwenan;22166;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Perros-Guirec;Perroz-Gireg;22168;breton;tregerieg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Tréguier);SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Peumerit-Quintin;Purid-Kintin;22169;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Pléguien;Plian;22177;breton;tregerieg;goelo;galo;;"Pléguien : bretonnante pour les neuf dixièmes ; prédication en breton | Goëlo, archidiaconé de l'évêché de Saint-Brieuc";SEB86 DED IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Pléhédel;Plehedel;22178;breton;tregerieg;goelo;;;Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plélauff;Pellann;22181;breton;gwenedeg;;kerneveg-gwenedeg;;"pays Pourlet, évêché de Vannes (articles Mellionnec et Plélauff) ; mais pour Sébillot le vannetais « n'est parlé que dans le Morbihan » : à vérifier";SEB86 DED IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Plélo;Pleuloc'h;22182;vesina;tregerieg;goelo;galo;;Plélo : entièrement française, mais beaucoup de familles bretonnantes (Saint-Quay, la Ville-Garre, Beauchamp) | Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plésidy;Plijidi;22189;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Plestin-les-Grèves;Plistin;22194;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Pleubian;Pleuvihan;22195;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Pleudaniel;Planiel;22196;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Pleumeur-Bodou;Pleuveur-Bodoù;22198;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Pleumeur-Gautier;Pleuveur-Gaoter;22199;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plévin;Plevin;22202;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Ploëzal;Pleuzal;22204;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Châtelaudren-Plouagat;Kastellaodren-Plagad;22206;vesina;tregerieg;;galo;;"Plouagat : aucun village exclusivement breton, mais le breton y est plus parlé qu'il y a quarante ans (Kerharscouët, Christ, le Leshouarn) ; prédication en français. Châtelaudren (réunie en 2019) : à l'est de la limite";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Plouaret;Plouared;22207;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Ploubazlanec;Plaeraneg;22210;breton;tregerieg;goelo;;;enclave de l'évêché de Dol, rangée avec son entourage (Saint-Brieuc);SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Ploubezre;Ploubêr;22211;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plouëc-du-Trieux;Ploueg-Pontrev;22212;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Plouézec;Ploueg-ar-Mor;22214;breton;tregerieg;goelo;;;Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plougonver;Plougonveur;22216;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plougras;Plougraz;22217;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plougrescant;Plougouskant;22218;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plouguernével;Plougernevel;22220;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Plouguiel;Priel;22221;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Plouha;Plouha;22222;breton;tregerieg;goelo;galo;;"Plouha : on y parle breton partout, souvent aussi le français ; derniers villages bretons à l'est : Kerégal, la Lande-Mergat, Kervizel, Boisgougen | Goëlo, archidiaconé de l'évêché de Saint-Brieuc";SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plouisy;Plouizi;22223;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Ploulec'h;Ploulec'h;22224;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Ploumagoar;Plouvagor;22225;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Ploumilliau;Plouilio;22226;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plounérin;Plounerin;22227;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plounévez-Moëdec;Plounevez-Moedeg;22228;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plounévez-Quintin;Plounevez-Kintin;22229;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plourac'h;Plourac'h;22231;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Plourhan;Plourc'han;22232;vesina;tregerieg;goelo;galo;;"Plourhan : la limite passe par les villages bretons de la Ville-Hélio, du Rohat et de Bois-Buhain ; très grande majorité de la commune française | Goëlo, archidiaconé de l'évêché de Saint-Brieuc";SEB86 DED IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Plourivo;Plourivoù;22233;breton;tregerieg;goelo;;;Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plouzélambre;Plouzelambr;22235;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Pludual;Plua;22236;breton;tregerieg;goelo;;;Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plufur;Plufur;22238;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plusquellec;Pluskelleg;22243;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plussulien;Plusulian;22244;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Pluzunet;Plûned;22245;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Pommerit-le-Vicomte;Pañvrid-ar-Beskont;22248;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Pont-Melvez;Pont-Melvez;22249;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Pontrieux;Pontrev;22250;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Prat;Prad;22254;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Quemper-Guézennec;Kemper-Gwezhenneg;22256;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Quemperven;Kemperven;22257;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;La Roche-Jaudy;Roc'h-ar-Yeodi;22264;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Rospez;Rospezh;22265;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Rostrenen;Rostrenenn;22266;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Runan;Runan;22269;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Adrien;Sant-Rien;22271;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Agathon;Sant-Eganton;22272;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Caradec;Sant-Karadeg;22279;vesina;kerneveg;;galo;;Saint-Caradec : la limite y englobe le village breton de Tréviel;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Clet;Sant-Kleve;22283;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Connan;Sant-Konan;22284;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Connec;Sant-Koneg;22285;breton;kerneveg;;galo;;"Saint-Connec : bretonnante pour les cinq sixièmes (l'OCR lit « 8/6 ») ; Brenné et Tréhouët, villages français ; prédication en breton et en français";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Fiacre;Sant-Fieg;22289;breton;tregerieg;;galo;;Saint-Fiacre : purement bretonne;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Gildas;Sant-Weltaz;22291;mixta;kerneveg;;galo;;"Saint-Gildas : bretonnante pour les deux tiers, bourg en pays français ; prédication en français";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Gilles-les-Bois;Sant-Jili-ar-C'hoad;22293;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Gilles-Pligeaux;Sant-Jili-Plijo;22294;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Gilles-Vieux-Marché;Sant-Jili-ar-C'hozhvarc'had;22295;mixta;kerneveg;;galo;;"Saint-Gilles-Vieux-Marché : villages bretons à l'ouest (Kercadou, Kerouault, Kergoué, Kerniault), bourg et est de la commune français (majorité) ; prédication en breton et en français";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Jean-Kerdaniel;Sant-Yann-Gerdaniel;22304;breton;tregerieg;;galo;;"Saint-Jean-Kerdaniel : le français y est connu mais n'est usité nulle part ; prédication en breton";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Laurent;Sant-Laorañs;22310;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Martin-des-Prés;Sant-Varzhin-Korle;22313;vesina;kerneveg;;galo;;"Saint-Martin-des-Prés : à l'est de la limite sur la fig. 5 ; non citée dans le texte (canton de Corlay, zone bretonne de la carte AN)";SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Mayeux;Sant-Vaeg;22316;mixta;kerneveg;;galo;;"Saint-Mayeux : villages extrêmes bretons Kerfaven, Kerléau, Ker-Brun… ; prédication en breton et en français";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Michel-en-Grève;Lokmikael-an-Traezh;22319;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Nicodème;Sant-Nigouden;22320;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Nicolas-du-Pélem;Sant-Nikolaz-ar-Pelem;22321;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Péver;Sant-Pever;22322;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Quay-Perros;Sant-Ke-Perroz;22324;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Servais;Sant-Servez-Kallag;22328;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Sainte-Tréphine;Sant-Trifin;22331;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Igeaux;Sant-Ijo;22334;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Senven-Léhart;Senven-Lehard;22335;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Squiffiec;Skiñvieg;22338;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Tonquédec;Tonkedeg;22340;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trébeurden;Trebeurden;22343;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Trébrivan;Trabrivan;22344;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trédarzec;Tredarzeg;22347;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trédrez-Locquémeau;Tredraezh-Lokemo;22349;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Tréduder;Treduder;22350;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Treffrin;Trefrin;22351;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trégastel;Tregastell;22353;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Tréglamus;Treglañviz;22354;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trégonneau;Tregonev;22358;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trégrom;Tregrom;22359;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Tréguidel;Tregedel;22361;vesina;tregerieg;goelo;galo;;Tréguidel : française pour les neuf dixièmes, familles bretonnes isolées vers Pléguien et Tressignaux | Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Tréguier;Landreger;22362;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trélévern;Trelêvern;22363;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Trémargat;Tremargad;22365;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trémel;Tremael;22366;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Tréméven;Tremeven-Goueloù;22370;breton;tregerieg;goelo;;;Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Tréogan;Treogan;22373;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Tressignaux;Tresigne;22375;breton;tregerieg;goelo;galo;;Tressignaux : totalement bretonnante | Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Tréveneuc;Treveneg;22377;vesina;tregerieg;goelo;galo;;"Tréveneuc : presque personne n'y sait ou n'y parle le breton ; prédication en français | Goëlo, archidiaconé de l'évêché de Saint-Brieuc";SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Trévérec;Trevereg;22378;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trévou-Tréguignec;An Trevoù;22379;breton;tregerieg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Tréguier);SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Trézény;Trezeni;22381;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Troguéry;Trogeri;22383;breton;tregerieg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Le Vieux-Bourg;Bourc'h-Kintin;22386;mixta;kerneveg;;galo;;"Le Vieux-Bourg : bretonnante pour un peu moins de moitié ; prédication en français (le texte place le bourg en pays breton, la fig. 5 à l'est de la limite)";SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Le Vieux-Marché;Ar C'houerc'had;22387;breton;tregerieg;;;;archidiaconé de Plougastel (Tréguier, entre Léguer et Queffleuth), liste absente de Wikipédia : déduit;SEB86 DED IGN WD-brwiki
+France;Saint-Brieuc;comuna_fr;Yvias;Eviaz;22390;breton;tregerieg;goelo;;;Goëlo, archidiaconé de l'évêché de Saint-Brieuc;SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Argol;Argol;29001;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Arzano;An Arzhanaou;29002;breton;kerneveg;;kerneveg-gwenedeg;;"une des trois paroisses de l'évêché de Vannes passées au Finistère ; Sébillot : le cornouaillais « comprend les arrondissements entiers de Châteaulin, de Quimper et de Quimperlé »";SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Audierne;Gwaien;29003;breton;kerneveg;;;;;SEB86 EV IGN OSM
+France;Cornouaille;comuna_fr;Bannalec;Banaleg;29004;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Baye;Bei;29005;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Bénodet;Benoded;29006;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Berrien;Berrien;29007;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Beuzec-Cap-Sizun;Beuzeg-ar-C'hab;29008;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Bodilis;Bodiliz;29010;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Bohars;Boc'harzh;29011;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Bolazec;Bolazeg;29012;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Botmeur;Boneur;29013;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Botsorhel;Bodsorc'hel;29014;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Bourg-Blanc;Ar Vourc'h-Wenn;29015;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Brasparts;Brasparzh;29016;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Brélès;Brelez;29017;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Brennilis;Brenniliz;29018;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Brest;Brest;29019;breton;leoneg;;;;comptée bretonnante par Sébillot, mais « îlot à peu près français » (Brest, rive gauche de la Penfeld) / enclave « presque entièrement française » (Lorient intra-muros);SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Briec;Brieg;29020;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plounéour-Brignogan-plages;Plouneour-Traezh-Brignogan;29021;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Camaret-sur-Mer;Kameled;29022;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Carantec;Karanteg;29023;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Carhaix-Plouguer;Karaez-Plougêr;29024;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Cast;Kast;29025;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Châteaulin;Kastellin;29026;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Châteauneuf-du-Faou;Kastell-Nevez-ar-Faou;29027;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Cléden-Cap-Sizun;Kledenn-ar-C'hab;29028;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Cléden-Poher;Kledenn-Poc'hêr;29029;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Cléder;Kleder;29030;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Clohars-Carnoët;Kloar-Karnoed;29031;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Clohars-Fouesnant;Kloar-Fouenant;29032;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Le Cloître-Pleyben;Kloastr-Pleiben;29033;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Le Cloître-Saint-Thégonnec;Ar C'hloastr-Plourin;29034;breton;tregerieg;;;;trève de Plourin, évêché de Tréguier (article de la commune);SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Coat-Méal;Koz-Meal;29035;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Collorec;Koloreg;29036;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Combrit;Kombrid;29037;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Commana;Kommanna;29038;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Concarneau;Konk-Kerne;29039;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Le Conquet;Konk-Leon;29040;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Coray;Kore;29041;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Crozon;Kraozon;29042;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Daoulas;Daoulaz;29043;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Dinéault;Dineol;29044;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Dirinon;Dirinonn;29045;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Douarnenez;Douarnenez;29046;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Le Drennec;An Dreneg;29047;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Edern;Edern;29048;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Elliant;Eliant;29049;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Ergué-Gabéric;An Erge-Vras;29051;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Le Faou;Ar Faou;29053;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;La Feuillée;Ar Fouilhez;29054;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Le Folgoët;Ar Folgoad;29055;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;La Forest-Landerneau;Ar Forest-Landerne;29056;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;La Forêt-Fouesnant;Ar Forest-Fouenant;29057;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Fouesnant;Fouenant;29058;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Garlan;Garlann;29059;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Gouesnach;Gouenac'h;29060;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Gouesnou;Gouenoù;29061;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Gouézec;Gouezeg;29062;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Goulien;Goulien;29063;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Goulven;Goulc'hen;29064;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Gourlizon;Gourlizon;29065;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Guengat;Gwengad;29066;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Guerlesquin;Gwerliskin;29067;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Guiclan;Gwiglann;29068;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Guilers;Gwiler-Leon;29069;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Guiler-sur-Goyen;Gwiler-Kerne;29070;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Guilligomarc'h;Gwelegouarc'h;29071;breton;kerneveg;;kerneveg-gwenedeg;;"une des trois paroisses de l'évêché de Vannes passées au Finistère ; Sébillot : le cornouaillais « comprend les arrondissements entiers de Châteaulin, de Quimper et de Quimperlé »";SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Guilvinec;Ar Gelveneg;29072;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Guimaëc;Gwimaeg;29073;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Guimiliau;Gwimilio;29074;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Guipavas;Gwipavaz;29075;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Milizac-Guipronvel;Milizag-Gwiproñvel;29076;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Guissény;Gwiseni;29077;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Hanvec;Hañveg;29078;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Henvic;Henvig;29079;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Hôpital-Camfrout;An Ospital;29080;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Huelgoat;An Uhelgoad;29081;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Île-de-Batz;Enez-Vaz;29082;breton;leoneg;enez-vaz;;;île : domaine d'après la carte AN (zone 6) et Sébillot;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Île-de-Sein;Enez-Sun;29083;breton;kerneveg;enez-sun;;;île : domaine d'après la carte AN (zone 6) et Sébillot;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Île-Molène;Molenez;29084;breton;leoneg;molenez;;;île : domaine d'après la carte AN (zone 6) et Sébillot;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Île-Tudy;Enez-Tudi;29085;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Irvillac;Irvilhag;29086;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Le Juch;Ar Yeuc'h;29087;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Kergloff;Kerglof;29089;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Kerlaz;Kerlaz;29090;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Kerlouan;Kerlouan;29091;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Kernilis;Kerniliz;29093;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Kernouës;Kernouez;29094;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Kersaint-Plabennec;Kersent-Plabenneg;29095;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lampaul-Guimiliau;Lambaol-Gwimilio;29097;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lampaul-Plouarzel;Lambaol-Blouarzhel;29098;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lampaul-Ploudalmézeau;Lambaol-Gwitalmeze;29099;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lanarvily;Lannarvili;29100;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Landéda;Landeda;29101;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Landeleau;Landelo;29102;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Landerneau;Landerne;29103;breton;leoneg;;leoneg-kerneveg;;"paroisses de plusieurs évêchés : Cornouaille, Léon ; ville partagée entre Léon et Cornouaille (paroisse Saint-Thomas) ; Sébillot fait passer la limite « entre Landerneau et la Martyre »";SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Landévennec;Landevenneg;29104;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Landivisiau;Landivizio;29105;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Landrévarzec;Landrevarzeg;29106;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Landudal;Landudal;29107;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Landudec;Landudeg;29108;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Landunvez;Landunvez;29109;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Langolen;Langolen;29110;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lanhouarneau;Lanhouarne;29111;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lanildut;Lannildud;29112;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Lanmeur;Lanneur;29113;breton;tregerieg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Tréguier);SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Lannéanou;Lanneanoù;29114;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Lannédern;Lannedern;29115;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lanneuffret;Lanneured;29116;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lannilis;Lanniliz;29117;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lanrivoaré;Lañriware;29119;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Lanvéoc;Lañveog;29120;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Laz;Laz;29122;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Lennon;Lennon;29123;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Lesneven;Lesneven;29124;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Leuhan;Leuc'han;29125;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Loc-Brévalaire;Loprevaler;29126;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Loc-Eguiner;Logeginer-Plouziri;29128;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Locmaria-Plouzané;Lokmaria-Plouzane;29130;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Locmélar;Lokmelar;29131;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Locquénolé;Lokenole;29132;breton;leoneg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Léon);SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Locquirec;Lokireg;29133;breton;tregerieg;;;;enclave de l'évêché de Dol, rangée avec son entourage (Tréguier);SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Locronan;Lokorn;29134;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Loctudy;Loktudi;29135;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Locunolé;Lokunole;29136;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Logonna-Daoulas;Logonna-Daoulaz;29137;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Lopérec;Lopereg;29139;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Loperhet;Loperc'hed;29140;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Loqueffret;Lokeored;29141;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Lothey;Lotei;29142;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Mahalon;Mahalon;29143;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;La Martyre;Ar Merzher-Salaun;29144;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Confort-Meilars;Koñforzh-Meilar;29145;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Melgven;Mêlwenn;29146;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Mellac;Mellag;29147;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Mespaul;Mespaol;29148;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Moëlan-sur-Mer;Molan;29150;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Morlaix;Montroulez;29151;breton;leoneg;;leoneg-tregerieg;;"Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier) ; Sébillot : « toute la ville de Morlaix et plusieurs communes des environs situées sur la rive trécorroise parlent le breton de Léon » (communes non nommées) ; paroisses Saint-Mathieu et Saint-Melaine de Tréguier, Saint-Martin de Léon";SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Motreff;Motrev;29152;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Névez;Nevez;29153;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Ouessant;Eusa;29155;breton;leoneg;eusa;leoneg-tregerieg;;"île : domaine d'après la carte AN (zone 6) et Sébillot | évêché de Léon ; d'après Luzel, cité par Sébillot, le parler d'Ouessant a « une plus grande parenté » avec le trégorrois";SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Pencran;Penn-ar-C'hrann;29156;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Penmarch;Penmarc'h;29158;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Peumerit;Purid;29159;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plabennec;Plabenneg;29160;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Pleuven;Pluwenn;29161;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Pleyben;Pleiben;29162;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Pleyber-Christ;Pleiber-Krist;29163;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plobannalec-Lesconil;Pornaleg-Leskonil;29165;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Ploéven;Ploeven;29166;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plogastel-Saint-Germain;Plogastell-Sant-Jermen;29167;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plogoff;Plougoñ;29168;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plogonnec;Plogoneg;29169;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plomelin;Ploveilh;29170;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plomeur;Ploveur;29171;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plomodiern;Ploudiern;29172;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plonéis;Ploneiz;29173;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plonéour-Lanvern;Ploneour-Lanwern;29174;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plonévez-du-Faou;Plonevez-ar-Faou;29175;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plonévez-Porzay;Plonevez-Porzhe;29176;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouarzel;Plouarzhel;29177;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Ploudalmézeau;Gwitalmeze;29178;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Ploudaniel;Plouzeniel;29179;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Ploudiry;Plouziri;29180;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouédern;Plouedern;29181;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Plouégat-Guérand;Plegad-Gwerann;29182;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Tréguier;comuna_fr;Plouégat-Moysan;Plegad-Moezan;29183;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Plouénan;Plouenan;29184;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouescat;Ploueskad;29185;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Plouezoc'h;Plouezoc'h;29186;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Plougar;Gwikar;29187;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Plougasnou;Plouganoù;29188;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plougastel-Daoulas;Plougastell-Daoulaz;29189;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plougonvelin;Plougonvelen;29190;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Plougonven;Plougonven;29191;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Plougoulm;Plougouloum;29192;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plougourvest;Gwikourvest;29193;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouguerneau;Plougerne;29195;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouguin;Plougin;29196;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plouhinec;Ploeneg;29197;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouider;Plouider;29198;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Plouigneau;Plouigno;29199;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN OSM
+France;Léon;comuna_fr;Ploumoguer;Plonger;29201;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plounéour-Ménez;Plouneour-Menez;29202;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plounéventer;Gwineventer;29204;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plounévézel;Plonevell;29205;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plounévez-Lochrist;Gwinevez;29206;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Plourin-lès-Morlaix;Plourin-Montroulez;29207;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Plourin;Plourin-Gwitalmeze;29208;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouvien;Plouvien;29209;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouvorn;Plouvorn;29210;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plouyé;Plouie;29211;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouzané;Plouzane;29212;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Plouzévédé;Gwitevede;29213;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plovan;Plovan;29214;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Plozévet;Plozeved;29215;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Pluguffan;Pluguen;29216;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Pont-Aven;Pont-Aven;29217;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Pont-Croix;Pontekroaz;29218;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Pont-l'Abbé;Pont-'n-Abad;29220;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Porspoder;Porspoder;29221;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Port-Launay;Meilh-ar-Wern;29222;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Pouldergat;Pouldregad;29224;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Pouldreuzic;Pouldreuzig;29225;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Poullan-sur-Mer;Poullann;29226;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Poullaouen;Poullaouen;29227;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Primelin;Prevel;29228;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Quéménéven;Kemeneven;29229;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Querrien;Kerien;29230;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Quimper;Kemper;29232;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Quimperlé;Kemperle;29233;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Rédené;Redene;29234;breton;kerneveg;;kerneveg-gwenedeg;;"une des trois paroisses de l'évêché de Vannes passées au Finistère ; Sébillot : le cornouaillais « comprend les arrondissements entiers de Châteaulin, de Quimper et de Quimperlé »";SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Le Relecq-Kerhuon;Ar Releg-Kerhuon;29235;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Riec-sur-Bélon;Rieg;29236;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;La Roche-Maurice;Ar Roc'h-Morvan;29237;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Roscanvel;Roskañvel;29238;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Roscoff;Rosko;29239;breton;leoneg;;;;Minihy de Saint-Pol (Léon), absent des listes d'archidiaconés;SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Rosnoën;Rosloc'hen;29240;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Rosporden;Rosporden;29241;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Coulitz;Sant-Kouled;29243;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Derrien;Sant-Derc'hen;29244;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Divy;Sant-Divi;29245;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Eloy;Sant-Alar;29246;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Évarzec;Sant-Evarzeg;29247;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Frégant;Sant-Fregan;29248;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Goazec;Sant-Wazeg;29249;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Hernin;Sant-Hern;29250;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Tréguier;comuna_fr;Saint-Jean-du-Doigt;Sant-Yann-ar-Biz;29251;breton;tregerieg;;;;Trégor finistérien : absent des listes de Léon et de Cornouaille (le Finistère a reçu 15 paroisses de Tréguier);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Jean-Trolimon;Sant-Yann-Drolimon;29252;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Martin-des-Champs;Sant-Martin-war-ar-Maez;29254;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Méen;Sant-Neven;29255;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Nic;Sant-Vig;29256;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Pabu;Sant-Pabu;29257;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Pol-de-Léon;Kastell-Paol;29259;breton;leoneg;;;;Minihy de Saint-Pol (Léon), absent des listes d'archidiaconés;SEB86 DED IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Renan;Lokournan;29260;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Rivoal;Sant-Riwal;29261;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Sauveur;An Dre-Nevez;29262;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Ségal;Sant-Segal;29263;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Servais;Sant-Servez-Landivizio;29264;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Sainte-Sève;Sant-Seo;29265;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Thégonnec Loc-Eguiner;Sant-Tegoneg-Logeginer;29266;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Thois;Santoz;29267;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Thonan;Sant-Tonan;29268;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Thurien;Sant-Turian;29269;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Urbain;Lannurvan;29270;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Saint-Vougay;Sant-Nouga;29271;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Saint-Yvi;Sant-Ivi;29272;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Santec;Santeg;29273;breton;leoneg;;;;Minihy de Saint-Pol (Léon), absent des listes d'archidiaconés;SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Scaër;Skaer;29274;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Scrignac;Skrigneg;29275;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Sibiril;Sibirill;29276;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Sizun;Sizun;29277;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Spézet;Speied;29278;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Taulé;Taole;29279;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Telgruc-sur-Mer;Terrug;29280;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Tourch;Tourc'h;29281;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Trébabu;Trebabu;29282;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Treffiagat;Triagad;29284;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Tréflaouénan;Trelaouenan;29285;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Tréflévénez;Trelevenez;29286;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Tréflez;Trelez;29287;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Trégarantec;Tregaranteg;29288;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Trégarvan;Tregarvan;29289;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Tréglonou;Treglonoù;29290;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Trégourez;Tregourez;29291;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Tréguennec;Tregeneg;29292;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Trégunc;Tregon;29293;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Le Tréhou;An Treoù-Leon;29294;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Trémaouézan;Tremaouezan;29295;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Tréméoc;Tremeog;29296;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Tréméven;Tremeven-Kemperle;29297;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Tréogat;Trêgad;29298;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Tréouergat;Treouergad;29299;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Le Trévoux;An Treoù-Kerne;29300;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Léon;comuna_fr;Trézilidé;Trezilide;29301;breton;leoneg;;;;;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Pont-de-Buis-lès-Quimerch;Pont-ar-Veuzenn-Kimerc'h;29302;breton;kerneveg;;;;;SEB86 EV IGN WD-brwiki
+France;Nantes;comuna_fr;Assérac;Azereg;44006;desaparegut;gwenedeg;gwenrann;;;Assérac (partie ouest) : en 1806, la limite des deux langues « commence aux salines d'Herbignac » (enquête Coquebert de Montbret, imprécise pour ce département) | breton de Batz rangé avec le vannetais, à titre provisoire (certains auteurs parlent d'un « breton guérandais » à part);WPB IGN WD-brwiki
+France;Nantes;comuna_fr;Batz-sur-Mer;Bourc'h-Baz;44010;desaparegut;gwenedeg;gwenrann;;;"Batz-sur-Mer (Bourg-de-Batz) : breton encore parlé en 1886 dans sept villages paludiers (Kervalet, Trégaté, Roffiat, Kermoisan…), 200 locutrices et locuteurs habituels selon Léon Bureau ; derniers locuteurs morts dans les années 1960 | breton de Batz rangé avec le vannetais, à titre provisoire (certains auteurs parlent d'un « breton guérandais » à part)";SEB86 WPB IGN WD-brwiki
+France;Nantes;comuna_fr;Mesquer;Mesker;44097;desaparegut;gwenedeg;gwenrann;;;Mesquer : breton parlé plus tard encore qu'à Piriac (Paulin Benoist) | breton de Batz rangé avec le vannetais, à titre provisoire (certains auteurs parlent d'un « breton guérandais » à part);WPB IGN WD-brwiki
+France;Nantes;comuna_fr;Piriac-sur-Mer;Penc'herieg;44125;desaparegut;gwenedeg;gwenrann;;;"Piriac-sur-Mer : des anciens parlaient breton après 1830 (témoignage recueilli par Paulin Benoist) ; mots notés en 1823 par Édouard Richer | breton de Batz rangé avec le vannetais, à titre provisoire (certains auteurs parlent d'un « breton guérandais » à part)";WPB IGN WD-brwiki
+France;Nantes;comuna_fr;Le Pouliguen;Ar Poulgwenn;44135;desaparegut;gwenedeg;gwenrann;;;Le Pouliguen (séparé de Batz en 1854) : locuteurs tardifs au village de Penchâteau (XIXe siècle) | breton de Batz rangé avec le vannetais, à titre provisoire (certains auteurs parlent d'un « breton guérandais » à part);WPB IGN WD-brwiki
+France;Nantes;comuna_fr;Saint-Molf;Sant-Molf;44183;desaparegut;gwenedeg;gwenrann;;;Saint-Molf (en partie) : même interprétation de l'enquête de 1806 | breton de Batz rangé avec le vannetais, à titre provisoire (certains auteurs parlent d'un « breton guérandais » à part);WPB IGN WD-brwiki
+France;Vannes;comuna_fr;Ambon;Ambon;56002;breton;gwenedeg;;galo;;"Ambon : entièrement bretonnante, sauf le village de Penesclus ; prédication en français et en breton | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Arradon;Aradon;56003;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Arzon;Arzhon-Rewiz;56005;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Auray;An Alre;56007;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Baden;Baden;56008;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Bangor;Bangor;56009;breton;gwenedeg;ar-gerveur;;;île : domaine d'après la carte AN (zone 6) et Sébillot | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Baud;Baod;56010;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Belz;Belz;56013;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Berné;Berne;56014;breton;kerneveg;;kerneveg-gwenedeg;;"Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes) ; Sébillot : les cantons du Faouët et de Gourin parlent un dialecte « fortement teinté de vannetais » mais plus proche du cornouaillais";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Berric;Berrig;56015;breton;gwenedeg;;galo;;"Berric : laissée un peu à l'ouest, la limite passe au Drenegy ; prédication en breton | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Bignan;Begnen;56017;breton;gwenedeg;;galo;;Bignan : presque entièrement bretonne (hameau de Kercado sur la limite) | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Brandérion;Prederion;56021;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Brandivy;Brandevi;56022;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Brech;Brec'h;56023;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Bubry;Bubri;56026;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Calan;Kalann;56029;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Nantes;comuna_fr;Camoël;Kamoel;56030;desaparegut;gwenedeg;gwenrann;;;"Camoël : breton parlé en 1806 (Coquebert de Montbret) ; éteint au sud de la Vilaine en 1886 (Sébillot) | breton de Batz rangé avec le vannetais, à titre provisoire (certains auteurs parlent d'un « breton guérandais » à part)";WPB SEB86 IGN WD-brwiki
+France;Vannes;comuna_fr;Camors;Kamorzh;56031;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Carnac;Karnag;56034;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Caudan;Kaodan;56036;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;La Chapelle-Neuve;Ar Chapel-Nevez;56039;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Cléguer;Kleger;56040;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Cléguérec;Klegereg;56041;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Colpo;Kolpoù;56042;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Crach;Krac'h;56046;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Le Croisty;Ar C'hroesti;56048;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Damgan;Damgan;56052;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Elven;An Elven;56053;mixta;gwenedeg;;galo;;"Elven : coupée à peu près par moitié, bourg en pays français ; un vicaire breton sur quatre prêtres | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Erdeven;An Ardeven;56054;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Étel;An Intel;56055;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Le Faouët;Ar Faoued;56057;breton;kerneveg;;kerneveg-gwenedeg;;Sébillot : cantons du Faouët et de Gourin, dialecte « fortement teinté de vannetais », plus proche du cornouaillais;SEB86 EV IGN WD-brwiki
+France;Nantes;comuna_fr;Férel;Ferel;56058;desaparegut;gwenedeg;gwenrann;;;"Férel : breton parlé en 1806 (Coquebert de Montbret) ; éteint au sud de la Vilaine en 1886 (Sébillot) | breton de Batz rangé avec le vannetais, à titre provisoire (certains auteurs parlent d'un « breton guérandais » à part)";WPB SEB86 IGN WD-brwiki
+France;Vannes;comuna_fr;Gâvres;Gavr;56062;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Gestel;Yestael;56063;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Gourin;Gourin;56066;breton;kerneveg;;kerneveg-gwenedeg;;Sébillot : cantons du Faouët et de Gourin, dialecte « fortement teinté de vannetais », plus proche du cornouaillais;SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Grand-Champ;Gregam;56067;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Groix;Groe;56069;breton;gwenedeg;groe;;;île : domaine d'après la carte AN (zone 6) et Sébillot | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Guéhenno;Gwezhennoù;56071;vesina;gwenedeg;;galo;;Guéhenno : en majeure partie française (hameau de Kermel sur la limite) | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Gueltas;Gweltaz;56072;vesina;gwenedeg;;galo;;Gueltas : la commune entière en pays français (le breton y disparaissait déjà selon Guyot-Jomard, 1861) | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Guémené-sur-Scorff;Ar Gemene;56073;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Guénin;Gwennin;56074;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Guern;Gwern;56076;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Guidel;Gwidel;56078;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Guiscriff;Gwiskri;56081;breton;kerneveg;;kerneveg-gwenedeg;;Sébillot : cantons du Faouët et de Gourin, dialecte « fortement teinté de vannetais », plus proche du cornouaillais;SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Hennebont;Henbont;56083;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Le Hézo;Hezoù;56084;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Hœdic;Edig;56085;breton;gwenedeg;edig;;;île : domaine d'après la carte AN (zone 6) et Sébillot | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Île-d'Houat;Enez Houad;56086;breton;gwenedeg;enez-houad;;;île : domaine d'après la carte AN (zone 6) et Sébillot | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Île-aux-Moines;Enizenac'h;56087;breton;gwenedeg;enizenach;;;île : domaine d'après la carte AN (zone 6) et Sébillot | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Île-d'Arz;An Arzh;56088;breton;gwenedeg;an-arzh;;;île : domaine d'après la carte AN (zone 6) et Sébillot | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Inguiniel;An Ignel;56089;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Inzinzac-Lochrist;Zinzag-Lokrist;56090;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Kerfourn;Kerforn;56092;breton;gwenedeg;;galo;;"Kerfourn : bourg en pays bretonnant ; la limite passe par les hameaux de Gahvern et Lesoanic | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Kergrist;Kergrist;56093;breton;kerneveg;;kerneveg-gwenedeg;;"évêché de Cornouaille ; mais Sébillot ne range dans le cornouaillais, pour le Morbihan, que les cantons du Faouët et de Gourin : à vérifier";SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Kervignac;Kervignag;56094;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Landaul;Landaol;56096;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Landévant;Landevant;56097;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Lanester;Lannarstêr;56098;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Langoëlan;Laoulan;56099;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Langonnet;Langoned;56100;breton;kerneveg;;kerneveg-gwenedeg;;Sébillot : cantons du Faouët et de Gourin, dialecte « fortement teinté de vannetais », plus proche du cornouaillais;SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Languidic;Langedig;56101;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Lanvaudan;Lanvodan;56104;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Lanvénégen;Lannejenn;56105;breton;kerneveg;;kerneveg-gwenedeg;;Sébillot : cantons du Faouët et de Gourin, dialecte « fortement teinté de vannetais », plus proche du cornouaillais;SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Larmor-Baden;An Arvor-Baden;56106;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Larmor-Plage;An Arvor;56107;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Lauzach;Laozag;56109;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Lignol;An Ignol;56110;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Locmalo;Lokmac'hloù;56113;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Locmaria;Lokmaria-ar-Gerveur;56114;breton;gwenedeg;ar-gerveur;;;île : domaine d'après la carte AN (zone 6) et Sébillot | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Locmaria-Grand-Champ;Lokmaria-Gregam;56115;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Locmariaquer;Lokmaria-Kaer;56116;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Locminé;Logunec'h;56117;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Locmiquélic;Lokmikaelig;56118;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Locoal-Mendon;Lokoal-Mendon;56119;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Locqueltas;Lokeltaz;56120;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Lorient;An Oriant;56121;breton;gwenedeg;;;;comptée bretonnante par Sébillot, mais « îlot à peu près français » (Brest, rive gauche de la Penfeld) / enclave « presque entièrement française » (Lorient intra-muros) | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Malguénac;Malgeneg;56125;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Melrand;Mêlrant;56128;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Merlevenez;Brelevenez;56130;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Meslan;Mêlann;56131;breton;kerneveg;;kerneveg-gwenedeg;;"Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes) ; Sébillot : les cantons du Faouët et de Gourin parlent un dialecte « fortement teinté de vannetais » mais plus proche du cornouaillais";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Meucon;Meukon;56132;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Monterblanc;Sterwenn;56137;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Moréac;Mourieg;56140;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Moustoir-Ac;Moustoer-Logunec'h;56141;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Muzillac;Muzilheg;56143;vesina;gwenedeg;;galo;;"Muzillac : française ; la limite suit un étang de la commune puis la rivière vers Ambon | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Évellys;Eveliz;56144;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Neulliac;Neulieg;56146;breton;kerneveg;;kerneveg-gwenedeg;;"évêché de Cornouaille ; mais Sébillot ne range dans le cornouaillais, pour le Morbihan, que les cantons du Faouët et de Gourin : à vérifier";SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Nostang;Lostenk;56148;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Noyal-Muzillac;Noal-Muzilheg;56149;vesina;gwenedeg;;galo;;"Noyal-Muzillac : bourg en pays français ; hameaux de Bourgeul et Muren à l'ouest de la limite | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Noyal-Pontivy;Noal-Pondi;56151;breton;gwenedeg;;galo;;Noyal-Pontivy : parle breton, sauf deux villages à l'est de la limite | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Le Palais;Porzh-Lae;56152;breton;gwenedeg;ar-gerveur;;;île : domaine d'après la carte AN (zone 6) et Sébillot | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Nantes;comuna_fr;Pénestin;Pennestin;56155;desaparegut;gwenedeg;gwenrann;;;"Pénestin : breton parlé en 1806 (Coquebert de Montbret) ; disparu « à une époque assez rapprochée » selon le chanoine Le Méné (1889) | breton de Batz rangé avec le vannetais, à titre provisoire (certains auteurs parlent d'un « breton guérandais » à part)";WPB SEB86 IGN WD-brwiki
+France;Vannes;comuna_fr;Persquen;Persken;56156;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plaudren;Plaodren;56157;breton;gwenedeg;;galo;;"Plaudren : bretonnante ; la limite suit celle de Trédion | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plescop;Pleskob;56158;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Ploemel;Pleñver;56161;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Ploemeur;Plañvour;56162;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Ploërdut;Pleurdud;56163;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Ploeren;Ploveren;56164;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plouay;Ploue;56166;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plougoumelen;Plougouvelen;56167;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plouharnel;Plouharnel;56168;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plouhinec;Pleheneg;56169;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plouray;Plourae;56170;breton;kerneveg;;kerneveg-gwenedeg;;"Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes) ; Sébillot : les cantons du Faouët et de Gourin parlent un dialecte « fortement teinté de vannetais » mais plus proche du cornouaillais";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plumelec;Pluveleg;56172;vesina;gwenedeg;;galo;;"Plumelec : bourg en pays français ; séparation entre Cadoudal et Lestiernau | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Pluméliau-Bieuzy;Pluniav-Bizhui;56173;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plumelin;Pluverin;56174;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Plumergat;Pluvergad;56175;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Pluneret;Plunered;56176;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Pluvigner;Pleuwigner;56177;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Pontivy;Pondi;56178;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Pont-Scorff;Pont-Skorf;56179;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Port-Louis;Porzh-Loeiz;56181;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Priziac;Prizieg;56182;breton;kerneveg;;kerneveg-gwenedeg;;"Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes) ; Sébillot : les cantons du Faouët et de Gourin parlent un dialecte « fortement teinté de vannetais » mais plus proche du cornouaillais";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Quéven;Kewenn;56185;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Quiberon;Kiberen;56186;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Quistinic;Kistinid;56188;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Radenac;Radeneg;56189;vesina;gwenedeg;;galo;;Radenac : française, sauf une petite pointe autour du village de Nespy | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Réguiny;Regini;56190;vesina;gwenedeg;;galo;;"Réguiny : bourg en pays français, à petite distance du breton ; hameaux bretons du Theil et de Couedrien ; prédication en français | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Riantec;Rianteg;56193;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Cornouaille;comuna_fr;Roudouallec;Roudoualleg;56199;breton;kerneveg;;kerneveg-gwenedeg;;Sébillot : cantons du Faouët et de Gourin, dialecte « fortement teinté de vannetais », plus proche du cornouaillais;SEB86 EV IGN WD-brwiki
+France;Cornouaille;comuna_fr;Le Saint;Ar Sent;56201;breton;kerneveg;;kerneveg-gwenedeg;;Sébillot : cantons du Faouët et de Gourin, dialecte « fortement teinté de vannetais », plus proche du cornouaillais;SEB86 EV IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Aignan;Sant-Inan;56203;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Allouestre;Sant-Aleustr;56204;mixta;gwenedeg;;galo;;"Saint-Allouestre : bourg et deux tiers du territoire en pays bretonnant ; prédication en breton | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Armel;Sant-Armael;56205;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Avé;Sant-Teve;56206;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Barthélemy;Bartelame;56207;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Sainte-Brigitte;Berc'hed;56209;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Caradec-Trégomel;Sant-Karadeg-Tregonvael;56210;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Gérand-Croixanvec;Sant-Jelan-Kroeshañveg;56213;breton;gwenedeg;;galo;;"Croixanvec : bretonnante, la limite y entre au village de Crano ; prédication en breton. Saint-Gérand (réunie en 2022) : à l'ouest de la limite | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Gildas-de-Rhuys;Lokentaz;56214;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Gonnery;Sant-Goneri;56215;vesina;gwenedeg;;galo;;Saint-Gonnery : de langue française, sauf une petite pointe à l'ouest | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Sainte-Hélène;Santez-Elen;56220;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Jean-Brévelay;Sant-Yann-Brevele;56222;breton;gwenedeg;;galo;;Saint-Jean-Brévelay : toute bretonne, sauf le hameau de Kermorin | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Nolff;Sant-Nolf;56231;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Philibert;Sant-Filiberzh;56233;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Pierre-Quiberon;Sant-Pêr-Kiberen;56234;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Thuriau;Sant-Turiav;56237;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Saint-Tugdual;Sant-Tudal;56238;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Sarzeau;Sarzhav;56240;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Sauzon;Saozon;56241;breton;gwenedeg;ar-gerveur;;;île : domaine d'après la carte AN (zone 6) et Sébillot | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Séglien;Seglian;56242;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Séné;Sine;56243;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Silfiac;Silieg;56245;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Le Sourn;Ar Sorn;56246;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Sulniac;Sulnieg;56247;breton;gwenedeg;;galo;;"Sulniac : bretonne (hameaux de Kerbournis et du Château sur la limite) ; prédication en breton | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Surzur;Surzhur;56248;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Theix-Noyalo;Teiz-Noaloù;56251;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Le Tour-du-Parc;Tro-Park;56252;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Trédion;Tredion;56254;vesina;gwenedeg;;galo;;Trédion : française, sauf une petite pointe à Kerdossan | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Treffléan;Trevlean;56255;breton;gwenedeg;;galo;;Treffléan : à l'ouest de la limite | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;La Trinité-sur-Mer;An Drinded-Karnag;56258;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;La Trinité-Surzur;An Drinded-Surzhur;56259;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Vannes;Gwened;56260;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;La Vraie-Croix;Langroez;56261;vesina;gwenedeg;;galo;;"La Vraie-Croix : bourg français ; la limite passe plus près de cette commune que de Treffléan | Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes)";SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Le Bono;Ar Bonoù;56262;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Sainte-Anne-d'Auray;Santez-Anna-Wened;56263;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki
+France;Vannes;comuna_fr;Kernascléden;Kernaskledenn;56264;breton;gwenedeg;;;;Morbihan : évêché de Vannes par défaut (exceptions citées : paroisses de Cornouaille, de Saint-Brieuc et de Nantes);SEB86 DED IGN WD-brwiki

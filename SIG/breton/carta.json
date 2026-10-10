@@ -1,0 +1,41 @@
+{
+  "endo": "br",
+  "doms": [
+    "breton",
+    "mixta",
+    "desaparegut"
+  ],
+  "deps": [
+    "22",
+    "29",
+    "35",
+    "44",
+    "56"
+  ],
+  "paises": [
+    "France"
+  ],
+  "barrièra": [],
+  "trans_ignorar": [
+    "galo"
+  ],
+  "desaparegut": "gwenrann",
+  "dialectes_mai": [
+    {
+      "kod": "gwenrann",
+      "br": "brezhoneg Gwenrann",
+      "fr": "breton de Guérande (éteint)",
+      "oc": "breton escantit",
+      "istoric": true,
+      "sota_fr": "breton éteint",
+      "sota_oc": "breton escantit"
+    }
+  ],
+  "apart": [],
+  "sortida": "breton.json",
+  "vilas_max": 120,
+  "osm_noms": [
+    "name:br"
+  ],
+  "illot_min": 0.05
+}

@@ -154,7 +154,15 @@ CATALOGUE.push({
 			nota_oc: 'Sos dialèctes, de Bilbo a Maule e a Iruña ; Iparralde a despart',
 			nota_fr: 'Ses dialectes, de Bilbao à Mauléon et à Pampelune ; le Pays basque nord à part'
 		},
-		{ id: 'breton', oc: 'Breton', fr: 'Breton', estat: 'a venir' },
+		{
+			id: 'breton',
+			oc: 'Breton',
+			fr: 'Breton',
+			estat: 'disponible',
+			defaut: false,
+			nota_oc: 'Sos quatre dialèctes, de Leon a Gwened, dins sa limit de 1886',
+			nota_fr: 'Ses quatre dialectes, du Léon à Vannes, dans sa limite de 1886'
+		},
 		{
 			id: 'alsacian',
 			oc: 'Alsacian e francic',
@@ -165,7 +173,15 @@ CATALOGUE.push({
 			nota_fr: 'Le continuum alémanique et francique, de Strasbourg à Zurich et à Luxembourg ; Alsace et Moselle à part'
 		},
 		{ id: 'flamenc', oc: 'Flamenc occidental', fr: 'Flamand occidental', estat: 'a venir' },
-		{ id: 'cors', oc: 'Còrs', fr: 'Corse', estat: 'a venir' },
+		{
+			id: 'cors',
+			oc: 'Còrs',
+			fr: 'Corse',
+			estat: 'disponible',
+			defaut: false,
+			nota_oc: 'Sos parlars, del Cap Còrs a Bonifacio, e lo gallurés e lo sassarés de Sardenha ; Corsega a despart',
+			nota_fr: 'Ses parlers, du Cap Corse à Bonifacio, et le gallurais et le sassarais de Sardaigne ; la Corse à part'
+		},
 		{
 			id: 'oil',
 			oc: 'Lengas d’oïl',
@@ -179,7 +195,7 @@ CATALOGUE.push({
 });
 
 // Las jaces de lengas pintadas per una còla de lenga (colaLenga.js, lengas.js)
-export const JACES_LENGAS = ['catalan', 'arpitan', 'basc', 'oil', 'alsacian'];
+export const JACES_LENGAS = ['catalan', 'arpitan', 'basc', 'oil', 'alsacian', 'breton', 'cors'];
 
 // Las jaces pintadas pel fons « Contorns » (colaEstelas.js) : son pas pintadas
 // sus los autres fonses (las tuèlas an las lors). Jaça → element del fons.

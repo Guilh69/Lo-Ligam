@@ -198,6 +198,7 @@ for c, r in per_codi.items():
     # (una comuna ont la lenga s'es escantida : lo dialècte « istoric » de CONF)
     # (una comuna mixta sens dialècte : la colomna « transicio » dona lo de la lenga)
     d0 = r['dialecte'] or ((r.get('transicio') or '').strip() if (r.get('transicio') or '').strip() in DIAL else '')
+    d0 = CONF.get('domeni_dialecte', {}).get(r['domeni'], d0)
     if not d0:
         sens_geo.append('%s (sens dialècte)' % r.get('nom_oficial', c))
         continue
@@ -289,8 +290,17 @@ if anels_b:
 # clau que ne tòca mai ; los traucs de mai de 1,5 km2 (lacs) demòran
 marca("benda e comunas a l'entorn")
 P = dict(brut)
-tot = unir(list(P.values()))
-fendas = valid(valid(tot.Buffer(B, 8).Buffer(-B, 8)).Difference(tot).Difference(oc_local))
+# (sonque quand de comunas de mantun país se tòcan : las comunas de l'IGN
+# s'encaissan ja, e lo tampon sus la còsta bretona durava mai d'una ora)
+# (e sonque se las comunas de doas fonts se tòcan : Corsega e Sardenha, non)
+u_fr = unir([u['g'] for u in unitats if es_fr(u['codi'])])
+u_ext = unir([u['g'] for u in unitats if not es_fr(u['codi'])])
+fonts_ext = {u['codi'].split(':')[0] for u in unitats if not es_fr(u['codi'])}
+if n_ext and (len(fonts_ext) > 1 or (not u_fr.IsEmpty() and u_fr.Buffer(1000, 2).Intersects(u_ext))):
+    tot = unir(list(P.values()))
+    fendas = valid(valid(tot.Buffer(B, 8).Buffer(-B, 8)).Difference(tot).Difference(oc_local))
+else:
+    fendas = ogr.Geometry(ogr.wkbMultiPolygon)
 n_f = 0
 for q in tròces(fendas):
     if q.GetArea() < 500:
@@ -541,7 +551,8 @@ for k in CLAUS:
     pres_ll = unir([pres_ll, CLAU_LL[k]])
 print('Netejatge del bòrd occitan : %.2f km2 apondut al ras de la linha' % a_e)
 # los illòts isolats de mens de 1 km2 (tròces de bocatge dins l'Alèir...) son levats
-illòts = [p.Clone() for p in tròces(unir(list(CLAU_LL.values()))) if km2(en_m(p)) < 1]
+# (CONF['illot_min'] : los illòts pus pichons son levats ; las illas de Sen e de Molenes fan mens de 1 km2)
+illòts = [p.Clone() for p in tròces(unir(list(CLAU_LL.values()))) if km2(en_m(p)) < CONF.get('illot_min', 1)]
 if illòts:
     ill = unir(illòts)
     for k in CLAUS:

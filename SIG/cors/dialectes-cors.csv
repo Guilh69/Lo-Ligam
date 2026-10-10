@@ -1,0 +1,414 @@
+﻿regio;unitat;mena;nom_oficial;nom_local;codi;domeni;dialecte;parlar;transicio;part_oc;nota;font
+Corsica;CA du Pays Ajaccien;comuna_fr;Afa;Afà;2A001;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CA du Pays Ajaccien;comuna_fr;Ajaccio;Aiacciu;2A004;cors;transizione;transizione;lij;0;"aiaccinu : base méridionale, influence ligure (fr.wiki, it.wiki) ; « corsu-ligure aghjaccinu » sur G ; parler cité : aiaccinu";G18 J06 WIT IGN
+Corsica;CA du Pays Ajaccien;comuna_fr;Alata;Alata;2A006;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Albitreccia;Albitreccia;2A008;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Altagène;Altaghjè;2A011;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Ambiegna;Ambiegna;2A014;cors;transizione;transizione;;0;parler cité : Cinarca : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CA du Pays Ajaccien;comuna_fr;Appietto;Appietu;2A017;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Arbellara;Arbiddali;2A018;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Arbori;Arburi;2A019;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Argiusta-Moriccio;Arghjusta è Muricciu;2A021;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Arro;Arru;2A022;cors;transizione;transizione;;0;parler cité : Cinarca : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Aullène;Auddè;2A024;cors;oltramuntincu;taravesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Azilone-Ampaza;Azilonu è Ampaza;2A026;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Azzana;Azzana;2A027;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Balogna;Balogna;2A028;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Bastelica;Bastelica;2A031;cors;transizione;transizione;;0;"G : corsu taravesu & sartinesu (village sur la limite) ; J : oltramontano ; it.wiki : transition ; parler cité : bastelicaccio";G18 J06 WIT IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Bastelicaccia;A Bastilicaccia;2A032;cors;transizione;transizione;;0;"chef-lieu dans la tache « corsu-ligure » de G autour d’une ville (symbole) : non retenu ; J : oltramontano ; parler cité : Gravona : transition (it.wiki)";G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Belvédère-Campomoro;Belvidè è Campumoru;2A035;cors;oltramuntincu;sartinesu;;0;;G18 J06 IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Bilia;Bilia;2A038;cors;oltramuntincu;sartinesu;;0;;G18 J06 IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Bocognano;Bucugnà;2A040;cors;transizione;transizione;;0;"J : oltramontano ; parler cité : Gravona : transition (it.wiki)";G18 J06 WIT IGN
+Corsica;CC du Sud Corse;comuna_fr;Bonifacio;Bunifaziu;2A041;ligure;;bunifazzinu;;0;"ville de langue ligure (bunifazzinu), de moins en moins parlée ; campagne de la commune corsophone (corsu taravesu & sartinesu / oltramontano sartenese sur G et J)";G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Calcatoggio;Calcatoghju;2A048;cors;transizione;transizione;;0;parler cité : Cinarca : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Campo;Campu;2A056;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Cannelle;I Canneddi;2A060;cors;transizione;transizione;;0;parler cité : Cinarca : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Carbini;Carbini;2A061;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Carbuccia;Carbuccia;2A062;cors;transizione;transizione;;0;"J : oltramontano ; parler cité : Gravona : transition (it.wiki)";G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Cardo-Torgia;Cardu è Torghja;2A064;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Cargèse;Carghjese;2A065;cors;transizione;transizione;el;0;"colonie grecque (1676) ; le grec ne sert plus qu’à la liturgie (it.wiki) ; « grecu di Carghjese » sur G";G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Cargiaca;Carghjaca;2A066;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Casaglione;Casaglione;2A070;cors;transizione;transizione;;0;parler cité : Cinarca : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Casalabriva;Casalabriva;2A071;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Cauro;Cavru;2A085;cors;transizione;transizione;;0;J : oltramontano;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Ciamannacce;Ciamanaccia;2A089;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Coggia;Coghja;2A090;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Cognocoli-Monticchi;Cugnoculu è Muntichji;2A091;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Conca;Conca;2A092;cors;oltramuntincu;sartinesu;;0;lu taravesu sur J, aucune voisine dans ce parler : rangée avec ses voisines (sartinesu);G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Corrano;Currà;2A094;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Coti-Chiavari;Coti Chjavari;2A098;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Cozzano;Cuzzà;2A099;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Cristinacce;E Cristinacce;2A100;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CA du Pays Ajaccien;comuna_fr;Cuttoli-Corticchiato;Cutuli è Curtichjatu;2A103;cors;transizione;transizione;;0;"J : oltramontano ; parler cité : Gravona : transition (it.wiki)";G18 J06 WIT IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Eccica-Suarella;Eccica è Suaredda;2A104;cors;transizione;transizione;;0;J : oltramontano;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Évisa;Evisa;2A108;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC du Sud Corse;comuna_fr;Figari;Figari;2A114;cors;oltramuntincu;sartinesu;;0;parler cité : parler de Figari (iddu, idda);G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Foce;Foci è Bilzesi;2A115;cors;oltramuntincu;sartinesu;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Forciolo;U Furciolu;2A117;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Fozzano;Fozzà;2A118;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Frasseto;Frassetu;2A119;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Giuncheto;Ghjunchetu;2A127;cors;oltramuntincu;sartinesu;;0;;G18 J06 IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Granace;Granaccia;2A128;cors;oltramuntincu;sartinesu;;0;;G18 J06 IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Grossa;A Grossa;2A129;cors;oltramuntincu;sartinesu;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Grosseto-Prugna;Grussettu è Prugna;2A130;cors;oltramuntincu;taravesu;;0;parler cité : hameau de Porticcio : transition (it.wiki : le pumuntincu commence au sud de Porticcio);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Guagno;Guagnu;2A131;cors;cismuntincu;cismunticu;;0;"J : transizione ; limite de zone sur G (à moins de 1,5 km : pumunticu di transizione)";G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Guargualé;Guargualè;2A132;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Guitera-les-Bains;A Vuttera;2A133;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC du Sud Corse;comuna_fr;Lecci;Lecci;2A139;cors;oltramuntincu;sartinesu;;0;lu taravesu sur J, aucune voisine dans ce parler : rangée avec ses voisines (sartinesu);G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Letia;Letia;2A141;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Levie;Livia;2A142;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Lopigna;Lopigna;2A144;cors;transizione;transizione;;0;parler cité : Cinarca : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Loreto-di-Tallano;Laretu d'Attallà;2A146;cors;oltramuntincu;taravesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Marignana;Marignana;2A154;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Mela;Mela;2A158;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Moca-Croce;Macà è Croci;2A160;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC du Sud Corse;comuna_fr;Monacia-d'Aullène;A Munacia d'Auddè;2A163;cors;oltramuntincu;sartinesu;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Murzo;Murzu;2A174;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Ocana;Ocana;2A181;cors;transizione;transizione;;0;J : oltramontano;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Olivese;Livesi;2A186;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Olmeto;Ulmetu;2A189;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Olmiccia;Ulimiccia;2A191;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Orto;Ortu;2A196;cors;cismuntincu;cismunticu;;0;"J : transizione ; limite de zone sur G (à moins de 1,5 km : pumunticu di transizione)";G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Osani;Osani;2A197;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Ota;Ota;2A198;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Palneca;Palleca;2A200;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Partinello;Partinellu;2A203;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Pastricciola;Pastricciola;2A204;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CA du Pays Ajaccien;comuna_fr;Peri;I Peri;2A209;cors;transizione;transizione;;0;"J : oltramontano ; parler cité : Gravona : transition (it.wiki)";G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Petreto-Bicchisano;Pitretu è Bicchisgià;2A211;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Piana;A Piana;2A212;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC du Sud Corse;comuna_fr;Pianottoli-Caldarello;Pianottuli è Caldareddu;2A215;cors;oltramuntincu;sartinesu;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Pietrosella;Pitrusedda;2A228;cors;oltramuntincu;taravesu;;0;limite de zone sur G (à moins de 1,5 km : pumunticu di transizione);G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Pila-Canale;Pila è Canali;2A232;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Poggiolo;U Pighjolu;2A240;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC du Sud Corse;comuna_fr;Porto-Vecchio;Portivechju;2A247;cors;oltramuntincu;sartinesu;;0;parler cité : portivechjacciu;G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Propriano;Prupià;2A249;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Quasquara;Quasquara;2A253;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Quenza;Quenza;2A254;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Renno;Rennu;2A258;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Rezza;Reza;2A259;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Rosazia;Rusazia;2A262;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Salice;U salice;2A266;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Sampolo;Sampolu;2A268;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Sari-Solenzara;Sari di Sulinzara;2A269;cors;transizione;transizione;;0;"G : corsu taravesu & sartinesu ; J et it.wiki : transition ; parler cité : parler de Solenzara";G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Sari-d'Orcino;Sari d'Urcinu;2A270;cors;transizione;transizione;;0;parler cité : Cinarca : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CA du Pays Ajaccien;comuna_fr;Sarrola-Carcopino;Sarrula è Carcupinu;2A271;cors;transizione;transizione;;0;parler cité : Gravona : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Sartène;Sartè;2A272;cors;oltramuntincu;sartinesu;;0;parler cité : sartinesu;G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Serra-di-Ferro;A Sarra di Farru;2A276;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Serra-di-Scopamène;A Sarra di Scupamena;2A278;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Serriera;A Sarrera;2A279;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Soccia;A Soccia;2A282;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Sollacaro;Suddacarò;2A284;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Sorbollano;Surbuddà;2A285;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC du Sud Corse;comuna_fr;Sotta;Sotta;2A288;cors;oltramuntincu;sartinesu;;0;;G18 J06 IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Sant'Andréa-d'Orcino;Sant'Andria d'Urcinu;2A295;cors;transizione;transizione;;0;parler cité : Cinarca : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;San-Gavino-di-Carbini;San Gavinu di Carbini;2A300;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Sainte-Lucie-de-Tallano;Santa Lucia di Tallà;2A308;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Santa-Maria-Figaniella;Santa Maria Ficaniedda;2A310;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Santa-Maria-Siché;Santa Maria Sichè;2A312;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Tasso;Tassu;2A322;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CA du Pays Ajaccien;comuna_fr;Tavaco;Tavacu;2A323;cors;transizione;transizione;;0;parler cité : Gravona : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Tavera;Tavera;2A324;cors;transizione;transizione;;0;"J : oltramontano ; parler cité : Gravona : transition (it.wiki)";G18 J06 WIT IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Tolla;Todda;2A326;cors;transizione;transizione;;0;J : oltramontano;G18 J06 IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Ucciani;Aucciani;2A330;cors;transizione;transizione;;0;"J : oltramontano ; parler cité : Gravona : transition (it.wiki)";G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Urbalacone;Urbalaconu;2A331;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CA du Pays Ajaccien;comuna_fr;Valle-di-Mezzana;Vaddi di Mizana;2A336;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC Celavu-Prunelli;comuna_fr;Vero;Veru;2A345;cors;transizione;transizione;;0;parler cité : Gravona : transition (it.wiki);G18 J06 WIT IGN
+Corsica;CC Spelunca-Liamone;comuna_fr;Vico;Vicu;2A348;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC du Sartenais Valinco Taravo;comuna_fr;Viggianello;Vighjaneddu;2A349;cors;oltramuntincu;taravesu;;0;;G18 J06 IGN
+Corsica;CA du Pays Ajaccien;comuna_fr;Villanova;Villanova;2A351;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Zérubia;Zirubia;2A357;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Zévaco;Zevacu;2A358;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Zicavo;Zicavu;2A359;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de la Pieve de l'Ornano et du Taravo;comuna_fr;Zigliara;Ziddara;2A360;cors;oltramuntincu;taravesu;;0;parler cité : taravesu (vallée du Taravo);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Zonza;Zonza;2A362;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC de l'Alta Rocca;comuna_fr;Zoza;Zoza;2A363;cors;oltramuntincu;sartinesu;;0;parler cité : rucchisgianu (Alta Rocca);G18 J06 WIT IGN
+Corsica;CC de l'Oriente;comuna_fr;Aghione;Aghjone;2B002;cors;cismuntincu;cismunticu;;0;limite de zone sur G (à moins de 1,5 km : pumunticu di transizione);G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Aiti;Aiti;2B003;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Alando;Alandu;2B005;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Albertacce;Albertacce;2B007;cors;cismuntincu;cismunticu;;0;parler cité : niulincu (Niolu);G18 J06 WIT IGN
+Corsica;CC de l'Oriente;comuna_fr;Aléria;Aleria;2B009;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Algajola;L'Algaiola;2B010;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de l'Oriente;comuna_fr;Altiani;Altiani;2B012;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Alzi;L'Alzi;2B013;cors;cismuntincu;nordicu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu);G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Ampriani;Ampriani;2B015;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Antisanti;Antisanti;2B016;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Aregno;Aregnu;2B020;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Asco;Ascu;2B023;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Avapessa;Avapessa;2B025;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Barbaggio;Barbaghju;2B029;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Barrettali;Barrettali;2B030;cors;cismuntincu;capicursinu;;0;;G18 J06 EPCI IGN
+Corsica;CA de Bastia;comuna_fr;Bastia;Bastia;2B033;cors;cismuntincu;nordicu;;0;parler cité : bastiacciu;G18 J06 WIT IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Belgodère;Belgudè;2B034;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de Marana-Golo;comuna_fr;Bigorno;Bigornu;2B036;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Marana-Golo;comuna_fr;Biguglia;Biguglia;2B037;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Bisinchi;Bisinchi;2B039;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Marana-Golo;comuna_fr;Borgo;U Borgu;2B042;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Brando;Brandu;2B043;cors;cismuntincu;capicursinu;;0;G : cismunticu nordicu;G18 J06 EPCI IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Bustanico;Bustanicu;2B045;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Cagnano;Cagnanu;2B046;cors;cismuntincu;capicursinu;;0;"G : cismunticu nordicu ; limite de zone sur G (à moins de 1,5 km : cismunticu capicursinu)";G18 J06 EPCI IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Calacuccia;Calacuccia;2B047;cors;cismuntincu;cismunticu;;0;parler cité : niulincu (Niolu);G18 J06 WIT IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Calenzana;Calinzana;2B049;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Calvi;Calvi;2B050;cors;cismuntincu;cismunticu;lij;0;"ancien parler ligure (calvese), éteint selon it.wiki ; « corsu-ligure calvese » sur G ; parler cité : balaninu (Balagne)";G18 J06 WIT IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Cambia;Cambia;2B051;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Campana;A Campana;2B052;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Campi;Campi;2B053;cors;cismuntincu;nordicu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu);G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Campile;Campile;2B054;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Marana-Golo;comuna_fr;Campitello;Campitellu;2B055;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Canale-di-Verde;Canale di Verde;2B057;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Canari;Canari;2B058;cors;cismuntincu;capicursinu;;0;;G18 J06 EPCI IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Canavaggia;A Canavaghja;2B059;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Carcheto-Brustico;Carchetu è Brusticu;2B063;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Carpineto;U Carpinetu;2B067;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Carticasi;Carticasi;2B068;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Casabianca;A Casabianca;2B069;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Casalta;A Casalta;2B072;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Casamaccioli;Casamacciuli;2B073;cors;cismuntincu;cismunticu;;0;parler cité : niulincu (Niolu);G18 J06 WIT IGN
+Corsica;CC du Centre Corse;comuna_fr;Casanova;A Casanova;2B074;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Casevecchie;E Casevechje;2B075;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Castellare-di-Casinca;U Castellà di Casinca;2B077;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Castellare-di-Mercurio;U Castellà di Mercoriu;2B078;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Castello-di-Rostino;Castellu di Rustinu;2B079;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Castifao;Castifau;2B080;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Castiglione;Castiglione;2B081;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Castineta;Castineta;2B082;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Castirla;Castirla;2B083;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Cateri;I Catari;2B084;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC du Cap Corse;comuna_fr;Centuri;Centuri;2B086;cors;cismuntincu;capicursinu;;0;G : cismunticu nordicu;G18 J06 EPCI IGN
+Corsica;CC de la Costa Verde;comuna_fr;Cervione;Cervioni;2B087;cors;cismuntincu;nordicu;;0;parler cité : parler de Cervioni;G18 J06 WIT IGN
+Corsica;CC de l'Oriente;comuna_fr;Chiatra;Chjatra;2B088;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Corbara;Curbara;2B093;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Corscia;Corscia;2B095;cors;cismuntincu;cismunticu;;0;parler cité : niulincu (Niolu);G18 J06 WIT IGN
+Corsica;CC du Centre Corse;comuna_fr;Corte;Corti;2B096;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Costa;A Costa;2B097;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Croce;A Croce;2B101;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Crocicchia;A Crucichja;2B102;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Erbajolo;Erbaghjolu;2B105;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Érone;Erone;2B106;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Ersa;Ersa;2B107;cors;cismuntincu;capicursinu;;0;G : cismunticu nordicu;G18 J06 EPCI IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Farinole;Farringule;2B109;cors;cismuntincu;nordicu;;0;J : cismontano capocorsino;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Favalello;U Favalellu;2B110;cors;cismuntincu;nordicu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu);G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Felce;Felce;2B111;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Feliceto;U Filicetu;2B112;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Ficaja;Ficaghja;2B113;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Focicchia;Fughjichja;2B116;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CA de Bastia;comuna_fr;Furiani;Furiani;2B120;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Galéria;Galeria;2B121;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Gavignano;Gavignanu;2B122;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Ghisonaccia;A Ghisunaccia;2B123;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Ghisoni;Ghisoni;2B124;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Giocatojo;Ghjucatoghju;2B125;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Giuncaggio;Ghjuncaghju;2B126;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;L'Île-Rousse;Lisula (Isula Rossa);2B134;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Isolaccio-di-Fiumorbo;L'Isulacciu di Fiumorbu;2B135;cors;transizione;transizione;;0;parler cité : fiumorbacciu (Fiumorbo);G18 J06 WIT IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Lama;Lama;2B136;cors;cismuntincu;nordicu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Lano;Lanu;2B137;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Lavatoggio;Lavatoghju;2B138;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de Marana-Golo;comuna_fr;Lento;Lentu;2B140;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Linguizzetta;Linguizzetta;2B143;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Loreto-di-Casinca;Loretu di Casinca;2B145;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Lozzi;Lozzi;2B147;cors;cismuntincu;cismunticu;;0;parler cité : niulincu (Niolu);G18 J06 WIT IGN
+Corsica;CC de Marana-Golo;comuna_fr;Lucciana;Lucciana;2B148;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Lugo-di-Nazza;U Lugu di Nazza;2B149;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Lumio;Lumiu;2B150;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC du Cap Corse;comuna_fr;Luri;Luri;2B152;cors;cismuntincu;capicursinu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu nordicu);G18 J06 EPCI IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Manso;U Mansu;2B153;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de l'Oriente;comuna_fr;Matra;Matra;2B155;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Mausoléo;U Musuleu;2B156;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Mazzola;A Mazzola;2B157;cors;cismuntincu;cismunticu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu nordicu);G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Meria;Meria;2B159;cors;cismuntincu;capicursinu;;0;G : cismunticu nordicu;G18 J06 EPCI IGN
+Corsica;CC de l'Oriente;comuna_fr;Moïta;Moita;2B161;cors;cismuntincu;cismunticu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu nordicu);G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Moltifao;Moltifau;2B162;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Monacia-d'Orezza;A Munacia d'Orezza;2B164;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Moncale;U Mucale;2B165;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de Marana-Golo;comuna_fr;Monte;Monte;2B166;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Montegrosso;Montegrossu;2B167;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Monticello;Munticellu;2B168;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Morosaglia;Merusaglia;2B169;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Morsiglia;Mursiglia;2B170;cors;cismuntincu;capicursinu;;0;G : cismunticu nordicu;G18 J06 EPCI IGN
+Corsica;CC du Centre Corse;comuna_fr;Muracciole;E Muracciole;2B171;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Murato;Muratu;2B172;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Muro;Muru;2B173;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Nessa;Nesce;2B175;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Nocario;Nucariu;2B176;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Centre Corse;comuna_fr;Noceta;Nuceta;2B177;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Nonza;Nonza;2B178;cors;cismuntincu;capicursinu;;0;;G18 J06 EPCI IGN
+Corsica;CC de la Costa Verde;comuna_fr;Novale;A Nuvale;2B179;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Novella;Nuvella;2B180;cors;cismuntincu;cismunticu;;0;"limite de zone sur G (à moins de 1,5 km : cismunticu nordicu) ; parler cité : balaninu (Balagne)";G18 J06 WIT IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Occhiatana;Ochjatana;2B182;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC du Cap Corse;comuna_fr;Ogliastro;Ogliastru;2B183;cors;cismuntincu;capicursinu;;0;;G18 J06 EPCI IGN
+Corsica;CC du Cap Corse;comuna_fr;Olcani;Olcani;2B184;cors;cismuntincu;capicursinu;;0;;G18 J06 EPCI IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Oletta;Oletta;2B185;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Olmeta-di-Capocorso;Olmeta di Capicorsu;2B187;cors;cismuntincu;capicursinu;;0;;G18 J06 EPCI IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Olmeta-di-Tuda;Olmeta di Tuda;2B188;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Olmi-Cappella;Olmi è Cappella;2B190;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de Marana-Golo;comuna_fr;Olmo;L'Olmu;2B192;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Omessa;Omessa;2B193;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Ortale;L'Ortale;2B194;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Ortiporio;Ortiporiu;2B195;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Palasca;Palasca;2B199;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de l'Oriente;comuna_fr;Pancheraccia;A Pancheraccia;2B201;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Parata;A Parata;2B202;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Patrimonio;Patrimoniu;2B205;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Penta-Acquatella;Penta è Acquatella;2B206;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Penta-di-Casinca;A Penta di Casinca;2B207;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Perelli;I Pirelli;2B208;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Pero-Casevecchie;Peru è Casevechje;2B210;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Pianello;U Pianellu;2B213;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Piano;U Pianu;2B214;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Piazzali;I Piazzali;2B216;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Piazzole;E Piazzole;2B217;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Piedicorte-di-Gaggio;Pedicorti di Caghju;2B218;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Piedicroce;Pedicroce;2B219;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Piedigriggio;Pedigrisgiu;2B220;cors;cismuntincu;nordicu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu);G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Piedipartino;U Pedipartinu;2B221;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Pie-d'Orezza;U Ped'Orezza;2B222;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Pietralba;Petralba;2B223;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC du Cap Corse;comuna_fr;Pietracorbara;A Petracurbara;2B224;cors;cismuntincu;capicursinu;;0;G : cismunticu nordicu;G18 J06 EPCI IGN
+Corsica;CC de l'Oriente;comuna_fr;Pietra-di-Verde;A Petra di Verde;2B225;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Pietraserena;Petraserena;2B226;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Pietricaggio;U Petricaghju;2B227;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Pietroso;U Petrosu;2B229;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Piève;A Pieve;2B230;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Pigna;Pigna;2B231;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC du Cap Corse;comuna_fr;Pino;Pinu;2B233;cors;cismuntincu;capicursinu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu nordicu);G18 J06 EPCI IGN
+Corsica;CC de la Costa Verde;comuna_fr;Piobetta;Piupeta;2B234;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Pioggiola;Pioghjula;2B235;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Poggio-di-Nazza;U Poghju di Nazza;2B236;cors;transizione;transizione;;0;;G18 J06 IGN
+Corsica;CC du Centre Corse;comuna_fr;Poggio-di-Venaco;U Poghju di Venacu;2B238;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Poggio-d'Oletta;U Poghju d'Oletta;2B239;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Poggio-Marinaccio;U Poghju Marinacciu;2B241;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Poggio-Mezzana;Poghju è Mezana;2B242;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Polveroso;U Pulverosu;2B243;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Popolasca;Upulasca;2B244;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Porri;Porri;2B245;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;La Porta;A Porta;2B246;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Prato-di-Giovellina;U Pratu di Ghjuvellina;2B248;cors;cismuntincu;cismunticu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu nordicu);G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Prunelli-di-Casacconi;I Prunelli di Casacconi;2B250;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Prunelli-di-Fiumorbo;I Prunelli di Fiumorbu;2B251;cors;transizione;transizione;;0;parler cité : fiumorbacciu (Fiumorbo);G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Pruno;U Prunu;2B252;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Quercitello;U Quarcitellu;2B255;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Rapaggio;Rapaghju;2B256;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Rapale;Rapale;2B257;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Centre Corse;comuna_fr;Riventosa;A Riventosa;2B260;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Rogliano;Ruglianu;2B261;cors;cismuntincu;capicursinu;;0;G : cismunticu nordicu;G18 J06 EPCI IGN
+Corsica;CC du Centre Corse;comuna_fr;Rospigliani;Ruspigliani;2B263;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Rusio;Rusiu;2B264;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Rutali;Rutali;2B265;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Saliceto;U Salicetu;2B267;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Scata;Scata;2B273;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Marana-Golo;comuna_fr;Scolca;Scolca;2B274;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Sermano;Sermanu;2B275;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Serra-di-Fiumorbo;Serra di Fiumorbu;2B277;cors;transizione;transizione;;0;"G : corsu taravesu & sartinesu ; J et it.wiki : transition ; parler cité : fiumorbacciu (Fiumorbo)";G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Silvareccio;U Silvarecciu;2B280;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Sisco;Siscu;2B281;cors;cismuntincu;capicursinu;;0;G : cismunticu nordicu;G18 J06 EPCI IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Solaro;U Sulaghju;2B283;cors;transizione;transizione;;0;"G : corsu taravesu & sartinesu ; J et it.wiki : transition";G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Sorbo-Ocagnano;Sorbu è Ocagnanu;2B286;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Sorio;Soriu;2B287;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Soveria;Suveria;2B289;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Speloncato;U Spiluncatu;2B290;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Stazzona;A Stazzona;2B291;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Sant'Andréa-di-Bozio;Sant'Andria di Boziu;2B292;cors;cismuntincu;cismunticu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu nordicu);G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Sant'Andréa-di-Cotone;Sant'Andria di u Cotone;2B293;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Sant'Antonino;Sant'Antuninu;2B296;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;San-Damiano;San Damianu;2B297;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Saint-Florent;San Fiurenzu;2B298;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;San-Gavino-d'Ampugnani;San Gavinu d'Ampugnani;2B299;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;San-Gavino-di-Tenda;San Gavinu di Tenda;2B301;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;San-Giovanni-di-Moriani;San Ghjuvanni di Moriani;2B302;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;San-Giuliano;San Ghjulianu;2B303;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;San-Lorenzo;San Lorenzu;2B304;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CA de Bastia;comuna_fr;San-Martino-di-Lota;San Martinu di Lota;2B305;cors;cismuntincu;nordicu;;0;J : cismontano capocorsino;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Santa-Lucia-di-Mercurio;Santa Lucia di Mercoriu;2B306;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Santa-Lucia-di-Moriani;Santa Lucia di Moriani;2B307;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CA de Bastia;comuna_fr;Santa-Maria-di-Lota;Santa Maria di Lota;2B309;cors;cismuntincu;nordicu;;0;J : cismontano capocorsino;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Santa-Maria-Poggio;Santa Maria Poghju;2B311;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;San-Nicolao;San Niculaiu;2B313;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Santo-Pietro-di-Tenda;Santu Petru di Tenda;2B314;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Centre Corse;comuna_fr;Santo-Pietro-di-Venaco;San Petru di Venacu;2B315;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Santa-Reparata-di-Balagna;Santa Riparata di Balagna;2B316;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de la Costa Verde;comuna_fr;Santa-Reparata-di-Moriani;Santa Riparata di Moriani;2B317;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Taglio-Isolaccio;Tagliu è Isulacciu;2B318;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Talasani;Talasani;2B319;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Tallone;Tallone;2B320;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Tarrano;Tarranu;2B321;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Cap Corse;comuna_fr;Tomino;Tuminu;2B327;cors;cismuntincu;capicursinu;;0;G : cismunticu nordicu;G18 J06 EPCI IGN
+Corsica;CC de l'Oriente;comuna_fr;Tox;Tocchisu;2B328;cors;cismuntincu;cismunticu;;0;limite de zone sur G (à moins de 1,5 km : cismunticu nordicu);G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Tralonca;Tralonca;2B329;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Urtaca;Urtaca;2B332;cors;cismuntincu;nordicu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC Nebbiu - Conca d'Oro;comuna_fr;Vallecalle;Vallecalle;2B333;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Valle-d'Alesani;E Valli d'Alisgiani;2B334;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Costa Verde;comuna_fr;Valle-di-Campoloro;A Valle di Campulori;2B335;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC Pasquale Paoli;comuna_fr;Valle-di-Rostino;Valle di Rustinu;2B337;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Valle-d'Orezza;A Valle d'Orezza;2B338;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Vallica;A Vallica;2B339;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de la Costa Verde;comuna_fr;Velone-Orneto;Vilone è Urnetu;2B340;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Centre Corse;comuna_fr;Venaco;Venacu;2B341;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Ventiseri;Vintisari;2B342;cors;transizione;transizione;;0;"G : corsu taravesu & sartinesu ; J et it.wiki : transition";G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Venzolasca;A Venzulasca;2B343;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Verdèse;A Verdese;2B344;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Vescovato;U Viscuvatu;2B346;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Vezzani;Vizzani;2B347;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de Marana-Golo;comuna_fr;Vignale;Vignale;2B350;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Île-Rousse - Balagne;comuna_fr;Ville-di-Paraso;E Ville di Parasu;2B352;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CA de Bastia;comuna_fr;Ville-di-Pietrabugno;E Ville di Petrabugnu;2B353;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC du Centre Corse;comuna_fr;Vivario;Vivariu;2B354;cors;cismuntincu;cismunticu;;0;"J : transizione ; parler cité : hameau de Vizzavona : transition (it.wiki)";G18 J06 WIT IGN
+Corsica;CC de la Castagniccia-Casinca;comuna_fr;Volpajola;A Vulpaiola;2B355;cors;cismuntincu;nordicu;;0;;G18 J06 IGN
+Corsica;CC de l'Oriente;comuna_fr;Zalana;Zalana;2B356;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de Calvi Balagne;comuna_fr;Zilia;Zilia;2B361;cors;cismuntincu;cismunticu;;0;parler cité : balaninu (Balagne);G18 J06 WIT IGN
+Corsica;CC de l'Oriente;comuna_fr;Zuani;Zuani;2B364;cors;cismuntincu;cismunticu;;0;;G18 J06 IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;San-Gavino-di-Fiumorbo;San Gavinu di Fiumorbu;2B365;cors;transizione;transizione;;0;"G : corsu taravesu & sartinesu ; J et it.wiki : transition ; parler cité : fiumorbacciu (Fiumorbo)";G18 J06 WIT IGN
+Corsica;CC de Fium'Orbu Castellu;comuna_fr;Chisa;Chisà;2B366;cors;transizione;transizione;;0;"G : corsu taravesu & sartinesu ; J et it.wiki : transition";G18 J06 WIT IGN
+Toscana;Provincia di Livorno;comune_it;Capraia Isola;Capraia Isula;it:049005;desaparegut;cismuntincu;capraiese;;0;"parler corse de l’île, éteint au XXe siècle (fr.wiki, it.wiki) ; autrefois rattaché à la zone du Cap Corse (Retali-Medori 2024, contrôle) ; carte J : capraiese";WFR WIT J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Alghero;;it:112001;vesina;;;;0;catalan (l’Alguer), voir SIG/catalan;ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Bulzi;;it:112013;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Castelsardo;Caltheddu;it:112016;cors;gadduresu;castiddanesu;sas;0;castellanese : variété du gallurais pour la loi (LR 22/2018), parler de passage entre gallurais et sassarais (it.wiki);LR18 WGAL WSAS J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Chiaramonti;;it:112018;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Erula;Erula;it:112021;cors;gadduresu;;;0;variante locale : hors de la Gallura historique (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Laerru;;it:112028;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Muros;;it:112033;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Nulvi;;it:112036;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Olmedo;;it:112037;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Osilo;;it:112038;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Ossi;;it:112039;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Ozieri;;it:112040;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Perfugas;;it:112043;vesina;;;gal;0;"commune de langue sarde (logudorais) ; gallurais sur une partie du territoire (it.wiki, co.wiki)";WGAL ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Porto Torres;Porthu Torra;it:112045;cors;sassaresu;;;0;variété « provinciale » du sassarese (it.wiki);WSAS LR97 LR18 J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Santa Maria Coghinas;Cuzina;it:112049;cors;gadduresu;;;0;variante locale : cuzinesu (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Sassari;Sassari;it:112050;cors;sassaresu;;;0;sassarese de la ville;WSAS LR97 LR18 J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Sedini;Séddini;it:112051;cors;gadduresu;castiddanesu;sas;0;castellanese (sedinese) : variété du gallurais pour la loi (LR 22/2018), parler de passage entre gallurais et sassarais (it.wiki);LR18 WGAL WSAS J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Sennori;;it:112053;vesina;;;;0;"commune voisine de langue sarde (logudorais) ; sarde influencé par le sassarese (it.wiki)";ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Sorso;Sossu;it:112055;cors;sassaresu;;;0;variété « provinciale » du sassarese (it.wiki);WSAS LR97 LR18 J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Stintino;Isthintini;it:112056;cors;sassaresu;;;0;variété « provinciale » du sassarese (it.wiki);WSAS LR97 LR18 J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Tergu;Zélgu;it:112057;cors;gadduresu;castiddanesu;sas;0;castellanese : variété du gallurais pour la loi (LR 22/2018), parler de passage entre gallurais et sassarais (it.wiki);LR18 WGAL WSAS J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Tissi;;it:112059;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Tula;;it:112061;vesina;;;gal;0;"commune de langue sarde (logudorais) ; gallurais sur une partie du territoire (it.wiki, co.wiki)";WGAL ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Uri;;it:112062;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Usini;;it:112063;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Valledoria;Codaruina;it:112064;cors;gadduresu;;sas;0;gallurais (agghjesu au centre, Codaruina) et castellanese aux hameaux de La Muddizza et La Ciaccia (it.wiki);WGAL J06 ISTAT
+Sardegna;Città metropolitana di Sassari;comune_it;Viddalba;Viddalba;it:112065;cors;gadduresu;;;0;variante locale : agghjesu (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Aggius;Agghju;it:113001;cors;gadduresu;;;0;variante locale : agghjesu (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Aglientu;Aglientu;it:113002;cors;gadduresu;;;0;;WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Alà dei Sardi;;it:113003;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Arzachena;Alzachena;it:113004;cors;gadduresu;;;0;;WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Badesi;Badesi;it:113005;cors;gadduresu;;;0;variante locale : agghjesu (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Berchidda;;it:113006;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Bortigiadas;Bultigghjata;it:113007;cors;gadduresu;;;0;variante locale : variante de Bortigiadas (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Budoni;;it:113009;vesina;;;gal;0;"commune de langue sarde (logudorais) ; gallurais sur une partie du territoire (it.wiki, co.wiki)";WGAL ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Calangianus;Caragnani;it:113010;cors;gadduresu;;;0;variante locale : caragnanesu (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Golfo Aranci;Figari;it:113011;cors;gadduresu;;sc;0;une grande partie du territoire de langue sarde (logudorais), gallurais dans les campagnes (it.wiki, co.wiki);WGAL J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;La Maddalena;A Madalena;it:113012;cors;gadduresu;isulanu;;0;"isulanu : variété du gallurais pour la loi (LR 22/2018, art. 8) ; corse du Sud (comme Sartène) pour la dialectologie (it.wiki, fr.wiki ; carte J : oltramontano sartenese)";LR18 WGAL WFR J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Loiri Porto San Paolo;Loiri Poltu Santu Paulu;it:113013;cors;gadduresu;;;0;;WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Luogosanto;Locusantu;it:113014;cors;gadduresu;;;0;;WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Luras;;it:113015;vesina;;;;0;"enclave de langue sarde (logudorais) entourée de communes galluraises (it.wiki « isola linguistica » ; point gris de J)";WGAL J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Monti;;it:113016;vesina;;;;0;commune voisine de langue sarde (logudorais);ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Olbia;Tarranoa;it:113017;cors;gadduresu;;sc;0;"ville historiquement de langue sarde (logudorais), gallurais répandu dans les campagnes depuis le XIXe s. (it.wiki, co.wiki) ; 39,9 %% de locuteurs actifs du gallurais, 44,6 %% du sarde (Oppo 2007)";WGAL J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Oschiri;;it:113018;vesina;;;gal;0;"commune de langue sarde (logudorais) ; gallurais sur une partie du territoire (it.wiki, co.wiki)";WGAL ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Padru;;it:113019;vesina;;;gal;0;"commune de langue sarde (logudorais) ; gallurais sur une partie du territoire (it.wiki, co.wiki)";WGAL ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Palau;Lu Palau;it:113020;cors;gadduresu;;;0;;WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;San Teodoro;Santu Tiadoru;it:113021;cors;gadduresu;;;0;variante locale : Gallura côtière (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Santa Teresa Gallura;Lungoni;it:113022;cors;gadduresu;;;0;variante locale : teresinu / lungunesu au bourg seulement (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Sant'Antonio di Gallura;Sant'Antoni di Gaddura;it:113023;cors;gadduresu;;;0;variante locale : caragnanesu (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Telti;Telti;it:113024;cors;gadduresu;;;0;;WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Tempio Pausania;Tempiu;it:113025;cors;gadduresu;;;0;variante locale : timpiesu, variété de référence (hameau de Nuchis : variante propre) (it.wiki);WGAL LR97 LR18 J06 ISTAT
+Sardegna;Provincia del Nord-Est Sardegna;comune_it;Trinità d'Agultu e Vignola;Trinitài d'Agultu è Vignola;it:113026;cors;gadduresu;;;0;variante locale : agghjesu (it.wiki);WGAL LR97 LR18 J06 ISTAT

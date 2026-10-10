@@ -179,6 +179,43 @@ export const LENGAS = {
 		atribucion:
 			'Alsacian e francic : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), BKG VG250 (dl-de/by-2-0), swisstopo, © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">contributors OpenStreetMap</a> (ODbL) ; limits d\'aprèp Wenker, Constant This (1887) e las cartas « Sprachen in Elsass-Lothringen », « Rheinischer Fächer », « Alemannic dialects » de Wikimedia Commons (CC BY-SA)'
 	},
+	// Lo còrs (2026-10-10) : los dialèctes de Corsega (cartas de Wikimedia
+	// Commons calada), lo galurés e lo sassarés de Sardenha (leis regionalas
+	// 26/1997 e 22/2018), Bonifacio ligur, Capraia escantit ; Corsega a despart
+	// (SIG/cors/FONTS.md)
+	cors: {
+		kod: 'cors',
+		pref: 'co-',
+		lang: 'co',
+		url: '/data/cors.json',
+		nom: { oc: 'còrs', fr: 'corse', endo: 'corsu' },
+		eti: [9.05, 42.15],
+		// ocres e tèrras cuechas (lo granit de Corsega), un blau pel ligur
+		color: { sorne: '#f08a5c', clar: '#a8401a', dalt: '#e69f00' },
+		tèxt: { sorne: '#ffe3d6', clar: '#5c1f08', dalt: '#fff0d0' },
+		dial: {
+			sorne: { cismuntincu: '#ff8a5c', transizione: '#ffbf6b', oltramuntincu: '#e0503a', gadduresu: '#d99a5a', sassaresu: '#b8783f', bunifazzinu: '#7fb0ff', capraiese: '#ff8a5c' },
+			clar: { cismuntincu: '#c2501f', transizione: '#a8701a', oltramuntincu: '#9a2a1a', gadduresu: '#8a5a2a', sassaresu: '#6a4a2a', bunifazzinu: '#2f5fb0', capraiese: '#c2501f' },
+			dalt: { cismuntincu: '#e69f00', transizione: '#f0e442', oltramuntincu: '#d55e00', gadduresu: '#cc79a7', sassaresu: '#999999', bunifazzinu: '#0072b2', capraiese: '#bbbbbb' }
+		},
+		apart: { 'cors-franca': { dins: ['cismuntincu', 'transizione', 'oltramuntincu', 'bunifazzinu'] } },
+		// noms corses ; los occitans son de validar
+		pastilhas: [
+			{ k: 'cors-franca', co: 'Corsica', oc: 'Corsega', fr: 'Corse' },
+			{ k: 'cismuntincu', co: 'cismuntincu', oc: 'còrs del nòrd', fr: 'corse du Nord' },
+			{ k: 'transizione', co: 'transizione', long: 'parlà di transizione', oc: 'parlars de transicion', fr: 'parlers de transition' },
+			{ k: 'oltramuntincu', co: 'pumuntincu', oc: 'còrs del sud', fr: 'corse du Sud' },
+			{ k: 'gadduresu', co: 'gadduresu', oc: 'gallurés', fr: 'gallurais' },
+			{ k: 'sassaresu', co: 'sassaresu', oc: 'sassarés', fr: 'sassarais' },
+			{ k: 'bunifazzinu', co: 'bunifazzinu', oc: 'bonifacenc', fr: 'bonifacien (ligure)' },
+			{ k: 'capraiese', co: 'capraiese', oc: 'parlar de Capraia', fr: 'parler de Capraia (éteint)' }
+		],
+		sota: { oc: 'parlar còrs', fr: 'parler corse' },
+		sotaApart: { oc: 'còrs de França', fr: 'corse de France' },
+		nomCarta: 'CORSU',
+		atribucion:
+			'Còrs : comunas IGN ADMIN EXPRESS 2026 (Licéncia dobèrta), comunas ISTAT (CC BY 4.0) ; parlars d\'aprèp las cartas « Parlers de Corse » de Wikimedia Commons (CC BY-SA), leis regionalas sardas 26/1997 e 22/2018 ; noms corses de la Collectivitat de Corsega (Licéncia dobèrta)'
+	},
 	// Lo breton (2026-10-10) : limit de Sébillot (1886, estat istoric coma per
 	// l'occitan), quatre dialèctes d'aprèp los ancians evescats, breton escantit
 	// del país de Guerranda pus palle, zòna mixta en asclas (SIG/breton/FONTS.md)

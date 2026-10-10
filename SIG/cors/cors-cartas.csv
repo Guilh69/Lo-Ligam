@@ -1,0 +1,454 @@
+codi;nom;G_cl;G_dist_km;G_disc;G_poly;G_cobert;J_cl;J_dist_km;J_disc;J_poly;J_cobert
+2A001;Afa;transizione;0.0;transizione:1.00;transizione:0.90 ligure:0.10;0.93;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A004;Ajaccio;ligure;0.0;ligure:0.99;transizione:0.58 ligure:0.42;0.82;transizione;0.0;transizione:0.97;transizione:0.97 oltramontano:0.03;0.65
+2A006;Alata;transizione;0.0;transizione:1.00;transizione:0.95 ligure:0.05;0.93;transizione;0.0;transizione:1.00;transizione:1.00;0.98
+2A008;Albitreccia;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:0.55 transizione:0.42 ligure:0.03;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A011;Altagène;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A014;Ambiegna;transizione;0.22;transizione:1.00;transizione:1.00;0.85;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A017;Appietto;transizione;0.0;transizione:1.00;transizione:1.00;0.9;transizione;0.0;transizione:1.00;transizione:1.00;0.9
+2A018;Arbellara;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:0.85 sartenese:0.15;sartenese:0.58 oltramontano:0.42;1.0
+2A019;Arbori;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A021;Argiusta-Moriccio;taravesu_sartinesu;0.11;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.87;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A022;Arro;transizione;0.0;transizione:1.00;transizione:1.00;0.92;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A024;Aullène;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.93;oltramontano;0.0;oltramontano:0.80 sartenese:0.20;oltramontano:1.00;1.0
+2A026;Azilone-Ampaza;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.97;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A027;Azzana;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A028;Balogna;transizione;0.0;transizione:1.00;transizione:1.00;0.95;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A031;Bastelica;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:0.70 transizione:0.30;0.86;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A032;Bastelicaccia;ligure;0.0;ligure:1.00;ligure:0.73 transizione:0.27;0.94;oltramontano;0.0;oltramontano:0.98 transizione:0.02;oltramontano:0.94 transizione:0.06;0.7
+2A035;Belvédère-Campomoro;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.89;sartenese;0.31;sartenese:1.00;sartenese:1.00;0.51
+2A038;Bilia;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A040;Bocognano;transizione;0.0;transizione:1.00;transizione:1.00;0.92;oltramontano;0.0;oltramontano:1.00;oltramontano:0.62 transizione:0.38;1.0
+2A041;Bonifacio;ligure;0.77;ligure:1.00;taravesu_sartinesu:0.67 ligure:0.33;0.87;sartenese;0.44;sartenese:0.72 ligure:0.28;sartenese:0.95 ligure:0.05;0.91
+2A048;Calcatoggio;transizione;0.11;transizione:1.00;transizione:1.00;0.8;transizione;0.0;transizione:1.00;transizione:1.00;0.56
+2A056;Campo;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.89;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A060;Cannelle;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A061;Carbini;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.98;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A062;Carbuccia;transizione;0.0;transizione:1.00;transizione:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A064;Cardo-Torgia;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A065;Cargèse;grecu;0.0;grecu:1.00;grecu:0.66 transizione:0.34;0.88;transizione;0.0;transizione:1.00;transizione:1.00;0.91
+2A066;Cargiaca;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:0.52 oltramontano:0.48;oltramontano:0.75 sartenese:0.25;1.0
+2A070;Casaglione;transizione;0.0;transizione:1.00;transizione:1.00;0.99;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A071;Casalabriva;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A085;Cauro;transizione;0.0;transizione:0.97 taravesu_sartinesu:0.03;transizione:0.62 taravesu_sartinesu:0.20 ligure:0.18;0.95;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A089;Ciamannacce;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.97;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A090;Coggia;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A091;Cognocoli-Monticchi;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.9;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A092;Conca;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.94;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;0.92
+2A094;Corrano;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A098;Coti-Chiavari;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:0.91 transizione:0.09;0.87;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;0.76
+2A099;Cozzano;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.99;oltramontano;0.0;oltramontano:1.00;oltramontano:0.65 transizione:0.35;1.0
+2A100;Cristinacce;transizione;0.0;transizione:1.00;transizione:0.89 cismunticu:0.11;0.87;transizione;0.0;transizione:1.00;transizione:0.60 cismontano:0.40;1.0
+2A103;Cuttoli-Corticchiato;transizione;0.0;transizione:1.00;transizione:1.00;0.88;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A104;Eccica-Suarella;transizione;0.0;transizione:1.00;transizione:0.80 ligure:0.15 taravesu_sartinesu:0.04;0.97;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A108;Évisa;transizione;0.0;transizione:1.00;transizione:0.76 cismunticu:0.24;0.96;transizione;0.0;transizione:1.00;transizione:0.83 cismontano:0.17;1.0
+2A114;Figari;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.93;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A115;Foce;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:1.00;sartenese:1.00;0.79
+2A117;Forciolo;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A118;Fozzano;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:0.90 sartenese:0.10;1.0
+2A119;Frasseto;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.83;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A127;Giuncheto;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A128;Granace;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.98;sartenese;0.55;sartenese:1.00;sartenese:1.00;0.49
+2A129;Grossa;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A130;Grosseto-Prugna;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:0.43 ligure:0.42 transizione:0.14;0.99;oltramontano;0.0;oltramontano:1.00;oltramontano:0.91 transizione:0.09;0.96
+2A131;Guagno;cismunticu;0.0;cismunticu:0.53 transizione:0.47;cismunticu:0.77 transizione:0.23;1.0;transizione;0.0;transizione:1.00;transizione:0.78 cismontano:0.22;1.0
+2A132;Guargualé;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A133;Guitera-les-Bains;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.99;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A139;Lecci;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.98;oltramontano;0.0;oltramontano:1.00;oltramontano:0.65 sartenese:0.35;0.96
+2A141;Letia;transizione;0.0;transizione:1.00;transizione:0.75 cismunticu:0.25;1.0;transizione;0.0;transizione:1.00;transizione:0.59 cismontano:0.41;1.0
+2A142;Levie;taravesu_sartinesu;0.31;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.95;sartenese;0.0;sartenese:1.00;sartenese:1.00;0.88
+2A144;Lopigna;transizione;0.0;transizione:1.00;transizione:1.00;0.85;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A146;Loreto-di-Tallano;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:0.60 sartenese:0.40;sartenese:0.60 oltramontano:0.40;1.0
+2A154;Marignana;transizione;0.0;transizione:1.00;transizione:0.98;0.99;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A158;Mela;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.92;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A160;Moca-Croce;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.95;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A163;Monacia-d'Aullène;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.96;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A174;Murzo;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A181;Ocana;transizione;0.0;transizione:1.00;transizione:1.00;0.99;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;0.94
+2A186;Olivese;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.94;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A189;Olmeto;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.73;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A191;Olmiccia;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:1.00;sartenese:1.00;0.98
+2A196;Orto;cismunticu;0.0;cismunticu:0.63 transizione:0.37;cismunticu:0.93 transizione:0.07;1.0;transizione;0.0;transizione:1.00;transizione:0.51 cismontano:0.49;1.0
+2A197;Osani;transizione;0.0;transizione:1.00;transizione:0.88 cismunticu:0.12;1.0;transizione;0.0;transizione:1.00;transizione:1.00;0.59
+2A198;Ota;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:1.00;transizione:0.99;0.84
+2A200;Palneca;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:0.87 transizione:0.13;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:0.73 transizione:0.27;1.0
+2A203;Partinello;transizione;0.0;transizione:1.00;transizione:0.82 cismunticu:0.18;0.91;transizione;0.0;transizione:1.00;transizione:0.98;1.0
+2A204;Pastricciola;transizione;0.0;transizione:0.96 cismunticu:0.04;transizione:0.56 cismunticu:0.44;0.98;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A209;Peri;transizione;0.0;transizione:1.00;transizione:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:0.85 transizione:0.15;1.0
+2A211;Petreto-Bicchisano;taravesu_sartinesu;0.55;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.92;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A212;Piana;transizione;0.11;transizione:1.00;transizione:1.00;0.92;transizione;0.0;transizione:1.00;transizione:1.00;0.76
+2A215;Pianottoli-Caldarello;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.91;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A228;Pietrosella;taravesu_sartinesu;0.0;taravesu_sartinesu:0.59 transizione:0.41;transizione:0.70 taravesu_sartinesu:0.30;0.83;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;0.93
+2A232;Pila-Canale;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.98;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A240;Poggiolo;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A247;Porto-Vecchio;taravesu_sartinesu;0.16;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.86;sartenese;0.0;sartenese:0.98;sartenese:1.00;0.88
+2A249;Propriano;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:0.99;sartenese:0.70 oltramontano:0.30;0.56
+2A253;Quasquara;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.67;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A254;Quenza;taravesu_sartinesu;0.47;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.88;sartenese;0.0;sartenese:0.96 oltramontano:0.04;oltramontano:0.89 sartenese:0.11;1.0
+2A258;Renno;transizione;0.0;transizione:1.00;transizione:1.00;0.94;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A259;Rezza;transizione;0.0;transizione:1.00;transizione:1.00;0.93;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A262;Rosazia;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A266;Salice;transizione;0.0;transizione:1.00;transizione:1.00;0.89;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A268;Sampolo;taravesu_sartinesu;0.11;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.85;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A269;Sari-Solenzara;taravesu_sartinesu;0.0;taravesu_sartinesu:0.99;taravesu_sartinesu:1.00;0.93;transizione;0.99;transizione:0.97 oltramontano:0.03;oltramontano:0.96 transizione:0.04;0.83
+2A270;Sari-d'Orcino;transizione;0.0;transizione:1.00;transizione:1.00;0.82;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A271;Sarrola-Carcopino;transizione;0.0;transizione:1.00;transizione:0.93 ligure:0.07;0.94;transizione;0.0;transizione:1.00;transizione:0.99;0.97
+2A272;Sartène;taravesu_sartinesu;0.64;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.94;sartenese;0.0;sartenese:0.99;sartenese:1.00;0.97
+2A276;Serra-di-Ferro;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.91;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;0.94
+2A278;Serra-di-Scopamène;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.97;sartenese;0.0;sartenese:1.00;oltramontano:0.54 sartenese:0.46;1.0
+2A279;Serriera;transizione;0.0;transizione:1.00;transizione:0.92 cismunticu:0.08;0.99;transizione;0.0;transizione:1.00;transizione:0.97 cismontano:0.03;0.97
+2A282;Soccia;transizione;0.0;transizione:0.86 cismunticu:0.14;cismunticu:0.59 transizione:0.41;1.0;transizione;0.0;transizione:0.98;cismontano:0.65 transizione:0.35;1.0
+2A284;Sollacaro;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A285;Sorbollano;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.93;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A288;Sotta;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2A295;Sant'Andréa-d'Orcino;transizione;0.0;transizione:1.00;transizione:1.00;0.91;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A300;San-Gavino-di-Carbini;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.98;sartenese;0.0;sartenese:1.00;sartenese:0.85 oltramontano:0.15;1.0
+2A308;Sainte-Lucie-de-Tallano;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.99;sartenese;0.0;sartenese:1.00;sartenese:1.00;0.91
+2A310;Santa-Maria-Figaniella;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A312;Santa-Maria-Siché;taravesu_sartinesu;0.22;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.67;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A322;Tasso;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.93;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A323;Tavaco;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:0.79 oltramontano:0.21;transizione:0.91 oltramontano:0.09;1.0
+2A324;Tavera;transizione;0.0;transizione:1.00;transizione:1.00;0.98;oltramontano;0.0;oltramontano:1.00;oltramontano:0.72 transizione:0.28;1.0
+2A326;Tolla;transizione;0.0;transizione:0.96 taravesu_sartinesu:0.04;transizione:0.79 taravesu_sartinesu:0.21;0.99;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A330;Ucciani;transizione;0.0;transizione:1.00;transizione:1.00;0.91;oltramontano;0.0;oltramontano:1.00;oltramontano:0.92 transizione:0.08;1.0
+2A331;Urbalacone;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A336;Valle-di-Mezzana;transizione;0.0;transizione:1.00;transizione:1.00;0.88;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A345;Vero;transizione;0.0;transizione:1.00;transizione:1.00;0.99;transizione;0.0;transizione:0.86 oltramontano:0.14;transizione:0.87 oltramontano:0.13;1.0
+2A348;Vico;transizione;0.4;transizione:1.00;transizione:1.00;0.95;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2A349;Viggianello;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;oltramontano;0.0;oltramontano:1.00;oltramontano:0.73 sartenese:0.27;1.0
+2A351;Villanova;transizione;0.49;transizione:1.00;transizione:1.00;0.67;transizione;0.0;transizione:1.00;transizione:1.00;0.49
+2A357;Zérubia;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:0.76 oltramontano:0.24;oltramontano:0.56 sartenese:0.44;1.0
+2A358;Zévaco;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.99;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A359;Zicavo;taravesu_sartinesu;0.11;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.97;oltramontano;0.0;oltramontano:1.00;oltramontano:0.78 transizione:0.22;1.0
+2A360;Zigliara;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.89;oltramontano;0.0;oltramontano:1.00;oltramontano:1.00;1.0
+2A362;Zonza;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.89;sartenese;0.0;sartenese:1.00;oltramontano:0.61 sartenese:0.39;0.97
+2A363;Zoza;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;sartenese;0.0;sartenese:1.00;sartenese:1.00;1.0
+2B002;Aghione;cismunticu;0.0;cismunticu:0.62 transizione:0.38;transizione:0.65 cismunticu:0.35;1.0;cismontano;0.0;cismontano:1.00;cismontano:0.69 transizione:0.31;1.0
+2B003;Aiti;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.74
+2B005;Alando;nordicu;0.0;nordicu:0.90 cismunticu:0.10;nordicu:1.00;0.92;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B007;Albertacce;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.95
+2B009;Aléria;cismunticu;0.0;cismunticu:1.00;cismunticu:0.96 transizione:0.03;0.63;cismontano;0.0;cismontano:0.98;cismontano:0.94 transizione:0.05;0.78
+2B010;Algajola;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.66;cismontano:0.99;cismontano:1.00;0.1
+2B012;Altiani;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B013;Alzi;nordicu;0.0;nordicu:0.60 cismunticu:0.40;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B015;Ampriani;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B016;Antisanti;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.94;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B020;Aregno;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.95
+2B023;Asco;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.97
+2B025;Avapessa;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B029;Barbaggio;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B030;Barrettali;capicursinu;0.0;capicursinu:1.00;capicursinu:1.00;1.0;capocorsino;0.0;capocorsino:1.00;capocorsino:1.00;0.98
+2B033;Bastia;nordicu;0.33;nordicu:1.00;nordicu:1.00;0.9;cismontano;0.0;cismontano:0.86 capocorsino:0.13;cismontano:0.99;0.97
+2B034;Belgodère;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.98
+2B036;Bigorno;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B037;Biguglia;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.79
+2B039;Bisinchi;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.95;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B042;Borgo;nordicu;0.11;nordicu:1.00;nordicu:1.00;0.84;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.78
+2B043;Brando;nordicu;0.4;nordicu:1.00;nordicu:1.00;0.81;capocorsino;0.0;capocorsino:0.98;capocorsino:1.00;1.0
+2B045;Bustanico;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.8;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B046;Cagnano;nordicu;0.0;nordicu:0.60 capicursinu:0.40;nordicu:0.74 capicursinu:0.26;1.0;capocorsino;0.0;capocorsino:1.00;capocorsino:0.99;0.95
+2B047;Calacuccia;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.93;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B049;Calenzana;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.95
+2B050;Calvi;ligure;0.55;ligure:1.00;ligure:0.63 cismunticu:0.37;0.91;cismontano;0.99;cismontano:1.00;cismontano:0.99;0.75
+2B051;Cambia;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B052;Campana;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.35
+2B053;Campi;nordicu;0.0;cismunticu:0.50 nordicu:0.50;cismunticu:0.53 nordicu:0.47;0.96;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B054;Campile;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B055;Campitello;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B057;Canale-di-Verde;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.94
+2B058;Canari;capicursinu;0.0;capicursinu:1.00;capicursinu:1.00;1.0;capocorsino;0.0;capocorsino:0.98;capocorsino:0.99;0.95
+2B059;Canavaggia;nordicu;0.0;nordicu:1.00;nordicu:0.88 cismunticu:0.12;0.97;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B063;Carcheto-Brustico;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B067;Carpineto;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B068;Carticasi;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.81;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B069;Casabianca;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.62;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B072;Casalta;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B073;Casamaccioli;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B074;Casanova;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B075;Casevecchie;cismunticu;0.11;cismunticu:1.00;cismunticu:1.00;0.91;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B077;Castellare-di-Casinca;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.82
+2B078;Castellare-di-Mercurio;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B079;Castello-di-Rostino;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.77;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B080;Castifao;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B081;Castiglione;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B082;Castineta;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B083;Castirla;cismunticu;0.0;cismunticu:0.88 nordicu:0.12;cismunticu:0.98 nordicu:0.02;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B084;Cateri;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B086;Centuri;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;capocorsino;0.0;capocorsino:0.99;capocorsino:1.00;0.73
+2B087;Cervione;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.73
+2B088;Chiatra;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B093;Corbara;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.97;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.73
+2B095;Corscia;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.92
+2B096;Corte;cismunticu;0.0;cismunticu:1.00;cismunticu:0.98 nordicu:0.02;0.94;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B097;Costa;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B101;Croce;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.96
+2B102;Crocicchia;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B105;Erbajolo;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B106;Érone;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.93
+2B107;Ersa;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;capocorsino;0.0;capocorsino:1.00;capocorsino:1.00;0.31
+2B109;Farinole;nordicu;0.0;nordicu:0.99;nordicu:0.99;1.0;capocorsino;0.0;capocorsino:0.76 cismontano:0.24;capocorsino:0.66 cismontano:0.34;0.98
+2B110;Favalello;nordicu;0.0;nordicu:0.77 cismunticu:0.23;nordicu:0.55 cismunticu:0.45;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B111;Felce;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B112;Feliceto;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B113;Ficaja;nordicu;0.16;nordicu:1.00;nordicu:1.00;0.72;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B116;Focicchia;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B120;Furiani;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.89
+2B121;Galéria;cismunticu;0.0;cismunticu:1.00;cismunticu:0.98;1.0;cismontano;0.0;cismontano:1.00;cismontano:0.98;0.74
+2B122;Gavignano;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B123;Ghisonaccia;transizione;0.64;transizione:1.00;transizione:1.00;0.69;transizione;0.0;transizione:1.00;transizione:0.99;0.88
+2B124;Ghisoni;transizione;0.4;transizione:1.00;transizione:0.97 cismunticu:0.03;0.95;transizione;0.0;transizione:1.00;transizione:0.60 oltramontano:0.37 cismontano:0.02;1.0
+2B125;Giocatojo;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B126;Giuncaggio;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B134;L'Île-Rousse;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.96;cismontano;0.25;cismontano:0.99;cismontano:0.99;0.69
+2B135;Isolaccio-di-Fiumorbo;transizione;0.0;transizione:1.00;transizione:0.95 taravesu_sartinesu:0.05;0.87;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2B136;Lama;nordicu;0.0;nordicu:0.99;nordicu:0.83 cismunticu:0.17;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B137;Lano;nordicu;0.0;nordicu:1.00;nordicu:0.99;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.76
+2B138;Lavatoggio;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B140;Lento;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B143;Linguizzetta;nordicu;0.0;nordicu:1.00;cismunticu:0.72 nordicu:0.28;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.83
+2B145;Loreto-di-Casinca;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B147;Lozzi;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.83;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.54
+2B148;Lucciana;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.88
+2B149;Lugo-di-Nazza;transizione;0.0;transizione:1.00;transizione:1.00;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2B150;Lumio;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.65
+2B152;Luri;capicursinu;0.0;capicursinu:0.69 nordicu:0.31;capicursinu:0.53 nordicu:0.47;1.0;capocorsino;0.0;capocorsino:1.00;capocorsino:1.00;0.98
+2B153;Manso;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:0.99;0.74
+2B155;Matra;cismunticu;0.0;cismunticu:0.88 nordicu:0.12;cismunticu:0.90 nordicu:0.10;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B156;Mausoléo;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B157;Mazzola;cismunticu;0.0;cismunticu:0.66 nordicu:0.34;cismunticu:0.67 nordicu:0.33;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B159;Meria;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;capocorsino;0.0;capocorsino:0.99;capocorsino:0.99;0.97
+2B161;Moïta;cismunticu;0.16;cismunticu:0.78 nordicu:0.22;cismunticu:0.62 nordicu:0.38;0.59;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B162;Moltifao;cismunticu;0.0;cismunticu:1.00;cismunticu:0.99;0.83;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B164;Monacia-d'Orezza;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B165;Moncale;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B166;Monte;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.96;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B167;Montegrosso;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B168;Monticello;cismunticu;0.11;cismunticu:1.00;cismunticu:1.00;0.8;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.83
+2B169;Morosaglia;nordicu;0.0;nordicu:1.00;nordicu:0.99;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B170;Morsiglia;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;capocorsino;0.0;capocorsino:0.99;capocorsino:1.00;0.99
+2B171;Muracciole;cismunticu;0.0;cismunticu:1.00;cismunticu:0.93 transizione:0.07;1.0;cismontano;0.0;cismontano:0.69 transizione:0.31;cismontano:0.79 transizione:0.21;1.0
+2B172;Murato;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B173;Muro;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B175;Nessa;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B176;Nocario;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.61
+2B177;Noceta;cismunticu;0.11;cismunticu:1.00;cismunticu:1.00;0.96;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B178;Nonza;capicursinu;0.0;capicursinu:1.00;capicursinu:1.00;1.0;capocorsino;0.0;capocorsino:0.98;capocorsino:0.99;0.98
+2B179;Novale;nordicu;0.25;nordicu:1.00;nordicu:1.00;0.57;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B180;Novella;cismunticu;0.0;cismunticu:0.67 nordicu:0.33;cismunticu:0.77 nordicu:0.23;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B182;Occhiatana;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.95;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.94
+2B183;Ogliastro;capicursinu;0.0;capicursinu:1.00;capicursinu:1.00;1.0;capocorsino;0.0;capocorsino:0.99;capocorsino:1.00;1.0
+2B184;Olcani;capicursinu;0.0;capicursinu:1.00;capicursinu:0.97 nordicu:0.03;1.0;capocorsino;0.0;capocorsino:1.00;capocorsino:1.00;1.0
+2B185;Oletta;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B187;Olmeta-di-Capocorso;capicursinu;0.0;capicursinu:1.00;capicursinu:0.84 nordicu:0.16;0.99;capocorsino;0.0;capocorsino:1.00;capocorsino:0.99;1.0
+2B188;Olmeta-di-Tuda;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B190;Olmi-Cappella;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.89;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B192;Olmo;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B193;Omessa;nordicu;0.0;nordicu:1.00;nordicu:0.70 cismunticu:0.30;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.83
+2B194;Ortale;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.82;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B195;Ortiporio;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.75;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B199;Palasca;cismunticu;0.0;cismunticu:1.00;cismunticu:0.69 nordicu:0.31;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.95
+2B201;Pancheraccia;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B202;Parata;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B205;Patrimonio;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:0.97 capocorsino:0.03;0.99
+2B206;Penta-Acquatella;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.74;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B207;Penta-di-Casinca;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.82
+2B208;Perelli;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.93;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B210;Pero-Casevecchie;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B213;Pianello;cismunticu;0.0;cismunticu:1.00;cismunticu:0.72 nordicu:0.28;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B214;Piano;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.93;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B216;Piazzali;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B217;Piazzole;nordicu;0.11;nordicu:1.00;nordicu:1.00;0.52;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B218;Piedicorte-di-Gaggio;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B219;Piedicroce;nordicu;0.22;nordicu:1.00;nordicu:1.00;0.87;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B220;Piedigriggio;nordicu;0.0;nordicu:0.51 cismunticu:0.49;nordicu:0.68 cismunticu:0.32;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B221;Piedipartino;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B222;Pie-d'Orezza;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.93
+2B223;Pietralba;cismunticu;0.0;cismunticu:0.91 nordicu:0.09;cismunticu:0.75 nordicu:0.25;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B224;Pietracorbara;nordicu;0.0;nordicu:0.93 capicursinu:0.07;nordicu:0.76 capicursinu:0.24;1.0;capocorsino;0.0;capocorsino:1.00;capocorsino:1.00;0.98
+2B225;Pietra-di-Verde;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.87;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B226;Pietraserena;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B227;Pietricaggio;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B229;Pietroso;cismunticu;0.11;cismunticu:1.00;transizione:0.81 cismunticu:0.19;0.93;cismontano;0.0;cismontano:1.00;cismontano:0.81 transizione:0.19;1.0
+2B230;Piève;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B231;Pigna;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B233;Pino;capicursinu;0.0;capicursinu:0.65 nordicu:0.35;capicursinu:0.76 nordicu:0.24;1.0;capocorsino;0.0;capocorsino:0.99;capocorsino:0.99;0.92
+2B234;Piobetta;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B235;Pioggiola;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B236;Poggio-di-Nazza;transizione;0.0;transizione:1.00;transizione:1.00;0.82;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2B238;Poggio-di-Venaco;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B239;Poggio-d'Oletta;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B241;Poggio-Marinaccio;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.78;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B242;Poggio-Mezzana;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.92;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.86
+2B243;Polveroso;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.99
+2B244;Popolasca;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B245;Porri;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B246;La Porta;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.9;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B248;Prato-di-Giovellina;cismunticu;0.0;cismunticu:0.70 nordicu:0.30;cismunticu:0.63 nordicu:0.37;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B250;Prunelli-di-Casacconi;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B251;Prunelli-di-Fiumorbo;transizione;0.55;transizione:1.00;transizione:0.74 taravesu_sartinesu:0.26;0.77;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2B252;Pruno;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B255;Quercitello;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.87;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B256;Rapaggio;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.32;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B257;Rapale;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B260;Riventosa;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B261;Rogliano;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.97;capocorsino;0.0;capocorsino:1.00;capocorsino:1.00;0.58
+2B263;Rospigliani;cismunticu;0.11;cismunticu:1.00;cismunticu:1.00;0.82;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B264;Rusio;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.84;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B265;Rutali;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B267;Saliceto;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.33;cismontano:1.00;cismontano:1.00;0.83
+2B273;Scata;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B274;Scolca;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B275;Sermano;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.93;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B277;Serra-di-Fiumorbo;taravesu_sartinesu;0.0;taravesu_sartinesu:0.93 transizione:0.07;taravesu_sartinesu:0.98 transizione:0.02;0.93;transizione;0.0;transizione:1.00;transizione:1.00;0.95
+2B280;Silvareccio;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.88;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B281;Sisco;nordicu;0.0;nordicu:1.00;nordicu:0.88 capicursinu:0.12;0.92;capocorsino;0.0;capocorsino:1.00;capocorsino:1.00;0.99
+2B283;Solaro;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.93;transizione;0.0;transizione:1.00;transizione:0.83 oltramontano:0.17;0.95
+2B286;Sorbo-Ocagnano;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.91
+2B287;Sorio;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B289;Soveria;nordicu;0.0;nordicu:0.98;nordicu:0.56 cismunticu:0.44;1.0;cismontano;0.0;cismontano:0.97;cismontano:0.99;0.97
+2B290;Speloncato;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B291;Stazzona;nordicu;0.35;nordicu:1.00;nordicu:1.00;0.44;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B292;Sant'Andréa-di-Bozio;cismunticu;0.0;cismunticu:0.70 nordicu:0.30;cismunticu:0.93 nordicu:0.07;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B293;Sant'Andréa-di-Cotone;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B296;Sant'Antonino;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B297;San-Damiano;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.92;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B298;Saint-Florent;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.79;cismontano;0.0;cismontano:0.99;cismontano:1.00;0.85
+2B299;San-Gavino-d'Ampugnani;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B301;San-Gavino-di-Tenda;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.94
+2B302;San-Giovanni-di-Moriani;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B303;San-Giuliano;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.78
+2B304;San-Lorenzo;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.49
+2B305;San-Martino-di-Lota;nordicu;0.55;nordicu:1.00;nordicu:1.00;0.82;capocorsino;0.0;capocorsino:0.89 cismontano:0.09;capocorsino:1.00;1.0
+2B306;Santa-Lucia-di-Mercurio;nordicu;0.0;nordicu:1.00;nordicu:0.91 cismunticu:0.09;0.96;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B307;Santa-Lucia-di-Moriani;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.55;cismontano:0.99;cismontano:1.00;0.8
+2B309;Santa-Maria-di-Lota;nordicu;0.22;nordicu:1.00;nordicu:1.00;0.93;capocorsino;0.0;capocorsino:0.99;capocorsino:1.00;1.0
+2B311;Santa-Maria-Poggio;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.99;cismontano:1.00;cismontano:1.00;0.8
+2B313;San-Nicolao;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.25;cismontano:1.00;cismontano:1.00;0.78
+2B314;Santo-Pietro-di-Tenda;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.95
+2B315;Santo-Pietro-di-Venaco;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.92;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B316;Santa-Reparata-di-Balagna;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.95;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B317;Santa-Reparata-di-Moriani;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B318;Taglio-Isolaccio;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.93
+2B319;Talasani;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.86
+2B320;Tallone;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.93
+2B321;Tarrano;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B327;Tomino;nordicu;0.4;nordicu:1.00;nordicu:1.00;0.59;capocorsino;0.0;capocorsino:0.99;capocorsino:0.99;0.95
+2B328;Tox;cismunticu;0.0;cismunticu:0.80 nordicu:0.20;cismunticu:0.84 nordicu:0.16;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B329;Tralonca;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.99;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B332;Urtaca;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B333;Vallecalle;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B334;Valle-d'Alesani;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B335;Valle-di-Campoloro;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.75
+2B337;Valle-di-Rostino;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B338;Valle-d'Orezza;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B339;Vallica;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B340;Velone-Orneto;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.71;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B341;Venaco;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.93;cismontano;0.0;cismontano:1.00;cismontano:0.71 transizione:0.29;1.0
+2B342;Ventiseri;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;0.88;transizione;0.0;transizione:1.00;transizione:1.00;0.87
+2B343;Venzolasca;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.88
+2B344;Verdèse;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B346;Vescovato;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;0.99
+2B347;Vezzani;cismunticu;0.89;cismunticu:1.00;cismunticu:0.77 transizione:0.23;0.83;cismontano;0.0;cismontano:1.00;cismontano:0.98 transizione:0.02;1.0
+2B350;Vignale;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B352;Ville-di-Paraso;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;0.98;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B353;Ville-di-Pietrabugno;nordicu;0.0;nordicu:1.00;nordicu:1.00;0.92;cismontano;0.0;cismontano:0.63 capocorsino:0.37;capocorsino:0.51 cismontano:0.49;1.0
+2B354;Vivario;cismunticu;0.0;cismunticu:1.00;cismunticu:0.59 transizione:0.41;0.89;transizione;0.0;transizione:0.60 cismontano:0.40;transizione:0.97 cismontano:0.03;1.0
+2B355;Volpajola;nordicu;0.0;nordicu:1.00;nordicu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B356;Zalana;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B361;Zilia;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B364;Zuani;cismunticu;0.0;cismunticu:1.00;cismunticu:1.00;1.0;cismontano;0.0;cismontano:1.00;cismontano:1.00;1.0
+2B365;San-Gavino-di-Fiumorbo;taravesu_sartinesu;0.0;taravesu_sartinesu:0.58 transizione:0.42;taravesu_sartinesu:0.81 transizione:0.19;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+2B366;Chisa;taravesu_sartinesu;0.0;taravesu_sartinesu:1.00;taravesu_sartinesu:1.00;1.0;transizione;0.0;transizione:1.00;transizione:1.00;1.0
+it:049005;Capraia Isola;;;;;0.0;;;;;0.0
+it:112001;Alghero;;;;;0;;;;sardo:0.94 catalano:0.06;0.72
+it:112002;Anela;;;;;0;;;;sardo:0.82 toscano:0.18;1.0
+it:112003;Ardara;;;;;0;;;;sardo:1.00;1.0
+it:112004;Banari;;;;;0;;;;sardo:1.00;1.0
+it:112005;Benetutti;;;;;0;;;;sardo:0.80 toscano:0.20;1.0
+it:112006;Bessude;;;;;0;;;;sardo:1.00;1.0
+it:112007;Bonnanaro;;;;;0;;;;sardo:1.00;1.0
+it:112008;Bono;;;;;0;;;;sardo:0.82 toscano:0.18;1.0
+it:112009;Bonorva;;;;;0;;;;sardo:0.83 toscano:0.17;1.0
+it:112010;Borutta;;;;;0;;;;sardo:1.00;1.0
+it:112011;Bottidda;;;;;0;;;;sardo:0.51 toscano:0.49;1.0
+it:112012;Bultei;;;;;0;;;;sardo:0.97 toscano:0.03;1.0
+it:112013;Bulzi;;;;;0;;;;castellanese:0.51 sardo:0.49;1.0
+it:112014;Burgos;;;;;0;;;;toscano:1.00;1.0
+it:112015;Cargeghe;;;;;0;;;;sardo:1.00;1.0
+it:112016;Castelsardo;;;;;0;;;;castellanese:0.99;0.6
+it:112017;Cheremule;;;;;0;;;;sardo:1.00;1.0
+it:112018;Chiaramonti;;;;;0;;;;sardo:1.00;1.0
+it:112019;Codrongianos;;;;;0;;;;sardo:1.00;1.0
+it:112020;Cossoine;;;;;0;;;;sardo:0.83 toscano:0.17;1.0
+it:112021;Erula;;;;;0;;;;sardo:0.60 gallurese:0.40;1.0
+it:112022;Esporlatu;;;;;0;;;;;0
+it:112023;Florinas;;;;;0;;;;sardo:1.00;1.0
+it:112024;Giave;;;;;0;;;;sardo:0.94 toscano:0.06;1.0
+it:112025;Illorai;;;;;0;;;;;0
+it:112026;Ittireddu;;;;;0;;;;sardo:1.00;1.0
+it:112027;Ittiri;;;;;0;;;;sardo:1.00;1.0
+it:112028;Laerru;;;;;0;;;;sardo:1.00;1.0
+it:112029;Mara;;;;;0;;;;sardo:0.72 toscano:0.28;1.0
+it:112030;Martis;;;;;0;;;;sardo:1.00;1.0
+it:112031;Monteleone Rocca Doria;;;;;0;;;;sardo:1.00;1.0
+it:112032;Mores;;;;;0;;;;sardo:1.00;1.0
+it:112033;Muros;;;;;0;;;;sardo:1.00;1.0
+it:112034;Nughedu San Nicolò;;;;;0;;;;sardo:1.00;1.0
+it:112035;Nule;;;;;0;;;;sardo:1.00;1.0
+it:112036;Nulvi;;;;;0;;;;sardo:0.76 castellanese:0.24;1.0
+it:112037;Olmedo;;;;;0;;;;sardo:1.00;1.0
+it:112038;Osilo;;;;;0;;;;sardo:0.84 castellanese:0.16;1.0
+it:112039;Ossi;;;;;0;;;;sardo:1.00;1.0
+it:112040;Ozieri;;;;;0;;;;sardo:1.00;1.0
+it:112041;Padria;;;;;0;;;;sardo:0.56 toscano:0.44;1.0
+it:112042;Pattada;;;;;0;;;;sardo:1.00;1.0
+it:112043;Perfugas;;;;;0;;;;gallurese:0.64 sardo:0.35;1.0
+it:112044;Ploaghe;;;;;0;;;;sardo:1.00;1.0
+it:112045;Porto Torres;;;;;0;;;;sassarese:1.00;0.43
+it:112046;Pozzomaggiore;;;;;0;;;;toscano:0.98 sardo:0.02;1.0
+it:112047;Putifigari;;;;;0;;;;sardo:1.00;1.0
+it:112048;Romana;;;;;0;;;;sardo:1.00;1.0
+it:112049;Santa Maria Coghinas;;;;;0;;;;gallurese:0.73 castellanese:0.27;1.0
+it:112050;Sassari;;;;;0;;;;sassarese:0.63 sardo:0.37;0.84
+it:112051;Sedini;;;;;0;;;;castellanese:0.77 sardo:0.22;0.98
+it:112052;Semestene;;;;;0;;;;;0
+it:112053;Sennori;;;;;0;;;;castellanese:0.58 sardo:0.38 sassarese:0.04;0.99
+it:112054;Siligo;;;;;0;;;;sardo:1.00;1.0
+it:112055;Sorso;;;;;0;;;;sassarese:0.44 castellanese:0.37 sardo:0.19;0.7
+it:112056;Stintino;;;;;0;;;;sassarese:1.00;0.3
+it:112057;Tergu;;;;;0;;;;castellanese:1.00;1.0
+it:112058;Thiesi;;;;;0;;;;sardo:1.00;1.0
+it:112059;Tissi;;;;;0;;;;sardo:1.00;1.0
+it:112060;Torralba;;;;;0;;;;sardo:1.00;1.0
+it:112061;Tula;;;;;0;;;;sardo:1.00;0.94
+it:112062;Uri;;;;;0;;;;sardo:1.00;1.0
+it:112063;Usini;;;;;0;;;;sardo:1.00;1.0
+it:112064;Valledoria;;;;;0;;;;gallurese:0.71 castellanese:0.29;0.66
+it:112065;Viddalba;;;;;0;;;;gallurese:1.00;0.98
+it:112066;Villanova Monteleone;;;;;0;;;;sardo:0.92 toscano:0.08;0.92
+it:113001;Aggius;;;;;0;;;;gallurese:1.00;1.0
+it:113002;Aglientu;;;;;0;;;;gallurese:1.00;0.91
+it:113003;Alà dei Sardi;;;;;0;;;;sardo:1.00;1.0
+it:113004;Arzachena;;;;;0;;;;gallurese:1.00;0.86
+it:113005;Badesi;;;;;0;;;;gallurese:1.00;0.81
+it:113006;Berchidda;;;;;0;;;;sardo:0.95 gallurese:0.05;1.0
+it:113007;Bortigiadas;;;;;0;;;;gallurese:1.00;0.81
+it:113008;Buddusò;;;;;0;;;;sardo:1.00;1.0
+it:113009;Budoni;;;;;0;;;;sardo:0.68 gallurese:0.32;0.56
+it:113010;Calangianus;;;;;0;;;;gallurese:0.92 sardo:0.08;0.88
+it:113011;Golfo Aranci;;;;;0;;;;gallurese:0.92 sardo:0.08;0.51
+it:113012;La Maddalena;;;;;0.0;;;;;0.0
+it:113013;Loiri Porto San Paolo;;;;;0;;;;gallurese:1.00;0.94
+it:113014;Luogosanto;;;;;0;;;;gallurese:1.00;1.0
+it:113015;Luras;;;;;0;;;;gallurese:0.98 sardo:0.02;0.83
+it:113016;Monti;;;;;0;;;;sardo:0.88 gallurese:0.12;1.0
+it:113017;Olbia;;;;;0;;;;gallurese:0.87 sardo:0.13;0.84
+it:113018;Oschiri;;;;;0;;;;sardo:1.00;0.95
+it:113019;Padru;;;;;0;;;;sardo:0.73 gallurese:0.27;1.0
+it:113020;Palau;;;;;0;;;;gallurese:1.00;0.73
+it:113021;San Teodoro;;;;;0;;;;gallurese:0.89 sardo:0.10;0.67
+it:113022;Santa Teresa Gallura;;;;;0;;;;gallurese:0.99;0.79
+it:113023;Sant'Antonio di Gallura;;;;;0;;;;gallurese:1.00;1.0
+it:113024;Telti;;;;;0;;;;gallurese:0.97 sardo:0.03;0.84
+it:113025;Tempio Pausania;;;;;0;;;;gallurese:0.87 sardo:0.13;0.91
+it:113026;Trinità d'Agultu e Vignola;;;;;0;;;;gallurese:1.00;0.91
