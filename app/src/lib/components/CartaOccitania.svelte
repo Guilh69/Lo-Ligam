@@ -329,7 +329,7 @@
 					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp)
 				});
 				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
-				colaEstelas.setNomsDobles(lang === 'fr' ? 'fr' : null);
+				colaEstelas.setNomsDobles(lang === 'fr' ? 'fr' : null, polissaSota);
 				colaEstelas.setElements(elements);
 				colaEstelas.setColors(colors);
 				colaEstelas.setModeDialectes(!!visibility.dialectes);
@@ -814,11 +814,20 @@
 	// pas ») : lo nom francés d'en primièr, l'occitan en pichon e en italica
 	// dejós (causit per Romain entre los dos òrdres). Las comunas de las autras
 	// lengas (lo camp fr es alara lor nom local) gardan un sol nom.
-	let clauEstil = '';
+	let clauEstil = '',
+		polissaSota = $state(false);
 	$effect(() => {
-		clauEstil = lang;
+		clauEstil = lang + (polissaSota ? '|l' : '');
 		motorNoms?.tornarPintar();
-		colaEstelas?.setNomsDobles?.(lang === 'fr' ? 'fr' : null);
+		colaEstelas?.setNomsDobles?.(lang === 'fr' ? 'fr' : null, polissaSota);
+	});
+	// (la polissa del segond nom cargada : los noms se tòrnan dessenhar amb ela)
+	$effect(() => {
+		if (lang !== 'fr' || polissaSota) return;
+		document.fonts
+			?.load('italic 400 11px Luciole')
+			.then(() => (polissaSota = true))
+			.catch(() => {});
 	});
 	function estilNom(c) {
 		const e = estilVila(c.renc, talhaNom(c.renc, c.pop));
@@ -833,9 +842,12 @@
 		const px = parseFloat(e.font.match(/([\d.]+)px/)[1]);
 		const r = { nom, px, font: e.font, esp: e.esp, majus: e.majus, w: g.measureText(e.majus ? nom.toUpperCase() : nom).width, clau: clauEstil };
 		if (sota) {
-			// (pas tròp pichon nimai tròp fin : « Juvinhac » se legissiá mal)
-			r.pxSota = Math.max(11, Math.round(px * 0.86 * 2) / 2);
-			r.fontSota = `italic 600 ${r.pxSota}px 'Cormorant Garamond', Georgia, serif`;
+			// (una autra letra que lo nom principal : Luciole, dessenhada per
+			// demorar legibla en pichon, en italica, daurada ; retorn de Romain :
+			// « pas lisible et la hiérarchie des polices n'est pas bonne »)
+			r.pxSota = Math.min(10.5, Math.max(9, Math.round(px * 0.74 * 2) / 2));
+			r.fontSota = `italic 400 ${r.pxSota}px Luciole, sans-serif`;
+			r.colorSota = '#ecd29c';
 			g.font = r.fontSota;
 			if ('letterSpacing' in g) g.letterSpacing = '0px';
 			r.sota = sota;

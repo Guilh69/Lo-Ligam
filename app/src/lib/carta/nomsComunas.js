@@ -102,7 +102,7 @@ export function crearNomsComunas(
 			g.font = e.fontSota;
 			if ('letterSpacing' in g) g.letterSpacing = '0px';
 			g.textAlign = 'right';
-			g.fillStyle = aur ? '#f6d68c' : '#f2e6d2';
+			g.fillStyle = aur ? '#f6d68c' : e.colorSota ?? '#ecd29c';
 			letras(e.sota, ox + R, y2);
 		}
 		im = { t, w, h, ox, bL: L - 3, bR: R + 3, bh: e.px * 1.24 + hS, dpr, clau: e.clau };

@@ -340,8 +340,11 @@ const aplicarVila = (g, renc, f, nom) => {
 	return e.majus ? nom.toUpperCase() : nom;
 };
 // lo segond nom d'una vila (site en francés), en pichon e en italica dejós
-const polissaSota = (f) => `italic 600 ${Math.max(11, Math.round(f * 0.86 * 2) / 2)}px "Cormorant Garamond", Georgia, serif`;
-const nautSota = (f) => Math.max(11, f * 0.86) * 1.1;
+// (Luciole en italica, daurada : una autra letra que lo nom principal, legibla en pichon)
+const pxSota = (f) => Math.min(10.5, Math.max(9, Math.round(f * 0.74 * 2) / 2));
+const polissaSota = (f) => `italic 400 ${pxSota(f)}px Luciole, sans-serif`;
+const nautSota = (f) => pxSota(f) * 1.25;
+const COLOR_SOTA = '#ecd29c';
 const sensEspaci = (g) => {
 	if ('letterSpacing' in g) g.letterSpacing = '0px';
 };
@@ -802,8 +805,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		// francophones sont paniqués dès qu'ils ne comprennent pas ») : 'fr' =
 		// lo francés d'en primièr, 'oc' = l'occitan d'en primièr, null =
 		// l'occitan sol (site en occitan)
-		setNomsDobles(mòde) {
-			if (this._dobles === mòde) return;
+		setNomsDobles(mòde, polissa = false) {
+			if (this._dobles === mòde && this._polissaSota === polissa) return;
+			this._polissaSota = polissa;
 			this._dobles = mòde;
 			this._zP = null;
 			if (this._map) this._update();
@@ -1387,11 +1391,14 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					sensEspaci(g);
 					g.font = polissaSota(v.f);
 					g.textAlign = 'right';
+					const colorNom = g.fillStyle;
+					g.fillStyle = COLOR_SOTA;
 					g.shadowBlur = 3 + v.f * 0.3;
 					g.fillText(v.t2, xFin, v.y + v.hS);
 					g.fillText(v.t2, xFin, v.y + v.hS);
 					g.shadowBlur = 0;
 					g.fillText(v.t2, xFin, v.y + v.hS);
+					g.fillStyle = colorNom;
 				}
 			}
 			this._viv.acabar();
