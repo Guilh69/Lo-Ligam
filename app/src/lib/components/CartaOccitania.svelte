@@ -329,7 +329,7 @@
 					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp)
 				});
 				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
-				colaEstelas.setNomsDobles(lang === 'fr' ? ensagNoms : null);
+				colaEstelas.setNomsDobles(lang === 'fr' ? 'fr' : null);
 				colaEstelas.setElements(elements);
 				colaEstelas.setColors(colors);
 				colaEstelas.setModeDialectes(!!visibility.dialectes);
@@ -797,6 +797,11 @@
 		return res;
 	}
 	const popNoms = (z) => (z >= 12.5 ? 0 : z >= 11.5 ? 100 : z >= 10.5 ? 500 : z >= 9.5 ? 2000 : 8000);
+	// (sul site en francés, dos noms per vila : mens de comunas, que arriban
+	// mai prèp ; retorn de Romain, 2026-10-11 : « à 5 km, ça fait chargé »,
+	// « il faudrait zoomer encore un peu plus en français »)
+	const popNomsFr = (z) => (z >= 13 ? 0 : z >= 12.25 ? 300 : z >= 11.5 ? 1500 : z >= 10.75 ? 5000 : 15000);
+	const popNomsSite = (z) => (lang === 'fr' ? popNomsFr(z) : popNoms(z));
 	// La polissa d'un nom segon lo reng de la vila, coma sus la carta estelada
 	// (estil « Atlas », 2026-10-08) : Limelight per las metropòlis, capitalas
 	// espaçadas per las vilas repèrs, italica per las autras. Las comunas fòra
@@ -806,28 +811,14 @@
 	let cxMesura = null;
 	// Sul site en francés, lo nom francés tanben (retorn de Romain, 2026-10-11 :
 	// « beaucoup de francophones sont paniqués dès qu'ils ne comprennent
-	// pas ») : un nom principal e l'autre en pichon, en italica, dejós. ENSAG
-	// (a levar quand Romain aurà causit) : 'fr' = lo francés d'en primièr,
-	// 'oc' = l'occitan d'en primièr. Las comunas de las autras lengas (lo
-	// camp fr es alara lor nom local) gardan un sol nom.
-	let ensagNoms = $state('fr');
-	$effect(() => {
-		try {
-			const v = localStorage.getItem('lo-ligam-ensag-noms');
-			if (v === 'fr' || v === 'oc') ensagNoms = v;
-		} catch {}
-	});
-	function causirEnsagNoms(v) {
-		ensagNoms = v;
-		try {
-			localStorage.setItem('lo-ligam-ensag-noms', v);
-		} catch {}
-	}
+	// pas ») : lo nom francés d'en primièr, l'occitan en pichon e en italica
+	// dejós (causit per Romain entre los dos òrdres). Las comunas de las autras
+	// lengas (lo camp fr es alara lor nom local) gardan un sol nom.
 	let clauEstil = '';
 	$effect(() => {
-		clauEstil = lang + '|' + ensagNoms;
+		clauEstil = lang;
 		motorNoms?.tornarPintar();
-		colaEstelas?.setNomsDobles?.(lang === 'fr' ? ensagNoms : null);
+		colaEstelas?.setNomsDobles?.(lang === 'fr' ? 'fr' : null);
 	});
 	function estilNom(c) {
 		const e = estilVila(c.renc, talhaNom(c.renc, c.pop));
@@ -835,7 +826,7 @@
 			fr = JACES_LENGAS.includes(c.dep) ? null : c.fr;
 		let nom = oc,
 			sota = null;
-		if (lang === 'fr' && fr && oc && fr.toLowerCase() !== oc.toLowerCase()) [nom, sota] = ensagNoms === 'fr' ? [fr, oc] : [oc, fr];
+		if (lang === 'fr' && fr && oc && fr.toLowerCase() !== oc.toLowerCase()) [nom, sota] = [fr, oc];
 		const g = (cxMesura ??= document.createElement('canvas').getContext('2d'));
 		g.font = e.font;
 		if ('letterSpacing' in g) g.letterSpacing = e.esp.toFixed(2) + 'px';
@@ -1487,7 +1478,7 @@
 			estil: (c) => (c.estil?.clau === clauEstil ? c.estil : (c.estil = estilNom(c))),
 			// (pendent la revelacion, los nívols que se dissipan : cap de nom)
 			actiu: () => baseLayer === 'estelas' && map.getZoom() >= Z.RELAIS && !map.getContainer().classList.contains('revelant'),
-			popMin: popNoms,
+			popMin: popNomsSite,
 			obstacles: caixasDeCòlas,
 			onRepaus: noms_repaus
 		});
@@ -1504,7 +1495,7 @@
 					// (la fin d'un lisament de la carta es pas un clic)
 					if (map.dragging?.moved()) return;
 					// (los botons de la carta, la ficha, las fonts : pas un clic sus la carta)
-					if (e.target.closest?.('.leaflet-control-container, .ficha-comuna, .legenda-dial, .fonts-carta, .ensag-noms')) return;
+					if (e.target.closest?.('.leaflet-control-container, .ficha-comuna, .legenda-dial, .fonts-carta')) return;
 					const c = nomA(e);
 					if (!c) return void causirNomComuna(null);
 					e.stopImmediatePropagation();
@@ -2105,14 +2096,6 @@
 		</div>
 	{/if}
 
-	{#if lang === 'fr'}
-		<!-- ENSAG (a levar quand Romain aurà causit) : los noms de las vilas sul site en francés -->
-		<div class="ensag-noms" role="group" aria-label="Essai des noms de villes">
-			<span>Essai des noms</span>
-			<button type="button" aria-pressed={ensagNoms === 'fr'} onclick={() => causirEnsagNoms('fr')}>Français, occitan dessous</button>
-			<button type="button" aria-pressed={ensagNoms === 'oc'} onclick={() => causirEnsagNoms('oc')}>Occitan, français dessous</button>
-		</div>
-	{/if}
 	<!-- Lo dialècte survolat o causit : meteissa etiqueta que los territòris -->
 	{#if fichaComuna}
 		<FichaComuna comuna={fichaComuna.c} contorn={fichaComuna.contorn} {lang} onTampar={() => causirNomComuna(null)} />
@@ -2305,40 +2288,6 @@
 
 	/* L'etiqueta del dialècte survolat o causit : la meteissa que pels
 	   territòris (pintada dins lo canavàs de las estelas), en bas al centre */
-	/* ENSAG (a levar quand Romain aurà causit) */
-	.ensag-noms {
-		position: absolute;
-		z-index: 1000;
-		top: 118px;
-		left: 50%;
-		transform: translateX(-50%);
-		display: flex;
-		align-items: center;
-		gap: 4px;
-		padding: 4px 6px;
-		border: 1px dashed var(--t-linha);
-		border-radius: 10px;
-		background: color-mix(in srgb, var(--t-fons-2) 90%, transparent);
-		font: 600 0.6875rem/1.2 var(--font-body);
-		color: var(--t-tinta-2);
-		white-space: nowrap;
-	}
-	.ensag-noms span {
-		margin: 0 4px;
-	}
-	.ensag-noms button {
-		padding: 3px 9px;
-		border: 1px solid transparent;
-		border-radius: 999px;
-		background: none;
-		color: inherit;
-		font: inherit;
-		cursor: pointer;
-	}
-	.ensag-noms button[aria-pressed='true'] {
-		border-color: var(--t-aur);
-		color: var(--t-aur-clar);
-	}
 	.legenda-dial {
 		position: absolute;
 		z-index: 900;
