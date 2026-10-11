@@ -93,13 +93,6 @@ const PER_UNITAT = {
 		pas: 45,
 		easing: 'ease-out'
 	}),
-	deroulat: () => ({
-		kf: [{ opacity: 0, transform: 'perspective(400px) rotateX(-95deg)' }, { opacity: 1, transform: 'perspective(400px) rotateX(0)' }],
-		dur: 560,
-		pas: 40,
-		easing: ressòrt,
-		origin: '50% 0'
-	}),
 	patinatge: () => ({
 		kf: [{ opacity: 0, transform: 'translateX(1.2em) skewX(-22deg)', filter: 'blur(2px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }],
 		dur: 600,
@@ -224,6 +217,66 @@ export function animarText(el, efèct, o = {}) {
 		animacions.push(
 			cap.animate([{ color: 'transparent' }, { color: 'transparent', offset: 0.5 }, { color, offset: 0.501 }, { color }], { duration: d, delay: retard, fill: 'backwards' })
 		);
+		return esperar();
+	}
+
+	if (efèct === 'deroulat') {
+		// Lo rotlèu d'una maquina de casino (retorn de Romain, 2026-10-11 :
+		// « chaque lettre arrive de manière indépendante et se stabilise ») :
+		// cada letra a son rotlèu, que fa desfilar d'autras letras, ralentís,
+		// passa un pauc sa letra e i torna ; las darrièras viran mai longtemps.
+		const cs = getComputedStyle(el),
+			fs = parseFloat(cs.fontSize) || 16,
+			// (la fenèstra a la nautor de la linha del tèxt : res bolega a la fin)
+			h = cs.lineHeight === 'normal' ? 1.2 : parseFloat(cs.lineHeight) / fs;
+		// (copat sonque en naut e en bas : las italicas e los accents passan ;
+		// la linha de basa ven de la letra amagada, coma lo tèxt d'a costat)
+		const clip = typeof CSS !== 'undefined' && CSS.supports?.('overflow', 'clip');
+		const fenèstra = clip
+			? `;position:relative;overflow-x:visible;overflow-y:clip;overflow-clip-margin:0.12em;height:${h}em;line-height:${h}em`
+			: `;position:relative;overflow:hidden;height:${h}em;line-height:${h}em;vertical-align:-0.28em;padding:0 0.12em;margin:0 -0.12em`;
+		const letras = copar(el, tèxt, 'letra');
+		const n = letras.length,
+			fons = [...new Set(tèxt.replace(/\s/g, ''))].join('') + 'abcdefghijklmnopqrstuvwxyz';
+		letras.forEach((l, k) => {
+			const c = l.textContent,
+				passa = 7 + k * 2 + Math.floor(Math.random() * 3);
+			l.textContent = '';
+			l.style.cssText += fenèstra;
+			const banda = document.createElement('span');
+			banda.style.cssText = 'display:flex;flex-direction:column;will-change:transform';
+			for (let i = 0; i < passa; i++) {
+				const s = document.createElement('span');
+				s.textContent = fons[Math.floor(Math.random() * fons.length)];
+				banda.append(s);
+			}
+			const fin0 = document.createElement('span');
+			fin0.textContent = c;
+			banda.append(fin0);
+			// (una letra de mai jos la bona : la que se vei quand lo rotlèu passa)
+			const après = document.createElement('span');
+			après.textContent = fons[Math.floor(Math.random() * fons.length)];
+			banda.append(après);
+			// (la letra amagada dona a la fenèstra sa largor e sa linha de basa)
+			const mesura = document.createElement('span');
+			mesura.style.cssText = 'visibility:hidden';
+			mesura.textContent = c;
+			l.append(mesura, banda);
+			banda.style.position = 'absolute';
+			banda.style.left = clip ? '0' : '0.12em';
+			banda.style.top = '0';
+			const dur = (720 + k * (520 / Math.max(1, n - 1)) + Math.random() * 120) / v;
+			animacions.push(
+				banda.animate(
+					[
+						{ transform: 'translateY(0)', filter: 'blur(1.4px)', easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)' },
+						{ transform: `translateY(${-(passa + 0.22) * h}em)`, filter: 'blur(0)', offset: 0.84, easing: 'cubic-bezier(0.3, 0, 0.3, 1)' },
+						{ transform: `translateY(${-passa * h}em)`, filter: 'blur(0)' }
+					],
+					{ duration: dur, delay: retard + (k * 45) / v, fill: 'both' }
+				)
+			);
+		});
 		return esperar();
 	}
 
