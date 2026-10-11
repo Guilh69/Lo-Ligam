@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Espace « Òbras » : ce que Romain fait découvrir — musiques, livres, films.
 	//
 	// On n'héberge aucun extrait. On donne les informations, son commentaire, et
@@ -134,7 +135,7 @@
 							<img src={o.imatge_url} alt={o.titre} loading="lazy" />
 							{#if embed}
 								<button type="button" class="jogar" onclick={() => (dubèrt = o.id)}>
-									<span aria-hidden="true">▶</span>
+									<Icona nom="lire" size="1.3em" />
 									<span class="sr-only">{tx.escotar} — {o.titre}</span>
 								</button>
 							{/if}
@@ -145,7 +146,7 @@
 								<span class="aplat-titre">{o.titre}</span>
 								{#if embed}
 									<button type="button" class="jogar sus-aplat" onclick={() => (dubèrt = o.id)}>
-										<span aria-hidden="true">▶</span>
+										<Icona nom="lire" size="1.3em" />
 										<span class="sr-only">{tx.escotar} — {o.titre}</span>
 									</button>
 								{/if}
@@ -212,10 +213,10 @@
 				<strong id="vista-titol" lang="oc">{vista.titol}</strong>
 				<span>{lang === 'oc' ? vista.oc : vista.fr}</span>
 				{#if vista.epoca}<span class="vista-epoca">{vista.epoca}</span>{/if}
-				{#if vista.font}<span class="vista-font">{lang === 'oc' ? 'Font' : 'Source'} : {#if vista.ligam}<a href={vista.ligam} target="_blank" rel="noopener noreferrer">{vista.font} ↗</a>{:else}{vista.font}{/if}</span>{/if}
+				{#if vista.font}<span class="vista-font">{lang === 'oc' ? 'Font' : 'Source'} : {#if vista.ligam}<a href={vista.ligam} target="_blank" rel="noopener noreferrer">{vista.font} <Icona nom="extern" size="0.9em" /></a>{:else}{vista.font}{/if}</span>{/if}
 			</figcaption>
 		</figure>
-		<button type="button" class="vista-tampar" onclick={tampar}>{tx.tampar} <span aria-hidden="true">✕</span></button>
+		<button type="button" class="vista-tampar" onclick={tampar}>{tx.tampar} <Icona nom="fermer" size="1.1em" /></button>
 	{/if}
 </dialog>
 

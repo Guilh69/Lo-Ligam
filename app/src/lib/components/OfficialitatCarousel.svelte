@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Série « Officialitat » : 9 visuels qui forment une démonstration
 	// suivie sur le statut officiel de l'occitan. L'ordre compte (c'est un
 	// raisonnement, pas une galerie).
@@ -153,7 +154,7 @@
 			type="button"
 			onclick={() => centerOn(index - 1)}
 			disabled={index === 0}
-			aria-label={lang === 'oc' ? 'Precedent' : 'Précédent'}>←</button
+			aria-label={lang === 'oc' ? 'Precedent' : 'Précédent'}><Icona nom="precedent" size="1.2em" /></button
 		>
 		<div class="dots">
 			{#each slides as s, i (s.src)}
@@ -170,7 +171,7 @@
 			type="button"
 			onclick={() => centerOn(index + 1)}
 			disabled={index === slides.length - 1}
-			aria-label={lang === 'oc' ? 'Seguent' : 'Suivant'}>→</button
+			aria-label={lang === 'oc' ? 'Seguent' : 'Suivant'}><Icona nom="suivant" size="1.2em" /></button
 		>
 	</div>
 </div>

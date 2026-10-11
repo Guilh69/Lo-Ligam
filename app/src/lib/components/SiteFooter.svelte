@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Pied de page commun (cadre commun, refonte 2026-10-07 dans la charte de
 	// l'esbòs de nuèch) : présent sur toutes les pages via le layout, plus
 	// seulement sur l'accueil. Colonnes texte (même source de vérité que le
@@ -44,13 +45,13 @@
 				{#each externalLinks as l (l.href)}
 					<li>
 						<a class="footer-link" href={l.href} target="_blank" rel="noopener noreferrer"
-							>{l.label} ↗</a
+							>{l.label} <Icona nom="extern" size="0.9em" /></a
 						>
 					</li>
 				{/each}
 				<li>
 					<a class="footer-link" href="https://www.instagram.com/lo_ligam/" target="_blank" rel="noopener noreferrer"
-						>Instagram ↗</a
+						>Instagram <Icona nom="extern" size="0.9em" /></a
 					>
 				</li>
 			</ul>

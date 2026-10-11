@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Lecteur de la vidéo d'une fiche. Deux cas, deux comportements.
 	//
 	// LOGIQUE DU SON — les navigateurs refusent de démarrer une vidéo sonore
@@ -86,7 +87,7 @@
 			aria-pressed={son}
 			aria-label={son ? tx.levarSon : tx.metreSon}
 		>
-			<span aria-hidden="true">{son ? '🔊' : '🔇'}</span>
+			<Icona nom={son ? 'son' : 'muet'} size="1.2em" />
 		</button>
 	</div>
 {:else if mena === 'canva' && ligamCanva}
@@ -104,7 +105,7 @@
 			     de leurs traceurs déposé — tant que le visiteur n'a pas demandé. -->
 			<button type="button" class="faciada" onclick={() => (canvaCargat = true)}>
 				<img src={ficha.grand} alt={ficha.titre} />
-				<span class="jogar" aria-hidden="true">▶</span>
+				<span class="jogar" aria-hidden="true"><Icona nom="lire" size="1.3em" /></span>
 				<span class="sr-only">{tx.jogar}</span>
 			</button>
 			<p class="avis">{tx.avisCanva}</p>

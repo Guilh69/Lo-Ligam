@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Bandeau commun à toutes les pages (cadre commun, refonte 2026-10-07 dans
 	// la charte de l'esbòs de nuèch) : la croix-constellation + « Lo Ligam » en
 	// Limelight, quatre liens texte, puis le compte, l'administration, le
@@ -54,7 +55,7 @@
 			     protection : les verrous sont dans la base (RLS). -->
 			{#if $esAdmin}
 				<a class="admin-link" href="/admin" title={tx.admin}>
-					<span aria-hidden="true">⚙</span>
+					<Icona nom="reglages" size="1.1em" />
 					<span class="admin-tèxte">{tx.admin}</span>
 				</a>
 			{/if}

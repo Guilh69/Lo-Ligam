@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Accueil (2026-10-07) : l'esbòs de nuèch validé par Romain, porté dans le
 	// site et posé dans le cadre commun (bandeau AppHeader, pied SiteFooter,
 	// réglage d'ambiance, retour en haut). L'ancien accueil reste dans
@@ -277,7 +278,7 @@
 			<div class="camins-pin">
 				<h2 class="camins-cap jalon">
 					<span><b>03</b>&ensp;<span id="camins-titol">{@render bi('Quatre camins', 'Quatre chemins')}</span></span>
-					<span aria-hidden="true">→</span>
+					<Icona nom="suivant" />
 				</h2>
 				<div class="camins-pista">
 					{#each CAMINS as c, n (c.oc)}
@@ -291,7 +292,7 @@
 								<ul class="panel-items">
 									{#each c.items as [oc, frTxt, href] (oc)}
 										{#if href}
-											<li><a {href}>{@render bi(oc, frTxt)}<span aria-hidden="true">→</span></a></li>
+											<li><a {href}>{@render bi(oc, frTxt)}<Icona nom="suivant" /></a></li>
 										{:else}
 											<li><span class="leu">{@render bi(oc, frTxt)}<em>{@render bi('Lèu', 'Bientôt')}</em></span></li>
 										{/if}

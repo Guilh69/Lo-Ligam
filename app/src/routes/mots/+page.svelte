@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Mots en imatges, harmonisée avec la charte de l'accueil (2026-10-07) :
 	// fond de thème (sombre, clair, daltonisme), titres en Limelight, repère
 	// « petit chiffre, grand titre ». Les 38 thèmes ne sont plus un nuage de
@@ -424,7 +425,7 @@
 						</div>
 						<div class="controls">
 							<button type="button" class="rond" onclick={() => go(-1)} disabled={carIndex === 0} aria-label={tx.prev}
-								>←</button
+								><Icona nom="precedent" size="1.2em" /></button
 							>
 							<span class="counter">{carIndex + 1} / {visibles.length}</span>
 							<button
@@ -432,7 +433,7 @@
 								class="rond"
 								onclick={() => go(1)}
 								disabled={carIndex === visibles.length - 1}
-								aria-label={tx.next}>→</button
+								aria-label={tx.next}><Icona nom="suivant" size="1.2em" /></button
 							>
 						</div>
 					</div>
@@ -471,14 +472,14 @@
 				</div>
 				{#if fichasPost.length > 1}
 					<button type="button" class="rond post-prev" onclick={() => anar(-1)} disabled={postActiu === 0} aria-label={tx.prev}
-						>←</button
+						><Icona nom="precedent" size="1.2em" /></button
 					>
 					<button
 						type="button"
 						class="rond post-next"
 						onclick={() => anar(1)}
 						disabled={postActiu === fichasPost.length - 1}
-						aria-label={tx.next}>→</button
+						aria-label={tx.next}><Icona nom="suivant" size="1.2em" /></button
 					>
 					<div class="ponches" aria-hidden="true">
 						{#each fichasPost as f, i (f.id)}<i class:on={i === postActiu}></i>{/each}
@@ -505,7 +506,7 @@
 			</div>
 		</div>
 
-		<button type="button" class="rond post-tampar" bind:this={tamparEl} onclick={tampar} aria-label={tx.close}>×</button>
+		<button type="button" class="rond post-tampar" bind:this={tamparEl} onclick={tampar} aria-label={tx.close}><Icona nom="fermer" size="1.25em" /></button>
 	</div>
 {/if}
 
