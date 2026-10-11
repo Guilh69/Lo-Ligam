@@ -326,6 +326,7 @@
 					lang,
 					onFicha: (v) => goto(v.ligam),
 					onPus: (p) => marcarPus(p),
+					zonasUI,
 					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp)
 				});
 				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
@@ -1982,11 +1983,36 @@
 		[42.5, -1.8],
 		[46.55, 7.7]
 	];
+	// Las zònas de l'ecran presas per l'interfàcia (botons de la carta, capçal,
+	// recèrca, rail), en ponches del contenedor : los noms de las vilas i van
+	// pas jos (retorn de Romain sul telefòn, 2026-10-11)
+	function zonasUI() {
+		if (!map) return [];
+		const c = map.getContainer().getBoundingClientRect(),
+			z = [];
+		for (const el of document.querySelectorAll('.leaflet-control-container .leaflet-right .leaflet-control:not(.leaflet-control-attribution), .cerca, .info-trigger, .rail, .capçal')) {
+			const r = el.getBoundingClientRect();
+			if (r.width < 4 || r.height < 4) continue;
+			z.push([r.left - c.left - 4, r.top - c.top - 4, r.right - c.left + 4, r.bottom - c.top + 4]);
+		}
+		return z;
+	}
 	function vistaOccitana() {
 		const size = map.getSize(),
 			telefon = size.x <= 700;
-		// (esquèrra, naut, drecha, bas : la plaça presa per l'interfàcia)
-		const [pe, pn, pd, pb] = telefon ? [12, 120, 12, 96] : [120, 140, 76, 44];
+		// (esquèrra, naut, drecha, bas : la plaça presa per l'interfàcia ; sul
+		// telefòn, l'Occitània sus tota la largor, al dessús de la colomna de
+		// botons, se i a la plaça ; si que non, a costat)
+		let [pe, pn, pd, pb] = telefon ? [12, 180, 58, 96] : [120, 140, 76, 44];
+		if (telefon) {
+			const c = map.getContainer().getBoundingClientRect();
+			const tops = [...document.querySelectorAll('.leaflet-control-container .leaflet-right .leaflet-control:not(.leaflet-control-attribution)')]
+				.map((el) => el.getBoundingClientRect().top - c.top)
+				.filter((t) => t > 0);
+			// (a l'arribada los botons son pas encara pausats : lor colomna fa ~380 px amb la barra d'en bas)
+			const naut = tops.length ? Math.min(...tops) : size.y - 380;
+			if (naut - pn > size.y * 0.3) [pd, pb] = [12, size.y - naut + 10];
+		}
 		const b = L.latLngBounds(OCCITANIA_VISTA);
 		const z = Math.min(map.getBoundsZoom(b, false, L.point(pe + pd, pn + pb)) - 0.1, Z.ARRIBADA_MAX);
 		// (lo domeni al mitan de l'espaci liure, pas de tot l'ecran)

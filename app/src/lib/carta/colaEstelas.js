@@ -373,7 +373,7 @@ const K_REV = 0.25;
 // drecha, 6 dessús a esquèrra, 7 dejós a esquèrra
 const PLAÇA_PREFERIDA = { Marselha: 3, Bordèu: 3, Limòtges: 2, Gap: 5, Pau: 3 };
 
-function plaçar(cx, vilas, rius, ambNomsRius = true) {
+function plaçar(cx, vilas, rius, ambNomsRius = true, ocupat = []) {
 	const CEL = 16,
 		grilha = new Map();
 	const cases = (b, fn) => {
@@ -423,6 +423,9 @@ function plaçar(cx, vilas, rius, ambNomsRius = true) {
 	// voisins étouffaient Montpelhièr : aucune place libre pour son nom)
 	const punt = (v) => metre([v.x - 4, v.y - 4, v.x + 4, v.y + 4], 5, v.nom);
 	vilas.filter((v) => v.ciutat).forEach(punt);
+	// (los botons, lo capçal, la recèrca, lo rail : un nom i va pas jos ;
+	// retorn de Romain sul telefòn, 2026-10-11)
+	for (const b of ocupat) metre(b, 5, 'interfacia');
 	rius.forEach(({ nom, pts }, n) => {
 		const prop = nom || 'riu' + n;
 		for (let i = 1; i < pts.length; i++) {
@@ -672,7 +675,7 @@ export const cargarLimits = () =>
 
 
 /* ---------- La couche ---------- */
-export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null } = {}) {
+export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null, zonasUI = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: {
 			pane: 'estelas',
@@ -1291,7 +1294,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// par département ; en zoomant sur un département, ses villes
 			// importantes (Besièrs, Lodeva…), puis les villages en retrait
 			const telefon = this._map.getSize().x <= 700;
-			const talhas = telefon ? { 1: 14, 2: 10.5, 3: 9.5, 4: 8.5 } : { 1: 17, 2: 11.5, 3: 10.5, 4: 9.5 };
+			// (sul telefòn, mai pichons : tota l'Occitània es dins 375 px ; retorn de Romain, 2026-10-11)
+			const talhas = telefon ? { 1: 11.5, 2: 9.5, 3: 9, 4: 8.5 } : { 1: 17, 2: 11.5, 3: 10.5, 4: 9.5 };
 			// (de luènh, sonque las vilas grandas, una o doas per dialècte ; las
 			// que s'escantisson gardan lor plaça lo temps de partir)
 			const renc = (e) => (capitala(e) ? 1 : e.renc);
@@ -1300,7 +1304,15 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				.filter((e) => e.visNom || (e.tNomEsc != null && ara - e.tNomEsc < ESC_LUÒC))
 				.sort((a, b) => renc(a) - renc(b) || rang(a.nom) - rang(b.nom))
 				.map((e) => ({ nom: e.nom, ...this._tèxtesVila(e.nom), x: e.X, y: e.Y, f: talhas[renc(e)], ciutat: renc(e) <= 2, renc: renc(e), e }));
-			return plaçar(this._cx, vilas, this._rius, !!this._el.nomsRius);
+			// las zònas de l'interfàcia, del contenedor a las coordenadas de la carta
+			const map = this._map,
+				o = map.getPixelOrigin();
+			const ocupat = (zonasUI?.() ?? []).map(([x0, y0, x1, y1]) => {
+				const a = map.containerPointToLayerPoint([x0, y0]).add(o),
+					b = map.containerPointToLayerPoint([x1, y1]).add(o);
+				return [a.x, a.y, b.x, b.y];
+			});
+			return plaçar(this._cx, vilas, this._rius, !!this._el.nomsRius, ocupat);
 		},
 
 		/* Les noms sont dessinés UNE fois par recalage dans une image en mémoire,
