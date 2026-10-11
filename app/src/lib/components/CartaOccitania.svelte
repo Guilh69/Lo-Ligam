@@ -2,6 +2,8 @@
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { cargarFranca, francaCargada, dinsFranca } from '$lib/carta/franca.js';
 	import { crearDonadasLengas } from '$lib/carta/donadasLengas.js';
+	import { zoomDoç } from '$lib/carta/zoomDoc.js';
+	import { crearNomsComunas } from '$lib/carta/nomsComunas.js';
 	import { fly } from 'svelte/transition';
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
@@ -736,63 +738,46 @@
 	// Los noms de totas las comunas en occitan, sus lo satellit (demanda de
 	// Romain, 2026-10-09) : sonque los de la vista, las comunas mai pobladas
 	// d'en primièr, sens que dos noms se tòquen. Los ponches los evitan.
-	let capaNoms = null;
-	const nomsAfichats = new Map();
+	// Los noms de totas las comunas en occitan, sus lo satellit (demanda de
+	// Romain, 2026-10-09) : un motor de noms coma sus Google Maps (2026-10-11,
+	// nomsComunas.js), tornat pintar a cada imatge del zoom doç (zoomDoc.js).
+	let motorNoms = null;
+	// las bóstias dels noms afichats, a la pausa (las icònas los evitan)
 	let bóstiasNoms = [];
 	// Un òrdre per totes los tèxtes de la carta (retorn de Romain, 2026-10-10 :
 	// Ais de Provença jos lo Mont Ventor, de comunas sus los massís) : las
 	// vilas d'en primièr ; los noms de dialèctes e del relèu las evitan ; los
 	// vilatges, al darrièr, evitan tot. (bóstias de las vilas en coordenadas
 	// projectadas, coma las de las còlas)
-	let caixasVilasDOM = null;
-	// Al dezoom, los noms que trobaràn pas pus plaça s'escantisson tre lo
-	// començament del movement, pas totes d'un còp a la fin (retorn de Romain,
-	// 2026-10-11 : « c'est pas fluide au niveau des noms des villes ») : lor
-	// plaça es calculada a l'escala d'arribada, sus los noms ja afichats.
-	// La plaça vertadièra se fa a la fin (majNomsComunas), qu'i torna se cal.
-	function anticiparNoms(e) {
-		if (!capaNoms || !nomsAfichats.size || e.zoom >= map.getZoom()) return;
-		const totes = baseLayer !== 'estelas' || e.zoom < Z.RELAIS;
-		const pm = popNoms(e.zoom),
-			mieg = map.getSize().divideBy(2),
-			c0 = map.project(e.center, e.zoom);
-		const lista = [...nomsAfichats.values()].filter((m) => m._comuna).sort((a, b) => a._comuna.renc - b._comuna.renc || b._comuna.pop - a._comuna.pop);
-		const caixas = [];
-		for (const m of lista) {
-			const c = m._comuna,
-				st = c.estil;
-			let pòt = !totes && (c.renc <= 3 || c.pop >= pm) && st;
-			if (pòt) {
-				const q = map.project([c.lat, c.lon], e.zoom).subtract(c0).add(mieg),
-					wd = st.w + 6,
-					bx = [q.x - wd / 2, q.y - st.px * 0.62, q.x + wd / 2, q.y + st.px * 0.62];
-				pòt = !caixas.some((o) => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1]);
-				if (pòt) caixas.push(bx);
-			}
-			if (!pòt) m.getElement()?.classList.add('partent');
+	let caixasVilasDOM = null,
+		clauVilas = '';
+	function noms_repaus({ pausats, vilas }) {
+		bóstiasNoms = pausats;
+		const z = map.getZoom(),
+			o = map.getPixelOrigin();
+		const proj = (x, y) => map.containerPointToLayerPoint([x, y]).add(o);
+		const cs = vilas.map(([x0, y0, x1, y1]) => {
+			const a = proj(x0, y0),
+				b = proj(x1, y1);
+			return [a.x, a.y, b.x, b.y];
+		});
+		const clau = cs.map((b) => b.map(Math.round).join(',')).join(';') + '@' + z;
+		if (clau !== clauVilas) {
+			clauVilas = clau;
+			caixasVilasDOM = cs.length ? { z, cs } : null;
+			if (z < 9.8) colaDonadas?._pintar();
+			for (const c of Object.values(colasLengas)) c._pintar?.();
+			colaTematica?._pintar();
+			motorNoms?.tornarPintar();
 		}
+		programarDegatjament();
 	}
 	// Lo luòc survolat : son nom en aur, al costat de son ponch (colaEstelas) ;
 	// sus lo satellit, lo nom de la comuna s'escafa e los que lo nom en aur
 	// recobrís s'escantisson (retorn de Romain, 2026-10-11 : Vilafranca de
 	// Roergue escrich dos còps, l'un sus l'autre)
 	function marcarPus(p) {
-		const ct = map?.getContainer().getBoundingClientRect();
-		if (!ct) return;
-		for (const m of nomsAfichats.values()) {
-			const el = m.getElement();
-			if (!el) continue;
-			let amagat = false,
-				escur = false;
-			const r = p && el.firstElementChild?.getBoundingClientRect();
-			if (r) {
-				const b = [r.left - ct.left, r.top - ct.top, r.right - ct.left, r.bottom - ct.top];
-				amagat = Math.hypot((b[0] + b[2]) / 2 - p.x, (b[1] + b[3]) / 2 - p.y) < 14;
-				escur = !amagat && b[0] < p.caixa[2] && b[2] > p.caixa[0] && b[1] < p.caixa[3] && b[3] > p.caixa[1];
-			}
-			el.classList.toggle('pus-amagat', amagat);
-			el.classList.toggle('pus-escur', escur);
-		}
+		motorNoms?.pus(p);
 	}
 	function caixasDeCòlas(z) {
 		const o = map.getPixelOrigin(),
@@ -823,86 +808,13 @@
 		g.font = e.font;
 		if ('letterSpacing' in g) g.letterSpacing = e.esp.toFixed(2) + 'px';
 		const px = parseFloat(e.font.match(/([\d.]+)px/)[1]);
-		return {
-			nom,
-			px,
-			w: g.measureText(e.majus ? nom.toUpperCase() : nom).width,
-			css: `font:${e.font.replace(/"/g, "'")};letter-spacing:${e.esp.toFixed(2)}px${e.majus ? ';text-transform:uppercase' : ''}`
-		};
+		return { nom, px, font: e.font, esp: e.esp, majus: e.majus, w: g.measureText(e.majus ? nom.toUpperCase() : nom).width };
 	}
+	// (los noms se cargan quand cal ; lo motor se torna pintar)
 	function majNomsComunas() {
 		if (!map) return;
-		if (baseLayer !== 'estelas' || map.getZoom() < Z.RELAIS) {
-			if (capaNoms) map.removeLayer(capaNoms);
-			capaNoms = null;
-			nomsAfichats.clear();
-			bóstiasNoms = [];
-			if (caixasVilasDOM) {
-				caixasVilasDOM = null;
-				colaTematica?._pintar();
-			}
-			return;
-		}
-		if (!nomsComunas?.length) return void cargarNomsComunas();
-		capaNoms ??= L.layerGroup().addTo(map);
-		const z = map.getZoom();
-		const b = map.getBounds().pad(0.1);
-		const s = b.getSouth(), n = b.getNorth(), w = b.getWest(), e = b.getEast();
-		const pm = popNoms(z);
-		// (las vilas de la tièra se mòstran totjorn, coma sus la carta estelada)
-		const cands = nomsComunas.filter((c) => (c.renc <= 3 || c.pop >= pm) && c.lat > s && c.lat < n && c.lon > w && c.lon < e);
-		cands.sort((a, c) => a.renc - c.renc || c.pop - a.pop);
-		const vòl = new Set();
-		bóstiasNoms = [];
-		const tòca = (bx, lista) => lista.some((o) => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1]);
-		// (las vilas pausadas, las autras còlas tornan plaçar lors noms)
-		let còlas = null;
-		const pausarVilas = () => {
-			const o = map.getPixelOrigin();
-			const proj = (x, y) => map.containerPointToLayerPoint([x, y]).add(o);
-			const cs = bóstiasNoms.map(([x0, y0, x1, y1]) => {
-				const a = proj(x0, y0),
-					b = proj(x1, y1);
-				return [a.x, a.y, b.x, b.y];
-			});
-			caixasVilasDOM = cs.length ? { z, cs } : null;
-			if (z < 9.8) colaDonadas?._pintar();
-			for (const c of Object.values(colasLengas)) c._pintar?.();
-			colaTematica?._pintar();
-			còlas = caixasDeCòlas(z);
-		};
-		for (const c of cands) {
-			if (bóstiasNoms.length >= 260) break;
-			if (c.renc > 3 && !còlas) pausarVilas();
-			const st = (c.estil ??= estilNom(c));
-			const q = map.latLngToContainerPoint([c.lat, c.lon]);
-			const wd = st.w + 6;
-			const bx = [q.x - wd / 2, q.y - st.px * 0.62, q.x + wd / 2, q.y + st.px * 0.62];
-			// (un pauc d'aire a l'entorn dels noms de las autras còlas)
-			const bxA = [bx[0] - 4, bx[1] - 3, bx[2] + 4, bx[3] + 3];
-			if (tòca(bx, bóstiasNoms) || (còlas && tòca(bxA, còlas))) continue;
-			bóstiasNoms.push(bx);
-			const k = c.fr + c.dep;
-			vòl.add(k);
-			if (!nomsAfichats.has(k)) {
-				const m = L.marker([c.lat, c.lon], {
-					icon: L.divIcon({ className: 'nom-comuna', html: `<span style="${st.css}">${escapeHtml(st.nom)}</span>`, iconSize: [0, 0], iconAnchor: [0, 0] }),
-					interactive: false,
-					keyboard: false
-				});
-				m._comuna = c;
-				capaNoms.addLayer(m);
-				nomsAfichats.set(k, m);
-			} else nomsAfichats.get(k).getElement()?.classList.remove('partent');
-		}
-		if (!còlas) pausarVilas();
-		// (un nom que se'n va s'escantís, coma los de las còlas)
-		for (const [k, m] of nomsAfichats)
-			if (!vòl.has(k)) {
-				nomsAfichats.delete(k);
-				m.getElement()?.classList.add('partent');
-				setTimeout(() => capaNoms?.removeLayer(m), 380);
-			}
+		if (baseLayer === 'estelas' && map.getZoom() >= Z.RELAIS && !nomsComunas?.length) return void cargarNomsComunas();
+		motorNoms?.tornarPintar();
 	}
 
 	// de luènh, los ponches son d'estelas (la carta d'estelas de l'entrada) ;
@@ -1185,7 +1097,10 @@
 		// et l'Occitanie entière tient juste dans la fenêtre à l'arrivée (même
 		// cadre que la carte en étoiles de l'accueil).
 		map = L.map(mapEl, {
-			zoomSnap: 0.25,
+			// lo zoom doç (zoomDoc.js) remplaça las animacions de Leaflet : cap de
+			// cran, cap d'escala imposada a la fin d'un pinçament
+			zoomSnap: 0,
+			zoomAnimation: false,
 			zoomDelta: 0.5,
 			wheelPxPerZoomLevel: 110,
 			minZoom: 2, // fins al mond (dezoom : Euròpa, puèi lo mond)
@@ -1375,8 +1290,18 @@
 		);
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
+		zoomDoç(L, map);
+		motorNoms = crearNomsComunas(L, map, {
+			lista: () => nomsComunas ?? [],
+			estil: (c) => (c.estil ??= estilNom(c)),
+			// (pendent la revelacion, los nívols que se dissipan : cap de nom)
+			actiu: () => baseLayer === 'estelas' && map.getZoom() >= Z.RELAIS && !map.getContainer().classList.contains('revelant'),
+			popMin: popNoms,
+			obstacles: caixasDeCòlas,
+			onRepaus: noms_repaus
+		});
+		new MutationObserver(() => motorNoms?.tornarPintar()).observe(map.getContainer(), { attributes: true, attributeFilter: ['class'] });
 		map.on('moveend', majNomsComunas);
-		map.on('zoomanim', anticiparNoms);
 		map.on('moveend layeradd layerremove', programarDegatjament);
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
@@ -2923,55 +2848,7 @@
 		font-size: 0.82rem;
 	}
 
-	/* los noms de las comunas sul satellit : la letra de la carta estelada
-	   (polissa segon lo reng, en linha), amb un alo doç ; arriban aprèp las estelas */
-	.carta :global(.nom-comuna span) {
-		position: absolute;
-		transform: translate(-50%, -50%);
-		white-space: nowrap;
-		pointer-events: none;
-		/* letra clara e alo sorne amb los dos tèmas : lo fons es la fòto, pas
-		   lo tèma (en sorne sus clar, l'italica fina dels vilatges s'i perdiá) */
-		color: #f5ead8;
-		text-shadow:
-			0 0 3px rgba(18, 9, 6, 0.95),
-			0 0 8px rgba(18, 9, 6, 0.75);
-		/* (un nom nòu arriba tre la fin del movement, en fondut cort : un
-		   retard d'1,2 s fasiá una carta que se recalava aprèp, Romain 2026-10-11) */
-		animation: nom-ven 0.45s ease 0.05s backwards;
-	}
-	/* coma los noms de las tuèlas d'abans : pendent la revelacion (los nívols
-	   que se dissipan), cap de nom ; arriban un còp la tèrra descobèrta, e se
-	   n'anan tre que l'on se recula (jamai dos jòcs de noms ensems) */
-	.carta :global(.nom-comuna) {
-		transition: opacity 0.8s ease 0.15s;
-	}
-	.carta :global(.nom-comuna.pus-amagat) {
-		opacity: 0;
-		transition: opacity 0.2s ease;
-	}
-	.carta :global(.nom-comuna.pus-escur) {
-		opacity: 0.15;
-		transition: opacity 0.2s ease;
-	}
-	.carta :global(.nom-comuna.partent) {
-		opacity: 0;
-		transition: opacity 0.25s ease;
-	}
-	.carta:global(.revelant) :global(.nom-comuna) {
-		opacity: 0;
-		transition: opacity 0.25s ease;
-	}
-	@keyframes nom-ven {
-		from {
-			opacity: 0;
-		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.carta :global(.nom-comuna span) {
-			animation: none;
-		}
-	}
+	/* (los noms de las comunas sul satellit : una tela, nomsComunas.js) */
 
 	.carta :global(.oc-label-town) {
 		font-size: 0.68rem;
