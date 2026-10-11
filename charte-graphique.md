@@ -179,6 +179,26 @@ respecté, 60 fps (transform/opacity uniquement). Détail et justifications :
 `transposicion-racine2.md` §6 · démo interactive : « Fluiditat Lo Ligam »
 (https://claude.ai/artifact/UfWbWE9UPufi27nHf2pZkF).
 
+
+## 5quinquies. Animations de texte (2026-10-11)
+
+Onze effets d'entrée, repris des « suggestions » de Canva, disponibles partout dans le site : `app/src/lib/actions/animarText.js` (`animarText(el, efèct, { tèxt, retard, velocitat })`, ou `{@attach animat('rebond')}` en Svelte). Banc d'essai : `/ensag/letra`.
+
+| Canva | Code | Pour quoi (proposition) |
+|---|---|---|
+| Machine à écrire | `maquina` | une citation, une phrase qui se dit (Max Roqueta à l'accueil) |
+| Ascension | `ascension` | un titre de page, une étiquette qui change (dialecte au-dessus de l'échelle) |
+| Décalage | `decalatge` | un nom propre qui arrive (ville, langue) |
+| Fusion | `fusion` | deux formes qui se rejoignent (occitan et français) |
+| Bloc | `bloc` | un mot mis en avant, un titre de rubrique (bloc d'or) |
+| Explosion | `explosion` | une réussite (fin de leçon, série complète) |
+| Rebond | `rebond` | une bonne réponse, un « Plan fach ! » |
+| Déroulé | `deroulat` | un mot qu'on découvre (carte retournée, mot du jour) |
+| Patinage | `patinatge` | un passage d'une page à l'autre, un défilement |
+| Écart | `escart` | un grand titre, le nom « Lo Ligam » |
+| Clarifier | `clarificar` | un texte qui change de langue, un nom qui se précise |
+
+Règles : sobre, pas kitsch (une seule animation de texte à la fois sur l'écran) ; courtes (moins d'une seconde, sauf la machine à écrire) ; jamais sur un texte long ; seulement le mouvement, l'opacité et le flou ; `prefers-reduced-motion` respecté (le texte apparaît sans effet) ; le texte entier reste lisible pour les lecteurs d'écran.
 ---
 
 ## 6. Décision
