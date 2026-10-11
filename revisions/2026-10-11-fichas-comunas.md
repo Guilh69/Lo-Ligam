@@ -19,6 +19,8 @@ Tout est en ligne sur `master` (site pas encore public). Dernier commit de la s�
 7. Le choix remplace l'ancien repère doré rond des villes à page (« Descobrir la vila » passe dans la fiche).
 8. D'abord la partie haute, puis on déplie pour le texte et le lien, puis les crédits en plus petit.
 9. Fiche par défaut **dans la langue du lieu** (Lyon en arpitan, Brest en breton), possibilité de passer en occitan ; nom local d'abord, puis occitan, puis français.
+10. Bayonne : basque, occitan **et** français ; le choix de langue plus discret et plus clair (fait : petit bouton « Eu · Òc · Fr » avec l'icône des langues, sur le modèle du bouton Òc / Fr du site, à droite du texte ; les drapeaux restent une option si Romain préfère).
+11. De près (10 à 5 km), plus d'aplat des dialectes ni de clic : le dialecte du centre de la carte s'écrit au-dessus de l'échelle (`majDialLuòc` dans `CartaOccitania.svelte`, `aTenchas` dans `escalas.js`).
 
 Pas encore fait dans la demande 5 : les « infos curieuses » (pour l'instant, seulement les premières phrases de l'article).
 
@@ -35,6 +37,7 @@ Parcours d'un clic : `nomsComunas.js` sait quel nom est sous la souris → `Cart
 | `app/src/lib/carta/nomsComunas.js` | moteur des noms (placement à chaque image, fondus) ; `a(p)` = nom sous un point ; `causir(c)` = ovale doré |
 | `app/src/lib/components/CartaOccitania.svelte` | sélection, vol (laisse ~170 px pour la fiche), surface (calque `comunaCausida`), Échap pour fermer, clics ignorés sur les boutons et la fiche |
 | `app/src/lib/carta/vilasFichas.js` | villes qui auront une page sur le site (Montpelhièr en prototype, `ligam: null` → « Descobrir la vila : lèu ») |
+| `SIG/cadena/comunas-mixtas.mjs` | communes de deux langues : propriété `lg` d'après les zones de transition des langues (209 communes : Bayonne, Anglet, bande arpitan-occitan, breton-galo…) ; relancé à la fin de `comunas.mjs` et `comunas-lengas.mjs` |
 | `app/static/data/comunas/` | contours par département (`index.json`) et par zone de langue (`index-lengas.json`), noms occitans (`noms.json`), noms dans les autres langues (`noms-lengas.json`) |
 
 Langue du lieu : table `WIKIS` dans `FichaComuna.svelte` (catalan → ca, arpitan → frp, basque → eu, breton → br, alsacien → als, francique → lb/pfl/ksh/li, flamand → vls/nl, corse → co, oïl → pcd/wa/nrm). Quand il y a plusieurs Wikipèdias possibles, le serveur garde celle qui nomme la ville comme notre carte (Lile → picard). Dans le domaine occitan, la langue du lieu est l'occitan.
