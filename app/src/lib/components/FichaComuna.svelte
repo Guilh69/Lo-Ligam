@@ -168,16 +168,17 @@
 		if (!extrach) hTèxt = 0;
 	});
 	// ENSAG (a levar quand Romain aurà causit) : la prepausa de tria de la lenga
-	let varianta = $state('a');
+	let varianta = $state('d');
 	$effect(() => {
 		try {
-			varianta = localStorage.getItem('lo-ligam-ensag-tria-lenga') ?? 'a';
+			const v = localStorage.getItem('lo-ligam-ensag-tria-lenga-2');
+			if (['a', 'c', 'd'].includes(v)) varianta = v;
 		} catch {}
 	});
 	function causirVarianta(v) {
 		varianta = v;
 		try {
-			localStorage.setItem('lo-ligam-ensag-tria-lenga', v);
+			localStorage.setItem('lo-ligam-ensag-tria-lenga-2', v);
 		} catch {}
 	}
 	// lo còdi de la lenga, coma lo boton Òc / Fr del site
@@ -239,7 +240,7 @@
 				<!-- ENSAG (a levar quand Romain aurà causit) : las tres prepausas -->
 				<div class="ensag" role="group" aria-label="Essai">
 					<span>Essai</span>
-					{#each [['a', 'Cadran'], ['b', 'Colonne'], ['c', 'Camembert']] as [v, n] (v)}
+					{#each [['a', 'Cadran'], ['c', 'Camembert'], ['d', 'Entre les deux']] as [v, n] (v)}
 						<button type="button" aria-pressed={varianta === v} onclick={() => causirVarianta(v)}>{v.toUpperCase()} · {n}</button>
 					{/each}
 				</div>

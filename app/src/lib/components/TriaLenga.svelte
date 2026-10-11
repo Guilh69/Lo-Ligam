@@ -2,10 +2,13 @@
 	// Lo tria de la lenga del tèxt d'una ficha de comuna (retorn de Romain,
 	// 2026-10-11 : « comme un diagramme avec l'icône basque, occitane et
 	// française ; la langue choisie en bas ; un bruit de clic satisfaisant ;
-	// une animation soignée »). Tres prepausas a ensajar, una sola demorarà :
+	// une animation soignée »). Prepausas a ensajar, una sola demorarà :
 	//   a : lo cadran, que vira fins que la lenga causida es en bas ;
-	//   b : la colomna, la lenga causida davala dins son lotjament ;
-	//   c : lo camembèrt, sa part vira en bas e s'avança.
+	//   c : lo camembèrt, sa part vira en bas e s'avança ;
+	//   d : entre los dos (Romain : « j'aime bien le A et le C ») : l'anèl
+	//       colorat del camembèrt, fin, amb los emblèmas del cadran, sos crans
+	//       e son repèr daurat ; lo còdi de la lenga al centre.
+	// (la colomna, b, es pas estada retenguda)
 	import { sonClic } from '$lib/carta/sons.js';
 
 	let { lenguas = [], causida, onCausir, varianta = 'a', nomLenga = (l) => l, còdi = (l) => l, etiqueta = '' } = $props();
@@ -33,8 +36,8 @@
 		rot -= d * pas;
 		onCausir?.(l);
 		// lo son : a l'encastre (e un cran leugièr per cada lenga passada, pel cadran)
-		const t = calm() ? 0 : varianta === 'a' ? 430 : varianta === 'b' ? 330 : 380;
-		if (varianta === 'a' && !calm()) for (let k = 1; k < Math.abs(d); k++) setTimeout(() => sonClic(0.45), (t * k) / Math.abs(d) - 60);
+		const t = calm() ? 0 : varianta === 'c' ? 380 : 430;
+		if (varianta !== 'c' && !calm()) for (let k = 1; k < Math.abs(d); k++) setTimeout(() => sonClic(0.45), (t * k) / Math.abs(d) - 60);
 		setTimeout(() => sonClic(1), t);
 	}
 	function clavièr(e) {
@@ -46,8 +49,8 @@
 
 	// cadran e camembèrt : la lenga k es a l'angle 90° + k·pas (90° = en bas)
 	const angle = (k) => ((90 + k * pas) * Math.PI) / 180;
-	// colomna : la causida en bas, las autras dins lor òrdre al dessús
-	const plaça = (l) => (l === causida ? n - 1 : lenguas.filter((x) => x !== causida).indexOf(l));
+	// l'anèl : mièja talha, rais de las parts e dels emblèmas, talha d'un emblèma
+	const G = $derived(varianta === 'd' ? { m: 42, r1: 26, r2: 32, rb: 29, b: 22, pop: 2.5 } : { m: 40, r1: 22, r2: 37, rb: 29.5, b: 18, pop: 3.5 });
 
 	// las colors de las parts del camembèrt
 	const COLOR = { oc: '#d9a441', fr: '#4d6fd6', eu: '#2e9e5b', ca: '#e0b021', br: '#b9b9b9', frp: '#3fae6a', als: '#d9534f', co: '#c9c9c9', lb: '#5aa0d8', vls: '#e2c14a', nl: '#e8873a', pcd: '#8fb35a', wa: '#e3c03a', nrm: '#d65a4a' };
@@ -131,39 +134,19 @@
 			</div>
 			<span class="osca" aria-hidden="true"></span>
 		</div>
-	{:else if varianta === 'b'}
-		<!-- B. La colomna -->
-		<div class="colomna" style:height="{n * 28 + 6}px">
-			<span class="lotjament" aria-hidden="true" style:top="{(n - 1) * 28 + 1}px">
-				{#key causida}<span class="pols"></span>{/key}
-			</span>
-			{#each lenguas as l (l)}
-				<button
-					type="button"
-					role="radio"
-					aria-checked={l === causida}
-					aria-label={nomLenga(l)}
-					title={nomLenga(l)}
-					class="lg"
-					class:causida={l === causida}
-					style:top="{plaça(l) * 28 + 3}px"
-					onclick={() => causir(l)}>{@render pastilha(l)}</button
-				>
-			{/each}
-		</div>
 	{:else}
-		<!-- C. Lo camembèrt -->
-		<div class="camembert">
-			<svg class="parts" viewBox="-40 -40 80 80" aria-hidden="true">
+		<!-- C. Lo camembèrt ; D. entre lo cadran e lo camembèrt -->
+		<div class="camembert" style:width="{2 * G.m}px" style:height="{2 * G.m}px">
+			<svg class="parts" viewBox="{-G.m} {-G.m} {2 * G.m} {2 * G.m}" aria-hidden="true">
 				<g class="roda-svg" style:transform="rotate({rot}deg)">
 					{#each lenguas as l, k (l)}
 						<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 						<path
-							d={arc(k, 22, 37)}
+							d={arc(k, G.r1, G.r2, varianta === 'd' ? 7 : 5)}
 							fill={COLOR[l] ?? '#888'}
 							class="part"
 							class:causida={l === causida}
-							style:transform={l === causida ? `translate(${(3.5 * Math.cos(angle(k))).toFixed(2)}px, ${(3.5 * Math.sin(angle(k))).toFixed(2)}px)` : null}
+							style:transform={l === causida ? `translate(${(G.pop * Math.cos(angle(k))).toFixed(2)}px, ${(G.pop * Math.sin(angle(k))).toFixed(2)}px)` : null}
 							onclick={() => causir(l)}
 						/>
 					{/each}
@@ -179,8 +162,10 @@
 						title={nomLenga(l)}
 						class="lg"
 						class:causida={l === causida}
-						style:left="{40 + 29.5 * Math.cos(angle(k)) - 9}px"
-						style:top="{40 + 29.5 * Math.sin(angle(k)) - 9}px"
+						style:width="{G.b}px"
+						style:height="{G.b}px"
+						style:left="{G.m + G.rb * Math.cos(angle(k)) - G.b / 2}px"
+						style:top="{G.m + G.rb * Math.sin(angle(k)) - G.b / 2}px"
 						onclick={() => causir(l)}
 					>
 						<span class="drech" style:transform="rotate({-rot}deg)">{@render pastilha(l)}</span>
@@ -188,6 +173,7 @@
 				{/each}
 			</div>
 			{#key causida}<span class="centre" aria-hidden="true">{còdi(causida)}</span>{/key}
+			{#if varianta === 'd'}<span class="osca" aria-hidden="true"></span>{/if}
 		</div>
 	{/if}
 	{#key causida}<span class="nom-lenga">{nomLenga(causida)}</span>{/key}
@@ -285,62 +271,9 @@
 		border-bottom-color: var(--t-aur);
 	}
 
-	/* B. La colomna */
-	.colomna {
-		position: relative;
-		width: 34px;
-		border-radius: 17px;
-		border: 1px solid var(--t-linha);
-		background: color-mix(in srgb, var(--t-fons) 60%, transparent);
-	}
-	.lotjament {
-		position: absolute;
-		left: 2px;
-		width: 28px;
-		height: 28px;
-		border-radius: 50%;
-		box-shadow:
-			0 0 0 1.5px var(--t-aur),
-			inset 0 0 8px color-mix(in srgb, var(--t-aur) 45%, transparent);
-	}
-	.pols {
-		position: absolute;
-		inset: 0;
-		border-radius: 50%;
-		animation: pols 0.6s ease-out 0.3s both;
-	}
-	@keyframes pols {
-		from {
-			box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 70%, transparent);
-		}
-		to {
-			box-shadow: 0 0 0 9px transparent;
-		}
-	}
-	.colomna .lg {
-		left: 5px;
-		width: 22px;
-		height: 22px;
-		transition:
-			top 0.46s var(--ressòrt),
-			transform 0.4s var(--ressòrt),
-			opacity 0.3s ease;
-		transform: scale(0.86);
-		opacity: 0.7;
-	}
-	.colomna .lg.causida {
-		transform: scale(1.04);
-		opacity: 1;
-	}
-	.colomna .lg:hover {
-		opacity: 1;
-	}
-
 	/* C. Lo camembèrt */
 	.camembert {
 		position: relative;
-		width: 80px;
-		height: 80px;
 	}
 	.parts {
 		position: absolute;
@@ -374,10 +307,11 @@
 		transition: transform 0.6s var(--ressòrt);
 	}
 	.camembert .lg {
-		width: 18px;
-		height: 18px;
 		pointer-events: auto;
-		transition: transform 0.4s var(--ressòrt);
+		transition:
+			transform 0.4s var(--ressòrt),
+			opacity 0.3s ease,
+			box-shadow 0.3s ease;
 	}
 	.camembert .lg.causida {
 		transform: scale(1.2);
@@ -391,6 +325,41 @@
 		color: var(--t-tinta);
 		pointer-events: none;
 		animation: aparéisser 0.35s ease-out 0.2s both;
+	}
+
+	/* D. Entre los dos : l'anèl fin, los emblèmas grands, lo repèr daurat */
+	.v-d .part {
+		fill-opacity: 0.35;
+	}
+	.v-d .part.causida {
+		fill-opacity: 0.9;
+	}
+	.v-d .lg {
+		transform: scale(0.84);
+		opacity: 0.8;
+	}
+	.v-d .lg:hover {
+		opacity: 1;
+	}
+	.v-d .lg.causida {
+		transform: scale(1.22);
+		opacity: 1;
+		box-shadow:
+			0 0 0 1.5px var(--t-aur),
+			0 0 10px color-mix(in srgb, var(--t-aur) 55%, transparent);
+	}
+	.v-d .centre {
+		inset: 18px;
+		border-radius: 50%;
+		background: radial-gradient(circle, color-mix(in srgb, var(--t-fons) 75%, transparent) 55%, transparent 75%);
+		font-size: 0.875rem;
+		letter-spacing: 0.02em;
+	}
+	.v-d .osca {
+		bottom: -9px;
+	}
+	.v-d .nom-lenga {
+		margin-top: 7px;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
