@@ -7,6 +7,8 @@
 	import { fly, slide } from 'svelte/transition';
 	import { VILAS_FICHAS } from '$lib/carta/vilasFichas.js';
 	import TriaLenga from './TriaLenga.svelte';
+	import { flushSync } from 'svelte';
+	import { sonClic, sonPapièr } from '$lib/carta/sons.js';
 
 	let { comuna, contorn = null, lang = 'oc', onTampar = null } = $props();
 
@@ -159,52 +161,63 @@
 	const wiki = $derived(dades?.wiki?.[lt]);
 	const nomLenga = (l) => LENGAS[l]?.[fr ? 1 : 0] ?? l;
 
-	// Lo tèxt que cambia de lenga se fond (retorn de Romain, 2026-10-11) : lo
-	// vièlh s'esvanís en se trebolant, lo nòu ven ; l'encastre pren sa nauta
-	// en doçor (los dos son l'un sus l'autre lo temps del fondut)
-	const fondut = (_n, { entra }) => ({
-		duration: entra ? 380 : 220,
-		delay: entra ? 110 : 0,
-		easing: (t) => 1 - Math.pow(1 - t, 3),
-		css: (t) => `opacity: ${t}; filter: blur(${((1 - t) * 4).toFixed(2)}px); transform: translateY(${((1 - t) * (entra ? 6 : -6)).toFixed(2)}px)`
-	});
-	let hTèxt = $state(null);
-	function mesurar(el) {
-		const ro = new ResizeObserver(() => (hTèxt = el.offsetHeight));
-		ro.observe(el);
-		return () => ro.disconnect();
-	}
-	$effect(() => {
-		if (!extrach) hTèxt = 0;
-	});
-	// ENSAG (a levar quand Romain aurà causit) : la prepausa de tria de la lenga
-	const VARIANTAS = [
-		['d', 'Cadran'],
-		['e', 'Boussole'],
-		['f', 'Manège'],
-		['g', 'Roue'],
-		['h', 'Onglets']
+	// La ficha se transforma quand la lenga cambia (retorn de Romain,
+	// 2026-10-11 : « une animation qui transforme la fiche, avec un effet
+	// vraiment joli et pas trop lourd… très satisfaisant »). Tres prepausas :
+	//   virar : se revira coma una carta (transicion de vista, app.css) ;
+	//   revelar : la lenga nòva s'espandís en ròtle a partir de l'emblèma ;
+	//   cascada : los elements tornan un a un, de naut en bas.
+	// Sens transicion de vista (navegador vièlh), la cascada ; sens movement
+	// (preferéncia del sistèma), lo cambiament sol.
+	// ENSAG (a levar quand Romain aurà causit)
+	const EFÈCTES = [
+		['revelar', 'Révélation'],
+		['virar', 'Retournement'],
+		['cascada', 'Cascade']
 	];
-	let varianta = $state('d');
+	let efèct = $state('revelar');
 	$effect(() => {
 		try {
-			const v = localStorage.getItem('lo-ligam-ensag-tria-lenga-3');
-			if (VARIANTAS.some(([x]) => x === v)) varianta = v;
+			const v = localStorage.getItem('lo-ligam-ensag-ficha-lenga');
+			if (EFÈCTES.some(([x]) => x === v)) efèct = v;
 		} catch {}
 	});
-	function causirVarianta(v) {
-		varianta = v;
+	function causirEfèct(v) {
+		efèct = v;
 		try {
-			localStorage.setItem('lo-ligam-ensag-tria-lenga-3', v);
+			localStorage.setItem('lo-ligam-ensag-ficha-lenga', v);
 		} catch {}
 	}
-	// lo títol que cambia de lenga se fond tanben
-	const fondutNom = (_n, { entra }) => ({
-		duration: entra ? 360 : 200,
-		delay: entra ? 90 : 0,
-		easing: (t) => 1 - Math.pow(1 - t, 3),
-		css: (t) => `opacity: ${t}; filter: blur(${((1 - t) * 3).toFixed(2)}px); transform: translateX(${((1 - t) * (entra ? 8 : -8)).toFixed(2)}px)`
-	});
+	let cara = $state(null),
+		cascada = $state(false);
+	function causirLenga(l, punt) {
+		if (!l || l === lt) return;
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (calm || efèct === 'cascada' || !document.startViewTransition || !cara) {
+			lenguaCausida = l;
+			sonClic(0.8);
+			if (!calm) {
+				cascada = false;
+				requestAnimationFrame(() => (cascada = true));
+			}
+			return;
+		}
+		// (lo ròtle part del centre de l'emblèma ; la ficha pòt créisser)
+		const r = cara.getBoundingClientRect(),
+			h = document.documentElement,
+			x = (punt?.x ?? r.left + 30) - r.left,
+			y = (punt?.y ?? r.top) - r.top;
+		h.style.setProperty('--ficha-x', x.toFixed(0) + 'px');
+		h.style.setProperty('--ficha-y', y.toFixed(0) + 'px');
+		h.style.setProperty('--ficha-r', Math.hypot(Math.max(x, r.width - x), r.height + 240).toFixed(0) + 'px');
+		h.dataset.fichaVt = efèct;
+		if (efèct === 'virar') {
+			sonPapièr(false);
+			setTimeout(() => sonClic(0.7), 560);
+		} else sonClic(1);
+		const t = document.startViewTransition(() => flushSync(() => (lenguaCausida = l)));
+		t.finished.finally(() => delete h.dataset.fichaVt);
+	}
 	// lo còdi de la lenga, coma lo boton Òc / Fr del site
 	const còdi = (l) => (l === 'oc' ? 'Òc' : l[0].toUpperCase() + l.slice(1));
 
@@ -225,79 +238,72 @@
 </script>
 
 {#if comuna}
-	{#snippet tria()}
-		<TriaLenga lenguas={lenguasTèxt} causida={lt} onCausir={(l) => (lenguaCausida = l)} {varianta} {nomLenga} {còdi} etiqueta={fr ? 'Langue de la fiche' : 'Lenga de la ficha'} />
-	{/snippet}
-	<section class="ficha-comuna" aria-label={nom} transition:fly={{ y: 16, duration: 260 }}>
-		<button type="button" class="tampar" aria-label={fr ? 'Fermer' : 'Tampar'} onclick={() => onTampar?.()}>×</button>
-		{#if lenguasTèxt.length > 1}
-			<!-- ENSAG (a levar quand Romain aurà causit) : las prepausas -->
-			<div class="ensag" role="group" aria-label="Essai">
-				<span>Essai</span>
-				{#each VARIANTAS as [v, n] (v)}
-					<button type="button" aria-pressed={varianta === v} onclick={() => causirVarianta(v)}>{v.toUpperCase()} · {n}</button>
-				{/each}
-			</div>
-			<!-- los onglets, en naut de la ficha : menan tota la ficha -->
-			{#if varianta === 'h'}<div class="barra-lenguas">{@render tria()}</div>{/if}
-		{/if}
-		<div class="cap">
-			{#if dades?.fòto}
-				<div class="vinheta">
-					<img src={dades.fòto.url} alt={nom} loading="lazy" decoding="async" />
-					{#if silhoeta}<svg class="silh mini" viewBox="0 0 64 64" aria-hidden="true"><path d={silhoeta} fill-rule="evenodd" /></svg>{/if}
+	<div class="ficha-comuna" transition:fly={{ y: 16, duration: 260 }}>
+		<section class="cara" class:amb-emblemas={lenguasTèxt.length > 1} class:cascada aria-label={nom} bind:this={cara}>
+			<button type="button" class="tampar" aria-label={fr ? 'Fermer' : 'Tampar'} onclick={() => onTampar?.()}>×</button>
+			{#if lenguasTèxt.length > 1}
+				<!-- ENSAG (a levar quand Romain aurà causit) : los efèctes -->
+				<div class="ensag" role="group" aria-label="Essai">
+					<span>Essai</span>
+					{#each EFÈCTES as [v, n] (v)}
+						<button type="button" aria-pressed={efèct === v} onclick={() => causirEfèct(v)}>{n}</button>
+					{/each}
 				</div>
-			{:else if silhoeta}
-				<svg class="silh gran" viewBox="0 0 64 64" aria-hidden="true"><path d={silhoeta} fill-rule="evenodd" /></svg>
 			{/if}
-			<div class="cos">
-				<h2>
-					{#key nom}<span lang={lengaNom} in:fondutNom={{ entra: true }} out:fondutNom={{ entra: false }}>{nom}</span>{/key}
-				</h2>
-				{#if chifras.length}<p class="chifras">{chifras.join(' · ')}</p>{/if}
-				{#if gentilici}<p class="gentilici">{fr ? 'Habitants' : 'Abitants'} : {gentilici}</p>{/if}
-				{#if cargant}<p class="cargant" aria-hidden="true">…</p>{/if}
-				{#if dades && (lenguasTèxt.length || fichaSite)}
-					<button type="button" class="desplegar" aria-expanded={dobèrta} onclick={() => (dobèrta = !dobèrta)}
-						>{dobèrta ? (fr ? 'Replier' : 'Plegar') : fr ? 'En savoir plus' : 'Legir mai'}<span class="chev" aria-hidden="true">▾</span></button
-					>
+			<div class="cap">
+				{#if dades?.fòto}
+					<div class="vinheta">
+						<img src={dades.fòto.url} alt={nom} loading="lazy" decoding="async" />
+						{#if silhoeta}<svg class="silh mini" viewBox="0 0 64 64" aria-hidden="true"><path d={silhoeta} fill-rule="evenodd" /></svg>{/if}
+					</div>
+				{:else if silhoeta}
+					<svg class="silh gran" viewBox="0 0 64 64" aria-hidden="true"><path d={silhoeta} fill-rule="evenodd" /></svg>
 				{/if}
-			</div>
-			<!-- lo cadran, a drecha del nom : mena tota la ficha -->
-			{#if lenguasTèxt.length > 1 && varianta !== 'h'}<div class="tria-cap">{@render tria()}</div>{/if}
-		</div>
-		{#if dades && dobèrta}
-			<div class="mai" transition:slide={{ duration: 240 }}>
-				<div class="pila" style:height={hTèxt == null ? null : hTèxt + 'px'}>
-					{#if extrach}
-						{#key lt}
-							<p class="extrach" lang={lt} in:fondut={{ entra: true }} out:fondut={{ entra: false }} {@attach mesurar}>{extrach}</p>
-						{/key}
-					{/if}
-				</div>
-				<footer>
-					{#if fichaSite}
-						{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{fr ? 'Découvrir la ville' : 'Descobrir la vila'} →</a>
-						{:else}<span class="site leu">{fr ? 'Découvrir la ville : bientôt' : 'Descobrir la vila : lèu'}</span>{/if}
-					{/if}
-					{#if wiki}
-						<!-- (lo ligam seguís la lenga causida, e la ditz) -->
-						<a class="wiki" href={wiki} hreflang={lt} target="_blank" rel="noopener"
-							>{fr ? `Lire l'article de Wikipédia en ${enLenga(lt)}` : `Legir l'article de Wikipèdia en ${enLenga(lt)}`} ↗</a
+				<div class="cos">
+					<h2 lang={lengaNom} style:--i="0">{nom}</h2>
+					{#if chifras.length}<p class="chifras" style:--i="1">{chifras.join(' · ')}</p>{/if}
+					{#if gentilici}<p class="gentilici" style:--i="2">{fr ? 'Habitants' : 'Abitants'} : {gentilici}</p>{/if}
+					{#if cargant}<p class="cargant" aria-hidden="true">…</p>{/if}
+					{#if dades && (lenguasTèxt.length || fichaSite)}
+						<button type="button" class="desplegar" style:--i="3" aria-expanded={dobèrta} onclick={() => (dobèrta = !dobèrta)}
+							>{dobèrta ? (fr ? 'Replier' : 'Plegar') : fr ? 'En savoir plus' : 'Legir mai'}<span class="chev" aria-hidden="true">▾</span></button
 						>
 					{/if}
-					<p class="credits">
-						{#if dades.fòto}{fr ? 'Photo' : 'Fòto'} : {#if dades.fòto.pagina}<a href={dades.fòto.pagina} target="_blank" rel="noopener">{dades.fòto.autor ?? 'Wikimedia Commons'}</a
-							>{:else}{dades.fòto.autor ?? 'Wikimedia Commons'}{/if}{dades.fòto.licéncia ? `, ${dades.fòto.licéncia}` : ''}{' · '}{/if}{#if extrach}{fr ? 'Texte : Wikipédia' : 'Tèxt : Wikipèdia'}, <a
-								href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr"
-								target="_blank"
-								rel="noopener">CC BY-SA 4.0</a
-							>{' · '}{/if}{fr ? 'Chiffres' : 'Chifras'} : Wikidata
-					</p>
-				</footer>
+				</div>
+			</div>
+			{#if dades && dobèrta}
+				<div class="mai" transition:slide={{ duration: 240 }}>
+					{#if extrach}<p class="extrach" lang={lt} style:--i="4">{extrach}</p>{/if}
+					<footer style:--i="5">
+						{#if fichaSite}
+							{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{fr ? 'Découvrir la ville' : 'Descobrir la vila'} →</a>
+							{:else}<span class="site leu">{fr ? 'Découvrir la ville : bientôt' : 'Descobrir la vila : lèu'}</span>{/if}
+						{/if}
+						{#if wiki}
+							<!-- (lo ligam seguís la lenga causida, e la ditz) -->
+							<a class="wiki" href={wiki} hreflang={lt} target="_blank" rel="noopener"
+								>{fr ? `Lire l'article de Wikipédia en ${enLenga(lt)}` : `Legir l'article de Wikipèdia en ${enLenga(lt)}`} ↗</a
+							>
+						{/if}
+						<p class="credits">
+							{#if dades.fòto}{fr ? 'Photo' : 'Fòto'} : {#if dades.fòto.pagina}<a href={dades.fòto.pagina} target="_blank" rel="noopener">{dades.fòto.autor ?? 'Wikimedia Commons'}</a
+								>{:else}{dades.fòto.autor ?? 'Wikimedia Commons'}{/if}{dades.fòto.licéncia ? `, ${dades.fòto.licéncia}` : ''}{' · '}{/if}{#if extrach}{fr ? 'Texte : Wikipédia' : 'Tèxt : Wikipèdia'}, <a
+									href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr"
+									target="_blank"
+									rel="noopener">CC BY-SA 4.0</a
+								>{' · '}{/if}{fr ? 'Chiffres' : 'Chifras'} : Wikidata
+						</p>
+					</footer>
+				</div>
+			{/if}
+		</section>
+		<!-- los emblèmas de las lengas, sul canton de la ficha : menan tota la ficha -->
+		{#if lenguasTèxt.length > 1}
+			<div class="emblemas-fl">
+				<TriaLenga lenguas={lenguasTèxt} causida={lt} onCausir={causirLenga} {nomLenga} {còdi} etiqueta={fr ? 'Langue de la fiche' : 'Lenga de la ficha'} />
 			</div>
 		{/if}
-	</section>
+	</div>
 {/if}
 
 <style>
@@ -308,6 +314,10 @@
 		bottom: 18px;
 		transform: translateX(-50%);
 		width: min(30rem, calc(100% - 24px));
+	}
+	.cara {
+		position: relative;
+		view-transition-name: ficha-cara;
 		padding: 14px 16px 12px;
 		border: 1px solid var(--t-linha);
 		border-radius: 14px;
@@ -332,6 +342,30 @@
 	}
 	/* la fòto, lo nom e sas chifras, lo tria de la lenga a drecha (que passa
 	   dejós quand la ficha es estrecha) */
+	/* los emblèmas de las lengas, pausats sul canton naut a esquèrra, un pauc
+	   al dessús del quadre */
+	.emblemas-fl {
+		position: absolute;
+		z-index: 2;
+		left: 14px;
+		top: -17px;
+		view-transition-name: ficha-emblemas;
+	}
+	.cara.amb-emblemas {
+		padding-top: 24px;
+	}
+	/* la cascada : los elements tornan un a un */
+	.cara.cascada :is(h2, .chifras, .gentilici, .desplegar, .extrach, footer) {
+		animation: cascada 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+		animation-delay: calc(var(--i, 0) * 60ms);
+	}
+	@keyframes cascada {
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+			filter: blur(3px);
+		}
+	}
 	.cap {
 		display: flex;
 		flex-wrap: wrap;
@@ -355,39 +389,17 @@
 		flex: 1 1 150px;
 		min-width: 0;
 	}
-	.tria-cap {
-		flex: none;
-		margin: 0 -6px 0 auto;
-	}
-	/* (los onglets, en naut, a costat del boton de tampar) */
-	.barra-lenguas {
-		margin: 0 36px 12px 0;
-	}
-	/* (los dos noms, l'un sus l'autre lo temps del fondut) */
 	h2 {
-		display: grid;
 		margin: 0;
 		font: 600 1.35rem/1.15 'Cormorant Garamond', Georgia, serif;
 		font-style: italic;
 		color: var(--t-aur-clar);
-	}
-	h2 > span {
-		grid-area: 1 / 1;
 	}
 	.gentilici,
 	.cargant {
 		margin: 2px 0 0;
 		font-size: 0.8125rem;
 		color: var(--t-tinta-2);
-	}
-	.pila {
-		margin-top: 10px;
-		display: grid;
-		overflow: hidden;
-		transition: height 0.38s cubic-bezier(0.2, 0.8, 0.2, 1);
-	}
-	.pila > :global(*) {
-		grid-area: 1 / 1;
 	}
 	/* ENSAG (a levar quand Romain aurà causit) */
 	.ensag {
@@ -451,7 +463,7 @@
 		vector-effect: non-scaling-stroke;
 	}
 	.extrach {
-		margin: 0;
+		margin: 10px 0 0;
 		font-size: 0.875rem;
 		line-height: 1.5;
 	}

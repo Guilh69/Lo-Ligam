@@ -128,6 +128,73 @@ a {
 	animation-duration: 0.45s;
 }
 
+/* La ficha d'una comuna de la carta cambia de lenga (Romain, 2026-10-11 :
+   « une transformation, un retournement… quelque chose de très
+   satisfaisant ») : sonque la ficha se transforma ; la carta e los
+   emblèmas demòran vius dessús. Doas prepausas a ensajar :
+   - virar : la ficha se revira coma una carta, la lenga nòva sus l'autra cara ;
+   - revelar : la lenga nòva s'espandís en ròtle a partir de l'emblèma clicat. */
+html[data-ficha-vt]::view-transition-old(root) {
+	display: none;
+}
+html[data-ficha-vt]::view-transition-new(root),
+html[data-ficha-vt]::view-transition-group(ficha-emblemas),
+html[data-ficha-vt]::view-transition-new(ficha-emblemas) {
+	animation: none;
+}
+html[data-ficha-vt]::view-transition-old(ficha-emblemas) {
+	display: none;
+}
+html[data-ficha-vt]::view-transition-old(ficha-cara),
+html[data-ficha-vt]::view-transition-new(ficha-cara) {
+	mix-blend-mode: normal;
+}
+html[data-ficha-vt='virar']::view-transition-group(ficha-cara) {
+	animation-duration: 0.6s;
+	animation-timing-function: cubic-bezier(0.3, 0.7, 0.3, 1);
+}
+html[data-ficha-vt='virar']::view-transition-old(ficha-cara) {
+	animation: ficha-virar-fora 0.24s cubic-bezier(0.55, 0, 0.85, 0.4) both;
+	backface-visibility: hidden;
+}
+html[data-ficha-vt='virar']::view-transition-new(ficha-cara) {
+	animation: ficha-virar-dintre 0.36s cubic-bezier(0.2, 0.75, 0.3, 1.18) 0.24s both;
+	backface-visibility: hidden;
+}
+@keyframes ficha-virar-fora {
+	to {
+		transform: perspective(1200px) rotateY(90deg);
+		filter: brightness(0.65);
+	}
+}
+@keyframes ficha-virar-dintre {
+	from {
+		transform: perspective(1200px) rotateY(-90deg);
+		filter: brightness(0.65);
+	}
+}
+html[data-ficha-vt='revelar']::view-transition-group(ficha-cara) {
+	animation-duration: 0.62s;
+	animation-timing-function: cubic-bezier(0.3, 0.6, 0.2, 1);
+}
+html[data-ficha-vt='revelar']::view-transition-old(ficha-cara) {
+	animation: none;
+	opacity: 1;
+}
+html[data-ficha-vt='revelar']::view-transition-new(ficha-cara) {
+	animation: ficha-revelar 0.62s cubic-bezier(0.3, 0.6, 0.2, 1) both;
+}
+@keyframes ficha-revelar {
+	from {
+		clip-path: circle(0 at var(--ficha-x, 30px) var(--ficha-y, 0px));
+		filter: brightness(1.35);
+	}
+	to {
+		clip-path: circle(var(--ficha-r, 600px) at var(--ficha-x, 30px) var(--ficha-y, 0px));
+		filter: brightness(1);
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	::view-transition-group(*),
 	::view-transition-old(*),
