@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Le dialogue d'entrée (Escota) : scènes, répliques, glossaire « ça sonne
 	// comme ». Quand un fichier audio existe (scene.audio) : lecture/pause de
 	// la scène entière, vitesse normale ou lente, et si une réplique porte ses
@@ -120,7 +121,7 @@
 						onclick={() => toggleScene(si)}
 						aria-label={playingScene === si ? 'Pausa' : 'Escotar la scèna'}
 					>
-						<span class="listen-icon" aria-hidden="true">{playingScene === si ? '⏸' : '▶'}</span>
+						<span class="listen-icon" aria-hidden="true"><Icona nom={playingScene === si ? 'pause' : 'lire'} /></span>
 						{playingScene === si ? 'Pausa' : 'Escotar'}
 					</button>
 					<button
@@ -139,7 +140,7 @@
 			{:else}
 				<div class="audio-controls">
 					<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
-						<span class="listen-icon" aria-hidden="true">▶</span>
+						<span class="listen-icon" aria-hidden="true"><Icona nom="lire" /></span>
 						Àudio a venir
 					</button>
 				</div>
@@ -176,7 +177,7 @@
 				{#each block.glossary as g}
 					<li>
 						{#if g.audio}
-							<button type="button" class="g-listen" onclick={() => play(g.audio)} aria-label="Escotar {g.oc}">🔊</button>
+							<button type="button" class="g-listen" onclick={() => play(g.audio)} aria-label="Escotar {g.oc}"><Icona nom="son" size="1.2em" /></button>
 						{/if}
 						<strong class="g-oc">{g.oc}</strong>
 						<span class="g-sound">{g.sound}</span>
@@ -274,7 +275,8 @@
 	}
 
 	.listen-icon {
-		font-size: 0.8rem;
+		display: inline-flex;
+		font-size: 1.05rem;
 	}
 
 	.speed {
@@ -382,6 +384,7 @@
 		padding: 0 0.25rem 0 0;
 		cursor: pointer;
 		font-size: 0.85rem;
+		color: var(--color-brick);
 	}
 
 	.g-oc {

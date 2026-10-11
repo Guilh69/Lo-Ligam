@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import { browser } from '$app/environment';
@@ -251,9 +252,9 @@
 	{:else}
 		<header class="lesson-top">
 			{#if view === 'list'}
-				<a class="close" href="/aprene" aria-label="Tornar als moduls">×</a>
+				<a class="close" href="/aprene" aria-label="Tornar als moduls"><Icona nom="fermer" /></a>
 			{:else}
-				<button type="button" class="close" onclick={() => openSession('list')} aria-label="Tornar al somari">×</button>
+				<button type="button" class="close" onclick={() => openSession('list')} aria-label="Tornar al somari"><Icona nom="fermer" /></button>
 			{/if}
 			<a class="home-link" href="/" aria-label="Tornar a l'acuèlh">
 				<HomeIcon size={21} />
@@ -284,12 +285,12 @@
 			<div class="sessions">
 				{#each modul.sessions as s, i}
 					<button type="button" class="session-card" class:done={done[i]} onclick={() => openSession(i)}>
-						<span class="session-num" aria-hidden="true">{done[i] ? '✓' : i + 1}</span>
+						<span class="session-num" aria-hidden="true">{#if done[i]}<Icona nom="valide" />{:else}{i + 1}{/if}</span>
 						<span class="session-titles">
 							<span class="session-title">{s.title}</span>
 							<span class="session-min">{s.minutes} min</span>
 						</span>
-						<span class="session-go" aria-hidden="true">→</span>
+						<span class="session-go" aria-hidden="true"><Icona nom="suivant" /></span>
 					</button>
 				{/each}
 			</div>
@@ -308,12 +309,12 @@
 
 			<nav class="modul-nav" aria-label="Navigation entre modules">
 				{#if precedent}
-					<a href="/aprene/modul/{precedent}">← {moduls[precedent].nivel.split('·')[1] ?? precedent}</a>
+					<a href="/aprene/modul/{precedent}"><Icona nom="precedent" /> {moduls[precedent].nivel.split('·')[1] ?? precedent}</a>
 				{:else}
 					<span></span>
 				{/if}
 				{#if seguent && !allDone}
-					<a href="/aprene/modul/{seguent}">{moduls[seguent].nivel.split('·')[1] ?? seguent} →</a>
+					<a href="/aprene/modul/{seguent}">{moduls[seguent].nivel.split('·')[1] ?? seguent} <Icona nom="suivant" /></a>
 				{/if}
 			</nav>
 

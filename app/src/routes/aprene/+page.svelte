@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import AppHeader from '$lib/components/AppHeader.svelte';
@@ -131,7 +132,7 @@
 									<span class="module-oc">{m.oc}</span>
 									<span class="module-fr"><em>({m.fr})</em></span>
 								</span>
-								<span class="module-status" aria-hidden="true">{moduleOneDone ? '✓' : '→'}</span>
+								<span class="module-status" aria-hidden="true"><Icona nom={moduleOneDone ? 'valide' : 'suivant'} /></span>
 							</a>
 						{:else}
 							<div class="module-card locked" aria-disabled="true">

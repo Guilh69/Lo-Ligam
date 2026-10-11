@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import { browser } from '$app/environment';
@@ -467,7 +468,7 @@
 
 <main class="screen">
 	<header class="lesson-top">
-		<a class="close" href="/aprene" aria-label="Tornar als moduls">×</a>
+		<a class="close" href="/aprene" aria-label="Tornar als moduls"><Icona nom="fermer" /></a>
 		<a class="home-link" href="/" aria-label="Tornar a l'acuèlh">
 			<HomeIcon size={21} />
 		</a>
@@ -544,7 +545,7 @@
 				>
 			</p>
 			<button type="button" class="btn-primary" onclick={() => (phase = 'detail')}>
-				Contunhar <span class="arrow">→</span>
+				Contunhar <span class="arrow"><Icona nom="suivant" /></span>
 			</button>
 		</section>
 	{:else if phase === 'detail'}
@@ -558,7 +559,7 @@
 				bien pour dire bonjour <strong>que</strong> pour dire au revoir !
 			</p>
 			<button type="button" class="btn-primary" onclick={() => (phase = 'discover')}>
-				Descobrir los mots <span class="arrow">→</span>
+				Descobrir los mots <span class="arrow"><Icona nom="suivant" /></span>
 			</button>
 		</section>
 	{:else if phase === 'discover'}
@@ -661,7 +662,7 @@
 
 		{#if wordComplete}
 			<button type="button" class="btn-primary" onclick={next}>
-				{wordIndex < flatWords.length - 1 ? 'Segon' : 'Acabar'} <span class="arrow">→</span>
+				{wordIndex < flatWords.length - 1 ? 'Segon' : 'Acabar'} <span class="arrow"><Icona nom="suivant" /></span>
 			</button>
 		{:else}
 			<p class="hint">Tapa las letras dins l'òrdre, o pica-las al clavièr</p>
@@ -683,7 +684,7 @@
 				vocabulari s'emplenarà a mesura.
 			</p>
 			<a class="btn-primary" href="/compte?mode=signup"
-				>Crèa un compte per contunhar <span class="arrow">→</span></a
+				>Crèa un compte per contunhar <span class="arrow"><Icona nom="suivant" /></span></a
 			>
 			<div class="reward-links">
 				<button type="button" class="btn-secondary" onclick={restartModule}
@@ -1324,6 +1325,7 @@
 
 	.btn-primary .arrow {
 		display: inline-block;
+		margin-left: 0.2em;
 		transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 

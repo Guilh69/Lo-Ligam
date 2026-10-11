@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Bloc de texte typé : son du jour, Los que parlan, culture, consigne de
 	// tâche… La variante choisit la couleur et l'icône, le contenu reste des
 	// paragraphes (et une liste optionnelle).
@@ -28,11 +29,11 @@
 	<h3 class="block-title">{#if icon}<span aria-hidden="true">{icon}</span> {/if}{block.title}</h3>
 	{#if block.audioSrc}
 		<button type="button" class="listen active" onclick={() => play(block.audioSrc)} aria-label="Escotar">
-			🔊 <span class="listen-label">escotar</span>
+			<Icona nom="son" size="1.2em" /> <span class="listen-label">escotar</span>
 		</button>
 	{:else if block.audio}
 		<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
-			🔊 <span class="listen-label">a venir</span>
+			<Icona nom="son" size="1.2em" /> <span class="listen-label">a venir</span>
 		</button>
 	{/if}
 	{#each block.paragraphs ?? [] as p}

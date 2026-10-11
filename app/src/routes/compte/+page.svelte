@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
@@ -119,9 +120,9 @@
 				{#if loading}
 					…
 				{:else if mode === 'login'}
-					Se connectar <span class="arrow">→</span>
+					Se connectar <span class="arrow"><Icona nom="suivant" /></span>
 				{:else}
-					Crear mon compte <span class="arrow">→</span>
+					Crear mon compte <span class="arrow"><Icona nom="suivant" /></span>
 				{/if}
 			</button>
 		</form>

@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Les expressions à retenir : le mot, « ça sonne comme », le sens.
 	// Le bouton audio s'active dès qu'un fichier existe (c.audio).
 	let { block } = $props();
@@ -19,9 +20,9 @@
 		{#each block.items as c}
 			<li class="chunk">
 				{#if c.audio}
-					<button type="button" class="listen active" onclick={() => play(c.audio)} aria-label="Escotar {c.oc}">🔊</button>
+					<button type="button" class="listen active" onclick={() => play(c.audio)} aria-label="Escotar {c.oc}"><Icona nom="son" size="1.25em" /></button>
 				{:else}
-					<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">🔊</button>
+					<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir"><Icona nom="son" size="1.25em" /></button>
 				{/if}
 				<span class="c-body">
 					<span class="c-oc">{c.oc}</span>
@@ -84,6 +85,7 @@
 	}
 
 	.listen.active {
+		color: var(--color-brick);
 		opacity: 1;
 		cursor: pointer;
 		background: white;

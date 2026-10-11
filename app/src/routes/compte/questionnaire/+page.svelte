@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { get } from 'svelte/store';
@@ -248,7 +249,7 @@
 				{#if errorMsg}<p class="msg error" role="alert">{errorMsg}</p>{/if}
 
 				<button type="submit" class="btn-primary" disabled={loading}>
-					{loading ? '…' : main('Contunhar', 'Continuer')} <span class="arrow">→</span>
+					{loading ? '…' : main('Contunhar', 'Continuer')} <span class="arrow"><Icona nom="suivant" /></span>
 				</button>
 			</form>
 		</section>
