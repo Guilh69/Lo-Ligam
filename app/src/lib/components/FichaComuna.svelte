@@ -9,23 +9,62 @@
 
 	let { comuna, contorn = null, lang = 'oc', onTampar = null } = $props();
 
+	// La ficha dins la lenga del luòc (retorn de Romain, 2026-10-11 : Liyon en
+	// arpitan, Brest en breton ; « cocher oc si on veut voir en oc ») : son nom
+	// local d'en primièr, puèi en occitan, puèi en francés ; lo tèxt de
+	// Wikipèdia dins la lenga del luòc, e un tria per lo legir en occitan o en
+	// francés. Las Wikipèdias de cada lenga de la carta (per las lengas d'oïl,
+	// lo servidor garda la que nomena la vila coma nosautres).
+	const WIKIS = { catalan: ['ca'], arpitan: ['frp'], basc: ['eu'], breton: ['br'], alsacian: ['als'], francic: ['lb', 'pfl', 'ksh', 'li'], flamenc: ['vls', 'nl'], cors: ['co'], oil: ['pcd', 'wa', 'nrm'] };
+	const LENGAS = {
+		oc: ['Occitan', 'Occitan'],
+		fr: ['Francés', 'Français'],
+		ca: ['Catalan', 'Catalan'],
+		frp: ['Arpitan', 'Arpitan'],
+		eu: ['Basc', 'Basque'],
+		br: ['Breton', 'Breton'],
+		als: ['Alsacian', 'Alsacien'],
+		lb: ['Francic', 'Francique'],
+		pfl: ['Francic', 'Francique'],
+		ksh: ['Francic', 'Francique'],
+		li: ['Francic', 'Francique'],
+		vls: ['Flamenc', 'Flamand'],
+		nl: ['Neerlandés', 'Néerlandais'],
+		co: ['Còrs', 'Corse'],
+		pcd: ['Picard', 'Picard'],
+		wa: ['Valon', 'Wallon'],
+		nrm: ['Normand', 'Normand']
+	};
+
 	let dades = $state(null),
 		cargant = $state(false),
 		clauCargada = '';
 	// d'en primièr la partida nauta (fòto, nom, chifras) ; lo tèxt, los ligams e
 	// los crèdits se desplegan (retorn de Romain, 2026-10-11)
-	let dobèrta = $state(false);
+	let dobèrta = $state(false),
+		lenguaCausida = $state(null);
 	$effect(() => {
 		comuna;
 		dobèrta = false;
+		lenguaCausida = null;
 	});
 	const fr = $derived(lang === 'fr');
+
+	// la lenga del luòc : la zòna de son contorn (« arpitan-69 »), o sa lista de
+	// noms ; null dins lo domeni occitan
+	const lenga = $derived.by(() => {
+		const z = contorn?.zona;
+		const id = z && /^[a-z]+-/.test(z) ? z.split('-')[0] : comuna?.dep;
+		return WIKIS[id] ? id : null;
+	});
 
 	$effect(() => {
 		const c = comuna,
 			i = contorn?.props?.i ?? null;
 		if (!c) return;
-		const q = i && /^\d[\dAB]\d{3}$/.test(i) ? `i=${i}` : `nom=${encodeURIComponent(contorn?.props?.fr ?? c.fr)}&lat=${c.lat}&lon=${c.lon}`;
+		const q =
+			(i && /^\d[\dAB]\d{3}$/.test(i) ? `i=${i}` : `nom=${encodeURIComponent(contorn?.props?.fr ?? c.fr)}&lat=${c.lat}&lon=${c.lon}`) +
+			(lenga ? `&l=${WIKIS[lenga].join(',')}&nl=${encodeURIComponent(c.oc ?? '')}` : '');
 		if (q === clauCargada) return;
 		clauCargada = q;
 		dades = null;
@@ -44,10 +83,22 @@
 		return () => clearTimeout(t);
 	});
 
-	const nom = $derived(comuna?.oc || dades?.nom?.oc || comuna?.fr || '');
+	// (dins las listas de la carta, lo camp oc es lo nom dins la lenga del luòc)
+	const lengaLocal = $derived(lenga ? (dades?.local ?? WIKIS[lenga][0]) : 'oc');
+	const nom = $derived(comuna?.oc || dades?.nom?.[lengaLocal] || comuna?.fr || '');
 	// la vila a sa pagina sul site (l'ancian repèr daurat de la carta)
 	const fichaSite = $derived(comuna ? VILAS_FICHAS.find((v) => Math.abs(v.lat - comuna.lat) < 0.05 && Math.abs(v.lon - comuna.lon) < 0.07) : null);
-	const nomOficial = $derived(contorn?.props?.fr ?? dades?.nom?.fr ?? null);
+	// los autres noms : en occitan (fòra del domeni), puèi en francés
+	const autresNoms = $derived.by(() => {
+		const vist = [nom.toLowerCase()],
+			l = [];
+		for (const [lg, n] of [
+			['oc', lenga ? dades?.nom?.oc : null],
+			['fr', contorn?.props?.fr ?? dades?.nom?.fr ?? (lenga ? null : comuna?.fr)]
+		])
+			if (n && !vist.includes(n.toLowerCase())) vist.push(n.toLowerCase()), l.push([lg, n]);
+		return l;
+	});
 	const nombre = (n, d = 0) => n.toLocaleString('fr-FR', { maximumFractionDigits: d });
 	const chifras = $derived.by(() => {
 		const d = dades,
@@ -59,10 +110,15 @@
 		return l;
 	});
 	const gentilici = $derived(fr ? dades?.gentilici?.fr : dades?.gentilici?.oc);
-	// (l'extrach dins la lenga de la pagina ; en occitan, sonque l'article occitan)
-	const extrach = $derived(fr ? dades?.extrach?.fr : dades?.extrach?.oc);
-	const wiki = $derived(fr ? (dades?.wiki?.fr ?? dades?.wiki?.oc) : (dades?.wiki?.oc ?? dades?.wiki?.fr));
-	const wikiFr = $derived(!fr && !dades?.wiki?.oc && !!dades?.wiki?.fr);
+	// lo tèxt : dins la lenga del luòc d'en primièr, puèi en occitan, puèi en
+	// francés (las lengas qu'an un article)
+	const lenguasTèxt = $derived(
+		dades ? [dades.local, 'oc', 'fr'].filter((l, k, a) => l && a.indexOf(l) === k && (dades.extrach?.[l] || dades.wiki?.[l])) : []
+	);
+	const lt = $derived(lenguasTèxt.includes(lenguaCausida) ? lenguaCausida : lenguasTèxt[0]);
+	const extrach = $derived(dades?.extrach?.[lt]);
+	const wiki = $derived(dades?.wiki?.[lt]);
+	const nomLenga = (l) => LENGAS[l]?.[fr ? 1 : 0] ?? l;
 
 	// la silhoeta de la comuna, a l'escala de la vinheta
 	const silhoeta = $derived.by(() => {
@@ -90,12 +146,18 @@
 				<svg class="silh gran" viewBox="0 0 64 64" aria-hidden="true"><path d={silhoeta} fill-rule="evenodd" /></svg>
 			{/if}
 			<div class="cos">
-				<h2 lang={fr ? 'fr' : 'oc'}>{nom}</h2>
-				{#if nomOficial && nomOficial !== nom}<p class="oficial" lang="fr">{nomOficial}</p>{/if}
+				<h2 lang={lengaLocal}>{nom}</h2>
+				{#if autresNoms.length}
+					<p class="autres">
+						{#each autresNoms as [lg, n], k (lg)}{#if k}<span class="sep" aria-hidden="true">·</span>{/if}<span class="lg" title={nomLenga(lg)}
+								>{lg}</span
+							>&nbsp;<span lang={lg}>{n}</span>{/each}
+					</p>
+				{/if}
 				{#if chifras.length}<p class="chifras">{chifras.join(' · ')}</p>{/if}
 				{#if gentilici}<p class="gentilici">{fr ? 'Habitants' : 'Abitants'} : {gentilici}</p>{/if}
 				{#if cargant}<p class="cargant" aria-hidden="true">…</p>{/if}
-				{#if dades && (extrach || wiki || fichaSite)}
+				{#if dades && (lenguasTèxt.length || fichaSite)}
 					<button type="button" class="desplegar" aria-expanded={dobèrta} onclick={() => (dobèrta = !dobèrta)}
 						>{dobèrta ? (fr ? 'Replier' : 'Plegar') : fr ? 'En savoir plus' : 'Legir mai'}<span class="chev" aria-hidden="true">▾</span></button
 					>
@@ -107,7 +169,14 @@
 		</div>
 		{#if dades && dobèrta}
 			<div class="mai" transition:slide={{ duration: 240 }}>
-			{#if extrach}<p class="extrach" lang={fr ? 'fr' : 'oc'}>{extrach}</p>{/if}
+			{#if lenguasTèxt.length > 1}
+				<div class="lenguas" role="radiogroup" aria-label={fr ? 'Langue du texte' : 'Lenga del tèxt'}>
+					{#each lenguasTèxt as l (l)}
+						<button type="button" role="radio" aria-checked={l === lt} lang={fr ? 'fr' : 'oc'} onclick={() => (lenguaCausida = l)}>{nomLenga(l)}</button>
+					{/each}
+				</div>
+			{/if}
+			{#if extrach}<p class="extrach" lang={lt}>{extrach}</p>{/if}
 			<footer>
 				{#if fichaSite}
 					{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{fr ? 'Découvrir la ville' : 'Descobrir la vila'} →</a>
@@ -115,16 +184,16 @@
 				{/if}
 				{#if wiki}
 					<a class="wiki" href={wiki} target="_blank" rel="noopener"
-						>{fr ? "Lire l'article sur Wikipédia" : `Legir l'article sus Wikipèdia${wikiFr ? ' (en francés)' : ''}`} ↗</a
+						>{fr ? "Lire l'article sur Wikipédia" : "Legir l'article sus Wikipèdia"} ↗</a
 					>
 				{/if}
 				<p class="credits">
 					{#if dades.fòto}{fr ? 'Photo' : 'Fòto'} : {#if dades.fòto.pagina}<a href={dades.fòto.pagina} target="_blank" rel="noopener">{dades.fòto.autor ?? 'Wikimedia Commons'}</a
-						>{:else}{dades.fòto.autor ?? 'Wikimedia Commons'}{/if}{dades.fòto.licéncia ? `, ${dades.fòto.licéncia}` : ''} · {/if}{#if extrach}{fr ? 'Texte' : 'Tèxt'} : Wikipèdia, <a
+						>{:else}{dades.fòto.autor ?? 'Wikimedia Commons'}{/if}{dades.fòto.licéncia ? `, ${dades.fòto.licéncia}` : ''}{' · '}{/if}{#if extrach}{fr ? 'Texte' : 'Tèxt'} : Wikipèdia, <a
 							href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr"
 							target="_blank"
 							rel="noopener">CC BY-SA 4.0</a
-						> · {/if}{fr ? 'Chiffres' : 'Chifras'} : Wikidata
+						>{' · '}{/if}{fr ? 'Chiffres' : 'Chifras'} : Wikidata
 				</p>
 			</footer>
 			</div>
@@ -186,12 +255,42 @@
 		font-style: italic;
 		color: var(--t-aur-clar);
 	}
-	.oficial,
+	.autres,
 	.gentilici,
 	.cargant {
 		margin: 2px 0 0;
 		font-size: 0.8125rem;
 		color: var(--t-tinta-2);
+	}
+	.autres .sep {
+		margin: 0 7px;
+	}
+	.autres .lg {
+		font-size: 0.625rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--t-aur-clar) 70%, var(--t-tinta-2));
+	}
+	.lenguas {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		margin-top: 10px;
+	}
+	.lenguas button {
+		padding: 3px 10px;
+		border: 1px solid var(--t-linha);
+		border-radius: 999px;
+		background: none;
+		color: var(--t-tinta-2);
+		font: 600 0.75rem/1.2 var(--font-body);
+		cursor: pointer;
+	}
+	.lenguas button[aria-checked='true'] {
+		border-color: #f3c25a;
+		background: color-mix(in srgb, #f3c25a 18%, transparent);
+		color: var(--t-aur-clar);
 	}
 	.chifras {
 		margin: 6px 0 0;

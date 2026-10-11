@@ -37,7 +37,8 @@ export async function contornComuna(lat, lon) {
 			.catch(() => null);
 		const fs = await deps[d.d];
 		const f = fs?.find((f) => f.poligons.some((p) => dins(p, lon, lat)));
-		if (f) return f;
+		// (sa zòna, « arpitan-69 » o « 30 » : la lenga del luòc, per sa ficha)
+		if (f) return Object.assign(f, { zona: d.d });
 	}
 	return null;
 }
