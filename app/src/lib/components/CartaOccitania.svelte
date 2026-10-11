@@ -5,6 +5,7 @@
 	import { zoomDoç } from '$lib/carta/zoomDoc.js';
 	import { crearNomsComunas } from '$lib/carta/nomsComunas.js';
 	import { contornComuna } from '$lib/carta/contornComuna.js';
+	import FichaComuna from './FichaComuna.svelte';
 	import { fly } from 'svelte/transition';
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
@@ -875,16 +876,19 @@
 	// lo domeni occitan, ont son los contorns)
 	let contornCausit = null,
 		comunaCausida = null;
+	// la ficha de la comuna, dins l'encastre d'en bas (FichaComuna.svelte)
+	// ($state.raw : la comuna e son contorn demòran los objèctes d'origina, sens proxy)
+	let fichaComuna = $state.raw(null);
 	function causirNomComuna(c) {
 		motorNoms?.causir(c);
 		comunaCausida = c;
 		contornCausit?.remove();
 		contornCausit = null;
+		fichaComuna = c ? { c, contorn: null } : null;
 	}
 	async function anarALaComuna(c) {
 		map.closePopup();
 		causirNomComuna(c);
-		colaEstelas?.senhalar(c.lat, c.lon);
 		// (lo contorn, se ven pro lèu ; si que non la carta part sens el)
 		const f = await Promise.race([contornComuna(c.lat, c.lon), new Promise((r) => setTimeout(() => r(null), 450))]);
 		if (comunaCausida !== c || !map) return;
@@ -898,14 +902,25 @@
 				f.poligons.map((p) => p.map((a) => a.map(([x, y]) => [y, x]))),
 				{ pane: 'comunaCausida', className: 'comuna-causida', color: '#f3c25a', weight: 2, opacity: 0.95, fillColor: '#f3c25a', fillOpacity: 0.1, interactive: false }
 			).addTo(map);
+			contornCausit.getElement()?.setAttribute('pathLength', '1');
+			if (fichaComuna?.c === c) fichaComuna = { c, contorn: f };
 			return contornCausit.getBounds();
 		};
 		const b = pintar(f);
+		// (la ficha ocupa lo bas de la carta : la comuna se mòstra dins l'espaci
+		// que demòra, al dessús ; ~250 px sus un grand ecran, ~300 sul telefòn)
+		const size = map.getSize(),
+			ficha = Math.min(300, size.y * 0.42),
+			marge = size.x <= 600 ? 24 : 120;
 		if (b) {
-			// (tota la comuna dins la vista, al mai prèp de l'escala de sa talha)
-			z = Math.min(z, map.getBoundsZoom(b, false, L.point(140, 140)));
+			// (tota la comuna dins l'espaci liure, al mai prèp de l'escala de sa talha)
+			const liure = L.point(Math.max(80, size.x - 2 * marge), Math.max(80, size.y - ficha - 110));
+			z = Math.min(z, map.getBoundsZoom(b, false, size.subtract(liure)));
 			centre = b.getCenter();
 		}
+		// lo centre de la comuna al mitan de l'espaci liure (pas jos la ficha)
+		const p = map.project(centre, z).add([0, ficha / 2 - 30]);
+		centre = map.unproject(p, z);
 		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		map.flyTo(centre, z, { duration: calm ? 0 : 1.2 });
 		if (!f) contornComuna(c.lat, c.lon).then(pintar);
@@ -2009,7 +2024,9 @@
 	{/if}
 
 	<!-- Lo dialècte survolat o causit : meteissa etiqueta que los territòris -->
-	{#if legendaDial}
+	{#if fichaComuna}
+		<FichaComuna comuna={fichaComuna.c} contorn={fichaComuna.contorn} {lang} onTampar={() => causirNomComuna(null)} />
+	{:else if legendaDial}
 		<div class="legenda-dial" class:fixada={!!(causida ?? causidaLenga)} class:amb-encadrat={!!legendaDial.encadrat} aria-live="polite">
 			<span class="nom" lang={legendaDial.lang}>{lang === 'fr' ? legendaDial.fr : legendaDial.oc}</span>
 			<span class="sota"
@@ -2977,18 +2994,37 @@
 	.carta:global(.sus-nom) {
 		cursor: pointer !important;
 	}
-	/* la comuna causida : son contorn arriba en fondut */
+	/* la comuna causida : son contorn se traça (0,9 s), lo fons arriba, puèi
+	   lo contorn lusís doas vegadas (retorn de Romain, 2026-10-11 : pas un
+	   pichon rond que lusís, mal acordat als noms longs) */
 	.carta :global(.comuna-causida) {
-		animation: comuna-ven 0.45s ease both;
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+		animation:
+			comuna-traça 0.9s ease-out forwards,
+			comuna-fons 0.6s ease 0.5s both,
+			comuna-lusís 1.1s ease-in-out 0.9s 2;
 	}
-	@keyframes comuna-ven {
+	@keyframes comuna-traça {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+	@keyframes comuna-fons {
 		from {
-			opacity: 0;
+			fill-opacity: 0;
+		}
+	}
+	@keyframes comuna-lusís {
+		50% {
+			filter: drop-shadow(0 0 6px rgba(243, 194, 90, 0.95));
+			stroke-width: 3px;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.carta :global(.comuna-causida) {
 			animation: none;
+			stroke-dashoffset: 0;
 		}
 	}
 

@@ -46,7 +46,8 @@ export function crearNomsComunas(
 	const estats = new Map(); // comuna → { a, cibla, x, y, w, h }
 	const imatges = new WeakMap(); // comuna → tela del nom
 	const imatgesAur = new WeakMap(); // (lo nom causit, en aur)
-	let causit = null;
+	let causit = null,
+		tCausit = 0;
 	let raf = 0,
 		tPrec = 0,
 		bougant = false,
@@ -184,6 +185,26 @@ export function crearNomsComunas(
 				continue;
 			}
 			const im = imatge(c, c === causit);
+			if (c === causit && st.bx) {
+				// (lusís doas vegadas en 1,8 s, puèi demòra)
+				const t = (performance.now() - tCausit) / 1000,
+					l = calm || t > 1.8 ? 0.75 : 0.55 + 0.45 * Math.sin(((t / 0.9) * 2 - 0.5) * Math.PI) ** 2;
+				if (!calm && t <= 1.8) anima = true;
+				const [x0, y0, x1, y1] = st.bx,
+					h = y1 - y0 + 8;
+				cx.globalAlpha = st.a;
+				cx.beginPath();
+				cx.roundRect(x0 - 8, y0 - 4, x1 - x0 + 16, h, h / 2);
+				cx.fillStyle = 'rgba(20, 12, 8, 0.55)';
+				cx.fill();
+				cx.lineWidth = 1.4;
+				cx.strokeStyle = `rgba(243, 194, 90, ${l})`;
+				cx.shadowColor = 'rgba(243, 194, 90, 0.8)';
+				cx.shadowBlur = 10 * l;
+				cx.stroke();
+				cx.shadowBlur = 0;
+				cx.shadowColor = 'transparent';
+			}
 			cx.globalAlpha = st.a * k;
 			cx.drawImage(im.t, st.x - im.w / 2, st.y - im.h / 2, im.w, im.h);
 		}
@@ -239,6 +260,7 @@ export function crearNomsComunas(
 		causir(c) {
 			if (causit === c) return;
 			causit = c;
+			tCausit = performance.now();
 			lançar();
 		}
 	};
