@@ -833,8 +833,9 @@
 		const px = parseFloat(e.font.match(/([\d.]+)px/)[1]);
 		const r = { nom, px, font: e.font, esp: e.esp, majus: e.majus, w: g.measureText(e.majus ? nom.toUpperCase() : nom).width, clau: clauEstil };
 		if (sota) {
-			r.pxSota = Math.max(9.5, Math.round(px * 0.78 * 2) / 2);
-			r.fontSota = `italic 500 ${r.pxSota}px 'Cormorant Garamond', Georgia, serif`;
+			// (pas tròp pichon nimai tròp fin : « Juvinhac » se legissiá mal)
+			r.pxSota = Math.max(11, Math.round(px * 0.86 * 2) / 2);
+			r.fontSota = `italic 600 ${r.pxSota}px 'Cormorant Garamond', Georgia, serif`;
 			g.font = r.fontSota;
 			if ('letterSpacing' in g) g.letterSpacing = '0px';
 			r.sota = sota;

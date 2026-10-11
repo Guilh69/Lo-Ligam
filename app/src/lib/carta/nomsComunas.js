@@ -64,9 +64,14 @@ export function crearNomsComunas(
 		const e = estil(c);
 		let im = cache.get(c);
 		if (im && im.dpr === dpr && im.clau === e.clau) return im;
+		// (lo segond nom acaba jos la darrièra letra del primièr : retorn de
+		// Romain, 2026-10-11 ; L e R, los bòrds del blòt a partir del ponch)
 		const marge = 10,
 			hS = e.sota ? e.pxSota * 1.18 : 0,
-			w = Math.ceil(Math.max(e.w, e.sota ? e.wSota : 0) + 2 * marge),
+			L = Math.min(-e.w / 2, e.sota ? e.w / 2 - e.wSota : 0),
+			R = e.w / 2,
+			ox = marge - L,
+			w = Math.ceil(R - L + 2 * marge),
 			h = Math.ceil(e.px * 1.5 + hS + 2 * marge),
 			t = document.createElement('canvas');
 		t.width = Math.ceil(w * dpr);
@@ -81,25 +86,26 @@ export function crearNomsComunas(
 		// (los dos noms, centrats ensemble sul ponch)
 		const y1 = h / 2 - hS / 2,
 			y2 = y1 + e.px * 0.62 + e.pxSota * 0.62;
-		const letras = (s, y) => {
+		const letras = (s, x, y) => {
 			g.shadowColor = 'rgba(18, 9, 6, 0.75)';
 			g.shadowBlur = 8 * dpr;
-			g.fillText(s, w / 2, y);
+			g.fillText(s, x, y);
 			g.shadowColor = 'rgba(18, 9, 6, 0.95)';
 			g.shadowBlur = 3 * dpr;
-			g.fillText(s, w / 2, y);
+			g.fillText(s, x, y);
 			g.shadowColor = 'transparent';
-			g.fillText(s, w / 2, y);
+			g.fillText(s, x, y);
 		};
 		g.fillStyle = aur ? '#f3c25a' : '#f5ead8';
-		letras(tx, y1);
+		letras(tx, ox, y1);
 		if (e.sota) {
 			g.font = e.fontSota;
 			if ('letterSpacing' in g) g.letterSpacing = '0px';
-			g.fillStyle = aur ? '#f6d68c' : 'rgba(240, 228, 208, 0.9)';
-			letras(e.sota, y2);
+			g.textAlign = 'right';
+			g.fillStyle = aur ? '#f6d68c' : '#f2e6d2';
+			letras(e.sota, ox + R, y2);
 		}
-		im = { t, w, h, bw: Math.max(e.w, e.sota ? e.wSota : 0) + 6, bh: e.px * 1.24 + hS, dpr, clau: e.clau };
+		im = { t, w, h, ox, bL: L - 3, bR: R + 3, bh: e.px * 1.24 + hS, dpr, clau: e.clau };
 		cache.set(c, im);
 		return im;
 	}
@@ -136,7 +142,7 @@ export function crearNomsComunas(
 				if (!(c.renc <= 3 || c.pop >= pm) || c.lat < s || c.lat > n || c.lon < w || c.lon > e) continue;
 				const im = imatge(c),
 					q = map.latLngToContainerPoint([c.lat, c.lon]);
-				const bx = [q.x - im.bw / 2, q.y - im.bh / 2, q.x + im.bw / 2, q.y + im.bh / 2];
+				const bx = [q.x + im.bL, q.y - im.bh / 2, q.x + im.bR, q.y + im.bh / 2];
 				if (bx[2] < -50 || bx[0] > size.x + 50 || bx[3] < -30 || bx[1] > size.y + 30) continue;
 				// (un pauc d'aire a l'entorn dels noms de las autras còlas)
 				const ok = !tòca(bx, pausats) && (c.renc <= 3 || !tòca([bx[0] - 4, bx[1] - 3, bx[2] + 4, bx[3] + 3], obst));
@@ -221,7 +227,7 @@ export function crearNomsComunas(
 				cx.shadowColor = 'transparent';
 			}
 			cx.globalAlpha = st.a * k;
-			cx.drawImage(im.t, st.x - im.w / 2, st.y - im.h / 2, im.w, im.h);
+			cx.drawImage(im.t, st.x - im.ox, st.y - im.h / 2, im.w, im.h);
 		}
 		cx.globalAlpha = 1;
 		return { anima, r };

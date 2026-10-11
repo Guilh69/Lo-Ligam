@@ -340,8 +340,8 @@ const aplicarVila = (g, renc, f, nom) => {
 	return e.majus ? nom.toUpperCase() : nom;
 };
 // lo segond nom d'una vila (site en francés), en pichon e en italica dejós
-const polissaSota = (f) => `italic 500 ${Math.max(9.5, Math.round(f * 0.8 * 2) / 2)}px "Cormorant Garamond", Georgia, serif`;
-const nautSota = (f) => Math.max(9.5, f * 0.8) * 1.12;
+const polissaSota = (f) => `italic 600 ${Math.max(11, Math.round(f * 0.86 * 2) / 2)}px "Cormorant Garamond", Georgia, serif`;
+const nautSota = (f) => Math.max(11, f * 0.86) * 1.1;
 const sensEspaci = (g) => {
 	if ('letterSpacing' in g) g.letterSpacing = '0px';
 };
@@ -461,7 +461,13 @@ function plaçar(cx, vilas, rius, ambNomsRius = true) {
 			{ x: x - 5 * k, y: y - 7 * k, al: 'right', b: [x - 7 * k - w, y - 19 * k, x - 3 * k, y - 4 * k], bonus: 1.2 },
 			{ x: x - 5 * k, y: y + 15 * k, al: 'right', b: [x - 7 * k - w, y + 3 * k, x - 3 * k, y + 18 * k], bonus: 1.2 }
 		];
-		const cand = cand0.map((q) => (q.y < y ? { ...q, y: q.y - hS, b: [q.b[0], q.b[1] - hS, q.b[2], q.b[3]] } : { ...q, b: [q.b[0], q.b[1], q.b[2], q.b[3] + hS] }));
+		// (lo segond nom acaba jos la fin del primièr : s'es mai long, depassa a esquèrra)
+		const esq = (q) => {
+			if (!v.t2) return q.b[0];
+			const fin = q.al === 'left' ? q.x + w1 : q.al === 'right' ? q.x : q.x + w1 / 2;
+			return Math.min(q.b[0], fin - w2 - 2);
+		};
+		const cand = cand0.map((q) => (q.y < y ? { ...q, y: q.y - hS, b: [esq(q), q.b[1] - hS, q.b[2], q.b[3]] } : { ...q, b: [esq(q), q.b[1], q.b[2], q.b[3] + hS] }));
 		let c = cand[0],
 			mendre = Infinity;
 		// Las vilas grandas e las vilas repèrs : lo nom a drecha del ponch,
@@ -855,14 +861,15 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				g.save();
 				if ('letterSpacing' in g) g.letterSpacing = '0px';
 				const cs = pl.vilas.map((v) => {
-					let w = g.measureText(aplicarVila(g, v.renc, v.f, v.t1 ?? v.nom)).width;
+					const w = g.measureText(aplicarVila(g, v.renc, v.f, v.t1 ?? v.nom)).width;
+					let x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
 					if (v.t2) {
 						sensEspaci(g);
 						g.font = polissaSota(v.f);
-						w = Math.max(w, g.measureText(v.t2).width);
+						x0 = Math.min(x0, x0 + w - g.measureText(v.t2).width);
 					}
-					const x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
-					return [x0 - 2, v.y - v.f, x0 + w + 2, v.y + v.f * 0.3 + (v.hS ?? 0)];
+					const x1 = v.al === 'left' ? v.x + w : v.al === 'right' ? v.x : v.x + w / 2;
+					return [x0 - 2, v.y - v.f, x1 + 2, v.y + v.f * 0.3 + (v.hS ?? 0)];
 				});
 				// los ponches de las vilas visiblas (VIVAROAUPENC tombava sus Gap) ;
 				// las icònas de las jaces s'i estacan (ponchs)
@@ -1374,14 +1381,17 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				g.shadowBlur = 0;
 				g.fillText(tv, v.x, v.y);
 				if (v.t2) {
+					// (lo segond nom acaba jos la darrièra letra del primièr)
+					const w1 = g.measureText(tv).width,
+						xFin = v.al === 'left' ? v.x + w1 : v.al === 'right' ? v.x : v.x + w1 / 2;
 					sensEspaci(g);
 					g.font = polissaSota(v.f);
-					g.globalAlpha *= 0.92;
+					g.textAlign = 'right';
 					g.shadowBlur = 3 + v.f * 0.3;
-					g.fillText(v.t2, v.x, v.y + v.hS);
-					g.fillText(v.t2, v.x, v.y + v.hS);
+					g.fillText(v.t2, xFin, v.y + v.hS);
+					g.fillText(v.t2, xFin, v.y + v.hS);
 					g.shadowBlur = 0;
-					g.fillText(v.t2, v.x, v.y + v.hS);
+					g.fillText(v.t2, xFin, v.y + v.hS);
 				}
 			}
 			this._viv.acabar();
