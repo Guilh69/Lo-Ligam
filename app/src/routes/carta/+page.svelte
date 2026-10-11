@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { fly } from 'svelte/transition';
@@ -173,7 +174,7 @@
 					type="button"
 					class="info-close"
 					onclick={() => (showInfo = false)}
-					aria-label={tx.close}>×</button
+					aria-label={tx.close}><Icona nom="fermer" size="1.25em" /></button
 				>
 				<h1>{tx.title}</h1>
 				<p>

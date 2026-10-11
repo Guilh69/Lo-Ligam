@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// La ficha d'una comuna causida sus la carta (retorn de Romain, 2026-10-11) :
 	// son nom, sa silhoeta, una fòto, las chifras de basa (populacion e son
 	// annada, susfàcia, altitud, gentilici), las primièras frasas de l'article
@@ -263,7 +264,7 @@
 {#if comuna}
 	<div class="ficha-comuna" transition:fly={{ y: 16, duration: 260 }}>
 		<section class="cara" class:amb-emblemas={lenguasTèxt.length > 1} class:cascada aria-label={nom} bind:this={cara}>
-			<button type="button" class="tampar" aria-label={t.tampar} onclick={() => onTampar?.()}>×</button>
+			<button type="button" class="tampar" aria-label={t.tampar} onclick={() => onTampar?.()}><Icona nom="fermer" size="1.25em" /></button>
 			<div class="cap">
 				{#if dades?.fòto}
 					<div class="vinheta">
@@ -290,13 +291,13 @@
 					{#if extrach}<p class="extrach" lang={lt} style:--i="4">{extrach}</p>{/if}
 					<footer style:--i="5">
 						{#if fichaSite}
-							{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{t.vila} →</a>
+							{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{t.vila} <Icona nom="suivant" /></a>
 							{:else}<span class="site leu">{t.vilaLèu}</span>{/if}
 						{/if}
 						{#if wiki}
 							<!-- (lo ligam seguís la lenga causida, e la ditz) -->
 							<a class="wiki" href={wiki} hreflang={lt} target="_blank" rel="noopener"
-								>{t.article(enLenga(lt))} ↗</a
+								>{t.article(enLenga(lt))} <Icona nom="extern" size="0.9em" /></a
 							>
 						{/if}
 						<p class="credits">

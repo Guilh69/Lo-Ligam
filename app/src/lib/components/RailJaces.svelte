@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	import { PLAJAS, zPlaja } from '$lib/carta/escalas.js';
 	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 	// Rail de las jaces (causida de Romain, 2026-10-07, « panèl C ») : un rail
@@ -990,7 +991,7 @@
 		></button>
 		<header>
 			<h2>{nomFam(dobert)}</h2>
-			<button type="button" class="tampar" onclick={tamparTirador} aria-label={tx.tampar}>×</button>
+			<button type="button" class="tampar" onclick={tamparTirador} aria-label={tx.tampar}><Icona nom="fermer" size="1.25em" /></button>
 		</header>
 
 		{#if dobert === 'sus'}
@@ -1108,7 +1109,7 @@
 		{/if}
 
 		{#if esAdmin}
-			<a class="admin" href="/admin/carta">{tx.admin} →</a>
+			<a class="admin" href="/admin/carta">{tx.admin} <Icona nom="suivant" /></a>
 		{/if}
 	</section>
 {/if}
@@ -1259,7 +1260,7 @@
 
 {#snippet infoFont(font, html, cl = '')}
 	<span class="info {cl}" tabindex="0">{@html html}{#if font}<span class="bulla" role="tooltip"
-				><b>{tx.fonts}</b> {font.t}{#if font.url} <a href={font.url} target="_blank" rel="noopener">→</a>{/if}</span
+				><b>{tx.fonts}</b> {font.t}{#if font.url} <a href={font.url} target="_blank" rel="noopener"><Icona nom="extern" size="0.9em" /></a>{/if}</span
 			>{/if}</span
 	>
 {/snippet}
@@ -1591,7 +1592,12 @@
 		color: var(--t-tinta);
 	}
 	.rail-b.retorn::after {
-		content: '‹';
+		content: '';
+		width: 1rem;
+		height: 1rem;
+		background: currentColor;
+		/* la sageta d'Iconoir (meteis traçat que Icona « revenir ») */
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 6L9 12L15 18'/%3E%3C/svg%3E") center / contain no-repeat;
 		position: absolute;
 		left: 4px;
 		top: 50%;
@@ -1611,7 +1617,12 @@
 		border-radius: 0;
 	}
 	.rail-b.banda-fam::after {
-		content: '‹';
+		content: '';
+		width: 1rem;
+		height: 1rem;
+		background: currentColor;
+		/* la sageta d'Iconoir (meteis traçat que Icona « revenir ») */
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 6L9 12L15 18'/%3E%3C/svg%3E") center / contain no-repeat;
 		position: absolute;
 		left: 4px;
 		top: 50%;

@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	import { onMount, onDestroy, untrack } from 'svelte';
 	import { cargarFranca, francaCargada, dinsFranca } from '$lib/carta/franca.js';
 	import { crearDonadasLengas } from '$lib/carta/donadasLengas.js';
@@ -2184,7 +2185,7 @@
 		<section class="fonts-carta" role="dialog" aria-label={lang === 'fr' ? 'Sources de la carte' : 'Fonts de la carta'} transition:fly={{ y: 10, duration: 220 }}>
 			<header>
 				<h2>{lang === 'fr' ? 'Sources de la carte' : 'Fonts de la carta'}</h2>
-				<button type="button" class="tampar-fonts" aria-label={lang === 'fr' ? 'Fermer' : 'Tampar'} onclick={() => (fontsDobèrtas = false)}>×</button>
+				<button type="button" class="tampar-fonts" aria-label={lang === 'fr' ? 'Fermer' : 'Tampar'} onclick={() => (fontsDobèrtas = false)}><Icona nom="fermer" size="20px" /></button>
 			</header>
 			<dl>
 				{#each fontsPerTèma as g (g.tèma)}
@@ -2200,7 +2201,7 @@
 	{#if vesina && !legendaDial}
 		<button type="button" class="legenda-dial vesina" onclick={() => alucarVesina(vesina.kod)}>
 			<span class="nom" lang={LENGAS[vesina.kod.replace('rèsta:', '')]?.lang ?? 'oc'}>{vesina.endo}</span>
-			<span class="sota">{lang === 'fr' ? vesina.fr : vesina.oc} →</span>
+			<span class="sota">{lang === 'fr' ? vesina.fr : vesina.oc} <Icona nom="suivant" /></span>
 		</button>
 	{/if}
 

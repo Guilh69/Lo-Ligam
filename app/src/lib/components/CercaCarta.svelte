@@ -1,4 +1,5 @@
 <script>
+	import Icona from '$lib/components/Icona.svelte';
 	// Recherche d'un territoire sur la carte (demande de Romain, 2026-10-07) :
 	// un lieu (nom occitan, ou français pour les villes principales, sans tenir
 	// compte des accents), un département ou une région. Tout est cherché dans
@@ -137,7 +138,7 @@
 		onkeydown={onKey}
 	/>
 	{#if q}
-		<button type="button" class="esfaçar" aria-label={tx.esfaçar} onclick={() => (q = '')}>×</button>
+		<button type="button" class="esfaçar" aria-label={tx.esfaçar} onclick={() => (q = '')}><Icona nom="fermer" size="1.2em" /></button>
 	{/if}
 
 	{#if dobèrt && resultats.length}
