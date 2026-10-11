@@ -222,37 +222,34 @@ export function animarText(el, efèct, o = {}) {
 
 	if (efèct === 'deroulat') {
 		// Lo desrotlat, coma sus Canva (retorn de Romain, 2026-10-11 : « les
-		// lettres arrivent du haut vers le bas ; c'est la même lettre ; le B,
-		// ensuite le O, ensuite le N… de manière rythmée, pas tout d'un coup ») :
-		// cada letra davala d'en naut dins sa fenèstra, passa un pauc e se pausa,
-		// una aprèp l'autra, a un ritme regular.
-		const cs = getComputedStyle(el),
-			fs = parseFloat(cs.fontSize) || 16,
-			// (la fenèstra a la nautor de la linha del tèxt : res bolega a la fin)
-			h = cs.lineHeight === 'normal' ? 1.2 : parseFloat(cs.lineHeight) / fs;
-		// (copada sonque en naut e en bas : las italicas e los accents passan ;
-		// la linha de basa es la de la letra, coma lo tèxt d'a costat)
-		const clip = typeof CSS !== 'undefined' && CSS.supports?.('overflow', 'clip');
-		const fenèstra = clip
-			? `;overflow-x:visible;overflow-y:clip;overflow-clip-margin:0.06em;height:${h}em;line-height:${h}em`
-			: `;overflow:hidden;height:${h}em;line-height:${h}em;vertical-align:-0.28em;padding:0 0.12em;margin:0 -0.12em`;
+		// lettres arrivent du haut vers le bas… le B, ensuite le O, ensuite le
+		// N, de manière rythmée » ; puèi : « la lettre tourne et se pose de
+		// manière droite », amb « le mouvement de bas vers le haut pour adoucir
+		// l'arrivée », sens « ligne dure ») : cada letra davala d'en naut,
+		// clinada coma sus un rotlèu, passa un pauc jos sa linha en se
+		// redreiçant, remonta doçament e se pausa drecha ; una aprèp l'autra.
+		// Pas de talh en bas : sonque un fondut en naut (masca), per que la
+		// letra aparesca sens qu'una linha la cope.
+		const masca = 'linear-gradient(to bottom, transparent 0, #000 0.32em)';
 		const letras = copar(el, tèxt, 'letra');
 		letras.forEach((l, k) => {
 			const c = l.textContent;
 			l.textContent = '';
-			l.style.cssText += fenèstra;
+			// (la fenèstra s'espandís sens cambiar la linha : marges negatius)
+			l.style.cssText += `;padding:0.32em 0.16em 0.32em;margin:-0.32em -0.16em;-webkit-mask-image:${masca};mask-image:${masca}`;
 			const letra = document.createElement('span');
-			letra.style.cssText = 'display:block;will-change:transform';
+			letra.style.cssText = 'display:inline-block;will-change:transform;transform-origin:50% 60%';
 			letra.textContent = c;
 			l.append(letra);
 			animacions.push(
 				letra.animate(
 					[
-						{ transform: 'translateY(-105%)', easing: 'cubic-bezier(0.3, 0.6, 0.35, 1)' },
-						{ transform: 'translateY(7%)', offset: 0.68, easing: 'cubic-bezier(0.4, 0, 0.4, 1)' },
-						{ transform: 'translateY(0)' }
+						{ transform: 'perspective(320px) translateY(-0.95em) rotateX(78deg)', opacity: 0, easing: 'cubic-bezier(0.25, 0.75, 0.35, 1)' },
+						{ transform: 'perspective(320px) translateY(0.13em) rotateX(-12deg)', opacity: 1, offset: 0.5, easing: 'cubic-bezier(0.45, 0, 0.4, 1)' },
+						{ transform: 'perspective(320px) translateY(-0.04em) rotateX(3deg)', offset: 0.78, easing: 'cubic-bezier(0.45, 0, 0.4, 1)' },
+						{ transform: 'perspective(320px) translateY(0) rotateX(0)', opacity: 1 }
 					],
-					{ duration: 520 / v, delay: retard + (k * 85) / v, fill: 'backwards' }
+					{ duration: 680 / v, delay: retard + (k * 85) / v, fill: 'backwards' }
 				)
 			);
 		});
