@@ -4,7 +4,7 @@
 	// annada, susfàcia, altitud, gentilici), las primièras frasas de l'article
 	// de Wikipèdia e lo ligam cap a l'article entièr. Las donadas venon de
 	// /api/comuna (Wikidata e Wikipèdia, relaiats per nòstre servidor).
-	import { fly } from 'svelte/transition';
+	import { fly, slide } from 'svelte/transition';
 	import { VILAS_FICHAS } from '$lib/carta/vilasFichas.js';
 
 	let { comuna, contorn = null, lang = 'oc', onTampar = null } = $props();
@@ -12,6 +12,13 @@
 	let dades = $state(null),
 		cargant = $state(false),
 		clauCargada = '';
+	// d'en primièr la partida nauta (fòto, nom, chifras) ; lo tèxt, los ligams e
+	// los crèdits se desplegan (retorn de Romain, 2026-10-11)
+	let dobèrta = $state(false);
+	$effect(() => {
+		comuna;
+		dobèrta = false;
+	});
 	const fr = $derived(lang === 'fr');
 
 	$effect(() => {
@@ -88,13 +95,19 @@
 				{#if chifras.length}<p class="chifras">{chifras.join(' · ')}</p>{/if}
 				{#if gentilici}<p class="gentilici">{fr ? 'Habitants' : 'Abitants'} : {gentilici}</p>{/if}
 				{#if cargant}<p class="cargant" aria-hidden="true">…</p>{/if}
+				{#if dades && (extrach || wiki || fichaSite)}
+					<button type="button" class="desplegar" aria-expanded={dobèrta} onclick={() => (dobèrta = !dobèrta)}
+						>{dobèrta ? (fr ? 'Replier' : 'Plegar') : fr ? 'En savoir plus' : 'Legir mai'}<span class="chev" aria-hidden="true">▾</span></button
+					>
+				{/if}
 			</div>
 			{#if dades?.fòto && silhoeta}
 				<svg class="silh" viewBox="0 0 64 64" aria-hidden="true"><path d={silhoeta} fill-rule="evenodd" /></svg>
 			{/if}
 		</div>
-		{#if extrach}<p class="extrach" lang={fr ? 'fr' : 'oc'}>{extrach}</p>{/if}
-		{#if dades}
+		{#if dades && dobèrta}
+			<div class="mai" transition:slide={{ duration: 240 }}>
+			{#if extrach}<p class="extrach" lang={fr ? 'fr' : 'oc'}>{extrach}</p>{/if}
 			<footer>
 				{#if fichaSite}
 					{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{fr ? 'Découvrir la ville' : 'Descobrir la vila'} →</a>
@@ -114,6 +127,7 @@
 						> · {/if}{fr ? 'Chiffres' : 'Chifras'} : Wikidata
 				</p>
 			</footer>
+			</div>
 		{/if}
 	</section>
 {/if}
@@ -224,9 +238,27 @@
 		font-weight: 600;
 		color: var(--t-aur-clar);
 	}
+	.desplegar {
+		margin-top: 8px;
+		padding: 4px 10px 4px 12px;
+		border: 1px solid var(--t-linha);
+		border-radius: 999px;
+		background: none;
+		color: var(--t-aur-clar);
+		font: 600 0.8125rem/1.2 var(--font-body);
+		cursor: pointer;
+	}
+	.desplegar .chev {
+		display: inline-block;
+		margin-left: 6px;
+		transition: transform 0.2s ease;
+	}
+	.desplegar[aria-expanded='true'] .chev {
+		transform: rotate(180deg);
+	}
 	.credits {
-		margin: 6px 0 0;
-		font-size: 0.6875rem;
+		margin: 8px 0 0;
+		font-size: 0.625rem;
 		line-height: 1.4;
 		color: var(--t-tinta-2);
 	}

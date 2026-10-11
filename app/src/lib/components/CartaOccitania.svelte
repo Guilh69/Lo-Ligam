@@ -908,9 +908,9 @@
 		};
 		const b = pintar(f);
 		// (la ficha ocupa lo bas de la carta : la comuna se mòstra dins l'espaci
-		// que demòra, al dessús ; ~250 px sus un grand ecran, ~300 sul telefòn)
+		// que demòra, al dessús ; plegada, ~150 px)
 		const size = map.getSize(),
-			ficha = Math.min(300, size.y * 0.42),
+			ficha = Math.min(170, size.y * 0.3),
 			marge = size.x <= 600 ? 24 : 120;
 		if (b) {
 			// (tota la comuna dins l'espaci liure, al mai prèp de l'escala de sa talha)
