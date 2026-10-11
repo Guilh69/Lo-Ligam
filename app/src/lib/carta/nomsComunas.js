@@ -45,6 +45,8 @@ export function crearNomsComunas(
 	const cx = cv.getContext('2d');
 	const estats = new Map(); // comuna → { a, cibla, x, y, w, h }
 	const imatges = new WeakMap(); // comuna → tela del nom
+	const imatgesAur = new WeakMap(); // (lo nom causit, en aur)
+	let causit = null;
 	let raf = 0,
 		tPrec = 0,
 		bougant = false,
@@ -54,8 +56,9 @@ export function crearNomsComunas(
 		listaFont = null;
 
 	// lo nom en imatge : letras claras e alo sorne (coma lo text-shadow d'abans)
-	function imatge(c) {
-		let im = imatges.get(c);
+	function imatge(c, aur = false) {
+		const cache = aur ? imatgesAur : imatges;
+		let im = cache.get(c);
 		if (im && im.dpr === dpr) return im;
 		const e = estil(c),
 			marge = 10,
@@ -71,7 +74,7 @@ export function crearNomsComunas(
 		g.textAlign = 'center';
 		g.textBaseline = 'middle';
 		const tx = e.majus ? e.nom.toUpperCase() : e.nom;
-		g.fillStyle = '#f5ead8';
+		g.fillStyle = aur ? '#f3c25a' : '#f5ead8';
 		g.shadowColor = 'rgba(18, 9, 6, 0.75)';
 		g.shadowBlur = 8 * dpr;
 		g.fillText(tx, w / 2, h / 2);
@@ -81,7 +84,7 @@ export function crearNomsComunas(
 		g.shadowColor = 'transparent';
 		g.fillText(tx, w / 2, h / 2);
 		im = { t, w, h, bw: e.w + 6, bh: e.px * 1.24, dpr };
-		imatges.set(c, im);
+		cache.set(c, im);
 		return im;
 	}
 
@@ -180,7 +183,7 @@ export function crearNomsComunas(
 				estats.delete(c);
 				continue;
 			}
-			const im = imatge(c);
+			const im = imatge(c, c === causit);
 			cx.globalAlpha = st.a * k;
 			cx.drawImage(im.t, st.x - im.w / 2, st.y - im.h / 2, im.w, im.h);
 		}
@@ -222,6 +225,21 @@ export function crearNomsComunas(
 			lançar();
 		},
 		// las bóstias dels noms afichats (per las icònas)
-		caixas: () => [...estats.values()].filter((s) => s.cibla && s.bx).map((s) => s.bx)
+		caixas: () => [...estats.values()].filter((s) => s.cibla && s.bx).map((s) => s.bx),
+		// lo nom jos un ponch del contenedor (un clic, la mirga), o null
+		a(p) {
+			let m = null;
+			for (const [c, st] of estats)
+				if (st.a > 0.5 && st.bx && p.x >= st.bx[0] - 3 && p.x <= st.bx[2] + 3 && p.y >= st.bx[1] - 3 && p.y <= st.bx[3] + 3) {
+					if (!m || c.renc < m.renc || (c.renc === m.renc && c.pop > m.pop)) m = c;
+				}
+			return m;
+		},
+		// lo nom causit (en aur), o null
+		causir(c) {
+			if (causit === c) return;
+			causit = c;
+			lançar();
+		}
 	};
 }

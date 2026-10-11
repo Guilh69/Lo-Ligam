@@ -865,6 +865,18 @@
 		}
 		return listaNoms;
 	}
+	// La comuna causida : son nom en aur, l'onda daurada, e la carta i vòla, a
+	// una escala segon sa talha (de 7 km per una metropòla a 1 km per un
+	// vilatge), sens jamai se recuolar
+	function anarALaComuna(c) {
+		map.closePopup();
+		motorNoms?.causir(c);
+		const km = c.renc === 1 ? 7 : c.renc === 2 ? 5 : c.renc === 3 ? 3 : c.pop >= 3000 ? 2 : 1;
+		const z = Math.min(15, Math.max(map.getZoom(), zCran(km, c.lat)));
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		map.flyTo([c.lat, c.lon], z, { duration: calm ? 0 : 1.2 });
+		colaEstelas?.senhalar(c.lat, c.lon);
+	}
 	// (los noms se cargan quand cal ; lo motor se torna pintar)
 	function majNomsComunas() {
 		if (!map) return;
@@ -1344,7 +1356,7 @@
 			)
 		);
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
-		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
+		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; }, get motorNoms() { return motorNoms; } };
 		zoomDoç(L, map);
 		motorNoms = crearNomsComunas(L, map, {
 			lista: nomsDeLaCarta,
@@ -1356,6 +1368,30 @@
 			onRepaus: noms_repaus
 		});
 		new MutationObserver(() => motorNoms?.tornarPintar()).observe(map.getContainer(), { attributes: true, attributeFilter: ['class'] });
+		// Un clic sul nom d'una comuna la causís e i mena, en doçor, a una escala
+		// centrada sus ela (retorn de Romain, 2026-10-11). Lo clic es pres abans
+		// las còlas (captura) : los dialèctes jos lo nom se causisson pas.
+		{
+			const cont = map.getContainer();
+			const nomA = (e) => motorNoms?.a(map.mouseEventToContainerPoint(e));
+			cont.addEventListener(
+				'click',
+				(e) => {
+					// (la fin d'un lisament de la carta es pas un clic)
+					if (map.dragging?.moved()) return;
+					const c = nomA(e);
+					if (!c) return void motorNoms?.causir(null);
+					e.stopImmediatePropagation();
+					e.preventDefault();
+					anarALaComuna(c);
+				},
+				true
+			);
+			// (lo doble clic sus un nom fa pas lo zoom de la carta per dessús)
+			cont.addEventListener('dblclick', (e) => nomA(e) && (e.stopImmediatePropagation(), e.preventDefault()), true);
+			cont.addEventListener('mousemove', (e) => cont.classList.toggle('sus-nom', !!nomA(e)), true);
+			addEventListener('keydown', (e) => e.key === 'Escape' && motorNoms?.causir(null));
+		}
 		map.on('moveend', majNomsComunas);
 		map.on('moveend layeradd layerremove', programarDegatjament);
 		map.on('zoomend', applyToponymVisibility);
@@ -2903,7 +2939,11 @@
 		font-size: 0.82rem;
 	}
 
-	/* (los noms de las comunas sul satellit : una tela, nomsComunas.js) */
+	/* (los noms de las comunas sul satellit : una tela, nomsComunas.js) ;
+	   un nom se pòt causir : la man al survòl */
+	.carta:global(.sus-nom) {
+		cursor: pointer !important;
+	}
 
 	.carta :global(.oc-label-town) {
 		font-size: 0.68rem;
