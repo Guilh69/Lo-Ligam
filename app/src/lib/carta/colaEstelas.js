@@ -373,7 +373,7 @@ const K_REV = 0.25;
 // drecha, 6 dessús a esquèrra, 7 dejós a esquèrra
 const PLAÇA_PREFERIDA = { Marselha: 3, Bordèu: 3, Limòtges: 2, Gap: 5, Pau: 3 };
 
-function plaçar(cx, vilas, rius, ambNomsRius = true, ocupat = []) {
+function plaçar(cx, vilas, rius, ambNomsRius = true, ocupat = [], centrat = false) {
 	const CEL = 16,
 		grilha = new Map();
 	const cases = (b, fn) => {
@@ -484,10 +484,15 @@ function plaçar(cx, vilas, rius, ambNomsRius = true, ocupat = []) {
 		// qualques vilas grandas an una plaça preferida, per l'estetica (retorn
 		// de Romain : Marselha e Bordèu jos lo ponch, Limòtges e Clarmont pas en
 		// linha, Gap pas sus Valença) ; se i a pas de plaça, la mai liura
-		const pref = cand[PLAÇA_PREFERIDA[v.nom] ?? 0];
+		// sul telefòn, lo nom centrat sus son ponch (al dessús, o dejós) : a
+		// costat, un nom long semblava designar una vila mai a l'èst (retorn de
+		// Romain, 2026-10-12 : « on dirait que Toulouse est positionnée à Montpellier »)
+		const iPref = PLAÇA_PREFERIDA[v.nom] ?? 0;
+		const pref = cand[centrat ? (iPref === 2 || iPref === 3 ? iPref : 2) : iPref];
 		for (const q of cand) {
 			const [val, f] = cost(q.b, v.nom);
-			const sc = (val - 5 * f) * 0.03 + f * 100 + (q === pref ? 0 : q.bonus + drecha);
+			const costat = centrat && q.al !== 'center' ? 2 : 0;
+			const sc = (val - 5 * f) * 0.03 + f * 100 + (q === pref ? 0 : q.bonus + (centrat ? costat : drecha));
 			if (sc < mendre) {
 				mendre = sc;
 				c = q;
@@ -1312,7 +1317,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					b = map.containerPointToLayerPoint([x1, y1]).add(o);
 				return [a.x, a.y, b.x, b.y];
 			});
-			return plaçar(this._cx, vilas, this._rius, !!this._el.nomsRius, ocupat);
+			return plaçar(this._cx, vilas, this._rius, !!this._el.nomsRius, ocupat, telefon);
 		},
 
 		/* Les noms sont dessinés UNE fois par recalage dans une image en mémoire,

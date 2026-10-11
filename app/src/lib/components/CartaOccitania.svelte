@@ -990,17 +990,21 @@
 		const b = pintar(f);
 		// (la ficha ocupa lo bas de la carta : la comuna se mòstra dins l'espaci
 		// que demòra, al dessús ; plegada, ~150 px)
+		// (sul telefòn, lo panèl de la ficha e la barra d'en bas, ~280 px, e lo
+		// capçal amb la recèrca, ~180 px)
 		const size = map.getSize(),
-			ficha = Math.min(170, size.y * 0.3),
-			marge = size.x <= 600 ? 24 : 120;
+			telefon = size.x <= 600,
+			ficha = telefon ? 280 : Math.min(170, size.y * 0.3),
+			naut = telefon ? 180 : 60,
+			marge = telefon ? 24 : 120;
 		if (b) {
 			// (tota la comuna dins l'espaci liure, al mai prèp de l'escala de sa talha)
-			const liure = L.point(Math.max(80, size.x - 2 * marge), Math.max(80, size.y - ficha - 110));
+			const liure = L.point(Math.max(80, size.x - 2 * marge), Math.max(80, size.y - ficha - naut - 50));
 			z = Math.min(z, map.getBoundsZoom(b, false, size.subtract(liure)));
 			centre = b.getCenter();
 		}
 		// lo centre de la comuna al mitan de l'espaci liure (pas jos la ficha)
-		const p = map.project(centre, z).add([0, ficha / 2 - 30]);
+		const p = map.project(centre, z).add([0, (ficha - naut) / 2]);
 		centre = map.unproject(p, z);
 		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		map.flyTo(centre, z, { duration: calm ? 0 : 1.2 });
@@ -2087,6 +2091,7 @@
 <div class="carta-root" class:visualizacion>
 	<div
 		class="carta"
+		class:amb-ficha={!!fichaComuna}
 		class:muted={baseLayer === 'occitan' && clar}
 		class:nuech={(baseLayer === 'occitan' || baseLayer === 'estelas') && !clar}
 		bind:this={mapEl}
@@ -2201,7 +2206,7 @@
 
 	<!-- Flèche du nord à l'ancienne, comme sur l'accueil : aiguille en losange
 	     (moitié pleine, moitié tracée), anneau fin, N italique -->
-	<div class="compass" aria-hidden="true">
+	<div class="compass" class:escantit={!!fichaComuna} aria-hidden="true">
 		<svg viewBox="-12 -16 34 40" width="30" height="36">
 			<circle cx="0" cy="4" r="5.5" fill="none" stroke="currentColor" stroke-width="0.9" />
 			<line x1="-9" y1="4" x2="9" y2="4" stroke="currentColor" stroke-width="0.9" opacity="0.5" />
@@ -2922,6 +2927,16 @@
 	/* Telefon : las aisinas de lectura se lèvan sus la barra de las jaces */
 	.carta :global(.leaflet-bottom) {
 		bottom: var(--barra-bas, 0px);
+		transition: opacity 0.25s ease;
+	}
+	/* (la ficha d'una comuna dobèrta sul telefòn : l'escala, lo dialècte e
+	   los botons s'escantisson jos son panèl) */
+	@container carta (max-width: 600px) {
+		.carta.amb-ficha :global(.leaflet-bottom),
+		.compass.escantit {
+			opacity: 0;
+			pointer-events: none;
+		}
 	}
 	@container carta (max-width: 600px) {
 		.compass {

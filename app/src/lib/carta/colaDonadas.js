@@ -290,63 +290,98 @@ export function crearColaDonadas(
 		_ti() {
 			return this._tIntro == null || this._calm ? 99 : (performance.now() - this._tIntro) / 1000;
 		},
-		// totas las zònas, vistas a travèrs de lors tacas que creisson (masca en
-		// pichon puèi agrandida), e lors fronts lusents
+		// Lo fuòc d'artifici dels dialèctes (refach lo 2026-10-12, retorn de
+		// Romain : « les limites s'illuminent de manière pas cohérente… il faut
+		// que ça suive vraiment le mouvement et que ce soit très fluide ») :
+		//   - cada dialècte es una taca que creis a partir de son còr ; sa color
+		//     apareis exactament dins la taca (copada a plena resolucion : la
+		//     masca en pichon d'abans fasiá una bòrda flosa que lo trach lusent
+		//     seguissiá pas) ;
+		//   - lo front de la taca lusís e s'escantís en doçor tre que la taca
+		//     emplena son dialècte ;
+		//   - la limita entre dos dialèctes lusís sonque ont lors doas tacas se
+		//     tòcan, e s'alonga amb elas ; s'escantís quand an acabat.
 		_introDial(ti, a) {
 			const G = this._geo,
-				dpr = this._dpr,
-				[d0, d1] = INTRO.dialectes;
-			const t = this._trab,
-				tg = t.getContext('2d');
-			const m = this._masca,
-				k = 1 / 6;
-			const mw = Math.max(1, Math.round(t.width * k)),
-				mh = Math.max(1, Math.round(t.height * k));
-			if (m.width !== mw || m.height !== mh) (m.width = mw), (m.height = mh);
-			const mg = m.getContext('2d');
-			mg.setTransform(dpr * k, 0, 0, dpr * k, 0, 0);
-			mg.clearRect(0, 0, m.width / (dpr * k), m.height / (dpr * k));
-			mg.fillStyle = '#000';
+				cx = this._cx,
+				T = this._tem,
+				[d0, d1] = INTRO.dialectes,
+				n = G.zonas.length;
+			// (totas acaban a d1, quin que siá lor nombre)
+			const pas = n > 1 ? Math.min(0.12, 0.6 / (n - 1)) : 0,
+				dur = d1 - d0 - pas * (n - 1);
 			const tacas = G.zonas.map((zn, i) => {
-				const p = clamp((ti - (d0 + i * 0.12)) / (d1 - d0 - 0.6));
-				const pts = p > 0 ? this._contornTaca(zn, p) : null;
-				if (pts) {
-					mg.beginPath();
-					pts.forEach(([x, y], j) => (j ? mg.lineTo(x, y) : mg.moveTo(x, y)));
-					mg.closePath();
-					mg.fill();
-				}
-				return { zn, p, pts };
+				const p = clamp((ti - (d0 + i * pas)) / dur);
+				if (p <= 0) return { zn, p, cami: null };
+				const cami = new Path2D();
+				this._contornTaca(zn, p).forEach(([x, y], j) => (j ? cami.lineTo(x, y) : cami.moveTo(x, y)));
+				cami.closePath();
+				return { zn, p, cami };
 			});
-			tg.setTransform(1, 0, 0, 1, 0, 0);
-			tg.globalCompositeOperation = 'source-over';
-			tg.clearRect(0, 0, t.width, t.height);
-			tg.drawImage(this._imgTotes, 0, 0);
-			tg.globalCompositeOperation = 'destination-in';
-			tg.imageSmoothingQuality = 'high';
-			tg.drawImage(m, 0, 0, t.width, t.height);
-			tg.globalCompositeOperation = 'source-over';
-			this._copiar(t, a);
-			const cx = this._cx,
-				T = this._tem;
-			for (const { zn, p, pts } of tacas) {
-				const aF = pts ? (1 - dossa(p)) * 0.8 : 0;
-				if (aF < 0.02) continue;
+			const dins = (fn) => {
 				cx.save();
-				cx.clip(zn.c, 'evenodd');
 				if (G.dom) cx.clip(G.dom, 'evenodd');
-				cx.beginPath();
-				pts.forEach(([x, y], j) => (j ? cx.lineTo(x, y) : cx.moveTo(x, y)));
-				cx.closePath();
-				const color = T.dial[zn.kod];
-				cx.strokeStyle = T.clar ? color : mesclar(color, '#fff8ec', 0.45);
-				cx.shadowColor = color;
-				cx.shadowBlur = 14;
-				cx.globalAlpha = aF;
-				cx.lineWidth = 2;
-				cx.stroke();
+				fn();
 				cx.restore();
+			};
+			// 1. la color de cada dialècte, dins sa taca
+			for (const { zn, cami } of tacas)
+				if (cami)
+					dins(() => {
+						cx.clip(zn.c, 'evenodd');
+						cx.clip(cami);
+						this._copiar(this._imgTotes, a);
+					});
+			cx.lineJoin = 'round';
+			cx.lineCap = 'round';
+			// 2. lo front de cada taca, dins son dialècte
+			for (const { zn, p, cami } of tacas) {
+				if (!cami) continue;
+				const aF = a * clamp(p / 0.06) * Math.pow(1 - p, 1.4) * 0.9;
+				if (aF < 0.015) continue;
+				const color = T.dial[zn.kod];
+				dins(() => {
+					cx.clip(zn.c, 'evenodd');
+					cx.strokeStyle = color;
+					cx.globalAlpha = aF * 0.32;
+					cx.lineWidth = 7;
+					cx.stroke(cami);
+					cx.strokeStyle = T.clar ? color : mesclar(color, '#fff8ec', 0.5);
+					cx.globalAlpha = aF;
+					cx.lineWidth = 1.5;
+					cx.stroke(cami);
+				});
 			}
+			// 3. la limita lusenta ont doas tacas vesinas se tòcan
+			if (this._vesinsGeo !== G) {
+				this._vesinsGeo = G;
+				this._vesins = [];
+				for (let i = 0; i < n; i++)
+					for (let j = i + 1; j < n; j++) {
+						const A = G.zonas[i].bbox,
+							B = G.zonas[j].bbox;
+						if (A[0] <= B[2] + 2 && B[0] <= A[2] + 2 && A[1] <= B[3] + 2 && B[1] <= A[3] + 2) this._vesins.push([i, j]);
+					}
+			}
+			for (const [i, j] of this._vesins) {
+				const A = tacas[i],
+					B = tacas[j];
+				if (!A.cami || !B.cami) continue;
+				const aC = a * 0.85 * Math.pow(1 - Math.max(A.p, B.p), 0.9);
+				if (aC < 0.015) continue;
+				dins(() => {
+					cx.clip(A.cami);
+					cx.clip(B.cami);
+					cx.strokeStyle = T.clar ? '#ffffff' : '#fff1d6';
+					cx.globalAlpha = aC * 0.3;
+					cx.lineWidth = 8;
+					cx.stroke(A.zn.c);
+					cx.globalAlpha = aC;
+					cx.lineWidth = 1.4;
+					cx.stroke(A.zn.c);
+				});
+			}
+			cx.globalAlpha = 1;
 		},
 		// las bóstias dels noms de dialèctes pausats (per las autras còlas)
 		caixasNoms() {

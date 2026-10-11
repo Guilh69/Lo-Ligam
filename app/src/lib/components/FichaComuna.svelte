@@ -498,9 +498,41 @@
 	.credits a {
 		color: inherit;
 	}
+	/* Sul telefòn, un panèl que monta d'en bas, sus tota la largor, pausat
+	   sus la barra de las jaces (retorn de Romain, 2026-10-12 : la ficha
+	   tustava l'escala e la legenda, « ça fait brouillon ») ; la carta escantís
+	   sas aisinas d'en bas tant qu'es dobèrt (CartaOccitania, .amb-ficha) */
 	@container carta (max-width: 600px) {
 		.ficha-comuna {
-			bottom: 64px;
+			left: 0;
+			right: 0;
+			bottom: var(--barra-bas, 0px);
+			width: auto;
+			transform: none;
+		}
+		.cara {
+			max-height: 62svh;
+			overflow-y: auto;
+			overscroll-behavior: contain;
+			padding: 22px 14px 12px;
+			border-bottom: 0;
+			border-radius: 18px 18px 0 0;
+			box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.4);
+		}
+		.cara.amb-emblemas {
+			padding-top: 24px;
+		}
+		/* la pòrta de man del panèl */
+		.cara::before {
+			content: '';
+			position: absolute;
+			top: 7px;
+			left: 50%;
+			width: 36px;
+			height: 4px;
+			margin-left: -18px;
+			border-radius: 2px;
+			background: color-mix(in srgb, var(--t-tinta) 30%, transparent);
 		}
 		img,
 		.silh.gran {
