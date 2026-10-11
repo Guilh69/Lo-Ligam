@@ -14,7 +14,7 @@
 	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, fixarLatEscala, nivèlsDezoom, aDetalh, aTenchas } from '$lib/carta/escalas.js';
+	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, fixarLatEscala, fixarEcran, nivèlsDezoom, aDetalh, aTenchas } from '$lib/carta/escalas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
@@ -1304,6 +1304,9 @@
 		});
 		// la grilha de las escalas seguís la latitud del centre (escalas.js)
 		map.on('move', () => fixarLatEscala(map.getCenter().lat));
+		// (e la talha de l'ecran : un telefòn vei las meteissas jaces al meteis cadratge)
+		fixarEcran(map.getSize().x, map.getSize().y);
+		map.on('resize', () => fixarEcran(map.getSize().x, map.getSize().y));
 		// tota l'Occitània a l'arribada, sus totes los aparelhs (vistaOccitana)
 		{
 			const v = vistaOccitana();

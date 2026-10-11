@@ -18,8 +18,24 @@ export const PAS_ZOOM = 0.25;
 export const LAT_REF = 44.7;
 
 const MERC = (2 * Math.PI * 6371000) / 256; // (Leaflet : Tèrra de 6 371 km)
-// lo zoom ont 110 px fan exactament `km` a la latitud `lat`
-export const zÈscala = (km, lat = LAT_REF) => Math.log2((ESCALA_PX * MERC * Math.cos((lat * Math.PI) / 180)) / (km * 1000));
+// La talha de l'ecran (decision de Romain, 2026-10-11 : « le téléphone, c'est
+// le principal ») : los sulhets seguisson lo cadratge geografic, pas la barra
+// sola. Un telefòn que mòstra tota l'Occitània mòstra las meteissas jaces
+// qu'un ordenador que la mòstra tanben (dialèctes, vilas, satellit…). Los
+// sulhets en km son los de l'ecran de Romain (1 470 px de large, format 1,7) ;
+// un ecran mai estrech los atenh mai luènh (zoom mai pichon), un mai larg
+// mai prèp. La barra, ela, marca totjorn la distància vertadièra.
+const LARGOR_REF = 1470,
+	FORMAT_REF = 1.7;
+let decalEcran = 0;
+export const fixarEcran = (w, h) => {
+	if (!(w > 0 && h > 0)) return;
+	const e = Math.min(w, h * FORMAT_REF);
+	decalEcran = Math.max(-2.4, Math.min(0.6, Math.log2(e / LARGOR_REF)));
+};
+// lo zoom ont 110 px fan exactament `km` a la latitud `lat` (sus l'ecran de
+// referéncia ; decalat segon la talha de l'ecran)
+export const zÈscala = (km, lat = LAT_REF) => Math.log2((ESCALA_PX * MERC * Math.cos((lat * Math.PI) / 180)) / (km * 1000)) + decalEcran;
 // la valor de la barra just al dessús de `km` (100 → 150, 200 → 300, 700 → 1 000)
 function cranSus(km) {
 	const p = 10 ** Math.floor(Math.log10(km) + 1e-9),
@@ -160,7 +176,9 @@ export const Z = {
 		return zDès(150, latEscala);
 	},
 	// un grand ecran arriba pas dirèctament sul satellit (8,5)
-	ARRIBADA_MAX: zCran(30)
+	get ARRIBADA_MAX() {
+		return zCran(30);
+	}
 };
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
