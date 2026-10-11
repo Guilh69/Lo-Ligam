@@ -15,7 +15,6 @@
 // que le moteur de rendu canevas de Leaflet).
 import { LUOCS, RIUS, COSTA, dialDe, rencDe, SOTDIALECTES, SOBRENOMS } from '$lib/acuelh/carta-estelas.js';
 import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
-import { VILAS_FICHAS } from './vilasFichas.js';
 import { nomTerritori, sotaTerritori } from './territoris.js';
 import { proj0, projectar, projPonch } from './projeccion.js';
 import { Z, KM, zDès, nivèlsDezoom, aDetalh } from './escalas.js';
@@ -676,7 +675,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// una autra còla a quicòm d'explicar jos aqueste ponch (una enclava) : lo
 			// territòri se mòstra pas
 			this._cedir = cedir;
-			this._fichas = VILAS_FICHAS.map((v) => ({ ...v, X: 0, Y: 0 }));
+			// (lo repèr daurat de las vilas a ficha es remplaçat per la causida d'una
+			// comuna e sa ficha, que pòrta lo ligam : Romain, 2026-10-11)
+			this._fichas = [];
 			this._calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 			this._estelas = this._estelasOc = LUOCS.map(([lon, lat, nom, vila, dia, dia2]) => ({
 				lon, lat, nom, vila, dia, dia2, renc: rencDe(nom), sobrenom: SOBRENOMS[nom] ?? null,

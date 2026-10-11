@@ -5,6 +5,7 @@
 	// de Wikipèdia e lo ligam cap a l'article entièr. Las donadas venon de
 	// /api/comuna (Wikidata e Wikipèdia, relaiats per nòstre servidor).
 	import { fly } from 'svelte/transition';
+	import { VILAS_FICHAS } from '$lib/carta/vilasFichas.js';
 
 	let { comuna, contorn = null, lang = 'oc', onTampar = null } = $props();
 
@@ -37,6 +38,8 @@
 	});
 
 	const nom = $derived(comuna?.oc || dades?.nom?.oc || comuna?.fr || '');
+	// la vila a sa pagina sul site (l'ancian repèr daurat de la carta)
+	const fichaSite = $derived(comuna ? VILAS_FICHAS.find((v) => Math.abs(v.lat - comuna.lat) < 0.05 && Math.abs(v.lon - comuna.lon) < 0.07) : null);
 	const nomOficial = $derived(contorn?.props?.fr ?? dades?.nom?.fr ?? null);
 	const nombre = (n, d = 0) => n.toLocaleString('fr-FR', { maximumFractionDigits: d });
 	const chifras = $derived.by(() => {
@@ -93,6 +96,10 @@
 		{#if extrach}<p class="extrach" lang={fr ? 'fr' : 'oc'}>{extrach}</p>{/if}
 		{#if dades}
 			<footer>
+				{#if fichaSite}
+					{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{fr ? 'Découvrir la ville' : 'Descobrir la vila'} →</a>
+					{:else}<span class="site leu">{fr ? 'Découvrir la ville : bientôt' : 'Descobrir la vila : lèu'}</span>{/if}
+				{/if}
 				{#if wiki}
 					<a class="wiki" href={wiki} target="_blank" rel="noopener"
 						>{fr ? "Lire l'article sur Wikipédia" : `Legir l'article sus Wikipèdia${wikiFr ? ' (en francés)' : ''}`} ↗</a
@@ -200,6 +207,17 @@
 	}
 	footer {
 		margin-top: 10px;
+	}
+	.site {
+		display: inline-block;
+		margin-right: 14px;
+		font-size: 0.875rem;
+		font-weight: 700;
+		color: var(--t-aur-clar);
+	}
+	.site.leu {
+		font-weight: 600;
+		color: var(--t-tinta-2);
 	}
 	.wiki {
 		font-size: 0.875rem;

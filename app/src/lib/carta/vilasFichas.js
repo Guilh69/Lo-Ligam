@@ -1,8 +1,8 @@
 // Villes qui ont (ou auront) leur fiche : histoire du territoire, lien avec
 // l'occitan, où l'apprendre… (projet de Romain, 2026-10-07). Sur la carte,
-// chacune reçoit le repère doré de Lo Ligam, cliquable à tous les niveaux de
-// zoom : on ne peut pas effacer un nom des tuiles OSM (ce sont des images),
-// alors on ajoute NOTRE repère au lieu de doubler le nom.
+// le lien « Descobrir la vila » est dans la fiche de la commune quand on la
+// choisit (FichaComuna.svelte) ; il remplace le repère doré d'avant (Romain,
+// 2026-10-11).
 //
 // Liste provisoire, écrite ici : elle passera dans l'admin de la carte
 // (/admin/carta) quand les premières fiches existeront. `ligam` = adresse de
