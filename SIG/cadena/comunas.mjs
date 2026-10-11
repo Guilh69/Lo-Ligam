@@ -237,7 +237,9 @@ async function principal() {
 	});
 
 	// 6. Fichiers de la carte
-	for (const f of fs.readdirSync(SORTIDA)) if (f.endsWith('.json')) fs.rmSync(path.join(SORTIDA, f));
+	// (sonque los fichièrs d'aquesta cadena : los noms e las autras lengas,
+	// noms*.json, index-lengas.json e <lenga>-<zòna>.json, demòran)
+	for (const f of fs.readdirSync(SORTIDA)) if (/^(\d\d|2A|2B|ARAN|IT|index)\.json$/.test(f)) fs.rmSync(path.join(SORTIDA, f));
 	const index = { font: FONT, deps: [] };
 	const r4 = (x) => Math.round(x * 1e4) / 1e4;
 	const estat = [];

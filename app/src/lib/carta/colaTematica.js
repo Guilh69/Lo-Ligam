@@ -453,8 +453,14 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			if (J.provincias && !this._prov) cargar('/data/provincias-1789.json').then((d) => ((this._prov = d), this._update()));
 			if (J.parcs && !this._parcs) cargar('/data/parcs.json').then((d) => ((this._parcs = d), this._update()));
 			if (J.massis && !this._releu) cargar('/data/releu-noms.json').then((d) => ((this._releu = d), this._update()));
+			// (lo domeni occitan e las autras lengas : un indèx cadun, comunas.mjs e comunas-lengas.mjs)
 			if (J.comunas && !this._index)
-				cargar('/data/comunas/index.json').then((d) => (d ? ((this._index = d), this._cargarComunas()) : delete promesas['/data/comunas/index.json']));
+				Promise.all([cargar('/data/comunas/index.json'), cargar('/data/comunas/index-lengas.json')]).then(([d, l]) => {
+					if (!d) return void delete promesas['/data/comunas/index.json'];
+					if (!l) delete promesas['/data/comunas/index-lengas.json'];
+					this._index = { ...d, deps: [...d.deps, ...(l?.deps ?? [])] };
+					this._cargarComunas();
+				});
 		},
 		// Los despartaments visibles, a partir de l'escala de las comunas
 		_cargarComunas() {

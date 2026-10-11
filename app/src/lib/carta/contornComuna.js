@@ -1,7 +1,8 @@
 // Lo contorn d'una comuna a partir d'un ponch (retorn de Romain, 2026-10-11 :
 // « il faut que ça sélectionne la surface de la ville ») : los fichièrs per
-// despartament de comunas/ (IGN ADMIN EXPRESS, TopoJSON, los meteisses que la
-// jaça « Comunas »), cargats sonque quand cal e gardats.
+// despartament (o per zòna d'una autra lenga) de comunas/ (IGN ADMIN EXPRESS e
+// instituts nacionals, TopoJSON, los meteisses que la jaça « Comunas »),
+// cargats sonque quand cal e gardats.
 import { decodarTopo } from './colaTematica.js';
 
 let index = null;
@@ -21,11 +22,13 @@ function dins(poligon, x, y) {
 
 // { props, poligons: [[anel [[lon, lat], …], …], …] } o null
 export async function contornComuna(lat, lon) {
-	index ??= fetch('/data/comunas/index.json')
-		.then((r) => (r.ok ? r.json() : null))
-		.catch(() => null);
-	const ix = await index;
-	for (const d of ix?.deps ?? []) {
+	// (lo domeni occitan e las autras lengas : un indèx cadun)
+	const legir = (u) =>
+		fetch(u)
+			.then((r) => (r.ok ? r.json() : null))
+			.catch(() => null);
+	index ??= Promise.all([legir('/data/comunas/index.json'), legir('/data/comunas/index-lengas.json')]).then(([a, b]) => [...(a?.deps ?? []), ...(b?.deps ?? [])]);
+	for (const d of await index) {
 		const [w, s, e, n] = d.bbox;
 		if (lon < w || lon > e || lat < s || lat > n) continue;
 		deps[d.d] ??= fetch(`/data/comunas/${d.d}.json`)
