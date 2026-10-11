@@ -650,7 +650,7 @@ export const cargarLimits = () =>
 
 
 /* ---------- La couche ---------- */
-export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null } = {}) {
+export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: {
 			pane: 'estelas',
@@ -672,6 +672,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// ela : los territòris se revèlan pas
 			this._modeDial = false;
 			this._onFicha = onFicha;
+			this._onPus = onPus;
 			// una autra còla a quicòm d'explicar jos aqueste ponch (una enclava) : lo
 			// territòri se mòstra pas
 			this._cedir = cedir;
@@ -1140,6 +1141,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._center = map.getCenter();
 			this._zoom = map.getZoom();
 			this._zCibla = null;
+			// un luòc survolat abans un zoom que mena al satellit : son nom en aur
+			// demorava sus los noms de las comunas (retorn de Romain, 2026-10-11)
+			if (this._zoom >= Z.RELAIS) (this._pus = null), (this._det = false);
 			this._nivèls = nivèlsDezoom(map);
 			this._majLuòcs();
 			// sul telefon, la barra de las jaces en bas : l'etiqueta del territòri
@@ -1605,6 +1609,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 			if (this._zoom >= Z.RELAIS) {
 				this._map.getContainer().style.cursor = '';
+				// (lo satellit a sos noms de comunas : pas de survòl de la carta estelada)
+				if (this._pus) (this._pus = null), this._construirEtiquetas();
 				return;
 			}
 			this._pus = this._pròche(e.layerPoint, 22, 6);
@@ -2192,6 +2198,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._construirEtiquetas();
 			}
 			const p = this._pus;
+			let caixa = null;
 			if (p) {
 				const px = p.X - o.x,
 					py = p.Y - o.y;
@@ -2228,6 +2235,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						bh = sob ? 74 : 52;
 					const bx = Math.min(v0.x + vis.x - bw / 2 - 10, Math.max(v0.x + bw / 2 + 10, px));
 					const by = Math.max(v0.y + 90 + bh / 2, py - 86);
+					caixa = [bx - bw / 2, by - bh / 2, bx + bw / 2, by + bh / 2];
 					cx.strokeStyle = T.fil;
 					cx.lineWidth = 1;
 					cx.beginPath();
@@ -2274,6 +2282,9 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					cx.textAlign = dreta ? 'left' : 'right';
 					cx.strokeStyle = T.liser;
 					cx.font = polissaVila(p.renc, 23);
+					const wN = cx.measureText(p.nom).width + 10,
+						bas = py + (p.sobrenom ? 52 : 30);
+					caixa = dreta ? [px - 12, py - 24, tx + wN, bas] : [tx - wN, py - 24, px + 12, bas];
 					cx.fillStyle = T.riuTèxt;
 					escriure(p.nom, tx, py + 2, 5);
 					cx.font = '700 11px Luciole, sans-serif';
@@ -2285,6 +2296,23 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				cx.textAlign = 'left';
 				cx.globalAlpha = 1;
 			}
+			this._anonçarPus(p, caixa);
+		},
+
+		// Lo luòc survolat e la bóstia de son nom (o de sa bulla), en
+		// coordenadas del contenedor : sus lo satellit, lo nom de la comuna s'i
+		// escafa e los noms recobèrts s'escantisson (CartaOccitania)
+		_anonçarPus(p, c) {
+			if (!this._onPus || !this._map) return;
+			const k = p && c ? p.nom + c.map(Math.round).join(',') : '';
+			if (k === this._clauPus) return;
+			this._clauPus = k;
+			if (!k) return this._onPus(null);
+			const cp = (x, y) => this._map.layerPointToContainerPoint(L.point(x + this._min.x, y + this._min.y));
+			const a = cp(c[0], c[1]),
+				b = cp(c[2], c[3]),
+				q = cp(p.X - this._o.x, p.Y - this._o.y);
+			this._onPus({ nom: p.nom, x: q.x, y: q.y, caixa: [a.x, a.y, b.x, b.y] });
 		}
 	});
 	return new Cola();

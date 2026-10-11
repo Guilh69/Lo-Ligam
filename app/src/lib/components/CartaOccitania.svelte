@@ -321,6 +321,7 @@
 					dalt,
 					lang,
 					onFicha: (v) => goto(v.ligam),
+					onPus: (p) => marcarPus(p),
 					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp)
 				});
 				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
@@ -744,6 +745,28 @@
 	// vilatges, al darrièr, evitan tot. (bóstias de las vilas en coordenadas
 	// projectadas, coma las de las còlas)
 	let caixasVilasDOM = null;
+	// Lo luòc survolat : son nom en aur, al costat de son ponch (colaEstelas) ;
+	// sus lo satellit, lo nom de la comuna s'escafa e los que lo nom en aur
+	// recobrís s'escantisson (retorn de Romain, 2026-10-11 : Vilafranca de
+	// Roergue escrich dos còps, l'un sus l'autre)
+	function marcarPus(p) {
+		const ct = map?.getContainer().getBoundingClientRect();
+		if (!ct) return;
+		for (const m of nomsAfichats.values()) {
+			const el = m.getElement();
+			if (!el) continue;
+			let amagat = false,
+				escur = false;
+			const r = p && el.firstElementChild?.getBoundingClientRect();
+			if (r) {
+				const b = [r.left - ct.left, r.top - ct.top, r.right - ct.left, r.bottom - ct.top];
+				amagat = Math.hypot((b[0] + b[2]) / 2 - p.x, (b[1] + b[3]) / 2 - p.y) < 14;
+				escur = !amagat && b[0] < p.caixa[2] && b[2] > p.caixa[0] && b[1] < p.caixa[3] && b[3] > p.caixa[1];
+			}
+			el.classList.toggle('pus-amagat', amagat);
+			el.classList.toggle('pus-escur', escur);
+		}
+	}
 	function caixasDeCòlas(z) {
 		const o = map.getPixelOrigin(),
 			res = [];
@@ -2891,6 +2914,14 @@
 	   n'anan tre que l'on se recula (jamai dos jòcs de noms ensems) */
 	.carta :global(.nom-comuna) {
 		transition: opacity 0.8s ease 0.15s;
+	}
+	.carta :global(.nom-comuna.pus-amagat) {
+		opacity: 0;
+		transition: opacity 0.2s ease;
+	}
+	.carta :global(.nom-comuna.pus-escur) {
+		opacity: 0.15;
+		transition: opacity 0.2s ease;
 	}
 	.carta :global(.nom-comuna.partent) {
 		opacity: 0;
