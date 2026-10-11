@@ -199,6 +199,18 @@ Onze effets d'entrée, repris des « suggestions » de Canva, disponibles partou
 | Clarifier | `clarificar` | un texte qui change de langue, un nom qui se précise |
 
 Règles : sobre, pas kitsch (une seule animation de texte à la fois sur l'écran) ; courtes (moins d'une seconde, sauf la machine à écrire) ; jamais sur un texte long ; seulement le mouvement, l'opacité et le flou ; `prefers-reduced-motion` respecté (le texte apparaît sans effet) ; le texte entier reste lisible pour les lecteurs d'écran.
+
+## 5sexies. Icônes pratiques et ressources de design (décision 2026-10-12)
+
+**Deux familles d'icônes.** Les icônes d'identité (croix, plume, livre, communauté…) restent dessinées maison (§5ter). Les icônes pratiques (fermer, suivant, précédent, lien externe, lire, pause, écouter, son coupé, réglages, validé, rechercher, revenir) viennent d'**Iconoir** (licence MIT, créateur italien), trait **1,7** comme les icônes maison, choisi sur planche comparée contre Phosphor (`/ensag/icones`).
+- Un seul composant : `app/src/lib/components/Icona.svelte` (`<Icona nom="fermer" />`, taille 1em par défaut, elle suit le texte). Douze tracés, 3 Ko : on copie une icône à la fois depuis iconoir.com, jamais la bibliothèque entière.
+- Plus de caractères (× → ↗ ▶ ⚙) ni d'émojis (🔊 🔇) pour les boutons : leur dessin et leur couleur changent d'un téléphone à l'autre. Les flèches dans une phrase (« A → Z ») et les émojis de contenu (🗣️ 🎶 ✍️ des notes, 🦥 du ralenti) restent.
+- Pseudo-élément CSS (où un composant ne peut pas aller) : même tracé en `mask` (exemple : la sageta du rail de la carte).
+
+**Ressources de design (tri du 2026-10-12)**
+- *Inspiration* (on regarde, on ne copie pas) : Land-book, Lapa Ninja, One Page Love (pages d'accueil), Unsection (sections : tarifs, questions fréquentes), Web Interactions Gallery (petites animations), Dribbble et Behance (illustration, écrans de téléphone), Awwwards (idées audacieuses, souvent trop lourdes). Méthode : Romain range ses captures dans `design-stock/Inspiration/<chantier>/` avec une ligne sur ce qui lui plaît ; Claude analyse, propose une page d'essai dans `/ensag/`, Romain décide, la décision entre ici.
+- *Matériaux* : Iconoir (retenu) ; CodePen (créations publiques sous licence MIT, à adapter allégées et avec `prefers-reduced-motion`) ; PhotoGradient (idée : un dégradé tiré de la photo affiché pendant son chargement).
+- *Écartées* : Fontshare et Fontspace (typographie close, §2 ; licences mêlées chez Fontspace), Vecteezy (attribution obligatoire, beaucoup d'images IA, style générique), Replicate (IA payante à l'usage, contraire au §3bis).
 ---
 
 ## 6. Décision
