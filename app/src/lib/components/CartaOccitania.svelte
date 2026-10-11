@@ -745,6 +745,33 @@
 	// vilatges, al darrièr, evitan tot. (bóstias de las vilas en coordenadas
 	// projectadas, coma las de las còlas)
 	let caixasVilasDOM = null;
+	// Al dezoom, los noms que trobaràn pas pus plaça s'escantisson tre lo
+	// començament del movement, pas totes d'un còp a la fin (retorn de Romain,
+	// 2026-10-11 : « c'est pas fluide au niveau des noms des villes ») : lor
+	// plaça es calculada a l'escala d'arribada, sus los noms ja afichats.
+	// La plaça vertadièra se fa a la fin (majNomsComunas), qu'i torna se cal.
+	function anticiparNoms(e) {
+		if (!capaNoms || !nomsAfichats.size || e.zoom >= map.getZoom()) return;
+		const totes = baseLayer !== 'estelas' || e.zoom < Z.RELAIS;
+		const pm = popNoms(e.zoom),
+			mieg = map.getSize().divideBy(2),
+			c0 = map.project(e.center, e.zoom);
+		const lista = [...nomsAfichats.values()].filter((m) => m._comuna).sort((a, b) => a._comuna.renc - b._comuna.renc || b._comuna.pop - a._comuna.pop);
+		const caixas = [];
+		for (const m of lista) {
+			const c = m._comuna,
+				st = c.estil;
+			let pòt = !totes && (c.renc <= 3 || c.pop >= pm) && st;
+			if (pòt) {
+				const q = map.project([c.lat, c.lon], e.zoom).subtract(c0).add(mieg),
+					wd = st.w + 6,
+					bx = [q.x - wd / 2, q.y - st.px * 0.62, q.x + wd / 2, q.y + st.px * 0.62];
+				pòt = !caixas.some((o) => bx[0] < o[2] && bx[2] > o[0] && bx[1] < o[3] && bx[3] > o[1]);
+				if (pòt) caixas.push(bx);
+			}
+			if (!pòt) m.getElement()?.classList.add('partent');
+		}
+	}
 	// Lo luòc survolat : son nom en aur, al costat de son ponch (colaEstelas) ;
 	// sus lo satellit, lo nom de la comuna s'escafa e los que lo nom en aur
 	// recobrís s'escantisson (retorn de Romain, 2026-10-11 : Vilafranca de
@@ -863,9 +890,10 @@
 					interactive: false,
 					keyboard: false
 				});
+				m._comuna = c;
 				capaNoms.addLayer(m);
 				nomsAfichats.set(k, m);
-			}
+			} else nomsAfichats.get(k).getElement()?.classList.remove('partent');
 		}
 		if (!còlas) pausarVilas();
 		// (un nom que se'n va s'escantís, coma los de las còlas)
@@ -1348,6 +1376,7 @@
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
 		map.on('moveend', majNomsComunas);
+		map.on('zoomanim', anticiparNoms);
 		map.on('moveend layeradd layerremove', programarDegatjament);
 		map.on('zoomend', applyToponymVisibility);
 		map.on('zoomend', majDetalh);
@@ -2907,7 +2936,9 @@
 		text-shadow:
 			0 0 3px rgba(18, 9, 6, 0.95),
 			0 0 8px rgba(18, 9, 6, 0.75);
-		animation: nom-ven 0.9s ease 0.35s backwards;
+		/* (un nom nòu arriba tre la fin del movement, en fondut cort : un
+		   retard d'1,2 s fasiá una carta que se recalava aprèp, Romain 2026-10-11) */
+		animation: nom-ven 0.45s ease 0.05s backwards;
 	}
 	/* coma los noms de las tuèlas d'abans : pendent la revelacion (los nívols
 	   que se dissipan), cap de nom ; arriban un còp la tèrra descobèrta, e se
@@ -2925,7 +2956,7 @@
 	}
 	.carta :global(.nom-comuna.partent) {
 		opacity: 0;
-		transition: opacity 0.35s ease;
+		transition: opacity 0.25s ease;
 	}
 	.carta:global(.revelant) :global(.nom-comuna) {
 		opacity: 0;
