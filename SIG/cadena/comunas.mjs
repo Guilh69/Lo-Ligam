@@ -277,6 +277,8 @@ async function principal() {
 	console.log(`total ${tn} communes, ${toc} avec nom occitan (${Math.round((100 * toc) / tn)} %), ${Math.round(tko)} Ko, ${Math.round(tgz)} Ko gzip`);
 	console.log(`Liste pour Romain : ${revision.length} lignes dans SIG/comunas/noms-a-validar.csv`);
 	fs.writeFileSync(path.join(TRABALH, 'estat.json'), JSON.stringify(estat, null, 1));
+	// las comunas de doas lengas (comunas-mixtas.mjs)
+	await import('./comunas-mixtas.mjs');
 }
 
 principal().catch((e) => { console.error(e); process.exit(1); });

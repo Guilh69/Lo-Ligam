@@ -8,10 +8,13 @@
 // Fòra del domeni occitan, l'article dins la lenga del luòc tanben (retorn de
 // Romain, 2026-10-11 : Liyon en arpitan, Brest en breton) : l= dona las
 // Wikipèdias de la lenga, nl= lo nom local (quand n'i a mai d'una, coma per
-// las lengas d'oïl, la que nomena la vila atal es preferida).
+// las lengas d'oïl, la que nomena la vila atal es preferida). Una comuna de
+// doas lengas (Baiona : basc e occitan) dona doas tièras, separadas per « . » :
+// la segonda es presa sonque se i a pas qu'una Wikipèdia possibla.
 //
 //   GET /api/comuna?i=30034                     (còdi INSEE)
 //   GET /api/comuna?i=69123&l=frp&nl=Liyon
+//   GET /api/comuna?i=64102&l=eu&nl=Baiona
 //   GET /api/comuna?nom=Montreux&lat=46.43&lon=6.91&l=frp   (fòra de França)
 import { json } from '@sveltejs/kit';
 
@@ -107,19 +110,21 @@ const net = (s) =>
 async function ficha(q) {
 	const id = await element(q);
 	if (!id) return null;
-	const ets = q.l.map((l) => ETIQUETA[l] ?? l);
+	const ets = q.l.flat().map((l) => ETIQUETA[l] ?? l);
 	const e = (await legir(W + 'action=wbgetentities&props=claims|sitelinks|labels&languages=' + ['oc', 'fr', ...ets].join('|') + '&ids=' + id))?.entities?.[id];
 	if (!e) return null;
 	const sitelink = (l) => e.sitelinks?.[l.replace(/-/g, '_') + 'wiki']?.title ?? null;
 	const etiqueta = (l) => e.labels?.[ETIQUETA[l] ?? l]?.value ?? null;
 	// la lenga del luòc : la Wikipèdia que nomena la vila coma nosautres, o la
 	// primièra qu'a un article, o la primièra qu'a un nom
-	const local =
-		q.l.find((l) => q.nl && [sitelink(l), etiqueta(l)].some((t) => t && net(t) === net(q.nl))) ??
-		q.l.find((l) => sitelink(l)) ??
-		q.l.find((l) => etiqueta(l)) ??
+	const causir = (g) =>
+		g.find((l) => q.nl && [sitelink(l), etiqueta(l)].some((t) => t && net(t) === net(q.nl))) ??
+		g.find((l) => sitelink(l)) ??
+		g.find((l) => etiqueta(l)) ??
 		null;
-	const lengas = ['oc', 'fr', ...(local ? [local] : [])];
+	// (una tièra per lenga del luòc, dins l'òrdre ; null quand cap convèn)
+	const locals = q.l.map((g, k) => (k === 0 ? causir(g) : g.length === 1 && (sitelink(g[0]) || etiqueta(g[0])) ? g[0] : null));
+	const lengas = ['oc', 'fr', ...locals.filter(Boolean)];
 	const C = e.claims ?? {};
 	const pop = darrièra(C.P1082);
 	const sup = darrièra(C.P2046);
@@ -156,7 +161,8 @@ async function ficha(q) {
 	}
 	return {
 		id,
-		local,
+		local: locals[0] ?? null,
+		locals,
 		nom: Object.fromEntries(lengas.map((l) => [l, etiqueta(l)])),
 		pop: pop ? { n: nombre(pop.v), an: pop.an || null } : null,
 		km2,
@@ -175,9 +181,14 @@ export async function GET({ url, setHeaders }) {
 		lat: +url.searchParams.get('lat'),
 		lon: +url.searchParams.get('lon'),
 		l: (url.searchParams.get('l') ?? '')
-			.split(',')
-			.filter((l) => WIKIS.includes(l))
-			.slice(0, 4),
+			.split('.')
+			.slice(0, 3)
+			.map((g) =>
+				g
+					.split(',')
+					.filter((l) => WIKIS.includes(l))
+					.slice(0, 4)
+			),
 		nl: url.searchParams.get('nl')?.slice(0, 80) ?? null
 	};
 	const clau = JSON.stringify(q);

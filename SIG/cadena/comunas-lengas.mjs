@@ -69,3 +69,5 @@ for (const f of fs.readdirSync(topo).filter((f) => f.endsWith('.json')).sort()) 
 }
 fs.writeFileSync(path.join(SORTIDA, 'index-lengas.json'), JSON.stringify(index));
 console.log(`${index.deps.length} zònas, ${tN} comunas, ${Math.round(tKo)} Ko (${Math.round(tGz)} Ko compressats)`);
+// 4. Las comunas de doas lengas (comunas-mixtas.mjs)
+await import('./comunas-mixtas.mjs');

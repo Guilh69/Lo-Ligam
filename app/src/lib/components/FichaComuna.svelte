@@ -14,8 +14,20 @@
 	// local d'en primièr, puèi en occitan, puèi en francés ; lo tèxt de
 	// Wikipèdia dins la lenga del luòc, e un tria per lo legir en occitan o en
 	// francés. Las Wikipèdias de cada lenga de la carta (per las lengas d'oïl,
-	// lo servidor garda la que nomena la vila coma nosautres).
-	const WIKIS = { catalan: ['ca'], arpitan: ['frp'], basc: ['eu'], breton: ['br'], alsacian: ['als'], francic: ['lb', 'pfl', 'ksh', 'li'], flamenc: ['vls', 'nl'], cors: ['co'], oil: ['pcd', 'wa', 'nrm'] };
+	// lo servidor garda la que nomena la vila coma nosautres ; lo galò n'a pas).
+	const WIKIS = {
+		catalan: ['ca'],
+		arpitan: ['frp'],
+		basc: ['eu'],
+		breton: ['br'],
+		alsacian: ['als'],
+		francic: ['lb', 'pfl', 'ksh', 'li'],
+		flamenc: ['vls', 'nl'],
+		cors: ['co'],
+		oil: ['pcd', 'wa', 'nrm'],
+		picard: ['pcd'],
+		galo: []
+	};
 	const LENGAS = {
 		oc: ['Occitan', 'Occitan'],
 		fr: ['Francés', 'Français'],
@@ -50,13 +62,20 @@
 	});
 	const fr = $derived(lang === 'fr');
 
-	// la lenga del luòc : la zòna de son contorn (« arpitan-69 »), o sa lista de
-	// noms ; null dins lo domeni occitan
-	const lenga = $derived.by(() => {
+	// Las lengas del luòc : la de sa zòna (« arpitan-69 » ; l'occitan pels
+	// despartaments), puèi las de sa zòna de transicion (`lg`, Baiona en basc
+	// e en occitan : SIG/cadena/comunas-mixtas.mjs) ; las autras lengas d'en
+	// primièr, l'occitan aprèp (retorn de Romain, 2026-10-11)
+	const lengas = $derived.by(() => {
 		const z = contorn?.zona;
-		const id = z && /^[a-z]+-/.test(z) ? z.split('-')[0] : comuna?.dep;
-		return WIKIS[id] ? id : null;
+		const basa = z ? (/^[a-z]+-/.test(z) ? z.split('-')[0] : 'oc') : WIKIS[comuna?.dep] ? comuna.dep : 'oc';
+		const l = [...new Set([basa, ...(contorn?.props?.lg ?? [])])];
+		return [...l.filter((x) => x !== 'oc'), ...(l.includes('oc') ? ['oc'] : [])];
 	});
+	// (las que an una Wikipèdia ; lo servidor ne tria lo còdi)
+	const autras = $derived(lengas.filter((l) => WIKIS[l]?.length));
+	// (dins las listas de la carta, lo camp oc es lo nom dins la lenga de la lista)
+	const deLenga = $derived(!!WIKIS[comuna?.dep]);
 
 	$effect(() => {
 		const c = comuna,
@@ -64,7 +83,7 @@
 		if (!c) return;
 		const q =
 			(i && /^\d[\dAB]\d{3}$/.test(i) ? `i=${i}` : `nom=${encodeURIComponent(contorn?.props?.fr ?? c.fr)}&lat=${c.lat}&lon=${c.lon}`) +
-			(lenga ? `&l=${WIKIS[lenga].join(',')}&nl=${encodeURIComponent(c.oc ?? '')}` : '');
+			(autras.length ? `&l=${autras.map((l) => WIKIS[l].join(',')).join('.')}` + (deLenga ? `&nl=${encodeURIComponent(c.oc ?? '')}` : '') : '');
 		if (q === clauCargada) return;
 		clauCargada = q;
 		dades = null;
@@ -83,22 +102,31 @@
 		return () => clearTimeout(t);
 	});
 
-	// (dins las listas de la carta, lo camp oc es lo nom dins la lenga del luòc)
-	const lengaLocal = $derived(lenga ? (dades?.local ?? WIKIS[lenga][0]) : 'oc');
-	const nom = $derived(comuna?.oc || dades?.nom?.[lengaLocal] || comuna?.fr || '');
+	// los noms : dins las lengas del luòc, puèi en occitan, puèi en francés ;
+	// lo primièr es lo títol. Un meteis nom dins doas lengas es escrich un còp,
+	// amb sas doas lengas (Baiona : basc e occitan)
+	const noms = $derived.by(() => {
+		const c = comuna;
+		if (!c) return [];
+		const l = autras.map((lg, k) => {
+			const cd = dades?.locals?.[k] ?? WIKIS[lg][0];
+			return [cd, deLenga && lg === c.dep ? c.oc : dades?.nom?.[cd]];
+		});
+		l.push(['oc', deLenga ? dades?.nom?.oc : c.oc]);
+		l.push(['fr', contorn?.props?.fr ?? dades?.nom?.fr ?? (deLenga ? null : c.fr)]);
+		const r = [];
+		for (const [cd, n] of l) {
+			if (!n) continue;
+			const ja = r.find((x) => x.n.toLowerCase() === n.toLowerCase());
+			if (ja) ja.cds.push(cd);
+			else r.push({ cds: [cd], n });
+		}
+		return r;
+	});
+	const nom = $derived(noms[0]?.n ?? comuna?.oc ?? '');
+	const autresNoms = $derived(noms.slice(1));
 	// la vila a sa pagina sul site (l'ancian repèr daurat de la carta)
 	const fichaSite = $derived(comuna ? VILAS_FICHAS.find((v) => Math.abs(v.lat - comuna.lat) < 0.05 && Math.abs(v.lon - comuna.lon) < 0.07) : null);
-	// los autres noms : en occitan (fòra del domeni), puèi en francés
-	const autresNoms = $derived.by(() => {
-		const vist = [nom.toLowerCase()],
-			l = [];
-		for (const [lg, n] of [
-			['oc', lenga ? dades?.nom?.oc : null],
-			['fr', contorn?.props?.fr ?? dades?.nom?.fr ?? (lenga ? null : comuna?.fr)]
-		])
-			if (n && !vist.includes(n.toLowerCase())) vist.push(n.toLowerCase()), l.push([lg, n]);
-		return l;
-	});
 	const nombre = (n, d = 0) => n.toLocaleString('fr-FR', { maximumFractionDigits: d });
 	const chifras = $derived.by(() => {
 		const d = dades,
@@ -113,12 +141,14 @@
 	// lo tèxt : dins la lenga del luòc d'en primièr, puèi en occitan, puèi en
 	// francés (las lengas qu'an un article)
 	const lenguasTèxt = $derived(
-		dades ? [dades.local, 'oc', 'fr'].filter((l, k, a) => l && a.indexOf(l) === k && (dades.extrach?.[l] || dades.wiki?.[l])) : []
+		dades ? [...(dades.locals ?? []), 'oc', 'fr'].filter((l, k, a) => l && a.indexOf(l) === k && (dades.extrach?.[l] || dades.wiki?.[l])) : []
 	);
 	const lt = $derived(lenguasTèxt.includes(lenguaCausida) ? lenguaCausida : lenguasTèxt[0]);
 	const extrach = $derived(dades?.extrach?.[lt]);
 	const wiki = $derived(dades?.wiki?.[lt]);
 	const nomLenga = (l) => LENGAS[l]?.[fr ? 1 : 0] ?? l;
+	// lo còdi de la lenga, coma lo boton Òc / Fr del site
+	const còdi = (l) => (l === 'oc' ? 'Òc' : l[0].toUpperCase() + l.slice(1));
 
 	// la silhoeta de la comuna, a l'escala de la vinheta
 	const silhoeta = $derived.by(() => {
@@ -146,12 +176,15 @@
 				<svg class="silh gran" viewBox="0 0 64 64" aria-hidden="true"><path d={silhoeta} fill-rule="evenodd" /></svg>
 			{/if}
 			<div class="cos">
-				<h2 lang={lengaLocal}>{nom}</h2>
+				<h2 lang={noms[0]?.cds[0] ?? 'oc'}>
+					{nom}{#if noms[0]}<span class="lg-titol" title={noms[0].cds.map(nomLenga).join(', ')}>{noms[0].cds.map(còdi).join(' · ')}</span>{/if}
+				</h2>
 				{#if autresNoms.length}
 					<p class="autres">
-						{#each autresNoms as [lg, n], k (lg)}{#if k}<span class="sep" aria-hidden="true">·</span>{/if}<span class="lg" title={nomLenga(lg)}
-								>{lg}</span
-							>&nbsp;<span lang={lg}>{n}</span>{/each}
+						{#each autresNoms as { cds, n }, k (cds[0])}{#if k}<span class="sep" aria-hidden="true">·</span>{/if}<span
+								class="lg"
+								title={cds.map(nomLenga).join(', ')}>{cds.map(còdi).join(' · ')}</span
+							>&nbsp;<span lang={cds[0]}>{n}</span>{/each}
 					</p>
 				{/if}
 				{#if chifras.length}<p class="chifras">{chifras.join(' · ')}</p>{/if}
@@ -170,9 +203,17 @@
 		{#if dades && dobèrta}
 			<div class="mai" transition:slide={{ duration: 240 }}>
 			{#if lenguasTèxt.length > 1}
-				<div class="lenguas" role="radiogroup" aria-label={fr ? 'Langue du texte' : 'Lenga del tèxt'}>
+				<!-- coma lo boton Òc / Fr del site, discret, a drecha del tèxt (retorn de Romain) -->
+				<div class="lenguas" role="radiogroup" aria-label={fr ? 'Langue du texte' : 'Lenga del tèxt'} title={fr ? 'Langue du texte' : 'Lenga del tèxt'}>
+					<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
+						><path d="M4 5h7" /><path d="M9 3v2c0 4.418 -2.239 8 -5 8" /><path d="M5 9c0 2.144 2.952 3.908 6.7 4" /><path d="M12 20l4 -9l4 9" /><path
+							d="M19.1 18h-6.2"
+						/></svg
+					>
 					{#each lenguasTèxt as l (l)}
-						<button type="button" role="radio" aria-checked={l === lt} lang={fr ? 'fr' : 'oc'} onclick={() => (lenguaCausida = l)}>{nomLenga(l)}</button>
+						<button type="button" role="radio" aria-checked={l === lt} aria-label={nomLenga(l)} title={nomLenga(l)} onclick={() => (lenguaCausida = l)}
+							>{còdi(l)}</button
+						>
 					{/each}
 				</div>
 			{/if}
@@ -265,32 +306,62 @@
 	.autres .sep {
 		margin: 0 7px;
 	}
-	.autres .lg {
-		font-size: 0.625rem;
-		font-weight: 700;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
+	/* (la lenga del títol, discreta, coma las autras) */
+	.lg-titol {
+		margin-left: 8px;
+		font: 700 0.6875rem/1 var(--font-body);
+		font-style: normal;
+		vertical-align: 0.2em;
 		color: color-mix(in srgb, var(--t-aur-clar) 70%, var(--t-tinta-2));
 	}
+	.autres .lg {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		color: color-mix(in srgb, var(--t-aur-clar) 70%, var(--t-tinta-2));
+	}
+	/* (flotant a drecha del tèxt : pas una linha de mai) */
 	.lenguas {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 6px;
-		margin-top: 10px;
+		float: right;
+		display: inline-flex;
+		align-items: center;
+		gap: 1px;
+		margin: 10px 0 6px 12px;
+		padding: 2px 2px 2px 7px;
+		border: 1px solid var(--t-linha);
+		border-radius: 999px;
+	}
+	.lenguas .ic {
+		width: 13px;
+		height: 13px;
+		margin-right: 3px;
+		fill: none;
+		stroke: var(--t-tinta-2);
+		stroke-width: 1.8;
+		stroke-linecap: round;
+		stroke-linejoin: round;
 	}
 	.lenguas button {
-		padding: 3px 10px;
-		border: 1px solid var(--t-linha);
+		padding: 2px 7px;
+		border: 0;
 		border-radius: 999px;
 		background: none;
 		color: var(--t-tinta-2);
-		font: 600 0.75rem/1.2 var(--font-body);
+		font: 700 0.6875rem/1.2 var(--font-body);
 		cursor: pointer;
+		transition:
+			background 0.3s ease,
+			color 0.3s ease;
+	}
+	.lenguas button:hover {
+		color: var(--t-tinta);
 	}
 	.lenguas button[aria-checked='true'] {
-		border-color: #f3c25a;
-		background: color-mix(in srgb, #f3c25a 18%, transparent);
-		color: var(--t-aur-clar);
+		background: var(--t-tinta);
+		color: var(--t-fons);
+	}
+	.lenguas button:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 1px;
 	}
 	.chifras {
 		margin: 6px 0 0;
@@ -319,6 +390,7 @@
 		line-height: 1.5;
 	}
 	footer {
+		clear: both;
 		margin-top: 10px;
 	}
 	.site {
