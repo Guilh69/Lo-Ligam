@@ -8,7 +8,7 @@
 	import { VILAS_FICHAS } from '$lib/carta/vilasFichas.js';
 	import TriaLenga from './TriaLenga.svelte';
 	import { flushSync } from 'svelte';
-	import { sonClic, sonPapièr } from '$lib/carta/sons.js';
+	import { sonClic } from '$lib/carta/sons.js';
 
 	let { comuna, contorn = null, lang = 'oc', onTampar = null } = $props();
 
@@ -31,24 +31,64 @@
 		picard: ['pcd'],
 		galo: []
 	};
+	// lo nom de cada lenga, dins la lenga de la ficha (anglés, espanhòl,
+	// alemand, italian : las lengas del site a venir)
 	const LENGAS = {
-		oc: ['Occitan', 'Occitan'],
-		fr: ['Francés', 'Français'],
-		ca: ['Catalan', 'Catalan'],
-		frp: ['Arpitan', 'Arpitan'],
-		eu: ['Basc', 'Basque'],
-		br: ['Breton', 'Breton'],
-		als: ['Alsacian', 'Alsacien'],
-		lb: ['Francic', 'Francique'],
-		pfl: ['Francic', 'Francique'],
-		ksh: ['Francic', 'Francique'],
-		li: ['Francic', 'Francique'],
-		vls: ['Flamenc', 'Flamand'],
-		nl: ['Neerlandés', 'Néerlandais'],
-		co: ['Còrs', 'Corse'],
-		pcd: ['Picard', 'Picard'],
-		wa: ['Valon', 'Wallon'],
-		nrm: ['Normand', 'Normand']
+		oc: { oc: 'Occitan', fr: 'Occitan' },
+		fr: { oc: 'Francés', fr: 'Français' },
+		ca: { oc: 'Catalan', fr: 'Catalan' },
+		frp: { oc: 'Arpitan', fr: 'Arpitan' },
+		eu: { oc: 'Basc', fr: 'Basque' },
+		br: { oc: 'Breton', fr: 'Breton' },
+		als: { oc: 'Alsacian', fr: 'Alsacien' },
+		lb: { oc: 'Francic', fr: 'Francique' },
+		pfl: { oc: 'Francic', fr: 'Francique' },
+		ksh: { oc: 'Francic', fr: 'Francique' },
+		li: { oc: 'Francic', fr: 'Francique' },
+		vls: { oc: 'Flamenc', fr: 'Flamand' },
+		nl: { oc: 'Neerlandés', fr: 'Néerlandais' },
+		co: { oc: 'Còrs', fr: 'Corse' },
+		pcd: { oc: 'Picard', fr: 'Picard' },
+		wa: { oc: 'Valon', fr: 'Wallon' },
+		nrm: { oc: 'Normand', fr: 'Normand' },
+		en: { oc: 'Anglés', fr: 'Anglais' },
+		es: { oc: 'Espanhòl', fr: 'Espagnol' },
+		de: { oc: 'Alemand', fr: 'Allemand' },
+		it: { oc: 'Italian', fr: 'Italien' }
+	};
+	// Los mots de la ficha, per lenga : una lenga del site de mai (anglés,
+	// espanhòl, catalan…) = una entrada de mai ; sens entrada, lo francés
+	const TÈXTES = {
+		oc: {
+			tampar: 'Tampar',
+			abitants: 'abitants',
+			gentilici: 'Abitants',
+			legirMai: 'Legir mai',
+			plegar: 'Plegar',
+			vila: 'Descobrir la vila',
+			vilaLèu: 'Descobrir la vila : lèu',
+			article: (l) => `Legir l'article de Wikipèdia en ${l}`,
+			fòto: 'Fòto',
+			tèxt: 'Tèxt : Wikipèdia',
+			chifras: 'Chifras',
+			lenga: 'Lenga de la ficha',
+			nombres: 'fr-FR'
+		},
+		fr: {
+			tampar: 'Fermer',
+			abitants: 'habitants',
+			gentilici: 'Habitants',
+			legirMai: 'En savoir plus',
+			plegar: 'Replier',
+			vila: 'Découvrir la ville',
+			vilaLèu: 'Découvrir la ville : bientôt',
+			article: (l) => `Lire l'article de Wikipédia en ${l}`,
+			fòto: 'Photo',
+			tèxt: 'Texte : Wikipédia',
+			chifras: 'Chiffres',
+			lenga: 'Langue de la fiche',
+			nombres: 'fr-FR'
+		}
 	};
 
 	let dades = $state(null),
@@ -63,9 +103,6 @@
 		dobèrta = false;
 		lenguaCausida = null;
 	});
-	// (la lenga de l'interfàcia de la ficha : la lenga causida quand es
-	// l'occitan o lo francés, si que non la de la pagina ; veire mai bas)
-	const fr = $derived(lc === 'fr');
 
 	// Las lengas del luòc : la de sa zòna (« arpitan-69 » ; l'occitan pels
 	// despartaments), puèi las de sa zòna de transicion (`lg`, Baiona en basc
@@ -88,7 +125,8 @@
 		if (!c) return;
 		const q =
 			(i && /^\d[\dAB]\d{3}$/.test(i) ? `i=${i}` : `nom=${encodeURIComponent(contorn?.props?.fr ?? c.fr)}&lat=${c.lat}&lon=${c.lon}`) +
-			(autras.length ? `&l=${autras.map((l) => WIKIS[l].join(',')).join('.')}` + (deLenga ? `&nl=${encodeURIComponent(c.oc ?? '')}` : '') : '');
+			(autras.length ? `&l=${autras.map((l) => WIKIS[l].join(',')).join('.')}` + (deLenga ? `&nl=${encodeURIComponent(c.oc ?? '')}` : '') : '') +
+			(lang !== 'oc' && lang !== 'fr' ? `&s=${lang}` : '');
 		if (q === clauCargada) return;
 		clauCargada = q;
 		dades = null;
@@ -118,6 +156,7 @@
 			return [cd, deLenga && lg === c.dep ? c.oc : dades?.nom?.[cd]];
 		});
 		l.push(['oc', deLenga ? dades?.nom?.oc : c.oc]);
+		if (lang !== 'oc' && lang !== 'fr') l.push([lang, dades?.nom?.[lang]]);
 		l.push(['fr', contorn?.props?.fr ?? dades?.nom?.fr ?? (deLenga ? null : c.fr)]);
 		const r = [];
 		for (const [cd, n] of l) {
@@ -133,67 +172,52 @@
 	const lengaNom = $derived(noms.find((x) => x.n === nom)?.cds[0] ?? 'oc');
 	// la vila a sa pagina sul site (l'ancian repèr daurat de la carta)
 	const fichaSite = $derived(comuna ? VILAS_FICHAS.find((v) => Math.abs(v.lat - comuna.lat) < 0.05 && Math.abs(v.lon - comuna.lon) < 0.07) : null);
-	const nombre = (n, d = 0) => n.toLocaleString('fr-FR', { maximumFractionDigits: d });
+	const nombre = (n, d = 0) => n.toLocaleString(t.nombres ?? lc, { maximumFractionDigits: d });
 	const chifras = $derived.by(() => {
 		const d = dades,
 			l = [];
 		if (!d) return l;
-		if (d.pop?.n) l.push(`${nombre(d.pop.n)} ${fr ? 'habitants' : 'abitants'}${d.pop.an ? ` (${d.pop.an})` : ''}`);
+		if (d.pop?.n) l.push(`${nombre(d.pop.n)} ${t.abitants}${d.pop.an ? ` (${d.pop.an})` : ''}`);
 		if (d.km2) l.push(`${nombre(d.km2, 1)} km²`);
 		if (d.alt != null) l.push(`${nombre(d.alt)} m`);
 		return l;
 	});
-	const gentilici = $derived(fr ? dades?.gentilici?.fr : dades?.gentilici?.oc);
-	// lo tèxt : dins la lenga del luòc d'en primièr, puèi en occitan, puèi en
-	// francés (las lengas qu'an un article)
+	const gentilici = $derived(dades?.gentilici?.[lc] ?? null);
+	// Quinas lengas, dins quin òrdre (règla de Romain, 2026-10-11) : las
+	// lengas del luòc (la lenga regionala, puèi l'occitan dins son domeni),
+	// puèi l'occitan, puèi la lenga del site ; sonque las qu'an un article.
+	//   - site en occitan : una vila occitana a pas que l'occitan (cap de
+	//     revirada) ; una vila d'una autra lenga, sa lenga, puèi l'occitan ;
+	//   - site en francés (deman en anglés, espanhòl, catalan…) : la lenga del
+	//     site s'apond a la fin.
+	// Per defaut, la primièra : la lenga del luòc. (Pel site en francés, l'òrdre
+	// es encara a decidir : revisions/2026-10-11-fichas-comunas.md.)
 	const lenguasTèxt = $derived(
-		dades ? [...(dades.locals ?? []), 'oc', 'fr'].filter((l, k, a) => l && a.indexOf(l) === k && (dades.extrach?.[l] || dades.wiki?.[l])) : []
+		dades ? [...(dades.locals ?? []), 'oc', lang].filter((l, k, a) => l && a.indexOf(l) === k && (dades.extrach?.[l] || dades.wiki?.[l])) : []
 	);
 	const lt = $derived(lenguasTèxt.includes(lenguaCausida) ? lenguaCausida : lenguasTèxt[0]);
-	// La lenga causida mena tota la ficha (retorn de Romain, 2026-10-11) : lo
-	// nom, lo tèxt, lo ligam, e los mots de la ficha quand es l'occitan o lo
-	// francés (pels autres, los mots demòran dins la lenga de la pagina : n'avèm
-	// pas de revirada verificada)
-	const lc = $derived(lt === 'oc' || lt === 'fr' ? lt : lang);
+	// La lenga causida mena tota la ficha : lo nom, lo tèxt, lo ligam, e los
+	// mots de la ficha quand los avèm dins aquela lenga (si que non, los de
+	// la lenga del site : pas de revirada pas verificada)
+	const lc = $derived(TÈXTES[lt] ? lt : TÈXTES[lang] ? lang : 'fr');
+	const t = $derived(TÈXTES[lc]);
 	// (lo nom de la lenga dins una frasa : « en basc », « en basque »)
 	const enLenga = (l) => nomLenga(l).toLowerCase();
 	const extrach = $derived(dades?.extrach?.[lt]);
 	const wiki = $derived(dades?.wiki?.[lt]);
-	const nomLenga = (l) => LENGAS[l]?.[fr ? 1 : 0] ?? l;
+	const nomLenga = (l) => LENGAS[l]?.[lc] ?? LENGAS[l]?.fr ?? l;
 
-	// La ficha se transforma quand la lenga cambia (retorn de Romain,
-	// 2026-10-11 : « une animation qui transforme la fiche, avec un effet
-	// vraiment joli et pas trop lourd… très satisfaisant »). Tres prepausas :
-	//   virar : se revira coma una carta (transicion de vista, app.css) ;
-	//   revelar : la lenga nòva s'espandís en ròtle a partir de l'emblèma ;
-	//   cascada : los elements tornan un a un, de naut en bas.
-	// Sens transicion de vista (navegador vièlh), la cascada ; sens movement
-	// (preferéncia del sistèma), lo cambiament sol.
-	// ENSAG (a levar quand Romain aurà causit)
-	const EFÈCTES = [
-		['revelar', 'Révélation'],
-		['virar', 'Retournement'],
-		['cascada', 'Cascade']
-	];
-	let efèct = $state('revelar');
-	$effect(() => {
-		try {
-			const v = localStorage.getItem('lo-ligam-ensag-ficha-lenga');
-			if (EFÈCTES.some(([x]) => x === v)) efèct = v;
-		} catch {}
-	});
-	function causirEfèct(v) {
-		efèct = v;
-		try {
-			localStorage.setItem('lo-ligam-ensag-ficha-lenga', v);
-		} catch {}
-	}
+	// La ficha se transforma quand la lenga cambia : la lenga nòva s'espandís
+	// en ròtle a partir de l'emblèma clicat (causit per Romain, 2026-10-11,
+	// entre revelacion, reviradura e cascada ; transicion de vista, app.css).
+	// Sens transicion de vista (navegador vièlh), los elements tornan un a un
+	// (cascada) ; sens movement (preferéncia del sistèma), lo cambiament sol.
 	let cara = $state(null),
 		cascada = $state(false);
 	function causirLenga(l, punt) {
 		if (!l || l === lt) return;
 		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (calm || efèct === 'cascada' || !document.startViewTransition || !cara) {
+		if (calm || !document.startViewTransition || !cara) {
 			lenguaCausida = l;
 			sonClic(0.8);
 			if (!calm) {
@@ -210,11 +234,8 @@
 		h.style.setProperty('--ficha-x', x.toFixed(0) + 'px');
 		h.style.setProperty('--ficha-y', y.toFixed(0) + 'px');
 		h.style.setProperty('--ficha-r', Math.hypot(Math.max(x, r.width - x), r.height + 240).toFixed(0) + 'px');
-		h.dataset.fichaVt = efèct;
-		if (efèct === 'virar') {
-			sonPapièr(false);
-			setTimeout(() => sonClic(0.7), 560);
-		} else sonClic(1);
+		h.dataset.fichaVt = 'revelar';
+		sonClic(1);
 		const t = document.startViewTransition(() => flushSync(() => (lenguaCausida = l)));
 		t.finished.finally(() => delete h.dataset.fichaVt);
 	}
@@ -240,16 +261,7 @@
 {#if comuna}
 	<div class="ficha-comuna" transition:fly={{ y: 16, duration: 260 }}>
 		<section class="cara" class:amb-emblemas={lenguasTèxt.length > 1} class:cascada aria-label={nom} bind:this={cara}>
-			<button type="button" class="tampar" aria-label={fr ? 'Fermer' : 'Tampar'} onclick={() => onTampar?.()}>×</button>
-			{#if lenguasTèxt.length > 1}
-				<!-- ENSAG (a levar quand Romain aurà causit) : los efèctes -->
-				<div class="ensag" role="group" aria-label="Essai">
-					<span>Essai</span>
-					{#each EFÈCTES as [v, n] (v)}
-						<button type="button" aria-pressed={efèct === v} onclick={() => causirEfèct(v)}>{n}</button>
-					{/each}
-				</div>
-			{/if}
+			<button type="button" class="tampar" aria-label={t.tampar} onclick={() => onTampar?.()}>×</button>
 			<div class="cap">
 				{#if dades?.fòto}
 					<div class="vinheta">
@@ -262,11 +274,11 @@
 				<div class="cos">
 					<h2 lang={lengaNom} style:--i="0">{nom}</h2>
 					{#if chifras.length}<p class="chifras" style:--i="1">{chifras.join(' · ')}</p>{/if}
-					{#if gentilici}<p class="gentilici" style:--i="2">{fr ? 'Habitants' : 'Abitants'} : {gentilici}</p>{/if}
+					{#if gentilici}<p class="gentilici" style:--i="2">{t.gentilici} : {gentilici}</p>{/if}
 					{#if cargant}<p class="cargant" aria-hidden="true">…</p>{/if}
 					{#if dades && (lenguasTèxt.length || fichaSite)}
 						<button type="button" class="desplegar" style:--i="3" aria-expanded={dobèrta} onclick={() => (dobèrta = !dobèrta)}
-							>{dobèrta ? (fr ? 'Replier' : 'Plegar') : fr ? 'En savoir plus' : 'Legir mai'}<span class="chev" aria-hidden="true">▾</span></button
+							>{dobèrta ? t.plegar : t.legirMai}<span class="chev" aria-hidden="true">▾</span></button
 						>
 					{/if}
 				</div>
@@ -276,22 +288,22 @@
 					{#if extrach}<p class="extrach" lang={lt} style:--i="4">{extrach}</p>{/if}
 					<footer style:--i="5">
 						{#if fichaSite}
-							{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{fr ? 'Découvrir la ville' : 'Descobrir la vila'} →</a>
-							{:else}<span class="site leu">{fr ? 'Découvrir la ville : bientôt' : 'Descobrir la vila : lèu'}</span>{/if}
+							{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{t.vila} →</a>
+							{:else}<span class="site leu">{t.vilaLèu}</span>{/if}
 						{/if}
 						{#if wiki}
 							<!-- (lo ligam seguís la lenga causida, e la ditz) -->
 							<a class="wiki" href={wiki} hreflang={lt} target="_blank" rel="noopener"
-								>{fr ? `Lire l'article de Wikipédia en ${enLenga(lt)}` : `Legir l'article de Wikipèdia en ${enLenga(lt)}`} ↗</a
+								>{t.article(enLenga(lt))} ↗</a
 							>
 						{/if}
 						<p class="credits">
-							{#if dades.fòto}{fr ? 'Photo' : 'Fòto'} : {#if dades.fòto.pagina}<a href={dades.fòto.pagina} target="_blank" rel="noopener">{dades.fòto.autor ?? 'Wikimedia Commons'}</a
-								>{:else}{dades.fòto.autor ?? 'Wikimedia Commons'}{/if}{dades.fòto.licéncia ? `, ${dades.fòto.licéncia}` : ''}{' · '}{/if}{#if extrach}{fr ? 'Texte : Wikipédia' : 'Tèxt : Wikipèdia'}, <a
+							{#if dades.fòto}{t.fòto} : {#if dades.fòto.pagina}<a href={dades.fòto.pagina} target="_blank" rel="noopener">{dades.fòto.autor ?? 'Wikimedia Commons'}</a
+								>{:else}{dades.fòto.autor ?? 'Wikimedia Commons'}{/if}{dades.fòto.licéncia ? `, ${dades.fòto.licéncia}` : ''}{' · '}{/if}{#if extrach}{t.tèxt}, <a
 									href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr"
 									target="_blank"
 									rel="noopener">CC BY-SA 4.0</a
-								>{' · '}{/if}{fr ? 'Chiffres' : 'Chifras'} : Wikidata
+								>{' · '}{/if}{t.chifras} : Wikidata
 						</p>
 					</footer>
 				</div>
@@ -300,7 +312,7 @@
 		<!-- los emblèmas de las lengas, sul canton de la ficha : menan tota la ficha -->
 		{#if lenguasTèxt.length > 1}
 			<div class="emblemas-fl">
-				<TriaLenga lenguas={lenguasTèxt} causida={lt} onCausir={causirLenga} {nomLenga} {còdi} etiqueta={fr ? 'Langue de la fiche' : 'Lenga de la ficha'} />
+				<TriaLenga lenguas={lenguasTèxt} causida={lt} onCausir={causirLenga} {nomLenga} {còdi} etiqueta={t.lenga} />
 			</div>
 		{/if}
 	</div>
@@ -400,35 +412,6 @@
 		margin: 2px 0 0;
 		font-size: 0.8125rem;
 		color: var(--t-tinta-2);
-	}
-	/* ENSAG (a levar quand Romain aurà causit) */
-	.ensag {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 4px;
-		margin: 0 36px 10px 0;
-		padding: 4px 6px;
-		border: 1px dashed var(--t-linha);
-		border-radius: 8px;
-		font: 600 0.6875rem/1.2 var(--font-body);
-		color: var(--t-tinta-2);
-	}
-	.ensag span {
-		margin-right: 4px;
-	}
-	.ensag button {
-		padding: 2px 8px;
-		border: 1px solid transparent;
-		border-radius: 999px;
-		background: none;
-		color: inherit;
-		font: inherit;
-		cursor: pointer;
-	}
-	.ensag button[aria-pressed='true'] {
-		border-color: var(--t-aur);
-		color: var(--t-aur-clar);
 	}
 	.chifras {
 		margin: 6px 0 0;

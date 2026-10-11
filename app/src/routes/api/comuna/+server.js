@@ -20,6 +20,10 @@ import { json } from '@sveltejs/kit';
 
 // las Wikipèdias de las lengas de la carta (e lo còdi de lor etiqueta Wikidata)
 const WIKIS = ['ca', 'frp', 'eu', 'br', 'als', 'lb', 'pfl', 'ksh', 'li', 'vls', 'nl', 'co', 'pcd', 'wa', 'nrm'];
+// las lengas del site, a venir (Romain, 2026-10-11 : anglés, espanhòl,
+// catalan, puèi alemand, italian…) : s= apond la de la pagina a l'occitan e
+// al francés, totjorn cargats
+const SITE = ['en', 'es', 'ca', 'de', 'it', 'pt', 'nl'];
 const ETIQUETA = { als: 'gsw' };
 
 const UA = 'LoLigam/1.0 (https://loligam.eu ; carta de las lengas)';
@@ -110,8 +114,8 @@ const net = (s) =>
 async function ficha(q) {
 	const id = await element(q);
 	if (!id) return null;
-	const ets = q.l.flat().map((l) => ETIQUETA[l] ?? l);
-	const e = (await legir(W + 'action=wbgetentities&props=claims|sitelinks|labels&languages=' + ['oc', 'fr', ...ets].join('|') + '&ids=' + id))?.entities?.[id];
+	const ets = [...(q.s ? [q.s] : []), ...q.l.flat()].map((l) => ETIQUETA[l] ?? l);
+	const e = (await legir(W + 'action=wbgetentities&props=claims|sitelinks|labels&languages=' + [...new Set(['oc', 'fr', ...ets])].join('|') + '&ids=' + id))?.entities?.[id];
 	if (!e) return null;
 	const sitelink = (l) => e.sitelinks?.[l.replace(/-/g, '_') + 'wiki']?.title ?? null;
 	const etiqueta = (l) => e.labels?.[ETIQUETA[l] ?? l]?.value ?? null;
@@ -124,7 +128,7 @@ async function ficha(q) {
 		null;
 	// (una tièra per lenga del luòc, dins l'òrdre ; null quand cap convèn)
 	const locals = q.l.map((g, k) => (k === 0 ? causir(g) : g.length === 1 && (sitelink(g[0]) || etiqueta(g[0])) ? g[0] : null));
-	const lengas = ['oc', 'fr', ...locals.filter(Boolean)];
+	const lengas = [...new Set(['oc', 'fr', ...(q.s ? [q.s] : []), ...locals.filter(Boolean)])];
 	const C = e.claims ?? {};
 	const pop = darrièra(C.P1082);
 	const sup = darrièra(C.P2046);
@@ -189,7 +193,8 @@ export async function GET({ url, setHeaders }) {
 					.filter((l) => WIKIS.includes(l))
 					.slice(0, 4)
 			),
-		nl: url.searchParams.get('nl')?.slice(0, 80) ?? null
+		nl: url.searchParams.get('nl')?.slice(0, 80) ?? null,
+		s: SITE.includes(url.searchParams.get('s')) ? url.searchParams.get('s') : null
 	};
 	const clau = JSON.stringify(q);
 	let c = cache.get(clau);
