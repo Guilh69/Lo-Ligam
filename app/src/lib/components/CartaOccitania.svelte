@@ -14,7 +14,7 @@
 	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, fixarLatEscala, nivèlsDezoom, aDetalh, aTenchas } from '$lib/carta/escalas.js';
+	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, fixarLatEscala, nivèlsDezoom, aDetalh, aTenchas } from '$lib/carta/escalas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
@@ -1304,15 +1304,11 @@
 		});
 		// la grilha de las escalas seguís la latitud del centre (escalas.js)
 		map.on('move', () => fixarLatEscala(map.getCenter().lat));
-		map.fitBounds(
-			[
-				[42.65, -1.6],
-				[46.4, 7.55]
-			],
-			{ paddingTopLeft: [16, 96], paddingBottomRight: [16, 24] }
-		);
-		// (un grand ecran arriba pas dirèctament sul satellit : 30 km al mai, escalas.js)
-		if (map.getZoom() > Z.ARRIBADA_MAX) map.setZoom(Z.ARRIBADA_MAX, { animate: false });
+		// tota l'Occitània a l'arribada, sus totes los aparelhs (vistaOccitana)
+		{
+			const v = vistaOccitana();
+			map.setView(v.c, v.z, { animate: false });
+		}
 
 		setBaseLayer(baseLayer);
 		colaDonadas = crearColaDonadas(L, {
@@ -1973,18 +1969,33 @@
 		addEventListener('carta-anar-plaja', anar);
 		return () => removeEventListener('carta-anar-plaja', anar);
 	});
-	// Una jaça occitana cochada : la vista d'ensemble de l'Occitània, lo meteis
-	// cadratge sus totes los aparelhs (50 km sus un ecran de 1 830 px), mai
-	// pròche se la jaça se vei pas d'aquí (los dialèctes, a 100 km al mai)
+	// La vista d'ensemble de l'Occitània (retorn de Romain, 2026-10-11 :
+	// « remets la vue par défaut à 70 km… voir l'Occitanie de cette manière
+	// sur l'ensemble des appareils ») : tot lo domeni (del Creissent als
+	// Pirenèus, de l'Ocean a las valadas d'Itàlia) dins l'espaci que demòra
+	// liure (sens lo capçal e la recèrca, lo rail, los botons, la barra d'en
+	// bas del telefòn), amb un pauc d'aire. Sus l'ordenador de Romain : 70 km.
 	const OCCITANIA_VISTA = [
-		[42.65, -1.6],
-		[46.4, 7.55]
+		[42.5, -1.8],
+		[46.55, 7.7]
 	];
+	function vistaOccitana() {
+		const size = map.getSize(),
+			telefon = size.x <= 700;
+		// (esquèrra, naut, drecha, bas : la plaça presa per l'interfàcia)
+		const [pe, pn, pd, pb] = telefon ? [12, 120, 12, 96] : [120, 140, 76, 44];
+		const b = L.latLngBounds(OCCITANIA_VISTA);
+		const z = Math.min(map.getBoundsZoom(b, false, L.point(pe + pd, pn + pb)) - 0.1, Z.ARRIBADA_MAX);
+		// (lo domeni al mitan de l'espaci liure, pas de tot l'ecran)
+		const liure = L.point((pe + size.x - pd) / 2, (pn + size.y - pb) / 2);
+		const c = map.unproject(map.project(b.getCenter(), z).subtract(liure.subtract(size.divideBy(2))), z);
+		return { c, z };
+	}
+	// Una jaça occitana cochada : la vista d'ensemble de l'Occitània, mai
+	// pròche se la jaça se vei pas d'aquí (los dialèctes, a 100 km al mai)
 	function anarALaVistaOccitana(id) {
 		if (!map || !L) return;
-		const b = L.latLngBounds(OCCITANIA_VISTA),
-			c = b.getCenter();
-		let z = Math.floor(map.getBoundsZoom(b, false, L.point(32, 120)) / PAS_ZOOM) * PAS_ZOOM - RECUOL_VISTA;
+		let { c, z } = vistaOccitana();
 		const pl = PLAJAS[id];
 		if (pl) z = Math.max(z, zCran(pl[0], c.lat));
 		z = Math.min(z, Z.ARRIBADA_MAX);

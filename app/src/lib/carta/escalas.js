@@ -78,12 +78,11 @@ export const PLAJAS = {
 };
 // Las jaces vertadièrament occitanas (e las regions e despartaments, demanda
 // de Romain del meteis jorn) : cochadas, menan a la vista
-// d'ensemble de l'Occitània (50 km sus l'ordenador de Romain, un cadratge
-// parièr suls autres aparelhs ; demanda de Romain, 2026-10-09)
+// d'ensemble de l'Occitània (tot lo domeni, sus totes los aparelhs ; 70 km sus
+// l'ordenador de Romain, 2026-10-11)
 export const OCCITANAS = new Set(['frontiera', 'dialectes', 'departaments', 'toponimia', 'calandretas', 'librarias', 'lieusInteres', 'festas', 'regions', 'despartaments']);
-// (la vista d'ensemble : l'Occitània dins l'ecran, coma a l'arribada : 50 km sus
-// l'ordenador de Romain ; causida de Romain, 2026-10-09, en luòc de 70 km)
-export const RECUOL_VISTA = 0;
+// (la vista d'ensemble : tot lo domeni dins l'espaci liure de l'ecran, 70 km sus
+// l'ordenador de Romain : vistaOccitana dins CartaOccitania, 2026-10-11)
 // lo zoom ont anar per veire una jaça (null : se vei ja)
 export function zPlaja(id, z, lat = LAT_REF) {
 	const pl = PLAJAS[id];
