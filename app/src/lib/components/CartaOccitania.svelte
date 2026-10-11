@@ -810,6 +810,28 @@
 		const px = parseFloat(e.font.match(/([\d.]+)px/)[1]);
 		return { nom, px, font: e.font, esp: e.esp, majus: e.majus, w: g.measureText(e.majus ? nom.toUpperCase() : nom).width };
 	}
+	// Las vilas de las autras lengas alucadas, amb lor nom dins la lenga (retorn
+	// de Romain, 2026-10-11 : cap de nom en Savòia sul satellit ; la lista de
+	// las comunas es sonque la del domeni occitan). Meteis filtre que la carta
+	// estelada (la part francesa sola dins lo mòde). Lor populacion es pas
+	// coneguda : estimada d'aprèp lor reng.
+	const POP_RENC = { 1: 100000, 2: 30000, 3: 8000, 4: 2500 };
+	let listaNoms = [],
+		clauNoms = '';
+	function nomsDeLaCarta() {
+		const fs = JACES_LENGAS.filter((id) => visibility[id])
+			.map((id) => [id, fonsDe(id)])
+			.filter(([, f]) => f?.vilas?.length);
+		const clau = (nomsComunas?.length ?? 0) + '|' + fs.map(([id, f]) => id + f.vilas.length).join(',');
+		if (clau !== clauNoms) {
+			clauNoms = clau;
+			listaNoms = [
+				...(nomsComunas ?? []),
+				...fs.flatMap(([id, f]) => f.vilas.map((v) => ({ fr: v.nom, oc: v.nom, lon: v.lon, lat: v.lat, renc: v.renc ?? 4, pop: POP_RENC[v.renc] ?? 2500, dep: id })))
+			];
+		}
+		return listaNoms;
+	}
 	// (los noms se cargan quand cal ; lo motor se torna pintar)
 	function majNomsComunas() {
 		if (!map) return;
@@ -1292,7 +1314,7 @@
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; } };
 		zoomDoç(L, map);
 		motorNoms = crearNomsComunas(L, map, {
-			lista: () => nomsComunas ?? [],
+			lista: nomsDeLaCarta,
 			estil: (c) => (c.estil ??= estilNom(c)),
 			// (pendent la revelacion, los nívols que se dissipan : cap de nom)
 			actiu: () => baseLayer === 'estelas' && map.getZoom() >= Z.RELAIS && !map.getContainer().classList.contains('revelant'),
