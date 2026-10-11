@@ -9,7 +9,7 @@
 // mesclan). Un dialècte (o lo Creissent) se pòt causir : sol el demòra, e sa
 // color se difusa sus son territòri a partir de son còr.
 import { cargarLimits, INTRO } from './colaEstelas.js';
-import { nivèlsDezoom, aDialectes, aDetalh } from './escalas.js';
+import { nivèlsDezoom, aDialectes, aDetalh, aTenchas as tenchasDePrèp } from './escalas.js';
 import { prepContorn, traçarPart, estelaCap, avançada, TOTAL as TOTAL_APAR } from './aparicion.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
@@ -496,12 +496,14 @@ export function crearColaDonadas(
 		_interactiu() {
 			// (l'Occitània unida, de luènh o causida : los dialèctes se causisson pas)
 			if (this._jaces.unificat || (this._nivèls && aDialectes(this._nivèls, this._zoom) < 0.5)) return false;
+			// (de prèp, las tenchas son escantidas : pas pus de causida)
+			if (tenchasDePrèp(this._zoom) < 0.5) return false;
 			return !!(this._jaces.dialectes && this._dial) || !!(this._jaces.creissent && this._creissent);
 		},
 		// Una enclava (Pichona Gavachariá) se dessenha amb la frontièra tanben :
 		// son encastre al survòl o al tòc, coma un despartament (retorn de Romain)
 		_enclavas() {
-			return this._geo?.mix && this._map?.getZoom() < 13 ? this._geo.mix.filter((zm) => zm.enclava) : [];
+			return this._geo?.mix && this._map && tenchasDePrèp(this._map.getZoom()) >= 0.5 ? this._geo.mix.filter((zm) => zm.enclava) : [];
 		},
 		enclavaA(lp) {
 			const enc = this._enclavas();
@@ -515,9 +517,15 @@ export function crearColaDonadas(
 		zonaA(lp) {
 			return this._zonaA(lp);
 		},
+		// Lo dialècte d'un ponch, quitament de prèp, quand las tenchas son
+		// escantidas : l'etiqueta al dessús de l'escala (retorn de Romain, 2026-10-11)
+		dialècteA(lp) {
+			const k = this._zonaA(lp, true, true);
+			return k && !k.startsWith('enc-') ? this._nomDe(k) : null;
+		},
 		// La zòna jos un ponch : l'enclava, lo Creissent (es dessús), puèi
 		// las zònas mixtas (pel survòl sonque), puèi los dialèctes
-		_zonaA(lp, ambMix = true) {
+		_zonaA(lp, ambMix = true, totjorn = false) {
 			const g = this._geo;
 			if (!g) return null;
 			if (this._franca) {
@@ -526,7 +534,8 @@ export function crearColaDonadas(
 			}
 			const kEnc = this.enclavaA(lp);
 			if (kEnc) return kEnc;
-			if (!this._interactiu()) return null;
+			if (!totjorn && !this._interactiu()) return null;
+			if (totjorn && (this._jaces.unificat || !this._min)) return null;
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
 			const x = lp.x - this._min.x,
 				y = lp.y - this._min.y;
@@ -1051,7 +1060,8 @@ export function crearColaDonadas(
 			// de la lenga pretendriá una precision qu'a pas. Escantits doçament, sus
 			// mai d'un nivèl (retorn de Romain : una disparicion d'un sol còp de
 			// zoom fasiá una cassura) : contorns administratius de 10 a 11,5,
-			// frontièra de 11 a 13, tenchas de 11,5 a 13.
+			// frontièra de 11 a 13, tenchas de 10 a 11 (de 10 a 5 km : de prèp lo
+			// dialècte s'escriu al dessús de l'escala, retorn de Romain, 2026-10-11).
 			// Lo dezoom (demandas de Romain, 2026-10-08) : vers « 200 km » los
 			// dialèctes se fondon dins l'Occitània unida ; a partir de « 300 km »
 			// las autras jaces s'escantisson, a « 500 km » demòra lo contorn sol
@@ -1060,7 +1070,7 @@ export function crearColaDonadas(
 				aDet = this._rel?.det?.v ?? aDetalh(nv, z);
 			const aAdmin = this._doç('admin', clamp((11.5 - z) / 1.5)) * aDet,
 				aFront = dossa(clamp((13 - z) / 2)) * aDet,
-				aTenchas0 = clamp((13 - z) / 1.5);
+				aTenchas0 = tenchasDePrèp(z);
 			// u : 0 los dialèctes, 1 l'Occitània unida (relais dins lo temps)
 			const R = this._rel ?? {},
 				ru = R.uni,

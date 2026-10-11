@@ -14,7 +14,7 @@
 	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, fixarLatEscala, nivèlsDezoom, aDetalh } from '$lib/carta/escalas.js';
+	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, RECUOL_VISTA, PAS_ZOOM, fixarLatEscala, nivèlsDezoom, aDetalh, aTenchas } from '$lib/carta/escalas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
 	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
@@ -876,6 +876,43 @@
 	// lo domeni occitan, ont son los contorns)
 	let contornCausit = null,
 		comunaCausida = null;
+	// Lo dialècte del centre de la carta, de prèp (retorn de Romain, 2026-10-11 :
+	// las tenchas se vesián pas pus e se causissián per res) : escrich al dessús
+	// de l'escala, sens clic ; las zònas de transicion passan davant
+	let elDialLuòc = null,
+		clauDialLuòc = '';
+	function majDialLuòc() {
+		const el = elDialLuòc;
+		if (!el || !map) return;
+		let info = null;
+		if (aTenchas(map.getZoom()) < 0.5) {
+			const lp = map.latLngToLayerPoint(map.getCenter());
+			const l = [colaDonadas?.dialècteA(lp), ...Object.values(colasLengas).map((c) => c.dialècteA?.(lp))].filter(Boolean);
+			info = l.find((i) => i.mix || i.cro) ?? l[0] ?? null;
+		}
+		el.classList.toggle('vesible', !!info);
+		// (en s'escantissent, lo nom d'abans demòra)
+		if (!info) return;
+		const fr = lang === 'fr',
+			nom = fr ? info.fr : info.oc,
+			sota = info.mix || info.cro ? (fr ? 'zone de transition' : 'zòna de transicion') : ((fr ? info.sota_fr : info.sota_oc) ?? (fr ? 'dialecte' : 'dialècte'));
+		const clau = nom + '|' + sota;
+		if (clau === clauDialLuòc) return;
+		clauDialLuòc = clau;
+		const n = L.DomUtil.create('span', 'nom'),
+			so = L.DomUtil.create('span', 'sota');
+		n.lang = info.lang ?? (fr ? 'fr' : 'oc');
+		n.textContent = nom;
+		so.textContent = sota;
+		el.replaceChildren(n, so);
+	}
+	$effect(() => {
+		// (una lenga o los dialèctes alucats o escantits, la lenga de la pagina)
+		JSON.stringify(visibility);
+		lang;
+		const t = setTimeout(majDialLuòc, 400);
+		return () => clearTimeout(t);
+	});
 	// la ficha de la comuna, dins l'encastre d'en bas (FichaComuna.svelte)
 	// ($state.raw : la comuna e son contorn demòran los objèctes d'origina, sens proxy)
 	let fichaComuna = $state.raw(null);
@@ -1592,6 +1629,10 @@
 			this._updateScale(this._mScale, label, m / maxMeters);
 		};
 		escala.addTo(map);
+		// lo dialècte del centre, de prèp : al dessús de la barra
+		elDialLuòc = L.DomUtil.create('div', 'dial-luoc', escala.getContainer());
+		elDialLuòc.setAttribute('aria-hidden', 'true');
+		map.on('moveend', () => requestAnimationFrame(majDialLuòc));
 		// (lo nom del palièr, « Las comunas » sus « 5 km », se legissiá coma una
 		// mesura e Romain sabiá pas çò que voliá dire, 2026-10-10 : levat ; la
 		// barra mòstra sonque la distància)
@@ -2485,6 +2526,44 @@
 		line-height: 1.3;
 		padding: 1px 6px 2px;
 		border-radius: 0 0 4px 4px;
+	}
+
+	/* lo dialècte del centre, de prèp, just al dessús de la barra (retorn de Romain, 2026-10-11) */
+	.carta :global(.dial-luoc) {
+		display: flex;
+		align-items: baseline;
+		gap: 7px;
+		margin: 0 0 5px;
+		padding: 3px 10px 4px;
+		border: 1px solid color-mix(in srgb, var(--t-tinta) 35%, transparent);
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--t-fons) 84%, transparent);
+		color: var(--t-tinta);
+		white-space: nowrap;
+		pointer-events: none;
+		opacity: 0;
+		transform: translateY(3px);
+		transition:
+			opacity 0.35s ease,
+			transform 0.35s ease;
+	}
+	.carta :global(.dial-luoc.vesible) {
+		opacity: 1;
+		transform: none;
+	}
+	.carta :global(.dial-luoc .nom) {
+		font: 700 10.5px/1.3 var(--font-body);
+		letter-spacing: 1.8px;
+		text-transform: uppercase;
+	}
+	.carta :global(.dial-luoc .sota) {
+		font: 400 10.5px/1.3 var(--font-body);
+		color: var(--t-aur-clar);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.carta :global(.dial-luoc) {
+			transition: none;
+		}
 	}
 
 	/* lo palièr, just al dessús de la barra (al costat, tustava las mencions de la carta) */

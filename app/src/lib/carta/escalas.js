@@ -147,6 +147,15 @@ export const Z = {
 	get DEP_1() {
 		return zDès(5, latEscala);
 	},
+	// las tenchas dels dialèctes s'escantisson de 10 a 5 km (10 a 11) : de prèp,
+	// se vesián pas pus e se causissián per res ; lo dialècte del centre de la
+	// carta s'escriu al dessús de l'escala (retorn de Romain, 2026-10-11)
+	get TENCHAS_0() {
+		return zDès(10, latEscala);
+	},
+	get TENCHAS_1() {
+		return zDès(5, latEscala);
+	},
 	// los parcs a partir de 150 km (6)
 	get PARCS() {
 		return zDès(150, latEscala);
@@ -179,4 +188,6 @@ export function nivèlsDezoom(map) {
 }
 // de 0 a 1 : los dialèctes (0 = la lenga unida) ; las jaces de detalh (0 = lo contorn sol)
 export const aDialectes = (n, z) => easeS(clamp((z - n.zDial + 0.1) / 0.1));
+// de 1 a 0 : las tenchas dels dialèctes de prèp (0 = escantidas, pas pus causiblas)
+export const aTenchas = (z) => clamp((Z.TENCHAS_1 - z) / (Z.TENCHAS_1 - Z.TENCHAS_0));
 export const aDetalh = (n, z) => easeS(clamp((z - n.z500) / (n.z300 - n.z500)));

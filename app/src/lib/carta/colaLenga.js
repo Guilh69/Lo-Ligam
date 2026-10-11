@@ -9,7 +9,7 @@
 //
 // Una còla per lenga, dins son pan (entre los dialèctes occitans, 300, e las
 // jaces tematicas, 320) ; las donadas se cargan sonque quand la jaça s'aluca.
-import { nivèlsDezoom as nivèlsComuns, aDialectes, aDetalh, zDès } from './escalas.js';
+import { nivèlsDezoom as nivèlsComuns, aDialectes, aDetalh, zDès, aTenchas as tenchasDePrèp } from './escalas.js';
 import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
 import { telaNoms } from './etiquetasVivas.js';
@@ -320,13 +320,20 @@ export function crearColaLenga(
 		/* ---------- Survòl e causida ---------- */
 		_interactiu() {
 			if (!this._actiu || !this._geo?.zonas) return false;
+			// (de prèp, las tenchas son escantidas : pas pus de causida)
+			if (tenchasDePrèp(this._zoom) < 0.5) return false;
 			return !(this._nivèls && aDialectes(this._nivèls, this._zoom) < 0.5);
+		},
+		// Lo dialècte d'un ponch, quitament de prèp : l'etiqueta al dessús de
+		// l'escala (retorn de Romain, 2026-10-11)
+		dialècteA(lp) {
+			return this._nomDe(this.zonaA(lp, true, true));
 		},
 		// La zòna jos un ponch : una zòna a despart causida (la Catalonha del
 		// Nòrd), puèi los dialèctes ; res defòra del domeni
-		zonaA(lp, ambTrans = false) {
+		zonaA(lp, ambTrans = false, totjorn = false) {
 			const G = this._geo;
-			if (!this._interactiu()) return null;
+			if (totjorn ? !this._actiu || !G?.zonas || !this._min : !this._interactiu()) return null;
 			if (this._franca) {
 				const ll = this._map.layerPointToLatLng(lp);
 				if (!dinsFranca(ll.lat, ll.lng)) return null;
@@ -808,7 +815,7 @@ export function crearColaLenga(
 			const nv = this._nivèls ?? nivèlsDezoom(this._map),
 				R = this._rel ?? {},
 				aDet = R.det?.v ?? aDetalh(nv, z),
-				aTenchas0 = clamp((13 - z) / 1.5),
+				aTenchas0 = tenchasDePrèp(z),
 				aFront = dossa(clamp((13 - z) / 2)) * aDet;
 			// u : 0 los dialèctes, 1 la lenga unida (relais dins lo temps). Cap a
 			// la lenga unida, la mescla : los dialèctes se fondon e prenon sa color.
