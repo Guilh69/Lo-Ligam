@@ -816,18 +816,51 @@
 	// estelada (la part francesa sola dins lo mòde). Lor populacion es pas
 	// coneguda : estimada d'aprèp lor reng.
 	const POP_RENC = { 1: 100000, 2: 30000, 3: 8000, 4: 2500 };
+	// (e totas las comunas que lor nom dins la lenga es conegut, amb lor
+	// populacion : la meteissa règla d'aparicion pertot ; SIG/cadena/noms-lengas.py)
+	let nomsLengas = null;
+	function cargarNomsLengas() {
+		if (nomsLengas) return;
+		nomsLengas = { lengas: [], c: [] };
+		fetch('/data/comunas/noms-lengas.json')
+			.then((r) => (r.ok ? r.json() : null))
+			.then((d) => {
+				if (d?.c) nomsLengas = d;
+				// (la font, dins lo panèl « Fonts », rengada amb sas parèlhas)
+				if (d?.font) map?.attributionControl?.addAttribution(d.font);
+				motorNoms?.tornarPintar();
+			})
+			.catch(() => {});
+	}
 	let listaNoms = [],
 		clauNoms = '';
 	function nomsDeLaCarta() {
-		const fs = JACES_LENGAS.filter((id) => visibility[id])
-			.map((id) => [id, fonsDe(id)])
-			.filter(([, f]) => f?.vilas?.length);
-		const clau = (nomsComunas?.length ?? 0) + '|' + fs.map(([id, f]) => id + f.vilas.length).join(',');
+		const ids = JACES_LENGAS.filter((id) => visibility[id]);
+		if (ids.length) cargarNomsLengas();
+		const fs = ids.map((id) => [id, fonsDe(id)]).filter(([, f]) => f?.vilas?.length);
+		const clau = [
+			nomsComunas?.length ?? 0,
+			nomsLengas?.c.length ?? 0,
+			ids.map((id) => id + (nomésFrança(id) ? '·fr' : '')).join(','),
+			fs.map(([id, f]) => id + f.vilas.length).join(','),
+			francaCargada()
+		].join('|');
 		if (clau !== clauNoms) {
 			clauNoms = clau;
+			const dins = new Set(ids);
+			// (una vila de la tièra es ja nomenada : pas un segond nom al meteis luòc,
+			// Èx-los-Bens e Ésse per Aix-les-Bains)
+			const vilas = fs.flatMap(([, f]) => f.vilas);
+			const nomenada = (c) => vilas.some((v) => Math.abs(v.lat - c.lat) < 0.02 && Math.abs(v.lon - c.lon) < 0.028);
+			// (la part francesa sola dins lo mòde, coma la carta estelada)
+			const comunasLengas = (nomsLengas?.c ?? [])
+				.map(([nom, lon, lat, pop, i]) => ({ id: nomsLengas.lengas[i], nom, lon, lat, pop }))
+				.filter((c) => dins.has(c.id) && !(nomésFrança(c.id) && francaCargada() && !dinsFranca(c.lat, c.lon)) && !nomenada(c))
+				.map((c) => ({ fr: c.nom, oc: c.nom, lon: c.lon, lat: c.lat, renc: 4, pop: c.pop ?? 1000, dep: c.id }));
 			listaNoms = [
 				...(nomsComunas ?? []),
-				...fs.flatMap(([id, f]) => f.vilas.map((v) => ({ fr: v.nom, oc: v.nom, lon: v.lon, lat: v.lat, renc: v.renc ?? 4, pop: POP_RENC[v.renc] ?? 2500, dep: id })))
+				...fs.flatMap(([id, f]) => f.vilas.map((v) => ({ fr: v.nom, oc: v.nom, lon: v.lon, lat: v.lat, renc: v.renc ?? 4, pop: POP_RENC[v.renc] ?? 2500, dep: id }))),
+				...comunasLengas
 			];
 		}
 		return listaNoms;
