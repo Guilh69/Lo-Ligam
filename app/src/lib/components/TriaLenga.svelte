@@ -50,7 +50,7 @@
 	// cadran e camembèrt : la lenga k es a l'angle 90° + k·pas (90° = en bas)
 	const angle = (k) => ((90 + k * pas) * Math.PI) / 180;
 	// l'anèl : mièja talha, rais de las parts e dels emblèmas, talha d'un emblèma
-	const G = $derived(varianta === 'd' ? { m: 42, r1: 26, r2: 32, rb: 29, b: 22, pop: 2.5 } : { m: 40, r1: 22, r2: 37, rb: 29.5, b: 18, pop: 3.5 });
+	const G = $derived(varianta === 'd' ? { m: 34, r1: 21, r2: 26, rb: 23.5, b: 18, pop: 2 } : { m: 40, r1: 22, r2: 37, rb: 29.5, b: 18, pop: 3.5 });
 
 	// las colors de las parts del camembèrt
 	const COLOR = { oc: '#d9a441', fr: '#4d6fd6', eu: '#2e9e5b', ca: '#e0b021', br: '#b9b9b9', frp: '#3fae6a', als: '#d9534f', co: '#c9c9c9', lb: '#5aa0d8', vls: '#e2c14a', nl: '#e8873a', pcd: '#8fb35a', wa: '#e3c03a', nrm: '#d65a4a' };
@@ -348,18 +348,19 @@
 			0 0 0 1.5px var(--t-aur),
 			0 0 10px color-mix(in srgb, var(--t-aur) 55%, transparent);
 	}
+	/* (lo còdi sol al centre : pas de disc dessús los emblèmas, retorn de Romain) */
 	.v-d .centre {
-		inset: 18px;
-		border-radius: 50%;
-		background: radial-gradient(circle, color-mix(in srgb, var(--t-fons) 75%, transparent) 55%, transparent 75%);
-		font-size: 0.875rem;
+		font-size: 0.75rem;
 		letter-spacing: 0.02em;
 	}
+	/* (la sageta un pauc mai luènh de l'emblèma causit) */
 	.v-d .osca {
-		bottom: -9px;
+		bottom: -11px;
+		border-width: 4px 4.5px;
+		border-bottom-color: var(--t-aur);
 	}
 	.v-d .nom-lenga {
-		margin-top: 7px;
+		margin-top: 10px;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
