@@ -24,7 +24,9 @@ Tout est en ligne sur `master` (site pas encore public). Dernier commit de la s�
 12. Choix de la langue : après plusieurs essais (cadran, boussole, manège, roue, onglets), **les emblèmes seuls**, posés au-dessus du coin haut gauche de la fiche ; la langue choisie pilote toute la fiche ; changement par une **révélation** en cercle depuis l'emblème cliqué (transition de vue, `app/src/app.css`), clic sonore.
 13. **Règle des langues** : langues du lieu (langue régionale, puis l'occitan dans son domaine), puis l'occitan, puis la langue du site ; seulement celles qui ont un article. Site en occitan : ville occitane = occitan seul ; autre langue régionale = elle, puis l'occitan. Autres langues du site à venir (anglais, espagnol, catalan, allemand, italien…) : `TÈXTES` et `LENGAS` dans `FichaComuna.svelte`, paramètre `s=` du serveur.
 
-**Question ouverte (Romain hésite) : le site en français.**
+**Décidé ensuite (2026-10-11) : le site en français.** La fiche s'ouvre en français (puis la langue du lieu, puis l'occitan). Sur la carte, deux lignes par ville : essai en cours entre « français, occitan dessous » et « occitan, français dessous » (sélecteur « Essai des noms », `ensagNoms` dans `CartaOccitania.svelte`, `setNomsDobles` dans `colaEstelas.js`). Les communes des autres langues n'ont pas encore leur nom français dans `noms-lengas.json` (le nom officiel existe dans `SIG/cadena/noms-lengas.py` : à exporter) ; même chose pour les villes des autres langues (`vilas` des `<lenga>.json`).
+
+*Pour mémoire, la question telle qu'elle était posée :*
 - A. Langue du lieu d'abord, comme en occitan (Bayonne s'ouvre en basque, Montpelhièr en occitan ; le français est proposé). Ce qui distingue la carte de Google Maps ; cohérent avec les noms sur la carte, déjà dans la langue du lieu. *C'est le fonctionnement actuel.*
 - B. Le français d'abord, l'occitan derrière (et la langue du lieu proposée).
 - Recommandation de Claude : A, en retenant le choix du visiteur (s'il choisit le français une fois, les fiches suivantes s'ouvrent en français) ; à décider aussi : les noms sur la carte elle-même en interface française.
