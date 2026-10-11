@@ -4,6 +4,7 @@
 	import { crearDonadasLengas } from '$lib/carta/donadasLengas.js';
 	import { zoomDoç } from '$lib/carta/zoomDoc.js';
 	import { crearNomsComunas } from '$lib/carta/nomsComunas.js';
+	import { contornComuna } from '$lib/carta/contornComuna.js';
 	import { fly } from 'svelte/transition';
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
@@ -868,14 +869,46 @@
 	// La comuna causida : son nom en aur, l'onda daurada, e la carta i vòla, a
 	// una escala segon sa talha (de 7 km per una metropòla a 1 km per un
 	// vilatge), sens jamai se recuolar
-	function anarALaComuna(c) {
-		map.closePopup();
+	// La susfàcia de la comuna tanben (retorn de Romain, 2026-10-11 : « il faut
+	// que ça sélectionne la surface de la ville ») : son contorn en aur, un
+	// fons leugièr ; la carta la mòstra tota (contornComuna.js ; sonque dins
+	// lo domeni occitan, ont son los contorns)
+	let contornCausit = null,
+		comunaCausida = null;
+	function causirNomComuna(c) {
 		motorNoms?.causir(c);
-		const km = c.renc === 1 ? 7 : c.renc === 2 ? 5 : c.renc === 3 ? 3 : c.pop >= 3000 ? 2 : 1;
-		const z = Math.min(15, Math.max(map.getZoom(), zCran(km, c.lat)));
-		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-		map.flyTo([c.lat, c.lon], z, { duration: calm ? 0 : 1.2 });
+		comunaCausida = c;
+		contornCausit?.remove();
+		contornCausit = null;
+	}
+	async function anarALaComuna(c) {
+		map.closePopup();
+		causirNomComuna(c);
 		colaEstelas?.senhalar(c.lat, c.lon);
+		// (lo contorn, se ven pro lèu ; si que non la carta part sens el)
+		const f = await Promise.race([contornComuna(c.lat, c.lon), new Promise((r) => setTimeout(() => r(null), 450))]);
+		if (comunaCausida !== c || !map) return;
+		const km = c.renc === 1 ? 7 : c.renc === 2 ? 5 : c.renc === 3 ? 3 : c.pop >= 3000 ? 2 : 1;
+		let z = Math.min(15, Math.max(map.getZoom(), zCran(km, c.lat))),
+			centre = L.latLng(c.lat, c.lon);
+		const pintar = (f) => {
+			if (!f || comunaCausida !== c || !map) return null;
+			if (!map.getPane('comunaCausida')) map.createPane('comunaCausida').style.zIndex = '345';
+			contornCausit = L.polygon(
+				f.poligons.map((p) => p.map((a) => a.map(([x, y]) => [y, x]))),
+				{ pane: 'comunaCausida', className: 'comuna-causida', color: '#f3c25a', weight: 2, opacity: 0.95, fillColor: '#f3c25a', fillOpacity: 0.1, interactive: false }
+			).addTo(map);
+			return contornCausit.getBounds();
+		};
+		const b = pintar(f);
+		if (b) {
+			// (tota la comuna dins la vista, al mai prèp de l'escala de sa talha)
+			z = Math.min(z, map.getBoundsZoom(b, false, L.point(140, 140)));
+			centre = b.getCenter();
+		}
+		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		map.flyTo(centre, z, { duration: calm ? 0 : 1.2 });
+		if (!f) contornComuna(c.lat, c.lon).then(pintar);
 	}
 	// (los noms se cargan quand cal ; lo motor se torna pintar)
 	function majNomsComunas() {
@@ -1380,7 +1413,7 @@
 					// (la fin d'un lisament de la carta es pas un clic)
 					if (map.dragging?.moved()) return;
 					const c = nomA(e);
-					if (!c) return void motorNoms?.causir(null);
+					if (!c) return void causirNomComuna(null);
 					e.stopImmediatePropagation();
 					e.preventDefault();
 					anarALaComuna(c);
@@ -1390,7 +1423,7 @@
 			// (lo doble clic sus un nom fa pas lo zoom de la carta per dessús)
 			cont.addEventListener('dblclick', (e) => nomA(e) && (e.stopImmediatePropagation(), e.preventDefault()), true);
 			cont.addEventListener('mousemove', (e) => cont.classList.toggle('sus-nom', !!nomA(e)), true);
-			addEventListener('keydown', (e) => e.key === 'Escape' && motorNoms?.causir(null));
+			addEventListener('keydown', (e) => e.key === 'Escape' && causirNomComuna(null));
 		}
 		map.on('moveend', majNomsComunas);
 		map.on('moveend layeradd layerremove', programarDegatjament);
@@ -2943,6 +2976,20 @@
 	   un nom se pòt causir : la man al survòl */
 	.carta:global(.sus-nom) {
 		cursor: pointer !important;
+	}
+	/* la comuna causida : son contorn arriba en fondut */
+	.carta :global(.comuna-causida) {
+		animation: comuna-ven 0.45s ease both;
+	}
+	@keyframes comuna-ven {
+		from {
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.carta :global(.comuna-causida) {
+			animation: none;
+		}
 	}
 
 	.carta :global(.oc-label-town) {

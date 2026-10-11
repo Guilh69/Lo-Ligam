@@ -102,7 +102,7 @@ const promesas = {};
 const cargar = (url) => (promesas[url] ??= cargarJson(url));
 
 // TopoJSON → [{ props, poligons: [[anel [[lon, lat], …], …], …] }]
-function decodarTopo(topo, nom) {
+export function decodarTopo(topo, nom) {
 	const t = topo.transform;
 	const arcs = topo.arcs.map((arc) => {
 		if (!t) return arc;
