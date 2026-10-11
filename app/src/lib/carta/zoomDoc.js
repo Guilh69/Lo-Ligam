@@ -13,7 +13,7 @@
 
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-export function zoomDoç(L, map, { pxPerNivèl = 260, doçor = 0.2 } = {}) {
+export function zoomDoç(L, map, { pxPerNivèl = 220, doçor = 0.3 } = {}) {
 	const cont = map.getContainer();
 	let cibla = null,
 		últim = null,
