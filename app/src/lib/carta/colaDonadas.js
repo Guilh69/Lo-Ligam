@@ -414,7 +414,7 @@ export function crearColaDonadas(
 		// lo temps, pas amb lo zoom (coma las estelas e las tuèlas). Cap a
 		// l'Occitània unida, los dialèctes se mesclan (s'enfoscan e rogejan)
 		// fins al roge unit ; cap als dialèctes, tornan coma a l'entrada en
-		// scèna, en fuòc d'artifici, e lors limits se traçan una a una.
+		// scèna, en fuòc d'artifici (las limits lusisson ont las tacas se tòcan).
 		_majUni() {
 			const n = this._nivèls;
 			if (!n) return;
@@ -1179,27 +1179,9 @@ export function crearColaDonadas(
 				cx.fillRect(0, 0, this._cv.width, this._cv.height);
 				cx.restore();
 			}
-			// lo balet : las limits dels dialèctes se traçan una a una, de lor
-			// color, puèi s'esvanisson dins lo fondut
-			if (balet && J.dialectes && G.zonas) {
-				const q = qUni;
-				cx.save();
-				cx.lineJoin = 'round';
-				cx.lineCap = 'round';
-				cx.lineWidth = 0.9;
-				G.zonas.forEach((zn, i) => {
-					if (this._sels.some((k) => k !== 'cro') && !this._sels.includes(zn.kod)) return;
-					const pz = clamp((q - 0.04 - i * 0.15) / 0.22);
-					if (pz <= 0 || pz >= 1) return;
-					const [x0, y0, x1, y1] = zn.bbox,
-						L = (x1 - x0 + y1 - y0) * 3.2;
-					cx.setLineDash([L * easeS(clamp(pz / 0.65)), L]);
-					cx.strokeStyle = T.dial[zn.kod] ?? T.lenga;
-					cx.globalAlpha = Math.sin(Math.PI * pz) * 0.9;
-					cx.stroke(zn.c);
-				});
-				cx.restore();
-			}
+			// (lo balet traçava puèi las limits dels dialèctes una a una : arribavan
+			// en retard, « pas naturel, un peu chaotique » (Romain, 2026-10-12) ;
+			// las limits lusisson ara amb las tacas, ont se tòcan : _introDial)
 
 			/* Zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes */
 			if (G.mix) {
