@@ -16,6 +16,7 @@ const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 export function zoomDoç(L, map, { pxPerNivèl = 220, doçor = 0.3 } = {}) {
 	const cont = map.getContainer();
 	let cibla = null,
+		vòl = false,
 		últim = null,
 		ancòra = null,
 		raf = 0,
@@ -24,8 +25,10 @@ export function zoomDoç(L, map, { pxPerNivèl = 220, doçor = 0.3 } = {}) {
 
 	function començar() {
 		if (cibla != null) return;
-		// (_stop : arrèsta un vòl sens tornar plaçar la vista, coma stop() o fa)
+		// (_stop : arrèsta un vòl sens tornar plaçar la vista, coma stop() o fa ;
+		// lo gèst de l'internauta pren la man)
 		map._stop();
+		vòl = false;
 		cibla = map.getZoom();
 		últim = cibla;
 		map._moveStart(true, false);
@@ -35,7 +38,7 @@ export function zoomDoç(L, map, { pxPerNivèl = 220, doçor = 0.3 } = {}) {
 		if (!map._loaded || cibla == null) return;
 		// (un vòl o una vista causida endacòm mai prenon la man)
 		const z = map.getZoom();
-		if (map._flyToFrame || Math.abs(z - últim) > 1e-6) return void ((cibla = null), (ancòra = null));
+		if (vòl || Math.abs(z - últim) > 1e-6) return void ((cibla = null), (ancòra = null));
 		let nz = calm() ? cibla : z + (cibla - z) * doçor;
 		if (Math.abs(cibla - nz) < 0.003) nz = cibla;
 		// lo ponch jos la mirga (o lo centre) demòra al meteis endrech
@@ -101,5 +104,18 @@ export function zoomDoç(L, map, { pxPerNivèl = 220, doçor = 0.3 } = {}) {
 		anar((cibla ?? this._zoom) - delta);
 		return this;
 	};
+	// Un vòl en cors (flyTo, flyToBounds) : lo zoom en cors s'arrèsta. Leaflet
+	// garda lo numèro de la darrièra imatge del vòl (_flyToFrame) sens lo tornar
+	// metre a zèro : provar aquel numèro blocava lo zoom aprèp lo primièr vòl
+	// (retorn de Romain, 2026-10-11 : aprèp la causida d'una comuna, pas pus
+	// de zoom). Un indicador nòstre, levat a la fin del vòl.
+	const volar = map.flyTo.bind(map);
+	map.flyTo = function (...a) {
+		vòl = true;
+		cibla = null;
+		ancòra = null;
+		return volar(...a);
+	};
+	map.on('moveend', () => (vòl = false));
 	return { anar, enCors: () => cibla != null };
 }

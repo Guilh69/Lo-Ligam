@@ -1427,6 +1427,8 @@
 				(e) => {
 					// (la fin d'un lisament de la carta es pas un clic)
 					if (map.dragging?.moved()) return;
+					// (los botons de la carta, la ficha, las fonts : pas un clic sus la carta)
+					if (e.target.closest?.('.leaflet-control-container, .ficha-comuna, .legenda-dial, .fonts-carta')) return;
 					const c = nomA(e);
 					if (!c) return void causirNomComuna(null);
 					e.stopImmediatePropagation();
