@@ -56,6 +56,51 @@ export function sonPapièr(plegar = true) {
 	}
 }
 
+// Un clic de causida (retorn de Romain, 2026-10-11 : « un bruit de clic,
+// un bruit satisfaisant ») : coma un cadran que s'encastra. Un esclat de
+// bruch cort e filtrat (lo clic, sens aguts) e un tòc grèu que davala (lo
+// còrs). fòrça < 1 : un cran leugièr (lo cadran que passa una lenga).
+export function sonClic(fòrça = 1) {
+	if (!sonsActius()) return;
+	try {
+		ctx ??= new (window.AudioContext || window.webkitAudioContext)();
+		if (ctx.state === 'suspended') ctx.resume();
+		const t0 = ctx.currentTime + 0.005,
+			sr = ctx.sampleRate;
+		// lo clic : 25 ms de bruch qu'amortís de lèu
+		const n = Math.floor(sr * 0.025),
+			buf = ctx.createBuffer(1, n, sr),
+			d = buf.getChannelData(0);
+		for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 5);
+		const clic = ctx.createBufferSource();
+		clic.buffer = buf;
+		const bp = ctx.createBiquadFilter();
+		bp.type = 'bandpass';
+		bp.frequency.value = fòrça < 1 ? 3400 : 2600;
+		bp.Q.value = 1.3;
+		const gc = ctx.createGain();
+		gc.gain.value = 0.42 * fòrça;
+		clic.connect(bp).connect(gc).connect(ctx.destination);
+		clic.start(t0);
+		// lo tòc : una nòta grèva que davala, 110 ms
+		if (fòrça >= 0.6) {
+			const o = ctx.createOscillator(),
+				go = ctx.createGain();
+			o.type = 'sine';
+			o.frequency.setValueAtTime(190, t0);
+			o.frequency.exponentialRampToValueAtTime(72, t0 + 0.09);
+			go.gain.setValueAtTime(0.0001, t0);
+			go.gain.exponentialRampToValueAtTime(0.26 * fòrça, t0 + 0.004);
+			go.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.11);
+			o.connect(go).connect(ctx.destination);
+			o.start(t0);
+			o.stop(t0 + 0.13);
+		}
+	} catch {
+		/* sens son, jamai blocant */
+	}
+}
+
 // Los sons de l'entrada en scèna (demanda de Romain), menats pel dessenh
 // meteis (pas per un relòtge fixat a l'avança : lo primièr ensag se
 // descalava de l'animacion) :

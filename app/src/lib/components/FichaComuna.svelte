@@ -6,6 +6,7 @@
 	// /api/comuna (Wikidata e Wikipèdia, relaiats per nòstre servidor).
 	import { fly, slide } from 'svelte/transition';
 	import { VILAS_FICHAS } from '$lib/carta/vilasFichas.js';
+	import TriaLenga from './TriaLenga.svelte';
 
 	let { comuna, contorn = null, lang = 'oc', onTampar = null } = $props();
 
@@ -147,6 +148,38 @@
 	const extrach = $derived(dades?.extrach?.[lt]);
 	const wiki = $derived(dades?.wiki?.[lt]);
 	const nomLenga = (l) => LENGAS[l]?.[fr ? 1 : 0] ?? l;
+
+	// Lo tèxt que cambia de lenga se fond (retorn de Romain, 2026-10-11) : lo
+	// vièlh s'esvanís en se trebolant, lo nòu ven ; l'encastre pren sa nauta
+	// en doçor (los dos son l'un sus l'autre lo temps del fondut)
+	const fondut = (_n, { entra }) => ({
+		duration: entra ? 380 : 220,
+		delay: entra ? 110 : 0,
+		easing: (t) => 1 - Math.pow(1 - t, 3),
+		css: (t) => `opacity: ${t}; filter: blur(${((1 - t) * 4).toFixed(2)}px); transform: translateY(${((1 - t) * (entra ? 6 : -6)).toFixed(2)}px)`
+	});
+	let hTèxt = $state(null);
+	function mesurar(el) {
+		const ro = new ResizeObserver(() => (hTèxt = el.offsetHeight));
+		ro.observe(el);
+		return () => ro.disconnect();
+	}
+	$effect(() => {
+		if (!extrach) hTèxt = 0;
+	});
+	// ENSAG (a levar quand Romain aurà causit) : la prepausa de tria de la lenga
+	let varianta = $state('a');
+	$effect(() => {
+		try {
+			varianta = localStorage.getItem('lo-ligam-ensag-tria-lenga') ?? 'a';
+		} catch {}
+	});
+	function causirVarianta(v) {
+		varianta = v;
+		try {
+			localStorage.setItem('lo-ligam-ensag-tria-lenga', v);
+		} catch {}
+	}
 	// lo còdi de la lenga, coma lo boton Òc / Fr del site
 	const còdi = (l) => (l === 'oc' ? 'Òc' : l[0].toUpperCase() + l.slice(1));
 
@@ -203,21 +236,34 @@
 		{#if dades && dobèrta}
 			<div class="mai" transition:slide={{ duration: 240 }}>
 			{#if lenguasTèxt.length > 1}
-				<!-- coma lo boton Òc / Fr del site, discret, a drecha del tèxt (retorn de Romain) -->
-				<div class="lenguas" role="radiogroup" aria-label={fr ? 'Langue du texte' : 'Lenga del tèxt'} title={fr ? 'Langue du texte' : 'Lenga del tèxt'}>
-					<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-						><path d="M4 5h7" /><path d="M9 3v2c0 4.418 -2.239 8 -5 8" /><path d="M5 9c0 2.144 2.952 3.908 6.7 4" /><path d="M12 20l4 -9l4 9" /><path
-							d="M19.1 18h-6.2"
-						/></svg
-					>
-					{#each lenguasTèxt as l (l)}
-						<button type="button" role="radio" aria-checked={l === lt} aria-label={nomLenga(l)} title={nomLenga(l)} onclick={() => (lenguaCausida = l)}
-							>{còdi(l)}</button
-						>
+				<!-- ENSAG (a levar quand Romain aurà causit) : las tres prepausas -->
+				<div class="ensag" role="group" aria-label="Essai">
+					<span>Essai</span>
+					{#each [['a', 'Cadran'], ['b', 'Colonne'], ['c', 'Camembert']] as [v, n] (v)}
+						<button type="button" aria-pressed={varianta === v} onclick={() => causirVarianta(v)}>{v.toUpperCase()} · {n}</button>
 					{/each}
 				</div>
 			{/if}
-			{#if extrach}<p class="extrach" lang={lt}>{extrach}</p>{/if}
+			<div class="cors-tèxt">
+				<div class="pila" style:height={hTèxt == null ? null : hTèxt + 'px'}>
+					{#if extrach}
+						{#key lt}
+							<p class="extrach" lang={lt} in:fondut={{ entra: true }} out:fondut={{ entra: false }} {@attach mesurar}>{extrach}</p>
+						{/key}
+					{/if}
+				</div>
+				{#if lenguasTèxt.length > 1}
+					<TriaLenga
+						lenguas={lenguasTèxt}
+						causida={lt}
+						onCausir={(l) => (lenguaCausida = l)}
+						{varianta}
+						{nomLenga}
+						{còdi}
+						etiqueta={fr ? 'Langue du texte' : 'Lenga del tèxt'}
+					/>
+				{/if}
+			</div>
 			<footer>
 				{#if fichaSite}
 					{#if fichaSite.ligam}<a class="site" href={fichaSite.ligam}>{fr ? 'Découvrir la ville' : 'Descobrir la vila'} →</a>
@@ -319,49 +365,51 @@
 		font-weight: 700;
 		color: color-mix(in srgb, var(--t-aur-clar) 70%, var(--t-tinta-2));
 	}
-	/* (flotant a drecha del tèxt : pas una linha de mai) */
-	.lenguas {
-		float: right;
-		display: inline-flex;
+	/* lo tèxt a esquèrra, lo tria de la lenga a drecha */
+	.cors-tèxt {
+		display: flex;
+		align-items: flex-start;
+		gap: 14px;
+		margin-top: 10px;
+	}
+	.pila {
+		flex: 1;
+		min-width: 0;
+		display: grid;
+		overflow: hidden;
+		transition: height 0.38s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+	.pila > :global(*) {
+		grid-area: 1 / 1;
+	}
+	/* ENSAG (a levar quand Romain aurà causit) */
+	.ensag {
+		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
-		gap: 1px;
-		margin: 10px 0 6px 12px;
-		padding: 2px 2px 2px 7px;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
+		gap: 4px;
+		margin-top: 10px;
+		padding: 4px 6px;
+		border: 1px dashed var(--t-linha);
+		border-radius: 8px;
+		font: 600 0.6875rem/1.2 var(--font-body);
+		color: var(--t-tinta-2);
 	}
-	.lenguas .ic {
-		width: 13px;
-		height: 13px;
-		margin-right: 3px;
-		fill: none;
-		stroke: var(--t-tinta-2);
-		stroke-width: 1.8;
-		stroke-linecap: round;
-		stroke-linejoin: round;
+	.ensag span {
+		margin-right: 4px;
 	}
-	.lenguas button {
-		padding: 2px 7px;
-		border: 0;
+	.ensag button {
+		padding: 2px 8px;
+		border: 1px solid transparent;
 		border-radius: 999px;
 		background: none;
-		color: var(--t-tinta-2);
-		font: 700 0.6875rem/1.2 var(--font-body);
+		color: inherit;
+		font: inherit;
 		cursor: pointer;
-		transition:
-			background 0.3s ease,
-			color 0.3s ease;
 	}
-	.lenguas button:hover {
-		color: var(--t-tinta);
-	}
-	.lenguas button[aria-checked='true'] {
-		background: var(--t-tinta);
-		color: var(--t-fons);
-	}
-	.lenguas button:focus-visible {
-		outline: 2px solid var(--t-aur);
-		outline-offset: 1px;
+	.ensag button[aria-pressed='true'] {
+		border-color: var(--t-aur);
+		color: var(--t-aur-clar);
 	}
 	.chifras {
 		margin: 6px 0 0;
@@ -385,12 +433,11 @@
 		vector-effect: non-scaling-stroke;
 	}
 	.extrach {
-		margin: 10px 0 0;
+		margin: 0;
 		font-size: 0.875rem;
 		line-height: 1.5;
 	}
 	footer {
-		clear: both;
 		margin-top: 10px;
 	}
 	.site {
