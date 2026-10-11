@@ -119,12 +119,13 @@
 	.emblemas {
 		display: inline-flex;
 		align-items: flex-end;
-		gap: 7px;
+		gap: 6px;
 		outline: none;
 	}
+	/* (pichons ; lo que n'es pas causit, encara mai pichon : retorn de Romain) */
 	button {
-		width: 24px;
-		height: 24px;
+		width: 17px;
+		height: 17px;
 		padding: 0;
 		border: 0;
 		border-radius: 50%;
@@ -145,8 +146,8 @@
 		transform: translateY(-2px);
 	}
 	button.causida {
-		width: 32px;
-		height: 32px;
+		width: 23px;
+		height: 23px;
 		opacity: 1;
 		box-shadow:
 			0 0 0 2px var(--t-aur),

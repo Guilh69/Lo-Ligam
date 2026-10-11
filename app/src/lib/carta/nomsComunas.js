@@ -56,15 +56,18 @@ export function crearNomsComunas(
 		ordenada = null,
 		listaFont = null;
 
-	// lo nom en imatge : letras claras e alo sorne (coma lo text-shadow d'abans)
+	// lo nom en imatge : letras claras e alo sorne (coma lo text-shadow d'abans) ;
+	// sus lo site en francés, un segond nom en pichon e en italica dejós
+	// (e.sota : retorn de Romain, 2026-10-11)
 	function imatge(c, aur = false) {
 		const cache = aur ? imatgesAur : imatges;
+		const e = estil(c);
 		let im = cache.get(c);
-		if (im && im.dpr === dpr) return im;
-		const e = estil(c),
-			marge = 10,
-			w = Math.ceil(e.w + 2 * marge),
-			h = Math.ceil(e.px * 1.5 + 2 * marge),
+		if (im && im.dpr === dpr && im.clau === e.clau) return im;
+		const marge = 10,
+			hS = e.sota ? e.pxSota * 1.18 : 0,
+			w = Math.ceil(Math.max(e.w, e.sota ? e.wSota : 0) + 2 * marge),
+			h = Math.ceil(e.px * 1.5 + hS + 2 * marge),
 			t = document.createElement('canvas');
 		t.width = Math.ceil(w * dpr);
 		t.height = Math.ceil(h * dpr);
@@ -75,16 +78,28 @@ export function crearNomsComunas(
 		g.textAlign = 'center';
 		g.textBaseline = 'middle';
 		const tx = e.majus ? e.nom.toUpperCase() : e.nom;
+		// (los dos noms, centrats ensemble sul ponch)
+		const y1 = h / 2 - hS / 2,
+			y2 = y1 + e.px * 0.62 + e.pxSota * 0.62;
+		const letras = (s, y) => {
+			g.shadowColor = 'rgba(18, 9, 6, 0.75)';
+			g.shadowBlur = 8 * dpr;
+			g.fillText(s, w / 2, y);
+			g.shadowColor = 'rgba(18, 9, 6, 0.95)';
+			g.shadowBlur = 3 * dpr;
+			g.fillText(s, w / 2, y);
+			g.shadowColor = 'transparent';
+			g.fillText(s, w / 2, y);
+		};
 		g.fillStyle = aur ? '#f3c25a' : '#f5ead8';
-		g.shadowColor = 'rgba(18, 9, 6, 0.75)';
-		g.shadowBlur = 8 * dpr;
-		g.fillText(tx, w / 2, h / 2);
-		g.shadowColor = 'rgba(18, 9, 6, 0.95)';
-		g.shadowBlur = 3 * dpr;
-		g.fillText(tx, w / 2, h / 2);
-		g.shadowColor = 'transparent';
-		g.fillText(tx, w / 2, h / 2);
-		im = { t, w, h, bw: e.w + 6, bh: e.px * 1.24, dpr };
+		letras(tx, y1);
+		if (e.sota) {
+			g.font = e.fontSota;
+			if ('letterSpacing' in g) g.letterSpacing = '0px';
+			g.fillStyle = aur ? '#f6d68c' : 'rgba(240, 228, 208, 0.9)';
+			letras(e.sota, y2);
+		}
+		im = { t, w, h, bw: Math.max(e.w, e.sota ? e.wSota : 0) + 6, bh: e.px * 1.24 + hS, dpr, clau: e.clau };
 		cache.set(c, im);
 		return im;
 	}

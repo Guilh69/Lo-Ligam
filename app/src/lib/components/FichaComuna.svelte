@@ -189,11 +189,13 @@
 	//   - site en occitan : una vila occitana a pas que l'occitan (cap de
 	//     revirada) ; una vila d'una autra lenga, sa lenga, puèi l'occitan ;
 	//   - site en francés (deman en anglés, espanhòl, catalan…) : la lenga del
-	//     site s'apond a la fin.
-	// Per defaut, la primièra : la lenga del luòc. (Pel site en francés, l'òrdre
-	// es encara a decidir : revisions/2026-10-11-fichas-comunas.md.)
+	//     site d'en primièr (« beaucoup de francophones sont paniqués dès
+	//     qu'ils ne comprennent pas »), puèi la lenga del luòc e l'occitan.
+	// Per defaut, la primièra.
 	const lenguasTèxt = $derived(
-		dades ? [...(dades.locals ?? []), 'oc', lang].filter((l, k, a) => l && a.indexOf(l) === k && (dades.extrach?.[l] || dades.wiki?.[l])) : []
+		dades
+			? [...(lang === 'oc' ? [] : [lang]), ...(dades.locals ?? []), 'oc'].filter((l, k, a) => l && a.indexOf(l) === k && (dades.extrach?.[l] || dades.wiki?.[l]))
+			: []
 	);
 	const lt = $derived(lenguasTèxt.includes(lenguaCausida) ? lenguaCausida : lenguasTèxt[0]);
 	// La lenga causida mena tota la ficha : lo nom, lo tèxt, lo ligam, e los
@@ -360,11 +362,11 @@
 		position: absolute;
 		z-index: 2;
 		left: 14px;
-		top: -17px;
+		top: -12px;
 		view-transition-name: ficha-emblemas;
 	}
 	.cara.amb-emblemas {
-		padding-top: 24px;
+		padding-top: 20px;
 	}
 	/* la cascada : los elements tornan un a un */
 	.cara.cascada :is(h2, .chifras, .gentilici, .desplegar, .extrach, footer) {

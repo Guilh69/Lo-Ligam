@@ -20,6 +20,7 @@ import { proj0, projectar, projPonch } from './projeccion.js';
 import { Z, KM, zDès, nivèlsDezoom, aDetalh } from './escalas.js';
 import { emprèsa } from './centrar.js';
 import { EtiquetasVivas } from './etiquetasVivas.js';
+import { NOMS_FRANCES } from './nomsFrances.js';
 
 // Lo repèr d'una vila qu'a sa ficha : la crotz de Lo Ligam sus un disc sorne
 // liserat d'aur, e una onda que s'espandís doçament, coma un ponch d'interès
@@ -338,6 +339,9 @@ const aplicarVila = (g, renc, f, nom) => {
 	if ('letterSpacing' in g) g.letterSpacing = e.esp.toFixed(2) + 'px';
 	return e.majus ? nom.toUpperCase() : nom;
 };
+// lo segond nom d'una vila (site en francés), en pichon e en italica dejós
+const polissaSota = (f) => `italic 500 ${Math.max(9.5, Math.round(f * 0.8 * 2) / 2)}px "Cormorant Garamond", Georgia, serif`;
+const nautSota = (f) => Math.max(9.5, f * 0.8) * 1.12;
 const sensEspaci = (g) => {
 	if ('letterSpacing' in g) g.letterSpacing = '0px';
 };
@@ -435,10 +439,19 @@ function plaçar(cx, vilas, rius, ambNomsRius = true) {
 	// Ordre : villes, puis noms de rivières, puis villages dans la place qui reste
 	const pausarVila = (v) => {
 		const k = v.f / 12,
-			w = cx.measureText(aplicarVila(cx, v.renc, v.f, v.nom)).width,
+			w1 = cx.measureText(aplicarVila(cx, v.renc, v.f, v.t1 ?? v.nom)).width,
 			x = v.x,
 			y = v.y;
-		const cand = [
+		// (lo segond nom : la bóstia s'alonga cap aval, o lo blòt monta quand es al dessús del ponch)
+		let w2 = 0;
+		if (v.t2) {
+			sensEspaci(cx);
+			cx.font = polissaSota(v.f);
+			w2 = cx.measureText(v.t2).width;
+		}
+		const w = Math.max(w1, w2),
+			hS = v.t2 ? nautSota(v.f) : 0;
+		const cand0 = [
 			{ x: x + 7 * k, y: y + 4 * k, al: 'left', b: [x + 5 * k, y - 8 * k, x + 9 * k + w, y + 7 * k], bonus: 0 },
 			{ x: x - 7 * k, y: y + 4 * k, al: 'right', b: [x - 9 * k - w, y - 8 * k, x - 5 * k, y + 7 * k], bonus: 0.4 },
 			{ x, y: y - 9 * k, al: 'center', b: [x - w / 2 - 2, y - 21 * k, x + w / 2 + 2, y - 5 * k], bonus: 0.6 },
@@ -448,6 +461,7 @@ function plaçar(cx, vilas, rius, ambNomsRius = true) {
 			{ x: x - 5 * k, y: y - 7 * k, al: 'right', b: [x - 7 * k - w, y - 19 * k, x - 3 * k, y - 4 * k], bonus: 1.2 },
 			{ x: x - 5 * k, y: y + 15 * k, al: 'right', b: [x - 7 * k - w, y + 3 * k, x - 3 * k, y + 18 * k], bonus: 1.2 }
 		];
+		const cand = cand0.map((q) => (q.y < y ? { ...q, y: q.y - hS, b: [q.b[0], q.b[1] - hS, q.b[2], q.b[3]] } : { ...q, b: [q.b[0], q.b[1], q.b[2], q.b[3] + hS] }));
 		let c = cand[0],
 			mendre = Infinity;
 		// Las vilas grandas e las vilas repèrs : lo nom a drecha del ponch,
@@ -470,7 +484,7 @@ function plaçar(cx, vilas, rius, ambNomsRius = true) {
 		sensEspaci(cx);
 		if (mendre >= 100) return; // pas de place : le nom reste visible au survol
 		metre(c.b, 5, 'etiqueta');
-		res.vilas.push({ nom: v.nom, x: c.x, y: c.y, al: c.al, f: v.f, ciutat: v.ciutat, renc: v.renc, e: v.e });
+		res.vilas.push({ nom: v.nom, t1: v.t1, t2: v.t2, hS, x: c.x, y: c.y, al: c.al, f: v.f, ciutat: v.ciutat, renc: v.renc, e: v.e });
 	};
 	for (const v of vilas) if (v.ciutat) pausarVila(v);
 
@@ -777,6 +791,22 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		setLenga(l) {
 			this._lang = l;
 		},
+		// Sul site en francés, lo nom francés de la vila tanben, en pichon e en
+		// italica jos l'autre (retorn de Romain, 2026-10-11 : « beaucoup de
+		// francophones sont paniqués dès qu'ils ne comprennent pas ») : 'fr' =
+		// lo francés d'en primièr, 'oc' = l'occitan d'en primièr, null =
+		// l'occitan sol (site en occitan)
+		setNomsDobles(mòde) {
+			if (this._dobles === mòde) return;
+			this._dobles = mòde;
+			this._zP = null;
+			if (this._map) this._update();
+		},
+		_tèxtesVila(nom) {
+			const fr = this._dobles ? NOMS_FRANCES[nom] : null;
+			if (!fr || fr.toLowerCase() === nom.toLowerCase()) return { t1: nom, t2: null };
+			return this._dobles === 'fr' ? { t1: fr, t2: nom } : { t1: nom, t2: fr };
+		},
 
 		setTema(c, d) {
 			this._temaBasa = [c, d];
@@ -825,9 +855,14 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				g.save();
 				if ('letterSpacing' in g) g.letterSpacing = '0px';
 				const cs = pl.vilas.map((v) => {
-					const w = g.measureText(aplicarVila(g, v.renc, v.f, v.nom)).width,
-						x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
-					return [x0 - 2, v.y - v.f, x0 + w + 2, v.y + v.f * 0.3];
+					let w = g.measureText(aplicarVila(g, v.renc, v.f, v.t1 ?? v.nom)).width;
+					if (v.t2) {
+						sensEspaci(g);
+						g.font = polissaSota(v.f);
+						w = Math.max(w, g.measureText(v.t2).width);
+					}
+					const x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
+					return [x0 - 2, v.y - v.f, x0 + w + 2, v.y + v.f * 0.3 + (v.hS ?? 0)];
 				});
 				// los ponches de las vilas visiblas (VIVAROAUPENC tombava sus Gap) ;
 				// las icònas de las jaces s'i estacan (ponchs)
@@ -1253,7 +1288,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const vilas = this._estelas
 				.filter((e) => e.visNom || (e.tNomEsc != null && ara - e.tNomEsc < ESC_LUÒC))
 				.sort((a, b) => renc(a) - renc(b) || rang(a.nom) - rang(b.nom))
-				.map((e) => ({ nom: e.nom, x: e.X, y: e.Y, f: talhas[renc(e)], ciutat: renc(e) <= 2, renc: renc(e), e }));
+				.map((e) => ({ nom: e.nom, ...this._tèxtesVila(e.nom), x: e.X, y: e.Y, f: talhas[renc(e)], ciutat: renc(e) <= 2, renc: renc(e), e }));
 			return plaçar(this._cx, vilas, this._rius, !!this._el.nomsRius);
 		},
 
@@ -1319,7 +1354,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				const aN = aNomLuòc(v.e, ara) * (nomsOff ? 1 - easeS(clamp(((ara - this._tNomsOff) / 1000 - (v.e ? retardLuòc(v.e) * 0.35 : 0)) / 0.45)) : 1);
 				if (v.e && (v.e.visNom ? aN < 1 && v.e.tNom != null : aN > 0)) enCamin = true;
 				if (aN < 0.01) continue;
-				const tv = aplicarVila(g, v.renc, v.f, v.nom);
+				const tv = aplicarVila(g, v.renc, v.f, v.t1 ?? v.nom);
 				// distance du lieu survolé au TEXTE (sa boîte), pas à son point d'ancrage
 				let aprèp = false;
 				if (p) {
@@ -1338,6 +1373,16 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				g.fillText(tv, v.x, v.y);
 				g.shadowBlur = 0;
 				g.fillText(tv, v.x, v.y);
+				if (v.t2) {
+					sensEspaci(g);
+					g.font = polissaSota(v.f);
+					g.globalAlpha *= 0.92;
+					g.shadowBlur = 3 + v.f * 0.3;
+					g.fillText(v.t2, v.x, v.y + v.hS);
+					g.fillText(v.t2, v.x, v.y + v.hS);
+					g.shadowBlur = 0;
+					g.fillText(v.t2, v.x, v.y + v.hS);
+				}
 			}
 			this._viv.acabar();
 			this._viv.pintar(g, 1, 1, true);
