@@ -6,6 +6,7 @@ Stock de designs récupérés depuis le Canva de Lo Ligam (dossier "Lo Ligam" �
 
 - `logo/` — le logo officiel (croix occitana + « Lo ligam »).
 - `canva-vf/<NN-nom-du-theme>/` — un dossier par thème de publication Instagram (ex. `03-Cos-uman`, `10-Planetas`), avec un PNG par design à l'intérieur.
+- `Inspiration/<chantier>/` — captures de sites qui plaisent (depuis le 2026-10-12), mode d'emploi dans `Inspiration/LISEZ-MOI.md`.
 
 ## État (29 juillet 2026)
 
