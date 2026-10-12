@@ -65,8 +65,10 @@ Z.features.push({
 		// « gavòt », « intemelian » absents du Basic de lo Congrès)
 		oc: 'País mentonasc',
 		fr: 'Pays mentonnais',
-		sota_oc: "parlar de transicion entre l'occitan alpin (gavòt) e lo ligur intemelian",
-		sota_fr: "parler de transition entre l'occitan alpin (gavot) et le ligure intémélien",
+		// (« a confirmar » : zone complexe, niçois, ligure et gavot s'y
+		// mêlent ; note de sources : revisions/2026-10-12-zona-mentonasca.md)
+		sota_oc: "parlar de transicion entre l'occitan alpin (gavòt) e lo ligur intemelian (a confirmar)",
+		sota_fr: "parler de transition entre l'occitan alpin (gavot) et le ligure intémélien (à confirmer)",
 		eti: [7.468, 43.785]
 	},
 	geometry: { type: 'MultiPolygon', coordinates: torns.map((a) => [a]) }
