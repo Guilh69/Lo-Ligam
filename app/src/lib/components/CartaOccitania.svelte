@@ -17,7 +17,7 @@
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
 	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, fixarLatEscala, fixarEcran, nivèlsDezoom, aDetalh, aTenchas } from '$lib/carta/escalas.js';
 	import { sonsEntrada } from '$lib/carta/sons.js';
-	import { crearColaDonadas } from '$lib/carta/colaDonadas.js';
+	import { crearColaDonadas, COLORS as COLORS_DIAL } from '$lib/carta/colaDonadas.js';
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
 	import { crearColaLenga } from '$lib/carta/colaLenga.js';
 	import { LENGAS, esOccitan, fonsLenga } from '$lib/carta/lengas.js';
@@ -27,6 +27,7 @@
 	import { NOMS_FRANCES } from '$lib/carta/nomsFrances.js';
 	import { LUOCS } from '$lib/acuelh/carta-estelas.js';
 	import CercaCarta from './CercaCarta.svelte';
+	import VotzAtlas from './VotzAtlas.svelte';
 
 	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
 	// carta_colas — geridas dins /admin/carta) puslèu que
@@ -586,9 +587,17 @@
 	}
 
 	// L'Atlas sonòr (LISN) : demostracion (decision de Romain, 2026-10-12) ;
-	// donadas de SIG/cadena/lisn-enquistas.mjs, mp3 sul site de l'Atlas
-	const ATLAS_LISN = 'https://atlas.lisn.upsaclay.fr';
+	// donadas de SIG/cadena/lisn-enquistas.mjs, mp3 sul site de l'Atlas.
+	// Lecteur « Ondas » (VotzAtlas.svelte) : un toucher sur un point et la
+	// voix part ; le point qui parle émet des ondes.
 	let enquistasCargadas = false;
+	// (raw : les points restent les mêmes objets que ceux des marqueurs)
+	let enquistas = $state.raw([]);
+	let votzComp = $state();
+	let votzAra = $state.raw(null);
+	const votzMarcas = new Map();
+	const colorDial = (kod) => COLORS_DIAL[dalt ? 'dalt' : clar ? 'clar' : 'sorne'][kod] ?? '#eeaf34';
+	const nomVotz = (p) => (lang === 'fr' ? p.n : comunaOc(p.n));
 	async function cargarEnquistas() {
 		if (enquistasCargadas || !map) return;
 		enquistasCargadas = true;
@@ -596,28 +605,55 @@
 			.then((r) => (r.ok ? r.json() : null))
 			.catch(() => null);
 		if (!d?.ponches) return (enquistasCargadas = false);
-		const fr = lang === 'fr';
-		const son = (s) =>
-			/^sounds\/[^?#<>"]+\.mp3$/i.test(s ?? '') ? `<audio controls preload="none" src="${escapeHtml(ATLAS_LISN + '/' + encodeURI(s))}"></audio>` : '';
-		const tèxt = (t, oc) => `<p class="enquista-tèxt"${oc ? ' lang="oc"' : ''}>${escapeHtml(t)}</p>`;
 		pointLayers.limsi = L.layerGroup(
 			d.ponches.map((p) => {
-				const dial = p.mix ? (fr ? p.mix.fr : p.mix.oc) : (fr ? p.d.fr : p.d.oc) + (p.cro ? (fr ? ' · Croissant' : ' · Creissent') : '');
-				const mistral = /mistral/i.test(p.g2 ?? '');
-				const autra = p.tx2
-					? `<details class="enquista-autra"><summary>${fr ? (mistral ? 'Graphie mistralienne' : 'Autre graphie') : mistral ? 'Grafia de Mistral' : 'Autra grafia'}</summary>${tèxt(p.tx2, !p.mix)}</details>`
-					: '';
-				const votz2 = p.so2 ? `<span class="enquista-votz">${fr ? 'Autre voix' : 'Autra votz'}</span>${son(p.so2)}` : '';
-				return dobleClicSus(L.marker([p.lat, p.lon], { icon: iconaPunt('limsi'), title: p.n, keyboard: true })).bindPopup(
-					`<div class="enquista"><strong>${escapeHtml(fr ? p.n : comunaOc(p.n))}</strong><span class="enquista-dial">${escapeHtml(dial)}</span><span class="enquista-titol">${fr ? '« La bise et le soleil »' : '« La bisa e lo solelh »'}</span>${son(p.so)}${votz2}${tèxt(p.tx, !p.mix)}${autra}</div>`,
-					// bulla nauta : que passe pas jos la barra de recèrca e lo rail
-					{ maxWidth: 320, autoPanPaddingTopLeft: L.point(90, 170), autoPanPaddingBottomRight: L.point(70, 24) }
-				);
+				const m = L.marker([p.lat, p.lon], {
+					icon: L.divIcon({
+						className: 'votz-ponch',
+						html: `<span style="--c:${colorDial(p.d.kod)}"><i></i><i></i><i></i><b></b></span>`,
+						iconSize: [24, 24],
+						iconAnchor: [12, 12]
+					}),
+					title: nomVotz(p),
+					keyboard: true
+				});
+				// le son part dans le geste même (les téléphones l'exigent)
+				m.on('click', () => votzComp?.jogar(p));
+				votzMarcas.set(p, m);
+				return dobleClicSus(m);
 			})
 		);
+		enquistas = d.ponches;
 		if (d.font) map.attributionControl?.addAttribution(d.font);
 		if (visibility.limsi) pointLayers.limsi.addTo(map);
 	}
+
+	// Le point écouté : ses ondes, et la carte le garde visible au-dessus de
+	// la feuille du lecteur (en bas sur téléphone, à droite sur ordinateur)
+	function veireVotz(p) {
+		votzAra = p;
+		if (!map) return;
+		const s = map.getSize(),
+			pt = map.latLngToContainerPoint([p.lat, p.lon]);
+		const estrech = s.x < 720;
+		const liure = estrech ? pt.y > 80 && pt.y < s.y * 0.36 : pt.x > 110 && pt.x < s.x - 480 && pt.y > 80;
+		if (liure) return;
+		const cibla = estrech ? L.point(s.x / 2, s.y * 0.24) : L.point((s.x - 480) / 2 + 55, s.y / 2);
+		map.panBy(pt.subtract(cibla), { animate: !matchMedia('(prefers-reduced-motion: reduce)').matches });
+	}
+	$effect(() => {
+		const ara = votzAra;
+		for (const [p, m] of votzMarcas) m.getElement()?.classList.toggle('ara', p === ara);
+	});
+	// les couleurs suivent le thème (clair, sombre, daltonisme)
+	$effect(() => {
+		const pal = COLORS_DIAL[dalt ? 'dalt' : clar ? 'clar' : 'sorne'];
+		for (const [p, m] of votzMarcas) m.getElement()?.firstElementChild?.style.setProperty('--c', pal[p.d.kod] ?? '#eeaf34');
+	});
+	// couche éteinte : la voix se tait
+	$effect(() => {
+		if (!visibility.limsi) untrack(() => votzAra && votzComp?.tampar());
+	});
 
 	// La Calandreta mai pròcha (demanda de Romain, 2026-10-08) : a partir de
 	// la posicion de l'internauta (lo navegador la demanda ; demòra dins la
@@ -2082,6 +2118,17 @@
 
 	{#if !visualizacion}<CercaCarta {lang} onCausir={anarA} />{/if}
 
+	<!-- lecteur des enquêtes vocales de l'Atlas sonore -->
+	<VotzAtlas
+		bind:this={votzComp}
+		{lang}
+		ponches={enquistas}
+		colorDe={colorDial}
+		nomDe={nomVotz}
+		onPunt={veireVotz}
+		onTampar={() => (votzAra = null)}
+	/>
+
 	<!-- La Calandreta mai pròcha : quand la jaça es alucada -->
 	{#if visibility.calandretas && !visualizacion}
 		<div class="procha" class:dobert={menuPròcha}>
@@ -2853,37 +2900,70 @@
 		color: var(--t-aur-clar);
 	}
 
-	/* bulla d'una enquista de l'Atlas sonòr (demostracion locala) */
-	.carta :global(.enquista) {
-		display: flex;
-		flex-direction: column;
-		gap: 0.3rem;
-		width: min(290px, 70vw);
-	}
-	.carta :global(.enquista-dial),
-	.carta :global(.enquista-votz) {
-		font-size: 0.8rem;
-		color: var(--t-tinta-2, currentColor);
-		opacity: 0.85;
-	}
-	.carta :global(.enquista-titol) {
-		font-family: var(--font-quote);
-		font-style: italic;
-	}
-	.carta :global(.enquista audio) {
-		width: 100%;
-		height: 2.2rem;
-	}
-	.carta :global(.enquista-tèxt) {
-		margin: 0;
-		max-height: min(9.5em, 28vh);
-		overflow-y: auto;
-		padding-right: 0.4rem;
-	}
-	.carta :global(.enquista-autra summary) {
+	/* points des voix de l'Atlas sonore : la couleur du dialecte ; celui
+	   qu'on écoute émet des ondes (lecteur « Ondas », 2026-10-12) */
+	.carta :global(.votz-ponch) {
 		cursor: pointer;
-		font-size: 0.8rem;
-		color: var(--t-aur-clar);
+	}
+	.carta :global(.votz-ponch span) {
+		position: absolute;
+		inset: 0;
+		display: grid;
+		place-items: center;
+	}
+	.carta :global(.votz-ponch b) {
+		grid-area: 1 / 1;
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		background: var(--c);
+		border: 1.5px solid rgba(18, 9, 6, 0.85);
+		box-shadow:
+			0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent),
+			0 0 12px color-mix(in srgb, var(--c) 55%, transparent);
+		transition: transform 0.25s;
+	}
+	.carta :global(.votz-ponch:hover b),
+	.carta :global(.votz-ponch:focus-visible b) {
+		transform: scale(1.35);
+	}
+	.carta :global(.votz-ponch i) {
+		grid-area: 1 / 1;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		border: 1.5px solid var(--c);
+		opacity: 0;
+	}
+	.carta :global(.votz-ponch.ara b) {
+		transform: scale(1.5);
+		border-color: #fff8ec;
+	}
+	.carta :global(.votz-ponch.ara i) {
+		animation: votz-onda 2.4s ease-out infinite;
+	}
+	.carta :global(.votz-ponch.ara i:nth-child(2)) {
+		animation-delay: 0.8s;
+	}
+	.carta :global(.votz-ponch.ara i:nth-child(3)) {
+		animation-delay: 1.6s;
+	}
+	@keyframes -global-votz-onda {
+		from {
+			transform: scale(1);
+			opacity: 0.9;
+		}
+		to {
+			transform: scale(6);
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.carta :global(.votz-ponch.ara i) {
+			animation: none;
+			opacity: 0.5;
+			transform: scale(2.4);
+		}
 	}
 
 	/* las accions d'una bulla : un vèrb amb son icòna, una per linha */

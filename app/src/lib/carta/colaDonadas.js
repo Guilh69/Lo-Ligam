@@ -28,7 +28,7 @@ const mesclar = (a, b, t) => {
 // Una color per dialècte, dins l'esperit de la carta d'Occitanica (violet
 // gascon, magenta lengadocian, ròse provençal, irangis del nòrd) ; en
 // daltonisme, la paleta Okabe-Ito
-const COLORS = {
+export const COLORS = {
 	// lo gascon en blau prigond, l'« otramar » (causida de Romain, 2026-10-10 ; abans violet)
 	sorne: { gas: '#5b7fff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' },
 	clar: { gas: '#2350d8', lan: '#c2185b', pro: '#e573ad', lem: '#e07b00', auv: '#a8321a', viv: '#c9a227' },
