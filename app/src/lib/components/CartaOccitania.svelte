@@ -28,6 +28,7 @@
 	import { LUOCS } from '$lib/acuelh/carta-estelas.js';
 	import CercaCarta from './CercaCarta.svelte';
 	import VotzAtlas from './VotzAtlas.svelte';
+	import { cargarVotz } from '$lib/carta/votz.js';
 
 	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
 	// carta_colas — geridas dins /admin/carta) puslèu que
@@ -323,7 +324,7 @@
 				});
 				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
 				colaEstelas.setNomsDobles(lang === 'fr' ? 'fr' : null, polissaSota);
-				colaEstelas.setElements(elements);
+				colaEstelas.setElements(elementsVesibles());
 				colaEstelas.setColors(colors);
 				colaEstelas.setModeDialectes(!!visibility.dialectes);
 				colaEstelas.setTerritoris({ regions: !!visibility.regions, despartaments: !!visibility.despartaments, comunas: !!visibility.comunas });
@@ -601,16 +602,14 @@
 	async function cargarEnquistas() {
 		if (enquistasCargadas || !map) return;
 		enquistasCargadas = true;
-		const d = await fetch('/data/enquistas-lisn.json')
-			.then((r) => (r.ok ? r.json() : null))
-			.catch(() => null);
+		const d = await cargarVotz();
 		if (!d?.ponches) return (enquistasCargadas = false);
 		pointLayers.limsi = L.layerGroup(
 			d.ponches.map((p) => {
 				const m = L.marker([p.lat, p.lon], {
 					icon: L.divIcon({
 						className: 'votz-ponch',
-						html: `<span style="--c:${colorDial(p.d.kod)}"><i></i><i></i><i></i><b></b>${Object.entries(p.m ?? {})
+						html: `<span style="--c:${colorDial(p.d.kod)}"><i></i><i></i><i></i><b></b><em data-m="nom" class="nom">${escapeHtml(nomVotz(p))}</em>${Object.entries(p.m ?? {})
 							.map(([k, w]) => `<em data-m="${k}" lang="oc">${escapeHtml(w)}</em>`)
 							.join('')}</span>`,
 						iconSize: [24, 24],
@@ -628,24 +627,36 @@
 		enquistas = d.ponches;
 		if (d.font) map.attributionControl?.addAttribution(d.font);
 		if (visibility.limsi) pointLayers.limsi.addTo(map);
+		votzMarcas.get(votzAra)?.getElement()?.classList.add('ara');
 		map.on('zoomend moveend', placarMots);
+		requestAnimationFrame(placarMots);
 	}
 
-	// « Un mot, cent parlars » : la carte écrit la forme locale du mot choisi.
-	// Les étiquettes qui se chevauchent sont cachées, les formes rares d'abord
-	// gardées (c'est la variation qu'on veut voir).
+	// Depuis la fiche d'une ville : « Totas las votz sus la carta » allume le
+	// mode écoute et fait entendre ce point (dans le geste même)
+	function votzSusLaCarta(p) {
+		causirNomComuna(null);
+		votzComp?.jogar(p);
+		onAlucar?.('limsi');
+	}
+
+	// « Un mot, cent parlars » : la carte écrit la forme locale du mot choisi ;
+	// sans mot, le nom du lieu enregistré (les noms des villes sont effacés
+	// en mode écoute). Les étiquettes qui se chevauchent sont cachées, les
+	// formes rares d'abord gardées (c'est la variation qu'on veut voir).
 	let votzMot = $state(null);
 	function placarMots() {
-		const k = votzMot;
-		if (!map || !k) return;
+		const k = votzMot ?? 'nom';
+		if (!map) return;
+		const forma = (p) => (k === 'nom' ? '' : (p.m?.[k] ?? '').toLowerCase());
 		const n = {};
-		for (const p of enquistas) if (p.m?.[k]) n[p.m[k].toLowerCase()] = (n[p.m[k].toLowerCase()] ?? 0) + 1;
+		for (const p of enquistas) n[forma(p)] = (n[forma(p)] ?? 0) + 1;
 		const tièra = [];
 		for (const [p, m] of votzMarcas) {
 			const em = m.getElement()?.querySelector(`em[data-m="${k}"]`);
 			if (!em) continue;
 			em.classList.remove('amagat');
-			tièra.push({ em, n: n[p.m[k].toLowerCase()] ?? 0 });
+			tièra.push({ em, n: n[forma(p)] ?? 0 });
 		}
 		tièra.sort((a, b) => a.n - b.n);
 		const placats = [];
@@ -658,10 +669,19 @@
 		}
 	}
 	$effect(() => {
-		const k = votzMot;
+		const k = votzMot ?? 'nom';
 		if (!mapEl) return;
-		for (const m of ['solelh', 'bisa', 'viatjaire']) mapEl.classList.toggle('votz-mot-' + m, m === k);
+		for (const m of ['nom', 'solelh', 'bisa', 'viatjaire']) mapEl.classList.toggle('votz-mot-' + m, m === k);
 		requestAnimationFrame(placarMots);
+	});
+	// Mode écoute (Romain, 2026-10-12 : « option enregistrement ouverte
+	// uniquement : une interface précise ») : la couche allumée efface les
+	// noms des villes, qui reviennent quand on l'éteint ; le réglage des noms
+	// dans le rail n'est pas touché.
+	let escota = $derived(!!visibility.limsi);
+	const elementsVesibles = () => ({ ...elements, nomsVilas: !!elements.nomsVilas && !escota });
+	$effect(() => {
+		mapEl?.classList.toggle('escota', escota);
 	});
 
 	// Le point écouté : ses ondes, et la carte le garde visible au-dessus de
@@ -1562,7 +1582,8 @@
 			lista: nomsDeLaCarta,
 			estil: (c) => (c.estil?.clau === clauEstil ? c.estil : (c.estil = estilNom(c))),
 			// (pendent la revelacion, los nívols que se dissipan : cap de nom)
-			actiu: () => baseLayer === 'estelas' && map.getZoom() >= Z.RELAIS && !map.getContainer().classList.contains('revelant'),
+			// (ni en mode écoute : les points des voix portent leurs noms)
+			actiu: () => baseLayer === 'estelas' && map.getZoom() >= Z.RELAIS && !map.getContainer().classList.contains('revelant') && !escota,
 			popMin: popNomsSite,
 			obstacles: caixasDeCòlas,
 			onRepaus: noms_repaus
@@ -1887,7 +1908,8 @@
 	});
 	// Elements e colors del fons, dialècte causit dempuèi lo panèl
 	$effect(() => {
-		const el = { ...elements };
+		// (en mode écoute, sans les noms des villes)
+		const el = elementsVesibles();
 		colaEstelas?.setElements(el);
 	});
 	$effect(() => {
@@ -2224,7 +2246,15 @@
 
 	<!-- Lo dialècte survolat o causit : meteissa etiqueta que los territòris -->
 	{#if fichaComuna}
-		<FichaComuna comuna={fichaComuna.c} contorn={fichaComuna.contorn} {lang} onTampar={() => causirNomComuna(null)} />
+		<FichaComuna
+			comuna={fichaComuna.c}
+			contorn={fichaComuna.contorn}
+			{lang}
+			onTampar={() => causirNomComuna(null)}
+			nomVotz={nomVotz}
+			colorVotz={colorDial}
+			onVotzCarta={votzSusLaCarta}
+		/>
 	{:else if legendaDial}
 		<div class="legenda-dial" class:fixada={!!(causida ?? causidaLenga)} class:amb-encadrat={!!legendaDial.encadrat} aria-live="polite">
 			<span class="nom" lang={legendaDial.lang}>{lang === 'fr' ? legendaDial.fr : legendaDial.oc}</span>
@@ -3003,6 +3033,13 @@
 			0 0 1px var(--t-fons);
 		pointer-events: auto;
 	}
+	/* sans mot choisi : le nom du lieu enregistré, discret */
+	.carta :global(.votz-ponch em.nom) {
+		font: italic 400 0.82rem/1 var(--font-quote);
+		color: var(--t-tinta);
+		bottom: calc(50% + 7px);
+	}
+	.carta:global(.votz-mot-nom) :global(.votz-ponch em[data-m='nom']:not(.amagat)),
 	.carta:global(.votz-mot-solelh) :global(.votz-ponch em[data-m='solelh']:not(.amagat)),
 	.carta:global(.votz-mot-bisa) :global(.votz-ponch em[data-m='bisa']:not(.amagat)),
 	.carta:global(.votz-mot-viatjaire) :global(.votz-ponch em[data-m='viatjaire']:not(.amagat)) {

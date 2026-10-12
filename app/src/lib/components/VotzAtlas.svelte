@@ -7,7 +7,7 @@
 	// l'Atlas. Un clic ailleurs ferme (principe du site), un autre point change
 	// de voix sans fermer.
 	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { ATLAS_LISN, sonDe, frasas, frasaAra, vesina, minutas } from '$lib/carta/votz.js';
+	import { ATLAS_LISN, sonDe, frasas, frasaAra, vesina, minutas, sonSol } from '$lib/carta/votz.js';
 
 	let {
 		lang = 'oc',
@@ -127,7 +127,7 @@
 <audio
 	bind:this={audio}
 	preload="none"
-	onplay={() => (jogant = true)}
+	onplay={() => ((jogant = true), sonSol(audio))}
 	onpause={() => (jogant = false)}
 	onended={() => ((jogant = false), (temps = durada))}
 	ontimeupdate={() => (temps = audio.currentTime)}
@@ -243,6 +243,7 @@
 		bottom: 0;
 		max-height: 62%;
 		overflow-y: auto;
+		overflow-x: hidden;
 		overscroll-behavior: contain;
 		display: flex;
 		flex-direction: column;

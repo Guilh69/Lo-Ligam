@@ -8,10 +8,21 @@
 	import { fly, slide } from 'svelte/transition';
 	import { VILAS_FICHAS } from '$lib/carta/vilasFichas.js';
 	import TriaLenga from './TriaLenga.svelte';
+	import VotzFicha from './VotzFicha.svelte';
 	import { flushSync } from 'svelte';
 	import { sonClic } from '$lib/carta/sons.js';
 
-	let { comuna, contorn = null, lang = 'oc', onTampar = null } = $props();
+	let {
+		comuna,
+		contorn = null,
+		lang = 'oc',
+		onTampar = null,
+		// « La votz d'aquí » (Atlas sonore) : nom et couleur d'un point, et
+		// passage au mode écoute de la carte
+		nomVotz = undefined,
+		colorVotz = undefined,
+		onVotzCarta = null
+	} = $props();
 
 	// La ficha dins la lenga del luòc (retorn de Romain, 2026-10-11 : Liyon en
 	// arpitan, Brest en breton ; « cocher oc si on veut voir en oc ») : son nom
@@ -286,6 +297,8 @@
 					{/if}
 				</div>
 			</div>
+			<!-- la voix d'ici, pour les communes occitanes (Atlas sonore) -->
+			{#if !deLenga}<VotzFicha {comuna} {lang} nomDe={nomVotz} colorDe={colorVotz} onCarta={onVotzCarta} />{/if}
 			{#if dades && dobèrta}
 				<div class="mai" transition:slide={{ duration: 240 }}>
 					{#if extrach}<p class="extrach" lang={lt} style:--i="4">{extrach}</p>{/if}
