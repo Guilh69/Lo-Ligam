@@ -626,10 +626,38 @@
 		);
 		enquistas = d.ponches;
 		if (d.font) map.attributionControl?.addAttribution(d.font);
+		pointLayers.limsi.on('add', () => requestAnimationFrame(vagaVotz));
 		if (visibility.limsi) pointLayers.limsi.addTo(map);
 		votzMarcas.get(votzAra)?.getElement()?.classList.add('ara');
 		map.on('zoomend moveend', placarMots);
 		requestAnimationFrame(placarMots);
+	}
+
+	// L'allumage en vague (Romain, 2026-10-12 : « l'apparition des points en
+	// éclairage par vague poétique ») : quand la couche s'allume, une onde part
+	// du milieu de la vue et allume chaque voix à son passage, comme une pierre
+	// dans l'eau ; les noms suivent un souffle plus tard.
+	let vagaFin = null;
+	function vagaVotz() {
+		if (!map || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const mitan = map.getSize().divideBy(2);
+		const tièra = [];
+		let max = 1;
+		for (const [p, m] of votzMarcas) {
+			const el = m.getElement();
+			if (!el) continue;
+			const d = map.latLngToContainerPoint([p.lat, p.lon]).distanceTo(mitan);
+			max = Math.max(max, d);
+			tièra.push([el, d]);
+		}
+		for (const [el, d] of tièra) {
+			el.style.setProperty('--vaga', ((d / max) * 1.6 + Math.random() * 0.15).toFixed(2) + 's');
+			el.classList.remove('apareis');
+			void el.offsetWidth;
+			el.classList.add('apareis');
+		}
+		clearTimeout(vagaFin);
+		vagaFin = setTimeout(() => tièra.forEach(([el]) => el.classList.remove('apareis')), 3200);
 	}
 
 	// Depuis la fiche d'une ville : « Totas las votz sus la carta » allume le
@@ -3044,6 +3072,65 @@
 	.carta:global(.votz-mot-bisa) :global(.votz-ponch em[data-m='bisa']:not(.amagat)),
 	.carta:global(.votz-mot-viatjaire) :global(.votz-ponch em[data-m='viatjaire']:not(.amagat)) {
 		display: block;
+	}
+	/* l'allumage en vague : un éclat, un cercle qui s'ouvre, puis le nom */
+	.carta :global(.votz-ponch.apareis b) {
+		animation: votz-alucar 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+		animation-delay: var(--vaga, 0s);
+	}
+	.carta :global(.votz-ponch.apareis i:first-child) {
+		animation: votz-cercle 1.3s ease-out both;
+		animation-delay: var(--vaga, 0s);
+	}
+	.carta :global(.votz-ponch.apareis em) {
+		animation: votz-nom 0.7s ease both;
+		animation-delay: calc(var(--vaga, 0s) + 0.45s);
+	}
+	@keyframes -global-votz-alucar {
+		0% {
+			transform: scale(0);
+			opacity: 0;
+		}
+		40% {
+			transform: scale(1.9);
+			opacity: 1;
+			box-shadow:
+				0 0 0 8px color-mix(in srgb, var(--c) 30%, transparent),
+				0 0 28px var(--c);
+		}
+		100% {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+	@keyframes -global-votz-cercle {
+		0% {
+			transform: scale(1);
+			opacity: 0.85;
+		}
+		100% {
+			transform: scale(5.5);
+			opacity: 0;
+		}
+	}
+	@keyframes -global-votz-nom {
+		from {
+			opacity: 0;
+			transform: translate(-50%, 4px);
+		}
+		to {
+			opacity: 1;
+			transform: translate(-50%, 0);
+		}
+	}
+	/* en s'éteignant, chaque voix se retire à son tour */
+	.carta :global(.votz-ponch.ponch-se-va b) {
+		animation: ponch-part 0.45s cubic-bezier(0.5, 0, 0.8, 0.4) forwards;
+		animation-delay: calc(var(--vaga, 0s) * 0.5);
+	}
+	.carta :global(.votz-ponch.ponch-se-va em) {
+		opacity: 0;
+		transition: opacity 0.3s;
 	}
 	@keyframes -global-votz-onda {
 		from {

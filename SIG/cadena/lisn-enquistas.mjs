@@ -59,10 +59,12 @@ const ARTICLES = /^(la|lo|le|lou|lu|l['’]|eth|era|ra|a|o|er|el|ul|li|les|los|l
 const VERBES = /(èron|èran|eron|avan?|ava|ir|gù|ìou|àvan)$/i;
 const brut = (w) => (w ?? '').replace(/^[«"'’‘(]+|[»"’,;:.!?)]+$/g, '').replace(/^l['’]/i, '');
 const MOTS = {
+	// (« lo só » gascon, « u sù » mentonnais, « ël sol » alpin, « le sol »
+	// auvergnat : retours de Romain du 2026-10-12)
 	solelh(t) {
-		const m = t.slice(0, 120).match(/\b(?:e|et|i|y|è)\s+(?:lo|le|lou|lu|eth|ul|o|el|ou|er)\s+([^\s,;.]+)/i);
-		if (m && /^s/i.test(m[1]) && m[1].length > 2) return brut(m[1]);
-		return t.split(/\s+/).slice(0, 20).map(brut).find((x) => /^s[oóòuüe][lruo]/i.test(x) && x.length >= 4 && !/^solid/i.test(x)) ?? null;
+		const m = t.slice(0, 120).match(/(?:^|\s)(?:e|et|i|y|è|'bei|bei|amb|emb)\s+(?:lo|le|lou|lu|eth|ul|o|el|ël|ou|er|u|'r)\s+([^\s,;.]+)/i);
+		if (m && /^s/i.test(m[1]) && brut(m[1]).length >= 2) return brut(m[1]);
+		return t.split(/\s+/).slice(0, 20).map(brut).find((x) => /^s[oóòuùüe][lruo]/i.test(x) && x.length >= 3 && !/^solid/i.test(x)) ?? null;
 	},
 	bisa(t) {
 		let f = t.split(/[.;]/)[0].replace(/^(un\s+c[oò]p|un\s+jorn|una\s+vetz)[,\s]+/i, '');
@@ -101,7 +103,9 @@ for (const f of FICHIÈRS) {
 	for (const p of (await r.json()).tabres ?? []) {
 		const lon = Number(p.lon),
 			lat = Number(p.lat);
-		if (!p.soundfile || p.display === false || !Number.isFinite(lon) || !Number.isFinite(lat)) continue;
+		// (des sons seulement : la vidéo en langue des signes, posée au centre
+		// de la France, n'est pas une enquête occitane)
+		if (!/\.mp3$/i.test(p.soundfile ?? '') || p.display === false || !Number.isFinite(lon) || !Number.isFinite(lat)) continue;
 		if (vistes.has(p.soundfile)) continue;
 		// le Croissant chevauche nos dialectes : un point peut être des deux
 		const cro = !!trobar(creissent, lon, lat);

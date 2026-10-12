@@ -9,7 +9,7 @@ sounds/Arsac-en-Velay.mp3;Arsac-en-Velay;Auvergnat;solelh;aura;viatjaire
 sounds/Artiguemy.mp3;Artiguemy;Gascon;sorelh;bisa;viatjador
 sounds/Azerables.mp3;Azérables;Limousin;solelh;bise;voiageur
 sounds/Bagneres-de-Luchon.mp3;Bagnères- de-Luchon;Gascon;solelh;aire;viatjador
-sounds/Belis.mp3;Bélis;Gascon;;vent;viatjador
+sounds/Belis.mp3;Bélis;Gascon;só;vent;viatjador
 sounds/Beyssac.mp3;Beyssac;Limousin;solelh;vent;voiatjador
 sounds/Biscarrosse.mp3;Biscarrosse;Gascon;sou;bisa;viatjaire
 sounds/Bobbio_Pellice.mp3;Bobbio Pellice;Vivaro-alpin;solelh;aura;
@@ -38,7 +38,7 @@ sounds/Gimat.mp3;Gimat;Gascon;sorelh;bisa;voiatjaire
 sounds/Guillestre.mp3;Guillestre;Vivaro-alpin;soleu;bisa;voiatjur
 sounds/Issoire.mp3;Issoire;Auvergnat;solelh;bisa;voiajaire
 sounds/Jouillat.mp3;Jouillat;Limousin;solelh;bise;voiageur
-sounds/La_Brigue.mp3;La Brigue;Vivaro-alpin;;binda;
+sounds/La_Brigue.mp3;La Brigue;Vivaro-alpin;sùu;binda;
 sounds/La_Celle-Dunoise.mp3;La Celle-Dunoise;Limousin;solelh;bise;voiatgeur
 sounds/La_Chatre-Langlin.mp3;La Châtre-Langlin;Limousin;solelh;;voaiageur
 sounds/Laboule.mp3;Laboule;Languedocien;solelh;bisa;voiajaire
@@ -47,11 +47,10 @@ sounds/Lamaziere-Basse.mp3;Lamazière- Basse;Limousin;sorelh;bisa;voiatjaire
 sounds/Le_Grand-Bourg.mp3;Le Grand-Bourg;Limousin;solelh;bise;voiageur
 sounds/Grizac.mp3;Le Pont-de-Montvert;Languedocien;sorelh;aura;
 sounds/Lilhac.mp3;Lilhac;Gascon;solelh;bisa;voiatjur
-Videos/LSF_montage.mp4;LSF;Auvergnat;;;
 sounds/Maillane.mp3;Maillane;Provençal;solèu;bisa;voiatjor
 sounds/Marie.mp3;Marie;Vivaro-alpin;solelh;cisampa;viatjaire
 sounds/Marseille3.mp3;Marseille;Provençal;soleu;mistrau;voaiajor
-sounds/Maurrin.mp3;Maurrin;Gascon;;vent;viatjaire
+sounds/Maurrin.mp3;Maurrin;Gascon;só;vent;viatjaire
 sounds/Mirabel-et-Blacons.mp3;Mirabel-et-Blacons;Vivaro-alpin;solelh;bisa;viatjaor
 sounds/Momas.mp3;Momas;Gascon;sorelh;bisa;viatjador
 sounds/Montblanc.mp3;Montblanc;Languedocien;solelh;cisampa;viatjaire
@@ -64,7 +63,7 @@ sounds/Najac.mp3;Najac;Languedocien;solelh;cisampa;viatjaire
 sounds/Naves.mp3;Naves;Limousin;solelh;bise;voiatjaor
 sounds/Nice.mp3;Nice;Provençal;soleu;zísola;voaiajur
 sounds/Noth.mp3;Noth;Limousin;solèlh;vent;
-sounds/Orthez.mp3;Orthez;Gascon;;bisa;viatjador
+sounds/Orthez.mp3;Orthez;Gascon;só;bisa;viatjador
 sounds/Pailhares.mp3;Pailharès;Vivaro-alpin;solelh;bisa;voiatjuer
 sounds/Pavie.mp3;Pavie;Gascon;sorelh;bisa;viatjaire
 sounds/Pierre-Buffiere.mp3;Pierre-Buffière;Limousin;solelh;bisa;voiatjor
@@ -78,11 +77,11 @@ sounds/Puymeras.mp3;Puyméras;Provençal;soleu;bisa;voiatjur
 sounds/Rauret.mp3;Rauret;Auvergnat;solelh;bisa;viatjaire
 sounds/Risoul.mp3;Risoul;Vivaro-alpin;solèu;bisa;viatjaire
 sounds/Roiffieux.mp3;Roiffieux;Vivaro-alpin;solelh;bisa;voiatjuer
-sounds/Roquebrune-Cap-Martin.mp3;Roquebrune-Cap-Martin;Vivaro-alpin;;;
+sounds/Roquebrune-Cap-Martin.mp3;Roquebrune-Cap-Martin;Vivaro-alpin;sù;;
 sounds/Saint-Agnant-de-Versillat.mp3;Saint-Agnant-de-Versillat;Limousin;solelh;bise;
 sounds/Saint-Amans-Soult.mp3;Saint-Amans-Soult;Languedocien;solelh;bisa;viatjaire
 sounds/Saint-Hilaire-la-Treille.mp3;Saint-Hilaire- la-Treille;Limousin;solèlh;vent;voiageur
-sounds/Saint-Julien-Puy-Laveze.mp3;Saint-Julien-Puy-Lavèze;Auvergnat;;bisa;voaiatgeur
+sounds/Saint-Julien-Puy-Laveze.mp3;Saint-Julien-Puy-Lavèze;Auvergnat;sol;bisa;voaiatgeur
 sounds/Saint-Leger-Magnazeix.mp3;Saint-Léger- Magnazeix;Limousin;solèlh;vent;voiageur
 sounds/Saint-Martial.mp3;Saint-Martial;Vivaro-alpin;solelh;bisa;
 sounds/Saint-Martin-de-Riberac.mp3;Saint-Martin-de-Ribérac;Limousin;solelh;vent;
@@ -108,7 +107,7 @@ sounds/Thiers.mp3;Thiers;Auvergnat;solelh;bisa;voiatjor
 sounds/Toulouse.mp3;Toulouse;Languedocien;solelh;bisa;viatjaire
 sounds/Tuchan.mp3;Tuchan;Languedocien;solelh;bisa;voiajur
 sounds/Bussiere-Poitevine.mp3;Val-d'Oire-et- Gartempe;Limousin;solelh;bise;voaiatgeur
-sounds/Valgrana.mp3;Valgrana;Vivaro-alpin;;bisa;viagiató
+sounds/Valgrana.mp3;Valgrana;Vivaro-alpin;sol;bisa;viagiató
 sounds/Vendays-Montalivet.mp3;Vendays-Montalivet;Gascon;sorelh;bisa;viatjurt
 sounds/Venteuges.mp3;Venteuges;Auvergnat;solelh;bisa;voiatjur
 sounds/Verdelais.mp3;Verdelais;Gascon;sorelh;bisa;viatjaire
