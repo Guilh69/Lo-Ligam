@@ -229,7 +229,7 @@ if sec == "culture":
 if sec == "sensibilisation":
     O = plan(4, "Sensibilisation 4:5")
     fond(O, 1350, "#3A2A20", "#241913")
-    croix(O + 830, 1080, 300, "#4A382C", "#4A382C", "#4A382C", 10)
+    croix(O + 840, 1090, 190, "#4A382C", "#4A382C", "#4A382C", 8)
     etiquette(O, "Sensibilisation", "#EEAF34", "#3A2A20")
     out("add_text", text="«", x=O + 70, y=330, font="Limelight", size=240, color="#EEAF34")
     out("add_text", text="Une phrase forte et courte, qui fait réfléchir.", x=O + 90, y=360, width=900, height=330, font="Limelight", size=76, color="#FFFFFF")
