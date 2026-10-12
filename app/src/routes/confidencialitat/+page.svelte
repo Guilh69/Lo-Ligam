@@ -50,7 +50,7 @@
 			roleAlbergament: 'hébergement',
 			tiersT: 'Ressources chargées depuis d’autres sites',
 			tiers:
-				'Certaines pages chargent des éléments hébergés ailleurs, ce qui transmet votre adresse IP à ces services : les fonds de carte (OpenStreetMap e occitan, OpenTopoMap, EOX Sentinel-2), la recherche de communes quand vous tapez un lieu (API Adresse, Photon), et les vidéos que vous choisissez de lancer (YouTube en mode sans cookie, Canva). Les polices de caractères et les icônes, elles, sont servies par ce site : aucune requête vers Google.',
+				'Certaines pages chargent des éléments hébergés ailleurs, ce qui transmet votre adresse IP à ces services : les fonds de carte (OpenStreetMap et sa version occitane OSM-bzh, OpenTopoMap, photos aériennes de l’IGN et du PNOA espagnol), la recherche de communes quand vous tapez un lieu (API Adresse, Photon), les vidéos que vous choisissez de lancer (YouTube en mode sans cookie, Canva) et les enregistrements de l’Atlas sonore des langues régionales (LISN, Université Paris-Saclay) que vous choisissez d’écouter sur la carte. Les polices de caractères et les icônes, elles, sont servies par ce site : aucune requête vers Google.',
 			droitsT: 'Vos droits',
 			droits:
 				'Vous pouvez à tout moment demander à consulter vos données, les corriger, les effacer, les récupérer dans un format lisible, ou retirer votre consentement aux réponses facultatives. Écrivez à {email} : la réponse intervient sous un mois.',
@@ -98,7 +98,7 @@
 			roleAlbergament: 'albergament',
 			tiersT: 'Ressorsas cargadas d’autres sites',
 			tiers:
-				'Certanas paginas cargan d’elements albergats endacòm mai, çò que transmet vòstra adreça IP a aquestes servicis : los fonses de carta (OpenStreetMap e occitan, OpenTopoMap, EOX Sentinel-2), la recèrca de comunas quand tapatz un luòc (API Adresse, Photon), e las vidèos que causissètz de lançar (YouTube en mòde sens cookies, Canva). Las poliças de caractèrs e las icònas, elas, son servidas per aqueste site : cap de requèsta cap a Google.',
+				'Certanas paginas cargan d’elements albergats endacòm mai, çò que transmet vòstra adreça IP a aquestes servicis : los fonses de carta (OpenStreetMap e sa version occitana OSM-bzh, OpenTopoMap, fòtos aerianas de l’IGN e del PNOA espanhòl), la recèrca de comunas quand tapatz un luòc (API Adresse, Photon), las vidèos que causissètz de lançar (YouTube en mòde sens cookies, Canva) e las faulas de l’Atlas sonòr de las lengas regionalas (LISN, Universitat Paris-Saclay) que causissètz d’escotar sus la carta. Las poliças de caractèrs e las icònas, elas, son servidas per aqueste site : cap de requèsta cap a Google.',
 			droitsT: 'Vòstres dreches',
 			droits:
 				'Podètz a tot moment demandar de consultar vòstras donadas, las corregir, las escafar, las recuperar dins un format legible, o retirar vòstre consentiment a las respònsas facultativas. Escrivètz a {email} : la respònsa arriba jos un mes.',

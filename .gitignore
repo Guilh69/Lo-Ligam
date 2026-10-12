@@ -11,10 +11,6 @@ Modules_cors/Base_donnees_linguistica/
 /SIG/brut/
 # Carte de l'Atlas sonore (LIMSI/LISN, CC BY-NC-SA) : contrôle seulement, pas republiée
 /SIG/Limsi/
-# Enquêtes vocales de l'Atlas sonore : démonstrateur local, refait par
-# node SIG/cadena/lisn-enquistas.mjs (ni dans Git ni en ligne)
-/app/static/data/enquistas-lisn.json
-
 # design-stock : vidéos et archives restent sur le disque, hors Git (règle du 2026-10-12,
 # PILOTATGE chantier 9). Les autres fichiers de plus de 1 Mo sont refusés par .githooks/pre-commit.
 design-stock/**/*.mp4

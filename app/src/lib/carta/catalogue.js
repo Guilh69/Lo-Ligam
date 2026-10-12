@@ -47,11 +47,13 @@ export const CATALOGUE = [
 				id: 'limsi',
 				oc: 'Enquistas vocalas (Atlàs LISN)',
 				fr: 'Enquêtes vocales (Atlas LISN)',
-				// demostracion sonque en local (decision de Romain, 2026-10-12) :
-				// donadas de SIG/cadena/lisn-enquistas.mjs, jamai en linha
-				...(import.meta.env?.DEV
-					? { estat: 'disponible', defaut: false, nota_oc: 'Demostracion, sonque en local', nota_fr: 'Démonstration, seulement en local' }
-					: { estat: 'a venir', nota_oc: "En espèra de l'autorizacion del LISN", nota_fr: "En attente de l'autorisation du LISN" })
+				// demostracion per lo LISN (decision de Romain, 2026-10-12 : en linha,
+				// lo site es pas encara dobèrt al public) ; donadas de
+				// SIG/cadena/lisn-enquistas.mjs
+				estat: 'disponible',
+				defaut: false,
+				nota_oc: 'Demostracion : una faula, mantun parlar',
+				nota_fr: 'Démonstration : une fable, plusieurs parlers'
 			}
 		]
 	},

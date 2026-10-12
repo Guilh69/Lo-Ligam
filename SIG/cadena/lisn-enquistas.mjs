@@ -1,12 +1,12 @@
 // Enquêtes vocales de l'Atlas sonore des langues régionales de France (LISN,
 // CNRS, Université Paris-Saclay ; licence CC BY-NC-SA 4.0) : les points
 // d'enquête situés dans nos dialectes occitans ou dans le Croissant, pour le
-// démonstrateur local de la couche « Enquêtes vocales » (décision de Romain,
-// 2026-10-12, PILOTATGE question 9 ; le labo est favorable au projet).
+// démonstrateur de la couche « Enquêtes vocales » (décision de Romain,
+// 2026-10-12, PILOTATGE question 9 ; le labo est favorable au projet). En
+// ligne, le site n'étant pas encore ouvert au public (Romain, même jour).
 //
-// Le fichier produit (app/static/data/enquistas-lisn.json) n'est PAS dans Git
-// (.gitignore) ni dans la version en ligne (app/scripts/levar-esbos.mjs) :
-// chaque ordinateur le refabrique avec
+// Sortie : app/static/data/enquistas-lisn.json. À relancer pour suivre
+// les ajouts de l'Atlas :
 //   node SIG/cadena/lisn-enquistas.mjs
 // Les sons ne sont pas copiés : la carte les lit sur le site de l'Atlas.
 //

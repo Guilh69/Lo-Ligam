@@ -29,14 +29,8 @@ export async function handle({ event, resolve }) {
 	// svelte.config.js : une compilation réécrit la configuration partagée
 	// avec le serveur local et remettait 'none' (2026-10-10).
 	response.headers.set('X-Frame-Options', dev ? 'SAMEORIGIN' : 'DENY');
-	// En développement aussi, les sons de l'Atlas sonore (LISN) sont permis :
-	// démonstration de la couche « Enquêtes vocales », jamais en ligne (2026-10-12).
 	const csp = dev && response.headers.get('content-security-policy');
-	if (csp)
-		response.headers.set(
-			'content-security-policy',
-			csp.replace("frame-ancestors 'none'", "frame-ancestors 'self'").replace(/media-src [^;]*/, '$& https://atlas.lisn.upsaclay.fr')
-		);
+	if (csp) response.headers.set('content-security-policy', csp.replace("frame-ancestors 'none'", "frame-ancestors 'self'"));
 
 	// Force le HTTPS pendant deux ans. En développement le site est servi
 	// en clair : l'en-tête n'aurait pas de sens et gênerait les tests.

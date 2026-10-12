@@ -585,13 +585,12 @@
 		if (visibility.calandretas) pointLayers.calandretas.addTo(map);
 	}
 
-	// L'Atlas sonòr (LISN) : demostracion sonque en local (decision de Romain,
-	// 2026-10-12) ; donadas de SIG/cadena/lisn-enquistas.mjs, mp3 sul site de
-	// l'Atlas
+	// L'Atlas sonòr (LISN) : demostracion (decision de Romain, 2026-10-12) ;
+	// donadas de SIG/cadena/lisn-enquistas.mjs, mp3 sul site de l'Atlas
 	const ATLAS_LISN = 'https://atlas.lisn.upsaclay.fr';
 	let enquistasCargadas = false;
 	async function cargarEnquistas() {
-		if (enquistasCargadas || !map || !import.meta.env.DEV) return;
+		if (enquistasCargadas || !map) return;
 		enquistasCargadas = true;
 		const d = await fetch('/data/enquistas-lisn.json')
 			.then((r) => (r.ok ? r.json() : null))

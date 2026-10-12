@@ -40,7 +40,9 @@ const csp = {
 			'https://api-adresse.data.gouv.fr', // autocomplétion des lieux
 			'https://photon.komoot.io'
 		],
-		'media-src': ['self', 'https://*.supabase.co'],
+		// sons des enquêtes de l'Atlas sonore (LISN), lus seulement quand on
+		// lance l'écoute sur la carte
+		'media-src': ['self', 'https://*.supabase.co', 'https://atlas.lisn.upsaclay.fr'],
 		'frame-src': ['https://www.youtube-nocookie.com', 'https://www.canva.com'],
 		'object-src': ['none'],
 		'base-uri': ['self'],
