@@ -60,7 +60,7 @@ dans les mentions du site. La clé vit dans `app/.env`, jamais dans Git.
 | **punt de lenga** | Fiches de grammaire bilingues | Vérifier nos explications grammaticales contre la référence |
 
 ### Les 2 API sur demande (clé séparée : écrire à info@locongres.org)
-- **Votz** (synthèse vocale languedocienne) : uniquement pour **prototyper en interne** le rythme des leçons audio. Le cadre v0.3 impose des voix humaines à la publication ; Votz n'est admis qu'en secours provisoire sur des corrigés. → Demander la clé quand on attaquera l'audio.
+- **Votz** (synthèse vocale languedocienne) : uniquement pour **prototyper en interne** le rythme des leçons audio. Le cadre v0.3 impose des voix humaines à la publication ; Votz n'est admis qu'en secours provisoire sur des corrigés. → Clé non demandée : l'audio passe par des voix humaines (Romain, cahier §11 du 2026-10-12).
 - **Revirada** (traduction automatique) : **non retenue pour produire du contenu** — la traduction automatique n'a pas le niveau d'un cours de langue. Au mieux un brouillon à tout relire, ce qui ne fait pas gagner de temps sur des textes courts et précis.
 
 ---
