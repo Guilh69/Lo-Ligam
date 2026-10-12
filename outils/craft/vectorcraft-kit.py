@@ -159,3 +159,115 @@ if sec == "gabarit":
     out("draw_path", d=deplace("M0 12L10 12L22 2L22 38L10 28L0 28Z", O + 388, 1244), fill="#FFFFFF", stroke="none")
     out("draw_path", d=deplace("M29 12C34 16 34 24 29 28", O + 388, 1244), fill="none", stroke="#FFFFFF", strokeWidth=3.5)
     out("add_text", text="Prononciation", x=O + 454, y=1276, font="Luciole", size=30, color="#3A2A20")
+
+# ---- Gabarits par famille (2026-10-12) : une couleur de fond et une étiquette par famille
+def fond(O, h, c1, c2):
+    out("draw_shape", shape="rectangle", x=O, y=0, width=1080, height=h, fill=c1, stroke="none")
+    out("run_command", command="paint.setFill", params={"gradient": {"kind": "linear", "angle": -90, "stops": [
+        {"offset": 0, "color": c1}, {"offset": 1, "color": c2}]}})
+
+def etiquette(O, texte, fondc, textec, y0=56):
+    w = 44 + len(texte) * 14
+    out("draw_shape", shape="rectangle", x=O + 60, y=y0, width=w, height=50, radius=25, fill=fondc, stroke="none")
+    out("add_text", text=texte, x=O + 82, y=y0 + 34, font="Luciole", size=24, color=textec)
+    out("run_command", command="text.setStyle", params={"style": "Bold"})
+
+def titre_centre(O, y, texte, taille, couleur, police="Limelight"):
+    out("add_text", text=texte, x=O + 540, y=y, font=police, size=taille, color=couleur)
+    out("run_command", command="text.setStyle", params={"justify": "center"})
+
+def logo_rond(O, y, anneau="#FFD47F"):
+    out("draw_shape", shape="ellipse", x=O + 50, y=y, width=104, height=104, fill="#B53D17", stroke=anneau, strokeWidth=3)
+    croix(O + 102, y + 52, 38, "#FFFFFF", "#FFD47F", "#EEAF34", 3.2)
+
+def plan(k, nom, h=1350):
+    O = 1180 * k
+    if len(sys.argv) > 2:
+        out("run_command", command="select.allOnArtboard", params={"artboard": k})
+        out("run_command", command="edit.clear", params={})
+        return O
+    out("run_command", command="artboard.new", params={"x": O, "y": 0, "width": 1080, "height": h, "name": nom})
+    return O
+
+if sec == "grammaire":
+    O = plan(2, "Grammaire 4:5")
+    fond(O, 1350, "#24706F", "#163F42")
+    etiquette(O, "Grammaire", "#FFD47F", "#1F5F63")
+    titre_centre(O, 210, "Titre en occitan", 84, "#FFFFFF")
+    titre_centre(O, 272, "(Traduction)", 40, "#FFFFFF", "Luciole")
+    out("draw_shape", shape="rectangle", x=O + 90, y=330, width=900, height=640, radius=28, fill="#F5EAD8", stroke="none")
+    for i in range(6):
+        y = 330 + 40 + i * 100
+        if i:
+            out("draw_shape", shape="line", x1=O + 130, y1=y - 18, x2=O + 950, y2=y - 18, stroke="#D9C9AE", strokeWidth=2)
+        out("add_text", text=f"Pronom {i+1}", x=O + 140, y=y + 48, font="Luciole", size=40, color="#B53D17")
+        out("run_command", command="text.setStyle", params={"style": "Bold"})
+        out("add_text", text=f"Forme {i+1}", x=O + 560, y=y + 48, font="Luciole", size=40, color="#3A2A20")
+    out("draw_shape", shape="rectangle", x=O + 90, y=1010, width=900, height=150, radius=24, fill="#FFD47F", stroke="none")
+    out("add_text", text="À retenir : une règle courte, en une ou deux lignes.", x=O + 130, y=1040, width=820, height=100, font="Luciole", size=34, color="#3A2A20")
+    logo_rond(O, 1210)
+    out("add_text", text="1/3", x=O + 960, y=1275, font="Luciole", size=30, color="#FFFFFF")
+
+if sec == "culture":
+    O = plan(3, "Culture 4:5")
+    fond(O, 1350, "#F0B43C", "#FAD994")
+    etiquette(O, "Culture et calendrier", "#B53D17", "#FFFFFF")
+    out("draw_shape", shape="ellipse", x=O + 860, y=40, width=160, height=160, fill="#B53D17", stroke="#FFFFFF", strokeWidth=4)
+    out("add_text", text="24", x=O + 940, y=128, font="Limelight", size=64, color="#FFFFFF")
+    out("run_command", command="text.setStyle", params={"justify": "center"})
+    out("add_text", text="décembre", x=O + 940, y=166, font="Luciole", size=24, color="#FFD47F")
+    out("run_command", command="text.setStyle", params={"justify": "center"})
+    titre_centre(O, 300, "Titre en occitan", 84, "#3A2A20")
+    titre_centre(O, 362, "(Traduction)", 40, "#3A2A20", "Luciole")
+    out("draw_shape", shape="rectangle", x=O + 240, y=420, width=600, height=480, radius=40, fill="none", stroke="#3A2A20", strokeWidth=3)
+    out("run_command", command="stroke.set", params={"dash": [14, 12], "cap": "round"})
+    titre_centre(O, 672, "Illustration", 34, "#3A2A20", "Luciole")
+    out("add_text", text="Un court texte qui raconte la tradition ou l'histoire : deux ou trois lignes, pas plus.", x=O + 110, y=950, width=860, height=180, font="Luciole", size=36, color="#3A2A20")
+    out("run_command", command="text.setStyle", params={"justify": "center"})
+    logo_rond(O, 1210, "#FFFFFF")
+
+if sec == "sensibilisation":
+    O = plan(4, "Sensibilisation 4:5")
+    fond(O, 1350, "#3A2A20", "#241913")
+    croix(O + 830, 1080, 300, "#4A382C", "#4A382C", "#4A382C", 10)
+    etiquette(O, "Sensibilisation", "#EEAF34", "#3A2A20")
+    out("add_text", text="«", x=O + 70, y=330, font="Limelight", size=240, color="#EEAF34")
+    out("add_text", text="Une phrase forte et courte, qui fait réfléchir.", x=O + 90, y=360, width=900, height=330, font="Limelight", size=76, color="#FFFFFF")
+    out("add_text", text="00 %", x=O + 90, y=860, font="Limelight", size=170, color="#EEAF34")
+    out("add_text", text="ce que mesure ce chiffre, en une ligne", x=O + 100, y=920, font="Luciole", size=34, color="#F5EAD8")
+    out("add_text", text="Source : à préciser", x=O + 100, y=975, font="Luciole", size=24, color="#B8A890")
+    logo_rond(O, 1210)
+
+if sec == "video":
+    O = plan(5, "Vidéo 9:16", 1920)
+    fond(O, 1920, "#C04A1E", "#8F2D14")
+    for y, lib in ((250, "au-dessus : masqué par Instagram"), (1500, "en dessous : masqué par Instagram")):
+        out("draw_shape", shape="line", x1=O, y1=y, x2=O + 1080, y2=y, stroke="#FFD47F", strokeWidth=2)
+        out("run_command", command="stroke.set", params={"dash": [10, 10]})
+        out("add_text", text=lib, x=O + 40, y=y + (40 if y > 1000 else -16), font="Luciole", size=24, color="#FFD47F")
+    etiquette(O, "Vidéo", "#FFD47F", "#B53D17", 290)
+    titre_centre(O, 760, "Titre en occitan", 104, "#FFFFFF")
+    titre_centre(O, 840, "(Traduction)", 46, "#FFFFFF", "Luciole")
+    fleche(0, O + 420, 900, 1.3)
+    out("draw_shape", shape="rectangle", x=O + 290, y=1100, width=500, height=300, radius=36, fill="none", stroke="#FFFFFF", strokeWidth=3)
+    out("run_command", command="stroke.set", params={"dash": [14, 12], "cap": "round"})
+    titre_centre(O, 1262, "Illustration ou vidéo", 32, "#FFFFFF", "Luciole")
+    logo_rond(O, 1330)
+
+if sec == "annonces":
+    O = plan(6, "Annonces 4:5")
+    fond(O, 1350, "#F5EAD8", "#EADBC0")
+    etiquette(O, "Annonce", "#B53D17", "#FFFFFF")
+    titre_centre(O, 280, "Titre de l'annonce", 92, "#B53D17")
+    titre_centre(O, 345, "Une phrase qui donne envie, en français", 36, "#3A2A20", "Luciole")
+    for i, (lib, val) in enumerate((("Quand", "Date et horaire"), ("Où", "En visio"), ("Pour qui", "Niveau, public"))):
+        y = 430 + i * 160
+        out("draw_shape", shape="rectangle", x=O + 140, y=y, width=800, height=130, radius=24, fill="#FFFFFF", stroke="#B53D17", strokeWidth=3)
+        out("draw_shape", shape="ellipse", x=O + 170, y=y + 39, width=52, height=52, fill="#EEAF34", stroke="none")
+        out("add_text", text=lib, x=O + 250, y=y + 56, font="Luciole", size=26, color="#B53D17")
+        out("run_command", command="text.setStyle", params={"style": "Bold"})
+        out("add_text", text=val, x=O + 250, y=y + 98, font="Luciole", size=36, color="#3A2A20")
+    out("draw_shape", shape="rectangle", x=O + 340, y=960, width=400, height=96, radius=48, fill="#B53D17", stroke="none")
+    titre_centre(O, 1022, "Lien en bio", 38, "#FFFFFF", "Luciole")
+    croix(O + 540, 1180, 70, "#B53D17", "#EEAF34", "#EEAF34", 4)
+    logo_rond(O, 1210, "#B53D17")
