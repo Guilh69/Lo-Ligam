@@ -59,6 +59,9 @@ y accèdent par un chemin relatif.
     Puis `node SIG/cadena/gavacharia.mjs` (après `domeni.mjs` et `mixtas.py`) : la Petite
     Gavacherie, îlot d'oïl éteint au XXe siècle, n'est plus un trou du domaine mais une
     zone particulière hachurée dans le gascon, expliquée au survol (Romain, 2026-10-08).
+    Puis `node SIG/cadena/mentonasc.mjs` (après `mixtas.py`) : le pays mentonnais (Menton,
+    Roquebrune, Gorbio, Sainte-Agnès) en zone de transition entre l'occitan alpin et le
+    ligure intémélien (Romain, 2026-10-12). À relancer ensuite : `lisn-enquistas.mjs`.
 12. Frontière avec le catalan : `python-qgis.bat -s -P SIG/cadena/fenolhedes.py` (après
     `gavacharia.mjs`, avant `catalan.py`). Dans les Pyrénées-Orientales, le domaine et le
     languedocien suivent les communes IGN : le Fenouillèdes (28 communes occitanes, liste
