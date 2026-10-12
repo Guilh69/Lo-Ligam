@@ -610,7 +610,9 @@
 				const m = L.marker([p.lat, p.lon], {
 					icon: L.divIcon({
 						className: 'votz-ponch',
-						html: `<span style="--c:${colorDial(p.d.kod)}"><i></i><i></i><i></i><b></b></span>`,
+						html: `<span style="--c:${colorDial(p.d.kod)}"><i></i><i></i><i></i><b></b>${Object.entries(p.m ?? {})
+							.map(([k, w]) => `<em data-m="${k}" lang="oc">${escapeHtml(w)}</em>`)
+							.join('')}</span>`,
 						iconSize: [24, 24],
 						iconAnchor: [12, 12]
 					}),
@@ -626,7 +628,41 @@
 		enquistas = d.ponches;
 		if (d.font) map.attributionControl?.addAttribution(d.font);
 		if (visibility.limsi) pointLayers.limsi.addTo(map);
+		map.on('zoomend moveend', placarMots);
 	}
+
+	// « Un mot, cent parlars » : la carte écrit la forme locale du mot choisi.
+	// Les étiquettes qui se chevauchent sont cachées, les formes rares d'abord
+	// gardées (c'est la variation qu'on veut voir).
+	let votzMot = $state(null);
+	function placarMots() {
+		const k = votzMot;
+		if (!map || !k) return;
+		const n = {};
+		for (const p of enquistas) if (p.m?.[k]) n[p.m[k].toLowerCase()] = (n[p.m[k].toLowerCase()] ?? 0) + 1;
+		const tièra = [];
+		for (const [p, m] of votzMarcas) {
+			const em = m.getElement()?.querySelector(`em[data-m="${k}"]`);
+			if (!em) continue;
+			em.classList.remove('amagat');
+			tièra.push({ em, n: n[p.m[k].toLowerCase()] ?? 0 });
+		}
+		tièra.sort((a, b) => a.n - b.n);
+		const placats = [];
+		for (const { em } of tièra) {
+			const r = em.getBoundingClientRect();
+			if (!r.width) continue;
+			const b = { x: r.left - 2, y: r.top - 1, w: r.width + 4, h: r.height + 2 };
+			if (placats.some((a) => b.x < a.x + a.w && b.x + b.w > a.x && b.y < a.y + a.h && b.y + b.h > a.y)) em.classList.add('amagat');
+			else placats.push(b);
+		}
+	}
+	$effect(() => {
+		const k = votzMot;
+		if (!mapEl) return;
+		for (const m of ['solelh', 'bisa', 'viatjaire']) mapEl.classList.toggle('votz-mot-' + m, m === k);
+		requestAnimationFrame(placarMots);
+	});
 
 	// Le point écouté : ses ondes, et la carte le garde visible au-dessus de
 	// la feuille du lecteur (en bas sur téléphone, à droite sur ordinateur)
@@ -2127,6 +2163,8 @@
 		nomDe={nomVotz}
 		onPunt={veireVotz}
 		onTampar={() => (votzAra = null)}
+		actiu={!!visibility.limsi && enquistas.length > 0 && !visualizacion}
+		bind:mot={votzMot}
 	/>
 
 	<!-- La Calandreta mai pròcha : quand la jaça es alucada -->
@@ -2947,6 +2985,28 @@
 	}
 	.carta :global(.votz-ponch.ara i:nth-child(3)) {
 		animation-delay: 1.6s;
+	}
+	/* le mot de la fable écrit sur chaque point (« Un mot, cent parlars ») */
+	.carta :global(.votz-ponch em) {
+		display: none;
+		position: absolute;
+		left: 50%;
+		bottom: calc(50% + 6px);
+		transform: translateX(-50%);
+		font: 700 0.74rem/1 var(--font-body);
+		font-style: normal;
+		white-space: nowrap;
+		color: var(--c);
+		text-shadow:
+			0 0 3px var(--t-fons),
+			0 0 3px var(--t-fons),
+			0 0 1px var(--t-fons);
+		pointer-events: auto;
+	}
+	.carta:global(.votz-mot-solelh) :global(.votz-ponch em[data-m='solelh']:not(.amagat)),
+	.carta:global(.votz-mot-bisa) :global(.votz-ponch em[data-m='bisa']:not(.amagat)),
+	.carta:global(.votz-mot-viatjaire) :global(.votz-ponch em[data-m='viatjaire']:not(.amagat)) {
+		display: block;
 	}
 	@keyframes -global-votz-onda {
 		from {

@@ -50,6 +50,45 @@ const netejar = (s) =>
 		.replace(/\s+/g, ' ')
 		.trim();
 
+// « Un mot, cent parlars » (2026-10-12) : la forme locale de trois mots de
+// la fable, repérée automatiquement. Les erreurs se corrigent dans
+// SIG/lisn/mots-corregits.csv (mêmes colonnes que mots-a-validar.csv, une
+// cellule vide = rien à corriger), relu à chaque passage.
+const LISN = path.join(DONADAS, '..', '..', '..', 'SIG', 'lisn');
+const ARTICLES = /^(la|lo|le|lou|lu|l['’]|eth|era|ra|a|o|er|el|ul|li|les|los|las|un|una)$/i;
+const VERBES = /(èron|èran|eron|avan?|ava|ir|gù|ìou|àvan)$/i;
+const brut = (w) => (w ?? '').replace(/^[«"'’‘(]+|[»"’,;:.!?)]+$/g, '').replace(/^l['’]/i, '');
+const MOTS = {
+	solelh(t) {
+		const m = t.slice(0, 120).match(/\b(?:e|et|i|y|è)\s+(?:lo|le|lou|lu|eth|ul|o|el|ou|er)\s+([^\s,;.]+)/i);
+		if (m && /^s/i.test(m[1]) && m[1].length > 2) return brut(m[1]);
+		return t.split(/\s+/).slice(0, 20).map(brut).find((x) => /^s[oóòuüe][lruo]/i.test(x) && x.length >= 4 && !/^solid/i.test(x)) ?? null;
+	},
+	bisa(t) {
+		let f = t.split(/[.;]/)[0].replace(/^(un\s+c[oò]p|un\s+jorn|una\s+vetz)[,\s]+/i, '');
+		f = f.split(/\s+(?:e|et|i|y|è)\s+/i)[0];
+		for (const w of f.split(/\s+/).map((w) => w.replace(/^[«"'’‘(]+/, ''))) {
+			if (ARTICLES.test(w)) continue;
+			const x = brut(w);
+			return x.length > 2 && !/^s[oóòu][lr]/i.test(x) && !/^(se|langue)$/i.test(x) ? x : null;
+		}
+		return null;
+	},
+	viatjaire(t) {
+		for (const m of t.matchAll(/\b(?:un|ün|in|on)\s+(?:\S+\s+)?(v[^\s,;.]+)/gi)) {
+			const x = brut(m[1]);
+			if (!VERBES.test(x) && !/^ven/i.test(x)) return x;
+		}
+		return null;
+	}
+};
+const legirCsv = (f) => {
+	if (!fs.existsSync(f)) return [];
+	const [cap, ...linhas] = fs.readFileSync(f, 'utf8').replace(/^﻿/, '').split(/\r?\n/).filter(Boolean).map((l) => l.split(';'));
+	return linhas.map((l) => Object.fromEntries(cap.map((c, i) => [c.trim(), (l[i] ?? '').trim()])));
+};
+const correccions = new Map(legirCsv(path.join(LISN, 'mots-corregits.csv')).map((r) => [r.son, r]));
+
 const dialèctes = legir('dialectes.geojson');
 const creissent = legir('creissent.geojson');
 const mixtas = legir('zonas-mixtas.geojson');
@@ -75,6 +114,8 @@ for (const f of FICHIÈRS) {
 		if (/classique/i.test(g2) && !/classique/i.test(g)) [tx, g, tx2, g2] = [tx2, g2, tx, g];
 
 		const mix = trobar(mixtas, lon, lat)?.properties;
+		const c = correccions.get(p.soundfile) ?? {};
+		const m = Object.fromEntries(Object.entries(MOTS).map(([k, f]) => [k, c[k] || f(tx)]).filter(([, w]) => w));
 		ponches.push({
 			n: netejar(p.name),
 			lon: Math.round(lon * 1e4) / 1e4,
@@ -85,7 +126,8 @@ for (const f of FICHIÈRS) {
 			so: p.soundfile,
 			...(p.soundfile1 ? { so2: p.soundfile1 } : {}),
 			tx,
-			...(tx2 ? { tx2, g2: g2 || null } : {})
+			...(tx2 ? { tx2, g2: g2 || null } : {}),
+			m
 		});
 	}
 }
@@ -100,6 +142,21 @@ fs.writeFileSync(
 		ponches
 	})
 );
+
+// table à relire par Romain : une ligne par lieu, les trois mots repérés
+fs.mkdirSync(LISN, { recursive: true });
+const cellula = (s) => String(s ?? '').replace(/;/g, ',');
+fs.writeFileSync(
+	path.join(LISN, 'mots-a-validar.csv'),
+	'﻿' +
+		['son;lieu;dialecte;solelh;bisa;viatjaire', ...ponches.map((p) => [p.so, p.n, p.d.fr, p.m.solelh, p.m.bisa, p.m.viatjaire].map(cellula).join(';'))].join('\n') +
+		'\n'
+);
+for (const k of Object.keys(MOTS)) {
+	const formas = {};
+	for (const p of ponches) if (p.m[k]) formas[p.m[k].toLowerCase()] = (formas[p.m[k].toLowerCase()] ?? 0) + 1;
+	console.log(`${k} : ${ponches.filter((p) => p.m[k]).length} lieux, ${Object.keys(formas).length} formes`);
+}
 
 const perDialècte = {};
 for (const p of ponches) perDialècte[p.d.fr] = (perDialècte[p.d.fr] ?? 0) + 1;

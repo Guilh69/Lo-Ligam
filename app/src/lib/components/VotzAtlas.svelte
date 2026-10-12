@@ -18,12 +18,40 @@
 		nomDe = (p) => p.n,
 		// la carte suit : point actif, recentrage
 		onPunt = () => {},
-		onTampar = () => {}
+		onTampar = () => {},
+		// couche allumée : les boutons des mots apparaissent
+		actiu = false,
+		// « Un mot, cent parlars » : le mot de la fable que la carte écrit
+		mot = $bindable(null)
 	} = $props();
 
+	const MOTS = {
+		solelh: { oc: 'lo solelh', fr: 'le soleil' },
+		bisa: { oc: 'la bisa', fr: 'la bise' },
+		viatjaire: { oc: 'lo viatjaire', fr: 'le voyageur' }
+	};
+	// les formes d'un mot, des plus courantes aux plus rares, avec la couleur
+	// du dialecte où on l'entend le plus
+	let formas = $derived.by(() => {
+		if (!mot) return [];
+		const c = new Map();
+		for (const p of ponches) {
+			const w = p.m?.[mot]?.toLowerCase();
+			if (!w) continue;
+			const e = c.get(w) ?? { w, n: 0, kod: {} };
+			e.n++;
+			e.kod[p.d.kod] = (e.kod[p.d.kod] ?? 0) + 1;
+			c.set(w, e);
+		}
+		return [...c.values()].sort((a, b) => b.n - a.n).map((e) => ({ ...e, kod: Object.entries(e.kod).sort((a, b) => b[1] - a[1])[0][0] }));
+	});
+	let lòcs = $derived(formas.reduce((s, f) => s + f.n, 0));
+	// le mot surligné dans la fable écoutée
+	const talhar = (f, w) => (w ? f.split(new RegExp(`(?<!\\p{L})(${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})(?!\\p{L})`, 'iu')) : [f]);
+
 	const t = {
-		oc: { escotar: 'Escotar', pausa: 'Pausa', tampar: 'Tampar', seguenta: 'Votz seguenta', votz: 'votz', Votz: 'Votz', classica: 'Grafia classica', mistral: 'Grafia de Mistral', autra: 'Autra grafia', titol: '« La bisa e lo solelh »', posicion: 'Posicion', cro: 'Creissent' },
-		fr: { escotar: 'Écouter', pausa: 'Pause', tampar: 'Fermer', seguenta: 'Voix suivante', votz: 'voix', Votz: 'Voix', classica: 'Graphie classique', mistral: 'Graphie mistralienne', autra: 'Autre graphie', titol: '« La bise et le soleil »', posicion: 'Position', cro: 'Croissant' }
+		oc: { dins: 'dins', parlars: 'parlars', tocatz: "Tocatz un mot per l'ausir", escotar: 'Escotar', pausa: 'Pausa', tampar: 'Tampar', seguenta: 'Votz seguenta', votz: 'votz', Votz: 'Votz', classica: 'Grafia classica', mistral: 'Grafia de Mistral', autra: 'Autra grafia', titol: '« La bisa e lo solelh »', posicion: 'Posicion', cro: 'Creissent' },
+		fr: { dins: 'dans', parlars: 'parlers', tocatz: "Touchez un mot pour l'entendre", escotar: 'Écouter', pausa: 'Pause', tampar: 'Fermer', seguenta: 'Voix suivante', votz: 'voix', Votz: 'Voix', classica: 'Graphie classique', mistral: 'Graphie mistralienne', autra: 'Autre graphie', titol: '« La bise et le soleil »', posicion: 'Position', cro: 'Croissant' }
 	};
 	let tx = $derived(t[lang] ?? t.oc);
 
@@ -80,7 +108,7 @@
 	// un clic ailleurs ferme ; un autre point de voix reste « dedans »
 	$effect(() => {
 		if (!punt) return;
-		return tampaDefòra((el) => !!el.closest('.votz-fuelha, .votz-ponch'), tampar);
+		return tampaDefòra((el) => !!el.closest('.votz-fuelha, .votz-ponch, .votz-mots'), tampar);
 	});
 
 	// la phrase en cours reste visible dans le texte
@@ -105,6 +133,38 @@
 	ontimeupdate={() => (temps = audio.currentTime)}
 	onloadedmetadata={() => (durada = audio.duration)}
 ></audio>
+
+{#if actiu}
+	<!-- « Un mot, cent parlars » : la carte écrit la forme locale du mot choisi -->
+	<div class="votz-mots" role="group" aria-label={fr ? 'Un mot, cent parlers' : 'Un mot, cent parlars'}>
+		{#each Object.entries(MOTS) as [k, l] (k)}
+			<button type="button" class:actiu={mot === k} aria-pressed={mot === k} onclick={() => (mot = mot === k ? null : k)}>
+				{fr ? l.fr : l.oc}
+			</button>
+		{/each}
+	</div>
+{/if}
+
+{#if actiu && mot && !punt}
+	<section class="votz-fuelha votz-formas" aria-label={fr ? MOTS[mot].fr : MOTS[mot].oc}>
+		<div class="manha" aria-hidden="true"></div>
+		<button type="button" class="tampar" onclick={() => (mot = null)} aria-label={tx.tampar} title={tx.tampar}>
+			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+		</button>
+		<p class="formas-cap"><span class="mot-titol">«&nbsp;{fr ? MOTS[mot].fr : MOTS[mot].oc}&nbsp;»</span> <span class="titol">{tx.dins} {lòcs} {tx.parlars}</span></p>
+		<div class="barras">
+			{#each formas.slice(0, 5) as f (f.w)}
+				<span class="forma" lang="oc" style="color: {colorDe(f.kod)}">{f.w}</span>
+				<span class="barra" style="width: {(f.n / formas[0].n) * 100}%; background: {colorDe(f.kod)}"></span>
+				<span class="nombre">{f.n}</span>
+			{/each}
+		</div>
+		{#if formas.length > 5}
+			<p class="autras" lang="oc">{formas.slice(5).map((f) => f.w).join(' · ')}</p>
+		{/if}
+		<p class="astuci">{tx.tocatz}</p>
+	</section>
+{/if}
 
 {#if punt}
 	<section class="votz-fuelha" style="--c: {color}" aria-label={nomDe(punt)}>
@@ -145,7 +205,9 @@
 
 		<p class="titol">{tx.titol}</p>
 		<p class="karaoke" bind:this={tèxtEl} lang={punt.mix ? undefined : 'oc'}>
-			{#each liste as f, i (i)}<span class:dita={i < iAra} class:ara={i === iAra}>{f}</span>{' '}{/each}
+			{#each liste as f, i (i)}<span class:dita={i < iAra} class:ara={i === iAra}
+					>{#each talhar(f, mot && punt.m?.[mot]) as part, j (j)}{#if j % 2}<mark>{part}</mark>{:else}{part}{/if}{/each}</span
+				>{' '}{/each}
 		</p>
 
 		<div class="accions">
@@ -201,8 +263,8 @@
 			right: 76px;
 			bottom: 22px;
 			width: 380px;
-			/* sous la barre de recherche */
-			max-height: calc(100% - 190px);
+			/* sous la barre de recherche et les boutons des mots */
+			max-height: calc(100% - 230px);
 			border-bottom: 1px solid var(--t-linha);
 			border-radius: 22px;
 		}
@@ -433,6 +495,100 @@
 	.font a {
 		color: inherit;
 	}
+	.karaoke :global(mark) {
+		background: none;
+		color: var(--t-aur-clar);
+		font-weight: 700;
+	}
+
+	/* boutons des mots, sous la barre de recherche */
+	.votz-mots {
+		position: absolute;
+		z-index: 1000;
+		top: calc(var(--cap-bas, 5.3rem) + 66px);
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 6px;
+		max-width: calc(100% - 7rem);
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+	.votz-mots button {
+		flex: none;
+		font-family: var(--font-quote);
+		font-style: italic;
+		font-size: 1.02rem;
+		padding: 3px 13px 4px;
+		border-radius: 99px;
+		border: 1px solid var(--t-linha);
+		background: color-mix(in srgb, var(--t-fons-2) 88%, transparent);
+		backdrop-filter: blur(6px);
+		color: var(--t-tinta);
+		cursor: pointer;
+	}
+	.votz-mots button.actiu {
+		background: var(--t-aur);
+		border-color: var(--t-aur);
+		color: #2a1408;
+	}
+	.formas-cap {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 4px 10px;
+		padding-right: 28px;
+	}
+	.mot-titol {
+		font-family: var(--font-heading);
+		font-size: 1.4rem;
+		color: var(--t-aur-clar);
+	}
+	.barras {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		gap: 6px 10px;
+		align-items: center;
+		margin-top: 10px;
+	}
+	.forma {
+		font-family: var(--font-quote);
+		font-style: italic;
+		font-size: 1.15rem;
+	}
+	.barra {
+		height: 7px;
+		border-radius: 7px;
+		min-width: 6px;
+	}
+	.nombre {
+		font-size: 0.75rem;
+		color: var(--t-tinta-2);
+		font-variant-numeric: tabular-nums;
+	}
+	.autras {
+		margin-top: 8px;
+		font-family: var(--font-quote);
+		font-style: italic;
+		color: var(--t-tinta-2);
+		font-size: 0.95rem;
+	}
+	.astuci {
+		margin-top: 10px;
+		font-size: 0.78rem;
+		color: var(--t-tinta-2);
+	}
+	/* sur téléphone, le décompte reste court : la carte des mots doit se voir */
+	@media (max-width: 719px) {
+		.votz-formas {
+			max-height: 38%;
+		}
+		.barras > :nth-child(n + 10),
+		.autras {
+			display: none;
+		}
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.votz-fuelha {
 			animation: none;

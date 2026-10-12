@@ -82,7 +82,7 @@ téléchargées vont dans `SIG/brut/` (ignoré par Git, refait par les scripts).
 | Massifs et sommets | `node SIG/cadena/releu-noms.mjs` | `app/static/data/releu-noms.json` |
 | Noms occitans (provinces, parcs) | `node SIG/cadena/noms-oc-jaces.mjs`, à relancer après une correction des tables `SIG/provincias/noms-oc.csv` et `SIG/natura/noms-parcs-oc.csv` | les deux fichiers ci-dessus |
 | Sons de la carte | `node SIG/cadena/sons-copar.mjs entree.mp3 sortie.mp3 debut fin` (découpe sans réencoder) | `app/static/sons/`, crédits dans `FONTS.md` |
-| Enquêtes vocales de l'Atlas sonore (LISN, CC BY-NC-SA), **démonstrateur** | `node SIG/cadena/lisn-enquistas.mjs` (points de l'Atlas rangés dans nos dialectes ; les sons restent sur le site de l'Atlas) | `app/static/data/enquistas-lisn.json` |
+| Enquêtes vocales de l'Atlas sonore (LISN, CC BY-NC-SA), **démonstrateur** | `node SIG/cadena/lisn-enquistas.mjs` (points de l'Atlas rangés dans nos dialectes ; les sons restent sur le site de l'Atlas ; repère aussi trois mots de la fable, corrections dans `SIG/lisn/mots-corregits.csv`) | `app/static/data/enquistas-lisn.json` ; à relire : `SIG/lisn/mots-a-validar.csv` |
 
 Après une nouvelle fabrication des provinces ou des parcs, relancer
 `noms-oc-jaces.mjs` (les scripts réécrivent les noms occitans de la source).
