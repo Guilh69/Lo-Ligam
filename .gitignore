@@ -1,6 +1,10 @@
 # Sources brutes des visuels (photos/SVG bruts, souvent volumineux — Canva, exports).
 # Les versions optimisées utilisées par l'appli vivent dans app/static/ et app/src/lib/assets/.
-/Photo/
+# (Ancien dossier /Photo/ à la racine, rangé ici le 2026-10-12.)
+design-stock/brut/
+
+# Bibliothèque de référence (carte de 71 Mo, lexique sous droits) : reste sur le disque.
+Modules_cors/Base_donnees_linguistica/
 
 # Données SIG brutes téléchargées (IGN, OSM, Dataverse…) : refaisables par les
 # scripts de SIG/cadena, trop lourdes pour le dépôt.
@@ -13,6 +17,7 @@
 design-stock/**/*.mp4
 design-stock/**/*.mov
 design-stock/**/*.webm
+design-stock/**/*.wav
 design-stock/**/*.zip
 
 # Python : fichièrs compilats

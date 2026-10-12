@@ -9,7 +9,7 @@
 > en fin de séance. Une conversation = un chantier. Les décisions vont au
 > §11 du cahier des charges ; ici, seulement l'état et la prochaine action.
 >
-> **Dernier point d'étape : `BILAN-2026-10-08.md`** (révision complète de la
+> **Dernier point d'étape : `revisions/BILAN-2026-10-08.md`** (révision complète de la
 > carte et du site, nuit du 7 au 8 octobre : 52 corrections, 94 constats
 > restants, ce que Romain peut faire seul, ce qui concerne chaque
 > conversation). À lire avant de reprendre un chantier.
@@ -55,7 +55,7 @@ photos.
 | 6 | **Refonte de /aprene en « Camin »** | à faire | Construire le sommaire du cursus avec la frise du chemin (essai → Modul 0 → A1) et les 4 modules de l'unité 1 visibles | Claude |
 | 7 | **Transposition Racine² sur le site** | à faire | Coder le premier lot : ligne de promesse + ancre héros, pages A prepaus + Contacte, FAQ accordéon, kit de fluidité | Claude |
 | 8 | **Photos « sang e aur »** | bloqué | Romain inventorie ses photos existantes et pressent son casting ; Claude prépare le modèle d'autorisation (droit à l'image et à la voix) | Romain |
-| 9 | **Vidéo et design-stock** (104 Mo dans Git + 159 Mo hors Git, mesuré le 12-10) | ✅ règle A le 12-10 (cahier §11) : rien de plus de 1 Mo dans Git ; vidéos et .zip ignorés ; garde-fou `.githooks/pre-commit` testé | Sur l'autre PC : lancer une fois `git config core.hooksPath .githooks` et vérifier que Proton Drive y recopie bien design-stock. Plus tard, peut-être : retirer de l'historique les 28 fichiers déjà committés de plus de 1 Mo (option C, délicat) | Romain (autre PC) |
+| 9 | **Vidéo et design-stock** (104 Mo dans Git + 159 Mo hors Git, mesuré le 12-10) | ✅ règle A le 12-10 (cahier §11) : rien de plus de 1 Mo dans Git ; vidéos et .zip ignorés ; garde-fou `.githooks/pre-commit` testé | Sur l'autre PC : lancer une fois `git config core.hooksPath .githooks` et vérifier que Proton Drive y recopie bien design-stock. Plus tard, peut-être : retirer de l'historique les 28 fichiers déjà committés de plus de 1 Mo (option C, délicat). **Proton Drive + Git se battent** (rangement du 12-10, cahier §11) : 35 copies « Name clash » du cache du site (1,26 Go) et une jusque dans `.git`, mises en quarantaine dans `C:\Users\perie\Lo_Ligam_quarantena_2026-10-12` (à supprimer après vérification). Mercredi : voir si Proton Drive peut exclure `app/node_modules`, `app/.svelte-kit`, `app/build` et `.git` (sa documentation n'en parle pas), sinon sortir le projet du dossier synchronisé. **Fiche « Pronoms personals » en double sur /mots** : la supprimer dans /admin (identifiant `pronoms-personals--copie-de-pronoms-personals`), puis retirer la ligne du filet `fichas.js` | Romain (autre PC) |
 | 10 | **Réveil technique** | bloqué | Romain ouvre le tableau de bord Supabase et relance le projet (2 minutes — le plan gratuit se met en pause après inactivité) | Romain |
 | 11 | **Courriels** (Votz/CGU lo Congrès + relance LISN) | ✅ clos le 12-10 sans envoi (cahier §11) : lo Congrès = vérification pendant la construction ; voix humaines, pas de clé Votz ; LISN sans objet | Partenariat avec lo Congrès : à étudier un jour, rien de décidé | — |
 | 12 | **Autoformation de Romain** (décision du 2026-10-04) | **en cours, prioritaire sur 3, 5 et 6** | Suivre `autoformation-parcours.md` étape par étape ; écrire la page de l'étape 1 dans `carnet-concepcion/etapa-1-nivels.md` ; Claude relit avec cinq questions, vérifie, code, ne produit plus de contenu pédagogique à sa place | Romain |

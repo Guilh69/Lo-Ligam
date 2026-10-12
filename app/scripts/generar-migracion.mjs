@@ -3,7 +3,7 @@
 //   cd app && npm run generar:migracion
 //
 // Lit app/src/lib/data/fichas.js — la source actuelle, celle que le site
-// affiche aujourd'hui — et écrit supabase-migracion-fichas.sql à la racine.
+// affiche aujourd'hui — et écrit supabase/supabase-migracion-fichas.sql.
 // Rien n'est recopié à la main : le SQL produit correspond exactement à ce qui
 // est en ligne, y compris les accents et les apostrophes.
 //
@@ -17,7 +17,7 @@ import { dirname, join } from 'node:path';
 import { categories, fichas } from '../src/lib/data/fichas.js';
 
 const racina = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const sortida = join(racina, 'supabase-migracion-fichas.sql');
+const sortida = join(racina, 'supabase', 'supabase-migracion-fichas.sql');
 
 // Échappement SQL : seule l'apostrophe droite compte. Les apostrophes
 // typographiques (’) et les accents passent tels quels en UTF-8.

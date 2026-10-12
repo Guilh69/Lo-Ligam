@@ -4,8 +4,8 @@
 	let { size = 22 } = $props();
 </script>
 
-<!-- Illustration de mas occitan fournie par Romain (Icone_mas.png à la racine
-     du projet) : détourée sur son cercle et réduite en WebP 128 px (4 ko).
+<!-- Illustration de mas occitan fournie par Romain (design-stock/icones/
+     Icone_mas.png) : détourée sur son cercle et réduite en WebP 128 px (4 ko).
      L'image porte DÉJÀ son propre fond rond terracotta — le bouton qui
      l'accueille ne doit donc pas en remettre un derrière. -->
 <img class="icone-mas" src={iconeMas} width={size} height={size} alt="" />

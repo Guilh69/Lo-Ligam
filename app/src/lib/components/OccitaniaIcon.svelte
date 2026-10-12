@@ -4,8 +4,8 @@
 
 <!-- Silhouette de l'Occitanie linguistique, extraite par analyse de pixels
      (composante connexe + enveloppe par ligne, simplifiée par
-     Ramer-Douglas-Peucker) de la carte de référence fournie dans le dossier
-     du projet ("Occitan_language_map_1900_(Europe_only).svg.webp"), pas
+     Ramer-Douglas-Peucker) de la carte de référence fournie dans
+     design-stock/icones/ ("Occitan_language_map_1900_(Europe_only).svg.webp"), pas
      dessinée à main levée — pour rester fidèle au contour réel même
      simplifié pour une petite taille d'icône. -->
 <svg
