@@ -6,13 +6,13 @@
 	// GeoJSON téléversé (zones/lignes), et modèle de popup avec les champs des
 	// données — ex. « {nom} — {descripcion} ».
 	//
-	// Deux couches restent SPÉCIALES (comportement codé) : dialèctes (couleur
-	// par zone, voir plus bas) et despartaments (3 nivèls, écran dédié). On ne
-	// peut ni les supprimer ni changer leur fichier ici.
+	// Une couche reste SPÉCIALE (comportement codé) : dialèctes (couleur par
+	// zone, voir plus bas). On ne peut pas changer son fichier ici. (Les
+	// « despartaments » à 3 niveaux ont été retirés le 2026-10-12, cahier §11.)
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
 
-	const ESPECIALAS = ['dialectes', 'departaments'];
+	const ESPECIALAS = ['dialectes'];
 	const TIPES = [
 		{ id: 'punts', oc: 'Punts (marcadors)', ajuda: 'se gerisson dins « Luòcs »' },
 		{ id: 'zonas', oc: 'Zònas (susfàcias)', ajuda: 'fichièr GeoJSON de polygòns' },
@@ -373,7 +373,7 @@
 
 			{#if ESPECIALAS.includes(forma.id)}
 				<p class="ajuda">
-					Còla especiala : son afichatge es codat (colors per zòna o nivèls). Se pòdon cambiar los
+					Còla especiala : son afichatge es codat (colors per zòna). Se pòdon cambiar los
 					libellats, la tematica e la disponibilitat ; lo fichièr e la plantilha, non.
 				</p>
 			{/if}

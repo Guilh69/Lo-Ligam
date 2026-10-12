@@ -44,13 +44,6 @@ export const CATALOGUE = [
 			// 1930) es pas pus una jaça a despart : es una pastilha dels dialèctes,
 			// causissabla coma eles (retorn de Romain : « un seul endroit »)
 			{
-				id: 'departaments',
-				oc: 'Despartaments occitanofòns',
-				fr: 'Départements occitanophones',
-				estat: 'basa',
-				defaut: false
-			},
-			{
 				id: 'limsi',
 				oc: 'Enquistas vocalas (Atlàs LISN)',
 				fr: 'Enquêtes vocales (Atlas LISN)',

@@ -29,7 +29,7 @@
 	import CercaCarta from './CercaCarta.svelte';
 
 	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
-	// carta_colas, carta_departaments — geridas dins /admin/carta) puslèu que
+	// carta_colas — geridas dins /admin/carta) puslèu que
 	// d'èsser escriches en dur aicí. Cargats dins onMount, abans de bastir la
 	// carta, per evitar tota corsa entre l'afichatge e las donadas.
 	//
@@ -38,16 +38,6 @@
 	// còdi novèl serà de besonh, sonque una linha dins carta_colas e de punts.
 	let colaColors = {};
 	let colaOpacitats = {};
-	let deptNivels = {};
-
-	// Los tres nivèls de la còla « Despartaments occitans » (definits per
-	// Romain) : lo nivèl mena l'intensitat de l'emplenatge e lo tèxte del
-	// popup. Etiquetas occitanas de validar (dicodòc).
-	const DEPT_NIVELS = {
-		1: { opacitat: 1, label: 'Occitan, sola lenga regionala' },
-		2: { opacitat: 0.55, label: 'Occitan, lenga regionala en partida' },
-		3: { opacitat: 0.25, label: "Preséncia anciana de l'occitan, despareguda" }
-	};
 
 	// Fonses de carta disponibles. Sonque lo fons « occitan » a d'etiquetas en
 	// occitan (rendudas per OSM-bzh) ; los autres son de fonses tèrças sens
@@ -384,13 +374,11 @@
 		}
 	}
 
-	// Jaces de zònas e de linhas. Doas menas :
-	// — GENERICAS : descrichas entièrament dins carta_colas (tipe, fichièr
-	//   geojson_url, color, opacitat, pes de linha, puntejat, plantilha de
-	//   popup) — creablas dempuèi /admin/carta sens cap de còdi ;
-	// — ESPECIALAS : los despartaments occitanofòns (nivèls), renduts pel
-	//   còdi çai-jos. Los dialèctes, la frontièra, lo Creissent e los contorns
-	//   administratius son pintats per la còla de donadas (colaDonadas.js).
+	// Jaces de zònas e de linhas GENERICAS : descrichas entièrament dins
+	// carta_colas (tipe, fichièr geojson_url, color, opacitat, pes de linha,
+	// puntejat, plantilha de popup) — creablas dempuèi /admin/carta sens cap de
+	// còdi. Los dialèctes, la frontièra, lo Creissent e los contorns
+	// administratius son pintats per la còla de donadas (colaDonadas.js).
 	// Lo registre final (geoDefs) es bastit dins onMount, un còp la basa legida.
 	let geoDefs = {};
 
@@ -429,33 +417,6 @@
 				: null
 		};
 	}
-
-	const SPECIAL_GEO = {
-		departaments: {
-			url: '/data/departements.geojson',
-			attribution:
-				'Contorns : <a href="https://github.com/gregoiredavid/france-geojson" target="_blank" rel="noopener">france-geojson</a> / Etalab (Licéncia Dobèrta)',
-			// Sonque los despartaments classats (taula carta_departaments) son
-			// afichats ; l'intensitat seguís lo nivèl (1 fòrt, 2 mejan, 3 leugièr).
-			filter: (feature) => feature.properties.code in deptNivels,
-			style: (feature) => {
-				const nivèl = DEPT_NIVELS[deptNivels[feature.properties.code]?.nivèl];
-				const basa = colaOpacitats.departaments ?? 0.45;
-				const color = colaColors.departaments ?? '#b53d17';
-				return {
-					color,
-					weight: 1,
-					fillColor: color,
-					fillOpacity: basa * (nivèl?.opacitat ?? 1)
-				};
-			},
-			popup: (feature) => {
-				const dept = deptNivels[feature.properties.code];
-				const nivèl = DEPT_NIVELS[dept?.nivèl];
-				return `<strong>${feature.properties.nom}</strong>${nivèl ? `<br>${nivèl.label}` : ''}`;
-			}
-		}
-	};
 
 	// Cada punt : una pastilha de veire amb l'icòna de sa jaça (Tabler Icons,
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
@@ -1685,36 +1646,22 @@
 		// mesura e Romain sabiá pas çò que voliá dire, 2026-10-10 : levat ; la
 		// barra mòstra sonque la distància)
 
-		// Puèi las donadas de la basa (luòcs, còlas, dialèctes, despartaments)
-		const [{ data: luocsData }, { data: colasData }, { data: deptData }] =
-			await Promise.all([
-				supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
-				supabase.from('carta_colas').select('*').order('ordre'),
-				supabase.from('carta_departaments').select('code, nom, nivèl')
-			]);
+		// Puèi las donadas de la basa (luòcs, còlas)
+		const [{ data: luocsData }, { data: colasData }] = await Promise.all([
+			supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
+			supabase.from('carta_colas').select('*').order('ordre')
+		]);
 
 		for (const c of colasData ?? []) {
 			colaColors[c.id] = c.color;
 			colaOpacitats[c.id] = c.opacitat;
 			// Còlas genericas de zònas/linhas : tota la definicion ven de la basa.
-			if (
-				(c.tipe === 'zonas' || c.tipe === 'linhas') &&
-				c.geojson_url &&
-				!(c.id in SPECIAL_GEO)
-			) {
+			if ((c.tipe === 'zonas' || c.tipe === 'linhas') && c.geojson_url) {
 				geoDefs[c.id] = makeGenericGeoDef(c);
 			}
 		}
-		// Las especialas passan totjorn en darrièr (ganhan sus tota linha
-		// generica omonima), e « regions » garda son filet tant que la basa
-		// es pas migrada.
-		Object.assign(geoDefs, SPECIAL_GEO);
 		// Las jaces de la còla de donadas son pas de jaces Leaflet
 		for (const id of [...JACES_DONADAS, ...JACES_LENGAS]) delete geoDefs[id];
-
-		for (const d of deptData ?? []) {
-			deptNivels[d.code] = d;
-		}
 
 		// Grope los punts per còla. Los punts d'abans la colomna cola_id (basa
 		// pas encara migrada) son de luòcs d'interès.

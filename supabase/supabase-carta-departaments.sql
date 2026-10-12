@@ -1,5 +1,9 @@
 -- Lo Ligam — còla « Despartaments occitans » (3 nivèls)
 -- =============================================================================
+-- RETIRÉE DU SITE LE 2026-10-12 (cahier §11) : dépassée par les limites de la
+-- langue et des dialectes tracées commune par commune. Ne plus rejouer ce
+-- fichier. Pour effacer aussi la table : drop table public.carta_departaments;
+-- =============================================================================
 -- À coller dans Supabase : SQL Editor → New query → Run. Rejouable.
 -- Suppose que supabase-carta-schema.sql a déjà été exécuté.
 --

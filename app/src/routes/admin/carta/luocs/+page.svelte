@@ -13,7 +13,7 @@
 
 	// Las còlas que son de PUNTS. Se la colomna « tipe » existís (migracion
 	// generica passada), es ela que decidís ; senon, lista fixa de secors.
-	const COLAS_PAS_DE_PUNTS = ['dialectes', 'provincias', 'limsi', 'regions', 'departaments'];
+	const COLAS_PAS_DE_PUNTS = ['dialectes', 'provincias', 'limsi', 'regions'];
 
 	// La colomna cola_id apareis amb supabase-carta-librarias.sql : abans
 	// aquela migracion, se ditz pas dins las escrituras (senon la basa las

@@ -96,7 +96,7 @@ export const PLAJAS = {
 // de Romain del meteis jorn) : cochadas, menan a la vista
 // d'ensemble de l'Occitània (tot lo domeni, sus totes los aparelhs ; 70 km sus
 // l'ordenador de Romain, 2026-10-11)
-export const OCCITANAS = new Set(['frontiera', 'dialectes', 'departaments', 'toponimia', 'calandretas', 'librarias', 'lieusInteres', 'festas', 'regions', 'despartaments']);
+export const OCCITANAS = new Set(['frontiera', 'dialectes', 'toponimia', 'calandretas', 'librarias', 'lieusInteres', 'festas', 'regions', 'despartaments']);
 // (la vista d'ensemble : tot lo domeni dins l'espaci liure de l'ecran, 70 km sus
 // l'ordenador de Romain : vistaOccitana dins CartaOccitania, 2026-10-11)
 // lo zoom ont anar per veire una jaça (null : se vei ja)
