@@ -121,7 +121,7 @@ photos.
 6. **Le nom « Lo Ligam »** : domaine, INPI, stores — vérifiés ou pas ?
 7. **Casting** : qui joue les personnages ? (+ autorisations écrites)
 8. ~~**design-stock** : que committer, qu'archiver ?~~ Tranché le 2026-10-12 (option A, chantier 9).
-9. **Démonstrateur pour le LISN** : intégrer leurs enquêtes vocales dans la version non publiée du site, pour montrer au labo le résultat possible ? Romain hésite (2026-10-12) ; le labo est favorable au projet.
+9. **Démonstrateur pour le LISN** : ✅ option A faite le 2026-10-12 (cahier §11) : couche « Enquêtes vocales » visible seulement en local (`npm run dev`), 115 points rangés dans nos dialectes, fiche d'écoute. Sur l'autre PC : lancer une fois `node SIG/cadena/lisn-enquistas.mjs`. Restent : B (comparer deux parlers phrase par phrase), C (fiche de commune), le nom occitan des villages, et comment le labo verra la démonstration (partage d'écran en visio ?).
 
 ## Restes du toilettage (2026-09-18) — pour les conversations concernées
 

@@ -16,3 +16,10 @@ if (fs.existsSync(RAIÇ))
 			levadas.push(nom);
 		}
 console.log(`esbòsses levats de la version en linha : ${levadas.filter((n) => n.endsWith('.html')).join(', ') || 'cap'}`);
+
+// L'Atlas sonòr (LISN, enquistas-lisn.json) : demostracion sonque en local
+// (decision de Romain, 2026-10-12), jamai en linha
+const DONADAS = path.join(RAIÇ, 'data');
+if (fs.existsSync(DONADAS))
+	for (const nom of fs.readdirSync(DONADAS))
+		if (/^enquistas-lisn\.json(\.br|\.gz)?$/.test(nom)) fs.rmSync(path.join(DONADAS, nom));

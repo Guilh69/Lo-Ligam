@@ -585,6 +585,41 @@
 		if (visibility.calandretas) pointLayers.calandretas.addTo(map);
 	}
 
+	// L'Atlas sonòr (LISN) : demostracion sonque en local (decision de Romain,
+	// 2026-10-12) ; donadas de SIG/cadena/lisn-enquistas.mjs, mp3 sul site de
+	// l'Atlas
+	const ATLAS_LISN = 'https://atlas.lisn.upsaclay.fr';
+	let enquistasCargadas = false;
+	async function cargarEnquistas() {
+		if (enquistasCargadas || !map || !import.meta.env.DEV) return;
+		enquistasCargadas = true;
+		const d = await fetch('/data/enquistas-lisn.json')
+			.then((r) => (r.ok ? r.json() : null))
+			.catch(() => null);
+		if (!d?.ponches) return (enquistasCargadas = false);
+		const fr = lang === 'fr';
+		const son = (s) =>
+			/^sounds\/[^?#<>"]+\.mp3$/i.test(s ?? '') ? `<audio controls preload="none" src="${escapeHtml(ATLAS_LISN + '/' + encodeURI(s))}"></audio>` : '';
+		const tèxt = (t, oc) => `<p class="enquista-tèxt"${oc ? ' lang="oc"' : ''}>${escapeHtml(t)}</p>`;
+		pointLayers.limsi = L.layerGroup(
+			d.ponches.map((p) => {
+				const dial = p.mix ? (fr ? p.mix.fr : p.mix.oc) : (fr ? p.d.fr : p.d.oc) + (p.cro ? (fr ? ' · Croissant' : ' · Creissent') : '');
+				const mistral = /mistral/i.test(p.g2 ?? '');
+				const autra = p.tx2
+					? `<details class="enquista-autra"><summary>${fr ? (mistral ? 'Graphie mistralienne' : 'Autre graphie') : mistral ? 'Grafia de Mistral' : 'Autra grafia'}</summary>${tèxt(p.tx2, !p.mix)}</details>`
+					: '';
+				const votz2 = p.so2 ? `<span class="enquista-votz">${fr ? 'Autre voix' : 'Autra votz'}</span>${son(p.so2)}` : '';
+				return dobleClicSus(L.marker([p.lat, p.lon], { icon: iconaPunt('limsi'), title: p.n, keyboard: true })).bindPopup(
+					`<div class="enquista"><strong>${escapeHtml(fr ? p.n : comunaOc(p.n))}</strong><span class="enquista-dial">${escapeHtml(dial)}</span><span class="enquista-titol">${fr ? '« La bise et le soleil »' : '« La bisa e lo solelh »'}</span>${son(p.so)}${votz2}${tèxt(p.tx, !p.mix)}${autra}</div>`,
+					// bulla nauta : que passe pas jos la barra de recèrca e lo rail
+					{ maxWidth: 320, autoPanPaddingTopLeft: L.point(90, 170), autoPanPaddingBottomRight: L.point(70, 24) }
+				);
+			})
+		);
+		if (d.font) map.attributionControl?.addAttribution(d.font);
+		if (visibility.limsi) pointLayers.limsi.addTo(map);
+	}
+
 	// La Calandreta mai pròcha (demanda de Romain, 2026-10-08) : a partir de
 	// la posicion de l'internauta (lo navegador la demanda ; demòra dins la
 	// pagina, es pas mandada endacòm) o de sa comuna, cercada dins un indèx
@@ -1712,6 +1747,7 @@
 		colaEstelas?.setTerritoris({ regions: !!vis.regions, despartaments: !!vis.despartaments, comunas: !!vis.comunas });
 		colaTematica?.setJaces(jacesTematicas(vis));
 		if (vis.calandretas) cargarCalandretas();
+		if (vis.limsi) cargarEnquistas();
 		if (vis.lengasFranca) cargarLengas();
 		// dialèctes o Creissent visibles : lo survòl e lo clic son per eles
 		colaEstelas?.setModeDialectes(!!vis.dialectes);
@@ -2815,6 +2851,39 @@
 		fill: var(--t-aur-clar);
 	}
 	.carta :global(.leaflet-popup-content .distancia) {
+		color: var(--t-aur-clar);
+	}
+
+	/* bulla d'una enquista de l'Atlas sonòr (demostracion locala) */
+	.carta :global(.enquista) {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+		width: min(290px, 70vw);
+	}
+	.carta :global(.enquista-dial),
+	.carta :global(.enquista-votz) {
+		font-size: 0.8rem;
+		color: var(--t-tinta-2, currentColor);
+		opacity: 0.85;
+	}
+	.carta :global(.enquista-titol) {
+		font-family: var(--font-quote);
+		font-style: italic;
+	}
+	.carta :global(.enquista audio) {
+		width: 100%;
+		height: 2.2rem;
+	}
+	.carta :global(.enquista-tèxt) {
+		margin: 0;
+		max-height: min(9.5em, 28vh);
+		overflow-y: auto;
+		padding-right: 0.4rem;
+	}
+	.carta :global(.enquista-autra summary) {
+		cursor: pointer;
+		font-size: 0.8rem;
 		color: var(--t-aur-clar);
 	}
 
