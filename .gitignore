@@ -8,5 +8,12 @@
 # Carte de l'Atlas sonore (LIMSI/LISN, CC BY-NC-SA) : contrôle seulement, pas republiée
 /SIG/Limsi/
 
+# design-stock : vidéos et archives restent sur le disque, hors Git (règle du 2026-10-12,
+# PILOTATGE chantier 9). Les autres fichiers de plus de 1 Mo sont refusés par .githooks/pre-commit.
+design-stock/**/*.mp4
+design-stock/**/*.mov
+design-stock/**/*.webm
+design-stock/**/*.zip
+
 # Python : fichièrs compilats
 __pycache__/

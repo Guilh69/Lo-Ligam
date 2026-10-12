@@ -34,6 +34,7 @@ Romain travaille via plusieurs conversations séparées, une par thème, et depu
 - Avant une tâche conséquente : `git log --oneline -15` et `git status`.
 - Committer par petits lots, **uniquement les fichiers qu'on a soi-même modifiés**.
 - **Jamais de `git add -A`** sans relire `git status`.
+- **design-stock : rien de plus de 1 Mo dans Git** (vidéos et .zip ignorés ; `.githooks/pre-commit` refuse le reste). Ne pas contourner le garde-fou : le gros fichier reste sur le disque (cahier §11, 2026-10-12).
 - Modifications non committées d'une autre conversation : ne pas les écraser ni les committer à sa place ; le signaler à Romain.
 - Fin de séance : vérifier que tout est **poussé** (committé ≠ poussé).
 - Décisions transverses → `cahier-des-charges.md` §11, pas la mémoire d'une conversation.

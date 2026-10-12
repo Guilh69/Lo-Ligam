@@ -1,0 +1,20 @@
+#!/bin/sh
+# Garde-fou design-stock (PILOTATGE chantier 9, règle du 2026-10-12) :
+# aucun fichier de plus de 1 Mo n'entre dans Git. Les gros fichiers restent
+# sur le disque (Proton Drive les sauvegarde) ; .gitignore écarte déjà
+# vidéos et .zip. Activé sur chaque ordinateur par :
+#   git config core.hooksPath .githooks
+limita=1048576
+trop=$(git -c core.quotepath=off diff --cached --name-only --diff-filter=ACM -- design-stock |
+	while IFS= read -r f; do
+		t=$(git cat-file -s ":$f")
+		if [ "$t" -gt "$limita" ]; then
+			echo "  $f ($((t / 1024)) Ko)"
+		fi
+	done)
+if [ -n "$trop" ]; then
+	echo "Commit refusé : fichiers de plus de 1 Mo dans design-stock (règle chantier 9)."
+	echo "$trop"
+	echo "Les retirer du commit : git restore --staged <fichier>"
+	exit 1
+fi

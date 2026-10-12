@@ -55,7 +55,7 @@ photos.
 | 6 | **Refonte de /aprene en « Camin »** | à faire | Construire le sommaire du cursus avec la frise du chemin (essai → Modul 0 → A1) et les 4 modules de l'unité 1 visibles | Claude |
 | 7 | **Transposition Racine² sur le site** | à faire | Coder le premier lot : ligne de promesse + ancre héros, pages A prepaus + Contacte, FAQ accordéon, kit de fluidité | Claude |
 | 8 | **Photos « sang e aur »** | bloqué | Romain inventorie ses photos existantes et pressent son casting ; Claude prépare le modèle d'autorisation (droit à l'image et à la voix) | Romain |
-| 9 | **Vidéo et design-stock** (103 Mo de PNG dans Git + 91 Mo hors Git, mesuré le 08-10) | flou | Claude mesure Officialitat.mp4, propose un plafond de poids et une règle écrite « quoi committer / quoi archiver » ; Romain tranche | ensemble |
+| 9 | **Vidéo et design-stock** (104 Mo dans Git + 159 Mo hors Git, mesuré le 12-10) | ✅ règle A le 12-10 (cahier §11) : rien de plus de 1 Mo dans Git ; vidéos et .zip ignorés ; garde-fou `.githooks/pre-commit` testé | Sur l'autre PC : lancer une fois `git config core.hooksPath .githooks` et vérifier que Proton Drive y recopie bien design-stock. Plus tard, peut-être : retirer de l'historique les 28 fichiers déjà committés de plus de 1 Mo (option C, délicat) | Romain (autre PC) |
 | 10 | **Réveil technique** | bloqué | Romain ouvre le tableau de bord Supabase et relance le projet (2 minutes — le plan gratuit se met en pause après inactivité) | Romain |
 | 11 | **Courriels** (Votz/CGU lo Congrès + relance LISN) | bloqué | Claude prépare les deux brouillons ; Romain les envoie de sa boîte | Romain |
 | 12 | **Autoformation de Romain** (décision du 2026-10-04) | **en cours, prioritaire sur 3, 5 et 6** | Suivre `autoformation-parcours.md` étape par étape ; écrire la page de l'étape 1 dans `carnet-concepcion/etapa-1-nivels.md` ; Claude relit avec cinq questions, vérifie, code, ne produit plus de contenu pédagogique à sa place | Romain |
@@ -120,7 +120,7 @@ photos.
    (répétition espacée, courriel hebdo, animations par défaut…).
 6. **Le nom « Lo Ligam »** : domaine, INPI, stores — vérifiés ou pas ?
 7. **Casting** : qui joue les personnages ? (+ autorisations écrites)
-8. **design-stock** : que committer, qu'archiver ? (~60 Mo hors Git)
+8. ~~**design-stock** : que committer, qu'archiver ?~~ Tranché le 2026-10-12 (option A, chantier 9).
 
 ## Restes du toilettage (2026-09-18) — pour les conversations concernées
 

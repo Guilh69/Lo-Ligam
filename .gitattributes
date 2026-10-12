@@ -1,0 +1,2 @@
+# Les scripts de .githooks doivent garder des fins de ligne Unix sur tous les ordinateurs
+.githooks/* text eol=lf
