@@ -2,12 +2,12 @@
 -- =============================================================================
 -- FICHIER ENGENDRÉ AUTOMATIQUEMENT — ne pas le modifier à la main.
 -- Produit par app/scripts/generar-migracion.mjs à partir de
--- app/src/lib/data/fichas.js le 2026-08-03.
+-- app/src/lib/data/fichas.js le 2026-10-12.
 --
 -- À coller dans Supabase : SQL Editor → New query → Run.
 -- Le script est REJOUABLE : le relancer met simplement les données à jour.
 --
--- Contenu : 35 thèmes et 204 fiches.
+-- Contenu : 35 thèmes et 203 fiches.
 
 -- 1) Nettoyage des lignes d'essai laissées par le contrôle de sécurité.
 --    Le « \_ » est échappé : dans un LIKE, un « _ » seul signifie
@@ -61,7 +61,7 @@ on conflict (id) do update set
 	ordre = excluded.ordre;
 
 
--- 3) Les 204 fiches.
+-- 3) Les 203 fiches.
 --    Les adresses pointent vers app/static/ : les images restent servies par
 --    le site, elles ne passent pas dans Supabase Storage (décision du
 --    2026-08-03, §11). Les fiches ajoutées plus tard depuis l'espace
@@ -103,9 +103,8 @@ insert into public.fichas (id, tema_id, titre, mini_url, grand_url, ordre) value
 	('pronoms-personals--eles-elas', 'pronoms-personals', 'Eles Elas', '/fichas/mini/pronoms-personals--eles-elas.webp', '/fichas/grand/pronoms-personals--eles-elas.webp', 2),
 	('pronoms-personals--ieu', 'pronoms-personals', 'Ieu', '/fichas/mini/pronoms-personals--ieu.webp', '/fichas/grand/pronoms-personals--ieu.webp', 3),
 	('pronoms-personals--nousautres-as', 'pronoms-personals', 'Nousautres as', '/fichas/mini/pronoms-personals--nousautres-as.webp', '/fichas/grand/pronoms-personals--nousautres-as.webp', 4),
-	('pronoms-personals--pronoms-personals', 'pronoms-personals', 'Pronoms personals', '/fichas/mini/pronoms-personals--pronoms-personals.webp', '/fichas/grand/pronoms-personals--pronoms-personals.webp', 5),
-	('pronoms-personals--tu', 'pronoms-personals', 'Tu', '/fichas/mini/pronoms-personals--tu.webp', '/fichas/grand/pronoms-personals--tu.webp', 6),
-	('pronoms-personals--vosautres-as', 'pronoms-personals', 'Vosautres as', '/fichas/mini/pronoms-personals--vosautres-as.webp', '/fichas/grand/pronoms-personals--vosautres-as.webp', 7),
+	('pronoms-personals--tu', 'pronoms-personals', 'Tu', '/fichas/mini/pronoms-personals--tu.webp', '/fichas/grand/pronoms-personals--tu.webp', 5),
+	('pronoms-personals--vosautres-as', 'pronoms-personals', 'Vosautres as', '/fichas/mini/pronoms-personals--vosautres-as.webp', '/fichas/grand/pronoms-personals--vosautres-as.webp', 6),
 	('colors-partida-1--blau', 'colors-partida-1', 'Blau', '/fichas/mini/colors-partida-1--blau.webp', '/fichas/grand/colors-partida-1--blau.webp', 0),
 	('colors-partida-1--irange', 'colors-partida-1', 'Irange', '/fichas/mini/colors-partida-1--irange.webp', '/fichas/grand/colors-partida-1--irange.webp', 1),
 	('colors-partida-1--jaune', 'colors-partida-1', 'Jaune', '/fichas/mini/colors-partida-1--jaune.webp', '/fichas/grand/colors-partida-1--jaune.webp', 2),
@@ -292,8 +291,8 @@ begin
 		raise exception 'MIGRACION : % temas en basa, 35 esperats. Tot es anullat.', nt;
 	end if;
 
-	if nf <> 204 then
-		raise exception 'MIGRACION : % fichas en basa, 204 esperadas. Tot es anullat.', nf;
+	if nf <> 203 then
+		raise exception 'MIGRACION : % fichas en basa, 203 esperadas. Tot es anullat.', nf;
 	end if;
 
 	raise notice 'Migracion capitada : % temas, % fichas.', nt, nf;

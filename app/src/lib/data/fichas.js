@@ -105,7 +105,6 @@ export const fichas = [
 	f('pronoms-personals--eles-elas', 'pronoms-personals', "Eles Elas"),
 	f('pronoms-personals--ieu', 'pronoms-personals', "Ieu"),
 	f('pronoms-personals--nousautres-as', 'pronoms-personals', "Nousautres as"),
-	f('pronoms-personals--pronoms-personals', 'pronoms-personals', "Pronoms personals"),
 	f('pronoms-personals--tu', 'pronoms-personals', "Tu"),
 	f('pronoms-personals--vosautres-as', 'pronoms-personals', "Vosautres as"),
 	f('colors-partida-1--blau', 'colors-partida-1', "Blau"),
