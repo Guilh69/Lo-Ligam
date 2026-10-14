@@ -290,7 +290,6 @@
 				{#each CAMINS as c, n (c.oc)}
 					<article class="panel esvani" data-revela style:--i={n}>
 						<div class="panel-tèxt">
-							<p class="panel-num" aria-hidden="true">0{n + 1}</p>
 							<div>
 								<h3 class="panel-nom">{@render bi(c.oc, c.fr)}</h3>
 								<p class="panel-tagline">{@render bi(c.toc, c.tfr)}</p>

@@ -209,7 +209,7 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 /* Jalons : la convencion editoriala (pichon subretítol, grand messatge) mas mai legibla (decision Romain 2026-10-07) */
 .acuelh .jalon { position: relative; display: grid; justify-items: start; gap: 0.6rem; padding-top: 1.6rem; margin-bottom: 4.5rem; }
 .acuelh .jalon b { font-family: var(--titol); font-weight: 400; font-size: clamp(3.6rem, 7vw, 7rem); line-height: 0.85; color: transparent; -webkit-text-stroke: 1px var(--aur); }
-.acuelh .jalon span { font-family: var(--titol); font-weight: 400; font-size: clamp(1.8rem, 3.2vw, 3rem); line-height: 1.05; color: var(--crema); }
+.acuelh .jalon span { font-family: var(--titol); font-weight: 400; font-size: clamp(2rem, 3.6vw, 3.2rem); line-height: 1.05; color: var(--crema); }
 /* Seccions plan separadas (2026-10-14, retorn de Cyril ; Romain causís A e B amassa) : un fial
    daurat se tira al dessús de cada títol, e lo títol se dobrís coma un capítol */
 .acuelh .jalon::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
@@ -278,8 +278,8 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 .acuelh .camins-pista { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1.4rem, 2.4vw, 2.6rem); }
 .acuelh .panel { container-type: inline-size; display: flex; flex-direction: column; gap: 1.4rem; min-width: 0; }
 .acuelh .panel-tèxt { flex: 1; display: flex; flex-direction: column; gap: 1.2rem; min-width: 0; }
-.acuelh .panel-num { font-family: var(--titol); font-size: clamp(2.2rem, 16cqi, 3.6rem); line-height: 0.9; color: transparent; -webkit-text-stroke: 1px var(--aur); }
-.acuelh .panel-nom { font-family: var(--titol); font-size: clamp(2rem, 13cqi, 3.4rem); line-height: 0.95; color: var(--crema); }
+/* Los noms de las cartas demòran mai pichons que lo títol de la seccion (retorn de Romain, 2026-10-14) */
+.acuelh .panel-nom { font-family: var(--titol); font-size: clamp(1.5rem, 8cqi, 2.2rem); line-height: 0.95; color: var(--crema); }
 .acuelh .panel-tagline { font-family: var(--votz); font-style: italic; font-size: clamp(1.15rem, 6.5cqi, 1.6rem); color: var(--aur-clar); margin-top: 0.5rem; }
 /* Las listas s'alinhan en bas d'una carta a l'autra */
 .acuelh .panel-items { list-style: none; border-top: 1px solid var(--crema-3); margin-top: auto; }
@@ -314,7 +314,6 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 }
 @container camins (max-width: 620px) {
 	.acuelh .camins-pista { grid-template-columns: 1fr; row-gap: 3.4rem; }
-	.acuelh .panel-num { display: none; }
 }
 /* ---------- Acte V : las chifras ---------- */
 .acuelh .chifras { padding: 24vh var(--marge) 18vh; }
