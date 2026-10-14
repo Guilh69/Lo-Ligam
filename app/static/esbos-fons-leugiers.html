@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fr" data-tema="sorne" data-fons="brasa">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Lo Ligam, fonds légers</title>
+<!--
+  Planche d'essai (2026-10-14, demande de Romain) : la version légère des
+  animations du site. Trois fonds minimalistes, en CSS seul : rien n'est
+  calculé à chaque image (pas de WebGL, pas de boucle JavaScript), seuls
+  le mouvement et l'opacité bougent, et tout s'arrête sous
+  prefers-reduced-motion.
+-->
+<style>
+@font-face { font-family: Limelight; src: url(/fonts/limelight.woff2) format('woff2'); font-display: swap; }
+@font-face { font-family: Luciole; src: url(/fonts/luciole-regular.woff2) format('woff2'); font-display: swap; }
+:root {
+	--fons: #120906; --fons-2: #2a110a; --tinta: #f5ead8; --tinta-2: rgba(245, 234, 216, .72);
+	--vel: rgba(18, 9, 6, .72); --linha: rgba(245, 234, 216, .16);
+	--aur: #eeaf34; --aur-clar: #ffd47f; --terra: #b53d17; --terra-viu: #e0612f;
+	--lum-1: rgba(181, 61, 23, .34); --lum-2: rgba(238, 175, 52, .16); --ombra: rgba(0, 0, 0, .5);
+}
+[data-tema=clar] {
+	--fons: #f5ead8; --fons-2: #ebd5b5; --tinta: #2e1d14; --tinta-2: rgba(46, 29, 20, .72);
+	--vel: rgba(245, 234, 216, .82); --linha: rgba(46, 29, 20, .16);
+	--aur: #a85d12; --aur-clar: #8a3f12; --terra-viu: #b53d17;
+	--lum-1: rgba(181, 61, 23, .13); --lum-2: rgba(238, 175, 52, .2); --ombra: rgba(120, 60, 20, .1);
+}
+html, body { margin: 0; height: 100%; }
+body { background: var(--fons); color: var(--tinta); font-family: Luciole, system-ui, sans-serif; overflow: hidden; }
+
+/* ---------- Le fond commun : une nuit chaude, plus claire vers le bas ---------- */
+.fons { position: fixed; inset: 0; overflow: hidden; background: linear-gradient(to top, var(--fons-2), var(--fons) 72%); }
+.fons::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+	background: radial-gradient(ellipse 75% 70% at 55% 48%, transparent 45%, var(--ombra)); }
+.m { position: absolute; inset: 0; display: none; }
+[data-fons=brasa] .m-brasa, [data-fons=fial] .m-fial, [data-fons=estelas] .m-estelas { display: block; }
+
+/* ---------- 1. Braise : deux lueurs qui dérivent, quelques étincelles ---------- */
+.m-brasa i { position: absolute; border-radius: 50%; will-change: transform; }
+.m-brasa i:nth-child(1) { width: 95vmax; height: 95vmax; left: -35vmax; top: 5vh;
+	background: radial-gradient(closest-side, var(--lum-1), transparent); animation: derivaA 80s ease-in-out infinite alternate; }
+.m-brasa i:nth-child(2) { width: 65vmax; height: 65vmax; right: -22vmax; top: -28vmax;
+	background: radial-gradient(closest-side, var(--lum-2), transparent); animation: derivaB 110s ease-in-out infinite alternate; }
+@keyframes derivaA { to { transform: translate(28vw, -14vh) scale(1.15); } }
+@keyframes derivaB { to { transform: translate(-20vw, 22vh) scale(.88); } }
+.m-brasa b { position: absolute; bottom: -1vh; width: 3px; height: 3px; border-radius: 50%; opacity: 0;
+	background: var(--aur-clar); box-shadow: 0 0 6px var(--aur); will-change: transform, opacity;
+	animation: escarbilha 19s linear infinite; }
+.m-brasa b:nth-of-type(1) { left: 18%; animation-delay: -3s; }
+.m-brasa b:nth-of-type(2) { left: 41%; animation-delay: -11s; animation-duration: 23s; }
+.m-brasa b:nth-of-type(3) { left: 67%; animation-delay: -7s; animation-duration: 17s; }
+.m-brasa b:nth-of-type(4) { left: 84%; animation-delay: -15s; animation-duration: 25s; }
+@keyframes escarbilha {
+	0% { transform: translate(0, 0); opacity: 0; }
+	12% { opacity: .85; }
+	70% { opacity: .4; }
+	100% { transform: translate(5vw, -62vh); opacity: 0; }
+}
+
+/* ---------- 2. Fil : deux fils, or et brique, qui se croisent (lo ligam) ---------- */
+.m-fial svg { position: absolute; left: 0; top: 56vh; width: max(200vw, 1800px); height: 24vh; overflow: visible; will-change: transform; }
+.m-fial path { fill: none; vector-effect: non-scaling-stroke; stroke-linecap: round; }
+.m-fial svg:nth-child(1) path { stroke: var(--aur); stroke-width: 1.6; opacity: .6; }
+.m-fial svg:nth-child(2) path { stroke: var(--terra-viu); stroke-width: 1.6; opacity: .65; }
+.m-fial svg:nth-child(1) { animation: fial 90s linear infinite; }
+.m-fial svg:nth-child(2) { animation: fial 125s linear infinite reverse; }
+@keyframes fial { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---------- 3. Étoiles : un ciel qui scintille, une étoile filante parfois ---------- */
+.m-estelas i { position: absolute; inset: 0; will-change: opacity; animation: lusir 7s ease-in-out infinite alternate; }
+.m-estelas i:nth-child(1) { background-image: var(--e0); }
+.m-estelas i:nth-child(2) { background-image: var(--e1); animation-duration: 11s; animation-delay: -4s; }
+.m-estelas i:nth-child(3) { background-image: var(--e2); animation-duration: 16s; animation-delay: -9s; }
+@keyframes lusir { from { opacity: .2; } to { opacity: 1; } }
+.m-estelas b { position: absolute; top: 16%; left: 62%; width: 130px; height: 1px; opacity: 0;
+	background: linear-gradient(90deg, var(--aur-clar), transparent); will-change: transform, opacity;
+	animation: filanta 23s ease-out 3s infinite; }
+@keyframes filanta {
+	0% { opacity: 0; transform: rotate(-20deg) translateX(0); }
+	1% { opacity: 1; }
+	5%, 100% { opacity: 0; transform: rotate(-20deg) translateX(-280px); }
+}
+
+/* Mouvement réduit (réglage du système) ou bouton « Pause » : le fond reste, immobile */
+@media (prefers-reduced-motion: reduce) { .m *, .m *::before { animation: none !important; } .m-estelas b, .m-brasa b { display: none; } }
+[data-pausa] .m * { animation-play-state: paused !important; }
+
+/* ---------- La page posée dessus ---------- */
+main { position: relative; min-height: 100%; display: grid; place-content: center; text-align: center; padding: 0 16px 9rem; box-sizing: border-box; }
+h1 { font-family: Limelight, serif; font-weight: 400; font-size: clamp(2.3rem, 7vw, 5.4rem); line-height: 1.05; margin: 0 0 .6rem; }
+main p { margin: 0 auto; max-width: 34rem; color: var(--tinta-2); font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.55; }
+.barra { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); width: min(40rem, calc(100% - 32px)); box-sizing: border-box;
+	background: var(--vel); border: 1px solid var(--linha); border-radius: 14px; padding: .8rem; backdrop-filter: blur(8px); }
+.barra .tria { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; }
+.barra button { font: inherit; font-size: .95rem; color: var(--tinta); background: transparent; border: 1px solid var(--linha);
+	border-radius: 999px; padding: .45rem .95rem; cursor: pointer; }
+.barra button[aria-pressed=true] { border-color: var(--aur); color: var(--aur); }
+.barra button:focus-visible { outline: 2px solid var(--aur); outline-offset: 2px; }
+.barra .sep { width: 1px; background: var(--linha); margin: 0 .2rem; }
+@media (max-width: 520px) { .barra .sep { display: none; } }
+.barra .nota { margin: .6rem .3rem 0; font-size: .85rem; line-height: 1.45; color: var(--tinta-2); text-align: center; }
+</style>
+</head>
+<body>
+<div class="fons" aria-hidden="true">
+	<div class="m m-brasa"><i></i><i></i><b></b><b></b><b></b><b></b></div>
+	<div class="m m-fial">
+		<svg viewBox="0 0 2400 200" preserveAspectRatio="none"><path d="M0 100Q300 15 600 100T1200 100T1800 100T2400 100"/></svg>
+		<svg viewBox="0 0 2400 200" preserveAspectRatio="none"><path d="M0 100Q300 185 600 100T1200 100T1800 100T2400 100"/></svg>
+	</div>
+	<div class="m m-estelas"><i></i><i></i><i></i><b></b></div>
+</div>
+
+<main>
+	<h1>Lo Ligam t’acompanha</h1>
+	<p>Essai des fonds légers : le texte et les boutons du site se posent ici, le fond reste discret derrière.</p>
+</main>
+
+<div class="barra">
+	<div class="tria">
+		<button data-f="brasa" aria-pressed="true">1. Braise</button>
+		<button data-f="fial" aria-pressed="false">2. Fil</button>
+		<button data-f="estelas" aria-pressed="false">3. Étoiles</button>
+		<span class="sep"></span>
+		<button id="tema" aria-pressed="false">Clair</button>
+		<button id="pausa" aria-pressed="false">Pause</button>
+	</div>
+	<p class="nota" id="nota"></p>
+</div>
+
+<script>
+const h = document.documentElement;
+const NOTAS = {
+	brasa: 'Deux lueurs de braise dérivent très lentement, quelques étincelles montent. Les couleurs des visuels Instagram, sans aucun calcul.',
+	fial: 'Deux fils, or et brique, ondulent en sens contraire et se croisent sans cesse : le lien entre deux personnes, lo ligam.',
+	estelas: 'Un ciel de nuit qui scintille doucement, une étoile filante de temps en temps : le ciel de la carte en étoiles.'
+};
+// Trois couches d'étoiles en motifs de tailles différentes (389, 613, 887 px) : la répétition ne se voit pas
+function estelas() {
+	const cols = h.dataset.tema === 'clar' ? ['#b53d17', '#a85d12', '#8a3f12'] : ['#ffd47f', '#f5ead8', '#eeaf34'];
+	[[389, 14, .7], [613, 12, 1], [887, 7, 1.5]].forEach(([t, n, r], k) => {
+		let s = `<svg xmlns='http://www.w3.org/2000/svg' width='${t}' height='${t}'><g fill='${cols[k]}'>`;
+		for (let i = 0; i < n; i++) s += `<circle cx='${(Math.random() * t).toFixed(1)}' cy='${(Math.random() * t).toFixed(1)}' r='${r}'/>`;
+		h.style.setProperty('--e' + k, `url("data:image/svg+xml,${encodeURIComponent(s + '</g></svg>')}")`);
+	});
+}
+function triar(f) {
+	h.dataset.fons = f;
+	document.querySelectorAll('[data-f]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.f === f));
+	document.getElementById('nota').textContent = NOTAS[f];
+}
+document.querySelectorAll('[data-f]').forEach((b) => b.addEventListener('click', () => triar(b.dataset.f)));
+document.getElementById('tema').addEventListener('click', (ev) => {
+	const clar = h.dataset.tema !== 'clar';
+	h.dataset.tema = clar ? 'clar' : 'sorne';
+	ev.currentTarget.textContent = clar ? 'Sombre' : 'Clair';
+	estelas();
+});
+document.getElementById('pausa').addEventListener('click', (ev) => {
+	const p = !('pausa' in h.dataset);
+	p ? (h.dataset.pausa = '') : delete h.dataset.pausa;
+	ev.currentTarget.setAttribute('aria-pressed', p);
+	ev.currentTarget.textContent = p ? 'Reprendre' : 'Pause';
+});
+const q = new URLSearchParams(location.search);
+if (q.get('tema') === 'clar') document.getElementById('tema').click();
+estelas();
+triar(NOTAS[q.get('fons')] ? q.get('fons') : 'brasa');
+</script>
+</body>
+</html>

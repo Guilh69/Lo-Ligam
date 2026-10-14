@@ -31,7 +31,7 @@
 		let quitada = false;
 		import('$lib/acuelh/motor.js').then(({ lancarAcuelh }) => {
 			if (quitada) return;
-			motor = lancarAcuelh(racina, { clar: ambianca.clar, dalt: ambianca.dalt, fons: ambianca.fons });
+			motor = lancarAcuelh(racina, { clar: ambianca.clar, dalt: ambianca.dalt, fons: ambianca.fons, leugier: ambianca.leugier });
 		});
 		try {
 			const v = localStorage.getItem(CLAU_LENGA_CORS);
@@ -56,6 +56,10 @@
 	$effect(() => {
 		const n = ambianca.fons;
 		motor?.fons(n);
+	});
+	$effect(() => {
+		const l = ambianca.leugier;
+		motor?.leugier(l);
 	});
 
 	/* Langue de départ des cours : chaque langue nommée dans elle-même, la
@@ -127,6 +131,8 @@
 
 <div class="acuelh" class:fr bind:this={racina}>
 	<canvas id="fons" aria-hidden="true"></canvas>
+	<!-- Fond léger (2026-10-14) : la braise, en CSS seul (acuelh.css) -->
+	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 	<canvas id="estelas" aria-hidden="true"></canvas>
 	<div class="cur-anel" aria-hidden="true"></div>
 	<div class="cur-ponch" aria-hidden="true"></div>

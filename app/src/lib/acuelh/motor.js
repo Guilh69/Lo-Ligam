@@ -110,10 +110,15 @@ export function lancarAcuelh(racina, opcions = {}) {
 	}
 
 	/* ================= Fons WebGL : las venas d'aur ================= */
+	// Fons leugièr (2026-10-14) : la brasa en CSS remplaça lo shader. Lo contèxte
+	// WebGL se crèa sonque quand cal (pas jamai sus un telefòn que demòra leugièr).
 	const fons = racina.querySelector('#fons');
-	const gl = fons.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
-	let U = null;
-	if (gl) {
+	let gl = null, U = null, glProvat = false, leugier = !!opcions.leugier;
+	function iniciarGL() {
+		if (glProvat || !viu) return;
+		glProvat = true;
+		gl = fons.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
+		if (!gl) return;
 		// Las corbas de nivèl an besonh de las derivadas (fwidth) per un traç fin e regular
 		const deriv = gl.getExtension('OES_standard_derivatives');
 		const frag = (deriv ? '#extension GL_OES_standard_derivatives : enable\n#define DERIV\n' : '') + `
@@ -223,6 +228,9 @@ export function lancarAcuelh(racina, opcions = {}) {
 		const a = gl.getAttribLocation(pr, 'a');
 		gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
 		U = Object.fromEntries(['r', 't', 'm', 's', 'p', 'c', 'rel', 'g', 'ro', 'mo', 'cl'].map((k) => [k, gl.getUniformLocation(pr, k)]));
+		fons.width = Math.round(W * ESCALA_FONS); fons.height = Math.round(H * ESCALA_FONS); gl.viewport(0, 0, fons.width, fons.height);
+		forçarFons = true;
+		if (reliefDemandat) cargarRelief();
 	}
 	// Mièja resolucion : lo flou del bruch o perdona, la carta grafica trabalha 4 còps mens.
 	const ESCALA_FONS = 0.5;
@@ -768,7 +776,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		dessenharConstellacion(t, sy);
 		// Fons a 30 imatges/s : las venas van lentament, l'uelh i ve pas res
 		const besonhFons = modeFons !== 3 || sy !== sySimple || forçarFons;
-		if (gl && besonhFons && (fotograma++ & 1) === 0) {
+		if (gl && !leugier && besonhFons && (fotograma++ & 1) === 0) {
 			sySimple = sy; forçarFons = false;
 			const maxSy = Math.max(1, document.documentElement.scrollHeight - H);
 			gl.uniform2f(U.r, fons.width, fons.height);
@@ -788,6 +796,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 	}
 	aplicarTema(opcions.clar, opcions.dalt);
 	modeFons = opcions.fons ?? 0;
+	if (!leugier) iniciarGL();
 	idRaf = requestAnimationFrame(bocla);
 	// Mòde calm : un imatge fix, redessenhat sonque quand quicòm càmbia
 	if (calm) ['scroll', 'resize'].forEach((ev) => addEventListener(ev, () => (idRaf = requestAnimationFrame(bocla)), { passive: true, signal }));
@@ -802,6 +811,11 @@ export function lancarAcuelh(racina, opcions = {}) {
 		},
 		fons(n) {
 			modeFons = n; forçarFons = true;
+			if (calm) idRaf = requestAnimationFrame(bocla);
+		},
+		leugier(v) {
+			leugier = !!v;
+			if (!leugier) { iniciarGL(); forçarFons = true; }
 			if (calm) idRaf = requestAnimationFrame(bocla);
 		},
 		destruir() {

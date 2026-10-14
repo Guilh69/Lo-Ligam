@@ -44,6 +44,41 @@ html.lenis, html.lenis body { height: auto; }
 .acuelh #fons, .acuelh #estelas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .acuelh #fons { z-index: 0; }
 .acuelh #estelas { z-index: 1; }
+/* ---------- Fons leugièr : la brasa (2026-10-14, causida per Romain) ----------
+   Pas cap de calcul a cada imatge : doas lusors que derivan e quatre belugas,
+   sonque transform e opacitat (planca d'ensag : static/esbos-fons-leugiers.html).
+   Escondut (display: none) quand es pas en servici : res non bolega per res. */
+.acuelh .brasa { display: none; position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+	--b-fons: #120906; --b-fons-2: #2a110a; --b-lum-1: rgba(181, 61, 23, 0.34); --b-lum-2: rgba(238, 175, 52, 0.16);
+	--b-beluga: #ffd47f; --b-beluga-lum: #eeaf34; --b-ombra: rgba(0, 0, 0, 0.5);
+	background: linear-gradient(to top, var(--b-fons-2), var(--b-fons) 72%); transition: opacity 0.8s ease; }
+:root[data-tema='clar'] .acuelh .brasa { --b-fons: #f5ead8; --b-fons-2: #ebd5b5; --b-lum-1: rgba(181, 61, 23, 0.13);
+	--b-lum-2: rgba(238, 175, 52, 0.2); --b-beluga: #8a3f12; --b-beluga-lum: #a85d12; --b-ombra: rgba(120, 60, 20, 0.1); }
+:root[data-leugier='on'] .acuelh .brasa { display: block; }
+:root[data-leugier='on'] .acuelh #fons { display: none; }
+@starting-style { :root[data-leugier='on'] .acuelh .brasa { opacity: 0; } }
+.acuelh .brasa::after { content: ''; position: absolute; inset: 0;
+	background: radial-gradient(ellipse 75% 70% at 55% 48%, transparent 45%, var(--b-ombra)); }
+.acuelh .brasa i { position: absolute; border-radius: 50%; will-change: transform; }
+.acuelh .brasa i:nth-child(1) { width: 95vmax; height: 95vmax; left: -35vmax; top: 5vh;
+	background: radial-gradient(closest-side, var(--b-lum-1), transparent); animation: brasa-a 80s ease-in-out infinite alternate; }
+.acuelh .brasa i:nth-child(2) { width: 65vmax; height: 65vmax; right: -22vmax; top: -28vmax;
+	background: radial-gradient(closest-side, var(--b-lum-2), transparent); animation: brasa-b 110s ease-in-out infinite alternate; }
+@keyframes brasa-a { to { transform: translate(28vw, -14vh) scale(1.15); } }
+@keyframes brasa-b { to { transform: translate(-20vw, 22vh) scale(0.88); } }
+.acuelh .brasa b { position: absolute; bottom: -1vh; width: 3px; height: 3px; border-radius: 50%; opacity: 0;
+	background: var(--b-beluga); box-shadow: 0 0 6px var(--b-beluga-lum); will-change: transform, opacity;
+	animation: brasa-beluga 19s linear infinite; }
+.acuelh .brasa b:nth-of-type(1) { left: 18%; animation-delay: -3s; }
+.acuelh .brasa b:nth-of-type(2) { left: 41%; animation-delay: -11s; animation-duration: 23s; }
+.acuelh .brasa b:nth-of-type(3) { left: 67%; animation-delay: -7s; animation-duration: 17s; }
+.acuelh .brasa b:nth-of-type(4) { left: 84%; animation-delay: -15s; animation-duration: 25s; }
+@keyframes brasa-beluga {
+	0% { transform: translate(0, 0); opacity: 0; }
+	12% { opacity: 0.85; }
+	70% { opacity: 0.4; }
+	100% { transform: translate(5vw, -62vh); opacity: 0; }
+}
 .acuelh main, .acuelh .capçal { position: relative; z-index: 2; }
 /* ---------- Cursor ---------- */
 .acuelh .cur-ponch, .acuelh .cur-anel { position: fixed; top: 0; left: 0; z-index: 90; pointer-events: none; border-radius: 50%; opacity: 0; }

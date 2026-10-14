@@ -1,7 +1,7 @@
 <script>
 	// Bouton « soleil » + panneau de réglages d'ambiance (cadre commun,
 	// 2026-10-07, repris de l'esbòs de nuèch) : thème, couleurs adaptées au
-	// daltonisme, fond animé. Les réglages vivent dans stores/ambianca.
+	// daltonisme, fond animé, fond léger. Les réglages vivent dans stores/ambianca.
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
@@ -21,6 +21,7 @@
 			dalt: 'Colors adaptadas (daltonisme)',
 			forçat: 'Aquesta pagina demòra en clar pel moment.',
 			fons: 'Fons',
+			leugier: 'Fons leugièr',
 			fonses: ['Venas d’aur', 'Lum e estelas', 'Corbas de nivèl', 'Simple']
 		},
 		fr: {
@@ -32,6 +33,7 @@
 			dalt: 'Couleurs adaptées (daltonisme)',
 			forçat: 'Cette page reste en clair pour le moment.',
 			fons: 'Fond',
+			leugier: 'Fond léger',
 			fonses: ['Veines d’or', 'Lumière et étoiles', 'Courbes de niveau', 'Sobre']
 		}
 	};
@@ -104,7 +106,17 @@
 
 			{#if ambianca.fonsPresent}
 				<p class="ambianca-titol">{tx.fons}</p>
-				{#each ORDRE_FONS as v (v)}
+				<!-- Fond léger (2026-10-14) : la braise en CSS seul, d'office sur
+				     téléphone ; les fonds calculés ne s'affichent qu'en dehors -->
+				<button
+					type="button"
+					class="dalt leugier"
+					aria-pressed={ambianca.leugier}
+					onclick={() => (ambianca.leugier = !ambianca.leugier)}
+				>
+					<span class="interr" aria-hidden="true"></span>{tx.leugier}
+				</button>
+				{#each ambianca.leugier ? [] : ORDRE_FONS as v (v)}
 					<label class="fons-opcion">
 						<input
 							type="radio"
@@ -279,6 +291,15 @@
 	.dalt[aria-pressed='true'] .interr::after {
 		transform: translateX(14px);
 		background: #fff;
+	}
+
+	.leugier[aria-pressed='true'] .interr {
+		background: var(--t-aur);
+		border-color: var(--t-aur);
+	}
+
+	.leugier[aria-pressed='true'] .interr::after {
+		background: var(--t-fons);
 	}
 
 	.fons-opcion {
