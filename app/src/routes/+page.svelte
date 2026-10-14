@@ -25,24 +25,7 @@
 	let racina;
 	let motor = $state.raw(null);
 
-	// ESSAI PROVISOIRE (2026-10-14) : trois façons de mieux séparer les
-	// sections (retour de Cyril), comparées sur la vraie page avec /?seccions.
-	// À retirer une fois le choix de Romain fait (avec le bloc ENSAG d'acuelh.css).
-	const ESSAIS_SECCIONS = [
-		['', 'Actuel'],
-		['a', 'A · Fil d’or'],
-		['b', 'B · Chapitres'],
-		['c', 'C · Bandes']
-	];
-	let ensagSeccions = $state(false);
-	let seccions = $state('');
-
 	onMount(() => {
-		const q = new URLSearchParams(location.search);
-		if (q.has('seccions')) {
-			ensagSeccions = true;
-			seccions = ESSAIS_SECCIONS.some(([v]) => v === q.get('seccions')) ? q.get('seccions') : 'a';
-		}
 		// Le panneau d'ambiance propose les fonds seulement là où il y en a un
 		ambianca.fonsPresent = true;
 		let quitada = false;
@@ -146,7 +129,7 @@
 		><path d="M2 8h12M9 3l5 5-5 5" /></svg
 	>{/snippet}
 
-<div class="acuelh" class:fr bind:this={racina} data-seccions={seccions || undefined}>
+<div class="acuelh" class:fr bind:this={racina}>
 	<canvas id="fons" aria-hidden="true"></canvas>
 	<!-- Fond léger (2026-10-14) : la braise, en CSS seul (acuelh.css) -->
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
@@ -446,13 +429,5 @@
 				</div>
 			</div>
 		</section>
-
-		{#if ensagSeccions}
-			<div class="ensag-seccions" role="group" aria-label="Essai : séparation des sections">
-				{#each ESSAIS_SECCIONS as [v, nom] (v)}
-					<button type="button" aria-pressed={seccions === v} onclick={() => (seccions = v)}>{nom}</button>
-				{/each}
-			</div>
-		{/if}
 	</main>
 </div>
