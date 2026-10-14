@@ -213,6 +213,27 @@ Règles : sobre, pas kitsch (une seule animation de texte à la fois sur l'écra
 - *Écartées* : Fontshare et Fontspace (typographie close, §2 ; licences mêlées chez Fontspace), Vecteezy (attribution obligatoire, beaucoup d'images IA, style générique), Replicate (IA payante à l'usage, contraire au §3bis).
 ---
 
+## 5septies. Version légère (décision 2026-10-14)
+
+Le site aura une **version légère** : même site, mêmes fonctions, presque rien
+qui bouge, pour l'accessibilité et pour qui préfère le minimalisme. Elle n'est
+pas imposée : le visiteur la choisit au premier passage, le choix est mémorisé
+dans le navigateur et reste modifiable dans le panneau Ambiance. Elle s'ajoute
+au respect de `prefers-reduced-motion` (réglage du système), qui reste dû
+partout.
+
+**Règle dès maintenant : toute nouvelle animation prévoit sa version légère**
+(immobile, ou un fondu court), branchée sur `:root[data-leugier='on']` en CSS
+ou sur `ambianca.leugier` en JavaScript (`app/src/lib/stores/ambianca.svelte.js`).
+
+- Déjà fait : le fond de l'accueil (la braise, CSS seul, sans WebGL).
+- À reprendre à la fin du site : la croix-constellation qui tourne et se forme,
+  la constellation redessinée à chaque image, le défilement amorti (Lenis), le
+  curseur, l'entrée en scène de la carte, le scintillement des étoiles, les
+  animations de texte, les révélations au défilement.
+- Le libellé « Fons leugièr » deviendra celui de toute la version légère
+  (nouveau nom à vérifier avec l'API de lo Congrès).
+
 ## 6. Décision
 
 L'identité visuelle de Lo Ligam est **actée** : celle de l'Instagram existant, adaptée aux règles d'interface ci-dessus. Sert de référence à Claude Code.

@@ -6,11 +6,11 @@ import { browser } from '$app/environment';
 // visite à l'autre, et posés sur <html> (data-tema, data-dalt, data-fons,
 // data-leugier) pour que le CSS de toutes les pages suive.
 //
-// Fond léger (2026-10-14, choix de Romain : « automatique ») : la braise en
-// CSS seul remplace le fond calculé (WebGL). Actif d'office sur téléphone et
-// tablette, sur les appareils modestes, quand le visiteur économise ses
-// données ou demande moins de mouvement ; l'interrupteur du panneau garde le
-// choix du visiteur, qui l'emporte ensuite.
+// Fond léger (2026-10-14) : la braise en CSS seul remplace le fond calculé
+// (WebGL). Jamais par défaut (Romain : Venas d'aur reste le fond de tous) :
+// seulement sur choix du visiteur, mémorisé dans ce navigateur. Première
+// brique de la future version légère de tout le site, proposée au premier
+// passage (cahier §11, 2026-10-14).
 //
 // Les pages pas encore harmonisées avec la nouvelle charte restent en clair
 // (elles sont dessinées pour un fond crème) : le layout lève `forçarClar`
@@ -34,8 +34,7 @@ function crearEstat() {
 		tema: 'sorne',
 		dalt: false,
 		fons: 0, // Venas d'aur, l'ambiança preferida de Romain (2026-10-07)
-		leugier: null, // choix du visiteur ('on' / 'off'), null = automatique
-		leugierAuto: false,
+		leugier: false, // fond léger, sur choix du visiteur seulement
 		forçarClar: false,
 		sistèmaClar: false,
 		// Vrai tant qu'une page affiche le fond animé : le choix du fond
@@ -63,24 +62,6 @@ function escriure(k, v) {
 	}
 }
 
-// Mode automatique : écran tactile sans survol (téléphone, tablette),
-// économiseur de données, appareil modeste (4 Go ou 4 cœurs au plus, quand
-// le navigateur le dit) ou mouvement réduit demandé au système.
-function detectarLeugier() {
-	const n = navigator;
-	return (
-		matchMedia('(hover: none) and (pointer: coarse)').matches ||
-		matchMedia('(prefers-reduced-motion: reduce)').matches ||
-		n.connection?.saveData === true ||
-		(n.deviceMemory > 0 && n.deviceMemory <= 4) ||
-		(n.hardwareConcurrency > 0 && n.hardwareConcurrency <= 4)
-	);
-}
-
-function leugierEfectiu() {
-	return e.leugier ? e.leugier === 'on' : e.leugierAuto;
-}
-
 function clarEfectiu() {
 	return e.forçarClar || e.tema === 'clar' || (e.tema === 'sistema' && e.sistèmaClar);
 }
@@ -91,7 +72,7 @@ function aplicar() {
 	d.tema = clarEfectiu() ? 'clar' : 'sorne';
 	d.dalt = e.dalt ? 'on' : 'off';
 	d.fons = String(e.fons);
-	d.leugier = leugierEfectiu() ? 'on' : 'off';
+	d.leugier = e.leugier ? 'on' : 'off';
 }
 
 export const ambianca = {
@@ -122,13 +103,12 @@ export const ambianca = {
 		escriure(CLAU.fons, String(v));
 		aplicar();
 	},
-	/** Fond léger réellement appliqué (choix du visiteur, sinon automatique). */
 	get leugier() {
-		return leugierEfectiu();
+		return e.leugier;
 	},
 	set leugier(v) {
-		e.leugier = v ? 'on' : 'off';
-		escriure(CLAU.leugier, e.leugier);
+		e.leugier = !!v;
+		escriure(CLAU.leugier, e.leugier ? 'on' : 'off');
 		aplicar();
 	},
 	/** Thème réellement affiché (après « système » et pages forcées en clair). */
@@ -160,9 +140,7 @@ if (browser && !G.__loLigamAmbiancaLegit) {
 	e.dalt = legir(CLAU.dalt) === 'on';
 	const f = legir(CLAU.fons);
 	if (f !== null && FONSES.includes(Number(f))) e.fons = Number(f);
-	const l = legir(CLAU.leugier);
-	if (l === 'on' || l === 'off') e.leugier = l;
-	e.leugierAuto = detectarLeugier();
+	e.leugier = legir(CLAU.leugier) === 'on';
 	const mq = matchMedia('(prefers-color-scheme: light)');
 	e.sistèmaClar = mq.matches;
 	mq.addEventListener('change', (ev) => {

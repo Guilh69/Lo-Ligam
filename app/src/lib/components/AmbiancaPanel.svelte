@@ -106,8 +106,8 @@
 
 			{#if ambianca.fonsPresent}
 				<p class="ambianca-titol">{tx.fons}</p>
-				<!-- Fond léger (2026-10-14) : la braise en CSS seul, d'office sur
-				     téléphone ; les fonds calculés ne s'affichent qu'en dehors -->
+				<!-- Fond léger (2026-10-14) : la braise en CSS seul, sur choix du
+				     visiteur ; les fonds calculés ne s'affichent qu'en dehors -->
 				<button
 					type="button"
 					class="dalt leugier"
