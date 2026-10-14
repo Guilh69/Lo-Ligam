@@ -189,7 +189,12 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 .acuelh .ligam-tèxt::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform-origin: left; transition: transform 0.7s var(--ease); }
 .acuelh .ligam-tèxt:hover::after { transform: scaleX(0); transform-origin: right; }
 /* ---------- Acte II : lo bandèl de mots ---------- */
-.acuelh .bandel { padding: 4.5rem 0; border-block: 1px solid var(--crema-3); overflow: hidden; }
+.acuelh .bandel { padding: 4.5rem 0; border-block: 1px solid var(--crema-3); overflow: hidden;
+	/* Se mena a la man : lo det lisa de costat, la pagina defila totjorn en naut e en bas */
+	touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
+html.cursor-viu .acuelh .bandel { cursor: grab; }
+html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbing; }
+.acuelh .bandel:focus-visible { outline-offset: -4px; }
 .acuelh .bandel-pista { display: flex; width: max-content; will-change: transform; }
 .acuelh .bandel-mot {
 	display: inline-flex; align-items: baseline; gap: 0.5em; padding-right: 0.9em;
@@ -199,8 +204,8 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 }
 .acuelh .bandel-mot:nth-child(3n) { color: var(--crema); -webkit-text-stroke-color: transparent; }
 .acuelh .bandel-mot small { font-family: var(--votz); font-style: italic; font-size: 0.42em; color: var(--aur); -webkit-text-stroke: 0; opacity: 0; transition: opacity 0.5s; }
-.acuelh .bandel-mot:hover { color: var(--aur); -webkit-text-stroke-color: transparent; }
-.acuelh .bandel-mot:hover small { opacity: 1; }
+.acuelh .bandel-mot:hover, .acuelh .bandel-mot.mostra { color: var(--aur); -webkit-text-stroke-color: transparent; }
+.acuelh .bandel-mot:hover small, .acuelh .bandel-mot.mostra small { opacity: 1; }
 .acuelh .bandel-mot::after { content: '✦'; font-size: 0.32em; color: var(--terra-viu); -webkit-text-stroke: 0; align-self: center; margin-left: 0.4em; }
 .acuelh .bandel-font { margin: 0.9rem var(--marge) 0; font-size: 0.78rem; color: var(--crema-2); text-align: right; }
 .acuelh .bandel-font i { font-family: var(--votz); font-size: 1.05em; }

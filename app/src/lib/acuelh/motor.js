@@ -705,6 +705,60 @@ export function lancarAcuelh(racina, opcions = {}) {
 	const bandel = racina.querySelector('.bandel'), bandelPista = racina.querySelector('.bandel-pista');
 	let bandelX = 0, bandelSkew = 0, ultimY = scrollY;
 
+	// Lo bandèl se mena tanben a la man (2026-10-14, retorn de Romain : los qu'ensajavan lo site
+	// lo volián far defilar) : al det o a la mirga, amb lo pavat en orizontal, amb las sagetas del clavièr.
+	// Puèi, garda un pauc d'inercia e torna partir sol. Un tocar sens lisar fa veire la traduccion.
+	let bandelVel = 0, bandelTèn = null, bandelDarrièr = 0, bandelLong = 0, bandelOra = 0;
+	function bandelMòu(dx) {
+		bandelX += dx;
+		if (calm) idRaf = requestAnimationFrame(bocla);
+	}
+	bandel.addEventListener('pointerdown', (e) => {
+		if (e.button > 0) return;
+		bandelTèn = e.pointerId; bandelDarrièr = e.clientX; bandelLong = 0; bandelVel = 0;
+		bandel.classList.add('glissa');
+	}, { signal });
+	bandel.addEventListener('pointermove', (e) => {
+		if (e.pointerId !== bandelTèn) return;
+		const dx = e.clientX - bandelDarrièr;
+		bandelDarrièr = e.clientX; bandelLong += Math.abs(dx); bandelOra = performance.now();
+		if (bandelLong > 6 && !bandel.hasPointerCapture(e.pointerId)) {
+			try { bandel.setPointerCapture(e.pointerId); } catch { /* lo det es ja levat */ }
+		}
+		bandelVel = calm ? 0 : clamp(lerp(bandelVel, dx, 0.5), -60, 60);
+		bandelMòu(dx);
+	}, { signal });
+	const bandelLèva = (e) => {
+		if (e.pointerId !== bandelTèn) return;
+		bandelTèn = null;
+		bandel.classList.remove('glissa');
+		// Tengut immobil abans de levar lo det : pas de vam
+		if (performance.now() - bandelOra > 90) bandelVel = 0;
+		// Un tocar (pas una lisada) : la traduccion del mot apareis, coma al subrevòl
+		if (e.type === 'pointerup' && bandelLong <= 6) {
+			const mot = e.target.closest?.('.bandel-mot');
+			bandel.querySelectorAll('.bandel-mot.mostra').forEach((m) => m !== mot && m.classList.remove('mostra'));
+			mot?.classList.toggle('mostra');
+		}
+	};
+	bandel.addEventListener('pointerup', bandelLèva, { signal });
+	// A la mirga, lisar seleccionava lo tèxt de l'entorn : se fa pas mai
+	['selectstart', 'dragstart'].forEach((ev) => bandel.addEventListener(ev, (e) => e.preventDefault(), { signal }));
+	bandel.addEventListener('pointercancel', bandelLèva, { signal });
+	// Pavat tactil o ròda amb Maj : sonque lo movement orizontal ; lo vertical fa defilar la pagina
+	bandel.addEventListener('wheel', (e) => {
+		if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+		e.preventDefault(); e.stopPropagation();
+		bandelVel = 0;
+		bandelMòu(-e.deltaX);
+	}, { passive: false, signal });
+	bandel.addEventListener('keydown', (e) => {
+		if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+		e.preventDefault();
+		const pas = e.key === 'ArrowLeft' ? 1 : -1;
+		if (calm) bandelMòu(pas * 160); else bandelVel = pas * 14;
+	}, { signal });
+
 	function segonDefilament(sy, vel) {
 		// Capçal : s'amaga en davalant, torna en remontant
 		if (!calm && Math.abs(sy - ultimY) > 0.3) head.classList.toggle('amagat', sy > H * 0.7 && sy > ultimY);
@@ -715,8 +769,12 @@ export function lancarAcuelh(racina, opcions = {}) {
 		const rb = bandel.getBoundingClientRect();
 		if (rb.bottom > 0 && rb.top < H) {
 			const largor = bandelPista.scrollWidth / 2;
-			// Totjorn de drecha a esquèrra (demanda Romain 2026-10-07) : lo defilament l'accelèra sonque
-		bandelX -= calm ? 0 : 0.55 + Math.min(Math.abs(vel) * 0.35, 14);
+			// Totjorn de drecha a esquèrra (demanda Romain 2026-10-07) : lo defilament l'accelèra sonque.
+			// Tengut a la man, s'arrèsta ; laissat, garda son vam que s'amenusa.
+			if (bandelTèn === null) {
+				bandelX += bandelVel; bandelVel *= 0.92;
+				bandelX -= calm ? 0 : 0.55 + Math.min(Math.abs(vel) * 0.35, 14);
+			}
 			bandelX = ((bandelX % largor) - largor) % largor;
 			bandelSkew = lerp(bandelSkew, calm ? 0 : clamp(vel * 0.4, -9, 9), 0.12);
 			bandelPista.style.transform = `translate3d(${bandelX}px,0,0) skewX(${-bandelSkew}deg)`;

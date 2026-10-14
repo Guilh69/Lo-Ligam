@@ -182,7 +182,8 @@
 		</section>
 
 		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->
-		<div class="bandel" role="group" aria-label={fr ? 'Quelques mots' : 'Qualques mots'}>
+		<!-- On peut le faire glisser (doigt, souris, pavé, flèches) ; un toucher montre la traduction -->
+		<div class="bandel" role="group" tabindex="0" aria-label={fr ? 'Quelques mots' : 'Qualques mots'}>
 			<div class="bandel-pista">
 				{#each [false, true] as copia (copia)}
 					{#each MOTS as [oc, frTxt] (oc)}
