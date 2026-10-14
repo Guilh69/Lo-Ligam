@@ -357,3 +357,34 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 	.acuelh .trobador-fenestra { clip-path: none; }
 	.acuelh .trobador-fenestra img { transform: none; }
 }
+
+/* ========== ENSAG PROVISÒRI (2026-10-14) : tres separacions de las seccions ==========
+   Retorn de Cyril (« il faudrait mieux séparer les sections »), comparat sus la vertadièra
+   pagina amb /?seccions. A levar quand Romain aurà causit (amb lo selector de +page.svelte). */
+/* A · Fil d'or : mai d'espaci, un fial daurat que se tira al dessús de cada títol */
+.acuelh[data-seccions='a'] .biais, .acuelh[data-seccions='a'] .camins { padding-top: 16vh; }
+.acuelh[data-seccions='a'] .jalon { position: relative; padding-top: 1.6rem; margin-bottom: 3.6rem; font-size: 1.05rem; }
+.acuelh[data-seccions='a'] .jalon b { font-size: 2.2rem; }
+.acuelh[data-seccions='a'] .jalon::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+	background: linear-gradient(90deg, var(--aur), color-mix(in srgb, var(--aur) 30%, transparent) 45%, transparent);
+	transform-origin: left; transform: scaleX(0); transition: transform 1.4s var(--ease); }
+.acuelh[data-seccions='a'] .vist .jalon::before, .acuelh[data-seccions='a'] .jalon.vist::before { transform: scaleX(1); }
+/* B · Capítols : un grand numèro contornat e lo títol en Limelight, coma una obertura de capítol */
+.acuelh[data-seccions='b'] .biais, .acuelh[data-seccions='b'] .camins { padding-top: 18vh; }
+.acuelh[data-seccions='b'] .jalon { display: grid; justify-items: start; gap: 0.6rem; margin-bottom: 4.5rem; text-transform: none; letter-spacing: 0; }
+.acuelh[data-seccions='b'] .jalon b { font-size: clamp(3.6rem, 7vw, 7rem); line-height: 0.85; color: transparent; -webkit-text-stroke: 1px var(--aur); }
+.acuelh[data-seccions='b'] .jalon span { font-family: var(--titol); font-weight: 400; font-size: clamp(1.8rem, 3.2vw, 3rem); line-height: 1.05; opacity: 1; }
+/* C · Bandas : una seccion de cada doas sus una banda que vela lo fons (la carta en estelas
+   demòra a l'aire : la banda la cobririá) */
+.acuelh[data-seccions='c'] .manifest, .acuelh[data-seccions='c'] .camins {
+	margin-inline: clamp(0.5rem, 1.6vw, 1.6rem); border-radius: clamp(18px, 2.4vw, 36px);
+	background: color-mix(in srgb, var(--nuech) 86%, transparent); box-shadow: inset 0 0 0 1px var(--crema-3); }
+.acuelh[data-seccions='c'] .manifest { margin-top: 8vh; }
+.acuelh[data-seccions='c'] .biais { padding-block: 14vh; }
+.acuelh[data-seccions='c'] .camins { padding-top: 12vh; margin-bottom: 8vh; }
+.acuelh[data-seccions='c'] .jalon b { font-size: 2rem; }
+/* Lo selector de l'ensag */
+.acuelh .ensag-seccions { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 95; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem;
+	width: max-content; max-width: calc(100% - 32px); padding: 0.5rem; border-radius: 999px; background: var(--t-vel); border: 1px solid var(--crema-3); backdrop-filter: blur(8px); }
+.acuelh .ensag-seccions button { font: inherit; font-size: 0.9rem; font-weight: 700; color: var(--crema); background: transparent; border: 1px solid var(--crema-3); border-radius: 999px; padding: 0.4rem 0.9rem; cursor: pointer; }
+.acuelh .ensag-seccions button[aria-pressed='true'] { color: var(--aur); border-color: var(--aur); }

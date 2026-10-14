@@ -25,7 +25,24 @@
 	let racina;
 	let motor = $state.raw(null);
 
+	// ESSAI PROVISOIRE (2026-10-14) : trois façons de mieux séparer les
+	// sections (retour de Cyril), comparées sur la vraie page avec /?seccions.
+	// À retirer une fois le choix de Romain fait (avec le bloc ENSAG d'acuelh.css).
+	const ESSAIS_SECCIONS = [
+		['', 'Actuel'],
+		['a', 'A · Fil d’or'],
+		['b', 'B · Chapitres'],
+		['c', 'C · Bandes']
+	];
+	let ensagSeccions = $state(false);
+	let seccions = $state('');
+
 	onMount(() => {
+		const q = new URLSearchParams(location.search);
+		if (q.has('seccions')) {
+			ensagSeccions = true;
+			seccions = ESSAIS_SECCIONS.some(([v]) => v === q.get('seccions')) ? q.get('seccions') : 'a';
+		}
 		// Le panneau d'ambiance propose les fonds seulement là où il y en a un
 		ambianca.fonsPresent = true;
 		let quitada = false;
@@ -129,7 +146,7 @@
 		><path d="M2 8h12M9 3l5 5-5 5" /></svg
 	>{/snippet}
 
-<div class="acuelh" class:fr bind:this={racina}>
+<div class="acuelh" class:fr bind:this={racina} data-seccions={seccions || undefined}>
 	<canvas id="fons" aria-hidden="true"></canvas>
 	<!-- Fond léger (2026-10-14) : la braise, en CSS seul (acuelh.css) -->
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
@@ -279,12 +296,12 @@
 			</fieldset>
 		</section>
 
-		<!-- IV. Quatre chemins : le défilement vertical devient horizontal -->
+		<!-- IV. Quatre chemins -->
 		<!-- Quatre cartes vues d'un coup, sans glissement (2026-10-14 : le défilement
 		     qui partait de côté déroutait, retour de Cyril ; option A choisie par Romain) -->
 		<section class="camins" aria-labelledby="camins-titol">
-			<h2 class="camins-cap jalon">
-				<span><b>03</b>&ensp;<span id="camins-titol">{@render bi('Quatre camins', 'Quatre chemins')}</span></span>
+			<h2 class="camins-cap jalon" data-revela>
+				<b>03</b><span class="masc"><span class="masc-in" id="camins-titol">{@render bi('Quatre camins', 'Quatre chemins')}</span></span>
 			</h2>
 			<div class="camins-pista">
 				{#each CAMINS as c, n (c.oc)}
@@ -429,5 +446,13 @@
 				</div>
 			</div>
 		</section>
+
+		{#if ensagSeccions}
+			<div class="ensag-seccions" role="group" aria-label="Essai : séparation des sections">
+				{#each ESSAIS_SECCIONS as [v, nom] (v)}
+					<button type="button" aria-pressed={seccions === v} onclick={() => (seccions = v)}>{nom}</button>
+				{/each}
+			</div>
+		{/if}
 	</main>
 </div>
