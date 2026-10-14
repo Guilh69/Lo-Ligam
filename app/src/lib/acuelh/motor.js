@@ -698,8 +698,6 @@ export function lancarAcuelh(racina, opcions = {}) {
 
 	/* ================= Lo defilament pilòta tot ================= */
 	const head = racina.querySelector('.capçal');
-	const camins = racina.querySelector('.camins'), caminsPista = racina.querySelector('.camins-pista'), caminsBarra = racina.querySelector('.camins-barra i');
-	const panels = [...racina.querySelectorAll('.panel')];
 	const trobador = racina.querySelector('.trobador'), fenestra = racina.querySelector('.trobador-fenestra'), fenestraImg = fenestra.querySelector('img');
 	const vers = racina.querySelector('.trobador-vers');
 	if (calm) vers.classList.add('vist');
@@ -733,22 +731,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 			mots.forEach((m, i) => m.classList.toggle('on', calm || i < n));
 		}
 
-		// Camins : lo defilament vertical ven orizontal
-		const rc = camins.getBoundingClientRect();
-		if (rc.top < H && rc.bottom > 0) {
-			const prog = clamp(-rc.top / (rc.height - H));
-			const despl = caminsPista.scrollWidth - W;
-			caminsPista.style.transform = `translate3d(${-prog * despl}px,0,0)`;
-			caminsBarra.style.transform = `scaleX(${prog})`;
-			panels.forEach((p) => {
-				const r = p.getBoundingClientRect();
-				const c = (r.left + r.width / 2 - W / 2) / W;
-				const img = p.querySelector('[data-paral]');
-				if (img && !calm) img.style.transform = `translate3d(${c * -12}%,0,0)`;
-				const simb = p.querySelector('.simbol');
-				if (simb && Math.abs(c) < 0.35) simb.classList.add('actiu');
-			});
-		}
+		// Camins : pas mai de defilament orizontal (2026-10-14, retorn de Cyril,
+		// causida de Romain) : quatre cartas que se revelan coma lo rèsta (data-revela)
 
 		// Trobador : la fenèstra s'obrís fins a tota la pagina
 		const rt = trobador.getBoundingClientRect();

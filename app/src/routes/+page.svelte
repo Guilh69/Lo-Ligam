@@ -280,64 +280,62 @@
 		</section>
 
 		<!-- IV. Quatre chemins : le défilement vertical devient horizontal -->
+		<!-- Quatre cartes vues d'un coup, sans glissement (2026-10-14 : le défilement
+		     qui partait de côté déroutait, retour de Cyril ; option A choisie par Romain) -->
 		<section class="camins" aria-labelledby="camins-titol">
-			<div class="camins-pin">
-				<h2 class="camins-cap jalon">
-					<span><b>03</b>&ensp;<span id="camins-titol">{@render bi('Quatre camins', 'Quatre chemins')}</span></span>
-					<Icona nom="suivant" />
-				</h2>
-				<div class="camins-pista">
-					{#each CAMINS as c, n (c.oc)}
-						<article class="panel">
-							<div class="panel-tèxt">
-								<p class="panel-num" aria-hidden="true">0{n + 1}</p>
-								<div>
-									<h3 class="panel-nom">{@render bi(c.oc, c.fr)}</h3>
-									<p class="panel-tagline">{@render bi(c.toc, c.tfr)}</p>
-								</div>
-								<ul class="panel-items">
-									{#each c.items as [oc, frTxt, href] (oc)}
-										{#if href}
-											<li><a {href}>{@render bi(oc, frTxt)}<Icona nom="suivant" /></a></li>
-										{:else}
-											<li><span class="leu">{@render bi(oc, frTxt)}<em>{@render bi('Lèu', 'Bientôt')}</em></span></li>
-										{/if}
-									{/each}
-								</ul>
+			<h2 class="camins-cap jalon">
+				<span><b>03</b>&ensp;<span id="camins-titol">{@render bi('Quatre camins', 'Quatre chemins')}</span></span>
+			</h2>
+			<div class="camins-pista">
+				{#each CAMINS as c, n (c.oc)}
+					<article class="panel esvani" data-revela style:--i={n}>
+						<div class="panel-tèxt">
+							<p class="panel-num" aria-hidden="true">0{n + 1}</p>
+							<div>
+								<h3 class="panel-nom">{@render bi(c.oc, c.fr)}</h3>
+								<p class="panel-tagline">{@render bi(c.toc, c.tfr)}</p>
 							</div>
-							{#if c.media === 'retrat'}
-								<div class="panel-media retrat">
-									<img src="/acuelh/romain.webp" alt="Romain Périer" loading="lazy" width="600" height="620" data-paral />
-								</div>
-							{:else if c.media === 'paisatge'}
-								<div class="panel-media">
-									<img class="sens-cel" src="/acuelh/paisatge.webp" alt="" loading="lazy" width="900" height="1028" data-paral />
-								</div>
-							{:else if c.media === 'tipo'}
-								<div class="panel-media tipo"><span class="gros-mot" lang="oc">ensems</span></div>
-							{:else}
-								<!-- Le logo se dessine quand le panneau arrive au centre -->
-								<div class="panel-media simbol">
-									<svg viewBox="-1.3 -1.3 2.6 2.6" aria-hidden="true">
-										{#each TRAÇATS as t (t.d)}
-											<path class="tr" d={t.d} fill="none" stroke="#fff" stroke-width={0.055 * t.k} stroke-linecap="round" pathLength="1" />
-										{/each}
-										{#each P as [x, y], i (i)}
-											<circle
-												cx={x}
-												cy={y}
-												r={i === 0 ? 0.124 : 0.109}
-												fill={i === 0 ? '#eeaf34' : '#ffd47f'}
-												style:transition-delay="{600 + i * 50}ms"
-											/>
-										{/each}
-									</svg>
-								</div>
-							{/if}
-						</article>
-					{/each}
-				</div>
-				<div class="camins-barra" aria-hidden="true"><i></i></div>
+							<ul class="panel-items">
+								{#each c.items as [oc, frTxt, href] (oc)}
+									{#if href}
+										<li><a {href}>{@render bi(oc, frTxt)}<Icona nom="suivant" /></a></li>
+									{:else}
+										<li><span class="leu">{@render bi(oc, frTxt)}<em>{@render bi('Lèu', 'Bientôt')}</em></span></li>
+									{/if}
+								{/each}
+							</ul>
+						</div>
+						{#if c.media === 'retrat'}
+							<div class="panel-media retrat">
+								<img src="/acuelh/romain.webp" alt="Romain Périer" loading="lazy" width="600" height="620" />
+							</div>
+						{:else if c.media === 'paisatge'}
+							<div class="panel-media">
+								<img class="sens-cel" src="/acuelh/paisatge.webp" alt="" loading="lazy" width="900" height="1028" />
+							</div>
+						{:else if c.media === 'tipo'}
+							<div class="panel-media tipo"><span class="gros-mot" lang="oc">ensems</span></div>
+						{:else}
+							<!-- Le logo se dessine quand la carte arrive à l'écran -->
+							<div class="panel-media simbol">
+								<svg viewBox="-1.3 -1.3 2.6 2.6" aria-hidden="true">
+									{#each TRAÇATS as t (t.d)}
+										<path class="tr" d={t.d} fill="none" stroke="#fff" stroke-width={0.055 * t.k} stroke-linecap="round" pathLength="1" />
+									{/each}
+									{#each P as [x, y], i (i)}
+										<circle
+											cx={x}
+											cy={y}
+											r={i === 0 ? 0.124 : 0.109}
+											fill={i === 0 ? '#eeaf34' : '#ffd47f'}
+											style:transition-delay="{600 + i * 50}ms"
+										/>
+									{/each}
+								</svg>
+							</div>
+						{/if}
+					</article>
+				{/each}
 			</div>
 		</section>
 
