@@ -182,7 +182,9 @@
 		</section>
 
 		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->
-		<!-- On peut le faire glisser (doigt, souris, pavé, flèches) ; un toucher montre la traduction -->
+		<!-- On peut le faire glisser (doigt, souris, pavé, flèches) ; un toucher montre la traduction.
+		     Focalisable pour que les flèches du clavier le déplacent (zone qui défile : WCAG 2.1.1). -->
+		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<div class="bandel" role="group" tabindex="0" aria-label={fr ? 'Quelques mots' : 'Qualques mots'}>
 			<div class="bandel-pista">
 				{#each [false, true] as copia (copia)}
