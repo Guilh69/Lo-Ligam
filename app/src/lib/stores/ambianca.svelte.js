@@ -22,7 +22,7 @@ import { browser } from '$app/environment';
 
 // Pages harmonisées avec la charte (les autres restent en clair). COPIE dans
 // src/app.html (script de départ), à tenir identique.
-export const ARMONIZADAS = ['/', '/mots', '/carta']; // harmonisées le 2026-10-07 : accueil, mots, carte
+export const ARMONIZADAS = ['/', '/mots', '/carta', '/ensag/acuelh']; // harmonisées le 2026-10-07 : accueil, mots, carte ; essai d'accueil (2026-10-15)
 
 const CLAU = { tema: 'lo-ligam-tema', dalt: 'lo-ligam-dalt', fons: 'lo-ligam-fons', leugier: 'lo-ligam-leugier' };
 const TEMAS = ['sorne', 'clar', 'sistema'];
