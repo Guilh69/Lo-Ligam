@@ -2,23 +2,20 @@
 	import Icona from '$lib/components/Icona.svelte';
 	// Pied de page commun (cadre commun, refonte 2026-10-07 dans la charte de
 	// l'esbòs de nuèch) : présent sur toutes les pages via le layout, plus
-	// seulement sur l'accueil. Colonnes texte (même source de vérité que le
-	// menu), puis le grand nom « Lo Ligam » en terracotta. Couleurs de thème.
+	// seulement sur l'accueil. Colonnes texte sur le même plan que le menu
+	// (2026-10-15 : Se parla, S'apren, Se viu, Lo Ligam, comme le pied de page
+	// de l'Alliance répète son menu ; source commune data/planSite.js), puis
+	// les ressources et le grand nom « Lo Ligam » en terracotta. Couleurs de thème.
 	import { scramble } from '$lib/actions/scramble';
 	// Le texte est écrit dans le HTML du serveur (lisible sans JavaScript et
 	// par les lecteurs d'écran) ; l'action scramble le remplace au montage.
-	import { onMount } from 'svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { families, externalLinks } from '$lib/data/siteSections';
-	// Essai du menu (2026-10-15) : le pied de page reprend le même plan que le
-	// menu-voile, comme celui de l'Alliance répète son menu
-	import { essaiMenu, legirEssaiMenu } from '$lib/stores/essaiMenu.svelte.js';
+	import { externalLinks } from '$lib/data/siteSections';
 	import { PLAN, LO_LIGAM } from '$lib/data/planSite.js';
 
 	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.' };
 	let { tagline = PER_DEFAUT } = $props();
 	let lang = $derived(langStore.current);
-	onMount(legirEssaiMenu);
 </script>
 
 {#snippet ligam(it)}
@@ -33,7 +30,6 @@
 
 <footer class="site-footer">
 	<nav class="footer-colomnas" aria-label={lang === 'oc' ? 'Plan del site' : 'Plan du site'}>
-		{#if essaiMenu.actiu}
 			{#each PLAN as c (c.id)}
 				<div class="footer-col">
 					<p class="footer-col-title">
@@ -70,47 +66,6 @@
 					{/each}
 				</ul>
 			</div>
-		{:else}
-		{#each families as fam (fam.id)}
-			<div class="footer-col">
-				<p class="footer-col-title" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}>{lang === 'oc' ? fam.oc : fam.fr}</p>
-				<ul>
-					{#each fam.items as it (it.id)}
-						<li>
-							{#if it.status === 'live'}
-								<a class="footer-link" href={it.href}>
-									<span use:scramble={{ oc: it.oc, fr: it.fr, lang }}>{lang === 'oc' ? it.oc : it.fr}</span>
-								</a>
-							{:else}
-								<span class="footer-link leu">
-									<span use:scramble={{ oc: it.oc, fr: it.fr, lang }}>{lang === 'oc' ? it.oc : it.fr}</span>
-									<em use:scramble={{ oc: 'lèu', fr: 'bientôt', lang }}>{lang === 'oc' ? 'lèu' : 'bientôt'}</em>
-								</span>
-							{/if}
-						</li>
-					{/each}
-				</ul>
-			</div>
-		{/each}
-
-		<div class="footer-col">
-			<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', lang }}>{lang === 'oc' ? 'Ressorsas' : 'Ressources'}</p>
-			<ul>
-				{#each externalLinks as l (l.href)}
-					<li>
-						<a class="footer-link" href={l.href} target="_blank" rel="noopener noreferrer"
-							>{l.label} <Icona nom="extern" size="0.9em" /></a
-						>
-					</li>
-				{/each}
-				<li>
-					<a class="footer-link" href="https://www.instagram.com/lo_ligam/" target="_blank" rel="noopener noreferrer"
-						>Instagram <Icona nom="extern" size="0.9em" /></a
-					>
-				</li>
-			</ul>
-		</div>
-		{/if}
 	</nav>
 
 	<p class="footer-nom" aria-hidden="true">Lo Ligam</p>
@@ -161,7 +116,7 @@
 		color: var(--t-aur);
 	}
 
-	/* Essai : le numéro du verbe en contour, au-dessus du verbe, comme sur l'accueil */
+	/* Le numéro du verbe en contour, au-dessus du verbe, comme sur l'accueil */
 	.footer-num {
 		display: block;
 		margin-bottom: 0.15rem;
@@ -201,15 +156,6 @@
 	a.footer-link:focus-visible {
 		color: var(--t-tinta);
 		transform: translateX(6px);
-	}
-
-	.footer-link.leu em {
-		margin-left: 0.4rem;
-		font-style: normal;
-		font-size: 0.7rem;
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-		color: var(--t-terra-viu);
 	}
 
 	/* Le grand nom, qui remplit toute la largeur */

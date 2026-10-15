@@ -1,7 +1,7 @@
-// Plan du site sur le modèle de l'accueil (2026-10-15, option 2 de Romain) :
-// les trois verbes du titre « Se parla. S'apren. Se viu. » rangent aussi le
-// menu et le pied de page, comme l'Alliance des collectivités pour la qualité
-// de l'air reprend dans son menu les questions de sa page d'accueil.
+// Plan du site sur le modèle de l'accueil (2026-10-15, cahier §11) : les trois
+// verbes du titre « Se parla. S'apren. Se viu. » rangent aussi le menu et le
+// pied de page, comme l'Alliance des collectivités pour la qualité de l'air
+// reprend dans son menu les questions de sa page d'accueil.
 // Une seule source pour le menu-voile (MenuVel) et le pied de page.
 // Les rubriques à développer avant la diffusion du site ont déjà leur lien
 // (choix de Romain, 2026-10-15). Occitan nouveau : À VALIDER par Romain.
@@ -20,7 +20,9 @@ export const PLAN = [
 		grops: [{ items: [
 			{ oc: 'Lo parcors', fr: 'Le parcours', href: '/aprene' },
 			{ oc: 'Leiçon d’ensag', fr: 'Leçon d’essai', href: '/aprene/essai' },
-			{ oc: 'Corses en visio', fr: 'Cours en visio', href: RESERVAR, defòra: true }
+			{ oc: 'Corses en visio', fr: 'Cours en visio', href: RESERVAR, defòra: true },
+			// (était dans l'ancien pied de page : on ne retire aucune fonction)
+			{ oc: 'Ma progression', fr: 'Ma progression', href: '/compte' }
 		] }]
 	},
 	{

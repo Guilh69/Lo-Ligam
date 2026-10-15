@@ -1,11 +1,14 @@
 <script>
-	// Menu-voile (essai du 2026-10-15, option 2 de Romain, d'après le site de
-	// l'Alliance des collectivités pour la qualité de l'air) : un grand panneau
-	// terracotta qui glisse depuis la droite, rangé comme l'accueil en trois
-	// colonnes (Se parla, S'apren, Se viu), la ligne « Lo Ligam » en bas et le
-	// bouton de réservation. Le croisillon du logo en filigrane, comme le nuage
-	// de l'Alliance. Repris de l'ancien menu-voile du 2026-10-06 : les liens qui
-	// montent chacun dans leur masque, Échap pour fermer, la page bloquée derrière.
+	// Menu-voile du site (2026-10-15, cahier §11, d'après le site de l'Alliance
+	// des collectivités pour la qualité de l'air) : un grand panneau terracotta
+	// qui glisse depuis la droite. Disposition verticale choisie par Romain
+	// (après essai contre trois colonnes) : 01 Se parla, 02 S'apren, 03 Se viu
+	// empilés en grand comme le titre de l'accueil ; chacun se déroule pour
+	// montrer ses rubriques, au survol sur ordinateur, au toucher sur téléphone,
+	// ouvert d'office sur la rubrique de la page en cours. La ligne « Lo Ligam »
+	// en bas et le bouton de réservation. Le croisillon du logo en filigrane,
+	// comme le nuage de l'Alliance. Repris de l'ancien menu-voile du 2026-10-06 :
+	// les liens qui montent dans leur masque, Échap, la page bloquée derrière.
 	// Ferme : ✕, Échap, clic ailleurs (tampaDefòra, principe du site), clic sur un lien.
 	import { page } from '$app/state';
 	import { tick } from 'svelte';
@@ -15,12 +18,6 @@
 	import { PLAN, LO_LIGAM, RESERVAR } from '$lib/data/planSite.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { portal } from '$lib/actions/portal.js';
-	import { essaiMenu, mudarForma } from '$lib/stores/essaiMenu.svelte.js';
-	//
-	// Deux dispositions à comparer (sélecteur dans l'en-tête du panneau) :
-	// « colomnas » côte à côte, ou « vertical » (idée de Romain) : 01, 02, 03
-	// empilés en grand, chacun se déroule pour montrer ses rubriques, au
-	// survol sur ordinateur, au toucher sur téléphone.
 
 	let { dobèrt = $bindable(false), lang = 'oc', boton = null } = $props();
 	let fr = $derived(lang === 'fr');
@@ -91,21 +88,11 @@
 
 			<div class="vel-cap">
 				<p class="vel-titol" id="vel-titol">{fr ? 'Menu' : 'Menú'}</p>
-				<!-- Essai : passer d'une disposition à l'autre pour comparer -->
-				<div class="vel-forma" role="group" aria-label={fr ? 'Colonnes ou vertical' : 'Colomnas o vertical'}>
-					<button type="button" aria-pressed={essaiMenu.forma === 'colomnas'} onclick={() => mudarForma('colomnas')}
-						>{fr ? 'Colonnes' : 'Colomnas'}</button
-					>
-					<button type="button" aria-pressed={essaiMenu.forma === 'vertical'} onclick={() => mudarForma('vertical')}
-						>Vertical</button
-					>
-				</div>
 				<button type="button" class="vel-tampar" onclick={tampar} aria-label={fr ? 'Fermer le menu' : 'Tampar lo menú'}>
 					<Icona nom="fermer" size="1.6em" />
 				</button>
 			</div>
 
-			{#if essaiMenu.forma === 'vertical'}
 				<nav class="vel-vertical" aria-label={fr ? 'Plan du site' : 'Plan del site'}>
 					{#each PLAN as c, ci (c.id)}
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -151,34 +138,6 @@
 						</section>
 					{/each}
 				</nav>
-			{:else}
-			<nav class="vel-plan" aria-label={fr ? 'Plan du site' : 'Plan del site'}>
-				{#each PLAN as c, ci (c.id)}
-					<section class="vel-colomna" style:--d={ci}>
-						<h2 class="vel-verb"><b>{c.n}</b><span>{fr ? c.fr : c.oc}</span></h2>
-						{#each c.grops as g, gi (gi)}
-							{#if g.oc}<p class="vel-grop">{fr ? g.fr : g.oc}</p>{/if}
-							<ul>
-								{#each g.items as it, ii (it.href)}
-									<li class="vel-masc">
-										<a
-											class="vel-ligam"
-											href={it.href}
-											style:--i={gi * 4 + ii}
-											aria-current={!it.defòra && actiu(it.href) ? 'page' : undefined}
-											target={it.defòra ? '_blank' : undefined}
-											rel={it.defòra ? 'noopener noreferrer' : undefined}
-											onclick={tampar}
-											>{fr ? it.fr : it.oc}<Icona nom={it.defòra ? 'extern' : 'suivant'} size="0.8em" /></a
-										>
-									</li>
-								{/each}
-							</ul>
-						{/each}
-					</section>
-				{/each}
-			</nav>
-			{/if}
 
 			<div class="vel-pe">
 				<ul class="vel-lo-ligam">
@@ -282,38 +241,6 @@
 		transform: rotate(90deg);
 	}
 
-	.vel-plan {
-		position: relative;
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 2.6rem clamp(1.6rem, 4vw, 3.4rem);
-	}
-
-	.vel-verb {
-		display: grid;
-		gap: 0.3rem;
-		margin: 0 0 1.4rem;
-		padding-top: 1rem;
-		border-top: 1px solid var(--vel-linha);
-		font-weight: 400;
-	}
-
-	.vel-verb b {
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: 2.4rem;
-		line-height: 0.9;
-		color: transparent;
-		-webkit-text-stroke: 1px var(--vel-tinta);
-		opacity: 0.7;
-	}
-
-	.vel-verb span {
-		font-family: var(--font-heading);
-		font-size: clamp(2rem, 4cqi, 2.9rem);
-		line-height: 1.05;
-	}
-
 	.vel-grop {
 		margin: 1.2rem 0 0.3rem;
 		font-size: 0.72rem;
@@ -323,14 +250,13 @@
 		color: var(--vel-tinta-2);
 	}
 
-	.vel-plan ul,
 	.vel-lo-ligam {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
 
-	/* Chaque lien monte dans son propre masque, en cascade de colonne en colonne */
+	/* Chaque lien monte dans son propre masque */
 	.vel-masc {
 		overflow: hidden;
 	}
@@ -452,40 +378,7 @@
 		border-radius: 6px;
 	}
 
-	/* Sélecteur de l'essai : Colomnas / Vertical */
-	.vel-forma {
-		display: inline-flex;
-		gap: 2px;
-		margin-left: auto;
-		margin-right: 1rem;
-		padding: 3px;
-		border: 1px solid var(--vel-linha);
-		border-radius: 999px;
-	}
-
-	.vel-forma button {
-		border: 0;
-		background: transparent;
-		color: var(--vel-tinta);
-		font: inherit;
-		font-size: 0.74rem;
-		font-weight: 700;
-		padding: 0.35rem 0.8rem;
-		border-radius: 999px;
-		cursor: pointer;
-	}
-
-	.vel-forma button[aria-pressed='true'] {
-		background: var(--vel-tinta);
-		color: var(--vel-fons);
-	}
-
-	.vel-forma button:focus-visible {
-		outline: 2px solid var(--vel-tinta);
-		outline-offset: 2px;
-	}
-
-	/* ---------- Disposition verticale : 01, 02, 03 empilés, qui se déroulent ---------- */
+	/* ---------- 01, 02, 03 empilés, qui se déroulent ---------- */
 	.vel-vertical {
 		position: relative;
 	}
@@ -607,16 +500,8 @@
 		transform: none;
 	}
 
-	/* Téléphone et panneau étroit : une colonne */
+	/* Téléphone et panneau étroit : les rubriques en liste sous le verbe */
 	@container (max-width: 44rem) {
-		.vel-plan {
-			grid-template-columns: 1fr;
-			gap: 1.6rem;
-		}
-		.vel-verb {
-			margin-bottom: 0.4rem;
-		}
-		/* vertical : les rubriques sous le verbe, en liste */
 		.vel-desplega-pad {
 			padding-left: 0;
 			flex-direction: column;
