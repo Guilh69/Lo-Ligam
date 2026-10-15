@@ -63,7 +63,7 @@ photos.
 | 13 bis | **Fiches des communes de la carte** (clic sur un nom : surface dorée, vol, fiche dans la langue du lieu) | en ligne le 2026-10-11 : emblèmes des langues au coin de la fiche, révélation en cercle, règle des langues (site en occitan / en français), noms des villes en français et occitan sur le site en français ; animations de texte (`/ensag/letra`, charte §5quinquies) ; vue d'ensemble = tout le domaine (70 km sur l'ordinateur) ; **seuils de la carte relatifs à la taille de l'écran, le téléphone devient l'usage principal** (2026-10-12). **Conversation neuve** : cadre dans `revisions/2026-10-11-fichas-comunas.md` | Romain ouvre quelques communes de chaque langue (site en occitan et en français) et envoie ses captures ; puis choisir les pistes du lancement (section 7 du cadre) | Romain + Claude |
 | 14 | **Icônes pratiques et ressources de design** (2026-10-12) | ✅ en ligne : Iconoir trait 1,7 via `Icona.svelte`, caractères et émojis des boutons remplacés (leçons, compte, carte, Mots, Òbras, accueil, pied de page) ; tri des ressources web dans la charte §5sexies | Romain range des captures d'inspiration dans `design-stock/Inspiration/<chantier>/` ; restes : cadenas 🔒 de /aprene en émoji, premier carrousel de /mots flou au chargement (défaut antérieur) | Romain |
 | 15 | **Outils ArtCraft : EffectCraft et VectorCraft** (2026-10-12, conversation « ArtCraft ») | Évaluation : libres, locaux, pas d'envoi de données constaté, mais alpha de 12 jours. Claude les pilote à l'écran (fenêtre à droite) via `outils/craft/`. Faits : banc `/ensag/lottie` (4 récompenses Lottie, 0,6 à 1,6 Ko + lecteur 45 Ko), `design-stock/vecteurs/` (kit Lo Ligam : palette, flèches à boucle, bloc de vocabulaire, gabarit 4:5 fond brique), `design-stock/animations/` ; vidéo « Qu'es aquò » refaite en 9:16 avec la voix d'origine (brouillon `design-stock/MP4/qu-es-aquo-2026-9x16-brouillon.mp4`, compteur provisoire « 0 000 », projet `design-stock/animations/qu-es-aquo-2026.ecproj`) | Romain choisit plus tard les récompenses des cours ; prochaines étapes : module de formation EffectCraft/VectorCraft, chantier Canva/Instagram (conversation à part) |
-| 16 | **Reprise du parcours pédagogique** (2026-10-15, conversation « parcours ») : test de positionnement, histoire tout le long, fogassas, ton sérieux et ludique | proposition de méthode écrite : `revisions/2026-10-15-metode-parcours.md` (conception à rebours + unité modèle testée ; test façon DIALANG ; trois formes d'histoire) | Romain tranche la décision 1 du document (partage des rôles, qui touche la décision 14) et colle le rendu de l'autre discussion | Romain |
+| 16 | **Reprise du parcours pédagogique** (2026-10-15, conversation « parcours ») : test de positionnement, histoire tout le long, fogassas, ton sérieux et ludique | proposition de méthode écrite : `revisions/2026-10-15-metode-parcours.md` (conception à rebours + unité modèle testée ; test façon DIALANG ; trois formes d'histoire) | ✅ décision 1 « charpente et chair » (15-10, §11). Piste de Romain pour le fil : voyage-découverte, culture et moderne, sans intrigue (forme D du document, à voir). **Romain** : finir sa phrase coupée, coller le rendu de l'autre discussion | Romain |
 
 ## Les décisions déjà prises — à NE PAS rouvrir
 
@@ -103,6 +103,9 @@ photos.
     questionne et code ; plus de contenu pédagogique produit à sa place
     (`autoformation-parcours.md` §2). Les documents pédagogiques existants
     deviennent des hypothèses à relire par lui.
+15. **2026-10-15** — Précise la 14 : **« charpente et chair »**. Claude
+    propose la charpente du parcours avec intérêt, limites et cohérence ;
+    Romain écrit la chair ; Claude vérifie tout.
 
 ## Les vraies questions ouvertes (pour la séance d'arbitrage)
 

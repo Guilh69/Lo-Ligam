@@ -41,7 +41,9 @@ Les deux se concilient si l'on sépare **la charpente** de **la chair** :
 - **Vérification** (Claude, toujours) : chaque mot occitan par l'API de
   lo Congrès, chaque fait par sa source, chaque écran par une capture.
 
-C'est la **décision 1** à prendre (§8).
+**Décision 1 prise par Romain le 2026-10-15 : charpente et chair** (cahier §11).
+La décision 14 tient toujours pour la chair ; Claude propose désormais aussi
+des options argumentées pour la charpente.
 
 ## 3. La méthode : « conception à rebours » + « tranche complète »
 
@@ -144,6 +146,36 @@ c'est d'abord un choix de motivation. À vérifier à la phase 1c.
 
 ◇ Les formes se combinent (par exemple B en A1-A2, puis A à partir de B1).
 
+**Retour de Romain (2026-10-15)** : un seul univers risque de lasser ; plutôt
+**faire voyager**, découvrir l'Occitanie au fur et à mesure, sans histoire à
+suivre comme dans un livre ; de la culture, des situations, et du **moderne**
+pour ne pas être seulement folklorique. D'où une quatrième forme :
+
+| Forme | Principe | Intérêt | Limite |
+|---|---|---|---|
+| D. **Le voyage-découverte** (sans intrigue) | chaque unité est une étape : un lieu de la carte, une situation de la vie (marché, gare, match, concert, école, travail), un usage d'hier et un usage d'aujourd'hui | pas de lassitude (un nouveau lieu à chaque unité) ; chaque étape tient seule, donc le test de positionnement peut faire commencer n'importe où ; relie le parcours à la carte ; montre ta vision de l'Occitanie (repositionnement du 06-10) | moins d'« envie de la suite » qu'un feuilleton, à compenser par la découverte elle-même ; le réemploi des mots n'est plus automatique, il faut le prévoir (révisions en spirale) |
+
+Trois points de cohérence pour D ◇ :
+1. **La géographie suit la progression.** Le site enseigne le languedocien :
+   en A1-A2, les étapes restent en pays languedocien ; les autres dialectes
+   arrivent à partir de B1, quand le cadre prévoit la variation en écoute
+   (`00-cadre-methodologique.md`, tableau en spirale). Puis au-delà : Val
+   d'Aran, vallées d'Italie, voisins.
+2. **La còla devient les compagnons de route** : un personnage par unité qui
+   « porte son pays » (décision du 29-08), rencontré à l'étape. Le fil
+   récurrent n'est plus une intrigue, c'est ton chemin et ta còla qui grandit.
+3. **Question ouverte** : une carte « qui se remplit » au fil des étapes
+   ferait doublon avec l'Arbre del Ligam (déjà décidé). Soit la carte n'est
+   que le décor, soit on repense l'Arbre plus tard. Pas à trancher maintenant.
+
+**Le moderne, exemples vérifiés** ✓ (pour montrer le genre, le choix reste à
+toi) : Massilia Sound System, groupe marseillais qui chante en occitan et en
+français depuis les années 1980 ; Ràdio Occitània, radio toulousaine fondée en
+1981, environ 80 % de ses émissions en occitan ; Jornalet, journal en ligne en
+occitan depuis 2012, tous dialectes, graphie classique ; les Calandretas,
+écoles en occitan (déjà sur la carte). Règle proposée ◇ : à chaque étape, au
+moins un usage d'aujourd'hui.
+
 **Deux règles de cohérence** ◇ :
 1. **Des épisodes qui tiennent debout seuls**, avec un « précédemment » en
    trois lignes : sinon l'histoire empêche le test de positionnement de faire
@@ -175,12 +207,9 @@ Jamais « oui, tu as raison » sans avoir revérifié.
 
 ## 8. Les décisions, une à la fois
 
-1. **Le partage des rôles** (§2) : charpente proposée par Claude et chair
-   écrite par toi (recommandé) ; ou Claude rédige aussi des brouillons de
-   contenu que tu corriges (revient sur la décision 14) ; ou on garde la
-   décision 14 telle quelle.
+1. ✅ **Le partage des rôles** (§2) : charpente et chair (Romain, 2026-10-15).
 2. La méthode du §3 (à rebours + tranche complète).
-3. La forme de l'histoire (§5).
+3. La forme du fil (§5) : piste de Romain = le voyage-découverte (D), à voir.
 4. Le test v1 (§4) : on le code dès la phase 1, ou après l'unité modèle.
 
 ## 9. Ce que tu peux faire seul / ce qui demandera de l'aide
