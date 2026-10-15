@@ -217,6 +217,31 @@
 		}
 	}
 
+	/* Téléphone avec le compte affiché (Apprendre, Compte) : le bouton « Menú »
+	   ne garde que son icône (le mot reste pour les lecteurs d'écran) et tout se
+	   resserre, sinon la barre dépasse l'écran et la page glisse de côté */
+	@container (max-width: 30rem) {
+		.top-in.essai {
+			column-gap: 0.8rem;
+		}
+		.top-in.essai .header-right {
+			gap: 0.4rem;
+		}
+		.top-in.essai .header-right:has(.compte) .menu-boton {
+			justify-content: center;
+			width: 2.2rem;
+			padding: 0;
+		}
+		.top-in.essai .header-right:has(.compte) .menu-boton span {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+	}
+
 	.essai-pastilha {
 		position: fixed;
 		left: 1rem;

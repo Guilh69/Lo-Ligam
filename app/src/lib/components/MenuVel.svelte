@@ -15,6 +15,12 @@
 	import { PLAN, LO_LIGAM, RESERVAR } from '$lib/data/planSite.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { portal } from '$lib/actions/portal.js';
+	import { essaiMenu, mudarForma } from '$lib/stores/essaiMenu.svelte.js';
+	//
+	// Deux dispositions à comparer (sélecteur dans l'en-tête du panneau) :
+	// « colomnas » côte à côte, ou « vertical » (idée de Romain) : 01, 02, 03
+	// empilés en grand, chacun se déroule pour montrer ses rubriques, au
+	// survol sur ordinateur, au toucher sur téléphone.
 
 	let { dobèrt = $bindable(false), lang = 'oc', boton = null } = $props();
 	let fr = $derived(lang === 'fr');
@@ -22,6 +28,16 @@
 
 	const tampar = () => (dobèrt = false);
 	const actiu = (href) => page.url.pathname === href || page.url.pathname.startsWith(href + '/');
+
+	// Vertical : le verbe ouvert ; à l'ouverture, celui de la page où l'on est
+	let desplegat = $state(null);
+	$effect(() => {
+		if (dobèrt)
+			desplegat = PLAN.find((c) => c.grops.some((g) => g.items.some((it) => !it.defòra && actiu(it.href))))?.id ?? null;
+	});
+	const survòl = (id) => {
+		if (matchMedia('(hover: hover)').matches) desplegat = id;
+	};
 
 	// Page bloquée derrière, focus sur « fermer », retour au bouton « Menú »
 	$effect(() => {
@@ -75,11 +91,67 @@
 
 			<div class="vel-cap">
 				<p class="vel-titol" id="vel-titol">{fr ? 'Menu' : 'Menú'}</p>
+				<!-- Essai : passer d'une disposition à l'autre pour comparer -->
+				<div class="vel-forma" role="group" aria-label={fr ? 'Colonnes ou vertical' : 'Colomnas o vertical'}>
+					<button type="button" aria-pressed={essaiMenu.forma === 'colomnas'} onclick={() => mudarForma('colomnas')}
+						>{fr ? 'Colonnes' : 'Colomnas'}</button
+					>
+					<button type="button" aria-pressed={essaiMenu.forma === 'vertical'} onclick={() => mudarForma('vertical')}
+						>Vertical</button
+					>
+				</div>
 				<button type="button" class="vel-tampar" onclick={tampar} aria-label={fr ? 'Fermer le menu' : 'Tampar lo menú'}>
 					<Icona nom="fermer" size="1.6em" />
 				</button>
 			</div>
 
+			{#if essaiMenu.forma === 'vertical'}
+				<nav class="vel-vertical" aria-label={fr ? 'Plan du site' : 'Plan del site'}>
+					{#each PLAN as c, ci (c.id)}
+						<!-- svelte-ignore a11y_no_static_element_interactions -->
+						<section class="vel-renc" class:desplegat={desplegat === c.id} style:--d={ci} onmouseenter={() => survòl(c.id)}>
+							<h2 class="vel-renc-cap">
+								<button
+									type="button"
+									class="vel-renc-boton"
+									aria-expanded={desplegat === c.id}
+									aria-controls="vel-{c.id}"
+									onclick={() => (desplegat = desplegat === c.id ? null : c.id)}
+								>
+									<b>{c.n}</b><span>{fr ? c.fr : c.oc}</span><Icona nom="suivant" size="1.4rem" />
+								</button>
+							</h2>
+							<div class="vel-desplega" id="vel-{c.id}" inert={desplegat !== c.id}>
+								<div class="vel-desplega-in">
+									<div class="vel-desplega-pad">
+										{#each c.grops as g, gi (gi)}
+											<div class="vel-renc-grop">
+												{#if g.oc}<p class="vel-grop">{fr ? g.fr : g.oc}</p>{/if}
+												<ul>
+													{#each g.items as it, ii (it.href)}
+														<li class="vel-masc">
+															<a
+																class="vel-ligam"
+																href={it.href}
+																style:--i={gi * 3 + ii}
+																aria-current={!it.defòra && actiu(it.href) ? 'page' : undefined}
+																target={it.defòra ? '_blank' : undefined}
+																rel={it.defòra ? 'noopener noreferrer' : undefined}
+																onclick={tampar}
+																>{fr ? it.fr : it.oc}<Icona nom={it.defòra ? 'extern' : 'suivant'} size="0.8em" /></a
+															>
+														</li>
+													{/each}
+												</ul>
+											</div>
+										{/each}
+									</div>
+								</div>
+							</div>
+						</section>
+					{/each}
+				</nav>
+			{:else}
 			<nav class="vel-plan" aria-label={fr ? 'Plan du site' : 'Plan del site'}>
 				{#each PLAN as c, ci (c.id)}
 					<section class="vel-colomna" style:--d={ci}>
@@ -106,6 +178,7 @@
 					</section>
 				{/each}
 			</nav>
+			{/if}
 
 			<div class="vel-pe">
 				<ul class="vel-lo-ligam">
@@ -379,6 +452,161 @@
 		border-radius: 6px;
 	}
 
+	/* Sélecteur de l'essai : Colomnas / Vertical */
+	.vel-forma {
+		display: inline-flex;
+		gap: 2px;
+		margin-left: auto;
+		margin-right: 1rem;
+		padding: 3px;
+		border: 1px solid var(--vel-linha);
+		border-radius: 999px;
+	}
+
+	.vel-forma button {
+		border: 0;
+		background: transparent;
+		color: var(--vel-tinta);
+		font: inherit;
+		font-size: 0.74rem;
+		font-weight: 700;
+		padding: 0.35rem 0.8rem;
+		border-radius: 999px;
+		cursor: pointer;
+	}
+
+	.vel-forma button[aria-pressed='true'] {
+		background: var(--vel-tinta);
+		color: var(--vel-fons);
+	}
+
+	.vel-forma button:focus-visible {
+		outline: 2px solid var(--vel-tinta);
+		outline-offset: 2px;
+	}
+
+	/* ---------- Disposition verticale : 01, 02, 03 empilés, qui se déroulent ---------- */
+	.vel-vertical {
+		position: relative;
+	}
+
+	.vel-vertical ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.vel-renc {
+		border-top: 1px solid var(--vel-linha);
+	}
+
+	.vel-renc-cap {
+		margin: 0;
+		font-weight: 400;
+		overflow: hidden;
+	}
+
+	.vel-renc-boton {
+		display: flex;
+		align-items: center;
+		gap: clamp(1rem, 3cqi, 2.2rem);
+		width: 100%;
+		padding: clamp(0.8rem, 2vh, 1.3rem) 0;
+		border: 0;
+		background: none;
+		color: var(--vel-tinta);
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+		animation: vel-monta 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+		animation-delay: calc(150ms + var(--d, 0) * 110ms);
+	}
+
+	.vel-renc-boton b {
+		min-width: 2.1em;
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: clamp(1.8rem, 4.4cqi, 3.2rem);
+		line-height: 1;
+		color: transparent;
+		-webkit-text-stroke: 1px var(--vel-tinta);
+		opacity: 0.7;
+	}
+
+	.vel-renc-boton span {
+		flex: 1;
+		font-family: var(--font-heading);
+		font-size: clamp(2.6rem, 8cqi, 5.4rem);
+		line-height: 1;
+		transition: opacity 0.5s;
+	}
+
+	/* Quand un verbe est ouvert, les autres s'effacent un peu */
+	.vel-vertical:has(.desplegat) .vel-renc:not(.desplegat) .vel-renc-boton span {
+		opacity: 0.5;
+	}
+
+	.vel-renc-boton :global(svg) {
+		flex: none;
+		transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.desplegat .vel-renc-boton :global(svg) {
+		transform: rotate(90deg);
+	}
+
+	.vel-renc-boton:focus-visible {
+		outline: 2px solid var(--vel-tinta);
+		outline-offset: -2px;
+		border-radius: 6px;
+	}
+
+	/* Le déroulé : hauteur 0 → hauteur du contenu, sans mesurer en JavaScript */
+	.vel-desplega {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.desplegat .vel-desplega {
+		grid-template-rows: 1fr;
+	}
+
+	.vel-desplega-in {
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	.vel-desplega-pad {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem clamp(2rem, 6cqi, 4.5rem);
+		/* les rubriques s'alignent sur le verbe, pas sur le numéro */
+		padding: 0 0 1.6rem calc(clamp(1.8rem, 4.4cqi, 3.2rem) * 2.1 + clamp(1rem, 3cqi, 2.2rem));
+	}
+
+	.vel-renc-grop .vel-grop {
+		margin-top: 0;
+	}
+
+	.vel-renc-grop ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 1.8rem;
+	}
+
+	/* Les rubriques montent quand leur verbe se déroule */
+	.vel-vertical .vel-ligam {
+		animation: none;
+		transform: translateY(110%);
+		transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+		transition-delay: calc(120ms + var(--i, 0) * 45ms);
+	}
+
+	.desplegat .vel-ligam {
+		transform: none;
+	}
+
 	/* Téléphone et panneau étroit : une colonne */
 	@container (max-width: 44rem) {
 		.vel-plan {
@@ -388,11 +616,26 @@
 		.vel-verb {
 			margin-bottom: 0.4rem;
 		}
+		/* vertical : les rubriques sous le verbe, en liste */
+		.vel-desplega-pad {
+			padding-left: 0;
+			flex-direction: column;
+			gap: 0.8rem;
+		}
+		.vel-renc-grop ul {
+			flex-direction: column;
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.vel-ligam {
+		.vel-ligam,
+		.vel-renc-boton {
 			animation: none;
+		}
+		.vel-vertical .vel-ligam,
+		.vel-desplega {
+			transition: none;
+			transform: none;
 		}
 	}
 </style>
