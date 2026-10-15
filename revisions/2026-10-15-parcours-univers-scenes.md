@@ -299,6 +299,14 @@ parcours sont une couche de plus, à n'afficher que sur demande.
    un dessin au trait) ; au toucher, l'aplat se retire, la flèche se trace
    de l'objet vers l'étiquette, l'étiquette s'écrit dans la structure de
    Romain. À montrer sur deux ou trois variantes comparées.
+   **Troisième essai (même soir)**, en ligne sur `/ensag/scena` : trois
+   révélateurs opaques à comparer (« Aplat » : chaque objet en aplat de sa
+   propre couleur ; « Sépia » : camaïeu entre le brun et le crème du dessin ;
+   « Brume » : l'objet flou dans ses vraies couleurs) ; au toucher, l'objet
+   se révèle, une flèche blanche se trace vers lui, puis l'étiquette de
+   Romain apparaît (écusson à croix + occitan, haut-parleur + prononciation,
+   drapeau + français). Vérifié à l'écran, ordinateur et téléphone. Choix de
+   Romain attendu.
 
 **Pour ta refonte des visuels** (retour de Romain, 15-10 : nouveau logo,
 bonne dimension, les familles de publications) ◇ :

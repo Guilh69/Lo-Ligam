@@ -1,30 +1,39 @@
 <script>
 	// Banc d'ensag de la « scèna » d'unitat (demanda de Romain, 2026-10-15) :
-	// un visual Instagram de Romain en grand, cada objècte se toca, s'aluma e
+	// un visual Instagram de Romain en grand, cada objècte se toca, se revèla e
 	// mòstra son nom. La scèna completa dobrís l'unitat seguenta.
 	// Proposicion : revisions/2026-10-15-parcours-univers-scenes.md. Pagina de
 	// trabalh, pas indexada. Coordenadas dins l'espaci de l'imatge (860 × 860).
-	// 2n passatge (retorn de Romain) : pas pus de caches ni de sagetas ; cada
-	// objècte a un vel transparent de sa color, e l'etiqueta escricha pel site
-	// pren la meteissa color (la color fa lo ligam, pas una sageta).
+	// 3en passatge (retorn de Romain) : un revelador opac acordat a las colors
+	// del dessenh (tres variantas de comparar), una sageta que se traça per
+	// menar al mot, e l'etiqueta de Romain (crotz + occitan, votz, francés).
 	import Icona from '$lib/components/Icona.svelte';
+	import CrossIcon from '$lib/components/CrossIcon.svelte';
 
 	// Version del visual sens etiquetas ni sagetas (fabricada per l'ensag ;
 	// Romain la tornarà far dins Canva en amagant los tèxtes)
 	const IMATGE = '/ensag/scena/ostal-net.webp';
 
-	// Los mots e la prononciacion venon del visual de Romain.
+	const VARIANTAS = [
+		{ id: 'aplat', nom: 'Aplat', desc: 'chaque objet en aplat de sa propre couleur, comme découpé dans le papier' },
+		{ id: 'sepia', nom: 'Sépia', desc: 'les objets en camaïeu brun et crème, les deux tons du dessin' },
+		{ id: 'bruma', nom: 'Brume', desc: 'les objets flous, dans leurs vraies couleurs, qui deviennent nets' }
+	];
+
+	// Los mots e la prononciacion venon del visual de Romain. « aplat » = color
+	// mejana de l'objècte, relevada sul visual e un pauc escurzida.
 	const OBJECTES = [
 		{
 			id: 'teulat',
 			oc: 'Lo teulat',
 			fr: 'Le toit',
 			son: 'Lou téwlatt',
-			color: '#3fd2c7',
-			// lo teulat sens las doas finèstras de la teulada (traucs)
+			aplat: '#a86d46',
 			clip: 'M300 280 L558 280 L655 420 L652 446 L213 446 L211 414 Z M326 310 H404 V382 H326 Z M456 310 H534 V382 H456 Z',
 			zonas: [[211, 280, 444, 166]],
-			etiqueta: [70, 214]
+			etiqueta: [76, 200],
+			sageta: 'M262 222 C 318 196, 352 226, 352 268',
+			punta: 'M339 256 L352 272 L364 255'
 		},
 		{
 			id: 'fenestras',
@@ -32,7 +41,7 @@
 			fr: 'Les fenêtres',
 			son: 'Lass finèstross',
 			nota: 'Ton visuel écrit « finèstras » ; lo Congrès ne connaît que « fenèstra » (languedocien), vérifié le 15-10. Coquille probable : à confirmer, et la prononciation avec.',
-			color: '#ffd166',
+			aplat: '#5c6157',
 			clip: 'M326 310 H404 V382 H326 Z M456 310 H534 V382 H456 Z M294 472 H370 V575 H294 Z M485 472 H564 V575 H485 Z',
 			zonas: [
 				[326, 310, 78, 72],
@@ -40,33 +49,39 @@
 				[294, 472, 76, 103],
 				[485, 472, 79, 103]
 			],
-			// accrochada per la drecha (bord drech a 818 px), que dobrisca pas sul telefòn
-			etiqueta: [818, 214, 'drecha']
+			etiqueta: [588, 205],
+			sageta: 'M690 300 C 700 362, 622 378, 548 352',
+			punta: 'M564 341 L546 351 L561 365'
 		},
 		{
 			id: 'porta',
 			oc: 'La pòrta',
 			fr: 'La porte',
 			son: 'La porto',
-			color: '#c3a6ff',
+			aplat: '#6e503a',
 			clip: 'M390 493 H455 V630 H390 Z',
 			zonas: [[384, 488, 77, 146]],
-			etiqueta: [330, 652]
+			etiqueta: [118, 650],
+			sageta: 'M278 708 C 330 742, 404 722, 420 646',
+			punta: 'M406 659 L421 642 L434 660'
 		},
 		{
 			id: 'claus',
 			oc: 'Las claus',
 			fr: 'Les clefs',
 			son: 'Lass klaws',
-			color: '#8ee88f',
+			aplat: '#d39809',
 			clip: 'M764 758 H856 V846 H764 Z',
-			// las claus son sul fons : lo vel es calculat sus l'imatge (lo fons ven transparent)
-			velImatge: true,
+			// las claus son sul fons : los filtres fan transparent lo fons roge
+			surFons: true,
 			zonas: [[756, 750, 104, 104]],
-			etiqueta: [590, 690]
+			etiqueta: [574, 660],
+			sageta: 'M742 690 C 790 680, 812 708, 812 746',
+			punta: 'M799 735 L812 751 L825 734'
 		}
 	];
 
+	let varianta = $state('aplat');
 	let alucats = $state({});
 	let causit = $state(null);
 	let lista = $state(false);
@@ -82,9 +97,14 @@
 		alucats = {};
 		causit = null;
 	}
+	function causir(v) {
+		varianta = v;
+		tornar();
+	}
 	const pct = (v) => `${(v / 860) * 100}%`;
-	// color en RGB 0-1, per la matritz del filtre de las claus
 	const rgb = (h) => [1, 3, 5].map((i) => (parseInt(h.slice(i, i + 2), 16) / 255).toFixed(3));
+	// opacitat calculada sul verd : lo fons roge (#b34624, verd 0,27) ven transparent
+	const ALFA_FONS = '0 4 0 0 -1.4';
 </script>
 
 <svelte:head>
@@ -96,10 +116,16 @@
 	<header>
 		<h1>La scène de l'unité</h1>
 		<p>
-			Essai sur ton visuel « L'ostal », version sans étiquettes ni flèches. Chaque chose à découvrir
-			porte un voile transparent de sa couleur. Touche-la : le voile s'efface, son nom apparaît dans
-			la même couleur. Les quatre découvertes, la scène est complète et l'unité suivante s'ouvre.
+			Troisième essai, d'après ton retour : les objets à découvrir sont cachés de façon opaque, dans
+			les couleurs du dessin ; au toucher, l'objet se révèle, une flèche se trace et ton étiquette
+			apparaît (croix et occitan, prononciation, français). Trois façons de cacher, à comparer :
 		</p>
+		<div class="comparar" role="group" aria-label="Façon de cacher les objets">
+			{#each VARIANTAS as v (v.id)}
+				<button aria-pressed={varianta === v.id} onclick={() => causir(v.id)}>{v.nom}</button>
+			{/each}
+		</div>
+		<p class="desc">{VARIANTAS.find((v) => v.id === varianta).desc}</p>
 	</header>
 
 	<div class="mise">
@@ -115,57 +141,89 @@
 						<clipPath id="clip-{o.id}">
 							<path d={o.clip} clip-rule="evenodd" />
 						</clipPath>
-						{#if o.velImatge}
-							<!-- color fixa ; opacitat = 0,6 × (4 × verd − 1,4) : lo fons (#b34624) ven transparent -->
-							<filter id="vel-{o.id}" color-interpolation-filters="sRGB">
-								<feColorMatrix
-									type="matrix"
-									values="0 0 0 0 {rgb(o.color)[0]}  0 0 0 0 {rgb(o.color)[1]}  0 0 0 0 {rgb(
-										o.color
-									)[2]}  0 2.4 0 0 -0.84"
-								/>
-							</filter>
-						{/if}
+						<!-- aplat : color plana de l'objècte -->
+						<filter id="aplat-{o.id}" color-interpolation-filters="sRGB">
+							<feColorMatrix
+								type="matrix"
+								values="0 0 0 0 {rgb(o.aplat)[0]}  0 0 0 0 {rgb(o.aplat)[1]}  0 0 0 0 {rgb(
+									o.aplat
+								)[2]}  {o.surFons ? ALFA_FONS : '0 0 0 1 0'}"
+							/>
+						</filter>
+						<!-- sepia : camaïeu entre lo brun e lo crèma del dessenh -->
+						<filter id="sepia-{o.id}" color-interpolation-filters="sRGB">
+							<feColorMatrix
+								type="matrix"
+								values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  {o.surFons ? ALFA_FONS : '0 0 0 1 0'}"
+							/>
+							<feColorMatrix type="saturate" values="0" />
+							<feComponentTransfer>
+								<feFuncR type="table" tableValues="0.353 0.953" />
+								<feFuncG type="table" tableValues="0.141 0.933" />
+								<feFuncB type="table" tableValues="0.078 0.847" />
+							</feComponentTransfer>
+						</filter>
+						<!-- bruma : las colors vertadièras, trebolas -->
+						<filter
+							id="bruma-{o.id}"
+							color-interpolation-filters="sRGB"
+							x="-5%"
+							y="-5%"
+							width="110%"
+							height="110%"
+						>
+							<feColorMatrix
+								in="SourceGraphic"
+								type="matrix"
+								values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  {o.surFons ? ALFA_FONS : '0 0 0 1 0'}"
+								result="forma"
+							/>
+							<feGaussianBlur in="SourceGraphic" stdDeviation="9" result="trebol" />
+							<feComposite in="trebol" in2="forma" operator="in" />
+						</filter>
 					{/each}
 				</defs>
 				<image href={IMATGE} width="860" height="860" />
 				{#each OBJECTES as o (o.id)}
-					{#if o.velImatge}
-						<image
-							href={IMATGE}
-							width="860"
-							height="860"
-							filter="url(#vel-{o.id})"
-							clip-path="url(#clip-{o.id})"
-							class="vel"
-							class:alucat={alucats[o.id]}
-						/>
-					{:else}
-						<path
-							d={o.clip}
-							fill-rule="evenodd"
-							fill={o.color}
-							stroke={o.color}
-							stroke-width="3"
-							class="vel"
-							class:alucat={alucats[o.id]}
-						/>
+					<image
+						href={IMATGE}
+						width="860"
+						height="860"
+						filter="url(#{varianta}-{o.id})"
+						clip-path="url(#clip-{o.id})"
+						class="cache"
+						class:alucat={alucats[o.id]}
+					/>
+				{/each}
+				{#each OBJECTES as o (o.id)}
+					{#if alucats[o.id]}
+						<g class="sageta">
+							<path class="trait" d={o.sageta} pathLength="1" />
+							<path class="punta" d={o.punta} />
+						</g>
 					{/if}
 				{/each}
 			</svg>
 
 			{#each OBJECTES as o (o.id)}
 				{#if alucats[o.id]}
-					<div
-						class="etiqueta"
-						style:left={o.etiqueta[2] === 'drecha' ? null : pct(o.etiqueta[0])}
-						style:right={o.etiqueta[2] === 'drecha' ? pct(860 - o.etiqueta[0]) : null}
-						style:top={pct(o.etiqueta[1])}
-						style:--color={o.color}
-					>
-						<p class="e-oc">{o.oc}</p>
+					<div class="etiqueta" style:left={pct(o.etiqueta[0])} style:top={pct(o.etiqueta[1])}>
+						<p class="e-oc"><span class="escut"><CrossIcon size="70%" /></span>{o.oc}</p>
 						<p class="e-son"><Icona nom="son" /> {o.son}</p>
-						<p class="e-fr">{o.fr}</p>
+						<p class="e-fr">
+							<svg
+								class="bandiera"
+								viewBox="0 0 3 2"
+								width="1.1em"
+								height="0.75em"
+								aria-hidden="true"
+							>
+								<rect width="1" height="2" fill="#0055a4" />
+								<rect x="1" width="1" height="2" fill="#fff" />
+								<rect x="2" width="1" height="2" fill="#ef4135" />
+							</svg>
+							{o.fr}
+						</p>
 					</div>
 				{/if}
 			{/each}
@@ -207,7 +265,7 @@
 			{/if}
 
 			{#if causit}
-				<div class="fica" style:--color={causit.color}>
+				<div class="fica">
 					<p class="oc">{causit.oc}</p>
 					<p class="fr">{causit.fr}</p>
 					<p class="son">Ça se dit : <em>{causit.son}</em></p>
@@ -219,7 +277,7 @@
 					{/if}
 				</div>
 			{:else}
-				<p class="indici">Quatre couleurs, quatre choses à découvrir. Touche-les.</p>
+				<p class="indici">Quatre choses sont cachées dans la maison. Touche-les.</p>
 			{/if}
 
 			<div class="accions">
@@ -233,12 +291,7 @@
 				<ul class="lista">
 					{#each OBJECTES as o (o.id)}
 						<li>
-							<button
-								onclick={() => tocar(o)}
-								aria-pressed={!!alucats[o.id]}
-								style:--color={o.color}
-							>
-								<span class="punt" aria-hidden="true"></span>
+							<button onclick={() => tocar(o)} aria-pressed={!!alucats[o.id]}>
 								<span class="oc">{o.oc}</span> · {o.fr}
 							</button>
 						</li>
@@ -270,9 +323,33 @@
 	}
 	header p,
 	footer p {
-		margin: 0 0 1.25rem;
+		margin: 0 0 1rem;
 		max-width: 46rem;
 		color: var(--t-tinta-2);
+	}
+	.desc {
+		font-style: italic;
+	}
+	.comparar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 0.6rem;
+	}
+	.comparar button {
+		min-height: 2.75rem;
+		padding: 0.45rem 1.1rem;
+		border: 1px solid var(--t-linha);
+		border-radius: 999px;
+		background: none;
+		color: var(--t-tinta);
+		font: inherit;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.comparar button[aria-pressed='true'] {
+		border-color: var(--t-aur);
+		color: var(--t-aur-clar);
 	}
 	.mise {
 		display: grid;
@@ -293,27 +370,42 @@
 		overflow: hidden;
 		box-shadow: 0 0.6rem 2rem rgb(0 0 0 / 0.25);
 	}
-	.scena svg {
+	.scena > svg {
 		display: block;
 		width: 100%;
 		height: 100%;
 	}
-	/* lo vel : transparent, de la color de l'objècte ; respira doçament */
-	.vel {
-		opacity: 0.5;
-		transition: opacity 0.7s ease;
-		animation: respirar 2.6s ease-in-out infinite;
+	/* lo cache : opac ; se retira a la descobèrta */
+	.cache {
+		transition: opacity 0.8s ease;
 	}
-	path.vel {
-		stroke-opacity: 0.9;
-	}
-	.vel.alucat {
+	.cache.alucat {
 		opacity: 0;
-		animation: none;
 	}
-	@keyframes respirar {
-		50% {
-			opacity: 0.32;
+	/* la sageta se traça (0,6 s), puèi la punta e l'etiqueta */
+	.sageta {
+		fill: none;
+		stroke: #fff;
+		stroke-width: 4;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+	.trait {
+		stroke-dasharray: 1;
+		stroke-dashoffset: 0;
+		animation: tracar 0.6s ease-out 0.35s backwards;
+	}
+	.punta {
+		animation: apareisser-punta 0.2s ease-out 0.9s backwards;
+	}
+	@keyframes tracar {
+		from {
+			stroke-dashoffset: 1;
+		}
+	}
+	@keyframes apareisser-punta {
+		from {
+			opacity: 0;
 		}
 	}
 	.zona {
@@ -331,47 +423,47 @@
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;
 	}
-	/* etiquetas escrichas pel site ; la talha seguís la scèna */
+	/* l'etiqueta de Romain : crotz + occitan, votz + prononciacion, bandièra + francés */
 	.etiqueta {
 		position: absolute;
-		padding: 0.6cqw 1.6cqw 0.7cqw 1.4cqw;
-		border-left: 0.7cqw solid var(--color);
-		border-radius: 0 1.2cqw 1.2cqw 0;
-		background: rgb(30 14 8 / 0.62);
 		color: #fff;
-		line-height: 1.2;
+		line-height: 1.25;
 		pointer-events: none;
-		animation: apareisser 0.6s ease-out 1;
+		animation: apareisser 0.5s ease-out 0.85s backwards;
 	}
 	.etiqueta p {
+		display: flex;
+		gap: 0.45em;
+		align-items: center;
 		margin: 0;
 		white-space: nowrap;
 	}
 	.e-oc {
 		font-weight: 700;
-		font-size: 3.6cqw;
-		color: var(--color);
+		font-size: 3.4cqw;
+	}
+	.escut {
+		display: inline-grid;
+		place-items: center;
+		width: 1.05em;
+		height: 1.15em;
+		border-radius: 0.15em 0.15em 0.5em 0.5em;
+		background: #d4261c;
+		color: #f6c343;
 	}
 	.e-son {
-		display: flex;
-		gap: 0.3em;
-		align-items: center;
-		font-size: 2.7cqw;
+		font-size: 2.6cqw;
+		opacity: 0.95;
 	}
 	.e-fr {
 		font-style: italic;
-		font-size: 2.5cqw;
-		opacity: 0.85;
+		font-size: 2.4cqw;
+		opacity: 0.92;
 	}
-	/* scèna estreta (telefòn) : sonque lo nom, legible ; lo rèsta es dins lo panèl */
-	@container (max-width: 480px) {
-		.e-son,
-		.e-fr {
-			display: none;
-		}
-		.e-oc {
-			font-size: max(3.6cqw, 0.9rem);
-		}
+	.bandiera {
+		width: 1.1em;
+		height: 0.75em;
+		border-radius: 0.1em;
 	}
 	@keyframes apareisser {
 		from {
@@ -399,10 +491,6 @@
 		height: 100%;
 		background: var(--t-aur);
 		transition: width 0.6s ease;
-	}
-	.fica {
-		padding-left: 0.9rem;
-		border-left: 4px solid var(--color);
 	}
 	.fica .oc {
 		margin: 0;
@@ -474,29 +562,19 @@
 		padding: 0;
 		list-style: none;
 	}
-	.lista button {
-		display: inline-flex;
-		gap: 0.5rem;
-		align-items: center;
-	}
 	.lista button[aria-pressed='true'] {
 		border-color: var(--t-aur);
-	}
-	.lista .punt {
-		width: 0.75rem;
-		height: 0.75rem;
-		border-radius: 50%;
-		background: var(--color);
 	}
 	.lista .oc {
 		font-weight: 700;
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.vel,
+		.cache,
 		.barra span {
 			transition: none;
-			animation: none;
 		}
+		.trait,
+		.punta,
 		.etiqueta {
 			animation: none;
 		}
