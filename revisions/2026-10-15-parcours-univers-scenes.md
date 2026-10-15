@@ -104,10 +104,12 @@ Canva : masquer les textes, exporter. Les zones cliquables, elles, se
 dessinent une fois pour toutes.
 
 **L'essai en ligne** ✓ : `/ensag/scena` (page de travail non indexée) sur ton
-visuel *L'ostal*. La maison est « au crayon », les étiquettes sont cachées,
-les flèches servent d'indices ; chaque objet touché s'allume et découvre ton
-étiquette ; sur téléphone, le nom s'affiche en bulle sur l'image ; à quatre
-objets, la scène est complète. Vérifié à l'écran (ordinateur et téléphone).
+visuel *L'ostal*. Premier passage : maison « au crayon », étiquettes cachées
+par des caches, flèches en indices (jugé grossier par Romain). Deuxième
+passage : visuel sans étiquettes ni flèches, un voile transparent de couleur
+par chose à découvrir ; le toucher efface le voile et fait apparaître
+l'étiquette du site dans la même couleur ; à quatre découvertes, la scène est
+complète. Vérifié à l'écran (ordinateur et téléphone).
 **Vérification occitane** ✓ : *teulat*, *pòrta*, *clau*, *ostal* sont connus
 de lo Congrès ; **« finèstra » ne l'est pas** : pour le languedocien, l'API
 donne *fenèstra*. Variante de chez toi ou coquille ? À toi de trancher.
@@ -276,16 +278,33 @@ parcours sont une couche de plus, à n'afficher que sur demande.
 
 ## 9. Les décisions, une à la fois
 
-1. **La scène de l'unité comme fil rouge** (§3) : on garde l'idée, après
-   avoir essayé `/ensag/scena` ?
-2. **Tes étiquettes** : on les découvre sur l'image (l'essai) ou on les
-   retire et le nom n'apparaît que dans la bulle ? (La seconde permet de
-   réutiliser la scène à d'autres niveaux.)
+1. ✅ **La scène de l'unité comme fil rouge** (§3) : gardée par Romain après
+   essai de `/ensag/scena` (2026-10-15).
+2. **Tes étiquettes** : retour de Romain sur le premier essai (caches
+   grossiers, flèches bizarres ; plutôt des **voiles transparents de couleurs
+   différentes**). Deuxième essai en ligne : visuel sans étiquettes ni
+   flèches, un voile de couleur par chose à découvrir, l'étiquette écrite par
+   le site dans la même couleur (la couleur remplace la flèche) ; sur
+   téléphone, seul le nom occitan reste sur l'image. À valider.
+
+**Pour ta refonte des visuels** (retour de Romain, 15-10 : nouveau logo,
+bonne dimension, les familles de publications) ◇ :
+- les **six familles** décidées le 12-10 (vocabulaire, grammaire et langue,
+  culture et calendrier, sensibilisation, vidéo, annonces) : les scènes
+  viennent de la famille « vocabulaire », gabarit
+  `design-stock/vecteurs/gabarits/1-vocabulaire` (format 4:5, 1080 × 1350) ;
+- le **logo en variante C** (intégré au site le 30-09) ;
+- **deux exports par visuel de scène** : celui d'Instagram (avec étiquettes)
+  et celui du site (sans textes ni flèches, même cadrage) ;
+- des **objets bien séparés** (dans *Manjam uèi*, les légumes se chevauchent :
+  difficile d'y poser des zones).
 3. **Fabrication** : option A (ton image + zones) pour démarrer ?
 4. **Répétition** : `ts-fsrs` avec deux réponses (raté / réussi) ?
 5. **La leçon en cinq temps** (§4) à la place des six sessions du cadre ?
 6. **Musique, vidéo, articles** : la règle du §6 ?
-7. **« finèstra » ou « fenèstra »** sur ton visuel *L'ostal* ?
+7. **« finèstra » ou « fenèstra »** sur ton visuel *L'ostal* : « c'est
+   possible que ce soit une coquille » (Romain, 15-10) ; l'essai affiche
+   *fenèstras*, à confirmer avec la prononciation.
 
 ## 10. Ce que tu peux faire seul / ce qui demandera de l'aide
 

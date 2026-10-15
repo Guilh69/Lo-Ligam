@@ -77,15 +77,16 @@ vérification occitane), le script de vérification déjà en place
 ## 4. Le test de positionnement (proposition v1)
 
 **Modèle** ✓ : DIALANG, outil du Conseil de l'Europe. Un test de vocabulaire
-« vrais mots / mots inventés » choisit le niveau des épreuves, complété par une
-auto-évaluation « je peux… » tirée du CECR, comparée ensuite au résultat
-(Alderson, *Diagnosing Foreign Language Proficiency*, 2006). Le vocabulaire y
-pèse plus lourd parce qu'il prédit mieux le niveau.
+choisit le niveau des épreuves, complété par une auto-évaluation « je
+peux… » tirée du CECR, comparée ensuite au résultat (Alderson, *Diagnosing
+Foreign Language Proficiency*, 2006). Le vocabulaire y pèse plus lourd parce
+qu'il prédit mieux le niveau. (DIALANG utilise des mots inventés : Lo Ligam
+non, voir la correction plus bas.)
 
 | Partie | Ce qu'elle fait | Durée ◇ |
 |---|---|---|
 | 1. Profil | 2 ou 3 questions : occitan entendu en famille ? une autre langue romane (catalan, espagnol, italien) ? → oriente vers les publics de l'état de l'art §5.5 (natif rouillé, romanophone, débutant) | 1 min |
-| 2. Vrais mots, mots inventés | une trentaine de mots, rangés par fréquence (les 1 001 mots pour A1), dont un tiers inventés ; « oui » à un mot inventé corrige le score à la baisse | 3 min |
+| 2. Reconnaître des mots | une trentaine de mots rangés par fréquence (les 1 001 mots pour A1) : on entend ou on lit le mot, on choisit son sens parmi quelques propositions, avec toujours « je ne sais pas » (contre les réponses au hasard) | 3 min |
 | 3. Compréhension, en escalier | 8 à 12 épreuves (écoute avec ta voix, lecture courte) ; on monte après une réussite, on descend après un échec | 4 à 5 min |
 | 4. « Je peux… » (facultatif) | auto-évaluation, comparée au résultat, sans jugement | 1 min |
 
@@ -93,12 +94,15 @@ pèse plus lourd parce qu'il prédit mieux le niveau.
 graphie d'abord ») et jamais un verdict ; on peut toujours revenir en arrière
 ou sauter. Une question par écran, gros boutons : le téléphone d'abord.
 
-**Vérifié aujourd'hui** ✓ : `verificar-oc.mjs` reconnaît *ostal* et *aiga* et
-déclare absents du Basic et de vèrb'Òc deux mots inventés pour l'essai
-(*brascolh*, *pentilar* : **ce ne sont pas des mots occitans**). L'API sait
-donc valider les vrais mots et écarter les faux.
-**Limite** ~ : « absent du Basic languedocien » ne prouve pas l'absence dans un
-autre dialecte ; chaque mot inventé passe aussi sur dicodòc à la main.
+**Correction du 2026-10-15 (après-midi)** ✓ : la première version de cette
+partie reprenait le format « vrai mot / mot inventé » de DIALANG. Or ce
+principe a été **écarté définitivement par Romain le 2026-08-29** (cahier §11 :
+trop proche d'un jeu de lo Congrès). Claude ne l'avait pas vu ; la partie 2
+est remplacée par un test de **reconnaissance du sens**, au format du
+*Vocabulary Levels Test* (Paul Nation ; révisé par Schmitt, Schmitt et
+Clapham, 2001 ; mis à jour par Webb, Sasao et Ballance, 2017) : des mots
+rangés par bandes de fréquence, dont il faut retrouver le sens. Aucun mot
+inventé. Chaque mot du test passe par l'API de lo Congrès.
 
 **Le code** ◇ : une fonction de calcul seule (`app/src/lib/positionament/`),
 les épreuves dans un fichier de données, les seuils dans un tableau lisible,

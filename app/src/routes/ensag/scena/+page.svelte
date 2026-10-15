@@ -4,27 +4,35 @@
 	// mòstra son nom. La scèna completa dobrís l'unitat seguenta.
 	// Proposicion : revisions/2026-10-15-parcours-univers-scenes.md. Pagina de
 	// trabalh, pas indexada. Coordenadas dins l'espaci de l'imatge (860 × 860).
-	const IMATGE = '/fichas/grand/ostal--ostal.webp';
-	const FONS = '#b34624'; // color del fons del visual (relevada sul fichièr)
+	// 2n passatge (retorn de Romain) : pas pus de caches ni de sagetas ; cada
+	// objècte a un vel transparent de sa color, e l'etiqueta escricha pel site
+	// pren la meteissa color (la color fa lo ligam, pas una sageta).
+	import Icona from '$lib/components/Icona.svelte';
 
-	// Los mots e la prononciacion son los del visual de Romain.
+	// Version del visual sens etiquetas ni sagetas (fabricada per l'ensag ;
+	// Romain la tornarà far dins Canva en amagant los tèxtes)
+	const IMATGE = '/ensag/scena/ostal-net.webp';
+
+	// Los mots e la prononciacion venon del visual de Romain.
 	const OBJECTES = [
 		{
 			id: 'teulat',
 			oc: 'Lo teulat',
 			fr: 'Le toit',
 			son: 'Lou téwlatt',
+			color: '#3fd2c7',
 			// lo teulat sens las doas finèstras de la teulada (traucs)
 			clip: 'M300 280 L558 280 L655 420 L652 446 L213 446 L211 414 Z M326 310 H404 V382 H326 Z M456 310 H534 V382 H456 Z',
 			zonas: [[211, 280, 444, 166]],
-			etiqueta: [76, 198, 192, 102]
+			etiqueta: [70, 214]
 		},
 		{
-			id: 'finestras',
-			oc: 'Las finèstras',
+			id: 'fenestras',
+			oc: 'Las fenèstras',
 			fr: 'Les fenêtres',
 			son: 'Lass finèstross',
-			nota: 'Lo Congrès donne « fenèstra » pour le languedocien ; « finèstra » est inconnu de l’API (vérifié le 15-10). Variante de chez toi ou coquille ?',
+			nota: 'Ton visuel écrit « finèstras » ; lo Congrès ne connaît que « fenèstra » (languedocien), vérifié le 15-10. Coquille probable : à confirmer, et la prononciation avec.',
+			color: '#ffd166',
 			clip: 'M326 310 H404 V382 H326 Z M456 310 H534 V382 H456 Z M294 472 H370 V575 H294 Z M485 472 H564 V575 H485 Z',
 			zonas: [
 				[326, 310, 78, 72],
@@ -32,30 +40,32 @@
 				[294, 472, 76, 103],
 				[485, 472, 79, 103]
 			],
-			etiqueta: [596, 203, 222, 97]
+			// accrochada per la drecha (bord drech a 818 px), que dobrisca pas sul telefòn
+			etiqueta: [818, 214, 'drecha']
 		},
 		{
 			id: 'porta',
 			oc: 'La pòrta',
 			fr: 'La porte',
 			son: 'La porto',
+			color: '#c3a6ff',
 			clip: 'M390 493 H455 V630 H390 Z',
 			zonas: [[384, 488, 77, 146]],
-			etiqueta: [113, 648, 172, 99]
+			etiqueta: [330, 652]
 		},
 		{
 			id: 'claus',
 			oc: 'Las claus',
 			fr: 'Les clefs',
 			son: 'Lass klaws',
+			color: '#8ee88f',
 			clip: 'M764 758 H856 V846 H764 Z',
-			// las claus son sul fons : lo filtre fa transparent lo fons roge
-			filtre: 'gredon-fons',
+			// las claus son sul fons : lo vel es calculat sus l'imatge (lo fons ven transparent)
+			velImatge: true,
 			zonas: [[756, 750, 104, 104]],
-			etiqueta: [570, 658, 170, 96]
+			etiqueta: [590, 690]
 		}
 	];
-	const TITOL_SON = [283, 766, 350, 70]; // « L'oustal énn outsita », a la fin
 
 	let alucats = $state({});
 	let causit = $state(null);
@@ -73,6 +83,8 @@
 		causit = null;
 	}
 	const pct = (v) => `${(v / 860) * 100}%`;
+	// color en RGB 0-1, per la matritz del filtre de las claus
+	const rgb = (h) => [1, 3, 5].map((i) => (parseInt(h.slice(i, i + 2), 16) / 255).toFixed(3));
 </script>
 
 <svelte:head>
@@ -84,9 +96,9 @@
 	<header>
 		<h1>La scène de l'unité</h1>
 		<p>
-			Essai sur ton visuel « L'ostal ». Au départ, la maison est « au crayon » et les étiquettes
-			sont cachées ; les flèches servent d'indices. Touche un objet : il s'allume, son nom
-			apparaît. Les quatre objets allumés, la scène est complète et l'unité suivante s'ouvre.
+			Essai sur ton visuel « L'ostal », version sans étiquettes ni flèches. Chaque chose à découvrir
+			porte un voile transparent de sa couleur. Touche-la : le voile s'efface, son nom apparaît dans
+			la même couleur. Les quatre découvertes, la scène est complète et l'unité suivante s'ouvre.
 		</p>
 	</header>
 
@@ -95,67 +107,68 @@
 			class="scena"
 			class:completa
 			role="group"
-			aria-label="Scène : une maison, quatre objets à découvrir"
+			aria-label="Scène : une maison, quatre choses à découvrir"
 		>
 			<svg viewBox="0 0 860 860" aria-hidden="true">
 				<defs>
-					<filter id="gredon" color-interpolation-filters="sRGB">
-						<feColorMatrix type="saturate" values="0" />
-						<feComponentTransfer>
-							<feFuncR type="linear" slope="0.55" intercept="0.42" />
-							<feFuncG type="linear" slope="0.55" intercept="0.42" />
-							<feFuncB type="linear" slope="0.55" intercept="0.42" />
-						</feComponentTransfer>
-					</filter>
-					<!-- opacitat = 4 × verd − 1,4 : lo fons (#b34624, verd 0,27) ven transparent -->
-					<filter id="gredon-fons" color-interpolation-filters="sRGB">
-						<feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 4 0 0 -1.4" />
-						<feColorMatrix type="saturate" values="0" />
-						<feComponentTransfer>
-							<feFuncR type="linear" slope="0.55" intercept="0.42" />
-							<feFuncG type="linear" slope="0.55" intercept="0.42" />
-							<feFuncB type="linear" slope="0.55" intercept="0.42" />
-						</feComponentTransfer>
-					</filter>
 					{#each OBJECTES as o (o.id)}
 						<clipPath id="clip-{o.id}">
 							<path d={o.clip} clip-rule="evenodd" />
 						</clipPath>
+						{#if o.velImatge}
+							<!-- color fixa ; opacitat = 0,6 × (4 × verd − 1,4) : lo fons (#b34624) ven transparent -->
+							<filter id="vel-{o.id}" color-interpolation-filters="sRGB">
+								<feColorMatrix
+									type="matrix"
+									values="0 0 0 0 {rgb(o.color)[0]}  0 0 0 0 {rgb(o.color)[1]}  0 0 0 0 {rgb(
+										o.color
+									)[2]}  0 2.4 0 0 -0.84"
+								/>
+							</filter>
+						{/if}
 					{/each}
 				</defs>
 				<image href={IMATGE} width="860" height="860" />
 				{#each OBJECTES as o (o.id)}
-					<image
-						href={IMATGE}
-						width="860"
-						height="860"
-						filter="url(#{o.filtre ?? 'gredon'})"
-						clip-path="url(#clip-{o.id})"
-						class="gris"
-						class:alucat={alucats[o.id]}
-					/>
+					{#if o.velImatge}
+						<image
+							href={IMATGE}
+							width="860"
+							height="860"
+							filter="url(#vel-{o.id})"
+							clip-path="url(#clip-{o.id})"
+							class="vel"
+							class:alucat={alucats[o.id]}
+						/>
+					{:else}
+						<path
+							d={o.clip}
+							fill-rule="evenodd"
+							fill={o.color}
+							stroke={o.color}
+							stroke-width="3"
+							class="vel"
+							class:alucat={alucats[o.id]}
+						/>
+					{/if}
 				{/each}
-				{#each OBJECTES as o (o.id)}
-					<rect
-						x={o.etiqueta[0]}
-						y={o.etiqueta[1]}
-						width={o.etiqueta[2]}
-						height={o.etiqueta[3]}
-						fill={FONS}
-						class="cache"
-						class:alucat={alucats[o.id]}
-					/>
-				{/each}
-				<rect
-					x={TITOL_SON[0]}
-					y={TITOL_SON[1]}
-					width={TITOL_SON[2]}
-					height={TITOL_SON[3]}
-					fill={FONS}
-					class="cache"
-					class:alucat={completa}
-				/>
 			</svg>
+
+			{#each OBJECTES as o (o.id)}
+				{#if alucats[o.id]}
+					<div
+						class="etiqueta"
+						style:left={o.etiqueta[2] === 'drecha' ? null : pct(o.etiqueta[0])}
+						style:right={o.etiqueta[2] === 'drecha' ? pct(860 - o.etiqueta[0]) : null}
+						style:top={pct(o.etiqueta[1])}
+						style:--color={o.color}
+					>
+						<p class="e-oc">{o.oc}</p>
+						<p class="e-son"><Icona nom="son" /> {o.son}</p>
+						<p class="e-fr">{o.fr}</p>
+					</div>
+				{/if}
+			{/each}
 
 			{#each OBJECTES as o (o.id)}
 				{#each o.zonas as z, k (k)}
@@ -166,25 +179,18 @@
 						style:top={pct(z[1])}
 						style:width={pct(z[2])}
 						style:height={pct(z[3])}
-						aria-label={k === 0 ? `${o.fr} : allumer et entendre` : undefined}
+						aria-label={k === 0 ? `${o.fr} : découvrir` : undefined}
 						aria-hidden={k === 0 ? undefined : 'true'}
 						tabindex={k === 0 ? 0 : -1}
 						onclick={() => tocar(o)}
 					></button>
 				{/each}
 			{/each}
-
-			{#if causit}
-				<!-- sul telefòn, lo nom s'aficha dins la scèna (lo panèl es en dessota) -->
-				<p class="bulla" aria-hidden="true">
-					<strong>{causit.oc}</strong> · <em>{causit.fr}</em>
-				</p>
-			{/if}
 		</div>
 
 		<aside class="panel" aria-live="polite">
 			<p class="comptador">
-				<strong>{comptador}</strong> / {total} objets allumés
+				<strong>{comptador}</strong> / {total} découvertes
 			</p>
 			<div class="barra" aria-hidden="true">
 				<span style:width="{(comptador / total) * 100}%"></span>
@@ -192,7 +198,7 @@
 
 			{#if completa}
 				<div class="fin">
-					<p class="gran">La maison est allumée !</p>
+					<p class="gran">La maison est complète !</p>
 					<p>
 						Dans le parcours : une branche pousse sur l'Arbre del Ligam, le personnage de la còla
 						apparaît dans la scène, et l'unité suivante s'ouvre.
@@ -201,17 +207,19 @@
 			{/if}
 
 			{#if causit}
-				<div class="fica">
+				<div class="fica" style:--color={causit.color}>
 					<p class="oc">{causit.oc}</p>
 					<p class="fr">{causit.fr}</p>
 					<p class="son">Ça se dit : <em>{causit.son}</em></p>
-					<button class="votz" disabled title="Ta voix, à enregistrer">▶ Ta voix (à enregistrer)</button>
+					<button class="votz" disabled title="Ta voix, à enregistrer">
+						<Icona nom="son" /> Ta voix (à enregistrer)
+					</button>
 					{#if causit.nota}
 						<p class="nota">⚠ Vérification : {causit.nota}</p>
 					{/if}
 				</div>
 			{:else}
-				<p class="indici">Touche le toit, les fenêtres, la porte… et cherche les clefs.</p>
+				<p class="indici">Quatre couleurs, quatre choses à découvrir. Touche-les.</p>
 			{/if}
 
 			<div class="accions">
@@ -225,7 +233,12 @@
 				<ul class="lista">
 					{#each OBJECTES as o (o.id)}
 						<li>
-							<button onclick={() => tocar(o)} aria-pressed={!!alucats[o.id]}>
+							<button
+								onclick={() => tocar(o)}
+								aria-pressed={!!alucats[o.id]}
+								style:--color={o.color}
+							>
+								<span class="punt" aria-hidden="true"></span>
 								<span class="oc">{o.oc}</span> · {o.fr}
 							</button>
 						</li>
@@ -237,9 +250,9 @@
 
 	<footer>
 		<p>
-			À trancher : tes étiquettes restent sur l'image (on les découvre) ou on les retire et le nom
-			n'apparaît que dans le panneau ? Le personnage de la còla caché dans la scène attend son
-			dessin.
+			La version sans étiquettes a été fabriquée pour l'essai (un petit raccord reste au bord du
+			toit, à droite) ; la vraie se fera dans Canva en masquant les textes. Le personnage de la còla
+			caché dans la scène attend son dessin.
 		</p>
 	</footer>
 </main>
@@ -273,6 +286,7 @@
 		}
 	}
 	.scena {
+		container-type: inline-size;
 		position: relative;
 		aspect-ratio: 1;
 		border-radius: 0.75rem;
@@ -284,13 +298,23 @@
 		width: 100%;
 		height: 100%;
 	}
-	.gris,
-	.cache {
+	/* lo vel : transparent, de la color de l'objècte ; respira doçament */
+	.vel {
+		opacity: 0.5;
 		transition: opacity 0.7s ease;
+		animation: respirar 2.6s ease-in-out infinite;
 	}
-	.gris.alucat,
-	.cache.alucat {
+	path.vel {
+		stroke-opacity: 0.9;
+	}
+	.vel.alucat {
 		opacity: 0;
+		animation: none;
+	}
+	@keyframes respirar {
+		50% {
+			opacity: 0.32;
+		}
 	}
 	.zona {
 		position: absolute;
@@ -301,40 +325,58 @@
 		cursor: pointer;
 	}
 	.zona:not(.alucat):hover {
-		background: rgb(255 255 255 / 0.12);
+		background: rgb(255 255 255 / 0.15);
 	}
 	.zona:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;
 	}
-	.zona.alucat {
-		animation: lusir 0.9s ease-out 1;
-	}
-	@keyframes lusir {
-		from {
-			box-shadow: 0 0 0 0 rgb(255 214 120 / 0.9);
-		}
-		to {
-			box-shadow: 0 0 0 1.2rem rgb(255 214 120 / 0);
-		}
-	}
-	.bulla {
+	/* etiquetas escrichas pel site ; la talha seguís la scèna */
+	.etiqueta {
 		position: absolute;
-		left: 50%;
-		bottom: 3%;
-		margin: 0;
-		padding: 0.4rem 0.9rem;
-		border-radius: 999px;
-		background: rgb(20 12 8 / 0.82);
+		padding: 0.6cqw 1.6cqw 0.7cqw 1.4cqw;
+		border-left: 0.7cqw solid var(--color);
+		border-radius: 0 1.2cqw 1.2cqw 0;
+		background: rgb(30 14 8 / 0.62);
 		color: #fff;
-		font-size: 0.95rem;
-		white-space: nowrap;
-		transform: translateX(-50%);
+		line-height: 1.2;
 		pointer-events: none;
+		animation: apareisser 0.6s ease-out 1;
 	}
-	@media (min-width: 900px) {
-		.bulla {
+	.etiqueta p {
+		margin: 0;
+		white-space: nowrap;
+	}
+	.e-oc {
+		font-weight: 700;
+		font-size: 3.6cqw;
+		color: var(--color);
+	}
+	.e-son {
+		display: flex;
+		gap: 0.3em;
+		align-items: center;
+		font-size: 2.7cqw;
+	}
+	.e-fr {
+		font-style: italic;
+		font-size: 2.5cqw;
+		opacity: 0.85;
+	}
+	/* scèna estreta (telefòn) : sonque lo nom, legible ; lo rèsta es dins lo panèl */
+	@container (max-width: 480px) {
+		.e-son,
+		.e-fr {
 			display: none;
+		}
+		.e-oc {
+			font-size: max(3.6cqw, 0.9rem);
+		}
+	}
+	@keyframes apareisser {
+		from {
+			opacity: 0;
+			transform: translateY(0.4rem);
 		}
 	}
 	.panel {
@@ -358,6 +400,10 @@
 		background: var(--t-aur);
 		transition: width 0.6s ease;
 	}
+	.fica {
+		padding-left: 0.9rem;
+		border-left: 4px solid var(--color);
+	}
 	.fica .oc {
 		margin: 0;
 		font-family: 'Limelight', serif;
@@ -372,6 +418,9 @@
 		margin: 0 0 0.75rem;
 	}
 	.votz {
+		display: inline-flex;
+		gap: 0.4em;
+		align-items: center;
 		padding: 0.45rem 1rem;
 		border: 1px dashed var(--t-linha);
 		border-radius: 999px;
@@ -425,19 +474,30 @@
 		padding: 0;
 		list-style: none;
 	}
+	.lista button {
+		display: inline-flex;
+		gap: 0.5rem;
+		align-items: center;
+	}
 	.lista button[aria-pressed='true'] {
 		border-color: var(--t-aur);
+	}
+	.lista .punt {
+		width: 0.75rem;
+		height: 0.75rem;
+		border-radius: 50%;
+		background: var(--color);
 	}
 	.lista .oc {
 		font-weight: 700;
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.gris,
-		.cache,
+		.vel,
 		.barra span {
 			transition: none;
+			animation: none;
 		}
-		.zona.alucat {
+		.etiqueta {
 			animation: none;
 		}
 	}
