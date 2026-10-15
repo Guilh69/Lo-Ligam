@@ -159,9 +159,14 @@ export function lancarAcuelh(racina, opcions = {}) {
 				col = mix(b0, b1, smoothstep(0.28, 0.86, v));
 				col = mix(col, b2, smoothstep(0.62, 0.98, v) * (0.22 + 0.3 * p));
 				float f = abs(fract(v * 3.4 + tt * 0.6) - 0.5);
-				float vena = smoothstep(0.045, 0.0, f) * smoothstep(0.38, 0.82, v);
-				col += b3 * vena * (0.5 + 0.2 * p) * (1.0 - 0.8 * c);
+				// Plus doux (Romain, 2026-10-15 : « un peu trop intense parfois ») :
+				// veines un peu plus fines et moins brillantes (avant : 0,045 et 0,5 + 0,2 p)
+				float vena = smoothstep(0.038, 0.0, f) * smoothstep(0.38, 0.82, v);
+				col += b3 * vena * (0.36 + 0.14 * p) * (1.0 - 0.8 * c);
 				col += vec3(0.85, 0.47, 0.19) * exp(-d * 5.5) * 0.24;
+				// …et les pics compressés : les sombres ne bougent presque pas, les
+				// éclats les plus vifs perdent environ un tiers
+				col = col / (1.0 + 0.6 * col) * 1.12;
 				col *= 1.0 - 0.4 * c;
 			} else if (mo < 1.5) {
 				// 1. Lum e estelas : grandas tacas de lum cauda que derivan, una candela jos la mirga
