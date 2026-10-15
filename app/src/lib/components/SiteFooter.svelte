@@ -7,16 +7,70 @@
 	import { scramble } from '$lib/actions/scramble';
 	// Le texte est écrit dans le HTML du serveur (lisible sans JavaScript et
 	// par les lecteurs d'écran) ; l'action scramble le remplace au montage.
+	import { onMount } from 'svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { families, externalLinks } from '$lib/data/siteSections';
+	// Essai du menu (2026-10-15) : le pied de page reprend le même plan que le
+	// menu-voile, comme celui de l'Alliance répète son menu
+	import { essaiMenu, legirEssaiMenu } from '$lib/stores/essaiMenu.svelte.js';
+	import { PLAN, LO_LIGAM } from '$lib/data/planSite.js';
 
 	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.' };
 	let { tagline = PER_DEFAUT } = $props();
 	let lang = $derived(langStore.current);
+	onMount(legirEssaiMenu);
 </script>
+
+{#snippet ligam(it)}
+	{#if it.defòra}
+		<a class="footer-link" href={it.href} target="_blank" rel="noopener noreferrer"
+			>{lang === 'oc' ? it.oc : it.fr} <Icona nom="extern" size="0.9em" /></a
+		>
+	{:else}
+		<a class="footer-link" href={it.href}><span use:scramble={{ oc: it.oc, fr: it.fr, lang }}>{lang === 'oc' ? it.oc : it.fr}</span></a>
+	{/if}
+{/snippet}
 
 <footer class="site-footer">
 	<nav class="footer-colomnas" aria-label={lang === 'oc' ? 'Plan del site' : 'Plan du site'}>
+		{#if essaiMenu.actiu}
+			{#each PLAN as c (c.id)}
+				<div class="footer-col">
+					<p class="footer-col-title">
+						<b class="footer-num">{c.n}</b>
+						<span use:scramble={{ oc: c.oc, fr: c.fr, lang }}>{lang === 'oc' ? c.oc : c.fr}</span>
+					</p>
+					{#each c.grops as g, gi (gi)}
+						{#if g.oc}<p class="footer-grop">{lang === 'oc' ? g.oc : g.fr}</p>{/if}
+						<ul>
+							{#each g.items as it (it.href)}
+								<li>{@render ligam(it)}</li>
+							{/each}
+						</ul>
+					{/each}
+				</div>
+			{/each}
+			<div class="footer-col">
+				<p class="footer-col-title">Lo Ligam</p>
+				<ul>
+					{#each LO_LIGAM as it (it.href)}
+						<li>{@render ligam(it)}</li>
+					{/each}
+				</ul>
+			</div>
+			<div class="footer-col">
+				<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', lang }}>{lang === 'oc' ? 'Ressorsas' : 'Ressources'}</p>
+				<ul>
+					{#each externalLinks as l (l.href)}
+						<li>
+							<a class="footer-link" href={l.href} target="_blank" rel="noopener noreferrer"
+								>{l.label} <Icona nom="extern" size="0.9em" /></a
+							>
+						</li>
+					{/each}
+				</ul>
+			</div>
+		{:else}
 		{#each families as fam (fam.id)}
 			<div class="footer-col">
 				<p class="footer-col-title" use:scramble={{ oc: fam.oc, fr: fam.fr, lang }}>{lang === 'oc' ? fam.oc : fam.fr}</p>
@@ -56,6 +110,7 @@
 				</li>
 			</ul>
 		</div>
+		{/if}
 	</nav>
 
 	<p class="footer-nom" aria-hidden="true">Lo Ligam</p>
@@ -104,6 +159,26 @@
 		font-family: var(--font-heading);
 		font-size: 1.25rem;
 		color: var(--t-aur);
+	}
+
+	/* Essai : le numéro du verbe en contour, au-dessus du verbe, comme sur l'accueil */
+	.footer-num {
+		display: block;
+		margin-bottom: 0.15rem;
+		font-weight: 400;
+		font-size: 1.6rem;
+		line-height: 1;
+		color: transparent;
+		-webkit-text-stroke: 1px var(--t-aur);
+	}
+
+	.footer-grop {
+		margin: 0.7rem 0 0.2rem;
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--t-tinta-2);
 	}
 
 	.footer-col ul {

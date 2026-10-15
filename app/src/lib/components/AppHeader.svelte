@@ -6,14 +6,28 @@
 	// réglage d'ambiance et la langue. Couleurs de thème (--t-*) : suit le
 	// sombre, le clair et le daltonisme. Même API qu'avant (le bloc compte
 	// passe en enfant), donc aucune page à modifier.
+	//
+	// Essai du 2026-10-15 (option 2 de Romain, d'après l'Alliance) : barre
+	// presque vide, bouton « Menú » qui ouvre le menu-voile en trois colonnes
+	// (MenuVel) et bouton « Reservar un cors ». Seulement si l'essai est allumé
+	// sur /ensag/menu, dans ce navigateur ; sinon, la barre actuelle.
 	import { page } from '$app/state';
+	import { onMount } from 'svelte';
 	import Crotz from './Crotz.svelte';
 	import AmbiancaPanel from './AmbiancaPanel.svelte';
+	import MenuVel from './MenuVel.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { essaiMenu, legirEssaiMenu } from '$lib/stores/essaiMenu.svelte.js';
+	import { RESERVAR } from '$lib/data/planSite.js';
+	import { portal } from '$lib/actions/portal.js';
 	import { esAdmin } from '$lib/adminStore';
 
 	let { children } = $props();
 	let lang = $derived(langStore.current);
+
+	onMount(legirEssaiMenu);
+	let menuDobèrt = $state(false);
+	let botonMenu = $state(null);
 
 	const t = {
 		oc: { acuelhLong: "Tornar a l'acuèlh", admin: 'Administracion', nav: 'Navigacion' },
@@ -30,21 +44,39 @@
 </script>
 
 <header class="top">
-	<div class="top-in">
+	<div class="top-in" class:essai={essaiMenu.actiu}>
 		<a class="brand" href="/" title={tx.acuelhLong} aria-label={`Lo Ligam, ${tx.acuelhLong}`}>
 			<Crotz talha={30} />
 			<span class="brand-name">Lo Ligam</span>
 		</a>
 
-		<nav class="nav" aria-label={tx.nav}>
-			{#each LIGAMS as l (l.href)}
-				<a class="nav-ligam" href={l.href} aria-current={actiu(l.href) ? 'page' : undefined}
-					>{lang === 'oc' ? l.oc : l.fr}</a
-				>
-			{/each}
-		</nav>
+		{#if !essaiMenu.actiu}
+			<nav class="nav" aria-label={tx.nav}>
+				{#each LIGAMS as l (l.href)}
+					<a class="nav-ligam" href={l.href} aria-current={actiu(l.href) ? 'page' : undefined}
+						>{lang === 'oc' ? l.oc : l.fr}</a
+					>
+				{/each}
+			</nav>
+		{/if}
 
 		<div class="header-right">
+			{#if essaiMenu.actiu}
+				<button
+					type="button"
+					class="menu-boton"
+					bind:this={botonMenu}
+					aria-haspopup="dialog"
+					aria-expanded={menuDobèrt}
+					onclick={() => (menuDobèrt = !menuDobèrt)}
+				>
+					<Icona nom="menu" size="1.15em" /><span>{lang === 'oc' ? 'Menú' : 'Menu'}</span>
+				</button>
+				<a class="reservar" href={RESERVAR} target="_blank" rel="noopener"
+					>{lang === 'oc' ? 'Reservar un cors' : 'Réserver un cours'}</a
+				>
+			{/if}
+
 			{#if children}
 				<div class="compte">
 					{@render children()}
@@ -73,6 +105,12 @@
 		</div>
 	</div>
 </header>
+
+{#if essaiMenu.actiu}
+	<MenuVel bind:dobèrt={menuDobèrt} {lang} boton={botonMenu} />
+	<!-- Rappel : on regarde l'essai, pas le menu du site (retour à l'actuel sur /ensag/menu) -->
+	<a class="essai-pastilha" href="/ensag/menu" use:portal>{lang === 'oc' ? 'Menú d’ensag' : 'Menu d’essai'}</a>
+{/if}
 
 <style>
 	.top {
@@ -116,6 +154,83 @@
 				'brand right'
 				'nav nav';
 		}
+	}
+
+	/* Essai : une seule ligne en toute largeur, la marque à gauche, le reste à droite */
+	.top-in.essai {
+		grid-template-columns: auto 1fr;
+		grid-template-areas: 'brand right';
+	}
+
+	.menu-boton {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		height: 2.2rem;
+		padding: 0 0.9rem;
+		border: 1px solid var(--t-linha);
+		border-radius: 999px;
+		background: transparent;
+		color: var(--t-tinta);
+		font: inherit;
+		font-weight: 700;
+		font-size: 0.82rem;
+		cursor: pointer;
+		transition: border-color 0.3s;
+	}
+
+	.menu-boton:hover,
+	.menu-boton[aria-expanded='true'] {
+		border-color: var(--t-aur);
+	}
+
+	/* La seule action en couleur de la barre, comme « Nous rejoindre » */
+	.reservar {
+		display: inline-flex;
+		align-items: center;
+		height: 2.2rem;
+		padding: 0 1.1rem;
+		border-radius: 999px;
+		background: var(--t-aur);
+		color: var(--t-fons);
+		font-weight: 700;
+		font-size: 0.82rem;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.reservar:hover {
+		transform: translateY(-1px);
+	}
+
+	.menu-boton:focus-visible,
+	.reservar:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 3px;
+	}
+
+	/* Faute de place, la réservation passe dans le menu (comme sur le téléphone de l'Alliance) */
+	@container (max-width: 44rem) {
+		.reservar {
+			display: none;
+		}
+	}
+
+	.essai-pastilha {
+		position: fixed;
+		left: 1rem;
+		bottom: 1rem;
+		z-index: 2999;
+		padding: 0.4rem 0.8rem;
+		border-radius: 999px;
+		background: var(--t-terra);
+		color: #f5ead8;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-decoration: none;
+		box-shadow: 0 4px 14px rgba(18, 9, 6, 0.3);
 	}
 
 	.brand {
