@@ -344,7 +344,7 @@
 		background:
 			radial-gradient(circle at 70% 30%, rgba(238, 175, 52, 0.7) 0 6%, transparent 30%),
 			radial-gradient(ellipse at 30% 70%, #6e2410, transparent 70%),
-			#120906;
+			#22100a;
 	}
 
 	.m1 {
@@ -353,17 +353,17 @@
 			radial-gradient(1px 1px at 75% 60%, #f5ead8, transparent),
 			radial-gradient(circle at 30% 60%, rgba(181, 61, 23, 0.6), transparent 60%),
 			radial-gradient(circle at 80% 85%, rgba(238, 175, 52, 0.35), transparent 50%),
-			#160b07;
+			#261209;
 	}
 
 	.m2 {
 		background:
 			repeating-radial-gradient(circle at 40% 65%, transparent 0 4px, rgba(238, 175, 52, 0.55) 4px 5px),
-			#120906;
+			#22100a;
 	}
 
 	.m3 {
-		background: linear-gradient(#120906, #2a120a);
+		background: linear-gradient(#22100a, #3a1a0e);
 	}
 
 	.sr-only {

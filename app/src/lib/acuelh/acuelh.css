@@ -49,8 +49,8 @@ html.lenis, html.lenis body { height: auto; }
    sonque transform e opacitat (planca d'ensag : static/esbos-fons-leugiers.html).
    Escondut (display: none) quand es pas en servici : res non bolega per res. */
 .acuelh .brasa { display: none; position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
-	--b-fons: #120906; --b-fons-2: #2a110a; --b-lum-1: rgba(181, 61, 23, 0.34); --b-lum-2: rgba(238, 175, 52, 0.16);
-	--b-beluga: #ffd47f; --b-beluga-lum: #eeaf34; --b-ombra: rgba(0, 0, 0, 0.5);
+	--b-fons: #22100a; --b-fons-2: #38190e; --b-lum-1: rgba(200, 72, 28, 0.34); --b-lum-2: rgba(246, 183, 60, 0.16);
+	--b-beluga: #ffd98a; --b-beluga-lum: #f6b73c; --b-ombra: rgba(0, 0, 0, 0.5);
 	background: linear-gradient(to top, var(--b-fons-2), var(--b-fons) 72%); transition: opacity 0.8s ease; }
 :root[data-tema='clar'] .acuelh .brasa { --b-fons: #f5ead8; --b-fons-2: #ebd5b5; --b-lum-1: rgba(181, 61, 23, 0.13);
 	--b-lum-2: rgba(238, 175, 52, 0.2); --b-beluga: #8a3f12; --b-beluga-lum: #a85d12; --b-ombra: rgba(120, 60, 20, 0.1); }
