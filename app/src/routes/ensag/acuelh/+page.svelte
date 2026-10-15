@@ -8,8 +8,11 @@
 	//   - un seul bouton principal à l'ouverture (la carte) ;
 	//   - « Qui » : le manifeste sans numéro, avec la photo de Romain ;
 	//   - les numéros 01-02-03 portent les idées (se parle, s'apprend, se vit) ;
-	//   - « Quatre chemins » disparaît (il répétait le menu, 6 liens sur 12 « Bientôt ») ;
+	//   - « Quatre chemins » disparaît (il répétait le menu) ;
 	//   - Instagram tient lieu de lettre d'informations, sans travail en plus.
+	// Puis (même jour) : l'encyclopédie sous la carte, « Se viu » en deux cartes
+	// Descobrir / Amassa (forum, groupes, boîte à idées), « amassa » plutôt que
+	// « ensems » (inconnu de lo Congrès), « fòrum » avec l'accent.
 	// Même moteur et même feuille de style que l'accueil ($lib/acuelh) : seuls
 	// l'ordre et quelques textes changent. Occitan nouveau : À VALIDER par Romain.
 	import { onMount } from 'svelte';
@@ -17,7 +20,7 @@
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 	import { RESERVAR, MOTS, MANIFEST, CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
-	import { P, TRAÇATS } from '$lib/acuelh/simbol.js';
+	import { AMASSA } from '$lib/acuelh/amassa.js';
 	import '$lib/acuelh/acuelh.css';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -25,15 +28,23 @@
 	let racina;
 	let motor = $state.raw(null);
 
-	// « Se viu » : ce qui fait vivre la langue, que des liens qui existent
+	// « Se viu » : découvrir, et faire ensemble (option 1 de Romain, 2026-10-15).
+	// Articles, forum, groupes et boîte à idées seront développés avant la
+	// diffusion du site : leurs liens figurent dès maintenant, comme les autres.
 	const VIURE = [
-		{ oc: 'Mots', fr: 'Mots', toc: 'Las fichas, per tèma', tfr: 'Les fiches, par thème', media: 'tipo',
-			items: [['Mots en imatges', 'Mots en images', '/mots']] },
-		{ oc: 'Òbras', fr: 'Œuvres', toc: 'Çò qu’escoti, çò que legissi', tfr: 'Ce que j’écoute, ce que je lis', media: 'paisatge',
-			items: [['Veire las òbras', 'Voir les œuvres', '/obras']] },
-		{ oc: 'Instagram', fr: 'Instagram', toc: 'Las novetats de Lo Ligam', tfr: 'Les nouveautés de Lo Ligam', media: 'simbol',
-			items: [['Seguir Lo Ligam', 'Suivre Lo Ligam', 'https://www.instagram.com/lo_ligam/']] }
+		{ oc: 'Descobrir', fr: 'Découvrir', toc: 'Lo país e sa cultura', tfr: 'Le pays et sa culture', media: 'paisatge',
+			items: [['Mots en imatges', 'Mots en images', '/mots'], ['Òbras', 'Œuvres', '/obras'], ['Articles', 'Articles', '/articles']] },
+		{ oc: 'Amassa', fr: 'Ensemble', toc: 'La comunautat', tfr: 'La communauté', media: 'liams',
+			items: [['Fòrum', 'Forum', '/forum'], ['Grops', 'Groupes', '/grops'], ['Boita d’idèas', 'Boîte à idées', '/ideas'],
+				['Instagram', 'Instagram', 'https://www.instagram.com/lo_ligam/']] }
 	];
+
+	// Le flux des liaisons ne tourne que lorsque la carte « Amassa » est à l'écran
+	function enVista(el) {
+		const io = new IntersectionObserver(([e]) => el.classList.toggle('en-vista', e.isIntersecting));
+		io.observe(el);
+		return { destroy: () => io.disconnect() };
+	}
 
 	onMount(() => {
 		ambianca.fonsPresent = true;
@@ -234,11 +245,16 @@
 					? 'Carte de l’Occitanie en étoiles : 304 villes et villages, avec leur nom occitan'
 					: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan'}
 			></div>
+			<!-- La carte montre, l'encyclopédie explique : chaque fiche y est reliée
+			     (revisions/2026-10-10-concept-wiki.md) -->
 			<div class="carta-dobrir esvani">
 				<a class="boton boton-traç" href="/carta" data-magnet
 					><span class="boton-emplenat"></span><span class="boton-tèxt"
 						>{@render bi('Dobrir la carta entièra', 'Ouvrir la carte entière')} {@render sageta()}</span
 					></a
+				>
+				<a class="ligam-tèxt" href="/enciclopedia"
+					>{@render bi('L’enciclopèdia de las lengas e dels luòcs', 'L’encyclopédie des langues et des lieux')}</a
 				>
 			</div>
 			<div class="chifras-grasilha">
@@ -304,7 +320,7 @@
 						)}
 					</p>
 					<a class="biai-ligam" href={RESERVAR} target="_blank" rel="noopener" aria-describedby="onglet-nou"
-						>{@render bi('Ne parlar ensems', 'En parler ensemble')} {@render sageta()}</a
+						>{@render bi('Ne parlar amassa', 'En parler ensemble')} {@render sageta()}</a
 					>
 				</article>
 			</div>
@@ -327,8 +343,8 @@
 			</fieldset>
 		</section>
 
-		<!-- VI. 03 Se viu : trois cartes, que des liens vivants -->
-		<section class="camins tres" aria-labelledby="viure-titol">
+		<!-- VI. 03 Se viu : deux cartes, découvrir et faire ensemble -->
+		<section class="camins dos" aria-labelledby="viure-titol">
 			<h2 class="camins-cap jalon" data-revela>
 				<b>03</b><span class="masc"><span class="masc-in" id="viure-titol">{@render bi('Se viu', 'Se vit')}</span></span>
 			</h2>
@@ -356,22 +372,18 @@
 							<div class="panel-media">
 								<img class="sens-cel" src="/acuelh/paisatge.webp" alt="" loading="lazy" width="900" height="1028" />
 							</div>
-						{:else if c.media === 'tipo'}
-							<div class="panel-media tipo"><span class="gros-mot" lang="oc">abelugat</span></div>
 						{:else}
-							<div class="panel-media simbol">
-								<svg viewBox="-1.3 -1.3 2.6 2.6" aria-hidden="true">
-									{#each TRAÇATS as t (t.d)}
-										<path class="tr" d={t.d} fill="none" stroke="#fff" stroke-width={0.055 * t.k} stroke-linecap="round" pathLength="1" />
+							<!-- Idée de Romain : le domaine occitan et des liaisons comme des lignes
+							     aériennes entre les villes (dessin : scripts/amassa-liaisons.mjs) -->
+							<div class="panel-media liams" use:enVista>
+								<svg viewBox="0 0 400 300" aria-hidden="true">
+									<path class="domeni" d={AMASSA.contorn} />
+									{#each AMASSA.arcs as d, i (d)}
+										<path class="liam" {d} pathLength="1" style:--i={i} />
+										<path class="flux" {d} style:--i={i} />
 									{/each}
-									{#each P as [x, y], i (i)}
-										<circle
-											cx={x}
-											cy={y}
-											r={i === 0 ? 0.124 : 0.109}
-											fill={i === 0 ? '#eeaf34' : '#ffd47f'}
-											style:transition-delay="{600 + i * 50}ms"
-										/>
+									{#each AMASSA.vilas as [x, y], i (i)}
+										<circle class="vila" cx={x} cy={y} r="3.2" style:--i={i} />
 									{/each}
 								</svg>
 							</div>
@@ -463,17 +475,97 @@
 		}
 	}
 
-	/* Se viu : trois cartes de front, puis l'une sous l'autre */
-	.tres .camins-pista {
-		grid-template-columns: repeat(3, minmax(0, 1fr));
+	/* La carte et l'encyclopédie côte à côte */
+	.carta-dobrir {
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1.2rem 2.4rem;
 	}
-	@container camins (max-width: 1250px) {
-		.tres .camins-pista {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+
+	/* Se viu : deux cartes de front, puis l'une sous l'autre ; sur grand écran,
+	   l'image passe à gauche du texte pour ne pas devenir immense */
+	.dos .camins-pista {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	@container camins (min-width: 1300px) {
+		.dos .panel {
+			flex-direction: row;
+			gap: 2.4rem;
+		}
+		.dos .panel-media {
+			flex: 0 0 50%;
 		}
 	}
-	@container camins (max-width: 760px) {
-		.tres .camins-pista {
+
+	/* Amassa : les villes éclosent, un trait fin se tire de A vers B, liaison
+	   après liaison, puis des pointillés y coulent en continu, comme un flux
+	   de données (retour de Romain : pas de lueurs « trains »). Le flux
+	   s'arrête hors de l'écran, en version légère et si le visiteur réduit
+	   les animations : les pointillés restent, immobiles. */
+	.liams svg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.domeni {
+		fill: color-mix(in srgb, var(--terra) 24%, transparent);
+		stroke: color-mix(in srgb, var(--aur) 50%, transparent);
+		stroke-width: 0.8;
+		stroke-linejoin: round;
+	}
+	.liam,
+	.flux {
+		fill: none;
+		stroke-linecap: round;
+	}
+	.liam {
+		stroke: var(--aur);
+		stroke-width: 0.7;
+		opacity: 0.35;
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+		transition: stroke-dashoffset 1.1s var(--ease-io) calc(700ms + var(--i) * 450ms);
+	}
+	.vila {
+		fill: var(--aur-clar);
+		transform-box: fill-box;
+		transform-origin: center;
+		transform: scale(0);
+		transition: transform 0.8s var(--ease) calc(var(--i) * 60ms);
+	}
+	.panel:global(.vist) .liam {
+		stroke-dashoffset: 0;
+	}
+	.panel:global(.vist) .vila {
+		transform: scale(1);
+	}
+	/* Pointillés ronds tous les 7 px ; ils apparaissent une fois leur trait tiré */
+	.flux {
+		stroke: var(--aur-clar);
+		stroke-width: 2;
+		stroke-dasharray: 0 7;
+		opacity: 0;
+		transition: opacity 0.6s var(--ease) calc(1500ms + var(--i) * 450ms);
+	}
+	.panel:global(.vist) .flux {
+		opacity: 0.9;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.liams:global(.en-vista) .flux {
+			animation: flux 1.1s linear infinite;
+		}
+	}
+	:global(:root[data-leugier='on']) .flux {
+		animation: none !important;
+	}
+	@keyframes flux {
+		to {
+			stroke-dashoffset: -7;
+		}
+	}
+	@container camins (max-width: 700px) {
+		.dos .camins-pista {
 			grid-template-columns: 1fr;
 			row-gap: 3.4rem;
 		}
