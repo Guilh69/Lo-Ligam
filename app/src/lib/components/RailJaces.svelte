@@ -424,6 +424,39 @@
 		ro.observe(p);
 		return () => ro.disconnect();
 	});
+	// La flèche du nord et l'échelle (CartaOccitania) s'alignent sur le rail
+	// (retour de Romain, 2026-10-15 : « alignement ») : son bord gauche et son
+	// axe sont publiés sur le conteneur de la carte, tant qu'il est rangé dans la
+	// colonne de gauche d'un écran large ; sinon (déplacé au milieu, barre du
+	// téléphone), le bloc reprend la marge normale.
+	function publicarColomna() {
+		const p = railEl?.offsetParent;
+		if (!p) return;
+		const r = railEl.getBoundingClientRect(), pr = p.getBoundingClientRect();
+		const esq = r.left - pr.left;
+		if (!orizontal && p.clientWidth > 600 && esq < 160) {
+			p.style.setProperty('--rail-esq', esq + 'px');
+			p.style.setProperty('--rail-mitan', esq + r.width / 2 + 'px');
+		} else {
+			p.style.removeProperty('--rail-esq');
+			p.style.removeProperty('--rail-mitan');
+		}
+	}
+	$effect(() => {
+		void railPos, reduch, orizontal;
+		publicarColomna();
+	});
+	$effect(() => {
+		const p = railEl?.offsetParent;
+		if (!p) return;
+		const ro = new ResizeObserver(publicarColomna);
+		ro.observe(p);
+		return () => {
+			ro.disconnect();
+			p.style.removeProperty('--rail-esq');
+			p.style.removeProperty('--rail-mitan');
+		};
+	});
 	const gardarRail = () => {
 		try {
 			localStorage.setItem(CLAU_RAIL, JSON.stringify({ pos: railPos, reduch, orizontal }));
@@ -1380,7 +1413,9 @@
 		left: var(--rail-x, var(--marge, 1rem));
 		transform: translateY(-50%);
 		width: 4.6rem;
-		max-height: calc(100% - 9rem);
+		/* centré à 50 % + 2 rem : sa moitié basse ne descend jamais sous le bloc
+		   flèche du nord + échelle (≈ 6,3 rem du bas, CartaOccitania .compass) */
+		max-height: calc(100% - 16.6rem);
 		overflow-y: auto;
 		scrollbar-width: none;
 		display: grid;

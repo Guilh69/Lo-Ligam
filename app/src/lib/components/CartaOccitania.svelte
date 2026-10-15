@@ -2334,7 +2334,9 @@
 	     redessiné en tracé) : deux cercles, le fin dehors, l'épais dedans ; la pointe
 	     touche le cercle extérieur et s'effile jusqu'au centre -->
 	<div class="compass" class:escantit={!!fichaComuna} aria-hidden="true">
-		<svg viewBox="-50 -50 100 100" width="44" height="44">
+		<svg viewBox="-50 -64 100 114" width="44" height="50">
+			<!-- petit N italique au-dessus de la pointe (demande de Romain, 2026-10-15) -->
+			<text x="0" y="-41" text-anchor="middle">N</text>
 			<circle r="35.5" fill="none" stroke="currentColor" stroke-width="1.8" />
 			<circle r="28.1" fill="none" stroke="currentColor" stroke-width="3.6" />
 			<path d="M0 -35.5L14.3 -24.2A28.1 28.1 0 0 0 4.2 -27.8L0 -0.2L-4.2 -27.8A28.1 28.1 0 0 0 -14.3 -24.2Z" fill="currentColor" />
@@ -3189,15 +3191,22 @@
 		pointer-events: none;
 	}
 
-	/* La flèche du nord rejoint l'échelle, en bas à gauche : les deux outils de
-	   lecture côte à côte, à droite de l'échelle (qui mesure au plus ~7,5 rem),
-	   hors de la colonne du rail. Sous le rail, elle se faisait recouvrir dès que
-	   l'écran était un peu bas (retour de Romain, 2026-10-15). En haut, elle
+	/* La flèche du nord forme un bloc avec l'échelle, en bas à gauche : posée
+	   juste au-dessus, alignée sur son bord gauche (Romain, 2026-10-15). Le rail
+	   s'arrête toujours au-dessus de ce bloc (sa hauteur maximale, RailJaces) :
+	   avant, il la recouvrait dès que l'écran était un peu bas. En haut, elle
 	   collait au logo du bandeau (retour de Romain, 2026-10-07). */
+	/* Alignés sur le rail, où qu'il soit rangé à gauche (retour de Romain :
+	   « alignement ») : l'échelle part de son bord gauche, la flèche (44 px) se
+	   centre sur son axe. --rail-esq et --rail-mitan viennent de RailJaces ; à
+	   défaut, la place par défaut du rail (marge, 4,6 rem de large). */
+	.carta :global(.leaflet-left .leaflet-control-scale) {
+		margin-left: var(--rail-esq, var(--marge, 1rem));
+	}
 	.compass {
 		position: absolute;
-		bottom: 0.3rem;
-		left: 8.4rem;
+		bottom: 2.75rem;
+		left: calc(var(--rail-mitan, calc(var(--marge, 1rem) + 2.3rem)) - 22px);
 		z-index: 900;
 		color: var(--t-aur);
 		opacity: 0.9;
@@ -3222,8 +3231,10 @@
 		}
 	}
 	@container carta (max-width: 600px) {
+		/* téléphone : le rail est la barre du bas ; la flèche se cale sur l'échelle */
 		.compass {
-			bottom: calc(var(--barra-bas, 0px) + 0.3rem);
+			bottom: calc(var(--barra-bas, 0px) + 2.75rem);
+			left: calc(var(--marge, 1rem) - 6px);
 		}
 	}
 
@@ -3376,11 +3387,12 @@
 		display: none;
 	}
 
+	/* (taille en unités du dessin, 100 unités = 44 px : 26 unités ≈ 11 px) */
 	.compass text {
 		font-family: var(--font-quote);
 		font-style: italic;
 		font-weight: 500;
-		font-size: 11px;
+		font-size: 26px;
 		fill: var(--t-aur-clar);
 	}
 

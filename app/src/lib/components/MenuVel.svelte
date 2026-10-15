@@ -88,6 +88,11 @@
 
 			<div class="vel-cap">
 				<p class="vel-titol" id="vel-titol">{fr ? 'Menu' : 'Menú'}</p>
+				<!-- Retour à l'accueil (demande de Romain, 2026-10-15), avec le croisillon du logo -->
+				<a class="vel-acuelh" href="/" onclick={tampar} aria-current={page.url.pathname === '/' ? 'page' : undefined}>
+					<Crotz talha={24} traç="currentColor" ponch="currentColor" />
+					<span>{fr ? 'Retour à l’accueil' : 'Tornar a l’acuèlh'}</span>
+				</a>
 				<button type="button" class="vel-tampar" onclick={tampar} aria-label={fr ? 'Fermer le menu' : 'Tampar lo menú'}>
 					<Icona nom="fermer" size="1.6em" />
 				</button>
@@ -212,13 +217,42 @@
 		margin-bottom: clamp(2rem, 6vh, 4rem);
 	}
 
+	/* Le titre « Menú » reste pour les lecteurs d'écran ; à l'œil, la place
+	   revient au retour à l'accueil */
 	.vel-titol {
+		position: absolute;
+		width: 1px;
+		height: 1px;
 		margin: 0;
-		font-size: 0.78rem;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.vel-acuelh {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.65rem;
+		color: var(--vel-tinta);
 		font-weight: 700;
-		letter-spacing: 0.3em;
-		text-transform: uppercase;
-		color: var(--vel-tinta-2);
+		font-size: 0.95rem;
+		text-decoration: underline;
+		text-decoration-color: transparent;
+		text-underline-offset: 5px;
+		transition: text-decoration-color 0.4s;
+	}
+
+	.vel-acuelh :global(svg) {
+		transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.vel-acuelh:hover,
+	.vel-acuelh[aria-current='page'] {
+		text-decoration-color: currentColor;
+	}
+
+	.vel-acuelh:hover :global(svg) {
+		transform: rotate(90deg);
 	}
 
 	.vel-tampar {

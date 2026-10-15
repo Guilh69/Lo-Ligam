@@ -16,6 +16,11 @@ import { LUOCS, RIUS, COSTA, NOMENATS, dialDe, rencDe } from './carta-estelas.js
 // 2026-10-07, coma sus /carta), copat a 8,6° E coma los rius : la Còrsega, que
 // tombariá fòra de la zòna de la carta sus l'acuèlh, es pas dessenhada.
 const COSTA_ACUELH = COSTA.map((l) => l.filter(([lon]) => lon <= 8.6)).filter((l) => l.length > 1);
+// Pointe de la flèche du nord : même tracé que l'SVG de /carta (unités de -50 à 50)
+const PONTA_NÒRD =
+	typeof Path2D !== 'undefined'
+		? new Path2D('M0 -35.5L14.3 -24.2A28.1 28.1 0 0 0 4.2 -27.8L0 -0.2L-4.2 -27.8A28.1 28.1 0 0 0 -14.3 -24.2Z')
+		: null;
 
 export function lancarAcuelh(racina, opcions = {}) {
 	let viu = true, idRaf = 0;
@@ -628,9 +633,10 @@ export function lancarAcuelh(racina, opcions = {}) {
 			cx.textAlign = 'left';
 			}
 		}
-		// La flècha del nòrd, a l'anciana : agulha en losange (mitat plena, mitat
-		// traçada), un anèl fin, una N italica ; FÒRA de la carta, dins l'espaci entre
-		// lo jalon « 04 » e lo primièr riu (demanda Romain 2026-10-07)
+		// Flèche du nord (dessin de Romain, 2026-10-15, la même que sur /carta) : deux
+		// cercles, le fin dehors, l'épais dedans, une pointe qui touche le cercle
+		// extérieur et s'effile jusqu'au centre. HORS de la carte, dans l'espace entre
+		// le jalon « 01 » et la première rivière (demande de Romain, 2026-10-07)
 		if (aCarta > 0.05) {
 			// Mesurada a cada talha : l'espaci sorne entre lo bas del jalon « 04 » e lo primièr
 			// element de la carta JUST DEJÓS (riu o vila de la banda esquèrra, sovent la Charanta) ;
@@ -641,18 +647,22 @@ export function lancarAcuelh(racina, opcions = {}) {
 			for (const [, , l] of RIUS) for (const [lo, la] of l) { const x = pX(lo), y = pY(la); if (x > x0 && x < x1 && y > jr.bottom && y < nautCarta) nautCarta = y; }
 			for (const e of estelas) if (e.ai > 0.5 && e.px > x0 && e.px < x1 && e.py > jr.bottom && e.py < nautCarta) nautCarta = e.py;
 			const espaci = Math.max(30, nautCarta - jr.bottom);
-			const h = Math.max(11, Math.min(telefon ? 15 : 20, espaci * 0.36)), l = h * 0.19, rA = h / 3, bra = h * 0.6;
-			const nx = Math.round(jr.left + bra), ny = jr.bottom + espaci / 2 - h * 0.95;
-			cx.globalAlpha = aCarta * 0.8; cx.strokeStyle = TEM.fil; cx.fillStyle = TEM.fil; cx.lineWidth = 0.9;
-			cx.beginPath(); cx.arc(nx, ny + h, rA, 0, 6.283); cx.stroke();
-			cx.globalAlpha = aCarta * 0.45;
-			cx.beginPath(); cx.moveTo(nx - bra, ny + h); cx.lineTo(nx + bra, ny + h); cx.stroke();
-			cx.globalAlpha = aCarta * 0.8;
-			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx - l, ny + h); cx.lineTo(nx, ny + h); cx.closePath(); cx.fill();
-			cx.beginPath(); cx.moveTo(nx, ny); cx.lineTo(nx + l, ny + h); cx.lineTo(nx, ny + h); cx.closePath(); cx.stroke();
-			cx.beginPath(); cx.moveTo(nx - l, ny + h); cx.lineTo(nx, ny + h * 1.9); cx.lineTo(nx + l, ny + h); cx.stroke();
-			cx.font = 'italic ' + (telefon ? 13 : 16) + 'px "Cormorant Garamond", Georgia, serif'; cx.textAlign = 'left'; cx.fillStyle = TEM.riuTèxt;
-			cx.fillText('N', nx + bra + 4, ny + h * 0.35);
+			// diamètre : 40 px (30 sur téléphone), jamais plus des 3/4 de l'espace ;
+			// le dessin est en unités de -50 à 50 (comme l'SVG de /carta)
+			const diam = Math.max(22, Math.min(telefon ? 30 : 40, espaci * 0.75)), k = diam / 2 / 36.4;
+			// (le petit N au-dessus ajoute ~0,35 diamètre : on descend d'autant la moitié)
+			const nx = Math.round(jr.left + diam / 2), ny = Math.round(jr.bottom + espaci / 2 + diam * 0.17);
+			cx.save();
+			cx.translate(nx, ny); cx.scale(k, k);
+			cx.globalAlpha = aCarta * 0.85; cx.strokeStyle = TEM.fil; cx.fillStyle = TEM.fil;
+			cx.lineWidth = 1.8; cx.beginPath(); cx.arc(0, 0, 35.5, 0, 6.283); cx.stroke();
+			cx.lineWidth = 3.6; cx.beginPath(); cx.arc(0, 0, 28.1, 0, 6.283); cx.stroke();
+			if (PONTA_NÒRD) cx.fill(PONTA_NÒRD);
+			// petit N italique au-dessus de la pointe (demande de Romain, 2026-10-15)
+			cx.font = 'italic 26px "Cormorant Garamond", Georgia, serif'; cx.textAlign = 'center'; cx.fillStyle = TEM.riuTèxt;
+			cx.fillText('N', 0, -41);
+			cx.restore();
+			cx.textAlign = 'left';
 		}
 
 		// Los 13 punts del lògo : ressòrt cap a la cibla + repulsion de la mirga
