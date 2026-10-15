@@ -80,6 +80,55 @@
 	--t-linha: rgba(46, 29, 20, 0.3);
 }
 
+/* Contraste inverse du thème (Romain, 2026-10-15 : « trop sombre sur
+   sombre ») : les commandes de la carte (rail, boutons ronds, « ? ») sont
+   claires sur la carte sombre et foncées sur la carte claire. La classe
+   .tema-invèrs (et les boutons Leaflet de la carte) reçoit les couleurs du
+   thème opposé ; le verre est recalculé avec elles, un peu plus couvrant. */
+:root :is(.tema-invèrs, .carta .leaflet-bar),
+:root[data-tema='sorne'] :is(.tema-invèrs, .carta .leaflet-bar) {
+	--t-fons: #f5ead8;
+	--t-fons-2: #ecdcc3;
+	--t-tinta: #2e1d14;
+	--t-tinta-2: rgba(46, 29, 20, 0.72);
+	--t-linha: rgba(46, 29, 20, 0.16);
+	--t-vel: rgba(245, 234, 216, 0.8);
+	--t-aur: #a85d12;
+	--t-aur-clar: #8a3f12;
+	--t-terra: #b53d17;
+	--t-terra-viu: #b53d17;
+}
+:root[data-tema='clar'] :is(.tema-invèrs, .carta .leaflet-bar) {
+	--t-fons: #120906;
+	--t-fons-2: #1d0f0a;
+	--t-tinta: #f5ead8;
+	--t-tinta-2: rgba(245, 234, 216, 0.7);
+	--t-linha: rgba(245, 234, 216, 0.16);
+	--t-vel: rgba(18, 9, 6, 0.72);
+	--t-aur: #eeaf34;
+	--t-aur-clar: #ffd47f;
+	--t-terra: #b53d17;
+	--t-terra-viu: #e0612f;
+}
+:root:not([data-tema='clar'])[data-dalt='on'] :is(.tema-invèrs, .carta .leaflet-bar) {
+	--t-terra: #1f5f8f;
+	--t-terra-viu: #1f5f8f;
+	--t-aur: #8a4f00;
+	--t-aur-clar: #6b3a00;
+	--t-tinta-2: rgba(46, 29, 20, 0.88);
+	--t-linha: rgba(46, 29, 20, 0.3);
+}
+:root[data-tema='clar'][data-dalt='on'] :is(.tema-invèrs, .carta .leaflet-bar) {
+	--t-terra: #2f6fb0;
+	--t-terra-viu: #6fb1ff;
+	--t-tinta-2: rgba(245, 234, 216, 0.86);
+	--t-linha: rgba(245, 234, 216, 0.28);
+}
+:is(.tema-invèrs, .carta .leaflet-bar) {
+	--t-veire: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 90%, var(--t-terra)) 86%, transparent);
+	--t-veire-fort: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 82%, var(--t-terra)) 96%, transparent);
+}
+
 /* Barrio e Limelight existisson pas qu'en 400 : cap de fals gras fabricat
    pel navigator (baveux e inegal), la grais demandada tomba sus la vertadièra. */
 * {

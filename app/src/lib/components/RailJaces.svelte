@@ -851,8 +851,9 @@
 
 <svelte:window onkeydown={onKey} onpointerdowncapture={clicDefòra} />
 
+<!-- tema-invèrs (app.css) : clair sur la carte sombre, foncé sur la carte claire -->
 <nav
-	class="rail"
+	class="rail tema-invèrs"
 	class:desplaçat={!!railPos && !orizontal}
 	class:reduch
 	class:orizontal

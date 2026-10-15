@@ -188,7 +188,7 @@
 		{:else}
 			<button
 				type="button"
-				class="info-trigger"
+				class="info-trigger tema-invèrs"
 				onclick={() => (showInfo = true)}
 				aria-label={tx.more}
 				transition:fly={{ y: -12, duration: 220, easing: quintOut }}
