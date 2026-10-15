@@ -1388,11 +1388,14 @@
 		grid-template-columns: minmax(0, 1fr);
 		gap: 2px;
 		padding: 6px 5px;
-		background: color-mix(in srgb, var(--t-fons-2) 90%, transparent);
+		/* Sans contour (Romain, 2026-10-15) : le rail se détache par un fond un
+		   peu plus chaud que la carte (une pointe de terracotta), légèrement
+		   transparent ; le flou garde les icônes lisibles sur la carte */
+		background: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 90%, var(--t-terra)) 76%, transparent);
 		backdrop-filter: blur(10px);
-		border: 1px solid var(--t-linha);
+		border: 0;
 		border-radius: 18px;
-		box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+		box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
 	}
 	.rail.desplaçat {
 		transform: none;
@@ -2509,7 +2512,6 @@
 			align-items: stretch;
 			gap: 0;
 			padding: 3px 4px env(safe-area-inset-bottom, 0px);
-			border-width: 1px 0 0;
 			border-radius: 16px 16px 0 0;
 			box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3);
 			transform: none;
