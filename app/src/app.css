@@ -82,68 +82,13 @@
 
 /* Commandes posées sur la carte (rail, panneau qui s'ouvre à côté, boutons
    ronds, « ? ») : classe .comandas-carta (et les boutons Leaflet de la carte).
-   Trois pistes à comparer (Romain, 2026-10-15 : l'inversé « n'est pas
-   harmonieux ») ; la piste vient de <html data-comandas>, choisie sur
-   /carta?ensag=comandas. Par défaut, « relevat » : un cran plus clair que la
-   carte sombre (un cran plus foncé que la carte claire), dans la même famille
-   de couleurs, avec une pointe de terracotta. */
+   Ton « relevé », choisi par Romain le 2026-10-15 après essai contre le
+   terracotta et l'inversé : un cran plus clair que la carte sombre (un cran
+   plus foncé que la carte claire), dans la même famille de couleurs, avec une
+   pointe de terracotta ; sans trait, légèrement transparent. */
 :is(.comandas-carta, .carta .leaflet-bar) {
 	--t-veire: color-mix(in srgb, color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 86%, var(--t-tinta)) 92%, var(--t-terra)) 90%, transparent);
 	--t-veire-fort: color-mix(in srgb, color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 78%, var(--t-tinta)) 92%, var(--t-terra)) 96%, transparent);
-}
-/* « terra » : le terracotta du logo et du menu, icônes et textes crème */
-:root[data-comandas='terra'] :is(.comandas-carta, .carta .leaflet-bar) {
-	--t-tinta: #f5ead8;
-	--t-tinta-2: rgba(245, 234, 216, 0.78);
-	--t-linha: rgba(245, 234, 216, 0.26);
-	--t-aur: #ffd47f;
-	--t-aur-clar: #fff1d6;
-	--t-veire: color-mix(in srgb, var(--t-terra) 88%, transparent);
-	--t-veire-fort: color-mix(in srgb, var(--t-terra) 82%, #120906);
-}
-/* « invèrs » : les couleurs du thème opposé (clair sur la carte sombre,
-   foncé sur la carte claire), daltonisme compris */
-:root[data-comandas='invèrs']:not([data-tema='clar']) :is(.comandas-carta, .carta .leaflet-bar) {
-	--t-fons: #f5ead8;
-	--t-fons-2: #ecdcc3;
-	--t-tinta: #2e1d14;
-	--t-tinta-2: rgba(46, 29, 20, 0.72);
-	--t-linha: rgba(46, 29, 20, 0.16);
-	--t-vel: rgba(245, 234, 216, 0.8);
-	--t-aur: #a85d12;
-	--t-aur-clar: #8a3f12;
-	--t-terra: #b53d17;
-	--t-terra-viu: #b53d17;
-}
-:root[data-comandas='invèrs'][data-tema='clar'] :is(.comandas-carta, .carta .leaflet-bar) {
-	--t-fons: #120906;
-	--t-fons-2: #1d0f0a;
-	--t-tinta: #f5ead8;
-	--t-tinta-2: rgba(245, 234, 216, 0.7);
-	--t-linha: rgba(245, 234, 216, 0.16);
-	--t-vel: rgba(18, 9, 6, 0.72);
-	--t-aur: #eeaf34;
-	--t-aur-clar: #ffd47f;
-	--t-terra: #b53d17;
-	--t-terra-viu: #e0612f;
-}
-:root[data-comandas='invèrs']:not([data-tema='clar'])[data-dalt='on'] :is(.comandas-carta, .carta .leaflet-bar) {
-	--t-terra: #1f5f8f;
-	--t-terra-viu: #1f5f8f;
-	--t-aur: #8a4f00;
-	--t-aur-clar: #6b3a00;
-	--t-tinta-2: rgba(46, 29, 20, 0.88);
-	--t-linha: rgba(46, 29, 20, 0.3);
-}
-:root[data-comandas='invèrs'][data-tema='clar'][data-dalt='on'] :is(.comandas-carta, .carta .leaflet-bar) {
-	--t-terra: #2f6fb0;
-	--t-terra-viu: #6fb1ff;
-	--t-tinta-2: rgba(245, 234, 216, 0.86);
-	--t-linha: rgba(245, 234, 216, 0.28);
-}
-:root[data-comandas='invèrs'] :is(.comandas-carta, .carta .leaflet-bar) {
-	--t-veire: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 90%, var(--t-terra)) 86%, transparent);
-	--t-veire-fort: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 82%, var(--t-terra)) 96%, transparent);
 }
 
 /* Barrio e Limelight existisson pas qu'en 400 : cap de fals gras fabricat
