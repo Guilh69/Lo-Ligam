@@ -17,6 +17,25 @@
 
 	let lang = $derived(langStore.current);
 
+	// Essai des couleurs des commandes de la carte (Romain, 2026-10-15) :
+	// /carta?ensag=comandas montre un sélecteur entre trois pistes (app.css,
+	// .comandas-carta). Sans le paramètre : la piste par défaut, « relevat ».
+	const PISTAS = [
+		['relevat', 'Relevé'],
+		['terra', 'Terracotta'],
+		['invèrs', 'Inversé']
+	];
+	let ensagComandas = $state(false);
+	let pista = $state('relevat');
+	function causirPista(p) {
+		pista = p;
+		document.documentElement.dataset.comandas = p;
+	}
+	onMount(() => {
+		ensagComandas = new URLSearchParams(location.search).get('ensag') === 'comandas';
+		return () => delete document.documentElement.dataset.comandas;
+	});
+
 	// Textes de l'interface dans les deux langues. L'occitan reste la
 	// version de référence, le français en est la traduction.
 	const t = {
@@ -188,7 +207,7 @@
 		{:else}
 			<button
 				type="button"
-				class="info-trigger tema-invèrs"
+				class="info-trigger comandas-carta"
 				onclick={() => (showInfo = true)}
 				aria-label={tx.more}
 				transition:fly={{ y: -12, duration: 220, easing: quintOut }}
@@ -210,7 +229,46 @@
 	</main>
 </div>
 
+{#if ensagComandas}
+	<!-- Outil d'essai, volontairement neutre (hors charte) pour ne pas se confondre avec la carte -->
+	<div class="ensag-comandas" role="group" aria-label="Essai : couleur des commandes de la carte">
+		{#each PISTAS as [v, nom] (v)}
+			<button type="button" aria-pressed={pista === v} onclick={() => causirPista(v)}>{nom}</button>
+		{/each}
+	</div>
+{/if}
+
 <style>
+	.ensag-comandas {
+		position: fixed;
+		left: 50%;
+		bottom: 1rem;
+		z-index: 2000;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 3px;
+		padding: 4px;
+		border-radius: 999px;
+		background: #ffffff;
+		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+		font: 700 0.8rem/1 system-ui, sans-serif;
+	}
+
+	.ensag-comandas button {
+		border: 0;
+		border-radius: 999px;
+		padding: 0.55rem 1rem;
+		background: transparent;
+		color: #222222;
+		font: inherit;
+		cursor: pointer;
+	}
+
+	.ensag-comandas button[aria-pressed='true'] {
+		background: #222222;
+		color: #ffffff;
+	}
+
 	/* Carte plein écran, harmonisée avec la charte de l'accueil (2026-10-07) :
 	   la carte occupe toute la fenêtre, le bandeau et les panneaux flottent
 	   dessus en verre sombre (ou crème en thème clair). */

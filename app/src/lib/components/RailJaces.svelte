@@ -851,9 +851,9 @@
 
 <svelte:window onkeydown={onKey} onpointerdowncapture={clicDefòra} />
 
-<!-- tema-invèrs (app.css) : clair sur la carte sombre, foncé sur la carte claire -->
+<!-- comandas-carta (app.css) : la couleur des commandes posées sur la carte -->
 <nav
-	class="rail tema-invèrs"
+	class="rail comandas-carta"
 	class:desplaçat={!!railPos && !orizontal}
 	class:reduch
 	class:orizontal
@@ -966,7 +966,7 @@
 {#if dobert}
 	<section
 		id="tirador-jaces"
-		class="tirador"
+		class="tirador comandas-carta"
 		aria-label={nomFam(dobert)}
 		style:--tir-x={posT ? posT.x + 'px' : null}
 		style:--tir-y={posT ? posT.y + 'px' : null}
