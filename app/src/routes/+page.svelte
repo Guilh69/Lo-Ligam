@@ -10,7 +10,7 @@
 	// le plan de la page (option A de Romain, avec le meilleur de l'option B) :
 	//   - un seul bouton principal à l'ouverture (la carte) ;
 	//   - « Qui » : le manifeste sans numéro, avec la photo de Romain ;
-	//   - 01 Se parla : la carte, les chiffres et l'encyclopédie ;
+	//   - 01 Se parla : la carte, les chiffres et le wiki ;
 	//   - 02 S'apren : les trois façons d'apprendre ;
 	//   - 03 Se viu : Descobrir (Mots, Òbras, Articles) et Amassa (forum,
 	//     groupes, boîte à idées, Instagram) ; les rubriques à développer avant
@@ -272,7 +272,7 @@
 					? 'Carte de l’Occitanie en étoiles : 304 villes et villages, avec leur nom occitan'
 					: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan'}
 			></div>
-			<!-- La carte montre, l'encyclopédie explique : chaque fiche y est reliée
+			<!-- La carte montre, le wiki explique : chaque fiche y est reliée
 			     (revisions/2026-10-10-concept-wiki.md) -->
 			<div class="carta-dobrir esvani">
 				<a class="boton boton-traç" href="/carta" data-magnet
@@ -280,8 +280,8 @@
 						>{@render bi('Dobrir la carta entièra', 'Ouvrir la carte entière')} {@render sageta()}</span
 					></a
 				>
-				<a class="ligam-tèxt" href="/enciclopedia"
-					>{@render bi('L’enciclopèdia de las lengas e dels luòcs', 'L’encyclopédie des langues et des lieux')}</a
+				<a class="ligam-tèxt" href="/wiki"
+					>{@render bi('Lo wiki de las lengas e dels luòcs', 'Le wiki des langues et des lieux')}</a
 				>
 			</div>
 			<div class="chifras-grasilha">
@@ -503,7 +503,7 @@
 		}
 	}
 
-	/* La carte et l'encyclopédie côte à côte */
+	/* La carte et le wiki côte à côte */
 	.carta-dobrir {
 		flex-wrap: wrap;
 		align-items: center;

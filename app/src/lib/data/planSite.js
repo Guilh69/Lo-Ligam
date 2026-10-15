@@ -12,7 +12,7 @@ export const PLAN = [
 		id: 'parla', n: '01', oc: 'Se parla', fr: 'Se parle',
 		grops: [{ items: [
 			{ oc: 'La carta', fr: 'La carte', href: '/carta' },
-			{ oc: 'L’enciclopèdia', fr: 'L’encyclopédie', href: '/enciclopedia' }
+			{ oc: 'Lo wiki', fr: 'Le wiki', href: '/wiki' } // (« wiki » plutôt qu'« encyclopédie », Romain, 2026-10-15)
 		] }]
 	},
 	{
