@@ -133,8 +133,6 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 :root[data-tema='clar'] .acuelh .manifest-tèxt .m { color: rgba(46, 29, 20, 0.15); }
 :root[data-tema='clar'] .acuelh .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #e7c9a6, var(--nuech-2) 70%); }
 :root[data-tema='clar'] .acuelh .cur-anel { mix-blend-mode: normal; border-color: var(--crema); }
-/* lo lògo garda sas colors */
-.acuelh .panel-media.simbol { background: #b53d17 !important; }
 /* ---------- Acte I : l'eròi ---------- */
 .acuelh .eros {
 	min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end;
@@ -238,7 +236,6 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 .acuelh .biai-ligam { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 700; color: var(--aur-clar); width: fit-content; }
 .acuelh .biai-ligam svg { width: 1em; transition: transform 0.6s var(--ease); }
 .acuelh .biai-ligam:hover svg { transform: translateX(6px); }
-.acuelh .biai-ligam.leu { color: var(--terra-viu); font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; }
 .acuelh .lengas { border: 0; margin-top: 3rem; display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.6rem; }
 .acuelh .lengas legend { float: left; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--crema-2); margin-right: 0.4rem; }
 .acuelh .lengas-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
@@ -275,12 +272,12 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 	.acuelh .biais-grasilha { grid-template-columns: 1fr; }
 	.acuelh .biai + .biai { padding-left: 0; border-left: 0; border-top: 1px solid var(--crema-3); }
 }
-/* ---------- Acte IV : quatre camins, quatre cartas (2026-10-14) ----------
-   Pas mai de panèls que lisan de costat (retorn de Cyril, causida de Romain) :
-   las quatre cartas se vesen d'un còp. Quatre de front sus un grand ecran,
-   doas per doas al mitan, una jos l'autra sul telefòn. */
+/* ---------- « Se viu » : deux cartes, Descobrir et Amassa (2026-10-15) ----------
+   Elles remplacent les « Quatre camins » (cahier §11). De front, sans glissement
+   (retour de Cyril, 2026-10-14) ; sur grand écran, l'image passe à gauche du
+   texte pour ne pas devenir immense ; l'une sous l'autre sur le téléphone. */
 .acuelh .camins { padding: 18vh var(--marge) 6vh; container: camins / inline-size; }
-.acuelh .camins-pista { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1.4rem, 2.4vw, 2.6rem); }
+.acuelh .camins-pista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.4rem, 2.4vw, 2.6rem); }
 .acuelh .panel { container-type: inline-size; display: flex; flex-direction: column; gap: 1.4rem; min-width: 0; }
 .acuelh .panel-tèxt { flex: 1; display: flex; flex-direction: column; gap: 1.2rem; min-width: 0; }
 /* Los noms de las cartas demòran mai pichons que lo títol de la seccion (retorn de Romain, 2026-10-14) */
@@ -289,7 +286,7 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 /* Las listas s'alinhan en bas d'una carta a l'autra */
 .acuelh .panel-items { list-style: none; border-top: 1px solid var(--crema-3); margin-top: auto; }
 .acuelh .panel-items li { border-bottom: 1px solid var(--crema-3); }
-.acuelh .panel-items a, .acuelh .panel-items .leu {
+.acuelh .panel-items a {
 	position: relative; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
 	padding: 0.95rem 0; font-weight: 700; overflow: hidden;
 }
@@ -297,8 +294,6 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 .acuelh .panel-items a { z-index: 0; transition: color 0.45s, padding 0.6s var(--ease); }
 .acuelh .panel-items a:hover { color: var(--nuech); padding-inline: 1rem; }
 .acuelh .panel-items a:hover::before { transform: scaleY(1); }
-.acuelh .panel-items .leu { color: var(--crema-2); font-weight: 400; }
-.acuelh .panel-items .leu em { font-style: normal; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terra-viu); }
 .acuelh .panel-media { order: -1; aspect-ratio: 4 / 3; position: relative; overflow: hidden; border-radius: 22px; background: var(--nuech-2); }
 .acuelh .panel-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 /* La fòto a un cèl blanc (sistèma sang e aur) : sus fons de nuèch, l'amagam */
@@ -306,18 +301,11 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 .acuelh .panel-media.liseré { box-shadow: 0 0 0 3px var(--terra), 0 0 0 6px var(--aur); }
 .acuelh .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #4a1a0b, var(--nuech-2) 70%); }
 .acuelh .panel-media.retrat img { inset: auto 0 0 0; width: 100%; height: 92%; object-fit: contain; object-position: bottom; }
-.acuelh .panel-media.tipo { display: grid; place-items: center; border: 1px solid var(--crema-3); background: transparent; }
-.acuelh .panel-media.tipo .gros-mot { font-family: var(--votz); font-style: italic; font-size: clamp(2.6rem, 24cqi, 6rem); color: var(--aur); line-height: 0.9; text-align: center; }
-.acuelh .panel-media.simbol { display: grid; place-items: center; background: var(--terra); }
-.acuelh .panel-media.simbol svg { width: 62%; height: auto; }
-.acuelh .panel-media.simbol svg .tr { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s var(--ease-io) 0.4s; }
-.acuelh .panel-media.simbol svg circle { transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform 0.9s var(--ease); }
-.acuelh .panel.vist .panel-media.simbol svg .tr { stroke-dashoffset: 0; }
-.acuelh .panel.vist .panel-media.simbol svg circle { transform: scale(1); }
-@container camins (max-width: 1250px) {
-	.acuelh .camins-pista { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 4rem; }
+@container camins (min-width: 1300px) {
+	.acuelh .panel { flex-direction: row; gap: 2.4rem; }
+	.acuelh .panel-media { flex: 0 0 50%; }
 }
-@container camins (max-width: 620px) {
+@container camins (max-width: 700px) {
 	.acuelh .camins-pista { grid-template-columns: 1fr; row-gap: 3.4rem; }
 }
 /* ---------- Acte V : las chifras ---------- */

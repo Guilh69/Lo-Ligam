@@ -17,17 +17,6 @@ export const MANIFEST = {
 	fr: [['Ici, l’occitan s’apprend'], ['sans honte', 1], ['et'], ['avec bienveillance,', 1], ['et chaque leçon crée du'], ['lien.', 1]]
 };
 
-// Camins : las quatre familhas del site (siteSections.js).
-export const CAMINS = [
-	{ oc: 'Aprene', fr: 'Apprendre', toc: 'L’esquina del site', tfr: 'La colonne vertébrale', media: 'retrat',
-		items: [['Lo parcors', 'Le parcours', '/aprene'], ['Leiçon d’ensag', 'Leçon d’essai', '/aprene/essai'], ['Ma progression', 'Ma progression', '/compte']] },
-	{ oc: 'Descobrir', fr: 'Découvrir', toc: 'Lo país e sa cultura', tfr: 'Le pays et sa culture', media: 'paisatge',
-		items: [['La carta', 'La carte', '/carta'], ['Mots en imatges', 'Mots en images', '/mots'], ['Òbras', 'Œuvres', '/obras']] },
-	{ oc: 'Participar', fr: 'Participer', toc: 'La comunautat', tfr: 'La communauté', media: 'tipo',
-		items: [['Forum', 'Forum'], ['Grops', 'Groupes'], ['Boita d’idèas', 'Boîte à idées']] },
-	{ oc: 'Lo Ligam', fr: 'Lo Ligam', toc: 'Qual soi', tfr: 'Qui suis-je', media: 'simbol',
-		items: [['Mon istòria', 'Mon histoire'], ['Ressorsas occitanas', 'Ressources occitanes'], ['Contacte', 'Contact']] }
-];
 
 // Tèxtes en anglés, espanhòl e catalan : A VERIFICAR per un locutor.
 export const CONSIGNAS = {

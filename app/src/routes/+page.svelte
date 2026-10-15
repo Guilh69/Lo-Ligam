@@ -2,22 +2,33 @@
 	import Icona from '$lib/components/Icona.svelte';
 	// Accueil (2026-10-07) : l'esbòs de nuèch validé par Romain, porté dans le
 	// site et posé dans le cadre commun (bandeau AppHeader, pied SiteFooter,
-	// réglage d'ambiance, retour en haut). L'ancien accueil reste dans
-	// l'historique Git (commit 737f8b6 et avant).
+	// réglage d'ambiance, retour en haut).
 	//
-	// Le contenu est rendu ici (Svelte, deux langues dans des masques qui
-	// basculent) ; le mouvement (fond vivant, constellation, carte en étoiles,
-	// défilement) vit dans $lib/acuelh/motor.js, chargé après coup pour que la
-	// page s'affiche vite.
+	// Réorganisé le 2026-10-15 (cahier §11), d'après le site de l'Alliance des
+	// collectivités pour la qualité de l'air : chaque section répond à une seule
+	// question du visiteur, et le titre « Se parla. S'apren. Se viu. » devient
+	// le plan de la page (option A de Romain, avec le meilleur de l'option B) :
+	//   - un seul bouton principal à l'ouverture (la carte) ;
+	//   - « Qui » : le manifeste sans numéro, avec la photo de Romain ;
+	//   - 01 Se parla : la carte, les chiffres et l'encyclopédie ;
+	//   - 02 S'apren : les trois façons d'apprendre ;
+	//   - 03 Se viu : Descobrir (Mots, Òbras, Articles) et Amassa (forum,
+	//     groupes, boîte à idées, Instagram) ; les rubriques à développer avant
+	//     la diffusion du site ont déjà leur lien ;
+	//   - « Quatre camins » retiré (il répétait le menu ; l'ancienne version
+	//     reste dans l'historique Git, commit 614ff3c et avant).
 	//
-	// Les textes ne passent plus par /admin/textes (site_textes) : à rebrancher
-	// plus tard. Occitan nouveau : À VALIDER par Romain avant publication.
+	// Le contenu est rendu ici (deux langues dans des masques qui basculent) ;
+	// le mouvement (fond vivant, constellation, carte en étoiles, défilement)
+	// vit dans $lib/acuelh/motor.js, chargé après coup pour que la page
+	// s'affiche vite. Textes en dur (plus de /admin/textes, à rebrancher).
+	// Occitan nouveau : À VALIDER par Romain avant publication.
 	import { onMount } from 'svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { RESERVAR, MOTS, MANIFEST, CAMINS, CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
-	import { P, TRAÇATS } from '$lib/acuelh/simbol.js';
+	import { RESERVAR, MOTS, MANIFEST, CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
+	import { AMASSA } from '$lib/acuelh/amassa.js';
 	import '$lib/acuelh/acuelh.css';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -25,8 +36,25 @@
 	let racina;
 	let motor = $state.raw(null);
 
+	// « Se viu » : découvrir, et faire ensemble (option 1 de Romain, 2026-10-15).
+	// Articles, forum, groupes et boîte à idées seront développés avant la
+	// diffusion du site : leurs liens figurent dès maintenant, comme les autres.
+	const VIURE = [
+		{ oc: 'Descobrir', fr: 'Découvrir', toc: 'Lo país e sa cultura', tfr: 'Le pays et sa culture', media: 'paisatge',
+			items: [['Mots en imatges', 'Mots en images', '/mots'], ['Òbras', 'Œuvres', '/obras'], ['Articles', 'Articles', '/articles']] },
+		{ oc: 'Amassa', fr: 'Ensemble', toc: 'La comunautat', tfr: 'La communauté', media: 'liams',
+			items: [['Fòrum', 'Forum', '/forum'], ['Grops', 'Groupes', '/grops'], ['Boita d’idèas', 'Boîte à idées', '/ideas'],
+				['Instagram', 'Instagram', 'https://www.instagram.com/lo_ligam/']] }
+	];
+
+	// Le flux des liaisons ne tourne que lorsque la carte « Amassa » est à l'écran
+	function enVista(el) {
+		const io = new IntersectionObserver(([e]) => el.classList.toggle('en-vista', e.isIntersecting));
+		io.observe(el);
+		return { destroy: () => io.disconnect() };
+	}
+
 	onMount(() => {
-		// Le panneau d'ambiance propose les fonds seulement là où il y en a un
 		ambianca.fonsPresent = true;
 		let quitada = false;
 		import('$lib/acuelh/motor.js').then(({ lancarAcuelh }) => {
@@ -48,7 +76,6 @@
 		};
 	});
 
-	// Le réglage commun pilote le fond et la carte
 	$effect(() => {
 		const clar = ambianca.clar, dalt = ambianca.dalt;
 		motor?.tema(clar, dalt);
@@ -62,9 +89,6 @@
 		motor?.leugier(l);
 	});
 
-	/* Langue de départ des cours : chaque langue nommée dans elle-même, la
-	   consigne écrite dans la langue choisie. Au clic, les drapeaux des pays
-	   où la langue se parle défilent puis se posent sur celui de son origine. */
 	const CLAU_LENGA_CORS = 'lo-ligam-lenga-cors';
 	const LENGAS_CORS = [
 		{ v: 'fr', nom: 'Français' },
@@ -93,7 +117,6 @@
 		}
 		let k = 0;
 		drapèus[v] = DRAPEUS[seq[0]];
-		// L'avant-dernier drapeau (le Québec pour le français) reste un peu plus
 		const seguent = () => {
 			k++;
 			drapèus[v] = DRAPEUS[seq[k]];
@@ -131,7 +154,6 @@
 
 <div class="acuelh" class:fr bind:this={racina}>
 	<canvas id="fons" aria-hidden="true"></canvas>
-	<!-- Fond léger (2026-10-14) : la braise, en CSS seul (acuelh.css) -->
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 	<canvas id="estelas" aria-hidden="true"></canvas>
 	<div class="cur-anel" aria-hidden="true"></div>
@@ -148,7 +170,7 @@
 				: 'Dobrís la pagina de reservacion de Proton dins un onglet novèl'}</span
 		>
 
-		<!-- I. Le héros -->
+		<!-- I. Le héros : le titre annonce le plan de la page, un seul bouton principal -->
 		<section class="eros" data-revela>
 			<p class="eros-kicker">
 				<span class="masc"><span class="masc-in">{@render bi('L’occitan', 'L’occitan')}</span></span>
@@ -162,8 +184,8 @@
 				<div class="esvani" style="--i: 5">
 					<p class="eros-sub">
 						{@render bi(
-							'De corses en visio amb ieu, un parcors per avançar a ton ritme, e de monde per parlar.',
-							'Des cours en visio avec moi, un parcours pour avancer à ton rythme, et du monde avec qui parler.'
+							'Una carta per lo veire, de corses per l’aprene, de mots e d’òbras per lo viure.',
+							'Une carte pour le voir, des cours pour l’apprendre, des mots et des œuvres pour le vivre.'
 						)}
 					</p>
 					<p class="indici" aria-hidden="true">
@@ -171,19 +193,17 @@
 					</p>
 				</div>
 				<div class="eros-accions esvani" style="--i: 6">
-					<a class="boton" href={RESERVAR} target="_blank" rel="noopener" data-magnet aria-describedby="onglet-nou">
+					<a class="boton" href="/carta" data-magnet>
 						<span class="boton-emplenat"></span>
-						<span class="boton-tèxt">{@render bi('Reservar un primièr cors', 'Réserver un premier cours')}{@render sageta()}</span>
+						<span class="boton-tèxt">{@render bi('Dobrir la carta', 'Ouvrir la carte')}{@render sageta()}</span>
 					</a>
-					<a class="ligam-tèxt" href="/aprene/essai">{@render bi('Començar sol·a', 'Commencer seul·e')}</a>
+					<a class="ligam-tèxt" href="#biais">{@render bi('Aprene l’occitan', 'Apprendre l’occitan')}</a>
 				</div>
 				<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
 			</div>
 		</section>
 
 		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->
-		<!-- On peut le faire glisser (doigt, souris, pavé, flèches) ; un toucher montre la traduction.
-		     Focalisable pour que les flèches du clavier le déplacent (zone qui défile : WCAG 2.1.1). -->
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<div class="bandel" role="group" tabindex="0" aria-label={fr ? 'Quelques mots' : 'Qualques mots'}>
 			<div class="bandel-pista">
@@ -201,26 +221,81 @@
 			>
 		</p>
 
-		<!-- III. Le manifeste : chaque mot s'allume avec le défilement -->
+		<!-- III. Qui : le manifeste (sans numéro, comme la phrase d'identité de l'Alliance), avec la photo de Romain -->
 		<section class="manifest">
 			<h2 class="jalon" data-revela>
-				<b>01</b><span class="masc"><span class="masc-in">{@render bi('Qu’es aquò, Lo Ligam ?', 'Qu’est-ce que Lo Ligam ?')}</span></span>
+				<span class="masc"><span class="masc-in">{@render bi('Qu’es aquò, Lo Ligam ?', 'Qu’est-ce que Lo Ligam ?')}</span></span>
 			</h2>
-			<p class="manifest-tèxt" data-emplenar>
-				{#each ['oc', 'fr'] as l (l)}
-					<span data-lenga={l} lang={l}
-						>{#each MANIFEST[l] as [frasa, aur], n (n)}{#each frasa.split(' ') as m, k (k)}<span
-									class={aur ? 'm aur' : 'm'}>{m}</span
-								>{' '}{/each}{/each}</span
-					>
-				{/each}
-			</p>
+			<div class="manifest-cors">
+				<p class="manifest-tèxt" data-emplenar>
+					{#each ['oc', 'fr'] as l (l)}
+						<span data-lenga={l} lang={l}
+							>{#each MANIFEST[l] as [frasa, aur], n (n)}{#each frasa.split(' ') as m, k (k)}<span
+										class={aur ? 'm aur' : 'm'}>{m}</span
+									>{' '}{/each}{/each}</span
+						>
+					{/each}
+				</p>
+				<figure class="manifest-retrat esvani" data-revela>
+					<div class="panel-media retrat">
+						<img src="/acuelh/romain.webp" alt="" loading="lazy" width="600" height="620" />
+					</div>
+					<figcaption>Romain Périer</figcaption>
+				</figure>
+			</div>
 		</section>
 
-		<!-- III bis. Trois façons d'apprendre : l'offre, dite clairement -->
+		<!-- IV. 01 Se parla : la carte en étoiles et les chiffres, remontés -->
+		<section class="chifras" data-revela>
+			<h2 class="jalon">
+				<b>01</b><span class="masc"><span class="masc-in">{@render bi('Se parla', 'Se parle')}</span></span>
+			</h2>
+			<div
+				class="carta-estelas"
+				role="img"
+				aria-label={fr
+					? 'Carte de l’Occitanie en étoiles : 304 villes et villages, avec leur nom occitan'
+					: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan'}
+			></div>
+			<!-- La carte montre, l'encyclopédie explique : chaque fiche y est reliée
+			     (revisions/2026-10-10-concept-wiki.md) -->
+			<div class="carta-dobrir esvani">
+				<a class="boton boton-traç" href="/carta" data-magnet
+					><span class="boton-emplenat"></span><span class="boton-tèxt"
+						>{@render bi('Dobrir la carta entièra', 'Ouvrir la carte entière')} {@render sageta()}</span
+					></a
+				>
+				<a class="ligam-tèxt" href="/enciclopedia"
+					>{@render bi('L’enciclopèdia de las lengas e dels luòcs', 'L’encyclopédie des langues et des lieux')}</a
+				>
+			</div>
+			<div class="chifras-grasilha">
+				<div class="chifra esvani" style="--i: 1">
+					<p class="chifra-num" data-comptar="600000" data-prefix="≈ ">≈ 600 000</p>
+					<p class="chifra-nom">{@render bi('locutors', 'locuteurs')}</p>
+					<p class="chifra-font">
+						{@render bi('Estimacion, enquèsta sociolingüistica OPLO, 2020', 'Estimation, enquête sociolinguistique OPLO, 2020')}
+					</p>
+				</div>
+				<div class="chifra esvani" style="--i: 2">
+					<p class="chifra-num" data-comptar="32">32</p>
+					<p class="chifra-nom">{@render bi('despartaments', 'départements')}</p>
+					<p class="chifra-font">
+						{@render bi('e mai la Val d’Aran e las valadas occitanas d’Itàlia', 'plus le Val d’Aran et les vallées occitanes d’Italie')}
+					</p>
+				</div>
+				<div class="chifra esvani" style="--i: 3">
+					<p class="chifra-num" data-comptar="10">10</p>
+					<p class="chifra-nom">{@render bi('sègles de literatura', 'siècles de littérature')}</p>
+					<p class="chifra-font">{@render bi('dempuèi los primièrs trobadors', 'depuis les premiers troubadours')}</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- V. 02 S'apren : les trois façons d'apprendre, telles quelles -->
 		<section class="biais" id="biais" data-revela>
 			<h2 class="jalon">
-				<b>02</b><span class="masc"><span class="masc-in">{@render bi('Tres biais d’aprene', 'Trois façons d’apprendre')}</span></span>
+				<b>02</b><span class="masc"><span class="masc-in">{@render bi('S’apren', 'S’apprend')}</span></span>
 			</h2>
 			<div class="biais-grasilha">
 				<article class="biai esvani" style="--i: 1">
@@ -257,12 +332,10 @@
 						)}
 					</p>
 					<a class="biai-ligam" href={RESERVAR} target="_blank" rel="noopener" aria-describedby="onglet-nou"
-						>{@render bi('Ne parlar ensems', 'En parler ensemble')} {@render sageta()}</a
+						>{@render bi('Ne parlar amassa', 'En parler ensemble')} {@render sageta()}</a
 					>
 				</article>
 			</div>
-			<!-- Les cours se font depuis quatre langues ; textes anglais, castillan et
-			     catalan À VÉRIFIER par un locuteur -->
 			<fieldset class="lengas esvani" style="--i: 4">
 				<legend>{@render bi('Aprene l’occitan dempuèi :', 'Apprendre l’occitan depuis :')}</legend>
 				<div class="lengas-chips">
@@ -282,15 +355,13 @@
 			</fieldset>
 		</section>
 
-		<!-- IV. Quatre chemins -->
-		<!-- Quatre cartes vues d'un coup, sans glissement (2026-10-14 : le défilement
-		     qui partait de côté déroutait, retour de Cyril ; option A choisie par Romain) -->
-		<section class="camins" aria-labelledby="camins-titol">
+		<!-- VI. 03 Se viu : deux cartes, découvrir et faire ensemble -->
+		<section class="camins" aria-labelledby="viure-titol">
 			<h2 class="camins-cap jalon" data-revela>
-				<b>03</b><span class="masc"><span class="masc-in" id="camins-titol">{@render bi('Quatre camins', 'Quatre chemins')}</span></span>
+				<b>03</b><span class="masc"><span class="masc-in" id="viure-titol">{@render bi('Se viu', 'Se vit')}</span></span>
 			</h2>
 			<div class="camins-pista">
-				{#each CAMINS as c, n (c.oc)}
+				{#each VIURE as c, n (c.oc)}
 					<article class="panel esvani" data-revela style:--i={n}>
 						<div class="panel-tèxt">
 							<div>
@@ -299,39 +370,32 @@
 							</div>
 							<ul class="panel-items">
 								{#each c.items as [oc, frTxt, href] (oc)}
-									{#if href}
-										<li><a {href}>{@render bi(oc, frTxt)}<Icona nom="suivant" /></a></li>
+									{#if href.startsWith('http')}
+										<li>
+											<a {href} target="_blank" rel="noopener noreferrer">{@render bi(oc, frTxt)}<Icona nom="extern" /></a>
+										</li>
 									{:else}
-										<li><span class="leu">{@render bi(oc, frTxt)}<em>{@render bi('Lèu', 'Bientôt')}</em></span></li>
+										<li><a {href}>{@render bi(oc, frTxt)}<Icona nom="suivant" /></a></li>
 									{/if}
 								{/each}
 							</ul>
 						</div>
-						{#if c.media === 'retrat'}
-							<div class="panel-media retrat">
-								<img src="/acuelh/romain.webp" alt="Romain Périer" loading="lazy" width="600" height="620" />
-							</div>
-						{:else if c.media === 'paisatge'}
+						{#if c.media === 'paisatge'}
 							<div class="panel-media">
 								<img class="sens-cel" src="/acuelh/paisatge.webp" alt="" loading="lazy" width="900" height="1028" />
 							</div>
-						{:else if c.media === 'tipo'}
-							<div class="panel-media tipo"><span class="gros-mot" lang="oc">ensems</span></div>
 						{:else}
-							<!-- Le logo se dessine quand la carte arrive à l'écran -->
-							<div class="panel-media simbol">
-								<svg viewBox="-1.3 -1.3 2.6 2.6" aria-hidden="true">
-									{#each TRAÇATS as t (t.d)}
-										<path class="tr" d={t.d} fill="none" stroke="#fff" stroke-width={0.055 * t.k} stroke-linecap="round" pathLength="1" />
+							<!-- Idée de Romain : le domaine occitan et des liaisons comme des lignes
+							     aériennes entre les villes (dessin : scripts/amassa-liaisons.mjs) -->
+							<div class="panel-media liams" use:enVista>
+								<svg viewBox="0 0 400 300" aria-hidden="true">
+									<path class="domeni" d={AMASSA.contorn} />
+									{#each AMASSA.arcs as d, i (d)}
+										<path class="liam" {d} pathLength="1" style:--i={i} />
+										<path class="flux" {d} style:--i={i} />
 									{/each}
-									{#each P as [x, y], i (i)}
-										<circle
-											cx={x}
-											cy={y}
-											r={i === 0 ? 0.124 : 0.109}
-											fill={i === 0 ? '#eeaf34' : '#ffd47f'}
-											style:transition-delay="{600 + i * 50}ms"
-										/>
+									{#each AMASSA.vilas as [x, y], i (i)}
+										<circle class="vila" cx={x} cy={y} r="3.2" style:--i={i} />
 									{/each}
 								</svg>
 							</div>
@@ -341,57 +405,12 @@
 			</div>
 		</section>
 
-		<!-- V. Les chiffres, et l'Occitanie dessinée par les étoiles -->
-		<section class="chifras" data-revela>
-			<h2 class="jalon">
-				<b>04</b><span class="masc"><span class="masc-in">{@render bi('L’occitan, uèi', 'L’occitan, aujourd’hui')}</span></span>
-			</h2>
-			<div
-				class="carta-estelas"
-				role="img"
-				aria-label={fr
-					? 'Carte de l’Occitanie en étoiles : 304 villes et villages, avec leur nom occitan'
-					: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan'}
-			></div>
-			<div class="carta-dobrir esvani">
-				<a class="boton boton-traç" href="/carta" data-magnet
-					><span class="boton-emplenat"></span><span class="boton-tèxt"
-						>{@render bi('Dobrir la carta entièra', 'Ouvrir la carte entière')} {@render sageta()}</span
-					></a
-				>
-			</div>
-			<div class="chifras-grasilha">
-				<div class="chifra esvani" style="--i: 1">
-					<p class="chifra-num" data-comptar="600000" data-prefix="≈ ">≈ 600 000</p>
-					<p class="chifra-nom">{@render bi('locutors', 'locuteurs')}</p>
-					<p class="chifra-font">
-						{@render bi('Estimacion, enquèsta sociolingüistica OPLO, 2020', 'Estimation, enquête sociolinguistique OPLO, 2020')}
-					</p>
-				</div>
-				<div class="chifra esvani" style="--i: 2">
-					<p class="chifra-num" data-comptar="32">32</p>
-					<p class="chifra-nom">{@render bi('despartaments', 'départements')}</p>
-					<p class="chifra-font">
-						{@render bi('e mai la Val d’Aran e las valadas occitanas d’Itàlia', 'plus le Val d’Aran et les vallées occitanes d’Italie')}
-					</p>
-				</div>
-				<div class="chifra esvani" style="--i: 3">
-					<p class="chifra-num" data-comptar="10">10</p>
-					<p class="chifra-nom">{@render bi('sègles de literatura', 'siècles de littérature')}</p>
-					<p class="chifra-font">{@render bi('dempuèi los primièrs trobadors', 'depuis les premiers troubadours')}</p>
-				</div>
-			</div>
-		</section>
-
-		<!-- VI. Le troubadour : la fenêtre de la page s'ouvre sur une vraie fenêtre
-		     de pierre (vallée de l'Hérault, photo Romain, 2025) -->
+		<!-- VII. Le troubadour (Max Rouquette), qui clôt « Se viu » -->
 		<section class="trobador">
 			<div class="trobador-pin">
 				<div class="trobador-fenestra">
 					<img src="/acuelh/erau.webp" alt="" loading="lazy" decoding="async" width="1500" height="2173" />
 				</div>
-				<!-- Max Rouquette (1908-2005), choisi par Romain le 2026-10-06. Deux lignes
-				     seulement : texte encore protégé, citation courte et signée. -->
 				<blockquote class="trobador-vers">
 					<p lang="oc">
 						<span class="masc"><span class="masc-in">« Espinchas dins la solelhada</span></span><span class="masc"
@@ -410,7 +429,7 @@
 			</div>
 		</section>
 
-		<!-- VII. L'appel -->
+		<!-- VIII. L'appel : les cours, en fin de parcours -->
 		<section class="crida centrat" id="crida" data-revela>
 			<div>
 				<h2 class="crida-titol">
@@ -433,3 +452,113 @@
 		</section>
 	</main>
 </div>
+
+<style>
+	/* Qui : le manifeste et la photo côte à côte, l'un sous l'autre quand la place manque */
+	.manifest {
+		container: manifest / inline-size;
+	}
+	.manifest-cors {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: end;
+		gap: clamp(2rem, 5vw, 6rem);
+	}
+	.manifest-retrat {
+		width: clamp(220px, 22vw, 360px);
+		margin: 0;
+	}
+	.manifest-retrat .panel-media {
+		aspect-ratio: 4 / 5;
+	}
+	.manifest-retrat figcaption {
+		margin-top: 0.9rem;
+		font-family: var(--votz);
+		font-style: italic;
+		font-size: 1.15rem;
+		color: var(--aur-clar);
+	}
+	@container manifest (max-width: 820px) {
+		.manifest-cors {
+			grid-template-columns: 1fr;
+		}
+		.manifest-retrat {
+			width: min(72%, 300px);
+		}
+	}
+
+	/* La carte et l'encyclopédie côte à côte */
+	.carta-dobrir {
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1.2rem 2.4rem;
+	}
+
+	/* Amassa : les villes éclosent, un trait fin se tire de A vers B, liaison
+	   après liaison, puis des pointillés y coulent en continu, comme un flux
+	   de données (retour de Romain : pas de lueurs « trains »). Le flux
+	   s'arrête hors de l'écran, en version légère et si le visiteur réduit
+	   les animations : les pointillés restent, immobiles. */
+	.liams svg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.domeni {
+		fill: color-mix(in srgb, var(--terra) 24%, transparent);
+		stroke: color-mix(in srgb, var(--aur) 50%, transparent);
+		stroke-width: 0.8;
+		stroke-linejoin: round;
+	}
+	.liam,
+	.flux {
+		fill: none;
+		stroke-linecap: round;
+	}
+	.liam {
+		stroke: var(--aur);
+		stroke-width: 0.7;
+		opacity: 0.35;
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+		transition: stroke-dashoffset 1.1s var(--ease-io) calc(700ms + var(--i) * 450ms);
+	}
+	.vila {
+		fill: var(--aur-clar);
+		transform-box: fill-box;
+		transform-origin: center;
+		transform: scale(0);
+		transition: transform 0.8s var(--ease) calc(var(--i) * 60ms);
+	}
+	.panel:global(.vist) .liam {
+		stroke-dashoffset: 0;
+	}
+	.panel:global(.vist) .vila {
+		transform: scale(1);
+	}
+	/* Pointillés ronds tous les 7 px ; ils apparaissent une fois leur trait tiré */
+	.flux {
+		stroke: var(--aur-clar);
+		stroke-width: 2;
+		stroke-dasharray: 0 7;
+		opacity: 0;
+		transition: opacity 0.6s var(--ease) calc(1500ms + var(--i) * 450ms);
+	}
+	.panel:global(.vist) .flux {
+		opacity: 0.9;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.liams:global(.en-vista) .flux {
+			animation: flux 1.1s linear infinite;
+		}
+	}
+	:global(:root[data-leugier='on']) .flux {
+		animation: none !important;
+	}
+	@keyframes flux {
+		to {
+			stroke-dashoffset: -7;
+		}
+	}
+</style>
