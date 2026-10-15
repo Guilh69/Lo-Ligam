@@ -271,20 +271,23 @@
 		display: grid;
 		place-items: center;
 		padding: 0;
-		border: 1px solid var(--t-linha);
+		/* même verre que le rail et les boutons de la carte, sans trait (Romain, 2026-10-15) */
+		border: 0;
 		border-radius: 50%;
-		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
-		backdrop-filter: blur(6px);
+		background: var(--t-veire);
+		backdrop-filter: blur(10px);
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 		color: var(--t-aur-clar);
 		cursor: pointer;
 		transition:
-			border-color 0.4s,
+			background 0.4s,
 			transform 0.6s var(--ease);
 	}
 
 	.info-trigger:hover,
 	.info-close:hover {
-		border-color: var(--t-aur);
+		background: var(--t-veire-fort);
+		color: var(--t-aur);
 	}
 
 	.info-trigger:focus-visible,

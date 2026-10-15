@@ -2571,23 +2571,24 @@
 		font-family: var(--font-body);
 	}
 
-	/* Contrôles Leaflet (zoom, échelle, crédits) dans la charte : verre sombre,
-	   liseré, or */
+	/* Contrôles Leaflet (zoom, plein écran, fonds…) dans la charte : le même
+	   verre que le rail, sans trait (Romain, 2026-10-15 : ni autour des
+	   boutons ni entre + et −), une ombre douce pour les détacher, or */
 	.carta :global(.leaflet-bar) {
-		border: 1px solid var(--t-linha);
+		border: 0;
 		border-radius: 14px;
 		overflow: hidden;
-		box-shadow: none;
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 	}
 
 	.carta :global(.leaflet-bar a) {
 		width: 2.4rem;
 		height: 2.4rem;
 		line-height: 2.4rem;
-		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
-		backdrop-filter: blur(6px);
+		background: var(--t-veire);
+		backdrop-filter: blur(10px);
 		color: var(--t-aur-clar);
-		border-bottom-color: var(--t-linha);
+		border-bottom: 0;
 		font: 400 1.2rem var(--font-body);
 	}
 
@@ -2604,7 +2605,7 @@
 
 	.carta :global(.leaflet-bar a:hover),
 	.carta :global(.leaflet-bar a:focus) {
-		background: var(--t-fons-2);
+		background: var(--t-veire-fort);
 		color: var(--t-aur);
 	}
 
@@ -2632,7 +2633,7 @@
 	}
 	.carta :global(.leaflet-bar a.leaflet-disabled) {
 		color: var(--t-linha);
-		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
+		background: var(--t-veire);
 	}
 
 	/* Las fonts : una linha corta (© OpenStreetMap e lo boton « Fonts ») ; la

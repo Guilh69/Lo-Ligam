@@ -55,6 +55,14 @@
 	--t-terra: #b53d17;
 	--t-terra-viu: #b53d17;
 }
+/* Verre des éléments posés sur la carte (rail, panneau qui s'ouvre à côté,
+   boutons ronds) : sans trait, un fond un peu plus chaud que la carte (une
+   pointe de terracotta) et légèrement transparent (Romain, 2026-10-15). Suit
+   le thème : les couleurs de base sont lues sur <html> au moment du calcul. */
+:root {
+	--t-veire: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 90%, var(--t-terra)) 76%, transparent);
+	--t-veire-fort: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 84%, var(--t-terra)) 90%, transparent);
+}
 /* Colors adaptadas al daltonisme : lo terracòta ven blau (se destria de
    l'aur per totes los daltonismes roge-verd), mai de contraste. */
 :root[data-dalt='on'] {

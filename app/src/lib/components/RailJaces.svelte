@@ -1389,9 +1389,9 @@
 		gap: 2px;
 		padding: 6px 5px;
 		/* Sans contour (Romain, 2026-10-15) : le rail se détache par un fond un
-		   peu plus chaud que la carte (une pointe de terracotta), légèrement
-		   transparent ; le flou garde les icônes lisibles sur la carte */
-		background: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 90%, var(--t-terra)) 76%, transparent);
+		   peu plus chaud que la carte, légèrement transparent (--t-veire, app.css) ;
+		   le flou garde les icônes lisibles sur la carte */
+		background: var(--t-veire);
 		backdrop-filter: blur(10px);
 		border: 0;
 		border-radius: 18px;
@@ -1712,10 +1712,11 @@
 		scrollbar-width: thin;
 		scrollbar-color: var(--t-linha) transparent;
 		padding: 16px;
-		background: color-mix(in srgb, var(--t-fons-2) 72%, transparent);
+		/* même verre que le rail, sans trait (Romain, 2026-10-15) */
+		background: var(--t-veire);
 		backdrop-filter: blur(10px) saturate(1.15);
 		-webkit-backdrop-filter: blur(10px) saturate(1.15);
-		border: 1px solid var(--t-linha);
+		border: 0;
 		border-radius: 10px;
 		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 		color: var(--t-tinta);
