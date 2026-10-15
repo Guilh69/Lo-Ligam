@@ -214,11 +214,40 @@ version plus récente de FSRS que celle de la bibliothèque (FSRS-6 : 0,346).
 
 ## 6. Musique, vidéo, articles : ce qu'un cours payant permet
 
-*(complété après vérification, voir plus bas)*
+Recherche du 15-10 (Claude n'est pas juriste ; les points ~ méritent l'avis
+d'un juriste avant d'ouvrir une partie payante).
+
+| Média | Sans demander | Avec autorisation | À éviter |
+|---|---|---|---|
+| **Articles du Jornalet** | le texte, avec la mention de la source : licence CC BY-SA, **sans clause « non commerciale »** ✓ ([avis légal](https://www.jornalet.com/avis-legal)) | les photos, les tribunes d'opinion, les blogs (hors licence) | sans mention de la source |
+| **Wikipèdia en occitan** | un extrait, avec lien, nom de la licence, modifications signalées ; usage commercial permis ✓ | les images (chaque fichier a sa licence) | empêcher les autres de reprendre l'extrait |
+| **Musique** | un lien vers la chaîne officielle de l'artiste ; un ou deux vers cités et commentés ~ | héberger un morceau sur le site (auteurs **et** producteur du disque) ; les paroles entières (éditeur) | toute copie non autorisée |
+| **Vidéo** | le lecteur YouTube de la chaîne officielle, en complément | une vidéo d'un tiers hébergée chez nous | **faire payer pour voir** une vidéo YouTube intégrée (interdit par les règles de YouTube ✓) |
+
+**Ce que ça veut dire pour Lo Ligam** ◇ :
+- L'« exception pédagogique » ne couvre très probablement pas un cours payant
+  indépendant ~ : elle vise les établissements d'enseignement, sans but
+  commercial ([Légifrance](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044363194)).
+- **La musique et la vidéo des autres vont dans la « Pause », gratuite** :
+  lien ou lecteur officiel, hors de la partie payante. Ce qu'on fait payer,
+  c'est ton travail : tes leçons, ta voix, tes visuels, ton suivi.
+- **Les articles du Jornalet peuvent entrer dans les leçons**, avec la
+  mention ; un courriel de courtoisie à l'éditeur (l'ADÒC) reste prudent ~.
+- **Demander aux artistes** : la scène occitane est petite, un accord écrit
+  peut s'obtenir ; c'est une piste « évolution », pas un préalable.
+- Tout dépend du modèle économique, toujours ouvert (PILOTATGE, question 1).
 
 ## 6 bis. Accessibilité de la scène
 
-*(complété après vérification, voir plus bas)*
+✓ Vérifié : le critère WCAG 2.5.8 (niveau AA) demande des cibles d'au moins
+24 × 24 px ([W3C](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)) ;
+le RGAA en vigueur ne teste pas encore la taille des cibles, sa version 5
+(alignée sur WCAG 2.2) est annoncée pour fin 2026.
+L'essai suit déjà la bonne pratique ◇ : de vrais boutons posés sur l'image
+(atteignables au clavier, contour doré au focus), un libellé pour chacun,
+une **liste des mots** en boutons sous la scène (l'équivalent pour qui ne
+voit pas l'image). Plus petite cible sur un téléphone de 375 px : environ
+30 × 29 px ✓ (mesuré dans l'essai, au-dessus du minimum).
 
 ## 7. La carte, porte d'entrée vers les cours
 

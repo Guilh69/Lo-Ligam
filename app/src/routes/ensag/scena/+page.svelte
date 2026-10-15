@@ -91,7 +91,12 @@
 	</header>
 
 	<div class="mise">
-		<div class="scena" class:completa>
+		<div
+			class="scena"
+			class:completa
+			role="group"
+			aria-label="Scène : une maison, quatre objets à découvrir"
+		>
 			<svg viewBox="0 0 860 860" aria-hidden="true">
 				<defs>
 					<filter id="gredon" color-interpolation-filters="sRGB">
