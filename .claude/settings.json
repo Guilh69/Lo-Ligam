@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git diff *)",
+      "Bash(git show *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git ls-files *)",
+      "Bash(git check-ignore *)",
+      "Bash(npm run build)",
+      "Bash(npm run check)",
+      "Bash(npm test)",
+      "Bash(npm run test)",
+      "Bash(node scripts/verificar-oc.mjs *)",
+      "Bash(date *)",
+      "PowerShell(git status *)",
+      "PowerShell(git log *)",
+      "PowerShell(git diff *)",
+      "PowerShell(git show *)",
+      "PowerShell(git fetch *)",
+      "PowerShell(git pull *)",
+      "PowerShell(npm run build)",
+      "PowerShell(npm run check)",
+      "PowerShell(npm test)",
+      "PowerShell(npm run test)",
+      "PowerShell(node scripts/verificar-oc.mjs *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/garde-fou-git.mjs\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
