@@ -29,23 +29,12 @@
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 	import { RESERVAR, MOTS, MANIFEST, CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
 	import { AMASSA } from '$lib/acuelh/amassa.js';
-	import { lumLetras } from '$lib/acuelh/lumLetras.js';
 	import '$lib/acuelh/acuelh.css';
 
 	let fr = $derived(langStore.current === 'fr');
 
 	let racina;
 	let motor = $state.raw(null);
-
-	// Éclairage des lettres du titre : trois formes à comparer sur /?ensag=letras
-	// (Romain, 2026-10-15) ; sans le paramètre, la lanterne
-	const FORMAS_LUM = [
-		['fanal', 'Lanterne'],
-		['brasa', 'Braise'],
-		['saut', 'Saut']
-	];
-	let lumForma = $state('fanal');
-	let ensagLetras = $state(false);
 
 	// « Se viu » : découvrir, et faire ensemble (option 1 de Romain, 2026-10-15).
 	// Articles, forum, groupes et boîte à idées seront développés avant la
@@ -66,7 +55,6 @@
 	}
 
 	onMount(() => {
-		ensagLetras = new URLSearchParams(location.search).get('ensag') === 'letras';
 		ambianca.fonsPresent = true;
 		let quitada = false;
 		import('$lib/acuelh/motor.js').then(({ lancarAcuelh }) => {
@@ -160,7 +148,7 @@
 		><span class="oc" aria-hidden={fr}>{oc}</span><span class="fr" aria-hidden={!fr}>{frTxt}</span></span
 	>{/snippet}
 
-<!-- Le titre lettre par lettre, pour l'éclairage au survol (lumLetras.js ;
+<!-- Le titre lettre par lettre, pour les lettres en braise au survol (acuelh.css ;
      Romain, 2026-10-15, à la place de la traduction). Les lecteurs d'écran
      lisent le mot entier (copie masquée), pas les lettres. -->
 {#snippet letras(oc, frTxt)}<span class="bi"
@@ -202,7 +190,7 @@
 			<p class="eros-kicker">
 				<span class="masc"><span class="masc-in">{@render bi('L’occitan', 'L’occitan')}</span></span>
 			</p>
-			<h1 class="eros-titol" data-lum={lumForma} use:lumLetras={{ forma: lumForma }}>
+			<h1 class="eros-titol">
 				<span class="linha masc"><span class="masc-in" style="--i: 1">{@render letras('Se parla.', 'Se parle.')}</span></span>
 				<span class="linha masc"><span class="masc-in" style="--i: 2">{@render letras('S’apren.', 'S’apprend.')}</span></span>
 				<span class="linha masc"><span class="masc-in" style="--i: 3">{@render letras('Se viu.', 'Se vit.')}</span></span>
@@ -480,44 +468,8 @@
 	</main>
 </div>
 
-{#if ensagLetras}
-	<!-- Outil d'essai, volontairement neutre (hors charte) pour ne pas se confondre avec la page -->
-	<div class="ensag-lum" role="group" aria-label="Essai : éclairage des lettres du titre">
-		{#each FORMAS_LUM as [v, nom] (v)}
-			<button type="button" aria-pressed={lumForma === v} onclick={() => (lumForma = v)}>{nom}</button>
-		{/each}
-	</div>
-{/if}
 
 <style>
-	.ensag-lum {
-		position: fixed;
-		left: 50%;
-		bottom: 1rem;
-		z-index: 2000;
-		transform: translateX(-50%);
-		display: flex;
-		gap: 3px;
-		padding: 4px;
-		border-radius: 999px;
-		background: #ffffff;
-		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-		font: 700 0.8rem/1 system-ui, sans-serif;
-	}
-	.ensag-lum button {
-		border: 0;
-		border-radius: 999px;
-		padding: 0.55rem 1rem;
-		background: transparent;
-		color: #222222;
-		font: inherit;
-		cursor: pointer;
-	}
-	.ensag-lum button[aria-pressed='true'] {
-		background: #222222;
-		color: #ffffff;
-	}
-
 	/* Qui : le manifeste et la photo côte à côte, l'un sous l'autre quand la place manque */
 	.manifest {
 		container: manifest / inline-size;

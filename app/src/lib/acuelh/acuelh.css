@@ -148,34 +148,25 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 .acuelh .linha { display: block; width: fit-content; cursor: default; margin-bottom: 0.03em; }
 .acuelh .linha:nth-child(2) { padding-left: 0.9em; }
 .acuelh .linha:nth-child(3) { color: var(--aur); }
-/* Éclairage des lettres au survol (Romain, 2026-10-15, à la place de la
-   traduction ; trois formes à comparer, lumLetras.js) : la lumière est dorée,
-   crème sur la ligne déjà dorée (--lum-b : couleur de base, --lum : lumière) */
+/* Les lettres en braise au survol (Romain, 2026-10-15, choisie après essai
+   contre une lanterne et un saut ; à la place de la traduction) : la lettre
+   se remplit d'or de bas en haut, comme une braise qu'on attise, puis
+   refroidit lentement. Lumière crème sur la ligne déjà dorée (--lum-b :
+   couleur de base, --lum : lumière). CSS seul. */
 .acuelh .eros-titol { --lum-b: var(--crema); --lum: var(--aur); }
 .acuelh .linha:nth-child(3) { --lum-b: var(--aur); --lum: var(--crema); }
-.acuelh .eros-titol[data-lum] .letra:not(.espaci) { display: inline-block; }
-/* Lanterne : chaque lettre s'allume selon sa distance à la souris (--llum, de 0 à 1) */
-.acuelh .eros-titol[data-lum='fanal'] .letra {
-	color: color-mix(in srgb, var(--lum) calc(var(--llum, 0) * 100%), var(--lum-b));
-	text-shadow: 0 0 calc(var(--llum, 0) * 0.3em) color-mix(in srgb, var(--lum) calc(var(--llum, 0) * 60%), transparent);
-	transform: translateY(calc(var(--llum, 0) * -0.035em));
-	transition: color 0.5s, text-shadow 0.5s, transform 0.5s var(--ease);
-}
-/* Braise : la lettre se remplit d'or de bas en haut, puis refroidit lentement */
-.acuelh .eros-titol[data-lum='brasa'] .letra {
+.acuelh .eros-titol .letra:not(.espaci) {
+	display: inline-block;
 	color: transparent;
 	background: linear-gradient(to top, var(--lum) 0 44%, var(--lum-b) 56% 100%) 0 0 / 100% 200% no-repeat;
 	-webkit-background-clip: text; background-clip: text;
 	transition: background-position 1.8s var(--ease), filter 1.8s;
 }
-.acuelh .eros-titol[data-lum='brasa'] .letra:hover {
+.acuelh .eros-titol .letra:not(.espaci):hover {
 	background-position: 0 100%;
 	filter: drop-shadow(0 0 0.12em color-mix(in srgb, var(--lum) 55%, transparent));
 	transition-duration: 0.5s;
 }
-/* Saut : la lettre saute et se dore (les voisines suivent, en JS), puis s'éteint lentement */
-.acuelh .eros-titol[data-lum='saut'] .letra { color: var(--lum-b); transition: color 1.2s var(--ease); }
-.acuelh .eros-titol[data-lum='saut'] .letra.dorada { color: var(--lum); transition-duration: 0.15s; }
 /* En français, « S'apprend. » est plus long que « S'apren. » : le titre se fait
    un peu plus petit (sur téléphone, sinon le point sortait de l'écran), et la
    croix en étoiles s'écarte (motor.js) */
