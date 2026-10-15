@@ -55,6 +55,34 @@
 	--t-terra: #b53d17;
 	--t-terra-viu: #b53d17;
 }
+/* Gammes plus éclatantes du thème sombre, en essai (Romain, 2026-10-15 :
+   « un peu trop sombre », garder l'aspect, jouer seulement sur les couleurs).
+   <html data-gama>, choisi avec le sélecteur du cadre commun (/?ensag=gama) ;
+   sans réglage, la gamme actuelle. Le mode daltonien garde ses couleurs. */
+:root[data-tema='sorne'][data-gama='eclat']:not([data-dalt='on']) {
+	--t-fons: #22100a;
+	--t-fons-2: #2f170e;
+	--t-tinta: #fbf1e1;
+	--t-tinta-2: rgba(251, 241, 225, 0.78);
+	--t-linha: rgba(251, 241, 225, 0.2);
+	--t-vel: rgba(34, 16, 10, 0.72);
+	--t-aur: #f6b73c;
+	--t-aur-clar: #ffd98a;
+	--t-terra: #c8481c;
+	--t-terra-viu: #ef6a35;
+}
+:root[data-tema='sorne'][data-gama='eclat-plus']:not([data-dalt='on']) {
+	--t-fons: #2e140b;
+	--t-fons-2: #3d1d11;
+	--t-tinta: #fff4e4;
+	--t-tinta-2: rgba(255, 244, 228, 0.8);
+	--t-linha: rgba(255, 244, 228, 0.22);
+	--t-vel: rgba(46, 20, 11, 0.72);
+	--t-aur: #ffbe45;
+	--t-aur-clar: #ffdf95;
+	--t-terra: #d4501f;
+	--t-terra-viu: #ff7a40;
+}
 /* Verre des éléments posés sur la carte (rail, panneau qui s'ouvre à côté,
    boutons ronds) : sans trait, un fond un peu plus chaud que la carte (une
    pointe de terracotta) et légèrement transparent (Romain, 2026-10-15). Suit

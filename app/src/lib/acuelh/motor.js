@@ -16,6 +16,8 @@ import { LUOCS, RIUS, COSTA, NOMENATS, dialDe, rencDe } from './carta-estelas.js
 // 2026-10-07, coma sus /carta), copat a 8,6° E coma los rius : la Còrsega, que
 // tombariá fòra de la zòna de la carta sus l'acuèlh, es pas dessenhada.
 const COSTA_ACUELH = COSTA.map((l) => l.filter(([lon]) => lon <= 8.6)).filter((l) => l.length > 1);
+// Gamme de couleurs en essai (<html data-gama>, sélecteur du cadre commun) → éclat du fond vivant
+const GAMAS_FONS = { eclat: 1, 'eclat-plus': 2 };
 // Pointe de la flèche du nord : même tracé que l'SVG de /carta (unités de -50 à 50)
 const PONTA_NÒRD =
 	typeof Path2D !== 'undefined'
@@ -129,7 +131,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		const frag = (deriv ? '#extension GL_OES_standard_derivatives : enable\n#define DERIV\n' : '') + `
 		precision highp float;
 		uniform vec2 r; uniform float t; uniform vec2 m; uniform float s; uniform float p; uniform float c;
-		uniform sampler2D rel; uniform vec4 g; uniform float ro; uniform float mo; uniform float cl;
+		uniform sampler2D rel; uniform vec4 g; uniform float ro; uniform float mo; uniform float cl; uniform float ga;
 		float h(vec2 q){ return fract(sin(dot(q, vec2(41.3, 289.1))) * 43758.5453); }
 		float n(vec2 q){ vec2 i = floor(q), f = fract(q); vec2 u = f*f*(3.0-2.0*f);
 			return mix(mix(h(i), h(i+vec2(1,0)), u.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), u.x), u.y); }
@@ -220,6 +222,9 @@ export function lancarAcuelh(racina, opcions = {}) {
 			}
 			col *= mix(0.62, 1.0, smoothstep(0.0, 0.7, uv.x));
 			col *= smoothstep(1.45, 0.2, length((uv - vec2(0.58, 0.5)) * vec2(1.0, 1.25)));
+			// Gamme plus éclatante, en essai (Romain, 2026-10-15 : « un peu trop sombre ») :
+			// 1 = Éclat, 2 = Éclat + ; un fond plus chaud et un peu plus lumineux
+			if (cl < 0.5 && ga > 0.5) col = col * (1.0 + 0.18 * ga) + vec3(0.03, 0.013, 0.006) * ga;
 			// Mòde clar : çò qu'èra lum sus la nuèch ven tencha terracòta sus lo papièr crèma
 			if (cl > 0.5) {
 				float i = clamp(dot(col - basa, vec3(0.6, 0.3, 0.1)) * 2.4, 0.0, 1.0);
@@ -237,7 +242,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
 		const a = gl.getAttribLocation(pr, 'a');
 		gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
-		U = Object.fromEntries(['r', 't', 'm', 's', 'p', 'c', 'rel', 'g', 'ro', 'mo', 'cl'].map((k) => [k, gl.getUniformLocation(pr, k)]));
+		U = Object.fromEntries(['r', 't', 'm', 's', 'p', 'c', 'rel', 'g', 'ro', 'mo', 'cl', 'ga'].map((k) => [k, gl.getUniformLocation(pr, k)]));
 		fons.width = Math.round(W * ESCALA_FONS); fons.height = Math.round(H * ESCALA_FONS); gl.viewport(0, 0, fons.width, fons.height);
 		forçarFons = true;
 		if (reliefDemandat) cargarRelief();
@@ -864,6 +869,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 			gl.uniform2f(U.m, ax / W, 1 - ay / H);
 			gl.uniform1f(U.mo, modeFons);
 			gl.uniform1f(U.cl, temaClar ? 1 : 0);
+			gl.uniform1f(U.ga, GAMAS_FONS[document.documentElement.dataset.gama] ?? 0);
 			gl.uniform1f(U.s, sy / H);
 			gl.uniform1f(U.p, sy / maxSy);
 			// La nuèch se calma quand la carta se forma : las venas dauradas s'escafan

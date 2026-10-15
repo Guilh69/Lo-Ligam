@@ -5,6 +5,7 @@
 	import { ambianca, ARMONIZADAS } from '$lib/stores/ambianca.svelte.js';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import TornarAmont from '$lib/components/TornarAmont.svelte';
+	import EnsagGama from '$lib/components/EnsagGama.svelte';
 
 	let { children } = $props();
 
@@ -35,3 +36,6 @@
 {#if !id.startsWith('/admin')}
 	<TornarAmont />
 {/if}
+
+<!-- Essai des gammes du thème sombre (2026-10-15), visible seulement après /?ensag=gama -->
+<EnsagGama />
