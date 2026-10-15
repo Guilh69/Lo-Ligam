@@ -39,7 +39,8 @@ env:
   # Nom del conteneire Serverless (namespace « ligam-web »). Se lo nom
   # cambia dins la consòla, cal lo cambiar aicí tanben.
   CONTENEIRE: lo-ligam
-  SITE: https://ligamweb62fb7521-lo-ligam.functions.fnc.fr-par.scw.cloud
+  # Adreça del site dempuèi lo 2026-10-15 (l'adreça tecnica …scw.cloud i renvia).
+  SITE: https://loligam.eu
 
 jobs:
   bastir:

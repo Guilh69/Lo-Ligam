@@ -1,9 +1,28 @@
 import { dev } from '$app/environment';
 
+// Une seule adresse pour le site (2026-10-15) : www.loligam.eu et l'adresse
+// technique de Scaleway (…scw.cloud) renvoient vers loligam.eu, même page.
+// On lit l'en-tête Host plutôt que event.url, qui suivrait ORIGIN s'il était
+// un jour réglé dans la console.
+const ADRESSE = 'loligam.eu';
+
+function versAdresse(event) {
+	const hote = event.request.headers.get('host')?.split(':')[0];
+	if (dev || !hote || hote === ADRESSE) return null;
+	if (hote !== 'www.' + ADRESSE && !hote.endsWith('.scw.cloud')) return null;
+	return new Response(null, {
+		status: 301,
+		headers: { location: `https://${ADRESSE}${event.url.pathname}${event.url.search}` }
+	});
+}
+
 // En-têtes de sécurité posés sur chaque réponse. Scaleway ne les met pas
 // tout seul, et la politique de contenu (définie dans svelte.config.js)
 // ne couvre pas ces aspects-là.
 export async function handle({ event, resolve }) {
+	const redirection = versAdresse(event);
+	if (redirection) return redirection;
+
 	const response = await resolve(event);
 
 	// Empêche le navigateur de « deviner » un type de fichier différent de
