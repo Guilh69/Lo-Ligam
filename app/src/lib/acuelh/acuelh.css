@@ -148,13 +148,16 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 .acuelh .linha { display: block; width: fit-content; cursor: default; margin-bottom: 0.03em; }
 .acuelh .linha:nth-child(2) { padding-left: 0.9em; }
 .acuelh .linha:nth-child(3) { color: var(--aur); }
-/* L'autra lenga, al subrevòl : un murmuri en Cormorant italica daurada */
-.acuelh .linha .bi > span { transition-duration: 0.8s; }
-.acuelh:not(.fr) .linha .fr, .acuelh.fr .linha .oc { font-family: var(--votz); font-style: italic; color: var(--aur-clar); }
-.acuelh:not(.fr) .linha:hover .bi > .oc { transform: translateY(-125%); }
-.acuelh:not(.fr) .linha:hover .bi > .fr { transform: none; }
-.acuelh.fr .linha:hover .bi > .oc { transform: none; }
-.acuelh.fr .linha:hover .bi > .fr { transform: translateY(125%); }
+/* Au survol, chaque lettre s'allume en or (comme « Se viu. ») et s'éteint
+   doucement derrière la souris ; sur la ligne déjà dorée, elle passe en crème
+   (Romain, 2026-10-15 : à la place de la traduction au survol) */
+.acuelh .letra { transition: color 1.4s var(--ease); }
+.acuelh .letra:hover { color: var(--aur); transition-duration: 0.12s; }
+.acuelh .linha:nth-child(3) .letra:hover { color: var(--crema); }
+/* En français, « S'apprend. » est plus long que « S'apren. » : le titre se fait
+   un peu plus petit (sur téléphone, sinon le point sortait de l'écran), et la
+   croix en étoiles s'écarte (motor.js) */
+.acuelh.fr .eros-titol { font-size: clamp(3.1rem, 10vw, 11rem); }
 .acuelh .eros-pe { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; margin-top: 2.6rem; }
 .acuelh .eros-sub { max-width: 30ch; font-size: clamp(1rem, 1.3vw, 1.18rem); line-height: 1.65; color: var(--crema-2); }
 .acuelh .eros-accions { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; }

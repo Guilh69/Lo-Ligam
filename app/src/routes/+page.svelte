@@ -148,6 +148,21 @@
 		><span class="oc" aria-hidden={fr}>{oc}</span><span class="fr" aria-hidden={!fr}>{frTxt}</span></span
 	>{/snippet}
 
+<!-- Le titre lettre par lettre : au survol, chaque lettre s'allume en or puis
+     s'éteint doucement (Romain, 2026-10-15, à la place de la traduction). Les
+     lecteurs d'écran lisent le mot entier (copie masquée), pas les lettres. -->
+{#snippet letras(oc, frTxt)}<span class="bi"
+		><span class="oc" aria-hidden={fr}
+			><span class="visually-hidden">{oc}</span><span aria-hidden="true"
+				>{#each [...oc] as l, i (i)}<span class="letra">{l}</span>{/each}</span
+			></span
+		><span class="fr" aria-hidden={!fr}
+			><span class="visually-hidden">{frTxt}</span><span aria-hidden="true"
+				>{#each [...frTxt] as l, i (i)}<span class="letra">{l}</span>{/each}</span
+			></span
+		></span
+	>{/snippet}
+
 {#snippet sageta()}<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"
 		><path d="M2 8h12M9 3l5 5-5 5" /></svg
 	>{/snippet}
@@ -176,9 +191,9 @@
 				<span class="masc"><span class="masc-in">{@render bi('L’occitan', 'L’occitan')}</span></span>
 			</p>
 			<h1 class="eros-titol">
-				<span class="linha masc"><span class="masc-in" style="--i: 1">{@render bi('Se parla.', 'Se parle.')}</span></span>
-				<span class="linha masc"><span class="masc-in" style="--i: 2">{@render bi('S’apren.', 'S’apprend.')}</span></span>
-				<span class="linha masc"><span class="masc-in" style="--i: 3">{@render bi('Se viu.', 'Se vit.')}</span></span>
+				<span class="linha masc"><span class="masc-in" style="--i: 1">{@render letras('Se parla.', 'Se parle.')}</span></span>
+				<span class="linha masc"><span class="masc-in" style="--i: 2">{@render letras('S’apren.', 'S’apprend.')}</span></span>
+				<span class="linha masc"><span class="masc-in" style="--i: 3">{@render letras('Se viu.', 'Se vit.')}</span></span>
 			</h1>
 			<div class="eros-pe">
 				<div class="esvani" style="--i: 5">
