@@ -285,7 +285,20 @@ parcours sont une couche de plus, à n'afficher que sur demande.
    différentes**). Deuxième essai en ligne : visuel sans étiquettes ni
    flèches, un voile de couleur par chose à découvrir, l'étiquette écrite par
    le site dans la même couleur (la couleur remplace la flèche) ; sur
-   téléphone, seul le nom occitan reste sur l'image. À valider.
+   téléphone, seul le nom occitan reste sur l'image. **Pas validé** (retour
+   de Romain, fin de séance du 15-10), à reprendre :
+   - les couleurs « ne sont pas belles » et ignorent celles du dessin : il
+     faut un révélateur **opaque**, **accordé aux couleurs du dessin**
+     derrière (pas des teintes plaquées) ;
+   - des **flèches qui apparaissent** et amènent le mot quand on découvre la
+     chose (la flèche revient, mais animée, au moment de la découverte) ;
+   - **garder sa structure d'étiquette** : icône (croix occitane) + mot
+     occitan, haut-parleur + prononciation, drapeau + français.
+   Piste ◇ pour la reprise : partir du visuel refait sans textes ; avant la
+   découverte, l'objet sous un aplat opaque pris dans sa propre couleur (ou
+   un dessin au trait) ; au toucher, l'aplat se retire, la flèche se trace
+   de l'objet vers l'étiquette, l'étiquette s'écrit dans la structure de
+   Romain. À montrer sur deux ou trois variantes comparées.
 
 **Pour ta refonte des visuels** (retour de Romain, 15-10 : nouveau logo,
 bonne dimension, les familles de publications) ◇ :
