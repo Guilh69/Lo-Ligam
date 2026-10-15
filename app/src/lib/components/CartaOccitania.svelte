@@ -2330,16 +2330,14 @@
 		</button>
 	{/if}
 
-	<!-- Flèche du nord à l'ancienne, comme sur l'accueil : aiguille en losange
-	     (moitié pleine, moitié tracée), anneau fin, N italique -->
+	<!-- Flèche du nord (dessin de Romain, 2026-10-15, design-stock/icones/Fleche_nord.webp,
+	     redessiné en tracé) : deux cercles, le fin dehors, l'épais dedans ; la pointe
+	     touche le cercle extérieur et s'effile jusqu'au centre -->
 	<div class="compass" class:escantit={!!fichaComuna} aria-hidden="true">
-		<svg viewBox="-12 -16 34 40" width="30" height="36">
-			<circle cx="0" cy="4" r="5.5" fill="none" stroke="currentColor" stroke-width="0.9" />
-			<line x1="-9" y1="4" x2="9" y2="4" stroke="currentColor" stroke-width="0.9" opacity="0.5" />
-			<path d="M0 -14L-3 4L0 4Z" fill="currentColor" />
-			<path d="M0 -14L3 4L0 4Z" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linejoin="round" />
-			<path d="M-3 4L0 20L3 4" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linejoin="round" />
-			<text x="8" y="-6">N</text>
+		<svg viewBox="-50 -50 100 100" width="44" height="44">
+			<circle r="35.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+			<circle r="28.1" fill="none" stroke="currentColor" stroke-width="3.6" />
+			<path d="M0 -35.5L14.3 -24.2A28.1 28.1 0 0 0 4.2 -27.8L0 -0.2L-4.2 -27.8A28.1 28.1 0 0 0 -14.3 -24.2Z" fill="currentColor" />
 		</svg>
 	</div>
 </div>
@@ -3191,18 +3189,22 @@
 		pointer-events: none;
 	}
 
-	/* La flèche du nord rejoint les outils de lecture de la carte, en bas à
-	   gauche : centrée au-dessus du bouton des calques (2,8 rem, à 3,5 rem du
-	   bas), avec le même souffle entre chaque élément. En haut, elle collait au
-	   logo du bandeau (retour de Romain, 2026-10-07). */
+	/* La flèche du nord rejoint l'échelle, en bas à gauche : les deux outils de
+	   lecture côte à côte, à droite de l'échelle (qui mesure au plus ~7,5 rem),
+	   hors de la colonne du rail. Sous le rail, elle se faisait recouvrir dès que
+	   l'écran était un peu bas (retour de Romain, 2026-10-15). En haut, elle
+	   collait au logo du bandeau (retour de Romain, 2026-10-07). */
 	.compass {
 		position: absolute;
-		bottom: 7.5rem;
-		left: calc(var(--marge, 1rem) + 1.4rem - 15px);
+		bottom: 0.3rem;
+		left: 8.4rem;
 		z-index: 900;
 		color: var(--t-aur);
-		opacity: 0.85;
+		opacity: 0.9;
 		pointer-events: none;
+	}
+	.compass svg {
+		display: block;
 	}
 
 	/* Telefon : las aisinas de lectura se lèvan sus la barra de las jaces */
@@ -3221,8 +3223,7 @@
 	}
 	@container carta (max-width: 600px) {
 		.compass {
-			bottom: calc(var(--barra-bas, 0px) + 2.9rem);
-			left: 0.85rem;
+			bottom: calc(var(--barra-bas, 0px) + 0.3rem);
 		}
 	}
 
