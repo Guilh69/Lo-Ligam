@@ -743,6 +743,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 	const trobador = racina.querySelector('.trobador'), fenestra = racina.querySelector('.trobador-fenestra'), fenestraImg = fenestra.querySelector('img');
 	const vers = racina.querySelector('.trobador-vers');
 	const indiciFenestra = racina.querySelector('.trobador-indici');
+	let fenestraPossada = false; // la poussée automatique n'a lieu qu'une fois par visite
 	if (calm) vers.classList.add('vist');
 	const manifest = racina.querySelector('[data-emplenar]');
 	const bandel = racina.querySelector('.bandel'), bandelPista = racina.querySelector('.bandel-pista');
@@ -843,6 +844,16 @@ export function lancarAcuelh(racina, opcions = {}) {
 			const tel = W <= 600;
 			const iy = lerp(tel ? 16 : 22, 0, k), ix = lerp(tel ? 12 : 32, 0, k), rad = lerp(28, 0, k);
 			if (indiciFenestra) indiciFenestra.style.opacity = String(clamp(1 - k * 5));
+			// Si la personne reste 2 s devant la fenêtre encore fermée (section arrivée en
+			// haut de l'écran), le défilement est poussé en douceur jusqu'à la fenêtre
+			// ouverte et au vers, au cas où le principe ne serait pas compris (Romain,
+			// 2026-10-16). Une seule fois ; un geste l'interrompt ; jamais en mode calme.
+			if (!fenestraPossada && k < 0.08 && rt.top < H * 0.2 && performance.now() - darrierDefil > 2000) {
+				fenestraPossada = true;
+				const cibla = scrollY + rt.top + 0.64 * (rt.height - H); // k ≈ 0,97
+				if (lenis) lenis.scrollTo(cibla, { duration: 2.4 });
+				else scrollTo({ top: cibla, behavior: 'smooth' });
+			}
 			fenestra.style.clipPath = `inset(${iy}% ${ix}% round ${rad}px)`;
 			fenestraImg.style.transform = `scale(${lerp(1.3, 1, k)})`;
 			// Lo vèrs apareis sonque quand la fenèstra es pro larga per l'aculhir
