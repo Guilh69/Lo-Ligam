@@ -35,8 +35,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 	let forçarFons = true;
 	/* ================= Tèma : sorne, clar, o coma lo sistèma ================= */
 	const TEMAS = {
-		sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(47, 23, 14, 0.94)', riu: '#f6b73c', estela: '#fbf1e1', liser: 'rgba(34, 16, 10, 0.9)', fil: '#f6b73c', riuTèxt: '#ffd98a', vilaTèxt: '#fbf1e1', vel: 'rgba(34, 16, 10, 0.75)', velFin: 'rgba(34, 16, 10, 0)', crotzPonch: '#f5ead8', crotzEstret: '#b9822f', crotzCrida: '#6e2e12' },
-		clar: { costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#c98a4a', crotzCrida: '#e6cbaa' }
+		sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(47, 23, 14, 0.94)', riu: '#f6b73c', estela: '#fbf1e1', liser: 'rgba(34, 16, 10, 0.9)', fil: '#f6b73c', riuTèxt: '#ffd98a', vilaTèxt: '#fbf1e1', vel: 'rgba(34, 16, 10, 0.75)', velFin: 'rgba(34, 16, 10, 0)', crotzPonch: '#f5ead8', crotzEstret: '#8f5c28', crotzCrida: '#6e2e12' },
+		clar: { costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#dcb790', crotzCrida: '#e6cbaa' }
 	};
 	let TEM = TEMAS.sorne, temaClar = false;
 	function aplicarTema(clar, dalt) {
@@ -527,7 +527,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 			ox = Math.min(Math.max(ox, dreta + marge + 1.15 * R), W - marge - 1.15 * R);
 		}
 		const oy = enCrida ? rc.top + rc.height / 2 : (estret ? H * 0.27 : H * 0.42) - sy * 0.35;
-		const opacitat = enCrida ? 0.32 : estret ? 0.45 : 1;
+		// (écran étroit : 0,45 → 0,3 le 2026-10-16, la croix derrière le titre plus discrète, demande de Romain)
+		const opacitat = enCrida ? 0.32 : estret ? 0.3 : 1;
 		const rot = temps * 0.015 + sy * 0.0004;
 		const co = Math.cos(rot), si = Math.sin(rot);
 
