@@ -154,6 +154,10 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
    refroidit lentement. Lumière crème sur la ligne déjà dorée (--lum-b :
    couleur de base, --lum : lumière). CSS seul. */
 .acuelh .eros-titol { --lum-b: var(--crema); --lum: var(--aur); }
+/* Une ligne du titre ne se replie jamais : les lettres en blocs pouvaient passer à
+   la ligne, et la langue cachée (« S'apprend. », plus long) doublait la hauteur de
+   la ligne sur téléphone, d'où un trou avant « Se viu. » (Romain, 2026-10-16) */
+.acuelh .eros-titol .bi > span { white-space: nowrap; }
 .acuelh .linha:nth-child(3) { --lum-b: var(--aur); --lum: var(--crema); }
 .acuelh .eros-titol .letra:not(.espaci) {
 	display: inline-block;
