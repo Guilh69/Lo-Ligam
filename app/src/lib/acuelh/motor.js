@@ -742,6 +742,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 	const head = racina.querySelector('.capçal');
 	const trobador = racina.querySelector('.trobador'), fenestra = racina.querySelector('.trobador-fenestra'), fenestraImg = fenestra.querySelector('img');
 	const vers = racina.querySelector('.trobador-vers');
+	const indiciFenestra = racina.querySelector('.trobador-indici');
 	if (calm) vers.classList.add('vist');
 	const manifest = racina.querySelector('[data-emplenar]');
 	const bandel = racina.querySelector('.bandel'), bandelPista = racina.querySelector('.bandel-pista');
@@ -838,7 +839,10 @@ export function lancarAcuelh(racina, opcions = {}) {
 		const rt = trobador.getBoundingClientRect();
 		if (!calm && rt.top < H && rt.bottom > 0) {
 			const k = easeIO(clamp(-rt.top / (rt.height - H) * 1.25));
-			const iy = lerp(22, 0, k), ix = lerp(32, 0, k), rad = lerp(28, 0, k);
+			// téléphone : fenêtre de départ plus large (comme acuelh.css), 2026-10-16
+			const tel = W <= 600;
+			const iy = lerp(tel ? 16 : 22, 0, k), ix = lerp(tel ? 12 : 32, 0, k), rad = lerp(28, 0, k);
+			if (indiciFenestra) indiciFenestra.style.opacity = String(clamp(1 - k * 5));
 			fenestra.style.clipPath = `inset(${iy}% ${ix}% round ${rad}px)`;
 			fenestraImg.style.transform = `scale(${lerp(1.3, 1, k)})`;
 			// Lo vèrs apareis sonque quand la fenèstra es pro larga per l'aculhir

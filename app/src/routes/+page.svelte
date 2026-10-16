@@ -441,6 +441,8 @@
 						></cite
 					>
 				</blockquote>
+				<!-- Repère : continuer à descendre ouvre la fenêtre (s'efface dès qu'elle s'ouvre) -->
+				<div class="trobador-indici" aria-hidden="true"><span></span></div>
 			</div>
 		</section>
 
