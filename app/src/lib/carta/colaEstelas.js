@@ -680,7 +680,7 @@ export const cargarLimits = () =>
 
 
 /* ---------- La couche ---------- */
-export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null, zonasUI = null, activa = null } = {}) {
+export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null, zonasUI = null, activa = null, onTerritori = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: {
 			pane: 'estelas',
@@ -708,6 +708,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._cedir = cedir;
 			// la couche active de la légende (façon QGIS, Romain 2026-10-19) : son id ou null
 			this._activa = activa;
+			// le territoire choisi (ou null) : la carte dessine son contour doré
+			this._onTerritori = onTerritori;
 			// (lo repèr daurat de las vilas a ficha es remplaçat per la causida d'una
 			// comuna e sa ficha, que pòrta lo ligam : Romain, 2026-10-11)
 			this._fichas = [];
@@ -1118,9 +1120,23 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// dans la couche active reste choisi quand une autre couche change)
 			if (on && !this._modeDial) {
 				this._terPus = null;
-				this._terFixat = null;
+				this._fixar(null);
 			}
 			this._modeDial = !!on;
+		},
+		// Le territoire choisi d'un clic : sa carte dessine son contour doré, comme
+		// la commune choisie (retour de Romain, 2026-10-19 : la même jolie animation)
+		_fixar(ter) {
+			const a = this._terFixat;
+			this._terFixat = ter;
+			if (a === ter || (a && ter && a.code === ter.code && a.mena === ter.mena)) return;
+			const r = ter && this._limitsGeo?.[ter.mena === 'region' ? 'regions' : 'despartaments']?.find((x) => x[0] === ter.code);
+			this._onTerritori?.(r ? { mena: ter.mena, code: ter.code, anels: r[2] } : null);
+		},
+		// région ou département à cette échelle, la couche active d'abord
+		_menaEf(z) {
+			const ta = this._terActiva();
+			return ta ? (ta === 'regions' ? 'region' : 'despartament') : this._mena(z);
 		},
 		// régions ou départements : la couche active de la légende ?
 		_terActiva() {
@@ -1264,7 +1280,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 						}
 						return { code, nom, cami, centre: centreDe(pa) };
 					});
-				if (this._terFixat && this._terFixat.mena !== this._mena(z)) this._terFixat = null;
+				if (this._terFixat && this._terFixat.mena !== this._menaEf(z)) this._fixar(null);
 				const dom = this._limitsGeo?.domeni;
 				if (dom) {
 					const proj = (a) => projectar(map, a, z);
@@ -1664,7 +1680,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			const a = this._terJaces;
 			if (a && a.regions === t.regions && a.despartaments === t.despartaments && a.comunas === t.comunas) return;
 			this._terJaces = t;
-			this._terFixat = this._terPus = null;
+			this._terPus = null;
+			this._fixar(null);
 		},
 		// Le territoire (région ou département) sous un point
 		_territoriA(lp) {
@@ -1780,7 +1797,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				// reste, avec son nom ; un second clic dessus le libère
 				const ter = this._territoriA(e.layerPoint);
 				const meme = ter && this._terFixat && ter.code === this._terFixat.code && ter.mena === this._terFixat.mena;
-				this._terFixat = ter && !meme ? ter : null;
+				this._fixar(ter && !meme ? ter : null);
 				return;
 			}
 			if (tactil && this._pus !== lòc) {

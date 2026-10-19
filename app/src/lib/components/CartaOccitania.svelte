@@ -334,7 +334,8 @@
 					onPus: (p) => marcarPus(p),
 					zonasUI,
 					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp),
-					activa
+					activa,
+					onTerritori: dessenharTerritori
 				});
 				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
 				colaEstelas.setNomsDobles(lang === 'fr' ? 'fr' : null, polissaSota);
@@ -1160,6 +1161,21 @@
 		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		map.flyTo(centre, z, { duration: calm ? 0 : 1.2 });
 		if (!f) contornComuna(c.lat, c.lon).then(pintar);
+	}
+	// Le département ou la région choisis d'un clic : le même contour doré que la
+	// commune choisie, qui se trace, se remplit d'un fond léger et luit deux fois
+	// (retour de Romain, 2026-10-19 ; animation .comuna-causida)
+	let contornTerritori = null;
+	function dessenharTerritori(t) {
+		contornTerritori?.remove();
+		contornTerritori = null;
+		if (!t?.anels?.length || !map || !L) return;
+		if (!map.getPane('comunaCausida')) map.createPane('comunaCausida').style.zIndex = '345';
+		contornTerritori = L.polygon(
+			t.anels.map((a) => a.map(([x, y]) => [y, x])),
+			{ pane: 'comunaCausida', className: 'comuna-causida', color: '#f3c25a', weight: t.mena === 'region' ? 2.4 : 2, opacity: 0.95, fillColor: '#f3c25a', fillOpacity: 0.1, interactive: false }
+		).addTo(map);
+		contornTerritori.getElement()?.setAttribute('pathLength', '1');
 	}
 	// (los noms se cargan quand cal ; lo motor se torna pintar)
 	function majNomsComunas() {
