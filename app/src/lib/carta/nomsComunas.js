@@ -13,6 +13,8 @@
 // Remplaça los marcadors DOM d'abans (un per nom, plaçats sonque a la fin del
 // movement).
 
+import { liberar } from './telas.js';
+
 const DURADA = 0.25; // s
 const MAX = 280; // noms al mai sus l'ecran
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -44,8 +46,12 @@ export function crearNomsComunas(
 	const cv = L.DomUtil.create('canvas', 'noms-comunas', map.getPane('nomsComunas'));
 	const cx = cv.getContext('2d');
 	const estats = new Map(); // comuna → { a, cibla, x, y, w, h }
-	const imatges = new WeakMap(); // comuna → tela del nom
-	const imatgesAur = new WeakMap(); // (lo nom causit, en aur)
+	const imatges = new Map(); // comuna → tela del nom
+	const imatgesAur = new Map(); // (lo nom causit, en aur)
+	// (sobriété, 2026-10-19 : les images des noms qui n'ont servi ni à ce
+	// repos de la carte ni au précédent sont libérées ; le cache grandissait
+	// sans fin au fil d'une visite, 20 Mo et plus)
+	let repaus = 0;
 	let causit = null,
 		tCausit = 0;
 	let raf = 0,
@@ -63,7 +69,8 @@ export function crearNomsComunas(
 		const cache = aur ? imatgesAur : imatges;
 		const e = estil(c);
 		let im = cache.get(c);
-		if (im && im.dpr === dpr && im.clau === e.clau) return im;
+		if (im && im.dpr === dpr && im.clau === e.clau) return ((im.repaus = repaus), im);
+		if (im) liberar(im.t);
 		// (lo segond nom acaba jos la darrièra letra del primièr : retorn de
 		// Romain, 2026-10-11 ; L e R, los bòrds del blòt a partir del ponch)
 		const marge = 10,
@@ -105,7 +112,7 @@ export function crearNomsComunas(
 			g.fillStyle = aur ? '#f6d68c' : e.colorSota ?? '#ecd29c';
 			letras(e.sota, ox + R, y2);
 		}
-		im = { t, w, h, ox, bL: L - 3, bR: R + 3, bh: e.px * 1.24 + hS, dpr, clau: e.clau };
+		im = { t, w, h, ox, bL: L - 3, bR: R + 3, bh: e.px * 1.24 + hS, dpr, clau: e.clau, repaus };
 		cache.set(c, im);
 		return im;
 	}
@@ -256,6 +263,13 @@ export function crearNomsComunas(
 		const r = bocla(performance.now());
 		onRepaus?.(r);
 		lançar();
+		for (const cache of [imatges, imatgesAur])
+			for (const [c, im] of cache)
+				if (im.repaus < repaus - 1) {
+					liberar(im.t);
+					cache.delete(c);
+				}
+		repaus++;
 	});
 	map.on('resize', lançar);
 
