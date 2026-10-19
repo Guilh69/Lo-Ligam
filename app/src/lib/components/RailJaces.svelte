@@ -88,6 +88,7 @@
 			lengas: 'Lengas',
 			lengasFranca: 'Lengas de França',
 			jaçaActiva: 'jaça activa',
+			levarCausida: (n) => `Levar la causida : ${n}`,
 			tornarFamilhas: (f) => `${f} : tornar a las familhas`,
 			fuelhaReduire: 'Reduire lo panèl',
 			anarTitol: "Anar a l'escala ont la jaça se vei"
@@ -147,6 +148,7 @@
 			lengas: 'Langues',
 			lengasFranca: 'Langues de France',
 			jaçaActiva: 'couche active',
+			levarCausida: (n) => `Retirer la sélection : ${n}`,
 			tornarFamilhas: (f) => `${f} : revenir aux familles`,
 			fuelhaReduire: 'Réduire le panneau',
 			anarTitol: "Aller à l'échelle où la couche est visible"
@@ -677,7 +679,7 @@
 	// Tota la linha aluca o escantís sa jaça (decision de Romain, 2026-10-10) ;
 	// los botons, pastilhas, bullas e reglatges de la linha gardan lor clic
 	function clicLinha(e, j) {
-		if (!actiu(j) || e.target.closest('button, a, input, select, label, .info, .pastilhas, [role="button"], [role="switch"]')) return;
+		if (!actiu(j) || e.target.closest('button, a, input, select, label, .info, .pastilhas, .causida-j, [role="button"], [role="switch"]')) return;
 		tocarJaça(j);
 	}
 	// Le nom d'une couche (ligne du panneau, pastille du téléphone) : allumée mais
@@ -1364,6 +1366,17 @@
 		<div class="cos">
 			<b>{nomJ(j)}{#if estatCarta.activa === j.id && visibility[j.id]}<span class="sr"> ({tx.jaçaActiva})</span>{/if}</b>
 			{#if notaJ(j)}<small>{notaJ(j)}</small>{/if}
+			<!-- l'objet choisi sur la carte, rappelé sous sa couche (audit des clics, 2026-10-19) -->
+			{#if estatCarta.causida?.jaça === j.id && estatCarta.causida.nom}
+				<span class="causida-j"
+					><span class="nom-c">{estatCarta.causida.nom}</span><button
+						type="button"
+						class="levar-c"
+						aria-label={tx.levarCausida(estatCarta.causida.nom)}
+						onclick={() => dispatchEvent(new CustomEvent('carta-levar-causida', { detail: { jaça: j.id } }))}>✕</button
+					></span
+				>
+			{/if}
 			<!-- l'escala, sonque quand la jaça alucada se vei pas d'aquí (decision de Romain, 2026-10-10) -->
 			{#if visibility[j.id] && actiu(j) && escalaJ(j) && foraEscala(j) && estatCarta.apercebut !== j.id}
 				<small class="escala-j">{escalaJ(j)}<button type="button" class="anar" title={tx.anarTitol} onclick={() => anarPlaja(j.id)}>{tx.anar}</button></small>
@@ -1918,6 +1931,43 @@
 	}
 	.ficha.activa {
 		position: relative;
+	}
+	/* l'objet choisi sur la carte, sous sa couche : une étiquette dorée et son ✕ */
+	.causida-j {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		max-width: 100%;
+		margin-top: 4px;
+		padding: 1px 2px 1px 9px;
+		border: 1px solid color-mix(in srgb, var(--t-aur) 60%, transparent);
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--t-aur) 12%, transparent);
+		color: var(--t-aur-clar);
+		font: 600 0.75rem/1.3 var(--font-body);
+		cursor: default;
+	}
+	.causida-j .nom-c {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.levar-c {
+		flex: 0 0 auto;
+		display: grid;
+		place-items: center;
+		width: 22px;
+		height: 22px;
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		background: none;
+		color: inherit;
+		font-size: 0.75rem;
+		cursor: pointer;
+	}
+	.levar-c:hover {
+		background: color-mix(in srgb, var(--t-aur) 22%, transparent);
 	}
 	.sr {
 		position: absolute;

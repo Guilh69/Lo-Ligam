@@ -302,7 +302,7 @@ function letrasSusCorba(cx, tèxt, [a, c, b], esp) {
 	});
 }
 
-export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, cedirProv = null, obstacles = null, onSurvòl = null, activa = null } = {}) {
+export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, cedirProv = null, obstacles = null, onSurvòl = null, activa = null, onCausida = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: { pane: 'tematica', padding: 0.3 },
 
@@ -368,6 +368,7 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 					this._lançarApar();
 				}
 			this._jaces = { ...j };
+			if (this._fix && !this._jaçaDe(this._fix.mena)) this._fixar(null);
 			if (this._pus && !this._jaçaDe(this._pus.mena)) this._survòl(null);
 			this._cargar();
 			this._update();
@@ -631,18 +632,18 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			if (G.parcs && pren('parcs')) {
 				// lo còr d'un parc nacional abans son aira d'adesion
 				const p = G.parcs.filter(dins).sort((a, b) => (a.props.mena === 'pn-adesion') - (b.props.mena === 'pn-adesion'))[0];
-				if (p) return { mena: 'parc', kod: p.props.kod, props: p.props };
+				if (p) return { mena: 'parc', kod: p.props.kod, props: p.props, poligons: p.poligons };
 			}
 			if (G.com && z >= this._zCom && pren('comunas')) {
 				const c = G.com.find(dins);
-				if (c) return { mena: 'com', kod: c.props.i, props: c.props, dep: c.dep };
+				if (c) return { mena: 'com', kod: c.props.i, props: c.props, dep: c.dep, poligons: c.poligons };
 			}
 			if (G.prov && z < Z.PROV_MAX && pren('provincias') && (a === 'provincias' || !cedirProv?.(lp))) {
 				// de luènh, los governaments ; de prèp, las provincias
 				const nivèl = z < Z.GOV_PROV ? 'governament' : 'provincia';
 				const lista = G.prov.filter((p) => p.props.nivel === nivèl || p.props.nivel === 'fora');
 				const p = lista.find(dins);
-				if (p) return { mena: 'prov', kod: p.props.kod, props: p.props };
+				if (p) return { mena: 'prov', kod: p.props.kod, props: p.props, poligons: p.poligons };
 			}
 			return null;
 		},
@@ -679,11 +680,29 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 			};
 		},
 		_survòl(t) {
+			// (sans rien sous le pointeur, l'objet choisi reste éclairé, avec son encart)
+			t ??= this._fix ?? null;
 			const clau = t ? t.mena + ':' + t.kod : null;
 			if (clau === (this._pus ? this._pus.mena + ':' + this._pus.kod : null)) return;
 			this._pus = t;
 			onSurvòl?.(this._info(t));
 			this._bocla();
+		},
+		// Un clic choisit la province, le parc ou la commune, comme un département
+		// (audit des clics, Romain 2026-10-19) : son encart reste, la carte dessine
+		// son contour doré ; un second clic dessus ou un clic ailleurs le relâche
+		_fixar(t) {
+			const a = this._fix;
+			if (a === t || (a && t && a.mena === t.mena && a.kod === t.kod)) return;
+			this._fix = t;
+			this._pus = t;
+			onSurvòl?.(this._info(t));
+			this._bocla();
+			const jaça = t && { com: 'comunas', parc: 'parcs', prov: 'provincias' }[t.mena];
+			onCausida?.(t ? { jaça, mena: t.mena, info: this._info(t), poligons: t.poligons } : null);
+		},
+		levarCausida() {
+			this._fixar(null);
 		},
 		// Las comunas novèlament vistas : la primièra fornada part en onda del
 		// mitan de la vista ; las seguentas (en se desplaçant), a pauc a pauc
@@ -737,7 +756,11 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 		_onMirga(e) {
 			if (e.originalEvent?.pointerType === 'touch') return;
 			if ((this._aDet ?? 1) < 0.25) return this._survòl(null);
-			this._survòl(this._ciblaA(e.layerPoint));
+			const t = this._ciblaA(e.layerPoint);
+			this._survòl(t);
+			// (la main sur ce qui se choisit ; jamais remise à zéro ici : une autre
+			// couche, plus haut, a pu la mettre)
+			if (t) this._map.getContainer().style.cursor = 'pointer';
 		},
 		_onSortida() {
 			this._survòl(null);
@@ -757,11 +780,15 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				b = this._map.layerPointToLatLng([zn.bbox[2] + m.x, zn.bbox[1] + m.y]);
 			return { bounds: [[a.lat, a.lng], [b.lat, b.lng]] };
 		},
-		// al det : un tòc mòstra l'encastre, un tòc endacòm mai l'escafa
+		// un clic (ou un toucher) choisit l'objet, un second le relâche, un clic
+		// ailleurs l'efface
 		_onClic(e) {
-			if ((this._aDet ?? 1) < 0.25) return this._survòl(null); // (de luènh, invisibla)
-			const tactil = e.originalEvent?.pointerType === 'touch' || !matchMedia('(hover: hover)').matches;
-			if (tactil) this._survòl(this._ciblaA(e.layerPoint));
+			// (lo segond clic d'un doble clic : la vista se centra, la causida demòra)
+			if (e.originalEvent?.detail > 1) return;
+			if ((this._aDet ?? 1) < 0.25) return this._fixar(null); // (de luènh, invisibla)
+			const t = this._ciblaA(e.layerPoint);
+			const meme = t && this._fix && t.mena === this._fix.mena && t.kod === this._fix.kod;
+			this._fixar(t && !meme ? t : null);
 		},
 		// lo survòl se fond (≈ 0,3 s) : una bocla sonque pendent lo fondut
 		_bocla() {

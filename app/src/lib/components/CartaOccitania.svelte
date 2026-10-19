@@ -1118,6 +1118,8 @@
 		contornCausit?.remove();
 		contornCausit = null;
 		fichaComuna = c ? { c, contorn: null } : null;
+		// (rappelée sous la couche « Comunas » de la légende)
+		causidaLegenda(['comunas'], c && { jaça: 'comunas', nom: lang === 'fr' ? (c.fr ?? c.oc) : c.oc || c.fr });
 	}
 	async function anarALaComuna(c) {
 		map.closePopup();
@@ -1165,18 +1167,45 @@
 	// Le département ou la région choisis d'un clic : le même contour doré que la
 	// commune choisie, qui se trace, se remplit d'un fond léger et luit deux fois
 	// (retour de Romain, 2026-10-19 ; animation .comuna-causida)
-	let contornTerritori = null;
-	function dessenharTerritori(t) {
-		contornTerritori?.remove();
-		contornTerritori = null;
-		if (!t?.anels?.length || !map || !L) return;
+	// (même dessin pour la province, le parc ou la commune choisis d'un clic :
+	// audit des clics, 2026-10-19 ; un contour par couche qui choisit)
+	const contornsCausits = {};
+	function dessenharContorn(clau, anels, mena) {
+		contornsCausits[clau]?.remove();
+		contornsCausits[clau] = null;
+		if (!anels?.length || !map || !L) return;
 		if (!map.getPane('comunaCausida')) map.createPane('comunaCausida').style.zIndex = '345';
-		contornTerritori = L.polygon(
-			t.anels.map((a) => a.map(([x, y]) => [y, x])),
-			{ pane: 'comunaCausida', className: 'comuna-causida', color: '#f3c25a', weight: t.mena === 'region' ? 2.4 : 2, opacity: 0.95, fillColor: '#f3c25a', fillOpacity: 0.1, interactive: false }
+		const p = L.polygon(
+			anels.map((a) => a.map(([x, y]) => [y, x])),
+			{ pane: 'comunaCausida', className: 'comuna-causida', color: '#f3c25a', weight: mena === 'region' || mena === 'prov' ? 2.4 : 2, opacity: 0.95, fillColor: '#f3c25a', fillOpacity: 0.1, interactive: false }
 		).addTo(map);
-		contornTerritori.getElement()?.setAttribute('pathLength', '1');
+		p.getElement()?.setAttribute('pathLength', '1');
+		contornsCausits[clau] = p;
 	}
+	// La sélection rappelée dans la légende, sous sa couche (RailJaces) : son nom
+	// et un ✕ qui la relâche (événement « carta-levar-causida »)
+	function causidaLegenda(jaces, c) {
+		if (c) estatCarta.causida = c;
+		else if (jaces.includes(estatCarta.causida?.jaça)) estatCarta.causida = null;
+	}
+	function dessenharTerritori(t) {
+		dessenharContorn('ter', t?.anels, t?.mena);
+		causidaLegenda(['regions', 'despartaments'], t && { jaça: t.mena === 'region' ? 'regions' : 'despartaments', nom: t.nom });
+	}
+	function causidaTematica(c) {
+		dessenharContorn('tem', c?.poligons?.flat(), c?.mena);
+		causidaLegenda(['provincias', 'parcs', 'comunas'], c && { jaça: c.jaça, nom: c.info?.oc });
+	}
+	$effect(() => {
+		const levar = (e) => {
+			const j = e.detail?.jaça;
+			if (j === 'regions' || j === 'despartaments') colaEstelas?.levarTerritori();
+			else if (j === 'provincias' || j === 'parcs') colaTematica?.levarCausida();
+			else if (j === 'comunas') (colaTematica?.levarCausida(), fichaComuna && causirNomComuna(null));
+		};
+		addEventListener('carta-levar-causida', levar);
+		return () => removeEventListener('carta-levar-causida', levar);
+	});
 	// (los noms se cargan quand cal ; lo motor se torna pintar)
 	function majNomsComunas() {
 		if (!map) return;
@@ -1556,7 +1585,8 @@
 			// los noms de vilas de la carta en estelas : los noms de províncias los evitan
 			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, caixasVilasDOM, colaDonadas.caixasNoms(), ...Object.values(colasLengas).map((c) => c.caixasNoms())],
 			onSurvòl: (info) => (survòlTem = info),
-			activa
+			activa,
+			onCausida: causidaTematica
 		});
 		colaTematica.addTo(map);
 		// Lo doble clic centra la vista sus la donada jos lo ponteiro (Romain,

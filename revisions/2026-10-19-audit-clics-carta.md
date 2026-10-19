@@ -68,3 +68,10 @@ Règles du site rappelées : un clic sélectionne, un double clic centre et zoom
 6. **Un seul emplacement pour les étiquettes du bas**, avec une priorité claire : invitation, puis sélection, puis survol, puis dialecte du centre.
 7. **Village au doigt en un toucher** : le nom et un bouton « Anar », ou le vol direct.
 8. Clavier et recherche : à traiter à part.
+
+## 5. Fait le 2026-10-19 (lot 1, 2, 3 choisi par Romain)
+
+- **Un clic sélectionne partout** : provinces, parcs et communes en surface se fixent au clic (encart qui reste, contour doré animé), un second clic ou un clic ailleurs les relâche (proposition 1).
+- **La sélection rappelée dans la légende**, sous sa couche : « Roergue ✕ », « Nièvre ✕ » ; le ✕ la relâche, la couche reste allumée. Vaut pour régions, départements, provinces, parcs et communes (y compris la commune choisie par son nom en satellite) (proposition 3).
+- **La main** sur les territoires, provinces, parcs et communes qu'on peut choisir ; sur les villages seulement quand ils prennent le clic (proposition 5).
+- Reste à trancher ou à faire : villages (4), étiquettes du bas (6), village au doigt (7), clavier et recherche (8).

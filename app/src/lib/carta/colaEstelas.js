@@ -1131,7 +1131,10 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._terFixat = ter;
 			if (a === ter || (a && ter && a.code === ter.code && a.mena === ter.mena)) return;
 			const r = ter && this._limitsGeo?.[ter.mena === 'region' ? 'regions' : 'despartaments']?.find((x) => x[0] === ter.code);
-			this._onTerritori?.(r ? { mena: ter.mena, code: ter.code, anels: r[2] } : null);
+			this._onTerritori?.(r ? { mena: ter.mena, code: ter.code, anels: r[2], nom: nomTerritori(ter.mena, ter.code, r[1], this._lang) } : null);
+		},
+		levarTerritori() {
+			this._fixar(null);
 		},
 		// région ou département à cette échelle, la couche active d'abord
 		_menaEf(z) {
@@ -1730,8 +1733,10 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._map.getContainer().style.cursor = 'pointer';
 				return;
 			}
+			// (la main sur ce qui se choisit : un territoire, ou un lieu quand les
+			// villages prennent le clic ; audit des clics, 2026-10-19)
 			if (this._zoom >= Z.RELAIS) {
-				this._map.getContainer().style.cursor = '';
+				this._map.getContainer().style.cursor = ter ? 'pointer' : '';
 				// (lo satellit a sos noms de comunas : pas de survòl de la carta estelada)
 				if (this._pus) (this._pus = null), this._construirEtiquetas();
 				return;
@@ -1739,7 +1744,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._pus = this._pròche(e.layerPoint, 22, 6);
 			this._det = false;
 			if (this._pus !== this._etiqPus) this._construirEtiquetas();
-			this._map.getContainer().style.cursor = this._pus ? 'pointer' : '';
+			this._map.getContainer().style.cursor = (this._pus && !this._autraActiva()) || ter ? 'pointer' : '';
 		},
 		_onSortida() {
 			this._terPus = null;
