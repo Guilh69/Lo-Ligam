@@ -456,7 +456,12 @@
 		// L'invitation, à toutes les échelles et partout dans une langue prévue par
 		// le site (retour de Romain, 2026-10-19 : les langues d'oïl n'apparaissaient
 		// jamais, cachées par les départements, ni rien à 40 km et moins)
-		for (const [k, anels] of Object.entries(vesinas)) if (amagada(k) && dinsAnels(anels, ll.lng, ll.lat)) return k;
+		// Au-delà de 400 km, une autre langue invite à découvrir la diversité
+		// linguistique de la France : la couche « Lengas de França », une étiquette
+		// par langue (Romain, 2026-10-19 : les langues une à une à partir de 400 km)
+		const luènh = map && map.getZoom() < zDès(400, map.getCenter().lat) - 0.01;
+		for (const [k, anels] of Object.entries(vesinas))
+			if (amagada(k) && dinsAnels(anels, ll.lng, ll.lat)) return !luènh || k === 'occitan' ? k : visibility.lengasFranca ? null : 'lengasFranca';
 		return null;
 	}
 	// Le clic sur une langue cachée l'allume tout de suite, sauf quand il sert
@@ -475,6 +480,14 @@
 	// (noms de validar per Romain)
 	const vocala = (t) => /^[aeiouàèéíòóúh]/i.test(t);
 	const descVesina = (kod) => {
+		if (kod === 'lengasFranca')
+			return {
+				kod,
+				lang: lang === 'fr' ? 'fr' : 'oc',
+				endo: lang === 'fr' ? 'Langues de France' : 'Lengas de França',
+				oc: 'Descobrir la diversitat lingüistica de França',
+				fr: 'Découvrir la diversité linguistique de la France'
+			};
 		const rèsta = kod.startsWith('rèsta:'),
 			k = rèsta ? kod.slice(6) : kod;
 		const n = LENGAS[k]?.nom ?? { oc: 'occitan', fr: 'occitan', endo: 'occitan' };
@@ -1984,6 +1997,19 @@
 		if (!map || !L) return;
 		const z = zPlaja(id, map.getZoom(), map.getCenter().lat);
 		if (z == null) return;
+		// Les langues de France allumées de trop loin : toute la France, où leurs
+		// étiquettes se lisent (au cran de 400 km, la vue « monde » ne montre que
+		// l'outre-mer ; Romain, 2026-10-19, découvrir la diversité linguistique)
+		if (id === 'lengasFranca' && z > map.getZoom()) {
+			const estrech = map.getSize().x <= 600,
+				calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+			// (sur téléphone, les marges de vistaOccitana : la colonne de boutons à droite)
+			return void map.flyToBounds(L.latLngBounds([41.33, -5.15], [51.09, 9.56]), {
+				paddingTopLeft: L.point(estrech ? 12 : 110, estrech ? 110 : 90),
+				paddingBottomRight: L.point(estrech ? 58 : 70, estrech ? 96 : 50),
+				duration: calm ? 0 : 1.3
+			});
+		}
 		const occ = L.latLng(44.5, 2.97),
 			c = map.getBounds().contains(occ) ? map.getCenter() : occ,
 			calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2337,7 +2363,7 @@
 	     elle n'existe que sous le pointeur, ou après un toucher, sur une langue cachée) -->
 	{#if vesina && !fichaComuna}
 		<button type="button" class="legenda-dial vesina" onclick={() => alucarVesina(vesina.kod)}>
-			<span class="nom" lang={LENGAS[vesina.kod.replace('rèsta:', '')]?.lang ?? 'oc'}>{vesina.endo}</span>
+			<span class="nom" lang={vesina.lang ?? LENGAS[vesina.kod.replace('rèsta:', '')]?.lang ?? 'oc'}>{vesina.endo}</span>
 			<span class="sota">{lang === 'fr' ? vesina.fr : vesina.oc} <Icona nom="suivant" /></span>
 		</button>
 	{/if}
