@@ -453,13 +453,21 @@
 		if (estatCarta.mòde === 'lengas' && francaCargada() && !dinsFranca(ll.lat, ll.lng))
 			for (const [k, anels] of Object.entries(vesinas))
 				if (k !== 'franca' && !amagada(k) && nomésFrança(k) && dinsAnels(anels, ll.lng, ll.lat)) return 'rèsta:' + k;
-		// de prèp (40 km e mens), lo clic es pels despartaments e las vilas, pas
-		// per l'invitacion (retorn de Romain, 2026-10-10)
-		if (map && map.getZoom() >= zDès(40, map.getCenter().lat) - 0.01) return null;
-		// un despartament o una region afichats jos lo ponteiro passan d'abòrd
-		if (colaEstelas && map?.hasLayer(colaEstelas) && colaEstelas._territoriA?.(map.latLngToLayerPoint(ll))) return null;
+		// L'invitation, à toutes les échelles et partout dans une langue prévue par
+		// le site (retour de Romain, 2026-10-19 : les langues d'oïl n'apparaissaient
+		// jamais, cachées par les départements, ni rien à 40 km et moins)
 		for (const [k, anels] of Object.entries(vesinas)) if (amagada(k) && dinsAnels(anels, ll.lng, ll.lat)) return k;
 		return null;
+	}
+	// Le clic sur une langue cachée l'allume tout de suite, sauf quand il sert
+	// déjà à autre chose : de près (40 km et moins), le clic est pour les
+	// départements et les villes (Romain, 2026-10-10) ; un département, une
+	// région ou une zone thématique sous le pointeur passent d'abord. Le clic fait
+	// alors son office et l'invitation s'affiche en bouton.
+	function clicPres(ll) {
+		if (survòlTem) return true;
+		if (map && map.getZoom() >= zDès(40, map.getCenter().lat) - 0.01) return true;
+		return !!(colaEstelas && map?.hasLayer(colaEstelas) && colaEstelas._territoriA?.(map.latLngToLayerPoint(ll)));
 	}
 	// una lenga pas afichada : lo catalan, l'arpitan… decochats ; l'occitan, quand
 	// sos dialèctes e l'occitan unificat son levats (« Netejar la carta »)
@@ -1519,10 +1527,12 @@
 		// (al det, lo primièr tòc mòstra l'invitacion, que se tòca per alucar)
 		map.on('mousemove', (e) => {
 			if (!vesinas) return void cargarVesinas();
-			const k = survòl || survòlLenga || survòlTem ? null : vesinaA(e.latlng);
+			// (une zone thématique, les provinces, couvre tout : elle ne cache pas l'invitation)
+			const k = survòl || survòlLenga ? null : vesinaA(e.latlng);
 			if (k !== (vesina?.kod ?? null)) vesina = k ? descVesina(k) : null;
 			colaEstelas?.amagarLegenda(!!k);
-			mapEl?.classList.toggle('sus-vesina', !!k);
+			// (la main seulement là où le clic allume la langue)
+			mapEl?.classList.toggle('sus-vesina', !!k && (k.startsWith('rèsta:') || !clicPres(e.latlng)));
 		});
 		map.on('mouseout', () => {
 			vesina = null;
@@ -1531,10 +1541,10 @@
 		});
 		map.on('click', async (e) => {
 			await cargarVesinas();
-			if (survòl || survòlLenga || survòlTem) return;
+			if (survòl || survòlLenga) return;
 			const k = vesinaA(e.latlng);
 			if (!k) return void (matchMedia('(hover: hover)').matches || ((vesina = null), colaEstelas?.amagarLegenda(false)));
-			if (matchMedia('(hover: hover)').matches) alucarVesina(k);
+			if (matchMedia('(hover: hover)').matches && (k.startsWith('rèsta:') || !clicPres(e.latlng))) alucarVesina(k);
 			else {
 				vesina = descVesina(k);
 				colaEstelas?.amagarLegenda(true);
@@ -2283,7 +2293,7 @@
 			colorVotz={colorDial}
 			onVotzCarta={votzSusLaCarta}
 		/>
-	{:else if legendaDial}
+	{:else if legendaDial && !vesina}
 		<div class="legenda-dial" class:fixada={!!(causida ?? causidaLenga)} class:amb-encadrat={!!legendaDial.encadrat} aria-live="polite">
 			<span class="nom" lang={legendaDial.lang}>{lang === 'fr' ? legendaDial.fr : legendaDial.oc}</span>
 			<span class="sota"
@@ -2323,7 +2333,9 @@
 		</section>
 	{/if}
 
-	{#if vesina && !legendaDial}
+	<!-- (l'invitation passe devant l'étiquette d'une zone survolée ou choisie :
+	     elle n'existe que sous le pointeur, ou après un toucher, sur une langue cachée) -->
+	{#if vesina && !fichaComuna}
 		<button type="button" class="legenda-dial vesina" onclick={() => alucarVesina(vesina.kod)}>
 			<span class="nom" lang={LENGAS[vesina.kod.replace('rèsta:', '')]?.lang ?? 'oc'}>{vesina.endo}</span>
 			<span class="sota">{lang === 'fr' ? vesina.fr : vesina.oc} <Icona nom="suivant" /></span>
