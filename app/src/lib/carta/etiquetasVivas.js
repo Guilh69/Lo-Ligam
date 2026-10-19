@@ -239,6 +239,15 @@ export function telaNoms(L, cvPrincipal, map, retalh = null) {
 			pintar();
 			if (E.enCors()) lançar();
 		},
+		// (couche éteinte : plus de noms, la toile revient à un pixel)
+		voidar() {
+			cancelAnimationFrame(raf);
+			raf = 0;
+			E.lista = [];
+			E.vièlha = null;
+			E._parelhas = null;
+			pintar();
+		},
 		levar() {
 			cancelAnimationFrame(raf);
 			L.DomUtil.remove(cv);

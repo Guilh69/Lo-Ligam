@@ -2,6 +2,8 @@
 // França » (Romain, 2026-10-10) : una lenga alucada mòstra d'en primièr sa part
 // francesa ; « Veire la lenga dins son environament lingüistic » mòstra la
 // rèsta. Cargat sonque quand cal (34 Ko).
+import { liberar } from './telas.js';
+
 let aneis = null,
 	estrangier = [],
 	dialectes = {},
@@ -73,6 +75,8 @@ export function pintarAmbFranca(capa) {
 		f = capa._fondutFr,
 		t = f ? (performance.now() - f) / DURADA_FR : 1;
 	if (!(f && t < 1 && cv && capa._map && capa._min && aneis?.length)) {
+		// (le fondu fini, sa toile ne sert plus : telas.js)
+		liberar(capa._offFr);
 		capa._fondutFr = null;
 		capa._retalhat = false;
 		capa._pintarCòs();

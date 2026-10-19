@@ -15,6 +15,7 @@ import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
 import { telaNoms } from './etiquetasVivas.js';
 import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranca } from './franca.js';
+import { trabalh, talhar, liberar } from './telas.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -122,7 +123,7 @@ export function crearColaDonadas(
 			this._imgCro = document.createElement('canvas');
 			this._imgMix = document.createElement('canvas');
 			this._masca = document.createElement('canvas');
-			this._trab = document.createElement('canvas');
+			// (les toiles de travail sont partagées entre les couches : telas.js)
 			cargarLimits().then((l) => {
 				this._limits = l;
 				this._update();
@@ -694,7 +695,8 @@ export function crearColaDonadas(
 			this._dpr = dpr;
 			this._W = tal.x;
 			this._H = tal.y;
-			for (const c of [this._cv, this._imgTotes, this._imgSel, this._trab]) {
+			// (l'image des zones choisies n'existe que s'il y en a : _prepSel)
+			for (const c of [this._cv, this._imgTotes]) {
 				c.width = Math.round(tal.x * dpr);
 				c.height = Math.round(tal.y * dpr);
 			}
@@ -778,10 +780,8 @@ export function crearColaDonadas(
 			g.clearRect(0, 0, c.width, c.height);
 			if (!zonas.length) return;
 			const flo = clamp(5000 / G.mPx, 1.2, 45); // fondut d'environ 5 km
-			const t = this._trab,
+			const t = trabalh('trab', c.width, c.height),
 				tg = t.getContext('2d');
-			tg.setTransform(1, 0, 0, 1, 0, 0);
-			tg.clearRect(0, 0, t.width, t.height);
 			tg.setTransform(dpr, 0, 0, dpr, 0, 0);
 			tg.lineJoin = 'round';
 			for (const zn of zonas) {
@@ -815,9 +815,7 @@ export function crearColaDonadas(
 			// la largor relevada (5 a 35 km) ; tres classas de largor, cada una
 			// vista a travèrs de sas bendas fondudas (pas de cassura al bòrd)
 			if (!sola && G.bandas?.length) {
-				const t2 = (this._trab2 ??= document.createElement('canvas'));
-				t2.width = c.width;
-				t2.height = c.height;
+				const t2 = trabalh('trab2', c.width, c.height);
 				const g2 = t2.getContext('2d');
 				for (const [l0, l1] of [[0, 12], [12, 24], [24, 99]]) {
 					const bs = G.bandas.filter((b) => b.larg > l0 && b.larg <= l1);
@@ -926,9 +924,7 @@ export function crearColaDonadas(
 			// tencha de l'autra lenga quand es alucada (retorn de Romain, 2026-10-09)
 			const mesc = this._jaces.dialectes ? G.mix.filter((zm) => zm.props.mescla && this._tem.dial[zm.props.mescla]) : [];
 			if (mesc.length) {
-				const t = (this._imgMixMescla ??= document.createElement('canvas'));
-				t.width = c.width;
-				t.height = c.height;
+				const t = trabalh('mescla', c.width, c.height);
 				const tg = t.getContext('2d');
 				for (const zm of mesc) {
 					const p = document.createElement('canvas');
@@ -1023,10 +1019,9 @@ export function crearColaDonadas(
 				k = this._pus;
 			const zn = k && G?.zonas ? G.zonas.find((x) => x.kod === k) : null;
 			this._pusDial = !!zn;
-			if (!zn) return;
+			if (!zn) return liberar(this._imgPus);
 			this._imgPus ??= document.createElement('canvas');
-			this._imgPus.width = this._cv.width;
-			this._imgPus.height = this._cv.height;
+			talhar(this._imgPus, this._cv.width, this._cv.height);
 			this._tenchaDins(this._imgPus, [zn], true);
 		},
 		// Los dialèctes causits, sols : fonduts entre eles, e cap als autres se
@@ -1037,13 +1032,18 @@ export function crearColaDonadas(
 			if (!G || !G.zonas) return;
 			const an = this._anim;
 			const zonas = (l) => G.zonas.filter((x) => l.includes(x.kod));
-			this._tenchaDins(this._imgSel, zonas(this._sels.filter((k) => k !== 'cro')), true);
+			// (sans zone choisie ni transition, ces deux images n'existent pas)
+			const sel = zonas(this._sels.filter((k) => k !== 'cro'));
+			if (sel.length) {
+				talhar(this._imgSel, this._cv.width, this._cv.height);
+				this._tenchaDins(this._imgSel, sel, true);
+			} else liberar(this._imgSel);
 			if (an && ((an.ajust && an.ajust !== 'cro') || an.lev.length)) {
 				const c = (this._imgAvant ??= document.createElement('canvas'));
 				c.width = this._cv.width;
 				c.height = this._cv.height;
 				this._tenchaDins(c, zonas(an.de), true);
-			}
+			} else liberar(this._imgAvant);
 		},
 
 		/* ---------- Dessenh (a cada recalatge, e a cada image d'una animacion) ---------- */
@@ -1135,6 +1135,7 @@ export function crearColaDonadas(
 				this._prepSel();
 				this._prepPus();
 				if (J.creissent) this._prepCro();
+				else liberar(this._imgCro);
 				if (J.dialectes || J.frontiera) this._prepMix();
 			}
 			/* Dialèctes */
@@ -1320,8 +1321,7 @@ export function crearColaDonadas(
 					if (vE > 0.001) {
 						// (lo vuèg se fa dins una còpia del roge : sus lo canavàs, escafava
 						// tot çò qu'èra dessenhat abans, dialèctes e frontièra compresos)
-						const c = (this._imgVuèg ??= document.createElement('canvas'));
-						if (c.width !== img.width || c.height !== img.height) (c.width = img.width), (c.height = img.height);
+						const c = trabalh('vuèg', img.width, img.height);
 						const g = c.getContext('2d'),
 							k = this._dpr * (img.width / this._cv.width);
 						g.setTransform(1, 0, 0, 1, 0, 0);
@@ -1527,11 +1527,9 @@ export function crearColaDonadas(
 				G = this._geo,
 				dpr = this._dpr;
 			const zn = an.ajust && an.ajust !== 'cro' ? G.zonas.find((x) => x.kod === an.ajust) : null;
-			const t = this._trab,
+			const t = trabalh('trab', this._cv.width, this._cv.height),
 				tg = t.getContext('2d');
-			const t2 = (this._trab2 ??= document.createElement('canvas'));
-			t2.width = t.width;
-			t2.height = t.height;
+			const t2 = trabalh('trab2', t.width, t.height);
 			const g2 = t2.getContext('2d');
 			// la masca, en pichon (1/6) puèi agrandida : vòra doça a bon mercat
 			const m = this._masca,

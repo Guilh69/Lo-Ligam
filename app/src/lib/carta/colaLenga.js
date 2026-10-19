@@ -14,6 +14,7 @@ import { proj0, projectar } from './projeccion.js';
 import { cadreDe } from './centrar.js';
 import { telaNoms } from './etiquetasVivas.js';
 import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranca } from './franca.js';
+import { trabalh, talhar, liberar } from './telas.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -102,7 +103,8 @@ export function crearColaLenga(
 				cx.setTransform(this._dpr, 0, 0, this._dpr, 0, 0);
 				retalharFranca(cx, this._map, this._zoom, this._map.getPixelOrigin().add(this._min));
 			});
-			for (const k of ['_imgTotes', '_imgSel', '_imgUni', '_imgFlo', '_trab', '_masca']) this[k] = document.createElement('canvas');
+			// (les toiles de travail sont partagées entre les couches : telas.js)
+			for (const k of ['_imgTotes', '_imgSel', '_imgUni', '_imgFlo', '_masca']) this[k] = document.createElement('canvas');
 			this._cargar();
 			this._update();
 			this._fonts();
@@ -117,6 +119,15 @@ export function crearColaLenga(
 			L.DomUtil.remove(this._cv);
 			this._noms?.levar();
 			this._noms = null;
+			this._liberar();
+		},
+		// Une langue éteinte rend toute sa mémoire (telas.js) ; rallumée, _update
+		// refait la géométrie et chaque image est repréparée
+		_liberar() {
+			for (const k of ['_cv', '_imgTotes', '_imgSel', '_imgUni', '_imgFlo', '_imgPus', '_imgAvant', '_imgTrans', '_imgTransPus', '_offFr']) liberar(this[k]);
+			this._noms?.voidar();
+			this._tenchasGeo = this._uniGeo = this._floGeo = this._transGeo = null;
+			this._transPus = undefined;
 		},
 
 		getEvents() {
@@ -203,7 +214,7 @@ export function crearColaLenga(
 				this._survòl(null);
 				if (this._sels.length) this._aplicar([], false);
 				// (escafat aprèp lo fondut)
-				this._tEscafar = setTimeout(() => !this._actiu && this._cx && this._cx.clearRect(0, 0, this._cv.width, this._cv.height), 700);
+				this._tEscafar = setTimeout(() => !this._actiu && this._liberar(), 700);
 			}
 		},
 		// Lo mòde « Lengas de França » : sonque la part francesa (retalhada al
@@ -468,7 +479,8 @@ export function crearColaLenga(
 			this._dpr = dpr;
 			this._W = tal.x;
 			this._H = tal.y;
-			for (const c of [this._cv, this._imgTotes, this._imgSel, this._trab]) {
+			// (l'image des zones choisies n'existe que s'il y en a : _prepSel)
+			for (const c of [this._cv, this._imgTotes]) {
 				c.width = Math.round(tal.x * dpr);
 				c.height = Math.round(tal.y * dpr);
 			}
@@ -544,10 +556,8 @@ export function crearColaLenga(
 			g.clearRect(0, 0, c.width, c.height);
 			if (!zonas.length) return;
 			const flo = clamp(5000 / G.mPx, 1.2, 45); // fondut d'environ 5 km
-			const t = this._trab,
+			const t = trabalh('trab', c.width, c.height),
 				tg = t.getContext('2d');
-			tg.setTransform(1, 0, 0, 1, 0, 0);
-			tg.clearRect(0, 0, t.width, t.height);
 			tg.setTransform(dpr, 0, 0, dpr, 0, 0);
 			tg.lineJoin = 'round';
 			const color = (zn) => (zn.props.apart ? T.color : (T.dial[zn.kod] ?? zn.props.color ?? T.color));
@@ -615,22 +625,31 @@ export function crearColaLenga(
 		_prepSel() {
 			if (!this._geo) return;
 			const an = this._anim;
-			this._tencha(this._imgSel, this._zonasDe(this._sels), true);
+			// (sans zone choisie ni transition, ces deux images n'existent pas)
+			const sel = this._zonasDe(this._sels);
+			if (sel.length) {
+				talhar(this._imgSel, this._cv.width, this._cv.height);
+				this._tencha(this._imgSel, sel, true);
+			} else liberar(this._imgSel);
 			if (an) {
 				const c = (this._imgAvant ??= document.createElement('canvas'));
 				c.width = this._cv.width;
 				c.height = this._cv.height;
 				this._tencha(c, this._zonasDe(an.de), true);
-			}
+			} else liberar(this._imgAvant);
 		},
 		_prepPus() {
 			const G = this._geo,
 				zn = this._pus && G && !this._pus.startsWith(lenga.pref + 'trans') ? this._zonasDe([this._pus])[0] : null;
 			this._pusOk = !!zn;
-			if (!zn) return;
+			// (le survol d'un parler de transition fini : son image non plus)
+			if (this._transPus !== undefined && this._transPus !== this._pus) {
+				liberar(this._imgTransPus);
+				this._transPus = undefined;
+			}
+			if (!zn) return liberar(this._imgPus);
 			this._imgPus ??= document.createElement('canvas');
-			this._imgPus.width = this._cv.width;
-			this._imgPus.height = this._cv.height;
+			talhar(this._imgPus, this._cv.width, this._cv.height);
 			this._tencha(this._imgPus, [zn], true);
 		},
 		// Los parlars de transicion : d'asclas finas de la color de la lenga,
@@ -665,9 +684,7 @@ export function crearColaLenga(
 			const g = c.getContext('2d');
 			g.setTransform(1, 0, 0, 1, 0, 0);
 			g.clearRect(0, 0, c.width, c.height);
-			const t = (this._imgTransZona ??= document.createElement('canvas'));
-			t.width = c.width;
-			t.height = c.height;
+			const t = trabalh('transZona', c.width, c.height);
 			for (const zn of zonas) {
 				this._pintarTransZona(t, zn);
 				g.drawImage(t, 0, 0);
@@ -704,9 +721,7 @@ export function crearColaLenga(
 			// contacte de l'arpitan es dins lo domeni occitan, Romain 2026-10-09)
 			const defora = zn.props.defora ? [zn] : [];
 			if (G.dom && defora.length) {
-				const m = (this._imgTransMasca ??= document.createElement('canvas'));
-				m.width = c.width;
-				m.height = c.height;
+				const m = trabalh('transMasca', c.width, c.height);
 				const mg = m.getContext('2d');
 				mg.setTransform(dpr, 0, 0, dpr, 0, 0);
 				mg.fillStyle = '#000';
@@ -940,8 +955,7 @@ export function crearColaLenga(
 					if (this._uniGeo !== G) this._prepUni();
 					let img = this._imgUni;
 					if (vE > 0.001) {
-						const c = (this._imgVuèg ??= document.createElement('canvas'));
-						if (c.width !== img.width || c.height !== img.height) (c.width = img.width), (c.height = img.height);
+						const c = trabalh('vuèg', img.width, img.height);
 						const g = c.getContext('2d'),
 							k = this._dpr * (img.width / this._cv.width);
 						g.setTransform(1, 0, 0, 1, 0, 0);
@@ -1115,7 +1129,7 @@ export function crearColaLenga(
 			return pts;
 		},
 		_masca1(k = 1 / 6) {
-			const t = this._trab,
+			const t = this._cv,
 				m = this._masca;
 			const mw = Math.max(1, Math.round(t.width * k)),
 				mh = Math.max(1, Math.round(t.height * k));
@@ -1239,10 +1253,9 @@ export function crearColaLenga(
 			const an = this._anim,
 				dpr = this._dpr;
 			const zn = an.ajust ? this._zonasDe([an.ajust])[0] : null;
-			const t = this._trab,
+			const t = trabalh('trab', this._cv.width, this._cv.height),
 				tg = t.getContext('2d');
-			const t2 = (this._trab2 ??= document.createElement('canvas'));
-			if (t2.width !== t.width || t2.height !== t.height) (t2.width = t.width), (t2.height = t.height);
+			const t2 = trabalh('trab2', t.width, t.height);
 			const g2 = t2.getContext('2d');
 			const k = 1 / 6,
 				mg = this._masca1(k),
