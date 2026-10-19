@@ -382,10 +382,14 @@
 		const p = railEl?.offsetParent;
 		if (!p || !pos) return pos;
 		const pr = p.getBoundingClientRect();
-		return {
-			x: clampR(pos.x, 8, pr.width - railEl.offsetWidth - 8),
-			y: clampR(pos.y, capBas(p) + 8, pr.height - railEl.offsetHeight - 8)
-		};
+		const x = clampR(pos.x, 8, pr.width - railEl.offsetWidth - 8);
+		// Dans la colonne de gauche, la flèche du nord et l'échelle s'alignent sous
+		// le rail (publicarColomna) : déplacé, il s'arrête au-dessus d'elles, comme
+		// à sa place par défaut (retour de Romain, 2026-10-19 : la flèche
+		// recouvrait le bas du rail après un changement de taille de la fenêtre)
+		const flecha = x < 160 && !orizontal && p.clientWidth > 600 ? p.querySelector('.compass') : null;
+		const bas = flecha ? flecha.getBoundingClientRect().top - pr.top - 10 : pr.height - 8;
+		return { x, y: clampR(pos.y, capBas(p) + 8, bas - railEl.offsetHeight) };
 	}
 	let railEl = $state(null);
 	let railPos = $state(null); // { x, y } en px dins la carta ; null = plaça per defaut
@@ -619,9 +623,8 @@
 			const h1 = railEl.offsetHeight;
 			reduch = false;
 			await tick();
-			// desplegat, lo panèl deu demorar dins la carta
-			const pr = railEl.offsetParent?.getBoundingClientRect();
-			if (pr && railPos) railPos = { ...railPos, y: Math.min(railPos.y, Math.max(8, pr.height - railEl.offsetHeight - 8)) };
+			// desplegat, lo panèl deu demorar dins la carta (e al dessús de la bossòla)
+			if (railPos) railPos = borner(railPos);
 			if (!calm) {
 				plegant = true;
 				const h0 = railEl.offsetHeight,
@@ -1409,13 +1412,19 @@
 		z-index: 1010; /* dessús la barra de recèrca (1000) */
 		/* per defaut a mièg nautor, un pauc pus bas (retorn de Romain : collat al
 		   capçal, « ça fait trop cliché ») ; desplaçable per son encòca */
-		top: var(--rail-y, calc(50% + 2rem));
+		/* Par défaut, centré dans toute la place libre entre le bas du bandeau
+		   (--cap-bas) et le bloc flèche du nord + échelle (6,3 rem du bas,
+		   CartaOccitania .compass), un peu plus bas sur un grand écran (--rail-biais).
+		   Retour de Romain, 2026-10-19 : centré à 50 % + 2 rem, il n'avait que
+		   100 % − 16,6 rem de haut et défilait, « Autras lengas » coupé en bas. */
+		--rail-biais: clamp(0px, (100% - 760px) / 2, 4rem);
+		top: var(--rail-y, calc(var(--cap-bas, 0px) + 8px + var(--rail-biais)));
+		bottom: 6.3rem;
+		height: fit-content;
+		margin-block: auto;
 		left: var(--rail-x, var(--marge, 1rem));
-		transform: translateY(-50%);
 		width: 4.6rem;
-		/* centré à 50 % + 2 rem : sa moitié basse ne descend jamais sous le bloc
-		   flèche du nord + échelle (≈ 6,3 rem du bas, CartaOccitania .compass) */
-		max-height: calc(100% - 16.6rem);
+		max-height: calc(100% - var(--cap-bas, 0px) - 8px - var(--rail-biais) - 6.3rem);
 		overflow-y: auto;
 		scrollbar-width: none;
 		display: grid;
@@ -1433,8 +1442,13 @@
 		border-radius: 18px;
 		box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
 	}
-	.rail.desplaçat {
-		transform: none;
+	/* déplacé : sa place (--rail-y), toute la hauteur entre bandeau et flèche */
+	@container carta (min-width: 601px) {
+		.rail.desplaçat {
+			bottom: auto;
+			margin-block: 0;
+			max-height: calc(100% - var(--cap-bas, 0px) - 8px - 6.3rem);
+		}
 	}
 	/* l'encòca : de que prene lo panèl, e lo boton per lo reduire */
 	/* (l'encòca e sos dos botons tenon dins la largor del panèl) */
@@ -2531,6 +2545,33 @@
 		.rail-b svg {
 			width: 20px;
 			height: 20px;
+		}
+	}
+	/* Écran encore plus bas (fenêtre réduite, tablette couchée) : le rail
+	   vertical se resserre encore pour tenir sans défiler */
+	@container carta (min-width: 601px) and (max-height: 600px) {
+		.rail:not(.orizontal) {
+			gap: 1px;
+			padding: 4px 5px;
+		}
+		.rail:not(.orizontal) .rail-b {
+			gap: 2px;
+			padding: 4px 2px 3px;
+			font-size: 9px;
+		}
+		.rail:not(.orizontal) .rail-b.rail-sus {
+			padding: 5px 2px 4px;
+		}
+		.rail:not(.orizontal) .rail-b.rail-sus svg {
+			width: 21px;
+			height: 21px;
+		}
+		.rail:not(.orizontal) .rail-b svg {
+			width: 18px;
+			height: 18px;
+		}
+		.rail:not(.orizontal) .rail-sep {
+			margin: 2px 10px;
 		}
 	}
 	/* Telefon : lo rail ven una barra en bas (a portada del det, liura la
