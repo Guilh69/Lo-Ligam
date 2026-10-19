@@ -302,7 +302,7 @@ function letrasSusCorba(cx, tèxt, [a, c, b], esp) {
 	});
 }
 
-export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, cedirProv = null, obstacles = null, onSurvòl = null } = {}) {
+export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, cedirProv = null, obstacles = null, onSurvòl = null, activa = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: { pane: 'tematica', padding: 0.3 },
 
@@ -623,16 +623,21 @@ export function crearColaTematica(L, { clar = false, lang = 'oc', jaces = {}, ce
 				y = lp.y - this._min.y,
 				z = this._zoom;
 			const dins = (zn) => x >= zn.bbox[0] && x <= zn.bbox[2] && y >= zn.bbox[1] && y <= zn.bbox[3] && this._cxTest.isPointInPath(zn.c, x, y, 'evenodd');
-			if (G.parcs) {
+			// La couche active de la légende (façon QGIS, Romain 2026-10-19) : seule
+			// elle répond au survol et au clic ; active, la province ne cède plus
+			// aux dialectes
+			const a = activa?.(),
+				pren = (id) => !a || a === id;
+			if (G.parcs && pren('parcs')) {
 				// lo còr d'un parc nacional abans son aira d'adesion
 				const p = G.parcs.filter(dins).sort((a, b) => (a.props.mena === 'pn-adesion') - (b.props.mena === 'pn-adesion'))[0];
 				if (p) return { mena: 'parc', kod: p.props.kod, props: p.props };
 			}
-			if (G.com && z >= this._zCom) {
+			if (G.com && z >= this._zCom && pren('comunas')) {
 				const c = G.com.find(dins);
 				if (c) return { mena: 'com', kod: c.props.i, props: c.props, dep: c.dep };
 			}
-			if (G.prov && z < Z.PROV_MAX && !cedirProv?.(lp)) {
+			if (G.prov && z < Z.PROV_MAX && pren('provincias') && (a === 'provincias' || !cedirProv?.(lp))) {
 				// de luènh, los governaments ; de prèp, las provincias
 				const nivèl = z < Z.GOV_PROV ? 'governament' : 'provincia';
 				const lista = G.prov.filter((p) => p.props.nivel === nivèl || p.props.nivel === 'fora');

@@ -1,7 +1,7 @@
 <script>
 	import Icona from '$lib/components/Icona.svelte';
 	import { PLAJAS, zPlaja } from '$lib/carta/escalas.js';
-	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
+	import { estatCarta, SELECCIONABLAS } from '$lib/carta/estatCarta.svelte.js';
 	// Rail de las jaces (causida de Romain, 2026-10-07, « panèl C ») : un rail
 	// totjorn visible al bòrd de la carta, una icòna nomenada per familha. Un
 	// clic dobrís lo tirador de la familha ; un segond clic sus la meteissa
@@ -87,6 +87,7 @@
 			occitan: 'Occitan',
 			lengas: 'Lengas',
 			lengasFranca: 'Lengas de França',
+			jaçaActiva: 'jaça activa',
 			tornarFamilhas: (f) => `${f} : tornar a las familhas`,
 			fuelhaReduire: 'Reduire lo panèl',
 			anarTitol: "Anar a l'escala ont la jaça se vei"
@@ -145,6 +146,7 @@
 			occitan: 'Occitan',
 			lengas: 'Langues',
 			lengasFranca: 'Langues de France',
+			jaçaActiva: 'couche active',
 			tornarFamilhas: (f) => `${f} : revenir aux familles`,
 			fuelhaReduire: 'Réduire le panneau',
 			anarTitol: "Aller à l'échelle où la couche est visible"
@@ -676,8 +678,22 @@
 	// los botons, pastilhas, bullas e reglatges de la linha gardan lor clic
 	function clicLinha(e, j) {
 		if (!actiu(j) || e.target.closest('button, a, input, select, label, .info, .pastilhas, [role="button"], [role="switch"]')) return;
+		tocarJaça(j);
+	}
+	// Le nom d'une couche (ligne du panneau, pastille du téléphone) : allumée mais
+	// pas active, elle devient active ; sinon elle s'allume ou s'éteint
+	// (l'interrupteur des lignes, lui, allume et éteint toujours)
+	function tocarJaça(j) {
+		if (visibility[j.id] && seleccionabla(j.id) && estatCarta.activa !== j.id) return void (estatCarta.activa = j.id);
 		bascular(j.id, !visibility[j.id]);
 	}
+	// La couche active, façon QGIS (option A de Romain, 2026-10-19) : la dernière
+	// allumée, ou celle dont on touche le nom ; éteinte, plus de couche active
+	const seleccionabla = (id) => SELECCIONABLAS.has(id) || !!LENGAS[id];
+	$effect(() => {
+		const a = estatCarta.activa;
+		if (a && !visibility[a]) estatCarta.activa = null;
+	});
 	// La jaça es alucada mas pas vesibla a l'escala actuala
 	const foraEscala = (j) => estatCarta.z != null && zPlaja(j.id, estatCarta.z, estatCarta.lat) != null;
 	const anarPlaja = (id) => dispatchEvent(new CustomEvent('carta-anar-plaja', { detail: { id } }));
@@ -777,9 +793,11 @@
 			estatCarta.apercebut = null;
 			visibility[id] = false;
 			visibility[id] = true;
+			if (seleccionabla(id)) estatCarta.activa = id;
 			return;
 		}
 		visibility[id] = on;
+		if (on && seleccionabla(id)) estatCarta.activa = id;
 		// (una jaça escantida : sas zònas son pas pus causidas, las de las autras demòran)
 		if (id === 'dialectes' && !on) causits = causits.filter((k) => !esOccitan(k));
 		if (LENGAS[id] && !on) causits = causits.filter((k) => !k.startsWith(LENGAS[id].pref));
@@ -788,12 +806,14 @@
 	// a la causida, o l'en leva se i èra (retorn de Romain : mantuna a l'encòp)
 	function causirDial(k) {
 		visibility.dialectes = true;
+		estatCarta.activa = 'dialectes';
 		causits = causits.includes(k) ? causits.filter((x) => x !== k) : [...causits, k];
 	}
 
 	// Una pastilha d'una autra lenga : aluca sa jaça e apond la zòna
 	function causirLenga(id, k) {
 		visibility[id] = true;
+		estatCarta.activa = id;
 		const kod = LENGAS[id].pref + k;
 		// (un dialècte d'una lenga de la familha, coma lo ch'ti : remplaça sa lenga)
 		const de = LENGAS[id].pastilhas.find((q) => q.k === k)?.de;
@@ -963,12 +983,13 @@
 					class="chip"
 					class:on={actiu(j) && visibility[j.id]}
 					class:fora={actiu(j) && visibility[j.id] && foraEscala(j)}
+					class:activa={estatCarta.activa === j.id && !!visibility[j.id]}
 					role="switch"
 					aria-checked={actiu(j) && !!visibility[j.id]}
 					disabled={!actiu(j)}
-					onclick={() => bascular(j.id, !visibility[j.id])}
+					onclick={() => tocarJaça(j)}
 				>
-					<span class="chip-ap"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>{nomJ(j)}
+					<span class="chip-ap"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>{nomJ(j)}{#if estatCarta.activa === j.id && visibility[j.id]}<span class="sr"> ({tx.jaçaActiva})</span>{/if}
 				</button>
 			{/each}
 			<button type="button" class="chip mai" aria-label={tx.totDetalh} title={tx.totDetalh} aria-expanded={dobert === banda} aria-controls="tirador-jaces" onclick={() => alternar(banda)}>⋯</button>
@@ -1188,7 +1209,7 @@
 {#snippet fichaOccitan()}
 	{@const dob = dialsDob.includes('occitan')}
 	{@const on = !!visibility.dialectes}
-	<div class="ficha" class:alucada={on}>
+	<div class="ficha" class:alucada={on} class:activa={on && estatCarta.activa === 'dialectes'}>
 		<div class="ficha-cap">
 			<span class="banda" style:background={`linear-gradient(${NOMS_DIAL.map(([k]) => DIAL[k]).join(', ')})`}></span>
 			<div class="ficha-cos">
@@ -1238,7 +1259,7 @@
 	{@const dz = lg.pastilhas.filter((q) => lg.dial.sorne[q.k] && !q.de)}
 	{@const dob = dialsDob.includes(j.id)}
 	{@const nomLg = lang === 'fr' ? lg.nom.fr : lg.nom.oc}
-	<div class="ficha" class:alucada={!!visibility[j.id]}>
+	<div class="ficha" class:alucada={!!visibility[j.id]} class:activa={estatCarta.activa === j.id && !!visibility[j.id]}>
 		<div class="ficha-cap">
 			<span class="banda" style:background={`linear-gradient(${dz.map((q) => colorPastilha(j.id, q.k)).join(', ')})`}></span>
 			<div class="ficha-cos">
@@ -1334,13 +1355,14 @@
 		class:escantida={!actiu(j)}
 		class:fora={visibility[j.id] && actiu(j) && foraEscala(j)}
 		class:apercebuda={estatCarta.apercebut === j.id}
+		class:activa={estatCarta.activa === j.id && !!visibility[j.id]}
 		onclick={(e) => clicLinha(e, j)}
 		onpointerenter={(e) => entrarLinha(e, j)}
 		onpointerleave={sortirLinha}
 	>
 		<span class="apercebut"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>
 		<div class="cos">
-			<b>{nomJ(j)}</b>
+			<b>{nomJ(j)}{#if estatCarta.activa === j.id && visibility[j.id]}<span class="sr"> ({tx.jaçaActiva})</span>{/if}</b>
 			{#if notaJ(j)}<small>{notaJ(j)}</small>{/if}
 			<!-- l'escala, sonque quand la jaça alucada se vei pas d'aquí (decision de Romain, 2026-10-10) -->
 			{#if visibility[j.id] && actiu(j) && escalaJ(j) && foraEscala(j) && estatCarta.apercebut !== j.id}
@@ -1730,6 +1752,17 @@
 		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
 		color: var(--t-aur-clar);
 	}
+	/* la couche active (téléphone) : plus remplie, un point doré */
+	.chip.activa {
+		background: color-mix(in srgb, var(--t-aur) 30%, transparent);
+	}
+	.chip.activa::after {
+		content: '';
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--t-aur);
+	}
 	/* alucada mas pas vesibla a aquesta escala */
 	.chip.fora {
 		border-style: dashed;
@@ -1862,6 +1895,37 @@
 		min-height: 48px;
 		padding: 8px 0;
 		border-top: 1px solid color-mix(in srgb, var(--t-linha) 55%, transparent);
+	}
+	/* La couche active (façon QGIS, Romain 2026-10-19) : un liseré doré à gauche
+	   et son nom en or ; c'est elle qui répond au clic sur la carte */
+	.linha.activa {
+		position: relative;
+	}
+	.linha.activa::before,
+	.ficha.activa::before {
+		content: '';
+		position: absolute;
+		left: -9px;
+		top: 9px;
+		bottom: 9px;
+		width: 3px;
+		border-radius: 2px;
+		background: var(--t-aur);
+	}
+	.linha.activa b,
+	.ficha.activa .endo {
+		color: var(--t-aur-clar);
+	}
+	.ficha.activa {
+		position: relative;
+	}
+	.sr {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
 	}
 	/* una linha nauta (pastilhas dels dialèctes) : apercebut e interruptor en naut, al nivèl del nom */
 	.linha:has(.pastilhas) {

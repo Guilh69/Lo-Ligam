@@ -168,6 +168,19 @@
 	const colasLengas = {};
 	// las vilas e la còsta de cada lenga (de sas donadas), per la carta en estelas
 	const fonsLengas = {};
+	// La couche active de la légende (façon QGIS, Romain 2026-10-19) : la
+	// dernière allumée, ou celle dont on a touché le nom (RailJaces) ; elle seule
+	// répond au clic et au double clic sur la carte, même sous d'autres couches.
+	// Sans couche active (ou éteinte), l'ordre habituel des couches.
+	const activa = () => {
+		const a = estatCarta.activa;
+		return a && visibility[a] ? a : null;
+	};
+	// (une autre couche que celle-ci est active : elle lui cède la place)
+	const cedirAActiva = (id) => {
+		const a = activa();
+		return !!a && a !== id;
+	};
 	// (una zòna d'una autra lenga jos lo ponch ; sauf : la lenga que demanda)
 	const zonaLengaA = (lp, sauf = null) => Object.entries(colasLengas).some(([id, c]) => id !== sauf && map?.hasLayer(c) && !!c.zonaA(lp));
 	// (lo Creissent es una pastilha dels dialèctes : se mòstra amb eles)
@@ -320,7 +333,8 @@
 					onFicha: (v) => goto(v.ligam),
 					onPus: (p) => marcarPus(p),
 					zonasUI,
-					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp)
+					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp),
+					activa
 				});
 				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
 				colaEstelas.setNomsDobles(lang === 'fr' ? 'fr' : null, polissaSota);
@@ -1466,6 +1480,7 @@
 			// es ela que conta lo contacte ; sens aquò las doas còlas se cedavan
 			// l'una a l'autra e res s'afichava)
 			ocupat: (lp) =>
+				cedirAActiva('dialectes') ||
 				!!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) ||
 				!!colaTematica?.ocupat(lp, true) ||
 				(zonaLengaA(lp) && !colaDonadas?.zonaA(lp)?.startsWith('mix-')),
@@ -1490,9 +1505,10 @@
 				lang,
 				actiu: !!visibility[id],
 				ocupat: (lp) =>
+					cedirAActiva(id) ||
 					!!(colaEstelas && map.hasLayer(colaEstelas) && colaEstelas.ocupat(lp)) ||
 					!!colaTematica?.ocupat(lp, true) ||
-					!!colaDonadas.zonaA(lp) ||
+					(activa() !== id && !!colaDonadas.zonaA(lp)) ||
 					zonaLengaA(lp, id),
 				obstacles: () => [
 					colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null,
@@ -1523,7 +1539,8 @@
 			cedirProv: (lp) => !!(map.hasLayer(colaDonadas) && colaDonadas.zonaA(lp)) || zonaLengaA(lp),
 			// los noms de vilas de la carta en estelas : los noms de províncias los evitan
 			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, caixasVilasDOM, colaDonadas.caixasNoms(), ...Object.values(colasLengas).map((c) => c.caixasNoms())],
-			onSurvòl: (info) => (survòlTem = info)
+			onSurvòl: (info) => (survòlTem = info),
+			activa
 		});
 		colaTematica.addTo(map);
 		// Lo doble clic centra la vista sus la donada jos lo ponteiro (Romain,
@@ -1568,8 +1585,20 @@
 			if (tMov >= tClic && tMov - tClic < 600) return;
 			const lp = e.layerPoint,
 				v = (c) => c && map.hasLayer(c);
-			const cad =
-				(v(colaEstelas) && colaEstelas.ponchA(lp)) ||
+			// la couche active seule (façon QGIS, Romain 2026-10-19) : le double clic
+			// centre sur son objet et zoome pour le cadrer ; rien dessous : un cran de zoom
+			const a = activa();
+			const cad = a
+				? a === 'vilas'
+					? v(colaEstelas) && colaEstelas.ponchA(lp)
+					: a === 'regions' || a === 'despartaments'
+						? v(colaEstelas) && colaEstelas.cadreA(lp)
+						: a === 'dialectes'
+							? v(colaDonadas) && colaDonadas.cadreA(lp)
+							: a === 'comunas' || a === 'provincias' || a === 'parcs'
+								? v(colaTematica) && colaTematica.cadreA(lp)
+								: v(colasLengas[a]) && colasLengas[a].cadreA(lp)
+				: (v(colaEstelas) && colaEstelas.ponchA(lp)) ||
 				(v(colaTematica) && colaTematica.cadreA(lp)) ||
 				Object.values(colasLengas).reduce((r, c) => r || (v(c) && c.cadreA(lp)), null) ||
 				(v(colaDonadas) && colaDonadas.cadreA(lp)) ||

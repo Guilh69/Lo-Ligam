@@ -680,7 +680,7 @@ export const cargarLimits = () =>
 
 
 /* ---------- La couche ---------- */
-export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null, zonasUI = null } = {}) {
+export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null, zonasUI = null, activa = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: {
 			pane: 'estelas',
@@ -706,6 +706,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// una autra còla a quicòm d'explicar jos aqueste ponch (una enclava) : lo
 			// territòri se mòstra pas
 			this._cedir = cedir;
+			// la couche active de la légende (façon QGIS, Romain 2026-10-19) : son id ou null
+			this._activa = activa;
 			// (lo repèr daurat de las vilas a ficha es remplaçat per la causida d'una
 			// comuna e sa ficha, que pòrta lo ligam : Romain, 2026-10-11)
 			this._fichas = [];
@@ -1112,18 +1114,31 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			}
 		},
 		setModeDialectes(on) {
-			this._modeDial = !!on;
-			if (on) {
+			// (seulement quand les dialectes s'allument : un département choisi
+			// dans la couche active reste choisi quand une autre couche change)
+			if (on && !this._modeDial) {
 				this._terPus = null;
 				this._terFixat = null;
 			}
+			this._modeDial = !!on;
+		},
+		// régions ou départements : la couche active de la légende ?
+		_terActiva() {
+			const a = this._activa?.();
+			return a === 'regions' || a === 'despartaments' ? a : null;
+		},
+		// une couche active autre que les villes et villages : les lieux ne
+		// prennent plus le clic (les villes à fiche, boutons visibles, oui)
+		_autraActiva() {
+			const a = this._activa?.();
+			return !!a && a !== 'vilas';
 		},
 		// I a quicòm de clicable (un luòc, una vila a ficha) jos aqueste ponch ?
 		// (la còla de donadas cedís alara lo clic)
 		ocupat(lp) {
 			if (!this._map || !this._min) return false;
 			if (this._fichaA(lp)) return true;
-			if (this._zoom >= Z.RELAIS) return false;
+			if (this._zoom >= Z.RELAIS || this._autraActiva()) return false;
 			const tactil = !matchMedia('(hover: hover)').matches;
 			return !!this._pròche(lp, tactil ? 34 : 22, tactil ? 18 : 6);
 		},
@@ -1291,7 +1306,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._construirEtiquetas();
 			// L'échelle a changé sous une souris immobile (région → département) :
 			// le territoire sous elle se révèle sans attendre qu'elle bouge
-			if (this._mirgaCP && !this._modeDial) this._terPus = this._territoriA(map.containerPointToLayerPoint(this._mirgaCP));
+			if (this._mirgaCP && (!this._modeDial || this._terActiva())) this._terPus = this._territoriA(map.containerPointToLayerPoint(this._mirgaCP));
 		},
 
 		_plaçarTot(z) {
@@ -1653,8 +1668,19 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		},
 		// Le territoire (région ou département) sous un point
 		_territoriA(lp) {
-			if (this._modeDial || this._cedir?.(lp)) return null;
-			const mena = this._mena(this._zoom);
+			// Couche active (façon QGIS, Romain 2026-10-19) : régions ou départements
+			// répondent même sous les dialectes, dans toute leur plage (300 à 5 km) ;
+			// une autre couche active : ils lui cèdent le clic
+			const ta = this._terActiva();
+			let mena;
+			if (ta) {
+				const lat = this._map.getCenter().lat;
+				if (this._zoom < zDès(300, lat) - 0.01 || this._zoom >= zDès(5, lat)) return null;
+				mena = ta === 'regions' ? 'region' : 'despartament';
+			} else {
+				if (this._activa?.() || this._modeDial || this._cedir?.(lp)) return null;
+				mena = this._mena(this._zoom);
+			}
 			const lista = mena === 'region' ? this._regions : mena === 'despartament' ? this._deps : null;
 			if (!lista?.length) return null;
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
@@ -1746,7 +1772,8 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				}
 				return;
 			}
-			const lòc = this._pròche(e.layerPoint, tactil ? 34 : 22, tactil ? 18 : 6);
+			// (une autre couche active : le clic est pour elle, pas pour les lieux)
+			const lòc = this._autraActiva() ? null : this._pròche(e.layerPoint, tactil ? 34 : 22, tactil ? 18 : 6);
 			if (!lòc) {
 				if (tactil) this._pus = null;
 				// Un clic dans un vide : le département (ou la région) se révèle et

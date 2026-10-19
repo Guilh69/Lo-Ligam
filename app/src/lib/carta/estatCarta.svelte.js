@@ -6,4 +6,10 @@
 //   l'istoric, la carta bolega pas) ;
 // - mòde : 'lengas' dins lo mòde « Lengas de França » ; environament : las
 //   lengas mostradas tanben fòra de França (las autras, sonque lor part francesa).
-export const estatCarta = $state({ z: null, lat: null, apercebut: null, mòde: null, environament: [] });
+// - activa : la couche active de la légende, façon QGIS (Romain, 2026-10-19) :
+//   la dernière allumée, ou celle dont on touche le nom ; seule elle répond au
+//   clic et au double clic sur la carte (null : l'ordre habituel des couches).
+export const estatCarta = $state({ z: null, lat: null, apercebut: null, mòde: null, environament: [], activa: null });
+
+// Les couches dont on peut choisir un objet sur la carte (et leurs langues, LENGAS)
+export const SELECCIONABLAS = new Set(['vilas', 'regions', 'despartaments', 'comunas', 'dialectes', 'provincias', 'parcs']);
