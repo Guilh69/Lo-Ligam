@@ -386,3 +386,31 @@ bonne dimension, les familles de publications) ◇ :
 
 **Coût** ◇ : la scène dans le moteur et sa page d'admin, une à deux séances ;
 la répétition espacée, une séance ; sans agents.
+
+## 11. Construction de la page d'administration (à lancer après la refonte des visuels)
+
+**Ordre décidé par Romain (2026-10-20)** : d'abord la refonte de ses visuels
+dans Canva (harmonisation : logo C, format, mise en page ; classement dans les
+six familles de publications du 2026-10-12), ensuite la construction.
+
+Ce que la session de construction devra faire (repris de la proposition du
+20-10) :
+1. `supabase/supabase-scenas-schema.sql` sur le modèle de
+   `supabase-admin-schema.sql` : tables `scenas` (nom, unité ou thème, image,
+   réglages ombre / couleur du texte / taille, publiée, ordre) et
+   `scena_objectes` (occitan, français, prononciation, audio, ovales en jsonb
+   [cx, cy, rx, ry], pastille, étiquette et son ancrage) ; lecture publique
+   des scènes publiées, écriture réservée aux admins ; dossier Storage
+   `scenas`. Romain colle le fichier dans Supabase, guidé pas à pas.
+2. Composant unique `app/src/lib/scena/Scena.svelte`, tiré de l'essai
+   `/ensag/scena` (comportement validé), flèche calculée automatiquement de
+   l'étiquette vers l'ovale ; prévoir des visuels non carrés (4:5).
+3. Page `/admin/scenas` : déposer le visuel (converti en WebP léger dans le
+   navigateur), tracer, déplacer et redimensionner les ovales au doigt ou à
+   la souris, glisser l'étiquette, saisir les mots, envoyer sa voix, aperçu
+   réel ; en français, utilisable sur téléphone.
+4. Script `app/scripts/verificar-scenas.mjs` : chaque mot des scènes passé à
+   lo Congrès (clé locale, jamais d'appel depuis le site).
+Fini quand : construction du site qui passe, essai à l'écran (≥ 1830 px et
+375 px), une scène de test créée de bout en bout, pilotage et §11 à jour.
+
