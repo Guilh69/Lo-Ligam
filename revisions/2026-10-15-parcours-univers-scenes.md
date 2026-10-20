@@ -307,6 +307,18 @@ parcours sont une couche de plus, à n'afficher que sur demande.
    Romain apparaît (écusson à croix + occitan, haut-parleur + prononciation,
    drapeau + français). Vérifié à l'écran, ordinateur et téléphone. Choix de
    Romain attendu.
+   **2026-10-20 : aucune des trois ne plaît** (Romain). Diagnostic de Claude :
+   les quatre essais traitaient la découverte comme un **filtre** posé sur le
+   dessin (gris, voile, aplat, flou), qui l'abîme, au lieu d'un **geste du
+   monde du dessin**. Nouvelle méthode : une **planche fixe avant / après**
+   d'abord (`revisions/scena/planca-revelacion.jpg`), on n'anime que la
+   direction choisie, puis on règle une seule chose à la fois sur captures.
+   Trois directions : **A. La maison s'allume** (la scène commence à la nuit,
+   chaque mot allume son objet ; cohérent avec le thème sombre, les lettres en
+   braise et le Fuòc de l'ostal), **B. Le carnet à colorier** (objets au
+   trait, la couleur revient), **C. L'album d'autocollants** (objets
+   manquants, chaque mot colle le sien ; devient un exercice). La flèche
+   tracée et l'étiquette de Romain valent pour les trois.
 
 **Pour ta refonte des visuels** (retour de Romain, 15-10 : nouveau logo,
 bonne dimension, les familles de publications) ◇ :
