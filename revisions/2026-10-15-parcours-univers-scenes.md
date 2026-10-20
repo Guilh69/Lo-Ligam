@@ -333,6 +333,20 @@ parcours sont une couche de plus, à n'afficher que sur demande.
    approximatives, écarté ; **Repères** (pastilles, rien de caché) le plus
    propre mais sans révélateur. Recommandation : Lumière + pastilles dans
    l'ombre pour montrer où toucher.
+   **Choix de Romain (20-10) : « Lumière avec pastilles », animée** sur
+   `/ensag/scena` avec trois visuels (maison, animaux, corps ; versions sans
+   textes fabriquées pour l'essai). La scène est dans l'ombre (ses propres
+   couleurs ; ombre plus légère sur fond blanc), une pastille dorée respire
+   sur chaque chose à découvrir ; au toucher, la lumière s'ouvre depuis le
+   centre de la zone avec une lueur chaude, la flèche se trace, l'étiquette
+   de Romain apparaît (taille réduite pour les noms doubles, accrochée par la
+   droite au bord) ; scène complète = l'ombre se lève en entier. Sur
+   téléphone, seul le nom occitan reste sur l'image (lisible), le reste est
+   dans le panneau. Mots vérifiés (lo Congrès) : can, canha, gat, gata,
+   cabra, boc, galina, gal, caval, cavala, pòrc, truèja, cap, man, braç,
+   ventre, camba, pè ; pluriels de son visuel (mans, braces, cambas, pès)
+   non vérifiables par l'API. Prononciations des animaux et du corps : à
+   écrire par Romain. À valider.
 
 **Pour ta refonte des visuels** (retour de Romain, 15-10 : nouveau logo,
 bonne dimension, les familles de publications) ◇ :
