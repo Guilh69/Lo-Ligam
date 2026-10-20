@@ -360,7 +360,11 @@ bonne dimension, les familles de publications) ◇ :
   et celui du site (sans textes ni flèches, même cadrage) ;
 - des **objets bien séparés** (dans *Manjam uèi*, les légumes se chevauchent :
   difficile d'y poser des zones).
-3. **Fabrication** : option A (ton image + zones) pour démarrer ?
+3. ✅ **Fabrication** (Romain, 2026-10-20) : **une page d'administration
+   où Romain trace lui-même les ovales** sur son visuel exporté sans textes et
+   saisit mot occitan, prononciation, français et sa voix ; scènes en base
+   (comme les fiches de /mots) ; la vérification occitane reste un script
+   lancé par Claude (jamais d'appel à l'API depuis le site).
 4. **Répétition** : `ts-fsrs` avec deux réponses (raté / réussi) ?
 5. **La leçon en cinq temps** (§4) à la place des six sessions du cadre ?
 6. **Musique, vidéo, articles** : la règle du §6 ?
