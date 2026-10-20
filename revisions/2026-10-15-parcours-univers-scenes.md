@@ -319,6 +319,20 @@ parcours sont une couche de plus, à n'afficher que sur demande.
    trait, la couleur revient), **C. L'album d'autocollants** (objets
    manquants, chaque mot colle le sien ; devient un exercice). La flèche
    tracée et l'étiquette de Romain valent pour les trois.
+   **Objection de Romain (20-10)** : la A ne vaut que pour la maison, or il
+   faut l'appliquer à **tous** les visuels. Classement des 35 thèmes (planche
+   contact) : objets séparés sur un fond (animaux, planètes, légumes,
+   chiffres…), parties d'un même dessin (maison, corps, visage, météo…),
+   textes et schémas (conjugaison, pronoms, cartes : pas des scènes). Fonds en
+   aplat, dégradé, peinture ou photo. **Critère d'échelle** : ce qui exige un
+   détourage au pixel près (silhouettes, coloriage, autocollants) ne passe pas
+   à 200 visuels ; il faut des zones approximatives. Deuxième planche
+   (`revisions/scena/planca-revelacion-2.jpg`), trois directions × trois
+   visuels (maison, animaux, corps) : **Lumière** (scène dans l'ombre, l'objet
+   découvert en lumière) tient sur les trois ; **Hachures** grossier sur zones
+   approximatives, écarté ; **Repères** (pastilles, rien de caché) le plus
+   propre mais sans révélateur. Recommandation : Lumière + pastilles dans
+   l'ombre pour montrer où toucher.
 
 **Pour ta refonte des visuels** (retour de Romain, 15-10 : nouveau logo,
 bonne dimension, les familles de publications) ◇ :
