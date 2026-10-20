@@ -346,7 +346,8 @@ parcours sont une couche de plus, à n'afficher que sur demande.
    cabra, boc, galina, gal, caval, cavala, pòrc, truèja, cap, man, braç,
    ventre, camba, pè ; pluriels de son visuel (mans, braces, cambas, pès)
    non vérifiables par l'API. Prononciations des animaux et du corps : à
-   écrire par Romain. À valider.
+   écrire par Romain. ✅ **Validé par Romain après essai sur téléphone
+   (2026-10-20) : révélateur de toutes les scènes** (cahier §11).
 
 **Pour ta refonte des visuels** (retour de Romain, 15-10 : nouveau logo,
 bonne dimension, les familles de publications) ◇ :
