@@ -83,14 +83,15 @@
 		<div class="vel-fons" aria-hidden="true" transition:esvanir></div>
 		<div class="vel" bind:this={panel} role="dialog" aria-modal="true" aria-labelledby="vel-titol" transition:lisar>
 			<div class="vel-filigrana" aria-hidden="true">
-				<Crotz talha={760} traç="currentColor" ponch="currentColor" />
+				<Crotz talha={760} traç="currentColor" ponch="currentColor" moieu="currentColor" />
 			</div>
 
 			<div class="vel-cap">
 				<p class="vel-titol" id="vel-titol">{fr ? 'Menu' : 'Menú'}</p>
 				<!-- Retour à l'accueil (demande de Romain, 2026-10-15), avec le croisillon du logo -->
 				<a class="vel-acuelh" href="/" onclick={tampar} aria-current={page.url.pathname === '/' ? 'page' : undefined}>
-					<Crotz talha={24} traç="currentColor" ponch="currentColor" />
+					<!-- sur le voile brique : les couleurs du logo (traits blancs, points or) -->
+					<Crotz talha={24} traç="#ffffff" ponch="#ffd47f" moieu="#eeaf34" />
 					<span>{fr ? 'Retour à l’accueil' : 'Tornar a l’acuèlh'}</span>
 				</a>
 				<button type="button" class="vel-tampar" onclick={tampar} aria-label={fr ? 'Fermer le menu' : 'Tampar lo menú'}>

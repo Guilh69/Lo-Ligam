@@ -32,7 +32,7 @@
 <header class="top">
 	<div class="top-in">
 		<a class="brand" href="/" title={tx.acuelhLong} aria-label={`Lo Ligam, ${tx.acuelhLong}`}>
-			<Crotz talha={30} />
+			<Crotz talha={30} teula />
 			<span class="brand-name">Lo Ligam</span>
 		</a>
 

@@ -172,11 +172,12 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 	color: transparent;
 	background: linear-gradient(to top, var(--lum) 0 44%, var(--lum-b) 56% 100%) 0 0 / 100% 200% no-repeat;
 	-webkit-background-clip: text; background-clip: text;
-	transition: background-position 1.8s var(--ease), filter 1.8s;
+	transition: background-position 1.8s var(--ease);
 }
+/* Sans halo (Romain, 2026-10-21) : le drop-shadow posé sur la lettre découpée
+   éclairait toute sa boîte, un rectangle autour du S ; le remplissage seul reste */
 .acuelh .eros-titol .letra:not(.espaci):hover {
 	background-position: 0 100%;
-	filter: drop-shadow(0 0 0.12em color-mix(in srgb, var(--lum) 55%, transparent));
 	transition-duration: 0.5s;
 }
 /* En français, « S'apprend. » est plus long que « S'apren. » : le titre se fait

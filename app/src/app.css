@@ -62,6 +62,21 @@
 	--t-terra: #c8481c;
 	--t-terra-viu: #ef6a35;
 }
+/* Couleurs de la croix-constellation : celles des logos de Romain (Canva,
+   design-stock/logo/svg, charte §1 bis), rien d'autre (Romain, 2026-10-21).
+   Sur fond sombre : traits blancs, points or clair, moyeu or ; sur fond
+   clair : la version d'une seule couleur, brun. */
+:root,
+:root[data-tema='sorne'] {
+	--logo-traç: #ffffff;
+	--logo-ponch: #ffd47f;
+	--logo-moieu: #eeaf34;
+}
+:root[data-tema='clar'] {
+	--logo-traç: #3a2a20;
+	--logo-ponch: #3a2a20;
+	--logo-moieu: #3a2a20;
+}
 /* Gamme « Plâtre » (Romain, 2026-10-21, refonte claire, étape 1 : choisie
    contre « Terre cuite » et « Ciel du Sud » sur /ensag/clar) : plâtre, pierre
    et encre brun-noir, d'après les couleurs mesurées de leoparpeix.com ; la

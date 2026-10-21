@@ -77,6 +77,13 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
   design-stock sont la version C).
 - Logo intégré au site le 2026-09-30 : favicon, barre d'accueil, en-tête
   des pages app, pied de page.
+- **Règle (Romain, 2026-10-21) : la croix ne prend que les couleurs de ces
+  recettes, jamais d'autres.** Barre du haut : le logo complet (tuile
+  brique, traits blancs, points or clair, moyeu or), identique dans les deux
+  thèmes. Grande croix de l'accueil : en sombre, traits blancs, points or
+  clair, moyeu or ; en clair, la version brun d'une seule couleur. Sur le
+  voile brique du menu : traits blancs, points or. Jetons `--logo-*`
+  d'`app/src/app.css`, composant `Crotz.svelte` (`teula` = logo complet).
 
 ---
 
