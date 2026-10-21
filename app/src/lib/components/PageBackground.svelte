@@ -15,8 +15,8 @@
 		pointer-events: none;
 		background: radial-gradient(
 			circle at 50% 0%,
-			rgba(250, 243, 230, 0.9) 0%,
-			rgba(245, 234, 216, 0.86) 60%
+			rgba(251, 249, 246, 0.9) 0%,
+			rgba(247, 243, 238, 0.86) 60%
 		);
 	}
 

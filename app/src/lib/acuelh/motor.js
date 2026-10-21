@@ -36,7 +36,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 	/* ================= Tèma : sorne, clar, o coma lo sistèma ================= */
 	const TEMAS = {
 		sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(47, 23, 14, 0.94)', riu: '#f6b73c', estela: '#fbf1e1', liser: 'rgba(34, 16, 10, 0.9)', fil: '#f6b73c', riuTèxt: '#ffd98a', vilaTèxt: '#fbf1e1', vel: 'rgba(34, 16, 10, 0.75)', velFin: 'rgba(34, 16, 10, 0)', crotzPonch: '#f5ead8', crotzEstret: '#8f5c28', crotzCrida: '#6e2e12', crotzFons: '#4a2313' },
-		clar: { costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#dcb790', crotzCrida: '#e6cbaa', crotzFons: '#ecdec8' }
+		clar: { costa: 'rgba(42, 26, 16, 0.42)', bulla: 'rgba(251, 249, 246, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(247, 243, 238, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2a1a10', vel: 'rgba(247, 243, 238, 0.85)', velFin: 'rgba(247, 243, 238, 0)', crotzPonch: '#b53d17', crotzEstret: '#dcb790', crotzCrida: '#e6cbaa', crotzFons: '#ede6dc' }
 	};
 	let TEM = TEMAS.sorne, temaClar = false;
 	function aplicarTema(clar, dalt) {
@@ -226,7 +226,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 			// Mòde clar : çò qu'èra lum sus la nuèch ven tencha terracòta sus lo papièr crèma
 			if (cl > 0.5) {
 				float i = clamp(dot(col - basa, vec3(0.6, 0.3, 0.1)) * 2.4, 0.0, 1.0);
-				col = mix(vec3(0.961, 0.918, 0.847), vec3(0.76, 0.43, 0.26), i);
+				col = mix(vec3(0.969, 0.953, 0.933), vec3(0.76, 0.43, 0.26), i); // basa : lo Plâtre (2026-10-21)
 			}
 			gl_FragColor = vec4(col, 1.0);
 		}`;

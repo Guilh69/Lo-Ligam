@@ -52,7 +52,7 @@ html.lenis, html.lenis body { height: auto; }
 	--b-fons: #22100a; --b-fons-2: #38190e; --b-lum-1: rgba(200, 72, 28, 0.34); --b-lum-2: rgba(246, 183, 60, 0.16);
 	--b-beluga: #ffd98a; --b-beluga-lum: #f6b73c; --b-ombra: rgba(0, 0, 0, 0.5);
 	background: linear-gradient(to top, var(--b-fons-2), var(--b-fons) 72%); transition: opacity 0.8s ease; }
-:root[data-tema='clar'] .acuelh .brasa { --b-fons: #f5ead8; --b-fons-2: #ebd5b5; --b-lum-1: rgba(181, 61, 23, 0.13);
+:root[data-tema='clar'] .acuelh .brasa { --b-fons: #f7f3ee; --b-fons-2: #e9dfd2; --b-lum-1: rgba(181, 61, 23, 0.13);
 	--b-lum-2: rgba(238, 175, 52, 0.2); --b-beluga: #8a3f12; --b-beluga-lum: #a85d12; --b-ombra: rgba(120, 60, 20, 0.1); }
 :root[data-leugier='on'] .acuelh .brasa { display: block; }
 :root[data-leugier='on'] .acuelh #fons { display: none; }
@@ -129,8 +129,8 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 	.acuelh .capçal::before { background: linear-gradient(var(--nuech) 62%, transparent); }
 	.acuelh .capçal.solid::before { opacity: 0.94; }
 }
-:root[data-tema='clar'] .acuelh .bandel-mot { -webkit-text-stroke-color: rgba(46, 29, 20, 0.5); }
-:root[data-tema='clar'] .acuelh .manifest-tèxt .m { color: rgba(46, 29, 20, 0.15); }
+:root[data-tema='clar'] .acuelh .bandel-mot { -webkit-text-stroke-color: rgba(42, 26, 16, 0.5); }
+:root[data-tema='clar'] .acuelh .manifest-tèxt .m { color: rgba(42, 26, 16, 0.15); }
 :root[data-tema='clar'] .acuelh .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #e7c9a6, var(--nuech-2) 70%); }
 :root[data-tema='clar'] .acuelh .cur-anel { mix-blend-mode: normal; border-color: var(--crema); }
 /* ---------- Acte I : l'eròi ---------- */

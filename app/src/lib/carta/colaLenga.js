@@ -65,7 +65,7 @@ export function crearColaLenga(
 		return {
 			clar: c,
 			tencha: c ? 0.36 : 0.3, // (tèma clar : coma colaDonadas.js)
-			ombra: c ? 'rgba(245, 234, 216, 0.95)' : 'rgba(18, 9, 6, 0.9)',
+			ombra: c ? 'rgba(247, 243, 238, 0.95)' : 'rgba(18, 9, 6, 0.9)',
 			mòde: m,
 			color: lenga.color[m],
 			tèxt: lenga.tèxt[m],
@@ -1091,7 +1091,7 @@ export function crearColaLenga(
 					caixas.push(b);
 					const color = zn.props.apart ? T.color : (T.dial[zn.kod] ?? T.color);
 					cx.globalAlpha = a;
-					cx.fillStyle = T.clar ? mesclar(color, '#2e1d14', 0.7) : mesclar(color, '#fff8ec', 0.35);
+					cx.fillStyle = T.clar ? mesclar(color, '#2a1a10', 0.7) : mesclar(color, '#fff8ec', 0.35);
 					cx.fillText(t, (b[0] + b[2]) / 2, (b[1] + b[3]) / 2);
 				}
 				cx.restore();

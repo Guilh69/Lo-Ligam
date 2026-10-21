@@ -37,7 +37,7 @@ export const COLORS = {
 };
 const TEMAS = {
 	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: '#d9343f', occitanTèxt: '#ffc2b8', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: 0.3 },
-	clar: { estela: '#9a6a1c', lenga: '#b53d17', occitan: '#b0202c', occitanTèxt: '#7e121c', admin: '46, 29, 20', ombra: 'rgba(245, 234, 216, 0.95)', clar: true, tencha: 0.36 } // (tèma clar : tenchas mai fòrtas, retorn de Romain 2026-10-10 : zònas e noms pauc legibles)
+	clar: { estela: '#9a6a1c', lenga: '#b53d17', occitan: '#b0202c', occitanTèxt: '#7e121c', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: 0.36 } // (tèma clar : tenchas mai fòrtas, retorn de Romain 2026-10-10 : zònas e noms pauc legibles)
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
@@ -1451,7 +1451,7 @@ export function crearColaDonadas(
 					// glissa, sens sautar (retorn de Romain, 2026-10-09 : PROVENÇAL)
 					const [gx, gy] = this._glissar(zn.kod, dec);
 					cx.globalAlpha = a;
-					cx.fillStyle = T.clar ? mesclar(color, '#2e1d14', 0.7) : mesclar(color, '#fff8ec', 0.35);
+					cx.fillStyle = T.clar ? mesclar(color, '#2a1a10', 0.7) : mesclar(color, '#fff8ec', 0.35);
 					cx.fillText(t, zn.eti[0] + gx, zn.eti[1] + gy);
 				}
 				cx.restore();

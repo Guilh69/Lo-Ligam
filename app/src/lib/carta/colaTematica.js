@@ -31,10 +31,10 @@ const TEMAS = {
 	},
 	clar: {
 		estela: '#9a6a1c',
-		linha: '46, 29, 20',
+		linha: '42, 26, 16',
 		parc: '46, 110, 62',
 		mar: '30, 90, 140',
-		ombra: 'rgba(245, 234, 216, 0.95)'
+		ombra: 'rgba(247, 243, 238, 0.95)'
 	}
 };
 

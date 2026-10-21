@@ -7,13 +7,15 @@
 	--color-brick: #a5342a;
 	--color-gold: #eeaf34;
 	--color-gold-light: #ffd47f; /* l'aur clar de las pomètas del lògo */
-	--color-cream: #f5ead8;
+	/* Le fond des pages pas encore harmonisées suit le Plâtre (2026-10-21) :
+	   avant #f5ead8 ; le crème reste la teinte des textes sur fond sombre. */
+	--color-cream: #f7f3ee;
 
 	/* Accents */
 	--color-teal: #1f5f63;
 	--color-sky: #3e7cb1;
 	--color-olive: #5e7b3a;
-	--color-text: #3a2a20;
+	--color-text: #2a1a10; /* encre du Plâtre (2026-10-21), avant #3a2a20 */
 
 	/* Sistèma tipografic 2026-09-30, simplificat lo 2026-10-05 (jornal §11) :
 	   Limelight pels títols E pel nom « Lo Ligam » (lo lògo de Romain es
@@ -60,13 +62,17 @@
 	--t-terra: #c8481c;
 	--t-terra-viu: #ef6a35;
 }
+/* Gamme « Plâtre » (Romain, 2026-10-21, refonte claire, étape 1 : choisie
+   contre « Terre cuite » et « Ciel du Sud » sur /ensag/clar) : plâtre, pierre
+   et encre brun-noir, d'après les couleurs mesurées de leoparpeix.com ; la
+   brique reste la seule couleur vive. Avant : #f5ead8, #ecdcc3, #2e1d14. */
 :root[data-tema='clar'] {
-	--t-fons: #f5ead8;
-	--t-fons-2: #ecdcc3;
-	--t-tinta: #2e1d14;
-	--t-tinta-2: rgba(46, 29, 20, 0.72);
-	--t-linha: rgba(46, 29, 20, 0.16);
-	--t-vel: rgba(245, 234, 216, 0.8);
+	--t-fons: #f7f3ee;
+	--t-fons-2: #ede6dc;
+	--t-tinta: #2a1a10;
+	--t-tinta-2: rgba(42, 26, 16, 0.72);
+	--t-linha: rgba(42, 26, 16, 0.14);
+	--t-vel: rgba(247, 243, 238, 0.8);
 	/* #a85d12 → #9c5611 le 2026-10-21 : 4,16 → 4,70 sur --t-fons, les petits
 	   textes dorés (« L'occitan », numéros) passent le seuil WCAG de 4,5 */
 	--t-aur: #9c5611;
@@ -95,8 +101,8 @@
 	--t-terra-viu: #1f5f8f;
 	--t-aur: #8a4f00;
 	--t-aur-clar: #6b3a00;
-	--t-tinta-2: rgba(46, 29, 20, 0.88);
-	--t-linha: rgba(46, 29, 20, 0.3);
+	--t-tinta-2: rgba(42, 26, 16, 0.88);
+	--t-linha: rgba(42, 26, 16, 0.3);
 }
 
 /* Commandes posées sur la carte (rail, panneau qui s'ouvre à côté, boutons

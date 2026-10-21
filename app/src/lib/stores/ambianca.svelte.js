@@ -31,9 +31,13 @@ const FONSES = [0, 1, 2, 3];
 
 function crearEstat() {
 	const e = $state({
-		tema: 'sorne',
+		// Refonte claire (2026-10-21, cahier §11) : le clair « Plâtre » devient le
+		// thème de tous, le sombre reste au choix ; le fond animé quitte l'accueil
+		// par défaut (« trop de bruit »), Venas d'aur reste au choix.
+		// Avant : 'sorne' et 0 (Venas d'aur, 2026-10-07).
+		tema: 'clar',
 		dalt: false,
-		fons: 0, // Venas d'aur, l'ambiança preferida de Romain (2026-10-07)
+		fons: 3, // Simple : immobile
 		leugier: false, // fond léger, sur choix du visiteur seulement
 		forçarClar: false,
 		sistèmaClar: false,

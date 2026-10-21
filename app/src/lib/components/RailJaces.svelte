@@ -828,7 +828,7 @@
 	const APERCEBUT_COLOR = { costa: 'costa', riu: 'rius', estela: 'estelas', corba: 'corbas' };
 	const colorBasa = (
 		clar
-			? { estela: '#6b3a22', riu: '#b06a14', corba: '#8a5a2b', costa: '#2e1d14' }
+			? { estela: '#6b3a22', riu: '#b06a14', corba: '#8a5a2b', costa: '#2a1a10' }
 			: { estela: '#f5ead8', riu: '#eeaf34', corba: '#eeaf34', costa: '#f5ead8' }
 	);
 	// Sonque los contorns : la còsta e la frontièra de la lenga, res mai

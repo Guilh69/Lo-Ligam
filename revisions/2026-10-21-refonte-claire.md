@@ -85,7 +85,17 @@ Chaque étape : je prépare des essais, **tu choisis une chose à la fois**, je
 porte dans le site, je vérifie et je te montre la preuve. Pas d'agents.
 Total estimé : **10 à 14 séances**, aucune dépense.
 
-### Étape 1. L'ambiance claire ← en cours (essai en ligne)
+### Étape 1. L'ambiance claire ✅ faite le 21-10 : « Plâtre »
+
+> Choix de Romain : A Plâtre. Appliqué le même soir à tout le site (jetons
+> du clair, anciens jetons des pages pas encore harmonisées, couleurs claires
+> écrites en dur dans l'accueil et la carte), clair par défaut, sombre au
+> choix, fond « Simple » (immobile) par défaut. Vérifié à l'écran : accueil,
+> menu, carte, Mots, Òbras, parcours, leçon d'essai, compte, à 1830 px et au
+> téléphone ; le sombre reste intact. Restent pour l'étape 6 : les taches de
+> couleur du fond des anciennes pages (`PageBackground.svelte`), l'ancien or
+> `#eeaf34` employé comme texte. Vu en passant : Òbras affiche « Impossible
+> de cargar las òbras » en local (base Supabase, sans lien avec la refonte).
 
 Même page, trois ambiances, seules les couleurs changent :
 

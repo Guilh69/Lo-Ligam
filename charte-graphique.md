@@ -2,7 +2,7 @@
 
 > Dérivée de l'identité **Instagram Lo Ligam** déjà existante. L'app *prolonge* cette marque (même âme visuelle), avec la retenue qu'exige une interface.
 > ~~Couleurs en hex **approximatifs** — à prélever précisément sur les vrais visuels. · v0.1~~ *(périmé — les couleurs sont des tokens exacts dans `app/src/app.css` depuis le 2026-07-28, annotation du toilettage 2026-09-18)*
-> **État réel** : les couleurs du §1 sont **exactes** — ce sont les tokens de `app/src/app.css` (`--color-terracotta: #c8562e` · `--color-brick: #a5342a` · `--color-gold: #e0a43b` · `--color-cream: #f5ead8` · `--color-teal: #1f5f63` · `--color-sky: #3e7cb1` · `--color-olive: #5e7b3a` · `--color-text: #3a2a20`). La typographie du §2 est **définitive** (décision du 2026-08-22) ; le système photo du §3bis est **acté** (décision du 2026-08-30). Charte vivante, mais ses décisions datées sont fermes.
+> **État réel** : les couleurs du §1 sont **exactes** — ce sont les tokens de `app/src/app.css` (`--color-terracotta: #c8562e` · `--color-brick: #a5342a` · `--color-gold: #e0a43b` · `--color-cream: #f7f3ee` (plâtre depuis le 2026-10-21, était #f5ead8) · `--color-teal: #1f5f63` · `--color-sky: #3e7cb1` · `--color-olive: #5e7b3a` · `--color-text: #2a1a10` (depuis le 2026-10-21, était #3a2a20)). La typographie du §2 est **définitive** (décision du 2026-08-22) ; le système photo du §3bis est **acté** (décision du 2026-08-30). Charte vivante, mais ses décisions datées sont fermes.
 
 ---
 
@@ -14,13 +14,35 @@ le logo est le maître des couleurs, plus l'inverse.*
 - Rouge brique (accent texte) : #A5342A (inchangé)
 - Or (token `--color-gold`) : **#EEAF34** (était #E0A43B)
 - Or clair des pommettes (`--color-gold-light`, nouveau) : **#FFD47F**
-- Crème (fond) : #F5EAD8 (inchangé — le fond reste en question pour le redesign)
+- Fond : **plâtre #F7F3EE** (2026-10-21, refonte claire, voir ci-dessous) ;
+  le crème #F5EAD8 reste la teinte des textes sur fond sombre et des visuels
+  Instagram
 
 **Accents**
 - Teal / pétrole : ~#1F5F63
 - Bleu ciel : ~#3E7CB1
 - Vert olive : ~#5E7B3A
-- Texte brun foncé : ~#3A2A20
+- Texte brun-noir : **#2A1A10** (2026-10-21, était #3A2A20)
+
+**Thème clair « Plâtre » (2026-10-21), thème par défaut du site.** Choisi
+par Romain contre « Terre cuite » et « Ciel du Sud » (essai `/ensag/clar`),
+d'après les couleurs mesurées de leoparpeix.com : plâtre, pierre, encre
+brun-noir, la brique seule couleur vive. Jetons `--t-*` d'`app/src/app.css` :
+
+| Jeton | Valeur | Contraste sur le fond |
+|---|---|---|
+| `--t-fons` (plâtre) | #F7F3EE | |
+| `--t-fons-2` (pierre) | #EDE6DC | |
+| `--t-tinta` (encre) | #2A1A10 | 15,2 |
+| `--t-tinta-2` (texte second) | encre à 72 % | 6,3 |
+| `--t-linha` (filets) | encre à 14 % | |
+| `--t-aur` (or des petits textes) | #9C5611 | 5,1 (4,5 sur la pierre) |
+| `--t-terra` (brique) | #B53D17 | 5,2 (blanc dessus : 5,8) |
+
+Le thème sombre « Éclat » reste au choix (panneau Ambiance). Le fond animé
+n'est plus celui de tous : « Simple » (immobile) par défaut, Venas d'aur au
+choix. ⚠ L'ancien or `--color-gold` #EEAF34 ne doit jamais servir de texte
+sur fond clair (1,8:1) : à traquer page par page (refonte, étape 6).
 
 > ⚠️ **Note (toilettage 2026-09-18)** : les « ~ » ci-dessus datent de la v0.1. Ces huit valeurs sont **exactes** depuis le 2026-07-28 : ce sont les tokens de `app/src/app.css` (voir bandeau d'en-tête).
 
