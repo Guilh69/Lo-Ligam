@@ -81,8 +81,10 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
   recettes, jamais d'autres.** Barre du haut : le logo complet (tuile
   brique, traits blancs, points or clair, moyeu or), identique dans les deux
   thèmes. Grande croix de l'accueil : en sombre, traits blancs, points or
-  clair, moyeu or ; en clair, la version brun d'une seule couleur. Sur le
-  voile brique du menu : traits blancs, points or. Jetons `--logo-*`
+  clair, moyeu or ; en clair, **ocre et rouge** (points or #EEAF34, traits et
+  moyeu brique #B53D17 ; la version brune, essayée le même soir, est
+  écartée : « je voudrais la croix avec les couleurs type Lo Ligam »). Sur
+  le voile brique du menu : traits blancs, points or. Jetons `--logo-*`
   d'`app/src/app.css`, composant `Crotz.svelte` (`teula` = logo complet).
 
 ---

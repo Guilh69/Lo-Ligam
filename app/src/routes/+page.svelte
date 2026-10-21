@@ -43,7 +43,8 @@
 	const VIURE = [
 		{ oc: 'Descobrir', fr: 'Découvrir', toc: 'Lo país e sa cultura', tfr: 'Le pays et sa culture', media: 'paisatge',
 			items: [['Mots en imatges', 'Mots en images', '/mots'], ['Òbras', 'Œuvres', '/obras'], ['Articles', 'Articles', '/articles']] },
-		{ oc: 'Amassa', fr: 'Ensemble', toc: 'La comunautat', tfr: 'La communauté', media: 'liams',
+		// (la carte s'appelait « Amassa » ; le mot est devenu le nom de la rubrique, 2026-10-21)
+		{ oc: 'La comunautat', fr: 'La communauté', toc: 'Fòrum, grops e idèas', tfr: 'Forum, groupes et idées', media: 'liams',
 			items: [['Fòrum', 'Forum', '/forum'], ['Grops', 'Groupes', '/grops'], ['Boita d’idèas', 'Boîte à idées', '/ideas'],
 				['Instagram', 'Instagram', 'https://www.instagram.com/lo_ligam/']] }
 	];
@@ -224,7 +225,7 @@
 </script>
 
 <svelte:head>
-	<title>Lo Ligam · L’occitan se parla, s’apren, se viu</title>
+	<title>Lo Ligam · L’occitan se parla, s’apren, amassa</title>
 	<meta
 		name="description"
 		content="Aprene l’occitan sens vergonha : de corses en visio, un parcors autonòm fins al nivèl B1, e de monde per parlar. Apprendre l’occitan : cours en visio, parcours autonome jusqu’au B1."
@@ -300,7 +301,7 @@
 				<h1 class="eros-titol">
 					<span class="linha masc"><span class="masc-in" style="--i: 1">{@render letras('Se parla.', 'Se parle.')}</span></span>
 					<span class="linha masc"><span class="masc-in" style="--i: 2">{@render letras('S’apren.', 'S’apprend.')}</span></span>
-					<span class="linha masc"><span class="masc-in" style="--i: 3">{@render letras('Se viu.', 'Se vit.')}</span></span>
+					<span class="linha masc"><span class="masc-in" style="--i: 3">{@render letras('Amassa.', 'Rassemble.')}</span></span>
 				</h1>
 				{#if formaEros === 'fials'}
 					<ul class="eros-fials" use:fialsMesura={fr}>
@@ -508,10 +509,10 @@
 			</fieldset>
 		</section>
 
-		<!-- VI. 03 Se viu : deux cartes, découvrir et faire ensemble -->
+		<!-- VI. 03 Amassa (« Se viu » jusqu’au 2026-10-21) : deux cartes, découvrir et faire ensemble -->
 		<section class="camins" id="viure" aria-labelledby="viure-titol">
 			<h2 class="camins-cap jalon" data-revela>
-				<b>03</b><span class="masc"><span class="masc-in" id="viure-titol">{@render bi('Se viu', 'Se vit')}</span></span>
+				<b>03</b><span class="masc"><span class="masc-in" id="viure-titol">{@render bi('Amassa', 'Rassemble')}</span></span>
 			</h2>
 			{@render somari(VIU)}
 			<div class="camins-pista">
@@ -559,7 +560,7 @@
 			</div>
 		</section>
 
-		<!-- VII. Le troubadour (Max Rouquette), qui clôt « Se viu » -->
+		<!-- VII. Le troubadour (Max Rouquette), qui clôt « Amassa » -->
 		<section class="trobador">
 			<div class="trobador-pin">
 				<div class="trobador-fenestra">

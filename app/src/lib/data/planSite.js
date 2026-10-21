@@ -1,5 +1,5 @@
 // Plan du site sur le modèle de l'accueil (2026-10-15, cahier §11) : les trois
-// verbes du titre « Se parla. S'apren. Se viu. » rangent aussi le menu et le
+// verbes du titre « Se parla. S’apren. Amassa. » (« Se viu » jusqu’au 2026-10-21) rangent aussi le menu et le
 // pied de page, comme l'Alliance des collectivités pour la qualité de l'air
 // reprend dans son menu les questions de sa page d'accueil.
 // Une seule source pour le menu-voile (MenuVel) et le pied de page.
@@ -26,14 +26,17 @@ export const PLAN = [
 		] }]
 	},
 	{
-		id: 'viu', n: '03', oc: 'Se viu', fr: 'Se vit',
+		// « Amassa » / « Rassemble » remplace « Se viu » / « Se vit » (Romain, 2026-10-21 :
+		// « se viu ne correspond pas au contenu ») ; l'id reste 'viu' (ancres, styles)
+		id: 'viu', n: '03', oc: 'Amassa', fr: 'Rassemble',
 		grops: [
 			{ oc: 'Descobrir', fr: 'Découvrir', items: [
 				{ oc: 'Mots en imatges', fr: 'Mots en images', href: '/mots' },
 				{ oc: 'Òbras', fr: 'Œuvres', href: '/obras' },
 				{ oc: 'Articles', fr: 'Articles', href: '/articles' }
 			] },
-			{ oc: 'Amassa', fr: 'Ensemble', items: [
+			// (s'appelait « Amassa », devenu le nom de la rubrique, 2026-10-21)
+			{ oc: 'La comunautat', fr: 'La communauté', items: [
 				{ oc: 'Fòrum', fr: 'Forum', href: '/forum' },
 				{ oc: 'Grops', fr: 'Groupes', href: '/grops' },
 				{ oc: 'Boita d’idèas', fr: 'Boîte à idées', href: '/ideas' }

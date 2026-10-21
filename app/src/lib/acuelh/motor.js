@@ -36,7 +36,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 	/* ================= Tèma : sorne, clar, o coma lo sistèma ================= */
 	const TEMAS = {
 		sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(47, 23, 14, 0.94)', riu: '#f6b73c', estela: '#fbf1e1', liser: 'rgba(34, 16, 10, 0.9)', fil: '#f6b73c', riuTèxt: '#ffd98a', vilaTèxt: '#fbf1e1', vel: 'rgba(34, 16, 10, 0.75)', velFin: 'rgba(34, 16, 10, 0)', crotzTraç: '#ffffff', crotzPonch: '#ffd47f', crotzMoieu: '#eeaf34', crotzEstret: '#8f5c28', crotzCrida: '#6e2e12', crotzFons: '#4a2313' },
-		clar: { costa: 'rgba(42, 26, 16, 0.42)', bulla: 'rgba(251, 249, 246, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(247, 243, 238, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2a1a10', vel: 'rgba(247, 243, 238, 0.85)', velFin: 'rgba(247, 243, 238, 0)', crotzTraç: '#3a2a20', crotzPonch: '#3a2a20', crotzMoieu: '#3a2a20', crotzEstret: '#cdc7c0', crotzCrida: '#dbd5cf', crotzFons: '#d5cfc9' }
+		clar: { costa: 'rgba(42, 26, 16, 0.42)', bulla: 'rgba(251, 249, 246, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(247, 243, 238, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2a1a10', vel: 'rgba(247, 243, 238, 0.85)', velFin: 'rgba(247, 243, 238, 0)', crotzTraç: '#b53d17', crotzPonch: '#eeaf34', crotzMoieu: '#b53d17', crotzEstret: '#e4d2b0', crotzCrida: '#ead9bd', crotzFons: '#e8d8bf' }
 	};
 	let TEM = TEMAS.sorne, temaClar = false;
 	function aplicarTema(clar, dalt) {
@@ -733,7 +733,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// per que los traçats se vejan pas a travèrs (efièch grisastre).
 		// Darrièr lo títol de la crida, color de braça (lo tèxte daurat demòra legible).
 		// Colors del lògo de Romain (Canva, 2026-09-30 ; tornadas lo 2026-10-21) : sus fons
-		// escur traçats blancs, pomètas aur clar e moieu aur ; sus fons clar, tot en brun.
+		// escur traçats blancs, pomètas aur clar e moieu aur ; sus fons clar, òcre e roge
+		// (pomètas aur, traçats e moieu bricalha), jamai de brun (Romain, 2026-10-21).
 		const atenuat = enCrida ? TEM.crotzCrida : fons ? TEM.crotzFons : estret ? TEM.crotzEstret : null;
 		punts.forEach((pt, i) => {
 			cx.fillStyle = atenuat ?? (i === 0 ? TEM.crotzMoieu : TEM.crotzPonch);
