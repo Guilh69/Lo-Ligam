@@ -24,6 +24,20 @@
 	--font-body: 'Luciole', system-ui, sans-serif;
 	--font-quote: 'Cormorant Garamond', 'Georgia', serif;
 	--font-logo: 'Limelight', 'Georgia', serif;
+
+	/* Échelle d'espacement (2026-10-21, charte §5octies) : multiples de 4 px,
+	   notés en rem pour suivre la taille de texte du visiteur. Moins d'espace
+	   pour grouper, plus pour séparer (loi de proximité). */
+	--esp-4: 0.25rem;
+	--esp-8: 0.5rem;
+	--esp-12: 0.75rem;
+	--esp-16: 1rem;
+	--esp-24: 1.5rem;
+	--esp-32: 2rem;
+	--esp-48: 3rem;
+	--esp-64: 4rem;
+	--esp-96: 6rem;
+	--esp-128: 8rem;
 }
 
 /* Colors de tèma (cadre comun, 2026-10-07, représ de l'esbòs de nuèch) :
@@ -53,7 +67,9 @@
 	--t-tinta-2: rgba(46, 29, 20, 0.72);
 	--t-linha: rgba(46, 29, 20, 0.16);
 	--t-vel: rgba(245, 234, 216, 0.8);
-	--t-aur: #a85d12;
+	/* #a85d12 → #9c5611 le 2026-10-21 : 4,16 → 4,70 sur --t-fons, les petits
+	   textes dorés (« L'occitan », numéros) passent le seuil WCAG de 4,5 */
+	--t-aur: #9c5611;
 	--t-aur-clar: #8a3f12;
 	--t-terra: #b53d17;
 	--t-terra-viu: #b53d17;

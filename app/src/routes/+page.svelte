@@ -47,6 +47,37 @@
 				['Instagram', 'Instagram', 'https://www.instagram.com/lo_ligam/']] }
 	];
 
+	// Mise en ordre de l'ouverture (Romain, 2026-10-21 : « les éléments flottent ») :
+	// trois formes à comparer sur /?ensag=eros ; sans le paramètre, l'actuelle.
+	//   - Colonne : texte puis boutons dans une seule colonne, sous le titre ;
+	//   - Sommaire : chaque ligne du titre reçoit son chemin (la phrase
+	//     d'explication découpée en trois), plus de boutons séparés ;
+	//   - Fenêtre : la croix en étoiles dans un cadre qui ouvre la carte (idée
+	//     du frère de Romain : encadrer ce qui se clique).
+	const FORMAS_EROS = [
+		['actual', 'Actuelle'],
+		['colomna', 'Colonne'],
+		['somari', 'Sommaire'],
+		['fenestra', 'Fenêtre']
+	];
+	const CLAU_ENSAG_EROS = 'lo-ligam-ensag-eros';
+	let formaEros = $state('actual');
+	let ensagEros = $state(false);
+	function causirFormaEros(v) {
+		formaEros = v;
+		try {
+			localStorage.setItem(CLAU_ENSAG_EROS, v);
+		} catch {
+			// pas grave : le choix vaut pour la visite
+		}
+	}
+	// Sans mot nouveau : les trois morceaux de la phrase d'explication
+	const SOMARI = [
+		{ oc: 'Una carta per lo veire', fr: 'Une carte pour le voir', href: '/carta' },
+		{ oc: 'De corses per l’aprene', fr: 'Des cours pour l’apprendre', href: '#biais' },
+		{ oc: 'De mots e d’òbras per lo viure', fr: 'Des mots et des œuvres pour le vivre', href: '#viure' }
+	];
+
 	// Le flux des liaisons ne tourne que lorsque la carte « Amassa » est à l'écran
 	function enVista(el) {
 		const io = new IntersectionObserver(([e]) => el.classList.toggle('en-vista', e.isIntersecting));
@@ -66,6 +97,15 @@
 			if (v && CONSIGNAS[v]) lengaCors = v;
 		} catch {
 			// stockage indisponible : on garde le français
+		}
+		ensagEros = new URLSearchParams(location.search).get('ensag') === 'eros';
+		if (ensagEros) {
+			try {
+				const f = localStorage.getItem(CLAU_ENSAG_EROS);
+				if (FORMAS_EROS.some(([v]) => v === f)) formaEros = f;
+			} catch {
+				// stockage indisponible : la forme actuelle
+			}
 		}
 		return () => {
 			quitada = true;
@@ -186,35 +226,64 @@
 		>
 
 		<!-- I. Le héros : le titre annonce le plan de la page, un seul bouton principal -->
-		<section class="eros" data-revela>
-			<p class="eros-kicker">
-				<span class="masc"><span class="masc-in">{@render bi('L’occitan', 'L’occitan')}</span></span>
-			</p>
-			<h1 class="eros-titol">
-				<span class="linha masc"><span class="masc-in" style="--i: 1">{@render letras('Se parla.', 'Se parle.')}</span></span>
-				<span class="linha masc"><span class="masc-in" style="--i: 2">{@render letras('S’apren.', 'S’apprend.')}</span></span>
-				<span class="linha masc"><span class="masc-in" style="--i: 3">{@render letras('Se viu.', 'Se vit.')}</span></span>
-			</h1>
-			<div class="eros-pe">
-				<div class="esvani" style="--i: 5">
-					<p class="eros-sub">
-						{@render bi(
-							'Una carta per lo veire, de corses per l’aprene, de mots e d’òbras per lo viure.',
-							'Une carte pour le voir, des cours pour l’apprendre, des mots et des œuvres pour le vivre.'
-						)}
+		<section class="eros" data-revela data-forma={formaEros}>
+			<div class="eros-cors">
+				<div class="eros-cap">
+					<p class="eros-kicker">
+						<span class="masc"><span class="masc-in">{@render bi('L’occitan', 'L’occitan')}</span></span>
 					</p>
-					<p class="indici" aria-hidden="true">
-						{@render bi('Passatz la mirga suls tres mots.', 'Survolez les trois mots.')}
-					</p>
+					<div class="eros-entitol">
+						<h1 class="eros-titol">
+							<span class="linha masc"><span class="masc-in" style="--i: 1">{@render letras('Se parla.', 'Se parle.')}</span></span>
+							<span class="linha masc"><span class="masc-in" style="--i: 2">{@render letras('S’apren.', 'S’apprend.')}</span></span>
+							<span class="linha masc"><span class="masc-in" style="--i: 3">{@render letras('Se viu.', 'Se vit.')}</span></span>
+						</h1>
+						{#if formaEros === 'somari'}
+							<ul class="eros-somari">
+								{#each SOMARI as s, i (s.href)}
+									<li class="esvani" style="--i: {4 + i}">
+										<a href={s.href}><b>0{i + 1}</b>{@render bi(s.oc, s.fr)}{@render sageta()}</a>
+									</li>
+								{/each}
+							</ul>
+						{/if}
+					</div>
+					<div class="eros-pe">
+						{#if formaEros !== 'somari'}
+							<div class="esvani" style="--i: 5">
+								<p class="eros-sub">
+									{@render bi(
+										'Una carta per lo veire, de corses per l’aprene, de mots e d’òbras per lo viure.',
+										'Une carte pour le voir, des cours pour l’apprendre, des mots et des œuvres pour le vivre.'
+									)}
+								</p>
+								<p class="indici" aria-hidden="true">
+									{@render bi('Passatz la mirga suls tres mots.', 'Survolez les trois mots.')}
+								</p>
+							</div>
+							<div class="eros-accions esvani" style="--i: 6">
+								{#if formaEros !== 'fenestra'}
+									<a class="boton" href="/carta" data-magnet>
+										<span class="boton-emplenat"></span>
+										<span class="boton-tèxt">{@render bi('Dobrir la carta', 'Ouvrir la carte')}{@render sageta()}</span>
+									</a>
+								{/if}
+								<a class="ligam-tèxt" href="#biais">{@render bi('Aprene l’occitan', 'Apprendre l’occitan')}</a>
+							</div>
+						{/if}
+						<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
+					</div>
 				</div>
-				<div class="eros-accions esvani" style="--i: 6">
-					<a class="boton" href="/carta" data-magnet>
-						<span class="boton-emplenat"></span>
-						<span class="boton-tèxt">{@render bi('Dobrir la carta', 'Ouvrir la carte')}{@render sageta()}</span>
+				{#if formaEros === 'fenestra'}
+					<!-- La croix en étoiles se dessine dans ce cadre (motor.js, .eros-fenestra-crotz) -->
+					<a class="eros-fenestra esvani" style="--i: 4" href="/carta">
+						<span class="eros-fenestra-crotz" aria-hidden="true"></span>
+						<span class="boton">
+							<span class="boton-emplenat"></span>
+							<span class="boton-tèxt">{@render bi('Dobrir la carta', 'Ouvrir la carte')}{@render sageta()}</span>
+						</span>
 					</a>
-					<a class="ligam-tèxt" href="#biais">{@render bi('Aprene l’occitan', 'Apprendre l’occitan')}</a>
-				</div>
-				<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
+				{/if}
 			</div>
 		</section>
 
@@ -371,7 +440,7 @@
 		</section>
 
 		<!-- VI. 03 Se viu : deux cartes, découvrir et faire ensemble -->
-		<section class="camins" aria-labelledby="viure-titol">
+		<section class="camins" id="viure" aria-labelledby="viure-titol">
 			<h2 class="camins-cap jalon" data-revela>
 				<b>03</b><span class="masc"><span class="masc-in" id="viure-titol">{@render bi('Se viu', 'Se vit')}</span></span>
 			</h2>
@@ -470,8 +539,44 @@
 	</main>
 </div>
 
+{#if ensagEros}
+	<!-- Outil d'essai, volontairement neutre (hors charte) pour ne pas se confondre avec la page -->
+	<div class="ensag-eros" role="group" aria-label="Essai : mise en ordre de l'ouverture">
+		{#each FORMAS_EROS as [v, nom] (v)}
+			<button type="button" aria-pressed={formaEros === v} onclick={() => causirFormaEros(v)}>{nom}</button>
+		{/each}
+	</div>
+{/if}
 
 <style>
+	.ensag-eros {
+		position: fixed;
+		left: 50%;
+		bottom: 1rem;
+		z-index: 2000;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 3px;
+		padding: 4px;
+		border-radius: 999px;
+		background: #ffffff;
+		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+		font: 700 0.8rem/1 system-ui, sans-serif;
+	}
+	.ensag-eros button {
+		border: 0;
+		border-radius: 999px;
+		padding: 0.55rem 0.9rem;
+		background: transparent;
+		color: #222222;
+		font: inherit;
+		cursor: pointer;
+	}
+	.ensag-eros button[aria-pressed='true'] {
+		background: #222222;
+		color: #ffffff;
+	}
+
 	/* Qui : le manifeste et la photo côte à côte, l'un sous l'autre quand la place manque */
 	.manifest {
 		container: manifest / inline-size;

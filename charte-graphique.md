@@ -234,6 +234,37 @@ ou sur `ambianca.leugier` en JavaScript (`app/src/lib/stores/ambianca.svelte.js`
 - Le libellé « Fons leugièr » deviendra celui de toute la version légère
   (nouveau nom à vérifier avec l'API de lo Congrès).
 
+## 5octies. Mise en page : règles mesurables (2026-10-21)
+
+Tirées d'une synthèse de recommandations transmise par Romain (USWDS, WCAG 2.2,
+loi de proximité de la Gestalt, échelles d'espacement en 8 px), triées pour Lo
+Ligam. Chaque règle se vérifie par une mesure. Accessibilité : bloquant ; le
+reste : à signaler.
+
+| Règle | Critère | Test |
+|---|---|---|
+| ESP-01 Échelle | Espacements pris dans 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 128 px : variables `--esp-4` à `--esp-128` (`app/src/app.css`), en rem pour suivre la taille de texte du visiteur | marges, écarts et rembourrages calculés : multiples de 4 |
+| ESP-02 Proximité | Ce qui va ensemble est plus proche que ce qui est séparé | écart dans un groupe < écart entre groupes ; un élément loin de tout groupe « flotte » |
+| ESP-03 Paragraphes | Entre paragraphes 1 à 1,5 em ; entre items de liste au moins 0,5 em ; pas d'alinéa | marge basse du paragraphe / taille de police |
+| GRI-01 Grille | Sur ordinateur, les grands blocs se posent sur 12 colonnes, gouttière 24 px, marges `--marge` | bords des blocs sur des lignes de colonne |
+| TYP-01 Hiérarchie | Trois niveaux de texte au plus par écran ; tailles décroissantes ; texte courant de 45 à 75 signes par ligne, interligne 1,4 à 1,6 ; fer à gauche (centré pour titres courts et citations) ; plus d'espace au-dessus d'un titre qu'en dessous | tailles calculées, largeur en `ch` |
+| ACC-01 Contraste | WCAG 2.2 AA : 4,5:1 texte courant, 3:1 grand texte, dans les deux thèmes ; sur le fond animé, mesurer aussi sur les veines les plus claires | ratio calculé, couleur à transparence mélangée au fond |
+| ACC-02 Cibles | Tout ce qui se clique fait au moins 24 × 24 px (WCAG 2.2, 2.5.8), 44 px visés sur téléphone | taille du lien ou du bouton |
+
+Premier diagnostic (ouverture de l'accueil, 1906 × 902) : les boutons étaient à
+254 px du texte et à plus de 500 px de la croix, proches d'aucun groupe : d'où
+l'impression qu'ils « flottent » (ESP-02). Le doré du thème clair passait à
+4,16:1 pour les petits textes : assombri en `#9c5611` (4,70:1, ACC-01).
+
+Écarté : le Système de design de l'État (DSFR), réservé aux sites de l'État
+(lecture possible, usage non) ; une grille de ligne de base stricte (sans objet
+en responsive) ; la « touche méditerranéenne » de la note, non sourcée, alors
+que Lo Ligam a déjà son identité (§3bis, gamme Éclat) ; les normes ISO 9241,
+payantes, dont le sommaire peut servir plus tard de liste de contrôle.
+
+Application : l'échelle et ces règles valent pour tout nouveau travail ; le
+reste du site s'y range au fil des chantiers, sans refonte d'un coup.
+
 ## 6. Décision
 
 L'identité visuelle de Lo Ligam est **actée** : celle de l'Instagram existant, adaptée aux règles d'interface ci-dessus. Sert de référence à Claude Code.
