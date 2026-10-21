@@ -17,8 +17,9 @@
 		ambianca.forçarClar = !ARMONIZADAS.includes(id);
 	});
 	// Pied de page partout, sauf l'administration (l'accueil l'a aussi depuis
-	// qu'il est passé dans le cadre commun, 2026-10-07).
-	let ambPè = $derived(!id.startsWith('/admin'));
+	// qu'il est passé dans le cadre commun, 2026-10-07). L'essai de la refonte
+	// claire (/ensag/clar, 2026-10-21) dessine son propre pied de page.
+	let ambPè = $derived(!id.startsWith('/admin') && id !== '/ensag/clar');
 </script>
 
 <svelte:head>
@@ -32,6 +33,6 @@
 	<SiteFooter />
 {/if}
 
-{#if !id.startsWith('/admin')}
+{#if ambPè}
 	<TornarAmont />
 {/if}

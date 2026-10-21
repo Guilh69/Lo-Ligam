@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 375 375">
+	<!-- Lo lògo oficial (2026-09-30, carta grafica §1 bis) : la crotz-constellacion
+	     dessenhada per Romain — 12 pomètas + un moieu, la crotz existís pas que
+	     perque los punts son ligats. Fichièr reconstruit a la man dempuèi
+	     design-stock/logo/svg/simbol-blanc.svg (geometria identica, sens la
+	     tuyautariá Canva) : teula bricalha + simbòl blanc, servís de favicon e
+	     de pastilha de marca. Varianta C causida per Romain lo 30-09 (còntra
+	     l efièch « granda ròda » vist per sa sòrre) : moieu reduch (r 25→17),
+	     arcs espessits (5→9). Lo mèstre Canva es de metre a jorn parièr. -->
+	<rect width="375" height="375" rx="64" fill="#b53d17"/>
+	<g stroke="#ffffff" fill="none">
+		<!-- Los 8 arcs concaus entre las pomètas -->
+		<g stroke-width="9">
+			<path transform="matrix(0.268014, 0.700477, -0.700477, 0.268014, 64.86348, 183.788938)" d="M 1.376068 17.552014 C 31.817355 -2.514514 62.260322 -2.515953 92.703108 17.552563"/>
+			<path transform="matrix(-0.264462, 0.701826, -0.701826, -0.264462, 90.09249, 126.787067)" d="M 1.362442 17.551517 C 32.215336 -2.517821 63.067305 -2.516403 93.916511 17.550899"/>
+			<path transform="matrix(0.691513, 0.29036, -0.29036, 0.691513, 126.085587, 284.330547)" d="M 1.348645 17.5517 C 32.627018 -2.518593 63.904784 -2.518294 95.186744 17.550581"/>
+			<path transform="matrix(0.693965, -0.284452, 0.284452, 0.693965, 182.144918, 311.278163)" d="M 1.384734 17.548771 C 31.55003 -2.514684 61.715991 -2.516508 91.885462 17.550094"/>
+			<path transform="matrix(0.271321, -0.699203, 0.699203, 0.271321, 284.023404, 247.651683)" d="M 1.451193 17.549063 C 29.632651 -2.515269 57.816365 -2.518569 86.001247 17.550756"/>
+			<path transform="matrix(-0.249767, -0.707189, 0.707189, -0.249767, 307.550843, 193.403865)" d="M 1.370475 17.551954 C 31.989038 -2.516707 62.607047 -2.51822 93.217856 17.550591"/>
+			<path transform="matrix(-0.691743, 0.289812, -0.289812, -0.691743, 190.590153, 63.74593)" d="M 1.38408 17.548767 C 31.566341 -2.518959 61.743885 -2.519346 91.926321 17.551629"/>
+			<path transform="matrix(-0.698452, -0.273248, 0.273248, -0.698452, 248.993103, 90.119833)" d="M 1.376053 17.552315 C 31.806364 -2.517971 62.241936 -2.518033 92.676019 17.549175"/>
+		</g>
+		<!-- Las 8 brancas (4 linhas que traversan lo centre) -->
+		<g stroke-width="8">
+			<path transform="matrix(0.641948, -0.387818, 0.387818, 0.641948, 73.545424, 252.913812)" d="M 3.999957 3.998973 L 345.757126 3.999943"/>
+			<path transform="matrix(-0.642386, -0.387091, 0.387091, -0.642386, 294.426636, 256.816332)" d="M -0.00130785 4.001866 L 338.79745 3.999582"/>
+			<path transform="matrix(0.385815, -0.643154, 0.643154, 0.385815, 118.61033, 295.77414)" d="M 0.00157877 4.000061 L 339.885894 4.000818"/>
+			<path transform="matrix(-0.384776, -0.643776, 0.643776, -0.384776, 250.14365, 300.072431)" d="M -0.0020904 3.998745 L 343.962972 4.001613"/>
+		</g>
+	</g>
+	<!-- Lo moieu e las 12 pomètas -->
+	<g fill="#ffffff">
+		<circle cx="185.77" cy="188.05" r="17"/>
+		<circle cx="185.77" cy="50.75" r="15"/>
+		<circle cx="121.45" cy="78.61" r="15"/>
+		<circle cx="252.46" cy="78.61" r="15"/>
+		<circle cx="51.75" cy="189.22" r="15"/>
+		<circle cx="77.83" cy="122.14" r="15"/>
+		<circle cx="77.83" cy="254.02" r="15"/>
+		<circle cx="323.25" cy="188.05" r="15"/>
+		<circle cx="296.89" cy="122.12" r="15"/>
+		<circle cx="296.89" cy="253.99" r="15"/>
+		<circle cx="121.45" cy="297.43" r="15"/>
+		<circle cx="252.46" cy="297.43" r="15"/>
+		<circle cx="185.77" cy="324.25" r="15"/>
+	</g>
+</svg>
