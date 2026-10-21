@@ -29,6 +29,7 @@
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 	import { RESERVAR, MOTS, MANIFEST, CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
 	import { AMASSA } from '$lib/acuelh/amassa.js';
+	import { PLAN } from '$lib/data/planSite.js';
 	import '$lib/acuelh/acuelh.css';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -47,18 +48,14 @@
 				['Instagram', 'Instagram', 'https://www.instagram.com/lo_ligam/']] }
 	];
 
-	// Mise en ordre de l'ouverture (Romain, 2026-10-21 : « les éléments flottent ») :
-	// trois formes à comparer sur /?ensag=eros ; sans le paramètre, l'actuelle.
-	//   - Colonne : texte puis boutons dans une seule colonne, sous le titre ;
-	//   - Sommaire : chaque ligne du titre reçoit son chemin (la phrase
-	//     d'explication découpée en trois), plus de boutons séparés ;
-	//   - Fenêtre : la croix en étoiles dans un cadre qui ouvre la carte (idée
-	//     du frère de Romain : encadrer ce qui se clique).
+	// Mise en ordre de l'ouverture (Romain, 2026-10-21 : « les éléments flottent »,
+	// « trop de vide au milieu ») : « Fils d'or » à comparer sur /?ensag=eros ;
+	// sans le paramètre, l'actuelle. Chaque phrase du titre se prolonge par un
+	// trait doré jusqu'à son chemin. (Colonne, Sommaire et Fenêtre, essayées le
+	// même jour, n'ont pas convaincu.)
 	const FORMAS_EROS = [
 		['actual', 'Actuelle'],
-		['colomna', 'Colonne'],
-		['somari', 'Sommaire'],
-		['fenestra', 'Fenêtre']
+		['fials', 'Fils d’or']
 	];
 	const CLAU_ENSAG_EROS = 'lo-ligam-ensag-eros';
 	let formaEros = $state('actual');
@@ -71,12 +68,43 @@
 			// pas grave : le choix vaut pour la visite
 		}
 	}
-	// Sans mot nouveau : les trois morceaux de la phrase d'explication
-	const SOMARI = [
-		{ oc: 'Una carta per lo veire', fr: 'Une carte pour le voir', href: '/carta' },
-		{ oc: 'De corses per l’aprene', fr: 'Des cours pour l’apprendre', href: '#biais' },
-		{ oc: 'De mots e d’òbras per lo viure', fr: 'Des mots et des œuvres pour le vivre', href: '#viure' }
+	// Les trois chemins, pris dans le plan du site (le même que le menu et le
+	// pied de page) : un chemin principal et quelques autres. « Amassa » mène à
+	// sa section plus bas tant que le fòrum et les grops ne sont pas faits.
+	const rubrica = (href) => PLAN.flatMap((s) => s.grops.flatMap((g) => g.items)).find((i) => i.href === href);
+	const [PARLA, APREN, VIU] = PLAN;
+	const FIALS = [
+		{ ...PARLA, cap: rubrica('/carta'), autres: [rubrica('/wiki')] },
+		{ ...APREN, cap: rubrica('/aprene'), autres: [rubrica('/aprene/essai'), rubrica(RESERVAR)] },
+		{ ...VIU, cap: { ...VIU.grops[1], href: '#viure' }, autres: [rubrica('/forum'), rubrica('/grops'), rubrica('/obras')] }
 	];
+	// Le trait part de la fin de chaque phrase, dans la langue affichée : la
+	// colonne du titre a la largeur de la langue la plus longue (les deux sont
+	// superposées), on mesure donc l'écart entre chaque fin de phrase et le
+	// début de la colonne des chemins
+	function fialsMesura(ul, francés) {
+		let lenga = francés;
+		const mesurar = () => {
+			const linhas = ul.parentElement.querySelectorAll('.eros-titol .linha');
+			const ecart = parseFloat(getComputedStyle(ul.parentElement).columnGap) || 0;
+			const debut = ul.getBoundingClientRect().left - ecart;
+			[...linhas].forEach((l, i) => {
+				const fin = l.querySelector(`.bi > ${lenga ? '.fr' : '.oc'}`).getBoundingClientRect().right;
+				ul.children[i]?.style.setProperty('--manca', `${Math.max(0, Math.round(debut - fin))}px`);
+			});
+		};
+		const ro = new ResizeObserver(mesurar);
+		ro.observe(ul.parentElement);
+		document.fonts?.ready.then(mesurar);
+		mesurar();
+		return {
+			update(f) {
+				lenga = f;
+				mesurar();
+			},
+			destroy: () => ro.disconnect()
+		};
+	}
 
 	// Le flux des liaisons ne tourne que lorsque la carte « Amassa » est à l'écran
 	function enVista(el) {
@@ -227,64 +255,65 @@
 
 		<!-- I. Le héros : le titre annonce le plan de la page, un seul bouton principal -->
 		<section class="eros" data-revela data-forma={formaEros}>
-			<div class="eros-cors">
-				<div class="eros-cap">
-					<p class="eros-kicker">
-						<span class="masc"><span class="masc-in">{@render bi('L’occitan', 'L’occitan')}</span></span>
-					</p>
-					<div class="eros-entitol">
-						<h1 class="eros-titol">
-							<span class="linha masc"><span class="masc-in" style="--i: 1">{@render letras('Se parla.', 'Se parle.')}</span></span>
-							<span class="linha masc"><span class="masc-in" style="--i: 2">{@render letras('S’apren.', 'S’apprend.')}</span></span>
-							<span class="linha masc"><span class="masc-in" style="--i: 3">{@render letras('Se viu.', 'Se vit.')}</span></span>
-						</h1>
-						{#if formaEros === 'somari'}
-							<ul class="eros-somari">
-								{#each SOMARI as s, i (s.href)}
-									<li class="esvani" style="--i: {4 + i}">
-										<a href={s.href}><b>0{i + 1}</b>{@render bi(s.oc, s.fr)}{@render sageta()}</a>
-									</li>
-								{/each}
-							</ul>
-						{/if}
-					</div>
-					<div class="eros-pe">
-						{#if formaEros !== 'somari'}
-							<div class="esvani" style="--i: 5">
-								<p class="eros-sub">
-									{@render bi(
-										'Una carta per lo veire, de corses per l’aprene, de mots e d’òbras per lo viure.',
-										'Une carte pour le voir, des cours pour l’apprendre, des mots et des œuvres pour le vivre.'
-									)}
-								</p>
-								<p class="indici" aria-hidden="true">
-									{@render bi('Passatz la mirga suls tres mots.', 'Survolez les trois mots.')}
-								</p>
-							</div>
-							<div class="eros-accions esvani" style="--i: 6">
-								{#if formaEros !== 'fenestra'}
-									<a class="boton" href="/carta" data-magnet>
-										<span class="boton-emplenat"></span>
-										<span class="boton-tèxt">{@render bi('Dobrir la carta', 'Ouvrir la carte')}{@render sageta()}</span>
-									</a>
-								{/if}
-								<a class="ligam-tèxt" href="#biais">{@render bi('Aprene l’occitan', 'Apprendre l’occitan')}</a>
-							</div>
-						{/if}
-						<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
-					</div>
-				</div>
-				{#if formaEros === 'fenestra'}
-					<!-- La croix en étoiles se dessine dans ce cadre (motor.js, .eros-fenestra-crotz) -->
-					<a class="eros-fenestra esvani" style="--i: 4" href="/carta">
-						<span class="eros-fenestra-crotz" aria-hidden="true"></span>
-						<span class="boton">
-							<span class="boton-emplenat"></span>
-							<span class="boton-tèxt">{@render bi('Dobrir la carta', 'Ouvrir la carte')}{@render sageta()}</span>
-						</span>
-					</a>
+			<p class="eros-kicker">
+				<span class="masc"><span class="masc-in">{@render bi('L’occitan', 'L’occitan')}</span></span>
+			</p>
+			<div class="eros-entitol">
+				<h1 class="eros-titol">
+					<span class="linha masc"><span class="masc-in" style="--i: 1">{@render letras('Se parla.', 'Se parle.')}</span></span>
+					<span class="linha masc"><span class="masc-in" style="--i: 2">{@render letras('S’apren.', 'S’apprend.')}</span></span>
+					<span class="linha masc"><span class="masc-in" style="--i: 3">{@render letras('Se viu.', 'Se vit.')}</span></span>
+				</h1>
+				{#if formaEros === 'fials'}
+					<ul class="eros-fials" use:fialsMesura={fr}>
+						{#each FIALS as c, i (c.n)}
+							<li class="esvani" style="--i: {4 + i}">
+								<span class="fial" aria-hidden="true"></span>
+								<div class="fial-camin">
+									<span class="fial-n">{c.n}<span class="fial-verb"> · {@render bi(c.oc, c.fr)}</span></span>
+									<a class="fial-cap" href={c.cap.href}>{@render bi(c.cap.oc, c.cap.fr)}{@render sageta()}</a>
+									<span class="fial-autres">
+										{#each c.autres as a, j (a.href)}
+											{#if j}<span class="fial-sep" aria-hidden="true">·</span>{/if}
+											<a
+												href={a.href}
+												target={a.defòra ? '_blank' : undefined}
+												rel={a.defòra ? 'noopener' : undefined}
+												aria-describedby={a.defòra ? 'onglet-nou' : undefined}>{fr ? a.fr : a.oc}</a
+											>
+										{/each}
+									</span>
+								</div>
+							</li>
+						{/each}
+					</ul>
 				{/if}
 			</div>
+			{#if formaEros === 'fials'}
+				<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
+			{:else}
+				<div class="eros-pe">
+					<div class="esvani" style="--i: 5">
+						<p class="eros-sub">
+							{@render bi(
+								'Una carta per lo veire, de corses per l’aprene, de mots e d’òbras per lo viure.',
+								'Une carte pour le voir, des cours pour l’apprendre, des mots et des œuvres pour le vivre.'
+							)}
+						</p>
+						<p class="indici" aria-hidden="true">
+							{@render bi('Passatz la mirga suls tres mots.', 'Survolez les trois mots.')}
+						</p>
+					</div>
+					<div class="eros-accions esvani" style="--i: 6">
+						<a class="boton" href="/carta" data-magnet>
+							<span class="boton-emplenat"></span>
+							<span class="boton-tèxt">{@render bi('Dobrir la carta', 'Ouvrir la carte')}{@render sageta()}</span>
+						</a>
+						<a class="ligam-tèxt" href="#biais">{@render bi('Aprene l’occitan', 'Apprendre l’occitan')}</a>
+					</div>
+					<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
+				</div>
+			{/if}
 		</section>
 
 		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->

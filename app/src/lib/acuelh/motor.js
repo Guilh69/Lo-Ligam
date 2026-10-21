@@ -35,8 +35,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 	let forçarFons = true;
 	/* ================= Tèma : sorne, clar, o coma lo sistèma ================= */
 	const TEMAS = {
-		sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(47, 23, 14, 0.94)', riu: '#f6b73c', estela: '#fbf1e1', liser: 'rgba(34, 16, 10, 0.9)', fil: '#f6b73c', riuTèxt: '#ffd98a', vilaTèxt: '#fbf1e1', vel: 'rgba(34, 16, 10, 0.75)', velFin: 'rgba(34, 16, 10, 0)', crotzPonch: '#f5ead8', crotzEstret: '#8f5c28', crotzCrida: '#6e2e12' },
-		clar: { costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#dcb790', crotzCrida: '#e6cbaa' }
+		sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(47, 23, 14, 0.94)', riu: '#f6b73c', estela: '#fbf1e1', liser: 'rgba(34, 16, 10, 0.9)', fil: '#f6b73c', riuTèxt: '#ffd98a', vilaTèxt: '#fbf1e1', vel: 'rgba(34, 16, 10, 0.75)', velFin: 'rgba(34, 16, 10, 0)', crotzPonch: '#f5ead8', crotzEstret: '#8f5c28', crotzCrida: '#6e2e12', crotzFons: '#4a2313' },
+		clar: { costa: 'rgba(46, 29, 20, 0.42)', bulla: 'rgba(250, 243, 232, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(245, 234, 216, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2e1d14', vel: 'rgba(245, 234, 216, 0.85)', velFin: 'rgba(245, 234, 216, 0)', crotzPonch: '#b53d17', crotzEstret: '#dcb790', crotzCrida: '#e6cbaa', crotzFons: '#ecdec8' }
 	};
 	let TEM = TEMAS.sorne, temaClar = false;
 	function aplicarTema(clar, dalt) {
@@ -500,8 +500,6 @@ export function lancarAcuelh(racina, opcions = {}) {
 			const s = l.querySelector('.bi > ' + lenga);
 			if (s) d = Math.max(d, s.getBoundingClientRect().right);
 		}
-		// essai « Sommaire » (2026-10-21) : les chemins à droite du titre
-		for (const a of racina.querySelectorAll('.eros-somari a')) d = Math.max(d, a.getBoundingClientRect().right);
 		return d;
 	}
 
@@ -510,22 +508,18 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// Intro : los punts venon s'ajustar (1,8 s), en luòc d'un compte a rebors factici.
 		const intro = calm ? 1 : easeIO(clamp((temps - 0.35) / 1.8));
 		// Ecran estrech : la crotz se fa discreta en naut a drecha, darrièr lo tèxte.
-		let estret = W < 1100;
+		const estret = W < 1100;
 		const aEros = intro * clamp(1 - sy / (H * 0.85));
 		const rc = crida.getBoundingClientRect();
 		const aCrida = clamp((H - rc.top) / (H * 0.9));
 		const enCrida = aCrida > aEros;
 		const a = Math.max(aEros, aCrida);
-		// essai « Fenêtre » (2026-10-21) : la croix se dessine dans le cadre de la carte
-		const zona = enCrida ? null : racina.querySelector('.eros-fenestra-crotz');
-		const rz = zona && zona.getBoundingClientRect();
-		if (rz) estret = false;
-		let R = enCrida ? Math.min(H * 0.4, W * 0.36) : estret ? Math.min(W * 0.26, H * 0.2) : Math.min(H * 0.26, W * 0.14);
-		let ox = enCrida ? W / 2 : estret ? W * 0.7 : W * 0.8;
-		if (rz) {
-			R = Math.min(rz.width, rz.height) / 2.3;
-			ox = rz.left + rz.width / 2;
-		} else if (!enCrida && !estret) {
+		// essai « Fils d'or » (2026-10-21) : sur ordinateur, la croix passe en fond,
+		// grande et discrète, derrière les chemins
+		const fons = !enCrida && !estret && racina.querySelector('.eros-fials') !== null;
+		let R = enCrida ? Math.min(H * 0.4, W * 0.36) : fons ? Math.min(H * 0.36, W * 0.2) : estret ? Math.min(W * 0.26, H * 0.2) : Math.min(H * 0.26, W * 0.14);
+		let ox = enCrida ? W / 2 : fons ? W * 0.76 : estret ? W * 0.7 : W * 0.8;
+		if (!enCrida && !estret && !fons) {
 			// La croix ne passe jamais sous le titre (Romain, 2026-10-15 : en français,
 			// « S'apprend. » est plus long que « S'apren. ») : elle s'écarte vers la
 			// droite et rapetisse s'il le faut, d'après la fin du titre dans la langue
@@ -535,9 +529,9 @@ export function lancarAcuelh(racina, opcions = {}) {
 			if (dispo < 2.3 * R) R = Math.max(dispo / 2.3, R * 0.55);
 			ox = Math.min(Math.max(ox, dreta + marge + 1.15 * R), W - marge - 1.15 * R);
 		}
-		const oy = rz ? rz.top + rz.height / 2 : enCrida ? rc.top + rc.height / 2 : (estret ? H * 0.27 : H * 0.42) - sy * 0.35;
+		const oy = enCrida ? rc.top + rc.height / 2 : (fons ? H * 0.52 : estret ? H * 0.27 : H * 0.42) - sy * 0.35;
 		// (écran étroit : 0,45 → 0,3 le 2026-10-16, la croix derrière le titre plus discrète, demande de Romain)
-		const opacitat = enCrida ? 0.32 : estret ? 0.3 : 1;
+		const opacitat = enCrida ? 0.32 : fons ? 0.18 : estret ? 0.3 : 1;
 		const rot = temps * 0.015 + sy * 0.0004;
 		const co = Math.cos(rot), si = Math.sin(rot);
 
@@ -738,7 +732,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// Mòde discret (crida, ecran estrech) : pomètas d'aur amortit e OPACAS,
 		// per que los traçats se vejan pas a travèrs (efièch grisastre).
 		// Darrièr lo títol de la crida, color de braça (lo tèxte daurat demòra legible).
-		cx.fillStyle = enCrida ? TEM.crotzCrida : estret ? TEM.crotzEstret : TEM.crotzPonch;
+		cx.fillStyle = enCrida ? TEM.crotzCrida : fons ? TEM.crotzFons : estret ? TEM.crotzEstret : TEM.crotzPonch;
 		punts.forEach((pt, i) => {
 			const rr = lerp(1.6, R * (i === 0 ? 0.124 : 0.109), pt.ai * pt.ai);
 			cx.globalAlpha = lerp(0.6, 1, pt.ai);

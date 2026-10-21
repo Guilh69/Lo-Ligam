@@ -192,90 +192,68 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 @media (hover: none) {
 	.acuelh .indici { display: none; }
 }
-/* ----- Essai (Romain, 2026-10-21, « les éléments flottent ») : trois mises en
-   ordre de l'ouverture, /?ensag=eros. À retirer dès son choix. ----- */
+/* ----- Essai « Fils d'or » (Romain, 2026-10-21 : « les éléments flottent »,
+   « trop de vide au milieu ») : chaque phrase du titre se prolonge par un fin
+   trait doré jusqu'à son chemin, pris dans le plan du site (planSite.js).
+   /?ensag=eros ; à rendre définitif ou à retirer après son choix. Les essais
+   Colonne, Sommaire et Fenêtre n'ont pas convaincu (retirés). ----- */
 .acuelh .eros { position: relative; }
-.acuelh .eros-cors, .acuelh .eros-cap { min-width: 0; }
-/* Les trois essais suivent l'échelle d'espacement (app.css) et la loi de
-   proximité : ce qui va ensemble est plus proche que ce qui est séparé.
-   « L'occitan » et le titre : 24 ; titre → explication : 48 ; explication →
-   boutons : 32 ; entre deux boutons : 24 */
-.acuelh .eros:not([data-forma='actual']) .eros-kicker { margin-bottom: var(--esp-24); }
-.acuelh .eros:not([data-forma='actual']) .eros-pe { margin-top: var(--esp-48); }
-.acuelh .eros:not([data-forma='actual']) .eros-accions { gap: var(--esp-24); }
-.acuelh .eros:not([data-forma='actual']) .indici { margin-top: var(--esp-12); }
-/* Colonne : le texte puis les boutons, alignés sur le titre ; le tout centré en
-   hauteur, la croix en face ; l'invitation à descendre au milieu, en bas */
-.acuelh .eros[data-forma='colomna'] { justify-content: center; --eros-fs: clamp(3.4rem, min(11vw, 29vh - 8.5rem), 12rem); }
-.acuelh.fr .eros[data-forma='colomna'] { --eros-fs: clamp(3.1rem, min(10vw, 29vh - 8.5rem), 11rem); }
-.acuelh .eros[data-forma='colomna'] .eros-pe { flex-direction: column; align-items: flex-start; gap: var(--esp-32); }
-.acuelh .eros[data-forma='colomna'] .indici { display: none; }
-.acuelh .eros[data-forma='colomna'] .davalar { position: absolute; left: 50%; bottom: var(--esp-24); translate: -50% 0; }
-.acuelh .eros[data-forma='colomna'] .davalar span { height: 44px; }
-/* Sommaire : chaque ligne du titre reçoit son chemin, comme une table des
-   matières (01, 02, 03 : les numéros des chapitres plus bas) */
-.acuelh .eros-somari { list-style: none; margin-top: var(--esp-32); }
-.acuelh .eros-somari li { border-top: 1px solid color-mix(in srgb, var(--crema) 16%, transparent); }
-.acuelh .eros-somari li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--crema) 16%, transparent); }
-.acuelh .eros-somari a {
-	/* cible d'au moins 24 px de haut (WCAG 2.2, 2.5.8) : 48 sur téléphone */
-	display: inline-flex; align-items: center; gap: var(--esp-12); padding: var(--esp-12) 0;
-	font: 600 clamp(0.95rem, 1vw, 1.05rem)/1.35 var(--cors); color: var(--crema-2); text-wrap: balance;
-	transition: color 0.4s, gap 0.6s var(--ease);
+.acuelh .eros[data-forma='fials'] { justify-content: center; }
+.acuelh .eros[data-forma='fials'] .eros-kicker { margin-bottom: var(--esp-24); }
+.acuelh .eros[data-forma='fials'] .davalar { position: absolute; left: 50%; bottom: var(--esp-24); translate: -50% 0; }
+.acuelh .eros[data-forma='fials'] .davalar span { height: 44px; }
+/* Téléphone et tablette : les trois chemins en liste sous le titre, qui cède
+   la hauteur qu'ils prennent */
+.acuelh .eros[data-forma='fials'] { --eros-fs: clamp(3.4rem, min(11vw, 29vh - 10rem), 12rem); }
+.acuelh.fr .eros[data-forma='fials'] { --eros-fs: clamp(3.1rem, min(10vw, 29vh - 10rem), 11rem); }
+.acuelh .eros-fials { list-style: none; margin-top: var(--esp-32); }
+.acuelh .eros-fials li { display: flex; align-items: center; gap: var(--esp-24); padding: var(--esp-12) 0; border-top: 1px solid color-mix(in srgb, var(--crema) 16%, transparent); }
+.acuelh .eros-fials li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--crema) 16%, transparent); }
+.acuelh .fial { display: none; }
+.acuelh .fial-camin { flex: 1; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--esp-12); align-items: baseline; }
+.acuelh .fial-n { font-size: 0.72rem; line-height: 1.3; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--aur); }
+.acuelh .fial-verb { display: none; }
+.acuelh .fial-cap {
+	display: flex; align-items: center; justify-content: space-between; gap: var(--esp-16);
+	font-family: var(--titol); font-size: 1.5rem; line-height: 1.15; color: var(--crema); transition: color 0.4s;
 }
-/* la langue cachée, plus longue, peut faire deux lignes : la visible reste au milieu */
-.acuelh .eros-somari .bi > span { display: flex; align-items: center; }
-.acuelh .eros-somari b { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.22em; color: var(--aur); }
-.acuelh .eros-somari svg { flex: none; width: 1em; height: 1em; color: var(--aur); transition: transform 0.6s var(--ease); }
-.acuelh .eros-somari li:not(:first-child) svg { rotate: 90deg; }
-.acuelh .eros-somari a:hover, .acuelh .eros-somari a:focus-visible { color: var(--crema); }
-.acuelh .eros-somari a:hover svg { transform: translateX(4px); }
-.acuelh .eros[data-forma='somari'] .eros-pe { margin-top: var(--esp-24); justify-content: flex-end; }
-@media (min-width: 1300px) {
-	/* à côté du titre, chaque chemin à hauteur de sa ligne ; le titre se règle
-	   aussi sur la largeur pour laisser la place aux chemins et à la croix */
-	.acuelh .eros[data-forma='somari'] { --eros-fs: clamp(3.4rem, min(6vw, 29vh - 7.5rem), 12rem); }
-	.acuelh .eros[data-forma='somari'] .eros-entitol {
-		display: grid; grid-template-columns: max-content minmax(0, 25rem); column-gap: var(--esp-48); align-items: start;
-	}
-	.acuelh .eros-somari { margin-top: 0; font-size: var(--eros-fs); }
-	.acuelh .eros-somari li, .acuelh .eros-somari li:last-child { height: 1.15em; display: flex; align-items: center; border: 0; }
-	.acuelh .eros-somari a { padding: var(--esp-8) 0; }
+.acuelh .fial-cap svg { flex: none; width: 0.8em; height: 0.8em; color: var(--aur); transition: transform 0.6s var(--ease); }
+.acuelh .fial-cap:hover, .acuelh .fial-cap:focus-visible { color: var(--aur); }
+.acuelh .fial-cap:hover svg, .acuelh .fial-cap:focus-visible svg { transform: translateX(4px); }
+/* liens secondaires : cible d'au moins 24 px de haut (WCAG 2.2, 2.5.8) */
+.acuelh .fial-autres { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--esp-8); font-size: 0.85rem; color: var(--crema-2); }
+.acuelh .fial-autres a {
+	padding-block: var(--esp-4);
+	background: linear-gradient(currentColor, currentColor) 0 calc(100% - 3px) / 0 1px no-repeat;
+	transition: background-size 0.5s var(--ease), color 0.3s;
 }
-/* Fenêtre : la croix en étoiles dans un cadre qui ouvre la carte ; « Aprene »
-   devient un bouton à contour, à gauche sous le texte */
-.acuelh .eros[data-forma='fenestra'] .ligam-tèxt {
-	/* même hauteur que le bouton plein */
-	padding: calc(1.15rem - 1px) 2.2rem; border: 1px solid color-mix(in srgb, var(--crema) 45%, transparent); border-radius: 999px;
-	transition: border-color 0.4s, background-color 0.4s;
-}
-.acuelh .eros[data-forma='fenestra'] .ligam-tèxt::after { display: none; }
-.acuelh .eros[data-forma='fenestra'] .eros-pe { justify-content: flex-start; column-gap: var(--esp-32); }
-.acuelh .eros[data-forma='fenestra'] .davalar { margin-left: auto; }
-.acuelh .eros[data-forma='fenestra'] .ligam-tèxt:hover { border-color: var(--crema); background: color-mix(in srgb, var(--crema) 8%, transparent); }
-.acuelh .eros-fenestra {
-	position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
-	padding: var(--esp-24); border-radius: 24px;
-	/* pas de flou : la croix est dessinée derrière, sur le canevas */
-	background: color-mix(in srgb, var(--crema) 4%, transparent);
-	border: 1px solid color-mix(in srgb, var(--aur) 38%, transparent);
-	transition: border-color 0.5s, background-color 0.5s;
-}
-.acuelh .eros-fenestra-crotz { position: absolute; inset: var(--esp-24) var(--esp-24) var(--esp-96); }
-.acuelh .eros-fenestra:hover, .acuelh .eros-fenestra:focus-visible { border-color: var(--aur); background: color-mix(in srgb, var(--crema) 7%, transparent); }
-.acuelh .eros-fenestra:hover .boton-emplenat, .acuelh .eros-fenestra:focus-visible .boton-emplenat { transform: translate(-50%, -50%) scale(1); }
-.acuelh .eros-fenestra:hover .boton svg { transform: translateX(4px) rotate(-45deg); }
-/* sur tablette et téléphone, le cadre passe sous le texte : le titre cède la hauteur qu'il prend */
-.acuelh .eros[data-forma='fenestra'] { --eros-fs: clamp(3.1rem, min(10vw, 29vh - 12rem), 12rem); }
-.acuelh .eros[data-forma='fenestra'] .eros-fenestra { margin-top: var(--esp-24); height: clamp(7rem, 20vh, 11rem); }
+.acuelh .fial-autres a:hover, .acuelh .fial-autres a:focus-visible { color: var(--crema); background-size: 100% 1px; }
+.acuelh .fial-sep { color: var(--aur); opacity: 0.7; }
 @media (min-width: 1100px) {
-	/* grille de 12 colonnes : le texte sur 7, le cadre sur 5 ; le titre se règle
-	   aussi sur la largeur pour rester dans ses 7 colonnes */
-	.acuelh .eros[data-forma='fenestra'] { --eros-fs: clamp(3.4rem, min(7vw, 29vh - 7.5rem), 12rem); }
-	.acuelh .eros[data-forma='fenestra'] .eros-cors { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--esp-24); }
-	.acuelh .eros[data-forma='fenestra'] .eros-cap { grid-column: 1 / 8; }
-	.acuelh .eros[data-forma='fenestra'] .eros-fenestra { grid-column: 8 / 13; margin-top: 0; height: auto; }
+	/* Ordinateur : à côté du titre, chaque chemin à hauteur de sa ligne, relié
+	   par le trait qui part de la fin de la phrase (--manca, mesuré par
+	   +page.svelte) ; le titre se règle aussi sur la largeur pour laisser la
+	   place au trait et aux chemins */
+	.acuelh .eros[data-forma='fials'], .acuelh.fr .eros[data-forma='fials'] { --eros-fs: clamp(3.4rem, min(8vw, 29vh - 7.5rem), 12rem); }
+	.acuelh .eros[data-forma='fials'] .eros-entitol { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--esp-24); align-items: start; }
+	.acuelh .eros-fials { margin-top: 0; font-size: var(--eros-fs); }
+	.acuelh .eros-fials li, .acuelh .eros-fials li:last-child { height: 1.15em; margin-left: calc(-1 * var(--manca, 0px)); padding: 0; border: 0; }
+	.acuelh .fial {
+		display: block; position: relative; flex: 1; min-width: var(--esp-32); height: 1px; background: var(--aur); opacity: 0.55;
+		transform-origin: left; transform: scaleX(0); transition: transform 1.4s var(--ease), opacity 0.4s;
+		transition-delay: calc(var(--i, 0) * 120ms + 500ms), 0s;
+	}
+	.acuelh .fial::after { content: ''; position: absolute; right: -3px; top: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--aur); }
+	.acuelh .vist .fial { transform: none; }
+	.acuelh .eros-fials li:hover .fial, .acuelh .eros-fials li:focus-within .fial { opacity: 1; }
+	/* au moins 16rem : sur un portable peu haut, les liens restent sur une ligne */
+	.acuelh .fial-camin { flex: none; width: max(2.7em, 16rem); display: flex; flex-direction: column; gap: 0.04em; }
+	.acuelh .fial-n { font-size: max(0.75rem, 0.11em); }
+	.acuelh .fial-verb { display: inline; }
+	.acuelh .fial-cap { font-size: max(1.1rem, 0.27em); }
+	.acuelh .fial-autres { font-size: max(0.8rem, 0.125em); }
 }
+:root[data-leugier='on'] .acuelh .fial { transition: opacity 0.4s; transform: none; }
 /* ---------- Botons ---------- */
 .acuelh .boton {
 	position: relative; display: inline-flex; align-items: center; gap: 0.7rem; overflow: hidden; isolation: isolate;
@@ -474,6 +452,7 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 @media (prefers-reduced-motion: reduce) {
 	.acuelh *, .acuelh *::before, .acuelh *::after { animation: none !important; transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
 	.acuelh .masc > .masc-in, .acuelh .esvani { transform: none !important; opacity: 1 !important; }
+	.acuelh .fial { transform: none !important; }
 	.acuelh .trobador-fenestra { clip-path: none; }
 	.acuelh .trobador-fenestra img { transform: none; }
 }
