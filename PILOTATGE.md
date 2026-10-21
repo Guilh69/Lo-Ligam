@@ -126,6 +126,7 @@ photos.
 7. **Casting** : qui joue les personnages ? (+ autorisations écrites)
 8. ~~**design-stock** : que committer, qu'archiver ?~~ Tranché le 2026-10-12 (option A, chantier 9).
 9. **Démonstrateur pour le LISN** : ✅ option A faite le 2026-10-12 (cahier §11) : couche « Enquêtes vocales » sur la carte **en ligne** (le site n'est pas encore ouvert au public), 115 points rangés dans nos dialectes, fiche d'écoute. **Avant l'ouverture au public : accord écrit du LISN.** Le même jour, Romain veut les trois idées des maquettes (`app/static/esbos-votz.html`) : ✅ A « Ondas » (lecteur : un toucher et la voix part, ondes, fable phrase par phrase) et ✅ C « Un mot, cent parlars » (lo solelh, la bisa, lo viatjaire écrits sur la carte, décompte des formes) ; **B « Lo viatge » attend** (Romain). **À relire par Romain : `SIG/lisn/mots-a-validar.csv`** (mots repérés automatiquement, quelques erreurs comme « sou ») ; les corrections vont dans `SIG/lisn/mots-corregits.csv`, puis relancer `node SIG/cadena/lisn-enquistas.mjs`. Restent aussi : la fiche de commune, le nom occitan des villages.
+10. **Ouverture de l'accueil** (2026-10-21, « les éléments flottent ») : Colonne, Sommaire ou Fenêtre ? Essai en ligne sur https://loligam.eu/?ensag=eros (pilule blanche en bas). Règles de mise en page mesurables adoptées le même jour (charte §5octies).
 
 ## Restes du toilettage (2026-09-18) — pour les conversations concernées
 
