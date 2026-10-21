@@ -68,6 +68,26 @@
 			// pas grave : le choix vaut pour la visite
 		}
 	}
+	// Séparation des sections (refonte claire, étape 4b, 2026-10-21 : l'accueil
+	// reste la vue d'ensemble, on améliore la séparation et la compréhension) :
+	// à comparer sur /?ensag=separa ; sans le paramètre, l'actuelle.
+	const FORMAS_SEPARA = [
+		['actual', 'Actuelle'],
+		['bandas', 'Bandes'],
+		['capitols', 'Chapitres'],
+		['totes', 'Les deux']
+	];
+	const CLAU_ENSAG_SEPARA = 'lo-ligam-ensag-separa';
+	let formaSepara = $state('actual');
+	let ensagSepara = $state(false);
+	function causirFormaSepara(v) {
+		formaSepara = v;
+		try {
+			localStorage.setItem(CLAU_ENSAG_SEPARA, v);
+		} catch {
+			// pas grave : le choix vaut pour la visite
+		}
+	}
 	// Les trois chemins, pris dans le plan du site (le même que le menu et le
 	// pied de page) : un chemin principal et quelques autres. « Amassa » mène à
 	// sa section plus bas tant que le fòrum et les grops ne sont pas faits.
@@ -131,6 +151,15 @@
 			try {
 				const f = localStorage.getItem(CLAU_ENSAG_EROS);
 				if (FORMAS_EROS.some(([v]) => v === f)) formaEros = f;
+			} catch {
+				// stockage indisponible : la forme actuelle
+			}
+		}
+		ensagSepara = new URLSearchParams(location.search).get('ensag') === 'separa';
+		if (ensagSepara) {
+			try {
+				const f = localStorage.getItem(CLAU_ENSAG_SEPARA);
+				if (FORMAS_SEPARA.some(([v]) => v === f)) formaSepara = f;
 			} catch {
 				// stockage indisponible : la forme actuelle
 			}
@@ -235,7 +264,16 @@
 		><path d="M2 8h12M9 3l5 5-5 5" /></svg
 	>{/snippet}
 
-<div class="acuelh" class:fr bind:this={racina}>
+<!-- Sommaire d'une rubrique sous son titre (essai de séparation, « Chapitres ») -->
+{#snippet somari(sec)}<p class="jalon-somari">
+		{#each sec.grops.flatMap((g) => g.items) as it, k (it.href)}{#if k}<span aria-hidden="true">·</span>{/if}<a
+				href={it.href}
+				target={it.defòra ? '_blank' : undefined}
+				rel={it.defòra ? 'noopener' : undefined}>{fr ? it.fr : it.oc}</a
+			>{/each}
+	</p>{/snippet}
+
+<div class="acuelh" class:fr bind:this={racina} data-separa={formaSepara}>
 	<canvas id="fons" aria-hidden="true"></canvas>
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 	<canvas id="estelas" aria-hidden="true"></canvas>
@@ -363,6 +401,7 @@
 			<h2 class="jalon">
 				<b>01</b><span class="masc"><span class="masc-in">{@render bi('Se parla', 'Se parle')}</span></span>
 			</h2>
+			{@render somari(PARLA)}
 			<div
 				class="carta-estelas"
 				role="img"
@@ -410,6 +449,7 @@
 			<h2 class="jalon">
 				<b>02</b><span class="masc"><span class="masc-in">{@render bi('S’apren', 'S’apprend')}</span></span>
 			</h2>
+			{@render somari(APREN)}
 			<div class="biais-grasilha">
 				<article class="biai esvani" style="--i: 1">
 					<p class="biai-num" aria-hidden="true">I</p>
@@ -473,6 +513,7 @@
 			<h2 class="camins-cap jalon" data-revela>
 				<b>03</b><span class="masc"><span class="masc-in" id="viure-titol">{@render bi('Se viu', 'Se vit')}</span></span>
 			</h2>
+			{@render somari(VIU)}
 			<div class="camins-pista">
 				{#each VIURE as c, n (c.oc)}
 					<article class="panel esvani" data-revela style:--i={n}>
@@ -573,6 +614,13 @@
 	<div class="ensag-eros" role="group" aria-label="Essai : mise en ordre de l'ouverture">
 		{#each FORMAS_EROS as [v, nom] (v)}
 			<button type="button" aria-pressed={formaEros === v} onclick={() => causirFormaEros(v)}>{nom}</button>
+		{/each}
+	</div>
+{/if}
+{#if ensagSepara}
+	<div class="ensag-eros" role="group" aria-label="Essai : séparation des sections">
+		{#each FORMAS_SEPARA as [v, nom] (v)}
+			<button type="button" aria-pressed={formaSepara === v} onclick={() => causirFormaSepara(v)}>{nom}</button>
 		{/each}
 	</div>
 {/if}

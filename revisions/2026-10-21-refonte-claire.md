@@ -141,11 +141,17 @@ chaque page, `npm run build`.
 | | Articles, Fòrum, Grops, Boita d'idèas | ❌ 404 |
 | Lo Ligam | Mon istòria, Contacte | ❌ 404 |
 
+> **Réponse de Romain (21-10, soir)** : le menu lui plaît tel qu'il est
+> (« presque la partie la plus sympa du site ») ; **oui à une page par
+> rubrique**, mais **l'accueil reste la vue d'ensemble de tout le site**.
+> L'accueil actuel lui plaît : rien à ajouter, il faut **mieux organiser,
+> améliorer les contrastes, la séparation et la compréhension**, puis
+> **alimenter les sous-parties**. Les étapes 3 et 4 changent en conséquence.
+
 Questions à trancher, une par une :
 
-1. **Une page par rubrique** (`/parla`, `/apren`, `/viu`), façon Villa
-   Albertine, qui présente ses modules ? Je le recommande : c'est ce qui
-   donne la structure.
+1. ✅ **Une page par rubrique** (`/parla`, `/apren`, `/viu`) : oui, et
+   l'accueil garde la vue d'ensemble.
 2. **Mots en imatges** : reste dans Se viu, ou passe dans S'apren (c'est du
    vocabulaire) ?
 3. **Les pages qui n'existent pas encore** : une page d'attente honnête, ou
@@ -158,25 +164,40 @@ aucune 404.
 
 ### Étape 3. Le cadre commun
 
-La barre sur la grille (logo, promesse, menu), le menu-voile en clair, le
-pied de page. **Vérification** : même rendu sur toutes les pages, captures.
+**Le menu-voile ne change pas** (Romain, 21-10). Restent seulement la barre
+du haut, qui passe sur le contenu sans fond quand on descend, et le pied de
+page. **Vérification** : même rendu sur toutes les pages, captures.
 
-### Étape 4. L'accueil, bloc par bloc
+### Étape 4. L'accueil, amélioré sans être refait
 
-Pour chaque bloc : deux ou trois variantes sur la planche, tu choisis, je
-porte, je capture.
+L'accueil garde ses sections et son rôle de vue d'ensemble (Romain, 21-10).
+Trois chantiers, dans cet ordre :
 
-- 4a **L'ouverture** : titre, photo, un seul bouton. Reprend la question
-  ouverte « Fils d'or » (`/?ensag=eros`) dans le cadre clair.
-- 4b **Les trois portes**.
-- 4c **Le bandeau de mots**, plus calme.
-- 4d **Qu'es aquò, Lo Ligam ?** : la déclaration et ta photo.
-- 4e **Max Rouquette et l'appel final**.
+- 4a **Contrastes** ✅ (21-10) : mesurés texte par texte sur le Plâtre ;
+  tout passe le seuil AA, sauf un vrai défaut corrigé : la phrase « Aicí,
+  l'occitan s'apren… » ne s'allumait jamais en clair (une règle du thème
+  clair écrasait celle des mots allumés : 1,35:1, désormais 15,2:1 et 5,1:1
+  pour les mots dorés). Restent des effets voulus, lisibles mais fins : les
+  numéros et les mots du bandeau en contour d'un pixel.
+- 4b **Séparation** : essai en ligne **https://loligam.eu/?ensag=separa**
+  (pilule en bas) : *Actuelle* ; *Bandes* (Qu'es aquò, S'apren et l'appel
+  final sur la pierre, d'un bord à l'autre) ; *Chapitres* (trait franc,
+  numéro plein en brique à côté du titre, sommaire de la rubrique dessous,
+  pris dans le plan du site, donc aucun mot nouveau) ; *Les deux*. Tu
+  choisis.
+- 4c **Compréhension** : chaque section dit en une ligne ce qu'elle offre et
+  mène à sa page de rubrique. Les phrases nouvelles sont les tiennes (je
+  propose une charpente, tu écris, je vérifie l'occitan).
+
+La question ouverte « Fils d'or » (`/?ensag=eros`) se tranche dans ce cadre.
 
 ### Étape 5. Les pages de rubrique
 
 Un gabarit commun : titre, une phrase, la liste des modules en lignes, une
 image calme.
+
+Puis **alimenter les sous-parties** (wiki, articles, Mon istòria…) : ta
+matière, mise en forme par moi.
 
 ### Étape 6. Les pages intérieures, une à une
 

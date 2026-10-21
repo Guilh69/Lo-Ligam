@@ -130,7 +130,9 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 	.acuelh .capçal.solid::before { opacity: 0.94; }
 }
 :root[data-tema='clar'] .acuelh .bandel-mot { -webkit-text-stroke-color: rgba(42, 26, 16, 0.5); }
-:root[data-tema='clar'] .acuelh .manifest-tèxt .m { color: rgba(42, 26, 16, 0.15); }
+/* :not(.on) (2026-10-21) : sans lui, cette règle plus précise écrasait « .m.on » et la
+   phrase restait éteinte en clair (1,35:1), mot allumé ou non */
+:root[data-tema='clar'] .acuelh .manifest-tèxt .m:not(.on) { color: rgba(42, 26, 16, 0.15); }
 :root[data-tema='clar'] .acuelh .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #e7c9a6, var(--nuech-2) 70%); }
 :root[data-tema='clar'] .acuelh .cur-anel { mix-blend-mode: normal; border-color: var(--crema); }
 /* ---------- Acte I : l'eròi ---------- */
@@ -307,6 +309,19 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 	background: linear-gradient(90deg, var(--aur), color-mix(in srgb, var(--aur) 30%, transparent) 45%, transparent);
 	transform-origin: left; transform: scaleX(0); transition: transform 1.4s var(--ease); }
 .acuelh .vist .jalon::before, .acuelh .jalon.vist::before { transform: scaleX(1); }
+/* Essai de séparation des sections (refonte claire, étape 4b, 2026-10-21, /?ensag=separa).
+   Bandes : une section sur deux sur la pierre, d'un bord à l'autre. Chapitres : un trait
+   franc, le numéro plein à côté du titre, le sommaire de la rubrique (pris dans le plan
+   du site) juste dessous. Sans l'essai, rien ne change. */
+.acuelh .jalon-somari { display: none; }
+.acuelh:is([data-separa='bandas'], [data-separa='totes']) :is(.manifest, .biais, .crida) { background: var(--nuech-2); }
+.acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon { grid-auto-flow: column; justify-content: start; align-items: baseline; gap: 1rem; margin-bottom: 1rem; }
+.acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon::before { height: 2px; background: var(--crema); transform: none; }
+.acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon b { font-size: clamp(1.6rem, 2.4vw, 2.2rem); line-height: 1; color: var(--terra); -webkit-text-stroke: 0; }
+.acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon-somari { display: block; margin-bottom: 4rem; font-size: 1rem; line-height: 1.6; color: var(--crema-2); }
+.acuelh .jalon-somari span { margin-inline: 0.6em; }
+.acuelh .jalon-somari a { color: var(--crema); text-decoration: underline; text-decoration-color: var(--crema-3); text-underline-offset: 0.25em; transition: color 0.3s, text-decoration-color 0.3s; }
+.acuelh .jalon-somari a:hover { color: var(--terra); text-decoration-color: currentColor; }
 .acuelh .manifest-tèxt { max-width: 22ch; font-family: var(--titol); font-size: clamp(2.2rem, 5.6vw, 5.4rem); line-height: 1.08; }
 .acuelh .manifest-tèxt .m { color: rgba(245, 234, 216, 0.14); transition: color 0.35s; }
 .acuelh .manifest-tèxt .m.on { color: var(--crema); }
