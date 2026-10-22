@@ -7,6 +7,7 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import RailJaces from '$lib/components/RailJaces.svelte';
+	import VisitaCarta from '$lib/components/VisitaCarta.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
@@ -131,11 +132,30 @@
 		}
 
 		if (!browser) return;
-		if (!localStorage.getItem(SEEN_KEY)) {
+		// Première visite guidée (essai, 2026-10-22) : /carta?ensag=visita ; pendant
+		// l'essai, la pancarte des crédits ne s'ouvre pas d'elle-même
+		ensagVisita = new URLSearchParams(location.search).get('ensag') === 'visita';
+		if (!ensagVisita && !localStorage.getItem(SEEN_KEY)) {
 			showInfo = true;
 			localStorage.setItem(SEEN_KEY, '1');
 		}
 	});
+
+	let ensagVisita = $state(false);
+	let formaVisita = $state('actual');
+	// Les trois portes du panneau d'accueil (forme C) : la page tient les couches
+	function porta(k) {
+		if (k === 'territori') {
+			layerVisibility.dialectes = true;
+			layerVisibility.calandretas = false;
+			layerVisibility.limsi = false;
+		} else if (k === 'uei') {
+			layerVisibility.calandretas = true;
+			layerVisibility.limsi = true;
+		} else if (k === 'vila') {
+			document.getElementById('cerca-carta')?.focus();
+		}
+	}
 </script>
 
 <svelte:head>
@@ -207,6 +227,8 @@
 			{lang}
 			esAdmin={$esAdmin}
 		/>
+
+		<VisitaCarta bind:forma={formaVisita} ensag={ensagVisita} {lang} onPorta={porta} />
 	</main>
 </div>
 
