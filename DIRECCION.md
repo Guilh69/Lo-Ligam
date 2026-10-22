@@ -400,6 +400,19 @@ viu » : à réécrire par toi.
   entendue autour de Montpellier, hors norme). Donc pas « es » pour « tu
   es » ; « siás » deux fois (« D'ont que siás, aicí siás en çò tieu ») est
   la forme standard ; « ès » possible pour varier. Au choix de Romain.
+- *Romain penche pour « siès » et apporte une conversation avec l'IA de
+  Google (22-10).* Relecture de ce texte : il se contredit (il dit « ès »
+  standard, puis « sès » montpelliérain en citant le Notre Père et le
+  Wiktionnaire, puis « siès » quand Romain insiste, en citant un blog sur
+  les parlers cévenols) ; ses sources citées pour « siès » sont un blog et
+  une page Wikipédia qui donne « siás » pour le provençal. Revérifié avec
+  lo Congrès : **« sès » et « siès » sont inconnus du Basic et de vèrb'Òc**,
+  « siás » est au Basic, « ès » à vèrb'Òc. Conclusion : « siès » est une
+  forme vivante de l'est languedocien (Gard, Cévennes, entendue à
+  Montpellier), hors des références du projet. Le choix revient à Romain,
+  qui valide l'occitan : « siás » (norme, références), ou « siès » (sa
+  voix, à assumer dans la charte comme forme locale, et que le script de
+  vérification signalera à chaque passage).
 
 ### Bloc 3 : ce qui en sort (2026-10-22)
 
