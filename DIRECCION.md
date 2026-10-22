@@ -246,6 +246,26 @@ s'adresse à tous à la fois.
   choix à la première visite…). Rien d'imposé par le navigateur sans qu'on
   le dise.
 
+*Ta réponse (2026-10-22, question 3) :*
+
+> « Dès l'ouverture : je peux donner des cours depuis l'anglais, le
+> castillan et le catalan. »
+
+*Ce que Claude en retient :* le sélecteur de langue de cours de l'accueil
+est une promesse tenue, pas une annonce. Conséquence pour plus tard : le
+site lui-même reste en occitan et en français ; seuls les cours en visio se
+donnent depuis quatre langues (à dire clairement près du sélecteur).
+
+### Bloc 2 : ce qui en sort (2026-10-22)
+
+1. **Le premier public : le curieux, occitan ou non.** Le site ne suppose
+   rien du visiteur.
+2. **Le site s'ouvre en occitan, par choix**, et la bascule en français doit
+   être évidente dès le premier écran (formes à comparer sur essai, Claude).
+3. **Les cours en visio se donnent dès maintenant depuis le français,
+   l'anglais, le castillan et le catalan** ; le site, lui, reste en occitan
+   et en français.
+
 ### Bloc 3. Les trois : Se parla, S'apren, Amassa
 
 *Ce qu'on sait.* Le plan en trois verbes (15-10), le troisième devenu
@@ -402,5 +422,8 @@ occitane des modules, photos, les pages promises par le menu.
 | 2026-10-22 | 1 | Trois éléments : comprendre la situation avant d'apprendre ; culture occitane et vision décentralisée face à l'État ; ressources |
 | 2026-10-22 | 1 | La carte a deux lectures (territoire naturel, réalité d'aujourd'hui) et un geste pour passer de l'une à l'autre |
 | 2026-10-22 | 1 | L'image du site : la fenêtre de pierre sur l'Hérault |
+| 2026-10-22 | 2 | Premier public : le curieux, occitan ou non |
+| 2026-10-22 | 2 | Le site s'ouvre en occitan par choix ; bascule en français évidente dès le premier écran |
+| 2026-10-22 | 2 | Cours en visio dès maintenant depuis le français, l'anglais, le castillan et le catalan |
 | 2026-10-22 | 3 | Mots en imatges dans S'apren ; les liens vers les pages à venir restent |
 | 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles |
