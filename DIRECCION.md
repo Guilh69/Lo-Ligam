@@ -343,7 +343,11 @@ viu » : à réécrire par toi.
   est la vraie question** : seul, Romain ne peut pas modérer un forum ; des
   groupes WhatsApp externes se modèrent hors du site. À classer lancement /
   évolution au bloc 8.
-- **Òbras et Articles : où ?** Question suivante.
+- **Òbras et Articles : où ?** → *Romain, le même jour : « Òbras et Articles
+  passent dans Se parla, à côté de la carte et du wiki. »* Appliqué (menu,
+  pied de page, accueil) : Se parla = la carte, le wiki, Òbras, Articles ;
+  S'apren = le parcours, la leçon d'essai, Mots en imatges, les cours en
+  visio, ma progression ; Amassa = Fòrum, Grops, Boita d'idèas.
 
 ### Bloc 4. L'accueil : la vue d'ensemble
 
@@ -472,4 +476,6 @@ occitane des modules, photos, les pages promises par le menu.
 | 2026-10-22 | 2 | Le site s'ouvre en occitan par choix ; bascule en français évidente dès le premier écran |
 | 2026-10-22 | 2 | Cours en visio dès maintenant depuis le français, l'anglais, le castillan et le catalan |
 | 2026-10-22 | 3 | Mots en imatges dans S'apren ; les liens vers les pages à venir restent |
+| 2026-10-22 | 3 | Òbras et Articles dans Se parla ; Amassa = la communauté seule |
+| 2026-10-22 | 3 | Le wiki = des cartes thématiques (l'amas de la connaissance de Romain), pas une encyclopédie |
 | 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles |

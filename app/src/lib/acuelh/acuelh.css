@@ -382,6 +382,8 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
    texte pour ne pas devenir immense ; l'une sous l'autre sur le téléphone. */
 .acuelh .camins { padding: 18vh var(--marge) 6vh; container: camins / inline-size; }
 .acuelh .camins-pista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.4rem, 2.4vw, 2.6rem); }
+/* Une seule carte (Amassa = la communauté seule, 2026-10-22) : elle prend toute la largeur */
+.acuelh .camins-pista > .panel:only-child { grid-column: 1 / -1; }
 .acuelh .panel { container-type: inline-size; display: flex; flex-direction: column; gap: 1.4rem; min-width: 0; }
 .acuelh .panel-tèxt { flex: 1; display: flex; flex-direction: column; gap: 1.2rem; min-width: 0; }
 /* Los noms de las cartas demòran mai pichons que lo títol de la seccion (retorn de Romain, 2026-10-14) */

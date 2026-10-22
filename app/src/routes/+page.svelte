@@ -40,10 +40,9 @@
 	// « Se viu » : découvrir, et faire ensemble (option 1 de Romain, 2026-10-15).
 	// Articles, forum, groupes et boîte à idées seront développés avant la
 	// diffusion du site : leurs liens figurent dès maintenant, comme les autres.
+	// 2026-10-22 : Mots en imatges est passé dans S'apren, Òbras et Articles dans
+	// Se parla ; Amassa = la communauté seule, une seule carte.
 	const VIURE = [
-		{ oc: 'Descobrir', fr: 'Découvrir', toc: 'Lo país e sa cultura', tfr: 'Le pays et sa culture', media: 'paisatge',
-			// (Mots en imatges est passé dans S'apren le 2026-10-22 : « c'est de l'apprentissage »)
-			items: [['Òbras', 'Œuvres', '/obras'], ['Articles', 'Articles', '/articles']] },
 		// (la carte s'appelait « Amassa » ; le mot est devenu le nom de la rubrique, 2026-10-21)
 		{ oc: 'La comunautat', fr: 'La communauté', toc: 'Fòrum, grops e idèas', tfr: 'Forum, groupes et idées', media: 'liams',
 			items: [['Fòrum', 'Forum', '/forum'], ['Grops', 'Groupes', '/grops'], ['Boita d’idèas', 'Boîte à idées', '/ideas'],
@@ -96,9 +95,9 @@
 	const rubrica = (href) => PLAN.flatMap((s) => s.grops.flatMap((g) => g.items)).find((i) => i.href === href);
 	const [PARLA, APREN, VIU] = PLAN;
 	const FIALS = [
-		{ ...PARLA, cap: rubrica('/carta'), autres: [rubrica('/wiki')] },
+		{ ...PARLA, cap: rubrica('/carta'), autres: [rubrica('/wiki'), rubrica('/obras'), rubrica('/articles')] },
 		{ ...APREN, cap: rubrica('/aprene'), autres: [rubrica('/aprene/essai'), rubrica(RESERVAR)] },
-		{ ...VIU, cap: { ...VIU.grops[1], href: '#viure' }, autres: [rubrica('/forum'), rubrica('/grops'), rubrica('/obras')] }
+		{ ...VIU, cap: { ...VIU.grops[0], href: '#viure' }, autres: [rubrica('/forum'), rubrica('/grops'), rubrica('/ideas')] }
 	];
 	// Le trait part de la fin de chaque phrase, dans la langue affichée : la
 	// colonne du titre a la largeur de la langue la plus longue (les deux sont
@@ -422,6 +421,9 @@
 				<a class="ligam-tèxt" href="/wiki"
 					>{@render bi('Lo wiki de las lengas e dels luòcs', 'Le wiki des langues et des lieux')}</a
 				>
+				<!-- Òbras et Articles : le pays, ce qui s'y dit et s'y fait (Romain, 2026-10-22) -->
+				<a class="ligam-tèxt" href="/obras">{@render bi('Òbras', 'Œuvres')}</a>
+				<a class="ligam-tèxt" href="/articles">{@render bi('Articles', 'Articles')}</a>
 			</div>
 			<div class="chifras-grasilha">
 				<div class="chifra esvani" style="--i: 1">

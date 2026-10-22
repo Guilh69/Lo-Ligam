@@ -12,7 +12,10 @@ export const PLAN = [
 		id: 'parla', n: '01', oc: 'Se parla', fr: 'Se parle',
 		grops: [{ items: [
 			{ oc: 'La carta', fr: 'La carte', href: '/carta' },
-			{ oc: 'Lo wiki', fr: 'Le wiki', href: '/wiki' } // (« wiki » plutôt qu'« encyclopédie », Romain, 2026-10-15)
+			{ oc: 'Lo wiki', fr: 'Le wiki', href: '/wiki' }, // (« wiki » plutôt qu'« encyclopédie », Romain, 2026-10-15)
+			// (venaient d'Amassa : le pays, ce qui s'y dit et s'y fait ; Romain, 2026-10-22)
+			{ oc: 'Òbras', fr: 'Œuvres', href: '/obras' },
+			{ oc: 'Articles', fr: 'Articles', href: '/articles' }
 		] }]
 	},
 	{
@@ -31,11 +34,9 @@ export const PLAN = [
 		// « Amassa » / « Rassemble » remplace « Se viu » / « Se vit » (Romain, 2026-10-21 :
 		// « se viu ne correspond pas au contenu ») ; l'id reste 'viu' (ancres, styles)
 		id: 'viu', n: '03', oc: 'Amassa', fr: 'Rassemble',
+		// Amassa = la communauté au sens strict (Òbras et Articles partis dans
+		// Se parla le 2026-10-22)
 		grops: [
-			{ oc: 'Descobrir', fr: 'Découvrir', items: [
-				{ oc: 'Òbras', fr: 'Œuvres', href: '/obras' },
-				{ oc: 'Articles', fr: 'Articles', href: '/articles' }
-			] },
 			// (s'appelait « Amassa », devenu le nom de la rubrique, 2026-10-21)
 			{ oc: 'La comunautat', fr: 'La communauté', items: [
 				{ oc: 'Fòrum', fr: 'Forum', href: '/forum' },
