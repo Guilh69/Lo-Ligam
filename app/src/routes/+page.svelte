@@ -335,8 +335,9 @@
 					<div class="esvani" style="--i: 5">
 						<p class="eros-sub">
 							{@render bi(
-								'Una carta per lo veire, de corses per l’aprene, de mots e d’òbras per lo viure.',
-								'Une carte pour le voir, des cours pour l’apprendre, des mots et des œuvres pour le vivre.'
+								// La phrase de Romain (DIRECCION, bloc 3, 2026-10-22) ; « siès » : montpelliéranisme assumé (charte §2 bis)
+								'Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.',
+								'Bienvenue dans ton lien avec le monde occitan. D’où que tu sois, tu es ici chez toi.'
 							)}
 						</p>
 						<p class="indici" aria-hidden="true">

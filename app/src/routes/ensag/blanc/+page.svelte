@@ -91,7 +91,8 @@
 				<span class="linha" aria-hidden="true">{@render braisa('Amassa.')}</span>
 			</h1>
 			<div class="pè-dobertura esvani" style="--i: 3">
-				<p class="escriure">{ESCRIURE}</p>
+				<!-- la phrase de Romain (22-10) ; « siès » : montpelliéranisme assumé -->
+				<p class="sostitol">Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.</p>
 				{#if dobertura === 'carta'}
 					<div class="accions"><a class="boton" href="/carta">Dobrir la carta {@render sageta()}</a><a class="ligam-fl" href="/aprene">Aprene l’occitan</a></div>
 				{:else}
@@ -311,6 +312,7 @@
 		-webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; transition: background-position 2.4s var(--lent); }
 	.titol :global(.l:hover) { background-position: 0 100%; transition-duration: 0.35s; }
 	.pè-dobertura { grid-column: 1 / 8; grid-row: 4; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 48px; margin-top: 40px; }
+	.dobertura .sostitol { max-width: 34ch; font-size: 1.25rem; line-height: 1.45; color: var(--t2); }
 	.ficha { margin: 0; display: grid; gap: 12px; }
 	.dobertura .ficha { grid-column: 9 / 13; grid-row: 1 / 6; align-self: center; }
 	/* Variante Carte : la carte en étoiles ouvre la page, dessinée dans le temps (pas au défilement) */

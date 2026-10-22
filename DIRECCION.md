@@ -413,6 +413,11 @@ viu » : à réécrire par toi.
   qui valide l'occitan : « siás » (norme, références), ou « siès » (sa
   voix, à assumer dans la charte comme forme locale, et que le script de
   vérification signalera à chaque passage).
+- **Tranché par Romain le 22-10 : « siès », ma voix, montpelliéranisme
+  assumé, « bien distingué de siás et de es ».** Phrase finale : « Benvenguda
+  dins ton ligam amb lo mond occitan. D'ont que siás, aicí siès en çò
+  tieu. » Portée sur l'accueil et l'esquisse ; charte §2 bis ; le script
+  reconnaît la forme.
 
 ### Bloc 3 : ce qui en sort (2026-10-22)
 
@@ -566,6 +571,6 @@ occitane des modules, photos, les pages promises par le menu.
 | 2026-10-22 | 3 | Òbras et Articles dans Se parla ; Amassa = la communauté seule |
 | 2026-10-22 | 3 | Le wiki = des cartes thématiques (l'amas de la connaissance de Romain), pas une encyclopédie |
 | 2026-10-22 | 3 | Les trois rubriques sont un ordre (on voit, on apprend, on se rassemble) : chaque rubrique renvoie à la suivante ; Ma progression = tableau de bord par bloc, dans S'apren |
-| 2026-10-22 | 3 | La phrase sous le titre : « Bienvenue dans ton lien avec le monde occitan. D'où que tu sois, tu es ici chez toi. » (occitan proposé, à valider) |
+| 2026-10-22 | 3 | La phrase sous le titre, portée : « Benvenguda dins ton ligam amb lo mond occitan. D'ont que siás, aicí siès en çò tieu. » / « Bienvenue dans ton lien avec le monde occitan. D'où que tu sois, tu es ici chez toi. » ; « siès » montpelliéranisme assumé (charte §2 bis) |
 | 2026-10-22 | 7 | Le tutoiement, partout, dans les deux langues |
 | 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles |

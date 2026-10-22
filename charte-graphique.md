@@ -117,6 +117,23 @@ Instrument Sans / Cormorant / Fredoka du 2026-08-22) :
 
 ---
 
+## 2 bis. Formes locales assumées (2026-10-22)
+
+L'occitan du site suit la norme classique languedocienne et se vérifie avec
+le Basic et vèrb'Òc de lo Congrès. Romain, qui valide tout l'occitan, peut
+y assumer des formes de son parler, listées ici ; le script
+`app/scripts/verificar-oc.mjs` les reconnaît (`FORMAS_ASSUMIDAS`) au lieu de
+les signaler absentes.
+
+| Forme | Norme | Pourquoi | Où |
+|---|---|---|---|
+| **siès** (« tu es ») | siás (Basic), ès (vèrb'Òc) | montpelliéranisme assumé : « bien distingué de siás et de es » (Romain, 22-10) ; forme de l'est languedocien, inconnue du Basic et de vèrb'Òc | la phrase sous le titre de l'accueil ; partout où le site dit « tu es » |
+
+Règle : une forme locale s'ajoute ici avec sa norme en face, jamais en
+silence.
+
+---
+
 ## 3. Illustrations
 
 - Style plat, chaleureux, un brin storybook / troubadour.

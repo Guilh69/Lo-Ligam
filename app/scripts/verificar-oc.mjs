@@ -132,8 +132,17 @@ if (args[0] === '--modul' && args[1]) {
 
 console.log(`Vérification de ${mots.length} mots contre lo Basic (variété languedocienne)…\n`);
 
+// Formes locales assumées par Romain (charte §2 bis) : hors Basic et vèrb'Òc,
+// mais voulues telles quelles ; on le dit au lieu de les signaler absentes.
+const FORMAS_ASSUMIDAS = {
+	'siès': 'montpelliéranisme assumé pour « tu es » (Romain, 2026-10-22, charte §2 bis)'
+};
 const absents = [];
 for (const mot of mots) {
+	if (FORMAS_ASSUMIDAS[mot]) {
+		console.log(`  ✓ ${mot}  (forme locale assumée : ${FORMAS_ASSUMIDAS[mot]})`);
+		continue;
+	}
 	const url = new URL('https://api.locongres.org/basic.php');
 	url.searchParams.set('key', clau);
 	url.searchParams.set('lang', 'oc');
