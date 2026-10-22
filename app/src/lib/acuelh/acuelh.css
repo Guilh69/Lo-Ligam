@@ -146,14 +146,16 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
    (5), à la façon de l'esquisse /ensag/blanc ; sur téléphone, la carte sous les
    boutons, en pleine largeur. La croix ne se montre plus qu'à l'appel final. */
 .acuelh .eros.amb-carta {
-	display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-rows: 1fr auto auto auto;
+	/* colonnes 6 / 6 et carte relevée (Romain, 2026-10-22 : « la remonter légèrement
+	   et la positionner un peu plus à gauche ») */
+	display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); grid-template-rows: 1fr auto auto auto;
 	column-gap: var(--esp-48); align-content: end;
 	--eros-fs: clamp(3.4rem, min(8.4vw, 29vh - 7.5rem), 10rem);
 }
 .acuelh .eros.amb-carta .eros-kicker { grid-column: 1; grid-row: 2; }
 .acuelh .eros.amb-carta .eros-entitol { grid-column: 1; grid-row: 3; }
 .acuelh .eros.amb-carta .eros-pe { grid-column: 1; grid-row: 4; }
-.acuelh .eros.amb-carta .carta-estelas { grid-column: 2; grid-row: 1 / 5; align-self: center; height: min(66svh, 40vw); margin: 0; }
+.acuelh .eros.amb-carta .carta-estelas { grid-column: 2; grid-row: 1 / 5; align-self: center; height: min(66svh, 40vw); margin: 0; translate: -3% -7%; }
 @media (max-width: 1100px) {
 	.acuelh .eros.amb-carta { display: flex; --eros-fs: clamp(3.4rem, min(11vw, 29vh - 7.5rem), 12rem); }
 	/* align-self: stretch, sinon « center » (hérité de la grille) lui donne une largeur nulle en colonne */
@@ -205,15 +207,6 @@ html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
 .acuelh .eros-pe { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; margin-top: 2.6rem; }
 .acuelh .eros-sub { max-width: 30ch; font-size: clamp(1rem, 1.3vw, 1.18rem); line-height: 1.65; color: var(--crema-2); }
 .acuelh .eros-accions { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; }
-/* Essais de bascule en français (/?ensag=lenga, 2026-10-22) */
-.acuelh .eros-sub-autra { font-size: 0.95rem; color: var(--crema-2); opacity: 0.85; margin-top: var(--esp-8); }
-.acuelh .lenga-ligam { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; margin-top: var(--esp-8); padding: 0;
-	border: 0; background: none; font: inherit; font-weight: 700; color: var(--aur-clar); cursor: pointer; border-bottom: 1.5px solid currentColor; white-space: nowrap; }
-.acuelh .lenga-causida { display: inline-flex; align-items: center; flex-wrap: wrap; gap: var(--esp-12); padding: var(--esp-8) var(--esp-16);
-	border: 1px solid var(--crema-3); border-radius: 999px; font-size: 0.95rem; color: var(--crema-2); }
-.acuelh .lenga-causida button { min-height: 44px; padding: 0 var(--esp-16); border: 0; border-radius: 999px; background: none; font: inherit; font-weight: 700; color: var(--crema); cursor: pointer; }
-.acuelh .lenga-causida button[aria-pressed='true'] { background: var(--terra); color: #fff; }
-.acuelh .eros.amb-carta .lenga-causida { grid-column: 1 / -1; grid-row: 1; align-self: start; justify-self: start; }
 .acuelh .davalar { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; color: var(--crema-2); }
 .acuelh .davalar span { width: 1px; height: 56px; background: var(--crema-3); position: relative; overflow: hidden; }
 .acuelh .davalar span::after { content: ''; position: absolute; left: 0; top: -100%; width: 100%; height: 100%; background: var(--aur); animation: acuelh-davala 2s var(--ease-io) infinite; }

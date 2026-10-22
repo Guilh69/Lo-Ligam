@@ -22,6 +22,28 @@
 	let menuDobèrt = $state(false);
 	let botonMenu = $state(null);
 
+	// Première visite (Romain, 2026-10-22, DIRECCION bloc 2 : le site s'ouvre en
+	// occitan par choix, « mais rendre la bascule en français évidente ») : le
+	// bouton Òc / Fr se met en avant quelques secondes, avec sa légende, tant
+	// qu'aucune langue n'a été choisie ; une seule fois par navigateur.
+	const CLAU_VISTA = 'lo-ligam-lenga-vista';
+	let crida = $state(false);
+	$effect(() => {
+		try {
+			if (localStorage.getItem('lo-ligam-lang') || localStorage.getItem(CLAU_VISTA)) return;
+			localStorage.setItem(CLAU_VISTA, '1');
+		} catch {
+			// stockage indisponible : on montre quand même, une fois par visite
+		}
+		crida = true;
+		const t = setTimeout(() => (crida = false), 7000);
+		return () => clearTimeout(t);
+	});
+	function causirLenga(v) {
+		langStore.current = v;
+		crida = false;
+	}
+
 	const t = {
 		oc: { acuelhLong: "Tornar a l'acuèlh", admin: 'Administracion', menu: 'Menú', reservar: 'Reservar un cors' },
 		fr: { acuelhLong: "Retour à l'accueil", admin: 'Administration', menu: 'Menu', reservar: 'Réserver un cours' }
@@ -66,13 +88,12 @@
 
 			<AmbiancaPanel />
 
-			<div class="lang-toggle" role="group" aria-label="Lenga / Langue">
-				<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => (langStore.current = 'oc')}
-					>Òc</button
-				>
-				<button type="button" aria-pressed={lang === 'fr'} lang="fr" onclick={() => (langStore.current = 'fr')}
-					>Fr</button
-				>
+			<div class="lang-toggle" class:crida role="group" aria-label="Lenga / Langue">
+				<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
+				<button type="button" aria-pressed={lang === 'fr'} lang="fr" onclick={() => causirLenga('fr')}>Fr</button>
+				{#if crida}
+					<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -232,6 +253,22 @@
 	.lang-toggle button[aria-pressed='true'] {
 		background: var(--t-tinta);
 		color: var(--t-fons);
+	}
+
+	/* Première visite : le bouton se met en avant (halo d'or qui bat trois fois,
+	   légende dessous), puis s'efface ; immobile si « réduire les animations » */
+	.lang-toggle { position: relative; }
+	.lang-toggle.crida { border-color: var(--t-aur); box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); animation: lang-crida 1.6s ease-out 3; }
+	.lang-crida {
+		position: absolute; top: calc(100% + 6px); right: 0; white-space: nowrap;
+		font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--t-aur);
+		animation: lang-crida-tèxt 7s ease-in-out forwards;
+	}
+	@keyframes lang-crida { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); } 100% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--t-aur) 0%, transparent); } }
+	@keyframes lang-crida-tèxt { 0%, 8% { opacity: 0; translate: 0 -4px; } 20%, 85% { opacity: 1; translate: 0 0; } 100% { opacity: 0; } }
+	@media (prefers-reduced-motion: reduce) {
+		.lang-toggle.crida { animation: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--t-aur) 45%, transparent); }
+		.lang-crida { animation: none; }
 	}
 
 	.lang-toggle button:focus-visible,
