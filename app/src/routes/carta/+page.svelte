@@ -38,8 +38,6 @@
 	};
 	let tx = $derived(t[lang]);
 
-	const SEEN_KEY = 'lo-ligam-carta-info-seen';
-
 	let showInfo = $state(false);
 	// la pancarta se tampa d'un clic defòra o amb Escapar (principi del site,
 	// $lib/tampaDefora.js)
@@ -132,17 +130,14 @@
 		}
 
 		if (!browser) return;
-		// Première visite guidée (essai, 2026-10-22) : /carta?ensag=visita ; pendant
-		// l'essai, la pancarte des crédits ne s'ouvre pas d'elle-même
+		// Première visite guidée « Trois portes » (retenue par Romain le 2026-10-22) :
+		// elle remplace l'ouverture automatique de la pancarte des crédits, qui reste
+		// derrière le bouton « ? » ; /carta?ensag=visita compare encore les trois formes
 		ensagVisita = new URLSearchParams(location.search).get('ensag') === 'visita';
-		if (!ensagVisita && !localStorage.getItem(SEEN_KEY)) {
-			showInfo = true;
-			localStorage.setItem(SEEN_KEY, '1');
-		}
 	});
 
 	let ensagVisita = $state(false);
-	let formaVisita = $state('actual');
+	let formaVisita = $state('portas'); // la forme retenue ; l'essai en propose trois
 	// Les trois portes du panneau d'accueil (forme C) : la page tient les couches
 	function porta(k) {
 		if (k === 'territori') {

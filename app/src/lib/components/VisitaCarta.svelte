@@ -8,13 +8,15 @@
 	//     fait vraiment le geste (toucher un dialecte, chercher, ouvrir le rail) ;
 	//   C « Trois portes » : un panneau d'accueil, trois entrées (le territoire,
 	//     où ça se parle aujourd'hui, ma ville).
+	// Forme retenue par Romain le 2026-10-22 : « Trois portes » (« à voir car ça ne
+	// couvre pas tout ») ; les deux autres restent comparables sur l'essai.
 	// Règles : rien avant la fin de l'entrée en scène (ou le premier geste), le
 	// clic ailleurs ferme, « Passar » toujours possible, mémorisé une fois hors
 	// essai. Occitan nouveau : à valider par Romain (mots vérifiés par l'API).
 	import { onMount } from 'svelte';
 	import Icona from './Icona.svelte';
 
-	let { forma = $bindable('actual'), ensag = false, lang = 'oc', onPorta = () => {} } = $props();
+	let { forma = $bindable('portas'), ensag = false, lang = 'oc', onPorta = () => {} } = $props();
 
 	const CLAU = 'lo-ligam-carta-visita';
 	const FORMAS = [
