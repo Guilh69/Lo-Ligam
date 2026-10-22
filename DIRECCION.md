@@ -165,6 +165,32 @@ carte (découverte, fierté du territoire), pas dans l'apprentissage.
   les faits et la carte plus que par le discours, sinon le site change de
   registre (le ton décidé : chaleureux, humour fin, jamais militant au
   sens pesant). À arbitrer par Romain quand on écrira les textes.
+
+*Ta réponse (2026-10-22, question 3) :*
+
+> « J'aime la vision de ma photo à travers la fenêtre de pierre. »
+
+*Ce que Claude en retient (à confirmer) :*
+- La fenêtre de pierre sur l'Hérault (`app/static/acuelh/erau.webp`, ta
+  photo) : un seuil. Dedans, la pierre, l'ombre, l'ancien ; dehors, la
+  lumière et le pays. On regarde avant d'y aller : c'est « comprendre avant
+  d'apprendre », et c'est « lo ligam », ce qui relie le dedans au dehors.
+- Elle est déjà dans l'essai clair (ouverture) et dans l'esquisse (l'appel
+  final), en arc. Candidate à devenir le **motif des images du site** : le
+  cadre en arc, comme une fenêtre, pour les photos. Pas décidé, à essayer.
+
+### Bloc 1 : ce qui en sort (2026-10-22)
+
+1. **L'émotion visée** : la connexion (« l'endroit qui me connecte à
+   l'occitan »), puis l'envie d'en parler. Le mot est le nom du site.
+2. **Les trois éléments, dans l'ordre** : comprendre la situation de
+   l'occitan avant de l'apprendre ; partager la culture occitane et une
+   vision décentralisée face à l'État ; les ressources.
+3. **La carte a deux lectures** (territoire naturel, réalité d'aujourd'hui)
+   et doit offrir le geste pour passer de l'une à l'autre.
+4. **L'image** : la fenêtre de pierre, ta photo.
+5. Au parking : un geste de partage ; où ranger « Ressources » (bloc 3) ; le
+   ton de la vision décentralisée (bloc 7) ; l'arc de fenêtre comme cadre.
 - **« Ressources »** : aujourd'hui, des liens en pied de page (lo Congrès,
   OPLO, CIRDOC, CAOC…) et les sources de la carte (bouton « Fonts »). Pas de
   page. Le cahier §3 le prévoyait dès la phase 1 (« relais vers les outils
@@ -344,4 +370,9 @@ occitane des modules, photos, les pages promises par le menu.
 
 | Date | Bloc | Décision |
 |---|---|---|
-| — | — | *(rien encore : le premier bloc attend ta réponse)* |
+| 2026-10-22 | 1 | Émotion visée : la connexion, puis l'envie d'en parler |
+| 2026-10-22 | 1 | Trois éléments : comprendre la situation avant d'apprendre ; culture occitane et vision décentralisée face à l'État ; ressources |
+| 2026-10-22 | 1 | La carte a deux lectures (territoire naturel, réalité d'aujourd'hui) et un geste pour passer de l'une à l'autre |
+| 2026-10-22 | 1 | L'image du site : la fenêtre de pierre sur l'Hérault |
+| 2026-10-22 | 3 | Mots en imatges dans S'apren ; les liens vers les pages à venir restent |
+| 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles |
