@@ -42,7 +42,8 @@
 	// diffusion du site : leurs liens figurent dès maintenant, comme les autres.
 	const VIURE = [
 		{ oc: 'Descobrir', fr: 'Découvrir', toc: 'Lo país e sa cultura', tfr: 'Le pays et sa culture', media: 'paisatge',
-			items: [['Mots en imatges', 'Mots en images', '/mots'], ['Òbras', 'Œuvres', '/obras'], ['Articles', 'Articles', '/articles']] },
+			// (Mots en imatges est passé dans S'apren le 2026-10-22 : « c'est de l'apprentissage »)
+			items: [['Òbras', 'Œuvres', '/obras'], ['Articles', 'Articles', '/articles']] },
 		// (la carte s'appelait « Amassa » ; le mot est devenu le nom de la rubrique, 2026-10-21)
 		{ oc: 'La comunautat', fr: 'La communauté', toc: 'Fòrum, grops e idèas', tfr: 'Forum, groupes et idées', media: 'liams',
 			items: [['Fòrum', 'Forum', '/forum'], ['Grops', 'Groupes', '/grops'], ['Boita d’idèas', 'Boîte à idées', '/ideas'],

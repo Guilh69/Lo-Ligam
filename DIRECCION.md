@@ -138,9 +138,12 @@ viu » : à réécrire par toi.
    disparaissent du menu jusque-là ?
 6. La phrase sous le titre, dans tes mots.
 
-*Ta réponse (date) :*
+*Ta réponse (2026-10-22, au matin, après le rapport de nuit) :*
 
-—
+- q3 : « Mots en imatges : s'apren. » → appliqué le jour même (menu, pied de page, accueil).
+- q5 : « Non, je les garde. Je ne peux pas tout faire en même temps, mais ce sera fait. » → les liens vers les pages à venir restent (confirme la décision du 15-10 ; la proposition de nuit est écartée sur ce point).
+- Ouverture (question 1 du rapport) : « J'hésite, car la carte est vraiment une pièce maîtresse. Je me demande même si le site ne devrait pas s'ouvrir sur la version accueil de la carte. » → essai à comparer sur `/ensag/blanc` (sélecteur en bas : Fiche / Carte en étoiles).
+- q1, q2, q4, q6 : en attente.
 
 ### Bloc 4. L'accueil : la vue d'ensemble
 

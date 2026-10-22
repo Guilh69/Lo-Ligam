@@ -20,6 +20,8 @@ export const PLAN = [
 		grops: [{ items: [
 			{ oc: 'Lo parcors', fr: 'Le parcours', href: '/aprene' },
 			{ oc: 'Leiçon d’ensag', fr: 'Leçon d’essai', href: '/aprene/essai' },
+			// (venait d'Amassa : « c'est de l'apprentissage », Romain, 2026-10-22)
+			{ oc: 'Mots en imatges', fr: 'Mots en images', href: '/mots' },
 			{ oc: 'Corses en visio', fr: 'Cours en visio', href: RESERVAR, defòra: true },
 			// (était dans l'ancien pied de page : on ne retire aucune fonction)
 			{ oc: 'Ma progression', fr: 'Ma progression', href: '/compte' }
@@ -31,7 +33,6 @@ export const PLAN = [
 		id: 'viu', n: '03', oc: 'Amassa', fr: 'Rassemble',
 		grops: [
 			{ oc: 'Descobrir', fr: 'Découvrir', items: [
-				{ oc: 'Mots en imatges', fr: 'Mots en images', href: '/mots' },
 				{ oc: 'Òbras', fr: 'Œuvres', href: '/obras' },
 				{ oc: 'Articles', fr: 'Articles', href: '/articles' }
 			] },

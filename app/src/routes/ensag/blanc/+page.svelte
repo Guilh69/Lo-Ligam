@@ -17,7 +17,22 @@
 		VISTA, ESTELAS, COSTA_D
 	} from './donadas.js';
 
+	import { page } from '$app/state';
+	import { replaceState } from '$app/navigation';
+
 	const href = (h) => (h === 'RESERVAR' ? RESERVAR : h);
+	// Essai de l'ouverture (Romain, 2026-10-22 : « la carte est vraiment une pièce
+	// maîtresse… s'ouvrir sur la version accueil de la carte ? ») : Fiche = la fiche
+	// de la semaine ouvre, la carte en étoiles est en 01 ; Carte = la carte en
+	// étoiles ouvre, la fiche rejoint S'apren (Mots en imatges y est depuis ce jour).
+	// Le choix se garde dans l'adresse (?dobertura=carta).
+	const DOBERTURAS = [['ficha', 'Fiche'], ['carta', 'Carte en étoiles']];
+	const demandada = page.url.searchParams.get('dobertura');
+	let dobertura = $state(DOBERTURAS.some(([v]) => v === demandada) ? demandada : 'ficha');
+	function causir(v) {
+		dobertura = v;
+		replaceState('?dobertura=' + v, {});
+	}
 	// La croix aux couleurs de Romain sur fond clair (app.css, 2026-10-21) : ocre et rouge
 	const CROTZ = { traç: '#b53d17', ponch: '#eeaf34', moieu: '#b53d17' };
 </script>
@@ -31,6 +46,30 @@
 {#snippet braisa(t)}{#each [...t] as c, i (i)}{#if c === ' '}{' '}{:else}<span class="l">{c}</span>{/if}{/each}{/snippet}
 
 {#snippet sageta()}<Icona nom="suivant" size="0.9em" />{/snippet}
+
+<!-- La fiche de la semaine : dans l'ouverture (variante Fiche) ou dans S'apren (variante Carte) -->
+{#snippet fichaFig(cl)}
+	<figure class="ficha {cl}" style="--i: 2">
+		<figcaption class="ficha-cap"><span class="etiqueta">Lo mot de la setmana</span><small class="nòta">[a validar]</small></figcaption>
+		<a class="teula" href={MOT_SETMANA.href}>
+			<img src="/ensag/blanc/{MOT_SETMANA.img}.webp" width="640" height="640" alt="Ficha « {MOT_SETMANA.mot} »" fetchpriority="high" />
+		</a>
+		<p class="teula-mot"><span class="mot">{MOT_SETMANA.mot}</span><a class="ligam-fl" href={MOT_SETMANA.href}>Mots en imatges {@render sageta()}</a></p>
+	</figure>
+{/snippet}
+
+<!-- La carte en étoiles : en 01 (variante Fiche) ou dans l'ouverture (variante Carte) -->
+{#snippet cartaFig()}
+	<figure class="carta">
+		<svg viewBox={VISTA} role="img" aria-label="La carta">
+			<path class="costa" d={COSTA_D} pathLength="1" />
+			{#each ESTELAS as e, i (e.nom + i)}
+				<circle class="estela" class:vila={e.vila} cx={e.x} cy={e.y} r={e.vila ? 4 : 2} style="--i: {i}" />
+				{#if e.vila}<text class="vila-nom" x={e.x + 8} y={e.y + 4}>{e.nom}</text>{/if}
+			{/each}
+		</svg>
+	</figure>
+{/snippet}
 
 <div class="blanc">
 	<header class="cap grasilha">
@@ -52,15 +91,13 @@
 			</h1>
 			<div class="pè-dobertura esvani" style="--i: 3">
 				<p class="escriure">{ESCRIURE}</p>
-				<a class="boton" href="/aprene">Aprene l’occitan {@render sageta()}</a>
+				{#if dobertura === 'carta'}
+					<div class="accions"><a class="boton" href="/carta">Dobrir la carta {@render sageta()}</a><a class="ligam-fl" href="/aprene">Aprene l’occitan</a></div>
+				{:else}
+					<a class="boton" href="/aprene">Aprene l’occitan {@render sageta()}</a>
+				{/if}
 			</div>
-			<figure class="ficha esvani" style="--i: 2">
-				<figcaption class="ficha-cap"><span class="etiqueta">Lo mot de la setmana</span><small class="nòta">[a validar]</small></figcaption>
-				<a class="teula" href={MOT_SETMANA.href}>
-					<img src="/ensag/blanc/{MOT_SETMANA.img}.webp" width="640" height="640" alt="Ficha « {MOT_SETMANA.mot} »" fetchpriority="high" />
-				</a>
-				<p class="teula-mot"><span class="mot">{MOT_SETMANA.mot}</span><a class="ligam-fl" href={MOT_SETMANA.href}>Mots en imatges {@render sageta()}</a></p>
-			</figure>
+			{#if dobertura === 'carta'}{@render cartaFig()}{:else}{@render fichaFig('esvani')}{/if}
 		</section>
 
 		<!-- 2. Bandeau : onze mots des fiches, chacun mène à sa fiche -->
@@ -96,16 +133,8 @@
 				<h2 id="parla-titol">Se parla</h2>
 				<p class="escriure">{ESCRIURE}</p>
 			</header>
-			<figure class="carta">
-				<svg viewBox={VISTA} role="img" aria-label="La carta">
-					<path class="costa" d={COSTA_D} pathLength="1" />
-					{#each ESTELAS as e, i (e.nom + i)}
-						<circle class="estela" class:vila={e.vila} cx={e.x} cy={e.y} r={e.vila ? 4 : 2} style="--i: {i}" />
-						{#if e.vila}<text class="vila-nom" x={e.x + 8} y={e.y + 4}>{e.nom}</text>{/if}
-					{/each}
-				</svg>
-			</figure>
-			<div class="bloc-còs">
+			{#if dobertura !== 'carta'}{@render cartaFig()}{/if}
+			<div class="bloc-còs" class:larg={dobertura === 'carta'}>
 				<ul class="ligams">
 					<li><a href="/carta">Dobrir la carta entièra {@render sageta()}</a></li>
 					<li><a href="/wiki">Lo wiki de las lengas e dels luòcs {@render sageta()}</a></li>
@@ -130,6 +159,7 @@
 				<span class="pastilha" aria-hidden="true"></span>
 			</figure>
 			<div class="bloc-còs biais">
+				{#if dobertura === 'carta'}{@render fichaFig('')}{/if}
 				{#each BIAIS as b (b.n)}
 					<article class="biai">
 						<p class="num" aria-hidden="true">{b.n}</p>
@@ -194,6 +224,11 @@
 			{/each}
 		</nav>
 	</footer>
+
+	<!-- Outil d'essai (hors charte) : choisir ce qui ouvre la page -->
+	<div class="causida" role="group" aria-label="Essai : l’ouverture">
+		{#each DOBERTURAS as [v, nom] (v)}<button type="button" aria-pressed={dobertura === v} onclick={() => causir(v)}>{nom}</button>{/each}
+	</div>
 </div>
 
 <style>
@@ -275,7 +310,14 @@
 		-webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; transition: background-position 2.4s var(--lent); }
 	.titol :global(.l:hover) { background-position: 0 100%; transition-duration: 0.35s; }
 	.pè-dobertura { grid-column: 1 / 8; grid-row: 4; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 48px; margin-top: 40px; }
-	.ficha { grid-column: 9 / 13; grid-row: 1 / 6; align-self: center; margin: 0; display: grid; gap: 12px; }
+	.ficha { margin: 0; display: grid; gap: 12px; }
+	.dobertura .ficha { grid-column: 9 / 13; grid-row: 1 / 6; align-self: center; }
+	/* Variante Carte : la carte en étoiles ouvre la page, dessinée dans le temps (pas au défilement) */
+	.dobertura .carta { grid-column: 7 / 13; grid-row: 1 / 6; align-self: center; }
+	.dobertura .costa { animation: traçar 2.4s var(--lent) 0.2s forwards; animation-timeline: auto; }
+	.dobertura .estela { animation: lusir 0.6s ease-out forwards; animation-delay: calc(0.6s + var(--i) * 6ms); animation-timeline: auto; }
+	#parla .bloc-còs.larg { grid-column: 1 / 13; grid-template-columns: 1fr 1fr; align-items: start; }
+	#apren .ficha { max-width: 360px; margin-bottom: 40px; }
 	.ficha-cap { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 	.teula { display: block; border-radius: 8px; overflow: hidden; background: var(--f2); box-shadow: 0 1px 2px rgba(42, 26, 16, 0.08), 0 12px 32px -20px rgba(42, 26, 16, 0.5);
 		transition: transform 0.5s var(--lent), box-shadow 0.5s; }
@@ -370,6 +412,12 @@
 	.pè nav { grid-column: 6 / 13; display: flex; gap: 32px; justify-content: flex-end; }
 	.pè nav a { display: inline-flex; align-items: center; min-height: 44px; }
 
+	/* ——— Sélecteur de l'essai (outil, pas le site) ——— */
+	.causida { position: fixed; right: 16px; bottom: 16px; z-index: 9; display: flex; gap: 4px; padding: 4px;
+		background: #fff; color: #2a1a10; border-radius: 999px; box-shadow: 0 8px 32px -8px rgba(42, 26, 16, 0.35); font: 700 0.8125rem / 1 'Luciole', sans-serif; }
+	.causida button { font: inherit; color: inherit; border: 0; background: none; padding: 12px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+	.causida button[aria-pressed='true'] { background: #2a1a10; color: #fff; }
+
 	/* ——— Entrée en douceur, une fois ——— */
 	.esvani { animation: montar 0.9s var(--lent) both; animation-delay: calc(var(--i, 0) * 90ms + 100ms); }
 	@keyframes montar { from { opacity: 0; transform: translateY(16px); } }
@@ -389,9 +437,12 @@
 		.nav button span { display: none; }
 		.pilula { padding: 10px 14px; font-size: 0.8125rem; }
 		.dobertura { grid-template-rows: auto; min-height: 0; padding-block: 32px 48px; row-gap: 0; }
-		.dobertura .etiqueta, .blanc .titol, .pè-dobertura, .ficha { grid-column: 1 / 13; grid-row: auto; }
+		.dobertura .etiqueta, .blanc .titol, .pè-dobertura, .dobertura .ficha, .dobertura .carta { grid-column: 1 / 13; grid-row: auto; }
 		.pè-dobertura { margin-top: 32px; }
-		.ficha { margin-top: 48px; max-width: 420px; }
+		.dobertura .ficha { margin-top: 48px; max-width: 420px; }
+		.dobertura .carta { margin-top: 40px; }
+		#parla .bloc-còs.larg { grid-template-columns: 1fr; }
+		.causida { left: 16px; justify-content: space-between; }
 		.bandel { padding-block: 24px; }
 		.bandel a { font-size: 1.25rem; padding: 0 10px; }
 		.manifest { padding-block: 80px; row-gap: 32px; }
@@ -402,6 +453,10 @@
 		.bloc-cap .num, .bloc-cap h2, .bloc-cap .escriure { grid-column: 1; }
 		.carta, .scena, .bloc-còs, #apren .bloc-còs, .amassa-ligams { grid-column: 1 / 13; }
 		.vila-nom { display: none; }
+		/* sur téléphone la carte est petite : étoiles plus grosses, côte plus nette */
+		.estela { r: 3.2px; }
+		.estela.vila { r: 5.5px; }
+		.costa { stroke-opacity: 0.55; }
 		.chifras { grid-template-columns: 1fr; gap: 0; }
 		.chifras div { display: flex; align-items: baseline; gap: 12px; padding-block: 12px; }
 		.chifras dt { font-size: 1.25rem; }
