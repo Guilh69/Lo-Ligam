@@ -292,6 +292,11 @@ export function lancarAcuelh(racina, opcions = {}) {
 	// Cadre geografic : l'Occitània de Bordèu a Niça, de Lemòtges a Vielha
 	const GEO = { lon0: -1.6, lon1: 7.55, lat0: 42.65, lat1: 46.4, kx: Math.cos((44.5 * Math.PI) / 180) };
 	const zonaCarta = racina.querySelector('.carta-estelas');
+	// La carte en étoiles ouvre la page (Romain, 2026-10-22, « la carte version
+	// allégée ») : quand sa zone est dans l'ouverture, elle se dessine dans le
+	// temps à l'arrivée (pas au défilement), et la croix ne se montre plus qu'à
+	// l'appel final (une seule chose qui bouge par écran).
+	const cartaEnEros = zonaCarta.closest('.eros') !== null;
 	const jalonCarta = racina.querySelector('.chifras .jalon');
 	// Ont escriure lo nom de cada riu : al mièg de sa linha mai longa
 	const rius_nomenats = {};
@@ -540,7 +545,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// Estelas de fons : los luòcs esparpalhats… que venon dessenhar l'Occitània
 		// quand la zòna de la carta (acte V) passa davant l'uelh.
 		const zr = zonaCarta.getBoundingClientRect();
-		const aCarta = clamp((H * 0.95 - zr.top) / (H * 0.55)) * clamp((zr.bottom - H * 0.05) / (H * 0.45));
+		const aCartaVista = clamp((H * 0.95 - zr.top) / (H * 0.55)) * clamp((zr.bottom - H * 0.05) / (H * 0.45));
+		const aCarta = cartaEnEros ? Math.min(aCartaVista, calm ? 1 : easeIO(clamp((temps - 0.4) / 2.2))) : aCartaVista;
 		aCartaFons = aCarta;
 		if (!reliefDemandat && zr.top < H * 2.5) cargarRelief();
 		const gw = (GEO.lon1 - GEO.lon0) * GEO.kx, gh = GEO.lat1 - GEO.lat0;
@@ -716,7 +722,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 			pt.vx *= 0.8; pt.vy *= 0.8;
 			pt.x += pt.vx; pt.y += pt.vy; pt.ai = ai;
 		}
-		const aL = clamp((a - 0.55) / 0.4) * opacitat;
+		const amagada = cartaEnEros && !enCrida; // croix réservée à l'appel final
+		const aL = amagada ? 0 : clamp((a - 0.55) / 0.4) * opacitat;
 		if (aL > 0.01) {
 			cx.globalAlpha = aL; cx.strokeStyle = TEM.crotzTraç; cx.lineCap = 'round';
 			cx.lineWidth = Math.max(1.2, R * 0.05);
@@ -736,7 +743,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// escur traçats blancs, pomètas aur clar e moieu aur ; sus fons clar, òcre e roge
 		// (pomètas aur, traçats e moieu bricalha), jamai de brun (Romain, 2026-10-21).
 		const atenuat = enCrida ? TEM.crotzCrida : fons ? TEM.crotzFons : estret ? TEM.crotzEstret : null;
-		punts.forEach((pt, i) => {
+		if (!amagada) punts.forEach((pt, i) => {
 			cx.fillStyle = atenuat ?? (i === 0 ? TEM.crotzMoieu : TEM.crotzPonch);
 			const rr = lerp(1.6, R * (i === 0 ? 0.124 : 0.109), pt.ai * pt.ai);
 			cx.globalAlpha = lerp(0.6, 1, pt.ai);

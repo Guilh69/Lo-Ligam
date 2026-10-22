@@ -78,6 +78,36 @@
 		['capitols', 'Chapitres'],
 		['totes', 'Les deux']
 	];
+	// La phrase sous le titre (Romain, DIRECCION bloc 3, 2026-10-22 ; « siès » :
+	// montpelliéranisme assumé, charte §2 bis)
+	const FRASA = {
+		oc: 'Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.',
+		fr: 'Bienvenue dans ton lien avec le monde occitan. D’où que tu sois, tu es ici chez toi.'
+	};
+	// Bascule en français évidente dès le premier écran (DIRECCION bloc 2,
+	// 2026-10-22 : « choix délibéré de commencer par l'occitan, mais rendre la
+	// bascule en français évidente » ; le petit Òc · Fr de la barre ne suffit
+	// pas) : trois formes à comparer sur /?ensag=lenga. Lien : une ligne sous la
+	// phrase. Bilingue : l'autre langue en petit sous la phrase, avec le lien.
+	// Choix : une barre à deux boutons en haut de l'ouverture (dans la version
+	// finale, mémorisée après le premier choix).
+	const FORMAS_LENGA = [
+		['actual', 'Actuelle'],
+		['ligam', 'Lien'],
+		['bilingua', 'Bilingue'],
+		['causida', 'Choix']
+	];
+	const CLAU_ENSAG_LENGA = 'lo-ligam-ensag-lenga';
+	let formaLenga = $state('actual');
+	let ensagLenga = $state(false);
+	function causirFormaLenga(v) {
+		formaLenga = v;
+		try {
+			localStorage.setItem(CLAU_ENSAG_LENGA, v);
+		} catch {
+			// pas grave : le choix vaut pour la visite
+		}
+	}
 	const CLAU_ENSAG_SEPARA = 'lo-ligam-ensag-separa';
 	let formaSepara = $state('actual');
 	let ensagSepara = $state(false);
@@ -161,6 +191,15 @@
 			try {
 				const f = localStorage.getItem(CLAU_ENSAG_SEPARA);
 				if (FORMAS_SEPARA.some(([v]) => v === f)) formaSepara = f;
+			} catch {
+				// stockage indisponible : la forme actuelle
+			}
+		}
+		ensagLenga = new URLSearchParams(location.search).get('ensag') === 'lenga';
+		if (ensagLenga) {
+			try {
+				const f = localStorage.getItem(CLAU_ENSAG_LENGA);
+				if (FORMAS_LENGA.some(([v]) => v === f)) formaLenga = f;
 			} catch {
 				// stockage indisponible : la forme actuelle
 			}
@@ -293,7 +332,15 @@
 		>
 
 		<!-- I. Le héros : le titre annonce le plan de la page, un seul bouton principal -->
-		<section class="eros" data-revela data-forma={formaEros}>
+		<section class="eros" class:amb-carta={formaEros !== 'fials'} data-revela data-forma={formaEros}>
+			{#if ensagLenga && formaLenga === 'causida'}
+				<!-- essai « Choix » : deux boutons en haut, 44 px, dans chaque langue -->
+				<div class="lenga-causida" role="group" aria-label="Lenga / Langue">
+					<span lang="oc">Legir en occitan o en francés ?</span>
+					<button type="button" lang="oc" aria-pressed={!fr} onclick={() => (langStore.current = 'oc')}>Òc, en occitan</button>
+					<button type="button" lang="fr" aria-pressed={fr} onclick={() => (langStore.current = 'fr')}>Oui, en français</button>
+				</div>
+			{/if}
 			<p class="eros-kicker">
 				<span class="masc"><span class="masc-in">{@render bi('L’occitan', 'L’occitan')}</span></span>
 			</p>
@@ -333,13 +380,17 @@
 			{:else}
 				<div class="eros-pe">
 					<div class="esvani" style="--i: 5">
-						<p class="eros-sub">
-							{@render bi(
-								// La phrase de Romain (DIRECCION, bloc 3, 2026-10-22) ; « siès » : montpelliéranisme assumé (charte §2 bis)
-								'Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.',
-								'Bienvenue dans ton lien avec le monde occitan. D’où que tu sois, tu es ici chez toi.'
-							)}
-						</p>
+						<p class="eros-sub">{@render bi(FRASA.oc, FRASA.fr)}</p>
+						{#if ensagLenga && formaLenga === 'bilingua'}
+							<!-- essai « Bilingue » : l'autre langue en petit, sous la phrase -->
+							<p class="eros-sub eros-sub-autra" lang={fr ? 'oc' : 'fr'}>{fr ? FRASA.oc : FRASA.fr}</p>
+						{/if}
+						{#if ensagLenga && (formaLenga === 'ligam' || formaLenga === 'bilingua')}
+							<!-- essai « Lien » : une ligne visible, dans la langue qu'on ne lit pas encore -->
+							<button type="button" class="lenga-ligam" lang={fr ? 'oc' : 'fr'} onclick={() => (langStore.current = fr ? 'oc' : 'fr')}>
+								{fr ? 'Legir en occitan' : 'Lire en français'} {@render sageta()}
+							</button>
+						{/if}
 						<p class="indici" aria-hidden="true">
 							{@render bi('Passatz la mirga suls tres mots.', 'Survolez les trois mots.')}
 						</p>
@@ -354,6 +405,15 @@
 					<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
 				</div>
 			{/if}
+			<!-- La carte en étoiles ouvre la page (Romain, 2026-10-22) : le moteur la
+			     dessine ici, dans le temps, à l'arrivée ; elle était en 01 -->
+			<div
+				class="carta-estelas"
+				role="img"
+				aria-label={fr
+					? 'Carte de l’Occitanie en étoiles : 304 villes et villages, avec leur nom occitan'
+					: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan'}
+			></div>
 		</section>
 
 		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->
@@ -399,18 +459,12 @@
 		</section>
 
 		<!-- IV. 01 Se parla : la carte en étoiles et les chiffres, remontés -->
-		<section class="chifras" data-revela>
+		<!-- 01 compacte depuis le 2026-10-22 : la carte en étoiles est montée dans l'ouverture -->
+		<section class="chifras compacta" data-revela>
 			<h2 class="jalon">
 				<b>01</b><span class="masc"><span class="masc-in">{@render bi('Se parla', 'Se parle')}</span></span>
 			</h2>
 			{@render somari(PARLA)}
-			<div
-				class="carta-estelas"
-				role="img"
-				aria-label={fr
-					? 'Carte de l’Occitanie en étoiles : 304 villes et villages, avec leur nom occitan'
-					: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan'}
-			></div>
 			<!-- La carte montre, le wiki explique : chaque fiche y est reliée
 			     (revisions/2026-10-10-concept-wiki.md) -->
 			<div class="carta-dobrir esvani">
@@ -619,6 +673,13 @@
 	<div class="ensag-eros" role="group" aria-label="Essai : mise en ordre de l'ouverture">
 		{#each FORMAS_EROS as [v, nom] (v)}
 			<button type="button" aria-pressed={formaEros === v} onclick={() => causirFormaEros(v)}>{nom}</button>
+		{/each}
+	</div>
+{/if}
+{#if ensagLenga}
+	<div class="ensag-eros" role="group" aria-label="Essai : bascule en français">
+		{#each FORMAS_LENGA as [v, nom] (v)}
+			<button type="button" aria-pressed={formaLenga === v} onclick={() => causirFormaLenga(v)}>{nom}</button>
 		{/each}
 	</div>
 {/if}

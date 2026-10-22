@@ -573,4 +573,4 @@ occitane des modules, photos, les pages promises par le menu.
 | 2026-10-22 | 3 | Les trois rubriques sont un ordre (on voit, on apprend, on se rassemble) : chaque rubrique renvoie à la suivante ; Ma progression = tableau de bord par bloc, dans S'apren |
 | 2026-10-22 | 3 | La phrase sous le titre, portée : « Benvenguda dins ton ligam amb lo mond occitan. D'ont que siás, aicí siès en çò tieu. » / « Bienvenue dans ton lien avec le monde occitan. D'où que tu sois, tu es ici chez toi. » ; « siès » montpelliéranisme assumé (charte §2 bis) |
 | 2026-10-22 | 7 | Le tutoiement, partout, dans les deux langues |
-| 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles |
+| 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles (porté le jour même ; la croix ne se montre plus qu'à l'appel final) |
