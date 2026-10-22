@@ -453,6 +453,11 @@
 					<p class="chifra-font">{@render bi('dempuèi los primièrs trobadors', 'depuis les premiers troubadours')}</p>
 				</div>
 			</div>
+			<!-- Les trois rubriques sont un ordre (Romain, 2026-10-22) : chacune renvoie à la suivante -->
+			<p class="pont esvani">
+				<span class="pont-mot">{@render bi('Puèi', 'Ensuite')}</span>
+				<a href="#biais"><b>02</b> {@render bi('S’apren', 'S’apprend')} {@render sageta()}</a>
+			</p>
 		</section>
 
 		<!-- V. 02 S'apren : les trois façons d'apprendre, telles quelles -->
@@ -517,6 +522,10 @@
 				</div>
 				<p class="lengas-consigna" aria-live="polite" lang={consigna[0]}>{consigna[1]}</p>
 			</fieldset>
+			<p class="pont esvani">
+				<span class="pont-mot">{@render bi('Puèi', 'Ensuite')}</span>
+				<a href="#viure"><b>03</b> {@render bi('Amassa', 'Rassemble')} {@render sageta()}</a>
+			</p>
 		</section>
 
 		<!-- VI. 03 Amassa (« Se viu » jusqu’au 2026-10-21) : deux cartes, découvrir et faire ensemble -->
