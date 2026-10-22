@@ -263,7 +263,7 @@ export function crearColaDonadas(
 			this._pintar();
 		},
 		// La lectura de la carta (Romain, DIRECCION bloc 1) : 0 lo territòri,
-		// tenchas plenas ; 1 « ont se parla uèi », tenchas estompadas (los contorns
+		// tenchas plenas ; 1 « la reviscolada », tenchas estompadas (los contorns
 		// e los noms demòran) ; entre los dos, la glissièra
 		setLectura(u) {
 			u = clamp(Number(u) || 0);

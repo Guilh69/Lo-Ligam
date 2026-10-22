@@ -7,7 +7,7 @@
 	//   B « Le fil » : une petite carte en bas à gauche, qui avance quand on
 	//     fait vraiment le geste (toucher un dialecte, chercher, ouvrir le rail) ;
 	//   C « Trois portes » : un panneau d'accueil, trois entrées (le territoire,
-	//     où ça se parle aujourd'hui, ma ville).
+	//     la revitalisation, ma ville). Seconde porte renommée le 22-10 (Romain).
 	// Forme retenue par Romain le 2026-10-22 : « Trois portes » (« à voir car ça ne
 	// couvre pas tout ») ; les deux autres restent comparables sur l'essai.
 	// Règles : rien avant la fin de l'entrée en scène (ou le premier geste), le
@@ -39,10 +39,10 @@
 			fil: ['Tòca un dialècte sus la carta.', 'Cèrca ta vila.', 'Dobrís « Sus la carta ».'],
 			filFin: 'Aicí, tot es a tu.',
 			portasTitol: 'Benvenguda sus la carta',
-			portasTèxt: 'Lo territòri de l’occitan, e ont se parla uèi.',
+			portasTèxt: 'Lo territòri de l’occitan, e sa reviscolada.',
 			portas: [
 				['territori', 'Lo territòri'],
-				['uei', 'Ont se parla uèi'],
+				['reviscolada', 'La reviscolada'],
 				['vila', 'Ma vila']
 			]
 		},
@@ -58,10 +58,10 @@
 			fil: ['Touche un dialecte sur la carte.', 'Cherche ta ville.', 'Ouvre « Sus la carta ».'],
 			filFin: 'Ici, tout est à toi.',
 			portasTitol: 'Bienvenue sur la carte',
-			portasTèxt: 'Le territoire de l’occitan, et où il se parle aujourd’hui.',
+			portasTèxt: 'Le territoire de l’occitan, et sa revitalisation.',
 			portas: [
 				['territori', 'Le territoire'],
-				['uei', 'Où ça se parle aujourd’hui'],
+				['reviscolada', 'La revitalisation'],
 				['vila', 'Ma ville']
 			]
 		}

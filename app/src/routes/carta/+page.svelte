@@ -145,22 +145,23 @@
 	let formaLectura = $state('bascula'); // la forme par défaut ; /carta?ensag=lectura en propose trois
 	let nautLectura = $state(0); // la hauteur de la commande, pour décaler les mots à écouter
 	// La lecture de la carte (DIRECCION bloc 1 : « naviguer entre le territoire
-	// naturel et la réalité d'aujourd'hui ») : 0 lo territòri (tenchas plenas,
-	// res d'uèi), 1 « ont se parla uèi » (tenchas estompadas, calandretas e votz
-	// de l'Atlas alucadas) ; entre los dos, la glissièra. Les portes de la
-	// première visite la choisissent aussi.
+	// naturel et la réalité d'aujourd'hui ») : 0 lo territòri (tenchas plenas),
+	// 1 « la reviscolada » (tenchas estompadas ; calandretas e librariás alucadas :
+	// çò que fa reviure la lenga, Romain 22-10) ; entre los dos, la glissièra.
+	// Les voix de l'Atlas ne sont liées à aucune lecture (témoins de la langue
+	// parlée). Les portes de la première visite choisissent la lecture aussi.
 	let lectura = $state(0);
 	function causirLectura(u) {
 		lectura = Math.max(0, Math.min(1, Number(u) || 0));
-		const uei = lectura >= 0.5;
+		const reviscolada = lectura >= 0.5;
 		layerVisibility.dialectes = true;
-		layerVisibility.calandretas = uei;
-		layerVisibility.limsi = uei;
+		layerVisibility.calandretas = reviscolada;
+		layerVisibility.librarias = reviscolada;
 	}
 	// Les trois portes du panneau d'accueil (forme C) : la page tient les couches
 	function porta(k) {
 		if (k === 'territori') causirLectura(0);
-		else if (k === 'uei') causirLectura(1);
+		else if (k === 'reviscolada') causirLectura(1);
 		else if (k === 'vila') document.getElementById('cerca-carta')?.focus();
 	}
 </script>

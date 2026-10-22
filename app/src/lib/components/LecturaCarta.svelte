@@ -5,7 +5,12 @@
 	// Il aboutit la première visite « Trois portes » (22-10 : « la carte ne
 	// montre pas dans quelle lecture on est »). Trois formes à comparer sur
 	// /carta?ensag=lectura :
-	//   A « La bascule » : deux positions, Territòri | Uèi (comme Òc / Fr) ;
+	//   A « La bascule » : deux positions, Territòri | Reviscolada (comme Òc / Fr) ;
+	// Seconde lecture renommée « Reviscolada » le 22-10 (Romain : les voix de
+	// l'Atlas sont les témoins de la langue parlée dans sa diversité, pas la
+	// revitalisation ; la revitalisation = calandretas, cercles occitans,
+	// formateurs, librairies, organismes engagés). « Uèi » (part de locuteurs
+	// par département, enquête OPLO 2020) viendra quand la couche existera.| Uèi (comme Òc / Fr) ;
 	//   B « Le cartouche » : le titre de la lecture en cours, une ligne dessous,
 	//     et le passage vers l'autre ;
 	//   C « La glissière » : un curseur continu entre les deux, la carte se fond.
@@ -26,17 +31,17 @@
 		oc: {
 			lectura: 'Lectura de la carta',
 			territori: 'Territòri',
-			uei: 'Uèi',
-			titols: ['Lo territòri', 'Ont se parla uèi'],
-			sotas: ['L’aira istorica de la lenga', 'Calandretas e votz de l’Atlas'],
+			uei: 'Reviscolada',
+			titols: ['Lo territòri', 'La reviscolada'],
+			sotas: ['L’aira istorica de la lenga', 'Calandretas e librariás'],
 			passar: 'Passar a'
 		},
 		fr: {
 			lectura: 'Lecture de la carte',
 			territori: 'Territoire',
-			uei: 'Aujourd’hui',
-			titols: ['Le territoire', 'Où ça se parle aujourd’hui'],
-			sotas: ['L’aire historique de la langue', 'Calandretas et voix de l’Atlas'],
+			uei: 'Revitalisation',
+			titols: ['Le territoire', 'La revitalisation'],
+			sotas: ['L’aire historique de la langue', 'Calandretas et librairies'],
 			passar: 'Passer à'
 		}
 	};
