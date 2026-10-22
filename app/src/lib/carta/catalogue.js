@@ -45,15 +45,17 @@ export const CATALOGUE = [
 			// causissabla coma eles (retorn de Romain : « un seul endroit »)
 			{
 				id: 'limsi',
-				oc: 'Enquistas vocalas (Atlàs LISN)',
-				fr: 'Enquêtes vocales (Atlas LISN)',
+				// « les voix d'Occitanie » (Romain, 2026-10-22) : los testimònis de la lenga
+				// parlada dins sa diversitat ; la font (Atlàs sonòr, LISN) demòra dins la nòta
+				oc: 'Las votz d’Occitània',
+				fr: 'Les voix d’Occitanie',
 				// demostracion per lo LISN (decision de Romain, 2026-10-12 : en linha,
 				// lo site es pas encara dobèrt al public) ; donadas de
 				// SIG/cadena/lisn-enquistas.mjs
 				estat: 'disponible',
 				defaut: false,
-				nota_oc: 'Demostracion : una faula, mantun parlar',
-				nota_fr: 'Démonstration : une fable, plusieurs parlers'
+				nota_oc: 'Demostracion (Atlàs sonòr, LISN) : una faula, mantun parlar',
+				nota_fr: 'Démonstration (Atlas sonore, LISN) : une fable, plusieurs parlers'
 			}
 		]
 	},
