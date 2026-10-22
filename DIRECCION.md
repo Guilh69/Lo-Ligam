@@ -391,6 +391,15 @@ viu » : à réécrire par toi.
   « lo tieu » donné par le Basic pour « le tien », languedocien ; « en çò
   tieu » = chez toi). **À valider par Romain tel quel**, puis portage sur
   l'accueil avec l'ouverture.
+- *Doute de Romain sur « tu es » (« le classique veut es ? à Montpellier on
+  dit siès ? »).* Vérifié le 22-10 : le Basic connaît **« siás »** (2e
+  personne du singulier d'èsser, indicatif et subjonctif dans le paradigme
+  d'Alibert : soi, siás, es, sèm, sètz, son / siá, siás, siá…) ; vèrb'Òc
+  donne **« es » = 3e personne** (el es) et **« ès » = 2e personne**
+  (variante) ; **« siès » est inconnu** du Basic et de vèrb'Òc (forme
+  entendue autour de Montpellier, hors norme). Donc pas « es » pour « tu
+  es » ; « siás » deux fois (« D'ont que siás, aicí siás en çò tieu ») est
+  la forme standard ; « ès » possible pour varier. Au choix de Romain.
 
 ### Bloc 3 : ce qui en sort (2026-10-22)
 
