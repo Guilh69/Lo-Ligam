@@ -229,6 +229,23 @@ s'adresse à tous à la fois.
   compte (module 0, décidé le 29-08) ; le premier clic (la carte) doit
   accueillir quelqu'un qui ne sait rien.
 
+*Ta réponse (2026-10-22, question 2) :*
+
+> « L'occitan est français et souvent ne connaît pas sa langue. Choix
+> délibéré de commencer par l'occitan, mais oui, rendre la bascule en
+> français évidente. »
+
+*Ce que Claude en retient (à confirmer) :*
+- **Le site s'ouvre en occitan, par choix** : la langue d'abord, même pour
+  qui ne la lit pas ; c'est le message. Décision tenue depuis le 28-07,
+  maintenant motivée dans ses mots.
+- **La bascule en français doit être évidente dès le premier écran** : le
+  petit « Òc · Fr » en haut à droite ne suffit pas. À faire par Claude lors
+  du portage de l'ouverture (deux ou trois formes à comparer sur essai : un
+  lien « en français » sous le titre, une première phrase bilingue, un
+  choix à la première visite…). Rien d'imposé par le navigateur sans qu'on
+  le dise.
+
 ### Bloc 3. Les trois : Se parla, S'apren, Amassa
 
 *Ce qu'on sait.* Le plan en trois verbes (15-10), le troisième devenu
