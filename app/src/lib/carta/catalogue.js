@@ -253,10 +253,10 @@ export function fusionarCatalogue(linhas = []) {
 	for (const r of linhas) {
 		const j = perId.get(r.id);
 		if (j) {
-			// La basa pòt renomenar o anonciar una jaça, pas desactivar una jaça
-			// que lo site sap pintar sol
-			if (r.label_oc) j.oc = r.label_oc;
-			if (r.label_fr) j.fr = r.label_fr;
+			// Lo nom d'una jaça que lo site sap pintar sol ven del còde, pas de la
+			// basa (Romain, 2026-10-22 : l'espaci d'administracion es pas encara
+			// represes, deu pas blocar ; abans, la basa podiá renomenar). La basa pòt
+			// encara anonciar una jaça (nòta, disponibilitat, visibilitat per defaut).
 			// (una linha d'abans que lo site sapièsse pintar la jaça, « A venir »,
 			// es passada : sa nòta contradiriá la jaça disponibla, retorn de Romain
 			// sus las provincias istoricas, 2026-10-08)
