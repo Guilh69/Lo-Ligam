@@ -349,6 +349,22 @@ viu » : à réécrire par toi.
   S'apren = le parcours, la leçon d'essai, Mots en imatges, les cours en
   visio, ma progression ; Amassa = Fòrum, Grops, Boita d'idèas.
 
+*Ta réponse (2026-10-22, question 2 : le lien entre les trois) :*
+
+> « Un ordre : on voit, puis on apprend, puis on se rassemble. »
+
+*Ce que Claude en retient (à confirmer) :*
+- **Les trois rubriques sont un chemin**, dans l'ordre du titre. L'accueil
+  s'ouvre sur la première étape (la carte en étoiles : décidé ce matin), et
+  **chaque rubrique se termine en renvoyant à la suivante** : la carte vers
+  S'apren, S'apren vers Amassa. C'est la règle « jamais d'impasse » de la
+  charte (§5quater), appliquée au plan.
+- Le menu reste tel quel (les trois sur un pied d'égalité, pour qui sait où
+  il va) : l'ordre guide, il n'enferme pas.
+- **Question 4 (Ma progression)** : déjà répondue à la question 1, « tableau
+  de bord de son activité par bloc », dans S'apren. Elle reste aussi dans le
+  compte.
+
 ### Bloc 4. L'accueil : la vue d'ensemble
 
 *Ce qu'on sait.* L'accueil reste la vue d'ensemble ; on l'améliore sans le
@@ -478,4 +494,5 @@ occitane des modules, photos, les pages promises par le menu.
 | 2026-10-22 | 3 | Mots en imatges dans S'apren ; les liens vers les pages à venir restent |
 | 2026-10-22 | 3 | Òbras et Articles dans Se parla ; Amassa = la communauté seule |
 | 2026-10-22 | 3 | Le wiki = des cartes thématiques (l'amas de la connaissance de Romain), pas une encyclopédie |
+| 2026-10-22 | 3 | Les trois rubriques sont un ordre (on voit, on apprend, on se rassemble) : chaque rubrique renvoie à la suivante ; Ma progression = tableau de bord par bloc, dans S'apren |
 | 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles |
