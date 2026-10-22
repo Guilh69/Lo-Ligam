@@ -17,6 +17,7 @@ RUN npm ci
 COPY . .
 # Les tests passent avant la construction : une régression détectée bloque
 # la mise en ligne, l'ancienne version reste en place (audit du 2026-10-08).
+# npm test fa partida de l'imatge : verificar « npm test » en local abans de mandar (2026-10-22)
 RUN npm test && npm run build && npm prune --omit=dev
 
 # ---
