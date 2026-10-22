@@ -11,7 +11,7 @@ https://www.ofici-occitan.eu/wp-content/uploads/2020/09/OPLO_Enquete-sociolingus
 - La lecture du graphique est faite à partir du texte du PDF (étiquettes et positions) : **à contrôler à l'œil sur la page 63** pour la Corrèze (11 %, une étiquette « 10 % » voisine appartient à la série des 15-29 ans) et la Creuse (11 %).
 
 ## Deuxième niveau : la compréhension
-Colonne `comprenon_pct` : part des 15 ans et plus qui **comprennent l'occitan parfaitement ou facilement** (graphique « Niveau de compréhension selon le territoire », base : population totale ; capture fournie par Romain, valeurs lisibles sans ambiguïté). Moyennes : 15 % en Nouvelle-Aquitaine comme en Occitanie, 73 % au Val d'Aran. Les couples échantillonnés ensemble sont séparés d'après la note du graphique : Charente 38 % / Dordogne 19 % ; Aude 21 % / Pyrénées-Orientales occitanes 36 %.
+Colonne `comprenon_pct` : part des 15 ans et plus qui **comprennent l'occitan parfaitement ou facilement** (graphique « Niveau de compréhension selon le territoire », p. 78 du rapport, page 79 du PDF, base : population totale ; capture fournie par Romain, valeurs lisibles sans ambiguïté). Moyennes : 15 % en Nouvelle-Aquitaine comme en Occitanie, 73 % au Val d'Aran. Les couples échantillonnés ensemble sont séparés d'après la note du graphique : Charente 38 % / Dordogne 19 % ; Aude 21 % / Pyrénées-Orientales occitanes 36 %.
 
 Selon l'âge (ensemble interrégional, même graphique) : 15-29 ans 3 %, 30-44 ans 4 %, 45-59 ans 13 %, 60-74 ans 25 %, 75 ans et plus 39 %. Utile pour la page de vulgarisation.
 
