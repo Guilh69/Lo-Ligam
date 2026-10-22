@@ -1,24 +1,24 @@
-code;nom_fr;taux_locutors_pct;base_enquesta;nota
-09;Ariège;11;300;
-11;Aude;11;400;échantillon commun avec la partie occitane des Pyrénées-Orientales (11-66)
-12;Aveyron;18;350;
-16;Charente (partie occitane);15;;« Charente occitane » (focus p. 46) ; échantillon commun avec la Dordogne (16-24, n=400) ; non présentée dans le graphique par département (effectifs trop faibles)
-19;Corrèze;11;300;
-23;Creuse;11;300;
-24;Dordogne;9;400;
-30;Gard;5;500;
-31;Haute-Garonne;3;650;
-32;Gers;8;300;
-33;Gironde;2;650;
-34;Hérault;4;600;
-40;Landes;12;400;
-46;Lot;12;300;
-47;Lot-et-Garonne;4;350;
-48;Lozère;22;300;
-64;Pyrénées-Atlantiques (Béarn et Bas-Adour);12;400;partie occitane du département seulement (hors Pays basque)
-65;Hautes-Pyrénées;11;300;
-66;Pyrénées-Orientales (partie occitane);ND;;résultats non présentés (effectifs trop faibles) ; échantillon commun avec l'Aude
-81;Tarn;14;400;
-82;Tarn-et-Garonne;8;300;
-87;Haute-Vienne;9;400;
-ARAN;Val d'Aran;62;100;Catalogne, Espagne
+code;nom_fr;taux_locutors_pct;comprenon_pct;base_enquesta;nota
+09;Ariège;11;21;300;
+11;Aude;11;21;400;échantillon commun avec la partie occitane des Pyrénées-Orientales (11-66, 22 % de compréhension ensemble)
+12;Aveyron;18;30;350;
+16;Charente (partie occitane);15;38;;« Charente occitane » (focus p. 46) ; échantillon commun avec la Dordogne (16-24, n=400, 22 % de compréhension ensemble) ; locuteurs non présentés dans le graphique par département (effectifs trop faibles)
+19;Corrèze;11;23;300;
+23;Creuse;11;28;300;
+24;Dordogne;9;19;400;
+30;Gard;5;10;500;
+31;Haute-Garonne;3;8;650;
+32;Gers;8;16;300;
+33;Gironde;2;6;650;
+34;Hérault;4;9;600;
+40;Landes;12;20;400;
+46;Lot;12;23;300;
+47;Lot-et-Garonne;4;14;350;
+48;Lozère;22;36;300;
+64;Pyrénées-Atlantiques (Béarn et Bas-Adour);12;17;400;partie occitane du département seulement (hors Pays basque)
+65;Hautes-Pyrénées;11;18;300;
+66;Pyrénées-Orientales (partie occitane);ND;36;;locuteurs non présentés (effectifs trop faibles) ; échantillon commun avec l'Aude
+81;Tarn;14;28;400;
+82;Tarn-et-Garonne;8;16;300;
+87;Haute-Vienne;9;22;400;
+ARAN;Val d'Aran;62;73;100;Catalogne, Espagne
