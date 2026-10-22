@@ -365,6 +365,44 @@ viu » : à réécrire par toi.
   de bord de son activité par bloc », dans S'apren. Elle reste aussi dans le
   compte.
 
+*Ta réponse (2026-10-22, question 6 : la phrase sous le titre) :*
+
+> « Bienvenue dans votre lien avec le monde occitan. D'où que vous soyez,
+> vous êtes ici chez vous. »
+
+*Ce que Claude en retient et propose (à valider par Romain) :*
+- La phrase dit l'émotion du bloc 1 (le lien, « lo ligam ») et le public du
+  bloc 2 (« d'où que vous soyez » : le curieux, occitan ou non). Elle
+  remplace « Una carta per lo veire… », écrite pour « Se viu ».
+- **Proposition d'occitan, mots vérifiés par l'API de lo Congrès le 22-10,
+  à valider sur dicodòc** : « Benvenguda dins vòstre ligam amb lo mond
+  occitan. D'ont que siatz, aicí sètz a l'ostal. » (« a l'ostal » = chez
+  soi ; variante « en çò vòstre » : « çò » est absent du Basic mais « en çò
+  de » est sa propre traduction de « chez »). « Benvenguda » est le nom
+  (la bienvenue), donc sans genre à accorder.
+- **Un point à trancher au bloc 7** : la phrase dit « vous », le reste du
+  site dit « tu » (« A ton ritme », « Ma progression »). L'un ou l'autre,
+  partout.
+- Portage sur l'accueil (les deux langues) dès que l'occitan est validé.
+
+### Bloc 3 : ce qui en sort (2026-10-22)
+
+1. **Se parla** = la carte (l'aire culturelle, une autre vision du
+   territoire, support d'apprentissage, objet ludique diffusable), le wiki
+   (des cartes thématiques, l'amas de la connaissance de Romain), Òbras,
+   Articles. Les Ressources trouveront place ici (à confirmer).
+2. **S'apren** = le parcours (style Busuu, Duolingo, Babbel), Mots en imatges
+   en version augmentée (même chantier que la scène de l'unité), les cours
+   en visio pour néophytes de tout pays, la progression (tableau de bord par
+   bloc).
+3. **Amassa** = la communauté seule : forum d'entraide, groupes, boîte à
+   idées ; la modération est la question ouverte (bloc 8).
+4. **Les trois sont un ordre** : on voit, on apprend, on se rassemble ;
+   chaque rubrique renvoie à la suivante ; le menu reste égal.
+5. **Les liens vers les pages à venir restent.**
+6. **La phrase sous le titre**, en français, est écrite ; l'occitan attend
+   la validation de Romain ; « tu » ou « vous » : bloc 7.
+
 ### Bloc 4. L'accueil : la vue d'ensemble
 
 *Ce qu'on sait.* L'accueil reste la vue d'ensemble ; on l'améliore sans le
@@ -495,4 +533,5 @@ occitane des modules, photos, les pages promises par le menu.
 | 2026-10-22 | 3 | Òbras et Articles dans Se parla ; Amassa = la communauté seule |
 | 2026-10-22 | 3 | Le wiki = des cartes thématiques (l'amas de la connaissance de Romain), pas une encyclopédie |
 | 2026-10-22 | 3 | Les trois rubriques sont un ordre (on voit, on apprend, on se rassemble) : chaque rubrique renvoie à la suivante ; Ma progression = tableau de bord par bloc, dans S'apren |
+| 2026-10-22 | 3 | La phrase sous le titre : « Bienvenue dans votre lien avec le monde occitan. D'où que vous soyez, vous êtes ici chez vous. » (occitan à valider) |
 | 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles |
