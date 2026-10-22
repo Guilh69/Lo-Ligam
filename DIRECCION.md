@@ -297,7 +297,53 @@ viu » : à réécrire par toi.
 - q3 : « Mots en imatges : s'apren. » → appliqué le jour même (menu, pied de page, accueil).
 - q5 : « Non, je les garde. Je ne peux pas tout faire en même temps, mais ce sera fait. » → les liens vers les pages à venir restent (confirme la décision du 15-10 ; la proposition de nuit est écartée sur ce point).
 - Ouverture (question 1 du rapport) : « J'hésite, car la carte est vraiment une pièce maîtresse. Je me demande même si le site ne devrait pas s'ouvrir sur la version accueil de la carte. » → essai comparé sur `/ensag/blanc` (sélecteur : Fiche / Carte en étoiles), puis **tranché le même matin : « Oui, la carte version allégée »** : la carte en étoiles (17 Ko, immobile, CSS seul) ouvre la page à côté du titre, « Dobrir la carta » en action principale, la fiche de la semaine rejoint S'apren. La vraie carte `/carta` reste une page : jamais en ouverture (123 Mo sur iPhone à l'arrivée).
-- q1, q2, q4, q6 : en attente.
+- q1, q2, q4, q6 : voir ci-dessous.
+
+*Ta réponse (2026-10-22, question 1 : que vient-on faire dans chaque rubrique) :*
+
+> **Se parla** : « La carte nous montre l'aire culturelle occitane, donne
+> une nouvelle vision du territoire français, unit et distingue les régions
+> de l'aire occitane. Elle se veut support d'apprentissage et objet ludique
+> diffusable. Le wiki serait un endroit qui centralise des cartes
+> thématiques, qui seraient l'amas de ma connaissance sur l'occitan. »
+>
+> **S'apren** : « Le parcours permet d'apprendre dans le style Busuu,
+> Duolingo ou Babbel. Mots en imatges : lien avec Instagram, version
+> augmentée avec immersion et découverte progressive de l'image. Cours en
+> visio : destinés au débutant, avec une découverte de l'occitan pour les
+> néophytes de tout pays. Progression : tableau de bord de son activité par
+> bloc. »
+>
+> **Amassa** : « Òbras et Articles : je me demande si c'est logique que ce
+> soit dans Amassa. Fòrum : idée de créer un espace d'entraide entre
+> apprenants. Boîte à idées : amélioration du site. Grops : permettre la
+> création de groupes WhatsApp ou autre. Question sur la modération pour
+> éviter les abus. »
+
+*Ce que Claude en retient (à confirmer) :*
+- **La carte a maintenant sa phrase** : montrer l'aire culturelle occitane,
+  une autre vision du territoire français, unie et distinguée par régions ;
+  support d'apprentissage ; « objet ludique diffusable » (le geste de
+  partage du parking devient un besoin confirmé).
+- **Le wiki change de nature** : non plus l'encyclopédie « des langues et
+  des lieux » du 10-10, mais **des cartes thématiques**, l'amas de la
+  connaissance de Romain. C'est plus petit, plus sien, et plus faisable. Le
+  libellé « Lo wiki de las lengas e dels luòcs » est à revoir. Place
+  naturelle des **Ressources** : à côté, dans Se parla (à confirmer).
+- **Mots en imatges, version augmentée** : c'est la scène de l'unité
+  (« Lumière avec pastilles », 20-10) appliquée aux fiches Instagram, ce
+  que la proposition de nuit appelait la fiche comme unité. Les deux
+  chantiers n'en font qu'un.
+- **« Style Busuu, Duolingo, Babbel »** : compatible avec les décisions du
+  29-08 (un seul chemin, Arbre del Ligam, zéro classement, « vrai mot / mot
+  inventé » écarté) ; à garder en tête les limites relevées dans
+  corpus-design.md §2.3 sur Duolingo (motivation sans transfert).
+- **Amassa devient « la comunautat » au sens strict** si Òbras et Articles
+  en sortent : forum d'entraide, groupes, boîte à idées. **La modération
+  est la vraie question** : seul, Romain ne peut pas modérer un forum ; des
+  groupes WhatsApp externes se modèrent hors du site. À classer lancement /
+  évolution au bloc 8.
+- **Òbras et Articles : où ?** Question suivante.
 
 ### Bloc 4. L'accueil : la vue d'ensemble
 
