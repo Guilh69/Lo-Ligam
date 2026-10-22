@@ -129,6 +129,38 @@ carte (découverte, fierté du territoire), pas dans l'apprentissage.
   n'est pas ce que la carte montre en premier. Question pour plus tard : la
   carte doit-elle d'abord montrer où l'occitan *se parle aujourd'hui* ?
 
+*Ta réponse (2026-10-22, question 2, suite : la zone, puis les éléments 2 et 3) :*
+
+> « Justement, pour la zone, il faut naviguer entre le territoire naturel de
+> l'occitan, où une reconnexion est naturelle, et la réalité, où la plupart
+> de ce territoire n'a plus l'occitan comme langue vernaculaire.
+> Deuxième élément : partager la culture occitane et une vision
+> décentralisée. Troisième : ressources. »
+
+*Ce que Claude en retient (à confirmer) :*
+- **Les trois éléments, dans l'ordre de Romain** : (1) comprendre la
+  situation de l'occitan avant de l'apprendre ; (2) partager la culture
+  occitane et une vision décentralisée ; (3) les ressources.
+- **La carte a deux lectures, et le visiteur doit passer de l'une à
+  l'autre** : le territoire naturel (le domaine, les dialectes : « une
+  reconnexion est naturelle ») et la réalité d'aujourd'hui (les poches :
+  Calandretas, cours, enquêtes, locuteurs). La contradiction notée plus haut
+  n'en est pas une : c'est une bascule à rendre visible. Les deux couches
+  existent déjà ; ce qui manque, c'est le geste pour passer de l'une à
+  l'autre, et son nom (à écrire par Romain, vérifier par l'API).
+- **« Culture occitane »** : Òbras, Mots en imatges, les articles promis, et
+  la famille « culture et calendrier » des publications Instagram (20
+  visuels). **« Vision décentralisée »** a au moins trois sens possibles,
+  tous présents dans les décisions passées : la langue sans centre (les
+  dialectes à égalité, les noms dans leur dialecte, 2026-10) ; le projet
+  sans centre (des groupes par lieu, les voix par localité, les
+  contributions) ; le choix politique (loligam.eu « européen, pas l'État
+  français », 2026-10-15). À préciser par Romain : question suivante.
+- **« Ressources »** : aujourd'hui, des liens en pied de page (lo Congrès,
+  OPLO, CIRDOC, CAOC…) et les sources de la carte (bouton « Fonts »). Pas de
+  page. Le cahier §3 le prévoyait dès la phase 1 (« relais vers les outils
+  existants »). Où la ranger dans les trois verbes : question du bloc 3.
+
 ### Bloc 2. Pour qui
 
 *Ce qu'on sait.* Quatre publics (§2), 15 ans minimum, téléphone d'abord,
