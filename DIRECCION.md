@@ -214,9 +214,20 @@ s'adresse à tous à la fois.
 3. Les cours depuis l'anglais, le castillan et le catalan : promesse tenue
    dès l'ouverture, ou pour plus tard ?
 
-*Ta réponse (date) :*
+*Ta réponse (2026-10-22, question 1) :*
 
-—
+> « Le curieux, peu importe occitan ou non. »
+
+*Ce que Claude en retient (à confirmer) :*
+- Le premier public n'est pas défini par l'origine mais par **la curiosité**.
+  Les publics 1 et 3 du cahier se fondent ; la personne déplacée et le
+  locuteur avancé viennent après.
+- Cohérent avec le bloc 1 (« attise la curiosité », « comprendre avant
+  d'apprendre ») et avec l'ouverture sur la carte en étoiles.
+- Conséquences : le site ne doit rien supposer du visiteur (ni qu'il
+  connaît l'occitan, ni qu'il est du pays) ; la première leçon se fait sans
+  compte (module 0, décidé le 29-08) ; le premier clic (la carte) doit
+  accueillir quelqu'un qui ne sait rien.
 
 ### Bloc 3. Les trois : Se parla, S'apren, Amassa
 
