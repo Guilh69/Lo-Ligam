@@ -137,6 +137,9 @@
 		elements = {},
 		// colors causidas per l'internauta ({ riu, costa, estela, corba })
 		colors = {},
+		// la lectura de la carta : 0 lo territòri (tenchas plenas), 1 « ont se parla
+		// uèi » (tenchas estompadas) ; la pagina la ten amb las jaces d'uèi
+		lectura = 0,
 		// lo dialècte causit (còdi, 'cro' pel Creissent, o null) : de la carta al
 		// panèl e del panèl a la carta
 		causits = $bindable([]),
@@ -1539,6 +1542,7 @@
 			}
 		});
 		colaDonadas.addTo(map);
+		colaDonadas.setLectura(lectura);
 		// Las autras lengas (demanda de Romain, 2026-10-08) : meteissa lectura
 		// que l'occitan ; lors vilas grandas venon sus la carta en estelas amb elas
 		for (const id of JACES_LENGAS) {
@@ -2031,6 +2035,11 @@
 		for (const cl of Object.values(colasLengas)) cl.setLenga(l);
 		colaTematica?.setLenga(l);
 		tèxtesLeaflet();
+	});
+	// La lectura (territòri / uèi) : las tenchas dels dialèctes s'estompan
+	$effect(() => {
+		const u = lectura;
+		colaDonadas?.setLectura(u);
 	});
 	// Elements e colors del fons, dialècte causit dempuèi lo panèl
 	$effect(() => {

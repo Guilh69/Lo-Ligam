@@ -262,6 +262,15 @@ export function crearColaDonadas(
 			this._lang = l;
 			this._pintar();
 		},
+		// La lectura de la carta (Romain, DIRECCION bloc 1) : 0 lo territòri,
+		// tenchas plenas ; 1 « ont se parla uèi », tenchas estompadas (los contorns
+		// e los noms demòran) ; entre los dos, la glissièra
+		setLectura(u) {
+			u = clamp(Number(u) || 0);
+			if (u === (this._lectura ?? 0)) return;
+			this._lectura = u;
+			this._pintar();
+		},
 		// Causida venguda de defòra (lo panèl) : la lista de las zònas causidas
 		// (dialèctes e 'cro' pel Creissent), voida per totas
 		// L'entrada en scèna : a la fin, totes los dialèctes se difusan
@@ -1105,7 +1114,9 @@ export function crearColaDonadas(
 				aDet = this._rel?.det?.v ?? aDetalh(nv, z);
 			const aAdmin = this._doç('admin', clamp((11.5 - z) / 1.5)) * aDet,
 				aFront = dossa(clamp((13 - z) / 2)) * aDet,
-				aTenchas0 = tenchasDePrèp(z);
+				// la lectura « uèi » : las tenchas s'estompan (doçament dins lo temps)
+				aLect = 1 - 0.78 * this._doç('lectura', this._lectura ?? 0, 0.9),
+				aTenchas0 = tenchasDePrèp(z) * aLect;
 			// u : 0 los dialèctes, 1 l'Occitània unida (relais dins lo temps)
 			const R = this._rel ?? {},
 				ru = R.uni,

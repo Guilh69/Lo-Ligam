@@ -506,7 +506,7 @@
 	.votz-mots {
 		position: absolute;
 		z-index: 1000;
-		top: calc(var(--cap-bas, 5.3rem) + 66px);
+		top: calc(var(--cap-bas, 5.3rem) + 66px + var(--lectura-naut, 0px)); /* (la commande de lecture, quand elle partage la rangée) */
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;

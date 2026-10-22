@@ -8,6 +8,7 @@
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import RailJaces from '$lib/components/RailJaces.svelte';
 	import VisitaCarta from '$lib/components/VisitaCarta.svelte';
+	import LecturaCarta from '$lib/components/LecturaCarta.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
@@ -133,23 +134,34 @@
 		// Première visite guidée « Trois portes » (retenue par Romain le 2026-10-22) :
 		// elle remplace l'ouverture automatique de la pancarte des crédits, qui reste
 		// derrière le bouton « ? » ; /carta?ensag=visita compare encore les trois formes
-		ensagVisita = new URLSearchParams(location.search).get('ensag') === 'visita';
+		const ensag = new URLSearchParams(location.search).get('ensag');
+		ensagVisita = ensag === 'visita';
+		ensagLectura = ensag === 'lectura'; // le geste territoire / aujourd'hui, trois formes
 	});
 
 	let ensagVisita = $state(false);
 	let formaVisita = $state('portas'); // la forme retenue ; l'essai en propose trois
+	let ensagLectura = $state(false);
+	let formaLectura = $state('bascula'); // la forme par défaut ; /carta?ensag=lectura en propose trois
+	let nautLectura = $state(0); // la hauteur de la commande, pour décaler les mots à écouter
+	// La lecture de la carte (DIRECCION bloc 1 : « naviguer entre le territoire
+	// naturel et la réalité d'aujourd'hui ») : 0 lo territòri (tenchas plenas,
+	// res d'uèi), 1 « ont se parla uèi » (tenchas estompadas, calandretas e votz
+	// de l'Atlas alucadas) ; entre los dos, la glissièra. Les portes de la
+	// première visite la choisissent aussi.
+	let lectura = $state(0);
+	function causirLectura(u) {
+		lectura = Math.max(0, Math.min(1, Number(u) || 0));
+		const uei = lectura >= 0.5;
+		layerVisibility.dialectes = true;
+		layerVisibility.calandretas = uei;
+		layerVisibility.limsi = uei;
+	}
 	// Les trois portes du panneau d'accueil (forme C) : la page tient les couches
 	function porta(k) {
-		if (k === 'territori') {
-			layerVisibility.dialectes = true;
-			layerVisibility.calandretas = false;
-			layerVisibility.limsi = false;
-		} else if (k === 'uei') {
-			layerVisibility.calandretas = true;
-			layerVisibility.limsi = true;
-		} else if (k === 'vila') {
-			document.getElementById('cerca-carta')?.focus();
-		}
+		if (k === 'territori') causirLectura(0);
+		else if (k === 'uei') causirLectura(1);
+		else if (k === 'vila') document.getElementById('cerca-carta')?.focus();
 	}
 </script>
 
@@ -163,9 +175,10 @@
 		<AppHeader />
 	</div>
 
-	<main class="carta-wrap">
+	<main class="carta-wrap" style:--lectura-naut="{nautLectura}px">
 		<CartaOccitania
 			visibility={layerVisibility}
+			{lectura}
 			{baseLayer}
 			clar={ambianca.clar}
 			dalt={ambianca.dalt}
@@ -224,6 +237,7 @@
 		/>
 
 		<VisitaCarta bind:forma={formaVisita} ensag={ensagVisita} {lang} onPorta={porta} />
+		<LecturaCarta bind:forma={formaLectura} {lectura} ensag={ensagLectura} {lang} onCausir={causirLectura} onNaut={(h) => (nautLectura = h)} />
 	</main>
 </div>
 
