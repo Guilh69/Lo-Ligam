@@ -28,7 +28,8 @@
 	// Le choix se garde dans l'adresse (?dobertura=carta).
 	const DOBERTURAS = [['ficha', 'Fiche'], ['carta', 'Carte en étoiles']];
 	const demandada = page.url.searchParams.get('dobertura');
-	let dobertura = $state(DOBERTURAS.some(([v]) => v === demandada) ? demandada : 'ficha');
+	// Choix de Romain le 2026-10-22 au matin : « Oui, la carte version allégée » : Carte par défaut
+	let dobertura = $state(DOBERTURAS.some(([v]) => v === demandada) ? demandada : 'carta');
 	function causir(v) {
 		dobertura = v;
 		replaceState('?dobertura=' + v, {});
