@@ -111,6 +111,24 @@ carte (découverte, fierté du territoire), pas dans l'apprentissage.
   site, n'aide à en parler (pas de « partager », pas d'« envoyer à »). À
   mettre au parking : un geste de partage, sobre, sur la carte et les fiches.
 
+*Ta réponse (2026-10-22, question 2, premier élément) :*
+
+> « L'occitan n'est pas une langue comme l'anglais ou l'italien, il faut
+> comprendre sa situation, son intérêt, sa richesse, ce qu'elle apporte
+> avant de l'apprendre. Ce n'est pas une langue ayant une zone parlée
+> naturellement, mais qui fonctionne par poches de locuteurs. »
+
+*Ce que Claude en retient (à confirmer) :*
+- **Comprendre avant d'apprendre** : c'est l'ordre du titre (Se parla avant
+  S'apren) et c'est le module 0 (« L'occitan… Kezako ? »), à écrire par
+  Romain depuis septembre. Ce premier élément en est la raison d'être.
+- **Une contradiction à regarder en face** : la carte peint un domaine
+  continu (six dialectes en aplats, le « domeni »), c'est-à-dire une zone.
+  Or l'élément dit « des poches de locuteurs ». Les couches qui montrent
+  ces poches existent déjà (Calandretas, enquêtes vocales, cours), mais ce
+  n'est pas ce que la carte montre en premier. Question pour plus tard : la
+  carte doit-elle d'abord montrer où l'occitan *se parle aujourd'hui* ?
+
 ### Bloc 2. Pour qui
 
 *Ce qu'on sait.* Quatre publics (§2), 15 ans minimum, téléphone d'abord,
