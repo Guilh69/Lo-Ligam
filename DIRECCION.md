@@ -155,7 +155,16 @@ carte (découverte, fierté du territoire), pas dans l'apprentissage.
   dialectes à égalité, les noms dans leur dialecte, 2026-10) ; le projet
   sans centre (des groupes par lieu, les voix par localité, les
   contributions) ; le choix politique (loligam.eu « européen, pas l'État
-  français », 2026-10-15). À préciser par Romain : question suivante.
+  français », 2026-10-15). **Précisé par Romain le même jour : « face à
+  l'État ».** C'est le sens politique : une vision décentralisée face à
+  l'État français. Déjà visible dans les choix : loligam.eu plutôt que .fr,
+  hébergement européen, DSFR écarté (« réservé aux sites de l'État »), la
+  couche « Lengas de França » qui montre la diversité des langues du pays.
+  Point à tenir à l'œil (bloc 7, le ton) : le public visé comprend des
+  curieux non occitans, francophones ou étrangers ; la vision se montre par
+  les faits et la carte plus que par le discours, sinon le site change de
+  registre (le ton décidé : chaleureux, humour fin, jamais militant au
+  sens pesant). À arbitrer par Romain quand on écrira les textes.
 - **« Ressources »** : aujourd'hui, des liens en pied de page (lo Congrès,
   OPLO, CIRDOC, CAOC…) et les sources de la carte (bouton « Fonts »). Pas de
   page. Le cahier §3 le prévoyait dès la phase 1 (« relais vers les outils
