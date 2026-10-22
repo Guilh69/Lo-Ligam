@@ -5,9 +5,8 @@ Romain a autorisé une heure d'agents (« réanalyser l'ensemble du projet depui
 ## Fait
 - **Vague 1, neuf lecteurs en parallèle (17 min, 1,7 M de jetons)** : neuf rapports dans ce dossier, résumés et faits clés dans `00-resums.md`. Sujets : histoire Git, journal des décisions, chantiers, marque Instagram, site actuel, façon de travailler de Romain, références et principes, état de l'apprentissage, place de la carte.
 
-## Interrompu
-- **Vague 2 allégée** (proposition finale, esprit et façon de travailler, esquisse `/ensag/blanc`, rapport de nuit) lancée à 0 h 21 puis **arrêtée : la limite du forfait a été atteinte** (Romain : « attention déjà à 72 % »). Script conservé ici : `vaga2-leugiera.js` (à relancer tel quel avec l'outil Workflow, une fois le forfait renouvelé ; il lit `00-resums.md`).
-- Donc pas encore de `revisions/2026-10-22-proposicion-pagina-blanca.md`, ni `esperit.md`, ni `faicon-de-trabalhar.md`, ni d'esquisse en ligne, ni de rapport de nuit (sauf si un de ces fichiers figure déjà à côté : alors il est partiel, écrit avant l'arrêt).
+- **Vague 2 allégée, le matin** (lancée à 0 h 21, coupée par la limite du forfait, relancée à 8 h 40 à la demande de Romain, finie à 9 h 32 ; quatre agents, 0,77 M de jetons ; script : `vaga2-leugiera.js`) : la proposition `revisions/2026-10-22-proposicion-pagina-blanca.md`, le miroir `esperit.md` et `faicon-de-trabalhar.md`, l'esquisse `/ensag/blanc` (vérifiée à l'écran par Claude, ordinateur et téléphone, construction passée), et le rapport pour Romain `revisions/2026-10-22-analisi-profonda.md` (à lire en premier).
+- Pas de juges ni de vérificateurs adverses (forfait ménagé) : les chemins de la proposition ont été vérifiés par `ls` par son auteur, l'occitan nouveau par l'API de lo Congrès ; le reste reste à confronter par Romain.
 
 ## Cinq constats des rapports, pour commencer la lecture
 1. 682 commits en 35 jours actifs ; **six jours d'octobre (7 au 12) portent 53 % du projet, presque tout sur la carte** ; l'apprentissage, cœur annoncé du site, n'a que 10 % des commits (`istoria-git.md`).
