@@ -86,9 +86,30 @@ carte (découverte, fierté du territoire), pas dans l'apprentissage.
    (la fenêtre de pierre sur l'Hérault ? la salle de classe ? la table de la
    cuisine ?)
 
-*Ta réponse (date) :*
+*Ta réponse (2026-10-22, question 1) :*
 
-—
+> « Je veux créer une plateforme qui attise la curiosité, qui permette
+> d'apprendre, de jouer, qui donne une image moderne de l'occitan avec
+> l'utilisation des outils les plus qualitatifs et une qualité de code
+> élevée. Je veux que quand il ferme, la personne se dise : ok, c'est
+> l'endroit qui me connecte à l'occitan, et il faut absolument que j'en
+> parle à telle ou telle personne. »
+
+*Ce que Claude en retient (à confirmer par Romain) :*
+- Le mot, c'est le nom du site : **lo ligam**, « l'endroit qui me connecte ».
+  L'émotion visée n'est pas d'abord la fierté : c'est la **connexion**, puis
+  l'**envie d'en parler**.
+- Quatre verbes dans sa phrase : attiser la curiosité, apprendre, jouer,
+  donner une image moderne. « Jouer » est décidé depuis le 29-08 (Arbre del
+  Ligam, Fuòc de l'ostal, còla) et toujours absent du site ; la scène de
+  l'unité en est la première pièce.
+- « Image moderne, outils les plus qualitatifs, qualité de code élevée » :
+  la qualité technique fait partie du message, pas seulement de la cuisine.
+  Aujourd'hui elle se voit sur la carte et l'accueil, pas sur les neuf pages
+  restées dans l'ancienne charte.
+- « Il faut absolument que j'en parle à telle personne » : rien, sur le
+  site, n'aide à en parler (pas de « partager », pas d'« envoyer à »). À
+  mettre au parking : un geste de partage, sobre, sur la carte et les fiches.
 
 ### Bloc 2. Pour qui
 
