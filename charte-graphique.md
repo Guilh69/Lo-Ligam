@@ -39,9 +39,10 @@ brun-noir, la brique seule couleur vive. Jetons `--t-*` d'`app/src/app.css` :
 | `--t-aur` (or des petits textes) | #9C5611 | 5,1 (4,5 sur la pierre) |
 | `--t-terra` (brique) | #B53D17 | 5,2 (blanc dessus : 5,8) |
 
-Le thème sombre « Éclat » reste au choix (panneau Ambiance). Le fond animé
-n'est plus celui de tous : « Simple » (immobile) par défaut, Venas d'aur au
-choix. ⚠ L'ancien or `--color-gold` #EEAF34 ne doit jamais servir de texte
+**Le 2026-10-22, Romain revient au thème sombre « Éclat » avec le fond
+Venas d'aur comme défaut** (« je préfère, mais il y aura encore la version
+light », cahier §11) : le Plâtre reste le thème clair, entier, au choix dans
+le panneau Ambiance ; la version légère (§5septies) reste due. ⚠ L'ancien or `--color-gold` #EEAF34 ne doit jamais servir de texte
 sur fond clair (1,8:1) : à traquer page par page (refonte, étape 6).
 
 > ⚠️ **Note (toilettage 2026-09-18)** : les « ~ » ci-dessus datent de la v0.1. Ces huit valeurs sont **exactes** depuis le 2026-07-28 : ce sont les tokens de `app/src/app.css` (voir bandeau d'en-tête).

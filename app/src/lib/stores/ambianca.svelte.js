@@ -31,13 +31,15 @@ const FONSES = [0, 1, 2, 3];
 
 function crearEstat() {
 	const e = $state({
-		// Refonte claire (2026-10-21, cahier §11) : le clair « Plâtre » devient le
-		// thème de tous, le sombre reste au choix ; le fond animé quitte l'accueil
-		// par défaut (« trop de bruit »), Venas d'aur reste au choix.
-		// Avant : 'sorne' et 0 (Venas d'aur, 2026-10-07).
-		tema: 'clar',
+		// Le 2026-10-21, le clair « Plâtre » était devenu le thème de tous et le
+		// fond immobile le fond par défaut. Le 2026-10-22, devant la carte en
+		// étoiles sur fond nuit, Romain revient au sombre avec Venas d'aur, « en
+		// connaissance du choix d'hier » : « finalement je veux peaufiner
+		// celui-ci, je préfère ; mais il y aura encore la version light »
+		// (cahier §11). Le clair Plâtre reste au choix dans le panneau Ambiance.
+		tema: 'sorne',
 		dalt: false,
-		fons: 3, // Simple : immobile
+		fons: 0, // Venas d'aur
 		leugier: false, // fond léger, sur choix du visiteur seulement
 		forçarClar: false,
 		sistèmaClar: false,

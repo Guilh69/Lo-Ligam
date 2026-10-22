@@ -40,7 +40,7 @@ les rouvrir sans le vouloir. Source : `cahier-des-charges.md` §1 à §11,
 | Le jeu | Arbre del Ligam, còla pyrénéenne, Fuòc de l'ostal, zéro classement ; « vrai mot / mot inventé » écarté. Scène de l'unité = fil rouge de chaque unité (visuel de Romain, « Lumière avec pastilles », admin pour fabriquer 200 scènes). | 29-08, 15-10, 20-10 |
 | La carte | Chantier principal depuis octobre, de fait la première fonctionnalité ; langues de France et voisines ; wiki « des langues et des lieux ». | 07-10 → 19-10 |
 | L'identité | Croix-constellation (12 points liés) ; Limelight / Luciole / Cormorant ; brique #B53D17, or #EEAF34, or clair #FFD47F ; photos « sang e aur » ; icônes Iconoir. | 30-09, 05-10, 12-10 |
-| L'ambiance | Clair « Plâtre » par défaut, sombre au choix ; fond immobile par défaut ; principes de Léo Parpeix (fond clair, une couleur vive, titre géant, grille). | 21-10 |
+| L'ambiance | Sombre « Éclat » avec Venas d'aur par défaut (22-10, en connaissance du choix du 21-10 : « je préfère, mais il y aura encore la version light ») ; le clair « Plâtre » reste entier, au choix ; principes de Léo Parpeix gardés pour la structure (une couleur vive, titre géant, grille). | 21-10, 22-10 |
 | Le mouvement | Animations soignées mais sobres, sons désactivables, humour fin ; version légère de tout le site, prévue dès chaque nouvelle animation. | charte §5bis, 14-10 |
 | Les règles de page | Espacements en multiples de 4, proximité, grille de 12, trois tailles de texte, contraste AA, cibles de 24 px. | 21-10, charte §5octies |
 | Les langues du site | Occitan et français (bouton Òc / Fr) ; cours depuis le français, l'anglais, le castillan ou le catalan (sélecteur de l'accueil). | 28-07, 07-10 |
@@ -574,3 +574,4 @@ occitane des modules, photos, les pages promises par le menu.
 | 2026-10-22 | 3 | La phrase sous le titre, portée : « Benvenguda dins ton ligam amb lo mond occitan. D'ont que siás, aicí siès en çò tieu. » / « Bienvenue dans ton lien avec le monde occitan. D'où que tu sois, tu es ici chez toi. » ; « siès » montpelliéranisme assumé (charte §2 bis) |
 | 2026-10-22 | 7 | Le tutoiement, partout, dans les deux langues |
 | 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles (porté le jour même ; la croix ne se montre plus qu'à l'appel final) |
+| 2026-10-22 | 5 | Sombre « Éclat » avec Venas d'aur par défaut ; le clair Plâtre reste au choix (revient sur le 21-10, en connaissance de cause) |
