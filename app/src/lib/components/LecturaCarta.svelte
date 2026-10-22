@@ -10,7 +10,7 @@
 	// l'Atlas sont les témoins de la langue parlée dans sa diversité, pas la
 	// revitalisation ; la revitalisation = calandretas, cercles occitans,
 	// formateurs, librairies, organismes engagés). « Uèi » (part de locuteurs
-	// par département, enquête OPLO 2020) viendra quand la couche existera.| Uèi (comme Òc / Fr) ;
+	// par département, enquête OPLO 2020) viendra quand la couche existera.
 	//   B « Le cartouche » : le titre de la lecture en cours, une ligne dessous,
 	//     et le passage vers l'autre ;
 	//   C « La glissière » : un curseur continu entre les deux, la carte se fond.
