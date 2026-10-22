@@ -383,7 +383,14 @@ viu » : à réécrire par toi.
 - **Un point à trancher au bloc 7** : la phrase dit « vous », le reste du
   site dit « tu » (« A ton ritme », « Ma progression »). L'un ou l'autre,
   partout.
-- Portage sur l'accueil (les deux langues) dès que l'occitan est validé.
+- *Romain, le même jour : « en çò de, je crois que c'est mieux. Et
+  tutoiement. »* → la phrase passe au « tu » dans les deux langues :
+  « Bienvenue dans ton lien avec le monde occitan. D'où que tu sois, tu es
+  ici chez toi. » / **« Benvenguda dins ton ligam amb lo mond occitan.
+  D'ont que siás, aicí siás en çò tieu. »** (« ton », « siás » au Basic ;
+  « lo tieu » donné par le Basic pour « le tien », languedocien ; « en çò
+  tieu » = chez toi). **À valider par Romain tel quel**, puis portage sur
+  l'accueil avec l'ouverture.
 
 ### Bloc 3 : ce qui en sort (2026-10-22)
 
@@ -485,9 +492,13 @@ pilotage (chantier 2c, 13).
    wiki, Lo parcors, Mots en imatges, Òbras, Articles, Fòrum, Grops, Boita
    d'idèas, Mon istòria, Contacte.)
 
-*Ta réponse (date) :*
+*Ta réponse (2026-10-22, question 1, donnée pendant le bloc 3) :*
 
-—
+> « Tutoiement. »
+
+*Ce que Claude en retient :* le « tu » partout, dans les deux langues ; le
+site le fait déjà (« A ton ritme », « Ma progression ») ; la phrase sous le
+titre s'y range. Questions 2 et 3 du bloc : en attente.
 
 ### Bloc 8. Lancement et évolution
 
@@ -533,5 +544,6 @@ occitane des modules, photos, les pages promises par le menu.
 | 2026-10-22 | 3 | Òbras et Articles dans Se parla ; Amassa = la communauté seule |
 | 2026-10-22 | 3 | Le wiki = des cartes thématiques (l'amas de la connaissance de Romain), pas une encyclopédie |
 | 2026-10-22 | 3 | Les trois rubriques sont un ordre (on voit, on apprend, on se rassemble) : chaque rubrique renvoie à la suivante ; Ma progression = tableau de bord par bloc, dans S'apren |
-| 2026-10-22 | 3 | La phrase sous le titre : « Bienvenue dans votre lien avec le monde occitan. D'où que vous soyez, vous êtes ici chez vous. » (occitan à valider) |
+| 2026-10-22 | 3 | La phrase sous le titre : « Bienvenue dans ton lien avec le monde occitan. D'où que tu sois, tu es ici chez toi. » (occitan proposé, à valider) |
+| 2026-10-22 | 7 | Le tutoiement, partout, dans les deux langues |
 | 2026-10-22 | 4 | L'accueil s'ouvre sur la carte en étoiles |
