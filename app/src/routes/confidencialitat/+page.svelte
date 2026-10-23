@@ -19,43 +19,43 @@
 			collecteT: 'Ce qui est collecté',
 			collecte: [
 				[
-					'Votre compte',
-					'Adresse e-mail et mot de passe, pour vous reconnaître d’une visite à l’autre. Le mot de passe n’est jamais lisible : il est stocké sous forme chiffrée par notre prestataire.'
+					'Ton compte',
+					'Adresse e-mail et mot de passe, pour te reconnaître d’une visite à l’autre. Le mot de passe n’est jamais lisible : il est stocké sous forme chiffrée par notre prestataire.'
 				],
 				[
-					'Votre profil',
-					'Pseudonyme (obligatoire), et de façon entièrement facultative : genre, tranche d’âge, catégorie professionnelle, lieu de vie, ce qui vous intéresse dans l’occitan. Vous pouvez ne rien renseigner.'
+					'Ton profil',
+					'Pseudonyme (obligatoire), et de façon entièrement facultative : genre, tranche d’âge, catégorie professionnelle, lieu de vie, ce qui t’intéresse dans l’occitan. Tu peux ne rien renseigner.'
 				],
 				[
-					'Votre progression',
-					'La leçon en cours, votre avancement et vos points, pour vous permettre de reprendre où vous en étiez.'
+					'Ta progression',
+					'La leçon en cours, ton avancement et tes points, pour te permettre de reprendre où tu en étais.'
 				]
 			],
 			pourquoiT: 'Pourquoi, et sur quelle base',
 			pourquoi:
-				'Le compte et la progression reposent sur l’exécution du service que vous demandez. Les réponses facultatives du questionnaire reposent sur votre consentement : elles servent uniquement à comprendre qui apprend l’occitan, jamais à vous cibler.',
+				'Le compte et la progression reposent sur l’exécution du service que tu demandes. Les réponses facultatives du questionnaire reposent sur ton consentement : elles servent uniquement à comprendre qui apprend l’occitan, jamais à te cibler.',
 			ageT: 'Âge minimum',
 			age: 'La création de compte est réservée aux personnes de 15 ans ou plus.',
 			dureeT: 'Combien de temps',
 			duree:
-				'Vos données sont conservées tant que votre compte existe. Si vous demandez sa suppression, elles sont effacées, y compris votre progression.',
+				'Tes données sont conservées tant que ton compte existe. Si tu demandes sa suppression, elles sont effacées, y compris ta progression.',
 			quiT: 'Qui d’autre y a accès',
 			qui: 'Personne, en dehors des prestataires techniques nécessaires au fonctionnement du site :',
 			juridiccion:
-				'Précision que nous préférons dire clairement : vos données sont stockées sur des serveurs situés dans l’Union européenne, mais la société qui gère la base de données est américaine. Les autorités des États-Unis peuvent donc, en droit, en demander l’accès — c’est ce qu’on appelle le CLOUD Act. L’hébergement du site, lui, est français. Nous cherchons un prestataire européen pour la base de données ; aucun ne réunit à ce jour la maturité et la compatibilité nécessaires.',
+				'Précision que nous préférons dire clairement : tes données sont stockées sur des serveurs situés dans l’Union européenne, mais la société qui gère la base de données est américaine. Les autorités des États-Unis peuvent donc, en droit, en demander l’accès (c’est ce qu’on appelle le CLOUD Act). L’hébergement du site, lui, est français. Nous cherchons un prestataire européen pour la base de données ; aucun ne réunit à ce jour la maturité et la compatibilité nécessaires.',
 			cookiesT: 'Traceurs et stockage',
 			cookies:
-				'Aucun traceur publicitaire, aucune mesure d’audience. Le site garde seulement quelques réglages dans votre navigateur : la langue choisie, la progression de la leçon d’essai, et le fait que vous ayez déjà vu certains messages d’accueil. Ces informations ne quittent jamais votre appareil et ne servent pas à vous identifier.',
+				'Aucun traceur publicitaire, aucune mesure d’audience. Le site garde seulement quelques réglages dans ton navigateur : la langue choisie, la progression de la leçon d’essai, et le fait que tu aies déjà vu certains messages d’accueil. Ces informations ne quittent jamais ton appareil et ne servent pas à t’identifier.',
 			roleBasa: 'base de données et authentification',
 			roleAlbergament: 'hébergement',
 			tiersT: 'Ressources chargées depuis d’autres sites',
 			tiers:
-				'Certaines pages chargent des éléments hébergés ailleurs, ce qui transmet votre adresse IP à ces services : les fonds de carte (OpenStreetMap et sa version occitane OSM-bzh, OpenTopoMap, photos aériennes de l’IGN et du PNOA espagnol), la recherche de communes quand vous tapez un lieu (API Adresse, Photon), les vidéos que vous choisissez de lancer (YouTube en mode sans cookie, Canva) et les enregistrements de l’Atlas sonore des langues régionales (LISN, Université Paris-Saclay) que vous choisissez d’écouter sur la carte. Les polices de caractères et les icônes, elles, sont servies par ce site : aucune requête vers Google.',
-			droitsT: 'Vos droits',
+				'Certaines pages chargent des éléments hébergés ailleurs, ce qui transmet ton adresse IP à ces services : les fonds de carte (OpenStreetMap et sa version occitane OSM-bzh, OpenTopoMap, photos aériennes de l’IGN et du PNOA espagnol), la recherche de communes quand tu tapes un lieu (API Adresse, Photon), les vidéos que tu choisis de lancer (YouTube en mode sans cookie, Canva) et les enregistrements de l’Atlas sonore des langues régionales (LISN, Université Paris-Saclay) que tu choisis d’écouter sur la carte. Les polices de caractères et les icônes, elles, sont servies par ce site : aucune requête vers Google.',
+			droitsT: 'Tes droits',
 			droits:
-				'Vous pouvez à tout moment demander à consulter vos données, les corriger, les effacer, les récupérer dans un format lisible, ou retirer votre consentement aux réponses facultatives. Écrivez à {email} : la réponse intervient sous un mois.',
+				'Tu peux à tout moment demander à consulter tes données, les corriger, les effacer, les récupérer dans un format lisible, ou retirer ton consentement aux réponses facultatives. Écris à {email} : la réponse intervient sous un mois.',
 			cnilT: 'En cas de désaccord',
-			cnil: 'Si une réponse ne vous satisfait pas, vous pouvez saisir la CNIL :'
+			cnil: 'Si une réponse ne te satisfait pas, tu peux saisir la CNIL :'
 		},
 		oc: {
 			titre: 'Politica de confidencialitat',
@@ -67,43 +67,43 @@
 			collecteT: 'Çò qu’es recuelhit',
 			collecte: [
 				[
-					'Vòstre compte',
-					'Adreça electronica e senhal, per vos reconéisser d’una visita a l’autra. Lo senhal es pas jamai legible : es emmagazinat chifrat per nòstre prestatari.'
+					'Ton compte',
+					'Adreça electronica e senhal, per te reconéisser d’una visita a l’autra. Lo senhal es pas jamai legible : es emmagazinat chifrat per nòstre prestatari.'
 				],
 				[
-					'Vòstre perfil',
-					'Escaisnom (obligatòri), e de manièra completament facultativa : genre, forcheta d’edat, categoria professionala, luòc de vida, çò que vos interèssa dins l’occitan. Podètz res emplenar.'
+					'Ton perfil',
+					'Escaisnom (obligatòri), e de manièra completament facultativa : genre, forcheta d’edat, categoria professionala, luòc de vida, çò que t’interèssa dins l’occitan. Pòdes res emplenar.'
 				],
 				[
-					'Vòstra progression',
-					'La leiçon en cors, vòstre avançament e vòstres punts, per vos permetre de tornar ont n’èretz.'
+					'Ta progression',
+					'La leiçon en cors, ton avançament e tos punts, per te permetre de tornar ont n’èras.'
 				]
 			],
 			pourquoiT: 'Perqué, e sus quina basa',
 			pourquoi:
-				'Lo compte e la progression repausan sus l’execucion del servici que demandatz. Las respònsas facultativas del questionari repausan sus vòstre consentiment : servisson unicament a comprene qual apren l’occitan, pas jamai a vos ciblar.',
+				'Lo compte e la progression repausan sus l’execucion del servici que demandas. Las respònsas facultativas del questionari repausan sus ton consentiment : servisson unicament a comprene qual apren l’occitan, pas jamai a te ciblar.',
 			ageT: 'Edat minimala',
 			age: 'La creacion de compte es reservada a las personas de 15 ans o mai.',
 			dureeT: 'Quant de temps',
 			duree:
-				'Vòstras donadas son gardadas tant que vòstre compte existís. Se demandatz sa supression, son escafadas, progression compresa.',
+				'Tas donadas son gardadas tant que ton compte existís. Se demandas sa supression, son escafadas, progression compresa.',
 			quiT: 'Qual mai i a accès',
 			qui: 'Degun, levat los prestataris tecnics necessaris al foncionament del site :',
 			juridiccion:
-				'Precision que valèm mai dire clarament : vòstras donadas son gardadas sus de servidors situats dins l’Union europèa, mas la societat que gerís la basa de donadas es americana. Las autoritats dels Estats-Units pòdon doncas, en drech, ne demandar l’accès — çò que s’apèla lo CLOUD Act. L’albergament del site, el, es francés. Cercam un prestatari europèu per la basa de donadas ; cap reünís pas encara la maduretat e la compatibilitat necessàrias.',
+				'Precision que valèm mai dire clarament : tas donadas son gardadas sus de servidors situats dins l’Union europèa, mas la societat que gerís la basa de donadas es americana. Las autoritats dels Estats-Units pòdon doncas, en drech, ne demandar l’accès (çò que s’apèla lo CLOUD Act). L’albergament del site, el, es francés. Cercam un prestatari europèu per la basa de donadas ; cap reünís pas encara la maduretat e la compatibilitat necessàrias.',
 			cookiesT: 'Pistaires e emmagazinatge',
 			cookies:
-				'Cap de pistaire publicitari, cap de mesura d’audiéncia. Lo site garda solament qualques reglatges dins vòstre navegador : la lenga causida, la progression de la leiçon d’ensag, e lo fach qu’ajatz ja vist certans messatges d’acuèlh. Aquelas informacions quitan pas jamai vòstre aparelh e servisson pas a vos identificar.',
+				'Cap de pistaire publicitari, cap de mesura d’audiéncia. Lo site garda solament qualques reglatges dins ton navegador : la lenga causida, la progression de la leiçon d’ensag, e lo fach qu’ajas ja vist certans messatges d’acuèlh. Aquelas informacions quitan pas jamai ton aparelh e servisson pas a t’identificar.',
 			roleBasa: 'basa de donadas e autentificacion',
 			roleAlbergament: 'albergament',
 			tiersT: 'Ressorsas cargadas d’autres sites',
 			tiers:
-				'Certanas paginas cargan d’elements albergats endacòm mai, çò que transmet vòstra adreça IP a aquestes servicis : los fonses de carta (OpenStreetMap e sa version occitana OSM-bzh, OpenTopoMap, fòtos aerianas de l’IGN e del PNOA espanhòl), la recèrca de comunas quand tapatz un luòc (API Adresse, Photon), las vidèos que causissètz de lançar (YouTube en mòde sens cookies, Canva) e las faulas de l’Atlas sonòr de las lengas regionalas (LISN, Universitat Paris-Saclay) que causissètz d’escotar sus la carta. Las poliças de caractèrs e las icònas, elas, son servidas per aqueste site : cap de requèsta cap a Google.',
-			droitsT: 'Vòstres dreches',
+				'Certanas paginas cargan d’elements albergats endacòm mai, çò que transmet ton adreça IP a aquestes servicis : los fonses de carta (OpenStreetMap e sa version occitana OSM-bzh, OpenTopoMap, fòtos aerianas de l’IGN e del PNOA espanhòl), la recèrca de comunas quand tapas un luòc (API Adresse, Photon), las vidèos que causisses de lançar (YouTube en mòde sens cookies, Canva) e las faulas de l’Atlas sonòr de las lengas regionalas (LISN, Universitat Paris-Saclay) que causisses d’escotar sus la carta. Las poliças de caractèrs e las icònas, elas, son servidas per aqueste site : cap de requèsta cap a Google.',
+			droitsT: 'Tos dreches',
 			droits:
-				'Podètz a tot moment demandar de consultar vòstras donadas, las corregir, las escafar, las recuperar dins un format legible, o retirar vòstre consentiment a las respònsas facultativas. Escrivètz a {email} : la respònsa arriba jos un mes.',
+				'Pòdes a tot moment demandar de consultar tas donadas, las corregir, las escafar, las recuperar dins un format legible, o retirar ton consentiment a las respònsas facultativas. Escriu a {email} : la respònsa arriba jos un mes.',
 			cnilT: 'En cas de desacòrd',
-			cnil: 'Se una respònsa vos satisfà pas, podètz sasir la CNIL :'
+			cnil: 'Se una respònsa te satisfà pas, pòdes sasir la CNIL :'
 		}
 	};
 	let tx = $derived(t[lang]);

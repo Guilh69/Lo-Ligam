@@ -180,7 +180,7 @@ export const modul11 = {
 							explain: 'Question « ça va ? » → réponse *Va plan*.'
 						},
 						{
-							q: 'Vous vous reverrez demain.',
+							q: 'Tu reverras cette personne demain.',
 							options: ['A deman', 'Cossí vas ?', 'Bon ser'],
 							correct: 0,
 							explain: '*A deman* = à demain.'
@@ -287,7 +287,7 @@ export const modul11 = {
 							explain: 'Plusieurs personnes → *-siatz*.'
 						},
 						{
-							q: 'Vous vous verrez demain : « ___ ! »',
+							q: 'Tu verras cette personne demain : « ___ ! »',
 							options: ['A deman', 'A lèu', 'Bon ser'],
 							correct: 0,
 							explain: '*A deman* = demain précisément.'

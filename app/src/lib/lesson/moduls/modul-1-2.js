@@ -31,7 +31,7 @@ export const modul12 = {
 						},
 						{ q: '*Adieu-siatz !* s’adresse à qui ?', a: 'À plusieurs personnes, ou en vouvoyant.' },
 						{ q: 'Le soir, en arrivant : « ___ ! »', a: '*Bon ser !*' },
-						{ q: 'Vous vous reverrez demain : « ___ ! »', a: '*A deman !*' }
+						{ q: 'Tu reverras cette personne demain : « ___ ! »', a: '*A deman !*' }
 					]
 				},
 				{

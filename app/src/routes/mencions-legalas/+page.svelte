@@ -28,7 +28,7 @@
 			tipoT: 'Tipografia',
 			tipo: 'Lo site utiliza la poliça Luciole © Laurent Bourcellier e Jonathan Perez (CTRDV), jos licéncia CC BY 4.0.',
 			donadasT: 'Donadas personalas',
-			donadas: 'La gestion de vòstras donadas es detalhada sus la pagina dedicada :',
+			donadas: 'La gestion de tas donadas es detalhada sus la pagina dedicada :',
 			donadasLink: 'Politica de confidencialitat'
 		},
 		fr: {
@@ -50,7 +50,7 @@
 			tipoT: 'Typographie',
 			tipo: 'Le site utilise la police Luciole © Laurent Bourcellier et Jonathan Perez (CTRDV), sous licence CC BY 4.0.',
 			donadasT: 'Données personnelles',
-			donadas: 'La gestion de vos données est détaillée sur la page dédiée :',
+			donadas: 'La gestion de tes données est détaillée sur la page dédiée :',
 			donadasLink: 'Politique de confidentialité'
 		}
 	};
