@@ -800,9 +800,13 @@
 
 	// Depuis la fiche d'une ville : « Totas las votz sus la carta » allume le
 	// mode écoute et fait entendre ce point (dans le geste même)
+	// (la jaça alucada per la ficha s'escantís quand se tampa lo lector : la
+	// vila tòrna clicable, retorn de Romain 2026-10-23 ; alucada pel rail, demòra)
+	let limsiPerFicha = false;
 	function votzSusLaCarta(p) {
 		causirNomComuna(null);
 		votzComp?.jogar(p);
+		limsiPerFicha = !visibility.limsi;
 		onAlucar?.('limsi');
 	}
 
@@ -2455,7 +2459,11 @@
 		colorDe={colorDial}
 		nomDe={nomVotz}
 		onPunt={veireVotz}
-		onTampar={() => (votzAra = null)}
+		onTampar={() => {
+			votzAra = null;
+			if (limsiPerFicha) onAlucar?.('limsi', false);
+			limsiPerFicha = false;
+		}}
 		actiu={!!visibility.limsi && enquistas.length > 0 && !visualizacion}
 		bind:mot={votzMot}
 	/>

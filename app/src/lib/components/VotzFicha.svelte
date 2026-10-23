@@ -4,13 +4,16 @@
 	// pas en points par-dessus). L'enregistrement de l'Atlas sonore (LISN)
 	// le plus proche, à moins de 25 km : son lieu, son dialecte, l'écoute et
 	// la phrase en cours ; un lien ouvre le mode écoute sur la carte.
+	// Repliée en une ligne sous les informations de la ville (Romain,
+	// 2026-10-23 : « on devrait d'abord voir les informations sur la ville ») :
+	// un toucher lit la voix et déplie la phrase, sans second geste.
 	import { cargarVotz, pròcha, sonDe, frasas, frasaAra, sonSol } from '$lib/carta/votz.js';
 
 	let { comuna, lang = 'oc', nomDe = (p) => p.n, colorDe = () => '#eeaf34', onCarta = null } = $props();
 
 	const t = {
-		oc: { aquí: "La votz d'aquí", procha: 'La votz mai pròcha', a: 'a', escotar: 'Escotar', pausa: 'Pausa', carta: 'Totas las votz sus la carta', titol: '« La bisa e lo solelh »' },
-		fr: { aquí: "La voix d'ici", procha: 'La voix la plus proche', a: 'à', escotar: 'Écouter', pausa: 'Pause', carta: 'Toutes les voix sur la carte', titol: '« La bise et le soleil »' }
+		oc: { aquí: "Escotar la votz d'aquí", procha: 'Escotar la votz mai pròcha', a: 'a', pausa: 'Pausa', carta: 'Totas las votz sus la carta', titol: '« La bisa e lo solelh »' },
+		fr: { aquí: "Écouter la voix d'ici", procha: 'Écouter la voix la plus proche', a: 'à', pausa: 'Pause', carta: 'Toutes les voix sur la carte', titol: '« La bise et le soleil »' }
 	};
 	let tx = $derived(t[lang] ?? t.oc);
 	let fr = $derived(lang === 'fr');
@@ -27,21 +30,24 @@
 
 	let audio = $state();
 	let jogant = $state(false);
+	let dobèrta = $state(false);
 	let temps = $state(0);
 	let durada = $state(0);
 	let p = $derived(trobada?.p);
 	let liste = $derived(p ? frasas(p.tx) : []);
 	let i = $derived(durada ? frasaAra(liste, temps / durada) : -1);
-	// une autre ville : on se tait et on repart de zéro
+	// une autre ville : on se tait, on replie et on repart de zéro
 	$effect(() => {
 		p;
 		audio?.pause();
+		dobèrta = false;
 		temps = 0;
 		durada = 0;
 	});
 
 	function bascular() {
 		if (!audio || !p) return;
+		dobèrta = true;
 		if (!audio.paused) return audio.pause();
 		const src = sonDe(p.so);
 		if (audio.getAttribute('src') !== src) audio.src = src;
@@ -51,27 +57,33 @@
 </script>
 
 {#if p}
-	<div class="votz-ficha" style="--c: {colorDe(p.d.kod)}">
-		<button type="button" class="boton" onclick={bascular} aria-label={(jogant ? tx.pausa : tx.escotar) + ' : ' + nomDe(p)}>
-			{#if jogant}
-				<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1.2" /><rect x="13.5" y="5" width="4" height="14" rx="1.2" /></svg>
-			{:else}
-				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
-			{/if}
+	<div class="votz-ficha" class:dobèrta style="--c: {colorDe(p.d.kod)}">
+		<button type="button" class="linha" onclick={bascular} aria-expanded={dobèrta} aria-label={(jogant ? tx.pausa : trobada.d < 2 ? tx.aquí : tx.procha) + ' : ' + nomDe(p)}>
+			<span class="boton" aria-hidden="true">
+				{#if jogant}
+					<svg viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1.2" /><rect x="13.5" y="5" width="4" height="14" rx="1.2" /></svg>
+				{:else}
+					<svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" /></svg>
+				{/if}
+			</span>
+			<span class="tèxt">
+				<span class="cap">{trobada.d < 2 ? tx.aquí : tx.procha}</span>
+				<span class="luòc">
+					<span class="punt"></span>{dial(p)}{#if trobada.d >= 2}, {tx.a} {nomDe(p)} · {Math.round(trobada.d)} km{/if}
+				</span>
+			</span>
 		</button>
-		<div class="cos">
-			<p class="cap">{trobada.d < 2 ? tx.aquí : tx.procha}</p>
-			<p class="luòc">
-				<span class="punt" aria-hidden="true"></span>{dial(p)}{#if trobada.d >= 2}, {tx.a} {nomDe(p)} · {Math.round(trobada.d)} km{/if}
-			</p>
-			<p class="frasa" lang={p.mix ? undefined : 'oc'}>
-				{#if i >= 0}{liste[i]}{:else}{tx.titol}{/if}
-			</p>
-			<div class="fil" aria-hidden="true"><i style="width: {durada ? (temps / durada) * 100 : 0}%"></i></div>
-			{#if onCarta}
-				<button type="button" class="carta" onclick={() => (audio?.pause(), onCarta(p))}>{tx.carta} →</button>
-			{/if}
-		</div>
+		{#if dobèrta}
+			<div class="cos">
+				<p class="frasa" lang={p.mix ? undefined : 'oc'}>
+					{#if i >= 0}{liste[i]}{:else}{tx.titol}{/if}
+				</p>
+				<div class="fil" aria-hidden="true"><i style="width: {durada ? (temps / durada) * 100 : 0}%"></i></div>
+				{#if onCarta}
+					<button type="button" class="carta" onclick={() => (audio?.pause(), onCarta(p))}>{tx.carta} →</button>
+				{/if}
+			</div>
+		{/if}
 	</div>
 	<audio
 		bind:this={audio}
@@ -89,65 +101,79 @@
 		display: none;
 	}
 	.votz-ficha {
+		margin-top: 10px;
+		border-top: 1px solid var(--t-linha);
+		padding-top: 6px;
+	}
+	/* la ligne repliée : tout est une seule cible (44 px de haut au moins) */
+	.linha {
 		display: flex;
-		gap: 12px;
-		align-items: flex-start;
-		margin-top: 12px;
-		padding: 10px 12px;
-		border-radius: 14px;
-		border: 1px solid var(--t-linha);
-		background: color-mix(in srgb, var(--c) 7%, transparent);
+		align-items: center;
+		gap: 10px;
+		width: 100%;
+		min-height: 44px;
+		padding: 4px 2px;
+		border: 0;
+		background: none;
+		font: inherit;
+		color: inherit;
+		text-align: left;
+		cursor: pointer;
+		border-radius: 10px;
+	}
+	.linha:hover .cap,
+	.linha:focus-visible .cap {
+		text-decoration: underline;
+		text-underline-offset: 3px;
 	}
 	.boton {
-		width: 44px;
-		height: 44px;
+		width: 32px;
+		height: 32px;
 		flex: none;
-		border: 0;
 		border-radius: 50%;
 		display: grid;
 		place-items: center;
-		cursor: pointer;
 		color: #2a1408;
 		background: radial-gradient(circle at 35% 30%, var(--t-aur-clar), var(--t-aur) 70%);
-		box-shadow: 0 0 0 5px color-mix(in srgb, var(--t-aur) 14%, transparent);
 	}
 	.boton svg {
-		width: 20px;
-		height: 20px;
+		width: 15px;
+		height: 15px;
 		fill: currentColor;
 	}
-	.cos {
-		flex: 1;
+	.tèxt {
+		display: flex;
+		flex-direction: column;
 		min-width: 0;
 	}
 	.cap {
-		font-family: var(--font-heading);
+		font-size: 0.92rem;
 		color: var(--t-aur-clar);
-		font-size: 1rem;
-		line-height: 1.2;
+		line-height: 1.25;
 	}
 	.luòc {
 		display: flex;
 		align-items: center;
 		gap: 6px;
 		flex-wrap: wrap;
-		font-size: 0.78rem;
+		font-size: 0.76rem;
 		color: var(--t-tinta-2);
-		margin-top: 2px;
 	}
 	.punt {
-		width: 8px;
-		height: 8px;
+		width: 7px;
+		height: 7px;
 		border-radius: 50%;
 		background: var(--c);
-		box-shadow: 0 0 8px var(--c);
+		box-shadow: 0 0 6px var(--c);
+	}
+	.cos {
+		padding: 2px 2px 4px 44px;
 	}
 	.frasa {
 		font-family: var(--font-quote);
 		font-style: italic;
-		font-size: 1.02rem;
+		font-size: 1rem;
 		line-height: 1.35;
-		margin-top: 6px;
 		min-height: 1.35em;
 	}
 	.fil {

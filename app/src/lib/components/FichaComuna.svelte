@@ -297,8 +297,6 @@
 					{/if}
 				</div>
 			</div>
-			<!-- la voix d'ici, pour les communes occitanes (Atlas sonore) -->
-			{#if !deLenga}<VotzFicha {comuna} {lang} nomDe={nomVotz} colorDe={colorVotz} onCarta={onVotzCarta} />{/if}
 			{#if dades && dobèrta}
 				<div class="mai" transition:slide={{ duration: 240 }}>
 					{#if extrach}<p class="extrach" lang={lt} style:--i="4">{extrach}</p>{/if}
@@ -324,6 +322,9 @@
 					</footer>
 				</div>
 			{/if}
+			<!-- la voix d'ici, pour les communes occitanes (Atlas sonore) : après
+			     les informations de la ville, repliée en une ligne (Romain, 2026-10-23) -->
+			{#if !deLenga}<VotzFicha {comuna} {lang} nomDe={nomVotz} colorDe={colorVotz} onCarta={onVotzCarta} />{/if}
 		</section>
 		<!-- los emblèmas de las lengas, sul canton de la ficha : menan tota la ficha -->
 		{#if lenguasTèxt.length > 1}
