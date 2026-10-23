@@ -1,0 +1,27 @@
+nivel;uai;nom;motiu
+bilingue;0820397L;École maternelle Camille Claudel;code UAI absent de l'annuaire, remplacé par l'établissement ouvert le plus proche de l'adresse : Ecole primaire Camille Claudel (0820395J, Montauban)
+bilingue;0810424W;École maternelle Jacques Durand;code UAI absent de l'annuaire, remplacé par l'établissement ouvert le plus proche de l'adresse : Ecole élémentaire publique Jacques Durand (0811143C, Réalmont)
+bilingue;0641221E;École maternelle;code UAI absent de l'annuaire, remplacé par l'établissement ouvert le plus proche de l'adresse : Ecole Primaire Publique Jean Moulin (0641174D, Morlaàs)
+bilingue;0400979X;École maternelle Jules Ferry;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« 110 Rue Jules Ferry 40400 Tartas ») : écarté
+bilingue;0650629F;École maternelle Henri Duparc;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« Rue Henri Duparc 65000 Tarbes ») : écarté
+bilingue;0240560D;École primaire Gambetta;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« Boulevard Gambetta 24300 Nontron ») : écarté
+bilingue;0120565G;École maternelle Monteil;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« 6 Rue de l'Embergue 12000 Rodez ») : écarté
+bilingue;0120608W;École primaire Cambon;code UAI absent de l'annuaire, remplacé par l'établissement ouvert le plus proche de l'adresse : Ecole primaire publique Cambon (0120595G, Rodez)
+sensibilizacion;0340538A;École maternelle Anatole France;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« 10 Rue Général Lafon 34000 Montpellier ») : écarté
+sensibilizacion;0310244X;École maternelle Falguière;code UAI absent de l'annuaire, remplacé par l'établissement ouvert le plus proche de l'adresse : Ecole primaire publique Falguière (0310916C, Toulouse)
+sensibilizacion;0650213D;École élémentaire;code UAI absent de l'annuaire, adresse non retrouvée : Le Bourg 65220  Tournous-Darré
+sensibilizacion;0480089L;École primaire;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« Sogno del Riou (Malbouzon) 48100 Prinsuéjols-Malbouzon ») : écarté
+sensibilizacion;0121172J;École primaire Jouels;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« Route de la Roumegouse 12800 Sauveterre-de-Rouergue ») : écarté
+sensibilizacion;0120318F;École élémentaire;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« Gaillac-d'Aveyron ») : écarté
+sensibilizacion;0110731K;École élémentaire;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« Rue des Ecoles 11160 Caunes-Minervois ») : écarté
+sensibilizacion;0110129F;École maternelle;code UAI absent de l'annuaire, aucun établissement ouvert à moins de 200 m de l'adresse (« 5 Rue des Etudes 11150 Bram ») : écarté
+sensibilizacion;0110713R;École maternelle;code UAI absent de l'annuaire, remplacé par l'établissement ouvert le plus proche de l'adresse : Ecole primaire (0110729H, Azille)
+collègi;0310021Z;Collège du Fezensaguet;code UAI absent de l'annuaire, remplacé par l'établissement ouvert le plus proche de l'adresse : Collège du Fezensaguet (0320021Z, Mauvezin)
+collègi;0650837F;Collège climatique René Billères;code UAI absent de l'annuaire, remplacé par l'établissement ouvert le plus proche de l'adresse : Collège climatique René Billères (0650836F, Argelès-Gazost)
+collègi;;Collège Beaupeyrat;pas de code UAI, remplacé par l'établissement ouvert le plus proche de l'adresse : Collège privé Beaupeyrat (0870909R, Limoges)
+collègi;;Collège Le Beau Rameau;pas de code UAI, remplacé par l'établissement ouvert le plus proche de l'adresse : Collège privé Le Beau Rameau (0641655B, Lestelle-Bétharram)
+collègi;;Collège Notre-Dame;pas de code UAI, remplacé par l'établissement ouvert le plus proche de l'adresse : Collège privé Notre-Dame (0640121J, Lescar)
+licèu;;Lycée général et technologique Jeanne d'Arc;pas de code UAI, remplacé par l'établissement ouvert le plus proche de l'adresse : Lycée général et technologique privé Jeanne d'Arc (0120051R, Millau)
+licèu;;Lycée général et technologique Saint-Gabriel;pas de code UAI, remplacé par l'établissement ouvert le plus proche de l'adresse : Lycée général et technologique privé Saint-Gabriel (0120059Z, Saint-Affrique)
+licèu;;Lycée général et technologique Beaupeyrat;pas de code UAI, remplacé par l'établissement ouvert le plus proche de l'adresse : Lycée privé Beaupeyrat (0870081R, Limoges)
+licèu;;Lycée général Barral;pas de code UAI, remplacé par l'établissement ouvert le plus proche de l'adresse : Lycée général privé Barral (0810071M, Castres)

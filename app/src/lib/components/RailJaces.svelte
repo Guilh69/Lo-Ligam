@@ -224,6 +224,8 @@
 			// cercles e associacions : un ponch plen (activitat provada), un vuèg (declarada)
 			cercles: '<circle cx="17" cy="18" r="7" fill="#ffd98a"/><circle cx="35" cy="18" r="7" fill="none" stroke="#ffd98a" stroke-width="1.5" stroke-dasharray="3 2"/>',
 			culturaOc: '<circle cx="17" cy="18" r="7" fill="#ef6a35"/><circle cx="35" cy="18" r="7" fill="none" stroke="#ef6a35" stroke-width="1.5" stroke-dasharray="3 2"/>',
+			// ensenhament : la pastilha al gredon, lo ponch pichon de la sensibilizacion
+			ensenhament: '<circle cx="18" cy="18" r="9" fill="none" stroke="#c8481c" stroke-width="1.5"/><path d="M14 22h2.5l6-6a1.6 1.6 0 0 0-2.5-2.5l-6 6z" fill="none" stroke="#c8481c" stroke-width="1.3" stroke-linejoin="round"/><circle cx="36" cy="20" r="3" fill="#c8481c"/>',
 			calandretas: '<path d="M12 28V16l14-7 14 7v12z" fill="none" stroke="#eeaf34" stroke-width="1.5" stroke-linejoin="round"/><path d="M23 28v-6h6v6" stroke="#eeaf34" stroke-width="1.4" fill="none"/>',
 			festas: '<path d="M26 7l3 7 7 .6-5.4 4.6 1.7 7-6.3-3.8-6.3 3.8 1.7-7L15 14.6l7-.6z" fill="#eeaf34" opacity=".85"/>',
 			provincias: '<path d="M2 12 Q 18 3 30 12 T 50 9" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 3" opacity=".75"/><path d="M4 29 Q 20 20 32 27 T 50 23" fill="none" stroke="currentColor" stroke-width=".9" opacity=".55"/>',

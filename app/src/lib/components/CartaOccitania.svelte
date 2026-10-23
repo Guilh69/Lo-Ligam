@@ -29,6 +29,7 @@
 	import CercaCarta from './CercaCarta.svelte';
 	import VotzAtlas from './VotzAtlas.svelte';
 	import { cargarVotz } from '$lib/carta/votz.js';
+	import { ponchesEnsenhament } from '$lib/carta/ensenhament.js';
 
 	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
 	// carta_colas — geridas dins /admin/carta) puslèu que
@@ -441,7 +442,7 @@
 
 	// Cada punt : una pastilha de veire amb l'icòna de sa jaça (Tabler Icons,
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
-	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', cercles: 'messages', culturaOc: 'music', festas: 'confetti', limsi: 'microphone-2' };
+	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', ensenhament: 'pencil', cercles: 'messages', culturaOc: 'music', festas: 'confetti', limsi: 'microphone-2' };
 	// una jaça apondida dins l'admin pren sa color de la basa
 	// Las lengas vesinas (demanda de Romain, 2026-10-09 : « une incitation à
 	// découvrir ce qui se passe à côté ») : al survòl (o al tòc) d'una lenga pas
@@ -625,6 +626,21 @@
 		);
 		if (d.font) map.attributionControl?.addAttribution(d.font);
 		if (visibility.calandretas) pointLayers.calandretas.addTo(map);
+	}
+
+	// L'ensenhament de l'occitan, levat de las Calandretas (decision de Romain,
+	// 2026-10-23 ; SIG/ensenhament) : los ponches se fabrican dins ensenhament.js
+	let ensenhamentCargat = false;
+	async function cargarEnsenhament() {
+		if (ensenhamentCargat || !map) return;
+		ensenhamentCargat = true;
+		const d = await fetch('/data/ensenhament.json')
+			.then((r) => (r.ok ? r.json() : null))
+			.catch(() => null);
+		if (!d?.ponches) return (ensenhamentCargat = false);
+		pointLayers.ensenhament = L.layerGroup(ponchesEnsenhament(d.ponches, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml, comunaOc }));
+		if (d.font) map.attributionControl?.addAttribution(d.font);
+		if (visibility.ensenhament) pointLayers.ensenhament.addTo(map);
 	}
 
 	// Los cercles e las associacions (decision de Romain, 2026-10-23 ;
@@ -2032,6 +2048,7 @@
 		colaEstelas?.setTerritoris({ regions: !!vis.regions, despartaments: !!vis.despartaments, comunas: !!vis.comunas });
 		colaTematica?.setJaces(jacesTematicas(vis));
 		if (vis.calandretas) cargarCalandretas();
+		if (vis.ensenhament) cargarEnsenhament();
 		if (vis.cercles || vis.culturaOc) cargarCercles();
 		if (vis.limsi) cargarEnquistas();
 		if (vis.lengasFranca) cargarLengas();
@@ -2634,6 +2651,27 @@
 	}
 	:global(.ponch-jaça-culturaOc) {
 		--ponch: var(--t-terra-viu);
+	}
+	/* l'ensenhament : la pastilha al gredon ; la sensibilizacion (mens d'oras),
+	   un ponch pichon plen, sens icòna, per daissar veire l'ensenhament regular */
+	:global(.ponch-jaça-ensenhament) {
+		--ponch: var(--t-terra);
+	}
+	:global(.ponch-pichon .ponch) {
+		width: 10px;
+		height: 10px;
+		background: var(--ponch);
+		border-color: color-mix(in srgb, var(--t-fons-2) 70%, transparent);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+	}
+	:global(.ponch-pichon .ponch svg),
+	:global(.ponch-pichon .ponch-estela) {
+		display: none;
+	}
+	:global(.leaflet-popup-content .lista-bulla) {
+		margin: 0.3em 0 0.2em;
+		padding-left: 1.1em;
+		font-size: 0.9em;
 	}
 	:global(.ponch-plen .ponch) {
 		background: var(--ponch);

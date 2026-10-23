@@ -92,6 +92,9 @@ export const CATALOGUE = [
 			{ id: 'lieusInteres', oc: "Luòcs d'interès", fr: "Lieux d'intérêt", estat: 'basa', defaut: false },
 			{ id: 'librarias', oc: 'Librariás', fr: 'Librairies', estat: 'basa', defaut: false },
 			{ id: 'calandretas', oc: 'Calandretas', fr: 'Calandretas', estat: 'disponible', defaut: false, nota_oc: "Escòlas, collègis e licèu (annuari de l'educacion)", nota_fr: "Écoles, collèges et lycée (annuaire de l'éducation)" },
+			// las escòlas, collègis, licèus e universitats ont s'apren l'occitan,
+			// levat de las Calandretas (decision de Romain, 2026-10-23, SIG/ensenhament)
+			{ id: 'ensenhament', oc: 'Ensenhament', fr: 'Enseignement', estat: 'disponible', defaut: false, nota_oc: 'Escòlas, collègis, licèus e universitats, levat de las Calandretas ; ponch pichon : sensibilizacion', nota_fr: 'Écoles, collèges, lycées et universités, hors Calandretas ; petit point : sensibilisation' },
 			// cercles, ostals, IEO, escolo, Parlaren ; e las associacions de
 			// cultura occitana (decision de Romain, 2026-10-23, SIG/cercles)
 			{ id: 'cercles', oc: 'Cercles e associacions', fr: 'Cercles et associations', estat: 'disponible', defaut: false, nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },

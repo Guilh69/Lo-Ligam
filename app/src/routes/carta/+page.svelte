@@ -160,6 +160,7 @@
 		layerVisibility.dialectes = true;
 		layerVisibility.locutors = uei;
 		layerVisibility.calandretas = reviscolada;
+		layerVisibility.ensenhament = reviscolada;
 		layerVisibility.librarias = reviscolada;
 		layerVisibility.cercles = reviscolada;
 		layerVisibility.culturaOc = reviscolada;
