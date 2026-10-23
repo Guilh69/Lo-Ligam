@@ -25,6 +25,9 @@ Site d'apprentissage de l'occitan (languedocien, norme classique), support des c
 - UX : animations soignées, sons discrets et désactivables, humour fin par touches.
 - Périmètre MVP : A1, compte, questionnaire. Cartographie et modèle payant = en cours d'arbitrage, voir `cahier-des-charges.md` §3/§6/§11 avant de supposer l'ancien périmètre.
 
+## Édition sur place (depuis le 2026-10-24)
+Romain modifie lui-même les textes, liens, images et listes des pages, connecté avec son compte administrateur (bouton « Editar » sur la page ; brouillons dans la table `pagina_elements`, « Publicar » les rend publics). **Claude ne retouche plus ces contenus dans le code** : le code ne garde qu'un filet de secours (`app/src/lib/data/elements-filet.json`, à rafraîchir depuis la base avec `node scripts/elements-filet.mjs`). Pour rendre un nouvel élément modifiable : une ligne dans le filet, `node scripts/elements-sql.mjs`, et `use:editar={clau}` dans la page (lecture par `txt()`, `ligam()`, `imatge()`, `lista()` de `$lib/edicion/edicion.svelte.js`). Détail : `revisions/2026-10-24-edicion-sus-plaça.md`.
+
 ## Documents de référence
 **`PILOTATGE.md` d'abord : l'ouvrir en début de séance, le mettre à jour en fin.** Puis `cahier-des-charges.md` (source de vérité + journal des décisions §11) · `charte-graphique.md` · `corpus-design.md` · `transposicion-racine2.md` · les documents pédagogiques listés dans PILOTATGE.
 

@@ -5,6 +5,9 @@
 	import { ambianca, ARMONIZADAS } from '$lib/stores/ambianca.svelte.js';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import TornarAmont from '$lib/components/TornarAmont.svelte';
+	// l'édition sur place (bouton, barre, panneau) : ne montre rien tant
+	// qu'une page ne s'y est pas branchée (2026-10-24)
+	import Edicion from '$lib/components/Edicion.svelte';
 
 	let { children } = $props();
 
@@ -37,3 +40,5 @@
 {#if ambPè}
 	<TornarAmont />
 {/if}
+
+<Edicion />

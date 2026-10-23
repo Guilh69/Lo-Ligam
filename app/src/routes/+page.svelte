@@ -18,36 +18,35 @@
 	//   - « Quatre camins » retiré (il répétait le menu ; l'ancienne version
 	//     reste dans l'historique Git, commit 614ff3c et avant).
 	//
-	// Le contenu est rendu ici (deux langues dans des masques qui basculent) ;
-	// le mouvement (fond vivant, constellation, carte en étoiles, défilement)
+	// Le mouvement (fond vivant, constellation, carte en étoiles, défilement)
 	// vit dans $lib/acuelh/motor.js, chargé après coup pour que la page
-	// s'affiche vite. Textes en dur (plus de /admin/textes, à rebrancher).
-	// Occitan nouveau : À VALIDER par Romain avant publication.
+	// s'affiche vite.
+	//
+	// Édition sur place (2026-10-24, revisions/2026-10-24-edicion-sus-plaça.md) :
+	// les textes, liens, images et listes de la page viennent des éléments
+	// publiés (+page.server.js : base, sinon filet $lib/data/elements-filet.json)
+	// et se lisent par txt(), ligam(), imatge(), lista() ; chaque élément porte
+	// l'action `editar` avec sa clé. Romain les change lui-même, connecté avec
+	// son compte administrateur : Claude ne retouche plus ces textes ici.
 	import { onMount } from 'svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { RESERVAR, MOTS, MANIFEST, CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
+	import { RESERVAR, CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
 	import { AMASSA } from '$lib/acuelh/amassa.js';
 	import { PLAN } from '$lib/data/planSite.js';
+	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+	import { segments } from '$lib/edicion/marcat.js';
 	import '$lib/acuelh/acuelh.css';
+
+	let { data } = $props();
+	const lèvaEdicion = iniciar('acuelh', data.elements);
 
 	let fr = $derived(langStore.current === 'fr');
 
 	let racina;
 	let motor = $state.raw(null);
-
-	// « Se viu » : découvrir, et faire ensemble (option 1 de Romain, 2026-10-15).
-	// Articles, forum, groupes et boîte à idées seront développés avant la
-	// diffusion du site : leurs liens figurent dès maintenant, comme les autres.
-	// 2026-10-22 : Mots en imatges est passé dans S'apren, Òbras et Articles dans
-	// Se parla ; Amassa = la communauté seule, une seule carte.
-	const VIURE = [
-		// (la carte s'appelait « Amassa » ; le mot est devenu le nom de la rubrique, 2026-10-21)
-		{ oc: 'La comunautat', fr: 'La communauté', toc: 'Fòrum, grops e idèas', tfr: 'Forum, groupes et idées', media: 'liams',
-			items: [['Fòrum', 'Forum', '/forum'], ['Grops', 'Groupes', '/grops'], ['Boita d’idèas', 'Boîte à idées', '/ideas'],
-				['Instagram', 'Instagram', 'https://www.instagram.com/lo_ligam/']] }
-	];
 
 	// Mise en ordre de l'ouverture (Romain, 2026-10-21 : « les éléments flottent »,
 	// « trop de vide au milieu ») : « Fils d'or » à comparer sur /?ensag=eros ;
@@ -78,12 +77,6 @@
 		['capitols', 'Chapitres'],
 		['totes', 'Les deux']
 	];
-	// La phrase sous le titre (Romain, DIRECCION bloc 3, 2026-10-22 ; « siès » :
-	// montpelliéranisme assumé, charte §2 bis)
-	const FRASA = {
-		oc: 'Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.',
-		fr: 'Bienvenue dans ton lien avec le monde occitan. D’où que tu sois, tu es ici chez toi.'
-	};
 	// Bascule en français (DIRECCION bloc 2, 2026-10-22) : trois essais (Lien,
 	// Bilingue, Choix) comparés le 22-10 ; Romain a préféré mettre en avant le
 	// bouton Òc / Fr de la barre à la première visite (AppHeader.svelte).
@@ -143,6 +136,18 @@
 		return { destroy: () => io.disconnect() };
 	}
 
+	// Les chiffres : le compteur du moteur part du nombre lu dans le texte
+	// (« ≈ 600 000 » → 600000, préfixe « ≈ »)
+	const nombre = (s) => (s ?? '').replace(/[^\d]/g, '');
+	const prefix = (s) => {
+		const i = (s ?? '').search(/\d/);
+		return i > 0 ? s.slice(0, i) : '';
+	};
+	const im = (clau, defaut) => imatge(clau) ?? defaut;
+	const alt = (i) => (fr ? i?.alt_fr : i?.alt_oc) || '';
+	let retrat = $derived(im('acuelh.manifest.retrat', { url: '/acuelh/romain.webp', largor: 600, nautor: 620 }));
+	let fen = $derived(im('acuelh.trobador.fenestra', { url: '/acuelh/erau.webp', largor: 1500, nautor: 2173 }));
+
 	onMount(() => {
 		ambianca.fonsPresent = true;
 		let quitada = false;
@@ -180,6 +185,7 @@
 			ambianca.fonsPresent = false;
 			motor?.destruir();
 			motor = null;
+			lèvaEdicion?.();
 		};
 	});
 
@@ -231,6 +237,22 @@
 		};
 		defilada = setTimeout(seguent, seq.length === 2 ? 520 : 170);
 	}
+
+	// Ajouts dans les listes (mode édition) : un mot, un lien, une carte
+	const apondreMot = () => apondre('acuelh.bandel', 'text', { oc: 'mot', fr: 'mot' });
+	const apondreLigam = (l) => apondre(l, 'ligam', { oc: 'Ligam', fr: 'Lien', ligam: '/' });
+	const apondreChifra = () =>
+		apondre('acuelh.chifras', 'bloc', {}, [
+			['num', 'text', { oc: '0', fr: '0' }],
+			['nom', 'text', { oc: 'nom', fr: 'nom' }],
+			['font', 'text', { oc: 'font', fr: 'source' }]
+		]);
+	const apondreBiai = () =>
+		apondre('acuelh.biais', 'bloc', {}, [
+			['titol', 'text', { oc: 'Títol', fr: 'Titre' }],
+			['tèxt', 'text', { oc: 'Tèxt', fr: 'Texte' }],
+			['ligam', 'ligam', { oc: 'Ligam', fr: 'Lien', ligam: '/' }]
+		]);
 </script>
 
 <svelte:head>
@@ -251,27 +273,46 @@
 	</noscript>
 </svelte:head>
 
-{#snippet bi(oc, frTxt)}<span class="bi"
-		><span class="oc" aria-hidden={fr}>{oc}</span><span class="fr" aria-hidden={!fr}>{frTxt}</span></span
+<!-- Un texte dans les deux langues (masques qui basculent), lu par sa clé -->
+{#snippet bi(clau)}{@const v = txt(clau)}<span class="bi"
+		><span class="oc" aria-hidden={fr}>{v.oc}</span><span class="fr" aria-hidden={!fr}>{v.fr}</span></span
+	>{/snippet}
+
+<!-- Le même, avec les marques *or* et _italique_ -->
+{#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
+{#snippet bim(clau)}{@const v = txt(clau)}<span class="bi"
+		><span class="oc" aria-hidden={fr}>{@render marcat(v.oc)}</span><span class="fr" aria-hidden={!fr}>{@render marcat(v.fr)}</span></span
 	>{/snippet}
 
 <!-- Le titre lettre par lettre, pour les lettres en braise au survol (acuelh.css ;
      Romain, 2026-10-15, à la place de la traduction). Les lecteurs d'écran
      lisent le mot entier (copie masquée), pas les lettres. -->
-{#snippet letras(oc, frTxt)}<span class="bi"
+{#snippet letras(clau)}{@const v = txt(clau)}<span class="bi"
 		><span class="oc" aria-hidden={fr}
-			><span class="visually-hidden">{oc}</span><span aria-hidden="true"
-				>{#each [...oc] as l, i (i)}<span class="letra" class:espaci={l === ' '}>{l}</span>{/each}</span
+			><span class="visually-hidden">{v.oc}</span><span aria-hidden="true"
+				>{#each [...v.oc] as l, i (i)}<span class="letra" class:espaci={l === ' '}>{l}</span>{/each}</span
 			></span
 		><span class="fr" aria-hidden={!fr}
-			><span class="visually-hidden">{frTxt}</span><span aria-hidden="true"
-				>{#each [...frTxt] as l, i (i)}<span class="letra" class:espaci={l === ' '}>{l}</span>{/each}</span
+			><span class="visually-hidden">{v.fr}</span><span aria-hidden="true"
+				>{#each [...v.fr] as l, i (i)}<span class="letra" class:espaci={l === ' '}>{l}</span>{/each}</span
 			></span
 		></span
 	>{/snippet}
 
 {#snippet sageta()}<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"
 		><path d="M2 8h12M9 3l5 5-5 5" /></svg
+	>{/snippet}
+
+<!-- Un lien lu par sa clé : page du site, ancre, ou adresse https (nouvel onglet) -->
+{#snippet lg(clau, classe, extra = {})}{@const l = ligam(clau)}<a
+		class={classe}
+		href={l.href}
+		target={l.defòra ? '_blank' : undefined}
+		rel={l.defòra ? 'noopener' : undefined}
+		aria-describedby={l.defòra ? 'onglet-nou' : undefined}
+		hidden={amagat(clau)}
+		use:editar={clau}
+		{...extra}>{@render bi(clau)}{#if extra['data-sageta']} {@render sageta()}{/if}</a
 	>{/snippet}
 
 <!-- Sommaire d'une rubrique sous son titre (essai de séparation, « Chapitres ») -->
@@ -283,7 +324,9 @@
 			>{/each}
 	</p>{/snippet}
 
-<div class="acuelh" class:fr bind:this={racina} data-separa={formaSepara}>
+{#snippet apondreBoton(f, txtOc, txtFr)}{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={f}>+ {fr ? txtFr : txtOc}</button>{/if}{/snippet}
+
+<div class="acuelh" class:fr class:ed-actiu={edicion.actiu} bind:this={racina} data-separa={formaSepara}>
 	<canvas id="fons" aria-hidden="true"></canvas>
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 	<canvas id="estelas" aria-hidden="true"></canvas>
@@ -296,21 +339,19 @@
 
 	<main>
 		<span id="onglet-nou" class="visually-hidden"
-			>{fr
-				? 'Ouvre la page de réservation de Proton dans un nouvel onglet'
-				: 'Dobrís la pagina de reservacion de Proton dins un onglet novèl'}</span
+			>{fr ? 'S’ouvre dans un nouvel onglet' : 'Se dobrís dins un onglet novèl'}</span
 		>
 
 		<!-- I. Le héros : le titre annonce le plan de la page, un seul bouton principal -->
 		<section class="eros" class:amb-carta={formaEros !== 'fials'} data-revela data-forma={formaEros}>
-			<p class="eros-kicker">
-				<span class="masc"><span class="masc-in">{@render bi('L’occitan', 'L’occitan')}</span></span>
+			<p class="eros-kicker" hidden={amagat('acuelh.eros.kicker')}>
+				<span class="masc"><span class="masc-in" use:editar={'acuelh.eros.kicker'}>{@render bi('acuelh.eros.kicker')}</span></span>
 			</p>
 			<div class="eros-entitol">
 				<h1 class="eros-titol">
-					<span class="linha masc"><span class="masc-in" style="--i: 1">{@render letras('Se parla.', 'Se parle.')}</span></span>
-					<span class="linha masc"><span class="masc-in" style="--i: 2">{@render letras('S’apren.', 'S’apprend.')}</span></span>
-					<span class="linha masc"><span class="masc-in" style="--i: 3">{@render letras('Amassa.', 'Rassemble.')}</span></span>
+					<span class="linha masc" hidden={amagat('acuelh.eros.titol.1')}><span class="masc-in" style="--i: 1" use:editar={'acuelh.eros.titol.1'}>{@render letras('acuelh.eros.titol.1')}</span></span>
+					<span class="linha masc" hidden={amagat('acuelh.eros.titol.2')}><span class="masc-in" style="--i: 2" use:editar={'acuelh.eros.titol.2'}>{@render letras('acuelh.eros.titol.2')}</span></span>
+					<span class="linha masc" hidden={amagat('acuelh.eros.titol.3')}><span class="masc-in" style="--i: 3" use:editar={'acuelh.eros.titol.3'}>{@render letras('acuelh.eros.titol.3')}</span></span>
 				</h1>
 				{#if formaEros === 'fials'}
 					<ul class="eros-fials" use:fialsMesura={fr}>
@@ -318,8 +359,8 @@
 							<li class="esvani" style="--i: {4 + i}">
 								<span class="fial" aria-hidden="true"></span>
 								<div class="fial-camin">
-									<span class="fial-n">{c.n}<span class="fial-verb"> · {@render bi(c.oc, c.fr)}</span></span>
-									<a class="fial-cap" href={c.cap.href}>{@render bi(c.cap.oc, c.cap.fr)}{@render sageta()}</a>
+									<span class="fial-n">{c.n}<span class="fial-verb"> · <span class="bi"><span class="oc" aria-hidden={fr}>{c.oc}</span><span class="fr" aria-hidden={!fr}>{c.fr}</span></span></span></span>
+									<a class="fial-cap" href={c.cap.href}><span class="bi"><span class="oc" aria-hidden={fr}>{c.cap.oc}</span><span class="fr" aria-hidden={!fr}>{c.cap.fr}</span></span>{@render sageta()}</a>
 									<span class="fial-autres">
 										{#each c.autres as a, j (a.href)}
 											{#if j}<span class="fial-sep" aria-hidden="true">·</span>{/if}
@@ -342,17 +383,20 @@
 			{:else}
 				<div class="eros-pe">
 					<div class="esvani" style="--i: 5">
-						<p class="eros-sub">{@render bi(FRASA.oc, FRASA.fr)}</p>
-						<p class="indici" aria-hidden="true">
-							{@render bi('Passa la mirga suls tres mots.', 'Survole les trois mots.')}
+						<p class="eros-sub" hidden={amagat('acuelh.eros.frasa')} use:editar={'acuelh.eros.frasa'}>{@render bi('acuelh.eros.frasa')}</p>
+						<p class="indici" aria-hidden="true" hidden={amagat('acuelh.eros.indici')} use:editar={'acuelh.eros.indici'}>
+							{@render bi('acuelh.eros.indici')}
 						</p>
 					</div>
 					<div class="eros-accions esvani" style="--i: 6">
-						<a class="boton" href="/carta" data-magnet>
-							<span class="boton-emplenat"></span>
-							<span class="boton-tèxt">{@render bi('Dobrir la carta', 'Ouvrir la carte')}{@render sageta()}</span>
-						</a>
-						<a class="ligam-tèxt" href="#biais">{@render bi('Aprene l’occitan', 'Apprendre l’occitan')}</a>
+						{#if !amagat('acuelh.eros.carta')}
+							{@const l = ligam('acuelh.eros.carta')}
+							<a class="boton" href={l.href} target={l.defòra ? '_blank' : undefined} rel={l.defòra ? 'noopener' : undefined} data-magnet use:editar={'acuelh.eros.carta'}>
+								<span class="boton-emplenat"></span>
+								<span class="boton-tèxt">{@render bi('acuelh.eros.carta')}{@render sageta()}</span>
+							</a>
+						{/if}
+						{@render lg('acuelh.eros.aprene', 'ligam-tèxt')}
 					</div>
 					<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
 				</div>
@@ -373,39 +417,42 @@
 		<div class="bandel" role="group" tabindex="0" aria-label={fr ? 'Quelques mots' : 'Qualques mots'}>
 			<div class="bandel-pista">
 				{#each [false, true] as copia (copia)}
-					{#each MOTS as [oc, frTxt] (oc)}
-						<span class="bandel-mot" lang="oc" aria-hidden={copia ? 'true' : undefined}>{oc}<small lang="fr">{frTxt}</small></span>
+					{#each lista('acuelh.bandel') as m (m.clau)}
+						{#if copia}
+							<span class="bandel-mot" lang="oc" aria-hidden="true">{m.oc}<small lang="fr">{m.fr}</small></span>
+						{:else}
+							<span class="bandel-mot" lang="oc" use:editar={m.clau}>{m.oc}<small lang="fr">{m.fr}</small></span>
+						{/if}
 					{/each}
 				{/each}
 			</div>
 		</div>
-		<p class="bandel-font">
-			<span class="bi"
-				><span class="oc" aria-hidden={fr}>Mots del <i>Lexic de Max Roqueta</i>, establit per Joan-Guilhèm Roqueta</span
-				><span class="fr" aria-hidden={!fr}>Mots du <i>Lexique de Max Rouquette</i>, établi par Jean-Guilhem Rouquette</span></span
-			>
+		<p class="bandel-font" hidden={amagat('acuelh.bandel.font')}>
+			<span use:editar={'acuelh.bandel.font'}>{@render bim('acuelh.bandel.font')}</span>
+			{@render apondreBoton(apondreMot, 'Apondre un mot', 'Ajouter un mot')}
 		</p>
 
 		<!-- III. Qui : le manifeste (sans numéro, comme la phrase d'identité de l'Alliance), avec la photo de Romain -->
 		<section class="manifest">
-			<h2 class="jalon" data-revela>
-				<span class="masc"><span class="masc-in">{@render bi('Qu’es aquò, Lo Ligam ?', 'Qu’est-ce que Lo Ligam ?')}</span></span>
+			<h2 class="jalon" data-revela hidden={amagat('acuelh.manifest.titol')}>
+				<span class="masc"><span class="masc-in" use:editar={'acuelh.manifest.titol'}>{@render bi('acuelh.manifest.titol')}</span></span>
 			</h2>
 			<div class="manifest-cors">
-				<p class="manifest-tèxt" data-emplenar>
+				<!-- chaque mot s'allume au défilement (motor : data-emplenar) ; *…* = en or -->
+				<p class="manifest-tèxt" data-emplenar hidden={amagat('acuelh.manifest.tèxt')} use:editar={'acuelh.manifest.tèxt'}>
 					{#each ['oc', 'fr'] as l (l)}
 						<span data-lenga={l} lang={l}
-							>{#each MANIFEST[l] as [frasa, aur], n (n)}{#each frasa.split(' ') as m, k (k)}<span
-										class={aur ? 'm aur' : 'm'}>{m}</span
+							>{#each segments(txt('acuelh.manifest.tèxt')[l]) as seg, n (n)}{#each seg.t.trim().split(/\s+/).filter(Boolean) as m, k (k)}<span
+										class={seg.aur ? 'm aur' : 'm'}>{m}</span
 									>{' '}{/each}{/each}</span
 						>
 					{/each}
 				</p>
-				<figure class="manifest-retrat esvani" data-revela>
-					<div class="panel-media retrat">
-						<img src="/acuelh/romain.webp" alt="" loading="lazy" width="600" height="620" />
+				<figure class="manifest-retrat esvani" data-revela hidden={amagat('acuelh.manifest.retrat')}>
+					<div class="panel-media retrat" use:editar={'acuelh.manifest.retrat'}>
+						<img src={retrat.url} alt={alt(retrat)} loading="lazy" width={retrat.largor} height={retrat.nautor} />
 					</div>
-					<figcaption>Romain Périer</figcaption>
+					<figcaption use:editar={'acuelh.manifest.legenda'} hidden={amagat('acuelh.manifest.legenda')}>{@render bi('acuelh.manifest.legenda')}</figcaption>
 				</figure>
 			</div>
 		</section>
@@ -414,99 +461,61 @@
 		<!-- 01 compacte depuis le 2026-10-22 : la carte en étoiles est montée dans l'ouverture -->
 		<section class="chifras compacta" data-revela>
 			<h2 class="jalon">
-				<b>01</b><span class="masc"><span class="masc-in">{@render bi('Se parla', 'Se parle')}</span></span>
+				<b>01</b><span class="masc" hidden={amagat('acuelh.sec.parla.titol')}><span class="masc-in" use:editar={'acuelh.sec.parla.titol'}>{@render bi('acuelh.sec.parla.titol')}</span></span>
 			</h2>
 			{@render somari(PARLA)}
 			<!-- La carte montre, le wiki explique : chaque fiche y est reliée
 			     (revisions/2026-10-10-concept-wiki.md) -->
 			<div class="carta-dobrir esvani">
-				<a class="boton boton-traç" href="/carta" data-magnet
-					><span class="boton-emplenat"></span><span class="boton-tèxt"
-						>{@render bi('Dobrir la carta entièra', 'Ouvrir la carte entière')} {@render sageta()}</span
-					></a
-				>
-				<a class="ligam-tèxt" href="/wiki"
-					>{@render bi('Lo wiki de las lengas e dels luòcs', 'Le wiki des langues et des lieux')}</a
-				>
+				{#if !amagat('acuelh.parla.carta')}
+					{@const l = ligam('acuelh.parla.carta')}
+					<a class="boton boton-traç" href={l.href} data-magnet use:editar={'acuelh.parla.carta'}
+						><span class="boton-emplenat"></span><span class="boton-tèxt">{@render bi('acuelh.parla.carta')} {@render sageta()}</span></a
+					>
+				{/if}
 				<!-- Òbras et Articles : le pays, ce qui s'y dit et s'y fait (Romain, 2026-10-22) -->
-				<a class="ligam-tèxt" href="/obras">{@render bi('Òbras', 'Œuvres')}</a>
-				<a class="ligam-tèxt" href="/articles">{@render bi('Articles', 'Articles')}</a>
+				{#each lista('acuelh.parla.ligams') as l (l.clau)}
+					{@render lg(l.clau, 'ligam-tèxt')}
+				{/each}
+				{@render apondreBoton(() => apondreLigam('acuelh.parla.ligams'), 'Apondre un ligam', 'Ajouter un lien')}
 			</div>
 			<div class="chifras-grasilha">
-				<div class="chifra esvani" style="--i: 1">
-					<p class="chifra-num" data-comptar="600000" data-prefix="≈ ">≈ 600 000</p>
-					<p class="chifra-nom">{@render bi('locutors', 'locuteurs')}</p>
-					<p class="chifra-font">
-						{@render bi('Estimacion, enquèsta sociolingüistica OPLO, 2020', 'Estimation, enquête sociolinguistique OPLO, 2020')}
-					</p>
-				</div>
-				<div class="chifra esvani" style="--i: 2">
-					<p class="chifra-num" data-comptar="32">32</p>
-					<p class="chifra-nom">{@render bi('despartaments', 'départements')}</p>
-					<p class="chifra-font">
-						{@render bi('e mai la Val d’Aran e las valadas occitanas d’Itàlia', 'plus le Val d’Aran et les vallées occitanes d’Italie')}
-					</p>
-				</div>
-				<div class="chifra esvani" style="--i: 3">
-					<p class="chifra-num" data-comptar="10">10</p>
-					<p class="chifra-nom">{@render bi('sègles de literatura', 'siècles de littérature')}</p>
-					<p class="chifra-font">{@render bi('dempuèi los primièrs trobadors', 'depuis les premiers troubadours')}</p>
-				</div>
+				{#each lista('acuelh.chifras') as c, i (c.clau)}
+					{@const num = txt(c.clau + '.num')}
+					<div class="chifra esvani" style="--i: {i + 1}" use:editar={c.clau}>
+						<p class="chifra-num" data-comptar={nombre(num.oc)} data-prefix={prefix(num.oc)} hidden={amagat(c.clau + '.num')} use:editar={c.clau + '.num'}>{num.oc}</p>
+						<p class="chifra-nom" hidden={amagat(c.clau + '.nom')} use:editar={c.clau + '.nom'}>{@render bi(c.clau + '.nom')}</p>
+						<p class="chifra-font" hidden={amagat(c.clau + '.font')} use:editar={c.clau + '.font'}>{@render bi(c.clau + '.font')}</p>
+					</div>
+				{/each}
 			</div>
+			{@render apondreBoton(apondreChifra, 'Apondre una chifra', 'Ajouter un chiffre')}
 			<!-- Les trois rubriques sont un ordre (Romain, 2026-10-22) : chacune renvoie à la suivante -->
 			<p class="pont esvani">
-				<span class="pont-mot">{@render bi('Puèi', 'Ensuite')}</span>
-				<a href="#biais"><b>02</b> {@render bi('S’apren', 'S’apprend')} {@render sageta()}</a>
+				<span class="pont-mot" hidden={amagat('acuelh.pont.mot')} use:editar={'acuelh.pont.mot'}>{@render bi('acuelh.pont.mot')}</span>
+				<a href="#biais"><b>02</b> {@render bi('acuelh.sec.apren.titol')} {@render sageta()}</a>
 			</p>
 		</section>
 
 		<!-- V. 02 S'apren : les trois façons d'apprendre, telles quelles -->
 		<section class="biais" id="biais" data-revela>
 			<h2 class="jalon">
-				<b>02</b><span class="masc"><span class="masc-in">{@render bi('S’apren', 'S’apprend')}</span></span>
+				<b>02</b><span class="masc" hidden={amagat('acuelh.sec.apren.titol')}><span class="masc-in" use:editar={'acuelh.sec.apren.titol'}>{@render bi('acuelh.sec.apren.titol')}</span></span>
 			</h2>
 			{@render somari(APREN)}
 			<div class="biais-grasilha">
-				<article class="biai esvani" style="--i: 1">
-					<p class="biai-num" aria-hidden="true">I</p>
-					<h3 class="biai-titol">{@render bi('En visio, amb ieu', 'En visio, avec moi')}</h3>
-					<p class="biai-tèxt">
-						{@render bi(
-							'De corses en dirècte, en pichon grop o sol a sol. Lo primièr es ofèrt.',
-							'Des cours en direct, en petit groupe ou en tête-à-tête. Le premier est offert.'
-						)}
-					</p>
-					<a class="biai-ligam" href={RESERVAR} target="_blank" rel="noopener" aria-describedby="onglet-nou"
-						>{@render bi('Prene rendètz-vos', 'Prendre rendez-vous')} {@render sageta()}</a
-					>
-				</article>
-				<article class="biai esvani" style="--i: 2">
-					<p class="biai-num" aria-hidden="true">II</p>
-					<h3 class="biai-titol">{@render bi('A ton ritme', 'À ton rythme')}</h3>
-					<p class="biai-tèxt">
-						{@render bi(
-							'Un parcors autonòm, de zèro fins al nivèl B1, leiçon per leiçon, per contunhar entre dos corses.',
-							'Un parcours autonome, de zéro jusqu’au niveau B1, leçon par leçon, pour continuer entre deux cours.'
-						)}
-					</p>
-					<a class="biai-ligam" href="/aprene">{@render bi('Començar lo parcors', 'Commencer le parcours')} {@render sageta()}</a>
-				</article>
-				<article class="biai esvani" style="--i: 3">
-					<p class="biai-num" aria-hidden="true">III</p>
-					<h3 class="biai-titol">{@render bi('Sus mesura', 'Sur mesure')}</h3>
-					<p class="biai-tèxt">
-						{@render bi(
-							'Visio, parcors autonòm e rescontres en persona se sèm dins la meteissa vila : ara, soi a Lion.',
-							'Visio, parcours autonome et rencontres en personne si nous sommes dans la même ville : en ce moment, je suis à Lyon.'
-						)}
-					</p>
-					<a class="biai-ligam" href={RESERVAR} target="_blank" rel="noopener" aria-describedby="onglet-nou"
-						>{@render bi('Ne parlar amassa', 'En parler ensemble')} {@render sageta()}</a
-					>
-				</article>
+				{#each lista('acuelh.biais') as b, i (b.clau)}
+					<article class="biai esvani" style="--i: {i + 1}" use:editar={b.clau}>
+						<p class="biai-num" aria-hidden="true">{['I', 'II', 'III', 'IV', 'V', 'VI'][i] ?? i + 1}</p>
+						<h3 class="biai-titol" hidden={amagat(b.clau + '.titol')} use:editar={b.clau + '.titol'}>{@render bi(b.clau + '.titol')}</h3>
+						<p class="biai-tèxt" hidden={amagat(b.clau + '.tèxt')} use:editar={b.clau + '.tèxt'}>{@render bi(b.clau + '.tèxt')}</p>
+						{@render lg(b.clau + '.ligam', 'biai-ligam', { 'data-sageta': true })}
+					</article>
+				{/each}
 			</div>
+			{@render apondreBoton(apondreBiai, 'Apondre un biais', 'Ajouter une carte')}
 			<fieldset class="lengas esvani" style="--i: 4">
-				<legend>{@render bi('Aprene l’occitan dempuèi :', 'Apprendre l’occitan depuis :')}</legend>
+				<legend hidden={amagat('acuelh.lengas.legenda')} use:editar={'acuelh.lengas.legenda'}>{@render bi('acuelh.lengas.legenda')}</legend>
 				<div class="lengas-chips">
 					{#each LENGAS_CORS as l (l.v)}
 						<label
@@ -523,82 +532,67 @@
 				<p class="lengas-consigna" aria-live="polite" lang={consigna[0]}>{consigna[1]}</p>
 			</fieldset>
 			<p class="pont esvani">
-				<span class="pont-mot">{@render bi('Puèi', 'Ensuite')}</span>
-				<a href="#viure"><b>03</b> {@render bi('Amassa', 'Rassemble')} {@render sageta()}</a>
+				<span class="pont-mot" hidden={amagat('acuelh.pont.mot')} use:editar={'acuelh.pont.mot'}>{@render bi('acuelh.pont.mot')}</span>
+				<a href="#viure"><b>03</b> {@render bi('acuelh.sec.viu.titol')} {@render sageta()}</a>
 			</p>
 		</section>
 
-		<!-- VI. 03 Amassa (« Se viu » jusqu’au 2026-10-21) : deux cartes, découvrir et faire ensemble -->
+		<!-- VI. 03 Amassa (« Se viu » jusqu’au 2026-10-21) : la communauté, une seule carte -->
 		<section class="camins" id="viure" aria-labelledby="viure-titol">
 			<h2 class="camins-cap jalon" data-revela>
-				<b>03</b><span class="masc"><span class="masc-in" id="viure-titol">{@render bi('Amassa', 'Rassemble')}</span></span>
+				<b>03</b><span class="masc" hidden={amagat('acuelh.sec.viu.titol')}><span class="masc-in" id="viure-titol" use:editar={'acuelh.sec.viu.titol'}>{@render bi('acuelh.sec.viu.titol')}</span></span>
 			</h2>
 			{@render somari(VIU)}
 			<div class="camins-pista">
-				{#each VIURE as c, n (c.oc)}
-					<article class="panel esvani" data-revela style:--i={n}>
-						<div class="panel-tèxt">
-							<div>
-								<h3 class="panel-nom">{@render bi(c.oc, c.fr)}</h3>
-								<p class="panel-tagline">{@render bi(c.toc, c.tfr)}</p>
-							</div>
-							<ul class="panel-items">
-								{#each c.items as [oc, frTxt, href] (oc)}
-									{#if href.startsWith('http')}
-										<li>
-											<a {href} target="_blank" rel="noopener noreferrer">{@render bi(oc, frTxt)}<Icona nom="extern" /></a>
-										</li>
-									{:else}
-										<li><a {href}>{@render bi(oc, frTxt)}<Icona nom="suivant" /></a></li>
-									{/if}
-								{/each}
-							</ul>
+				<article class="panel esvani" data-revela style:--i={0}>
+					<div class="panel-tèxt">
+						<div>
+							<h3 class="panel-nom" hidden={amagat('acuelh.viure.comunautat.nom')} use:editar={'acuelh.viure.comunautat.nom'}>{@render bi('acuelh.viure.comunautat.nom')}</h3>
+							<p class="panel-tagline" hidden={amagat('acuelh.viure.comunautat.sota')} use:editar={'acuelh.viure.comunautat.sota'}>{@render bi('acuelh.viure.comunautat.sota')}</p>
 						</div>
-						{#if c.media === 'paisatge'}
-							<div class="panel-media">
-								<img class="sens-cel" src="/acuelh/paisatge.webp" alt="" loading="lazy" width="900" height="1028" />
-							</div>
-						{:else}
-							<!-- Idée de Romain : le domaine occitan et des liaisons comme des lignes
-							     aériennes entre les villes (dessin : scripts/amassa-liaisons.mjs) -->
-							<div class="panel-media liams" use:enVista>
-								<svg viewBox="0 0 400 300" aria-hidden="true">
-									<path class="domeni" d={AMASSA.contorn} />
-									{#each AMASSA.arcs as d, i (d)}
-										<path class="liam" {d} pathLength="1" style:--i={i} />
-										<path class="flux" {d} style:--i={i} />
-									{/each}
-									{#each AMASSA.vilas as [x, y], i (i)}
-										<circle class="vila" cx={x} cy={y} r="3.2" style:--i={i} />
-									{/each}
-								</svg>
-							</div>
-						{/if}
-					</article>
-				{/each}
+						<ul class="panel-items">
+							{#each lista('acuelh.viure.comunautat.items') as it (it.clau)}
+								{@const l = ligam(it.clau)}
+								<li>
+									<a href={l.href} target={l.defòra ? '_blank' : undefined} rel={l.defòra ? 'noopener noreferrer' : undefined} use:editar={it.clau}
+										>{@render bi(it.clau)}<Icona nom={l.defòra ? 'extern' : 'suivant'} /></a
+									>
+								</li>
+							{/each}
+							{#if edicion.actiu}<li>{@render apondreBoton(() => apondreLigam('acuelh.viure.comunautat.items'), 'Apondre un ligam', 'Ajouter un lien')}</li>{/if}
+						</ul>
+					</div>
+					<!-- Idée de Romain : le domaine occitan et des liaisons comme des lignes
+					     aériennes entre les villes (dessin : scripts/amassa-liaisons.mjs) -->
+					<div class="panel-media liams" use:enVista>
+						<svg viewBox="0 0 400 300" aria-hidden="true">
+							<path class="domeni" d={AMASSA.contorn} />
+							{#each AMASSA.arcs as d, i (d)}
+								<path class="liam" {d} pathLength="1" style:--i={i} />
+								<path class="flux" {d} style:--i={i} />
+							{/each}
+							{#each AMASSA.vilas as [x, y], i (i)}
+								<circle class="vila" cx={x} cy={y} r="3.2" style:--i={i} />
+							{/each}
+						</svg>
+					</div>
+				</article>
 			</div>
 		</section>
 
 		<!-- VII. Le troubadour (Max Rouquette), qui clôt « Amassa » -->
 		<section class="trobador">
 			<div class="trobador-pin">
-				<div class="trobador-fenestra">
-					<img src="/acuelh/erau.webp" alt="" loading="lazy" decoding="async" width="1500" height="2173" />
+				<div class="trobador-fenestra" hidden={amagat('acuelh.trobador.fenestra')} use:editar={'acuelh.trobador.fenestra'}>
+					<img src={fen.url} alt={alt(fen)} loading="lazy" decoding="async" width={fen.largor} height={fen.nautor} />
 				</div>
 				<blockquote class="trobador-vers">
 					<p lang="oc">
-						<span class="masc"><span class="masc-in">« Espinchas dins la solelhada</span></span><span class="masc"
-							><span class="masc-in" style="--i: 1">passar d’un nivol lo pantai… »</span></span
+						<span class="masc" hidden={amagat('acuelh.trobador.vers.1')}><span class="masc-in" use:editar={'acuelh.trobador.vers.1'}>{txt('acuelh.trobador.vers.1').oc}</span></span><span class="masc" hidden={amagat('acuelh.trobador.vers.2')}
+							><span class="masc-in" style="--i: 1" use:editar={'acuelh.trobador.vers.2'}>{txt('acuelh.trobador.vers.2').oc}</span></span
 						>
 					</p>
-					<cite class="esvani" style="--i: 4"
-						><span class="bi"
-							><span class="oc" aria-hidden={fr}>Max Roqueta · <i>La pietat dau matin</i>, 1963</span><span
-								class="fr"
-								aria-hidden={!fr}>Max Rouquette · <i>La pietat dau matin</i>, 1963</span
-							></span
-						></cite
-					>
+					<cite class="esvani" style="--i: 4" hidden={amagat('acuelh.trobador.cita')} use:editar={'acuelh.trobador.cita'}>{@render bim('acuelh.trobador.cita')}</cite>
 				</blockquote>
 				<!-- Repère : continuer à descendre ouvre la fenêtre (s'efface dès qu'elle s'ouvre) -->
 				<div class="trobador-indici" aria-hidden="true"><span></span></div>
@@ -609,19 +603,22 @@
 		<section class="crida centrat" id="crida" data-revela>
 			<div>
 				<h2 class="crida-titol">
-					<span class="masc"><span class="masc-in">{@render bi('Prèst·a per', 'Prêt·e à')}</span></span>
-					<span class="masc"><span class="masc-in aur" style="--i: 1">{@render bi('començar ?', 'commencer ?')}</span></span>
+					<span class="masc" hidden={amagat('acuelh.crida.titol.1')}><span class="masc-in" use:editar={'acuelh.crida.titol.1'}>{@render bi('acuelh.crida.titol.1')}</span></span>
+					<span class="masc" hidden={amagat('acuelh.crida.titol.2')}><span class="masc-in aur" style="--i: 1" use:editar={'acuelh.crida.titol.2'}>{@render bi('acuelh.crida.titol.2')}</span></span>
 				</h2>
-				<p class="crida-sub esvani" style="--i: 3">
-					{@render bi('Tres mots uèi, una lenga deman.', 'Trois mots aujourd’hui, une langue demain.')}
+				<p class="crida-sub esvani" style="--i: 3" hidden={amagat('acuelh.crida.sota')} use:editar={'acuelh.crida.sota'}>
+					{@render bi('acuelh.crida.sota')}
 				</p>
 				<div class="esvani" style="--i: 4">
 					<div class="crida-accions">
-						<a class="boton" href={RESERVAR} target="_blank" rel="noopener" data-magnet aria-describedby="onglet-nou">
-							<span class="boton-emplenat"></span>
-							<span class="boton-tèxt">{@render bi('Reservar un primièr cors', 'Réserver un premier cours')}{@render sageta()}</span>
-						</a>
-						<a class="ligam-tèxt" href="/aprene/essai">{@render bi('Començar sol·a', 'Commencer seul·e')}</a>
+						{#if !amagat('acuelh.crida.reservar')}
+							{@const l = ligam('acuelh.crida.reservar')}
+							<a class="boton" href={l.href} target={l.defòra ? '_blank' : undefined} rel={l.defòra ? 'noopener' : undefined} data-magnet aria-describedby={l.defòra ? 'onglet-nou' : undefined} use:editar={'acuelh.crida.reservar'}>
+								<span class="boton-emplenat"></span>
+								<span class="boton-tèxt">{@render bi('acuelh.crida.reservar')}{@render sageta()}</span>
+							</a>
+						{/if}
+						{@render lg('acuelh.crida.sol', 'ligam-tèxt')}
 					</div>
 				</div>
 			</div>
@@ -781,5 +778,12 @@
 		to {
 			stroke-dashoffset: -7;
 		}
+	}
+	/* en mode édition, les éléments cachés restent là, les boutons d'ajout se placent */
+	.acuelh :global(.ed-apondre) {
+		margin: 0.6rem 0 0 0.6rem;
+	}
+	.bandel-font :global(.ed-apondre) {
+		margin-left: 1rem;
 	}
 </style>

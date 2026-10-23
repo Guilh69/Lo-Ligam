@@ -60,6 +60,12 @@ Quatre séances, sans agents, chacune close par ton test sur téléphone. Possib
 
 C'est le barreau 7 (« l'administration remise en cohérence »), pris avant le barreau 3 (bloc 4, l'accueil), par choix de Romain : avec l'éditeur, une bonne part du bloc 4 se fera de sa main. Consigné dans `PILOTATGE.md`.
 
-## 8. La décision à prendre maintenant
+## 8. La décision prise, et la séance 1 (nuit du 24-10)
 
-Le périmètre de la séance 1 : commencer par l'accueil avec les textes et les liens (recommandé : c'est là que se joue le bloc 4, et c'est le plus petit pas qui prouve le principe), ou par une page plus simple comme Mots, ou tout le niveau 1 d'un coup (plus long avant de voir quelque chose).
+Romain a choisi **l'accueil, tout le niveau Contenu**. Fait dans la nuit, relu par deux agents, testé en local en mode simulation (ordinateur et téléphone) :
+
+- **Base** : `supabase/supabase-pagina-elements.sql` (fabriqué par `app/scripts/elements-sql.mjs` depuis le filet) : table `pagina_elements` (une ligne par élément et par état, publié ou brouillon), table `pagina_publicacions` (photographies), fonctions `publicar_pagina` et `restaurar_publicacion` (réservées à l'administrateur), dossier d'images `paginas` (2 Mo, webp/jpeg/png), semence des 72 éléments de l'accueil (jamais écrasée si elle existe déjà).
+- **Site** : `app/src/lib/edicion/` (store `edicion.svelte.js`, action `editar.svelte.js`, balisage `marcat.js`), `app/src/lib/components/Edicion.svelte` (bouton, barre, panneau), `app/src/routes/+page.server.js` (lecture serveur, cache 20 s, filet), accueil réécrit pour lire ses éléments par clé.
+- **Ce que Romain peut faire** : texte (òc et fr), lien (adresse contrôlée), image (remplacer, description), visible ou caché, monter ou descendre, ajouter ou retirer (mots du bandeau, liens de Se parla et d'Amassa, chiffres, cartes de S'apren), brouillon, Publicar, Anullar. Sur téléphone, le panneau est une feuille en bas.
+- **Ce que Romain fait maintenant** : coller le SQL dans Supabase ; se connecter sur loligam.eu ; « Editar » ; essayer ; publier ; vérifier en navigation privée.
+- **Séances suivantes** : 2 (Istòria et restauration, « Veire sul telefòn »), 3 (apparence dans la charte), 4 (mouvement, autres pages, menu et pied de page, tiroir « Atelier », retrait de `/admin/textes`).
