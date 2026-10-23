@@ -223,13 +223,6 @@
 			comunas: '<path d="M2 6 L18 4 L22 16 L6 19z M18 4 L34 7 L32 18 L22 16 M34 7 L50 5 L49 17 L32 18 M6 19 L22 16 L20 32 L4 31z M22 16 L32 18 L38 32 L20 32 M32 18 L49 17 L50 31 L38 32" fill="none" stroke="currentColor" stroke-width=".8" stroke-dasharray="3 2" opacity=".6"/>',
 			lieusInteres: '<circle cx="12" cy="14" r="3.4" fill="#eeaf34" stroke="#a5342a" stroke-width="1.2"/><circle cx="30" cy="24" r="3.4" fill="#eeaf34" stroke="#a5342a" stroke-width="1.2"/><circle cx="42" cy="10" r="3.4" fill="#eeaf34" stroke="#a5342a" stroke-width="1.2"/>',
 			librarias: '<path d="M14 10h10v18H14zM26 10h10v18H26z" fill="none" stroke="#eeaf34" stroke-width="1.5"/><path d="M17 15h4M29 15h4" stroke="#eeaf34" stroke-width="1.2"/>',
-			// l'ensenhament (jòc A1, 2026-10-23) : cada pastilha amb son icòna ; los
-			// ponches pichons de la sensibilizacion ; los corses, de la color dels cercles
-			ensBilingue: '<circle cx="26" cy="18" r="15" fill="none" stroke="#c8481c" stroke-width="1.5"/><g transform="translate(15.8 7.8) scale(0.85)" fill="none" stroke="#c8481c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.183 6.117a6 6 0 1 0 4.511 3.986"/><path d="M14.813 17.883a6 6 0 1 0 -4.496 -3.954"/></g>',
-			ensEscola: '<circle cx="19" cy="18" r="15" fill="none" stroke="#c8481c" stroke-width="1.5"/><g transform="translate(8.8 7.8) scale(0.85)" fill="none" stroke="#c8481c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16v-6a2 2 0 1 1 4 0v6"/><path d="M3 13h4"/><path d="M10 8v6a2 2 0 1 0 4 0v-1a2 2 0 1 0 -4 0v1"/><path d="M20.732 12a2 2 0 0 0 -3.732 1v1a2 2 0 0 0 3.726 1.01"/></g><circle cx="42" cy="11" r="3" fill="#c8481c"/><circle cx="47" cy="24" r="3" fill="#c8481c"/>',
-			ensSegond: '<circle cx="26" cy="18" r="15" fill="none" stroke="#c8481c" stroke-width="1.5"/><g transform="translate(15.8 7.8) scale(0.85)" fill="none" stroke="#c8481c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18"/><path d="M13 8l2 0"/><path d="M13 12l2 0"/></g>',
-			ensSuperior: '<circle cx="26" cy="18" r="15" fill="none" stroke="#c8481c" stroke-width="1.5"/><g transform="translate(15.8 7.8) scale(0.85)" fill="none" stroke="#c8481c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"/><path d="M13 17.5v4.5l2 -1.5l2 1.5v-4.5"/><path d="M10 19h-5a2 2 0 0 1 -2 -2v-10c0 -1.1 .9 -2 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -1 1.73"/><path d="M6 9l12 0"/><path d="M6 12l3 0"/><path d="M6 15l2 0"/></g>',
-			corsAdults: '<circle cx="26" cy="18" r="15" fill="none" stroke="#ffd98a" stroke-width="1.5"/><g transform="translate(15.8 7.8) scale(0.85)" fill="none" stroke="#ffd98a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1"/><path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M17 10h2a2 2 0 0 1 2 2v1"/><path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M3 13v-1a2 2 0 0 1 2 -2h2"/></g>',
 			calandretas: '<path d="M12 28V16l14-7 14 7v12z" fill="none" stroke="#eeaf34" stroke-width="1.5" stroke-linejoin="round"/><path d="M23 28v-6h6v6" stroke="#eeaf34" stroke-width="1.4" fill="none"/>',
 			festas: '<path d="M26 7l3 7 7 .6-5.4 4.6 1.7 7-6.3-3.8-6.3 3.8 1.7-7L15 14.6l7-.6z" fill="#eeaf34" opacity=".85"/>',
 			provincias: '<path d="M2 12 Q 18 3 30 12 T 50 9" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 3" opacity=".75"/><path d="M4 29 Q 20 20 32 27 T 50 23" fill="none" stroke="currentColor" stroke-width=".9" opacity=".55"/>',
@@ -1003,7 +996,7 @@
 					disabled={!actiu(j)}
 					onclick={() => tocarJaça(j)}
 				>
-					<span class="chip-ap"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>{nomJ(j)}{#if estatCarta.activa === j.id && visibility[j.id]}<span class="sr"> ({tx.jaçaActiva})</span>{/if}
+					{#if j.icona}<span class="chip-ponch" style:--ponch="var(--t-{j.color ?? 'aur'})" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{@html ICONAS[j.icona]}</svg></span>{:else}<span class="chip-ap"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>{/if}{nomJ(j)}{#if estatCarta.activa === j.id && visibility[j.id]}<span class="sr"> ({tx.jaçaActiva})</span>{/if}
 				</button>
 			{/each}
 			<button type="button" class="chip mai" aria-label={tx.totDetalh} title={tx.totDetalh} aria-expanded={dobert === banda} aria-controls="tirador-jaces" onclick={() => alternar(banda)}>⋯</button>
@@ -1775,6 +1768,19 @@
 		display: block;
 		width: 100%;
 		height: 100%;
+	}
+	/* (la pastilha de la carta, en pichon, per las jaces de ponches : sus telefòn
+	   tanben, lo boton mòstra çò que se veirà sus la carta) */
+	.chip-ponch svg {
+		display: block;
+		box-sizing: border-box;
+		width: 22px;
+		height: 22px;
+		padding: 3.5px;
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--t-fons-2) 88%, transparent);
+		border: 1.2px solid var(--ponch);
+		color: var(--ponch);
 	}
 	.chip.on {
 		border-color: var(--t-aur);
