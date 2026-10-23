@@ -91,15 +91,32 @@ export const CATALOGUE = [
 		jaces: [
 			{ id: 'lieusInteres', oc: "Luòcs d'interès", fr: "Lieux d'intérêt", estat: 'basa', defaut: false },
 			{ id: 'librarias', oc: 'Librariás', fr: 'Librairies', estat: 'basa', defaut: false },
-			{ id: 'calandretas', oc: 'Calandretas', fr: 'Calandretas', estat: 'disponible', defaut: false, nota_oc: "Escòlas, collègis e licèu (annuari de l'educacion)", nota_fr: "Écoles, collèges et lycée (annuaire de l'éducation)" },
-			// las escòlas, collègis, licèus e universitats ont s'apren l'occitan,
-			// levat de las Calandretas (decision de Romain, 2026-10-23, SIG/ensenhament)
-			{ id: 'ensenhament', oc: 'Ensenhament', fr: 'Enseignement', estat: 'disponible', defaut: false, nota_oc: 'Escòlas, collègis, licèus e universitats, levat de las Calandretas ; ponch pichon : sensibilizacion', nota_fr: 'Écoles, collèges, lycées et universités, hors Calandretas ; petit point : sensibilisation' },
 			// cercles, ostals, IEO, escolo, Parlaren ; e las associacions de
 			// cultura occitana (decision de Romain, 2026-10-23, SIG/cercles)
 			{ id: 'cercles', oc: 'Cercles e associacions', fr: 'Cercles et associations', estat: 'disponible', defaut: false, nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
 			{ id: 'culturaOc', oc: 'Associacions culturalas', fr: 'Associations culturelles', estat: 'disponible', defaut: false, nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
 			{ id: 'festas', oc: 'Fèstas e eveniments', fr: 'Fêtes et événements', estat: 'a venir' }
+		]
+	},
+	{
+		// L'ensenhament (demanda de Romain, 2026-10-23 : « un gros chapeau
+		// enseignement, avec une distinction Calandreta et le reste, sachant que
+		// c'est pas le même statut ») : l'immersion d'abord, puèi l'escòla
+		// publica, del bilingüisme a la sensibilizacion, collègis e licèus, lo
+		// superior, e los corses per adults. Donadas : SIG/ensenhament ; los
+		// corses, las associacions de SIG/cercles que ne donan
+		id: 'ensenhament',
+		// (un caractèr invisible, ­ : sus telefòn, lo mot se copa en doas
+		// linhas coma « Lenga nòstra », en luòc de desbordar sus « Istòria »)
+		oc: 'Ensenha­ment',
+		fr: 'Enseigne­ment',
+		jaces: [
+			{ id: 'calandretas', oc: 'Calandretas', fr: 'Calandretas', estat: 'disponible', defaut: false, nota_oc: "Immersion, tot en occitan : escòlas d'associacions, collègis, licèu", nota_fr: 'Immersion, tout en occitan : écoles associatives, collèges, lycée' },
+			{ id: 'ensBilingue', oc: 'Escòlas bilingüas', fr: 'Écoles bilingues', estat: 'disponible', defaut: false, nota_oc: "Escòlas publicas a paritat oraria ; Val d'Aran : l'aranés es la lenga d'ensenhament", nota_fr: "Écoles publiques : autant d'heures en occitan qu'en français ; Val d'Aran : l'aranais est la langue d'enseignement" },
+			{ id: 'ensEscola', oc: "L'occitan a l'escòla", fr: "L'occitan à l'école", estat: 'disponible', defaut: false, nota_oc: '3 oras per setmana ; ponch pichon : sensibilizacion', nota_fr: '3 heures par semaine ; petit point : sensibilisation' },
+			{ id: 'ensSegond', oc: 'Collègis e licèus', fr: 'Collèges et lycées', estat: 'disponible', defaut: false, nota_oc: 'Opcion, seccion bilingüa, especialitat', nota_fr: 'Option, section bilingue, spécialité' },
+			{ id: 'ensSuperior', oc: 'Universitats e formacion', fr: 'Universités et formation', estat: 'disponible', defaut: false, nota_oc: 'Licéncias, diplòmas, formacion dels ensenhaires', nota_fr: 'Licences, diplômes, formation des enseignants' },
+			{ id: 'corsAdults', oc: 'Corses per adults', fr: 'Cours pour adultes', estat: 'disponible', defaut: false, nota_oc: "Las associacions que donan de corses d'occitan", nota_fr: "Les associations qui donnent des cours d'occitan" }
 		]
 	},
 	{

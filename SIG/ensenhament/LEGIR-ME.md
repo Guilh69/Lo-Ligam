@@ -117,7 +117,7 @@ Plan retenu : cahier des charges § 11, entrée du 2026-10-23 (« L'enseignement
 - **Tableau sourcé** : `establiments.csv`, un établissement par ligne (niveau, forme, code UAI, nom officiel, commune, département, académie, position et sa source, source de la liste).
 - **Supérieur** : `superior.csv`, écrit à la main (formations séparées par « | », sources ; position fixée à la main quand le géocodage échoue, ici Béziers d'après la cartographie Parcoursup 2026).
 - **À regarder** : `a-verificar.csv`. Une école dont le code a disparu de l'annuaire (fermée, ou fondue dans une école primaire) est remplacée par l'établissement ouvert du même type, à moins de 200 m de son adresse et partageant un mot de son nom ; sinon elle est écartée. Deux codes faux dans la carte de l'OPLO sont ainsi corrigés (collège du Fezensaguet, collège René Billères).
-- **Couche de la carte** : `app/static/data/ensenhament.json`, format compact décrit dans le script (75 Ko, 22 Ko compressé).
+- **Couche de la carte** : `app/static/data/ensenhament.json`, format compact décrit dans le script (75 Ko, 18 Ko à l'envoi). Dans le rail, famille « Ensenhament » (2026-10-23) : Calandretas, Escòlas bilingüas (avec les écoles de l'Aran), L'occitan a l'escòla (renforcé et sensibilisation), Collègis e licèus (avec l'institut de l'Aran), Universitats e formacion, Corses per adults (lus dans `cercles.geojson`, propriété `k`). Répartition : `app/src/lib/carta/ensenhament.js`.
 
 | Niveau | Établissements |
 |---|---|

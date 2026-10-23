@@ -29,7 +29,7 @@
 	import CercaCarta from './CercaCarta.svelte';
 	import VotzAtlas from './VotzAtlas.svelte';
 	import { cargarVotz } from '$lib/carta/votz.js';
-	import { ponchesEnsenhament } from '$lib/carta/ensenhament.js';
+	import { ponchesEnsenhament, ponchesCorses } from '$lib/carta/ensenhament.js';
 
 	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
 	// carta_colas — geridas dins /admin/carta) puslèu que
@@ -442,7 +442,7 @@
 
 	// Cada punt : una pastilha de veire amb l'icòna de sa jaça (Tabler Icons,
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
-	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', ensenhament: 'pencil', cercles: 'messages', culturaOc: 'music', festas: 'confetti', limsi: 'microphone-2' };
+	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', ensBilingue: 'pencil', ensEscola: 'pencil', ensSegond: 'pencil', ensSuperior: 'pencil', corsAdults: 'pencil', cercles: 'messages', culturaOc: 'music', festas: 'confetti', limsi: 'microphone-2' };
 	// una jaça apondida dins l'admin pren sa color de la basa
 	// Las lengas vesinas (demanda de Romain, 2026-10-09 : « une incitation à
 	// découvrir ce qui se passe à côté ») : al survòl (o al tòc) d'una lenga pas
@@ -629,7 +629,9 @@
 	}
 
 	// L'ensenhament de l'occitan, levat de las Calandretas (decision de Romain,
-	// 2026-10-23 ; SIG/ensenhament) : los ponches se fabrican dins ensenhament.js
+	// 2026-10-23 ; SIG/ensenhament) : un fichièr per quatre jaces de la familha
+	// Ensenhament ; los ponches se fabrican dins ensenhament.js
+	const JACES_ENSENHAMENT = ['ensBilingue', 'ensEscola', 'ensSegond', 'ensSuperior'];
 	let ensenhamentCargat = false;
 	async function cargarEnsenhament() {
 		if (ensenhamentCargat || !map) return;
@@ -638,9 +640,23 @@
 			.then((r) => (r.ok ? r.json() : null))
 			.catch(() => null);
 		if (!d?.ponches) return (ensenhamentCargat = false);
-		pointLayers.ensenhament = L.layerGroup(ponchesEnsenhament(d.ponches, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml, comunaOc }));
+		for (const [id, ms] of Object.entries(ponchesEnsenhament(d.ponches, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml, comunaOc }))) {
+			pointLayers[id] = L.layerGroup(ms);
+			if (visibility[id]) pointLayers[id].addTo(map);
+		}
 		if (d.font) map.attributionControl?.addAttribution(d.font);
-		if (visibility.ensenhament) pointLayers.ensenhament.addTo(map);
+	}
+	// los corses per adults : las associacions dels cercles que ne donan
+	let corsesCargats = false;
+	async function cargarCorses() {
+		if (corsesCargats || !map) return;
+		corsesCargats = true;
+		const d = await fetch('/data/cercles.geojson')
+			.then((r) => (r.ok ? r.json() : null))
+			.catch(() => null);
+		if (!d?.features) return (corsesCargats = false);
+		pointLayers.corsAdults = L.layerGroup(ponchesCorses(d.features, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml }));
+		if (visibility.corsAdults) pointLayers.corsAdults.addTo(map);
 	}
 
 	// Los cercles e las associacions (decision de Romain, 2026-10-23 ;
@@ -2048,7 +2064,8 @@
 		colaEstelas?.setTerritoris({ regions: !!vis.regions, despartaments: !!vis.despartaments, comunas: !!vis.comunas });
 		colaTematica?.setJaces(jacesTematicas(vis));
 		if (vis.calandretas) cargarCalandretas();
-		if (vis.ensenhament) cargarEnsenhament();
+		if (JACES_ENSENHAMENT.some((id) => vis[id])) cargarEnsenhament();
+		if (vis.corsAdults) cargarCorses();
 		if (vis.cercles || vis.culturaOc) cargarCercles();
 		if (vis.limsi) cargarEnquistas();
 		if (vis.lengasFranca) cargarLengas();
@@ -2654,8 +2671,15 @@
 	}
 	/* l'ensenhament : la pastilha al gredon ; la sensibilizacion (mens d'oras),
 	   un ponch pichon plen, sens icòna, per daissar veire l'ensenhament regular */
-	:global(.ponch-jaça-ensenhament) {
+	:global(.ponch-jaça-ensBilingue),
+	:global(.ponch-jaça-ensEscola),
+	:global(.ponch-jaça-ensSegond),
+	:global(.ponch-jaça-ensSuperior) {
 		--ponch: var(--t-terra);
+	}
+	/* los corses per adults : la color dels cercles */
+	:global(.ponch-jaça-corsAdults) {
+		--ponch: var(--t-aur-clar);
 	}
 	:global(.ponch-pichon .ponch) {
 		width: 10px;

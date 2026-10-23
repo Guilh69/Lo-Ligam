@@ -160,7 +160,8 @@
 		layerVisibility.dialectes = true;
 		layerVisibility.locutors = uei;
 		layerVisibility.calandretas = reviscolada;
-		layerVisibility.ensenhament = reviscolada;
+		// l'ensenhament (los corses per adults son ja dins los cercles)
+		for (const id of ['ensBilingue', 'ensEscola', 'ensSegond', 'ensSuperior']) layerVisibility[id] = reviscolada;
 		layerVisibility.librarias = reviscolada;
 		layerVisibility.cercles = reviscolada;
 		layerVisibility.culturaOc = reviscolada;

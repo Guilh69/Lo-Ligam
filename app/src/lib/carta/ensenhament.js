@@ -44,13 +44,20 @@ const TÈXTES = {
 	}
 };
 
-// Los ponches de la jaça : una pastilha per l'ensenhament regular, un ponch
-// pichon per la sensibilizacion (mens d'oras, sonque relevada dins las
-// acadèmias de Tolosa e de Montpelhièr)
+// Cada nivèl dins sa jaça de la familha Ensenhament (demanda de Romain,
+// 2026-10-23) ; lo Val d'Aran : las escòlas amb las bilingüas, l'institut amb
+// los collègis e licèus
+const JAÇA = { b: 'ensBilingue', r: 'ensEscola', s: 'ensEscola', c: 'ensSegond', l: 'ensSegond', u: 'ensSuperior' };
+const jaçaDe = (n, forma) => (n === 'a' ? (/ESO|batxillerat|FP/.test(forma) ? 'ensSegond' : 'ensBilingue') : JAÇA[n]);
+
+// Los ponches : una pastilha per l'ensenhament regular, un ponch pichon per la
+// sensibilizacion (mens d'oras, sonque relevada dins las acadèmias de Tolosa e
+// de Montpelhièr). Torna { idJaça: [ponches] }
 export function ponchesEnsenhament(ponches, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml, comunaOc }) {
 	const t = TÈXTES[lang] ?? TÈXTES.oc;
 	const fr = lang === 'fr';
-	return ponches.map(([lon, lat, n, nom, comuna, forma = '', formacions = '']) => {
+	const jaces = { ensBilingue: [], ensEscola: [], ensSegond: [], ensSuperior: [] };
+	for (const [lon, lat, n, nom, comuna, forma = '', formacions = ''] of ponches) {
 		const fs = forma ? forma.split(' ') : [];
 		let detalh = '';
 		if (n === 'c' || n === 'l') {
@@ -68,8 +75,27 @@ export function ponchesEnsenhament(ponches, { L, lang, iconaPunt, dobleClicSus, 
 			`<br>${escapeHtml(t.nivèl[n] ?? '')}${detalh ? ' : ' + escapeHtml(detalh) : ''}` +
 			(lista || '<br>') +
 			`<small>${t.font} : ${font}</small>`;
-		const icon = iconaPunt('ensenhament');
+		const id = jaçaDe(n, forma);
+		const icon = iconaPunt(id);
 		if (n === 's') icon.options.className += ' ponch-pichon';
-		return dobleClicSus(L.marker([lat, lon], { icon, title: nom, keyboard: true }).bindPopup(cap + `<span class="accions-bulla">${accionsNav(lat, lon, nom + ' ' + comuna)}</span>`));
-	});
+		jaces[id].push(dobleClicSus(L.marker([lat, lon], { icon, title: nom, keyboard: true }).bindPopup(cap + `<span class="accions-bulla">${accionsNav(lat, lon, nom + ' ' + comuna)}</span>`)));
+	}
+	return jaces;
+}
+
+// Los corses per adults : las associacions de la jaça dels cercles que ne
+// donan (cercles.geojson, k: 1 ; SIG/cercles)
+export function ponchesCorses(features, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml }) {
+	const fr = lang === 'fr';
+	return features
+		.filter((f) => f.properties.k)
+		.map((f) => {
+			const [lon, lat] = f.geometry.coordinates;
+			const q = f.properties;
+			const cap =
+				`<strong>${escapeHtml(q.n)}</strong><br>${escapeHtml(fr ? q.c : (q.o ?? q.c))}` +
+				`<br>${fr ? "Cours d'occitan pour adultes" : "Corses d'occitan per adults"}` +
+				`<br><small>${fr ? 'Source : couche « Cercles et associations »' : 'Font : jaça « Cercles e associacions »'}</small>`;
+			return dobleClicSus(L.marker([lat, lon], { icon: iconaPunt('corsAdults'), title: q.n, keyboard: true }).bindPopup(cap + `<span class="accions-bulla">${accionsNav(lat, lon, q.n + ' ' + q.c)}</span>`));
+		});
 }

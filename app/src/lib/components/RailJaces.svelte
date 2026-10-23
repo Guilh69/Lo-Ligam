@@ -165,6 +165,7 @@
 		lenga: '<path transform="translate(12 12) scale(10)" d="M0 0L-0.468 -0.797Q-0.194 -0.746 0 -1Q0.202 -0.746 0.486 -0.797ZM0 0L0.809 -0.48Q0.751 -0.199 1 0Q0.751 0.199 0.809 0.48ZM0 0L0.486 0.797Q0.202 0.742 0 0.992Q-0.194 0.742 -0.468 0.797ZM0 0L-0.786 0.48Q-0.731 0.203 -0.976 0.009Q-0.731 -0.195 -0.786 -0.48Z" fill="currentColor"/>',
 		administracion: '<path d="M4 6l5-2 6 2 5-2v14l-5 2-6-2-5 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"/>',
 		cultura: '<path d="M4 6c3-1 5-1 8 1 3-2 5-2 8-1v12c-3-1-5-1-8 1-3-2-5-2-8-1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 7v12" stroke="currentColor" stroke-width="1.4"/>',
+		ensenhament: '<path d="M22 9l-10-4-10 4 10 4 10-4v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4" fill="none" stroke="currentColor" stroke-width="1.6"/>',
 		istoria: '<path d="M5 20h14M6 20V10M10 20V10M14 20V10M18 20V10M4 10h16L12 4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>',
 		natura: '<path d="M3 19l6-10 4 6 3-4 5 8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="17" cy="6" r="2" fill="none" stroke="currentColor" stroke-width="1.5"/>',
 		// doas botiòlas de discussion, una plena e una al traç (causida de Romain,
@@ -224,8 +225,13 @@
 			// cercles e associacions : un ponch plen (activitat provada), un vuèg (declarada)
 			cercles: '<circle cx="17" cy="18" r="7" fill="#ffd98a"/><circle cx="35" cy="18" r="7" fill="none" stroke="#ffd98a" stroke-width="1.5" stroke-dasharray="3 2"/>',
 			culturaOc: '<circle cx="17" cy="18" r="7" fill="#ef6a35"/><circle cx="35" cy="18" r="7" fill="none" stroke="#ef6a35" stroke-width="1.5" stroke-dasharray="3 2"/>',
-			// ensenhament : la pastilha al gredon, lo ponch pichon de la sensibilizacion
-			ensenhament: '<circle cx="18" cy="18" r="9" fill="none" stroke="#c8481c" stroke-width="1.5"/><path d="M14 22h2.5l6-6a1.6 1.6 0 0 0-2.5-2.5l-6 6z" fill="none" stroke="#c8481c" stroke-width="1.3" stroke-linejoin="round"/><circle cx="36" cy="20" r="3" fill="#c8481c"/>',
+			// l'ensenhament (2026-10-23) : la pastilha al gredon, los ponches pichons
+			// de la sensibilizacion, lo capèl del superior, los corses dels cercles
+			ensBilingue: '<circle cx="18" cy="18" r="9" fill="none" stroke="#c8481c" stroke-width="1.5"/><path d="M14 22h2.5l6-6a1.6 1.6 0 0 0-2.5-2.5l-6 6z" fill="none" stroke="#c8481c" stroke-width="1.3" stroke-linejoin="round"/><path d="M32 12v12" stroke="#c8481c" stroke-width="1.3"/><path d="M36 12h8M36 18h8M36 24h8" stroke="#c8481c" stroke-width="1.2" opacity=".7"/>',
+			ensEscola: '<circle cx="16" cy="18" r="9" fill="none" stroke="#c8481c" stroke-width="1.5"/><path d="M12 22h2.5l6-6a1.6 1.6 0 0 0-2.5-2.5l-6 6z" fill="none" stroke="#c8481c" stroke-width="1.3" stroke-linejoin="round"/><circle cx="32" cy="21" r="3" fill="#c8481c"/><circle cx="41" cy="13" r="3" fill="#c8481c"/><circle cx="44" cy="25" r="3" fill="#c8481c"/>',
+			ensSegond: '<circle cx="16" cy="19" r="9" fill="none" stroke="#c8481c" stroke-width="1.5"/><path d="M12 23h2.5l6-6a1.6 1.6 0 0 0-2.5-2.5l-6 6z" fill="none" stroke="#c8481c" stroke-width="1.3" stroke-linejoin="round"/><circle cx="35" cy="16" r="9" fill="none" stroke="#c8481c" stroke-width="1.5"/><path d="M31 20h2.5l6-6a1.6 1.6 0 0 0-2.5-2.5l-6 6z" fill="none" stroke="#c8481c" stroke-width="1.3" stroke-linejoin="round"/>',
+			ensSuperior: '<path d="M44 14l-18-7-18 7 18 7 18-7v9" fill="none" stroke="#c8481c" stroke-width="1.5" stroke-linejoin="round"/><path d="M15 17v8a11 5 0 0 0 22 0v-8" fill="none" stroke="#c8481c" stroke-width="1.5"/>',
+			corsAdults: '<circle cx="18" cy="18" r="9" fill="none" stroke="#ffd98a" stroke-width="1.5"/><path d="M14 22h2.5l6-6a1.6 1.6 0 0 0-2.5-2.5l-6 6z" fill="none" stroke="#ffd98a" stroke-width="1.3" stroke-linejoin="round"/><circle cx="35" cy="14" r="3" fill="#ffd98a"/><path d="M30 26a5 4 0 0 1 10 0" fill="none" stroke="#ffd98a" stroke-width="1.4"/>',
 			calandretas: '<path d="M12 28V16l14-7 14 7v12z" fill="none" stroke="#eeaf34" stroke-width="1.5" stroke-linejoin="round"/><path d="M23 28v-6h6v6" stroke="#eeaf34" stroke-width="1.4" fill="none"/>',
 			festas: '<path d="M26 7l3 7 7 .6-5.4 4.6 1.7 7-6.3-3.8-6.3 3.8 1.7-7L15 14.6l7-.6z" fill="#eeaf34" opacity=".85"/>',
 			provincias: '<path d="M2 12 Q 18 3 30 12 T 50 9" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 3" opacity=".75"/><path d="M4 29 Q 20 20 32 27 T 50 23" fill="none" stroke="currentColor" stroke-width=".9" opacity=".55"/>',
@@ -265,7 +271,7 @@
 		return A[ALIAS[id] ?? id] ?? '';
 	};
 
-	const RAIL = ['sus', 'lenga', 'administracion', 'cultura', 'istoria', 'natura', 'lengas'];
+	const RAIL = ['sus', 'lenga', 'administracion', 'cultura', 'ensenhament', 'istoria', 'natura', 'lengas'];
 	let dobert = $state(null);
 	// los tèmas de « Sus la carta » enrotlats (demanda de Romain, 2026-10-09)
 	let enrotlats = $state([]);
@@ -339,7 +345,7 @@
 	// carta es restablida coma èra.
 	let mòde = $state(null);
 	let salvat = null;
-	const FAMILHAS_OC = ['cultura', 'istoria'];
+	const FAMILHAS_OC = ['cultura', 'ensenhament', 'istoria'];
 	function dintrarMòde() {
 		salvat = { v: $state.snapshot(visibility), d: [...causits] };
 		for (const fm of familhas) if (FAMILHAS_OC.includes(fm.id)) for (const j of fm.jaces) if (visibility[j.id]) visibility[j.id] = false;
