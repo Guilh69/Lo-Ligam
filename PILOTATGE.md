@@ -10,8 +10,9 @@
 
 **Maintenant**
 1. **Proton Drive abîmait `.git`** : ✅ réglé sur ce PC le 24-10. Proton ne sait pas exclure un sous-dossier ; le carnet de Git a donc été sorti de Documents, dans `C:\Users\perie\Depots\Lo_Ligam.git` (un fichier `.git` d'une ligne y renvoie, le projet ne bouge pas). Restent : jeter l'ancien carnet gardé en réserve, `C:\Users\perie\Depots\reserva-git-2026-10-24`, et la quarantaine `C:\Users\perie\Lo_Ligam_quarantena_2026-10-12` d'ici une semaine si tout va bien ; **sur l'autre ordinateur, la même opération avec Claude** si Proton y synchronise aussi les Documents.
-2. **Répondre au bloc 4 de `DIRECCION.md`** (l'accueil, vue d'ensemble) : c'est le barreau 3 de l'échelle, le suivant.
-3. **Une question de couleur** : le rouge du logo aussi sur les boutons de zoom de la carte et sur « Écouter la voix la plus proche » ? (règle B, 23-10)
+2. **L'édition sur place** (24-10, Romain : « que je puisse changer un mot directement sur la page… sans passer par toi ») : proposition `revisions/2026-10-24-edicion-sus-plaça.md` ; barreau 7 pris avant le barreau 3, par choix de Romain. À trancher : le périmètre de la séance 1.
+3. **Répondre au bloc 4 de `DIRECCION.md`** (l'accueil, vue d'ensemble) : barreau 3, après l'éditeur.
+4. **Une question de couleur** : le rouge du logo aussi sur les boutons de zoom de la carte et sur « Écouter la voix la plus proche » ? (règle B, 23-10)
 
 **Ensuite**
 4. Regarder sur téléphone et valider : les premiers pas de la carte (forme et occitan, `app/src/lib/components/Guida.svelte`), la famille Ensenhament (`SIG/ensenhament/LEGIR-ME.md` : « renfortit », « oras », « oraria »), les libellés des cercles, des voix et de « La carta se prepara… ».
@@ -36,7 +37,7 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 4 | La charte et le mouvement (blocs 5 et 6), le cadre commun des pages | en partie : règle B des couleurs sur tout le site (23-10) ; reste la question du point 3 ci-dessus |
 | 5 | Les mots (bloc 7) | en partie : tutoiement partout, « uèi » validé (22-23-10) ; reste la pile de validations |
 | 6 | Les pages de rubrique : Se parla (carte, puis wiki), S'apren, Amassa | carte très avancée (prise en avance le 22-10) ; wiki, S'apren et Amassa à faire |
-| 7 | Les pages intérieures, l'administration remise en cohérence | à faire |
+| 7 | Les pages intérieures, l'administration remise en cohérence | **pris en avance le 24-10** : l'édition sur place (proposition `revisions/2026-10-24-edicion-sus-plaça.md`) |
 | 8 | Lancement (bloc 8) | à faire |
 
 ## 3. Les chantiers (une ligne chacun)
