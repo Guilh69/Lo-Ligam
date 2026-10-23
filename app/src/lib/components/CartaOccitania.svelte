@@ -2713,8 +2713,14 @@
 		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
 	}
 	:global(.ponch-pichon .ponch svg),
-	:global(.ponch-pichon .ponch-estela) {
+	:global(.ponch-pichon .ponch-estela),
+	:global(.ponch-pichon .ponch-fil) {
 		display: none;
+	}
+	/* (lo ponch pichon es sul luòc meteis, sens camba : la camba fasiá un
+	   tiret estranh sota cada ponch) */
+	:global(.ponch-pichon .ponch-pos) {
+		transform: translate(-5px, -5px);
 	}
 	:global(.leaflet-popup-content .lista-bulla) {
 		margin: 0.3em 0 0.2em;
