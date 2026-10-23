@@ -42,8 +42,10 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 
 		onAdd(map) {
 			if (!map.getPane('ponchs')) {
+				// jos los noms de vilas (estelas, 350) e de comunas (590) : los noms
+				// demòran legibles (retorn de Romain, 2026-10-23)
 				const p = map.createPane('ponchs');
-				p.style.zIndex = '590';
+				p.style.zIndex = '349';
 				p.style.pointerEvents = 'none';
 			}
 			this._cv = L.DomUtil.create('canvas', 'cola-ponchs leaflet-zoom-animated', this.getPane());

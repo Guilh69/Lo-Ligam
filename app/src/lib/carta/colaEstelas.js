@@ -1428,7 +1428,12 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				}
 				g.globalAlpha = { 1: 1, 2: 0.85, 3: 0.74, 4: 0.55 }[v.renc] * (aprèp ? 0.12 : 1) * aN;
 				g.textAlign = v.al;
-				// un alo doç de la color del fons (doas passadas), puèi la letra neta
+				// un liserat fin de la color del fons (lo nom se destria dels ponches
+				// de las jaces, retorn de Romain 2026-10-23), un alo doç (doas
+				// passadas), puèi la letra neta
+				g.strokeStyle = T.liser;
+				g.lineWidth = 2.2 + v.f * 0.12;
+				g.strokeText(tv, v.x, v.y);
 				g.shadowColor = T.liser;
 				g.shadowBlur = 3 + v.f * 0.35;
 				g.fillText(tv, v.x, v.y);
