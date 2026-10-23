@@ -30,6 +30,12 @@ export async function handle({ event, resolve }) {
 	// comme du script.
 	response.headers.set('X-Content-Type-Options', 'nosniff');
 
+	// Pas encore lancé (cahier §11, 2026-10-24) : les moteurs de recherche ne
+	// référencent aucune page, même trouvée par un lien venu d'ailleurs ; le
+	// site reste ouvert à qui a l'adresse. À retirer au lancement, avec la
+	// ligne « Disallow: / » de static/robots.txt.
+	response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+
 	// Ne fuite pas l'adresse complète des pages visitées vers les sites
 	// externes (ressources occitanes, cartes) : juste le domaine.
 	response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');

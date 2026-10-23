@@ -1,3 +1,6 @@
-# allow crawling everything by default
+# Le site n'est pas encore lancé (cahier §11, 2026-10-24) : les moteurs de
+# recherche ne le référencent pas, mais il reste ouvert à qui a l'adresse.
+# Au lancement : remettre « Disallow: » vide et retirer X-Robots-Tag de
+# src/hooks.server.js.
 User-agent: *
-Disallow:
+Disallow: /
