@@ -103,6 +103,27 @@ Le design ne peut agir que sur l'extrinsèque — et doit la réduire à zéro :
 première leçon · audio systématique (Votz) · récompenses = progression
 visible et beauté, pas classements · communauté = entraide, pas duel.
 
+### 2.4 Psychologie de l'interface : cinq effets (2026-10-23)
+
+Point de départ : la vidéo de Wyatt Feaster, designer d'applications, *The
+psychology trick that makes any app feel 10x better* (YouTube, 6 min 30,
+https://www.youtube.com/watch?v=MVOpq3WRnbo), envoyée par Romain et relue
+d'après sa transcription. Ce sont des effets connus de la psychologie, pas
+une étude : des repères, passés ici au crible des valeurs du projet.
+
+| Effet | Ce qu'il dit | Chez Lo Ligam aujourd'hui | Règle retenue |
+|---|---|---|---|
+| **Gradient d'objectif** (Hull, 1932) | On accélère quand on voit l'arrivée : « 5 étapes sur 7 » motive plus que « fais cette étape ». | Premiers pas de la carte : compteur « 3 / 11 » et barre d'or (`Guida.svelte`) ; lo Fuòc de l'ostal (`gamification.md` §5 bis). | Tout parcours en étapes dit où on en est et ce qui reste (leçon, module, premiers pas, futur test de positionnement). Jamais de compte à rebours qui presse. |
+| **Pic et fin** (Kahneman et coll., 1993) | On retient le meilleur moment, le pire, et la fin ; le reste s'efface. | Entrée en scène de la carte ; fin des premiers pas (cercle d'or, « Tot es a punt ! ») ; célébrations (`gamification.md` §5). | Soigner la fin de chaque parcours. **Et traiter les pires moments avant d'ajouter des fêtes** : une carte qui se recharge sur iPhone pèse plus lourd dans le souvenir que dix belles animations. |
+| **Illusion du travail** (Buell et Norton, 2011) | On accorde plus de valeur à ce qui semble demander du travail ; certaines applications ajoutent une attente factice. | Écran « La carta se prepara… » pendant un vrai chargement. | **Écarté : jamais d'attente inventée** (contraire à l'éthique et à la sobriété). Version honnête, celle que l'étude d'origine soutient : quand un vrai travail se fait, le montrer plutôt que le cacher. |
+| **Effet d'isolement** (von Restorff, 1933) | On se souvient de ce qui diffère du reste. | « Reservar un cors », seul bouton en or de la barre ; principe de signalisation de Mayer (§2.1). | **Une seule mise en avant par écran.** Si tout brille, rien ne ressort : l'or reste rare. |
+| **Surcharge de choix** (Iyengar et Lepper, 2000) | Trop d'options d'un coup inquiète et fait renoncer. | Barre presque vide et menu en trois rubriques (modèle de l'Alliance, §11 du 15-10) ; recherche et familles repliables du rail de la carte. | Peu de choix visibles d'un coup : ranger, filtrer, chercher, retirer ce qui ne sert pas. À surveiller : le rail de la carte et le panneau des langues, qui grossissent à chaque couche. |
+
+**Nuance.** L'effet de surcharge est discuté : la méta-analyse de
+Scheibehenne et coll. (2010) trouve un effet moyen proche de zéro, net
+seulement quand les options se comparent mal. D'où la règle : moins de choix
+*à la fois*, pas moins de contenu.
+
 ---
 
 ## 3. Accessibilité daltonisme (décision Romain 2026-08-22)
@@ -264,6 +285,8 @@ Avant toute mise en ligne d'un changement visuel :
 6. Occitan nouveau → validation Romain (dicodòc / lo Congrès).
 7. Cohérence : tokens de `app.css` uniquement, grille respectée, un seul
    style par rôle de bouton.
+8. Psychologie (§2.4) : étapes comptées, fin soignée, une seule mise en
+   avant, peu de choix à la fois, aucune attente inventée.
 
 ---
 
@@ -277,4 +300,10 @@ Trainable Spaced Repetition Model*, ACL 2016 (research.duolingo.com) ·
 Okabe & Ito, *Color Universal Design* (2008) · W3C, WCAG 2.1 SC 1.4.1 ·
 awwwards.com (sites primés) · elias.studio · locomotive.ca ·
 archiviograficaitaliana.com · Institut Ramon Llull (arts visuels catalans) ·
-CSS-Tricks & Chrome DevRel (View Transitions, scroll-driven animations).
+CSS-Tricks & Chrome DevRel (View Transitions, scroll-driven animations) ·
+Wyatt Feaster, vidéo YouTube citée au §2.4 · Hull, *The goal-gradient
+hypothesis* (1932) · Kahneman et coll., *When more pain is preferred to
+less* (1993) · Buell & Norton, *The labor illusion*, *Management Science*
+(2011) · von Restorff (1933) · Iyengar & Lepper, *When choice is
+demotivating* (2000) · Scheibehenne et coll., méta-analyse de la surcharge
+de choix, *Journal of Consumer Research* (2010).
