@@ -1,7 +1,7 @@
 <script>
 	import Icona from '$lib/components/Icona.svelte';
 	import { PLAJAS, zPlaja } from '$lib/carta/escalas.js';
-	import { estatCarta, SELECCIONABLAS } from '$lib/carta/estatCarta.svelte.js';
+	import { estatCarta, SELECCIONABLAS, activar } from '$lib/carta/estatCarta.svelte.js';
 	// Rail de las jaces (causida de Romain, 2026-10-07, « panèl C ») : un rail
 	// totjorn visible al bòrd de la carta, una icòna nomenada per familha. Un
 	// clic dobrís lo tirador de la familha ; un segond clic sus la meteissa
@@ -691,15 +691,19 @@
 	// pas active, elle devient active ; sinon elle s'allume ou s'éteint
 	// (l'interrupteur des lignes, lui, allume et éteint toujours)
 	function tocarJaça(j) {
-		if (visibility[j.id] && seleccionabla(j.id) && estatCarta.activa !== j.id) return void (estatCarta.activa = j.id);
+		if (visibility[j.id] && seleccionabla(j.id) && estatCarta.activa !== j.id) return void activar(j.id);
 		bascular(j.id, !visibility[j.id]);
 	}
 	// La couche active, façon QGIS (option A de Romain, 2026-10-19) : la dernière
 	// allumée, ou celle dont on touche le nom ; éteinte, plus de couche active
 	const seleccionabla = (id) => SELECCIONABLAS.has(id) || !!LENGAS[id];
+	// (escantida : la man tòrna a la jaça activa precedenta encara alucada)
 	$effect(() => {
 		const a = estatCarta.activa;
-		if (a && !visibility[a]) estatCarta.activa = null;
+		if (a && !visibility[a]) {
+			estatCarta.pila = estatCarta.pila.filter((id) => id !== a && visibility[id]);
+			estatCarta.activa = estatCarta.pila.at(-1) ?? null;
+		}
 	});
 	// La jaça es alucada mas pas vesibla a l'escala actuala
 	const foraEscala = (j) => estatCarta.z != null && zPlaja(j.id, estatCarta.z, estatCarta.lat) != null;
@@ -800,11 +804,11 @@
 			estatCarta.apercebut = null;
 			visibility[id] = false;
 			visibility[id] = true;
-			if (seleccionabla(id)) estatCarta.activa = id;
+			if (seleccionabla(id)) activar(id);
 			return;
 		}
 		visibility[id] = on;
-		if (on && seleccionabla(id)) estatCarta.activa = id;
+		if (on && seleccionabla(id)) activar(id);
 		// (una jaça escantida : sas zònas son pas pus causidas, las de las autras demòran)
 		if (id === 'dialectes' && !on) causits = causits.filter((k) => !esOccitan(k));
 		if (LENGAS[id] && !on) causits = causits.filter((k) => !k.startsWith(LENGAS[id].pref));
@@ -813,14 +817,14 @@
 	// a la causida, o l'en leva se i èra (retorn de Romain : mantuna a l'encòp)
 	function causirDial(k) {
 		visibility.dialectes = true;
-		estatCarta.activa = 'dialectes';
+		activar('dialectes');
 		causits = causits.includes(k) ? causits.filter((x) => x !== k) : [...causits, k];
 	}
 
 	// Una pastilha d'una autra lenga : aluca sa jaça e apond la zòna
 	function causirLenga(id, k) {
 		visibility[id] = true;
-		estatCarta.activa = id;
+		activar(id);
 		const kod = LENGAS[id].pref + k;
 		// (un dialècte d'una lenga de la familha, coma lo ch'ti : remplaça sa lenga)
 		const de = LENGAS[id].pastilhas.find((q) => q.k === k)?.de;
