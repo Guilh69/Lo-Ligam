@@ -9,13 +9,19 @@
 // comme une vague les uns après les autres ») ; un pauc d'azard dins lo
 // moment de cadun fa viure la difusion. L'escantiment seguís la meteissa onda.
 
+import { DURADA as DURADA_CONTORNS } from './aparicion.js';
+
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 
 // lo temps que l'onda met per traversar la vista (s), l'azard de cada ponch
 // (s), e la durada de son aluc (s)
-const DURADA = 1.9,
-	AZARD = 0.45,
-	ALUC = 0.9;
+// (una sola relòtge per las aparicions : l'onda dels ponches a lo tempo dels
+// contorns que se tracan, aparicion.js ; audit del 2026-10-23)
+const DURADA = DURADA_CONTORNS,
+	AZARD = 0.4,
+	ALUC = 0.8,
+	// lo fondut entre estelas (de luènh) e pastilhas (de prèp)
+	FONDUT = 0.35;
 // un azard estable per ponch (lo meteis a cada onda)
 const azard = (n) => {
 	const x = Math.sin(n * 12.9898) * 43758.5453;
@@ -117,12 +123,15 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 					q.x = lp.x - min.x;
 					q.y = lp.y - min.y;
 				}
-			this._pintar();
+			if (this._pintar()) this._animar();
 		},
 
 		// --- las jaces ---
 		mostrar(g) {
 			this._grops.add(g);
+			// (tornada alucar en plena onda d'escantiment : sas estelas encara
+			// visiblas demòran, l'onda las tòrna pas far espelir)
+			g._dejaVisibla = g._estat === 'va';
 			g._estat = 'ven';
 			this._vaga(g, 1);
 		},
@@ -144,7 +153,7 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 		_vaga(g, dir) {
 			const ara = performance.now() / 1000;
 			const v = this._darrièra;
-			if (v && v.dir === dir && ara - v.t0 < 0.1) g._vagaA = v;
+			if (v && v.dir === dir && ara - v.t0 < 1.2) g._vagaA = v;
 			else {
 				const tal = this._map.getSize();
 				g._vagaA = this._darrièra = { t0: calm() ? -99 : ara, dir, centre: this._map.getCenter(), max: Math.hypot(tal.x, tal.y) / 2 };
@@ -249,7 +258,12 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 			x.clearRect(0, 0, this._W, this._H);
 			const ara = performance.now() / 1000;
 			const luenh = map.getZoom() < zIconas();
-			let viu = false;
+			// (lo fondut de las estelas quand se passa lo lindal de las pastilhas)
+			const dtF = Math.min(0.1, ara - (this._tF ?? ara));
+			this._tF = ara;
+			const cibF = luenh ? 1 : 0;
+			this._aF = calm() || this._aF === undefined ? cibF : this._aF + Math.sign(cibF - this._aF) * Math.min(Math.abs(cibF - this._aF), dtF / FONDUT);
+			let viu = this._aF !== cibF;
 			const FIN = DURADA * 1.2 + AZARD + ALUC;
 			const esclat = this._esclat();
 			const esclats = [];
@@ -259,7 +273,7 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 				const enOnda = v && dt < FIN;
 				if (enOnda) viu = true;
 				else if (g._estat === 'va') continue;
-				if (!luenh) continue;
+				if (this._aF <= 0.001) continue;
 				const color = this._color(g.cid);
 				const vc = enOnda ? map.latLngToLayerPoint(v.centre).subtract(this._min) : null;
 				for (const q of g.punts()) {
@@ -271,9 +285,10 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 					if (vc) {
 						q.az ??= azard(q.n);
 						const tq = clamp(Math.hypot(q.x - vc.x, q.y - vc.y) / v.max, 0, 1.2) * DURADA + q.az * AZARD;
-						const u = (dt - tq) / ALUC;
+						let u = (dt - tq) / ALUC;
 						if (v.dir > 0) {
-							if (u < 0) continue;
+							if (u < 0 && !g._dejaVisibla) continue;
+							if (u < 0) u = 1;
 							// l'aluc : una belugueta que naís, s'espandís e se pausa
 							const k = clamp(u);
 							a = clamp(u * 6);
@@ -289,7 +304,7 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 					}
 					const sp = this._sprite(color, q.m);
 					const r = sp.R * esc;
-					x.globalAlpha = a;
+					x.globalAlpha = a * this._aF;
 					x.drawImage(sp.c, q.x - r, q.y - r, 2 * r, 2 * r);
 					if (e > 0.02) esclats.push(q.x, q.y, e);
 				}
@@ -382,6 +397,12 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 			const map = this._map;
 			if (!map) return;
 			const luenh = map.getZoom() < zIconas();
+			// (lo lindal passat en s'apropant : las pastilhas espelisson del mitan
+			// de la vista cap als bòrds, a l'endreit de las estelas que s'escafan)
+			const lindal = this._luenhPrec === true && !luenh;
+			this._luenhPrec = luenh;
+			const mitan = map.getSize().divideBy(2),
+				diag = mitan.distanceTo([0, 0]) || 1;
 			const b = map.getBounds().pad(0.3);
 			this.eachLayer((m) => {
 				const vòl = this._fixas.has(m) || (!luenh && b.contains(m.getLatLng())) || m.isPopupOpen?.();
@@ -390,6 +411,10 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 					map.addLayer(m);
 					// a l'aluc de la jaça, la pastilha espelís al passatge de l'onda
 					if (vaga === true && m._icon && !calm()) m._icon.style.setProperty('--retard', Math.round(tela.retard(this, m.getLatLng(), L.stamp(m)) * 1000) + 'ms');
+					else if (lindal && m._icon && !calm()) {
+						const d = map.latLngToContainerPoint(m.getLatLng()).distanceTo(mitan) / diag;
+						m._icon.style.setProperty('--retard', Math.round(Math.min(1, d) * 450 + azard(L.stamp(m)) * 150) + 'ms');
+					}
 				} else if (!vòl && i) map.removeLayer(m);
 			});
 		},
