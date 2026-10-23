@@ -13,7 +13,7 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { cargarColas } from '$lib/carta/colasBasa.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
+	import { estatCarta, ecranCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
 	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
 	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, fixarLatEscala, fixarEcran, nivèlsDezoom, aDetalh, aTenchas } from '$lib/carta/escalas.js';
@@ -1860,6 +1860,11 @@
 				})
 			);
 		});
+		// un luòc de la carta en pixèls d'ecran (los primièrs passes, Guida.svelte)
+		ecranCarta.punt = (lat, lon) => {
+			const p = map.latLngToContainerPoint([lat, lon]), r = map.getContainer().getBoundingClientRect();
+			return { x: r.left + p.x, y: r.top + p.y };
+		};
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; }, get motorNoms() { return motorNoms; } };
 		zoomDoç(L, map);
@@ -2482,6 +2487,7 @@
 		// (las boclas d'imatges s'arrèstan abans la carta : quitar la pagina
 		// daissava de boclas que pintavan una carta levada ; sul servidor, res)
 		if (typeof window === 'undefined') return;
+		ecranCarta.punt = null;
 		// (en tornant sus la carta, l'ecran de cargament tòrna)
 		estatCarta.prèsta = false;
 		estatCarta.cargament = 0;

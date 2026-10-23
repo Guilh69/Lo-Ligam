@@ -1,18 +1,18 @@
 <script>
 	import Icona from '$lib/components/Icona.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { browser } from '$app/environment';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import RailJaces from '$lib/components/RailJaces.svelte';
-	import VisitaCarta from '$lib/components/VisitaCarta.svelte';
 	import CargamentCarta from '$lib/components/CargamentCarta.svelte';
+	import Guida from '$lib/components/Guida.svelte';
 	import LecturaCarta from '$lib/components/LecturaCarta.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { estatCarta, JACES_PONCHS, activar } from '$lib/carta/estatCarta.svelte.js';
+	import { estatCarta, ecranCarta, JACES_PONCHS, activar } from '$lib/carta/estatCarta.svelte.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { cargarColas } from '$lib/carta/colasBasa.js';
 	import { esAdmin } from '$lib/adminStore';
@@ -29,16 +29,63 @@
 			intro: 'Fons de carta en occitan, realizat per',
 			introEnd: "amb l'Institut d'Estudis Occitans.",
 			close: 'Tampar',
-			more: 'Saber mai sus lo Mond en occitan'
+			more: 'Saber mai sus lo Mond en occitan',
+			guida: 'Tornar veire los primièrs passes'
 		},
 		fr: {
 			title: 'Le Monde en occitan',
 			intro: 'Fond de carte en occitan, réalisé par',
 			introEnd: "avec l'Institut d'Études Occitanes.",
 			close: 'Fermer',
-			more: 'En savoir plus sur le Monde en occitan'
+			more: 'En savoir plus sur le Monde en occitan',
+			guida: 'Revoir les premiers pas'
 		}
 	};
+
+	// Les premiers pas de la carte (tutoriel de première connexion, 2026-10-23) :
+	// la commande visée, son texte, le geste qui la coche dans la liste
+	const ETAPAS = [
+		{
+			cibla: '.lectura:not(.gama)',
+			oc: 'Tres lecturas de la carta : lo territòri, la lenga uèi, sa reviscolada.',
+			fr: 'Trois lectures de la carte : le territoire, la langue aujourd’hui, sa revitalisation.',
+			linha: { oc: 'Causir una lectura', fr: 'Choisir une lecture' },
+			fait: { ev: 'click', sel: '.lectura:not(.gama)' }
+		},
+		{
+			cibla: '.rail',
+			oc: 'Las jaças : çò que la carta mòstra, familha per familha.',
+			fr: 'Les couches : ce que montre la carte, famille par famille.',
+			linha: { oc: 'Alucar una jaça', fr: 'Allumer une couche' },
+			fait: { ev: 'click', sel: '.rail' }
+		},
+		{
+			cibla: '.cerca',
+			oc: 'Cercar una vila o un despartament.',
+			fr: 'Chercher une ville ou un département.',
+			linha: { oc: 'Cercar una vila', fr: 'Chercher une ville' },
+			fait: { ev: 'focusin', sel: '.cerca' }
+		},
+		{
+			// (vers Rodez : sur l'occitan, à l'arrivée, sur ordinateur comme sur téléphone)
+			cibla: () => {
+				const p = ecranCarta.punt?.(44.35, 2.57);
+				return p && { left: p.x, top: p.y, width: 1, height: 1 };
+			},
+			punt: true,
+			oc: 'Un dialècte, una vila : un clic, e sa ficha s’obrís.',
+			fr: 'Un dialecte, une ville : un clic, et sa fiche s’ouvre.',
+			linha: { oc: 'Tocar la carta', fr: 'Toucher la carte' },
+			fait: { ev: 'click', sel: '.leaflet-container', sauf: '.leaflet-control, .comandas-carta, .cerca' }
+		},
+		{
+			cibla: '.info-trigger',
+			oc: 'Per tornar veire los primièrs passes : aicí.',
+			fr: 'Pour revoir les premiers pas : ici.'
+		}
+	];
+	const FIN = { oc: 'Bon viatge sus la carta !', fr: 'Bon voyage sur la carte !' };
+	let guida = $state(null);
 	let tx = $derived(t[lang]);
 
 	let showInfo = $state(false);
@@ -133,16 +180,16 @@
 		}
 
 		if (!browser) return;
-		// Première visite guidée « Trois portes » (retenue par Romain le 2026-10-22) :
-		// elle remplace l'ouverture automatique de la pancarte des crédits, qui reste
-		// derrière le bouton « ? » ; /carta?ensag=visita compare encore les trois formes
+		// (le panneau de première visite « Trois portes » est débranché le 2026-10-23,
+		// à la demande de Romain : le tutoriel de première connexion le remplacera ;
+		// la pancarte des crédits reste derrière le bouton « ? »)
 		const ensag = new URLSearchParams(location.search).get('ensag');
-		ensagVisita = ensag === 'visita';
 		ensagLectura = ensag === 'lectura'; // le geste territoire / aujourd'hui, trois formes
+		ensagGuida = ensag === 'guida'; // les premiers pas, trois formes
 	});
 
-	let ensagVisita = $state(false);
-	let formaVisita = $state('portas'); // la forme retenue ; l'essai en propose trois
+	let ensagGuida = $state(false);
+	let formaGuida = $state('bullas');
 	let ensagLectura = $state(false);
 	let formaLectura = $state('bascula'); // la forme par défaut ; /carta?ensag=lectura en propose trois
 	let nautLectura = $state(0); // la hauteur de la commande, pour décaler les mots à écouter
@@ -152,8 +199,7 @@
 	// enquête OPLO 2020, Romain 22-10), 2 « la reviscolada » (tenchas estompadas ;
 	// calandretas e librariás alucadas : çò que fa reviure la lenga, Romain
 	// 22-10) ; entre eux, la glissière. Les voix de l'Atlas ne sont liées à aucune
-	// lecture (témoins de la langue parlée). Les portes de la première visite
-	// choisissent la lecture aussi.
+	// lecture (témoins de la langue parlée).
 	let lectura = $state(0);
 	function causirLectura(u) {
 		lectura = Math.max(0, Math.min(2, Number(u) || 0));
@@ -174,12 +220,6 @@
 			estatCarta.pila = estatCarta.pila.filter((id) => !JACES_PONCHS.includes(id) && layerVisibility[id]);
 			estatCarta.activa = estatCarta.pila.at(-1) ?? null;
 		}
-	}
-	// Les trois portes du panneau d'accueil (forme C) : la page tient les couches
-	function porta(k) {
-		if (k === 'territori') causirLectura(0);
-		else if (k === 'reviscolada') causirLectura(2);
-		else if (k === 'vila') document.getElementById('cerca-carta')?.focus();
 	}
 </script>
 
@@ -232,6 +272,14 @@
 					>
 					{tx.introEnd}
 				</p>
+				{#if guida}<button
+					type="button"
+					class="info-guida"
+					onclick={() => {
+						showInfo = false;
+						tick().then(() => guida?.lançar()); // (le bouton « ? » revient d'abord)
+					}}><Icona nom="suivant" size="0.9em" /> {tx.guida}</button
+				>{/if}
 			</div>
 		{:else}
 			<button
@@ -256,7 +304,10 @@
 			esAdmin={$esAdmin}
 		/>
 
-		<VisitaCarta bind:forma={formaVisita} ensag={ensagVisita} {lang} onPorta={porta} />
+		<!-- les premiers pas : en essai seulement, tant que Romain n'a pas choisi la forme -->
+		{#if ensagGuida}
+			<Guida bind:this={guida} bind:forma={formaGuida} etapas={ETAPAS} clau="lo-ligam-carta-primiers-passes" fin={FIN} ensag {lang} lest={estatCarta.prèsta} espera={9500} />
+		{/if}
 		<LecturaCarta bind:forma={formaLectura} {lectura} ensag={ensagLectura} {lang} clar={ambianca.clar} dalt={ambianca.dalt} onCausir={causirLectura} onNaut={(h) => (nautLectura = h)} />
 	</main>
 </div>
@@ -369,6 +420,29 @@
 		font-size: 0.88rem;
 		line-height: 1.55;
 		color: var(--t-tinta-2);
+	}
+
+	.info-guida {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		min-height: 44px;
+		margin-top: 0.8rem;
+		padding: 0 1rem;
+		border: 1px solid var(--t-linha);
+		border-radius: 999px;
+		background: none;
+		color: var(--t-tinta);
+		font: inherit;
+		font-size: 0.88rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: background 0.3s, border-color 0.3s;
+	}
+	.info-guida:hover,
+	.info-guida:focus-visible {
+		background: color-mix(in srgb, var(--t-terra) 14%, transparent);
+		border-color: var(--t-terra);
 	}
 
 	.info-card a {
