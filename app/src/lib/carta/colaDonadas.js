@@ -1518,15 +1518,26 @@ export function crearColaDonadas(
 					const w = cx.measureText(t).width + 6,
 						h = fs * 1.5;
 					let b = null,
-						dec = [0, 0];
+						dec = [0, 0],
+						mendre = Infinity;
+					// (los obstacles pròches sonque : dos mila ponches de las jaces
+					// i son ara, audit del 2026-10-23)
+					const R = w + 120,
+						prèp = ocup.filter((q) => q[2] > zn.eti[0] - R && q[0] < zn.eti[0] + R && q[3] > zn.eti[1] - R && q[1] < zn.eti[1] + R);
 					for (const [dx, dy] of DECALATGES_NOM) {
 						const c = [zn.eti[0] + dx - w / 2, zn.eti[1] + dy - h / 2, zn.eti[0] + dx + w / 2, zn.eti[1] + dy + h / 2];
 						// (entre dos noms de dialèctes, una marja : sens ela se tocavan)
 						const cm = [c[0] - 10, c[1] - 9, c[2] + 10, c[3] + 9];
-						if (!ocup.some((q) => se(c, q)) && !caixas.some((q) => se(cm, q))) {
+						if (caixas.some((q) => se(cm, q))) continue;
+						// lo primièr luòc liure ; si que non, lo que recobrís lo mens
+						// de ponches e de noms (pas mai de retorn al mitan)
+						let n = 0;
+						for (const q of prèp) if (se(c, q) && ++n >= mendre) break;
+						if (n < mendre) {
+							mendre = n;
 							b = c;
 							dec = [dx, dy];
-							break;
+							if (!n) break;
 						}
 					}
 					b ??= [zn.eti[0] - w / 2, zn.eti[1] - h / 2, zn.eti[0] + w / 2, zn.eti[1] + h / 2];

@@ -1632,7 +1632,9 @@
 				const b = m.getPopup();
 				if (b) L.popup({ ...b.options, offset: L.point(0, -4) }).setLatLng(m.getLatLng()).setContent(b.getContent()).openOn(map);
 			},
-			onDobleClic: (m) => centrarSus({ centre: m.getLatLng() })
+			onDobleClic: (m) => centrarSus({ centre: m.getLatLng() }),
+			// (de ponches alucats o escantits : los noms dels dialèctes se tòrnan plaçar)
+			onCanvi: () => colaDonadas?._update?.()
 		});
 		// la grilha de las escalas seguís la latitud del centre (escalas.js)
 		map.on('move', () => fixarLatEscala(map.getCenter().lat));
@@ -1662,7 +1664,7 @@
 				!!colaTematica?.ocupat(lp, true) ||
 				(zonaLengaA(lp) && !colaDonadas?.zonaA(lp)?.startsWith('mix-')),
 			// los noms de vilas : los noms de dialèctes los evitan
-			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, caixasVilasDOM],
+			obstacles: () => [colaEstelas && map.hasLayer(colaEstelas) ? colaEstelas.caixasNoms() : null, caixasVilasDOM, ponchs?.tela.caixas()],
 			onSurvòl: (k, info) => (survòl = info),
 			onCausida: (kods, info) => {
 				causida = info;

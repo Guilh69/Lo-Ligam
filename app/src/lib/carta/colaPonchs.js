@@ -34,7 +34,7 @@ function mena(m) {
 	return c.includes('ponch-pichon') ? 'pichon' : c.includes('ponch-vuèg') ? 'vuèg' : c.includes('ponch-plen') ? 'plen' : '';
 }
 
-export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
+export function crearPonchs(L, { zIconas, onClic, onDobleClic, onCanvi }) {
 	const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 	// --- la tela ---
@@ -129,6 +129,8 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 		// --- las jaces ---
 		mostrar(g) {
 			this._grops.add(g);
+			this._caixas = null;
+			queueMicrotask(() => onCanvi?.());
 			// (tornada alucar en plena onda d'escantiment : sas estelas encara
 			// visiblas demòran, l'onda las tòrna pas far espelir)
 			g._dejaVisibla = g._estat === 'va';
@@ -142,6 +144,28 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 		retirar(g) {
 			this._grops.delete(g);
 			this._pintar();
+			this._caixas = null;
+			onCanvi?.();
+		},
+		// las bóstias de las estelas visiblas (±6 px), en coordenadas
+		// projectadas al zoom actual : los noms dels dialèctes las evitan
+		// (retorn de Romain, 2026-10-23 : VIVAROAUPENC sus un ponch prèp de Gap)
+		caixas() {
+			const map = this._map;
+			if (!map || map.getZoom() >= zIconas()) return null;
+			const z = map.getZoom(),
+				clau = z + '|' + [...this._grops].filter((g) => g._estat !== 'va').map((g) => g.cid).join(',');
+			if (this._caixas?.clau === clau) return this._caixas;
+			const cs = [];
+			for (const g of this._grops) {
+				if (g._estat === 'va') continue;
+				for (const q of g.punts()) {
+					if (q.m === 'pichon') continue;
+					const p = map.project(q.ll, z);
+					cs.push([p.x - 6, p.y - 6, p.x + 6, p.y + 6]);
+				}
+			}
+			return (this._caixas = { clau, z, cs });
 		},
 		// lo tèma o lo daltonisme an cambiat : las colors (--ponch) se tòrnan
 		// legir a l'imatge seguent, un còp las variablas CSS mesas
