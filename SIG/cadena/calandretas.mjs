@@ -349,7 +349,7 @@ if (fs.existsSync(revFic)) {
 	const iU = cap.indexOf('uai'), iN = cap.indexOf('nom_retengut');
 	const novels = new Map(linhasCsv.map((l) => [l[0], l[2]]));
 	const cambiats = iU < 0 || iN < 0 ? [] : ancianas.filter(
-		(c) => novels.has(c[iU]) && c[iN] && c[iN] !== novels.get(c[iU]) && c[iN] !== calculats.get(c[iU])
+		(c) => c[iU] && novels.has(c[iU]) && c[iN] && c[iN] !== novels.get(c[iU]) && c[iN] !== calculats.get(c[iU])
 	);
 	if (cambiats.length) {
 		const copia = path.join(REVISION, 'noms-a-validar.anterior.csv');
