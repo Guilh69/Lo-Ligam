@@ -78,7 +78,7 @@ téléchargées vont dans `SIG/brut/` (ignoré par Git, refait par les scripts).
 |---|---|---|
 | Communes | `node SIG/cadena/comunas.mjs` (appelle `comunas.py` ; `--sens-noms-osm` si Overpass est saturé) | `app/static/data/comunas/<dep>.json` et `index.json` ; à valider : `SIG/comunas/noms-a-validar.csv` |
 | Communes de deux langues | `node SIG/cadena/comunas-mixtas.mjs` (relancé à la fin de `comunas.mjs` et `comunas-lengas.mjs`) : jointure du point de chaque commune avec les zones de transition des langues (`<lenga>.json`, `transicio`, `entre`) | propriété `lg` dans `app/static/data/comunas/*.json` (fiche de la commune : Bayonne en basque, occitan et français) |
-| Calandretas | `node SIG/cadena/calandretas.mjs` (annuaire de l'éducation) | `app/static/data/calandretas.geojson` ; manquantes : `SIG/calandretas/escolas-mancantas.md` |
+| Calandretas | `node SIG/cadena/calandretas.mjs` (annuaire de l'éducation, plus les écoles sans code de `SIG/calandretas/escolas-sens-uai.csv`) | `app/static/data/calandretas.geojson` ; état : `SIG/calandretas/etat-2026-10.md` |
 | Provinces de 1789 | `python-qgis.bat SIG/cadena/provincias.py` | `app/static/data/provincias-1789.json` ; table : `SIG/provincias/taula-bailliages.csv` |
 | Pays traditionnels (juridictions de 1789) | `python-qgis.bat SIG/cadena/paises.py` (se sert de `provincias.py` ; noms occitans pris dans sa propre table, `noms-oc-jaces.mjs` n'y touche pas) | `app/static/data/paises-1789.json` ; table : `SIG/paises/taula-paises.csv` ; sources et doutes : `SIG/paises/FONTS.md` |
 | Parcs | `node SIG/cadena/parcs.mjs` (appelle `parcs.py`) | `app/static/data/parcs.json` |

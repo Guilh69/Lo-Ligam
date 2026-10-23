@@ -13,6 +13,11 @@
 // 4. ecrit le GeoJSON (nom occitan tire du nom officiel, sans le prefixe administratif francais)
 //    et la liste de controle des noms SIG/calandretas/noms-a-validar.csv.
 //
+// Ecoles sans code UAI (seconds sites, ecole transferee) : SIG/calandretas/escolas-sens-uai.csv,
+// une ligne par ecole (adresse publiee par l'ecole ou sa mairie, position du geocodage IGN
+// Geoplateforme, Licence Ouverte ; ni OSM ni la carte de la Confederacion). Elles sont ajoutees
+// telles quelles a la couche ; leur nom se corrige directement dans ce fichier.
+//
 // Noms valides par Romain : s'il existe un fichier SIG/calandretas/noms-validats.csv
 // (separateur ;, premiere ligne avec les colonnes uai et nom, ou bien une copie corrigee
 // de noms-a-validar.csv dont on lit la colonne nom_retengut), ses noms remplacent les noms calcules.
@@ -298,8 +303,39 @@ for (const c of [...CONEGUTS].sort()) {
 	linhasCsv.push([c, oficial, nom, entitats.at(-1).properties.comuna, nota.join(', ')]);
 }
 
+// ---------- 5 bis. Ecoles sans code UAI ----------
+const sensFic = path.join(REVISION, 'escolas-sens-uai.csv');
+let sensUai = 0;
+if (fs.existsSync(sensFic)) {
+	const [cap = [], ...linhas] = legirCsv(sensFic);
+	for (const c of linhas) {
+		const v = (k) => (cap.indexOf(k) >= 0 ? c[cap.indexOf(k)] || '' : '');
+		const coords = [Number(v('lon')), Number(v('lat'))].map(r5);
+		if (!v('nom') || !coords.every(Number.isFinite)) { avisar(`${path.basename(sensFic)} : ligne « ${v('id')} » incomplète, ignorée`); continue; }
+		if (!dinsDomeni(coords)) avisar(`${v('id')} (${v('comuna')}) est hors du domaine de la langue`);
+		const tel = v('telefon').replace(/\s/g, ''), corr = v('corriel').trim(), web = v('ligam').trim();
+		entitats.push({
+			type: 'Feature',
+			geometry: { type: 'Point', coordinates: coords },
+			properties: {
+				uai: null,
+				mena: v('mena') || 'escòla',
+				nom: v('nom').replace(/\s+/g, ' ').trim(),
+				nom_oficial: null,
+				comuna: v('comuna'),
+				ligam: /^https:\/\//i.test(web) ? web : null,
+				telefon: /^0\d{9}$/.test(tel) ? tel.replace(/(\d\d)(?=\d)/g, '$1 ') : null,
+				corrièl: /^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(corr) ? corr.toLowerCase() : null
+			}
+		});
+		linhasCsv.push(['', '', v('nom'), v('comuna'), [`école sans code UAI (${v('id')}), nom à corriger dans escolas-sens-uai.csv`, v('posicion') !== 'adresse' ? `position : ${v('posicion')}` : ''].filter(Boolean).join(', ')]);
+		sensUai++;
+	}
+}
+const fontsTot = sensUai ? `${fonts} ; ${sensUai} écoles hors annuaire : adresses des écoles, géocodage IGN (Licence Ouverte)` : fonts;
+
 const json =
-	'{"type":"FeatureCollection","font":' + JSON.stringify(fonts) + ',"features":[\n' +
+	'{"type":"FeatureCollection","font":' + JSON.stringify(fontsTot) + ',"features":[\n' +
 	entitats.map((e) => JSON.stringify(e)).join(',\n') + '\n]}\n';
 fs.writeFileSync(SORTIDA, json);
 
@@ -329,6 +365,6 @@ fs.writeFileSync(
 const compte = (k) => entitats.filter((e) => e.properties.mena === k).length;
 console.log(
 	`${entitats.length} établissements écrits (${compte('escòla')} écoles, ${compte('collègi')} collèges, ${compte('licèu')} lycée) ` +
-	`dans ${path.relative(path.resolve(DIR, '../..'), SORTIDA)}, ${(Buffer.byteLength(json) / 1024).toFixed(1)} Ko. Jeu du ${dataJoc}.`
+	`dont ${sensUai} sans code UAI, dans ${path.relative(path.resolve(DIR, '../..'), SORTIDA)}, ${(Buffer.byteLength(json) / 1024).toFixed(1)} Ko. Jeu du ${dataJoc}.`
 );
 if (avis.length) console.log(`${avis.length} avertissement(s), voir plus haut.`);

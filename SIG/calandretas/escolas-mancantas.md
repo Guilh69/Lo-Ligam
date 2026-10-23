@@ -49,3 +49,7 @@ Mise à jour du 2026-10-23 (`etat-2026-10.md`) : l’Esquiròl de Saint-Céré a
 Drin a drin a quitté Espoey pour Montaner à la rentrée 2026 (son ancien code 0642188F n’est plus dans
 l’annuaire). Les 7 autres n’ont aucun code dans les effectifs du ministère : sans doute des sites
 rattachés à l’école principale de leur ville. Il reste donc 8 écoles à ajouter, 53 + 8 = 61.
+
+Ajoutées le 2026-10-23 : les 8 écoles sont dans la couche, à partir de `escolas-sens-uai.csv`
+(adresse publiée par l’école ou sa mairie, géocodage IGN, Licence Ouverte ; ni OSM ni la carte de la
+Confederacion). La couche reste sous Licence Ouverte.
