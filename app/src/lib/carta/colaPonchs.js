@@ -3,15 +3,24 @@
 // avec un cercle lumineux »). De luènh, las estelas de totas las jaces de
 // ponches son pintadas sus una sola tela (abans : dos mila objèctes de nòu
 // elements cadun dins la pagina) ; de prèp, sonque los ponches de la vista
-// venon de pastilhas. Quand una jaça s'aluca, un cercle lumenós part del mitan
-// de la vista e aluca cada ponch a son passatge ; quand s'escantís, l'onda los
-// amorça al meteis biais.
+// venon de pastilhas. Quand una jaça s'aluca, los ponches s'alucan l'un après
+// l'autre, coma una onda que partís d'un ponch e se difusa sus tota
+// l'Occitània (retorn de Romain : pas de cercle, « les points s'illuminent
+// comme une vague les uns après les autres ») ; un pauc d'azard dins lo
+// moment de cadun fa viure la difusion. L'escantiment seguís la meteissa onda.
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 
-// lo temps que l'onda met per traversar la vista (s), e lo de l'aluc d'un ponch
-const DURADA = 1.5,
-	ALUC = 0.45;
+// lo temps que l'onda met per traversar la vista (s), l'azard de cada ponch
+// (s), e la durada de son aluc (s)
+const DURADA = 1.9,
+	AZARD = 0.45,
+	ALUC = 0.9;
+// un azard estable per ponch (lo meteis a cada onda)
+const azard = (n) => {
+	const x = Math.sin(n * 12.9898) * 43758.5453;
+	return x - Math.floor(x);
+};
 
 // la mena d'un ponch, legida sus son icòna (ponch-plen, ponch-vuèg, ponch-pichon)
 function mena(m) {
@@ -138,11 +147,11 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 		},
 		// lo moment ont l'onda passa sus un ponch (s), e son retard per las
 		// pastilhas (CSS)
-		retard(g, ll) {
+		retard(g, ll, n = 0) {
 			const v = g._vagaA;
 			if (!v || !this._map) return 0;
 			const d = this._map.latLngToContainerPoint(ll).distanceTo(this._map.latLngToContainerPoint(v.centre));
-			return clamp(d / v.max, 0, 1.2) * DURADA;
+			return clamp(d / v.max, 0, 1.2) * DURADA + azard(n) * AZARD;
 		},
 
 		_animar() {
@@ -204,6 +213,25 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 			return sp;
 		},
 
+		// l'esclat d'un ponch qu'es alucat : un alo blanc-daurat
+		_esclat() {
+			if (this._spEsclat?.dpr === this._dpr) return this._spEsclat;
+			const dpr = this._dpr,
+				R = 16,
+				c = document.createElement('canvas');
+			c.width = c.height = Math.ceil(2 * R * dpr);
+			const x = c.getContext('2d');
+			x.scale(dpr, dpr);
+			const g = x.createRadialGradient(R, R, 0, R, R, R);
+			g.addColorStop(0, 'rgba(255, 252, 240, 1)');
+			g.addColorStop(0.12, 'rgba(255, 240, 200, 0.9)');
+			g.addColorStop(0.35, 'rgba(255, 215, 140, 0.35)');
+			g.addColorStop(1, 'rgba(255, 200, 120, 0)');
+			x.fillStyle = g;
+			x.fillRect(0, 0, 2 * R, 2 * R);
+			return (this._spEsclat = { c, R, dpr });
+		},
+
 		// torna true tant qu'una onda es en cors
 		_pintar() {
 			const x = this._cx,
@@ -215,62 +243,60 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 			const ara = performance.now() / 1000;
 			const luenh = map.getZoom() < zIconas();
 			let viu = false;
-			const ondas = new Set();
+			const FIN = DURADA * 1.2 + AZARD + ALUC;
+			const esclat = this._esclat();
+			const esclats = [];
 			for (const g of this._grops) {
 				const v = g._vagaA;
 				const dt = v ? ara - v.t0 : 99;
-				if (v && dt < DURADA * 1.25 + ALUC) {
-					viu = true;
-					ondas.add(v);
-				} else if (g._estat === 'va') continue;
+				const enOnda = v && dt < FIN;
+				if (enOnda) viu = true;
+				else if (g._estat === 'va') continue;
 				if (!luenh) continue;
 				const color = this._color(g.cid);
-				const vc = v ? map.latLngToLayerPoint(v.centre).subtract(this._min) : null;
+				const vc = enOnda ? map.latLngToLayerPoint(v.centre).subtract(this._min) : null;
 				for (const q of g.punts()) {
 					if (q.m === 'pichon' || q.x === undefined) continue;
 					if (q.x < -20 || q.y < -20 || q.x > this._W + 20 || q.y > this._H + 20) continue;
 					let a = 1,
-						esc = 1;
-					if (vc && dt < DURADA * 1.25 + ALUC) {
-						const tq = clamp(Math.hypot(q.x - vc.x, q.y - vc.y) / v.max, 0, 1.2) * DURADA;
+						esc = 1,
+						e = 0;
+					if (vc) {
+						q.az ??= azard(q.n);
+						const tq = clamp(Math.hypot(q.x - vc.x, q.y - vc.y) / v.max, 0, 1.2) * DURADA + q.az * AZARD;
 						const u = (dt - tq) / ALUC;
 						if (v.dir > 0) {
 							if (u < 0) continue;
-							a = clamp(u * 2);
-							// l'aluc : l'estela s'agrandís e lusís al passatge de l'onda
-							esc = 1 + 1.3 * Math.exp(-4 * clamp(u, 0, 3));
+							// l'aluc : una belugueta que naís, s'espandís e se pausa
+							const k = clamp(u);
+							a = clamp(u * 6);
+							esc = 0.35 + 0.65 * clamp(u * 4) + 0.55 * Math.sin(Math.PI * clamp(u * 1.6)) * (1 - k);
+							e = Math.sin(Math.PI * clamp(u * 1.3)) * (1 - 0.4 * k);
 						} else {
 							if (u > 1) continue;
-							a = 1 - clamp(u);
-							esc = 1 + 0.6 * clamp(u);
+							// l'escantiment : un darrièr lusor, puèi l'estela s'amorça
+							a = 1 - clamp((u - 0.15) / 0.85);
+							esc = 1 + 0.35 * Math.sin(Math.PI * clamp(u * 2.5)) - 0.5 * clamp(u);
+							e = 0.5 * Math.sin(Math.PI * clamp(u * 2.5));
 						}
 					}
 					const sp = this._sprite(color, q.m);
 					const r = sp.R * esc;
 					x.globalAlpha = a;
 					x.drawImage(sp.c, q.x - r, q.y - r, 2 * r, 2 * r);
+					if (e > 0.02) esclats.push(q.x, q.y, e);
 				}
 			}
-			x.globalAlpha = 1;
-			// lo cercle lumenós de cada onda
-			for (const v of ondas) {
-				const dt = ara - v.t0;
-				const q = clamp(dt / DURADA, 0, 1.25);
-				const R = q * v.max * 1.05;
-				const a = (v.dir > 0 ? 0.55 : 0.3) * Math.pow(clamp(1 - q / 1.25), 0.7);
-				if (R < 2 || a <= 0.01) continue;
-				const c = map.latLngToLayerPoint(v.centre).subtract(this._min);
-				const col = this._color('cercles');
-				const gr = x.createRadialGradient(c.x, c.y, Math.max(0, R - 38), c.x, c.y, R + 6);
-				gr.addColorStop(0, 'transparent');
-				gr.addColorStop(0.75, `color-mix(in srgb, ${col} ${Math.round(a * 100)}%, transparent)`);
-				gr.addColorStop(0.9, `color-mix(in srgb, white ${Math.round(a * 60)}%, transparent)`);
-				gr.addColorStop(1, 'transparent');
-				x.fillStyle = gr;
-				x.beginPath();
-				x.arc(c.x, c.y, R + 6, 0, 2 * Math.PI);
-				x.fill();
+			// los esclats, per dessús : la lutz de l'onda que passa (en « screen » :
+			// ont los ponches son espesses, la lutz se pòt pas cremar en blanc)
+			x.globalCompositeOperation = 'screen';
+			for (let i = 0; i < esclats.length; i += 3) {
+				const r = esclat.R * (0.45 + 0.45 * esclats[i + 2]);
+				x.globalAlpha = 0.6 * esclats[i + 2];
+				x.drawImage(esclat.c, esclats[i] - r, esclats[i + 1] - r, 2 * r, 2 * r);
 			}
+			x.globalCompositeOperation = 'source-over';
+			x.globalAlpha = 1;
 			return viu;
 		},
 
@@ -322,7 +348,7 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 		punts() {
 			if (!this._punts) {
 				this._punts = [];
-				this.eachLayer((m) => this._punts.push({ ll: m.getLatLng(), marca: m, m: mena(m) }));
+				this.eachLayer((m) => this._punts.push({ ll: m.getLatLng(), marca: m, m: mena(m), n: L.stamp(m) }));
 			}
 			return this._punts;
 		},
@@ -350,7 +376,7 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 				if (vòl && !i) {
 					map.addLayer(m);
 					// a l'aluc de la jaça, la pastilha espelís al passatge de l'onda
-					if (vaga === true && m._icon && !calm()) m._icon.style.setProperty('--retard', Math.round(tela.retard(this, m.getLatLng()) * 1000) + 'ms');
+					if (vaga === true && m._icon && !calm()) m._icon.style.setProperty('--retard', Math.round(tela.retard(this, m.getLatLng(), L.stamp(m)) * 1000) + 'ms');
 				} else if (!vòl && i) map.removeLayer(m);
 			});
 		},
@@ -359,7 +385,7 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 			tela.amagar(this);
 			this.eachLayer((m) => {
 				if (!m._icon) return;
-				m._icon.style.setProperty('--retard', Math.round(tela.retard(this, m.getLatLng()) * 2000) + 'ms');
+				m._icon.style.setProperty('--retard', Math.round(tela.retard(this, m.getLatLng(), L.stamp(m)) * 2000) + 'ms');
 				m._icon.classList.add('ponch-se-va');
 			});
 		},
@@ -382,6 +408,6 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 		tela,
 		grop: (marcas, cid) => new Grop(marcas, cid),
 		// la durada d'una onda d'escantiment (ms), per levar la jaça après
-		DURADA_MS: Math.round((DURADA * 1.25 + ALUC) * 1000)
+		DURADA_MS: Math.round((DURADA * 1.2 + AZARD + ALUC) * 1000)
 	};
 }
