@@ -2149,6 +2149,7 @@
 		colaDonadas?.setTema(c, d);
 		for (const cl of Object.values(colasLengas)) cl.setTema(c, d);
 		colaTematica?.setTema(c);
+		ponchs?.tela.repintar();
 	});
 	$effect(() => {
 		const l = lang;

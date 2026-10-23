@@ -132,6 +132,11 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 			this._grops.delete(g);
 			this._pintar();
 		},
+		// lo tèma o lo daltonisme an cambiat : las colors (--ponch) se tòrnan
+		// legir a l'imatge seguent, un còp las variablas CSS mesas
+		repintar() {
+			requestAnimationFrame(() => this._pintar());
+		},
 		// l'onda : partís del mitan de la vista ; las jaces alucadas al meteis
 		// moment (la lectura Reviscolada n'aluca cinc) partejan la meteissa onda
 		_vaga(g, dir) {
