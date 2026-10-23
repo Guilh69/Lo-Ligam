@@ -101,6 +101,33 @@ export function sonClic(fòrça = 1) {
 	}
 }
 
+// Los primièrs passes acabats (Romain, 2026-10-23 : « une sorte d'animation
+// validée, c'est tout bon, on est prêt ») : tres nòtas doças que montan (un
+// acòrd major), sens aguts, fòrça bassas, en mai de l'animacion.
+export function sonAcabat() {
+	if (!sonsActius()) return;
+	try {
+		ctx ??= new (window.AudioContext || window.webkitAudioContext)();
+		if (ctx.state === 'suspended') ctx.resume();
+		const t0 = ctx.currentTime + 0.02;
+		[523.25, 659.25, 783.99].forEach((f, i) => {
+			const t = t0 + i * 0.12,
+				o = ctx.createOscillator(),
+				g = ctx.createGain();
+			o.type = 'sine';
+			o.frequency.value = f;
+			g.gain.setValueAtTime(0.0001, t);
+			g.gain.exponentialRampToValueAtTime(0.07, t + 0.02);
+			g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+			o.connect(g).connect(ctx.destination);
+			o.start(t);
+			o.stop(t + 0.95);
+		});
+	} catch {
+		/* sens son, jamai blocant */
+	}
+}
+
 // Los sons de l'entrada en scèna (demanda de Romain), menats pel dessenh
 // meteis (pas per un relòtge fixat a l'avança : lo primièr ensag se
 // descalava de l'animacion) :

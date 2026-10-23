@@ -13,6 +13,7 @@
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { estatCarta, ecranCarta } from '$lib/carta/estatCarta.svelte.js';
+	import { sonAcabat } from '$lib/carta/sons.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { cargarColas } from '$lib/carta/colasBasa.js';
 	import { esAdmin } from '$lib/adminStore';
@@ -171,7 +172,25 @@
 			fach: (b) => baseLayer !== b
 		}
 	];
-	const FIN = { oc: 'Bon viatge sus la carta !', fr: 'Bon voyage sur la carte !' };
+	const FIN = {
+		titol: { oc: 'Tot es a punt !', fr: 'Tout est prêt !' },
+		sota: { oc: 'Bon viatge sus la carta.', fr: 'Bon voyage sur la carte.' }
+	};
+	// Le parcours fini : la carte revient à son état d'arrivée (Romain, 2026-10-23),
+	// pendant que l'animation de fin se joue ; un petit accord, si les sons sont là
+	function tornarAlInici() {
+		sonAcabat();
+		// (même règle qu'à l'arrivée : les couches du catalogue suivent sa vue
+		// d'arrivée, celles ajoutées dans l'admin leur colonne « visibla »)
+		for (const f of familhas) for (const j of f.jaces) layerVisibility[j.id] = j.id in DEFAUT_CATALOGUE ? DEFAUT_CATALOGUE[j.id] : !!j.defaut;
+		causits = [];
+		baseLayer = 'estelas';
+		colors = {};
+		estatCarta.activa = null;
+		estatCarta.pila = [];
+		// (après la mise à jour des couches : la vue d'ensemble a le dernier mot)
+		tick().then(() => dispatchEvent(new CustomEvent('carta-inici')));
+	}
 	const NÒTA = { oc: 'Per tornar veire los primièrs passes : aicí.', fr: 'Pour revoir les premiers pas : ici.', cibla: '.info-trigger' };
 	let guida = $state(null);
 	let tx = $derived(t[lang]);
@@ -207,9 +226,8 @@
 	// /admin/carta) pòt renomenar una jaça o n'apondre ; se respond pas
 	// (projècte gratuit en pausa), lo catalògue s'aficha parièr.
 	let familhas = $state(fusionarCatalogue([]));
-	let layerVisibility = $state(
-		Object.fromEntries(CATALOGUE.flatMap((f) => f.jaces.map((j) => [j.id, !!j.defaut])))
-	);
+	const DEFAUT_CATALOGUE = Object.fromEntries(CATALOGUE.flatMap((f) => f.jaces.map((j) => [j.id, !!j.defaut])));
+	let layerVisibility = $state({ ...DEFAUT_CATALOGUE });
 
 	// Lo bas real del capçal (una o doas linhas segon la largor) : la recèrca
 	// e lo boton d'informacion se plaçan just dejós (retorn de Romain : la
@@ -368,7 +386,7 @@
 		<!-- les premiers pas, dès la carte prête (l'essai se lit après le montage :
 		     le guide repart alors sans mémoire) -->
 		{#key ensagGuida}
-			<Guida bind:this={guida} etapas={ETAPAS} clau="lo-ligam-carta-primiers-passes" fin={FIN} nota={NÒTA} ensag={ensagGuida} {lang} lest={estatCarta.prèsta} />
+			<Guida bind:this={guida} etapas={ETAPAS} clau="lo-ligam-carta-primiers-passes" fin={FIN} onAcabat={tornarAlInici} nota={NÒTA} ensag={ensagGuida} {lang} lest={estatCarta.prèsta} />
 		{/key}
 		{#if layerVisibility.locutors}<LegendaLocutors {lang} clar={ambianca.clar} dalt={ambianca.dalt} onNaut={(h) => (nautLegenda = h)} />{/if}
 	</main>

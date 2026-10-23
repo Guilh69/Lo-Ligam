@@ -495,6 +495,11 @@
 		addEventListener('carta-fons', dobrirFons);
 		return () => removeEventListener('carta-fons', dobrirFons);
 	});
+	// la carte revient à son état d'arrivée (fin des premiers pas) : panneau fermé
+	$effect(() => {
+		addEventListener('carta-inici', sortirBanda);
+		return () => removeEventListener('carta-inici', sortirBanda);
+	});
 	$effect(() => {
 		botons.fons?.setAttribute?.('aria-expanded', String(dobert === 'fons'));
 	});

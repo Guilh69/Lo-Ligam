@@ -1342,6 +1342,21 @@
 		addEventListener('carta-levar-causida', levar);
 		return () => removeEventListener('carta-levar-causida', levar);
 	});
+	// L'état d'arrivée (fin des premiers pas, Romain 2026-10-23 : « que ça ramène
+	// à l'état initial de la carte ») : la page remet les couches ; ici, plus de
+	// sélection ni de fiche, et la vue de toute l'Occitanie
+	$effect(() => {
+		const inici = () => {
+			map?.closePopup();
+			colaEstelas?.levarTerritori();
+			colaTematica?.levarCausida();
+			if (fichaComuna) causirNomComuna(null);
+			estatCarta.causida = null;
+			anarALaVistaOccitana(null);
+		};
+		addEventListener('carta-inici', inici);
+		return () => removeEventListener('carta-inici', inici);
+	});
 	// (los noms se cargan quand cal ; lo motor se torna pintar)
 	function majNomsComunas() {
 		if (!map) return;

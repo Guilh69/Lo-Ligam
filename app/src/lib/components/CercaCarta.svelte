@@ -75,6 +75,12 @@
 
 	let q = $state('');
 	let dobèrt = $state(false);
+	// la carte revient à son état d'arrivée (fin des premiers pas) : recherche vidée
+	$effect(() => {
+		const inici = () => ((q = ''), (dobèrt = false));
+		addEventListener('carta-inici', inici);
+		return () => removeEventListener('carta-inici', inici);
+	});
 	let actiu = $state(0);
 	let resultats = $derived(cercar(q));
 

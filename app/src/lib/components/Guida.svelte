@@ -23,8 +23,12 @@
 	// relançable (lançar) ; sans mémoire en essai (?ensag=guida). Sur téléphone,
 	// en haut sous la recherche (les panneaux, l'étiquette du territoire et la
 	// fiche de ville s'ouvrent en bas), seule l'étape ouverte se montre, son
-	// titre dans l'en-tête ; elle se replie d'un toucher. Occitan nouveau : à
-	// valider par Romain.
+	// titre dans l'en-tête ; elle se replie d'un toucher. À la fin (Romain : « une
+	// sorte d'animation validée, c'est tout bon, on est prêt », et la carte revient
+	// à son état initial) : un cercle d'or se trace, un point par étape s'allume,
+	// une coche, « Tot es a punt ! » ; la page remet tout en place (onAcabat).
+	// Tout passé sans rien faire : rien à fêter, le guide se ferme. Occitan
+	// nouveau : à valider par Romain.
 	import { onMount, untrack } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import Icona from './Icona.svelte';
@@ -32,7 +36,8 @@
 	let {
 		etapas = [],
 		clau, // la clé de mémoire (localStorage)
-		fin = { oc: '', fr: '' }, // le mot de la fin
+		fin = { titol: { oc: '', fr: '' }, sota: { oc: '', fr: '' } }, // le mot de la fin
+		onAcabat = () => {}, // le parcours est fini : la page revient à son état initial
 		nota = null, // { oc, fr, cibla } : où revoir les premiers pas
 		lang = 'oc',
 		ensag = false,
@@ -167,10 +172,11 @@
 		seguent();
 	}
 	function acabar() {
-		acabat = true;
-		plegada = false;
 		memorizar();
-		tSeguent = setTimeout(() => (actiu = false), 3400);
+		if (!fachas.length) return tampar();
+		acabat = true;
+		onAcabat();
+		tSeguent = setTimeout(() => (actiu = false), 3600);
 	}
 	function dobrir(i) {
 		pas = i;
@@ -211,6 +217,24 @@
 		></div>
 	{/if}
 
+	{#if acabat}
+		<!-- la fin : le cercle se trace, un point par étape s'allume, la coche -->
+		<div class="guida guida-fèsta" role="status" aria-live="polite">
+			<div class="fèsta-cor">
+				<svg viewBox="0 0 140 140" aria-hidden="true">
+					<circle class="fèsta-lum" cx="70" cy="70" r="46" />
+					<circle class="fèsta-anèl" cx="70" cy="70" r="46" pathLength="1" />
+					{#each etapas as _, i (i)}
+						{@const a = (i / etapas.length) * Math.PI * 2 - Math.PI / 2}
+						<circle class="fèsta-punt" cx={70 + 60 * Math.cos(a)} cy={70 + 60 * Math.sin(a)} r="4" style:--i={i} />
+					{/each}
+					<path class="fèsta-coca" d="M47 71 L63 86 L94 54" pathLength="1" />
+				</svg>
+				<p class="fèsta-titol">{dire(fin.titol)}</p>
+				<p class="fèsta-sota">{dire(fin.sota)}</p>
+			</div>
+		</div>
+	{:else}
 	<section class="guida guida-lista" class:plegada aria-label={tx.titol}>
 		<header>
 			<button type="button" class="guida-dobrir" aria-expanded={!plegada} aria-label={plegada ? tx.desplegar : tx.plegar} onclick={() => (plegada = !plegada)}>
@@ -223,9 +247,7 @@
 		</header>
 		<div class="guida-barra" aria-hidden="true"><i style:width="{(fachas.length / Math.max(1, etapas.length)) * 100}%"></i></div>
 
-		{#if acabat}
-			<p class="guida-fin">{dire(fin)}</p>
-		{:else if !plegada}
+		{#if !plegada}
 			<ol>
 				{#each etapas as e, i (i)}
 					<li class:fach={fachas.includes(i)} class:passada={passadas.includes(i)} class:dobèrta={i === pas}>
@@ -249,6 +271,7 @@
 			{/if}
 		{/if}
 	</section>
+	{/if}
 {/if}
 
 <style>
@@ -308,7 +331,21 @@
 	.guida-etapa p { margin: 0.1rem 0 0.2rem; font-size: 0.86rem; line-height: 1.45; color: var(--t-tinta); }
 	.guida-passar { min-height: 32px; padding: 0; border: 0; background: none; font: inherit; font-size: 0.8rem; color: var(--t-tinta-2); cursor: pointer; text-decoration: underline; text-underline-offset: 0.2em; }
 	.guida-nòta { display: block; margin: 0.35rem 0 0; padding: 0.3rem; border: 0; background: none; font: inherit; font-size: 0.78rem; color: var(--t-tinta-2); text-align: left; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 0.2em; }
-	.guida-fin { margin: 0.5rem 0 0.3rem; font-family: var(--font-heading); font-size: 1.3rem; line-height: 1.2; animation: guida-venir 0.45s cubic-bezier(0.19, 1, 0.22, 1) both; }
+	/* la fin : au milieu de l'écran, sans bloquer (la carte revient derrière) */
+	.guida-fèsta { inset: 0; display: grid; place-items: center; pointer-events: none; }
+	.fèsta-cor { display: flex; flex-direction: column; align-items: center; padding: 1.4rem 2.2rem 1.5rem; border-radius: 24px; background: var(--t-veire-fort); backdrop-filter: blur(12px); box-shadow: 0 1px 0 var(--t-linha) inset, 0 24px 60px -24px rgba(0, 0, 0, 0.7); text-align: center; animation: fèsta-venir 0.5s cubic-bezier(0.19, 1, 0.22, 1) both, fèsta-partir 0.6s 2.9s ease-in forwards; }
+	.fèsta-cor svg { width: 132px; height: 132px; overflow: visible; }
+	.fèsta-anèl { fill: none; stroke: var(--t-aur); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transform: rotate(-90deg); transform-origin: 70px 70px; animation: fèsta-traçar 0.8s 0.15s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+	.fèsta-punt { fill: var(--t-aur); transform-box: fill-box; transform-origin: center; scale: 0; animation: fèsta-punt 0.4s calc(0.25s + var(--i) * 0.08s) cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+	.fèsta-coca { fill: none; stroke: var(--t-aur); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: fèsta-traçar 0.45s 0.95s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+	.fèsta-lum { fill: color-mix(in srgb, var(--t-aur) 35%, transparent); opacity: 0; transform-origin: 70px 70px; animation: fèsta-lum 1.2s 1.25s ease-out forwards; }
+	.fèsta-titol { margin: 0.7rem 0 0.15rem; font-family: var(--font-heading); font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.05; color: var(--t-tinta); animation: guida-venir 0.5s 1.1s cubic-bezier(0.19, 1, 0.22, 1) both; }
+	.fèsta-sota { margin: 0; font-size: 1rem; color: var(--t-tinta-2); animation: guida-venir 0.5s 1.25s cubic-bezier(0.19, 1, 0.22, 1) both; }
+	@keyframes fèsta-venir { from { opacity: 0; scale: 0.92; } }
+	@keyframes fèsta-partir { to { opacity: 0; scale: 0.97; } }
+	@keyframes fèsta-traçar { to { stroke-dashoffset: 0; } }
+	@keyframes fèsta-punt { to { scale: 1; } }
+	@keyframes fèsta-lum { 0% { opacity: 0.9; scale: 1; } 100% { opacity: 0; scale: 1.7; } }
 
 	/* repliée : une ligne, le titre de l'étape et le compte */
 	.guida-lista.plegada { width: auto; max-width: min(300px, calc(100vw - 68px)); padding: 0.3rem 0.4rem 0.3rem 0.9rem; }
@@ -328,7 +365,10 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.guida-lista, .guida-halo, .guida-fin, .fach .guida-casa { animation: none; }
+		.guida-lista, .guida-halo, .fach .guida-casa, .fèsta-titol, .fèsta-sota, .fèsta-lum { animation: none; }
+		.fèsta-anèl, .fèsta-coca { animation: none; stroke-dashoffset: 0; }
+		.fèsta-punt { animation: none; scale: 1; }
+		.fèsta-cor { animation: fèsta-partir 0.6s 2.9s ease-in forwards; }
 		.guida-halo, .guida-barra i { transition: none; }
 	}
 </style>
