@@ -98,17 +98,18 @@
 			// pas grave : le choix vaut pour la visite
 		}
 	}
-	// Une couleur pour ce qui se clique (effet d'isolement, corpus-design §2.4,
-	// 2026-10-23) : l'or (l'ocre en clair) reste pour mettre en valeur (Romain :
-	// « ça permet de bien mettre en valeur certains trucs ») ; les boutons et
-	// les liens prennent leur propre couleur. À comparer sur /?ensag=accion ;
-	// sans le paramètre, l'actuelle. La couleur est posée sur <html> pour que
-	// le bouton « Reservar un cors » de la barre la prenne aussi.
+	// Ce qui se clique et ce qui est mis en valeur (effet d'isolement,
+	// corpus-design §2.4, 2026-10-23) : Romain hésite entre deux règles de la
+	// planche https://claude.ai/artifact/M1DRchgv6cnutGiu2etmY4. B : les
+	// boutons sont des tuiles du rouge du logo, l'or met en valeur ; C : tout
+	// en or, le bouton plein ou le lien souligné agit, l'or écrit seul met en
+	// valeur. À comparer sur /?ensag=accion ; sans le paramètre, l'actuelle.
+	// La règle est posée sur <html> pour que le bouton « Reservar un cors » de
+	// la barre la suive aussi.
 	const FORMAS_ACCION = [
 		['actual', 'Actuelle'],
-		['brica', 'Brique'],
-		['blau', 'Bleu'],
-		['crema', 'Crème']
+		['b', 'B · Tuile'],
+		['c', 'C · Tout en or']
 	];
 	const CLAU_ENSAG_ACCION = 'lo-ligam-ensag-accion';
 	let formaAccion = $state('actual');
@@ -711,6 +712,7 @@
 		background: transparent;
 		color: #222222;
 		font: inherit;
+		white-space: nowrap;
 		cursor: pointer;
 	}
 	.ensag-eros button[aria-pressed='true'] {

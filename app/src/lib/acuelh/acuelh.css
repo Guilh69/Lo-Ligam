@@ -340,33 +340,31 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 .acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon::before { height: 2px; background: var(--crema); transform: none; }
 .acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon b { font-size: clamp(1.6rem, 2.4vw, 2.2rem); line-height: 1; color: var(--terra); -webkit-text-stroke: 0; }
 .acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon-somari { display: block; margin-bottom: 4rem; font-size: 1rem; line-height: 1.6; color: var(--crema-2); }
-/* Essai d'une couleur pour ce qui se clique (/?ensag=accion, 2026-10-23, corpus-design
-   §2.4) : l'or (l'ocre en clair) reste pour mettre en valeur ; boutons, liens et survols
-   prennent la couleur d'action, posée sur <html> par la page pour que le bouton
-   « Reservar un cors » de la barre la suive. Brique : le terracotta de la marque (bleu
-   avec les couleurs adaptées au daltonisme) ; Bleu : le bleu des couleurs adaptées
-   (#6fb1ff en sombre, #1f5f8f en clair) ; Crème : neutre, l'encre en clair. */
-:root[data-accion='brica'] { --accion: var(--t-terra-viu); }
-:root[data-accion='blau'] { --accion: #6fb1ff; }
-:root[data-tema='clar'][data-accion='blau'] { --accion: #1f5f8f; }
-:root[data-accion='crema'] { --accion: var(--t-tinta); }
-:root[data-accion] { --accion-tinta: var(--t-fons); --accion-viu: color-mix(in srgb, var(--accion) 78%, var(--t-tinta)); }
-:root[data-accion='crema'] { --accion-viu: color-mix(in srgb, var(--t-tinta) 80%, var(--t-fons)); }
-:root[data-accion] .reservar { background: var(--accion); color: var(--accion-tinta); }
-:root[data-accion] .menu-boton:is(:hover, [aria-expanded='true']) { border-color: var(--accion); }
-:root[data-accion] .acuelh .boton { background: var(--accion); color: var(--accion-tinta); }
+/* Essai B / C (/?ensag=accion, 2026-10-23, corpus-design §2.4, planche des trois règles) :
+   la règle est posée sur <html> par la page, pour que le bouton « Reservar un cors » de la
+   barre la suive. B : les boutons sont des tuiles du rouge du logo (#b53d17, fixe, comme le
+   carré du logo), texte crème ; l'or et l'ocre mettent en valeur comme aujourd'hui.
+   C : tout en or ; le bouton plein ou le lien souligné agit, l'or écrit seul met en valeur ;
+   en clair, aplat or sous un texte foncé et soulignement ocre (l'or ne se lit pas sur le
+   plâtre). Dans les deux, un lien d'action est souligné, jamais seulement coloré. */
+:root[data-accion='b'] { --accion: #b53d17; --accion-tinta: #fbf1e1; --accion-viu: color-mix(in srgb, #b53d17 82%, #000); --accion-trait: #b53d17; }
+:root[data-accion='c'] { --accion: #f6b73c; --accion-tinta: #22100a; --accion-viu: #ffd98a; --accion-trait: #f6b73c; }
+:root[data-tema='clar'][data-accion='c'] { --accion-trait: #9c5611; --accion-anel: rgba(42, 26, 16, 0.3); }
+:root[data-accion] .reservar { background: var(--accion); color: var(--accion-tinta); box-shadow: inset 0 0 0 1px var(--accion-anel, transparent); }
+:root[data-accion] .menu-boton:is(:hover, [aria-expanded='true']) { border-color: var(--accion-trait); }
+:root[data-accion] .acuelh .boton { background: var(--accion); color: var(--accion-tinta); box-shadow: inset 0 0 0 1px var(--accion-anel, transparent); }
 :root[data-accion] .acuelh .boton-emplenat { background: var(--accion-viu); }
-:root[data-accion] .acuelh .boton-traç { background: transparent; color: var(--accion); box-shadow: inset 0 0 0 1px var(--accion); }
+:root[data-accion] .acuelh .boton-traç { background: transparent; color: var(--crema); box-shadow: inset 0 0 0 2px var(--accion-trait); }
 :root[data-accion] .acuelh .boton-traç:is(:hover, :focus-visible) { color: var(--accion-tinta); }
-:root[data-accion] .acuelh .biai-ligam { color: var(--accion); }
-:root[data-accion] .acuelh .ligam-tèxt::after { height: 2px; background: var(--accion); }
-:root[data-accion] .acuelh .jalon-somari a { text-decoration-color: var(--accion); }
-:root[data-accion] .acuelh :is(.jalon-somari a, .pont a):is(:hover, :focus-visible) { color: var(--accion); }
-:root[data-accion] .acuelh :is(.pont a svg, .panel-items a svg) { color: var(--accion); }
+:root[data-accion] .acuelh .biai-ligam { color: var(--crema); text-decoration: underline; text-decoration-color: var(--accion-trait); text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+:root[data-accion] .acuelh :is(.biai-ligam svg, .pont a svg) { color: var(--accion-trait); }
+:root[data-accion] .acuelh .ligam-tèxt::after { height: 2px; background: var(--accion-trait); }
+:root[data-accion] .acuelh .jalon-somari a { text-decoration-color: var(--accion-trait); text-decoration-thickness: 2px; }
+:root[data-accion] .acuelh :is(.jalon-somari a, .pont a):is(:hover, :focus-visible) { color: var(--crema); text-decoration: underline; text-decoration-color: var(--accion-trait); text-decoration-thickness: 2px; text-underline-offset: 0.3em; }
 :root[data-accion] .acuelh .panel-items a::before { background: var(--accion); }
 :root[data-accion] .acuelh .panel-items a:hover, :root[data-accion] .acuelh .panel-items a:hover svg { color: var(--accion-tinta); }
-:root[data-accion] .acuelh .lengas-chips label:hover span { border-color: var(--accion); }
-:root[data-accion] .acuelh :focus-visible { outline-color: var(--accion); }
+:root[data-accion] .acuelh .lengas-chips label:hover span { border-color: var(--accion-trait); }
+:root[data-accion] .acuelh :focus-visible { outline-color: var(--accion-trait); }
 .acuelh .jalon-somari span { margin-inline: 0.6em; }
 .acuelh .jalon-somari a { color: var(--crema); text-decoration: underline; text-decoration-color: var(--crema-3); text-underline-offset: 0.25em; transition: color 0.3s, text-decoration-color 0.3s; }
 .acuelh .jalon-somari a:hover { color: var(--terra); text-decoration-color: currentColor; }
