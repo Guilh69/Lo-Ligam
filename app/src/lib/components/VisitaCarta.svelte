@@ -15,6 +15,7 @@
 	// essai. Occitan nouveau : à valider par Romain (mots vérifiés par l'API).
 	import { onMount } from 'svelte';
 	import Icona from './Icona.svelte';
+	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 
 	let { forma = $bindable('portas'), ensag = false, lang = 'oc', onPorta = () => {} } = $props();
 
@@ -100,17 +101,28 @@
 		}
 		let t = null;
 		const partir = () => {
-			if (t) return;
+			// (pas pendent lo cargament : la carta es pas encara aquí)
+			if (t || !estatCarta.prèsta) return;
 			t = setTimeout(() => (actiu = true), 1500);
 			for (const ev of ['pointerdown', 'wheel', 'keydown']) window.removeEventListener(ev, partir, true);
 		};
 		for (const ev of ['pointerdown', 'wheel', 'keydown']) window.addEventListener(ev, partir, true);
-		const tard = setTimeout(partir, 11000);
+		// l'entrada en scèna (≈ 9,5 s) se jòga d'abord, a comptar de la carta prèsta
+		let tard = null;
+		lançarTard = () => (tard ??= setTimeout(partir, 9500));
+		if (estatCarta.prèsta) lançarTard();
 		return () => {
+			lançarTard = null;
 			clearTimeout(tard);
 			if (t) clearTimeout(t);
 			for (const ev of ['pointerdown', 'wheel', 'keydown']) window.removeEventListener(ev, partir, true);
 		};
+	});
+
+	// la carta ven prèsta (l'ecran de cargament s'escafa) : lo comptador part
+	let lançarTard = null;
+	$effect(() => {
+		if (estatCarta.prèsta) lançarTard?.();
 	});
 
 	// Changer de forme pendant l'essai : on repart du début

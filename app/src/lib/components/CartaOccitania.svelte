@@ -1608,6 +1608,7 @@
 		// Supabase respond pas (projècte gratuit en pausa, ret copada), la carta
 		// demòra utilizabla ; las còlas de l'admin s'apondon quand arriban.
 		L = (await import('leaflet')).default;
+		estatCarta.cargament = 0.35;
 
 		// Zoom par quarts de niveau : la traversée des échelles est plus douce,
 		// et l'Occitanie entière tient juste dans la fenêtre à l'arrivée (même
@@ -1645,6 +1646,7 @@
 		}
 
 		setBaseLayer(baseLayer);
+		estatCarta.cargament = 0.55;
 		colaDonadas = crearColaDonadas(L, {
 			clar,
 			dalt,
@@ -1806,7 +1808,8 @@
 		// scèna va a la fin
 		const amagada = () => document.hidden && acabarIntro();
 		document.addEventListener('visibilitychange', amagada);
-		for (const ev of escotas) window.addEventListener(ev, acabarIntro, true);
+		// (los gèstes que copan l'entrada en scèna s'escotan quand comença, pas
+		// abans : un toquet pendent lo cargament fasiá tot aparéisser d'un còp)
 		quitarIntro = () => {
 			acabada = true;
 			sons?.copar();
@@ -1816,10 +1819,14 @@
 		Promise.race([
 			Promise.all([colaEstelas?.prèsta(), colaDonadas.prèsta()]),
 			new Promise((r) => setTimeout(r, 4000))
-		]).then(() =>
+		]).then(() => {
+			estatCarta.cargament = 1;
 			requestAnimationFrame(() =>
 				requestAnimationFrame(() => {
+					// la carta es prèsta : l'ecran de cargament s'escafa
+					estatCarta.prèsta = true;
 					if (acabada) return;
+					for (const ev of escotas) window.addEventListener(ev, acabarIntro, true);
 					const t0 = performance.now();
 					// los sons (gredon, pèiras, aiga), menats pel dessenh de la carta
 					// en estelas ; res se mens de movement es demandat
@@ -1830,8 +1837,8 @@
 						for (const ev of escotas) window.removeEventListener(ev, acabarIntro, true);
 					}, 10000);
 				})
-			)
-		);
+			);
+		});
 		// desbugatge (sonque en desvolopament) : la carta e sas còlas dins la consòla
 		if (import.meta.env.DEV) window.__carta = { map, colaDonadas, colasLengas, get colaCatalan() { return colasLengas.catalan; }, get colaEstelas() { return colaEstelas; }, get colaTematica() { return colaTematica; }, get motorNoms() { return motorNoms; } };
 		zoomDoç(L, map);
@@ -2454,6 +2461,9 @@
 		// (las boclas d'imatges s'arrèstan abans la carta : quitar la pagina
 		// daissava de boclas que pintavan una carta levada ; sul servidor, res)
 		if (typeof window === 'undefined') return;
+		// (en tornant sus la carta, l'ecran de cargament tòrna)
+		estatCarta.prèsta = false;
+		estatCarta.cargament = 0;
 		cancelAnimationFrame(degatRaf);
 		motorNoms?.levar();
 		map?.remove();

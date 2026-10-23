@@ -8,6 +8,7 @@
 	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
 	import RailJaces from '$lib/components/RailJaces.svelte';
 	import VisitaCarta from '$lib/components/VisitaCarta.svelte';
+	import CargamentCarta from '$lib/components/CargamentCarta.svelte';
 	import LecturaCarta from '$lib/components/LecturaCarta.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
@@ -209,6 +210,8 @@
 				causits = [];
 			}}
 		/>
+		<!-- l'écran de chargement, jusqu'à ce que la carte soit prête (lot 2) -->
+		{#if !estatCarta.prèsta}<CargamentCarta {lang} />{/if}
 
 		{#if showInfo}
 			<div class="info-card" transition:fly={{ y: -12, duration: 260, easing: quintOut }}>

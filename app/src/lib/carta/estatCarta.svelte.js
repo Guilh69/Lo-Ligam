@@ -11,7 +11,9 @@
 //   clic et au double clic sur la carte (null : l'ordre habituel des couches).
 // - causida : l'objet choisi d'un clic sur la carte ({ jaça, nom } ou null),
 //   rappelé sous sa couche dans la légende avec un ✕ (audit des clics, 2026-10-19).
-export const estatCarta = $state({ z: null, lat: null, apercebut: null, mòde: null, environament: [], activa: null, causida: null });
+// - cargament (0 a 1) e prèsta : l'ecran de cargament (CargamentCarta), que
+//   s'escafa quand la carta es prèsta (lot 2, 2026-10-23).
+export const estatCarta = $state({ z: null, lat: null, apercebut: null, mòde: null, environament: [], activa: null, causida: null, cargament: 0, prèsta: false });
 
 // Les couches dont on peut choisir un objet sur la carte (et leurs langues, LENGAS)
 export const SELECCIONABLAS = new Set(['vilas', 'regions', 'despartaments', 'comunas', 'dialectes', 'provincias', 'parcs']);
