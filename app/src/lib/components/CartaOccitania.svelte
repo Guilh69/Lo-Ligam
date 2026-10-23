@@ -342,7 +342,7 @@
 					onFicha: (v) => goto(v.ligam),
 					onPus: (p) => marcarPus(p),
 					zonasUI,
-					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp),
+					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp) || vesinaPren(lp),
 					activa,
 					onTerritori: dessenharTerritori,
 					// de luènh, un clic sus una vila i vòla : a l'arribada, sa comuna es
@@ -496,11 +496,22 @@
 	// départements et les villes (Romain, 2026-10-10) ; un département, une
 	// région ou une zone thématique sous le pointeur passent d'abord. Le clic fait
 	// alors son office et l'invitation s'affiche en bouton.
+	// (retorn de Romain, 2026-10-23 : « pourquoi ça sélectionne la région quand
+	// l'option découvrir les langues d'oïl est affichée ? ») : regions e
+	// despartaments prenon lo clic sonque se lor jaça es alucada ; si que non,
+	// l'invitacion afichada es per el
 	function clicPres(ll) {
 		if (survòlTem) return true;
 		if (map && map.getZoom() >= zDès(40, map.getCenter().lat) - 0.01) return true;
-		return !!(colaEstelas && map?.hasLayer(colaEstelas) && colaEstelas._territoriA?.(map.latLngToLayerPoint(ll)));
+		return !!(visibility.regions || visibility.despartaments);
 	}
+	// una lenga amagada jos lo ponch, que lo clic alucariá : los territòris (lo
+	// despartament o la region revelats al clic dins un vuèg) li cedisson
+	const vesinaPren = (lp) => {
+		if (!vesinas || !map) return false;
+		const ll = map.layerPointToLatLng(lp);
+		return !!vesinaA(ll) && !clicPres(ll);
+	};
 	// una lenga pas afichada : lo catalan, l'arpitan… decochats ; l'occitan, quand
 	// sos dialèctes e l'occitan unificat son levats (« Netejar la carta »)
 	const amagada = (k) => (k === 'occitan' ? !visibility.dialectes && !visibility.unificat : LENGAS[k] && !visibility[k]);
@@ -1734,6 +1745,9 @@
 		let tClic = -1e9,
 			tMov = -1e9;
 		map.on('click', () => (tClic = performance.now()));
+		// (lo contorn de las lengas vesinas, 12 Ko, cargat d'avança : al det, lo
+		// primièr tòc deu ja saber se una lenga es jos el)
+		cargarVesinas();
 		// las lengas vesinas : al survòl, l'invitacion ; al clic, la lenga s'aluca
 		// (al det, lo primièr tòc mòstra l'invitacion, que se tòca per alucar)
 		map.on('mousemove', (e) => {
