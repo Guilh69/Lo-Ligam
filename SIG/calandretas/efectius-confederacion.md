@@ -1,6 +1,6 @@
 # Effectifs annoncés par la Confederacion Calandreta
 
-**Relevé du 2026-10-23, à valider par Romain.** Chiffres recopiés tels que publiés, sommes recalculées. Tableaux : `efectius-confederacion-totals.csv` (ensemble) et `efectius-confederacion-federations.csv` (par fédération).
+**Relevé du 2026-10-23. Mis de côté par Romain le même jour : chiffres non actuels, utiles seulement pour l’évolution. État consolidé : `etat-2026-10.md`.** Chiffres recopiés tels que publiés, sommes recalculées. Tableaux : `efectius-confederacion-totals.csv` (ensemble) et `efectius-confederacion-federations.csv` (par fédération).
 
 ## Source
 - Page « Efectius » du site de la Confederacion Calandreta, consultée le 2026-10-23 : https://calandreta.org/oc/efectius/
@@ -71,7 +71,7 @@ Les départements sont rangés par fédération d'après la géographie (hypoth�
 - Restent deux écarts : une école de plus en Provence dans l'annuaire (Gap, Marseille, Orange, Valréas), une de moins en Aquitaine. Une ouverture ou une fermeture depuis la mise à jour de la page peut l'expliquer : à demander à la Confederacion.
 - L'Esquiròl (Saint-Céré) n'est pas sur la carte de la Confederacion, mais le compte de Miègjorn-Pirenèus suppose une école de plus que l'annuaire : c'est elle, ou une autre.
 
-## Ce que le site peut en faire (décision de Romain)
+## Ce que le site pourrait en faire (mis de côté le 2026-10-23)
 1. **Note de la couche Calandretas sur la carte** (`app/src/lib/carta/catalogue.js`), qui ne dit pas aujourd'hui qu'il manque des écoles. Proposition, mots occitans vérifiés avec l'API de lo Congrès (establiment, anonciar, escòla, collègi, licèu, annuari, educacion, confederacion, dels, per) :
    - oc : « Escòlas, collègis e licèu de l'annuari de l'educacion : 58 dels 67 establiments anonciats per la Confederacion Calandreta »
    - fr : « Écoles, collèges et lycée de l'annuaire de l'éducation : 58 des 67 établissements annoncés par la Confédération Calandreta »
