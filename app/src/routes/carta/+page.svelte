@@ -518,7 +518,7 @@
 		background: var(--t-veire);
 		backdrop-filter: blur(10px);
 		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-		color: var(--t-aur-clar);
+		color: var(--t-tinta);
 		cursor: pointer;
 		transition:
 			background 0.4s,
@@ -528,7 +528,7 @@
 	.info-trigger:hover,
 	.info-close:hover {
 		background: var(--t-veire-fort);
-		color: var(--t-aur);
+		color: var(--t-accion);
 	}
 
 	.info-trigger:focus-visible,
@@ -584,9 +584,9 @@
 	}
 
 	.info-card a {
-		color: var(--t-aur-clar);
+		color: var(--t-tinta);
 		text-decoration: underline;
-		text-decoration-color: color-mix(in srgb, var(--t-aur) 50%, transparent);
+		text-decoration-color: var(--t-accion); text-decoration-thickness: 2px;
 		text-underline-offset: 3px;
 	}
 

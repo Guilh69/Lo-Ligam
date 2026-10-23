@@ -671,7 +671,7 @@
 	}
 
 	.tema:hover {
-		border-color: var(--t-aur);
+		border-color: var(--t-accion);
 	}
 
 	.tema:focus-visible,
@@ -755,7 +755,7 @@
 
 		.tema:hover {
 			padding-left: 0.6rem;
-			color: var(--t-aur-clar);
+			color: var(--t-tinta);
 		}
 
 		.tema[aria-pressed='true'] {
@@ -903,7 +903,7 @@
 	.card:hover img {
 		transform: translateY(-5px);
 		box-shadow:
-			0 0 0 2px var(--t-aur),
+			0 0 0 2px var(--t-accion),
 			0 18px 34px rgba(0, 0, 0, 0.35);
 	}
 
@@ -915,7 +915,7 @@
 	}
 
 	.card:hover .card-name {
-		color: var(--t-aur);
+		color: var(--t-tinta);
 	}
 
 	/* ---------- Carrousel ---------- */
@@ -986,7 +986,7 @@
 		border: 1px solid var(--t-linha);
 		background: color-mix(in srgb, var(--t-fons) 75%, transparent);
 		backdrop-filter: blur(6px);
-		color: var(--t-aur-clar);
+		color: var(--t-tinta);
 		font-size: 1.1rem;
 		cursor: pointer;
 		transition:
@@ -995,7 +995,7 @@
 	}
 
 	.rond:hover:not(:disabled) {
-		border-color: var(--t-aur);
+		border-color: var(--t-accion);
 	}
 
 	.rond:disabled {
@@ -1102,7 +1102,7 @@
 	.tile:hover .tile-pila img {
 		transform: rotate(-1.5deg) translateY(-4px);
 		box-shadow:
-			0 0 0 2px var(--t-aur),
+			0 0 0 2px var(--t-accion),
 			0 18px 34px rgba(0, 0, 0, 0.35);
 	}
 
@@ -1131,7 +1131,7 @@
 	}
 
 	.tile:hover .tile-nom {
-		color: var(--t-aur);
+		color: var(--t-tinta);
 	}
 
 	.tile-n {
@@ -1346,7 +1346,7 @@
 	}
 
 	.post-lista button:hover {
-		color: var(--t-aur-clar);
+		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 	}
 
 	.post-lista button[aria-current='true'] {

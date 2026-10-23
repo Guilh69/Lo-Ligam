@@ -2843,7 +2843,7 @@
 		opacity: 0;
 	}
 	:global(.leaflet-popup-content small a) {
-		color: var(--t-aur-clar);
+		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 	}
 	:global(.leaflet-popup-content .nota-bulla) {
 		display: block;
@@ -3111,7 +3111,7 @@
 		line-height: 1.45;
 	}
 	.fonts-carta :global(a) {
-		color: var(--t-aur-clar);
+		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 	}
 
 	/* (la linha corta) */
@@ -3133,7 +3133,7 @@
 	}
 
 	.carta :global(.leaflet-control-attribution a) {
-		color: var(--t-aur-clar);
+		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 	}
 
 	/* L'échelle : nette (Leaflet ajoute une ombre blanche décalée d'un pixel

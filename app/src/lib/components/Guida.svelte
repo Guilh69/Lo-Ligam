@@ -325,7 +325,7 @@
 
 	.guida-lista ol { margin: 0.3rem 0 0; padding: 0; list-style: none; }
 	.guida-linha { display: flex; align-items: center; gap: 0.6rem; width: 100%; min-height: 36px; padding: 0.2rem 0.3rem; border: 0; border-radius: 8px; background: none; color: var(--t-tinta-2); font: inherit; font-size: 0.92rem; text-align: left; cursor: pointer; transition: color 0.3s, background 0.3s; }
-	.guida-linha:hover { background: color-mix(in srgb, var(--t-aur) 10%, transparent); color: var(--t-tinta); }
+	.guida-linha:hover { background: color-mix(in srgb, var(--t-accion) 14%, transparent); color: var(--t-tinta); }
 	.dobèrta .guida-linha { color: var(--t-tinta); font-weight: 700; }
 	.fach .guida-titol { text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--t-aur) 60%, transparent); }
 	.passada .guida-titol { opacity: 0.6; }

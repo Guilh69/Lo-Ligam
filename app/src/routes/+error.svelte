@@ -98,14 +98,14 @@
 	}
 
 	.ligams a {
-		color: var(--t-aur-clar);
+		color: var(--t-tinta);
 		text-decoration: underline;
-		text-decoration-color: color-mix(in srgb, var(--t-aur) 50%, transparent);
+		text-decoration-color: var(--t-accion); text-decoration-thickness: 2px;
 		text-underline-offset: 4px;
 	}
 
 	.ligams a:hover {
-		text-decoration-color: var(--t-aur);
+		text-decoration-thickness: 3px;
 	}
 
 	.ligams a:focus-visible {

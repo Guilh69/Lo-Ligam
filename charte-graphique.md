@@ -28,6 +28,7 @@ le logo est le maître des couleurs, plus l'inverse.*
 - **Ce qui se clique** : le rouge du fond du logo **#B53D17** (`--t-accion`), en aplat sous un texte crème #FBF1E1 pour les boutons (chaque bouton est une tuile du logo), en soulignement de 2 px pour les liens. Le même sur les deux thèmes et avec les couleurs adaptées au daltonisme.
 - **Ce qui est mis en valeur** : l'or en sombre, l'ocre en clair (mots forts du titre, numéros, chiffres, surtitres).
 - **Jamais ce rouge en texte sur le fond sombre** : il a la teinte du fond (14° contre 15°, contraste 3,2). Planche des trois règles comparées : https://claude.ai/artifact/M1DRchgv6cnutGiu2etmY4.
+- **Sur la carte et dans les panneaux**, l'or dit « allumé ou choisi » (couches, onglets, interrupteurs) ; le rouge dit « cliquable » (boutons, liens, survols). Le contour du focus clavier reste en or, plus visible. Appliqué à tout le site le 2026-10-23 (cahier §11).
 
 **Thème clair « Plâtre » (2026-10-21), thème par défaut du site.** Choisi
 par Romain contre « Terre cuite » et « Ciel du Sud » (essai `/ensag/clar`),

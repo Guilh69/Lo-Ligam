@@ -1887,8 +1887,8 @@
 		cursor: pointer;
 	}
 	.tampar:hover {
-		color: var(--t-aur-clar);
-		border-color: var(--t-aur);
+		color: var(--t-tinta);
+		border-color: var(--t-accion);
 	}
 	.sota {
 		margin: 4px 0 12px;
@@ -1986,10 +1986,10 @@
 		max-width: 100%;
 		margin-top: 4px;
 		padding: 1px 2px 1px 9px;
-		border: 1px solid color-mix(in srgb, var(--t-aur) 60%, transparent);
+		border: 1px solid var(--t-accion);
 		border-radius: 999px;
-		background: color-mix(in srgb, var(--t-aur) 12%, transparent);
-		color: var(--t-aur-clar);
+		background: color-mix(in srgb, var(--t-accion) 18%, transparent);
+		color: var(--t-tinta);
 		font: 600 0.75rem/1.3 var(--font-body);
 		cursor: default;
 	}
@@ -2013,7 +2013,7 @@
 		cursor: pointer;
 	}
 	.levar-c:hover {
-		background: color-mix(in srgb, var(--t-aur) 22%, transparent);
+		background: color-mix(in srgb, var(--t-accion) 26%, transparent);
 	}
 	.sr {
 		position: absolute;
@@ -2043,15 +2043,15 @@
 	.anar {
 		margin-left: 8px;
 		padding: 2px 9px;
-		border: 1px solid var(--t-aur);
+		border: 1px solid var(--t-accion);
 		border-radius: 999px;
 		background: none;
-		color: var(--t-aur-clar);
+		color: var(--t-tinta);
 		font: 700 0.75rem/1.3 var(--font-body);
 		cursor: pointer;
 	}
 	.anar:hover {
-		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
+		background: color-mix(in srgb, var(--t-accion) 22%, transparent);
 	}
 	.linha.escantida {
 		opacity: 0.55;
@@ -2245,7 +2245,7 @@
 		transform: none;
 	}
 	.info .bulla a {
-		color: var(--t-aur);
+		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 	}
 	.desplegar-l {
 		display: flex;
@@ -2403,7 +2403,7 @@
 		padding: 3px 0;
 		border: 0;
 		background: none;
-		color: var(--t-aur);
+		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 		font: 600 0.7rem/1 var(--font-body);
 		cursor: pointer;
 	}
@@ -2639,7 +2639,7 @@
 	/* « Afichar l'occitan » : en aur, pus visible que los autres */
 	.boton-oc {
 		margin-top: 0.6rem;
-		border-color: var(--t-aur);
+		border-color: var(--t-accion);
 		font-weight: 700;
 	}
 	.botons {
@@ -2658,8 +2658,8 @@
 		cursor: pointer;
 	}
 	.boton:hover {
-		border-color: var(--t-aur);
-		color: var(--t-aur-clar);
+		border-color: var(--t-accion);
+		color: var(--t-tinta);
 	}
 	.admin {
 		display: block;
@@ -2668,8 +2668,8 @@
 		border-top: 1px solid var(--t-linha);
 		font-size: 0.82rem;
 		font-weight: 700;
-		color: var(--t-aur-clar);
-		text-decoration: none;
+		color: var(--t-tinta);
+		text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 	}
 
 	/* Pichona nautor (telefon en païsatge, fenèstra corta) : rail mai sarrat */

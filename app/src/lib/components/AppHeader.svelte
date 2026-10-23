@@ -226,7 +226,7 @@
 	}
 
 	.admin-link:hover {
-		border-color: var(--t-aur);
+		border-color: var(--t-accion);
 	}
 
 	.lang-toggle {

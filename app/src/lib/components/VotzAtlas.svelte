@@ -353,11 +353,11 @@
 		display: grid;
 		place-items: center;
 		cursor: pointer;
-		color: #2a1408;
-		background: radial-gradient(circle at 35% 30%, var(--t-aur-clar), var(--t-aur) 70%);
+		color: var(--t-accion-tinta);
+		background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--t-accion) 72%, #fff), var(--t-accion) 70%);
 		box-shadow:
-			0 0 0 6px color-mix(in srgb, var(--t-aur) 16%, transparent),
-			0 8px 24px color-mix(in srgb, var(--t-aur) 35%, transparent);
+			0 0 0 6px color-mix(in srgb, var(--t-accion) 22%, transparent),
+			0 8px 24px color-mix(in srgb, var(--t-accion) 40%, transparent);
 	}
 	.boton svg {
 		width: 24px;
@@ -480,8 +480,8 @@
 		cursor: pointer;
 	}
 	.accions button.aur {
-		border-color: color-mix(in srgb, var(--t-aur) 55%, transparent);
-		color: var(--t-aur-clar);
+		border-color: var(--t-accion);
+		color: var(--t-tinta);
 	}
 	.accions button.actiu {
 		background: color-mix(in srgb, var(--t-aur) 18%, transparent);

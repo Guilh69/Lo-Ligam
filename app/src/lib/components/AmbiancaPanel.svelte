@@ -147,7 +147,7 @@
 		border-radius: 50%;
 		border: 1px solid var(--t-linha);
 		background: transparent;
-		color: var(--t-aur);
+		color: var(--t-tinta);
 		cursor: pointer;
 		transition:
 			border-color 0.4s,
@@ -161,7 +161,7 @@
 
 	.ambianca-boton:hover,
 	.ambianca-boton[aria-expanded='true'] {
-		border-color: var(--t-aur);
+		border-color: var(--t-accion);
 		transform: rotate(45deg);
 	}
 

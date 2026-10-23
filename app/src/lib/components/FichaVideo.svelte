@@ -158,7 +158,7 @@
 		border: 1px solid var(--t-linha);
 		background: color-mix(in srgb, var(--t-fons) 78%, transparent);
 		backdrop-filter: blur(6px);
-		color: var(--t-aur-clar);
+		color: var(--t-tinta);
 		cursor: pointer;
 		font-size: 1.1rem;
 		line-height: 1;
@@ -166,7 +166,7 @@
 	}
 
 	.son:hover {
-		border-color: var(--t-aur);
+		border-color: var(--t-accion);
 	}
 
 	.faciada {
@@ -187,7 +187,7 @@
 		width: 4rem;
 		height: 4rem;
 		border-radius: 999px;
-		border: 1px solid var(--t-aur);
+		border: 2px solid var(--t-accion);
 		background: color-mix(in srgb, var(--t-fons) 80%, transparent);
 		backdrop-filter: blur(6px);
 		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -195,7 +195,7 @@
 		align-items: center;
 		justify-content: center;
 		font-size: 1.4rem;
-		color: var(--t-aur-clar);
+		color: var(--t-tinta);
 		padding-left: 0.2rem;
 	}
 

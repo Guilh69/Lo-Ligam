@@ -452,8 +452,8 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		background: var(--color-gold);
-		color: var(--color-text);
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
 		border: none;
 		padding: 0.9rem 1.5rem;
 		border-radius: 999px;
@@ -465,7 +465,7 @@
 			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
 			box-shadow 220ms ease,
 			filter 80ms ease;
-		box-shadow: 0 6px 18px rgba(238, 175, 52, 0.45);
+		box-shadow: 0 6px 18px rgba(181, 61, 23, 0.35);
 	}
 
 	.btn-primary .arrow {
@@ -475,7 +475,7 @@
 
 	.btn-primary:hover:not(:disabled) {
 		transform: translateY(-2px) scale(1.02);
-		box-shadow: 0 10px 24px rgba(238, 175, 52, 0.55);
+		box-shadow: 0 10px 24px rgba(181, 61, 23, 0.45);
 	}
 
 	.btn-primary:active:not(:disabled) {

@@ -1306,8 +1306,8 @@
 
 	.btn-primary {
 		display: inline-block;
-		background: var(--color-gold);
-		color: var(--color-text);
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
 		border: none;
 		padding: 1rem 1.75rem;
 		border-radius: 999px;
@@ -1320,7 +1320,7 @@
 			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
 			box-shadow 220ms ease,
 			filter 80ms ease;
-		box-shadow: 0 6px 18px rgba(238, 175, 52, 0.45);
+		box-shadow: 0 6px 18px rgba(181, 61, 23, 0.35);
 	}
 
 	.btn-primary .arrow {
@@ -1331,7 +1331,7 @@
 
 	.btn-primary:hover {
 		transform: translateY(-3px) scale(1.03);
-		box-shadow: 0 10px 24px rgba(238, 175, 52, 0.55);
+		box-shadow: 0 10px 24px rgba(181, 61, 23, 0.45);
 	}
 
 	.btn-primary:hover .arrow {

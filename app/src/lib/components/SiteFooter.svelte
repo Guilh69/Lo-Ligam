@@ -200,7 +200,7 @@
 
 	.footer-legal-link:hover {
 		color: var(--t-tinta);
-		text-decoration-color: var(--t-aur);
+		text-decoration-color: var(--t-accion);
 	}
 
 	.footer-legal-leu em {

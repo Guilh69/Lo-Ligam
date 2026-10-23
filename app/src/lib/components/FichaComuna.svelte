@@ -475,7 +475,7 @@
 		margin-right: 14px;
 		font-size: 0.875rem;
 		font-weight: 700;
-		color: var(--t-aur-clar);
+		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 	}
 	.site.leu {
 		font-weight: 600;
@@ -484,7 +484,7 @@
 	.wiki {
 		font-size: 0.875rem;
 		font-weight: 600;
-		color: var(--t-aur-clar);
+		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 	}
 	.desplegar {
 		margin-top: 8px;
@@ -492,7 +492,7 @@
 		border: 1px solid var(--t-linha);
 		border-radius: 999px;
 		background: none;
-		color: var(--t-aur-clar);
+		color: var(--t-tinta); border-color: var(--t-accion);
 		font: 600 0.8125rem/1.2 var(--font-body);
 		cursor: pointer;
 	}

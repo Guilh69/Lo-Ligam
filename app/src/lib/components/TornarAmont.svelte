@@ -57,7 +57,7 @@
 		border: 1px solid var(--t-linha);
 		background: color-mix(in srgb, var(--t-fons) 75%, transparent);
 		backdrop-filter: blur(6px);
-		color: var(--t-aur);
+		color: var(--t-tinta);
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent;
 		opacity: 0;
@@ -82,7 +82,7 @@
 	}
 
 	.amont:hover {
-		border-color: var(--t-aur);
+		border-color: var(--t-accion);
 	}
 
 	.amont:hover svg {

@@ -133,8 +133,8 @@
 		border-radius: 50%;
 		display: grid;
 		place-items: center;
-		color: #2a1408;
-		background: radial-gradient(circle at 35% 30%, var(--t-aur-clar), var(--t-aur) 70%);
+		color: var(--t-accion-tinta);
+		background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--t-accion) 72%, #fff), var(--t-accion) 70%);
 	}
 	.boton svg {
 		width: 15px;
@@ -196,7 +196,7 @@
 		background: none;
 		font: inherit;
 		font-size: 0.8rem;
-		color: var(--t-aur-clar);
+		color: var(--t-tinta); text-decoration-color: var(--t-accion); text-decoration-thickness: 2px;
 		cursor: pointer;
 		text-decoration: underline;
 		text-underline-offset: 3px;
