@@ -93,8 +93,8 @@ export const CATALOGUE = [
 			{ id: 'librarias', oc: 'Librariás', fr: 'Librairies', estat: 'basa', defaut: false },
 			// cercles, ostals, IEO, escolo, Parlaren ; e las associacions de
 			// cultura occitana (decision de Romain, 2026-10-23, SIG/cercles)
-			{ id: 'cercles', oc: 'Cercles e associacions', fr: 'Cercles et associations', estat: 'disponible', defaut: false, nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
-			{ id: 'culturaOc', oc: 'Associacions culturalas', fr: 'Associations culturelles', estat: 'disponible', defaut: false, nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
+			{ id: 'cercles', oc: 'Cercles e associacions', fr: 'Cercles et associations', estat: 'disponible', defaut: false, icona: 'messages', color: 'aur-clar', nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
+			{ id: 'culturaOc', oc: 'Associacions culturalas', fr: 'Associations culturelles', estat: 'disponible', defaut: false, icona: 'music', color: 'terra-viu', nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
 			{ id: 'festas', oc: 'Fèstas e eveniments', fr: 'Fêtes et événements', estat: 'a venir' }
 		]
 	},

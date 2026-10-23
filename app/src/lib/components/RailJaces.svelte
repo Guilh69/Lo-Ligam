@@ -223,9 +223,6 @@
 			comunas: '<path d="M2 6 L18 4 L22 16 L6 19z M18 4 L34 7 L32 18 L22 16 M34 7 L50 5 L49 17 L32 18 M6 19 L22 16 L20 32 L4 31z M22 16 L32 18 L38 32 L20 32 M32 18 L49 17 L50 31 L38 32" fill="none" stroke="currentColor" stroke-width=".8" stroke-dasharray="3 2" opacity=".6"/>',
 			lieusInteres: '<circle cx="12" cy="14" r="3.4" fill="#eeaf34" stroke="#a5342a" stroke-width="1.2"/><circle cx="30" cy="24" r="3.4" fill="#eeaf34" stroke="#a5342a" stroke-width="1.2"/><circle cx="42" cy="10" r="3.4" fill="#eeaf34" stroke="#a5342a" stroke-width="1.2"/>',
 			librarias: '<path d="M14 10h10v18H14zM26 10h10v18H26z" fill="none" stroke="#eeaf34" stroke-width="1.5"/><path d="M17 15h4M29 15h4" stroke="#eeaf34" stroke-width="1.2"/>',
-			// cercles e associacions : un ponch plen (activitat provada), un vuèg (declarada)
-			cercles: '<circle cx="17" cy="18" r="7" fill="#ffd98a"/><circle cx="35" cy="18" r="7" fill="none" stroke="#ffd98a" stroke-width="1.5" stroke-dasharray="3 2"/>',
-			culturaOc: '<circle cx="17" cy="18" r="7" fill="#ef6a35"/><circle cx="35" cy="18" r="7" fill="none" stroke="#ef6a35" stroke-width="1.5" stroke-dasharray="3 2"/>',
 			// l'ensenhament (jòc A1, 2026-10-23) : cada pastilha amb son icòna ; los
 			// ponches pichons de la sensibilizacion ; los corses, de la color dels cercles
 			ensBilingue: '<circle cx="26" cy="18" r="15" fill="none" stroke="#c8481c" stroke-width="1.5"/><g transform="translate(15.8 7.8) scale(0.85)" fill="none" stroke="#c8481c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.183 6.117a6 6 0 1 0 4.511 3.986"/><path d="M14.813 17.883a6 6 0 1 0 -4.496 -3.954"/></g>',
