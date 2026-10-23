@@ -445,7 +445,7 @@
 
 	// Cada punt : una pastilha de veire amb l'icòna de sa jaça (Tabler Icons,
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
-	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', ensBilingue: 'pencil', ensEscola: 'pencil', ensSegond: 'pencil', ensSuperior: 'pencil', corsAdults: 'pencil', cercles: 'messages', culturaOc: 'music', festas: 'confetti', limsi: 'microphone-2' };
+	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', ensBilingue: 'circle-half-2', ensEscola: 'abc', ensSegond: 'notebook', ensSuperior: 'certificate', corsAdults: 'users-group', cercles: 'messages', culturaOc: 'music', festas: 'confetti', limsi: 'microphone-2' };
 	// una jaça apondida dins l'admin pren sa color de la basa
 	// Las lengas vesinas (demanda de Romain, 2026-10-09 : « une incitation à
 	// découvrir ce qui se passe à côté ») : al survòl (o al tòc) d'una lenga pas
