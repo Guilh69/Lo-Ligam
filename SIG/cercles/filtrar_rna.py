@@ -7,7 +7,7 @@ DOMAINE = {'09','11','12','30','31','32','34','46','48','65','81','82',
            '19','23','24','33','40','47','87',
            '07','15','43','63',
            '04','05','06','13','83','84'}
-PARTIEL = {'03','16','17','26','38','42','64','66'}
+PARTIEL = {'03','16','18','26','36','38','42','64','66','86'}
 
 def plier(s):
     s = unicodedata.normalize('NFKD', s or '')
@@ -20,8 +20,8 @@ FORT = [
     ('escolo', r"\bESCOLO\b"),
     ('oc', r"(LENGA|LANGUE|LENGO|PAYS|PAIS|PAÏS|TERRA|TERRO) D.\s?OC\b|['’]\s?OC\b"),
     ('ostal', r"\bOSTAL\b|\bOSTAU\b|\bOUSTAU\b"),
-    ('lenga', r"\bLENGA\b|\bLENGO\b|\bLENGUO\b"),
-    ('calandreta', r"CALANDRET"),
+    ('lenga', r"\bLENGA\b|\bLENGO\b|\bLENGUO\b|PARLAREN"),
+    ('calandreta', r"CALANDRET|CALENDRET"),
 ]
 MOYEN = [
     ('provencal', r"\bPROVENCAL(E|ES|S)?\b|\bPROUVENCAU\b"),
@@ -70,7 +70,7 @@ def lire(zipchemin, fichier):
             for ligne in csv.DictReader(txt, delimiter=';'):
                 yield fichier, ligne
 
-champs = ['source','id','id_ex','siret','titre','objet','codes','cp','commune','dep','zone',
+champs = ['source','id','id_ex','siret','titre','objet','codes','cp','insee','commune','dep','zone',
           'date_creat','date_decla','date_disso','position','maj_time','siteweb','motifs']
 w_ex = set()
 with open(sys.argv[3], 'w', newline='', encoding='utf-8') as s:
@@ -85,7 +85,7 @@ with open(sys.argv[3], 'w', newline='', encoding='utf-8') as s:
         if m == ['code_006110'] and dep not in DOMAINE | PARTIEL: continue
         out.writerow({'source':'waldec','id':l['id'],'id_ex':l.get('id_ex',''),'siret':l.get('siret',''),
             'titre':l.get('titre',''),'objet':(l.get('objet','') or '')[:400],'codes':'/'.join(codes),
-            'cp':l.get('adrs_codepostal',''),'commune':l.get('adrs_libcommune',''),'dep':dep,
+            'cp':l.get('adrs_codepostal',''),'insee':l.get('adrs_codeinsee',''),'commune':l.get('adrs_libcommune',''),'dep':dep,
             'zone':'domaine' if dep in DOMAINE else 'partiel' if dep in PARTIEL else 'hors',
             'date_creat':l.get('date_creat',''),'date_decla':l.get('date_decla',''),
             'date_disso':l.get('date_disso',''),'position':l.get('position',''),'maj_time':l.get('maj_time',''),
@@ -99,7 +99,7 @@ with open(sys.argv[3], 'w', newline='', encoding='utf-8') as s:
         doublon = (l.get('id_ex','').strip() in w_ex) or (l.get('rup_mi','').startswith('W'))
         out.writerow({'source':'import' + ('-migre' if doublon else ''),'id':l['id'],'id_ex':l.get('id_ex',''),
             'siret':l.get('siret',''),'titre':l.get('titre',''),'objet':(l.get('objet','') or '')[:400],
-            'codes':'/'.join(codes),'cp':l.get('adrs_codepostal',''),'commune':l.get('libcom',''),'dep':dep,
+            'codes':'/'.join(codes),'cp':l.get('adrs_codepostal',''),'insee':'','commune':l.get('libcom',''),'dep':dep,
             'zone':'domaine' if dep in DOMAINE else 'partiel' if dep in PARTIEL else 'hors',
             'date_creat':l.get('date_creat',''),'date_decla':l.get('date_publi',''),'date_disso':'',
             'position':l.get('position',''),'maj_time':l.get('maj_time',''),'siteweb':l.get('siteweb',''),

@@ -98,3 +98,13 @@ Sur les 1 287 associations « langue » du RNA dans le domaine : 12 % dissoutes,
 
 ## Choix de Romain (2026-10-23)
 L'option la plus complète : langue et culture, Provence comprise (le débat sur le provençal mentionné comme une information), carte de l'OPLO reprise sans demande préalable (ses mentions légales le permettent, avec mention de l'OPLO et du lien, hors usage commercial ; ni données personnelles ni textes recopiés). Plan détaillé au cahier des charges § 11, entrée du 2026-10-23.
+
+## Étape 2 : la couche (2026-10-23)
+`app/static/data/cercles.geojson` (185 Ko, 33 Ko compressé) : **983 points**, dont 547 associations de langue (couche « Cercles e associacions ») et 436 de culture (« Associacions culturalas »), dans la lecture Reviscolada. Point plein : activité prouvée (434) ; point vide : seulement déclarée en préfecture depuis 2021 (549).
+- RNA : 1 386 fiches relues à la main, 821 gardées (`decisions.csv` : id, décision, nom). Écartés : pétanque et joutes « provençales », clubs taurins, gastronomie, comités des fêtes, crèches et santons, loges, francoprovençal, catalan, basque.
+- Carte de l'OPLO : 151 structures sans fiche au RNA, gardées par règles (`autras.py`, sans associations de Calandreta, institutions, médias, éditeurs ni conservatoires) ; 19 doublons passent leur preuve à la fiche du RNA.
+- Val d'Aran : 11 associations du registre catalan (point vide : l'inscription ne prouve pas l'activité).
+- Cours : 93 associations marquées « cours d'occitan » (carte de l'OPLO).
+- Chaîne : `filtrar_rna.py` → `classar_rna.py` → `crosar.py` → `relectura.py` (liste à relire) → `autras.py` → `exportar.py`.
+
+**Reste à faire** : vallées d'Italie (liste à la main) ; contrôle par Romain des libellés occitans de la couche et des bulles ; les 152 cours sans organisateur retrouvé.

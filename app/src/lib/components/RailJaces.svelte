@@ -221,6 +221,9 @@
 			comunas: '<path d="M2 6 L18 4 L22 16 L6 19z M18 4 L34 7 L32 18 L22 16 M34 7 L50 5 L49 17 L32 18 M6 19 L22 16 L20 32 L4 31z M22 16 L32 18 L38 32 L20 32 M32 18 L49 17 L50 31 L38 32" fill="none" stroke="currentColor" stroke-width=".8" stroke-dasharray="3 2" opacity=".6"/>',
 			lieusInteres: '<circle cx="12" cy="14" r="3.4" fill="#eeaf34" stroke="#a5342a" stroke-width="1.2"/><circle cx="30" cy="24" r="3.4" fill="#eeaf34" stroke="#a5342a" stroke-width="1.2"/><circle cx="42" cy="10" r="3.4" fill="#eeaf34" stroke="#a5342a" stroke-width="1.2"/>',
 			librarias: '<path d="M14 10h10v18H14zM26 10h10v18H26z" fill="none" stroke="#eeaf34" stroke-width="1.5"/><path d="M17 15h4M29 15h4" stroke="#eeaf34" stroke-width="1.2"/>',
+			// cercles e associacions : un ponch plen (activitat provada), un vuèg (declarada)
+			cercles: '<circle cx="17" cy="18" r="7" fill="#ffd98a"/><circle cx="35" cy="18" r="7" fill="none" stroke="#ffd98a" stroke-width="1.5" stroke-dasharray="3 2"/>',
+			culturaOc: '<circle cx="17" cy="18" r="7" fill="#ef6a35"/><circle cx="35" cy="18" r="7" fill="none" stroke="#ef6a35" stroke-width="1.5" stroke-dasharray="3 2"/>',
 			calandretas: '<path d="M12 28V16l14-7 14 7v12z" fill="none" stroke="#eeaf34" stroke-width="1.5" stroke-linejoin="round"/><path d="M23 28v-6h6v6" stroke="#eeaf34" stroke-width="1.4" fill="none"/>',
 			festas: '<path d="M26 7l3 7 7 .6-5.4 4.6 1.7 7-6.3-3.8-6.3 3.8 1.7-7L15 14.6l7-.6z" fill="#eeaf34" opacity=".85"/>',
 			provincias: '<path d="M2 12 Q 18 3 30 12 T 50 9" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 3" opacity=".75"/><path d="M4 29 Q 20 20 32 27 T 50 23" fill="none" stroke="currentColor" stroke-width=".9" opacity=".55"/>',

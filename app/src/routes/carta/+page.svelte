@@ -161,6 +161,8 @@
 		layerVisibility.locutors = uei;
 		layerVisibility.calandretas = reviscolada;
 		layerVisibility.librarias = reviscolada;
+		layerVisibility.cercles = reviscolada;
+		layerVisibility.culturaOc = reviscolada;
 	}
 	// Les trois portes du panneau d'accueil (forme C) : la page tient les couches
 	function porta(k) {

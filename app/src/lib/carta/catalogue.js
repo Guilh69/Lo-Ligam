@@ -92,6 +92,10 @@ export const CATALOGUE = [
 			{ id: 'lieusInteres', oc: "Luòcs d'interès", fr: "Lieux d'intérêt", estat: 'basa', defaut: false },
 			{ id: 'librarias', oc: 'Librariás', fr: 'Librairies', estat: 'basa', defaut: false },
 			{ id: 'calandretas', oc: 'Calandretas', fr: 'Calandretas', estat: 'disponible', defaut: false, nota_oc: "Escòlas, collègis e licèu (annuari de l'educacion)", nota_fr: "Écoles, collèges et lycée (annuaire de l'éducation)" },
+			// cercles, ostals, IEO, escolo, Parlaren ; e las associacions de
+			// cultura occitana (decision de Romain, 2026-10-23, SIG/cercles)
+			{ id: 'cercles', oc: 'Cercles e associacions', fr: 'Cercles et associations', estat: 'disponible', defaut: false, nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
+			{ id: 'culturaOc', oc: 'Associacions culturalas', fr: 'Associations culturelles', estat: 'disponible', defaut: false, nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
 			{ id: 'festas', oc: 'Fèstas e eveniments', fr: 'Fêtes et événements', estat: 'a venir' }
 		]
 	},

@@ -441,7 +441,7 @@
 
 	// Cada punt : una pastilha de veire amb l'icòna de sa jaça (Tabler Icons,
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
-	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', festas: 'confetti', limsi: 'microphone-2' };
+	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', cercles: 'messages', culturaOc: 'music', festas: 'confetti', limsi: 'microphone-2' };
 	// una jaça apondida dins l'admin pren sa color de la basa
 	// Las lengas vesinas (demanda de Romain, 2026-10-09 : « une incitation à
 	// découvrir ce qui se passe à côté ») : al survòl (o al tòc) d'una lenga pas
@@ -625,6 +625,68 @@
 		);
 		if (d.font) map.attributionControl?.addAttribution(d.font);
 		if (visibility.calandretas) pointLayers.calandretas.addTo(map);
+	}
+
+	// Los cercles e las associacions (decision de Romain, 2026-10-23 ;
+	// SIG/cercles) : un fichièr per doas jaces, « l » la lenga, « c » la
+	// cultura. Ponch plen : activitat provada (ret, carta de l'OPLO, agenda) ;
+	// vuèg : sonque declarada en prefectura dempuèi 2021
+	let cerclesCargats = false;
+	const FONTS_CERCLES = {
+		ag: { oc: 'agenda Lo CalenDiari', fr: 'agenda Lo CalenDiari', ligam: (u) => 'https://openagenda.com/agendas/41454951/events/' + u },
+		ieo: { oc: "guida de l'IEO", fr: "guide du réseau IEO", ligam: () => 'https://ieo-opm.com/wp-content/uploads/GuideReseauIEO2026.pdf' },
+		fp: { oc: 'Félibrige', fr: 'Félibrige', ligam: () => 'https://provence.felibrige.org/escolo-felibrenco-prouvenco/' },
+		fa: { oc: 'Félibrige', fr: 'Félibrige', ligam: () => 'https://aquitaine.felibrige.org/escolo-felibrenco-aquitani/' },
+		fl: { oc: 'Félibrige', fr: 'Félibrige', ligam: () => 'https://limousin.felibrige.org/escolo-felibrenco-dou-limousin/' },
+		op: { oc: "carta de l'OPLO", fr: "carte de l'OPLO", ligam: () => 'https://umap.openstreetmap.fr/fr/map/actors-de-terren-siti_1186246' },
+		ar: { oc: "Registre d'entitats de Catalunya", fr: "Registre d'entitats de Catalunya", ligam: () => 'https://analisi.transparenciacatalunya.cat/d/y6fz-g3ff' }
+	};
+	// lo debat sul provençal, mencionat coma una informacion (Romain, 2026-10-23)
+	const DEBAT_PROVENÇAL = {
+		oc: "D'associacions provençalas tenon lo provençal per una autra lenga que l'occitan : lo debat existís.",
+		fr: "Certaines associations provençales tiennent le provençal pour une langue distincte de l'occitan : le débat existe."
+	};
+	async function cargarCercles() {
+		if (cerclesCargats || !map) return;
+		cerclesCargats = true;
+		const d = await fetch('/data/cercles.geojson')
+			.then((r) => (r.ok ? r.json() : null))
+			.catch(() => null);
+		if (!d?.features) return (cerclesCargats = false);
+		const fr = lang === 'fr';
+		const grops = { cercles: [], culturaOc: [] };
+		for (const f of d.features) {
+			const [lon, lat] = f.geometry.coordinates;
+			const q = f.properties;
+			const cid = q.m === 'c' ? 'culturaOc' : 'cercles';
+			const fonts = (q.p ?? []).map(([k, data, u]) => {
+				const s = FONTS_CERCLES[k];
+				const quand = k === 'ag' && data ? ' (' + data.split('-').reverse().join('/') + ')' : '';
+				return `<a href="${escapeHtml(s.ligam(u))}" target="_blank" rel="noopener">${escapeHtml(fr ? s.fr : s.oc)}</a>${quand}`;
+			});
+			const estat =
+				q.e === 'v'
+					? `${fr ? 'Activité prouvée' : 'Activitat provada'} : ${fonts.join(', ')}`
+					: q.a
+						? fr
+							? `Déclarée en préfecture en ${q.a}`
+							: `Declarada en prefectura en ${q.a}`
+						: `${fr ? 'Source' : 'Font'} : ${fonts.join(', ')}`;
+			const provençal = /parlaren|prouven|proven|escolo|felibr/i.test(q.n) ? `<br><em class="nota-bulla">${escapeHtml(fr ? DEBAT_PROVENÇAL.fr : DEBAT_PROVENÇAL.oc)}</em>` : '';
+			const cap =
+				`<strong>${escapeHtml(q.n)}</strong><br>${escapeHtml(fr ? q.c : (q.o ?? q.c))}` +
+				(q.k ? ` · ${fr ? "cours d'occitan" : "cors d'occitan"}` : '') +
+				`<br><small>${estat}</small>${provençal}`;
+			const icon = iconaPunt(cid);
+			icon.options.className += q.e === 'v' ? ' ponch-plen' : ' ponch-vuèg';
+			const m = dobleClicSus(L.marker([lat, lon], { icon, title: q.n, keyboard: true }).bindPopup(cap + `<span class="accions-bulla">${accionsNav(lat, lon, q.n + ' ' + q.c)}</span>`));
+			grops[cid].push(m);
+		}
+		for (const [cid, ms] of Object.entries(grops)) {
+			pointLayers[cid] = L.layerGroup(ms);
+			if (visibility[cid]) pointLayers[cid].addTo(map);
+		}
+		if (d.font) map.attributionControl?.addAttribution(d.font);
 	}
 
 	// L'Atlas sonòr (LISN) : demostracion (decision de Romain, 2026-10-12) ;
@@ -1970,6 +2032,7 @@
 		colaEstelas?.setTerritoris({ regions: !!vis.regions, despartaments: !!vis.despartaments, comunas: !!vis.comunas });
 		colaTematica?.setJaces(jacesTematicas(vis));
 		if (vis.calandretas) cargarCalandretas();
+		if (vis.cercles || vis.culturaOc) cargarCercles();
 		if (vis.limsi) cargarEnquistas();
 		if (vis.lengasFranca) cargarLengas();
 		// dialèctes o Creissent visibles : lo survòl e lo clic son per eles
@@ -2563,6 +2626,30 @@
 	}
 	:global(.ponch-jaça-librarias) {
 		--ponch: var(--t-terra-viu);
+	}
+	/* cercles e associacions : plen quand l'activitat es provada, vuèg (traç
+	   menut) quand l'associacion es sonque declarada (Romain, 2026-10-23) */
+	:global(.ponch-jaça-cercles) {
+		--ponch: var(--t-aur-clar);
+	}
+	:global(.ponch-jaça-culturaOc) {
+		--ponch: var(--t-terra-viu);
+	}
+	:global(.ponch-plen .ponch) {
+		background: var(--ponch);
+		color: var(--t-fons-2, #1d1a17);
+	}
+	:global(.ponch-vuèg .ponch) {
+		border-style: dashed;
+	}
+	:global(.leaflet-popup-content small a) {
+		color: var(--t-aur-clar);
+	}
+	:global(.leaflet-popup-content .nota-bulla) {
+		display: block;
+		margin-top: 0.3em;
+		font-size: 0.85em;
+		opacity: 0.85;
 	}
 	:global(.ponch) {
 		display: grid;
