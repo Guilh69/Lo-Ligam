@@ -168,18 +168,19 @@
 
 	.menu-boton:hover,
 	.menu-boton[aria-expanded='true'] {
-		border-color: var(--t-aur);
+		border-color: var(--t-accion);
 	}
 
-	/* La seule action en couleur de la barre, comme « Nous rejoindre » chez l'Alliance */
+	/* La seule action en couleur de la barre, comme « Nous rejoindre » chez l'Alliance ;
+	   en tuile du rouge du logo, la couleur de ce qui se clique (app.css, 2026-10-23) */
 	.reservar {
 		display: inline-flex;
 		align-items: center;
 		height: 2.2rem;
 		padding: 0 1.1rem;
 		border-radius: 999px;
-		background: var(--t-aur);
-		color: var(--t-fons);
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
 		font-weight: 700;
 		font-size: 0.82rem;
 		text-decoration: none;

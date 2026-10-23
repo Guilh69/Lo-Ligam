@@ -80,6 +80,18 @@
 	--logo-ponch: #eeaf34;
 	--logo-moieu: #b53d17;
 }
+/* Ce qui se clique (Romain, 2026-10-23, règle B de la planche
+   https://claude.ai/artifact/M1DRchgv6cnutGiu2etmY4) : le rouge du fond du
+   logo, en aplat sous un texte crème (chaque bouton est une tuile du logo),
+   et en soulignement pour les liens ; le même sur les deux thèmes et avec les
+   couleurs adaptées au daltonisme. L'or (l'ocre en clair) reste pour mettre
+   en valeur. Jamais ce rouge en texte sur le fond sombre : il a la teinte du
+   fond (14° contre 15°, contraste 3,2). */
+:root {
+	--t-accion: #b53d17;
+	--t-accion-tinta: #fbf1e1;
+	--t-accion-viu: color-mix(in srgb, #b53d17 82%, #000);
+}
 /* Gamme « Plâtre » (Romain, 2026-10-21, refonte claire, étape 1 : choisie
    contre « Terre cuite » et « Ciel du Sud » sur /ensag/clar) : plâtre, pierre
    et encre brun-noir, d'après les couleurs mesurées de leoparpeix.com ; la

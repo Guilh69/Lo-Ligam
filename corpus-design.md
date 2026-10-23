@@ -116,7 +116,7 @@ une étude : des repères, passés ici au crible des valeurs du projet.
 | **Gradient d'objectif** (Hull, 1932) | On accélère quand on voit l'arrivée : « 5 étapes sur 7 » motive plus que « fais cette étape ». | Premiers pas de la carte : compteur « 3 / 11 » et barre d'or (`Guida.svelte`) ; lo Fuòc de l'ostal (`gamification.md` §5 bis). | Tout parcours en étapes dit où on en est et ce qui reste (leçon, module, premiers pas, futur test de positionnement). Jamais de compte à rebours qui presse. |
 | **Pic et fin** (Kahneman et coll., 1993) | On retient le meilleur moment, le pire, et la fin ; le reste s'efface. | Entrée en scène de la carte ; fin des premiers pas (cercle d'or, « Tot es a punt ! ») ; célébrations (`gamification.md` §5). | Soigner la fin de chaque parcours. **Et traiter les pires moments avant d'ajouter des fêtes** : une carte qui se recharge sur iPhone pèse plus lourd dans le souvenir que dix belles animations. |
 | **Illusion du travail** (Buell et Norton, 2011) | On accorde plus de valeur à ce qui semble demander du travail ; certaines applications ajoutent une attente factice. | Écran « La carta se prepara… » pendant un vrai chargement. | **Écarté : jamais d'attente inventée** (contraire à l'éthique et à la sobriété). Version honnête, celle que l'étude d'origine soutient : quand un vrai travail se fait, le montrer plutôt que le cacher. |
-| **Effet d'isolement** (von Restorff, 1933) | On se souvient de ce qui diffère du reste. | L'or (l'ocre en clair) met en valeur les mots forts, les numéros, les chiffres ; « Reservar un cors » partage ce même or, il ne ressort donc pas (relevé du 23-10 : 22 éléments dorés sur l'accueil). | **L'or met en valeur, une autre couleur dit « ça se clique ».** Retirer l'or des ornements a été écarté par Romain (23-10 : il « permet de bien mettre en valeur certains trucs ») ; les boutons et les liens reçoivent leur propre couleur (essai `/?ensag=accion`, cahier §11). |
+| **Effet d'isolement** (von Restorff, 1933) | On se souvient de ce qui diffère du reste. | L'or (l'ocre en clair) met en valeur les mots forts, les numéros, les chiffres ; « Reservar un cors » partage ce même or, il ne ressort donc pas (relevé du 23-10 : 22 éléments dorés sur l'accueil). | **L'or met en valeur, le rouge du logo dit « ça se clique ».** Retirer l'or des ornements a été écarté par Romain (23-10 : il « permet de bien mettre en valeur certains trucs ») ; règle B retenue le même jour : boutons en aplat du rouge du logo, liens soulignés de ce rouge, jamais ce rouge en texte sur le sombre (charte §1, cahier §11). |
 | **Surcharge de choix** (Iyengar et Lepper, 2000) | Trop d'options d'un coup inquiète et fait renoncer. | Barre presque vide et menu en trois rubriques (modèle de l'Alliance, §11 du 15-10) ; recherche et familles repliables du rail de la carte. | Peu de choix visibles d'un coup : ranger, filtrer, chercher, retirer ce qui ne sert pas. À surveiller : le rail de la carte et le panneau des langues, qui grossissent à chaque couche. |
 
 **Nuance.** L'effet de surcharge est discuté : la méta-analyse de
@@ -286,8 +286,10 @@ Avant toute mise en ligne d'un changement visuel :
 7. Cohérence : tokens de `app.css` uniquement, grille respectée, un seul
    style par rôle de bouton.
 8. Psychologie (§2.4) : étapes comptées, fin soignée, l'or pour mettre en
-   valeur et la couleur d'action pour ce qui se clique, peu de choix à la
-   fois, aucune attente inventée.
+   valeur et le rouge du logo (aplat ou soulignement) pour ce qui se clique,
+   peu de choix à la fois, aucune attente inventée.
+9. Les deux langues : regarder la page en occitan ET en français ; un texte
+   français plus long ne doit ni déborder ni mordre sur ses voisins.
 
 ---
 

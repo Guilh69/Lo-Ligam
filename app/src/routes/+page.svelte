@@ -98,35 +98,6 @@
 			// pas grave : le choix vaut pour la visite
 		}
 	}
-	// Ce qui se clique et ce qui est mis en valeur (effet d'isolement,
-	// corpus-design §2.4, 2026-10-23) : Romain hésite entre deux règles de la
-	// planche https://claude.ai/artifact/M1DRchgv6cnutGiu2etmY4. B : les
-	// boutons sont des tuiles du rouge du logo, l'or met en valeur ; C : tout
-	// en or, le bouton plein ou le lien souligné agit, l'or écrit seul met en
-	// valeur. À comparer sur /?ensag=accion ; sans le paramètre, l'actuelle.
-	// La règle est posée sur <html> pour que le bouton « Reservar un cors » de
-	// la barre la suive aussi.
-	const FORMAS_ACCION = [
-		['actual', 'Actuelle'],
-		['b', 'B · Tuile'],
-		['c', 'C · Tout en or']
-	];
-	const CLAU_ENSAG_ACCION = 'lo-ligam-ensag-accion';
-	let formaAccion = $state('actual');
-	let ensagAccion = $state(false);
-	function causirFormaAccion(v) {
-		formaAccion = v;
-		try {
-			localStorage.setItem(CLAU_ENSAG_ACCION, v);
-		} catch {
-			// pas grave : le choix vaut pour la visite
-		}
-	}
-	$effect(() => {
-		if (!ensagAccion || formaAccion === 'actual') return;
-		document.documentElement.dataset.accion = formaAccion;
-		return () => delete document.documentElement.dataset.accion;
-	});
 	// Les trois chemins, pris dans le plan du site (le même que le menu et le
 	// pied de page) : un chemin principal et quelques autres. « Amassa » mène à
 	// sa section plus bas tant que le fòrum et les grops ne sont pas faits.
@@ -199,15 +170,6 @@
 			try {
 				const f = localStorage.getItem(CLAU_ENSAG_SEPARA);
 				if (FORMAS_SEPARA.some(([v]) => v === f)) formaSepara = f;
-			} catch {
-				// stockage indisponible : la forme actuelle
-			}
-		}
-		ensagAccion = new URLSearchParams(location.search).get('ensag') === 'accion';
-		if (ensagAccion) {
-			try {
-				const f = localStorage.getItem(CLAU_ENSAG_ACCION);
-				if (FORMAS_ACCION.some(([v]) => v === f)) formaAccion = f;
 			} catch {
 				// stockage indisponible : la forme actuelle
 			}
@@ -679,13 +641,6 @@
 	<div class="ensag-eros" role="group" aria-label="Essai : séparation des sections">
 		{#each FORMAS_SEPARA as [v, nom] (v)}
 			<button type="button" aria-pressed={formaSepara === v} onclick={() => causirFormaSepara(v)}>{nom}</button>
-		{/each}
-	</div>
-{/if}
-{#if ensagAccion}
-	<div class="ensag-eros" role="group" aria-label="Essai : une couleur pour ce qui se clique">
-		{#each FORMAS_ACCION as [v, nom] (v)}
-			<button type="button" aria-pressed={formaAccion === v} onclick={() => causirFormaAccion(v)}>{nom}</button>
 		{/each}
 	</div>
 {/if}
