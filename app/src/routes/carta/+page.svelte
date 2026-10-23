@@ -42,8 +42,9 @@
 		}
 	};
 
-	// Les premiers pas de la carte (tutoriel de première connexion, 2026-10-23) :
-	// la commande visée, son texte, le geste qui la coche dans la liste
+	// Les premiers pas de la carte (tutoriel de première connexion, 2026-10-23,
+	// liste à cocher retenue par Romain) : la commande visée, son texte, le geste
+	// qui coche sa ligne ; la dernière, sans geste, dit où revoir la liste
 	const ETAPAS = [
 		{
 			cibla: '.lectura:not(.gama)',
@@ -185,11 +186,10 @@
 		// la pancarte des crédits reste derrière le bouton « ? »)
 		const ensag = new URLSearchParams(location.search).get('ensag');
 		ensagLectura = ensag === 'lectura'; // le geste territoire / aujourd'hui, trois formes
-		ensagGuida = ensag === 'guida'; // les premiers pas, trois formes
+		ensagGuida = ensag === 'guida'; // les premiers pas, à chaque visite
 	});
 
 	let ensagGuida = $state(false);
-	let formaGuida = $state('bullas');
 	let ensagLectura = $state(false);
 	let formaLectura = $state('bascula'); // la forme par défaut ; /carta?ensag=lectura en propose trois
 	let nautLectura = $state(0); // la hauteur de la commande, pour décaler les mots à écouter
@@ -304,10 +304,11 @@
 			esAdmin={$esAdmin}
 		/>
 
-		<!-- les premiers pas : en essai seulement, tant que Romain n'a pas choisi la forme -->
-		{#if ensagGuida}
-			<Guida bind:this={guida} bind:forma={formaGuida} etapas={ETAPAS} clau="lo-ligam-carta-primiers-passes" fin={FIN} ensag {lang} lest={estatCarta.prèsta} espera={9500} />
-		{/if}
+		<!-- les premiers pas, dès la carte prête (l'essai se lit après le montage :
+		     le guide repart alors sans mémoire) -->
+		{#key ensagGuida}
+			<Guida bind:this={guida} etapas={ETAPAS} clau="lo-ligam-carta-primiers-passes" fin={FIN} ensag={ensagGuida} {lang} lest={estatCarta.prèsta} />
+		{/key}
 		<LecturaCarta bind:forma={formaLectura} {lectura} ensag={ensagLectura} {lang} clar={ambianca.clar} dalt={ambianca.dalt} onCausir={causirLectura} onNaut={(h) => (nautLectura = h)} />
 	</main>
 </div>
@@ -333,7 +334,8 @@
 	.screen.visualizacion :global(.info-trigger),
 	.screen.visualizacion :global(.info-card),
 	.screen.visualizacion :global(.rail),
-	.screen.visualizacion :global(.tirador) {
+	.screen.visualizacion :global(.tirador),
+	.screen.visualizacion :global(.guida) {
 		display: none !important;
 	}
 	.capçal {
