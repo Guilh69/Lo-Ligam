@@ -25,7 +25,7 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 3 | **L'accueil, la vue d'ensemble** (bloc 4, étape 4) | **prochain barreau : Romain répond au bloc 4** |
 | 4 | **La charte et le mouvement** (blocs 5 et 6), puis le cadre commun des pages (étape 3) | à faire |
 | 5 | **Les mots** (bloc 7 : tu ou vous, libellés, occitan à valider) | à faire |
-| 6 | **Les pages de rubrique** (étape 5), Se parla d'abord. La carte, prise en avance le 22-10 : première visite « Trois portes » et bascule Territòri / Reviscolada faites ; reste la lecture « Uèi » (couche OPLO par département, chiffres validés), les couches de la reviscolada (cercles, formateurs, organismes), puis le wiki ; ensuite S'apren, Amassa | en cours (carte), le reste à faire |
+| 6 | **Les pages de rubrique** (étape 5), Se parla d'abord. La carte, prise en avance le 22-10 : première visite « Trois portes » et bascule Territòri / Reviscolada faites ; reste la lecture « Uèi » (couche OPLO par département, chiffres validés), les couches de la reviscolada (cercles, formateurs, organismes ; effectifs des Calandretas relevés le 23-10, `SIG/calandretas/efectius-confederacion.md`, à valider), puis le wiki ; ensuite S'apren, Amassa | en cours (carte), le reste à faire |
 | 7 | **Les pages intérieures**, une à une (étape 6) ; l'espace d'administration remis en cohérence | à faire |
 | 8 | **Lancement** (bloc 8, étape 7) | à faire |
 

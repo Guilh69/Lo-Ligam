@@ -40,3 +40,7 @@ Pour les ajouter plus tard, deux chemins :
 Dans les deux cas, ajouter un champ qui distingue ces écoles (pas de code UAI) et vérifier
 chaque année si l'annuaire leur a donné un code : le script `SIG/cadena/calandretas.mjs`
 signale tout nouvel établissement privé dont le nom contient calandreta, calendreta ou calentreta.
+
+Recoupement du 2026-10-23 avec la page « Efectius » de la Confederacion (écoles par fédération) :
+53 + 9 = 62 sur 19 départements, le Languedoc tombe juste ; restent une école de plus en Provence
+et une de moins en Aquitaine. Détail : `efectius-confederacion.md`.
