@@ -495,10 +495,19 @@
 		addEventListener('carta-fons', dobrirFons);
 		return () => removeEventListener('carta-fons', dobrirFons);
 	});
-	// la carte revient à son état d'arrivée (fin des premiers pas) : panneau fermé
+	// la carte revient à son état d'arrivée (fin des premiers pas) : panneau
+	// fermé, hors du mode « Lengas de França » (sans y remettre les couches
+	// d'avant : la page vient de remettre celles de l'arrivée)
 	$effect(() => {
-		addEventListener('carta-inici', sortirBanda);
-		return () => removeEventListener('carta-inici', sortirBanda);
+		const inici = () => {
+			salvat = null;
+			mòde = null;
+			estatCarta.mòde = null;
+			estatCarta.environament = [];
+			sortirBanda();
+		};
+		addEventListener('carta-inici', inici);
+		return () => removeEventListener('carta-inici', inici);
 	});
 	$effect(() => {
 		botons.fons?.setAttribute?.('aria-expanded', String(dobert === 'fons'));

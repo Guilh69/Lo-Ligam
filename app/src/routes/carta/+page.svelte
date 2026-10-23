@@ -14,6 +14,7 @@
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { estatCarta, ecranCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { sonAcabat } from '$lib/carta/sons.js';
+	import { LENGAS } from '$lib/carta/lengas.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { cargarColas } from '$lib/carta/colasBasa.js';
 	import { esAdmin } from '$lib/adminStore';
@@ -50,6 +51,7 @@
 	// toucher (le halo la suit quand un panneau s'ouvre), et ce qui coche l'étape
 	// quand le geste est vraiment fait. Tutoiement (cahier §11, 2026-10-22).
 	const alucadas = () => familhas.flatMap((f) => f.jaces.filter((j) => layerVisibility[j.id]).map((j) => j.id));
+	const lengasAlucadas = () => Object.keys(LENGAS).filter((id) => layerVisibility[id]);
 	const tirador = (k) => document.querySelector(`#tirador-jaces[data-tirador="${k}"]`);
 	// « Sus la carta » dans le rail (sur téléphone, une famille ouverte le remplace
 	// par sa rangée de pastilles : on vise alors le bouton qui revient au rail)
@@ -62,10 +64,11 @@
 		const r = el?.getBoundingClientRect();
 		return r && r.left >= 0 && r.right <= innerWidth ? el : null;
 	};
-	// (vers Rodez : sur l'occitan à l'arrivée, sur ordinateur comme sur téléphone)
-	const puntCarta = () => {
-		const p = ecranCarta.punt?.(44.35, 2.57);
-		return p && { left: p.x, top: p.y, width: 1, height: 1, punt: true };
+	// un lieu de la carte, en point (par défaut vers Rodez : sur l'occitan à
+	// l'arrivée, sur ordinateur comme sur téléphone)
+	const puntCarta = (lat = 44.35, lon = 2.57) => {
+		const p = ecranCarta.punt?.(lat, lon);
+		return p && { left: p.x, top: p.y, width: 1, height: 1, punt: true, dins: '.leaflet-container' };
 	};
 	const ETAPAS = [
 		{
@@ -160,6 +163,60 @@
 				if (n === 0) mem.buit = true;
 				return !!mem.buit && n > 0;
 			}
+		},
+		// Les autres langues (Romain, 2026-10-23 : « il manque la découverte des
+		// autres langues… c'est un peu complexe, donc il faut quand même le
+		// comprendre » ; et les deux chemins : le rail, ou toucher la carte hors de
+		// la zone occitane, où l'invitation « Descobrir… » allume la langue)
+		{
+			titol: { oc: 'Descobrir una autra lenga', fr: 'Découvrir une autre langue' },
+			tèxt: {
+				oc: 'Fòra de la zòna occitana, tòca la carta : « Descobrir… » aluca la lenga d’aquí, lo catalan per exemple. O dobrís « Autras lengas ».',
+				fr: 'Hors de la zone occitane, touche la carte : « Découvrir… » allume la langue de là, le catalan par exemple. Ou ouvre « Autres langues ».'
+			},
+			// deux halos : le Roussillon (le catalan, hors de l'occitan) et le rail
+			cibla: () => [puntCarta(42.62, 2.65), aLEcran(document.querySelector('.legenda-dial.vesina')) ?? document.querySelector('[data-familha="lengas"]')],
+			inici: lengasAlucadas,
+			fach: (abans) => lengasAlucadas().some((id) => !abans.includes(id))
+		},
+		{
+			titol: { oc: 'Tota la lenga', fr: 'Toute la langue' },
+			tèxt: {
+				oc: 'Dins « Autras lengas », una lenga se mòstra en primièr en França. Tòca sa pichona carta, o la carta de l’autre costat de la frontièra : apareis tota.',
+				fr: 'Dans « Autres langues », une langue se montre d’abord en France. Touche sa petite carte, ou la carte de l’autre côté de la frontière : elle apparaît en entier.'
+			},
+			// la petite carte d'une langue allumée qui passe la frontière (amenée en
+			// vue une fois dans le panneau), et la Catalogne, de l'autre côté
+			cibla: (mem) => {
+				const t = tirador('lengas');
+				if (!t) return document.querySelector('.rail-b[data-familha="lengas"]') ?? document.querySelector('[data-familha="lengas"]');
+				const b = t.querySelector('.ficha.alucada .silh-b') ?? t.querySelector('.silh-b');
+				if (b && !mem.vist) {
+					mem.vist = true;
+					// (le défilement du panneau seul : scrollIntoView faisait aussi
+					// glisser toute la page)
+					let c = b.parentElement;
+					while (c && c !== t.parentElement && !(c.scrollHeight > c.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(c).overflowY))) c = c.parentElement;
+					if (c && c !== t.parentElement) {
+						const rb = b.getBoundingClientRect(), rc = c.getBoundingClientRect();
+						c.scrollBy({ top: rb.top - rc.top - rc.height / 2 + rb.height / 2, behavior: 'smooth' });
+					}
+				}
+				return [b, puntCarta(42.15, 2.2)];
+			},
+			inici: () => [...estatCarta.environament],
+			fach: (abans) => estatCarta.environament.some((id) => !abans.includes(id))
+		},
+		{
+			titol: { oc: 'Tornar a l’occitan', fr: 'Revenir à l’occitan' },
+			tèxt: {
+				oc: 'Aqueste boton te torna a la carta de l’occitan.',
+				fr: 'Ce bouton te ramène à la carte de l’occitan.'
+			},
+			cibla: '.rail-b.retorn',
+			inici: () => estatCarta.mòde,
+			// (hors du mode « Lengas de França », rien à quitter : l'étape est faite)
+			fach: () => estatCarta.mòde !== 'lengas'
 		},
 		{
 			titol: { oc: 'Lo fons de carta', fr: 'Le fond de carte' },

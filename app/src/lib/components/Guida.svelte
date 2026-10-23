@@ -13,7 +13,8 @@
 	// geste est vraiment fait, et la suivante s'ouvre. Chaque étape peut se
 	// passer ; toucher une autre étape l'ouvre.
 	// Une étape : { titol, tèxt (oc / fr) ; cibla : sélecteur, élément, ou
-	// fonction (mem) → élément, sélecteur ou rectangle (punt : un point) ;
+	// fonction (mem) → élément, sélecteur ou rectangle (punt : un point), ou une
+	// liste de cibles quand il y a deux chemins (un halo sur chacun) ;
 	// fach : (inici, mem) → vrai quand c'est fait (lue dans un $effect : l'état
 	// réactif de la page s'y lit) ; inici : () → l'état au départ de l'étape ;
 	// ev : { nom, sel } un geste (écouté sur window, en capture) ; pausa : ms
@@ -58,21 +59,27 @@
 	let passadas = $state([]); // les étapes passées
 	let acabat = $state(false); // le mot de la fin
 	let plegada = $state(false); // téléphone : repliée sur le titre de l'étape
-	let cibla = $state(null); // le rectangle du halo
+	let ciblas = $state([]); // les rectangles des halos
 	let jutjar = $state(false); // l'étape ouverte peut se cocher (après sa pausa)
 	let inici = null, // l'état au départ de l'étape
 		mem = {}; // la mémoire de l'étape (un geste en deux temps)
 
-	// le rectangle d'une cible, si elle est à l'écran
-	function rectangle(c) {
-		let r = typeof c === 'function' ? c(mem) : c;
+	// les rectangles des cibles à l'écran
+	function rectangles(c) {
+		const r = typeof c === 'function' ? c(mem) : c;
+		return (Array.isArray(r) ? r : [r]).map(rectangle).filter(Boolean);
+	}
+	function rectangle(r) {
 		if (typeof r === 'string') r = document.querySelector(r);
-		const punt = !!r?.punt;
+		const punt = !!r?.punt,
+			dins = r?.dins; // (un point « dins » un élément : caché quand un panneau le couvre)
 		if (r instanceof Element) r = r.getBoundingClientRect();
 		if (!r?.width || !r.height) return null;
 		if (!(r.left < innerWidth && r.left + r.width > 0 && r.top < innerHeight && r.top + r.height > 0)) return null;
 		if (!punt) return { x: r.left, y: r.top, w: r.width, h: r.height };
-		return { x: r.left + r.width / 2 - 28, y: r.top + r.height / 2 - 28, w: 56, h: 56, punt: true };
+		const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+		if (dins && !document.elementFromPoint(cx, cy)?.closest(dins)) return null;
+		return { x: cx - 28, y: cy - 28, w: 56, h: 56, punt: true };
 	}
 
 	function memorizar() {
@@ -187,13 +194,12 @@
 	// bouge) ; la note « revoir » le pose quelques secondes sur son bouton
 	let notaVista = $state(false);
 	$effect(() => {
-		if (!actiu || acabat) return void (cibla = null);
+		if (!actiu || acabat) return void (ciblas = []);
 		const e = notaVista ? nota : etapas[pas];
-		if (!e?.cibla || (!notaVista && fachas.includes(pas))) return void (cibla = null);
+		if (!e?.cibla || (!notaVista && fachas.includes(pas))) return void (ciblas = []);
 		const viser = () => {
-			const r = rectangle(e.cibla);
-			const c = untrack(() => cibla);
-			if (r?.x !== c?.x || r?.y !== c?.y || r?.w !== c?.w || r?.h !== c?.h) cibla = r;
+			const r = rectangles(e.cibla);
+			if (JSON.stringify(r) !== JSON.stringify(untrack(() => ciblas))) ciblas = r;
 		};
 		viser();
 		const iv = setInterval(viser, 300);
@@ -208,14 +214,14 @@
 </script>
 
 {#if actiu}
-	{#if cibla}
+	{#each ciblas as cibla, k (k)}
 		<div
 			class="guida guida-halo"
 			class:punt={cibla.punt}
 			style="left: {cibla.x - 6}px; top: {cibla.y - 6}px; width: {cibla.w + 12}px; height: {cibla.h + 12}px"
 			aria-hidden="true"
 		></div>
-	{/if}
+	{/each}
 
 	{#if acabat}
 		<!-- la fin : le cercle se trace, un point par étape s'allume, la coche -->
