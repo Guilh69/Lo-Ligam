@@ -9,10 +9,10 @@
 	import RailJaces from '$lib/components/RailJaces.svelte';
 	import CargamentCarta from '$lib/components/CargamentCarta.svelte';
 	import Guida from '$lib/components/Guida.svelte';
-	import LecturaCarta from '$lib/components/LecturaCarta.svelte';
+	import LegendaLocutors from '$lib/components/LegendaLocutors.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { estatCarta, ecranCarta, JACES_PONCHS, activar } from '$lib/carta/estatCarta.svelte.js';
+	import { estatCarta, ecranCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { cargarColas } from '$lib/carta/colasBasa.js';
 	import { esAdmin } from '$lib/adminStore';
@@ -42,50 +42,137 @@
 		}
 	};
 
-	// Les premiers pas de la carte (tutoriel de première connexion, 2026-10-23,
-	// liste à cocher retenue par Romain) : la commande visée, son texte, le geste
-	// qui coche sa ligne ; la dernière, sans geste, dit où revoir la liste
+	// Les premiers pas de la carte (tutoriel de première connexion, Guida.svelte).
+	// Un parcours, du plus important au plus « gadget » (Romain, 2026-10-23 :
+	// gérer ses couches, comprendre les échelles en touchant la carte, chercher
+	// un lieu, le zoom, revenir à l'Occitanie, vider et annuler) : la commande à
+	// toucher (le halo la suit quand un panneau s'ouvre), et ce qui coche l'étape
+	// quand le geste est vraiment fait. Tutoiement (cahier §11, 2026-10-22).
+	const alucadas = () => familhas.flatMap((f) => f.jaces.filter((j) => layerVisibility[j.id]).map((j) => j.id));
+	const tirador = (k) => document.querySelector(`#tirador-jaces[data-tirador="${k}"]`);
+	// « Sus la carta » dans le rail (sur téléphone, une famille ouverte le remplace
+	// par sa rangée de pastilles : on vise alors le bouton qui revient au rail)
+	const railSus = () => document.querySelector('.rail-sus') ?? document.querySelector('.rail .banda-fam');
+	const tiradorFamilha = () => {
+		const t = document.querySelector('#tirador-jaces');
+		return t && !['sus', 'fons'].includes(t.dataset.tirador) ? t : null;
+	};
+	const aLEcran = (el) => {
+		const r = el?.getBoundingClientRect();
+		return r && r.left >= 0 && r.right <= innerWidth ? el : null;
+	};
+	// (vers Rodez : sur l'occitan à l'arrivée, sur ordinateur comme sur téléphone)
+	const puntCarta = () => {
+		const p = ecranCarta.punt?.(44.35, 2.57);
+		return p && { left: p.x, top: p.y, width: 1, height: 1, punt: true };
+	};
 	const ETAPAS = [
 		{
-			cibla: '.lectura:not(.gama)',
-			oc: 'Tres lecturas de la carta : lo territòri, la lenga uèi, sa reviscolada.',
-			fr: 'Trois lectures de la carte : le territoire, la langue aujourd’hui, sa revitalisation.',
-			linha: { oc: 'Causir una lectura', fr: 'Choisir une lecture' },
-			fait: { ev: 'click', sel: '.lectura:not(.gama)' }
-		},
-		{
-			cibla: '.rail',
-			oc: 'Las jaças : çò que la carta mòstra, familha per familha.',
-			fr: 'Les couches : ce que montre la carte, famille par famille.',
-			linha: { oc: 'Alucar una jaça', fr: 'Allumer une couche' },
-			fait: { ev: 'click', sel: '.rail' }
-		},
-		{
-			cibla: '.cerca',
-			oc: 'Cercar una vila o un despartament.',
-			fr: 'Chercher une ville ou un département.',
-			linha: { oc: 'Cercar una vila', fr: 'Chercher une ville' },
-			fait: { ev: 'focusin', sel: '.cerca' }
-		},
-		{
-			// (vers Rodez : sur l'occitan, à l'arrivée, sur ordinateur comme sur téléphone)
-			cibla: () => {
-				const p = ecranCarta.punt?.(44.35, 2.57);
-				return p && { left: p.x, top: p.y, width: 1, height: 1 };
+			titol: { oc: 'Alucar una jaça', fr: 'Allumer une couche' },
+			tèxt: {
+				oc: 'Dobrís una familha (Territòri, per exemple) e aluca una jaça : Despartaments.',
+				fr: 'Ouvre une famille (Territoire, par exemple) et allume une couche : Départements.'
 			},
-			punt: true,
-			oc: 'Un dialècte, una vila : un clic, e sa ficha s’obrís.',
-			fr: 'Un dialecte, une ville : un clic, et sa fiche s’ouvre.',
-			linha: { oc: 'Tocar la carta', fr: 'Toucher la carte' },
-			fait: { ev: 'click', sel: '.leaflet-container', sauf: '.leaflet-control, .comandas-carta, .cerca' }
+			// (sur téléphone, une famille ouverte devient une rangée de pastilles en bas)
+			cibla: () =>
+				tirador('administracion')?.querySelector('[data-jaca="despartaments"]') ??
+				tiradorFamilha() ??
+				aLEcran(document.querySelector('.banda-jaces .chip[data-jaca="despartaments"]')) ??
+				document.querySelector('.banda-jaces') ??
+				document.querySelector('[data-familha="administracion"]'),
+			inici: alucadas,
+			fach: (abans) => alucadas().some((id) => !abans.includes(id))
 		},
 		{
-			cibla: '.info-trigger',
-			oc: 'Per tornar veire los primièrs passes : aicí.',
-			fr: 'Pour revoir les premiers pas : ici.'
+			titol: { oc: 'Gerir tas jaças', fr: 'Gérer tes couches' },
+			tèxt: {
+				oc: 'Dobrís « Sus la carta » : i son totas tas jaças alucadas. Escantís-ne una amb son boton ; « Anullar », just dessús, la torna.',
+				fr: 'Ouvre « Sur la carte » : toutes tes couches allumées y sont. Éteins-en une avec son bouton ; « Annuler », juste au-dessus, la ramène.'
+			},
+			// le bouton de la couche active (la dernière allumée), puis « Anullar »
+			// (une couche éteinte quitte « Sus la carta » : on ne l'y rallume pas)
+			cibla: (mem) => {
+				const t = tirador('sus');
+				if (!t) return railSus();
+				if (mem.escantida) return t.querySelector('.botons-sus .boton');
+				// (sur téléphone, la ligne active peut être plus bas dans le panneau, hors de vue)
+				const activa = t.querySelector('.linha.activa .basc')?.getBoundingClientRect(), c = t.getBoundingClientRect();
+				return activa && activa.top >= c.top && activa.bottom <= Math.min(c.bottom, innerHeight - 80) ? t.querySelector('.linha.activa .basc') : t.querySelector('.linha .basc');
+			},
+			inici: alucadas,
+			fach: (abans, mem) => {
+				const ara = alucadas();
+				mem.escantida ??= abans.find((id) => !ara.includes(id));
+				return !!mem.escantida && ara.includes(mem.escantida);
+			}
+		},
+		{
+			titol: { oc: 'Causir sus la carta', fr: 'Choisir sur la carte' },
+			tèxt: {
+				oc: 'La jaça activa, enlusida dins « Sus la carta », decidís l’escala : region, despartament, vila… Tòca lo nom d’una jaça per l’activar, puèi tòca la carta.',
+				fr: 'La couche active, en surbrillance dans « Sur la carte », décide de l’échelle : région, département, ville… Touche le nom d’une couche pour l’activer, puis touche la carte.'
+			},
+			cibla: () => tirador('sus') ?? puntCarta() ?? railSus(),
+			inici: () => estatCarta.causida,
+			fach: (abans) => !!estatCarta.causida && estatCarta.causida !== abans
+		},
+		{
+			titol: { oc: 'Cercar un luòc', fr: 'Chercher un lieu' },
+			tèxt: {
+				oc: 'Escriu lo nom d’una vila o d’un despartament, puèi causís-lo dins la lista.',
+				fr: 'Écris le nom d’une ville ou d’un département, puis choisis-le dans la liste.'
+			},
+			cibla: '.cerca',
+			ev: { nom: 'carta-cercat' }
+		},
+		{
+			titol: { oc: 'Raprochar, alunhar', fr: 'Zoomer' },
+			tèxt: {
+				oc: 'Los botons + e −, la moleta de la mirga o dos dets sus l’ecran. D’unas jaças se veson sonque de prèp.',
+				fr: 'Les boutons + et −, la molette de la souris ou deux doigts sur l’écran. Certaines couches ne se voient que de près.'
+			},
+			cibla: '.leaflet-control-zoom',
+			// (le vol de la recherche se pose d'abord : son zoom ne compte pas)
+			pausa: 1800,
+			inici: () => estatCarta.z,
+			fach: (z) => estatCarta.z !== z
+		},
+		{
+			titol: { oc: 'Tornar a l’Occitània', fr: 'Revenir à l’Occitanie' },
+			tèxt: {
+				oc: 'Aqueste boton te torna a la vista de tota l’Occitània.',
+				fr: 'Ce bouton te ramène à la vue de toute l’Occitanie.'
+			},
+			cibla: '.tornar-oc',
+			ev: { nom: 'click', sel: '.tornar-oc' }
+		},
+		{
+			titol: { oc: 'Netejar e anullar', fr: 'Vider et annuler' },
+			tèxt: {
+				oc: 'Netejar la carta escantís totas las jaças ; Anullar, dins « Sus la carta » (o Ctrl+Z), las torna. Ensaja los dos.',
+				fr: 'Vider la carte éteint toutes les couches ; Annuler, dans « Sur la carte » (ou Ctrl+Z), les ramène. Essaie les deux.'
+			},
+			// d'abord le bouton qui vide, puis « Anullar » (le panneau, ouvert ou pas)
+			cibla: (mem) => (!mem.buit ? '.netejar-carta' : (tirador('sus')?.querySelector('.botons-sus .boton') ?? railSus())),
+			fach: (_, mem) => {
+				const n = alucadas().length;
+				if (n === 0) mem.buit = true;
+				return !!mem.buit && n > 0;
+			}
+		},
+		{
+			titol: { oc: 'Lo fons de carta', fr: 'Le fond de carte' },
+			tèxt: {
+				oc: 'Contorns, occitan, natural o satellit : causís lo fons que t’agrada.',
+				fr: 'Contours, occitan, naturel ou satellite : choisis le fond qui te plaît.'
+			},
+			cibla: () => tirador('fons')?.querySelector('.fonses') ?? document.querySelector('.fons-carta'),
+			inici: () => baseLayer,
+			fach: (b) => baseLayer !== b
 		}
 	];
 	const FIN = { oc: 'Bon viatge sus la carta !', fr: 'Bon voyage sur la carte !' };
+	const NÒTA = { oc: 'Per tornar veire los primièrs passes : aicí.', fr: 'Pour revoir les premiers pas : ici.', cibla: '.info-trigger' };
 	let guida = $state(null);
 	let tx = $derived(t[lang]);
 
@@ -185,42 +272,16 @@
 		// à la demande de Romain : le tutoriel de première connexion le remplacera ;
 		// la pancarte des crédits reste derrière le bouton « ? »)
 		const ensag = new URLSearchParams(location.search).get('ensag');
-		ensagLectura = ensag === 'lectura'; // le geste territoire / aujourd'hui, trois formes
 		ensagGuida = ensag === 'guida'; // les premiers pas, à chaque visite
 	});
 
 	let ensagGuida = $state(false);
-	let ensagLectura = $state(false);
-	let formaLectura = $state('bascula'); // la forme par défaut ; /carta?ensag=lectura en propose trois
-	let nautLectura = $state(0); // la hauteur de la commande, pour décaler les mots à écouter
-	// La lecture de la carte (DIRECCION bloc 1 : « naviguer entre le territoire
-	// naturel et la réalité d'aujourd'hui ») : 0 lo territòri (tenchas plenas),
-	// 1 « uèi » (tenchas estompadas ; la part de locuteurs par département,
-	// enquête OPLO 2020, Romain 22-10), 2 « la reviscolada » (tenchas estompadas ;
-	// calandretas e librariás alucadas : çò que fa reviure la lenga, Romain
-	// 22-10) ; entre eux, la glissière. Les voix de l'Atlas ne sont liées à aucune
-	// lecture (témoins de la langue parlée).
-	let lectura = $state(0);
-	function causirLectura(u) {
-		lectura = Math.max(0, Math.min(2, Number(u) || 0));
-		const uei = lectura >= 0.5 && lectura < 1.5,
-			reviscolada = lectura >= 1.5;
-		layerVisibility.dialectes = true;
-		layerVisibility.locutors = uei;
-		layerVisibility.calandretas = reviscolada;
-		// l'ensenhament (los corses per adults son ja dins los cercles)
-		for (const id of ['ensBilingue', 'ensEscola', 'ensSegond', 'ensSuperior']) layerVisibility[id] = reviscolada;
-		layerVisibility.librarias = reviscolada;
-		layerVisibility.cercles = reviscolada;
-		layerVisibility.culturaOc = reviscolada;
-		// la reviscolada : sos ponches prenon la man sul clic (los noms de vilas e
-		// las zònas lor cedisson) ; en la quitant, l'òrdre abitual torna
-		if (reviscolada) activar('cercles');
-		else if (JACES_PONCHS.includes(estatCarta.activa)) {
-			estatCarta.pila = estatCarta.pila.filter((id) => !JACES_PONCHS.includes(id) && layerVisibility[id]);
-			estatCarta.activa = estatCarta.pila.at(-1) ?? null;
-		}
-	}
+	let nautLegenda = $state(0); // la hauteur de la légende des locuteurs, pour décaler les mots à écouter
+	// La bascule de lecture Territòri / Uèi / Reviscolada est retirée (Romain,
+	// 2026-10-23 : « ça fait doublon avec tout le reste », ses couches sont dans
+	// le rail). Ce qu'elle faisait de plus est gardé : la couche des locuteurs
+	// (OPLO 2020) estompe les teintes des dialectes et montre sa légende.
+	const lectura = $derived(layerVisibility.locutors ? 1 : 0);
 </script>
 
 <svelte:head>
@@ -233,7 +294,7 @@
 		<AppHeader />
 	</div>
 
-	<main class="carta-wrap" style:--lectura-naut="{nautLectura}px">
+	<main class="carta-wrap" style:--lectura-naut="{nautLegenda}px">
 		<CartaOccitania
 			visibility={layerVisibility}
 			{lectura}
@@ -307,9 +368,9 @@
 		<!-- les premiers pas, dès la carte prête (l'essai se lit après le montage :
 		     le guide repart alors sans mémoire) -->
 		{#key ensagGuida}
-			<Guida bind:this={guida} etapas={ETAPAS} clau="lo-ligam-carta-primiers-passes" fin={FIN} ensag={ensagGuida} {lang} lest={estatCarta.prèsta} />
+			<Guida bind:this={guida} etapas={ETAPAS} clau="lo-ligam-carta-primiers-passes" fin={FIN} nota={NÒTA} ensag={ensagGuida} {lang} lest={estatCarta.prèsta} />
 		{/key}
-		<LecturaCarta bind:forma={formaLectura} {lectura} ensag={ensagLectura} {lang} clar={ambianca.clar} dalt={ambianca.dalt} onCausir={causirLectura} onNaut={(h) => (nautLectura = h)} />
+		{#if layerVisibility.locutors}<LegendaLocutors {lang} clar={ambianca.clar} dalt={ambianca.dalt} onNaut={(h) => (nautLegenda = h)} />{/if}
 	</main>
 </div>
 

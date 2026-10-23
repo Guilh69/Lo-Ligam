@@ -47,7 +47,7 @@
 			indisponible: 'Indisponibla per ara',
 			disponiblas: (n) => `${n} ${n > 1 ? 'jaces disponiblas' : 'jaça disponibla'}`,
 			venir: (n) => `${n} a venir`,
-			res: 'Pas cap de jaça : la carta es nusa. Causissètz-ne una dins una familha.',
+			res: 'Pas cap de jaça : la carta es nusa. Causís-ne una dins una familha.', // (tutoiement, cahier §11 2026-10-22)
 			afichatOc: "Afichar l'occitan",
 			afichadas: (n) => `${n} ${n > 1 ? 'jaces afichadas' : 'jaça afichada'}`,
 			fonsCarta: 'Fons de carta',
@@ -110,7 +110,7 @@
 			indisponible: "Indisponible pour l'instant",
 			disponiblas: (n) => `${n} ${n > 1 ? 'couches disponibles' : 'couche disponible'}`,
 			venir: (n) => `${n} à venir`,
-			res: 'Aucune couche : la carte est nue. Choisissez-en une dans une famille.',
+			res: 'Aucune couche : la carte est nue. Choisis-en une dans une famille.',
 			afichatOc: "Afficher l'occitan",
 			afichadas: (n) => `${n} ${n > 1 ? 'couches affichées' : 'couche affichée'}`,
 			fonsCarta: 'Fond de carte',
@@ -970,6 +970,7 @@
 				type="button"
 				class="rail-b"
 				class:rail-sus={id === 'sus'}
+				data-familha={id}
 				bind:this={botons[id]}
 				aria-expanded={dobert === id}
 				aria-controls="tirador-jaces"
@@ -992,6 +993,7 @@
 				<button
 					type="button"
 					class="chip"
+					data-jaca={j.id}
 					class:on={actiu(j) && visibility[j.id]}
 					class:fora={actiu(j) && visibility[j.id] && foraEscala(j)}
 					class:activa={estatCarta.activa === j.id && !!visibility[j.id]}
@@ -1012,6 +1014,7 @@
 			type="button"
 			class="rail-b"
 			class:rail-sus={id === 'sus'}
+			data-familha={id}
 			bind:this={botons[id]}
 			aria-expanded={dobert === id}
 			aria-controls="tirador-jaces"
@@ -1035,6 +1038,7 @@
 	<section
 		id="tirador-jaces"
 		class="tirador comandas-carta"
+		data-tirador={dobert}
 		aria-label={nomFam(dobert)}
 		style:--tir-x={posT ? posT.x + 'px' : null}
 		style:--tir-y={posT ? posT.y + 'px' : null}
@@ -1362,9 +1366,11 @@
 
 {#snippet linha(j)}
 	<!-- (tota la linha es clicabla a la mirga ; al clavièr, l'interruptor) -->
+	<!-- (data-jaca, data-tirador, data-familha : les premiers pas visent les commandes, Guida.svelte) -->
 	<!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
 	<div
 		class="linha"
+		data-jaca={j.id}
 		class:escantida={!actiu(j)}
 		class:fora={visibility[j.id] && actiu(j) && foraEscala(j)}
 		class:apercebuda={estatCarta.apercebut === j.id}

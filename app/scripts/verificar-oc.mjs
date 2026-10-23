@@ -135,7 +135,8 @@ console.log(`Vérification de ${mots.length} mots contre lo Basic (variété lan
 // Formes locales assumées par Romain (charte §2 bis) : hors Basic et vèrb'Òc,
 // mais voulues telles quelles ; on le dit au lieu de les signaler absentes.
 const FORMAS_ASSUMIDAS = {
-	'siès': 'montpelliéranisme assumé pour « tu es » (Romain, 2026-10-22, charte §2 bis)'
+	'siès': 'montpelliéranisme assumé pour « tu es » (Romain, 2026-10-22, charte §2 bis)',
+	'uèi': '« aujourd’hui », mot validé par Romain (2026-10-23) : ne plus le signaler'
 };
 const absents = [];
 for (const mot of mots) {

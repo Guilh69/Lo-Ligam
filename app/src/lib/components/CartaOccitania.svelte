@@ -916,28 +916,28 @@
 			boton: 'La Calandreta mai pròcha',
 			titol: 'Trobar la Calandreta mai pròcha',
 			posicion: 'De ma posicion',
-			comuna: 'O cercatz vòstra comuna',
+			comuna: 'O cèrca ta comuna', // (tutoiement, cahier §11 2026-10-22)
 			exemple: 'Rodés, Pau, Agen…',
 			cap: 'Cap de comuna trobada',
-			privat: 'Vòstra posicion demòra dins vòstre navegador : es pas mandada endacòm.',
-			cerca: 'Cerca de vòstra posicion…',
-			refusada: 'Vòstra posicion es pas disponibla : cercatz vòstra comuna.',
+			privat: 'Ta posicion demòra dins ton navegador : es pas mandada endacòm.',
+			cerca: 'Cerca de ta posicion…',
+			refusada: 'Ta posicion es pas disponibla : cèrca ta comuna.',
 			distancia: (km) => `A ${km} a vòl d’aucèl`,
-			vos: 'Vos sètz aquí',
+			vos: 'Siès aquí',
 			tampar: 'Tampar'
 		},
 		fr: {
 			boton: 'La Calandreta la plus proche',
 			titol: 'Trouver la Calandreta la plus proche',
 			posicion: 'Depuis ma position',
-			comuna: 'Ou cherchez votre commune',
+			comuna: 'Ou cherche ta commune',
 			exemple: 'Rodez, Pau, Agen…',
 			cap: 'Aucune commune trouvée',
-			privat: 'Votre position reste dans votre navigateur : elle n’est envoyée nulle part.',
-			cerca: 'Recherche de votre position…',
-			refusada: 'Votre position n’est pas disponible : cherchez votre commune.',
+			privat: 'Ta position reste dans ton navigateur : elle n’est envoyée nulle part.',
+			cerca: 'Recherche de ta position…',
+			refusada: 'Ta position n’est pas disponible : cherche ta commune.',
 			distancia: (km) => `À ${km} à vol d’oiseau`,
-			vos: 'Vous êtes ici',
+			vos: 'Tu es ici',
 			tampar: 'Fermer'
 		}
 	};

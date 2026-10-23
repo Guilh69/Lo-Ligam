@@ -86,6 +86,8 @@
 		q = nomAfichat(r);
 		dobèrt = false;
 		onCausir(r);
+		// (les premiers pas cochent « Cercar un luòc », Guida.svelte)
+		dispatchEvent(new CustomEvent('carta-cercat'));
 	}
 
 	function onKey(e) {
