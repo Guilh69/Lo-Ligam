@@ -7,6 +7,12 @@
       "runtimeArgs": [],
       "port": 5173,
       "autoPort": true
+    },
+    {
+      "name": "lo-ligam-app-preview",
+      "runtimeExecutable": "C:\\Users\\perie\\Documents\\6_Projectes\\Lo_Ligam\\app\\preview-server.cmd",
+      "runtimeArgs": [],
+      "port": 4180
     }
   ]
 }
