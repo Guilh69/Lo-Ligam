@@ -15,12 +15,10 @@ Colonne `comprenon_pct` : part des 15 ans et plus qui **comprennent l'occitan pa
 
 Selon l'âge (ensemble interrégional, même graphique) : 15-29 ans 3 %, 30-44 ans 4 %, 45-59 ans 13 %, 60-74 ans 25 %, 75 ans et plus 39 %. Utile pour la page de vulgarisation.
 
-## Ce que la carte pourra montrer
-- Un aplat par département, « ND » affiché comme tel pour les départements non présentés (16 partiel, 66) et pour tout le reste du domaine : Auvergne-Rhône-Alpes (Cantal, Haute-Loire, Puy-de-Dôme, Allier, Ardèche, Drôme, Isère, Loire), Provence-Alpes-Côte d'Azur, vallées occitanes d'Italie, Monaco, Guardia Piemontese.
-- Autres enquêtes à chercher pour ces territoires avant de les laisser en ND (décision de Romain, 22-10).
+## Ce que la carte montre (fait le 2026-10-23)
+- Lecture « Uèi » de `/carta` (bascule Territòri | Uèi | Reviscolada) : un aplat par département enquêté, cinq classes (moins de 5 %, 5, 10, 15, 20 % et plus) du rose pâle au rouge profond dans tous les thèmes, découpé sur le domaine occitan (Béarn, Charente occitane) ; survol ou toucher : taux de locuteurs, compréhension, source et définition. Données recopiées dans `app/src/lib/carta/locutors.js` : **corriger ce tableau-ci d'abord, puis le module**.
+- **Là où aucune enquête n'existe, rien n'est indiqué** (décision de Romain, 23-10 ; remplace le « ND affiché » prévu le 22-10). Pyrénées-Orientales occitanes : rien non plus (taux de locuteurs non publié).
+- Enquêtes cherchées pour le reste du domaine : `autras-enquestas.md` (deux décisions en attente de Romain : vallées d'Italie, Auvergne).
 
-## Ce qui reste à faire (autre conversation, modèle moins coûteux)
-1. Validation du tableau par Romain.
-2. Couche « Uèi » : jointure code département → contour (couche Despartaments déjà dans le catalogue), teinte par classe, source au survol, ND visible.
-3. La bascule à trois positions : Territòri | Uèi | Reviscolada.
-4. Plus tard : une page qui vulgarise l'enquête (graphiques, analyse).
+## Ce qui reste à faire
+1. Plus tard : une page qui vulgarise l'enquête (graphiques, analyse).

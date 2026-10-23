@@ -25,11 +25,11 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 3 | **L'accueil, la vue d'ensemble** (bloc 4, étape 4) | **prochain barreau : Romain répond au bloc 4** |
 | 4 | **La charte et le mouvement** (blocs 5 et 6), puis le cadre commun des pages (étape 3) | à faire |
 | 5 | **Les mots** (bloc 7 : tu ou vous, libellés, occitan à valider) | à faire |
-| 6 | **Les pages de rubrique** (étape 5), Se parla d'abord. La carte, prise en avance le 22-10 : première visite « Trois portes » et bascule Territòri / Reviscolada faites ; reste la lecture « Uèi » (couche OPLO par département, chiffres validés), les couches de la reviscolada (cercles, formateurs, organismes ; Calandretas : état consolidé le 23-10, 61 écoles, 4 collèges, 1 lycée, 3 851 élèves officiels en 2025, les 61 écoles sur la carte depuis le 23-10, `SIG/calandretas/etat-2026-10.md`, à valider), puis le wiki ; ensuite S'apren, Amassa | en cours (carte), le reste à faire |
+| 6 | **Les pages de rubrique** (étape 5), Se parla d'abord. La carte, prise en avance le 22-10 : première visite « Trois portes » et bascule Territòri / Reviscolada faites ; lecture « Uèi » faite le 23-10 (couche OPLO par département, bascule à trois positions ; à décider par Romain : vallées d'Italie et Auvergne, `SIG/oplo-2020/autras-enquestas.md`) ; reste les couches de la reviscolada (cercles, formateurs, organismes ; Calandretas : état consolidé le 23-10, 61 écoles, 4 collèges, 1 lycée, 3 851 élèves officiels en 2025, les 61 écoles sur la carte depuis le 23-10, `SIG/calandretas/etat-2026-10.md`, à valider), puis le wiki ; ensuite S'apren, Amassa | en cours (carte), le reste à faire |
 | 7 | **Les pages intérieures**, une à une (étape 6) ; l'espace d'administration remis en cohérence | à faire |
 | 8 | **Lancement** (bloc 8, étape 7) | à faire |
 
-Le 22-10, la carte (barreau 6) a été prise quatre barreaux en avance, sans le dire : c'est consigné ici, et la suite repart du barreau 3. La lecture « Uèi » se fait quand Romain le décide, dans une conversation à part.
+Le 22-10, la carte (barreau 6) a été prise quatre barreaux en avance, sans le dire : c'est consigné ici, et la suite repart du barreau 3. La lecture « Uèi » est faite (23-10, conversation à part, cahier §11).
 
 ## La photo du projet (2026-09-18)
 
