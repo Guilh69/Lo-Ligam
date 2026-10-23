@@ -71,8 +71,8 @@ function dessenharRepèr(cx, x, y, R, T, a, onda) {
 }
 
 const TÈXTES_FICHA = {
-	oc: { dobrir: 'Descobrir la vila  →', leu: 'Lèu', ajuda: 'Clicatz per descobrir la vila' },
-	fr: { dobrir: 'Découvrir la ville  →', leu: 'Bientôt', ajuda: 'Cliquez pour découvrir la ville' }
+	oc: { dobrir: 'Descobrir la vila  →', leu: 'Lèu', ajuda: 'Clica per descobrir la vila' },
+	fr: { dobrir: 'Découvrir la ville  →', leu: 'Bientôt', ajuda: 'Clique pour découvrir la ville' }
 };
 
 const TEMAS = {

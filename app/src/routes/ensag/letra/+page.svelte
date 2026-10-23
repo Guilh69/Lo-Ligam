@@ -42,7 +42,7 @@
 <main class="banc">
 	<header>
 		<h1>Animations de texte</h1>
-		<p>Les onze effets de Canva, reproduits pour le site. Cliquez sur une vignette pour la rejouer.</p>
+		<p>Les onze effets de Canva, reproduits pour le site. Clique sur une vignette pour la rejouer.</p>
 		<div class="reglatges">
 			<label>Texte <input type="text" bind:value={tèxt} maxlength="40" /></label>
 			<label>Vitesse

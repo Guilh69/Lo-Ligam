@@ -14,7 +14,7 @@
 			titre404: 'Aquesta pagina existís pas',
 			titre: 'Quicòm a fach mancança',
 			text404: 'L’adreça es benlèu mal escricha, o la pagina es estada desplaçada.',
-			text: 'Una error es arribada de nòstre costat. Tornatz ensajar d’aquí un moment.',
+			text: 'Una error es arribada de nòstre costat. Torna ensajar d’aquí un moment.',
 			acuelh: 'Tornar a l’acuèlh',
 			aprene: 'Aprene l’occitan',
 			carta: 'Veire la carta'
@@ -23,7 +23,7 @@
 			titre404: 'Cette page n’existe pas',
 			titre: 'Quelque chose a manqué',
 			text404: 'L’adresse est peut-être mal écrite, ou la page a été déplacée.',
-			text: 'Une erreur s’est produite de notre côté. Réessayez dans un moment.',
+			text: 'Une erreur s’est produite de notre côté. Réessaie dans un moment.',
 			acuelh: 'Retour à l’accueil',
 			aprene: 'Apprendre l’occitan',
 			carta: 'Voir la carte'

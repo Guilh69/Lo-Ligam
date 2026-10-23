@@ -50,8 +50,8 @@
 	const talhar = (f, w) => (w ? f.split(new RegExp(`(?<!\\p{L})(${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})(?!\\p{L})`, 'iu')) : [f]);
 
 	const t = {
-		oc: { dins: 'dins', parlars: 'parlars', tocatz: "Tocatz un mot per l'ausir", escotar: 'Escotar', pausa: 'Pausa', tampar: 'Tampar', seguenta: 'Votz seguenta', votz: 'votz', Votz: 'Votz', classica: 'Grafia classica', mistral: 'Grafia de Mistral', autra: 'Autra grafia', titol: '« La bisa e lo solelh »', posicion: 'Posicion', cro: 'Creissent' },
-		fr: { dins: 'dans', parlars: 'parlers', tocatz: "Touchez un mot pour l'entendre", escotar: 'Écouter', pausa: 'Pause', tampar: 'Fermer', seguenta: 'Voix suivante', votz: 'voix', Votz: 'Voix', classica: 'Graphie classique', mistral: 'Graphie mistralienne', autra: 'Autre graphie', titol: '« La bise et le soleil »', posicion: 'Position', cro: 'Croissant' }
+		oc: { dins: 'dins', parlars: 'parlars', tocatz: "Toca un mot per l'ausir", escotar: 'Escotar', pausa: 'Pausa', tampar: 'Tampar', seguenta: 'Votz seguenta', votz: 'votz', Votz: 'Votz', classica: 'Grafia classica', mistral: 'Grafia de Mistral', autra: 'Autra grafia', titol: '« La bisa e lo solelh »', posicion: 'Posicion', cro: 'Creissent' },
+		fr: { dins: 'dans', parlars: 'parlers', tocatz: "Touche un mot pour l'entendre", escotar: 'Écouter', pausa: 'Pause', tampar: 'Fermer', seguenta: 'Voix suivante', votz: 'voix', Votz: 'Voix', classica: 'Graphie classique', mistral: 'Graphie mistralienne', autra: 'Autre graphie', titol: '« La bise et le soleil »', posicion: 'Position', cro: 'Croissant' }
 	};
 	let tx = $derived(t[lang] ?? t.oc);
 

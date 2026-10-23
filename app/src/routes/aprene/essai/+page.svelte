@@ -649,7 +649,7 @@
 					<div class="reveal">
 						{#if current.note}
 							<button type="button" class="fact-toggle" onclick={() => (showNote = !showNote)}>
-								💡 Sabètz ? <em>(Le saviez-vous&nbsp;?)</em>
+								💡 Sabes ? <em>(Le savais-tu&nbsp;?)</em>
 							</button>
 							{#if showNote}
 								<p class="fact">{current.note}</p>

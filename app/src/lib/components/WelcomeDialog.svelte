@@ -28,7 +28,7 @@
 		},
 		fr: {
 			titre: 'Bienvenue sur Lo Ligam',
-			lead: "Un seul endroit pour tout l'écosystème occitan. Voici ce que vous y trouverez :",
+			lead: "Un seul endroit pour tout l'écosystème occitan. Voici ce que tu y trouveras :",
 			commencar: "Commencer l'exploration",
 			tampar: 'Fermer',
 			pasTornar: 'Ne plus revoir'

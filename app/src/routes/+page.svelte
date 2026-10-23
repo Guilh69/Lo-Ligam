@@ -344,7 +344,7 @@
 					<div class="esvani" style="--i: 5">
 						<p class="eros-sub">{@render bi(FRASA.oc, FRASA.fr)}</p>
 						<p class="indici" aria-hidden="true">
-							{@render bi('Passatz la mirga suls tres mots.', 'Survolez les trois mots.')}
+							{@render bi('Passa la mirga suls tres mots.', 'Survole les trois mots.')}
 						</p>
 					</div>
 					<div class="eros-accions esvani" style="--i: 6">

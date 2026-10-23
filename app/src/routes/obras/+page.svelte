@@ -19,7 +19,7 @@
 	const t = {
 		oc: {
 			title: 'Òbras',
-			lead: 'Çò qu’escoti, çò que legissi, çò que vos fau descobrir en occitan.',
+			lead: 'Çò qu’escoti, çò que legissi, çò que te fau descobrir en occitan.',
 			tot: 'Tot',
 			escotar: 'Escotar',
 			veire: 'Ne saber mai',
@@ -33,7 +33,7 @@
 		},
 		fr: {
 			title: 'Œuvres',
-			lead: 'Ce que j’écoute, ce que je lis, ce que je vous fais découvrir en occitan.',
+			lead: 'Ce que j’écoute, ce que je lis, ce que je te fais découvrir en occitan.',
 			tot: 'Tout',
 			escotar: 'Écouter',
 			veire: 'En savoir plus',

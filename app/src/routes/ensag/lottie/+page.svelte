@@ -50,7 +50,7 @@
 <main class="banc">
 	<header>
 		<h1>Récompenses animées</h1>
-		<p>Dessinées dans EffectCraft, exportées au format Lottie. Cliquez sur une vignette pour la rejouer.</p>
+		<p>Dessinées dans EffectCraft, exportées au format Lottie. Clique sur une vignette pour la rejouer.</p>
 		<div class="reglatges">
 			<span class="fons" role="group" aria-label="Fond des vignettes">
 				<button type="button" aria-pressed={fons === 'nuech'} onclick={() => (fons = 'nuech')}>Fond du site</button>

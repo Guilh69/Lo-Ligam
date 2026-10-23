@@ -948,7 +948,7 @@
 			x = Math.sin(((c - a) * r) / 2) ** 2 + Math.cos(a * r) * Math.cos(c * r) * Math.sin(((d - b) * r) / 2) ** 2;
 		return 12742 * Math.asin(Math.sqrt(x));
 	};
-	// (etiqueta : « Vos sètz aquí », o lo nom de la comuna cercada)
+	// (etiqueta : « Siès aquí », o lo nom de la comuna cercada)
 	async function trobarPròcha(lat, lon, etiqueta) {
 		if (!calandretas.length) await cargarCalandretas();
 		if (!calandretas.length || !map) return;
