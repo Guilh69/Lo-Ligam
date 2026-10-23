@@ -2695,15 +2695,24 @@
 	}
 	/* l'ensenhament : la pastilha al gredon ; la sensibilizacion (mens d'oras),
 	   un ponch pichon plen, sens icòna, per daissar veire l'ensenhament regular */
-	:global(.ponch-jaça-ensBilingue),
-	:global(.ponch-jaça-ensEscola),
-	:global(.ponch-jaça-ensSegond),
-	:global(.ponch-jaça-ensSuperior) {
-		--ponch: var(--t-terra);
+	/* una color per jaça : vejatz app.css (--t-ens-*) */
+	:global(.ponch-jaça-calandretas) {
+		--ponch: var(--t-ens-cal);
 	}
-	/* los corses per adults : la color dels cercles */
+	:global(.ponch-jaça-ensBilingue) {
+		--ponch: var(--t-ens-bil);
+	}
+	:global(.ponch-jaça-ensEscola) {
+		--ponch: var(--t-ens-esc);
+	}
+	:global(.ponch-jaça-ensSegond) {
+		--ponch: var(--t-ens-seg);
+	}
+	:global(.ponch-jaça-ensSuperior) {
+		--ponch: var(--t-ens-sup);
+	}
 	:global(.ponch-jaça-corsAdults) {
-		--ponch: var(--t-aur-clar);
+		--ponch: var(--t-ens-adu);
 	}
 	:global(.ponch-pichon .ponch) {
 		width: 10px;

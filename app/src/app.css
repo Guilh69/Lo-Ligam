@@ -123,6 +123,44 @@
 	--t-linha: rgba(42, 26, 16, 0.3);
 }
 
+/* Couleurs de l'enseignement sur la carte (Romain, 2026-10-23) : celles de la
+   charte (or, bleu ciel, olive, brique, crème ou encre, or clair), une par
+   couche, lisibles sur les deux thèmes (contraste de 3,5 à 14) ; et une
+   variante quand l'option daltonisme est active (celles de la charte s'y
+   confondraient : olive et brique, or et brique) */
+:root,
+:root[data-tema='sorne'] {
+	--t-ens-cal: #f6b73c;
+	--t-ens-bil: #3e7cb1;
+	--t-ens-esc: #5e7b3a;
+	--t-ens-seg: #c8481c;
+	--t-ens-sup: #f5ead8;
+	--t-ens-adu: #ffd98a;
+}
+:root[data-tema='clar'] {
+	--t-ens-cal: #9c5611;
+	--t-ens-bil: #3e7cb1;
+	--t-ens-esc: #5e7b3a;
+	--t-ens-seg: #b53d17;
+	--t-ens-sup: #2a1a10;
+	--t-ens-adu: #8a3f12;
+}
+:root[data-dalt='on'] {
+	--t-ens-cal: #e69f00;
+	--t-ens-bil: #56b4e9;
+	--t-ens-esc: #009e73;
+	--t-ens-seg: #b07cd8;
+	--t-ens-sup: #f5ead8;
+	--t-ens-adu: #ff8c69;
+}
+:root[data-tema='clar'][data-dalt='on'] {
+	--t-ens-cal: #9c5611;
+	--t-ens-bil: #1f78b4;
+	--t-ens-esc: #007a5a;
+	--t-ens-seg: #7a3a99;
+	--t-ens-sup: #2a1a10;
+	--t-ens-adu: #b0306a;
+}
 /* Commandes posées sur la carte (rail, panneau qui s'ouvre à côté, boutons
    ronds, « ? ») : classe .comandas-carta (et les boutons Leaflet de la carte).
    Ton « relevé », choisi par Romain le 2026-10-15 après essai contre le
