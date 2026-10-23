@@ -11,6 +11,7 @@
 	import LecturaCarta from '$lib/components/LecturaCarta.svelte';
 	import InfoIcon from '$lib/components/InfoIcon.svelte';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
+	import { estatCarta, JACES_PONCHS } from '$lib/carta/estatCarta.svelte.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { supabase } from '$lib/supabaseClient';
 	import { esAdmin } from '$lib/adminStore';
@@ -165,6 +166,10 @@
 		layerVisibility.librarias = reviscolada;
 		layerVisibility.cercles = reviscolada;
 		layerVisibility.culturaOc = reviscolada;
+		// la reviscolada : sos ponches prenon la man sul clic (los noms de vilas e
+		// las zònas lor cedisson) ; en la quitant, l'òrdre abitual torna
+		if (reviscolada) estatCarta.activa = 'cercles';
+		else if (JACES_PONCHS.includes(estatCarta.activa)) estatCarta.activa = null;
 	}
 	// Les trois portes du panneau d'accueil (forme C) : la page tient les couches
 	function porta(k) {

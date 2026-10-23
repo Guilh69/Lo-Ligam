@@ -15,3 +15,7 @@ export const estatCarta = $state({ z: null, lat: null, apercebut: null, mòde: n
 
 // Les couches dont on peut choisir un objet sur la carte (et leurs langues, LENGAS)
 export const SELECCIONABLAS = new Set(['vilas', 'regions', 'despartaments', 'comunas', 'dialectes', 'provincias', 'parcs']);
+// Las jaces de ponches : alucadas, prenon la man sul clic (los noms de vilas e
+// las zònas lor cedisson ; retorn de Romain, 2026-10-23)
+export const JACES_PONCHS = ['calandretas', 'ensBilingue', 'ensEscola', 'ensSegond', 'ensSuperior', 'corsAdults', 'cercles', 'culturaOc', 'librarias', 'lieusInteres'];
+for (const id of JACES_PONCHS) SELECCIONABLAS.add(id);

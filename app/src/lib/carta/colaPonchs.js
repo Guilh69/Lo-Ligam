@@ -313,8 +313,10 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 			if (!map || !this._min || map.getZoom() >= zIconas()) return null;
 			if (map.getContainer().classList.contains('luenh')) return null;
 			const lp = map.containerPointToLayerPoint(map.mouseEventToContainerPoint(e)).subtract(this._min);
+			// (al det, una estela se tòca de pus luènh qu'a la mirga)
+			const r = e.pointerType === 'touch' || !matchMedia('(hover: hover)').matches ? 16 : 10;
 			let mai = null,
-				dm = 9 * 9;
+				dm = r * r;
 			for (const g of this._grops) {
 				if (g._estat === 'va') continue;
 				for (const q of g.punts()) {
@@ -324,6 +326,10 @@ export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
 				}
 			}
 			return mai;
+		},
+		// (pels autres escotaires : una estela es jos lo det ?)
+		tocada(e) {
+			return !!this._tocada(e);
 		},
 		_onClic(e, f) {
 			if (this._map?.dragging?._draggable?._moved) return;

@@ -680,7 +680,7 @@ export const cargarLimits = () =>
 
 
 /* ---------- La couche ---------- */
-export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null, zonasUI = null, activa = null, onTerritori = null } = {}) {
+export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null, zonasUI = null, activa = null, onTerritori = null, onVol = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: {
 			pane: 'estelas',
@@ -710,6 +710,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._activa = activa;
 			// le territoire choisi (ou null) : la carte dessine son contour doré
 			this._onTerritori = onTerritori;
+			this._onVol = onVol;
 			// (lo repèr daurat de las vilas a ficha es remplaçat per la causida d'una
 			// comuna e sa ficha, que pòrta lo ligam : Romain, 2026-10-11)
 			this._fichas = [];
@@ -1644,7 +1645,30 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					bestD = sc;
 				}
 			}
-			return best;
+			// lo nom tanben, pas sonque lo ponch : un clic sus las letras de
+			// « Clarmont-Ferrand », a drecha de son ponch, causís la vila (retorn de
+			// Romain, 2026-10-23)
+			return best ?? this._nomA(x + this._o.x, y + this._o.y);
+		},
+		// la vila dont lo nom pausat conten aqueste ponch (meteissas bóstias que caixasNoms)
+		_nomA(px, py) {
+			const pl = this._plaçament;
+			if (!pl?.vilas?.length || !this._el.nomsVilas || !this._cx) return null;
+			const g = this._cx;
+			g.save();
+			if ('letterSpacing' in g) g.letterSpacing = '0px';
+			let trobada = null;
+			for (const v of pl.vilas) {
+				if (!v.e || py < v.y - v.f - 2 || py > v.y + v.f * 0.3 + (v.hS ?? 0) + 2) continue;
+				const w = g.measureText(aplicarVila(g, v.renc, v.f, v.t1 ?? v.nom)).width;
+				const x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - w : v.x - w / 2;
+				if (px >= x0 - 4 && px <= x0 + w + 4) {
+					trobada = v.e;
+					break;
+				}
+			}
+			g.restore();
+			return trobada;
 		},
 		// Le repère d'une ville à fiche n'apparaît qu'avec la carte détaillée (de
 		// loin, on clique sur l'étoile) ; il flotte au-dessus du nom OSM, d'autant
@@ -1790,6 +1814,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._pus = null;
 				if (this._zoom < Z.RELAIS) {
 					this._map.flyTo([f.lat, f.lon], Z.VOL, { duration: this._calm ? 0 : 1.8 });
+					this._onVol?.(f);
 				} else if (f.ligam && this._onFicha) {
 					this._onFicha(f);
 				} else {
@@ -1820,6 +1845,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			this._pus = null;
 			const z = Math.min(Math.max(this._zoom + 2.5, Z.VOL), 12);
 			this._map.flyTo([lòc.lat, lòc.lon], z, { duration: this._calm ? 0 : 1.8 });
+			this._onVol?.(lòc);
 		},
 
 		_dessenhar(t) {

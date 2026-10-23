@@ -343,7 +343,10 @@
 					zonasUI,
 					cedir: (lp) => !!(colaDonadas && map.hasLayer(colaDonadas) && colaDonadas.enclavaA(lp)) || !!colaTematica?.ocupat(lp) || zonaLengaA(lp),
 					activa,
-					onTerritori: dessenharTerritori
+					onTerritori: dessenharTerritori,
+					// de luènh, un clic sus una vila i vòla : a l'arribada, sa comuna es
+					// causida (contorn e ficha, sens segond clic ; retorn de Romain 2026-10-23)
+					onVol: (l) => map.once('moveend', () => causirComunaA(l.lat, l.lon))
 				});
 				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
 				colaEstelas.setNomsDobles(lang === 'fr' ? 'fr' : null, polissaSota);
@@ -1228,6 +1231,15 @@
 		// (rappelée sous la couche « Comunas » de la légende)
 		causidaLegenda(['comunas'], c && { jaça: 'comunas', nom: lang === 'fr' ? (c.fr ?? c.oc) : c.oc || c.fr });
 	}
+	// la comuna jos un luòc (son nom es centrat sus el) : causida se son nom es
+	// pausat ; los noms se cargan après lo vol, d'unes ensages
+	function causirComunaA(lat, lon, n = 0) {
+		if (!map) return;
+		const pt = map.latLngToContainerPoint([lat, lon]);
+		const c = [0, -6, -12, 6].map((dy) => motorNoms?.a(pt.add([0, dy]))).find(Boolean);
+		if (c) return void anarALaComuna(c);
+		if (n < 8) setTimeout(() => causirComunaA(lat, lon, n + 1), 250);
+	}
 	async function anarALaComuna(c) {
 		map.closePopup();
 		causirNomComuna(c);
@@ -1845,7 +1857,9 @@
 					// (la fin d'un lisament de la carta es pas un clic)
 					if (map.dragging?.moved()) return;
 					// (los botons de la carta, la ficha, las fonts : pas un clic sus la carta)
-					if (e.target.closest?.('.leaflet-control-container, .ficha-comuna, .legenda-dial, .fonts-carta')) return;
+					if (e.target.closest?.('.leaflet-control-container, .ficha-comuna, .legenda-dial, .fonts-carta, .leaflet-popup')) return;
+					// (una pastilha o una estela de las jaces jos lo det : lo clic es per ela)
+					if (e.target.closest?.('.leaflet-marker-icon') || ponchs?.tela.tocada(e)) return;
 					const c = nomA(e);
 					if (!c) return void causirNomComuna(null);
 					e.stopImmediatePropagation();
