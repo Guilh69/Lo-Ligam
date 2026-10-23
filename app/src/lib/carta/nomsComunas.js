@@ -247,7 +247,8 @@ export function crearNomsComunas(
 		else tPrec = 0;
 		return r;
 	}
-	const lançar = () => (raf ||= requestAnimationFrame(bocla));
+	let levat = false;
+	const lançar = () => !levat && (raf ||= requestAnimationFrame(bocla));
 
 	map.on('zoomstart movestart', () => {
 		bougant = true;
@@ -275,6 +276,12 @@ export function crearNomsComunas(
 
 	return {
 		tornarPintar: lançar,
+		// la carta se'n va (pagina quitada) : pas pus d'imatge a pintar
+		levar() {
+			levat = true;
+			cancelAnimationFrame(raf);
+			raf = 0;
+		},
 		// lo luòc survolat ({ x, y, caixa } en ponches del contenedor) o null
 		pus(p) {
 			pus = p;

@@ -767,9 +767,21 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 				this._update();
 			});
 			this._viu = true;
+			// al repaus, 20 imatges per segonda pro (lo lusiment de las estelas
+			// demòra doç) ; a plen ritme quand la carta bolega, al survòl, pendent
+			// l'entrada en scèna e quand de noms arriban (audit de la carta,
+			// 2026-10-23 : 60 imatges per segonda en permanéncia, sul telefòn tanben)
+			this._actiuFins = 0;
+			const despertar = () => (this._actiuFins = performance.now() + 1200);
+			map.on('move zoom mousemove click', despertar);
+			this._despertar = despertar;
 			const bocla = (t) => {
 				if (!this._viu) return;
-				this._dessenhar(t);
+				const intro = !this._calm && this._tIntro != null && (t - this._tIntro) / 1000 < INTRO.fin + 0.5;
+				if (intro || this._etiqAnim || this._doçViu || t < this._actiuFins || t - (this._tDarr ?? 0) >= 48) {
+					this._tDarr = t;
+					this._dessenhar(t);
+				}
 				this._raf = requestAnimationFrame(bocla);
 			};
 			this._raf = requestAnimationFrame(bocla);
@@ -778,6 +790,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 		onRemove() {
 			this._viu = false;
 			cancelAnimationFrame(this._raf);
+			if (this._despertar) this._map?.off('move zoom mousemove click', this._despertar);
 			L.DomUtil.remove(this._cv);
 			if (this._cvR) L.DomUtil.remove(this._cvR);
 			this._cvR = this._cxR = null;

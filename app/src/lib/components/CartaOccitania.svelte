@@ -2451,7 +2451,13 @@
 
 	onDestroy(() => {
 		quitarIntro?.();
+		// (las boclas d'imatges s'arrèstan abans la carta : quitar la pagina
+		// daissava de boclas que pintavan una carta levada ; sul servidor, res)
+		if (typeof window === 'undefined') return;
+		cancelAnimationFrame(degatRaf);
+		motorNoms?.levar();
 		map?.remove();
+		map = null;
 	});
 </script>
 

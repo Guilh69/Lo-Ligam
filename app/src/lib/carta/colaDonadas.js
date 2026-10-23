@@ -211,6 +211,9 @@ export function crearColaDonadas(
 			}
 		},
 		setJaces(j) {
+			// (una autra jaça qu'aquestas a cambiat : res a tornar far ; las
+			// tenchas se refasián a cada jaça alucada, audit del 2026-10-23)
+			if (this._jaces && Object.keys(j).length === Object.keys(this._jaces).length && Object.keys(j).every((k) => j[k] === this._jaces[k])) return;
 			// la jaça dels dialèctes ven d'èsser alucada (sovent pel meteis clic
 			// qu'una pastilha) : sas zònas totas se mòstran pas abans la difusion
 			if (j.dialectes && !this._jaces.dialectes) {
