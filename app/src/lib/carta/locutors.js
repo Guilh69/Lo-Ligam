@@ -41,16 +41,18 @@ export const LOCUTORS = {
 	ARAN: [62, 73]
 };
 
-// Cinq classes ; la teinte est la couleur de l'occitan du thème, de plus en
-// plus couvrante (lisible en clair, en sombre et en daltonisme)
-export const CLASSAS = [
-	{ min: 0, alfa: 0.16 },
-	{ min: 5, alfa: 0.29 },
-	{ min: 10, alfa: 0.44 },
-	{ min: 15, alfa: 0.6 },
-	{ min: 20, alfa: 0.8 }
-];
-export const classaDe = (pct) => CLASSAS.findLast((c) => pct >= c.min);
+// Cinq classes, du plus clair (peu de locuteurs) au plus foncé, dans tous les
+// thèmes (Romain, 23-10 : avec une transparence, en sombre, les départements
+// les plus sombres semblaient les plus parlants) ; en bleu pour le daltonisme
+export const CLASSAS = [0, 5, 10, 15, 20];
+const GAMAS = {
+	color: ['#f3cfc8', '#e3978c', '#cf5f52', '#ad3030', '#7a1420'],
+	dalt: ['#d4e4f2', '#9cc3e0', '#5f9dcc', '#2f6fae', '#0d3f7a']
+};
+export const gamaLocutors = (dalt) => (dalt ? GAMAS.dalt : GAMAS.color);
+// (un peu de transparence : le relief et les rivières restent visibles)
+export const alfaLocutors = (clar) => (clar ? 0.72 : 0.82);
+export const classaDe = (pct) => CLASSAS.findLastIndex((m) => pct >= m);
 
 const TX = {
 	oc: {

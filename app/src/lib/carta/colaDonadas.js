@@ -16,7 +16,7 @@ import { cadreDe } from './centrar.js';
 import { telaNoms } from './etiquetasVivas.js';
 import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranca } from './franca.js';
 import { trabalh, talhar, liberar } from './telas.js';
-import { LOCUTORS, classaDe, infoLocutors } from './locutors.js';
+import { LOCUTORS, classaDe, gamaLocutors, alfaLocutors, infoLocutors } from './locutors.js';
 import { nomTerritori } from './territoris.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
@@ -44,10 +44,9 @@ const TEMAS = {
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
 	...(dalt ? { lenga: clar ? '#1f5f8f' : '#6fb1ff', occitan: clar ? '#1f5f8f' : '#4a90d9', occitanTèxt: clar ? '#123a57' : '#cfe4ff' } : {}),
-	dial: dalt ? COLORS.dalt : clar ? COLORS.clar : COLORS.sorne
+	dial: dalt ? COLORS.dalt : clar ? COLORS.clar : COLORS.sorne,
+	dalt: !!dalt
 });
-// (la couleur de l'occitan du thème : la légende de la lecture « Uèi »)
-export const colorOccitan = (clar, dalt) => temaDe(clar, dalt).occitan;
 
 // Lo luòc del nom d'un dialècte, quand lo de las donadas va pas : lo
 // lengadocian, al mitan de sa zòna, tombava sus las Cevenas (retorn de
@@ -1283,11 +1282,12 @@ export function crearColaDonadas(
 			if (G.locs && aLoc > 0.01) {
 				cx.save();
 				if (G.dom) cx.clip(G.dom, 'evenodd');
-				cx.fillStyle = T.occitan;
 				// (de près, l'aplat s'allège comme les teintes : le fond reste lisible)
-				const aZ = lerp(1, 0.45, clamp((z - 7) / 3));
+				const aZ = lerp(1, 0.45, clamp((z - 7) / 3)),
+					gama = gamaLocutors(T.dalt);
+				cx.globalAlpha = alfaLocutors(T.clar) * aLoc * aZ;
 				for (const d of G.locs) {
-					cx.globalAlpha = classaDe(LOCUTORS[d.k][0]).alfa * aLoc * aZ;
+					cx.fillStyle = gama[classaDe(LOCUTORS[d.k][0])];
 					cx.fill(d.c, 'evenodd');
 				}
 				// (un trait fin : un département à 2 % se distingue d'une zone sans enquête)

@@ -21,8 +21,7 @@
 	// visite la choisissent aussi. Occitan vérifié par l'API (lectura, aira,
 	// istorica, votz, territòri, locutor, departament) ; « uèi » à valider par Romain.
 	import Icona from './Icona.svelte';
-	import { colorOccitan } from '$lib/carta/colaDonadas.js';
-	import { CLASSAS, FONT_LOCUTORS } from '$lib/carta/locutors.js';
+	import { CLASSAS, FONT_LOCUTORS, gamaLocutors, alfaLocutors } from '$lib/carta/locutors.js';
 
 	let { lectura = 0, forma = $bindable('bascula'), ensag = false, lang = 'oc', clar = false, dalt = false, onCausir = () => {}, onNaut = () => {} } = $props();
 
@@ -52,7 +51,7 @@
 	const tx = $derived(T[lang] ?? T.oc);
 	// la position : 0 territòri, 1 uèi, 2 reviscolada (la glissière va de l'une à l'autre)
 	const pos = $derived(Math.max(0, Math.min(2, Math.round(lectura))));
-	const color = $derived(colorOccitan(clar, dalt));
+	const gama = $derived(gamaLocutors(dalt));
 	let nautGama = $state(0);
 
 	// Quand la commande partage la rangée des mots à écouter (téléphone, écran
@@ -82,12 +81,12 @@
 	</div>
 	<!-- la légende des teintes de « Uèi » : cinq classes, la source en lien -->
 	{#if pos === 1}
-		<div class="lectura gama comandas-carta" bind:clientHeight={nautGama} style:--c={color}>
+		<div class="lectura gama comandas-carta" bind:clientHeight={nautGama} style:--alfa={alfaLocutors(clar)}>
 			<p>{tx.gama}</p>
 			<div class="linha">
 				<ol>
-					{#each CLASSAS as c (c.min)}
-						<li><i style:opacity={c.alfa}></i><span>{c.min === 20 ? '20 +' : c.min}</span></li>
+					{#each CLASSAS as m, i (m)}
+						<li><i style:background={gama[i]}></i><span>{m === 20 ? '20 +' : m}</span></li>
 					{/each}
 				</ol>
 				<a href={FONT_LOCUTORS.url} target="_blank" rel="noopener" title={FONT_LOCUTORS[lang === 'fr' ? 'fr' : 'oc']}>OPLO 2020</a>
@@ -202,7 +201,7 @@
 		display: block;
 		width: 34px;
 		height: 10px;
-		background: var(--c);
+		opacity: var(--alfa);
 	}
 	.gama li span {
 		font-size: 0.66rem;
