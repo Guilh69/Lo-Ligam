@@ -35,6 +35,7 @@ Romain travaille via plusieurs conversations séparées, une par thème, et depu
 - Committer par petits lots, **uniquement les fichiers qu'on a soi-même modifiés**.
 - **Jamais de `git add -A`** sans relire `git status`.
 - Ces règles sont appliquées par un crochet (`.claude/hooks/garde-fou-git.mjs`, déclaré dans `.claude/settings.json`) : `git add -A/./-u`, `commit -a`, `--no-verify` et tout changement de `core.hooksPath` sont bloqués. Ajouter les fichiers par leur nom. Les autorisations communes à tous les ordinateurs vont dans `.claude/settings.json`, pas dans `settings.local.json`.
+- **Le carnet de Git est hors de Documents** (2026-10-24) : Proton Drive synchronise tout `Documents` et abîmait `.git`. Sur le PC principal, `.git` est un fichier d'une ligne qui renvoie à `C:\Users\perie\Depots\Lo_Ligam.git`. Ne jamais recréer de dossier `.git` dans le projet ; un nouveau clone sur un autre ordinateur se fait avec `git clone --separate-git-dir=<dossier hors de Documents>`.
 - **design-stock : rien de plus de 1 Mo dans Git** (vidéos et .zip ignorés ; `.githooks/pre-commit` refuse le reste). Ne pas contourner le garde-fou : le gros fichier reste sur le disque (cahier §11, 2026-10-12).
 - Modifications non committées d'une autre conversation : ne pas les écraser ni les committer à sa place ; le signaler à Romain.
 - Fin de séance : vérifier que tout est **poussé** (committé ≠ poussé).

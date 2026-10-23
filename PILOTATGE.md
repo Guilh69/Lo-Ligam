@@ -9,7 +9,7 @@
 ## 1. Ce que Romain a à faire, dans l'ordre
 
 **Maintenant**
-1. **Proton Drive abîme `.git`** (12-10, puis 21-10 : la branche a reculé). Régler l'exclusion de `.git`, `app/node_modules`, `app/.svelte-kit` et `app/build` dans Proton Drive ; si l'appli ne le permet pas, sortir le dossier `Documents › 6_Projectes › Lo_Ligam` de la synchronisation (Git et GitHub suffisent entre les deux ordinateurs). Ensuite, jeter `C:\Users\perie\Lo_Ligam_quarantena_2026-10-12`.
+1. **Proton Drive abîmait `.git`** : ✅ réglé sur ce PC le 24-10. Proton ne sait pas exclure un sous-dossier ; le carnet de Git a donc été sorti de Documents, dans `C:\Users\perie\Depots\Lo_Ligam.git` (un fichier `.git` d'une ligne y renvoie, le projet ne bouge pas). Restent : jeter l'ancien carnet gardé en réserve, `C:\Users\perie\Depots\reserva-git-2026-10-24`, et la quarantaine `C:\Users\perie\Lo_Ligam_quarantena_2026-10-12` d'ici une semaine si tout va bien ; **sur l'autre ordinateur, la même opération avec Claude** si Proton y synchronise aussi les Documents.
 2. **Répondre au bloc 4 de `DIRECCION.md`** (l'accueil, vue d'ensemble) : c'est le barreau 3 de l'échelle, le suivant.
 3. **Une question de couleur** : le rouge du logo aussi sur les boutons de zoom de la carte et sur « Écouter la voix la plus proche » ? (règle B, 23-10)
 
@@ -50,7 +50,7 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 6 | /aprene en « Camin » (sommaire du cursus) | à faire | attend S'apren (barreau 6) | Claude |
 | 7 | Transposition Racine² : A prepaus, Contacte, FAQ | à faire ; les liens du menu mènent à des pages vides (wiki, articles, forum, groupes, idées, istòria, contacte) | à ranger dans les barreaux 6 et 7 | Claude |
 | 8 | Photos « sang e aur » | bloqué | inventaire des photos et casting | Romain |
-| 9 | design-stock et Proton Drive | règle « rien de plus de 1 Mo dans Git » en place (12-10) ; **Proton abîme `.git`** | point 1 de la liste | Romain |
+| 9 | design-stock et Proton Drive | règle « rien de plus de 1 Mo dans Git » en place (12-10) ; carnet de Git sorti de Documents sur ce PC (24-10) | l'autre ordinateur (point 1 de la liste) | Romain + Claude |
 | 12 | Autoformation de Romain (`autoformation-parcours.md`) | carnet ouvert le 04-10, pages encore vides | page de l'étape 1 | Romain |
 | 13 | **Carte /carta** (le gros du travail d'octobre) | remise en ordre en deux lots faite (23-10) ; langues de France, voix, lecture « Uèi », Ensenhament (970 lieux, 61 Calandretas), cercles (983), premiers pas en 11 étapes | validations du point 4 ; test iPhone ; plus tard la page qui vulgarise l'enquête OPLO, « Lo viatge » (voix), le mode d'export | Romain + Claude |
 | 13 bis | Fiches des communes | en ligne, la voix d'ici repliée en une ligne (23-10) | captures de Romain sur quelques communes | Romain |
