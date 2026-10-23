@@ -21,7 +21,7 @@
 	import { crearColaTematica } from '$lib/carta/colaTematica.js';
 	import { crearColaLenga } from '$lib/carta/colaLenga.js';
 	import { LENGAS, esOccitan, fonsLenga } from '$lib/carta/lengas.js';
-	import { JACES_DONADAS, JACES_TEMATICAS, JACES_LENGAS } from '$lib/carta/catalogue.js';
+	import { JACES_DONADAS, JACES_TEMATICAS, JACES_LENGAS, ICONAS_JACES } from '$lib/carta/catalogue.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
 	import { degatjar, zonaEtiqueta, zonaCaixa, placeVisible, DEFAUT } from '$lib/carta/degatjament.js';
 	import { NOMS_FRANCES } from '$lib/carta/nomsFrances.js';
@@ -445,7 +445,7 @@
 
 	// Cada punt : una pastilha de veire amb l'icòna de sa jaça (Tabler Icons,
 	// MIT), de la color de la jaça ; las colors de basa venon del tèma
-	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', calandretas: 'school', ensBilingue: 'circle-half-2', ensEscola: 'abc', ensSegond: 'notebook', ensSuperior: 'certificate', corsAdults: 'users-group', cercles: 'messages', culturaOc: 'music', festas: 'confetti', limsi: 'microphone-2' };
+	const ICONA_COLA = { lieusInteres: 'building-arch', librarias: 'books', cercles: 'messages', culturaOc: 'music', festas: 'confetti', limsi: 'microphone-2', ...ICONAS_JACES };
 	// una jaça apondida dins l'admin pren sa color de la basa
 	// Las lengas vesinas (demanda de Romain, 2026-10-09 : « une incitation à
 	// découvrir ce qui se passe à côté ») : al survòl (o al tòc) d'una lenga pas

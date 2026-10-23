@@ -111,12 +111,12 @@ export const CATALOGUE = [
 		oc: 'Ensenha­ment',
 		fr: 'Enseigne­ment',
 		jaces: [
-			{ id: 'calandretas', oc: 'Calandretas', fr: 'Calandretas', estat: 'disponible', defaut: false, nota_oc: "Immersion, tot en occitan : escòlas d'associacions, collègis, licèu", nota_fr: 'Immersion, tout en occitan : écoles associatives, collèges, lycée' },
-			{ id: 'ensBilingue', oc: 'Escòlas bilingüas', fr: 'Écoles bilingues', estat: 'disponible', defaut: false, nota_oc: "Escòlas publicas a paritat oraria ; Val d'Aran : l'aranés es la lenga d'ensenhament", nota_fr: "Écoles publiques : autant d'heures en occitan qu'en français ; Val d'Aran : l'aranais est la langue d'enseignement" },
-			{ id: 'ensEscola', oc: "L'occitan a l'escòla", fr: "L'occitan à l'école", estat: 'disponible', defaut: false, nota_oc: '3 oras per setmana ; ponch pichon : sensibilizacion', nota_fr: '3 heures par semaine ; petit point : sensibilisation' },
-			{ id: 'ensSegond', oc: 'Collègis e licèus', fr: 'Collèges et lycées', estat: 'disponible', defaut: false, nota_oc: 'Opcion, seccion bilingüa, especialitat', nota_fr: 'Option, section bilingue, spécialité' },
-			{ id: 'ensSuperior', oc: 'Universitats e formacion', fr: 'Universités et formation', estat: 'disponible', defaut: false, nota_oc: 'Licéncias, diplòmas, formacion dels ensenhaires', nota_fr: 'Licences, diplômes, formation des enseignants' },
-			{ id: 'corsAdults', oc: 'Corses per adults', fr: 'Cours pour adultes', estat: 'disponible', defaut: false, nota_oc: "Las associacions que donan de corses d'occitan", nota_fr: "Les associations qui donnent des cours d'occitan" }
+			{ id: 'calandretas', oc: 'Calandretas', fr: 'Calandretas', estat: 'disponible', defaut: false, icona: 'school', color: 'aur', grop_oc: 'Immersion', grop_fr: 'Immersion', nota_oc: "Tot en occitan, dins d'escòlas d'associacions", nota_fr: 'Tout en occitan, dans des écoles associatives' },
+			{ id: 'ensBilingue', oc: 'Escòlas bilingüas', fr: 'Écoles bilingues', estat: 'disponible', defaut: false, icona: 'circles-relation', color: 'terra', grop_oc: 'Ensenhament public', grop_fr: 'Enseignement public', nota_oc: 'Mitat del temps en occitan', nota_fr: 'La moitié du temps en occitan' },
+			{ id: 'ensEscola', oc: "L'occitan a l'escòla", fr: "L'occitan à l'école", estat: 'disponible', defaut: false, icona: 'abc', color: 'terra', grop_oc: 'Ensenhament public', grop_fr: 'Enseignement public', nota_oc: 'Tres oras per setmana, o una iniciacion', nota_fr: 'Trois heures par semaine, ou une initiation' },
+			{ id: 'ensSegond', oc: 'Collègis e licèus', fr: 'Collèges et lycées', estat: 'disponible', defaut: false, icona: 'notebook', color: 'terra', grop_oc: 'Ensenhament public', grop_fr: 'Enseignement public', nota_oc: 'Opcion, seccion bilingüa o especialitat', nota_fr: 'Option, section bilingue ou spécialité' },
+			{ id: 'ensSuperior', oc: 'Universitats e formacion', fr: 'Universités et formation', estat: 'disponible', defaut: false, icona: 'certificate', color: 'terra', grop_oc: 'Superior e adults', grop_fr: 'Supérieur et adultes', nota_oc: 'Licéncias, diplòmas, formacion dels ensenhaires', nota_fr: 'Licences, diplômes, formation des enseignants' },
+			{ id: 'corsAdults', oc: 'Corses per adults', fr: 'Cours pour adultes', estat: 'disponible', defaut: false, icona: 'users-group', color: 'aur-clar', grop_oc: 'Superior e adults', grop_fr: 'Supérieur et adultes', nota_oc: 'Associacions que donan de corses', nota_fr: 'Associations qui donnent des cours' }
 		]
 	},
 	{
@@ -273,6 +273,14 @@ export const JACES_FONS = { vilas: 'estelas', toponimia: 'nomsVilas', rius: 'riu
 
 // Las jaces que pinta la còla de donadas (colaDonadas.js) ; las autras son de
 // jaces Leaflet (punts e zònas de la basa)
+// L'icòna de cada jaça de ponches que n'a una dins lo catalògue (font unica
+// per la carta e per lo rail : la pastilha de la linha es la de la carta)
+export const ICONAS_JACES = Object.fromEntries(
+	CATALOGUE.flatMap((f) => f.jaces)
+		.filter((j) => j.icona)
+		.map((j) => [j.id, j.icona])
+);
+
 export const JACES_DONADAS = ['frontiera', 'dialectes', 'unificat', 'creissent', 'regions', 'despartaments', 'locutors'];
 
 // Las jaces que pinta la còla tematica (colaTematica.js), de fonts publicas
