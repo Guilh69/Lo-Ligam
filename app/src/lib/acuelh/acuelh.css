@@ -340,6 +340,15 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 .acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon::before { height: 2px; background: var(--crema); transform: none; }
 .acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon b { font-size: clamp(1.6rem, 2.4vw, 2.2rem); line-height: 1; color: var(--terra); -webkit-text-stroke: 0; }
 .acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon-somari { display: block; margin-bottom: 4rem; font-size: 1rem; line-height: 1.6; color: var(--crema-2); }
+/* Essai de l'or réservé (/?ensag=aur, 2026-10-23, corpus-design §2.4) : les ornements
+   passent au crème ; l'or reste aux actions (boutons, survols) et, en « réservé », au
+   mot fort de chaque grand titre (Amassa, les mots du manifeste, « començar ? ») */
+.acuelh:is([data-aur='reservat'], [data-aur='estricte']) :is(.eros-kicker, .pont-mot, .biai-num, .pont a b, .lengas-consigna, .panel-tagline, .trobador-vers cite, .crida-sub) { color: var(--crema-2); }
+.acuelh:is([data-aur='reservat'], [data-aur='estricte']) .chifra-num { color: var(--crema); }
+.acuelh:is([data-aur='reservat'], [data-aur='estricte']) .jalon b { -webkit-text-stroke-color: var(--crema-2); }
+.acuelh:is([data-aur='reservat'], [data-aur='estricte']) .jalon::before { background: linear-gradient(90deg, var(--crema-2), color-mix(in srgb, var(--crema-2) 30%, transparent) 45%, transparent); }
+.acuelh[data-aur='estricte'] .linha:nth-child(3) { color: var(--crema); --lum-b: var(--crema); --lum: var(--aur); }
+.acuelh[data-aur='estricte'] :is(.manifest-tèxt .m.aur.on, .crida-titol .aur) { color: var(--crema); }
 .acuelh .jalon-somari span { margin-inline: 0.6em; }
 .acuelh .jalon-somari a { color: var(--crema); text-decoration: underline; text-decoration-color: var(--crema-3); text-underline-offset: 0.25em; transition: color 0.3s, text-decoration-color 0.3s; }
 .acuelh .jalon-somari a:hover { color: var(--terra); text-decoration-color: currentColor; }
