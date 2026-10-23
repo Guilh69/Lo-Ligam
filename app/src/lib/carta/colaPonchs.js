@@ -1,0 +1,387 @@
+// La tela dels ponches (decision de Romain, 2026-10-23 : « la carte fluide au
+// maximum » ; « un joli vague qui déferle sur le système, qui s'illumine…
+// avec un cercle lumineux »). De luènh, las estelas de totas las jaces de
+// ponches son pintadas sus una sola tela (abans : dos mila objèctes de nòu
+// elements cadun dins la pagina) ; de prèp, sonque los ponches de la vista
+// venon de pastilhas. Quand una jaça s'aluca, un cercle lumenós part del mitan
+// de la vista e aluca cada ponch a son passatge ; quand s'escantís, l'onda los
+// amorça al meteis biais.
+
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+
+// lo temps que l'onda met per traversar la vista (s), e lo de l'aluc d'un ponch
+const DURADA = 1.5,
+	ALUC = 0.45;
+
+// la mena d'un ponch, legida sus son icòna (ponch-plen, ponch-vuèg, ponch-pichon)
+function mena(m) {
+	const c = m.options.icon?.options?.className ?? '';
+	return c.includes('ponch-pichon') ? 'pichon' : c.includes('ponch-vuèg') ? 'vuèg' : c.includes('ponch-plen') ? 'plen' : '';
+}
+
+export function crearPonchs(L, { zIconas, onClic, onDobleClic }) {
+	const calm = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	// --- la tela ---
+	const Tela = L.Layer.extend({
+		options: { pane: 'ponchs', padding: 0.3 },
+
+		initialize() {
+			this._grops = new Set();
+			this._sprites = new Map();
+		},
+
+		onAdd(map) {
+			if (!map.getPane('ponchs')) {
+				const p = map.createPane('ponchs');
+				p.style.zIndex = '590';
+				p.style.pointerEvents = 'none';
+			}
+			this._cv = L.DomUtil.create('canvas', 'cola-ponchs leaflet-zoom-animated', this.getPane());
+			this._cx = this._cv.getContext('2d');
+			// los clics e lo survòl : escotats abans Leaflet (captura), per que
+			// una estela tocada dobrisca sa bulla sens dobrir la ficha de la comuna
+			const c = map.getContainer();
+			this._clic = (e) => this._onClic(e, onClic);
+			this._dclic = (e) => this._onClic(e, onDobleClic);
+			this._mirga = (e) => this._onMirga(e);
+			c.addEventListener('click', this._clic, true);
+			c.addEventListener('dblclick', this._dclic, true);
+			c.addEventListener('mousemove', this._mirga, { passive: true });
+			this._update();
+		},
+		onRemove(map) {
+			cancelAnimationFrame(this._raf);
+			const c = map.getContainer();
+			c.removeEventListener('click', this._clic, true);
+			c.removeEventListener('dblclick', this._dclic, true);
+			c.removeEventListener('mousemove', this._mirga);
+			L.DomUtil.remove(this._cv);
+		},
+		getEvents() {
+			const ev = { viewreset: this._update, zoom: this._onZoom, moveend: this._update, resize: this._update };
+			if (this._zoomAnimated) ev.zoomanim = this._onAnimZoom;
+			return ev;
+		},
+		_onAnimZoom(ev) {
+			this._transform(ev.center, ev.zoom);
+		},
+		_onZoom() {
+			this._transform(this._map.getCenter(), this._map.getZoom());
+		},
+		// (coma los rendèires de Leaflet : la tela s'agrandís pendent lo zoom)
+		_transform(centre, zoom) {
+			if (!this._centre) return;
+			const map = this._map;
+			const s = map.getZoomScale(zoom, this._zoom),
+				miei = map.getSize().multiplyBy(0.5 + this.options.padding),
+				pc = map.project(this._centre, zoom),
+				o = miei.multiplyBy(-s).add(pc).subtract(map._getNewPixelOrigin(centre, zoom));
+			L.DomUtil.setTransform(this._cv, o, s);
+		},
+
+		_update() {
+			const map = this._map;
+			if (!map) return;
+			const p = this.options.padding,
+				tal = map.getSize(),
+				min = map.containerPointToLayerPoint(tal.multiplyBy(-p)).round(),
+				t = tal.multiplyBy(1 + 2 * p).round();
+			this._min = min;
+			this._centre = map.getCenter();
+			this._zoom = map.getZoom();
+			L.DomUtil.setPosition(this._cv, min);
+			const dpr = Math.min(devicePixelRatio || 1, 2);
+			this._dpr = dpr;
+			this._W = t.x;
+			this._H = t.y;
+			this._cv.width = Math.round(t.x * dpr);
+			this._cv.height = Math.round(t.y * dpr);
+			this._cv.style.width = t.x + 'px';
+			this._cv.style.height = t.y + 'px';
+			// (las posicions, un còp per vista : l'onda las tòrna legir)
+			for (const g of this._grops)
+				for (const q of g.punts()) {
+					const lp = map.latLngToLayerPoint(q.ll);
+					q.x = lp.x - min.x;
+					q.y = lp.y - min.y;
+				}
+			this._pintar();
+		},
+
+		// --- las jaces ---
+		mostrar(g) {
+			this._grops.add(g);
+			g._estat = 'ven';
+			this._vaga(g, 1);
+		},
+		amagar(g) {
+			g._estat = 'va';
+			this._vaga(g, -1);
+		},
+		retirar(g) {
+			this._grops.delete(g);
+			this._pintar();
+		},
+		// l'onda : partís del mitan de la vista ; las jaces alucadas al meteis
+		// moment (la lectura Reviscolada n'aluca cinc) partejan la meteissa onda
+		_vaga(g, dir) {
+			const ara = performance.now() / 1000;
+			const v = this._darrièra;
+			if (v && v.dir === dir && ara - v.t0 < 0.1) g._vagaA = v;
+			else {
+				const tal = this._map.getSize();
+				g._vagaA = this._darrièra = { t0: calm() ? -99 : ara, dir, centre: this._map.getCenter(), max: Math.hypot(tal.x, tal.y) / 2 };
+			}
+			this._update();
+			this._animar();
+		},
+		// lo moment ont l'onda passa sus un ponch (s), e son retard per las
+		// pastilhas (CSS)
+		retard(g, ll) {
+			const v = g._vagaA;
+			if (!v || !this._map) return 0;
+			const d = this._map.latLngToContainerPoint(ll).distanceTo(this._map.latLngToContainerPoint(v.centre));
+			return clamp(d / v.max, 0, 1.2) * DURADA;
+		},
+
+		_animar() {
+			if (this._raf) return;
+			const pas = () => {
+				this._raf = null;
+				const viu = this._pintar();
+				if (viu) this._raf = requestAnimationFrame(pas);
+			};
+			this._raf = requestAnimationFrame(pas);
+		},
+
+		// --- lo dessenh ---
+		_color(cid) {
+			// la color de la jaça : la de sas pastilhas (--ponch), legida sul CSS
+			let s = this._sonda;
+			if (!s) {
+				s = this._sonda = L.DomUtil.create('div', '', this._map.getContainer());
+				s.style.display = 'none';
+			}
+			s.className = 'ponch-jaça ponch-jaça-' + cid;
+			return getComputedStyle(s).getPropertyValue('--ponch').trim() || '#f6b73c';
+		},
+		// una estela precalculada (alo + còr) per color e mena
+		_sprite(color, m) {
+			const k = color + m;
+			let sp = this._sprites.get(k);
+			if (sp) return sp;
+			const dpr = this._dpr,
+				R = 13,
+				c = document.createElement('canvas');
+			c.width = c.height = Math.ceil(2 * R * dpr);
+			const x = c.getContext('2d');
+			x.scale(dpr, dpr);
+			const g = x.createRadialGradient(R, R, 0, R, R, R);
+			g.addColorStop(0, color);
+			g.addColorStop(0.18, color);
+			g.addColorStop(0.3, `color-mix(in srgb, ${color} 55%, transparent)`);
+			g.addColorStop(0.65, 'transparent');
+			x.fillStyle = g;
+			x.globalAlpha = m === 'vuèg' ? 0.45 : 0.8;
+			x.beginPath();
+			x.arc(R, R, R, 0, 2 * Math.PI);
+			x.fill();
+			x.globalAlpha = 1;
+			x.beginPath();
+			if (m === 'vuèg') {
+				x.strokeStyle = color;
+				x.lineWidth = 1.2;
+				x.arc(R, R, 3.2, 0, 2 * Math.PI);
+				x.stroke();
+			} else {
+				x.fillStyle = color;
+				x.arc(R, R, 3.6, 0, 2 * Math.PI);
+				x.fill();
+			}
+			sp = { c, R };
+			this._sprites.set(k, sp);
+			return sp;
+		},
+
+		// torna true tant qu'una onda es en cors
+		_pintar() {
+			const x = this._cx,
+				map = this._map;
+			if (!x || !map) return false;
+			const dpr = this._dpr;
+			x.setTransform(dpr, 0, 0, dpr, 0, 0);
+			x.clearRect(0, 0, this._W, this._H);
+			const ara = performance.now() / 1000;
+			const luenh = map.getZoom() < zIconas();
+			let viu = false;
+			const ondas = new Set();
+			for (const g of this._grops) {
+				const v = g._vagaA;
+				const dt = v ? ara - v.t0 : 99;
+				if (v && dt < DURADA * 1.25 + ALUC) {
+					viu = true;
+					ondas.add(v);
+				} else if (g._estat === 'va') continue;
+				if (!luenh) continue;
+				const color = this._color(g.cid);
+				const vc = v ? map.latLngToLayerPoint(v.centre).subtract(this._min) : null;
+				for (const q of g.punts()) {
+					if (q.m === 'pichon' || q.x === undefined) continue;
+					if (q.x < -20 || q.y < -20 || q.x > this._W + 20 || q.y > this._H + 20) continue;
+					let a = 1,
+						esc = 1;
+					if (vc && dt < DURADA * 1.25 + ALUC) {
+						const tq = clamp(Math.hypot(q.x - vc.x, q.y - vc.y) / v.max, 0, 1.2) * DURADA;
+						const u = (dt - tq) / ALUC;
+						if (v.dir > 0) {
+							if (u < 0) continue;
+							a = clamp(u * 2);
+							// l'aluc : l'estela s'agrandís e lusís al passatge de l'onda
+							esc = 1 + 1.3 * Math.exp(-4 * clamp(u, 0, 3));
+						} else {
+							if (u > 1) continue;
+							a = 1 - clamp(u);
+							esc = 1 + 0.6 * clamp(u);
+						}
+					}
+					const sp = this._sprite(color, q.m);
+					const r = sp.R * esc;
+					x.globalAlpha = a;
+					x.drawImage(sp.c, q.x - r, q.y - r, 2 * r, 2 * r);
+				}
+			}
+			x.globalAlpha = 1;
+			// lo cercle lumenós de cada onda
+			for (const v of ondas) {
+				const dt = ara - v.t0;
+				const q = clamp(dt / DURADA, 0, 1.25);
+				const R = q * v.max * 1.05;
+				const a = (v.dir > 0 ? 0.55 : 0.3) * Math.pow(clamp(1 - q / 1.25), 0.7);
+				if (R < 2 || a <= 0.01) continue;
+				const c = map.latLngToLayerPoint(v.centre).subtract(this._min);
+				const col = this._color('cercles');
+				const gr = x.createRadialGradient(c.x, c.y, Math.max(0, R - 38), c.x, c.y, R + 6);
+				gr.addColorStop(0, 'transparent');
+				gr.addColorStop(0.75, `color-mix(in srgb, ${col} ${Math.round(a * 100)}%, transparent)`);
+				gr.addColorStop(0.9, `color-mix(in srgb, white ${Math.round(a * 60)}%, transparent)`);
+				gr.addColorStop(1, 'transparent');
+				x.fillStyle = gr;
+				x.beginPath();
+				x.arc(c.x, c.y, R + 6, 0, 2 * Math.PI);
+				x.fill();
+			}
+			return viu;
+		},
+
+		// --- las estelas tocadas ---
+		_tocada(e) {
+			const map = this._map;
+			if (!map || !this._min || map.getZoom() >= zIconas()) return null;
+			if (map.getContainer().classList.contains('luenh')) return null;
+			const lp = map.containerPointToLayerPoint(map.mouseEventToContainerPoint(e)).subtract(this._min);
+			let mai = null,
+				dm = 9 * 9;
+			for (const g of this._grops) {
+				if (g._estat === 'va') continue;
+				for (const q of g.punts()) {
+					if (q.m === 'pichon' || q.x === undefined) continue;
+					const d = (q.x - lp.x) ** 2 + (q.y - lp.y) ** 2;
+					if (d < dm) (dm = d), (mai = q);
+				}
+			}
+			return mai;
+		},
+		_onClic(e, f) {
+			if (this._map?.dragging?._draggable?._moved) return;
+			const q = this._tocada(e);
+			if (!q || !f) return;
+			// (escotat en captura sul contenidor : Leaflet o veirà pas)
+			e.stopImmediatePropagation();
+			e.stopPropagation();
+			f(q.marca);
+		},
+		_onMirga(e) {
+			if (this._rafM) return;
+			this._rafM = requestAnimationFrame(() => {
+				this._rafM = null;
+				this._map?.getContainer().classList.toggle('sus-estela', !!this._tocada(e));
+			});
+		}
+	});
+
+	const tela = new Tela();
+
+	// --- un grop de ponches : de prèp, sonque las pastilhas de la vista ---
+	const Grop = L.LayerGroup.extend({
+		initialize(marcas, cid) {
+			L.LayerGroup.prototype.initialize.call(this, marcas);
+			this.cid = cid;
+			this._fixas = new Set();
+		},
+		punts() {
+			if (!this._punts) {
+				this._punts = [];
+				this.eachLayer((m) => this._punts.push({ ll: m.getLatLng(), marca: m, m: mena(m) }));
+			}
+			return this._punts;
+		},
+		onAdd(map) {
+			this._map = map;
+			if (!map.hasLayer(tela)) tela.addTo(map);
+			map.on('moveend', this._sync, this);
+			tela.mostrar(this);
+			this._sync(true);
+		},
+		onRemove(map) {
+			map.off('moveend', this._sync, this);
+			this.eachLayer((m) => map.hasLayer(m) && map.removeLayer(m));
+			this._fixas.clear();
+			tela.retirar(this);
+		},
+		_sync(vaga) {
+			const map = this._map;
+			if (!map) return;
+			const luenh = map.getZoom() < zIconas();
+			const b = map.getBounds().pad(0.3);
+			this.eachLayer((m) => {
+				const vòl = this._fixas.has(m) || (!luenh && b.contains(m.getLatLng())) || m.isPopupOpen?.();
+				const i = map.hasLayer(m);
+				if (vòl && !i) {
+					map.addLayer(m);
+					// a l'aluc de la jaça, la pastilha espelís al passatge de l'onda
+					if (vaga === true && m._icon && !calm()) m._icon.style.setProperty('--retard', Math.round(tela.retard(this, m.getLatLng()) * 1000) + 'ms');
+				} else if (!vòl && i) map.removeLayer(m);
+			});
+		},
+		// la jaça s'escantís : l'onda d'escantiment (estelas e pastilhas)
+		escantir() {
+			tela.amagar(this);
+			this.eachLayer((m) => {
+				if (!m._icon) return;
+				m._icon.style.setProperty('--retard', Math.round(tela.retard(this, m.getLatLng()) * 2000) + 'ms');
+				m._icon.classList.add('ponch-se-va');
+			});
+		},
+		reviure() {
+			this.eachLayer((m) => m._icon?.classList.remove('ponch-se-va'));
+			tela.mostrar(this);
+		},
+		// una pastilha que deu èsser sus la carta (la Calandreta mai pròcha)
+		assegurar(m) {
+			this._fixas.add(m);
+			if (this._map && !this._map.hasLayer(m)) this._map.addLayer(m);
+			m.once('popupclose', () => {
+				this._fixas.delete(m);
+				setTimeout(() => this._sync(), 0);
+			});
+		}
+	});
+
+	return {
+		tela,
+		grop: (marcas, cid) => new Grop(marcas, cid),
+		// la durada d'una onda d'escantiment (ms), per levar la jaça après
+		DURADA_MS: Math.round((DURADA * 1.25 + ALUC) * 1000)
+	};
+}

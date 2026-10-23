@@ -30,6 +30,7 @@
 	import VotzAtlas from './VotzAtlas.svelte';
 	import { cargarVotz } from '$lib/carta/votz.js';
 	import { ponchesEnsenhament, ponchesCorses } from '$lib/carta/ensenhament.js';
+	import { crearPonchs } from '$lib/carta/colaPonchs.js';
 
 	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
 	// carta_colas — geridas dins /admin/carta) puslèu que
@@ -318,6 +319,8 @@
 	let quitarIntro = null;
 	let L;
 	let pointLayers = {};
+	// la tela dels ponches e sos grops (colaPonchs.js) : de luènh, una sola tela
+	let ponchs = null;
 	let geoLayers = {};
 	let geoLoading = {};
 	let currentBaseTileLayer;
@@ -602,7 +605,7 @@
 		if (!d?.features) return (calandretasCargadas = false);
 		const mena = MENA_ESCÒLA[lang] ?? MENA_ESCÒLA.oc;
 		calandretas = [];
-		pointLayers.calandretas = L.layerGroup(
+		pointLayers.calandretas = ponchs.grop(
 			d.features.map((f) => {
 				const [lon, lat] = f.geometry.coordinates;
 				const q = f.properties;
@@ -622,7 +625,8 @@
 				// (per la mai pròcha : la distància s'insertís jos lo nom)
 				calandretas.push({ lat, lon, m, cap, ligam });
 				return m;
-			})
+			}),
+			'calandretas'
 		);
 		if (d.font) map.attributionControl?.addAttribution(d.font);
 		if (visibility.calandretas) pointLayers.calandretas.addTo(map);
@@ -641,7 +645,7 @@
 			.catch(() => null);
 		if (!d?.ponches) return (ensenhamentCargat = false);
 		for (const [id, ms] of Object.entries(ponchesEnsenhament(d.ponches, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml, comunaOc }))) {
-			pointLayers[id] = L.layerGroup(ms);
+			pointLayers[id] = ponchs.grop(ms, id);
 			if (visibility[id]) pointLayers[id].addTo(map);
 		}
 		if (d.font) map.attributionControl?.addAttribution(d.font);
@@ -655,7 +659,7 @@
 			.then((r) => (r.ok ? r.json() : null))
 			.catch(() => null);
 		if (!d?.features) return (corsesCargats = false);
-		pointLayers.corsAdults = L.layerGroup(ponchesCorses(d.features, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml }));
+		pointLayers.corsAdults = ponchs.grop(ponchesCorses(d.features, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml }), 'corsAdults');
 		if (visibility.corsAdults) pointLayers.corsAdults.addTo(map);
 	}
 
@@ -715,7 +719,7 @@
 			grops[cid].push(m);
 		}
 		for (const [cid, ms] of Object.entries(grops)) {
-			pointLayers[cid] = L.layerGroup(ms);
+			pointLayers[cid] = ponchs.grop(ms, cid);
 			if (visibility[cid]) pointLayers[cid].addTo(map);
 		}
 		if (d.font) map.attributionControl?.addAttribution(d.font);
@@ -948,6 +952,7 @@
 			{ paddingTopLeft: [60, 170], paddingBottomRight: [60, 120], maxZoom: 13, duration: calm ? 0 : 1.6 }
 		);
 		map.once('moveend', () => {
+			pointLayers.calandretas?.assegurar?.(mai.m);
 			mai.m.openPopup();
 			ponchUsatgièr?.openTooltip();
 		});
@@ -1601,6 +1606,16 @@
 			maxZoom: 19,
 			zoomControl: false
 		});
+		// las estelas de las jaces de ponches, sus una sola tela ; una tocada
+		// dobrís la bulla de son ponch (coma la pastilha de prèp)
+		ponchs = crearPonchs(L, {
+			zIconas: () => Z.ICONAS,
+			onClic: (m) => {
+				const b = m.getPopup();
+				if (b) L.popup({ ...b.options, offset: L.point(0, -4) }).setLatLng(m.getLatLng()).setContent(b.getContent()).openOn(map);
+			},
+			onDobleClic: (m) => centrarSus({ centre: m.getLatLng() })
+		});
 		// la grilha de las escalas seguís la latitud del centre (escalas.js)
 		map.on('move', () => fixarLatEscala(map.getCenter().lat));
 		// (e la talha de l'ecran : un telefòn vei las meteissas jaces al meteis cadratge)
@@ -2024,7 +2039,7 @@
 		}
 
 		for (const [cid, luocs] of Object.entries(perCola)) {
-			pointLayers[cid] = L.layerGroup(
+			pointLayers[cid] = ponchs.grop(
 				luocs.map((lieu) => {
 					const nom = (lang === 'fr' && lieu.nom_fr) || lieu.nom_oc;
 					const desc = (lang === 'fr' && lieu.descripcion_fr) || lieu.descripcion_oc;
@@ -2036,7 +2051,8 @@
 					return dobleClicSus(L.marker([lieu.latitud, lieu.longitud], { icon: iconaPunt(cid), title: nom, keyboard: true })).bindPopup(
 						`<strong>${escapeHtml(nom)}</strong>${desc ? `<br>${escapeHtml(desc)}` : ''}${accions ? `<span class="accions-bulla">${accions}</span>` : ''}`
 					);
-				})
+				}),
+				cid
 			);
 			if (visibility[cid]) pointLayers[cid].addTo(map);
 		}
@@ -2074,9 +2090,12 @@
 
 		for (const [cid, layer] of Object.entries(pointLayers)) {
 			if (vis[cid]) {
+				const tornar = !!partidas[cid];
 				clearTimeout(partidas[cid]);
 				partidas[cid] = null;
-				layer.eachLayer((m) => m._icon?.classList.remove('ponch-se-va'));
+				// (rapelada en plena onda d'escantiment : l'onda d'aluc tòrna partir)
+				if (tornar && layer.reviure) layer.reviure();
+				else layer.eachLayer((m) => m._icon?.classList.remove('ponch-se-va'));
 				layer.addTo(map);
 			} else if (map.hasLayer(layer) && !partidas[cid]) {
 				// los ponches s'escantisson un a un abans de partir (demanda de
@@ -2085,11 +2104,16 @@
 					map.removeLayer(layer);
 					continue;
 				}
-				layer.eachLayer((m) => m._icon?.classList.add('ponch-se-va'));
-				partidas[cid] = setTimeout(() => {
-					partidas[cid] = null;
-					map?.removeLayer(layer);
-				}, 1000);
+				// (las jaces de la tela : una onda lumenosa las escantís, vejatz colaPonchs.js)
+				if (layer.escantir) layer.escantir();
+				else layer.eachLayer((m) => m._icon?.classList.add('ponch-se-va'));
+				partidas[cid] = setTimeout(
+					() => {
+						partidas[cid] = null;
+						map?.removeLayer(layer);
+					},
+					layer.escantir ? ponchs.DURADA_MS : 1000
+				);
 			}
 		}
 
@@ -2703,6 +2727,17 @@
 	}
 	:global(.ponch-vuèg .ponch) {
 		border-style: dashed;
+	}
+	/* la tela dels ponches (colaPonchs.js) : la man sus una estela ; escafada
+	   a l'escala del mond, coma las pastilhas */
+	:global(.leaflet-container.sus-estela) {
+		cursor: pointer;
+	}
+	:global(.leaflet-ponchs-pane) {
+		transition: opacity 0.45s;
+	}
+	.carta:global(.luenh) :global(.leaflet-ponchs-pane) {
+		opacity: 0;
 	}
 	:global(.leaflet-popup-content small a) {
 		color: var(--t-aur-clar);
