@@ -98,27 +98,34 @@
 			// pas grave : le choix vaut pour la visite
 		}
 	}
-	// L'or réservé aux actions (effet d'isolement, corpus-design §2.4,
-	// 2026-10-23) : une quinzaine d'ornements partageaient l'or du bouton
-	// « Reservar un cors ». À comparer sur /?ensag=aur : « Or réservé » garde
-	// l'or aux actions et au mot fort de chaque grand titre, « Or strict » aux
-	// seules actions ; sans le paramètre, l'actuelle.
-	const FORMAS_AUR = [
+	// Une couleur pour ce qui se clique (effet d'isolement, corpus-design §2.4,
+	// 2026-10-23) : l'or (l'ocre en clair) reste pour mettre en valeur (Romain :
+	// « ça permet de bien mettre en valeur certains trucs ») ; les boutons et
+	// les liens prennent leur propre couleur. À comparer sur /?ensag=accion ;
+	// sans le paramètre, l'actuelle. La couleur est posée sur <html> pour que
+	// le bouton « Reservar un cors » de la barre la prenne aussi.
+	const FORMAS_ACCION = [
 		['actual', 'Actuelle'],
-		['reservat', 'Or réservé'],
-		['estricte', 'Or strict']
+		['brica', 'Brique'],
+		['blau', 'Bleu'],
+		['crema', 'Crème']
 	];
-	const CLAU_ENSAG_AUR = 'lo-ligam-ensag-aur';
-	let formaAur = $state('actual');
-	let ensagAur = $state(false);
-	function causirFormaAur(v) {
-		formaAur = v;
+	const CLAU_ENSAG_ACCION = 'lo-ligam-ensag-accion';
+	let formaAccion = $state('actual');
+	let ensagAccion = $state(false);
+	function causirFormaAccion(v) {
+		formaAccion = v;
 		try {
-			localStorage.setItem(CLAU_ENSAG_AUR, v);
+			localStorage.setItem(CLAU_ENSAG_ACCION, v);
 		} catch {
 			// pas grave : le choix vaut pour la visite
 		}
 	}
+	$effect(() => {
+		if (!ensagAccion || formaAccion === 'actual') return;
+		document.documentElement.dataset.accion = formaAccion;
+		return () => delete document.documentElement.dataset.accion;
+	});
 	// Les trois chemins, pris dans le plan du site (le même que le menu et le
 	// pied de page) : un chemin principal et quelques autres. « Amassa » mène à
 	// sa section plus bas tant que le fòrum et les grops ne sont pas faits.
@@ -195,11 +202,11 @@
 				// stockage indisponible : la forme actuelle
 			}
 		}
-		ensagAur = new URLSearchParams(location.search).get('ensag') === 'aur';
-		if (ensagAur) {
+		ensagAccion = new URLSearchParams(location.search).get('ensag') === 'accion';
+		if (ensagAccion) {
 			try {
-				const f = localStorage.getItem(CLAU_ENSAG_AUR);
-				if (FORMAS_AUR.some(([v]) => v === f)) formaAur = f;
+				const f = localStorage.getItem(CLAU_ENSAG_ACCION);
+				if (FORMAS_ACCION.some(([v]) => v === f)) formaAccion = f;
 			} catch {
 				// stockage indisponible : la forme actuelle
 			}
@@ -313,7 +320,7 @@
 			>{/each}
 	</p>{/snippet}
 
-<div class="acuelh" class:fr bind:this={racina} data-separa={formaSepara} data-aur={formaAur}>
+<div class="acuelh" class:fr bind:this={racina} data-separa={formaSepara}>
 	<canvas id="fons" aria-hidden="true"></canvas>
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 	<canvas id="estelas" aria-hidden="true"></canvas>
@@ -674,10 +681,10 @@
 		{/each}
 	</div>
 {/if}
-{#if ensagAur}
-	<div class="ensag-eros" role="group" aria-label="Essai : l'or réservé aux actions">
-		{#each FORMAS_AUR as [v, nom] (v)}
-			<button type="button" aria-pressed={formaAur === v} onclick={() => causirFormaAur(v)}>{nom}</button>
+{#if ensagAccion}
+	<div class="ensag-eros" role="group" aria-label="Essai : une couleur pour ce qui se clique">
+		{#each FORMAS_ACCION as [v, nom] (v)}
+			<button type="button" aria-pressed={formaAccion === v} onclick={() => causirFormaAccion(v)}>{nom}</button>
 		{/each}
 	</div>
 {/if}
@@ -734,10 +741,6 @@
 		font-style: italic;
 		font-size: 1.15rem;
 		color: var(--aur-clar);
-	}
-	/* Essai de l'or réservé (/?ensag=aur) : la légende passe au crème */
-	.acuelh:is([data-aur='reservat'], [data-aur='estricte']) .manifest-retrat figcaption {
-		color: var(--crema-2);
 	}
 	@container manifest (max-width: 820px) {
 		.manifest-cors {
