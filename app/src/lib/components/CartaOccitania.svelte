@@ -320,6 +320,8 @@
 	let quitarIntro = null;
 	let L;
 	let pointLayers = {};
+	// l'etiqueta del departament o de la region revelats (colaEstelas onLegenda)
+	let legendaTer = $state(null);
 	// la tela dels ponches e sos grops (colaPonchs.js) : de luènh, una sola tela
 	let ponchs = null;
 	let geoLayers = {};
@@ -347,7 +349,10 @@
 					onTerritori: dessenharTerritori,
 					// de luènh, un clic sus una vila i vòla : a l'arribada, sa comuna es
 					// causida (contorn e ficha, sens segond clic ; retorn de Romain 2026-10-23)
-					onVol: (l) => map.once('moveend', () => causirComunaA(l.lat, l.lon))
+					onVol: (l) => map.once('moveend', () => causirComunaA(l.lat, l.lon)),
+					// l'etiqueta del territòri revelat : un element de la pagina, al dessús
+					// dels noms de las comunas e dels ponches
+					onLegenda: (l) => (legendaTer = l)
 				});
 				for (const id of JACES_LENGAS) colaEstelas.setLengaFons(id, visibility[id] ? (fonsLengas[id] ?? null) : null);
 				colaEstelas.setNomsDobles(lang === 'fr' ? 'fr' : null, polissaSota);
@@ -2601,6 +2606,12 @@
 			{#if legendaDial.encadrat}
 				<p class="encadrat" lang={lang === 'fr' ? 'fr' : 'oc'}>{lang === 'fr' ? legendaDial.encadrat.fr : legendaDial.encadrat.oc}</p>
 			{/if}
+		</div>
+	{:else if legendaTer && !vesina}
+		<!-- lo departament o la region revelats (al dessús de tot) -->
+		<div class="legenda-dial" class:fixada={legendaTer.fixat} aria-live="polite">
+			<span class="nom">{legendaTer.nom}</span>
+			<span class="sota">{legendaTer.sota}</span>
 		</div>
 	{/if}
 

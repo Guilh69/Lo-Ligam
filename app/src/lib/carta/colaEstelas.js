@@ -680,7 +680,7 @@ export const cargarLimits = () =>
 
 
 /* ---------- La couche ---------- */
-export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null, zonasUI = null, activa = null, onTerritori = null, onVol = null } = {}) {
+export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', onFicha = null, cedir = null, onPus = null, zonasUI = null, activa = null, onTerritori = null, onVol = null, onLegenda = null } = {}) {
 	const Cola = L.Layer.extend({
 		options: {
 			pane: 'estelas',
@@ -711,6 +711,7 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// le territoire choisi (ou null) : la carte dessine son contour doré
 			this._onTerritori = onTerritori;
 			this._onVol = onVol;
+			this._onLegenda = onLegenda;
 			// (lo repèr daurat de las vilas a ficha es remplaçat per la causida d'una
 			// comuna e sa ficha, que pòrta lo ligam : Romain, 2026-10-11)
 			this._fichas = [];
@@ -2312,8 +2313,29 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 			// Pendant un fondu, une seule étiquette : sa largeur glisse de l'un à
 			// l'autre et les deux noms se fondent, centrés
 			const lg = this._legendaT;
+			// sus la carta, l'etiqueta es un element de la pagina, al dessús de las
+			// còlas (los noms de comunas, pintats pus naut, la recobrissián : retorn
+			// de Romain, 2026-10-23, « GIRONDA » sus « Lo Mont de Marçan ») ; la
+			// tela la pinta sonque se degun l'afichà pas (l'acuèlh)
+			if (this._onLegenda) {
+				const tt = TÈXTES_TER[this._lang] ?? TÈXTES_TER.oc;
+				const l = !this._legendaAmagada && lg.length ? lg.reduce((m, x) => (x.a > (m?.a ?? 0) ? x : m), null) : null;
+				const item =
+					l && l.a > 0.35
+						? {
+								nom: nomTerritori(l.reg ? 'region' : 'despartament', l.t.code, l.t.nom, this._lang).toUpperCase(),
+								sota: sotaTerritori(l.t.code, this._lang) ?? (l.reg ? tt.region : tt.despartament + ' · ' + l.t.code),
+								fixat: lg.some((x) => x.fixat)
+							}
+						: null;
+				const clau = item ? item.nom + '|' + item.sota + '|' + item.fixat : '';
+				if (clau !== this._clauLegenda) {
+					this._clauLegenda = clau;
+					this._onLegenda(item);
+				}
+			}
 			// (l'invitacion a descobrir una lenga vesina es al meteis endrech : passa d'en primièr)
-			if (lg.length && !this._legendaAmagada) {
+			else if (lg.length && !this._legendaAmagada) {
 				const tt = TÈXTES_TER[this._lang] ?? TÈXTES_TER.oc,
 					vis = this._map.getSize(),
 					v0 = this._map.containerPointToLayerPoint([0, 0]).subtract(this._min);
