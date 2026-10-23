@@ -1,7 +1,8 @@
 // La memòria del navigador (decision de Romain, 2026-10-23 : « la mémoire du
-// navigateur pour que la carte se recharge instantanément »). Lo site
-// (scripts e estils) es gardat a la primièra visita ; las donadas de la carta,
-// las polissas, las icònas e los sons, a lor primièr usatge. A la visita
+// navigateur pour que la carte se recharge instantanément »). Los scripts e
+// estils, las donadas de la carta, las polissas, las icònas e los sons son
+// gardats a lor primièr usatge (pas tot lo site d'un còp a la primièra
+// visita : 480 Ko que la carta esperava pas, audit del 2026-10-23). A la visita
 // seguenta, venon de la memòria sens tornar demandar res al servidor. Cada
 // mesa en linha càmbia la version : la memòria vièlha es levada, las donadas
 // novèlas se tornan cargar un còp. Las paginas e lo compte demòran sul ret
@@ -14,12 +15,7 @@ const MEMÒRIA = `lo-ligam-${version}`;
 const A_GARDAR = /^\/(data|fonts|icones|sons|_app\/immutable)\//;
 
 self.addEventListener('install', (ev) => {
-	ev.waitUntil(
-		caches
-			.open(MEMÒRIA)
-			.then((c) => c.addAll(build))
-			.then(() => self.skipWaiting())
-	);
+	ev.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', (ev) => {

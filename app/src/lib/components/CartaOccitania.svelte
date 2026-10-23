@@ -11,6 +11,7 @@
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
+	import { cargarColas } from '$lib/carta/colasBasa.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { crearColaMar } from '$lib/carta/colaMar.js';
@@ -2034,7 +2035,7 @@
 		// Puèi las donadas de la basa (luòcs, còlas)
 		const [{ data: luocsData }, { data: colasData }] = await Promise.all([
 			supabase.from('carta_luocs').select('*').eq('publicat', true).order('ordre'),
-			supabase.from('carta_colas').select('*').order('ordre')
+			cargarColas()
 		]);
 
 		for (const c of colasData ?? []) {

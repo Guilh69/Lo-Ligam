@@ -13,7 +13,7 @@
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { estatCarta, JACES_PONCHS } from '$lib/carta/estatCarta.svelte.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { supabase } from '$lib/supabaseClient';
+	import { cargarColas } from '$lib/carta/colasBasa.js';
 	import { esAdmin } from '$lib/adminStore';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 	import { CATALOGUE, fusionarCatalogue, JACES_FONS } from '$lib/carta/catalogue.js';
@@ -122,7 +122,7 @@
 	});
 
 	onMount(async () => {
-		const { data } = await supabase.from('carta_colas').select('*').order('ordre');
+		const { data } = await cargarColas();
 		if (data?.length) {
 			familhas = fusionarCatalogue(data);
 			// visibilitat per defaut reglabla dins l'admin (colomna « visibla »),
