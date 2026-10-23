@@ -146,22 +146,26 @@
 	let nautLectura = $state(0); // la hauteur de la commande, pour décaler les mots à écouter
 	// La lecture de la carte (DIRECCION bloc 1 : « naviguer entre le territoire
 	// naturel et la réalité d'aujourd'hui ») : 0 lo territòri (tenchas plenas),
-	// 1 « la reviscolada » (tenchas estompadas ; calandretas e librariás alucadas :
-	// çò que fa reviure la lenga, Romain 22-10) ; entre los dos, la glissièra.
-	// Les voix de l'Atlas ne sont liées à aucune lecture (témoins de la langue
-	// parlée). Les portes de la première visite choisissent la lecture aussi.
+	// 1 « uèi » (tenchas estompadas ; la part de locuteurs par département,
+	// enquête OPLO 2020, Romain 22-10), 2 « la reviscolada » (tenchas estompadas ;
+	// calandretas e librariás alucadas : çò que fa reviure la lenga, Romain
+	// 22-10) ; entre eux, la glissière. Les voix de l'Atlas ne sont liées à aucune
+	// lecture (témoins de la langue parlée). Les portes de la première visite
+	// choisissent la lecture aussi.
 	let lectura = $state(0);
 	function causirLectura(u) {
-		lectura = Math.max(0, Math.min(1, Number(u) || 0));
-		const reviscolada = lectura >= 0.5;
+		lectura = Math.max(0, Math.min(2, Number(u) || 0));
+		const uei = lectura >= 0.5 && lectura < 1.5,
+			reviscolada = lectura >= 1.5;
 		layerVisibility.dialectes = true;
+		layerVisibility.locutors = uei;
 		layerVisibility.calandretas = reviscolada;
 		layerVisibility.librarias = reviscolada;
 	}
 	// Les trois portes du panneau d'accueil (forme C) : la page tient les couches
 	function porta(k) {
 		if (k === 'territori') causirLectura(0);
-		else if (k === 'reviscolada') causirLectura(1);
+		else if (k === 'reviscolada') causirLectura(2);
 		else if (k === 'vila') document.getElementById('cerca-carta')?.focus();
 	}
 </script>
@@ -238,7 +242,7 @@
 		/>
 
 		<VisitaCarta bind:forma={formaVisita} ensag={ensagVisita} {lang} onPorta={porta} />
-		<LecturaCarta bind:forma={formaLectura} {lectura} ensag={ensagLectura} {lang} onCausir={causirLectura} onNaut={(h) => (nautLectura = h)} />
+		<LecturaCarta bind:forma={formaLectura} {lectura} ensag={ensagLectura} {lang} clar={ambianca.clar} dalt={ambianca.dalt} onCausir={causirLectura} onNaut={(h) => (nautLectura = h)} />
 	</main>
 </div>
 

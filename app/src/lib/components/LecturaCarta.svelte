@@ -10,17 +10,21 @@
 	// l'Atlas sont les témoins de la langue parlée dans sa diversité, pas la
 	// revitalisation ; la revitalisation = calandretas, cercles occitans,
 	// formateurs, librairies, organismes engagés). « Uèi » (part de locuteurs
-	// par département, enquête OPLO 2020) viendra quand la couche existera.
+	// par département, enquête OPLO 2020) arrive le 2026-10-23, entre les deux :
+	// la bascule passe à trois positions (0 Territòri, 1 Uèi, 2 Reviscolada),
+	// avec la légende des teintes sous elle quand « Uèi » est choisi.
 	//   B « Le cartouche » : le titre de la lecture en cours, une ligne dessous,
-	//     et le passage vers l'autre ;
-	//   C « La glissière » : un curseur continu entre les deux, la carte se fond.
+	//     et le passage vers les autres ;
+	//   C « La glissière » : un curseur continu de 0 à 2, la carte se fond.
 	// La lecture estompe les teintes des dialectes (colaDonadas.setLectura) et
-	// allume les couches d'aujourd'hui (la page) ; les portes de la première
+	// allume les couches de la lecture (la page) ; les portes de la première
 	// visite la choisissent aussi. Occitan vérifié par l'API (lectura, aira,
-	// istorica, votz, territòri) ; « uèi » à valider par Romain.
+	// istorica, votz, territòri, locutor, departament) ; « uèi » à valider par Romain.
 	import Icona from './Icona.svelte';
+	import { colorOccitan } from '$lib/carta/colaDonadas.js';
+	import { CLASSAS, FONT_LOCUTORS } from '$lib/carta/locutors.js';
 
-	let { lectura = 0, forma = $bindable('bascula'), ensag = false, lang = 'oc', onCausir = () => {}, onNaut = () => {} } = $props();
+	let { lectura = 0, forma = $bindable('bascula'), ensag = false, lang = 'oc', clar = false, dalt = false, onCausir = () => {}, onNaut = () => {} } = $props();
 
 	const FORMAS = [
 		['bascula', 'La bascule'],
@@ -30,66 +34,90 @@
 	const T = {
 		oc: {
 			lectura: 'Lectura de la carta',
-			territori: 'Territòri',
-			uei: 'Reviscolada',
-			titols: ['Lo territòri', 'La reviscolada'],
-			sotas: ['L’aira istorica de la lenga', 'Calandretas e librariás'],
-			passar: 'Passar a'
+			noms: ['Territòri', 'Uèi', 'Reviscolada'],
+			titols: ['Lo territòri', 'Uèi', 'La reviscolada'],
+			sotas: ['L’aira istorica de la lenga', 'Los locutors, per departament', 'Calandretas e librariás'],
+			passar: 'Passar a',
+			gama: 'Locutors, en % dels 15 ans e mai'
 		},
 		fr: {
 			lectura: 'Lecture de la carte',
-			territori: 'Territoire',
-			uei: 'Revitalisation',
-			titols: ['Le territoire', 'La revitalisation'],
-			sotas: ['L’aire historique de la langue', 'Calandretas et librairies'],
-			passar: 'Passer à'
+			noms: ['Territoire', 'Aujourd’hui', 'Revitalisation'],
+			titols: ['Le territoire', 'Aujourd’hui', 'La revitalisation'],
+			sotas: ['L’aire historique de la langue', 'Les locuteurs, par département', 'Calandretas et librairies'],
+			passar: 'Passer à',
+			gama: 'Locuteurs, en % des 15 ans et plus'
 		}
 	};
 	const tx = $derived(T[lang] ?? T.oc);
-	const uei = $derived(lectura >= 0.5);
+	// la position : 0 territòri, 1 uèi, 2 reviscolada (la glissière va de l'une à l'autre)
+	const pos = $derived(Math.max(0, Math.min(2, Math.round(lectura))));
+	const color = $derived(colorOccitan(clar, dalt));
+	let nautGama = $state(0);
 
-	// Quand la commande partage la rangée des mots à écouter (téléphone, ou la
-	// glissière sous la recherche), la page décale cette rangée de sa hauteur
+	// Quand la commande partage la rangée des mots à écouter (téléphone, écran
+	// moyen, ou la glissière sous la recherche), la page décale cette rangée de
+	// sa hauteur (seuil : celui du style, plus bas)
 	let naut = $state(0);
 	let estrech = $state(false);
 	$effect(() => {
-		const mq = matchMedia('(max-width: 760px)');
+		const mq = matchMedia('(max-width: 1020px)');
 		const f = () => (estrech = mq.matches);
 		f();
 		mq.addEventListener('change', f);
 		return () => mq.removeEventListener('change', f);
 	});
 	$effect(() => {
-		onNaut(estrech || forma === 'glissiera' ? naut + 10 : 0);
+		// (la légende de « Uèi », sous la bascule, compte dans la hauteur)
+		const gama = forma === 'bascula' && pos === 1 && nautGama ? nautGama + 6 : 0;
+		onNaut(estrech || forma === 'glissiera' ? naut + 10 + gama : 0);
 	});
 </script>
 
 {#if forma === 'bascula'}
 	<div class="lectura bascula comandas-carta" bind:clientHeight={naut} role="group" aria-label={tx.lectura}>
-		<button type="button" aria-pressed={!uei} onclick={() => onCausir(0)}>{tx.territori}</button>
-		<button type="button" aria-pressed={uei} onclick={() => onCausir(1)}>{tx.uei}</button>
+		{#each tx.noms as nom, i (i)}
+			<button type="button" aria-pressed={pos === i} onclick={() => onCausir(i)}>{nom}</button>
+		{/each}
 	</div>
+	<!-- la légende des teintes de « Uèi » : cinq classes, la source en lien -->
+	{#if pos === 1}
+		<div class="lectura gama comandas-carta" bind:clientHeight={nautGama} style:--c={color}>
+			<p>{tx.gama}</p>
+			<div class="linha">
+				<ol>
+					{#each CLASSAS as c (c.min)}
+						<li><i style:opacity={c.alfa}></i><span>{c.min === 20 ? '20 +' : c.min}</span></li>
+					{/each}
+				</ol>
+				<a href={FONT_LOCUTORS.url} target="_blank" rel="noopener" title={FONT_LOCUTORS[lang === 'fr' ? 'fr' : 'oc']}>OPLO 2020</a>
+			</div>
+		</div>
+	{/if}
 {:else if forma === 'cartocha'}
 	<div class="lectura cartocha comandas-carta" bind:clientHeight={naut} role="group" aria-label={tx.lectura}>
 		<p class="sobre">{tx.lectura}</p>
-		<h2>{tx.titols[uei ? 1 : 0]}</h2>
-		<p class="sota">{tx.sotas[uei ? 1 : 0]}</p>
-		<button type="button" class="autra" onclick={() => onCausir(uei ? 0 : 1)}>{tx.passar} « {tx.titols[uei ? 0 : 1]} » <Icona nom="suivant" size="0.9em" /></button>
+		<h2>{tx.titols[pos]}</h2>
+		<p class="sota">{tx.sotas[pos]}</p>
+		{#each [0, 1, 2].filter((i) => i !== pos) as i (i)}
+			<button type="button" class="autra" onclick={() => onCausir(i)}>{tx.passar} « {tx.titols[i]} » <Icona nom="suivant" size="0.9em" /></button>
+		{/each}
 	</div>
 {:else}
 	<div class="lectura glissiera comandas-carta" bind:clientHeight={naut}>
-		<span class:on={!uei}>{tx.territori}</span>
+		<span class:on={pos === 0}>{tx.noms[0]}</span>
 		<input
 			type="range"
 			min="0"
-			max="1"
+			max="2"
 			step="0.01"
 			value={lectura}
 			aria-label={tx.lectura}
-			aria-valuetext={uei ? tx.uei : tx.territori}
+			aria-valuetext={tx.noms[pos]}
 			oninput={(e) => onCausir(e.currentTarget.value)}
 		/>
-		<span class:on={uei}>{tx.uei}</span>
+		<span class:on={pos === 2}>{tx.noms[2]}</span>
+		<span class="mitan" class:on={pos === 1}>{tx.noms[1]}</span>
 	</div>
 {/if}
 
@@ -105,7 +133,7 @@
 <style>
 	.lectura {
 		position: absolute;
-		z-index: 1000;
+		z-index: 999; /* sous la recherche (1000) : sa liste de résultats passe devant */
 		font-family: var(--font-body);
 		color: var(--t-tinta);
 		background: var(--t-veire-fort);
@@ -140,6 +168,52 @@
 	.bascula button[aria-pressed='true'] {
 		background: var(--t-tinta);
 		color: var(--t-fons);
+	}
+	/* la légende de « Uèi », sous la bascule, à droite du rail des couches */
+	.gama {
+		top: calc(var(--cap-bas, 5.4rem) + 18px + 50px);
+		left: calc(var(--marge, 1rem) + 5.3rem);
+		padding: 0.45rem 0.75rem 0.35rem;
+		border-radius: 12px;
+		font-size: 0.72rem;
+	}
+	.gama p {
+		margin: 0 0 0.3rem;
+		font-weight: 700;
+	}
+	.gama .linha {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.7rem;
+	}
+	.gama ol {
+		display: flex;
+		gap: 2px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.gama li {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+	.gama i {
+		display: block;
+		width: 34px;
+		height: 10px;
+		background: var(--c);
+	}
+	.gama li span {
+		font-size: 0.66rem;
+		font-variant-numeric: tabular-nums;
+		color: var(--t-tinta-2);
+	}
+	.gama a {
+		font-size: 0.66rem;
+		white-space: nowrap;
+		color: var(--t-tinta-2);
+		text-underline-offset: 0.2em;
 	}
 
 	/* B : le cartouche, à droite du rail : le titre de la lecture en cours */
@@ -215,6 +289,30 @@
 		accent-color: var(--t-aur);
 		cursor: pointer;
 	}
+	/* « Uèi », au milieu de la course : écrit sous la glissière quand on y est */
+	.glissiera .mitan {
+		position: absolute;
+		top: calc(100% + 4px);
+		left: 50%;
+		transform: translateX(-50%);
+		opacity: 0;
+		transition: opacity 0.4s;
+	}
+	.glissiera .mitan.on {
+		opacity: 1;
+	}
+
+	/* écran moyen : la bascule à trois positions toucherait la recherche (centrée,
+	   400 px) ; elle passe sous elle, à droite du rail des couches */
+	@media (min-width: 761px) and (max-width: 1020px) {
+		.bascula {
+			top: calc(var(--cap-bas, 5.4rem) + 18px + 60px);
+			left: calc(var(--marge, 1rem) + 5.3rem);
+		}
+		.gama {
+			top: calc(var(--cap-bas, 5.4rem) + 18px + 60px + 50px);
+		}
+	}
 
 	/* téléphone : sous la recherche, à gauche (la recherche prend toute la largeur) */
 	@media (max-width: 760px) {
@@ -224,6 +322,10 @@
 			top: calc(var(--cap-bas, 6.4rem) + 18px + 60px);
 			left: var(--marge, 1rem);
 			transform: none;
+		}
+		.gama {
+			top: calc(var(--cap-bas, 6.4rem) + 18px + 60px + 50px);
+			left: var(--marge, 1rem);
 		}
 		.cartocha {
 			width: calc(100% - 2 * var(--marge, 1rem));

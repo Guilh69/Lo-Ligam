@@ -14,6 +14,7 @@
 	import { fly, slide } from 'svelte/transition';
 	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
 	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
+	import { CLASSAS } from '$lib/carta/locutors.js';
 	import { quintOut } from 'svelte/easing';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { cargarFranca, lengasEstrangièr, dialèctesFranca } from '$lib/carta/franca.js';
@@ -212,6 +213,8 @@
 			// la lenga unida : una sola color, son nom
 			unificat: '<rect width="52" height="36" fill="#c4553f" opacity=".72"/><text x="26" y="21.5" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1.2" fill="#fff8ec">OCCITAN</text>',
 			creissent: '<defs><pattern id="ap-h" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.6" height="5" fill="#e0612f"/></pattern></defs><path d="M0 22 Q 26 4 52 20 V 36 H 0z" fill="url(#ap-h)" opacity=".8"/>',
+			// (les locuteurs, OPLO 2020 : les cinq classes de la légende de « Uèi »)
+			locutors: CLASSAS.map((c, i) => `<rect x="${i * 10.4}" y="0" width="10.4" height="36" fill="#d9343f" opacity="${c.alfa}"/>`).join(''),
 			limsi: '<circle cx="14" cy="18" r="3" fill="#3e7cb1"/><path d="M20 12a8 8 0 0 1 0 12M24 8a13 13 0 0 1 0 20" fill="none" stroke="#3e7cb1" stroke-width="1.6"/>',
 			regions: '<path d="M6 8 L22 5 L30 14 L46 10 L48 30 L24 32 L8 28z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 3" opacity=".8"/>',
 			despartaments: '<path d="M2 12 L18 8 L20 20 L4 24z M18 8 L34 10 L36 22 L20 20 M34 10 L50 6 L50 20 L36 22 M4 24 L20 20 L24 34 M20 20 L36 22 L40 34" fill="none" stroke="currentColor" stroke-width=".9" opacity=".6"/>',

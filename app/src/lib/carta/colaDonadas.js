@@ -16,6 +16,8 @@ import { cadreDe } from './centrar.js';
 import { telaNoms } from './etiquetasVivas.js';
 import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranca } from './franca.js';
 import { trabalh, talhar, liberar } from './telas.js';
+import { LOCUTORS, classaDe, infoLocutors } from './locutors.js';
+import { nomTerritori } from './territoris.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -44,6 +46,8 @@ const temaDe = (clar, dalt) => ({
 	...(dalt ? { lenga: clar ? '#1f5f8f' : '#6fb1ff', occitan: clar ? '#1f5f8f' : '#4a90d9', occitanTèxt: clar ? '#123a57' : '#cfe4ff' } : {}),
 	dial: dalt ? COLORS.dalt : clar ? COLORS.clar : COLORS.sorne
 });
+// (la couleur de l'occitan du thème : la légende de la lecture « Uèi »)
+export const colorOccitan = (clar, dalt) => temaDe(clar, dalt).occitan;
 
 // Lo luòc del nom d'un dialècte, quand lo de las donadas va pas : lo
 // lengadocian, al mitan de sa zòna, tombava sus las Cevenas (retorn de
@@ -226,7 +230,8 @@ export function crearColaDonadas(
 			// una zòna causida dont la jaça s'escantís es pas pus causida
 			const resta = this._sels.filter((k) => (k === 'cro' ? j.creissent : j.dialectes));
 			if (resta.length !== this._sels.length) this._aplicar(resta, false);
-			if (this._pus && !(this._pus === 'cro' ? j.creissent : j.dialectes)) this._survòl(null);
+			const viva = (k) => (k === 'cro' ? j.creissent : k.startsWith('loc-') ? j.locutors : j.dialectes);
+			if (this._pus && !viva(this._pus)) this._survòl(null);
 			this._cargar();
 			this._update();
 			this._lançarBalet();
@@ -558,6 +563,18 @@ export function crearColaDonadas(
 				y = lp.y - this._min.y;
 			return enc.find((zm) => this._cxTest.isPointInPath(zm.c, x, y, 'evenodd'))?.kod ?? null;
 		},
+		// Le département de l'enquête OPLO sous un point (couche « locutors »
+		// allumée, à l'échelle où son aplat se voit), sinon null
+		_locA(lp) {
+			const g = this._geo;
+			if (!g?.locs || !this._jaces.locutors || !this._min || this._zoom > 10.75) return null;
+			if (aDetalh(this._nivèls ?? nivèlsDezoom(this._map), this._zoom) < 0.5) return null;
+			this._cxTest ??= document.createElement('canvas').getContext('2d');
+			const x = lp.x - this._min.x,
+				y = lp.y - this._min.y;
+			if (g.dom && !this._cxTest.isPointInPath(g.dom, x, y, 'evenodd')) return null;
+			return g.locs.find((d) => this._cxTest.isPointInPath(d.c, x, y, 'evenodd'))?.kod ?? null;
+		},
 		// (per las autras còlas : las provincias de 1789 cedisson als dialèctes)
 		zonaA(lp) {
 			return this._zonaA(lp);
@@ -579,6 +596,9 @@ export function crearColaDonadas(
 			}
 			const kEnc = this.enclavaA(lp);
 			if (kEnc) return kEnc;
+			// la lecture « Uèi » : le département sous le point passe avant le dialecte
+			const kLoc = totjorn ? null : this._locA(lp);
+			if (kLoc) return kLoc;
 			if (!totjorn && !this._interactiu()) return null;
 			if (totjorn && (this._jaces.unificat || !this._min)) return null;
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
@@ -603,7 +623,7 @@ export function crearColaDonadas(
 		},
 		_onMirga(e) {
 			if (e.originalEvent?.pointerType === 'touch') return;
-			if (!this._interactiu() && !this._enclavas().length) return this._survòl(null);
+			if (!this._interactiu() && !this._enclavas().length && !this._locA(e.layerPoint)) return this._survòl(null);
 			const k = ocupat?.(e.layerPoint) ? null : this._zonaA(e.layerPoint);
 			this._survòl(k);
 			if (k) this._map.getContainer().style.cursor = 'pointer';
@@ -626,8 +646,11 @@ export function crearColaDonadas(
 			// una enclava (fòra del domeni) : lo clic o lo tòc mòstra sa legenda
 			const kEnc = this.enclavaA(e.layerPoint);
 			if (kEnc) return this._survòl(kEnc);
+			// (de même pour un département de la lecture « Uèi » : au doigt aussi)
+			const kLoc = this._locA(e.layerPoint);
+			if (kLoc) return this._survòl(kLoc);
 			// al det, lo survòl demòra : un tòc endacòm mai l'escafa
-			if (this._pus?.startsWith('enc-')) this._survòl(null);
+			if (this._pus?.startsWith('enc-') || this._pus?.startsWith('loc-')) this._survòl(null);
 			if (!this._interactiu()) return;
 			// una zòna mixta se causís pas : lo clic va al dialècte de dejós
 			const k = this._zonaA(e.layerPoint, false);
@@ -638,6 +661,11 @@ export function crearColaDonadas(
 		},
 		_nomDe(k) {
 			if (!k) return null;
+			if (k.startsWith('loc-')) {
+				const c = k.slice(4),
+					fr = this._geo?.locs?.find((d) => d.k === c)?.nom ?? c;
+				return infoLocutors(c, nomTerritori('despartament', c, fr, 'oc'), fr);
+			}
 			if (k.startsWith('mix-') || k.startsWith('ist-') || k.startsWith('enc-')) {
 				const m = this._mix?.features.find((x) => x.properties.kod === k)?.properties;
 				return m ? { kod: k, oc: m.oc, fr: m.fr, sota_oc: m.sota_oc, sota_fr: m.sota_fr, encadrat: m.encadrat, mix: true } : null;
@@ -765,7 +793,11 @@ export function crearColaDonadas(
 				deps: this._jacesVivas('despartaments') ? (this._limits?.despartaments || []).map(([, , anels]) => cami(anels)) : null,
 				// (los ponches, per l'aparicion en estelas : calculats sonque se cal)
 				regionsAnels: this._jacesVivas('regions') ? (this._limits?.regions || []).map(([, , anels]) => anels) : null,
-				depsAnels: this._jacesVivas('despartaments') ? (this._limits?.despartaments || []).map(([, , anels]) => anels) : null
+				depsAnels: this._jacesVivas('despartaments') ? (this._limits?.despartaments || []).map(([, , anels]) => anels) : null,
+				// la lecture « Uèi » : les départements de l'enquête OPLO (2020)
+				locs: this._jacesVivas('locutors')
+					? (this._limits?.despartaments || []).filter(([k]) => LOCUTORS[k]).map(([k, nom, anels]) => ({ kod: 'loc-' + k, k, nom, c: cami(anels) }))
+					: null
 			};
 			// las tenchas fondudas (lo flo es car) : preparadas sonque quand
 			// servisson, al primièr dessenh que n'a besonh (çai-jos, _pintar)
@@ -1116,7 +1148,11 @@ export function crearColaDonadas(
 				aFront = dossa(clamp((13 - z) / 2)) * aDet,
 				// la lectura « uèi » : las tenchas s'estompan (doçament dins lo temps)
 				aLect = 1 - 0.78 * this._doç('lectura', this._lectura ?? 0, 0.9),
-				aTenchas0 = tenchasDePrèp(z) * aLect;
+				// (les locuteurs par département : les teintes des dialectes s'effacent
+				// presque, pour ne pas se mêler à leur aplat ; de près, comme les
+				// contours administratifs, l'aplat s'efface)
+				aLoc = this._aJ('locutors', 'locs') * aAdmin,
+				aTenchas0 = tenchasDePrèp(z) * aLect * (1 - 0.85 * aLoc);
 			// u : 0 los dialèctes, 1 l'Occitània unida (relais dins lo temps)
 			const R = this._rel ?? {},
 				ru = R.uni,
@@ -1238,6 +1274,34 @@ export function crearColaDonadas(
 				cx.save();
 				if (an?.ajust === 'cro') this._mascaDifusion(G.cro, p); // clip progressiu
 				this._copiar(this._imgCro, a * aTenchas * aFinIntro);
+				cx.restore();
+			}
+
+			/* Les locuteurs (OPLO 2020) : un aplat par département, de plus en plus
+			   couvrant, dans le domaine seulement (Béarn, Charente occitane) ; le
+			   département survolé est cerné */
+			if (G.locs && aLoc > 0.01) {
+				cx.save();
+				if (G.dom) cx.clip(G.dom, 'evenodd');
+				cx.fillStyle = T.occitan;
+				// (de près, l'aplat s'allège comme les teintes : le fond reste lisible)
+				const aZ = lerp(1, 0.45, clamp((z - 7) / 3));
+				for (const d of G.locs) {
+					cx.globalAlpha = classaDe(LOCUTORS[d.k][0]).alfa * aLoc * aZ;
+					cx.fill(d.c, 'evenodd');
+				}
+				// (un trait fin : un département à 2 % se distingue d'une zone sans enquête)
+				cx.globalAlpha = aLoc;
+				cx.strokeStyle = `rgba(${T.admin}, 0.3)`;
+				cx.lineWidth = 0.7;
+				for (const d of G.locs) cx.stroke(d.c);
+				const pus = G.locs.find((d) => d.kod === this._pus);
+				if (pus) {
+					cx.globalAlpha = aLoc;
+					cx.strokeStyle = T.occitanTèxt;
+					cx.lineWidth = 2;
+					cx.stroke(pus.c);
+				}
 				cx.restore();
 			}
 

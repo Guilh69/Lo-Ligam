@@ -137,8 +137,9 @@
 		elements = {},
 		// colors causidas per l'internauta ({ riu, costa, estela, corba })
 		colors = {},
-		// la lectura de la carta : 0 lo territòri (tenchas plenas), 1 « ont se parla
-		// uèi » (tenchas estompadas) ; la pagina la ten amb las jaces d'uèi
+		// la lecture de la carte : 0 lo territòri (teintes pleines), 1 « uèi », 2 « la
+		// reviscolada » (teintes estompées dans les deux cas : setLectura borne à 1) ;
+		// la page tient les couches de chaque lecture
 		lectura = 0,
 		// lo dialècte causit (còdi, 'cro' pel Creissent, o null) : de la carta al
 		// panèl e del panèl a la carta
@@ -3357,6 +3358,12 @@
 		.compass {
 			bottom: calc(var(--barra-bas, 0px) + 2.75rem);
 			left: calc(var(--marge, 1rem) - 6px);
+		}
+		/* l'encadré long (Baiona, un département de la lecture « Uèi ») : entre
+		   la marge gauche et la colonne des boutons (centré sur cet espace) */
+		.legenda-dial.amb-encadrat {
+			left: calc(50% - 1.6rem);
+			width: calc(100% - 4.7rem);
 		}
 	}
 
