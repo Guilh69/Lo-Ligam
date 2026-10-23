@@ -7,7 +7,7 @@
 // 2026-10-23) ; les Pyrénées-Orientales occitanes ont une enquête mais pas de
 // taux de locuteurs publié (effectifs trop faibles) : rien non plus.
 // Occitan vérifié par l'API de lo Congrès (departament, enquèsta, locutor,
-// comprenon, declaran…) ; « uèi » à valider par Romain.
+// comprenon, declaran…) ; « uèi » validé par Romain (2026-10-23).
 
 export const FONT_LOCUTORS = {
 	url: 'https://www.ofici-occitan.eu/wp-content/uploads/2020/09/OPLO_Enquete-sociolingusitique-occitan-2020_Resultats.pdf',

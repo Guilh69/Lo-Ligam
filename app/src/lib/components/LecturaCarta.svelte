@@ -19,7 +19,7 @@
 	// La lecture estompe les teintes des dialectes (colaDonadas.setLectura) et
 	// allume les couches de la lecture (la page) ; les portes de la première
 	// visite la choisissent aussi. Occitan vérifié par l'API (lectura, aira,
-	// istorica, votz, territòri, locutor, departament) ; « uèi » à valider par Romain.
+	// istorica, votz, territòri, locutor, departament) ; « uèi » validé par Romain (2026-10-23).
 	import Icona from './Icona.svelte';
 	import { CLASSAS, FONT_LOCUTORS, gamaLocutors, alfaLocutors } from '$lib/carta/locutors.js';
 
