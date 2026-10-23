@@ -17,9 +17,9 @@ Repère de comparaison, l'OPLO 2020 : sondage téléphonique représentatif (COH
 
 Autres estimations écartées : Regis 2020 (*Estudis Romànics*) projette sur les vallées le taux de dialectophonie de l'ISTAT 2015 pour tout le Piémont (15 000 à 20 000 locuteurs) : c'est un calcul, pas une enquête. L'enquête Famille de l'INSEE (1999) mesure la transmission, pas la pratique actuelle.
 
-## À décider par Romain
-1. Vallées d'Italie : afficher 34 % (IRES Piemonte, 2005) sur les douze vallées, en le disant dans l'encadré (« 18 ans et plus, zone occitane reconnue par la loi, 2005 ») ? Ou ne rien afficher ?
-2. Auvergne : ne rien afficher (recommandé), ou le seul Cantal (23 %, IFOP 2006) ?
+## Décisions de Romain
+1. Vallées d'Italie : **rien n'est affiché** (Romain, 2026-10-23 : « l'enquête est trop ancienne et la zone trop large »).
+2. Auvergne : à décider ; ne rien afficher (recommandé), ou le seul Cantal (23 %, IFOP 2006) ?
 
 ## Sources
 - IRES Piemonte 2007 : https://www.ires.piemonte.it/pubblicazioni/le-lingue-del-piemonte/ (PDF lu : https://www.gioventurapiemonteisa.net/wp-content/uploads/docs/ires_quaderno_113.pdf)
