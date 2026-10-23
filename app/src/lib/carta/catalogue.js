@@ -29,9 +29,10 @@ export const CATALOGUE = [
 				estat: 'disponible',
 				defaut: true
 			},
-			{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', estat: 'disponible', defaut: true, nota_oc: "Se'n pòt causir mantun, lo Creissent tanben", nota_fr: 'On peut en choisir plusieurs, le Croissant aussi' },
-			// l'occitan unificat a totas las escalas, coma de luènh (retorn de Romain, 2026-10-08)
-			{ id: 'unificat', oc: 'Occitan unificat', fr: 'Occitan unifié', estat: 'disponible', defaut: false, nota_oc: 'La lenga sola, sens los dialèctes, a totas las escalas', nota_fr: 'La langue seule, sans les dialectes, à toutes les échelles' },
+			{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', estat: 'disponible', defaut: false, nota_oc: "Se'n pòt causir mantun, lo Creissent tanben", nota_fr: 'On peut en choisir plusieurs, le Croissant aussi' },
+			// l'occitan unificat a totas las escalas, coma de luènh (retorn de Romain, 2026-10-08) ;
+			// la carta arriba sus el sol, los dialèctes e lo relèu a la demanda (Romain, 2026-10-23)
+			{ id: 'unificat', oc: 'Occitan unificat', fr: 'Occitan unifié', estat: 'disponible', defaut: true, nota_oc: 'La lenga sola, sens los dialèctes, a totas las escalas', nota_fr: 'La langue seule, sans les dialectes, à toutes les échelles' },
 			// la lecture « Uèi » (Romain, 2026-10-22) : la part de locuteurs par
 			// département, enquête OPLO 2020 (locutors.js) ; rien là où aucune
 			// enquête n'existe (Romain, 2026-10-23). Occitan vérifié par l'API.
@@ -134,11 +135,11 @@ export const CATALOGUE = [
 		oc: 'Natura',
 		fr: 'Nature',
 		jaces: [
-			{ id: 'rius', oc: 'Rius', fr: 'Rivières', estat: 'disponible', defaut: true, fons: 'estelas' },
+			{ id: 'rius', oc: 'Rius', fr: 'Rivières', estat: 'disponible', defaut: false, fons: 'estelas' },
 			{ id: 'nomsRius', oc: 'Noms dels rius', fr: 'Noms des rivières', estat: 'disponible', defaut: false, fons: 'estelas' },
-			{ id: 'corbas', oc: 'Relèu', fr: 'Relief', estat: 'disponible', defaut: true, fons: 'estelas', nota_oc: 'Corbas de nivèl', nota_fr: 'Courbes de niveau' },
+			{ id: 'corbas', oc: 'Relèu', fr: 'Relief', estat: 'disponible', defaut: false, fons: 'estelas', nota_oc: 'Corbas de nivèl', nota_fr: 'Courbes de niveau' },
 			{ id: 'parcs', oc: 'Parcs naturals', fr: 'Parcs naturels', estat: 'disponible', defaut: false, nota_oc: 'Regionals, nacionals e marins', nota_fr: 'Régionaux, nationaux et marins' },
-			{ id: 'massis', oc: 'Massís e montanhas', fr: 'Massifs et montagnes', estat: 'disponible', defaut: true, nota_oc: 'Noms dels massís e de las cimas', nota_fr: 'Noms des massifs et des sommets' },
+			{ id: 'massis', oc: 'Massís e montanhas', fr: 'Massifs et montagnes', estat: 'disponible', defaut: false, nota_oc: 'Noms dels massís e de las cimas', nota_fr: 'Noms des massifs et des sommets' },
 			{ id: 'bacins', oc: 'Bacins dels rius', fr: 'Bassins des rivières', estat: 'a venir' }
 		]
 	}

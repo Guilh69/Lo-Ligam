@@ -235,12 +235,18 @@ export function crearColaDonadas(
 			this._update();
 			this._lançarBalet();
 		},
+		// l'occitan unificat sol : sa jaça alucada e los dialèctes pas (cochar los
+		// dialèctes los fa veire, quitament se l'unificat es alucat : retorn de
+		// Romain, 2026-10-23, la carta arriba sus l'occitan unificat sol)
+		_uniSol() {
+			return !!this._jaces.unificat && !this._jaces.dialectes;
+		},
 		// Lo fuòc d'artifici dels dialèctes, demandat en los cochant : sonque a
 		// l'escala dels dialèctes (de pus luènh, la carta i vòla e lo jòga a
 		// l'arribada), e sens lo roge de l'occitan unificat que s'esvaniriá
 		_lançarBalet() {
 			const n = this._nivèls;
-			if (!this._baletDemandat || !n || this._jaces.unificat || !this._jaces.dialectes) return;
+			if (!this._baletDemandat || !n || !this._jaces.dialectes) return;
 			if (this._zoom < n.zDial) return;
 			this._baletDemandat = false;
 			const R = (this._rel ??= {});
@@ -437,7 +443,7 @@ export function crearColaDonadas(
 			const salt = this._zPrec != null && Math.abs(this._zoom - this._zPrec) > 1.5;
 			this._zPrec = this._zoom;
 			// (l'occitan unificat a totas las escalas, se la jaça es alucada)
-			const uni = this._jaces.unificat || this._zoom < n.zDial ? 1 : 0;
+			const uni = this._uniSol() || this._zoom < n.zDial ? 1 : 0;
 			// (los dialèctes venon d'èsser cochats : lor fuòc d'artifici, quin que
 			// siá lo saut de zoom per i arribar)
 			if (this._baletDemandat && !uni) this._lançarBalet();
@@ -544,7 +550,7 @@ export function crearColaDonadas(
 		},
 		_interactiu() {
 			// (l'Occitània unida, de luènh o causida : los dialèctes se causisson pas)
-			if (this._jaces.unificat || (this._nivèls && aDialectes(this._nivèls, this._zoom) < 0.5)) return false;
+			if (this._uniSol() || (this._nivèls && aDialectes(this._nivèls, this._zoom) < 0.5)) return false;
 			// (de prèp, las tenchas son escantidas : pas pus de causida)
 			if (tenchasDePrèp(this._zoom) < 0.5) return false;
 			return !!(this._jaces.dialectes && this._dial) || !!(this._jaces.creissent && this._creissent);
@@ -599,7 +605,7 @@ export function crearColaDonadas(
 			const kLoc = totjorn ? null : this._locA(lp);
 			if (kLoc) return kLoc;
 			if (!totjorn && !this._interactiu()) return null;
-			if (totjorn && (this._jaces.unificat || !this._min)) return null;
+			if (totjorn && (this._uniSol() || !this._min)) return null;
 			this._cxTest ??= document.createElement('canvas').getContext('2d');
 			const x = lp.x - this._min.x,
 				y = lp.y - this._min.y;
