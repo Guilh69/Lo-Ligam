@@ -18,7 +18,7 @@ Selon l'âge (ensemble interrégional, même graphique) : 15-29 ans 3 %, 30-44 a
 ## Ce que la carte montre (fait le 2026-10-23)
 - Lecture « Uèi » de `/carta` (bascule Territòri | Uèi | Reviscolada) : un aplat par département enquêté, cinq classes (moins de 5 %, 5, 10, 15, 20 % et plus) du rose pâle au rouge profond dans tous les thèmes, découpé sur le domaine occitan (Béarn, Charente occitane) ; survol ou toucher : taux de locuteurs, compréhension, source et définition. Données recopiées dans `app/src/lib/carta/locutors.js` : **corriger ce tableau-ci d'abord, puis le module**.
 - **Là où aucune enquête n'existe, rien n'est indiqué** (décision de Romain, 23-10 ; remplace le « ND affiché » prévu le 22-10). Pyrénées-Orientales occitanes : rien non plus (taux de locuteurs non publié).
-- Enquêtes cherchées pour le reste du domaine : `autras-enquestas.md` (vallées d'Italie : rien, Romain 23-10 ; Auvergne : décision en attente).
+- Enquêtes cherchées pour le reste du domaine : `autras-enquestas.md` (vallées d'Italie et Auvergne : rien, Romain 23-10).
 
 ## Ce qui reste à faire
 1. Plus tard : une page qui vulgarise l'enquête (graphiques, analyse).

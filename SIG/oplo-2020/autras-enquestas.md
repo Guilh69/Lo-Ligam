@@ -19,7 +19,9 @@ Autres estimations écartées : Regis 2020 (*Estudis Romànics*) projette sur le
 
 ## Décisions de Romain
 1. Vallées d'Italie : **rien n'est affiché** (Romain, 2026-10-23 : « l'enquête est trop ancienne et la zone trop large »).
-2. Auvergne : à décider ; ne rien afficher (recommandé), ou le seul Cantal (23 %, IFOP 2006) ?
+2. Auvergne : **rien n'est affiché** (Romain, 2026-10-23 ; taux par département non publiés, seul le Cantal cité).
+
+La lecture « Uèi » ne montre donc que l'enquête OPLO 2020. À rouvrir seulement si une nouvelle enquête comparable paraît (par exemple une suite de l'OPLO, ou une enquête de la Région Auvergne-Rhône-Alpes ou de la Région Sud).
 
 ## Sources
 - IRES Piemonte 2007 : https://www.ires.piemonte.it/pubblicazioni/le-lingue-del-piemonte/ (PDF lu : https://www.gioventurapiemonteisa.net/wp-content/uploads/docs/ires_quaderno_113.pdf)
