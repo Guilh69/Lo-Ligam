@@ -82,6 +82,23 @@
     { "clau": "acuelh.crida.reservar", "tipe": "ligam", "oc": "Reservar un primièr cors", "fr": "Réserver un premier cours", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" },
     { "clau": "acuelh.crida.sol", "tipe": "ligam", "oc": "Començar sol·a", "fr": "Commencer seul·e", "ligam": "/aprene/essai" }
   ],
+  "parla": [
+    { "clau": "parla.titol", "tipe": "text", "oc": "Se parla", "fr": "Se parle" },
+    { "clau": "parla.frasa", "tipe": "text", "oc": "A escriure : ta frasa sus Se parla", "fr": "À écrire : ta phrase sur Se parle", "visible": false },
+
+    { "clau": "parla.teulas.carta", "tipe": "bloc", "lista": "parla.teulas", "ordre": 1 },
+    { "clau": "parla.teulas.carta.ligam", "tipe": "ligam", "lista": "parla.teulas.carta", "oc": "La carta", "fr": "La carte", "ligam": "/carta" },
+    { "clau": "parla.teulas.carta.sota", "tipe": "text", "lista": "parla.teulas.carta", "oc": "L’aira culturala occitana, sas lengas e sos luòcs.", "fr": "L’aire culturelle occitane, ses langues et ses lieux." },
+    { "clau": "parla.teulas.wiki", "tipe": "bloc", "lista": "parla.teulas", "ordre": 2 },
+    { "clau": "parla.teulas.wiki.ligam", "tipe": "ligam", "lista": "parla.teulas.wiki", "oc": "Lo wiki", "fr": "Le wiki", "ligam": "/wiki" },
+    { "clau": "parla.teulas.wiki.sota", "tipe": "text", "lista": "parla.teulas.wiki", "oc": "A escriure", "fr": "À écrire", "visible": false },
+    { "clau": "parla.teulas.obras", "tipe": "bloc", "lista": "parla.teulas", "ordre": 3 },
+    { "clau": "parla.teulas.obras.ligam", "tipe": "ligam", "lista": "parla.teulas.obras", "oc": "Òbras", "fr": "Œuvres", "ligam": "/obras" },
+    { "clau": "parla.teulas.obras.sota", "tipe": "text", "lista": "parla.teulas.obras", "oc": "Çò qu’escoti, çò que legissi, çò que te fau descobrir.", "fr": "Ce que j’écoute, ce que je lis, ce que je te fais découvrir." },
+    { "clau": "parla.teulas.articles", "tipe": "bloc", "lista": "parla.teulas", "ordre": 4 },
+    { "clau": "parla.teulas.articles.ligam", "tipe": "ligam", "lista": "parla.teulas.articles", "oc": "Articles", "fr": "Articles", "ligam": "/articles" },
+    { "clau": "parla.teulas.articles.sota", "tipe": "text", "lista": "parla.teulas.articles", "oc": "A escriure", "fr": "À écrire", "visible": false }
+  ],
   "apren": [
     { "clau": "apren.titol", "tipe": "text", "oc": "S’apren", "fr": "S’apprend" },
     { "clau": "apren.frasa", "tipe": "text", "oc": "A escriure : ta frasa sus S’apren", "fr": "À écrire : ta phrase sur S’apprend", "visible": false },
@@ -217,5 +234,24 @@
     { "clau": "istoria.contacte.titol", "tipe": "text", "oc": "Escambiem", "fr": "Échangeons" },
     { "clau": "istoria.contacte.tèxt", "tipe": "text", "oc": "Una question, un cors, una idèa ? Escriu-me, te respondrai.", "fr": "Une question, un cours, une idée ? Écris-moi, je te répondrai." },
     { "clau": "istoria.contacte.reservar", "tipe": "ligam", "oc": "Reservar un cors en visio", "fr": "Réserver un cours en visio", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" }
+  ],
+  "amassa": [
+    { "clau": "amassa.titol", "tipe": "text", "oc": "Amassa", "fr": "Rassemble" },
+    { "clau": "amassa.frasa", "tipe": "text", "oc": "A escriure : ta frasa sus Amassa", "fr": "À écrire : ta phrase sur Rassemble", "visible": false },
+    { "clau": "amassa.teulas.grops", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 1 },
+    { "clau": "amassa.teulas.grops.ligam", "tipe": "ligam", "lista": "amassa.teulas.grops", "oc": "Grops", "fr": "Groupes", "ligam": "/grops" },
+    { "clau": "amassa.teulas.grops.sota", "tipe": "text", "lista": "amassa.teulas.grops", "oc": "Rencontrar d’autras personas que parlan occitan, prèp de tu o en linha.", "fr": "Rencontrer d’autres personnes qui parlent occitan, près de chez toi ou en ligne." },
+    { "clau": "amassa.teulas.cercles", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 2 },
+    { "clau": "amassa.teulas.cercles.ligam", "tipe": "ligam", "lista": "amassa.teulas.cercles", "oc": "Cercles e associacions", "fr": "Cercles et associations", "ligam": "/carta" },
+    { "clau": "amassa.teulas.cercles.sota", "tipe": "text", "lista": "amassa.teulas.cercles", "oc": "Las associacions occitanas, sus la carta.", "fr": "Les associations occitanes, sur la carte." },
+    { "clau": "amassa.teulas.forum", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 3 },
+    { "clau": "amassa.teulas.forum.ligam", "tipe": "ligam", "lista": "amassa.teulas.forum", "oc": "Fòrum", "fr": "Forum", "ligam": "/forum" },
+    { "clau": "amassa.teulas.forum.sota", "tipe": "text", "lista": "amassa.teulas.forum", "oc": "S’ajudar per aprene.", "fr": "S’entraider pour apprendre." },
+    { "clau": "amassa.teulas.ideas", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 4 },
+    { "clau": "amassa.teulas.ideas.ligam", "tipe": "ligam", "lista": "amassa.teulas.ideas", "oc": "Boita d’idèas", "fr": "Boîte à idées", "ligam": "/ideas" },
+    { "clau": "amassa.teulas.ideas.sota", "tipe": "text", "lista": "amassa.teulas.ideas", "oc": "Per melhorar Lo Ligam amb tu.", "fr": "Pour améliorer Lo Ligam avec toi." },
+    { "clau": "amassa.teulas.instagram", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 5 },
+    { "clau": "amassa.teulas.instagram.ligam", "tipe": "ligam", "lista": "amassa.teulas.instagram", "oc": "Instagram", "fr": "Instagram", "ligam": "https://www.instagram.com/lo_ligam/" },
+    { "clau": "amassa.teulas.instagram.sota", "tipe": "text", "lista": "amassa.teulas.instagram", "oc": "Los visuals de Lo Ligam.", "fr": "Les visuels de Lo Ligam." }
   ]
 }
