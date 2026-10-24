@@ -117,9 +117,18 @@ Pas d'examen final : évaluation continue par les tâches, certificat de réussi
    - **(b) Le DCL comme préparation à part** : le cursus garde ses situations de vie et ses niveaux du CECR ; à partir d'A2, un module « Préparer le DCL » par niveau (méthode des 5 phases, annales, entraînement oral en visio avec Romain).
    - **(c) Pas de cap certifiant pour l'instant** : on affiche les niveaux du CECR, sans lien annoncé au DCL.
 2. ✅ **Le découpage affiché** : décidé le 2026-10-24 par Romain : **(a)** (cahier §11). Reste à fixer le nombre de blocs par niveau. Options posées : : des blocs de 45 h à la manière du CPNL (un bloc = un trimestre de visio), ou nos unités telles quelles.
-3. *(ensuite)* Le rôle de tes cours en visio et du site : une seule progression (la visio fait la séance, le site l'avant et l'après, comme le CPNL avec ses contenus interactifs), ou deux.
-4. *(ensuite)* Le circuit d'une unité : reprendre celui de l'A1 du CPNL (scène, défis, micro-activités titrées par des questions, « à toi », tâche, mémo) dans notre moteur.
-5. *(ensuite)* Les habitudes à reprendre : titres-phrases, son accroché au point, révision nommée.
+3. ✅ **Le rôle de la visio et du site** : décidé le 2026-10-24 par Romain : **(b) le site porte tout le parcours**, une visio de rencontre au départ, des cours en visio à la carte selon ses disponibilités, modèle asynchrone + synchrone du CPNL (cahier §11). Le bloc de 45 h devient un trimestre de parcours, accompagné ou non. Options posées au départ : le rôle de tes cours en visio et du site : une seule progression (la visio fait la séance, le site l'avant et l'après, comme le CPNL avec ses contenus interactifs), ou deux.
+4. ✅ **Le circuit d'une unité** : décidé le 2026-10-24 par Romain : **(c) le mixte** : la scène ouvre l'unité (défis oraux enregistrés), nos modules à l'intérieur renommés en questions, la tâche ferme, un mémo résume (cahier §11). Options posées : le circuit d'une unité : reprendre celui de l'A1 du CPNL (scène, défis, micro-activités titrées par des questions, « à toi », tâche, mémo) dans notre moteur.
+5. ✅ **Le nombre de blocs par niveau** : décidé le 2026-10-24 par Romain : **(c) A1 = 2 blocs (90 h), A2 = 3 blocs (135 h), le reste plus tard** (cahier §11). La carte A1 passe de 10 unités à 8 (à faire par Romain).
+6. ✅ **La révision nommée** : décidé le 2026-10-24 par Romain : **(a) toutes les deux unités, deux par bloc** (cahier §11). Les titres-phrases sont acquis avec la décision 4.
+7. *(ensuite)* Le son du jour accroché au point de forme du module.
+8. ✅ **La répétition espacée, outil central** (Romain, 2026-10-24, cahier §11) : chaque chose apprise entre dans le carnet de révision ; le code planifie et dit acquis / pas encore ; cartes de formes variées, reliées aux règles et aux jeux.
+   - ✅ **Décision 8 bis, la manière de noter** : décidé le 2026-10-24 par Romain : **(a)** (cahier §11). Options posées :
+     - **(a) Surtout automatique, deux réponses sinon** : quand l'exercice se corrige seul (choix, ordre, trous), la réussite note la carte sans rien demander ; quand l'élève s'évalue (rappel libre, oral), deux boutons « Pas encore » / « Acquis ». Algorithme FSRS (celui d'Anki depuis 2023, bibliothèque libre `ts-fsrs`, licence MIT, calcul dans le navigateur, carnet dans Supabase).
+     - **(b) Les quatre boutons d'Anki** (À revoir, Difficile, Bien, Facile) sur chaque carte, même algorithme.
+     - **(c) Un calendrier fixe d'abord** (J+2, J+7, J+30, recommandation de l'état de l'art §9), FSRS plus tard.
+   - ✅ **Décision 8 ter, ce qu'est une carte** : décidé le 2026-10-24 par Romain : **deux cartes par chose apprise, « je reconnais » puis « je produis »**, la seconde s'ouvre quand la première est acquise (cahier §11).
+   - Ensuite : la séance quotidienne ; le lien avec les haltes de révision ; le carnet sans compte (module 0).
 
 ## 5. Ce que Romain peut faire seul / ce qui demande du code
 
