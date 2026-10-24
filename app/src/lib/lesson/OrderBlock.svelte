@@ -4,7 +4,9 @@
 	// tremble ; bonne tuile → elle rejoint la phrase.
 	import { rich } from '$lib/lesson/rich.js';
 
-	let { block, onCorrect = () => {}, onComplete = () => {} } = $props();
+	// onResult(item, reussi) : une fois la phrase remise, réussi sans aucune
+	// tuile tremblante (le carnet de révision note les choses qu'elle teste).
+	let { block, onCorrect = () => {}, onComplete = () => {}, onResult = () => {} } = $props();
 
 	function shuffle(arr) {
 		const a = [...arr];
@@ -18,7 +20,8 @@
 	let states = $state(
 		block.items.map((item) => ({
 			bank: shuffle(item.tiles.map((t, id) => ({ text: t, id, used: false, wrong: false }))),
-			placed: 0
+			placed: 0,
+			missed: false
 		}))
 	);
 	let doneCount = $derived(states.filter((s, i) => s.placed >= block.items[i].tiles.length).length);
@@ -32,9 +35,11 @@
 			tile.used = true;
 			st.placed += 1;
 			onCorrect();
+			if (st.placed >= item.tiles.length) onResult(item, !st.missed);
 			if (states.every((s, k) => s.placed >= block.items[k].tiles.length)) onComplete();
 		} else {
 			tile.wrong = true;
+			st.missed = true;
 			setTimeout(() => (tile.wrong = false), 280);
 		}
 	}

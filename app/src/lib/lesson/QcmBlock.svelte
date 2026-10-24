@@ -4,7 +4,9 @@
 	// n'apparaît qu'une fois l'item courant réussi.
 	import { rich } from '$lib/lesson/rich.js';
 
-	let { block, onCorrect = () => {}, onComplete = () => {} } = $props();
+	// onResult(item, reussi) : une fois l'item trouvé, réussi s'il l'a été du
+	// premier coup (le carnet de révision note les choses qu'il teste).
+	let { block, onCorrect = () => {}, onComplete = () => {}, onResult = () => {} } = $props();
 
 	// L'ordre des options est mélangé à l'affichage (sinon la bonne réponse
 	// serait devinable par sa position), sauf Vrai/Faux (noShuffle).
@@ -30,6 +32,7 @@
 		if (oi === block.items[i].correct) {
 			st.done = true;
 			onCorrect();
+			onResult(block.items[i], st.wrong.length === 0);
 			if (states.every((s) => s.done)) onComplete();
 		} else {
 			if (!st.wrong.includes(oi)) st.wrong.push(oi);

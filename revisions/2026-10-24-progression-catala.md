@@ -147,7 +147,7 @@ Pas d'examen final : évaluation continue par les tâches, certificat de réussi
 4. Regarder une annale du DCL avec sa vidéo (`Modules_cors/DCL/`).
 
 **Claude, dans l'ordre, chaque chantier vérifié par `npm run build` et des captures** :
-1. **Le carnet de révision** : modèle de données (deux cartes par chose : je reconnais, je produis), planification FSRS (`ts-fsrs`), carnet dans le navigateur puis dans Supabase à l'inscription, notation automatique branchée sur les exercices de l'unité 1. C'est le socle de tout le reste.
+1. ✅ (codé le 2026-10-24, cahier §11) **Le carnet de révision** : modèle de données (deux cartes par chose : je reconnais, je produis), planification FSRS (`ts-fsrs`), carnet dans le navigateur puis dans Supabase à l'inscription, notation automatique branchée sur les exercices de l'unité 1. C'est le socle de tout le reste.
 2. **La séance du jour** : révision plafonnée avant la leçon, à la place du rappel écrit à la main.
 3. **Les modules « halte »** et l'écran de bilan.
 4. **L'enveloppe d'unité** : la scène en ouverture (attend les visuels Canva et `/admin/scenas`, chantier 16), les défis oraux enregistrés, le mémo.

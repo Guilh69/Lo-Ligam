@@ -57,6 +57,7 @@ export const modul14 = {
 							q: 'Le soir, tu arrives et tu salues un groupe :',
 							options: ['Bon ser ! Adieu-siatz !', 'Bonjorn ! Adieu !', 'A lèu ! A deman !'],
 							correct: 0,
+							choses: ['bon-ser', 'adieu-siatz'],
 							explain: 'Soir → *Bon ser* ; groupe → *Adieu-siatz*.'
 						},
 						{
@@ -69,18 +70,21 @@ export const modul14 = {
 							q: 'Réponds à *Cossí anatz ?* :',
 							options: ['Va plan, mercé. E vos ?', 'Me dison Pau.', 'A deman !'],
 							correct: 0,
+							choses: ['va-plan-e-tu'],
 							explain: 'La même réponse *Va plan*, et *E vos ?* pour retourner poliment.'
 						},
 						{
 							q: '« Moi, j’habite ici. »',
 							options: ['Ieu, demòri aquí.', 'Ieu, soi aquí.', 'Demòras aquí.'],
 							correct: 0,
+							choses: ['demori-a'],
 							explain: 'Habiter → *demòri* ; *Ieu,* pour insister.'
 						},
 						{
 							q: 'Un homme : « Encanta___ ! »',
 							options: ['-t', '-da', '-tz'],
 							correct: 0,
+							choses: ['encantat'],
 							noShuffle: true,
 							explain: 'Homme → *Encantat*.'
 						},
@@ -88,6 +92,7 @@ export const modul14 = {
 							q: 'Vrai ou faux : *Adieu* ne sert qu’à partir.',
 							options: ['Vrai', 'Faux'],
 							correct: 1,
+							choses: ['adieu'],
 							noShuffle: true,
 							explain: 'Il ouvre ET ferme la rencontre, depuis le module 1.1 !'
 						},
@@ -95,12 +100,14 @@ export const modul14 = {
 							q: '« D’ont ___ ? » (tu)',
 							options: ['siás', 'soi', 'es'],
 							correct: 0,
+							choses: ['d-ont-sias'],
 							explain: 'Tu → *siás* (*ès* est aussi correct).'
 						},
 						{
 							q: '« À bientôt ! »',
 							options: ['A lèu !', 'A deman !', 'Bon ser !'],
 							correct: 0,
+							choses: ['a-leu'],
 							explain: '*A lèu* = bientôt, sans date précise.'
 						},
 						{

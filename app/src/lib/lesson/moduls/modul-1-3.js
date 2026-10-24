@@ -125,6 +125,7 @@ export const modul13 = {
 							q: '*Soi de Marselha.*',
 							options: ['je suis', 'tu es', 'elle est'],
 							correct: 0,
+							choses: ['soi-de'],
 							explain: '*soi* = je.'
 						},
 						{
@@ -143,12 +144,14 @@ export const modul13 = {
 							q: '*D’ont siás ?* demande…',
 							options: ['l’origine', 'le nom', 'comment ça va'],
 							correct: 0,
+							choses: ['d-ont-sias'],
 							explain: '*D’ont* = d’où.'
 						},
 						{
 							q: '*Demòri a Albi.*',
 							options: ['j’habite', 'tu habites', 'il habite'],
 							correct: 0,
+							choses: ['demori-a'],
 							explain: '*demòri* = j’habite (*demorar* : habiter, rester).'
 						},
 						{
@@ -188,13 +191,13 @@ export const modul13 = {
 					title: 'À retenir',
 					intro: 'Ça sonne comme : syllabe forte en capitales.',
 					items: [
-						{ oc: 'Soi de…', sound: 'souï dé', fr: 'je suis de… (origine)' },
-						{ oc: 'D’ont siás ?', sound: 'd’oun SYOS', fr: 'd’où es-tu ?' },
-						{ oc: 'Demòri a…', sound: 'dé-MÒ-ri a', fr: 'j’habite à…' },
-						{ oc: 'Ont demòras ?', sound: 'oun dé-MÒ-ros', fr: 'où habites-tu ?' },
-						{ oc: 'Soi d’aquí.', sound: 'souï da-KI', fr: 'je suis d’ici.' },
-						{ oc: 'Tolosa · Besièrs · Montpelhièr · Carcassona', sound: 'tou-LOU-zo · bé-ZYÈS · moun-pé-LYÈ · car-ca-SOU-no', fr: 'ta ville a son nom occitan (le r de Besièrs se tait !)' },
-						{ oc: 'lo vilatge · la vila · lo país', sound: 'lou bi-LA-djé · la BI-lo · lou pa-ÍS', fr: 'le village, la ville, le pays' }
+						{ id: 'soi-de', oc: 'Soi de…', sound: 'souï dé', fr: 'je suis de… (origine)' },
+						{ id: 'd-ont-sias', oc: 'D’ont siás ?', sound: 'd’oun SYOS', fr: 'd’où es-tu ?' },
+						{ id: 'demori-a', oc: 'Demòri a…', sound: 'dé-MÒ-ri a', fr: 'j’habite à…' },
+						{ id: 'ont-demoras', oc: 'Ont demòras ?', sound: 'oun dé-MÒ-ros', fr: 'où habites-tu ?' },
+						{ id: 'soi-d-aqui', oc: 'Soi d’aquí.', sound: 'souï da-KI', fr: 'je suis d’ici.' },
+						{ id: 'noms-vilas', oc: 'Tolosa · Besièrs · Montpelhièr · Carcassona', sound: 'tou-LOU-zo · bé-ZYÈS · moun-pé-LYÈ · car-ca-SOU-no', fr: 'ta ville a son nom occitan (le r de Besièrs se tait !)' },
+						{ id: 'vilatge-vila-pais', oc: 'lo vilatge · la vila · lo país', sound: 'lou bi-LA-djé · la BI-lo · lou pa-ÍS', fr: 'le village, la ville, le pays' }
 					]
 				}
 			]
@@ -208,10 +211,10 @@ export const modul13 = {
 					type: 'qcm',
 					title: '3a · Bloc court : soi, siás ou es ?',
 					items: [
-						{ q: '(ieu) ___ de Nimes.', options: ['soi', 'siás', 'es'], correct: 0, noShuffle: true, explain: 'Je → *soi*.' },
-						{ q: 'Tu ___ d’ont ?', options: ['soi', 'siás', 'es'], correct: 1, noShuffle: true, explain: 'Tu → *siás*.' },
+						{ q: '(ieu) ___ de Nimes.', options: ['soi', 'siás', 'es'], correct: 0, choses: ['soi-de'], noShuffle: true, explain: 'Je → *soi*.' },
+						{ q: 'Tu ___ d’ont ?', options: ['soi', 'siás', 'es'], correct: 1, choses: ['d-ont-sias'], noShuffle: true, explain: 'Tu → *siás*.' },
 						{ q: 'Ela ___ de Rodés.', options: ['soi', 'siás', 'es'], correct: 2, noShuffle: true, explain: 'Elle → *es*.' },
-						{ q: 'Ieu, ___ del vilatge.', options: ['soi', 'siás', 'es'], correct: 0, noShuffle: true, explain: '*Ieu* insiste, le verbe reste *soi*.' },
+						{ q: 'Ieu, ___ del vilatge.', options: ['soi', 'siás', 'es'], correct: 0, choses: ['soi-de'], noShuffle: true, explain: '*Ieu* insiste, le verbe reste *soi*.' },
 						{ q: 'Karim ___ de Besièrs.', options: ['soi', 'siás', 'es'], correct: 2, noShuffle: true, explain: 'Il → *es*.' },
 						{ q: '___ d’aquí, tu ?', options: ['soi', 'siás', 'es'], correct: 1, noShuffle: true, explain: 'Tu → *siás*.' }
 					]
@@ -230,30 +233,35 @@ export const modul13 = {
 							q: 'Demande son nom à ton ami :',
 							options: ['Cossí te dison ?', 'D’ont siás ?', 'Cossí anatz ?'],
 							correct: 0,
+							choses: ['cossi-te-dison'],
 							explain: 'Le nom → *Cossí te dison ?*'
 						},
 						{
 							q: '« D’ont ___ ? » (tu)',
 							options: ['siás', 'soi', 'es'],
 							correct: 0,
+							choses: ['d-ont-sias'],
 							explain: 'Tu → *siás*.'
 						},
 						{
 							q: '« Demòri ___ Tolosa. »',
 							options: ['a', 'de', 'del'],
 							correct: 0,
+							choses: ['demori-a'],
 							explain: 'Habiter *à* → *a*.'
 						},
 						{
 							q: 'Un homme, enchanté :',
 							options: ['Encantat !', 'Encantada !', 'Òc !'],
 							correct: 0,
+							choses: ['encantat'],
 							explain: 'Homme → *-t*.'
 						},
 						{
 							q: 'Vrai ou faux : *Soi de Tolosa* et *Demòri a Tolosa* disent la même chose.',
 							options: ['Vrai', 'Faux'],
 							correct: 1,
+							choses: ['soi-de', 'demori-a'],
 							noShuffle: true,
 							explain: 'Origine ≠ lieu de vie : Karim : *soi de Besièrs, mas demòri a Tolosa*.'
 						},
@@ -261,12 +269,14 @@ export const modul13 = {
 							q: '« Ieu, me ___ Marià. »',
 							options: ['dison', 'apèli', 'demòri'],
 							correct: 0,
+							choses: ['me-dison'],
 							explain: '*me dison* (« on me dit ») ; *m’apèli* marcherait aussi, sans le *me*.'
 						},
 						{
 							q: 'Le soir, tu arrives : « ___ ! »',
 							options: ['Bon ser', 'Bonjorn', 'A lèu'],
 							correct: 0,
+							choses: ['bon-ser'],
 							explain: 'Le soir → *Bon ser*.'
 						},
 						{
@@ -279,6 +289,7 @@ export const modul13 = {
 							q: 'Demande où elle habite :',
 							options: ['Ont demòras ?', 'D’ont siás ?', 'Cossí vas ?'],
 							correct: 0,
+							choses: ['ont-demoras'],
 							explain: '*Ont* = où (lieu de vie) ; *D’ont* = d’où (origine).'
 						},
 						{
@@ -291,6 +302,7 @@ export const modul13 = {
 							q: 'Salue le groupe et dis d’où tu es :',
 							options: ['Adieu-siatz ! Soi de Nimes.', 'A deman ! Siás de Nimes.', 'Bonjorn ! Es de Nimes.'],
 							correct: 0,
+							choses: ['adieu-siatz', 'soi-de'],
 							explain: 'Groupe → *Adieu-siatz* ; je → *soi*.'
 						}
 					]
@@ -306,8 +318,8 @@ export const modul13 = {
 					type: 'order',
 					title: 'Remets dans l’ordre',
 					items: [
-						{ prompt: 'Je suis de Béziers.', tiles: ['Soi', 'de', 'Besièrs.'], explain: '*Soi de Besièrs.*' },
-						{ prompt: 'D’où es-tu ?', tiles: ['D’ont', 'siás ?'], explain: '*D’ont siás ?*' }
+						{ prompt: 'Je suis de Béziers.', tiles: ['Soi', 'de', 'Besièrs.'], choses: ['soi-de'], explain: '*Soi de Besièrs.*' },
+						{ prompt: 'D’où es-tu ?', tiles: ['D’ont', 'siás ?'], choses: ['d-ont-sias'], explain: '*D’ont siás ?*' }
 					]
 				},
 				{

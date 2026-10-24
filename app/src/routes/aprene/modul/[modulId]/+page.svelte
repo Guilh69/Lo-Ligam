@@ -18,6 +18,7 @@
 	import TableBlock from '$lib/lesson/TableBlock.svelte';
 	import NoteBlock from '$lib/lesson/NoteBlock.svelte';
 	import ChecklistBlock from '$lib/lesson/ChecklistBlock.svelte';
+	import { demarrerCarnet, noterExercice } from '$lib/carnet/carnet.svelte.js';
 
 	let modul = $derived(moduls[$page.params.modulId]);
 	let posicion = $derived(ordre.indexOf($page.params.modulId));
@@ -103,6 +104,7 @@
 
 	onMount(() => {
 		/* le $effect ci-dessus fait le premier chargement */
+		demarrerCarnet();
 	});
 
 	async function saveProgress() {
@@ -219,6 +221,11 @@
 	function onCorrect() {
 		if (!muted) playTick();
 	}
+
+	// Carnet de révision : les questions à choix notent « je reconnais »,
+	// « Remets dans l'ordre » note « je produis » (cahier §11, 2026-10-24).
+	const noterReconnais = (item, reussi) => noterExercice(item.choses, 'reconnais', reussi);
+	const noterProduis = (item, reussi) => noterExercice(item.choses, 'produis', reussi);
 </script>
 
 <svelte:head>
@@ -334,11 +341,11 @@
 					{#each s.blocks.slice(0, visibleBlockCount) as block, bi}
 						<div class="block-slot">
 							{#if block.type === 'qcm'}
-								<QcmBlock {block} {onCorrect} onComplete={() => (blockDone[bi] = true)} />
+								<QcmBlock {block} {onCorrect} onResult={noterReconnais} onComplete={() => (blockDone[bi] = true)} />
 							{:else if block.type === 'reveal'}
 								<RevealBlock {block} {onCorrect} onComplete={() => (blockDone[bi] = true)} />
 							{:else if block.type === 'order'}
-								<OrderBlock {block} {onCorrect} onComplete={() => (blockDone[bi] = true)} />
+								<OrderBlock {block} {onCorrect} onResult={noterProduis} onComplete={() => (blockDone[bi] = true)} />
 							{:else if block.type === 'dialogue'}
 								<DialogueBlock {block} />
 							{:else if block.type === 'chunks'}

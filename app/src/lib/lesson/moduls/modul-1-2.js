@@ -83,6 +83,7 @@ export const modul12 = {
 							q: 'Loís et Núria disent « je m’appelle » chacun à sa façon. Loís dit…',
 							options: ['*Me dison* (« on me dit »)', '*M’apèli*', 'Encantat'],
 							correct: 0,
+							choses: ['me-dison'],
 							explain:
 								'Loís : *Me dison* ; Núria : *M’apèli*. **Les deux sont parfaitement correctes**, chacun sa préférence.'
 						},
@@ -90,6 +91,7 @@ export const modul12 = {
 							q: 'Vrai ou faux : *Encantat* et *Encantada* veulent dire deux choses différentes.',
 							options: ['Vrai', 'Faux'],
 							correct: 1,
+							choses: ['encantat'],
 							noShuffle: true,
 							explain:
 								'C’est le même « enchanté » : *Encantat* pour un homme, *Encantada* pour une femme (én-can-TA-do).'
@@ -136,18 +138,21 @@ export const modul12 = {
 							q: '*Me dison Mirelha.* Elle dit…',
 							options: ['son nom', 'où elle habite', 'au revoir'],
 							correct: 0,
+							choses: ['me-dison'],
 							explain: '*Me dison* = « on me dit » = je m’appelle.'
 						},
 						{
 							q: 'Pour demander son nom à ta boulangère (que tu vouvoies) :',
 							options: ['Cossí vos dison ?', 'Cossí te dison ?', 'Cossí vas ?'],
 							correct: 0,
+							choses: ['cossi-vos-dison'],
 							explain: '*vos* = vouvoiement.'
 						},
 						{
 							q: 'Un homme répond « enchanté » :',
 							options: ['Encantat', 'Encantada', 'Mercé'],
 							correct: 0,
+							choses: ['encantat'],
 							explain: '*-t* pour un homme, *-da* pour une femme.'
 						},
 						{
@@ -158,12 +163,14 @@ export const modul12 = {
 								'l’une tutoie, l’autre vouvoie'
 							],
 							correct: 0,
+							choses: ['cossi-t-apelas', 'cossi-te-dison'],
 							explain: 'La même question, deux mélodies : toutes deux correctes.'
 						},
 						{
 							q: 'Vrai ou faux : *Me dison* signifie mot à mot « on me dit ».',
 							options: ['Vrai', 'Faux'],
 							correct: 0,
+							choses: ['me-dison'],
 							noShuffle: true,
 							explain: 'Vrai : et c’est charmant.'
 						},
@@ -171,6 +178,7 @@ export const modul12 = {
 							q: '« Moi, je m’appelle Joan » (en insistant) :',
 							options: ['Ieu, m’apèli Joan', 'M’apèli Joan', 'Joan m’apèli'],
 							correct: 0,
+							choses: ['m-apeli'],
 							explain: '*Ieu,* devant, pour insister.'
 						}
 					]
@@ -204,12 +212,12 @@ export const modul12 = {
 					title: 'À retenir',
 					intro: 'Ça sonne comme : syllabe forte en capitales.',
 					items: [
-						{ oc: 'Cossí te dison ?', sound: 'cou-si té DI-zoun', fr: 'comment t’appelles-tu ? (litt. « comment on te dit »)' },
-						{ oc: 'Me dison…', sound: 'mé DI-zoun', fr: 'je m’appelle (« on me dit »)' },
-						{ oc: 'Cossí t’apèlas ?', sound: 'cou-si ta-PÈ-los', fr: 'comment t’appelles-tu ?' },
-						{ oc: 'M’apèli…', sound: 'ma-PÈ-li', fr: 'je m’appelle' },
-						{ oc: 'Cossí vos dison ? / vos apelatz ?', sound: 'cou-si bous a-pé-LATS', fr: 'et en vouvoyant' },
-						{ oc: 'Encantat ! / Encantada !', sound: 'én-can-TAT / én-can-TA-do', fr: 'enchanté·e !' }
+						{ id: 'cossi-te-dison', oc: 'Cossí te dison ?', sound: 'cou-si té DI-zoun', fr: 'comment t’appelles-tu ? (litt. « comment on te dit »)' },
+						{ id: 'me-dison', oc: 'Me dison…', sound: 'mé DI-zoun', fr: 'je m’appelle (« on me dit »)' },
+						{ id: 'cossi-t-apelas', oc: 'Cossí t’apèlas ?', sound: 'cou-si ta-PÈ-los', fr: 'comment t’appelles-tu ?' },
+						{ id: 'm-apeli', oc: 'M’apèli…', sound: 'ma-PÈ-li', fr: 'je m’appelle' },
+						{ id: 'cossi-vos-dison', oc: 'Cossí vos dison ? / vos apelatz ?', sound: 'cou-si bous a-pé-LATS', fr: 'et en vouvoyant' },
+						{ id: 'encantat', oc: 'Encantat ! / Encantada !', sound: 'én-can-TAT / én-can-TA-do', fr: 'enchanté·e !' }
 					]
 				}
 			]
@@ -228,30 +236,35 @@ export const modul12 = {
 							q: 'Demande son nom à ton ami : « Cossí ___ ? »',
 							options: ['te dison', 'vos dison', 'vas'],
 							correct: 0,
+							choses: ['cossi-te-dison'],
 							explain: 'Un ami → *te*.'
 						},
 						{
 							q: 'Réponds (façon « on me dit ») : « ___ Lisa. »',
 							options: ['Me dison', 'M’apèli', 'Soi'],
 							correct: 0,
+							choses: ['me-dison'],
 							explain: '*Me dison Lisa.*'
 						},
 						{
 							q: 'Réponds (l’autre façon) : « ___ Lisa. »',
 							options: ['M’apèli', 'Me dison', 'Encantada'],
 							correct: 0,
+							choses: ['m-apeli'],
 							explain: '*M’apèli Lisa.*'
 						},
 						{
 							q: 'Une femme dit enchanté : « ___ ! »',
 							options: ['Encantada', 'Encantat', 'Plan mercé'],
 							correct: 0,
+							choses: ['encantat'],
 							explain: 'Femme → *-da* (prononcé -do).'
 						},
 						{
 							q: 'Demande le nom en vouvoyant : « Cossí ___ dison ? »',
 							options: ['vos', 'te', 'me'],
 							correct: 0,
+							choses: ['cossi-vos-dison'],
 							explain: '*vos* = vouvoiement.'
 						},
 						{
@@ -270,18 +283,21 @@ export const modul12 = {
 							q: 'Le matin, salue puis demande le nom (tu) :',
 							options: ['Bonjorn ! Cossí te dison ?', 'Bon ser ! Cossí vos dison ?', 'A deman ! E tu ?'],
 							correct: 0,
+							choses: ['bonjorn', 'cossi-te-dison'],
 							explain: 'Matin → *Bonjorn* ; ami → *te*.'
 						},
 						{
 							q: '« ___ Núria. E tu ? » (on me dit)',
 							options: ['Me dison', 'M’apèli', 'Va plan'],
 							correct: 0,
+							choses: ['me-dison'],
 							explain: '*Me dison Núria.*'
 						},
 						{
 							q: 'Un homme : « Encanta___ ! »',
 							options: ['-t', '-da', '-tz'],
 							correct: 0,
+							choses: ['encantat'],
 							noShuffle: true,
 							explain: 'Homme → *Encantat*.'
 						},
@@ -289,6 +305,7 @@ export const modul12 = {
 							q: 'Ta vieille voisine : « Cossí ___ apelatz ? »',
 							options: ['vos', 'te', 't’'],
 							correct: 0,
+							choses: ['cossi-vos-dison'],
 							explain: 'Vouvoiement → *vos apelatz*.'
 						},
 						{
@@ -302,30 +319,35 @@ export const modul12 = {
 							q: 'Réponds à *Cossí vas ?* :',
 							options: ['Va plan, mercé. E tu ?', 'Me dison Joan.', 'A lèu !'],
 							correct: 0,
+							choses: ['va-plan-e-tu'],
 							explain: 'Le réflexe complet de 1.1.'
 						},
 						{
 							q: '« Ieu, ___ Karim. » (deux réponses possibles : choisis-en une)',
 							options: ['me dison', 'te dison', 'vos dison'],
 							correct: 0,
+							choses: ['me-dison'],
 							explain: '*me dison* ou *m’apèli* : les deux marchent.'
 						},
 						{
 							q: 'Tu quittes Núria, vous vous reverrez bientôt : « ___ ! »',
 							options: ['A lèu', 'A deman', 'Bon ser'],
 							correct: 0,
+							choses: ['a-leu'],
 							explain: '*A lèu* = à bientôt.'
 						},
 						{
 							q: '*Cossí t’apèlas ?* : on parle à…',
 							options: ['un ami, un proche', 'un groupe', 'quelqu’un qu’on vouvoie'],
 							correct: 0,
+							choses: ['cossi-t-apelas'],
 							explain: 'Le *t’* tutoie.'
 						},
 						{
 							q: 'Le soir, salue puis présente-toi :',
 							options: ['Bon ser ! Me dison Lisa.', 'Bonjorn ! E tu ?', 'A deman ! M’apèli Lisa.'],
 							correct: 0,
+							choses: ['bon-ser', 'me-dison'],
 							explain: 'Soir → *Bon ser*, puis ton nom.'
 						}
 					]
@@ -344,11 +366,13 @@ export const modul12 = {
 						{
 							prompt: 'Comment t’appelles-tu ?',
 							tiles: ['Cossí', 'te', 'dison ?'],
+							choses: ['cossi-te-dison'],
 							explain: '*Cossí te dison ?*'
 						},
 						{
 							prompt: 'Moi, je m’appelle Núria.',
 							tiles: ['Ieu,', 'm’apèli', 'Núria.'],
+							choses: ['m-apeli'],
 							explain: '*Ieu, m’apèli Núria.*'
 						}
 					]
