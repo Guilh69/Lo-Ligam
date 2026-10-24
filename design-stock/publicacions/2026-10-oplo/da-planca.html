@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>OPLO 2020, deux fonds</title>
+<!-- Planche de choix (2026-10-24) : la scène carte dans la DA Instagram de
+     Romain (fond plein, titre en capitales blanches, traduction en italique
+     avec le drapeau, aplats francs sans contour, flèches dessinées du kit),
+     sur deux fonds : A brique, B pétrole. -->
+<style>
+	@font-face { font-family: Limelight; src: url(../../../app/static/fonts/limelight.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; src: url(../../../app/static/fonts/luciole-regular.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; font-weight: 700; src: url(../../../app/static/fonts/luciole-bold.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; font-style: italic; src: url(../../../app/static/fonts/luciole-italic.woff2) format('woff2'); }
+	body { margin: 0; background: #141010; color: #f5ead8; font-family: Luciole, sans-serif; display: flex; gap: 24px; padding: 16px; flex-wrap: wrap; }
+	figure { margin: 0; }
+	figcaption { font: 700 18px Luciole; margin: 0 0 8px; }
+	svg { width: 540px; height: 675px; display: block; }
+</style>
+</head>
+<body>
+<figure><figcaption>A · fond brique</figcaption><svg id="a" viewBox="0 0 1080 1350"></svg></figure>
+<figure><figcaption>B · fond pétrole</figcaption><svg id="b" viewBox="0 0 1080 1350"></svg></figure>
+<script src="carta-donadas.js"></script>
+<script>
+	const VARS = {
+		a: { fons: '#B53D17', gama: ['#FBF1E1', '#FFD47F', '#EEAF34', '#9C5611', '#3A2A20'], res: 'rgba(255,255,255,0.13)' },
+		b: { fons: '#1F5F63', gama: ['#F5EAD8', '#FFD47F', '#EEAF34', '#D4702A', '#B53D17'], res: 'rgba(255,255,255,0.12)' }
+	};
+	const CLASSAS = [0, 5, 10, 15, 20];
+	const classa = (p) => CLASSAS.findLastIndex((m) => p >= m);
+
+	// la flèche à boucle du kit (corps), en coordonnées locales
+	const P = [[10, 40], [120, 60], [80, 55], [225, 110]];
+	const OUT = [[50, -40], [-15, 45], [20, -35]];
+	const IN = [[20, -60], [-20, 35], [-45, -80]];
+	let corsD = `M${P[0]}`;
+	for (let i = 0; i < 3; i++)
+		corsD += ` C${P[i][0] + OUT[i][0]},${P[i][1] + OUT[i][1]} ${P[i + 1][0] + IN[i][0]},${P[i + 1][1] + IN[i][1]} ${P[i + 1]}`;
+	// une flèche dessinée de L (près du nom) vers T (le département)
+	function fleca(L, T) {
+		const [sx, sy] = P[0], [ex, ey] = P[3];
+		const dl = Math.hypot(ex - sx, ey - sy), dg = Math.hypot(T[0] - L[0], T[1] - L[1]);
+		const s = dg / dl, th = Math.atan2(T[1] - L[1], T[0] - L[0]) - Math.atan2(ey - sy, ex - sx);
+		const tr = `translate(${L}) rotate(${(th * 180) / Math.PI}) scale(${s}) translate(${-sx},${-sy})`;
+		// la pointe, dans le repère de l'image
+		const dir = th + Math.atan2(80, 45);
+		const pt = (a) => `${T[0] - 26 * Math.cos(dir + a)},${T[1] - 26 * Math.sin(dir + a)}`;
+		return `<path d="${corsD}" transform="${tr}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+			<path d="M${pt(0.5)} L${T} L${pt(-0.5)}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`;
+	}
+	// le drapeau rond (devant la traduction)
+	const drapèu = (x, y) => `<clipPath id="r${x}${y}"><circle cx="${x}" cy="${y}" r="16"/></clipPath>
+		<g clip-path="url(#r${x}${y})"><rect x="${x - 16}" y="${y - 16}" width="11" height="32" fill="#2b3f8f"/><rect x="${x - 5}" y="${y - 16}" width="10" height="32" fill="#fff"/><rect x="${x + 5}" y="${y - 16}" width="11" height="32" fill="#d8312b"/></g>`;
+
+	const dep = (c) => CARTA.deps.find((d) => d.code === c);
+	for (const [id, v] of Object.entries(VARS)) {
+		let s = `<rect width="1080" height="1350" fill="${v.fons}"/>`;
+		// titre : capitales blanches centrées, comme « SABETZ COSSÍ… »
+		s += `<text x="540" y="150" text-anchor="middle" font-family="Luciole" font-weight="700" font-size="70" fill="#fff">QUAL PARLA OCCITAN</text>`;
+		s += `<text x="540" y="235" text-anchor="middle" font-family="Luciole" font-weight="700" font-size="70" fill="#fff">UÈI ?</text>`;
+		s += `<clipPath id="dom${id}"><path d="${CARTA.domeni}" clip-rule="evenodd"/></clipPath>`;
+		s += `<path d="${CARTA.domeni}" fill="${v.res}" fill-rule="evenodd"/>`;
+		s += `<g clip-path="url(#dom${id})">`;
+		for (const d of CARTA.deps) {
+			const c = v.gama[classa(d.pct)];
+			s += `<path d="${d.d}" fill="${c}" stroke="${c}" stroke-width="1.2"/>`;
+		}
+		s += `</g>`;
+		// trois noms, flèches dessinées
+		for (const [code, nom, x, y, L] of [
+			['33', 'Gironda', 70, 330, [150, 400]],
+			['48', 'Losèra', 760, 380, [760, 450]],
+			['ARAN', 'Val d’Aran', 420, 990, [430, 960]]
+		]) {
+			const d = dep(code);
+			s += `<text x="${x}" y="${y}" font-family="Limelight" font-size="54" fill="#FFD47F">${d.pct} %</text>`;
+			s += `<text x="${x}" y="${y + 36}" font-family="Luciole" font-weight="700" font-size="30" fill="#fff">${nom}</text>`;
+			s += fleca(L, d.c);
+		}
+		// traduction, en italique avec le drapeau
+		s += drapèu(300, 1130);
+		s += `<text x="330" y="1140" font-family="Luciole" font-style="italic" font-size="32" fill="#fff">Qui parle occitan aujourd’hui ?</text>`;
+		s += `<g>${CARTA.gabarit.logo}</g>`;
+		document.getElementById(id).innerHTML = s;
+	}
+</script>
+</body>
+</html>

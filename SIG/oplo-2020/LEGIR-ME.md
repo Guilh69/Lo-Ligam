@@ -15,6 +15,13 @@ Colonne `comprenon_pct` : part des 15 ans et plus qui **comprennent l'occitan pa
 
 Selon l'âge (ensemble interrégional, même graphique) : 15-29 ans 3 %, 30-44 ans 4 %, 45-59 ans 13 %, 60-74 ans 25 %, 75 ans et plus 39 %. Utile pour la page de vulgarisation.
 
+## Selon l'âge (relevé du 2026-10-24, rapport complet lu, pour la vidéo Instagram)
+- **Locuteurs chez les 15-29 ans : 2 %** (contre 7 % tous âges), graphique « Taux de locuteurs… par département », p. 63, série « Locuteur 15-29 ans », colonne Total.
+- **Âge moyen des locuteurs : 66 ans** (contre 50 ans pour l'ensemble) ; 66 % d'hommes, 56 % en zone rurale (synthèse, p. 24).
+- **Locuteurs + occitano-imprégnés** (comprennent au moins un peu) selon l'âge : 15-29 ans 23 %, 30-44 ans 35 %, 45-59 ans 44 %, 60-74 ans 56 %, 75 ans et plus 65 % (p. 74).
+- Compréhension « parfaitement » 7,5 % + « facilement » 7,1 % = 14,6 % (p. 24), d'où les 15 %.
+- Le taux de **locuteurs** par tranche d'âge complète n'est pas publié (seuls les 15-29 ans et l'ensemble).
+
 ## Ce que la carte montre (fait le 2026-10-23)
 - Lecture « Uèi » de `/carta` (bascule Territòri | Uèi | Reviscolada) : un aplat par département enquêté, cinq classes (moins de 5 %, 5, 10, 15, 20 % et plus) du rose pâle au rouge profond dans tous les thèmes, découpé sur le domaine occitan (Béarn, Charente occitane) ; survol ou toucher : taux de locuteurs, compréhension, source et définition. Données recopiées dans `app/src/lib/carta/locutors.js` : **corriger ce tableau-ci d'abord, puis le module**.
 - **Là où aucune enquête n'existe, rien n'est indiqué** (décision de Romain, 23-10 ; remplace le « ND affiché » prévu le 22-10). Pyrénées-Orientales occitanes : rien non plus (taux de locuteurs non publié).
