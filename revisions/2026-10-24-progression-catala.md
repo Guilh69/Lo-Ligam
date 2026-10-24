@@ -122,6 +122,12 @@ Pas d'examen final : évaluation continue par les tâches, certificat de réussi
 5. ✅ **Le nombre de blocs par niveau** : décidé le 2026-10-24 par Romain : **(c) A1 = 2 blocs (90 h), A2 = 3 blocs (135 h), le reste plus tard** (cahier §11). La carte A1 passe de 10 unités à 8 (à faire par Romain).
 6. ✅ **La révision nommée** : décidé le 2026-10-24 par Romain : **(a) toutes les deux unités, deux par bloc** (cahier §11). Les titres-phrases sont acquis avec la décision 4.
 7. *(ensuite)* Le son du jour accroché au point de forme du module.
+8. ✅ **La répétition espacée, outil central** (Romain, 2026-10-24, cahier §11) : chaque chose apprise entre dans le carnet de révision ; le code planifie et dit acquis / pas encore ; cartes de formes variées, reliées aux règles et aux jeux.
+   - **Décision 8 bis, la manière de noter** :
+     - **(a) Surtout automatique, deux réponses sinon** : quand l'exercice se corrige seul (choix, ordre, trous), la réussite note la carte sans rien demander ; quand l'élève s'évalue (rappel libre, oral), deux boutons « Pas encore » / « Acquis ». Algorithme FSRS (celui d'Anki depuis 2023, bibliothèque libre `ts-fsrs`, licence MIT, calcul dans le navigateur, carnet dans Supabase).
+     - **(b) Les quatre boutons d'Anki** (À revoir, Difficile, Bien, Facile) sur chaque carte, même algorithme.
+     - **(c) Un calendrier fixe d'abord** (J+2, J+7, J+30, recommandation de l'état de l'art §9), FSRS plus tard.
+   - Ensuite : ce qu'est une carte (une par mot ? par bloc tout fait ? par forme ?) ; la séance quotidienne ; le lien avec les haltes de révision ; le carnet sans compte (module 0).
 
 ## 5. Ce que Romain peut faire seul / ce qui demande du code
 
