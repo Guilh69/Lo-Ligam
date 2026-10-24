@@ -6,6 +6,12 @@
 # Bibliothèque de référence (carte de 71 Mo, lexique sous droits) : reste sur le disque.
 /Modules_cors/Base_donnees_linguistica
 
+# Documents du cours de catalan (CPNL) et du DCL fournis par Romain (24-10) :
+# sous droits, et l'archive des annales fait 141 Mo. Analyse dans
+# revisions/2026-10-24-progression-catala.md.
+/Modules_cors/Inspiracion_catala
+/Modules_cors/DCL
+
 # Données SIG brutes téléchargées (IGN, OSM, Dataverse…) : refaisables par les
 # scripts de SIG/cadena, trop lourdes pour le dépôt.
 /SIG/brut

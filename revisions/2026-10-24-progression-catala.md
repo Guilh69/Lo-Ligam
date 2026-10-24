@@ -121,7 +121,7 @@ Pas d'examen final : évaluation continue par les tâches, certificat de réussi
 4. ✅ **Le circuit d'une unité** : décidé le 2026-10-24 par Romain : **(c) le mixte** : la scène ouvre l'unité (défis oraux enregistrés), nos modules à l'intérieur renommés en questions, la tâche ferme, un mémo résume (cahier §11). Options posées : le circuit d'une unité : reprendre celui de l'A1 du CPNL (scène, défis, micro-activités titrées par des questions, « à toi », tâche, mémo) dans notre moteur.
 5. ✅ **Le nombre de blocs par niveau** : décidé le 2026-10-24 par Romain : **(c) A1 = 2 blocs (90 h), A2 = 3 blocs (135 h), le reste plus tard** (cahier §11). La carte A1 passe de 10 unités à 8 (à faire par Romain).
 6. ✅ **La révision nommée** : décidé le 2026-10-24 par Romain : **(a) toutes les deux unités, deux par bloc** (cahier §11). Les titres-phrases sont acquis avec la décision 4.
-7. *(ensuite)* Le son du jour accroché au point de forme du module.
+7. ✅ **Le son du jour** : décidé le 2026-10-24 par Romain : **(c) le son de la forme du jour, dans l'ordre de phonologie du DCL** (cahier §11).
 8. ✅ **La répétition espacée, outil central** (Romain, 2026-10-24, cahier §11) : chaque chose apprise entre dans le carnet de révision ; le code planifie et dit acquis / pas encore ; cartes de formes variées, reliées aux règles et aux jeux.
    - ✅ **Décision 8 bis, la manière de noter** : décidé le 2026-10-24 par Romain : **(a)** (cahier §11). Options posées :
      - **(a) Surtout automatique, deux réponses sinon** : quand l'exercice se corrige seul (choix, ordre, trous), la réussite note la carte sans rien demander ; quand l'élève s'évalue (rappel libre, oral), deux boutons « Pas encore » / « Acquis ». Algorithme FSRS (celui d'Anki depuis 2023, bibliothèque libre `ts-fsrs`, licence MIT, calcul dans le navigateur, carnet dans Supabase).
@@ -137,3 +137,18 @@ Pas d'examen final : évaluation continue par les tâches, certificat de réussi
 - **Seul, maintenant** : trancher la décision 1 ; dire en quelques phrases ce qui t'a plu en vivant le cours de catalan ; regarder une des trois annales du DCL avec sa vidéo, en te demandant « mes élèves de visio pourraient-ils faire ça, et à quel niveau ? ».
 - **Avec Claude, ensuite** : selon la décision, relier les modules aux séances de visio (code), un type de module « révision » dans le moteur (code), la relecture de la carte A1 avec la grille du catalan.
 - **Plus tard** : tester une unité ainsi construite avec deux ou trois élèves de visio.
+
+## 6. Après les décisions : l'ordre des chantiers (proposé le 2026-10-24)
+
+**Romain, seul, sans attendre le code** :
+1. La carte A1 en 8 unités, 2 blocs de 4 (aujourd'hui 10 unités : lesquelles fusionner ou repousser en A2), avec une halte après les unités 2, 4, 6 et 8. Fichier : `Modules_cors/lo-ligam-cursus-pour-claude-code/cursus/01-A1.md`.
+2. Les questions-titres de l'unité 1 (une par module, une qu'on pose vraiment), puis le son de chaque module.
+3. Les situations de réemploi de la première halte.
+4. Regarder une annale du DCL avec sa vidéo (`Modules_cors/DCL/`).
+
+**Claude, dans l'ordre, chaque chantier vérifié par `npm run build` et des captures** :
+1. **Le carnet de révision** : modèle de données (deux cartes par chose : je reconnais, je produis), planification FSRS (`ts-fsrs`), carnet dans le navigateur puis dans Supabase à l'inscription, notation automatique branchée sur les exercices de l'unité 1. C'est le socle de tout le reste.
+2. **La séance du jour** : révision plafonnée avant la leçon, à la place du rappel écrit à la main.
+3. **Les modules « halte »** et l'écran de bilan.
+4. **L'enveloppe d'unité** : la scène en ouverture (attend les visuels Canva et `/admin/scenas`, chantier 16), les défis oraux enregistrés, le mémo.
+5. **L'affichage des niveaux du DCL et des blocs** sur S'apren (en lien avec le chantier 19).
