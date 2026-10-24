@@ -47,7 +47,6 @@
     { "clau": "acuelh.chifras.c3.nom", "tipe": "text", "lista": "acuelh.chifras.c3", "oc": "sègles de literatura", "fr": "siècles de littérature" },
     { "clau": "acuelh.chifras.c3.font", "tipe": "text", "lista": "acuelh.chifras.c3", "oc": "dempuèi los primièrs trobadors", "fr": "depuis les premiers troubadours" },
 
-    { "clau": "acuelh.pont.mot", "tipe": "text", "oc": "Puèi", "fr": "Ensuite" },
     { "clau": "acuelh.sec.apren.titol", "tipe": "text", "oc": "S’apren", "fr": "S’apprend" },
 
     { "clau": "acuelh.biais.visio", "tipe": "bloc", "lista": "acuelh.biais", "ordre": 1 },

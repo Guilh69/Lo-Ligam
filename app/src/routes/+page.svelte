@@ -490,11 +490,7 @@
 				{/each}
 			</div>
 			{@render apondreBoton(apondreChifra, 'Apondre una chifra', 'Ajouter un chiffre')}
-			<!-- Les trois rubriques sont un ordre (Romain, 2026-10-22) : chacune renvoie à la suivante -->
-			<p class="pont esvani">
-				<span class="pont-mot" hidden={amagat('acuelh.pont.mot')} use:editar={'acuelh.pont.mot'}>{@render bi('acuelh.pont.mot')}</span>
-				<a href="#biais"><b>02</b> {@render bi('acuelh.sec.apren.titol')} {@render sageta()}</a>
-			</p>
+			<!-- (les liens « Puèi · 02 S’apren → » et « Puèi · 03 Amassa → » ont été retirés : « ils ne servent à rien », Romain, 2026-10-24) -->
 		</section>
 
 		<!-- V. 02 S'apren : les trois façons d'apprendre, telles quelles -->
@@ -531,10 +527,6 @@
 				</div>
 				<p class="lengas-consigna" aria-live="polite" lang={consigna[0]}>{consigna[1]}</p>
 			</fieldset>
-			<p class="pont esvani">
-				<span class="pont-mot" hidden={amagat('acuelh.pont.mot')} use:editar={'acuelh.pont.mot'}>{@render bi('acuelh.pont.mot')}</span>
-				<a href="#viure"><b>03</b> {@render bi('acuelh.sec.viu.titol')} {@render sageta()}</a>
-			</p>
 		</section>
 
 		<!-- VI. 03 Amassa (« Se viu » jusqu’au 2026-10-21) : la communauté, une seule carte -->

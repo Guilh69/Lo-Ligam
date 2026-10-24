@@ -1,6 +1,6 @@
 -- Lo Ligam — édition sur place : les éléments modifiables des pages
 -- =============================================================================
--- Fabriqué par app/scripts/elements-sql.mjs le 2026-10-23 ; ne pas modifier à la main.
+-- Fabriqué par app/scripts/elements-sql.mjs le 2026-10-24 ; ne pas modifier à la main.
 -- À coller dans Supabase : SQL Editor → New query → Run. Rejouable sans risque :
 -- la semence ne touche pas aux lignes déjà présentes.
 -- Suppose que supabase-admin-schema.sql a déjà été exécuté (public.is_admin(),
@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (72 lignes). Jamais écrasés s'ils existent déjà.
+-- (71 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -185,7 +185,6 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.chifras.c3.num', 'acuelh', 'text', 'acuelh.chifras.c3', 0, '10', '10', null, null, true),
 	('acuelh.chifras.c3.nom', 'acuelh', 'text', 'acuelh.chifras.c3', 0, 'sègles de literatura', 'siècles de littérature', null, null, true),
 	('acuelh.chifras.c3.font', 'acuelh', 'text', 'acuelh.chifras.c3', 0, 'dempuèi los primièrs trobadors', 'depuis les premiers troubadours', null, null, true),
-	('acuelh.pont.mot', 'acuelh', 'text', null, 0, 'Puèi', 'Ensuite', null, null, true),
 	('acuelh.sec.apren.titol', 'acuelh', 'text', null, 0, 'S’apren', 'S’apprend', null, null, true),
 	('acuelh.biais.visio', 'acuelh', 'bloc', 'acuelh.biais', 1, null, null, null, null, true),
 	('acuelh.biais.visio.titol', 'acuelh', 'text', 'acuelh.biais.visio', 0, 'En visio, amb ieu', 'En visio, avec moi', null, null, true),

@@ -18,7 +18,6 @@ const ETIQUETAS = [
 	['acuelh.manifest.legenda', 'La legenda de la fòto', 'La légende de la photo'],
 	['acuelh.sec.parla.titol', 'Títol de la rubrica 01', 'Titre de la rubrique 01'],
 	['acuelh.parla.carta', 'Boton « Dobrir la carta entièra »', 'Bouton « Ouvrir la carte entière »'],
-	['acuelh.pont.mot', 'Lo mot « Puèi »', 'Le mot « Ensuite »'],
 	['acuelh.sec.apren.titol', 'Títol de la rubrica 02', 'Titre de la rubrique 02'],
 	['acuelh.lengas.legenda', 'Legenda « Aprene dempuèi »', 'Légende « Apprendre depuis »'],
 	['acuelh.sec.viu.titol', 'Títol de la rubrica 03', 'Titre de la rubrique 03'],
