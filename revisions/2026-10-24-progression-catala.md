@@ -130,7 +130,7 @@ Pas d'examen final : évaluation continue par les tâches, certificat de réussi
    - ✅ **Décision 8 ter, ce qu'est une carte** : décidé le 2026-10-24 par Romain : **deux cartes par chose apprise, « je reconnais » puis « je produis »**, la seconde s'ouvre quand la première est acquise (cahier §11).
    - ✅ **Décision 8 quater, la séance du jour** : décidé le 2026-10-24 par Romain : **la révision d'abord, plafonnée à quelques minutes, puis la leçon** (cahier §11).
    - ✅ **Les haltes de révision** : décidé le 2026-10-24 par Romain : **du réemploi qui mêle les deux unités, puis un bilan visible tiré du carnet** (cahier §11).
-   - Ensuite : le lien avec les haltes de révision ; le carnet sans compte (module 0).
+   - ✅ **Le carnet sans compte** : décidé le 2026-10-24 par Romain : **dans le navigateur, rattaché au compte à l'inscription** (cahier §11).
 
 ## 5. Ce que Romain peut faire seul / ce qui demande du code
 
