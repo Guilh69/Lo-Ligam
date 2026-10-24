@@ -117,7 +117,7 @@ Pas d'examen final : évaluation continue par les tâches, certificat de réussi
    - **(b) Le DCL comme préparation à part** : le cursus garde ses situations de vie et ses niveaux du CECR ; à partir d'A2, un module « Préparer le DCL » par niveau (méthode des 5 phases, annales, entraînement oral en visio avec Romain).
    - **(c) Pas de cap certifiant pour l'instant** : on affiche les niveaux du CECR, sans lien annoncé au DCL.
 2. ✅ **Le découpage affiché** : décidé le 2026-10-24 par Romain : **(a)** (cahier §11). Reste à fixer le nombre de blocs par niveau. Options posées : : des blocs de 45 h à la manière du CPNL (un bloc = un trimestre de visio), ou nos unités telles quelles.
-3. *(ensuite)* Le rôle de tes cours en visio et du site : une seule progression (la visio fait la séance, le site l'avant et l'après, comme le CPNL avec ses contenus interactifs), ou deux.
+3. ✅ **Le rôle de la visio et du site** : décidé le 2026-10-24 par Romain : **(b) le site porte tout le parcours**, une visio de rencontre au départ, des cours en visio à la carte selon ses disponibilités, modèle asynchrone + synchrone du CPNL (cahier §11). Le bloc de 45 h devient un trimestre de parcours, accompagné ou non. Options posées au départ : le rôle de tes cours en visio et du site : une seule progression (la visio fait la séance, le site l'avant et l'après, comme le CPNL avec ses contenus interactifs), ou deux.
 4. *(ensuite)* Le circuit d'une unité : reprendre celui de l'A1 du CPNL (scène, défis, micro-activités titrées par des questions, « à toi », tâche, mémo) dans notre moteur.
 5. *(ensuite)* Les habitudes à reprendre : titres-phrases, son accroché au point, révision nommée.
 
