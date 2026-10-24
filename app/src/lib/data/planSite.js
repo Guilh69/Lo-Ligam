@@ -15,6 +15,8 @@ export const VISIO = '/apren/visio';
 export const PLAN = [
 	{
 		id: 'parla', n: '01', oc: 'Se parla', fr: 'Se parle',
+		// la page de la rubrique, sur le modèle de S'apren (Romain, 2026-10-25)
+		href: '/parla',
 		grops: [{ items: [
 			{ oc: 'La carta', fr: 'La carte', href: '/carta' },
 			{ oc: 'Lo wiki', fr: 'Le wiki', href: '/wiki' }, // (« wiki » plutôt qu'« encyclopédie », Romain, 2026-10-15)
@@ -42,6 +44,8 @@ export const PLAN = [
 		// « Amassa » / « Rassemble » remplace « Se viu » / « Se vit » (Romain, 2026-10-21 :
 		// « se viu ne correspond pas au contenu ») ; l'id reste 'viu' (ancres, styles)
 		id: 'viu', n: '03', oc: 'Amassa', fr: 'Rassemble',
+		// la page de la rubrique, en cases de couleur comme S'apren (2026-10-25)
+		href: '/amassa',
 		// Amassa = la communauté au sens strict (Òbras et Articles partis dans
 		// Se parla le 2026-10-22)
 		grops: [

@@ -68,7 +68,11 @@ Remise d'environ 8 % pour le mois et 15 % pour le trimestre (par exemple 12 × 2
 1. ~~Le tarif solidaire : déclaratif ou réservé à des cas ?~~ **Décidé le 2026-10-24 : sur simple déclaration, sans justificatif ; chacun choisit son tarif en conscience** (Romain).
 2. ~~Petits groupes : quel prix par personne ?~~ **Décidé le 2026-10-24 : pas de groupes pour l'instant, seulement des cours individuels ; les groupes plus tard** (Romain). Repère gardé pour plus tard : environ 60 % du prix individuel par personne.
 3. ~~Durée de validité des bouquets~~ **Décidé le 2026-10-24 : 2 mois pour 4 cours, 5 mois pour 12 cours** (Romain). **Annulation : pas de règle pour l'instant** (Romain, 2026-10-24 : « ce sera vraiment plus tard si ça marche et si ça arrive souvent ») ; repères gardés pour plus tard : sans frais jusqu'à 24 h ou 48 h avant.
-4. Paiement : quel outil (européen si possible), selon le statut de Romain.
+4. ~~Paiement : quel outil ?~~ **Décidé le 2026-10-24 : par virement, sur un compte réservé à l'activité** (Romain). Vérifié le même jour :
+   - en micro-entreprise, un compte dédié n'est **obligatoire qu'au-delà de 10 000 € de chiffre d'affaires deux années civiles de suite** ; ce peut être un compte personnel séparé, réservé à l'activité ; il reste recommandé dès le départ ([Service-Public](https://entreprendre.service-public.gouv.fr/vosdroits/F35991?lang=fr)). 10 000 € par an, c'est environ 455 cours au tarif classique, soit 9 par semaine ;
+   - un vrai compte professionnel coûte cher pour démarrer : Nef Pro 35 € par mois, soit 420 € par an ([La Nef](https://aide.lanef.com/hc/fr/articles/21729604093842-Nef-Pro-combien-vais-je-payer-par-mois)) ; Crédit Coopératif, grille pro générale autour de 180 € par trimestre ([Moneyvox](https://www.moneyvox.fr/tarif-bancaire/compte-pro/credit-cooperatif/)) ;
+   - cotisations sociales d'une micro-entreprise de services (BNC) : 25,6 % du chiffre d'affaires en 2026 ([economie.gouv.fr](https://www.economie.gouv.fr/entreprises/micro-entreprise-auto-entreprise-charges-sociales)) ; un cours classique à 22 € laisse donc environ 16,40 € avant impôt ;
+   - à vérifier par Romain (je ne suis pas conseiller) : le classement exact de l'activité auprès de l'URSSAF, la note ou facture à remettre pour chaque paiement, avec la mention « TVA non applicable, art. 293 B du CGI » en franchise de TVA.
 
 ## Sources
 - [Superprof, cours d'occitan en ligne](https://www.superprof.fr/cours/occitan/online/) et [en France](https://www.superprof.fr/cours/occitan/france/)

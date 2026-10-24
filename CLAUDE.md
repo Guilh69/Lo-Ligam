@@ -21,7 +21,7 @@ Site d'apprentissage de l'occitan (languedocien, norme classique), support des c
 ## Contenu
 - L'occitan produit par Claude est **toujours à valider par Romain** (dicodòc / lo Congrès) avant publication.
 - **Vérifier d'abord avec l'API de lo Congrès**, avant de montrer un mot à Romain : `cd app` puis `node scripts/verificar-oc.mjs mot1 mot2` (occitan) ou `node scripts/verificar-oc.mjs --fr mot` (français → occitan, avec la variété). Clé dans `app/.env`, ne jamais l'afficher.
-- Depuis le 2026-10-04, Claude ne produit plus de contenu pédagogique à la place de Romain : il questionne, vérifie et code (cahier §11).
+- Depuis le 2026-10-25, **Claude rédige les unités du cursus** (revirement de la décision du 2026-10-04, cahier §11) : Romain fixe le cap, répond aux questions une à une, relit et valide l'occitan avant publication. Exigences : logique d'ensemble visible, un objectif clair par leçon, aucun mot ni notion non expliqués avant, répétition, découverte, variété des jeux.
 - UX : animations soignées, sons discrets et désactivables, humour fin par touches.
 - Périmètre MVP : A1, compte, questionnaire. Cartographie et modèle payant = en cours d'arbitrage, voir `cahier-des-charges.md` §3/§6/§11 avant de supposer l'ancien périmètre.
 

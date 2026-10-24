@@ -4,6 +4,7 @@ Contenu pédagogique du site Lo Ligam (source de vérité : `cursus/`).
 
 ## Fichiers
 - `cursus/00-cadre-methodologique.md` — norme (CLO 2007 + Alibèrt), choix de formes (§3), 8 principes SLA, gabarit de module paginé en sessions, décisions v0.3.
+- `cursus/01-A1-carta-8-unitats.md` — **carte de l'A1 en 8 unités (2026-10-25, Claude rédige depuis le revirement du 25-10)**, remplace la carte de `01-A1.md`.
 - `cursus/01-A1.md` … `06-C2.md` — carte des unités/modules par niveau + 1 module intégralement rédigé par niveau (4.1, 11.1, 21.1, 33.1, 44.1, 61.1).
 - `cursus/07-carta-del-cursus.md` — carte du cursus : formes d'apprentissage / formes en usage, natifs relecteurs, modules réalisés.
 - `cursus/08-proposition-personas.md`, `personas-retours-bruts.md` — lecture par 10 personas et arbitrages.

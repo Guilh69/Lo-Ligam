@@ -8,6 +8,7 @@
 	import FougasseIcon from '$lib/components/FougasseIcon.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { session, authReady } from '$lib/authStore';
+	import { esAdmin, adminSabut } from '$lib/adminStore';
 	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
 	import QcmBlock from '$lib/lesson/QcmBlock.svelte';
@@ -256,7 +257,17 @@
 			<p>Ce module n'existe pas (encore).</p>
 			<a class="btn-primary" href="/aprene">Tornar als moduls</a>
 		</section>
+	{:else if !modul.relu && !$adminSabut}
+		<!-- on attend de savoir si c'est Romain avant d'afficher un module pas encore relu -->
+	{:else if !modul.relu && !$esAdmin}
+		<section class="missing">
+			<p>Ce module est en préparation : il ouvrira bientôt.</p>
+			<a class="btn-primary" href="/aprene">Tornar als moduls</a>
+		</section>
 	{:else}
+		{#if !modul.relu}
+			<p class="en-relecture">En relecture : visible seulement pour toi, connecté en administrateur.</p>
+		{/if}
 		<header class="lesson-top">
 			{#if view === 'list'}
 				<a class="close" href="/aprene" aria-label="Tornar als moduls"><Icona nom="fermer" /></a>
@@ -503,6 +514,16 @@
 		background: rgba(58, 42, 32, 0.07);
 		color: var(--color-text);
 		cursor: pointer;
+	}
+
+	.en-relecture {
+		margin: 0 0 1rem;
+		padding: 0.5rem 0.9rem;
+		border-radius: 12px;
+		background: var(--color-gold-light);
+		color: var(--color-text);
+		font-size: 0.9rem;
+		text-align: center;
 	}
 
 	.missing {
