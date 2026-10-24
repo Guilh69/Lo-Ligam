@@ -65,7 +65,7 @@ Pourquoi A : Romain se présente comme apprenant engagé, pas comme expert (« d
 Remise d'environ 8 % pour le mois et 15 % pour le trimestre (par exemple 12 × 22 € = 264 €, ramenés à 225 €) : assez pour donner envie de s'engager sur un bloc, pas assez pour brader.
 
 ## 5. Questions qui viendront après le choix de la grille (une à la fois)
-1. Le tarif solidaire : déclaratif sans justificatif (comme à Rennes), ou réservé à des cas (étudiants, sans emploi, petits revenus) ?
+1. ~~Le tarif solidaire : déclaratif ou réservé à des cas ?~~ **Décidé le 2026-10-24 : sur simple déclaration, sans justificatif ; chacun choisit son tarif en conscience** (Romain).
 2. Petits groupes (2 à 4 personnes, déjà annoncés sur la page) : quel prix par personne ? Repère : environ 60 % du prix individuel.
 3. Durée de validité des bouquets (par exemple 2 mois pour 4 cours, 5 mois pour 12) et règle d'annulation (par exemple prévenir 24 h avant).
 4. Paiement : quel outil (européen si possible), selon le statut de Romain.
