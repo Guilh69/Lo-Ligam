@@ -6,16 +6,20 @@
 	// on laisse écouter par le lecteur officiel, chargé SEULEMENT au clic : avant
 	// ça, aucune requête ne part chez un tiers, donc aucun traceur.
 	//
-	// Les musiques (2026-10-25, option « fiche + écouter ici ») : une fiche par
-	// artiste, que Romain ajoute sur la page (édition sur place) : le nom, ses
-	// lignes, les liens qu'il colle (la plateforme se reconnaît). « Escotar
-	// aicí » ouvre d'abord une phrase qui dit ce que la plateforme recevra ;
-	// le lecteur ne se charge qu'après l'accord, qui vaut pour la visite.
+	// Les musiques (2026-10-25, choix de Romain sur maquettes) : une pochette
+	// de couleur par artiste, le disque qui dépasse sort au clic (« Las
+	// pochetas ») ; Bandcamp au centre, les autres liens en option. Romain
+	// ajoute un artiste « tout d'un coup » : il colle ses liens dans une seule
+	// case, le nom et le lecteur Bandcamp se trouvent seuls (/api/bandcamp),
+	// sa phrase s'il veut, « Publicar ». « Escotar aicí » ouvre d'abord une
+	// phrase qui dit ce que la plateforme recevra ; le lecteur ne se charge
+	// qu'après l'accord, qui vaut pour la visite.
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { plataforma, lectorPer } from '$lib/obras';
+	import { plataforma, lectorPer, ligamsCollats } from '$lib/obras';
+	import { PALETAS, PALETA_PER_DEFAUT } from '$lib/apren/teulas.js';
 	import { afichas } from '$lib/data/afichas.js';
-	import { edicion, iniciar, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
+	import { edicion, iniciar, txt, ligam, lista, amagat, apondre, cambiar, causir, publicar } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
 
@@ -35,7 +39,6 @@
 			òc: 'Escotar',
 			non: 'Non, mercé',
 			ligams: 'Ont escotar',
-			cort: 'Ligam cort : lo lector se pòt pas cargar. Copiar l’adreça complèta (deezer.com/…).',
 			void: 'Encara res aicí. Lèu.',
 			afichas: 'Afichas',
 			afichasLead: 'D’afichas que fan parlar la lenga sus las parets.',
@@ -50,7 +53,6 @@
 			òc: 'Écouter',
 			non: 'Non merci',
 			ligams: 'Où écouter',
-			cort: 'Lien court : le lecteur ne peut pas se charger. Copier l’adresse complète (deezer.com/…).',
 			void: 'Rien encore ici. Bientôt.',
 			afichas: 'Affiches',
 			afichasLead: 'Des affiches qui font parler la langue sur les murs.',
@@ -60,21 +62,25 @@
 	};
 	let tx = $derived(t[lang]);
 
-	// Les liens d'une fiche, rangés par plateforme (Bandcamp d'abord) ; hors
-	// édition, un lien pas encore collé (« / ») ne s'affiche pas
+	// la couleur d'une pochette suit sa place, comme les cases des rubriques
+	const color = (i) => PALETAS[PALETA_PER_DEFAUT][i % PALETAS[PALETA_PER_DEFAUT].length];
+	const ÈS_LECTOR = (clau) => clau.endsWith('.lector');
+
+	// Les liens visibles d'une pochette, rangés (Bandcamp d'abord) ; le lecteur
+	// trouvé à l'ajout est rangé à part (`<clau>.lector`)
 	function ligamsDe(clau) {
 		return lista(clau)
-			.filter((e) => e.tipe === 'ligam')
+			.filter((e) => e.tipe === 'ligam' && !ÈS_LECTOR(e.clau))
 			.map((e) => ({ clau: e.clau, l: ligam(e.clau), p: plataforma(ligam(e.clau).href) }))
 			.filter((x) => edicion.actiu || x.p)
 			.sort((a, b) => (a.p?.rang ?? 9) - (b.p?.rang ?? 9));
 	}
-	// le premier lien qui ouvre un lecteur dans la fiche (Deezer ou YouTube)
-	const lectorDe = (ligams) => ligams.map((x) => lectorPer(x.l.href)).find((l) => l?.src) ?? null;
-	const ligamsCorts = (ligams) => ligams.some((x) => lectorPer(x.l.href)?.cort);
+	// le lecteur : celui de Bandcamp s'il a été trouvé, sinon Deezer ou YouTube
+	const lectorDe = (clau, ligams) =>
+		lectorPer(ligam(clau + '.lector').href) ?? ligams.map((x) => lectorPer(x.l.href)).find((l) => l?.src) ?? null;
 
-	let demanda = $state(null); // la fiche dont la phrase d'accord est ouverte
-	let dubèrt = $state(null); // la fiche dont le lecteur est chargé
+	let demanda = $state(null); // la pochette dont la phrase d'accord est ouverte
+	let dubèrt = $state(null); // la pochette dont le disque est sorti
 	let acòrds = $state({}); // plateformes acceptées pendant la visite
 	function escotar(clau, lector) {
 		if (acòrds[lector.plataforma]) dubèrt = clau;
@@ -86,11 +92,58 @@
 		dubèrt = clau;
 	}
 
-	const apondreArtista = () =>
-		apondre('obras.artistas', 'bloc', {}, [
-			['nom', 'text', { oc: 'Nom', fr: 'Nom' }],
-			['tèxt', 'text', { oc: 'A escriure', fr: 'À écrire' }]
+	// --- l'ajout « tout d'un coup » (édition seulement) ---
+	let formulari = $state(false);
+	let collats = $state('');
+	let nòuNom = $state('');
+	let nomTocat = $state(false); // Romain a corrigé le nom : on n'y touche plus
+	let frasaOc = $state('');
+	let frasaFr = $state('');
+	let lectorTrobat = $state(null);
+	let cèrca = $state(false);
+	let error = $state('');
+	let trobats = $derived(ligamsCollats(collats));
+	let fichaBandcamp = $derived(trobats.find((l) => plataforma(l)?.nom === 'Bandcamp') ?? null);
+
+	let darrièr = null;
+	$effect(() => {
+		const u = fichaBandcamp;
+		if (!u || u === darrièr) return;
+		darrièr = u;
+		cèrca = true;
+		fetch('/api/bandcamp?u=' + encodeURIComponent(u))
+			.then((r) => (r.ok ? r.json() : null))
+			.then((r) => {
+				if (darrièr !== u) return;
+				lectorTrobat = r?.lector ?? null;
+				if (r?.nom && !nomTocat) nòuNom = r.nom;
+			})
+			.catch(() => {})
+			.finally(() => (cèrca = false));
+	});
+
+	function voidar() {
+		formulari = false;
+		collats = nòuNom = frasaOc = frasaFr = error = '';
+		nomTocat = false;
+		lectorTrobat = darrièr = null;
+	}
+	async function publicarArtista() {
+		const nom = nòuNom.trim();
+		if (!trobats.length) return (error = fr ? 'Colle au moins un lien.' : 'Pega al mens un ligam.');
+		if (!nom) return (error = fr ? 'Il manque le nom.' : 'Manca lo nom.');
+		const sensFrasa = !frasaOc.trim() && !frasaFr.trim();
+		const clau = apondre('obras.artistas', 'bloc', {}, [
+			['nom', 'text', { oc: nom, fr: nom }],
+			['tèxt', 'text', { oc: frasaOc.trim(), fr: frasaFr.trim() || frasaOc.trim(), visible: !sensFrasa }]
 		]);
+		for (const u of trobats) apondre(clau, 'ligam', { oc: '', fr: '', ligam: u });
+		if (lectorTrobat) cambiar(`${clau}.lector`, { oc: '', fr: '', ligam: lectorTrobat }, { tipe: 'ligam', lista: clau, tot_d_un_còp: true });
+		causir(null);
+		await publicar();
+		voidar();
+	}
+
 	const apondreLigam = (clau) => apondre(clau, 'ligam', { oc: '', fr: '', ligam: '/' });
 	// le nom affiché d'un lien : celui que Romain a écrit, sinon la plateforme
 	const nomLigam = (x) => (fr ? x.l.fr : x.l.oc) || x.p?.nom || (fr ? 'Coller l’adresse' : 'Pegar l’adreça');
@@ -119,6 +172,30 @@
 {#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
 {#snippet tt(clau)}{@const v = txt(clau)}<span lang={fr ? 'fr' : 'oc'}>{@render marcat(fr ? v.fr : v.oc)}</span>{/snippet}
 
+{#snippet pocheta(nom, i, lector, sortit, clau)}
+	{@const [fons, tinta] = color(i)}
+	<div class="pocheta" class:sortit style:--fons={fons} style:--tinta={tinta}>
+		<span class="disc" aria-hidden="true"><span class="disc-cor"></span></span>
+		<div class="cobèrta">
+			{#if clau}
+				<h3 class="pocheta-nom" hidden={amagat(clau + '.nom')} use:editar={clau + '.nom'}>{nom}</h3>
+			{:else}
+				<h3 class="pocheta-nom">{nom}</h3>
+			{/if}
+			{#if lector && clau}
+				{#if !sortit}
+					<button type="button" class="escotar" onclick={() => escotar(clau, lector)}>
+						<Icona nom="lire" size="1em" />
+						{tx.escotar}
+					</button>
+				{/if}
+			{:else if lector}
+				<span class="escotar"><Icona nom="lire" size="1em" /> {tx.escotar}</span>
+			{/if}
+		</div>
+	</div>
+{/snippet}
+
 <div class="page-bg" aria-hidden="true">
 	<span class="blob blob-gold"></span>
 	<span class="blob blob-teal"></span>
@@ -134,71 +211,97 @@
 
 	<section class="musicas" id="musicas" aria-labelledby="musicas-titol">
 		<h2 id="musicas-titol" class="seccion-titol" hidden={amagat('obras.musica.titol')} use:editar={'obras.musica.titol'}>{@render tt('obras.musica.titol')}</h2>
-		<p class="lead" hidden={amagat('obras.musica.frasa')} use:editar={'obras.musica.frasa'}>{@render tt('obras.musica.frasa')}</p>
+		<p class="musicas-lead" hidden={amagat('obras.musica.frasa')} use:editar={'obras.musica.frasa'}>{@render tt('obras.musica.frasa')}</p>
 
 		{#if !lista('obras.artistas').length && !edicion.actiu}
-			<p class="msg">{tx.void}</p>
+			<p class="musicas-void">{tx.void}</p>
 		{/if}
-		<ul class="artistas">
-			{#each lista('obras.artistas') as a (a.clau)}
-				{@const ligams = ligamsDe(a.clau)}
-				{@const lector = lectorDe(ligams)}
-				{@const nom = txt(a.clau + '.nom')}
-				<li class="artista-plaça">
-					<div class="artista" use:editar={a.clau}>
-						<h3 hidden={amagat(a.clau + '.nom')} use:editar={a.clau + '.nom'}>{fr ? nom.fr : nom.oc}</h3>
-						<p class="tèxt" hidden={amagat(a.clau + '.tèxt')} use:editar={a.clau + '.tèxt'}>{@render tt(a.clau + '.tèxt')}</p>
 
-						{#if lector}
-							{#if dubèrt === a.clau}
-								<iframe
-									class="lector"
-									class:video={lector.video}
-									style:height={lector.video ? null : lector.nautor + 'px'}
-									src={lector.src}
-									title="{lector.plataforma} : {fr ? nom.fr : nom.oc}"
-									allow="autoplay; encrypted-media; clipboard-write; picture-in-picture"
-									referrerpolicy="strict-origin-when-cross-origin"
-								></iframe>
-							{:else if demanda === a.clau}
-								<div class="acòrd" role="group" aria-label={tx.escotar}>
-									<p>{tx.acòrd(lector.plataforma)}</p>
-									<div class="acòrd-botons">
-										<button type="button" class="acòrd-òc" onclick={() => acceptar(a.clau, lector)}>{tx.òc}</button>
-										<button type="button" class="acòrd-non" onclick={() => (demanda = null)}>{tx.non}</button>
-									</div>
-								</div>
-							{:else}
-								<button type="button" class="escotar" onclick={() => escotar(a.clau, lector)}>
-									<Icona nom="lire" size="1.1em" />
-									{tx.escotar} <span class="escotar-p">· {lector.plataforma}</span>
-								</button>
-							{/if}
+		{#if edicion.actiu}
+			{#if formulari}
+				<!-- L'ajout « tout d'un coup » : une case pour tous les liens, le
+				     nom trouvé tout seul, la phrase si Romain veut, Publicar -->
+				<form class="apondre" onsubmit={(e) => (e.preventDefault(), publicarArtista())}>
+					<div class="apondre-camps">
+						<label>
+							<span>{fr ? 'Colle les liens (un par ligne)' : 'Pega los ligams (un per linha)'}</span>
+							<textarea rows="4" bind:value={collats} placeholder="https://….bandcamp.com"></textarea>
+						</label>
+						{#if trobats.length}
+							<p class="apondre-trobats">
+								<Icona nom="valide" size="1em" />
+								{trobats.map((l) => plataforma(l).nom).join(' · ')}{#if cèrca}…{/if}
+							</p>
 						{/if}
-						{#if edicion.actiu && ligamsCorts(ligams)}
-							<p class="ed-avis">{tx.cort}</p>
-						{/if}
-
-						<ul class="ligams" aria-label="{tx.ligams} : {fr ? nom.fr : nom.oc}">
-							{#each ligams as x (x.clau)}
-								<li>
-									<a href={x.l.href} target="_blank" rel="noopener noreferrer" hidden={amagat(x.clau)} use:editar={x.clau}
-										>{nomLigam(x)} <Icona nom="extern" size="0.85em" /></a
-									>
-								</li>
-							{/each}
-						</ul>
+						<label>
+							<span>Nom</span>
+							<input type="text" bind:value={nòuNom} oninput={() => (nomTocat = true)} />
+						</label>
+						<label>
+							<span>{fr ? 'Ta phrase (si tu veux) · Òc' : 'Ta frasa (se vòls) · Òc'}</span>
+							<textarea rows="2" bind:value={frasaOc}></textarea>
+						</label>
+						<label>
+							<span>{fr ? 'Ta phrase (si tu veux) · Fr' : 'Ta frasa (se vòls) · Fr'}</span>
+							<textarea rows="2" bind:value={frasaFr}></textarea>
+						</label>
+						{#if error}<p class="apondre-error" role="alert">{error}</p>{/if}
+						<div class="apondre-botons">
+							<button type="submit" class="apondre-publicar" disabled={edicion.ocupat}>Publicar</button>
+							<button type="button" class="apondre-anullar" onclick={voidar}>Anullar</button>
+						</div>
 					</div>
-					<!-- (hors de la fiche : un toucher dans la fiche, en édition, la choisit) -->
+					<div class="apondre-apercebut" aria-hidden="true">
+						{@render pocheta(nòuNom || 'Nom', lista('obras.artistas').length, lectorTrobat ? { plataforma: 'Bandcamp' } : null, false, null)}
+						<p class="ligams">{trobats.map((l) => plataforma(l).nom).join(' · ')}</p>
+					</div>
+				</form>
+			{:else}
+				<button type="button" class="ed-apondre" onclick={() => (formulari = true)}>+ {fr ? 'Ajouter un artiste' : 'Apondre una ficha'}</button>
+			{/if}
+		{/if}
+
+		<ul class="pochetas">
+			{#each lista('obras.artistas') as a, i (a.clau)}
+				{@const ligams = ligamsDe(a.clau)}
+				{@const lector = lectorDe(a.clau, ligams)}
+				{@const nom = txt(a.clau + '.nom')}
+				<li class="pocheta-plaça">
+					<div class="pocheta-ed" use:editar={a.clau}>
+						{@render pocheta(fr ? nom.fr : nom.oc, i, lector, dubèrt === a.clau, a.clau)}
+					</div>
+					{#if lector && demanda === a.clau}
+						<div class="acòrd" role="group" aria-label={tx.escotar}>
+							<p>{tx.acòrd(lector.plataforma)}</p>
+							<div class="acòrd-botons">
+								<button type="button" class="acòrd-òc" onclick={() => acceptar(a.clau, lector)}>{tx.òc}</button>
+								<button type="button" class="acòrd-non" onclick={() => (demanda = null)}>{tx.non}</button>
+							</div>
+						</div>
+					{/if}
+					{#if lector && dubèrt === a.clau}
+						<iframe
+							class="lector"
+							class:video={lector.video}
+							style:height={lector.video ? null : lector.nautor + 'px'}
+							src={lector.src}
+							title="{lector.plataforma} : {fr ? nom.fr : nom.oc}"
+							allow="autoplay; encrypted-media; clipboard-write; picture-in-picture"
+							referrerpolicy="strict-origin-when-cross-origin"
+						></iframe>
+					{/if}
+					<p class="tèxt" hidden={amagat(a.clau + '.tèxt')} use:editar={a.clau + '.tèxt'}>{@render tt(a.clau + '.tèxt')}</p>
+					<p class="ligams" aria-label="{tx.ligams} : {fr ? nom.fr : nom.oc}">
+						{#each ligams as x (x.clau)}
+							<a href={x.l.href} target="_blank" rel="noopener noreferrer" hidden={amagat(x.clau)} use:editar={x.clau}>{nomLigam(x)}</a>
+						{/each}
+					</p>
 					{#if edicion.actiu}
 						<button type="button" class="ed-apondre" onclick={() => apondreLigam(a.clau)}>+ {fr ? 'Ajouter un lien' : 'Apondre un ligam'}</button>
 					{/if}
 				</li>
 			{/each}
 		</ul>
-		{#if edicion.actiu}
-			<button type="button" class="ed-apondre" onclick={apondreArtista}>+ {fr ? 'Ajouter une fiche d’artiste' : 'Apondre una ficha'}</button>
-		{/if}
 	</section>
 
 	<section class="afichas" aria-labelledby="afichas-titol">
@@ -461,108 +564,151 @@
 		color: var(--color-teal);
 	}
 
-	/* ---------- Musiques : une fiche par artiste ---------- */
+	/* ---------- Musiques : las pochetas (2026-10-25) ----------
+	   Une bande sombre, les couleurs du thème « Éclat », même quand la page
+	   est claire : un bac de disques au milieu de la page */
 	.musicas {
+		--m-fons: #22100a;
+		--m-tinta: #fbf1e1;
+		--m-tinta-2: rgba(251, 241, 225, 0.78);
+		--m-aur: #f6b73c;
+		--m-accion: #b53d17;
 		container: musicas / inline-size;
-		width: 100%;
-		max-width: 60rem;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
+		box-sizing: border-box;
+		width: calc(100% + 3rem);
+		margin: 1rem -1.5rem 0;
+		padding: clamp(2.2rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 4rem);
+		/* (le disque sorti de la dernière pochette ne doit pas élargir la page) */
+		overflow-x: clip;
+		background: var(--m-fons);
+		color: var(--m-tinta);
+		text-align: center;
 	}
 	.seccion-titol {
 		margin: 0;
 		font-family: var(--font-heading);
 		font-weight: 400;
-		font-size: clamp(1.4rem, 4vw, 1.9rem);
-		color: var(--color-text);
+		font-size: clamp(2.2rem, 6vw, 3.6rem);
+		line-height: 1;
 	}
-	.musicas > .lead {
-		max-width: 34rem;
-		text-align: center;
+	.musicas-lead {
+		max-width: 36rem;
+		margin: 0.8rem auto 0;
+		color: var(--m-tinta-2);
+		line-height: 1.5;
 	}
-	.artistas {
+	.musicas-void {
+		margin: 2rem 0 0;
+		font-style: italic;
+		color: var(--m-tinta-2);
+	}
+	.pochetas {
 		list-style: none;
-		margin: 1rem 0 0;
+		max-width: 74rem;
+		margin: clamp(2rem, 5vw, 3.5rem) auto 0;
 		padding: 0;
-		width: 100%;
 		display: grid;
-		/* (centrées quand il y en a peu) */
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 28rem));
-		justify-content: center;
-		gap: 1.25rem;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
+		gap: 3.2rem 2.6rem;
+		text-align: left;
 	}
-	.artista-plaça {
+
+	/* la pochette carrée, et le disque à sillons qui en dépasse */
+	.pocheta {
+		position: relative;
+	}
+	.cobèrta {
+		position: relative;
+		z-index: 1;
+		box-sizing: border-box;
+		width: 86%;
+		aspect-ratio: 1;
+		padding: clamp(0.9rem, 1.6vw, 1.25rem);
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
-		gap: 0.5rem;
+		justify-content: space-between;
+		background: var(--fons);
+		color: var(--tinta);
+		outline: 1px solid color-mix(in srgb, var(--tinta) 22%, transparent);
+		outline-offset: -9px;
+		box-shadow: 0 22px 34px -22px rgba(0, 0, 0, 0.8);
 	}
-	.artista {
-		align-self: stretch;
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		gap: 0.7rem;
-		background: white;
-		border-radius: 20px;
-		padding: 1.4rem;
-		border-top: 4px solid var(--color-terracotta);
-		box-shadow: 0 12px 30px rgba(58, 42, 32, 0.09);
-	}
-	h3 {
+	.pocheta-nom {
 		margin: 0;
 		font-family: var(--font-heading);
 		font-weight: 400;
-		font-size: 1.45rem;
-		line-height: 1.15;
-		color: var(--color-text);
+		font-size: clamp(1.7rem, 2.5vw, 2.3rem);
+		line-height: 0.98;
+		text-wrap: balance;
+		overflow-wrap: anywhere;
 	}
-	.tèxt {
-		margin: 0;
-		font-size: 0.95rem;
-		line-height: 1.55;
-		color: var(--color-text);
+	.disc {
+		position: absolute;
+		top: 7%;
+		left: 18%;
+		width: 79%;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: repeating-radial-gradient(circle, #140906 0 1.5px, #24120c 1.5px 3.5px);
+		box-shadow: inset 0 0 0 1px rgba(251, 241, 225, 0.08);
+		display: grid;
+		place-items: center;
+		transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
 	}
-	.tèxt :global(.aur) {
-		color: var(--color-terracotta);
-		font-weight: 700;
+	.disc-cor {
+		width: 34%;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: var(--fons);
+		box-shadow: 0 0 0 4px #140906;
 	}
-
-	/* l'écoute : le bouton, la phrase d'accord, puis le lecteur officiel */
+	.pocheta-plaça:hover .pocheta:not(.sortit) .disc {
+		transform: translateX(7%);
+	}
+	/* au clic : le disque sort de la pochette, puis tourne */
+	.pocheta.sortit .disc {
+		transform: translateX(26%);
+		animation: virar 4s linear 0.75s infinite;
+	}
+	@keyframes virar {
+		from {
+			transform: translateX(26%) rotate(0deg);
+		}
+		to {
+			transform: translateX(26%) rotate(360deg);
+		}
+	}
 	.escotar {
 		align-self: flex-start;
 		display: inline-flex;
 		align-items: center;
-		gap: 0.5rem;
-		border: none;
-		border-radius: 999px;
-		padding: 0.6rem 1.1rem;
-		background: var(--color-terracotta);
-		color: white;
+		gap: 0.45rem;
+		padding: 0.35rem 0;
+		border: 0;
+		border-bottom: 2px solid currentColor;
+		background: none;
+		color: inherit;
 		font: inherit;
 		font-weight: 700;
 		font-size: 0.92rem;
 		cursor: pointer;
-		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
-	.escotar:hover {
-		transform: scale(1.04);
+	.escotar:focus-visible {
+		outline: 3px solid var(--m-aur);
+		outline-offset: 3px;
 	}
-	.escotar-p {
-		font-weight: 400;
-		opacity: 0.85;
-	}
+
+	/* sous la pochette : l'accord, le lecteur, la phrase de Romain, les liens */
 	.acòrd {
-		border-radius: 14px;
-		padding: 0.9rem 1rem;
-		background: #f6efe3;
-		color: var(--color-text);
+		margin-top: 1rem;
+		padding: 0.8rem 1rem;
+		border-left: 3px solid var(--m-aur);
+		border-radius: 0;
+		background: rgba(251, 241, 225, 0.07);
 	}
 	.acòrd p {
 		margin: 0 0 0.7rem;
-		font-size: 0.9rem;
+		font-size: 0.88rem;
 		line-height: 1.5;
 	}
 	.acòrd-botons {
@@ -572,62 +718,144 @@
 	}
 	.acòrd-òc,
 	.acòrd-non {
-		border-radius: 999px;
-		padding: 0.5rem 1rem;
+		padding: 0.45rem 1rem;
+		border-radius: 4px;
 		font: inherit;
 		font-weight: 700;
-		font-size: 0.88rem;
+		font-size: 0.86rem;
 		cursor: pointer;
 	}
 	.acòrd-òc {
-		border: 2px solid var(--color-terracotta);
-		background: var(--color-terracotta);
-		color: white;
+		border: 2px solid var(--m-accion);
+		background: var(--m-accion);
+		color: var(--m-tinta);
 	}
 	.acòrd-non {
-		border: 2px solid currentColor;
+		border: 2px solid rgba(251, 241, 225, 0.5);
 		background: transparent;
-		color: var(--color-text);
+		color: var(--m-tinta);
 	}
 	.lector {
-		width: 100%;
-		border: none;
-		border-radius: 12px;
 		display: block;
+		width: 100%;
+		margin-top: 1rem;
+		border: 0;
 	}
 	.lector.video {
 		aspect-ratio: 16 / 9;
 	}
-
-	/* les liens, Bandcamp d'abord */
+	.tèxt {
+		max-width: 32ch;
+		margin: 1rem 0 0;
+		font-style: italic;
+		font-size: 0.98rem;
+		line-height: 1.5;
+		color: var(--m-aur);
+	}
 	.ligams {
-		list-style: none;
-		margin: auto 0 0;
-		padding: 0.4rem 0 0;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.45rem;
+		gap: 0.3rem 1.1rem;
+		margin: 0.7rem 0 0;
 	}
 	.ligams a {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
-		padding: 0.4rem 0.85rem;
-		border-radius: 999px;
-		border: 1.5px solid rgba(58, 42, 32, 0.25);
-		color: var(--color-text);
-		font-size: 0.88rem;
-		font-weight: 600;
-		text-decoration: none;
+		color: var(--m-tinta);
+		font-weight: 700;
+		font-size: 0.9rem;
+		text-decoration: underline;
+		text-decoration-color: var(--m-accion);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 4px;
 	}
 	.ligams a:hover {
-		border-color: var(--color-terracotta);
-		color: var(--color-terracotta);
+		color: var(--m-aur);
 	}
-	.ed-avis {
-		margin: 0;
+	.pocheta-plaça > .ed-apondre {
+		margin-top: 0.7rem;
+	}
+
+	/* l'ajout « tout d'un coup » : une case, l'aperçu de la pochette à côté */
+	.apondre {
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+		gap: 2rem;
+		max-width: 56rem;
+		margin: 2rem auto 0;
+		padding: 1.4rem;
+		border: 1.5px dashed var(--m-aur);
+		text-align: left;
+	}
+	.apondre-camps {
+		display: flex;
+		flex-direction: column;
+		gap: 0.8rem;
+	}
+	.apondre label {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
 		font-size: 0.8rem;
-		color: var(--color-brick);
+		color: var(--m-aur);
+	}
+	.apondre textarea,
+	.apondre input {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0.55rem 0.7rem;
+		border: 0;
+		border-radius: 4px;
+		background: var(--m-tinta);
+		color: #2a1a10;
+		font: inherit;
+		font-size: 0.92rem;
+	}
+	.apondre-trobats {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin: -0.3rem 0 0;
+		font-size: 0.85rem;
+		color: #c9e3a6;
+	}
+	.apondre-error {
+		margin: 0;
+		font-size: 0.85rem;
+		color: #ffb4a0;
+	}
+	.apondre-botons {
+		display: flex;
+		gap: 0.6rem;
+	}
+	.apondre-publicar,
+	.apondre-anullar {
+		padding: 0.6rem 1.2rem;
+		border-radius: 4px;
+		font: inherit;
+		font-weight: 700;
+		cursor: pointer;
+	}
+	.apondre-publicar {
+		border: 0;
+		background: var(--m-accion);
+		color: var(--m-tinta);
+	}
+	.apondre-anullar {
+		border: 2px solid rgba(251, 241, 225, 0.5);
+		background: transparent;
+		color: var(--m-tinta);
+	}
+
+	/* téléphone : une pochette par ligne, l'aperçu sous la case */
+	@container musicas (max-width: 560px) {
+		.pochetas {
+			max-width: 21rem;
+		}
+		.apondre {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.apondre-apercebut {
+			max-width: 15rem;
+		}
 	}
 
 	.sr-only {
@@ -643,8 +871,14 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.escotar {
+		.disc {
 			transition: none;
 		}
+		.pocheta.sortit .disc {
+			animation: none;
+		}
+	}
+	:global(html[data-leugier='on']) .pocheta.sortit .disc {
+		animation: none;
 	}
 </style>
