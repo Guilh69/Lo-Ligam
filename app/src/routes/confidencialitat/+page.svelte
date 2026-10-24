@@ -33,6 +33,10 @@
 				[
 					'Ton message',
 					'Si tu m’écris par le formulaire de contact : ton adresse électronique, ton nom si tu le donnes, et ton message. Je les reçois par courriel pour pouvoir te répondre ; le site n’en garde aucune copie. Le courriel est effacé de ma messagerie au bout d’un an au plus tard.'
+				],
+				[
+					'Tes réponses avant un premier cours',
+					'Si tu remplis le questionnaire avant un premier cours en visio : ton adresse électronique, ton prénom si tu le donnes, et tes réponses (niveau, raisons, langues, lieu, rythme, envies, message). Je les reçois par courriel pour préparer le cours ; le site n’en garde aucune copie. Le courriel est effacé de ma messagerie au bout d’un an au plus tard.'
 				]
 			],
 			pourquoiT: 'Pourquoi, et sur quelle base',
@@ -85,6 +89,10 @@
 				[
 					'Ton messatge',
 					'Se m’escrives pel formulari de contacte : ton corrièl, ton nom se lo donas, e ton messatge. Los recebi per corrièl per te poder respondre ; lo site ne garda pas cap de còpia. Lo corrièl es escafat de ma messatjariá al cap d’un an al mai tard.'
+				],
+				[
+					'Tas responsas abans un primièr cors',
+					'Se emplenas lo questionari abans un primièr cors en visio : ton corrièl, ton prenom se lo donas, e tas responsas (nivèl, rasons, lengas, luòc, ritme, envejas, messatge). Las recebi per corrièl per preparar lo cors ; lo site ne garda pas cap de còpia. Lo corrièl es escafat de ma messatjariá al cap d’un an al mai tard.'
 				]
 			],
 			pourquoiT: 'Perqué, e sus quina basa',

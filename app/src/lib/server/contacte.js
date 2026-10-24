@@ -37,7 +37,7 @@ export function geton() {
 	return `${t}.${signar(t)}`;
 }
 
-function getonValid(v) {
+export function getonValid(v) {
 	const [t, s] = String(v ?? '').split('.');
 	if (!t || !s) return false;
 	const atendut = Buffer.from(signar(t));
@@ -50,7 +50,7 @@ function getonValid(v) {
 // (en mémoire : le conteneur peut redémarrer, ce n'est qu'un garde-fou)
 const traças = new Map();
 let globau = [];
-function plafonat(ip) {
+export function plafonat(ip) {
 	const ara = Date.now();
 	const ora = ara - 3600_000;
 	globau = globau.filter((t) => t > ora);
@@ -63,8 +63,8 @@ function plafonat(ip) {
 	return false;
 }
 
-const linha = (s) => String(s ?? '').replace(/[\r\n\t]+/g, ' ').trim();
-const corrièlValid = (s) => s.length <= 254 && /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[^\s@<>()",;:]{2,}$/.test(s);
+export const linha = (s) => String(s ?? '').replace(/[\r\n\t]+/g, ' ').trim();
+export const corrièlValid = (s) => s.length <= 254 && /^[^\s@<>()",;:]+@[^\s@<>()",;:]+\.[^\s@<>()",;:]{2,}$/.test(s);
 
 /**
  * Lit et contrôle le formulaire, puis envoie.
@@ -83,7 +83,6 @@ export async function mandarContacte(formData, ip) {
 	if ((messatge.match(/https?:\/\//gi) ?? []).length > 3) return { ok: false, error: 'ligams', status: 400 };
 	if (plafonat(ip)) return { ok: false, error: 'plafond', status: 429 };
 
-	const de = env.CONTACTE_DE || 'formulari@loligam.eu';
 	const qui = nom || corrièl;
 	const cos = [
 		`Messatge mandat pel formulari de loligam.eu (Mon ligam amb l’occitan)`,
@@ -99,9 +98,19 @@ export async function mandarContacte(formData, ip) {
 		`Répondre à ce courriel écrit directement à ${corrièl}.`
 	].join('\n');
 
+	return mandarCorrièl({ subject: `Lo Ligam · messatge de ${qui}`, text: cos, nom, corrièl });
+}
+
+/**
+ * Envoie un courriel à l'alias de Romain, avec l'adresse du visiteur en
+ * « Répondre à ». Commun au contact et au questionnaire d'avant le premier
+ * cours (2026-10-24).
+ */
+export async function mandarCorrièl({ subject, text, nom, corrièl }) {
+	const de = env.CONTACTE_DE || 'formulari@loligam.eu';
 	if (!env.SCW_TEM_CLAU || !env.SCW_PROJECTE) {
 		if (dev) {
-			console.log('[contacte] envoi simulé (pas de clé SCW_TEM_CLAU en local)\n' + cos);
+			console.log('[contacte] envoi simulé (pas de clé SCW_TEM_CLAU en local)\n' + text);
 			return { ok: true, simulat: true };
 		}
 		return { ok: false, error: 'pas_brancat', status: 503 };
@@ -114,8 +123,8 @@ export async function mandarContacte(formData, ip) {
 			body: JSON.stringify({
 				from: { email: de, name: 'Lo Ligam' },
 				to: [{ email: editor.email, name: 'Lo Ligam' }],
-				subject: `Lo Ligam · messatge de ${qui}`.slice(0, 180),
-				text: cos,
+				subject: subject.slice(0, 180),
+				text,
 				project_id: env.SCW_PROJECTE,
 				additional_headers: [{ key: 'Reply-To', value: nom ? `"${nom.replace(/["\\]/g, '')}" <${corrièl}>` : corrièl }]
 			}),

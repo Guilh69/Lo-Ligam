@@ -43,7 +43,15 @@ const ETIQUETAS = [
 	['visio.metòde.titol', 'Títol « La metòde »', 'Titre « La méthode »'],
 	['visio.metòde.tèxt', 'La metòde', 'La méthode'],
 	['visio.debana.titol', 'Títol « Cossí se debana »', 'Titre « Comment se passe »'],
-	['visio.practica.titol', 'Títol « En practica »', 'Titre « En pratique »']
+	['visio.practica.titol', 'Títol « En practica »', 'Titre « En pratique »'],
+	['visio.debana.nota', 'Nòta jos las etapas', 'Note sous les étapes'],
+	['visio.q.titol', 'Títol del questionari', 'Titre du questionnaire'],
+	['visio.q.intro', 'Introduccion del questionari', 'Introduction du questionnaire'],
+	['visio.q.mandar', 'Boton « Mandar »', 'Bouton « Envoyer »'],
+	['visio.q.mercé', 'Mercé, un còp mandat', 'Remerciement, une fois envoyé'],
+	['visio.q.sens', 'Ligam « sens respondre »', 'Lien « sans répondre »'],
+	['visio.q.avís', 'Linha sus las donadas', 'Ligne sur les données'],
+	['visio.q.luòc.exemple', 'Exemple dins lo camp', 'Exemple dans le champ']
 ];
 const PER_FIN = [
 	[/^acuelh\.bandel\.[^.]+$/, 'Un mot de la lista', 'Un mot du bandeau'],
@@ -61,7 +69,10 @@ const PER_FIN = [
 	[/^apren\.teulas\.[^.]+\.ligam$/, 'Nom e ligam de la teula', 'Nom et lien de la case'],
 	[/^apren\.teulas\.[^.]+\.sota$/, 'Segonda linha de la teula', 'Sous-titre de la case'],
 	[/^visio\.debana\.[^.]+$/, 'Una etapa del cors', 'Une étape du cours'],
-	[/^visio\.practica\.[^.]+$/, 'Una linha practica', 'Une ligne pratique']
+	[/^visio\.practica\.[^.]+$/, 'Una linha practica', 'Une ligne pratique'],
+	[/^visio\.q\.[^.]+\.titol$/, 'Una question', 'Une question'],
+	[/^visio\.q\.(nivèls|motivacions|lengas|ritmes|axes)\.[^.]+$/, 'Una responsa de la lista', 'Une réponse de la liste'],
+	[/^visio\.q\.[^.]+$/, 'Un camp del questionari', 'Un champ du questionnaire']
 ];
 const perClau = new Map(ETIQUETAS.map(([c, oc, fr]) => [c, { oc, fr }]));
 

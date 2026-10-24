@@ -190,7 +190,8 @@ export const MARCATS = new Set([
 	'apren.frasa',
 	'visio.chapeu',
 	'visio.qual.tèxt',
-	'visio.metòde.tèxt'
+	'visio.metòde.tèxt',
+	'visio.debana.nota'
 ]);
 
 const esquelet = (clau, tipe, lista = null) => ({
