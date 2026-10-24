@@ -24,6 +24,10 @@ BLAU, ROGE = "#2B4C9B", "#D6372B"  # le drapeau rond du kit
 GAMA = [CREME, ORC, OR, "#D4702A", BRIQUE]  # du plus clair au plus foncé, comme la couche « Locutors »
 CLASSAS = [0, 5, 10, 15, 20]
 DY = 460   # la silhouette du domaine (repère 4:5) descend de 460 px
+# Départements : aplats sans contour, comme un remplissage sans trait dans QGIS
+# (Romain, 24-10) ; la couleur distingue. SEPARACION = (épaisseur, opacité) d'un
+# filet pétrole très fin qui laisse deviner les limites ; (0, 0) : aucun.
+SEPARACION = (0.8, 40)
 
 # début de chaque étape (s)
 T = {1: 0.0, 2: 4.0, 3: 9.6, 4: 15.6, 5: 21.4, 6: 25.8, 7: 31.0, 8: 34.0}
@@ -326,21 +330,24 @@ if N >= 2:
     noms = []
     for i, d in enumerate(deps):
         nom = f"Dep {d['code']}"
-        forma(nom, anels(d["d"]), fill=GAMA[classa(d["pct"])])
+        c = GAMA[classa(d["pct"])]
+        forma(nom, anels(d["d"]), fill=c, stroke=c, ep=1)  # trait de la couleur du fond : ferme les jours, ne se voit pas
         duree(nom, t, FIN)
         ancrar(nom, d["c"][0], d["c"][1] + DY)
         t0 = t + 1.7 + i * 0.11 + (0.25 if d["code"] == "ARAN" else 0)
         doux(nom, "transform/opacity", t0, t0 + 0.45, 0, 100)
         doux(nom, "transform/scale", t0, t0 + 0.6, [94, 94, 100], [100, 100, 100])
         noms.append(nom)
-    forma("Limits", zona, stroke=PETROLE, ep=2.5)
-    duree("Limits", t, FIN)
-    doux("Limits", "transform/opacity", t + 0.5, t + 1.3, 0, 100)
+    if SEPARACION[0]:
+        forma("Limits", zona, stroke=PETROLE, ep=SEPARACION[0])
+        duree("Limits", t, FIN)
+        doux("Limits", "transform/opacity", t + 1.7, t + 2.5, 0, SEPARACION[1])
+        noms.append("Limits")
     # découpé sur le domaine (Béarn, Charente occitane) : un précompo, le domaine en cache
-    cmd("layer.precompose", layers=["Zona"] + noms + ["Limits"], name="Carta departaments", mode="move")
+    cmd("layer.precompose", layers=["Zona"] + noms, name="Carta departaments v2", mode="move")
     forma("Domeni masca", anels(CARTA["domeni"]), fill=BLANC)
-    cmd("layer.setTrackMatte", layer="Carta departaments", matte="Domeni masca", kind="alpha")
-    CARTA_NOMS += ["Carta departaments"]
+    cmd("layer.setTrackMatte", layer="Carta departaments v2", matte="Domeni masca", kind="alpha")
+    CARTA_NOMS += ["Carta departaments v2"]
     frasa(2, "Ta phrase : qui, quand, combien ?", t + 0.4, T[3])
 
 # ———————————————————————— étape 3 : de 2 % à 62 % ————————————————————————
@@ -502,8 +509,29 @@ if N >= 6:
         fondre(["Regla 50 tèxt"], T[7] - 0.5, v0=80)
 
 # ———————————————————————— étape 7 : la fin ————————————————————————
-# Le logo quitte son coin et vient au centre, sous la question de fin.
+# Le logo du site (Romain, 24-10 : « le logo qu'on utilise sur le site ») arrive
+# au centre, sous la question de fin : la tuile de la barre du haut
+# (crotz-teula.png, fabricar-crotz-teula.py) et « Lo Ligam » en Limelight, aux
+# proportions de la barre (tuile 30 px, nom 1,3 rem, écart 0,6 rem). La tuile
+# tourne d'un quart de tour en arrivant, comme au survol sur le site. Le logo
+# du coin s'efface.
 if N >= 7:
     t = T[7]
-    doux("Logo", "transform/position", t, t + 1.3, [1035, 1585], [540, 1060], 35, 85)
-    doux("Logo", "transform/scale", t, t + 1.3, [37.5, 37.5, 100], [64, 64, 100], 35, 85)
+    fondre(["Logo"], t - 0.1, 0.5)
+    TUILA, TALHA, ECART, CY = 170, 118, 54, 1060
+    try:  # largeur et métriques du nom, mesurées dans la police
+        from PIL import ImageFont
+        pol = ImageFont.truetype(_os.path.expandvars(r"%LOCALAPPDATA%\Microsoft\Windows\Fonts\limelight.ttf"), TALHA)
+        larg, (asc, desc) = pol.getlength("Lo Ligam"), pol.getmetrics()
+    except Exception:
+        larg, asc, desc = 549, 108, 37
+    x0 = 540 - (TUILA + ECART + larg) / 2
+    importar("crotz-teula.png", "Marca tuila", t, [round(x0 + TUILA / 2, 1), CY], 50)
+    duree("Marca tuila", t, FIN)
+    doux("Marca tuila", "transform/opacity", t + 0.2, t + 0.6, 0, 100)
+    doux("Marca tuila", "transform/scale", t + 0.2, t + 1.4, [40, 40, 100], [50, 50, 100], 15, 90)
+    doux("Marca tuila", "transform/rotation", t + 0.2, t + 1.4, -90, 0, 15, 90)
+    pos = [round(x0 + TUILA + ECART, 1), round(CY + (asc - desc) / 2, 1)]
+    texte("Marca nom", "Lo Ligam", pos, "Limelight", "Regular", TALHA, BLANC, t, FIN, "left")
+    doux("Marca nom", "transform/opacity", t + 0.6, t + 1.1, 0, 100)
+    doux("Marca nom", "transform/position", t + 0.6, t + 1.5, [pos[0] - 30, pos[1]], pos, 15, 90)
