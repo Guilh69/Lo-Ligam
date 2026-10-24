@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Factures Lo Ligam</title>
+<!-- Lo Ligam : page de facturation des cours en visio (2026-10-25).
+     Servie par servidor.mjs ; les données restent dans le dossier hors Git.
+     Couleurs et polices : charte-graphique.md (§1 bis logo sur fond clair :
+     points or #EEAF34, traits et moyeu brique #B53D17 ; Limelight + Luciole). -->
+<style>
+@font-face { font-family: 'Limelight'; src: url(/polices/limelight.woff2) format('woff2'); font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url(/polices/luciole-regular.woff2) format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url(/polices/luciole-bold.woff2) format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Luciole'; src: url(/polices/luciole-italic.woff2) format('woff2'); font-style: italic; font-display: swap; }
+
+:root {
+	--fons: #f7f3ee;
+	--fons-2: #ede6dc;
+	--tinta: #2a1a10;
+	--tinta-2: rgba(42, 26, 16, 0.72);
+	--linha: rgba(42, 26, 16, 0.14);
+	--brica: #b53d17;
+	--aur: #eeaf34;
+	--aur-text: #9c5611;
+	--aur-pal: #fbefd6;
+	--verd: #2f6b3a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fons); color: var(--tinta); font: 15px/1.5 'Luciole', system-ui, sans-serif; font-synthesis: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* ---------- l'écran : panneau à gauche, feuille à droite ---------- */
+.ecran { display: grid; grid-template-columns: minmax(340px, 470px) 1fr; min-height: 100vh; }
+.panneau { background: var(--fons-2); border-right: 1px solid var(--linha); padding: 20px 22px 40px; }
+.marque { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.marque b { font: 26px/1 'Limelight', serif; color: var(--brica); font-weight: 400; }
+.marque span { color: var(--tinta-2); }
+nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+nav button { border: 1px solid var(--linha); background: var(--fons); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+nav button[aria-current='page'] { background: var(--brica); border-color: var(--brica); color: #fff; }
+h2 { font: 400 20px/1.2 'Limelight', serif; color: var(--brica); margin: 0 0 12px; }
+h3 { font-size: 15px; margin: 18px 0 6px; }
+label { display: block; font-weight: 700; margin: 12px 0 4px; }
+label small { font-weight: 400; color: var(--tinta-2); }
+input, select, textarea { width: 100%; border: 1px solid rgba(42, 26, 16, 0.3); border-radius: 8px; background: #fff; padding: 7px 10px; }
+textarea { min-height: 64px; resize: vertical; }
+:focus-visible { outline: 3px solid var(--aur); outline-offset: 2px; }
+.deux { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+.choix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.choix label { margin: 0; font-weight: 400; border: 1px solid rgba(42, 26, 16, 0.3); border-radius: 8px; background: #fff; padding: 6px 8px; cursor: pointer; text-align: center; }
+.choix input { position: absolute; opacity: 0; width: 1px; }
+.choix label:has(input:checked) { border: 2px solid var(--brica); padding: 5px 7px; font-weight: 700; }
+.choix label:has(input:focus-visible) { outline: 3px solid var(--aur); }
+.choix small { display: block; color: var(--tinta-2); font-weight: 400; }
+.bouton { display: inline-block; border: 0; border-radius: 8px; background: var(--brica); color: #fff; padding: 9px 16px; font-weight: 700; cursor: pointer; margin-top: 16px; }
+.bouton.discret { background: transparent; color: var(--brica); border: 1px solid var(--brica); }
+.bouton:disabled { opacity: 0.45; cursor: not-allowed; }
+.aide { color: var(--tinta-2); font-size: 13.5px; margin: 6px 0 0; }
+.alerte { background: var(--aur-pal); border-left: 4px solid var(--aur); padding: 8px 12px; border-radius: 6px; margin: 12px 0; }
+.message { min-height: 1.5em; margin-top: 10px; font-weight: 700; color: var(--verd); }
+.message.erreur { color: var(--brica); }
+table.liste { width: 100%; border-collapse: collapse; font-size: 14px; }
+.liste th, .liste td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--linha); vertical-align: top; }
+.liste td.n, .liste th.n { text-align: right; white-space: nowrap; }
+.liste tr.choisie td { background: var(--aur-pal); }
+.liste td:last-child { white-space: nowrap; }
+.liste button:not(.bouton) { border: 0; background: none; color: var(--brica); text-decoration: underline; cursor: pointer; padding: 0; margin-right: 8px; }
+.etat { font-size: 13px; color: var(--tinta-2); }
+.etat.payee { color: var(--verd); font-weight: 700; }
+.fiche-paiement { background: var(--fons); border: 1px solid var(--linha); border-radius: 8px; padding: 4px 12px 12px; margin-top: 12px; }
+
+.scene { padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.actions-feuille { display: flex; gap: 10px; align-items: center; }
+
+/* ---------- la feuille A4 ---------- */
+.feuille {
+	width: 210mm; min-height: 297mm; background: #fff; padding: 15mm 16mm 12mm;
+	box-shadow: 0 2px 18px rgba(42, 26, 16, 0.16); position: relative;
+	display: flex; flex-direction: column; font-size: 10.5pt; line-height: 1.45;
+	-webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.f-tete { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 6mm; border-bottom: 2px solid var(--brica); }
+.f-marque { display: flex; align-items: center; gap: 4mm; }
+.f-marque b { display: block; font: 400 25pt/1 'Limelight', serif; color: var(--brica); }
+.f-marque span { display: block; color: var(--aur-text); font-weight: 700; margin-top: 1.5mm; letter-spacing: 0.02em; }
+.f-titre { text-align: right; }
+.f-titre b { display: block; font: 400 21pt/1 'Limelight', serif; color: var(--tinta); }
+.f-titre .num { display: inline-block; margin-top: 2.5mm; background: var(--aur-pal); border-radius: 4px; padding: 1mm 2.5mm; font-weight: 700; }
+.f-titre .date { display: block; margin-top: 1.5mm; color: var(--tinta-2); }
+.f-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin: 7mm 0 6mm; }
+.f-parties h4 { margin: 0 0 1.5mm; font-size: 8.5pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aur-text); }
+.f-parties p { margin: 0; white-space: pre-line; }
+.f-parties .vide { color: var(--brica); font-style: italic; }
+.f-lignes { width: 100%; border-collapse: collapse; }
+.f-lignes th { font-size: 8.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-2); text-align: left; font-weight: 700; padding: 0 0 2mm; border-bottom: 1px solid var(--linha); }
+.f-lignes td { padding: 3mm 0; border-bottom: 1px solid var(--linha); vertical-align: top; }
+.f-lignes .n { text-align: right; white-space: nowrap; padding-left: 4mm; }
+.f-lignes small { display: block; color: var(--tinta-2); font-size: 9pt; margin-top: 0.5mm; }
+.f-total { display: flex; justify-content: flex-end; margin-top: 4mm; }
+.f-total div { background: var(--aur-pal); border-left: 5px solid var(--aur); border-radius: 4px; padding: 3mm 5mm; min-width: 72mm; }
+.f-total .ligne { display: flex; justify-content: space-between; gap: 6mm; }
+.f-total .somme { font-size: 15pt; font-weight: 700; }
+.f-total .tva { font-size: 9pt; color: var(--tinta-2); margin-top: 1mm; }
+.f-blocs { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 8mm; }
+.f-bloc { border: 1px solid var(--linha); border-radius: 6px; padding: 3.5mm 4.5mm; }
+.f-bloc h4 { margin: 0 0 2mm; font: 400 12.5pt/1.1 'Limelight', serif; color: var(--brica); }
+.f-bloc p { margin: 0 0 1.5mm; }
+.f-bloc .petit { font-size: 9pt; color: var(--tinta-2); }
+.f-iban { font-weight: 700; letter-spacing: 0.03em; }
+.f-tampon { display: inline-block; border: 2px solid var(--verd); color: var(--verd); font-weight: 700; border-radius: 4px; padding: 1mm 3mm; margin-bottom: 2mm; }
+.barre { display: flex; height: 6mm; border-radius: 3px; overflow: hidden; margin: 2mm 0; }
+.barre .coti { background: var(--aur); }
+.barre .prof { background: var(--brica); }
+.legende { display: grid; grid-template-columns: auto 1fr auto; gap: 0.5mm 2.5mm; align-items: center; font-size: 9.5pt; }
+.legende i { width: 3mm; height: 3mm; border-radius: 1px; display: inline-block; }
+.f-pied { margin-top: auto; padding-top: 6mm; font-size: 8.5pt; color: var(--tinta-2); }
+.f-pied p { margin: 0 0 1mm; }
+.f-pied .fin { display: flex; justify-content: space-between; border-top: 1px solid var(--linha); padding-top: 2.5mm; margin-top: 3mm; }
+.f-merce { font: 400 13pt/1 'Limelight', serif; color: var(--brica); }
+.f-annulee { position: absolute; top: 120mm; left: 0; right: 0; text-align: center; transform: rotate(-14deg); font: 400 48pt/1 'Limelight', serif; color: rgba(181, 61, 23, 0.16); pointer-events: none; }
+.bandeau-apercu { background: var(--tinta); color: #fff; border-radius: 6px; padding: 6px 14px; font-weight: 700; }
+
+@media print {
+	@page { size: A4; margin: 0; }
+	body { background: #fff; }
+	.panneau, .actions-feuille, .bandeau-apercu { display: none !important; }
+	.ecran { display: block; }
+	.scene { padding: 0; display: block; }
+	.feuille { box-shadow: none; width: 210mm; height: 296mm; min-height: 0; overflow: hidden; }
+}
+@media (prefers-reduced-motion: no-preference) { nav button, .bouton { transition: background 0.15s; } }
+</style>
+</head>
+<body>
+<div class="ecran">
+	<aside class="panneau">
+		<div class="marque"><span id="logo-petit"></span><div><b>Lo Ligam</b><br><span>Factures des cours en visio</span></div></div>
+		<nav aria-label="Onglets">
+			<button data-vue="nouvelle">Nouvelle facture</button>
+			<button data-vue="liste">Factures émises</button>
+			<button data-vue="livre">Livre des recettes</button>
+			<button data-vue="reglatges">Réglages</button>
+		</nav>
+		<div id="vue"></div>
+		<p class="message" id="message" role="status" aria-live="polite"></p>
+	</aside>
+	<main class="scene">
+		<div class="actions-feuille" id="actions-feuille"></div>
+		<div id="feuille"></div>
+	</main>
+</div>
+
+<script>
+// ---------------------------------------------------------------- outils
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const euros = (n) => n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+const dateFr = (iso) => (iso ? new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR') : '');
+const dateLongue = (iso) => (iso ? new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '');
+const aujourdhui = () => new Date().toLocaleDateString('sv-SE');
+function ajouter(iso, { jours = 0, mois = 0 }) {
+	const d = new Date(iso + 'T12:00:00');
+	d.setMonth(d.getMonth() + mois);
+	d.setDate(d.getDate() + jours);
+	return d.toLocaleDateString('sv-SE');
+}
+const TARIFS = { solidaire: 'solidaire', classique: 'classique', engage: 'engagé' };
+
+// La croix-constellation du logo (géométrie de Crotz.svelte), couleurs du
+// fond clair : points or, traits et moyeu brique.
+function crotz(taille) {
+	const m = 1.25;
+	const pts = [[0,-1],[0.486,-0.797],[0.809,-0.48],[1,0],[0.809,0.48],[0.486,0.797],[0,0.992],[-0.468,0.797],[-0.786,0.48],[-0.976,0.009],[-0.786,-0.48],[-0.468,-0.797]];
+	return `<svg viewBox="${-m} ${-m} ${2 * m} ${2 * m}" width="${taille}" height="${taille}" aria-hidden="true" focusable="false">
+	<g fill="none" stroke-linecap="round" stroke="#b53d17">
+		<path d="M0 0L0.486 -0.797M0 0L0.809 -0.48M0 0L0.809 0.48M0 0L0.486 0.797M0 0L-0.468 0.797M0 0L-0.786 0.48M0 0L-0.786 -0.48M0 0L-0.468 -0.797" stroke-width="0.063"/>
+		<path d="M-0.468 -0.797Q-0.194 -0.746 0 -1M0 -1Q0.202 -0.746 0.486 -0.797M0.809 -0.48Q0.751 -0.199 1 0M1 0Q0.751 0.199 0.809 0.48M0.486 0.797Q0.202 0.742 0 0.992M0 0.992Q-0.194 0.742 -0.468 0.797M-0.786 0.48Q-0.731 0.203 -0.976 0.009M-0.976 0.009Q-0.731 -0.195 -0.786 -0.48" stroke-width="0.07"/>
+	</g>
+	<circle r="0.124" fill="#b53d17"/>
+	<g fill="#eeaf34">${pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="0.109"/>`).join('')}</g>
+</svg>`;
+}
+
+// ---------------------------------------------------------------- état
+let R = null;          // réglages
+let pieces = [];       // factures et avoirs émis
+let dossier = '';
+let vue = 'nouvelle';
+let choisie = null;    // numéro de la pièce affichée (sinon : l'aperçu du brouillon)
+let paiementOuvert = null;
+const brouillon = { date: aujourdhui(), nom: '', adresse: '', tarif: 'classique', formule: '4', quantite: 1, cours: '', designation: '', montant: '' };
+
+async function api(chemin, donnees) {
+	const r = await fetch(chemin, donnees ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(donnees) } : undefined);
+	const j = await r.json();
+	if (!r.ok) throw new Error(j.erreur || 'Erreur');
+	return j;
+}
+function dire(texte, erreur = false) {
+	const m = $('#message');
+	m.textContent = texte;
+	m.classList.toggle('erreur', erreur);
+}
+
+// ---------------------------------------------------------------- brouillon → pièce
+function pieceDuBrouillon() {
+	const b = brouillon;
+	const nomTarif = TARIFS[b.tarif];
+	let lignes = [];
+	let validite = '';
+	if (b.formule === '1') {
+		const q = Math.max(1, Number(b.quantite) || 1);
+		lignes = [{ designation: q > 1 ? "Cours d'occitan en visio (1 h chacun)" : "Cours d'occitan en visio (1 h)", detail: `Tarif ${nomTarif}` + (b.cours ? ` · ${b.cours}` : ''), quantite: q, prixUnitaire: R.prix[b.tarif][1] }];
+	} else if (b.formule === '4' || b.formule === '12') {
+		validite = ajouter(b.date, { mois: R.validiteMois[b.formule] });
+		lignes = [{ designation: `Bouquet de ${b.formule} cours d'occitan en visio (1 h chacun)`, detail: `Tarif ${nomTarif} · cours à prendre avant le ${dateFr(validite)}`, quantite: 1, prixUnitaire: R.prix[b.tarif][b.formule] }];
+	} else {
+		lignes = [{ designation: b.designation || 'Désignation à écrire', detail: '', quantite: 1, prixUnitaire: Number(String(b.montant).replace(',', '.')) || 0 }];
+	}
+	const total = lignes.reduce((s, l) => s + l.quantite * l.prixUnitaire, 0);
+	return {
+		type: 'facture', date: b.date, eleve: { nom: b.nom.trim(), adresse: b.adresse.trim() },
+		tarif: b.formule === 'libre' ? null : b.tarif, formule: b.formule, validite,
+		echeance: ajouter(b.date, { jours: Number(R.delaiJours) || 0 }), lignes, total
+	};
+}
+
+function manques(p) {
+	const l = [];
+	if (!R.nom) l.push('ton nom (Réglages)');
+	if (!R.adresse) l.push('ton adresse (Réglages)');
+	if (!R.siret) l.push('ton SIRET (Réglages)');
+	if (!R.iban) l.push('ton IBAN (Réglages)');
+	if (!p.eleve.nom) l.push("le nom de l'élève");
+	if (!p.eleve.adresse) l.push("l'adresse de l'élève");
+	if (p.total <= 0) l.push('un montant');
+	return l;
+}
+
+// ---------------------------------------------------------------- la feuille
+function feuille(p, apercu) {
+	const avoir = p.type === 'avoir';
+	const prenom = (R.nom || '').trim().split(/\s+/)[0] || 'ton prof';
+	const coti = Math.round(Math.abs(p.total) * R.tauxCotisations) / 100;
+	const reste = Math.abs(p.total) - coti;
+	const pctCoti = R.tauxCotisations;
+	const lignes = p.lignes.map((l) => `<tr>
+		<td>${esc(l.designation)}${l.detail ? `<small>${esc(l.detail)}</small>` : ''}</td>
+		<td class="n">${l.quantite}</td><td class="n">${euros(l.prixUnitaire)}</td><td class="n">${euros(l.quantite * l.prixUnitaire)}</td></tr>`).join('');
+	const vendeur = R.nom
+		? `<p><b>${esc(R.nom)}</b>, EI (entrepreneur individuel)\n${esc(R.adresse) || '<span class="vide">adresse à remplir dans Réglages</span>'}\nSIRET : ${esc(R.siret) || '<span class="vide">à remplir</span>'}${R.email ? '\n' + esc(R.email) : ''}</p>`
+		: '<p class="vide">Remplis ton nom, ton adresse et ton SIRET dans Réglages.</p>';
+	const client = p.eleve.nom ? `<p><b>${esc(p.eleve.nom)}</b>\n${esc(p.eleve.adresse) || '<span class="vide">adresse à remplir</span>'}</p>` : '<p class="vide">Nom et adresse de l\'élève</p>';
+
+	let blocPaiement;
+	if (avoir) {
+		blocPaiement = `<h4>Annulation</h4><p>Cet avoir annule la facture <b>${esc(p.avoirDe)}</b>.</p>${p.motif ? `<p>Motif : ${esc(p.motif)}</p>` : ''}
+			${p.paiement ? `<p class="f-tampon">Remboursé le ${dateFr(p.paiement.date)}</p>`
+				: pieces.find((f) => f.numero === p.avoirDe)?.paiement ? '<p class="petit">La somme déjà payée t\'est remboursée par virement.</p>'
+				: '<p class="petit">La facture n\'avait pas été payée : il n\'y a rien à régler.</p>'}`;
+	} else if (p.paiement) {
+		blocPaiement = `<h4>Paiement</h4><p class="f-tampon">Payée le ${dateFr(p.paiement.date)}</p><p>par ${esc(p.paiement.mode.toLowerCase())}. Merci !</p>`;
+	} else {
+		blocPaiement = `<h4>Paiement par virement</h4>
+			<p>À régler avant le <b>${dateLongue(p.echeance)}</b>.</p>
+			<p class="petit">${esc(R.titulaire || R.nom)}${R.banque ? ' · ' + esc(R.banque) : ''}</p>
+			<p class="f-iban">IBAN ${esc(R.iban) || '<span class="vide">à remplir</span>'}</p>
+			${R.bic ? `<p class="petit">BIC ${esc(R.bic)}</p>` : ''}
+			<p class="petit">Indique en référence du virement : <b>${apercu ? 'le numéro de facture' : esc(p.numero)}</b></p>`;
+	}
+
+	const tarifs = p.tarif ? `<p class="petit" style="margin-top:2.5mm">Tu as choisi le tarif <b>${TARIFS[p.tarif]}</b>. Trois tarifs au choix, sur simple déclaration : solidaire ${R.prix.solidaire[1]} €, classique ${R.prix.classique[1]} €, engagé ${R.prix.engage[1]} € l'heure. Le tarif engagé aide à financer le solidaire.</p>` : '';
+	const transparence = avoir ? '' : `<div class="f-bloc">
+		<h4>Où vont tes ${euros(Math.abs(p.total)).replace(' €', '&nbsp;€')}</h4>
+		<div class="barre" role="img" aria-label="${pctCoti} % de cotisations sociales, le reste pour ${esc(prenom)}"><span class="coti" style="width:${pctCoti}%"></span><span class="prof" style="width:${100 - pctCoti}%"></span></div>
+		<div class="legende">
+			<i style="background:var(--aur)"></i><span>Cotisations sociales (${String(pctCoti).replace('.', ',')} %)</span><b>${euros(coti)}</b>
+			<i style="background:var(--brica)"></i><span>Pour ${esc(prenom)}, avant impôt : préparation, cours, suivi</span><b>${euros(reste)}</b>
+		</div>
+		${tarifs}
+	</div>`;
+
+	return `<article class="feuille" aria-label="Facture">
+		${p.annuleePar ? '<div class="f-annulee" aria-hidden="true">Annulée</div>' : ''}
+		<header class="f-tete">
+			<div class="f-marque">${crotz(62)}<div><b>Lo Ligam</b><span>Cours d'occitan en visio</span></div></div>
+			<div class="f-titre"><b>${avoir ? 'Avoir' : 'Facture'}</b>
+				<span class="num">N° ${apercu ? 'donné à l\'émission' : esc(p.numero)}</span>
+				<span class="date">${dateLongue(p.date)}</span></div>
+		</header>
+		<section class="f-parties">
+			<div><h4>De</h4>${vendeur}</div>
+			<div><h4>Pour</h4>${client}</div>
+		</section>
+		<table class="f-lignes">
+			<thead><tr><th>Désignation</th><th class="n">Qté</th><th class="n">Prix unitaire</th><th class="n">Montant</th></tr></thead>
+			<tbody>${lignes}</tbody>
+		</table>
+		<div class="f-total"><div>
+			<div class="ligne somme"><span>${avoir ? "Total de l'avoir" : 'Total à payer'}</span><span>${euros(p.total)}</span></div>
+			<div class="tva">${esc(R.mentionTva)}</div>
+		</div></div>
+		<section class="f-blocs">
+			<div class="f-bloc">${blocPaiement}</div>
+			${transparence}
+		</section>
+		<footer class="f-pied">
+			<p>${esc(R.escompte)} ${esc(R.penalites)}</p>
+			<div class="fin"><span>${esc(R.nom || '')}${R.nom ? ', EI' : ''}${R.siret ? ' · SIRET ' + esc(R.siret) : ''}${R.site ? ' · ' + esc(R.site) : ''}</span><span class="f-merce">Mercé !</span></div>
+		</footer>
+	</article>`;
+}
+
+function afficherFeuille() {
+	const p = choisie ? pieces.find((x) => x.numero === choisie) : pieceDuBrouillon();
+	const apercu = !choisie;
+	$('#feuille').innerHTML = feuille(p, apercu);
+	$('#actions-feuille').innerHTML = apercu
+		? '<span class="bandeau-apercu">Aperçu : rien n\'est encore enregistré</span>'
+		: `<button class="bouton" style="margin:0" id="imprimer">Imprimer ou enregistrer en PDF</button>
+		   <button class="bouton discret" style="margin:0" id="ouvrir">Ouvrir le dossier des PDF</button>`;
+	if (!apercu) {
+		$('#imprimer').onclick = () => {
+			const titre = document.title;
+			document.title = `${p.type === 'avoir' ? 'Avoir' : 'Facture'} ${p.numero} ${p.eleve.nom}`;
+			window.print();
+			document.title = titre;
+		};
+		$('#ouvrir').onclick = () => api('/api/ouvrir', {});
+	}
+}
+
+// ---------------------------------------------------------------- les vues
+const vues = {
+	nouvelle() {
+		const b = brouillon;
+		const eleves = [...new Map(pieces.map((p) => [p.eleve.nom, p.eleve.adresse])).entries()];
+		const p = pieceDuBrouillon();
+		const m = manques(p);
+		const radio = (nom, val, texte, sous) => `<label><input type="radio" name="${nom}" value="${val}" ${b[nom] === val ? 'checked' : ''}>${texte}${sous ? `<small>${sous}</small>` : ''}</label>`;
+		return `<h2>Nouvelle facture</h2>
+		<label for="nom">Élève <small>(nom et prénom)</small></label>
+		<input id="nom" list="eleves" value="${esc(b.nom)}" autocomplete="off">
+		<datalist id="eleves">${eleves.map(([n]) => `<option value="${esc(n)}">`).join('')}</datalist>
+		<label for="adresse">Adresse de l'élève</label>
+		<textarea id="adresse" rows="2">${esc(b.adresse)}</textarea>
+		<label for="date">Date de la facture</label>
+		<input id="date" type="date" value="${b.date}">
+		<label id="l-formule">Formule</label>
+		<div class="choix" role="radiogroup" aria-labelledby="l-formule">
+			${radio('formule', '1', 'Cours', 'à l\'unité')}${radio('formule', '4', '4 cours', 'valables 2 mois')}${radio('formule', '12', '12 cours', 'valables 5 mois')}
+		</div>
+		<p class="aide"><label style="display:inline;font-weight:400"><input type="radio" name="formule" value="libre" ${b.formule === 'libre' ? 'checked' : ''} style="width:auto"> Autre (don, montant libre)</label></p>
+		${b.formule !== 'libre' ? `<label id="l-tarif">Tarif choisi par l'élève</label>
+		<div class="choix" role="radiogroup" aria-labelledby="l-tarif">
+			${['solidaire', 'classique', 'engage'].map((t) => radio('tarif', t, TARIFS[t][0].toUpperCase() + TARIFS[t].slice(1), euros(R.prix[t][b.formule]))).join('')}
+		</div>` : ''}
+		${b.formule === '1' ? `<div class="deux"><div><label for="quantite">Nombre de cours</label><input id="quantite" type="number" min="1" value="${b.quantite}"></div>
+			<div><label for="cours">Date(s) du cours</label><input id="cours" value="${esc(b.cours)}" placeholder="ex. le 24/10/2026"></div></div>` : ''}
+		${b.formule === 'libre' ? `<label for="designation">Désignation</label><input id="designation" value="${esc(b.designation)}" placeholder="ex. Soutien à Lo Ligam (don)">
+			<label for="montant">Montant (€)</label><input id="montant" inputmode="decimal" value="${esc(b.montant)}">` : ''}
+		<div id="manques">${m.length ? `<div class="alerte">Il manque : ${m.join(', ')}.</div>` : ''}</div>
+		<button class="bouton" id="emettre" ${m.length ? 'disabled' : ''}>Émettre la facture (${euros(p.total)})</button>
+		<p class="aide">Une fois émise, une facture reçoit son numéro et ne se modifie plus. En cas d'erreur, on l'annule par un avoir (onglet « Factures émises »).</p>`;
+	},
+	liste() {
+		if (!pieces.length) return '<h2>Factures émises</h2><p>Aucune pour l\'instant.</p>';
+		const lignes = [...pieces].reverse().map((p) => {
+			let etat;
+			if (p.annuleePar) etat = `<span class="etat">Annulée par ${esc(p.annuleePar)}${p.paiement ? ', payée le ' + dateFr(p.paiement.date) : ''}</span>`;
+			else if (p.paiement) etat = `<span class="etat payee">${p.type === 'avoir' ? 'Remboursé' : 'Payée'} le ${dateFr(p.paiement.date)}</span>`;
+			else if (p.type === 'avoir') etat = '<span class="etat">Avoir</span>';
+			else etat = `<span class="etat">À payer avant le ${dateFr(p.echeance)}</span>`;
+			const peutPayer = !p.paiement && (p.type === 'facture' ? !p.annuleePar : pieces.find((f) => f.numero === p.avoirDe)?.paiement);
+			const actions = [`<button data-voir="${p.numero}">Voir</button>`];
+			if (peutPayer) actions.push(`<button data-payer="${p.numero}">${p.type === 'avoir' ? 'Remboursement fait' : 'Paiement reçu'}</button>`);
+			if (p.type === 'facture' && !p.annuleePar) actions.push(`<button data-annuler="${p.numero}">Annuler par un avoir</button>`);
+			const fiche = paiementOuvert === p.numero ? `<tr><td colspan="4"><div class="fiche-paiement">
+				<div class="deux"><div><label for="p-date">Date de réception</label><input id="p-date" type="date" value="${aujourdhui()}"></div>
+				<div><label for="p-mode">Moyen</label><select id="p-mode">${['Virement', 'Espèces', 'Chèque', 'Autre'].map((x) => `<option>${x}</option>`).join('')}</select></div></div>
+				<button class="bouton" id="p-valider">Noter au livre des recettes</button>
+				<p class="aide">Une ligne s'ajoute au livre des recettes ; elle ne pourra plus être modifiée.</p></div></td></tr>` : '';
+			return `<tr class="${choisie === p.numero ? 'choisie' : ''}"><td><b>${esc(p.numero)}</b><br><span class="etat">${dateFr(p.date)}</span></td>
+				<td>${esc(p.eleve.nom)}<br>${etat}</td><td class="n">${euros(p.total)}</td><td>${actions.join('<br>')}</td></tr>${fiche}`;
+		}).join('');
+		return `<h2>Factures émises</h2><table class="liste"><thead><tr><th>N°</th><th>Élève</th><th class="n">Total</th><th></th></tr></thead><tbody>${lignes}</tbody></table>`;
+	},
+	livre() {
+		const payees = pieces.filter((p) => p.paiement).sort((a, b) => a.paiement.date.localeCompare(b.paiement.date) || a.numero.localeCompare(b.numero));
+		const trimestres = new Map();
+		for (const p of payees) {
+			const [a, mo] = p.paiement.date.split('-');
+			const k = `${a}, ${Math.ceil(Number(mo) / 3)}e trimestre`.replace(', 1e', ', 1er');
+			trimestres.set(k, (trimestres.get(k) || 0) + p.total);
+		}
+		const an = aujourdhui().slice(0, 4);
+		const totalAn = payees.filter((p) => p.paiement.date.startsWith(an)).reduce((s, p) => s + p.total, 0);
+		return `<h2>Livre des recettes</h2>
+		<p class="aide">Obligatoire en micro-entreprise : chaque somme reçue, dans l'ordre, avec l'élève et le moyen de paiement. Le fichier <b>livre-des-recettes.csv</b> s'ouvre dans LibreOffice. À garder 10 ans.</p>
+		${payees.length ? `<table class="liste"><thead><tr><th>Reçu le</th><th>Pièce</th><th>Élève</th><th class="n">Montant</th><th>Moyen</th></tr></thead><tbody>
+			${payees.map((p) => `<tr><td>${dateFr(p.paiement.date)}</td><td>${esc(p.numero)}</td><td>${esc(p.eleve.nom)}</td><td class="n">${euros(p.total)}</td><td>${esc(p.paiement.mode)}</td></tr>`).join('')}
+		</tbody></table>
+		<h3>Totaux par trimestre</h3>
+		<table class="liste"><tbody>${[...trimestres].map(([k, v]) => `<tr><td>${k}</td><td class="n">${euros(v)}</td></tr>`).join('')}</tbody></table>
+		<p class="aide">Total ${an} : <b>${euros(totalAn)}</b>. C'est ce chiffre que tu déclares à l'URSSAF.</p>` : '<p>Aucune recette notée pour l\'instant.</p>'}
+		<button class="bouton discret" id="ouvrir-livre">Ouvrir le dossier</button>
+		<p class="aide">Dossier : ${esc(dossier)}</p>`;
+	},
+	reglatges() {
+		const champ = (id, texte, aide = '', type = 'text') => `<label for="r-${id}">${texte}${aide ? ` <small>${aide}</small>` : ''}</label><input id="r-${id}" type="${type}" value="${esc(R[id])}">`;
+		const prix = ['solidaire', 'classique', 'engage'].map((t) => `<tr><th>${TARIFS[t]}</th>${['1', '4', '12'].map((f) => `<td><input aria-label="${TARIFS[t]}, ${f} cours" data-prix="${t}.${f}" inputmode="decimal" value="${R.prix[t][f]}"></td>`).join('')}</tr>`).join('');
+		return `<h2>Réglages</h2>
+		<p class="aide">Ces informations restent sur ton ordinateur, dans le dossier hors Git. Elles ne vont ni sur le site ni sur GitHub.</p>
+		<h3>Toi</h3>
+		${champ('nom', 'Nom et prénom', '(« EI » est ajouté tout seul)')}
+		<label for="r-adresse">Adresse <small>(celle déclarée pour ta micro-entreprise)</small></label><textarea id="r-adresse" rows="2">${esc(R.adresse)}</textarea>
+		${champ('siret', 'SIRET', '(14 chiffres)')}
+		${champ('email', 'E-mail', '(ton alias)')}
+		${champ('site', 'Site')}
+		<h3>Compte réservé à l'activité</h3>
+		${champ('titulaire', 'Titulaire du compte')}
+		${champ('banque', 'Banque')}
+		${champ('iban', 'IBAN')}
+		${champ('bic', 'BIC')}
+		<h3>Prix</h3>
+		<table class="liste"><thead><tr><th></th><th>1 cours</th><th>4 cours</th><th>12 cours</th></tr></thead><tbody>${prix}</tbody></table>
+		<h3>Mentions</h3>
+		${champ('mentionTva', 'Mention de TVA', '(change au 1er janvier 2027 : à vérifier)')}
+		${champ('escompte', 'Escompte')}
+		${champ('penalites', 'Pénalités de retard')}
+		<div class="deux">${champ('delaiJours', 'Délai de paiement', '(jours)', 'number')}${champ('tauxCotisations', 'Cotisations', '(%)', 'number')}</div>
+		<button class="bouton" id="enregistrer">Enregistrer les réglages</button>`;
+	}
+};
+
+function afficher() {
+	document.querySelectorAll('nav button').forEach((b) => b.setAttribute('aria-current', b.dataset.vue === vue ? 'page' : 'false'));
+	$('#vue').innerHTML = vues[vue]();
+	brancher();
+	afficherFeuille();
+}
+
+// ---------------------------------------------------------------- les gestes
+function brancher() {
+	const v = $('#vue');
+	if (vue === 'nouvelle') {
+		v.querySelectorAll('input, textarea').forEach((el) => {
+			const maj = () => {
+				if (el.type === 'radio') { if (!el.checked) return; brouillon[el.name] = el.value; afficher(); return; }
+				brouillon[el.id] = el.value;
+				if (el.id === 'nom') {
+					const connu = pieces.findLast((p) => p.eleve.nom === el.value);
+					if (connu && !brouillon.adresse) { brouillon.adresse = connu.eleve.adresse; $('#adresse').value = connu.eleve.adresse; }
+				}
+				afficherFeuille();
+				const p = pieceDuBrouillon();
+				const btn = $('#emettre');
+				btn.disabled = manques(p).length > 0;
+				btn.textContent = `Émettre la facture (${euros(p.total)})`;
+				const m = manques(p);
+				$('#manques').innerHTML = m.length ? `<div class="alerte">Il manque : ${m.join(', ')}.</div>` : '';
+			};
+			el.addEventListener(el.type === 'radio' ? 'change' : 'input', maj);
+		});
+		$('#emettre').onclick = async () => {
+			const p = pieceDuBrouillon();
+			if (!confirm(`Émettre la facture de ${euros(p.total)} pour ${p.eleve.nom} ? Elle ne pourra plus être modifiée.`)) return;
+			try {
+				const r = await api('/api/piece', p);
+				pieces = r.factures;
+				choisie = r.piece.numero;
+				Object.assign(brouillon, { nom: '', adresse: '', cours: '', designation: '', montant: '', quantite: 1 });
+				vue = 'liste';
+				afficher();
+				dire(`Facture ${r.piece.numero} émise. Imprime-la ou enregistre-la en PDF.`);
+			} catch (e) { dire(e.message, true); }
+		};
+	}
+	if (vue === 'liste') {
+		v.querySelectorAll('[data-voir]').forEach((b) => (b.onclick = () => { choisie = b.dataset.voir; afficher(); }));
+		v.querySelectorAll('[data-payer]').forEach((b) => (b.onclick = () => { paiementOuvert = paiementOuvert === b.dataset.payer ? null : b.dataset.payer; choisie = b.dataset.payer; afficher(); $('#p-date')?.focus(); }));
+		v.querySelectorAll('[data-annuler]').forEach((b) => (b.onclick = async () => {
+			const f = pieces.find((x) => x.numero === b.dataset.annuler);
+			const motif = prompt(`Annuler la facture ${f.numero} (${euros(f.total)}, ${f.eleve.nom}) par un avoir.\nMotif (facultatif) :`);
+			if (motif === null) return;
+			try {
+				const r = await api('/api/piece', {
+					type: 'avoir', avoirDe: f.numero, motif, date: aujourdhui(), eleve: f.eleve, tarif: null,
+					lignes: f.lignes.map((l) => ({ ...l, prixUnitaire: -l.prixUnitaire })), total: -f.total
+				});
+				pieces = r.factures; choisie = r.piece.numero; afficher();
+				dire(`Avoir ${r.piece.numero} émis : la facture ${f.numero} est annulée.`);
+			} catch (e) { dire(e.message, true); }
+		}));
+		const valider = $('#p-valider');
+		if (valider) valider.onclick = async () => {
+			try {
+				const r = await api('/api/paiement', { numero: paiementOuvert, date: $('#p-date').value, mode: $('#p-mode').value });
+				pieces = r.factures; paiementOuvert = null; afficher();
+				dire(`Noté au livre des recettes : ${r.piece.numero}, ${euros(r.piece.total)}.`);
+			} catch (e) { dire(e.message, true); }
+		};
+	}
+	if (vue === 'livre') $('#ouvrir-livre').onclick = () => api('/api/ouvrir', {});
+	if (vue === 'reglatges') {
+		$('#enregistrer').onclick = async () => {
+			const r = {};
+			v.querySelectorAll('[id^="r-"]').forEach((el) => (r[el.id.slice(2)] = el.type === 'number' ? Number(el.value) : el.value.trim()));
+			r.prix = structuredClone(R.prix);
+			v.querySelectorAll('[data-prix]').forEach((el) => { const [t, f] = el.dataset.prix.split('.'); r.prix[t][f] = Number(el.value.replace(',', '.')) || 0; });
+			try { R = (await api('/api/reglatges', r)).reglatges; afficher(); dire('Réglages enregistrés.'); }
+			catch (e) { dire(e.message, true); }
+		};
+		v.querySelectorAll('input, textarea').forEach((el) => el.addEventListener('input', () => {
+			R = { ...R, [el.id.slice(2)]: el.type === 'number' ? Number(el.value) : el.value };
+			afficherFeuille();
+		}));
+	}
+}
+
+document.querySelectorAll('nav button').forEach((b) => (b.onclick = () => {
+	vue = b.dataset.vue;
+	if (vue === 'nouvelle') choisie = null;
+	paiementOuvert = null;
+	dire('');
+	afficher();
+}));
+
+(async () => {
+	$('#logo-petit').innerHTML = crotz(44);
+	try {
+		const e = await api('/api/estat');
+		R = e.reglatges; pieces = e.factures; dossier = e.dossier;
+		if (!R.nom || !R.siret) { vue = 'reglatges'; dire('Bienvenue ! Commence par remplir tes réglages.'); }
+		afficher();
+	} catch {
+		document.body.innerHTML = '<p style="padding:2em">Le serveur ne répond pas. Relance « Factures.cmd ».</p>';
+	}
+})();
+</script>
+</body>
+</html>
