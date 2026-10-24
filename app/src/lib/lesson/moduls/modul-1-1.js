@@ -5,6 +5,9 @@
 
 export const modul11 = {
 	id: 'modul-1-1',
+	// Date de la relecture de l'occitan par Romain. Tant qu'elle manque, le
+	// module n'est visible que d'un administrateur (décision du 2026-10-25).
+	relu: null,
 	slug: '1-1',
 	unitat: 'Unitat 1 · Adieu !',
 	nivel: 'A1 · Modul 1.1',
