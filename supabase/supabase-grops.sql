@@ -162,7 +162,10 @@ $$;
 revoke all on function public.adreca_verificada (), public.es_bandit (), public.es_membre (text),
 	public.pot_escriure (text), public.conten_mot_defendut (text) from public, anon;
 grant execute on function public.adreca_verificada (), public.es_bandit (), public.es_membre (text),
-	public.pot_escriure (text), public.conten_mot_defendut (text) to authenticated;
+	public.pot_escriure (text) to authenticated;
+-- Le filtre ne s'appelle que depuis le déclencheur des messages : ouvert, il
+-- permettrait de deviner la liste mot par mot (avis Supabase, 2026-10-25)
+revoke all on function public.conten_mot_defendut (text) from authenticated;
 
 
 -- 2) LES RÈGLES D'ACCÈS (RLS)

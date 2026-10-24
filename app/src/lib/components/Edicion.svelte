@@ -54,6 +54,8 @@
 			segur: 'Segur ?',
 			òc: 'Òc, suprimir',
 			non: 'Non',
+			validar: 'Validar',
+			puèi: 'Puèi « Publicar », en naut.',
 			bloc: 'Toca un tèxt o un ligam de la carta per lo cambiar.',
 			ocupat: 'Enregistrament…',
 			marcas: '*mot* = en aur · _mot_ = en italica'
@@ -84,6 +86,8 @@
 			segur: 'Sûr ?',
 			òc: 'Oui, supprimer',
 			non: 'Non',
+			validar: 'Valider',
+			puèi: 'Puis « Publier », en haut.',
 			bloc: 'Touche un texte ou un lien de la carte pour le changer.',
 			ocupat: 'Enregistrement…',
 			marcas: '*mot* = en or · _mot_ = en italique'
@@ -220,7 +224,7 @@
 			{#if e.tipe === 'ligam'}
 				<label class="ed-camp">
 					<span>{t.adreça}</span>
-					<input type="text" value={e.ligam ?? ''} class:invalid={!ligamValid(e.ligam)} onfocus={alCentre} oninput={(ev) => cambiar(e.clau, { ligam: ev.currentTarget.value.trim() })} />
+					<input type="text" value={e.ligam ?? ''} class:invalid={!ligamValid(e.ligam)} onfocus={alCentre} oninput={(ev) => cambiar(e.clau, { ligam: ev.currentTarget.value.trim().replace(/^\/+(?=https?:)/, '') })} />
 				</label>
 				<p class="ed-ajuda" class:error={!ligamValid(e.ligam)}>{t.adreçaAjuda}</p>
 			{/if}
@@ -259,6 +263,12 @@
 						<button type="button" class="ed-segond ed-perilhós" onclick={() => (confirma = true)}>{t.suprimir}</button>
 					{/if}
 				{/if}
+			</div>
+			<!-- (Romain, 2026-10-25 : « je comprends pas comment valider » ; tout est
+			     déjà gardé en brouillon, le bouton ferme le panneau et rappelle Publier) -->
+			<div class="ed-validar">
+				<span class="ed-ajuda">{t.puèi}</span>
+				<button type="button" class="ed-primari" onclick={() => causir(null)} disabled={e.tipe === 'ligam' && !ligamValid(e.ligam)}>{t.validar}</button>
 			</div>
 		</div>
 	{/if}
@@ -479,6 +489,16 @@
 		margin: 0.35rem 0 0;
 		font-size: 0.72rem;
 		color: var(--t-tinta-2);
+	}
+	.ed-validar {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 0.6rem;
+		margin-top: 0.7rem;
+	}
+	.ed-validar .ed-ajuda {
+		margin: 0;
 	}
 	.ed-linha {
 		display: flex;

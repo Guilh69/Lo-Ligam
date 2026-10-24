@@ -71,7 +71,10 @@
 	function ligamsDe(clau) {
 		return lista(clau)
 			.filter((e) => e.tipe === 'ligam' && !ÈS_LECTOR(e.clau))
-			.map((e) => ({ clau: e.clau, l: ligam(e.clau), p: plataforma(ligam(e.clau).href) }))
+			// (« /https://… » : le « / » de départ resté devant une adresse collée)
+			.map((e) => ({ clau: e.clau, l: ligam(e.clau) }))
+			.map((x) => ({ ...x, l: { ...x.l, href: x.l.href?.replace(/^\/+(?=https?:)/, '') } }))
+			.map((x) => ({ ...x, p: plataforma(x.l.href) }))
 			.filter((x) => edicion.actiu || x.p)
 			.sort((a, b) => (a.p?.rang ?? 9) - (b.p?.rang ?? 9));
 	}
