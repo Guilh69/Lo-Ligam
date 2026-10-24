@@ -64,4 +64,4 @@ export const baseDonnadas = {
 	societatNonEuropea: true
 };
 
-export const dataMiseAJour = '2026-10-24';
+export const dataMiseAJour = '2026-10-25';

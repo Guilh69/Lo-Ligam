@@ -97,7 +97,14 @@
     { "clau": "parla.teulas.obras.sota", "tipe": "text", "lista": "parla.teulas.obras", "oc": "Çò qu’escoti, çò que legissi, çò que te fau descobrir.", "fr": "Ce que j’écoute, ce que je lis, ce que je te fais découvrir." },
     { "clau": "parla.teulas.articles", "tipe": "bloc", "lista": "parla.teulas", "ordre": 4 },
     { "clau": "parla.teulas.articles.ligam", "tipe": "ligam", "lista": "parla.teulas.articles", "oc": "Articles", "fr": "Articles", "ligam": "/articles" },
-    { "clau": "parla.teulas.articles.sota", "tipe": "text", "lista": "parla.teulas.articles", "oc": "A escriure", "fr": "À écrire", "visible": false }
+    { "clau": "parla.teulas.articles.sota", "tipe": "text", "lista": "parla.teulas.articles", "oc": "A escriure", "fr": "À écrire", "visible": false },
+    { "clau": "parla.teulas.musicas", "tipe": "bloc", "lista": "parla.teulas", "ordre": 5 },
+    { "clau": "parla.teulas.musicas.ligam", "tipe": "ligam", "lista": "parla.teulas.musicas", "oc": "Musicas", "fr": "Musiques", "ligam": "/obras#musicas" },
+    { "clau": "parla.teulas.musicas.sota", "tipe": "text", "lista": "parla.teulas.musicas", "oc": "Çò qu’escoti, e ont l’escotar.", "fr": "Ce que j’écoute, et où l’écouter." }
+  ],
+  "obras": [
+    { "clau": "obras.musica.titol", "tipe": "text", "oc": "Musicas", "fr": "Musiques" },
+    { "clau": "obras.musica.frasa", "tipe": "text", "oc": "A escriure", "fr": "À écrire", "visible": false }
   ],
   "apren": [
     { "clau": "apren.titol", "tipe": "text", "oc": "S’apren", "fr": "S’apprend" },
@@ -253,5 +260,12 @@
     { "clau": "amassa.teulas.instagram", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 5 },
     { "clau": "amassa.teulas.instagram.ligam", "tipe": "ligam", "lista": "amassa.teulas.instagram", "oc": "Instagram", "fr": "Instagram", "ligam": "https://www.instagram.com/lo_ligam/" },
     { "clau": "amassa.teulas.instagram.sota", "tipe": "text", "lista": "amassa.teulas.instagram", "oc": "Los visuals de Lo Ligam.", "fr": "Les visuels de Lo Ligam." }
+  ],
+  "ideas": [
+    { "clau": "ideas.titol", "tipe": "text", "oc": "Boita d’idèas", "fr": "Boîte à idées" },
+    { "clau": "ideas.frasa", "tipe": "text", "oc": "Una idèa per melhorar Lo Ligam ? Escriu-la aquí : las legissi totas.", "fr": "Une idée pour améliorer Lo Ligam ? Écris-la ici : je les lis toutes." },
+    { "clau": "ideas.compte", "tipe": "text", "oc": "Per mandar una idèa, cal un compte : es gratuit.", "fr": "Pour envoyer une idée, il faut un compte : c’est gratuit." },
+    { "clau": "ideas.mercé", "tipe": "text", "oc": "Mercé ! Ton idèa es plan arribada.", "fr": "Merci ! Ton idée est bien arrivée." },
+    { "clau": "ideas.avís", "tipe": "text", "oc": "Soi lo sol a legir las idèas, sens saber qual las manda. Las pòdes suprimir quand vòles.", "fr": "Je suis seul à lire les idées, sans savoir qui les envoie. Tu peux les supprimer quand tu veux." }
   ]
 }

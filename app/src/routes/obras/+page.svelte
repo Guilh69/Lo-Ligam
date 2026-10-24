@@ -1,31 +1,42 @@
 <script>
 	import Icona from '$lib/components/Icona.svelte';
-	// Espace « Òbras » : ce que Romain fait découvrir — musiques, livres, films.
+	// Espace « Òbras » : ce que Romain fait découvrir.
 	//
 	// On n'héberge aucun extrait. On donne les informations, son commentaire, et
 	// on laisse écouter par le lecteur officiel, chargé SEULEMENT au clic : avant
 	// ça, aucune requête ne part chez un tiers, donc aucun traceur.
+	//
+	// Les musiques (2026-10-25, option « fiche + écouter ici ») : une fiche par
+	// artiste, que Romain ajoute sur la page (édition sur place) : le nom, ses
+	// lignes, les liens qu'il colle (la plateforme se reconnaît). « Escotar
+	// aicí » ouvre d'abord une phrase qui dit ce que la plateforme recevra ;
+	// le lecteur ne se charge qu'après l'accord, qui vaut pour la visite.
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { MENAS, embedYoutube, ostePropre } from '$lib/obras';
+	import { plataforma, lectorPer } from '$lib/obras';
 	import { afichas } from '$lib/data/afichas.js';
+	import { edicion, iniciar, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+	import { segments } from '$lib/edicion/marcat.js';
 
 	let { data } = $props();
-	let lang = $derived(langStore.current);
+	const lèvaEdicion = iniciar('obras', data.elements);
+	$effect(() => () => lèvaEdicion?.());
 
-	let filtre = $state('tot');
-	let dubèrt = $state(null); // id de l'œuvre dont le lecteur est chargé
+	let lang = $derived(langStore.current);
+	let fr = $derived(lang === 'fr');
 
 	const t = {
 		oc: {
 			title: 'Òbras',
 			lead: 'Çò qu’escoti, çò que legissi, çò que te fau descobrir en occitan.',
-			tot: 'Tot',
-			escotar: 'Escotar',
-			veire: 'Ne saber mai',
-			avis: 'En clicant, cargas lo lector de la plataforma.',
+			escotar: 'Escotar aicí',
+			acòrd: (p) => `Escotar sus ${p} ? Son lector recebrà ton adreça IP e poirà pausar de cookies.`,
+			òc: 'Escotar',
+			non: 'Non, mercé',
+			ligams: 'Ont escotar',
+			cort: 'Ligam cort : lo lector se pòt pas cargar. Copiar l’adreça complèta (deezer.com/…).',
 			void: 'Encara res aicí. Lèu.',
-			pana: 'Impossible de cargar las òbras pel moment.',
 			afichas: 'Afichas',
 			afichasLead: 'D’afichas que fan parlar la lenga sus las parets.',
 			agrandir: 'Veire en grand',
@@ -34,12 +45,13 @@
 		fr: {
 			title: 'Œuvres',
 			lead: 'Ce que j’écoute, ce que je lis, ce que je te fais découvrir en occitan.',
-			tot: 'Tout',
-			escotar: 'Écouter',
-			veire: 'En savoir plus',
-			avis: 'En cliquant, tu charges le lecteur de la plateforme.',
+			escotar: 'Écouter ici',
+			acòrd: (p) => `Écouter sur ${p} ? Son lecteur recevra ton adresse IP et pourra déposer des cookies.`,
+			òc: 'Écouter',
+			non: 'Non merci',
+			ligams: 'Où écouter',
+			cort: 'Lien court : le lecteur ne peut pas se charger. Copier l’adresse complète (deezer.com/…).',
 			void: 'Rien encore ici. Bientôt.',
-			pana: 'Impossible de charger les œuvres pour le moment.',
 			afichas: 'Affiches',
 			afichasLead: 'Des affiches qui font parler la langue sur les murs.',
 			agrandir: 'Voir en grand',
@@ -48,14 +60,40 @@
 	};
 	let tx = $derived(t[lang]);
 
-	let visiblas = $derived(
-		filtre === 'tot' ? data.obras : data.obras.filter((o) => o.mena === filtre)
-	);
+	// Les liens d'une fiche, rangés par plateforme (Bandcamp d'abord) ; hors
+	// édition, un lien pas encore collé (« / ») ne s'affiche pas
+	function ligamsDe(clau) {
+		return lista(clau)
+			.filter((e) => e.tipe === 'ligam')
+			.map((e) => ({ clau: e.clau, l: ligam(e.clau), p: plataforma(ligam(e.clau).href) }))
+			.filter((x) => edicion.actiu || x.p)
+			.sort((a, b) => (a.p?.rang ?? 9) - (b.p?.rang ?? 9));
+	}
+	// le premier lien qui ouvre un lecteur dans la fiche (Deezer ou YouTube)
+	const lectorDe = (ligams) => ligams.map((x) => lectorPer(x.l.href)).find((l) => l?.src) ?? null;
+	const ligamsCorts = (ligams) => ligams.some((x) => lectorPer(x.l.href)?.cort);
 
-	const nomMena = (id) => {
-		const m = MENAS.find((x) => x.id === id);
-		return m ? (lang === 'oc' ? m.oc : m.fr) : id;
-	};
+	let demanda = $state(null); // la fiche dont la phrase d'accord est ouverte
+	let dubèrt = $state(null); // la fiche dont le lecteur est chargé
+	let acòrds = $state({}); // plateformes acceptées pendant la visite
+	function escotar(clau, lector) {
+		if (acòrds[lector.plataforma]) dubèrt = clau;
+		else demanda = clau;
+	}
+	function acceptar(clau, lector) {
+		acòrds[lector.plataforma] = true;
+		demanda = null;
+		dubèrt = clau;
+	}
+
+	const apondreArtista = () =>
+		apondre('obras.artistas', 'bloc', {}, [
+			['nom', 'text', { oc: 'Nom', fr: 'Nom' }],
+			['tèxt', 'text', { oc: 'A escriure', fr: 'À écrire' }]
+		]);
+	const apondreLigam = (clau) => apondre(clau, 'ligam', { oc: '', fr: '', ligam: '/' });
+	// le nom affiché d'un lien : celui que Romain a écrit, sinon la plateforme
+	const nomLigam = (x) => (fr ? x.l.fr : x.l.oc) || x.p?.nom || (fr ? 'Coller l’adresse' : 'Pegar l’adreça');
 
 	// Galerie : la grande image se charge seulement à l'ouverture (<dialog> natif :
 	// Échap ferme, le focus revient au bouton, la page derrière est inerte).
@@ -68,10 +106,6 @@
 	function tampar() {
 		dialeg.close();
 	}
-
-	function comptar(mena) {
-		return data.obras.filter((o) => o.mena === mena).length;
-	}
 </script>
 
 <svelte:head>
@@ -82,12 +116,15 @@
 	/>
 </svelte:head>
 
+{#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
+{#snippet tt(clau)}{@const v = txt(clau)}<span lang={fr ? 'fr' : 'oc'}>{@render marcat(fr ? v.fr : v.oc)}</span>{/snippet}
+
 <div class="page-bg" aria-hidden="true">
 	<span class="blob blob-gold"></span>
 	<span class="blob blob-teal"></span>
 </div>
 
-<main class="screen">
+<main class="screen" class:ed-actiu={edicion.actiu}>
 	<AppHeader />
 
 	<header class="intro">
@@ -95,95 +132,74 @@
 		<p class="lead">{tx.lead}</p>
 	</header>
 
-	{#if data.pana}
-		<p class="msg">{tx.pana}</p>
-	{:else if !data.obras.length}
-		<p class="msg">{tx.void}</p>
-	{:else}
-		<nav class="menas" aria-label={tx.title}>
-			<button type="button" class="mena" class:on={filtre === 'tot'} onclick={() => (filtre = 'tot')}>
-				{tx.tot}<span class="n">{data.obras.length}</span>
-			</button>
-			{#each MENAS as m (m.id)}
-				{#if comptar(m.id)}
-					<button
-						type="button"
-						class="mena"
-						class:on={filtre === m.id}
-						onclick={() => (filtre = m.id)}
-					>
-						{lang === 'oc' ? m.oc : m.fr}<span class="n">{comptar(m.id)}</span>
-					</button>
-				{/if}
-			{/each}
-		</nav>
+	<section class="musicas" id="musicas" aria-labelledby="musicas-titol">
+		<h2 id="musicas-titol" class="seccion-titol" hidden={amagat('obras.musica.titol')} use:editar={'obras.musica.titol'}>{@render tt('obras.musica.titol')}</h2>
+		<p class="lead" hidden={amagat('obras.musica.frasa')} use:editar={'obras.musica.frasa'}>{@render tt('obras.musica.frasa')}</p>
 
-		<ul class="lista">
-			{#each visiblas as o (o.id)}
-				{@const embed = embedYoutube(o.embed_url)}
-				<li class="obra">
-					<div class="visual">
-						{#if dubèrt === o.id && embed}
-							<iframe
-								src={embed}
-								title={o.titre}
-								allow="accelerometer; autoplay; encrypted-media; picture-in-picture"
-								referrerpolicy="strict-origin-when-cross-origin"
-								loading="lazy"
-							></iframe>
-						{:else if o.imatge_url}
-							<img src={o.imatge_url} alt={o.titre} loading="lazy" />
-							{#if embed}
-								<button type="button" class="jogar" onclick={() => (dubèrt = o.id)}>
-									<Icona nom="lire" size="1.3em" />
-									<span class="sr-only">{tx.escotar} — {o.titre}</span>
+		{#if !lista('obras.artistas').length && !edicion.actiu}
+			<p class="msg">{tx.void}</p>
+		{/if}
+		<ul class="artistas">
+			{#each lista('obras.artistas') as a (a.clau)}
+				{@const ligams = ligamsDe(a.clau)}
+				{@const lector = lectorDe(ligams)}
+				{@const nom = txt(a.clau + '.nom')}
+				<li class="artista-plaça">
+					<div class="artista" use:editar={a.clau}>
+						<h3 hidden={amagat(a.clau + '.nom')} use:editar={a.clau + '.nom'}>{fr ? nom.fr : nom.oc}</h3>
+						<p class="tèxt" hidden={amagat(a.clau + '.tèxt')} use:editar={a.clau + '.tèxt'}>{@render tt(a.clau + '.tèxt')}</p>
+
+						{#if lector}
+							{#if dubèrt === a.clau}
+								<iframe
+									class="lector"
+									class:video={lector.video}
+									style:height={lector.video ? null : lector.nautor + 'px'}
+									src={lector.src}
+									title="{lector.plataforma} : {fr ? nom.fr : nom.oc}"
+									allow="autoplay; encrypted-media; clipboard-write; picture-in-picture"
+									referrerpolicy="strict-origin-when-cross-origin"
+								></iframe>
+							{:else if demanda === a.clau}
+								<div class="acòrd" role="group" aria-label={tx.escotar}>
+									<p>{tx.acòrd(lector.plataforma)}</p>
+									<div class="acòrd-botons">
+										<button type="button" class="acòrd-òc" onclick={() => acceptar(a.clau, lector)}>{tx.òc}</button>
+										<button type="button" class="acòrd-non" onclick={() => (demanda = null)}>{tx.non}</button>
+									</div>
+								</div>
+							{:else}
+								<button type="button" class="escotar" onclick={() => escotar(a.clau, lector)}>
+									<Icona nom="lire" size="1.1em" />
+									{tx.escotar} <span class="escotar-p">· {lector.plataforma}</span>
 								</button>
 							{/if}
-						{:else}
-							<!-- Aucune image dont on ait le droit : un aplat de la charte, le
-							     titre en grand. Pas de vignette prise chez un tiers. -->
-							<div class="aplat">
-								<span class="aplat-titre">{o.titre}</span>
-								{#if embed}
-									<button type="button" class="jogar sus-aplat" onclick={() => (dubèrt = o.id)}>
-										<Icona nom="lire" size="1.3em" />
-										<span class="sr-only">{tx.escotar} — {o.titre}</span>
-									</button>
-								{/if}
-							</div>
 						{/if}
+						{#if edicion.actiu && ligamsCorts(ligams)}
+							<p class="ed-avis">{tx.cort}</p>
+						{/if}
+
+						<ul class="ligams" aria-label="{tx.ligams} : {fr ? nom.fr : nom.oc}">
+							{#each ligams as x (x.clau)}
+								<li>
+									<a href={x.l.href} target="_blank" rel="noopener noreferrer" hidden={amagat(x.clau)} use:editar={x.clau}
+										>{nomLigam(x)} <Icona nom="extern" size="0.85em" /></a
+									>
+								</li>
+							{/each}
+						</ul>
 					</div>
-
-					<div class="tèxte">
-						<p class="mena-etiqueta">{nomMena(o.mena)}</p>
-						<h2>{o.titre}</h2>
-						<p class="autor">
-							{o.autor}{#if o.editor}<span class="fin"> · {o.editor}</span>{/if}{#if o.an}<span
-									class="fin"
-								>
-									· {o.an}</span
-								>{/if}
-						</p>
-
-						{#if o.comentari}
-							<blockquote>{o.comentari}</blockquote>
-						{/if}
-
-						{#if embed && dubèrt !== o.id}
-							<p class="avis">{tx.avis}</p>
-						{/if}
-
-						{#if o.ligam}
-							<a class="ligam" href={o.ligam} target="_blank" rel="noopener noreferrer">
-								{tx.veire}
-								{#if ostePropre(o.ligam)}<span class="oste">{ostePropre(o.ligam)}</span>{/if}
-							</a>
-						{/if}
-					</div>
+					<!-- (hors de la fiche : un toucher dans la fiche, en édition, la choisit) -->
+					{#if edicion.actiu}
+						<button type="button" class="ed-apondre" onclick={() => apondreLigam(a.clau)}>+ {fr ? 'Ajouter un lien' : 'Apondre un ligam'}</button>
+					{/if}
 				</li>
 			{/each}
 		</ul>
-	{/if}
+		{#if edicion.actiu}
+			<button type="button" class="ed-apondre" onclick={apondreArtista}>+ {fr ? 'Ajouter une fiche d’artiste' : 'Apondre una ficha'}</button>
+		{/if}
+	</section>
 
 	<section class="afichas" aria-labelledby="afichas-titol">
 		<h2 id="afichas-titol" class="afichas-titol">{tx.afichas}</h2>
@@ -445,191 +461,173 @@
 		color: var(--color-teal);
 	}
 
-	.menas {
+	/* ---------- Musiques : une fiche par artiste ---------- */
+	.musicas {
+		container: musicas / inline-size;
+		width: 100%;
+		max-width: 60rem;
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-		justify-content: center;
-		max-width: 40rem;
-	}
-
-	.mena {
-		display: inline-flex;
+		flex-direction: column;
 		align-items: center;
-		gap: 0.4rem;
-		border: none;
-		background: white;
-		color: var(--color-text);
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 0.9rem;
-		padding: 0.5rem 1rem;
-		border-radius: 999px;
-		cursor: pointer;
-		box-shadow: 0 3px 10px rgba(58, 42, 32, 0.07);
+		gap: 0.5rem;
 	}
-
-	.mena.on {
-		background: var(--color-terracotta);
-		color: white;
-	}
-
-	.n {
-		font-size: 0.78rem;
-		opacity: 0.7;
-	}
-
-	.lista {
-		list-style: none;
+	.seccion-titol {
 		margin: 0;
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: clamp(1.4rem, 4vw, 1.9rem);
+		color: var(--color-text);
+	}
+	.musicas > .lead {
+		max-width: 34rem;
+		text-align: center;
+	}
+	.artistas {
+		list-style: none;
+		margin: 1rem 0 0;
 		padding: 0;
 		width: 100%;
-		max-width: 46rem;
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		/* (centrées quand il y en a peu) */
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 28rem));
+		justify-content: center;
 		gap: 1.25rem;
 	}
-
-	.obra {
+	.artista-plaça {
 		display: flex;
-		gap: 1.25rem;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
+	}
+	.artista {
+		align-self: stretch;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 0.7rem;
 		background: white;
 		border-radius: 20px;
-		padding: 1.25rem;
+		padding: 1.4rem;
+		border-top: 4px solid var(--color-terracotta);
 		box-shadow: 0 12px 30px rgba(58, 42, 32, 0.09);
-		flex-wrap: wrap;
 	}
-
-	.visual {
-		position: relative;
-		flex: 1 1 15rem;
-		min-width: 13rem;
-		align-self: flex-start;
-	}
-
-	.visual img,
-	.visual iframe,
-	.aplat {
-		width: 100%;
-		aspect-ratio: 16 / 9;
-		border-radius: 14px;
-		display: block;
-		object-fit: cover;
-		border: none;
-	}
-
-	.aplat {
-		background: linear-gradient(135deg, var(--color-terracotta), var(--color-brick));
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		position: relative;
-		padding: 1rem;
-	}
-
-	.aplat-titre {
-		font-family: var(--font-heading);
-		font-size: 1.15rem;
-		color: white;
-		text-align: center;
-		line-height: 1.25;
-		opacity: 0.95;
-	}
-
-	.jogar {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: 3.4rem;
-		height: 3.4rem;
-		border-radius: 999px;
-		border: none;
-		background: rgba(255, 255, 255, 0.94);
-		box-shadow: 0 6px 18px rgba(58, 42, 32, 0.32);
-		color: var(--color-terracotta);
-		font-size: 1.2rem;
-		cursor: pointer;
-		padding-left: 0.2rem;
-		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
-	.jogar:hover {
-		transform: translate(-50%, -50%) scale(1.08);
-	}
-
-	.tèxte {
-		flex: 1 1 16rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.45rem;
-		min-width: 0;
-	}
-
-	.mena-etiqueta {
+	h3 {
 		margin: 0;
-		font-size: 0.72rem;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		color: var(--color-teal);
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: 1.45rem;
+		line-height: 1.15;
+		color: var(--color-text);
+	}
+	.tèxt {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.55;
+		color: var(--color-text);
+	}
+	.tèxt :global(.aur) {
+		color: var(--color-terracotta);
 		font-weight: 700;
 	}
 
-	h2 {
-		margin: 0;
-		font-family: var(--font-heading);
-		font-size: 1.25rem;
-		color: var(--color-text);
-	}
-
-	.autor {
-		margin: 0;
+	/* l'écoute : le bouton, la phrase d'accord, puis le lecteur officiel */
+	.escotar {
+		align-self: flex-start;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		border: none;
+		border-radius: 999px;
+		padding: 0.6rem 1.1rem;
+		background: var(--color-terracotta);
+		color: white;
+		font: inherit;
+		font-weight: 700;
 		font-size: 0.92rem;
-		color: var(--color-text);
+		cursor: pointer;
+		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
-
-	.fin {
-		opacity: 0.65;
+	.escotar:hover {
+		transform: scale(1.04);
 	}
-
-	blockquote {
-		margin: 0.3rem 0 0;
-		padding-left: 0.8rem;
-		border-left: 3px solid var(--color-gold);
-		font-size: 0.92rem;
-		line-height: 1.55;
-		color: var(--color-text);
-		opacity: 0.9;
-	}
-
-	.avis {
-		margin: 0;
-		font-size: 0.75rem;
-		color: var(--color-teal);
+	.escotar-p {
+		font-weight: 400;
 		opacity: 0.85;
 	}
-
-	.ligam {
-		align-self: flex-start;
-		margin-top: 0.2rem;
-		display: inline-flex;
-		align-items: baseline;
-		gap: 0.4rem;
-		color: var(--color-terracotta);
-		font-weight: 600;
+	.acòrd {
+		border-radius: 14px;
+		padding: 0.9rem 1rem;
+		background: #f6efe3;
+		color: var(--color-text);
+	}
+	.acòrd p {
+		margin: 0 0 0.7rem;
 		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+	.acòrd-botons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.acòrd-òc,
+	.acòrd-non {
+		border-radius: 999px;
+		padding: 0.5rem 1rem;
+		font: inherit;
+		font-weight: 700;
+		font-size: 0.88rem;
+		cursor: pointer;
+	}
+	.acòrd-òc {
+		border: 2px solid var(--color-terracotta);
+		background: var(--color-terracotta);
+		color: white;
+	}
+	.acòrd-non {
+		border: 2px solid currentColor;
+		background: transparent;
+		color: var(--color-text);
+	}
+	.lector {
+		width: 100%;
+		border: none;
+		border-radius: 12px;
+		display: block;
+	}
+	.lector.video {
+		aspect-ratio: 16 / 9;
+	}
+
+	/* les liens, Bandcamp d'abord */
+	.ligams {
+		list-style: none;
+		margin: auto 0 0;
+		padding: 0.4rem 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+	.ligams a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.4rem 0.85rem;
+		border-radius: 999px;
+		border: 1.5px solid rgba(58, 42, 32, 0.25);
+		color: var(--color-text);
+		font-size: 0.88rem;
+		font-weight: 600;
 		text-decoration: none;
-		border-bottom: 2px solid rgba(199, 91, 57, 0.3);
 	}
-
-	.ligam:hover {
-		border-bottom-color: var(--color-terracotta);
+	.ligams a:hover {
+		border-color: var(--color-terracotta);
+		color: var(--color-terracotta);
 	}
-
-	.oste {
-		font-size: 0.75rem;
-		font-weight: 400;
-		opacity: 0.7;
+	.ed-avis {
+		margin: 0;
+		font-size: 0.8rem;
+		color: var(--color-brick);
 	}
 
 	.sr-only {
@@ -645,7 +643,7 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.jogar {
+		.escotar {
 			transition: none;
 		}
 	}

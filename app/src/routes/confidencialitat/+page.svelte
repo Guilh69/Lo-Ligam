@@ -37,11 +37,15 @@
 				[
 					'Tes réponses avant un premier cours',
 					'Si tu remplis le questionnaire avant un premier cours en visio : ton adresse électronique, ton prénom si tu le donnes, et tes réponses (niveau, raisons, langues, lieu, rythme, envies, message). Je les reçois par courriel pour préparer le cours ; le site n’en garde aucune copie. Le courriel est effacé de ma messagerie au bout d’un an au plus tard.'
+				],
+				[
+					'Tes idées',
+					'Si tu envoies une idée dans la boîte à idées : son texte, rattaché à ton compte pour que tu la retrouves et puisses la supprimer. Je suis seul à la lire, sans savoir qui l’envoie. Elle est effacée quand tu la supprimes, quand ton compte est supprimé, et au bout de deux ans au plus tard.'
 				]
 			],
 			pourquoiT: 'Pourquoi, et sur quelle base',
 			pourquoi:
-				'Le compte et la progression reposent sur l’exécution du service que tu demandes. Les réponses facultatives du questionnaire reposent sur ton consentement : elles servent uniquement à comprendre qui apprend l’occitan, jamais à te cibler.',
+				'Le compte et la progression reposent sur l’exécution du service que tu demandes. Les réponses facultatives du questionnaire reposent sur ton consentement : elles servent uniquement à comprendre qui apprend l’occitan, jamais à te cibler. Les idées reposent aussi sur ton consentement : tu choisis de les envoyer, et tu peux les retirer.',
 			ageT: 'Âge minimum',
 			age: 'La création de compte est réservée aux personnes de 15 ans ou plus.',
 			dureeT: 'Combien de temps',
@@ -58,7 +62,7 @@
 			roleAlbergament: 'hébergement, et envoi des messages du formulaire de contact',
 			tiersT: 'Ressources chargées depuis d’autres sites',
 			tiers:
-				'Certaines pages chargent des éléments hébergés ailleurs, ce qui transmet ton adresse IP à ces services : les fonds de carte (OpenStreetMap et sa version occitane OSM-bzh, OpenTopoMap, photos aériennes de l’IGN et du PNOA espagnol), la recherche de communes quand tu tapes un lieu (API Adresse, Photon), les vidéos que tu choisis de lancer (YouTube en mode sans cookie, Canva) et les enregistrements de l’Atlas sonore des langues régionales (LISN, Université Paris-Saclay) que tu choisis d’écouter sur la carte. Les polices de caractères et les icônes, elles, sont servies par ce site : aucune requête vers Google.',
+				'Certaines pages chargent des éléments hébergés ailleurs, ce qui transmet ton adresse IP à ces services : les fonds de carte (OpenStreetMap et sa version occitane OSM-bzh, OpenTopoMap, photos aériennes de l’IGN et du PNOA espagnol), la recherche de communes quand tu tapes un lieu (API Adresse, Photon), les vidéos et les musiques que tu choisis de lancer (YouTube en mode sans cookie, Deezer, Canva ; pour les musiques, une phrase te prévient avant) et les enregistrements de l’Atlas sonore des langues régionales (LISN, Université Paris-Saclay) que tu choisis d’écouter sur la carte. Les polices de caractères et les icônes, elles, sont servies par ce site : aucune requête vers Google.',
 			droitsT: 'Tes droits',
 			droits:
 				'Tu peux à tout moment demander à consulter tes données, les corriger, les effacer, les récupérer dans un format lisible, ou retirer ton consentement aux réponses facultatives. Écris à {email} : la réponse intervient sous un mois.',
@@ -93,11 +97,15 @@
 				[
 					'Tas responsas abans un primièr cors',
 					'Se emplenas lo questionari abans un primièr cors en visio : ton corrièl, ton prenom se lo donas, e tas responsas (nivèl, rasons, lengas, luòc, ritme, envejas, messatge). Las recebi per corrièl per preparar lo cors ; lo site ne garda pas cap de còpia. Lo corrièl es escafat de ma messatjariá al cap d’un an al mai tard.'
+				],
+				[
+					'Tas idèas',
+					'Se mandas una idèa dins la boita d’idèas : son tèxte, ligat a ton compte per que la tornes trobar e la pòscas suprimir. Soi lo sol a la legir, sens saber qual la manda. Es escafada quand la suprimisses, quand ton compte es suprimit, e al cap de dos ans al mai tard.'
 				]
 			],
 			pourquoiT: 'Perqué, e sus quina basa',
 			pourquoi:
-				'Lo compte e la progression repausan sus l’execucion del servici que demandas. Las respònsas facultativas del questionari repausan sus ton consentiment : servisson unicament a comprene qual apren l’occitan, pas jamai a te ciblar.',
+				'Lo compte e la progression repausan sus l’execucion del servici que demandas. Las respònsas facultativas del questionari repausan sus ton consentiment : servisson unicament a comprene qual apren l’occitan, pas jamai a te ciblar. Las idèas repausan tanben sus ton consentiment : causisses de las mandar, e las pòdes retirar.',
 			ageT: 'Edat minimala',
 			age: 'La creacion de compte es reservada a las personas de 15 ans o mai.',
 			dureeT: 'Quant de temps',
@@ -114,7 +122,7 @@
 			roleAlbergament: 'albergament, e mandadís dels messatges del formulari de contacte',
 			tiersT: 'Ressorsas cargadas d’autres sites',
 			tiers:
-				'Certanas paginas cargan d’elements albergats endacòm mai, çò que transmet ton adreça IP a aquestes servicis : los fonses de carta (OpenStreetMap e sa version occitana OSM-bzh, OpenTopoMap, fòtos aerianas de l’IGN e del PNOA espanhòl), la recèrca de comunas quand tapas un luòc (API Adresse, Photon), las vidèos que causisses de lançar (YouTube en mòde sens cookies, Canva) e las faulas de l’Atlas sonòr de las lengas regionalas (LISN, Universitat Paris-Saclay) que causisses d’escotar sus la carta. Las poliças de caractèrs e las icònas, elas, son servidas per aqueste site : cap de requèsta cap a Google.',
+				'Certanas paginas cargan d’elements albergats endacòm mai, çò que transmet ton adreça IP a aquestes servicis : los fonses de carta (OpenStreetMap e sa version occitana OSM-bzh, OpenTopoMap, fòtos aerianas de l’IGN e del PNOA espanhòl), la recèrca de comunas quand tapas un luòc (API Adresse, Photon), las vidèos e las musicas que causisses de lançar (YouTube en mòde sens cookies, Deezer, Canva) e las faulas de l’Atlas sonòr de las lengas regionalas (LISN, Universitat Paris-Saclay) que causisses d’escotar sus la carta. Las poliças de caractèrs e las icònas, elas, son servidas per aqueste site : cap de requèsta cap a Google.',
 			droitsT: 'Tos dreches',
 			droits:
 				'Pòdes a tot moment demandar de consultar tas donadas, las corregir, las escafar, las recuperar dins un format legible, o retirar ton consentiment a las respònsas facultativas. Escriu a {email} : la respònsa arriba jos un mes.',

@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (229 lignes). Jamais écrasés s'ils existent déjà.
+-- (234 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -382,5 +382,10 @@ L''idée, c''est d''apprendre en même temps que je partage. Je ne me présente 
 	('amassa.teulas.ideas.sota', 'amassa', 'text', 'amassa.teulas.ideas', 0, 'Per melhorar Lo Ligam amb tu.', 'Pour améliorer Lo Ligam avec toi.', null, null, true),
 	('amassa.teulas.instagram', 'amassa', 'bloc', 'amassa.teulas', 5, null, null, null, null, true),
 	('amassa.teulas.instagram.ligam', 'amassa', 'ligam', 'amassa.teulas.instagram', 0, 'Instagram', 'Instagram', 'https://www.instagram.com/lo_ligam/', null, true),
-	('amassa.teulas.instagram.sota', 'amassa', 'text', 'amassa.teulas.instagram', 0, 'Los visuals de Lo Ligam.', 'Les visuels de Lo Ligam.', null, null, true)
+	('amassa.teulas.instagram.sota', 'amassa', 'text', 'amassa.teulas.instagram', 0, 'Los visuals de Lo Ligam.', 'Les visuels de Lo Ligam.', null, null, true),
+	('ideas.titol', 'ideas', 'text', null, 0, 'Boita d’idèas', 'Boîte à idées', null, null, true),
+	('ideas.frasa', 'ideas', 'text', null, 0, 'Una idèa per melhorar Lo Ligam ? Escriu-la aquí : las legissi totas.', 'Une idée pour améliorer Lo Ligam ? Écris-la ici : je les lis toutes.', null, null, true),
+	('ideas.compte', 'ideas', 'text', null, 0, 'Per mandar una idèa, cal un compte : es gratuit.', 'Pour envoyer une idée, il faut un compte : c’est gratuit.', null, null, true),
+	('ideas.mercé', 'ideas', 'text', null, 0, 'Mercé ! Ton idèa es plan arribada.', 'Merci ! Ton idée est bien arrivée.', null, null, true),
+	('ideas.avís', 'ideas', 'text', null, 0, 'Soi lo sol a legir las idèas, sens saber qual las manda. Las pòdes suprimir quand vòles.', 'Je suis seul à lire les idées, sans savoir qui les envoie. Tu peux les supprimer quand tu veux.', null, null, true)
 on conflict (clau, estat) do nothing;

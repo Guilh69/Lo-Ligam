@@ -20,7 +20,10 @@
 			.select('user_id')
 			.eq('user_id', $session.user.id)
 			.maybeSingle();
-		goto(data ? '/aprene' : '/compte/questionnaire');
+		// ?tornar=/ideas : on revient sur la page d'où l'on venait (chemin interne seulement)
+		const tornar = page.url.searchParams.get('tornar');
+		const intèrn = tornar?.startsWith('/') && !tornar.startsWith('//');
+		goto(data ? (intèrn ? tornar : '/aprene') : '/compte/questionnaire');
 	}
 
 	$effect(() => {
