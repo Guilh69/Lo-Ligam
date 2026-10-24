@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>OPLO 2020, ouverture du réel</title>
+<!-- Étape 1 du réel (Romain, 2026-10-24) : la page d'ouverture, calée sur la
+     grammaire de ses posts récents (Article définit, Eclipsi, Dets, Drech,
+     Officialitat) : titre centré en haut en Limelight sur l'étiquette brique,
+     traduction en petit italique entre parenthèses, écussons de part et
+     d'autre du titre, logo complet sur tuile brique en bas à droite, crédit
+     minuscule en bas à gauche. Deux fonds à comparer, puis les zones
+     qu'Instagram recouvre. -->
+<style>
+	@font-face { font-family: Limelight; src: url(../../../app/static/fonts/limelight.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; src: url(../../../app/static/fonts/luciole-regular.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; font-weight: 700; src: url(../../../app/static/fonts/luciole-bold.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; font-style: italic; src: url(../../../app/static/fonts/luciole-italic.woff2) format('woff2'); }
+	body { margin: 0; background: #141010; color: #f5ead8; font-family: Luciole, sans-serif; padding: 16px; display: flex; gap: 18px; flex-wrap: wrap; }
+	figure { margin: 0; }
+	figcaption { font: 700 16px Luciole; margin: 0 0 6px; }
+	svg { width: 360px; height: 640px; display: block; }
+</style>
+</head>
+<body>
+<figure><figcaption>A · fond pétrole (B2)</figcaption><svg id="a" viewBox="0 0 1080 1920"></svg></figure>
+<figure><figcaption>B · fond crème (tes posts clairs)</figcaption><svg id="b" viewBox="0 0 1080 1920"></svg></figure>
+<figure><figcaption>A avec les zones d'Instagram</figcaption><svg id="z" viewBox="0 0 1080 1920"></svg></figure>
+<script src="carta-donadas.js"></script>
+<script>
+	const BRICA = '#B53D17', CREMA = '#F5EAD8', BRUN = '#3A2A20';
+	// l'écusson rond du gabarit (centré en 102, 1262 dans le repère 4:5)
+	const escut = (x, y, r) => `<g transform="translate(${x} ${y}) scale(${r / 54}) translate(-102 -1262)">${CARTA.gabarit.logo}</g>`;
+	// le logo complet sur sa tuile brique, coins arrondis (comme dans tes posts)
+	const tuila = (x, y, w, k) => `<clipPath id="t${k}"><rect x="${x}" y="${y}" width="${w}" height="${w}" rx="${w * 0.16}"/></clipPath>
+		<g clip-path="url(#t${k})"><image href="../../logo/svg/vertical-color.svg" x="${x - w * 0.06}" y="${y - w * 0.06}" width="${w * 1.12}" height="${w * 1.12}"/></g>`;
+
+	function dobertura(k, fons, tinta, silueta) {
+		let s = `<rect width="1080" height="1920" fill="${fons}"/>`;
+		// le domaine, en silhouette calme (la carte arrivera dessus)
+		s += `<g transform="translate(0 460)"><path d="${CARTA.domeni}" fill="${silueta}" fill-rule="evenodd"/></g>`;
+		// l'étiquette du titre
+		s += `<rect x="150" y="290" width="780" height="270" rx="10" fill="${BRICA}"/>`;
+		s += `<text x="540" y="402" text-anchor="middle" font-family="Limelight" font-size="76" fill="#fff">QUAL PARLA</text>`;
+		s += `<text x="540" y="510" text-anchor="middle" font-family="Limelight" font-size="76" fill="#fff">OCCITAN UÈI ?</text>`;
+		s += escut(80, 425, 42) + escut(1000, 425, 42);
+		// la traduction, petite, en italique, entre parenthèses
+		s += `<text x="540" y="630" text-anchor="middle" font-family="Luciole" font-style="italic" font-size="36" fill="${tinta}">(Qui parle occitan aujourd’hui ?)</text>`;
+		// logo en bas à droite, crédit en bas à gauche
+		s += tuila(890, 1530, 140, k);
+		s += `<text transform="translate(44 1670) rotate(-90)" font-family="Luciole" font-size="18" fill="${tinta}" opacity="0.7">© RP · enquête OPLO 2020</text>`;
+		return s;
+	}
+	const A = dobertura('a', '#1F5F63', CREMA, 'rgba(255,255,255,0.16)');
+	document.getElementById('a').innerHTML = A;
+	document.getElementById('b').innerHTML = dobertura('b', CREMA, BRUN, '#FFFFFF');
+	document.getElementById('z').innerHTML = A.replaceAll('id="ta"', 'id="tz"').replaceAll('#ta)', '#tz)') +
+		`<g fill="rgba(0,0,0,0.5)"><rect width="1080" height="250"/><rect y="1500" width="1080" height="420"/><rect x="940" y="1050" width="140" height="450"/></g>
+		<rect x="2" y="240" width="1076" height="1440" fill="none" stroke="#FFD47F" stroke-width="4" stroke-dasharray="16 10"/>
+		<text x="540" y="150" text-anchor="middle" font-family="Luciole" font-size="34" fill="#fff">en-tête d’Instagram</text>
+		<text x="540" y="1790" text-anchor="middle" font-family="Luciole" font-size="34" fill="#fff">nom du compte, légende, son</text>
+		<text x="30" y="1665" font-family="Luciole" font-size="26" fill="#FFD47F" transform="translate(60 0)">cadre de la grille du profil</text>`;
+</script>
+</body>
+</html>
