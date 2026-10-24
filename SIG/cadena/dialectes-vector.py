@@ -4,6 +4,8 @@
 import os
 import json, subprocess, sys
 from osgeo import ogr, osr
+import os as _os
+RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))  # racine du projet, où qu'il soit
 ogr.UseExceptions()
 # entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
 ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
@@ -41,7 +43,7 @@ CORRECCIONS = [
 # validadas per Romain lo 2026-10-07 : Ardèche (nòrd vivaroaupenc, sud lengadocian),
 # Gironda e Òlt e Garona (gascon), Alps Maritims (Vesubia, Tinèa, Mentonasc :
 # vivaroaupenc), Isèra (Vercòrs, Trièves, Oisans : vivaroaupenc). Dins l'òrdre de la recèrca.
-RECERCA = json.load(open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['corrections']
+RECERCA = json.load(open(RAIZ + '/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['corrections']
 APLICADAS = ['velay-vivarais-nord', 'bas-vivarais', 'ardeche-rhodanienne', 'bordelais-rive-droite', 'garonnais-albret', 'brulhois', 'vesubie-tinee', 'mentonnais', 'isere-vercors-oisans',
              # limitas debatudas, conselhs de la recèrca seguits (Romain, 2026-10-07)
              'creuse-correze-est', 'baronnies-sud', 'perigord-ouest',

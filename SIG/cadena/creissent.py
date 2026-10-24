@@ -5,11 +5,13 @@
 import os
 import json
 from osgeo import ogr, osr
+import os as _os
+RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))  # racine du projet, où qu'il soit
 ogr.UseExceptions()
 # entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
 ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
 S = ENTRADAS + 'osm/'
-D = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/creissent.geojson'
+D = RAIZ + '/app/static/data/creissent.geojson'
 d = json.load(open(S + 'creissent-nostre.json', encoding='utf-8'))
 wgs, l93 = osr.SpatialReference(), osr.SpatialReference()
 wgs.ImportFromEPSG(4326); l93.ImportFromEPSG(2154)

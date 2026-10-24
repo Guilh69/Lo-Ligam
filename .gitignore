@@ -1,16 +1,16 @@
 # Sources brutes des visuels (photos/SVG bruts, souvent volumineux — Canva, exports).
 # Les versions optimisées utilisées par l'appli vivent dans app/static/ et app/src/lib/assets/.
 # (Ancien dossier /Photo/ à la racine, rangé ici le 2026-10-12.)
-design-stock/brut/
+/design-stock/brut
 
 # Bibliothèque de référence (carte de 71 Mo, lexique sous droits) : reste sur le disque.
-Modules_cors/Base_donnees_linguistica/
+/Modules_cors/Base_donnees_linguistica
 
 # Données SIG brutes téléchargées (IGN, OSM, Dataverse…) : refaisables par les
 # scripts de SIG/cadena, trop lourdes pour le dépôt.
-/SIG/brut/
+/SIG/brut
 # Carte de l'Atlas sonore (LIMSI/LISN, CC BY-NC-SA) : contrôle seulement, pas republiée
-/SIG/Limsi/
+/SIG/Limsi
 # design-stock : vidéos et archives restent sur le disque, hors Git (règle du 2026-10-12,
 # PILOTATGE chantier 9). Les autres fichiers de plus de 1 Mo sont refusés par .githooks/pre-commit.
 design-stock/**/*.mp4
@@ -18,6 +18,13 @@ design-stock/**/*.mov
 design-stock/**/*.webm
 design-stock/**/*.wav
 design-stock/**/*.zip
+
+# Raccourcis vers Documents\6_Projectes\Lo_Ligam_hors-git (2026-10-24) : le projet est hors de
+# Proton Drive ; ces dossiers lourds vivent dans Documents (sauvegardés par Proton) et sont
+# rattachés ici par des jonctions (outils/liens-hors-git.ps1). Sans barre finale : une
+# jonction n'est pas toujours vue comme un dossier par Git.
+/design-stock/MP4
+/design-stock/animations
 
 # Python : fichièrs compilats
 __pycache__/

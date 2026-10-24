@@ -2,9 +2,10 @@
 // (ponch dins lo poligòn ; defòra : la zòna mai pròcha).
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+const RAIZ = (await import('node:path')).resolve((await import('node:url')).fileURLToPath(new URL('.', import.meta.url)), '..', '..'); // racine du projet, où qu'il soit
 // entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
 const S = fileURLToPath(new URL('../brut/cadena-entradas/occitanica/', import.meta.url));
-const F = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/src/lib/acuelh/carta-estelas.js';
+const F = RAIZ + '/app/src/lib/acuelh/carta-estelas.js';
 const g = JSON.parse(fs.readFileSync(S + 'dialectes-occitanica.geojson', 'utf8'));
 const ORDRE = ['gas', 'lan', 'pro', 'lem', 'auv', 'viv'];
 const pip = (p, poly) => {
@@ -55,7 +56,7 @@ for (const l of L) {
 }
 // Lo Creissent (zòna de transicion oc / oïl) : sas vilas pòrtan « creissent »
 // coma segond nom, al luòc d'una transicion entre dialèctes
-const cro = JSON.parse(fs.readFileSync('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/creissent.geojson', 'utf8')).features[0];
+const cro = JSON.parse(fs.readFileSync(RAIZ + '/app/static/data/creissent.geojson', 'utf8')).features[0];
 const creissent = [];
 for (const l of L) if (polys(cro).some((q) => pip([l[0], l[1]], q))) { l[5] = 6; creissent.push(l[2] + ' (' + NOU[l[4]] + ')'); }
 console.log(creissent.length, 'dins lo Creissent :', creissent.join(', '));

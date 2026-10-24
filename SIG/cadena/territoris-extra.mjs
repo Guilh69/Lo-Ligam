@@ -3,9 +3,10 @@
 // Contorns OpenStreetMap (ODbL), simplificats (~150 m) e arredondits (3 decimalas).
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+const RAIZ = (await import('node:path')).resolve((await import('node:url')).fileURLToPath(new URL('.', import.meta.url)), '..', '..'); // racine du projet, où qu'il soit
 // entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
 const S = fileURLToPath(new URL('../brut/cadena-entradas/osm/', import.meta.url));
-const F = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/limits-carta.json';
+const F = RAIZ + '/app/static/data/limits-carta.json';
 
 // Douglas-Peucker sus un anèl (tolerància en grases, ~ 0,0015° ≈ 150 m)
 const dp = (pts, tol) => {

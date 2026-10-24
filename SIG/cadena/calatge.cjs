@@ -1,8 +1,9 @@
+const RAIZ = require('path').resolve(__dirname, '..', '..'); // racine du projet, où qu'il soit
 // Calage de la carte Occitanica en Lambert-93 : ajustement affine initial sur
 // les villes, puis affiné sur le trait de côte (ICP : chaque point de côte de
 // la carte est rapproché du point le plus proche de la côte Natural Earth, et
 // l'on recalcule la transformation, jusqu'à stabilité).
-const sharp = require('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/node_modules/sharp');
+const sharp = require(RAIZ + '/app/node_modules/sharp');
 const fs = require('fs');
 const { execFileSync } = require('child_process');
 const dir = __dirname + '/';
@@ -91,7 +92,7 @@ const aplicar = ([cx, cy], [x, y]) => { const v = base(x, y); let X = 0, Y = 0; 
 	console.log('ponches de còsta sus la carta :', pts.length);
 
 	// Côte de référence (Natural Earth), densifiée tous les ~400 m
-	const { COSTA } = await import('file:///C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/src/lib/acuelh/carta-estelas.js');
+	const { COSTA } = await import(require('url').pathToFileURL(RAIZ + '/app/src/lib/acuelh/carta-estelas.js').href);
 	const lignes = COSTA.map((l) => versL93(l));
 	const ref = [];
 	for (const l of lignes)

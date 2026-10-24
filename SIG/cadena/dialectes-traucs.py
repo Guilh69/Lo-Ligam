@@ -7,8 +7,10 @@
 # demòran. Las coordenadas son pas tocadas : sonque d'anèls levats.
 import json
 from osgeo import ogr, osr
+import os as _os
+RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))  # racine du projet, où qu'il soit
 ogr.UseExceptions()
-D = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/'
+D = RAIZ + '/app/static/data/'
 LIMIT = 20e6  # m²
 wgs, m = osr.SpatialReference(), osr.SpatialReference()
 wgs.ImportFromEPSG(4326); m.ImportFromEPSG(3035)

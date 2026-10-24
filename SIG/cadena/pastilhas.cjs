@@ -1,6 +1,7 @@
+const RAIZ = require('path').resolve(__dirname, '..', '..'); // racine du projet, où qu'il soit
 // Détecte les pastilles blanches des villes sur la carte Occitanica (version
 // 4000 px) et les associe aux villes connues : points de calage (GCP).
-const sharp = require('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/node_modules/sharp');
+const sharp = require(RAIZ + '/app/node_modules/sharp');
 const fs = require('fs');
 const dir = __dirname + '/';
 

@@ -1,8 +1,9 @@
+const RAIZ = require('path').resolve(__dirname, '..', '..'); // racine du projet, où qu'il soit
 // Zones de dialectes d'après la carte Occitanica : chaque pixel du domaine est
 // rangé dans la famille de couleur la plus proche (couleur de base du dialecte
 // éclaircie par le relief), puis nettoyé. Orange vif : limousin à l'ouest,
 // vivaro-alpin à l'est (même teinte, séparés par l'auvergnat).
-const sharp = require('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/node_modules/sharp');
+const sharp = require(RAIZ + '/app/node_modules/sharp');
 const dir = __dirname + '/';
 // 1 gas, 2 lan, 3 pro, 4 lem, 5 auv, 6 viv, 7 transicion auv/viv
 const FAM = {

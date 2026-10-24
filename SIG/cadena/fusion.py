@@ -4,6 +4,8 @@
 import os
 import json
 from osgeo import ogr
+import os as _os
+RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))  # racine du projet, où qu'il soit
 ogr.UseExceptions()
 # entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
 ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
@@ -20,7 +22,7 @@ valadas = valadas.Union(aran)
 # Frontièras d'Estat respectadas (retorn de Romain) : lo domeni s'arrèsta a la
 # França (union dels despartaments, Etalab), levat ont l'occitan es atestat
 # fòra de França : Val d'Aran e valadas d'Itàlia (Andòrra e Mónegue defòra)
-deps = json.load(open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/departements.geojson', encoding='utf-8'))
+deps = json.load(open(RAIZ + '/app/static/data/departements.geojson', encoding='utf-8'))
 franca = None
 for f in deps['features']:
     g = ogr.CreateGeometryFromJson(json.dumps(f['geometry'])).Buffer(0)
@@ -28,14 +30,14 @@ for f in deps['features']:
 franca = franca.Buffer(0.0005).Buffer(-0.0005)  # junts entre despartaments
 # Isèra (Vercòrs, Trièves, Valbonés, Oisans) : vivaroaupenc, absent de la carta
 # Occitanica (recèrca suls transicions, validada per Romain lo 2026-10-07)
-isera = [c for c in json.load(open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['corrections'] if c['id'] == 'isere-vercors-oisans'][0]['polygone']
+isera = [c for c in json.load(open(RAIZ + '/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['corrections'] if c['id'] == 'isere-vercors-oisans'][0]['polygone']
 if isera[0] != isera[-1]: isera = isera + [isera[0]]
 isera = ogr.CreateGeometryFromWkt('POLYGON((' + ','.join('%f %f' % (x, y) for x, y in isera) + '))').Buffer(0)
 nou = nou.Union(isera)
 # Fòra del domeni (lenga d'oïl, saintongés) : la Pichona Gavachariá (enclava
 # a l'entorn de Montségur) e lo Blaiés (recèrca, validat per Romain)
 for idc in ('petite-gavacherie', 'blayais-hors-domaine'):
-    pp = [c for c in json.load(open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['corrections'] if c['id'] == idc][0]['polygone']
+    pp = [c for c in json.load(open(RAIZ + '/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['corrections'] if c['id'] == idc][0]['polygone']
     if pp[0] != pp[-1]: pp = pp + [pp[0]]
     nou = nou.Difference(ogr.CreateGeometryFromWkt('POLYGON((' + ','.join('%f %f' % (x, y) for x, y in pp) + '))').Buffer(0))
 fin = nou.Intersection(franca).Union(valadas).Buffer(0)
@@ -44,7 +46,7 @@ print('França', round(franca.GetArea(), 2), '; domeni dins França + Aran + val
 # Lo Creissent fa part del domeni (zòna de transicion), e la frontièra de la
 # lenga seguís son bòrd nòrd (retorn de Romain : pas de decalatge entre los
 # dos). Region al nòrd del Creissent = de son bòrd nòrd fins a 48,5° N.
-cro = ogr.CreateGeometryFromJson(json.dumps(json.load(open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/creissent.geojson', encoding='utf-8'))['features'][0]['geometry']))
+cro = ogr.CreateGeometryFromJson(json.dumps(json.load(open(RAIZ + '/app/static/data/creissent.geojson', encoding='utf-8'))['features'][0]['geometry']))
 def nord_de(poli):
     r = poli.GetGeometryRef(0)
     pts = [(r.GetX(k), r.GetY(k)) for k in range(r.GetPointCount() - 1)]

@@ -1,7 +1,8 @@
+const RAIZ = require('path').resolve(__dirname, '..', '..'); // racine du projet, où qu'il soit
 // Masque du domaine occitan sur la carte Occitanica (pixels colorés : violet,
 // magenta, rose, orangé), nettoyé : rivières, pointillés et écritures
 // bouchés par fermeture morphologique et remplissage des petits trous.
-const sharp = require('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/node_modules/sharp');
+const sharp = require(RAIZ + '/app/node_modules/sharp');
 const fs = require('fs');
 const dir = __dirname + '/';
 

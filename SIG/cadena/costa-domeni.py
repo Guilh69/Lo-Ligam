@@ -9,6 +9,8 @@
 import os
 import json
 from osgeo import ogr, osr
+import os as _os
+RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))  # racine du projet, où qu'il soit
 ogr.UseExceptions()
 # entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
 ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
@@ -51,7 +53,7 @@ terra = terra.UnaryUnion()
 print('morceaux terre', nT, 'mer', nM, '; terre km2', round(terra.GetArea() / 1e6), 'domaine km2', round(dom.GetArea() / 1e6))
 
 # frontières terrestres de la langue (déjà calculées dans limits-carta.json)
-lim = json.load(open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/limits-carta.json', encoding='utf-8'))['domeni']['linhas']
+lim = json.load(open(RAIZ + '/app/static/data/limits-carta.json', encoding='utf-8'))['domeni']['linhas']
 fr = ogr.Geometry(ogr.wkbMultiLineString)
 for l in lim:
     ls = ogr.Geometry(ogr.wkbLineString)

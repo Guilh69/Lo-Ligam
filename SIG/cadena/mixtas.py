@@ -5,11 +5,13 @@
 import os
 import json
 from osgeo import ogr, osr
+import os as _os
+RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))  # racine du projet, où qu'il soit
 ogr.UseExceptions()
 # entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
 ENTRADAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'brut', 'cadena-entradas') + '/'
 S = ENTRADAS + 'osm/'
-R = json.load(open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['corrections']
+R = json.load(open(RAIZ + '/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['corrections']
 wgs, m = osr.SpatialReference(), osr.SpatialReference()
 wgs.ImportFromEPSG(4326); m.ImportFromEPSG(3035)
 for s in (wgs, m): s.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
@@ -82,4 +84,4 @@ for kod, g, oc, fr, sota_oc, sota_fr in [
     feats.append({'type': 'Feature', 'properties': {'kod': kod, 'mena': 'istoric' if kod.startswith('ist-') else 'enclava' if kod.startswith('enc-') else 'mixta', 'oc': oc, 'fr': fr, 'sota_oc': sota_oc, 'sota_fr': sota_fr, 'eti': [round(eti.GetX(), 3), round(eti.GetY(), 3)]}, 'geometry': gj})
     print(kod, gj['type'])
 json.dump({'type': 'FeatureCollection', 'font': "Recèrca suls transicions (SIG/Dialecte/transicions-dialectes.md) ; comunas : OpenStreetMap (ODbL)", 'features': feats},
-          open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/zonas-mixtas.geojson', 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+          open(RAIZ + '/app/static/data/zonas-mixtas.geojson', 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))

@@ -3,8 +3,10 @@
 # larg (nuancièr). Sonque las bendas entre dos dialèctes occitans.
 import json
 from osgeo import ogr, osr
+import os as _os
+RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))  # racine du projet, où qu'il soit
 ogr.UseExceptions()
-B = json.load(open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['bandes']
+B = json.load(open(RAIZ + '/SIG/Dialecte/transicions-dialectes.json', encoding='utf-8'))['bandes']
 D = {'gas', 'lan', 'pro', 'lem', 'auv', 'viv'}
 wgs, m = osr.SpatialReference(), osr.SpatialReference()
 wgs.ImportFromEPSG(4326); m.ImportFromEPSG(2154)
@@ -26,5 +28,5 @@ for b in B:
     feats.append({'type': 'Feature', 'properties': {'id': b['id'], 'paire': b['paire'], 'larg': larg, 'confiance': b.get('confiance')}, 'geometry': gj})
     print(b['id'], b['paire'], larg)
 json.dump({'type': 'FeatureCollection', 'font': 'Recèrca suls transicions entre dialèctes (SIG/Dialecte/transicions-dialectes.md)', 'features': feats},
-          open('C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/transicions.geojson', 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+          open(RAIZ + '/app/static/data/transicions.geojson', 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 print(len(feats), 'bendas')

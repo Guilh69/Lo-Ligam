@@ -3,11 +3,13 @@
 # après València) ; noms des familles vérifiés par l'API de lo Congrès le 2026-10-12.
 # py video.py <scène> > lot.tsv   (une commande par ligne : id<TAB>json)
 import json, sys
+import os as _os
+RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))  # racine du projet, où qu'il soit
 sys.stdout.reconfigure(encoding="utf-8")
 
 C = "Qu'es aquò 9:16"
-CANVA = "C:/Users/perie/Documents/6_Projectes/Lo_Ligam/design-stock/canva-vf/"
-VOIX = "C:/Users/perie/Documents/6_Projectes/Lo_Ligam/design-stock/MP4/qu-es-aquo-son.wav"
+CANVA = RAIZ + "/design-stock/canva-vf/"
+VOIX = RAIZ + "/design-stock/MP4/qu-es-aquo-son.wav"
 BRIQUE, OR, ORC, CREME, BRUN, PETROLE, BLANC = "#B53D17", "#EEAF34", "#FFD47F", "#F5EAD8", "#3A2A20", "#1F5F63", "#FFFFFF"
 
 def cmd(i, **p):

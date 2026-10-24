@@ -4,10 +4,11 @@
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { COSTA } from '../../app/src/lib/acuelh/carta-estelas.js';
+const RAIZ = (await import('node:path')).resolve((await import('node:url')).fileURLToPath(new URL('.', import.meta.url)), '..', '..'); // racine du projet, où qu'il soit
 
 // entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
 const dir = fileURLToPath(new URL('../brut/cadena-entradas/limits/', import.meta.url));
-const sortida = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/static/data/limits-carta.json';
+const sortida = RAIZ + '/app/static/data/limits-carta.json';
 const SEUIL_KM = Number(process.argv[2] ?? 4);
 
 const g = JSON.parse(fs.readFileSync(dir + (process.argv[3] ?? 'domeni.geojson'), 'utf8')).features[0].geometry;

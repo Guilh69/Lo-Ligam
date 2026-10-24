@@ -1,9 +1,10 @@
 // Noms occitans e entradas de recèrca de las valadas d'Itàlia dins territoris.js
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+const RAIZ = (await import('node:path')).resolve((await import('node:url')).fileURLToPath(new URL('.', import.meta.url)), '..', '..'); // racine du projet, où qu'il soit
 // entradas de la cadena (fòra Git) : SIG/brut/cadena-entradas
 const S = fileURLToPath(new URL('../brut/cadena-entradas/osm/', import.meta.url));
-const F = 'C:/Users/perie/Documents/6_Projectes/Lo_Ligam/app/src/lib/carta/territoris.js';
+const F = RAIZ + '/app/src/lib/carta/territoris.js';
 const v = JSON.parse(fs.readFileSync(S + 'valadas.json', 'utf8'));
 const OC = {
 	'V-SUSA': 'Auta Val de Susa',

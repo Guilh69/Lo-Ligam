@@ -3,14 +3,14 @@
   "configurations": [
     {
       "name": "lo-ligam-app-dev",
-      "runtimeExecutable": "C:\\Users\\perie\\Documents\\6_Projectes\\Lo_Ligam\\app\\dev-server.cmd",
+      "runtimeExecutable": "C:\\Users\\perie\\Depots\\Lo_Ligam\\app\\dev-server.cmd",
       "runtimeArgs": [],
       "port": 5173,
       "autoPort": true
     },
     {
       "name": "lo-ligam-app-preview",
-      "runtimeExecutable": "C:\\Users\\perie\\Documents\\6_Projectes\\Lo_Ligam\\app\\preview-server.cmd",
+      "runtimeExecutable": "C:\\Users\\perie\\Depots\\Lo_Ligam\\app\\preview-server.cmd",
       "runtimeArgs": [],
       "port": 4180
     }
