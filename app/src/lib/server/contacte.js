@@ -86,8 +86,8 @@ export async function mandarContacte(formData, ip) {
 	const de = env.CONTACTE_DE || 'formulari@loligam.eu';
 	const qui = nom || corrièl;
 	const cos = [
-		`Messatge mandat pel formulari de loligam.eu (Mon istòria)`,
-		`Message envoyé par le formulaire de loligam.eu (Mon histoire)`,
+		`Messatge mandat pel formulari de loligam.eu (Mon ligam amb l’occitan)`,
+		`Message envoyé par le formulaire de loligam.eu (Mon lien avec l’occitan)`,
 		'',
 		`Nom : ${nom || '(non donné)'}`,
 		`Corrièl : ${corrièl}`,

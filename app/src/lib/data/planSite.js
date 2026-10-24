@@ -57,7 +57,7 @@ export const PLAN = [
 
 // La ligne du bas : qui est derrière Lo Ligam
 export const LO_LIGAM = [
-	{ oc: 'Mon istòria', fr: 'Mon histoire', href: '/istoria' },
+	{ oc: 'Mon ligam amb l’occitan', fr: 'Mon lien avec l’occitan', href: '/istoria' }, // (ex-« Mon istòria », titre C de Romain, 2026-10-24)
 	{ oc: 'Contacte', fr: 'Contact', href: '/istoria#contacte' }, // (fin de Mon istòria, option A de Romain, 2026-10-24)
 	{ oc: 'Instagram', fr: 'Instagram', href: 'https://www.instagram.com/lo_ligam/', defòra: true }
 ];

@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (135 lignes). Jamais écrasés s'ils existent déjà.
+-- (136 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -249,7 +249,7 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('visio.practica.durada', 'visio', 'text', 'visio.practica', 3, 'Durada : a escriure', 'Durée : à écrire', null, null, false),
 	('visio.practica.pretz', 'visio', 'text', 'visio.practica', 4, 'Prètz : a escriure', 'Prix : à écrire', null, null, false),
 	('istoria.kicker', 'istoria', 'text', null, 0, 'Lo Ligam', 'Lo Ligam', null, null, true),
-	('istoria.titol', 'istoria', 'text', null, 0, 'Mon istòria', 'Mon histoire', null, null, true),
+	('istoria.titol', 'istoria', 'text', null, 0, 'Mon ligam amb l’occitan', 'Mon lien avec l’occitan', null, null, true),
 	('istoria.chapèu', 'istoria', 'text', null, 0, '', 'Je m''appelle Romain Périer. Je suis né à Montpellier en 1994, d''un père né à Paris et d''une mère née à Clermont-l''Hérault.', null, null, false),
 	('istoria.retrat', 'istoria', 'imatge', null, 0, null, null, null, '{"url":"/acuelh/romain.webp","largor":600,"nautor":620,"alt_oc":"","alt_fr":""}'::jsonb, true),
 	('istoria.capitols.c1', 'istoria', 'bloc', 'istoria.capitols', 1, null, null, null, null, false),
@@ -272,16 +272,17 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('istoria.capitols.c6.tèxt', 'istoria', 'text', 'istoria.capitols.c6', 0, '', 'J''ai pu reposer des questions à ma famille sur les mots en occitan, commencer à les recueillir, faire des liens, et comprendre que des mots que j''utilisais déjà tous les jours étaient de l''occitan.
 
 J''ai été heureux de pouvoir me reconnecter avec mon papy autour de l''occitan. Lui-même avait du mal à l''appeler « occitan ». Il était un peu interloqué au début, quand je m''y suis intéressé, et il avait un peu honte : il disait qu''il ne parlait pas le vrai occitan, que c''était du patois. Mais au bout d''un moment, je sentais qu''il se décoinçait, qu''il commençait à dire des phrases, à nous raconter de nouveau des histoires en occitan. Je suis très heureux d''avoir pu échanger avec lui sur tout ça jusqu''à la fin de sa vie. Il nous a quittés en 2023.', null, null, true),
-	('istoria.capitols.c7', 'istoria', 'bloc', 'istoria.capitols', 7, null, null, null, null, false),
-	('istoria.capitols.c7.titol', 'istoria', 'text', 'istoria.capitols.c7', 0, '', 'Naissance du Ligam (2022)', null, null, true),
-	('istoria.capitols.c7.tèxt', 'istoria', 'text', 'istoria.capitols.c7', 0, '', 'En 2022, je me suis lancé, sans trop savoir pourquoi, dans un compte Instagram. J''ai saisi l''occasion d''un traducteur automatique, Revirada, qui venait d''être publié avec un générateur de voix, Vòtz. Ça m''a donné envie de publier de jolies illustrations avec des mots simples : le ciel, la montagne, les oiseaux.
+	('istoria.espelida.titol', 'istoria', 'text', null, 0, 'L’espelida del Ligam', 'La naissance du Ligam', null, null, true),
+	('istoria.espelida.c1', 'istoria', 'bloc', 'istoria.espelida', 1, null, null, null, null, false),
+	('istoria.espelida.c1.titol', 'istoria', 'text', 'istoria.espelida.c1', 0, '', 'Naissance du Ligam (2022)', null, null, true),
+	('istoria.espelida.c1.tèxt', 'istoria', 'text', 'istoria.espelida.c1', 0, '', 'En 2022, je me suis lancé, sans trop savoir pourquoi, dans un compte Instagram. J''ai saisi l''occasion d''un traducteur automatique, Revirada, qui venait d''être publié avec un générateur de voix, Vòtz. Ça m''a donné envie de publier de jolies illustrations avec des mots simples : le ciel, la montagne, les oiseaux.
 
 Au début, je mettais la voix automatique, parce que je n''osais pas parler. Puis, au fur et à mesure, j''ai pris le coup : des publications sur différentes thématiques, des animations de plus en plus travaillées, avec Canva comme outil principal. Ça a intéressé quelques personnes au début, et je ne m''attendais pas à ce que ça marche aussi bien. Ça m''a encouragé à continuer.
 
 L''idée, c''est d''apprendre en même temps que je partage. Je ne me présente pas comme un guide suprême ou un maître de la langue, mais comme un apprenti qui n''a pas peur de faire des erreurs et qui essaie d''apprendre au mieux une langue qu''il adore. Tout ça a mené à une communauté de plusieurs milliers de personnes.', null, null, true),
-	('istoria.capitols.c8', 'istoria', 'bloc', 'istoria.capitols', 8, null, null, null, null, false),
-	('istoria.capitols.c8.titol', 'istoria', 'text', 'istoria.capitols.c8', 0, '', 'Aujourd''hui', null, null, true),
-	('istoria.capitols.c8.tèxt', 'istoria', 'text', 'istoria.capitols.c8', 0, '', 'Aujourd''hui, j''ai envie de passer à un stade supérieur : enseigner vraiment ce que j''ai appris, partager ma vision de la réalité occitane en France aujourd''hui, dans sa complexité, et surtout créer un espace d''échange.', null, null, true),
+	('istoria.espelida.c2', 'istoria', 'bloc', 'istoria.espelida', 2, null, null, null, null, false),
+	('istoria.espelida.c2.titol', 'istoria', 'text', 'istoria.espelida.c2', 0, '', 'Aujourd''hui', null, null, true),
+	('istoria.espelida.c2.tèxt', 'istoria', 'text', 'istoria.espelida.c2', 0, '', 'Aujourd''hui, j''ai envie de passer à un stade supérieur : enseigner vraiment ce que j''ai appris, partager ma vision de la réalité occitane en France aujourd''hui, dans sa complexité, et surtout créer un espace d''échange.', null, null, true),
 	('istoria.contacte.titol', 'istoria', 'text', null, 0, 'Parlem', 'Parlons', null, null, true),
 	('istoria.contacte.tèxt', 'istoria', 'text', null, 0, 'Una question, un cors, una idèa ? Escriu-me, te respondrai.', 'Une question, un cours, une idée ? Écris-moi, je te répondrai.', null, null, true),
 	('istoria.contacte.reservar', 'istoria', 'ligam', null, 0, 'Reservar un cors en visio', 'Réserver un cours en visio', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true)

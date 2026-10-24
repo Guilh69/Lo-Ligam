@@ -1,5 +1,5 @@
 <script>
-	// Mon istòria (2026-10-24, option A de Romain : une seule page, le récit
+	// Mon ligam amb l'occitan, ex-« Mon istòria » (2026-10-24, option A de Romain : une seule page, le récit
 	// puis le contact ; /contacte renvoie à #contacte). Le récit est celui de
 	// Romain (matière brute : istoria-romain.md, dictée le 2026-10-06) : chaque
 	// chapitre arrive caché, Romain le relit, le traduit et le publie lui-même
@@ -22,7 +22,7 @@
 
 	const t = {
 		oc: {
-			titolPagina: 'Mon istòria',
+			titolPagina: 'Mon ligam amb l’occitan',
 			escriu: 'Escriu-me',
 			nom: 'Ton nom',
 			facultatiu: 'facultatiu',
@@ -48,7 +48,7 @@
 			}
 		},
 		fr: {
-			titolPagina: 'Mon histoire',
+			titolPagina: 'Mon lien avec l’occitan',
 			escriu: 'Écris-moi',
 			nom: 'Ton nom',
 			facultatiu: 'facultatif',
@@ -84,10 +84,13 @@
 	}
 	const paragrafs = (s) => s.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
 
+	// deux parties (titre C de Romain, 2026-10-24) : son lien avec l'occitan,
+	// puis « L'espelida del Ligam », la naissance du projet à partir de 2022
 	let capitols = $derived(lista('istoria.capitols'));
+	let espelida = $derived(lista('istoria.espelida'));
 	let retrat = $derived(imatge('istoria.retrat'));
-	const apondreCapitol = () =>
-		apondre('istoria.capitols', 'bloc', { visible: false }, [
+	const apondreCapitol = (clauLista) =>
+		apondre(clauLista, 'bloc', { visible: false }, [
 			['titol', 'text', { oc: '', fr: 'Títol' }],
 			['tèxt', 'text', { oc: '', fr: '…' }]
 		]);
@@ -100,8 +103,8 @@
 </script>
 
 <svelte:head>
-	<title>{tx.titolPagina} · Lo Ligam</title>
-	<meta name="description" content="Romain Périer e l’occitan, e cossí me contactar." />
+	<title>{vista('istoria.titol').t || tx.titolPagina} · Lo Ligam</title>
+	<meta name="description" content="Mon ligam amb l’occitan, e cossí me contactar." />
 </svelte:head>
 
 {#snippet tèxt(clau, etiqueta = 'span')}{@const v = vista(clau)}<svelte:element
@@ -141,14 +144,14 @@
 			{/if}
 		</header>
 
-		{#if capitols.length || edicion.actiu}
-			<ol class="capitols">
-				{#each capitols as c, i (c.clau)}
+		{#snippet partida(clauLista, l, debuta, etiqueta)}
+			<ol class="capitols" start={debuta + 1}>
+				{#each l as c, i (c.clau)}
 					{@const cos = vista(c.clau + '.tèxt')}
 					<li class="capitol" use:editar={c.clau}>
-						<span class="capitol-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+						<span class="capitol-n" aria-hidden="true">{String(debuta + i + 1).padStart(2, '0')}</span>
 						<div>
-							{@render tèxt(c.clau + '.titol', 'h2')}
+							{@render tèxt(c.clau + '.titol', etiqueta)}
 							<div class="capitol-cos" lang={cos.lang} hidden={amagat(c.clau + '.tèxt')} use:editar={c.clau + '.tèxt'}>
 								{#each paragrafs(cos.t) as p, k (k)}<p>{p}</p>{/each}
 							</div>
@@ -156,7 +159,18 @@
 					</li>
 				{/each}
 			</ol>
-			{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondreCapitol}>+ {tx.apondre}</button>{/if}
+			{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={() => apondreCapitol(clauLista)}>+ {tx.apondre}</button>{/if}
+		{/snippet}
+
+		{#if capitols.length || edicion.actiu}
+			{@render partida('istoria.capitols', capitols, 0, 'h2')}
+		{/if}
+
+		{#if espelida.length || edicion.actiu}
+			<section class="espelida" aria-labelledby="espelida-titol">
+				<h2 class="espelida-titol" id="espelida-titol">{@render tèxt('istoria.espelida.titol')}</h2>
+				{@render partida('istoria.espelida', espelida, capitols.length, 'h3')}
+			</section>
 		{/if}
 
 		<section class="contacte" id="contacte" aria-labelledby="contacte-titol">
@@ -378,7 +392,8 @@
 		font-family: var(--font-heading);
 		font-size: 0.95rem;
 	}
-	.capitol :global(h2) {
+	.capitol :global(h2),
+	.capitol :global(h3) {
 		margin: 0.35rem 0 0.8rem;
 		font-family: var(--font-heading);
 		font-weight: 400;
@@ -395,6 +410,34 @@
 		max-width: 62ch;
 	}
 
+	/* ---------- L'intertitre : « L'espelida del Ligam » ---------- */
+	.espelida {
+		margin-top: clamp(1.5rem, 5vh, 3rem);
+	}
+	.espelida-titol {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin: 0;
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: clamp(2rem, 5.5cqi, 3.6rem);
+		line-height: 1.05;
+	}
+	.espelida-titol::before {
+		content: '';
+		flex: none;
+		width: 2.7rem;
+		height: 1px;
+		background: var(--t-aur);
+	}
+	.espelida .capitols {
+		padding-top: 2rem;
+	}
+	.espelida .capitols::before {
+		top: 2rem;
+	}
+
 	/* ---------- Le contact, en fin de page ---------- */
 	.contacte {
 		margin-top: clamp(2.5rem, 8vh, 5rem);
@@ -407,6 +450,7 @@
 	/* sans chapitre publié, le trait de l'ouverture suffit */
 	.intro + .contacte {
 		border-top: 0;
+		padding-top: 0;
 	}
 	@container (min-width: 760px) {
 		.contacte {
