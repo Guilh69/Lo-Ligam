@@ -2,7 +2,7 @@
 	// Mon ligam amb l'occitan, ex-« Mon istòria » (2026-10-24, option A de Romain : une seule page, le récit
 	// puis le contact ; /contacte renvoie à #contacte). Le récit est celui de
 	// Romain (matière brute : istoria-romain.md, dictée le 2026-10-06) : chaque
-	// chapitre arrive caché, Romain le relit, le traduit et le publie lui-même
+	// chapitre est affiché tel que dicté (choix de Romain, 2026-10-24), il le relit, le traduit
 	// dans l'éditeur (bouton « Editar »). Un texte occitan encore vide laisse
 	// voir le français, marqué comme tel pour les lecteurs d'écran.
 	// Occitan de l'interface vérifié par l'API de lo Congrès : À VALIDER par Romain.
