@@ -101,6 +101,20 @@ async function verificarLectura(supabase) {
 		ideas.data?.length ? `${ideas.data.length} idée(s) exposée(s) !` : ''
 	);
 
+	// Les groupes d'Amassa (2026-10-25) : la liste est publique, le reste non
+	const grops = await supabase.from('grops').select('id');
+	verificar('La liste des groupes est lisible', !grops.error && grops.data?.length > 0, grops.error?.message ?? '');
+	for (const [taula, nom] of [
+		['messatges', 'Les messages des groupes sont illisibles'],
+		['grop_membres', 'Les membres des groupes sont illisibles'],
+		['senhalaments', 'Les signalements sont illisibles'],
+		['mots_defenduts', 'La liste des mots interdits est illisible'],
+		['bandiments', 'Les suspensions sont illisibles']
+	]) {
+		const r = await supabase.from(taula).select('*').limit(1);
+		verificar(nom, !!r.error || r.data?.length === 0, r.data?.length ? 'données exposées !' : '');
+	}
+
 	const admin = await supabase.rpc('is_admin');
 	verificar("Un anonyme n'est pas administrateur", admin.data === false, `réponse : ${admin.data}`);
 }
@@ -143,6 +157,15 @@ async function verificarEscritura(supabase) {
 	// un anonyme ne peut pas lire la table)
 	const idea = await supabase.from('ideas').insert({ tèxte: 'Idée envoyée sans compte' });
 	verificar('ENVOYER une idée sans compte est refusé', !!idea.error);
+
+	// Rejoindre un groupe, y écrire ou ouvrir une proposition sans compte : refusé
+	const rejonher = await supabase.rpc('rejonher_grop', { g: 'vila-marselha' });
+	verificar('REJOINDRE un groupe sans compte est refusé', !!rejonher.error);
+	const messatge = await supabase.from('messatges').insert({ grop_id: 'vila-montpelhier', tèxte: 'Sans compte' });
+	verificar('ÉCRIRE dans un groupe sans compte est refusé', !!messatge.error);
+	await supabase.from('grops').update({ estat: 'dobèrt' }).eq('id', 'vila-marselha');
+	const marselha = await supabase.from('grops').select('estat').eq('id', 'vila-marselha');
+	verificar('OUVRIR une proposition sans compte est refusé', marselha.data?.[0]?.estat === 'prepausat', `état : ${marselha.data?.[0]?.estat}`);
 
 	// La tentative la plus grave : se déclarer administrateur.
 	const promocion = await supabase
