@@ -51,7 +51,7 @@
 
     { "clau": "acuelh.biais.visio", "tipe": "bloc", "lista": "acuelh.biais", "ordre": 1 },
     { "clau": "acuelh.biais.visio.titol", "tipe": "text", "lista": "acuelh.biais.visio", "oc": "En visio, amb ieu", "fr": "En visio, avec moi" },
-    { "clau": "acuelh.biais.visio.tèxt", "tipe": "text", "lista": "acuelh.biais.visio", "oc": "De corses en dirècte, en pichon grop o sol a sol. Lo primièr es ofèrt.", "fr": "Des cours en direct, en petit groupe ou en tête-à-tête. Le premier est offert." },
+    { "clau": "acuelh.biais.visio.tèxt", "tipe": "text", "lista": "acuelh.biais.visio", "oc": "De corses en dirècte, sol a sol. Lo primièr es ofèrt.", "fr": "Des cours en direct, en tête-à-tête. Le premier est offert." },
     { "clau": "acuelh.biais.visio.ligam", "tipe": "ligam", "lista": "acuelh.biais.visio", "oc": "Prene rendètz-vos", "fr": "Prendre rendez-vous", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" },
     { "clau": "acuelh.biais.ritme", "tipe": "bloc", "lista": "acuelh.biais", "ordre": 2 },
     { "clau": "acuelh.biais.ritme.titol", "tipe": "text", "lista": "acuelh.biais.ritme", "oc": "A ton ritme", "fr": "À ton rythme" },
