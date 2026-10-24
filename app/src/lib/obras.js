@@ -86,6 +86,11 @@ export function plataforma(url) {
 	return PLATAFORMAS.find((p) => p.test(oste)) ?? { nom: oste, rang: 5, site: true };
 }
 
+/** les liens collés d'un coup (un par ligne, ou séparés par des espaces) : seuls les https */
+export function ligamsCollats(tèxt) {
+	return [...new Set((tèxt ?? '').split(/\s+/).filter((l) => /^https:\/\/[^\s]+$/.test(l) && plataforma(l)))];
+}
+
 /**
  * Le lecteur officiel qu'on peut ouvrir dans la fiche, d'après un lien Deezer
  * (album, titre, liste, artiste) ou YouTube (vidéo, liste). Les liens courts
@@ -100,6 +105,9 @@ export function lectorPer(url) {
 		return null;
 	}
 	const oste = u.hostname.replace(/^www\./, '');
+	// le lecteur officiel de Bandcamp, trouvé par /api/bandcamp quand Romain
+	// colle le lien (2026-10-25 : « Bandcamp au centre »)
+	if (oste === 'bandcamp.com' && u.pathname.startsWith('/EmbeddedPlayer/')) return { plataforma: 'Bandcamp', src: u.href, nautor: 120 };
 	if (oste === 'deezer.com') {
 		const m = u.pathname.match(/^\/(?:[a-z]{2}\/)?(album|track|playlist|artist)\/(\d+)/);
 		if (!m) return null;
