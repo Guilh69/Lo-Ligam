@@ -38,9 +38,16 @@ const REGLATGES_DEFAUT = {
 	iban: '',
 	bic: '',
 	banque: '',
+	// Facture bilingue (Romain, 2026-10-25) : le français d'abord, comme
+	// l'exige la loi, l'occitan à côté. Occitan vérifié par l'API de lo
+	// Congrès, à valider par Romain.
+	bilingue: true,
 	mentionTva: 'TVA non applicable, art. 293 B du CGI',
+	mentionTvaOc: 'Sens TVA (art. 293 B del CGI)',
 	escompte: "Pas d'escompte pour paiement anticipé.",
+	escompteOc: 'Pas de reduccion per un pagament per avança.',
 	penalites: "En cas de retard de paiement, pénalités au taux d'intérêt légal en vigueur.",
+	penalitesOc: "En cas de retard de pagament, penalitats al taus d'interès legal en vigor.",
 	delaiJours: 8,
 	tauxCotisations: 25.6,
 	prix: {
