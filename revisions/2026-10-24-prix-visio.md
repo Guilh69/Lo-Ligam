@@ -67,7 +67,7 @@ Remise d'environ 8 % pour le mois et 15 % pour le trimestre (par exemple 12 × 2
 ## 5. Questions qui viendront après le choix de la grille (une à la fois)
 1. ~~Le tarif solidaire : déclaratif ou réservé à des cas ?~~ **Décidé le 2026-10-24 : sur simple déclaration, sans justificatif ; chacun choisit son tarif en conscience** (Romain).
 2. ~~Petits groupes : quel prix par personne ?~~ **Décidé le 2026-10-24 : pas de groupes pour l'instant, seulement des cours individuels ; les groupes plus tard** (Romain). Repère gardé pour plus tard : environ 60 % du prix individuel par personne.
-3. Durée de validité des bouquets (par exemple 2 mois pour 4 cours, 5 mois pour 12) et règle d'annulation (par exemple prévenir 24 h avant).
+3. ~~Durée de validité des bouquets~~ **Décidé le 2026-10-24 : 2 mois pour 4 cours, 5 mois pour 12 cours** (Romain). Reste la règle d'annulation (par exemple prévenir 24 h avant).
 4. Paiement : quel outil (européen si possible), selon le statut de Romain.
 
 ## Sources
