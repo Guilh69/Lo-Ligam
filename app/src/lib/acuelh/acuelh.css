@@ -93,8 +93,11 @@ html.lenis, html.lenis body { height: auto; }
 	transition: width 0.5s var(--ease), height 0.5s var(--ease), margin 0.5s var(--ease), background 0.4s, opacity 0.4s;
 }
 .acuelh .cur-anel.gros { width: 84px; height: 84px; margin: -42px 0 0 -42px; border-color: var(--aur); background: rgba(238, 175, 52, 0.08); mix-blend-mode: normal; }
-html.cursor-viu, html.cursor-viu a, html.cursor-viu button { cursor: none; }
+/* la vraie souris ne se cache que sur la page : le menu et les panneaux, posés par-dessus
+   le rond doré, la gardent (Romain, 2026-10-24 : « la souris disparaît » dans le menu) */
+html.cursor-viu .acuelh, html.cursor-viu .acuelh a, html.cursor-viu .acuelh button { cursor: none; }
 html.cursor-viu .cur-ponch, html.cursor-viu .cur-anel { opacity: 1; }
+html.cursor-viu:has(.vel-fons) .cur-ponch, html.cursor-viu:has(.vel-fons) .cur-anel { opacity: 0; }
 /* ---------- Bilingüe : doas jaças dins una mascara ---------- */
 .acuelh .bi { display: inline-grid; overflow: hidden; vertical-align: top; justify-items: start; padding: 0.06em 0.04em 0.12em; margin: -0.06em -0.04em -0.12em; }
 .acuelh .bi > span { grid-area: 1 / 1; transition: transform 0.95s var(--ease); }
