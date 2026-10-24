@@ -38,6 +38,8 @@
 	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
+	import Pictograma from '$lib/apren/Pictograma.svelte';
+	import { PALETAS, pictoPer } from '$lib/apren/teulas.js';
 	import '$lib/acuelh/acuelh.css';
 
 	let { data } = $props();
@@ -91,6 +93,31 @@
 			// pas grave : le choix vaut pour la visite
 		}
 	}
+	// Essai « Chapitres de couleur » (direction B, 2026-10-25, /?ensag=blocs) :
+	// les trois entités deviennent des chapitres au fond calme et teinté (la
+	// braise ne reste qu'au héros et à l'appel), avec leurs portes en blocs, dans
+	// la palette sourde « terra » des rubriques. Sans le paramètre, rien ne change.
+	// À rendre définitif ou à retirer après le choix de Romain.
+	const FORMAS_BLOCS = [
+		['actual', 'Actuelle'],
+		['B', 'Chapitres']
+	];
+	const CLAU_ENSAG_BLOCS = 'lo-ligam-ensag-blocs';
+	let formaBlocs = $state('actual');
+	let ensagBlocs = $state(false);
+	function causirFormaBlocs(v) {
+		formaBlocs = v;
+		try {
+			localStorage.setItem(CLAU_ENSAG_BLOCS, v);
+		} catch {
+			// pas grave : le choix vaut pour la visite
+		}
+	}
+	// Les blocs prennent la palette sourde « terra », décalée par chapitre pour
+	// que chaque entité parte sur sa propre teinte (chaud, pétrole, prune)
+	const TERRA = PALETAS.terra;
+	const terraColor = (i) => TERRA[((i % TERRA.length) + TERRA.length) % TERRA.length];
+	const CHAPS = { parla: { ini: 0 }, apren: { ini: 4 }, viu: { ini: 2 } };
 	// Les trois chemins, pris dans le plan du site (le même que le menu et le
 	// pied de page) : un chemin principal et quelques autres. « Amassa » mène à
 	// sa section plus bas tant que le fòrum et les grops ne sont pas faits.
@@ -175,6 +202,15 @@
 			try {
 				const f = localStorage.getItem(CLAU_ENSAG_SEPARA);
 				if (FORMAS_SEPARA.some(([v]) => v === f)) formaSepara = f;
+			} catch {
+				// stockage indisponible : la forme actuelle
+			}
+		}
+		ensagBlocs = new URLSearchParams(location.search).get('ensag') === 'blocs';
+		if (ensagBlocs) {
+			try {
+				const f = localStorage.getItem(CLAU_ENSAG_BLOCS);
+				if (FORMAS_BLOCS.some(([v]) => v === f)) formaBlocs = f;
 			} catch {
 				// stockage indisponible : la forme actuelle
 			}
@@ -324,9 +360,32 @@
 			>{/each}
 	</p>{/snippet}
 
+<!-- Essai « Chapitres » (direction B) : les portes d'une rubrique en blocs de couleur sourde -->
+{#snippet teulasChap(sec)}{@const items = sec.grops.flatMap((g) => g.items)}<ul
+		class="teulas-ac"
+		aria-label={fr ? `Les portes de ${sec.fr}` : `Las portas de ${sec.oc}`}
+	>
+		{#each items as it, i (it.href)}
+			{@const col = terraColor((CHAPS[sec.id]?.ini ?? 0) + i)}
+			<li class="teula-ac" style="--fons: {col[0]}; --tinta: {col[1]}; --i: {i};">
+				<span class="teula-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+				<a
+					class="teula-ligam"
+					href={it.href}
+					target={it.defòra ? '_blank' : undefined}
+					rel={it.defòra ? 'noopener' : undefined}
+					aria-describedby={it.defòra ? 'onglet-nou' : undefined}
+				>
+					<span class="teula-nom">{fr ? it.fr : it.oc}</span>
+				</a>
+				<span class="teula-picto"><Pictograma nom={pictoPer(it.href)} size="2.8rem" /></span>
+			</li>
+		{/each}
+	</ul>{/snippet}
+
 {#snippet apondreBoton(f, txtOc, txtFr)}{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={f}>+ {fr ? txtFr : txtOc}</button>{/if}{/snippet}
 
-<div class="acuelh" class:fr class:ed-actiu={edicion.actiu} bind:this={racina} data-separa={formaSepara}>
+<div class="acuelh" class:fr class:ed-actiu={edicion.actiu} bind:this={racina} data-separa={formaSepara} data-blocs={formaBlocs}>
 	<canvas id="fons" aria-hidden="true"></canvas>
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 	<canvas id="estelas" aria-hidden="true"></canvas>
@@ -464,6 +523,7 @@
 				<b>01</b><span class="masc" hidden={amagat('acuelh.sec.parla.titol')}><span class="masc-in" use:editar={'acuelh.sec.parla.titol'}>{@render bi('acuelh.sec.parla.titol')}</span></span>
 			</h2>
 			{@render somari(PARLA)}
+			{#if formaBlocs === 'B'}{@render teulasChap(PARLA)}{/if}
 			<!-- La carte montre, le wiki explique : chaque fiche y est reliée
 			     (revisions/2026-10-10-concept-wiki.md) -->
 			<div class="carta-dobrir esvani">
@@ -499,6 +559,7 @@
 				<b>02</b><span class="masc" hidden={amagat('acuelh.sec.apren.titol')}><span class="masc-in" use:editar={'acuelh.sec.apren.titol'}>{@render bi('acuelh.sec.apren.titol')}</span></span>
 			</h2>
 			{@render somari(APREN)}
+			{#if formaBlocs === 'B'}{@render teulasChap(APREN)}{/if}
 			<div class="biais-grasilha">
 				{#each lista('acuelh.biais') as b, i (b.clau)}
 					<article class="biai esvani" style="--i: {i + 1}" use:editar={b.clau}>
@@ -535,6 +596,7 @@
 				<b>03</b><span class="masc" hidden={amagat('acuelh.sec.viu.titol')}><span class="masc-in" id="viure-titol" use:editar={'acuelh.sec.viu.titol'}>{@render bi('acuelh.sec.viu.titol')}</span></span>
 			</h2>
 			{@render somari(VIU)}
+			{#if formaBlocs === 'B'}{@render teulasChap(VIU)}{/if}
 			<div class="camins-pista">
 				<article class="panel esvani" data-revela style:--i={0}>
 					<div class="panel-tèxt">
@@ -630,6 +692,13 @@
 	<div class="ensag-eros" role="group" aria-label="Essai : séparation des sections">
 		{#each FORMAS_SEPARA as [v, nom] (v)}
 			<button type="button" aria-pressed={formaSepara === v} onclick={() => causirFormaSepara(v)}>{nom}</button>
+		{/each}
+	</div>
+{/if}
+{#if ensagBlocs}
+	<div class="ensag-eros" role="group" aria-label="Essai : chapitres de couleur">
+		{#each FORMAS_BLOCS as [v, nom] (v)}
+			<button type="button" aria-pressed={formaBlocs === v} onclick={() => causirFormaBlocs(v)}>{nom}</button>
 		{/each}
 	</div>
 {/if}

@@ -511,3 +511,44 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 	.acuelh .trobador-fenestra { clip-path: none; }
 	.acuelh .trobador-fenestra img { transform: none; }
 }
+/* ---------- Essai « Chapitres de couleur » (direction B, 2026-10-25, /?ensag=blocs) ----------
+   Les trois entités deviennent des chapitres au fond calme et teinté : la braise
+   (#fons / .brasa, fixés derrière un main au-dessus) ne se voit plus qu'au héros
+   et à l'appel, car les sections du milieu reçoivent un fond opaque. Chaque
+   chapitre porte ses portes en blocs, dans la palette sourde « terra » des
+   rubriques. Sans data-blocs='B', rien ne change. */
+/* récit : interludes calmes, braise éteinte */
+.acuelh[data-blocs='B'] :is(.bandel, .manifest, .trobador) { background: var(--nuech-2); }
+/* chapitres : fond teinté vers la couleur de l'entité (s'adapte au thème via --nuech) */
+.acuelh[data-blocs='B'] .chifras { background: color-mix(in srgb, #a5342a 11%, var(--nuech)); }
+.acuelh[data-blocs='B'] .biais { background: color-mix(in srgb, #1f5f63 13%, var(--nuech)); }
+.acuelh[data-blocs='B'] .camins { background: color-mix(in srgb, #6b3a5b 13%, var(--nuech)); }
+/* chapitres resserrés : la couleur lit comme une bande, pas comme un grand vide */
+.acuelh[data-blocs='B'] :is(.chifras, .biais, .camins) { padding-top: clamp(3rem, 8vh, 6rem); padding-bottom: clamp(3rem, 8vh, 6rem); }
+.acuelh[data-blocs='B'] .chifras.compacta { padding-top: clamp(3rem, 8vh, 6rem); }
+/* le numéro du chapitre devient plein (comme les pages de rubrique), le sommaire
+   cède la place aux blocs */
+.acuelh[data-blocs='B'] .jalon b { color: var(--aur); -webkit-text-stroke: 0; }
+.acuelh[data-blocs='B'] .jalon-somari { display: none; }
+/* les contenus que les blocs remplacent */
+.acuelh[data-blocs='B'] :is(.carta-dobrir, .biais-grasilha, .camins-pista) { display: none; }
+/* ---------- Les blocs (portes de l'entité), palette sourde « terra » ---------- */
+.acuelh .teulas-ac { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--esp-12); max-width: 56rem; margin: 0 0 var(--esp-24); }
+.acuelh .teula-ac {
+	position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 0.9rem;
+	min-height: 8.5rem; padding: 1.1rem 1.1rem 1rem; border-radius: 8px;
+	background: var(--fons); color: var(--tinta); overflow: clip;
+	transition: transform 0.35s var(--ease), box-shadow 0.35s;
+}
+.acuelh .teula-num { font-family: var(--titol); font-size: 2rem; line-height: 1; }
+.acuelh .teula-ligam { color: inherit; }
+.acuelh .teula-ligam::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.acuelh .teula-nom { display: block; font-family: var(--titol); font-size: clamp(1.1rem, 1.6vw, 1.4rem); line-height: 1.1; text-transform: uppercase; letter-spacing: 0.02em; }
+.acuelh .teula-picto { display: flex; justify-content: flex-end; margin-top: auto; transition: transform 0.45s var(--ease); }
+.acuelh .teula-ac:hover, .acuelh .teula-ac:focus-within { transform: translateY(-4px); box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.45); }
+.acuelh .teula-ac:hover .teula-picto, .acuelh .teula-ac:focus-within .teula-picto { transform: scale(1.08) rotate(-4deg); }
+.acuelh .teula-ac:has(.teula-ligam:focus-visible) { outline: 3px solid var(--aur); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+	.acuelh .teula-ac, .acuelh .teula-picto { transition: none; }
+	.acuelh .teula-ac:hover, .acuelh .teula-ac:focus-within { transform: none; }
+}
