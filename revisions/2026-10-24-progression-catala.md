@@ -127,7 +127,8 @@ Pas d'examen final : évaluation continue par les tâches, certificat de réussi
      - **(a) Surtout automatique, deux réponses sinon** : quand l'exercice se corrige seul (choix, ordre, trous), la réussite note la carte sans rien demander ; quand l'élève s'évalue (rappel libre, oral), deux boutons « Pas encore » / « Acquis ». Algorithme FSRS (celui d'Anki depuis 2023, bibliothèque libre `ts-fsrs`, licence MIT, calcul dans le navigateur, carnet dans Supabase).
      - **(b) Les quatre boutons d'Anki** (À revoir, Difficile, Bien, Facile) sur chaque carte, même algorithme.
      - **(c) Un calendrier fixe d'abord** (J+2, J+7, J+30, recommandation de l'état de l'art §9), FSRS plus tard.
-   - Ensuite : ce qu'est une carte (une par mot ? par bloc tout fait ? par forme ?) ; la séance quotidienne ; le lien avec les haltes de révision ; le carnet sans compte (module 0).
+   - ✅ **Décision 8 ter, ce qu'est une carte** : décidé le 2026-10-24 par Romain : **deux cartes par chose apprise, « je reconnais » puis « je produis »**, la seconde s'ouvre quand la première est acquise (cahier §11).
+   - Ensuite : la séance quotidienne ; le lien avec les haltes de révision ; le carnet sans compte (module 0).
 
 ## 5. Ce que Romain peut faire seul / ce qui demande du code
 
