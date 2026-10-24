@@ -83,7 +83,10 @@
 				{editor.nom}<br />
 				{editor.statut}
 				{#if val(editor.siret)}<br />SIRET : {editor.siret}{/if}
+				{#if val(editor.registre)}<br />{editor.registre}{/if}
+				{#if val(editor.tva)}<br />{editor.tva}{/if}
 				{#if val(editor.adresse)}<br />{editor.adresse}{/if}
+				{#if val(editor.telefòn)}<br />{editor.telefòn}{/if}
 			</p>
 		</section>
 

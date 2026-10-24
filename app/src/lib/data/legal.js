@@ -3,24 +3,33 @@
 // qu'ils ne sont pas remplis — c'est volontaire, pour qu'on ne publie pas
 // des mentions incomplètes sans s'en apercevoir.
 //
-// La loi française (LCEN, article 6) impose de publier l'identité de
-// l'éditeur et celle de l'hébergeur. Pour un particulier qui édite un site
-// non professionnel, l'adresse postale peut rester chez l'hébergeur, mais
-// nom, prénom et moyen de contact restent obligatoires.
+// La loi française (LCEN, articles 1-1 et 19) impose de publier l'identité
+// de l'éditeur et celle de l'hébergeur. Depuis le 2026-07-17, l'éditeur est
+// la micro-entreprise de Romain (entrepreneur individuel, nom commercial
+// Lo Ligam ; document de synthèse du Guichet unique). Pour une entreprise
+// individuelle : nom et prénom avec « EI », adresse de l'entreprise,
+// courriel, téléphone, numéro d'immatriculation, situation de TVA
+// (fiche Service Public F37351).
 
 export const editor = {
 	// Personne physique : nom et prénom. Personne morale : raison sociale.
 	nom: 'Romain Perier',
-	statut: 'Particulier (site non professionnel)',
+	statut: 'Entrepreneur individuel (EI), micro-entreprise · nom commercial : Lo Ligam',
+	registre: 'Immatriculée au registre national des entreprises (RNE) le 17 juillet 2026',
+	tva: 'TVA non applicable, art. 293 B du CGI',
 	// Obligatoire et public. L'alias du site (Romain, 2026-10-24) : c'est la
 	// seule adresse affichée, jamais l'adresse personnelle. Reçoit aussi le
 	// formulaire de contact de Mon istòria ($lib/server/contacte.js).
 	email: 'lo_ligam@proton.me',
 	// Directeur de la publication : la personne responsable du contenu.
 	directeurPublication: 'Romain Perier',
-	// Si un jour le projet devient une association ou une société :
-	siret: 'À_COMPLÉTER_SI_STRUCTURE_JURIDIQUE',
-	adresse: 'À_COMPLÉTER_SI_STRUCTURE_JURIDIQUE'
+	siret: '107 446 056 00015',
+	// ⚠ Obligatoires dès que le site vend (LCEN, Code de la consommation),
+	// laissés vides par choix de Romain le 2026-10-24 : pas son domicile, pas
+	// de domiciliation louée pour l'instant. À régler AVANT LE LANCEMENT
+	// (PILOTATGE §1). Jamais l'adresse ni le portable personnels ici.
+	adresse: 'À_COMPLÉTER_AVANT_LANCEMENT',
+	telefòn: 'À_COMPLÉTER_AVANT_LANCEMENT'
 };
 
 // Hébergeur depuis le 2026-08-08 : le site a quitté Vercel (États-Unis) pour

@@ -23,6 +23,7 @@
 8. Tester un vrai courriel de confirmation de compte (l'adresse de Supabase est passée à loligam.eu le 15-10).
 
 **Avant le lancement** (barreau 8)
+- **Mentions légales (24-10)** : une adresse et un téléphone à afficher, obligatoires dès que le site vend (Romain ne veut ni son domicile ni louer une domiciliation : solution à trouver) ; élargir l'activité de la micro-entreprise sur procedures.inpi.fr (aujourd'hui : vente de cartes seulement ; ajouter cours en visio, déco et textile, prestations intellectuelles) avant le premier cours payant.
 9. Accord écrit du LISN pour les voix de l'Atlas ; droit de réutiliser la carte d'Occitanica ; mention de la carte de l'OPLO ; relecture du pays mentonnais par quelqu'un qui connaît la zone (`revisions/2026-10-12-zona-mentonasca.md`).
 10. Rouvrir le site aux moteurs de recherche (fermé le 24-10 : `app/static/robots.txt` et `X-Robots-Tag` dans `app/src/hooks.server.js`).
 
@@ -96,7 +97,7 @@ Depuis le 12-10 : 211 changements, dont la moitié pour la carte, un tiers pour 
 
 1. **Modèle économique** : limite gratuit / payant du parcours autonome ; logique solidaire (ouverte depuis le 31-07).
 2. **Combien d'unités A1 pour lancer ?**
-3. **Statut juridique** : micro-entreprise ou association ?
+3. ~~**Statut juridique**~~ : tranché le 24-10, micro-entreprise (cahier §11).
 4. **Les 14 questions du §9** de l'état de l'art des parcours (répétition espacée, courriel hebdo…).
 5. **Casting** des personnages et autorisations écrites.
 6. **Héberger soi-même les photos satellite** si des trous reviennent (environ 6 Go).
