@@ -15,6 +15,8 @@ export const VISIO = '/apren/visio';
 export const PLAN = [
 	{
 		id: 'parla', n: '01', oc: 'Se parla', fr: 'Se parle',
+		// la page de la rubrique, sur le modèle de S'apren (Romain, 2026-10-25)
+		href: '/parla',
 		grops: [{ items: [
 			{ oc: 'La carta', fr: 'La carte', href: '/carta' },
 			{ oc: 'Lo wiki', fr: 'Le wiki', href: '/wiki' }, // (« wiki » plutôt qu'« encyclopédie », Romain, 2026-10-15)

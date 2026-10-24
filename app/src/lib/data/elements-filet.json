@@ -82,6 +82,23 @@
     { "clau": "acuelh.crida.reservar", "tipe": "ligam", "oc": "Reservar un primièr cors", "fr": "Réserver un premier cours", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" },
     { "clau": "acuelh.crida.sol", "tipe": "ligam", "oc": "Començar sol·a", "fr": "Commencer seul·e", "ligam": "/aprene/essai" }
   ],
+  "parla": [
+    { "clau": "parla.titol", "tipe": "text", "oc": "Se parla", "fr": "Se parle" },
+    { "clau": "parla.frasa", "tipe": "text", "oc": "A escriure : ta frasa sus Se parla", "fr": "À écrire : ta phrase sur Se parle", "visible": false },
+
+    { "clau": "parla.teulas.carta", "tipe": "bloc", "lista": "parla.teulas", "ordre": 1 },
+    { "clau": "parla.teulas.carta.ligam", "tipe": "ligam", "lista": "parla.teulas.carta", "oc": "La carta", "fr": "La carte", "ligam": "/carta" },
+    { "clau": "parla.teulas.carta.sota", "tipe": "text", "lista": "parla.teulas.carta", "oc": "L’aira culturala occitana, sas lengas e sos luòcs.", "fr": "L’aire culturelle occitane, ses langues et ses lieux." },
+    { "clau": "parla.teulas.wiki", "tipe": "bloc", "lista": "parla.teulas", "ordre": 2 },
+    { "clau": "parla.teulas.wiki.ligam", "tipe": "ligam", "lista": "parla.teulas.wiki", "oc": "Lo wiki", "fr": "Le wiki", "ligam": "/wiki" },
+    { "clau": "parla.teulas.wiki.sota", "tipe": "text", "lista": "parla.teulas.wiki", "oc": "A escriure", "fr": "À écrire", "visible": false },
+    { "clau": "parla.teulas.obras", "tipe": "bloc", "lista": "parla.teulas", "ordre": 3 },
+    { "clau": "parla.teulas.obras.ligam", "tipe": "ligam", "lista": "parla.teulas.obras", "oc": "Òbras", "fr": "Œuvres", "ligam": "/obras" },
+    { "clau": "parla.teulas.obras.sota", "tipe": "text", "lista": "parla.teulas.obras", "oc": "Çò qu’escoti, çò que legissi, çò que te fau descobrir.", "fr": "Ce que j’écoute, ce que je lis, ce que je te fais découvrir." },
+    { "clau": "parla.teulas.articles", "tipe": "bloc", "lista": "parla.teulas", "ordre": 4 },
+    { "clau": "parla.teulas.articles.ligam", "tipe": "ligam", "lista": "parla.teulas.articles", "oc": "Articles", "fr": "Articles", "ligam": "/articles" },
+    { "clau": "parla.teulas.articles.sota", "tipe": "text", "lista": "parla.teulas.articles", "oc": "A escriure", "fr": "À écrire", "visible": false }
+  ],
   "apren": [
     { "clau": "apren.titol", "tipe": "text", "oc": "S’apren", "fr": "S’apprend" },
     { "clau": "apren.frasa", "tipe": "text", "oc": "A escriure : ta frasa sus S’apren", "fr": "À écrire : ta phrase sur S’apprend", "visible": false },
