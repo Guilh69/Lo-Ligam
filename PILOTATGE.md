@@ -36,7 +36,7 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 3 | **L'accueil, la vue d'ensemble** (bloc 4) | **prochain : Romain répond au bloc 4** |
 | 4 | La charte et le mouvement (blocs 5 et 6), le cadre commun des pages | en partie : règle B des couleurs sur tout le site (23-10) ; reste la question du point 3 ci-dessus |
 | 5 | Les mots (bloc 7) | en partie : tutoiement partout, « uèi » validé (22-23-10) ; reste la pile de validations |
-| 6 | Les pages de rubrique : Se parla (carte, puis wiki), S'apren, Amassa | carte très avancée (prise en avance le 22-10) ; wiki, S'apren et Amassa à faire |
+| 6 | Les pages de rubrique : Se parla (carte, puis wiki), S'apren, Amassa | carte très avancée (prise en avance le 22-10) ; **les trois pages lancées le 24-10** (chantiers 19 à 23, une discussion chacun), S'apren d'abord |
 | 7 | Les pages intérieures, l'administration remise en cohérence | **pris en avance le 24-10** : l'édition sur place, séance 1 faite (accueil, tout le niveau Contenu) ; séances 2 à 4 à faire |
 | 8 | Lancement (bloc 8) | à faire |
 
@@ -59,6 +59,11 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 15 | Outils EffectCraft et VectorCraft | évalués, pilotés à l'écran (`outils/craft/`) | choisir les récompenses des cours (plus tard) | Romain |
 | 16 | Parcours pédagogique et scènes | méthode et « Lumière avec pastilles » validées (20-10) | **visuels Canva de Romain**, puis `/admin/scenas` | Romain puis Claude |
 | 18 | Infrastructure | loligam.eu (15-10), mémoire du navigateur (23-10), garde-fou Git (15-10), site fermé aux moteurs de recherche (24-10) | clé Scaleway à renouveler avant le 2027-08-08 ; namespace vide `lo-ligam-site` à supprimer | Romain |
+| 19 | **Page 02 S'apren** et l'écran « Cours en visio » (méthode expliquée avant le calendrier) | lancé le 24-10, discussion à part | proposition de page | Claude puis Romain |
+| 20 | **Progression du cursus**, sur le modèle du cours de catalan de Romain | lancé le 24-10, discussion à part | Romain envoie les documents du cours de catalan | Romain puis Claude |
+| 21 | **Page 01 Se parla** et les musiques des artistes (liens vers Deezer et autres, sans copier) | lancé le 24-10, discussion à part | proposition de page et liste d'artistes de Romain | Claude puis Romain |
+| 22 | **Page 03 Amassa** : groupes, forum, boîte à idées | lancé le 24-10, discussion à part, réflexion d'abord (modération, RGPD, outils européens) | options comparées | Claude puis Romain |
+| 23 | **Mon istòria et Contacte** (regroupées ou non) | lancé le 24-10, discussion à part | options de structure | Claude puis Romain |
 
 Petits restes, détaillés dans l'archive : côte OpenStreetMap autour de la France (`node SIG/cadena/costa-osm.mjs`, puis `mar.py` et `costa-ref.py`), Lomagne (attente d'une source), photos des vallées d'Italie, attribution de la revue Duolingo dans `corpus-design.md`, sort d'`unitat-1-adieu.md`, laquelle des deux maquettes photo fait foi, crédit Luciole sur la future page accessibilité.
 
