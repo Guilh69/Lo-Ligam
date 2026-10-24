@@ -118,8 +118,9 @@ Pas d'examen final : évaluation continue par les tâches, certificat de réussi
    - **(c) Pas de cap certifiant pour l'instant** : on affiche les niveaux du CECR, sans lien annoncé au DCL.
 2. ✅ **Le découpage affiché** : décidé le 2026-10-24 par Romain : **(a)** (cahier §11). Reste à fixer le nombre de blocs par niveau. Options posées : : des blocs de 45 h à la manière du CPNL (un bloc = un trimestre de visio), ou nos unités telles quelles.
 3. ✅ **Le rôle de la visio et du site** : décidé le 2026-10-24 par Romain : **(b) le site porte tout le parcours**, une visio de rencontre au départ, des cours en visio à la carte selon ses disponibilités, modèle asynchrone + synchrone du CPNL (cahier §11). Le bloc de 45 h devient un trimestre de parcours, accompagné ou non. Options posées au départ : le rôle de tes cours en visio et du site : une seule progression (la visio fait la séance, le site l'avant et l'après, comme le CPNL avec ses contenus interactifs), ou deux.
-4. *(ensuite)* Le circuit d'une unité : reprendre celui de l'A1 du CPNL (scène, défis, micro-activités titrées par des questions, « à toi », tâche, mémo) dans notre moteur.
-5. *(ensuite)* Les habitudes à reprendre : titres-phrases, son accroché au point, révision nommée.
+4. ✅ **Le circuit d'une unité** : décidé le 2026-10-24 par Romain : **(c) le mixte** : la scène ouvre l'unité (défis oraux enregistrés), nos modules à l'intérieur renommés en questions, la tâche ferme, un mémo résume (cahier §11). Options posées : le circuit d'une unité : reprendre celui de l'A1 du CPNL (scène, défis, micro-activités titrées par des questions, « à toi », tâche, mémo) dans notre moteur.
+5. *(ensuite)* Le nombre de blocs par niveau (A1 et A2 d'abord ?).
+6. *(ensuite)* Les habitudes à reprendre : titres-phrases, son accroché au point, révision nommée.
 
 ## 5. Ce que Romain peut faire seul / ce qui demande du code
 
