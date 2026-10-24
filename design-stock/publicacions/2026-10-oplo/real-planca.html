@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>OPLO 2020, réel 9:16</title>
+<!-- Planche (2026-10-24) : la variante B2 retenue par Romain (pétrole, chiffres
+     sur des pastilles), passée au format réel 1080 × 1920 pour la diffusion.
+     Chaque pastille prend la couleur de son département. À droite, la même
+     image avec les zones que l'interface d'Instagram recouvre (repères
+     approximatifs) et le cadrage 3:4 de la grille du profil. -->
+<style>
+	@font-face { font-family: Limelight; src: url(../../../app/static/fonts/limelight.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; src: url(../../../app/static/fonts/luciole-regular.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; font-weight: 700; src: url(../../../app/static/fonts/luciole-bold.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; font-style: italic; src: url(../../../app/static/fonts/luciole-italic.woff2) format('woff2'); }
+	body { margin: 0; background: #141010; color: #f5ead8; font-family: Luciole, sans-serif; padding: 16px; display: flex; gap: 20px; flex-wrap: wrap; }
+	figure { margin: 0; }
+	figcaption { font: 700 16px Luciole; margin: 0 0 6px; }
+	svg { width: 405px; height: 720px; display: block; }
+</style>
+</head>
+<body>
+<figure><figcaption>Réel 9:16 · B2 corrigée</figcaption><svg id="net" viewBox="0 0 1080 1920"></svg></figure>
+<figure><figcaption>Avec les zones couvertes par Instagram</figcaption><svg id="zonas" viewBox="0 0 1080 1920"></svg></figure>
+<script src="carta-donadas.js"></script>
+<script>
+	const FONS = '#1F5F63',
+		GAMA = ['#F5EAD8', '#FFD47F', '#EEAF34', '#D4702A', '#B53D17'],
+		CLASSAS = [0, 5, 10, 15, 20];
+	const classa = (p) => CLASSAS.findLastIndex((m) => p >= m);
+	// texte brun sur les pastilles claires, blanc sur les foncées
+	const sobre = (i) => (i <= 2 ? '#3A2A20' : '#fff');
+	const DY = 300; // la carte descend de 300 px par rapport au 4:5
+
+	const P = [[10, 40], [120, 60], [80, 55], [225, 110]];
+	const OUT = [[50, -40], [-15, 45], [20, -35]];
+	const IN = [[20, -60], [-20, 35], [-45, -80]];
+	let corsD = `M${P[0]}`;
+	for (let i = 0; i < 3; i++)
+		corsD += ` C${P[i][0] + OUT[i][0]},${P[i][1] + OUT[i][1]} ${P[i + 1][0] + IN[i][0]},${P[i + 1][1] + IN[i][1]} ${P[i + 1]}`;
+	function fleca(L, T) {
+		const [sx, sy] = P[0], [ex, ey] = P[3];
+		const s = Math.hypot(T[0] - L[0], T[1] - L[1]) / Math.hypot(ex - sx, ey - sy);
+		const th = Math.atan2(T[1] - L[1], T[0] - L[0]) - Math.atan2(ey - sy, ex - sx);
+		const tr = `translate(${L}) rotate(${(th * 180) / Math.PI}) scale(${s}) translate(${-sx},${-sy})`;
+		const dir = th + Math.atan2(80, 45);
+		const pt = (a) => `${T[0] - 26 * Math.cos(dir + a)},${T[1] - 26 * Math.sin(dir + a)}`;
+		return `<path d="${corsD}" transform="${tr}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+			<path d="M${pt(0.5)} L${T} L${pt(-0.5)}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`;
+	}
+	const drapèu = (x, y, k) => `<clipPath id="r${k}"><circle cx="${x}" cy="${y}" r="16"/></clipPath>
+		<g clip-path="url(#r${k})"><rect x="${x - 16}" y="${y - 16}" width="11" height="32" fill="#2b3f8f"/><rect x="${x - 5}" y="${y - 16}" width="10" height="32" fill="#fff"/><rect x="${x + 5}" y="${y - 16}" width="11" height="32" fill="#d8312b"/></g>`;
+	const dep = (c) => CARTA.deps.find((d) => d.code === c);
+
+	function imatge(k) {
+		let s = `<rect width="1080" height="1920" fill="${FONS}"/>`;
+		s += `<text x="540" y="380" text-anchor="middle" font-family="Luciole" font-weight="700" font-size="76" fill="#fff">QUAL PARLA OCCITAN</text>`;
+		s += `<text x="540" y="470" text-anchor="middle" font-family="Luciole" font-weight="700" font-size="76" fill="#fff">UÈI ?</text>`;
+		s += drapèu(318, 545, k);
+		s += `<text x="348" y="556" font-family="Luciole" font-style="italic" font-size="34" fill="#fff">Qui parle occitan aujourd’hui ?</text>`;
+		s += `<g transform="translate(0 ${DY})">`;
+		s += `<clipPath id="dom${k}"><path d="${CARTA.domeni}" clip-rule="evenodd"/></clipPath>`;
+		s += `<path d="${CARTA.domeni}" fill="rgba(255,255,255,0.12)" fill-rule="evenodd"/>`;
+		s += `<g clip-path="url(#dom${k})">`;
+		for (const d of CARTA.deps) {
+			const c = GAMA[classa(d.pct)];
+			s += `<path d="${d.d}" fill="${c}" stroke="${c}" stroke-width="1.2"/>`;
+		}
+		s += `</g>`;
+		// pastille de la couleur du département
+		for (const [code, nom, x, y, L] of [
+			['33', 'Gironda', 70, 350, [150, 410]],
+			['48', 'Losèra', 760, 390, [760, 460]],
+			['ARAN', 'Val d’Aran', 420, 1000, [430, 970]]
+		]) {
+			const d = dep(code), i = classa(d.pct);
+			s += `<rect x="${x - 12}" y="${y - 52}" width="${d.pct < 10 ? 118 : 150}" height="66" rx="33" fill="${GAMA[i]}"/>`;
+			s += `<text x="${x + 8}" y="${y}" font-family="Limelight" font-size="52" fill="${sobre(i)}">${d.pct} %</text>`;
+			s += `<text x="${x}" y="${y + 44}" font-family="Luciole" font-weight="700" font-size="32" fill="#fff">${nom}</text>`;
+			s += fleca(L, d.c);
+		}
+		s += `</g>`;
+		// place réservée au texte de chaque scène (Romain l'écrit)
+		s += `<rect x="190" y="1370" width="730" height="120" rx="14" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-dasharray="10 8"/>`;
+		s += `<text x="555" y="1440" text-anchor="middle" font-family="Luciole" font-style="italic" font-size="30" fill="rgba(255,255,255,0.6)">ta phrase de la scène</text>`;
+		// écusson, au-dessus de la zone de la légende d'Instagram
+		s += `<g transform="translate(0 168)">${CARTA.gabarit.logo}</g>`;
+		return s;
+	}
+
+	document.getElementById('net').innerHTML = imatge('n');
+	// zones couvertes (approximatives) : haut 250 px, bas 420 px, colonne
+	// d'icônes à droite ; cadre 3:4 de la grille du profil (1080 × 1440)
+	document.getElementById('zonas').innerHTML =
+		imatge('z') +
+		`<g fill="rgba(0,0,0,0.45)">
+			<rect width="1080" height="250"/>
+			<rect y="1500" width="1080" height="420"/>
+			<rect x="940" y="1050" width="140" height="450"/>
+		</g>
+		<rect x="2" y="240" width="1076" height="1440" fill="none" stroke="#FFD47F" stroke-width="4" stroke-dasharray="16 10"/>
+		<text x="540" y="150" text-anchor="middle" font-family="Luciole" font-size="34" fill="#fff">en-tête d’Instagram</text>
+		<text x="540" y="1730" text-anchor="middle" font-family="Luciole" font-size="34" fill="#fff">nom du compte, légende, son</text>
+		<text x="1010" y="1280" text-anchor="middle" font-family="Luciole" font-size="26" fill="#fff" transform="rotate(-90 1010 1280)">j’aime, partage</text>
+		<text x="30" y="1665" font-family="Luciole" font-size="26" fill="#FFD47F">cadre 3:4 de la grille du profil</text>`;
+</script>
+</body>
+</html>
