@@ -156,7 +156,7 @@
     { "clau": "istoria.espelida.c2.titol", "tipe": "text", "lista": "istoria.espelida.c2", "oc": "", "fr": "Aujourd'hui" },
     { "clau": "istoria.espelida.c2.tèxt", "tipe": "text", "lista": "istoria.espelida.c2", "oc": "", "fr": "Aujourd'hui, j'ai envie de passer à un stade supérieur : enseigner vraiment ce que j'ai appris, partager ma vision de la réalité occitane en France aujourd'hui, dans sa complexité, et surtout créer un espace d'échange." },
 
-    { "clau": "istoria.contacte.titol", "tipe": "text", "oc": "Parlem", "fr": "Parlons" },
+    { "clau": "istoria.contacte.titol", "tipe": "text", "oc": "Escambiem", "fr": "Échangeons" },
     { "clau": "istoria.contacte.tèxt", "tipe": "text", "oc": "Una question, un cors, una idèa ? Escriu-me, te respondrai.", "fr": "Une question, un cours, une idée ? Écris-moi, je te répondrai." },
     { "clau": "istoria.contacte.reservar", "tipe": "ligam", "oc": "Reservar un cors en visio", "fr": "Réserver un cours en visio", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" }
   ]

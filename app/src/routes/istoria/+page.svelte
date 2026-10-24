@@ -286,7 +286,8 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 2rem;
-		align-items: end;
+		/* le portrait au milieu de sa colonne, à hauteur du titre (Romain, 2026-10-24 : « mal positionnée ») */
+		align-items: center;
 		padding: clamp(2.5rem, 8vh, 5.5rem) 0 clamp(2rem, 6vh, 3.5rem);
 		border-bottom: 1px solid var(--t-linha);
 	}
@@ -335,12 +336,11 @@
 	/* Le portrait « sang e aur » : liseré terracotta, puis or (charte §3bis) */
 	.retrat {
 		margin: 0;
-		justify-self: start;
+		justify-self: center;
 		width: min(260px, 70%);
 	}
 	@container (min-width: 760px) {
 		.retrat {
-			justify-self: end;
 			width: 100%;
 			max-width: 320px;
 		}
@@ -349,6 +349,10 @@
 		display: block;
 		width: 100%;
 		height: auto;
+		/* un cercle, le visage au centre */
+		aspect-ratio: 1;
+		object-fit: cover;
+		object-position: 50% 30%;
 		border-radius: 46% 54% 50% 50% / 52% 48% 52% 48%;
 		box-shadow:
 			0 0 0 5px var(--t-terra),

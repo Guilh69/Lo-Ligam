@@ -283,7 +283,7 @@ L''idée, c''est d''apprendre en même temps que je partage. Je ne me présente 
 	('istoria.espelida.c2', 'istoria', 'bloc', 'istoria.espelida', 2, null, null, null, null, false),
 	('istoria.espelida.c2.titol', 'istoria', 'text', 'istoria.espelida.c2', 0, '', 'Aujourd''hui', null, null, true),
 	('istoria.espelida.c2.tèxt', 'istoria', 'text', 'istoria.espelida.c2', 0, '', 'Aujourd''hui, j''ai envie de passer à un stade supérieur : enseigner vraiment ce que j''ai appris, partager ma vision de la réalité occitane en France aujourd''hui, dans sa complexité, et surtout créer un espace d''échange.', null, null, true),
-	('istoria.contacte.titol', 'istoria', 'text', null, 0, 'Parlem', 'Parlons', null, null, true),
+	('istoria.contacte.titol', 'istoria', 'text', null, 0, 'Escambiem', 'Échangeons', null, null, true),
 	('istoria.contacte.tèxt', 'istoria', 'text', null, 0, 'Una question, un cors, una idèa ? Escriu-me, te respondrai.', 'Une question, un cours, une idée ? Écris-moi, je te répondrai.', null, null, true),
 	('istoria.contacte.reservar', 'istoria', 'ligam', null, 0, 'Reservar un cors en visio', 'Réserver un cours en visio', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true)
 on conflict (clau, estat) do nothing;
