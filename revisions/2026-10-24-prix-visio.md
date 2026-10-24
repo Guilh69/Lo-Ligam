@@ -1,6 +1,6 @@
 # Prix des cours en visio : étude du marché (2026-10-24)
 
-Demande de Romain : préparer des formules (« bouquets ») aux tarifs **solidaire, classique et engagé**, calées sur les prix du marché et accessibles. Premier cours gratuit, don possible (déjà sur `/apren/visio`). Rien n'est décidé tant que Romain n'a pas choisi : ce document propose, il ne tranche pas.
+Demande de Romain : préparer des formules (« bouquets ») aux tarifs **solidaire, classique et engagé**, calées sur les prix du marché et accessibles. Premier cours gratuit, don possible (déjà sur `/apren/visio`). **Décision de Romain (2026-10-24) : la grille A, 15 € solidaire, 22 € classique, 30 € engagé, avec les bouquets au mois et au trimestre (§4).** Restent les questions du §5.
 
 Chiffres relevés en ligne le 2026-10-24 ; ce sont des prix affichés, qui bougent. À revérifier avant de publier une grille.
 
@@ -48,7 +48,7 @@ Association d'acroyoga de Rennes, année 2026-2027 : **Soutien 325 €, Normal 2
 
 | | Solidaire | Classique | Engagé | Logique |
 |---|---|---|---|---|
-| **A, sur le marché de l'occitan** (recommandée) | 15 € | 22 € | 30 € | classique = moyenne Superprof ; solidaire = le bas du marché ; engagé = le haut des profs d'occitan, loin des écoles |
+| **A, sur le marché de l'occitan** (retenue par Romain) | 15 € | 22 € | 30 € | classique = moyenne Superprof ; solidaire = le bas du marché ; engagé = le haut des profs d'occitan, loin des écoles |
 | B, la plus accessible | 10 € | 18 € | 25 € | sous le marché ; risque de paraître « pas sérieux » et de mal payer le temps de préparation |
 | C, valoriser le travail | 20 € | 30 € | 40 € | prix d'un prof expérimenté ; s'écarte du « accessible » demandé |
 
