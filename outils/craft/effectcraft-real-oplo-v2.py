@@ -10,24 +10,40 @@
 # Maquette fixe (avant les retouches du 24-10) : design-stock/publicacions/2026-10-oplo/real-dobertura.html.
 # Blason et logo : blason.png et logo-instagram.png, refaits par fabricar-logo-instagram.py.
 # Chiffres : SIG/oplo-2020/LEGIR-ME.md et la synthèse de l'OPLO (près de 600 000 locuteurs).
-# py effectcraft-real-oplo-v2.py <dernière étape, 1 à 7> [nu] > lot.tsv   puis   bash effectcraft-lancer.sh lot.tsv
+# py effectcraft-real-oplo-v2.py <dernière étape, 1 à 7> [nu] [clar] > lot.tsv   puis   bash effectcraft-lancer.sh lot.tsv
 # « nu » (Romain, 24-10 : « juste les animations page par page, et moi je me
 # charge du reste ») : sans l'étiquette, le titre, les blasons, les phrases, le
 # logo du coin ni le crédit, qu'il pose lui-même dans Canva ; fond pétrole plein,
 # car Canva ne garde pas la transparence des vidéos.
+# « clar » (Romain, 25-10 : son aquarelle bleu clair, « adapte les couleurs pour
+# que tout reste lisible ») : sous les textes, l'aquarelle a une luminance de
+# 0,24 à 0,44, où le blanc ne fait que 2,2 à 3 de contraste et l'or 1,5 à 2.
+# Textes, chiffres, flèches, règle et voiles passent à une encre pétrole très
+# sombre (4,5 à 6,5) ; la carte, les pastilles et les points de couleur gardent
+# leurs couleurs, que le bleu fait ressortir. Le domaine et les points gris
+# prennent le bleu le plus profond de l'aquarelle (l'encre y faisait une tache
+# grise). Fond rendu à part (canva-mp4.py).
 import json, math, sys
 import os as _os
 RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))
 sys.stdout.reconfigure(encoding="utf-8")
 
 NU = "nu" in sys.argv[2:]
-C = "OPLO 2020 real v2" + (" animacions" if NU else "")
-PRECOMPO = "Carta departaments v2" + (" animacions" if NU else "")
+CLAR = "clar" in sys.argv[2:]
+SUFIX = (" animacions" if NU else "") + (" clar" if CLAR else "")
+C = "OPLO 2020 real v2" + SUFIX
+PRECOMPO = "Carta departaments v2" + SUFIX
 DOS = RAIZ + "/design-stock/publicacions/2026-10-oplo/"
 PETROLE, BRIQUE, CREME, BLANC = "#1F5F63", "#B53D17", "#F5EAD8", "#FFFFFF"
 ORC, OR = "#FFD47F", "#EEAF34"
 BLAU, ROGE = "#2B4C9B", "#D6372B"  # le drapeau rond du kit
 GAMA = [CREME, ORC, OR, "#D4702A", BRIQUE]  # du plus clair au plus foncé, comme la couche « Locutors »
+ENCRE = "#0A2327"  # le pétrole assombri
+FONS = "#71A9CF" if CLAR else PETROLE  # teinte moyenne de l'aquarelle, pour l'aperçu
+TINTA = ENCRE if CLAR else BLANC  # textes, flèches, voiles du domaine
+REVIR = ENCRE if CLAR else CREME  # traductions, notes, règle, points gris
+EMFASI = ENCRE if CLAR else ORC  # grands chiffres
+VEL, OP_DOMENI, OP_PUNTS = ("#165281", 35, 55) if CLAR else (BLANC, 16, 28)  # domaine, zone, points gris
 CLASSAS = [0, 5, 10, 15, 20]
 DY = 460   # la silhouette du domaine (repère 4:5) descend de 460 px
 # Départements : aplats sans contour, comme un remplissage sans trait dans QGIS
@@ -214,7 +230,7 @@ def drapeu(nom, cible, t0, t1, r=15):
 def revirada(nom, txt, y, t0, t1, taille=30, x=540):
     """Une traduction : drapeau, puis le texte en italique qui se déroule."""
     decal = (2 * 15 + 12) / 2  # le groupe drapeau + texte reste centré
-    texte(nom, txt, [x + decal, y], "Luciole", "Italic", taille, CREME, t0, t1)
+    texte(nom, txt, [x + decal, y], "Luciole", "Italic", taille, REVIR, t0, t1)
     deroula(nom, t0 + 0.1, t0 + 0.9)
     drapeu(nom + " drapèu", nom, t0, t1)
     return [nom, nom + " drapèu"]
@@ -225,7 +241,7 @@ def frasa(n, indice, t0, t1):
     if NU:
         return
     oc = f"Frasa {n}"
-    texte(oc, "✎ " + indice, [540, 668], "Luciole", "Bold", 38, BLANC, t0, t1)
+    texte(oc, "✎ " + indice, [540, 668], "Luciole", "Bold", 38, TINTA, t0, t1)
     monta(oc, t0, [540, 668])
     noms = [oc] + revirada(f"Frasa {n} fr", "(sa traduction en français)", 718, t0 + 0.4, t1)
     if t1 < FIN:
@@ -266,7 +282,7 @@ def fleca(nom, L, T_, t0, t1, ep=6, miralh=False):
     ti = [[0, 0]] + [rot(*k) for k in i_]
     cmd("layer.newShape", kind="none", name=nom)
     cmd("shape.newPath", layer=nom, vertices=v, inTangents=ti, outTangents=to, closed=False, space="comp",
-        fill=False, stroke=BLANC, strokeWidth=ep)
+        fill=False, stroke=TINTA, strokeWidth=ep)
     cmd("prop.set", layer=nom, path="contents/group/contents/stroke/cap", value=1)
     cmd("layer.addShapeItem", layer=nom, kind="trim", group="contents/group")
     doux(nom, "contents/group/contents/trim/end", t0, t0 + 0.7, 0, 100, 40, 70)
@@ -277,7 +293,7 @@ def fleca(nom, L, T_, t0, t1, ep=6, miralh=False):
     pt = lambda a: [round(T_[0] - 26 * math.cos(d + a), 2), round(T_[1] - 26 * math.sin(d + a), 2)]
     cmd("layer.newShape", kind="none", name=nom + " punta")
     cmd("shape.newPath", layer=nom + " punta", vertices=[pt(0.55), list(T_), pt(-0.55)], closed=False,
-        space="comp", fill=False, stroke=BLANC, strokeWidth=ep)
+        space="comp", fill=False, stroke=TINTA, strokeWidth=ep)
     cmd("prop.set", layer=nom + " punta", path="contents/group/contents/stroke/cap", value=1)
     cmd("prop.set", layer=nom + " punta", path="contents/group/contents/stroke/join", value=1)
     duree(nom + " punta", t0, t1)
@@ -299,8 +315,8 @@ def pastilha(nom, txt, pos, w, fons, tinta, t0, t1, taille=50, police="Limelight
 
 
 # ———————————————————————— étape 1 : l'ouverture (validée le 24-10) ————————————————————————
-cmd("comp.new", name=C, width=1080, height=1920, frameRate=30, duration=FIN, background=PETROLE)
-cmd("layer.newSolid", name="Fons", color=PETROLE)
+cmd("comp.new", name=C, width=1080, height=1920, frameRate=30, duration=FIN, background=FONS)
+cmd("layer.newSolid", name="Fons", color=FONS)
 duree("Fons", 0, FIN)
 
 # le domaine : le contour se dessine d'un trait, puis l'intérieur apparaît
@@ -311,16 +327,16 @@ cmd("layer.newShape", kind="none", name="Domeni")
 cmd("layer.newShape", kind="none", name="Domeni contorn")
 aire = lambda v: abs(sum(x1 * y2 - x2 * y1 for (x1, y1), (x2, y2) in zip(v, v[1:] + v[:1]))) / 2
 for v in anneaux:
-    cmd("shape.newPath", layer="Domeni", vertices=v, closed=True, space="comp", fill=BLANC, stroke=False)
+    cmd("shape.newPath", layer="Domeni", vertices=v, closed=True, space="comp", fill=VEL, stroke=False)
     if aire(v) < 400:  # les îlots ne se dessinent pas : ils clignoteraient pendant le tracé
         continue
     cmd("shape.newPath", layer="Domeni contorn", vertices=v, closed=True, space="comp", fill=False,
-        stroke=BLANC, strokeWidth=4)
+        stroke=TINTA, strokeWidth=4)
 cmd("layer.addShapeItem", layer="Domeni contorn", kind="trim")
 duree("Domeni", 0, FIN)
 duree("Domeni contorn", 0, min(FIN, 3.6))
 doux("Domeni contorn", "contents/trim/end", 0.5, 2.4, 0, 100, 25, 70)
-doux("Domeni", "transform/opacity", 2.0, 3.0, 0, 16)
+doux("Domeni", "transform/opacity", 2.0, 3.0, 0, OP_DOMENI)
 doux("Domeni contorn", "transform/opacity", 2.5, 3.4, 70, 0)
 
 if not NU:
@@ -339,7 +355,7 @@ if not NU:
 
     # la traduction se déroule de gauche à droite
     cmd("layer.newText", text="(Qui parle occitan aujourd’hui ?)", name="Revirada", position=[540, 630],
-        font="Luciole", style="Italic", size=36, fill=CREME, justify="center")
+        font="Luciole", style="Italic", size=36, fill=REVIR, justify="center")
     duree("Revirada", 0, FIN)
     A = "text/animators/animator/"
     cmd("layer.addTextAnimator", layer="Revirada", properties=["opacity"])
@@ -352,7 +368,7 @@ if not NU:
     importar("logo-instagram.png", "Logo", 0, [1035, 1585], 37.5)
     duree("Logo", 0, FIN)
     cmd("layer.newText", text="© RP · enquête OPLO 2020", name="Credit", position=[44, 1670],
-        font="Luciole", style="Regular", size=18, fill=CREME, justify="left")
+        font="Luciole", style="Regular", size=18, fill=REVIR, justify="left")
     cmd("prop.set", layer="Credit", path="transform/rotation", value=-90)
     cmd("prop.set", layer="Credit", path="transform/opacity", value=70)
     duree("Credit", 0, FIN)
@@ -369,7 +385,7 @@ if N >= 2:
         fondre(["Revirada"], t - 0.1)
     deps = sorted(CARTA["deps"], key=lambda d: d["pct"])
     zona = [r for d in deps for r in anels(d["d"])]
-    forma("Zona", zona, fill=BLANC)
+    forma("Zona", zona, fill=VEL)
     duree("Zona", t, FIN)
     doux("Zona", "transform/opacity", t + 0.2, t + 1.1, 0, 24)
     noms = []
@@ -422,15 +438,15 @@ if N >= 3:
         np = f"Pastilha {code} nom"
         if cote in ("dessous", "dessus"):  # sous la pastille, ou dessus quand la flèche part d'en bas
             y = pos[1] + 78 if cote == "dessous" else pos[1] - 50
-            texte(np, nom, [pos[0], y], "Luciole", "Bold", 32, BLANC, t0, FIN)
+            texte(np, nom, [pos[0], y], "Luciole", "Bold", 32, TINTA, t0, FIN)
             monta(np, t0 + 0.15, [pos[0], y], 10)
         else:
-            texte(np, nom, [pos[0] + w / 2 + 18, pos[1] + 11], "Luciole", "Bold", 32, BLANC, t0, FIN, "left")
+            texte(np, nom, [pos[0] + w / 2 + 18, pos[1] + 11], "Luciole", "Bold", 32, TINTA, t0, FIN, "left")
             monta(np, t0 + 0.15, [pos[0] + w / 2 + 18, pos[1] + 11], 10)
         CARTA_NOMS += [np]
         CARTA_NOMS += fleca(f"Fleca {code}", L, (d["c"][0], d["c"][1] + DY - 8), t0 + 0.3, FIN, miralh=miralh)
     fondre(CARTA_NOMS[1:], T[4] - 0.5)
-    fondre(["Domeni"], T[4] - 0.5, v0=16)
+    fondre(["Domeni"], T[4] - 0.5, v0=OP_DOMENI)
 
 # ———————————————————————— étape 4 : parler, comprendre ————————————————————————
 # Cent points pour cent personnes : 7 parlent, 15 comprennent bien
@@ -446,10 +462,10 @@ if N >= 4:
         cmd("layer.newShape", kind="none", name=nom)
         for col in range(10):
             cmd("shape.newPath", layer=nom, vertices=cercle(x0 + col * PAS, y0 + row * PAS, R), closed=True,
-                space="comp", fill=CREME, stroke=False)
+                space="comp", fill=CREME if not CLAR else VEL, stroke=False)
         duree(nom, t, FIN)
         t0 = t + 0.5 + row * 0.06
-        doux(nom, "transform/opacity", t0, t0 + 0.4, 0, 28)
+        doux(nom, "transform/opacity", t0, t0 + 0.4, 0, OP_PUNTS)
         doux(nom, "transform/position", t0, t0 + 0.5, [540, 970], [540, 960])
         sortents.append(nom)
     for k in range(15):
@@ -468,7 +484,7 @@ if N >= 4:
     for nom, xc, chif, oc, fr, coul, t0 in (("Legenda parlan", 300, "7 %", "parlan", "(parlent)", BRIQUE, t + 1.5),
                                             ("Legenda comprenon", 780, "15 %", "comprenon plan",
                                              "(comprennent bien)", OR, t + 2.8)):
-        texte(nom, chif, [xc + 16, 832], "Limelight", "Regular", 60, BLANC, t0, FIN)
+        texte(nom, chif, [xc + 16, 832], "Limelight", "Regular", 60, TINTA, t0, FIN)
         monta(nom, t0, [xc + 16, 832])
         cmd("layer.newShape", kind="none", name=nom + " punt")
         cmd("shape.newPath", layer=nom + " punt", vertices=cercle(540, 960, 14), closed=True, space="comp",
@@ -476,27 +492,27 @@ if N >= 4:
         a_esquerra(nom + " punt", nom, 30)
         duree(nom + " punt", t0, FIN)
         doux(nom + " punt", "transform/opacity", t0, t0 + 0.3, 0, 100)
-        texte(nom + " oc", oc, [xc, 876], "Luciole", "Bold", 34, BLANC, t0, FIN)
+        texte(nom + " oc", oc, [xc, 876], "Luciole", "Bold", 34, TINTA, t0, FIN)
         monta(nom + " oc", t0 + 0.15, [xc, 876])
         sortents += [nom, nom + " punt", nom + " oc"] + revirada(nom + " fr", fr, 912, t0 + 0.35, FIN, 26, xc)
-    texte("Nota 100", "Sur 100 personnes de 15 ans et plus", [540, 1478], "Luciole", "Italic", 24, CREME, t + 0.9, FIN)
+    texte("Nota 100", "Sur 100 personnes de 15 ans et plus", [540, 1478], "Luciole", "Italic", 24, REVIR, t + 0.9, FIN)
     doux("Nota 100", "transform/opacity", t + 0.9, t + 1.4, 0, 75)
     sortents.append("Nota 100")
     fondre(sortents, T[5] - 0.5)
     fondre(["Nota 100"], T[5] - 0.5, v0=75)
     for row in range(10):
-        fondre([f"Punts {row}"], T[5] - 0.5, v0=28)
+        fondre([f"Punts {row}"], T[5] - 0.5, v0=OP_PUNTS)
 
 # ———————————————————————— étape 5 : près de 600 000 ————————————————————————
 if N >= 5:
     t = T[5]
     frasa(5, "Ta phrase : un constat sec", t + 0.2, T[6])
-    texte("Nombre", "600 000", [540, 1075], "Limelight", "Regular", 190, ORC, t + 0.4, FIN)
+    texte("Nombre", "600 000", [540, 1075], "Limelight", "Regular", 190, EMFASI, t + 0.4, FIN)
     cmd("prop.setExpression", layer="Nombre", path="text/sourceText", expression=(
         f'var v = Math.round(ease(time, {t + 0.5}, {t + 2.1}, 0, 600) ) * 1000; '
         f'var s = String(v); s.length > 3 ? s.slice(0, -3) + " " + s.slice(-3) : s'))
     doux("Nombre", "transform/opacity", t + 0.4, t + 0.8, 0, 100)
-    texte("Nombre oc", "locutors", [540, 1160], "Luciole", "Bold", 52, BLANC, t + 1.2, FIN)
+    texte("Nombre oc", "locutors", [540, 1160], "Luciole", "Bold", 52, TINTA, t + 1.2, FIN)
     monta("Nombre oc", t + 1.2, [540, 1160])
     sortents = ["Nombre", "Nombre oc"] + revirada("Nombre fr", "(locuteurs)", 1210, t + 1.5, FIN, 32)
     sortents += pastilha("Mejana", "7 % en mejana", [540, 1330], 420, BRIQUE, BLANC, t + 2.3, FIN, 40, "Luciole",
@@ -510,14 +526,14 @@ if N >= 5:
 if N >= 6:
     t = T[6]
     frasa(6, "Ta question de fin", t + 0.2, FIN)
-    texte("Joves", "15-29 ans", [540, 818], "Luciole", "Bold", 36, CREME, t + 0.5, FIN)
+    texte("Joves", "15-29 ans", [540, 818], "Luciole", "Bold", 36, REVIR, t + 0.5, FIN)
     monta("Joves", t + 0.5, [540, 818])
-    texte("Joves chifra", "2 %", [540, 960], "Limelight", "Regular", 150, ORC, t + 0.7, FIN)
+    texte("Joves chifra", "2 %", [540, 960], "Limelight", "Regular", 150, EMFASI, t + 0.7, FIN)
     monta("Joves chifra", t + 0.7, [540, 960], 20, 0.8)
-    texte("Joves oc", "parlan", [540, 1010], "Luciole", "Bold", 34, BLANC, t + 1.0, FIN)
+    texte("Joves oc", "parlan", [540, 1010], "Luciole", "Bold", 34, TINTA, t + 1.0, FIN)
     monta("Joves oc", t + 1.0, [540, 1010])
     sortents = ["Joves", "Joves chifra", "Joves oc"] + revirada("Joves fr", "(parlent)", 1046, t + 1.2, FIN, 26)
-    texte("Atge oc", "atge mejan dels locutors", [540, 1150], "Luciole", "Bold", 34, BLANC, t + 2.0, FIN)
+    texte("Atge oc", "atge mejan dels locutors", [540, 1150], "Luciole", "Bold", 34, TINTA, t + 2.0, FIN)
     monta("Atge oc", t + 2.0, [540, 1150])
     sortents += ["Atge oc"] + revirada("Atge fr", "(âge moyen des locuteurs ; 50 ans pour l’ensemble)", 1188,
                                        t + 2.2, FIN, 26)
@@ -525,7 +541,7 @@ if N >= 6:
     X = lambda age: 140 + (age - 15) * 800 / 75
     cmd("layer.newShape", kind="none", name="Regla")
     cmd("shape.newPath", layer="Regla", vertices=[[140, 1340], [940, 1340]], closed=False, space="comp", fill=False,
-        stroke=CREME, strokeWidth=3)
+        stroke=REVIR, strokeWidth=3)
     cmd("prop.set", layer="Regla", path="contents/group/contents/stroke/cap", value=1)
     cmd("layer.addShapeItem", layer="Regla", kind="trim", group="contents/group")
     doux("Regla", "contents/group/contents/trim/end", t + 2.4, t + 3.1, 0, 100, 40, 70)
@@ -533,16 +549,16 @@ if N >= 6:
     cmd("prop.set", layer="Regla", path="transform/opacity", value=60)
     sortents.append("Regla")
     for nom, txt, x in (("Regla 15", "15", 140), ("Regla 90", "90 ans", 940)):
-        texte(nom, txt, [x, 1382], "Luciole", "Regular", 24, CREME, t + 2.6, FIN)
+        texte(nom, txt, [x, 1382], "Luciole", "Regular", 24, REVIR, t + 2.6, FIN)
         doux(nom, "transform/opacity", t + 2.6, t + 3.0, 0, 70)
         sortents.append(nom)
     # l'ensemble : 50 ans
     cmd("layer.newShape", kind="none", name="Regla 50")
-    cmd("shape.newPath", layer="Regla 50", vertices=cercle(X(50), 1340, 9), closed=True, space="comp", fill=CREME,
+    cmd("shape.newPath", layer="Regla 50", vertices=cercle(X(50), 1340, 9), closed=True, space="comp", fill=REVIR,
         stroke=False)
     duree("Regla 50", t + 3.0, FIN)
     doux("Regla 50", "transform/opacity", t + 3.0, t + 3.3, 0, 100)
-    texte("Regla 50 tèxt", "50", [X(50), 1382], "Luciole", "Bold", 26, CREME, t + 3.0, FIN)  # sous la règle : le 66 passe au-dessus
+    texte("Regla 50 tèxt", "50", [X(50), 1382], "Luciole", "Bold", 26, REVIR, t + 3.0, FIN)  # sous la règle : le 66 passe au-dessus
     doux("Regla 50 tèxt", "transform/opacity", t + 3.0, t + 3.3, 0, 80)
     sortents += ["Regla 50", "Regla 50 tèxt"]
     # les locuteurs : 66 ans, le point glisse depuis 15 ans
@@ -552,7 +568,7 @@ if N >= 6:
     duree("Regla 66", t + 3.2, FIN)
     doux("Regla 66", "transform/opacity", t + 3.2, t + 3.4, 0, 100)
     doux("Regla 66", "transform/position", t + 3.2, t + 4.4, [140, 1340], [X(66), 1340], 35, 85)
-    texte("Regla 66 tèxt", "66 ans", [0, -40], "Limelight", "Regular", 60, ORC, t + 3.2, FIN)
+    texte("Regla 66 tèxt", "66 ans", [0, -40], "Limelight", "Regular", 60, EMFASI, t + 3.2, FIN)
     cmd("layer.setParent", layers=["Regla 66 tèxt"], parent="Regla 66", compensate=False)
     doux("Regla 66 tèxt", "transform/opacity", t + 3.2, t + 3.5, 0, 100)
     sortents += ["Regla 66", "Regla 66 tèxt"]
@@ -587,6 +603,6 @@ if N >= 7:
     doux("Marca tuila", "transform/scale", t + 0.2, t + 1.4, [40, 40, 100], [50, 50, 100], 15, 90)
     doux("Marca tuila", "transform/rotation", t + 0.2, t + 1.4, -90, 0, 15, 90)
     pos = [round(x0 + TUILA + ECART, 1), round(CY + (asc - desc) / 2, 1)]
-    texte("Marca nom", "Lo Ligam", pos, "Limelight", "Regular", TALHA, BLANC, t, FIN, "left")
+    texte("Marca nom", "Lo Ligam", pos, "Limelight", "Regular", TALHA, TINTA, t, FIN, "left")
     doux("Marca nom", "transform/opacity", t + 0.6, t + 1.1, 0, 100)
     doux("Marca nom", "transform/position", t + 0.6, t + 1.5, [pos[0] - 30, pos[1]], pos, 15, 90)

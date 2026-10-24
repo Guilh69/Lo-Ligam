@@ -64,7 +64,7 @@ table.liste { width: 100%; border-collapse: collapse; font-size: 14px; }
 .liste th, .liste td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--linha); vertical-align: top; }
 .liste td.n, .liste th.n { text-align: right; white-space: nowrap; }
 .liste tr.choisie td { background: var(--aur-pal); }
-.liste td:last-child { white-space: nowrap; }
+.liste td:first-child, .liste td:last-child { white-space: nowrap; }
 .liste button:not(.bouton) { border: 0; background: none; color: var(--brica); text-decoration: underline; cursor: pointer; padding: 0; margin-right: 8px; }
 .etat { font-size: 13px; color: var(--tinta-2); }
 .etat.payee { color: var(--verd); font-weight: 700; }
@@ -75,50 +75,64 @@ table.liste { width: 100%; border-collapse: collapse; font-size: 14px; }
 
 /* ---------- la feuille A4 ---------- */
 .feuille {
-	width: 210mm; min-height: 297mm; background: #fff; padding: 15mm 16mm 12mm;
+	width: 210mm; min-height: 297mm; background: #fff; padding: 12mm 15mm 10mm;
 	box-shadow: 0 2px 18px rgba(42, 26, 16, 0.16); position: relative;
-	display: flex; flex-direction: column; font-size: 10.5pt; line-height: 1.45;
+	display: flex; flex-direction: column; font-size: 10pt; line-height: 1.42;
 	-webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
-.f-tete { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 6mm; border-bottom: 2px solid var(--brica); }
+.f-tete { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 4mm; border-bottom: 2px solid var(--brica); }
 .f-marque { display: flex; align-items: center; gap: 4mm; }
 .f-marque b { display: block; font: 400 25pt/1 'Limelight', serif; color: var(--brica); }
 .f-marque span { display: block; color: var(--aur-text); font-weight: 700; margin-top: 1.5mm; letter-spacing: 0.02em; }
 .f-titre { text-align: right; }
-.f-titre b { display: block; font: 400 21pt/1 'Limelight', serif; color: var(--tinta); }
+.f-titre b { display: block; font: 400 19pt/1 'Limelight', serif; color: var(--tinta); }
 .f-titre .num { display: inline-block; margin-top: 2.5mm; background: var(--aur-pal); border-radius: 4px; padding: 1mm 2.5mm; font-weight: 700; }
 .f-titre .date { display: block; margin-top: 1.5mm; color: var(--tinta-2); }
-.f-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin: 7mm 0 6mm; }
+.f-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; margin: 5mm 0 4mm; }
 .f-parties h4 { margin: 0 0 1.5mm; font-size: 8.5pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aur-text); }
 .f-parties p { margin: 0; white-space: pre-line; }
 .f-parties .vide { color: var(--brica); font-style: italic; }
 .f-lignes { width: 100%; border-collapse: collapse; }
 .f-lignes th { font-size: 8.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-2); text-align: left; font-weight: 700; padding: 0 0 2mm; border-bottom: 1px solid var(--linha); }
-.f-lignes td { padding: 3mm 0; border-bottom: 1px solid var(--linha); vertical-align: top; }
+.f-lignes td { padding: 2.5mm 0; border-bottom: 1px solid var(--linha); vertical-align: top; }
 .f-lignes .n { text-align: right; white-space: nowrap; padding-left: 4mm; }
 .f-lignes small { display: block; color: var(--tinta-2); font-size: 9pt; margin-top: 0.5mm; }
-.f-total { display: flex; justify-content: flex-end; margin-top: 4mm; }
+.f-total { display: grid; grid-template-columns: 1fr auto; gap: 8mm; align-items: start; margin-top: 4mm; }
 .f-total div { background: var(--aur-pal); border-left: 5px solid var(--aur); border-radius: 4px; padding: 3mm 5mm; min-width: 72mm; }
 .f-total .ligne { display: flex; justify-content: space-between; gap: 6mm; }
 .f-total .somme { font-size: 15pt; font-weight: 700; }
 .f-total .tva { font-size: 9pt; color: var(--tinta-2); margin-top: 1mm; }
-.f-blocs { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 8mm; }
-.f-bloc { border: 1px solid var(--linha); border-radius: 6px; padding: 3.5mm 4.5mm; }
+.f-blocs { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 5mm; }
+.f-bloc { border: 1px solid var(--linha); border-radius: 6px; padding: 3mm 4mm; }
 .f-bloc h4 { margin: 0 0 2mm; font: 400 12.5pt/1.1 'Limelight', serif; color: var(--brica); }
 .f-bloc p { margin: 0 0 1.5mm; }
 .f-bloc .petit { font-size: 9pt; color: var(--tinta-2); }
-.f-iban { font-weight: 700; letter-spacing: 0.03em; }
+.f-iban { font-weight: 700; font-size: 9.5pt; white-space: nowrap; }
 .f-tampon { display: inline-block; border: 2px solid var(--verd); color: var(--verd); font-weight: 700; border-radius: 4px; padding: 1mm 3mm; margin-bottom: 2mm; }
 .barre { display: flex; height: 6mm; border-radius: 3px; overflow: hidden; margin: 2mm 0; }
 .barre .coti { background: var(--aur); }
 .barre .prof { background: var(--brica); }
 .legende { display: grid; grid-template-columns: auto 1fr auto; gap: 0.5mm 2.5mm; align-items: center; font-size: 9.5pt; }
 .legende i { width: 3mm; height: 3mm; border-radius: 1px; display: inline-block; }
-.f-pied { margin-top: auto; padding-top: 6mm; font-size: 8.5pt; color: var(--tinta-2); }
+.f-pied { margin-top: auto; padding-top: 4mm; font-size: 8.5pt; color: var(--tinta-2); }
 .f-pied p { margin: 0 0 1mm; }
 .f-pied .fin { display: flex; justify-content: space-between; border-top: 1px solid var(--linha); padding-top: 2.5mm; margin-top: 3mm; }
 .f-merce { font: 400 13pt/1 'Limelight', serif; color: var(--brica); }
 .f-annulee { position: absolute; top: 120mm; left: 0; right: 0; text-align: center; transform: rotate(-14deg); font: 400 48pt/1 'Limelight', serif; color: rgba(181, 61, 23, 0.16); pointer-events: none; }
+/* L'occitan à côté du français : italique, or foncé (lisible sur blanc). */
+.oc, .oc-b { font-style: italic; font-weight: 400; color: var(--aur-text); }
+.oc-b { display: block; }
+.f-titre .oc-titre { display: block; font: 400 13pt/1 'Limelight', serif; color: var(--aur-text); margin-top: 1mm; }
+.f-parties h4 .oc, .f-lignes th .oc-b { text-transform: none; letter-spacing: 0.02em; }
+.f-lignes th .oc-b { font-size: 8pt; margin-top: 0.3mm; }
+.f-lignes td > .oc-b { font-size: 9.5pt; }
+.f-total .oc-b { font-size: 10pt; }
+.f-bloc h4 .oc-b { font: italic 400 9.5pt/1.2 'Luciole', sans-serif; margin-top: 0.8mm; }
+.f-bloc .oc-b { font-size: 8.5pt; }
+.f-tarifs { margin: 0; font-size: 8.5pt; color: var(--tinta-2); }
+.f-tarifs .oc-b { margin-top: 1mm; }
+.f-pied .deux-langues p { margin: 0; }
+.deux-langues { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
 .bandeau-apercu { background: var(--tinta); color: #fff; border-radius: 6px; padding: 6px 14px; font-weight: 700; }
 
 @media print {
@@ -167,6 +181,24 @@ function ajouter(iso, { jours = 0, mois = 0 }) {
 }
 const TARIFS = { solidaire: 'solidaire', classique: 'classique', engage: 'engagé' };
 
+// L'occitan de la facture (Romain, 2026-10-25 : « au moins bilingue »).
+// Vérifié avec l'API de lo Congrès (verificar-oc.mjs), à valider par Romain.
+// Mêmes mots que la page /apren/visio : « prètz solidari, classic, engatjat ».
+const TARIFS_OC = { solidaire: 'solidari', classique: 'classic', engage: 'engatjat' };
+const MOIS_OC = ['genièr', 'febrièr', 'març', 'abril', 'mai', 'junh', 'julhet', 'agost', 'setembre', 'octobre', 'novembre', 'decembre'];
+function dateOc(iso) {
+	if (!iso) return '';
+	const [a, m, j] = iso.split('-').map(Number);
+	const mes = MOIS_OC[m - 1];
+	return `${j} ${/^[aeiouò]/.test(mes) ? "d'" : 'de '}${mes} de ${a}`;
+}
+// Le français d'abord, l'occitan à côté (« · ») ou dessous (bloc).
+const bi = (fr, oc, bloc = false) =>
+	!R.bilingue || !oc ? fr : bloc ? `${fr}<span class="oc-b" lang="oc">${oc}</span>` : `${fr} <span class="oc" lang="oc">· ${oc}</span>`;
+const bi2 = (fr, oc) =>
+	!R.bilingue || !oc ? `<p>${fr}</p>` : `<div class="deux-langues"><p>${fr}</p><p class="oc-b" lang="oc">${oc}</p></div>`;
+const ocB = (oc) => (R.bilingue && oc ? `<span class="oc-b" lang="oc">${oc}</span>` : '');
+
 // La croix-constellation du logo (géométrie de Crotz.svelte), couleurs du
 // fond clair : points or, traits et moyeu brique.
 function crotz(taille) {
@@ -189,7 +221,7 @@ let dossier = '';
 let vue = 'nouvelle';
 let choisie = null;    // numéro de la pièce affichée (sinon : l'aperçu du brouillon)
 let paiementOuvert = null;
-const brouillon = { date: aujourdhui(), nom: '', adresse: '', tarif: 'classique', formule: '4', quantite: 1, cours: '', designation: '', montant: '' };
+const brouillon = { date: aujourdhui(), nom: '', adresse: '', tarif: 'classique', formule: '4', quantite: 1, cours: '', designation: '', designationOc: '', montant: '' };
 
 async function api(chemin, donnees) {
 	const r = await fetch(chemin, donnees ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(donnees) } : undefined);
@@ -209,14 +241,26 @@ function pieceDuBrouillon() {
 	const nomTarif = TARIFS[b.tarif];
 	let lignes = [];
 	let validite = '';
+	const nomOc = TARIFS_OC[b.tarif];
 	if (b.formule === '1') {
 		const q = Math.max(1, Number(b.quantite) || 1);
-		lignes = [{ designation: q > 1 ? "Cours d'occitan en visio (1 h chacun)" : "Cours d'occitan en visio (1 h)", detail: `Tarif ${nomTarif}` + (b.cours ? ` · ${b.cours}` : ''), quantite: q, prixUnitaire: R.prix[b.tarif][1] }];
+		lignes = [{
+			designation: q > 1 ? "Cours d'occitan en visio (1 h chacun)" : "Cours d'occitan en visio (1 h)",
+			designationOc: q > 1 ? "Corses d'occitan en visio (1 h cadun)" : "Cors d'occitan en visio (1 h)",
+			detail: `Tarif ${nomTarif}` + (b.cours ? ` · ${b.cours}` : ''), detailOc: `Prètz ${nomOc}`,
+			quantite: q, prixUnitaire: R.prix[b.tarif][1]
+		}];
 	} else if (b.formule === '4' || b.formule === '12') {
 		validite = ajouter(b.date, { mois: R.validiteMois[b.formule] });
-		lignes = [{ designation: `Bouquet de ${b.formule} cours d'occitan en visio (1 h chacun)`, detail: `Tarif ${nomTarif} · cours à prendre avant le ${dateFr(validite)}`, quantite: 1, prixUnitaire: R.prix[b.tarif][b.formule] }];
+		lignes = [{
+			designation: `Bouquet de ${b.formule} cours d'occitan en visio (1 h chacun)`,
+			designationOc: `Paquet de ${b.formule} corses d'occitan en visio (1 h cadun)`,
+			detail: `Tarif ${nomTarif} · cours à prendre avant le ${dateFr(validite)}`,
+			detailOc: `Prètz ${nomOc} · corses de prene abans lo ${dateFr(validite)}`,
+			quantite: 1, prixUnitaire: R.prix[b.tarif][b.formule]
+		}];
 	} else {
-		lignes = [{ designation: b.designation || 'Désignation à écrire', detail: '', quantite: 1, prixUnitaire: Number(String(b.montant).replace(',', '.')) || 0 }];
+		lignes = [{ designation: b.designation || 'Désignation à écrire', designationOc: b.designationOc.trim(), detail: '', quantite: 1, prixUnitaire: Number(String(b.montant).replace(',', '.')) || 0 }];
 	}
 	const total = lignes.reduce((s, l) => s + l.quantite * l.prixUnitaire, 0);
 	return {
@@ -245,69 +289,78 @@ function feuille(p, apercu) {
 	const coti = Math.round(Math.abs(p.total) * R.tauxCotisations) / 100;
 	const reste = Math.abs(p.total) - coti;
 	const pctCoti = R.tauxCotisations;
+	const pct = String(pctCoti).replace('.', ',');
 	const lignes = p.lignes.map((l) => `<tr>
-		<td>${esc(l.designation)}${l.detail ? `<small>${esc(l.detail)}</small>` : ''}</td>
+		<td>${esc(l.designation)}${ocB(esc(l.designationOc))}${l.detail ? `<small>${esc(l.detail)}</small>` : ''}${l.detailOc && R.bilingue ? `<small class="oc-b" lang="oc">${esc(l.detailOc)}</small>` : ''}</td>
 		<td class="n">${l.quantite}</td><td class="n">${euros(l.prixUnitaire)}</td><td class="n">${euros(l.quantite * l.prixUnitaire)}</td></tr>`).join('');
 	const vendeur = R.nom
-		? `<p><b>${esc(R.nom)}</b>, EI (entrepreneur individuel)\n${esc(R.adresse) || '<span class="vide">adresse à remplir dans Réglages</span>'}\nSIRET : ${esc(R.siret) || '<span class="vide">à remplir</span>'}${R.email ? '\n' + esc(R.email) : ''}</p>`
+		? `<p><b>${esc(R.nom)}</b>, EI\n${esc(R.adresse) || '<span class="vide">adresse à remplir dans Réglages</span>'}\nSIRET : ${esc(R.siret) || '<span class="vide">à remplir</span>'}${R.email ? '\n' + esc(R.email) : ''}</p>`
 		: '<p class="vide">Remplis ton nom, ton adresse et ton SIRET dans Réglages.</p>';
 	const client = p.eleve.nom ? `<p><b>${esc(p.eleve.nom)}</b>\n${esc(p.eleve.adresse) || '<span class="vide">adresse à remplir</span>'}</p>` : '<p class="vide">Nom et adresse de l\'élève</p>';
 
 	let blocPaiement;
 	if (avoir) {
-		blocPaiement = `<h4>Annulation</h4><p>Cet avoir annule la facture <b>${esc(p.avoirDe)}</b>.</p>${p.motif ? `<p>Motif : ${esc(p.motif)}</p>` : ''}
-			${p.paiement ? `<p class="f-tampon">Remboursé le ${dateFr(p.paiement.date)}</p>`
-				: pieces.find((f) => f.numero === p.avoirDe)?.paiement ? '<p class="petit">La somme déjà payée t\'est remboursée par virement.</p>'
-				: '<p class="petit">La facture n\'avait pas été payée : il n\'y a rien à régler.</p>'}`;
+		const origPayee = pieces.find((f) => f.numero === p.avoirDe)?.paiement;
+		blocPaiement = `<h4>${bi('Annulation', 'Anullacion', true)}</h4>
+			<p>${bi(`Cet avoir annule la facture <b>${esc(p.avoirDe)}</b>.`, `Aqueste aver anulla la factura ${esc(p.avoirDe)}.`, true)}</p>
+			${p.motif ? `<p>Motif : ${esc(p.motif)}</p>` : ''}
+			${p.paiement ? `<p class="f-tampon">${bi(`Remboursé le ${dateFr(p.paiement.date)}`, `Remborsat lo ${dateFr(p.paiement.date)}`, true)}</p>`
+				: origPayee ? `<p class="petit">${bi("La somme déjà payée t'est remboursée par virement.", 'La soma ja pagada te’s remborsada per virament.', true)}</p>`
+				: `<p class="petit">${bi("La facture n'avait pas été payée : il n'y a rien à régler.", 'La factura èra pas estada pagada : i a pas res de pagar.', true)}</p>`}`;
 	} else if (p.paiement) {
-		blocPaiement = `<h4>Paiement</h4><p class="f-tampon">Payée le ${dateFr(p.paiement.date)}</p><p>par ${esc(p.paiement.mode.toLowerCase())}. Merci !</p>`;
+		blocPaiement = `<h4>${bi('Paiement', 'Pagament', true)}</h4>
+			<p class="f-tampon">${bi(`Payée le ${dateFr(p.paiement.date)}`, `Pagada lo ${dateFr(p.paiement.date)}`, true)}</p>
+			<p>${bi(`par ${esc(p.paiement.mode.toLowerCase())}. Merci !`, 'Mercé !', true)}</p>`;
 	} else {
-		blocPaiement = `<h4>Paiement par virement</h4>
-			<p>À régler avant le <b>${dateLongue(p.echeance)}</b>.</p>
+		blocPaiement = `<h4>${bi('Paiement par virement', 'Pagament per virament', true)}</h4>
+			<p>${bi(`À régler avant le <b>${dateLongue(p.echeance)}</b>.`, `De pagar abans lo ${dateOc(p.echeance)}.`, true)}</p>
 			<p class="petit">${esc(R.titulaire || R.nom)}${R.banque ? ' · ' + esc(R.banque) : ''}</p>
 			<p class="f-iban">IBAN ${esc(R.iban) || '<span class="vide">à remplir</span>'}</p>
 			${R.bic ? `<p class="petit">BIC ${esc(R.bic)}</p>` : ''}
-			<p class="petit">Indique en référence du virement : <b>${apercu ? 'le numéro de facture' : esc(p.numero)}</b></p>`;
+			<p class="petit">${bi(`Indique en référence du virement : <b>${apercu ? 'le numéro de facture' : esc(p.numero)}</b>`, 'Referéncia del virament : lo numèro de la factura.', true)}</p>`;
 	}
 
-	const tarifs = p.tarif ? `<p class="petit" style="margin-top:2.5mm">Tu as choisi le tarif <b>${TARIFS[p.tarif]}</b>. Trois tarifs au choix, sur simple déclaration : solidaire ${R.prix.solidaire[1]} €, classique ${R.prix.classique[1]} €, engagé ${R.prix.engage[1]} € l'heure. Le tarif engagé aide à financer le solidaire.</p>` : '';
+	const tarifs = p.tarif ? `<p class="f-tarifs">${bi(
+		`Tu as choisi le tarif <b>${TARIFS[p.tarif]}</b>. Trois tarifs au choix, sur simple déclaration : solidaire ${R.prix.solidaire[1]} €, classique ${R.prix.classique[1]} €, engagé ${R.prix.engage[1]} € l'heure. Le tarif engagé aide à financer le solidaire.`,
+		`As causit lo prètz ${TARIFS_OC[p.tarif]}. Tres prètz al causit, sens cap de justificatiu : solidari ${R.prix.solidaire[1]} €, classic ${R.prix.classique[1]} €, engatjat ${R.prix.engage[1]} € l'ora. Lo prètz engatjat finança lo prètz solidari.`, true)}</p>` : '<span></span>';
+	const somme = euros(Math.abs(p.total)).replace(' €', '&nbsp;€');
 	const transparence = avoir ? '' : `<div class="f-bloc">
-		<h4>Où vont tes ${euros(Math.abs(p.total)).replace(' €', '&nbsp;€')}</h4>
+		<h4>${bi(`Où vont tes ${somme}`, `Ont van tos ${somme}`, true)}</h4>
 		<div class="barre" role="img" aria-label="${pctCoti} % de cotisations sociales, le reste pour ${esc(prenom)}"><span class="coti" style="width:${pctCoti}%"></span><span class="prof" style="width:${100 - pctCoti}%"></span></div>
 		<div class="legende">
-			<i style="background:var(--aur)"></i><span>Cotisations sociales (${String(pctCoti).replace('.', ',')} %)</span><b>${euros(coti)}</b>
-			<i style="background:var(--brica)"></i><span>Pour ${esc(prenom)}, avant impôt : préparation, cours, suivi</span><b>${euros(reste)}</b>
+			<i style="background:var(--aur)"></i><span>${bi(`Cotisations sociales (${pct} %)`, 'Cotizacions socialas', true)}</span><b>${euros(coti)}</b>
+			<i style="background:var(--brica)"></i><span>${bi(`Pour ${esc(prenom)}, avant impôt : préparation, cours, suivi`, `Per ${esc(prenom)}, abans impòst : preparacion e corses`, true)}</span><b>${euros(reste)}</b>
 		</div>
-		${tarifs}
 	</div>`;
 
+	const titre = avoir ? ['Avoir', 'Aver'] : ['Facture', 'Factura'];
 	return `<article class="feuille" aria-label="Facture">
 		${p.annuleePar ? '<div class="f-annulee" aria-hidden="true">Annulée</div>' : ''}
 		<header class="f-tete">
-			<div class="f-marque">${crotz(62)}<div><b>Lo Ligam</b><span>Cours d'occitan en visio</span></div></div>
-			<div class="f-titre"><b>${avoir ? 'Avoir' : 'Facture'}</b>
+			<div class="f-marque">${crotz(62)}<div><b>Lo Ligam</b><span>${bi("Cours d'occitan en visio", "Corses d'occitan en visio", true)}</span></div></div>
+			<div class="f-titre"><b>${titre[0]}</b>${R.bilingue ? `<span class="oc-titre" lang="oc">${titre[1]}</span>` : ''}
 				<span class="num">N° ${apercu ? 'donné à l\'émission' : esc(p.numero)}</span>
-				<span class="date">${dateLongue(p.date)}</span></div>
+				<span class="date">${dateLongue(p.date)}${ocB(dateOc(p.date))}</span></div>
 		</header>
 		<section class="f-parties">
 			<div><h4>De</h4>${vendeur}</div>
-			<div><h4>Pour</h4>${client}</div>
+			<div><h4>${bi('Pour', 'Per')}</h4>${client}</div>
 		</section>
 		<table class="f-lignes">
-			<thead><tr><th>Désignation</th><th class="n">Qté</th><th class="n">Prix unitaire</th><th class="n">Montant</th></tr></thead>
+			<thead><tr><th>${bi('Désignation', 'Descripcion', true)}</th><th class="n">${bi('Qté', 'Qt.', true)}</th><th class="n">${bi('Prix unitaire', 'Prètz unitari', true)}</th><th class="n">${bi('Montant', 'Montant', true)}</th></tr></thead>
 			<tbody>${lignes}</tbody>
 		</table>
-		<div class="f-total"><div>
-			<div class="ligne somme"><span>${avoir ? "Total de l'avoir" : 'Total à payer'}</span><span>${euros(p.total)}</span></div>
-			<div class="tva">${esc(R.mentionTva)}</div>
+		<div class="f-total">${tarifs}<div>
+			<div class="ligne somme"><span>${bi(avoir ? "Total de l'avoir" : 'Total à payer', avoir ? "Total de l'aver" : 'Total de pagar', true)}</span><span>${euros(p.total)}</span></div>
+			<div class="tva">${esc(R.mentionTva)}${ocB(esc(R.mentionTvaOc))}</div>
 		</div></div>
 		<section class="f-blocs">
 			<div class="f-bloc">${blocPaiement}</div>
 			${transparence}
 		</section>
 		<footer class="f-pied">
-			<p>${esc(R.escompte)} ${esc(R.penalites)}</p>
-			<div class="fin"><span>${esc(R.nom || '')}${R.nom ? ', EI' : ''}${R.siret ? ' · SIRET ' + esc(R.siret) : ''}${R.site ? ' · ' + esc(R.site) : ''}</span><span class="f-merce">Mercé !</span></div>
+			${bi2(`${esc(R.escompte)} ${esc(R.penalites)}`, R.escompteOc || R.penalitesOc ? `${esc(R.escompteOc)} ${esc(R.penalitesOc)}` : '')}
+			<div class="fin"><span>${esc(R.nom || '')}${R.nom ? ', EI' : ''}${R.siret ? ' · SIRET ' + esc(R.siret) : ''}${R.site ? ' · ' + esc(R.site) : ''}</span><span class="f-merce" lang="oc">Mercé !</span></div>
 		</footer>
 	</article>`;
 }
@@ -359,6 +412,7 @@ const vues = {
 		${b.formule === '1' ? `<div class="deux"><div><label for="quantite">Nombre de cours</label><input id="quantite" type="number" min="1" value="${b.quantite}"></div>
 			<div><label for="cours">Date(s) du cours</label><input id="cours" value="${esc(b.cours)}" placeholder="ex. le 24/10/2026"></div></div>` : ''}
 		${b.formule === 'libre' ? `<label for="designation">Désignation</label><input id="designation" value="${esc(b.designation)}" placeholder="ex. Soutien à Lo Ligam (don)">
+			<label for="designationOc">Désignation en occitan <small>(facultatif)</small></label><input id="designationOc" lang="oc" value="${esc(b.designationOc)}" placeholder="ex. Sosten a Lo Ligam (don)">
 			<label for="montant">Montant (€)</label><input id="montant" inputmode="decimal" value="${esc(b.montant)}">` : ''}
 		<div id="manques">${m.length ? `<div class="alerte">Il manque : ${m.join(', ')}.</div>` : ''}</div>
 		<button class="bouton" id="emettre" ${m.length ? 'disabled' : ''}>Émettre la facture (${euros(p.total)})</button>
@@ -425,10 +479,15 @@ const vues = {
 		${champ('bic', 'BIC')}
 		<h3>Prix</h3>
 		<table class="liste"><thead><tr><th></th><th>1 cours</th><th>4 cours</th><th>12 cours</th></tr></thead><tbody>${prix}</tbody></table>
+		<h3>Langues</h3>
+		<label style="font-weight:400"><input id="r-bilingue" type="checkbox" ${R.bilingue ? 'checked' : ''} style="width:auto"> Facture bilingue, français et occitan <small>(le français reste en premier, comme l'exige la loi)</small></label>
 		<h3>Mentions</h3>
 		${champ('mentionTva', 'Mention de TVA', '(change au 1er janvier 2027 : à vérifier)')}
+		${champ('mentionTvaOc', 'Mention de TVA en occitan')}
 		${champ('escompte', 'Escompte')}
+		${champ('escompteOc', 'Escompte en occitan')}
 		${champ('penalites', 'Pénalités de retard')}
+		${champ('penalitesOc', 'Pénalités de retard en occitan')}
 		<div class="deux">${champ('delaiJours', 'Délai de paiement', '(jours)', 'number')}${champ('tauxCotisations', 'Cotisations', '(%)', 'number')}</div>
 		<button class="bouton" id="enregistrer">Enregistrer les réglages</button>`;
 	}
@@ -470,7 +529,7 @@ function brancher() {
 				const r = await api('/api/piece', p);
 				pieces = r.factures;
 				choisie = r.piece.numero;
-				Object.assign(brouillon, { nom: '', adresse: '', cours: '', designation: '', montant: '', quantite: 1 });
+				Object.assign(brouillon, { nom: '', adresse: '', cours: '', designation: '', designationOc: '', montant: '', quantite: 1 });
 				vue = 'liste';
 				afficher();
 				dire(`Facture ${r.piece.numero} émise. Imprime-la ou enregistre-la en PDF.`);
@@ -506,14 +565,14 @@ function brancher() {
 	if (vue === 'reglatges') {
 		$('#enregistrer').onclick = async () => {
 			const r = {};
-			v.querySelectorAll('[id^="r-"]').forEach((el) => (r[el.id.slice(2)] = el.type === 'number' ? Number(el.value) : el.value.trim()));
+			v.querySelectorAll('[id^="r-"]').forEach((el) => (r[el.id.slice(2)] = el.type === 'checkbox' ? el.checked : el.type === 'number' ? Number(el.value) : el.value.trim()));
 			r.prix = structuredClone(R.prix);
 			v.querySelectorAll('[data-prix]').forEach((el) => { const [t, f] = el.dataset.prix.split('.'); r.prix[t][f] = Number(el.value.replace(',', '.')) || 0; });
 			try { R = (await api('/api/reglatges', r)).reglatges; afficher(); dire('Réglages enregistrés.'); }
 			catch (e) { dire(e.message, true); }
 		};
-		v.querySelectorAll('input, textarea').forEach((el) => el.addEventListener('input', () => {
-			R = { ...R, [el.id.slice(2)]: el.type === 'number' ? Number(el.value) : el.value };
+		v.querySelectorAll('[id^="r-"]').forEach((el) => el.addEventListener(el.type === 'checkbox' ? 'change' : 'input', () => {
+			R = { ...R, [el.id.slice(2)]: el.type === 'checkbox' ? el.checked : el.type === 'number' ? Number(el.value) : el.value };
 			afficherFeuille();
 		}));
 	}
