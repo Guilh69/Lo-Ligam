@@ -234,5 +234,24 @@
     { "clau": "istoria.contacte.titol", "tipe": "text", "oc": "Escambiem", "fr": "Échangeons" },
     { "clau": "istoria.contacte.tèxt", "tipe": "text", "oc": "Una question, un cors, una idèa ? Escriu-me, te respondrai.", "fr": "Une question, un cours, une idée ? Écris-moi, je te répondrai." },
     { "clau": "istoria.contacte.reservar", "tipe": "ligam", "oc": "Reservar un cors en visio", "fr": "Réserver un cours en visio", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" }
+  ],
+  "amassa": [
+    { "clau": "amassa.titol", "tipe": "text", "oc": "Amassa", "fr": "Rassemble" },
+    { "clau": "amassa.frasa", "tipe": "text", "oc": "A escriure : ta frasa sus Amassa", "fr": "À écrire : ta phrase sur Rassemble", "visible": false },
+    { "clau": "amassa.teulas.grops", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 1 },
+    { "clau": "amassa.teulas.grops.ligam", "tipe": "ligam", "lista": "amassa.teulas.grops", "oc": "Grops", "fr": "Groupes", "ligam": "/grops" },
+    { "clau": "amassa.teulas.grops.sota", "tipe": "text", "lista": "amassa.teulas.grops", "oc": "Rencontrar d’autras personas que parlan occitan, prèp de tu o en linha.", "fr": "Rencontrer d’autres personnes qui parlent occitan, près de chez toi ou en ligne." },
+    { "clau": "amassa.teulas.cercles", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 2 },
+    { "clau": "amassa.teulas.cercles.ligam", "tipe": "ligam", "lista": "amassa.teulas.cercles", "oc": "Cercles e associacions", "fr": "Cercles et associations", "ligam": "/carta" },
+    { "clau": "amassa.teulas.cercles.sota", "tipe": "text", "lista": "amassa.teulas.cercles", "oc": "Las associacions occitanas, sus la carta.", "fr": "Les associations occitanes, sur la carte." },
+    { "clau": "amassa.teulas.forum", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 3 },
+    { "clau": "amassa.teulas.forum.ligam", "tipe": "ligam", "lista": "amassa.teulas.forum", "oc": "Fòrum", "fr": "Forum", "ligam": "/forum" },
+    { "clau": "amassa.teulas.forum.sota", "tipe": "text", "lista": "amassa.teulas.forum", "oc": "S’ajudar per aprene.", "fr": "S’entraider pour apprendre." },
+    { "clau": "amassa.teulas.ideas", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 4 },
+    { "clau": "amassa.teulas.ideas.ligam", "tipe": "ligam", "lista": "amassa.teulas.ideas", "oc": "Boita d’idèas", "fr": "Boîte à idées", "ligam": "/ideas" },
+    { "clau": "amassa.teulas.ideas.sota", "tipe": "text", "lista": "amassa.teulas.ideas", "oc": "Per melhorar Lo Ligam amb tu.", "fr": "Pour améliorer Lo Ligam avec toi." },
+    { "clau": "amassa.teulas.instagram", "tipe": "bloc", "lista": "amassa.teulas", "ordre": 5 },
+    { "clau": "amassa.teulas.instagram.ligam", "tipe": "ligam", "lista": "amassa.teulas.instagram", "oc": "Instagram", "fr": "Instagram", "ligam": "https://www.instagram.com/lo_ligam/" },
+    { "clau": "amassa.teulas.instagram.sota", "tipe": "text", "lista": "amassa.teulas.instagram", "oc": "Los visuals de Lo Ligam.", "fr": "Les visuels de Lo Ligam." }
   ]
 }

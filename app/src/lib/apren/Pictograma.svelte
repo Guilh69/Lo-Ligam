@@ -4,7 +4,9 @@
 	// (visio), un chemin (parcours), un dé (leçon d'essai), une image (mots en
 	// images), des barres qui montent (progression) ; pour Se parla (25-10), une
 	// carte pliée, un livre ouvert (wiki), deux notes (œuvres), une page
-	// d'écriture (articles). Toujours décoratifs : la
+	// d'écriture (articles) ; pour Amassa (25-10), trois personnes (groupes),
+	// deux bulles (forum), une ampoule (boîte à idées), une pile d'images
+	// (Instagram). Toujours décoratifs : la
 	// case porte son nom en toutes lettres.
 	let { nom = 'autre', size = '3rem' } = $props();
 </script>
@@ -57,6 +59,25 @@
 	{:else if nom === 'articles'}
 		<rect x="7" y="7" width="34" height="34" rx="3" />
 		<path d="M13 15h22M13 22h22M13 29h22M13 36h13" />
+	{:else if nom === 'grops'}
+		<circle cx="24" cy="14" r="5" />
+		<path d="M14.5 36c1.2-6.6 4.8-10 9.5-10s8.3 3.4 9.5 10" />
+		<circle cx="10.5" cy="20" r="3.8" />
+		<path d="M3.5 36c.8-4.8 3.4-7.5 7-7.5 1.6 0 3 .5 4.1 1.5" />
+		<circle cx="37.5" cy="20" r="3.8" />
+		<path d="M44.5 36c-.8-4.8-3.4-7.5-7-7.5-1.6 0-3 .5-4.1 1.5" />
+	{:else if nom === 'forum'}
+		<path d="M6 9h24a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H15l-7 6v-6H6a3 3 0 0 1-3-3V12a3 3 0 0 1 3-3z" />
+		<path d="M37 17h5a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-2v6l-7-6H24a3 3 0 0 1-3-3v-1" />
+	{:else if nom === 'ideas'}
+		<path d="M17.5 33c0-4.5-6.5-7.5-6.5-15a13 13 0 0 1 26 0c0 7.5-6.5 10.5-6.5 15z" />
+		<path d="M18 38.5h12M20 43.5h8" />
+		<path d="M24 33V22l-3.5-3.5M24 22l3.5-3.5" />
+	{:else if nom === 'imatges'}
+		<rect x="12" y="12" width="30" height="30" rx="5" />
+		<path d="M6 34V10a4 4 0 0 1 4-4h24" />
+		<circle cx="27" cy="27" r="6.5" />
+		<circle cx="35.5" cy="18.5" r="1.4" fill="currentColor" stroke="none" />
 	{:else}
 		<circle cx="24" cy="24" r="17" />
 		<path d="M16 24h16M26 17l7 7-7 7" />

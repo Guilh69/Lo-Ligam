@@ -44,6 +44,8 @@ export const PLAN = [
 		// « Amassa » / « Rassemble » remplace « Se viu » / « Se vit » (Romain, 2026-10-21 :
 		// « se viu ne correspond pas au contenu ») ; l'id reste 'viu' (ancres, styles)
 		id: 'viu', n: '03', oc: 'Amassa', fr: 'Rassemble',
+		// la page de la rubrique, en cases de couleur comme S'apren (2026-10-25)
+		href: '/amassa',
 		// Amassa = la communauté au sens strict (Òbras et Articles partis dans
 		// Se parla le 2026-10-22)
 		grops: [

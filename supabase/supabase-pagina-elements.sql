@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (198 lignes). Jamais écrasés s'ils existent déjà.
+-- (229 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -215,6 +215,20 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.crida.sota', 'acuelh', 'text', null, 0, 'Tres mots uèi, una lenga deman.', 'Trois mots aujourd’hui, une langue demain.', null, null, true),
 	('acuelh.crida.reservar', 'acuelh', 'ligam', null, 0, 'Reservar un primièr cors', 'Réserver un premier cours', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true),
 	('acuelh.crida.sol', 'acuelh', 'ligam', null, 0, 'Començar sol·a', 'Commencer seul·e', '/aprene/essai', null, true),
+	('parla.titol', 'parla', 'text', null, 0, 'Se parla', 'Se parle', null, null, true),
+	('parla.frasa', 'parla', 'text', null, 0, 'A escriure : ta frasa sus Se parla', 'À écrire : ta phrase sur Se parle', null, null, false),
+	('parla.teulas.carta', 'parla', 'bloc', 'parla.teulas', 1, null, null, null, null, true),
+	('parla.teulas.carta.ligam', 'parla', 'ligam', 'parla.teulas.carta', 0, 'La carta', 'La carte', '/carta', null, true),
+	('parla.teulas.carta.sota', 'parla', 'text', 'parla.teulas.carta', 0, 'L’aira culturala occitana, sas lengas e sos luòcs.', 'L’aire culturelle occitane, ses langues et ses lieux.', null, null, true),
+	('parla.teulas.wiki', 'parla', 'bloc', 'parla.teulas', 2, null, null, null, null, true),
+	('parla.teulas.wiki.ligam', 'parla', 'ligam', 'parla.teulas.wiki', 0, 'Lo wiki', 'Le wiki', '/wiki', null, true),
+	('parla.teulas.wiki.sota', 'parla', 'text', 'parla.teulas.wiki', 0, 'A escriure', 'À écrire', null, null, false),
+	('parla.teulas.obras', 'parla', 'bloc', 'parla.teulas', 3, null, null, null, null, true),
+	('parla.teulas.obras.ligam', 'parla', 'ligam', 'parla.teulas.obras', 0, 'Òbras', 'Œuvres', '/obras', null, true),
+	('parla.teulas.obras.sota', 'parla', 'text', 'parla.teulas.obras', 0, 'Çò qu’escoti, çò que legissi, çò que te fau descobrir.', 'Ce que j’écoute, ce que je lis, ce que je te fais découvrir.', null, null, true),
+	('parla.teulas.articles', 'parla', 'bloc', 'parla.teulas', 4, null, null, null, null, true),
+	('parla.teulas.articles.ligam', 'parla', 'ligam', 'parla.teulas.articles', 0, 'Articles', 'Articles', '/articles', null, true),
+	('parla.teulas.articles.sota', 'parla', 'text', 'parla.teulas.articles', 0, 'A escriure', 'À écrire', null, null, false),
 	('apren.titol', 'apren', 'text', null, 0, 'S’apren', 'S’apprend', null, null, true),
 	('apren.frasa', 'apren', 'text', null, 0, 'A escriure : ta frasa sus S’apren', 'À écrire : ta phrase sur S’apprend', null, null, false),
 	('apren.teulas.visio', 'apren', 'bloc', 'apren.teulas', 1, null, null, null, null, true),
@@ -351,5 +365,22 @@ L''idée, c''est d''apprendre en même temps que je partage. Je ne me présente 
 	('istoria.espelida.c2.tèxt', 'istoria', 'text', 'istoria.espelida.c2', 0, '', 'Aujourd''hui, j''ai envie de passer à un stade supérieur : enseigner vraiment ce que j''ai appris, partager ma vision de la réalité occitane en France aujourd''hui, dans sa complexité, et surtout créer un espace d''échange.', null, null, true),
 	('istoria.contacte.titol', 'istoria', 'text', null, 0, 'Escambiem', 'Échangeons', null, null, true),
 	('istoria.contacte.tèxt', 'istoria', 'text', null, 0, 'Una question, un cors, una idèa ? Escriu-me, te respondrai.', 'Une question, un cours, une idée ? Écris-moi, je te répondrai.', null, null, true),
-	('istoria.contacte.reservar', 'istoria', 'ligam', null, 0, 'Reservar un cors en visio', 'Réserver un cours en visio', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true)
+	('istoria.contacte.reservar', 'istoria', 'ligam', null, 0, 'Reservar un cors en visio', 'Réserver un cours en visio', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true),
+	('amassa.titol', 'amassa', 'text', null, 0, 'Amassa', 'Rassemble', null, null, true),
+	('amassa.frasa', 'amassa', 'text', null, 0, 'A escriure : ta frasa sus Amassa', 'À écrire : ta phrase sur Rassemble', null, null, false),
+	('amassa.teulas.grops', 'amassa', 'bloc', 'amassa.teulas', 1, null, null, null, null, true),
+	('amassa.teulas.grops.ligam', 'amassa', 'ligam', 'amassa.teulas.grops', 0, 'Grops', 'Groupes', '/grops', null, true),
+	('amassa.teulas.grops.sota', 'amassa', 'text', 'amassa.teulas.grops', 0, 'Rencontrar d’autras personas que parlan occitan, prèp de tu o en linha.', 'Rencontrer d’autres personnes qui parlent occitan, près de chez toi ou en ligne.', null, null, true),
+	('amassa.teulas.cercles', 'amassa', 'bloc', 'amassa.teulas', 2, null, null, null, null, true),
+	('amassa.teulas.cercles.ligam', 'amassa', 'ligam', 'amassa.teulas.cercles', 0, 'Cercles e associacions', 'Cercles et associations', '/carta', null, true),
+	('amassa.teulas.cercles.sota', 'amassa', 'text', 'amassa.teulas.cercles', 0, 'Las associacions occitanas, sus la carta.', 'Les associations occitanes, sur la carte.', null, null, true),
+	('amassa.teulas.forum', 'amassa', 'bloc', 'amassa.teulas', 3, null, null, null, null, true),
+	('amassa.teulas.forum.ligam', 'amassa', 'ligam', 'amassa.teulas.forum', 0, 'Fòrum', 'Forum', '/forum', null, true),
+	('amassa.teulas.forum.sota', 'amassa', 'text', 'amassa.teulas.forum', 0, 'S’ajudar per aprene.', 'S’entraider pour apprendre.', null, null, true),
+	('amassa.teulas.ideas', 'amassa', 'bloc', 'amassa.teulas', 4, null, null, null, null, true),
+	('amassa.teulas.ideas.ligam', 'amassa', 'ligam', 'amassa.teulas.ideas', 0, 'Boita d’idèas', 'Boîte à idées', '/ideas', null, true),
+	('amassa.teulas.ideas.sota', 'amassa', 'text', 'amassa.teulas.ideas', 0, 'Per melhorar Lo Ligam amb tu.', 'Pour améliorer Lo Ligam avec toi.', null, null, true),
+	('amassa.teulas.instagram', 'amassa', 'bloc', 'amassa.teulas', 5, null, null, null, null, true),
+	('amassa.teulas.instagram.ligam', 'amassa', 'ligam', 'amassa.teulas.instagram', 0, 'Instagram', 'Instagram', 'https://www.instagram.com/lo_ligam/', null, true),
+	('amassa.teulas.instagram.sota', 'amassa', 'text', 'amassa.teulas.instagram', 0, 'Los visuals de Lo Ligam.', 'Les visuels de Lo Ligam.', null, null, true)
 on conflict (clau, estat) do nothing;
