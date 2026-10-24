@@ -37,11 +37,15 @@
 				[
 					'Tes réponses avant un premier cours',
 					'Si tu remplis le questionnaire avant un premier cours en visio : ton adresse électronique, ton prénom si tu le donnes, et tes réponses (niveau, raisons, langues, lieu, rythme, envies, message). Je les reçois par courriel pour préparer le cours ; le site n’en garde aucune copie. Le courriel est effacé de ma messagerie au bout d’un an au plus tard.'
+				],
+				[
+					'Tes idées',
+					'Si tu envoies une idée dans la boîte à idées : son texte, rattaché à ton compte pour que tu la retrouves et puisses la supprimer. Je suis seul à la lire, sans savoir qui l’envoie. Elle est effacée quand tu la supprimes, quand ton compte est supprimé, et au bout de deux ans au plus tard.'
 				]
 			],
 			pourquoiT: 'Pourquoi, et sur quelle base',
 			pourquoi:
-				'Le compte et la progression reposent sur l’exécution du service que tu demandes. Les réponses facultatives du questionnaire reposent sur ton consentement : elles servent uniquement à comprendre qui apprend l’occitan, jamais à te cibler.',
+				'Le compte et la progression reposent sur l’exécution du service que tu demandes. Les réponses facultatives du questionnaire reposent sur ton consentement : elles servent uniquement à comprendre qui apprend l’occitan, jamais à te cibler. Les idées reposent aussi sur ton consentement : tu choisis de les envoyer, et tu peux les retirer.',
 			ageT: 'Âge minimum',
 			age: 'La création de compte est réservée aux personnes de 15 ans ou plus.',
 			dureeT: 'Combien de temps',
@@ -93,11 +97,15 @@
 				[
 					'Tas responsas abans un primièr cors',
 					'Se emplenas lo questionari abans un primièr cors en visio : ton corrièl, ton prenom se lo donas, e tas responsas (nivèl, rasons, lengas, luòc, ritme, envejas, messatge). Las recebi per corrièl per preparar lo cors ; lo site ne garda pas cap de còpia. Lo corrièl es escafat de ma messatjariá al cap d’un an al mai tard.'
+				],
+				[
+					'Tas idèas',
+					'Se mandas una idèa dins la boita d’idèas : son tèxte, ligat a ton compte per que la tornes trobar e la pòscas suprimir. Soi lo sol a la legir, sens saber qual la manda. Es escafada quand la suprimisses, quand ton compte es suprimit, e al cap de dos ans al mai tard.'
 				]
 			],
 			pourquoiT: 'Perqué, e sus quina basa',
 			pourquoi:
-				'Lo compte e la progression repausan sus l’execucion del servici que demandas. Las respònsas facultativas del questionari repausan sus ton consentiment : servisson unicament a comprene qual apren l’occitan, pas jamai a te ciblar.',
+				'Lo compte e la progression repausan sus l’execucion del servici que demandas. Las respònsas facultativas del questionari repausan sus ton consentiment : servisson unicament a comprene qual apren l’occitan, pas jamai a te ciblar. Las idèas repausan tanben sus ton consentiment : causisses de las mandar, e las pòdes retirar.',
 			ageT: 'Edat minimala',
 			age: 'La creacion de compte es reservada a las personas de 15 ans o mai.',
 			dureeT: 'Quant de temps',

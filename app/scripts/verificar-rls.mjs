@@ -93,6 +93,14 @@ async function verificarLectura(supabase) {
 		profils.data?.length ? `${profils.data.length} profil(s) exposé(s) !` : ''
 	);
 
+	// La boîte à idées (2026-10-25) : rien n'y est lisible sans compte
+	const ideas = await supabase.from('ideas').select('id');
+	verificar(
+		'Les idées de la boîte à idées sont illisibles',
+		!!ideas.error || ideas.data?.length === 0,
+		ideas.data?.length ? `${ideas.data.length} idée(s) exposée(s) !` : ''
+	);
+
 	const admin = await supabase.rpc('is_admin');
 	verificar("Un anonyme n'est pas administrateur", admin.data === false, `réponse : ${admin.data}`);
 }
@@ -130,6 +138,11 @@ async function verificarEscritura(supabase) {
 	await supabase.from('temas').insert({ id: '_pirata', oc: 'x', fr: 'x' });
 	const tema = await supabase.from('temas').select('id').eq('id', '_pirata');
 	verificar('AJOUTER un thème est refusé', tema.data?.length === 0);
+
+	// Une idée sans compte : refusée (l'insertion échoue, on n'a rien à relire :
+	// un anonyme ne peut pas lire la table)
+	const idea = await supabase.from('ideas').insert({ tèxte: 'Idée envoyée sans compte' });
+	verificar('ENVOYER une idée sans compte est refusé', !!idea.error);
 
 	// La tentative la plus grave : se déclarer administrateur.
 	const promocion = await supabase
