@@ -183,7 +183,15 @@ export const nombreCambiaments = () => Object.keys(edicion.brolhons).length;
 /** les brouillons qu'on ne peut pas publier (un lien mal formé) */
 export const brolhonsInvalids = () => Object.values(edicion.brolhons).filter((e) => e.tipe === 'ligam' && !e.suprimit && !ligamValid(e.ligam)).length;
 /** les textes qui comprennent les marques *or* et _italique_ */
-export const MARCATS = new Set(['acuelh.manifest.tèxt', 'acuelh.bandel.font', 'acuelh.trobador.cita']);
+export const MARCATS = new Set([
+	'acuelh.manifest.tèxt',
+	'acuelh.bandel.font',
+	'acuelh.trobador.cita',
+	'apren.frasa',
+	'visio.chapeu',
+	'visio.qual.tèxt',
+	'visio.metòde.tèxt'
+]);
 
 const esquelet = (clau, tipe, lista = null) => ({
 	clau,

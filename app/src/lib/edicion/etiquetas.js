@@ -31,7 +31,19 @@ const ETIQUETAS = [
 	['acuelh.crida.titol.2', 'Crida, linha 2', 'Appel, ligne 2'],
 	['acuelh.crida.sota', 'La frasa de la crida', 'La phrase de l’appel'],
 	['acuelh.crida.reservar', 'Boton « Reservar un cors »', 'Bouton « Réserver un cours »'],
-	['acuelh.crida.sol', 'Ligam « Començar sol·a »', 'Lien « Commencer seul·e »']
+	['acuelh.crida.sol', 'Ligam « Començar sol·a »', 'Lien « Commencer seul·e »'],
+	// page 02 S'apren et « Corses en visio » (2026-10-24)
+	['apren.titol', 'Títol de la pagina', 'Titre de la page'],
+	['apren.frasa', 'La frasa jos lo títol', 'La phrase sous le titre'],
+	['visio.titol', 'Títol de la pagina', 'Titre de la page'],
+	['visio.chapeu', 'La frasa jos lo títol', 'La phrase sous le titre'],
+	['visio.reservar', 'Boton « Reservar un cors »', 'Bouton « Réserver un cours »'],
+	['visio.qual.titol', 'Títol « Per qual »', 'Titre « Pour qui »'],
+	['visio.qual.tèxt', 'Tèxt « Per qual »', 'Texte « Pour qui »'],
+	['visio.metòde.titol', 'Títol « La metòde »', 'Titre « La méthode »'],
+	['visio.metòde.tèxt', 'La metòde', 'La méthode'],
+	['visio.debana.titol', 'Títol « Cossí se debana »', 'Titre « Comment se passe »'],
+	['visio.practica.titol', 'Títol « En practica »', 'Titre « En pratique »']
 ];
 const PER_FIN = [
 	[/^acuelh\.bandel\.[^.]+$/, 'Un mot de la lista', 'Un mot du bandeau'],
@@ -44,7 +56,12 @@ const PER_FIN = [
 	[/^acuelh\.biais\.[^.]+$/, 'Un biais d’aprene (carta)', 'Une façon d’apprendre (carte)'],
 	[/^acuelh\.biais\.[^.]+\.titol$/, 'Títol de la carta', 'Titre de la carte'],
 	[/^acuelh\.biais\.[^.]+\.tèxt$/, 'Tèxt de la carta', 'Texte de la carte'],
-	[/^acuelh\.biais\.[^.]+\.ligam$/, 'Ligam de la carta', 'Lien de la carte']
+	[/^acuelh\.biais\.[^.]+\.ligam$/, 'Ligam de la carta', 'Lien de la carte'],
+	[/^apren\.teulas\.[^.]+$/, 'Una teula', 'Une case'],
+	[/^apren\.teulas\.[^.]+\.ligam$/, 'Nom e ligam de la teula', 'Nom et lien de la case'],
+	[/^apren\.teulas\.[^.]+\.sota$/, 'Segonda linha de la teula', 'Sous-titre de la case'],
+	[/^visio\.debana\.[^.]+$/, 'Una etapa del cors', 'Une étape du cours'],
+	[/^visio\.practica\.[^.]+$/, 'Una linha practica', 'Une ligne pratique']
 ];
 const perClau = new Map(ETIQUETAS.map(([c, oc, fr]) => [c, { oc, fr }]));
 

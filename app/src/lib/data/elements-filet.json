@@ -81,5 +81,47 @@
     { "clau": "acuelh.crida.sota", "tipe": "text", "oc": "Tres mots uèi, una lenga deman.", "fr": "Trois mots aujourd’hui, une langue demain." },
     { "clau": "acuelh.crida.reservar", "tipe": "ligam", "oc": "Reservar un primièr cors", "fr": "Réserver un premier cours", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" },
     { "clau": "acuelh.crida.sol", "tipe": "ligam", "oc": "Començar sol·a", "fr": "Commencer seul·e", "ligam": "/aprene/essai" }
+  ],
+  "apren": [
+    { "clau": "apren.titol", "tipe": "text", "oc": "S’apren", "fr": "S’apprend" },
+    { "clau": "apren.frasa", "tipe": "text", "oc": "A escriure : ta frasa sus S’apren", "fr": "À écrire : ta phrase sur S’apprend", "visible": false },
+
+    { "clau": "apren.teulas.visio", "tipe": "bloc", "lista": "apren.teulas", "ordre": 1 },
+    { "clau": "apren.teulas.visio.ligam", "tipe": "ligam", "lista": "apren.teulas.visio", "oc": "Corses en visio", "fr": "Cours en visio", "ligam": "/apren/visio" },
+    { "clau": "apren.teulas.visio.sota", "tipe": "text", "lista": "apren.teulas.visio", "oc": "En pichon grop o sol a sol. Lo primièr es ofèrt.", "fr": "En petit groupe ou en tête-à-tête. Le premier est offert." },
+    { "clau": "apren.teulas.parcors", "tipe": "bloc", "lista": "apren.teulas", "ordre": 2 },
+    { "clau": "apren.teulas.parcors.ligam", "tipe": "ligam", "lista": "apren.teulas.parcors", "oc": "Lo parcors", "fr": "Le parcours", "ligam": "/aprene" },
+    { "clau": "apren.teulas.parcors.sota", "tipe": "text", "lista": "apren.teulas.parcors", "oc": "De zèro fins al nivèl B1, leiçon per leiçon.", "fr": "De zéro jusqu’au niveau B1, leçon par leçon." },
+    { "clau": "apren.teulas.ensag", "tipe": "bloc", "lista": "apren.teulas", "ordre": 3 },
+    { "clau": "apren.teulas.ensag.ligam", "tipe": "ligam", "lista": "apren.teulas.ensag", "oc": "Leiçon d’ensag", "fr": "Leçon d’essai", "ligam": "/aprene/essai" },
+    { "clau": "apren.teulas.ensag.sota", "tipe": "text", "lista": "apren.teulas.ensag", "oc": "A escriure", "fr": "À écrire", "visible": false },
+    { "clau": "apren.teulas.mots", "tipe": "bloc", "lista": "apren.teulas", "ordre": 4 },
+    { "clau": "apren.teulas.mots.ligam", "tipe": "ligam", "lista": "apren.teulas.mots", "oc": "Mots en imatges", "fr": "Mots en images", "ligam": "/mots" },
+    { "clau": "apren.teulas.mots.sota", "tipe": "text", "lista": "apren.teulas.mots", "oc": "A escriure", "fr": "À écrire", "visible": false },
+    { "clau": "apren.teulas.progression", "tipe": "bloc", "lista": "apren.teulas", "ordre": 5 },
+    { "clau": "apren.teulas.progression.ligam", "tipe": "ligam", "lista": "apren.teulas.progression", "oc": "Ma progression", "fr": "Ma progression", "ligam": "/compte" },
+    { "clau": "apren.teulas.progression.sota", "tipe": "text", "lista": "apren.teulas.progression", "oc": "A escriure", "fr": "À écrire", "visible": false }
+  ],
+  "visio": [
+    { "clau": "visio.titol", "tipe": "text", "oc": "Corses en visio", "fr": "Cours en visio" },
+    { "clau": "visio.chapeu", "tipe": "text", "oc": "De corses en dirècte, en pichon grop o sol a sol. Lo primièr es ofèrt.", "fr": "Des cours en direct, en petit groupe ou en tête-à-tête. Le premier est offert." },
+    { "clau": "visio.reservar", "tipe": "ligam", "oc": "Reservar un primièr cors", "fr": "Réserver un premier cours", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" },
+
+    { "clau": "visio.qual.titol", "tipe": "text", "oc": "Per qual ?", "fr": "Pour qui ?" },
+    { "clau": "visio.qual.tèxt", "tipe": "text", "oc": "Per las debutantas e los debutants de tot país : una primièra descobèrta de l’occitan.", "fr": "Pour les débutant·es de tout pays : une première découverte de l’occitan." },
+
+    { "clau": "visio.metòde.titol", "tipe": "text", "oc": "La metòde", "fr": "La méthode" },
+    { "clau": "visio.metòde.tèxt", "tipe": "text", "oc": "A escriure : ta metòde, amb tos mots.", "fr": "À écrire : ta méthode, avec tes mots.", "visible": false },
+
+    { "clau": "visio.debana.titol", "tipe": "text", "oc": "Cossí se debana un cors ?", "fr": "Comment se passe un cours ?" },
+    { "clau": "visio.debana.e1", "tipe": "text", "lista": "visio.debana", "ordre": 1, "oc": "Etapa 1 : a escriure", "fr": "Étape 1 : à écrire", "visible": false },
+    { "clau": "visio.debana.e2", "tipe": "text", "lista": "visio.debana", "ordre": 2, "oc": "Etapa 2 : a escriure", "fr": "Étape 2 : à écrire", "visible": false },
+    { "clau": "visio.debana.e3", "tipe": "text", "lista": "visio.debana", "ordre": 3, "oc": "Etapa 3 : a escriure", "fr": "Étape 3 : à écrire", "visible": false },
+
+    { "clau": "visio.practica.titol", "tipe": "text", "oc": "En practica", "fr": "En pratique" },
+    { "clau": "visio.practica.lengas", "tipe": "text", "lista": "visio.practica", "ordre": 1, "oc": "Dempuèi lo francés, l’anglés, lo castelhan o lo catalan.", "fr": "Depuis le français, l’anglais, le castillan ou le catalan." },
+    { "clau": "visio.practica.persona", "tipe": "text", "lista": "visio.practica", "ordre": 2, "oc": "En persona tanben, se sèm dins la meteissa vila : ara, soi a Lion.", "fr": "En personne aussi, si nous sommes dans la même ville : en ce moment, je suis à Lyon." },
+    { "clau": "visio.practica.durada", "tipe": "text", "lista": "visio.practica", "ordre": 3, "oc": "Durada : a escriure", "fr": "Durée : à écrire", "visible": false },
+    { "clau": "visio.practica.pretz", "tipe": "text", "lista": "visio.practica", "ordre": 4, "oc": "Prètz : a escriure", "fr": "Prix : à écrire", "visible": false }
   ]
 }

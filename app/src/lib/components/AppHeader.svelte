@@ -13,7 +13,7 @@
 	import AmbiancaPanel from './AmbiancaPanel.svelte';
 	import MenuVel from './MenuVel.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { RESERVAR } from '$lib/data/planSite.js';
+	import { VISIO } from '$lib/data/planSite.js';
 	import { esAdmin } from '$lib/adminStore';
 
 	let { children } = $props();
@@ -69,7 +69,7 @@
 			>
 				<Icona nom="menu" size="1.15em" /><span>{tx.menu}</span>
 			</button>
-			<a class="reservar" href={RESERVAR} target="_blank" rel="noopener">{tx.reservar}</a>
+			<a class="reservar" href={VISIO}>{tx.reservar}</a>
 
 			{#if children}
 				<div class="compte">

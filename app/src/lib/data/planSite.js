@@ -7,6 +7,11 @@
 // (choix de Romain, 2026-10-15). Occitan nouveau : À VALIDER par Romain.
 import { RESERVAR } from '$lib/acuelh/donadas.js';
 
+// Les boutons « Reservar un cors » du bandeau et du menu mènent d'abord à la
+// page qui explique le cours ; c'est elle qui ouvre le calendrier (Romain,
+// 2026-10-24 : « éviter d'arriver directement sur mon calendrier »).
+export const VISIO = '/apren/visio';
+
 export const PLAN = [
 	{
 		id: 'parla', n: '01', oc: 'Se parla', fr: 'Se parle',
@@ -20,12 +25,15 @@ export const PLAN = [
 	},
 	{
 		id: 'apren', n: '02', oc: 'S’apren', fr: 'S’apprend',
+		// la page de la rubrique, en cases de couleur (2026-10-24)
+		href: '/apren',
 		grops: [{ items: [
 			{ oc: 'Lo parcors', fr: 'Le parcours', href: '/aprene' },
 			{ oc: 'Leiçon d’ensag', fr: 'Leçon d’essai', href: '/aprene/essai' },
 			// (venait d'Amassa : « c'est de l'apprentissage », Romain, 2026-10-22)
 			{ oc: 'Mots en imatges', fr: 'Mots en images', href: '/mots' },
-			{ oc: 'Corses en visio', fr: 'Cours en visio', href: RESERVAR, defòra: true },
+			// (la page qui explique le cours avant le calendrier, Romain, 2026-10-24)
+			{ oc: 'Corses en visio', fr: 'Cours en visio', href: VISIO },
 			// (était dans l'ancien pied de page : on ne retire aucune fonction)
 			{ oc: 'Ma progression', fr: 'Ma progression', href: '/compte' }
 		] }]

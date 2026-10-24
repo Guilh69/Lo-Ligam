@@ -15,7 +15,7 @@
 	import { quartOut } from 'svelte/easing';
 	import Icona from './Icona.svelte';
 	import Crotz from './Crotz.svelte';
-	import { PLAN, LO_LIGAM, RESERVAR } from '$lib/data/planSite.js';
+	import { PLAN, LO_LIGAM, VISIO } from '$lib/data/planSite.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { portal } from '$lib/actions/portal.js';
 
@@ -121,6 +121,14 @@
 											<div class="vel-renc-grop">
 												{#if g.oc}<p class="vel-grop">{fr ? g.fr : g.oc}</p>{/if}
 												<ul>
+													<!-- la page de la rubrique, quand elle existe (2026-10-24) -->
+													{#if c.href && gi === 0}
+														<li class="vel-masc">
+															<a class="vel-ligam" href={c.href} style:--i={0} aria-current={page.url.pathname === c.href ? 'page' : undefined} onclick={tampar}
+																>{fr ? 'Toute la rubrique' : 'Tota la rubrica'}<Icona nom="suivant" size="0.8em" /></a
+															>
+														</li>
+													{/if}
 													{#each g.items as it, ii (it.href)}
 														<li class="vel-masc">
 															<a
@@ -159,7 +167,7 @@
 						</li>
 					{/each}
 				</ul>
-				<a class="vel-reservar" href={RESERVAR} target="_blank" rel="noopener" onclick={tampar}
+				<a class="vel-reservar" href={VISIO} onclick={tampar}
 					>{fr ? 'Réserver un premier cours' : 'Reservar un primièr cors'}<Icona nom="suivant" size="0.9em" /></a
 				>
 			</div>

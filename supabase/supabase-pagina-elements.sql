@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (71 lignes). Jamais écrasés s'ils existent déjà.
+-- (104 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -214,5 +214,38 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.crida.titol.2', 'acuelh', 'text', null, 0, 'començar ?', 'commencer ?', null, null, true),
 	('acuelh.crida.sota', 'acuelh', 'text', null, 0, 'Tres mots uèi, una lenga deman.', 'Trois mots aujourd’hui, une langue demain.', null, null, true),
 	('acuelh.crida.reservar', 'acuelh', 'ligam', null, 0, 'Reservar un primièr cors', 'Réserver un premier cours', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true),
-	('acuelh.crida.sol', 'acuelh', 'ligam', null, 0, 'Començar sol·a', 'Commencer seul·e', '/aprene/essai', null, true)
+	('acuelh.crida.sol', 'acuelh', 'ligam', null, 0, 'Començar sol·a', 'Commencer seul·e', '/aprene/essai', null, true),
+	('apren.titol', 'apren', 'text', null, 0, 'S’apren', 'S’apprend', null, null, true),
+	('apren.frasa', 'apren', 'text', null, 0, 'A escriure : ta frasa sus S’apren', 'À écrire : ta phrase sur S’apprend', null, null, false),
+	('apren.teulas.visio', 'apren', 'bloc', 'apren.teulas', 1, null, null, null, null, true),
+	('apren.teulas.visio.ligam', 'apren', 'ligam', 'apren.teulas.visio', 0, 'Corses en visio', 'Cours en visio', '/apren/visio', null, true),
+	('apren.teulas.visio.sota', 'apren', 'text', 'apren.teulas.visio', 0, 'En pichon grop o sol a sol. Lo primièr es ofèrt.', 'En petit groupe ou en tête-à-tête. Le premier est offert.', null, null, true),
+	('apren.teulas.parcors', 'apren', 'bloc', 'apren.teulas', 2, null, null, null, null, true),
+	('apren.teulas.parcors.ligam', 'apren', 'ligam', 'apren.teulas.parcors', 0, 'Lo parcors', 'Le parcours', '/aprene', null, true),
+	('apren.teulas.parcors.sota', 'apren', 'text', 'apren.teulas.parcors', 0, 'De zèro fins al nivèl B1, leiçon per leiçon.', 'De zéro jusqu’au niveau B1, leçon par leçon.', null, null, true),
+	('apren.teulas.ensag', 'apren', 'bloc', 'apren.teulas', 3, null, null, null, null, true),
+	('apren.teulas.ensag.ligam', 'apren', 'ligam', 'apren.teulas.ensag', 0, 'Leiçon d’ensag', 'Leçon d’essai', '/aprene/essai', null, true),
+	('apren.teulas.ensag.sota', 'apren', 'text', 'apren.teulas.ensag', 0, 'A escriure', 'À écrire', null, null, false),
+	('apren.teulas.mots', 'apren', 'bloc', 'apren.teulas', 4, null, null, null, null, true),
+	('apren.teulas.mots.ligam', 'apren', 'ligam', 'apren.teulas.mots', 0, 'Mots en imatges', 'Mots en images', '/mots', null, true),
+	('apren.teulas.mots.sota', 'apren', 'text', 'apren.teulas.mots', 0, 'A escriure', 'À écrire', null, null, false),
+	('apren.teulas.progression', 'apren', 'bloc', 'apren.teulas', 5, null, null, null, null, true),
+	('apren.teulas.progression.ligam', 'apren', 'ligam', 'apren.teulas.progression', 0, 'Ma progression', 'Ma progression', '/compte', null, true),
+	('apren.teulas.progression.sota', 'apren', 'text', 'apren.teulas.progression', 0, 'A escriure', 'À écrire', null, null, false),
+	('visio.titol', 'visio', 'text', null, 0, 'Corses en visio', 'Cours en visio', null, null, true),
+	('visio.chapeu', 'visio', 'text', null, 0, 'De corses en dirècte, en pichon grop o sol a sol. Lo primièr es ofèrt.', 'Des cours en direct, en petit groupe ou en tête-à-tête. Le premier est offert.', null, null, true),
+	('visio.reservar', 'visio', 'ligam', null, 0, 'Reservar un primièr cors', 'Réserver un premier cours', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true),
+	('visio.qual.titol', 'visio', 'text', null, 0, 'Per qual ?', 'Pour qui ?', null, null, true),
+	('visio.qual.tèxt', 'visio', 'text', null, 0, 'Per las debutantas e los debutants de tot país : una primièra descobèrta de l’occitan.', 'Pour les débutant·es de tout pays : une première découverte de l’occitan.', null, null, true),
+	('visio.metòde.titol', 'visio', 'text', null, 0, 'La metòde', 'La méthode', null, null, true),
+	('visio.metòde.tèxt', 'visio', 'text', null, 0, 'A escriure : ta metòde, amb tos mots.', 'À écrire : ta méthode, avec tes mots.', null, null, false),
+	('visio.debana.titol', 'visio', 'text', null, 0, 'Cossí se debana un cors ?', 'Comment se passe un cours ?', null, null, true),
+	('visio.debana.e1', 'visio', 'text', 'visio.debana', 1, 'Etapa 1 : a escriure', 'Étape 1 : à écrire', null, null, false),
+	('visio.debana.e2', 'visio', 'text', 'visio.debana', 2, 'Etapa 2 : a escriure', 'Étape 2 : à écrire', null, null, false),
+	('visio.debana.e3', 'visio', 'text', 'visio.debana', 3, 'Etapa 3 : a escriure', 'Étape 3 : à écrire', null, null, false),
+	('visio.practica.titol', 'visio', 'text', null, 0, 'En practica', 'En pratique', null, null, true),
+	('visio.practica.lengas', 'visio', 'text', 'visio.practica', 1, 'Dempuèi lo francés, l’anglés, lo castelhan o lo catalan.', 'Depuis le français, l’anglais, le castillan ou le catalan.', null, null, true),
+	('visio.practica.persona', 'visio', 'text', 'visio.practica', 2, 'En persona tanben, se sèm dins la meteissa vila : ara, soi a Lion.', 'En personne aussi, si nous sommes dans la même ville : en ce moment, je suis à Lyon.', null, null, true),
+	('visio.practica.durada', 'visio', 'text', 'visio.practica', 3, 'Durada : a escriure', 'Durée : à écrire', null, null, false),
+	('visio.practica.pretz', 'visio', 'text', 'visio.practica', 4, 'Prètz : a escriure', 'Prix : à écrire', null, null, false)
 on conflict (clau, estat) do nothing;

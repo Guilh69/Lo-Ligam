@@ -32,9 +32,9 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { RESERVAR, CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
+	import { CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
 	import { AMASSA } from '$lib/acuelh/amassa.js';
-	import { PLAN } from '$lib/data/planSite.js';
+	import { PLAN, VISIO } from '$lib/data/planSite.js';
 	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
@@ -98,7 +98,7 @@
 	const [PARLA, APREN, VIU] = PLAN;
 	const FIALS = [
 		{ ...PARLA, cap: rubrica('/carta'), autres: [rubrica('/wiki'), rubrica('/obras'), rubrica('/articles')] },
-		{ ...APREN, cap: rubrica('/aprene'), autres: [rubrica('/aprene/essai'), rubrica(RESERVAR)] },
+		{ ...APREN, cap: rubrica('/aprene'), autres: [rubrica('/aprene/essai'), rubrica(VISIO)] },
 		{ ...VIU, cap: { ...VIU.grops[0], href: '#viure' }, autres: [rubrica('/forum'), rubrica('/grops'), rubrica('/ideas')] }
 	];
 	// Le trait part de la fin de chaque phrase, dans la langue affichée : la
