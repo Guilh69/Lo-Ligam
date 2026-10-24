@@ -85,7 +85,7 @@
 	<title>{fr ? 'Cours en visio' : 'Corses en visio'} · Lo Ligam</title>
 	<meta
 		name="description"
-		content="Corses d’occitan en visio amb Romain, en pichon grop o sol a sol ; lo primièr es ofèrt. Cours d’occitan en visio avec Romain, en petit groupe ou en tête-à-tête ; le premier est offert."
+		content="Corses d’occitan en visio amb Romain, sol a sol ; lo primièr es ofèrt. Cours d’occitan en visio avec Romain, en tête-à-tête ; le premier est offert."
 	/>
 </svelte:head>
 

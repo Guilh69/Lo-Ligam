@@ -88,7 +88,7 @@
 
     { "clau": "apren.teulas.visio", "tipe": "bloc", "lista": "apren.teulas", "ordre": 1 },
     { "clau": "apren.teulas.visio.ligam", "tipe": "ligam", "lista": "apren.teulas.visio", "oc": "Corses en visio", "fr": "Cours en visio", "ligam": "/apren/visio" },
-    { "clau": "apren.teulas.visio.sota", "tipe": "text", "lista": "apren.teulas.visio", "oc": "En pichon grop o sol a sol. Lo primièr es ofèrt.", "fr": "En petit groupe ou en tête-à-tête. Le premier est offert." },
+    { "clau": "apren.teulas.visio.sota", "tipe": "text", "lista": "apren.teulas.visio", "oc": "Sol a sol. Lo primièr es ofèrt.", "fr": "En tête-à-tête. Le premier est offert." },
     { "clau": "apren.teulas.parcors", "tipe": "bloc", "lista": "apren.teulas", "ordre": 2 },
     { "clau": "apren.teulas.parcors.ligam", "tipe": "ligam", "lista": "apren.teulas.parcors", "oc": "Lo parcors", "fr": "Le parcours", "ligam": "/aprene" },
     { "clau": "apren.teulas.parcors.sota", "tipe": "text", "lista": "apren.teulas.parcors", "oc": "De zèro fins al nivèl B1, leiçon per leiçon.", "fr": "De zéro jusqu’au niveau B1, leçon par leçon." },
@@ -104,7 +104,7 @@
   ],
   "visio": [
     { "clau": "visio.titol", "tipe": "text", "oc": "Corses en visio", "fr": "Cours en visio" },
-    { "clau": "visio.chapeu", "tipe": "text", "oc": "De corses en dirècte, en pichon grop o sol a sol. Lo primièr es ofèrt.", "fr": "Des cours en direct, en petit groupe ou en tête-à-tête. Le premier est offert." },
+    { "clau": "visio.chapeu", "tipe": "text", "oc": "De corses en dirècte, sol a sol. Lo primièr es ofèrt.", "fr": "Des cours en direct, en tête-à-tête. Le premier est offert." },
     { "clau": "visio.reservar", "tipe": "ligam", "oc": "Reservar un primièr cors", "fr": "Réserver un premier cours", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" },
     { "clau": "visio.qual.titol", "tipe": "text", "oc": "Per qual ?", "fr": "Pour qui ?" },
     { "clau": "visio.qual.tèxt", "tipe": "text", "oc": "Per las debutantas e los debutants de tot país : una primièra descobèrta de l’occitan.", "fr": "Pour les débutant·es de tout pays : une première découverte de l’occitan." },
