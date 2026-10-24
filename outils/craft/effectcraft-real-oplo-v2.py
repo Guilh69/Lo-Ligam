@@ -25,9 +25,11 @@ GAMA = [CREME, ORC, OR, "#D4702A", BRIQUE]  # du plus clair au plus foncé, comm
 CLASSAS = [0, 5, 10, 15, 20]
 DY = 460   # la silhouette du domaine (repère 4:5) descend de 460 px
 # Départements : aplats sans contour, comme un remplissage sans trait dans QGIS
-# (Romain, 24-10) ; la couleur distingue. SEPARACION = (épaisseur, opacité) d'un
-# filet pétrole très fin qui laisse deviner les limites ; (0, 0) : aucun.
-SEPARACION = (0.8, 40)
+# (Romain, 24-10) ; la couleur distingue. Leurs frontières communes, chacune
+# tracée une seule fois, en pointillé blanc très fin (Romain, 24-10 : « un trait
+# très fin blanc en pointillé ») : points de `ep` px tous les `pas` px, à
+# `opac` % ; None : aucune limite.
+SEPARACION = {"ep": 2, "pas": 5.5, "opac": 70}
 
 # début de chaque étape (s)
 T = {1: 0.0, 2: 4.0, 3: 9.6, 4: 15.6, 5: 21.4, 6: 25.8, 7: 31.0, 8: 34.0}
@@ -71,6 +73,39 @@ def simplificar(pts, tol=0.8):
             garda[k] = True
             pila += [(i, k), (k, j)]
     return [p for p, g in zip(pts, garda) if g]
+
+
+def frontieras(deps):
+    """Les frontières communes entre départements, chacune une seule fois, en lignes ouvertes."""
+    from collections import Counter, defaultdict
+    n = Counter(frozenset((a, b)) for d in deps for r in anels(d["d"]) for a, b in zip(r, r[1:] + r[:1]) if a != b)
+    voisins = defaultdict(list)
+    for e, k in n.items():
+        if k == 2:  # un segment partagé par deux départements (les bords extérieurs n'en sont pas)
+            a, b = tuple(e)
+            voisins[a].append(b)
+            voisins[b].append(a)
+    vus, lignes = set(), []
+
+    def suivre(a, b):
+        l = [a, b]
+        vus.add(frozenset((a, b)))
+        while len(voisins[b]) == 2:
+            c = next((c for c in voisins[b] if frozenset((b, c)) not in vus), None)
+            if c is None:
+                break
+            vus.add(frozenset((b, c)))
+            l.append(c)
+            b = c
+        return l
+    for depuis_bouts in (True, False):  # des bouts et carrefours d'abord, puis les boucles fermées
+        for a in list(voisins):
+            if depuis_bouts and len(voisins[a]) == 2:
+                continue
+            for b in voisins[a]:
+                if frozenset((a, b)) not in vus:
+                    lignes.append(suivre(a, b))
+    return lignes
 
 
 def classa(p):
@@ -338,10 +373,19 @@ if N >= 2:
         doux(nom, "transform/opacity", t0, t0 + 0.45, 0, 100)
         doux(nom, "transform/scale", t0, t0 + 0.6, [94, 94, 100], [100, 100, 100])
         noms.append(nom)
-    if SEPARACION[0]:
-        forma("Limits", zona, stroke=PETROLE, ep=SEPARACION[0])
+    if SEPARACION:
+        lignes = [l for l in (simplificar(l) for l in frontieras(deps)) if len(l) >= 2]
+        cmd("layer.newShape", kind="none", name="Limits")
+        for l in lignes:
+            cmd("shape.newPath", layer="Limits", vertices=[[round(x, 1), round(y, 1)] for x, y in l], closed=False,
+                space="comp", fill=False, stroke=BLANC, strokeWidth=SEPARACION["ep"])
+        for k in range(len(lignes)):  # tiret presque nul à bout rond : un point
+            g = "contents/group" + (f"#{k + 1}" if k else "")
+            cmd("prop.set", layer="Limits", path=g + "/contents/stroke/cap", value=1)
+            cmd("prop.set", layer="Limits", path=g + "/contents/stroke/dashes/dash", value=0.1)
+            cmd("prop.set", layer="Limits", path=g + "/contents/stroke/dashes/gap", value=SEPARACION["pas"])
         duree("Limits", t, FIN)
-        doux("Limits", "transform/opacity", t + 1.7, t + 2.5, 0, SEPARACION[1])
+        doux("Limits", "transform/opacity", t + 0.5, t + 1.3, 0, SEPARACION["opac"])
         noms.append("Limits")
     # découpé sur le domaine (Béarn, Charente occitane) : un précompo, le domaine en cache
     cmd("layer.precompose", layers=["Zona"] + noms, name="Carta departaments v2", mode="move")
