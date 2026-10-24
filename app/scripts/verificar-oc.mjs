@@ -44,7 +44,9 @@ if (!clau) {
 function motsDe(texte) {
 	return texte
 		.toLowerCase()
-		.replace(/[«»?!.,·()]/g, ' ')
+		.replace(/[«»?!.,·()…]/g, ' ')
+		// « m’apèli » → apèli : l'élision (m’, t’, d’) se vérifie à part
+		.replace(/(^|\s)\p{L}{1,2}['’]/gu, ' ')
 		.split(/[\s/-]+/)
 		.map((m) => m.trim())
 		.filter((m) => m.length > 1);
@@ -62,8 +64,18 @@ async function lexiqueDuModul(slug) {
 		for (const bloc of session.blocks) {
 			if (bloc.type === 'chunks') for (const c of bloc.items) motsDe(c.oc).forEach((m) => mots.add(m));
 			if (bloc.type === 'dialogue') {
-				for (const scena of bloc.scenes) for (const l of scena.lines) motsDe(l).forEach((m) => mots.add(m));
+				for (const scena of bloc.scenes) for (const l of scena.lines) motsDe(l.oc ?? l).forEach((m) => mots.add(m));
 				for (const g of bloc.glossary ?? []) motsDe(g.oc).forEach((m) => mots.add(m));
+			}
+			// Jeux : réponses à écrire, tuiles, dialogue à choix, villes de la carte
+			for (const item of bloc.items ?? []) {
+				for (const t of [...(item.tiles ?? []), ...(item.answers ?? []), ...(item.debut ?? [])]) motsDe(t).forEach((m) => mots.add(m));
+				if (item.ditz?.oc) motsDe(item.ditz.oc).forEach((m) => mots.add(m));
+				if (bloc.type === 'carta') motsDe(item.oc).forEach((m) => mots.add(m));
+			}
+			for (const t of bloc.tours ?? []) {
+				if (t.ditz) motsDe(t.ditz).forEach((m) => mots.add(m));
+				for (const o of t.options) motsDe(o.oc).forEach((m) => mots.add(m));
 			}
 		}
 	}

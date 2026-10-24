@@ -1,6 +1,9 @@
-// Module 1.4 · A1 · Tasca « Me presenti ! » : contenu structuré.
-// Source : Modules_cors/…/cursus/modules/1.4-tasca-me-presenti.md
-// Module d'intégration : aucune forme nouvelle, tout est du recyclage 1.1-1.3.
+// Module 1.4 · A1 · « E tu ? » : la tâche de l'unité 1 (Adieu !), rédigée
+// par Claude le 2026-10-25 sur le modèle du module 1.1 (même chemin en six
+// étapes, carte de l'A1 §3). Rien de nouveau : on assemble les modules 1.1
+// à 1.3 pour se présenter en six phrases. Jeu du jour : écrire sa
+// présentation, que la page rassemble à la fin.
+// ⚠️ Occitan vérifié par l'API de lo Congrès, à valider par Romain.
 
 export const modul14 = {
 	id: 'modul-1-4',
@@ -9,184 +12,245 @@ export const modul14 = {
 	relu: null,
 	slug: '1-4',
 	unitat: 'Unitat 1 · Adieu !',
-	nivel: 'A1 · Modul 1.4 · Tasca',
-	oc: 'Me presenti !',
-	fr: 'Je me présente : la tâche de l’unité',
+	nivel: 'A1 · Modul 1.4 · la tâche',
+	oc: 'E tu ?',
+	fr: 'Et toi ? Te présenter en six phrases',
 	cando:
-		'Je peux me présenter en 6 phrases : saluer, dire mon nom, d’où je viens, où j’habite, prendre congé, et poser les questions en retour.',
-	durada: '~35-40 min · 4 étapes de 8-10 min',
-	nomsPropris: ['Karim', 'Núria', 'Loís', 'Marià', 'Lisa', 'Pau'],
+		'Je peux me présenter en six phrases, à l’oral et à l’écrit : saluer, dire mon nom, d’où je suis, où j’habite, retourner la question, partir.',
+	durada: '~45 min · 6 étapes',
+	nomsPropris: ['Karim', 'Núria', 'Lisa'],
+	notesRelecture: [
+		'Le titre du module est la question qui revient dans toute l’unité : *E tu ?* Il ne demande aucun mot nouveau (la tâche n’en apprend pas).',
+		'La présentation modèle de Karim reprend uniquement les phrases des modules 1.1 à 1.3.'
+	],
 
 	sessions: [
+		// ————————————————————————————————— 1. Révision du jour
 		{
-			title: 'Grand Rappel de l’unitat 1',
-			minutes: 9,
+			title: 'Révision du jour',
+			minutes: 6,
 			blocks: [
 				{
-					type: 'reveal',
-					title: 'Tout ce que tu as appris (modules 1.1 à 1.3), de mémoire',
-					intro: 'Rien de nouveau aujourd’hui : on assemble. Réponds à voix haute, puis vérifie.',
+					type: 'qcm',
+					title: 'Toute l’unité, en désordre',
+					intro: 'Rien de nouveau aujourd’hui : on rassemble. De mémoire, une question à la fois.',
 					items: [
-						{ q: 'Le matin, salue ton amie et demande-lui comment ça va.', a: '*Bonjorn ! Cossí vas ?*' },
-						{ q: 'Réponds et retourne la question.', a: '*Va plan, mercé. E tu ?*' },
-						{ q: 'Demande son nom à quelqu’un que tu vouvoies.', a: '*Cossí vos dison ? / Cossí vos apelatz ?*' },
-						{ q: '« On me dit Núria. »', a: '*Me dison Núria.*' },
-						{ q: 'Une femme dit enchanté : « ___ ! »', a: '*Encantada !*' },
-						{ q: '« D’où es-tu ? »', a: '*D’ont siás ?*' },
-						{ q: '« Je suis de Béziers mais j’habite à Toulouse. »', a: '*Soi de Besièrs mas demòri a Tolosa.*' },
-						{ q: 'Quitte le groupe : vous vous revoyez demain.', a: '*A deman ! Adieu-siatz !*' }
-					]
-				},
-				{
-					type: 'note',
-					variant: 'info',
-					title: 'Réécoute',
-					paragraphs: [
-						'Rejoue les trois dialogues de l’unité (le marché, la fèsta, les origines) : c’est déjà une petite histoire, et tu comprends tout. *(Les audios arriveront ici.)*'
+						{
+							q: 'Le matin, au marchand, que tu vouvoies :',
+							options: ['Bonjorn !', 'Adieu !', 'Bon ser !'],
+							correct: 0,
+							oc: true,
+							choses: ['bonjorn'],
+							explain: '*Adieu* est familier : entre amis, entre jeunes.'
+						},
+						{
+							q: 'Je m’appelle Lisa :',
+							options: ['M’apèli Lisa.', 'Soi de Lisa.', 'Demòri a Lisa.'],
+							correct: 0,
+							oc: true,
+							choses: ['m-apeli'],
+							explain: '*M’apèli…* ou *Me dison…*'
+						},
+						{
+							q: 'D’où es-tu ?',
+							options: ['D’ont siás ?', 'Ont demòras ?', 'Cossí vas ?'],
+							correct: 0,
+							oc: true,
+							choses: ['d-ont-sias'],
+							explain: '*Ont demòras ?* demande où tu habites.'
+						},
+						{
+							q: 'J’habite à Toulouse :',
+							options: ['Demòri a Tolosa.', 'Soi de Tolosa.'],
+							correct: 0,
+							oc: true,
+							choses: ['demori-a'],
+							explain: '*Soi de…* dit d’où l’on vient ; *Demòri a…* où l’on habite.'
+						},
+						{
+							q: 'Une dame âgée te dit *Encantada !* Tu es un homme :',
+							options: ['Encantat !', 'Encantada !'],
+							correct: 0,
+							oc: true,
+							choses: ['encantat'],
+							explain: 'Un homme dit *Encantat*.'
+						},
+						{
+							q: 'Tu quittes un groupe, tu les revois demain :',
+							options: ['A deman ! Adieu-siatz !', 'A lèu ! Adieu !'],
+							correct: 0,
+							oc: true,
+							choses: ['a-deman', 'adieu-siatz'],
+							explain: 'Demain précisément : *A deman*. Plusieurs personnes : *Adieu-siatz*.'
+						}
 					]
 				}
 			]
 		},
 
+		// ————————————————————————————————— 2. Escota
 		{
-			title: 'Tout mélangé',
-			minutes: 10,
+			title: 'Escota',
+			fr: 'écoute',
+			minutes: 8,
 			blocks: [
 				{
+					type: 'dialogue',
+					title: 'Karim se présente',
+					intro: 'Karim se présente à Núria, qu’il ne connaît pas encore. Six phrases. Écoute deux fois, puis lis.',
+					scenes: [
+						{
+							title: 'Karim',
+							subtitle: '(Karim se présente)',
+							lines: [
+								{ oc: 'Adieu !', sound: 'a-DIOU !', fr: 'Salut !' },
+								{ oc: 'Me dison Karim.', sound: 'mé DI-zoun ka-RIM.', fr: 'Je m’appelle Karim.' },
+								{ oc: 'Soi de Besièrs.', sound: 'souï dé bé-ZYÈS.', fr: 'Je suis de Béziers.' },
+								{ oc: 'Mas demòri a Tolosa.', sound: 'mas dé-MÒ-ri a tou-LOU-zo.', fr: 'Mais j’habite à Toulouse.' },
+								{ oc: 'E tu, cossí te dison ? D’ont siás ?', sound: 'é TU, cou-si té DI-zoun ? doun SYOS ?', fr: 'Et toi, comment t’appelles-tu ? D’où es-tu ?' },
+								{ oc: 'Encantat ! A lèu !', sound: 'én-can-TAT ! a LÈOU !', fr: 'Enchanté ! À bientôt !' }
+							]
+						}
+					]
+				},
+				{
 					type: 'qcm',
-					title: 'L’unité entière en désordre',
+					title: 'As-tu compris ?',
+					intro: 'Une question à la fois.',
 					items: [
 						{
-							q: 'Le soir, tu arrives et tu salues un groupe :',
-							options: ['Bon ser ! Adieu-siatz !', 'Bonjorn ! Adieu !', 'A lèu ! A deman !'],
+							q: 'Karim tutoie Núria. Quel mot te le montre ?',
+							options: ['Adieu', 'Adieu-siatz', 'Bon ser'],
 							correct: 0,
-							choses: ['bon-ser', 'adieu-siatz'],
-							explain: 'Soir → *Bon ser* ; groupe → *Adieu-siatz*.'
+							oc: true,
+							choses: ['adieu'],
+							explain: '*Adieu* : un salut familier, entre jeunes. Il dit aussi *E tu ?*'
 						},
 						{
-							q: '(ela) ___ de Carcassona.',
-							options: ['es', 'soi', 'siás'],
-							correct: 0,
-							explain: 'Elle → *es*.'
-						},
-						{
-							q: 'Réponds à *Cossí anatz ?* :',
-							options: ['Va plan, mercé. E vos ?', 'Me dison Pau.', 'A deman !'],
-							correct: 0,
-							choses: ['va-plan-e-tu'],
-							explain: 'La même réponse *Va plan*, et *E vos ?* pour retourner poliment.'
-						},
-						{
-							q: '« Moi, j’habite ici. »',
-							options: ['Ieu, demòri aquí.', 'Ieu, soi aquí.', 'Demòras aquí.'],
+							q: 'Karim habite…',
+							options: ['à Toulouse', 'à Béziers'],
 							correct: 0,
 							choses: ['demori-a'],
-							explain: 'Habiter → *demòri* ; *Ieu,* pour insister.'
+							explain: 'Il est de Béziers (*Soi de Besièrs*), mais il habite à Toulouse (*demòri a Tolosa*).'
 						},
 						{
-							q: 'Un homme : « Encanta___ ! »',
-							options: ['-t', '-da', '-tz'],
+							q: 'Combien de questions pose-t-il à Núria ?',
+							options: ['deux', 'une', 'aucune'],
 							correct: 0,
-							choses: ['encantat'],
 							noShuffle: true,
-							explain: 'Homme → *Encantat*.'
-						},
-						{
-							q: 'Vrai ou faux : *Adieu* ne sert qu’à partir.',
-							options: ['Vrai', 'Faux'],
-							correct: 1,
-							choses: ['adieu'],
-							noShuffle: true,
-							explain: 'Il ouvre ET ferme la rencontre, depuis le module 1.1 !'
-						},
-						{
-							q: '« D’ont ___ ? » (tu)',
-							options: ['siás', 'soi', 'es'],
-							correct: 0,
-							choses: ['d-ont-sias'],
-							explain: 'Tu → *siás* (*ès* est aussi correct).'
-						},
-						{
-							q: '« À bientôt ! »',
-							options: ['A lèu !', 'A deman !', 'Bon ser !'],
-							correct: 0,
-							choses: ['a-leu'],
-							explain: '*A lèu* = bientôt, sans date précise.'
-						},
-						{
-							q: '*Tolosa* se prononce…',
-							options: ['tou-LOU-zo', 'to-LO-za'],
-							correct: 0,
-							explain: '*o* = « ou », *-a* final = « o ».'
+							choses: ['cossi-te-dison', 'd-ont-sias'],
+							explain: '*Cossí te dison ?* et *D’ont siás ?*'
 						}
+					]
+				}
+			]
+		},
+
+		// ————————————————————————————————— 3. Obsèrva
+		{
+			title: 'Obsèrva',
+			fr: 'observe',
+			minutes: 8,
+			blocks: [
+				{
+					type: 'table',
+					title: 'Une présentation en six phrases',
+					head: ['', 'Karim dit', 'tu peux dire aussi'],
+					rows: [
+						['1. saluer', '*Adieu !*', '*Bonjorn !* · *Bon ser !*'],
+						['2. ton nom', '*Me dison Karim.*', '*M’apèli…*'],
+						['3. d’où tu es', '*Soi de Besièrs.*', '*Soi d’aquí.*'],
+						['4. où tu habites', '*Mas demòri a Tolosa.*', '*Demòri a…*'],
+						['5. retourner la question', '*E tu, cossí te dison ? D’ont siás ?*', '*E tu, ont demòras ?*'],
+						['6. partir', '*Encantat ! A lèu !*', '*Encantada !* · *A deman !*']
+					],
+					notes: [
+						'*mas* (mais) relie l’origine et le lieu de vie : *Soi de Besièrs, mas demòri a Tolosa.*',
+						'À une personne âgée qu’on ne connaît pas, on vouvoie : *Bonjorn !*, *E vos ?*, *Adieu-siatz !*'
 					]
 				},
 				{
 					type: 'order',
-					title: 'Remets l’histoire dans l’ordre',
-					intro: 'Les 6 répliques d’une rencontre complète, mélangées.',
+					title: 'Remets la présentation dans l’ordre',
+					intro: 'Ici, chaque tuile est une phrase entière.',
 					items: [
 						{
-							tiles: [
-								'Adieu ! Cossí te dison ?',
-								'Me dison Pau. E tu ?',
-								'Ieu, m’apèli Lisa. Soi de Nimes.',
-								'Encantat !',
-								'Encantada !',
-								'A lèu !'
-							],
-							explain: 'Saluer → les noms → l’origine → enchanté·e·s → congé. La mélodie complète d’une rencontre.'
-						}
-					]
-				},
-				{
-					type: 'reveal',
-					title: 'À toi de dire',
-					items: [
-						{ q: '« Comment t’appelles-tu ? » : les deux façons.', a: '*Cossí te dison ? / Cossí t’apèlas ?*' },
-						{
-							q: 'Présente Karim (il est de Besièrs, il vit à Tolosa) en 2 phrases.',
-							a: '*Karim es de Besièrs. Demòra a Tolosa.*'
-						},
-						{
-							q: 'Ton prénom + les deux questions en retour (nom, origine).',
-							a: 'Modèle : *Me dison … E tu, cossí te dison ? D’ont siás ?*'
+							prompt: 'Salut ! Je m’appelle Núria. Je suis de Barcelone. Mais j’habite ici. Et toi ? À bientôt !',
+							tiles: ['Adieu !', 'M’apèli Núria.', 'Soi de Barcelona.', 'Mas demòri aquí.', 'E tu ?', 'A lèu !'],
+							choses: ['adieu', 'm-apeli', 'soi-de', 'demori-a', 'va-plan-e-tu', 'a-leu'],
+							explain: 'Saluer, le nom, l’origine, le lieu de vie, la question, partir.'
 						}
 					]
 				}
 			]
 		},
 
+		// ————————————————————————————————— 4. Lo jòc del jorn
 		{
-			title: 'Fluiditat',
+			title: 'Lo jòc del jorn',
+			fr: 'le jeu du jour',
+			minutes: 10,
+			blocks: [
+				{
+					type: 'escriure',
+					title: 'Escriu (écris ta présentation)',
+					intro:
+						'Six phrases, une à la fois, avec tes vrais nom et ville. À la fin, la page les rassemble : c’est ta présentation.',
+					recap: 'Ta présentation, à dire à voix haute :',
+					items: [
+						{
+							consigne: '1. Salue.',
+							answers: ['Adieu !', 'Bonjorn !', 'Bon ser !', 'Adieu-siatz !'],
+							choses: ['adieu', 'bonjorn', 'bon-ser']
+						},
+						{
+							consigne: '2. Dis ton nom.',
+							debut: ['Me dison', 'M’apèli', 'Ieu, me dison', 'Ieu, m’apèli'],
+							choses: ['me-dison', 'm-apeli'],
+							explain: 'Puis ton prénom.'
+						},
+						{
+							consigne: '3. Dis d’où tu es.',
+							answers: ['Soi d’aquí.'],
+							debut: ['Soi de', 'Soi d’', 'Ieu, soi de', 'Ieu, soi d’'],
+							choses: ['soi-de'],
+							explain: 'Avec ta ville, ou *Soi d’aquí.*'
+						},
+						{
+							consigne: '4. Dis où tu habites.',
+							answers: ['Demòri aquí.'],
+							debut: ['Demòri a', 'Mas demòri a'],
+							choses: ['demori-a']
+						},
+						{
+							consigne: '5. Retourne une question.',
+							answers: ['E tu ?', 'E tu, cossí te dison ?', 'E tu, d’ont siás ?', 'E tu, ont demòras ?', 'E tu, cossí t’apèlas ?', 'E vos ?'],
+							choses: ['va-plan-e-tu']
+						},
+						{
+							consigne: '6. Pars.',
+							answers: ['A lèu !', 'A deman !', 'Adieu !', 'Adieu-siatz !', 'Encantat ! A lèu !', 'Encantada ! A lèu !'],
+							choses: ['a-leu', 'a-deman']
+						}
+					]
+				}
+			]
+		},
+
+		// ————————————————————————————————— 5. A tu !
+		{
+			title: 'A tu !',
+			fr: 'à toi !',
 			minutes: 8,
 			blocks: [
 				{
 					type: 'note',
-					variant: 'info',
-					title: 'Va plus vite : sans chrono, jamais',
-					list: [
-						'**Ta présentation, trois fois** : nom, origine, lieu de vie, salut de départ, la 2ᵉ fois plus vite, la 3ᵉ sans notes.',
-						'**L’entretien de la fèsta** : réponds sans réfléchir aux quatre questions, *Cossí te dison ? D’ont siás ? Ont demòras ? Cossí vas ?* Puis inverse les rôles.',
-						'**5 mots-clés** pour tout rejouer : *Bonjorn – Me dison – Soi de – Demòri – A lèu*.'
-					]
-				}
-			]
-		},
-
-		{
-			title: 'La Tasca de l’unitat + Bilan',
-			minutes: 10,
-			blocks: [
-				{
-					type: 'note',
 					variant: 'task',
-					title: 'Tasca finala : Me presenti !',
+					title: 'La tâche de l’unité : te présenter',
 					paragraphs: [
-						'Enregistre (ou écris) ta présentation complète en **6 phrases** : ① salutation adaptée au moment, ② ton nom, ③ d’où tu viens, ④ où tu habites, ⑤ une question en retour (*E tu ? D’ont siás ?*), ⑥ congé.',
-						'C’est ta première vraie production : **garde-la**, tu la réécouteras dans quelques mois avec un grand sourire.',
-						'**Voie privée** : téléphone, réécoute demain. **Voie communautaire** *(bientôt)* : le post de la semaine.',
-						'**Bonus** : ajoute une 7ᵉ phrase avec le nom occitan de ta ville ou de ton village (regarde la carte de Lo Ligam).'
+						'Dis ta présentation à voix haute, d’une traite, puis enregistre-la sur ton téléphone. Réécoute-la demain, et coche les critères toi-même.',
+						'Garde ce premier enregistrement : tu le réécouteras dans quelques mois, avec le sourire.',
+						'Pour aller plus loin : présente-toi une deuxième fois en vouvoyant, comme devant une personne âgée.'
 					]
 				},
 				{
@@ -194,71 +258,88 @@ export const modul14 = {
 					key: 'criteris',
 					title: 'Critères de réussite',
 					items: [
-						'Les 6 phrases y sont, dans un ordre naturel',
-						'*soi / demòri* bien employés (origine ≠ lieu de vie)',
-						'*Encantat/Encantada* accordé, et tu/vous cohérent',
-						'Prononciation : *-a* final « o », *o* « ou », *Besièrs* sans r final'
+						'les six phrases y sont, dans un ordre naturel',
+						'*Soi de…* pour l’origine, *Demòri a…* pour le lieu de vie',
+						'le « tu » ou le « vous » reste le même du début à la fin',
+						'la prononciation : le *a* final sonne « o », le *o* sonne « ou », la syllabe forte est marquée'
 					]
 				},
 				{
 					type: 'reveal',
-					title: 'Un exemple de production',
+					title: 'Un exemple',
 					items: [
 						{
-							q: 'Quand tu as fini (pas avant !), regarde un exemple.',
-							a: '*Bonjorn ! Me dison Lisa. Soi de Nimes, mas demòri a Montpelhièr. Encantada ! E tu, cossí te dison ? D’ont siás ? A lèu !*'
+							q: 'Quand tu as fini, et pas avant, regarde un exemple.',
+							a: '*Bonjorn ! Me dison Lisa. Soi de Nimes, mas demòri a Montpelhièr. E tu, cossí te dison ? D’ont siás ? Encantada ! A lèu !*'
+						}
+					]
+				}
+			]
+		},
+
+		// ————————————————————————————————— 6. Lo son e lo bilanç
+		{
+			title: 'Lo son e lo bilanç',
+			fr: 'le son et le bilan',
+			minutes: 8,
+			blocks: [
+				{
+					type: 'note',
+					variant: 'son',
+					title: 'Les trois sons de l’unité',
+					list: [
+						'le *a* final sonne « o » : *la plaça* « la PLA-ço » (module 1.1) ;',
+						'la syllabe forte, que l’accent écrit montre : *m’apèli* « ma-PÈ-li » (module 1.2) ;',
+						'*o* sonne « ou », *ò* sonne « o » : *Tolosa*, *demòri* (module 1.3).'
+					]
+				},
+				{
+					type: 'qcm',
+					title: 'L’oreille',
+					items: [
+						{
+							q: '*Carcassona* se dit…',
+							options: ['car-ca-SOU-no', 'car-ca-SO-na'],
+							correct: 0,
+							noShuffle: true,
+							explain: 'Le *o* sonne « ou », et le *a* final sonne « o ».'
+						},
+						{
+							q: 'Dans *Encantada*, la voix appuie sur…',
+							options: ['TA', 'EN', 'DA'],
+							correct: 0,
+							noShuffle: true,
+							explain: '« én-can-TA-do » : l’avant-dernière syllabe.'
+						},
+						{
+							q: '*Òc* se dit…',
+							options: ['OK', 'OUK'],
+							correct: 0,
+							noShuffle: true,
+							explain: 'Avec l’accent grave, *ò* sonne « o ».'
 						}
 					]
 				},
 				{
 					type: 'checklist',
 					key: 'bilan',
-					title: 'Bilan de l’unitat 1 : Je peux…',
-					intro: 'Coche seulement ce que tu sais faire **seul**.',
+					title: 'Bilan de l’unité 1 : je peux…',
+					intro: 'Coche seulement ce que tu sais faire seul. Ton carnet de révision fera revenir le reste.',
 					items: [
-						'saluer et prendre congé (matin/soir, tu/vous)',
-						'demander et dire comment ça va',
-						'demander et dire le nom (deux façons)',
-						'dire d’où je viens et où j’habite',
-						'me présenter en 6 phrases d’affilée'
-					]
-				},
-				{
-					type: 'reveal',
-					title: 'Mini-test',
-					items: [
-						{ q: 'Salue un groupe le soir.', a: '*Bon ser ! Adieu-siatz !*' },
-						{ q: '« Je m’appelle » (les deux façons).', a: '*Me dison … / M’apèli …*' },
-						{ q: '(tu) ___ d’ont ?', a: '*Siás*' },
-						{ q: '« J’habite à Rodés. »', a: '*Demòri a Rodés.*' },
-						{ q: 'Ta présentation en 3 phrases, là, maintenant.', a: 'Modèle : *Me dison … Soi de … Demòri a …*' }
-					]
-				},
-				{
-					type: 'note',
-					variant: 'culture',
-					audio: true,
-					title: 'Cultura : Adieu paure Carnaval, ta première chanson',
-					paragraphs: [
-						'Tu la connais depuis le module 1.1 : maintenant tu peux la chanter en comprenant : *adieu* (il ouvre ET il ferme), *paure* (pauvre). Écoute le refrain une dernière fois, chante par-dessus, et compte les *adieu*.',
-						'C’est l’adieu le plus célèbre de la culture occitane : et ta première chanson.'
+						'saluer et partir, le matin ou le soir, en tutoyant ou en vouvoyant',
+						'demander comment ça va, et répondre',
+						'demander et dire le nom',
+						'dire d’où je suis et où j’habite',
+						'me présenter en six phrases d’affilée'
 					]
 				},
 				{
 					type: 'note',
 					variant: 'info',
-					title: 'Se parles catalan / castelhan',
+					title: 'Fin de l’unité 1',
+					glosa: { òsca: 'bravo' },
 					paragraphs: [
-						'Ta présentation entière est presque du catalan : *Em dic… / Sóc de… / Visc a…* ↔ *Me dison… / Soi de… / Demòri a…*, six phrases, deux langues sœurs.'
-					]
-				},
-				{
-					type: 'note',
-					variant: 'info',
-					title: '🎉 Fin de l’unitat 1 !',
-					paragraphs: [
-						'*Òsca !* Tu sais te présenter en occitan : saluer, te nommer, dire d’où tu viens, prendre congé. La suite du chemin : l’unitat 2, *D’ont ses ?*, origines, langues et nationalités.',
-						'**Dans 2 jours** : ta présentation complète · **Dans 7 jours** : les 4 questions · **Dans 30 jours** : toute l’unité, le site te les resservira.'
+						'*Òsca !* (bravo !) Tu sais te présenter en occitan. Dans l’unité 2, tu parleras des langues et des pays : qui parle quoi, et comment se débrouiller quand on ne comprend pas. Puis viendra la première halte, pour tout ressortir.'
 					]
 				}
 			]

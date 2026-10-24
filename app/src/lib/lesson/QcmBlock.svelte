@@ -4,6 +4,8 @@
 	// n'apparaît qu'une fois l'item courant réussi.
 	import { rich } from '$lib/lesson/rich.js';
 
+	// item.ditz = { qui, oc } : quelqu'un te parle (jeu « Escota e causís ») ;
+	// la question devient une bulle, et l'on choisit sa réponse.
 	// onResult(item, reussi) : une fois l'item trouvé, réussi s'il l'a été du
 	// premier coup (le carnet de révision note les choses qu'il teste).
 	let { block, onCorrect = () => {}, onComplete = () => {}, onResult = () => {} } = $props();
@@ -51,7 +53,10 @@
 
 	{#each block.items.slice(0, visibleCount) as item, i}
 		<div class="item" class:shake={states[i].shake}>
-			<p class="question"><span class="num">{i + 1}</span> {@html rich(item.q)}</p>
+			{#if item.ditz}
+				<p class="ditz"><span class="num">{i + 1}</span> <span class="qui">{item.ditz.qui}</span> <span class="paraula" lang="oc">{item.ditz.oc}</span></p>
+			{/if}
+			<p class="question">{#if !item.ditz}<span class="num">{i + 1}</span> {/if}{@html rich(item.q)}</p>
 			<div class="options">
 				{#each states[i].order as oi}
 					<button
@@ -117,6 +122,30 @@
 	.question {
 		margin: 0 0 0.5rem;
 		line-height: 1.55;
+		color: var(--color-text);
+	}
+
+	.ditz {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.35rem;
+		margin: 0 0 0.45rem;
+	}
+
+	.qui {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--color-teal);
+	}
+
+	.paraula {
+		padding: 0.45rem 0.85rem;
+		border-radius: 16px 16px 16px 4px;
+		background: color-mix(in srgb, var(--color-teal) 10%, white);
+		font-size: 1.05rem;
 		color: var(--color-text);
 	}
 

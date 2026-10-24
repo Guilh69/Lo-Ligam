@@ -99,8 +99,8 @@ describe('étiquettes des modules', () => {
 		for (const cle of ordre) {
 			for (const etape of moduls[cle].sessions) {
 				for (const bloc of etape.blocks) {
-					for (const item of bloc.items ?? []) {
-						for (const id of item.choses ?? []) expect(ids.has(id), `${cle} : ${id}`).toBe(true);
+					for (const item of [...(bloc.items ?? []), ...(bloc.tours ?? [])]) {
+						for (const id of item.choses ?? bloc.choses ?? []) expect(ids.has(id), `${cle} : ${id}`).toBe(true);
 					}
 				}
 			}

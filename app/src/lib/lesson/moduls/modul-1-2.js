@@ -1,6 +1,8 @@
-// Module 1.2 · A1 · « Me dison… / M'apèli… » : contenu structuré.
-// Source : Modules_cors/…/cursus/modules/1.2-me-dison-m-apeli.md
-// ⚠️ Occitan à valider par Romain avant mise en ligne (vérifié API 29/08).
+// Module 1.2 · A1 · « Cossí te dison ? » : unité 1 (Adieu !), rédigé par
+// Claude le 2026-10-25 sur le modèle du module 1.1 (même chemin en six
+// étapes, carte de l'A1 §3). Forme du jour : me dison / m'apèli.
+// Jeu du jour : le dialogue à choix avec Marià.
+// ⚠️ Occitan vérifié par l'API de lo Congrès, à valider par Romain.
 
 export const modul12 = {
 	id: 'modul-1-2',
@@ -10,500 +12,422 @@ export const modul12 = {
 	slug: '1-2',
 	unitat: 'Unitat 1 · Adieu !',
 	nivel: 'A1 · Modul 1.2',
-	oc: 'Me dison… / M’apèli…',
-	fr: 'Dire et demander le nom',
+	oc: 'Cossí te dison ?',
+	fr: 'Comment t’appelles-tu ? Dire et demander le nom',
 	cando:
-		'Je peux demander son nom à quelqu’un (en « tu » ou en « vous »), dire le mien des deux façons occitanes, et dire enchanté·e.',
-	durada: '~45 min · 6 étapes de 7-9 min',
-	nomsPropris: ['Núria', 'Loís', 'Marià', 'Karim', 'Mirelha', 'Joan', 'Lisa', 'Pau'],
+		'Je peux demander son nom à quelqu’un, en le tutoyant ou en le vouvoyant, dire le mien de deux façons, et dire enchanté ou enchantée.',
+	durada: '~50 min · 6 étapes',
+	nomsPropris: ['Núria', 'Loís', 'Marià', 'Karim', 'Lisa'],
+	notesRelecture: [
+		'Deux façons de dire son nom, présentées comme équivalentes : *Me dison* (« on me dit ») et *M’apèli*. Les deux te conviennent-elles en A1 ?',
+		'*Cossí vos dison ?* et *Cossí vos apelatz ?* pour le vouvoiement : à confirmer.',
+		'Syllabe forte : *apèli* « a-PÈ-li », *apèlas* « a-PÈ-los », mais *apelatz* « a-pé-LATS ».'
+	],
 
 	sessions: [
+		// ————————————————————————————————— 1. Révision du jour
 		{
-			title: 'Rappel de 1.1 + Escota',
-			minutes: 8,
+			title: 'Révision du jour',
+			minutes: 5,
 			blocks: [
 				{
-					type: 'reveal',
-					title: 'Rappel : de mémoire (module 1.1)',
-					intro: 'Sans rien relire. Pense ta réponse, dis-la à voix haute, puis vérifie.',
+					type: 'qcm',
+					title: 'Ce qui revient du module 1.1',
+					intro:
+						'Ton carnet de révision te ressert ce que tu as appris. Une question à la fois, de mémoire.',
 					items: [
-						{ q: 'Le matin, tu croises ton amie : « ___ ! »', a: '*Bonjorn !*, le matin.' },
 						{
-							q: 'On te lance *Cossí vas ?* : la réponse complète ?',
-							a: '*Va plan, mercé. E tu ?* : répondre **et** retourner.'
+							q: 'Le soir, tu arrives chez des amis :',
+							options: ['Bon ser !', 'Bonjorn !', 'A deman !'],
+							correct: 0,
+							oc: true,
+							choses: ['bon-ser'],
+							explain: 'Le soir, en arrivant : *Bon ser !*'
 						},
-						{ q: '*Adieu-siatz !* s’adresse à qui ?', a: 'À plusieurs personnes, ou en vouvoyant.' },
-						{ q: 'Le soir, en arrivant : « ___ ! »', a: '*Bon ser !*' },
-						{ q: 'Tu reverras cette personne demain : « ___ ! »', a: '*A deman !*' }
+						{
+							q: 'Ton ami te demande *Cossí vas ?* Tu réponds :',
+							options: ['Va plan, mercé. E tu ?', 'Va plan, mercé. E vos ?'],
+							correct: 0,
+							oc: true,
+							choses: ['va-plan-e-tu'],
+							explain: 'Ton ami te tutoie : *E tu ?*'
+						},
+						{
+							q: '*Adieu-siatz !* se dit…',
+							options: ['à plusieurs personnes, ou en vouvoyant', 'à un ami seul'],
+							correct: 0,
+							choses: ['adieu-siatz'],
+							explain: 'La fin en *-atz* dit « vous ».'
+						},
+						{
+							q: 'À bientôt !',
+							options: ['A lèu !', 'A deman !', 'Plan mercé !'],
+							correct: 0,
+							oc: true,
+							choses: ['a-leu'],
+							explain: '*A lèu* : à bientôt. *A deman* : à demain.'
+						}
 					]
-				},
+				}
+			]
+		},
+
+		// ————————————————————————————————— 2. Escota
+		{
+			title: 'Escota',
+			fr: 'écoute',
+			minutes: 10,
+			blocks: [
 				{
 					type: 'dialogue',
-					title: 'Escota : écoute d’abord, lis ensuite',
+					title: 'Deux rencontres à la fête du village',
 					intro:
-						'La fèsta du village, sur la plaça. Núria, une Catalane de passage, rencontre Loís ; plus tard, Marià fait connaissance avec Karim : elle le vouvoie. Écoute 2 fois avant de lire.',
+						'C’est la fête du village. Núria, qui arrive de Barcelone, rencontre Loís : ils sont jeunes, ils se tutoient. Plus tard, Marià rencontre Karim, qu’elle ne connaît pas : ils se vouvoient. Écoute deux fois, puis lis.',
 					scenes: [
 						{
-							title: 'Scèna 1 : Núria e Loís',
-							subtitle: '(deux jeunes, tutoiement)',
+							title: 'Núria e Loís',
+							subtitle: '(Núria et Loís, en se tutoyant)',
 							lines: [
-								{ oc: 'Adieu ! Cossí te dison ?', sound: 'a-DIOU ! cou-si té DI-zoun ?' },
-								{ oc: 'Me dison Loís. E tu, cossí t’apèlas ?', sound: 'mé DI-zoun lou-ÍS. é TU, cou-si ta-PÈ-los ?' },
-								{ oc: 'Ieu, m’apèli Núria.', sound: 'YÉOU, ma-PÈ-li NOU-ria.' },
-								{ oc: 'Encantat, Núria !', sound: 'én-can-TAT !' },
-								{ oc: 'Encantada !', sound: 'én-can-TA-do !' }
+								{ oc: 'Adieu ! Cossí te dison ?', sound: 'a-DIOU ! cou-si té DI-zoun ?', fr: 'Salut ! Comment t’appelles-tu ?' },
+								{ oc: 'Me dison Loís. E tu, cossí t’apèlas ?', sound: 'mé DI-zoun lou-ÍS. é TU, cou-si ta-PÈ-los ?', fr: 'Je m’appelle Loís. Et toi, comment t’appelles-tu ?' },
+								{ oc: 'Ieu, m’apèli Núria.', sound: 'YÉOU, ma-PÈ-li NOU-ria.', fr: 'Moi, je m’appelle Núria.' },
+								{ oc: 'Encantat, Núria !', sound: 'én-can-TAT, NOU-ria !', fr: 'Enchanté, Núria !' },
+								{ oc: 'Encantada !', sound: 'én-can-TA-do !', fr: 'Enchantée !' }
 							]
 						},
 						{
-							title: 'Scèna 2 : Marià e Karim',
-							subtitle: '(vouvoiement)',
+							title: 'Marià e Karim',
+							subtitle: '(Marià et Karim, en se vouvoyant)',
 							lines: [
-								{ oc: 'Bon ser ! Cossí vos dison ?', sound: 'bou(n) SÉ ! cou-si bous DI-zoun ?' },
-								{ oc: 'Me dison Karim. E vos ?', sound: 'mé DI-zoun ka-RIM. é BOUS ?' },
-								{ oc: 'Ieu, me dison Marià. Encantada !', sound: 'YÉOU, mé DI-zoun ma-ri-A. én-can-TA-do !' },
-								{ oc: 'Encantat !', sound: 'én-can-TAT !' }
+								{ oc: 'Bon ser ! Cossí vos dison ?', sound: 'bou(n) SÉ ! cou-si bous DI-zoun ?', fr: 'Bonsoir ! Comment vous appelez-vous ?' },
+								{ oc: 'Me dison Karim. E vos ?', sound: 'mé DI-zoun ka-RIM. é BOUS ?', fr: 'Je m’appelle Karim. Et vous ?' },
+								{ oc: 'Ieu, me dison Marià. Encantada !', sound: 'YÉOU, mé DI-zoun ma-ri-A. én-can-TA-do !', fr: 'Moi, je m’appelle Marià. Enchantée !' },
+								{ oc: 'Encantat !', sound: 'én-can-TAT !', fr: 'Enchanté !' }
 							]
 						}
 					],
-					glossary: [
-						{ oc: 'ieu', sound: 'YÉOU', fr: 'moi (pour insister, comme « E tu ? » en 1.1)' },
-						{ oc: 'la fèsta', sound: 'la FÈS-to', fr: 'la fête' }
-					]
-				}
-			]
-		},
-
-		{
-			title: 'Comprendre + Los que parlan',
-			minutes: 7,
-			blocks: [
+					glossary: [{ oc: 'la fèsta', sound: 'la FÈS-to', fr: 'la fête' }]
+				},
 				{
 					type: 'qcm',
-					title: 'Compréhension',
-					intro: 'Un item à la fois, réponse immédiate.',
+					title: 'As-tu compris ?',
+					intro: 'Une question à la fois.',
 					items: [
 						{
-							q: 'Loís et Núria disent « je m’appelle » chacun à sa façon. Loís dit…',
-							options: ['*Me dison* (« on me dit »)', '*M’apèli*', 'Encantat'],
+							q: 'Comment s’appelle le jeune homme de la première scène ?',
+							options: ['Loís', 'Karim', 'Núria'],
 							correct: 0,
-							choses: ['me-dison'],
-							explain:
-								'Loís : *Me dison* ; Núria : *M’apèli*. **Les deux sont parfaitement correctes**, chacun sa préférence.'
+							explain: '*Me dison Loís* : je m’appelle Loís.'
 						},
 						{
-							q: 'Vrai ou faux : *Encantat* et *Encantada* veulent dire deux choses différentes.',
-							options: ['Vrai', 'Faux'],
-							correct: 1,
+							q: 'Qui dit *Encantada !* ?',
+							options: ['Núria et Marià', 'Loís et Karim'],
+							correct: 0,
 							choses: ['encantat'],
-							noShuffle: true,
-							explain:
-								'C’est le même « enchanté » : *Encantat* pour un homme, *Encantada* pour une femme (én-can-TA-do).'
+							explain: 'Une femme dit *Encantada*, un homme *Encantat*.'
 						},
 						{
-							q: 'Chasse à l’expression : combien de fois entends-tu *dison* dans les deux scènes ?',
-							options: ['5 fois', '3 fois', '2 fois'],
+							q: 'Marià et Karim se vouvoient. Quel mot te le montre ?',
+							options: ['vos', 'te', 'ieu'],
 							correct: 0,
-							explain: '5 fois : c’est la tournure la plus courante : « on me dit ».'
+							oc: true,
+							choses: ['cossi-vos-dison'],
+							explain: '*Cossí vos dison ?* : *vos*, comme dans *E vos ?* (module 1.1).'
 						}
 					]
-				},
-				{
-					type: 'note',
-					variant: 'natiu',
-					audio: true,
-					title: 'Los que parlan',
-					paragraphs: [
-						'30 secondes d’un natif : comment on se nomme chez lui, et peut-être son *escais* (surnom) de village. Écoute seulement, puis lis. Tu n’as rien à corriger, juste à reconnaître.',
-						'*(Enregistrement et transcription à venir.)*'
-					]
-				},
-				{
-					type: 'note',
-					variant: 'info',
-					title: 'Relecture ciblée',
-					paragraphs: [
-						'Réécoute en lisant, expressions en gras :',
-						'— **Cossí te dison ?** · — **Me dison** Loís. E tu, **cossí t’apèlas ?** · — Ieu, **m’apèli** Núria. · — **Encantat !** — **Encantada !** · — **Cossí vos dison ?** · — **Me dison** Karim.'
-					]
 				}
 			]
 		},
 
+		// ————————————————————————————————— 3. Obsèrva
 		{
 			title: 'Obsèrva',
-			minutes: 8,
+			fr: 'observe',
+			minutes: 10,
 			blocks: [
 				{
 					type: 'qcm',
-					title: 'Obsèrva : la bonne expression au bon moment',
+					title: 'Deux façons de dire son nom',
+					intro: 'Compare les répliques des deux scènes.',
 					items: [
 						{
-							q: '*Me dison Mirelha.* Elle dit…',
-							options: ['son nom', 'où elle habite', 'au revoir'],
+							q: '*Me dison Loís* et *M’apèli Núria* : ces deux phrases veulent dire…',
+							options: ['la même chose : je m’appelle…', 'deux choses différentes'],
 							correct: 0,
-							choses: ['me-dison'],
-							explain: '*Me dison* = « on me dit » = je m’appelle.'
-						},
-						{
-							q: 'Pour demander son nom à ta boulangère (que tu vouvoies) :',
-							options: ['Cossí vos dison ?', 'Cossí te dison ?', 'Cossí vas ?'],
-							correct: 0,
-							choses: ['cossi-vos-dison'],
-							explain: '*vos* = vouvoiement.'
-						},
-						{
-							q: 'Un homme répond « enchanté » :',
-							options: ['Encantat', 'Encantada', 'Mercé'],
-							correct: 0,
-							choses: ['encantat'],
-							explain: '*-t* pour un homme, *-da* pour une femme.'
-						},
-						{
-							q: '*Cossí t’apèlas ?* et *Cossí te dison ?* :',
-							options: [
-								'la même question, deux façons',
-								'deux sens différents',
-								'l’une tutoie, l’autre vouvoie'
-							],
-							correct: 0,
-							choses: ['cossi-t-apelas', 'cossi-te-dison'],
-							explain: 'La même question, deux mélodies : toutes deux correctes.'
-						},
-						{
-							q: 'Vrai ou faux : *Me dison* signifie mot à mot « on me dit ».',
-							options: ['Vrai', 'Faux'],
-							correct: 0,
-							choses: ['me-dison'],
 							noShuffle: true,
-							explain: 'Vrai : et c’est charmant.'
+							choses: ['me-dison', 'm-apeli'],
+							explain: 'Deux façons de dire « je m’appelle ». *Me dison*, mot à mot : « on me dit ».'
 						},
 						{
-							q: '« Moi, je m’appelle Joan » (en insistant) :',
-							options: ['Ieu, m’apèli Joan', 'M’apèli Joan', 'Joan m’apèli'],
+							q: 'Dans *Cossí te dison ?*, le petit mot *te* veut dire…',
+							options: ['te (toi)', 'me (moi)', 'vous'],
 							correct: 0,
-							choses: ['m-apeli'],
-							explain: '*Ieu,* devant, pour insister.'
+							choses: ['cossi-te-dison'],
+							explain: '*Cossí te dison ?* : « comment on te dit ? », comment t’appelles-tu ?'
+						},
+						{
+							q: 'Et pour vouvoyer, *te* devient…',
+							options: ['vos', 'me', 'tu'],
+							correct: 0,
+							oc: true,
+							choses: ['cossi-vos-dison'],
+							explain: '*Cossí vos dison ?* Comme en français : te, vous.'
+						},
+						{
+							q: 'Núria dit *Ieu, m’apèli Núria.* Le mot *Ieu* sert à…',
+							options: ['insister : moi, je…', 'dire bonjour', 'poser une question'],
+							correct: 0,
+							choses: ['ieu'],
+							explain: '*Ieu* : moi. On l’ajoute pour insister, comme « moi, je m’appelle… ».'
 						}
 					]
 				},
 				{
 					type: 'table',
-					title: 'L’essentiel : deux mélodies au choix',
-					head: ['', 'à quelqu’un qu’on tutoie', 'à plusieurs / en vouvoyant'],
+					title: 'Le nom : deux mélodies au choix',
+					head: ['', 'demander (tu)', 'demander (vous)', 'répondre'],
 					rows: [
-						['demander le nom', '**Cossí te dison ?** · **Cossí t’apèlas ?**', '**Cossí vos dison ?** · **Cossí vos apelatz ?**'],
-						['dire son nom', '**Me dison…** · **M’apèli…**', 'pareil'],
-						['enchanté·e', '**Encantat !** (homme) · **Encantada !** (femme)', 'pareil']
+						['« on me dit »', '*Cossí te dison ?*', '*Cossí vos dison ?*', '*Me dison…*'],
+						['« je m’appelle »', '*Cossí t’apèlas ?*', '*Cossí vos apelatz ?*', '*M’apèli…*']
 					],
 					notes: [
-						'Les deux façons sont **également correctes** : *Me dison* (« on me dit ») est très courante, *M’apèli* te rappellera le français. Choisis ta préférée, comprends les deux.',
-						'« Enchanté » se dit aussi *Plan content / Plan contenta de te conéisser*.',
-						'*Ieu* (moi) sert à insister : *Ieu, m’apèli Núria.*'
-					]
-				},
-				{
-					type: 'note',
-					variant: 'son',
-					title: 'Son du jour : le -on qui sonne « oun »',
-					paragraphs: [
-						'Le *-on* de *dison* sonne « oun » : *me dison* → mé DI-zoun.',
-						'Et rappel de 1.1 : le *-a* final sonne « o » → *Encantada* = én-can-TA-do.'
+						'Les deux colonnes se valent : choisis la mélodie que tu préfères, et reconnais l’autre.',
+						'Devant une voyelle, *me* et *te* perdent leur *e* : *m’apèli*, *t’apèlas*.',
+						'Enchanté : *Encantat* si tu es un homme, *Encantada* si tu es une femme.'
 					]
 				},
 				{
 					type: 'chunks',
 					title: 'À retenir',
-					intro: 'Ça sonne comme : syllabe forte en capitales.',
+					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces expressions entrent dans ton carnet.',
 					items: [
-						{ id: 'cossi-te-dison', oc: 'Cossí te dison ?', sound: 'cou-si té DI-zoun', fr: 'comment t’appelles-tu ? (litt. « comment on te dit »)' },
-						{ id: 'me-dison', oc: 'Me dison…', sound: 'mé DI-zoun', fr: 'je m’appelle (« on me dit »)' },
+						{ id: 'cossi-te-dison', oc: 'Cossí te dison ?', sound: 'cou-si té DI-zoun', fr: 'comment t’appelles-tu ? (« comment on te dit ? »)' },
+						{ id: 'me-dison', oc: 'Me dison…', sound: 'mé DI-zoun', fr: 'je m’appelle… (« on me dit »)' },
 						{ id: 'cossi-t-apelas', oc: 'Cossí t’apèlas ?', sound: 'cou-si ta-PÈ-los', fr: 'comment t’appelles-tu ?' },
-						{ id: 'm-apeli', oc: 'M’apèli…', sound: 'ma-PÈ-li', fr: 'je m’appelle' },
-						{ id: 'cossi-vos-dison', oc: 'Cossí vos dison ? / vos apelatz ?', sound: 'cou-si bous a-pé-LATS', fr: 'et en vouvoyant' },
-						{ id: 'encantat', oc: 'Encantat ! / Encantada !', sound: 'én-can-TAT / én-can-TA-do', fr: 'enchanté·e !' }
+						{ id: 'm-apeli', oc: 'M’apèli…', sound: 'ma-PÈ-li', fr: 'je m’appelle…' },
+						{ id: 'cossi-vos-dison', oc: 'Cossí vos dison ? · Cossí vos apelatz ?', sound: 'cou-si bous DI-zoun · cou-si bous a-pé-LATS', fr: 'comment vous appelez-vous ?' },
+						{ id: 'encantat', oc: 'Encantat ! · Encantada !', sound: 'én-can-TAT · én-can-TA-do', fr: 'enchanté ! · enchantée !' },
+						{ id: 'ieu', oc: 'Ieu, …', sound: 'YÉOU', fr: 'moi, … (pour insister)' }
 					]
 				}
 			]
 		},
 
+		// ————————————————————————————————— 4. Lo jòc del jorn
 		{
-			title: 'Practica',
-			minutes: 8,
+			title: 'Lo jòc del jorn',
+			fr: 'le jeu du jour',
+			minutes: 10,
 			blocks: [
 				{
-					type: 'qcm',
-					title: '3a · Bloc court',
-					intro: 'Complète avec la bonne expression.',
+					type: 'causida',
+					title: 'Rencontre avec Marià',
+					intro:
+						'C’est toi qui parles : choisis chaque réplique. Si elle ne va pas, Marià te le fait comprendre, et tu choisis de nouveau.',
+					personatge: 'Marià',
+					tours: [
+						{
+							situacion: 'Le soir, à la fête du village. Une dame âgée que tu ne connais pas vient vers toi.',
+							ditz: 'Bon ser !',
+							options: [
+								{ oc: 'Bon ser !', bon: true },
+								{ oc: 'Bonjorn !', reaccion: 'Marià sourit et regarde le ciel : il fait nuit depuis longtemps.' },
+								{ oc: 'A deman !', reaccion: 'Marià s’étonne : tu pars déjà ? Elle vient juste d’arriver.' }
+							],
+							choses: ['bon-ser'],
+							explain: 'Le soir : *Bon ser !*'
+						},
+						{
+							ditz: 'Cossí vos dison ?',
+							options: [
+								{ oc: 'Me dison…', bon: true },
+								{ oc: 'Va plan, mercé.', reaccion: 'Marià rit : elle ne t’a pas demandé comment tu vas, mais ton nom.' },
+								{ oc: 'Encantat !', reaccion: 'Un peu tôt : elle ne t’a pas encore dit son nom.' }
+							],
+							choses: ['cossi-vos-dison', 'me-dison'],
+							explain: 'Elle te demande ton nom : *Me dison…* ou *M’apèli…*, puis ton prénom.'
+						},
+						{
+							situacion: 'À ton tour : demande-lui son nom. C’est une dame âgée que tu ne connais pas.',
+							options: [
+								{ oc: 'E vos, cossí vos dison ?', bon: true },
+								{ oc: 'E tu, cossí te dison ?', reaccion: 'Marià hausse un sourcil : on vouvoie une dame qu’on ne connaît pas.' },
+								{ oc: 'A lèu !', reaccion: 'Marià reste là, étonnée : tu ne veux pas savoir son nom ?' }
+							],
+							choses: ['cossi-vos-dison'],
+							explain: 'En la vouvoyant : *E vos, cossí vos dison ?*'
+						},
+						{
+							ditz: 'Ieu, m’apèli Marià. Encantada !',
+							options: [
+								{ oc: 'Encantat !', bon: true },
+								{ oc: 'Encantada !', bon: true },
+								{ oc: 'Adieu-siatz !', reaccion: 'Marià est surprise : vous venez à peine de faire connaissance.' }
+							],
+							choses: ['encantat'],
+							explain: '*Encantat* si tu es un homme, *Encantada* si tu es une femme : les deux vont.'
+						},
+						{
+							ditz: 'Cossí anatz ?',
+							options: [
+								{ oc: 'Va plan, mercé. E vos ?', bon: true },
+								{ oc: 'Va plan, mercé. E tu ?', reaccion: 'Marià te vouvoie : tu peux la vouvoyer aussi.' },
+								{ oc: 'M’apèli Marià.', reaccion: 'Marià rit : c’est elle, Marià !' }
+							],
+							choses: ['va-plan-e-tu'],
+							explain: 'Répondre, puis retourner la question en vouvoyant : *E vos ?*'
+						},
+						{
+							ditz: 'Va plan ! A lèu !',
+							options: [
+								{ oc: 'A lèu ! Adieu-siatz !', bon: true },
+								{ oc: 'Bonjorn !', reaccion: 'Marià part déjà : c’est le moment de dire au revoir.' },
+								{ oc: 'Cossí vos dison ?', reaccion: 'Tu connais déjà son nom : Marià !' }
+							],
+							choses: ['a-leu', 'adieu-siatz'],
+							explain: '*A lèu ! Adieu-siatz !* : à bientôt, au revoir.'
+						}
+					],
+					fin: 'Bravo ! Ta première vraie conversation en occitan : saluer, se nommer, demander comment ça va, partir.'
+				}
+			]
+		},
+
+		// ————————————————————————————————— 5. A tu !
+		{
+			title: 'A tu !',
+			fr: 'à toi !',
+			minutes: 10,
+			blocks: [
+				{
+					type: 'escriure',
+					title: 'Escriu (écris)',
+					intro:
+						'Écris en occitan. Majuscules et ponctuation ne comptent pas ; un accent oublié, on te le montre.',
 					items: [
 						{
-							q: 'Demande son nom à ton ami : « Cossí ___ ? »',
-							options: ['te dison', 'vos dison', 'vas'],
-							correct: 0,
-							choses: ['cossi-te-dison'],
-							explain: 'Un ami → *te*.'
+							consigne: 'Dis ton nom : je m’appelle… (avec ton prénom).',
+							debut: ['Me dison', 'M’apèli'],
+							choses: ['me-dison', 'm-apeli'],
+							explain: 'Avec *Me dison* ou *M’apèli*, puis ton prénom.'
 						},
 						{
-							q: 'Réponds (façon « on me dit ») : « ___ Lisa. »',
-							options: ['Me dison', 'M’apèli', 'Soi'],
-							correct: 0,
-							choses: ['me-dison'],
-							explain: '*Me dison Lisa.*'
+							consigne: 'Demande son nom à un ami.',
+							answers: ['Cossí te dison ?', 'Cossí t’apèlas ?'],
+							choses: ['cossi-te-dison', 'cossi-t-apelas']
 						},
 						{
-							q: 'Réponds (l’autre façon) : « ___ Lisa. »',
-							options: ['M’apèli', 'Me dison', 'Encantada'],
-							correct: 0,
-							choses: ['m-apeli'],
-							explain: '*M’apèli Lisa.*'
+							consigne: 'Demande son nom à une dame âgée que tu ne connais pas.',
+							answers: ['Cossí vos dison ?', 'Cossí vos apelatz ?'],
+							choses: ['cossi-vos-dison']
 						},
 						{
-							q: 'Une femme dit enchanté : « ___ ! »',
-							options: ['Encantada', 'Encantat', 'Plan mercé'],
-							correct: 0,
-							choses: ['encantat'],
-							explain: 'Femme → *-da* (prononcé -do).'
+							consigne: 'Enchanté ! (ou enchantée !)',
+							answers: ['Encantat !', 'Encantada !'],
+							choses: ['encantat']
 						},
 						{
-							q: 'Demande le nom en vouvoyant : « Cossí ___ dison ? »',
-							options: ['vos', 'te', 'me'],
-							correct: 0,
-							choses: ['cossi-vos-dison'],
-							explain: '*vos* = vouvoiement.'
-						},
-						{
-							q: 'Insiste : « ___, m’apèli Pau. »',
-							options: ['Ieu', 'Tu', 'E vos'],
-							correct: 0,
-							explain: '*Ieu,* devant = « moi, … ».'
+							consigne: 'Moi, je m’appelle… (avec ton prénom).',
+							debut: ['Ieu, me dison', 'Ieu, m’apèli'],
+							choses: ['ieu'],
+							explain: '*Ieu* pour insister : moi, je…'
 						}
 					]
 				},
-				{
-					type: 'qcm',
-					title: '3b · Mélange (avec 1.1)',
-					items: [
-						{
-							q: 'Le matin, salue puis demande le nom (tu) :',
-							options: ['Bonjorn ! Cossí te dison ?', 'Bon ser ! Cossí vos dison ?', 'A deman ! E tu ?'],
-							correct: 0,
-							choses: ['bonjorn', 'cossi-te-dison'],
-							explain: 'Matin → *Bonjorn* ; ami → *te*.'
-						},
-						{
-							q: '« ___ Núria. E tu ? » (on me dit)',
-							options: ['Me dison', 'M’apèli', 'Va plan'],
-							correct: 0,
-							choses: ['me-dison'],
-							explain: '*Me dison Núria.*'
-						},
-						{
-							q: 'Un homme : « Encanta___ ! »',
-							options: ['-t', '-da', '-tz'],
-							correct: 0,
-							choses: ['encantat'],
-							noShuffle: true,
-							explain: 'Homme → *Encantat*.'
-						},
-						{
-							q: 'Ta vieille voisine : « Cossí ___ apelatz ? »',
-							options: ['vos', 'te', 't’'],
-							correct: 0,
-							choses: ['cossi-vos-dison'],
-							explain: 'Vouvoiement → *vos apelatz*.'
-						},
-						{
-							q: 'Vrai ou faux : *M’apèli* est plus correct que *Me dison*.',
-							options: ['Vrai', 'Faux'],
-							correct: 1,
-							noShuffle: true,
-							explain: 'Les deux sont également correctes : décision du cursus : deux façons, même rang.'
-						},
-						{
-							q: 'Réponds à *Cossí vas ?* :',
-							options: ['Va plan, mercé. E tu ?', 'Me dison Joan.', 'A lèu !'],
-							correct: 0,
-							choses: ['va-plan-e-tu'],
-							explain: 'Le réflexe complet de 1.1.'
-						},
-						{
-							q: '« Ieu, ___ Karim. » (deux réponses possibles : choisis-en une)',
-							options: ['me dison', 'te dison', 'vos dison'],
-							correct: 0,
-							choses: ['me-dison'],
-							explain: '*me dison* ou *m’apèli* : les deux marchent.'
-						},
-						{
-							q: 'Tu quittes Núria, vous vous reverrez bientôt : « ___ ! »',
-							options: ['A lèu', 'A deman', 'Bon ser'],
-							correct: 0,
-							choses: ['a-leu'],
-							explain: '*A lèu* = à bientôt.'
-						},
-						{
-							q: '*Cossí t’apèlas ?* : on parle à…',
-							options: ['un ami, un proche', 'un groupe', 'quelqu’un qu’on vouvoie'],
-							correct: 0,
-							choses: ['cossi-t-apelas'],
-							explain: 'Le *t’* tutoie.'
-						},
-						{
-							q: 'Le soir, salue puis présente-toi :',
-							options: ['Bon ser ! Me dison Lisa.', 'Bonjorn ! E tu ?', 'A deman ! M’apèli Lisa.'],
-							correct: 0,
-							choses: ['bon-ser', 'me-dison'],
-							explain: 'Soir → *Bon ser*, puis ton nom.'
-						}
-					]
-				}
-			]
-		},
-
-		{
-			title: 'Parla',
-			minutes: 7,
-			blocks: [
 				{
 					type: 'order',
 					title: 'Remets dans l’ordre',
+					intro: 'Touche les mots dans l’ordre.',
 					items: [
 						{
-							prompt: 'Comment t’appelles-tu ?',
-							tiles: ['Cossí', 'te', 'dison ?'],
-							choses: ['cossi-te-dison'],
-							explain: '*Cossí te dison ?*'
+							prompt: 'Je m’appelle Loís. Et toi, comment t’appelles-tu ?',
+							tiles: ['Me', 'dison', 'Loís.', 'E', 'tu,', 'cossí', 't’apèlas ?'],
+							choses: ['me-dison', 'cossi-t-apelas'],
+							explain: '*Me dison Loís. E tu, cossí t’apèlas ?*'
 						},
 						{
-							prompt: 'Moi, je m’appelle Núria.',
-							tiles: ['Ieu,', 'm’apèli', 'Núria.'],
-							choses: ['m-apeli'],
-							explain: '*Ieu, m’apèli Núria.*'
+							prompt: 'Bonsoir ! Comment vous appelez-vous ?',
+							tiles: ['Bon', 'ser !', 'Cossí', 'vos', 'dison ?'],
+							choses: ['bon-ser', 'cossi-vos-dison'],
+							explain: '*Bon ser ! Cossí vos dison ?*'
 						}
 					]
 				},
 				{
 					type: 'reveal',
-					title: 'Ton mini-dialogue de rencontre',
+					title: 'À voix haute',
 					intro:
-						'4 répliques : salue → demande le nom → dis le tien + « E tu ? » → enchanté·e. Dis-le à voix haute, puis compare.',
+						'Dis à voix haute la rencontre : saluer, demander le nom, répondre, dire enchanté, partir. Puis compare au modèle.',
 					items: [
 						{
-							q: '**Version « tu »** (deux amis se rencontrent).',
-							a: 'Modèle : *— Adieu ! Cossí te dison ? — Me dison Pau. E tu ? — Ieu, m’apèli Lisa. Encantada ! — Encantat !*'
+							q: 'Avec un jeune à la fête (tu).',
+							a: 'Par exemple : *Adieu ! Cossí te dison ? · M’apèli Lisa. E tu ? · Ieu, me dison Loís. Encantat ! · Encantada ! A lèu !*'
 						},
 						{
-							q: '**Version « vous »** (le soir, avec une personne vouvoyée).',
-							a: 'Modèle : *— Bon ser ! Cossí vos dison ? — Me dison Marià. E vos ? — Ieu, m’apèli Karim. Encantat ! — Encantada !*'
+							q: 'Avec une dame âgée (vous).',
+							a: 'Par exemple : *Bon ser ! Cossí vos dison ? · Me dison Marià. E vos ? · M’apèli Lisa. Encantada ! · Encantada ! Adieu-siatz !*'
 						}
-					]
-				},
-				{
-					type: 'reveal',
-					title: 'Traduis',
-					intro: 'Dis-le en occitan, puis vérifie.',
-					items: [
-						{ q: 'Comment t’appelles-tu ?', a: '*Cossí te dison ? / Cossí t’apèlas ?*' },
-						{ q: 'Je m’appelle Loís (les deux façons).', a: '*Me dison Loís. / M’apèli Loís.*' },
-						{ q: 'Enchantée !', a: '*Encantada !*' },
-						{ q: 'Comment vous appelez-vous ?', a: '*Cossí vos dison ? / Cossí vos apelatz ?*' },
-						{ q: 'Moi, on me dit Marià.', a: '*Ieu, me dison Marià.*' }
-					]
-				},
-				{
-					type: 'note',
-					variant: 'info',
-					title: 'Va plus vite : sans chrono',
-					list: [
-						'**Redis ton dialogue trois fois**, de plus en plus à l’aise.',
-						'**Rejoue les deux scènes** avec 5 mots-clés : *Cossí ? – Me dison – M’apèli – Encantat – E vos ?*',
-						'**Parle en même temps que l’audio** (à venir).'
 					]
 				}
 			]
 		},
 
+		// ————————————————————————————————— 6. Lo son e lo bilanç
 		{
-			title: 'Tasca finala + Bilan',
-			minutes: 7,
+			title: 'Lo son e lo bilanç',
+			fr: 'le son et le bilan',
+			minutes: 8,
 			blocks: [
 				{
 					type: 'note',
-					variant: 'task',
-					title: 'Tasca finala : À toi',
+					variant: 'son',
+					title: 'Le son du jour : la syllabe forte',
 					paragraphs: [
-						'Enregistre (ou écris) un dialogue de rencontre complet : salutation (1.1), demande de nom, présentation des deux personnes, « enchanté·e », congé. Une fois en « tu », une fois en « vous ».',
-						'**Voie privée** : enregistre-toi, réécoute demain, coche les critères.',
-						'**Voie communautaire** *(bientôt)* : poste ton audio sous le post Lo Ligam de la semaine.'
+						'Chaque mot a une syllabe où la voix appuie. L’accent écrit te la montre : *apèli* se dit « a-PÈ-li », *apèlas* « a-PÈ-los ».',
+						'Sans accent écrit, la voix appuie le plus souvent sur l’avant-dernière syllabe : *dison* « DI-zoun », *Encantada* « én-can-TA-do ». Mais sur la dernière quand le mot finit par une consonne autre que *s* : *Encantat* « én-can-TAT ».',
+						'Écoute, puis répète en tapant la syllabe forte dans tes mains : *m’apèli*, *me dison*, *encantat*.'
 					]
 				},
 				{
-					type: 'checklist',
-					key: 'criteris',
-					title: 'Critères de réussite',
-					items: [
-						'J’utilise les DEUX façons de dire mon nom',
-						'*Encantat / Encantada* accordé à qui parle',
-						'Le tu/vous est cohérent du début à la fin',
-						'Prononciation : *dison* = « DI-zoun », le *-a* final = « o »'
-					]
-				},
-				{
-					type: 'reveal',
-					title: 'Un exemple de production',
+					type: 'qcm',
+					title: 'L’oreille',
 					items: [
 						{
-							q: 'Quand tu as fini (pas avant !), regarde un exemple.',
-							a: '*— Bonjorn ! Cossí vos dison ? — Me dison Marià. E vos ? — Ieu, m’apèli Karim. Encantat ! — Encantada ! A lèu, Karim !*'
+							q: 'Où appuie la voix dans *apèli* ?',
+							options: ['a-PÈ-li', 'A-pè-li', 'a-pè-LI'],
+							correct: 0,
+							noShuffle: true,
+							explain: 'L’accent sur le *è* te le montre.'
+						},
+						{
+							q: 'Et dans *apelatz* (sans accent écrit) ?',
+							options: ['a-pé-LATS', 'a-PÉ-lats'],
+							correct: 0,
+							noShuffle: true,
+							explain: 'Le mot finit par *-tz* : la voix va sur la dernière syllabe, comme dans *anatz* (module 1.1).'
 						}
 					]
 				},
 				{
 					type: 'checklist',
 					key: 'bilan',
-					title: 'Bilan : Je peux…',
-					intro: 'Coche seulement ce que tu sais faire **seul**.',
+					title: 'Bilan : je peux…',
+					intro: 'Coche seulement ce que tu sais faire seul. Le reste reviendra dans ton carnet.',
 					items: [
-						'demander son nom à quelqu’un (tu et vous)',
-						'dire mon nom des deux façons',
-						'dire enchanté·e, accordé',
-						'insister avec *Ieu*'
-					]
-				},
-				{
-					type: 'reveal',
-					title: 'Mini-test',
-					intro: 'De mémoire, sans remonter la page.',
-					items: [
-						{ q: '« Comment t’appelles-tu ? » (une des deux façons)', a: '*Cossí te dison ?* ou *Cossí t’apèlas ?*' },
-						{ q: '« On me dit Joan. »', a: '*Me dison Joan.*' },
-						{ q: 'Une femme dit enchanté :', a: '*Encantada !*' },
-						{ q: 'La version vouvoyée de *Cossí t’apèlas ?*', a: '*Cossí vos apelatz ?*' },
-						{ q: 'Traduis « Moi, je m’appelle Lisa. »', a: '*Ieu, m’apèli Lisa.*' }
+						'demander son nom à quelqu’un, en tutoyant ou en vouvoyant',
+						'dire mon nom de deux façons',
+						'dire enchanté ou enchantée',
+						'insister avec « moi, je… »'
 					]
 				},
 				{
 					type: 'note',
 					variant: 'culture',
-					title: 'Cultura : Los escais-noms',
+					title: 'Cultura : les surnoms de village',
+					glosa: { escais: 'surnom' },
 					paragraphs: [
-						'Dans les villages occitans, presque tout le monde avait : et a souvent encore, son *escais-nom* : un surnom affectueux, moqueur ou mystérieux, parfois transmis sur trois générations, au point qu’on oubliait le nom d’état civil.',
-						'Demande autour de toi : il y a peut-être un *escais* dans ta famille.'
-					]
-				},
-				{
-					type: 'note',
-					variant: 'info',
-					title: 'Se parles catalan / castelhan',
-					paragraphs: [
-						'*Em dic Joan* ↔ *Me dison Joan* : même logique du « on me dit » ! *Com et dius ?* ↔ *Cossí te dison ?* · *Encantat/-ada* : mot pour mot le même qu’en catalan.'
-					]
-				},
-				{
-					type: 'note',
-					variant: 'info',
-					title: 'Réviser plus tard',
-					paragraphs: [
-						'Le site te les resservira :',
-						'**Dans 2 jours** : *Cossí te dison ? → Me dison…*, *Encantat/-ada* · **Dans 7 jours** : *M’apèli / t’apèlas*, les formes en *vos* · **Dans 30 jours** : tout le module.'
+						'Dans les villages occitans, presque tout le monde avait son *escais* (son surnom) : affectueux, moqueur ou mystérieux, parfois transmis sur trois générations, au point qu’on en oubliait le nom de l’état civil.',
+						'Demande autour de toi : il y a peut-être un surnom de ce genre dans ta famille.'
 					]
 				}
 			]
