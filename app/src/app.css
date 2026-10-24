@@ -210,6 +210,11 @@ body {
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 }
+/* En sombre, le fond suit le thème : sans quoi la marge au-dessus du pied de
+   page laissait voir une bande crème (Mots, Mon istòria ; 2026-10-24) */
+:root[data-tema='sorne'] body {
+	background: var(--t-fons);
+}
 
 h1,
 h2,

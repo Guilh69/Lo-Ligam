@@ -29,6 +29,10 @@
 				[
 					'Ta progression',
 					'La leçon en cours, ton avancement et tes points, pour te permettre de reprendre où tu en étais.'
+				],
+				[
+					'Ton message',
+					'Si tu m’écris par le formulaire de contact : ton adresse électronique, ton nom si tu le donnes, et ton message. Je les reçois par courriel pour pouvoir te répondre ; le site n’en garde aucune copie. Le courriel est effacé de ma messagerie au bout d’un an au plus tard.'
 				]
 			],
 			pourquoiT: 'Pourquoi, et sur quelle base',
@@ -47,7 +51,7 @@
 			cookies:
 				'Aucun traceur publicitaire, aucune mesure d’audience. Le site garde seulement quelques réglages dans ton navigateur : la langue choisie, la progression de la leçon d’essai, et le fait que tu aies déjà vu certains messages d’accueil. Ces informations ne quittent jamais ton appareil et ne servent pas à t’identifier.',
 			roleBasa: 'base de données et authentification',
-			roleAlbergament: 'hébergement',
+			roleAlbergament: 'hébergement, et envoi des messages du formulaire de contact',
 			tiersT: 'Ressources chargées depuis d’autres sites',
 			tiers:
 				'Certaines pages chargent des éléments hébergés ailleurs, ce qui transmet ton adresse IP à ces services : les fonds de carte (OpenStreetMap et sa version occitane OSM-bzh, OpenTopoMap, photos aériennes de l’IGN et du PNOA espagnol), la recherche de communes quand tu tapes un lieu (API Adresse, Photon), les vidéos que tu choisis de lancer (YouTube en mode sans cookie, Canva) et les enregistrements de l’Atlas sonore des langues régionales (LISN, Université Paris-Saclay) que tu choisis d’écouter sur la carte. Les polices de caractères et les icônes, elles, sont servies par ce site : aucune requête vers Google.',
@@ -77,6 +81,10 @@
 				[
 					'Ta progression',
 					'La leiçon en cors, ton avançament e tos punts, per te permetre de tornar ont n’èras.'
+				],
+				[
+					'Ton messatge',
+					'Se m’escrives pel formulari de contacte : ton corrièl, ton nom se lo donas, e ton messatge. Los recebi per corrièl per te poder respondre ; lo site ne garda pas cap de còpia. Lo corrièl es escafat de ma messatjariá al cap d’un an al mai tard.'
 				]
 			],
 			pourquoiT: 'Perqué, e sus quina basa',
@@ -95,7 +103,7 @@
 			cookies:
 				'Cap de pistaire publicitari, cap de mesura d’audiéncia. Lo site garda solament qualques reglatges dins ton navegador : la lenga causida, la progression de la leiçon d’ensag, e lo fach qu’ajas ja vist certans messatges d’acuèlh. Aquelas informacions quitan pas jamai ton aparelh e servisson pas a t’identificar.',
 			roleBasa: 'basa de donadas e autentificacion',
-			roleAlbergament: 'albergament',
+			roleAlbergament: 'albergament, e mandadís dels messatges del formulari de contacte',
 			tiersT: 'Ressorsas cargadas d’autres sites',
 			tiers:
 				'Certanas paginas cargan d’elements albergats endacòm mai, çò que transmet ton adreça IP a aquestes servicis : los fonses de carta (OpenStreetMap e sa version occitana OSM-bzh, OpenTopoMap, fòtos aerianas de l’IGN e del PNOA espanhòl), la recèrca de comunas quand tapas un luòc (API Adresse, Photon), las vidèos que causisses de lançar (YouTube en mòde sens cookies, Canva) e las faulas de l’Atlas sonòr de las lengas regionalas (LISN, Universitat Paris-Saclay) que causisses d’escotar sus la carta. Las poliças de caractèrs e las icònas, elas, son servidas per aqueste site : cap de requèsta cap a Google.',

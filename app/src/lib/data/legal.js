@@ -12,9 +12,10 @@ export const editor = {
 	// Personne physique : nom et prénom. Personne morale : raison sociale.
 	nom: 'Romain Perier',
 	statut: 'Particulier (site non professionnel)',
-	// Obligatoire et public. Une adresse dédiée au site vaut mieux qu'une
-	// adresse personnelle du quotidien.
-	email: 'perier.romain@proton.me',
+	// Obligatoire et public. L'alias du site (Romain, 2026-10-24) : c'est la
+	// seule adresse affichée, jamais l'adresse personnelle. Reçoit aussi le
+	// formulaire de contact de Mon istòria ($lib/server/contacte.js).
+	email: 'lo_ligam@proton.me',
 	// Directeur de la publication : la personne responsable du contenu.
 	directeurPublication: 'Romain Perier',
 	// Si un jour le projet devient une association ou une société :
@@ -54,4 +55,4 @@ export const baseDonnadas = {
 	societatNonEuropea: true
 };
 
-export const dataMiseAJour = '2026-08-08';
+export const dataMiseAJour = '2026-10-24';

@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (104 lignes). Jamais écrasés s'ils existent déjà.
+-- (135 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -247,5 +247,42 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('visio.practica.lengas', 'visio', 'text', 'visio.practica', 1, 'Dempuèi lo francés, l’anglés, lo castelhan o lo catalan.', 'Depuis le français, l’anglais, le castillan ou le catalan.', null, null, true),
 	('visio.practica.persona', 'visio', 'text', 'visio.practica', 2, 'En persona tanben, se sèm dins la meteissa vila : ara, soi a Lion.', 'En personne aussi, si nous sommes dans la même ville : en ce moment, je suis à Lyon.', null, null, true),
 	('visio.practica.durada', 'visio', 'text', 'visio.practica', 3, 'Durada : a escriure', 'Durée : à écrire', null, null, false),
-	('visio.practica.pretz', 'visio', 'text', 'visio.practica', 4, 'Prètz : a escriure', 'Prix : à écrire', null, null, false)
+	('visio.practica.pretz', 'visio', 'text', 'visio.practica', 4, 'Prètz : a escriure', 'Prix : à écrire', null, null, false),
+	('istoria.kicker', 'istoria', 'text', null, 0, 'Lo Ligam', 'Lo Ligam', null, null, true),
+	('istoria.titol', 'istoria', 'text', null, 0, 'Mon istòria', 'Mon histoire', null, null, true),
+	('istoria.chapèu', 'istoria', 'text', null, 0, '', 'Je m''appelle Romain Périer. Je suis né à Montpellier en 1994, d''un père né à Paris et d''une mère née à Clermont-l''Hérault.', null, null, false),
+	('istoria.retrat', 'istoria', 'imatge', null, 0, null, null, null, '{"url":"/acuelh/romain.webp","largor":600,"nautor":620,"alt_oc":"","alt_fr":""}'::jsonb, true),
+	('istoria.capitols.c1', 'istoria', 'bloc', 'istoria.capitols', 1, null, null, null, null, false),
+	('istoria.capitols.c1.titol', 'istoria', 'text', 'istoria.capitols.c1', 0, '', 'Une langue sans nom', null, null, true),
+	('istoria.capitols.c1.tèxt', 'istoria', 'text', 'istoria.capitols.c1', 0, '', 'J''ai grandi dans un environnement francophone, sans conscience de la langue pendant très longtemps. Il y a toujours eu des mots que je ne comprenais pas du côté de ma mère. Aux réunions de famille, avec mes grands-parents, mes oncles, mes cousins, il y avait toujours cette part de vocabulaire que je ne comprenais pas, et qui n''était pas nommée. J''entendais le mot « patois », mais sans aucun lien avec une langue.', null, null, true),
+	('istoria.capitols.c2', 'istoria', 'bloc', 'istoria.capitols', 2, null, null, null, null, false),
+	('istoria.capitols.c2.titol', 'istoria', 'text', 'istoria.capitols.c2', 0, '', 'Montpellier, une ville « sans histoire » ?', null, null, true),
+	('istoria.capitols.c2.tèxt', 'istoria', 'text', 'istoria.capitols.c2', 0, '', 'J''ai grandi avec un profond attachement à ma région et à ma ville, Montpellier. Je me suis passionné pour son histoire, et je me suis toujours étonné quand les gens disaient qu''il n''y avait pas d''histoire ici. Moi-même, j''ai pu le croire : l''accent s''est un peu perdu, il n''y a pas de communauté très marquée tant la ville s''est agrandie (ce qui est une bonne chose). Mais il y a aussi eu un processus de standardisation qui a fait que les traces historiques et l''identité montpelliéraine se sont effacées.', null, null, true),
+	('istoria.capitols.c3', 'istoria', 'bloc', 'istoria.capitols', 3, null, null, null, null, false),
+	('istoria.capitols.c3.titol', 'istoria', 'text', 'istoria.capitols.c3', 0, '', 'Le déclic : Valence, 2015', null, null, true),
+	('istoria.capitols.c3.tèxt', 'istoria', 'text', 'istoria.capitols.c3', 0, '', 'C''est en allant vivre en Espagne, à Valence, en 2015 pour un Erasmus, que j''ai découvert la langue valencienne. Elle a un autre statut que l''occitan en France : on la voit partout dans l''espace public, on entend beaucoup de gens la parler. En me rapprochant d''un groupe qui parlait valencien, j''ai pris conscience de l''enjeu linguistique et du débat qui l''entoure, encore plus fort en Catalogne qu''à Valence. J''ai compris que cette langue ressemblait à la mienne, et j''ai vécu la situation d''une langue minorisée.', null, null, true),
+	('istoria.capitols.c4', 'istoria', 'bloc', 'istoria.capitols', 4, null, null, null, null, false),
+	('istoria.capitols.c4.titol', 'istoria', 'text', 'istoria.capitols.c4', 0, '', 'Le retour : la richesse sous mes pieds', null, null, true),
+	('istoria.capitols.c4.tèxt', 'istoria', 'text', 'istoria.capitols.c4', 0, '', 'C''est en rentrant en France que je me suis passionné pour l''occitan, et que j''ai pris conscience de la richesse qui était sous mes pieds et que je ne voyais pas. De là a commencé tout un parcours de réappropriation de la langue.', null, null, true),
+	('istoria.capitols.c5', 'istoria', 'bloc', 'istoria.capitols', 5, null, null, null, null, false),
+	('istoria.capitols.c5.titol', 'istoria', 'text', 'istoria.capitols.c5', 0, '', 'Apprendre seul', null, null, true),
+	('istoria.capitols.c5.tèxt', 'istoria', 'text', 'istoria.capitols.c5', 0, '', 'Au début, je ne savais pas par où commencer : il n''y a pas de guide officiel, l''information est disparate. J''ai fait mon petit chemin en commençant par le livre Assimil, un livre super, mais où je me suis beaucoup perdu : tant d''exceptions, une langue qui semblait si compliquée que j''ai presque abandonné. Finalement, j''ai tenu. Au fur et à mesure, j''ai commencé à pouvoir m''exprimer en occitan et à rencontrer du monde dans cette langue.', null, null, true),
+	('istoria.capitols.c6', 'istoria', 'bloc', 'istoria.capitols', 6, null, null, null, null, false),
+	('istoria.capitols.c6.titol', 'istoria', 'text', 'istoria.capitols.c6', 0, '', 'Retrouver les mots de la famille', null, null, true),
+	('istoria.capitols.c6.tèxt', 'istoria', 'text', 'istoria.capitols.c6', 0, '', 'J''ai pu reposer des questions à ma famille sur les mots en occitan, commencer à les recueillir, faire des liens, et comprendre que des mots que j''utilisais déjà tous les jours étaient de l''occitan.
+
+J''ai été heureux de pouvoir me reconnecter avec mon papy autour de l''occitan. Lui-même avait du mal à l''appeler « occitan ». Il était un peu interloqué au début, quand je m''y suis intéressé, et il avait un peu honte : il disait qu''il ne parlait pas le vrai occitan, que c''était du patois. Mais au bout d''un moment, je sentais qu''il se décoinçait, qu''il commençait à dire des phrases, à nous raconter de nouveau des histoires en occitan. Je suis très heureux d''avoir pu échanger avec lui sur tout ça jusqu''à la fin de sa vie. Il nous a quittés en 2023.', null, null, true),
+	('istoria.capitols.c7', 'istoria', 'bloc', 'istoria.capitols', 7, null, null, null, null, false),
+	('istoria.capitols.c7.titol', 'istoria', 'text', 'istoria.capitols.c7', 0, '', 'Naissance du Ligam (2022)', null, null, true),
+	('istoria.capitols.c7.tèxt', 'istoria', 'text', 'istoria.capitols.c7', 0, '', 'En 2022, je me suis lancé, sans trop savoir pourquoi, dans un compte Instagram. J''ai saisi l''occasion d''un traducteur automatique, Revirada, qui venait d''être publié avec un générateur de voix, Vòtz. Ça m''a donné envie de publier de jolies illustrations avec des mots simples : le ciel, la montagne, les oiseaux.
+
+Au début, je mettais la voix automatique, parce que je n''osais pas parler. Puis, au fur et à mesure, j''ai pris le coup : des publications sur différentes thématiques, des animations de plus en plus travaillées, avec Canva comme outil principal. Ça a intéressé quelques personnes au début, et je ne m''attendais pas à ce que ça marche aussi bien. Ça m''a encouragé à continuer.
+
+L''idée, c''est d''apprendre en même temps que je partage. Je ne me présente pas comme un guide suprême ou un maître de la langue, mais comme un apprenti qui n''a pas peur de faire des erreurs et qui essaie d''apprendre au mieux une langue qu''il adore. Tout ça a mené à une communauté de plusieurs milliers de personnes.', null, null, true),
+	('istoria.capitols.c8', 'istoria', 'bloc', 'istoria.capitols', 8, null, null, null, null, false),
+	('istoria.capitols.c8.titol', 'istoria', 'text', 'istoria.capitols.c8', 0, '', 'Aujourd''hui', null, null, true),
+	('istoria.capitols.c8.tèxt', 'istoria', 'text', 'istoria.capitols.c8', 0, '', 'Aujourd''hui, j''ai envie de passer à un stade supérieur : enseigner vraiment ce que j''ai appris, partager ma vision de la réalité occitane en France aujourd''hui, dans sa complexité, et surtout créer un espace d''échange.', null, null, true),
+	('istoria.contacte.titol', 'istoria', 'text', null, 0, 'Parlem', 'Parlons', null, null, true),
+	('istoria.contacte.tèxt', 'istoria', 'text', null, 0, 'Una question, un cors, una idèa ? Escriu-me, te respondrai.', 'Une question, un cours, une idée ? Écris-moi, je te répondrai.', null, null, true),
+	('istoria.contacte.reservar', 'istoria', 'ligam', null, 0, 'Reservar un cors en visio', 'Réserver un cours en visio', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true)
 on conflict (clau, estat) do nothing;
