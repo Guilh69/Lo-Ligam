@@ -72,6 +72,13 @@ const deps = limits.despartaments
 		return { code, nom, pct, d: cami(anels), c: [Math.round(cx / n), Math.round(cy / n)] };
 	});
 
-const donadas = { cadre: CADRE, domeni: cami(limits.domeni.anels), deps };
+// Les morceaux du gabarit Sensibilisation (croix en filigrane, étiquette,
+// écusson), repris tels quels : les éléments 2 à 15, 16 à 18 et 29 à 43
+const gab = readFileSync(join(racina, 'design-stock/vecteurs/gabarits/4-sensibilisation.svg'), 'utf8');
+const pos = [...gab.matchAll(/<(path|g)\b[^>]*>/g)].map((m) => m.index);
+const bocin = (a, b) => gab.slice(pos[a], pos[b]).trim();
+const gabarit = { crotz: bocin(2, 16), etiqueta: bocin(16, 19), logo: gab.slice(pos[29], gab.lastIndexOf('</g>')).trim() };
+
+const donadas = { cadre: CADRE, domeni: cami(limits.domeni.anels), deps, gabarit };
 writeFileSync(join(aqui, 'carta-donadas.js'), 'window.CARTA = ' + JSON.stringify(donadas) + ';\n');
 console.log(`${deps.length} départements, ${(JSON.stringify(donadas).length / 1024).toFixed(0)} ko`);

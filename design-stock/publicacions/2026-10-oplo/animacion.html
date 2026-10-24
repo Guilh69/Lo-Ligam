@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>OPLO 2020, animation</title>
+<!-- Vidéo Instagram (famille Sensibilisation, 4:5) sur l'enquête OPLO 2020.
+     Chaque image est une fonction du temps (animacion.js) : la même page sert
+     à regarder, à se placer sur une scène (?t=12) et, plus tard, à enregistrer. -->
+<style>
+	@font-face { font-family: Limelight; src: url(../../../app/static/fonts/limelight.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; src: url(../../../app/static/fonts/luciole-regular.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; font-weight: 700; src: url(../../../app/static/fonts/luciole-bold.woff2) format('woff2'); }
+	@font-face { font-family: Luciole; font-style: italic; src: url(../../../app/static/fonts/luciole-italic.woff2) format('woff2'); }
+	html, body { margin: 0; height: 100%; background: #141010; color: #f5ead8; font: 15px Luciole, sans-serif; }
+	body { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 0; box-sizing: border-box; }
+	canvas { height: calc(100vh - 80px); aspect-ratio: 1080 / 1350; display: block; }
+	body.net { padding: 0; }
+	body.net canvas { height: auto; width: 1080px; }
+	body.net .comandas { display: none; }
+	.comandas { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+	.comandas button { font: inherit; padding: 4px 10px; border-radius: 6px; border: 1px solid #6a5848; background: #2a1f18; color: inherit; cursor: pointer; }
+	.comandas input[type='range'] { width: 320px; }
+	output { min-width: 4.5em; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<canvas id="tela" width="1080" height="1350" aria-label="Animation : la part de locuteurs de l'occitan selon l'enquête OPLO 2020"></canvas>
+<div class="comandas">
+	<button id="jogar" type="button">Lecture</button>
+	<input id="temps" type="range" min="0" max="40.5" step="0.01" value="0" aria-label="Position dans l'animation">
+	<output id="ora">0,0 s</output>
+	<span id="scenas"></span>
+</div>
+<script src="carta-donadas.js"></script>
+<script src="animacion.js"></script>
+</body>
+</html>
