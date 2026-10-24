@@ -51,7 +51,12 @@ const ETIQUETAS = [
 	['visio.q.mercé', 'Mercé, un còp mandat', 'Remerciement, une fois envoyé'],
 	['visio.q.sens', 'Ligam « sens respondre »', 'Lien « sans répondre »'],
 	['visio.q.avís', 'Linha sus las donadas', 'Ligne sur les données'],
-	['visio.q.luòc.exemple', 'Exemple dins lo camp', 'Exemple dans le champ']
+	['visio.q.luòc.exemple', 'Exemple dins lo camp', 'Exemple dans le champ'],
+	['visio.pretz.titol', 'Títol « Los prètz »', 'Titre « Les prix »'],
+	['visio.pretz.intro', 'Frasa sus los prètz', 'Phrase sur les prix'],
+	['visio.pretz.un', 'Linha « un cors »', 'Ligne « un cours »'],
+	['visio.pretz.mes', 'Linha « 4 corses »', 'Ligne « 4 cours »'],
+	['visio.pretz.trimestre', 'Linha « 12 corses »', 'Ligne « 12 cours »']
 ];
 const PER_FIN = [
 	[/^acuelh\.bandel\.[^.]+$/, 'Un mot de la lista', 'Un mot du bandeau'],
@@ -70,6 +75,9 @@ const PER_FIN = [
 	[/^apren\.teulas\.[^.]+\.sota$/, 'Segonda linha de la teula', 'Sous-titre de la case'],
 	[/^visio\.debana\.[^.]+$/, 'Una etapa del cors', 'Une étape du cours'],
 	[/^visio\.practica\.[^.]+$/, 'Una linha practica', 'Une ligne pratique'],
+	[/^visio\.pretz\.tarifs\.[^.]+$/, 'Un prètz (carta)', 'Un tarif (carte)'],
+	[/^visio\.pretz\.tarifs\.[^.]+\.nom$/, 'Nom del prètz', 'Nom du tarif'],
+	[/^visio\.pretz\.tarifs\.[^.]+\.[^.]+$/, 'Una soma', 'Un montant'],
 	[/^visio\.q\.[^.]+\.titol$/, 'Una question', 'Une question'],
 	[/^visio\.q\.(nivèls|motivacions|lengas|ritmes|axes)\.[^.]+$/, 'Una responsa de la lista', 'Une réponse de la liste'],
 	[/^visio\.q\.[^.]+$/, 'Un camp del questionari', 'Un champ du questionnaire']

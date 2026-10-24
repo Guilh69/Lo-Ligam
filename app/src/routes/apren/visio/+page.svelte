@@ -30,6 +30,9 @@
 	let metòde = $derived(edicion.actiu || !amagat('visio.metòde.tèxt'));
 	let etapas = $derived(lista('visio.debana'));
 	let practica = $derived(lista('visio.practica'));
+	let tarifs = $derived(lista('visio.pretz.tarifs'));
+	// les trois lignes de chaque carte, dans l'ordre (libellés communs aux trois)
+	const LINHAS = ['un', 'mes', 'trimestre'];
 
 	const apondreEtapa = () => apondre('visio.debana', 'text', { oc: 'Etapa', fr: 'Étape' });
 	const apondrePractica = () => apondre('visio.practica', 'text', { oc: 'Linha', fr: 'Ligne' });
@@ -151,6 +154,29 @@
 					</ol>
 					{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondreEtapa}>+ {fr ? 'Ajouter une étape' : 'Apondre una etapa'}</button>{/if}
 					<p class="nota" hidden={amagat('visio.debana.nota')} use:editar={'visio.debana.nota'}>{@render t('visio.debana.nota')}</p>
+				</section>
+			{/if}
+
+			<!-- Les prix (Romain, 2026-10-24 : grille A, solidaire sur simple déclaration) -->
+			{#if tarifs.length || edicion.actiu}
+				<section aria-labelledby="visio-pretz">
+					<h2 id="visio-pretz" hidden={amagat('visio.pretz.titol')} use:editar={'visio.pretz.titol'}>{@render t('visio.pretz.titol')}</h2>
+					<p hidden={amagat('visio.pretz.intro')} use:editar={'visio.pretz.intro'}>{@render t('visio.pretz.intro')}</p>
+					<ul class="tarifs">
+						{#each tarifs as b (b.clau)}
+							<li class="tarif" use:editar={b.clau}>
+								<h3 hidden={amagat(b.clau + '.nom')} use:editar={b.clau + '.nom'}>{@render t(b.clau + '.nom')}</h3>
+								<dl>
+									{#each LINHAS as l (l)}
+										<div class="tarif-{l}" hidden={amagat(b.clau + '.' + l)}>
+											<dt use:editar={'visio.pretz.' + l}>{@render t('visio.pretz.' + l)}</dt>
+											<dd use:editar={b.clau + '.' + l}>{@render t(b.clau + '.' + l)}</dd>
+										</div>
+									{/each}
+								</dl>
+							</li>
+						{/each}
+					</ul>
 				</section>
 			{/if}
 		</div>
@@ -503,6 +529,58 @@
 		margin-top: var(--esp-12);
 	}
 
+	/* Les prix : trois cartes, le prix du cours en grand, les deux formules dessous */
+	.tarifs {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--esp-16);
+		margin: var(--esp-24) 0 0;
+		padding: 0;
+		list-style: none;
+	}
+	.tarif {
+		padding: var(--esp-24);
+		border: 1px solid var(--t-linha);
+		border-top: 4px solid var(--visio);
+		border-radius: 6px;
+		background: var(--t-fons-2);
+	}
+	.tarif h3 {
+		margin: 0 0 var(--esp-12);
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: 1.35rem;
+	}
+	.tarif dl {
+		display: grid;
+		gap: var(--esp-12);
+		margin: 0;
+	}
+	.tarif dl > div {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+	.tarif dt {
+		font-size: 0.9rem;
+		opacity: 0.8;
+	}
+	.tarif dd {
+		margin: 0;
+		font-weight: 700;
+		font-size: 1.15rem;
+		font-variant-numeric: tabular-nums;
+	}
+	.tarif .tarif-un dd {
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: 2.4rem;
+		line-height: 1.1;
+		color: var(--t-aur);
+	}
+	.tarif .tarif-un {
+		padding-bottom: var(--esp-12);
+		border-bottom: 1px solid var(--t-linha);
+	}
 	.nota {
 		margin-top: var(--esp-24);
 		padding-left: var(--esp-16);
@@ -684,6 +762,23 @@
 		}
 		.questionari {
 			margin-top: var(--esp-64);
+		}
+	}
+	/* les trois cartes de prix l'une sous l'autre sur téléphone */
+	@container visio (max-width: 560px) {
+		.tarifs {
+			grid-template-columns: 1fr;
+		}
+		.tarif {
+			padding: var(--esp-16) var(--esp-24);
+		}
+		/* le prix du cours sur toute la largeur, les deux formules côte à côte */
+		.tarif dl {
+			grid-template-columns: 1fr 1fr;
+			gap: var(--esp-12) var(--esp-16);
+		}
+		.tarif .tarif-un {
+			grid-column: 1 / -1;
 		}
 	}
 

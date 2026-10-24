@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (178 lignes). Jamais écrasés s'ils existent déjà.
+-- (198 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -188,7 +188,7 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.sec.apren.titol', 'acuelh', 'text', null, 0, 'S’apren', 'S’apprend', null, null, true),
 	('acuelh.biais.visio', 'acuelh', 'bloc', 'acuelh.biais', 1, null, null, null, null, true),
 	('acuelh.biais.visio.titol', 'acuelh', 'text', 'acuelh.biais.visio', 0, 'En visio, amb ieu', 'En visio, avec moi', null, null, true),
-	('acuelh.biais.visio.tèxt', 'acuelh', 'text', 'acuelh.biais.visio', 0, 'De corses en dirècte, en pichon grop o sol a sol. Lo primièr es ofèrt.', 'Des cours en direct, en petit groupe ou en tête-à-tête. Le premier est offert.', null, null, true),
+	('acuelh.biais.visio.tèxt', 'acuelh', 'text', 'acuelh.biais.visio', 0, 'De corses en dirècte, sol a sol. Lo primièr es ofèrt.', 'Des cours en direct, en tête-à-tête. Le premier est offert.', null, null, true),
 	('acuelh.biais.visio.ligam', 'acuelh', 'ligam', 'acuelh.biais.visio', 0, 'Prene rendètz-vos', 'Prendre rendez-vous', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true),
 	('acuelh.biais.ritme', 'acuelh', 'bloc', 'acuelh.biais', 2, null, null, null, null, true),
 	('acuelh.biais.ritme.titol', 'acuelh', 'text', 'acuelh.biais.ritme', 0, 'A ton ritme', 'À ton rythme', null, null, true),
@@ -255,7 +255,27 @@ Je suis moi-même apprenant, et je le dis clairement : je ne me présente pas co
 	('visio.debana.e4', 'visio', 'text', 'visio.debana', 4, 'Un moment d’escritura : redigisses, per t’entrainar.', 'Un moment d’écriture : tu rédiges, pour t’entraîner.', null, null, true),
 	('visio.debana.e5', 'visio', 'text', 'visio.debana', 5, 'Per acabar, una obertura : una cançon, quicòm d’agradiu.', 'Pour finir, une ouverture : une chanson, quelque chose d’agréable.', null, null, true),
 	('visio.debana.nota', 'visio', 'text', null, 0, 'Fòrça dialòg : al començament mesclam ta lenga e l’occitan, puèi l’occitan ven de mai en mai natural.', 'Beaucoup de dialogue : au début on mélange ta langue et l’occitan, puis l’occitan devient de plus en plus naturel.', null, null, true),
-	('visio.practica.formulas', 'visio', 'text', 'visio.practica', 5, 'Puèi, de formulas de mantun cors, a prètz solidari, classic o engatjat : los prètz arriban lèu.', 'Ensuite, des formules de plusieurs cours, au tarif solidaire, classique ou engagé : les prix arrivent bientôt.', null, null, true),
+	('visio.practica.formulas', 'visio', 'text', 'visio.practica', 5, 'Puèi, de 15 a 30 € lo cors, segon lo prètz que causisses.', 'Ensuite, de 15 à 30 € le cours, selon le tarif que tu choisis.', null, null, true),
+	('visio.pretz.titol', 'visio', 'text', null, 0, 'Los prètz', 'Les prix', null, null, true),
+	('visio.pretz.intro', 'visio', 'text', null, 0, 'Lo primièr cors es gratuit. Puèi, causisses ton prètz en consciéncia, sens cap de justificatiu : lo prètz engatjat finança lo prètz solidari.', 'Le premier cours est gratuit. Ensuite, tu choisis ton tarif en conscience, sans aucun justificatif : le tarif engagé finance le tarif solidaire.', null, null, true),
+	('visio.pretz.un', 'visio', 'text', null, 0, 'Lo cors d’una ora', 'Le cours d’une heure', null, null, true),
+	('visio.pretz.mes', 'visio', 'text', null, 0, '4 corses, en dos meses', '4 cours, sur deux mois', null, null, true),
+	('visio.pretz.trimestre', 'visio', 'text', null, 0, '12 corses, en cinc meses', '12 cours, sur cinq mois', null, null, true),
+	('visio.pretz.tarifs.t1', 'visio', 'bloc', 'visio.pretz.tarifs', 1, null, null, null, null, true),
+	('visio.pretz.tarifs.t1.nom', 'visio', 'text', 'visio.pretz.tarifs.t1', 0, 'Solidari', 'Solidaire', null, null, true),
+	('visio.pretz.tarifs.t1.un', 'visio', 'text', 'visio.pretz.tarifs.t1', 0, '15 €', '15 €', null, null, true),
+	('visio.pretz.tarifs.t1.mes', 'visio', 'text', 'visio.pretz.tarifs.t1', 0, '55 €', '55 €', null, null, true),
+	('visio.pretz.tarifs.t1.trimestre', 'visio', 'text', 'visio.pretz.tarifs.t1', 0, '155 €', '155 €', null, null, true),
+	('visio.pretz.tarifs.t2', 'visio', 'bloc', 'visio.pretz.tarifs', 2, null, null, null, null, true),
+	('visio.pretz.tarifs.t2.nom', 'visio', 'text', 'visio.pretz.tarifs.t2', 0, 'Classic', 'Classique', null, null, true),
+	('visio.pretz.tarifs.t2.un', 'visio', 'text', 'visio.pretz.tarifs.t2', 0, '22 €', '22 €', null, null, true),
+	('visio.pretz.tarifs.t2.mes', 'visio', 'text', 'visio.pretz.tarifs.t2', 0, '80 €', '80 €', null, null, true),
+	('visio.pretz.tarifs.t2.trimestre', 'visio', 'text', 'visio.pretz.tarifs.t2', 0, '225 €', '225 €', null, null, true),
+	('visio.pretz.tarifs.t3', 'visio', 'bloc', 'visio.pretz.tarifs', 3, null, null, null, null, true),
+	('visio.pretz.tarifs.t3.nom', 'visio', 'text', 'visio.pretz.tarifs.t3', 0, 'Engatjat', 'Engagé', null, null, true),
+	('visio.pretz.tarifs.t3.un', 'visio', 'text', 'visio.pretz.tarifs.t3', 0, '30 €', '30 €', null, null, true),
+	('visio.pretz.tarifs.t3.mes', 'visio', 'text', 'visio.pretz.tarifs.t3', 0, '110 €', '110 €', null, null, true),
+	('visio.pretz.tarifs.t3.trimestre', 'visio', 'text', 'visio.pretz.tarifs.t3', 0, '305 €', '305 €', null, null, true),
 	('visio.q.titol', 'visio', 'text', null, 0, 'Abans lo primièr cors', 'Avant le premier cours', null, null, true),
 	('visio.q.intro', 'visio', 'text', null, 0, 'Qualques questions per preparar ton cors. Après, causisses ton ora dins mon calendièr.', 'Quelques questions pour préparer ton cours. Ensuite, tu choisis ton heure dans mon calendrier.', null, null, true),
 	('visio.q.nom', 'visio', 'text', null, 0, 'Ton prenom', 'Ton prénom', null, null, true),
