@@ -56,6 +56,7 @@ export function pictoPer(href = '') {
 	// les portes de Se parla (2026-10-25)
 	if (href.startsWith('/carta')) return 'carta';
 	if (href.startsWith('/wiki')) return 'wiki';
+	if (href.startsWith('/obras#musicas')) return 'musica';
 	if (href.startsWith('/obras')) return 'obras';
 	if (href.startsWith('/articles')) return 'articles';
 	return 'autre';

@@ -3,8 +3,8 @@
 	// comme les icônes d'identité (charte §5ter) : un écran et une personne
 	// (visio), un chemin (parcours), un dé (leçon d'essai), une image (mots en
 	// images), des barres qui montent (progression) ; pour Se parla (25-10), une
-	// carte pliée, un livre ouvert (wiki), deux notes (œuvres), une page
-	// d'écriture (articles). Toujours décoratifs : la
+	// carte pliée, un livre ouvert (wiki), un livre et un disque (œuvres), deux
+	// notes (musiques), une page d'écriture (articles). Toujours décoratifs : la
 	// case porte son nom en toutes lettres.
 	let { nom = 'autre', size = '3rem' } = $props();
 </script>
@@ -51,6 +51,11 @@
 		<path d="M24 13c-5-4-12-4.5-18-2.5v27c6-2 13-1.5 18 2.5 5-4 12-4.5 18-2.5v-27c-6-2-13-1.5-18 2.5z" />
 		<path d="M24 13v27" />
 	{:else if nom === 'obras'}
+		<rect x="6" y="9" width="13" height="30" rx="1.5" />
+		<path d="M9.5 15h6" />
+		<circle cx="32" cy="27" r="10.5" />
+		<circle cx="32" cy="27" r="2.5" />
+	{:else if nom === 'musica'}
 		<path d="M18 35V11l20-4.5v24" />
 		<circle cx="13.5" cy="35" r="4.5" />
 		<circle cx="33.5" cy="30.5" r="4.5" />

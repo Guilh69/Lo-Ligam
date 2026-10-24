@@ -97,7 +97,14 @@
     { "clau": "parla.teulas.obras.sota", "tipe": "text", "lista": "parla.teulas.obras", "oc": "Çò qu’escoti, çò que legissi, çò que te fau descobrir.", "fr": "Ce que j’écoute, ce que je lis, ce que je te fais découvrir." },
     { "clau": "parla.teulas.articles", "tipe": "bloc", "lista": "parla.teulas", "ordre": 4 },
     { "clau": "parla.teulas.articles.ligam", "tipe": "ligam", "lista": "parla.teulas.articles", "oc": "Articles", "fr": "Articles", "ligam": "/articles" },
-    { "clau": "parla.teulas.articles.sota", "tipe": "text", "lista": "parla.teulas.articles", "oc": "A escriure", "fr": "À écrire", "visible": false }
+    { "clau": "parla.teulas.articles.sota", "tipe": "text", "lista": "parla.teulas.articles", "oc": "A escriure", "fr": "À écrire", "visible": false },
+    { "clau": "parla.teulas.musicas", "tipe": "bloc", "lista": "parla.teulas", "ordre": 5 },
+    { "clau": "parla.teulas.musicas.ligam", "tipe": "ligam", "lista": "parla.teulas.musicas", "oc": "Musicas", "fr": "Musiques", "ligam": "/obras#musicas" },
+    { "clau": "parla.teulas.musicas.sota", "tipe": "text", "lista": "parla.teulas.musicas", "oc": "Çò qu’escoti, e ont l’escotar.", "fr": "Ce que j’écoute, et où l’écouter." }
+  ],
+  "obras": [
+    { "clau": "obras.musica.titol", "tipe": "text", "oc": "Musicas", "fr": "Musiques" },
+    { "clau": "obras.musica.frasa", "tipe": "text", "oc": "A escriure", "fr": "À écrire", "visible": false }
   ],
   "apren": [
     { "clau": "apren.titol", "tipe": "text", "oc": "S’apren", "fr": "S’apprend" },
