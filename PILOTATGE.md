@@ -13,6 +13,7 @@
 2. **L'édition sur place, séance 1 faite dans la nuit du 24-10** (`revisions/2026-10-24-edicion-sus-plaça.md`, cahier §11) : SQL collé dans Supabase par Romain le 24-10 ✅, l'éditeur marche (« ok ça marche ») ; connecté sur loligam.eu, touche le bouton « Editar » en bas à droite de l'accueil, change un mot, « Publicar », vérifie en navigation privée que le public le voit ; essaie aussi une image, un lien, « + Apondre », ↑ ↓, Suprimir, sur téléphone et sur ordinateur. Ensuite : séance 2 (historique, aperçu téléphone), 3 (apparence), 4 (mouvement, autres pages, Atelier).
 3. **Répondre au bloc 4 de `DIRECCION.md`** (l'accueil, vue d'ensemble) : barreau 3, après l'éditeur.
 4. **Une question de couleur** : le rouge du logo aussi sur les boutons de zoom de la carte et sur « Écouter la voix la plus proche » ? (règle B, 23-10)
+5. **Mon istòria (24-10)** : ① recoller `supabase/supabase-pagina-elements.sql` dans Supabase (ajoute les textes de la page, n'écrase rien) ; ② Scaleway : activer Transactional Email, ajouter le domaine loligam.eu, créer une clé d'API (droit TransactionalEmailFullAccess) et poser `SCW_TEM_CLAU` et `SCW_PROJECTE` dans les réglages du conteneur (tant que ce n'est pas fait, le formulaire renvoie vers l'adresse) ; ③ relire ton récit sur la page (« Editar »), écrire l'occitan, cocher « Visible » sur le numéro de chaque chapitre, publier ; ④ confirmer la conservation des messages un an au plus.
 
 **Ensuite**
 4. Regarder sur téléphone et valider : les premiers pas de la carte (forme et occitan, `app/src/lib/components/Guida.svelte`), la famille Ensenhament (`SIG/ensenhament/LEGIR-ME.md` : « renfortit », « oras », « oraria »), les libellés des cercles, des voix et de « La carta se prepara… ».
@@ -49,7 +50,7 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 4 | Audio de l'unité 1 (sa voix) | 1 enregistrement sur 17 | enregistrer le soir du 1.1 | Romain |
 | 5 | Validation occitane des modules 1.1 à 1.4 | bloqué | une séance dicodòc | Romain |
 | 6 | /aprene en « Camin » (sommaire du cursus) | à faire | attend S'apren (barreau 6) | Claude |
-| 7 | Transposition Racine² : A prepaus, Contacte, FAQ | à faire ; les liens du menu mènent à des pages vides (wiki, articles, forum, groupes, idées, istòria, contacte) | à ranger dans les barreaux 6 et 7 | Claude |
+| 7 | Transposition Racine² : A prepaus, Contacte, FAQ | à faire ; les liens du menu mènent à des pages vides (wiki, articles, forum, groupes, idées) ; istòria et contacte faits le 24-10 (chantier 23) | à ranger dans les barreaux 6 et 7 | Claude |
 | 8 | Photos « sang e aur » | bloqué | inventaire des photos et casting | Romain |
 | 9 | design-stock et Proton Drive | règle « rien de plus de 1 Mo dans Git » en place (12-10) ; projet sorti de Documents, fichiers lourds dans `Lo_Ligam_hors-git` (24-10) | l'autre ordinateur (point 1 de la liste) | Romain + Claude |
 | 12 | Autoformation de Romain (`autoformation-parcours.md`) | carnet ouvert le 04-10, pages encore vides | page de l'étape 1 | Romain |
@@ -63,7 +64,7 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 20 | **Progression du cursus**, sur le modèle du cours de catalan de Romain | lancé le 24-10, discussion à part | Romain envoie les documents du cours de catalan | Romain puis Claude |
 | 21 | **Page 01 Se parla** et les musiques des artistes (liens vers Deezer et autres, sans copier) | lancé le 24-10, discussion à part | proposition de page et liste d'artistes de Romain | Claude puis Romain |
 | 22 | **Page 03 Amassa** : groupes, forum, boîte à idées | lancé le 24-10, discussion à part, réflexion d'abord (modération, RGPD, outils européens) | options comparées | Claude puis Romain |
-| 23 | **Mon istòria et Contacte** (regroupées ou non) | lancé le 24-10, discussion à part | options de structure | Claude puis Romain |
+| 23 | **Mon istòria et Contacte** (regroupées ou non) | **fait le 24-10** : une seule page `/istoria`, contact en fin de page avec formulaire (cahier §11) | Romain : SQL, envoi Scaleway, relire et publier son récit | Romain |
 
 Petits restes, détaillés dans l'archive : côte OpenStreetMap autour de la France (`node SIG/cadena/costa-osm.mjs`, puis `mar.py` et `costa-ref.py`), Lomagne (attente d'une source), photos des vallées d'Italie, attribution de la revue Duolingo dans `corpus-design.md`, sort d'`unitat-1-adieu.md`, laquelle des deux maquettes photo fait foi, crédit Luciole sur la future page accessibilité.
 
