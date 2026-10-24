@@ -1,5 +1,7 @@
 # Cinq discussions à lancer (2026-10-24)
 
+> **Dépassé le jour même** : le projet est sorti de Documents (`C:\Users\perie\Depots\Lo_Ligam`, cahier §11) et les discussions en un clic remarchent ; les cinq ont été lancées ainsi. Ce fichier ne sert plus que de trace.
+
 Les tâches suggérées par Claude n'ont pas pu démarrer : elles s'ouvrent dans une copie à part du projet, ce que l'application ne gère pas depuis que le carnet de Git est hors de Documents.
 
 **Comment faire, pour chacune :** dans l'onglet Code de l'application Claude, ouvre une nouvelle session dans le dossier `Documents › 6_Projectes › Lo_Ligam`, sans « worktree ». Copie le bloc de la discussion choisie et colle-le comme premier message. Ordre conseillé : 1, puis 2 quand tu as les documents du catalan, puis 3, 5 et 4.
