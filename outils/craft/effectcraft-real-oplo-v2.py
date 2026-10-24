@@ -10,13 +10,19 @@
 # Maquette fixe (avant les retouches du 24-10) : design-stock/publicacions/2026-10-oplo/real-dobertura.html.
 # Blason et logo : blason.png et logo-instagram.png, refaits par fabricar-logo-instagram.py.
 # Chiffres : SIG/oplo-2020/LEGIR-ME.md et la synthèse de l'OPLO (près de 600 000 locuteurs).
-# py effectcraft-real-oplo-v2.py <dernière étape, 1 à 7> > lot.tsv   puis   bash effectcraft-lancer.sh lot.tsv
+# py effectcraft-real-oplo-v2.py <dernière étape, 1 à 7> [nu] > lot.tsv   puis   bash effectcraft-lancer.sh lot.tsv
+# « nu » (Romain, 24-10 : « juste les animations page par page, et moi je me
+# charge du reste ») : sans l'étiquette, le titre, les blasons, les phrases, le
+# logo du coin ni le crédit, qu'il pose lui-même dans Canva ; fond pétrole plein,
+# car Canva ne garde pas la transparence des vidéos.
 import json, math, sys
 import os as _os
 RAIZ = _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))
 sys.stdout.reconfigure(encoding="utf-8")
 
-C = "OPLO 2020 real v2"
+NU = "nu" in sys.argv[2:]
+C = "OPLO 2020 real v2" + (" animacions" if NU else "")
+PRECOMPO = "Carta departaments v2" + (" animacions" if NU else "")
 DOS = RAIZ + "/design-stock/publicacions/2026-10-oplo/"
 PETROLE, BRIQUE, CREME, BLANC = "#1F5F63", "#B53D17", "#F5EAD8", "#FFFFFF"
 ORC, OR = "#FFD47F", "#EEAF34"
@@ -216,6 +222,8 @@ def revirada(nom, txt, y, t0, t1, taille=30, x=540):
 
 def frasa(n, indice, t0, t1):
     """La case de la phrase de Romain sous le titre : l'occitan, puis sa traduction."""
+    if NU:
+        return
     oc = f"Frasa {n}"
     texte(oc, "✎ " + indice, [540, 668], "Luciole", "Bold", 38, BLANC, t0, t1)
     monta(oc, t0, [540, 668])
@@ -315,38 +323,39 @@ doux("Domeni contorn", "contents/trim/end", 0.5, 2.4, 0, 100, 25, 70)
 doux("Domeni", "transform/opacity", 2.0, 3.0, 0, 16)
 doux("Domeni contorn", "transform/opacity", 2.5, 3.4, 70, 0)
 
-# l'étiquette brique et le titre en Limelight, là dès la première image, jusqu'au bout
-cmd("layer.newShape", kind="rounded", name="Etiqueta", size=[780, 270], fill=BRIQUE, position=[540, 425])
-cmd("prop.set", layer="Etiqueta", path="contents/group/contents/rect/roundness", value=10)
-duree("Etiqueta", 0, FIN)
-cmd("layer.newText", text="QUAL PARLA\nOCCITAN UÈI ?", name="Titol", box=[150, 318, 780, 230],
-    font="Limelight", style="Regular", size=76, leading=108, fill=BLANC, justify="center")
-duree("Titol", 0, FIN)
+if not NU:
+    # l'étiquette brique et le titre en Limelight, là dès la première image, jusqu'au bout
+    cmd("layer.newShape", kind="rounded", name="Etiqueta", size=[780, 270], fill=BRIQUE, position=[540, 425])
+    cmd("prop.set", layer="Etiqueta", path="contents/group/contents/rect/roundness", value=10)
+    duree("Etiqueta", 0, FIN)
+    cmd("layer.newText", text="QUAL PARLA\nOCCITAN UÈI ?", name="Titol", box=[150, 318, 780, 230],
+        font="Limelight", style="Regular", size=76, leading=108, fill=BLANC, justify="center")
+    duree("Titol", 0, FIN)
 
-# ses blasons de part et d'autre du titre (blason.png, tiré de ses posts Canva)
-for nom, x in (("Blason esquèrra", 75), ("Blason drech", 1005)):
-    importar("blason.png", nom, 0, [x, 425], 43)
-    duree(nom, 0, FIN)
+    # ses blasons de part et d'autre du titre (blason.png, tiré de ses posts Canva)
+    for nom, x in (("Blason esquèrra", 75), ("Blason drech", 1005)):
+        importar("blason.png", nom, 0, [x, 425], 43)
+        duree(nom, 0, FIN)
 
-# la traduction se déroule de gauche à droite
-cmd("layer.newText", text="(Qui parle occitan aujourd’hui ?)", name="Revirada", position=[540, 630],
-    font="Luciole", style="Italic", size=36, fill=CREME, justify="center")
-duree("Revirada", 0, FIN)
-A = "text/animators/animator/"
-cmd("layer.addTextAnimator", layer="Revirada", properties=["opacity"])
-cmd("prop.set", layer="Revirada", path=A + "properties/opacity", value=0)
-cmd("prop.set", layer="Revirada", path=A + "selectors/rangeSelector/advanced/shape", value=1)
-doux("Revirada", A + "selectors/rangeSelector/offset", 0.3, 1.3, -100, 100, 20, 60)
+    # la traduction se déroule de gauche à droite
+    cmd("layer.newText", text="(Qui parle occitan aujourd’hui ?)", name="Revirada", position=[540, 630],
+        font="Luciole", style="Italic", size=36, fill=CREME, justify="center")
+    duree("Revirada", 0, FIN)
+    A = "text/animators/animator/"
+    cmd("layer.addTextAnimator", layer="Revirada", properties=["opacity"])
+    cmd("prop.set", layer="Revirada", path=A + "properties/opacity", value=0)
+    cmd("prop.set", layer="Revirada", path=A + "selectors/rangeSelector/advanced/shape", value=1)
+    doux("Revirada", A + "selectors/rangeSelector/offset", 0.3, 1.3, -100, 100, 20, 60)
 
-# son logo Instagram en bas à droite, coupé par le bord comme dans ses posts ;
-# le crédit en bas à gauche
-importar("logo-instagram.png", "Logo", 0, [1035, 1585], 37.5)
-duree("Logo", 0, FIN)
-cmd("layer.newText", text="© RP · enquête OPLO 2020", name="Credit", position=[44, 1670],
-    font="Luciole", style="Regular", size=18, fill=CREME, justify="left")
-cmd("prop.set", layer="Credit", path="transform/rotation", value=-90)
-cmd("prop.set", layer="Credit", path="transform/opacity", value=70)
-duree("Credit", 0, FIN)
+    # son logo Instagram en bas à droite, coupé par le bord comme dans ses posts ;
+    # le crédit en bas à gauche
+    importar("logo-instagram.png", "Logo", 0, [1035, 1585], 37.5)
+    duree("Logo", 0, FIN)
+    cmd("layer.newText", text="© RP · enquête OPLO 2020", name="Credit", position=[44, 1670],
+        font="Luciole", style="Regular", size=18, fill=CREME, justify="left")
+    cmd("prop.set", layer="Credit", path="transform/rotation", value=-90)
+    cmd("prop.set", layer="Credit", path="transform/opacity", value=70)
+    duree("Credit", 0, FIN)
 
 CARTA_NOMS = ["Domeni"]  # tout ce qui part avec la carte à la fin de l'étape 3
 
@@ -356,7 +365,8 @@ CARTA_NOMS = ["Domeni"]  # tout ce qui part avec la carte à la fin de l'étape 
 # département prend sa couleur, du plus petit taux au plus grand.
 if N >= 2:
     t = T[2]
-    fondre(["Revirada"], t - 0.1)
+    if not NU:
+        fondre(["Revirada"], t - 0.1)
     deps = sorted(CARTA["deps"], key=lambda d: d["pct"])
     zona = [r for d in deps for r in anels(d["d"])]
     forma("Zona", zona, fill=BLANC)
@@ -388,10 +398,10 @@ if N >= 2:
         doux("Limits", "transform/opacity", t + 0.5, t + 1.3, 0, SEPARACION["opac"])
         noms.append("Limits")
     # découpé sur le domaine (Béarn, Charente occitane) : un précompo, le domaine en cache
-    cmd("layer.precompose", layers=["Zona"] + noms, name="Carta departaments v2", mode="move")
+    cmd("layer.precompose", layers=["Zona"] + noms, name=PRECOMPO, mode="move")
     forma("Domeni masca", anels(CARTA["domeni"]), fill=BLANC)
-    cmd("layer.setTrackMatte", layer="Carta departaments v2", matte="Domeni masca", kind="alpha")
-    CARTA_NOMS += ["Carta departaments v2"]
+    cmd("layer.setTrackMatte", layer=PRECOMPO, matte="Domeni masca", kind="alpha")
+    CARTA_NOMS += [PRECOMPO]
     frasa(2, "Ta phrase : qui, quand, combien ?", t + 0.4, T[3])
 
 # ———————————————————————— étape 3 : de 2 % à 62 % ————————————————————————
@@ -561,7 +571,8 @@ if N >= 6:
 # du coin s'efface.
 if N >= 7:
     t = T[7]
-    fondre(["Logo"], t - 0.1, 0.5)
+    if not NU:
+        fondre(["Logo"], t - 0.1, 0.5)
     TUILA, TALHA, ECART, CY = 170, 118, 54, 1060
     try:  # largeur et métriques du nom, mesurées dans la police
         from PIL import ImageFont
