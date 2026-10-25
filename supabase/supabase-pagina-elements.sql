@@ -230,7 +230,7 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('parla.teulas.articles.ligam', 'parla', 'ligam', 'parla.teulas.articles', 0, 'Articles', 'Articles', '/articles', null, true),
 	('parla.teulas.articles.sota', 'parla', 'text', 'parla.teulas.articles', 0, 'A escriure', 'À écrire', null, null, false),
 	('parla.teulas.musicas', 'parla', 'bloc', 'parla.teulas', 5, null, null, null, null, true),
-	('parla.teulas.musicas.ligam', 'parla', 'ligam', 'parla.teulas.musicas', 0, 'Musicas', 'Musiques', '/obras#musicas', null, true),
+	('parla.teulas.musicas.ligam', 'parla', 'ligam', 'parla.teulas.musicas', 0, 'Musicas', 'Musiques', '/ensag/musica', null, true),
 	('parla.teulas.musicas.sota', 'parla', 'text', 'parla.teulas.musicas', 0, 'Çò qu’escoti, e ont l’escotar.', 'Ce que j’écoute, et où l’écouter.', null, null, true),
 	('obras.musica.titol', 'obras', 'text', null, 0, 'Musicas', 'Musiques', null, null, true),
 	('obras.musica.frasa', 'obras', 'text', null, 0, 'A escriure', 'À écrire', null, null, false),

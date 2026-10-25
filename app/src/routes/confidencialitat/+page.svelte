@@ -41,11 +41,15 @@
 				[
 					'Tes idées',
 					'Si tu envoies une idée dans la boîte à idées : son texte, rattaché à ton compte pour que tu la retrouves et puisses la supprimer. Je suis seul à la lire, sans savoir qui l’envoie. Elle est effacée quand tu la supprimes, quand ton compte est supprimé, et au bout de deux ans au plus tard.'
+				],
+				[
+					'Tes remarques sur les leçons',
+					'Si tu laisses une remarque sur une leçon, pendant la relecture : son texte, l’endroit de la page que tu touches, et ton prénom si tu le donnes. Aucun compte. Je suis seul à les lire, avec l’aide de Claude, l’intelligence artificielle d’Anthropic, pour les corriger. Elles sont effacées au bout d’un an au plus tard.'
 				]
 			],
 			pourquoiT: 'Pourquoi, et sur quelle base',
 			pourquoi:
-				'Le compte et la progression reposent sur l’exécution du service que tu demandes. Les réponses facultatives du questionnaire reposent sur ton consentement : elles servent uniquement à comprendre qui apprend l’occitan, jamais à te cibler. Les idées reposent aussi sur ton consentement : tu choisis de les envoyer, et tu peux les retirer.',
+				'Le compte et la progression reposent sur l’exécution du service que tu demandes. Les réponses facultatives du questionnaire reposent sur ton consentement : elles servent uniquement à comprendre qui apprend l’occitan, jamais à te cibler. Les idées reposent aussi sur ton consentement : tu choisis de les envoyer, et tu peux les retirer. Les remarques aussi.',
 			ageT: 'Âge minimum',
 			age: 'La création de compte est réservée aux personnes de 15 ans ou plus.',
 			dureeT: 'Combien de temps',
@@ -101,11 +105,15 @@
 				[
 					'Tas idèas',
 					'Se mandas una idèa dins la boita d’idèas : son tèxte, ligat a ton compte per que la tornes trobar e la pòscas suprimir. Soi lo sol a la legir, sens saber qual la manda. Es escafada quand la suprimisses, quand ton compte es suprimit, e al cap de dos ans al mai tard.'
+				],
+				[
+					'Tas remarcas sus las leiçons',
+					'Se daissas una remarca sus una leiçon : son tèxte, l’endrech de la pagina que tòcas, e ton prenom se lo donas. Pas cap de compte. Soi lo sol a las legir, amb l’ajuda de Claude, l’intelligéncia artificiala d’Anthropic, per las corregir. Son escafadas al cap d’un an al mai tard.'
 				]
 			],
 			pourquoiT: 'Perqué, e sus quina basa',
 			pourquoi:
-				'Lo compte e la progression repausan sus l’execucion del servici que demandas. Las respònsas facultativas del questionari repausan sus ton consentiment : servisson unicament a comprene qual apren l’occitan, pas jamai a te ciblar. Las idèas repausan tanben sus ton consentiment : causisses de las mandar, e las pòdes retirar.',
+				'Lo compte e la progression repausan sus l’execucion del servici que demandas. Las respònsas facultativas del questionari repausan sus ton consentiment : servisson unicament a comprene qual apren l’occitan, pas jamai a te ciblar. Las idèas repausan tanben sus ton consentiment : causisses de las mandar, e las pòdes retirar. Las remarcas tanben.',
 			ageT: 'Edat minimala',
 			age: 'La creacion de compte es reservada a las personas de 15 ans o mai.',
 			dureeT: 'Quant de temps',

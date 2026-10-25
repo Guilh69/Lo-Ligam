@@ -25,6 +25,7 @@
 	import CausidaBlock from '$lib/lesson/CausidaBlock.svelte';
 	import CartaBlock from '$lib/lesson/CartaBlock.svelte';
 	import CartaTitol from '$lib/lesson/CartaTitol.svelte';
+	import Remarcas from '$lib/lesson/Remarcas.svelte';
 	import { rich } from '$lib/lesson/rich.js';
 	import { demarrerCarnet, noterExercice } from '$lib/carnet/carnet.svelte.js';
 
@@ -363,7 +364,7 @@
 			{#key view}
 				<div class="blocks">
 					{#each s.blocks.slice(0, visibleBlockCount) as block, bi}
-						<div class="block-slot">
+						<div class="block-slot" data-bloc={bi}>
 							{#if block.type === 'qcm'}
 								<QcmBlock {block} {onCorrect} onResult={noterReconnais} onComplete={() => (blockDone[bi] = true)} />
 							{:else if block.type === 'reveal'}
@@ -419,6 +420,9 @@
 			{/if}
 		{/if}
 	</main>
+	{#if modul}
+		<Remarcas {modul} etapa={view === 'list' ? null : view} />
+	{/if}
 </div>
 
 <style>
