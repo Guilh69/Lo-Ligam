@@ -14,13 +14,13 @@
 			titol: 'Mot de pas nòu',
 			frasa: 'Causís un mot de pas nòu per ton compte.',
 			mdp: 'Mot de pas nòu',
-			ajuda: '8 caractèrs al mens',
+			ajuda: '10 caractèrs al mens, amb minuscula, majuscula, chifra e simbòl',
 			gardar: 'Gardar',
 			fach: 'Mot de pas cambiat : ta session es dobèrta.',
 			compte: 'Anar a mon compte',
 			expirat: 'Aqueste ligam es pas mai valid : demanda-ne un autre.',
 			autre: 'Recebre un ligam nòu',
-			cort: 'Lo mot de pas deu aver 8 caractèrs al mens.',
+			cort: 'Lo mot de pas deu aver 10 caractèrs al mens, amb minuscula, majuscula, chifra e simbòl.',
 			parièr: 'Lo mot de pas nòu deu èsser diferent de l’ancian.',
 			error: 'Una error : torna ensajar.'
 		},
@@ -28,13 +28,13 @@
 			titol: 'Nouveau mot de passe',
 			frasa: 'Choisis un nouveau mot de passe pour ton compte.',
 			mdp: 'Nouveau mot de passe',
-			ajuda: '8 caractères au moins',
+			ajuda: '10 caractères au moins, avec minuscule, majuscule, chiffre et symbole',
 			gardar: 'Enregistrer',
 			fach: 'Mot de passe changé : ta session est ouverte.',
 			compte: 'Aller à mon compte',
 			expirat: 'Ce lien n’est plus valable : demandes-en un autre.',
 			autre: 'Recevoir un nouveau lien',
-			cort: 'Le mot de passe doit avoir 8 caractères au moins.',
+			cort: 'Le mot de passe doit avoir 10 caractères au moins, avec minuscule, majuscule, chiffre et symbole.',
 			parièr: 'Le nouveau mot de passe doit être différent de l’ancien.',
 			error: 'Une erreur : réessaie.'
 		}
@@ -49,11 +49,16 @@
 	async function gardar(e) {
 		e.preventDefault();
 		error = null;
-		if (mdp.length < 8) return (error = 'cort');
+		if (mdp.length < 10) return (error = 'cort');
 		ocupat = true;
 		const { error: err } = await supabase.auth.updateUser({ password: mdp });
 		ocupat = false;
-		if (err) error = /should be different/i.test(err.message) ? 'parièr' : 'error';
+		if (err)
+			error = /should be different/i.test(err.message)
+				? 'parièr'
+				: /least|short|weak/i.test(err.message)
+					? 'cort'
+					: 'error';
 		else fach = true;
 	}
 </script>
@@ -82,7 +87,7 @@
 				<input type="email" class="vist" value={$session.user.email} autocomplete="username" readonly tabindex="-1" aria-hidden="true" />
 				<label class="camp">
 					<span>{x.mdp}</span>
-					<input type="password" bind:value={mdp} autocomplete="new-password" minlength="8" aria-describedby="mdp-ajuda" required />
+					<input type="password" bind:value={mdp} autocomplete="new-password" minlength="10" aria-describedby="mdp-ajuda" required />
 					<small id="mdp-ajuda">{x.ajuda}</small>
 				</label>
 				{#if error}<p class="error" role="alert">{x[error]}</p>{/if}
