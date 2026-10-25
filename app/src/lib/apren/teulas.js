@@ -88,7 +88,7 @@ export function pictoPer(href = '') {
 	if (href.startsWith('/obras#musicas') || href.startsWith('/ensag/musica')) return 'musica';
 	// maquette d'Òbras par art et de Médias (2026-10-25)
 	if (href.includes('#television') || href.startsWith('/ensag/television')) return 'television';
-	if (href.includes('#premsa')) return 'articles';
+	if (href.includes('#premsa') || href.startsWith('/ensag/premsa')) return 'articles';
 	if (href.startsWith('/ensag/medias') || href.startsWith('/ensag/radios')) return 'medias';
 	if (href.startsWith('/ensag/literatura')) return 'literatura';
 	if (href.includes('#cinema')) return 'cinema';

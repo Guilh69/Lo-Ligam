@@ -110,3 +110,36 @@ export const TELES = [
 		sorta: { oc: 'Videos', fr: 'Vidéos' }, luòc: { oc: 'Niça', fr: 'Nice' },
 		tèxt: { oc: 'Gabrièu, un niçard, fa de videos sus la lenga e lo país.', fr: 'Gabriel, un Niçois, fait des vidéos sur la langue et le pays.' } }
 ];
+
+// La presse en occitan pour l'essai /ensag/premsa (2026-10-25) : titres
+// encore vivants (dernier article ou numéro de 2025-2026), liens vérifiés le
+// jour même, textes réécrits. Le rythme vient des sites, de la boutique
+// Espaci Occitan et de la liste de Wikipédia (« Presse écrite occitane »).
+// Écartés : La Setmana (domaine abandonné), Lo blòg occitan de France 3 (muet
+// depuis 2022), Occitans! et País Gascons (pas de site trouvé).
+export const RITMES = [
+	{ id: 'linha', oc: 'En linha', fr: 'En ligne' },
+	{ id: 'mes', oc: 'Cada mes', fr: 'Chaque mois' },
+	{ id: 'dos', oc: 'Cada dos meses', fr: 'Tous les deux mois' },
+	{ id: 'trimèstre', oc: 'Cada trimèstre', fr: 'Chaque trimestre' }
+];
+export const PREMSA = [
+	{ id: 'jornalet', nom: 'Jornalet', site: 'https://www.jornalet.com/', ritme: 'linha',
+		sorta: { oc: 'Quotidian', fr: 'Quotidien' },
+		tèxt: { oc: 'L’actualitat de tot lo mond, cada jorn, en occitan.', fr: 'L’actualité du monde entier, chaque jour, en occitan.' } },
+	{ id: 'sapiencia', nom: 'Sapiéncia', site: 'https://sapiencia.eu/', ritme: 'linha',
+		sorta: { oc: 'Revista', fr: 'Revue' },
+		tèxt: { oc: 'Sciéncia, istòria e tecnologia en occitan.', fr: 'Science, histoire et technologie en occitan.' } },
+	{ id: 'aquodaqui', nom: 'Aquò d’Aquí', site: 'https://www.aquodaqui.info/', ritme: 'mes',
+		sorta: { oc: 'Mesadièr', fr: 'Mensuel' },
+		tèxt: { oc: 'L’actualitat de la lenga e de la cultura, en Provença e en Occitània.', fr: 'L’actualité de la langue et de la culture, en Provence et en Occitanie.' } },
+	{ id: 'lodiari', nom: 'Lo Diari', site: 'https://lodiari.com/', ritme: 'dos',
+		sorta: { oc: 'Magazin', fr: 'Magazine' },
+		tèxt: { oc: 'La cultura occitana : articles, entrevistas e agenda.', fr: 'La culture occitane : articles, entretiens et agenda.' } },
+	{ id: 'reclams', nom: 'Reclams', site: 'https://reclams.org/', ritme: 'trimèstre',
+		sorta: { oc: 'Revista gascona', fr: 'Revue gasconne' },
+		tèxt: { oc: 'La revista de l’Escòla Gaston Febus, dempuèi 1897.', fr: 'La revue de l’Escòla Gaston Febus, depuis 1897.' } },
+	{ id: 'convise', nom: 'Lo Convise', site: 'https://www.association-lo-convise.com/', ritme: 'trimèstre',
+		sorta: { oc: 'Revista d’Auvèrnhe', fr: 'Revue d’Auvergne' },
+		tèxt: { oc: 'La revista d’una associacion occitana d’Orlhac.', fr: 'La revue d’une association occitane d’Aurillac.' } }
+];
