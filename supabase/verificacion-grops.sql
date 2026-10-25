@@ -33,6 +33,15 @@ begin
 		(F, 'essai-f@loligam.test', 'authenticated', 'authenticated', now(), now()),
 		(M, 'essai-m@loligam.test', 'authenticated', 'authenticated', now(), now());
 	insert into public.admins (user_id) values (M);
+	-- depuis supabase-perfils.sql (25-10), écrire demande un profil vérifié
+	perform set_config('loligam.verificacion', 'on', true);
+	insert into public.profiles (user_id, pseudo, verificacion) values
+		(A, 'essai_a1', 'verificat'), (B, 'essai_b1', 'verificat'), (C, 'essai_c1', 'verificat'),
+		(D, 'essai_d1', 'verificat'), (E, 'essai_e1', 'verificat'), (F, 'essai_f1', 'verificat'), (M, 'essai_m1', 'verificat');
+	perform set_config('loligam.verificacion', 'off', true);
+	-- l'essai part d'un groupe vide, même si de vrais membres l'ont rejoint (tout est annulé à la fin)
+	delete from public.messatges where grop_id = G;
+	delete from public.grop_membres where grop_id = G;
 
 	-- 1. anonyme : la liste oui, le reste non
 	set local role anon;

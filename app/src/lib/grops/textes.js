@@ -11,6 +11,7 @@ export const X_ERRORS = {
 		messatges_mot: 'Aqueste messatge conten un mot defendut per la carta dels grops.',
 		messatges_limit: 'Tròp de messatges d’un còp : espèra un pauc.',
 		messatges_ligam: 'Los ligams son possibles quand ton compte a una setmana.',
+		messatges_verificacion: 'Ton perfil es en espèra : la moderacion lo legís lèu. Pòdes ja legir los grops.',
 		error: 'Una error : torna ensajar.'
 	},
 	fr: {
@@ -23,6 +24,7 @@ export const X_ERRORS = {
 		messatges_mot: 'Ce message contient un mot interdit par la charte des groupes.',
 		messatges_limit: 'Trop de messages d’un coup : attends un peu.',
 		messatges_ligam: 'Les liens sont possibles quand ton compte a une semaine.',
+		messatges_verificacion: 'Ton profil est en attente : la modération le lit bientôt. Tu peux déjà lire les groupes.',
 		error: 'Une erreur : réessaie.'
 	}
 };

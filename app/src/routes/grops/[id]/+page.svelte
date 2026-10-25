@@ -13,6 +13,7 @@
 	import { grops, escotar, rejonher, quitar, marcarLegit, clauError, ora } from '$lib/grops/grops.svelte.js';
 	import { X_ERRORS } from '$lib/grops/textes.js';
 	import Tèxte from '$lib/grops/Tèxte.svelte';
+	import Avatar from '$lib/grops/Avatar.svelte';
 
 	let { data } = $props();
 	let grop = $derived(data.grop);
@@ -50,6 +51,7 @@
 			dobrir: 'Dobrir aqueste grop',
 			prepausat: 'Aqueste grop es prepausat : dobrirà amb sa primièra persona.',
 			connectar: 'Se connectar',
+			perfil: 'Mon perfil',
 			...X_ERRORS.oc
 		},
 		fr: {
@@ -82,6 +84,7 @@
 			dobrir: 'Ouvrir ce groupe',
 			prepausat: 'Ce groupe est proposé : il ouvrira avec sa première personne.',
 			connectar: 'Se connecter',
+			perfil: 'Mon profil',
 			...X_ERRORS.fr
 		}
 	};
@@ -329,13 +332,27 @@
 			{/if}
 			{#if cargat && !messatges.length}<p class="vuèg">{x.vuèg}</p>{/if}
 			<ol>
-				{#each messatges as m (m.id)}
+				{#each messatges as m, i (m.id)}
 					{@const meu = m.user_id === grops.uid}
 					{@const p = pseudos[m.user_id]}
-					<li class:meu class:amagat={m.amagat}>
+					{@const seguit = i > 0 && messatges[i - 1].user_id === m.user_id}
+					{@const ligam = p?.verificat ? '/grops/perfil/' + encodeURIComponent(p.pseudo) : null}
+					<li class:meu class:amagat={m.amagat} class:seguit>
+						{#if !meu}
+							<span class="cara">
+								{#if !seguit}
+									{#if ligam}<a href={ligam} tabindex="-1" aria-hidden="true"><Avatar pseudo={p.pseudo} id={m.user_id} /></a>
+									{:else}<Avatar pseudo={p?.pseudo ?? '…'} id={m.user_id} />{/if}
+								{/if}
+							</span>
+						{/if}
+						<div class="cors">
 						<div class="bulla">
 							<p class="qui">
-								{#if !meu}<strong>{p?.pseudo ?? '…'}</strong>{/if}
+								{#if !meu && !seguit}
+									{#if ligam}<a class="nom" href={ligam}><strong>{p.pseudo}</strong></a>
+									{:else}<strong>{p?.pseudo ?? '…'}</strong>{/if}
+								{/if}
 								{#if p?.es_admin}<span class="moderacion">{x.moderacion}</span>{/if}
 								<time datetime={m.created_at}>{ora(m.created_at)}</time>
 							</p>
@@ -350,6 +367,7 @@
 								<button type="button" onclick={() => dobrirSenhal(m)}><Icona nom="senhal" />{x.senhalar}</button>
 							{/if}
 						</div>
+						</div>
 					</li>
 				{/each}
 			</ol>
@@ -357,6 +375,8 @@
 
 		{#if grop.estat === 'tampat'}
 			<p class="pè-tampat">{x.tampat}</p>
+		{:else if grops.ieu && grops.ieu.verificacion !== 'verificat' && !grops.admin}
+			<p class="pè-tampat">{x.messatges_verificacion} <a href="/grops/perfil">{x.perfil}</a></p>
 		{:else}
 			<form class="compositor" onsubmit={mandar}>
 				{#if error}<p class="error" role="alert">{x[error] ?? x.error}</p>{/if}
@@ -528,15 +548,44 @@
 		padding: 0;
 		list-style: none;
 	}
+	/* les autres : l'initiale à gauche, une fois par suite de messages */
 	li {
+		display: grid;
+		grid-template-columns: 2.25rem 1fr;
+		align-items: start;
+		column-gap: var(--esp-8);
+		max-width: min(38rem, 88%);
+	}
+	li.seguit {
+		margin-top: calc(-1 * var(--esp-8));
+	}
+	li.meu {
+		grid-template-columns: 1fr;
+		justify-self: end;
+	}
+	.cara a {
+		display: block;
+		border-radius: 50%;
+	}
+	.cors {
 		display: grid;
 		justify-items: start;
 		gap: 2px;
-		max-width: min(36rem, 85%);
+		min-width: 0;
 	}
-	li.meu {
-		justify-self: end;
+	.meu .cors {
 		justify-items: end;
+	}
+	.qui .nom {
+		color: inherit;
+		text-decoration: none;
+	}
+	.qui .nom:hover {
+		text-decoration: underline;
+	}
+	.pè-tampat a {
+		color: inherit;
+		font-weight: 700;
 	}
 	.bulla {
 		padding: 0.55rem 0.85rem;
@@ -807,6 +856,8 @@
 	.secondari:focus-visible,
 	.ancians:focus-visible,
 	.gèstes button:focus-visible,
+	.qui .nom:focus-visible,
+	.pè-tampat a:focus-visible,
 	.compositor textarea:focus-visible,
 	.mandar:focus-visible,
 	.boton:focus-visible,
@@ -834,7 +885,7 @@
 			justify-content: center;
 		}
 		li {
-			max-width: 92%;
+			max-width: 94%;
 		}
 	}
 </style>
