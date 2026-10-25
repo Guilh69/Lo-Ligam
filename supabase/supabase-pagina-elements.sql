@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (243 lignes). Jamais écrasés s'ils existent déjà.
+-- (246 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -150,6 +150,9 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.eros.titol.3', 'acuelh', 'text', null, 0, 'Amassa.', 'Rassemble.', null, null, true),
 	('acuelh.eros.frasa', 'acuelh', 'text', null, 0, 'Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.', 'Bienvenue dans ton lien avec le monde occitan. D’où que tu sois, tu es ici chez toi.', null, null, true),
 	('acuelh.eros.indici', 'acuelh', 'text', null, 0, 'Passa la mirga suls tres mots.', 'Survole les trois mots.', null, null, true),
+	('acuelh.mondes.parla.sota', 'acuelh', 'text', null, 0, 'Lo país e sas lengas, en carta d’estelas.', 'Le pays et ses langues, en carte d’étoiles.', null, null, true),
+	('acuelh.mondes.apren.sota', 'acuelh', 'text', null, 0, 'Un camin, pas a pas, a ton ritme.', 'Un chemin, pas à pas, à ton rythme.', null, null, true),
+	('acuelh.mondes.viu.sota', 'acuelh', 'text', null, 0, 'De monde, de ligams, pertot.', 'Des gens, des liens, partout.', null, null, true),
 	('acuelh.eros.carta', 'acuelh', 'ligam', null, 0, 'Dobrir la carta', 'Ouvrir la carte', '/carta', null, true),
 	('acuelh.eros.aprene', 'acuelh', 'ligam', null, 0, 'Aprene l’occitan', 'Apprendre l’occitan', '#biais', null, true),
 	('acuelh.bandel.m01', 'acuelh', 'text', 'acuelh.bandel', 1, 'lo risolet', 'le sourire', null, null, true),
@@ -166,8 +169,8 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.bandel.font', 'acuelh', 'text', null, 0, 'Mots del _Lexic de Max Roqueta_, establit per Joan-Guilhèm Roqueta', 'Mots du _Lexique de Max Rouquette_, établi par Jean-Guilhem Rouquette', null, null, true),
 	('acuelh.manifest.titol', 'acuelh', 'text', null, 0, 'Qu’es aquò, Lo Ligam ?', 'Qu’est-ce que Lo Ligam ?', null, null, true),
 	('acuelh.manifest.tèxt', 'acuelh', 'text', null, 0, 'Aicí, l’occitan s’apren *sens vergonha* e *amb benvolença,* e cada leiçon fa *ligam.*', 'Ici, l’occitan s’apprend *sans honte* et *avec bienveillance,* et chaque leçon crée du *lien.*', null, null, true),
-	('acuelh.manifest.retrat', 'acuelh', 'imatge', null, 0, null, null, null, '{"url":"/acuelh/romain.webp","largor":600,"nautor":620,"alt_oc":"","alt_fr":""}'::jsonb, true),
-	('acuelh.manifest.legenda', 'acuelh', 'text', null, 0, 'Romain Périer', 'Romain Périer', null, null, true),
+	('acuelh.manifest.retrat', 'acuelh', 'imatge', null, 0, null, null, null, '{"url":"/acuelh/romain.webp","largor":480,"nautor":600,"alt_oc":"Romain Périer davant lo pic Sant Lop, dins una fenèstra de pèira","alt_fr":"Romain Périer devant le pic Saint-Loup, dans une fenêtre de pierre"}'::jsonb, true),
+	('acuelh.manifest.legenda', 'acuelh', 'text', null, 0, 'ton professor', 'ton professeur', null, null, true),
 	('acuelh.sec.parla.titol', 'acuelh', 'text', null, 0, 'Se parla', 'Se parle', null, null, true),
 	('acuelh.parla.carta', 'acuelh', 'ligam', null, 0, 'Dobrir la carta entièra', 'Ouvrir la carte entière', '/carta', null, true),
 	('acuelh.parla.ligams.wiki', 'acuelh', 'ligam', 'acuelh.parla.ligams', 1, 'Lo wiki de las lengas e dels luòcs', 'Le wiki des langues et des lieux', '/wiki', null, true),
@@ -212,7 +215,7 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.trobador.cita', 'acuelh', 'text', null, 0, 'Max Roqueta · _La pietat dau matin_, 1963', 'Max Rouquette · _La pietat dau matin_, 1963', null, null, true),
 	('acuelh.crida.titol.1', 'acuelh', 'text', null, 0, 'Prèst·a per', 'Prêt·e à', null, null, true),
 	('acuelh.crida.titol.2', 'acuelh', 'text', null, 0, 'començar ?', 'commencer ?', null, null, true),
-	('acuelh.crida.sota', 'acuelh', 'text', null, 0, 'Tres mots uèi, una lenga deman.', 'Trois mots aujourd’hui, une langue demain.', null, null, true),
+	('acuelh.crida.sota', 'acuelh', 'text', null, 0, '', '', null, null, false),
 	('acuelh.crida.reservar', 'acuelh', 'ligam', null, 0, 'Reservar un primièr cors', 'Réserver un premier cours', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true),
 	('acuelh.crida.sol', 'acuelh', 'ligam', null, 0, 'Començar sol·a', 'Commencer seul·e', '/aprene/essai', null, true),
 	('parla.titol', 'parla', 'text', null, 0, 'Se parla', 'Se parle', null, null, true),
