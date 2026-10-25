@@ -1,13 +1,13 @@
 <script>
-	// Page d'essai de la télévision (2026-10-25, Romain : « pour la télé,
+	// Page de la télévision (2026-10-25, Romain : « pour la télé,
 	// pareil » que les radios). Trois présentations comparées (mur d'écrans,
 	// téléviseur, carte) ; Romain a choisi le téléviseur : l'écran à gauche, la
 	// télécommande à droite, on zappe de 1 à 6 avec un éclair de neige. Aucun
 	// lecteur intégré : chaque chaîne mène à son site (rien ne se charge chez
-	// un tiers sans clic). Données dans $lib/ensag/maqueta.js.
+	// un tiers sans clic). Données dans $lib/data/medias.js.
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Icona from '$lib/components/Icona.svelte';
-	import { TELES } from '$lib/ensag/maqueta.js';
+	import { TELES } from '$lib/data/medias.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -42,8 +42,7 @@
 </script>
 
 <svelte:head>
-	<title>Television (maqueta) · Lo Ligam</title>
-	<meta name="robots" content="noindex" />
+	<title>Television · Lo Ligam</title>
 </svelte:head>
 
 {#snippet dirècte(e)}
@@ -57,8 +56,8 @@
 
 <main class="tele">
 	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/ensag/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/ensag/medias">{fr ? 'Médias' : 'Mèdias'}</a><span aria-hidden="true">›</span>
+		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
+		<a href="/medias">{fr ? 'Médias' : 'Mèdias'}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 

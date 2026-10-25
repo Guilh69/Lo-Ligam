@@ -46,18 +46,23 @@
 		{#each lista(`${pagina}.teulas`) as b, i (b.clau)}
 			{@const l = ligam(b.clau + '.ligam')}
 			{@const [fons, tinta] = color(i)}
+			{@const sensPagina = l.href.startsWith('#')}
 			<li class="teula" class:granda={i === 0} style:--fons={fons} style:--tinta={tinta} style:--i={i} use:editar={b.clau}>
 				<span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-				<a
+				<!-- un lien réduit à une ancre (« #scena ») : case sans page pour l'instant,
+				     affichée mais pas cliquable (Òbras, 2026-10-25) -->
+				<svelte:element
+					this={sensPagina ? 'span' : 'a'}
 					class="teula-ligam"
-					href={l.href}
+					class:sens-pagina={sensPagina}
+					href={sensPagina ? undefined : l.href}
 					target={l.defòra ? '_blank' : undefined}
 					rel={l.defòra ? 'noopener' : undefined}
 					hidden={amagat(b.clau + '.ligam')}
 					use:editar={b.clau + '.ligam'}
 				>
 					<span class="nom" lang={fr ? 'fr' : 'oc'}>{fr ? l.fr : l.oc}</span>
-				</a>
+				</svelte:element>
 				<p class="sota" hidden={amagat(b.clau + '.sota')} use:editar={b.clau + '.sota'}>{@render t(b.clau + '.sota')}</p>
 				<span class="picto-plaça"><Pictograma nom={pictoPer(l.href)} size={i === 0 ? '7rem' : '3.6rem'} /></span>
 			</li>
@@ -187,7 +192,7 @@
 		text-decoration: none;
 	}
 	/* toute la case se clique (le lien s'étend sur elle) */
-	.teula-ligam::after {
+	.teula-ligam:not(.sens-pagina)::after {
 		content: '';
 		position: absolute;
 		inset: 0;
@@ -227,6 +232,14 @@
 	.teula:hover .picto-plaça,
 	.teula:focus-within .picto-plaça {
 		transform: scale(1.08) rotate(-4deg);
+	}
+	/* une case sans page ne bouge pas au survol : rien à cliquer */
+	.teula:has(.sens-pagina):hover {
+		transform: none;
+		box-shadow: none;
+	}
+	.teula:has(.sens-pagina):hover .picto-plaça {
+		transform: none;
 	}
 	.teula-ligam:focus-visible {
 		outline: none;

@@ -1,15 +1,15 @@
 <script>
-	// Page d'essai du cinéma (2026-10-25, Romain : même méthode que la
+	// Page du cinéma (2026-10-25, Romain : même méthode que la
 	// littérature, dans les verts d'Òbras). Trois présentations comparées
 	// (pellicule, programme, affiches) ; Romain a choisi les affiches : le mur
 	// d'affiches des plateformes et des carnets de cinéphiles, le plus récent
 	// en grand, un motif lié au sujet de chaque film. Puis où voir les films
 	// (des billets). Chaque film mène à sa page Wikipèdia. Données dans
-	// $lib/ensag/maqueta.js.
+	// $lib/data/arts.js.
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { PALETAS } from '$lib/apren/teulas.js';
-	import { FILMES } from '$lib/ensag/maqueta.js';
+	import { FILMES } from '$lib/data/arts.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -46,8 +46,7 @@
 </script>
 
 <svelte:head>
-	<title>Cinema (maqueta) · Lo Ligam</title>
-	<meta name="robots" content="noindex" />
+	<title>Cinema · Lo Ligam</title>
 </svelte:head>
 
 <div class="pagina">
@@ -55,8 +54,8 @@
 
 <main class="cinema">
 	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/ensag/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/ensag/obras">{fr ? 'Œuvres' : 'Òbras'}</a><span aria-hidden="true">›</span>
+		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
+		<a href="/obras">{fr ? 'Œuvres' : 'Òbras'}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 

@@ -65,8 +65,9 @@
 				}
 	);
 
-	// « ?dintrar » : on vient de la porte Musique d'Òbras, qui porte déjà
-	// l'avis sur Deezer (maquette du 2026-10-25) : on est tout de suite dedans
+	// « ?dintrar » : pour un lien qui porte déjà l'avis sur Deezer, on est tout
+	// de suite dedans. La case Musica d'Òbras n'en a plus (2026-10-25) : le café
+	// montre sa propre porte, avec l'avis.
 	let intrat = $state(page.url.searchParams.has('dintrar'));
 	let jòga = $state(false); // la musique joue (le lecteur Deezer nous le dit)
 	let partit = $state(false); // le lecteur a déjà lancé un morceau de ce disque

@@ -1,14 +1,14 @@
 <script>
-	// Page d'essai de la presse (2026-10-25, Romain : même méthode que les
+	// Page de la presse (2026-10-25, Romain : même méthode que les
 	// radios et la télé). Trois présentations comparées (kiosque, une,
 	// rythme) ; Romain a choisi le kiosque : les couvertures sur leurs rayons,
 	// comme dans les kiosques numériques. Les couvertures sont dessinées en
 	// lettres (aucune image de tiers) ; chaque titre mène à son site. Données
-	// dans $lib/ensag/maqueta.js.
+	// dans $lib/data/medias.js.
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { PALETAS } from '$lib/apren/teulas.js';
-	import { PREMSA, RITMES } from '$lib/ensag/maqueta.js';
+	import { PREMSA, RITMES } from '$lib/data/medias.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -35,8 +35,7 @@
 </script>
 
 <svelte:head>
-	<title>Premsa (maqueta) · Lo Ligam</title>
-	<meta name="robots" content="noindex" />
+	<title>Premsa · Lo Ligam</title>
 </svelte:head>
 
 <div class="pagina">
@@ -44,8 +43,8 @@
 
 <main class="premsa">
 	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/ensag/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/ensag/medias">{fr ? 'Médias' : 'Mèdias'}</a><span aria-hidden="true">›</span>
+		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
+		<a href="/medias">{fr ? 'Médias' : 'Mèdias'}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 
