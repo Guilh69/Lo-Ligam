@@ -1,7 +1,19 @@
 <script>
-	// Maquette de la page Médias (2026-10-25) : voir $lib/ensag/maqueta.js
-	import PaginaLista from '$lib/ensag/PaginaLista.svelte';
-	import { MEDIAS } from '$lib/ensag/maqueta.js';
+	// Maquette de la page Mèdias (2026-10-25) : des cases dans les ors de la
+	// case Mèdias de Se parla (Romain : « dans les médias, du jaune »), une par
+	// sorte de média ; voir $lib/ensag/maqueta.js
+	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
+	import { PLAN } from '$lib/data/planSite.js';
+	import { mostrar, teula } from '$lib/ensag/maqueta.js';
+
+	const P = 'ensag-medias';
+	mostrar(P, [
+		{ clau: `${P}.titol`, tipe: 'text', oc: 'Mèdias', fr: 'Médias' },
+		{ clau: `${P}.frasa`, tipe: 'text', oc: 'Las ràdios, las televisions e la premsa en occitan.', fr: 'Les radios, les télévisions et la presse en occitan.' },
+		...teula(P, 'radios', 1, '/ensag/radios', 'Ràdios', 'Radios', 'Set ràdios en occitan, en dirècte.', 'Sept radios en occitan, en direct.'),
+		...teula(P, 'television', 2, '/ensag/medias#television', 'Television e video', 'Télévision et vidéo', 'Lèu.', 'Bientôt.'),
+		...teula(P, 'premsa', 3, '/ensag/medias#premsa', 'Premsa', 'Presse', 'Lèu.', 'Bientôt.')
+	]);
 </script>
 
 <svelte:head>
@@ -9,10 +21,4 @@
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<PaginaLista
-	titol={{ oc: 'Mèdias', fr: 'Médias' }}
-	frasa={{ oc: 'Las ràdios, las televisions e la premsa en occitan.', fr: 'Les radios, les télévisions et la presse en occitan.' }}
-	picto="medias"
-	camin={[{ href: '/ensag/parla', oc: 'Se parla', fr: 'Se parle' }]}
-	grops={MEDIAS}
-/>
+<PaginaTeulas pagina={P} rubrica={PLAN.find((r) => r.id === 'parla')} etiqueta={{ oc: 'Los mèdias en occitan', fr: 'Les médias en occitan' }} paleta="aur" />

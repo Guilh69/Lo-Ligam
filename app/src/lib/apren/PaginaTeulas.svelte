@@ -161,6 +161,12 @@
 		grid-row: span 2;
 		padding: var(--esp-32);
 	}
+	/* trois cases seulement (Mèdias, 2026-10-25) : les deux petites prennent
+	   chacune une demi-hauteur sur toute la largeur restante, sans trou */
+	.teulas:has(> .teula:nth-child(3):last-child) .teula:not(.granda) {
+		grid-column: span 2;
+		aspect-ratio: auto;
+	}
 	@keyframes arribar {
 		from {
 			opacity: 0;

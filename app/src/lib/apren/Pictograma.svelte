@@ -91,6 +91,10 @@
 		<path d="M14 17L34 6" />
 		<circle cx="16" cy="29" r="6" />
 		<path d="M28 25h9M28 30h9M28 35h9" />
+	{:else if nom === 'television'}
+		<rect x="5" y="13" width="38" height="25" rx="3" />
+		<path d="M17 5l7 8 7-8" />
+		<path d="M14 43h20" />
 	{:else if nom === 'literatura'}
 		<path d="M11 8h24a3 3 0 0 1 3 3v29H14a3 3 0 0 1-3-3z" />
 		<path d="M11 37a3 3 0 0 1 3-3h24" />

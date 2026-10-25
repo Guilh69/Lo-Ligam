@@ -13,4 +13,4 @@
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<PaginaTeulas pagina="ensag-obras" rubrica={PLAN.find((r) => r.id === 'parla')} etiqueta={{ oc: 'Las òbras, art per art', fr: 'Les œuvres, art par art' }} />
+<PaginaTeulas pagina="ensag-obras" rubrica={PLAN.find((r) => r.id === 'parla')} etiqueta={{ oc: 'Las òbras, art per art', fr: 'Les œuvres, art par art' }} paleta="verd" />

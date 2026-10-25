@@ -69,3 +69,19 @@ export const EDITORS = [
 		]
 	}
 ];
+
+// Les radios pour la page d'essai /ensag/radios (2026-10-25, Romain : « va
+// t'inspirer sur des sites qui recensent différentes radios ») : le flux
+// direct de chacune (base libre radio-browser.info ou page de la radio,
+// tous essayés le 25-10), joué dans la page seulement au clic, avec l'avis
+// écrit à côté du bouton ; le lieu pour la carte. Radio Beckwith n'a qu'un
+// flux vidéo : lien vers son site.
+export const RADIOS = [
+	{ id: 'lengadoc-mtp', nom: 'Ràdio Lenga d’Òc', site: 'https://radiolengadoc.com/', flux: 'https://stream-ssl.radios-arra.fr:8443/rlo', lon: 3.877, lat: 43.611 },
+	{ id: 'pais', nom: 'Ràdio País', site: 'https://www.radiopais.fr/', flux: 'https://stunnel2.cyber-streaming.com:9272/stream', lon: -0.37, lat: 43.296 },
+	{ id: 'lengadoc-nbn', nom: 'Ràdio Lengadòc', site: 'https://www.lengadoc.eu/', flux: 'https://stream-ssl.radios-arra.fr:8443/lengadocnarbonne', lon: 3.003, lat: 43.184 },
+	{ id: 'albiges', nom: 'Ràdio Albigés', site: 'https://www.radioalbiges.com/', flux: 'https://live-albiges.radiom.fr/antenne.mp3', lon: 2.148, lat: 43.929 },
+	{ id: 'occitania', nom: 'Radio Occitània', site: 'https://radio-occitania.com/', flux: 'https://icecast.radio-occitania.com/occitania', lon: 1.444, lat: 43.604 },
+	{ id: 'nissa', nom: 'Nissa Pantai', site: 'https://nissapantai.org/', flux: 'https://listen.radioking.com/radio/79270/stream/117373', lon: 7.262, lat: 43.71 },
+	{ id: 'beckwith', nom: 'Radio Beckwith', site: 'https://rbe.it/', flux: null, lon: 7.245, lat: 44.811 }
+];
