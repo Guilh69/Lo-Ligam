@@ -81,7 +81,7 @@
 
     { "clau": "acuelh.crida.titol.1", "tipe": "text", "oc": "Prèst·a per", "fr": "Prêt·e à" },
     { "clau": "acuelh.crida.titol.2", "tipe": "text", "oc": "començar ?", "fr": "commencer ?" },
-    { "clau": "acuelh.crida.sota", "tipe": "text", "oc": "Tres mots uèi, una lenga deman.", "fr": "Trois mots aujourd’hui, une langue demain." },
+    { "clau": "acuelh.crida.sota", "tipe": "text", "oc": "", "fr": "", "visible": false },
     { "clau": "acuelh.crida.reservar", "tipe": "ligam", "oc": "Reservar un primièr cors", "fr": "Réserver un premier cours", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" },
     { "clau": "acuelh.crida.sol", "tipe": "ligam", "oc": "Començar sol·a", "fr": "Commencer seul·e", "ligam": "/aprene/essai" }
   ],
