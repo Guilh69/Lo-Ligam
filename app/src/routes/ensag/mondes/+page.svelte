@@ -10,6 +10,7 @@
 	import { onMount } from 'svelte';
 	import Crotz from '$lib/components/Crotz.svelte';
 	import { ESTELAS, VISTA, COSTA_D } from '../blanc/donadas.js';
+	import { AMASSA } from '$lib/acuelh/amassa.js';
 
 	// Sur fond sombre, la croix en or et rouge (recettes de Romain)
 	const CROTZ = { traç: '#eeaf34', ponch: '#b53d17', moieu: '#eeaf34' };
@@ -107,17 +108,18 @@
 				<div class="fen-cap">
 					<span class="num">02</span>
 					<h2>S’apren</h2>
-					<p class="sota">Un camin, a ton ritme o amb ieu. <span class="ex">[exemple]</span></p>
+					<p class="sota">Un camin, pas a pas, a ton ritme. <span class="ex">[exemple]</span></p>
 				</div>
-				<div class="apercu" aria-hidden="true">
-					<svg viewBox="0 0 220 90" class="camin-apercu">
-						<polyline points="14,76 70,60 120,34 206,16" pathLength="1" fill="none" stroke="#ffd98a" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.9" />
-						<circle cx="14" cy="76" r="5" fill="#ffd98a" />
-						<circle cx="120" cy="34" r="4" fill="#1f5f63" stroke="#ffd98a" stroke-width="2" />
-						<circle cx="206" cy="16" r="4" fill="#1f5f63" stroke="#ffd98a" stroke-width="2" />
+				<figure class="camin" aria-hidden="true">
+					<svg viewBox="0 0 260 140" role="img">
+						<path class="camin-via" d="M22 120 C 70 120 66 88 108 84 S 168 70 178 44 S 214 24 238 20" pathLength="1" fill="none" stroke="#ffd98a" stroke-width="2.6" stroke-linecap="round" stroke-opacity="0.85" />
+						<circle class="camin-fita" cx="22" cy="120" r="6" style="--i: 0" />
+						<circle class="camin-fita" cx="108" cy="84" r="5" style="--i: 1" />
+						<circle class="camin-fita" cx="178" cy="44" r="5" style="--i: 2" />
+						<circle class="camin-fita camin-fin" cx="238" cy="20" r="6.5" style="--i: 3" />
 					</svg>
-				</div>
-				<span class="apbord">fenêtre à bâtir</span>
+				</figure>
+				<a class="dintrar" href="/apren">Dintrar {@render sageta()}</a>
 			</section>
 
 			<!-- 03 Amassa : aperçu (fenêtre à bâtir ensuite) -->
@@ -127,19 +129,19 @@
 					<h2>Amassa</h2>
 					<p class="sota">De monde, de ligams, pertot. <span class="ex">[exemple]</span></p>
 				</div>
-				<div class="apercu" aria-hidden="true">
-					<svg viewBox="0 0 220 90" class="rets-apercu">
-						<g stroke="#ffd98a" stroke-width="1.2" stroke-opacity="0.55">
-							<line x1="26" y1="70" x2="96" y2="40" /><line x1="96" y1="40" x2="150" y2="64" />
-							<line x1="96" y1="40" x2="170" y2="26" /><line x1="26" y1="70" x2="70" y2="54" />
-						</g>
-						<g fill="#ffd98a">
-							<circle cx="26" cy="70" r="4" /><circle cx="96" cy="40" r="5" /><circle cx="150" cy="64" r="4" />
-							<circle cx="170" cy="26" r="4" /><circle cx="70" cy="54" r="3" />
-						</g>
+				<figure class="rets" aria-hidden="true">
+					<svg viewBox="0 0 400 300" role="img">
+						<path class="rets-domeni" d={AMASSA.contorn} />
+						{#each AMASSA.arcs as d, i (d)}
+							<path class="rets-arc" {d} pathLength="1" style="--i: {i}" />
+							<path class="rets-flux" {d} style="--i: {i}" />
+						{/each}
+						{#each AMASSA.vilas as [x, y], i (i)}
+							<circle class="rets-vila" cx={x} cy={y} r="4" style="--i: {i}" />
+						{/each}
 					</svg>
-				</div>
-				<span class="apbord">fenêtre à bâtir</span>
+				</figure>
+				<a class="dintrar" href="/amassa">Dintrar {@render sageta()}</a>
 			</section>
 		</div>
 
@@ -248,8 +250,30 @@
 	.anim .parla.vist .costa { stroke-dashoffset: 0; }
 	.anim .parla .estela { opacity: 0; transition: opacity 0.5s ease-out; transition-delay: calc(var(--i) * 4ms); }
 	.anim .parla.vist .estela { opacity: 1; }
-	.anim .camin-apercu polyline { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.2s var(--lent); }
-	.anim .apren.vist .camin-apercu polyline { stroke-dashoffset: 0; }
+	/* S'apren : le chemin et ses jalons */
+	.camin { margin: 12px 0 0; flex: 1; display: flex; align-items: center; justify-content: center; }
+	.camin svg { width: 100%; height: auto; max-height: 150px; }
+	.camin-fita { fill: #1f5f63; stroke: #ffd98a; stroke-width: 2.4; transform-box: fill-box; transform-origin: center; }
+	.camin-fin { fill: #ffd98a; }
+	/* Amassa : le domaine, les liaisons, le flux, les villes (donnée réelle) */
+	.rets { margin: 10px 0 0; flex: 1; display: flex; align-items: center; justify-content: center; }
+	.rets svg { width: 100%; height: auto; max-height: 172px; }
+	.rets-domeni { fill: color-mix(in srgb, #ffd98a 8%, transparent); stroke: rgba(238, 175, 52, 0.4); stroke-width: 0.8; stroke-linejoin: round; }
+	.rets-arc { fill: none; stroke: #ffd98a; stroke-width: 1; opacity: 0.4; }
+	.rets-flux { fill: none; stroke: #fff; stroke-width: 2; stroke-dasharray: 0 7; stroke-linecap: round; opacity: 0.85; }
+	.rets-vila { fill: #ffd98a; transform-box: fill-box; transform-origin: center; }
+	/* révélation au défilement (sinon tout est déjà visible, immobile) */
+	.anim .camin-via { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.4s var(--lent); }
+	.anim .apren.vist .camin-via { stroke-dashoffset: 0; }
+	.anim .camin-fita { transform: scale(0); transition: transform 0.5s var(--lent); transition-delay: calc(var(--i, 0) * 160ms + 350ms); }
+	.anim .apren.vist .camin-fita { transform: scale(1); }
+	.anim .rets-arc { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s var(--lent); transition-delay: calc(var(--i) * 110ms); }
+	.anim .amassa.vist .rets-arc { stroke-dashoffset: 0; }
+	.anim .rets-flux { opacity: 0; }
+	.anim .amassa.vist .rets-flux { opacity: 0.85; animation: fluir 1.1s linear infinite; animation-delay: calc(1.1s + var(--i) * 110ms); }
+	.anim .rets-vila { transform: scale(0); transition: transform 0.6s var(--lent); transition-delay: calc(var(--i) * 70ms + 200ms); }
+	.anim .amassa.vist .rets-vila { transform: scale(1); }
+	@keyframes fluir { to { stroke-dashoffset: -7; } }
 
 	@media (max-width: 820px) {
 		.mur { grid-template-columns: 1fr; }
