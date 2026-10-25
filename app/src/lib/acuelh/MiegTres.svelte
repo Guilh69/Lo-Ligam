@@ -115,7 +115,7 @@
 				</div>
 			</section>
 		{/each}
-	{:else}
+	{:else if varianta === 'chapitres'}
 		{#each ENTITATS as e, i (e.sec.id)}
 			<section class="chapitre" data-revela style="--color: {e.color}; --color-prec: {colorPrec(i)}">
 				<span class="chap-brasa" aria-hidden="true"></span>
@@ -126,6 +126,23 @@
 						<a class="dintrar clar" href={e.sec.href}>{fr ? DINTRAR.fr : DINTRAR.oc} {@render sageta()}</a>
 					</div>
 					<figure class="chap-vis">{@render visual(e.vis, true)}</figure>
+				</div>
+			</section>
+		{/each}
+	{:else}
+		{#each ENTITATS as e, i (e.sec.id)}
+			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} style="--color: {e.color}">
+				<div class="sist-cap">
+					<span class="sist-num">{e.sec.n}</span>
+					<h2>{fr ? e.sec.fr : e.sec.oc}</h2>
+				</div>
+				<div class="sist-cors">
+					<div class="sist-tèxt">
+						<p class="sota">{fr ? e.sota.fr : e.sota.oc}</p>
+						{@render lligams(e.sec)}
+						<a class="dintrar" href={e.sec.href}>{fr ? DINTRAR.fr : DINTRAR.oc} {@render sageta()}</a>
+					</div>
+					<figure class="sist-vis">{@render visual(e.vis, true)}</figure>
 				</div>
 			</section>
 		{/each}
@@ -208,6 +225,25 @@
 	.chap-vis { margin: 0; }
 	.chapitre .sota { font-size: clamp(1.1rem, 1.8vw, 1.5rem); max-width: 30ch; }
 	@media (max-width: 820px) { .chap-in { grid-template-columns: 1fr; text-align: left; } }
+
+	/* ——— Piste « Système » (inspirée de Léo Parpeix) : braise unifiée (section transparente),
+	   système fort (grand numéro + verbe, filet fin, grand visuel), couleur seulement en accent ——— */
+	.sistema-ent { position: relative; max-width: calc(80rem + 2 * var(--marge)); margin: 0 auto; padding: clamp(8vh, 12vh, 14vh) var(--marge); }
+	.sistema-ent + .sistema-ent { border-top: 1px solid color-mix(in srgb, var(--or) 22%, transparent); }
+	.sist-cap { display: flex; align-items: baseline; gap: 1.2rem; margin: 0 0 var(--esp-48, 2.5rem); }
+	.sist-num { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.9; color: var(--color); }
+	.sist-cap h2 { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 0.95; color: var(--crema); margin: 0; }
+	.sist-cors { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; }
+	.sistema-ent.invers .sist-cors { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.82fr); }
+	.sistema-ent.invers .sist-tèxt { order: 2; }
+	.sist-vis { position: relative; margin: 0; display: flex; justify-content: center; }
+	/* la couleur de l'entité en accent : une lueur douce derrière le grand visuel */
+	.sist-vis::before { content: ''; position: absolute; inset: -10% -8%; z-index: -1; border-radius: 50%; filter: blur(64px); opacity: 0.45; background: radial-gradient(closest-side, var(--color), transparent); }
+	.sist-vis :global(.vis) { width: 100%; max-height: clamp(220px, 42vh, 440px); }
+	@media (max-width: 820px) {
+		.sist-cors, .sistema-ent.invers .sist-cors { grid-template-columns: 1fr; }
+		.sistema-ent.invers .sist-tèxt { order: 0; }
+	}
 
 	/* ——— Révélation au défilement (classe « anim » posée hors « moins d'animation ») ——— */
 	.anim [data-revela] { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--lent), transform 0.9s var(--lent); }

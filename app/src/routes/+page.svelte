@@ -124,6 +124,7 @@
 	// actuel s'efface, le héros garde son titre, le manifeste et le troubadour restent.
 	const FORMAS_MONDES = [
 		['actual', 'Actuelle'],
+		['sistema', 'Système'],
 		['jalons', 'Jalons'],
 		['blocs', 'Blocs'],
 		['chapitres', 'Chapitres']
@@ -239,7 +240,7 @@
 		ensagMondes = new URLSearchParams(location.search).get('ensag') === 'mondes';
 		if (ensagMondes) {
 			// l'adresse ?ensag=mondes montre directement une variante (le bouton permet d'en changer et de revenir à l'actuelle)
-			formaMondes = 'jalons';
+			formaMondes = 'sistema';
 			try {
 				const f = localStorage.getItem(CLAU_ENSAG_MONDES);
 				if (FORMAS_MONDES.some(([v]) => v === f)) formaMondes = f;
