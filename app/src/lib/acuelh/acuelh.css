@@ -557,4 +557,4 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
    sections 01/02/03 seulement. Le haut (héros avec sa carte en étoiles, bandeau de mots) et
    le bas (manifeste, troubadour, appel) restent exactement comme l'accueil actuel.
    Sans data-mondes='mondes', rien ne change. */
-.acuelh[data-mondes='mondes'] :is(.chifras, .biais, .camins) { display: none; }
+.acuelh[data-mondes]:not([data-mondes='actual']) :is(.chifras, .biais, .camins) { display: none; }

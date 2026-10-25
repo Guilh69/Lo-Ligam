@@ -40,7 +40,7 @@
 	import { segments } from '$lib/edicion/marcat.js';
 	import Pictograma from '$lib/apren/Pictograma.svelte';
 	import { PALETAS, pictoPer } from '$lib/apren/teulas.js';
-	import TresMondes from '$lib/acuelh/TresMondes.svelte';
+	import MiegTres from '$lib/acuelh/MiegTres.svelte';
 	import '$lib/acuelh/acuelh.css';
 
 	let { data } = $props();
@@ -124,7 +124,9 @@
 	// actuel s'efface, le héros garde son titre, le manifeste et le troubadour restent.
 	const FORMAS_MONDES = [
 		['actual', 'Actuelle'],
-		['mondes', 'Los tres mondes']
+		['jalons', 'Jalons'],
+		['blocs', 'Blocs'],
+		['chapitres', 'Chapitres']
 	];
 	const CLAU_ENSAG_MONDES = 'lo-ligam-ensag-mondes';
 	let formaMondes = $state('actual');
@@ -236,13 +238,13 @@
 		}
 		ensagMondes = new URLSearchParams(location.search).get('ensag') === 'mondes';
 		if (ensagMondes) {
-			// l'adresse ?ensag=mondes montre directement la nouvelle version (le bouton permet de revenir à l'actuelle)
-			formaMondes = 'mondes';
+			// l'adresse ?ensag=mondes montre directement une variante (le bouton permet d'en changer et de revenir à l'actuelle)
+			formaMondes = 'jalons';
 			try {
 				const f = localStorage.getItem(CLAU_ENSAG_MONDES);
 				if (FORMAS_MONDES.some(([v]) => v === f)) formaMondes = f;
 			} catch {
-				// stockage indisponible : la nouvelle version
+				// stockage indisponible : la première variante
 			}
 		}
 		return () => {
@@ -546,9 +548,9 @@
 			</div>
 		</section>
 
-		{#if formaMondes === 'mondes'}
-			<!-- Direction « los tres mondes » (essai) : les trois fenêtres à la place des sections 01/02/03 -->
-			<TresMondes />
+		{#if formaMondes !== 'actual'}
+			<!-- Essai : les trois entités à la place de 01/02/03, variante choisie (jalons / blocs / chapitres) -->
+			<MiegTres varianta={formaMondes} />
 		{/if}
 
 		<!-- IV. 01 Se parla : la carte en étoiles et les chiffres, remontés -->
