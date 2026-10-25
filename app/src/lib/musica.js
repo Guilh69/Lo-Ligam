@@ -16,6 +16,9 @@ export const EXEMPLES = [
 ];
 export const CÒRS_EXEMPLES = ['Cocanha', 'Lo Cor De La Plana', 'Nadau'];
 
+/** une photo d'artiste vide chez Deezer (aucune image, ou l'image vide) : on montre alors la pochette */
+export const fotoVuèja = (u) => !u || u.includes('/artist//') || u.includes('d41d8cd98f00b204e9800998ecf8427e');
+
 export const ligamDeezer = (id) => `https://www.deezer.com/artist/${id}`;
 export const idDe = (ligam) => Number(/deezer\.com\/(?:[a-z]{2}\/)?artist\/(\d+)/.exec(ligam ?? '')?.[1]) || null;
 

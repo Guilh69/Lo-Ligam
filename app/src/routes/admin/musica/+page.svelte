@@ -10,7 +10,7 @@
 	import { SvelteSet } from 'svelte/reactivity';
 	import { supabase } from '$lib/supabaseClient';
 	import candidats from '$lib/data/musica-candidats.json';
-	import { PAGINA, LISTA, CÒRS, EXEMPLES, CÒRS_EXEMPLES, ligamDeezer, idsDe } from '$lib/musica.js';
+	import { PAGINA, LISTA, CÒRS, EXEMPLES, CÒRS_EXEMPLES, ligamDeezer, idsDe, fotoVuèja } from '$lib/musica.js';
 
 	const causits = new SvelteSet();
 	const còrs = new SvelteSet();
@@ -37,7 +37,7 @@
 		)
 	);
 	const talha = (u, n) => u?.replace(/\/\d+x\d+-/, `/${n}x${n}-`);
-	const vuèja = (u) => !u || u.includes('d41d8cd98f00b204e9800998ecf8427e');
+	const vuèja = fotoVuèja;
 
 	onMount(async () => {
 		const { data, error } = await supabase

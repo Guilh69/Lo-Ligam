@@ -7,7 +7,7 @@
 import candidats from '$lib/data/musica-candidats.json';
 import { legirElements } from '$lib/server/elements.js';
 import { fichasMusica } from '$lib/server/deezer.js';
-import { PAGINA, LISTA, CÒRS, EXEMPLES, CÒRS_EXEMPLES, idsDe } from '$lib/musica.js';
+import { PAGINA, LISTA, CÒRS, EXEMPLES, CÒRS_EXEMPLES, idsDe, fotoVuèja } from '$lib/musica.js';
 
 const PER_PAGINA = 6;
 const semenças = Object.fromEntries(candidats.map((a) => [a.id, a]));
@@ -25,7 +25,7 @@ export async function load() {
 		.map((a) => ({
 			...a,
 			// sans photo chez Deezer (image vide), on montre la pochette
-			imatge: a.imatge.includes('d41d8cd98f00b204e9800998ecf8427e') ? a.album.cobèrta : a.imatge,
+			imatge: fotoVuèja(a.imatge) ? a.album.cobèrta : a.imatge,
 			còr: còrs.includes(a.id),
 			annada: a.album.data.slice(0, 4)
 		}))
