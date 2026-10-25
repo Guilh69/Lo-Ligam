@@ -348,92 +348,10 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
    Bandes : une section sur deux sur la pierre, d'un bord à l'autre. Chapitres : un trait
    franc, le numéro plein à côté du titre, le sommaire de la rubrique (pris dans le plan
    du site) juste dessous. Sans l'essai, rien ne change. */
-.acuelh .jalon-somari { display: none; }
-.acuelh:is([data-separa='bandas'], [data-separa='totes']) :is(.manifest, .biais, .crida) { background: var(--nuech-2); }
-.acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon { grid-auto-flow: column; justify-content: start; align-items: baseline; gap: 1rem; margin-bottom: 1rem; }
-.acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon::before { height: 2px; background: var(--crema); transform: none; }
-.acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon b { font-size: clamp(1.6rem, 2.4vw, 2.2rem); line-height: 1; color: var(--terra); -webkit-text-stroke: 0; }
-.acuelh:is([data-separa='capitols'], [data-separa='totes']) .jalon-somari { display: block; margin-bottom: 4rem; font-size: 1rem; line-height: 1.6; color: var(--crema-2); }
-.acuelh .jalon-somari span { margin-inline: 0.6em; }
-.acuelh .jalon-somari a { color: var(--crema); text-decoration: underline; text-decoration-color: var(--accion); text-decoration-thickness: 2px; text-underline-offset: 0.25em; transition: color 0.3s, text-decoration-color 0.3s; }
-.acuelh .jalon-somari a:hover { text-decoration-thickness: 3px; }
 .acuelh .manifest-tèxt { max-width: 22ch; font-family: var(--titol); font-size: clamp(2.2rem, 5.6vw, 5.4rem); line-height: 1.08; }
 .acuelh .manifest-tèxt .m { color: rgba(245, 234, 216, 0.14); transition: color 0.35s; }
 .acuelh .manifest-tèxt .m.on { color: var(--crema); }
 .acuelh .manifest-tèxt .m.aur.on { color: var(--aur); }
-/* ---------- Acte III bis : tres biais d'aprene ---------- */
-.acuelh .biais { padding: 18vh var(--marge) 6vh; }
-.acuelh .biais-grasilha { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--crema-3); }
-.acuelh .biai { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 2.6rem 2.2rem 2.4rem 0; isolation: isolate; }
-.acuelh .biai + .biai { padding-left: 2.2rem; border-left: 1px solid var(--crema-3); }
-.acuelh .biai::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(rgba(238, 175, 52, 0.08), transparent 70%); opacity: 0; transition: opacity 0.6s var(--ease); }
-.acuelh .biai:hover::before { opacity: 1; }
-.acuelh .biai-num { font-family: var(--votz); font-style: italic; font-size: 1.6rem; color: var(--aur); }
-.acuelh .biai-titol { font-family: var(--titol); font-weight: 400; font-size: clamp(2rem, 3.4vw, 3.2rem); line-height: 1; }
-.acuelh .biai-tèxt { color: var(--crema-2); line-height: 1.7; max-width: 34ch; flex: 1; }
-.acuelh .biai-ligam { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 700; color: var(--crema); width: fit-content; padding-bottom: 0.2rem; border-bottom: 2px solid var(--accion); }
-.acuelh .biai-ligam svg { color: var(--accion); width: 1em; transition: transform 0.6s var(--ease); }
-.acuelh .biai-ligam:hover svg { transform: translateX(6px); }
-.acuelh .lengas { border: 0; margin-top: 3rem; display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.6rem; }
-.acuelh .lengas legend { float: left; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--crema-2); margin-right: 0.4rem; }
-.acuelh .lengas-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-/* Telefon : las quatre pastilhas sus una sola linha, mai pichonas, sus tota la largor ; la legenda respira */
-@media (max-width: 560px) {
-	.acuelh .lengas { gap: 0; }
-	.acuelh .lengas legend { float: none; margin: 0 0 0.9rem; }
-	.acuelh .lengas-chips { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.35rem; flex: 1 1 100%; min-width: 0; }
-	.acuelh .lengas .lengas-chips label { min-width: 0; }
-	.acuelh .lengas .lengas-chips span { display: block; text-align: center; padding: 0.5rem 0.1rem; font-size: 0.86rem; white-space: nowrap; }
-	.acuelh .lengas-consigna { margin-top: 0.9rem; }
-}
-.acuelh .lengas-chips label { position: relative; cursor: pointer; }
-.acuelh .lengas-chips input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
-.acuelh .lengas-chips span {
-	display: inline-block; padding: 0.6rem 1.25rem; border-radius: 999px; border: 1px solid var(--crema-3);
-	font-family: var(--votz); font-style: italic; font-size: 1.15rem; color: var(--crema);
-	transition: background 0.45s var(--ease), color 0.45s, border-color 0.45s;
-}
-.acuelh .lengas-chips label:hover span { border-color: var(--accion); }
-/* La bandièra se propaga dempuèi la esquèrra de la pastilha, en colors atenuadas
-   (un vel de nuèch las adoucís) ; lo tèxte demòra legible gràcias a un liseré sorne. */
-.acuelh .lengas-chips span { position: relative; overflow: hidden; isolation: isolate; }
-.acuelh .lengas-chips span::before {
-	content: ''; position: absolute; inset: -1px; z-index: -1;
-	clip-path: circle(0% at 0% 50%); transition: clip-path 0.9s var(--ease);
-}
-.acuelh .lengas-chips input:checked + span { border-color: transparent; color: #fff; text-shadow: 0 0 6px rgba(18, 9, 6, 0.95), 0 0 2px rgba(18, 9, 6, 0.9); }
-.acuelh .lengas-chips input:checked + span::before { clip-path: circle(160% at 0% 50%); }
-.acuelh .lengas-chips span::before { background: linear-gradient(rgba(18, 9, 6, 0.3), rgba(18, 9, 6, 0.3)), var(--drap, transparent); }
-.acuelh .lengas-chips input:focus-visible + span { outline: 2px solid var(--aur); outline-offset: 3px; }
-.acuelh .lengas-consigna { flex-basis: 100%; color: var(--aur-clar); font-size: 0.95rem; min-height: 1.5em; }
-@media (max-width: 860px) {
-	.acuelh .biais-grasilha { grid-template-columns: 1fr; }
-	.acuelh .biai + .biai { padding-left: 0; border-left: 0; border-top: 1px solid var(--crema-3); }
-}
-/* ---------- « Se viu » : deux cartes, Descobrir et Amassa (2026-10-15) ----------
-   Elles remplacent les « Quatre camins » (cahier §11). De front, sans glissement
-   (retour de Cyril, 2026-10-14) ; sur grand écran, l'image passe à gauche du
-   texte pour ne pas devenir immense ; l'une sous l'autre sur le téléphone. */
-.acuelh .camins { padding: 18vh var(--marge) 6vh; container: camins / inline-size; }
-.acuelh .camins-pista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.4rem, 2.4vw, 2.6rem); }
-/* Une seule carte (Amassa = la communauté seule, 2026-10-22) : elle prend toute la largeur */
-.acuelh .camins-pista > .panel:only-child { grid-column: 1 / -1; }
-.acuelh .panel { container-type: inline-size; display: flex; flex-direction: column; gap: 1.4rem; min-width: 0; }
-.acuelh .panel-tèxt { flex: 1; display: flex; flex-direction: column; gap: 1.2rem; min-width: 0; }
-/* Los noms de las cartas demòran mai pichons que lo títol de la seccion (retorn de Romain, 2026-10-14) */
-.acuelh .panel-nom { font-family: var(--titol); font-size: clamp(1.5rem, 8cqi, 2.2rem); line-height: 0.95; color: var(--crema); }
-.acuelh .panel-tagline { font-family: var(--votz); font-style: italic; font-size: clamp(1.15rem, 6.5cqi, 1.6rem); color: var(--aur-clar); margin-top: 0.5rem; }
-/* Las listas s'alinhan en bas d'una carta a l'autra */
-.acuelh .panel-items { list-style: none; border-top: 1px solid var(--crema-3); margin-top: auto; }
-.acuelh .panel-items li { border-bottom: 1px solid var(--crema-3); }
-.acuelh .panel-items a {
-	position: relative; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-	padding: 0.95rem 0; font-weight: 700; overflow: hidden;
-}
-.acuelh .panel-items a::before { content: ''; position: absolute; inset: 0; background: var(--accion); transform: scaleY(0); transform-origin: bottom; transition: transform 0.6s var(--ease); z-index: -1; }
-.acuelh .panel-items a { z-index: 0; transition: color 0.45s, padding 0.6s var(--ease); }
-.acuelh .panel-items a:hover { color: var(--accion-tinta); padding-inline: 1rem; }
-.acuelh .panel-items a:hover::before { transform: scaleY(1); }
 .acuelh .panel-media { order: -1; aspect-ratio: 4 / 3; position: relative; overflow: hidden; border-radius: 22px; background: var(--nuech-2); }
 .acuelh .panel-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 /* La fòto a un cèl blanc (sistèma sang e aur) : sus fons de nuèch, l'amagam */
@@ -441,13 +359,6 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 .acuelh .panel-media.liseré { box-shadow: 0 0 0 3px var(--terra), 0 0 0 6px var(--aur); }
 .acuelh .panel-media.retrat { background: radial-gradient(ellipse at 50% 80%, #4a1a0b, var(--nuech-2) 70%); }
 .acuelh .panel-media.retrat img { inset: auto 0 0 0; width: 100%; height: 92%; object-fit: contain; object-position: bottom; }
-@container camins (min-width: 1300px) {
-	.acuelh .panel { flex-direction: row; gap: 2.4rem; }
-	.acuelh .panel-media { flex: 0 0 50%; }
-}
-@container camins (max-width: 700px) {
-	.acuelh .camins-pista { grid-template-columns: 1fr; row-gap: 3.4rem; }
-}
 /* ---------- Acte V : las chifras ---------- */
 .acuelh .chifras { padding: 24vh var(--marge) 18vh; }
 /* Zòna voida : lo canevàs i dessenha l'Occitània amb las estelas */
@@ -511,50 +422,3 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 	.acuelh .trobador-fenestra { clip-path: none; }
 	.acuelh .trobador-fenestra img { transform: none; }
 }
-/* ---------- Essai « Chapitres de couleur » (direction B, 2026-10-25, /?ensag=blocs) ----------
-   Les trois entités deviennent des chapitres au fond calme et teinté : la braise
-   (#fons / .brasa, fixés derrière un main au-dessus) ne se voit plus qu'au héros
-   et à l'appel, car les sections du milieu reçoivent un fond opaque. Chaque
-   chapitre porte ses portes en blocs, dans la palette sourde « terra » des
-   rubriques. Sans data-blocs='B', rien ne change. */
-/* récit : interludes calmes, braise éteinte */
-.acuelh[data-blocs='B'] :is(.bandel, .manifest, .trobador) { background: var(--nuech-2); }
-/* chapitres : fond teinté vers la couleur de l'entité (s'adapte au thème via --nuech) */
-.acuelh[data-blocs='B'] .chifras { background: color-mix(in srgb, #a5342a 11%, var(--nuech)); }
-.acuelh[data-blocs='B'] .biais { background: color-mix(in srgb, #1f5f63 13%, var(--nuech)); }
-.acuelh[data-blocs='B'] .camins { background: color-mix(in srgb, #6b3a5b 13%, var(--nuech)); }
-/* chapitres resserrés : la couleur lit comme une bande, pas comme un grand vide */
-.acuelh[data-blocs='B'] :is(.chifras, .biais, .camins) { padding-top: clamp(3rem, 8vh, 6rem); padding-bottom: clamp(3rem, 8vh, 6rem); }
-.acuelh[data-blocs='B'] .chifras.compacta { padding-top: clamp(3rem, 8vh, 6rem); }
-/* le numéro du chapitre devient plein (comme les pages de rubrique), le sommaire
-   cède la place aux blocs */
-.acuelh[data-blocs='B'] .jalon b { color: var(--aur); -webkit-text-stroke: 0; }
-.acuelh[data-blocs='B'] .jalon-somari { display: none; }
-/* les contenus que les blocs remplacent */
-.acuelh[data-blocs='B'] :is(.carta-dobrir, .biais-grasilha, .camins-pista) { display: none; }
-/* ---------- Les blocs (portes de l'entité), palette sourde « terra » ---------- */
-.acuelh .teulas-ac { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--esp-12); max-width: 56rem; margin: 0 0 var(--esp-24); }
-.acuelh .teula-ac {
-	position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 0.9rem;
-	min-height: 8.5rem; padding: 1.1rem 1.1rem 1rem; border-radius: 8px;
-	background: var(--fons); color: var(--tinta); overflow: clip;
-	transition: transform 0.35s var(--ease), box-shadow 0.35s;
-}
-.acuelh .teula-num { font-family: var(--titol); font-size: 2rem; line-height: 1; }
-.acuelh .teula-ligam { color: inherit; }
-.acuelh .teula-ligam::after { content: ''; position: absolute; inset: 0; z-index: 1; }
-.acuelh .teula-nom { display: block; font-family: var(--titol); font-size: clamp(1.1rem, 1.6vw, 1.4rem); line-height: 1.1; text-transform: uppercase; letter-spacing: 0.02em; }
-.acuelh .teula-picto { display: flex; justify-content: flex-end; margin-top: auto; transition: transform 0.45s var(--ease); }
-.acuelh .teula-ac:hover, .acuelh .teula-ac:focus-within { transform: translateY(-4px); box-shadow: 0 14px 30px -12px rgba(0, 0, 0, 0.45); }
-.acuelh .teula-ac:hover .teula-picto, .acuelh .teula-ac:focus-within .teula-picto { transform: scale(1.08) rotate(-4deg); }
-.acuelh .teula-ac:has(.teula-ligam:focus-visible) { outline: 3px solid var(--aur); outline-offset: 3px; }
-@media (prefers-reduced-motion: reduce) {
-	.acuelh .teula-ac, .acuelh .teula-picto { transition: none; }
-	.acuelh .teula-ac:hover, .acuelh .teula-ac:focus-within { transform: none; }
-}
-/* ---------- Essai « Los tres mondes » (direction d'accueil, 2026-10-25, /?ensag=mondes) ----------
-   Les trois entités deviennent des fenêtres vivantes (composant TresMondes), À LA PLACE des
-   sections 01/02/03 seulement. Le haut (héros avec sa carte en étoiles, bandeau de mots) et
-   le bas (manifeste, troubadour, appel) restent exactement comme l'accueil actuel.
-   Sans data-mondes='mondes', rien ne change. */
-.acuelh[data-mondes]:not([data-mondes='actual']) :is(.chifras, .biais, .camins) { display: none; }
