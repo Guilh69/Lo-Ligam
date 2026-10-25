@@ -553,11 +553,8 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 	.acuelh .teula-ac:hover, .acuelh .teula-ac:focus-within { transform: none; }
 }
 /* ---------- Essai « Los tres mondes » (direction d'accueil, 2026-10-25, /?ensag=mondes) ----------
-   Les trois entités deviennent des fenêtres vivantes (composant TresMondes), posées après
-   l'ouverture. Le milieu actuel (bandeau de mots, 01/02/03) s'efface ; le héros garde son
-   titre (sans la carte latérale, qui vit maintenant dans la fenêtre Se parla) ; le manifeste,
-   le troubadour et l'appel restent. Sans data-mondes='mondes', rien ne change. */
-.acuelh[data-mondes='mondes'] .carta-estelas { display: none; }
-.acuelh[data-mondes='mondes'] :is(.bandel, .bandel-font, .chifras, .biais, .camins) { display: none; }
-/* le titre du héros prend toute la largeur une fois la carte latérale retirée */
-.acuelh[data-mondes='mondes'] .eros.amb-carta { display: flex; }
+   Les trois entités deviennent des fenêtres vivantes (composant TresMondes), À LA PLACE des
+   sections 01/02/03 seulement. Le haut (héros avec sa carte en étoiles, bandeau de mots) et
+   le bas (manifeste, troubadour, appel) restent exactement comme l'accueil actuel.
+   Sans data-mondes='mondes', rien ne change. */
+.acuelh[data-mondes='mondes'] :is(.chifras, .biais, .camins) { display: none; }

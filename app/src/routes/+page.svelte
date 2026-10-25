@@ -501,11 +501,6 @@
 			></div>
 		</section>
 
-		{#if formaMondes === 'mondes'}
-			<!-- Direction « los tres mondes » (essai) : les trois fenêtres remplacent le milieu -->
-			<TresMondes />
-		{/if}
-
 		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<div class="bandel" role="group" tabindex="0" aria-label={fr ? 'Quelques mots' : 'Qualques mots'}>
@@ -550,6 +545,11 @@
 				</figure>
 			</div>
 		</section>
+
+		{#if formaMondes === 'mondes'}
+			<!-- Direction « los tres mondes » (essai) : les trois fenêtres à la place des sections 01/02/03 -->
+			<TresMondes />
+		{/if}
 
 		<!-- IV. 01 Se parla : la carte en étoiles et les chiffres, remontés -->
 		<!-- 01 compacte depuis le 2026-10-22 : la carte en étoiles est montée dans l'ouverture -->
