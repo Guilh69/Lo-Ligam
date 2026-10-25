@@ -1,16 +1,13 @@
 <script>
 	// Page d'essai des radios (2026-10-25, Romain : « pas comme ça… va
 	// t'inspirer sur des sites qui recensent différentes radios »). Trois
-	// présentations à comparer, dans la direction du site et les ors de
-	// Mèdias : A les cases (comme des touches de présélection), B le cadran
-	// d'un poste (l'aiguille va sur la station), C la carte (un point par
-	// radio, comme Radio Garden). Le direct se joue dans la page, seulement au
-	// clic, avec l'avis écrit à côté ; « Arrestar » coupe le flux (rien ne se
-	// télécharge en fond). Un bandeau en bas dit ce qui joue (comme Online
-	// Radio Box).
+	// présentations comparées (cases, cadran, carte) ; Romain a choisi la
+	// carte : les dialectes en aplats d'or, un point par radio (comme Radio
+	// Garden). Le direct se joue dans la page, seulement au clic, avec l'avis
+	// écrit à côté ; « Arrestar » coupe le flux (rien ne se télécharge en
+	// fond). Un bandeau en bas dit ce qui joue (comme Online Radio Box).
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Icona from '$lib/components/Icona.svelte';
-	import Pictograma from '$lib/apren/Pictograma.svelte';
 	import { PALETAS } from '$lib/apren/teulas.js';
 	import { RADIOS } from '$lib/ensag/maqueta.js';
 	import { DIALECTES, LARG, NAUT, proj } from '$lib/ensag/carta-dialectes.js';
@@ -22,34 +19,22 @@
 			titol: 'Ràdios',
 			frasa: 'Las ràdios en occitan, en dirècte.',
 			avís: 'En escotant, la ràdio recebrà ton adreça IP.',
-			escotar: 'Escotar',
 			arrestar: 'Arrestar',
 			dirècte: 'En dirècte',
-			site: 'Son site',
-			sus: 'Sus son site'
+			site: 'Son site'
 		},
 		fr: {
 			titol: 'Radios',
 			frasa: 'Les radios en occitan, en direct.',
 			avís: 'En écoutant, la radio recevra ton adresse IP.',
-			escotar: 'Écouter',
 			arrestar: 'Arrêter',
 			dirècte: 'En direct',
-			site: 'Son site',
-			sus: 'Sur son site'
+			site: 'Son site'
 		}
 	};
 	let tx = $derived(t[fr ? 'fr' : 'oc']);
 
-	const VISTAS = [
-		['teulas', 'A. Les cases'],
-		['cadran', 'B. Le cadran'],
-		['carta', 'C. La carte']
-	];
-	let vista = $state('teulas');
-
 	const AUR = PALETAS.aur;
-	const color = (i) => AUR[i % AUR.length];
 	const pos = RADIOS.map((r) => proj(r.lon, r.lat));
 
 	let son;
@@ -78,9 +63,6 @@
 		jòga = cargant = false;
 		actiu = null;
 	}
-	// l'aiguille du cadran : la place de la station sur la bande
-	const plaça = (i) => 13 + (i * 74) / (RADIOS.length - 1);
-	const aguilha = $derived(actiu ? plaça(RADIOS.findIndex((r) => r.id === actiu)) : 2);
 </script>
 
 <svelte:head>
@@ -116,71 +98,6 @@
 		<p class="avís" lang={fr ? 'fr' : 'oc'}><Icona nom="son" size="1.1em" /> {tx.avís}</p>
 	</header>
 
-	<div class="vistas" role="group" aria-label="Présentation">
-		{#each VISTAS as [v, nom] (v)}
-			<button type="button" aria-pressed={vista === v} onclick={() => (vista = v)}>{nom}</button>
-		{/each}
-	</div>
-
-	{#if vista === 'teulas'}
-		<!-- A. Les cases : une touche de présélection par radio -->
-		<ul class="teulas">
-			{#each RADIOS as r, i (r.id)}
-				{@const [fons, tinta] = color(i)}
-				<li class="teula" class:actiu={actiu === r.id} style:--fons={fons} style:--tinta={tinta}>
-					{#if r.flux}
-						<button type="button" class="teula-boton" onclick={() => jogar(r)} aria-pressed={actiu === r.id}>
-							<span class="num">{String(i + 1).padStart(2, '0')}</span>
-							<span class="nom" lang="oc">{r.nom}</span>
-							<span class="teula-accion">
-								{#if actiu === r.id && jòga}{@render onda()} {tx.dirècte}{:else if actiu === r.id && cargant}…{:else}<Icona nom="lire" size="1em" /> {tx.escotar}{/if}
-							</span>
-						</button>
-					{:else}
-						<a class="teula-boton" href={r.site} target="_blank" rel="noopener noreferrer">
-							<span class="num">{String(i + 1).padStart(2, '0')}</span>
-							<span class="nom" lang="oc">{r.nom}</span>
-							<span class="teula-accion">{tx.sus} <Icona nom="extern" size="0.95em" /></span>
-						</a>
-					{/if}
-					<span class="picto-plaça"><Pictograma nom="medias" size="2.8rem" /></span>
-				</li>
-			{/each}
-		</ul>
-	{:else if vista === 'cadran'}
-		<!-- B. Le cadran : la bande des stations, l'aiguille, le haut-parleur -->
-		<div class="pòste">
-			<div class="banda">
-				<span class="aguilha" style:left="{aguilha}%" aria-hidden="true"></span>
-				{#each RADIOS as r, i (r.id)}
-					{#if r.flux}
-						<button type="button" class="estacion" class:actiu={actiu === r.id} style:left="{plaça(i)}%" onclick={() => jogar(r)} aria-pressed={actiu === r.id}>
-							<span lang="oc">{r.nom}</span>
-						</button>
-					{:else}
-						<a class="estacion defòra" style:left="{plaça(i)}%" href={r.site} target="_blank" rel="noopener noreferrer">
-							<span lang="oc">{r.nom}</span> <Icona nom="extern" size="0.9em" />
-						</a>
-					{/if}
-				{/each}
-			</div>
-			<div class="pòste-bas">
-				<span class="grasilha" aria-hidden="true"></span>
-				<div class="pòste-ecran">
-					{#if radio}
-						<span class="ecran-dirècte">{#if jòga}{@render onda()}{/if} {jòga ? tx.dirècte : '…'}</span>
-						<strong lang="oc">{radio.nom}</strong>
-					{:else}
-						<span class="ecran-dirècte">{tx.escotar}</span>
-						<strong>— · —</strong>
-					{/if}
-				</div>
-				<button type="button" class="boton-redond" onclick={() => (actiu ? arrestar() : jogar(RADIOS[0]))} aria-label={actiu ? tx.arrestar : tx.escotar}>
-					<Icona nom={actiu ? 'pause' : 'lire'} size="1.6em" />
-				</button>
-			</div>
-		</div>
-	{:else}
 		<!-- C. La carte : les dialectes en aplats d'or, un point par radio -->
 		<div class="carta" style:aspect-ratio="{LARG} / {NAUT}">
 			<svg viewBox="0 0 {LARG} {NAUT}" aria-hidden="true">
@@ -217,7 +134,6 @@
 				</li>
 			{/each}
 		</ul>
-	{/if}
 </main>
 
 {#if actiu}
@@ -293,31 +209,6 @@
 		font-size: 0.95rem;
 	}
 
-	/* le choix de la présentation (maquette seulement) */
-	.vistas {
-		display: inline-flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-		margin-bottom: var(--esp-24);
-		padding: 0.3rem;
-		border: 1px dashed var(--t-linha);
-		border-radius: 999px;
-	}
-	.vistas button {
-		padding: 0.45rem 1rem;
-		border: 0;
-		border-radius: 999px;
-		background: transparent;
-		color: var(--t-tinta-2);
-		font: inherit;
-		font-weight: 700;
-		cursor: pointer;
-	}
-	.vistas button[aria-pressed='true'] {
-		background: var(--t-aur);
-		color: #2a1a10;
-	}
-
 	/* l'onde qui bat pendant le direct */
 	.onda {
 		display: inline-flex;
@@ -346,196 +237,6 @@
 	}
 	.onda i {
 		transform-origin: bottom;
-	}
-
-	/* ---------- A. Les cases ---------- */
-	.teulas {
-		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		gap: var(--esp-12);
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-	.teula {
-		position: relative;
-		aspect-ratio: 1;
-		border-radius: 4px;
-		background: var(--fons);
-		color: var(--tinta);
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
-	}
-	.teula:hover {
-		transform: translateY(-3px);
-	}
-	.teula.actiu {
-		box-shadow: 0 0 0 4px var(--t-fons), 0 0 0 7px var(--t-terra);
-	}
-	.teula-boton {
-		box-sizing: border-box;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		padding: clamp(0.9rem, 1.8vw, 1.4rem);
-		border: 0;
-		background: none;
-		color: inherit;
-		font: inherit;
-		text-align: left;
-		text-decoration: none;
-		cursor: pointer;
-	}
-	.teula-boton:focus-visible {
-		outline: 3px solid var(--t-tinta);
-		outline-offset: 3px;
-	}
-	.num {
-		font-family: var(--font-heading);
-		font-size: 2.4rem;
-		line-height: 1;
-	}
-	.nom {
-		margin-top: 0.4rem;
-		font-family: var(--font-heading);
-		font-size: clamp(1.15rem, 1.8vw, 1.5rem);
-		line-height: 1.1;
-		text-transform: uppercase;
-	}
-	.teula-accion {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		margin-top: 0.7rem;
-		font-weight: 700;
-	}
-	.picto-plaça {
-		position: absolute;
-		right: clamp(0.9rem, 1.8vw, 1.4rem);
-		bottom: clamp(0.9rem, 1.8vw, 1.4rem);
-		pointer-events: none;
-	}
-
-	/* ---------- B. Le cadran ---------- */
-	.pòste {
-		padding: clamp(1rem, 3vw, 2rem);
-		border-radius: 18px;
-		background: var(--t-fons-2);
-		border: 1px solid var(--t-linha);
-	}
-	.banda {
-		position: relative;
-		height: clamp(9rem, 18vw, 12rem);
-		border-radius: 8px;
-		background:
-			repeating-linear-gradient(90deg, rgba(42, 26, 16, 0.55) 0 2px, transparent 2px 2%) 0 0 / 100% 22% no-repeat,
-			repeating-linear-gradient(90deg, rgba(42, 26, 16, 0.35) 0 1px, transparent 1px 1%) 0 0 / 100% 12% no-repeat,
-			#eeaf34;
-		overflow: hidden;
-	}
-	.aguilha {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		width: 4px;
-		margin-left: -2px;
-		background: #b53d17;
-		box-shadow: 0 0 12px rgba(181, 61, 23, 0.6);
-		transition: left 0.7s cubic-bezier(0.3, 1.3, 0.5, 1);
-	}
-	.estacion {
-		position: absolute;
-		top: 44%;
-		transform: translate(-50%, -50%);
-		display: inline-flex;
-		align-items: center;
-		gap: 0.25rem;
-		padding: 0.3rem 0.5rem;
-		border: 0;
-		border-radius: 4px;
-		background: none;
-		color: #2a1a10;
-		font-family: var(--font-heading);
-		font-size: clamp(0.85rem, 1.5vw, 1.15rem);
-		text-transform: uppercase;
-		white-space: nowrap;
-		text-decoration: none;
-		cursor: pointer;
-	}
-	.estacion:nth-of-type(even) {
-		top: 76%;
-	}
-	/* un trait relie chaque nom à sa place sur la graduation */
-	.estacion::before {
-		content: '';
-		position: absolute;
-		left: 50%;
-		bottom: 100%;
-		width: 2px;
-		height: 1.2rem;
-		background: rgba(42, 26, 16, 0.55);
-	}
-	.estacion:nth-of-type(even)::before {
-		height: 4.4rem;
-	}
-	.estacion:hover,
-	.estacion.actiu {
-		background: #2a1a10;
-		color: #eeaf34;
-	}
-	.estacion:focus-visible {
-		outline: 2px solid #2a1a10;
-		outline-offset: 2px;
-	}
-	.pòste-bas {
-		display: flex;
-		align-items: center;
-		gap: clamp(1rem, 3vw, 2rem);
-		margin-top: clamp(1rem, 3vw, 1.6rem);
-	}
-	.grasilha {
-		flex: 1 1 40%;
-		height: 6rem;
-		border-radius: 10px;
-		background: radial-gradient(circle, color-mix(in srgb, var(--t-tinta) 30%, transparent) 2px, transparent 2.5px) 0 0 / 12px 12px;
-	}
-	.pòste-ecran {
-		flex: 1 1 40%;
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-	}
-	.ecran-dirècte {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		color: var(--t-aur);
-		font-weight: 700;
-		text-transform: uppercase;
-		font-size: 0.85rem;
-		letter-spacing: 0.08em;
-	}
-	.pòste-ecran strong {
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: clamp(1.4rem, 3vw, 2.2rem);
-	}
-	.boton-redond {
-		flex: 0 0 auto;
-		display: grid;
-		place-items: center;
-		width: 4.5rem;
-		height: 4.5rem;
-		border: 0;
-		border-radius: 50%;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		cursor: pointer;
-		box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.7);
-	}
-	.boton-redond:hover {
-		background: var(--t-accion-viu);
 	}
 
 	/* ---------- C. La carte ---------- */
@@ -694,37 +395,8 @@
 		cursor: pointer;
 	}
 
-	/* téléphone */
+	/* téléphone : les noms ne tiennent pas sur la carte, on les liste dessous */
 	@container radios (max-width: 640px) {
-		.teulas {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-		.num {
-			font-size: 1.8rem;
-		}
-		/* le cadran en colonne : une station par ligne, la station jouée en noir */
-		.banda {
-			height: auto;
-			display: flex;
-			flex-direction: column;
-			padding: 1.6rem 0.8rem 0.8rem;
-			background-size: 100% 1rem, 100% 0.6rem, auto;
-		}
-		.aguilha,
-		.estacion::before {
-			display: none;
-		}
-		.estacion,
-		.estacion:nth-of-type(even) {
-			position: static;
-			transform: none;
-			justify-content: flex-start;
-			padding: 0.55rem 0.6rem;
-			font-size: 1rem;
-		}
-		.grasilha {
-			display: none;
-		}
 		.punt-nom {
 			display: none;
 		}
@@ -741,10 +413,6 @@
 		.onda i,
 		.punt.actiu .punt-rond::after {
 			animation: none;
-		}
-		.aguilha,
-		.teula {
-			transition: none;
 		}
 	}
 	:global(html[data-leugier='on']) .onda i,
