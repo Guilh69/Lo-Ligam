@@ -54,7 +54,7 @@ Le site a pris une grande avance ces deux dernières semaines sur **la carte, l'
 
 ## Le vocabulaire occitan : tu ne valides plus des milliers de mots
 
-Tu l'as dit : tu ne peux pas relire des milliers de mots. **C'est désormais à moi (et à Juan) d'aller chercher et de valider**, et de ne te remonter que les vrais doutes, au même endroit.
+Tu l'as dit : tu ne peux pas relire des milliers de mots. **C'est désormais à moi (et à Joan) d'aller chercher et de valider**, et de ne te remonter que les vrais doutes, au même endroit.
 
 - **Fait aujourd'hui** : tout le lexique de contenu de l'unité 1 et les mots du menu passés à l'API de lo Congrès. Le lexique courant est confirmé.
 - **Les seuls points qui demandent *ton* avis** (choix d'usage, pas d'orthographe) et les mots que les outils ne couvrent pas sont rassemblés dans un fichier unique : **`DOBTES-OCCITAN.md`** à la racine du projet. Tu l'ouvres quand tu veux, tu réponds une question à la fois.
