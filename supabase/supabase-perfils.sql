@@ -240,3 +240,75 @@ begin
 	perform set_config('loligam.verificacion', 'off', true);
 end;
 $$;
+
+
+-- 6) LISTES À COCHER ET LIEU DE LA CARTE (2026-10-25, Romain : « il faut une
+--    liste, car flemme d'écrire pour beaucoup » ; le lieu se cherche dans la
+--    base de communes de la carte, en français et en occitan)
+-- -----------------------------------------------------------------------------
+
+alter table public.profiles add column if not exists cerca text[];
+alter table public.profiles add column if not exists agrada text[];
+alter table public.profiles add column if not exists ont_oc text;
+alter table public.profiles add column if not exists ont_dep text;
+
+do $$
+begin
+	if not exists (select 1 from pg_constraint where conname = 'profiles_perfil_listas') then
+		alter table public.profiles add constraint profiles_perfil_listas check (
+			cerca <@ array['parlar', 'escriure', 'aprene', 'trobar', 'ajudar']
+			and agrada <@ array['musica', 'cant', 'danca', 'bal', 'cosina', 'literatura', 'teatre', 'cinema', 'natura', 'istoria', 'jocs']
+			and char_length(ont_oc) <= 80
+			and char_length(ont_dep) <= 6
+		);
+	end if;
+end;
+$$;
+
+drop function if exists public.perfil (text);
+create function public.perfil (p text) returns table (
+	user_id uuid, pseudo text, presentacion text, ont text, ont_oc text, ont_dep text, dialecte text, nivel text,
+	cerca text[], agrada text[], arribat_at timestamptz, es_admin boolean, grops_comuns jsonb
+) language sql stable security definer
+set
+	search_path = '' as $$
+	select pr.user_id, pr.pseudo, pr.presentacion, pr.ont, pr.ont_oc, pr.ont_dep, pr.dialecte, pr.nivel,
+		pr.cerca, pr.agrada, pr.created_at,
+		exists (select 1 from public.admins a where a.user_id = pr.user_id),
+		coalesce((
+			select jsonb_agg(jsonb_build_object('id', g.id, 'nom_oc', g.nom_oc, 'nom_fr', g.nom_fr) order by g.orde)
+			from public.grop_membres a
+			join public.grop_membres b on b.grop_id = a.grop_id and b.user_id = auth.uid ()
+			join public.grops g on g.id = a.grop_id
+			where a.user_id = pr.user_id
+		), '[]'::jsonb)
+	from public.profiles pr
+	where public.normalizar (btrim(pr.pseudo)) = public.normalizar (btrim(p))
+		and pr.verificacion = 'verificat'
+		and (public.es_verificat () or public.is_admin ());
+$$;
+revoke all on function public.perfil (text) from public, anon;
+grant execute on function public.perfil (text) to authenticated;
+
+drop function if exists public.perfils_en_espera ();
+create function public.perfils_en_espera () returns table (
+	user_id uuid, pseudo text, presentacion text, ont text, ont_oc text, dialecte text, nivel text,
+	cerca text[], agrada text[], adreca text, adreca_verificada boolean, inscrit_at timestamptz, verificacion text
+) language plpgsql stable security definer
+set
+	search_path = '' as $$
+begin
+	if not public.is_admin () then
+		raise exception 'perfil_admin';
+	end if;
+	return query
+		select p.user_id, p.pseudo, p.presentacion, p.ont, p.ont_oc, p.dialecte, p.nivel, p.cerca, p.agrada,
+			u.email::text, u.email_confirmed_at is not null, u.created_at, p.verificacion
+		from public.profiles p
+		join auth.users u on u.id = p.user_id
+		where p.verificacion <> 'verificat'
+		order by (p.verificacion = 'refusat'), u.created_at;
+end;
+$$;
+revoke all on function public.perfils_en_espera () from public, anon;
+grant execute on function public.perfils_en_espera () to authenticated;

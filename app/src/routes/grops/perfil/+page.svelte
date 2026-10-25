@@ -1,11 +1,16 @@
 <script>
 	// Son propre profil (2026-10-25) : ce que les autres membres vérifiés
-	// verront, écrit librement, et l'état de sa vérification. Les réponses
-	// du questionnaire d'accueil (âge, genre, profession) n'y paraissent pas.
+	// verront, et l'état de sa vérification. Surtout des cases à cocher
+	// (Romain : « flemme d'écrire ») ; le lieu se cherche dans les communes
+	// de la carte, en occitan ou en français ; le texte libre vient en dernier,
+	// facultatif. Les réponses du questionnaire d'accueil (âge, genre,
+	// profession) n'y paraissent pas.
+	import { browser } from '$app/environment';
 	import Icona from '$lib/components/Icona.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { grops, DIALECTES, NIVELS, cargarIeu } from '$lib/grops/grops.svelte.js';
+	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, cargarIeu } from '$lib/grops/grops.svelte.js';
+	import { cargarComunas, cercarComunas } from '$lib/comunas.js';
 	import Avatar from '$lib/grops/Avatar.svelte';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -20,13 +25,16 @@
 				refusat: 'Ton perfil es pas estat acceptat. Pòdes escriure a la moderacion :'
 			},
 			contacte: 'Contacte',
-			presentacion: 'Presentacion',
-			presentacion_ajuda: 'Çò que vòls : d’ont venes, perqué l’occitan, çò que t’agrada…',
-			ont: 'D’ont',
-			ont_ajuda: 'Una vila, un país, o res.',
-			dialecte: 'Dialècte',
 			nivel: 'Nivèl',
+			cerca: 'Çò que cèrqui',
+			agrada: 'Çò que m’agrada',
+			ont: 'D’ont',
+			ont_ajuda: 'Escriu lo començament del nom.',
+			ont_lista: 'Pas dins la lista : gardarem çò qu’as escrich.',
+			dialecte: 'Dialècte',
 			cap: '(cap)',
+			presentacion: 'En mai, se vòls',
+			presentacion_ajuda: 'Çò que vòls : d’ont venes, perqué l’occitan…',
 			enregistrar: 'Enregistrar',
 			enregistrat: 'Enregistrat.',
 			veire: 'Veire mon perfil',
@@ -45,13 +53,16 @@
 				refusat: 'Ton profil n’a pas été accepté. Tu peux écrire à la modération :'
 			},
 			contacte: 'Contact',
-			presentacion: 'Présentation',
-			presentacion_ajuda: 'Ce que tu veux : d’où tu viens, pourquoi l’occitan, ce que tu aimes…',
-			ont: 'D’où',
-			ont_ajuda: 'Une ville, un pays, ou rien.',
-			dialecte: 'Dialecte',
 			nivel: 'Niveau',
+			cerca: 'Ce que je cherche',
+			agrada: 'Ce que j’aime',
+			ont: 'D’où',
+			ont_ajuda: 'Écris le début du nom, en occitan ou en français.',
+			ont_lista: 'Pas dans la liste : on garde ce que tu as écrit.',
+			dialecte: 'Dialecte',
 			cap: '(aucun)',
+			presentacion: 'En plus, si tu veux',
+			presentacion_ajuda: 'Ce que tu veux : d’où tu viens, pourquoi l’occitan…',
 			enregistrar: 'Enregistrer',
 			enregistrat: 'Enregistré.',
 			veire: 'Voir mon profil',
@@ -66,43 +77,107 @@
 
 	let cargat = $state(false);
 	let existís = $state(false);
-	let f = $state({ presentacion: '', ont: '', dialecte: '', nivel: '' });
+	let f = $state({ presentacion: '', ont: '', ont_oc: null, ont_dep: null, dialecte: '', nivel: '', cerca: [], agrada: [] });
 	let enregistrant = $state(false);
 	let enregistrat = $state(false);
 	let error = $state(null);
+	// le lieu : ce qu'on tape (q), les communes proposées, celle qu'on survole au clavier
+	let q = $state('');
+	let trobadas = $state([]);
+	let activa = $state(-1);
+	let dobèrt = $state(false);
+
+	// le nom du lieu dans la langue choisie ; dans la liste, l'autre nom à côté
+	const nomLuòc = (l) => (fr ? l.ont : (l.ont_oc ?? l.ont)) ?? '';
+	const nomComuna = (c) => (fr ? c.fr : (c.oc ?? c.fr));
+	const autreNom = (c) => (c.oc ? (fr ? c.oc : c.fr) : null);
+
+	// en développement, « ?simular » montre le formulaire sans compte (mise en page)
+	const simular = browser && import.meta.env.DEV && new URLSearchParams(location.search).has('simular');
 
 	$effect(() => {
-		if (!grops.uid) return;
+		if (!grops.uid) {
+			if (simular) existís = cargat = true;
+			return;
+		}
 		supabase
 			.from('profiles')
-			.select('presentacion, ont, dialecte, nivel')
+			.select('presentacion, ont, ont_oc, ont_dep, dialecte, nivel, cerca, agrada')
 			.eq('user_id', grops.uid)
 			.maybeSingle()
 			.then(({ data }) => {
 				existís = !!data;
-				if (data)
+				if (data) {
 					f = {
 						presentacion: data.presentacion ?? '',
 						ont: data.ont ?? '',
+						ont_oc: data.ont_oc,
+						ont_dep: data.ont_dep,
 						dialecte: data.dialecte ?? '',
-						nivel: data.nivel ?? ''
+						nivel: data.nivel ?? '',
+						cerca: data.cerca ?? [],
+						agrada: data.agrada ?? []
 					};
+					q = nomLuòc(f);
+				}
 				cargat = true;
 			});
 	});
+
+	// une commune choisie change de nom avec la langue du site
+	$effect(() => {
+		if (f.ont_dep) q = nomLuòc(f);
+	});
+
+	async function tapar() {
+		// du texte libre tant qu'on n'a pas choisi : « en linha », Paris…
+		f.ont = q;
+		f.ont_oc = null;
+		f.ont_dep = null;
+		await cargarComunas();
+		trobadas = cercarComunas(q);
+		activa = -1;
+		dobèrt = true;
+	}
+	function causir(c) {
+		f.ont = c.fr;
+		f.ont_oc = c.oc;
+		f.ont_dep = c.dep;
+		q = nomComuna(c);
+		dobèrt = false;
+	}
+	function clavier(e) {
+		if (!dobèrt || !trobadas.length) return;
+		const n = trobadas.length;
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			activa = (activa + 1) % n;
+		} else if (e.key === 'ArrowUp') {
+			e.preventDefault();
+			activa = activa <= 0 ? n - 1 : activa - 1;
+		} else if (e.key === 'Enter' && activa >= 0) {
+			e.preventDefault();
+			causir(trobadas[activa]);
+		} else if (e.key === 'Escape') dobèrt = false;
+	}
 
 	async function enregistrar(e) {
 		e.preventDefault();
 		enregistrant = true;
 		enregistrat = false;
 		error = null;
+		const ont = f.ont.trim();
 		const { error: err } = await supabase
 			.from('profiles')
 			.update({
 				presentacion: f.presentacion.trim() || null,
-				ont: f.ont.trim() || null,
+				ont: ont || null,
+				ont_oc: ont ? f.ont_oc : null,
+				ont_dep: ont ? f.ont_dep : null,
 				dialecte: f.dialecte || null,
-				nivel: f.nivel || null
+				nivel: f.nivel || null,
+				cerca: f.cerca.length ? f.cerca : null,
+				agrada: f.agrada.length ? f.agrada : null
 			})
 			.eq('user_id', grops.uid);
 		enregistrant = false;
@@ -117,6 +192,24 @@
 <svelte:head>
 	<title>{x.titol} · Lo Ligam</title>
 </svelte:head>
+
+{#snippet chips(nom, lista, tipe)}
+	<fieldset class="camp">
+		<legend>{x[nom]}</legend>
+		<div class="chips">
+			{#each lista as [v, oc, fr_] (v)}
+				<label class="chip">
+					{#if tipe === 'radio'}
+						<input type="radio" name={nom} value={v} bind:group={f[nom]} />
+					{:else}
+						<input type="checkbox" value={v} bind:group={f[nom]} />
+					{/if}
+					{fr ? fr_ : oc}
+				</label>
+			{/each}
+		</div>
+	</fieldset>
+{/snippet}
 
 <div class="perfil">
 	<a class="tornar" href="/grops" aria-label={x.tornar}><Icona nom="revenir" size="1.4em" /></a>
@@ -140,17 +233,48 @@
 		<a class="boton" href="/compte/questionnaire">{x.causir}</a>
 	{:else if cargat}
 		<form onsubmit={enregistrar}>
-			<label class="camp">
-				<span>{x.presentacion}</span>
-				<small id="perfil-presentacion">{x.presentacion_ajuda}</small>
-				<textarea bind:value={f.presentacion} rows="5" maxlength={MAX} aria-describedby="perfil-presentacion"></textarea>
-				<small class="comptador">{f.presentacion.length} / {MAX}</small>
-			</label>
-			<label class="camp">
-				<span>{x.ont}</span>
+			{@render chips('nivel', NIVELS, 'radio')}
+			{@render chips('cerca', CERCA, 'checkbox')}
+			{@render chips('agrada', AGRADA, 'checkbox')}
+			<div class="camp luòc">
+				<label for="perfil-ont-camp">{x.ont}</label>
 				<small id="perfil-ont">{x.ont_ajuda}</small>
-				<input type="text" bind:value={f.ont} maxlength="80" aria-describedby="perfil-ont" />
-			</label>
+				<input
+					id="perfil-ont-camp"
+					type="text"
+					role="combobox"
+					autocomplete="off"
+					aria-autocomplete="list"
+					aria-expanded={dobèrt && trobadas.length > 0}
+					aria-controls="perfil-ont-lista"
+					aria-activedescendant={activa >= 0 ? `perfil-ont-${activa}` : undefined}
+					aria-describedby="perfil-ont"
+					maxlength="80"
+					bind:value={q}
+					oninput={tapar}
+					onfocus={cargarComunas}
+					onkeydown={clavier}
+					onblur={() => (dobèrt = false)}
+				/>
+				{#if dobèrt && trobadas.length}
+					<ul id="perfil-ont-lista" role="listbox" aria-label={x.ont}>
+						{#each trobadas as c, i (c.fr + c.dep)}
+							<li
+								id="perfil-ont-{i}"
+								role="option"
+								aria-selected={i === activa}
+								class:activa={i === activa}
+								onmousedown={(e) => (e.preventDefault(), causir(c))}
+							>
+								<strong>{nomComuna(c)}</strong>
+								<span>{autreNom(c) ? `${autreNom(c)} · ` : ''}{c.dep}</span>
+							</li>
+						{/each}
+					</ul>
+				{:else if dobèrt && q.trim().length >= 2}
+					<small class="fòra">{x.ont_lista}</small>
+				{/if}
+			</div>
 			<label class="camp">
 				<span>{x.dialecte}</span>
 				<select bind:value={f.dialecte}>
@@ -158,14 +282,12 @@
 					{#each DIALECTES as [v, oc, fr_] (v)}<option value={v}>{fr ? fr_ : oc}</option>{/each}
 				</select>
 			</label>
-			<fieldset class="camp">
-				<legend>{x.nivel}</legend>
-				<div class="nivels">
-					{#each NIVELS as [v, oc, fr_] (v)}
-						<label class="nivel"><input type="radio" name="nivel" value={v} bind:group={f.nivel} /> {fr ? fr_ : oc}</label>
-					{/each}
-				</div>
-			</fieldset>
+			<label class="camp">
+				<span>{x.presentacion}</span>
+				<small id="perfil-presentacion">{x.presentacion_ajuda}</small>
+				<textarea bind:value={f.presentacion} rows="4" maxlength={MAX} aria-describedby="perfil-presentacion"></textarea>
+				<small class="comptador">{f.presentacion.length} / {MAX}</small>
+			</label>
 			<div class="accions">
 				<button type="submit" class="boton" disabled={enregistrant}>{enregistrant ? '…' : x.enregistrar}</button>
 				{#if grops.ieu?.verificacion === 'verificat'}
@@ -244,6 +366,7 @@
 		border: 0;
 	}
 	.camp > span,
+	.luòc > label,
 	legend {
 		font-weight: 700;
 	}
@@ -274,12 +397,13 @@
 	textarea {
 		resize: vertical;
 	}
-	.nivels {
+	/* les pastilles : niveau, ce qu'on cherche, ce qu'on aime */
+	.chips {
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--esp-8);
 	}
-	.nivel {
+	.chip {
 		display: inline-flex;
 		align-items: center;
 		gap: var(--esp-8);
@@ -289,12 +413,57 @@
 		border-radius: 999px;
 		cursor: pointer;
 	}
-	.nivel:has(input:checked) {
+	.chip:has(input:checked) {
 		border-color: var(--t-aur);
 		background: color-mix(in srgb, var(--t-aur) 14%, transparent);
 	}
-	.nivel input {
+	.chip:has(input:focus-visible) {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 2px;
+	}
+	.chip input {
+		margin: 0;
 		accent-color: var(--t-aur);
+	}
+	/* le lieu : les communes proposées sous le champ */
+	.luòc {
+		position: relative;
+	}
+	.luòc ul {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		z-index: 5;
+		margin: 4px 0 0;
+		padding: 4px;
+		list-style: none;
+		border: 1px solid var(--t-linha);
+		border-radius: 6px;
+		background: var(--t-fons);
+		box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+	}
+	.luòc li {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: var(--esp-12);
+		min-height: 40px;
+		padding: 0.5rem 0.7rem;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+	.luòc li span {
+		color: var(--t-tinta-2);
+		font-size: 0.85rem;
+		white-space: nowrap;
+	}
+	.luòc li:hover,
+	.luòc li.activa {
+		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
+	}
+	.fòra {
+		font-style: italic;
 	}
 	.accions {
 		display: flex;
@@ -355,5 +524,8 @@
 	.estat a:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;
+	}
+	.chip input:focus-visible {
+		outline: none;
 	}
 </style>

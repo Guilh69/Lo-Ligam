@@ -37,6 +37,10 @@ begin
 	begin update public.profiles set presentacion = 'Gros connard' where user_id = A; r := array_append(r, 'ECHEC insulte acceptée dans le profil'); exception when others then r := array_append(r, 'ok pas d''insulte dans un profil : ' || sqlerrm); end;
 	begin update public.profiles set dialecte = 'klingon' where user_id = A; r := array_append(r, 'ECHEC dialecte inconnu accepté'); exception when others then r := array_append(r, 'ok dialecte inconnu refusé'); end;
 	begin update public.profiles set presentacion = repeat('a', 601) where user_id = A; r := array_append(r, 'ECHEC présentation trop longue acceptée'); exception when others then r := array_append(r, 'ok présentation limitée à 600 lettres'); end;
+	-- les cases à cocher et le lieu de la carte (§6)
+	update public.profiles set cerca = array['parlar', 'trobar'], agrada = array['bal'], ont = 'Lodève', ont_oc = 'Lodeva', ont_dep = '34' where user_id = A;
+	begin update public.profiles set cerca = array['parlar', 'vendre'] where user_id = A; r := array_append(r, 'ECHEC choix inconnu accepté dans « cerca »'); exception when others then r := array_append(r, 'ok choix inconnu refusé dans « cerca »'); end;
+	begin update public.profiles set agrada = array['politica'] where user_id = A; r := array_append(r, 'ECHEC choix inconnu accepté dans « agrada »'); exception when others then r := array_append(r, 'ok choix inconnu refusé dans « agrada »'); end;
 
 	-- 2. pas vérifié : on rejoint, on lit, on n'écrit pas
 	perform public.rejonher_grop (G);
@@ -80,6 +84,8 @@ begin
 	r := array_append(r, (case when n = 0 then 'ok la table des profils (questionnaire compris) reste privée' else 'ECHEC B lit la table' end));
 	select count(*) into n from public.perfil ('JOANA_essai');
 	r := array_append(r, (case when n = 1 then 'ok un membre vérifié voit le profil vérifié (pseudo sans tenir compte des majuscules)' else 'ECHEC profil de A : ' || n end));
+	select ont_oc || ' ' || ont_dep || ' ' || array_to_string(cerca, ',') into s from public.perfil ('Joana_essai');
+	r := array_append(r, (case when s = 'Lodeva 34 parlar,trobar' then 'ok le profil montre le lieu (occitan, département) et les choix' else 'ECHEC lieu et choix : ' || coalesce(s, 'absent') end));
 	select jsonb_array_length(grops_comuns) into n from public.perfil ('Joana_essai');
 	r := array_append(r, (case when n = 0 then 'ok sans groupe commun, aucun groupe n''est dévoilé' else 'ECHEC groupes dévoilés : ' || n end));
 	perform public.rejonher_grop (G);

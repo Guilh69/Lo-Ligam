@@ -6,7 +6,7 @@
 	// l'administration ; supabase/supabase-perfils.sql).
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
-	import { DIALECTES, NIVELS, nomDe } from '$lib/grops/grops.svelte.js';
+	import { DIALECTES, NIVELS, CERCA, AGRADA, nomDe } from '$lib/grops/grops.svelte.js';
 
 	let perfils = $state([]);
 	let cargant = $state(true);
@@ -101,9 +101,11 @@
 		</div>
 		{#if p.presentacion}<p class="tèxte">{p.presentacion}</p>{:else}<p class="tèxte void">Cap de presentacion. <em>(Pas de présentation.)</em></p>{/if}
 		<p class="detalhs">
-			{#if p.ont}<span>{p.ont}</span>{/if}
+			{#if p.ont}<span>{p.ont_oc && p.ont_oc !== p.ont ? `${p.ont_oc} / ${p.ont}` : p.ont}</span>{/if}
 			{#if p.dialecte}<span>{nomDe(DIALECTES, p.dialecte, false)}</span>{/if}
 			{#if p.nivel}<span>{nomDe(NIVELS, p.nivel, false)}</span>{/if}
+			{#each p.cerca ?? [] as v (v)}<span class="cerca">{nomDe(CERCA, v, false)}</span>{/each}
+			{#each p.agrada ?? [] as v (v)}<span class="agrada">{nomDe(AGRADA, v, false)}</span>{/each}
 		</p>
 		<div class="accions">
 			{#if p.verificacion === 'en_espèra'}
@@ -191,6 +193,9 @@
 		border-radius: 999px;
 		background: white;
 		font-size: 0.8rem;
+	}
+	.detalhs .cerca {
+		background: color-mix(in srgb, var(--color-teal) 12%, white);
 	}
 	.accions {
 		display: flex;
