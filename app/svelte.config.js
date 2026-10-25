@@ -24,6 +24,10 @@ const csp = {
 			'data:',
 			'blob:',
 			'https://*.supabase.co', // designs, cartes et vidéos téléversés
+			// photos et pochettes de Deezer, affichées seulement dans l'espace
+			// musique, après l'accord du visiteur (2026-10-25)
+			'https://cdn-images.dzcdn.net',
+			'https://e-cdns-images.dzcdn.net',
 			// Fonds de carte, tous européens : rendu occitan par OSM-bzh,
 			// relief par OpenTopoMap (Allemagne), photos aériennes par l'IGN
 			// (France) et le PNOA (Espagne). EOX retiré : licence non commerciale.
