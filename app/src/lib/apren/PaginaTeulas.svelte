@@ -148,6 +148,10 @@
 		display: flex;
 		flex-direction: column;
 		aspect-ratio: 1;
+		/* « stretch » explicite : une case carrée s'aligne quand même sur la
+		   plus haute de sa rangée (sinon, à taille intermédiaire, une case au
+		   texte long dépasse ses voisines ; Romain, 2026-10-25) */
+		align-self: stretch;
 		padding: var(--esp-16);
 		border-radius: 6px;
 		background: var(--fons);
@@ -265,6 +269,30 @@
 		border-radius: 6px;
 	}
 
+	/* Taille intermédiaire et téléphone : les petites cases font moins de
+	   200 px de large, les textes prennent la taille du téléphone */
+	@container rubrica (max-width: 960px) {
+		.teula {
+			padding: var(--esp-12);
+		}
+		.num {
+			font-size: 1.8rem;
+		}
+		.granda .num {
+			font-size: 3rem;
+		}
+		.nom {
+			font-size: 1.05rem;
+		}
+		.sota {
+			font-size: 0.85rem;
+		}
+		.picto-plaça :global(.picto) {
+			width: 2.6rem;
+			height: 2.6rem;
+		}
+	}
+
 	/* Téléphone : deux colonnes, la grande case sur toute la largeur */
 	@container rubrica (max-width: 640px) {
 		.teulas {
@@ -283,25 +311,9 @@
 			aspect-ratio: 1.15;
 			padding: var(--esp-24);
 		}
-		.num {
-			font-size: 1.8rem;
-		}
-		.granda .num {
-			font-size: 3rem;
-		}
-		.nom {
-			font-size: 1.05rem;
-		}
-		.sota {
-			font-size: 0.85rem;
-		}
 		.granda .picto-plaça :global(.picto) {
 			width: 4.5rem;
 			height: 4.5rem;
-		}
-		.picto-plaça :global(.picto) {
-			width: 2.6rem;
-			height: 2.6rem;
 		}
 	}
 
