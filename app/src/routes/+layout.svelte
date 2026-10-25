@@ -22,8 +22,11 @@
 	// Pied de page partout, sauf l'administration (l'accueil l'a aussi depuis
 	// qu'il est passé dans le cadre commun, 2026-10-07). L'essai de la refonte
 	// claire (/ensag/clar, 2026-10-21) et l'esquisse « page presque blanche »
-	// (/ensag/blanc, 2026-10-22) dessinent leur propre pied de page.
-	let ambPè = $derived(!id.startsWith('/admin') && id !== '/ensag/clar' && id !== '/ensag/blanc');
+	// (/ensag/blanc, 2026-10-22) dessinent leur propre pied de page. Les groupes
+	// (2026-10-25) tiennent à hauteur d'écran, comme une messagerie.
+	let ambPè = $derived(
+		!id.startsWith('/admin') && !id.startsWith('/grops') && id !== '/ensag/clar' && id !== '/ensag/blanc'
+	);
 </script>
 
 <svelte:head>
