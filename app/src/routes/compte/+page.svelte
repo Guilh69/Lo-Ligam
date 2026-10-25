@@ -1,332 +1,594 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	// Le compte (refait le 2026-10-25, cahier §11) : une seule adresse pour
+	// tout. Sans session : se connecter, créer un compte, ou recevoir un lien
+	// quand on a oublié son mot de passe. Avec une session : « Mon compte »
+	// (ses pages, changer de mot de passe, se déconnecter, supprimer son compte,
+	// supabase-compte.sql). Textes dans la langue choisie, au style du site.
 	import { page } from '$app/state';
+	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
-	import { session } from '$lib/authStore';
+	import { session, authReady, pseudoCompte, cargarPseudo } from '$lib/authStore';
+	import { esAdmin } from '$lib/adminStore';
+	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { DOBÈRTS } from '$lib/grops/grops.svelte.js';
 	import AppHeader from '$lib/components/AppHeader.svelte';
+	import Avatar from '$lib/grops/Avatar.svelte';
+	import Icona from '$lib/components/Icona.svelte';
 
-	let mode = $state(page.url.searchParams.get('mode') === 'signup' ? 'signup' : 'login');
+	let fr = $derived(langStore.current === 'fr');
+	const X = {
+		oc: {
+			login: 'Se connectar',
+			signup: 'Crear un compte',
+			oblit: 'Mot de pas oblidat',
+			frasa_signup: 'Es gratuit, e garda ta progression.',
+			frasa_oblit: 'Escriu ton adreça : te mandarem un ligam per causir un mot de pas nòu.',
+			email: 'Adreça de corrièl',
+			mdp: 'Mot de pas',
+			mdp_nòu: 'Mot de pas nòu',
+			mdp_ajuda: '8 caractèrs al mens',
+			far_login: 'Se connectar',
+			far_signup: 'Crear mon compte',
+			far_oblit: 'Recebre un ligam',
+			vers_oblit: 'Mot de pas oblidat ?',
+			vers_signup: 'Pas encara de compte ?',
+			vers_login: 'Ja un compte ?',
+			tornar_login: 'Tornar a la connexion',
+			confidencialitat: 'Çò que fasèm de tas donadas',
+			mandat_signup: 'Te mandèrem un corrièl : clica sul ligam per confirmar ton adreça, puèi tornaràs aicí.',
+			mandat_oblit: 'Se aquesta adreça a un compte, te mandèrem un ligam. Agacha tanben dins los indesirables.',
+			// connecté
+			compte: 'Mon compte',
+			pseudonim: 'Causís ton pseudonim per acabar ton compte.',
+			acabar: 'Acabar mon compte',
+			mas_paginas: 'Mas paginas',
+			moduls: 'Mos moduls',
+			perfil: 'Mon perfil d’Amassa',
+			cambiar_mdp: 'Cambiar de mot de pas',
+			cambiar: 'Cambiar',
+			mdp_cambiat: 'Mot de pas cambiat.',
+			desconnectar: 'Se desconnectar',
+			suprimir_titol: 'Suprimir mon compte',
+			suprimir_frasa: 'Tot s’escafa : ton perfil, ta progression, tos messatges e tos contactes. Se pòt pas desfar.',
+			suprimir: 'Suprimir mon compte',
+			suprimir_segur: 'Segur ? Tot serà escafat sul pic.',
+			òc_suprimir: 'Òc, suprimir',
+			non: 'Non',
+			// erreurs
+			camps: 'Cal una adreça e un mot de pas.',
+			cort: 'Lo mot de pas deu aver 8 caractèrs al mens.',
+			ja: 'Aquesta adreça a ja un compte : connecta-te.',
+			incorrècte: 'Adreça o mot de pas incorrècte.',
+			pas_confirmat: 'Confirma d’en primièr ton adreça : lo ligam es dins ton corrièl.',
+			tròp: 'Tròp d’ensages : espèra un pauc abans de tornar ensajar.',
+			parièr: 'Lo mot de pas nòu deu èsser diferent de l’ancian.',
+			compte_admin: 'Un compte d’administracion se suprimís pas d’aicí.',
+			error: 'Una error : torna ensajar.'
+		},
+		fr: {
+			login: 'Se connecter',
+			signup: 'Créer un compte',
+			oblit: 'Mot de passe oublié',
+			frasa_signup: 'C’est gratuit, et ça garde ta progression.',
+			frasa_oblit: 'Écris ton adresse : nous t’enverrons un lien pour choisir un nouveau mot de passe.',
+			email: 'Adresse e-mail',
+			mdp: 'Mot de passe',
+			mdp_nòu: 'Nouveau mot de passe',
+			mdp_ajuda: '8 caractères au moins',
+			far_login: 'Se connecter',
+			far_signup: 'Créer mon compte',
+			far_oblit: 'Recevoir un lien',
+			vers_oblit: 'Mot de passe oublié ?',
+			vers_signup: 'Pas encore de compte ?',
+			vers_login: 'Déjà un compte ?',
+			tornar_login: 'Retour à la connexion',
+			confidencialitat: 'Ce que nous faisons de tes données',
+			mandat_signup: 'Nous t’avons envoyé un e-mail : clique sur le lien pour confirmer ton adresse, puis tu reviendras ici.',
+			mandat_oblit: 'Si cette adresse a un compte, nous t’avons envoyé un lien. Regarde aussi dans les indésirables.',
+			compte: 'Mon compte',
+			pseudonim: 'Choisis ton pseudo pour terminer ton compte.',
+			acabar: 'Terminer mon compte',
+			mas_paginas: 'Mes pages',
+			moduls: 'Mes modules',
+			perfil: 'Mon profil d’Amassa',
+			cambiar_mdp: 'Changer de mot de passe',
+			cambiar: 'Changer',
+			mdp_cambiat: 'Mot de passe changé.',
+			desconnectar: 'Se déconnecter',
+			suprimir_titol: 'Supprimer mon compte',
+			suprimir_frasa: 'Tout s’efface : ton profil, ta progression, tes messages et tes contacts. C’est définitif.',
+			suprimir: 'Supprimer mon compte',
+			suprimir_segur: 'Sûr ? Tout sera effacé tout de suite.',
+			òc_suprimir: 'Oui, supprimer',
+			non: 'Non',
+			camps: 'Il faut une adresse et un mot de passe.',
+			cort: 'Le mot de passe doit avoir 8 caractères au moins.',
+			ja: 'Cette adresse a déjà un compte : connecte-toi.',
+			incorrècte: 'Adresse ou mot de passe incorrect.',
+			pas_confirmat: 'Confirme d’abord ton adresse : le lien est dans ton e-mail.',
+			tròp: 'Trop d’essais : attends un peu avant de réessayer.',
+			parièr: 'Le nouveau mot de passe doit être différent de l’ancien.',
+			compte_admin: 'Un compte d’administration ne se supprime pas d’ici.',
+			error: 'Une erreur : réessaie.'
+		}
+	};
+	let x = $derived(fr ? X.fr : X.oc);
+
+	// en développement, « ?simular » montre « Mon compte » sans session
+	const simular = browser && import.meta.env.DEV && page.url.searchParams.has('simular');
+	let sesilha = $derived($session ?? (simular ? { user: { id: 's1', email: 'joana@exemple.org' } } : null));
+	let pseudo = $derived($session ? $pseudoCompte : simular ? 'Joana' : undefined);
+
+	const MODES = ['login', 'signup', 'oblit'];
+	let mode = $state(MODES.includes(page.url.searchParams.get('mode')) ? page.url.searchParams.get('mode') : 'login');
 	let email = $state('');
-	let password = $state('');
-	let loading = $state(false);
-	let errorMsg = $state('');
-	let infoMsg = $state('');
+	let mdp = $state('');
+	let ocupat = $state(false);
+	let error = $state(null);
+	let mandat = $state(null); // 'signup' ou 'oblit' : le courriel est parti
 
-	async function routeAfterAuth() {
-		if (!$session) return;
-		const { data } = await supabase
-			.from('profiles')
-			.select('user_id')
-			.eq('user_id', $session.user.id)
-			.maybeSingle();
-		// ?tornar=/ideas : on revient sur la page d'où l'on venait (chemin interne seulement)
-		const tornar = page.url.searchParams.get('tornar');
-		const intèrn = tornar?.startsWith('/') && !tornar.startsWith('//');
-		goto(data ? (intèrn ? tornar : '/aprene') : '/compte/questionnaire');
+	function cambiarMode(m) {
+		mode = m;
+		error = null;
+		mandat = null;
 	}
 
-	$effect(() => {
-		$session;
-		routeAfterAuth();
-	});
+	// les messages de Supabase, ramenés à nos clés
+	function clau(e) {
+		const m = e?.message ?? '';
+		if (/already registered|already exists/i.test(m)) return 'ja';
+		if (/invalid login credentials/i.test(m)) return 'incorrècte';
+		if (/not confirmed/i.test(m)) return 'pas_confirmat';
+		if (/rate limit|security purposes|too many/i.test(m)) return 'tròp';
+		if (/should be different/i.test(m)) return 'parièr';
+		if (/password/i.test(m) && /least|short|weak/i.test(m)) return 'cort';
+		if (m === 'compte_admin') return 'compte_admin';
+		return 'error';
+	}
 
-	async function submit() {
-		errorMsg = '';
-		infoMsg = '';
-		if (!email || !password) {
-			errorMsg = 'Cal indicar un corrièl e un mot de pas.';
+	// après la connexion : la page d'où l'on venait (chemin interne seulement),
+	// sinon on reste ici, sur « Mon compte »
+	function tornar() {
+		const t = page.url.searchParams.get('tornar');
+		if (t?.startsWith('/') && !t.startsWith('//') && !t.startsWith('/compte')) goto(t);
+	}
+
+	async function mandar(e) {
+		e.preventDefault();
+		error = null;
+		mandat = null;
+		if (!email.trim() || (mode !== 'oblit' && !mdp)) return (error = 'camps');
+		if (mode === 'signup' && mdp.length < 8) return (error = 'cort');
+		ocupat = true;
+		if (mode === 'login') {
+			const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim(), password: mdp });
+			if (err) error = clau(err);
+			else tornar();
+		} else if (mode === 'signup') {
+			const { data, error: err } = await supabase.auth.signUp({
+				email: email.trim(),
+				password: mdp,
+				options: { emailRedirectTo: location.origin + '/compte' }
+			});
+			if (err) error = clau(err);
+			else if (!data.session) mandat = 'signup';
+			else tornar();
+		} else {
+			const { error: err } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+				redirectTo: location.origin + '/compte/mot-de-pas'
+			});
+			if (err) error = clau(err);
+			else mandat = 'oblit';
+		}
+		ocupat = false;
+	}
+
+	// ── connecté ──
+	// le pseudo a pu être choisi entre-temps (questionnaire, profil d'Amassa)
+	$effect(() => {
+		if ($session) cargarPseudo($session);
+	});
+	let mdpNòu = $state('');
+	let mdpMessatge = $state(null); // 'mdp_cambiat' ou une clé d'erreur
+	async function cambiarMdp(e) {
+		e.preventDefault();
+		mdpMessatge = null;
+		if (mdpNòu.length < 8) return (mdpMessatge = 'cort');
+		ocupat = true;
+		const { error: err } = await supabase.auth.updateUser({ password: mdpNòu });
+		ocupat = false;
+		mdpMessatge = err ? clau(err) : 'mdp_cambiat';
+		if (!err) mdpNòu = '';
+	}
+
+	async function desconnectar() {
+		await supabase.auth.signOut();
+		goto('/');
+	}
+
+	let suprimirSegur = $state(false);
+	let suprimirError = $state(null);
+	async function suprimir() {
+		ocupat = true;
+		suprimirError = null;
+		const { error: err } = await supabase.rpc('suprimir_mon_compte');
+		if (err) {
+			suprimirError = clau(err);
+			ocupat = false;
 			return;
 		}
-		loading = true;
-		if (mode === 'signup') {
-			const { data, error } = await supabase.auth.signUp({ email, password });
-			loading = false;
-			if (error) {
-				errorMsg = translateError(error.message);
-			} else if (!data.session) {
-				infoMsg =
-					'Verifica ta bóstia de mail per confirmar ton compte, puèi torna-te connectar. (Vérifie ta boîte mail pour confirmer ton compte, puis reviens te connecter.)';
-			}
-		} else {
-			const { error } = await supabase.auth.signInWithPassword({ email, password });
-			loading = false;
-			if (error) errorMsg = translateError(error.message);
-		}
-	}
-
-	function translateError(msg) {
-		if (/already registered|already exists/i.test(msg))
-			return 'Aqueste corrièl a ja un compte. Ensaja de te connectar. (Cet e-mail a déjà un compte, essaie de te connecter.)';
-		if (/invalid login credentials/i.test(msg))
-			return 'Corrièl o mot de pas incorrècte. (E-mail ou mot de passe incorrect.)';
-		if (/password.*(least|6)/i.test(msg))
-			return 'Lo mot de pas deu aver almens 6 caractèrs. (Le mot de passe doit avoir au moins 6 caractères.)';
-		return msg;
+		await supabase.auth.signOut();
+		goto('/');
 	}
 </script>
 
 <svelte:head>
-	<title>{mode === 'signup' ? "S'inscriure" : 'Se connectar'} · Lo Ligam</title>
+	<title>{sesilha ? x.compte : x[mode]} · Lo Ligam</title>
+	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<div class="page-bg" aria-hidden="true">
-	<span class="blob blob-gold"></span>
-	<span class="blob blob-teal"></span>
+<div class="pagina">
+	<div class="capçal"><AppHeader /></div>
+
+	<main class="compte">
+		{#if !$authReady}
+			<p class="nota">…</p>
+		{:else if !sesilha}
+			<h1>{x[mode]}</h1>
+			{#if mode === 'signup'}<p class="frasa">{x.frasa_signup}</p>{/if}
+			{#if mode === 'oblit'}<p class="frasa">{x.frasa_oblit}</p>{/if}
+
+			{#if mandat}
+				<p class="mandat" role="status"><Icona nom="valide" size="1.2em" /> {x['mandat_' + mandat]}</p>
+				<button type="button" class="ligam" onclick={() => cambiarMode('login')}>{x.tornar_login}</button>
+			{:else}
+				<form class="boita" onsubmit={mandar}>
+					<label class="camp">
+						<span>{x.email}</span>
+						<input type="email" bind:value={email} autocomplete="email" required />
+					</label>
+					{#if mode !== 'oblit'}
+						<label class="camp">
+							<span>{x.mdp}</span>
+							<input
+								type="password"
+								bind:value={mdp}
+								autocomplete={mode === 'signup' ? 'new-password' : 'current-password'}
+								minlength={mode === 'signup' ? 8 : undefined}
+								aria-describedby={mode === 'signup' ? 'mdp-ajuda' : undefined}
+								required
+							/>
+							{#if mode === 'signup'}<small id="mdp-ajuda">{x.mdp_ajuda}</small>{/if}
+						</label>
+					{/if}
+					{#if error}<p class="error" role="alert">{x[error]}</p>{/if}
+					<button type="submit" class="boton" disabled={ocupat}>{ocupat ? '…' : x['far_' + mode]}</button>
+					{#if mode === 'login'}
+						<button type="button" class="ligam" onclick={() => cambiarMode('oblit')}>{x.vers_oblit}</button>
+					{/if}
+				</form>
+
+				<p class="autre">
+					{#if mode === 'login'}
+						{x.vers_signup} <button type="button" class="ligam fòrt" onclick={() => cambiarMode('signup')}>{x.signup}</button>
+					{:else if mode === 'signup'}
+						{x.vers_login} <button type="button" class="ligam fòrt" onclick={() => cambiarMode('login')}>{x.login}</button>
+					{:else}
+						<button type="button" class="ligam fòrt" onclick={() => cambiarMode('login')}>{x.tornar_login}</button>
+					{/if}
+				</p>
+				{#if mode === 'signup'}<p class="autre"><a href="/confidencialitat">{x.confidencialitat}</a></p>{/if}
+			{/if}
+		{:else}
+			<header class="qui">
+				<Avatar pseudo={pseudo ?? sesilha.user.email ?? '?'} id={sesilha.user.id} size="3.5rem" />
+				<div>
+					<h1>{pseudo ?? x.compte}</h1>
+					<p class="adreca">{sesilha.user.email}</p>
+				</div>
+			</header>
+
+			{#if pseudo === null}
+				<div class="boita acabar">
+					<p>{x.pseudonim}</p>
+					<a class="boton" href="/compte/questionnaire">{x.acabar}</a>
+				</div>
+			{/if}
+
+			<section class="seccion" aria-labelledby="compte-paginas">
+				<h2 id="compte-paginas">{x.mas_paginas}</h2>
+				<ul class="paginas">
+					<li><a href="/aprene"><span>{x.moduls}</span><Icona nom="suivant" /></a></li>
+					{#if DOBÈRTS || $esAdmin}
+						<li><a href="/grops/perfil"><span>{x.perfil}</span><Icona nom="suivant" /></a></li>
+					{/if}
+				</ul>
+			</section>
+
+			<section class="seccion" aria-labelledby="compte-mdp">
+				<h2 id="compte-mdp">{x.cambiar_mdp}</h2>
+				<form class="linha" onsubmit={cambiarMdp}>
+					<!-- l'adresse, cachée, aide les gestionnaires de mots de passe -->
+					<input type="email" class="vist" value={sesilha.user.email} autocomplete="username" readonly tabindex="-1" aria-hidden="true" />
+					<label class="camp">
+						<span>{x.mdp_nòu}</span>
+						<input type="password" bind:value={mdpNòu} autocomplete="new-password" minlength="8" aria-describedby="mdp-nòu-ajuda" required />
+						<small id="mdp-nòu-ajuda">{x.mdp_ajuda}</small>
+					</label>
+					<button type="submit" class="boton segond" disabled={ocupat}>{x.cambiar}</button>
+				</form>
+				{#if mdpMessatge}
+					<p class={mdpMessatge === 'mdp_cambiat' ? 'mandat' : 'error'} role="status">{x[mdpMessatge]}</p>
+				{/if}
+			</section>
+
+			<section class="seccion">
+				<button type="button" class="boton segond" onclick={desconnectar}>{x.desconnectar}</button>
+			</section>
+
+			<section class="seccion perilh" aria-labelledby="compte-suprimir">
+				<h2 id="compte-suprimir">{x.suprimir_titol}</h2>
+				<p>{x.suprimir_frasa}</p>
+				{#if suprimirSegur}
+					<p class="segur" role="alert">{x.suprimir_segur}</p>
+					<div class="botons">
+						<button type="button" class="boton" disabled={ocupat} onclick={suprimir}>{x.òc_suprimir}</button>
+						<button type="button" class="boton segond" onclick={() => (suprimirSegur = false)}>{x.non}</button>
+					</div>
+				{:else}
+					<button type="button" class="ligam" onclick={() => (suprimirSegur = true)}>{x.suprimir}</button>
+				{/if}
+				{#if suprimirError}<p class="error" role="alert">{x[suprimirError]}</p>{/if}
+			</section>
+		{/if}
+	</main>
 </div>
 
-<main class="screen">
-	<AppHeader />
-
-	<section class="card">
-		<div class="tabs">
-			<button
-				type="button"
-				aria-pressed={mode === 'login'}
-				class:active={mode === 'login'}
-				onclick={() => (mode = 'login')}
-			>
-				Se connectar
-			</button>
-			<button
-				type="button"
-				aria-pressed={mode === 'signup'}
-				class:active={mode === 'signup'}
-				onclick={() => (mode = 'signup')}
-			>
-				S'inscriure
-			</button>
-		</div>
-
-		<p class="subtitle">
-			{#if mode === 'login'}
-				<em>(Se connecter)</em>
-			{:else}
-				<em>(S'inscrire — gratuit, pour garder ta progression)</em>
-			{/if}
-		</p>
-
-		<form onsubmit={(e) => (e.preventDefault(), submit())}>
-			<label>
-				Corrièl <em>(e-mail)</em>
-				<input type="email" bind:value={email} autocomplete="email" required />
-			</label>
-			<label>
-				Mot de pas <em>(mot de passe)</em>
-				<input type="password" bind:value={password} autocomplete={mode === 'signup' ? 'new-password' : 'current-password'} required />
-			</label>
-
-			{#if errorMsg}<p class="msg error" role="alert">{errorMsg}</p>{/if}
-			{#if infoMsg}<p class="msg info">{infoMsg}</p>{/if}
-
-			<button type="submit" class="btn-primary" disabled={loading}>
-				{#if loading}
-					…
-				{:else if mode === 'login'}
-					Se connectar <span class="arrow"><Icona nom="suivant" /></span>
-				{:else}
-					Crear mon compte <span class="arrow"><Icona nom="suivant" /></span>
-				{/if}
-			</button>
-		</form>
-	</section>
-</main>
-
 <style>
-	.page-bg {
-		position: fixed;
-		inset: 0;
-		overflow: hidden;
-		z-index: -1;
-		background: radial-gradient(circle at 50% 0%, #faf3e6 0%, var(--color-cream) 60%);
+	.pagina {
+		--marge: clamp(1rem, 4vw, 3.4rem);
+		min-height: 100vh;
+		color: var(--t-tinta);
+		background:
+			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			var(--t-fons);
+		overflow-x: clip;
 	}
-
-	.blob {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(70px);
+	.capçal {
+		padding: 1.3rem var(--marge);
 	}
-
-	.blob-gold {
-		width: 380px;
-		height: 380px;
-		background: var(--color-gold);
-		opacity: 0.3;
-		top: -120px;
-		left: -100px;
+	.capçal :global(.top) {
+		max-width: none;
 	}
-
-	.blob-teal {
-		width: 340px;
-		height: 340px;
-		background: var(--color-teal);
-		opacity: 0.18;
-		bottom: -100px;
-		right: -100px;
+	.compte {
+		container-type: inline-size;
+		display: grid;
+		gap: var(--esp-24);
+		max-width: calc(30rem + 2 * var(--marge));
+		margin: 0 auto;
+		padding: clamp(2rem, 6vh, 4.5rem) var(--marge) var(--esp-96);
 	}
-
-	.screen {
-		position: relative;
-		min-height: 100dvh;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 2rem;
-		padding: 1.5rem;
-	}
-
-	.card {
-		width: 100%;
-		max-width: 24rem;
-		background: white;
-		border-radius: 24px;
-		padding: 2rem 2.25rem;
-		box-shadow: 0 16px 36px rgba(58, 42, 32, 0.1);
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		animation: card-in 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
-		margin-top: 2rem;
-	}
-
-	.tabs {
-		display: flex;
-		gap: 0.35rem;
-		background: var(--color-cream);
-		padding: 0.3rem;
-		border-radius: 999px;
-	}
-
-	.tabs button {
-		flex: 1;
-		border: none;
-		background: transparent;
-		color: var(--color-text);
-		font-weight: 600;
-		font-family: var(--font-heading);
-		font-size: 0.92rem;
-		padding: 0.55rem 0.5rem;
-		border-radius: 999px;
-		cursor: pointer;
-		transition:
-			background-color 150ms ease,
-			color 150ms ease;
-	}
-
-	.tabs button.active {
-		background: var(--color-terracotta);
-		color: white;
-	}
-
-	.subtitle {
-		margin: -0.5rem 0 0;
-		text-align: center;
-		font-size: 0.85rem;
-		color: var(--color-teal);
-	}
-
-	form {
-		display: flex;
-		flex-direction: column;
-		gap: 0.9rem;
-	}
-
-	label {
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-		font-size: 0.88rem;
-		font-weight: 600;
-		color: var(--color-text);
-	}
-
-	label em {
-		font-weight: 400;
-		color: var(--color-teal);
-		font-size: 0.8rem;
-	}
-
-	input {
-		font-family: var(--font-body);
-		font-size: 1rem;
-		padding: 0.65rem 0.8rem;
-		border-radius: 12px;
-		border: 1.5px solid rgba(58, 42, 32, 0.55); /* contraste 3:1 (WCAG 1.4.11) */
-		background: var(--color-cream);
-		color: var(--color-text);
-	}
-
-	input:focus {
-		outline: none;
-		border-color: var(--color-teal);
-	}
-
-	.msg {
+	h1 {
 		margin: 0;
+		font-family: var(--font-heading);
+		font-weight: 400;
+		font-size: clamp(2.4rem, 7vw, 3.6rem);
+		line-height: 1;
+		overflow-wrap: anywhere;
+	}
+	.frasa {
+		margin: calc(-1 * var(--esp-8)) 0 0;
+		font-size: 1.1rem;
+		line-height: 1.5;
+		color: var(--t-tinta-2);
+	}
+	.nota {
+		margin: 0;
+		color: var(--t-tinta-2);
+	}
+
+	/* Le formulaire : un panneau translucide, les champs en colonne */
+	.boita {
+		display: grid;
+		gap: var(--esp-16);
+		padding: var(--esp-24);
+		border: 1px solid var(--t-linha);
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--t-fons-2) 82%, transparent);
+	}
+	.camp {
+		display: grid;
+		gap: var(--esp-8);
+		font-weight: 700;
+	}
+	.camp small {
+		font-weight: 400;
 		font-size: 0.85rem;
-		line-height: 1.4;
-		padding: 0.6rem 0.8rem;
-		border-radius: 10px;
+		color: var(--t-tinta-2);
 	}
-
-	.msg.error {
-		background: rgba(165, 52, 42, 0.1);
-		color: var(--color-brick);
+	input {
+		box-sizing: border-box;
+		width: 100%;
+		min-height: 44px;
+		padding: 0.6rem 0.9rem;
+		border: 1px solid var(--t-linha);
+		border-radius: 6px;
+		background: var(--t-fons);
+		color: var(--t-tinta);
+		font: 400 1rem/1.4 var(--font-body);
 	}
-
-	.msg.info {
-		background: rgba(31, 95, 99, 0.1);
-		color: var(--color-teal);
-	}
-
-	.btn-primary {
+	/* ce qui se clique : le rouge du logo en aplat (règle B) */
+	.boton {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
+		justify-self: start;
+		min-height: 44px;
+		padding: 0.6rem 1.4rem;
+		border: 0;
+		border-radius: 999px;
 		background: var(--t-accion);
 		color: var(--t-accion-tinta);
-		border: none;
-		padding: 0.9rem 1.5rem;
-		border-radius: 999px;
-		font-weight: 600;
-		font-family: var(--font-heading);
-		font-size: 1.05rem;
+		font: 700 1rem/1 var(--font-body);
+		text-decoration: none;
 		cursor: pointer;
-		transition:
-			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
-			box-shadow 220ms ease,
-			filter 80ms ease;
-		box-shadow: 0 6px 18px rgba(181, 61, 23, 0.35);
+		transition: background-color 0.25s;
 	}
-
-	.btn-primary .arrow {
-		display: inline-block;
-		margin-left: 0.3rem;
+	.boton:hover {
+		background: var(--t-accion-viu);
 	}
-
-	.btn-primary:hover:not(:disabled) {
-		transform: translateY(-2px) scale(1.02);
-		box-shadow: 0 10px 24px rgba(181, 61, 23, 0.45);
-	}
-
-	.btn-primary:active:not(:disabled) {
-		transform: translateY(0) scale(0.97);
-		filter: brightness(0.95);
-	}
-
-	.btn-primary:disabled {
+	.boton:disabled {
 		opacity: 0.6;
-		cursor: default;
+		cursor: wait;
+	}
+	.boton.segond {
+		background: transparent;
+		color: var(--t-tinta);
+		box-shadow: inset 0 0 0 1px var(--t-linha);
+	}
+	.boton.segond:hover {
+		background: color-mix(in srgb, var(--t-tinta) 7%, transparent);
+	}
+	/* les liens secondaires : soulignés, en retrait */
+	.ligam {
+		justify-self: start;
+		min-height: 44px;
+		padding: 0;
+		border: 0;
+		background: none;
+		color: var(--t-tinta-2);
+		font: inherit;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
+	}
+	.ligam:hover {
+		color: var(--t-tinta);
+	}
+	.ligam.fòrt {
+		min-height: 0;
+		color: var(--t-tinta);
+		font-weight: 700;
+		text-decoration-color: var(--t-accion);
+		text-decoration-thickness: 2px;
+	}
+	.autre {
+		margin: 0;
+		color: var(--t-tinta-2);
+	}
+	.autre a {
+		color: var(--t-tinta-2);
+	}
+	.error,
+	.mandat,
+	.segur {
+		margin: 0;
+		padding-left: var(--esp-12);
+		border-left: 4px solid var(--t-aur);
+		line-height: 1.5;
+		font-weight: 700;
+	}
+	.mandat {
+		display: flex;
+		gap: var(--esp-8);
+		align-items: baseline;
 	}
 
-	@keyframes card-in {
-		from {
-			opacity: 0;
-			transform: translateY(10px) scale(0.97);
+	/* Connecté : l'initiale, le pseudo, l'adresse */
+	.qui {
+		display: flex;
+		align-items: center;
+		gap: var(--esp-16);
+	}
+	.adreca {
+		margin: var(--esp-4) 0 0;
+		color: var(--t-tinta-2);
+		overflow-wrap: anywhere;
+	}
+	.acabar p {
+		margin: 0;
+		line-height: 1.5;
+	}
+	.seccion {
+		display: grid;
+		gap: var(--esp-12);
+		padding-top: var(--esp-24);
+		border-top: 1px solid var(--t-linha);
+	}
+	.seccion p {
+		margin: 0;
+		line-height: 1.5;
+		color: var(--t-tinta-2);
+	}
+	h2 {
+		margin: 0;
+		font-size: 0.85rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--t-aur);
+	}
+	.paginas {
+		display: grid;
+		gap: var(--esp-8);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.paginas a {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		min-height: 48px;
+		padding: 0.5rem 1rem;
+		border: 1px solid var(--t-linha);
+		border-radius: 6px;
+		color: inherit;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.paginas a:hover {
+		border-color: var(--t-aur);
+	}
+	.linha {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: start;
+		gap: var(--esp-12);
+	}
+	.linha .boton {
+		margin-top: calc(1.4em + var(--esp-8));
+	}
+	.botons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--esp-8);
+	}
+	.vist {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+
+	input:focus-visible,
+	.boton:focus-visible,
+	.ligam:focus-visible,
+	.paginas a:focus-visible,
+	.autre a:focus-visible {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 2px;
+	}
+
+	@container (width < 26rem) {
+		.linha {
+			grid-template-columns: 1fr;
 		}
-		to {
-			opacity: 1;
-			transform: translateY(0) scale(1);
+		.linha .boton {
+			margin-top: 0;
 		}
 	}
 </style>

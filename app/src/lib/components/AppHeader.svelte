@@ -15,6 +15,9 @@
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { VISIO } from '$lib/data/planSite.js';
 	import { esAdmin } from '$lib/adminStore';
+	import { session, authReady, pseudoCompte } from '$lib/authStore';
+	import { page } from '$app/state';
+	import Avatar from '$lib/grops/Avatar.svelte';
 
 	let { children } = $props();
 	let lang = $derived(langStore.current);
@@ -45,10 +48,16 @@
 	}
 
 	const t = {
-		oc: { acuelhLong: "Tornar a l'acuèlh", admin: 'Administracion', menu: 'Menú', reservar: 'Reservar un cors' },
-		fr: { acuelhLong: "Retour à l'accueil", admin: 'Administration', menu: 'Menu', reservar: 'Réserver un cours' }
+		oc: { acuelhLong: "Tornar a l'acuèlh", admin: 'Administracion', menu: 'Menú', reservar: 'Reservar un cors', compte: 'Mon compte', connectar: 'Se connectar' },
+		fr: { acuelhLong: "Retour à l'accueil", admin: 'Administration', menu: 'Menu', reservar: 'Réserver un cours', compte: 'Mon compte', connectar: 'Se connecter' }
 	};
 	let tx = $derived(t[lang]);
+
+	// Le compte, sur toutes les pages (2026-10-25) : « Se connectar » pour un
+	// visiteur (on revient ensuite sur la page où l'on était), l'initiale et
+	// « Mon compte » une fois connecté.
+	let surCompte = $derived(page.url.pathname.startsWith('/compte'));
+	let tornar = $derived(surCompte ? '/compte' : '/compte?tornar=' + encodeURIComponent(page.url.pathname));
 </script>
 
 <header class="top">
@@ -75,6 +84,18 @@
 				<div class="compte">
 					{@render children()}
 				</div>
+			{/if}
+
+			{#if $session}
+				<a class="compte-ligam connectat" href="/compte" aria-current={surCompte ? 'page' : undefined} title={tx.compte}>
+					<Avatar pseudo={$pseudoCompte ?? $session.user.email ?? '?'} id={$session.user.id} size="1.6rem" />
+					<span class="compte-tèxte">{tx.compte}</span>
+				</a>
+			{:else if $authReady}
+				<a class="compte-ligam" href={tornar} aria-current={surCompte ? 'page' : undefined} title={tx.connectar}>
+					<Icona nom="persona" size="1.15em" />
+					<span class="compte-tèxte">{tx.connectar}</span>
+				</a>
 			{/if}
 
 			<!-- Visible seulement pour un administrateur. C'est du confort, pas une
@@ -209,6 +230,31 @@
 		display: none;
 	}
 
+	/* le compte : même pastille discrète que l'administration, l'initiale
+	   devant ; le rouge reste à « Reservar un cors » */
+	.compte-ligam {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		height: 2.2rem;
+		padding: 0 0.75rem;
+		border-radius: 999px;
+		border: 1px solid var(--t-linha);
+		color: var(--t-tinta);
+		font-weight: 700;
+		font-size: 0.78rem;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: border-color 0.3s;
+	}
+	.compte-ligam.connectat {
+		padding-left: 0.3rem;
+	}
+	.compte-ligam:hover,
+	.compte-ligam[aria-current='page'] {
+		border-color: var(--t-aur);
+	}
+
 	.admin-link {
 		display: inline-flex;
 		align-items: center;
@@ -273,6 +319,8 @@
 	}
 
 	.lang-toggle button:focus-visible,
+	.compte-ligam:focus-visible,
+	.admin-link:focus-visible,
 	.menu-boton:focus-visible,
 	.reservar:focus-visible,
 	.brand:focus-visible {
@@ -292,6 +340,23 @@
 		.reservar {
 			display: none;
 		}
+		/* le mot reste pour les lecteurs d'écran : c'est le seul nom du lien */
+		.compte-tèxte {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+		.compte-ligam {
+			justify-content: center;
+			width: 2.2rem;
+			padding: 0;
+		}
+		.compte-ligam.connectat {
+			padding: 0;
+		}
 	}
 
 	@container (max-width: 34rem) {
@@ -307,12 +372,12 @@
 		.header-right {
 			gap: 0.4rem;
 		}
-		.header-right:has(.compte) .menu-boton {
+		.header-right:has(.compte, .compte-ligam) .menu-boton {
 			justify-content: center;
 			width: 2.2rem;
 			padding: 0;
 		}
-		.header-right:has(.compte) .menu-boton span {
+		.header-right:has(.compte, .compte-ligam) .menu-boton span {
 			position: absolute;
 			width: 1px;
 			height: 1px;

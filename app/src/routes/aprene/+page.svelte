@@ -40,12 +40,8 @@
 	];
 
 	let moduleOneDone = $state(false);
-	let pseudo = $state('');
 
 	let lang = $derived(langStore.current);
-	let nomAfichat = $derived(pseudo || $session?.user?.email || '');
-	// Pastille d'initiale : évite qu'un pseudo se confonde avec le nom du site.
-	let inicial = $derived(nomAfichat ? nomAfichat.trim().charAt(0).toUpperCase() : '?');
 
 	async function loadModuleOneStatus() {
 		if ($session) {
@@ -62,7 +58,6 @@
 				goto('/compte/questionnaire');
 				return;
 			}
-			pseudo = profile.pseudo;
 			return;
 		}
 		if (!browser) return;
@@ -78,10 +73,6 @@
 		loadModuleOneStatus();
 	});
 
-	async function logout() {
-		await supabase.auth.signOut();
-	}
-
 	let counter = 0;
 </script>
 
@@ -95,19 +86,7 @@
 </div>
 
 <main class="screen">
-	<AppHeader>
-		{#if $session}
-			<span class="account-avatar" aria-hidden="true">{inicial}</span>
-			<span class="account-email" title={nomAfichat}>{nomAfichat}</span>
-			<button type="button" class="link-btn" onclick={logout}>
-				{lang === 'oc' ? 'Sortir' : 'Quitter'}
-			</button>
-		{:else}
-			<a class="link-btn" href="/compte">
-				{lang === 'oc' ? 'Se connectar' : 'Se connecter'}
-			</a>
-		{/if}
-	</AppHeader>
+	<AppHeader />
 
 	<div class="intro">
 		<p class="kicker">Occitan · Lengadocian</p>
@@ -200,57 +179,6 @@
 		align-items: center;
 		gap: 1.75rem;
 		padding: 1.5rem 1.5rem 4rem;
-	}
-
-	/* Le bloc compte vit dans la pastille du bandeau (voir AppHeader) :
-	   initiale, nom, puis l'action. Plus de lien souligné rouge, qui donnait
-	   à la déconnexion le poids d'une alerte. */
-	.account-avatar {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 1.5rem;
-		height: 1.5rem;
-		border-radius: 999px;
-		background: var(--color-terracotta);
-		color: white;
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 0.7rem;
-		flex-shrink: 0;
-	}
-
-	.account-email {
-		color: var(--color-text);
-		font-weight: 600;
-		max-width: 8rem;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.link-btn {
-		border: none;
-		border-left: 1px solid rgba(58, 42, 32, 0.16);
-		background: none;
-		color: var(--color-brick);
-		font-family: var(--font-heading);
-		font-weight: 600;
-		text-decoration: none;
-		cursor: pointer;
-		font-size: 0.8rem;
-		padding: 0.1rem 0 0.1rem 0.55rem;
-		white-space: nowrap;
-	}
-
-	/* Seul dans la pastille (pas connecté) : pas de séparateur orphelin */
-	.link-btn:first-child {
-		border-left: 0;
-		padding-left: 0;
-	}
-
-	.link-btn:hover {
-		text-decoration: underline;
 	}
 
 	.intro {
