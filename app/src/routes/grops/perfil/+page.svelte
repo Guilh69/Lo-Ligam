@@ -2,7 +2,8 @@
 	// Son propre profil (2026-10-25) : ce que les autres membres vérifiés
 	// verront, et l'état de sa vérification. Surtout des cases à cocher
 	// (Romain : « flemme d'écrire ») ; le lieu se cherche dans les communes
-	// de la carte, en occitan ou en français ; le texte libre vient en dernier,
+	// de la carte, en occitan ou en français, puis dans le monde entier (une
+	// commune d'Occitanie porte la croix du logo) ; le texte libre vient en dernier,
 	// facultatif. Les réponses du questionnaire d'accueil (âge, genre,
 	// profession) n'y paraissent pas.
 	import { browser } from '$app/environment';
@@ -10,7 +11,8 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, cargarIeu } from '$lib/grops/grops.svelte.js';
-	import { cargarComunas, cercarComunas } from '$lib/comunas.js';
+	import { cargarComunas, cercarComunas, cercarMonde, normC } from '$lib/comunas.js';
+	import Crotz from '$lib/components/Crotz.svelte';
 	import Avatar from '$lib/grops/Avatar.svelte';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -29,7 +31,8 @@
 			cerca: 'Çò que cèrqui',
 			agrada: 'Çò que m’agrada',
 			ont: 'D’ont',
-			ont_ajuda: 'Escriu lo començament del nom.',
+			ont_ajuda: 'Escriu lo començament del nom : una comuna d’Occitània o un luòc del monde.',
+			occitania: 'Occitània',
 			ont_lista: 'Pas dins la lista : gardarem çò qu’as escrich.',
 			dialecte: 'Dialècte',
 			cap: '(cap)',
@@ -57,7 +60,8 @@
 			cerca: 'Ce que je cherche',
 			agrada: 'Ce que j’aime',
 			ont: 'D’où',
-			ont_ajuda: 'Écris le début du nom, en occitan ou en français.',
+			ont_ajuda: 'Écris le début du nom, en occitan ou en français : une commune d’Occitanie ou n’importe où dans le monde.',
+			occitania: 'Occitanie',
 			ont_lista: 'Pas dans la liste : on garde ce que tu as écrit.',
 			dialecte: 'Dialecte',
 			cap: '(aucun)',
@@ -84,6 +88,11 @@
 	// le lieu : ce qu'on tape (q), les communes proposées, celle qu'on survole au clavier
 	let q = $state('');
 	let trobadas = $state([]);
+	let monde = $state([]);
+	// les communes d'Occitanie d'abord, puis le reste du monde
+	let opcions = $derived([...trobadas.map((c) => ({ c })), ...monde.map((m) => ({ m }))]);
+	let cercant = $state(false);
+	let minuta, abandon;
 	let activa = $state(-1);
 	let dobèrt = $state(false);
 
@@ -138,17 +147,38 @@
 		trobadas = cercarComunas(q);
 		activa = -1;
 		dobèrt = true;
+		// le monde : quand on s'arrête de taper (trois lettres au moins),
+		// sans redire une commune déjà proposée
+		clearTimeout(minuta);
+		abandon?.abort();
+		monde = [];
+		const cerca = q.trim();
+		cercant = cerca.length >= 3;
+		if (!cercant) return;
+		minuta = setTimeout(async () => {
+			abandon = new AbortController();
+			const r = await cercarMonde(cerca, abandon.signal);
+			if (cerca !== q.trim()) return;
+			cercant = false;
+			const dejà = new Set(trobadas.map((c) => normC(c.fr)));
+			monde = r.filter((x) => !(x.pais === 'France' && dejà.has(normC(x.nom)))).slice(0, 8 - trobadas.length);
+		}, 300);
 	}
-	function causir(c) {
-		f.ont = c.fr;
-		f.ont_oc = c.oc;
-		f.ont_dep = c.dep;
-		q = nomComuna(c);
+	function causir(o) {
+		if (o.c) {
+			f.ont = o.c.fr;
+			f.ont_oc = o.c.oc;
+			f.ont_dep = o.c.dep;
+			q = nomComuna(o.c);
+		} else {
+			f.ont = q = o.m.pais && o.m.pais !== 'France' ? `${o.m.nom}, ${o.m.pais}` : o.m.nom;
+			f.ont_oc = f.ont_dep = null;
+		}
 		dobèrt = false;
 	}
 	function clavier(e) {
-		if (!dobèrt || !trobadas.length) return;
-		const n = trobadas.length;
+		if (!dobèrt || !opcions.length) return;
+		const n = opcions.length;
 		if (e.key === 'ArrowDown') {
 			e.preventDefault();
 			activa = (activa + 1) % n;
@@ -157,7 +187,7 @@
 			activa = activa <= 0 ? n - 1 : activa - 1;
 		} else if (e.key === 'Enter' && activa >= 0) {
 			e.preventDefault();
-			causir(trobadas[activa]);
+			causir(opcions[activa]);
 		} else if (e.key === 'Escape') dobèrt = false;
 	}
 
@@ -245,7 +275,7 @@
 					role="combobox"
 					autocomplete="off"
 					aria-autocomplete="list"
-					aria-expanded={dobèrt && trobadas.length > 0}
+					aria-expanded={dobèrt && opcions.length > 0}
 					aria-controls="perfil-ont-lista"
 					aria-activedescendant={activa >= 0 ? `perfil-ont-${activa}` : undefined}
 					aria-describedby="perfil-ont"
@@ -256,23 +286,31 @@
 					onkeydown={clavier}
 					onblur={() => (dobèrt = false)}
 				/>
-				{#if dobèrt && trobadas.length}
+				{#if dobèrt && opcions.length}
 					<ul id="perfil-ont-lista" role="listbox" aria-label={x.ont}>
-						{#each trobadas as c, i (c.fr + c.dep)}
+						{#each opcions as o, i (o.c ? 'c' + o.c.fr + o.c.dep : 'm' + o.m.nom + o.m.detalh)}
 							<li
 								id="perfil-ont-{i}"
 								role="option"
 								aria-selected={i === activa}
 								class:activa={i === activa}
-								onmousedown={(e) => (e.preventDefault(), causir(c))}
+								onmousedown={(e) => (e.preventDefault(), causir(o))}
 							>
-								<strong>{nomComuna(c)}</strong>
-								<span>{autreNom(c) ? `${autreNom(c)} · ` : ''}{c.dep}</span>
+								{#if o.c}
+									<strong><Crotz talha={18} teula />{nomComuna(o.c)}</strong>
+									<span>{autreNom(o.c) ? `${autreNom(o.c)} · ` : ''}{o.c.dep}</span>
+								{:else}
+									<strong>{o.m.nom}</strong>
+									<span>{o.m.detalh}</span>
+								{/if}
 							</li>
 						{/each}
 					</ul>
-				{:else if dobèrt && q.trim().length >= 2}
+				{:else if dobèrt && !cercant && q.trim().length >= 2}
 					<small class="fòra">{x.ont_lista}</small>
+				{/if}
+				{#if f.ont_dep && !dobèrt}
+					<small class="occitania"><Crotz talha={20} teula />{x.occitania}</small>
 				{/if}
 			</div>
 			<label class="camp">
@@ -446,17 +484,32 @@
 	.luòc li {
 		display: flex;
 		align-items: baseline;
+		flex-wrap: wrap;
 		justify-content: space-between;
-		gap: var(--esp-12);
+		gap: 0 var(--esp-12);
 		min-height: 40px;
 		padding: 0.5rem 0.7rem;
 		border-radius: 4px;
 		cursor: pointer;
 	}
+	.luòc li strong,
+	.occitania {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--esp-8);
+	}
+	.luòc li strong :global(svg) {
+		flex: none;
+	}
+	.occitania {
+		color: var(--t-tinta);
+		font-weight: 700;
+	}
 	.luòc li span {
 		color: var(--t-tinta-2);
 		font-size: 0.85rem;
-		white-space: nowrap;
+		margin-left: auto;
+		text-align: right;
 	}
 	.luòc li:hover,
 	.luòc li.activa {

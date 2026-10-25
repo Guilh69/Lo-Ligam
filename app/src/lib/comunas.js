@@ -40,6 +40,24 @@ export function cargarComunas() {
 	return promesa;
 }
 
+// Le reste du monde (New York, Lyon, Alger…) : Photon, déjà permis par la
+// politique de sécurité pour le questionnaire (LocationAutocomplete.svelte).
+// Les noms viennent en français ; le pays suit le nom, sauf pour la France.
+// Sans réponse (hors ligne, service coupé), on garde le texte libre.
+export async function cercarMonde(q, signal) {
+	try {
+		const r = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=6&lang=fr&osm_tag=place`, { signal });
+		if (!r.ok) return [];
+		const d = await r.json();
+		const vist = new Set();
+		return (d.features ?? [])
+			.map(({ properties: p }) => ({ nom: p.name, pais: p.country, detalh: [p.state, p.country].filter(Boolean).join(', ') }))
+			.filter((x) => x.nom && !vist.has(x.nom + x.detalh) && vist.add(x.nom + x.detalh));
+	} catch {
+		return [];
+	}
+}
+
 // exact 3, début du nom 2, début d'un mot 1 ; puis les plus peuplées d'abord
 export function cercarComunas(q, n = 6) {
 	const c = normC(q);
