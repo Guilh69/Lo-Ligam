@@ -138,7 +138,7 @@
 			cnil: 'Se una respònsa te satisfà pas, pòdes sasir la CNIL :'
 		}
 	};
-	let tx = $derived(t[lang]);
+	let tx = $derived(t[lang] ?? t.oc);
 
 	function avecVars(s) {
 		return s.replace('{nom}', editor.nom).replace('{email}', editor.email);

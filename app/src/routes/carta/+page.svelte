@@ -250,7 +250,7 @@
 	}
 	const NÒTA = { oc: 'Per tornar veire los primièrs passes : aicí.', fr: 'Pour revoir les premiers pas : ici.', cibla: '.info-trigger' };
 	let guida = $state(null);
-	let tx = $derived(t[lang]);
+	let tx = $derived(t[lang] ?? t.oc);
 
 	let showInfo = $state(false);
 	// la pancarta se tampa d'un clic defòra o amb Escapar (principi del site,

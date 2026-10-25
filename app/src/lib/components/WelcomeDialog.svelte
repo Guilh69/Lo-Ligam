@@ -34,7 +34,7 @@
 			pasTornar: 'Ne plus revoir'
 		}
 	};
-	let tx = $derived(t[lang]);
+	let tx = $derived(t[lang] ?? t.oc);
 
 	$effect(() => {
 		if (!browser) return;

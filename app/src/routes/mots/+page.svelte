@@ -57,7 +57,7 @@
 			views: { mosaica: 'Mosaïque', carrossel: 'Carrousel', tunel: 'Tunnel' }
 		}
 	};
-	let tx = $derived(t[lang]);
+	let tx = $derived(t[lang] ?? t.oc);
 
 	let view = $state('mosaica');
 	let activeCat = $state('all');

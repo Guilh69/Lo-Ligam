@@ -37,7 +37,7 @@
 			fonses: ['Veines d’or', 'Lumière et étoiles', 'Courbes de niveau', 'Sobre']
 		}
 	};
-	let tx = $derived(t[lang]);
+	let tx = $derived(t[lang] ?? t.oc);
 	// Ordre d'affichage : l'ambiance par défaut (Venas d'aur) d'abord
 	const ORDRE_FONS = [0, 1, 2, 3];
 

@@ -29,7 +29,7 @@
 			tampar: 'Fermer'
 		}
 	};
-	let tx = $derived(t[lang]);
+	let tx = $derived(t[lang] ?? t.oc);
 
 	// Galerie : la grande image se charge seulement à l'ouverture (<dialog> natif :
 	// Échap ferme, le focus revient au bouton, la page derrière est inerte).

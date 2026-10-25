@@ -54,7 +54,7 @@
 			donadasLink: 'Politique de confidentialité'
 		}
 	};
-	let tx = $derived(t[lang]);
+	let tx = $derived(t[lang] ?? t.oc);
 
 	// Rend visible ce qui n'a pas encore été renseigné, plutôt que d'afficher
 	// une mention légale trompeuse.

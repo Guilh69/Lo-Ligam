@@ -12,7 +12,8 @@
 	import Crotz from './Crotz.svelte';
 	import AmbiancaPanel from './AmbiancaPanel.svelte';
 	import MenuVel from './MenuVel.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, LENGAS, AUTRAS } from '$lib/stores/lang.svelte.js';
+	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { VISIO } from '$lib/data/planSite.js';
 	import { esAdmin } from '$lib/adminStore';
 	import { session, authReady, pseudoCompte } from '$lib/authStore';
@@ -45,13 +46,55 @@
 	function causirLenga(v) {
 		langStore.current = v;
 		crida = false;
+		globeDobert = false;
 	}
+
+	// Globe : l'espagnol, l'anglais et le catalan, pour qui découvre le site
+	// (cahier §11, 2026-10-25). Òc / Fr reste la bascule du cœur, le globe est
+	// posé juste à côté. L'occitan reste le repli de tout ce qui n'est pas
+	// encore traduit.
+	let botonGlobe = $state(null);
+	let panelGlobe = $state(null);
+	let globeDobert = $state(false);
+	let autra = $derived(AUTRAS.includes(lang) ? lang : null);
+	// Étiquette du globe dans les cinq langues (repli occitan). Le nom annoncé
+	// inclut la langue active pour un lecteur d'écran.
+	const GLOBE_ETIQ = { oc: 'Autras lengas', fr: 'Autres langues', es: 'Otros idiomas', en: 'Other languages', ca: 'Altres llengües' };
+	let globeEtiq = $derived(GLOBE_ETIQ[lang] ?? GLOBE_ETIQ.oc);
+	let globeNom = $derived(autra ? `${globeEtiq} : ${LENGAS[autra].nom}` : globeEtiq);
+	function basculaGlobe() {
+		globeDobert = !globeDobert;
+	}
+	function causirGlobe(code) {
+		langStore.current = code;
+		globeDobert = false;
+		botonGlobe?.focus();
+	}
+	// Ferme sur Échap ou clic dehors, et rend le focus au globe (comme Ambiance).
+	$effect(() => {
+		if (!globeDobert) return;
+		const lèva = tampaDefòra(
+			(t) => !!(panelGlobe?.contains(t) || botonGlobe?.contains(t)),
+			() => (globeDobert = false)
+		);
+		const tòca = (e) => {
+			if (e.key === 'Escape') {
+				globeDobert = false;
+				botonGlobe?.focus();
+			}
+		};
+		document.addEventListener('keydown', tòca);
+		return () => {
+			lèva();
+			document.removeEventListener('keydown', tòca);
+		};
+	});
 
 	const t = {
 		oc: { acuelhLong: "Tornar a l'acuèlh", admin: 'Administracion', menu: 'Menú', reservar: 'Reservar un cors', compte: 'Mon compte', connectar: 'Se connectar' },
 		fr: { acuelhLong: "Retour à l'accueil", admin: 'Administration', menu: 'Menu', reservar: 'Réserver un cours', compte: 'Mon compte', connectar: 'Se connecter' }
 	};
-	let tx = $derived(t[lang]);
+	let tx = $derived(t[lang] ?? t.oc);
 
 	// Le compte, sur toutes les pages (2026-10-25) : « Se connectar » pour un
 	// visiteur (on revient ensuite sur la page où l'on était), l'initiale et
@@ -109,12 +152,40 @@
 
 			<AmbiancaPanel />
 
-			<div class="lang-toggle" class:crida role="group" aria-label="Lenga / Langue">
-				<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
-				<button type="button" aria-pressed={lang === 'fr'} lang="fr" onclick={() => causirLenga('fr')}>Fr</button>
-				{#if crida}
-					<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
-				{/if}
+			<div class="lengas">
+				<div class="lang-toggle" class:en-avant={crida} role="group" aria-label="Lenga / Langue">
+					<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
+					<button type="button" aria-pressed={lang === 'fr'} lang="fr" onclick={() => causirLenga('fr')}>Fr</button>
+					{#if crida}
+						<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
+					{/if}
+				</div>
+				<div class="lang-globe">
+					<button
+						type="button"
+						class="globe-boton"
+						class:activa={autra}
+						bind:this={botonGlobe}
+						aria-expanded={globeDobert}
+						aria-controls="globe-panel"
+						title="Español · English · Català"
+						onclick={basculaGlobe}>
+						<Icona nom="mond" size="1.2rem" />
+						{#if autra}<span class="globe-code" aria-hidden="true">{LENGAS[autra].curt}</span>{/if}
+						<span class="sr-only">{globeNom}</span>
+					</button>
+					{#if globeDobert}
+						<div class="globe-panel" id="globe-panel" bind:this={panelGlobe} role="group" aria-label={globeEtiq}>
+							{#each AUTRAS as code (code)}
+								<button
+									type="button"
+									aria-pressed={lang === code}
+									lang={code}
+									onclick={() => causirGlobe(code)}>{LENGAS[code].nom}</button>
+							{/each}
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -302,10 +373,102 @@
 		color: var(--t-fons);
 	}
 
+	/* Globe : les langues de découverte (es / en / ca), à côté de la bascule. */
+	.lengas {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+	}
+	.lang-globe {
+		position: relative;
+		display: inline-flex;
+	}
+	/* Même famille que le bouton Ambiance voisin : cercle de 2,2 rem qui devient
+	   une pilule quand le code Es/En/Ca s'affiche ; bordure rouge (--t-accion)
+	   au survol et à l'ouverture, comme Ambiance (règle B). */
+	.globe-boton {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 4px;
+		min-width: 2.2rem;
+		height: 2.2rem;
+		padding: 0 0.45rem;
+		border: 1px solid var(--t-linha);
+		background: transparent;
+		color: var(--t-tinta);
+		border-radius: 999px;
+		cursor: pointer;
+		transition:
+			background 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+			color 0.5s,
+			border-color 0.4s;
+	}
+	.globe-boton:hover,
+	.globe-boton[aria-expanded='true'] {
+		border-color: var(--t-accion);
+	}
+	.globe-boton.activa {
+		background: var(--t-tinta);
+		color: var(--t-fons);
+		border-color: var(--t-tinta);
+	}
+	.globe-code {
+		font-size: 0.72rem;
+		font-weight: 700;
+		line-height: 1;
+	}
+	/* Panneau d'en-tête opaque, comme celui d'Ambiance. */
+	.globe-panel {
+		position: absolute;
+		top: calc(100% + 12px);
+		right: 0;
+		z-index: 60;
+		display: flex;
+		flex-direction: column;
+		min-width: 9rem;
+		padding: 0.4rem;
+		background: var(--t-fons-2);
+		color: var(--t-tinta);
+		border: 1px solid var(--t-linha);
+		border-radius: 18px;
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+	}
+	.globe-panel button {
+		border: 0;
+		background: transparent;
+		color: var(--t-tinta-2);
+		font-weight: 600;
+		font-size: 0.86rem;
+		text-align: left;
+		padding: 0.5rem 0.7rem;
+		border-radius: 10px;
+		cursor: pointer;
+		transition:
+			background 0.35s,
+			color 0.35s;
+	}
+	.globe-panel button:hover {
+		background: color-mix(in srgb, var(--t-tinta) 10%, transparent);
+		color: var(--t-tinta);
+	}
+	.globe-panel button[aria-pressed='true'] {
+		background: var(--t-tinta);
+		color: var(--t-fons);
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+	}
+
 	/* Première visite : le bouton se met en avant (halo d'or qui bat trois fois,
 	   légende dessous), puis s'efface ; immobile si « réduire les animations » */
 	.lang-toggle { position: relative; }
-	.lang-toggle.crida { border-color: var(--t-aur); box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); animation: lang-crida 1.6s ease-out 3; }
+	.lang-toggle.en-avant { border-color: var(--t-aur); box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); animation: lang-crida 1.6s ease-out 3; }
 	.lang-crida {
 		position: absolute; top: calc(100% + 6px); right: 0; white-space: nowrap;
 		font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--t-aur);
@@ -314,11 +477,13 @@
 	@keyframes lang-crida { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); } 100% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--t-aur) 0%, transparent); } }
 	@keyframes lang-crida-tèxt { 0%, 8% { opacity: 0; translate: 0 -4px; } 20%, 85% { opacity: 1; translate: 0 0; } 100% { opacity: 0; } }
 	@media (prefers-reduced-motion: reduce) {
-		.lang-toggle.crida { animation: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--t-aur) 45%, transparent); }
+		.lang-toggle.en-avant { animation: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--t-aur) 45%, transparent); }
 		.lang-crida { animation: none; }
 	}
 
 	.lang-toggle button:focus-visible,
+	.globe-boton:focus-visible,
+	.globe-panel button:focus-visible,
 	.compte-ligam:focus-visible,
 	.admin-link:focus-visible,
 	.menu-boton:focus-visible,
@@ -387,7 +552,10 @@
 		}
 	}
 
-	@container (max-width: 22rem) {
+	/* Le globe ajoute un bouton ; sous ~27rem de bandeau (téléphones courants),
+	   on cache le nom « Lo Ligam » — la croix-constellation reste — pour que
+	   tout tienne sans déborder. */
+	@container (max-width: 27rem) {
 		.brand-name {
 			display: none;
 		}
