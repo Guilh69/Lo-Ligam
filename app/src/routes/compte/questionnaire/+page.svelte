@@ -113,9 +113,14 @@
 		});
 		loading = false;
 		if (error) {
+			// refus de la base (supabase-grops-2.sql) : doublon, mot interdit, nom réservé, longueur
 			errorMsg = /duplicate|unique/i.test(error.message)
 				? 'Aqueste pseudonim es ja pres, ensaja-n’un autre. (Ce pseudo est déjà pris, essaie-en un autre.)'
-				: error.message;
+				: /pseudo_mot|pseudo_reservat/.test(error.message)
+					? 'Aqueste pseudonim es pas possible, ensaja-n’un autre. (Ce pseudo n’est pas possible, essaie-en un autre.)'
+					: /pseudo_longor/.test(error.message)
+						? 'Lo pseudonim fa de 2 a 30 letras. (Le pseudo fait de 2 à 30 lettres.)'
+						: error.message;
 			return;
 		}
 		goto('/aprene');
@@ -151,7 +156,8 @@
 				<label>
 					{main('Pseudonim', 'Pseudonyme')}
 					<em>({alt('Pseudonim', 'Pseudonyme')} · {required})</em>
-					<input type="text" bind:value={pseudo} maxlength="24" required />
+					<input type="text" bind:value={pseudo} minlength="2" maxlength="24" required aria-describedby="pseudo-vist" />
+					<small id="pseudo-vist">{main('Los membres de tos grops lo veiràn.', 'Les membres de tes groupes le verront.')}</small>
 				</label>
 
 				<fieldset>

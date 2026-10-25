@@ -1,6 +1,6 @@
 -- Lo Ligam — édition sur place : les éléments modifiables des pages
 -- =============================================================================
--- Fabriqué par app/scripts/elements-sql.mjs le 2026-10-24 ; ne pas modifier à la main.
+-- Fabriqué par app/scripts/elements-sql.mjs le 2026-10-25 ; ne pas modifier à la main.
 -- À coller dans Supabase : SQL Editor → New query → Run. Rejouable sans risque :
 -- la semence ne touche pas aux lignes déjà présentes.
 -- Suppose que supabase-admin-schema.sql a déjà été exécuté (public.is_admin(),
@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (234 lignes). Jamais écrasés s'ils existent déjà.
+-- (243 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -229,6 +229,11 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('parla.teulas.articles', 'parla', 'bloc', 'parla.teulas', 4, null, null, null, null, true),
 	('parla.teulas.articles.ligam', 'parla', 'ligam', 'parla.teulas.articles', 0, 'Articles', 'Articles', '/articles', null, true),
 	('parla.teulas.articles.sota', 'parla', 'text', 'parla.teulas.articles', 0, 'A escriure', 'À écrire', null, null, false),
+	('parla.teulas.musicas', 'parla', 'bloc', 'parla.teulas', 5, null, null, null, null, true),
+	('parla.teulas.musicas.ligam', 'parla', 'ligam', 'parla.teulas.musicas', 0, 'Musicas', 'Musiques', '/obras#musicas', null, true),
+	('parla.teulas.musicas.sota', 'parla', 'text', 'parla.teulas.musicas', 0, 'Çò qu’escoti, e ont l’escotar.', 'Ce que j’écoute, et où l’écouter.', null, null, true),
+	('obras.musica.titol', 'obras', 'text', null, 0, 'Musicas', 'Musiques', null, null, true),
+	('obras.musica.frasa', 'obras', 'text', null, 0, 'A escriure', 'À écrire', null, null, false),
 	('apren.titol', 'apren', 'text', null, 0, 'S’apren', 'S’apprend', null, null, true),
 	('apren.frasa', 'apren', 'text', null, 0, 'A escriure : ta frasa sus S’apren', 'À écrire : ta phrase sur S’apprend', null, null, false),
 	('apren.teulas.visio', 'apren', 'bloc', 'apren.teulas', 1, null, null, null, null, true),
@@ -387,5 +392,9 @@ L''idée, c''est d''apprendre en même temps que je partage. Je ne me présente 
 	('ideas.frasa', 'ideas', 'text', null, 0, 'Una idèa per melhorar Lo Ligam ? Escriu-la aquí : las legissi totas.', 'Une idée pour améliorer Lo Ligam ? Écris-la ici : je les lis toutes.', null, null, true),
 	('ideas.compte', 'ideas', 'text', null, 0, 'Per mandar una idèa, cal un compte : es gratuit.', 'Pour envoyer une idée, il faut un compte : c’est gratuit.', null, null, true),
 	('ideas.mercé', 'ideas', 'text', null, 0, 'Mercé ! Ton idèa es plan arribada.', 'Merci ! Ton idée est bien arrivée.', null, null, true),
-	('ideas.avís', 'ideas', 'text', null, 0, 'Soi lo sol a legir las idèas, sens saber qual las manda. Las pòdes suprimir quand vòles.', 'Je suis seul à lire les idées, sans savoir qui les envoie. Tu peux les supprimer quand tu veux.', null, null, true)
+	('ideas.avís', 'ideas', 'text', null, 0, 'Soi lo sol a legir las idèas, sens saber qual las manda. Las pòdes suprimir quand vòles.', 'Je suis seul à lire les idées, sans savoir qui les envoie. Tu peux les supprimer quand tu veux.', null, null, true),
+	('grops.acuelh', 'grops', 'text', null, 0, 'Aquí parlam occitan coma podèm, amb las fautas. Totas las lengas son benvengudas : çò que compta, es l’escambi.', 'Ici on parle occitan comme on peut, avec les fautes. Toutes les langues sont bienvenues : ce qui compte, c’est l’échange.', null, null, true),
+	('grops.compte', 'grops', 'text', null, 0, 'Per rejónher un grop, cal un compte amb una adreça verificada : es gratuit.', 'Pour rejoindre un groupe, il faut un compte avec une adresse vérifiée : c’est gratuit.', null, null, true),
+	('grops.pseudo', 'grops', 'text', null, 0, 'Los autres membres veson ton pseudonim, pas jamai ton adreça.', 'Les autres membres voient ton pseudo, jamais ton adresse.', null, null, true),
+	('grops.lèu', 'grops', 'text', null, 0, 'Los grops dobriràn lèu. Un pauc de paciéncia !', 'Les groupes ouvriront bientôt. Un peu de patience !', null, null, true)
 on conflict (clau, estat) do nothing;
