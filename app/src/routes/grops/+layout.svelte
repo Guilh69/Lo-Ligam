@@ -13,7 +13,8 @@
 	import { esAdmin, adminSabut } from '$lib/adminStore';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { iniciar } from '$lib/edicion/edicion.svelte.js';
-	import { grops, DOBÈRTS, cargarMevas, tancar, ora } from '$lib/grops/grops.svelte.js';
+	import { grops, DOBÈRTS, cargarMevas, cargarIeu, tancar, ora } from '$lib/grops/grops.svelte.js';
+	import Avatar from '$lib/grops/Avatar.svelte';
 	import Tèxte from '$lib/grops/Tèxte.svelte';
 
 	let { data, children } = $props();
@@ -25,6 +26,8 @@
 		oc: {
 			grops: 'Grops',
 			mos: 'Mos grops',
+			perfil: 'Mon perfil',
+			espèra: 'en espèra',
 			crear: 'Tots los grops',
 			començar: 'Per començar',
 			connectar: 'Se connectar',
@@ -35,6 +38,8 @@
 		fr: {
 			grops: 'Groupes',
 			mos: 'Mes groupes',
+			perfil: 'Mon profil',
+			espèra: 'en attente',
 			crear: 'Tous les groupes',
 			començar: 'Pour commencer',
 			connectar: 'Se connecter',
@@ -54,7 +59,10 @@
 	$effect(() => {
 		grops.admin = $esAdmin;
 		grops.uid = uid;
-		if (uid && permés) cargarMevas();
+		if (uid && permés) {
+			cargarMevas();
+			cargarIeu();
+		}
 		else tancar();
 	});
 	$effect(() => () => tancar());
@@ -96,7 +104,15 @@
 			<div class="messatjariá" class:dins>
 				<nav class="lista" aria-label={x.mos}>
 					<div class="cap-lista">
-						<h1>{x.grops}</h1>
+						<div class="titol-lista">
+							<h1>{x.grops}</h1>
+							{#if grops.ieu}
+								<a class="ieu" href="/grops/perfil" aria-current={page.route.id === '/grops/perfil' ? 'page' : undefined}>
+									<Avatar pseudo={grops.ieu.pseudo} id={uid} size="1.9rem" />
+									<span>{x.perfil}{#if grops.ieu.verificacion !== 'verificat'}<small>{x.espèra}</small>{/if}</span>
+								</a>
+							{/if}
+						</div>
 						<a class="crear" href="/grops/crear" aria-current={page.route.id === '/grops/crear' ? 'page' : undefined}>
 							<Icona nom="chercher" />
 							{x.crear}
@@ -216,6 +232,40 @@
 		padding: var(--esp-16);
 		border-right: 1px solid var(--t-linha);
 		overflow-y: auto;
+	}
+	.titol-lista {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--esp-8);
+	}
+	/* son profil : l'initiale et « Mon perfil », à côté du titre */
+	.ieu {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--esp-8);
+		min-height: 44px;
+		padding: 0.2rem 0.6rem 0.2rem 0.2rem;
+		border-radius: 999px;
+		color: inherit;
+		font-size: 0.85rem;
+		text-decoration: none;
+	}
+	.ieu:hover,
+	.ieu[aria-current='page'] {
+		background: color-mix(in srgb, var(--t-aur) 14%, transparent);
+	}
+	.ieu span {
+		display: grid;
+		line-height: 1.2;
+	}
+	.ieu small {
+		color: var(--t-aur);
+		font-weight: 700;
+	}
+	.ieu:focus-visible {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 2px;
 	}
 	.cap-lista {
 		display: grid;

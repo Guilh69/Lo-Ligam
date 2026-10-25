@@ -23,9 +23,30 @@ export const MENAS = [
 	['interes', 'Passions', 'Passions']
 ];
 
+// Le profil public (supabase-perfils.sql) : dialecte et niveau, en occitan et en français
+export const DIALECTES = [
+	['lengadocian', 'Lengadocian', 'Languedocien'],
+	['provencal', 'Provençal', 'Provençal'],
+	['gascon', 'Gascon', 'Gascon'],
+	['lemosin', 'Lemosin', 'Limousin'],
+	['auvernhat', 'Auvernhat', 'Auvergnat'],
+	['vivaroaupenc', 'Vivaroaupenc', 'Vivaro-alpin'],
+	['autre', 'Autre', 'Autre'],
+	['sabi_pas', 'Sabi pas encara', 'Je ne sais pas encore']
+];
+export const NIVELS = [
+	['debutant', 'Debuti', 'Je débute'],
+	['apren', 'Apreni', 'J’apprends'],
+	['parla', 'Parli', 'Je parle'],
+	['mairal', 'Lenga mairala', 'Langue maternelle']
+];
+/** Le nom d'un dialecte ou d'un niveau dans la langue choisie */
+export const nomDe = (lista, v, fr) => lista.find((x) => x[0] === v)?.[fr ? 2 : 1] ?? null;
+
 export const grops = $state({
 	uid: null,
 	admin: false,
+	ieu: null, // son propre profil : { pseudo, verificacion }
 	mevas: [], // mos_grops() : grop_id, mena, nom_oc, nom_fr, estat, darrier_at, non_legits
 	cargadas: false,
 	obert: null // le groupe affiché à droite
@@ -38,6 +59,11 @@ const auditors = new Set();
 export function escotar(fn) {
 	auditors.add(fn);
 	return () => auditors.delete(fn);
+}
+
+export async function cargarIeu() {
+	const { data } = await supabase.from('profiles').select('pseudo, verificacion').eq('user_id', grops.uid).maybeSingle();
+	grops.ieu = data;
 }
 
 export async function cargarMevas() {
@@ -70,6 +96,7 @@ export function tancar() {
 	canals.clear();
 	grops.mevas = [];
 	grops.cargadas = false;
+	grops.ieu = null;
 }
 
 function recebut(id, ev, p) {
@@ -114,7 +141,8 @@ const ERRORS = [
 	'grops_limit',
 	'messatges_mot',
 	'messatges_limit',
-	'messatges_ligam'
+	'messatges_ligam',
+	'messatges_verificacion'
 ];
 export function clauError(error) {
 	const m = error?.message ?? '';

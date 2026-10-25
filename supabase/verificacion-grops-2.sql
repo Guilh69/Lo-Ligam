@@ -24,6 +24,9 @@ begin
 		(C, 'essai-c@loligam.test', 'authenticated', 'authenticated', now(), now()),
 		(M, 'essai-m@loligam.test', 'authenticated', 'authenticated', now(), now());
 	insert into public.admins (user_id) values (M);
+	-- l'essai part d'un groupe vide, même si de vrais membres l'ont rejoint (tout est annulé à la fin)
+	delete from public.messatges where grop_id = G;
+	delete from public.grop_membres where grop_id = G;
 
 	-- 1. les pseudos
 	insert into public.profiles (user_id, pseudo) values (A, '  Joan_essai  ');
@@ -38,6 +41,10 @@ begin
 	insert into public.profiles (user_id, pseudo) values (B, 'Bernat_essai'), (C, 'Clara_essai');
 	insert into public.profiles (user_id, pseudo) values (M, 'Moderacion_essai');
 	r := array_append(r, 'ok l''administrateur peut s''appeler Moderacion');
+	-- depuis supabase-perfils.sql (25-10), écrire demande un profil vérifié
+	perform set_config('loligam.verificacion', 'on', true);
+	update public.profiles set verificacion = 'verificat' where user_id in (A, B, C);
+	perform set_config('loligam.verificacion', 'off', true);
 
 	-- 2. A et B rejoignent ; B écrit deux messages
 	perform set_config('request.jwt.claims', json_build_object('sub', A, 'role', 'authenticated')::text, true);

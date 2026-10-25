@@ -167,6 +167,15 @@ async function verificarEscritura(supabase) {
 	const marselha = await supabase.from('grops').select('estat').eq('id', 'vila-marselha');
 	verificar('OUVRIR une proposition sans compte est refusé', marselha.data?.[0]?.estat === 'prepausat', `état : ${marselha.data?.[0]?.estat}`);
 
+	// Profils vérifiés (supabase-perfils.sql) : sans compte, ni profil, ni file
+	// d'attente (avec les adresses), ni décision
+	const perfil = await supabase.rpc('perfil', { p: 'Romain' });
+	verificar('LIRE un profil sans compte est refusé', !!perfil.error || !perfil.data?.length);
+	const espera = await supabase.rpc('perfils_en_espera');
+	verificar('LIRE la file des profils (adresses) sans compte est refusé', !!espera.error);
+	const decision = await supabase.rpc('decidir_perfil', { u: '00000000-0000-0000-0000-000000000001', d: 'verificat' });
+	verificar('VALIDER un profil sans compte est refusé', !!decision.error);
+
 	// La tentative la plus grave : se déclarer administrateur.
 	const promocion = await supabase
 		.from('admins')
