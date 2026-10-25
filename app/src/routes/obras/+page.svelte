@@ -19,7 +19,7 @@
 	import { plataforma, lectorPer, ligamsCollats } from '$lib/obras';
 	import { PALETAS, PALETA_PER_DEFAUT } from '$lib/apren/teulas.js';
 	import { afichas } from '$lib/data/afichas.js';
-	import { edicion, iniciar, txt, ligam, lista, amagat, apondre, cambiar, causir, publicar } from '$lib/edicion/edicion.svelte.js';
+	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre, cambiar, causir, publicar, mandarImatge } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
 
@@ -103,6 +103,7 @@
 	let frasaOc = $state('');
 	let frasaFr = $state('');
 	let lectorTrobat = $state(null);
+	let imatgeTrobada = $state(null); // l'image de la page Bandcamp (og:image)
 	let cèrca = $state(false);
 	let error = $state('');
 	let trobats = $derived(ligamsCollats(collats));
@@ -119,6 +120,7 @@
 			.then((r) => {
 				if (darrièr !== u) return;
 				lectorTrobat = r?.lector ?? null;
+				imatgeTrobada = r?.imatge ?? null;
 				if (r?.nom && !nomTocat) nòuNom = r.nom;
 			})
 			.catch(() => {})
@@ -129,7 +131,34 @@
 		formulari = false;
 		collats = nòuNom = frasaOc = frasaFr = error = '';
 		nomTocat = false;
-		lectorTrobat = darrièr = null;
+		lectorTrobat = imatgeTrobada = darrièr = null;
+	}
+
+	// L'image (option A de Romain, 2026-10-25) : copiée et allégée par notre
+	// serveur, puis rangée dans le stockage des images du site ; Romain peut la
+	// remplacer ensuite comme toute image de la page.
+	const copiaImatge = (u) => '/api/bandcamp/imatge?u=' + encodeURIComponent(u);
+	async function pausarImatge(clau, u, nom) {
+		const r = await fetch(copiaImatge(u)).catch(() => null);
+		if (!r?.ok) return false;
+		const clauIm = `${clau}.imatge`;
+		await mandarImatge(clauIm, new File([await r.blob()], 'pocheta.webp', { type: 'image/webp' }));
+		const im = imatge(clauIm);
+		if (!im?.url) return false;
+		cambiar(clauIm, { lista: clau, oc: '', fr: '', imatge: { ...im, alt_oc: nom, alt_fr: nom } }, { tipe: 'imatge', tot_d_un_còp: true });
+		return true;
+	}
+	// pour une fiche déjà là : l'image de son premier lien Bandcamp
+	let cèrcaImatge = $state(null);
+	async function imatgeDeBandcamp(clau, ligams, nom) {
+		const u = ligams.find((x) => x.p?.nom === 'Bandcamp')?.l.href;
+		if (!u) return;
+		cèrcaImatge = clau;
+		const r = await fetch('/api/bandcamp?u=' + encodeURIComponent(u))
+			.then((r) => (r.ok ? r.json() : null))
+			.catch(() => null);
+		if (!(r?.imatge && (await pausarImatge(clau, r.imatge, nom)))) edicion.messatge = { tipe: 'error', text: fr ? 'Pas d’image trouvée sur cette page Bandcamp.' : 'Cap d’imatge sus aquesta pagina Bandcamp.' };
+		cèrcaImatge = null;
 	}
 	async function publicarArtista() {
 		const nom = nòuNom.trim();
@@ -142,6 +171,7 @@
 		]);
 		for (const u of trobats) apondre(clau, 'ligam', { oc: '', fr: '', ligam: u });
 		if (lectorTrobat) cambiar(`${clau}.lector`, { oc: '', fr: '', ligam: lectorTrobat }, { tipe: 'ligam', lista: clau, tot_d_un_còp: true });
+		if (imatgeTrobada) await pausarImatge(clau, imatgeTrobada, nom);
 		causir(null);
 		await publicar();
 		voidar();
@@ -175,11 +205,16 @@
 {#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
 {#snippet tt(clau)}{@const v = txt(clau)}<span lang={fr ? 'fr' : 'oc'}>{@render marcat(fr ? v.fr : v.oc)}</span>{/snippet}
 
-{#snippet pocheta(nom, i, lector, sortit, clau)}
+{#snippet pocheta(nom, i, lector, sortit, clau, im)}
 	{@const [fons, tinta] = color(i)}
 	<div class="pocheta" class:sortit style:--fons={fons} style:--tinta={tinta}>
 		<span class="disc" aria-hidden="true"><span class="disc-cor"></span></span>
-		<div class="cobèrta">
+		<div class="cobèrta" class:amb-imatge={im}>
+			{#if im && clau}
+				<img class="cobèrta-imatge" src={im.url} alt="" width="480" height="480" loading="lazy" decoding="async" use:editar={clau + '.imatge'} />
+			{:else if im}
+				<img class="cobèrta-imatge" src={im.url} alt="" width="480" height="480" />
+			{/if}
 			{#if clau}
 				<h3 class="pocheta-nom" hidden={amagat(clau + '.nom')} use:editar={clau + '.nom'}>{nom}</h3>
 			{:else}
@@ -255,7 +290,7 @@
 						</div>
 					</div>
 					<div class="apondre-apercebut" aria-hidden="true">
-						{@render pocheta(nòuNom || 'Nom', lista('obras.artistas').length, lectorTrobat ? { plataforma: 'Bandcamp' } : null, false, null)}
+						{@render pocheta(nòuNom || 'Nom', lista('obras.artistas').length, lectorTrobat ? { plataforma: 'Bandcamp' } : null, false, null, imatgeTrobada ? { url: copiaImatge(imatgeTrobada) } : null)}
 						<p class="ligams">{trobats.map((l) => plataforma(l).nom).join(' · ')}</p>
 					</div>
 				</form>
@@ -269,9 +304,10 @@
 				{@const ligams = ligamsDe(a.clau)}
 				{@const lector = lectorDe(a.clau, ligams)}
 				{@const nom = txt(a.clau + '.nom')}
+				{@const im = imatge(a.clau + '.imatge')}
 				<li class="pocheta-plaça">
 					<div class="pocheta-ed" use:editar={a.clau}>
-						{@render pocheta(fr ? nom.fr : nom.oc, i, lector, dubèrt === a.clau, a.clau)}
+						{@render pocheta(fr ? nom.fr : nom.oc, i, lector, dubèrt === a.clau, a.clau, im?.url ? im : null)}
 					</div>
 					{#if lector && demanda === a.clau}
 						<div class="acòrd" role="group" aria-label={tx.escotar}>
@@ -301,6 +337,9 @@
 					</p>
 					{#if edicion.actiu}
 						<button type="button" class="ed-apondre" onclick={() => apondreLigam(a.clau)}>+ {fr ? 'Ajouter un lien' : 'Apondre un ligam'}</button>
+						{#if !im?.url && ligams.some((x) => x.p?.nom === 'Bandcamp')}
+							<button type="button" class="ed-apondre" onclick={() => imatgeDeBandcamp(a.clau, ligams, fr ? nom.fr : nom.oc)} disabled={cèrcaImatge === a.clau}>+ {fr ? 'Image de Bandcamp' : 'Imatge de Bandcamp'}</button>
+						{/if}
 					{/if}
 				</li>
 			{/each}
@@ -635,6 +674,31 @@
 		outline: 1px solid color-mix(in srgb, var(--tinta) 22%, transparent);
 		outline-offset: -9px;
 		box-shadow: 0 22px 34px -22px rgba(0, 0, 0, 0.8);
+	}
+	/* la photo de l'artiste couvre la pochette ; un voile en haut et en bas
+	   garde le nom et « Escotar » lisibles quelle que soit l'image */
+	.cobèrta-imatge {
+		position: absolute;
+		inset: 0;
+		z-index: -2;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.cobèrta.amb-imatge {
+		--tinta: #fbf1e1;
+		isolation: isolate;
+	}
+	.cobèrta.amb-imatge::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+		background: linear-gradient(rgba(20, 8, 4, 0.72), transparent 38%, transparent 62%, rgba(20, 8, 4, 0.78));
+	}
+	.cobèrta.amb-imatge .pocheta-nom {
+		text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
 	}
 	.pocheta-nom {
 		margin: 0;
