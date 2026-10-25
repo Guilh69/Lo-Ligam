@@ -91,7 +91,7 @@ export function pictoPer(href = '') {
 	if (href.includes('#premsa') || href.startsWith('/ensag/premsa')) return 'articles';
 	if (href.startsWith('/ensag/medias') || href.startsWith('/ensag/radios')) return 'medias';
 	if (href.startsWith('/ensag/literatura')) return 'literatura';
-	if (href.includes('#cinema')) return 'cinema';
+	if (href.includes('#cinema') || href.startsWith('/ensag/cinema')) return 'cinema';
 	if (href.includes('#afichas')) return 'pintura';
 	if (href.includes('#scena')) return 'scena';
 	if (href.startsWith('/ensag/obras')) return 'obras';
