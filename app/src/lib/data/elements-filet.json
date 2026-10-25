@@ -7,6 +7,9 @@
     { "clau": "acuelh.eros.titol.3", "tipe": "text", "oc": "Amassa.", "fr": "Rassemble." },
     { "clau": "acuelh.eros.frasa", "tipe": "text", "oc": "Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.", "fr": "Bienvenue dans ton lien avec le monde occitan. D’où que tu sois, tu es ici chez toi." },
     { "clau": "acuelh.eros.indici", "tipe": "text", "oc": "Passa la mirga suls tres mots.", "fr": "Survole les trois mots." },
+    { "clau": "acuelh.mondes.parla.sota", "tipe": "text", "oc": "Lo país e sas lengas, en carta d’estelas.", "fr": "Le pays et ses langues, en carte d’étoiles." },
+    { "clau": "acuelh.mondes.apren.sota", "tipe": "text", "oc": "Un camin, pas a pas, a ton ritme.", "fr": "Un chemin, pas à pas, à ton rythme." },
+    { "clau": "acuelh.mondes.viu.sota", "tipe": "text", "oc": "De monde, de ligams, pertot.", "fr": "Des gens, des liens, partout." },
     { "clau": "acuelh.eros.carta", "tipe": "ligam", "oc": "Dobrir la carta", "fr": "Ouvrir la carte", "ligam": "/carta" },
     { "clau": "acuelh.eros.aprene", "tipe": "ligam", "oc": "Aprene l’occitan", "fr": "Apprendre l’occitan", "ligam": "#biais" },
 

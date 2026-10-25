@@ -12,6 +12,8 @@
 	import { PLAN } from '$lib/data/planSite.js';
 	import { AMASSA } from '$lib/acuelh/amassa.js';
 	import { ESTELAS, VISTA, COSTA_D } from '../../routes/ensag/blanc/donadas.js';
+	import { txt, lista } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
 
 	let { varianta = 'jalons' } = $props();
 	let fr = $derived(langStore.current === 'fr');
@@ -27,18 +29,14 @@
 	// la couleur de la section précédente, pour fondre les passages (la 1re part de la braise)
 	const colorPrec = (i) => (i === 0 ? 'transparent' : ENTITATS[i - 1].color);
 
-	// Contenu riche de l'accueil actuel, remonté dans la variante « Combiné »
-	const CHIFRAS = [
-		{ num: '≈ 600 000', nom: { oc: 'locutors', fr: 'locuteurs' } },
-		{ num: '32', nom: { oc: 'despartaments', fr: 'départements' } },
-		{ num: '10', nom: { oc: 'sègles de literatura', fr: 'siècles de littérature' } }
-	];
-	const BIAIS = [
-		{ n: 'I', titol: { oc: 'En visio, amb ieu', fr: 'En visio, avec moi' } },
-		{ n: 'II', titol: { oc: 'A ton ritme', fr: 'À ton rythme' } },
-		{ n: 'III', titol: { oc: 'Sus mesura', fr: 'Sur mesure' } }
-	];
+	// Contenu riche RÉUTILISÉ de l'accueil actuel : les chiffres (acuelh.chifras) et
+	// les trois façons (acuelh.biais) sont déjà des éléments modifiables ; on les lit.
 	const LENGAS = ['Français', 'English', 'Castellano', 'Català'];
+	// la phrase sous le titre : l'élément modifiable, sinon l'exemple du composant
+	const sotaTxt = (id, fallback) => {
+		const t = txt(`acuelh.mondes.${id}.sota`);
+		return (fr ? t.fr : t.oc) || (fr ? fallback.fr : fallback.oc);
+	};
 	const portas = (sec) => sec.grops.flatMap((g) => g.items);
 
 	let racina;
@@ -131,14 +129,19 @@
 {#snippet extra(id)}
 	{#if id === 'parla'}
 		<dl class="mix-chifras">
-			{#each CHIFRAS as c (c.num)}
-				<div><dt>{c.num}</dt><dd>{fr ? c.nom.fr : c.nom.oc}</dd></div>
+			{#each lista('acuelh.chifras') as c (c.clau)}
+				{@const nom = txt(c.clau + '.nom')}
+				<div use:editar={c.clau}>
+					<dt use:editar={c.clau + '.num'}>{txt(c.clau + '.num').oc}</dt>
+					<dd use:editar={c.clau + '.nom'}>{fr ? nom.fr : nom.oc}</dd>
+				</div>
 			{/each}
 		</dl>
 	{:else if id === 'apren'}
 		<ul class="mix-biais">
-			{#each BIAIS as b (b.n)}
-				<li><span class="mix-n">{b.n}</span>{fr ? b.titol.fr : b.titol.oc}</li>
+			{#each lista('acuelh.biais') as b, i (b.clau)}
+				{@const titol = txt(b.clau + '.titol')}
+				<li><span class="mix-n">{['I', 'II', 'III', 'IV', 'V', 'VI'][i] ?? i + 1}</span><span use:editar={b.clau + '.titol'}>{fr ? titol.fr : titol.oc}</span></li>
 			{/each}
 		</ul>
 		<p class="mix-lengas-cap">{fr ? 'Apprendre depuis :' : 'Aprene dempuèi :'}</p>
@@ -195,7 +198,7 @@
 				</div>
 				<div class="sist-cors">
 					<div class="sist-tèxt">
-						<p class="sota">{fr ? e.sota.fr : e.sota.oc}</p>
+						<p class="sota" use:editar={`acuelh.mondes.${e.sec.id}.sota`}>{sotaTxt(e.sec.id, e.sota)}</p>
 						{#if varianta === 'combinat'}{@render extra(e.sec.id)}{/if}
 						{@render lligams(e.sec)}
 						<a class="dintrar" href={e.sec.href}>{fr ? DINTRAR.fr : DINTRAR.oc} {@render sageta()}</a>

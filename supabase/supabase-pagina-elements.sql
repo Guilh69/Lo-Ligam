@@ -1,6 +1,6 @@
 -- Lo Ligam — édition sur place : les éléments modifiables des pages
 -- =============================================================================
--- Fabriqué par app/scripts/elements-sql.mjs le 2026-10-24 ; ne pas modifier à la main.
+-- Fabriqué par app/scripts/elements-sql.mjs le 2026-10-25 ; ne pas modifier à la main.
 -- À coller dans Supabase : SQL Editor → New query → Run. Rejouable sans risque :
 -- la semence ne touche pas aux lignes déjà présentes.
 -- Suppose que supabase-admin-schema.sql a déjà été exécuté (public.is_admin(),
@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (234 lignes). Jamais écrasés s'ils existent déjà.
+-- (242 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -150,6 +150,9 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.eros.titol.3', 'acuelh', 'text', null, 0, 'Amassa.', 'Rassemble.', null, null, true),
 	('acuelh.eros.frasa', 'acuelh', 'text', null, 0, 'Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.', 'Bienvenue dans ton lien avec le monde occitan. D’où que tu sois, tu es ici chez toi.', null, null, true),
 	('acuelh.eros.indici', 'acuelh', 'text', null, 0, 'Passa la mirga suls tres mots.', 'Survole les trois mots.', null, null, true),
+	('acuelh.mondes.parla.sota', 'acuelh', 'text', null, 0, 'Lo país e sas lengas, en carta d’estelas.', 'Le pays et ses langues, en carte d’étoiles.', null, null, true),
+	('acuelh.mondes.apren.sota', 'acuelh', 'text', null, 0, 'Un camin, pas a pas, a ton ritme.', 'Un chemin, pas à pas, à ton rythme.', null, null, true),
+	('acuelh.mondes.viu.sota', 'acuelh', 'text', null, 0, 'De monde, de ligams, pertot.', 'Des gens, des liens, partout.', null, null, true),
 	('acuelh.eros.carta', 'acuelh', 'ligam', null, 0, 'Dobrir la carta', 'Ouvrir la carte', '/carta', null, true),
 	('acuelh.eros.aprene', 'acuelh', 'ligam', null, 0, 'Aprene l’occitan', 'Apprendre l’occitan', '#biais', null, true),
 	('acuelh.bandel.m01', 'acuelh', 'text', 'acuelh.bandel', 1, 'lo risolet', 'le sourire', null, null, true),
@@ -229,6 +232,11 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('parla.teulas.articles', 'parla', 'bloc', 'parla.teulas', 4, null, null, null, null, true),
 	('parla.teulas.articles.ligam', 'parla', 'ligam', 'parla.teulas.articles', 0, 'Articles', 'Articles', '/articles', null, true),
 	('parla.teulas.articles.sota', 'parla', 'text', 'parla.teulas.articles', 0, 'A escriure', 'À écrire', null, null, false),
+	('parla.teulas.musicas', 'parla', 'bloc', 'parla.teulas', 5, null, null, null, null, true),
+	('parla.teulas.musicas.ligam', 'parla', 'ligam', 'parla.teulas.musicas', 0, 'Musicas', 'Musiques', '/obras#musicas', null, true),
+	('parla.teulas.musicas.sota', 'parla', 'text', 'parla.teulas.musicas', 0, 'Çò qu’escoti, e ont l’escotar.', 'Ce que j’écoute, et où l’écouter.', null, null, true),
+	('obras.musica.titol', 'obras', 'text', null, 0, 'Musicas', 'Musiques', null, null, true),
+	('obras.musica.frasa', 'obras', 'text', null, 0, 'A escriure', 'À écrire', null, null, false),
 	('apren.titol', 'apren', 'text', null, 0, 'S’apren', 'S’apprend', null, null, true),
 	('apren.frasa', 'apren', 'text', null, 0, 'A escriure : ta frasa sus S’apren', 'À écrire : ta phrase sur S’apprend', null, null, false),
 	('apren.teulas.visio', 'apren', 'bloc', 'apren.teulas', 1, null, null, null, null, true),
