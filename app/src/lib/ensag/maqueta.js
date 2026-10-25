@@ -143,3 +143,30 @@ export const PREMSA = [
 		sorta: { oc: 'Revista d’Auvèrnhe', fr: 'Revue d’Auvergne' },
 		tèxt: { oc: 'La revista d’una associacion occitana d’Orlhac.', fr: 'La revue d’une association occitane d’Aurillac.' } }
 ];
+
+// La littérature pour l'essai /ensag/literatura (2026-10-25) : les éditeurs
+// encore actifs (site vivant, nouveautés de 2024-2026) et deux endroits où
+// trouver les livres ; liens vérifiés le jour même, textes réécrits d'après
+// les sites (Per Noste : Wikipédia). Écartés : La Poesia (blog muet depuis
+// 2014), Fédérop et Novelum (plus de site), L'Ostal del Libre, Jorn, Lo
+// Chamin de Sent Jaume et L'Aucèu Libre (pas de site trouvé).
+export const LIBRES = [
+	{ id: 'letrasdoc', nom: 'Letras d’òc', site: 'http://www.letrasdoc.org/', grop: 'editor',
+		sorta: { oc: 'Editor', fr: 'Éditeur' },
+		tèxt: { oc: 'Romans, novèlas, contes, poesia e teatre d’autors d’uèi.', fr: 'Romans, nouvelles, contes, poésie et théâtre d’auteurs d’aujourd’hui.' } },
+	{ id: 'ventterral', nom: 'Vent Terral', site: 'http://vent-terral.com/', grop: 'editor', an: 1973,
+		sorta: { oc: 'Editor', fr: 'Éditeur' },
+		tèxt: { oc: 'Una associacion d’autors, nascuda en 1973 dins lo Segalar.', fr: 'Une association d’auteurs, née en 1973 dans le Ségala.' } },
+	{ id: 'pernoste', nom: 'Per Noste', site: 'https://www.pernoste.com/', grop: 'editor', an: 1960,
+		sorta: { oc: 'Editor gascon', fr: 'Éditeur gascon' },
+		tèxt: { oc: 'Libres en gascon e la revista País Gascons, dempuèi 1960.', fr: 'Des livres en gascon et la revue País Gascons, depuis 1960.' } },
+	{ id: 'ieo', nom: 'IEO', site: 'https://ieo-oc.org/', grop: 'editor', an: 1945,
+		sorta: { oc: 'Institut', fr: 'Institut' },
+		tèxt: { oc: 'L’Institut d’Estudis Occitans, fondat en 1945.', fr: 'L’Institut d’études occitanes, fondé en 1945.' } },
+	{ id: 'libraria', nom: 'Librariá occitana', site: 'https://www.libraria-occitana.org/', grop: 'trobar',
+		sorta: { oc: 'Botiga', fr: 'Boutique' },
+		tèxt: { oc: 'La botiga de l’IEO de Lemosin : libres, discs e videos.', fr: 'La boutique de l’IEO du Limousin : livres, disques et vidéos.' } },
+	{ id: 'occitanica', nom: 'Occitanica', site: 'https://www.occitanica.eu/', grop: 'trobar',
+		sorta: { oc: 'Bibliotèca numerica', fr: 'Bibliothèque numérique' },
+		tèxt: { oc: 'Lo portal collectiu de la lenga e de la cultura occitanas.', fr: 'Le portail collectif de la langue et de la culture occitanes.' } }
+];
