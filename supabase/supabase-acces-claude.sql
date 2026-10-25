@@ -30,11 +30,17 @@ on conflict (id) do update set empremta = excluded.empremta;
 -- un (sinon la prochaine publication de Romain effacerait la correction).
 -- Un paramètre laissé à null ne change rien. Renvoie le nombre de lignes
 -- touchées (0 : l'élément n'est pas dans la base, seulement dans le filet).
+-- L'ajout des langues es/en/ca change la signature : on retire d'abord
+-- l'ancienne version (sinon Postgres garderait les deux).
+drop function if exists public.claude_modificar_element (text, text, text, text, text, boolean, text);
 create or replace function public.claude_modificar_element (
 	p_clau_secreta text,
 	p_element text,
 	p_oc text default null,
 	p_fr text default null,
+	p_es text default null,
+	p_en text default null,
+	p_ca text default null,
 	p_ligam text default null,
 	p_visible boolean default null,
 	p_nota text default null
@@ -60,11 +66,14 @@ begin
 	update public.pagina_elements set
 		oc = coalesce(p_oc, oc),
 		fr = coalesce(p_fr, fr),
+		es = coalesce(p_es, es),
+		en = coalesce(p_en, en),
+		ca = coalesce(p_ca, ca),
 		ligam = coalesce(p_ligam, ligam),
 		visible = coalesce(p_visible, visible)
 	where clau = p_element and estat in ('publicat', 'brolhon');
 	get diagnostics n = row_count;
 	return n;
 end $$;
-revoke all on function public.claude_modificar_element (text, text, text, text, text, boolean, text) from public;
-grant execute on function public.claude_modificar_element (text, text, text, text, text, boolean, text) to anon, authenticated;
+revoke all on function public.claude_modificar_element (text, text, text, text, text, text, text, text, boolean, text) from public;
+grant execute on function public.claude_modificar_element (text, text, text, text, text, text, text, text, boolean, text) to anon, authenticated;

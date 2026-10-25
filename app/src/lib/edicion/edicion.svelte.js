@@ -14,7 +14,7 @@ import { supabase } from '$lib/supabaseClient';
 import { session, authReady } from '$lib/authStore';
 import { get } from 'svelte/store';
 
-const COLOMNAS = 'clau,estat,pagina,tipe,lista,ordre,oc,fr,ligam,imatge,visible,suprimit';
+const COLOMNAS = 'clau,estat,pagina,tipe,lista,ordre,oc,fr,es,en,ca,ligam,imatge,visible,suprimit';
 const CLAU_SESSION = 'lo-ligam-edicion';
 // En développement, « ?edicion=simular » fait comme si on était administrateur,
 // sans rien écrire dans la base : pour regarder l'éditeur sans compte.
@@ -34,7 +34,7 @@ export const edicion = $state({
 	messatge: null
 });
 
-const VUEJ = { oc: '', fr: '' };
+const VUEJ = { oc: '', fr: '', es: '', en: '', ca: '' };
 
 // --- lecture -------------------------------------------------------------
 
@@ -44,11 +44,11 @@ export function element(clau) {
 }
 export function txt(clau) {
 	const e = element(clau);
-	return e ? { oc: e.oc ?? '', fr: e.fr ?? '' } : VUEJ;
+	return e ? { oc: e.oc ?? '', fr: e.fr ?? '', es: e.es ?? '', en: e.en ?? '', ca: e.ca ?? '' } : VUEJ;
 }
 export function ligam(clau) {
 	const e = element(clau);
-	return e ? { oc: e.oc ?? '', fr: e.fr ?? '', href: e.ligam ?? '#', defòra: /^https?:\/\//.test(e.ligam ?? '') } : { ...VUEJ, href: '#', defòra: false };
+	return e ? { oc: e.oc ?? '', fr: e.fr ?? '', es: e.es ?? '', en: e.en ?? '', ca: e.ca ?? '', href: e.ligam ?? '#', defòra: /^https?:\/\//.test(e.ligam ?? '') } : { ...VUEJ, href: '#', defòra: false };
 }
 export function imatge(clau) {
 	return element(clau)?.imatge ?? null;

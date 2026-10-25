@@ -24,7 +24,7 @@ const env = Object.fromEntries(
 );
 const url = env.PUBLIC_SUPABASE_URL,
 	clau = env.PUBLIC_SUPABASE_ANON_KEY;
-const r = await fetch(`${url}/rest/v1/pagina_elements?estat=eq.publicat&select=clau,pagina,tipe,lista,ordre,oc,fr,ligam,imatge,visible&order=pagina,lista,ordre,clau`, {
+const r = await fetch(`${url}/rest/v1/pagina_elements?estat=eq.publicat&select=clau,pagina,tipe,lista,ordre,oc,fr,es,en,ca,ligam,imatge,visible&order=pagina,lista,ordre,clau`, {
 	headers: { apikey: clau, Authorization: `Bearer ${clau}` }
 });
 if (!r.ok) {

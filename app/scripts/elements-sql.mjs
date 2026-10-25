@@ -24,7 +24,7 @@ for (const [pagina, rows] of Object.entries(filet)) {
 	if (pagina.startsWith('_')) continue;
 	for (const r of rows)
 		linhas.push(
-			`\t(${q(r.clau)}, ${q(pagina)}, ${q(r.tipe)}, ${q(r.lista ?? null)}, ${r.ordre ?? 0}, ${q(r.oc ?? null)}, ${q(r.fr ?? null)}, ${q(r.ligam ?? null)}, ${j(r.imatge ?? null)}, ${r.visible === false ? 'false' : 'true'})`
+			`\t(${q(r.clau)}, ${q(pagina)}, ${q(r.tipe)}, ${q(r.lista ?? null)}, ${r.ordre ?? 0}, ${q(r.oc ?? null)}, ${q(r.fr ?? null)}, ${q(r.es ?? null)}, ${q(r.en ?? null)}, ${q(r.ca ?? null)}, ${q(r.ligam ?? null)}, ${j(r.imatge ?? null)}, ${r.visible === false ? 'false' : 'true'})`
 		);
 }
 
@@ -50,6 +50,10 @@ create table if not exists public.pagina_elements (
 	ordre integer not null default 0,
 	oc text,
 	fr text,
+	-- langues du globe (es/en/ca, 2026-10-25) ; l'occitan reste le repli
+	es text,
+	en text,
+	ca text,
 	-- une page du site (jamais « //ailleurs », adresse externe déguisée), une ancre, ou https
 	ligam text check (ligam is null or ligam ~ '^(/([^/[:space:]][^[:space:]]*)?|#[^[:space:]]+|https://[^[:space:]]+)$'),
 	imatge jsonb check (imatge is null or imatge->>'url' ~ '^(/[^/]|https://|blob:)'),
@@ -61,6 +65,13 @@ create table if not exists public.pagina_elements (
 	primary key (clau, estat)
 );
 create index if not exists pagina_elements_pagina on public.pagina_elements (pagina, estat);
+
+-- Base déjà installée : le « create table if not exists » ci-dessus ne lui
+-- ajoute pas les colonnes es/en/ca. On les ajoute donc explicitement (sans
+-- risque si elles existent déjà).
+alter table public.pagina_elements add column if not exists es text;
+alter table public.pagina_elements add column if not exists en text;
+alter table public.pagina_elements add column if not exists ca text;
 
 alter table public.pagina_elements enable row level security;
 
@@ -111,11 +122,12 @@ begin
 	delete from public.pagina_elements p
 	where p.pagina = p_pagina and p.estat = 'publicat'
 		and exists (select 1 from public.pagina_elements b where b.clau = p.clau and b.estat = 'brolhon' and b.suprimit);
-	insert into public.pagina_elements (clau, estat, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, estil, moviment, visible, suprimit)
-	select clau, 'publicat', pagina, tipe, lista, ordre, oc, fr, ligam, imatge, estil, moviment, visible, false
+	insert into public.pagina_elements (clau, estat, pagina, tipe, lista, ordre, oc, fr, es, en, ca, ligam, imatge, estil, moviment, visible, suprimit)
+	select clau, 'publicat', pagina, tipe, lista, ordre, oc, fr, es, en, ca, ligam, imatge, estil, moviment, visible, false
 	from public.pagina_elements where pagina = p_pagina and estat = 'brolhon' and not suprimit
 	on conflict (clau, estat) do update set
 		tipe = excluded.tipe, lista = excluded.lista, ordre = excluded.ordre, oc = excluded.oc, fr = excluded.fr,
+		es = excluded.es, en = excluded.en, ca = excluded.ca,
 		ligam = excluded.ligam, imatge = excluded.imatge, estil = excluded.estil, moviment = excluded.moviment,
 		visible = excluded.visible, suprimit = false;
 	delete from public.pagina_elements where pagina = p_pagina and estat = 'brolhon';
@@ -142,13 +154,13 @@ begin
 	end if;
 	delete from public.pagina_elements where pagina = pub.pagina and estat = 'brolhon';
 	-- ce qui existe aujourd'hui mais pas dans la photographie est marqué à retirer
-	insert into public.pagina_elements (clau, estat, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, estil, moviment, visible, suprimit)
-	select e.clau, 'brolhon', e.pagina, e.tipe, e.lista, e.ordre, e.oc, e.fr, e.ligam, e.imatge, e.estil, e.moviment, e.visible, true
+	insert into public.pagina_elements (clau, estat, pagina, tipe, lista, ordre, oc, fr, es, en, ca, ligam, imatge, estil, moviment, visible, suprimit)
+	select e.clau, 'brolhon', e.pagina, e.tipe, e.lista, e.ordre, e.oc, e.fr, e.es, e.en, e.ca, e.ligam, e.imatge, e.estil, e.moviment, e.visible, true
 	from public.pagina_elements e
 	where e.pagina = pub.pagina and e.estat = 'publicat'
 		and not exists (select 1 from jsonb_array_elements(pub.fotografia) f where f->>'clau' = e.clau);
-	insert into public.pagina_elements (clau, estat, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, estil, moviment, visible, suprimit)
-	select f->>'clau', 'brolhon', pub.pagina, f->>'tipe', f->>'lista', coalesce((f->>'ordre')::int, 0), f->>'oc', f->>'fr', f->>'ligam',
+	insert into public.pagina_elements (clau, estat, pagina, tipe, lista, ordre, oc, fr, es, en, ca, ligam, imatge, estil, moviment, visible, suprimit)
+	select f->>'clau', 'brolhon', pub.pagina, f->>'tipe', f->>'lista', coalesce((f->>'ordre')::int, 0), f->>'oc', f->>'fr', f->>'es', f->>'en', f->>'ca', f->>'ligam',
 		nullif(f->'imatge', 'null'::jsonb), coalesce(nullif(f->'estil', 'null'::jsonb), '{}'::jsonb), coalesce(nullif(f->'moviment', 'null'::jsonb), '{}'::jsonb), coalesce((f->>'visible')::boolean, true), false
 	from jsonb_array_elements(pub.fotografia) f;
 	select count(*) into n from public.pagina_elements where pagina = pub.pagina and estat = 'brolhon';
@@ -173,7 +185,7 @@ create policy "paginas : suprimir (admin)" on storage.objects for delete using (
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
 -- (${linhas.length} lignes). Jamais écrasés s'ils existent déjà.
-insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
+insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, es, en, ca, ligam, imatge, visible) values
 ${linhas.join(',\n')}
 on conflict (clau, estat) do nothing;
 `;

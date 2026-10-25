@@ -6,7 +6,7 @@
 // Clé dans app/.env (CLAUDE_EDICION_CLAU), jamais affichée.
 //
 //   cd app && node scripts/elements-modificar.mjs <clau> [--oc "…"] [--fr "…"]
-//        [--ligam "/…"] [--visible true|false] [--nota "pourquoi"]
+//        [--es "…"] [--en "…"] [--ca "…"] [--ligam "/…"] [--visible true|false] [--nota "pourquoi"]
 //
 // Ensuite : node scripts/elements-sql.mjs (semence), build, commit.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -33,14 +33,14 @@ const [clau, ...rèsta] = process.argv.slice(2);
 const opcions = {};
 for (let i = 0; i < rèsta.length; i += 2) {
 	const nom = rèsta[i]?.replace(/^--/, '');
-	if (!['oc', 'fr', 'ligam', 'visible', 'nota'].includes(nom) || rèsta[i + 1] === undefined) {
+	if (!['oc', 'fr', 'es', 'en', 'ca', 'ligam', 'visible', 'nota'].includes(nom) || rèsta[i + 1] === undefined) {
 		console.error(`Option inconnue ou sans valeur : ${rèsta[i]}`);
 		process.exit(1);
 	}
 	opcions[nom] = rèsta[i + 1];
 }
-if (!clau || !['oc', 'fr', 'ligam', 'visible'].some((k) => k in opcions)) {
-	console.error('Usage : node scripts/elements-modificar.mjs <clau> [--oc "…"] [--fr "…"] [--ligam "/…"] [--visible true|false] [--nota "…"]');
+if (!clau || !['oc', 'fr', 'es', 'en', 'ca', 'ligam', 'visible'].some((k) => k in opcions)) {
+	console.error('Usage : node scripts/elements-modificar.mjs <clau> [--oc "…"] [--fr "…"] [--es "…"] [--en "…"] [--ca "…"] [--ligam "/…"] [--visible true|false] [--nota "…"]');
 	process.exit(1);
 }
 if ('visible' in opcions && !['true', 'false'].includes(opcions.visible)) {
@@ -87,6 +87,9 @@ const r = await fetch(`${env.PUBLIC_SUPABASE_URL}/rest/v1/rpc/claude_modificar_e
 		p_element: clau,
 		p_oc: opcions.oc ?? null,
 		p_fr: opcions.fr ?? null,
+		p_es: opcions.es ?? null,
+		p_en: opcions.en ?? null,
+		p_ca: opcions.ca ?? null,
 		p_ligam: opcions.ligam ?? null,
 		p_visible: visible ?? null,
 		p_nota: opcions.nota ?? null
@@ -100,7 +103,7 @@ if (!r.ok) {
 } else {
 	tocadas = await r.json();
 
-	for (const k of ['oc', 'fr', 'ligam']) if (k in opcions) element[k] = opcions[k];
+	for (const k of ['oc', 'fr', 'es', 'en', 'ca', 'ligam']) if (k in opcions) element[k] = opcions[k];
 	if (visible === true) delete element.visible;
 	else if (visible === false) element.visible = false;
 	linhas[i] = retrait + escriure(element) + virgula;
