@@ -18,9 +18,9 @@
 	import { PLAN, LO_LIGAM, VISIO } from '$lib/data/planSite.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { portal } from '$lib/actions/portal.js';
+	import { tria } from '$lib/stores/lang.svelte.js';
 
 	let { dobèrt = $bindable(false), lang = 'oc', boton = null } = $props();
-	let fr = $derived(lang === 'fr');
 	let panel = $state(null);
 
 	const tampar = () => (dobèrt = false);
@@ -87,19 +87,19 @@
 			</div>
 
 			<div class="vel-cap">
-				<p class="vel-titol" id="vel-titol">{fr ? 'Menu' : 'Menú'}</p>
+				<p class="vel-titol" id="vel-titol">{tria({ oc: 'Menú', fr: 'Menu', es: 'Menú' })}</p>
 				<!-- Retour à l'accueil (demande de Romain, 2026-10-15), avec le croisillon du logo -->
 				<a class="vel-acuelh" href="/" onclick={tampar} aria-current={page.url.pathname === '/' ? 'page' : undefined}>
 					<!-- sur le voile brique : les couleurs du logo (traits blancs, points or) -->
 					<Crotz talha={24} traç="#ffffff" ponch="#ffd47f" moieu="#eeaf34" />
-					<span>{fr ? 'Retour à l’accueil' : 'Tornar a l’acuèlh'}</span>
+					<span>{tria({ oc: 'Tornar a l’acuèlh', fr: 'Retour à l’accueil', es: 'Volver al inicio' })}</span>
 				</a>
-				<button type="button" class="vel-tampar" onclick={tampar} aria-label={fr ? 'Fermer le menu' : 'Tampar lo menú'}>
+				<button type="button" class="vel-tampar" onclick={tampar} aria-label={tria({ oc: 'Tampar lo menú', fr: 'Fermer le menu', es: 'Cerrar el menú' })}>
 					<Icona nom="fermer" size="1.6em" />
 				</button>
 			</div>
 
-				<nav class="vel-vertical" aria-label={fr ? 'Plan du site' : 'Plan del site'}>
+				<nav class="vel-vertical" aria-label={tria({ oc: 'Plan del site', fr: 'Plan du site', es: 'Mapa del sitio' })}>
 					{#each PLAN as c, ci (c.id)}
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<section class="vel-renc" class:desplegat={desplegat === c.id} style:--d={ci} onmouseenter={() => survòl(c.id)}>
@@ -111,7 +111,7 @@
 									aria-controls="vel-{c.id}"
 									onclick={() => (desplegat = desplegat === c.id ? null : c.id)}
 								>
-									<b>{c.n}</b><span>{fr ? c.fr : c.oc}</span><Icona nom="suivant" size="1.4rem" />
+									<b>{c.n}</b><span>{tria(c)}</span><Icona nom="suivant" size="1.4rem" />
 								</button>
 							</h2>
 							<div class="vel-desplega" id="vel-{c.id}" inert={desplegat !== c.id}>
@@ -119,13 +119,13 @@
 									<div class="vel-desplega-pad">
 										{#each c.grops as g, gi (gi)}
 											<div class="vel-renc-grop">
-												{#if g.oc}<p class="vel-grop">{fr ? g.fr : g.oc}</p>{/if}
+												{#if g.oc}<p class="vel-grop">{tria(g)}</p>{/if}
 												<ul>
 													<!-- la page de la rubrique, quand elle existe (2026-10-24) -->
 													{#if c.href && gi === 0}
 														<li class="vel-masc">
 															<a class="vel-ligam" href={c.href} style:--i={0} aria-current={page.url.pathname === c.href ? 'page' : undefined} onclick={tampar}
-																>{fr ? 'Toute la rubrique' : 'Tota la rubrica'}<Icona nom="suivant" size="0.8em" /></a
+																>{tria({ oc: 'Tota la rubrica', fr: 'Toute la rubrique', es: 'Toda la sección' })}<Icona nom="suivant" size="0.8em" /></a
 															>
 														</li>
 													{/if}
@@ -139,7 +139,7 @@
 																target={it.defòra ? '_blank' : undefined}
 																rel={it.defòra ? 'noopener noreferrer' : undefined}
 																onclick={tampar}
-																>{fr ? it.fr : it.oc}<Icona nom={it.defòra ? 'extern' : 'suivant'} size="0.8em" /></a
+																>{tria(it)}<Icona nom={it.defòra ? 'extern' : 'suivant'} size="0.8em" /></a
 															>
 														</li>
 													{/each}
@@ -162,13 +162,13 @@
 								href={it.href}
 								target={it.defòra ? '_blank' : undefined}
 								rel={it.defòra ? 'noopener noreferrer' : undefined}
-								onclick={tampar}>{fr ? it.fr : it.oc}</a
+								onclick={tampar}>{tria(it)}</a
 							>
 						</li>
 					{/each}
 				</ul>
 				<a class="vel-reservar" href={VISIO} onclick={tampar}
-					>{fr ? 'Réserver un premier cours' : 'Reservar un primièr cors'}<Icona nom="suivant" size="0.9em" /></a
+					>{tria({ oc: 'Reservar un primièr cors', fr: 'Réserver un premier cours', es: 'Reservar una primera clase' })}<Icona nom="suivant" size="0.9em" /></a
 				>
 			</div>
 		</div>

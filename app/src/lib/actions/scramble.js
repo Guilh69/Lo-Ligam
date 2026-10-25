@@ -1,11 +1,16 @@
 // Fondu croisé lettre par lettre, sans jamais muter le texte affiché
-// pendant l'animation : les deux versions (occitan et français) sont
-// construites une seule fois au montage, empilées l'une sur l'autre
-// (CSS Grid, même cellule), et le changement de langue se contente de
-// faire basculer leur opacité/flou. Comme aucune lettre ne change de
-// contenu pendant la transition, il n'y a aucun recalcul de mise en
-// page en cours d'animation — juste un fondu doux, stable quelle que
-// soit la longueur du texte dans chaque langue.
+// pendant l'animation : chaque version de langue (occitan, français, et
+// depuis 2026-10-25 espagnol, anglais, catalan) est construite une seule
+// fois au montage, empilée sur les autres (CSS Grid, même cellule), et le
+// changement de langue se contente de faire basculer leur opacité/flou.
+// Comme aucune lettre ne change de contenu pendant la transition, il n'y a
+// aucun recalcul de mise en page en cours d'animation — juste un fondu doux,
+// stable quelle que soit la longueur du texte dans chaque langue.
+//
+// On empile une couche par langue fournie (oc toujours là, sert de repli) ;
+// une langue absente n'a pas de couche et retombe sur l'occitan.
+const CODES = ['oc', 'fr', 'es', 'en', 'ca'];
+
 function buildLayer(str, stagger) {
 	const layer = document.createElement('span');
 	layer.style.gridArea = '1 / 1';
@@ -38,39 +43,45 @@ export function scramble(node, params) {
 	const stagger = 6;
 	node.style.display = params.inline ? 'inline-grid' : 'grid';
 	// Sens aquò, la colomna implicita de la grasilha se dimensiona sul mot
-	// lo mai long de las doas jaças (min-content) : se aquel mot es mai
-	// large que la boita, la pista despassa e s'ancòra a ESQUÈRRA — lo
-	// tèxte pareis alara decalat cap a drecha (vist per Romain sul títol
-	// « T'ACOMPANHA » en capitalas). Amb una pista de 100 %, lo contengut
-	// tròp large despassa simetricament, coma de tèxte normal centrat.
+	// lo mai long de las jaças (min-content) : se aquel mot es mai large que
+	// la boita, la pista despassa e s'ancòra a ESQUÈRRA — lo tèxte pareis
+	// alara decalat cap a drecha. Amb una pista de 100 %, lo contengut tròp
+	// large despassa simetricament, coma de tèxte normal centrat.
 	if (!params.inline) node.style.gridTemplateColumns = '100%';
 
-	let oc = params.oc;
-	let fr = params.fr;
-	let ocLayer = buildLayer(oc, stagger);
-	let frLayer = buildLayer(fr, stagger);
-	node.textContent = '';
-	node.appendChild(ocLayer);
-	node.appendChild(frLayer);
-	setVisible(ocLayer, params.lang === 'oc');
-	setVisible(frLayer, params.lang !== 'oc');
+	let textos = {};
+	let jaças = {};
+
+	function bastir(p) {
+		textos = {};
+		jaças = {};
+		node.textContent = '';
+		for (const c of CODES) {
+			if (p[c] == null) continue;
+			textos[c] = p[c];
+			const jaça = buildLayer(p[c], stagger);
+			jaças[c] = jaça;
+			node.appendChild(jaça);
+		}
+	}
+
+	// La langue courante si elle a une couche, sinon l'occitan (repli).
+	function mostrar(lang) {
+		const actiu = jaças[lang] ? lang : 'oc';
+		for (const c of Object.keys(jaças)) setVisible(jaças[c], c === actiu);
+	}
+
+	bastir(params);
+	mostrar(params.lang);
 
 	return {
-		// Rebastís las doas jaças sonque se lo tèxte cambièt vertadièrament
+		// Rebastís las jaças sonque se un tèxte cambièt vertadièrament
 		// (contengut vengut de l'admin cargat après lo montatge) — jamai al
 		// simple cambiament de lenga, per gardar l'animacion de fondut.
 		update(newParams) {
-			if (newParams.oc !== oc || newParams.fr !== fr) {
-				oc = newParams.oc;
-				fr = newParams.fr;
-				ocLayer = buildLayer(oc, stagger);
-				frLayer = buildLayer(fr, stagger);
-				node.textContent = '';
-				node.appendChild(ocLayer);
-				node.appendChild(frLayer);
-			}
-			setVisible(ocLayer, newParams.lang === 'oc');
-			setVisible(frLayer, newParams.lang !== 'oc');
+			const cambiat = CODES.some((c) => newParams[c] !== textos[c]);
+			if (cambiat) bastir(newParams);
+			mostrar(newParams.lang);
 		}
 	};
 }

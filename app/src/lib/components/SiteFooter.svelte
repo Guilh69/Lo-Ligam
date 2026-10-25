@@ -9,11 +9,11 @@
 	import { scramble } from '$lib/actions/scramble';
 	// Le texte est écrit dans le HTML du serveur (lisible sans JavaScript et
 	// par les lecteurs d'écran) ; l'action scramble le remplace au montage.
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { externalLinks } from '$lib/data/siteSections';
 	import { PLAN, LO_LIGAM } from '$lib/data/planSite.js';
 
-	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.' };
+	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.', es: 'Hecho con amor en Occitania.' };
 	let { tagline = PER_DEFAUT } = $props();
 	let lang = $derived(langStore.current);
 </script>
@@ -21,23 +21,23 @@
 {#snippet ligam(it)}
 	{#if it.defòra}
 		<a class="footer-link" href={it.href} target="_blank" rel="noopener noreferrer"
-			>{lang === 'oc' ? it.oc : it.fr} <Icona nom="extern" size="0.9em" /></a
+			>{tria(it)} <Icona nom="extern" size="0.9em" /></a
 		>
 	{:else}
-		<a class="footer-link" href={it.href}><span use:scramble={{ oc: it.oc, fr: it.fr, lang }}>{lang === 'oc' ? it.oc : it.fr}</span></a>
+		<a class="footer-link" href={it.href}><span use:scramble={{ oc: it.oc, fr: it.fr, es: it.es, lang }}>{tria(it)}</span></a>
 	{/if}
 {/snippet}
 
 <footer class="site-footer">
-	<nav class="footer-colomnas" aria-label={lang === 'oc' ? 'Plan del site' : 'Plan du site'}>
+	<nav class="footer-colomnas" aria-label={tria({ oc: 'Plan del site', fr: 'Plan du site', es: 'Mapa del sitio' })}>
 			{#each PLAN as c (c.id)}
 				<div class="footer-col">
 					<p class="footer-col-title">
 						<b class="footer-num">{c.n}</b>
-						<span use:scramble={{ oc: c.oc, fr: c.fr, lang }}>{lang === 'oc' ? c.oc : c.fr}</span>
+						<span use:scramble={{ oc: c.oc, fr: c.fr, es: c.es, lang }}>{tria(c)}</span>
 					</p>
 					{#each c.grops as g, gi (gi)}
-						{#if g.oc}<p class="footer-grop">{lang === 'oc' ? g.oc : g.fr}</p>{/if}
+						{#if g.oc}<p class="footer-grop">{tria(g)}</p>{/if}
 						<ul>
 							{#each g.items as it (it.href)}
 								<li>{@render ligam(it)}</li>
@@ -55,7 +55,7 @@
 				</ul>
 			</div>
 			<div class="footer-col">
-				<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', lang }}>{lang === 'oc' ? 'Ressorsas' : 'Ressources'}</p>
+				<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos', lang }}>{tria({ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos' })}</p>
 				<ul>
 					{#each externalLinks as l (l.href)}
 						<li>
@@ -71,19 +71,19 @@
 	<p class="footer-nom" aria-hidden="true">Lo Ligam</p>
 
 	<div class="footer-legal">
-		<p use:scramble={{ oc: tagline.oc, fr: tagline.fr, lang }}>{lang === 'oc' ? tagline.oc : tagline.fr}</p>
+		<p use:scramble={{ oc: tagline.oc, fr: tagline.fr, es: tagline.es, lang }}>{tria(tagline)}</p>
 		<div class="footer-legal-links">
 			<span>© 2026 Lo Ligam</span>
 			<a class="footer-legal-link" href="/mencions-legalas"
-				><span use:scramble={{ oc: 'Mentions legalas', fr: 'Mentions légales', lang }}>{lang === 'oc' ? 'Mentions legalas' : 'Mentions légales'}</span></a
+				><span use:scramble={{ oc: 'Mentions legalas', fr: 'Mentions légales', es: 'Avisos legales', lang }}>{tria({ oc: 'Mentions legalas', fr: 'Mentions légales', es: 'Avisos legales' })}</span></a
 			>
 			<a class="footer-legal-link" href="/confidencialitat"
-				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', lang }}>{lang === 'oc' ? 'Confidencialitat' : 'Confidentialité'}</span></a
+				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', lang }}>{tria({ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad' })}</span></a
 			>
 			<span class="footer-legal-leu"
-				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', lang }}>{lang === 'oc' ? 'Accessibilitat' : 'Accessibilité'}</span><em
-					use:scramble={{ oc: '· Lèu', fr: '· Bientôt', lang }}
-				>{lang === 'oc' ? '· Lèu' : '· Bientôt'}</em></span
+				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', lang }}>{tria({ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad' })}</span><em
+					use:scramble={{ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto', lang }}
+				>{tria({ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto' })}</em></span
 			>
 		</div>
 	</div>
