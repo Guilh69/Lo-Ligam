@@ -6,7 +6,7 @@
 // peut transiter par ici). Réponses gardées un jour en mémoire.
 //
 //   GET /api/bandcamp?u=https://cocanha.bandcamp.com
-//   → { nom: 'Cocanha', lector: 'https://bandcamp.com/EmbeddedPlayer/album=…/' }
+//   → { nom: 'Cocanha', imatge: 'https://f4.bcbits.com/img/…', lector: 'https://bandcamp.com/EmbeddedPlayer/album=…/' }
 import { json } from '@sveltejs/kit';
 
 // (en ASCII : un « Ò » dans l'en-tête fait refuser la demande)
@@ -45,6 +45,9 @@ export async function GET({ url }) {
 	const html = await legir(clau).catch(() => null);
 	if (!html) return json({ error: 'pagina' }, { status: 502 });
 	const nom = meta(html, /property="og:site_name" content="([^"]*)"/);
+	// l'image de la page collée (sur la page de l'artiste : sa photo, ou sa
+	// dernière pochette), copiée ensuite par /api/bandcamp/imatge
+	const imatge = meta(html, /property="og:image" content="(https:\/\/f\d\.bcbits\.com\/img\/[a-z0-9]+_\d+\.jpg)"/);
 	let p = proprietats(html);
 	// page de l'artiste (accueil, /music) : on prend son premier album ou titre
 	if (!p || !['a', 't'].includes(p.item_type)) {
@@ -54,6 +57,7 @@ export async function GET({ url }) {
 	}
 	const r = {
 		nom,
+		imatge,
 		lector: p && ['a', 't'].includes(p.item_type) && /^\d+$/.test(String(p.item_id)) ? lector(p.item_type === 'a' ? 'album' : 'track', p.item_id) : null
 	};
 	cache.set(clau, { t: Date.now(), r });

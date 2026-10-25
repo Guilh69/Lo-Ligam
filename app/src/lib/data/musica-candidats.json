@@ -1,0 +1,2684 @@
+[
+	{
+		"id": 3219211,
+		"nom": "André Gouzes",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/5d8cf52865d7246f78aae3b884e2fa3a/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Messa de Silvanés en lenga d'Oc",
+			"annada": "2002"
+		},
+		"fans": 241,
+		"album": {
+			"id": 9819168,
+			"titol": "Psaumes des dimanches et fêtes, année B",
+			"data": "2014-10-09",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/5bdc05a37754d0a3fb586e54a88de16a/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 84730,
+		"nom": "André Ricros",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/c1e4e9c87b38c6dd4903ce79f7d6a1cf/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Un piano dans le pré",
+			"annada": "2002"
+		},
+		"fans": 33,
+		"album": {
+			"id": 304665917,
+			"titol": "Du Cochon",
+			"data": "2022-03-26",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/37b05feaeb4ddd0fea771b1e81955715/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 242374,
+		"nom": "André Thivet",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/7876fd2b7f757dc62c710367cf8a14f6/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Danses et chansons d'Auvergne Volume VI",
+			"annada": "2010"
+		},
+		"fans": 93,
+		"album": {
+			"id": 321279,
+			"titol": "Auvergne D'hier Et De Toujours",
+			"data": "2003-02-28",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/7876fd2b7f757dc62c710367cf8a14f6/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2091901,
+		"nom": "Antoni Rossell",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/8cd7a8a104c1033ef62e3d93019a2263/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Trobadors Catalans",
+			"annada": "2003"
+		},
+		"fans": 4,
+		"album": {
+			"id": 656048301,
+			"titol": "Ballads Of Love And Death – Romances del Amor y de la Muerte",
+			"data": "2024-10-07",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/845acb1a30a93dba9d1aee0c5ece0ead/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 208263,
+		"nom": "Arleen Augér",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/eebdad015be309d9a5d539883aa2cd72/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Chants d'Auvergne",
+			"annada": "1988"
+		},
+		"fans": 987,
+		"album": {
+			"id": 586695262,
+			"titol": "Weill: Street Scene",
+			"data": "2024-05-17",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/2c32f031c34ba7eeaf31014d8445b056/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 164229,
+		"nom": "Artús",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/f7d03936dde731339dc82ef7891dc133/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 3,
+		"exempleOc": {
+			"titol": "Artús",
+			"annada": "2013"
+		},
+		"fans": 270,
+		"album": {
+			"id": 133272242,
+			"titol": "Cerc",
+			"data": "2020-03-27",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/d451512022127bbd023eb47e17023ba1/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 53378682,
+		"nom": "Barrut",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/668f7de7dd5c6e2a796600b00974c7ad/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "La part de l'orage",
+			"annada": ""
+		},
+		"fans": 2190,
+		"album": {
+			"id": 669751681,
+			"titol": "Travèrsas",
+			"data": "2024-12-06",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/e7b5e9b1fba949b9b329b51042f14a54/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2838,
+		"nom": "Barry Adamson",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/0e0f654264a95efb16b91ed7a4dedd4c/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "The Hymn of the 7th Illusion",
+			"annada": "2017"
+		},
+		"fans": 2942,
+		"album": {
+			"id": 805483421,
+			"titol": "SCALA!!! (Original Music by Barry Adamson)",
+			"data": "2026-01-16",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/2bad36529e74130d3fb0b382a7ad69a7/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1672338,
+		"nom": "Benoit Hutin",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/3c8cf154f7bfa5c41333e6e36c78beb4/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Occitania",
+			"annada": "1982"
+		},
+		"fans": 101,
+		"album": {
+			"id": 181048722,
+			"titol": "Joyeux anniversaire",
+			"data": "2020-10-31",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/f4218e5cc1f7e6998c81eb1fbc49232b/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1639563,
+		"nom": "Bernart De Ventadorn",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/ccb3f95825897deada92d341e6379a95/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Chantador de joi d'amour, Six Songs by the Troubadour",
+			"annada": "2020"
+		},
+		"fans": 67,
+		"album": {
+			"id": 581254601,
+			"titol": "The Language of Love – Troubadours & Trouvères of the 12th & 13th Centuries",
+			"data": "2024-05-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/f9b835d6a06cea78fa27a9a20640e89e/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2037001,
+		"nom": "Bijan Chemirani",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/9de356d61f12d103d98f2e7227850157/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Enamorada Madalena - Cants provencaus de la religion populara",
+			"annada": ""
+		},
+		"fans": 679,
+		"album": {
+			"id": 312382047,
+			"titol": "Âwât",
+			"data": "2022-05-27",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/368f63d1b34a36a59febedab139fb6df/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1207589,
+		"nom": "Brama",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/09b05e10701a2928e67e7e8ebeb8f1e0/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "La Raive",
+			"annada": "2026"
+		},
+		"fans": 26,
+		"album": {
+			"id": 316275117,
+			"titol": "Родительское порно",
+			"data": "2022-05-27",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/88300a796e50a837c79151a7d3ab4499/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2859321,
+		"nom": "Bregada Berard",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/6910e38066cb4a75c486a240bdb0df9b/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Bòn Nadal Occitania",
+			"annada": "2009"
+		},
+		"fans": 18,
+		"album": {
+			"id": 3813441,
+			"titol": "Bon Nadal Occitania",
+			"data": "2010-09-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/6910e38066cb4a75c486a240bdb0df9b/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5273097,
+		"nom": "Brice Duisit",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/707db46fef9b6fba786a428fe7fcce5e/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "La Passion de Clermont : Hora vos dic vera raizun...",
+			"annada": "2006"
+		},
+		"fans": 30,
+		"album": {
+			"id": 236537382,
+			"titol": "La passion de Clermont: Hora vos dic vera raizun...",
+			"data": "2006-01-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/707db46fef9b6fba786a428fe7fcce5e/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 789265,
+		"nom": "Brick A Drac",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/f154640585061359560017338522aefc/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Un còp i aviá...",
+			"annada": ""
+		},
+		"fans": 1039,
+		"album": {
+			"id": 437166947,
+			"titol": "Drackinoleska",
+			"data": "2023-05-03",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/ecd7a554ac160668c92e285949bdcdcd/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5272622,
+		"nom": "Bruno Bonhoure",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/b7517481c70f1fc2f923fef79b6fe046/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Marseille, Damas, Jérusalem",
+			"annada": "2009"
+		},
+		"fans": 35,
+		"album": {
+			"id": 387166077,
+			"titol": "Noces de Saba / Missa Luba",
+			"data": "2022-12-16",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/4809e220256e913079065622d95cea74/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4333652,
+		"nom": "Calloway",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/ee55d62b373fbd0940d582a208425302/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "I Wanna Be Rich",
+			"annada": "1989"
+		},
+		"fans": 112,
+		"album": {
+			"id": 947251421,
+			"titol": "I Wanna Be Rich (6 Pack)",
+			"data": "2026-04-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/f06eec2acd6c3d63fc891e52b93a6fe1/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5918417,
+		"nom": "Camerata Mediterranea",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/91102a685852bbb0703bedbeaccf1622/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Le Fou sur le Pont",
+			"annada": "1994"
+		},
+		"fans": 7,
+		"album": {
+			"id": 626377341,
+			"titol": "Bernatz de Ventadorn: Le fou sur le pont. Chansons de troubadours",
+			"data": "2024-08-23",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/0cbbdfc34730e713ce097bab889bbb62/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 538150,
+		"nom": "Castanha é Vinovèl",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/17ae15a6e206081b6144a69f31751b78/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Castanha é Vinovèl",
+			"annada": "2010"
+		},
+		"fans": 418,
+		"album": {
+			"id": 58469202,
+			"titol": "Le bain turc",
+			"data": "2018-03-23",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/a71861fb9916aaca603729f6c119ce09/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4876090,
+		"nom": "Choeur occitan Rosamonda",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist//500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Se canta volume 1 : Chansons traditionnelles occitanes et catalanes",
+			"annada": ""
+		},
+		"fans": 67,
+		"album": {
+			"id": 7177649,
+			"titol": "Se canta...: Chansons traditionnelles occitanes et catalanes, Vol. 1",
+			"data": "2013-10-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/02c4b78f036ad48a3f096700911b262f/250x250-000000-80-0-0.jpg",
+			"tipe": "compile"
+		}
+	},
+	{
+		"id": 477621,
+		"nom": "Christian Almerge",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/70c0e7af33c133110e0071b0be2ea318/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "De Tautavel à Trencavel",
+			"annada": "2006"
+		},
+		"fans": 87,
+		"album": {
+			"id": 569532,
+			"titol": "Fantastic Album",
+			"data": "2010-04-28",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/70c0e7af33c133110e0071b0be2ea318/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1394945,
+		"nom": "Claude Marti",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/9975fdd6625e64ef5640df39442f4fda/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 11,
+		"exempleOc": {
+			"titol": "Çò milhor",
+			"annada": "2006"
+		},
+		"fans": 572,
+		"album": {
+			"id": 727235371,
+			"titol": "Retorn",
+			"data": "2023-09-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9979bb34460406a70490bd3c97ecf8d8/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4433588,
+		"nom": "Claude Sicre",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/06b3e406da7afc79b655d502c252e1d2/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Batèstas & Cantarias",
+			"annada": "1986"
+		},
+		"fans": 175,
+		"album": {
+			"id": 991675111,
+			"titol": "Ingénieur en folklore depuis 1978",
+			"data": "2026-05-29",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9bc7e019e30f0fadc572b0f31bcc121e/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 12722529,
+		"nom": "Cocanha",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/f34aedc6fb3a4a1fb52415c5ee1f72f2/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 5,
+		"exempleOc": {
+			"titol": "Puput",
+			"annada": "2020"
+		},
+		"fans": 4680,
+		"album": {
+			"id": 937514441,
+			"titol": "Flame Folclòre",
+			"data": "2026-05-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/aedec7da15b41f09c4cf3e069522af0e/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 150284,
+		"nom": "Corou de Berra",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/ae90cf032724fa14769eccb4812a8e9e/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 5,
+		"exempleOc": {
+			"titol": "Miédjou",
+			"annada": ""
+		},
+		"fans": 672,
+		"album": {
+			"id": 340303077,
+			"titol": "Canta ti passa!",
+			"data": "2011-12-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/369b2aa280604efcc6e813221cbbe918/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 252944462,
+		"nom": "CXK",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/77cb2030208d337134627ad2c2802fd3/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 3,
+		"exempleOc": {
+			"titol": "Castèls dins la luna",
+			"annada": "2024"
+		},
+		"fans": 480,
+		"album": {
+			"id": 532453442,
+			"titol": "Castèls dins la luna",
+			"data": "2024-03-29",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/77cb2030208d337134627ad2c2802fd3/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 62448552,
+		"nom": "D'En Haut",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/b7bb508bd1aa5d03afc8ab5770ac0dea/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "D'en haut",
+			"annada": "2013"
+		},
+		"fans": 23,
+		"album": {
+			"id": 604543562,
+			"titol": "D'En Haut",
+			"data": "2024-06-28",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/ce844facf6998fdbf5f5d2053d4acfb6/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4938966,
+		"nom": "Daniele Craighead",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/2ce9e8e50331994fa3739711de8a28bb/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Anita Anita",
+			"annada": "1994"
+		},
+		"fans": 15,
+		"album": {
+			"id": 969059601,
+			"titol": "Anita Anita",
+			"data": "2026-04-21",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/2ce9e8e50331994fa3739711de8a28bb/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5741815,
+		"nom": "Djé Balèti",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/8abc63154f35f6579fdb0fb8d91120bb/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Pantaï",
+			"annada": "2021"
+		},
+		"fans": 949,
+		"album": {
+			"id": 645664891,
+			"titol": "Potion",
+			"data": "2024-09-19",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/7b962cffc9585dd982265314b6e0765f/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 236623491,
+		"nom": "Dolàn Xakò",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/25d9ad2d381519dd8ed4e08f3c939a61/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Parallela",
+			"annada": "2016"
+		},
+		"fans": 0,
+		"album": {
+			"id": 847242772,
+			"titol": "Vertiges",
+			"data": "2016-11-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/6bfc496f0f0e2f3f3bcf6c5595e18851/250x250-000000-80-0-0.jpg",
+			"tipe": "ep"
+		}
+	},
+	{
+		"id": 289267,
+		"nom": "Du Bartas",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/a7939810deeb8a4fea9d447f5f5cea74/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 6,
+		"exempleOc": {
+			"titol": "Turbo Baleti",
+			"annada": "2009"
+		},
+		"fans": 813,
+		"album": {
+			"id": 112522622,
+			"titol": "Rufa",
+			"data": "2019-10-18",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/d61a94d88fdca5f0620ce4372beb5263/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 153715,
+		"nom": "Dupain",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/b07ee99dc71d28566ce28abc1ee304b5/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "L'Usina",
+			"annada": "2000"
+		},
+		"fans": 1319,
+		"album": {
+			"id": 9729630,
+			"titol": "Sòrga",
+			"data": "2015-03-09",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/b07ee99dc71d28566ce28abc1ee304b5/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 160421,
+		"nom": "Eduardo Paniagua",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/acb1ef7359f28647eb1fba7fd43745d3/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Cantigas de Francia",
+			"annada": "2003"
+		},
+		"fans": 1186,
+		"album": {
+			"id": 837089892,
+			"titol": "Himnos y Cantos al Martirio de Justo y Pastor",
+			"data": "2025-10-17",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/e02daf591a74f22f3acdb8010be010cf/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 76863,
+		"nom": "English Chamber Orchestra",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/274a66b412c6ea93e3aa9c9c37e8fa3e/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Chants d'Auvergne",
+			"annada": "1988"
+		},
+		"fans": 112657,
+		"album": {
+			"id": 1036380742,
+			"titol": "The Seasons",
+			"data": "2026-09-25",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/bef7ae987eb1618efb3759b5d70fb93c/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 6658112,
+		"nom": "Enlòc",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/198c3876bb426fd2e3d93539bab26b1b/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Avec un accent",
+			"annada": "2011"
+		},
+		"fans": 227,
+		"album": {
+			"id": 384928777,
+			"titol": "Tempora",
+			"data": "2023-01-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/63e92be9254d4b7bb664851b313f890a/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 8415352,
+		"nom": "Ensemble Oni Wytars",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/68dbd71be0aab5d0700faab7ca848443/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Music of the Troubadours",
+			"annada": ""
+		},
+		"fans": 266,
+		"album": {
+			"id": 84556942,
+			"titol": "Pentameron",
+			"data": "2019-02-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/48dae0973d3baed01d5f8c15ab1a3f2b/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 77004,
+		"nom": "Ensemble Perceval",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/3873bd0dd00c522cde2ec61337f4ea15/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Manuscrit du Roi",
+			"annada": "1993"
+		},
+		"fans": 185,
+		"album": {
+			"id": 110139,
+			"titol": "Troubadours - Songs By W. v.d. Vogelweide/N. v. Reuental, Oswald v. Wolkenstein",
+			"data": "1998-08-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/107fee94e6a9ae05574e3917f0296e87/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 56415,
+		"nom": "Ensemble Tre Fontane",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/56f8fc174b8e20f074595a4910e476d2/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Le Chant des troubadours, vol. 1 : Les Troubadours Aquitains",
+			"annada": "1992"
+		},
+		"fans": 400,
+		"album": {
+			"id": 1678977,
+			"titol": "Jaufré Rudel, vol. 13",
+			"data": "2012-03-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/d81d30ee066b09ecedda002442ac1a0a/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 441785,
+		"nom": "Ensemble Unicorn",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/338b74cc8d2337d83a71c91ef2387dd5/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Music of the Troubadours",
+			"annada": ""
+		},
+		"fans": 237,
+		"album": {
+			"id": 581206831,
+			"titol": "Art & Music: Raphael - Music of His Time",
+			"data": "2003-08-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/bb75942eb57c7fb242843085bd2c5a72/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5025754,
+		"nom": "Ensemble Vocal D'Avignon",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/834c7535580eae9b2c23bc2c34fd464b/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "La Provence",
+			"annada": ""
+		},
+		"fans": 35,
+		"album": {
+			"id": 158374042,
+			"titol": "Frescobaldi - Messa a 8 sopra l'aria della Monica (À l'orgue doré de Notre-Dame-des-Doms)",
+			"data": "2020-09-18",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9a82cb6889bd11d70a5155143d4a7a72/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 112889,
+		"nom": "Es Corbilhuèrs",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/8c2fe1c5b21f187422399ee63a6e1930/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Aran Cante Gasconha",
+			"annada": ""
+		},
+		"fans": 6,
+		"album": {
+			"id": 708681221,
+			"titol": "Aran Cante Gasconha",
+			"data": "2010-10-08",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/58e49375d0d9438470140b181693ab6e/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 6999733,
+		"nom": "Estar",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/2e2589f4ee788c63741ccb07a5cbf945/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Lo Saunei",
+			"annada": ""
+		},
+		"fans": 40,
+		"album": {
+			"id": 277191472,
+			"titol": "In His Glory",
+			"data": "2021-12-05",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/42e8e07921237148973b280a6b32be45/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1429,
+		"nom": "Fabulous Trobadors",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/eda875b1d1aae3638a77e9c0ff03f1a1/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 3,
+		"exempleOc": {
+			"titol": "Ma ville est le plus beau park",
+			"annada": "1995"
+		},
+		"fans": 24205,
+		"album": {
+			"id": 213422,
+			"titol": "On The Linha Imaginot",
+			"data": "2008-08-25",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/6645673d7b8978cc3292d15f913cfe97/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 102043,
+		"nom": "Factory Of Art",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/d3488038f53948e2e118087f28da35d6/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Story of Pain",
+			"annada": "2024"
+		},
+		"fans": 21,
+		"album": {
+			"id": 654004961,
+			"titol": "Back to Life",
+			"data": "2024-10-20",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/87e4575dfcc54a4cb1a54d0d9007b5a5/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 74240,
+		"nom": "Familha Artús",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/e6bd40654d5a0cbdb52dc697f0e6c363/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 3,
+		"exempleOc": {
+			"titol": "Òmi",
+			"annada": "2003"
+		},
+		"fans": 1331,
+		"album": {
+			"id": 652653,
+			"titol": "Drac",
+			"data": "2010-09-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/87513d978b0f2ea12cc8483d13991a81/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 55996372,
+		"nom": "Feràmia",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/6ab0c878c5117cbf365b10419b70d4f9/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "The Beast Is Coming",
+			"annada": "2021"
+		},
+		"fans": 119,
+		"album": {
+			"id": 505091721,
+			"titol": "Lo Drac pòt tanben èsser una soca",
+			"data": "2018-12-25",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/04bfcef001b9c0fddd7fc66537eed4b3/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 146546182,
+		"nom": "Frederic.",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/9c57d7575efcfacf73e1ba6336a19632/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Escota...",
+			"annada": "1977"
+		},
+		"fans": 52,
+		"album": {
+			"id": 374097737,
+			"titol": "Fainted",
+			"data": "2022-12-16",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9c57d7575efcfacf73e1ba6336a19632/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 159508,
+		"nom": "Gacha Empega",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/8bc143d58e33b861c2ff854b573de0bf/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Polyphonies Marseillaises",
+			"annada": "2002"
+		},
+		"fans": 229,
+		"album": {
+			"id": 57224282,
+			"titol": "Polyphonies marseillaises",
+			"data": "2008-11-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/8bc143d58e33b861c2ff854b573de0bf/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2325931,
+		"nom": "Gai Saber",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/f9ce2d210884688dbb78c93611846afc/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 3,
+		"exempleOc": {
+			"titol": "Electro Ch'Òc",
+			"annada": "2002"
+		},
+		"fans": 149,
+		"album": {
+			"id": 3813371,
+			"titol": "Angels Pastres Miracles (Chançons de Nadal en Occitania)",
+			"data": "2010-10-04",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/f9ce2d210884688dbb78c93611846afc/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1238213,
+		"nom": "Gentiane",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/dbce99a3e1b555820aa1d9427d1c9f3d/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Musique d’Auvergne",
+			"annada": "1979"
+		},
+		"fans": 201,
+		"album": {
+			"id": 6739186,
+			"titol": "Musique d'Auvergne",
+			"data": "2009-03-07",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/dbce99a3e1b555820aa1d9427d1c9f3d/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 6270844,
+		"nom": "Georges Durand",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/834c7535580eae9b2c23bc2c34fd464b/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "La Provence",
+			"annada": ""
+		},
+		"fans": 6,
+		"album": {
+			"id": 158374042,
+			"titol": "Frescobaldi - Messa a 8 sopra l'aria della Monica (À l'orgue doré de Notre-Dame-des-Doms)",
+			"data": "2020-09-18",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9a82cb6889bd11d70a5155143d4a7a72/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 91861,
+		"nom": "Gerard Delord",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/02abd8151e15cec9ebf1dc2518bd61e4/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Auvergne Traditionnelle Vol. 1",
+			"annada": ""
+		},
+		"fans": 224,
+		"album": {
+			"id": 1257182,
+			"titol": "Auvergne Traditionnelle Vol. 1",
+			"data": "2011-08-24",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/02abd8151e15cec9ebf1dc2518bd61e4/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4876091,
+		"nom": "Gérard Zuchetto",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/b31ef5ca993350942c6b32ffb8bab4c8/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 6,
+		"exempleOc": {
+			"titol": "Manuscrit du Roi",
+			"annada": "1993"
+		},
+		"fans": 43,
+		"album": {
+			"id": 10800736,
+			"titol": "La primavera d'amore",
+			"data": "2015-08-02",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/883ed0bed6442a1abb12418b916062e5/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 57395,
+		"nom": "Goulamas'k",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/f4dcf89302d7e44a0a31b3c654a27f60/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Fai petar",
+			"annada": "2007"
+		},
+		"fans": 9362,
+		"album": {
+			"id": 576665331,
+			"titol": "Sempre Aquí",
+			"data": "2024-05-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/0309a8569f778e850fb30419427c7fa7/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 11628827,
+		"nom": "Guilhem Verger",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/f208334cf61d49cb50df378c47073206/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Cosmogonia",
+			"annada": "2024"
+		},
+		"fans": 12,
+		"album": {
+			"id": 834923002,
+			"titol": "UNDONE",
+			"data": "2025-10-25",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/f208334cf61d49cb50df378c47073206/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1617880,
+		"nom": "Guillaume de Machaut",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/7db02b02e805ffae2034e78ad1c0c1de/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Machaut: Messe De Nostre Dame (La) - Le Voir Dit",
+			"annada": ""
+		},
+		"fans": 1864,
+		"album": {
+			"id": 581271211,
+			"titol": "Machaut: Songs from Remede de Fortune (Complete Machaut Edition 9)",
+			"data": "2024-05-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/f4bac775013da76168acea1ff20b4088/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 255053,
+		"nom": "Guy Bonnet",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/26404b7d5e3141590de1e666ec6e3333/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Cante : Guy Bonnet chante Charles Trenet en provençal",
+			"annada": "1996"
+		},
+		"fans": 217,
+		"album": {
+			"id": 81883662,
+			"titol": "Symphonie Provencale",
+			"data": "2018-04-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/09b67226abcb8d6a7b94739cb2ea8b36/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 76469,
+		"nom": "Hantaoma",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/fd758db227c1bc410acbb9651afc9195/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Malombra",
+			"annada": "2005"
+		},
+		"fans": 616,
+		"album": {
+			"id": 55608352,
+			"titol": "Malamòrt",
+			"data": "2018-03-09",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c26c67df73648bc26dcaf5a193e69581/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4455004,
+		"nom": "Henri Gougaud",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/f105434b0a8165ce9b0b805ddaafb70c/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Lo Pastre de paraulas",
+			"annada": "1974"
+		},
+		"fans": 119,
+		"album": {
+			"id": 501455211,
+			"titol": "J'ai pas fini mon rêve",
+			"data": "2023-12-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/f9a5a14b2182a5789aa0183a888e45e7/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5165510,
+		"nom": "Hespèrion XXI",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/7377210beb6abdd11797f1d7c89d73de/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Cansós de Trobairitz",
+			"annada": ""
+		},
+		"fans": 6150,
+		"album": {
+			"id": 174867,
+			"titol": "Orient - Occident",
+			"data": "2006-01-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/660119b4e5466a0280cdc2b441887959/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1394937,
+		"nom": "Jean-Pierre Lafitte",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/220adf5d902c270022715c9effc46050/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Joi de Levant",
+			"annada": "2010"
+		},
+		"fans": 2,
+		"album": {
+			"id": 1204855,
+			"titol": "Joi de Levant",
+			"data": "2004-01-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/2fd3186fc1a749f7ae93ea6dfd135bad/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1636858,
+		"nom": "Jeremy Summerly",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/3daa5756a91b9d8e77d2a973256fb54e/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Machaut: Messe De Nostre Dame (La) - Le Voir Dit",
+			"annada": ""
+		},
+		"fans": 57,
+		"album": {
+			"id": 563347442,
+			"titol": "Children of our Time: Tippett Spirituals & Other Choral Works",
+			"data": "2024-03-29",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/0e4446d9f9819dbd442fdff122e24ff7/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4084932,
+		"nom": "Joan Francés Tisner",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/12d3b4c0cc81d504a56666c7045f9c27/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Rondèus e congos de las Lanas",
+			"annada": "1999"
+		},
+		"fans": 53,
+		"album": {
+			"id": 6082392,
+			"titol": "Identitats (Transports Tisnèr S.A)",
+			"data": "2012-11-12",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/12d3b4c0cc81d504a56666c7045f9c27/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1193626,
+		"nom": "Joan-Pau Verdier",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/7248d595eb406b8f970a5bb113ffa5e2/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 3,
+		"exempleOc": {
+			"titol": "Vint ans aprèp",
+			"annada": "2011"
+		},
+		"fans": 43,
+		"album": {
+			"id": 916220,
+			"titol": "Léo En Òc - Verdier Chante Ferré",
+			"data": "2011-02-17",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/7248d595eb406b8f970a5bb113ffa5e2/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 65708,
+		"nom": "Joel Cohen",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/106b6194fafc881dda9dfe36a8b56b01/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Le Fou sur le Pont",
+			"annada": "1994"
+		},
+		"fans": 142,
+		"album": {
+			"id": 635313981,
+			"titol": "Weill: Johnny Johnson",
+			"data": "2024-08-31",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/1061af67cad7cd0184a7969011da9fa2/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 6826635,
+		"nom": "José Roux",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/c0afd95980ea5b525feab4d2515e1872/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Danses d'Auvergne",
+			"annada": ""
+		},
+		"fans": 3,
+		"album": {
+			"id": 899198,
+			"titol": "Danses d'Auvergne",
+			"data": "2011-01-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c0afd95980ea5b525feab4d2515e1872/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1637064,
+		"nom": "Joseph Canteloube",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/a2fef7a15ec063ea9bb39d25e7509d73/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Chants d'Auvergne",
+			"annada": "1988"
+		},
+		"fans": 170,
+		"album": {
+			"id": 496746861,
+			"titol": "Bréville & Canteloube: Violin Sonatas",
+			"data": "2023-10-13",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/13e8de7cd6a45a9c95805c6a27c41358/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1189981,
+		"nom": "Joseph Couderc",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/03c033c53e3b02a7decd8efaf64d0fa7/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Joseph Couderc, Chanteur du Ségala: una vida de cançons",
+			"annada": "2010"
+		},
+		"fans": 5,
+		"album": {
+			"id": 910790,
+			"titol": "Joseph Couderc, Chanteur du Ségala: una vida de cançons",
+			"data": "2010-01-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/03c033c53e3b02a7decd8efaf64d0fa7/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5294618,
+		"nom": "Katia Caré",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/56450a666c1b8f424b1cf655f3e9f9ed/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Manuscrit du Roi",
+			"annada": "1993"
+		},
+		"fans": 23,
+		"album": {
+			"id": 14627962,
+			"titol": "Abélard & Héloïse",
+			"data": "2016-09-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/a5e8c8a9c4593691e791e6f68806a239/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 6826637,
+		"nom": "L'Auvernha Tournidjaïre",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/c0afd95980ea5b525feab4d2515e1872/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Danses d'Auvergne",
+			"annada": ""
+		},
+		"fans": 2,
+		"album": {
+			"id": 899198,
+			"titol": "Danses d'Auvergne",
+			"data": "2011-01-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c0afd95980ea5b525feab4d2515e1872/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 405553522,
+		"nom": "La bando dal Giari",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/18d98db2bbc18f1e700ccd03004c9953/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Sem venguts ici",
+			"annada": ""
+		},
+		"fans": 0,
+		"album": {
+			"id": 1036248302,
+			"titol": "Sem venguts ici",
+			"data": "2026-08-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/18d98db2bbc18f1e700ccd03004c9953/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5272621,
+		"nom": "La Camera delle Lacrime",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/b7517481c70f1fc2f923fef79b6fe046/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Marseille, Damas, Jérusalem",
+			"annada": "2009"
+		},
+		"fans": 722,
+		"album": {
+			"id": 520744632,
+			"titol": "Visions amoureuses",
+			"data": "2023-12-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/fdd779e504818ae4746772a4371f62f4/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 246467,
+		"nom": "La Lionetta",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/f43312c89628cfaa3fc0e28abb8ae553/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Danze e ballate dell'area celtica italiana",
+			"annada": "1978"
+		},
+		"fans": 1321,
+		"album": {
+			"id": 672128171,
+			"titol": "Ottoni & Settimini",
+			"data": "2014-09-26",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/8f069102052c43b6f929fd1bdec7ef59/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 359470,
+		"nom": "La mal coiffée",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/d215e862affccc240bf5dd3e685f22e8/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 6,
+		"exempleOc": {
+			"titol": "L'Embelinaire",
+			"annada": "2014"
+		},
+		"fans": 5001,
+		"album": {
+			"id": 708457931,
+			"titol": "Rojas",
+			"data": "2025-03-07",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/6fae1a90ac2e6651fce76fc818ed076f/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 55493,
+		"nom": "La Novem",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/a13de2d447e56969009e80fad5e6e254/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 3,
+		"exempleOc": {
+			"titol": "France : Chants à voix égales du Béarn et de Gascogne",
+			"annada": "1998"
+		},
+		"fans": 57,
+		"album": {
+			"id": 43103,
+			"titol": "France: polyphonie en béarn vol.2",
+			"data": "2006-01-12",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/a13de2d447e56969009e80fad5e6e254/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 102533742,
+		"nom": "La Sauze",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/2041ac1e3b65eb6600f04ab8236c3f98/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "La tèrra se botiòla",
+			"annada": "2003"
+		},
+		"fans": 23,
+		"album": {
+			"id": 167946082,
+			"titol": "Tonton Francés Vol. 4",
+			"data": "2016-04-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/754717da4ac18c15e3eaa9d9eabf3949/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 153640,
+		"nom": "La Talvera",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/1fae74ca1a8982cb1bc7a633b8f9c04f/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 9,
+		"exempleOc": {
+			"titol": "Bramadís",
+			"annada": "2007"
+		},
+		"fans": 1696,
+		"album": {
+			"id": 192346062,
+			"titol": "A tu vai",
+			"data": "2020-12-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/4114eb45ef1e1bb7580fa55e7cd1c71c/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5246504,
+		"nom": "Laurent Cavalié",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/e32ee77299bab58293e4927e06aead4a/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Sòli solet",
+			"annada": "2009"
+		},
+		"fans": 173,
+		"album": {
+			"id": 311068227,
+			"titol": "A la frontièra dels gigants",
+			"data": "2022-05-20",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/d163f982d2eee26c222730d4a84d8d1b/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 14995705,
+		"nom": "Laüsa",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/d40be846fb7dd3b81bd7c37a57a0ee27/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Laüsa",
+			"annada": "2017"
+		},
+		"fans": 1098,
+		"album": {
+			"id": 417796137,
+			"titol": "Lebensglück",
+			"data": "2023-03-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/61b3014ab6da115796cbecf0c43b4376/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 9820516,
+		"nom": "Le Bal Brotto Lopez",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/cef2f9911cadd990e297b1973efa90c7/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "HDQ",
+			"annada": "2006"
+		},
+		"fans": 1307,
+		"album": {
+			"id": 12368402,
+			"titol": "Adiu miladiu !",
+			"data": "2016-02-05",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/cef2f9911cadd990e297b1973efa90c7/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 369229442,
+		"nom": "Le Verdouble",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/c330a1bc46064600767a7052a36dd0f6/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Le Verdouble",
+			"annada": "2015"
+		},
+		"fans": 0,
+		"album": {
+			"id": 903941722,
+			"titol": "Le verdouble",
+			"data": "2026-02-13",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c330a1bc46064600767a7052a36dd0f6/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1002140,
+		"nom": "Les Musiciens de Provence",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/ff925297479dc26b3e96b4e84b30aaf4/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Noël Provençal",
+			"annada": "1976"
+		},
+		"fans": 180,
+		"album": {
+			"id": 677869,
+			"titol": "Les Musiciens de Provence : Musique des trouvères et des troubadours",
+			"data": "2009-08-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/ff925297479dc26b3e96b4e84b30aaf4/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1361927,
+		"nom": "Les Passions",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/8279970203662cb60613aa3f1dcab767/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Cantem Nadal / Noël Baroque Occitan",
+			"annada": "2009"
+		},
+		"fans": 69,
+		"album": {
+			"id": 1127101501,
+			"titol": "Pergolesi: Stabat Mater - Scarlatti: Salve Regina",
+			"data": "2019-07-02",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/bef82360d5522e8bc2fcffba4a19848a/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 54359,
+		"nom": "Les Tisserands",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/697c9d953db10c0cbeb9c6d7cdffa258/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Les Tisserands",
+			"annada": "2006"
+		},
+		"fans": 23,
+		"album": {
+			"id": 5656441,
+			"titol": "Forêt de Taï",
+			"data": "2020-03-31",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/697c9d953db10c0cbeb9c6d7cdffa258/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 405260242,
+		"nom": "Lhi Jarris",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/890ac5a950fe2425cfe7775ef5ea64ea/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Minoranças",
+			"annada": ""
+		},
+		"fans": 1,
+		"album": {
+			"id": 1045061632,
+			"titol": "Lhi Jarris live 2016 (Live)",
+			"data": "2026-08-08",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c5e3efe5620bb6175b2fd61c433986de/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 77225832,
+		"nom": "Livewire",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/0427ad23131ce2c6e69079306190660f/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Under Attack!",
+			"annada": "2022"
+		},
+		"fans": 1,
+		"album": {
+			"id": 7274675,
+			"titol": "Livin'",
+			"data": "2012-10-30",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c478349422dea791d40d4030f4b2ab1d/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 10277020,
+		"nom": "Lo Barrut",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/a87b471c6723295cf982aac9ec78383f/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Lo Barrut",
+			"annada": "2016"
+		},
+		"fans": 686,
+		"album": {
+			"id": 45549511,
+			"titol": "Je suis de Castelsarrasin",
+			"data": "2017-09-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/a87b471c6723295cf982aac9ec78383f/250x250-000000-80-0-0.jpg",
+			"tipe": "single"
+		}
+	},
+	{
+		"id": 57971,
+		"nom": "Lo Cor De La Plana",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/033804f05e5eba4c4eac3bbbaaf50149/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Es lo titre",
+			"annada": "2003"
+		},
+		"fans": 3119,
+		"album": {
+			"id": 1640377,
+			"titol": "Marcha !",
+			"data": "2012-04-16",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/4be6dc676341351b4fd1a3b7db443152/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 88035,
+		"nom": "Lou Dalfin",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/777297674445f7e53509ec4a2eee3c68/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 25,
+		"exempleOc": {
+			"titol": "La flor de Lo Dalfin",
+			"annada": "2001"
+		},
+		"fans": 2113,
+		"album": {
+			"id": 504607121,
+			"titol": "La Meison",
+			"data": "2023-11-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/096ec0e7fac6932b9871f73ab77aba5c/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1125239,
+		"nom": "Lou Seriol",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/677f0feefc896dd019afae2660108bc1/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 3,
+		"exempleOc": {
+			"titol": "Reviori",
+			"annada": ""
+		},
+		"fans": 1076,
+		"album": {
+			"id": 75926242,
+			"titol": "Occitan",
+			"data": "2018-10-19",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/677f0feefc896dd019afae2660108bc1/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 3330391,
+		"nom": "Lous Gouyats de L'Adou",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/daa005430bb913055df067e4ad549366/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Folk Music From South West France",
+			"annada": "2008"
+		},
+		"fans": 24,
+		"album": {
+			"id": 580735231,
+			"titol": "Lous Gouyats De L'Adou: Folk Music From South-West France",
+			"data": "2008-01-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/717e20684bd21f751f82c785e9633340/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 9908734,
+		"nom": "Luc Aussibal",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/c4ff2c91273de5e232ed9a649c98f008/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Dedins",
+			"annada": "2003"
+		},
+		"fans": 16,
+		"album": {
+			"id": 279323132,
+			"titol": "Animaux errants",
+			"data": "2021-12-16",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9975491f4eac82eb573819044f652b26/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2037071,
+		"nom": "Manu Théron",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/42251de131eba7fb6ad89400bd51b9cc/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Chin na na poun",
+			"annada": "2007"
+		},
+		"fans": 182,
+		"album": {
+			"id": 9439492,
+			"titol": "Sirventés",
+			"data": "2015-01-19",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/42251de131eba7fb6ad89400bd51b9cc/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1636961,
+		"nom": "Manuel Vilas",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/86f9f71e068195412fd67ba3b8b10777/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Chantador de joi d'amour, Six Songs by the Troubadour",
+			"annada": "2020"
+		},
+		"fans": 14,
+		"album": {
+			"id": 900561412,
+			"titol": "Cielo de Nieve",
+			"data": "2026-01-14",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/64c8c3e79694aa582e1668bf1ec7a93c/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 14853537,
+		"nom": "manzer",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/557e3136e8346f316d9753d0b34b26a9/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Mausén Nàu",
+			"annada": "2013"
+		},
+		"fans": 8,
+		"album": {
+			"id": 81182212,
+			"titol": "Evolution",
+			"data": "2018-12-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/557e3136e8346f316d9753d0b34b26a9/250x250-000000-80-0-0.jpg",
+			"tipe": "single"
+		}
+	},
+	{
+		"id": 5805997,
+		"nom": "Mauresca",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/2fe3a65926869bcfa3caad0e25fde6a4/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Contèsta",
+			"annada": "2005"
+		},
+		"fans": 1094,
+		"album": {
+			"id": 60172612,
+			"titol": "Big sur",
+			"data": "2018-04-06",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/2fe3a65926869bcfa3caad0e25fde6a4/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 12655843,
+		"nom": "Mauris",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/9d20d5172494e1873e2bce803de0e6fb/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "A Tu",
+			"annada": "1999"
+		},
+		"fans": 13,
+		"album": {
+			"id": 1041929082,
+			"titol": "Insomnia",
+			"data": "2026-07-29",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/0fea852bcdf8c466cea4376de79390e7/250x250-000000-80-0-0.jpg",
+			"tipe": "single"
+		}
+	},
+	{
+		"id": 85086252,
+		"nom": "Mbraia",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/6f41b359205aea253d8bd040ce90af7a/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Ton Bal !",
+			"annada": ""
+		},
+		"fans": 287,
+		"album": {
+			"id": 1042987432,
+			"titol": "PICA LO PÈ",
+			"data": "2026-10-16",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c551150d1f470e794092a1c92c17596c/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 10894082,
+		"nom": "Menestrel",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/0db34aeac09af03f65e50220d69e3dc9/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Ménestrel",
+			"annada": ""
+		},
+		"fans": 7048,
+		"album": {
+			"id": 339014377,
+			"titol": "Há dias, adio a noite",
+			"data": "2022-08-05",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/e53c5e6b67dd4d26b8366b75dd172455/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 441786,
+		"nom": "Michael Posch",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/3cf5361a6f7d5c6f3fc810506323bc75/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Music of the Troubadours",
+			"annada": ""
+		},
+		"fans": 20,
+		"album": {
+			"id": 260591,
+			"titol": "Minnesang In Südtirol. Canciones De Amor Del Tirol Sur.",
+			"data": "2006-04-17",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/3cf5361a6f7d5c6f3fc810506323bc75/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1394933,
+		"nom": "Michel Marre",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/d4a7886b9793e219496158359497d197/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Trobar",
+			"annada": ""
+		},
+		"fans": 265,
+		"album": {
+			"id": 55619452,
+			"titol": "Salhi",
+			"data": "2018-01-26",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/dc20ee69d2f50e6ab3b5d5c9e457b464/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 153590,
+		"nom": "Millenarium",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/bb7bade1b63ad6392219cadbec79a837/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Chansons de troubadours et danses de jongleurs",
+			"annada": ""
+		},
+		"fans": 158,
+		"album": {
+			"id": 236603542,
+			"titol": "Llibre Vermell",
+			"data": "2013-04-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/d1658ebd684a4627b0ea6f5df65cf147/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 318531,
+		"nom": "Miquèu Montanaro",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/d28579c4dcd3fe1dd17328f15d16592a/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Maurin des Maures",
+			"annada": "1998"
+		},
+		"fans": 53,
+		"album": {
+			"id": 839771702,
+			"titol": "Lépcsők",
+			"data": "2025-10-16",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/fd95fc607fadf72138fc40beee7712fa/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 6987,
+		"nom": "Moussu T e lei jovents",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/6f1608d24670edffd7cee85d45822f28/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Navega !",
+			"annada": "2016"
+		},
+		"fans": 11137,
+		"album": {
+			"id": 106571632,
+			"titol": "À la Ciotat (Best Of)",
+			"data": "2019-10-25",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9ccbab332e5134e6febf1355aac074ff/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 434084,
+		"nom": "Nadau",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/d3eae05db3506d8d8a71372a24b45462/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 10,
+		"exempleOc": {
+			"titol": "Cançons Tà l'Olympia",
+			"annada": "2005"
+		},
+		"fans": 16881,
+		"album": {
+			"id": 950611951,
+			"titol": "Nadau - 50 ans",
+			"data": "2026-03-31",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/4ba19886e7e391c9379433116ebf707d/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 351874312,
+		"nom": "Necrophagea",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/aefea86ffcb85c8fcfcc09cdb6e53a11/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Demo #2",
+			"annada": "2025"
+		},
+		"fans": 1,
+		"album": {
+			"id": 874165482,
+			"titol": "Regurgitacion de Postema",
+			"data": "2025-12-19",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/aefea86ffcb85c8fcfcc09cdb6e53a11/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1667207,
+		"nom": "Netania Davrath",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/7d4d06300e6382e8296d52b2e22713a9/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Songs of the Auvergne",
+			"annada": "2004"
+		},
+		"fans": 17,
+		"album": {
+			"id": 304965937,
+			"titol": "Canteloube: Complete Songs of the Auvergne (Remastered 2022, Version 1963)",
+			"data": "2022-03-28",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/e43d2bef884551c683809d1d87b22653/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 390083,
+		"nom": "Nicola",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/3f14a468cc8944a9087f57fe2684b437/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Leissem lei escapar",
+			"annada": "1976"
+		},
+		"fans": 1033,
+		"album": {
+			"id": 870888142,
+			"titol": "Ltdblbl021",
+			"data": "2026-01-30",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9f314bc3305ed9bd596a9790a369ce7b/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 454770,
+		"nom": "Nux Vomica",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/350412a412601948e1388b584d04c76d/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Carnevale Nissart",
+			"annada": "1998"
+		},
+		"fans": 1843,
+		"album": {
+			"id": 873014422,
+			"titol": "NÃO - ALMA",
+			"data": "2025-12-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/65a2014d5f5b7e817f009349f1e578b1/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 63123502,
+		"nom": "OC",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/bee5bdb804d0d5121d0da140672fc14d/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Oc",
+			"annada": ""
+		},
+		"fans": 360,
+		"album": {
+			"id": 828080121,
+			"titol": "Europa",
+			"data": "2025-10-17",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/44ffc91688a7900a7a79e2877131dc42/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2512391,
+		"nom": "Occitania",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/bfeb609cb321ce211d476a19b27d3d04/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Occitània",
+			"annada": "2001"
+		},
+		"fans": 127,
+		"album": {
+			"id": 244579972,
+			"titol": "Mártires y Falsos Ídolos",
+			"data": "2014-01-23",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/f48e7410b5b143fcff284cf132835a6b/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 301695,
+		"nom": "Original Occitana",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/0eafeaa10f9882ca3133ce59aee2d1de/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Polyphonies sounds",
+			"annada": ""
+		},
+		"fans": 276,
+		"album": {
+			"id": 407966,
+			"titol": "Polyphonies Sounds",
+			"data": "2009-06-22",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/0eafeaa10f9882ca3133ce59aee2d1de/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 118526542,
+		"nom": "Originem",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/a224ec584a49473d262e24cd47a22876/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Seditionem",
+			"annada": "2022"
+		},
+		"fans": 162,
+		"album": {
+			"id": 977081691,
+			"titol": "Revitalizing",
+			"data": "2026-04-24",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/f7930d72c984630052f76606f9833382/250x250-000000-80-0-0.jpg",
+			"tipe": "single"
+		}
+	},
+	{
+		"id": 248039,
+		"nom": "Oxford Camerata",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/3daa5756a91b9d8e77d2a973256fb54e/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Machaut: Messe De Nostre Dame (La) - Le Voir Dit",
+			"annada": ""
+		},
+		"fans": 653,
+		"album": {
+			"id": 861114332,
+			"titol": "Cohen’s Carols",
+			"data": "2025-12-08",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/969f3e1e905edf85ca9fbd57181b54f0/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 387608801,
+		"nom": "Paloma Gutiérrez del Arroyo",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/5a6db7353e71e99384195f6dcb5b429a/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Chantador de joi d'amour, Six Songs by the Troubadour",
+			"annada": "2020"
+		},
+		"fans": 1,
+		"album": {
+			"id": 141933702,
+			"titol": "De Ventadorn: Chantador de joi d'amour, Six Songs by the Troubadour",
+			"data": "2020-04-08",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/5a6db7353e71e99384195f6dcb5b429a/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 477625,
+		"nom": "Pan Sonic",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/6b015a6f71572c769fe47992de67ca95/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "The Hymn of the 7th Illusion",
+			"annada": "2017"
+		},
+		"fans": 3500,
+		"album": {
+			"id": 437192197,
+			"titol": "Mort Aux Vaches (2019 Remaster)",
+			"data": "2023-05-12",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/46b20df4215b7f479b44a516e8ed406b/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 330308091,
+		"nom": "Papà Gahús",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/97395ee2620179263db37a60fb4f9990/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Lo ViRoLeT",
+			"annada": "2014"
+		},
+		"fans": 22,
+		"album": {
+			"id": 771841561,
+			"titol": "Tròp de pòc",
+			"data": "2025-06-13",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/97395ee2620179263db37a60fb4f9990/250x250-000000-80-0-0.jpg",
+			"tipe": "ep"
+		}
+	},
+	{
+		"id": 351614,
+		"nom": "Patric",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/58b08ee5e116c9334eaaa5ddd4e1b569/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 9,
+		"exempleOc": {
+			"titol": "Chansons enfantines en langue d'Oc",
+			"annada": "1996"
+		},
+		"fans": 174,
+		"album": {
+			"id": 165024822,
+			"titol": "Les grandes chansons occitanes de Patric",
+			"data": "2020-08-07",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/58b08ee5e116c9334eaaa5ddd4e1b569/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 452138,
+		"nom": "Patricia Rozario",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/fe57dc05c0f433285948189ff637f573/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Songs of the Auvergne",
+			"annada": "1988"
+		},
+		"fans": 43,
+		"album": {
+			"id": 581254251,
+			"titol": "Tavener: The World & Diódia",
+			"data": "2024-05-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/590a1211619e3856d357989b6a5e8cc0/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 75429752,
+		"nom": "Patrick Lenk",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/97d91d04d01ec9fb28770c12fc2ca822/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Chant of the Gnostics",
+			"annada": ""
+		},
+		"fans": 1503,
+		"album": {
+			"id": 745350261,
+			"titol": "Chant Of The Mystics, Vol. 1",
+			"data": "2022-12-17",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/2e1295b564e65c2a201f8770dddf1d4a/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2036791,
+		"nom": "Patrick Vaillant",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/a9f755248d0262e9a2b630364eaa1575/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 4,
+		"exempleOc": {
+			"titol": "Enamorada Madalena - Cants provencaus de la religion populara",
+			"annada": ""
+		},
+		"fans": 166,
+		"album": {
+			"id": 969059601,
+			"titol": "Anita Anita",
+			"data": "2026-04-21",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/2ce9e8e50331994fa3739711de8a28bb/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 92824292,
+		"nom": "Peiraguda",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/e5574ede4735802b659681ca88a34368/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 5,
+		"exempleOc": {
+			"titol": "Raiç",
+			"annada": "1980"
+		},
+		"fans": 104,
+		"album": {
+			"id": 306110237,
+			"titol": "Caminarem",
+			"data": "2022-04-25",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/93a56fbffe0862f29913047362968425/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4879941,
+		"nom": "Peter Rabanser",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/fe5c8a9650616a54ccb05fff130a174d/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Music of the Troubadours",
+			"annada": ""
+		},
+		"fans": 0,
+		"album": {
+			"id": 46569382,
+			"titol": "la voce della passione",
+			"data": "2014-05-18",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/fe5c8a9650616a54ccb05fff130a174d/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 190393,
+		"nom": "Philharmonia Orchestra",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/1b104b77236ab4d1b6c01313417bc33a/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Songs of the Auvergne",
+			"annada": "1988"
+		},
+		"fans": 161967,
+		"album": {
+			"id": 1045832222,
+			"titol": "Tchaikovsky: Symphony No. 5 in E Minor, Op. 64",
+			"data": "2026-09-04",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9818de379a4c40103af542c6225807c9/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 360200,
+		"nom": "Philippe Vialard",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/c56ca3f7f578870f104a2a567559367b/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 4,
+		"exempleOc": {
+			"titol": "Tèrra de Masucs",
+			"annada": "2010"
+		},
+		"fans": 40,
+		"album": {
+			"id": 56286182,
+			"titol": "Camin",
+			"data": "2018-02-08",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c56ca3f7f578870f104a2a567559367b/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2079521,
+		"nom": "Pierre De La Roche",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/1442fe57388ff52076c2bc01daddc63d/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Songs of the Auvergne",
+			"annada": "2004"
+		},
+		"fans": 3,
+		"album": {
+			"id": 6555458,
+			"titol": "Songs Of The Auvergne",
+			"data": "2013-04-02",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/1442fe57388ff52076c2bc01daddc63d/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 5768531,
+		"nom": "Pierre Desprats",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/7dc775c3af6d22ecc088286c296123a5/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Serpente (Bande originale)",
+			"annada": "2025"
+		},
+		"fans": 280,
+		"album": {
+			"id": 676575751,
+			"titol": "Les reines du drame (Bande originale du film)",
+			"data": "2024-11-29",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/7dc775c3af6d22ecc088286c296123a5/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 6934683,
+		"nom": "Poil",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/096cba08ac22a5e3c4c2dd19e811863f/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Sus",
+			"annada": "2019"
+		},
+		"fans": 1003,
+		"album": {
+			"id": 490881245,
+			"titol": "Yoshitsune",
+			"data": "2023-11-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/adf6103e8d9e130da072bcf50fc86ad9/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 78441422,
+		"nom": "Polifonic System",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/adbea5c217a6743d43f82b7314d78421/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Totem Sismic",
+			"annada": "2019"
+		},
+		"fans": 38,
+		"album": {
+			"id": 118664112,
+			"titol": "Totem-Sismic",
+			"data": "2019-11-22",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/adbea5c217a6743d43f82b7314d78421/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1394943,
+		"nom": "Renat Jurie",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/374902a258e4509a42988ffda225d93b/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Joi de Levant",
+			"annada": "2010"
+		},
+		"fans": 27,
+		"album": {
+			"id": 39409841,
+			"titol": "Entre La Riviera E La Mar",
+			"data": "2017-04-08",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9957f32dff273c662b2db0007737a0ac/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 6803929,
+		"nom": "Renat Sette",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/7c311a5a3acd3f614c59c2dbffbbd6e5/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Enamorada Madalena - Cants provencaus de la religion populara",
+			"annada": ""
+		},
+		"fans": 16,
+		"album": {
+			"id": 435391737,
+			"titol": "La vida fin finala",
+			"data": "2023-04-30",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/d37be7d562ae2c95c17bb01b9a818939/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 401697,
+		"nom": "Riccardo Tesi",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/9995f1dbdeea9c02b02c4e6cc3cc0a57/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Anita Anita",
+			"annada": "1994"
+		},
+		"fans": 425,
+		"album": {
+			"id": 969059601,
+			"titol": "Anita Anita",
+			"data": "2026-04-21",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/2ce9e8e50331994fa3739711de8a28bb/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 83468482,
+		"nom": "Roger Fakhr",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/b61bb8ba4d9ab9fb6553c1b57c476da7/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Fine Anyway",
+			"annada": "2021"
+		},
+		"fans": 2223,
+		"album": {
+			"id": 803456061,
+			"titol": "East of Any Place (Habibi Funk 025)",
+			"data": "2023-12-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c3de6742ed735bfa4e522d37e9d675fb/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 14616273,
+		"nom": "Romain Baudoin",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/26a73389691dd44a90849143a98225a5/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "1 Primate",
+			"annada": "2014"
+		},
+		"fans": 50,
+		"album": {
+			"id": 301605347,
+			"titol": "Arrehar",
+			"data": "2022-03-18",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/c00544d4207d5baf83e0d6e9e4bcbe00/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 275268,
+		"nom": "San Salvador",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/56a19b2b7db49a60a39d5582d04f1256/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "La Grande Folie",
+			"annada": "2021"
+		},
+		"fans": 3060,
+		"album": {
+			"id": 519988032,
+			"titol": "Rugged Are the Mountains",
+			"data": "2023-12-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/4857c8061c69ab64bccff952bde2a858/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 3554841,
+		"nom": "Silvio Peron",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/41ad277a956acb2e40ee0325ba5051a8/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Ballo delle valli occitane d’Italia",
+			"annada": "1998"
+		},
+		"fans": 7,
+		"album": {
+			"id": 889643602,
+			"titol": "Eschandihà de vita - Storie di personaggi delle Valli Occitane in Piemonte",
+			"data": "2013-09-10",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9988e79eee52dc42bd158cba98d3690b/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 240479,
+		"nom": "Sir John Pritchard",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/52cdf3b085f820939650b64ca9071360/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Songs of the Auvergne",
+			"annada": "1988"
+		},
+		"fans": 120,
+		"album": {
+			"id": 521276212,
+			"titol": "M. Tippett: A Child Of Our Time & Weeping Babe",
+			"data": "2023-12-15",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/d7468bd68408e9f889c221ee486e68fa/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 12903471,
+		"nom": "Sourdure",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/ee1edaa37022fd39c9ab76c5b9d93ecf/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "De Mòrt Viva",
+			"annada": "2021"
+		},
+		"fans": 459,
+		"album": {
+			"id": 1047919852,
+			"titol": "Outredore",
+			"data": "2026-09-25",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/ee1edaa37022fd39c9ab76c5b9d93ecf/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 111130,
+		"nom": "Strada",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/5a6d9ed53e657f77129e124b372d8ad2/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Colinda – Noëls de Provence",
+			"annada": "2011"
+		},
+		"fans": 1403,
+		"album": {
+			"id": 893419432,
+			"titol": "Lost Tapes Pt. 2",
+			"data": "2026-01-20",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/759214a7b9e4f9135f8624cf1c41c8ac/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4621138,
+		"nom": "Studio der frühen Musik",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/f386f65df2963d430152d01c59d418ad/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Troubadours & trouvères",
+			"annada": ""
+		},
+		"fans": 26,
+		"album": {
+			"id": 1125102612,
+			"titol": "Florid Song and Consort Music - Vocal and Instrumental Music in England, 1610 - 1660",
+			"data": "2026-10-23",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/1c9e837721cbb3bd23c7fc6fdd0f765e/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 153485,
+		"nom": "Sustraia",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/0e007cc3627f85d436fba3d0dbaa8382/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 3,
+		"exempleOc": {
+			"titol": "Radio Occitania libra",
+			"annada": "1997"
+		},
+		"fans": 1405,
+		"album": {
+			"id": 122778462,
+			"titol": "Segi Segi (Remix)",
+			"data": "2019-12-27",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/cfaf33bc8aa3bc6810435194e6e3b322/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1043604,
+		"nom": "The Hafler Trio",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/9422cf1b0adc986af4ed21f4f67ce12b/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "The Hymn of the 7th Illusion",
+			"annada": "2017"
+		},
+		"fans": 80,
+		"album": {
+			"id": 1100363522,
+			"titol": "Anamorphosis",
+			"data": "2026-10-02",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/bd5ddc9fad91197377581c3adab0b8db/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 1342063,
+		"nom": "The Martin Best Consort",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/9e10899b87fa9004665a8f59d295c3f0/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Forgotten Provence: Music-Making in the South of France, 1150-1550",
+			"annada": "1995"
+		},
+		"fans": 4,
+		"album": {
+			"id": 12584272,
+			"titol": "Forgotten Provence: Music-Making in the South of France, 1150-1550",
+			"data": "1994-01-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/9e10899b87fa9004665a8f59d295c3f0/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4821091,
+		"nom": "Thomas Binkley",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/22d0e1de727a6ae225a65933e9cbe11a/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Troubadours & trouvères",
+			"annada": ""
+		},
+		"fans": 20,
+		"album": {
+			"id": 353335857,
+			"titol": "Europa",
+			"data": "2022-05-06",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/aeaf2f8ade34da564c47d68afecc6eb4/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 293276,
+		"nom": "Toad",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/5d67c41a67e533b2601e81ab15dbd184/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Toad",
+			"annada": "2011"
+		},
+		"fans": 998,
+		"album": {
+			"id": 1129559241,
+			"titol": "DARK CHOCOLATE",
+			"data": "2026-10-24",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/1097fc99f571b6ceca7735ee2abbdb9d/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 4336039,
+		"nom": "tRaucatèrme",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/803066de94d3663400a4db255701a17b/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "A cops de pè pel cuou!",
+			"annada": ""
+		},
+		"fans": 96,
+		"album": {
+			"id": 6222578,
+			"titol": "Quand n'i a pro ne'n demora !",
+			"data": "2005-04-01",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/e8fec8337de8aee583f5788e6a85eb7a/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2325881,
+		"nom": "Trobairitz d'Oc",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/3ac1558deeea0cfa1c36583b1eff704a/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Lo mau d'amor",
+			"annada": "2011"
+		},
+		"fans": 44,
+		"album": {
+			"id": 2970551,
+			"titol": "Lo mau d'amor",
+			"data": "2011-01-31",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/3ac1558deeea0cfa1c36583b1eff704a/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 2011181,
+		"nom": "Yan Pascal Tortelier",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/5804f24d4eef74579f7c54ae0fbae601/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 1,
+		"exempleOc": {
+			"titol": "Chants d'Auvergne",
+			"annada": "1988"
+		},
+		"fans": 48,
+		"album": {
+			"id": 1074775222,
+			"titol": "Schmitt: Orchestral Works",
+			"data": "2026-10-16",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/87ebf6aaca977ffcf0699cd81085ea88/250x250-000000-80-0-0.jpg",
+			"tipe": "album"
+		}
+	},
+	{
+		"id": 119523502,
+		"nom": "Zef",
+		"imatge": "https://cdn-images.dzcdn.net/images/artist/a6d75bd30fd465b986a0610a4962e9c1/500x500-000000-80-0-0.jpg",
+		"sortidasOc": 2,
+		"exempleOc": {
+			"titol": "Génépi fugace",
+			"annada": "2017"
+		},
+		"fans": 64,
+		"album": {
+			"id": 480016185,
+			"titol": "Awal Kelmi",
+			"data": "2023-09-06",
+			"cobèrta": "https://cdn-images.dzcdn.net/images/cover/a5e9b16693e7574c137139c9fe200195/250x250-000000-80-0-0.jpg",
+			"tipe": "ep"
+		}
+	}
+]

@@ -74,6 +74,7 @@ const PER_FIN = [
 	[/^obras\.artistas\.[^.]+\.nom$/, 'Lo nom', 'Le nom'],
 	[/^obras\.artistas\.[^.]+\.tèxt$/, 'Ta frasa', 'Ta phrase'],
 	[/^obras\.artistas\.[^.]+\.lector$/, 'Lo lector', 'Le lecteur'],
+	[/^obras\.artistas\.[^.]+\.imatge$/, 'L’imatge', 'L’image'],
 	[/^obras\.artistas\.[^.]+\.[^.]+$/, 'Un ligam', 'Un lien'],
 	[/^apren\.teulas\.[^.]+$/, 'Una teula', 'Une case'],
 	[/^apren\.teulas\.[^.]+\.ligam$/, 'Nom e ligam de la teula', 'Nom et lien de la case'],
