@@ -15,19 +15,15 @@
 	import { txt, lista } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 
-	let { varianta = 'jalons' } = $props();
 	let fr = $derived(langStore.current === 'fr');
 	const [PARLA, APREN, VIU] = PLAN;
 	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer' };
-	// color = fond profond (variantes Blocs/Chapitres) ; accent = couleur claire et
-	// lumineuse qui ressort sur la braise (numéro et lueur de la variante Système/Combiné)
+	// accent = couleur claire qui ressort sur la braise (numéro et lueur de chaque bloc)
 	const ENTITATS = [
-		{ sec: PARLA, vis: 'carta', color: '#93301a', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.' } },
-		{ sec: APREN, vis: 'camin', color: '#1b5256', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.' } },
-		{ sec: VIU, vis: 'rets', color: '#5a3350', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.' } }
+		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.' } },
+		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.' } },
+		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.' } }
 	];
-	// la couleur de la section précédente, pour fondre les passages (la 1re part de la braise)
-	const colorPrec = (i) => (i === 0 ? 'transparent' : ENTITATS[i - 1].color);
 
 	// Contenu riche RÉUTILISÉ de l'accueil actuel : les chiffres (acuelh.chifras) et
 	// les trois façons (acuelh.biais) sont déjà des éléments modifiables ; on les lit.
@@ -149,47 +145,7 @@
 	{/if}
 {/snippet}
 
-<section class="mieg" data-varianta={varianta} bind:this={racina} aria-label={fr ? 'Les trois rubriques' : 'Las tres rubricas'}>
-	{#if varianta === 'jalons'}
-		{#each ENTITATS as e, i (e.sec.id)}
-			<section class="jalon-ent" data-revela>
-				<h2 class="jalon-cap"><b>{e.sec.n}</b><span>{fr ? e.sec.fr : e.sec.oc}</span></h2>
-				<div class="jalon-cors">
-					<div class="jalon-tèxt">
-						<p class="sota">{fr ? e.sota.fr : e.sota.oc}</p>
-						{@render lligams(e.sec)}
-						<a class="dintrar" href={e.sec.href}>{fr ? DINTRAR.fr : DINTRAR.oc} {@render sageta()}</a>
-					</div>
-					<figure class="jalon-vis">{@render visual(e.vis, false)}</figure>
-				</div>
-			</section>
-		{/each}
-	{:else if varianta === 'blocs'}
-		{#each ENTITATS as e, i (e.sec.id)}
-			<section class="banda" data-revela style="--color: {e.color}; --color-prec: {colorPrec(i)}">
-				<div class="banda-in">
-					<div class="banda-cap"><b>{e.sec.n}</b><span>{fr ? e.sec.fr : e.sec.oc}</span></div>
-					<p class="sota">{fr ? e.sota.fr : e.sota.oc}</p>
-					{@render lligams(e.sec)}
-					<a class="dintrar clar" href={e.sec.href}>{fr ? DINTRAR.fr : DINTRAR.oc} {@render sageta()}</a>
-				</div>
-			</section>
-		{/each}
-	{:else if varianta === 'chapitres'}
-		{#each ENTITATS as e, i (e.sec.id)}
-			<section class="chapitre" data-revela style="--color: {e.color}; --color-prec: {colorPrec(i)}">
-				<span class="chap-brasa" aria-hidden="true"></span>
-				<div class="chap-in">
-					<div class="chap-tèxt">
-						<h2 class="chap-cap"><b>{e.sec.n}</b><span>{fr ? e.sec.fr : e.sec.oc}</span></h2>
-						<p class="sota">{fr ? e.sota.fr : e.sota.oc}</p>
-						<a class="dintrar clar" href={e.sec.href}>{fr ? DINTRAR.fr : DINTRAR.oc} {@render sageta()}</a>
-					</div>
-					<figure class="chap-vis">{@render visual(e.vis, true)}</figure>
-				</div>
-			</section>
-		{/each}
-	{:else}
+<section class="mieg" bind:this={racina} aria-label={fr ? 'Les trois rubriques' : 'Las tres rubricas'}>
 		{#each ENTITATS as e, i (e.sec.id)}
 			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} style="--color: {e.accent}">
 				<div class="sist-cap">
@@ -199,7 +155,7 @@
 				<div class="sist-cors">
 					<div class="sist-tèxt">
 						<p class="sota" use:editar={`acuelh.mondes.${e.sec.id}.sota`}>{sotaTxt(e.sec.id, e.sota)}</p>
-						{#if varianta === 'combinat'}{@render extra(e.sec.id)}{/if}
+						{@render extra(e.sec.id)}
 						{@render lligams(e.sec)}
 						<a class="dintrar" href={e.sec.href}>{fr ? DINTRAR.fr : DINTRAR.oc} {@render sageta()}</a>
 					</div>
@@ -207,7 +163,6 @@
 				</div>
 			</section>
 		{/each}
-	{/if}
 </section>
 
 <style>
@@ -219,7 +174,6 @@
 	.portas a { padding-bottom: 2px; background: linear-gradient(var(--or), var(--or)) 0 100% / 0 1.5px no-repeat; transition: background-size 0.5s var(--lent); }
 	.portas a:hover, .portas a:focus-visible { background-size: 100% 1.5px; }
 	.dintrar { display: inline-flex; align-items: center; gap: 8px; margin-top: 1.1rem; font-weight: 700; color: var(--crema); border-bottom: 2px solid var(--t-accion, #b53d17); padding-bottom: 2px; }
-	.dintrar.clar { border-bottom-color: var(--or); }
 	.fl { width: 1em; height: 1em; transition: transform 0.4s var(--lent); }
 	.dintrar:hover .fl { transform: translateX(4px); }
 
@@ -236,56 +190,6 @@
 	.rets-flux { fill: none; stroke: #fff; stroke-width: 2.2; stroke-dasharray: 0 7; stroke-linecap: round; opacity: 0.9; }
 	.rets-vila { fill: #ffe6b8; transform-box: fill-box; transform-origin: center; filter: drop-shadow(0 0 3px rgba(255, 217, 138, 0.55)); }
 
-	/* ——— Piste 2 : jalons enrichis (grammaire de l'accueil) ——— */
-	.jalon-ent { padding: 10vh var(--marge); }
-	.jalon-cap { position: relative; display: flex; align-items: baseline; gap: 1rem; margin: 0 0 var(--esp-32, 2rem); padding-top: 1.4rem; }
-	.jalon-cap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--or), color-mix(in srgb, var(--or) 30%, transparent) 45%, transparent); transform-origin: left; transform: scaleX(0); transition: transform 1.3s var(--lent); }
-	.jalon-ent.vist .jalon-cap::before { transform: scaleX(1); }
-	.jalon-cap b { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2.2rem, 4vw, 3.4rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px var(--or); }
-	.jalon-cap span { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--crema); }
-	.jalon-cors { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; }
-	.jalon-vis { margin: 0; max-width: 360px; justify-self: end; }
-	@media (max-width: 820px) { .jalon-cors { grid-template-columns: 1fr; } .jalon-vis { max-width: 260px; } }
-
-	/* ——— Piste 3 : blocs fondus (bandes de couleur plates) ——— */
-	.banda { position: relative; background: var(--color); }
-	/* le haut de chaque bande se fond depuis la couleur précédente (ou la braise pour la 1re) */
-	.banda::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 120px; background: linear-gradient(to bottom, var(--color-prec, transparent), var(--color)); }
-	/* la dernière bande ressort en douceur vers la braise */
-	.banda:last-child::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; background: linear-gradient(to top, transparent, var(--color)); }
-	.banda-in { position: relative; z-index: 1; max-width: calc(72rem + 2 * var(--marge)); margin: 0 auto; padding: clamp(3.4rem, 7vh, 5.5rem) var(--marge); }
-	.banda-cap { display: flex; align-items: baseline; gap: 0.8rem; }
-	.banda-cap b { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2rem, 3vw, 3rem); line-height: 1; color: var(--crema); opacity: 0.85; }
-	.banda-cap span { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2rem, 4vw, 3.4rem); color: var(--crema); }
-	.banda .sota { margin-top: 0.6rem; }
-
-	/* ——— Piste 5 : chapitres plein écran ——— */
-	.chapitre { position: relative; min-height: 100svh; display: grid; place-items: center; background: var(--color); overflow: clip; }
-	/* chaque chapitre émerge en douceur de la couleur précédente (ou de la braise) ; le dernier ressort vers la braise */
-	.chapitre::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 28vh; z-index: 0; background: linear-gradient(to bottom, var(--color-prec, transparent), var(--color)); }
-	.chapitre:last-child::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 26vh; z-index: 0; background: linear-gradient(to top, transparent, var(--color)); }
-	/* la braise de l'accueil, teintée de la couleur du chapitre : deux lueurs dorées
-	   et un grain chaud, pour rester dans le même monde que le reste du site */
-	.chap-brasa { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-		background:
-			radial-gradient(ellipse 85% 65% at 15% 10%, rgba(255, 216, 138, 0.16), transparent 60%),
-			radial-gradient(ellipse 65% 55% at 88% 85%, rgba(255, 186, 96, 0.12), transparent 60%); }
-	.chap-brasa::before, .chap-brasa::after { content: ''; position: absolute; border-radius: 50%; filter: blur(42px); }
-	.chap-brasa::before { width: 70vmax; height: 46vmax; left: -16vmax; top: -18vmax; background: radial-gradient(closest-side, rgba(255, 205, 120, 0.33), transparent); }
-	.chap-brasa::after { width: 55vmax; height: 38vmax; right: -16vmax; bottom: -14vmax; background: radial-gradient(closest-side, rgba(238, 175, 52, 0.22), transparent); }
-	.chap-in { position: relative; z-index: 2; width: 100%; max-width: calc(72rem + 2 * var(--marge)); padding: 8vh var(--marge); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
-	@media (prefers-reduced-motion: no-preference) {
-		.anim .chap-brasa::before { animation: deriva-a 28s ease-in-out infinite alternate; will-change: transform; }
-		.anim .chap-brasa::after { animation: deriva-b 36s ease-in-out infinite alternate; will-change: transform; }
-	}
-	@keyframes deriva-a { to { transform: translate(8vw, 6vh) scale(1.12); } }
-	@keyframes deriva-b { to { transform: translate(-6vw, -5vh) scale(0.9); } }
-	.chap-cap { display: flex; align-items: baseline; gap: 1rem; margin: 0 0 1.2rem; }
-	.chap-cap b { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1; color: var(--crema); opacity: 0.8; }
-	.chap-cap span { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(3rem, 7vw, 6rem); line-height: 0.95; color: var(--crema); }
-	.chap-vis { margin: 0; }
-	.chapitre .sota { font-size: clamp(1.1rem, 1.8vw, 1.5rem); max-width: 30ch; }
-	@media (max-width: 820px) { .chap-in { grid-template-columns: 1fr; text-align: left; } }
 
 	/* ——— Piste « Système » (inspirée de Léo Parpeix) : braise unifiée (section transparente),
 	   système fort (grand numéro + verbe, filet fin, grand visuel), couleur seulement en accent ——— */

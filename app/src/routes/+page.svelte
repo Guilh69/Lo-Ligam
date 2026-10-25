@@ -252,7 +252,7 @@
 		</section>
 
 		<!-- IV. Le milieu : les trois mondes (Se parla · S'apren · Amassa) -->
-		<MiegTres varianta="combinat" />
+		<MiegTres />
 		<!-- VII. Le troubadour (Max Rouquette), qui clôt « Amassa » -->
 		<section class="trobador">
 			<div class="trobador-pin">
