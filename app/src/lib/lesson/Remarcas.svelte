@@ -55,7 +55,47 @@
 		fasa = 'causir';
 	}
 
+	// La dictée (Romain, 2026-10-25 : le micro du clavier ne s'active pas
+	// depuis la page) : la reconnaissance vocale du navigateur, en français.
+	// Elle passe par le service de l'éditeur du navigateur (Google pour
+	// Chrome, Microsoft pour Edge, Apple pour Safari) ; Firefox ne l'a pas.
+	const Reconeissença = browser ? (window.SpeechRecognition ?? window.webkitSpeechRecognition) : null;
+	let escota = $state(false);
+	let rec = null;
+
+	function dictar() {
+		if (escota) {
+			rec?.stop();
+			return;
+		}
+		error = '';
+		rec = new Reconeissença();
+		rec.lang = 'fr-FR';
+		rec.continuous = true;
+		rec.interimResults = true;
+		const abans = tèxte.trim() ? tèxte.trimEnd() + ' ' : '';
+		rec.onresult = (e) => {
+			let dich = '';
+			for (const r of e.results) dich += r[0].transcript;
+			tèxte = (abans + dich).slice(0, 2000);
+		};
+		rec.onerror = (e) => {
+			if (e.error === 'not-allowed' || e.error === 'service-not-allowed') error = 'Le micro est bloqué : autorise-le pour ce site dans ton navigateur.';
+			else if (e.error !== 'aborted' && e.error !== 'no-speech') error = 'La dictée n’a pas marché. Réessaie, ou écris.';
+		};
+		rec.onend = () => (escota = false);
+		rec.start();
+		escota = true;
+	}
+
+	function arrestar() {
+		rec?.abort();
+		rec = null;
+		escota = false;
+	}
+
 	function anullar() {
+		arrestar();
 		desmarcar();
 		fasa = 'repaus';
 		cibla = null;
@@ -122,6 +162,7 @@
 
 	async function mandar() {
 		if (tèxte.trim().length < 2 || mandant) return;
+		arrestar();
 		mandant = true;
 		error = '';
 		if (autor.trim()) gardar(CLAU_AUTOR, autor.trim());
@@ -186,7 +227,18 @@
 				{:else}
 					<p class="sus">Remarque générale sur cette page</p>
 				{/if}
-				<textarea bind:this={camp} bind:value={tèxte} rows="4" maxlength="2000" placeholder="Ta remarque (tu peux la dicter avec le micro du clavier)" aria-label="Ta remarque"></textarea>
+				<textarea bind:this={camp} bind:value={tèxte} rows="4" maxlength="2000" placeholder={Reconeissença ? 'Ta remarque : touche « Dictar » et parle' : 'Ta remarque'} aria-label="Ta remarque"></textarea>
+				{#if Reconeissença}
+					<div class="dicta">
+						<button type="button" class="micro" class:escota onclick={dictar} aria-pressed={escota}>
+							<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" /></svg>
+							{escota ? 'Arrestar' : 'Dictar'}
+						</button>
+						<span class="dicta-nota">{escota ? 'Je t’écoute… parle, puis touche « Arrestar ».' : 'La dictée passe par le service vocal de ton navigateur.'}</span>
+					</div>
+				{:else}
+					<p class="dicta-nota">Ce navigateur ne sait pas dicter : sur ordinateur, essaie Chrome ou Edge.</p>
+				{/if}
 				{#if !$esAdmin}
 					<input bind:value={autor} maxlength="60" placeholder="Ton prénom (facultatif)" aria-label="Ton prénom, facultatif" />
 				{/if}
@@ -330,6 +382,56 @@
 	input:focus {
 		outline: 2px solid var(--t-aur);
 		outline-offset: 1px;
+	}
+
+	.dicta {
+		display: flex;
+		align-items: center;
+		gap: var(--esp-12);
+		margin-top: var(--esp-8);
+	}
+
+	.micro {
+		display: inline-flex;
+		flex-shrink: 0;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.5rem 1rem;
+		border: 1px solid var(--t-aur);
+		border-radius: 999px;
+		background: none;
+		color: var(--t-tinta);
+		font: inherit;
+		cursor: pointer;
+	}
+
+	.micro.escota {
+		background: var(--t-accion);
+		border-color: var(--t-accion);
+		color: var(--t-accion-tinta);
+		animation: escota 1.4s ease-in-out infinite;
+	}
+
+	@keyframes escota {
+		50% {
+			box-shadow: 0 0 0 6px color-mix(in srgb, var(--t-accion) 30%, transparent);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.micro.escota {
+			animation: none;
+		}
+	}
+
+	.dicta-nota {
+		margin: var(--esp-8) 0 0;
+		font-size: 0.78rem;
+		color: var(--t-tinta-2);
+	}
+
+	.dicta .dicta-nota {
+		margin: 0;
 	}
 
 	.accions {
