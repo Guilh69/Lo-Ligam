@@ -17,11 +17,14 @@
 	let fr = $derived(langStore.current === 'fr');
 	const [PARLA, APREN, VIU] = PLAN;
 	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer' };
+	// couleurs un peu profondes, pour rester dans le ton chaud de la braise
 	const ENTITATS = [
-		{ sec: PARLA, vis: 'carta', color: '#a5342a', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.' } },
-		{ sec: APREN, vis: 'camin', color: '#1f5f63', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.' } },
-		{ sec: VIU, vis: 'rets', color: '#6b3a5b', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.' } }
+		{ sec: PARLA, vis: 'carta', color: '#93301a', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.' } },
+		{ sec: APREN, vis: 'camin', color: '#1b5256', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.' } },
+		{ sec: VIU, vis: 'rets', color: '#5a3350', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.' } }
 	];
+	// la couleur de la section précédente, pour fondre les passages (la 1re part de la braise)
+	const colorPrec = (i) => (i === 0 ? 'transparent' : ENTITATS[i - 1].color);
 	const portas = (sec) => sec.grops.flatMap((g) => g.items);
 
 	let racina;
@@ -103,7 +106,7 @@
 		{/each}
 	{:else if varianta === 'blocs'}
 		{#each ENTITATS as e, i (e.sec.id)}
-			<section class="banda" data-revela style="--color: {e.color}">
+			<section class="banda" data-revela style="--color: {e.color}; --color-prec: {colorPrec(i)}">
 				<div class="banda-in">
 					<div class="banda-cap"><b>{e.sec.n}</b><span>{fr ? e.sec.fr : e.sec.oc}</span></div>
 					<p class="sota">{fr ? e.sota.fr : e.sota.oc}</p>
@@ -114,7 +117,7 @@
 		{/each}
 	{:else}
 		{#each ENTITATS as e, i (e.sec.id)}
-			<section class="chapitre" data-revela style="--color: {e.color}">
+			<section class="chapitre" data-revela style="--color: {e.color}; --color-prec: {colorPrec(i)}">
 				<div class="chap-in">
 					<div class="chap-tèxt">
 						<h2 class="chap-cap"><b>{e.sec.n}</b><span>{fr ? e.sec.fr : e.sec.oc}</span></h2>
@@ -166,17 +169,23 @@
 	@media (max-width: 820px) { .jalon-cors { grid-template-columns: 1fr; } .jalon-vis { max-width: 260px; } }
 
 	/* ——— Piste 3 : blocs fondus (bandes de couleur plates) ——— */
-	.banda { background: var(--color); }
-	.banda + .banda { border-top: 2px solid rgba(0, 0, 0, 0.22); }
-	.banda-in { max-width: calc(72rem + 2 * var(--marge)); margin: 0 auto; padding: clamp(2.4rem, 6vh, 4.5rem) var(--marge); }
+	.banda { position: relative; background: var(--color); }
+	/* le haut de chaque bande se fond depuis la couleur précédente (ou la braise pour la 1re) */
+	.banda::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 120px; background: linear-gradient(to bottom, var(--color-prec, transparent), var(--color)); }
+	/* la dernière bande ressort en douceur vers la braise */
+	.banda:last-child::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; background: linear-gradient(to top, transparent, var(--color)); }
+	.banda-in { position: relative; z-index: 1; max-width: calc(72rem + 2 * var(--marge)); margin: 0 auto; padding: clamp(3.4rem, 7vh, 5.5rem) var(--marge); }
 	.banda-cap { display: flex; align-items: baseline; gap: 0.8rem; }
 	.banda-cap b { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2rem, 3vw, 3rem); line-height: 1; color: var(--crema); opacity: 0.85; }
 	.banda-cap span { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2rem, 4vw, 3.4rem); color: var(--crema); }
 	.banda .sota { margin-top: 0.6rem; }
 
 	/* ——— Piste 5 : chapitres plein écran ——— */
-	.chapitre { min-height: 100svh; display: grid; place-items: center; background: var(--color); }
-	.chap-in { width: 100%; max-width: calc(72rem + 2 * var(--marge)); padding: 8vh var(--marge); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+	.chapitre { position: relative; min-height: 100svh; display: grid; place-items: center; background: var(--color); }
+	/* chaque chapitre émerge en douceur de la couleur précédente (ou de la braise) ; le dernier ressort vers la braise */
+	.chapitre::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 28vh; background: linear-gradient(to bottom, var(--color-prec, transparent), var(--color)); }
+	.chapitre:last-child::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 26vh; background: linear-gradient(to top, transparent, var(--color)); }
+	.chap-in { position: relative; z-index: 1; width: 100%; max-width: calc(72rem + 2 * var(--marge)); padding: 8vh var(--marge); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
 	.chap-cap { display: flex; align-items: baseline; gap: 1rem; margin: 0 0 1.2rem; }
 	.chap-cap b { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1; color: var(--crema); opacity: 0.8; }
 	.chap-cap span { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(3rem, 7vw, 6rem); line-height: 0.95; color: var(--crema); }
