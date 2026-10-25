@@ -7,6 +7,7 @@
 	// envoie le dernier album de l'artiste sur la platine, et le lecteur Deezer
 	// de cet album s'ouvre dessous (lecteur B). Pagina de trabalh, pas indexada.
 	import { tick } from 'svelte';
+	import { page } from '$app/state';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 
@@ -64,7 +65,9 @@
 				}
 	);
 
-	let intrat = $state(false);
+	// « ?dintrar » : on vient de la porte Musique d'Òbras, qui porte déjà
+	// l'avis sur Deezer (maquette du 2026-10-25) : on est tout de suite dedans
+	let intrat = $state(page.url.searchParams.has('dintrar'));
 	let jòga = $state(false); // la musique joue (le lecteur Deezer nous le dit)
 	let partit = $state(false); // le lecteur a déjà lancé un morceau de ce disque
 	let autoplay = $state(false);

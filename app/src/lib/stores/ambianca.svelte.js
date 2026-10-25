@@ -22,7 +22,7 @@ import { browser } from '$app/environment';
 
 // Pages harmonisées avec la charte (les autres restent en clair). COPIE dans
 // src/app.html (script de départ), à tenir identique.
-export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/ideas', '/obras']; // harmonisées le 2026-10-07 : accueil, mots, carte ; Mon istòria, S'apren et sa page visio le 2026-10-24 ; Se parla, Amassa, la boîte à idées et Òbras le 2026-10-25
+export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/ideas', '/obras', '/ensag/parla', '/ensag/obras', '/ensag/medias', '/ensag/literatura']; // harmonisées le 2026-10-07 : accueil, mots, carte ; Mon istòria, S'apren et sa page visio le 2026-10-24 ; Se parla, Amassa, la boîte à idées et Òbras le 2026-10-25, et les maquettes de Se parla, Òbras par art et Médias
 
 // Les modules de leçon (/aprene/modul/1-1…) le 2026-10-25 : une famille de
 // pages, reconnue par son début (adresse réelle ou route de SvelteKit) ;
