@@ -25,6 +25,19 @@
 	];
 	// la couleur de la section précédente, pour fondre les passages (la 1re part de la braise)
 	const colorPrec = (i) => (i === 0 ? 'transparent' : ENTITATS[i - 1].color);
+
+	// Contenu riche de l'accueil actuel, remonté dans la variante « Combiné »
+	const CHIFRAS = [
+		{ num: '≈ 600 000', nom: { oc: 'locutors', fr: 'locuteurs' } },
+		{ num: '32', nom: { oc: 'despartaments', fr: 'départements' } },
+		{ num: '10', nom: { oc: 'sègles de literatura', fr: 'siècles de littérature' } }
+	];
+	const BIAIS = [
+		{ n: 'I', titol: { oc: 'En visio, amb ieu', fr: 'En visio, avec moi' } },
+		{ n: 'II', titol: { oc: 'A ton ritme', fr: 'À ton rythme' } },
+		{ n: 'III', titol: { oc: 'Sus mesura', fr: 'Sur mesure' } }
+	];
+	const LENGAS = ['Français', 'English', 'Castellano', 'Català'];
 	const portas = (sec) => sec.grops.flatMap((g) => g.items);
 
 	let racina;
@@ -113,6 +126,25 @@
 	</p>
 {/snippet}
 
+<!-- Contenu riche par entité (variante « Combiné ») : chiffres, trois façons, langues -->
+{#snippet extra(id)}
+	{#if id === 'parla'}
+		<dl class="mix-chifras">
+			{#each CHIFRAS as c (c.num)}
+				<div><dt>{c.num}</dt><dd>{fr ? c.nom.fr : c.nom.oc}</dd></div>
+			{/each}
+		</dl>
+	{:else if id === 'apren'}
+		<ul class="mix-biais">
+			{#each BIAIS as b (b.n)}
+				<li><span class="mix-n">{b.n}</span>{fr ? b.titol.fr : b.titol.oc}</li>
+			{/each}
+		</ul>
+		<p class="mix-lengas-cap">{fr ? 'Apprendre depuis :' : 'Aprene dempuèi :'}</p>
+		<div class="mix-lengas">{#each LENGAS as l (l)}<span>{l}</span>{/each}</div>
+	{/if}
+{/snippet}
+
 <section class="mieg" data-varianta={varianta} bind:this={racina} aria-label={fr ? 'Les trois rubriques' : 'Las tres rubricas'}>
 	{#if varianta === 'jalons'}
 		{#each ENTITATS as e, i (e.sec.id)}
@@ -163,6 +195,7 @@
 				<div class="sist-cors">
 					<div class="sist-tèxt">
 						<p class="sota">{fr ? e.sota.fr : e.sota.oc}</p>
+						{#if varianta === 'combinat'}{@render extra(e.sec.id)}{/if}
 						{@render lligams(e.sec)}
 						<a class="dintrar" href={e.sec.href}>{fr ? DINTRAR.fr : DINTRAR.oc} {@render sageta()}</a>
 					</div>
@@ -268,6 +301,19 @@
 		.sist-cors, .sistema-ent.invers .sist-cors { grid-template-columns: 1fr; }
 		.sistema-ent.invers .sist-tèxt { order: 0; }
 	}
+
+	/* ——— Contenu riche de la variante « Combiné » (scope :global pour que Svelte
+	   n'élague pas ces styles, qui ne vivent que dans un extrait conditionnel) ——— */
+	.sist-tèxt :global(.mix-chifras) { display: flex; flex-direction: column; margin: 1.4rem 0 0; padding: 0; }
+	.sist-tèxt :global(.mix-chifras div) { display: flex; align-items: baseline; gap: 0.7rem; padding: 0.5rem 0; border-top: 1px solid color-mix(in srgb, var(--or) 20%, transparent); }
+	.sist-tèxt :global(.mix-chifras dt) { font-family: var(--font-heading), serif; font-size: clamp(1.4rem, 2vw, 2rem); line-height: 1; color: var(--or); }
+	.sist-tèxt :global(.mix-chifras dd) { margin: 0; font-size: 0.85rem; color: var(--crema); opacity: 0.85; }
+	.sist-tèxt :global(.mix-biais) { list-style: none; margin: 1.4rem 0 0; padding: 0; }
+	.sist-tèxt :global(.mix-biais li) { list-style: none; display: flex; gap: 0.7rem; align-items: baseline; padding: 0.55rem 0; border-top: 1px solid color-mix(in srgb, var(--or) 18%, transparent); font-family: var(--font-heading), serif; font-size: clamp(1.05rem, 1.5vw, 1.3rem); color: var(--crema); }
+	.sist-tèxt :global(.mix-n) { flex: none; min-width: 1.6em; font-family: var(--font-quote), serif; font-style: italic; color: var(--or); }
+	.sist-tèxt :global(.mix-lengas-cap) { margin: 1.3rem 0 0.5rem; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--crema); opacity: 0.7; }
+	.sist-tèxt :global(.mix-lengas) { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+	.sist-tèxt :global(.mix-lengas span) { font-family: var(--font-quote), serif; font-style: italic; font-size: 1rem; padding: 0.3rem 0.9rem; border: 1px solid color-mix(in srgb, var(--or) 30%, transparent); border-radius: 999px; color: var(--crema); }
 
 	/* ——— Révélation au défilement (classe « anim » posée hors « moins d'animation ») ——— */
 	.anim [data-revela] { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--lent), transform 0.9s var(--lent); }
