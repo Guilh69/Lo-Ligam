@@ -542,7 +542,7 @@
 					{/each}
 				</p>
 				<figure class="manifest-retrat esvani" data-revela hidden={amagat('acuelh.manifest.retrat')}>
-					<div class="panel-media retrat" use:editar={'acuelh.manifest.retrat'}>
+					<div class="panel-media" use:editar={'acuelh.manifest.retrat'}>
 						<img src={retrat.url} alt={alt(retrat)} loading="lazy" width={retrat.largor} height={retrat.nautor} />
 					</div>
 					<figcaption use:editar={'acuelh.manifest.legenda'} hidden={amagat('acuelh.manifest.legenda')}>{@render bi('acuelh.manifest.legenda')}</figcaption>
@@ -794,10 +794,8 @@
 		margin: 0;
 	}
 	.manifest-retrat .panel-media {
+		/* format portrait ; coins arrondis et remplissage « cover » du média standard */
 		aspect-ratio: 4 / 5;
-		/* liseré chaud très fin + ombre douce : la photo se lit comme une fenêtre */
-		border: 1px solid rgba(238, 175, 52, 0.22);
-		box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 	}
 	.manifest-retrat figcaption {
 		margin-top: 0.7rem;
