@@ -2,7 +2,7 @@
 	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { page } from '$app/state';
-	import { ambianca, ARMONIZADAS } from '$lib/stores/ambianca.svelte.js';
+	import { ambianca, armonizada } from '$lib/stores/ambianca.svelte.js';
 	import SiteFooter from '$lib/components/SiteFooter.svelte';
 	import TornarAmont from '$lib/components/TornarAmont.svelte';
 	// l'édition sur place (bouton, barre, panneau) : ne montre rien tant
@@ -17,7 +17,7 @@
 	// fond crème), sans toucher au choix mémorisé du visiteur.
 	let id = $derived(page.route.id ?? '');
 	$effect(() => {
-		ambianca.forçarClar = !ARMONIZADAS.includes(id);
+		ambianca.forçarClar = !armonizada(id);
 	});
 	// Pied de page partout, sauf l'administration (l'accueil l'a aussi depuis
 	// qu'il est passé dans le cadre commun, 2026-10-07). L'essai de la refonte

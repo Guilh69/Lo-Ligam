@@ -109,10 +109,10 @@
 
 <style>
 	.block {
-		background: white;
+		background: var(--l-carta);
 		border-radius: 20px;
 		padding: 1.25rem 1.4rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 	}
 
 	.block-head {
@@ -126,20 +126,20 @@
 		margin: 0;
 		font-family: var(--font-heading);
 		font-size: 1.15rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.counter {
 		font-size: 0.8rem;
 		font-weight: 600;
-		color: var(--color-teal);
+		color: var(--l-teal);
 		white-space: nowrap;
 	}
 
 	.intro {
 		margin: 0.4rem 0 0;
 		font-size: 0.88rem;
-		color: rgba(58, 42, 32, 0.75);
+		color: color-mix(in srgb, var(--t-tinta) 75%, transparent);
 		line-height: 1.5;
 	}
 
@@ -156,7 +156,7 @@
 		align-self: center;
 		max-width: 90%;
 		font-size: 0.85rem;
-		color: rgba(58, 42, 32, 0.65);
+		color: color-mix(in srgb, var(--t-tinta) 65%, transparent);
 		text-align: center;
 		font-style: italic;
 	}
@@ -174,7 +174,7 @@
 
 	.bulle.eux {
 		align-self: flex-start;
-		background: color-mix(in srgb, var(--color-teal) 10%, white);
+		background: color-mix(in srgb, var(--l-teal) 10%, var(--l-carta));
 		border-bottom-left-radius: 4px;
 	}
 
@@ -190,11 +190,11 @@
 		font-weight: 700;
 		letter-spacing: 0.04em;
 		text-transform: uppercase;
-		color: var(--color-teal);
+		color: var(--l-teal);
 	}
 
 	.bulle.tu .qui {
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.choix {
@@ -208,7 +208,7 @@
 
 	.consigne {
 		font-size: 0.78rem;
-		color: rgba(58, 42, 32, 0.6);
+		color: color-mix(in srgb, var(--t-tinta) 60%, transparent);
 	}
 
 	.options {
@@ -219,12 +219,12 @@
 	}
 
 	.opt {
-		border: 1.5px dashed color-mix(in srgb, var(--color-brick) 50%, white);
-		background: white;
+		border: 1.5px dashed color-mix(in srgb, var(--l-marca) 50%, var(--l-carta));
+		background: var(--l-carta);
 		border-radius: 14px;
 		padding: 0.5rem 0.85rem;
 		font-size: 0.95rem;
-		color: var(--color-text);
+		color: var(--t-tinta);
 		cursor: pointer;
 		transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
 	}
@@ -232,13 +232,13 @@
 	.opt:hover:not(:disabled) {
 		transform: translateY(-1px);
 		border-style: solid;
-		border-color: var(--color-brick);
+		border-color: var(--l-marca);
 	}
 
 	.opt.faux {
 		border-color: transparent;
-		background: rgba(58, 42, 32, 0.05);
-		color: rgba(58, 42, 32, 0.4);
+		background: color-mix(in srgb, var(--t-tinta) 5%, transparent);
+		color: color-mix(in srgb, var(--t-tinta) 40%, transparent);
 		text-decoration: line-through;
 		cursor: default;
 	}
@@ -247,7 +247,7 @@
 		margin: 0;
 		max-width: 100%;
 		font-size: 0.86rem;
-		color: rgba(58, 42, 32, 0.75);
+		color: color-mix(in srgb, var(--t-tinta) 75%, transparent);
 		text-align: right;
 		animation: arriva 260ms ease-out;
 	}
@@ -255,7 +255,7 @@
 	.explain {
 		align-self: flex-end;
 		font-size: 0.82rem;
-		color: var(--color-olive, #6b7a3a);
+		color: var(--l-bon);
 		text-align: right;
 		max-width: 90%;
 	}
@@ -263,10 +263,10 @@
 	.fin {
 		margin: 1rem 0 0;
 		padding-top: 0.8rem;
-		border-top: 1px dashed rgba(58, 42, 32, 0.15);
+		border-top: 1px dashed color-mix(in srgb, var(--t-tinta) 15%, transparent);
 		font-size: 0.92rem;
 		line-height: 1.5;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	@keyframes arriva {

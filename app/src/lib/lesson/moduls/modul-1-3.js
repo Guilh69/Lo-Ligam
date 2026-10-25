@@ -225,7 +225,7 @@ export const modul13 = {
 					type: 'carta',
 					title: 'Ont es ? (où est-ce ?)',
 					intro:
-						'Voici le pays d’òc. On te donne une ville en français : touche-la sur la carte et découvre son nom occitan. La zone plus foncée est celle du languedocien, l’occitan de ce cours.',
+						'Voici le pays d’òc. On te donne une ville en français : touche-la sur la carte et découvre son nom occitan. La zone la plus dorée est celle du languedocien, l’occitan de ce cours.',
 					choses: ['noms-vilas'],
 					items: [
 						{ fr: 'Toulouse', oc: 'Tolosa', sound: 'tou-LOU-zo', lon: 1.443, lat: 43.604, cap: 'n' },

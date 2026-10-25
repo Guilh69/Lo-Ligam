@@ -158,10 +158,10 @@
 
 <style>
 	.block {
-		background: white;
+		background: var(--l-carta);
 		border-radius: 20px;
 		padding: 1.25rem 1.4rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 	}
 
 	.block-head {
@@ -175,20 +175,20 @@
 		margin: 0;
 		font-family: var(--font-heading);
 		font-size: 1.15rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.counter {
 		font-size: 0.8rem;
 		font-weight: 600;
-		color: var(--color-teal);
+		color: var(--l-teal);
 		white-space: nowrap;
 	}
 
 	.intro {
 		margin: 0.4rem 0 0;
 		font-size: 0.88rem;
-		color: rgba(58, 42, 32, 0.75);
+		color: color-mix(in srgb, var(--t-tinta) 75%, transparent);
 		line-height: 1.5;
 	}
 
@@ -203,13 +203,13 @@
 	}
 
 	.ont {
-		color: var(--color-teal);
+		color: var(--l-teal);
 	}
 
 	.vila-fr {
 		font-family: var(--font-heading);
 		font-size: 1.35rem;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	/* la carte prend toute la largeur de la carte blanche, même sur téléphone */
@@ -223,14 +223,14 @@
 	}
 
 	.zona {
-		fill: color-mix(in srgb, var(--color-gold) 30%, white);
-		stroke: color-mix(in srgb, var(--color-gold) 30%, white);
+		fill: color-mix(in srgb, var(--color-gold) 30%, var(--l-carta));
+		stroke: color-mix(in srgb, var(--color-gold) 30%, var(--l-carta));
 		stroke-width: 1;
 	}
 
 	.zona.lengadoc {
-		fill: color-mix(in srgb, var(--color-gold) 48%, white);
-		stroke: color-mix(in srgb, var(--color-gold) 48%, white);
+		fill: color-mix(in srgb, var(--color-gold) 48%, var(--l-carta));
+		stroke: color-mix(in srgb, var(--color-gold) 48%, var(--l-carta));
 	}
 
 	.zone-toucar {
@@ -238,15 +238,15 @@
 	}
 
 	.ponch {
-		fill: var(--color-teal);
-		stroke: white;
+		fill: var(--l-teal);
+		stroke: var(--l-carta);
 		stroke-width: 2.5;
 		transition: r 200ms ease;
 	}
 
 	.punt:hover .ponch,
 	.punt:focus-visible .ponch {
-		fill: var(--color-brick);
+		fill: var(--l-marca);
 	}
 
 	/* au doigt ou à la souris, pas de cadre ; au clavier, un cercle rouge */
@@ -256,21 +256,21 @@
 	}
 
 	.punt:focus-visible .zone-toucar {
-		stroke: var(--color-brick);
+		stroke: var(--l-marca);
 		stroke-width: 2;
 	}
 
 	.punt.trobat .ponch {
 		fill: var(--color-gold);
-		stroke: var(--color-brick);
+		stroke: var(--l-marca);
 	}
 
 	.etiqueta {
 		font-family: var(--font-heading);
 		font-size: 21px;
-		fill: var(--color-text);
+		fill: var(--t-tinta);
 		paint-order: stroke;
-		stroke: white;
+		stroke: var(--l-carta);
 		stroke-width: 5px;
 		stroke-linejoin: round;
 		pointer-events: none;
@@ -279,9 +279,9 @@
 	.bulle-fr {
 		font-size: 20px;
 		font-weight: 600;
-		fill: var(--color-teal);
+		fill: var(--l-teal);
 		paint-order: stroke;
-		stroke: white;
+		stroke: var(--l-carta);
 		stroke-width: 4px;
 		pointer-events: none;
 		animation: aparéisser 1.8s ease forwards;
@@ -302,23 +302,23 @@
 		align-items: baseline;
 		gap: 0.2rem 0.6rem;
 		padding: 0.35rem 0;
-		border-bottom: 1px solid rgba(58, 42, 32, 0.07);
+		border-bottom: 1px solid color-mix(in srgb, var(--t-tinta) 7%, transparent);
 	}
 
 	.t-oc {
 		font-family: var(--font-heading);
 		font-size: 1.1rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.t-sound {
 		font-size: 0.85rem;
-		color: var(--color-teal);
+		color: var(--l-teal);
 	}
 
 	.t-fr {
 		font-size: 0.85rem;
-		color: rgba(58, 42, 32, 0.65);
+		color: color-mix(in srgb, var(--t-tinta) 65%, transparent);
 	}
 
 	.lien {
@@ -327,7 +327,7 @@
 	}
 
 	.lien a {
-		color: var(--color-brick);
+		color: var(--l-marca);
 		font-weight: 600;
 	}
 

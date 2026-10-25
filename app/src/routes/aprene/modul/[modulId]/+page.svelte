@@ -4,11 +4,13 @@
 	import { get } from 'svelte/store';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import HomeIcon from '$lib/components/HomeIcon.svelte';
+	import Crotz from '$lib/components/Crotz.svelte';
 	import FougasseIcon from '$lib/components/FougasseIcon.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { session, authReady } from '$lib/authStore';
-	import { esAdmin, adminSabut } from '$lib/adminStore';
+	import { esAdmin } from '$lib/adminStore';
+	import { PALETAS } from '$lib/apren/teulas.js';
+	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
 	import QcmBlock from '$lib/lesson/QcmBlock.svelte';
@@ -23,9 +25,11 @@
 	import CausidaBlock from '$lib/lesson/CausidaBlock.svelte';
 	import CartaBlock from '$lib/lesson/CartaBlock.svelte';
 	import CartaTitol from '$lib/lesson/CartaTitol.svelte';
+	import { rich } from '$lib/lesson/rich.js';
 	import { demarrerCarnet, noterExercice } from '$lib/carnet/carnet.svelte.js';
 
 	let modul = $derived(moduls[$page.params.modulId]);
+	let fr = $derived(langStore.current === 'fr');
 	let posicion = $derived(ordre.indexOf($page.params.modulId));
 	let precedent = $derived(posicion > 0 ? ordre[posicion - 1] : null);
 	let seguent = $derived(posicion >= 0 && posicion < ordre.length - 1 ? ordre[posicion + 1] : null);
@@ -250,79 +254,78 @@
 	</svg>
 {/snippet}
 
-<div class="page-bg" aria-hidden="true">
-	<span class="blob blob-gold"></span>
-	<span class="blob blob-teal"></span>
-</div>
-
-<main class="screen">
-	{#if !modul}
-		<section class="missing">
-			<p>Ce module n'existe pas (encore).</p>
-			<a class="btn-primary" href="/aprene">Tornar als moduls</a>
-		</section>
-	{:else if !modul.relu && !$adminSabut}
-		<!-- on attend de savoir si c'est Romain avant d'afficher un module pas encore relu -->
-	{:else if !modul.relu && !$esAdmin}
-		<section class="missing">
-			<p>Ce module est en préparation : il ouvrira bientôt.</p>
-			<a class="btn-primary" href="/aprene">Tornar als moduls</a>
-		</section>
-	{:else}
-		{#if !modul.relu}
-			<p class="en-relecture">En relecture : visible seulement pour toi, connecté en administrateur.</p>
+<div class="pagina">
+	<header class="barra">
+		<a class="acuelh" href="/" aria-label={fr ? 'Accueil' : 'Acuèlh'}>
+			<Crotz talha={30} teula />
+			<span>{fr ? 'Accueil' : 'Acuèlh'}</span>
+		</a>
+		{#if modul && view !== 'list'}
+			<button type="button" class="tornar" onclick={() => openSession('list')}>
+				<Icona nom="precedent" size="1em" /> {fr ? 'Sommaire' : 'Somari'}
+			</button>
+		{:else}
+			<a class="tornar" href="/apren"><Icona nom="precedent" size="1em" /> S’apren</a>
 		{/if}
-		<header class="lesson-top">
-			{#if view === 'list'}
-				<a class="close" href="/aprene" aria-label="Tornar als moduls"><Icona nom="fermer" /></a>
-			{:else}
-				<button type="button" class="close" onclick={() => openSession('list')} aria-label="Tornar al somari"><Icona nom="fermer" /></button>
-			{/if}
-			<a class="home-link" href="/" aria-label="Tornar a l'acuèlh">
-				<HomeIcon size={21} />
-			</a>
-			<div class="spacer"></div>
-			<div class="points-pill" class:pulse={pillPulse} bind:this={pointsPillEl}>
+		<span class="espaci"></span>
+		{#if modul}
+			<div class="points-pill" class:pulse={pillPulse} bind:this={pointsPillEl} aria-label="{points} fogaças">
 				<FougasseIcon size={20} /> {points}
 			</div>
 			<button
 				type="button"
-				class="mute"
+				class="rond"
 				onclick={() => (muted = !muted)}
 				aria-label={muted ? 'Activar lo son' : 'Copar lo son'}
 			>
 				{@render speakerIcon(!muted)}
 			</button>
-		</header>
+		{/if}
+	</header>
 
-		{#if view === 'list'}
+	<main class="screen" class:larga={view === 'list'}>
+		{#if !modul}
+			<section class="missing">
+				<p>Ce module n'existe pas (encore).</p>
+				<a class="btn-primary" href="/apren">Tornar a S’apren</a>
+			</section>
+		{:else if view === 'list'}
 			{#if modul.ouverture}
 				<CartaTitol ouverture={modul.ouverture} />
+			{:else}
+				<p class="unitat-rapel">{modul.unitat}</p>
 			{/if}
+
+			<!-- Les quatre modules de l'unité, pour voir où l'on est -->
+			<nav class="fil" aria-label="Modules de l’unité">
+				{#each ordre as id}
+					<a href="/aprene/modul/{id}" class:actual={id === $page.params.modulId} aria-current={id === $page.params.modulId ? 'page' : undefined}>
+						<b>{id.replace('-', '.')}</b> <span lang="oc">{moduls[id].oc}</span>
+					</a>
+				{/each}
+			</nav>
+
 			<section class="modul-head">
-				<p class="kicker">{modul.nivel} · {modul.unitat}</p>
-				{#if modul.ouverture}
-					<h2 class="title">{modul.oc}</h2>
-				{:else}
-					<h1 class="title">{modul.oc}</h1>
-				{/if}
-				<p class="subtitle"><em>({modul.fr})</em></p>
-				<p class="cando">🎯 {modul.cando}</p>
+				<p class="kicker">{modul.nivel}</p>
+				<svelte:element this={modul.ouverture ? 'h2' : 'h1'} class="title" lang="oc">{modul.oc}</svelte:element>
+				<p class="subtitle">({modul.fr})</p>
+				<p class="cando">{modul.cando}</p>
 				<p class="durada">{modul.durada}</p>
 			</section>
 
-			<div class="sessions">
+			<ol class="teulas">
 				{#each modul.sessions as s, i}
-					<button type="button" class="session-card" class:done={done[i]} onclick={() => openSession(i)}>
-						<span class="session-num" aria-hidden="true">{#if done[i]}<Icona nom="valide" />{:else}{i + 1}{/if}</span>
-						<span class="session-titles">
-							<span class="session-title">{s.title}{#if s.fr} <em class="session-fr">({s.fr})</em>{/if}</span>
-							<span class="session-min">{s.minutes} min</span>
-						</span>
-						<span class="session-go" aria-hidden="true"><Icona nom="suivant" /></span>
-					</button>
+					{@const [fons, tinta] = PALETAS.charta[i % PALETAS.charta.length]}
+					<li class="teula" class:done={done[i]} style:--fons={fons} style:--tinta={tinta} style:--i={i}>
+						<button type="button" onclick={() => openSession(i)}>
+							<span class="num" aria-hidden="true">{#if done[i]}<Icona nom="valide" size="0.9em" />{:else}{String(i + 1).padStart(2, '0')}{/if}</span>
+							<span class="nom" lang="oc">{s.title}</span>
+							{#if s.fr}<span class="nom-fr">({s.fr})</span>{/if}
+							<span class="min">{s.minutes} min{done[i] ? ' · fach' : ''}</span>
+						</button>
+					</li>
 				{/each}
-			</div>
+			</ol>
 
 			{#if allDone}
 				<p class="all-done">
@@ -336,26 +339,24 @@
 				{/if}
 			{/if}
 
-			<nav class="modul-nav" aria-label="Navigation entre modules">
-				{#if precedent}
-					<a href="/aprene/modul/{precedent}"><Icona nom="precedent" /> {moduls[precedent].nivel.split('·')[1] ?? precedent}</a>
-				{:else}
-					<span></span>
-				{/if}
-				{#if seguent && !allDone}
-					<a href="/aprene/modul/{seguent}">{moduls[seguent].nivel.split('·')[1] ?? seguent} <Icona nom="suivant" /></a>
-				{/if}
-			</nav>
+			<!-- Romain relit en jouant : les questions de la fiche, sous ses yeux, tant que le module n'est pas relu -->
+			{#if $esAdmin && !modul.relu && modul.notesRelecture?.length}
+				<details class="questions-relecture" open>
+					<summary>Questions de relecture <em>(pour toi seul)</em></summary>
+					<ol>
+						{#each modul.notesRelecture as n}<li>{@html rich(n)}</li>{/each}
+					</ol>
+					<p>Réponds de vive voix à Claude, avec le numéro du module et de la question.</p>
+				</details>
+			{/if}
 
-			<p class="draft-note">
-				⚠️ Contenu en cours de validation linguistique (dicodòc / lo Congrès). L'audio arrive.
-			</p>
+			<p class="draft-note">Contenu en cours de validation linguistique. L’audio arrive.</p>
 		{:else}
 			{@const s = modul.sessions[view]}
 			<section class="session-head">
-				<p class="kicker">{modul.oc} · Étape {view + 1}/{modul.sessions.length}</p>
-				<h1 class="session-h">{s.title}</h1>
-				{#if s.fr}<p class="session-fr-h"><em>({s.fr})</em></p>{/if}
+				<p class="kicker"><span lang="oc">{modul.oc}</span> · {fr ? 'Étape' : 'Etapa'} {view + 1}/{modul.sessions.length}</p>
+				<h1 class="session-h"><b>{String(view + 1).padStart(2, '0')}</b> <span lang="oc">{s.title}</span></h1>
+				{#if s.fr}<p class="session-fr-h">({s.fr})</p>{/if}
 				<p class="session-min-line">~{s.minutes} min · à ton rythme</p>
 			</section>
 
@@ -417,89 +418,67 @@
 				{/key}
 			{/if}
 		{/if}
-	{/if}
-</main>
+	</main>
+</div>
 
 <style>
-	.page-bg {
-		position: fixed;
-		inset: 0;
-		overflow: hidden;
-		z-index: -1;
-		background: radial-gradient(circle at 50% 0%, #faf3e6 0%, var(--color-cream) 60%);
+	/* Le cadre des pages intérieures, comme S'apren (harmonisé le 2026-10-25) :
+	   fond du thème, une chaleur de braise en haut à gauche, rien qui bouge */
+	.pagina {
+		--marge: clamp(1rem, 4vw, 3.4rem);
+		min-height: 100vh;
+		color: var(--t-tinta);
+		background:
+			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			var(--t-fons);
+		overflow-x: clip;
 	}
 
-	.blob {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(70px);
-	}
-
-	.blob-gold {
-		width: 380px;
-		height: 380px;
-		background: var(--color-gold);
-		opacity: 0.3;
-		top: -120px;
-		left: -100px;
-	}
-
-	.blob-teal {
-		width: 340px;
-		height: 340px;
-		background: var(--color-teal);
-		opacity: 0.18;
-		bottom: -100px;
-		right: -100px;
-	}
-
-	.screen {
-		position: relative;
-		min-height: 100dvh;
-		max-width: 44rem;
-		margin: 0 auto;
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-		padding: 1.25rem 1.25rem 4rem;
-	}
-
-	.lesson-top {
+	/* La barre : le logo marqué « Acuèlh », le retour, les fougasses et le son */
+	.barra {
 		display: flex;
 		align-items: center;
-		gap: 0.7rem;
+		gap: var(--esp-12);
+		padding: 1.3rem var(--marge);
 	}
 
-	.close {
+	.acuelh {
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		width: 2.1rem;
-		height: 2.1rem;
-		border: none;
-		border-radius: 50%;
-		background: rgba(58, 42, 32, 0.07);
-		color: var(--color-text);
-		font-size: 1.3rem;
-		line-height: 1;
+		gap: 0.55rem;
+		color: var(--t-tinta);
+		font-family: var(--font-logo);
+		font-size: 1.05rem;
+		text-decoration: none;
+	}
+
+	.acuelh:hover span {
+		text-decoration: underline 2px var(--t-accion);
+		text-underline-offset: 4px;
+	}
+
+	.tornar {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin-left: var(--esp-8);
+		padding: 0.4rem 0.85rem;
+		border: 1px solid var(--t-linha);
+		border-radius: 999px;
+		background: none;
+		color: var(--t-tinta);
+		font: inherit;
+		font-size: 0.9rem;
 		text-decoration: none;
 		cursor: pointer;
 	}
 
-	.close:hover {
-		background: rgba(58, 42, 32, 0.13);
+	.tornar:hover {
+		border-color: var(--t-aur);
 	}
 
-	.home-link {
-		display: flex;
-		width: 1.45rem;
-		height: 1.45rem;
-		flex-shrink: 0;
-		color: var(--color-text);
-		opacity: 0.85;
-	}
-
-	.spacer {
+	.espaci {
 		flex: 1;
 	}
 
@@ -507,13 +486,12 @@
 		display: flex;
 		align-items: center;
 		gap: 0.3rem;
-		background: rgba(238, 175, 52, 0.18);
-		color: var(--color-brick);
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 0.95rem;
 		padding: 0.35rem 0.8rem;
 		border-radius: 999px;
+		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
+		color: var(--t-aur);
+		font-family: var(--font-heading);
+		font-size: 0.95rem;
 		transition: transform 220ms ease;
 	}
 
@@ -521,27 +499,34 @@
 		transform: scale(1.18);
 	}
 
-	.mute {
+	.rond {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 2.1rem;
-		height: 2.1rem;
-		border: none;
+		width: 2.3rem;
+		height: 2.3rem;
+		border: 1px solid var(--t-linha);
 		border-radius: 50%;
-		background: rgba(58, 42, 32, 0.07);
-		color: var(--color-text);
+		background: none;
+		color: var(--t-tinta);
 		cursor: pointer;
 	}
 
-	.en-relecture {
-		margin: 0 0 1rem;
-		padding: 0.5rem 0.9rem;
-		border-radius: 12px;
-		background: var(--color-gold-light);
-		color: var(--color-text);
-		font-size: 0.9rem;
-		text-align: center;
+	.rond:hover {
+		border-color: var(--t-aur);
+	}
+
+	.screen {
+		display: flex;
+		flex-direction: column;
+		gap: var(--esp-24);
+		max-width: calc(44rem + 2 * var(--marge));
+		margin: 0 auto;
+		padding: clamp(1rem, 4vh, 2.5rem) var(--marge) var(--esp-96);
+	}
+
+	.screen.larga {
+		max-width: calc(64rem + 2 * var(--marge));
 	}
 
 	.missing {
@@ -553,190 +538,250 @@
 		align-items: center;
 	}
 
+	.unitat-rapel {
+		margin: 0;
+		font-size: 0.8rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--t-aur);
+	}
+
+	/* Le fil de l'unité : les quatre modules, celui du jour en or */
+	.fil {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--esp-8);
+	}
+
+	.fil a {
+		padding: 0.35rem 0.8rem;
+		border: 1px solid var(--t-linha);
+		border-radius: 999px;
+		color: var(--t-tinta-2);
+		font-size: 0.85rem;
+		text-decoration: none;
+	}
+
+	.fil a b {
+		font-family: var(--font-heading);
+		font-weight: 400;
+		color: var(--t-aur);
+	}
+
+	.fil a:hover {
+		border-color: var(--t-aur);
+	}
+
+	.fil a.actual {
+		border-color: var(--t-aur);
+		background: color-mix(in srgb, var(--t-aur) 14%, transparent);
+		color: var(--t-tinta);
+	}
+
 	.modul-head,
 	.session-head {
-		text-align: center;
 		animation: fade-in 450ms ease-out;
 	}
 
 	.kicker {
-		margin: 0 0 0.15rem;
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.09em;
+		margin: 0 0 var(--esp-4);
+		font-size: 0.8rem;
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
-		color: var(--color-teal);
+		color: var(--t-aur);
 	}
 
 	.title {
 		margin: 0;
 		font-family: var(--font-heading);
-		font-size: clamp(2rem, 5vw, 2.6rem);
-		font-weight: 700;
-		color: var(--color-brick);
+		font-weight: 400;
+		font-size: clamp(2.4rem, 7vw, 4.2rem);
+		line-height: 1;
+		color: var(--t-tinta);
 	}
 
 	.subtitle {
-		margin: 0.15rem 0 0;
-		color: var(--color-teal);
-		font-size: 0.95rem;
+		margin: var(--esp-8) 0 0;
+		font-size: 1.05rem;
+		color: var(--t-tinta-2);
 	}
 
 	.cando {
-		max-width: 34rem;
-		margin: 0.9rem auto 0;
+		max-width: 46ch;
+		margin: var(--esp-16) 0 0;
+		font-size: 1.05rem;
 		line-height: 1.55;
-		color: var(--color-text);
-		font-size: 0.95rem;
 	}
 
 	.durada {
-		margin: 0.4rem 0 0;
-		font-size: 0.82rem;
-		color: rgba(58, 42, 32, 0.6);
-	}
-
-	.sessions {
-		display: flex;
-		flex-direction: column;
-		gap: 0.7rem;
-		animation: fade-in 450ms ease-out;
-	}
-
-	.session-card {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		background: white;
-		border: none;
-		border-radius: 18px;
-		padding: 1rem 1.25rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
-		cursor: pointer;
-		text-align: left;
-		font: inherit;
-		transition:
-			transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
-			box-shadow 180ms ease;
-	}
-
-	.session-card:hover {
-		transform: translateY(-3px);
-		box-shadow: 0 12px 26px rgba(58, 42, 32, 0.16);
-	}
-
-	.session-card.done {
-		opacity: 0.82;
-	}
-
-	.session-num {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-		width: 2.2rem;
-		height: 2.2rem;
-		border-radius: 50%;
-		background: var(--color-gold);
-		color: var(--color-text);
-		font-family: var(--font-heading);
-		font-weight: 700;
-	}
-
-	.session-card.done .session-num {
-		background: rgba(107, 122, 58, 0.25);
-		color: var(--color-olive, #6b7a3a);
-	}
-
-	.session-titles {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-	}
-
-	.session-title {
-		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 1.02rem;
-		color: var(--color-text);
-	}
-
-	.session-fr {
-		font-family: var(--font-body);
-		font-weight: 400;
+		margin: var(--esp-8) 0 0;
 		font-size: 0.85rem;
-		color: var(--color-teal);
+		color: var(--t-tinta-2);
 	}
 
-	.session-fr-h {
-		margin: 0.1rem 0 0;
-		color: var(--color-teal);
-		font-size: 0.95rem;
+	/* Les six étapes en cases de couleur, comme les portes de S'apren */
+	.teulas {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--esp-12);
+		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
 
-	.session-min {
-		font-size: 0.8rem;
-		color: var(--color-teal);
+	.teula {
+		animation: arribar 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+		animation-delay: calc(var(--i) * 60ms);
 	}
 
-	.session-go {
-		color: var(--color-brick);
-		font-size: 1.1rem;
+	.teula button {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		width: 100%;
+		height: 100%;
+		min-height: 11rem;
+		padding: var(--esp-16) var(--esp-16) var(--esp-12);
+		border: none;
+		border-radius: 6px;
+		background: var(--fons);
+		color: var(--tinta);
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+		transition:
+			transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+			box-shadow 0.35s;
+	}
+
+	.teula button:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+	}
+
+	.teula button:focus-visible {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 3px;
+	}
+
+	.teula.done button {
+		opacity: 0.72;
+	}
+
+	.num {
+		display: flex;
+		align-items: center;
+		min-height: 2.4rem;
+		font-family: var(--font-heading);
+		font-size: 2.4rem;
+		line-height: 1;
+	}
+
+	.nom {
+		margin-top: auto;
+		padding-top: var(--esp-16);
+		font-family: var(--font-heading);
+		font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+		line-height: 1.1;
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+	}
+
+	.nom-fr {
+		margin-top: var(--esp-4);
+		font-size: 0.85rem;
+		opacity: 0.85;
+	}
+
+	.min {
+		margin-top: var(--esp-8);
+		font-size: 0.78rem;
+		opacity: 0.8;
+	}
+
+	@keyframes arribar {
+		from {
+			opacity: 0;
+			transform: translateY(14px);
+		}
 	}
 
 	.all-done {
+		margin: 0;
 		text-align: center;
 		font-family: var(--font-heading);
-		font-size: 1.05rem;
-		color: var(--color-brick);
-		margin: 0;
+		font-size: 1.2rem;
+		color: var(--t-aur);
 	}
 
 	.all-done em {
 		display: block;
-		font-family: inherit;
+		font-family: var(--font-body);
 		font-size: 0.85rem;
-		color: var(--color-teal);
+		color: var(--t-tinta-2);
 	}
 
-	.modul-nav {
-		display: flex;
-		justify-content: space-between;
-		gap: 1rem;
-	}
-
-	.modul-nav a {
-		font-size: 0.85rem;
-		color: var(--color-teal);
-		text-decoration: none;
-		font-weight: 600;
-	}
-
-	.modul-nav a:hover {
-		text-decoration: underline;
-	}
-
-	.draft-note {
-		text-align: center;
-		font-size: 0.8rem;
-		color: rgba(58, 42, 32, 0.55);
-		max-width: 30rem;
-		margin: 0 auto;
+	.questions-relecture {
+		padding: var(--esp-12) var(--esp-16);
+		border: 1px dashed var(--t-aur);
+		border-radius: 10px;
+		font-size: 0.9rem;
 		line-height: 1.5;
 	}
 
+	.questions-relecture summary {
+		font-family: var(--font-heading);
+		color: var(--t-aur);
+		cursor: pointer;
+	}
+
+	.questions-relecture ol {
+		margin: var(--esp-8) 0;
+		padding-left: 1.3rem;
+	}
+
+	.questions-relecture li + li {
+		margin-top: 0.35rem;
+	}
+
+	.questions-relecture p {
+		margin: 0;
+		color: var(--t-tinta-2);
+	}
+
+	.draft-note {
+		margin: 0;
+		font-size: 0.8rem;
+		color: var(--t-tinta-2);
+	}
+
 	.session-h {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0 0.3em;
 		margin: 0;
 		font-family: var(--font-heading);
-		font-size: clamp(1.6rem, 4vw, 2rem);
-		font-weight: 700;
-		color: var(--color-brick);
+		font-weight: 400;
+		font-size: clamp(2rem, 6vw, 3.2rem);
+		line-height: 1.05;
+	}
+
+	.session-h b {
+		font-weight: 400;
+		font-size: 0.6em;
+		color: var(--t-aur);
+	}
+
+	.session-fr-h {
+		margin: var(--esp-8) 0 0;
+		color: var(--t-tinta-2);
 	}
 
 	.session-min-line {
-		margin: 0.3rem 0 0;
+		margin: var(--esp-4) 0 0;
 		font-size: 0.85rem;
-		color: rgba(58, 42, 32, 0.6);
+		color: var(--t-tinta-2);
 	}
 
 	.blocks {
@@ -746,6 +791,7 @@
 		animation: fade-in 400ms ease-out;
 	}
 
+	/* chaque bouton est une tuile du logo : le rouge du fond, le texte crème */
 	.btn-primary {
 		align-self: center;
 		display: flex;
@@ -753,21 +799,20 @@
 		align-items: center;
 		gap: 0.1rem;
 		border: none;
-		background: var(--color-brick);
-		color: white;
+		border-radius: 6px;
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
 		font-family: var(--font-heading);
-		font-weight: 600;
-		font-size: 1.02rem;
-		padding: 0.75rem 1.8rem;
-		border-radius: 999px;
+		font-size: 1.05rem;
+		padding: 0.8rem 1.8rem;
 		cursor: pointer;
 		text-decoration: none;
-		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 180ms ease;
-		box-shadow: 0 8px 20px rgba(178, 84, 58, 0.35);
+		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1), background 180ms ease;
 	}
 
 	.btn-primary:hover {
 		transform: translateY(-2px);
+		background: var(--t-accion-viu);
 	}
 
 	.finish {
@@ -779,10 +824,10 @@
 	}
 
 	.unlock-hint {
+		margin: 0.4rem 0 0;
 		text-align: center;
 		font-size: 0.85rem;
-		color: rgba(58, 42, 32, 0.55);
-		margin: 0.4rem 0 0;
+		color: var(--t-tinta-2);
 	}
 
 	.flying-fogassa {
@@ -809,8 +854,8 @@
 	}
 
 	.finish-sub {
+		font-family: var(--font-body);
 		font-size: 0.72rem;
-		font-weight: 400;
 		opacity: 0.85;
 	}
 
@@ -825,17 +870,38 @@
 		}
 	}
 
+	/* sur téléphone : deux cases par ligne */
+	@media (max-width: 640px) {
+		.teulas {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: var(--esp-8);
+		}
+		.teula button {
+			min-height: 9.5rem;
+			padding: var(--esp-12);
+		}
+		.num {
+			font-size: 2rem;
+		}
+		.barra {
+			gap: var(--esp-8);
+		}
+		.tornar {
+			margin-left: 0;
+		}
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.modul-head,
 		.session-head,
-		.sessions,
+		.teula,
 		.blocks,
 		.block-slot,
 		.flying-fogassa {
 			animation: none;
 		}
 
-		.session-card,
+		.teula button,
 		.btn-primary,
 		.points-pill {
 			transition: none;

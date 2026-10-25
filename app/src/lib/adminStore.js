@@ -1,7 +1,7 @@
 // Lo Ligam — « l'utilisateur courant est-il administrateur ? »
 //
 // Sert à afficher ou masquer le lien vers l'espace d'administration, et à
-// montrer à Romain seul les modules pas encore relus (décision du 2026-10-25).
+// montrer à Romain seul les questions de relecture des modules (2026-10-25).
 // Ce n'est pas une protection : n'importe qui peut lire ce fichier et appeler
 // la base directement. Ce qui protège, ce sont les politiques RLS, qui
 // refusent toute écriture à qui n'est pas administrateur.
