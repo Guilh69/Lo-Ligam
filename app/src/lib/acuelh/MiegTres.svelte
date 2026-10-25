@@ -118,6 +118,7 @@
 	{:else}
 		{#each ENTITATS as e, i (e.sec.id)}
 			<section class="chapitre" data-revela style="--color: {e.color}; --color-prec: {colorPrec(i)}">
+				<span class="chap-brasa" aria-hidden="true"></span>
 				<div class="chap-in">
 					<div class="chap-tèxt">
 						<h2 class="chap-cap"><b>{e.sec.n}</b><span>{fr ? e.sec.fr : e.sec.oc}</span></h2>
@@ -181,11 +182,26 @@
 	.banda .sota { margin-top: 0.6rem; }
 
 	/* ——— Piste 5 : chapitres plein écran ——— */
-	.chapitre { position: relative; min-height: 100svh; display: grid; place-items: center; background: var(--color); }
+	.chapitre { position: relative; min-height: 100svh; display: grid; place-items: center; background: var(--color); overflow: clip; }
 	/* chaque chapitre émerge en douceur de la couleur précédente (ou de la braise) ; le dernier ressort vers la braise */
-	.chapitre::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 28vh; background: linear-gradient(to bottom, var(--color-prec, transparent), var(--color)); }
-	.chapitre:last-child::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 26vh; background: linear-gradient(to top, transparent, var(--color)); }
-	.chap-in { position: relative; z-index: 1; width: 100%; max-width: calc(72rem + 2 * var(--marge)); padding: 8vh var(--marge); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+	.chapitre::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 28vh; z-index: 0; background: linear-gradient(to bottom, var(--color-prec, transparent), var(--color)); }
+	.chapitre:last-child::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 26vh; z-index: 0; background: linear-gradient(to top, transparent, var(--color)); }
+	/* la braise de l'accueil, teintée de la couleur du chapitre : deux lueurs dorées
+	   et un grain chaud, pour rester dans le même monde que le reste du site */
+	.chap-brasa { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+		background:
+			radial-gradient(ellipse 85% 65% at 15% 10%, rgba(255, 216, 138, 0.16), transparent 60%),
+			radial-gradient(ellipse 65% 55% at 88% 85%, rgba(255, 186, 96, 0.12), transparent 60%); }
+	.chap-brasa::before, .chap-brasa::after { content: ''; position: absolute; border-radius: 50%; filter: blur(42px); }
+	.chap-brasa::before { width: 70vmax; height: 46vmax; left: -16vmax; top: -18vmax; background: radial-gradient(closest-side, rgba(255, 205, 120, 0.33), transparent); }
+	.chap-brasa::after { width: 55vmax; height: 38vmax; right: -16vmax; bottom: -14vmax; background: radial-gradient(closest-side, rgba(238, 175, 52, 0.22), transparent); }
+	.chap-in { position: relative; z-index: 2; width: 100%; max-width: calc(72rem + 2 * var(--marge)); padding: 8vh var(--marge); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+	@media (prefers-reduced-motion: no-preference) {
+		.anim .chap-brasa::before { animation: deriva-a 28s ease-in-out infinite alternate; will-change: transform; }
+		.anim .chap-brasa::after { animation: deriva-b 36s ease-in-out infinite alternate; will-change: transform; }
+	}
+	@keyframes deriva-a { to { transform: translate(8vw, 6vh) scale(1.12); } }
+	@keyframes deriva-b { to { transform: translate(-6vw, -5vh) scale(0.9); } }
 	.chap-cap { display: flex; align-items: baseline; gap: 1rem; margin: 0 0 1.2rem; }
 	.chap-cap b { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1; color: var(--crema); opacity: 0.8; }
 	.chap-cap span { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(3rem, 7vw, 6rem); line-height: 0.95; color: var(--crema); }
