@@ -24,6 +24,10 @@ const csp = {
 			'data:',
 			'blob:',
 			'https://*.supabase.co', // designs, cartes et vidéos téléversés
+			// photos et pochettes de Deezer, affichées seulement dans l'espace
+			// musique, après l'accord du visiteur (2026-10-25)
+			'https://cdn-images.dzcdn.net',
+			'https://e-cdns-images.dzcdn.net',
 			// Fonds de carte, tous européens : rendu occitan par OSM-bzh,
 			// relief par OpenTopoMap (Allemagne), photos aériennes par l'IGN
 			// (France) et le PNOA (Espagne). EOX retiré : licence non commerciale.
@@ -44,7 +48,7 @@ const csp = {
 		// lance l'écoute sur la carte
 		'media-src': ['self', 'https://*.supabase.co', 'https://atlas.lisn.upsaclay.fr'],
 		// lecteurs officiels de musique, chargés au clic après accord (Òbras, 2026-10-25)
-		'frame-src': ['https://www.youtube-nocookie.com', 'https://www.canva.com', 'https://widget.deezer.com'],
+		'frame-src': ['https://www.youtube-nocookie.com', 'https://www.canva.com', 'https://bandcamp.com', 'https://widget.deezer.com'],
 		'object-src': ['none'],
 		'base-uri': ['self'],
 		'form-action': ['self'],

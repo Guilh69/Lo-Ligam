@@ -56,7 +56,14 @@ export function pictoPer(href = '') {
 	// les portes de Se parla (2026-10-25)
 	if (href.startsWith('/carta')) return 'carta';
 	if (href.startsWith('/wiki')) return 'wiki';
-	if (href.startsWith('/obras#musicas')) return 'musica';
+	if (href.startsWith('/obras#musicas') || href.startsWith('/ensag/musica')) return 'musica';
+	// maquette d'Òbras par art et de Médias (2026-10-25)
+	if (href.startsWith('/ensag/medias')) return 'medias';
+	if (href.startsWith('/ensag/literatura')) return 'literatura';
+	if (href.includes('#cinema')) return 'cinema';
+	if (href.includes('#afichas')) return 'pintura';
+	if (href.includes('#scena')) return 'scena';
+	if (href.startsWith('/ensag/obras')) return 'obras';
 	if (href.startsWith('/obras')) return 'obras';
 	if (href.startsWith('/articles')) return 'articles';
 	// les cases d'Amassa (2026-10-25)

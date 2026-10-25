@@ -82,10 +82,10 @@
 
 <style>
 	.block {
-		background: white;
+		background: var(--l-carta);
 		border-radius: 20px;
 		padding: 1.25rem 1.4rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 	}
 
 	.block-head {
@@ -99,20 +99,20 @@
 		margin: 0;
 		font-family: var(--font-heading);
 		font-size: 1.15rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.counter {
 		font-size: 0.8rem;
 		font-weight: 600;
-		color: var(--color-teal);
+		color: var(--l-teal);
 		white-space: nowrap;
 	}
 
 	.intro {
 		margin: 0.4rem 0 0;
 		font-size: 0.88rem;
-		color: rgba(58, 42, 32, 0.75);
+		color: color-mix(in srgb, var(--t-tinta) 75%, transparent);
 		line-height: 1.5;
 	}
 
@@ -124,18 +124,18 @@
 	.question {
 		margin: 0 0 0.5rem;
 		line-height: 1.55;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.built {
 		min-height: 2.4rem;
 		margin: 0 0 0.6rem;
 		padding: 0.5rem 0.9rem;
-		background: rgba(58, 42, 32, 0.05);
+		background: color-mix(in srgb, var(--t-tinta) 5%, transparent);
 		border-radius: 12px;
 		font-family: var(--font-heading);
 		font-size: 1.05rem;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.built.complete {
@@ -153,19 +153,19 @@
 	}
 
 	.tile {
-		border: 1.5px solid rgba(58, 42, 32, 0.18);
-		background: white;
+		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 18%, transparent);
+		background: var(--l-carta);
 		border-radius: 12px;
 		padding: 0.45rem 0.8rem;
 		font-size: 0.98rem;
-		color: var(--color-text);
+		color: var(--t-tinta);
 		cursor: pointer;
 		transition: transform 150ms ease, opacity 150ms ease;
 	}
 
 	.tile:hover:not(:disabled) {
 		transform: translateY(-1px);
-		border-color: var(--color-teal);
+		border-color: var(--l-teal);
 	}
 
 	.tile.used {
@@ -175,13 +175,13 @@
 
 	.tile.wrong {
 		animation: shake 260ms ease;
-		border-color: var(--color-brick);
+		border-color: var(--l-marca);
 	}
 
 	.explain {
 		margin: 0.55rem 0 0;
 		font-size: 0.88rem;
-		color: var(--color-olive, #6b7a3a);
+		color: var(--l-bon);
 		line-height: 1.5;
 	}
 

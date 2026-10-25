@@ -244,7 +244,11 @@ export function cambiar(clau, patch, { tipe = 'text', lista: l = null, tot_d_un_
 export function apondre(clauLista, tipe, modèl = {}, enfants = []) {
 	const existents = lista(clauLista);
 	const ordre = (existents.at(-1)?.ordre ?? 0) + 1;
-	const clau = `${clauLista}.${Date.now().toString(36)}`;
+	// (plusieurs ajouts dans la même milliseconde, comme les liens collés d'un
+	// coup : la clé suivante, sinon le second écraserait le premier)
+	let t = Date.now();
+	while (element(`${clauLista}.${t.toString(36)}`)) t++;
+	const clau = `${clauLista}.${t.toString(36)}`;
 	cambiar(clau, { ordre, ...modèl }, { tipe, lista: clauLista, tot_d_un_còp: true });
 	for (const [sufix, t, m] of enfants) cambiar(`${clau}.${sufix}`, m, { tipe: t, lista: clau, tot_d_un_còp: true });
 	// le panneau s'ouvre aussitôt sur le nouvel élément (ou son premier texte)

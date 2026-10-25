@@ -22,7 +22,13 @@ import { browser } from '$app/environment';
 
 // Pages harmonisées avec la charte (les autres restent en clair). COPIE dans
 // src/app.html (script de départ), à tenir identique.
-export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/ideas']; // harmonisées le 2026-10-07 : accueil, mots, carte ; Mon istòria, S'apren et sa page visio le 2026-10-24 ; Se parla, Amassa et la boîte à idées le 2026-10-25
+export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/ideas', '/obras', '/ensag/parla', '/ensag/obras', '/ensag/medias', '/ensag/literatura']; // harmonisées le 2026-10-07 : accueil, mots, carte ; Mon istòria, S'apren et sa page visio le 2026-10-24 ; Se parla, Amassa, la boîte à idées et Òbras le 2026-10-25, et les maquettes de Se parla, Òbras par art et Médias
+
+// Les modules de leçon (/aprene/modul/1-1…) le 2026-10-25 : une famille de
+// pages, reconnue par son début (adresse réelle ou route de SvelteKit) ;
+// de même les groupes d'Amassa (/grops…), le 2026-10-25.
+export const armonizada = (cami) =>
+	ARMONIZADAS.includes(cami) || cami.startsWith('/aprene/modul/') || cami.startsWith('/grops');
 
 const CLAU = { tema: 'lo-ligam-tema', dalt: 'lo-ligam-dalt', fons: 'lo-ligam-fons', leugier: 'lo-ligam-leugier' };
 const TEMAS = ['sorne', 'clar', 'sistema'];
@@ -140,7 +146,7 @@ export const ambianca = {
 // module est évalué deux fois.
 if (browser && !G.__loLigamAmbiancaLegit) {
 	G.__loLigamAmbiancaLegit = true;
-	e.forçarClar = !ARMONIZADAS.includes(location.pathname);
+	e.forçarClar = !armonizada(location.pathname);
 	const t = legir(CLAU.tema);
 	if (TEMAS.includes(t)) e.tema = t;
 	e.dalt = legir(CLAU.dalt) === 'on';

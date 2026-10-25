@@ -36,23 +36,23 @@
 
 <style>
 	.block {
-		background: white;
+		background: var(--l-carta);
 		border-radius: 20px;
 		padding: 1.25rem 1.4rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 	}
 
 	.block-title {
 		margin: 0;
 		font-family: var(--font-heading);
 		font-size: 1.15rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.intro {
 		margin: 0.4rem 0 0;
 		font-size: 0.85rem;
-		color: rgba(58, 42, 32, 0.7);
+		color: color-mix(in srgb, var(--t-tinta) 70%, transparent);
 	}
 
 	.chunks {
@@ -75,7 +75,7 @@
 
 	.listen {
 		border: none;
-		background: rgba(255, 255, 255, 0.7);
+		background: color-mix(in srgb, var(--l-carta) 70%, transparent);
 		border-radius: 999px;
 		padding: 0.2rem 0.45rem;
 		font-size: 0.85rem;
@@ -85,11 +85,11 @@
 	}
 
 	.listen.active {
-		color: var(--color-brick);
+		color: var(--l-marca);
 		opacity: 1;
 		cursor: pointer;
-		background: white;
-		box-shadow: 0 2px 8px rgba(58, 42, 32, 0.15);
+		background: var(--l-carta);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 	}
 
 	.c-body {
@@ -102,17 +102,17 @@
 		font-family: var(--font-heading);
 		font-weight: 600;
 		font-size: 1.02rem;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.c-sound {
 		font-size: 0.85rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.c-fr {
 		font-size: 0.88rem;
-		color: rgba(58, 42, 32, 0.75);
+		color: color-mix(in srgb, var(--t-tinta) 75%, transparent);
 		line-height: 1.4;
 	}
 </style>

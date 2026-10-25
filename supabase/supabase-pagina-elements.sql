@@ -142,7 +142,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (242 lignes). Jamais écrasés s'ils existent déjà.
+-- (246 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', null, null, true),
@@ -169,8 +169,8 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.bandel.font', 'acuelh', 'text', null, 0, 'Mots del _Lexic de Max Roqueta_, establit per Joan-Guilhèm Roqueta', 'Mots du _Lexique de Max Rouquette_, établi par Jean-Guilhem Rouquette', null, null, true),
 	('acuelh.manifest.titol', 'acuelh', 'text', null, 0, 'Qu’es aquò, Lo Ligam ?', 'Qu’est-ce que Lo Ligam ?', null, null, true),
 	('acuelh.manifest.tèxt', 'acuelh', 'text', null, 0, 'Aicí, l’occitan s’apren *sens vergonha* e *amb benvolença,* e cada leiçon fa *ligam.*', 'Ici, l’occitan s’apprend *sans honte* et *avec bienveillance,* et chaque leçon crée du *lien.*', null, null, true),
-	('acuelh.manifest.retrat', 'acuelh', 'imatge', null, 0, null, null, null, '{"url":"/acuelh/romain.webp","largor":600,"nautor":620,"alt_oc":"","alt_fr":""}'::jsonb, true),
-	('acuelh.manifest.legenda', 'acuelh', 'text', null, 0, 'Romain Périer', 'Romain Périer', null, null, true),
+	('acuelh.manifest.retrat', 'acuelh', 'imatge', null, 0, null, null, null, '{"url":"/acuelh/romain.webp","largor":480,"nautor":600,"alt_oc":"Romain Périer davant lo pic Sant Lop, dins una fenèstra de pèira","alt_fr":"Romain Périer devant le pic Saint-Loup, dans une fenêtre de pierre"}'::jsonb, true),
+	('acuelh.manifest.legenda', 'acuelh', 'text', null, 0, 'ton professor', 'ton professeur', null, null, true),
 	('acuelh.sec.parla.titol', 'acuelh', 'text', null, 0, 'Se parla', 'Se parle', null, null, true),
 	('acuelh.parla.carta', 'acuelh', 'ligam', null, 0, 'Dobrir la carta entièra', 'Ouvrir la carte entière', '/carta', null, true),
 	('acuelh.parla.ligams.wiki', 'acuelh', 'ligam', 'acuelh.parla.ligams', 1, 'Lo wiki de las lengas e dels luòcs', 'Le wiki des langues et des lieux', '/wiki', null, true),
@@ -215,7 +215,7 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('acuelh.trobador.cita', 'acuelh', 'text', null, 0, 'Max Roqueta · _La pietat dau matin_, 1963', 'Max Rouquette · _La pietat dau matin_, 1963', null, null, true),
 	('acuelh.crida.titol.1', 'acuelh', 'text', null, 0, 'Prèst·a per', 'Prêt·e à', null, null, true),
 	('acuelh.crida.titol.2', 'acuelh', 'text', null, 0, 'començar ?', 'commencer ?', null, null, true),
-	('acuelh.crida.sota', 'acuelh', 'text', null, 0, 'Tres mots uèi, una lenga deman.', 'Trois mots aujourd’hui, une langue demain.', null, null, true),
+	('acuelh.crida.sota', 'acuelh', 'text', null, 0, '', '', null, null, false),
 	('acuelh.crida.reservar', 'acuelh', 'ligam', null, 0, 'Reservar un primièr cors', 'Réserver un premier cours', 'https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=', null, true),
 	('acuelh.crida.sol', 'acuelh', 'ligam', null, 0, 'Començar sol·a', 'Commencer seul·e', '/aprene/essai', null, true),
 	('parla.titol', 'parla', 'text', null, 0, 'Se parla', 'Se parle', null, null, true),
@@ -233,7 +233,7 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, li
 	('parla.teulas.articles.ligam', 'parla', 'ligam', 'parla.teulas.articles', 0, 'Articles', 'Articles', '/articles', null, true),
 	('parla.teulas.articles.sota', 'parla', 'text', 'parla.teulas.articles', 0, 'A escriure', 'À écrire', null, null, false),
 	('parla.teulas.musicas', 'parla', 'bloc', 'parla.teulas', 5, null, null, null, null, true),
-	('parla.teulas.musicas.ligam', 'parla', 'ligam', 'parla.teulas.musicas', 0, 'Musicas', 'Musiques', '/obras#musicas', null, true),
+	('parla.teulas.musicas.ligam', 'parla', 'ligam', 'parla.teulas.musicas', 0, 'Musicas', 'Musiques', '/ensag/musica', null, true),
 	('parla.teulas.musicas.sota', 'parla', 'text', 'parla.teulas.musicas', 0, 'Çò qu’escoti, e ont l’escotar.', 'Ce que j’écoute, et où l’écouter.', null, null, true),
 	('obras.musica.titol', 'obras', 'text', null, 0, 'Musicas', 'Musiques', null, null, true),
 	('obras.musica.frasa', 'obras', 'text', null, 0, 'A escriure', 'À écrire', null, null, false),
@@ -395,5 +395,9 @@ L''idée, c''est d''apprendre en même temps que je partage. Je ne me présente 
 	('ideas.frasa', 'ideas', 'text', null, 0, 'Una idèa per melhorar Lo Ligam ? Escriu-la aquí : las legissi totas.', 'Une idée pour améliorer Lo Ligam ? Écris-la ici : je les lis toutes.', null, null, true),
 	('ideas.compte', 'ideas', 'text', null, 0, 'Per mandar una idèa, cal un compte : es gratuit.', 'Pour envoyer une idée, il faut un compte : c’est gratuit.', null, null, true),
 	('ideas.mercé', 'ideas', 'text', null, 0, 'Mercé ! Ton idèa es plan arribada.', 'Merci ! Ton idée est bien arrivée.', null, null, true),
-	('ideas.avís', 'ideas', 'text', null, 0, 'Soi lo sol a legir las idèas, sens saber qual las manda. Las pòdes suprimir quand vòles.', 'Je suis seul à lire les idées, sans savoir qui les envoie. Tu peux les supprimer quand tu veux.', null, null, true)
+	('ideas.avís', 'ideas', 'text', null, 0, 'Soi lo sol a legir las idèas, sens saber qual las manda. Las pòdes suprimir quand vòles.', 'Je suis seul à lire les idées, sans savoir qui les envoie. Tu peux les supprimer quand tu veux.', null, null, true),
+	('grops.acuelh', 'grops', 'text', null, 0, 'Aquí parlam occitan coma podèm, amb las fautas. Totas las lengas son benvengudas : çò que compta, es l’escambi.', 'Ici on parle occitan comme on peut, avec les fautes. Toutes les langues sont bienvenues : ce qui compte, c’est l’échange.', null, null, true),
+	('grops.compte', 'grops', 'text', null, 0, 'Per rejónher un grop, cal un compte amb una adreça verificada : es gratuit.', 'Pour rejoindre un groupe, il faut un compte avec une adresse vérifiée : c’est gratuit.', null, null, true),
+	('grops.pseudo', 'grops', 'text', null, 0, 'Los autres membres veson ton pseudonim, pas jamai ton adreça.', 'Les autres membres voient ton pseudo, jamais ton adresse.', null, null, true),
+	('grops.lèu', 'grops', 'text', null, 0, 'Los grops dobriràn lèu. Un pauc de paciéncia !', 'Les groupes ouvriront bientôt. Un peu de patience !', null, null, true)
 on conflict (clau, estat) do nothing;

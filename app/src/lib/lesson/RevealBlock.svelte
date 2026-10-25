@@ -41,10 +41,10 @@
 
 <style>
 	.block {
-		background: white;
+		background: var(--l-carta);
 		border-radius: 20px;
 		padding: 1.25rem 1.4rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 	}
 
 	.block-head {
@@ -58,20 +58,20 @@
 		margin: 0;
 		font-family: var(--font-heading);
 		font-size: 1.15rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.counter {
 		font-size: 0.8rem;
 		font-weight: 600;
-		color: var(--color-teal);
+		color: var(--l-teal);
 		white-space: nowrap;
 	}
 
 	.intro {
 		margin: 0.4rem 0 0;
 		font-size: 0.88rem;
-		color: rgba(58, 42, 32, 0.75);
+		color: color-mix(in srgb, var(--t-tinta) 75%, transparent);
 		line-height: 1.5;
 	}
 
@@ -83,7 +83,7 @@
 	.question {
 		margin: 0 0 0.5rem;
 		line-height: 1.55;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.num {
@@ -98,21 +98,21 @@
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 0.75rem;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.reveal-btn {
-		border: 1.5px dashed rgba(58, 42, 32, 0.3);
+		border: 1.5px dashed color-mix(in srgb, var(--t-tinta) 30%, transparent);
 		background: none;
 		border-radius: 12px;
 		padding: 0.45rem 0.9rem;
 		font-size: 0.88rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 		cursor: pointer;
 	}
 
 	.reveal-btn:hover {
-		border-color: var(--color-brick);
+		border-color: var(--l-marca);
 	}
 
 	.answer {
@@ -121,7 +121,7 @@
 		background: rgba(238, 175, 52, 0.14);
 		border-radius: 12px;
 		line-height: 1.55;
-		color: var(--color-text);
+		color: var(--t-tinta);
 		animation: fade-in 300ms ease-out;
 	}
 

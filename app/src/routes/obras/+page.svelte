@@ -6,16 +6,12 @@
 	// on laisse écouter par le lecteur officiel, chargé SEULEMENT au clic : avant
 	// ça, aucune requête ne part chez un tiers, donc aucun traceur.
 	//
-	// Les musiques (2026-10-25, option « fiche + écouter ici ») : une fiche par
-	// artiste, que Romain ajoute sur la page (édition sur place) : le nom, ses
-	// lignes, les liens qu'il colle (la plateforme se reconnaît). « Escotar
-	// aicí » ouvre d'abord une phrase qui dit ce que la plateforme recevra ;
-	// le lecteur ne se charge qu'après l'accord, qui vaut pour la visite.
+	// Les musiques ont leur propre espace, le café (/ensag/musica, 2026-10-25) :
+	// ici, une porte vers lui, plus de fiches en double.
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { plataforma, lectorPer } from '$lib/obras';
 	import { afichas } from '$lib/data/afichas.js';
-	import { edicion, iniciar, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
+	import { edicion, iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
 
@@ -31,12 +27,9 @@
 			title: 'Òbras',
 			lead: 'Çò qu’escoti, çò que legissi, çò que te fau descobrir en occitan.',
 			escotar: 'Escotar aicí',
-			acòrd: (p) => `Escotar sus ${p} ? Son lector recebrà ton adreça IP e poirà pausar de cookies.`,
-			òc: 'Escotar',
-			non: 'Non, mercé',
-			ligams: 'Ont escotar',
-			cort: 'Ligam cort : lo lector se pòt pas cargar. Copiar l’adreça complèta (deezer.com/…).',
-			void: 'Encara res aicí. Lèu.',
+			jornal: 'Lo Jornal de la musica',
+			jornalSota: 'Las novetats e los còps de còr de Lo Ligam',
+			intrar: 'Dintrar',
 			afichas: 'Afichas',
 			afichasLead: 'D’afichas que fan parlar la lenga sus las parets.',
 			agrandir: 'Veire en grand',
@@ -46,12 +39,9 @@
 			title: 'Œuvres',
 			lead: 'Ce que j’écoute, ce que je lis, ce que je te fais découvrir en occitan.',
 			escotar: 'Écouter ici',
-			acòrd: (p) => `Écouter sur ${p} ? Son lecteur recevra ton adresse IP et pourra déposer des cookies.`,
-			òc: 'Écouter',
-			non: 'Non merci',
-			ligams: 'Où écouter',
-			cort: 'Lien court : le lecteur ne peut pas se charger. Copier l’adresse complète (deezer.com/…).',
-			void: 'Rien encore ici. Bientôt.',
+			jornal: 'Le Journal de la musique',
+			jornalSota: 'Les nouveautés et les coups de cœur de Lo Ligam',
+			intrar: 'Entrer',
 			afichas: 'Affiches',
 			afichasLead: 'Des affiches qui font parler la langue sur les murs.',
 			agrandir: 'Voir en grand',
@@ -60,40 +50,6 @@
 	};
 	let tx = $derived(t[lang]);
 
-	// Les liens d'une fiche, rangés par plateforme (Bandcamp d'abord) ; hors
-	// édition, un lien pas encore collé (« / ») ne s'affiche pas
-	function ligamsDe(clau) {
-		return lista(clau)
-			.filter((e) => e.tipe === 'ligam')
-			.map((e) => ({ clau: e.clau, l: ligam(e.clau), p: plataforma(ligam(e.clau).href) }))
-			.filter((x) => edicion.actiu || x.p)
-			.sort((a, b) => (a.p?.rang ?? 9) - (b.p?.rang ?? 9));
-	}
-	// le premier lien qui ouvre un lecteur dans la fiche (Deezer ou YouTube)
-	const lectorDe = (ligams) => ligams.map((x) => lectorPer(x.l.href)).find((l) => l?.src) ?? null;
-	const ligamsCorts = (ligams) => ligams.some((x) => lectorPer(x.l.href)?.cort);
-
-	let demanda = $state(null); // la fiche dont la phrase d'accord est ouverte
-	let dubèrt = $state(null); // la fiche dont le lecteur est chargé
-	let acòrds = $state({}); // plateformes acceptées pendant la visite
-	function escotar(clau, lector) {
-		if (acòrds[lector.plataforma]) dubèrt = clau;
-		else demanda = clau;
-	}
-	function acceptar(clau, lector) {
-		acòrds[lector.plataforma] = true;
-		demanda = null;
-		dubèrt = clau;
-	}
-
-	const apondreArtista = () =>
-		apondre('obras.artistas', 'bloc', {}, [
-			['nom', 'text', { oc: 'Nom', fr: 'Nom' }],
-			['tèxt', 'text', { oc: 'A escriure', fr: 'À écrire' }]
-		]);
-	const apondreLigam = (clau) => apondre(clau, 'ligam', { oc: '', fr: '', ligam: '/' });
-	// le nom affiché d'un lien : celui que Romain a écrit, sinon la plateforme
-	const nomLigam = (x) => (fr ? x.l.fr : x.l.oc) || x.p?.nom || (fr ? 'Coller l’adresse' : 'Pegar l’adreça');
 
 	// Galerie : la grande image se charge seulement à l'ouverture (<dialog> natif :
 	// Échap ferme, le focus revient au bouton, la page derrière est inerte).
@@ -119,91 +75,33 @@
 {#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
 {#snippet tt(clau)}{@const v = txt(clau)}<span lang={fr ? 'fr' : 'oc'}>{@render marcat(fr ? v.fr : v.oc)}</span>{/snippet}
 
-<div class="page-bg" aria-hidden="true">
-	<span class="blob blob-gold"></span>
-	<span class="blob blob-teal"></span>
-</div>
 
-<main class="screen" class:ed-actiu={edicion.actiu}>
-	<AppHeader />
+<div class="pagina">
+<div class="capçal"><AppHeader /></div>
 
-	<header class="intro">
+<main class="obras" class:ed-actiu={edicion.actiu}>
+	<header class="cap">
 		<h1>{tx.title}</h1>
-		<p class="lead">{tx.lead}</p>
+		<p class="frasa">{tx.lead}</p>
 	</header>
 
 	<section class="musicas" id="musicas" aria-labelledby="musicas-titol">
 		<h2 id="musicas-titol" class="seccion-titol" hidden={amagat('obras.musica.titol')} use:editar={'obras.musica.titol'}>{@render tt('obras.musica.titol')}</h2>
-		<p class="lead" hidden={amagat('obras.musica.frasa')} use:editar={'obras.musica.frasa'}>{@render tt('obras.musica.frasa')}</p>
+		<p class="seccion-lead" hidden={amagat('obras.musica.frasa')} use:editar={'obras.musica.frasa'}>{@render tt('obras.musica.frasa')}</p>
 
-		{#if !lista('obras.artistas').length && !edicion.actiu}
-			<p class="msg">{tx.void}</p>
-		{/if}
-		<ul class="artistas">
-			{#each lista('obras.artistas') as a (a.clau)}
-				{@const ligams = ligamsDe(a.clau)}
-				{@const lector = lectorDe(ligams)}
-				{@const nom = txt(a.clau + '.nom')}
-				<li class="artista-plaça">
-					<div class="artista" use:editar={a.clau}>
-						<h3 hidden={amagat(a.clau + '.nom')} use:editar={a.clau + '.nom'}>{fr ? nom.fr : nom.oc}</h3>
-						<p class="tèxt" hidden={amagat(a.clau + '.tèxt')} use:editar={a.clau + '.tèxt'}>{@render tt(a.clau + '.tèxt')}</p>
-
-						{#if lector}
-							{#if dubèrt === a.clau}
-								<iframe
-									class="lector"
-									class:video={lector.video}
-									style:height={lector.video ? null : lector.nautor + 'px'}
-									src={lector.src}
-									title="{lector.plataforma} : {fr ? nom.fr : nom.oc}"
-									allow="autoplay; encrypted-media; clipboard-write; picture-in-picture"
-									referrerpolicy="strict-origin-when-cross-origin"
-								></iframe>
-							{:else if demanda === a.clau}
-								<div class="acòrd" role="group" aria-label={tx.escotar}>
-									<p>{tx.acòrd(lector.plataforma)}</p>
-									<div class="acòrd-botons">
-										<button type="button" class="acòrd-òc" onclick={() => acceptar(a.clau, lector)}>{tx.òc}</button>
-										<button type="button" class="acòrd-non" onclick={() => (demanda = null)}>{tx.non}</button>
-									</div>
-								</div>
-							{:else}
-								<button type="button" class="escotar" onclick={() => escotar(a.clau, lector)}>
-									<Icona nom="lire" size="1.1em" />
-									{tx.escotar} <span class="escotar-p">· {lector.plataforma}</span>
-								</button>
-							{/if}
-						{/if}
-						{#if edicion.actiu && ligamsCorts(ligams)}
-							<p class="ed-avis">{tx.cort}</p>
-						{/if}
-
-						<ul class="ligams" aria-label="{tx.ligams} : {fr ? nom.fr : nom.oc}">
-							{#each ligams as x (x.clau)}
-								<li>
-									<a href={x.l.href} target="_blank" rel="noopener noreferrer" hidden={amagat(x.clau)} use:editar={x.clau}
-										>{nomLigam(x)} <Icona nom="extern" size="0.85em" /></a
-									>
-								</li>
-							{/each}
-						</ul>
-					</div>
-					<!-- (hors de la fiche : un toucher dans la fiche, en édition, la choisit) -->
-					{#if edicion.actiu}
-						<button type="button" class="ed-apondre" onclick={() => apondreLigam(a.clau)}>+ {fr ? 'Ajouter un lien' : 'Apondre un ligam'}</button>
-					{/if}
-				</li>
-			{/each}
-		</ul>
-		{#if edicion.actiu}
-			<button type="button" class="ed-apondre" onclick={apondreArtista}>+ {fr ? 'Ajouter une fiche d’artiste' : 'Apondre una ficha'}</button>
-		{/if}
+		<a class="cafe" href="/ensag/musica">
+			<span class="cafe-disc" aria-hidden="true"><span class="cafe-etiqueta"></span></span>
+			<span class="cafe-tèxt">
+				<span class="cafe-titol">{tx.jornal}</span>
+				<span class="cafe-sota">{tx.jornalSota}</span>
+				<span class="cafe-intrar">{tx.intrar} <Icona nom="suivant" size="1em" /></span>
+			</span>
+		</a>
 	</section>
 
 	<section class="afichas" aria-labelledby="afichas-titol">
-		<h2 id="afichas-titol" class="afichas-titol">{tx.afichas}</h2>
-		<p class="lead">{tx.afichasLead}</p>
+		<h2 id="afichas-titol" class="seccion-titol">{tx.afichas}</h2>
+		<p class="seccion-lead">{tx.afichasLead}</p>
 		<ul class="galaria">
 			{#each afichas as a (a.id)}
 				<li class={a.forma}>
@@ -220,6 +118,7 @@
 		</ul>
 	</section>
 </main>
+</div>
 
 <dialog class="vista" bind:this={dialeg} onclose={() => (vista = null)} onclick={(e) => e.target === dialeg && tampar()} aria-labelledby="vista-titol">
 	{#if vista}
@@ -239,14 +138,7 @@
 <style>
 	/* ---------- Galerie des affiches ---------- */
 	.afichas {
-		margin-top: 4rem;
-	}
-	.afichas-titol {
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: clamp(2rem, 4vw, 2.8rem);
-		color: var(--color-terracotta);
-		margin: 0 0 0.4rem;
+		margin-top: var(--esp-96);
 	}
 	.galaria {
 		list-style: none;
@@ -270,8 +162,8 @@
 		border-radius: 14px;
 		overflow: hidden;
 		cursor: zoom-in;
-		background: var(--color-text);
-		box-shadow: 0 6px 20px rgba(58, 42, 32, 0.12);
+		background: var(--t-fons-2);
+		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
 		transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.6s;
 	}
 	.paisatge .afica {
@@ -287,7 +179,7 @@
 	.afica:hover,
 	.afica:focus-visible {
 		transform: translateY(-4px);
-		box-shadow: 0 0 0 3px var(--color-terracotta), 0 0 0 6px var(--color-gold), 0 14px 30px rgba(58, 42, 32, 0.2);
+		box-shadow: 0 0 0 3px var(--t-terra), 0 0 0 6px var(--t-aur), 0 14px 30px rgba(0, 0, 0, 0.25);
 	}
 	.afica:hover img {
 		transform: scale(1.04);
@@ -392,243 +284,157 @@
 		}
 	}
 
-	.page-bg {
-		position: fixed;
-		inset: 0;
-		overflow: hidden;
-		z-index: -1;
-		background: radial-gradient(circle at 50% 0%, #faf3e6 0%, var(--color-cream) 60%);
+	/* ---------- Le cadre des pages intérieures, comme S'apren et les Idées ----------
+	   Suit le thème du site (sombre par défaut, clair au choix) */
+	.pagina {
+		--marge: clamp(1rem, 4vw, 3.4rem);
+		min-height: 100vh;
+		color: var(--t-tinta);
+		background:
+			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			var(--t-fons);
+		overflow-x: clip;
 	}
-
-	.blob {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(70px);
+	.capçal {
+		padding: 1.3rem var(--marge);
 	}
-
-	.blob-gold {
-		width: 380px;
-		height: 380px;
-		background: var(--color-gold);
-		opacity: 0.3;
-		top: -120px;
-		left: -100px;
+	.capçal :global(.top) {
+		max-width: none;
 	}
-
-	.blob-teal {
-		width: 340px;
-		height: 340px;
-		background: var(--color-teal);
-		opacity: 0.18;
-		bottom: -100px;
-		right: -100px;
+	.obras {
+		max-width: calc(64rem + 2 * var(--marge));
+		margin: 0 auto;
+		padding: clamp(2rem, 6vh, 4.5rem) var(--marge) var(--esp-96);
 	}
-
-	.screen {
-		position: relative;
-		min-height: 100dvh;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1.5rem;
-		padding: 1.5rem;
+	.cap {
+		margin-bottom: var(--esp-48);
 	}
-
-	.intro {
-		text-align: center;
-		max-width: 34rem;
-		margin-top: 1rem;
-	}
-
 	h1 {
 		margin: 0;
 		font-family: var(--font-heading);
-		font-size: clamp(1.8rem, 6vw, 2.6rem);
-		color: var(--color-terracotta);
+		font-weight: 400;
+		font-size: clamp(2.6rem, 8vw, 5.5rem);
+		line-height: 0.95;
 	}
-
-	.lead {
-		margin: 0.5rem 0 0;
-		color: var(--color-text);
-		opacity: 0.85;
+	.frasa {
+		max-width: 38ch;
+		margin: var(--esp-16) 0 0;
+		font-size: clamp(1.1rem, 1.6vw, 1.35rem);
 		line-height: 1.5;
-	}
-
-	.msg {
-		background: white;
-		border-radius: 18px;
-		padding: 1.5rem 2rem;
-		color: var(--color-teal);
-	}
-
-	/* ---------- Musiques : une fiche par artiste ---------- */
-	.musicas {
-		container: musicas / inline-size;
-		width: 100%;
-		max-width: 60rem;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
+		color: var(--t-tinta-2);
 	}
 	.seccion-titol {
 		margin: 0;
 		font-family: var(--font-heading);
 		font-weight: 400;
-		font-size: clamp(1.4rem, 4vw, 1.9rem);
-		color: var(--color-text);
+		font-size: clamp(2rem, 4.5vw, 3rem);
+		line-height: 1;
 	}
-	.musicas > .lead {
-		max-width: 34rem;
-		text-align: center;
+	.seccion-lead {
+		max-width: 44ch;
+		margin: var(--esp-8) 0 0;
+		color: var(--t-tinta-2);
+		line-height: 1.5;
 	}
-	.artistas {
-		list-style: none;
-		margin: 1rem 0 0;
-		padding: 0;
-		width: 100%;
+	.seccion-lead :global(.aur) {
+		color: var(--t-aur);
+	}
+
+	/* ---------- Musiques : la porte du café ---------- */
+	.musicas {
+		container: musicas / inline-size;
+	}
+	/* la porte : un disque qui tourne au survol, le titre du journal, « Dintrar » */
+	.cafe {
+		max-width: 40rem;
+		margin: var(--esp-24) 0 0;
+		display: flex;
+		align-items: center;
+		gap: clamp(1.2rem, 4vw, 2.4rem);
+		padding: clamp(1rem, 3vw, 1.6rem);
+		box-sizing: border-box;
+		border: 1px solid var(--t-linha);
+		border-top: 6px solid var(--t-aur);
+		border-radius: 6px;
+		background: var(--t-fons-2);
+		color: inherit;
+		text-align: left;
+		text-decoration: none;
+		transition: background 0.2s ease;
+	}
+	.cafe:hover .cafe-intrar {
+		background: var(--t-accion-viu);
+	}
+	.cafe:hover {
+		background: color-mix(in srgb, var(--t-fons-2) 88%, var(--t-aur));
+	}
+	.cafe:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 4px;
+	}
+	.cafe-disc {
+		flex: 0 0 auto;
+		width: clamp(5.5rem, 22cqi, 9rem);
+		aspect-ratio: 1;
 		display: grid;
-		/* (centrées quand il y en a peu) */
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 28rem));
-		justify-content: center;
-		gap: 1.25rem;
+		place-items: center;
+		border-radius: 50%;
+		background:
+			repeating-radial-gradient(circle, #181010 0 2px, #261a18 2px 4px),
+			#181010;
+		box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.9);
 	}
-	.artista-plaça {
+	.cafe-etiqueta {
+		width: 36%;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: radial-gradient(circle, #181010 0 9%, var(--t-accion) 10% 100%);
+	}
+	.cafe:hover .cafe-disc {
+		animation: virar 2.4s linear infinite;
+	}
+	@keyframes virar {
+		to {
+			transform: rotate(1turn);
+		}
+	}
+	.cafe-tèxt {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 0.5rem;
-	}
-	.artista {
-		align-self: stretch;
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		gap: 0.7rem;
-		background: white;
-		border-radius: 20px;
-		padding: 1.4rem;
-		border-top: 4px solid var(--color-terracotta);
-		box-shadow: 0 12px 30px rgba(58, 42, 32, 0.09);
-	}
-	h3 {
-		margin: 0;
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: 1.45rem;
-		line-height: 1.15;
-		color: var(--color-text);
-	}
-	.tèxt {
-		margin: 0;
-		font-size: 0.95rem;
-		line-height: 1.55;
-		color: var(--color-text);
-	}
-	.tèxt :global(.aur) {
-		color: var(--color-terracotta);
-		font-weight: 700;
-	}
-
-	/* l'écoute : le bouton, la phrase d'accord, puis le lecteur officiel */
-	.escotar {
-		align-self: flex-start;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		border: none;
-		border-radius: 999px;
-		padding: 0.6rem 1.1rem;
-		background: var(--color-terracotta);
-		color: white;
-		font: inherit;
-		font-weight: 700;
-		font-size: 0.92rem;
-		cursor: pointer;
-		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-	.escotar:hover {
-		transform: scale(1.04);
-	}
-	.escotar-p {
-		font-weight: 400;
-		opacity: 0.85;
-	}
-	.acòrd {
-		border-radius: 14px;
-		padding: 0.9rem 1rem;
-		background: #f6efe3;
-		color: var(--color-text);
-	}
-	.acòrd p {
-		margin: 0 0 0.7rem;
-		font-size: 0.9rem;
-		line-height: 1.5;
-	}
-	.acòrd-botons {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
-	.acòrd-òc,
-	.acòrd-non {
-		border-radius: 999px;
-		padding: 0.5rem 1rem;
-		font: inherit;
-		font-weight: 700;
-		font-size: 0.88rem;
-		cursor: pointer;
-	}
-	.acòrd-òc {
-		border: 2px solid var(--color-terracotta);
-		background: var(--color-terracotta);
-		color: white;
-	}
-	.acòrd-non {
-		border: 2px solid currentColor;
-		background: transparent;
-		color: var(--color-text);
-	}
-	.lector {
-		width: 100%;
-		border: none;
-		border-radius: 12px;
-		display: block;
-	}
-	.lector.video {
-		aspect-ratio: 16 / 9;
-	}
-
-	/* les liens, Bandcamp d'abord */
-	.ligams {
-		list-style: none;
-		margin: auto 0 0;
-		padding: 0.4rem 0 0;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.45rem;
-	}
-	.ligams a {
-		display: inline-flex;
-		align-items: center;
 		gap: 0.35rem;
-		padding: 0.4rem 0.85rem;
+	}
+	.cafe-titol {
+		font-family: var(--font-heading);
+		font-size: clamp(1.5rem, 4vw, 2.1rem);
+		line-height: 1.05;
+	}
+	.cafe-sota {
+		color: var(--t-tinta-2);
+		font-style: italic;
+		line-height: 1.4;
+	}
+	.cafe-intrar {
+		margin-top: 0.6rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.5rem 1.1rem;
 		border-radius: 999px;
-		border: 1.5px solid rgba(58, 42, 32, 0.25);
-		color: var(--color-text);
-		font-size: 0.88rem;
-		font-weight: 600;
-		text-decoration: none;
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
+		font-weight: 700;
 	}
-	.ligams a:hover {
-		border-color: var(--color-terracotta);
-		color: var(--color-terracotta);
+	@media (prefers-reduced-motion: reduce) {
+		.cafe:hover .cafe-disc {
+			animation: none;
+		}
 	}
-	.ed-avis {
-		margin: 0;
-		font-size: 0.8rem;
-		color: var(--color-brick);
+	:global(html[data-leugier='on']) .cafe:hover .cafe-disc {
+		animation: none;
 	}
+
 
 	.sr-only {
 		position: absolute;
@@ -640,11 +446,5 @@
 		clip: rect(0, 0, 0, 0);
 		white-space: nowrap;
 		border: 0;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.escotar {
-			transition: none;
-		}
 	}
 </style>

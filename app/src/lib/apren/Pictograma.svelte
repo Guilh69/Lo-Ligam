@@ -6,7 +6,10 @@
 	// carte pliée, un livre ouvert (wiki), un livre et un disque (œuvres), deux
 	// notes (musiques), une page d'écriture (articles) ; pour Amassa (25-10),
 	// trois personnes (groupes), deux bulles (forum), une ampoule (boîte à
-	// idées), une pile d'images (Instagram). Toujours décoratifs : la
+	// idées), une pile d'images (Instagram) ; pour Òbras et Médias (maquette
+	// du 25-10), un poste de radio (médias), un livre fermé (littérature), un
+	// clap (cinéma), un cadre (peinture et affiches), un rideau (scène).
+	// Toujours décoratifs : la
 	// case porte son nom en toutes lettres.
 	let { nom = 'autre', size = '3rem' } = $props();
 </script>
@@ -83,6 +86,27 @@
 		<path d="M6 34V10a4 4 0 0 1 4-4h24" />
 		<circle cx="27" cy="27" r="6.5" />
 		<circle cx="35.5" cy="18.5" r="1.4" fill="currentColor" stroke="none" />
+	{:else if nom === 'medias'}
+		<rect x="5" y="17" width="38" height="24" rx="3" />
+		<path d="M14 17L34 6" />
+		<circle cx="16" cy="29" r="6" />
+		<path d="M28 25h9M28 30h9M28 35h9" />
+	{:else if nom === 'literatura'}
+		<path d="M11 8h24a3 3 0 0 1 3 3v29H14a3 3 0 0 1-3-3z" />
+		<path d="M11 37a3 3 0 0 1 3-3h24" />
+		<path d="M18 15h13" />
+	{:else if nom === 'cinema'}
+		<rect x="6" y="19" width="36" height="21" rx="2" />
+		<rect x="6" y="10" width="36" height="9" rx="1" />
+		<path d="M15 10l-4.5 9M25 10l-4.5 9M35 10l-4.5 9" />
+	{:else if nom === 'pintura'}
+		<rect x="6" y="7" width="36" height="34" rx="2" />
+		<rect x="11" y="12" width="26" height="24" />
+		<path d="M11 31l8-8 6 6 4-4 8 7" />
+	{:else if nom === 'scena'}
+		<rect x="5" y="7" width="38" height="34" rx="2" />
+		<path d="M5 13c6 3 13 3 19 0 6 3 13 3 19 0" />
+		<path d="M17 14c-1 6-4 10-9 13 2 4 3 9 3 14M31 14c1 6 4 10 9 13-2 4-3 9-3 14" />
 	{:else}
 		<circle cx="24" cy="24" r="17" />
 		<path d="M16 24h16M26 17l7 7-7 7" />

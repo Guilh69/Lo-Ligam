@@ -30,11 +30,12 @@
 		{ href: '/admin', oc: 'Verrolhs', fr: 'Verrous' },
 		{ href: '/admin/grops', oc: 'Grops', fr: 'Groupes' },
 		{ href: '/admin/designs', oc: 'Designs', fr: 'Designs' },
-		{ href: '/admin/obras', oc: 'Òbras', fr: 'Œuvres' },
+		{ href: '/admin/musica', oc: 'Musica', fr: 'Musique' },
 		{ href: '/admin/carta', oc: 'Carta', fr: 'Carte' },
 		{ href: '/admin/carta/luocs', oc: 'Luòcs', fr: 'Lieux' },
 		{ href: '/admin/textes', oc: 'Tèxtes', fr: 'Textes' },
-		{ href: '/admin/ideas', oc: 'Idèas', fr: 'Idées' }
+		{ href: '/admin/ideas', oc: 'Idèas', fr: 'Idées' },
+		{ href: '/admin/perfils', oc: 'Perfils', fr: 'Profils' }
 	];
 </script>
 

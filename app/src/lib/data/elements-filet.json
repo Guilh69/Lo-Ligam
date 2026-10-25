@@ -102,7 +102,7 @@
     { "clau": "parla.teulas.articles.ligam", "tipe": "ligam", "lista": "parla.teulas.articles", "oc": "Articles", "fr": "Articles", "ligam": "/articles" },
     { "clau": "parla.teulas.articles.sota", "tipe": "text", "lista": "parla.teulas.articles", "oc": "A escriure", "fr": "À écrire", "visible": false },
     { "clau": "parla.teulas.musicas", "tipe": "bloc", "lista": "parla.teulas", "ordre": 5 },
-    { "clau": "parla.teulas.musicas.ligam", "tipe": "ligam", "lista": "parla.teulas.musicas", "oc": "Musicas", "fr": "Musiques", "ligam": "/obras#musicas" },
+    { "clau": "parla.teulas.musicas.ligam", "tipe": "ligam", "lista": "parla.teulas.musicas", "oc": "Musicas", "fr": "Musiques", "ligam": "/ensag/musica" },
     { "clau": "parla.teulas.musicas.sota", "tipe": "text", "lista": "parla.teulas.musicas", "oc": "Çò qu’escoti, e ont l’escotar.", "fr": "Ce que j’écoute, et où l’écouter." }
   ],
   "obras": [
@@ -270,5 +270,11 @@
     { "clau": "ideas.compte", "tipe": "text", "oc": "Per mandar una idèa, cal un compte : es gratuit.", "fr": "Pour envoyer une idée, il faut un compte : c’est gratuit." },
     { "clau": "ideas.mercé", "tipe": "text", "oc": "Mercé ! Ton idèa es plan arribada.", "fr": "Merci ! Ton idée est bien arrivée." },
     { "clau": "ideas.avís", "tipe": "text", "oc": "Soi lo sol a legir las idèas, sens saber qual las manda. Las pòdes suprimir quand vòles.", "fr": "Je suis seul à lire les idées, sans savoir qui les envoie. Tu peux les supprimer quand tu veux." }
+  ],
+  "grops": [
+    { "clau": "grops.acuelh", "tipe": "text", "oc": "Aquí parlam occitan coma podèm, amb las fautas. Totas las lengas son benvengudas : çò que compta, es l’escambi.", "fr": "Ici on parle occitan comme on peut, avec les fautes. Toutes les langues sont bienvenues : ce qui compte, c’est l’échange." },
+    { "clau": "grops.compte", "tipe": "text", "oc": "Per rejónher un grop, cal un compte amb una adreça verificada : es gratuit.", "fr": "Pour rejoindre un groupe, il faut un compte avec une adresse vérifiée : c’est gratuit." },
+    { "clau": "grops.pseudo", "tipe": "text", "oc": "Los autres membres veson ton pseudonim, pas jamai ton adreça.", "fr": "Les autres membres voient ton pseudo, jamais ton adresse." },
+    { "clau": "grops.lèu", "tipe": "text", "oc": "Los grops dobriràn lèu. Un pauc de paciéncia !", "fr": "Les groupes ouvriront bientôt. Un peu de patience !" }
   ]
 }

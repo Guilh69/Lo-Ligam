@@ -51,8 +51,8 @@
 		position: relative;
 		border-radius: 20px;
 		padding: 1.25rem 1.4rem;
-		background: white;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+		background: var(--l-carta);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 	}
 
 	.block.son {
@@ -61,12 +61,12 @@
 	}
 
 	.block.natiu {
-		background: rgba(58, 122, 122, 0.1);
+		background: color-mix(in srgb, var(--l-teal) 10%, transparent);
 		box-shadow: none;
 	}
 
 	.block.culture {
-		background: rgba(178, 84, 58, 0.09);
+		background: color-mix(in srgb, var(--t-accion) 12%, transparent);
 		box-shadow: none;
 	}
 
@@ -78,7 +78,7 @@
 		margin: 0 0 0.5rem;
 		font-family: var(--font-heading);
 		font-size: 1.15rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.listen {
@@ -86,19 +86,19 @@
 		top: 1.1rem;
 		right: 1.1rem;
 		border: none;
-		background: rgba(255, 255, 255, 0.7);
+		background: color-mix(in srgb, var(--l-carta) 70%, transparent);
 		border-radius: 999px;
 		padding: 0.25rem 0.6rem;
 		font-size: 0.8rem;
-		color: rgba(58, 42, 32, 0.5);
+		color: color-mix(in srgb, var(--t-tinta) 50%, transparent);
 		cursor: default;
 	}
 
 	.listen.active {
-		color: var(--color-brick);
+		color: var(--l-marca);
 		cursor: pointer;
-		background: white;
-		box-shadow: 0 2px 8px rgba(58, 42, 32, 0.15);
+		background: var(--l-carta);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 	}
 
 	.listen-label {
@@ -109,7 +109,7 @@
 	.para {
 		margin: 0 0 0.6rem;
 		line-height: 1.6;
-		color: var(--color-text);
+		color: var(--t-tinta);
 		font-size: 0.95rem;
 	}
 
@@ -128,6 +128,6 @@
 	.list li {
 		font-size: 0.93rem;
 		line-height: 1.55;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 </style>

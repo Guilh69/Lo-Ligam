@@ -118,6 +118,24 @@
 	--t-veire: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 90%, var(--t-terra)) 76%, transparent);
 	--t-veire-fort: color-mix(in srgb, color-mix(in srgb, var(--t-fons-2) 84%, var(--t-terra)) 90%, transparent);
 }
+/* Les exercices des leçons (harmonisés le 2026-10-25) : la carte de chaque
+   exercice, la couleur des titres (or en sombre, brique en clair, comme
+   avant), le pétrole des personnages et des traductions, le vert du « bravo ». */
+:root,
+:root[data-tema='sorne'] {
+	--l-carta: color-mix(in srgb, var(--t-fons-2) 88%, var(--t-terra));
+	--l-sol: color-mix(in srgb, var(--t-tinta) 8%, transparent);
+	--l-marca: var(--t-aur);
+	--l-teal: #8fcfc6;
+	--l-bon: #b8d27c;
+}
+:root[data-tema='clar'] {
+	--l-carta: #ffffff;
+	--l-sol: #fbf6ec;
+	--l-marca: #a5342a;
+	--l-teal: #1f5f63;
+	--l-bon: #55702f;
+}
 /* Colors adaptadas al daltonisme : lo terracòta ven blau (se destria de
    l'aur per totes los daltonismes roge-verd), mai de contraste. */
 :root[data-dalt='on'] {
