@@ -289,14 +289,14 @@
 	.sistema-ent { position: relative; max-width: calc(80rem + 2 * var(--marge)); margin: 0 auto; padding: clamp(8vh, 12vh, 14vh) var(--marge); }
 	.sistema-ent + .sistema-ent { border-top: 1px solid color-mix(in srgb, var(--or) 22%, transparent); }
 	.sist-cap { display: flex; align-items: baseline; gap: 1.2rem; margin: 0 0 var(--esp-48, 2.5rem); }
-	.sist-num { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.9; color: var(--color); }
+	.sist-num { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.9; color: var(--or); }
 	.sist-cap h2 { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 0.95; color: var(--crema); margin: 0; }
 	.sist-cors { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; }
 	.sistema-ent.invers .sist-cors { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.82fr); }
 	.sistema-ent.invers .sist-tèxt { order: 2; }
 	.sist-vis { position: relative; margin: 0; display: flex; justify-content: center; transform: translateY(var(--para, 0)); will-change: transform; }
-	/* la couleur de l'entité en accent : une lueur douce derrière le grand visuel */
-	.sist-vis::before { content: ''; position: absolute; inset: -10% -8%; z-index: -1; border-radius: 50%; filter: blur(64px); opacity: 0.45; background: radial-gradient(closest-side, var(--color), transparent); }
+	/* une lueur dorée douce derrière le grand visuel (dans le ton de la braise) */
+	.sist-vis::before { content: ''; position: absolute; inset: -10% -8%; z-index: -1; border-radius: 50%; filter: blur(66px); opacity: 0.4; background: radial-gradient(closest-side, rgba(238, 175, 52, 0.5), transparent); }
 	.sist-vis :global(.vis) { width: 100%; max-height: clamp(220px, 42vh, 440px); }
 	@media (max-width: 820px) {
 		.sist-cors, .sistema-ent.invers .sist-cors { grid-template-columns: 1fr; }
