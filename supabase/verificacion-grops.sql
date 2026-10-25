@@ -190,8 +190,8 @@ begin
 	set local role authenticated;
 	begin insert into public.messatges (grop_id, tèxte) values (G, 'Groupe fermé ?'); r := array_append(r, 'ECHEC B écrit dans un groupe fermé'); exception when others then r := array_append(r, 'ok pas d''écriture dans un groupe fermé'); end;
 	reset role;
-	select count(*) into n from pg_publication_tables where pubname = 'supabase_realtime' and tablename = 'messatges';
-	r := array_append(r, (case when n = 1 then 'ok les messages sont dans le direct (Realtime)' else 'ECHEC pas de direct' end));
+	select count(*) into n from pg_trigger where tgname = 'messatges_difusar';
+	r := array_append(r, (case when n = 1 then 'ok les messages partent dans le direct (canaux privés, supabase-grops-2.sql)' else 'ECHEC pas de direct' end));
 
 	raise exception 'RESULTATS%', E'\n' || array_to_string(r, E'\n');
 end;
