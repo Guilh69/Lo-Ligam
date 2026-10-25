@@ -99,7 +99,7 @@
     { "clau": "parla.teulas.articles.ligam", "tipe": "ligam", "lista": "parla.teulas.articles", "oc": "Articles", "fr": "Articles", "ligam": "/articles" },
     { "clau": "parla.teulas.articles.sota", "tipe": "text", "lista": "parla.teulas.articles", "oc": "A escriure", "fr": "À écrire", "visible": false },
     { "clau": "parla.teulas.musicas", "tipe": "bloc", "lista": "parla.teulas", "ordre": 5 },
-    { "clau": "parla.teulas.musicas.ligam", "tipe": "ligam", "lista": "parla.teulas.musicas", "oc": "Musicas", "fr": "Musiques", "ligam": "C:/Program Files/Git/ensag/musica" },
+    { "clau": "parla.teulas.musicas.ligam", "tipe": "ligam", "lista": "parla.teulas.musicas", "oc": "Musicas", "fr": "Musiques", "ligam": "/ensag/musica" },
     { "clau": "parla.teulas.musicas.sota", "tipe": "text", "lista": "parla.teulas.musicas", "oc": "Çò qu’escoti, e ont l’escotar.", "fr": "Ce que j’écoute, et où l’écouter." }
   ],
   "obras": [
