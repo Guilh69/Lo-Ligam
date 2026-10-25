@@ -786,29 +786,38 @@
 	.manifest-cors {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) auto;
-		align-items: end;
-		gap: clamp(2rem, 5vw, 6rem);
+		align-items: center;
+		gap: clamp(2rem, 5vw, 5rem);
 	}
 	.manifest-retrat {
-		width: clamp(220px, 22vw, 360px);
+		width: clamp(240px, 26vw, 400px);
 		margin: 0;
 	}
 	.manifest-retrat .panel-media {
 		aspect-ratio: 4 / 5;
+		/* liseré chaud très fin + ombre douce : la photo se lit comme une fenêtre */
+		border: 1px solid rgba(238, 175, 52, 0.22);
+		box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 	}
 	.manifest-retrat figcaption {
-		margin-top: 0.9rem;
+		margin-top: 0.7rem;
 		font-family: var(--votz);
 		font-style: italic;
-		font-size: 1.15rem;
+		font-size: 1.1rem;
 		color: var(--aur-clar);
+		text-align: right;
 	}
 	@container manifest (max-width: 820px) {
 		.manifest-cors {
 			grid-template-columns: 1fr;
+			gap: 2.2rem;
 		}
 		.manifest-retrat {
-			width: min(72%, 300px);
+			width: min(80%, 320px);
+			justify-self: center;
+		}
+		.manifest-retrat figcaption {
+			text-align: center;
 		}
 	}
 

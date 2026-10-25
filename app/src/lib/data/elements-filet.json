@@ -28,7 +28,7 @@
 
     { "clau": "acuelh.manifest.titol", "tipe": "text", "oc": "Qu’es aquò, Lo Ligam ?", "fr": "Qu’est-ce que Lo Ligam ?" },
     { "clau": "acuelh.manifest.tèxt", "tipe": "text", "oc": "Aicí, l’occitan s’apren *sens vergonha* e *amb benvolença,* e cada leiçon fa *ligam.*", "fr": "Ici, l’occitan s’apprend *sans honte* et *avec bienveillance,* et chaque leçon crée du *lien.*" },
-    { "clau": "acuelh.manifest.retrat", "tipe": "imatge", "imatge": { "url": "/acuelh/romain.webp", "largor": 600, "nautor": 620, "alt_oc": "", "alt_fr": "" } },
+    { "clau": "acuelh.manifest.retrat", "tipe": "imatge", "imatge": { "url": "/acuelh/romain.webp", "largor": 480, "nautor": 600, "alt_oc": "Romain Périer davant lo pic Sant Lop, dins una fenèstra de pèira", "alt_fr": "Romain Périer devant le pic Saint-Loup, dans une fenêtre de pierre" } },
     { "clau": "acuelh.manifest.legenda", "tipe": "text", "oc": "Romain Périer", "fr": "Romain Périer" },
 
     { "clau": "acuelh.sec.parla.titol", "tipe": "text", "oc": "Se parla", "fr": "Se parle" },
