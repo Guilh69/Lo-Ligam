@@ -31,7 +31,9 @@ for (let off = 0; ; off += 100) {
 		for (const c of r['artist-credit'] ?? []) {
 			const n = c.artist?.name ?? c.name;
 			if (!n || /^various artists$/i.test(n)) continue;
-			noms.set(net(n), { nom: n, sortidas: (noms.get(net(n))?.sortidas ?? 0) + 1 });
+			const ja = noms.get(net(n));
+			// un titre en occitan, pour reconnaître le bon artiste au moment du tri
+			noms.set(net(n), { nom: n, sortidas: (ja?.sortidas ?? 0) + 1, exemple: ja?.exemple ?? { titol: r.title, annada: r.date?.slice(0, 4) ?? '' } });
 		}
 	console.log(`MusicBrainz : ${Math.min(off + 100, d.count)} / ${d.count} sorties`);
 	if (off + 100 >= d.count) break;
@@ -41,21 +43,25 @@ console.log(`${noms.size} artistes distincts`);
 
 // 2. Deezer : le même nom exactement, puis son dernier album
 const candidats = [];
-for (const [clau, { nom, sortidas }] of noms) {
+for (const [clau, { nom, sortidas, exemple }] of noms) {
 	const s = await json(`https://api.deezer.com/search/artist?q=${encodeURIComponent(nom)}&limit=5`);
 	const a = s?.data?.find((x) => net(x.name) === clau);
 	await dormir(150);
 	if (!a) continue;
 	const al = await json(`https://api.deezer.com/artist/${a.id}/albums?limit=100`);
 	await dormir(150);
-	const darrièr = (al?.data ?? []).filter((x) => x.release_date).sort((x, y) => y.release_date.localeCompare(x.release_date))[0];
+	// le dernier vrai album d'abord (Romain, 2026-10-25), sinon la dernière sortie (single, EP)
+	const totas = (al?.data ?? []).filter((x) => x.release_date).sort((x, y) => y.release_date.localeCompare(x.release_date));
+	const darrièr = totas.find((x) => x.record_type === 'album') ?? totas[0];
 	if (!darrièr) continue;
 	candidats.push({
 		id: a.id,
 		nom: a.name,
 		imatge: a.picture_big,
 		sortidasOc: sortidas,
-		album: { id: darrièr.id, titol: darrièr.title, data: darrièr.release_date, cobèrta: darrièr.cover_medium }
+		exempleOc: exemple,
+		fans: a.nb_fan ?? 0,
+		album: { id: darrièr.id, titol: darrièr.title, data: darrièr.release_date, cobèrta: darrièr.cover_medium, tipe: darrièr.record_type }
 	});
 	process.stdout.write('.');
 }
