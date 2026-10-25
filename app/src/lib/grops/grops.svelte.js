@@ -72,13 +72,19 @@ export const grops = $state({
 	ieu: null, // son propre profil : { pseudo, verificacion }
 	mevas: [], // mos_grops() : grop_id, mena, nom_oc, nom_fr, estat, darrier_at, non_legits
 	cargadas: false,
-	obert: null // le groupe affiché à droite
+	obert: null, // le groupe affiché à droite
+	// les contacts (supabase-contactes.sql, 2026-10-25) : mos_contactes() :
+	// user_id, pseudo, estat (acceptat, mandada, recebuda), darrier_at, non_legits
+	contactes: [],
+	obertAmb: null // la personne de la conversation affichée à droite
 });
+let canalIeu = null;
 
 const canals = new Map();
 const auditors = new Set();
 
-/** S'abonner aux avis du direct (la discussion ouverte) ; renvoie de quoi se désabonner. */
+/** S'abonner aux avis du direct (la discussion ouverte ; « ieu » pour les
+ *  messages un à un et les contacts) ; renvoie de quoi se désabonner. */
 export function escotar(fn) {
 	auditors.add(fn);
 	return () => auditors.delete(fn);
@@ -87,6 +93,52 @@ export function escotar(fn) {
 export async function cargarIeu() {
 	const { data } = await supabase.from('profiles').select('pseudo, verificacion').eq('user_id', grops.uid).maybeSingle();
 	grops.ieu = data;
+}
+
+/** Ses contacts, et le canal « ieu:<id> » où arrivent ses messages un à un. */
+export async function cargarContactes() {
+	const { data, error } = await supabase.rpc('mos_contactes');
+	if (error) return;
+	grops.contactes = data;
+	if (!canalIeu && grops.uid) {
+		canalIeu = supabase.channel('ieu:' + grops.uid, { config: { private: true } });
+		for (const ev of ['privat', 'privat_suprimit', 'contacte'])
+			canalIeu.on('broadcast', { event: ev }, ({ payload }) => recebutIeu(ev, payload));
+		canalIeu.subscribe();
+	}
+}
+
+function recebutIeu(ev, p) {
+	if (ev === 'contacte') cargarContactes();
+	else if (ev === 'privat') {
+		const autre = p.de === grops.uid ? p.a : p.de;
+		const c = grops.contactes.find((x) => x.user_id === autre);
+		if (c) {
+			c.darrier_at = p.created_at;
+			if (p.de !== grops.uid && autre !== grops.obertAmb) c.non_legits += 1;
+			grops.contactes.sort((a, b) => (b.estat === 'recebuda') - (a.estat === 'recebuda') || (b.darrier_at ?? '').localeCompare(a.darrier_at ?? ''));
+		}
+	}
+	for (const fn of auditors) fn('ieu', ev, p);
+}
+
+/** Les gestes sur un contact : renvoient la clé d'erreur ou null. */
+async function gèste(fn, args) {
+	const { error } = await supabase.rpc(fn, args);
+	if (error) return clauError(error);
+	await cargarContactes();
+	return null;
+}
+export const demandarContacte = (u) => gèste('demandar_contacte', { u });
+export const respondreContacte = (u, accepta) => gèste('respondre_contacte', { u, accepta });
+export const quitarContacte = (u) => gèste('quitar_contacte', { u });
+export const blocar = (u) => gèste('blocar', { u });
+export const desblocar = (u) => gèste('desblocar', { u });
+
+export async function marcarLegitPrivat(u) {
+	const c = grops.contactes.find((x) => x.user_id === u);
+	if (c) c.non_legits = 0;
+	await supabase.rpc('marcar_legit_privat', { u });
 }
 
 export async function cargarMevas() {
@@ -117,6 +169,9 @@ function sincronizar() {
 export function tancar() {
 	for (const c of canals.values()) supabase.removeChannel(c);
 	canals.clear();
+	if (canalIeu) supabase.removeChannel(canalIeu);
+	canalIeu = null;
+	grops.contactes = [];
 	grops.mevas = [];
 	grops.cargadas = false;
 	grops.ieu = null;
@@ -165,7 +220,11 @@ const ERRORS = [
 	'messatges_mot',
 	'messatges_limit',
 	'messatges_ligam',
-	'messatges_verificacion'
+	'messatges_verificacion',
+	'contactes_impossible',
+	'contactes_limit',
+	'contactes_inconegut',
+	'privats_contacte'
 ];
 export function clauError(error) {
 	const m = error?.message ?? '';

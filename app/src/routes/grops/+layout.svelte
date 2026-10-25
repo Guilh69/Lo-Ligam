@@ -13,7 +13,7 @@
 	import { esAdmin, adminSabut } from '$lib/adminStore';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { iniciar } from '$lib/edicion/edicion.svelte.js';
-	import { grops, DOBÈRTS, cargarMevas, cargarIeu, tancar, ora } from '$lib/grops/grops.svelte.js';
+	import { grops, DOBÈRTS, cargarMevas, cargarIeu, cargarContactes, respondreContacte, tancar, ora } from '$lib/grops/grops.svelte.js';
 	import Avatar from '$lib/grops/Avatar.svelte';
 	import Tèxte from '$lib/grops/Tèxte.svelte';
 
@@ -33,7 +33,13 @@
 			connectar: 'Se connectar',
 			non_legits: (n) => `${n} messatge${n > 1 ? 's' : ''} pas legit${n > 1 ? 's' : ''}`,
 			confidencialitat: 'Confidencialitat',
-			amassa: 'Tornar a Amassa'
+			amassa: 'Tornar a Amassa',
+			contactes: 'Mos contactes',
+			vòl: 'vòl èsser en contacte',
+			acceptar: 'Acceptar',
+			refusar: 'Refusar',
+			mandada: 'demanda mandada',
+			cap_contacte: 'Per apondre un contacte, dobrís son perfil dins un grop.'
 		},
 		fr: {
 			grops: 'Groupes',
@@ -45,7 +51,13 @@
 			connectar: 'Se connecter',
 			non_legits: (n) => `${n} message${n > 1 ? 's' : ''} non lu${n > 1 ? 's' : ''}`,
 			confidencialitat: 'Confidentialité',
-			amassa: 'Retour à Amassa'
+			amassa: 'Retour à Amassa',
+			contactes: 'Mes contacts',
+			vòl: 'veut être en contact',
+			acceptar: 'Accepter',
+			refusar: 'Refuser',
+			mandada: 'demande envoyée',
+			cap_contacte: 'Pour ajouter un contact, ouvre son profil dans un groupe.'
 		}
 	};
 	let x = $derived(fr ? X.fr : X.oc);
@@ -62,8 +74,19 @@
 		if (uid && permés) {
 			cargarMevas();
 			cargarIeu();
+			cargarContactes();
 		}
-		else tancar();
+		else {
+			tancar();
+			// en développement, des contacts d'exemple pour la mise en page
+			if (simular)
+				grops.contactes = [
+					{ user_id: 's1', pseudo: 'Joana', estat: 'recebuda', darrier_at: null, non_legits: 0 },
+					{ user_id: 's2', pseudo: 'Bernat_34', estat: 'acceptat', darrier_at: new Date().toISOString(), non_legits: 2 },
+					{ user_id: 's3', pseudo: 'Clara', estat: 'acceptat', darrier_at: '2026-10-20T10:00:00Z', non_legits: 0 },
+					{ user_id: 's4', pseudo: 'Pèire', estat: 'mandada', darrier_at: null, non_legits: 0 }
+				];
+		}
 	});
 	$effect(() => () => tancar());
 
@@ -79,6 +102,14 @@
 			.limit(8)
 			.then(({ data: d }) => (dobèrts = d ?? []));
 	});
+
+	// une demande reçue : on répond d'ici, sans ouvrir le profil
+	let respond = $state(null);
+	async function respondre(c, accepta) {
+		respond = c.user_id;
+		await respondreContacte(c.user_id, accepta);
+		respond = null;
+	}
 
 	// sur téléphone, une seule colonne : la liste à l'accueil, sinon la droite
 	let dins = $derived(page.route.id !== '/grops');
@@ -154,6 +185,39 @@
 								</li>
 							{/each}
 						</ul>
+					{/if}
+
+					{#if uid || simular}
+						<h2 class="començar">{x.contactes}</h2>
+						{#if grops.contactes.length}
+							<ul class="grops contactes">
+								{#each grops.contactes as c (c.user_id)}
+									<li class={c.estat}>
+										{#if c.estat === 'acceptat'}
+											<a href="/grops/amb/{c.pseudo}" aria-current={page.params.pseudo === c.pseudo && page.route.id?.startsWith('/grops/amb') ? 'page' : undefined}>
+												<span class="qui"><Avatar pseudo={c.pseudo} id={c.user_id} size="1.9rem" /><span class="nom">{c.pseudo}</span></span>
+												<span class="estat">
+													{#if c.darrier_at}<time datetime={c.darrier_at}>{ora(c.darrier_at)}</time>{/if}
+													{#if c.non_legits}<span class="non-legits" aria-label={x.non_legits(c.non_legits)}>{c.non_legits}</span>{/if}
+												</span>
+											</a>
+										{:else}
+											<a href="/grops/perfil/{c.pseudo}">
+												<span class="qui"><Avatar pseudo={c.pseudo} id={c.user_id} size="1.9rem" /><span class="noms"><span class="nom">{c.pseudo}</span><span class="nom-fr">{c.estat === 'recebuda' ? x.vòl : x.mandada}</span></span></span>
+											</a>
+											{#if c.estat === 'recebuda'}
+												<span class="respondre">
+													<button type="button" class="pichon" disabled={respond === c.user_id} onclick={() => respondre(c, true)}>{x.acceptar}</button>
+													<button type="button" class="pichon segond" disabled={respond === c.user_id} onclick={() => respondre(c, false)}>{x.refusar}</button>
+												</span>
+											{/if}
+										{/if}
+									</li>
+								{/each}
+							</ul>
+						{:else}
+							<p class="nota-contactes">{x.cap_contacte}</p>
+						{/if}
 					{/if}
 
 					<p class="pè"><a href="/confidencialitat">{x.confidencialitat}</a></p>
@@ -371,6 +435,57 @@
 		color: var(--t-fons);
 		font-weight: 700;
 		text-align: center;
+	}
+	/* les contacts : l'initiale devant le pseudo ; une demande reçue garde
+	   ses deux boutons sous le nom */
+	.qui {
+		display: flex;
+		align-items: center;
+		gap: var(--esp-8);
+		min-width: 0;
+	}
+	.contactes li.mandada .nom {
+		font-weight: 400;
+	}
+	.respondre {
+		display: flex;
+		gap: var(--esp-8);
+		padding: 0 0.75rem 0.5rem calc(0.75rem + 1.9rem + var(--esp-8));
+	}
+	.pichon {
+		min-height: 36px;
+		padding: 0.35rem 0.9rem;
+		border: 0;
+		border-radius: 999px;
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
+		font: 700 0.85rem/1 var(--font-body);
+		cursor: pointer;
+	}
+	.pichon:hover {
+		background: var(--t-accion-viu);
+	}
+	.pichon.segond {
+		background: transparent;
+		color: var(--t-tinta);
+		box-shadow: inset 0 0 0 1px var(--t-linha);
+	}
+	.pichon.segond:hover {
+		background: color-mix(in srgb, var(--t-tinta) 7%, transparent);
+	}
+	.pichon:disabled {
+		opacity: 0.6;
+		cursor: wait;
+	}
+	.pichon:focus-visible {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 2px;
+	}
+	.nota-contactes {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.5;
+		color: var(--t-tinta-2);
 	}
 	.pè {
 		margin: auto 0 0;
