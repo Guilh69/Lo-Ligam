@@ -8,6 +8,7 @@
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, nomDe } from '$lib/grops/grops.svelte.js';
 	import Avatar from '$lib/grops/Avatar.svelte';
+	import Crotz from '$lib/components/Crotz.svelte';
 
 	let fr = $derived(langStore.current === 'fr');
 	const X = {
@@ -19,6 +20,7 @@
 			nivel: 'Nivèl',
 			cerca: 'Çò que cèrca',
 			agrada: 'Çò que li agrada',
+			occitania: 'Occitània',
 			dempuei: 'Membre dempuèi',
 			comuns: 'Grops en comun',
 			cap: 'Cap de grop en comun.',
@@ -34,6 +36,7 @@
 			nivel: 'Niveau',
 			cerca: 'Ce qu’il ou elle cherche',
 			agrada: 'Ce qu’il ou elle aime',
+			occitania: 'Occitanie',
 			dempuei: 'Membre depuis',
 			comuns: 'Groupes en commun',
 			cap: 'Aucun groupe en commun.',
@@ -85,7 +88,7 @@
 		{#if perfil.presentacion}<p class="presentacion">{perfil.presentacion}</p>{/if}
 
 		<dl>
-			{#if perfil.ont}<div><dt>{x.ont}</dt><dd>{luòc(perfil)}</dd></div>{/if}
+			{#if perfil.ont}<div><dt>{x.ont}</dt><dd class:oc={perfil.ont_dep}>{#if perfil.ont_dep}<span role="img" aria-label={x.occitania} title={x.occitania}><Crotz talha={20} teula /></span>{/if}{luòc(perfil)}</dd></div>{/if}
 			{#if perfil.dialecte}<div><dt>{x.dialecte}</dt><dd>{nomDe(DIALECTES, perfil.dialecte, fr)}</dd></div>{/if}
 			{#if perfil.nivel}<div><dt>{x.nivel}</dt><dd>{nomDe(NIVELS, perfil.nivel, fr)}</dd></div>{/if}
 			<div><dt>{x.dempuei}</dt><dd>{mes(perfil.arribat_at)}</dd></div>
@@ -187,6 +190,15 @@
 	}
 	dd {
 		margin: 2px 0 0;
+	}
+	/* une commune d'Occitanie : la croix du logo devant son nom */
+	dd.oc {
+		display: flex;
+		align-items: center;
+		gap: var(--esp-8);
+	}
+	dd.oc span {
+		display: inline-flex;
 	}
 	/* ce qu'on cherche, ce qu'on aime : des étiquettes, pas des boutons */
 	.pastilhas {
