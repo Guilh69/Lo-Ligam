@@ -22,7 +22,9 @@ export const PLAN = [
 			{ oc: 'Lo wiki', fr: 'Le wiki', href: '/wiki' }, // (« wiki » plutôt qu'« encyclopédie », Romain, 2026-10-15)
 			// (venaient d'Amassa : le pays, ce qui s'y dit et s'y fait ; Romain, 2026-10-22)
 			{ oc: 'Òbras', fr: 'Œuvres', href: '/obras' },
-			{ oc: 'Articles', fr: 'Articles', href: '/articles' }
+			{ oc: 'Articles', fr: 'Articles', href: '/articles' },
+			// (la case Musicas de Se parla devenue Médias ; la musique est dans Òbras, 2026-10-25)
+			{ oc: 'Mèdias', fr: 'Médias', href: '/medias' }
 		] }]
 	},
 	{

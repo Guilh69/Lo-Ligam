@@ -16,12 +16,27 @@ function versAdresse(event) {
 	});
 }
 
+// Les pages d'essai de Se parla, Òbras et Médias, branchées sur le site le
+// 2026-10-25 : les anciennes adresses mènent aux nouvelles.
+const ANCIANAS = {
+	'/ensag/parla': '/parla',
+	'/ensag/obras': '/obras',
+	'/ensag/medias': '/medias',
+	'/ensag/radios': '/medias/radios',
+	'/ensag/television': '/medias/television',
+	'/ensag/premsa': '/medias/premsa',
+	'/ensag/literatura': '/obras/literatura',
+	'/ensag/cinema': '/obras/cinema'
+};
+
 // En-têtes de sécurité posés sur chaque réponse. Scaleway ne les met pas
 // tout seul, et la politique de contenu (définie dans svelte.config.js)
 // ne couvre pas ces aspects-là.
 export async function handle({ event, resolve }) {
 	const redirection = versAdresse(event);
 	if (redirection) return redirection;
+	const novèla = ANCIANAS[event.url.pathname];
+	if (novèla) return new Response(null, { status: 301, headers: { location: novèla + event.url.search } });
 
 	const response = await resolve(event);
 

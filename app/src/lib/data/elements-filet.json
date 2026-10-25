@@ -101,13 +101,43 @@
     { "clau": "parla.teulas.articles", "tipe": "bloc", "lista": "parla.teulas", "ordre": 4 },
     { "clau": "parla.teulas.articles.ligam", "tipe": "ligam", "lista": "parla.teulas.articles", "oc": "Articles", "fr": "Articles", "ligam": "/articles" },
     { "clau": "parla.teulas.articles.sota", "tipe": "text", "lista": "parla.teulas.articles", "oc": "A escriure", "fr": "À écrire", "visible": false },
-    { "clau": "parla.teulas.musicas", "tipe": "bloc", "lista": "parla.teulas", "ordre": 5 },
-    { "clau": "parla.teulas.musicas.ligam", "tipe": "ligam", "lista": "parla.teulas.musicas", "oc": "Musicas", "fr": "Musiques", "ligam": "/ensag/musica" },
-    { "clau": "parla.teulas.musicas.sota", "tipe": "text", "lista": "parla.teulas.musicas", "oc": "Çò qu’escoti, e ont l’escotar.", "fr": "Ce que j’écoute, et où l’écouter." }
+    { "clau": "parla.teulas.medias", "tipe": "bloc", "lista": "parla.teulas", "ordre": 5 },
+    { "clau": "parla.teulas.medias.ligam", "tipe": "ligam", "lista": "parla.teulas.medias", "oc": "Mèdias", "fr": "Médias", "ligam": "/medias" },
+    { "clau": "parla.teulas.medias.sota", "tipe": "text", "lista": "parla.teulas.medias", "oc": "Las ràdios, las televisions e la premsa.", "fr": "Les radios, les télévisions et la presse." }
   ],
   "obras": [
-    { "clau": "obras.musica.titol", "tipe": "text", "oc": "Musicas", "fr": "Musiques" },
-    { "clau": "obras.musica.frasa", "tipe": "text", "oc": "A escriure", "fr": "À écrire", "visible": false }
+    { "clau": "obras.titol", "tipe": "text", "oc": "Òbras", "fr": "Œuvres" },
+    { "clau": "obras.frasa", "tipe": "text", "oc": "Çò qu’escoti, çò que legissi, çò que te fau descobrir en occitan.", "fr": "Ce que j’écoute, ce que je lis, ce que je te fais découvrir en occitan." },
+
+    { "clau": "obras.teulas.musica", "tipe": "bloc", "lista": "obras.teulas", "ordre": 1 },
+    { "clau": "obras.teulas.musica.ligam", "tipe": "ligam", "lista": "obras.teulas.musica", "oc": "Musica", "fr": "Musique", "ligam": "/ensag/musica" },
+    { "clau": "obras.teulas.musica.sota", "tipe": "text", "lista": "obras.teulas.musica", "oc": "Las cançons en occitan.", "fr": "Les chansons en occitan." },
+    { "clau": "obras.teulas.literatura", "tipe": "bloc", "lista": "obras.teulas", "ordre": 2 },
+    { "clau": "obras.teulas.literatura.ligam", "tipe": "ligam", "lista": "obras.teulas.literatura", "oc": "Literatura", "fr": "Littérature", "ligam": "/obras/literatura" },
+    { "clau": "obras.teulas.literatura.sota", "tipe": "text", "lista": "obras.teulas.literatura", "oc": "Los editors en occitan.", "fr": "Les éditeurs en occitan." },
+    { "clau": "obras.teulas.cinema", "tipe": "bloc", "lista": "obras.teulas", "ordre": 3 },
+    { "clau": "obras.teulas.cinema.ligam", "tipe": "ligam", "lista": "obras.teulas.cinema", "oc": "Cinema e video", "fr": "Cinéma et vidéo", "ligam": "/obras/cinema" },
+    { "clau": "obras.teulas.cinema.sota", "tipe": "text", "lista": "obras.teulas.cinema", "oc": "Los filmes en occitan.", "fr": "Les films en occitan." },
+    { "clau": "obras.teulas.pintura", "tipe": "bloc", "lista": "obras.teulas", "ordre": 4 },
+    { "clau": "obras.teulas.pintura.ligam", "tipe": "ligam", "lista": "obras.teulas.pintura", "oc": "Pintura e afichas", "fr": "Peinture et affiches", "ligam": "/obras/afichas" },
+    { "clau": "obras.teulas.pintura.sota", "tipe": "text", "lista": "obras.teulas.pintura", "oc": "D’afichas que fan parlar la lenga sus las parets.", "fr": "Des affiches qui font parler la langue sur les murs." },
+    { "clau": "obras.teulas.scena", "tipe": "bloc", "lista": "obras.teulas", "ordre": 5 },
+    { "clau": "obras.teulas.scena.ligam", "tipe": "ligam", "lista": "obras.teulas.scena", "oc": "Scèna", "fr": "Scène", "ligam": "#scena" },
+    { "clau": "obras.teulas.scena.sota", "tipe": "text", "lista": "obras.teulas.scena", "oc": "Teatre, dança e contes. Lèu.", "fr": "Théâtre, danse et contes. Bientôt." }
+  ],
+  "medias": [
+    { "clau": "medias.titol", "tipe": "text", "oc": "Mèdias", "fr": "Médias" },
+    { "clau": "medias.frasa", "tipe": "text", "oc": "Las ràdios, las televisions e la premsa en occitan.", "fr": "Les radios, les télévisions et la presse en occitan." },
+
+    { "clau": "medias.teulas.radios", "tipe": "bloc", "lista": "medias.teulas", "ordre": 1 },
+    { "clau": "medias.teulas.radios.ligam", "tipe": "ligam", "lista": "medias.teulas.radios", "oc": "Ràdios", "fr": "Radios", "ligam": "/medias/radios" },
+    { "clau": "medias.teulas.radios.sota", "tipe": "text", "lista": "medias.teulas.radios", "oc": "Set ràdios en occitan, en dirècte.", "fr": "Sept radios en occitan, en direct." },
+    { "clau": "medias.teulas.television", "tipe": "bloc", "lista": "medias.teulas", "ordre": 2 },
+    { "clau": "medias.teulas.television.ligam", "tipe": "ligam", "lista": "medias.teulas.television", "oc": "Television e video", "fr": "Télévision et vidéo", "ligam": "/medias/television" },
+    { "clau": "medias.teulas.television.sota", "tipe": "text", "lista": "medias.teulas.television", "oc": "Las cadenas, las emissions e las videos.", "fr": "Les chaînes, les émissions et les vidéos." },
+    { "clau": "medias.teulas.premsa", "tipe": "bloc", "lista": "medias.teulas", "ordre": 3 },
+    { "clau": "medias.teulas.premsa.ligam", "tipe": "ligam", "lista": "medias.teulas.premsa", "oc": "Premsa", "fr": "Presse", "ligam": "/medias/premsa" },
+    { "clau": "medias.teulas.premsa.sota", "tipe": "text", "lista": "medias.teulas.premsa", "oc": "Los jornals e las revistas.", "fr": "Les journaux et les revues." }
   ],
   "apren": [
     { "clau": "apren.titol", "tipe": "text", "oc": "S’apren", "fr": "S’apprend" },

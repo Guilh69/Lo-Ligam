@@ -1,15 +1,15 @@
 <script>
-	// Page d'essai de la littérature (2026-10-25, Romain : même méthode que les
+	// Page de la littérature (2026-10-25, Romain : même méthode que les
 	// médias, dans les verts d'Òbras). Trois présentations comparées
 	// (bibliothèque, fichier, cases) ; Romain a choisi la bibliothèque : un dos
 	// de livre par entrée sur une étagère, la fiche du livre survolé à droite ;
 	// au téléphone, les livres couchés en pile. Deux groupes : les éditeurs,
 	// puis où trouver les livres. Chaque entrée mène à son site. Données dans
-	// $lib/ensag/maqueta.js.
+	// $lib/data/arts.js.
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { PALETAS } from '$lib/apren/teulas.js';
-	import { LIBRES } from '$lib/ensag/maqueta.js';
+	import { LIBRES } from '$lib/data/arts.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -48,8 +48,7 @@
 </script>
 
 <svelte:head>
-	<title>Literatura (maqueta) · Lo Ligam</title>
-	<meta name="robots" content="noindex" />
+	<title>Literatura · Lo Ligam</title>
 </svelte:head>
 
 <div class="pagina">
@@ -57,8 +56,8 @@
 
 <main class="literatura">
 	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/ensag/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/ensag/obras">{fr ? 'Œuvres' : 'Òbras'}</a><span aria-hidden="true">›</span>
+		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
+		<a href="/obras">{fr ? 'Œuvres' : 'Òbras'}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 

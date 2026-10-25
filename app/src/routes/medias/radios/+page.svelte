@@ -1,5 +1,5 @@
 <script>
-	// Page d'essai des radios (2026-10-25, Romain : « pas comme ça… va
+	// Page des radios (2026-10-25, Romain : « pas comme ça… va
 	// t'inspirer sur des sites qui recensent différentes radios »). Trois
 	// présentations comparées (cases, cadran, carte) ; Romain a choisi la
 	// carte : les dialectes en aplats d'or, un point par radio (comme Radio
@@ -9,8 +9,8 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { PALETAS } from '$lib/apren/teulas.js';
-	import { RADIOS } from '$lib/ensag/maqueta.js';
-	import { DIALECTES, LARG, NAUT, proj } from '$lib/ensag/carta-dialectes.js';
+	import { RADIOS } from '$lib/data/medias.js';
+	import { DIALECTES, LARG, NAUT, proj } from '$lib/data/carta-dialectes.js';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -66,8 +66,7 @@
 </script>
 
 <svelte:head>
-	<title>Ràdios (maqueta) · Lo Ligam</title>
-	<meta name="robots" content="noindex" />
+	<title>Ràdios · Lo Ligam</title>
 </svelte:head>
 
 <!-- svelte-ignore a11y_media_has_caption -->
@@ -87,8 +86,8 @@
 
 <main class="radios">
 	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/ensag/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/ensag/medias">{fr ? 'Médias' : 'Mèdias'}</a><span aria-hidden="true">›</span>
+		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
+		<a href="/medias">{fr ? 'Médias' : 'Mèdias'}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 
