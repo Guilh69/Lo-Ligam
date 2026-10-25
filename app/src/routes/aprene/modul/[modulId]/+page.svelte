@@ -23,6 +23,7 @@
 	import CausidaBlock from '$lib/lesson/CausidaBlock.svelte';
 	import CartaBlock from '$lib/lesson/CartaBlock.svelte';
 	import CartaTitol from '$lib/lesson/CartaTitol.svelte';
+	import { rich } from '$lib/lesson/rich.js';
 	import { demarrerCarnet, noterExercice } from '$lib/carnet/carnet.svelte.js';
 
 	let modul = $derived(moduls[$page.params.modulId]);
@@ -347,6 +348,17 @@
 				{/if}
 			</nav>
 
+			<!-- Romain relit en jouant : les questions de la fiche, sous ses yeux (visible seulement avant la relecture, donc pour lui seul) -->
+			{#if !modul.relu && modul.notesRelecture?.length}
+				<details class="questions-relecture" open>
+					<summary>Questions de relecture <em>(pour toi seul)</em></summary>
+					<ol>
+						{#each modul.notesRelecture as n}<li>{@html rich(n)}</li>{/each}
+					</ol>
+					<p>Réponds de vive voix à Claude, avec le numéro du module et de la question.</p>
+				</details>
+			{/if}
+
 			<p class="draft-note">
 				⚠️ Contenu en cours de validation linguistique (dicodòc / lo Congrès). L'audio arrive.
 			</p>
@@ -544,6 +556,35 @@
 		text-align: center;
 	}
 
+	.questions-relecture {
+		margin: 1.5rem 0 0;
+		padding: 0.8rem 1rem;
+		border-radius: 14px;
+		background: var(--color-gold-light);
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+
+	.questions-relecture summary {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.questions-relecture ol {
+		margin: 0.5rem 0;
+		padding-left: 1.3rem;
+	}
+
+	.questions-relecture li + li {
+		margin-top: 0.35rem;
+	}
+
+	.questions-relecture p {
+		margin: 0;
+		color: rgba(58, 42, 32, 0.7);
+	}
+
 	.missing {
 		text-align: center;
 		padding-top: 4rem;
@@ -662,6 +703,7 @@
 	}
 
 	.session-fr {
+		margin-left: 0.3em;
 		font-family: var(--font-body);
 		font-weight: 400;
 		font-size: 0.85rem;
