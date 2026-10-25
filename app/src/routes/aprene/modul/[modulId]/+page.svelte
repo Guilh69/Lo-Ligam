@@ -19,6 +19,10 @@
 	import TableBlock from '$lib/lesson/TableBlock.svelte';
 	import NoteBlock from '$lib/lesson/NoteBlock.svelte';
 	import ChecklistBlock from '$lib/lesson/ChecklistBlock.svelte';
+	import EscriureBlock from '$lib/lesson/EscriureBlock.svelte';
+	import CausidaBlock from '$lib/lesson/CausidaBlock.svelte';
+	import CartaBlock from '$lib/lesson/CartaBlock.svelte';
+	import CartaTitol from '$lib/lesson/CartaTitol.svelte';
 	import { demarrerCarnet, noterExercice } from '$lib/carnet/carnet.svelte.js';
 
 	let modul = $derived(moduls[$page.params.modulId]);
@@ -137,7 +141,7 @@
 	// Déblocage progressif : dans une étape, un bloc interactif (questions,
 	// remise en ordre…) doit être réussi pour révéler la suite ; les blocs de
 	// lecture (dialogue, tableau, notes…) accompagnent sans bloquer.
-	const INTERACTIUS = new Set(['qcm', 'reveal', 'order']);
+	const INTERACTIUS = new Set(['qcm', 'reveal', 'order', 'escriure', 'causida', 'carta']);
 	let blockDone = $state([]);
 
 	let visibleBlockCount = $derived.by(() => {
@@ -292,9 +296,16 @@
 		</header>
 
 		{#if view === 'list'}
+			{#if modul.ouverture}
+				<CartaTitol ouverture={modul.ouverture} />
+			{/if}
 			<section class="modul-head">
 				<p class="kicker">{modul.nivel} · {modul.unitat}</p>
-				<h1 class="title">{modul.oc}</h1>
+				{#if modul.ouverture}
+					<h2 class="title">{modul.oc}</h2>
+				{:else}
+					<h1 class="title">{modul.oc}</h1>
+				{/if}
 				<p class="subtitle"><em>({modul.fr})</em></p>
 				<p class="cando">🎯 {modul.cando}</p>
 				<p class="durada">{modul.durada}</p>
@@ -305,7 +316,7 @@
 					<button type="button" class="session-card" class:done={done[i]} onclick={() => openSession(i)}>
 						<span class="session-num" aria-hidden="true">{#if done[i]}<Icona nom="valide" />{:else}{i + 1}{/if}</span>
 						<span class="session-titles">
-							<span class="session-title">{s.title}</span>
+							<span class="session-title">{s.title}{#if s.fr} <em class="session-fr">({s.fr})</em>{/if}</span>
 							<span class="session-min">{s.minutes} min</span>
 						</span>
 						<span class="session-go" aria-hidden="true"><Icona nom="suivant" /></span>
@@ -344,6 +355,7 @@
 			<section class="session-head">
 				<p class="kicker">{modul.oc} · Étape {view + 1}/{modul.sessions.length}</p>
 				<h1 class="session-h">{s.title}</h1>
+				{#if s.fr}<p class="session-fr-h"><em>({s.fr})</em></p>{/if}
 				<p class="session-min-line">~{s.minutes} min · à ton rythme</p>
 			</section>
 
@@ -357,6 +369,12 @@
 								<RevealBlock {block} {onCorrect} onComplete={() => (blockDone[bi] = true)} />
 							{:else if block.type === 'order'}
 								<OrderBlock {block} {onCorrect} onResult={noterProduis} onComplete={() => (blockDone[bi] = true)} />
+							{:else if block.type === 'escriure'}
+								<EscriureBlock {block} {onCorrect} onResult={noterProduis} onComplete={() => (blockDone[bi] = true)} />
+							{:else if block.type === 'causida'}
+								<CausidaBlock {block} {onCorrect} onResult={noterReconnais} onComplete={() => (blockDone[bi] = true)} />
+							{:else if block.type === 'carta'}
+								<CartaBlock {block} {onCorrect} onResult={noterReconnais} onComplete={() => (blockDone[bi] = true)} />
 							{:else if block.type === 'dialogue'}
 								<DialogueBlock {block} />
 							{:else if block.type === 'chunks'}
@@ -641,6 +659,19 @@
 		font-weight: 600;
 		font-size: 1.02rem;
 		color: var(--color-text);
+	}
+
+	.session-fr {
+		font-family: var(--font-body);
+		font-weight: 400;
+		font-size: 0.85rem;
+		color: var(--color-teal);
+	}
+
+	.session-fr-h {
+		margin: 0.1rem 0 0;
+		color: var(--color-teal);
+		font-size: 0.95rem;
 	}
 
 	.session-min {
