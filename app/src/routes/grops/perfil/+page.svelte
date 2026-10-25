@@ -197,6 +197,10 @@
 		enregistrat = false;
 		error = null;
 		const ont = f.ont.trim();
+		// seules les valeurs des listes (la base refuse les autres)
+		const de = (lista, vals) => lista.map(([v]) => v).filter((v) => vals.includes(v));
+		const cerca = de(CERCA, f.cerca);
+		const agrada = de(AGRADA, f.agrada);
 		const { error: err } = await supabase
 			.from('profiles')
 			.update({
@@ -206,8 +210,8 @@
 				ont_dep: ont ? f.ont_dep : null,
 				dialecte: f.dialecte || null,
 				nivel: f.nivel || null,
-				cerca: f.cerca.length ? f.cerca : null,
-				agrada: f.agrada.length ? f.agrada : null
+				cerca: cerca.length ? cerca : null,
+				agrada: agrada.length ? agrada : null
 			})
 			.eq('user_id', grops.uid);
 		enregistrant = false;
@@ -228,11 +232,18 @@
 		<legend>{x[nom]}</legend>
 		<div class="chips">
 			{#each lista as [v, oc, fr_] (v)}
+				<!-- (pas de bind:group ici : Svelte regroupe les cases par expression,
+				     et les trois listes du gabarit se mêleraient) -->
 				<label class="chip">
 					{#if tipe === 'radio'}
-						<input type="radio" name={nom} value={v} bind:group={f[nom]} />
+						<input type="radio" name={nom} value={v} checked={f[nom] === v} onchange={() => (f[nom] = v)} />
 					{:else}
-						<input type="checkbox" value={v} bind:group={f[nom]} />
+						<input
+							type="checkbox"
+							value={v}
+							checked={f[nom].includes(v)}
+							onchange={(e) => (f[nom] = e.currentTarget.checked ? [...f[nom], v] : f[nom].filter((y) => y !== v))}
+						/>
 					{/if}
 					{fr ? fr_ : oc}
 				</label>
