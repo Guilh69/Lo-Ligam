@@ -1,7 +1,7 @@
 <script>
 	// Les groupes d'Amassa (2026-10-25) : une messagerie, comme on en a
 	// l'habitude. Sur grand écran, ses groupes à gauche et la discussion à
-	// droite ; sur téléphone, l'un puis l'autre. « Crear un grop » ouvre le
+	// droite ; sur téléphone, l'un puis l'autre. « Tots los grops » ouvre le
 	// catalogue (villes, dialectes, départements, passions). Fermé au public
 	// jusqu'à la charte (DOBÈRTS) : seul l'administrateur le voit.
 	import AppHeader from '$lib/components/AppHeader.svelte';
@@ -25,7 +25,7 @@
 		oc: {
 			grops: 'Grops',
 			mos: 'Mos grops',
-			crear: 'Crear un grop',
+			crear: 'Tots los grops',
 			començar: 'Per començar',
 			connectar: 'Se connectar',
 			non_legits: (n) => `${n} messatge${n > 1 ? 's' : ''} pas legit${n > 1 ? 's' : ''}`,
@@ -35,7 +35,7 @@
 		fr: {
 			grops: 'Groupes',
 			mos: 'Mes groupes',
-			crear: 'Créer un groupe',
+			crear: 'Tous les groupes',
 			començar: 'Pour commencer',
 			connectar: 'Se connecter',
 			non_legits: (n) => `${n} message${n > 1 ? 's' : ''} non lu${n > 1 ? 's' : ''}`,
@@ -98,7 +98,7 @@
 					<div class="cap-lista">
 						<h1>{x.grops}</h1>
 						<a class="crear" href="/grops/crear" aria-current={page.route.id === '/grops/crear' ? 'page' : undefined}>
-							<Icona nom="apondre" />
+							<Icona nom="chercher" />
 							{x.crear}
 						</a>
 					</div>

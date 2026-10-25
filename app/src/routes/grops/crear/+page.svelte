@@ -1,5 +1,6 @@
 <script>
-	// « Crear un grop » : le catalogue (villes, niveaux, dialectes,
+	// « Tots los grops » (d'abord « Crear un grop », renommé le 2026-10-25 : on
+	// y cherche autant qu'on y ouvre) : le catalogue (villes, niveaux, dialectes,
 	// départements, passions). Un groupe proposé ouvre avec sa première
 	// personne : la base s'en charge (rejonher_grop), il n'y a rien à remplir.
 	import Icona from '$lib/components/Icona.svelte';
@@ -12,7 +13,7 @@
 	let fr = $derived(langStore.current === 'fr');
 	const X = {
 		oc: {
-			titol: 'Crear un grop',
+			titol: 'Tots los grops',
 			tornar: 'Tornar a la lista',
 			frasa: 'Un grop prepausat dobrís amb sa primièra persona.',
 			cercar: 'Cercar',
@@ -25,7 +26,7 @@
 			...X_ERRORS.oc
 		},
 		fr: {
-			titol: 'Créer un groupe',
+			titol: 'Tous les groupes',
 			tornar: 'Retour à la liste',
 			frasa: 'Un groupe proposé ouvre avec sa première personne.',
 			cercar: 'Chercher',
