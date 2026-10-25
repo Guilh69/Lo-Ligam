@@ -11,7 +11,7 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, cargarIeu } from '$lib/grops/grops.svelte.js';
-	import { cargarComunas, cercarComunas, cercarMonde, normC } from '$lib/comunas.js';
+	import { cargarComunas, cercarComunas, cercarMonde, normC, luòcAfichat } from '$lib/comunas.js';
 	import Crotz from '$lib/components/Crotz.svelte';
 	import Avatar from '$lib/grops/Avatar.svelte';
 
@@ -81,7 +81,7 @@
 
 	let cargat = $state(false);
 	let existís = $state(false);
-	let f = $state({ presentacion: '', ont: '', ont_oc: null, ont_dep: null, dialecte: '', nivel: '', cerca: [], agrada: [] });
+	let f = $state({ presentacion: '', ont: '', ont_oc: null, ont_dep: null, ont_pais: null, ont_occitania: false, dialecte: '', nivel: '', cerca: [], agrada: [] });
 	let enregistrant = $state(false);
 	let enregistrat = $state(false);
 	let error = $state(null);
@@ -97,7 +97,6 @@
 	let dobèrt = $state(false);
 
 	// le nom du lieu dans la langue choisie ; dans la liste, l'autre nom à côté
-	const nomLuòc = (l) => (fr ? l.ont : (l.ont_oc ?? l.ont)) ?? '';
 	const nomComuna = (c) => (fr ? c.fr : (c.oc ?? c.fr));
 	const autreNom = (c) => (c.oc ? (fr ? c.oc : c.fr) : null);
 
@@ -111,7 +110,7 @@
 		}
 		supabase
 			.from('profiles')
-			.select('presentacion, ont, ont_oc, ont_dep, dialecte, nivel, cerca, agrada')
+			.select('presentacion, ont, ont_oc, ont_dep, ont_pais, ont_occitania, dialecte, nivel, cerca, agrada')
 			.eq('user_id', grops.uid)
 			.maybeSingle()
 			.then(({ data }) => {
@@ -122,12 +121,14 @@
 						ont: data.ont ?? '',
 						ont_oc: data.ont_oc,
 						ont_dep: data.ont_dep,
+						ont_pais: data.ont_pais,
+						ont_occitania: data.ont_occitania,
 						dialecte: data.dialecte ?? '',
 						nivel: data.nivel ?? '',
 						cerca: data.cerca ?? [],
 						agrada: data.agrada ?? []
 					};
-					q = nomLuòc(f);
+					q = luòcAfichat(f, fr);
 				}
 				cargat = true;
 			});
@@ -135,14 +136,14 @@
 
 	// une commune choisie change de nom avec la langue du site
 	$effect(() => {
-		if (f.ont_dep) q = nomLuòc(f);
+		if (f.ont_dep || f.ont_pais) q = luòcAfichat(f, fr);
 	});
 
 	async function tapar() {
 		// du texte libre tant qu'on n'a pas choisi : « en linha », Paris…
 		f.ont = q;
-		f.ont_oc = null;
-		f.ont_dep = null;
+		f.ont_oc = f.ont_dep = f.ont_pais = null;
+		f.ont_occitania = false;
 		await cargarComunas();
 		trobadas = cercarComunas(q);
 		activa = -1;
@@ -161,7 +162,7 @@
 			if (cerca !== q.trim()) return;
 			cercant = false;
 			const dejà = new Set(trobadas.map((c) => normC(c.fr)));
-			monde = r.filter((x) => !(x.pais === 'France' && dejà.has(normC(x.nom)))).slice(0, 8 - trobadas.length);
+			monde = r.filter((x) => !(!x.pais && dejà.has(normC(x.nom)))).slice(0, 8 - trobadas.length);
 		}, 300);
 	}
 	function causir(o) {
@@ -169,11 +170,16 @@
 			f.ont = o.c.fr;
 			f.ont_oc = o.c.oc;
 			f.ont_dep = o.c.dep;
-			q = nomComuna(o.c);
+			f.ont_pais = null;
+			f.ont_occitania = true;
 		} else {
-			f.ont = q = o.m.pais && o.m.pais !== 'France' ? `${o.m.nom}, ${o.m.pais}` : o.m.nom;
-			f.ont_oc = f.ont_dep = null;
+			f.ont = o.m.nom;
+			f.ont_oc = null;
+			f.ont_dep = o.m.dep;
+			f.ont_pais = o.m.pais;
+			f.ont_occitania = false;
 		}
+		q = luòcAfichat(f, fr);
 		dobèrt = false;
 	}
 	function clavier(e) {
@@ -208,6 +214,8 @@
 				ont: ont || null,
 				ont_oc: ont ? f.ont_oc : null,
 				ont_dep: ont ? f.ont_dep : null,
+				ont_pais: ont ? f.ont_pais : null,
+				ont_occitania: !!ont && f.ont_occitania,
 				dialecte: f.dialecte || null,
 				nivel: f.nivel || null,
 				cerca: cerca.length ? cerca : null,
@@ -288,7 +296,7 @@
 					aria-autocomplete="list"
 					aria-expanded={dobèrt && opcions.length > 0}
 					aria-controls="perfil-ont-lista"
-					aria-activedescendant={activa >= 0 ? `perfil-ont-${activa}` : undefined}
+					aria-activedescendant={dobèrt && activa >= 0 ? `perfil-ont-${activa}` : undefined}
 					aria-describedby="perfil-ont"
 					maxlength="80"
 					bind:value={q}
@@ -320,7 +328,7 @@
 				{:else if dobèrt && !cercant && q.trim().length >= 2}
 					<small class="fòra">{x.ont_lista}</small>
 				{/if}
-				{#if f.ont_dep && !dobèrt}
+				{#if f.ont_occitania && !dobèrt}
 					<small class="occitania"><Crotz talha={20} teula />{x.occitania}</small>
 				{/if}
 			</div>

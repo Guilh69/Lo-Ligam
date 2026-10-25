@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { DIALECTES, NIVELS, CERCA, AGRADA, nomDe } from '$lib/grops/grops.svelte.js';
+	import { luòcAfichat } from '$lib/comunas.js';
 
 	let perfils = $state([]);
 	let cargant = $state(true);
@@ -101,7 +102,7 @@
 		</div>
 		{#if p.presentacion}<p class="tèxte">{p.presentacion}</p>{:else}<p class="tèxte void">Cap de presentacion. <em>(Pas de présentation.)</em></p>{/if}
 		<p class="detalhs">
-			{#if p.ont}<span>{p.ont_oc && p.ont_oc !== p.ont ? `${p.ont_oc} / ${p.ont}` : p.ont}</span>{/if}
+			{#if p.ont}<span>{luòcAfichat(p, true)}{p.ont_oc && p.ont_oc !== p.ont ? ` · ${p.ont_oc}` : ''}{p.ont_occitania ? ' · Occitània' : ''}</span>{/if}
 			{#if p.dialecte}<span>{nomDe(DIALECTES, p.dialecte, false)}</span>{/if}
 			{#if p.nivel}<span>{nomDe(NIVELS, p.nivel, false)}</span>{/if}
 			{#each p.cerca ?? [] as v (v)}<span class="cerca">{nomDe(CERCA, v, false)}</span>{/each}

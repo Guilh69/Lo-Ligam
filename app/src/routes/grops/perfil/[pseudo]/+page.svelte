@@ -9,6 +9,7 @@
 	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, nomDe } from '$lib/grops/grops.svelte.js';
 	import Avatar from '$lib/grops/Avatar.svelte';
 	import Crotz from '$lib/components/Crotz.svelte';
+	import { luòcAfichat } from '$lib/comunas.js';
 
 	let fr = $derived(langStore.current === 'fr');
 	const X = {
@@ -61,8 +62,6 @@
 		});
 	});
 	let ieu = $derived(perfil && perfil.user_id === grops.uid);
-	// le lieu dans la langue choisie, avec le département quand il vient de la carte
-	const luòc = (p) => (fr ? p.ont : (p.ont_oc ?? p.ont)) + (p.ont_dep ? ` (${p.ont_dep})` : '');
 	const mes = (d) => new Date(d).toLocaleDateString('fr-FR', { month: '2-digit', year: 'numeric' });
 </script>
 
@@ -88,7 +87,7 @@
 		{#if perfil.presentacion}<p class="presentacion">{perfil.presentacion}</p>{/if}
 
 		<dl>
-			{#if perfil.ont}<div><dt>{x.ont}</dt><dd class:oc={perfil.ont_dep}>{#if perfil.ont_dep}<span role="img" aria-label={x.occitania} title={x.occitania}><Crotz talha={20} teula /></span>{/if}{luòc(perfil)}</dd></div>{/if}
+			{#if perfil.ont}<div><dt>{x.ont}</dt><dd class:oc={perfil.ont_occitania}>{#if perfil.ont_occitania}<span role="img" aria-label={x.occitania} title={x.occitania}><Crotz talha={20} teula /></span>{/if}{luòcAfichat(perfil, fr)}</dd></div>{/if}
 			{#if perfil.dialecte}<div><dt>{x.dialecte}</dt><dd>{nomDe(DIALECTES, perfil.dialecte, fr)}</dd></div>{/if}
 			{#if perfil.nivel}<div><dt>{x.nivel}</dt><dd>{nomDe(NIVELS, perfil.nivel, fr)}</dd></div>{/if}
 			<div><dt>{x.dempuei}</dt><dd>{mes(perfil.arribat_at)}</dd></div>
