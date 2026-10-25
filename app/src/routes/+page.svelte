@@ -40,6 +40,7 @@
 	import { segments } from '$lib/edicion/marcat.js';
 	import Pictograma from '$lib/apren/Pictograma.svelte';
 	import { PALETAS, pictoPer } from '$lib/apren/teulas.js';
+	import TresMondes from '$lib/acuelh/TresMondes.svelte';
 	import '$lib/acuelh/acuelh.css';
 
 	let { data } = $props();
@@ -118,6 +119,24 @@
 	const TERRA = PALETAS.terra;
 	const terraColor = (i) => TERRA[((i % TERRA.length) + TERRA.length) % TERRA.length];
 	const CHAPS = { parla: { ini: 0 }, apren: { ini: 4 }, viu: { ini: 2 } };
+	// Essai « Los tres mondes » (direction d'accueil validée le 2026-10-25, /?ensag=mondes) :
+	// les trois entités deviennent des fenêtres vivantes (composant TresMondes) ; le milieu
+	// actuel s'efface, le héros garde son titre, le manifeste et le troubadour restent.
+	const FORMAS_MONDES = [
+		['actual', 'Actuelle'],
+		['mondes', 'Los tres mondes']
+	];
+	const CLAU_ENSAG_MONDES = 'lo-ligam-ensag-mondes';
+	let formaMondes = $state('actual');
+	let ensagMondes = $state(false);
+	function causirFormaMondes(v) {
+		formaMondes = v;
+		try {
+			localStorage.setItem(CLAU_ENSAG_MONDES, v);
+		} catch {
+			// pas grave : le choix vaut pour la visite
+		}
+	}
 	// Les trois chemins, pris dans le plan du site (le même que le menu et le
 	// pied de page) : un chemin principal et quelques autres. « Amassa » mène à
 	// sa section plus bas tant que le fòrum et les grops ne sont pas faits.
@@ -213,6 +232,17 @@
 				if (FORMAS_BLOCS.some(([v]) => v === f)) formaBlocs = f;
 			} catch {
 				// stockage indisponible : la forme actuelle
+			}
+		}
+		ensagMondes = new URLSearchParams(location.search).get('ensag') === 'mondes';
+		if (ensagMondes) {
+			// l'adresse ?ensag=mondes montre directement la nouvelle version (le bouton permet de revenir à l'actuelle)
+			formaMondes = 'mondes';
+			try {
+				const f = localStorage.getItem(CLAU_ENSAG_MONDES);
+				if (FORMAS_MONDES.some(([v]) => v === f)) formaMondes = f;
+			} catch {
+				// stockage indisponible : la nouvelle version
 			}
 		}
 		return () => {
@@ -385,7 +415,7 @@
 
 {#snippet apondreBoton(f, txtOc, txtFr)}{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={f}>+ {fr ? txtFr : txtOc}</button>{/if}{/snippet}
 
-<div class="acuelh" class:fr class:ed-actiu={edicion.actiu} bind:this={racina} data-separa={formaSepara} data-blocs={formaBlocs}>
+<div class="acuelh" class:fr class:ed-actiu={edicion.actiu} bind:this={racina} data-separa={formaSepara} data-blocs={formaBlocs} data-mondes={formaMondes}>
 	<canvas id="fons" aria-hidden="true"></canvas>
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 	<canvas id="estelas" aria-hidden="true"></canvas>
@@ -470,6 +500,11 @@
 					: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan'}
 			></div>
 		</section>
+
+		{#if formaMondes === 'mondes'}
+			<!-- Direction « los tres mondes » (essai) : les trois fenêtres remplacent le milieu -->
+			<TresMondes />
+		{/if}
 
 		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
@@ -699,6 +734,13 @@
 	<div class="ensag-eros" role="group" aria-label="Essai : chapitres de couleur">
 		{#each FORMAS_BLOCS as [v, nom] (v)}
 			<button type="button" aria-pressed={formaBlocs === v} onclick={() => causirFormaBlocs(v)}>{nom}</button>
+		{/each}
+	</div>
+{/if}
+{#if ensagMondes}
+	<div class="ensag-eros" role="group" aria-label="Essai : los tres mondes">
+		{#each FORMAS_MONDES as [v, nom] (v)}
+			<button type="button" aria-pressed={formaMondes === v} onclick={() => causirFormaMondes(v)}>{nom}</button>
 		{/each}
 	</div>
 {/if}
