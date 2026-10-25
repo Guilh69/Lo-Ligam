@@ -32,7 +32,7 @@
 		<h1 class="titol">Se parla. S’apren. <span class="or">Amassa.</span></h1>
 
 		<div class="mur">
-			<span class="fil" aria-hidden="true"></span>
+			<span class="fil" aria-hidden="true"><i class="trait"></i></span>
 
 			<!-- 01 Se parla : la fenêtre vivante, avec la carte en étoiles -->
 			<section class="fenestra granda parla">
@@ -62,7 +62,7 @@
 				</div>
 				<div class="apercu" aria-hidden="true">
 					<svg viewBox="0 0 220 90" class="camin-apercu">
-						<polyline points="14,76 70,60 120,34 206,16" fill="none" stroke="#ffd98a" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.9" />
+						<polyline points="14,76 70,60 120,34 206,16" pathLength="1" fill="none" stroke="#ffd98a" stroke-width="2.5" stroke-linecap="round" stroke-opacity="0.9" />
 						<circle cx="14" cy="76" r="5" fill="#ffd98a" />
 						<circle cx="120" cy="34" r="4" fill="#1f5f63" stroke="#ffd98a" stroke-width="2" />
 						<circle cx="206" cy="16" r="4" fill="#1f5f63" stroke="#ffd98a" stroke-width="2" />
@@ -97,9 +97,9 @@
 		<!-- L'appel : le fil se noue -->
 		<div class="apel">
 			<svg class="nos" viewBox="0 0 48 60" aria-hidden="true">
-				<path d="M24 0V18" fill="none" stroke="#eeaf34" stroke-width="2" />
-				<path d="M24 18c-13 0-13 20 0 20s13-20 0-20" fill="none" stroke="#eeaf34" stroke-width="2" />
-				<path d="M24 38v8" fill="none" stroke="#eeaf34" stroke-width="2" />
+				<path d="M24 0V18" pathLength="1" fill="none" stroke="#eeaf34" stroke-width="2" />
+				<path d="M24 18c-13 0-13 20 0 20s13-20 0-20" pathLength="1" fill="none" stroke="#eeaf34" stroke-width="2" />
+				<path d="M24 38v8" pathLength="1" fill="none" stroke="#eeaf34" stroke-width="2" />
 			</svg>
 			<h2 class="apel-titol">Prèst·a per <span class="brica">començar ?</span></h2>
 			<a class="boton" href="/apren/visio">Reservar un primièr cors {@render sageta()}</a>
@@ -142,9 +142,9 @@
 
 	/* La composition libre : une grande fenêtre à gauche, deux à droite ; le fil
 	   du ligam descend dans la gouttière */
-	.mur { position: relative; display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto auto; gap: 18px 44px; }
-	.fil { position: absolute; top: 24px; bottom: -28px; left: calc(55.6% - 1px); width: 2px;
-		background: linear-gradient(#eeaf34, #eeaf34 92%, transparent); opacity: 0.8; z-index: 2; }
+	.mur { position: relative; display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto auto; gap: 18px 44px; view-timeline-name: --mur; view-timeline-axis: block; }
+	.fil { position: absolute; top: 24px; bottom: -28px; left: calc(55.6% - 1px); width: 2px; z-index: 2; }
+	.fil .trait { position: absolute; inset: 0; transform-origin: top; background: linear-gradient(#eeaf34, #eeaf34 92%, transparent); opacity: 0.8; }
 	.fil::before, .fil::after { content: ''; position: absolute; left: 50%; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: var(--or); }
 	.fil::before { top: 22%; }
 	.fil::after { top: 70%; }
@@ -190,6 +190,27 @@
 	.boton { background: var(--brica); color: #fff; font-weight: 700; padding: 15px 28px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; transition: transform 0.3s var(--lent), box-shadow 0.3s; }
 	.boton:hover { transform: translateY(-2px); box-shadow: 0 10px 28px -14px var(--brica); }
 
+	/* ——— Animations de défilement (sobres, une chose vivante par fenêtre) ——— */
+	@keyframes obrir { from { opacity: 0; transform: translateY(26px); } }
+	@keyframes tirar { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+	@keyframes nosar { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+	/* repli si le navigateur ne suit pas le défilement : une entrée douce, une fois */
+	.fenestra { animation: obrir 0.9s var(--lent) both; }
+	.apren { animation-delay: 0.12s; }
+	.amassa { animation-delay: 0.24s; }
+	/* quand le navigateur sait suivre le défilement : tout se joue au scroll */
+	@supports (animation-timeline: view()) {
+		.fenestra { animation: obrir auto linear both; animation-timeline: view(); animation-range: entry 6% cover 34%; animation-delay: 0s; }
+		/* le fil se tire au rythme de la zone des fenêtres, le nœud se serre quand l'appel entre */
+		.fil .trait { transform: scaleY(0); animation: tirar auto linear both; animation-timeline: --mur; animation-range: entry 10% exit 85%; }
+		.nos path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: nosar auto linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+		/* la carte en étoiles se trace en entrant dans l'écran */
+		.parla .costa { animation: traçar auto linear forwards; animation-timeline: view(); animation-range: entry 10% cover 50%; }
+		.parla .estela { animation: lusir auto linear forwards; animation-timeline: view(); animation-range: entry calc(20% + var(--i) * 0.12%) cover calc(46% + var(--i) * 0.12%); }
+		/* le chemin de S'apren se dessine en entrant */
+		.camin-apercu polyline { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar auto linear both; animation-timeline: view(); animation-range: entry 16% cover 60%; }
+	}
+
 	@media (max-width: 820px) {
 		.mur { grid-template-columns: 1fr; }
 		.parla { grid-row: auto; min-height: 380px; }
@@ -200,5 +221,9 @@
 		.mondes *, .mondes *::before, .mondes *::after { animation: none !important; transition: none !important; }
 		.costa { stroke-dashoffset: 0; }
 		.estela { opacity: 1; }
+		.fil .trait { transform: none; }
+		.nos path { stroke-dashoffset: 0; }
+		.camin-apercu polyline { stroke-dashoffset: 0; }
+		.fenestra { opacity: 1; transform: none; }
 	}
 </style>
