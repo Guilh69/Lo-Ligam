@@ -157,10 +157,10 @@
 
 <style>
 	.block {
-		background: white;
+		background: var(--l-carta);
 		border-radius: 20px;
 		padding: 1.25rem 1.4rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 	}
 
 	.block-head {
@@ -174,20 +174,20 @@
 		margin: 0;
 		font-family: var(--font-heading);
 		font-size: 1.15rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.counter {
 		font-size: 0.8rem;
 		font-weight: 600;
-		color: var(--color-teal);
+		color: var(--l-teal);
 		white-space: nowrap;
 	}
 
 	.intro {
 		margin: 0.4rem 0 0;
 		font-size: 0.88rem;
-		color: rgba(58, 42, 32, 0.75);
+		color: color-mix(in srgb, var(--t-tinta) 75%, transparent);
 		line-height: 1.5;
 	}
 
@@ -199,7 +199,7 @@
 	.question {
 		margin: 0 0 0.5rem;
 		line-height: 1.55;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.num {
@@ -214,7 +214,7 @@
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 0.75rem;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.letras {
@@ -227,17 +227,17 @@
 	.letra {
 		min-width: 2.2rem;
 		height: 2.2rem;
-		border: 1.5px solid rgba(58, 42, 32, 0.15);
+		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 15%, transparent);
 		border-radius: 10px;
-		background: var(--color-cream, #fbf6ec);
+		background: var(--l-sol);
 		font-size: 1.05rem;
-		color: var(--color-text);
+		color: var(--t-tinta);
 		cursor: pointer;
 		transition: transform 120ms ease, border-color 120ms ease;
 	}
 
 	.letra:hover {
-		border-color: var(--color-teal);
+		border-color: var(--l-teal);
 		transform: translateY(-1px);
 	}
 
@@ -249,17 +249,17 @@
 	.champ {
 		flex: 1;
 		min-width: 0;
-		border: 1.5px solid rgba(58, 42, 32, 0.22);
+		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 22%, transparent);
 		border-radius: 12px;
 		padding: 0.55rem 0.8rem;
 		font: inherit;
 		font-size: 1.02rem;
-		color: var(--color-text);
-		background: white;
+		color: var(--t-tinta);
+		background: var(--l-carta);
 	}
 
 	.champ:focus {
-		outline: 2px solid var(--color-teal);
+		outline: 2px solid var(--l-teal);
 		outline-offset: 1px;
 	}
 
@@ -273,8 +273,8 @@
 		border: none;
 		border-radius: 12px;
 		padding: 0 1rem;
-		background: var(--color-brick);
-		color: white;
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
 		font-family: var(--font-heading);
 		font-weight: 600;
 		cursor: pointer;
@@ -293,15 +293,15 @@
 	}
 
 	.bon {
-		color: var(--color-olive, #6b7a3a);
+		color: var(--l-bon);
 	}
 
 	.montre {
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.pas-encara {
-		color: rgba(58, 42, 32, 0.7);
+		color: color-mix(in srgb, var(--t-tinta) 70%, transparent);
 	}
 
 	.veire {
@@ -310,7 +310,7 @@
 		border: none;
 		background: none;
 		padding: 0;
-		color: var(--color-teal);
+		color: var(--l-teal);
 		font: inherit;
 		font-weight: 600;
 		text-decoration: underline;
@@ -329,14 +329,14 @@
 		margin: 0 0 0.35rem;
 		font-family: var(--font-heading);
 		font-weight: 600;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.recap-texte {
 		margin: 0;
 		font-size: 1.05rem;
 		line-height: 1.6;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.shake {

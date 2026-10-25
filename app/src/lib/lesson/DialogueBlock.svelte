@@ -191,30 +191,30 @@
 
 <style>
 	.block {
-		background: white;
+		background: var(--l-carta);
 		border-radius: 20px;
 		padding: 1.25rem 1.4rem;
-		box-shadow: 0 8px 20px rgba(58, 42, 32, 0.1);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 	}
 
 	.block-title {
 		margin: 0;
 		font-family: var(--font-heading);
 		font-size: 1.15rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.intro {
 		margin: 0.4rem 0 0;
 		font-size: 0.88rem;
-		color: rgba(58, 42, 32, 0.75);
+		color: color-mix(in srgb, var(--t-tinta) 75%, transparent);
 		line-height: 1.5;
 	}
 
 	.sound-hint {
 		margin: 0.45rem 0 0;
 		font-size: 0.8rem;
-		color: var(--color-teal);
+		color: var(--l-teal);
 	}
 
 	.scene {
@@ -229,14 +229,14 @@
 		margin: 0 0 0.35rem;
 		font-family: var(--font-heading);
 		font-weight: 600;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.scene-sub {
 		display: block;
 		font-size: 0.82rem;
 		font-weight: 400;
-		color: var(--color-teal);
+		color: var(--l-teal);
 	}
 
 	.audio-controls {
@@ -251,27 +251,27 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
-		border: 1.5px solid rgba(178, 84, 58, 0.4);
-		background: white;
+		border: 1.5px solid color-mix(in srgb, var(--t-accion) 50%, transparent);
+		background: var(--l-carta);
 		border-radius: 999px;
 		padding: 0.4rem 0.85rem;
 		font-family: var(--font-heading);
 		font-size: 0.88rem;
 		font-weight: 600;
-		color: var(--color-brick);
+		color: var(--l-marca);
 		cursor: pointer;
 	}
 
 	.listen:disabled {
-		border-color: rgba(58, 42, 32, 0.18);
-		color: rgba(58, 42, 32, 0.45);
-		background: rgba(255, 255, 255, 0.55);
+		border-color: color-mix(in srgb, var(--t-tinta) 18%, transparent);
+		color: color-mix(in srgb, var(--t-tinta) 45%, transparent);
+		background: color-mix(in srgb, var(--l-carta) 70%, transparent);
 		cursor: default;
 	}
 
 	.listen.active:hover,
 	.speed:hover {
-		box-shadow: 0 2px 8px rgba(58, 42, 32, 0.18);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 	}
 
 	.listen-icon {
@@ -296,8 +296,8 @@
 	.speed.on {
 		background: var(--color-gold);
 		border-color: var(--color-gold);
-		color: var(--color-text);
-		box-shadow: inset 0 1px 4px rgba(58, 42, 32, 0.2);
+		color: var(--t-tinta);
+		box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
 	}
 
 	.lines {
@@ -309,7 +309,7 @@
 	.line {
 		margin: 0;
 		line-height: 1.6;
-		color: var(--color-text);
+		color: var(--t-tinta);
 		font-size: 1.02rem;
 		text-align: left;
 	}
@@ -329,11 +329,11 @@
 	}
 
 	.line.tappable:hover {
-		background: rgba(255, 255, 255, 0.75);
+		background: color-mix(in srgb, var(--l-carta) 70%, transparent);
 	}
 
 	.line.tappable[aria-expanded='true'] {
-		background: rgba(255, 255, 255, 0.85);
+		background: color-mix(in srgb, var(--l-carta) 70%, transparent);
 	}
 
 	.line-oc {
@@ -347,7 +347,7 @@
 
 	.line-sound {
 		font-size: 0.85rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 		padding-left: 1.1rem;
 		animation: fade-in 200ms ease-out;
 	}
@@ -360,7 +360,7 @@
 		margin: 0 0 0.4rem;
 		font-size: 0.85rem;
 		font-weight: 600;
-		color: var(--color-teal);
+		color: var(--l-teal);
 	}
 
 	.glossary ul {
@@ -375,7 +375,7 @@
 	.glossary li {
 		font-size: 0.9rem;
 		line-height: 1.5;
-		color: var(--color-text);
+		color: var(--t-tinta);
 	}
 
 	.g-listen {
@@ -384,7 +384,7 @@
 		padding: 0 0.25rem 0 0;
 		cursor: pointer;
 		font-size: 0.85rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 	}
 
 	.g-oc {
@@ -393,12 +393,12 @@
 
 	.g-sound {
 		margin-left: 0.4rem;
-		color: var(--color-brick);
+		color: var(--l-marca);
 		font-size: 0.85rem;
 	}
 
 	.g-fr {
-		color: rgba(58, 42, 32, 0.75);
+		color: color-mix(in srgb, var(--t-tinta) 75%, transparent);
 		margin-left: 0.15rem;
 	}
 

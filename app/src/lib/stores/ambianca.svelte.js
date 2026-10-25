@@ -24,6 +24,10 @@ import { browser } from '$app/environment';
 // src/app.html (script de départ), à tenir identique.
 export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/ideas']; // harmonisées le 2026-10-07 : accueil, mots, carte ; Mon istòria, S'apren et sa page visio le 2026-10-24 ; Se parla, Amassa et la boîte à idées le 2026-10-25
 
+// Les modules de leçon (/aprene/modul/1-1…) le 2026-10-25 : une famille de
+// pages, reconnue par son début (adresse réelle ou route de SvelteKit).
+export const armonizada = (cami) => ARMONIZADAS.includes(cami) || cami.startsWith('/aprene/modul/');
+
 const CLAU = { tema: 'lo-ligam-tema', dalt: 'lo-ligam-dalt', fons: 'lo-ligam-fons', leugier: 'lo-ligam-leugier' };
 const TEMAS = ['sorne', 'clar', 'sistema'];
 // 0 Venas d'aur · 1 Lum e estelas · 2 Corbas de nivèl · 3 Simple
@@ -140,7 +144,7 @@ export const ambianca = {
 // module est évalué deux fois.
 if (browser && !G.__loLigamAmbiancaLegit) {
 	G.__loLigamAmbiancaLegit = true;
-	e.forçarClar = !ARMONIZADAS.includes(location.pathname);
+	e.forçarClar = !armonizada(location.pathname);
 	const t = legir(CLAU.tema);
 	if (TEMAS.includes(t)) e.tema = t;
 	e.dalt = legir(CLAU.dalt) === 'on';
