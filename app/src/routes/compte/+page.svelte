@@ -27,7 +27,8 @@
 			email: 'Adreça de corrièl',
 			mdp: 'Mot de pas',
 			mdp_nòu: 'Mot de pas nòu',
-			mdp_ajuda: '8 caractèrs al mens',
+			mdp_actual: 'Mot de pas actual',
+			mdp_ajuda: '10 caractèrs al mens, amb minuscula, majuscula, chifra e simbòl',
 			far_login: 'Se connectar',
 			far_signup: 'Crear mon compte',
 			far_oblit: 'Recebre un ligam',
@@ -57,7 +58,8 @@
 			non: 'Non',
 			// erreurs
 			camps: 'Cal una adreça e un mot de pas.',
-			cort: 'Lo mot de pas deu aver 8 caractèrs al mens.',
+			cort: 'Lo mot de pas deu aver 10 caractèrs al mens, amb minuscula, majuscula, chifra e simbòl.',
+			mdp_marrit: 'Lo mot de pas actual es pas bon.',
 			ja: 'Aquesta adreça a ja un compte : connecta-te.',
 			incorrècte: 'Adreça o mot de pas incorrècte.',
 			pas_confirmat: 'Confirma d’en primièr ton adreça : lo ligam es dins ton corrièl.',
@@ -75,7 +77,8 @@
 			email: 'Adresse e-mail',
 			mdp: 'Mot de passe',
 			mdp_nòu: 'Nouveau mot de passe',
-			mdp_ajuda: '8 caractères au moins',
+			mdp_actual: 'Mot de passe actuel',
+			mdp_ajuda: '10 caractères au moins, avec minuscule, majuscule, chiffre et symbole',
 			far_login: 'Se connecter',
 			far_signup: 'Créer mon compte',
 			far_oblit: 'Recevoir un lien',
@@ -103,7 +106,8 @@
 			òc_suprimir: 'Oui, supprimer',
 			non: 'Non',
 			camps: 'Il faut une adresse et un mot de passe.',
-			cort: 'Le mot de passe doit avoir 8 caractères au moins.',
+			cort: 'Le mot de passe doit avoir 10 caractères au moins, avec minuscule, majuscule, chiffre et symbole.',
+			mdp_marrit: 'Le mot de passe actuel est incorrect.',
 			ja: 'Cette adresse a déjà un compte : connecte-toi.',
 			incorrècte: 'Adresse ou mot de passe incorrect.',
 			pas_confirmat: 'Confirme d’abord ton adresse : le lien est dans ton e-mail.',
@@ -143,6 +147,7 @@
 		if (/rate limit|security purposes|too many/i.test(m)) return 'tròp';
 		if (/should be different/i.test(m)) return 'parièr';
 		if (/password/i.test(m) && /least|short|weak/i.test(m)) return 'cort';
+		if (/current password|reauthentication|not match/i.test(m)) return 'mdp_marrit';
 		if (m === 'compte_admin') return 'compte_admin';
 		return 'error';
 	}
@@ -151,7 +156,12 @@
 	// sinon on reste ici, sur « Mon compte »
 	function tornar() {
 		const t = page.url.searchParams.get('tornar');
-		if (t?.startsWith('/') && !t.startsWith('//') && !t.startsWith('/compte')) goto(t);
+		if (!t || !t.startsWith('/') || t.startsWith('//') || t.includes('\\') || t.startsWith('/compte')) return;
+		try {
+			if (new URL(t, location.origin).origin === location.origin) goto(t);
+		} catch {
+			/* adresse invalide : on ignore */
+		}
 	}
 
 	async function mandar(e) {
@@ -159,7 +169,7 @@
 		error = null;
 		mandat = null;
 		if (!email.trim() || (mode !== 'oblit' && !mdp)) return (error = 'camps');
-		if (mode === 'signup' && mdp.length < 8) return (error = 'cort');
+		if (mode === 'signup' && mdp.length < 10) return (error = 'cort');
 		ocupat = true;
 		if (mode === 'login') {
 			const { error: err } = await supabase.auth.signInWithPassword({ email: email.trim(), password: mdp });
@@ -189,17 +199,29 @@
 	$effect(() => {
 		if ($session) cargarPseudo($session);
 	});
+	let mdpActual = $state('');
 	let mdpNòu = $state('');
 	let mdpMessatge = $state(null); // 'mdp_cambiat' ou une clé d'erreur
 	async function cambiarMdp(e) {
 		e.preventDefault();
 		mdpMessatge = null;
-		if (mdpNòu.length < 8) return (mdpMessatge = 'cort');
+		if (mdpNòu.length < 10) return (mdpMessatge = 'cort');
 		ocupat = true;
-		const { error: err } = await supabase.auth.updateUser({ password: mdpNòu });
+		// l'ancien mot de passe est envoyé et vérifié par le serveur (réglage
+		// « Require current password when updating ») : une session volée ne peut
+		// pas changer le mot de passe sans le connaître.
+		const { error: err } = await supabase.auth.updateUser({
+			password: mdpNòu,
+			current_password: mdpActual
+		});
+		// après un changement réussi, on déconnecte les autres appareils
+		if (!err) await supabase.auth.signOut({ scope: 'others' });
 		ocupat = false;
 		mdpMessatge = err ? clau(err) : 'mdp_cambiat';
-		if (!err) mdpNòu = '';
+		if (!err) {
+			mdpActual = '';
+			mdpNòu = '';
+		}
 	}
 
 	async function desconnectar() {
@@ -208,10 +230,21 @@
 	}
 
 	let suprimirSegur = $state(false);
+	let suprimirMdp = $state('');
 	let suprimirError = $state(null);
 	async function suprimir() {
 		ocupat = true;
 		suprimirError = null;
+		// acte irréversible : on redemande le mot de passe avant d'effacer
+		const { error: errAuth } = await supabase.auth.signInWithPassword({
+			email: $session.user.email,
+			password: suprimirMdp
+		});
+		if (errAuth) {
+			suprimirError = 'incorrècte';
+			ocupat = false;
+			return;
+		}
 		const { error: err } = await supabase.rpc('suprimir_mon_compte');
 		if (err) {
 			suprimirError = clau(err);
@@ -308,12 +341,16 @@
 
 			<section class="seccion" aria-labelledby="compte-mdp">
 				<h2 id="compte-mdp">{x.cambiar_mdp}</h2>
-				<form class="linha" onsubmit={cambiarMdp}>
+				<form class="boita" onsubmit={cambiarMdp}>
 					<!-- l'adresse, cachée, aide les gestionnaires de mots de passe -->
 					<input type="email" class="vist" value={sesilha.user.email} autocomplete="username" readonly tabindex="-1" aria-hidden="true" />
 					<label class="camp">
+						<span>{x.mdp_actual}</span>
+						<input type="password" bind:value={mdpActual} autocomplete="current-password" required />
+					</label>
+					<label class="camp">
 						<span>{x.mdp_nòu}</span>
-						<input type="password" bind:value={mdpNòu} autocomplete="new-password" minlength="8" aria-describedby="mdp-nòu-ajuda" required />
+						<input type="password" bind:value={mdpNòu} autocomplete="new-password" minlength="10" aria-describedby="mdp-nòu-ajuda" required />
 						<small id="mdp-nòu-ajuda">{x.mdp_ajuda}</small>
 					</label>
 					<button type="submit" class="boton segond" disabled={ocupat}>{x.cambiar}</button>
@@ -332,10 +369,17 @@
 				<p>{x.suprimir_frasa}</p>
 				{#if suprimirSegur}
 					<p class="segur" role="alert">{x.suprimir_segur}</p>
-					<div class="botons">
-						<button type="button" class="boton" disabled={ocupat} onclick={suprimir}>{x.òc_suprimir}</button>
-						<button type="button" class="boton segond" onclick={() => (suprimirSegur = false)}>{x.non}</button>
-					</div>
+					<form class="boita" onsubmit={(e) => { e.preventDefault(); suprimir(); }}>
+						<input type="email" class="vist" value={sesilha.user.email} autocomplete="username" readonly tabindex="-1" aria-hidden="true" />
+						<label class="camp">
+							<span>{x.mdp}</span>
+							<input type="password" bind:value={suprimirMdp} autocomplete="current-password" required />
+						</label>
+						<div class="botons">
+							<button type="submit" class="boton" disabled={ocupat}>{x.òc_suprimir}</button>
+							<button type="button" class="boton segond" onclick={() => (suprimirSegur = false)}>{x.non}</button>
+						</div>
+					</form>
 				{:else}
 					<button type="button" class="ligam" onclick={() => (suprimirSegur = true)}>{x.suprimir}</button>
 				{/if}

@@ -120,7 +120,7 @@
 					? 'Aqueste pseudonim es pas possible, ensaja-n’un autre. (Ce pseudo n’est pas possible, essaie-en un autre.)'
 					: /pseudo_longor/.test(error.message)
 						? 'Lo pseudonim fa de 2 a 30 letras. (Le pseudo fait de 2 à 30 lettres.)'
-						: error.message;
+						: 'Una error : torna ensajar. (Une erreur, réessaie.)';
 			return;
 		}
 		goto('/aprene');
