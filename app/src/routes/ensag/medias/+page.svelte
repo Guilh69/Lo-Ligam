@@ -11,7 +11,7 @@
 		{ clau: `${P}.titol`, tipe: 'text', oc: 'Mèdias', fr: 'Médias' },
 		{ clau: `${P}.frasa`, tipe: 'text', oc: 'Las ràdios, las televisions e la premsa en occitan.', fr: 'Les radios, les télévisions et la presse en occitan.' },
 		...teula(P, 'radios', 1, '/ensag/radios', 'Ràdios', 'Radios', 'Set ràdios en occitan, en dirècte.', 'Sept radios en occitan, en direct.'),
-		...teula(P, 'television', 2, '/ensag/medias#television', 'Television e video', 'Télévision et vidéo', 'Lèu.', 'Bientôt.'),
+		...teula(P, 'television', 2, '/ensag/television', 'Television e video', 'Télévision et vidéo', 'Las cadenas, las emissions e las videos.', 'Les chaînes, les émissions et les vidéos.'),
 		...teula(P, 'premsa', 3, '/ensag/medias#premsa', 'Premsa', 'Presse', 'Lèu.', 'Bientôt.')
 	]);
 </script>

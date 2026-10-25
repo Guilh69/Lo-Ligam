@@ -85,3 +85,28 @@ export const RADIOS = [
 	{ id: 'nissa', nom: 'Nissa Pantai', site: 'https://nissapantai.org/', flux: 'https://listen.radioking.com/radio/79270/stream/117373', lon: 7.262, lat: 43.71 },
 	{ id: 'beckwith', nom: 'Radio Beckwith', site: 'https://rbe.it/', flux: null, lon: 7.245, lat: 44.811 }
 ];
+
+// Les télés et vidéos en occitan pour l'essai /ensag/television (2026-10-25) :
+// liens vérifiés le jour même, textes réécrits ; aucun lecteur intégré, on
+// renvoie vers le site de chacune. Le lieu sert à la carte (SuveProd : les
+// villages filmés vont des Alpes au Massif central, point posé dans les Alpes).
+export const TELES = [
+	{ id: 'octele', nom: 'ÒCtele', site: 'https://www.octele.com/', dirècte: 'https://www.octele.com/Direct_289.html', lon: -0.37, lat: 43.296,
+		sorta: { oc: 'Cadena en linha', fr: 'Chaîne en ligne' }, luòc: { oc: 'Pau', fr: 'Pau' },
+		tèxt: { oc: 'La television tota en occitan, en linha dempuèi 2013.', fr: 'La télévision tout en occitan, en ligne depuis 2013.' } },
+	{ id: 'viure', nom: 'Viure al país', site: 'https://france3-regions.franceinfo.fr/occitanie/programmes/france-3_occitanie_viure-al-pais', lon: 1.444, lat: 43.604,
+		sorta: { oc: 'Emission de França 3', fr: 'Émission de France 3' }, luòc: { oc: 'Tolosa', fr: 'Toulouse' },
+		tèxt: { oc: 'Lo magazin en occitan de França 3, dempuèi 1981, lo dimenge.', fr: 'Le magazine en occitan de France 3, depuis 1981, le dimanche.' } },
+	{ id: 'vaqui', nom: 'Vaquí', site: 'https://france3-regions.franceinfo.fr/provence-alpes-cote-d-azur/programmes/france-3_provence-alpes-cote-d-azur_vaqui', lon: 5.37, lat: 43.296,
+		sorta: { oc: 'Emission de França 3', fr: 'Émission de France 3' }, luòc: { oc: 'Marselha', fr: 'Marseille' },
+		tèxt: { oc: 'Lo magazin de França 3 Provença-Alps-Còsta d’Azur, lo dimenge.', fr: 'Le magazine de France 3 Provence-Alpes-Côte d’Azur, le dimanche.' } },
+	{ id: 'teveoc', nom: 'Tè Vé Òc', site: 'http://www.teveoc.com/', lon: 4.36, lat: 43.837,
+		sorta: { oc: 'Produccion', fr: 'Production' }, luòc: { oc: 'Nimes', fr: 'Nîmes' },
+		tèxt: { oc: 'Una associacion de produccion audiovisuala, fondada a Nimes en 2012.', fr: 'Une association de production audiovisuelle, fondée à Nîmes en 2012.' } },
+	{ id: 'suveprod', nom: 'SuveProd', site: 'https://www.youtube.com/user/SuveProd', lon: 6.2, lat: 44.35,
+		sorta: { oc: 'Films', fr: 'Films' }, luòc: { oc: 'Alps', fr: 'Alpes' },
+		tèxt: { oc: 'De paraulas de vilatges filmadas dempuèi 2008, dels Alps al Massís Central.', fr: 'Des paroles de villages filmées depuis 2008, des Alpes au Massif central.' } },
+	{ id: 'parpalhon', nom: 'Parpalhon Blau', site: 'https://www.youtube.com/@ParpalhonBlau', lon: 7.262, lat: 43.71,
+		sorta: { oc: 'Videos', fr: 'Vidéos' }, luòc: { oc: 'Niça', fr: 'Nice' },
+		tèxt: { oc: 'Gabrièu, un niçard, fa de videos sus la lenga e lo país.', fr: 'Gabriel, un Niçois, fait des vidéos sur la langue et le pays.' } }
+];
