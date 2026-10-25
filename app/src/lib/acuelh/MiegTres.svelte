@@ -42,7 +42,31 @@
 			{ threshold: 0.25 }
 		);
 		racina.querySelectorAll('[data-revela]').forEach((el) => io.observe(el));
-		return () => io.disconnect();
+
+		// mouvement fluide (piste Système) : chaque grand visuel dérive un peu au défilement
+		const visuals = racina.querySelectorAll('.sist-vis');
+		let af = 0;
+		const maj = () => {
+			af = 0;
+			const h = window.innerHeight;
+			visuals.forEach((el) => {
+				const r = el.getBoundingClientRect();
+				const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - h / 2) / h)); // ≈ -1 (haut) … 1 (bas)
+				el.style.setProperty('--para', (p * -26).toFixed(1) + 'px');
+			});
+		};
+		const aScroll = () => { if (!af) af = requestAnimationFrame(maj); };
+		if (visuals.length) {
+			addEventListener('scroll', aScroll, { passive: true });
+			addEventListener('resize', aScroll, { passive: true });
+			maj();
+		}
+		return () => {
+			io.disconnect();
+			removeEventListener('scroll', aScroll);
+			removeEventListener('resize', aScroll);
+			if (af) cancelAnimationFrame(af);
+		};
 	});
 </script>
 
@@ -236,7 +260,7 @@
 	.sist-cors { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; }
 	.sistema-ent.invers .sist-cors { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.82fr); }
 	.sistema-ent.invers .sist-tèxt { order: 2; }
-	.sist-vis { position: relative; margin: 0; display: flex; justify-content: center; }
+	.sist-vis { position: relative; margin: 0; display: flex; justify-content: center; transform: translateY(var(--para, 0)); will-change: transform; }
 	/* la couleur de l'entité en accent : une lueur douce derrière le grand visuel */
 	.sist-vis::before { content: ''; position: absolute; inset: -10% -8%; z-index: -1; border-radius: 50%; filter: blur(64px); opacity: 0.45; background: radial-gradient(closest-side, var(--color), transparent); }
 	.sist-vis :global(.vis) { width: 100%; max-height: clamp(220px, 42vh, 440px); }
