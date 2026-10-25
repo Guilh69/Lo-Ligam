@@ -678,7 +678,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// cercles, le fin dehors, l'épais dedans, une pointe qui touche le cercle
 		// extérieur et s'effile jusqu'au centre. HORS de la carte, dans l'espace entre
 		// le jalon « 01 » et la première rivière (demande de Romain, 2026-10-07)
-		if (aCarta > 0.05) {
+		if (aCarta > 0.05 && jalonCarta) {
 			// Mesurada a cada talha : l'espaci sorne entre lo bas del jalon « 04 » e lo primièr
 			// element de la carta JUST DEJÓS (riu o vila de la banda esquèrra, sovent la Charanta) ;
 			// la flècha se centra dedins, alinhada sul « 04 »
