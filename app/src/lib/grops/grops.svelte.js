@@ -40,7 +40,30 @@ export const NIVELS = [
 	['parla', 'Parli', 'Je parle'],
 	['mairal', 'Lenga mairala', 'Langue maternelle']
 ];
-/** Le nom d'un dialecte ou d'un niveau dans la langue choisie */
+// Ce qu'on cherche et ce qu'on aime : des cases à cocher plutôt que du texte
+// (Romain, 2026-10-25 : « flemme d'écrire ») ; les valeurs sont verrouillées
+// dans la base (profiles_perfil_listas, supabase-perfils.sql §6)
+export const CERCA = [
+	['parlar', 'Parlar', 'Parler'],
+	['escriure', 'Escriure', 'Écrire'],
+	['aprene', 'Aprene', 'Apprendre'],
+	['trobar', 'Trobar de monde', 'Rencontrer du monde'],
+	['ajudar', 'Ajudar los que debutan', 'Aider les débutants']
+];
+export const AGRADA = [
+	['musica', 'Musica', 'Musique'],
+	['cant', 'Cant', 'Chant'],
+	['danca', 'Dança', 'Danse'],
+	['bal', 'Bal', 'Bal'],
+	['cosina', 'Cosina', 'Cuisine'],
+	['literatura', 'Literatura', 'Littérature'],
+	['teatre', 'Teatre', 'Théâtre'],
+	['cinema', 'Cinema', 'Cinéma'],
+	['natura', 'Natura', 'Nature'],
+	['istoria', 'Istòria', 'Histoire'],
+	['jocs', 'Jòcs', 'Jeux']
+];
+/** Le nom d'un dialecte, d'un niveau ou d'un choix de liste dans la langue choisie */
 export const nomDe = (lista, v, fr) => lista.find((x) => x[0] === v)?.[fr ? 2 : 1] ?? null;
 
 export const grops = $state({
