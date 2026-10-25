@@ -4,7 +4,7 @@
     { "clau": "acuelh.eros.kicker", "tipe": "text", "oc": "L’occitan", "fr": "L’occitan", "es": "El occitano" },
     { "clau": "acuelh.eros.titol.1", "tipe": "text", "oc": "Se parla.", "fr": "Se parle.", "es": "Se habla." },
     { "clau": "acuelh.eros.titol.2", "tipe": "text", "oc": "S’apren.", "fr": "S’apprend.", "es": "Se aprende." },
-    { "clau": "acuelh.eros.titol.3", "tipe": "text", "oc": "Amassa.", "fr": "Rassemble.", "es": "Se reúne." },
+    { "clau": "acuelh.eros.titol.3", "tipe": "text", "oc": "Amassa.", "fr": "Rassemble.", "es": "Reúne." },
     { "clau": "acuelh.eros.frasa", "tipe": "text", "oc": "Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.", "fr": "Bienvenue dans ton lien avec le monde occitan. D’où que tu sois, tu es ici chez toi.", "es": "Bienvenido a tu vínculo con el mundo occitano. Vengas de donde vengas, aquí estás en tu casa." },
     { "clau": "acuelh.eros.indici", "tipe": "text", "oc": "Passa la mirga suls tres mots.", "fr": "Survole les trois mots.", "es": "Pasa el ratón por las tres palabras." },
     { "clau": "acuelh.mondes.parla.sota", "tipe": "text", "oc": "Lo país e sas lengas, en carta d’estelas.", "fr": "Le pays et ses langues, en carte d’étoiles.", "es": "El país y sus lenguas, en un mapa de estrellas." },
@@ -66,7 +66,7 @@
     { "clau": "acuelh.biais.mesura.ligam", "tipe": "ligam", "lista": "acuelh.biais.mesura", "oc": "Ne parlar amassa", "fr": "En parler ensemble", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=", "es": "Hablarlo juntos" },
     { "clau": "acuelh.lengas.legenda", "tipe": "text", "oc": "Aprene l’occitan dempuèi :", "fr": "Apprendre l’occitan depuis :", "es": "Aprender occitano desde:" },
 
-    { "clau": "acuelh.sec.viu.titol", "tipe": "text", "oc": "Amassa", "fr": "Rassemble", "es": "Se reúne" },
+    { "clau": "acuelh.sec.viu.titol", "tipe": "text", "oc": "Amassa", "fr": "Rassemble", "es": "Reúne" },
     { "clau": "acuelh.viure.comunautat.nom", "tipe": "text", "oc": "La comunautat", "fr": "La communauté", "es": "La comunidad" },
     { "clau": "acuelh.viure.comunautat.sota", "tipe": "text", "oc": "Fòrum, grops e idèas", "fr": "Forum, groupes et idées", "es": "Foro, grupos e ideas" },
     { "clau": "acuelh.viure.comunautat.items.forum", "tipe": "ligam", "lista": "acuelh.viure.comunautat.items", "ordre": 1, "oc": "Fòrum", "fr": "Forum", "ligam": "/forum", "es": "Foro" },
