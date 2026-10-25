@@ -19,11 +19,10 @@
 					frasa: 'Un café, le journal sur la table, et de la musique à écouter.',
 					jornal: 'Le Journal de la musique',
 					jornalSota: 'Les nouveautés et les coups de cœur de Lo Ligam',
-					demanda: 'Entrer dans le café ?',
-					acòrd: 'La musique vient de Deezer. En entrant, Deezer recevra ton adresse IP et pourra déposer des cookies.',
-					sortidaQuand: 'Tu peux sortir quand tu veux.',
+					acòrd: 'La musique vient de Deezer : en entrant, Deezer recevra ton adresse IP et pourra déposer des cookies.',
 					intrar: 'Entrer',
-					non: 'Non, merci',
+					legir: 'Lecture',
+					pausa: 'Pause',
 					sortir: 'Sortir du café',
 					còps: 'Coups de cœur',
 					novetats: 'Nouveautés',
@@ -44,11 +43,10 @@
 					frasa: 'Un cafè, lo jornal sus la taula, e de musica d’escotar.',
 					jornal: 'Lo Jornal de la musica',
 					jornalSota: 'Las novetats e los còps de còr de Lo Ligam',
-					demanda: 'Intrar dins lo cafè ?',
-					acòrd: 'La musica ven de Deezer. En intrant, Deezer recebrà ton adreça IP e poirà pausar de cookies.',
-					sortidaQuand: 'Pòdes sortir quand vòles.',
-					intrar: 'Intrar',
-					non: 'Non, mercé',
+					acòrd: 'La musica ven de Deezer : en dintrant, Deezer recebrà ton adreça IP e poirà pausar de cookies.',
+					intrar: 'Dintrar',
+					legir: 'Lectura',
+					pausa: 'Pausa',
 					sortir: 'Sortir del cafè',
 					còps: 'Còps de còr',
 					novetats: 'Novetats',
@@ -66,8 +64,11 @@
 				}
 	);
 
-	let dialèg;
 	let intrat = $state(false);
+	let jòga = $state(false); // la musique joue (le lecteur Deezer nous le dit)
+	let partit = $state(false); // le lecteur a déjà lancé un morceau de ce disque
+	let autoplay = $state(false);
+	let lectorEl;
 	let causit = $state(null); // l'artiste dont le disque est sur la platine
 	let pagina = $state(0); // 0 = la une, puis les pages de A à Z
 	let sens = $state(1); // sens de la page tournée
@@ -81,13 +82,15 @@
 	// photos de Deezer à la taille d'affichage (sobriété) : 250 px suffit aux petits articles
 	const talha = (u, n) => u.replace(/\/\d+x\d+-/, `/${n}x${n}-`);
 
+	// un seul clic pour entrer (Romain, 2026-10-25 : « deux fois Intrar, c'est
+	// trop ») : l'avis sur Deezer est écrit sur la case, avant le clic
 	function intrar() {
-		dialèg.close();
 		intrat = true;
 	}
 	function sortir() {
 		intrat = false;
 		causit = null;
+		jòga = partit = autoplay = false;
 		pagina = 0;
 	}
 	async function anar(n) {
@@ -101,6 +104,7 @@
 	// le disque part de la photo de l'article et se pose sur la platine
 	async function pausar(a, clau) {
 		const de = fotos[clau]?.getBoundingClientRect();
+		if (causit?.id !== a.id) jòga = partit = autoplay = false;
 		causit = a;
 		await tick();
 		const plat = document.querySelector('.platina');
@@ -122,7 +126,28 @@
 		const [y, m, j] = d.split('-').map(Number);
 		return fr ? new Date(y, m - 1, j).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : `${j} de ${MESES[m - 1]} de ${y}`;
 	};
-	const lector = (a) => `https://widget.deezer.com/widget/dark/album/${a.album.id}?tracklist=true&radius=true`;
+	// le bouton du disque pilote le lecteur officiel : Deezer accepte « play » et
+	// « pause » par message, et nous prévient quand on lance ou arrête la
+	// musique dans son lecteur (pas d'ordre « morceau suivant » : on le choisit
+	// dans la liste du lecteur, sous la platine). Au premier appui, le morceau
+	// n'est pas encore chargé et « play » ne ferait rien : on recharge le
+	// lecteur avec son démarrage automatique (l'appui sur le disque vaut accord).
+	const DEEZER = 'https://widget.deezer.com';
+	function jogar() {
+		if (!partit) autoplay = true;
+		else lectorEl?.contentWindow?.postMessage({ action: jòga ? 'pause' : 'play' }, DEEZER);
+		jòga = !jòga;
+	}
+	$effect(() => {
+		const escotar = (e) => {
+			if (e.origin !== DEEZER) return;
+			if (e.data?.action === 'play') jòga = partit = true;
+			else if (e.data?.action === 'pause') jòga = false;
+		};
+		addEventListener('message', escotar);
+		return () => removeEventListener('message', escotar);
+	});
+	const lector = (a, auto) => `https://widget.deezer.com/widget/dark/album/${a.album.id}?tracklist=true&radius=true${auto ? '&autoplay=1' : ''}`;
 </script>
 
 <svelte:head>
@@ -174,11 +199,12 @@
 				<h1>{tx.musica}</h1>
 				<p class="frasa">{tx.frasa}</p>
 			</header>
-			<button type="button" class="porta-teula" onclick={() => dialèg.showModal()}>
+			<button type="button" class="porta-teula" onclick={intrar}>
 				<span class="porta-nom">{tx.jornal}</span>
 				<span class="porta-sota">{tx.jornalSota}</span>
 				<span class="porta-disc" aria-hidden="true"></span>
-				<span class="porta-intrar" aria-hidden="true">{tx.intrar} →</span>
+				<span class="porta-intrar">{tx.intrar} →</span>
+				<span class="porta-avís">{tx.acòrd}</span>
 			</button>
 		</main>
 	{:else}
@@ -227,7 +253,7 @@
 				</article>
 
 				<div class="costat">
-					<div class="platina" class:vira={causit}>
+					<div class="platina" class:vira={causit && jòga}>
 						<div class="platina-plat"></div>
 						{#if causit}
 							<div class="disc" bind:this={platina}>
@@ -238,13 +264,20 @@
 						{/if}
 						<span class="platina-bras" aria-hidden="true"></span>
 						<span class="platina-boton" aria-hidden="true"></span>
+						{#if causit}
+							<button type="button" class="jogar" onclick={jogar} aria-label={jòga ? tx.pausa : tx.legir} title={jòga ? tx.pausa : tx.legir}>
+								<svg viewBox="0 0 24 24" aria-hidden="true">
+									{#if jòga}<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor" />{:else}<path d="M8 5.5v13l10.5-6.5z" fill="currentColor" />{/if}
+								</svg>
+							</button>
+						{/if}
 					</div>
 					<p class="estat" class:vuèja={!causit} aria-live="polite">
 						{#if causit}<b>{tx.suslaPlatina} :</b> {causit.nom}{' · '}<i>{causit.album.titol}</i> ({causit.annada}){:else}{tx.platinaVuèja}{/if}
 					</p>
 					{#if causit}
 						{#key causit.id}
-							<iframe class="lector" title="{causit.nom}, {causit.album.titol} · Deezer" src={lector(causit)} width="100%" height="320" loading="lazy" allow="encrypted-media; clipboard-write"></iframe>
+							<iframe bind:this={lectorEl} class="lector" title="{causit.nom}, {causit.album.titol} · Deezer" src={lector(causit, autoplay)} width="100%" height="320" loading="lazy" allow="autoplay; encrypted-media; clipboard-write"></iframe>
 						{/key}
 						<a class="deezer" href={causit.ligam ?? `https://www.deezer.com/artist/${causit.id}`} target="_blank" rel="noopener noreferrer">{tx.deezer} ↗</a>
 					{/if}
@@ -256,16 +289,6 @@
 	{/if}
 </div>
 
-<dialog bind:this={dialèg} class="acòrd" aria-labelledby="acòrd-titol">
-	<span class="acòrd-disc" aria-hidden="true"></span>
-	<h2 id="acòrd-titol">{tx.demanda}</h2>
-	<p>{tx.acòrd}</p>
-	<p class="acòrd-sota">{tx.sortidaQuand}</p>
-	<div class="acòrd-botons">
-		<button type="button" class="intrar" onclick={intrar}>{tx.intrar}</button>
-		<button type="button" class="non" onclick={() => dialèg.close()}>{tx.non}</button>
-	</div>
-</dialog>
 
 <style>
 	/* ---------- la page, comme les pages de rubrique (PaginaTeulas) ---------- */
@@ -329,6 +352,7 @@
 		text-align: left;
 		cursor: pointer;
 		overflow: clip;
+		container: porta / inline-size;
 		transition:
 			transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
 			box-shadow 0.35s;
@@ -371,6 +395,26 @@
 		position: relative;
 		z-index: 1;
 	}
+	.porta-avís {
+		position: relative;
+		z-index: 1;
+		max-width: 34ch;
+		margin-top: var(--esp-12);
+		font-size: 0.85rem;
+		line-height: 1.4;
+		opacity: 0.9;
+	}
+	/* case étroite (téléphone) : le disque se fait plus petit, l'avis reste à côté */
+	@container porta (max-width: 480px) {
+		.porta-disc {
+			width: 52%;
+			right: -16%;
+			bottom: -16%;
+		}
+		.porta-avís {
+			max-width: 64%;
+		}
+	}
 	.porta-teula:hover,
 	.porta-teula:focus-visible {
 		transform: translateY(-4px);
@@ -388,89 +432,6 @@
 		from {
 			opacity: 0;
 			transform: translateY(14px);
-		}
-	}
-
-	/* ---------- la fenêtre d'accord ---------- */
-	.acòrd {
-		max-width: min(28rem, calc(100% - 2rem));
-		padding: var(--esp-32) var(--esp-32) var(--esp-24);
-		border: 0;
-		border-top: 6px solid #b53d17;
-		border-radius: 6px;
-		background: var(--t-fons-2);
-		color: var(--t-tinta);
-		box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
-		overflow: visible;
-	}
-	.acòrd[open] {
-		animation: dobrir 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-	}
-	.acòrd::backdrop {
-		background: rgba(20, 10, 5, 0.6);
-		backdrop-filter: blur(3px);
-	}
-	.acòrd-disc {
-		position: absolute;
-		top: -2.4rem;
-		right: 1.6rem;
-		width: 4.6rem;
-		aspect-ratio: 1;
-		border-radius: 50%;
-		background:
-			radial-gradient(circle, #fbf1e1 0 3%, #eeaf34 4% 19%, #141414 20% 22%, transparent 23%),
-			repeating-radial-gradient(circle, #141414 0 2px, #222 2px 4px);
-		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-	}
-	.acòrd[open] .acòrd-disc {
-		animation: virar 2.4s linear infinite;
-	}
-	.acòrd h2 {
-		margin: 0 0 var(--esp-12);
-		padding-right: 4rem;
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: 1.9rem;
-		line-height: 1.1;
-	}
-	.acòrd p {
-		margin: 0 0 var(--esp-8);
-		line-height: 1.5;
-	}
-	.acòrd-sota {
-		color: var(--t-tinta-2);
-	}
-	.acòrd-botons {
-		display: flex;
-		gap: var(--esp-12);
-		flex-wrap: wrap;
-		margin-top: var(--esp-24);
-	}
-	.acòrd button {
-		padding: 0.7rem 1.4rem;
-		border-radius: 99px;
-		font: inherit;
-		font-weight: 700;
-		cursor: pointer;
-	}
-	.intrar {
-		border: 0;
-		background: #b53d17;
-		color: #fbf1e1;
-	}
-	.non {
-		border: 1px solid var(--t-linha);
-		background: none;
-		color: var(--t-tinta);
-	}
-	.acòrd button:focus-visible {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 2px;
-	}
-	@keyframes dobrir {
-		from {
-			opacity: 0;
-			transform: translateY(16px) scale(0.97);
 		}
 	}
 
@@ -863,6 +824,39 @@
 	.vira .platina-boton {
 		background: radial-gradient(circle, var(--aur) 0 30%, #2a160a 32%);
 	}
+	/* lecture et pause, en bas à droite du disque (Romain, 2026-10-25) */
+	.jogar {
+		position: absolute;
+		right: 4%;
+		bottom: 4%;
+		z-index: 3;
+		display: grid;
+		place-items: center;
+		width: 18%;
+		aspect-ratio: 1;
+		border: 0;
+		border-radius: 50%;
+		background: var(--roge);
+		color: #fbf1e1;
+		cursor: pointer;
+		box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+		transition: transform 0.2s;
+	}
+	.jogar svg {
+		width: 46%;
+		height: 46%;
+	}
+	.jogar:hover {
+		transform: scale(1.06);
+	}
+	.jogar:focus-visible {
+		outline: 3px solid var(--aur);
+		outline-offset: 3px;
+	}
+	/* le disque posé attend : le bouton respire */
+	.platina:not(.vira) .jogar {
+		animation: alenar 1.6s ease-in-out 0.9s 3;
+	}
 	.estat {
 		margin: 0;
 		padding: 0.55rem 0.8rem;
@@ -1030,19 +1024,18 @@
 		.costat,
 		.fuèlha,
 		.porta-teula,
-		.acòrd[open],
-		.acòrd[open] .acòrd-disc,
 		.vira .disc-vira,
 		.pausar,
 		.pausar .icona-disc,
+		.jogar,
 		.vapor {
 			animation: none !important;
 		}
 	}
 	:global(html[data-leugier='on']) .vira .disc-vira,
 	:global(html[data-leugier='on']) .fuèlha,
-	:global(html[data-leugier='on']) .acòrd-disc,
 	:global(html[data-leugier='on']) .pausar,
+	:global(html[data-leugier='on']) .jogar,
 	:global(html[data-leugier='on']) .icona-disc,
 	:global(html[data-leugier='on']) .vapor {
 		animation: none !important;
