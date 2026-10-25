@@ -138,11 +138,27 @@
 	// serveur, puis rangée dans le stockage des images du site ; Romain peut la
 	// remplacer ensuite comme toute image de la page.
 	const copiaImatge = (u) => '/api/bandcamp/imatge?u=' + encodeURIComponent(u);
+	// réduite ici, dans le navigateur de Romain : carré de 480 px, WebP (JPEG
+	// si le navigateur ne sait pas écrire le WebP), une vingtaine de Ko
+	async function reduire(blob) {
+		const bmp = await createImageBitmap(blob);
+		const c = Math.min(bmp.width, bmp.height);
+		const tela = document.createElement('canvas');
+		tela.width = tela.height = 480;
+		tela.getContext('2d').drawImage(bmp, (bmp.width - c) / 2, (bmp.height - c) / 2, c, c, 0, 0, 480, 480);
+		bmp.close();
+		const fach = (tipe, q) => new Promise((res) => tela.toBlob(res, tipe, q));
+		let b = await fach('image/webp', 0.72);
+		if (b?.type !== 'image/webp') b = await fach('image/jpeg', 0.8);
+		return new File([b], b.type === 'image/webp' ? 'pocheta.webp' : 'pocheta.jpg', { type: b.type });
+	}
 	async function pausarImatge(clau, u, nom) {
 		const r = await fetch(copiaImatge(u)).catch(() => null);
 		if (!r?.ok) return false;
+		const fichièr = await reduire(await r.blob()).catch(() => null);
+		if (!fichièr) return false;
 		const clauIm = `${clau}.imatge`;
-		await mandarImatge(clauIm, new File([await r.blob()], 'pocheta.webp', { type: 'image/webp' }));
+		await mandarImatge(clauIm, fichièr);
 		const im = imatge(clauIm);
 		if (!im?.url) return false;
 		cambiar(clauIm, { lista: clau, oc: '', fr: '', imatge: { ...im, alt_oc: nom, alt_fr: nom } }, { tipe: 'imatge', tot_d_un_còp: true });
