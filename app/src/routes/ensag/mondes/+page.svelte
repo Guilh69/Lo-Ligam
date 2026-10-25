@@ -7,11 +7,60 @@
 	// vivante dedans ; S'apren et Amassa en aperçu, à bâtir ensuite.
 	// Page de travail, non indexée. Aucun texte d'ambiance inventé : les phrases
 	// sous les fenêtres sont des exemples, à écrire par Romain.
+	import { onMount } from 'svelte';
 	import Crotz from '$lib/components/Crotz.svelte';
 	import { ESTELAS, VISTA, COSTA_D } from '../blanc/donadas.js';
 
 	// Sur fond sombre, la croix en or et rouge (recettes de Romain)
 	const CROTZ = { traç: '#eeaf34', ponch: '#b53d17', moieu: '#eeaf34' };
+
+	// Les animations de défilement en JavaScript (observateur + progression), pour
+	// qu'elles marchent dans tous les navigateurs : l'« animation-timeline » CSS
+	// n'est pas encore suivie partout (Firefox, Safari anciens). Rien ne bouge si
+	// l'écran demande moins d'animation, et tout est déjà visible sans JavaScript.
+	let racina;
+	onMount(() => {
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		racina.classList.add('anim');
+
+		// chaque fenêtre se révèle quand elle entre à l'écran
+		const io = new IntersectionObserver(
+			(lignas) => {
+				for (const l of lignas)
+					if (l.isIntersecting) {
+						l.target.classList.add('vist');
+						io.unobserve(l.target);
+					}
+			},
+			{ threshold: 0.2 }
+		);
+		racina.querySelectorAll('.fenestra').forEach((el) => io.observe(el));
+
+		// le fil se tire, le nœud se serre, la carte flotte (parallaxe) au défilement
+		const mur = racina.querySelector('.mur');
+		const carta = racina.querySelector('.carta');
+		let af = 0;
+		const maj = () => {
+			af = 0;
+			const r = mur.getBoundingClientRect();
+			const h = window.innerHeight;
+			const p = Math.min(1, Math.max(0, (h - r.top) / (h + r.height)));
+			racina.style.setProperty('--fil', Math.min(1, p * 1.3).toFixed(3));
+			racina.style.setProperty('--knot', (1 - Math.min(1, Math.max(0, (p - 0.72) / 0.22))).toFixed(3));
+			if (carta) carta.style.setProperty('--para', (-(p - 0.5) * 40).toFixed(1) + 'px');
+		};
+		const aScroll = () => { if (!af) af = requestAnimationFrame(maj); };
+		addEventListener('scroll', aScroll, { passive: true });
+		addEventListener('resize', aScroll, { passive: true });
+		maj();
+
+		return () => {
+			io.disconnect();
+			removeEventListener('scroll', aScroll);
+			removeEventListener('resize', aScroll);
+			if (af) cancelAnimationFrame(af);
+		};
+	});
 </script>
 
 <svelte:head>
@@ -21,7 +70,7 @@
 
 {#snippet sageta()}<svg class="fl" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" /></svg>{/snippet}
 
-<div class="mondes">
+<div class="mondes" bind:this={racina}>
 	<header class="cap">
 		<a class="marca" href="/"><Crotz talha={30} {...CROTZ} />Lo Ligam</a>
 		<span class="esc">Essai · los tres mondes</span>
@@ -142,9 +191,9 @@
 
 	/* La composition libre : une grande fenêtre à gauche, deux à droite ; le fil
 	   du ligam descend dans la gouttière */
-	.mur { position: relative; display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto auto; gap: 18px 44px; view-timeline-name: --mur; view-timeline-axis: block; }
+	.mur { position: relative; display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto auto; gap: 18px 44px; }
 	.fil { position: absolute; top: 24px; bottom: -28px; left: calc(55.6% - 1px); width: 2px; z-index: 2; }
-	.fil .trait { position: absolute; inset: 0; transform-origin: top; background: linear-gradient(#eeaf34, #eeaf34 92%, transparent); opacity: 0.8; }
+	.fil .trait { position: absolute; inset: 0; transform-origin: top; transform: scaleY(var(--fil, 1)); background: linear-gradient(#eeaf34, #eeaf34 92%, transparent); opacity: 0.8; }
 	.fil::before, .fil::after { content: ''; position: absolute; left: 50%; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: var(--or); }
 	.fil::before { top: 22%; }
 	.fil::after { top: 70%; }
@@ -162,15 +211,12 @@
 	.ex { color: var(--or-clar); font-style: italic; opacity: 0.8; font-size: 0.82em; }
 
 	/* La carte en étoiles, vivante (reprise de /ensag/blanc, couleurs pour fond sombre) */
-	.carta { margin: 14px 0 0; flex: 1; display: flex; align-items: center; justify-content: center; }
+	.carta { margin: 14px 0 0; flex: 1; display: flex; align-items: center; justify-content: center; transform: translateY(var(--para, 0)); will-change: transform; }
 	.carta svg { width: 100%; height: auto; display: block; }
-	.costa { fill: none; stroke: var(--or-clar); stroke-opacity: 0.5; stroke-width: 1.2; stroke-linejoin: round;
-		stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar 2.4s var(--lent) 0.3s forwards; }
-	.estela { fill: #ffe6b8; fill-opacity: 0.6; opacity: 0; animation: lusir 0.6s ease-out forwards; animation-delay: calc(0.7s + var(--i) * 6ms); }
+	.costa { fill: none; stroke: var(--or-clar); stroke-opacity: 0.5; stroke-width: 1.2; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+	.estela { fill: #ffe6b8; fill-opacity: 0.6; }
 	.estela.vila { fill: #ffd98a; fill-opacity: 1; }
 	.vila-nom { font: 400 12px/1 var(--font-body), sans-serif; fill: var(--crema); fill-opacity: 0.85; }
-	@keyframes traçar { to { stroke-dashoffset: 0; } }
-	@keyframes lusir { to { opacity: 1; } }
 
 	.dintrar { margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; width: fit-content; padding-bottom: 2px; border-bottom: 2px solid var(--or); }
 	.fl { width: 1em; height: 1em; transition: transform 0.4s var(--lent); }
@@ -185,31 +231,25 @@
 	/* L'appel : le fil se noue, puis le bouton */
 	.apel { display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 8px; padding-top: 24px; }
 	.nos { width: 40px; height: 50px; }
+	.nos path { stroke-dasharray: 1; stroke-dashoffset: var(--knot, 0); }
 	.apel-titol { font-size: clamp(2.4rem, 7vw, 5rem); line-height: 0.98; margin: 10px 0 24px; }
 	.brica { color: var(--or); }
 	.boton { background: var(--brica); color: #fff; font-weight: 700; padding: 15px 28px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; transition: transform 0.3s var(--lent), box-shadow 0.3s; }
 	.boton:hover { transform: translateY(-2px); box-shadow: 0 10px 28px -14px var(--brica); }
 
-	/* ——— Animations de défilement (sobres, une chose vivante par fenêtre) ——— */
-	@keyframes obrir { from { opacity: 0; transform: translateY(26px); } }
-	@keyframes tirar { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-	@keyframes nosar { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-	/* repli si le navigateur ne suit pas le défilement : une entrée douce, une fois */
-	.fenestra { animation: obrir 0.9s var(--lent) both; }
-	.apren { animation-delay: 0.12s; }
-	.amassa { animation-delay: 0.24s; }
-	/* quand le navigateur sait suivre le défilement : tout se joue au scroll */
-	@supports (animation-timeline: view()) {
-		.fenestra { animation: obrir auto linear both; animation-timeline: view(); animation-range: entry 6% cover 34%; animation-delay: 0s; }
-		/* le fil se tire au rythme de la zone des fenêtres, le nœud se serre quand l'appel entre */
-		.fil .trait { transform: scaleY(0); animation: tirar auto linear both; animation-timeline: --mur; animation-range: entry 10% exit 85%; }
-		.nos path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: nosar auto linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
-		/* la carte en étoiles se trace en entrant dans l'écran */
-		.parla .costa { animation: traçar auto linear forwards; animation-timeline: view(); animation-range: entry 10% cover 50%; }
-		.parla .estela { animation: lusir auto linear forwards; animation-timeline: view(); animation-range: entry calc(20% + var(--i) * 0.12%) cover calc(46% + var(--i) * 0.12%); }
-		/* le chemin de S'apren se dessine en entrant */
-		.camin-apercu polyline { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar auto linear both; animation-timeline: view(); animation-range: entry 16% cover 60%; }
-	}
+	/* ——— Animations de défilement (JavaScript : observateur + progression) ———
+	   Sobres : une chose vivante par fenêtre. La classe « anim » est posée par le
+	   script quand l'écran accepte le mouvement ; sans JavaScript ou en « moins
+	   d'animation », tout reste visible et immobile. Le fil (--fil), le nœud
+	   (--knot) et la parallaxe (--para) sont mis à jour au défilement. */
+	.anim .fenestra { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--lent), transform 0.9s var(--lent); }
+	.anim .fenestra.vist { opacity: 1; transform: none; }
+	.anim .parla .costa { stroke-dashoffset: 1; transition: stroke-dashoffset 2s var(--lent); }
+	.anim .parla.vist .costa { stroke-dashoffset: 0; }
+	.anim .parla .estela { opacity: 0; transition: opacity 0.5s ease-out; transition-delay: calc(var(--i) * 4ms); }
+	.anim .parla.vist .estela { opacity: 1; }
+	.anim .camin-apercu polyline { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.2s var(--lent); }
+	.anim .apren.vist .camin-apercu polyline { stroke-dashoffset: 0; }
 
 	@media (max-width: 820px) {
 		.mur { grid-template-columns: 1fr; }
@@ -219,11 +259,7 @@
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.mondes *, .mondes *::before, .mondes *::after { animation: none !important; transition: none !important; }
-		.costa { stroke-dashoffset: 0; }
-		.estela { opacity: 1; }
 		.fil .trait { transform: none; }
 		.nos path { stroke-dashoffset: 0; }
-		.camin-apercu polyline { stroke-dashoffset: 0; }
-		.fenestra { opacity: 1; transform: none; }
 	}
 </style>
