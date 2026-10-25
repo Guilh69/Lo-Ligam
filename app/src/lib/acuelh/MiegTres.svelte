@@ -17,11 +17,12 @@
 	let fr = $derived(langStore.current === 'fr');
 	const [PARLA, APREN, VIU] = PLAN;
 	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer' };
-	// couleurs un peu profondes, pour rester dans le ton chaud de la braise
+	// color = fond profond (variantes Blocs/Chapitres) ; accent = couleur claire et
+	// lumineuse qui ressort sur la braise (numéro et lueur de la variante Système/Combiné)
 	const ENTITATS = [
-		{ sec: PARLA, vis: 'carta', color: '#93301a', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.' } },
-		{ sec: APREN, vis: 'camin', color: '#1b5256', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.' } },
-		{ sec: VIU, vis: 'rets', color: '#5a3350', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.' } }
+		{ sec: PARLA, vis: 'carta', color: '#93301a', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.' } },
+		{ sec: APREN, vis: 'camin', color: '#1b5256', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.' } },
+		{ sec: VIU, vis: 'rets', color: '#5a3350', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.' } }
 	];
 	// la couleur de la section précédente, pour fondre les passages (la 1re part de la braise)
 	const colorPrec = (i) => (i === 0 ? 'transparent' : ENTITATS[i - 1].color);
@@ -187,7 +188,7 @@
 		{/each}
 	{:else}
 		{#each ENTITATS as e, i (e.sec.id)}
-			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} style="--color: {e.color}">
+			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} style="--color: {e.accent}">
 				<div class="sist-cap">
 					<span class="sist-num">{e.sec.n}</span>
 					<h2>{fr ? e.sec.fr : e.sec.oc}</h2>
@@ -227,10 +228,10 @@
 	.vila-nom { font: 400 12px/1 var(--font-body), sans-serif; fill: var(--crema); fill-opacity: 0.85; }
 	.camin-fita { fill: #123; stroke: #ffd98a; stroke-width: 2.4; transform-box: fill-box; transform-origin: center; }
 	.camin-fin { fill: #ffd98a; }
-	.rets-domeni { fill: color-mix(in srgb, #ffd98a 8%, transparent); stroke: rgba(238, 175, 52, 0.4); stroke-width: 0.8; stroke-linejoin: round; }
-	.rets-arc { fill: none; stroke: #ffd98a; stroke-width: 1; opacity: 0.4; }
-	.rets-flux { fill: none; stroke: #fff; stroke-width: 2; stroke-dasharray: 0 7; stroke-linecap: round; opacity: 0.85; }
-	.rets-vila { fill: #ffd98a; transform-box: fill-box; transform-origin: center; }
+	.rets-domeni { fill: color-mix(in srgb, #ffd98a 12%, transparent); stroke: rgba(238, 175, 52, 0.55); stroke-width: 0.9; stroke-linejoin: round; }
+	.rets-arc { fill: none; stroke: #ffd98a; stroke-width: 1; opacity: 0.5; }
+	.rets-flux { fill: none; stroke: #fff; stroke-width: 2.2; stroke-dasharray: 0 7; stroke-linecap: round; opacity: 0.9; }
+	.rets-vila { fill: #ffe6b8; transform-box: fill-box; transform-origin: center; filter: drop-shadow(0 0 3px rgba(255, 217, 138, 0.55)); }
 
 	/* ——— Piste 2 : jalons enrichis (grammaire de l'accueil) ——— */
 	.jalon-ent { padding: 10vh var(--marge); }
@@ -321,8 +322,11 @@
 	.anim .vist .costa { stroke-dashoffset: 1; animation: traçar 1.8s var(--lent) 0.2s forwards; }
 	.anim .vist .camin-via { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar 1.4s var(--lent) 0.2s forwards; }
 	.anim .vist .rets-flux { animation: fluir 1.1s linear infinite; }
+	.anim .vist .rets-arc { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar 1.2s var(--lent) both; animation-delay: calc(0.2s + var(--i) * 0.12s); }
+	.anim .vist .rets-vila { transform: scale(0); animation: naisser 0.6s var(--lent) both; animation-delay: calc(0.3s + var(--i) * 0.06s); }
 	@keyframes traçar { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 	@keyframes fluir { to { stroke-dashoffset: -7; } }
+	@keyframes naisser { from { transform: scale(0); } to { transform: scale(1); } }
 	@media (prefers-reduced-motion: reduce) {
 		.mieg *, .mieg *::before, .mieg *::after { animation: none !important; transition: none !important; }
 	}
