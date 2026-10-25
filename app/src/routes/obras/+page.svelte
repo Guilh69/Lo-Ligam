@@ -76,22 +76,18 @@
 {#snippet tt(clau)}{@const v = txt(clau)}<span lang={fr ? 'fr' : 'oc'}>{@render marcat(fr ? v.fr : v.oc)}</span>{/snippet}
 
 
-<div class="page-bg" aria-hidden="true">
-	<span class="blob blob-gold"></span>
-	<span class="blob blob-teal"></span>
-</div>
+<div class="pagina">
+<div class="capçal"><AppHeader /></div>
 
-<main class="screen" class:ed-actiu={edicion.actiu}>
-	<AppHeader />
-
-	<header class="intro">
+<main class="obras" class:ed-actiu={edicion.actiu}>
+	<header class="cap">
 		<h1>{tx.title}</h1>
-		<p class="lead">{tx.lead}</p>
+		<p class="frasa">{tx.lead}</p>
 	</header>
 
 	<section class="musicas" id="musicas" aria-labelledby="musicas-titol">
 		<h2 id="musicas-titol" class="seccion-titol" hidden={amagat('obras.musica.titol')} use:editar={'obras.musica.titol'}>{@render tt('obras.musica.titol')}</h2>
-		<p class="musicas-lead" hidden={amagat('obras.musica.frasa')} use:editar={'obras.musica.frasa'}>{@render tt('obras.musica.frasa')}</p>
+		<p class="seccion-lead" hidden={amagat('obras.musica.frasa')} use:editar={'obras.musica.frasa'}>{@render tt('obras.musica.frasa')}</p>
 
 		<a class="cafe" href="/ensag/musica">
 			<span class="cafe-disc" aria-hidden="true"><span class="cafe-etiqueta"></span></span>
@@ -104,8 +100,8 @@
 	</section>
 
 	<section class="afichas" aria-labelledby="afichas-titol">
-		<h2 id="afichas-titol" class="afichas-titol">{tx.afichas}</h2>
-		<p class="lead">{tx.afichasLead}</p>
+		<h2 id="afichas-titol" class="seccion-titol">{tx.afichas}</h2>
+		<p class="seccion-lead">{tx.afichasLead}</p>
 		<ul class="galaria">
 			{#each afichas as a (a.id)}
 				<li class={a.forma}>
@@ -122,6 +118,7 @@
 		</ul>
 	</section>
 </main>
+</div>
 
 <dialog class="vista" bind:this={dialeg} onclose={() => (vista = null)} onclick={(e) => e.target === dialeg && tampar()} aria-labelledby="vista-titol">
 	{#if vista}
@@ -141,14 +138,7 @@
 <style>
 	/* ---------- Galerie des affiches ---------- */
 	.afichas {
-		margin-top: 4rem;
-	}
-	.afichas-titol {
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: clamp(2rem, 4vw, 2.8rem);
-		color: var(--color-terracotta);
-		margin: 0 0 0.4rem;
+		margin-top: var(--esp-96);
 	}
 	.galaria {
 		list-style: none;
@@ -172,8 +162,8 @@
 		border-radius: 14px;
 		overflow: hidden;
 		cursor: zoom-in;
-		background: var(--color-text);
-		box-shadow: 0 6px 20px rgba(58, 42, 32, 0.12);
+		background: var(--t-fons-2);
+		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
 		transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.6s;
 	}
 	.paisatge .afica {
@@ -189,7 +179,7 @@
 	.afica:hover,
 	.afica:focus-visible {
 		transform: translateY(-4px);
-		box-shadow: 0 0 0 3px var(--color-terracotta), 0 0 0 6px var(--color-gold), 0 14px 30px rgba(58, 42, 32, 0.2);
+		box-shadow: 0 0 0 3px var(--t-terra), 0 0 0 6px var(--t-aur), 0 14px 30px rgba(0, 0, 0, 0.25);
 	}
 	.afica:hover img {
 		transform: scale(1.04);
@@ -294,129 +284,93 @@
 		}
 	}
 
-	.page-bg {
-		position: fixed;
-		inset: 0;
-		overflow: hidden;
-		z-index: -1;
-		background: radial-gradient(circle at 50% 0%, #faf3e6 0%, var(--color-cream) 60%);
+	/* ---------- Le cadre des pages intérieures, comme S'apren et les Idées ----------
+	   Suit le thème du site (sombre par défaut, clair au choix) */
+	.pagina {
+		--marge: clamp(1rem, 4vw, 3.4rem);
+		min-height: 100vh;
+		color: var(--t-tinta);
+		background:
+			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			var(--t-fons);
+		overflow-x: clip;
 	}
-
-	.blob {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(70px);
+	.capçal {
+		padding: 1.3rem var(--marge);
 	}
-
-	.blob-gold {
-		width: 380px;
-		height: 380px;
-		background: var(--color-gold);
-		opacity: 0.3;
-		top: -120px;
-		left: -100px;
+	.capçal :global(.top) {
+		max-width: none;
 	}
-
-	.blob-teal {
-		width: 340px;
-		height: 340px;
-		background: var(--color-teal);
-		opacity: 0.18;
-		bottom: -100px;
-		right: -100px;
+	.obras {
+		max-width: calc(64rem + 2 * var(--marge));
+		margin: 0 auto;
+		padding: clamp(2rem, 6vh, 4.5rem) var(--marge) var(--esp-96);
 	}
-
-	.screen {
-		position: relative;
-		min-height: 100dvh;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 1.5rem;
-		padding: 1.5rem;
+	.cap {
+		margin-bottom: var(--esp-48);
 	}
-
-	.intro {
-		text-align: center;
-		max-width: 34rem;
-		margin-top: 1rem;
-	}
-
 	h1 {
 		margin: 0;
 		font-family: var(--font-heading);
-		font-size: clamp(1.8rem, 6vw, 2.6rem);
-		color: var(--color-terracotta);
+		font-weight: 400;
+		font-size: clamp(2.6rem, 8vw, 5.5rem);
+		line-height: 0.95;
 	}
-
-	.lead {
-		margin: 0.5rem 0 0;
-		color: var(--color-text);
-		opacity: 0.85;
+	.frasa {
+		max-width: 38ch;
+		margin: var(--esp-16) 0 0;
+		font-size: clamp(1.1rem, 1.6vw, 1.35rem);
 		line-height: 1.5;
-	}
-
-	.msg {
-		background: white;
-		border-radius: 18px;
-		padding: 1.5rem 2rem;
-		color: var(--color-teal);
-	}
-
-	/* ---------- Musiques : la porte du café ----------
-	   Une bande sombre, les couleurs du café, même quand la page est claire */
-	.musicas {
-		--m-fons: #22100a;
-		--m-tinta: #fbf1e1;
-		--m-tinta-2: rgba(251, 241, 225, 0.78);
-		--m-aur: #f6b73c;
-		--m-accion: #b53d17;
-		container: musicas / inline-size;
-		box-sizing: border-box;
-		width: calc(100% + 3rem);
-		margin: 1rem -1.5rem 0;
-		padding: clamp(2.2rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 4rem);
-		/* (le disque sorti de la dernière pochette ne doit pas élargir la page) */
-		overflow-x: clip;
-		background: var(--m-fons);
-		color: var(--m-tinta);
-		text-align: center;
+		color: var(--t-tinta-2);
 	}
 	.seccion-titol {
 		margin: 0;
 		font-family: var(--font-heading);
 		font-weight: 400;
-		font-size: clamp(2.2rem, 6vw, 3.6rem);
+		font-size: clamp(2rem, 4.5vw, 3rem);
 		line-height: 1;
 	}
-	.musicas-lead {
-		max-width: 36rem;
-		margin: 0.8rem auto 0;
-		color: var(--m-tinta-2);
+	.seccion-lead {
+		max-width: 44ch;
+		margin: var(--esp-8) 0 0;
+		color: var(--t-tinta-2);
 		line-height: 1.5;
 	}
+	.seccion-lead :global(.aur) {
+		color: var(--t-aur);
+	}
 
+	/* ---------- Musiques : la porte du café ---------- */
+	.musicas {
+		container: musicas / inline-size;
+	}
 	/* la porte : un disque qui tourne au survol, le titre du journal, « Dintrar » */
 	.cafe {
 		max-width: 40rem;
-		margin: clamp(1.6rem, 4vw, 2.6rem) auto 0;
+		margin: var(--esp-24) 0 0;
 		display: flex;
 		align-items: center;
 		gap: clamp(1.2rem, 4vw, 2.4rem);
 		padding: clamp(1rem, 3vw, 1.6rem);
-		border-radius: 22px;
-		background: rgba(251, 241, 225, 0.06);
-		outline: 1px solid rgba(251, 241, 225, 0.14);
+		box-sizing: border-box;
+		border: 1px solid var(--t-linha);
+		border-top: 6px solid var(--t-aur);
+		border-radius: 6px;
+		background: var(--t-fons-2);
 		color: inherit;
 		text-align: left;
 		text-decoration: none;
 		transition: background 0.2s ease;
 	}
+	.cafe:hover .cafe-intrar {
+		background: var(--t-accion-viu);
+	}
 	.cafe:hover {
-		background: rgba(251, 241, 225, 0.1);
+		background: color-mix(in srgb, var(--t-fons-2) 88%, var(--t-aur));
 	}
 	.cafe:focus-visible {
-		outline: 2px solid var(--m-aur);
+		outline: 2px solid var(--t-aur);
 		outline-offset: 4px;
 	}
 	.cafe-disc {
@@ -435,7 +389,7 @@
 		width: 36%;
 		aspect-ratio: 1;
 		border-radius: 50%;
-		background: radial-gradient(circle, var(--m-fons) 0 9%, var(--m-accion) 10% 100%);
+		background: radial-gradient(circle, #181010 0 9%, var(--t-accion) 10% 100%);
 	}
 	.cafe:hover .cafe-disc {
 		animation: virar 2.4s linear infinite;
@@ -457,7 +411,7 @@
 		line-height: 1.05;
 	}
 	.cafe-sota {
-		color: var(--m-tinta-2);
+		color: var(--t-tinta-2);
 		font-style: italic;
 		line-height: 1.4;
 	}
@@ -468,8 +422,8 @@
 		gap: 0.45rem;
 		padding: 0.5rem 1.1rem;
 		border-radius: 999px;
-		background: var(--m-accion);
-		color: #fff;
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
 		font-weight: 700;
 	}
 	@media (prefers-reduced-motion: reduce) {
