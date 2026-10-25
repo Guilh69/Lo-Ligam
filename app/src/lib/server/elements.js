@@ -18,14 +18,20 @@ export async function legirElements(pagina) {
 	try {
 		const { data, error } = await supabase
 			.from('pagina_elements')
-			.select('clau,pagina,tipe,lista,ordre,oc,fr,ligam,imatge,visible')
+			.select('clau,pagina,tipe,lista,ordre,oc,fr,es,en,ca,ligam,imatge,visible')
 			.eq('pagina', pagina)
 			.eq('estat', 'publicat');
 		if (error || !data?.length) throw error ?? new Error('cap d’element');
 		// la base complète le filet, clé par clé : une semence partielle ou un
-		// seul élément publié ne font jamais disparaître le reste de la page
+		// seul élément publié ne font jamais disparaître le reste de la page.
+		// es/en/ca : les traductions vivent dans le filet ; une valeur de la base
+		// les remplace, sinon on garde celle du filet (l'occitan reste le repli
+		// plus loin si rien). oc/fr : la base fait foi (ce que Romain a édité).
 		const perClau = Object.fromEntries((filet[pagina] ?? []).map((e) => [e.clau, e]));
-		for (const e of data) perClau[e.clau] = e;
+		for (const e of data) {
+			const base = perClau[e.clau];
+			perClau[e.clau] = { ...e, es: e.es ?? base?.es, en: e.en ?? base?.en, ca: e.ca ?? base?.ca };
+		}
 		rows = Object.values(perClau);
 	} catch {
 		rows = m?.rows ?? filet[pagina] ?? [];

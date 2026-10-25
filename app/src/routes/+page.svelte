@@ -29,7 +29,7 @@
 	// son compte administrateur : Claude ne retouche plus ces textes ici.
 	import { onMount } from 'svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
@@ -40,7 +40,13 @@
 	let { data } = $props();
 	const lèvaEdicion = iniciar('acuelh', data.elements);
 
-	let fr = $derived(langStore.current === 'fr');
+	// L'accueil montre l'occitan ⇄ une autre langue en deux couches qui glissent.
+	// La 2ᵉ couche (« autra ») porte la langue courante si ce n'est pas l'occitan,
+	// sinon le français par défaut ; repli occitan si rien.
+	let lang = $derived(langStore.current);
+	let esOc = $derived(lang === 'oc');
+	let autraLang = $derived(esOc ? 'fr' : lang);
+	const autra = (v) => v?.[autraLang] || v?.fr || v?.oc || '';
 
 	let racina;
 	let motor = $state.raw(null);
@@ -48,7 +54,7 @@
 
 
 	const im = (clau, defaut) => imatge(clau) ?? defaut;
-	const alt = (i) => (fr ? i?.alt_fr : i?.alt_oc) || '';
+	const alt = (i) => i?.['alt_' + lang] || i?.alt_fr || i?.alt_oc || '';
 	let retrat = $derived(im('acuelh.manifest.retrat', { url: '/acuelh/romain.webp', largor: 600, nautor: 620 }));
 	let fen = $derived(im('acuelh.trobador.fenestra', { url: '/acuelh/erau.webp', largor: 1500, nautor: 2173 }));
 
@@ -106,26 +112,26 @@
 
 <!-- Un texte dans les deux langues (masques qui basculent), lu par sa clé -->
 {#snippet bi(clau)}{@const v = txt(clau)}<span class="bi"
-		><span class="oc" aria-hidden={fr}>{v.oc}</span><span class="fr" aria-hidden={!fr}>{v.fr}</span></span
+		><span class="oc" aria-hidden={!esOc}>{v.oc}</span><span class="autra" aria-hidden={esOc}>{autra(v)}</span></span
 	>{/snippet}
 
 <!-- Le même, avec les marques *or* et _italique_ -->
 {#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
 {#snippet bim(clau)}{@const v = txt(clau)}<span class="bi"
-		><span class="oc" aria-hidden={fr}>{@render marcat(v.oc)}</span><span class="fr" aria-hidden={!fr}>{@render marcat(v.fr)}</span></span
+		><span class="oc" aria-hidden={!esOc}>{@render marcat(v.oc)}</span><span class="autra" aria-hidden={esOc}>{@render marcat(autra(v))}</span></span
 	>{/snippet}
 
 <!-- Le titre lettre par lettre, pour les lettres en braise au survol (acuelh.css ;
      Romain, 2026-10-15, à la place de la traduction). Les lecteurs d'écran
      lisent le mot entier (copie masquée), pas les lettres. -->
-{#snippet letras(clau)}{@const v = txt(clau)}<span class="bi"
-		><span class="oc" aria-hidden={fr}
+{#snippet letras(clau)}{@const v = txt(clau)}{@const a = autra(v)}<span class="bi"
+		><span class="oc" aria-hidden={!esOc}
 			><span class="visually-hidden">{v.oc}</span><span aria-hidden="true"
 				>{#each [...v.oc] as l, i (i)}<span class="letra" class:espaci={l === ' '}>{l}</span>{/each}</span
 			></span
-		><span class="fr" aria-hidden={!fr}
-			><span class="visually-hidden">{v.fr}</span><span aria-hidden="true"
-				>{#each [...v.fr] as l, i (i)}<span class="letra" class:espaci={l === ' '}>{l}</span>{/each}</span
+		><span class="autra" aria-hidden={esOc}
+			><span class="visually-hidden">{a}</span><span aria-hidden="true"
+				>{#each [...a] as l, i (i)}<span class="letra" class:espaci={l === ' '}>{l}</span>{/each}</span
 			></span
 		></span
 	>{/snippet}
@@ -146,9 +152,9 @@
 		{...extra}>{@render bi(clau)}{#if extra['data-sageta']} {@render sageta()}{/if}</a
 	>{/snippet}
 
-{#snippet apondreBoton(f, txtOc, txtFr)}{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={f}>+ {fr ? txtFr : txtOc}</button>{/if}{/snippet}
+{#snippet apondreBoton(f, txtOc, txtFr)}{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={f}>+ {esOc ? txtOc : txtFr}</button>{/if}{/snippet}
 
-<div class="acuelh" class:fr class:ed-actiu={edicion.actiu} bind:this={racina}>
+<div class="acuelh" class:autra={!esOc} class:ed-actiu={edicion.actiu} bind:this={racina}>
 	<canvas id="fons" aria-hidden="true"></canvas>
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 	<canvas id="estelas" aria-hidden="true"></canvas>
@@ -161,7 +167,7 @@
 
 	<main>
 		<span id="onglet-nou" class="visually-hidden"
-			>{fr ? 'S’ouvre dans un nouvel onglet' : 'Se dobrís dins un onglet novèl'}</span
+			>{tria({ oc: 'Se dobrís dins un onglet novèl', fr: 'S’ouvre dans un nouvel onglet', es: 'Se abre en una pestaña nueva' })}</span
 		>
 
 		<!-- I. Le héros : le titre annonce le plan de la page, un seul bouton principal -->
@@ -200,22 +206,24 @@
 			<div
 				class="carta-estelas"
 				role="img"
-				aria-label={fr
-					? 'Carte de l’Occitanie en étoiles : 304 villes et villages, avec leur nom occitan'
-					: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan'}
+				aria-label={tria({
+					oc: 'Carta de l’Occitània en estelas : 304 vilas e vilatges, amb lor nom occitan',
+					fr: 'Carte de l’Occitanie en étoiles : 304 villes et villages, avec leur nom occitan',
+					es: 'Mapa de Occitania en estrellas: 304 ciudades y pueblos, con su nombre occitano'
+				})}
 			></div>
 		</section>
 
 		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-		<div class="bandel" role="group" tabindex="0" aria-label={fr ? 'Quelques mots' : 'Qualques mots'}>
+		<div class="bandel" role="group" tabindex="0" aria-label={tria({ oc: 'Qualques mots', fr: 'Quelques mots', es: 'Algunas palabras' })}>
 			<div class="bandel-pista">
 				{#each [false, true] as copia (copia)}
 					{#each lista('acuelh.bandel') as m (m.clau)}
 						{#if copia}
-							<span class="bandel-mot" lang="oc" aria-hidden="true">{m.oc}<small lang="fr">{m.fr}</small></span>
+							<span class="bandel-mot" lang="oc" aria-hidden="true">{m.oc}<small lang={autraLang}>{autra(m)}</small></span>
 						{:else}
-							<span class="bandel-mot" lang="oc" use:editar={m.clau}>{m.oc}<small lang="fr">{m.fr}</small></span>
+							<span class="bandel-mot" lang="oc" use:editar={m.clau}>{m.oc}<small lang={autraLang}>{autra(m)}</small></span>
 						{/if}
 					{/each}
 				{/each}
@@ -234,9 +242,11 @@
 			<div class="manifest-cors">
 				<!-- chaque mot s'allume au défilement (motor : data-emplenar) ; *…* = en or -->
 				<p class="manifest-tèxt" data-emplenar hidden={amagat('acuelh.manifest.tèxt')} use:editar={'acuelh.manifest.tèxt'}>
-					{#each ['oc', 'fr'] as l (l)}
-						<span data-lenga={l} lang={l}
-							>{#each segments(txt('acuelh.manifest.tèxt')[l]) as seg, n (n)}{#each seg.t.trim().split(/\s+/).filter(Boolean) as m, k (k)}<span
+					{#each [['oc', 'oc'], ['autra', autraLang]] as [clau, codi] (clau)}
+						{@const mv = txt('acuelh.manifest.tèxt')}
+						{@const contengut = clau === 'oc' ? mv.oc : autra(mv)}
+						<span data-lenga={clau} lang={codi}
+							>{#each segments(contengut) as seg, n (n)}{#each seg.t.trim().split(/\s+/).filter(Boolean) as m, k (k)}<span
 										class={seg.aur ? 'm aur' : 'm'}>{m}</span
 									>{' '}{/each}{/each}</span
 						>

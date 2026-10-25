@@ -34,9 +34,17 @@ if (!r.ok) {
 const rows = await r.json();
 const camin = join(aquí, '..', 'src', 'lib', 'data', 'elements-filet.json');
 const filet = JSON.parse(readFileSync(camin, 'utf8'));
+// Les traductions es/en/ca vivent dans le filet, écrites à la main. La base ne
+// les porte pas encore (elle les renvoie vides) : on les garde par clé pour ne
+// pas les perdre en rafraîchissant.
+const ancianas = {};
+for (const [pag, l] of Object.entries(filet))
+	if (!pag.startsWith('_')) for (const e of l) ancianas[e.clau] = e;
 const perPagina = {};
 for (const { pagina, ...e } of rows) {
 	const net = Object.fromEntries(Object.entries(e).filter(([k, v]) => v != null && !(k === 'ordre' && v === 0) && !(k === 'visible' && v === true)));
+	const a = ancianas[net.clau];
+	if (a) for (const k of ['es', 'en', 'ca']) if (net[k] == null && a[k] != null) net[k] = a[k];
 	(perPagina[pagina] ??= []).push(net);
 }
 for (const [pagina, l] of Object.entries(perPagina)) filet[pagina] = l;

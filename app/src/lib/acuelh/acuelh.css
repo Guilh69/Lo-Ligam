@@ -101,12 +101,12 @@ html.cursor-viu:has(.vel-fons) .cur-ponch, html.cursor-viu:has(.vel-fons) .cur-a
 /* ---------- Bilingüe : doas jaças dins una mascara ---------- */
 .acuelh .bi { display: inline-grid; overflow: hidden; vertical-align: top; justify-items: start; padding: 0.06em 0.04em 0.12em; margin: -0.06em -0.04em -0.12em; }
 .acuelh .bi > span { grid-area: 1 / 1; transition: transform 0.95s var(--ease); }
-.acuelh .bi > .fr { transform: translateY(125%); }
-.acuelh.fr .bi > .oc { transform: translateY(-125%); }
-.acuelh.fr .bi > .fr { transform: none; }
+.acuelh .bi > .autra { transform: translateY(125%); }
+.acuelh.autra .bi > .oc { transform: translateY(-125%); }
+.acuelh.autra .bi > .autra { transform: none; }
 .acuelh .centrat .bi { justify-items: center; }
 .acuelh [data-lenga] { display: contents; }
-.acuelh:not(.fr) [data-lenga='fr'], .acuelh.fr [data-lenga='oc'] { display: none; }
+.acuelh:not(.autra) [data-lenga='autra'], .acuelh.autra [data-lenga='oc'] { display: none; }
 /* ---------- Mascaras de revelacion ---------- */
 .acuelh .masc { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 .acuelh .masc > .masc-in { display: block; transform: translateY(112%); transition: transform 1.3s var(--ease); transition-delay: calc(var(--i, 0) * 90ms); }
@@ -210,14 +210,14 @@ html.cursor-viu:has(.vel-fons) .cur-ponch, html.cursor-viu:has(.vel-fons) .cur-a
 /* En français, « S'apprend. » est plus long que « S'apren. » : le titre se fait
    un peu plus petit (sur téléphone, sinon le point sortait de l'écran), et la
    croix en étoiles s'écarte (motor.js) */
-.acuelh.fr { --eros-fs: clamp(3.1rem, min(10vw, 29vh - 7.5rem), 11rem); }
+.acuelh.autra { --eros-fs: clamp(3.1rem, min(10vw, 29vh - 7.5rem), 11rem); }
 /* La règle ci-dessus était masquée, dans l'ouverture avec la carte (22-10), par la taille
    posée sur .eros.amb-carta, plus proche du titre : en français, « S'apprend. » mordait
    sur la carte sur ordinateur et sortait de l'écran sur téléphone (Romain, 2026-10-23 :
    « en français, le texte grignote la carte »). La taille suit donc la largeur réelle de
    la colonne du titre : « S'apprend. », retrait compris, mesure 6,76 fois la police */
 .acuelh .eros.amb-carta .eros-entitol { container-type: inline-size; }
-.acuelh.fr .eros.amb-carta .eros-titol { font-size: min(var(--eros-fs), 100cqi / 6.9); }
+.acuelh.autra .eros.amb-carta .eros-titol { font-size: min(var(--eros-fs), 100cqi / 6.9); }
 .acuelh .eros-pe { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; flex-wrap: wrap; margin-top: 2.6rem; }
 .acuelh .eros-sub { max-width: 30ch; font-size: clamp(1rem, 1.3vw, 1.18rem); line-height: 1.65; color: var(--crema-2); }
 .acuelh .eros-accions { display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; }
@@ -242,7 +242,7 @@ html.cursor-viu:has(.vel-fons) .cur-ponch, html.cursor-viu:has(.vel-fons) .cur-a
 /* Téléphone et tablette : les trois chemins en liste sous le titre, qui cède
    la hauteur qu'ils prennent */
 .acuelh .eros[data-forma='fials'] { --eros-fs: clamp(3.4rem, min(11vw, 29vh - 10rem), 12rem); }
-.acuelh.fr .eros[data-forma='fials'] { --eros-fs: clamp(3.1rem, min(10vw, 29vh - 10rem), 11rem); }
+.acuelh.autra .eros[data-forma='fials'] { --eros-fs: clamp(3.1rem, min(10vw, 29vh - 10rem), 11rem); }
 .acuelh .eros-fials { list-style: none; margin-top: var(--esp-32); }
 .acuelh .eros-fials li { display: flex; align-items: center; gap: var(--esp-24); padding: var(--esp-12) 0; border-top: 1px solid color-mix(in srgb, var(--crema) 16%, transparent); }
 .acuelh .eros-fials li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--crema) 16%, transparent); }
@@ -271,7 +271,7 @@ html.cursor-viu:has(.vel-fons) .cur-ponch, html.cursor-viu:has(.vel-fons) .cur-a
 	   par le trait qui part de la fin de la phrase (--manca, mesuré par
 	   +page.svelte) ; le titre se règle aussi sur la largeur pour laisser la
 	   place au trait et aux chemins */
-	.acuelh .eros[data-forma='fials'], .acuelh.fr .eros[data-forma='fials'] { --eros-fs: clamp(3.4rem, min(8vw, 29vh - 7.5rem), 12rem); }
+	.acuelh .eros[data-forma='fials'], .acuelh.autra .eros[data-forma='fials'] { --eros-fs: clamp(3.4rem, min(8vw, 29vh - 7.5rem), 12rem); }
 	.acuelh .eros[data-forma='fials'] .eros-entitol { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--esp-24); align-items: start; }
 	.acuelh .eros-fials { margin-top: 0; font-size: var(--eros-fs); }
 	.acuelh .eros-fials li, .acuelh .eros-fials li:last-child { height: 1.15em; margin-left: calc(-1 * var(--manca, 0px)); padding: 0; border: 0; }

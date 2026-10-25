@@ -8,21 +8,20 @@
 	//   - 'chapitres' : chaque entité sur un écran, visuel immersif (piste 5)
 	// Prototypes : les phrases sous les titres sont des exemples descriptifs.
 	import { onMount } from 'svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { tria } from '$lib/stores/lang.svelte.js';
 	import { PLAN } from '$lib/data/planSite.js';
 	import { AMASSA } from '$lib/acuelh/amassa.js';
 	import { ESTELAS, VISTA, COSTA_D } from '../../routes/ensag/blanc/donadas.js';
 	import { txt, lista } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 
-	let fr = $derived(langStore.current === 'fr');
 	const [PARLA, APREN, VIU] = PLAN;
-	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer' };
+	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer', es: 'Entrar' };
 	// accent = couleur claire qui ressort sur la braise (numéro et lueur de chaque bloc)
 	const ENTITATS = [
-		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.' } },
-		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.' } },
-		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.' } }
+		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.', es: 'El país y sus lenguas, en un mapa de estrellas.' } },
+		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.', es: 'Un camino, paso a paso, a tu ritmo.' } },
+		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.', es: 'Gente, vínculos, por todas partes.' } }
 	];
 
 	// Contenu riche RÉUTILISÉ de l'accueil actuel : les chiffres (acuelh.chifras) et
@@ -31,7 +30,7 @@
 	// la phrase sous le titre : l'élément modifiable, sinon l'exemple du composant
 	const sotaTxt = (id, fallback) => {
 		const t = txt(`acuelh.mondes.${id}.sota`);
-		return (fr ? t.fr : t.oc) || (fr ? fallback.fr : fallback.oc);
+		return tria(t) || tria(fallback);
 	};
 	const portas = (sec) => sec.grops.flatMap((g) => g.items);
 
@@ -116,7 +115,7 @@
 		{#each portas(sec) as it, k (it.href)}{#if k}<span aria-hidden="true">·</span>{/if}<a
 				href={it.href}
 				target={it.defòra ? '_blank' : undefined}
-				rel={it.defòra ? 'noopener' : undefined}>{fr ? it.fr : it.oc}</a
+				rel={it.defòra ? 'noopener' : undefined}>{tria(it)}</a
 			>{/each}
 	</p>
 {/snippet}
@@ -129,7 +128,7 @@
 				{@const nom = txt(c.clau + '.nom')}
 				<div use:editar={c.clau}>
 					<dt use:editar={c.clau + '.num'}>{txt(c.clau + '.num').oc}</dt>
-					<dd use:editar={c.clau + '.nom'}>{fr ? nom.fr : nom.oc}</dd>
+					<dd use:editar={c.clau + '.nom'}>{tria(nom)}</dd>
 				</div>
 			{/each}
 		</dl>
@@ -137,27 +136,27 @@
 		<ul class="mix-biais">
 			{#each lista('acuelh.biais') as b, i (b.clau)}
 				{@const titol = txt(b.clau + '.titol')}
-				<li><span class="mix-n">{['I', 'II', 'III', 'IV', 'V', 'VI'][i] ?? i + 1}</span><span use:editar={b.clau + '.titol'}>{fr ? titol.fr : titol.oc}</span></li>
+				<li><span class="mix-n">{['I', 'II', 'III', 'IV', 'V', 'VI'][i] ?? i + 1}</span><span use:editar={b.clau + '.titol'}>{tria(titol)}</span></li>
 			{/each}
 		</ul>
-		<p class="mix-lengas-cap">{fr ? 'Apprendre depuis :' : 'Aprene dempuèi :'}</p>
+		<p class="mix-lengas-cap">{tria({ oc: 'Aprene dempuèi :', fr: 'Apprendre depuis :', es: 'Aprender desde :' })}</p>
 		<div class="mix-lengas">{#each LENGAS as l (l)}<span>{l}</span>{/each}</div>
 	{/if}
 {/snippet}
 
-<section class="mieg" bind:this={racina} aria-label={fr ? 'Les trois rubriques' : 'Las tres rubricas'}>
+<section class="mieg" bind:this={racina} aria-label={tria({ oc: 'Las tres rubricas', fr: 'Les trois rubriques', es: 'Las tres secciones' })}>
 		{#each ENTITATS as e, i (e.sec.id)}
 			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} style="--color: {e.accent}">
 				<div class="sist-cap">
 					<span class="sist-num">{e.sec.n}</span>
-					<h2>{fr ? e.sec.fr : e.sec.oc}</h2>
+					<h2>{tria(e.sec)}</h2>
 				</div>
 				<div class="sist-cors">
 					<div class="sist-tèxt">
 						<p class="sota" use:editar={`acuelh.mondes.${e.sec.id}.sota`}>{sotaTxt(e.sec.id, e.sota)}</p>
 						{@render extra(e.sec.id)}
 						{@render lligams(e.sec)}
-						<a class="dintrar" href={e.sec.href}>{fr ? DINTRAR.fr : DINTRAR.oc} {@render sageta()}</a>
+						<a class="dintrar" href={e.sec.href}>{tria(DINTRAR)} {@render sageta()}</a>
 					</div>
 					<figure class="sist-vis">{@render visual(e.vis, true)}</figure>
 				</div>
