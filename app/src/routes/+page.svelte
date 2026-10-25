@@ -1,5 +1,4 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
 	// Accueil (2026-10-07) : l'esbòs de nuèch validé par Romain, porté dans le
 	// site et posé dans le cadre commun (bandeau AppHeader, pied SiteFooter,
 	// réglage d'ambiance, retour en haut).
@@ -32,12 +31,10 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { CONSIGNAS, DRAPEUS, SEQ } from '$lib/acuelh/donadas.js';
-	import { AMASSA } from '$lib/acuelh/amassa.js';
-	import { PLAN, VISIO } from '$lib/data/planSite.js';
 	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
+	import MiegTres from '$lib/acuelh/MiegTres.svelte';
 	import '$lib/acuelh/acuelh.css';
 
 	let { data } = $props();
@@ -48,101 +45,8 @@
 	let racina;
 	let motor = $state.raw(null);
 
-	// Mise en ordre de l'ouverture (Romain, 2026-10-21 : « les éléments flottent »,
-	// « trop de vide au milieu ») : « Fils d'or » à comparer sur /?ensag=eros ;
-	// sans le paramètre, l'actuelle. Chaque phrase du titre se prolonge par un
-	// trait doré jusqu'à son chemin. (Colonne, Sommaire et Fenêtre, essayées le
-	// même jour, n'ont pas convaincu.)
-	const FORMAS_EROS = [
-		['actual', 'Actuelle'],
-		['fials', 'Fils d’or']
-	];
-	const CLAU_ENSAG_EROS = 'lo-ligam-ensag-eros';
-	let formaEros = $state('actual');
-	let ensagEros = $state(false);
-	function causirFormaEros(v) {
-		formaEros = v;
-		try {
-			localStorage.setItem(CLAU_ENSAG_EROS, v);
-		} catch {
-			// pas grave : le choix vaut pour la visite
-		}
-	}
-	// Séparation des sections (refonte claire, étape 4b, 2026-10-21 : l'accueil
-	// reste la vue d'ensemble, on améliore la séparation et la compréhension) :
-	// à comparer sur /?ensag=separa ; sans le paramètre, l'actuelle.
-	const FORMAS_SEPARA = [
-		['actual', 'Actuelle'],
-		['bandas', 'Bandes'],
-		['capitols', 'Chapitres'],
-		['totes', 'Les deux']
-	];
-	// Bascule en français (DIRECCION bloc 2, 2026-10-22) : trois essais (Lien,
-	// Bilingue, Choix) comparés le 22-10 ; Romain a préféré mettre en avant le
-	// bouton Òc / Fr de la barre à la première visite (AppHeader.svelte).
-	const CLAU_ENSAG_SEPARA = 'lo-ligam-ensag-separa';
-	let formaSepara = $state('actual');
-	let ensagSepara = $state(false);
-	function causirFormaSepara(v) {
-		formaSepara = v;
-		try {
-			localStorage.setItem(CLAU_ENSAG_SEPARA, v);
-		} catch {
-			// pas grave : le choix vaut pour la visite
-		}
-	}
-	// Les trois chemins, pris dans le plan du site (le même que le menu et le
-	// pied de page) : un chemin principal et quelques autres. « Amassa » mène à
-	// sa section plus bas tant que le fòrum et les grops ne sont pas faits.
-	const rubrica = (href) => PLAN.flatMap((s) => s.grops.flatMap((g) => g.items)).find((i) => i.href === href);
-	const [PARLA, APREN, VIU] = PLAN;
-	const FIALS = [
-		{ ...PARLA, cap: rubrica('/carta'), autres: [rubrica('/wiki'), rubrica('/obras'), rubrica('/articles')] },
-		{ ...APREN, cap: rubrica('/aprene'), autres: [rubrica('/aprene/essai'), rubrica(VISIO)] },
-		{ ...VIU, cap: { ...VIU.grops[0], href: '#viure' }, autres: [rubrica('/forum'), rubrica('/grops'), rubrica('/ideas')] }
-	];
-	// Le trait part de la fin de chaque phrase, dans la langue affichée : la
-	// colonne du titre a la largeur de la langue la plus longue (les deux sont
-	// superposées), on mesure donc l'écart entre chaque fin de phrase et le
-	// début de la colonne des chemins
-	function fialsMesura(ul, francés) {
-		let lenga = francés;
-		const mesurar = () => {
-			const linhas = ul.parentElement.querySelectorAll('.eros-titol .linha');
-			const ecart = parseFloat(getComputedStyle(ul.parentElement).columnGap) || 0;
-			const debut = ul.getBoundingClientRect().left - ecart;
-			[...linhas].forEach((l, i) => {
-				const fin = l.querySelector(`.bi > ${lenga ? '.fr' : '.oc'}`).getBoundingClientRect().right;
-				ul.children[i]?.style.setProperty('--manca', `${Math.max(0, Math.round(debut - fin))}px`);
-			});
-		};
-		const ro = new ResizeObserver(mesurar);
-		ro.observe(ul.parentElement);
-		document.fonts?.ready.then(mesurar);
-		mesurar();
-		return {
-			update(f) {
-				lenga = f;
-				mesurar();
-			},
-			destroy: () => ro.disconnect()
-		};
-	}
 
-	// Le flux des liaisons ne tourne que lorsque la carte « Amassa » est à l'écran
-	function enVista(el) {
-		const io = new IntersectionObserver(([e]) => el.classList.toggle('en-vista', e.isIntersecting));
-		io.observe(el);
-		return { destroy: () => io.disconnect() };
-	}
 
-	// Les chiffres : le compteur du moteur part du nombre lu dans le texte
-	// (« ≈ 600 000 » → 600000, préfixe « ≈ »)
-	const nombre = (s) => (s ?? '').replace(/[^\d]/g, '');
-	const prefix = (s) => {
-		const i = (s ?? '').search(/\d/);
-		return i > 0 ? s.slice(0, i) : '';
-	};
 	const im = (clau, defaut) => imatge(clau) ?? defaut;
 	const alt = (i) => (fr ? i?.alt_fr : i?.alt_oc) || '';
 	let retrat = $derived(im('acuelh.manifest.retrat', { url: '/acuelh/romain.webp', largor: 600, nautor: 620 }));
@@ -155,33 +59,8 @@
 			if (quitada) return;
 			motor = lancarAcuelh(racina, { clar: ambianca.clar, dalt: ambianca.dalt, fons: ambianca.fons, leugier: ambianca.leugier });
 		});
-		try {
-			const v = localStorage.getItem(CLAU_LENGA_CORS);
-			if (v && CONSIGNAS[v]) lengaCors = v;
-		} catch {
-			// stockage indisponible : on garde le français
-		}
-		ensagEros = new URLSearchParams(location.search).get('ensag') === 'eros';
-		if (ensagEros) {
-			try {
-				const f = localStorage.getItem(CLAU_ENSAG_EROS);
-				if (FORMAS_EROS.some(([v]) => v === f)) formaEros = f;
-			} catch {
-				// stockage indisponible : la forme actuelle
-			}
-		}
-		ensagSepara = new URLSearchParams(location.search).get('ensag') === 'separa';
-		if (ensagSepara) {
-			try {
-				const f = localStorage.getItem(CLAU_ENSAG_SEPARA);
-				if (FORMAS_SEPARA.some(([v]) => v === f)) formaSepara = f;
-			} catch {
-				// stockage indisponible : la forme actuelle
-			}
-		}
 		return () => {
 			quitada = true;
-			clearTimeout(defilada);
 			ambianca.fonsPresent = false;
 			motor?.destruir();
 			motor = null;
@@ -202,57 +81,9 @@
 		motor?.leugier(l);
 	});
 
-	const CLAU_LENGA_CORS = 'lo-ligam-lenga-cors';
-	const LENGAS_CORS = [
-		{ v: 'fr', nom: 'Français' },
-		{ v: 'en', nom: 'English' },
-		{ v: 'es', nom: 'Castellano' },
-		{ v: 'ca', nom: 'Català' }
-	];
-	const darrièr = (v) => DRAPEUS[SEQ[v][SEQ[v].length - 1]];
-	let lengaCors = $state('fr');
-	const drapèus = $state(Object.fromEntries(LENGAS_CORS.map(({ v }) => [v, darrièr(v)])));
-	let consigna = $derived(CONSIGNAS[lengaCors] ?? CONSIGNAS.fr);
-	let defilada = 0;
-
-	function causirLengaCors(v) {
-		lengaCors = v;
-		try {
-			localStorage.setItem(CLAU_LENGA_CORS, v);
-		} catch {
-			// pas grave : le choix vaut pour la visite
-		}
-		clearTimeout(defilada);
-		const seq = SEQ[v];
-		if (matchMedia('(prefers-reduced-motion: reduce)').matches || seq.length < 2) {
-			drapèus[v] = darrièr(v);
-			return;
-		}
-		let k = 0;
-		drapèus[v] = DRAPEUS[seq[0]];
-		const seguent = () => {
-			k++;
-			drapèus[v] = DRAPEUS[seq[k]];
-			if (k < seq.length - 1) defilada = setTimeout(seguent, k === seq.length - 2 ? 520 : 170);
-		};
-		defilada = setTimeout(seguent, seq.length === 2 ? 520 : 170);
-	}
 
 	// Ajouts dans les listes (mode édition) : un mot, un lien, une carte
 	const apondreMot = () => apondre('acuelh.bandel', 'text', { oc: 'mot', fr: 'mot' });
-	const apondreLigam = (l) => apondre(l, 'ligam', { oc: 'Ligam', fr: 'Lien', ligam: '/' });
-	const apondreChifra = () =>
-		apondre('acuelh.chifras', 'bloc', {}, [
-			['num', 'text', { oc: '0', fr: '0' }],
-			['nom', 'text', { oc: 'nom', fr: 'nom' }],
-			['font', 'text', { oc: 'font', fr: 'source' }]
-		]);
-	const apondreBiai = () =>
-		apondre('acuelh.biais', 'bloc', {}, [
-			['titol', 'text', { oc: 'Títol', fr: 'Titre' }],
-			['tèxt', 'text', { oc: 'Tèxt', fr: 'Texte' }],
-			['ligam', 'ligam', { oc: 'Ligam', fr: 'Lien', ligam: '/' }]
-		]);
 </script>
 
 <svelte:head>
@@ -315,18 +146,9 @@
 		{...extra}>{@render bi(clau)}{#if extra['data-sageta']} {@render sageta()}{/if}</a
 	>{/snippet}
 
-<!-- Sommaire d'une rubrique sous son titre (essai de séparation, « Chapitres ») -->
-{#snippet somari(sec)}<p class="jalon-somari">
-		{#each sec.grops.flatMap((g) => g.items) as it, k (it.href)}{#if k}<span aria-hidden="true">·</span>{/if}<a
-				href={it.href}
-				target={it.defòra ? '_blank' : undefined}
-				rel={it.defòra ? 'noopener' : undefined}>{fr ? it.fr : it.oc}</a
-			>{/each}
-	</p>{/snippet}
-
 {#snippet apondreBoton(f, txtOc, txtFr)}{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={f}>+ {fr ? txtFr : txtOc}</button>{/if}{/snippet}
 
-<div class="acuelh" class:fr class:ed-actiu={edicion.actiu} bind:this={racina} data-separa={formaSepara}>
+<div class="acuelh" class:fr class:ed-actiu={edicion.actiu} bind:this={racina}>
 	<canvas id="fons" aria-hidden="true"></canvas>
 	<div class="brasa" aria-hidden="true"><i></i><i></i><b></b><b></b><b></b><b></b></div>
 	<canvas id="estelas" aria-hidden="true"></canvas>
@@ -343,7 +165,7 @@
 		>
 
 		<!-- I. Le héros : le titre annonce le plan de la page, un seul bouton principal -->
-		<section class="eros" class:amb-carta={formaEros !== 'fials'} data-revela data-forma={formaEros}>
+		<section class="eros amb-carta" data-revela>
 			<p class="eros-kicker" hidden={amagat('acuelh.eros.kicker')}>
 				<span class="masc"><span class="masc-in" use:editar={'acuelh.eros.kicker'}>{@render bi('acuelh.eros.kicker')}</span></span>
 			</p>
@@ -353,34 +175,7 @@
 					<span class="linha masc" hidden={amagat('acuelh.eros.titol.2')}><span class="masc-in" style="--i: 2" use:editar={'acuelh.eros.titol.2'}>{@render letras('acuelh.eros.titol.2')}</span></span>
 					<span class="linha masc" hidden={amagat('acuelh.eros.titol.3')}><span class="masc-in" style="--i: 3" use:editar={'acuelh.eros.titol.3'}>{@render letras('acuelh.eros.titol.3')}</span></span>
 				</h1>
-				{#if formaEros === 'fials'}
-					<ul class="eros-fials" use:fialsMesura={fr}>
-						{#each FIALS as c, i (c.n)}
-							<li class="esvani" style="--i: {4 + i}">
-								<span class="fial" aria-hidden="true"></span>
-								<div class="fial-camin">
-									<span class="fial-n">{c.n}<span class="fial-verb"> · <span class="bi"><span class="oc" aria-hidden={fr}>{c.oc}</span><span class="fr" aria-hidden={!fr}>{c.fr}</span></span></span></span>
-									<a class="fial-cap" href={c.cap.href}><span class="bi"><span class="oc" aria-hidden={fr}>{c.cap.oc}</span><span class="fr" aria-hidden={!fr}>{c.cap.fr}</span></span>{@render sageta()}</a>
-									<span class="fial-autres">
-										{#each c.autres as a, j (a.href)}
-											{#if j}<span class="fial-sep" aria-hidden="true">·</span>{/if}
-											<a
-												href={a.href}
-												target={a.defòra ? '_blank' : undefined}
-												rel={a.defòra ? 'noopener' : undefined}
-												aria-describedby={a.defòra ? 'onglet-nou' : undefined}>{fr ? a.fr : a.oc}</a
-											>
-										{/each}
-									</span>
-								</div>
-							</li>
-						{/each}
-					</ul>
-				{/if}
 			</div>
-			{#if formaEros === 'fials'}
-				<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
-			{:else}
 				<div class="eros-pe">
 					<div class="esvani" style="--i: 5">
 						<p class="eros-sub" hidden={amagat('acuelh.eros.frasa')} use:editar={'acuelh.eros.frasa'}>{@render bi('acuelh.eros.frasa')}</p>
@@ -400,7 +195,6 @@
 					</div>
 					<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
 				</div>
-			{/if}
 			<!-- La carte en étoiles ouvre la page (Romain, 2026-10-22) : le moteur la
 			     dessine ici, dans le temps, à l'arrivée ; elle était en 01 -->
 			<div
@@ -449,7 +243,7 @@
 					{/each}
 				</p>
 				<figure class="manifest-retrat esvani" data-revela hidden={amagat('acuelh.manifest.retrat')}>
-					<div class="panel-media retrat" use:editar={'acuelh.manifest.retrat'}>
+					<div class="panel-media" use:editar={'acuelh.manifest.retrat'}>
 						<img src={retrat.url} alt={alt(retrat)} loading="lazy" width={retrat.largor} height={retrat.nautor} />
 					</div>
 					<figcaption use:editar={'acuelh.manifest.legenda'} hidden={amagat('acuelh.manifest.legenda')}>{@render bi('acuelh.manifest.legenda')}</figcaption>
@@ -457,121 +251,8 @@
 			</div>
 		</section>
 
-		<!-- IV. 01 Se parla : la carte en étoiles et les chiffres, remontés -->
-		<!-- 01 compacte depuis le 2026-10-22 : la carte en étoiles est montée dans l'ouverture -->
-		<section class="chifras compacta" data-revela>
-			<h2 class="jalon">
-				<b>01</b><span class="masc" hidden={amagat('acuelh.sec.parla.titol')}><span class="masc-in" use:editar={'acuelh.sec.parla.titol'}>{@render bi('acuelh.sec.parla.titol')}</span></span>
-			</h2>
-			{@render somari(PARLA)}
-			<!-- La carte montre, le wiki explique : chaque fiche y est reliée
-			     (revisions/2026-10-10-concept-wiki.md) -->
-			<div class="carta-dobrir esvani">
-				{#if !amagat('acuelh.parla.carta')}
-					{@const l = ligam('acuelh.parla.carta')}
-					<a class="boton boton-traç" href={l.href} data-magnet use:editar={'acuelh.parla.carta'}
-						><span class="boton-emplenat"></span><span class="boton-tèxt">{@render bi('acuelh.parla.carta')} {@render sageta()}</span></a
-					>
-				{/if}
-				<!-- Òbras et Articles : le pays, ce qui s'y dit et s'y fait (Romain, 2026-10-22) -->
-				{#each lista('acuelh.parla.ligams') as l (l.clau)}
-					{@render lg(l.clau, 'ligam-tèxt')}
-				{/each}
-				{@render apondreBoton(() => apondreLigam('acuelh.parla.ligams'), 'Apondre un ligam', 'Ajouter un lien')}
-			</div>
-			<div class="chifras-grasilha">
-				{#each lista('acuelh.chifras') as c, i (c.clau)}
-					{@const num = txt(c.clau + '.num')}
-					<div class="chifra esvani" style="--i: {i + 1}" use:editar={c.clau}>
-						<p class="chifra-num" data-comptar={nombre(num.oc)} data-prefix={prefix(num.oc)} hidden={amagat(c.clau + '.num')} use:editar={c.clau + '.num'}>{num.oc}</p>
-						<p class="chifra-nom" hidden={amagat(c.clau + '.nom')} use:editar={c.clau + '.nom'}>{@render bi(c.clau + '.nom')}</p>
-						<p class="chifra-font" hidden={amagat(c.clau + '.font')} use:editar={c.clau + '.font'}>{@render bi(c.clau + '.font')}</p>
-					</div>
-				{/each}
-			</div>
-			{@render apondreBoton(apondreChifra, 'Apondre una chifra', 'Ajouter un chiffre')}
-			<!-- (les liens « Puèi · 02 S’apren → » et « Puèi · 03 Amassa → » ont été retirés : « ils ne servent à rien », Romain, 2026-10-24) -->
-		</section>
-
-		<!-- V. 02 S'apren : les trois façons d'apprendre, telles quelles -->
-		<section class="biais" id="biais" data-revela>
-			<h2 class="jalon">
-				<b>02</b><span class="masc" hidden={amagat('acuelh.sec.apren.titol')}><span class="masc-in" use:editar={'acuelh.sec.apren.titol'}>{@render bi('acuelh.sec.apren.titol')}</span></span>
-			</h2>
-			{@render somari(APREN)}
-			<div class="biais-grasilha">
-				{#each lista('acuelh.biais') as b, i (b.clau)}
-					<article class="biai esvani" style="--i: {i + 1}" use:editar={b.clau}>
-						<p class="biai-num" aria-hidden="true">{['I', 'II', 'III', 'IV', 'V', 'VI'][i] ?? i + 1}</p>
-						<h3 class="biai-titol" hidden={amagat(b.clau + '.titol')} use:editar={b.clau + '.titol'}>{@render bi(b.clau + '.titol')}</h3>
-						<p class="biai-tèxt" hidden={amagat(b.clau + '.tèxt')} use:editar={b.clau + '.tèxt'}>{@render bi(b.clau + '.tèxt')}</p>
-						{@render lg(b.clau + '.ligam', 'biai-ligam', { 'data-sageta': true })}
-					</article>
-				{/each}
-			</div>
-			{@render apondreBoton(apondreBiai, 'Apondre un biais', 'Ajouter une carte')}
-			<fieldset class="lengas esvani" style="--i: 4">
-				<legend hidden={amagat('acuelh.lengas.legenda')} use:editar={'acuelh.lengas.legenda'}>{@render bi('acuelh.lengas.legenda')}</legend>
-				<div class="lengas-chips">
-					{#each LENGAS_CORS as l (l.v)}
-						<label
-							><input
-								type="radio"
-								name="lenga-cors"
-								value={l.v}
-								checked={lengaCors === l.v}
-								onchange={() => causirLengaCors(l.v)}
-							/><span lang={l.v} style:--drap={drapèus[l.v]}>{l.nom}</span></label
-						>
-					{/each}
-				</div>
-				<p class="lengas-consigna" aria-live="polite" lang={consigna[0]}>{consigna[1]}</p>
-			</fieldset>
-		</section>
-
-		<!-- VI. 03 Amassa (« Se viu » jusqu’au 2026-10-21) : la communauté, une seule carte -->
-		<section class="camins" id="viure" aria-labelledby="viure-titol">
-			<h2 class="camins-cap jalon" data-revela>
-				<b>03</b><span class="masc" hidden={amagat('acuelh.sec.viu.titol')}><span class="masc-in" id="viure-titol" use:editar={'acuelh.sec.viu.titol'}>{@render bi('acuelh.sec.viu.titol')}</span></span>
-			</h2>
-			{@render somari(VIU)}
-			<div class="camins-pista">
-				<article class="panel esvani" data-revela style:--i={0}>
-					<div class="panel-tèxt">
-						<div>
-							<h3 class="panel-nom" hidden={amagat('acuelh.viure.comunautat.nom')} use:editar={'acuelh.viure.comunautat.nom'}>{@render bi('acuelh.viure.comunautat.nom')}</h3>
-							<p class="panel-tagline" hidden={amagat('acuelh.viure.comunautat.sota')} use:editar={'acuelh.viure.comunautat.sota'}>{@render bi('acuelh.viure.comunautat.sota')}</p>
-						</div>
-						<ul class="panel-items">
-							{#each lista('acuelh.viure.comunautat.items') as it (it.clau)}
-								{@const l = ligam(it.clau)}
-								<li>
-									<a href={l.href} target={l.defòra ? '_blank' : undefined} rel={l.defòra ? 'noopener noreferrer' : undefined} use:editar={it.clau}
-										>{@render bi(it.clau)}<Icona nom={l.defòra ? 'extern' : 'suivant'} /></a
-									>
-								</li>
-							{/each}
-							{#if edicion.actiu}<li>{@render apondreBoton(() => apondreLigam('acuelh.viure.comunautat.items'), 'Apondre un ligam', 'Ajouter un lien')}</li>{/if}
-						</ul>
-					</div>
-					<!-- Idée de Romain : le domaine occitan et des liaisons comme des lignes
-					     aériennes entre les villes (dessin : scripts/amassa-liaisons.mjs) -->
-					<div class="panel-media liams" use:enVista>
-						<svg viewBox="0 0 400 300" aria-hidden="true">
-							<path class="domeni" d={AMASSA.contorn} />
-							{#each AMASSA.arcs as d, i (d)}
-								<path class="liam" {d} pathLength="1" style:--i={i} />
-								<path class="flux" {d} style:--i={i} />
-							{/each}
-							{#each AMASSA.vilas as [x, y], i (i)}
-								<circle class="vila" cx={x} cy={y} r="3.2" style:--i={i} />
-							{/each}
-						</svg>
-					</div>
-				</article>
-			</div>
-		</section>
-
+		<!-- IV. Le milieu : les trois mondes (Se parla · S'apren · Amassa) -->
+		<MiegTres />
 		<!-- VII. Le troubadour (Max Rouquette), qui clôt « Amassa » -->
 		<section class="trobador">
 			<div class="trobador-pin">
@@ -618,52 +299,7 @@
 	</main>
 </div>
 
-{#if ensagEros}
-	<!-- Outil d'essai, volontairement neutre (hors charte) pour ne pas se confondre avec la page -->
-	<div class="ensag-eros" role="group" aria-label="Essai : mise en ordre de l'ouverture">
-		{#each FORMAS_EROS as [v, nom] (v)}
-			<button type="button" aria-pressed={formaEros === v} onclick={() => causirFormaEros(v)}>{nom}</button>
-		{/each}
-	</div>
-{/if}
-{#if ensagSepara}
-	<div class="ensag-eros" role="group" aria-label="Essai : séparation des sections">
-		{#each FORMAS_SEPARA as [v, nom] (v)}
-			<button type="button" aria-pressed={formaSepara === v} onclick={() => causirFormaSepara(v)}>{nom}</button>
-		{/each}
-	</div>
-{/if}
-
 <style>
-	.ensag-eros {
-		position: fixed;
-		left: 50%;
-		bottom: 1rem;
-		z-index: 2000;
-		transform: translateX(-50%);
-		display: flex;
-		gap: 3px;
-		padding: 4px;
-		border-radius: 999px;
-		background: #ffffff;
-		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-		font: 700 0.8rem/1 system-ui, sans-serif;
-	}
-	.ensag-eros button {
-		border: 0;
-		border-radius: 999px;
-		padding: 0.55rem 0.9rem;
-		background: transparent;
-		color: #222222;
-		font: inherit;
-		white-space: nowrap;
-		cursor: pointer;
-	}
-	.ensag-eros button[aria-pressed='true'] {
-		background: #222222;
-		color: #ffffff;
-	}
-
 	/* Qui : le manifeste et la photo côte à côte, l'un sous l'autre quand la place manque */
 	.manifest {
 		container: manifest / inline-size;
@@ -671,29 +307,36 @@
 	.manifest-cors {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) auto;
-		align-items: end;
-		gap: clamp(2rem, 5vw, 6rem);
+		align-items: center;
+		gap: clamp(2rem, 5vw, 5rem);
 	}
 	.manifest-retrat {
-		width: clamp(220px, 22vw, 360px);
+		width: clamp(240px, 26vw, 400px);
 		margin: 0;
 	}
 	.manifest-retrat .panel-media {
+		/* format portrait ; coins arrondis et remplissage « cover » du média standard */
 		aspect-ratio: 4 / 5;
 	}
 	.manifest-retrat figcaption {
-		margin-top: 0.9rem;
+		margin-top: 0.7rem;
 		font-family: var(--votz);
 		font-style: italic;
-		font-size: 1.15rem;
+		font-size: 1.1rem;
 		color: var(--aur-clar);
+		text-align: right;
 	}
 	@container manifest (max-width: 820px) {
 		.manifest-cors {
 			grid-template-columns: 1fr;
+			gap: 2.2rem;
 		}
 		.manifest-retrat {
-			width: min(72%, 300px);
+			width: min(80%, 320px);
+			justify-self: center;
+		}
+		.manifest-retrat figcaption {
+			text-align: center;
 		}
 	}
 

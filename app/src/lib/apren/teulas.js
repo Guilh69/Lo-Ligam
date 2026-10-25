@@ -37,6 +37,35 @@ export const PALETAS = {
 		['#2d6fb0', CREMA],
 		['#7a3b69', CREMA],
 		['#3f7a2a', CREMA]
+	],
+	// Les sous-pages prennent les teintes de leur case dans Se parla (Romain,
+	// 2026-10-25 : « si on va dans Òbras, un camaïeu de vert… dans les médias,
+	// du jaune ») : on sait où l'on est, et l'on ne confond pas avec la page
+	// d'avant. La première case garde la couleur de la case mère ; texte
+	// choisi pour tenir 4,5:1 au moins.
+	verd: [
+		['#55702f', CREMA],
+		['#353c1a', CREMA],
+		['#879764', TINTA],
+		['#b0b791', TINTA],
+		['#425223', CREMA],
+		['#4a5f28', CREMA]
+	],
+	aur: [
+		['#eeaf34', TINTA],
+		['#79591c', CREMA],
+		['#f2c368', TINTA],
+		['#f5d393', TINTA],
+		['#aa7d26', TINTA],
+		['#c8932c', TINTA]
+	],
+	blau: [
+		['#2f6a9c', CREMA],
+		['#233a4b', CREMA],
+		['#6c92b1', TINTA],
+		['#9fb4c2', TINTA],
+		['#284e6d', CREMA],
+		['#2b5a81', CREMA]
 	]
 };
 export const NOMS_PALETAS = [
@@ -56,7 +85,16 @@ export function pictoPer(href = '') {
 	// les portes de Se parla (2026-10-25)
 	if (href.startsWith('/carta')) return 'carta';
 	if (href.startsWith('/wiki')) return 'wiki';
-	if (href.startsWith('/obras#musicas')) return 'musica';
+	if (href.startsWith('/obras#musicas') || href.startsWith('/ensag/musica')) return 'musica';
+	// maquette d'Òbras par art et de Médias (2026-10-25)
+	if (href.includes('#television')) return 'television';
+	if (href.includes('#premsa')) return 'articles';
+	if (href.startsWith('/ensag/medias') || href.startsWith('/ensag/radios')) return 'medias';
+	if (href.startsWith('/ensag/literatura')) return 'literatura';
+	if (href.includes('#cinema')) return 'cinema';
+	if (href.includes('#afichas')) return 'pintura';
+	if (href.includes('#scena')) return 'scena';
+	if (href.startsWith('/ensag/obras')) return 'obras';
 	if (href.startsWith('/obras')) return 'obras';
 	if (href.startsWith('/articles')) return 'articles';
 	// les cases d'Amassa (2026-10-25)

@@ -7,6 +7,9 @@
     { "clau": "acuelh.eros.titol.3", "tipe": "text", "oc": "Amassa.", "fr": "Rassemble." },
     { "clau": "acuelh.eros.frasa", "tipe": "text", "oc": "Benvenguda dins ton ligam amb lo mond occitan. D’ont que siás, aicí siès en çò tieu.", "fr": "Bienvenue dans ton lien avec le monde occitan. D’où que tu sois, tu es ici chez toi." },
     { "clau": "acuelh.eros.indici", "tipe": "text", "oc": "Passa la mirga suls tres mots.", "fr": "Survole les trois mots." },
+    { "clau": "acuelh.mondes.parla.sota", "tipe": "text", "oc": "Lo país e sas lengas, en carta d’estelas.", "fr": "Le pays et ses langues, en carte d’étoiles." },
+    { "clau": "acuelh.mondes.apren.sota", "tipe": "text", "oc": "Un camin, pas a pas, a ton ritme.", "fr": "Un chemin, pas à pas, à ton rythme." },
+    { "clau": "acuelh.mondes.viu.sota", "tipe": "text", "oc": "De monde, de ligams, pertot.", "fr": "Des gens, des liens, partout." },
     { "clau": "acuelh.eros.carta", "tipe": "ligam", "oc": "Dobrir la carta", "fr": "Ouvrir la carte", "ligam": "/carta" },
     { "clau": "acuelh.eros.aprene", "tipe": "ligam", "oc": "Aprene l’occitan", "fr": "Apprendre l’occitan", "ligam": "#biais" },
 
@@ -25,8 +28,8 @@
 
     { "clau": "acuelh.manifest.titol", "tipe": "text", "oc": "Qu’es aquò, Lo Ligam ?", "fr": "Qu’est-ce que Lo Ligam ?" },
     { "clau": "acuelh.manifest.tèxt", "tipe": "text", "oc": "Aicí, l’occitan s’apren *sens vergonha* e *amb benvolença,* e cada leiçon fa *ligam.*", "fr": "Ici, l’occitan s’apprend *sans honte* et *avec bienveillance,* et chaque leçon crée du *lien.*" },
-    { "clau": "acuelh.manifest.retrat", "tipe": "imatge", "imatge": { "url": "/acuelh/romain.webp", "largor": 600, "nautor": 620, "alt_oc": "", "alt_fr": "" } },
-    { "clau": "acuelh.manifest.legenda", "tipe": "text", "oc": "Romain Périer", "fr": "Romain Périer" },
+    { "clau": "acuelh.manifest.retrat", "tipe": "imatge", "imatge": { "url": "/acuelh/romain.webp", "largor": 480, "nautor": 600, "alt_oc": "Romain Périer davant lo pic Sant Lop, dins una fenèstra de pèira", "alt_fr": "Romain Périer devant le pic Saint-Loup, dans une fenêtre de pierre" } },
+    { "clau": "acuelh.manifest.legenda", "tipe": "text", "oc": "ton professor", "fr": "ton professeur" },
 
     { "clau": "acuelh.sec.parla.titol", "tipe": "text", "oc": "Se parla", "fr": "Se parle" },
     { "clau": "acuelh.parla.carta", "tipe": "ligam", "oc": "Dobrir la carta entièra", "fr": "Ouvrir la carte entière", "ligam": "/carta" },
@@ -78,7 +81,7 @@
 
     { "clau": "acuelh.crida.titol.1", "tipe": "text", "oc": "Prèst·a per", "fr": "Prêt·e à" },
     { "clau": "acuelh.crida.titol.2", "tipe": "text", "oc": "començar ?", "fr": "commencer ?" },
-    { "clau": "acuelh.crida.sota", "tipe": "text", "oc": "Tres mots uèi, una lenga deman.", "fr": "Trois mots aujourd’hui, une langue demain." },
+    { "clau": "acuelh.crida.sota", "tipe": "text", "oc": "", "fr": "", "visible": false },
     { "clau": "acuelh.crida.reservar", "tipe": "ligam", "oc": "Reservar un primièr cors", "fr": "Réserver un premier cours", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=" },
     { "clau": "acuelh.crida.sol", "tipe": "ligam", "oc": "Començar sol·a", "fr": "Commencer seul·e", "ligam": "/aprene/essai" }
   ],

@@ -46,9 +46,20 @@ const csp = {
 		],
 		// sons des enquêtes de l'Atlas sonore (LISN), lus seulement quand on
 		// lance l'écoute sur la carte
-		'media-src': ['self', 'https://*.supabase.co', 'https://atlas.lisn.upsaclay.fr'],
+		// + le direct des radios en occitan, joué au clic (page d'essai des radios, 2026-10-25)
+		'media-src': [
+			'self',
+			'https://*.supabase.co',
+			'https://atlas.lisn.upsaclay.fr',
+			'https://stream-ssl.radios-arra.fr:8443',
+			'https://stunnel2.cyber-streaming.com:9272',
+			'https://live-albiges.radiom.fr',
+			'https://icecast.radio-occitania.com',
+			'https://listen.radioking.com',
+			'https://*.radioking.com'
+		],
 		// lecteurs officiels de musique, chargés au clic après accord (Òbras, 2026-10-25)
-		'frame-src': ['https://www.youtube-nocookie.com', 'https://www.canva.com', 'https://bandcamp.com', 'https://widget.deezer.com'],
+		'frame-src': ['https://www.youtube-nocookie.com', 'https://www.canva.com', 'https://widget.deezer.com'],
 		'object-src': ['none'],
 		'base-uri': ['self'],
 		'form-action': ['self'],
