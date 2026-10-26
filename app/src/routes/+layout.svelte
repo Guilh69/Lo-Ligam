@@ -46,7 +46,7 @@
 	<title>Lo Ligam</title>
 </svelte:head>
 
-<a class="evitar" href="#contengut" onclick={anarAlContengut}>{tria({ oc: 'Anar al contengut', fr: 'Aller au contenu', es: 'Ir al contenido' })}</a>
+<a class="evitar" href="#contengut" onclick={anarAlContengut}>{tria({ oc: 'Anar al contengut', fr: 'Aller au contenu', es: 'Ir al contenido', en: 'Skip to content', ca: 'Anar al contingut' })}</a>
 
 {@render children()}
 
