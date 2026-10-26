@@ -84,7 +84,7 @@
 				</p>
 				<div class="fil" aria-hidden="true"><i style="width: {durada ? (temps / durada) * 100 : 0}%"></i></div>
 				{#if onCarta}
-					<button type="button" class="carta" onclick={() => (audio?.pause(), onCarta(p))}>{tx.carta} →</button>
+					<button type="button" class="carta" onclick={() => (audio?.pause(), onCarta(p))}>{tx.carta} {lang === 'ar' ? '←' : '→'}</button>
 				{/if}
 			</div>
 		{/if}

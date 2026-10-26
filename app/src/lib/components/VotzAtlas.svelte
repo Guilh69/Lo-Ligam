@@ -216,7 +216,7 @@
 
 		<div class="accions">
 			{#if seguenta}
-				<button type="button" class="aur" onclick={() => jogar(seguenta)}>{tx.seguenta}{lang === 'oc' || lang === 'fr' ? ' :' : ':'} {nomDe(seguenta)} →</button>
+				<button type="button" class="aur" onclick={() => jogar(seguenta)}>{tx.seguenta}{lang === 'oc' || lang === 'fr' ? ' :' : ':'} {nomDe(seguenta)} {lang === 'ar' ? '←' : '→'}</button>
 			{/if}
 			{#if punt.so2}
 				<button type="button" class:actiu={!votz2} onclick={() => votz2 && jogar(punt, false)}>{tx.Votz} 1</button>

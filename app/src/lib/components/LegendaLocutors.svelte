@@ -41,7 +41,7 @@
 	<div class="linha">
 		<ol>
 			{#each CLASSAS as m, i (m)}
-				<li><i style:background={gama[i]}></i><span>{m === 20 ? '20 +' : m}</span></li>
+				<li><i style:background={gama[i]}></i><span dir="ltr">{m === 20 ? '20 +' : m}</span></li>
 			{/each}
 		</ol>
 		<a href={FONT_LOCUTORS.url} target="_blank" rel="noopener" title={tx.font ?? FONT_LOCUTORS[lang === 'fr' ? 'fr' : 'oc']}>OPLO 2020</a>

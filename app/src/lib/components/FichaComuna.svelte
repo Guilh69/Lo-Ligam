@@ -539,7 +539,7 @@
 	}
 	.site {
 		display: inline-block;
-		margin-right: 14px;
+		margin-inline-end: 14px;
 		font-size: 0.875rem;
 		font-weight: 700;
 		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
@@ -565,7 +565,7 @@
 	}
 	.desplegar .chev {
 		display: inline-block;
-		margin-left: 6px;
+		margin-inline-start: 6px;
 		transition: transform 0.2s ease;
 	}
 	.desplegar[aria-expanded='true'] .chev {
