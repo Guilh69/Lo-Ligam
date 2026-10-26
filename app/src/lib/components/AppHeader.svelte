@@ -206,6 +206,14 @@
 		container-type: inline-size;
 	}
 
+	/* Arabe (droite à gauche) : le bandeau garde sa disposition d'origine, pour
+	   que le menu, le compte, le choix de langue et le globe restent exactement
+	   où les gens les cherchent (Romain, 2026-10-26 : « ça va perdre les gens »).
+	   Seul le texte des boutons est en arabe ; le reste de la page, lui, s'inverse. */
+	:global(html[dir='rtl']) .top {
+		direction: ltr;
+	}
+
 	/* Une seule ligne : la marque à gauche, tout le reste à droite */
 	.top-in {
 		display: grid;
