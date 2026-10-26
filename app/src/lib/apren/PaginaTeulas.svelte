@@ -68,7 +68,7 @@
 		{/each}
 		{#if edicion.actiu}
 			<li class="teula-apondre">
-				<button type="button" class="ed-apondre" onclick={apondreTeula}>+ {tria({ oc: 'Apondre una teula', fr: 'Ajouter une case', es: 'Añadir una casilla', en: 'Add a tile', ca: 'Afegir una casella' })}</button>
+				<button type="button" class="ed-apondre" onclick={apondreTeula}>+ {tria({ oc: 'Apondre una teula', fr: 'Ajouter une case', es: 'Añadir una casilla', en: 'Add a tile', ca: 'Afegir una casella', ar: 'إضافة بطاقة' })}</button>
 			</li>
 		{/if}
 	</ul>

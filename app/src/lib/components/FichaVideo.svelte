@@ -50,6 +50,12 @@
 			levarSon: 'Silenciar',
 			jogar: 'Veure el vídeo',
 			avisCanva: 'El vídeo està allotjat a Canva. En fer clic, carregues el seu reproductor.'
+		},
+		ar: {
+			metreSon: 'تشغيل الصوت',
+			levarSon: 'كتم الصوت',
+			jogar: 'تشغيل الفيديو',
+			avisCanva: 'هذا الفيديو مستضاف لدى Canva، وبالنقر عليه يُحمَّل مشغّله.'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);

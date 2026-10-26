@@ -14,27 +14,27 @@
 	const chapters = [
 		{
 			oc: 'Las basas',
-			fr: 'Les bases', es: 'Lo básico', en: 'The basics', ca: 'Les bases',
+			fr: 'Les bases', es: 'Lo básico', en: 'The basics', ca: 'Les bases', ar: 'الأساسيات',
 			modules: [
-				{ oc: 'Se saludar', fr: 'Saluer', es: 'Saludar', en: 'Saying hello', ca: 'Saludar', href: '/aprene/essai', status: 'available' },
-				{ oc: 'Mercejar', fr: 'Remercier', es: 'Dar las gracias', en: 'Saying thank you', ca: 'Donar les gràcies', status: 'locked' },
-				{ oc: 'Se presentar', fr: 'Se présenter', es: 'Presentarse', en: 'Introducing yourself', ca: 'Presentar-se', status: 'locked' }
+				{ oc: 'Se saludar', fr: 'Saluer', es: 'Saludar', en: 'Saying hello', ca: 'Saludar', ar: 'إلقاء التحية', href: '/aprene/essai', status: 'available' },
+				{ oc: 'Mercejar', fr: 'Remercier', es: 'Dar las gracias', en: 'Saying thank you', ca: 'Donar les gràcies', ar: 'الشكر', status: 'locked' },
+				{ oc: 'Se presentar', fr: 'Se présenter', es: 'Presentarse', en: 'Introducing yourself', ca: 'Presentar-se', ar: 'التعريف بالنفس', status: 'locked' }
 			]
 		},
 		{
 			oc: 'A la botiga',
-			fr: 'Au magasin', es: 'En la tienda', en: 'At the shop', ca: 'A la botiga',
+			fr: 'Au magasin', es: 'En la tienda', en: 'At the shop', ca: 'A la botiga', ar: 'في المتجر',
 			modules: [
-				{ oc: 'Crompar', fr: 'Faire ses courses', es: 'Hacer la compra', en: 'Shopping', ca: 'Fer la compra', status: 'locked' },
-				{ oc: 'Los nombres', fr: 'Les nombres', es: 'Los números', en: 'Numbers', ca: 'Els números', status: 'locked' }
+				{ oc: 'Crompar', fr: 'Faire ses courses', es: 'Hacer la compra', en: 'Shopping', ca: 'Fer la compra', ar: 'التسوّق', status: 'locked' },
+				{ oc: 'Los nombres', fr: 'Les nombres', es: 'Los números', en: 'Numbers', ca: 'Els números', ar: 'الأعداد', status: 'locked' }
 			]
 		},
 		{
 			oc: 'A la bolangariá',
-			fr: 'À la boulangerie', es: 'En la panadería', en: 'At the bakery', ca: 'A la fleca',
+			fr: 'À la boulangerie', es: 'En la panadería', en: 'At the bakery', ca: 'A la fleca', ar: 'في المخبز',
 			modules: [
-				{ oc: 'Al forn', fr: 'À la boulangerie', es: 'En la panadería', en: 'At the bakery', ca: 'A la fleca', status: 'locked' },
-				{ oc: 'Demandar un servici', fr: 'Demander un service', es: 'Pedir un servicio', en: 'Asking for a service', ca: 'Demanar un servei', status: 'locked' }
+				{ oc: 'Al forn', fr: 'À la boulangerie', es: 'En la panadería', en: 'At the bakery', ca: 'A la fleca', ar: 'في المخبز', status: 'locked' },
+				{ oc: 'Demandar un servici', fr: 'Demander un service', es: 'Pedir un servicio', en: 'Asking for a service', ca: 'Demanar un servei', ar: 'طلب خدمة', status: 'locked' }
 			]
 		}
 	];
@@ -79,7 +79,7 @@
 </script>
 
 <svelte:head>
-	<title>{tria({ oc: 'Los moduls', fr: 'Les modules', es: 'Los módulos', en: 'Modules', ca: 'Els mòduls' })} · Lo Ligam</title>
+	<title>{tria({ oc: 'Los moduls', fr: 'Les modules', es: 'Los módulos', en: 'Modules', ca: 'Els mòduls', ar: 'الوحدات' })} · Lo Ligam</title>
 </svelte:head>
 
 <div class="page-bg" aria-hidden="true">
@@ -93,7 +93,7 @@
 	<div class="intro">
 		<p class="kicker">Occitan · Lengadocian</p>
 		<h1 class="title">Los moduls</h1>
-		<p class="subtitle"><em>({glosa({ fr: 'Les modules', es: 'Los módulos', en: 'The modules', ca: 'Els mòduls' })})</em></p>
+		<p class="subtitle"><em>({glosa({ fr: 'Les modules', es: 'Los módulos', en: 'The modules', ca: 'Els mòduls', ar: 'الوحدات' })})</em></p>
 	</div>
 
 	<div class="chapters">
@@ -138,7 +138,8 @@
 				fr: 'Les prochains modules demanderont un compte gratuit pour continuer et garder ta progression.',
 				es: 'Los próximos módulos pedirán una cuenta gratuita para continuar y guardar tu progreso.',
 				en: 'The next modules will ask for a free account so you can carry on and keep your progress.',
-				ca: 'Els propers mòduls demanaran un compte gratuït per continuar i guardar el teu progrés.'
+				ca: 'Els propers mòduls demanaran un compte gratuït per continuar i guardar el teu progrés.',
+					ar: 'ستتطلّب الوحدات القادمة حسابًا مجانيًا لمتابعة التعلّم وحفظ تقدّمك.'
 			})})</em
 		>
 	</p>

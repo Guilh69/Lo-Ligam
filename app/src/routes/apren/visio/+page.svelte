@@ -33,9 +33,9 @@
 	// les trois lignes de chaque carte, dans l'ordre (libellés communs aux trois)
 	const LINHAS = ['un', 'mes', 'trimestre'];
 
-	const apondreEtapa = () => apondre('visio.debana', 'text', { oc: 'Etapa', fr: 'Étape', es: 'Etapa', en: 'Step', ca: 'Etapa' });
-	const apondrePractica = () => apondre('visio.practica', 'text', { oc: 'Linha', fr: 'Ligne', es: 'Línea', en: 'Line', ca: 'Línia' });
-	const apondreOpcion = (l) => apondre(l, 'text', { oc: 'Responsa', fr: 'Réponse', es: 'Respuesta', en: 'Answer', ca: 'Resposta' });
+	const apondreEtapa = () => apondre('visio.debana', 'text', { oc: 'Etapa', fr: 'Étape', es: 'Etapa', en: 'Step', ca: 'Etapa', ar: 'خطوة' });
+	const apondrePractica = () => apondre('visio.practica', 'text', { oc: 'Linha', fr: 'Ligne', es: 'Línea', en: 'Line', ca: 'Línia', ar: 'سطر' });
+	const apondreOpcion = (l) => apondre(l, 'text', { oc: 'Responsa', fr: 'Réponse', es: 'Respuesta', en: 'Answer', ca: 'Resposta', ar: 'إجابة' });
 
 	// le questionnaire : une question à choix unique (rond) ou multiple (case)
 	const QUESTIONS = [
@@ -118,6 +118,20 @@
 				mandadís: 'Les teves respostes no s’han enviat. Torna-ho a provar, o escriu-me a:',
 				pas_brancat: 'Les teves respostes no s’han enviat. Torna-ho a provar, o escriu-me a:'
 			}
+		},
+		ar: {
+			facultatiu: 'اختياري',
+			obligatòri: 'إلزامي',
+			mantuna: 'يمكن اختيار أكثر من إجابة',
+			mandant: 'جارٍ الإرسال…',
+			error: {
+				corrièl: 'يرجى التحقّق من بريدك الإلكتروني.',
+				ligams: 'عدد الروابط في الرسالة كبير جدًا.',
+				plafond: 'عدد الرسائل كبير في وقت قصير. يرجى المحاولة مرة أخرى بعد ساعة.',
+				geton: 'لم يتم إرسال إجاباتك. يرجى المحاولة مرة أخرى.',
+				mandadís: 'لم يتم إرسال إجاباتك. يرجى المحاولة مرة أخرى، أو مراسلتي على:',
+				pas_brancat: 'لم يتم إرسال إجاباتك. يرجى المحاولة مرة أخرى، أو مراسلتي على:'
+			}
 		}
 	};
 	let x = $derived(tx[langStore.current] ?? tx.oc);
@@ -126,7 +140,7 @@
 </script>
 
 <svelte:head>
-	<title>{tria({ oc: 'Corses en visio', fr: 'Cours en visio', es: 'Clases por videollamada', en: 'Video lessons', ca: 'Classes per videotrucada' })} · Lo Ligam</title>
+	<title>{tria({ oc: 'Corses en visio', fr: 'Cours en visio', es: 'Clases por videollamada', en: 'Video lessons', ca: 'Classes per videotrucada', ar: 'دروس عبر الفيديو' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Corses d’occitan en visio amb Romain, sol a sol ; lo primièr es ofèrt. Cours d’occitan en visio avec Romain, en tête-à-tête ; le premier est offert."
@@ -156,9 +170,9 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="visio" class:ed-actiu={edicion.actiu}>
-	<span id="visio-onglet" class="visually-hidden">{tria({ oc: 'Se dobrís dins un onglet novèl', fr: 'S’ouvre dans un nouvel onglet', es: 'Se abre en una pestaña nueva', en: 'Opens in a new tab', ca: 'S’obre en una pestanya nova' })}</span>
+	<span id="visio-onglet" class="visually-hidden">{tria({ oc: 'Se dobrís dins un onglet novèl', fr: 'S’ouvre dans un nouvel onglet', es: 'Se abre en una pestaña nueva', en: 'Opens in a new tab', ca: 'S’obre en una pestanya nova', ar: 'يُفتح في تبويب جديد' })}</span>
 
-	<nav class="camin" aria-label={tria({ oc: 'Camin dins lo site', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
+	<nav class="camin" aria-label={tria({ oc: 'Camin dins lo site', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
 		<a href="/apren"><b>{RUBRICA.n}</b> {tria(RUBRICA)}</a>
 	</nav>
 
@@ -193,7 +207,7 @@
 							<li use:editar={e.clau}>{@render t(e.clau)}</li>
 						{/each}
 					</ol>
-					{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondreEtapa}>+ {tria({ oc: 'Apondre una etapa', fr: 'Ajouter une étape', es: 'Añadir una etapa', en: 'Add a step', ca: 'Afegir una etapa' })}</button>{/if}
+					{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondreEtapa}>+ {tria({ oc: 'Apondre una etapa', fr: 'Ajouter une étape', es: 'Añadir una etapa', en: 'Add a step', ca: 'Afegir una etapa', ar: 'إضافة خطوة' })}</button>{/if}
 					<p class="nota" hidden={amagat('visio.debana.nota')} use:editar={'visio.debana.nota'}>{@render t('visio.debana.nota')}</p>
 				</section>
 			{/if}
@@ -229,7 +243,7 @@
 					<li use:editar={p.clau}>{@render t(p.clau)}</li>
 				{/each}
 			</ul>
-			{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondrePractica}>+ {tria({ oc: 'Apondre una linha', fr: 'Ajouter une ligne', es: 'Añadir una línea', en: 'Add a line', ca: 'Afegir una línia' })}</button>{/if}
+			{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondrePractica}>+ {tria({ oc: 'Apondre una linha', fr: 'Ajouter une ligne', es: 'Añadir una línea', en: 'Add a line', ca: 'Afegir una línia', ar: 'إضافة سطر' })}</button>{/if}
 			{@render reservar('sus-fons', '#questionari')}
 		</aside>
 	</div>
@@ -293,7 +307,7 @@
 									</label>
 								{/each}
 								{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={() => apondreOpcion(q.lista)}
-										>+ {tria({ oc: 'Apondre una responsa', fr: 'Ajouter une réponse', es: 'Añadir una respuesta', en: 'Add an answer', ca: 'Afegir una resposta' })}</button
+										>+ {tria({ oc: 'Apondre una responsa', fr: 'Ajouter une réponse', es: 'Añadir una respuesta', en: 'Add an answer', ca: 'Afegir una resposta', ar: 'إضافة إجابة' })}</button
 									>{/if}
 							</div>
 						</fieldset>
@@ -337,7 +351,7 @@
 				</div>
 				<p class="avís">
 					<span use:editar={'visio.q.avís'}>{@render t('visio.q.avís')}</span>
-					<a href="/confidencialitat">{tria({ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', en: 'Privacy', ca: 'Privadesa' })}</a>
+					<a href="/confidencialitat">{tria({ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', en: 'Privacy', ca: 'Privadesa', ar: 'الخصوصية' })}</a>
 				</p>
 			</form>
 		{/if}

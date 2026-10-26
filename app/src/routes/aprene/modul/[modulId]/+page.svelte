@@ -256,13 +256,13 @@
 
 <div class="pagina">
 	<header class="barra">
-		<a class="acuelh" href="/" aria-label={tria({ oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici' })}>
+		<a class="acuelh" href="/" aria-label={tria({ oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici', ar: 'الرئيسية' })}>
 			<Crotz talha={30} teula />
-			<span>{tria({ oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici' })}</span>
+			<span>{tria({ oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici', ar: 'الرئيسية' })}</span>
 		</a>
 		{#if modul && view !== 'list'}
 			<button type="button" class="tornar" onclick={() => openSession('list')}>
-				<Icona nom="precedent" size="1em" /> {tria({ oc: 'Somari', fr: 'Sommaire', es: 'Índice', en: 'Contents', ca: 'Índex' })}
+				<Icona nom="precedent" size="1em" /> {tria({ oc: 'Somari', fr: 'Sommaire', es: 'Índice', en: 'Contents', ca: 'Índex', ar: 'الفهرس' })}
 			</button>
 		{:else}
 			<a class="tornar" href="/apren"><Icona nom="precedent" size="1em" /> S’apren</a>
@@ -354,7 +354,7 @@
 		{:else}
 			{@const s = modul.sessions[view]}
 			<section class="session-head">
-				<p class="kicker"><span lang="oc">{modul.oc}</span> · {tria({ oc: 'Etapa', fr: 'Étape', es: 'Etapa', en: 'Step', ca: 'Etapa' })} {view + 1}/{modul.sessions.length}</p>
+				<p class="kicker"><span lang="oc">{modul.oc}</span> · {tria({ oc: 'Etapa', fr: 'Étape', es: 'Etapa', en: 'Step', ca: 'Etapa', ar: 'الخطوة' })} {view + 1}/{modul.sessions.length}</p>
 				<h1 class="session-h"><b>{String(view + 1).padStart(2, '0')}</b> <span lang="oc">{s.title}</span></h1>
 				{#if s.fr}<p class="session-fr-h">({s.fr})</p>{/if}
 				<p class="session-min-line">~{s.minutes} min · à ton rythme</p>
