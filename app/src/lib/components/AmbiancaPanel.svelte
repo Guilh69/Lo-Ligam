@@ -71,6 +71,18 @@
 			fons: 'Fons',
 			leugier: 'Fons lleuger',
 			fonses: ['Vetes d’or', 'Llum i estrelles', 'Corbes de nivell', 'Sobri']
+		},
+		ar: {
+			titol: 'مظهر الموقع',
+			tema: 'السمة',
+			sorne: 'داكن',
+			clar: 'فاتح',
+			sistema: 'النظام',
+			dalt: 'ألوان مناسبة (لعمى الألوان)',
+			forçat: 'تبقى هذه الصفحة فاتحة حاليًا.',
+			fons: 'الخلفية',
+			leugier: 'خلفية خفيفة',
+			fonses: ['عروق ذهبية', 'ضوء ونجوم', 'خطوط الكنتور', 'بسيط']
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);

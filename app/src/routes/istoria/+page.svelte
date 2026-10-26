@@ -149,6 +149,32 @@
 				mandadís: 'El missatge no s’ha enviat. Torna-ho a provar, o escriu-me a:',
 				pas_brancat: 'El missatge no s’ha enviat. Torna-ho a provar, o escriu-me a:'
 			}
+		},
+		ar: {
+			titolPagina: 'علاقتي بالأوكسيتانية',
+			escriu: 'راسلني',
+			nom: 'اسمك',
+			facultatiu: 'اختياري',
+			corrièl: 'بريدك الإلكتروني',
+			obligatòri: 'إلزامي',
+			messatge: 'رسالتك',
+			mandar: 'إرسال',
+			mandant: 'جارٍ الإرسال…',
+			mercé: 'شكرًا! تم إرسال رسالتك، وسأردّ عليك قريبًا.',
+			avís: 'يُستخدم بريدك الإلكتروني للردّ عليك فقط، ولا يحتفظ الموقع بأي نسخة منه.',
+			confid: 'الخصوصية',
+			adreça: 'إظهار البريد الإلكتروني',
+			perCorrièl: 'البريد الإلكتروني',
+			apondre: 'إضافة فصل',
+			error: {
+				corrièl: 'تحقّق من بريدك الإلكتروني.',
+				messatge: 'رسالتك قصيرة جدًا.',
+				ligams: 'الرسالة تحتوي على روابط كثيرة جدًا.',
+				plafond: 'أُرسلت رسائل كثيرة جدًا دفعة واحدة. يُرجى المحاولة مرة أخرى بعد ساعة.',
+				geton: 'لم يتم إرسال الرسالة. يُرجى المحاولة مرة أخرى.',
+				mandadís: 'لم يتم إرسال الرسالة. يُرجى المحاولة مرة أخرى، أو مراسلتي على:',
+				pas_brancat: 'لم يتم إرسال الرسالة. يُرجى المحاولة مرة أخرى، أو مراسلتي على:'
+			}
 		}
 	};
 	let tx = $derived(t[langStore.current] ?? t.oc);

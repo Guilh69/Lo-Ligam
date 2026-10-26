@@ -78,6 +78,20 @@
 			cort: 'La contrasenya ha de tenir 10 caràcters com a mínim, amb minúscula, majúscula, xifra i símbol.',
 			parièr: 'La contrasenya nova ha de ser diferent de l’anterior.',
 			error: 'Hi ha hagut un error: torna-ho a provar.'
+		},
+		ar: {
+			titol: 'كلمة مرور جديدة',
+			frasa: 'اختر كلمة مرور جديدة لحسابك.',
+			mdp: 'كلمة المرور الجديدة',
+			ajuda: '10 أحرف على الأقل، منها حرف لاتيني صغير وحرف لاتيني كبير ورقم ورمز',
+			gardar: 'حفظ',
+			fach: 'تم تغيير كلمة المرور، وجلستك مفتوحة.',
+			compte: 'الانتقال إلى حسابي',
+			expirat: 'هذا الرابط لم يعد صالحًا: اطلب رابطًا آخر.',
+			autre: 'استلام رابط جديد',
+			cort: 'يجب أن تتألف كلمة المرور من 10 أحرف على الأقل، منها حرف لاتيني صغير وحرف لاتيني كبير ورقم ورمز.',
+			parièr: 'يجب أن تختلف كلمة المرور الجديدة عن القديمة.',
+			error: 'حدث خطأ، يُرجى المحاولة مرة أخرى.'
 		}
 	};
 	let x = $derived(X[langStore.current] ?? X.oc);

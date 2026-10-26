@@ -54,6 +54,15 @@
 			acuelh: 'Tornar a l’inici',
 			aprene: 'Aprendre occità',
 			carta: 'Veure el mapa'
+		},
+		ar: {
+			titre404: 'هذه الصفحة غير موجودة',
+			titre: 'حدث خلل ما',
+			text404: 'ربما كُتب عنوان الصفحة خطأً، أو نُقلت الصفحة إلى مكان آخر.',
+			text: 'حدث خطأ من جهتنا. يُرجى المحاولة مرة أخرى بعد قليل.',
+			acuelh: 'العودة إلى الصفحة الرئيسية',
+			aprene: 'تعلّم الأوكسيتانية',
+			carta: 'عرض الخريطة'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);

@@ -25,12 +25,12 @@ export const MENAS = [
 
 // Le profil public (supabase-perfils.sql) : dialecte et niveau, dans les six langues
 export const DIALECTES = [
-	['lengadocian', 'Lengadocian', 'Languedocien', 'Languedociano', 'Languedocian', 'Llenguadocià', 'اللانغدوكية'],
-	['provencal', 'Provençal', 'Provençal', 'Provenzal', 'Provençal', 'Provençal', 'البروفنسالية'],
-	['gascon', 'Gascon', 'Gascon', 'Gascón', 'Gascon', 'Gascó', 'الغاسكونية'],
-	['lemosin', 'Lemosin', 'Limousin', 'Lemosín', 'Limousin', 'Lemosí', 'الليموزينية'],
-	['auvernhat', 'Auvernhat', 'Auvergnat', 'Auvernés', 'Auvergnat', 'Alvernès', 'الأوفرنية'],
-	['vivaroaupenc', 'Vivaroaupenc', 'Vivaro-alpin', 'Vivaroalpino', 'Vivaro-Alpine', 'Vivaroalpí', 'الفيفارو-ألبية'],
+	['lengadocian', 'Lengadocian', 'Languedocien', 'Languedociano', 'Languedocian', 'Llenguadocià', 'Lengadocian'],
+	['provencal', 'Provençal', 'Provençal', 'Provenzal', 'Provençal', 'Provençal', 'Provençal'],
+	['gascon', 'Gascon', 'Gascon', 'Gascón', 'Gascon', 'Gascó', 'Gascon'],
+	['lemosin', 'Lemosin', 'Limousin', 'Lemosín', 'Limousin', 'Lemosí', 'Lemosin'],
+	['auvernhat', 'Auvernhat', 'Auvergnat', 'Auvernés', 'Auvergnat', 'Alvernès', 'Auvernhat'],
+	['vivaroaupenc', 'Vivaroaupenc', 'Vivaro-alpin', 'Vivaroalpino', 'Vivaro-Alpine', 'Vivaroalpí', 'Vivaroaupenc'],
 	['autre', 'Autre', 'Autre', 'Otro', 'Other', 'Altre', 'أخرى'],
 	['sabi_pas', 'Sabi pas encara', 'Je ne sais pas encore', 'Todavía no lo sé', 'I don’t know yet', 'Encara no ho sé', 'لا أعرف بعد']
 ];

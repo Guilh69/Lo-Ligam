@@ -53,6 +53,13 @@
 			commencar: 'Començar l’exploració',
 			tampar: 'Tancar',
 			pasTornar: 'No tornar-ho a veure'
+		},
+		ar: {
+			titre: 'أهلًا بك في Lo Ligam',
+			lead: 'مكان واحد يضمّ العالم الأوكسيتاني كلّه. وإليك ما ستجده فيه:',
+			commencar: 'بدء الاستكشاف',
+			tampar: 'إغلاق',
+			pasTornar: 'عدم الإظهار مجددًا'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);
@@ -60,10 +67,10 @@
 	// Nom et sous-titre des familles dans les langues que siteSections.js ne
 	// porte pas (il n'a que l'occitan et le français) : [nom, sous-titre]
 	const FAM = {
-		aprene: { es: ['Aprender', 'La columna vertebral'], en: ['Learn', 'The backbone'], ca: ['Aprendre', 'L’espina dorsal'] },
-		descobrir: { es: ['Descubrir', 'El país y su cultura'], en: ['Discover', 'The country and its culture'], ca: ['Descobrir', 'El país i la seva cultura'] },
-		participar: { es: ['Participar', 'La comunidad'], en: ['Take part', 'The community'], ca: ['Participar', 'La comunitat'] },
-		'lo-ligam': { es: ['Lo Ligam', 'Quiénes somos'], en: ['Lo Ligam', 'Who we are'], ca: ['Lo Ligam', 'Qui som'] }
+		aprene: { es: ['Aprender', 'La columna vertebral'], en: ['Learn', 'The backbone'], ca: ['Aprendre', 'L’espina dorsal'], ar: ['التعلّم', 'العمود الفقري'] },
+		descobrir: { es: ['Descubrir', 'El país y su cultura'], en: ['Discover', 'The country and its culture'], ca: ['Descobrir', 'El país i la seva cultura'], ar: ['الاكتشاف', 'أوكسيتانيا وثقافتها'] },
+		participar: { es: ['Participar', 'La comunidad'], en: ['Take part', 'The community'], ca: ['Participar', 'La comunitat'], ar: ['المشاركة', 'المجتمع'] },
+		'lo-ligam': { es: ['Lo Ligam', 'Quiénes somos'], en: ['Lo Ligam', 'Who we are'], ca: ['Lo Ligam', 'Qui som'], ar: ['Lo Ligam', 'من نحن'] }
 	};
 	const famNom = (fam) => FAM[fam.id]?.[lang]?.[0] ?? (lang === 'oc' ? fam.oc : fam.fr);
 	const famQuoi = (fam) => FAM[fam.id]?.[lang]?.[1] ?? (lang === 'oc' ? fam.tagline_oc : fam.tagline_fr);

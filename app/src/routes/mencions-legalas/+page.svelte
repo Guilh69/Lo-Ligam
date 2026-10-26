@@ -118,6 +118,28 @@
 			donadasT: 'Dades personals',
 			donadas: 'La gestió de les teves dades es detalla a la pàgina dedicada:',
 			donadasLink: 'Política de privadesa'
+		},
+		ar: {
+			titre: 'الإشعار القانوني',
+			maj: 'آخر تحديث',
+			editorT: 'ناشر الموقع',
+			directorT: 'مدير النشر',
+			contactT: 'التواصل',
+			hebergeurT: 'مزوّد الاستضافة',
+			proprietatT: 'الملكية الفكرية',
+			proprietat:
+				'محتويات هذا الموقع (من نصوص ورسوم وبطاقات مفردات) هي من إنتاج الناشر، ما لم يُذكر خلاف ذلك. ويتطلّب أي استنساخ لها موافقته.',
+			ligamsT: 'روابط خارجية',
+			ligams:
+				'يحيل هذا الموقع إلى مواقع أطراف ثالثة (Lo Congrès، OPLO، CIRDOC وغيرها). ولسنا مسؤولين عن محتواها.',
+			cartaT: 'خريطة الأساس',
+			carta:
+				'تأتي خريطة الأساس الأوكسيتانية من OpenStreetMap بالأوكسيتانية، بالتعاون مع Institut d’Estudis Occitans. والبيانات الخرائطية مرخّصة بموجب ODbL.',
+			tipoT: 'الخطوط',
+			tipo: 'يستخدم الموقع خط Luciole © Laurent Bourcellier وJonathan Perez (CTRDV)‎، بترخيص CC BY 4.0.',
+			donadasT: 'البيانات الشخصية',
+			donadas: 'يُفصَّل التعامل مع بياناتك في الصفحة المخصّصة:',
+			donadasLink: 'سياسة الخصوصية'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);

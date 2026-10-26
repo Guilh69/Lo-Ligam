@@ -6,7 +6,7 @@
 
 	let vist = $state(false);
 	let tèxt = $derived(
-		tria({ oc: 'Tornar amont', fr: 'Remonter en haut', es: 'Volver arriba', en: 'Back to top', ca: 'Tornar a dalt' })
+		tria({ oc: 'Tornar amont', fr: 'Remonter en haut', es: 'Volver arriba', en: 'Back to top', ca: 'Tornar a dalt', ar: 'العودة إلى الأعلى' })
 	);
 
 	$effect(() => {
