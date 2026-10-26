@@ -135,6 +135,30 @@
 			invisible: 'Aquest perfil no és visible.',
 			pas_contacte: 'Per escriure, cal estar en contacte.',
 			...X_ERRORS.ca
+		},
+		ar: {
+			tornar: 'العودة إلى القائمة',
+			perfil: 'الملف الشخصي',
+			blocar: 'حظر',
+			blocar_conf: 'هل تريد حظر هذا الشخص؟ لن يستطيع بعد الآن مراسلتك ولا إرسال طلبات إليك.',
+			ancians: 'رسائل أقدم',
+			vuèg: 'لا توجد رسائل بعد: يمكنك كتابة أول رسالة!',
+			camp: 'رسالتك',
+			mandar: 'إرسال',
+			suprimir: 'حذف',
+			suprimir_conf: 'هل تريد حذف هذه الرسالة؟',
+			senhalar: 'إبلاغ',
+			senhal_titol: 'الإبلاغ عن هذه الرسالة',
+			motiu: 'السبب',
+			motius: { insulta: 'إهانة', assetjament: 'مضايقة', odi: 'كراهية', spam: 'إعلانات', autre: 'أخرى' },
+			precisions: 'تفاصيل (إن أردت)',
+			anullar: 'إلغاء',
+			tampar: 'إغلاق',
+			mercé: 'شكرًا: سيطّلع فريق الإشراف على الأمر.',
+			ja: 'سبق أن أبلغت عن هذه الرسالة.',
+			invisible: 'هذا الملف الشخصي غير ظاهر.',
+			pas_contacte: 'لا يمكن الكتابة إلا لمن هو في جهات اتصالك.',
+			...X_ERRORS.ar
 		}
 	};
 	let x = $derived(X[langStore.current] ?? X.oc);

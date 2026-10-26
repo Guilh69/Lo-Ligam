@@ -16,7 +16,7 @@
 	const lèvaEdicion = iniciar('ideas', data.elements);
 	$effect(() => () => lèvaEdicion?.());
 
-	const LOCALAS = { oc: 'oc', fr: 'fr-FR', es: 'es-ES', en: 'en-GB', ca: 'ca' };
+	const LOCALAS = { oc: 'oc', fr: 'fr-FR', es: 'es-ES', en: 'en-GB', ca: 'ca', ar: 'ar-u-nu-latn' };
 
 	const MIN = 10;
 	const MAX = 2000;
@@ -90,6 +90,20 @@
 			error: 'Hi ha hagut un error: torna-ho a provar.',
 			confidencialitat: 'Privadesa',
 			estats: { nòva: 'Nova', legida: 'Llegida', retenguda: 'Retinguda', facha: 'Feta', escartada: 'Descartada' }
+		},
+		ar: {
+			camp: 'اقتراحك',
+			mandar: 'إرسال',
+			connectar: 'تسجيل الدخول',
+			tas: 'اقتراحاتك',
+			responsa: 'ردّ Romain',
+			suprimir: 'حذف',
+			confirmar: 'هل تريد حذف هذا الاقتراح؟',
+			cort: `الاقتراح قصير جدًّا: ${MIN} أحرف على الأقل.`,
+			limit: 'الحدّ الأقصى خمسة اقتراحات في اليوم: يمكنك المحاولة غدًا.',
+			error: 'حدث خطأ: يرجى المحاولة مرة أخرى.',
+			confidencialitat: 'الخصوصية',
+			estats: { nòva: 'جديد', legida: 'تمت قراءته', retenguda: 'تم اعتماده', facha: 'تم تنفيذه', escartada: 'مستبعد' }
 		}
 	};
 	let x = $derived(X[langStore.current] ?? X.oc);
@@ -144,7 +158,7 @@
 </script>
 
 <svelte:head>
-	<title>{tria({ oc: 'Boita d’idèas', fr: 'Boîte à idées', es: 'Buzón de ideas', en: 'Idea box', ca: 'Bústia d’idees' })} · Lo Ligam</title>
+	<title>{tria({ oc: 'Boita d’idèas', fr: 'Boîte à idées', es: 'Buzón de ideas', en: 'Idea box', ca: 'Bústia d’idees', ar: 'صندوق الاقتراحات' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Boita d’idèas : una idèa per melhorar Lo Ligam. Boîte à idées : une idée pour améliorer Lo Ligam."

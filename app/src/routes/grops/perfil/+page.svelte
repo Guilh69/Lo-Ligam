@@ -162,6 +162,35 @@
 			perfil_mot: 'Una paraula no està permesa en un perfil.',
 			perfil_ligam: 'Cap enllaç en un perfil.',
 			error: 'Hi ha hagut un error: torna-ho a provar.'
+		},
+		ar: {
+			titol: 'ملفّي الشخصي',
+			tornar: 'العودة إلى القائمة',
+			estats: {
+				en_espèra: 'ملفّك الشخصي قيد المراجعة: سيقرؤه فريق الإشراف قريبًا. ويمكنك قراءة المجموعات منذ الآن.',
+				verificat: 'تم التحقّق من ملفّك الشخصي: يراه بقية الأعضاء.',
+				refusat: 'لم يتم قبول ملفّك الشخصي. يمكنك مراسلة فريق الإشراف:'
+			},
+			contacte: 'التواصل',
+			nivel: 'المستوى',
+			cerca: 'ما أبحث عنه',
+			agrada: 'ما يعجبني',
+			ont: 'أنا من',
+			ont_ajuda: 'يمكنك كتابة بداية الاسم، بالأوكسيتانية أو بالفرنسية: بلدية في أوكسيتانيا أو أي مكان في العالم.',
+			occitania: 'أوكسيتانيا',
+			ont_lista: 'غير موجود في القائمة: سنحتفظ بما كتبته.',
+			dialecte: 'اللهجة',
+			cap: '(لا شيء)',
+			presentacion: 'إن أحببت، كلمة عنك',
+			presentacion_ajuda: 'ما تشاء: من أين أتيت، ولماذا الأوكسيتانية…',
+			enregistrar: 'حفظ',
+			enregistrat: 'تم الحفظ.',
+			veire: 'عرض ملفّي الشخصي',
+			questionnaire: 'للبدء، يلزم اختيار اسم مستعار.',
+			causir: 'اختيار اسم مستعار',
+			perfil_mot: 'توجد كلمة غير مسموح بها في الملف الشخصي.',
+			perfil_ligam: 'لا يُسمح بالروابط في الملف الشخصي.',
+			error: 'حدث خطأ: يرجى المحاولة مرة أخرى.'
 		}
 	};
 	let x = $derived(X[langStore.current] ?? X.oc);

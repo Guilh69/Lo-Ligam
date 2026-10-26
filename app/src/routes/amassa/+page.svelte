@@ -18,11 +18,11 @@
 </script>
 
 <svelte:head>
-	<title>{tria({ oc: 'Amassa', fr: 'Rassemble', es: 'Reúne', en: 'Gather', ca: 'Reuneix' })} · Lo Ligam</title>
+	<title>{tria({ oc: 'Amassa', fr: 'Rassemble', es: 'Reúne', en: 'Gather', ca: 'Reuneix', ar: 'نجتمع' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Rencontrar d’autras personas que parlan occitan : grops, cercles, fòrum, boita d’idèas. Rencontrer d’autres personnes qui parlent occitan : groupes, cercles, forum, boîte à idées."
 	/>
 </svelte:head>
 
-<PaginaTeulas pagina="amassa" rubrica={RUBRICA} etiqueta={{ oc: 'Çò que nos amassa', fr: 'Ce qui nous rassemble', es: 'Lo que nos une', en: 'What brings us together', ca: 'El que ens uneix' }} />
+<PaginaTeulas pagina="amassa" rubrica={RUBRICA} etiqueta={{ oc: 'Çò que nos amassa', fr: 'Ce qui nous rassemble', es: 'Lo que nos une', en: 'What brings us together', ca: 'El que ens uneix', ar: 'ما يجمعنا' }} />

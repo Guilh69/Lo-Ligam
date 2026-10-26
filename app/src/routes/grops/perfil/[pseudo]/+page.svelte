@@ -171,6 +171,37 @@
 			segur_blocar: 'Bloquejar aquesta persona? Ja no podrà escriure’t ni enviar-te sol·licituds.',
 			òc: 'Sí',
 			non: 'No'
+		},
+		ar: {
+			tornar: 'العودة إلى القائمة',
+			moderacion: 'الإشراف',
+			ont: 'من أين',
+			dialecte: 'اللهجة',
+			nivel: 'المستوى',
+			cerca: 'ما يبحث عنه',
+			agrada: 'ما يحبّه',
+			occitania: 'أوكسيتانيا',
+			dempuei: 'عضو منذ',
+			comuns: 'مجموعات مشتركة',
+			cap: 'لا توجد مجموعة مشتركة.',
+			invisible: 'هذا الملف الشخصي غير ظاهر.',
+			espèra: 'تظهر الملفات الشخصية بعد التحقّق من ملفّك.',
+			ieu: 'تعديل ملفّي الشخصي',
+			apondre: 'إضافة إلى جهات الاتصال',
+			mandada: 'تم إرسال الطلب: في انتظار الردّ.',
+			anullar: 'إلغاء الطلب',
+			recebuda: 'يرغب هذا الشخص في التواصل معك.',
+			acceptar: 'قبول',
+			refusar: 'رفض',
+			escriure: 'مراسلة',
+			quitar: 'حذف من جهات الاتصال',
+			blocar: 'حظر',
+			blocat: 'لقد حظرت هذا الشخص: لم يعد بإمكانه مراسلتك.',
+			desblocar: 'إلغاء الحظر',
+			segur_quitar: 'هل تريد حذف هذا الشخص من جهات اتصالك؟',
+			segur_blocar: 'هل تريد حظر هذا الشخص؟ لن يستطيع بعد الآن مراسلتك ولا إرسال طلبات إليك.',
+			òc: 'نعم',
+			non: 'لا'
 		}
 	};
 	let x = $derived(X[langStore.current] ?? X.oc);

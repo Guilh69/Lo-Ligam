@@ -112,6 +112,24 @@
 			refusar: 'Rebutja',
 			mandada: 'sol·licitud enviada',
 			cap_contacte: 'Per afegir un contacte, obre el seu perfil dins d’un grup.'
+		},
+		ar: {
+			grops: 'المجموعات',
+			mos: 'مجموعاتي',
+			perfil: 'ملفّي الشخصي',
+			espèra: 'قيد الانتظار',
+			crear: 'كل المجموعات',
+			començar: 'للبدء',
+			connectar: 'تسجيل الدخول',
+			non_legits: (n) => `رسائل غير مقروءة: ${n}`,
+			confidencialitat: 'الخصوصية',
+			amassa: 'العودة إلى «نجتمع»',
+			contactes: 'جهات اتصالي',
+			vòl: 'طلب تواصل معك',
+			acceptar: 'قبول',
+			refusar: 'رفض',
+			mandada: 'تم إرسال الطلب',
+			cap_contacte: 'لإضافة شخص إلى جهات اتصالك، يمكنك فتح ملفّه الشخصي داخل إحدى المجموعات.'
 		}
 	};
 	let x = $derived(X[langStore.current] ?? X.oc);

@@ -121,3 +121,33 @@ Conventions : le site tutoie ; on évite de genrer. Les boutons utilisent le nom
 | afichas (légendes) | Lucha Occitana, Montpelhièr. ; Joan Carles Codèrc, lycée Saint-Géraud. | Lucha Occitana, Montpelhièr. ; Joan Carles Codèrc، ثانوية Saint-Géraud. | Noms propres en latin. Un caractère invisible (marque de lecture gauche-droite) suit le point de la première, pour que le point reste collé au mot latin. | |
 | mots : tx.fichas / tx.temas (correction du lot 1) | N cartes, N thèmes | N من البطاقات ; مواضيع | Le code met le mot APRÈS le nombre : « étiquette : nombre » n'est pas possible en touchant seulement le dictionnaire. Pour les cartes : « 12 من البطاقات » (« 12 des cartes ») est correct pour tout nombre. Pour les thèmes, le même mot sert aussi de titre seul (liste de gauche), donc « مواضيع » (juste pour 3 à 10, faux pour 35). Solution propre, côté code : une clé séparée pour le compte et pour le titre, ou l'étiquette placée avant le nombre en arabe (« عدد المواضيع: 35 »). | |
 | carnet : date | à revoir le … | (non modifié) | La phrase entière est en français en dur (« à revoir le », 'fr-FR') et n'est pas choisie selon la langue du site : rien à changer côté arabe tant que cette phrase n'est pas traduite. | |
+
+## F. Rubrique Amassa (lot 4, 2026-10-26) : doutes de formulation
+
+| clé | français | arabe | doute | réponse de l'ami |
+|---|---|---|---|---|
+| amassa (titre), PLAN | Rassemble | نجتمع | Confirmé (même logique que les autres rubriques). | |
+| amassa : étiquette de la page | Ce qui nous rassemble | ما يجمعنا | Naturel pour un titre de section ? | |
+| amassa.teulas.cercles.ligam | Cercles et associations | النوادي والجمعيات | « Cercles » = cercles locaux occitans (cercles culturels) ; « النوادي » (clubs) est le mot le plus courant, « الحلقات » (cercles d'étude) se lirait autrement. Convient-il ? | |
+| amassa.teulas.forum.sota | S'entraider pour apprendre. | مساعدة متبادلة على التعلّم. | Nom d'action (pas de verbe, donc pas de genre). Autre : « نتساعد لنتعلّم ». | |
+| amassa.teulas.ideas.sota | Pour améliorer Lo Ligam avec toi. | لنُحسّن Lo Ligam معًا. | « avec toi » devenu « ensemble » (pluriel inclusif). « نُحسّن » ou « نطوّر » ? | |
+| amassa.teulas.instagram.sota | Les visuels de Lo Ligam. | صور وتصاميم Lo Ligam. | « visuels » = images et créations graphiques ; pas de mot arabe unique et courant. | |
+| ideas.* | idée / boîte à idées | اقتراح / صندوق الاقتراحات | Aligné sur le terme déjà employé dans le menu : « idée » est rendu partout par « اقتراح » (suggestion), pas « فكرة ». Cohérent ? Les nombres : « خمسة اقتراحات » (accord correct pour 3 à 10). | |
+| ideas.estats | Nouvelle, Lue, Retenue, Réalisée, Écartée | جديد، تمت قراءته، تم اعتماده، تم تنفيذه، مستبعد | « Retenue » = gardée en vue d'être faite : « تم اعتماده » (adoptée). Autre : « قيد الدراسة » (à l'étude), qui change un peu le sens. | |
+| ideas.responsa | Réponse de Romain | ردّ Romain | Nom propre en latin au milieu. | |
+| ideas.avís | Je suis seul à lire les idées… | أنا وحدي من يقرأ الاقتراحات، دون أن أعرف من أرسلها. | Clair ? | |
+| ideas : dates | 26 octobre 2026 | locale `ar-u-nu-latn` | Mois en arabe (أكتوبر… : forme du Maghreb et de l'Égypte ; le Levant dit « تشرين الأول »), chiffres 0-9. | |
+| grops.acuelh | Ici on parle occitan comme on peut, avec les fautes. | هنا نتحدّث الأوكسيتانية كما نستطيع، بأخطائنا. | Intention : rassurer (aucune honte à faire des fautes). « المهم أن نتبادل الحديث » pour « l'échange » : naturel ? | |
+| grops.compte | un compte avec une adresse vérifiée | حساب مع تأكيد البريد الإلكتروني | Intention gardée, forme simplifiée (« adresse vérifiée » seul se lit mal). | |
+| grops.pseudo | Les autres voient ton pseudo, jamais ton adresse. | يرى بقية الأعضاء اسمك المستعار، ولا يرون عنوان بريدك الإلكتروني أبدًا. | « عنوان » seul serait lu « adresse postale » : précisé. | |
+| grops : contacts | Mes contacts, contact | جهات اتصالي، جهة اتصال | Terme des applications de messagerie (« جهات الاتصال »). Pour « veut être en contact » : « طلب تواصل معك » (nom, sans genre). | |
+| grops : profil d'un autre membre | Ce qu'il ou elle cherche / aime | ما يبحث عنه / ما يحبّه | Impossible de ne pas genrer « il ou elle » : masculin non marqué (comme « هذا الشخص » qui est grammaticalement masculin). Acceptable ? | |
+| grops : nombres | N membres, N messages non lus | الأعضاء: N ; رسائل غير مقروءة: N | Étiquette avant le nombre (pas d'accord à gérer), comme le lot Se parla. | |
+| grops : Signaler (message) | Signaler / Signaler ce message | إبلاغ / الإبلاغ عن هذه الرسالة | Bouton court « إبلاغ » (nom d'action). Les motifs : إهانة، مضايقة، كراهية، إعلانات (pour « Publicité » = spam), أخرى. | |
+| grops : modération | la modération | فريق الإشراف / الإشراف | « الإشراف » est le mot courant des forums arabes (les « مشرفون »). | |
+| grops : dialectes | Languedocien, Provençal, Gascon, Limousin, Auvergnat, Vivaro-alpin | اللانغدوكية، البروفنسالية، الغاسكونية، الليموزينية، الأوفرنية، الفيفارو-ألبية | Noms translittérés, sans usage très fixé en arabe (Wikipédia arabe varie : « اللنغدوكية » aussi). « الفيفارو-ألبية » surtout. Le nom occitan en lettres latines serait une option plus sûre ; à trancher. | |
+| grops : niveaux | Je débute, J'apprends, Je parle, Langue maternelle | أبدأ للتوّ، أتعلّم، أتحدّثها، لغتي الأم | Première personne : pas de genre (ni « مبتدئ » ni « مبتدئة »). | |
+| grops : passions | Bal | السهرات الراقصة | « Bal » (bal populaire) n'a pas d'équivalent court ; « الرقص » est déjà pris par « Danse ». | |
+| grops : catalogue | Passions | الهوايات | « الشغف » (passion) est plus fidèle mais abstrait ; « الهوايات » dit ce que contient la liste (musique, cuisine…). | |
+| grops : profil, « D'où » | D'où | أنا من (mon profil), من أين (profil d'un autre) | Libellé de formulaire naturel (« أنا من : Lodeva »). | |
+| grops : refus de la base | contact impossible, limites | (textes.js) | « Les liens sont possibles quand ton compte a une semaine » → « يمكن إرسال الروابط بعد مرور أسبوع على إنشاء حسابك ». « الرابط » = lien hypertexte, juste ici. | |

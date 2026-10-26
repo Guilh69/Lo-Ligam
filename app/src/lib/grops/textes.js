@@ -85,5 +85,22 @@ export const X_ERRORS = {
 		contactes_inconegut: 'Aquesta sol·licitud ja no existeix.',
 		privats_contacte: 'Per escriure, cal estar en contacte.',
 		error: 'Hi ha hagut un error: torna-ho a provar.'
+	},
+	ar: {
+		grops_compte: 'يلزم وجود حساب للانضمام إلى مجموعة.',
+		grops_adreca: 'يرجى أولًا التحقّق من عنوان بريدك الإلكتروني: الرابط في الرسالة التي وصلتك.',
+		grops_bandit: 'تم إيقاف حسابك من قِبل فريق الإشراف.',
+		grops_inconegut: 'هذه المجموعة غير موجودة.',
+		grops_tampat: 'هذه المجموعة مغلقة.',
+		grops_limit: 'الحدّ الأقصى ثلاثون مجموعة.',
+		messatges_mot: 'تحتوي هذه الرسالة على كلمة يمنعها ميثاق المجموعات.',
+		messatges_limit: 'رسائل كثيرة دفعة واحدة: يرجى الانتظار قليلًا.',
+		messatges_ligam: 'يمكن إرسال الروابط بعد مرور أسبوع على إنشاء حسابك.',
+		messatges_verificacion: 'ملفّك الشخصي قيد المراجعة: سيقرؤه فريق الإشراف قريبًا. ويمكنك قراءة المجموعات منذ الآن.',
+		contactes_impossible: 'هذا الطلب غير ممكن.',
+		contactes_limit: 'طلبات كثيرة اليوم: يرجى المحاولة غدًا.',
+		contactes_inconegut: 'هذا الطلب لم يعد موجودًا.',
+		privats_contacte: 'لا يمكن الكتابة إلا لمن هو في جهات اتصالك.',
+		error: 'حدث خطأ: يرجى المحاولة مرة أخرى.'
 	}
 };

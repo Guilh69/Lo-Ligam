@@ -16,55 +16,55 @@ export const DOBÈRTS = false;
 
 // Les familles du catalogue, dans l'ordre de « Crear un grop »
 export const MENAS = [
-	['vila', 'Vilas', 'Villes', 'Ciudades', 'Cities', 'Ciutats'],
-	['nivel', 'Nivèls', 'Niveaux', 'Niveles', 'Levels', 'Nivells'],
-	['dialecte', 'Dialèctes', 'Dialectes', 'Dialectos', 'Dialects', 'Dialectes'],
-	['despartament', 'Departaments', 'Départements', 'Departamentos', 'Departments', 'Departaments'],
-	['interes', 'Passions', 'Passions', 'Pasiones', 'Passions', 'Passions']
+	['vila', 'Vilas', 'Villes', 'Ciudades', 'Cities', 'Ciutats', 'المدن'],
+	['nivel', 'Nivèls', 'Niveaux', 'Niveles', 'Levels', 'Nivells', 'المستويات'],
+	['dialecte', 'Dialèctes', 'Dialectes', 'Dialectos', 'Dialects', 'Dialectes', 'اللهجات'],
+	['despartament', 'Departaments', 'Départements', 'Departamentos', 'Departments', 'Departaments', 'المقاطعات'],
+	['interes', 'Passions', 'Passions', 'Pasiones', 'Passions', 'Passions', 'الهوايات']
 ];
 
-// Le profil public (supabase-perfils.sql) : dialecte et niveau, dans les cinq langues
+// Le profil public (supabase-perfils.sql) : dialecte et niveau, dans les six langues
 export const DIALECTES = [
-	['lengadocian', 'Lengadocian', 'Languedocien', 'Languedociano', 'Languedocian', 'Llenguadocià'],
-	['provencal', 'Provençal', 'Provençal', 'Provenzal', 'Provençal', 'Provençal'],
-	['gascon', 'Gascon', 'Gascon', 'Gascón', 'Gascon', 'Gascó'],
-	['lemosin', 'Lemosin', 'Limousin', 'Lemosín', 'Limousin', 'Lemosí'],
-	['auvernhat', 'Auvernhat', 'Auvergnat', 'Auvernés', 'Auvergnat', 'Alvernès'],
-	['vivaroaupenc', 'Vivaroaupenc', 'Vivaro-alpin', 'Vivaroalpino', 'Vivaro-Alpine', 'Vivaroalpí'],
-	['autre', 'Autre', 'Autre', 'Otro', 'Other', 'Altre'],
-	['sabi_pas', 'Sabi pas encara', 'Je ne sais pas encore', 'Todavía no lo sé', 'I don’t know yet', 'Encara no ho sé']
+	['lengadocian', 'Lengadocian', 'Languedocien', 'Languedociano', 'Languedocian', 'Llenguadocià', 'اللانغدوكية'],
+	['provencal', 'Provençal', 'Provençal', 'Provenzal', 'Provençal', 'Provençal', 'البروفنسالية'],
+	['gascon', 'Gascon', 'Gascon', 'Gascón', 'Gascon', 'Gascó', 'الغاسكونية'],
+	['lemosin', 'Lemosin', 'Limousin', 'Lemosín', 'Limousin', 'Lemosí', 'الليموزينية'],
+	['auvernhat', 'Auvernhat', 'Auvergnat', 'Auvernés', 'Auvergnat', 'Alvernès', 'الأوفرنية'],
+	['vivaroaupenc', 'Vivaroaupenc', 'Vivaro-alpin', 'Vivaroalpino', 'Vivaro-Alpine', 'Vivaroalpí', 'الفيفارو-ألبية'],
+	['autre', 'Autre', 'Autre', 'Otro', 'Other', 'Altre', 'أخرى'],
+	['sabi_pas', 'Sabi pas encara', 'Je ne sais pas encore', 'Todavía no lo sé', 'I don’t know yet', 'Encara no ho sé', 'لا أعرف بعد']
 ];
 export const NIVELS = [
-	['debutant', 'Debuti', 'Je débute', 'Estoy empezando', 'I’m just starting', 'Començo'],
-	['apren', 'Apreni', 'J’apprends', 'Estoy aprendiendo', 'I’m learning', 'Estic aprenent'],
-	['parla', 'Parli', 'Je parle', 'Lo hablo', 'I speak it', 'El parlo'],
-	['mairal', 'Lenga mairala', 'Langue maternelle', 'Lengua materna', 'Mother tongue', 'Llengua materna']
+	['debutant', 'Debuti', 'Je débute', 'Estoy empezando', 'I’m just starting', 'Començo', 'أبدأ للتوّ'],
+	['apren', 'Apreni', 'J’apprends', 'Estoy aprendiendo', 'I’m learning', 'Estic aprenent', 'أتعلّم'],
+	['parla', 'Parli', 'Je parle', 'Lo hablo', 'I speak it', 'El parlo', 'أتحدّثها'],
+	['mairal', 'Lenga mairala', 'Langue maternelle', 'Lengua materna', 'Mother tongue', 'Llengua materna', 'لغتي الأم']
 ];
 // Ce qu'on cherche et ce qu'on aime : des cases à cocher plutôt que du texte
 // (Romain, 2026-10-25 : « flemme d'écrire ») ; les valeurs sont verrouillées
 // dans la base (profiles_perfil_listas, supabase-perfils.sql §6)
 export const CERCA = [
-	['parlar', 'Parlar', 'Parler', 'Hablar', 'Speaking', 'Parlar'],
-	['escriure', 'Escriure', 'Écrire', 'Escribir', 'Writing', 'Escriure'],
-	['aprene', 'Aprene', 'Apprendre', 'Aprender', 'Learning', 'Aprendre'],
-	['trobar', 'Trobar de monde', 'Rencontrer du monde', 'Conocer gente', 'Meeting people', 'Conèixer gent'],
-	['ajudar', 'Ajudar los que debutan', 'Aider les débutants', 'Ayudar a quienes empiezan', 'Helping beginners', 'Ajudar qui comença']
+	['parlar', 'Parlar', 'Parler', 'Hablar', 'Speaking', 'Parlar', 'التحدّث'],
+	['escriure', 'Escriure', 'Écrire', 'Escribir', 'Writing', 'Escriure', 'الكتابة'],
+	['aprene', 'Aprene', 'Apprendre', 'Aprender', 'Learning', 'Aprendre', 'التعلّم'],
+	['trobar', 'Trobar de monde', 'Rencontrer du monde', 'Conocer gente', 'Meeting people', 'Conèixer gent', 'لقاء الناس'],
+	['ajudar', 'Ajudar los que debutan', 'Aider les débutants', 'Ayudar a quienes empiezan', 'Helping beginners', 'Ajudar qui comença', 'مساعدة من يبدؤون']
 ];
 export const AGRADA = [
-	['musica', 'Musica', 'Musique', 'Música', 'Music', 'Música'],
-	['cant', 'Cant', 'Chant', 'Canto', 'Singing', 'Cant'],
-	['danca', 'Dança', 'Danse', 'Danza', 'Dance', 'Dansa'],
-	['bal', 'Bal', 'Bal', 'Baile popular', 'Folk ball', 'Ball popular'],
-	['cosina', 'Cosina', 'Cuisine', 'Cocina', 'Cooking', 'Cuina'],
-	['literatura', 'Literatura', 'Littérature', 'Literatura', 'Literature', 'Literatura'],
-	['teatre', 'Teatre', 'Théâtre', 'Teatro', 'Theatre', 'Teatre'],
-	['cinema', 'Cinema', 'Cinéma', 'Cine', 'Cinema', 'Cinema'],
-	['natura', 'Natura', 'Nature', 'Naturaleza', 'Nature', 'Natura'],
-	['istoria', 'Istòria', 'Histoire', 'Historia', 'History', 'Història'],
-	['jocs', 'Jòcs', 'Jeux', 'Juegos', 'Games', 'Jocs']
+	['musica', 'Musica', 'Musique', 'Música', 'Music', 'Música', 'الموسيقى'],
+	['cant', 'Cant', 'Chant', 'Canto', 'Singing', 'Cant', 'الغناء'],
+	['danca', 'Dança', 'Danse', 'Danza', 'Dance', 'Dansa', 'الرقص'],
+	['bal', 'Bal', 'Bal', 'Baile popular', 'Folk ball', 'Ball popular', 'السهرات الراقصة'],
+	['cosina', 'Cosina', 'Cuisine', 'Cocina', 'Cooking', 'Cuina', 'الطبخ'],
+	['literatura', 'Literatura', 'Littérature', 'Literatura', 'Literature', 'Literatura', 'الأدب'],
+	['teatre', 'Teatre', 'Théâtre', 'Teatro', 'Theatre', 'Teatre', 'المسرح'],
+	['cinema', 'Cinema', 'Cinéma', 'Cine', 'Cinema', 'Cinema', 'السينما'],
+	['natura', 'Natura', 'Nature', 'Naturaleza', 'Nature', 'Natura', 'الطبيعة'],
+	['istoria', 'Istòria', 'Histoire', 'Historia', 'History', 'Història', 'التاريخ'],
+	['jocs', 'Jòcs', 'Jeux', 'Juegos', 'Games', 'Jocs', 'الألعاب']
 ];
-// Les listes ci-dessus : [valeur, oc, fr, es, en, ca]
-const COLONA = { oc: 1, fr: 2, es: 3, en: 4, ca: 5 };
+// Les listes ci-dessus : [valeur, oc, fr, es, en, ca, ar]
+const COLONA = { oc: 1, fr: 2, es: 3, en: 4, ca: 5, ar: 6 };
 /** Le libellé d'une ligne de liste dans la langue choisie (repli : l'occitan) */
 export const nomLigne = (ligne, lang) => ligne[COLONA[lang] ?? 1] || ligne[1];
 /** Le nom d'un dialecte, d'un niveau ou d'un choix de liste dans la langue choisie */

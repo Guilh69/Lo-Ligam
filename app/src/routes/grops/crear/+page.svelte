@@ -76,6 +76,19 @@
 			dobrir: 'Obre',
 			ton: 'El teu grup',
 			...X_ERRORS.ca
+		},
+		ar: {
+			titol: 'كل المجموعات',
+			tornar: 'العودة إلى القائمة',
+			frasa: 'المجموعة المقترحة تُفتح بانضمام أول شخص إليها.',
+			cercar: 'بحث',
+			exemple: 'مدينة، لهجة، هواية…',
+			cap: 'لا توجد نتائج.',
+			membres: (n) => `الأعضاء: ${n}`,
+			rejonher: 'الانضمام',
+			dobrir: 'فتح',
+			ton: 'مجموعتك',
+			...X_ERRORS.ar
 		}
 	};
 	let x = $derived(X[langStore.current] ?? X.oc);
