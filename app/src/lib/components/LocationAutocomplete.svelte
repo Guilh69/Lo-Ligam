@@ -172,11 +172,12 @@
 		autocomplete="off"
 		role="combobox"
 		aria-expanded={open}
+		aria-controls="location-suggestions"
 		aria-autocomplete="list"
 	/>
 	{#if loading}<span class="loading-dot" aria-hidden="true"></span>{/if}
 	{#if open}
-		<ul class="suggestions" role="listbox">
+		<ul class="suggestions" id="location-suggestions" role="listbox">
 			{#each suggestions as s, i (s.name + s.context)}
 				<li role="option" aria-selected={i === activeIndex}>
 					<button

@@ -2724,7 +2724,7 @@
 	{/if}
 
 	{#if fontsDobèrtas}
-		<section class="fonts-carta" role="dialog" aria-label={tria({ oc: 'Fonts de la carta', fr: 'Sources de la carte', es: 'Fuentes del mapa', en: 'Map sources', ca: 'Fonts del mapa' })} transition:fly={{ y: 10, duration: 220 }}>
+		<div class="fonts-carta" role="dialog" aria-label={tria({ oc: 'Fonts de la carta', fr: 'Sources de la carte', es: 'Fuentes del mapa', en: 'Map sources', ca: 'Fonts del mapa' })} transition:fly={{ y: 10, duration: 220 }}>
 			<header>
 				<h2>{tria({ oc: 'Fonts de la carta', fr: 'Sources de la carte', es: 'Fuentes del mapa', en: 'Map sources', ca: 'Fonts del mapa' })}</h2>
 				<button type="button" class="tampar-fonts" aria-label={tria({ oc: 'Tampar', fr: 'Fermer', es: 'Cerrar', en: 'Close', ca: 'Tancar' })} onclick={() => (fontsDobèrtas = false)}><Icona nom="fermer" size="20px" /></button>
@@ -2737,7 +2737,7 @@
 				<dt>{tria({ oc: 'Afichatge', fr: 'Affichage', es: 'Visualización', en: 'Display', ca: 'Visualització' })}</dt>
 				<dd><a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a></dd>
 			</dl>
-		</section>
+		</div>
 	{/if}
 
 	<!-- (l'invitation passe devant l'étiquette d'une zone survolée ou choisie :

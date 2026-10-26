@@ -80,10 +80,8 @@
 			<a class="footer-legal-link" href="/confidencialitat"
 				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', en: 'Privacy', ca: 'Privadesa', ar: 'الخصوصية', lang }}>{tria({ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', en: 'Privacy', ca: 'Privadesa', ar: 'الخصوصية' })}</span></a
 			>
-			<span class="footer-legal-leu"
-				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', en: 'Accessibility', ca: 'Accessibilitat', ar: 'إمكانية الوصول', lang }}>{tria({ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', en: 'Accessibility', ca: 'Accessibilitat', ar: 'إمكانية الوصول' })}</span><em
-					use:scramble={{ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto', en: '· Soon', ca: '· Aviat', ar: '· قريبًا', lang }}
-				>{tria({ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto', en: '· Soon', ca: '· Aviat', ar: '· قريبًا' })}</em></span
+			<a class="footer-legal-link" href="/accessibilitat"
+				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', en: 'Accessibility', ca: 'Accessibilitat', ar: 'إمكانية الوصول', lang }}>{tria({ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', en: 'Accessibility', ca: 'Accessibilitat', ar: 'إمكانية الوصول' })}</span></a
 			>
 		</div>
 	</div>
