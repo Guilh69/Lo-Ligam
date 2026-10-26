@@ -1380,14 +1380,27 @@
 		const km = c.renc === 1 ? 7 : c.renc === 2 ? 5 : c.renc === 3 ? 3 : c.pop >= 3000 ? 2 : 1;
 		let z = Math.min(15, Math.max(map.getZoom(), zCran(km, c.lat))),
 			centre = L.latLng(c.lat, c.lon);
+		// Le contour se pose À L'ARRIVÉE du vol, pas avant : posé au départ, le
+		// tracé SVG était étiré par le zoom du vol (une pastille, ou un trait
+		// énorme, au mauvais endroit) puis replacé d'un coup (retour de Romain,
+		// 2026-10-26, téléphone).
+		let enVol = true,
+			enAtendre = null;
+		const arribada = () => {
+			enVol = false;
+			if (enAtendre && comunaCausida === c && map) enAtendre.addTo(map);
+			enAtendre = null;
+		};
 		const pintar = (f) => {
 			if (!f || comunaCausida !== c || !map) return null;
 			if (!map.getPane('comunaCausida')) map.createPane('comunaCausida').style.zIndex = '345';
 			contornCausit = L.polygon(
 				f.poligons.map((p) => p.map((a) => a.map(([x, y]) => [y, x]))),
 				{ pane: 'comunaCausida', className: 'comuna-causida', color: '#f3c25a', weight: 2, opacity: 0.95, fillColor: '#f3c25a', fillOpacity: 0.1, interactive: false }
-			).addTo(map);
-			contornCausit.getElement()?.setAttribute('pathLength', '1');
+			);
+			contornCausit.on('add', () => contornCausit?.getElement()?.setAttribute('pathLength', '1'));
+			if (enVol) enAtendre = contornCausit;
+			else contornCausit.addTo(map);
 			if (fichaComuna?.c === c) fichaComuna = { c, contorn: f };
 			return contornCausit.getBounds();
 		};
@@ -1411,6 +1424,8 @@
 		const p = map.project(centre, z).add([0, (ficha - naut) / 2]);
 		centre = map.unproject(p, z);
 		const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		map.once('moveend', arribada);
+		setTimeout(arribada, 2500); // (filet : un vol sans arrivée ne doit pas perdre le contour)
 		map.flyTo(centre, z, { duration: calm ? 0 : 1.2 });
 		if (!f) contornComuna(c.lat, c.lon).then(pintar);
 	}

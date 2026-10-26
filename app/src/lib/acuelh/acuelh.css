@@ -124,17 +124,18 @@ html.cursor-viu:has(.vel-fons) .cur-ponch, html.cursor-viu:has(.vel-fons) .cur-a
 /* al clavièr, lo bandèu amagat torna quand un de sos ligams pren lo focus */
 .acuelh .capçal.amagat:focus-within { transform: none; }
 .acuelh .capçal::before {
-	content: ''; position: absolute; inset: 0; z-index: -1;
-	background: linear-gradient(var(--nuech) 10%, transparent);
+	content: ''; position: absolute; inset: 0 0 -1.6rem 0; z-index: -1;
+	background: linear-gradient(var(--nuech) 70%, transparent);
 	opacity: 0; transition: opacity 0.6s;
 }
-.acuelh .capçal.solid::before { opacity: 0.85; }
+/* opaque sous les boutons : le grand titre qui défile ne doit plus se lire à travers */
+.acuelh .capçal.solid::before { opacity: 1; }
 /* Écran étroit : le bandeau commun passe sur deux lignes (liens dessous), le
    dégradé doit couvrir les deux pour que le texte qui défile derrière ne
    gêne pas la lecture */
 @media (max-width: 900px) {
-	.acuelh .capçal::before { background: linear-gradient(var(--nuech) 62%, transparent); }
-	.acuelh .capçal.solid::before { opacity: 0.94; }
+	.acuelh .capçal::before { background: linear-gradient(var(--nuech) 75%, transparent); }
+	.acuelh .capçal.solid::before { opacity: 1; }
 }
 :root[data-tema='clar'] .acuelh .bandel-mot { -webkit-text-stroke-color: rgba(42, 26, 16, 0.5); }
 /* :not(.on) (2026-10-21) : sans lui, cette règle plus précise écrasait « .m.on » et la

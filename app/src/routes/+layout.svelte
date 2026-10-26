@@ -24,9 +24,10 @@
 	// qu'il est passé dans le cadre commun, 2026-10-07). L'essai de la refonte
 	// claire (/ensag/clar, 2026-10-21) et l'esquisse « page presque blanche »
 	// (/ensag/blanc, 2026-10-22) dessinent leur propre pied de page. Les groupes
-	// (2026-10-25) tiennent à hauteur d'écran, comme une messagerie.
+	// (2026-10-25) tiennent à hauteur d'écran, comme une messagerie. La carte (2026-10-26) est une interface pleine et
+	// stable : ni pied de page ni défilement.
 	let ambPè = $derived(
-		!id.startsWith('/admin') && !id.startsWith('/grops') && id !== '/ensag/clar' && id !== '/ensag/blanc'
+		!id.startsWith('/admin') && !id.startsWith('/grops') && id !== '/carta' && id !== '/ensag/clar' && id !== '/ensag/blanc'
 	);
 
 	// Lien d'évitement (2026-10-26, page accessibilité) : première étape du
@@ -43,6 +44,9 @@
 
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={favicon} />
+	<link rel="manifest" href="/manifest.webmanifest" />
+	<link rel="apple-touch-icon" href="/icones-app/apple-touch-180.png" />
+	<meta name="theme-color" content="#22100a" />
 	<title>Lo Ligam</title>
 </svelte:head>
 

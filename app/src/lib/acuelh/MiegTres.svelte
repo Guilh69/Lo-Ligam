@@ -147,16 +147,18 @@
 <section class="mieg" bind:this={racina} aria-label={tria({ oc: 'Las tres rubricas', fr: 'Les trois rubriques', es: 'Las tres secciones', en: 'The three sections', ca: 'Les tres seccions', ar: 'الأقسام الثلاثة' })}>
 		{#each ENTITATS as e, i (e.sec.id)}
 			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} style="--color: {e.accent}">
-				<div class="sist-cap">
-					<span class="sist-num">{e.sec.n}</span>
-					<h2>{tria(e.sec)}</h2>
-				</div>
 				<div class="sist-cors">
-					<div class="sist-tèxt">
-						<p class="sota" use:editar={`acuelh.mondes.${e.sec.id}.sota`}>{sotaTxt(e.sec.id, e.sota)}</p>
-						{@render extra(e.sec.id)}
-						{@render lligams(e.sec)}
-						<a class="dintrar" href={e.sec.href}>{tria(DINTRAR)} {@render sageta()}</a>
+					<div class="sist-gauche">
+						<div class="sist-cap">
+							<span class="sist-num">{e.sec.n}</span>
+							<h2>{tria(e.sec)}</h2>
+						</div>
+						<div class="sist-tèxt">
+							<p class="sota" use:editar={`acuelh.mondes.${e.sec.id}.sota`}>{sotaTxt(e.sec.id, e.sota)}</p>
+							{@render extra(e.sec.id)}
+							{@render lligams(e.sec)}
+							<a class="dintrar" href={e.sec.href}>{tria(DINTRAR)} {@render sageta()}</a>
+						</div>
 					</div>
 					<figure class="sist-vis">{@render visual(e.vis, true)}</figure>
 				</div>
@@ -197,17 +199,37 @@
 	.sist-cap { display: flex; align-items: baseline; gap: 1.2rem; margin: 0 0 var(--esp-48, 2.5rem); }
 	.sist-num { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(3rem, 7vw, 6.5rem); line-height: 0.9; color: var(--or); }
 	.sist-cap h2 { font-family: var(--font-heading), serif; font-weight: 400; font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 0.95; color: var(--crema); margin: 0; }
-	.sist-cors { display: grid; grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 6rem); align-items: center; }
-	.sistema-ent.invers .sist-cors { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.82fr); }
-	.sistema-ent.invers .sist-tèxt { order: 2; }
+	/* titre et texte forment une seule colonne ; le visuel prend la plus grande part et la hauteur de l'écran */
+	.sist-cors { display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+	.sistema-ent.invers .sist-cors { grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); }
+	.sistema-ent.invers .sist-gauche { order: 2; }
+	.sist-gauche .sist-cap { flex-wrap: wrap; row-gap: 0.4rem; margin-bottom: clamp(1.2rem, 3vh, 2rem); }
 	.sist-vis { position: relative; margin: 0; display: flex; justify-content: center; transform: translateY(var(--para, 0)); will-change: transform; }
 	/* une lueur dorée douce derrière le grand visuel (dans le ton de la braise) */
 	.sist-vis::before { content: ''; position: absolute; inset: -10% -8%; z-index: -1; border-radius: 50%; filter: blur(66px); opacity: 0.4; background: radial-gradient(closest-side, rgba(238, 175, 52, 0.5), transparent); }
-	.sist-vis :global(.vis) { width: 100%; max-height: clamp(220px, 42vh, 440px); }
+	.sist-vis :global(.vis) { width: 100%; max-height: clamp(280px, 68vh, 640px); }
 	@media (max-width: 820px) {
 		.sist-cors, .sistema-ent.invers .sist-cors { grid-template-columns: 1fr; }
-		.sistema-ent.invers .sist-tèxt { order: 0; }
+		.sistema-ent.invers .sist-gauche { order: 0; }
+		.sist-vis :global(.vis) { max-height: 52vh; }
 	}
+
+	/* ——— Thème clair : le crème et l'or pâle du fond sombre disparaissent sur le fond clair ;
+	   encre brune pour les textes (≥ 9:1), ocre profond pour numéros et traits (≥ 3:1) ——— */
+	:global(:root[data-tema='clar']) .mieg { --or: #8f5400; --or-clar: #8f5400; --crema: #2a1a10; }
+	:global(:root[data-tema='clar']) .sota { opacity: 1; }
+	:global(:root[data-tema='clar']) .portas span { opacity: 1; }
+	:global(:root[data-tema='clar']) .costa { stroke-opacity: 0.85; stroke-width: 1.5; }
+	:global(:root[data-tema='clar']) .estela { fill: #b36d00; fill-opacity: 0.7; }
+	:global(:root[data-tema='clar']) .estela.vila { fill: #8f5400; fill-opacity: 1; }
+	:global(:root[data-tema='clar']) .vila-nom { fill-opacity: 1; }
+	:global(:root[data-tema='clar']) .camin-fita { fill: #fbf1e1; stroke: #8f5400; }
+	:global(:root[data-tema='clar']) .camin-fin { fill: #8f5400; }
+	:global(:root[data-tema='clar']) .rets-domeni { fill: color-mix(in srgb, #b36d00 16%, transparent); stroke: rgba(143, 84, 0, 0.85); stroke-width: 1.3; }
+	:global(:root[data-tema='clar']) .rets-arc { stroke: #8f5400; opacity: 0.75; }
+	:global(:root[data-tema='clar']) .rets-flux { stroke: #b53d17; opacity: 1; }
+	:global(:root[data-tema='clar']) .rets-vila { fill: #8f5400; filter: none; }
+	:global(:root[data-tema='clar']) .sist-vis::before { opacity: 0.2; }
 
 	/* ——— Contenu riche de la variante « Combiné » (scope :global pour que Svelte
 	   n'élague pas ces styles, qui ne vivent que dans un extrait conditionnel) ——— */
