@@ -46,27 +46,27 @@
 	// lo nom de cada lenga, dins la lenga de la ficha (anglés, espanhòl,
 	// alemand, italian : las lengas del site a venir)
 	const LENGAS = {
-		oc: { oc: 'Occitan', fr: 'Occitan' },
-		fr: { oc: 'Francés', fr: 'Français' },
-		ca: { oc: 'Catalan', fr: 'Catalan' },
-		frp: { oc: 'Arpitan', fr: 'Arpitan' },
-		eu: { oc: 'Basc', fr: 'Basque' },
-		br: { oc: 'Breton', fr: 'Breton' },
-		als: { oc: 'Alsacian', fr: 'Alsacien' },
-		lb: { oc: 'Francic', fr: 'Francique' },
-		pfl: { oc: 'Francic', fr: 'Francique' },
-		ksh: { oc: 'Francic', fr: 'Francique' },
-		li: { oc: 'Francic', fr: 'Francique' },
-		vls: { oc: 'Flamenc', fr: 'Flamand' },
-		nl: { oc: 'Neerlandés', fr: 'Néerlandais' },
-		co: { oc: 'Còrs', fr: 'Corse' },
-		pcd: { oc: 'Picard', fr: 'Picard' },
-		wa: { oc: 'Valon', fr: 'Wallon' },
-		nrm: { oc: 'Normand', fr: 'Normand' },
-		en: { oc: 'Anglés', fr: 'Anglais' },
-		es: { oc: 'Espanhòl', fr: 'Espagnol' },
-		de: { oc: 'Alemand', fr: 'Allemand' },
-		it: { oc: 'Italian', fr: 'Italien' }
+		oc: { oc: 'Occitan', fr: 'Occitan', es: 'Occitano', en: 'Occitan', ca: 'Occità' },
+		fr: { oc: 'Francés', fr: 'Français', es: 'Francés', en: 'French', ca: 'Francès' },
+		ca: { oc: 'Catalan', fr: 'Catalan', es: 'Catalán', en: 'Catalan', ca: 'Català' },
+		frp: { oc: 'Arpitan', fr: 'Arpitan', es: 'Arpitano', en: 'Arpitan', ca: 'Arpità' },
+		eu: { oc: 'Basc', fr: 'Basque', es: 'Vasco', en: 'Basque', ca: 'Basc' },
+		br: { oc: 'Breton', fr: 'Breton', es: 'Bretón', en: 'Breton', ca: 'Bretó' },
+		als: { oc: 'Alsacian', fr: 'Alsacien', es: 'Alsaciano', en: 'Alsatian', ca: 'Alsacià' },
+		lb: { oc: 'Francic', fr: 'Francique', es: 'Franconio', en: 'Franconian', ca: 'Francònic' },
+		pfl: { oc: 'Francic', fr: 'Francique', es: 'Franconio', en: 'Franconian', ca: 'Francònic' },
+		ksh: { oc: 'Francic', fr: 'Francique', es: 'Franconio', en: 'Franconian', ca: 'Francònic' },
+		li: { oc: 'Francic', fr: 'Francique', es: 'Franconio', en: 'Franconian', ca: 'Francònic' },
+		vls: { oc: 'Flamenc', fr: 'Flamand', es: 'Flamenco', en: 'Flemish', ca: 'Flamenc' },
+		nl: { oc: 'Neerlandés', fr: 'Néerlandais', es: 'Neerlandés', en: 'Dutch', ca: 'Neerlandès' },
+		co: { oc: 'Còrs', fr: 'Corse', es: 'Corso', en: 'Corsican', ca: 'Cors' },
+		pcd: { oc: 'Picard', fr: 'Picard', es: 'Picardo', en: 'Picard', ca: 'Picard' },
+		wa: { oc: 'Valon', fr: 'Wallon', es: 'Valón', en: 'Walloon', ca: 'Való' },
+		nrm: { oc: 'Normand', fr: 'Normand', es: 'Normando', en: 'Norman', ca: 'Normand' },
+		en: { oc: 'Anglés', fr: 'Anglais', es: 'Inglés', en: 'English', ca: 'Anglès' },
+		es: { oc: 'Espanhòl', fr: 'Espagnol', es: 'Español', en: 'Spanish', ca: 'Espanyol' },
+		de: { oc: 'Alemand', fr: 'Allemand', es: 'Alemán', en: 'German', ca: 'Alemany' },
+		it: { oc: 'Italian', fr: 'Italien', es: 'Italiano', en: 'Italian', ca: 'Italià' }
 	};
 	// Los mots de la ficha, per lenga : una lenga del site de mai (anglés,
 	// espanhòl, catalan…) = una entrada de mai ; sens entrada, lo francés
@@ -84,7 +84,8 @@
 			tèxt: 'Tèxt : Wikipèdia',
 			chifras: 'Chifras',
 			lenga: 'Lenga de la ficha',
-			nombres: 'fr-FR'
+			nombres: 'fr-FR',
+			dp: ' :'
 		},
 		fr: {
 			tampar: 'Fermer',
@@ -99,7 +100,57 @@
 			tèxt: 'Texte : Wikipédia',
 			chifras: 'Chiffres',
 			lenga: 'Langue de la fiche',
-			nombres: 'fr-FR'
+			nombres: 'fr-FR',
+			dp: ' :'
+		},
+		es: {
+			tampar: 'Cerrar',
+			abitants: 'habitantes',
+			gentilici: 'Habitantes',
+			legirMai: 'Saber más',
+			plegar: 'Ver menos',
+			vila: 'Descubrir la ciudad',
+			vilaLèu: 'Descubrir la ciudad: próximamente',
+			article: (l) => `Leer el artículo de Wikipedia en ${l}`,
+			fòto: 'Foto',
+			tèxt: 'Texto: Wikipedia',
+			chifras: 'Cifras',
+			lenga: 'Idioma de la ficha',
+			nombres: 'es-ES',
+			dp: ':'
+		},
+		en: {
+			tampar: 'Close',
+			abitants: 'inhabitants',
+			gentilici: 'Inhabitants',
+			legirMai: 'Read more',
+			plegar: 'Show less',
+			vila: 'Discover the town',
+			vilaLèu: 'Discover the town: coming soon',
+			// (le nom de la langue arrive en minuscules : l'anglais lui veut une majuscule)
+			article: (l) => `Read the Wikipedia article in ${l.charAt(0).toUpperCase() + l.slice(1)}`,
+			fòto: 'Photo',
+			tèxt: 'Text: Wikipedia',
+			chifras: 'Figures',
+			lenga: 'Language of this card',
+			nombres: 'en-GB',
+			dp: ':'
+		},
+		ca: {
+			tampar: 'Tancar',
+			abitants: 'habitants',
+			gentilici: 'Habitants',
+			legirMai: 'Saber-ne més',
+			plegar: "Veure'n menys",
+			vila: 'Descobrir la ciutat',
+			vilaLèu: 'Descobrir la ciutat: aviat',
+			article: (l) => `Llegir l'article de la Viquipèdia en ${l}`,
+			fòto: 'Foto',
+			tèxt: 'Text: Viquipèdia',
+			chifras: 'Xifres',
+			lenga: 'Llengua de la fitxa',
+			nombres: 'ca-ES',
+			dp: ':'
 		}
 	};
 
@@ -288,7 +339,7 @@
 				<div class="cos">
 					<h2 lang={lengaNom} style:--i="0">{nom}</h2>
 					{#if chifras.length}<p class="chifras" style:--i="1">{chifras.join(' · ')}</p>{/if}
-					{#if gentilici}<p class="gentilici" style:--i="2">{t.gentilici} : {gentilici}</p>{/if}
+					{#if gentilici}<p class="gentilici" style:--i="2">{t.gentilici}{t.dp} {gentilici}</p>{/if}
 					{#if cargant}<p class="cargant" aria-hidden="true">…</p>{/if}
 					{#if dades && (lenguasTèxt.length || fichaSite)}
 						<button type="button" class="desplegar" style:--i="3" aria-expanded={dobèrta} onclick={() => (dobèrta = !dobèrta)}
@@ -312,12 +363,12 @@
 							>
 						{/if}
 						<p class="credits">
-							{#if dades.fòto}{t.fòto} : {#if dades.fòto.pagina}<a href={dades.fòto.pagina} target="_blank" rel="noopener">{dades.fòto.autor ?? 'Wikimedia Commons'}</a
+							{#if dades.fòto}{t.fòto}{t.dp} {#if dades.fòto.pagina}<a href={dades.fòto.pagina} target="_blank" rel="noopener">{dades.fòto.autor ?? 'Wikimedia Commons'}</a
 								>{:else}{dades.fòto.autor ?? 'Wikimedia Commons'}{/if}{dades.fòto.licéncia ? `, ${dades.fòto.licéncia}` : ''}{' · '}{/if}{#if extrach}{t.tèxt}, <a
 									href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr"
 									target="_blank"
 									rel="noopener">CC BY-SA 4.0</a
-								>{' · '}{/if}{t.chifras} : Wikidata
+								>{' · '}{/if}{t.chifras}{t.dp} Wikidata
 						</p>
 					</footer>
 				</div>

@@ -154,9 +154,226 @@
 			tornarFamilhas: (f) => `${f} : revenir aux familles`,
 			fuelhaReduire: 'Réduire le panneau',
 			anarTitol: "Aller à l'échelle où la couche est visible"
+		},
+		es: {
+			rail: 'Capas del mapa',
+			sons: (on) => (on ? 'Sonidos del mapa: activados' : 'Sonidos del mapa: silenciados'),
+			desplaçar: 'Mover el panel (también con las flechas; doble clic o tecla Inicio: devolverlo a su sitio)',
+			reduire: 'Reducir el panel',
+			enBas: 'Poner el panel abajo, en horizontal',
+			costat: 'Poner el panel en el lateral',
+			desplegar: 'Desplegar el panel',
+			sus: 'En el mapa',
+			fons: 'Fondo',
+			tampar: 'Cerrar',
+			aVenir: 'Próximamente',
+			indisponible: 'No disponible por ahora',
+			disponiblas: (n) => `${n} ${n > 1 ? 'capas disponibles' : 'capa disponible'}`,
+			venir: (n) => `${n} próximamente`,
+			res: 'Ninguna capa: el mapa está desnudo. Elige una dentro de una familia.',
+			afichatOc: 'Mostrar el occitano',
+			afichadas: (n) => `${n} ${n > 1 ? 'capas mostradas' : 'capa mostrada'}`,
+			fonsCarta: 'Fondo del mapa',
+			basemaps: { estelas: 'Contornos', occitan: 'Occitano', natural: 'Natural', satellite: 'Satélite' },
+			colors: 'Colores',
+			colorDe: { costa: 'Línea de costa', riu: 'Ríos', estela: 'Ciudades y nombres', corba: 'Relieve' },
+			sonqueContorns: 'Solo los contornos',
+			anullar: 'Deshacer',
+			anullarTitol: 'Deshacer la última acción (Ctrl+Z)',
+			netejar: 'Vaciar el mapa',
+			onglets: [['franca', 'Francia'], ['trans', 'Transfronterizas'], ['europa', 'Europa'], ['mond', 'Mundo']],
+			ordres: [['alfa', 'A → Z'], ['loc', 'Hablantes']],
+			ordreTit: 'Ordenar las lenguas',
+			nLengas: (n) => `${n} lenguas`,
+			deVenir: 'próximamente',
+			locutors: 'hablantes',
+			nDial: (n, sub) => `${n} ${sub ? 'lenguas y hablas' : 'dialectos'}`,
+			dialDe: (l) => `Dialectos: ${l}`,
+			fonts: 'Fuentes:',
+			netejarTitol: 'Apagar todas las capas y empezar de cero',
+			sonqueFons: 'Solo en el fondo Contornos',
+			totTornar: 'Restablecerlo todo',
+			colorsTema: 'Colores del tema',
+			color: (n) => `Color: ${n}`,
+			dialecteTotes: 'Todos',
+			causirDial: 'Elegir uno o varios dialectos',
+			gropeDial: { fr: 'En Francia', frontiera: 'Transfronterizos', defora: 'Fuera de Francia' },
+			causirLenga: (l) => `Elegir una zona: ${l}`,
+			admin: 'Modificar en la administración',
+			anar: 'Ir',
+			fuelhaAgrandir: 'Ampliar el panel',
+			totDetalh: 'Todo el detalle',
+			tornarOc: 'Volver al occitano',
+			environament: (pl) => (pl ? 'Ver las lenguas en su entorno lingüístico' : 'Ver la lengua en su entorno lingüístico'),
+			amagarRèsta: 'Solo la parte francesa',
+			occitan: 'Occitano',
+			lengas: 'Lenguas',
+			lengasFranca: 'Lenguas de Francia',
+			jaçaActiva: 'capa activa',
+			levarCausida: (n) => `Quitar la selección: ${n}`,
+			tornarFamilhas: (f) => `${f}: volver a las familias`,
+			fuelhaReduire: 'Reducir el panel',
+			anarTitol: 'Ir a la escala en la que se ve la capa',
+			dp: ':',
+			escala: (a, b) => (b ? `Visible de ${a} a ${b}` : `Visible a partir de ${a}`),
+			occitanDesc: 'Sus seis dialectos, de Burdeos a Niza; el Valle de Arán y valles de Italia también',
+			familha: 'románica',
+			infoOc: 'Clasificación: indoeuropeo › romance › galorromance › occitanorromance (Glottolog, Instituto Max Planck)',
+			infoDial: 'Dialectos según el mapa de Occitanica (CIRDÒC), ajustado a los municipios'
+		},
+		en: {
+			rail: 'Map layers',
+			sons: (on) => (on ? 'Map sounds: on' : 'Map sounds: off'),
+			desplaçar: 'Move the panel (arrow keys too; double-click or the Home key: put it back)',
+			reduire: 'Collapse the panel',
+			enBas: 'Put the panel at the bottom, horizontally',
+			costat: 'Put the panel at the side',
+			desplegar: 'Expand the panel',
+			sus: 'On the map',
+			fons: 'Background',
+			tampar: 'Close',
+			aVenir: 'Coming soon',
+			indisponible: 'Not available yet',
+			disponiblas: (n) => `${n} ${n > 1 ? 'layers available' : 'layer available'}`,
+			venir: (n) => `${n} coming soon`,
+			res: 'No layers: the map is bare. Pick one from a family.',
+			afichatOc: 'Show Occitan',
+			afichadas: (n) => `${n} ${n > 1 ? 'layers shown' : 'layer shown'}`,
+			fonsCarta: 'Map background',
+			basemaps: { estelas: 'Outlines', occitan: 'Occitan', natural: 'Natural', satellite: 'Satellite' },
+			colors: 'Colours',
+			colorDe: { costa: 'Coastline', riu: 'Rivers', estela: 'Towns and names', corba: 'Relief' },
+			sonqueContorns: 'Outlines only',
+			anullar: 'Undo',
+			anullarTitol: 'Undo the last action (Ctrl+Z)',
+			netejar: 'Clear the map',
+			onglets: [['franca', 'France'], ['trans', 'Cross-border'], ['europa', 'Europe'], ['mond', 'World']],
+			ordres: [['alfa', 'A → Z'], ['loc', 'Speakers']],
+			ordreTit: 'Sort the languages',
+			nLengas: (n) => `${n} languages`,
+			deVenir: 'coming soon',
+			locutors: 'speakers',
+			nDial: (n, sub) => `${n} ${sub ? 'languages and varieties' : 'dialects'}`,
+			dialDe: (l) => `Dialects: ${l}`,
+			fonts: 'Sources:',
+			netejarTitol: 'Switch off every layer and start from scratch',
+			sonqueFons: 'Only on the Outlines background',
+			totTornar: 'Reset everything',
+			colorsTema: 'Theme colours',
+			color: (n) => `Colour: ${n}`,
+			dialecteTotes: 'All',
+			causirDial: 'Choose one or more dialects',
+			gropeDial: { fr: 'In France', frontiera: 'Cross-border', defora: 'Outside France' },
+			causirLenga: (l) => `Choose an area: ${l}`,
+			admin: 'Edit in the admin area',
+			anar: 'Go',
+			fuelhaAgrandir: 'Enlarge the panel',
+			totDetalh: 'Full details',
+			tornarOc: 'Back to Occitan',
+			environament: (pl) => (pl ? 'See the languages in their linguistic environment' : 'See the language in its linguistic environment'),
+			amagarRèsta: 'French part only',
+			occitan: 'Occitan',
+			lengas: 'Languages',
+			lengasFranca: 'Languages of France',
+			jaçaActiva: 'active layer',
+			levarCausida: (n) => `Remove the selection: ${n}`,
+			tornarFamilhas: (f) => `${f}: back to the families`,
+			fuelhaReduire: 'Collapse the panel',
+			anarTitol: 'Go to the scale where the layer can be seen',
+			dp: ':',
+			escala: (a, b) => (b ? `Visible from ${a} to ${b}` : `Visible from ${a} onwards`),
+			occitanDesc: 'Its six dialects, from Bordeaux to Nice; the Aran Valley and some valleys in Italy too',
+			familha: 'Romance',
+			infoOc: 'Classification: Indo-European › Romance › Gallo-Romance › Occitano-Romance (Glottolog, Max Planck Institute)',
+			infoDial: 'Dialects after the Occitanica map (CIRDÒC), adjusted to the communes'
+		},
+		ca: {
+			rail: 'Capes del mapa',
+			sons: (on) => (on ? 'Sons del mapa: activats' : 'Sons del mapa: silenciats'),
+			desplaçar: 'Moure el panell (també amb les fletxes; doble clic o tecla Inici: tornar-lo al seu lloc)',
+			reduire: 'Reduir el panell',
+			enBas: 'Posar el panell a baix, en horitzontal',
+			costat: 'Posar el panell al costat',
+			desplegar: 'Desplegar el panell',
+			sus: 'Al mapa',
+			fons: 'Fons',
+			tampar: 'Tancar',
+			aVenir: 'Properament',
+			indisponible: 'No disponible per ara',
+			disponiblas: (n) => `${n} ${n > 1 ? 'capes disponibles' : 'capa disponible'}`,
+			venir: (n) => `${n} properament`,
+			res: 'Cap capa: el mapa és nu. Tria’n una dins d’una família.',
+			afichatOc: 'Mostrar l’occità',
+			afichadas: (n) => `${n} ${n > 1 ? 'capes mostrades' : 'capa mostrada'}`,
+			fonsCarta: 'Fons del mapa',
+			basemaps: { estelas: 'Contorns', occitan: 'Occità', natural: 'Natural', satellite: 'Satèl·lit' },
+			colors: 'Colors',
+			colorDe: { costa: 'Línia de costa', riu: 'Rius', estela: 'Ciutats i noms', corba: 'Relleu' },
+			sonqueContorns: 'Només els contorns',
+			anullar: 'Desfer',
+			anullarTitol: 'Desfer l’última acció (Ctrl+Z)',
+			netejar: 'Buidar el mapa',
+			onglets: [['franca', 'França'], ['trans', 'Transfrontereres'], ['europa', 'Europa'], ['mond', 'Món']],
+			ordres: [['alfa', 'A → Z'], ['loc', 'Parlants']],
+			ordreTit: 'Ordenar les llengües',
+			nLengas: (n) => `${n} llengües`,
+			deVenir: 'properament',
+			locutors: 'parlants',
+			nDial: (n, sub) => `${n} ${sub ? 'llengües i parlars' : 'dialectes'}`,
+			dialDe: (l) => `Dialectes: ${l}`,
+			fonts: 'Fonts:',
+			netejarTitol: 'Apagar totes les capes i tornar a començar de zero',
+			sonqueFons: 'Només sobre el fons Contorns',
+			totTornar: 'Restablir-ho tot',
+			colorsTema: 'Colors del tema',
+			color: (n) => `Color: ${n}`,
+			dialecteTotes: 'Tots',
+			causirDial: 'Triar un o diversos dialectes',
+			gropeDial: { fr: 'A França', frontiera: 'Transfronterers', defora: 'Fora de França' },
+			causirLenga: (l) => `Triar una zona: ${l}`,
+			admin: 'Modificar a l’administració',
+			anar: 'Anar-hi',
+			fuelhaAgrandir: 'Ampliar el panell',
+			totDetalh: 'Tot el detall',
+			tornarOc: 'Tornar a l’occità',
+			environament: (pl) => (pl ? 'Veure les llengües en el seu entorn lingüístic' : 'Veure la llengua en el seu entorn lingüístic'),
+			amagarRèsta: 'Només la part francesa',
+			occitan: 'Occità',
+			lengas: 'Llengües',
+			lengasFranca: 'Llengües de França',
+			jaçaActiva: 'capa activa',
+			levarCausida: (n) => `Treure la selecció: ${n}`,
+			tornarFamilhas: (f) => `${f}: tornar a les famílies`,
+			fuelhaReduire: 'Reduir el panell',
+			anarTitol: 'Anar a l’escala on es veu la capa',
+			dp: ':',
+			escala: (a, b) => (b ? `Visible de ${a} a ${b}` : `Visible a partir de ${a}`),
+			occitanDesc: 'Els seus sis dialectes, de Bordeus a Niça; la Vall d’Aran i valls d’Itàlia també',
+			familha: 'romànica',
+			infoOc: 'Classificació: indoeuropeu › romànic › galoromànic › occitanoromànic (Glottolog, Institut Max Planck)',
+			infoDial: 'Dialectes segons el mapa d’Occitanica (CIRDÒC), ajustat als municipis'
 		}
 	};
 	let tx = $derived(T[lang] ?? T.oc);
+
+	// Famille de langue et état de vitalité (fichas-lengas.js, fichier généré, avec
+	// seulement oc et fr) : mêmes libellés dans les trois autres langues, clés = le français
+	const FAM_T = {
+		celtique: { es: 'celta', en: 'Celtic', ca: 'cèltica' },
+		germanique: { es: 'germánica', en: 'Germanic', ca: 'germànica' },
+		'germanique, alémanique': { es: 'germánica, alemánica', en: 'Germanic, Alemannic', ca: 'germànica, alemànica' },
+		'germanique, francique': { es: 'germánica, fráncica', en: 'Germanic, Franconian', ca: 'germànica, francònica' },
+		isolat: { es: 'aislada', en: 'isolate', ca: 'aïllada' },
+		romane: { es: 'románica', en: 'Romance', ca: 'romànica' },
+		'romanes, une famille': { es: 'una familia de lenguas románicas', en: 'a family of Romance languages', ca: 'una família de llengües romàniques' }
+	};
+	const VIT_T = {
+		vulnérable: { es: 'vulnerable', en: 'vulnerable', ca: 'vulnerable' },
+		'en danger': { es: 'en peligro', en: 'endangered', ca: 'en perill' },
+		'sérieusement en danger': { es: 'en grave peligro', en: 'severely endangered', ca: 'en perill greu' }
+	};
+	const familhaTx = (f) => f[lang] ?? FAM_T[f.fr]?.[lang] ?? f.fr;
+	const vitalTx = (v) => v[lang] ?? VIT_T[v.fr]?.[lang] ?? v.fr;
 
 	// Icònas de las familhas (traç fin, color del tèxte)
 	const IC = {
@@ -671,19 +888,21 @@
 	const afichadas = $derived(totas.filter((j) => actiu(j) && visibility[j.id]));
 	// lo nombre de jaces alucadas d'una familha (la chifra del rail)
 	const nAlucadas = (id) => familhas.find((f) => f.id === id)?.jaces.filter((j) => actiu(j) && visibility[j.id]).length ?? 0;
-	const nomJ = (j) => (lang === 'oc' ? j.oc : (j.fr ?? j.oc));
+	const nomJ = (j) => (lang === 'oc' ? j.oc : (j[lang] ?? j.fr ?? j.oc));
+	const gropJ = (j) => (lang === 'oc' ? j.grop_oc : (j['grop_' + lang] ?? j.grop_fr));
 	const notaJ = (j) =>
 		j.estat === 'basa'
 			? tx.indisponible
 			: j.estat === 'disponible' && j.fons && j.fons !== baseLayer
 				? tx.sonqueFons
-				: ((lang === 'oc' ? j.nota_oc : (j.nota_fr ?? j.nota_oc)) ?? (actiu(j) ? null : tx.aVenir));
+				: ((lang === 'oc' ? j.nota_oc : (j['nota_' + lang] ?? j.nota_fr ?? j.nota_oc)) ?? (actiu(j) ? null : tx.aVenir));
 	// a quina escala la jaça se vei, escrich quand es cochada (demanda de
 	// Romain, 2026-10-09 ; « visible » : lo Basic de lo Congrès, oc general)
-	const kmTèxt = (k) => (k < 1 ? k * 1000 + ' m' : String(k).replace('.', ',') + ' km');
+	const kmTèxt = (k) => (k < 1 ? k * 1000 + ' m' : String(k).replace('.', lang === 'en' ? '.' : ',') + ' km');
 	const escalaJ = (j) => {
 		const pl = PLAJAS[j.id];
 		if (!pl) return null;
+		if (tx.escala) return tx.escala(kmTèxt(pl[0]), pl[1] ? kmTèxt(pl[1]) : null);
 		if (lang === 'oc') return pl[1] ? `Visibla de ${kmTèxt(pl[0])} a ${kmTèxt(pl[1])}` : `Visibla a partir de ${kmTèxt(pl[0])}`;
 		return pl[1] ? `Visible de ${kmTèxt(pl[0])} à ${kmTèxt(pl[1])}` : `Visible à partir de ${kmTèxt(pl[0])}`;
 	};
@@ -692,7 +911,7 @@
 		if (id === 'sus') return tx.sus;
 		if (id === 'fons') return tx.fons;
 		const f = familhas.find((x) => x.id === id);
-		return f ? (lang === 'oc' ? f.oc : f.fr) : id;
+		return f ? (lang === 'oc' ? f.oc : (f[lang] ?? f.fr)) : id;
 	};
 
 	// Tota la linha aluca o escantís sa jaça (decision de Romain, 2026-10-10) ;
@@ -1081,7 +1300,7 @@
 		</header>
 
 		{#if dobert === 'sus'}
-			<p class="sota">{tx.afichadas(afichadas.length)} · {tx.fonsCarta.toLowerCase()} : {tx.basemaps[baseLayer] ?? baseLayer}</p>
+			<p class="sota">{tx.afichadas(afichadas.length)} · {tx.fonsCarta.toLowerCase()}{tx.dp ?? ' :'} {tx.basemaps[baseLayer] ?? baseLayer}</p>
 			<div class="botons botons-sus">
 				<button type="button" class="boton" onclick={anullar} disabled={!istoric.length} title={tx.anullarTitol}>
 					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
@@ -1189,7 +1408,7 @@
 					<p class="sota">{tx.disponiblas(dispo)}{f.jaces.length - dispo ? ' · ' + tx.venir(f.jaces.length - dispo) : ''}</p>
 					{#each f.jaces as j, i (j.id)}
 						<!-- los gropes d'una familha (Ensenhament : l'immersion, l'ensenhament public, lo superior e los adults) -->
-						{#if j.grop_oc && j.grop_oc !== f.jaces[i - 1]?.grop_oc}<p class="titolet grop-j">{lang === 'oc' ? j.grop_oc : j.grop_fr}</p>{/if}
+						{#if j.grop_oc && j.grop_oc !== f.jaces[i - 1]?.grop_oc}<p class="titolet grop-j">{gropJ(j)}</p>{/if}
 						{@render linha(j)}
 					{/each}
 				{/if}
@@ -1246,9 +1465,9 @@
 			<div class="ficha-cos">
 				<span class="endo" lang="oc">Occitan</span>
 				<span class="nom-lg">{lang === 'fr' ? 'occitan' : 'occitan'}</span>
-				<p class="desc">{lang === 'fr' ? "Ses six dialectes, de Bordeaux à Nice ; le Val d'Aran et des vallées d'Italie aussi" : "Sos sièis dialèctes, de Bordèu a Niça ; la Val d'Aran e de valadas d'Itàlia tanben"}</p>
+				<p class="desc">{tx.occitanDesc ?? (lang === 'fr' ? "Ses six dialectes, de Bordeaux à Nice ; le Val d'Aran et des vallées d'Italie aussi" : "Sos sièis dialèctes, de Bordèu a Niça ; la Val d'Aran e de valadas d'Itàlia tanben")}</p>
 				<p class="meta">
-					{@render infoFont({ t: 'Classement : indo-européen › roman › gallo-roman › occitano-roman (Glottolog, Institut Max Planck)', url: 'https://glottolog.org/glottolog?search=Occitan' }, lang === 'fr' ? 'romane' : 'romana')}
+					{@render infoFont({ t: tx.infoOc ?? 'Classement : indo-européen › roman › gallo-roman › occitano-roman (Glottolog, Institut Max Planck)', url: 'https://glottolog.org/glottolog?search=Occitan' }, tx.familha ?? (lang === 'fr' ? 'romane' : 'romana'))}
 				</p>
 			</div>
 			<div class="ficha-dreita">
@@ -1260,7 +1479,7 @@
 			<button type="button" class="desplegar" aria-expanded={dob} onclick={() => virarDials('occitan')}
 				><span class="chev" aria-hidden="true">▸</span>{tx.nDial(NOMS_DIAL.length, false)}</button
 			>
-			{@render infoFont({ t: "Dialèctes d'après la carte d'Occitanica (CIRDÒC), recalée sur les communes", url: 'https://www.occitanica.eu' }, 'ⓘ', 'sol')}
+			{@render infoFont({ t: tx.infoDial ?? "Dialèctes d'après la carte d'Occitanica (CIRDÒC), recalée sur les communes", url: 'https://www.occitanica.eu' }, 'ⓘ', 'sol')}
 		</div>
 		{#if dob}
 			<ul class="albre" role="group" aria-label={tx.causirDial} transition:slide={{ duration: 200 }}>
@@ -1300,8 +1519,8 @@
 				<!-- cada informacion amb sa font al survòl (demanda de Romain : cercaires o institucions) -->
 				<p class="meta">
 					{#if fi.locutors}{@render infoFont(fi.fontLocutors, `<b>${fi.locutors}</b> ${tx.locutors}`)}{/if}
-					{#if fi.familha}{@render infoFont(fi.fontFamilha, fi.familha[lang] ?? fi.familha.fr)}{/if}
-					{#if fi.vital}{@render infoFont({ t: fi.vital.t, url: 'https://unesdoc.unesco.org/ark:/48223/pf0000187026' }, `<i style="background:${VITALITAT[fi.vital.k] ?? '#999'}"></i>${fi.vital[lang] ?? fi.vital.fr}`, 'vital')}{/if}
+					{#if fi.familha}{@render infoFont(fi.fontFamilha, familhaTx(fi.familha))}{/if}
+					{#if fi.vital}{@render infoFont({ t: fi.vital.t, url: 'https://unesdoc.unesco.org/ark:/48223/pf0000187026' }, `<i style="background:${VITALITAT[fi.vital.k] ?? '#999'}"></i>${vitalTx(fi.vital)}`, 'vital')}{/if}
 				</p>
 			</div>
 			<div class="ficha-dreita">
@@ -1444,7 +1663,7 @@
 						{#if obèrt}
 							<div class="grope-sots">
 								{@render pastilhaLenga(j, lg, q, sots.length, true)}
-								<div class="sots" role="group" aria-label={lang === 'fr' ? `Dialectes du ${q.fr}` : `Dialèctes del ${q.oc}`}>
+								<div class="sots" role="group" aria-label={tx.dialDe(lang === 'fr' ? q.fr : q.oc)}>
 									{#each sots as x (x.k)}{@render pastilhaLenga(j, lg, x, 0, false)}{/each}
 								</div>
 							</div>

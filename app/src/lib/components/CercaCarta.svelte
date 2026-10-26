@@ -26,6 +26,30 @@
 			despartament: 'Département',
 			region: 'Région',
 			esfaçar: 'Effacer'
+		},
+		es: {
+			etiqueta: 'Buscar en el mapa',
+			placeholder: 'Buscar una ciudad, un departamento…',
+			cap: 'Ningún resultado',
+			despartament: 'Departamento',
+			region: 'Región',
+			esfaçar: 'Borrar'
+		},
+		en: {
+			etiqueta: 'Search the map',
+			placeholder: 'Search for a town, a department…',
+			cap: 'No results',
+			despartament: 'Department',
+			region: 'Region',
+			esfaçar: 'Clear'
+		},
+		ca: {
+			etiqueta: 'Cercar al mapa',
+			placeholder: 'Cercar una ciutat, un departament…',
+			cap: 'Cap resultat',
+			despartament: 'Departament',
+			region: 'Regió',
+			esfaçar: 'Esborrar'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);

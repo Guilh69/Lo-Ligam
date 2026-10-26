@@ -26,9 +26,9 @@
 	} = $props();
 
 	const MOTS = {
-		solelh: { oc: 'lo solelh', fr: 'le soleil' },
-		bisa: { oc: 'la bisa', fr: 'la bise' },
-		viatjaire: { oc: 'lo viatjaire', fr: 'le voyageur' }
+		solelh: { oc: 'lo solelh', fr: 'le soleil', es: 'el sol', en: 'the sun', ca: 'el sol' },
+		bisa: { oc: 'la bisa', fr: 'la bise', es: 'el viento del norte', en: 'the north wind', ca: 'el vent del nord' },
+		viatjaire: { oc: 'lo viatjaire', fr: 'le voyageur', es: 'el viajero', en: 'the traveller', ca: 'el viatger' }
 	};
 	// les formes d'un mot, des plus courantes aux plus rares, avec la couleur
 	// du dialecte où on l'entend le plus
@@ -51,7 +51,10 @@
 
 	const t = {
 		oc: { dins: 'dins', parlars: 'parlars', tocatz: "Toca un mot per l'ausir", escotar: 'Escotar', pausa: 'Pausa', tampar: 'Tampar', seguenta: 'Votz seguenta', votz: 'votz', Votz: 'Votz', classica: 'Grafia classica', mistral: 'Grafia de Mistral', autra: 'Autra grafia', titol: '« La bisa e lo solelh »', posicion: 'Posicion', cro: 'Creissent' },
-		fr: { dins: 'dans', parlars: 'parlers', tocatz: "Touche un mot pour l'entendre", escotar: 'Écouter', pausa: 'Pause', tampar: 'Fermer', seguenta: 'Voix suivante', votz: 'voix', Votz: 'Voix', classica: 'Graphie classique', mistral: 'Graphie mistralienne', autra: 'Autre graphie', titol: '« La bise et le soleil »', posicion: 'Position', cro: 'Croissant' }
+		fr: { dins: 'dans', parlars: 'parlers', tocatz: "Touche un mot pour l'entendre", escotar: 'Écouter', pausa: 'Pause', tampar: 'Fermer', seguenta: 'Voix suivante', votz: 'voix', Votz: 'Voix', classica: 'Graphie classique', mistral: 'Graphie mistralienne', autra: 'Autre graphie', titol: '« La bise et le soleil »', posicion: 'Position', cro: 'Croissant', unmot: 'Un mot, cent parlers' },
+		es: { dins: 'en', parlars: 'hablas', tocatz: 'Toca una palabra para oírla', escotar: 'Escuchar', pausa: 'Pausa', tampar: 'Cerrar', seguenta: 'Siguiente voz', votz: 'voz', Votz: 'Voz', classica: 'Grafía clásica', mistral: 'Grafía mistraliana', autra: 'Otra grafía', titol: '« El viento del norte y el sol »', posicion: 'Posición', cro: 'Croissant', unmot: 'Una palabra, cien hablas' },
+		en: { dins: 'in', parlars: 'local varieties', tocatz: 'Touch a word to hear it', escotar: 'Listen', pausa: 'Pause', tampar: 'Close', seguenta: 'Next voice', votz: 'voice', Votz: 'Voice', classica: 'Classical spelling', mistral: 'Mistralian spelling', autra: 'Other spelling', titol: '“The North Wind and the Sun”', posicion: 'Position', cro: 'Croissant', unmot: 'One word, a hundred ways of speaking' },
+		ca: { dins: 'en', parlars: 'parlars', tocatz: 'Toca una paraula per sentir-la', escotar: 'Escoltar', pausa: 'Pausa', tampar: 'Tancar', seguenta: 'Veu següent', votz: 'veu', Votz: 'Veu', classica: 'Grafia clàssica', mistral: 'Grafia mistraliana', autra: 'Una altra grafia', titol: '« El vent del nord i el sol »', posicion: 'Posició', cro: 'Croissant', unmot: 'Una paraula, cent parlars' }
 	};
 	let tx = $derived(t[lang] ?? t.oc);
 
@@ -136,22 +139,22 @@
 
 {#if actiu}
 	<!-- « Un mot, cent parlars » : la carte écrit la forme locale du mot choisi -->
-	<div class="votz-mots" role="group" aria-label={fr ? 'Un mot, cent parlers' : 'Un mot, cent parlars'}>
+	<div class="votz-mots" role="group" aria-label={tx.unmot}>
 		{#each Object.entries(MOTS) as [k, l] (k)}
 			<button type="button" class:actiu={mot === k} aria-pressed={mot === k} onclick={() => (mot = mot === k ? null : k)}>
-				{fr ? l.fr : l.oc}
+				{l[lang] ?? l.oc}
 			</button>
 		{/each}
 	</div>
 {/if}
 
 {#if actiu && mot && !punt}
-	<section class="votz-fuelha votz-formas" aria-label={fr ? MOTS[mot].fr : MOTS[mot].oc}>
+	<section class="votz-fuelha votz-formas" aria-label={MOTS[mot][lang] ?? MOTS[mot].oc}>
 		<div class="manha" aria-hidden="true"></div>
 		<button type="button" class="tampar" onclick={() => (mot = null)} aria-label={tx.tampar} title={tx.tampar}>
 			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
 		</button>
-		<p class="formas-cap"><span class="mot-titol">«&nbsp;{fr ? MOTS[mot].fr : MOTS[mot].oc}&nbsp;»</span> <span class="titol">{tx.dins} {lòcs} {tx.parlars}</span></p>
+		<p class="formas-cap"><span class="mot-titol">«&nbsp;{MOTS[mot][lang] ?? MOTS[mot].oc}&nbsp;»</span> <span class="titol">{tx.dins} {lòcs} {tx.parlars}</span></p>
 		<div class="barras">
 			{#each formas.slice(0, 5) as f (f.w)}
 				<span class="forma" lang="oc" style="color: {colorDe(f.kod)}">{f.w}</span>
@@ -212,7 +215,7 @@
 
 		<div class="accions">
 			{#if seguenta}
-				<button type="button" class="aur" onclick={() => jogar(seguenta)}>{tx.seguenta} : {nomDe(seguenta)} →</button>
+				<button type="button" class="aur" onclick={() => jogar(seguenta)}>{tx.seguenta}{lang === 'oc' || lang === 'fr' ? ' :' : ':'} {nomDe(seguenta)} →</button>
 			{/if}
 			{#if punt.so2}
 				<button type="button" class:actiu={!votz2} onclick={() => votz2 && jogar(punt, false)}>{tx.Votz} 1</button>
