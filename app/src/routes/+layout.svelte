@@ -43,6 +43,9 @@
 
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={favicon} />
+	<link rel="manifest" href="/manifest.webmanifest" />
+	<link rel="apple-touch-icon" href="/icones-app/apple-touch-180.png" />
+	<meta name="theme-color" content="#22100a" />
 	<title>Lo Ligam</title>
 </svelte:head>
 
