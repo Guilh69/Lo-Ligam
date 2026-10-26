@@ -13,7 +13,7 @@
 	import { externalLinks } from '$lib/data/siteSections';
 	import { PLAN, LO_LIGAM } from '$lib/data/planSite.js';
 
-	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.', es: 'Hecho con amor en Occitania.' };
+	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.', es: 'Hecho con amor en Occitania.', en: 'Made with love in Occitania.', ca: 'Fet amb amor a Occitània.' };
 	let { tagline = PER_DEFAUT } = $props();
 	let lang = $derived(langStore.current);
 </script>
@@ -24,17 +24,17 @@
 			>{tria(it)} <Icona nom="extern" size="0.9em" /></a
 		>
 	{:else}
-		<a class="footer-link" href={it.href}><span use:scramble={{ oc: it.oc, fr: it.fr, es: it.es, lang }}>{tria(it)}</span></a>
+		<a class="footer-link" href={it.href}><span use:scramble={{ oc: it.oc, fr: it.fr, es: it.es, en: it.en, ca: it.ca, lang }}>{tria(it)}</span></a>
 	{/if}
 {/snippet}
 
 <footer class="site-footer">
-	<nav class="footer-colomnas" aria-label={tria({ oc: 'Plan del site', fr: 'Plan du site', es: 'Mapa del sitio' })}>
+	<nav class="footer-colomnas" aria-label={tria({ oc: 'Plan del site', fr: 'Plan du site', es: 'Mapa del sitio', en: 'Site map', ca: 'Mapa del web' })}>
 			{#each PLAN as c (c.id)}
 				<div class="footer-col">
 					<p class="footer-col-title">
 						<b class="footer-num">{c.n}</b>
-						<span use:scramble={{ oc: c.oc, fr: c.fr, es: c.es, lang }}>{tria(c)}</span>
+						<span use:scramble={{ oc: c.oc, fr: c.fr, es: c.es, en: c.en, ca: c.ca, lang }}>{tria(c)}</span>
 					</p>
 					{#each c.grops as g, gi (gi)}
 						{#if g.oc}<p class="footer-grop">{tria(g)}</p>{/if}
@@ -55,7 +55,7 @@
 				</ul>
 			</div>
 			<div class="footer-col">
-				<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos', lang }}>{tria({ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos' })}</p>
+				<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos', en: 'Resources', ca: 'Recursos', lang }}>{tria({ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos', en: 'Resources', ca: 'Recursos' })}</p>
 				<ul>
 					{#each externalLinks as l (l.href)}
 						<li>
@@ -71,19 +71,19 @@
 	<p class="footer-nom" aria-hidden="true">Lo Ligam</p>
 
 	<div class="footer-legal">
-		<p use:scramble={{ oc: tagline.oc, fr: tagline.fr, es: tagline.es, lang }}>{tria(tagline)}</p>
+		<p use:scramble={{ oc: tagline.oc, fr: tagline.fr, es: tagline.es, en: tagline.en, ca: tagline.ca, lang }}>{tria(tagline)}</p>
 		<div class="footer-legal-links">
 			<span>© 2026 Lo Ligam</span>
 			<a class="footer-legal-link" href="/mencions-legalas"
-				><span use:scramble={{ oc: 'Mentions legalas', fr: 'Mentions légales', es: 'Avisos legales', lang }}>{tria({ oc: 'Mentions legalas', fr: 'Mentions légales', es: 'Avisos legales' })}</span></a
+				><span use:scramble={{ oc: 'Mentions legalas', fr: 'Mentions légales', es: 'Avisos legales', en: 'Legal notice', ca: 'Avís legal', lang }}>{tria({ oc: 'Mentions legalas', fr: 'Mentions légales', es: 'Avisos legales', en: 'Legal notice', ca: 'Avís legal' })}</span></a
 			>
 			<a class="footer-legal-link" href="/confidencialitat"
-				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', lang }}>{tria({ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad' })}</span></a
+				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', en: 'Privacy', ca: 'Privadesa', lang }}>{tria({ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', en: 'Privacy', ca: 'Privadesa' })}</span></a
 			>
 			<span class="footer-legal-leu"
-				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', lang }}>{tria({ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad' })}</span><em
-					use:scramble={{ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto', lang }}
-				>{tria({ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto' })}</em></span
+				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', en: 'Accessibility', ca: 'Accessibilitat', lang }}>{tria({ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', en: 'Accessibility', ca: 'Accessibilitat' })}</span><em
+					use:scramble={{ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto', en: '· Soon', ca: '· Aviat', lang }}
+				>{tria({ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto', en: '· Soon', ca: '· Aviat' })}</em></span
 			>
 		</div>
 	</div>
