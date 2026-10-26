@@ -1,0 +1,29 @@
+# Doutes de traduction (Aran)
+
+Une ligne par doute. Colonne « Romain » à remplir.
+
+| Langue | Source (oc / fr) | Options | Avis d'Aran | Romain |
+|---|---|---|---|---|
+| en | Se parla / S'apren / Amassa (Se parle / S'apprend / Rassemble) | A. « Speak / Learn / Gather » ; B. « Spoken / Learned / Gathering » ; C. « Say it / Learn it / Gather » | A : court, parallèle, naturel en menu. Perd l'impersonnel (« on parle »), mais Amassa est de toute façon un verbe d'action. | |
+| es | Se parla / S'apren / Amassa | « Se habla / Se aprende / Reúne » (actuel) ; « Habla / Aprende / Reúne » | Actuel gardé (suit l'occitan). Mélange impersonnel + « Reúne » à l'impératif ou à la 3e personne : lecture ambiguë mais acceptable. | |
+| ca | Amassa (Rassemble) | « Reuneix » ; « Agrupa » ; « Ajunta » | « Reuneix » : fidèle à « rassembler les gens ». Attention : « amassa » existe en catalan avec un autre sens (entasse), ne pas le garder tel quel. | |
+| ca | Se connectar (Se connecter) | « Inicia la sessió » ; « Entra » ; « Iniciar sessió » | « Inicia la sessió » (usage courant). Autres boutons catalans à l'infinitif (« Reservar ») : léger mélange impératif / infinitif. | |
+| en | Lo parcors (Le parcours) | « The learning path » ; « The course » ; « Your path » | « The learning path » : « course » prêterait à confusion avec les cours en visio. | |
+| en | Corses en visio (Cours en visio) | « Video lessons » ; « Online lessons » ; « Video-call lessons » | « Video lessons » : court ; peut laisser croire à des vidéos enregistrées. « Live video lessons » si Romain veut lever l'ambiguïté. | |
+| ca | Corses en visio | « Classes per videotrucada » ; « Classes per videoconferència » | « Videotrucada » (terme recommandé, plus chaleureux). | |
+| en/ca | Òbras (Œuvres) | en « Works » ; ca « Obres » | Sens littéraire/artistique (musique, livres). « Works » peut sembler vague en anglais ; « Creative works » possible. | |
+| en/ca | Mèdias | en « Media » ; ca « Mitjans » | « Mitjans » (de comunicació) est l'usage ; « Mitjans » seul peut surprendre, « Mitjans de comunicació » est plus long. | |
+| ca | Plan del site (Plan du site) | « Mapa del web » ; « Mapa del lloc web » ; « Mapa web » | « Mapa del web » : court, courant. | |
+| en/ca | Mentions legalas (Mentions légales) | en « Legal notice » ; ca « Avís legal » | Singulier en en/ca (usage), pluriel en es (« Avisos legales »). Cohérent avec l'usage de chaque langue. | |
+| es/ca/en | Occitània | es « Occitania » ; en « Occitania » ; ca « Occitània » | Règle « noms de lieux occitans gardés » : en/es adaptés à l'usage (sans accent). Si Romain préfère « Occitània » partout, à trancher. | |
+| fr/oc (signalement) | « Se parla » = « Se parle » | — | Pas une faute, mais « Se parle » en français est inhabituel (« On parle »). Je n'y touche pas. | |
+| es/en/ca | « la rispa » (fr « la bise ») dans le bandeau de mots de l'accueil | Sens vent (es « el cierzo » ; en « the north wind » ; ca « la bisa ») ou sens baiser (es « el beso », corrigé : c'était l'ancien choix) | Vent : les mots de la liste sont des mots de nature (coquelicot, guêpier, ciel rouge). Mais « bise » français est ambigu : à confirmer par Romain (sens exact dans le Lexic de Roqueta). | |
+| es | « Benvenguda » (Bienvenue) dans la phrase d'accueil | « Te damos la bienvenida » (actuel) ; « Te doy la bienvenida » ; « Bienvenida » | « Bienvenido » (ancien) était masculin générique, contraire à l'inclusivité. « Te damos » évite le genre ; « Te doy » colle à la voix de Romain seul (« conmigo », « estoy en Lyon »). | |
+| ca/es | « Prèst·a per » / « Començar sol·a » (Prêt·e à / seul·e) | ca « Preparat/ada » et « sol/a » (actuel) ; ca « Preparat·ada » ; es garde « List·a » / « sol·a » | En catalan, « sol·a » se lit « sol·la » (l·l), confusion : barre oblique, forme admise et lisible. En es, « sol·a » est gardé selon la règle, mais « Empezar por tu cuenta » / ca « Començar pel teu compte » serait plus naturel et sans genre. | |
+| en | « Se parla / S'apren / Amassa » comme grands titres de l'accueil | « Speak. Learn. Gather. » (cohérent avec le menu) ; « Spoken. Learned. Gathering. » | Glossaire du menu repris : même terme partout. À l'impératif, le titre sonne comme une consigne ; ça marche aussi en es (« Reúne »). | |
+| es/ca | « Ne parlar amassa » (En parler ensemble) | es « Hablemos de ello » (corrigé) ; en « Let's talk about it » ; ca « Parlem-ne » | « Hablarlo juntos » (ancien) : masculin générique et calque. La forme à la 1re personne du pluriel est naturelle et sans genre. | |
+| es/ca | « sol a sol » (en tête-à-tête) | es « individuales » (corrigé, ancien « cara a cara ») ; en « one-to-one » ; ca « individuals » | « Cara a cara » suggère la présence physique alors que c'est en visio. | |
+| en | « Lexic de Max Roqueta, establit per Joan-Guilhèm Roqueta » | en « Lexicon of Max Rouquette, compiled by… » ; garder le titre en français ; « edited by » | Titre d'œuvre traduit comme en es (« Léxico »). Noms : forme française (Rouquette) en es/en, forme occitane (Roqueta) en ca. Si Romain préfère garder le titre original en toutes langues, à trancher. | |
+| es/en/ca | « Val d'Aran » | es « Valle de Arán » ; en « Aran Valley » ; ca « Vall d'Aran » | Exonymes établis, ca = nom officiel catalan. Règle « lieux occitans gardent leur forme » : à trancher si Romain veut « Val d'Aran » partout. | |
+| ca/en | « Lion » (Lyon) | es « Lyon » ; en « Lyon » ; ca « Lió » | « Lió » est l'exonyme catalan établi. | |
+| en | « Aprene dempuèi : » (Apprendre depuis :, suivi de la liste des langues) | en « Learn from: » ; ca « Aprendre des de: » ; es « Aprender desde: » | Corrigé l'espagnol : il y avait une espace avant les deux-points (« desde : »), à retirer hors du français. | |
