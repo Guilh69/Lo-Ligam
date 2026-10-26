@@ -16,12 +16,12 @@
 	import { editar } from '$lib/edicion/editar.svelte.js';
 
 	const [PARLA, APREN, VIU] = PLAN;
-	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer', es: 'Entrar', en: 'Enter', ca: 'Entrar' };
+	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer', es: 'Entrar', en: 'Enter', ca: 'Entrar', ar: 'ادخل' };
 	// accent = couleur claire qui ressort sur la braise (numéro et lueur de chaque bloc)
 	const ENTITATS = [
-		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.', es: 'El país y sus lenguas, en un mapa de estrellas.', en: 'The country and its languages, on a star map.', ca: 'El país i les seves llengües, en un mapa d’estrelles.' } },
-		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.', es: 'Un camino, paso a paso, a tu ritmo.', en: 'One path, step by step, at your own pace.', ca: 'Un camí, pas a pas, al teu ritme.' } },
-		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.', es: 'Gente, vínculos, por todas partes.', en: 'People, connections, everywhere.', ca: 'Gent, vincles, arreu.' } }
+		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.', es: 'El país y sus lenguas, en un mapa de estrellas.', en: 'The country and its languages, on a star map.', ca: 'El país i les seves llengües, en un mapa d’estrelles.', ar: 'البلد ولغاته، على خريطة من النجوم.' } },
+		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.', es: 'Un camino, paso a paso, a tu ritmo.', en: 'One path, step by step, at your own pace.', ca: 'Un camí, pas a pas, al teu ritme.', ar: 'مسار خطوة بخطوة، وعلى إيقاعك.' } },
+		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.', es: 'Gente, vínculos, por todas partes.', en: 'People, connections, everywhere.', ca: 'Gent, vincles, arreu.', ar: 'ناس وروابط في كل مكان.' } }
 	];
 
 	// Contenu riche RÉUTILISÉ de l'accueil actuel : les chiffres (acuelh.chifras) et
@@ -139,12 +139,12 @@
 				<li><span class="mix-n">{['I', 'II', 'III', 'IV', 'V', 'VI'][i] ?? i + 1}</span><span use:editar={b.clau + '.titol'}>{tria(titol)}</span></li>
 			{/each}
 		</ul>
-		<p class="mix-lengas-cap">{tria({ oc: 'Aprene dempuèi :', fr: 'Apprendre depuis :', es: 'Aprender desde:', en: 'Learn from:', ca: 'Aprendre des de:' })}</p>
+		<p class="mix-lengas-cap">{tria({ oc: 'Aprene dempuèi :', fr: 'Apprendre depuis :', es: 'Aprender desde:', en: 'Learn from:', ca: 'Aprendre des de:', ar: 'تعلّم انطلاقًا من:' })}</p>
 		<div class="mix-lengas">{#each LENGAS as l (l)}<span>{l}</span>{/each}</div>
 	{/if}
 {/snippet}
 
-<section class="mieg" bind:this={racina} aria-label={tria({ oc: 'Las tres rubricas', fr: 'Les trois rubriques', es: 'Las tres secciones', en: 'The three sections', ca: 'Les tres seccions' })}>
+<section class="mieg" bind:this={racina} aria-label={tria({ oc: 'Las tres rubricas', fr: 'Les trois rubriques', es: 'Las tres secciones', en: 'The three sections', ca: 'Les tres seccions', ar: 'الأقسام الثلاثة' })}>
 		{#each ENTITATS as e, i (e.sec.id)}
 			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} style="--color: {e.accent}">
 				<div class="sist-cap">

@@ -30,7 +30,7 @@ export async function legirElements(pagina) {
 		const perClau = Object.fromEntries((filet[pagina] ?? []).map((e) => [e.clau, e]));
 		for (const e of data) {
 			const base = perClau[e.clau];
-			perClau[e.clau] = { ...e, es: e.es ?? base?.es, en: e.en ?? base?.en, ca: e.ca ?? base?.ca };
+			perClau[e.clau] = { ...e, es: e.es ?? base?.es, en: e.en ?? base?.en, ca: e.ca ?? base?.ca, ar: e.ar ?? base?.ar };
 		}
 		rows = Object.values(perClau);
 	} catch {

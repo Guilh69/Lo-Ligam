@@ -18,8 +18,12 @@ const STORAGE_KEY = 'lo-ligam-lang';
 
 // Les deux langues du cœur, puis celles du globe. L'ordre sert à l'affichage.
 export const PRINCIPALAS = ['oc', 'fr'];
-export const AUTRAS = ['es', 'en', 'ca'];
+// 'ar' (arabe standard moderne) : essai depuis le 2026-10-26. S'écrit de droite
+// à gauche (dir=rtl posé sur le document plus bas).
+export const AUTRAS = ['es', 'en', 'ca', 'ar'];
 const SUPPORTED = [...PRINCIPALAS, ...AUTRAS];
+// Les langues qui s'écrivent de droite à gauche.
+const RTL = ['ar'];
 
 // Étiquettes des langues dans leur propre langue (endonymes), plus un code
 // court pour les affichages compacts.
@@ -28,14 +32,15 @@ export const LENGAS = {
 	fr: { nom: 'Français', curt: 'Fr' },
 	es: { nom: 'Español', curt: 'Es' },
 	en: { nom: 'English', curt: 'En' },
-	ca: { nom: 'Català', curt: 'Ca' }
+	ca: { nom: 'Català', curt: 'Ca' },
+	ar: { nom: 'العربية', curt: 'ع' }
 };
 
 // Les langues « secondes » (hors occitan), dans l'ordre alphabétique de leur
 // nom : Català, English, Español, Français. L'occitan reste toujours la 1re
 // place de la bascule ; la 2e montre la « seconde » langue (français par
 // défaut), que le globe permet de changer (demande de Romain, 2026-10-26).
-export const SEGONDAS = ['ca', 'en', 'es', 'fr'];
+export const SEGONDAS = ['ar', 'ca', 'en', 'es', 'fr'];
 const SEGONDA_KEY = 'lo-ligam-segonda';
 
 let current = $state('oc');
@@ -59,6 +64,7 @@ export const lang = {
 			// ce n'est pas une raison pour casser le changement de langue.
 		}
 		document.documentElement.lang = value;
+		document.documentElement.dir = RTL.includes(value) ? 'rtl' : 'ltr';
 	},
 	get segonda() {
 		return segonda;
@@ -96,4 +102,5 @@ if (browser) {
 	if (current !== 'oc') segonda = current;
 	else if (SEGONDAS.includes(savedSegonda)) segonda = savedSegonda;
 	document.documentElement.lang = current;
+	document.documentElement.dir = RTL.includes(current) ? 'rtl' : 'ltr';
 }

@@ -9,12 +9,21 @@
 //
 // On empile une couche par langue fournie (oc toujours là, sert de repli) ;
 // une langue absente n'a pas de couche et retombe sur l'occitan.
-const CODES = ['oc', 'fr', 'es', 'en', 'ca'];
+const CODES = ['oc', 'fr', 'es', 'en', 'ca', 'ar'];
 
-function buildLayer(str, stagger) {
+function buildLayer(str, stagger, code) {
 	const layer = document.createElement('span');
 	layer.style.gridArea = '1 / 1';
 	layer.style.display = 'block';
+	// L'arabe (écriture liée, de droite à gauche) ne se découpe pas lettre par
+	// lettre : les lettres s'afficheraient isolées. On fond le bloc entier.
+	if (code === 'ar') {
+		const mot = document.createElement('span');
+		mot.textContent = str;
+		mot.style.transition = 'opacity 560ms ease-in-out, filter 560ms ease-in-out, color 240ms ease';
+		layer.appendChild(mot);
+		return layer;
+	}
 	let i = 0;
 	for (const ch of str) {
 		const letter = document.createElement('span');
@@ -59,7 +68,7 @@ export function scramble(node, params) {
 		for (const c of CODES) {
 			if (p[c] == null) continue;
 			textos[c] = p[c];
-			const jaça = buildLayer(p[c], stagger);
+			const jaça = buildLayer(p[c], stagger, c);
 			jaças[c] = jaça;
 			node.appendChild(jaça);
 		}
