@@ -19,12 +19,11 @@ const STORAGE_KEY = 'lo-ligam-lang';
 // Les deux langues du cœur, puis celles du globe. L'ordre sert à l'affichage.
 export const PRINCIPALAS = ['oc', 'fr'];
 // 'ar' (arabe standard moderne) : en cours depuis le 2026-10-26. S'écrit de droite
-// à gauche (dir=rtl posé sur le document plus bas). Il n'est PAS proposé au
-// globe tant que le site n'est pas entièrement traduit et relu en arabe (il
-// était parti en ligne à moitié traduit le 26-10, corrigé aussitôt) : passer
-// ARABE_AU_GLOBE à true à ce moment-là. En attendant, on l'essaie par le lien
-// ?lang=ar (aussi valable pour les autres langues), que Romain donne à son ami.
-const ARABE_AU_GLOBE = false;
+// à gauche (dir=rtl posé sur le document plus bas). Proposé au globe depuis le
+// 2026-10-26 (décision de Romain : un bonus, l'ami arabophone corrigera ensuite
+// par Editar). Pour le retirer du globe, passer ARABE_AU_GLOBE à false : il
+// reste alors essayable par le lien ?lang=ar.
+const ARABE_AU_GLOBE = true;
 export const AUTRAS = ['es', 'en', 'ca', ...(ARABE_AU_GLOBE ? ['ar'] : [])];
 const SUPPORTED = [...PRINCIPALAS, 'es', 'en', 'ca', 'ar'];
 const ESSAI_KEY = 'lo-ligam-ar-essai';
