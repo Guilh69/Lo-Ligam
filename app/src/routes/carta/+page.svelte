@@ -65,6 +65,14 @@
 			close: 'Tancar',
 			more: 'Saber-ne més sobre El Món en occità',
 			guida: 'Tornar a veure els primers passos'
+		},
+		ar: {
+			title: 'العالم بالأوكسيتانية',
+			intro: 'خلفية خريطة بالأوكسيتانية، من إنجاز',
+			introEnd: 'بالتعاون مع Institut d’Estudis Occitans.',
+			close: 'إغلاق',
+			more: 'معرفة المزيد عن العالم بالأوكسيتانية',
+			guida: 'عرض الخطوات الأولى مرة أخرى'
 		}
 	};
 
@@ -96,10 +104,10 @@
 	};
 	const ETAPAS = [
 		{
-			titol: { oc: 'Alucar una jaça', fr: 'Allumer une couche', es: 'Encender una capa', en: 'Switch on a layer', ca: 'Encendre una capa' },
+			titol: { oc: 'Alucar una jaça', fr: 'Allumer une couche', es: 'Encender una capa', en: 'Switch on a layer', ca: 'Encendre una capa', ar: 'إظهار طبقة' },
 			tèxt: {
 				oc: 'Dobrís una familha (Territòri, per exemple) e aluca una jaça : Despartaments.',
-				fr: 'Ouvre une famille (Territoire, par exemple) et allume une couche : Départements.', es: 'Abre una familia (Territorio, por ejemplo) y enciende una capa: Departamentos.', en: 'Open a family (Territory, for example) and switch on a layer: Departments.', ca: 'Obre una família (Territori, per exemple) i encén una capa: Departaments.'
+				fr: 'Ouvre une famille (Territoire, par exemple) et allume une couche : Départements.', es: 'Abre una familia (Territorio, por ejemplo) y enciende una capa: Departamentos.', en: 'Open a family (Territory, for example) and switch on a layer: Departments.', ca: 'Obre una família (Territori, per exemple) i encén una capa: Departaments.', ar: 'افتح فئة (الإقليم مثلًا) وأظهر طبقة: المقاطعات.'
 			},
 			// (sur téléphone, une famille ouverte devient une rangée de pastilles en bas)
 			cibla: () =>
@@ -112,10 +120,10 @@
 			fach: (abans) => alucadas().some((id) => !abans.includes(id))
 		},
 		{
-			titol: { oc: 'Gerir tas jaças', fr: 'Gérer tes couches', es: 'Gestionar tus capas', en: 'Manage your layers', ca: 'Gestionar les teves capes' },
+			titol: { oc: 'Gerir tas jaças', fr: 'Gérer tes couches', es: 'Gestionar tus capas', en: 'Manage your layers', ca: 'Gestionar les teves capes', ar: 'إدارة طبقاتك' },
 			tèxt: {
 				oc: 'Dobrís « Sus la carta » : i son totas tas jaças alucadas. Escantís-ne una amb son boton ; « Anullar », just dessús, la torna.',
-				fr: 'Ouvre « Sur la carte » : toutes tes couches allumées y sont. Éteins-en une avec son bouton ; « Annuler », juste au-dessus, la ramène.', es: 'Abre «En el mapa»: ahí están todas tus capas encendidas. Apaga una con su botón; «Deshacer», justo encima, la recupera.', en: 'Open “On the map”: all your switched-on layers are there. Switch one off with its button; “Undo”, just above, brings it back.', ca: 'Obre «Al mapa»: hi són totes les teves capes enceses. Apaga’n una amb el seu botó; «Desfer», just a sobre, la recupera.'
+				fr: 'Ouvre « Sur la carte » : toutes tes couches allumées y sont. Éteins-en une avec son bouton ; « Annuler », juste au-dessus, la ramène.', es: 'Abre «En el mapa»: ahí están todas tus capas encendidas. Apaga una con su botón; «Deshacer», justo encima, la recupera.', en: 'Open “On the map”: all your switched-on layers are there. Switch one off with its button; “Undo”, just above, brings it back.', ca: 'Obre «Al mapa»: hi són totes les teves capes enceses. Apaga’n una amb el seu botó; «Desfer», just a sobre, la recupera.', ar: 'افتح «على الخريطة»: فيه كل الطبقات التي أظهرتها. يمكنك إخفاء إحداها بزرّها، ويعيدها زر «تراجع» الموجود فوقها مباشرة.'
 			},
 			// le bouton de la couche active (la dernière allumée), puis « Anullar »
 			// (une couche éteinte quitte « Sus la carta » : on ne l'y rallume pas)
@@ -135,29 +143,29 @@
 			}
 		},
 		{
-			titol: { oc: 'Causir sus la carta', fr: 'Choisir sur la carte', es: 'Elegir en el mapa', en: 'Pick on the map', ca: 'Triar al mapa' },
+			titol: { oc: 'Causir sus la carta', fr: 'Choisir sur la carte', es: 'Elegir en el mapa', en: 'Pick on the map', ca: 'Triar al mapa', ar: 'الاختيار على الخريطة' },
 			tèxt: {
 				oc: 'La jaça activa, enlusida dins « Sus la carta », decidís l’escala : region, despartament, vila… Tòca lo nom d’una jaça per l’activar, puèi tòca la carta.',
-				fr: 'La couche active, en surbrillance dans « Sur la carte », décide de l’échelle : région, département, ville… Touche le nom d’une couche pour l’activer, puis touche la carte.', es: 'La capa activa, resaltada en «En el mapa», decide la escala: región, departamento, ciudad… Toca el nombre de una capa para activarla y luego toca el mapa.', en: 'The active layer, highlighted in “On the map”, decides the scale: region, department, town… Touch the name of a layer to make it active, then touch the map.', ca: 'La capa activa, ressaltada a «Al mapa», decideix l’escala: regió, departament, ciutat… Toca el nom d’una capa per activar-la i després toca el mapa.'
+				fr: 'La couche active, en surbrillance dans « Sur la carte », décide de l’échelle : région, département, ville… Touche le nom d’une couche pour l’activer, puis touche la carte.', es: 'La capa activa, resaltada en «En el mapa», decide la escala: región, departamento, ciudad… Toca el nombre de una capa para activarla y luego toca el mapa.', en: 'The active layer, highlighted in “On the map”, decides the scale: region, department, town… Touch the name of a layer to make it active, then touch the map.', ca: 'La capa activa, ressaltada a «Al mapa», decideix l’escala: regió, departament, ciutat… Toca el nom d’una capa per activar-la i després toca el mapa.', ar: 'الطبقة النشطة، المميّزة في «على الخريطة»، هي التي تحدّد المستوى: منطقة أو مقاطعة أو مدينة… المس اسم طبقة لتنشيطها، ثم المس الخريطة.'
 			},
 			cibla: () => tirador('sus') ?? puntCarta() ?? railSus(),
 			inici: () => estatCarta.causida,
 			fach: (abans) => !!estatCarta.causida && estatCarta.causida !== abans
 		},
 		{
-			titol: { oc: 'Cercar un luòc', fr: 'Chercher un lieu', es: 'Buscar un lugar', en: 'Search for a place', ca: 'Cercar un lloc' },
+			titol: { oc: 'Cercar un luòc', fr: 'Chercher un lieu', es: 'Buscar un lugar', en: 'Search for a place', ca: 'Cercar un lloc', ar: 'البحث عن مكان' },
 			tèxt: {
 				oc: 'Escriu lo nom d’una vila o d’un despartament, puèi causís-lo dins la lista.',
-				fr: 'Écris le nom d’une ville ou d’un département, puis choisis-le dans la liste.', es: 'Escribe el nombre de una ciudad o de un departamento y elígelo en la lista.', en: 'Type the name of a town or a department, then pick it from the list.', ca: 'Escriu el nom d’una ciutat o d’un departament i tria’l a la llista.'
+				fr: 'Écris le nom d’une ville ou d’un département, puis choisis-le dans la liste.', es: 'Escribe el nombre de una ciudad o de un departamento y elígelo en la lista.', en: 'Type the name of a town or a department, then pick it from the list.', ca: 'Escriu el nom d’una ciutat o d’un departament i tria’l a la llista.', ar: 'اكتب اسم مدينة أو مقاطعة، ثم اخترها من القائمة.'
 			},
 			cibla: '.cerca',
 			ev: { nom: 'carta-cercat' }
 		},
 		{
-			titol: { oc: 'Raprochar, alunhar', fr: 'Zoomer', es: 'Acercar y alejar', en: 'Zoom in and out', ca: 'Apropar i allunyar' },
+			titol: { oc: 'Raprochar, alunhar', fr: 'Zoomer', es: 'Acercar y alejar', en: 'Zoom in and out', ca: 'Apropar i allunyar', ar: 'التكبير والتصغير' },
 			tèxt: {
 				oc: 'Los botons + e −, la moleta de la mirga o dos dets sus l’ecran. D’unas jaças se veson sonque de prèp.',
-				fr: 'Les boutons + et −, la molette de la souris ou deux doigts sur l’écran. Certaines couches ne se voient que de près.', es: 'Los botones + y −, la rueda del ratón o dos dedos en la pantalla. Algunas capas solo se ven de cerca.', en: 'The + and − buttons, the mouse wheel or two fingers on the screen. Some layers only show up close.', ca: 'Els botons + i −, la rodeta del ratolí o dos dits a la pantalla. Algunes capes només es veuen de prop.'
+				fr: 'Les boutons + et −, la molette de la souris ou deux doigts sur l’écran. Certaines couches ne se voient que de près.', es: 'Los botones + y −, la rueda del ratón o dos dedos en la pantalla. Algunas capas solo se ven de cerca.', en: 'The + and − buttons, the mouse wheel or two fingers on the screen. Some layers only show up close.', ca: 'Els botons + i −, la rodeta del ratolí o dos dits a la pantalla. Algunes capes només es veuen de prop.', ar: 'باستخدام الزرّين + و −، أو عجلة الفأرة، أو بإصبعين على الشاشة. بعض الطبقات لا تظهر إلا عن قرب.'
 			},
 			cibla: '.leaflet-control-zoom',
 			// (le vol de la recherche se pose d'abord : son zoom ne compte pas)
@@ -166,19 +174,19 @@
 			fach: (z) => estatCarta.z !== z
 		},
 		{
-			titol: { oc: 'Tornar a l’Occitània', fr: 'Revenir à l’Occitanie', es: 'Volver a Occitania', en: 'Back to Occitania', ca: 'Tornar a Occitània' },
+			titol: { oc: 'Tornar a l’Occitània', fr: 'Revenir à l’Occitanie', es: 'Volver a Occitania', en: 'Back to Occitania', ca: 'Tornar a Occitània', ar: 'العودة إلى أوكسيتانيا' },
 			tèxt: {
 				oc: 'Aqueste boton te torna a la vista de tota l’Occitània.',
-				fr: 'Ce bouton te ramène à la vue de toute l’Occitanie.', es: 'Este botón te lleva de vuelta a la vista de toda Occitania.', en: 'This button takes you back to the view of the whole of Occitania.', ca: 'Aquest botó et porta de nou a la vista de tota Occitània.'
+				fr: 'Ce bouton te ramène à la vue de toute l’Occitanie.', es: 'Este botón te lleva de vuelta a la vista de toda Occitania.', en: 'This button takes you back to the view of the whole of Occitania.', ca: 'Aquest botó et porta de nou a la vista de tota Occitània.', ar: 'هذا الزر يعيدك إلى عرض أوكسيتانيا كاملة.'
 			},
 			cibla: '.tornar-oc',
 			ev: { nom: 'click', sel: '.tornar-oc' }
 		},
 		{
-			titol: { oc: 'Netejar e anullar', fr: 'Vider et annuler', es: 'Vaciar y deshacer', en: 'Clear and undo', ca: 'Buidar i desfer' },
+			titol: { oc: 'Netejar e anullar', fr: 'Vider et annuler', es: 'Vaciar y deshacer', en: 'Clear and undo', ca: 'Buidar i desfer', ar: 'إفراغ الخريطة والتراجع' },
 			tèxt: {
 				oc: 'Netejar la carta escantís totas las jaças ; Anullar, dins « Sus la carta » (o Ctrl+Z), las torna. Ensaja los dos.',
-				fr: 'Vider la carte éteint toutes les couches ; Annuler, dans « Sur la carte » (ou Ctrl+Z), les ramène. Essaie les deux.', es: 'Vaciar el mapa apaga todas las capas; Deshacer, en «En el mapa» (o Ctrl+Z), las recupera. Prueba las dos.', en: 'Clear the map switches off every layer; Undo, in “On the map” (or Ctrl+Z), brings them back. Try both.', ca: 'Buidar el mapa apaga totes les capes; Desfer, a «Al mapa» (o Ctrl+Z), les recupera. Prova-les totes dues.'
+				fr: 'Vider la carte éteint toutes les couches ; Annuler, dans « Sur la carte » (ou Ctrl+Z), les ramène. Essaie les deux.', es: 'Vaciar el mapa apaga todas las capas; Deshacer, en «En el mapa» (o Ctrl+Z), las recupera. Prueba las dos.', en: 'Clear the map switches off every layer; Undo, in “On the map” (or Ctrl+Z), brings them back. Try both.', ca: 'Buidar el mapa apaga totes les capes; Desfer, a «Al mapa» (o Ctrl+Z), les recupera. Prova-les totes dues.', ar: 'إفراغ الخريطة يُخفي كل الطبقات، و«تراجع»، في «على الخريطة» (أو Ctrl+Z)، يعيدها. جرّب الاثنين.'
 			},
 			// d'abord le bouton qui vide, puis « Anullar » (le panneau, ouvert ou pas)
 			cibla: (mem) => (!mem.buit ? '.netejar-carta' : (tirador('sus')?.querySelector('.botons-sus .boton') ?? railSus())),
@@ -193,10 +201,10 @@
 		// comprendre » ; et les deux chemins : le rail, ou toucher la carte hors de
 		// la zone occitane, où l'invitation « Descobrir… » allume la langue)
 		{
-			titol: { oc: 'Descobrir una autra lenga', fr: 'Découvrir une autre langue', es: 'Descubrir otra lengua', en: 'Discover another language', ca: 'Descobrir una altra llengua' },
+			titol: { oc: 'Descobrir una autra lenga', fr: 'Découvrir une autre langue', es: 'Descubrir otra lengua', en: 'Discover another language', ca: 'Descobrir una altra llengua', ar: 'اكتشاف لغة أخرى' },
 			tèxt: {
 				oc: 'Fòra de la zòna occitana, tòca la carta : « Descobrir… » aluca la lenga d’aquí, lo catalan per exemple. O dobrís « Autras lengas ».',
-				fr: 'Hors de la zone occitane, touche la carte : « Découvrir… » allume la langue de là, le catalan par exemple. Ou ouvre « Autres langues ».', es: 'Fuera de la zona occitana, toca el mapa: «Descubrir…» enciende la lengua de allí, el catalán por ejemplo. O abre «Otras lenguas».', en: 'Outside the Occitan area, touch the map: “Discover…” switches on the language from there, Catalan for example. Or open “Other languages”.', ca: 'Fora de la zona occitana, toca el mapa: «Descobrir…» encén la llengua d’allà, el català per exemple. O obre «Altres llengües».'
+				fr: 'Hors de la zone occitane, touche la carte : « Découvrir… » allume la langue de là, le catalan par exemple. Ou ouvre « Autres langues ».', es: 'Fuera de la zona occitana, toca el mapa: «Descubrir…» enciende la lengua de allí, el catalán por ejemplo. O abre «Otras lenguas».', en: 'Outside the Occitan area, touch the map: “Discover…” switches on the language from there, Catalan for example. Or open “Other languages”.', ca: 'Fora de la zona occitana, toca el mapa: «Descobrir…» encén la llengua d’allà, el català per exemple. O obre «Altres llengües».', ar: 'خارج المجال الأوكسيتاني، المس الخريطة: «اكتشاف…» يُظهر لغة ذلك المكان، الكتالانية مثلًا. أو افتح «لغات أخرى».'
 			},
 			// deux halos : le Roussillon (le catalan, hors de l'occitan) et le rail
 			cibla: () => [puntCarta(42.62, 2.65), aLEcran(document.querySelector('.legenda-dial.vesina')) ?? document.querySelector('[data-familha="lengas"]')],
@@ -204,10 +212,10 @@
 			fach: (abans) => lengasAlucadas().some((id) => !abans.includes(id))
 		},
 		{
-			titol: { oc: 'Tota la lenga', fr: 'Toute la langue', es: 'Toda la lengua', en: 'The whole language', ca: 'Tota la llengua' },
+			titol: { oc: 'Tota la lenga', fr: 'Toute la langue', es: 'Toda la lengua', en: 'The whole language', ca: 'Tota la llengua', ar: 'اللغة كاملة' },
 			tèxt: {
 				oc: 'Dins « Autras lengas », una lenga se mòstra en primièr en França. Tòca sa pichona carta, o la carta de l’autre costat de la frontièra : apareis tota.',
-				fr: 'Dans « Autres langues », une langue se montre d’abord en France. Touche sa petite carte, ou la carte de l’autre côté de la frontière : elle apparaît en entier.', es: 'En «Otras lenguas», una lengua se muestra primero en Francia. Toca su pequeño mapa, o el mapa del otro lado de la frontera: aparece entera.', en: 'In “Other languages”, a language is first shown in France. Touch its little map, or the map on the other side of the border: it appears in full.', ca: 'A «Altres llengües», una llengua es mostra primer a França. Toca el seu petit mapa, o el mapa de l’altra banda de la frontera: apareix sencera.'
+				fr: 'Dans « Autres langues », une langue se montre d’abord en France. Touche sa petite carte, ou la carte de l’autre côté de la frontière : elle apparaît en entier.', es: 'En «Otras lenguas», una lengua se muestra primero en Francia. Toca su pequeño mapa, o el mapa del otro lado de la frontera: aparece entera.', en: 'In “Other languages”, a language is first shown in France. Touch its little map, or the map on the other side of the border: it appears in full.', ca: 'A «Altres llengües», una llengua es mostra primer a França. Toca el seu petit mapa, o el mapa de l’altra banda de la frontera: apareix sencera.', ar: 'في «لغات أخرى»، تظهر اللغة أولًا داخل فرنسا. المس خريطتها الصغيرة، أو الخريطة على الجانب الآخر من الحدود: تظهر كاملة.'
 			},
 			// la petite carte d'une langue allumée qui passe la frontière (amenée en
 			// vue une fois dans le panneau), et la Catalogne, de l'autre côté
@@ -232,10 +240,10 @@
 			fach: (abans) => estatCarta.environament.some((id) => !abans.includes(id))
 		},
 		{
-			titol: { oc: 'Tornar a l’occitan', fr: 'Revenir à l’occitan', es: 'Volver al occitano', en: 'Back to Occitan', ca: 'Tornar a l’occità' },
+			titol: { oc: 'Tornar a l’occitan', fr: 'Revenir à l’occitan', es: 'Volver al occitano', en: 'Back to Occitan', ca: 'Tornar a l’occità', ar: 'العودة إلى الأوكسيتانية' },
 			tèxt: {
 				oc: 'Aqueste boton te torna a la carta de l’occitan.',
-				fr: 'Ce bouton te ramène à la carte de l’occitan.', es: 'Este botón te lleva de vuelta al mapa del occitano.', en: 'This button takes you back to the map of Occitan.', ca: 'Aquest botó et porta de nou al mapa de l’occità.'
+				fr: 'Ce bouton te ramène à la carte de l’occitan.', es: 'Este botón te lleva de vuelta al mapa del occitano.', en: 'This button takes you back to the map of Occitan.', ca: 'Aquest botó et porta de nou al mapa de l’occità.', ar: 'هذا الزر يعيدك إلى خريطة اللغة الأوكسيتانية.'
 			},
 			cibla: '.rail-b.retorn',
 			inici: () => estatCarta.mòde,
@@ -243,10 +251,10 @@
 			fach: () => estatCarta.mòde !== 'lengas'
 		},
 		{
-			titol: { oc: 'Lo fons de carta', fr: 'Le fond de carte', es: 'El fondo del mapa', en: 'The map background', ca: 'El fons del mapa' },
+			titol: { oc: 'Lo fons de carta', fr: 'Le fond de carte', es: 'El fondo del mapa', en: 'The map background', ca: 'El fons del mapa', ar: 'خلفية الخريطة' },
 			tèxt: {
 				oc: 'Contorns, occitan, natural o satellit : causís lo fons que t’agrada.',
-				fr: 'Contours, occitan, naturel ou satellite : choisis le fond qui te plaît.', es: 'Contornos, occitano, natural o satélite: elige el fondo que más te guste.', en: 'Outlines, Occitan, natural or satellite: choose the background you like.', ca: 'Contorns, occità, natural o satèl·lit: tria el fons que t’agradi.'
+				fr: 'Contours, occitan, naturel ou satellite : choisis le fond qui te plaît.', es: 'Contornos, occitano, natural o satélite: elige el fondo que más te guste.', en: 'Outlines, Occitan, natural or satellite: choose the background you like.', ca: 'Contorns, occità, natural o satèl·lit: tria el fons que t’agradi.', ar: 'الحدود، أو Occitan، أو الطبيعي، أو القمر الصناعي: يمكنك اختيار الخلفية التي تعجبك.'
 			},
 			cibla: () => tirador('fons')?.querySelector('.fonses') ?? document.querySelector('.fons-carta'),
 			inici: () => baseLayer,
@@ -254,8 +262,8 @@
 		}
 	];
 	const FIN = {
-		titol: { oc: 'Tot es a punt !', fr: 'Tout est prêt !', es: '¡Todo listo!', en: 'All set!', ca: 'Tot a punt!' },
-		sota: { oc: 'Bon viatge sus la carta.', fr: 'Bon voyage sur la carte.', es: 'Buen viaje por el mapa.', en: 'Enjoy the trip across the map.', ca: 'Bon viatge pel mapa.' }
+		titol: { oc: 'Tot es a punt !', fr: 'Tout est prêt !', es: '¡Todo listo!', en: 'All set!', ca: 'Tot a punt!', ar: 'كل شيء جاهز!' },
+		sota: { oc: 'Bon viatge sus la carta.', fr: 'Bon voyage sur la carte.', es: 'Buen viaje por el mapa.', en: 'Enjoy the trip across the map.', ca: 'Bon viatge pel mapa.', ar: 'رحلة سعيدة على الخريطة.' }
 	};
 	// Le parcours fini : la carte revient à son état d'arrivée (Romain, 2026-10-23),
 	// pendant que l'animation de fin se joue ; un petit accord, si les sons sont là
@@ -272,7 +280,7 @@
 		// (après la mise à jour des couches : la vue d'ensemble a le dernier mot)
 		tick().then(() => dispatchEvent(new CustomEvent('carta-inici')));
 	}
-	const NÒTA = { oc: 'Per tornar veire los primièrs passes : aicí.', fr: 'Pour revoir les premiers pas : ici.', es: 'Para volver a ver los primeros pasos: aquí.', en: 'To see the first steps again: here.', ca: 'Per tornar a veure els primers passos: aquí.', cibla: '.info-trigger' };
+	const NÒTA = { oc: 'Per tornar veire los primièrs passes : aicí.', fr: 'Pour revoir les premiers pas : ici.', es: 'Para volver a ver los primeros pasos: aquí.', en: 'To see the first steps again: here.', ca: 'Per tornar a veure els primers passos: aquí.', ar: 'لإعادة عرض الخطوات الأولى: هنا.', cibla: '.info-trigger' };
 	let guida = $state(null);
 	let tx = $derived(t[lang] ?? t.oc);
 

@@ -11,21 +11,21 @@
 	let { lang = 'oc' } = $props();
 
 	const slides = [
-		{ src: '/officialitat/1_officialitat.webp', oc: 'Officialitat', fr: 'Officialité', es: 'Oficialidad', en: 'Official status', ca: 'Oficialitat' },
-		{ src: '/officialitat/2_visibilitat.webp', oc: 'Visibilitat', fr: 'Visibilité', es: 'Visibilidad', en: 'Visibility', ca: 'Visibilitat' },
-		{ src: '/officialitat/3_ont.webp', oc: 'Ont ?', fr: 'Où ?', es: '¿Dónde?', en: 'Where?', ca: 'On?' },
-		{ src: '/officialitat/4_pluralitat.webp', oc: 'Pluralitat', fr: 'Pluralité', es: 'Pluralidad', en: 'Plurality', ca: 'Pluralitat' },
-		{ src: '/officialitat/5_drech.webp', oc: 'Drech', fr: 'Droit', es: 'Derechos', en: 'Rights', ca: 'Drets' },
-		{ src: '/officialitat/6_parlar.webp', oc: 'Parlar', fr: 'Parler', es: 'Hablar', en: 'Speaking', ca: 'Parlar' },
-		{ src: '/officialitat/7_promoure.webp', oc: 'Promòure', fr: 'Promouvoir', es: 'Promover', en: 'Promoting', ca: 'Promoure' },
-		{ src: '/officialitat/8_origina.webp', oc: 'Origina', fr: 'Origine', es: 'Origen', en: 'Origin', ca: 'Origen' },
-		{ src: '/officialitat/9_senat.webp', oc: 'Senat', fr: 'Sénat', es: 'Senado', en: 'Senate', ca: 'Senat' }
+		{ src: '/officialitat/1_officialitat.webp', oc: 'Officialitat', fr: 'Officialité', es: 'Oficialidad', en: 'Official status', ca: 'Oficialitat', ar: 'الصفة الرسمية' },
+		{ src: '/officialitat/2_visibilitat.webp', oc: 'Visibilitat', fr: 'Visibilité', es: 'Visibilidad', en: 'Visibility', ca: 'Visibilitat', ar: 'الظهور' },
+		{ src: '/officialitat/3_ont.webp', oc: 'Ont ?', fr: 'Où ?', es: '¿Dónde?', en: 'Where?', ca: 'On?', ar: 'أين؟' },
+		{ src: '/officialitat/4_pluralitat.webp', oc: 'Pluralitat', fr: 'Pluralité', es: 'Pluralidad', en: 'Plurality', ca: 'Pluralitat', ar: 'التعدّد' },
+		{ src: '/officialitat/5_drech.webp', oc: 'Drech', fr: 'Droit', es: 'Derechos', en: 'Rights', ca: 'Drets', ar: 'الحقوق' },
+		{ src: '/officialitat/6_parlar.webp', oc: 'Parlar', fr: 'Parler', es: 'Hablar', en: 'Speaking', ca: 'Parlar', ar: 'التحدّث' },
+		{ src: '/officialitat/7_promoure.webp', oc: 'Promòure', fr: 'Promouvoir', es: 'Promover', en: 'Promoting', ca: 'Promoure', ar: 'التعزيز' },
+		{ src: '/officialitat/8_origina.webp', oc: 'Origina', fr: 'Origine', es: 'Origen', en: 'Origin', ca: 'Origen', ar: 'الأصل' },
+		{ src: '/officialitat/9_senat.webp', oc: 'Senat', fr: 'Sénat', es: 'Senado', en: 'Senate', ca: 'Senat', ar: 'مجلس الشيوخ' }
 	];
 
 	const T = {
-		serie: { oc: 'Seria Officialitat', fr: 'Série Officialité', es: 'Serie Oficialidad', en: 'Official status series', ca: 'Sèrie Oficialitat' },
-		prec: { oc: 'Precedent', fr: 'Précédent', es: 'Anterior', en: 'Previous', ca: 'Anterior' },
-		seg: { oc: 'Seguent', fr: 'Suivant', es: 'Siguiente', en: 'Next', ca: 'Següent' }
+		serie: { oc: 'Seria Officialitat', fr: 'Série Officialité', es: 'Serie Oficialidad', en: 'Official status series', ca: 'Sèrie Oficialitat', ar: 'سلسلة الصفة الرسمية' },
+		prec: { oc: 'Precedent', fr: 'Précédent', es: 'Anterior', en: 'Previous', ca: 'Anterior', ar: 'السابق' },
+		seg: { oc: 'Seguent', fr: 'Suivant', es: 'Siguiente', en: 'Next', ca: 'Següent', ar: 'التالي' }
 	};
 
 	let index = $state(0);

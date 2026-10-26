@@ -16,7 +16,8 @@
 		fr: { aquí: "Écouter la voix d'ici", procha: 'Écouter la voix la plus proche', a: 'à', pausa: 'Pause', carta: 'Toutes les voix sur la carte', titol: '« La bise et le soleil »' },
 		es: { aquí: 'Escuchar la voz de aquí', procha: 'Escuchar la voz más cercana', a: 'en', pausa: 'Pausa', carta: 'Todas las voces en el mapa', titol: '« El viento del norte y el sol »' },
 		en: { aquí: 'Listen to the voice from here', procha: 'Listen to the nearest voice', a: 'in', pausa: 'Pause', carta: 'All the voices on the map', titol: '“The North Wind and the Sun”' },
-		ca: { aquí: 'Escoltar la veu d’aquí', procha: 'Escoltar la veu més propera', a: 'a', pausa: 'Pausa', carta: 'Totes les veus al mapa', titol: '« El vent del nord i el sol »' }
+		ca: { aquí: 'Escoltar la veu d’aquí', procha: 'Escoltar la veu més propera', a: 'a', pausa: 'Pausa', carta: 'Totes les veus al mapa', titol: '« El vent del nord i el sol »' },
+		ar: { aquí: 'الاستماع إلى صوت هذا المكان', procha: 'الاستماع إلى أقرب صوت', a: 'في', pausa: 'إيقاف مؤقت', carta: 'كل الأصوات على الخريطة', titol: '« ريح الشمال والشمس »' }
 	};
 	let tx = $derived(t[lang] ?? t.oc);
 	let fr = $derived(lang === 'fr');

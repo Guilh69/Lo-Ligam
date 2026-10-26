@@ -13,7 +13,8 @@
 		fr: { gama: 'Locuteurs, en % des 15 ans et plus' },
 		es: { gama: 'Hablantes, en % de la población de 15 años o más', font: 'Encuesta sociolingüística de la OPLO (2020)' },
 		en: { gama: 'Speakers, as a % of people aged 15 or over', font: 'OPLO sociolinguistic survey (2020)' },
-		ca: { gama: 'Parlants, en % de la població de 15 anys o més', font: 'Enquesta sociolingüística de l’OPLO (2020)' }
+		ca: { gama: 'Parlants, en % de la població de 15 anys o més', font: 'Enquesta sociolingüística de l’OPLO (2020)' },
+		ar: { gama: 'المتحدّثون، كنسبة مئوية ممّن بلغوا 15 عامًا فأكثر', font: 'المسح الاجتماعي اللغوي OPLO (2020)' }
 	};
 	const tx = $derived(T[lang] ?? T.oc);
 	const gama = $derived(gamaLocutors(dalt));

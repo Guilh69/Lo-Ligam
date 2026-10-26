@@ -55,6 +55,15 @@
 			despartament: 'Departament',
 			region: 'Regió',
 			esfaçar: 'Esborrar'
+		},
+		ar: {
+			etiqueta: 'البحث في الخريطة',
+			placeholder: 'ابحث عن مدينة أو مقاطعة…',
+			placeholderCurt: 'البحث عن مكان…',
+			cap: 'لا توجد نتائج',
+			despartament: 'مقاطعة',
+			region: 'منطقة',
+			esfaçar: 'مسح'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);

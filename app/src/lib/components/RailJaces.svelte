@@ -352,6 +352,72 @@
 			familha: 'romànica',
 			infoOc: 'Classificació: indoeuropeu › romànic › galoromànic › occitanoromànic (Glottolog, Institut Max Planck)',
 			infoDial: 'Dialectes segons el mapa d’Occitanica (CIRDÒC), ajustat als municipis'
+		},
+		ar: {
+			rail: 'طبقات الخريطة',
+			sons: (on) => (on ? 'أصوات الخريطة: مفعّلة' : 'أصوات الخريطة: متوقفة'),
+			desplaçar: 'تحريك اللوحة (يمكن أيضًا بمفاتيح الأسهم؛ نقر مزدوج أو مفتاح Home: إعادتها إلى مكانها)',
+			reduire: 'طيّ اللوحة',
+			enBas: 'وضع اللوحة في الأسفل بشكل أفقي',
+			costat: 'وضع اللوحة على الجانب',
+			desplegar: 'فتح اللوحة',
+			sus: 'على الخريطة',
+			fons: 'الخلفية',
+			tampar: 'إغلاق',
+			aVenir: 'قريبًا',
+			indisponible: 'غير متاحة حاليًا',
+			disponiblas: (n) => `طبقات متاحة: ${n}`,
+			venir: (n) => `قريبًا: ${n}`,
+			res: 'لا توجد أي طبقة، فالخريطة فارغة. يمكنك اختيار طبقة من إحدى الفئات.',
+			afichatOc: 'إظهار الأوكسيتانية',
+			afichadas: (n) => `الطبقات المعروضة: ${n}`,
+			fonsCarta: 'خلفية الخريطة',
+			basemaps: { estelas: 'الحدود', occitan: 'Occitan', natural: 'طبيعي', satellite: 'القمر الصناعي' },
+			colors: 'الألوان',
+			colorDe: { costa: 'خط الساحل', riu: 'الأنهار', estela: 'المدن والأسماء', corba: 'التضاريس' },
+			sonqueContorns: 'الحدود فقط',
+			anullar: 'تراجع',
+			anullarTitol: 'التراجع عن آخر إجراء (Ctrl+Z)',
+			netejar: 'إفراغ الخريطة',
+			onglets: [['franca', 'فرنسا'], ['trans', 'عابرة للحدود'], ['europa', 'أوروبا'], ['mond', 'العالم']],
+			ordres: [['alfa', 'A → Z'], ['loc', 'المتحدّثون']],
+			ordreTit: 'ترتيب اللغات',
+			nLengas: (n) => `لغات: ${n}`,
+			deVenir: 'قريبًا',
+			locutors: 'متحدّث',
+			nDial: (n, sub) => `${sub ? 'لغات ولهجات' : 'لهجات'}: ${n}`,
+			dialDe: (l) => `اللهجات: ${l}`,
+			fonts: 'المصادر:',
+			netejarTitol: 'إخفاء كل الطبقات والبدء من الصفر',
+			sonqueFons: 'على خلفية الحدود فقط',
+			totTornar: 'إعادة ضبط الكل',
+			colorsTema: 'ألوان المظهر',
+			color: (n) => `اللون: ${n}`,
+			dialecteTotes: 'الكل',
+			causirDial: 'اختيار لهجة أو أكثر',
+			gropeDial: { fr: 'في فرنسا', frontiera: 'عابرة للحدود', defora: 'خارج فرنسا' },
+			causirLenga: (l) => `اختيار منطقة: ${l}`,
+			admin: 'التعديل في الإدارة',
+			anar: 'انتقال',
+			fuelhaAgrandir: 'تكبير اللوحة',
+			totDetalh: 'كل التفاصيل',
+			tornarOc: 'العودة إلى الأوكسيتانية',
+			environament: (pl) => (pl ? 'عرض اللغات في محيطها اللغوي' : 'عرض اللغة في محيطها اللغوي'),
+			amagarRèsta: 'الجزء الفرنسي فقط',
+			occitan: 'Occitan',
+			lengas: 'اللغات',
+			lengasFranca: 'لغات فرنسا',
+			jaçaActiva: 'طبقة نشطة',
+			levarCausida: (n) => `إلغاء الاختيار: ${n}`,
+			tornarFamilhas: (f) => `${f}: العودة إلى الفئات`,
+			fuelhaReduire: 'طيّ اللوحة',
+			anarTitol: 'الانتقال إلى مستوى التكبير الذي تظهر عنده الطبقة',
+			dp: ':',
+			escala: (a, b) => (b ? `مرئية من ${a} إلى ${b}` : `مرئية ابتداءً من ${a}`),
+			occitanDesc: 'لهجاتها الست، من Bordèu إلى Niça، وتشمل Val d’Aran وبعض الوديان في إيطاليا',
+			familha: 'رومانسية',
+			infoOc: 'التصنيف: هندو-أوروبية › رومانسية › غالو-رومانسية › أوكسيتانو-رومانسية (Glottolog، معهد ماكس بلانك)',
+			infoDial: 'اللهجات وفق خريطة Occitanica (CIRDÒC)، مضبوطة على حدود البلديات'
 		}
 	};
 	let tx = $derived(T[lang] ?? T.oc);
@@ -359,18 +425,18 @@
 	// Famille de langue et état de vitalité (fichas-lengas.js, fichier généré, avec
 	// seulement oc et fr) : mêmes libellés dans les trois autres langues, clés = le français
 	const FAM_T = {
-		celtique: { es: 'celta', en: 'Celtic', ca: 'cèltica' },
-		germanique: { es: 'germánica', en: 'Germanic', ca: 'germànica' },
-		'germanique, alémanique': { es: 'germánica, alemánica', en: 'Germanic, Alemannic', ca: 'germànica, alemànica' },
-		'germanique, francique': { es: 'germánica, fráncica', en: 'Germanic, Franconian', ca: 'germànica, francònica' },
-		isolat: { es: 'aislada', en: 'isolate', ca: 'aïllada' },
-		romane: { es: 'románica', en: 'Romance', ca: 'romànica' },
-		'romanes, une famille': { es: 'una familia de lenguas románicas', en: 'a family of Romance languages', ca: 'una família de llengües romàniques' }
+		celtique: { es: 'celta', en: 'Celtic', ca: 'cèltica', ar: 'كلتية' },
+		germanique: { es: 'germánica', en: 'Germanic', ca: 'germànica', ar: 'جرمانية' },
+		'germanique, alémanique': { es: 'germánica, alemánica', en: 'Germanic, Alemannic', ca: 'germànica, alemànica', ar: 'جرمانية، أليمانية' },
+		'germanique, francique': { es: 'germánica, fráncica', en: 'Germanic, Franconian', ca: 'germànica, francònica', ar: 'جرمانية، فرانكونية' },
+		isolat: { es: 'aislada', en: 'isolate', ca: 'aïllada', ar: 'معزولة' },
+		romane: { es: 'románica', en: 'Romance', ca: 'romànica', ar: 'رومانسية' },
+		'romanes, une famille': { es: 'una familia de lenguas románicas', en: 'a family of Romance languages', ca: 'una família de llengües romàniques', ar: 'عائلة من اللغات الرومانسية' }
 	};
 	const VIT_T = {
-		vulnérable: { es: 'vulnerable', en: 'vulnerable', ca: 'vulnerable' },
-		'en danger': { es: 'en peligro', en: 'endangered', ca: 'en perill' },
-		'sérieusement en danger': { es: 'en grave peligro', en: 'severely endangered', ca: 'en perill greu' }
+		vulnérable: { es: 'vulnerable', en: 'vulnerable', ca: 'vulnerable', ar: 'معرّضة للخطر' },
+		'en danger': { es: 'en peligro', en: 'endangered', ca: 'en perill', ar: 'مهدّدة بالخطر' },
+		'sérieusement en danger': { es: 'en grave peligro', en: 'severely endangered', ca: 'en perill greu', ar: 'مهدّدة بخطر شديد' }
 	};
 	const familhaTx = (f) => f[lang] ?? FAM_T[f.fr]?.[lang] ?? f.fr;
 	const vitalTx = (v) => v[lang] ?? VIT_T[v.fr]?.[lang] ?? v.fr;

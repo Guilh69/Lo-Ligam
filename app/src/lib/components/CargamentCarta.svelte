@@ -11,7 +11,7 @@
 	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 
 	let { lang = 'oc' } = $props();
-	const tx = { oc: 'La carta se prepara…', fr: 'La carte se prépare…', es: 'El mapa se está preparando…', en: 'The map is getting ready…', ca: 'El mapa s’està preparant…' };
+	const tx = { oc: 'La carta se prepara…', fr: 'La carte se prépare…', es: 'El mapa se está preparando…', en: 'The map is getting ready…', ca: 'El mapa s’està preparant…', ar: 'جارٍ تحضير الخريطة…' };
 
 	// los dotze ponches de la crotz (geometria de favicon.svg, coma Crotz.svelte)
 	const PONCHES = [

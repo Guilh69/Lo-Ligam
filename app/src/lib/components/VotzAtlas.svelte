@@ -26,9 +26,9 @@
 	} = $props();
 
 	const MOTS = {
-		solelh: { oc: 'lo solelh', fr: 'le soleil', es: 'el sol', en: 'the sun', ca: 'el sol' },
-		bisa: { oc: 'la bisa', fr: 'la bise', es: 'el viento del norte', en: 'the north wind', ca: 'el vent del nord' },
-		viatjaire: { oc: 'lo viatjaire', fr: 'le voyageur', es: 'el viajero', en: 'the traveller', ca: 'el viatger' }
+		solelh: { oc: 'lo solelh', fr: 'le soleil', es: 'el sol', en: 'the sun', ca: 'el sol', ar: 'الشمس' },
+		bisa: { oc: 'la bisa', fr: 'la bise', es: 'el viento del norte', en: 'the north wind', ca: 'el vent del nord', ar: 'ريح الشمال' },
+		viatjaire: { oc: 'lo viatjaire', fr: 'le voyageur', es: 'el viajero', en: 'the traveller', ca: 'el viatger', ar: 'المسافر' }
 	};
 	// les formes d'un mot, des plus courantes aux plus rares, avec la couleur
 	// du dialecte où on l'entend le plus
@@ -54,7 +54,8 @@
 		fr: { dins: 'dans', parlars: 'parlers', tocatz: "Touche un mot pour l'entendre", escotar: 'Écouter', pausa: 'Pause', tampar: 'Fermer', seguenta: 'Voix suivante', votz: 'voix', Votz: 'Voix', classica: 'Graphie classique', mistral: 'Graphie mistralienne', autra: 'Autre graphie', titol: '« La bise et le soleil »', posicion: 'Position', cro: 'Croissant', unmot: 'Un mot, cent parlers' },
 		es: { dins: 'en', parlars: 'hablas', tocatz: 'Toca una palabra para oírla', escotar: 'Escuchar', pausa: 'Pausa', tampar: 'Cerrar', seguenta: 'Siguiente voz', votz: 'voz', Votz: 'Voz', classica: 'Grafía clásica', mistral: 'Grafía mistraliana', autra: 'Otra grafía', titol: '« El viento del norte y el sol »', posicion: 'Posición', cro: 'Croissant', unmot: 'Una palabra, cien hablas' },
 		en: { dins: 'in', parlars: 'local varieties', tocatz: 'Touch a word to hear it', escotar: 'Listen', pausa: 'Pause', tampar: 'Close', seguenta: 'Next voice', votz: 'voice', Votz: 'Voice', classica: 'Classical spelling', mistral: 'Mistralian spelling', autra: 'Other spelling', titol: '“The North Wind and the Sun”', posicion: 'Position', cro: 'Croissant', unmot: 'One word, a hundred ways of speaking' },
-		ca: { dins: 'en', parlars: 'parlars', tocatz: 'Toca una paraula per sentir-la', escotar: 'Escoltar', pausa: 'Pausa', tampar: 'Tancar', seguenta: 'Veu següent', votz: 'veu', Votz: 'Veu', classica: 'Grafia clàssica', mistral: 'Grafia mistraliana', autra: 'Una altra grafia', titol: '« El vent del nord i el sol »', posicion: 'Posició', cro: 'Croissant', unmot: 'Una paraula, cent parlars' }
+		ca: { dins: 'en', parlars: 'parlars', tocatz: 'Toca una paraula per sentir-la', escotar: 'Escoltar', pausa: 'Pausa', tampar: 'Tancar', seguenta: 'Veu següent', votz: 'veu', Votz: 'Veu', classica: 'Grafia clàssica', mistral: 'Grafia mistraliana', autra: 'Una altra grafia', titol: '« El vent del nord i el sol »', posicion: 'Posició', cro: 'Croissant', unmot: 'Una paraula, cent parlars' },
+		ar: { dins: 'اللهجات المحلية:', parlars: '', tocatz: 'المس كلمة لسماعها', escotar: 'استماع', pausa: 'إيقاف مؤقت', tampar: 'إغلاق', seguenta: 'الصوت التالي', votz: 'أصوات', Votz: 'صوت', classica: 'الكتابة الكلاسيكية', mistral: 'كتابة Mistral', autra: 'كتابة أخرى', titol: '« ريح الشمال والشمس »', posicion: 'الموضع', cro: 'Croissant', unmot: 'كلمة واحدة، مئة لهجة' }
 	};
 	let tx = $derived(t[lang] ?? t.oc);
 
