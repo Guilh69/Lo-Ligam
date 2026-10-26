@@ -28,13 +28,14 @@
 				'Las imatges de contengut an un tèxte alternatiu ; los fons decoratius son escondeits als lectors d’ecran.',
 				'Un lector d’ecran legís lo títol animat de l’acuèlh un còp sol.',
 				'Los vidèos començan sens son : un son que part sol seriá un defaut d’accessibilitat.',
-				'Un ligam « Anar al contengut » apareis al primièr còp que quichas Tab, per sautar lo menú.'
+				'Un ligam « Anar al contengut » apareis al primièr còp que quichas Tab, per sautar lo menú.',
+				'Lo panèl de las jaças de la carta se manèja al claviar : Entrada o Espaci per dobrir e alucar, Escapar per tampar.'
 			],
 			manca: 'Çò que manca encara',
 			mancaL: [
 				'Los sostítols dels vidèos e de l’àudio.',
 				'La carta interactiva, que se manèja pas encara completament al claviar nimai amb un lector d’ecran.',
-				'La legenda de la carta (rail de las jaças), manejada en part al ratolet.',
+				'Dins la legenda de la carta, causir una jaça activa en clicant sul nom d’una linha se pòt pas far al claviar.',
 				'Una verificacion dels contrastes sus totas las paginas, en tèma clar e escur.',
 				'Un tèst amb de lectors d’ecran reals (NVDA, VoiceOver).'
 			],
@@ -68,13 +69,14 @@
 				'Les images de contenu ont un texte alternatif ; les fonds décoratifs sont masqués aux lecteurs d’écran.',
 				'Un lecteur d’écran lit le titre animé de l’accueil une seule fois.',
 				'Les vidéos démarrent sans son : un son qui part tout seul serait un défaut d’accessibilité.',
-				'Un lien « Aller au contenu » apparaît au premier appui sur Tab, pour sauter le menu.'
+				'Un lien « Aller au contenu » apparaît au premier appui sur Tab, pour sauter le menu.',
+				'Le panneau des couches de la carte se manie au clavier : Entrée ou Espace pour ouvrir et allumer, Échap pour fermer.'
 			],
 			manca: 'Ce qui manque encore',
 			mancaL: [
 				'Les sous-titres des vidéos et de l’audio.',
 				'La carte interactive, qui ne se manie pas encore entièrement au clavier ni avec un lecteur d’écran.',
-				'La légende de la carte (rail des couches), en partie maniée à la souris.',
+				'Dans la légende de la carte, choisir une couche active en cliquant sur le nom d’une ligne ne se fait pas au clavier.',
 				'Une vérification des contrastes sur toutes les pages, en thème clair et sombre.',
 				'Un test avec de vrais lecteurs d’écran (NVDA, VoiceOver).'
 			],
