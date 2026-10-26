@@ -9,15 +9,14 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Pictograma from '$lib/apren/Pictograma.svelte';
 	import { PALETAS, PALETA_PER_DEFAUT, pictoPer } from '$lib/apren/teulas.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { edicion, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
 
-	/** pagina : 'apren', 'amassa'… ; rubrica : l'entrée du PLAN ; etiqueta : {oc, fr} de la liste */
+	/** pagina : 'apren', 'amassa'… ; rubrica : l'entrée du PLAN ; etiqueta : {oc, fr, es…} de la liste */
 	let { pagina, rubrica, etiqueta, paleta = PALETA_PER_DEFAUT } = $props();
 
-	let fr = $derived(langStore.current === 'fr');
 	const color = (i) => PALETAS[paleta][i % PALETAS[paleta].length];
 
 	const apondreTeula = () =>
@@ -28,7 +27,7 @@
 </script>
 
 {#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
-{#snippet t(clau)}{@const v = txt(clau)}<span lang={fr ? 'fr' : 'oc'}>{@render marcat(fr ? v.fr : v.oc)}</span>{/snippet}
+{#snippet t(clau)}{@const v = txt(clau)}<span lang={langStore.current}>{@render marcat(tria(v))}</span>{/snippet}
 
 <div class="pagina">
 <div class="capçal"><AppHeader /></div>
@@ -42,7 +41,7 @@
 		<p class="frasa" hidden={amagat(`${pagina}.frasa`)} use:editar={`${pagina}.frasa`}>{@render t(`${pagina}.frasa`)}</p>
 	</header>
 
-	<ul class="teulas" aria-label={fr ? etiqueta.fr : etiqueta.oc}>
+	<ul class="teulas" aria-label={tria(etiqueta)}>
 		{#each lista(`${pagina}.teulas`) as b, i (b.clau)}
 			{@const l = ligam(b.clau + '.ligam')}
 			{@const [fons, tinta] = color(i)}
@@ -61,7 +60,7 @@
 					hidden={amagat(b.clau + '.ligam')}
 					use:editar={b.clau + '.ligam'}
 				>
-					<span class="nom" lang={fr ? 'fr' : 'oc'}>{fr ? l.fr : l.oc}</span>
+					<span class="nom" lang={langStore.current}>{tria(l)}</span>
 				</svelte:element>
 				<p class="sota" hidden={amagat(b.clau + '.sota')} use:editar={b.clau + '.sota'}>{@render t(b.clau + '.sota')}</p>
 				<span class="picto-plaça"><Pictograma nom={pictoPer(l.href)} size={i === 0 ? '7rem' : '3.6rem'} /></span>
@@ -69,7 +68,7 @@
 		{/each}
 		{#if edicion.actiu}
 			<li class="teula-apondre">
-				<button type="button" class="ed-apondre" onclick={apondreTeula}>+ {fr ? 'Ajouter une case' : 'Apondre una teula'}</button>
+				<button type="button" class="ed-apondre" onclick={apondreTeula}>+ {tria({ oc: 'Apondre una teula', fr: 'Ajouter une case', es: 'Añadir una casilla', en: 'Add a tile', ca: 'Afegir una casella' })}</button>
 			</li>
 		{/if}
 	</ul>

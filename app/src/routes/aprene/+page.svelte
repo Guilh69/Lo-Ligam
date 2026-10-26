@@ -5,7 +5,7 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { session } from '$lib/authStore';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
 	// Structure en chapitres (contextes de vie) > modules (une compétence
 	// précise chacun). Seul le module 1 a un contenu réel pour l'instant —
@@ -14,27 +14,27 @@
 	const chapters = [
 		{
 			oc: 'Las basas',
-			fr: 'Les bases',
+			fr: 'Les bases', es: 'Lo básico', en: 'The basics', ca: 'Les bases',
 			modules: [
-				{ oc: 'Se saludar', fr: 'Saluer', href: '/aprene/essai', status: 'available' },
-				{ oc: 'Mercejar', fr: 'Remercier', status: 'locked' },
-				{ oc: 'Se presentar', fr: 'Se présenter', status: 'locked' }
+				{ oc: 'Se saludar', fr: 'Saluer', es: 'Saludar', en: 'Saying hello', ca: 'Saludar', href: '/aprene/essai', status: 'available' },
+				{ oc: 'Mercejar', fr: 'Remercier', es: 'Dar las gracias', en: 'Saying thank you', ca: 'Donar les gràcies', status: 'locked' },
+				{ oc: 'Se presentar', fr: 'Se présenter', es: 'Presentarse', en: 'Introducing yourself', ca: 'Presentar-se', status: 'locked' }
 			]
 		},
 		{
 			oc: 'A la botiga',
-			fr: 'Au magasin',
+			fr: 'Au magasin', es: 'En la tienda', en: 'At the shop', ca: 'A la botiga',
 			modules: [
-				{ oc: 'Crompar', fr: 'Faire ses courses', status: 'locked' },
-				{ oc: 'Los nombres', fr: 'Les nombres', status: 'locked' }
+				{ oc: 'Crompar', fr: 'Faire ses courses', es: 'Hacer la compra', en: 'Shopping', ca: 'Fer la compra', status: 'locked' },
+				{ oc: 'Los nombres', fr: 'Les nombres', es: 'Los números', en: 'Numbers', ca: 'Els números', status: 'locked' }
 			]
 		},
 		{
 			oc: 'A la bolangariá',
-			fr: 'À la boulangerie',
+			fr: 'À la boulangerie', es: 'En la panadería', en: 'At the bakery', ca: 'A la fleca',
 			modules: [
-				{ oc: 'Al forn', fr: 'À la boulangerie', status: 'locked' },
-				{ oc: 'Demandar un servici', fr: 'Demander un service', status: 'locked' }
+				{ oc: 'Al forn', fr: 'À la boulangerie', es: 'En la panadería', en: 'At the bakery', ca: 'A la fleca', status: 'locked' },
+				{ oc: 'Demandar un servici', fr: 'Demander un service', es: 'Pedir un servicio', en: 'Asking for a service', ca: 'Demanar un servei', status: 'locked' }
 			]
 		}
 	];
@@ -42,6 +42,8 @@
 	let moduleOneDone = $state(false);
 
 	let lang = $derived(langStore.current);
+	// Le mot occitan garde la vedette ; la glose entre parenthèses suit la langue choisie (français pour l'occitan)
+	const glosa = (v) => (lang === 'oc' ? v.fr : (v[lang] ?? v.fr));
 
 	async function loadModuleOneStatus() {
 		if ($session) {
@@ -77,7 +79,7 @@
 </script>
 
 <svelte:head>
-	<title>{lang === 'fr' ? 'Les modules' : 'Los moduls'} · Lo Ligam</title>
+	<title>{tria({ oc: 'Los moduls', fr: 'Les modules', es: 'Los módulos', en: 'Modules', ca: 'Els mòduls' })} · Lo Ligam</title>
 </svelte:head>
 
 <div class="page-bg" aria-hidden="true">
@@ -91,7 +93,7 @@
 	<div class="intro">
 		<p class="kicker">Occitan · Lengadocian</p>
 		<h1 class="title">Los moduls</h1>
-		<p class="subtitle"><em>(Les modules)</em></p>
+		<p class="subtitle"><em>({glosa({ fr: 'Les modules', es: 'Los módulos', en: 'The modules', ca: 'Els mòduls' })})</em></p>
 	</div>
 
 	<div class="chapters">
@@ -99,7 +101,7 @@
 			<section class="chapter">
 				<div class="chapter-head">
 					<p class="chapter-oc">{chapter.oc}</p>
-					<p class="chapter-fr"><em>({chapter.fr})</em></p>
+					<p class="chapter-fr"><em>({glosa(chapter)})</em></p>
 				</div>
 				<div class="modules">
 					{#each chapter.modules as m}
@@ -109,7 +111,7 @@
 								<span class="module-num">{num}</span>
 								<span class="module-titles">
 									<span class="module-oc">{m.oc}</span>
-									<span class="module-fr"><em>({m.fr})</em></span>
+									<span class="module-fr"><em>({glosa(m)})</em></span>
 								</span>
 								<span class="module-status" aria-hidden="true"><Icona nom={moduleOneDone ? 'valide' : 'suivant'} /></span>
 							</a>
@@ -118,7 +120,7 @@
 								<span class="module-num">{num}</span>
 								<span class="module-titles">
 									<span class="module-oc">{m.oc}</span>
-									<span class="module-fr"><em>({m.fr})</em></span>
+									<span class="module-fr"><em>({glosa(m)})</em></span>
 								</span>
 								<span class="module-status" aria-hidden="true">🔒</span>
 							</div>
@@ -132,8 +134,12 @@
 	<p class="account-note">
 		🔒 Los moduls venents demandaràn un compte gratuit per contunhar e gardar ta progression.
 		<br /><em
-			>(Les prochains modules demanderont un compte gratuit pour continuer et garder ta
-			progression.)</em
+			>({glosa({
+				fr: 'Les prochains modules demanderont un compte gratuit pour continuer et garder ta progression.',
+				es: 'Los próximos módulos pedirán una cuenta gratuita para continuar y guardar tu progreso.',
+				en: 'The next modules will ask for a free account so you can carry on and keep your progress.',
+				ca: 'Els propers mòduls demanaran un compte gratuït per continuar i guardar el teu progrés.'
+			})})</em
 		>
 	</p>
 </main>

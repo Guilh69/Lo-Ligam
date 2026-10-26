@@ -17,7 +17,7 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import FichaTunnel from '$lib/components/FichaTunnel.svelte';
 	import FichaVideo from '$lib/components/FichaVideo.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
 	// Les fiches arrivent de la base via +page.js, qui se replie sur le
 	// catalogue gelé si elle ne répond pas.
@@ -55,8 +55,90 @@
 			next: 'Suivante',
 			vista: 'Affichage',
 			views: { mosaica: 'Mosaïque', carrossel: 'Carrousel', tunel: 'Tunnel' }
+		},
+		es: {
+			kicker: 'Descubrir',
+			tema: 'Tema',
+			title: 'Palabras en imágenes',
+			lead: 'Cada ficha: un tema, las palabras en occitano, su pronunciación y su traducción.',
+			fichas: 'fichas',
+			temas: 'temas',
+			all: 'Todas',
+			close: 'Cerrar',
+			prev: 'Anterior',
+			next: 'Siguiente',
+			vista: 'Vista',
+			views: { mosaica: 'Mosaico', carrossel: 'Carrusel', tunel: 'Túnel' }
+		},
+		en: {
+			kicker: 'Discover',
+			tema: 'Theme',
+			title: 'Words in pictures',
+			lead: 'Each card: a theme, the words in Occitan, their pronunciation and their translation.',
+			fichas: 'cards',
+			temas: 'themes',
+			all: 'All',
+			close: 'Close',
+			prev: 'Previous',
+			next: 'Next',
+			vista: 'View',
+			views: { mosaica: 'Mosaic', carrossel: 'Carousel', tunel: 'Tunnel' }
+		},
+		ca: {
+			kicker: 'Descobrir',
+			tema: 'Tema',
+			title: 'Paraules en imatges',
+			lead: 'Cada fitxa: un tema, les paraules en occità, la seva pronunciació i la seva traducció.',
+			fichas: 'fitxes',
+			temas: 'temes',
+			all: 'Totes',
+			close: 'Tancar',
+			prev: 'Anterior',
+			next: 'Següent',
+			vista: 'Vista',
+			views: { mosaica: 'Mosaic', carrossel: 'Carrusel', tunel: 'Túnel' }
 		}
 	};
+
+	// Noms des thèmes en espagnol, anglais et catalan (la base ne porte que
+	// l'occitan et le français). Un thème absent d'ici garde l'occitan (repli de tria).
+	const TEMES = {
+		'entre-cel-e-montanhas': { es: 'Entre cielo y montañas', en: 'Between sky and mountains', ca: 'Entre cel i muntanyes' },
+		sason: { es: 'Estaciones', en: 'Seasons', ca: 'Estacions' },
+		'cos-uman': { es: 'Cuerpo humano', en: 'Human body', ca: 'Cos humà' },
+		'manjam-uei': { es: 'Hoy comemos', en: 'Eating today', ca: 'Avui mengem' },
+		'pronoms-personals': { es: 'Pronombres personales', en: 'Personal pronouns', ca: 'Pronoms personals' },
+		'colors-partida-1': { es: 'Colores I', en: 'Colours I', ca: 'Colors I' },
+		'colors-partida-2': { es: 'Colores II', en: 'Colours II', ca: 'Colors II' },
+		'nadal-2022': { es: 'Navidad', en: 'Christmas', ca: 'Nadal' },
+		'cap-dan-2022': { es: 'Año Nuevo', en: 'New Year', ca: 'Cap d’any' },
+		planetas: { es: 'Planetas', en: 'Planets', ca: 'Planetes' },
+		meteo: { es: 'El tiempo', en: 'Weather', ca: 'El temps' },
+		animals: { es: 'Animales', en: 'Animals', ca: 'Animals' },
+		astrologics: { es: 'Astrología', en: 'Astrology', ca: 'Astrologia' },
+		emocions: { es: 'Emociones', en: 'Emotions', ca: 'Emocions' },
+		trabalh: { es: 'Trabajo', en: 'Work', ca: 'Treball' },
+		familha: { es: 'Familia', en: 'Family', ca: 'Família' },
+		som: { es: 'Sueño', en: 'Sleep', ca: 'Son' },
+		ora: { es: 'La hora', en: 'The time', ca: 'L’hora' },
+		'chiffras-partida-1': { es: 'Cifras I', en: 'Numbers I', ca: 'Xifres I' },
+		'chifras-partida-2': { es: 'Cifras II', en: 'Numbers II', ca: 'Xifres II' },
+		senses: { es: 'Sentidos', en: 'Senses', ca: 'Sentits' },
+		jo: { es: 'JJ. OO.', en: 'Olympics', ca: 'JJ. OO.' },
+		'oc-non': { es: 'Sí / No', en: 'Yes / No', ca: 'Sí / No' },
+		auton: { es: 'Otoño', en: 'Autumn', ca: 'Tardor' },
+		cardinals: { es: 'Puntos cardinales', en: 'Cardinal points', ca: 'Punts cardinals' },
+		direccions: { es: 'Direcciones', en: 'Directions', ca: 'Direccions' },
+		'biaisses-cognitius': { es: 'Sesgos cognitivos', en: 'Cognitive biases', ca: 'Biaixos cognitius' },
+		bordeu: { es: 'Burdeos', en: 'Bordeaux', ca: 'Bordeus' },
+		remplacat: { es: 'Reemplazado', en: 'Replaced', ca: 'Substituït' },
+		ostal: { es: 'Casa', en: 'House', ca: 'Casa' },
+		conjugason: { es: 'Conjugación', en: 'Conjugation', ca: 'Conjugació' },
+		'conta-me-istoria': { es: 'Cuéntame una historia', en: 'Tell me a story', ca: 'Explica’m una història' },
+		'amor-daussau': { es: 'Amor d’Aussau', en: 'Amor d’Aussau', ca: 'Amor d’Aussau' },
+		'carta-linguistic': { es: 'Mapa lingüístico', en: 'Language map', ca: 'Mapa lingüístic' }
+	};
+	const nomCat = (c) => tria({ oc: c.oc, fr: c.fr, ...TEMES[c.id] });
 	let tx = $derived(t[lang] ?? t.oc);
 
 	let view = $state('mosaica');
@@ -65,7 +147,7 @@
 		activeCat === 'all' ? fichas : fichas.filter((f) => f.cat === activeCat)
 	);
 	let catActiva = $derived(categories.find((c) => c.id === activeCat));
-	let nomActiu = $derived(catActiva ? (lang === 'oc' ? catActiva.oc : catActiva.fr) : tx.all);
+	let nomActiu = $derived(catActiva ? nomCat(catActiva) : tx.all);
 
 	function countIn(id) {
 		return fichas.filter((f) => f.cat === id).length;
@@ -91,7 +173,6 @@
 			.filter((g) => g.fichas.length)
 	);
 	let agropat = $derived(view === 'mosaica' && activeCat === 'all');
-	const nomCat = (c) => (lang === 'oc' ? c.oc : c.fr);
 
 	/* ---------- Le carrousel d'un thème (« post ») ---------- */
 	let paginaEl = $state();
@@ -329,7 +410,7 @@
 								onclick={() => causir(c.id)}
 							>
 								<span class="tema-ponch" aria-hidden="true"></span>
-								<span class="tema-nom">{lang === 'oc' ? c.oc : c.fr}</span>
+								<span class="tema-nom">{nomCat(c)}</span>
 								<span class="tema-n">{countIn(c.id)}</span>
 							</button>
 						</li>

@@ -32,6 +32,24 @@
 			levarSon: 'Couper le son',
 			jogar: 'Lire la vidéo',
 			avisCanva: 'La vidéo est hébergée par Canva. En cliquant, tu charges leur lecteur.'
+		},
+		es: {
+			metreSon: 'Activar el sonido',
+			levarSon: 'Silenciar',
+			jogar: 'Ver el vídeo',
+			avisCanva: 'El vídeo está alojado en Canva. Al hacer clic, cargas su reproductor.'
+		},
+		en: {
+			metreSon: 'Turn the sound on',
+			levarSon: 'Mute',
+			jogar: 'Play the video',
+			avisCanva: 'The video is hosted by Canva. By clicking, you load their player.'
+		},
+		ca: {
+			metreSon: 'Activar el so',
+			levarSon: 'Silenciar',
+			jogar: 'Veure el vídeo',
+			avisCanva: 'El vídeo està allotjat a Canva. En fer clic, carregues el seu reproductor.'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);

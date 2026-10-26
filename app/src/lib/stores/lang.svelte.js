@@ -59,7 +59,10 @@ export const lang = {
 // texte n'a que l'occitan et le français.
 export function tria(obj) {
 	if (!obj) return '';
-	return obj[current] ?? obj.oc ?? obj.fr ?? '';
+	// « || » et non « ?? » : txt()/ligam() renvoient '' (chaîne vide) pour une
+	// langue absente, et '' n'est pas nul. Sans ça, un texte éditable non encore
+	// traduit disparaîtrait en es/en/ca au lieu de retomber sur l'occitan.
+	return obj[current] || obj.oc || obj.fr || '';
 }
 
 // Restauration au démarrage. Volontairement hors de tout composant : la

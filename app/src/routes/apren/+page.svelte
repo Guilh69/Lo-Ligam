@@ -8,14 +8,13 @@
 	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
 	import { PALETAS, NOMS_PALETAS, PALETA_PER_DEFAUT } from '$lib/apren/teulas.js';
 	import { PLAN } from '$lib/data/planSite.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { tria } from '$lib/stores/lang.svelte.js';
 	import { iniciar } from '$lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('apren', data.elements);
 	$effect(() => () => lèvaEdicion?.());
 
-	let fr = $derived(langStore.current === 'fr');
 	const RUBRICA = PLAN.find((r) => r.id === 'apren');
 
 	// Essai des couleurs : /apren?ensag=colors (pilule en bas), mémorisé
@@ -43,14 +42,14 @@
 </script>
 
 <svelte:head>
-	<title>{fr ? 'S’apprend' : 'S’apren'} · Lo Ligam</title>
+	<title>{tria({ oc: 'S’apren', fr: 'S’apprend', es: 'Se aprende', en: 'Learn', ca: 'S’aprèn' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Aprene l’occitan : corses en visio, parcors, leiçon d’ensag, mots en imatges. Apprendre l’occitan : cours en visio, parcours, leçon d’essai, mots en images."
 	/>
 </svelte:head>
 
-<PaginaTeulas pagina="apren" rubrica={RUBRICA} etiqueta={{ oc: 'Çò que s’apren aicí', fr: 'Ce qui s’apprend ici' }} {paleta} />
+<PaginaTeulas pagina="apren" rubrica={RUBRICA} etiqueta={{ oc: 'Çò que s’apren aicí', fr: 'Ce qui s’apprend ici', es: 'Lo que se aprende aquí', en: 'What you can learn here', ca: 'El que s’aprèn aquí' }} {paleta} />
 
 {#if ensag}
 	<!-- Outil d'essai, volontairement neutre (hors charte), comme sur l'accueil -->
