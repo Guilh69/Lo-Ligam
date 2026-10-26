@@ -586,6 +586,31 @@
 		dobert = dobert === id ? null : id;
 		if (dobert) plaçarTirador();
 	};
+	// al clavièr (Entrada o Espaci : detail === 0), dobrir una familha mena lo
+	// focus dins lo tirador, que Tab passe pas per totes los botons del rail
+	// abans d'i arribar ; Escapar torna al boton (tamparTirador)
+	async function alternarClavièr(e, id) {
+		alternar(id);
+		if (e.detail !== 0 || dobert !== id) return;
+		await tick();
+		// (.ansa n'existeix que sus telefòn : un boton amagat pòt pas recebre lo focus)
+		const t = document.querySelector('#tirador-jaces');
+		(t?.querySelector('[role="switch"]:not([disabled])') ?? t?.querySelector('button:not(.ansa):not([disabled])'))?.focus();
+	}
+	// Al clavièr, desalucar una jaça pòt levar sa linha del tirador (« Sus la
+	// carta » mòstra pas que las alucadas) : lo boton qu'aviá lo focus dispareis
+	// e lo focus tomba sul cap de la pagina. Òm lo torna dins lo tirador.
+	function gardarFocus(node) {
+		async function clic(e) {
+			if (e.detail !== 0) return;
+			await tick();
+			await new Promise((r) => setTimeout(r, 0));
+			if (document.activeElement && document.activeElement !== document.body) return;
+			(node.querySelector('[role="switch"]:not([disabled])') ?? node.querySelector('button:not(.ansa):not([disabled])'))?.focus();
+		}
+		node.addEventListener('click', clic);
+		return { destroy: () => node.removeEventListener('click', clic) };
+	}
 	// en tampant un tirador, lo focus torna al boton del rail que l'aviá
 	// dobèrt (al clavièr, se perdiá al començament de la pagina)
 	let botons = $state({});
@@ -1207,7 +1232,7 @@
 				bind:this={botons[id]}
 				aria-expanded={dobert === id}
 				aria-controls="tirador-jaces"
-				onclick={() => alternar(id)}
+				onclick={(e) => alternarClavièr(e, id)}
 			>
 				<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC[id]}</svg>
 				<span class="lib">{id === 'lengas' ? tx.lengas : nomFam(id)}</span>
@@ -1251,7 +1276,7 @@
 			bind:this={botons[id]}
 			aria-expanded={dobert === id}
 			aria-controls="tirador-jaces"
-			onclick={() => alternar(id)}
+			onclick={(e) => alternarClavièr(e, id)}
 		>
 			<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC[id]}</svg>
 			<span class="lib">{cesura(nomFam(id))}</span>
@@ -1270,6 +1295,7 @@
 {#if dobert}
 	<section
 		id="tirador-jaces"
+		use:gardarFocus
 		class="tirador comandas-carta"
 		data-tirador={dobert}
 		aria-label={nomFam(dobert)}
