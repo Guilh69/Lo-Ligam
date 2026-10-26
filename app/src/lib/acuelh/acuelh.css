@@ -168,6 +168,23 @@ html.cursor-viu:has(.vel-fons) .cur-ponch, html.cursor-viu:has(.vel-fons) .cur-a
 	/* align-self: stretch, sinon « center » (hérité de la grille) lui donne une largeur nulle en colonne */
 	.acuelh .eros.amb-carta .carta-estelas { align-self: stretch; width: 100%; height: min(58vw, 46svh); margin: var(--esp-32) 0 0; }
 }
+/* Arabe (Romain, 2026-10-26 : « la carte est trop petite parce que l'arabe est
+   beaucoup plus court ; il faut jouer sur les proportions ») : à 1830 px, les
+   lignes du titre font ≈ 700 px en occitan et ≈ 250 px en arabe, et le plafond
+   « 100cqi / 6,9 » est calculé pour des mots latins. Sans réglage : un titre
+   maigre, un grand vide, une carte qui paraît petite. Sur ordinateur : titre
+   plus grand, colonne de texte plus étroite, colonne de carte plus large, carte
+   plus haute, décalage vers le titre dans le bon sens (la page est inversée). */
+@media (min-width: 1101px) {
+	html[lang='ar'] .acuelh .eros.amb-carta {
+		grid-template-columns: minmax(0, 4.6fr) minmax(0, 7.4fr);
+		--eros-fs: clamp(4rem, min(9.2vw, 29vh - 7rem), 11rem);
+	}
+	/* interligne resserré : à police plus grande, le bloc du titre garde la hauteur
+	   qu'il a en occitan (le héros ne déborde pas davantage) */
+	html[lang='ar'] .acuelh.autra .eros.amb-carta .eros-titol { font-size: min(var(--eros-fs), 100cqi / 2.4); line-height: 0.95; }
+	html[lang='ar'] .acuelh .eros.amb-carta .carta-estelas { height: min(76svh, 48vw); translate: 2% -7%; }
+}
 .acuelh .eros-kicker {
 	display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.4rem;
 	font-size: 0.78rem; font-weight: 700; letter-spacing: 0.32em; text-transform: uppercase; color: var(--aur);
