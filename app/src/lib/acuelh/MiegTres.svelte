@@ -214,6 +214,23 @@
 		.sist-vis :global(.vis) { max-height: 52vh; }
 	}
 
+	/* ——— Thème clair : le crème et l'or pâle du fond sombre disparaissent sur le fond clair ;
+	   encre brune pour les textes (≥ 9:1), ocre profond pour numéros et traits (≥ 3:1) ——— */
+	:global(:root[data-tema='clar']) .mieg { --or: #8f5400; --or-clar: #8f5400; --crema: #2a1a10; }
+	:global(:root[data-tema='clar']) .sota { opacity: 1; }
+	:global(:root[data-tema='clar']) .portas span { opacity: 1; }
+	:global(:root[data-tema='clar']) .costa { stroke-opacity: 0.85; stroke-width: 1.5; }
+	:global(:root[data-tema='clar']) .estela { fill: #b36d00; fill-opacity: 0.7; }
+	:global(:root[data-tema='clar']) .estela.vila { fill: #8f5400; fill-opacity: 1; }
+	:global(:root[data-tema='clar']) .vila-nom { fill-opacity: 1; }
+	:global(:root[data-tema='clar']) .camin-fita { fill: #fbf1e1; stroke: #8f5400; }
+	:global(:root[data-tema='clar']) .camin-fin { fill: #8f5400; }
+	:global(:root[data-tema='clar']) .rets-domeni { fill: color-mix(in srgb, #b36d00 16%, transparent); stroke: rgba(143, 84, 0, 0.85); stroke-width: 1.3; }
+	:global(:root[data-tema='clar']) .rets-arc { stroke: #8f5400; opacity: 0.75; }
+	:global(:root[data-tema='clar']) .rets-flux { stroke: #b53d17; opacity: 1; }
+	:global(:root[data-tema='clar']) .rets-vila { fill: #8f5400; filter: none; }
+	:global(:root[data-tema='clar']) .sist-vis::before { opacity: 0.2; }
+
 	/* ——— Contenu riche de la variante « Combiné » (scope :global pour que Svelte
 	   n'élague pas ces styles, qui ne vivent que dans un extrait conditionnel) ——— */
 	.sist-tèxt :global(.mix-chifras) { display: flex; flex-direction: column; margin: 1.4rem 0 0; padding: 0; }
