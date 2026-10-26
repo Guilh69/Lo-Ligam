@@ -21,7 +21,7 @@ export const PLAN = [
 			{ oc: 'La carta', fr: 'La carte', es: 'El mapa', en: 'The map', ca: 'El mapa', ar: 'الخريطة', href: '/carta' },
 			{ oc: 'Lo wiki', fr: 'Le wiki', es: 'El wiki', en: 'The wiki', ca: 'El wiki', ar: 'الويكي', href: '/wiki' }, // (« wiki » plutôt qu'« encyclopédie », Romain, 2026-10-15)
 			// (venaient d'Amassa : le pays, ce qui s'y dit et s'y fait ; Romain, 2026-10-22)
-			{ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres', ar: 'أعمال', href: '/obras' },
+			{ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres', ar: 'أعمال إبداعية', href: '/obras' },
 			{ oc: 'Articles', fr: 'Articles', es: 'Artículos', en: 'Articles', ca: 'Articles', ar: 'مقالات', href: '/articles' },
 			// (la case Musicas de Se parla devenue Médias ; la musique est dans Òbras, 2026-10-25)
 			{ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans', ar: 'وسائل الإعلام', href: '/medias' }
@@ -32,7 +32,7 @@ export const PLAN = [
 		// la page de la rubrique, en cases de couleur (2026-10-24)
 		href: '/apren',
 		grops: [{ items: [
-			{ oc: 'Lo parcors', fr: 'Le parcours', es: 'El recorrido', en: 'The learning path', ca: 'El recorregut', ar: 'المسار', href: '/aprene' },
+			{ oc: 'Lo parcors', fr: 'Le parcours', es: 'El recorrido', en: 'The learning path', ca: 'El recorregut', ar: 'مسار التعلّم', href: '/aprene' },
 			{ oc: 'Leiçon d’ensag', fr: 'Leçon d’essai', es: 'Lección de prueba', en: 'Trial lesson', ca: 'Lliçó de prova', ar: 'درس تجريبي', href: '/aprene/essai' },
 			// (venait d'Amassa : « c'est de l'apprentissage », Romain, 2026-10-22)
 			{ oc: 'Mots en imatges', fr: 'Mots en images', es: 'Palabras en imágenes', en: 'Words in pictures', ca: 'Paraules en imatges', ar: 'كلمات بالصور', href: '/mots' },
@@ -55,7 +55,7 @@ export const PLAN = [
 			{ oc: 'La comunautat', fr: 'La communauté', es: 'La comunidad', en: 'The community', ca: 'La comunitat', ar: 'المجتمع', items: [
 				{ oc: 'Fòrum', fr: 'Forum', es: 'Foro', en: 'Forum', ca: 'Fòrum', ar: 'المنتدى', href: '/forum' },
 				{ oc: 'Grops', fr: 'Groupes', es: 'Grupos', en: 'Groups', ca: 'Grups', ar: 'المجموعات', href: '/grops' },
-				{ oc: 'Boita d’idèas', fr: 'Boîte à idées', es: 'Buzón de ideas', en: 'Idea box', ca: 'Bústia d’idees', ar: 'صندوق الأفكار', href: '/ideas' }
+				{ oc: 'Boita d’idèas', fr: 'Boîte à idées', es: 'Buzón de ideas', en: 'Idea box', ca: 'Bústia d’idees', ar: 'صندوق الاقتراحات', href: '/ideas' }
 			] }
 		]
 	}
@@ -63,7 +63,7 @@ export const PLAN = [
 
 // La ligne du bas : qui est derrière Lo Ligam
 export const LO_LIGAM = [
-	{ oc: 'Mon ligam amb l’occitan', fr: 'Mon lien avec l’occitan', es: 'Mi vínculo con el occitano', en: 'My connection to Occitan', ca: 'El meu vincle amb l’occità', ar: 'صلتي باللغة الأوكسيتانية', href: '/istoria' }, // (ex-« Mon istòria », titre C de Romain, 2026-10-24)
+	{ oc: 'Mon ligam amb l’occitan', fr: 'Mon lien avec l’occitan', es: 'Mi vínculo con el occitano', en: 'My connection to Occitan', ca: 'El meu vincle amb l’occità', ar: 'علاقتي بالأوكسيتانية', href: '/istoria' }, // (ex-« Mon istòria », titre C de Romain, 2026-10-24)
 	{ oc: 'Contacte', fr: 'Contact', es: 'Contacto', en: 'Contact', ca: 'Contacte', ar: 'التواصل', href: '/istoria#contacte' }, // (fin de Mon istòria, option A de Romain, 2026-10-24)
 	{ oc: 'Instagram', fr: 'Instagram', es: 'Instagram', en: 'Instagram', ca: 'Instagram', ar: 'Instagram', href: 'https://www.instagram.com/lo_ligam/', defòra: true }
 ];

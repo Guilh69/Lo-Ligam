@@ -13,7 +13,7 @@
 	import { externalLinks } from '$lib/data/siteSections';
 	import { PLAN, LO_LIGAM } from '$lib/data/planSite.js';
 
-	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.', es: 'Hecho con amor en Occitania.', en: 'Made with love in Occitania.', ca: 'Fet amb amor a Occitània.', ar: 'صُنع بحبّ في أوكسيتانيا.' };
+	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.', es: 'Hecho con amor en Occitania.', en: 'Made with love in Occitania.', ca: 'Fet amb amor a Occitània.', ar: 'صُنع بكلّ حبّ في أوكسيتانيا.' };
 	let { tagline = PER_DEFAUT } = $props();
 	let lang = $derived(langStore.current);
 </script>
@@ -55,7 +55,7 @@
 				</ul>
 			</div>
 			<div class="footer-col">
-				<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos', en: 'Resources', ca: 'Recursos', ar: 'موارد', lang }}>{tria({ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos', en: 'Resources', ca: 'Recursos', ar: 'موارد' })}</p>
+				<p class="footer-col-title" use:scramble={{ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos', en: 'Resources', ca: 'Recursos', ar: 'مصادر', lang }}>{tria({ oc: 'Ressorsas', fr: 'Ressources', es: 'Recursos', en: 'Resources', ca: 'Recursos', ar: 'مصادر' })}</p>
 				<ul>
 					{#each externalLinks as l (l.href)}
 						<li>

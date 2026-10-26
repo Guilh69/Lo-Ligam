@@ -125,7 +125,7 @@
 													{#if c.href && gi === 0}
 														<li class="vel-masc">
 															<a class="vel-ligam" href={c.href} style:--i={0} aria-current={page.url.pathname === c.href ? 'page' : undefined} onclick={tampar}
-																>{tria({ oc: 'Tota la rubrica', fr: 'Toute la rubrique', es: 'Toda la sección', en: 'The whole section', ca: 'Tota la secció', ar: 'القسم كاملًا' })}<Icona nom="suivant" size="0.8em" /></a
+																>{tria({ oc: 'Tota la rubrica', fr: 'Toute la rubrique', es: 'Toda la sección', en: 'The whole section', ca: 'Tota la secció', ar: 'عرض القسم كاملًا' })}<Icona nom="suivant" size="0.8em" /></a
 															>
 														</li>
 													{/if}
@@ -168,7 +168,7 @@
 					{/each}
 				</ul>
 				<a class="vel-reservar" href={VISIO} onclick={tampar}
-					>{tria({ oc: 'Reservar un primièr cors', fr: 'Réserver un premier cours', es: 'Reservar una primera clase', en: 'Book a first lesson', ca: 'Reservar una primera classe', ar: 'احجز درسك الأول' })}<Icona nom="suivant" size="0.9em" /></a
+					>{tria({ oc: 'Reservar un primièr cors', fr: 'Réserver un premier cours', es: 'Reservar una primera clase', en: 'Book a first lesson', ca: 'Reservar una primera classe', ar: 'حجز الدرس الأول' })}<Icona nom="suivant" size="0.9em" /></a
 				>
 			</div>
 		</div>

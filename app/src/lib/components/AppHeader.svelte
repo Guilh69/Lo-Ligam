@@ -97,7 +97,7 @@
 		es: { acuelhLong: 'Volver al inicio', admin: 'Administración', menu: 'Menú', reservar: 'Reservar una clase', compte: 'Mi cuenta', connectar: 'Iniciar sesión' },
 		en: { acuelhLong: 'Back to home', admin: 'Administration', menu: 'Menu', reservar: 'Book a lesson', compte: 'My account', connectar: 'Log in' },
 		ca: { acuelhLong: 'Tornar a l’inici', admin: 'Administració', menu: 'Menú', reservar: 'Reservar una classe', compte: 'El meu compte', connectar: 'Inicia la sessió' },
-		ar: { acuelhLong: 'العودة إلى الصفحة الرئيسية', admin: 'الإدارة', menu: 'القائمة', reservar: 'احجز درسًا', compte: 'حسابي', connectar: 'تسجيل الدخول' }
+		ar: { acuelhLong: 'العودة إلى الصفحة الرئيسية', admin: 'الإدارة', menu: 'القائمة', reservar: 'حجز درس', compte: 'حسابي', connectar: 'تسجيل الدخول' }
 	};
 	let tx = $derived(t[lang] ?? t.oc);
 

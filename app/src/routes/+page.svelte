@@ -212,7 +212,7 @@
 					es: 'Mapa de Occitania en estrellas: 304 ciudades y pueblos, con su nombre occitano',
 					en: 'Star map of Occitania: 304 towns and villages, with their Occitan names',
 					ca: 'Mapa d’Occitània en estrelles: 304 ciutats i pobles, amb el seu nom occità',
-					ar: 'خريطة أوكسيتانيا بالنجوم: 304 مدينة وقرية، بأسمائها الأوكسيتانية'
+					ar: 'خريطة أوكسيتانيا مرصّعة بالنجوم: 304 مدينة وقرية بأسمائها الأوكسيتانية'
 				})}
 			></div>
 		</section>

@@ -19,9 +19,9 @@
 	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer', es: 'Entrar', en: 'Enter', ca: 'Entrar', ar: 'ادخل' };
 	// accent = couleur claire qui ressort sur la braise (numéro et lueur de chaque bloc)
 	const ENTITATS = [
-		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.', es: 'El país y sus lenguas, en un mapa de estrellas.', en: 'The country and its languages, on a star map.', ca: 'El país i les seves llengües, en un mapa d’estrelles.', ar: 'البلد ولغاته، على خريطة من النجوم.' } },
-		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.', es: 'Un camino, paso a paso, a tu ritmo.', en: 'One path, step by step, at your own pace.', ca: 'Un camí, pas a pas, al teu ritme.', ar: 'مسار خطوة بخطوة، وعلى إيقاعك.' } },
-		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.', es: 'Gente, vínculos, por todas partes.', en: 'People, connections, everywhere.', ca: 'Gent, vincles, arreu.', ar: 'ناس وروابط في كل مكان.' } }
+		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.', es: 'El país y sus lenguas, en un mapa de estrellas.', en: 'The country and its languages, on a star map.', ca: 'El país i les seves llengües, en un mapa d’estrelles.', ar: 'أوكسيتانيا ولغاتها على خريطة مرصّعة بالنجوم.' } },
+		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.', es: 'Un camino, paso a paso, a tu ritmo.', en: 'One path, step by step, at your own pace.', ca: 'Un camí, pas a pas, al teu ritme.', ar: 'مسار خطوة بخطوة، بالوتيرة التي تناسبك.' } },
+		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.', es: 'Gente, vínculos, por todas partes.', en: 'People, connections, everywhere.', ca: 'Gent, vincles, arreu.', ar: 'ناس وعلاقات في كل مكان.' } }
 	];
 
 	// Contenu riche RÉUTILISÉ de l'accueil actuel : les chiffres (acuelh.chifras) et
