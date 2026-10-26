@@ -173,7 +173,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En França, la Catalonha del Nòrd, de Salses a Perpinyà ; se perlonga en Espanha, en Andòrra e fins a l’Alguer',
-			nota_fr: 'En France, la Catalogne nord, de Salses à Perpignan ; il se prolonge en Espagne, en Andorre et jusqu’à Alghero', nota_es: 'En Francia, la Cataluña Norte, de Salses a Perpiñán; se prolonga por España, Andorra y hasta Alguer', nota_en: 'In France, Northern Catalonia, from Salses to Perpignan; it continues into Spain, Andorra and as far as Alghero', nota_ca: 'A França, la Catalunya del Nord, de Salses a Perpinyà; es perllonga per Espanya, Andorra i fins a l’Alguer'
+			nota_fr: 'En France, la Catalogne nord, de Salses à Perpignan ; il se prolonge en Espagne, en Andorre et jusqu’à Alghero', nota_es: 'En Francia, la Cataluña Norte, de Salses a Perpinyà; se prolonga por España, Andorra y hasta Alguer', nota_en: 'In France, Northern Catalonia, from Salses to Perpinyà; it continues into Spain, Andorra and as far as Alguer', nota_ca: 'A França, la Catalunya del Nord, de Salses a Perpinyà; es perllonga per Espanya, Andorra i fins a l’Alguer'
 		},
 		{
 			id: 'arpitan',
@@ -182,7 +182,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En França, de Liyon a Chambèri ; se perlonga en Soïssa romanda (Nôchâtél) e dins la val d’Aoûta',
-			nota_fr: 'En France, de Lyon à Chambéry ; il se prolonge en Suisse romande (Neuchâtel) et dans le Val d’Aoste', nota_es: 'En Francia, de Lyon a Chambéry; se prolonga por la Suiza romanda (Neuchâtel) y el Valle de Aosta', nota_en: 'In France, from Lyon to Chambéry; it continues into French-speaking Switzerland (Neuchâtel) and the Aosta Valley', nota_ca: 'A França, de Lió a Chambéry; es perllonga per la Suïssa romanda (Neuchâtel) i la Vall d’Aosta'
+			nota_fr: 'En France, de Lyon à Chambéry ; il se prolonge en Suisse romande (Neuchâtel) et dans le Val d’Aoste', nota_es: 'En Francia, de Liyon a Chambèri; se prolonga por la Suiza romanda (Nôchâtél) y el Valle de Aosta', nota_en: 'In France, from Liyon to Chambèri; it continues into French-speaking Switzerland (Nôchâtél) and the Aosta Valley', nota_ca: 'A França, de Liyon a Chambèri; es perllonga per la Suïssa romanda (Nôchâtél) i la Vall d’Aosta'
 		},
 		{
 			id: 'basc',
@@ -191,7 +191,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En França, Iparralde, de Baiona a Maule ; se perlonga en Espanha, de Bilbo a Iruña',
-			nota_fr: 'En France, le Pays basque nord, de Bayonne à Mauléon ; il se prolonge en Espagne, de Bilbao à Pampelune', nota_es: 'En Francia, el País Vasco francés, de Bayona a Mauleón; se prolonga por España, de Bilbao a Pamplona', nota_en: 'In France, the northern Basque Country, from Bayonne to Mauléon; it continues into Spain, from Bilbao to Pamplona', nota_ca: 'A França, el País Basc del Nord, de Baiona a Mauleó; es perllonga per Espanya, de Bilbao a Pamplona'
+			nota_fr: 'En France, le Pays basque nord, de Bayonne à Mauléon ; il se prolonge en Espagne, de Bilbao à Pampelune', nota_es: 'En Francia, el País Vasco francés, de Baiona a Maule; se prolonga por España, de Bilbo a Iruña', nota_en: 'In France, the northern Basque Country, from Baiona to Maule; it continues into Spain, from Bilbo to Iruña', nota_ca: 'A França, el País Basc del Nord, de Baiona a Maule; es perllonga per Espanya, de Bilbo a Iruña'
 		},
 		{
 			id: 'breton',
@@ -200,7 +200,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'Sos quatre dialèctes, de Leon a Gwened, dins sa limit de 1886',
-			nota_fr: 'Ses quatre dialectes, du Léon à Vannes, dans sa limite de 1886', nota_es: 'Sus cuatro dialectos, del Léon a Vannes, dentro de su límite de 1886', nota_en: 'Its four dialects, from Léon to Vannes, within its 1886 boundary', nota_ca: 'Els seus quatre dialectes, del Léon a Vannes, dins del seu límit de 1886'
+			nota_fr: 'Ses quatre dialectes, du Léon à Vannes, dans sa limite de 1886', nota_es: 'Sus cuatro dialectos, de Leon a Gwened, dentro de su límite de 1886', nota_en: 'Its four dialects, from Leon to Gwened, within its 1886 boundary', nota_ca: 'Els seus quatre dialectes, de Leon a Gwened, dins del seu límit de 1886'
 		},
 		{
 			id: 'alsacian',
@@ -209,7 +209,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En Alsàcia, a l’entorn d’Estrasborg ; fa partida del continuum alemanic, que s’espandís en Alemanha e en Soïssa, fins a Basilèa e Zuric',
-			nota_fr: 'En Alsace, autour de Strasbourg ; il fait partie du continuum alémanique, qui s’étend en Allemagne et en Suisse, jusqu’à Bâle et Zurich', nota_es: 'En Alsacia, en torno a Estrasburgo; forma parte del continuo alemánico, que se extiende por Alemania y Suiza, hasta Basilea y Zúrich', nota_en: 'In Alsace, around Strasbourg; it belongs to the Alemannic continuum, which stretches across Germany and Switzerland, as far as Basel and Zurich', nota_ca: 'A l’Alsàcia, al voltant d’Estrasburg; forma part del continu alemànic, que s’estén per Alemanya i Suïssa, fins a Basilea i Zuric'
+			nota_fr: 'En Alsace, autour de Strasbourg ; il fait partie du continuum alémanique, qui s’étend en Allemagne et en Suisse, jusqu’à Bâle et Zurich', nota_es: 'En Alsacia, en torno a Estrasborg; forma parte del continuo alemánico, que se extiende por Alemania y Suiza, hasta Basilèa y Zuric', nota_en: 'In Alsace, around Estrasborg; it belongs to the Alemannic continuum, which stretches across Germany and Switzerland, as far as Basilèa and Zuric', nota_ca: 'A l’Alsàcia, al voltant d’Estrasborg; forma part del continu alemànic, que s’estén per Alemanya i Suïssa, fins a Basilèa i Zuric'
 		},
 		{
 			id: 'francic',

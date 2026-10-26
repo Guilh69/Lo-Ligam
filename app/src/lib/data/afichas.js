@@ -25,9 +25,9 @@ export const afichas = [
 		titol: 'Gardarèm lo Larzac',
 		oc: 'Lucha Occitana, Montpelhièr.',
 		fr: 'Lucha Occitana, Montpellier.',
-		es: 'Lucha Occitana, Montpellier.',
-		en: 'Lucha Occitana, Montpellier.',
-		ca: 'Lucha Occitana, Montpeller.',
+		es: 'Lucha Occitana, Montpelhièr.',
+		en: 'Lucha Occitana, Montpelhièr.',
+		ca: 'Lucha Occitana, Montpelhièr.',
 		epoca: 'Larzac, 1971-1981',
 		font: 'Occitanica',
 		ligam: null

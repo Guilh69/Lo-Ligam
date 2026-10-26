@@ -44,7 +44,7 @@ export const FILMES = [
 	{ id: 'adrian', nom: 'Istòria d’Adrian', fr: 'Histoire d’Adrien', an: 1980, de: 'Jean-Pierre Denis', grop: 'filme',
 		site: 'https://oc.wikipedia.org/wiki/Ist%C3%B2ria_d%27Adrian',
 		sorta: { oc: 'Filme', fr: 'Film', es: 'Película', en: 'Film', ca: 'Pel·lícula' },
-		tèxt: { oc: 'La vida d’un paisan de Lemosin. Camèra d’Aur a Canas.', fr: 'La vie d’un paysan du Limousin. Caméra d’or à Cannes.', es: 'La vida de un campesino del Lemosín. Cámara de Oro en Cannes.', en: 'The life of a Limousin farmer. Caméra d’Or at Cannes.', ca: 'La vida d’un pagès del Llemosí. Càmera d’Or a Canes.' } },
+		tèxt: { oc: 'La vida d’un paisan de Lemosin. Camèra d’Aur a Canas.', fr: 'La vie d’un paysan du Limousin. Caméra d’or à Cannes.', es: 'La vida de un campesino del Lemosín. Cámara de Oro en Canas.', en: 'The life of a Limousin farmer. Caméra d’Or at Canas.', ca: 'La vida d’un pagès del Llemosí. Càmera d’Or a Canas.' } },
 	{ id: 'orsalher', nom: 'L’Orsalhèr', fr: 'Le Montreur d’ours', an: 1984, de: 'Jean Fléchet', grop: 'filme',
 		site: 'https://oc.wikipedia.org/wiki/L%E2%80%99Orsalh%C3%A8r',
 		sorta: { oc: 'Filme', fr: 'Film', es: 'Película', en: 'Film', ca: 'Pel·lícula' },

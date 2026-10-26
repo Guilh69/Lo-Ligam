@@ -41,7 +41,7 @@
 			],
 			lengasT: 'Lengas del site',
 			lengas:
-				'Occitan, francés, espanhòl, anglés e catalan. L’interfàcia e l’acuèlh son traduches en espanhòl ; lo rèsta es pas encara traduch en espanhòl, en anglés nimai en catalan : l’occitan s’aficha alara.',
+				'Occitan, francés, espanhòl, anglés e catalan. Los tèxtes del site son traduches ; demòran en occitan o en francés los noms de luòcs, las donadas de la carta e las leiçons.',
 			tipoT: 'Poliça',
 			tipo:
 				'Lo site utiliza la poliça Luciole, concebuda per melhorar la lectura de las personas malvesentas. Luciole © Laurent Bourcellier e Jonathan Perez (CTRDV), licéncia CC BY 4.0.',
@@ -82,7 +82,7 @@
 			],
 			lengasT: 'Langues du site',
 			lengas:
-				'Occitan, français, espagnol, anglais et catalan. L’interface et l’accueil sont traduits en espagnol ; le reste n’est pas encore traduit en espagnol, en anglais ni en catalan : l’occitan s’affiche alors.',
+				'Occitan, français, espagnol, anglais et catalan. Les textes du site sont traduits ; restent en occitan ou en français les noms de lieux, les données de la carte et les leçons.',
 			tipoT: 'Police de caractères',
 			tipo:
 				'Le site utilise la police Luciole, conçue pour améliorer la lecture des personnes malvoyantes. Luciole © Laurent Bourcellier et Jonathan Perez (CTRDV), licence CC BY 4.0.',
@@ -123,7 +123,7 @@
 			],
 			lengasT: 'Idiomas del sitio',
 			lengas:
-				'Occitano, francés, español, inglés y catalán. La interfaz y la página de inicio están traducidas al español; el resto todavía no está traducido al español, al inglés ni al catalán: se muestra entonces el occitano.',
+				'Occitano, francés, español, inglés y catalán. Los textos del sitio están traducidos; se mantienen en occitano o en francés los nombres de lugares, los datos del mapa y las lecciones.',
 			tipoT: 'Tipografía',
 			tipo:
 				'El sitio utiliza la tipografía Luciole, concebida para mejorar la lectura de las personas con baja visión. Luciole © Laurent Bourcellier y Jonathan Perez (CTRDV), licencia CC BY 4.0.',
@@ -164,7 +164,7 @@
 			],
 			lengasT: 'Site languages',
 			lengas:
-				'Occitan, French, Spanish, English and Catalan. The interface and the home page are translated into Spanish; the rest is not yet translated into Spanish, English or Catalan: Occitan is shown instead.',
+				'Occitan, French, Spanish, English and Catalan. The texts of the site are translated; place names, map data and lessons stay in Occitan or French.',
 			tipoT: 'Typeface',
 			tipo:
 				'The site uses the Luciole typeface, designed to improve reading for people with low vision. Luciole © Laurent Bourcellier and Jonathan Perez (CTRDV), licence CC BY 4.0.',
@@ -205,7 +205,7 @@
 			],
 			lengasT: 'Llengües del web',
 			lengas:
-				'Occità, francès, espanyol, anglès i català. La interfície i la pàgina d’inici estan traduïdes a l’espanyol; la resta encara no està traduïda a l’espanyol, a l’anglès ni al català: llavors es mostra l’occità.',
+				'Occità, francès, espanyol, anglès i català. Els textos del web estan traduïts; es mantenen en occità o en francès els noms de llocs, les dades del mapa i les lliçons.',
 			tipoT: 'Tipografia',
 			tipo:
 				'El web utilitza la tipografia Luciole, concebuda per millorar la lectura de les persones amb baixa visió. Luciole © Laurent Bourcellier i Jonathan Perez (CTRDV), llicència CC BY 4.0.',

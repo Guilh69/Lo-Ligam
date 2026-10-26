@@ -54,7 +54,7 @@ const TÈXTES = {
 			c: 'Colegio',
 			l: 'Liceo',
 			u: 'Enseñanza superior',
-			a: 'Valle de Arán: el aranés es la lengua de enseñanza'
+			a: 'Val d’Aran: el aranés es la lengua de enseñanza'
 		},
 		forma: { opcion: 'opción de occitano', dnl: 'una materia impartida en occitano', seccion: 'sección bilingüe', LLCER: 'especialidad LLCER occitano', LVB: 'occitano en LVB', LVC: 'occitano en LVC', lvr: 'lengua regional en el aula' },
 		associacion: (a) => 'por la asociación ' + a,
@@ -73,7 +73,7 @@ const TÈXTES = {
 			c: 'Middle school',
 			l: 'High school',
 			u: 'Higher education',
-			a: 'Aran Valley: Aranese is the language of teaching'
+			a: 'Val d’Aran: Aranese is the language of teaching'
 		},
 		forma: { opcion: 'Occitan option', dnl: 'one subject taught in Occitan', seccion: 'bilingual section', LLCER: 'LLCER specialism in Occitan', LVB: 'Occitan as LVB', LVC: 'Occitan as LVC', lvr: 'regional language in class' },
 		associacion: (a) => 'by the association ' + a,
@@ -92,7 +92,7 @@ const TÈXTES = {
 			c: 'Col·legi',
 			l: 'Liceu',
 			u: 'Ensenyament superior',
-			a: "Vall d'Aran: l'aranès és la llengua d'ensenyament"
+			a: "Val d'Aran: l'aranès és la llengua d'ensenyament"
 		},
 		forma: { opcion: "opció d'occità", dnl: 'una matèria ensenyada en occità', seccion: 'secció bilingüe', LLCER: 'especialitat LLCER occità', LVB: 'occità en LVB', LVC: 'occità en LVC', lvr: 'llengua regional a classe' },
 		associacion: (a) => "per l'associació " + a,

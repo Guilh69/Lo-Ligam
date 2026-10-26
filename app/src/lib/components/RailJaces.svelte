@@ -216,7 +216,7 @@
 			anarTitol: 'Ir a la escala en la que se ve la capa',
 			dp: ':',
 			escala: (a, b) => (b ? `Visible de ${a} a ${b}` : `Visible a partir de ${a}`),
-			occitanDesc: 'Sus seis dialectos, de Burdeos a Niza; el Valle de Arán y valles de Italia también',
+			occitanDesc: 'Sus seis dialectos, de Bordèu a Niça; Val d’Aran y valles de Italia también',
 			familha: 'románica',
 			infoOc: 'Clasificación: indoeuropeo › romance › galorromance › occitanorromance (Glottolog, Instituto Max Planck)',
 			infoDial: 'Dialectos según el mapa de Occitanica (CIRDÒC), ajustado a los municipios'
@@ -282,7 +282,7 @@
 			anarTitol: 'Go to the scale where the layer can be seen',
 			dp: ':',
 			escala: (a, b) => (b ? `Visible from ${a} to ${b}` : `Visible from ${a} onwards`),
-			occitanDesc: 'Its six dialects, from Bordeaux to Nice; the Aran Valley and some valleys in Italy too',
+			occitanDesc: 'Its six dialects, from Bordèu to Niça; Val d’Aran and some valleys in Italy too',
 			familha: 'Romance',
 			infoOc: 'Classification: Indo-European › Romance › Gallo-Romance › Occitano-Romance (Glottolog, Max Planck Institute)',
 			infoDial: 'Dialects after the Occitanica map (CIRDÒC), adjusted to the communes'
@@ -348,7 +348,7 @@
 			anarTitol: 'Anar a l’escala on es veu la capa',
 			dp: ':',
 			escala: (a, b) => (b ? `Visible de ${a} a ${b}` : `Visible a partir de ${a}`),
-			occitanDesc: 'Els seus sis dialectes, de Bordeus a Niça; la Vall d’Aran i valls d’Itàlia també',
+			occitanDesc: 'Els seus sis dialectes, de Bordèu a Niça; Val d’Aran i valls d’Itàlia també',
 			familha: 'romànica',
 			infoOc: 'Classificació: indoeuropeu › romànic › galoromànic › occitanoromànic (Glottolog, Institut Max Planck)',
 			infoDial: 'Dialectes segons el mapa d’Occitanica (CIRDÒC), ajustat als municipis'

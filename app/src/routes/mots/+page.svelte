@@ -130,7 +130,7 @@
 		cardinals: { es: 'Puntos cardinales', en: 'Cardinal points', ca: 'Punts cardinals' },
 		direccions: { es: 'Direcciones', en: 'Directions', ca: 'Direccions' },
 		'biaisses-cognitius': { es: 'Sesgos cognitivos', en: 'Cognitive biases', ca: 'Biaixos cognitius' },
-		bordeu: { es: 'Burdeos', en: 'Bordeaux', ca: 'Bordeus' },
+		bordeu: { es: 'Bordèu', en: 'Bordèu', ca: 'Bordèu' },
 		remplacat: { es: 'Reemplazado', en: 'Replaced', ca: 'Substituït' },
 		ostal: { es: 'Casa', en: 'House', ca: 'Casa' },
 		conjugason: { es: 'Conjugación', en: 'Conjugation', ca: 'Conjugació' },
