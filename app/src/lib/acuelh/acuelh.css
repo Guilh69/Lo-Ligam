@@ -168,6 +168,17 @@ html.cursor-viu:has(.vel-fons) .cur-ponch, html.cursor-viu:has(.vel-fons) .cur-a
 	/* align-self: stretch, sinon « center » (hérité de la grille) lui donne une largeur nulle en colonne */
 	.acuelh .eros.amb-carta .carta-estelas { align-self: stretch; width: 100%; height: min(58vw, 46svh); margin: var(--esp-32) 0 0; }
 }
+/* Arabe (Joan, 26-10) : à côté de Limelight, un titre arabe en graisse normale paraît léger.
+   Gras pour les titres de section ; le grand titre de l'ouverture (déjà bien dosé) ne bouge pas. */
+html[lang='ar'] .acuelh .jalon span,
+html[lang='ar'] .acuelh .sist-cap h2 { font-weight: 700; }
+/* Arabe : les deux couches de langue partagent une même case, dont la largeur est celle
+   de la plus large. L'arabe étant plus court que l'occitan, la flèche d'un bouton se
+   retrouvait loin du texte (Joan, 26-10). On sort la couche occitane invisible du
+   calcul de largeur ; elle reste en place, hors vue, donc la glissade entre langues
+   fonctionne comme avant. */
+html[lang='ar'] .acuelh .bi { position: relative; }
+html[lang='ar'] .acuelh .bi > .oc { position: absolute; top: 0.06em; inset-inline-start: 0.04em; }
 /* Arabe (Romain, 2026-10-26 : « la carte est trop petite parce que l'arabe est
    beaucoup plus court ; il faut jouer sur les proportions ») : à 1830 px, les
    lignes du titre font ≈ 700 px en occitan et ≈ 250 px en arabe, et le plafond

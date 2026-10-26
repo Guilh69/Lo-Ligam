@@ -249,8 +249,8 @@
 		<header>
 			<button type="button" class="guida-dobrir" aria-expanded={!plegada} aria-label={plegada ? tx.desplegar : tx.plegar} onclick={() => (plegada = !plegada)}>
 				<span class="guida-n">{tx.titol}</span>
-				{#if !acabat}<span class="guida-pleg"><b>{pas + 1}.</b> {dire(etapas[pas]?.titol)}</span>{/if}
-				<span class="guida-compte">{fachas.length} / {etapas.length}</span>
+				{#if !acabat}<span class="guida-pleg"><b><bdi dir="ltr">{pas + 1}.</bdi></b> {dire(etapas[pas]?.titol)}</span>{/if}
+				<span class="guida-compte"><bdi dir="ltr">{fachas.length} / {etapas.length}</bdi></span>
 				<span class="guida-chevron" aria-hidden="true"><Icona nom="suivant" size="0.8em" /></span>
 			</button>
 			<button type="button" class="guida-tampar" onclick={tampar} aria-label={tx.tampar}><Icona nom="fermer" size="1em" /></button>

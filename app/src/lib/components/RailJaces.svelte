@@ -1915,6 +1915,13 @@
 			background 0.25s,
 			color 0.25s;
 	}
+	/* Arabe (Joan, 26-10) : 10,5 px et 9 px sont des tailles de latin ; l'arabe, plus
+	   dense, y est illisible. 12 px, partout, y compris sur écran bas. */
+	:global(html[lang='ar']) .rail .rail-b,
+	:global(html[lang='ar']) .rail:not(.orizontal) .rail-b {
+		font-size: 12px;
+		line-height: 1.25;
+	}
 	.rail-b svg {
 		width: 22px;
 		height: 22px;

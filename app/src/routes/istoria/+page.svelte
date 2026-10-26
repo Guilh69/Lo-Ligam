@@ -479,8 +479,9 @@
 		position: absolute;
 		top: clamp(2.5rem, 7vh, 4.5rem);
 		bottom: 0;
-		left: 1.35rem;
-		border-left: 1px dashed color-mix(in srgb, var(--t-aur) 55%, transparent);
+		/* propriétés logiques : en arabe (droite à gauche) le fil suit les pastilles, à droite */
+		inset-inline-start: 1.35rem;
+		border-inline-start: 1px dashed color-mix(in srgb, var(--t-aur) 55%, transparent);
 	}
 	.capitol {
 		position: relative;
@@ -704,7 +705,7 @@
 	.error {
 		margin: 0;
 		padding: 0.8rem 1rem;
-		border-left: 3px solid var(--t-aur);
+		border-inline-start: 3px solid var(--t-aur);
 		background: color-mix(in srgb, var(--t-aur) 10%, transparent);
 	}
 	.mercé {

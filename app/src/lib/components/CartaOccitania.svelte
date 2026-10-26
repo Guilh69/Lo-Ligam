@@ -2165,7 +2165,7 @@
 					if (!this._map) return;
 					fontsCarta = Object.keys(this._attributions).filter((k) => this._attributions[k]);
 					const tx = tria({ oc: 'Fonts', fr: 'Sources', es: 'Fuentes', en: 'Sources', ca: 'Fonts', ar: 'المصادر' });
-					this._container.innerHTML = `<button type="button" class="fonts-b" aria-haspopup="dialog">${tx}</button><span aria-hidden="true"> · </span>© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>`;
+					this._container.innerHTML = `<button type="button" class="fonts-b" aria-haspopup="dialog">${tx}</button><span aria-hidden="true"> · </span><span dir="ltr">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></span>`;
 					this._container.querySelector('.fonts-b').onclick = (e) => {
 						e.preventDefault();
 						fontsDobèrtas = !fontsDobèrtas;
@@ -3256,6 +3256,8 @@
 	   au texte, qui le rendait gras et flou sur fond sombre ; pas de verre
 	   flouté non plus derrière) */
 	.carta :global(.leaflet-control-scale-line) {
+		/* « 70 km », jamais « km 70 » en droite à gauche (arabe) */
+		direction: ltr;
 		background: color-mix(in srgb, var(--t-fons) 88%, transparent);
 		border: 1px solid var(--t-aur);
 		border-top: none;

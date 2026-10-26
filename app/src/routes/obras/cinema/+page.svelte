@@ -431,6 +431,27 @@
 			transition: none;
 		}
 	}
+	/* Arabe (Joan, 26-10) : ces synopsis sont en Cormorant italique, une police latine ;
+	   en arabe le navigateur fabrique une fausse italique, penchée et fine. Police
+	   normale, plus grande et plus ferme. */
+	:global(html[lang='ar']) .af-tèxt {
+		font-family: var(--font-body);
+		font-style: normal;
+		font-weight: 500;
+		font-size: 1.15rem;
+		line-height: 1.5;
+	}
+	:global(html[lang='ar']) .granda .af-tèxt {
+		font-size: 1.5rem;
+	}
+	@container cinema (max-width: 640px) {
+		:global(html[lang='ar']) .af-tèxt {
+			font-size: 1rem;
+		}
+		:global(html[lang='ar']) .granda .af-tèxt {
+			font-size: 1.2rem;
+		}
+	}
 	:global(html[data-leugier='on']) .afiche {
 		animation: none;
 	}

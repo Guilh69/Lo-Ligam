@@ -134,6 +134,14 @@
 		color: var(--t-tinta-2);
 	}
 
+	/* Arabe : pas de majuscules ni d'espacement des lettres (ils séparent les lettres
+	   liées), et une taille lisible (Joan, 26-10) */
+	:global(html[lang='ar']) .footer-grop {
+		font-size: 0.85rem;
+		letter-spacing: normal;
+		text-transform: none;
+	}
+
 	.footer-col ul {
 		list-style: none;
 		margin: 0;

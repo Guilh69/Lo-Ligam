@@ -127,7 +127,7 @@
 			{#each lista('acuelh.chifras') as c (c.clau)}
 				{@const nom = txt(c.clau + '.nom')}
 				<div use:editar={c.clau}>
-					<dt use:editar={c.clau + '.num'}>{txt(c.clau + '.num').oc}</dt>
+					<dt dir="ltr" use:editar={c.clau + '.num'}>{txt(c.clau + '.num').oc}</dt>
 					<dd use:editar={c.clau + '.nom'}>{tria(nom)}</dd>
 				</div>
 			{/each}

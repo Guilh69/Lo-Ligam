@@ -122,6 +122,11 @@
 		font-size: 0.42em;
 		color: var(--t-aur);
 	}
+	/* Arabe (Joan, 26-10) : à côté du chiffre en Limelight, le titre arabe en graisse
+	   normale paraît léger ; gras pour l'arabe */
+	:global(html[lang='ar']) h1 .titol {
+		font-weight: 700;
+	}
 	.frasa {
 		max-width: 38ch;
 		margin: var(--esp-16) 0 0;
