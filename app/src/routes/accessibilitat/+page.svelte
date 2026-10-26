@@ -103,26 +103,27 @@
 				'Todavía no se ha realizado ninguna auditoría completa: no podemos afirmar que el sitio sea conforme. Esto es lo que sabemos, tras una comprobación de la página de inicio y del código.',
 			fachT: 'Lo que ya funciona',
 			fach: [
-				'El idioma de la página cambia según tu elección (occitano, francés, español), y los lectores de pantalla lo siguen.',
+				'El idioma de la página cambia según tu elección (occitano, francés, español, inglés, catalán), y los lectores de pantalla lo siguen.',
 				'Los títulos y las zonas de navegación están etiquetados; los botones tienen un nombre.',
 				'Se puede navegar con el teclado, con un contorno bien visible en el elemento activo.',
 				'Las animaciones se reducen cuando tu dispositivo lo pide.',
 				'Las imágenes de contenido tienen un texto alternativo; los fondos decorativos se ocultan a los lectores de pantalla.',
 				'Un lector de pantalla lee el título animado de la página de inicio una sola vez.',
 				'Los vídeos empiezan sin sonido: un sonido que se activa solo sería un defecto de accesibilidad.',
-				'Un enlace «Ir al contenido» aparece la primera vez que pulsas Tab, para saltar el menú.'
+				'Un enlace «Ir al contenido» aparece la primera vez que pulsas Tab, para saltar el menú.',
+					'El panel de capas del mapa se maneja con el teclado: Intro o Espacio para abrir y activar, Esc para cerrar.'
 			],
 			manca: 'Lo que aún falta',
 			mancaL: [
 				'Los subtítulos de los vídeos y del audio.',
 				'El mapa interactivo, que todavía no se maneja del todo con el teclado ni con un lector de pantalla.',
-				'La leyenda del mapa (barra de capas), manejada en parte con el ratón.',
+				'En la leyenda del mapa, elegir una capa activa haciendo clic en el nombre de una línea no se puede hacer con el teclado.',
 				'Una comprobación de los contrastes en todas las páginas, en tema claro y oscuro.',
 				'Una prueba con lectores de pantalla reales (NVDA, VoiceOver).'
 			],
 			lengasT: 'Idiomas del sitio',
 			lengas:
-				'Occitano, francés y español. Una parte de las páginas todavía no está traducida al español: se muestra entonces el occitano.',
+				'Occitano, francés, español, inglés y catalán. La interfaz y la página de inicio están traducidas al español; el resto todavía no está traducido al español, al inglés ni al catalán: se muestra entonces el occitano.',
 			tipoT: 'Tipografía',
 			tipo:
 				'El sitio utiliza la tipografía Luciole, concebida para mejorar la lectura de las personas con baja visión. Luciole © Laurent Bourcellier y Jonathan Perez (CTRDV), licencia CC BY 4.0.',
@@ -143,26 +144,27 @@
 				'A full audit has not yet been carried out, so we cannot say that the site is compliant. Here is what we know, after checking the home page and the code.',
 			fachT: 'What already works',
 			fach: [
-				'The page language changes with your choice (Occitan, French, Spanish), and screen readers follow it.',
+				'The page language changes with your choice (Occitan, French, Spanish, English, Catalan), and screen readers follow it.',
 				'Headings and navigation areas are marked up; buttons have a name.',
 				'You can navigate with the keyboard, with a clearly visible outline on the active element.',
 				'Animations are reduced when your device asks for it.',
 				'Content images have alternative text; decorative backgrounds are hidden from screen readers.',
 				'A screen reader reads the animated home page title only once.',
 				'Videos start without sound: sound that starts by itself would be an accessibility flaw.',
-				'A ‘Skip to content’ link appears the first time you press Tab, to skip the menu.'
+				'A ‘Skip to content’ link appears the first time you press Tab, to skip the menu.',
+					'The map layers panel can be operated with the keyboard: Enter or Space to open and switch on, Esc to close.'
 			],
 			manca: 'What is still missing',
 			mancaL: [
 				'Subtitles for videos and audio.',
 				'The interactive map, which cannot yet be fully operated with the keyboard or a screen reader.',
-				'The map legend (layer rail), partly operated with the mouse.',
+				'In the map legend, choosing an active layer by clicking on the name of a line cannot be done with the keyboard.',
 				'A check of contrasts on all pages, in light and dark themes.',
 				'A test with real screen readers (NVDA, VoiceOver).'
 			],
 			lengasT: 'Site languages',
 			lengas:
-				'Occitan, French and Spanish. Some pages are not yet translated into Spanish: Occitan is shown instead.',
+				'Occitan, French, Spanish, English and Catalan. The interface and the home page are translated into Spanish; the rest is not yet translated into Spanish, English or Catalan: Occitan is shown instead.',
 			tipoT: 'Typeface',
 			tipo:
 				'The site uses the Luciole typeface, designed to improve reading for people with low vision. Luciole © Laurent Bourcellier and Jonathan Perez (CTRDV), licence CC BY 4.0.',
@@ -183,26 +185,27 @@
 				'Encara no s’ha fet cap auditoria completa: no podem afirmar que el web sigui conforme. Això és el que sabem, després d’una comprovació de la pàgina d’inici i del codi.',
 			fachT: 'El que ja funciona',
 			fach: [
-				'La llengua de la pàgina canvia segons la teva elecció (occità, francès, espanyol), i els lectors de pantalla la segueixen.',
+				'La llengua de la pàgina canvia segons la teva elecció (occità, francès, espanyol, anglès, català), i els lectors de pantalla la segueixen.',
 				'Els títols i les zones de navegació estan etiquetats; els botons tenen un nom.',
 				'Es pot navegar amb el teclat, amb un contorn ben visible a l’element actiu.',
 				'Les animacions es redueixen quan el teu dispositiu ho demana.',
 				'Les imatges de contingut tenen un text alternatiu; els fons decoratius s’amaguen als lectors de pantalla.',
 				'Un lector de pantalla llegeix el títol animat de la pàgina d’inici una sola vegada.',
 				'Els vídeos comencen sense so: un so que s’activa tot sol seria un defecte d’accessibilitat.',
-				'Un enllaç «Anar al contingut» apareix la primera vegada que prems Tab, per saltar el menú.'
+				'Un enllaç «Anar al contingut» apareix la primera vegada que prems Tab, per saltar el menú.',
+					'El panell de capes del mapa es maneja amb el teclat: Intro o Espai per obrir i activar, Esc per tancar.'
 			],
 			manca: 'El que encara falta',
 			mancaL: [
 				'Els subtítols dels vídeos i de l’àudio.',
 				'El mapa interactiu, que encara no es maneja del tot amb el teclat ni amb un lector de pantalla.',
-				'La llegenda del mapa (barra de capes), manejada en part amb el ratolí.',
+				'A la llegenda del mapa, triar una capa activa fent clic al nom d’una línia no es pot fer amb el teclat.',
 				'Una verificació dels contrastos a totes les pàgines, en tema clar i fosc.',
 				'Una prova amb lectors de pantalla reals (NVDA, VoiceOver).'
 			],
 			lengasT: 'Llengües del web',
 			lengas:
-				'Occità, francès i espanyol. Una part de les pàgines encara no està traduïda a l’espanyol: llavors es mostra l’occità.',
+				'Occità, francès, espanyol, anglès i català. La interfície i la pàgina d’inici estan traduïdes a l’espanyol; la resta encara no està traduïda a l’espanyol, a l’anglès ni al català: llavors es mostra l’occità.',
 			tipoT: 'Tipografia',
 			tipo:
 				'El web utilitza la tipografia Luciole, concebuda per millorar la lectura de les persones amb baixa visió. Luciole © Laurent Bourcellier i Jonathan Perez (CTRDV), llicència CC BY 4.0.',
