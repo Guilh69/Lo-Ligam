@@ -136,9 +136,205 @@
 				'Pòdes a tot moment demandar de consultar tas donadas, las corregir, las escafar, las recuperar dins un format legible, o retirar ton consentiment a las respònsas facultativas. Escriu a {email} : la respònsa arriba jos un mes.',
 			cnilT: 'En cas de desacòrd',
 			cnil: 'Se una respònsa te satisfà pas, pòdes sasir la CNIL :'
+		},
+		es: {
+			titre: 'Política de privacidad',
+			maj: 'Última actualización',
+			intro:
+				'Lo Ligam recoge lo estrictamente necesario para que el aprendizaje funcione. No se vende ningún dato y no se instala ningún rastreador publicitario.',
+			responsableT: 'Quién es responsable',
+			responsable: 'El responsable del tratamiento es {nom}, contactable en {email}.',
+			collecteT: 'Qué se recoge',
+			collecte: [
+				[
+					'Tu cuenta',
+					'Dirección de correo electrónico y contraseña, para reconocerte de una visita a otra. La contraseña nunca es legible: nuestro proveedor la almacena cifrada.'
+				],
+				[
+					'Tu perfil',
+					'Seudónimo (obligatorio) y, de forma totalmente opcional: género, tramo de edad, categoría profesional, lugar donde vives, lo que te interesa del occitano. Puedes no rellenar nada.'
+				],
+				[
+					'Tu progreso',
+					'La lección en curso, tu avance y tus puntos, para permitirte retomarlo donde lo dejaste.'
+				],
+				[
+					'Tu mensaje',
+					'Si me escribes mediante el formulario de contacto: tu dirección de correo electrónico, tu nombre si lo das y tu mensaje. Los recibo por correo electrónico para poder responderte; el sitio no guarda ninguna copia. El correo se borra de mi buzón como máximo al cabo de un año.'
+				],
+				[
+					'Tus respuestas antes de una primera clase',
+					'Si rellenas el cuestionario antes de una primera clase por videollamada: tu dirección de correo electrónico, tu nombre de pila si lo das y tus respuestas (nivel, motivos, lenguas, lugar, ritmo, deseos, mensaje). Las recibo por correo electrónico para preparar la clase; el sitio no guarda ninguna copia. El correo se borra de mi buzón como máximo al cabo de un año.'
+				],
+				[
+					'Tus ideas',
+					'Si envías una idea al buzón de ideas: su texto, vinculado a tu cuenta para que puedas encontrarla y eliminarla. Solo yo la leo, sin saber quién la envía. Se borra cuando la eliminas, cuando se elimina tu cuenta y, como máximo, al cabo de dos años.'
+				],
+				[
+					'Tus comentarios sobre las lecciones',
+					'Si dejas un comentario sobre una lección, durante la revisión: su texto, el lugar de la página que tocas y tu nombre de pila si lo das. Sin cuenta. Solo yo los leo, con la ayuda de Claude, la inteligencia artificial de Anthropic, para corregirlos. Se borran como máximo al cabo de un año.'
+				]
+			],
+			pourquoiT: 'Por qué y con qué base',
+			pourquoi:
+				'La cuenta y el progreso se basan en la ejecución del servicio que solicitas. Las respuestas opcionales del cuestionario se basan en tu consentimiento: sirven únicamente para entender quién aprende occitano, nunca para segmentarte. Las ideas también se basan en tu consentimiento: tú eliges enviarlas y puedes retirarlas. Los comentarios también.',
+			ageT: 'Edad mínima',
+			age: 'La creación de cuenta está reservada a las personas de 15 años o más.',
+			dureeT: 'Durante cuánto tiempo',
+			duree:
+				'Tus datos se conservan mientras tu cuenta exista. Si solicitas su eliminación, se borran, incluido tu progreso.',
+			quiT: 'Quién más tiene acceso',
+			qui: 'Nadie, salvo los proveedores técnicos necesarios para el funcionamiento del sitio:',
+			juridiccion:
+				'Una precisión que preferimos decir con claridad: tus datos se almacenan en servidores situados en la Unión Europea, pero la empresa que gestiona la base de datos es estadounidense. Por tanto, las autoridades de Estados Unidos pueden, en derecho, solicitar acceso a ellos (es lo que se llama CLOUD Act). El alojamiento del sitio, en cambio, es francés. Buscamos un proveedor europeo para la base de datos; a día de hoy ninguno reúne la madurez y la compatibilidad necesarias.',
+			cookiesT: 'Rastreadores y almacenamiento',
+			cookies:
+				'Ningún rastreador publicitario, ninguna medición de audiencia. El sitio solo guarda unos pocos ajustes en tu navegador: la lengua elegida, el progreso de la lección de prueba y el hecho de que ya hayas visto ciertos mensajes de bienvenida. Esta información nunca sale de tu dispositivo y no sirve para identificarte.',
+			roleBasa: 'base de datos y autenticación',
+			roleAlbergament: 'alojamiento y envío de los mensajes del formulario de contacto',
+			tiersT: 'Recursos cargados desde otros sitios',
+			tiers:
+				'Algunas páginas cargan elementos alojados en otros lugares, lo que transmite tu dirección IP a esos servicios: los mapas base (OpenStreetMap y su versión occitana OSM-bzh, OpenTopoMap, fotos aéreas del IGN y del PNOA español), la búsqueda de municipios cuando escribes un lugar (API Adresse, Photon), los vídeos, las músicas y las radios que eliges reproducir (YouTube en modo sin cookies, Deezer, Canva, las radios en occitano; para las músicas y las radios, una frase te avisa antes) y las grabaciones del Atlas sonoro de las lenguas regionales (LISN, Université Paris-Saclay) que eliges escuchar en el mapa. Las fuentes tipográficas y los iconos, en cambio, los sirve este sitio: ninguna petición a Google.',
+			droitsT: 'Tus derechos',
+			droits:
+				'Puedes solicitar en cualquier momento consultar tus datos, corregirlos, borrarlos, recuperarlos en un formato legible o retirar tu consentimiento a las respuestas opcionales. Escribe a {email}: la respuesta llega en el plazo de un mes.',
+			cnilT: 'En caso de desacuerdo',
+			cnil: 'Si una respuesta no te satisface, puedes acudir a la CNIL:'
+		},
+		en: {
+			titre: 'Privacy policy',
+			maj: 'Last updated',
+			intro:
+				'Lo Ligam collects only what is strictly necessary to make learning work. No data is sold, and no advertising tracker is installed.',
+			responsableT: 'Who is responsible',
+			responsable: 'The data controller is {nom}, who can be contacted at {email}.',
+			collecteT: 'What is collected',
+			collecte: [
+				[
+					'Your account',
+					'Email address and password, so that we can recognise you from one visit to the next. The password is never readable: it is stored in encrypted form by our service provider.'
+				],
+				[
+					'Your profile',
+					'Nickname (required) and, entirely optionally: gender, age range, occupational category, place of residence, what interests you about Occitan. You can leave everything blank.'
+				],
+				[
+					'Your progress',
+					'The lesson in progress, your advancement and your points, so that you can pick up where you left off.'
+				],
+				[
+					'Your message',
+					'If you write to me via the contact form: your email address, your name if you give it, and your message. I receive them by email so that I can reply to you; the site keeps no copy. The email is deleted from my mailbox after one year at the latest.'
+				],
+				[
+					'Your answers before a first lesson',
+					'If you fill in the questionnaire before a first video lesson: your email address, your first name if you give it, and your answers (level, reasons, languages, place, pace, wishes, message). I receive them by email to prepare the lesson; the site keeps no copy. The email is deleted from my mailbox after one year at the latest.'
+				],
+				[
+					'Your ideas',
+					'If you send an idea to the idea box: its text, linked to your account so that you can find it again and delete it. I am the only one who reads it, without knowing who sends it. It is deleted when you delete it, when your account is deleted, and after two years at the latest.'
+				],
+				[
+					'Your comments on the lessons',
+					'If you leave a comment on a lesson, during proofreading: its text, the place on the page you touch, and your first name if you give it. No account. I am the only one who reads them, with the help of Claude, Anthropic’s artificial intelligence, to correct them. They are deleted after one year at the latest.'
+				]
+			],
+			pourquoiT: 'Why, and on what basis',
+			pourquoi:
+				'The account and progress are based on performing the service you request. The optional answers in the questionnaire are based on your consent: they are used only to understand who is learning Occitan, never to target you. Ideas are also based on your consent: you choose to send them, and you can withdraw them. The same goes for comments.',
+			ageT: 'Minimum age',
+			age: 'Creating an account is restricted to people aged 15 or over.',
+			dureeT: 'For how long',
+			duree:
+				'Your data is kept for as long as your account exists. If you ask for it to be deleted, it is erased, including your progress.',
+			quiT: 'Who else has access',
+			qui: 'No one, apart from the technical providers necessary for the site to work:',
+			juridiccion:
+				'A point we prefer to state clearly: your data is stored on servers located in the European Union, but the company that manages the database is American. The authorities of the United States can therefore, in law, request access to it (this is what is known as the CLOUD Act). The hosting of the site itself is French. We are looking for a European provider for the database; none currently combines the maturity and compatibility required.',
+			cookiesT: 'Trackers and storage',
+			cookies:
+				'No advertising tracker, no audience measurement. The site only keeps a few settings in your browser: the language you chose, the progress of the trial lesson, and the fact that you have already seen certain welcome messages. This information never leaves your device and is not used to identify you.',
+			roleBasa: 'database and authentication',
+			roleAlbergament: 'hosting, and sending of the contact form messages',
+			tiersT: 'Resources loaded from other sites',
+			tiers:
+				'Some pages load elements hosted elsewhere, which transmits your IP address to those services: the base maps (OpenStreetMap and its Occitan version OSM-bzh, OpenTopoMap, aerial photos from the IGN and the Spanish PNOA), the search for municipalities when you type a place (API Adresse, Photon), the videos, music and radio stations you choose to play (YouTube in cookie-free mode, Deezer, Canva, radio stations in Occitan; for music and radio, a sentence warns you beforehand) and the recordings of the Sound Atlas of regional languages (LISN, Université Paris-Saclay) that you choose to listen to on the map. The fonts and icons, on the other hand, are served by this site: no request to Google.',
+			droitsT: 'Your rights',
+			droits:
+				'You can at any time ask to see your data, correct it, erase it, retrieve it in a readable format, or withdraw your consent to the optional answers. Write to {email}: the reply comes within one month.',
+			cnilT: 'In case of disagreement',
+			cnil: 'If a reply does not satisfy you, you can refer the matter to the CNIL:'
+		},
+		ca: {
+			titre: 'Política de privadesa',
+			maj: 'Darrera actualització',
+			intro:
+				'Lo Ligam recull només el que és estrictament necessari perquè l’aprenentatge funcioni. No es ven cap dada i no s’instal·la cap rastrejador publicitari.',
+			responsableT: 'Qui n’és el responsable',
+			responsable: 'El responsable del tractament és {nom}, que es pot contactar a {email}.',
+			collecteT: 'Què es recull',
+			collecte: [
+				[
+					'El teu compte',
+					'Adreça electrònica i contrasenya, per reconèixer-te d’una visita a l’altra. La contrasenya no és mai llegible: la guarda xifrada el nostre proveïdor.'
+				],
+				[
+					'El teu perfil',
+					'Pseudònim (obligatori) i, de manera totalment opcional: gènere, franja d’edat, categoria professional, lloc de residència, el que t’interessa de l’occità. Pots no emplenar res.'
+				],
+				[
+					'El teu progrés',
+					'La lliçó en curs, el teu avenç i els teus punts, per permetre’t reprendre on ho havies deixat.'
+				],
+				[
+					'El teu missatge',
+					'Si m’escrius pel formulari de contacte: la teva adreça electrònica, el teu nom si el dones i el teu missatge. Els rebo per correu electrònic per poder respondre’t; el web no en guarda cap còpia. El correu s’esborra de la meva bústia com a molt tard al cap d’un any.'
+				],
+				[
+					'Les teves respostes abans d’una primera classe',
+					'Si emplenes el qüestionari abans d’una primera classe per videotrucada: la teva adreça electrònica, el teu nom de pila si el dones i les teves respostes (nivell, motius, llengües, lloc, ritme, desitjos, missatge). Les rebo per correu electrònic per preparar la classe; el web no en guarda cap còpia. El correu s’esborra de la meva bústia com a molt tard al cap d’un any.'
+				],
+				[
+					'Les teves idees',
+					'Si envies una idea a la bústia d’idees: el seu text, lligat al teu compte perquè la puguis tornar a trobar i suprimir. Només jo la llegeixo, sense saber qui l’envia. S’esborra quan la suprimeixes, quan se suprimeix el teu compte i, com a molt tard, al cap de dos anys.'
+				],
+				[
+					'Les teves remarques sobre les lliçons',
+					'Si deixes una remarca sobre una lliçó, durant la revisió: el seu text, l’indret de la pàgina que toques i el teu nom de pila si el dones. Sense compte. Només jo les llegeixo, amb l’ajuda de Claude, la intel·ligència artificial d’Anthropic, per corregir-les. S’esborren com a molt tard al cap d’un any.'
+				]
+			],
+			pourquoiT: 'Per què, i amb quina base',
+			pourquoi:
+				'El compte i el progrés es basen en l’execució del servei que demanes. Les respostes opcionals del qüestionari es basen en el teu consentiment: serveixen únicament per entendre qui aprèn occità, mai per segmentar-te. Les idees també es basen en el teu consentiment: tu decideixes enviar-les i les pots retirar. Les remarques també.',
+			ageT: 'Edat mínima',
+			age: 'La creació de compte està reservada a les persones de 15 anys o més.',
+			dureeT: 'Durant quant de temps',
+			duree:
+				'Les teves dades es conserven mentre el teu compte existeixi. Si en demanes la supressió, s’esborren, progrés inclòs.',
+			quiT: 'Qui més hi té accés',
+			qui: 'Ningú, tret dels proveïdors tècnics necessaris per al funcionament del web:',
+			juridiccion:
+				'Una precisió que preferim dir amb claredat: les teves dades s’emmagatzemen en servidors situats a la Unió Europea, però l’empresa que gestiona la base de dades és estatunidenca. Per tant, les autoritats dels Estats Units poden, en dret, demanar-ne l’accés (és el que s’anomena CLOUD Act). L’allotjament del web, en canvi, és francès. Cerquem un proveïdor europeu per a la base de dades; cap reuneix avui la maduresa i la compatibilitat necessàries.',
+			cookiesT: 'Rastrejadors i emmagatzematge',
+			cookies:
+				'Cap rastrejador publicitari, cap mesura d’audiència. El web només guarda uns quants ajustos al teu navegador: la llengua triada, el progrés de la lliçó de prova i el fet que ja hagis vist certs missatges de benvinguda. Aquesta informació no surt mai del teu dispositiu i no serveix per identificar-te.',
+			roleBasa: 'base de dades i autenticació',
+			roleAlbergament: 'allotjament i enviament dels missatges del formulari de contacte',
+			tiersT: 'Recursos carregats des d’altres llocs',
+			tiers:
+				'Algunes pàgines carreguen elements allotjats en altres llocs, cosa que transmet la teva adreça IP a aquests serveis: els mapes de fons (OpenStreetMap i la seva versió occitana OSM-bzh, OpenTopoMap, fotos aèries de l’IGN i del PNOA espanyol), la cerca de municipis quan escrius un lloc (API Adresse, Photon), els vídeos, les músiques i les ràdios que tries d’iniciar (YouTube en mode sense galetes, Deezer, Canva, les ràdios en occità; per a les músiques i les ràdios, una frase t’avisa abans) i els enregistraments de l’Atles sonor de les llengües regionals (LISN, Université Paris-Saclay) que tries d’escoltar al mapa. Les fonts tipogràfiques i les icones, en canvi, les serveix aquest web: cap petició a Google.',
+			droitsT: 'Els teus drets',
+			droits:
+				'Pots en qualsevol moment demanar de consultar les teves dades, corregir-les, esborrar-les, recuperar-les en un format llegible o retirar el teu consentiment a les respostes opcionals. Escriu a {email}: la resposta arriba en el termini d’un mes.',
+			cnilT: 'En cas de desacord',
+			cnil: 'Si una resposta no et satisfà, pots adreçar-te a la CNIL:'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);
+	// espace avant les deux-points : seulement en occitan et en français
+	let dp = $derived(lang === 'oc' || lang === 'fr' ? ' :' : ':');
+	// « Union européenne » : legal.js ne la donne qu'en occitan et en français
+	const regioUE = { es: 'Unión Europea', en: 'European Union', ca: 'Unió Europea' };
 
 	function avecVars(s) {
 		return s.replace('{nom}', editor.nom).replace('{email}', editor.email);
@@ -156,7 +352,7 @@
 
 	<article class="doc">
 		<h1>{tx.titre}</h1>
-		<p class="maj">{tx.maj} : {dataMiseAJour}</p>
+		<p class="maj">{tx.maj}{dp} {dataMiseAJour}</p>
 		<p class="intro">{tx.intro}</p>
 
 		<section>
@@ -195,7 +391,7 @@
 			<ul>
 				<li>
 					<strong>{baseDonnadas.nom}</strong> — {tx.roleBasa}
-					{#if baseDonnadas.region}({baseDonnadas.region[lang] ?? baseDonnadas.region.fr}){/if}
+					{#if baseDonnadas.region}({baseDonnadas.region[lang] ?? regioUE[lang] ?? baseDonnadas.region.fr}){/if}
 					·
 					<a href={baseDonnadas.site} target="_blank" rel="noopener noreferrer">{baseDonnadas.site}</a>
 				</li>

@@ -52,9 +52,77 @@
 			donadasT: 'Données personnelles',
 			donadas: 'La gestion de tes données est détaillée sur la page dédiée :',
 			donadasLink: 'Politique de confidentialité'
+		},
+		es: {
+			titre: 'Avisos legales',
+			maj: 'Última actualización',
+			editorT: 'Editor del sitio',
+			directorT: 'Director de la publicación',
+			contactT: 'Contacto',
+			hebergeurT: 'Proveedor de alojamiento',
+			proprietatT: 'Propiedad intelectual',
+			proprietat:
+				'Los contenidos de este sitio (textos, ilustraciones, fichas de vocabulario) son obra del editor, salvo mención en contrario. Toda reproducción requiere su acuerdo.',
+			ligamsT: 'Enlaces externos',
+			ligams:
+				'Este sitio remite a sitios de terceros (Lo Congrès, OPLO, CIRDOC y otros). No somos responsables de su contenido.',
+			cartaT: 'Mapa base',
+			carta:
+				'El mapa base occitano procede de OpenStreetMap en occitano, con el Institut d’Estudis Occitans. Los datos cartográficos están bajo licencia ODbL.',
+			tipoT: 'Tipografía',
+			tipo: 'El sitio utiliza la fuente Luciole © Laurent Bourcellier y Jonathan Perez (CTRDV), bajo licencia CC BY 4.0.',
+			donadasT: 'Datos personales',
+			donadas: 'La gestión de tus datos se detalla en la página dedicada:',
+			donadasLink: 'Política de privacidad'
+		},
+		en: {
+			titre: 'Legal notice',
+			maj: 'Last updated',
+			editorT: 'Publisher of the site',
+			directorT: 'Director of publication',
+			contactT: 'Contact',
+			hebergeurT: 'Hosting provider',
+			proprietatT: 'Intellectual property',
+			proprietat:
+				'The content of this site (texts, illustrations, vocabulary cards) is the work of the publisher, unless otherwise stated. Any reproduction requires the publisher’s agreement.',
+			ligamsT: 'External links',
+			ligams:
+				'This site links to third-party sites (Lo Congrès, OPLO, CIRDOC and others). We are not responsible for their content.',
+			cartaT: 'Base map',
+			carta:
+				'The Occitan base map comes from OpenStreetMap in Occitan, with the Institut d’Estudis Occitans. The map data is licensed under the ODbL.',
+			tipoT: 'Typography',
+			tipo: 'The site uses the Luciole typeface © Laurent Bourcellier and Jonathan Perez (CTRDV), licensed under CC BY 4.0.',
+			donadasT: 'Personal data',
+			donadas: 'How your data is handled is detailed on the dedicated page:',
+			donadasLink: 'Privacy policy'
+		},
+		ca: {
+			titre: 'Avís legal',
+			maj: 'Darrera actualització',
+			editorT: 'Editor del web',
+			directorT: 'Director de la publicació',
+			contactT: 'Contacte',
+			hebergeurT: 'Proveïdor d’allotjament',
+			proprietatT: 'Propietat intel·lectual',
+			proprietat:
+				'Els continguts d’aquest web (textos, il·lustracions, fitxes de vocabulari) són obra de l’editor, tret que s’indiqui el contrari. Qualsevol reproducció requereix el seu acord.',
+			ligamsT: 'Enllaços externs',
+			ligams:
+				'Aquest web remet a llocs de tercers (Lo Congrès, OPLO, CIRDOC i altres). No som responsables del seu contingut.',
+			cartaT: 'Mapa de fons',
+			carta:
+				'El mapa de fons occità prové d’OpenStreetMap en occità, amb l’Institut d’Estudis Occitans. Les dades cartogràfiques estan sota llicència ODbL.',
+			tipoT: 'Tipografia',
+			tipo: 'El web utilitza la lletra Luciole © Laurent Bourcellier i Jonathan Perez (CTRDV), sota llicència CC BY 4.0.',
+			donadasT: 'Dades personals',
+			donadas: 'La gestió de les teves dades es detalla a la pàgina dedicada:',
+			donadasLink: 'Política de privadesa'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);
+	// espace avant les deux-points : seulement en occitan et en français
+	let dp = $derived(lang === 'oc' || lang === 'fr' ? ' :' : ':');
 
 	// Rend visible ce qui n'a pas encore été renseigné, plutôt que d'afficher
 	// une mention légale trompeuse.
@@ -75,14 +143,14 @@
 
 	<article class="doc">
 		<h1>{tx.titre}</h1>
-		<p class="maj">{tx.maj} : {dataMiseAJour}</p>
+		<p class="maj">{tx.maj}{dp} {dataMiseAJour}</p>
 
 		<section>
 			<h2>{tx.editorT}</h2>
 			<p>
 				{editor.nom}<br />
 				{editor.statut}
-				{#if val(editor.siret)}<br />SIRET : {editor.siret}{/if}
+				{#if val(editor.siret)}<br />SIRET{dp} {editor.siret}{/if}
 				{#if val(editor.registre)}<br />{editor.registre}{/if}
 				{#if val(editor.tva)}<br />{editor.tva}{/if}
 				{#if val(editor.adresse)}<br />{editor.adresse}{/if}

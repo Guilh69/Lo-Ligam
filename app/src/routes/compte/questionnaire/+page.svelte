@@ -7,43 +7,62 @@
 	import { session, authReady } from '$lib/authStore';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import LocationAutocomplete from '$lib/components/LocationAutocomplete.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
 	let lang = $derived(langStore.current);
 
-	// Met en avant la langue choisie et relègue l'autre entre parenthèses.
-	// Avant, l'occitan était toujours devant même en français.
-	let main = $derived((oc, fr) => (lang === 'oc' ? oc : fr));
+	// Met en avant la langue choisie et relègue l'autre entre parenthèses :
+	// l'occitan pour qui lit en français, en espagnol, en anglais ou en catalan,
+	// le français pour qui lit en occitan.
+	// main(oc, fr, es, en, ca) : le texte dans la langue choisie.
+	let main = $derived((oc, fr, es, en, ca) => tria({ oc, fr, es, en, ca }));
 	let alt = $derived((oc, fr) => (lang === 'oc' ? fr : oc));
-	let optional = $derived(lang === 'oc' ? 'facultatiu' : 'facultatif');
-	let required = $derived(lang === 'oc' ? 'obligatòri' : 'obligatoire');
+	// message d'erreur : « occitan (français) » comme avant ; dans les autres
+	// langues, le texte choisi puis l'occitan entre parenthèses
+	function msg(oc, fr, es, en, ca) {
+		return lang === 'oc' || lang === 'fr' ? `${oc} (${fr})` : `${tria({ es, en, ca })} (${oc})`;
+	}
+	let optional = $derived(tria({ oc: 'facultatiu', fr: 'facultatif', es: 'opcional', en: 'optional', ca: 'opcional' }));
+	let required = $derived(tria({ oc: 'obligatòri', fr: 'obligatoire', es: 'obligatorio', en: 'required', ca: 'obligatori' }));
 
 	// Groupes socioprofessionnels INSEE (PCS, niveau 1 — les 8 grandes
 	// catégories). Facultatif, "Prefèri pas dire" par défaut.
 	const pcsCategories = [
-		{ value: 'agriculteurs', oc: 'Agricultors exploitants', fr: 'Agriculteurs exploitants' },
+		{ value: 'agriculteurs', oc: 'Agricultors exploitants', fr: 'Agriculteurs exploitants', es: 'Agricultores titulares de explotación', en: 'Farmers', ca: 'Agricultors titulars d’explotació' },
 		{
 			value: 'artisans',
 			oc: 'Artisans, comerçants e caps d’empresa',
-			fr: 'Artisans, commerçants et chefs d’entreprise'
+			fr: 'Artisans, commerçants et chefs d’entreprise',
+			es: 'Artesanos, comerciantes y empresarios',
+			en: 'Artisans, tradespeople and business owners',
+			ca: 'Artesans, comerciants i empresaris'
 		},
 		{
 			value: 'cadres',
 			oc: 'Quadres e professions intellectualas superioras',
-			fr: 'Cadres et professions intellectuelles supérieures'
+			fr: 'Cadres et professions intellectuelles supérieures',
+			es: 'Directivos y profesiones intelectuales superiores',
+			en: 'Managers and higher intellectual professions',
+			ca: 'Quadres i professions intel·lectuals superiors'
 		},
 		{
 			value: 'intermediaires',
 			oc: 'Professions intermediàrias',
-			fr: 'Professions intermédiaires'
+			fr: 'Professions intermédiaires',
+			es: 'Profesiones intermedias',
+			en: 'Intermediate professions',
+			ca: 'Professions intermèdies'
 		},
-		{ value: 'employes', oc: 'Emplegats', fr: 'Employés' },
-		{ value: 'ouvriers', oc: 'Obrièrs', fr: 'Ouvriers' },
-		{ value: 'retraites', oc: 'Retirats', fr: 'Retraités' },
+		{ value: 'employes', oc: 'Emplegats', fr: 'Employés', es: 'Empleados', en: 'Employees', ca: 'Empleats' },
+		{ value: 'ouvriers', oc: 'Obrièrs', fr: 'Ouvriers', es: 'Obreros', en: 'Manual workers', ca: 'Obrers' },
+		{ value: 'retraites', oc: 'Retirats', fr: 'Retraités', es: 'Jubilados', en: 'Retired people', ca: 'Jubilats' },
 		{
 			value: 'sans_activite',
 			oc: 'Autras personas sens activitat professionala',
-			fr: 'Autres personnes sans activité professionnelle'
+			fr: 'Autres personnes sans activité professionnelle',
+			es: 'Otras personas sin actividad profesional',
+			en: 'Other people with no professional activity',
+			ca: 'Altres persones sense activitat professional'
 		}
 	];
 
@@ -97,7 +116,7 @@
 			return;
 		}
 		if (!pseudo.trim()) {
-			errorMsg = 'Cal causir un pseudonim. (Il faut choisir un pseudo.)';
+			errorMsg = msg('Cal causir un pseudonim.', 'Il faut choisir un pseudo.', 'Hay que elegir un seudónimo.', 'Please choose a nickname.', 'Cal triar un pseudònim.');
 			return;
 		}
 		loading = true;
@@ -115,12 +134,36 @@
 		if (error) {
 			// refus de la base (supabase-grops-2.sql) : doublon, mot interdit, nom réservé, longueur
 			errorMsg = /duplicate|unique/i.test(error.message)
-				? 'Aqueste pseudonim es ja pres, ensaja-n’un autre. (Ce pseudo est déjà pris, essaie-en un autre.)'
+				? msg(
+						'Aqueste pseudonim es ja pres, ensaja-n’un autre.',
+						'Ce pseudo est déjà pris, essaie-en un autre.',
+						'Este seudónimo ya está en uso: prueba con otro.',
+						'This nickname is already taken: try another one.',
+						'Aquest pseudònim ja està agafat: prova’n un altre.'
+					)
 				: /pseudo_mot|pseudo_reservat/.test(error.message)
-					? 'Aqueste pseudonim es pas possible, ensaja-n’un autre. (Ce pseudo n’est pas possible, essaie-en un autre.)'
+					? msg(
+							'Aqueste pseudonim es pas possible, ensaja-n’un autre.',
+							'Ce pseudo n’est pas possible, essaie-en un autre.',
+							'Este seudónimo no es posible: prueba con otro.',
+							'This nickname is not possible: try another one.',
+							'Aquest pseudònim no és possible: prova’n un altre.'
+						)
 					: /pseudo_longor/.test(error.message)
-						? 'Lo pseudonim fa de 2 a 30 letras. (Le pseudo fait de 2 à 30 lettres.)'
-						: 'Una error : torna ensajar. (Une erreur, réessaie.)';
+						? msg(
+								'Lo pseudonim fa de 2 a 30 letras.',
+								'Le pseudo fait de 2 à 30 lettres.',
+								'El seudónimo debe tener entre 2 y 30 letras.',
+								'The nickname must be between 2 and 30 letters long.',
+								'El pseudònim ha de tenir entre 2 i 30 lletres.'
+							)
+						: msg(
+								'Una error : torna ensajar.',
+								'Une erreur, réessaie.',
+								'Ha habido un error: inténtalo de nuevo.',
+								'Something went wrong: please try again.',
+								'Hi ha hagut un error: torna-ho a provar.'
+							);
 			return;
 		}
 		goto('/aprene');
@@ -128,7 +171,7 @@
 </script>
 
 <svelte:head>
-	<title>{main('Fasèm coneissença', 'Faisons connaissance')} · Lo Ligam</title>
+	<title>{main('Fasèm coneissença', 'Faisons connaissance', 'Vamos a conocernos', 'Let’s get to know each other', 'Anem a conèixer-nos')} · Lo Ligam</title>
 </svelte:head>
 
 <div class="page-bg" aria-hidden="true">
@@ -141,112 +184,124 @@
 
 	{#if !checking}
 		<section class="card">
-			<p class="kicker">{main('Abans de començar', 'Avant de commencer')}</p>
-			<h1 class="title">{main('Fasèm coneissença', 'Faisons connaissance')}</h1>
+			<p class="kicker">{main('Abans de començar', 'Avant de commencer', 'Antes de empezar', 'Before we start', 'Abans de començar')}</p>
+			<h1 class="title">{main('Fasèm coneissença', 'Faisons connaissance', 'Vamos a conocernos', 'Let’s get to know each other', 'Anem a conèixer-nos')}</h1>
 			<p class="subtitle">
 				<em
 					>({main(
 						'Qualques questions rapidas — la màger part son facultativas.',
-						'Quelques questions rapides — la plupart sont facultatives.'
+						'Quelques questions rapides — la plupart sont facultatives.',
+						'Unas preguntas rápidas: la mayoría son opcionales.',
+						'A few quick questions: most of them are optional.',
+						'Unes quantes preguntes ràpides: la majoria són opcionals.'
 					)})</em
 				>
 			</p>
 
 			<form onsubmit={(e) => (e.preventDefault(), submit())}>
 				<label>
-					{main('Pseudonim', 'Pseudonyme')}
+					{main('Pseudonim', 'Pseudonyme', 'Seudónimo', 'Nickname', 'Pseudònim')}
 					<em>({alt('Pseudonim', 'Pseudonyme')} · {required})</em>
 					<input type="text" bind:value={pseudo} minlength="2" maxlength="24" required aria-describedby="pseudo-vist" />
-					<small id="pseudo-vist">{main('Los membres de tos grops lo veiràn.', 'Les membres de tes groupes le verront.')}</small>
+					<small id="pseudo-vist">{main('Los membres de tos grops lo veiràn.', 'Les membres de tes groupes le verront.', 'Las personas de tus grupos lo verán.', 'The members of your groups will see it.', 'Les persones dels teus grups el veuran.')}</small>
 				</label>
 
 				<fieldset>
-					<legend>{main('Genre', 'Genre')} <em>({optional})</em></legend>
+					<legend>{main('Genre', 'Genre', 'Género', 'Gender', 'Gènere')} <em>({optional})</em></legend>
 					<div class="radio-row">
 						<label class="radio"
 							><input type="radio" bind:group={gender} value="femna" />
-							{main('Femna', 'Femme')}</label
+							{main('Femna', 'Femme', 'Mujer', 'Woman', 'Dona')}</label
 						>
 						<label class="radio"
-							><input type="radio" bind:group={gender} value="ome" /> {main('Òme', 'Homme')}</label
+							><input type="radio" bind:group={gender} value="ome" /> {main('Òme', 'Homme', 'Hombre', 'Man', 'Home')}</label
 						>
 						<label class="radio"
 							><input type="radio" bind:group={gender} value="autra" />
-							{main('Autra', 'Autre')}</label
+							{main('Autra', 'Autre', 'Otro', 'Other', 'Altre')}</label
 						>
 						<label class="radio"
 							><input type="radio" bind:group={gender} value="" checked />
-							{main('Prefèri pas dire', 'Je préfère ne pas dire')}</label
+							{main('Prefèri pas dire', 'Je préfère ne pas dire', 'Prefiero no decirlo', 'I’d rather not say', 'Prefereixo no dir-ho')}</label
 						>
 					</div>
 				</fieldset>
 
 				<label>
-					{main('Edat', 'Âge')} <em>({alt('Edat', 'âge')} · {optional})</em>
+					{main('Edat', 'Âge', 'Edad', 'Age', 'Edat')} <em>({alt('Edat', 'âge')} · {optional})</em>
 					<select bind:value={ageBracket}>
-						<option value="">{main('Prefèri pas dire', 'Je préfère ne pas dire')}</option>
+						<option value="">{main('Prefèri pas dire', 'Je préfère ne pas dire', 'Prefiero no decirlo', 'I’d rather not say', 'Prefereixo no dir-ho')}</option>
 						<option value="15-17">15-17</option>
 						<option value="18-24">18-24</option>
 						<option value="25-34">25-34</option>
 						<option value="35-44">35-44</option>
 						<option value="45-54">45-54</option>
 						<option value="55-64">55-64</option>
-						<option value="65+">{main('65 e mai', '65 et plus')}</option>
+						<option value="65+">{main('65 e mai', '65 et plus', '65 y más', '65 and over', '65 i més')}</option>
 					</select>
 				</label>
 
 				<label>
-					{main('Mestièr', 'Profession')} <em>({alt('Mestièr', 'profession')} · {optional})</em>
+					{main('Mestièr', 'Profession', 'Profesión', 'Occupation', 'Professió')} <em>({alt('Mestièr', 'profession')} · {optional})</em>
 					<select bind:value={profession}>
-						<option value="">{main('Prefèri pas dire', 'Je préfère ne pas dire')}</option>
+						<option value="">{main('Prefèri pas dire', 'Je préfère ne pas dire', 'Prefiero no decirlo', 'I’d rather not say', 'Prefereixo no dir-ho')}</option>
 						{#each pcsCategories as cat}
 							<option value={cat.value}
-								>{main(cat.oc, cat.fr)} ({alt(cat.oc, cat.fr)})</option
+								>{main(cat.oc, cat.fr, cat.es, cat.en, cat.ca)} ({alt(cat.oc, cat.fr)})</option
 							>
 						{/each}
 					</select>
 				</label>
 
 				<label>
-					{main('Ont demòras', 'Où tu vis')}
+					{main('Ont demòras', 'Où tu vis', 'Dónde vives', 'Where you live', 'On vius')}
 					<em>({alt('Ont demòras', 'lieu de vie')} · {optional})</em>
 					<LocationAutocomplete bind:value={location} />
 				</label>
 
 				<fieldset>
 					<legend>
-						{main("Qué t'interèssa dins l'occitan ?", "Qu'est-ce qui t'intéresse dans l'occitan ?")}
+						{main(
+							"Qué t'interèssa dins l'occitan ?",
+							"Qu'est-ce qui t'intéresse dans l'occitan ?",
+							'¿Qué te interesa del occitano?',
+							'What interests you about Occitan?',
+							'Què t’interessa de l’occità?'
+						)}
 						<em>({optional})</em>
 					</legend>
 					<label class="radio-block">
 						<input type="radio" bind:group={interest} value="curiositat" />
-						{main('Aprene la lenga per curiositat', 'Apprendre la langue par curiosité')}
+						{main('Aprene la lenga per curiositat', 'Apprendre la langue par curiosité', 'Aprender la lengua por curiosidad', 'Learning the language out of curiosity', 'Aprendre la llengua per curiositat')}
 						<em>({alt('per curiositat', 'par curiosité')})</em>
 					</label>
 					<label class="radio-block">
 						<input type="radio" bind:group={interest} value="originas" />
-						{main('Renodar amb mas originas', 'Renouer avec mes origines')}
+						{main('Renodar amb mas originas', 'Renouer avec mes origines', 'Reconectar con mis orígenes', 'Reconnecting with my roots', 'Reconnectar amb els meus orígens')}
 						<em>({alt('mas originas', 'mes origines')})</em>
 					</label>
 					<label class="radio-block">
 						<input type="radio" bind:group={interest} value="region" />
 						{main(
 							"Melhor conéisser ma region d'adopcion",
-							"Mieux connaître ma région d'adoption"
+							"Mieux connaître ma région d'adoption",
+							'Conocer mejor mi región de adopción',
+							'Getting to know my adopted region better',
+							'Conèixer millor la meva regió d’adopció'
 						)}
 						<em>({alt("region d'adopcion", "région d'adoption")})</em>
 					</label>
 					<label class="radio-block">
 						<input type="radio" bind:group={interest} value="autra" />
-						{main('Autra', 'Autre')} <em>({alt('Autra', 'autre')})</em>
+						{main('Autra', 'Autre', 'Otro', 'Other', 'Altre')} <em>({alt('Autra', 'autre')})</em>
 					</label>
 					{#if interest === 'autra'}
 						<input
 							type="text"
 							class="interest-other"
-							aria-label={main('Precisa', 'Précise')}
+							aria-label={main('Precisa', 'Précise', 'Precisa', 'Specify', 'Precisa')}
 							bind:value={interestOther}
-							placeholder={main('Precisa se vòles…', 'Précise si tu veux…')}
+							placeholder={main('Precisa se vòles…', 'Précise si tu veux…', 'Precisa si quieres…', 'Specify if you like…', 'Precisa si vols…')}
 							maxlength="120"
 						/>
 					{/if}
@@ -255,7 +310,7 @@
 				{#if errorMsg}<p class="msg error" role="alert">{errorMsg}</p>{/if}
 
 				<button type="submit" class="btn-primary" disabled={loading}>
-					{loading ? '…' : main('Contunhar', 'Continuer')} <span class="arrow"><Icona nom="suivant" /></span>
+					{loading ? '…' : main('Contunhar', 'Continuer', 'Continuar', 'Continue', 'Continua')} <span class="arrow"><Icona nom="suivant" /></span>
 				</button>
 			</form>
 		</section>

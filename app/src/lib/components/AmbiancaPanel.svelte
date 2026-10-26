@@ -35,6 +35,42 @@
 			fons: 'Fond',
 			leugier: 'Fond léger',
 			fonses: ['Veines d’or', 'Lumière et étoiles', 'Courbes de niveau', 'Sobre']
+		},
+		es: {
+			titol: 'Ambiente del sitio',
+			tema: 'Tema',
+			sorne: 'Oscuro',
+			clar: 'Claro',
+			sistema: 'Sistema',
+			dalt: 'Colores adaptados (daltonismo)',
+			forçat: 'Esta página se queda en claro por ahora.',
+			fons: 'Fondo',
+			leugier: 'Fondo ligero',
+			fonses: ['Vetas de oro', 'Luz y estrellas', 'Curvas de nivel', 'Sobrio']
+		},
+		en: {
+			titol: 'Site ambience',
+			tema: 'Theme',
+			sorne: 'Dark',
+			clar: 'Light',
+			sistema: 'System',
+			dalt: 'Adapted colours (colour blindness)',
+			forçat: 'This page stays light for now.',
+			fons: 'Background',
+			leugier: 'Lightweight background',
+			fonses: ['Veins of gold', 'Light and stars', 'Contour lines', 'Plain']
+		},
+		ca: {
+			titol: 'Ambient del web',
+			tema: 'Tema',
+			sorne: 'Fosc',
+			clar: 'Clar',
+			sistema: 'Sistema',
+			dalt: 'Colors adaptats (daltonisme)',
+			forçat: 'Aquesta pàgina es queda en clar de moment.',
+			fons: 'Fons',
+			leugier: 'Fons lleuger',
+			fonses: ['Vetes d’or', 'Llum i estrelles', 'Corbes de nivell', 'Sobri']
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);

@@ -8,7 +8,6 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 
-	let fr = $derived(langStore.current === 'fr');
 	const X = {
 		oc: {
 			titol: 'Mot de pas nòu',
@@ -37,9 +36,51 @@
 			cort: 'Le mot de passe doit avoir 10 caractères au moins, avec minuscule, majuscule, chiffre et symbole.',
 			parièr: 'Le nouveau mot de passe doit être différent de l’ancien.',
 			error: 'Une erreur : réessaie.'
+		},
+		es: {
+			titol: 'Contraseña nueva',
+			frasa: 'Elige una contraseña nueva para tu cuenta.',
+			mdp: 'Contraseña nueva',
+			ajuda: 'Mínimo 10 caracteres, con minúscula, mayúscula, número y símbolo',
+			gardar: 'Guardar',
+			fach: 'Contraseña cambiada: tu sesión está abierta.',
+			compte: 'Ir a mi cuenta',
+			expirat: 'Este enlace ya no es válido: pide otro.',
+			autre: 'Recibir un enlace nuevo',
+			cort: 'La contraseña debe tener 10 caracteres como mínimo, con minúscula, mayúscula, número y símbolo.',
+			parièr: 'La contraseña nueva debe ser distinta de la anterior.',
+			error: 'Ha habido un error: inténtalo de nuevo.'
+		},
+		en: {
+			titol: 'New password',
+			frasa: 'Choose a new password for your account.',
+			mdp: 'New password',
+			ajuda: 'At least 10 characters, with a lower-case letter, an upper-case letter, a number and a symbol',
+			gardar: 'Save',
+			fach: 'Password changed: you’re now logged in.',
+			compte: 'Go to my account',
+			expirat: 'This link is no longer valid: ask for another one.',
+			autre: 'Get a new link',
+			cort: 'The password must be at least 10 characters long, with a lower-case letter, an upper-case letter, a number and a symbol.',
+			parièr: 'The new password must be different from the old one.',
+			error: 'Something went wrong: please try again.'
+		},
+		ca: {
+			titol: 'Contrasenya nova',
+			frasa: 'Tria una contrasenya nova per al teu compte.',
+			mdp: 'Contrasenya nova',
+			ajuda: 'Mínim 10 caràcters, amb minúscula, majúscula, xifra i símbol',
+			gardar: 'Desa',
+			fach: 'Contrasenya canviada: la teva sessió està oberta.',
+			compte: 'Vés al meu compte',
+			expirat: 'Aquest enllaç ja no és vàlid: demana’n un altre.',
+			autre: 'Rep un enllaç nou',
+			cort: 'La contrasenya ha de tenir 10 caràcters com a mínim, amb minúscula, majúscula, xifra i símbol.',
+			parièr: 'La contrasenya nova ha de ser diferent de l’anterior.',
+			error: 'Hi ha hagut un error: torna-ho a provar.'
 		}
 	};
-	let x = $derived(fr ? X.fr : X.oc);
+	let x = $derived(X[langStore.current] ?? X.oc);
 
 	let mdp = $state('');
 	let ocupat = $state(false);

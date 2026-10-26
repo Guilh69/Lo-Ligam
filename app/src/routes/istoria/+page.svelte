@@ -9,13 +9,12 @@
 	import { onDestroy } from 'svelte';
 	import { enhance } from '$app/forms';
 	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { editor } from '$lib/data/legal.js';
 
 	let { data, form } = $props();
-	let fr = $derived(langStore.current === 'fr');
 
 	const lèvaEdicion = iniciar('istoria', data.elements);
 	onDestroy(() => lèvaEdicion?.());
@@ -72,14 +71,95 @@
 				mandadís: 'Le message n’est pas parti. Réessaie, ou écris-moi à :',
 				pas_brancat: 'Le message n’est pas parti. Réessaie, ou écris-moi à :'
 			}
+		},
+		es: {
+			titolPagina: 'Mi vínculo con el occitano',
+			escriu: 'Escríbeme',
+			nom: 'Tu nombre',
+			facultatiu: 'opcional',
+			corrièl: 'Tu correo electrónico',
+			obligatòri: 'obligatorio',
+			messatge: 'Tu mensaje',
+			mandar: 'Enviar',
+			mandant: 'Enviando…',
+			mercé: '¡Gracias! Tu mensaje ha salido. Te responderé pronto.',
+			avís: 'Tu correo solo sirve para responderte. El sitio no guarda ninguna copia.',
+			confid: 'Privacidad',
+			adreça: 'Mostrar la dirección',
+			perCorrièl: 'Correo electrónico',
+			apondre: 'Añadir un capítulo',
+			error: {
+				corrièl: 'Comprueba tu correo electrónico.',
+				messatge: 'Tu mensaje es demasiado corto.',
+				ligams: 'Demasiados enlaces en el mensaje.',
+				plafond: 'Demasiados mensajes a la vez. Vuelve a intentarlo dentro de una hora.',
+				geton: 'El mensaje no ha salido. Vuelve a intentarlo.',
+				mandadís: 'El mensaje no ha salido. Vuelve a intentarlo, o escríbeme a:',
+				pas_brancat: 'El mensaje no ha salido. Vuelve a intentarlo, o escríbeme a:'
+			}
+		},
+		en: {
+			titolPagina: 'My connection to Occitan',
+			escriu: 'Write to me',
+			nom: 'Your name',
+			facultatiu: 'optional',
+			corrièl: 'Your email address',
+			obligatòri: 'required',
+			messatge: 'Your message',
+			mandar: 'Send',
+			mandant: 'Sending…',
+			mercé: 'Thank you! Your message has been sent. I’ll reply soon.',
+			avís: 'Your address is only used to reply to you. The site keeps no copy.',
+			confid: 'Privacy',
+			adreça: 'Show the address',
+			perCorrièl: 'Email',
+			apondre: 'Add a chapter',
+			error: {
+				corrièl: 'Please check your email address.',
+				messatge: 'Your message is too short.',
+				ligams: 'Too many links in the message.',
+				plafond: 'Too many messages at once. Please try again in an hour.',
+				geton: 'The message has not been sent. Please try again.',
+				mandadís: 'The message has not been sent. Please try again, or write to me at:',
+				pas_brancat: 'The message has not been sent. Please try again, or write to me at:'
+			}
+		},
+		ca: {
+			titolPagina: 'El meu vincle amb l’occità',
+			escriu: 'Escriu-me',
+			nom: 'El teu nom',
+			facultatiu: 'opcional',
+			corrièl: 'La teva adreça electrònica',
+			obligatòri: 'obligatori',
+			messatge: 'El teu missatge',
+			mandar: 'Envia',
+			mandant: 'Enviant…',
+			mercé: 'Gràcies! El teu missatge s’ha enviat. Et respondré aviat.',
+			avís: 'La teva adreça només serveix per respondre’t. El web no en guarda cap còpia.',
+			confid: 'Privadesa',
+			adreça: 'Mostra l’adreça',
+			perCorrièl: 'Correu electrònic',
+			apondre: 'Afegeix un capítol',
+			error: {
+				corrièl: 'Comprova la teva adreça electrònica.',
+				messatge: 'El teu missatge és massa curt.',
+				ligams: 'Massa enllaços al missatge.',
+				plafond: 'Massa missatges alhora. Torna-ho a provar d’aquí a una hora.',
+				geton: 'El missatge no s’ha enviat. Torna-ho a provar.',
+				mandadís: 'El missatge no s’ha enviat. Torna-ho a provar, o escriu-me a:',
+				pas_brancat: 'El missatge no s’ha enviat. Torna-ho a provar, o escriu-me a:'
+			}
 		}
 	};
-	let tx = $derived(t[fr ? 'fr' : 'oc']);
+	let tx = $derived(t[langStore.current] ?? t.oc);
+	// espace avant les deux-points : seulement en occitan et en français
+	let dp = $derived(langStore.current === 'oc' || langStore.current === 'fr' ? ' :' : ':');
 
-	/** le texte dans la langue du site ; l'occitan vide laisse voir le français */
+	/** le texte dans la langue du site ; si elle est vide, l'occitan, puis le français */
 	function vista(clau) {
 		const v = txt(clau);
-		if (fr) return { t: v.fr, lang: 'fr' };
+		const l = langStore.current;
+		if (v[l]?.trim()) return { t: v[l], lang: l };
 		return v.oc.trim() ? { t: v.oc, lang: 'oc' } : { t: v.fr, lang: 'fr' };
 	}
 	const paragrafs = (s) => s.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
@@ -137,7 +217,7 @@
 						src={retrat.url}
 						width={retrat.largor}
 						height={retrat.nautor}
-						alt={(fr ? retrat.alt_fr : retrat.alt_oc) || 'Romain Périer'}
+						alt={tria({ oc: retrat.alt_oc, fr: retrat.alt_fr }) || 'Romain Périer'}
 						fetchpriority="high"
 					/>
 				</figure>
@@ -184,11 +264,11 @@
 						href={l.href}
 						target={l.defòra ? '_blank' : undefined}
 						rel={l.defòra ? 'noopener' : undefined}
-						use:editar={'istoria.contacte.reservar'}>{fr ? l.fr : l.oc}</a
+						use:editar={'istoria.contacte.reservar'}>{tria(l)}</a
 					>
 				{/if}
 				<p class="adreça">
-					<span>{tx.perCorrièl} :</span>
+					<span>{tx.perCorrièl}{dp}</span>
 					{#if adreçaVista}
 						<a href="mailto:{editor.email}">{editor.email}</a>
 					{:else}

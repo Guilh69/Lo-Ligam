@@ -27,6 +27,33 @@
 			acuelh: 'Retour à l’accueil',
 			aprene: 'Apprendre l’occitan',
 			carta: 'Voir la carte'
+		},
+		es: {
+			titre404: 'Esta página no existe',
+			titre: 'Algo ha fallado',
+			text404: 'Puede que la dirección esté mal escrita o que la página se haya movido.',
+			text: 'Ha ocurrido un error por nuestra parte. Vuelve a intentarlo dentro de un momento.',
+			acuelh: 'Volver al inicio',
+			aprene: 'Aprender occitano',
+			carta: 'Ver el mapa'
+		},
+		en: {
+			titre404: 'This page doesn’t exist',
+			titre: 'Something went wrong',
+			text404: 'The address may be mistyped, or the page may have been moved.',
+			text: 'An error occurred on our side. Please try again in a moment.',
+			acuelh: 'Back to home',
+			aprene: 'Learn Occitan',
+			carta: 'See the map'
+		},
+		ca: {
+			titre404: 'Aquesta pàgina no existeix',
+			titre: 'Alguna cosa ha fallat',
+			text404: 'Potser l’adreça està mal escrita o la pàgina s’ha mogut.',
+			text: 'Hi ha hagut un error pel nostre cantó. Torna-ho a provar d’aquí a un moment.',
+			acuelh: 'Tornar a l’inici',
+			aprene: 'Aprendre occità',
+			carta: 'Veure el mapa'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);
