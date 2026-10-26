@@ -5,23 +5,22 @@
 	// la page.
 	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
 	import { PLAN } from '$lib/data/planSite.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { tria } from '$lib/stores/lang.svelte.js';
 	import { iniciar } from '$lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('medias', data.elements);
 	$effect(() => () => lèvaEdicion?.());
 
-	let fr = $derived(langStore.current === 'fr');
 	const RUBRICA = PLAN.find((r) => r.id === 'parla');
 </script>
 
 <svelte:head>
-	<title>{fr ? 'Médias' : 'Mèdias'} · Lo Ligam</title>
+	<title>{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Las ràdios, las televisions e la premsa en occitan. Les radios, les télévisions et la presse en occitan."
 	/>
 </svelte:head>
 
-<PaginaTeulas pagina="medias" rubrica={RUBRICA} etiqueta={{ oc: 'Los mèdias en occitan', fr: 'Les médias en occitan' }} paleta="aur" />
+<PaginaTeulas pagina="medias" rubrica={RUBRICA} etiqueta={{ oc: 'Los mèdias en occitan', fr: 'Les médias en occitan', es: 'Los medios en occitano', en: 'Media in Occitan', ca: 'Els mitjans en occità' }} paleta="aur" />

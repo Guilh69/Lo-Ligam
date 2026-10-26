@@ -12,7 +12,7 @@
 	import Crotz from './Crotz.svelte';
 	import AmbiancaPanel from './AmbiancaPanel.svelte';
 	import MenuVel from './MenuVel.svelte';
-	import { lang as langStore, LENGAS, AUTRAS } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { VISIO } from '$lib/data/planSite.js';
 	import { esAdmin } from '$lib/adminStore';
@@ -56,12 +56,13 @@
 	let botonGlobe = $state(null);
 	let panelGlobe = $state(null);
 	let globeDobert = $state(false);
-	let autra = $derived(AUTRAS.includes(lang) ? lang : null);
-	// Étiquette du globe dans les cinq langues (repli occitan). Le nom annoncé
-	// inclut la langue active pour un lecteur d'écran.
+	// La 2e place de la bascule montre la « seconde » langue (fr par défaut) ;
+	// le globe permet d'en choisir une autre — les langues non occitanes qui ne
+	// sont pas déjà dans la bascule, en ordre alphabétique (Romain, 2026-10-26).
+	let segonda = $derived(langStore.segonda);
+	let autras = $derived(SEGONDAS.filter((c) => c !== segonda));
 	const GLOBE_ETIQ = { oc: 'Autras lengas', fr: 'Autres langues', es: 'Otros idiomas', en: 'Other languages', ca: 'Altres llengües' };
 	let globeEtiq = $derived(GLOBE_ETIQ[lang] ?? GLOBE_ETIQ.oc);
-	let globeNom = $derived(autra ? `${globeEtiq} : ${LENGAS[autra].nom}` : globeEtiq);
 	function basculaGlobe() {
 		globeDobert = !globeDobert;
 	}
@@ -93,7 +94,9 @@
 	const t = {
 		oc: { acuelhLong: "Tornar a l'acuèlh", admin: 'Administracion', menu: 'Menú', reservar: 'Reservar un cors', compte: 'Mon compte', connectar: 'Se connectar' },
 		fr: { acuelhLong: "Retour à l'accueil", admin: 'Administration', menu: 'Menu', reservar: 'Réserver un cours', compte: 'Mon compte', connectar: 'Se connecter' },
-		es: { acuelhLong: 'Volver al inicio', admin: 'Administración', menu: 'Menú', reservar: 'Reservar una clase', compte: 'Mi cuenta', connectar: 'Iniciar sesión' }
+		es: { acuelhLong: 'Volver al inicio', admin: 'Administración', menu: 'Menú', reservar: 'Reservar una clase', compte: 'Mi cuenta', connectar: 'Iniciar sesión' },
+		en: { acuelhLong: 'Back to home', admin: 'Administration', menu: 'Menu', reservar: 'Book a lesson', compte: 'My account', connectar: 'Log in' },
+		ca: { acuelhLong: 'Tornar a l’inici', admin: 'Administració', menu: 'Menú', reservar: 'Reservar una classe', compte: 'El meu compte', connectar: 'Inicia la sessió' }
 	};
 	let tx = $derived(t[lang] ?? t.oc);
 
@@ -156,7 +159,7 @@
 			<div class="lengas">
 				<div class="lang-toggle" class:en-avant={crida} role="group" aria-label="Lenga / Langue">
 					<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
-					<button type="button" aria-pressed={lang === 'fr'} lang="fr" onclick={() => causirLenga('fr')}>Fr</button>
+					<button type="button" aria-pressed={lang === segonda} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
 					{#if crida}
 						<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
 					{/if}
@@ -165,22 +168,19 @@
 					<button
 						type="button"
 						class="globe-boton"
-						class:activa={autra}
 						bind:this={botonGlobe}
 						aria-expanded={globeDobert}
 						aria-controls="globe-panel"
-						title="Español · English · Català"
+						title={globeEtiq}
 						onclick={basculaGlobe}>
 						<Icona nom="mond" size="1.2rem" />
-						{#if autra}<span class="globe-code" aria-hidden="true">{LENGAS[autra].curt}</span>{/if}
-						<span class="sr-only">{globeNom}</span>
+						<span class="sr-only">{globeEtiq}</span>
 					</button>
 					{#if globeDobert}
 						<div class="globe-panel" id="globe-panel" bind:this={panelGlobe} role="group" aria-label={globeEtiq}>
-							{#each AUTRAS as code (code)}
+							{#each autras as code (code)}
 								<button
 									type="button"
-									aria-pressed={lang === code}
 									lang={code}
 									onclick={() => causirGlobe(code)}>{LENGAS[code].nom}</button>
 							{/each}
@@ -408,16 +408,6 @@
 	.globe-boton:hover,
 	.globe-boton[aria-expanded='true'] {
 		border-color: var(--t-accion);
-	}
-	.globe-boton.activa {
-		background: var(--t-tinta);
-		color: var(--t-fons);
-		border-color: var(--t-tinta);
-	}
-	.globe-code {
-		font-size: 0.72rem;
-		font-weight: 700;
-		line-height: 1;
 	}
 	/* Panneau d'en-tête opaque, comme celui d'Ambiance. */
 	.globe-panel {

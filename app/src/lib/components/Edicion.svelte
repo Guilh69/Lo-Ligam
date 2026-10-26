@@ -4,7 +4,7 @@
 	// Anullar, Sortir) et le panneau flottant de l'élément touché. Posée dans
 	// le cadre commun ; ne montre rien tant qu'une page n'a pas appelé
 	// iniciar(). Les mots sont dans la langue du site (Òc / Fr).
-	import { lang } from '$lib/stores/lang.svelte.js';
+	import { lang, LENGAS } from '$lib/stores/lang.svelte.js';
 	import Icona from '$lib/components/Icona.svelte';
 	import {
 		edicion,
@@ -218,6 +218,15 @@
 						<textarea rows="2" lang="fr" value={e.fr ?? ''} onfocus={alCentre} oninput={(ev) => champ(e.clau, 'fr')(ev.currentTarget.value)}></textarea>
 					</label>
 				{/if}
+				<!-- La langue affichée (es/en/ca) : son champ apparaît quand on est
+				     dans cette langue, à côté de la source Òc/Fr. La correction est
+				     gardée en brouillon puis publiée, et prime sur la traduction d'Aran. -->
+				{#if !SOLA_LENGA(e.clau) && (lang.current === 'es' || lang.current === 'en' || lang.current === 'ca')}
+					<label class="ed-camp ed-camp-tra">
+						<span>{LENGAS[lang.current].curt}</span>
+						<textarea rows="2" lang={lang.current} value={e[lang.current] ?? ''} onfocus={alCentre} oninput={(ev) => champ(e.clau, lang.current)(ev.currentTarget.value)}></textarea>
+					</label>
+				{/if}
 				{#if MARCATS.has(e.clau)}<p class="ed-ajuda">{t.marcas}</p>{/if}
 			{/if}
 
@@ -243,6 +252,12 @@
 					<span>{t.descripcion} (fr)</span>
 					<input type="text" value={e.imatge?.alt_fr ?? ''} oninput={(ev) => cambiar(e.clau, { imatge: { ...(e.imatge ?? {}), alt_fr: ev.currentTarget.value } }, { tipe: 'imatge' })} />
 				</label>
+				{#if lang.current === 'es' || lang.current === 'en' || lang.current === 'ca'}
+					<label class="ed-camp ed-camp-tra">
+						<span>{t.descripcion} ({LENGAS[lang.current].curt})</span>
+						<input type="text" value={e.imatge?.['alt_' + lang.current] ?? ''} oninput={(ev) => cambiar(e.clau, { imatge: { ...(e.imatge ?? {}), ['alt_' + lang.current]: ev.currentTarget.value } }, { tipe: 'imatge' })} />
+					</label>
+				{/if}
 			{/if}
 
 			{#if e.tipe === 'bloc'}<p class="ed-ajuda">{t.bloc}</p>{/if}
@@ -469,6 +484,16 @@
 	}
 	.ed-camp input.invalid {
 		border-color: var(--t-accion-viu, #ff6b5c);
+	}
+	/* le champ de la langue affichée (es/en/ca) ressort en or : c'est là qu'on
+	   corrige la traduction, à côté de la source Òc/Fr */
+	.ed-camp-tra > span {
+		color: var(--t-aur-clar);
+		font-weight: 700;
+	}
+	.ed-camp-tra textarea,
+	.ed-camp-tra input[type='text'] {
+		border-color: var(--t-aur);
 	}
 	.ed-fichièr input {
 		display: none;

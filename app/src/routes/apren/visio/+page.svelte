@@ -15,7 +15,7 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Pictograma from '$lib/apren/Pictograma.svelte';
 	import { PLAN } from '$lib/data/planSite.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { edicion, iniciar, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
@@ -24,7 +24,6 @@
 	const lèvaEdicion = iniciar('visio', data.elements);
 	$effect(() => () => lèvaEdicion?.());
 
-	let fr = $derived(langStore.current === 'fr');
 	const RUBRICA = PLAN.find((r) => r.id === 'apren');
 
 	let metòde = $derived(edicion.actiu || !amagat('visio.metòde.tèxt'));
@@ -34,9 +33,9 @@
 	// les trois lignes de chaque carte, dans l'ordre (libellés communs aux trois)
 	const LINHAS = ['un', 'mes', 'trimestre'];
 
-	const apondreEtapa = () => apondre('visio.debana', 'text', { oc: 'Etapa', fr: 'Étape' });
-	const apondrePractica = () => apondre('visio.practica', 'text', { oc: 'Linha', fr: 'Ligne' });
-	const apondreOpcion = (l) => apondre(l, 'text', { oc: 'Responsa', fr: 'Réponse' });
+	const apondreEtapa = () => apondre('visio.debana', 'text', { oc: 'Etapa', fr: 'Étape', es: 'Etapa', en: 'Step', ca: 'Etapa' });
+	const apondrePractica = () => apondre('visio.practica', 'text', { oc: 'Linha', fr: 'Ligne', es: 'Línea', en: 'Line', ca: 'Línia' });
+	const apondreOpcion = (l) => apondre(l, 'text', { oc: 'Responsa', fr: 'Réponse', es: 'Respuesta', en: 'Answer', ca: 'Resposta' });
 
 	// le questionnaire : une question à choix unique (rond) ou multiple (case)
 	const QUESTIONS = [
@@ -77,15 +76,57 @@
 				mandadís: 'Tes réponses ne sont pas parties. Réessaie, ou écris-moi à :',
 				pas_brancat: 'Tes réponses ne sont pas parties. Réessaie, ou écris-moi à :'
 			}
+		},
+		es: {
+			facultatiu: 'opcional',
+			obligatòri: 'obligatorio',
+			mantuna: 'varias respuestas posibles',
+			mandant: 'Enviando…',
+			error: {
+				corrièl: 'Revisa tu correo electrónico.',
+				ligams: 'Demasiados enlaces en el mensaje.',
+				plafond: 'Demasiados mensajes de golpe. Vuelve a intentarlo dentro de una hora.',
+				geton: 'Tus respuestas no se han enviado. Vuelve a intentarlo.',
+				mandadís: 'Tus respuestas no se han enviado. Vuelve a intentarlo, o escríbeme a:',
+				pas_brancat: 'Tus respuestas no se han enviado. Vuelve a intentarlo, o escríbeme a:'
+			}
+		},
+		en: {
+			facultatiu: 'optional',
+			obligatòri: 'required',
+			mantuna: 'select all that apply',
+			mandant: 'Sending…',
+			error: {
+				corrièl: 'Check your email address.',
+				ligams: 'Too many links in the message.',
+				plafond: 'Too many messages at once. Try again in an hour.',
+				geton: 'Your answers were not sent. Please try again.',
+				mandadís: 'Your answers were not sent. Please try again, or write to me at:',
+				pas_brancat: 'Your answers were not sent. Please try again, or write to me at:'
+			}
+		},
+		ca: {
+			facultatiu: 'opcional',
+			obligatòri: 'obligatori',
+			mantuna: 'diverses respostes possibles',
+			mandant: 'Enviant…',
+			error: {
+				corrièl: 'Revisa el teu correu electrònic.',
+				ligams: 'Massa enllaços al missatge.',
+				plafond: 'Massa missatges alhora. Torna-ho a provar d’aquí a una hora.',
+				geton: 'Les teves respostes no s’han enviat. Torna-ho a provar.',
+				mandadís: 'Les teves respostes no s’han enviat. Torna-ho a provar, o escriu-me a:',
+				pas_brancat: 'Les teves respostes no s’han enviat. Torna-ho a provar, o escriu-me a:'
+			}
 		}
 	};
-	let x = $derived(tx[fr ? 'fr' : 'oc']);
+	let x = $derived(tx[langStore.current] ?? tx.oc);
 	let error = $derived(form?.error ? (x.error[form.error] ?? x.error.mandadís) : null);
 	let ambAdreça = $derived(form?.error === 'mandadís' || form?.error === 'pas_brancat');
 </script>
 
 <svelte:head>
-	<title>{fr ? 'Cours en visio' : 'Corses en visio'} · Lo Ligam</title>
+	<title>{tria({ oc: 'Corses en visio', fr: 'Cours en visio', es: 'Clases por videollamada', en: 'Video lessons', ca: 'Classes per videotrucada' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Corses d’occitan en visio amb Romain, sol a sol ; lo primièr es ofèrt. Cours d’occitan en visio avec Romain, en tête-à-tête ; le premier est offert."
@@ -93,8 +134,8 @@
 </svelte:head>
 
 {#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
-<!-- (un occitan laissé vide montre le français, comme sur Mon ligam) -->
-{#snippet t(clau)}{@const v = txt(clau)}{@const oc = !fr && v.oc.trim()}<span lang={oc ? 'oc' : 'fr'}>{@render marcat(oc ? v.oc : v.fr)}</span>{/snippet}
+<!-- (un texte absent dans une langue montre l'occitan : repli de tria) -->
+{#snippet t(clau)}{@const v = txt(clau)}<span lang={langStore.current}>{@render marcat(tria(v))}</span>{/snippet}
 
 <!-- Le bouton de réservation : dans la page, il mène au questionnaire ; après
      l'envoi (ou « sans répondre »), au calendrier -->
@@ -106,7 +147,7 @@
 		aria-describedby={defòra ? 'visio-onglet' : undefined}
 		hidden={amagat('visio.reservar')}
 		use:editar={'visio.reservar'}
-		><span lang={fr ? 'fr' : 'oc'}>{fr ? l.fr : l.oc}</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"
+		><span lang={langStore.current}>{tria(l)}</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"
 			><path d="M2 8h12M9 3l5 5-5 5" /></svg
 		></a
 	>{/snippet}
@@ -115,10 +156,10 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="visio" class:ed-actiu={edicion.actiu}>
-	<span id="visio-onglet" class="visually-hidden">{fr ? 'S’ouvre dans un nouvel onglet' : 'Se dobrís dins un onglet novèl'}</span>
+	<span id="visio-onglet" class="visually-hidden">{tria({ oc: 'Se dobrís dins un onglet novèl', fr: 'S’ouvre dans un nouvel onglet', es: 'Se abre en una pestaña nueva', en: 'Opens in a new tab', ca: 'S’obre en una pestanya nova' })}</span>
 
-	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin dins lo site'}>
-		<a href="/apren"><b>{RUBRICA.n}</b> {fr ? RUBRICA.fr : RUBRICA.oc}</a>
+	<nav class="camin" aria-label={tria({ oc: 'Camin dins lo site', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
+		<a href="/apren"><b>{RUBRICA.n}</b> {tria(RUBRICA)}</a>
 	</nav>
 
 	<header class="eros">
@@ -152,7 +193,7 @@
 							<li use:editar={e.clau}>{@render t(e.clau)}</li>
 						{/each}
 					</ol>
-					{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondreEtapa}>+ {fr ? 'Ajouter une étape' : 'Apondre una etapa'}</button>{/if}
+					{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondreEtapa}>+ {tria({ oc: 'Apondre una etapa', fr: 'Ajouter une étape', es: 'Añadir una etapa', en: 'Add a step', ca: 'Afegir una etapa' })}</button>{/if}
 					<p class="nota" hidden={amagat('visio.debana.nota')} use:editar={'visio.debana.nota'}>{@render t('visio.debana.nota')}</p>
 				</section>
 			{/if}
@@ -188,7 +229,7 @@
 					<li use:editar={p.clau}>{@render t(p.clau)}</li>
 				{/each}
 			</ul>
-			{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondrePractica}>+ {fr ? 'Ajouter une ligne' : 'Apondre una linha'}</button>{/if}
+			{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={apondrePractica}>+ {tria({ oc: 'Apondre una linha', fr: 'Ajouter une ligne', es: 'Añadir una línea', en: 'Add a line', ca: 'Afegir una línia' })}</button>{/if}
 			{@render reservar('sus-fons', '#questionari')}
 		</aside>
 	</div>
@@ -252,7 +293,7 @@
 									</label>
 								{/each}
 								{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={() => apondreOpcion(q.lista)}
-										>+ {fr ? 'Ajouter une réponse' : 'Apondre una responsa'}</button
+										>+ {tria({ oc: 'Apondre una responsa', fr: 'Ajouter une réponse', es: 'Añadir una respuesta', en: 'Add an answer', ca: 'Afegir una resposta' })}</button
 									>{/if}
 							</div>
 						</fieldset>
@@ -265,7 +306,7 @@
 						type="text"
 						name="luòc"
 						maxlength="120"
-						placeholder={fr || !txt('visio.q.luòc.exemple').oc.trim() ? txt('visio.q.luòc.exemple').fr : txt('visio.q.luòc.exemple').oc}
+						placeholder={tria(txt('visio.q.luòc.exemple'))}
 						value={form?.luòc ?? ''}
 					/>
 				</label>
@@ -296,7 +337,7 @@
 				</div>
 				<p class="avís">
 					<span use:editar={'visio.q.avís'}>{@render t('visio.q.avís')}</span>
-					<a href="/confidencialitat">{fr ? 'Confidentialité' : 'Confidencialitat'}</a>
+					<a href="/confidencialitat">{tria({ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', en: 'Privacy', ca: 'Privadesa' })}</a>
 				</p>
 			</form>
 		{/if}
