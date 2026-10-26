@@ -102,6 +102,25 @@ const TÈXTES = {
 		fontAran: 'Generalitat de Catalunya',
 		dp: ':',
 		occitan: 'occità'
+	},
+	ar: {
+		nivèl: {
+			b: 'مدرسة ثنائية اللغة (عدد الساعات نفسه بالأوكسيتانية والفرنسية)',
+			r: 'مدرسة: 3 ساعات من الأوكسيتانية في الأسبوع',
+			s: 'مدرسة: تعريف بالأوكسيتانية (من 30 دقيقة إلى ساعة ونصف أسبوعيًا)',
+			c: 'مدرسة إعدادية',
+			l: 'مدرسة ثانوية',
+			u: 'التعليم العالي',
+			a: 'لغة التدريس في Val d’Aran هي Aranés'
+		},
+		forma: { opcion: 'خيار الأوكسيتانية', dnl: 'مادة تُدرَّس بالأوكسيتانية', seccion: 'قسم ثنائي اللغة', LLCER: 'تخصّص LLCER في الأوكسيتانية', LVB: 'الأوكسيتانية كلغة ثانية (LVB)', LVC: 'الأوكسيتانية كلغة ثالثة (LVC)', lvr: 'لغة جهوية في الصف' },
+		associacion: (a) => 'عبر جمعية ' + a,
+		font: 'المصدر',
+		oplo: 'خريطة OPLO « Actors de terren » (2024-2025)',
+		fontsSup: 'Parcoursup، Mon Master وخريطة OPLO',
+		fontAran: 'Generalitat de Catalunya',
+		dp: ':',
+		occitan: 'الأوكسيتانية'
 	}
 };
 
@@ -152,7 +171,8 @@ const TÈXTES_CORS = {
 	fr: { titol: "Cours d'occitan pour adultes", font: 'Source : couche « Cercles et associations »' },
 	es: { titol: 'Clases de occitano para adultos', font: 'Fuente: capa « Círculos y asociaciones »' },
 	en: { titol: 'Occitan classes for adults', font: 'Source: layer “Circles and associations”' },
-	ca: { titol: "Classes d'occità per a adults", font: 'Font: capa « Cercles i associacions »' }
+	ca: { titol: "Classes d'occità per a adults", font: 'Font: capa « Cercles i associacions »' },
+	ar: { titol: 'دروس في الأوكسيتانية للبالغين', font: 'المصدر: طبقة «النوادي والجمعيات»' }
 };
 export function ponchesCorses(features, { L, lang, iconaPunt, dobleClicSus, accionsNav, escapeHtml }) {
 	const fr = lang === 'fr'; // (noms de comunas seulement)

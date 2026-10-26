@@ -208,7 +208,8 @@
 		fr: { mai: 'Zoom avant', mens: 'Zoom arrière', tampar: 'Fermer', carta: "Carte de l'occitan", plen: 'Carte en plein écran', sortir: 'Quitter le plein écran' },
 		es: { mai: 'Acercar', mens: 'Alejar', tampar: 'Cerrar', carta: 'Mapa del occitano', plen: 'Mapa en pantalla completa', sortir: 'Salir de la pantalla completa' },
 		en: { mai: 'Zoom in', mens: 'Zoom out', tampar: 'Close', carta: 'Map of Occitan', plen: 'Full-screen map', sortir: 'Exit full screen' },
-		ca: { mai: 'Apropar', mens: 'Allunyar', tampar: 'Tancar', carta: "Mapa de l'occità", plen: 'Mapa a pantalla completa', sortir: 'Sortir de la pantalla completa' }
+		ca: { mai: 'Apropar', mens: 'Allunyar', tampar: 'Tancar', carta: "Mapa de l'occità", plen: 'Mapa a pantalla completa', sortir: 'Sortir de la pantalla completa' },
+		ar: { mai: 'تكبير', mens: 'تصغير', tampar: 'إغلاق', carta: 'خريطة اللغة الأوكسيتانية', plen: 'خريطة بملء الشاشة', sortir: 'الخروج من ملء الشاشة' }
 	};
 	function tèxtesLeaflet() {
 		if (!map) return;
@@ -254,7 +255,7 @@
 	let botonOc = null;
 	function majTornarOc() {
 		if (!botonOc) return;
-		const tx = tria({ oc: "Cap a l'Occitània", fr: "Cap sur l'Occitanie", es: 'Rumbo a Occitania', en: 'Head for Occitania', ca: "Rumb a l'Occitània" }); // (causit per Romain)
+		const tx = tria({ oc: "Cap a l'Occitània", fr: "Cap sur l'Occitanie", es: 'Rumbo a Occitania', en: 'Head for Occitania', ca: "Rumb a l'Occitània", ar: 'الذهاب إلى أوكسيتانيا' }); // (causit per Romain)
 		botonOc.title = tx;
 		botonOc.setAttribute('aria-label', tx);
 	}
@@ -270,7 +271,8 @@
 			fr: 'Vider la carte : éteindre toutes les couches',
 			es: 'Vaciar el mapa: apagar todas las capas',
 			en: 'Clear the map: switch off all layers',
-			ca: 'Buidar el mapa: apagar totes les capes'
+			ca: 'Buidar el mapa: apagar totes les capes',
+			ar: 'إفراغ الخريطة: إخفاء كل الطبقات'
 		});
 		botonNet.title = tx;
 		botonNet.setAttribute('aria-label', tx);
@@ -311,7 +313,7 @@
 	let botonFons = null;
 	function majFons() {
 		if (!botonFons) return;
-		const tx = tria({ oc: 'Fons de carta', fr: 'Fond de carte', es: 'Mapa base', en: 'Base map', ca: 'Mapa de fons' });
+		const tx = tria({ oc: 'Fons de carta', fr: 'Fond de carte', es: 'Mapa base', en: 'Base map', ca: 'Mapa de fons', ar: 'خلفية الخريطة' });
 		botonFons.title = tx;
 		botonFons.setAttribute('aria-label', tx);
 	}
@@ -538,12 +540,13 @@
 				kod,
 				// (l'intitulé est traduit : sa langue suit celle du site)
 				lang,
-				endo: tria({ oc: 'Lengas de França', fr: 'Langues de France', es: 'Lenguas de Francia', en: 'Languages of France', ca: 'Llengües de França' }),
+				endo: tria({ oc: 'Lengas de França', fr: 'Langues de France', es: 'Lenguas de Francia', en: 'Languages of France', ca: 'Llengües de França', ar: 'لغات فرنسا' }),
 				oc: 'Descobrir la diversitat lingüistica de França',
 				fr: 'Découvrir la diversité linguistique de la France',
 				es: 'Descubrir la diversidad lingüística de Francia',
 				en: 'Discover the linguistic diversity of France',
-				ca: 'Descobrir la diversitat lingüística de França'
+				ca: 'Descobrir la diversitat lingüística de França',
+				ar: 'اكتشاف التنوّع اللغوي في فرنسا'
 			};
 		const rèsta = kod.startsWith('rèsta:'),
 			k = rèsta ? kod.slice(6) : kod;
@@ -559,7 +562,8 @@
 				// (es/en/ca : le nom de la langue s'affiche juste au-dessus, dans sa propre langue)
 				es: 'Descubrir el resto de esta lengua',
 				en: 'Discover the rest of this language',
-				ca: "Descobrir la resta d'aquesta llengua"
+				ca: "Descobrir la resta d'aquesta llengua",
+				ar: 'اكتشاف بقية هذه اللغة'
 			};
 		return {
 			kod: k,
@@ -568,7 +572,8 @@
 			fr: 'Découvrir ' + art(n.fr, 'les ', "l'", 'le ') + n.fr,
 			es: 'Descubrir esta lengua',
 			en: 'Discover this language',
-			ca: 'Descobrir aquesta llengua'
+			ca: 'Descobrir aquesta llengua',
+			ar: 'اكتشاف هذه اللغة'
 		};
 	};
 	function alucarVesina(k) {
@@ -605,7 +610,8 @@
 		fr: { novèla: 's’ouvre dans une nouvelle fenêtre', site: 'Voir le site', nav: 'Ouvrir dans mon application de navigation', osm: 'Voir sur OpenStreetMap', osmTanben: 'ou sur OpenStreetMap' },
 		es: { novèla: 'se abre en una ventana nueva', site: 'Ver el sitio', nav: 'Abrir en mi aplicación de mapas', osm: 'Ver en OpenStreetMap', osmTanben: 'o en OpenStreetMap' },
 		en: { novèla: 'opens in a new window', site: 'View the website', nav: 'Open in my maps app', osm: 'View on OpenStreetMap', osmTanben: 'or on OpenStreetMap' },
-		ca: { novèla: "s'obre en una finestra nova", site: 'Veure el web', nav: 'Obrir a la meva aplicació de mapes', osm: 'Veure a OpenStreetMap', osmTanben: 'o a OpenStreetMap' }
+		ca: { novèla: "s'obre en una finestra nova", site: 'Veure el web', nav: 'Obrir a la meva aplicació de mapes', osm: 'Veure a OpenStreetMap', osmTanben: 'o a OpenStreetMap' },
+		ar: { novèla: 'يُفتح في نافذة جديدة', site: 'زيارة الموقع', nav: 'الفتح في تطبيق الخرائط لديّ', osm: 'عرض على OpenStreetMap', osmTanben: 'أو على OpenStreetMap' }
 	};
 	const txAccions = () => TÈXTES_ACCIONS[lang] ?? TÈXTES_ACCIONS.oc;
 	const accionBulla = (icona, href, tèxt, defòra = false) =>
@@ -646,7 +652,8 @@
 		fr: { escòla: 'école', collègi: 'collège', licèu: 'lycée' },
 		es: { escòla: 'escuela', collègi: 'colegio', licèu: 'liceo' },
 		en: { escòla: 'school', collègi: 'middle school', licèu: 'high school' },
-		ca: { escòla: 'escola', collègi: 'col·legi', licèu: 'liceu' }
+		ca: { escòla: 'escola', collègi: 'col·legi', licèu: 'liceu' },
+		ar: { escòla: 'مدرسة', collègi: 'مدرسة إعدادية', licèu: 'مدرسة ثانوية' }
 	};
 	async function cargarCalandretas() {
 		if (calandretasCargadas || !map) return;
@@ -669,12 +676,12 @@
 						? accionBulla(
 								'mail',
 								'mailto:' + q.corrièl,
-								tria({ oc: 'Contactar aquesta Calandreta', fr: 'Contacter cette Calandreta', es: 'Contactar con esta Calandreta', en: 'Contact this Calandreta', ca: 'Contactar amb aquesta Calandreta' })
+								tria({ oc: 'Contactar aquesta Calandreta', fr: 'Contacter cette Calandreta', es: 'Contactar con esta Calandreta', en: 'Contact this Calandreta', ca: 'Contactar amb aquesta Calandreta', ar: 'التواصل مع هذه المدرسة' })
 							)
 						: '',
-					q.telefon ? accionBulla('phone', 'tel:' + q.telefon.replace(/\s/g, ''), tria({ oc: 'Sonar', fr: 'Appeler', es: 'Llamar', en: 'Call', ca: 'Trucar' }) + ' (' + q.telefon + ')') : '',
+					q.telefon ? accionBulla('phone', 'tel:' + q.telefon.replace(/\s/g, ''), tria({ oc: 'Sonar', fr: 'Appeler', es: 'Llamar', en: 'Call', ca: 'Trucar', ar: 'الاتصال هاتفيًا' }) + ' (' + q.telefon + ')') : '',
 					/^https:\/\//.test(q.ligam ?? '')
-						? accionBulla('world', q.ligam, tria({ oc: 'Veire son site', fr: 'Voir son site', es: 'Ver su sitio web', en: 'Visit its website', ca: 'Veure el seu web' }), true)
+						? accionBulla('world', q.ligam, tria({ oc: 'Veire son site', fr: 'Voir son site', es: 'Ver su sitio web', en: 'Visit its website', ca: 'Veure el seu web', ar: 'زيارة موقعها الإلكتروني' }), true)
 						: '',
 					accionsNav(lat, lon, q.nom + ' ' + q.comuna)
 				].join('');
@@ -729,11 +736,11 @@
 	let cerclesCargats = false;
 	const FONTS_CERCLES = {
 		ag: { oc: 'agenda Lo CalenDiari', fr: 'agenda Lo CalenDiari', ligam: (u) => 'https://openagenda.com/agendas/41454951/events/' + u },
-		ieo: { oc: "guida de l'IEO", fr: "guide du réseau IEO", es: 'guía de la red IEO', en: 'IEO network guide', ca: 'guia de la xarxa IEO', ligam: () => 'https://ieo-opm.com/wp-content/uploads/GuideReseauIEO2026.pdf' },
+		ieo: { oc: "guida de l'IEO", fr: "guide du réseau IEO", es: 'guía de la red IEO', en: 'IEO network guide', ca: 'guia de la xarxa IEO', ar: 'دليل شبكة IEO', ligam: () => 'https://ieo-opm.com/wp-content/uploads/GuideReseauIEO2026.pdf' },
 		fp: { oc: 'Félibrige', fr: 'Félibrige', ligam: () => 'https://provence.felibrige.org/escolo-felibrenco-prouvenco/' },
 		fa: { oc: 'Félibrige', fr: 'Félibrige', ligam: () => 'https://aquitaine.felibrige.org/escolo-felibrenco-aquitani/' },
 		fl: { oc: 'Félibrige', fr: 'Félibrige', ligam: () => 'https://limousin.felibrige.org/escolo-felibrenco-dou-limousin/' },
-		op: { oc: "carta de l'OPLO", fr: "carte de l'OPLO", es: 'mapa de la OPLO', en: 'OPLO map', ca: 'mapa de la OPLO', ligam: () => 'https://umap.openstreetmap.fr/fr/map/actors-de-terren-siti_1186246' },
+		op: { oc: "carta de l'OPLO", fr: "carte de l'OPLO", es: 'mapa de la OPLO', en: 'OPLO map', ca: 'mapa de la OPLO', ar: 'خريطة OPLO', ligam: () => 'https://umap.openstreetmap.fr/fr/map/actors-de-terren-siti_1186246' },
 		ar: { oc: "Registre d'entitats de Catalunya", fr: "Registre d'entitats de Catalunya", ligam: () => 'https://analisi.transparenciacatalunya.cat/d/y6fz-g3ff' }
 	};
 	// lo debat sul provençal, mencionat coma una informacion (Romain, 2026-10-23)
@@ -742,7 +749,8 @@
 		fr: "Certaines associations provençales tiennent le provençal pour une langue distincte de l'occitan : le débat existe.",
 		es: 'Algunas asociaciones provenzales consideran el provenzal una lengua distinta del occitano: el debate existe.',
 		en: 'Some Provençal associations regard Provençal as a language distinct from Occitan: the debate exists.',
-		ca: "Algunes associacions provençals consideren el provençal una llengua diferent de l'occità: el debat existeix."
+		ca: "Algunes associacions provençals consideren el provençal una llengua diferent de l'occità: el debat existeix.",
+		ar: 'تعدّ بعض الجمعيات البروفنسالية أن البروفنسالية لغة مستقلة عن الأوكسيتانية: فالنقاش قائم.'
 	};
 	async function cargarCercles() {
 		if (cerclesCargats || !map) return;
@@ -764,20 +772,21 @@
 			});
 			const estat =
 				q.e === 'v'
-					? `${tria({ oc: 'Activitat provada :', fr: 'Activité prouvée :', es: 'Actividad comprobada:', en: 'Verified activity:', ca: 'Activitat comprovada:' })} ${fonts.join(', ')}`
+					? `${tria({ oc: 'Activitat provada :', fr: 'Activité prouvée :', es: 'Actividad comprobada:', en: 'Verified activity:', ca: 'Activitat comprovada:', ar: 'نشاط مؤكّد:' })} ${fonts.join(', ')}`
 					: q.a
 						? tria({
 								oc: `Declarada en prefectura en ${q.a}`,
 								fr: `Déclarée en préfecture en ${q.a}`,
 								es: `Declarada en la prefectura en ${q.a}`,
 								en: `Registered with the prefecture in ${q.a}`,
-								ca: `Declarada a la prefectura el ${q.a}`
+								ca: `Declarada a la prefectura el ${q.a}`,
+								ar: `تم التصريح بها لدى المحافظة عام ${q.a}`
 							})
-						: `${tria({ oc: 'Font :', fr: 'Source :', es: 'Fuente:', en: 'Source:', ca: 'Font:' })} ${fonts.join(', ')}`;
+						: `${tria({ oc: 'Font :', fr: 'Source :', es: 'Fuente:', en: 'Source:', ca: 'Font:', ar: 'المصدر:' })} ${fonts.join(', ')}`;
 			const provençal = /parlaren|prouven|proven|escolo|felibr/i.test(q.n) ? `<br><em class="nota-bulla">${escapeHtml(tria(DEBAT_PROVENÇAL))}</em>` : '';
 			const cap =
 				`<strong>${escapeHtml(q.n)}</strong><br>${escapeHtml(fr ? q.c : (q.o ?? q.c))}` +
-				(q.k ? ` · ${tria({ oc: "cors d'occitan", fr: "cours d'occitan", es: 'clases de occitano', en: 'Occitan classes', ca: "classes d'occità" })}` : '') +
+				(q.k ? ` · ${tria({ oc: "cors d'occitan", fr: "cours d'occitan", es: 'clases de occitano', en: 'Occitan classes', ca: "classes d'occità", ar: 'دروس في الأوكسيتانية' })}` : '') +
 				`<br><small>${estat}</small>${provençal}`;
 			const icon = iconaPunt(cid);
 			icon.options.className += q.e === 'v' ? ' ponch-plen' : ' ponch-vuèg';
@@ -1026,7 +1035,21 @@
 			refusada: 'La teva ubicació no està disponible: cerca el teu municipi.',
 			distancia: (km) => `A ${km} en línia recta`,
 			vos: 'Ets aquí',
-			tampar: 'Tancar'
+				tampar: 'Tancar'
+		},
+		ar: {
+			boton: 'أقرب مدرسة Calandreta',
+			titol: 'العثور على أقرب مدرسة Calandreta',
+			posicion: 'انطلاقًا من موقعي',
+			comuna: 'أو البحث عن بلديتك',
+			exemple: 'Rodez, Pau, Agen…',
+			cap: 'لم يُعثر على أي بلدية',
+			privat: 'يبقى موقعك داخل متصفّحك: لا يُرسَل إلى أي جهة.',
+			cerca: 'جارٍ تحديد موقعك…',
+			refusada: 'تعذّر تحديد موقعك: يمكنك البحث عن بلديتك.',
+			distancia: (km) => `على بُعد ${km} بخط مستقيم`,
+			vos: 'أنت هنا',
+			tampar: 'إغلاق'
 		}
 	};
 	const txPròcha = $derived(TÈXTES_PRÒCHA[lang] ?? TÈXTES_PRÒCHA.oc);
@@ -1308,8 +1331,8 @@
 			nom = fr ? info.fr : info.oc,
 			sota =
 				info.mix || info.cro
-					? tria({ oc: 'zòna de transicion', fr: 'zone de transition', es: 'zona de transición', en: 'transition zone', ca: 'zona de transició' })
-					: ((fr ? info.sota_fr : info.sota_oc) ?? tria({ oc: 'dialècte', fr: 'dialecte', es: 'dialecto', en: 'dialect', ca: 'dialecte' }));
+					? tria({ oc: 'zòna de transicion', fr: 'zone de transition', es: 'zona de transición', en: 'transition zone', ca: 'zona de transició', ar: 'منطقة انتقالية' })
+					: ((fr ? info.sota_fr : info.sota_oc) ?? tria({ oc: 'dialècte', fr: 'dialecte', es: 'dialecto', en: 'dialect', ca: 'dialecte', ar: 'لهجة' }));
 		const clau = nom + '|' + sota;
 		if (clau === clauDialLuòc) return;
 		clauDialLuòc = clau;
@@ -2141,7 +2164,7 @@
 				ctl._update = function () {
 					if (!this._map) return;
 					fontsCarta = Object.keys(this._attributions).filter((k) => this._attributions[k]);
-					const tx = tria({ oc: 'Fonts', fr: 'Sources', es: 'Fuentes', en: 'Sources', ca: 'Fonts' });
+					const tx = tria({ oc: 'Fonts', fr: 'Sources', es: 'Fuentes', en: 'Sources', ca: 'Fonts', ar: 'المصادر' });
 					this._container.innerHTML = `<button type="button" class="fonts-b" aria-haspopup="dialog">${tx}</button><span aria-hidden="true"> · </span>© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>`;
 					this._container.querySelector('.fonts-b').onclick = (e) => {
 						e.preventDefault();
@@ -2713,8 +2736,8 @@
 						? legendaDial.sota_fr
 						: legendaDial.sota_oc
 					: legendaDial.cro
-					? tria({ oc: 'zòna de transicion', fr: 'zone de transition', es: 'zona de transición', en: 'transition zone', ca: 'zona de transició' })
-					: tria({ oc: 'dialècte', fr: 'dialecte', es: 'dialecto', en: 'dialect', ca: 'dialecte' })}</span
+					? tria({ oc: 'zòna de transicion', fr: 'zone de transition', es: 'zona de transición', en: 'transition zone', ca: 'zona de transició', ar: 'منطقة انتقالية' })
+					: tria({ oc: 'dialècte', fr: 'dialecte', es: 'dialecto', en: 'dialect', ca: 'dialecte', ar: 'لهجة' })}</span
 			>
 			<!-- un encadrat, per las zònas que demandan una explicacion (Baiona) -->
 			{#if legendaDial.encadrat}
@@ -2730,17 +2753,17 @@
 	{/if}
 
 	{#if fontsDobèrtas}
-		<div class="fonts-carta" role="dialog" aria-label={tria({ oc: 'Fonts de la carta', fr: 'Sources de la carte', es: 'Fuentes del mapa', en: 'Map sources', ca: 'Fonts del mapa' })} transition:fly={{ y: 10, duration: 220 }}>
+		<div class="fonts-carta" role="dialog" aria-label={tria({ oc: 'Fonts de la carta', fr: 'Sources de la carte', es: 'Fuentes del mapa', en: 'Map sources', ca: 'Fonts del mapa', ar: 'مصادر الخريطة' })} transition:fly={{ y: 10, duration: 220 }}>
 			<header>
-				<h2>{tria({ oc: 'Fonts de la carta', fr: 'Sources de la carte', es: 'Fuentes del mapa', en: 'Map sources', ca: 'Fonts del mapa' })}</h2>
-				<button type="button" class="tampar-fonts" aria-label={tria({ oc: 'Tampar', fr: 'Fermer', es: 'Cerrar', en: 'Close', ca: 'Tancar' })} onclick={() => (fontsDobèrtas = false)}><Icona nom="fermer" size="20px" /></button>
+				<h2>{tria({ oc: 'Fonts de la carta', fr: 'Sources de la carte', es: 'Fuentes del mapa', en: 'Map sources', ca: 'Fonts del mapa', ar: 'مصادر الخريطة' })}</h2>
+				<button type="button" class="tampar-fonts" aria-label={tria({ oc: 'Tampar', fr: 'Fermer', es: 'Cerrar', en: 'Close', ca: 'Tancar', ar: 'إغلاق' })} onclick={() => (fontsDobèrtas = false)}><Icona nom="fermer" size="20px" /></button>
 			</header>
 			<dl>
 				{#each fontsPerTèma as g (g.tèma)}
-					<dt>{g.tèma || tria({ oc: 'Carta', fr: 'Carte', es: 'Mapa', en: 'Map', ca: 'Mapa' })}</dt>
+					<dt>{g.tèma || tria({ oc: 'Carta', fr: 'Carte', es: 'Mapa', en: 'Map', ca: 'Mapa', ar: 'الخريطة' })}</dt>
 					{#each g.fonts as font (font)}<dd>{@html font}</dd>{/each}
 				{/each}
-				<dt>{tria({ oc: 'Afichatge', fr: 'Affichage', es: 'Visualización', en: 'Display', ca: 'Visualització' })}</dt>
+				<dt>{tria({ oc: 'Afichatge', fr: 'Affichage', es: 'Visualización', en: 'Display', ca: 'Visualització', ar: 'العرض' })}</dt>
 				<dd><a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a></dd>
 			</dl>
 		</div>

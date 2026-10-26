@@ -16,7 +16,7 @@ const cargar = () =>
 		.catch(() => null));
 
 // (format des nombres : celui de la langue du site ; l'occitan garde « oc »)
-const LOCALAS = { fr: 'fr-FR', es: 'es-ES', en: 'en-GB', ca: 'ca-ES' };
+const LOCALAS = { fr: 'fr-FR', es: 'es-ES', en: 'en-GB', ca: 'ca-ES', ar: 'ar-u-nu-latn' };
 const nombre = (n, lang) => n.toLocaleString(LOCALAS[lang] ?? 'oc');
 // los mots de las bullas e del panèl de las fonts, per lenga de la pagina
 const MOTS = {
@@ -59,6 +59,14 @@ const MOTS = {
 		fora: 'fora del domini de 1886',
 		escolas: 'Ensenyament bilingüe en bretó',
 		limits: 'Límits del bretó'
+	},
+	ar: {
+		alumnes: 'من التلاميذ في التعليم ثنائي اللغة',
+		etab: ['مدرسة', 'من المدارس'],
+		diwan: (n) => `منهم ${n} في Diwan`,
+		fora: 'خارج المنطقة المحدّدة عام 1886',
+		escolas: 'التعليم ثنائي اللغة بالبريتونية',
+		limits: 'حدود البريتونية'
 	}
 };
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);

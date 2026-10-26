@@ -75,7 +75,8 @@ const TÈXTES_FICHA = {
 	fr: { dobrir: 'Découvrir la ville  →', leu: 'Bientôt', ajuda: 'Clique pour découvrir la ville' },
 	es: { dobrir: 'Descubrir la ciudad  →', leu: 'Pronto', ajuda: 'Haz clic para descubrir la ciudad' },
 	en: { dobrir: 'Discover the town  →', leu: 'Soon', ajuda: 'Click to discover the town' },
-	ca: { dobrir: 'Descobrir la ciutat  →', leu: 'Aviat', ajuda: 'Fes clic per descobrir la ciutat' }
+	ca: { dobrir: 'Descobrir la ciutat  →', leu: 'Aviat', ajuda: 'Fes clic per descobrir la ciutat' },
+	ar: { dobrir: 'اكتشاف المدينة  ←', leu: 'قريبًا', ajuda: 'النقر لاكتشاف المدينة' }
 };
 
 const TEMAS = {
@@ -145,8 +146,8 @@ function aNomLuòc(e, t) {
 	return easeS(clamp(((t - e.tNom) / 1000 - retardLuòc(e) - 0.2) / 0.7));
 }
 // los mots de la bulla (lo nom del dialècte e del sotdialècte demòran las donadas)
-const LIB_SOTDIALECTE = { oc: 'sotdialècte', fr: 'sous-dialecte', es: 'subdialecto', en: 'sub-dialect', ca: 'subdialecte' };
-const LIB_TRANSICION = { oc: 'parlar de transicion', fr: 'parler de transition', es: 'habla de transición', en: 'transitional speech', ca: 'parlar de transició' };
+const LIB_SOTDIALECTE = { oc: 'sotdialècte', fr: 'sous-dialecte', es: 'subdialecto', en: 'sub-dialect', ca: 'subdialecte', ar: 'لهجة فرعية' };
+const LIB_TRANSICION = { oc: 'parlar de transicion', fr: 'parler de transition', es: 'habla de transición', en: 'transitional speech', ca: 'parlar de transició', ar: 'لهجة انتقالية' };
 // lo dialècte d'un luòc, dins la bulla (los de las autras lengas lo pòrtan),
 // e son sotdialècte quand es plan particular (lo niçard, lo bearnés…)
 const dialLuòc = (e, lang = 'oc') => {
@@ -642,7 +643,8 @@ const TÈXTES_TER = {
 	fr: { region: 'Région', despartament: 'Département' },
 	es: { region: 'Región', despartament: 'Departamento' },
 	en: { region: 'Region', despartament: 'Department' },
-	ca: { region: 'Regió', despartament: 'Departament' }
+	ca: { region: 'Regió', despartament: 'Departament' },
+	ar: { region: 'منطقة', despartament: 'مقاطعة' }
 };
 // centre (pondéré) du plus grand anneau : là où s'écrit le nom
 const centreDe = (anels) => {
