@@ -332,15 +332,18 @@
 		const escap = (e) => {
 			if (e.key === 'Escape' && visualizacion && !document.fullscreenElement) visualizacion = false;
 		};
-		// (sens plen ecran del navegador, la pagina defila pas cap al pè de pagina)
-		if (visualizacion) window.scrollTo(0, 0);
-		document.documentElement.style.overflow = visualizacion ? 'hidden' : '';
+		// La carta es una interfàcia establa (Romain, 2026-10-26) : la pagina defila
+		// jamai cap al pè de pagina, qué que siá lo mòde.
+		window.scrollTo(0, 0);
+		document.documentElement.style.overflow = 'hidden';
+		document.documentElement.style.overscrollBehavior = 'none';
 		document.addEventListener('fullscreenchange', quitar);
 		window.addEventListener('keydown', escap);
 		return () => {
 			document.removeEventListener('fullscreenchange', quitar);
 			window.removeEventListener('keydown', escap);
 			document.documentElement.style.overflow = '';
+			document.documentElement.style.overscrollBehavior = '';
 		};
 	});
 	let capBas = $state(0);

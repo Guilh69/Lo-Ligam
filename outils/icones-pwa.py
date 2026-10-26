@@ -6,6 +6,8 @@ import os
 
 SORTIDA = os.path.join(os.path.dirname(__file__), '..', 'app', 'static', 'icones-app')
 M = 1.366
+# Variante claire du logo (jetons --logo-* du thème clair, app.css) : fond blanc, traits brique, points ocre.
+FOND, TRACE, PONCH, MOIEU = '#ffffff', '#b53d17', '#eeaf34', '#b53d17'
 RAJOLS = [(0.486,-0.797),(0.809,-0.48),(0.809,0.48),(0.486,0.797),(-0.468,0.797),(-0.786,0.48),(-0.786,-0.48),(-0.468,-0.797)]
 ARCS = [((-0.468,-0.797),(-0.194,-0.746),(0,-1)),((0,-1),(0.202,-0.746),(0.486,-0.797)),
         ((0.809,-0.48),(0.751,-0.199),(1,0)),((1,0),(0.751,0.199),(0.809,0.48)),
@@ -19,16 +21,16 @@ def dessenhar(talha, plen, rond):
     im = Image.new('RGBA', (N, N), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
     if rond:
-        d.rounded_rectangle([0, 0, N - 1, N - 1], radius=int(N * 0.466 / (2 * M)), fill='#b53d17')
+        d.rounded_rectangle([0, 0, N - 1, N - 1], radius=int(N * 0.466 / (2 * M)), fill=FOND)
     else:
-        d.rectangle([0, 0, N, N], fill='#b53d17')
+        d.rectangle([0, 0, N, N], fill=FOND)
     k = N / (2 * M) * plen  # plen < 1 : symbole réduit (zone sûre des icônes « maskable »)
     P = lambda x, y: (N / 2 + x * k, N / 2 + y * k)
     def fil(a, b, ep):
-        d.line([P(*a), P(*b)], fill='#ffffff', width=max(1, round(ep * k)), joint='curve')
+        d.line([P(*a), P(*b)], fill=TRACE, width=max(1, round(ep * k)), joint='curve')
         for p in (a, b):
             x, y = P(*p); r = ep * k / 2
-            d.ellipse([x - r, y - r, x + r, y + r], fill='#ffffff')
+            d.ellipse([x - r, y - r, x + r, y + r], fill=TRACE)
     for r in RAJOLS:
         fil((0, 0), r, 0.063)
     for a, c, b in ARCS:
@@ -37,9 +39,9 @@ def dessenhar(talha, plen, rond):
             fil(p, q, 0.07)
     for p in PONCHS:
         x, y = P(*p); r = 0.109 * k
-        d.ellipse([x - r, y - r, x + r, y + r], fill='#ffd47f')
+        d.ellipse([x - r, y - r, x + r, y + r], fill=PONCH)
     x, y = P(0, 0); r = 0.124 * k
-    d.ellipse([x - r, y - r, x + r, y + r], fill='#eeaf34')
+    d.ellipse([x - r, y - r, x + r, y + r], fill=MOIEU)
     return im.resize((talha, talha), Image.LANCZOS)
 
 os.makedirs(SORTIDA, exist_ok=True)
