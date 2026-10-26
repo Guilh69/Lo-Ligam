@@ -31,7 +31,15 @@ export const LENGAS = {
 	ca: { nom: 'Català', curt: 'Ca' }
 };
 
+// Les langues « secondes » (hors occitan), dans l'ordre alphabétique de leur
+// nom : Català, English, Español, Français. L'occitan reste toujours la 1re
+// place de la bascule ; la 2e montre la « seconde » langue (français par
+// défaut), que le globe permet de changer (demande de Romain, 2026-10-26).
+export const SEGONDAS = ['ca', 'en', 'es', 'fr'];
+const SEGONDA_KEY = 'lo-ligam-segonda';
+
 let current = $state('oc');
+let segonda = $state('fr');
 
 export const lang = {
 	get current() {
@@ -40,14 +48,20 @@ export const lang = {
 	set current(value) {
 		if (!SUPPORTED.includes(value)) return;
 		current = value;
+		// la 2e place de la bascule garde la dernière langue non occitane choisie
+		if (value !== 'oc') segonda = value;
 		if (!browser) return;
 		try {
 			localStorage.setItem(STORAGE_KEY, value);
+			localStorage.setItem(SEGONDA_KEY, segonda);
 		} catch {
 			// Mode privé ou stockage plein : le choix vaut pour la session,
 			// ce n'est pas une raison pour casser le changement de langue.
 		}
 		document.documentElement.lang = value;
+	},
+	get segonda() {
+		return segonda;
 	}
 };
 
@@ -69,11 +83,17 @@ export function tria(obj) {
 // langue doit être posée avant le premier rendu visible.
 if (browser) {
 	let saved = null;
+	let savedSegonda = null;
 	try {
 		saved = localStorage.getItem(STORAGE_KEY);
+		savedSegonda = localStorage.getItem(SEGONDA_KEY);
 	} catch {
 		saved = null;
 	}
 	if (SUPPORTED.includes(saved)) current = saved;
+	// la 2e place de la bascule : la langue courante si ce n'est pas l'occitan,
+	// sinon la dernière langue non occitane mémorisée (français par défaut)
+	if (current !== 'oc') segonda = current;
+	else if (SEGONDAS.includes(savedSegonda)) segonda = savedSegonda;
 	document.documentElement.lang = current;
 }

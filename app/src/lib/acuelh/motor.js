@@ -499,7 +499,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 	// contient les deux langues superposées : on mesure celle qui se voit)
 	const linhasTitol = racina.querySelectorAll('.eros-titol .linha');
 	function titolDreta() {
-		const lenga = racina.classList.contains('fr') ? '.fr' : '.oc';
+		const lenga = racina.classList.contains('autra') ? '.autra' : '.oc';
 		let d = 0;
 		for (const l of linhasTitol) {
 			const s = l.querySelector('.bi > ' + lenga);
@@ -842,7 +842,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		const rm = manifest.getBoundingClientRect();
 		if (rm.top < H && rm.bottom > 0) {
 			const prog = clamp((H * 0.82 - rm.top) / (rm.height + H * 0.3));
-			const mots = manifest.querySelectorAll(`[data-lenga="${racina.classList.contains('fr') ? 'fr' : 'oc'}"] .m`);
+			const mots = manifest.querySelectorAll(`[data-lenga="${racina.classList.contains('autra') ? 'autra' : 'oc'}"] .m`);
 			const n = Math.floor(prog * (mots.length + 1));
 			mots.forEach((m, i) => m.classList.toggle('on', calm || i < n));
 		}
