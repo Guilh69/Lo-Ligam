@@ -796,7 +796,7 @@
 	.tema-n {
 		font-size: 0.72rem;
 		font-weight: 400;
-		opacity: 0.6;
+		opacity: 0.78;
 		font-variant-numeric: tabular-nums;
 	}
 

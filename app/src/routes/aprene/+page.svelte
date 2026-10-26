@@ -335,12 +335,12 @@
 		max-width: 32rem;
 		text-align: center;
 		font-size: 0.85rem;
-		color: rgba(58, 42, 32, 0.65);
+		color: rgba(58, 42, 32, 0.82);
 		line-height: 1.5;
 	}
 
 	.account-note em {
-		opacity: 0.85;
+		opacity: 1;
 	}
 
 	@keyframes fade-in {
