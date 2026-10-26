@@ -10,9 +10,8 @@
 	import Icona from '$lib/components/Icona.svelte';
 	import { PALETAS } from '$lib/apren/teulas.js';
 	import { FILMES } from '$lib/data/arts.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
-	let fr = $derived(langStore.current === 'fr');
 	const t = {
 		oc: {
 			titol: 'Cinema',
@@ -27,10 +26,30 @@
 			filmes: 'Les films',
 			ont: 'Où les voir',
 			veire: 'Voir'
+		},
+		es: {
+			titol: 'Cine',
+			frasa: 'Las películas en occitano, y dónde verlas.',
+			filmes: 'Las películas',
+			ont: 'Dónde verlas',
+			veire: 'Ver'
+		},
+		en: {
+			titol: 'Cinema',
+			frasa: 'Films in Occitan, and where to watch them.',
+			filmes: 'The films',
+			ont: 'Where to watch them',
+			veire: 'Watch'
+		},
+		ca: {
+			titol: 'Cinema',
+			frasa: 'Les pel·lícules en occità, i on veure-les.',
+			filmes: 'Les pel·lícules',
+			ont: 'On veure-les',
+			veire: 'Veure'
 		}
 	};
-	let tx = $derived(t[fr ? 'fr' : 'oc']);
-	const s = (o) => (fr ? o.fr : o.oc);
+	let tx = $derived(t[langStore.current] ?? t.oc);
 
 	const VERD = PALETAS.verd;
 	const color = (i) => VERD[i % VERD.length];
@@ -46,22 +65,22 @@
 </script>
 
 <svelte:head>
-	<title>Cinema · Lo Ligam</title>
+	<title>{tx.titol} · Lo Ligam</title>
 </svelte:head>
 
 <div class="pagina">
 <div class="capçal"><AppHeader /></div>
 
 <main class="cinema">
-	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/obras">{fr ? 'Œuvres' : 'Òbras'}</a><span aria-hidden="true">›</span>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
+		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })}</a><span aria-hidden="true">›</span>
+		<a href="/obras">{tria({ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres' })}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 
 	<header class="cap">
-		<h1 lang={fr ? 'fr' : 'oc'}>{tx.titol}</h1>
-		<p class="frasa" lang={fr ? 'fr' : 'oc'}>{tx.frasa}</p>
+		<h1 lang={langStore.current}>{tx.titol}</h1>
+		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
 	</header>
 
 	<!-- les affiches : le plus récent en grand -->
@@ -74,8 +93,8 @@
 					<span class="af-motiu" aria-hidden="true"></span>
 					<span class="af-pè">
 						<strong class="af-nom" lang={lt(f)}>{f.nom}</strong>
-						<span class="af-tèxt" lang={fr ? 'fr' : 'oc'}>{s(f.tèxt)}</span>
-						<span class="af-an">{s(f.sorta)} · {f.an}</span>
+						<span class="af-tèxt" lang={langStore.current}>{tria(f.tèxt)}</span>
+						<span class="af-an">{tria(f.sorta)} · {f.an}</span>
 					</span>
 				</a>
 			</li>
@@ -84,14 +103,14 @@
 
 	<!-- où voir les films : des billets -->
 	<section class="ont" aria-labelledby="ont-titol">
-		<h2 id="ont-titol" lang={fr ? 'fr' : 'oc'}>{tx.ont}</h2>
+		<h2 id="ont-titol" lang={langStore.current}>{tx.ont}</h2>
 		<ul class="bilhets">
 			{#each LUÒCS as l (l.id)}
 				<li>
 					<a class="bilhet" href={l.site} target="_blank" rel="noopener noreferrer">
-						<span class="bl-sorta" lang={fr ? 'fr' : 'oc'}>{s(l.sorta)}</span>
+						<span class="bl-sorta" lang={langStore.current}>{tria(l.sorta)}</span>
 						<strong class="bl-nom" lang="oc">{l.nom}</strong>
-						<span class="bl-tèxt" lang={fr ? 'fr' : 'oc'}>{s(l.tèxt)}</span>
+						<span class="bl-tèxt" lang={langStore.current}>{tria(l.tèxt)}</span>
 						<span class="bl-veire" aria-hidden="true">{tx.veire} <Icona nom="extern" size="1em" /></span>
 					</a>
 				</li>
