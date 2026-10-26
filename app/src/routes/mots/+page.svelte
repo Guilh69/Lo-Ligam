@@ -481,6 +481,7 @@
 				{:else if view === 'carrossel'}
 					<div class="carousel">
 						<div
+							role="presentation"
 							class="track"
 							class:dragging
 							bind:this={trackEl}

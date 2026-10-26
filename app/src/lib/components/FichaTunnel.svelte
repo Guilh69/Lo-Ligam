@@ -123,7 +123,7 @@
 	onpointercancel={up}
 	onpointerenter={() => (hovering = true)}
 	onpointerleave={() => (hovering = false)}
-	role="list"
+	role="group"
 	aria-label="Tunnel"
 >
 	<div class="scene">
@@ -131,7 +131,6 @@
 			<button
 				type="button"
 				class="card"
-				role="listitem"
 				bind:this={cardEls[i]}
 				onclick={() => onOpen(item)}
 				aria-label={item.titre}

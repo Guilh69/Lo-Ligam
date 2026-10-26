@@ -27,14 +27,14 @@
 				'Las animacions se reduson quand ton aparelh o demanda.',
 				'Las imatges de contengut an un tèxte alternatiu ; los fons decoratius son escondeits als lectors d’ecran.',
 				'Un lector d’ecran legís lo títol animat de l’acuèlh un còp sol.',
-				'Los vidèos començan sens son : un son que part sol seriá un defaut d’accessibilitat.'
+				'Los vidèos començan sens son : un son que part sol seriá un defaut d’accessibilitat.',
+				'Un ligam « Anar al contengut » apareis al primièr còp que quichas Tab, per sautar lo menú.'
 			],
 			manca: 'Çò que manca encara',
 			mancaL: [
-				'Un ligam « Anar al contengut » pel claviar (en cors).',
 				'Los sostítols dels vidèos e de l’àudio.',
 				'La carta interactiva, que se manèja pas encara completament al claviar nimai amb un lector d’ecran.',
-				'Qualques elements clicables que respondon pas al claviar.',
+				'La legenda de la carta (rail de las jaças), manejada en part al ratolet.',
 				'Una verificacion dels contrastes sus totas las paginas, en tèma clar e escur.',
 				'Un tèst amb de lectors d’ecran reals (NVDA, VoiceOver).'
 			],
@@ -67,14 +67,14 @@
 				'Les animations se réduisent quand ton appareil le demande.',
 				'Les images de contenu ont un texte alternatif ; les fonds décoratifs sont masqués aux lecteurs d’écran.',
 				'Un lecteur d’écran lit le titre animé de l’accueil une seule fois.',
-				'Les vidéos démarrent sans son : un son qui part tout seul serait un défaut d’accessibilité.'
+				'Les vidéos démarrent sans son : un son qui part tout seul serait un défaut d’accessibilité.',
+				'Un lien « Aller au contenu » apparaît au premier appui sur Tab, pour sauter le menu.'
 			],
 			manca: 'Ce qui manque encore',
 			mancaL: [
-				'Un lien « Aller au contenu » pour le clavier (en cours).',
 				'Les sous-titres des vidéos et de l’audio.',
 				'La carte interactive, qui ne se manie pas encore entièrement au clavier ni avec un lecteur d’écran.',
-				'Quelques éléments cliquables qui ne répondent pas au clavier.',
+				'La légende de la carte (rail des couches), en partie maniée à la souris.',
 				'Une vérification des contrastes sur toutes les pages, en thème clair et sombre.',
 				'Un test avec de vrais lecteurs d’écran (NVDA, VoiceOver).'
 			],
