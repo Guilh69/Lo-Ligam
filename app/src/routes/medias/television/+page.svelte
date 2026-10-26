@@ -8,9 +8,8 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { TELES } from '$lib/data/medias.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
-	let fr = $derived(langStore.current === 'fr');
 	const t = {
 		oc: {
 			titol: 'Television e video',
@@ -25,10 +24,30 @@
 			veire: 'Voir',
 			dirècte: 'En direct',
 			cadenas: 'Les chaînes'
+		},
+		es: {
+			titol: 'Televisión y vídeo',
+			frasa: 'Los canales, los programas y los vídeos en occitano.',
+			veire: 'Ver',
+			dirècte: 'En directo',
+			cadenas: 'Los canales'
+		},
+		en: {
+			titol: 'Television and video',
+			frasa: 'The channels, the programmes and the videos in Occitan.',
+			veire: 'Watch',
+			dirècte: 'Live',
+			cadenas: 'The channels'
+		},
+		ca: {
+			titol: 'Televisió i vídeo',
+			frasa: 'Els canals, els programes i els vídeos en occità.',
+			veire: 'Veure',
+			dirècte: 'En directe',
+			cadenas: 'Els canals'
 		}
 	};
-	let tx = $derived(t[fr ? 'fr' : 'oc']);
-	const s = (o) => (fr ? o.fr : o.oc);
+	let tx = $derived(t[langStore.current] ?? t.oc);
 
 	const num = (i) => String(i + 1).padStart(2, '0');
 	// le téléviseur : la chaîne choisie, et un compteur pour rejouer la neige
@@ -42,7 +61,7 @@
 </script>
 
 <svelte:head>
-	<title>Television · Lo Ligam</title>
+	<title>{tria({ oc: 'Television', fr: 'Télévision', es: 'Televisión', en: 'Television', ca: 'Televisió' })} · Lo Ligam</title>
 </svelte:head>
 
 {#snippet dirècte(e)}
@@ -55,15 +74,15 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="tele">
-	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/medias">{fr ? 'Médias' : 'Mèdias'}</a><span aria-hidden="true">›</span>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
+		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })}</a><span aria-hidden="true">›</span>
+		<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans' })}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 
 	<header class="cap">
-		<h1 lang={fr ? 'fr' : 'oc'}>{tx.titol}</h1>
-		<p class="frasa" lang={fr ? 'fr' : 'oc'}>{tx.frasa}</p>
+		<h1 lang={langStore.current}>{tx.titol}</h1>
+		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
 	</header>
 
 	<!-- le téléviseur : l'écran à gauche, la télécommande à droite -->
@@ -72,9 +91,9 @@
 			{#key zap}
 				<div class="tv-contengut">
 					<span class="tv-num" aria-hidden="true">{num(causida)}</span>
-					<span class="sorta" lang={fr ? 'fr' : 'oc'}>{s(tele.sorta)} · {s(tele.luòc)}</span>
+					<span class="sorta" lang={langStore.current}>{tria(tele.sorta)} · {tria(tele.luòc)}</span>
 					<strong class="tv-nom" lang="oc">{tele.nom}</strong>
-					<p class="tèxt" lang={fr ? 'fr' : 'oc'}>{s(tele.tèxt)}</p>
+					<p class="tèxt" lang={langStore.current}>{tria(tele.tèxt)}</p>
 					<span class="tv-accions">
 						<a class="veire" href={tele.site} target="_blank" rel="noopener noreferrer">{tx.veire} <Icona nom="extern" size="1em" /></a>
 						{@render dirècte(tele)}

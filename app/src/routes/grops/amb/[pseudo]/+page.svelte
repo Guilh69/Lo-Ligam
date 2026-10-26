@@ -15,7 +15,6 @@
 	import { X_ERRORS } from '$lib/grops/textes.js';
 	import Avatar from '$lib/grops/Avatar.svelte';
 
-	let fr = $derived(langStore.current === 'fr');
 	const X = {
 		oc: {
 			tornar: 'Tornar a la lista',
@@ -64,9 +63,81 @@
 			invisible: 'Ce profil n’est pas visible.',
 			pas_contacte: 'Pour écrire, il faut être en contact.',
 			...X_ERRORS.fr
+		},
+		es: {
+			tornar: 'Volver a la lista',
+			perfil: 'Su perfil',
+			blocar: 'Bloquear',
+			blocar_conf: '¿Bloquear a esta persona? Ya no podrá escribirte ni enviarte solicitudes.',
+			ancians: 'Mensajes más antiguos',
+			vuèg: 'Aún no hay mensajes: ¡escribe el primero!',
+			camp: 'Tu mensaje',
+			mandar: 'Enviar',
+			suprimir: 'Eliminar',
+			suprimir_conf: '¿Eliminar este mensaje?',
+			senhalar: 'Denunciar',
+			senhal_titol: 'Denunciar este mensaje',
+			motiu: 'El motivo',
+			motius: { insulta: 'Insulto', assetjament: 'Acoso', odi: 'Odio', spam: 'Publicidad', autre: 'Otro' },
+			precisions: 'Detalles (si quieres)',
+			anullar: 'Cancelar',
+			tampar: 'Cerrar',
+			mercé: 'Gracias: la moderación lo revisará.',
+			ja: 'Ya lo has denunciado.',
+			invisible: 'Este perfil no es visible.',
+			pas_contacte: 'Para escribir, hay que estar en contacto.',
+			...X_ERRORS.es
+		},
+		en: {
+			tornar: 'Back to the list',
+			perfil: 'Their profile',
+			blocar: 'Block',
+			blocar_conf: 'Block this person? They will no longer be able to write to you or send you requests.',
+			ancians: 'Older messages',
+			vuèg: 'No messages yet: write the first one!',
+			camp: 'Your message',
+			mandar: 'Send',
+			suprimir: 'Delete',
+			suprimir_conf: 'Delete this message?',
+			senhalar: 'Report',
+			senhal_titol: 'Report this message',
+			motiu: 'The reason',
+			motius: { insulta: 'Insult', assetjament: 'Harassment', odi: 'Hate', spam: 'Advertising', autre: 'Other' },
+			precisions: 'Details (if you like)',
+			anullar: 'Cancel',
+			tampar: 'Close',
+			mercé: 'Thank you: the moderators will take a look.',
+			ja: 'You’ve already reported it.',
+			invisible: 'This profile isn’t visible.',
+			pas_contacte: 'To write, you need to be in contact.',
+			...X_ERRORS.en
+		},
+		ca: {
+			tornar: 'Torna a la llista',
+			perfil: 'El seu perfil',
+			blocar: 'Bloqueja',
+			blocar_conf: 'Bloquejar aquesta persona? Ja no podrà escriure’t ni enviar-te sol·licituds.',
+			ancians: 'Missatges més antics',
+			vuèg: 'Encara no hi ha cap missatge: escriu el primer!',
+			camp: 'El teu missatge',
+			mandar: 'Envia',
+			suprimir: 'Suprimeix',
+			suprimir_conf: 'Suprimir aquest missatge?',
+			senhalar: 'Denuncia',
+			senhal_titol: 'Denuncia aquest missatge',
+			motiu: 'El motiu',
+			motius: { insulta: 'Insult', assetjament: 'Assetjament', odi: 'Odi', spam: 'Publicitat', autre: 'Altre' },
+			precisions: 'Precisions (si vols)',
+			anullar: 'Cancel·la',
+			tampar: 'Tanca',
+			mercé: 'Gràcies: la moderació ho revisarà.',
+			ja: 'Ja l’has denunciat.',
+			invisible: 'Aquest perfil no és visible.',
+			pas_contacte: 'Per escriure, cal estar en contacte.',
+			...X_ERRORS.ca
 		}
 	};
-	let x = $derived(fr ? X.fr : X.oc);
+	let x = $derived(X[langStore.current] ?? X.oc);
 
 	let pseudo = $derived(page.params.pseudo);
 	let autre = $state(null); // { user_id, pseudo, es_admin } (public.perfil)

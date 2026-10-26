@@ -11,16 +11,22 @@
 	let { lang = 'oc' } = $props();
 
 	const slides = [
-		{ src: '/officialitat/1_officialitat.webp', oc: 'Officialitat', fr: 'Officialité' },
-		{ src: '/officialitat/2_visibilitat.webp', oc: 'Visibilitat', fr: 'Visibilité' },
-		{ src: '/officialitat/3_ont.webp', oc: 'Ont ?', fr: 'Où ?' },
-		{ src: '/officialitat/4_pluralitat.webp', oc: 'Pluralitat', fr: 'Pluralité' },
-		{ src: '/officialitat/5_drech.webp', oc: 'Drech', fr: 'Droit' },
-		{ src: '/officialitat/6_parlar.webp', oc: 'Parlar', fr: 'Parler' },
-		{ src: '/officialitat/7_promoure.webp', oc: 'Promòure', fr: 'Promouvoir' },
-		{ src: '/officialitat/8_origina.webp', oc: 'Origina', fr: 'Origine' },
-		{ src: '/officialitat/9_senat.webp', oc: 'Senat', fr: 'Sénat' }
+		{ src: '/officialitat/1_officialitat.webp', oc: 'Officialitat', fr: 'Officialité', es: 'Oficialidad', en: 'Official status', ca: 'Oficialitat' },
+		{ src: '/officialitat/2_visibilitat.webp', oc: 'Visibilitat', fr: 'Visibilité', es: 'Visibilidad', en: 'Visibility', ca: 'Visibilitat' },
+		{ src: '/officialitat/3_ont.webp', oc: 'Ont ?', fr: 'Où ?', es: '¿Dónde?', en: 'Where?', ca: 'On?' },
+		{ src: '/officialitat/4_pluralitat.webp', oc: 'Pluralitat', fr: 'Pluralité', es: 'Pluralidad', en: 'Plurality', ca: 'Pluralitat' },
+		{ src: '/officialitat/5_drech.webp', oc: 'Drech', fr: 'Droit', es: 'Derechos', en: 'Rights', ca: 'Drets' },
+		{ src: '/officialitat/6_parlar.webp', oc: 'Parlar', fr: 'Parler', es: 'Hablar', en: 'Speaking', ca: 'Parlar' },
+		{ src: '/officialitat/7_promoure.webp', oc: 'Promòure', fr: 'Promouvoir', es: 'Promover', en: 'Promoting', ca: 'Promoure' },
+		{ src: '/officialitat/8_origina.webp', oc: 'Origina', fr: 'Origine', es: 'Origen', en: 'Origin', ca: 'Origen' },
+		{ src: '/officialitat/9_senat.webp', oc: 'Senat', fr: 'Sénat', es: 'Senado', en: 'Senate', ca: 'Senat' }
 	];
+
+	const T = {
+		serie: { oc: 'Seria Officialitat', fr: 'Série Officialité', es: 'Serie Oficialidad', en: 'Official status series', ca: 'Sèrie Oficialitat' },
+		prec: { oc: 'Precedent', fr: 'Précédent', es: 'Anterior', en: 'Previous', ca: 'Anterior' },
+		seg: { oc: 'Seguent', fr: 'Suivant', es: 'Siguiente', en: 'Next', ca: 'Següent' }
+	};
 
 	let index = $state(0);
 	let trackEl = $state();
@@ -128,7 +134,7 @@
 		onkeydown={onKey}
 		tabindex="0"
 		role="listbox"
-		aria-label={lang === 'oc' ? 'Seria Officialitat' : 'Série Officialité'}
+		aria-label={T.serie[lang] ?? T.serie.oc}
 	>
 		{#each slides as s, i (s.src)}
 			<button
@@ -138,12 +144,12 @@
 				onclick={() => onSlideClick(i)}
 				role="option"
 				aria-selected={i === index}
-				aria-label={`${i + 1}. ${lang === 'oc' ? s.oc : s.fr}`}
+				aria-label={`${i + 1}. ${s[lang] ?? s.oc}`}
 			>
 				<img src={s.src} alt="" loading={i < 3 ? 'eager' : 'lazy'} draggable="false" />
 				<span class="caption">
 					<span class="slide-num">{String(i + 1).padStart(2, '0')}</span>
-					<span class="slide-name">{lang === 'oc' ? s.oc : s.fr}</span>
+					<span class="slide-name">{s[lang] ?? s.oc}</span>
 				</span>
 			</button>
 		{/each}
@@ -154,7 +160,7 @@
 			type="button"
 			onclick={() => centerOn(index - 1)}
 			disabled={index === 0}
-			aria-label={lang === 'oc' ? 'Precedent' : 'Précédent'}><Icona nom="precedent" size="1.2em" /></button
+			aria-label={T.prec[lang] ?? T.prec.oc}><Icona nom="precedent" size="1.2em" /></button
 		>
 		<div class="dots">
 			{#each slides as s, i (s.src)}
@@ -163,7 +169,7 @@
 					class="dot"
 					class:on={i === index}
 					onclick={() => centerOn(i)}
-					aria-label={`${i + 1}. ${lang === 'oc' ? s.oc : s.fr}`}
+					aria-label={`${i + 1}. ${s[lang] ?? s.oc}`}
 				></button>
 			{/each}
 		</div>
@@ -171,7 +177,7 @@
 			type="button"
 			onclick={() => centerOn(index + 1)}
 			disabled={index === slides.length - 1}
-			aria-label={lang === 'oc' ? 'Seguent' : 'Suivant'}><Icona nom="suivant" size="1.2em" /></button
+			aria-label={T.seg[lang] ?? T.seg.oc}><Icona nom="suivant" size="1.2em" /></button
 		>
 	</div>
 </div>

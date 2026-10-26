@@ -14,6 +14,7 @@
 		oc: {
 			etiqueta: 'Cercar sus la carta',
 			placeholder: 'Cercar una vila, un despartament…',
+			placeholderCurt: 'Cercar un luòc…',
 			cap: 'Cap de resultat',
 			despartament: 'Despartament',
 			region: 'Region',
@@ -22,13 +23,46 @@
 		fr: {
 			etiqueta: 'Chercher sur la carte',
 			placeholder: 'Chercher une ville, un département…',
+			placeholderCurt: 'Chercher un lieu…',
 			cap: 'Aucun résultat',
 			despartament: 'Département',
 			region: 'Région',
 			esfaçar: 'Effacer'
+		},
+		es: {
+			etiqueta: 'Buscar en el mapa',
+			placeholder: 'Buscar una ciudad, un departamento…',
+			placeholderCurt: 'Buscar un lugar…',
+			cap: 'Ningún resultado',
+			despartament: 'Departamento',
+			region: 'Región',
+			esfaçar: 'Borrar'
+		},
+		en: {
+			etiqueta: 'Search the map',
+			placeholder: 'Search for a town, a department…',
+			placeholderCurt: 'Search for a place…',
+			cap: 'No results',
+			despartament: 'Department',
+			region: 'Region',
+			esfaçar: 'Clear'
+		},
+		ca: {
+			etiqueta: 'Cercar al mapa',
+			placeholder: 'Cercar una ciutat, un departament…',
+			placeholderCurt: 'Cercar un lloc…',
+			cap: 'Cap resultat',
+			despartament: 'Departament',
+			region: 'Regió',
+			esfaçar: 'Esborrar'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);
+	// Champ étroit (téléphone) : la phrase complète est coupée en plein mot ; on
+	// montre alors la version courte (Romain, 2026-10-26). La phrase la plus longue
+	// (espagnol) fait ≈ 280 px + 86 px de marges internes.
+	let largorCamp = $state(0);
+	let curt = $derived(largorCamp > 0 && largorCamp < 380);
 
 	// « Montpelhièr », « montpelhier » et « MONTPELHIER » se valent ; tirets et
 	// apostrophes comptent comme des espaces
@@ -131,7 +165,8 @@
 		role="combobox"
 		autocomplete="off"
 		spellcheck="false"
-		placeholder={tx.placeholder}
+		placeholder={curt ? tx.placeholderCurt : tx.placeholder}
+		bind:clientWidth={largorCamp}
 		aria-autocomplete="list"
 		aria-expanded={dobèrt && resultats.length > 0}
 		aria-controls="cerca-resultats"

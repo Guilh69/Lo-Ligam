@@ -48,7 +48,10 @@
 
 	const T = {
 		oc: { titol: 'Primièrs passes', tampar: 'Tampar', passar: 'Passar l’etapa', plegar: 'Plegar', desplegar: 'Desplegar' },
-		fr: { titol: 'Premiers pas', tampar: 'Fermer', passar: 'Passer l’étape', plegar: 'Replier', desplegar: 'Déplier' }
+		fr: { titol: 'Premiers pas', tampar: 'Fermer', passar: 'Passer l’étape', plegar: 'Replier', desplegar: 'Déplier' },
+		es: { titol: 'Primeros pasos', tampar: 'Cerrar', passar: 'Saltar el paso', plegar: 'Plegar', desplegar: 'Desplegar' },
+		en: { titol: 'First steps', tampar: 'Close', passar: 'Skip this step', plegar: 'Collapse', desplegar: 'Expand' },
+		ca: { titol: 'Primers passos', tampar: 'Tancar', passar: 'Saltar el pas', plegar: 'Plegar', desplegar: 'Desplegar' }
 	};
 	const tx = $derived(T[lang] ?? T.oc);
 	const dire = (o) => o?.[lang] ?? o?.oc ?? '';

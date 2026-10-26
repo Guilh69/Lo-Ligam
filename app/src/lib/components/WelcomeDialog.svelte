@@ -32,9 +32,41 @@
 			commencar: "Commencer l'exploration",
 			tampar: 'Fermer',
 			pasTornar: 'Ne plus revoir'
+		},
+		es: {
+			titre: 'Te damos la bienvenida a Lo Ligam',
+			lead: 'Un solo lugar para todo el ecosistema occitano. Esto es lo que encontrarás:',
+			commencar: 'Empezar la exploración',
+			tampar: 'Cerrar',
+			pasTornar: 'No volver a ver'
+		},
+		en: {
+			titre: 'Welcome to Lo Ligam',
+			lead: 'One single place for the whole Occitan ecosystem. Here is what you’ll find:',
+			commencar: 'Start exploring',
+			tampar: 'Close',
+			pasTornar: 'Don’t show again'
+		},
+		ca: {
+			titre: 'Et donem la benvinguda a Lo Ligam',
+			lead: 'Un sol lloc per a tot l’ecosistema occità. Això és el que hi trobaràs:',
+			commencar: 'Començar l’exploració',
+			tampar: 'Tancar',
+			pasTornar: 'No tornar-ho a veure'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);
+
+	// Nom et sous-titre des familles dans les langues que siteSections.js ne
+	// porte pas (il n'a que l'occitan et le français) : [nom, sous-titre]
+	const FAM = {
+		aprene: { es: ['Aprender', 'La columna vertebral'], en: ['Learn', 'The backbone'], ca: ['Aprendre', 'L’espina dorsal'] },
+		descobrir: { es: ['Descubrir', 'El país y su cultura'], en: ['Discover', 'The country and its culture'], ca: ['Descobrir', 'El país i la seva cultura'] },
+		participar: { es: ['Participar', 'La comunidad'], en: ['Take part', 'The community'], ca: ['Participar', 'La comunitat'] },
+		'lo-ligam': { es: ['Lo Ligam', 'Quiénes somos'], en: ['Lo Ligam', 'Who we are'], ca: ['Lo Ligam', 'Qui som'] }
+	};
+	const famNom = (fam) => FAM[fam.id]?.[lang]?.[0] ?? (lang === 'oc' ? fam.oc : fam.fr);
+	const famQuoi = (fam) => FAM[fam.id]?.[lang]?.[1] ?? (lang === 'oc' ? fam.tagline_oc : fam.tagline_fr);
 
 	$effect(() => {
 		if (!browser) return;
@@ -89,8 +121,8 @@
 			<ul class="apercebut">
 				{#each families as fam (fam.id)}
 					<li style="--c: {fam.color}">
-						<span class="nom">{lang === 'oc' ? fam.oc : fam.fr}</span>
-						<span class="quoi">{lang === 'oc' ? fam.tagline_oc : fam.tagline_fr}</span>
+						<span class="nom">{famNom(fam)}</span>
+						<span class="quoi">{famQuoi(fam)}</span>
 					</li>
 				{/each}
 			</ul>

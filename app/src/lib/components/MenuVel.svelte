@@ -87,19 +87,19 @@
 			</div>
 
 			<div class="vel-cap">
-				<p class="vel-titol" id="vel-titol">{tria({ oc: 'Menú', fr: 'Menu', es: 'Menú', en: 'Menu', ca: 'Menú' })}</p>
+				<p class="vel-titol" id="vel-titol">{tria({ oc: 'Menú', fr: 'Menu', es: 'Menú', en: 'Menu', ca: 'Menú', ar: 'القائمة' })}</p>
 				<!-- Retour à l'accueil (demande de Romain, 2026-10-15), avec le croisillon du logo -->
 				<a class="vel-acuelh" href="/" onclick={tampar} aria-current={page.url.pathname === '/' ? 'page' : undefined}>
 					<!-- sur le voile brique : les couleurs du logo (traits blancs, points or) -->
 					<Crotz talha={24} traç="#ffffff" ponch="#ffd47f" moieu="#eeaf34" />
-					<span>{tria({ oc: 'Tornar a l’acuèlh', fr: 'Retour à l’accueil', es: 'Volver al inicio', en: 'Back to home', ca: 'Tornar a l’inici' })}</span>
+					<span>{tria({ oc: 'Tornar a l’acuèlh', fr: 'Retour à l’accueil', es: 'Volver al inicio', en: 'Back to home', ca: 'Tornar a l’inici', ar: 'العودة إلى الصفحة الرئيسية' })}</span>
 				</a>
-				<button type="button" class="vel-tampar" onclick={tampar} aria-label={tria({ oc: 'Tampar lo menú', fr: 'Fermer le menu', es: 'Cerrar el menú', en: 'Close menu', ca: 'Tancar el menú' })}>
+				<button type="button" class="vel-tampar" onclick={tampar} aria-label={tria({ oc: 'Tampar lo menú', fr: 'Fermer le menu', es: 'Cerrar el menú', en: 'Close menu', ca: 'Tancar el menú', ar: 'إغلاق القائمة' })}>
 					<Icona nom="fermer" size="1.6em" />
 				</button>
 			</div>
 
-				<nav class="vel-vertical" aria-label={tria({ oc: 'Plan del site', fr: 'Plan du site', es: 'Mapa del sitio', en: 'Site map', ca: 'Mapa del web' })}>
+				<nav class="vel-vertical" aria-label={tria({ oc: 'Plan del site', fr: 'Plan du site', es: 'Mapa del sitio', en: 'Site map', ca: 'Mapa del web', ar: 'خريطة الموقع' })}>
 					{#each PLAN as c, ci (c.id)}
 						<!-- svelte-ignore a11y_no_static_element_interactions -->
 						<section class="vel-renc" class:desplegat={desplegat === c.id} style:--d={ci} onmouseenter={() => survòl(c.id)}>
@@ -125,7 +125,7 @@
 													{#if c.href && gi === 0}
 														<li class="vel-masc">
 															<a class="vel-ligam" href={c.href} style:--i={0} aria-current={page.url.pathname === c.href ? 'page' : undefined} onclick={tampar}
-																>{tria({ oc: 'Tota la rubrica', fr: 'Toute la rubrique', es: 'Toda la sección', en: 'The whole section', ca: 'Tota la secció' })}<Icona nom="suivant" size="0.8em" /></a
+																>{tria({ oc: 'Tota la rubrica', fr: 'Toute la rubrique', es: 'Toda la sección', en: 'The whole section', ca: 'Tota la secció', ar: 'القسم كاملًا' })}<Icona nom="suivant" size="0.8em" /></a
 															>
 														</li>
 													{/if}
@@ -168,7 +168,7 @@
 					{/each}
 				</ul>
 				<a class="vel-reservar" href={VISIO} onclick={tampar}
-					>{tria({ oc: 'Reservar un primièr cors', fr: 'Réserver un premier cours', es: 'Reservar una primera clase', en: 'Book a first lesson', ca: 'Reservar una primera classe' })}<Icona nom="suivant" size="0.9em" /></a
+					>{tria({ oc: 'Reservar un primièr cors', fr: 'Réserver un premier cours', es: 'Reservar una primera clase', en: 'Book a first lesson', ca: 'Reservar una primera classe', ar: 'احجز درسك الأول' })}<Icona nom="suivant" size="0.9em" /></a
 				>
 			</div>
 		</div>

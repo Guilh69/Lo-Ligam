@@ -11,7 +11,7 @@
 	import { estatCarta } from '$lib/carta/estatCarta.svelte.js';
 
 	let { lang = 'oc' } = $props();
-	const tx = { oc: 'La carta se prepara…', fr: 'La carte se prépare…' };
+	const tx = { oc: 'La carta se prepara…', fr: 'La carte se prépare…', es: 'El mapa se está preparando…', en: 'The map is getting ready…', ca: 'El mapa s’està preparant…' };
 
 	// los dotze ponches de la crotz (geometria de favicon.svg, coma Crotz.svelte)
 	const PONCHES = [
@@ -21,10 +21,11 @@
 	const RAIS = PONCHES.map(([x, y]) => `M0 0L${x} ${y}`);
 	let alucats = $derived(Math.round(Math.min(1, estatCarta.cargament ?? 0) * PONCHES.length));
 
-	// (garda-fòl : se quicòm se bloca, la carta se mòstra pasmens)
+	// (garda-fòl : se quicòm se bloca, la carta se mòstra pasmens ; 30 s, al luòc
+	// de 9 s : sus un telefòn lent, l'emblèma s'escafava abans la fin, 2026-10-26)
 	onMount(() => {
 		estatCarta.cargament = Math.max(estatCarta.cargament ?? 0, 0.15);
-		const t = setTimeout(() => (estatCarta.prèsta = true), 9000);
+		const t = setTimeout(() => (estatCarta.prèsta = true), 30000);
 		return () => clearTimeout(t);
 	});
 </script>

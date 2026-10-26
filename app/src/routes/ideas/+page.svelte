@@ -7,7 +7,7 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { session, authReady } from '$lib/authStore';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { edicion, iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
@@ -16,7 +16,7 @@
 	const lèvaEdicion = iniciar('ideas', data.elements);
 	$effect(() => () => lèvaEdicion?.());
 
-	let fr = $derived(langStore.current === 'fr');
+	const LOCALAS = { oc: 'oc', fr: 'fr-FR', es: 'es-ES', en: 'en-GB', ca: 'ca' };
 
 	const MIN = 10;
 	const MAX = 2000;
@@ -48,9 +48,51 @@
 			error: 'Une erreur : réessaie.',
 			confidencialitat: 'Confidentialité',
 			estats: { nòva: 'Nouvelle', legida: 'Lue', retenguda: 'Retenue', facha: 'Réalisée', escartada: 'Écartée' }
+		},
+		es: {
+			camp: 'Tu idea',
+			mandar: 'Enviar',
+			connectar: 'Iniciar sesión',
+			tas: 'Tus ideas',
+			responsa: 'Respuesta de Romain',
+			suprimir: 'Eliminar',
+			confirmar: '¿Eliminar esta idea?',
+			cort: `Demasiado corta: mínimo ${MIN} letras.`,
+			limit: 'Máximo cinco ideas al día: vuelve mañana.',
+			error: 'Ha habido un error: inténtalo de nuevo.',
+			confidencialitat: 'Privacidad',
+			estats: { nòva: 'Nueva', legida: 'Leída', retenguda: 'Retenida', facha: 'Realizada', escartada: 'Descartada' }
+		},
+		en: {
+			camp: 'Your idea',
+			mandar: 'Send',
+			connectar: 'Log in',
+			tas: 'Your ideas',
+			responsa: 'Reply from Romain',
+			suprimir: 'Delete',
+			confirmar: 'Delete this idea?',
+			cort: `Too short: at least ${MIN} letters.`,
+			limit: 'Five ideas a day at most: come back tomorrow.',
+			error: 'Something went wrong: try again.',
+			confidencialitat: 'Privacy',
+			estats: { nòva: 'New', legida: 'Read', retenguda: 'Kept', facha: 'Done', escartada: 'Set aside' }
+		},
+		ca: {
+			camp: 'La teva idea',
+			mandar: 'Envia',
+			connectar: 'Inicia la sessió',
+			tas: 'Les teves idees',
+			responsa: 'Resposta de Romain',
+			suprimir: 'Suprimeix',
+			confirmar: 'Suprimir aquesta idea?',
+			cort: `Massa curta: mínim ${MIN} lletres.`,
+			limit: 'Com a màxim cinc idees al dia: torna demà.',
+			error: 'Hi ha hagut un error: torna-ho a provar.',
+			confidencialitat: 'Privadesa',
+			estats: { nòva: 'Nova', legida: 'Llegida', retenguda: 'Retinguda', facha: 'Feta', escartada: 'Descartada' }
 		}
 	};
-	let x = $derived(fr ? X.fr : X.oc);
+	let x = $derived(X[langStore.current] ?? X.oc);
 
 	let tèxte = $state('');
 	let mandant = $state(false);
@@ -98,11 +140,11 @@
 	}
 
 	const data_ = (d) =>
-		new Date(d).toLocaleDateString(fr ? 'fr-FR' : 'oc', { day: 'numeric', month: 'long', year: 'numeric' });
+		new Date(d).toLocaleDateString(LOCALAS[langStore.current] ?? 'oc', { day: 'numeric', month: 'long', year: 'numeric' });
 </script>
 
 <svelte:head>
-	<title>{fr ? 'Boîte à idées' : 'Boita d’idèas'} · Lo Ligam</title>
+	<title>{tria({ oc: 'Boita d’idèas', fr: 'Boîte à idées', es: 'Buzón de ideas', en: 'Idea box', ca: 'Bústia d’idees' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Boita d’idèas : una idèa per melhorar Lo Ligam. Boîte à idées : une idée pour améliorer Lo Ligam."
@@ -110,7 +152,7 @@
 </svelte:head>
 
 {#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
-{#snippet t(clau)}{@const v = txt(clau)}<span lang={fr ? 'fr' : 'oc'}>{@render marcat(fr ? v.fr : v.oc)}</span>{/snippet}
+{#snippet t(clau)}{@const v = txt(clau)}<span lang={langStore.current}>{@render marcat(tria(v))}</span>{/snippet}
 
 <div class="pagina">
 <div class="capçal"><AppHeader /></div>

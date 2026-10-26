@@ -131,7 +131,7 @@
 			></span
 		><span class="autra" aria-hidden={esOc}
 			><span class="visually-hidden">{a}</span><span aria-hidden="true"
-				>{#each [...a] as l, i (i)}<span class="letra" class:espaci={l === ' '}>{l}</span>{/each}</span
+				>{#if lang === 'ar'}{a}{:else}{#each [...a] as l, i (i)}<span class="letra" class:espaci={l === ' '}>{l}</span>{/each}{/if}</span
 			></span
 		></span
 	>{/snippet}
@@ -167,7 +167,7 @@
 
 	<main>
 		<span id="onglet-nou" class="visually-hidden"
-			>{tria({ oc: 'Se dobrís dins un onglet novèl', fr: 'S’ouvre dans un nouvel onglet', es: 'Se abre en una pestaña nueva', en: 'Opens in a new tab', ca: 'S’obre en una pestanya nova' })}</span
+			>{tria({ oc: 'Se dobrís dins un onglet novèl', fr: 'S’ouvre dans un nouvel onglet', es: 'Se abre en una pestaña nueva', en: 'Opens in a new tab', ca: 'S’obre en una pestanya nova', ar: 'يُفتح في تبويب جديد' })}</span
 		>
 
 		<!-- I. Le héros : le titre annonce le plan de la page, un seul bouton principal -->
@@ -211,14 +211,15 @@
 					fr: 'Carte de l’Occitanie en étoiles : 304 villes et villages, avec leur nom occitan',
 					es: 'Mapa de Occitania en estrellas: 304 ciudades y pueblos, con su nombre occitano',
 					en: 'Star map of Occitania: 304 towns and villages, with their Occitan names',
-					ca: 'Mapa d’Occitània en estrelles: 304 ciutats i pobles, amb el seu nom occità'
+					ca: 'Mapa d’Occitània en estrelles: 304 ciutats i pobles, amb el seu nom occità',
+					ar: 'خريطة أوكسيتانيا بالنجوم: 304 مدينة وقرية، بأسمائها الأوكسيتانية'
 				})}
 			></div>
 		</section>
 
 		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-		<div class="bandel" role="group" tabindex="0" aria-label={tria({ oc: 'Qualques mots', fr: 'Quelques mots', es: 'Algunas palabras', en: 'A few words', ca: 'Unes quantes paraules' })}>
+		<div class="bandel" role="group" tabindex="0" aria-label={tria({ oc: 'Qualques mots', fr: 'Quelques mots', es: 'Algunas palabras', en: 'A few words', ca: 'Unes quantes paraules', ar: 'بعض الكلمات' })}>
 			<div class="bandel-pista">
 				{#each [false, true] as copia (copia)}
 					{#each lista('acuelh.bandel') as m (m.clau)}

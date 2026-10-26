@@ -11,9 +11,8 @@
 	import { PALETAS } from '$lib/apren/teulas.js';
 	import { RADIOS } from '$lib/data/medias.js';
 	import { DIALECTES, LARG, NAUT, proj } from '$lib/data/carta-dialectes.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
-	let fr = $derived(langStore.current === 'fr');
 	const t = {
 		oc: {
 			titol: 'Ràdios',
@@ -30,9 +29,33 @@
 			arrestar: 'Arrêter',
 			dirècte: 'En direct',
 			site: 'Son site'
+		},
+		es: {
+			titol: 'Radios',
+			frasa: 'Las radios en occitano, en directo.',
+			avís: 'Mientras escuchas, la emisora recibirá tu dirección IP.',
+			arrestar: 'Parar',
+			dirècte: 'En directo',
+			site: 'Su sitio web'
+		},
+		en: {
+			titol: 'Radio stations',
+			frasa: 'Radio stations in Occitan, live.',
+			avís: 'While you listen, the radio station will receive your IP address.',
+			arrestar: 'Stop',
+			dirècte: 'Live',
+			site: 'Its website'
+		},
+		ca: {
+			titol: 'Ràdios',
+			frasa: 'Les ràdios en occità, en directe.',
+			avís: 'Mentre escoltes, la ràdio rebrà la teva adreça IP.',
+			arrestar: 'Aturar',
+			dirècte: 'En directe',
+			site: 'El seu web'
 		}
 	};
-	let tx = $derived(t[fr ? 'fr' : 'oc']);
+	let tx = $derived(t[langStore.current] ?? t.oc);
 
 	const AUR = PALETAS.aur;
 	const pos = RADIOS.map((r) => proj(r.lon, r.lat));
@@ -66,7 +89,7 @@
 </script>
 
 <svelte:head>
-	<title>Ràdios · Lo Ligam</title>
+	<title>{tx.titol} · Lo Ligam</title>
 </svelte:head>
 
 <!-- svelte-ignore a11y_media_has_caption -->
@@ -85,16 +108,16 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="radios">
-	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/medias">{fr ? 'Médias' : 'Mèdias'}</a><span aria-hidden="true">›</span>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
+		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })}</a><span aria-hidden="true">›</span>
+		<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans' })}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 
 	<header class="cap">
-		<h1 lang={fr ? 'fr' : 'oc'}>{tx.titol}</h1>
-		<p class="frasa" lang={fr ? 'fr' : 'oc'}>{tx.frasa}</p>
-		<p class="avís" lang={fr ? 'fr' : 'oc'}><Icona nom="son" size="1.1em" /> {tx.avís}</p>
+		<h1 lang={langStore.current}>{tx.titol}</h1>
+		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
+		<p class="avís" lang={langStore.current}><Icona nom="son" size="1.1em" /> {tx.avís}</p>
 	</header>
 
 		<!-- C. La carte : les dialectes en aplats d'or, un point par radio -->

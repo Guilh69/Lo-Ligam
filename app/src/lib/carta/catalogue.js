@@ -25,30 +25,30 @@ export const CATALOGUE = [
 				// prèp (demanda de Romain, 2026-10-09 ; nom occitan de validar)
 				id: 'frontiera',
 				oc: 'Domeni occitan',
-				fr: 'Domaine occitan',
+				fr: 'Domaine occitan', es: 'Dominio occitano', en: 'Occitan domain', ca: 'Domini occità',
 				estat: 'disponible',
 				defaut: true
 			},
-			{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', estat: 'disponible', defaut: false, nota_oc: "Se'n pòt causir mantun, lo Creissent tanben", nota_fr: 'On peut en choisir plusieurs, le Croissant aussi' },
+			{ id: 'dialectes', oc: 'Dialèctes', fr: 'Dialectes', es: 'Dialectos', en: 'Dialects', ca: 'Dialectes', estat: 'disponible', defaut: false, nota_oc: "Se'n pòt causir mantun, lo Creissent tanben", nota_fr: 'On peut en choisir plusieurs, le Croissant aussi', nota_es: 'Se pueden elegir varios, el Croissant también', nota_en: 'You can choose several, the Croissant too', nota_ca: 'Se’n poden triar diversos, el Croissant també' },
 			// l'occitan unificat a totas las escalas, coma de luènh (retorn de Romain, 2026-10-08) ;
 			// la carta arriba sus el sol, los dialèctes e lo relèu a la demanda (Romain, 2026-10-23)
-			{ id: 'unificat', oc: 'Occitan unificat', fr: 'Occitan unifié', estat: 'disponible', defaut: true, nota_oc: 'La lenga sola, sens los dialèctes, a totas las escalas', nota_fr: 'La langue seule, sans les dialectes, à toutes les échelles' },
+			{ id: 'unificat', oc: 'Occitan unificat', fr: 'Occitan unifié', es: 'Occitano unificado', en: 'Unified Occitan', ca: 'Occità unificat', estat: 'disponible', defaut: true, nota_oc: 'La lenga sola, sens los dialèctes, a totas las escalas', nota_fr: 'La langue seule, sans les dialectes, à toutes les échelles', nota_es: 'La lengua sola, sin los dialectos, a todas las escalas', nota_en: 'The language alone, without the dialects, at every scale', nota_ca: 'La llengua sola, sense els dialectes, a totes les escales' },
 			// la lecture « Uèi » (Romain, 2026-10-22) : la part de locuteurs par
 			// département, enquête OPLO 2020 (locutors.js) ; rien là où aucune
 			// enquête n'existe (Romain, 2026-10-23). Occitan vérifié par l'API.
 			{
 				id: 'locutors',
 				oc: 'Locutors (2020)',
-				fr: 'Locuteurs (2020)',
+				fr: 'Locuteurs (2020)', es: 'Hablantes (2020)', en: 'Speakers (2020)', ca: 'Parlants (2020)',
 				estat: 'disponible',
 				defaut: false,
 				nota_oc: 'Part dels 15 ans e mai que parlan occitan, per departament (OPLO)',
-				nota_fr: 'Part des 15 ans et plus qui parlent occitan, par département (OPLO)'
+				nota_fr: 'Part des 15 ans et plus qui parlent occitan, par département (OPLO)', nota_es: 'Parte de la población de 15 años o más que habla occitano, por departamento (OPLO)', nota_en: 'Share of people aged 15 or over who speak Occitan, by department (OPLO)', nota_ca: 'Part de la població de 15 anys o més que parla occità, per departament (OPLO)'
 			},
 			{
 				id: 'toponimia',
 				oc: 'Noms occitans de las vilas',
-				fr: 'Noms occitans des villes',
+				fr: 'Noms occitans des villes', es: 'Nombres occitanos de las ciudades', en: 'Occitan names of towns', ca: 'Noms occitans de les ciutats',
 				estat: 'disponible',
 				defaut: true,
 				fons: 'estelas'
@@ -61,14 +61,14 @@ export const CATALOGUE = [
 				// « les voix d'Occitanie » (Romain, 2026-10-22) : los testimònis de la lenga
 				// parlada dins sa diversitat ; la font (Atlàs sonòr, LISN) demòra dins la nòta
 				oc: 'Las votz d’Occitània',
-				fr: 'Les voix d’Occitanie',
+				fr: 'Les voix d’Occitanie', es: 'Las voces de Occitania', en: 'The voices of Occitania', ca: 'Les veus d’Occitània',
 				// demostracion per lo LISN (decision de Romain, 2026-10-12 : en linha,
 				// lo site es pas encara dobèrt al public) ; donadas de
 				// SIG/cadena/lisn-enquistas.mjs
 				estat: 'disponible',
 				defaut: false,
 				nota_oc: 'Demostracion (Atlàs sonòr, LISN) : una faula, mantun parlar',
-				nota_fr: 'Démonstration (Atlas sonore, LISN) : une fable, plusieurs parlers'
+				nota_fr: 'Démonstration (Atlas sonore, LISN) : une fable, plusieurs parlers', nota_es: 'Demostración (Atlas sonore, LISN): una fábula, varias hablas', nota_en: 'Demonstration (Atlas sonore, LISN): one fable, several local varieties', nota_ca: 'Demostració (Atlas sonore, LISN): una faula, diversos parlars'
 			}
 		]
 	},
@@ -77,26 +77,26 @@ export const CATALOGUE = [
 		// « Territòri » (decision de Romain, 2026-10-10) : « Administracion »
 		// desbordava del rail ; l'id demòra lo meteis
 		oc: 'Territòri',
-		fr: 'Territoire',
+		fr: 'Territoire', es: 'Territorio', en: 'Territory', ca: 'Territori',
 		jaces: [
-			{ id: 'vilas', oc: 'Vilas e vilatges', fr: 'Villes et villages', estat: 'disponible', defaut: true, fons: 'estelas' },
-			{ id: 'regions', oc: 'Regions', fr: 'Régions', estat: 'disponible', defaut: false },
-			{ id: 'despartaments', oc: 'Despartaments', fr: 'Départements', estat: 'disponible', defaut: false },
-			{ id: 'comunas', oc: 'Comunas', fr: 'Communes', estat: 'disponible', defaut: false } // (pas pus de nòta : l'escala s'aficha quand cal, Romain 2026-10-10)
+			{ id: 'vilas', oc: 'Vilas e vilatges', fr: 'Villes et villages', es: 'Ciudades y pueblos', en: 'Towns and villages', ca: 'Ciutats i pobles', estat: 'disponible', defaut: true, fons: 'estelas' },
+			{ id: 'regions', oc: 'Regions', fr: 'Régions', es: 'Regiones', en: 'Regions', ca: 'Regions', estat: 'disponible', defaut: false },
+			{ id: 'despartaments', oc: 'Despartaments', fr: 'Départements', es: 'Departamentos', en: 'Departments', ca: 'Departaments', estat: 'disponible', defaut: false },
+			{ id: 'comunas', oc: 'Comunas', fr: 'Communes', es: 'Municipios', en: 'Communes', ca: 'Municipis', estat: 'disponible', defaut: false } // (pas pus de nòta : l'escala s'aficha quand cal, Romain 2026-10-10)
 		]
 	},
 	{
 		id: 'cultura',
 		oc: 'Cultura',
-		fr: 'Culture',
+		fr: 'Culture', es: 'Cultura', en: 'Culture', ca: 'Cultura',
 		jaces: [
-			{ id: 'lieusInteres', oc: "Luòcs d'interès", fr: "Lieux d'intérêt", estat: 'basa', defaut: false },
-			{ id: 'librarias', oc: 'Librariás', fr: 'Librairies', estat: 'basa', defaut: false },
+			{ id: 'lieusInteres', oc: "Luòcs d'interès", fr: "Lieux d'intérêt", es: 'Lugares de interés', en: 'Places of interest', ca: 'Llocs d’interès', estat: 'basa', defaut: false },
+			{ id: 'librarias', oc: 'Librariás', fr: 'Librairies', es: 'Librerías', en: 'Bookshops', ca: 'Llibreries', estat: 'basa', defaut: false },
 			// cercles, ostals, IEO, escolo, Parlaren ; e las associacions de
 			// cultura occitana (decision de Romain, 2026-10-23, SIG/cercles)
-			{ id: 'cercles', oc: 'Cercles e associacions', fr: 'Cercles et associations', estat: 'disponible', defaut: false, icona: 'messages', color: 'aur-clar', nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
-			{ id: 'culturaOc', oc: 'Associacions culturalas', fr: 'Associations culturelles', estat: 'disponible', defaut: false, icona: 'music', color: 'terra-viu', nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment' },
-			{ id: 'festas', oc: 'Fèstas e eveniments', fr: 'Fêtes et événements', estat: 'a venir' }
+			{ id: 'cercles', oc: 'Cercles e associacions', fr: 'Cercles et associations', es: 'Círculos y asociaciones', en: 'Circles and associations', ca: 'Cercles i associacions', estat: 'disponible', defaut: false, icona: 'messages', color: 'aur-clar', nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment', nota_es: 'Punto lleno: actividad comprobada; vacío: declarada recientemente', nota_en: 'Filled dot: proven activity; empty: recently declared', nota_ca: 'Punt ple: activitat comprovada; buit: declarada recentment' },
+			{ id: 'culturaOc', oc: 'Associacions culturalas', fr: 'Associations culturelles', es: 'Asociaciones culturales', en: 'Cultural associations', ca: 'Associacions culturals', estat: 'disponible', defaut: false, icona: 'music', color: 'terra-viu', nota_oc: 'Ponch plen : activitat provada ; vuèg : declarada recentament', nota_fr: 'Point plein : activité prouvée ; vide : déclarée récemment', nota_es: 'Punto lleno: actividad comprobada; vacío: declarada recientemente', nota_en: 'Filled dot: proven activity; empty: recently declared', nota_ca: 'Punt ple: activitat comprovada; buit: declarada recentment' },
+			{ id: 'festas', oc: 'Fèstas e eveniments', fr: 'Fêtes et événements', es: 'Fiestas y eventos', en: 'Festivals and events', ca: 'Festes i esdeveniments', estat: 'a venir' }
 		]
 	},
 	{
@@ -110,37 +110,37 @@ export const CATALOGUE = [
 		// (un caractèr invisible, ­ : sus telefòn, lo mot se copa en doas
 		// linhas coma « Lenga nòstra », en luòc de desbordar sus « Istòria »)
 		oc: 'Ensenha­ment',
-		fr: 'Enseigne­ment',
+		fr: 'Enseigne­ment', es: 'Enseñanza', en: 'Education', ca: 'Ensenya­ment',
 		jaces: [
-			{ id: 'calandretas', oc: 'Calandretas', fr: 'Calandretas', estat: 'disponible', defaut: false, icona: 'school', color: 'ens-cal', grop_oc: 'Immersion', grop_fr: 'Immersion', nota_oc: "Tot en occitan, dins d'escòlas d'associacions", nota_fr: 'Tout en occitan, dans des écoles associatives' },
-			{ id: 'ensBilingue', oc: 'Escòlas bilingüas', fr: 'Écoles bilingues', estat: 'disponible', defaut: false, icona: 'circles-relation', color: 'ens-bil', grop_oc: 'Ensenhament public', grop_fr: 'Enseignement public', nota_oc: 'Mitat del temps en occitan', nota_fr: 'La moitié du temps en occitan' },
-			{ id: 'ensEscola', oc: "L'occitan a l'escòla", fr: "L'occitan à l'école", estat: 'disponible', defaut: false, icona: 'abc', color: 'ens-esc', grop_oc: 'Ensenhament public', grop_fr: 'Enseignement public', nota_oc: 'Tres oras per setmana, o una iniciacion', nota_fr: 'Trois heures par semaine, ou une initiation' },
-			{ id: 'ensSegond', oc: 'Collègis e licèus', fr: 'Collèges et lycées', estat: 'disponible', defaut: false, icona: 'notebook', color: 'ens-seg', grop_oc: 'Ensenhament public', grop_fr: 'Enseignement public', nota_oc: 'Opcion, seccion bilingüa o especialitat', nota_fr: 'Option, section bilingue ou spécialité' },
-			{ id: 'ensSuperior', oc: 'Universitats e formacion', fr: 'Universités et formation', estat: 'disponible', defaut: false, icona: 'certificate', color: 'ens-sup', grop_oc: 'Superior e adults', grop_fr: 'Supérieur et adultes', nota_oc: 'Licéncias, diplòmas, formacion dels ensenhaires', nota_fr: 'Licences, diplômes, formation des enseignants' },
-			{ id: 'corsAdults', oc: 'Corses per adults', fr: 'Cours pour adultes', estat: 'disponible', defaut: false, icona: 'users-group', color: 'ens-adu', grop_oc: 'Superior e adults', grop_fr: 'Supérieur et adultes', nota_oc: 'Associacions que donan de corses', nota_fr: 'Associations qui donnent des cours' }
+			{ id: 'calandretas', oc: 'Calandretas', fr: 'Calandretas', estat: 'disponible', defaut: false, icona: 'school', color: 'ens-cal', grop_oc: 'Immersion', grop_fr: 'Immersion', grop_es: 'Inmersión', grop_en: 'Immersion', grop_ca: 'Immersió', nota_oc: "Tot en occitan, dins d'escòlas d'associacions", nota_fr: 'Tout en occitan, dans des écoles associatives', nota_es: 'Todo en occitano, en escuelas asociativas', nota_en: 'All in Occitan, in community-run schools', nota_ca: 'Tot en occità, en escoles associatives' },
+			{ id: 'ensBilingue', oc: 'Escòlas bilingüas', fr: 'Écoles bilingues', es: 'Escuelas bilingües', en: 'Bilingual schools', ca: 'Escoles bilingües', estat: 'disponible', defaut: false, icona: 'circles-relation', color: 'ens-bil', grop_oc: 'Ensenhament public', grop_fr: 'Enseignement public', grop_es: 'Enseñanza pública', grop_en: 'Public education', grop_ca: 'Ensenyament públic', nota_oc: 'Mitat del temps en occitan', nota_fr: 'La moitié du temps en occitan', nota_es: 'La mitad del tiempo en occitano', nota_en: 'Half the time in Occitan', nota_ca: 'La meitat del temps en occità' },
+			{ id: 'ensEscola', oc: "L'occitan a l'escòla", fr: "L'occitan à l'école", es: 'El occitano en la escuela', en: 'Occitan at school', ca: 'L’occità a l’escola', estat: 'disponible', defaut: false, icona: 'abc', color: 'ens-esc', grop_oc: 'Ensenhament public', grop_fr: 'Enseignement public', grop_es: 'Enseñanza pública', grop_en: 'Public education', grop_ca: 'Ensenyament públic', nota_oc: 'Tres oras per setmana, o una iniciacion', nota_fr: 'Trois heures par semaine, ou une initiation', nota_es: 'Tres horas por semana, o una iniciación', nota_en: 'Three hours a week, or an introduction', nota_ca: 'Tres hores per setmana, o una iniciació' },
+			{ id: 'ensSegond', oc: 'Collègis e licèus', fr: 'Collèges et lycées', es: 'Institutos de secundaria', en: 'Secondary schools', ca: 'Instituts de secundària', estat: 'disponible', defaut: false, icona: 'notebook', color: 'ens-seg', grop_oc: 'Ensenhament public', grop_fr: 'Enseignement public', grop_es: 'Enseñanza pública', grop_en: 'Public education', grop_ca: 'Ensenyament públic', nota_oc: 'Opcion, seccion bilingüa o especialitat', nota_fr: 'Option, section bilingue ou spécialité', nota_es: 'Optativa, sección bilingüe o especialidad', nota_en: 'Option, bilingual stream or specialism', nota_ca: 'Optativa, secció bilingüe o especialitat' },
+			{ id: 'ensSuperior', oc: 'Universitats e formacion', fr: 'Universités et formation', es: 'Universidades y formación', en: 'Universities and training', ca: 'Universitats i formació', estat: 'disponible', defaut: false, icona: 'certificate', color: 'ens-sup', grop_oc: 'Superior e adults', grop_fr: 'Supérieur et adultes', grop_es: 'Enseñanza superior y adultos', grop_en: 'Higher education and adults', grop_ca: 'Ensenyament superior i adults', nota_oc: 'Licéncias, diplòmas, formacion dels ensenhaires', nota_fr: 'Licences, diplômes, formation des enseignants', nota_es: 'Grados, diplomas, formación del profesorado', nota_en: 'Degrees, diplomas, teacher training', nota_ca: 'Graus, diplomes, formació del professorat' },
+			{ id: 'corsAdults', oc: 'Corses per adults', fr: 'Cours pour adultes', es: 'Clases para adultos', en: 'Courses for adults', ca: 'Classes per a adults', estat: 'disponible', defaut: false, icona: 'users-group', color: 'ens-adu', grop_oc: 'Superior e adults', grop_fr: 'Supérieur et adultes', grop_es: 'Enseñanza superior y adultos', grop_en: 'Higher education and adults', grop_ca: 'Ensenyament superior i adults', nota_oc: 'Associacions que donan de corses', nota_fr: 'Associations qui donnent des cours', nota_es: 'Asociaciones que dan clases', nota_en: 'Associations that run courses', nota_ca: 'Associacions que fan classes' }
 		]
 	},
 	{
 		id: 'istoria',
 		oc: 'Istòria',
-		fr: 'Histoire',
+		fr: 'Histoire', es: 'Historia', en: 'History', ca: 'Història',
 		jaces: [
-			{ id: 'provincias', oc: 'Provincias istoricas', fr: 'Provinces historiques', estat: 'disponible', defaut: false, nota_oc: 'En 1789 : governaments e provincias', nota_fr: 'En 1789 : gouvernements et provinces' },
-			{ id: 'paises', oc: 'Païses tradicionals', fr: 'Pays traditionnels', estat: 'a venir' },
-			{ id: 'isolas', oc: 'Illòts lingüistics', fr: 'Îlots linguistiques', estat: 'a venir' }
+			{ id: 'provincias', oc: 'Provincias istoricas', fr: 'Provinces historiques', es: 'Provincias históricas', en: 'Historical provinces', ca: 'Províncies històriques', estat: 'disponible', defaut: false, nota_oc: 'En 1789 : governaments e provincias', nota_fr: 'En 1789 : gouvernements et provinces', nota_es: 'En 1789: gobiernos y provincias', nota_en: 'In 1789: governments and provinces', nota_ca: 'El 1789: governs i províncies' },
+			{ id: 'paises', oc: 'Païses tradicionals', fr: 'Pays traditionnels', es: 'Comarcas tradicionales', en: 'Traditional regions', ca: 'Comarques tradicionals', estat: 'a venir' },
+			{ id: 'isolas', oc: 'Illòts lingüistics', fr: 'Îlots linguistiques', es: 'Islotes lingüísticos', en: 'Language islands', ca: 'Illots lingüístics', estat: 'a venir' }
 		]
 	},
 	{
 		id: 'natura',
 		oc: 'Natura',
-		fr: 'Nature',
+		fr: 'Nature', es: 'Naturaleza', en: 'Nature', ca: 'Natura',
 		jaces: [
-			{ id: 'rius', oc: 'Rius', fr: 'Rivières', estat: 'disponible', defaut: false, fons: 'estelas' },
-			{ id: 'nomsRius', oc: 'Noms dels rius', fr: 'Noms des rivières', estat: 'disponible', defaut: false, fons: 'estelas' },
-			{ id: 'corbas', oc: 'Relèu', fr: 'Relief', estat: 'disponible', defaut: false, fons: 'estelas', nota_oc: 'Corbas de nivèl', nota_fr: 'Courbes de niveau' },
-			{ id: 'parcs', oc: 'Parcs naturals', fr: 'Parcs naturels', estat: 'disponible', defaut: false, nota_oc: 'Regionals, nacionals e marins', nota_fr: 'Régionaux, nationaux et marins' },
-			{ id: 'massis', oc: 'Massís e montanhas', fr: 'Massifs et montagnes', estat: 'disponible', defaut: false, nota_oc: 'Noms dels massís e de las cimas', nota_fr: 'Noms des massifs et des sommets' },
-			{ id: 'bacins', oc: 'Bacins dels rius', fr: 'Bassins des rivières', estat: 'a venir' }
+			{ id: 'rius', oc: 'Rius', fr: 'Rivières', es: 'Ríos', en: 'Rivers', ca: 'Rius', estat: 'disponible', defaut: false, fons: 'estelas' },
+			{ id: 'nomsRius', oc: 'Noms dels rius', fr: 'Noms des rivières', es: 'Nombres de los ríos', en: 'Names of rivers', ca: 'Noms dels rius', estat: 'disponible', defaut: false, fons: 'estelas' },
+			{ id: 'corbas', oc: 'Relèu', fr: 'Relief', es: 'Relieve', en: 'Relief', ca: 'Relleu', estat: 'disponible', defaut: false, fons: 'estelas', nota_oc: 'Corbas de nivèl', nota_fr: 'Courbes de niveau', nota_es: 'Curvas de nivel', nota_en: 'Contour lines', nota_ca: 'Corbes de nivell' },
+			{ id: 'parcs', oc: 'Parcs naturals', fr: 'Parcs naturels', es: 'Parques naturales', en: 'Nature parks', ca: 'Parcs naturals', estat: 'disponible', defaut: false, nota_oc: 'Regionals, nacionals e marins', nota_fr: 'Régionaux, nationaux et marins', nota_es: 'Regionales, nacionales y marinos', nota_en: 'Regional, national and marine', nota_ca: 'Regionals, nacionals i marins' },
+			{ id: 'massis', oc: 'Massís e montanhas', fr: 'Massifs et montagnes', es: 'Macizos y montañas', en: 'Massifs and mountains', ca: 'Massissos i muntanyes', estat: 'disponible', defaut: false, nota_oc: 'Noms dels massís e de las cimas', nota_fr: 'Noms des massifs et des sommets', nota_es: 'Nombres de los macizos y de las cimas', nota_en: 'Names of massifs and summits', nota_ca: 'Noms dels massissos i dels cims' },
+			{ id: 'bacins', oc: 'Bacins dels rius', fr: 'Bassins des rivières', es: 'Cuencas de los ríos', en: 'River basins', ca: 'Conques dels rius', estat: 'a venir' }
 		]
 	}
 ];
@@ -152,16 +152,16 @@ export const CATALOGUE = [
 CATALOGUE.push({
 	id: 'lengas',
 	oc: 'Autras lengas',
-	fr: 'Autres langues',
+	fr: 'Autres langues', es: 'Otras lenguas', en: 'Other languages', ca: 'Altres llengües',
 	jaces: [
 		{
 			id: 'lengasFranca',
 			oc: 'Lengas de França',
-			fr: 'Langues de France',
+			fr: 'Langues de France', es: 'Lenguas de Francia', en: 'Languages of France', ca: 'Llengües de França',
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'Catalan, basc, breton, arpitan, alsacian, còrs, lengas d’oïl, d’outra mar…',
-			nota_fr: 'Catalan, basque, breton, arpitan, alsacien, corse, langues d’oïl, d’outre-mer…'
+			nota_fr: 'Catalan, basque, breton, arpitan, alsacien, corse, langues d’oïl, d’outre-mer…', nota_es: 'Catalán, vasco, bretón, arpitano, alsaciano, corso, lenguas de oïl, de ultramar…', nota_en: 'Catalan, Basque, Breton, Arpitan, Alsatian, Corsican, langues d’oïl, overseas languages…', nota_ca: 'Català, basc, bretó, arpità, alsacià, cors, llengües d’oïl, d’ultramar…'
 		},
 		// Cada lenga, alucada coma l'occitan, amb sos dialèctes (retorn de
 		// Romain, 2026-10-08 : « un menu qui liste les langues de France ») ; lo
@@ -173,7 +173,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En França, la Catalonha del Nòrd, de Salses a Perpinyà ; se perlonga en Espanha, en Andòrra e fins a l’Alguer',
-			nota_fr: 'En France, la Catalogne nord, de Salses à Perpignan ; il se prolonge en Espagne, en Andorre et jusqu’à Alghero'
+			nota_fr: 'En France, la Catalogne nord, de Salses à Perpignan ; il se prolonge en Espagne, en Andorre et jusqu’à Alghero', nota_es: 'En Francia, la Cataluña Norte, de Salses a Perpiñán; se prolonga por España, Andorra y hasta Alguer', nota_en: 'In France, Northern Catalonia, from Salses to Perpignan; it continues into Spain, Andorra and as far as Alghero', nota_ca: 'A França, la Catalunya del Nord, de Salses a Perpinyà; es perllonga per Espanya, Andorra i fins a l’Alguer'
 		},
 		{
 			id: 'arpitan',
@@ -182,7 +182,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En França, de Liyon a Chambèri ; se perlonga en Soïssa romanda (Nôchâtél) e dins la val d’Aoûta',
-			nota_fr: 'En France, de Lyon à Chambéry ; il se prolonge en Suisse romande (Neuchâtel) et dans le Val d’Aoste'
+			nota_fr: 'En France, de Lyon à Chambéry ; il se prolonge en Suisse romande (Neuchâtel) et dans le Val d’Aoste', nota_es: 'En Francia, de Lyon a Chambéry; se prolonga por la Suiza romanda (Neuchâtel) y el Valle de Aosta', nota_en: 'In France, from Lyon to Chambéry; it continues into French-speaking Switzerland (Neuchâtel) and the Aosta Valley', nota_ca: 'A França, de Lió a Chambéry; es perllonga per la Suïssa romanda (Neuchâtel) i la Vall d’Aosta'
 		},
 		{
 			id: 'basc',
@@ -191,7 +191,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En França, Iparralde, de Baiona a Maule ; se perlonga en Espanha, de Bilbo a Iruña',
-			nota_fr: 'En France, le Pays basque nord, de Bayonne à Mauléon ; il se prolonge en Espagne, de Bilbao à Pampelune'
+			nota_fr: 'En France, le Pays basque nord, de Bayonne à Mauléon ; il se prolonge en Espagne, de Bilbao à Pampelune', nota_es: 'En Francia, el País Vasco francés, de Bayona a Mauleón; se prolonga por España, de Bilbao a Pamplona', nota_en: 'In France, the northern Basque Country, from Bayonne to Mauléon; it continues into Spain, from Bilbao to Pamplona', nota_ca: 'A França, el País Basc del Nord, de Baiona a Mauleó; es perllonga per Espanya, de Bilbao a Pamplona'
 		},
 		{
 			id: 'breton',
@@ -200,7 +200,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'Sos quatre dialèctes, de Leon a Gwened, dins sa limit de 1886',
-			nota_fr: 'Ses quatre dialectes, du Léon à Vannes, dans sa limite de 1886'
+			nota_fr: 'Ses quatre dialectes, du Léon à Vannes, dans sa limite de 1886', nota_es: 'Sus cuatro dialectos, del Léon a Vannes, dentro de su límite de 1886', nota_en: 'Its four dialects, from Léon to Vannes, within its 1886 boundary', nota_ca: 'Els seus quatre dialectes, del Léon a Vannes, dins del seu límit de 1886'
 		},
 		{
 			id: 'alsacian',
@@ -209,7 +209,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En Alsàcia, a l’entorn d’Estrasborg ; fa partida del continuum alemanic, que s’espandís en Alemanha e en Soïssa, fins a Basilèa e Zuric',
-			nota_fr: 'En Alsace, autour de Strasbourg ; il fait partie du continuum alémanique, qui s’étend en Allemagne et en Suisse, jusqu’à Bâle et Zurich'
+			nota_fr: 'En Alsace, autour de Strasbourg ; il fait partie du continuum alémanique, qui s’étend en Allemagne et en Suisse, jusqu’à Bâle et Zurich', nota_es: 'En Alsacia, en torno a Estrasburgo; forma parte del continuo alemánico, que se extiende por Alemania y Suiza, hasta Basilea y Zúrich', nota_en: 'In Alsace, around Strasbourg; it belongs to the Alemannic continuum, which stretches across Germany and Switzerland, as far as Basel and Zurich', nota_ca: 'A l’Alsàcia, al voltant d’Estrasburg; forma part del continu alemànic, que s’estén per Alemanya i Suïssa, fins a Basilea i Zuric'
 		},
 		{
 			id: 'francic',
@@ -218,7 +218,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En Mosèla germanofòna, lo platt ; se perlonga al Luxemborg e dins la Sarra',
-			nota_fr: 'En Moselle germanophone, le platt ; il se prolonge au Luxembourg et dans la Sarre'
+			nota_fr: 'En Moselle germanophone, le platt ; il se prolonge au Luxembourg et dans la Sarre', nota_es: 'En el Mosela germanófono, el platt; se prolonga por Luxemburgo y el Sarre', nota_en: 'In German-speaking Moselle, the platt; it continues into Luxembourg and the Saarland', nota_ca: 'A la Mosel·la germanòfona, el platt; es perllonga per Luxemburg i el Sarre'
 		},
 		{
 			id: 'flamenc',
@@ -227,7 +227,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En França, lo flamenc del Westhoek ; fa partida del continuum dels dialèctes neerlandeses, fins als Païses Basses',
-			nota_fr: 'En France, le flamand du Westhoek ; il fait partie du continuum des dialectes néerlandais, jusqu’aux Pays-Bas'
+			nota_fr: 'En France, le flamand du Westhoek ; il fait partie du continuum des dialectes néerlandais, jusqu’aux Pays-Bas', nota_es: 'En Francia, el flamenco del Westhoek; forma parte del continuo de los dialectos neerlandeses, hasta los Países Bajos', nota_en: 'In France, the Flemish of the Westhoek; it belongs to the continuum of Dutch dialects, as far as the Netherlands', nota_ca: 'A França, el flamenc del Westhoek; forma part del continu dels dialectes neerlandesos, fins als Països Baixos'
 		},
 		{
 			id: 'cors',
@@ -236,7 +236,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'En Corsega, sos parlars, del Cap Còrs a Bonifacio ; en Sardenha, lo gallurés e lo sassarés ne son pròches',
-			nota_fr: 'En Corse, ses parlers, du Cap Corse à Bonifacio ; en Sardaigne, le gallurais et le sassarais en sont proches'
+			nota_fr: 'En Corse, ses parlers, du Cap Corse à Bonifacio ; en Sardaigne, le gallurais et le sassarais en sont proches', nota_es: 'En Córcega, sus hablas, del Cabo Corso a Bonifacio; en Cerdeña, el gallurés y el sasarés son cercanos', nota_en: 'In Corsica, its local varieties, from Cap Corse to Bonifacio; in Sardinia, Gallurese and Sassarese are close to it', nota_ca: 'A Còrsega, els seus parlars, del Cap Corse a Bonifacio; a Sardenya, el gal·lurès i el sassarès hi són propers'
 		},
 		{
 			id: 'oil',
@@ -245,7 +245,7 @@ CATALOGUE.push({
 			estat: 'disponible',
 			defaut: false,
 			nota_oc: 'Una familha de lengas, del nòrd a l’oèst de França : picard, normand, galò, peitavin-santongés, campanés, lorren… ; tanben en Bèlgica e en Soïssa',
-			nota_fr: 'Une famille de langues, du nord à l’ouest de la France : picard, normand, gallo, poitevin-saintongeais, champenois, lorrain… ; aussi en Belgique et en Suisse'
+			nota_fr: 'Une famille de langues, du nord à l’ouest de la France : picard, normand, gallo, poitevin-saintongeais, champenois, lorrain… ; aussi en Belgique et en Suisse', nota_es: 'Una familia de lenguas, del norte al oeste de Francia: picardo, normando, galó, poitevino-saintongés, champañés, lorenés…; también en Bélgica y Suiza', nota_en: 'A family of languages, from the north to the west of France: Picard, Norman, Gallo, Poitevin-Saintongeais, Champenois, Lorrain…; also in Belgium and Switzerland', nota_ca: 'Una família de llengües, del nord a l’oest de França: picard, normand, gal·ló, poitevin-saintongès, champanyès, lorenès…; també a Bèlgica i a Suïssa'
 		}
 	]
 });
@@ -258,11 +258,11 @@ CATALOGUE.push({
 CATALOGUE.push({
 	id: 'donadas',
 	oc: 'Donadas',
-	fr: 'Données',
+	fr: 'Données', es: 'Datos', en: 'Data', ca: 'Dades',
 	jaces: [
-		{ id: 'escolasBreton', oc: 'Ensenhament bilingüe en breton', fr: 'Enseignement bilingue en breton', estat: 'disponible', defaut: false, nota_oc: 'Escolans per comuna, dintrada 2025', nota_fr: 'Élèves par commune, rentrée 2025' },
-		{ id: 'limitsBreton', oc: 'Limits del breton', fr: 'Limites du breton', estat: 'disponible', defaut: false, nota_oc: 'Del sègle IX a 1806', nota_fr: 'Du IXe siècle à 1806' },
-		{ id: 'escolasCors', oc: 'Ensenhament bilingüe en còrs', fr: 'Enseignement bilingue en corse', estat: 'a venir' }
+		{ id: 'escolasBreton', oc: 'Ensenhament bilingüe en breton', fr: 'Enseignement bilingue en breton', es: 'Enseñanza bilingüe en bretón', en: 'Bilingual education in Breton', ca: 'Ensenyament bilingüe en bretó', estat: 'disponible', defaut: false, nota_oc: 'Escolans per comuna, dintrada 2025', nota_fr: 'Élèves par commune, rentrée 2025', nota_es: 'Alumnado por municipio, inicio del curso 2025', nota_en: 'Pupils per commune, start of the 2025 school year', nota_ca: 'Alumnes per municipi, inici del curs 2025' },
+		{ id: 'limitsBreton', oc: 'Limits del breton', fr: 'Limites du breton', es: 'Límites del bretón', en: 'Limits of Breton', ca: 'Límits del bretó', estat: 'disponible', defaut: false, nota_oc: 'Del sègle IX a 1806', nota_fr: 'Du IXe siècle à 1806', nota_es: 'Del siglo IX a 1806', nota_en: 'From the 9th century to 1806', nota_ca: 'Del segle IX al 1806' },
+		{ id: 'escolasCors', oc: 'Ensenhament bilingüe en còrs', fr: 'Enseignement bilingue en corse', es: 'Enseñanza bilingüe en corso', en: 'Bilingual education in Corsican', ca: 'Ensenyament bilingüe en cors', estat: 'a venir' }
 	]
 });
 
@@ -294,7 +294,7 @@ const TEMATICA_FAMILHA = { Luòcs: 'cultura', Lenga: 'lenga', Referéncia: 'admi
 export function fusionarCatalogue(linhas = []) {
 	const familhas = CATALOGUE.map((f) => ({ ...f, jaces: f.jaces.map((j) => ({ ...j })) }));
 	const perId = new Map(familhas.flatMap((f) => f.jaces.map((j) => [j.id, j])));
-	const autras = { id: 'autras', oc: 'Autras', fr: 'Autres', jaces: [] };
+	const autras = { id: 'autras', oc: 'Autras', fr: 'Autres', es: 'Otras', en: 'Other', ca: 'Altres', jaces: [] };
 	for (const r of linhas) {
 		const j = perId.get(r.id);
 		if (j) {

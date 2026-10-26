@@ -18,8 +18,18 @@ const STORAGE_KEY = 'lo-ligam-lang';
 
 // Les deux langues du cœur, puis celles du globe. L'ordre sert à l'affichage.
 export const PRINCIPALAS = ['oc', 'fr'];
-export const AUTRAS = ['es', 'en', 'ca'];
-const SUPPORTED = [...PRINCIPALAS, ...AUTRAS];
+// 'ar' (arabe standard moderne) : en cours depuis le 2026-10-26. S'écrit de droite
+// à gauche (dir=rtl posé sur le document plus bas). Il n'est PAS proposé au
+// globe tant que le site n'est pas entièrement traduit et relu en arabe (il
+// était parti en ligne à moitié traduit le 26-10, corrigé aussitôt) : passer
+// ARABE_AU_GLOBE à true à ce moment-là. En attendant, on l'essaie par le lien
+// ?lang=ar (aussi valable pour les autres langues), que Romain donne à son ami.
+const ARABE_AU_GLOBE = false;
+export const AUTRAS = ['es', 'en', 'ca', ...(ARABE_AU_GLOBE ? ['ar'] : [])];
+const SUPPORTED = [...PRINCIPALAS, 'es', 'en', 'ca', 'ar'];
+const ESSAI_KEY = 'lo-ligam-ar-essai';
+// Les langues qui s'écrivent de droite à gauche.
+const RTL = ['ar'];
 
 // Étiquettes des langues dans leur propre langue (endonymes), plus un code
 // court pour les affichages compacts.
@@ -28,14 +38,15 @@ export const LENGAS = {
 	fr: { nom: 'Français', curt: 'Fr' },
 	es: { nom: 'Español', curt: 'Es' },
 	en: { nom: 'English', curt: 'En' },
-	ca: { nom: 'Català', curt: 'Ca' }
+	ca: { nom: 'Català', curt: 'Ca' },
+	ar: { nom: 'العربية', curt: 'ع' }
 };
 
 // Les langues « secondes » (hors occitan), dans l'ordre alphabétique de leur
 // nom : Català, English, Español, Français. L'occitan reste toujours la 1re
 // place de la bascule ; la 2e montre la « seconde » langue (français par
 // défaut), que le globe permet de changer (demande de Romain, 2026-10-26).
-export const SEGONDAS = ['ca', 'en', 'es', 'fr'];
+export const SEGONDAS = [...(ARABE_AU_GLOBE ? ['ar'] : []), 'ca', 'en', 'es', 'fr'];
 const SEGONDA_KEY = 'lo-ligam-segonda';
 
 let current = $state('oc');
@@ -59,6 +70,7 @@ export const lang = {
 			// ce n'est pas une raison pour casser le changement de langue.
 		}
 		document.documentElement.lang = value;
+		document.documentElement.dir = RTL.includes(value) ? 'rtl' : 'ltr';
 	},
 	get segonda() {
 		return segonda;
@@ -84,16 +96,32 @@ export function tria(obj) {
 if (browser) {
 	let saved = null;
 	let savedSegonda = null;
+	let essaiAr = false;
 	try {
 		saved = localStorage.getItem(STORAGE_KEY);
 		savedSegonda = localStorage.getItem(SEGONDA_KEY);
+		essaiAr = localStorage.getItem(ESSAI_KEY) === '1';
+		// lien d'essai : /?lang=ar, /?lang=es… (mémorisé comme un choix au globe)
+		const demanda = new URLSearchParams(location.search).get('lang');
+		if (SUPPORTED.includes(demanda)) {
+			saved = demanda;
+			localStorage.setItem(STORAGE_KEY, demanda);
+			if (demanda === 'ar') {
+				essaiAr = true;
+				localStorage.setItem(ESSAI_KEY, '1');
+			}
+		}
 	} catch {
 		saved = null;
 	}
+	// l'arabe caché du globe ne retient personne tant qu'il n'est pas complet :
+	// seul le lien d'essai l'active (sinon retour à l'occitan)
+	if (saved === 'ar' && !ARABE_AU_GLOBE && !essaiAr) saved = null;
 	if (SUPPORTED.includes(saved)) current = saved;
 	// la 2e place de la bascule : la langue courante si ce n'est pas l'occitan,
 	// sinon la dernière langue non occitane mémorisée (français par défaut)
 	if (current !== 'oc') segonda = current;
 	else if (SEGONDAS.includes(savedSegonda)) segonda = savedSegonda;
 	document.documentElement.lang = current;
+	document.documentElement.dir = RTL.includes(current) ? 'rtl' : 'ltr';
 }

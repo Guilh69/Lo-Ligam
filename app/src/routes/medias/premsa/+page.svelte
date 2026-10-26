@@ -9,9 +9,8 @@
 	import Icona from '$lib/components/Icona.svelte';
 	import { PALETAS } from '$lib/apren/teulas.js';
 	import { PREMSA, RITMES } from '$lib/data/medias.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
-	let fr = $derived(langStore.current === 'fr');
 	const t = {
 		oc: {
 			titol: 'Premsa',
@@ -22,10 +21,24 @@
 			titol: 'Presse',
 			frasa: 'Les journaux et les revues en occitan.',
 			legir: 'Lire'
+		},
+		es: {
+			titol: 'Prensa',
+			frasa: 'Los periódicos y las revistas en occitano.',
+			legir: 'Leer'
+		},
+		en: {
+			titol: 'Press',
+			frasa: 'Newspapers and magazines in Occitan.',
+			legir: 'Read'
+		},
+		ca: {
+			titol: 'Premsa',
+			frasa: 'Els diaris i les revistes en occità.',
+			legir: 'Llegir'
 		}
 	};
-	let tx = $derived(t[fr ? 'fr' : 'oc']);
-	const s = (o) => (fr ? o.fr : o.oc);
+	let tx = $derived(t[langStore.current] ?? t.oc);
 	const ritme = (id) => RITMES.find((r) => r.id === id);
 
 	const AUR = PALETAS.aur;
@@ -35,22 +48,22 @@
 </script>
 
 <svelte:head>
-	<title>Premsa · Lo Ligam</title>
+	<title>{tx.titol} · Lo Ligam</title>
 </svelte:head>
 
 <div class="pagina">
 <div class="capçal"><AppHeader /></div>
 
 <main class="premsa">
-	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/medias">{fr ? 'Médias' : 'Mèdias'}</a><span aria-hidden="true">›</span>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
+		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })}</a><span aria-hidden="true">›</span>
+		<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans' })}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 
 	<header class="cap">
-		<h1 lang={fr ? 'fr' : 'oc'}>{tx.titol}</h1>
-		<p class="frasa" lang={fr ? 'fr' : 'oc'}>{tx.frasa}</p>
+		<h1 lang={langStore.current}>{tx.titol}</h1>
+		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
 	</header>
 
 	<!-- le kiosque : les couvertures sur leurs rayons -->
@@ -59,12 +72,12 @@
 			{@const [fons, tinta] = color(i)}
 			<li style:--i={i}>
 				<a class="cobèrta" href={p.site} target="_blank" rel="noopener noreferrer" style:--fons={fons} style:--tinta={tinta} style:--r="{pench[i % pench.length]}deg">
-					<span class="cob-sorta" lang={fr ? 'fr' : 'oc'}>{s(p.sorta)}</span>
+					<span class="cob-sorta" lang={langStore.current}>{tria(p.sorta)}</span>
 					<span class="cob-nom" lang="oc">{p.nom}</span>
-					<span class="cob-tèxt" lang={fr ? 'fr' : 'oc'}>{s(p.tèxt)}</span>
+					<span class="cob-tèxt" lang={langStore.current}>{tria(p.tèxt)}</span>
 					<span class="cob-linhas" aria-hidden="true">{#each Array(10) as _, k (k)}<i></i>{/each}</span>
 					<span class="cob-pè">
-						<span lang={fr ? 'fr' : 'oc'}>{s(ritme(p.ritme))}</span>
+						<span lang={langStore.current}>{tria(ritme(p.ritme))}</span>
 						<span class="cob-legir">{tx.legir} <Icona nom="extern" size="0.9em" /></span>
 					</span>
 				</a>

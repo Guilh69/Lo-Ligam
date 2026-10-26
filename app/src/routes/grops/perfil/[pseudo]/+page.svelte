@@ -78,9 +78,103 @@
 			segur_blocar: 'Bloquer cette personne ? Elle ne pourra plus t’écrire ni te demander.',
 			òc: 'Oui',
 			non: 'Non'
+		},
+		es: {
+			tornar: 'Volver a la lista',
+			moderacion: 'moderación',
+			ont: 'De dónde',
+			dialecte: 'Dialecto',
+			nivel: 'Nivel',
+			cerca: 'Lo que busca',
+			agrada: 'Lo que le gusta',
+			occitania: 'Occitania',
+			dempuei: 'Miembro desde',
+			comuns: 'Grupos en común',
+			cap: 'Ningún grupo en común.',
+			invisible: 'Este perfil no es visible.',
+			espèra: 'Los perfiles se ven cuando el tuyo está verificado.',
+			ieu: 'Modificar mi perfil',
+			apondre: 'Añadir a contactos',
+			mandada: 'Solicitud enviada: espera su respuesta.',
+			anullar: 'Cancelar la solicitud',
+			recebuda: 'Quiere ponerse en contacto contigo.',
+			acceptar: 'Aceptar',
+			refusar: 'Rechazar',
+			escriure: 'Escribir',
+			quitar: 'Quitar de contactos',
+			blocar: 'Bloquear',
+			blocat: 'Has bloqueado a esta persona: ya no puede escribirte.',
+			desblocar: 'Desbloquear',
+			segur_quitar: '¿Quitar a esta persona de tus contactos?',
+			segur_blocar: '¿Bloquear a esta persona? Ya no podrá escribirte ni enviarte solicitudes.',
+			òc: 'Sí',
+			non: 'No'
+		},
+		en: {
+			tornar: 'Back to the list',
+			moderacion: 'moderation',
+			ont: 'Where from',
+			dialecte: 'Dialect',
+			nivel: 'Level',
+			cerca: 'What they’re looking for',
+			agrada: 'What they like',
+			occitania: 'Occitania',
+			dempuei: 'Member since',
+			comuns: 'Groups in common',
+			cap: 'No groups in common.',
+			invisible: 'This profile isn’t visible.',
+			espèra: 'Profiles become visible once yours is verified.',
+			ieu: 'Edit my profile',
+			apondre: 'Add to contacts',
+			mandada: 'Request sent: wait for their reply.',
+			anullar: 'Cancel the request',
+			recebuda: 'Wants to get in touch with you.',
+			acceptar: 'Accept',
+			refusar: 'Decline',
+			escriure: 'Message',
+			quitar: 'Remove from contacts',
+			blocar: 'Block',
+			blocat: 'You have blocked this person: they can no longer write to you.',
+			desblocar: 'Unblock',
+			segur_quitar: 'Remove this person from your contacts?',
+			segur_blocar: 'Block this person? They will no longer be able to write to you or send you requests.',
+			òc: 'Yes',
+			non: 'No'
+		},
+		ca: {
+			tornar: 'Torna a la llista',
+			moderacion: 'moderació',
+			ont: 'D’on',
+			dialecte: 'Dialecte',
+			nivel: 'Nivell',
+			cerca: 'El que cerca',
+			agrada: 'El que li agrada',
+			occitania: 'Occitània',
+			dempuei: 'Membre des de',
+			comuns: 'Grups en comú',
+			cap: 'Cap grup en comú.',
+			invisible: 'Aquest perfil no és visible.',
+			espèra: 'Els perfils es veuen quan el teu està verificat.',
+			ieu: 'Modifica el meu perfil',
+			apondre: 'Afegeix als contactes',
+			mandada: 'Sol·licitud enviada: espera la seva resposta.',
+			anullar: 'Cancel·la la sol·licitud',
+			recebuda: 'Vol posar-se en contacte amb tu.',
+			acceptar: 'Accepta',
+			refusar: 'Rebutja',
+			escriure: 'Escriu',
+			quitar: 'Treu dels contactes',
+			blocar: 'Bloqueja',
+			blocat: 'Has bloquejat aquesta persona: ja no et pot escriure.',
+			desblocar: 'Desbloqueja',
+			segur_quitar: 'Treure aquesta persona dels teus contactes?',
+			segur_blocar: 'Bloquejar aquesta persona? Ja no podrà escriure’t ni enviar-te sol·licituds.',
+			òc: 'Sí',
+			non: 'No'
 		}
 	};
-	let x = $derived(fr ? X.fr : X.oc);
+	let x = $derived(X[langStore.current] ?? X.oc);
+	let xe = $derived(X_ERRORS[langStore.current] ?? X_ERRORS.oc);
 
 	let pseudo = $derived(page.params.pseudo);
 	// en développement, « ?simular=acceptat » (cap, mandada, recebuda, blocat)
@@ -190,7 +284,7 @@
 						<button type="button" class="boton segond" disabled={ocupat} onclick={() => far(desblocar)}>{x.desblocar}</button>
 					</div>
 				{/if}
-				{#if error}<p class="error" role="alert">{(fr ? X_ERRORS.fr : X_ERRORS.oc)[error] ?? (fr ? X_ERRORS.fr : X_ERRORS.oc).error}</p>{/if}
+				{#if error}<p class="error" role="alert">{xe[error] ?? xe.error}</p>{/if}
 			</div>
 		{/if}
 
@@ -198,8 +292,8 @@
 
 		<dl>
 			{#if perfil.ont}<div><dt>{x.ont}</dt><dd class:oc={perfil.ont_occitania}>{#if perfil.ont_occitania}<span role="img" aria-label={x.occitania} title={x.occitania}><Crotz talha={20} teula /></span>{/if}{luòcAfichat(perfil, fr)}</dd></div>{/if}
-			{#if perfil.dialecte}<div><dt>{x.dialecte}</dt><dd>{nomDe(DIALECTES, perfil.dialecte, fr)}</dd></div>{/if}
-			{#if perfil.nivel}<div><dt>{x.nivel}</dt><dd>{nomDe(NIVELS, perfil.nivel, fr)}</dd></div>{/if}
+			{#if perfil.dialecte}<div><dt>{x.dialecte}</dt><dd>{nomDe(DIALECTES, perfil.dialecte, langStore.current)}</dd></div>{/if}
+			{#if perfil.nivel}<div><dt>{x.nivel}</dt><dd>{nomDe(NIVELS, perfil.nivel, langStore.current)}</dd></div>{/if}
 			<div><dt>{x.dempuei}</dt><dd>{mes(perfil.arribat_at)}</dd></div>
 		</dl>
 
@@ -208,7 +302,7 @@
 				<section aria-labelledby="perfil-{nom}">
 					<h3 id="perfil-{nom}">{x[nom]}</h3>
 					<p class="pastilhas">
-						{#each perfil[nom] as v (v)}<span>{nomDe(lista, v, fr)}</span>{/each}
+						{#each perfil[nom] as v (v)}<span>{nomDe(lista, v, langStore.current)}</span>{/each}
 					</p>
 				</section>
 			{/if}

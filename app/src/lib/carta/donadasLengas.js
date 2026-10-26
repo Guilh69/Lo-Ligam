@@ -15,7 +15,52 @@ const cargar = () =>
 		.then((r) => (r.ok ? r.json() : null))
 		.catch(() => null));
 
-const nombre = (n, lang) => n.toLocaleString(lang === 'fr' ? 'fr-FR' : 'oc');
+// (format des nombres : celui de la langue du site ; l'occitan garde « oc »)
+const LOCALAS = { fr: 'fr-FR', es: 'es-ES', en: 'en-GB', ca: 'ca-ES' };
+const nombre = (n, lang) => n.toLocaleString(LOCALAS[lang] ?? 'oc');
+// los mots de las bullas e del panèl de las fonts, per lenga de la pagina
+const MOTS = {
+	oc: {
+		alumnes: 'escolans en bilingüe',
+		etab: ['establiment', 'establiments'],
+		diwan: (n) => `${n} a Diwan`,
+		fora: 'fòra del domeni de 1886',
+		escolas: 'Ensenhament bilingüe en breton',
+		limits: 'Limits del breton'
+	},
+	fr: {
+		alumnes: 'élèves en bilingue',
+		etab: ['établissement', 'établissements'],
+		diwan: (n) => `dont ${n} à Diwan`,
+		fora: 'hors du domaine de 1886',
+		escolas: 'Enseignement bilingue en breton',
+		limits: 'Limites du breton'
+	},
+	es: {
+		alumnes: 'escolares en bilingüe',
+		etab: ['centro', 'centros'],
+		diwan: (n) => `de ellos ${n} en Diwan`,
+		fora: 'fuera del dominio de 1886',
+		escolas: 'Enseñanza bilingüe en bretón',
+		limits: 'Límites del bretón'
+	},
+	en: {
+		alumnes: 'pupils in bilingual education',
+		etab: ['school', 'schools'],
+		diwan: (n) => `of whom ${n} at Diwan`,
+		fora: 'outside the 1886 area',
+		escolas: 'Bilingual education in Breton',
+		limits: 'Limits of Breton'
+	},
+	ca: {
+		alumnes: 'alumnes en bilingüe',
+		etab: ['centre', 'centres'],
+		diwan: (n) => `dels quals ${n} a Diwan`,
+		fora: 'fora del domini de 1886',
+		escolas: 'Ensenyament bilingüe en bretó',
+		limits: 'Límits del bretó'
+	}
+};
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
 export function crearDonadasLengas(L, map, { color = '#4fd1b0', colorLimits = '#e9d7b0', lang = 'oc', pad = () => [110, 40] } = {}) {
@@ -32,10 +77,8 @@ export function crearDonadasLengas(L, map, { color = '#4fd1b0', colorLimits = '#
 
 	function tèxtEscola(e) {
 		const [, , n, fr, br, diwan, etab, dins] = e;
-		const t =
-			lang === 'fr'
-				? `${nombre(n, lang)} élèves en bilingue${etab ? ` · ${etab} établissement${etab > 1 ? 's' : ''}` : ''}${diwan ? `<br>dont ${nombre(diwan, lang)} à Diwan` : ''}${dins ? '' : '<br><i>hors du domaine de 1886</i>'}`
-				: `${nombre(n, lang)} escolans en bilingüe${etab ? ` · ${etab} establiment${etab > 1 ? 's' : ''}` : ''}${diwan ? `<br>${nombre(diwan, lang)} a Diwan` : ''}${dins ? '' : '<br><i>fòra del domeni de 1886</i>'}`;
+		const m = MOTS[lang] ?? MOTS.oc;
+		const t = `${nombre(n, lang)} ${m.alumnes}${etab ? ` · ${etab} ${m.etab[etab > 1 ? 1 : 0]}` : ''}${diwan ? `<br>${m.diwan(nombre(diwan, lang))}` : ''}${dins ? '' : `<br><i>${m.fora}</i>`}`;
 		return `<b lang="br">${esc(br ?? fr)}</b>${br && br !== fr ? ` <span class="sota">${esc(fr)}</span>` : ''}<br>${t}`;
 	}
 
@@ -128,7 +171,8 @@ export function crearDonadasLengas(L, map, { color = '#4fd1b0', colorLimits = '#
 	function fonts() {
 		const ctl = map.attributionControl;
 		if (!ctl || !d?.font) return;
-		const tèmas = { escolas: lang === 'fr' ? 'Enseignement bilingue en breton' : 'Ensenhament bilingüe en breton', limits: lang === 'fr' ? 'Limites du breton' : 'Limits del breton' };
+		const m = MOTS[lang] ?? MOTS.oc;
+		const tèmas = { escolas: m.escolas, limits: m.limits };
 		for (const k of ['escolas', 'limits']) {
 			const t = `${tèmas[k]} : ${d.font[k === 'escolas' ? 'escolas' : 'istoric']}`;
 			if (fontsMesas[k] && (!estat[k] || fontsMesas[k] !== t)) ctl.removeAttribution(fontsMesas[k]), delete fontsMesas[k];

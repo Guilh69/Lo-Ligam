@@ -5,11 +5,10 @@
 	// La grande image se charge seulement à l'ouverture.
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Icona from '$lib/components/Icona.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { afichas } from '$lib/data/afichas.js';
 
 	let lang = $derived(langStore.current);
-	let fr = $derived(lang === 'fr');
 
 	const t = {
 		oc: {
@@ -18,7 +17,9 @@
 			parla: 'Se parla',
 			obras: 'Òbras',
 			agrandir: 'Veire en grand',
-			tampar: 'Tampar'
+			tampar: 'Tampar',
+			dp: ' :',
+			font: 'Font'
 		},
 		fr: {
 			title: 'Affiches',
@@ -26,7 +27,39 @@
 			parla: 'Se parle',
 			obras: 'Œuvres',
 			agrandir: 'Voir en grand',
-			tampar: 'Fermer'
+			tampar: 'Fermer',
+			dp: ' :',
+			font: 'Source'
+		},
+		es: {
+			title: 'Carteles',
+			lead: 'Carteles que hacen hablar a la lengua en las paredes.',
+			parla: 'Se habla',
+			obras: 'Obras',
+			agrandir: 'Ver en grande',
+			tampar: 'Cerrar',
+			dp: ':',
+			font: 'Fuente'
+		},
+		en: {
+			title: 'Posters',
+			lead: 'Posters that make the language speak on the walls.',
+			parla: 'Speak',
+			obras: 'Works',
+			agrandir: 'View larger',
+			tampar: 'Close',
+			dp: ':',
+			font: 'Source'
+		},
+		ca: {
+			title: 'Cartells',
+			lead: 'Cartells que fan parlar la llengua a les parets.',
+			parla: 'Es parla',
+			obras: 'Obres',
+			agrandir: 'Veure en gran',
+			tampar: 'Tancar',
+			dp: ':',
+			font: 'Font'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);
@@ -56,7 +89,7 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="obras">
-	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
 		<a href="/parla">{tx.parla}</a><span aria-hidden="true">›</span>
 		<a href="/obras">{tx.obras}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.title}</span>
@@ -77,7 +110,7 @@
 							<span class="afica-titol" lang="oc">{a.titol}</span>
 							{#if a.epoca}<span class="afica-epoca">{a.epoca}</span>{/if}
 						</span>
-						<span class="sr-only">{tx.agrandir} : {a.titol}</span>
+						<span class="sr-only">{tx.agrandir}{tx.dp} {a.titol}</span>
 					</button>
 				</li>
 			{/each}
@@ -92,9 +125,9 @@
 			<img src="/obras/afichas/{vista.id}.webp" alt={vista.titol} />
 			<figcaption>
 				<strong id="vista-titol" lang="oc">{vista.titol}</strong>
-				<span>{lang === 'oc' ? vista.oc : vista.fr}</span>
+				<span>{tria(vista)}</span>
 				{#if vista.epoca}<span class="vista-epoca">{vista.epoca}</span>{/if}
-				{#if vista.font}<span class="vista-font">{lang === 'oc' ? 'Font' : 'Source'} : {#if vista.ligam}<a href={vista.ligam} target="_blank" rel="noopener noreferrer">{vista.font} <Icona nom="extern" size="0.9em" /></a>{:else}{vista.font}{/if}</span>{/if}
+				{#if vista.font}<span class="vista-font">{tx.font}{tx.dp} {#if vista.ligam}<a href={vista.ligam} target="_blank" rel="noopener noreferrer">{vista.font} <Icona nom="extern" size="0.9em" /></a>{:else}{vista.font}{/if}</span>{/if}
 			</figcaption>
 		</figure>
 		<button type="button" class="vista-tampar" onclick={tampar}>{tx.tampar} <Icona nom="fermer" size="1.1em" /></button>

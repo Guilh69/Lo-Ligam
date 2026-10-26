@@ -10,7 +10,10 @@
 
 	const T = {
 		oc: { gama: 'Locutors, en % dels 15 ans e mai' },
-		fr: { gama: 'Locuteurs, en % des 15 ans et plus' }
+		fr: { gama: 'Locuteurs, en % des 15 ans et plus' },
+		es: { gama: 'Hablantes, en % de la población de 15 años o más', font: 'Encuesta sociolingüística de la OPLO (2020)' },
+		en: { gama: 'Speakers, as a % of people aged 15 or over', font: 'OPLO sociolinguistic survey (2020)' },
+		ca: { gama: 'Parlants, en % de la població de 15 anys o més', font: 'Enquesta sociolingüística de l’OPLO (2020)' }
 	};
 	const tx = $derived(T[lang] ?? T.oc);
 	const gama = $derived(gamaLocutors(dalt));
@@ -40,7 +43,7 @@
 				<li><i style:background={gama[i]}></i><span>{m === 20 ? '20 +' : m}</span></li>
 			{/each}
 		</ol>
-		<a href={FONT_LOCUTORS.url} target="_blank" rel="noopener" title={FONT_LOCUTORS[lang === 'fr' ? 'fr' : 'oc']}>OPLO 2020</a>
+		<a href={FONT_LOCUTORS.url} target="_blank" rel="noopener" title={tx.font ?? FONT_LOCUTORS[lang === 'fr' ? 'fr' : 'oc']}>OPLO 2020</a>
 	</div>
 </div>
 

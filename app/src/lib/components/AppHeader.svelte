@@ -61,7 +61,7 @@
 	// sont pas déjà dans la bascule, en ordre alphabétique (Romain, 2026-10-26).
 	let segonda = $derived(langStore.segonda);
 	let autras = $derived(SEGONDAS.filter((c) => c !== segonda));
-	const GLOBE_ETIQ = { oc: 'Autras lengas', fr: 'Autres langues', es: 'Otros idiomas', en: 'Other languages', ca: 'Altres llengües' };
+	const GLOBE_ETIQ = { oc: 'Autras lengas', fr: 'Autres langues', es: 'Otros idiomas', en: 'Other languages', ca: 'Altres llengües', ar: 'لغات أخرى' };
 	let globeEtiq = $derived(GLOBE_ETIQ[lang] ?? GLOBE_ETIQ.oc);
 	function basculaGlobe() {
 		globeDobert = !globeDobert;
@@ -96,7 +96,8 @@
 		fr: { acuelhLong: "Retour à l'accueil", admin: 'Administration', menu: 'Menu', reservar: 'Réserver un cours', compte: 'Mon compte', connectar: 'Se connecter' },
 		es: { acuelhLong: 'Volver al inicio', admin: 'Administración', menu: 'Menú', reservar: 'Reservar una clase', compte: 'Mi cuenta', connectar: 'Iniciar sesión' },
 		en: { acuelhLong: 'Back to home', admin: 'Administration', menu: 'Menu', reservar: 'Book a lesson', compte: 'My account', connectar: 'Log in' },
-		ca: { acuelhLong: 'Tornar a l’inici', admin: 'Administració', menu: 'Menú', reservar: 'Reservar una classe', compte: 'El meu compte', connectar: 'Inicia la sessió' }
+		ca: { acuelhLong: 'Tornar a l’inici', admin: 'Administració', menu: 'Menú', reservar: 'Reservar una classe', compte: 'El meu compte', connectar: 'Inicia la sessió' },
+		ar: { acuelhLong: 'العودة إلى الصفحة الرئيسية', admin: 'الإدارة', menu: 'القائمة', reservar: 'احجز درسًا', compte: 'حسابي', connectar: 'تسجيل الدخول' }
 	};
 	let tx = $derived(t[lang] ?? t.oc);
 

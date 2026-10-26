@@ -34,7 +34,7 @@ export const edicion = $state({
 	messatge: null
 });
 
-const VUEJ = { oc: '', fr: '', es: '', en: '', ca: '' };
+const VUEJ = { oc: '', fr: '', es: '', en: '', ca: '', ar: '' };
 
 // --- lecture -------------------------------------------------------------
 
@@ -44,11 +44,11 @@ export function element(clau) {
 }
 export function txt(clau) {
 	const e = element(clau);
-	return e ? { oc: e.oc ?? '', fr: e.fr ?? '', es: e.es ?? '', en: e.en ?? '', ca: e.ca ?? '' } : VUEJ;
+	return e ? { oc: e.oc ?? '', fr: e.fr ?? '', es: e.es ?? '', en: e.en ?? '', ca: e.ca ?? '', ar: e.ar ?? '' } : VUEJ;
 }
 export function ligam(clau) {
 	const e = element(clau);
-	return e ? { oc: e.oc ?? '', fr: e.fr ?? '', es: e.es ?? '', en: e.en ?? '', ca: e.ca ?? '', href: e.ligam ?? '#', defòra: /^https?:\/\//.test(e.ligam ?? '') } : { ...VUEJ, href: '#', defòra: false };
+	return e ? { oc: e.oc ?? '', fr: e.fr ?? '', es: e.es ?? '', en: e.en ?? '', ca: e.ca ?? '', ar: e.ar ?? '', href: e.ligam ?? '#', defòra: /^https?:\/\//.test(e.ligam ?? '') } : { ...VUEJ, href: '#', defòra: false };
 }
 export function imatge(clau) {
 	return element(clau)?.imatge ?? null;

@@ -10,9 +10,8 @@
 	import Icona from '$lib/components/Icona.svelte';
 	import { PALETAS } from '$lib/apren/teulas.js';
 	import { LIBRES } from '$lib/data/arts.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
-	let fr = $derived(langStore.current === 'fr');
 	const t = {
 		oc: {
 			titol: 'Literatura',
@@ -27,10 +26,30 @@
 			editors: 'Les éditeurs',
 			trobar: 'Où trouver les livres',
 			veire: 'Voir'
+		},
+		es: {
+			titol: 'Literatura',
+			frasa: 'Las editoriales en occitano, y dónde encontrar los libros.',
+			editors: 'Las editoriales',
+			trobar: 'Dónde encontrar los libros',
+			veire: 'Ver'
+		},
+		en: {
+			titol: 'Literature',
+			frasa: 'Publishers in Occitan, and where to find the books.',
+			editors: 'Publishers',
+			trobar: 'Where to find the books',
+			veire: 'Visit'
+		},
+		ca: {
+			titol: 'Literatura',
+			frasa: 'Les editorials en occità, i on trobar els llibres.',
+			editors: 'Les editorials',
+			trobar: 'On trobar els llibres',
+			veire: 'Veure'
 		}
 	};
-	let tx = $derived(t[fr ? 'fr' : 'oc']);
-	const s = (o) => (fr ? o.fr : o.oc);
+	let tx = $derived(t[langStore.current] ?? t.oc);
 
 	const VERD = PALETAS.verd;
 	const color = (i) => VERD[i % VERD.length];
@@ -48,22 +67,22 @@
 </script>
 
 <svelte:head>
-	<title>Literatura · Lo Ligam</title>
+	<title>{tx.titol} · Lo Ligam</title>
 </svelte:head>
 
 <div class="pagina">
 <div class="capçal"><AppHeader /></div>
 
 <main class="literatura">
-	<nav class="camin" aria-label={fr ? 'Fil d’Ariane' : 'Camin'}>
-		<a href="/parla">{fr ? 'Se parle' : 'Se parla'}</a><span aria-hidden="true">›</span>
-		<a href="/obras">{fr ? 'Œuvres' : 'Òbras'}</a><span aria-hidden="true">›</span>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
+		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })}</a><span aria-hidden="true">›</span>
+		<a href="/obras">{tria({ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres' })}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 
 	<header class="cap">
-		<h1 lang={fr ? 'fr' : 'oc'}>{tx.titol}</h1>
-		<p class="frasa" lang={fr ? 'fr' : 'oc'}>{tx.frasa}</p>
+		<h1 lang={langStore.current}>{tx.titol}</h1>
+		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
 	</header>
 
 	<!-- la bibliothèque : un dos de livre par entrée, la fiche du livre tiré à droite -->
@@ -83,16 +102,16 @@
 							</li>
 						{/each}
 					</ul>
-					<p class="laissa-nom" lang={fr ? 'fr' : 'oc'}>{g.nom}</p>
+					<p class="laissa-nom" lang={langStore.current}>{g.nom}</p>
 				</div>
 			{/each}
 		</div>
 		<div class="pagina-libre" aria-live="polite">
 			{#key causit}
 				<div class="pl-contengut">
-					<span class="pl-sorta" lang={fr ? 'fr' : 'oc'}>{s(libre.sorta)}{#if libre.an} · {libre.an}{/if}</span>
+					<span class="pl-sorta" lang={langStore.current}>{tria(libre.sorta)}{#if libre.an} · {libre.an}{/if}</span>
 					<strong class="pl-nom" lang="oc">{libre.nom}</strong>
-					<p class="pl-tèxt" lang={fr ? 'fr' : 'oc'}>{s(libre.tèxt)}</p>
+					<p class="pl-tèxt" lang={langStore.current}>{tria(libre.tèxt)}</p>
 					<a class="pl-veire" href={libre.site} target="_blank" rel="noopener noreferrer">{tx.veire} <Icona nom="extern" size="1em" /></a>
 				</div>
 			{/key}

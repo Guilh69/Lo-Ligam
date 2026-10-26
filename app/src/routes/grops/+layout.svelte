@@ -58,9 +58,63 @@
 			refusar: 'Refuser',
 			mandada: 'demande envoyée',
 			cap_contacte: 'Pour ajouter un contact, ouvre son profil dans un groupe.'
+		},
+		es: {
+			grops: 'Grupos',
+			mos: 'Mis grupos',
+			perfil: 'Mi perfil',
+			espèra: 'pendiente',
+			crear: 'Todos los grupos',
+			començar: 'Para empezar',
+			connectar: 'Iniciar sesión',
+			non_legits: (n) => `${n} mensaje${n > 1 ? 's' : ''} sin leer`,
+			confidencialitat: 'Privacidad',
+			amassa: 'Volver a Reúne',
+			contactes: 'Mis contactos',
+			vòl: 'quiere ponerse en contacto',
+			acceptar: 'Aceptar',
+			refusar: 'Rechazar',
+			mandada: 'solicitud enviada',
+			cap_contacte: 'Para añadir un contacto, abre su perfil dentro de un grupo.'
+		},
+		en: {
+			grops: 'Groups',
+			mos: 'My groups',
+			perfil: 'My profile',
+			espèra: 'pending',
+			crear: 'All groups',
+			començar: 'To get started',
+			connectar: 'Log in',
+			non_legits: (n) => `${n} unread message${n > 1 ? 's' : ''}`,
+			confidencialitat: 'Privacy',
+			amassa: 'Back to Gather',
+			contactes: 'My contacts',
+			vòl: 'wants to get in touch',
+			acceptar: 'Accept',
+			refusar: 'Decline',
+			mandada: 'request sent',
+			cap_contacte: 'To add a contact, open their profile in a group.'
+		},
+		ca: {
+			grops: 'Grups',
+			mos: 'Els meus grups',
+			perfil: 'El meu perfil',
+			espèra: 'pendent',
+			crear: 'Tots els grups',
+			començar: 'Per començar',
+			connectar: 'Inicia la sessió',
+			non_legits: (n) => `${n} missatge${n > 1 ? 's' : ''} sense llegir`,
+			confidencialitat: 'Privadesa',
+			amassa: 'Torna a Reuneix',
+			contactes: 'Els meus contactes',
+			vòl: 'vol posar-se en contacte',
+			acceptar: 'Accepta',
+			refusar: 'Rebutja',
+			mandada: 'sol·licitud enviada',
+			cap_contacte: 'Per afegir un contacte, obre el seu perfil dins d’un grup.'
 		}
 	};
-	let x = $derived(fr ? X.fr : X.oc);
+	let x = $derived(X[langStore.current] ?? X.oc);
 
 	let uid = $derived($session?.user?.id ?? null);
 	// en développement, « ?simular » montre les groupes sans compte (mise en page)

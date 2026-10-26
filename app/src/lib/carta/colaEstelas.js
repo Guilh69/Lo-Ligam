@@ -72,7 +72,10 @@ function dessenharRepèr(cx, x, y, R, T, a, onda) {
 
 const TÈXTES_FICHA = {
 	oc: { dobrir: 'Descobrir la vila  →', leu: 'Lèu', ajuda: 'Clica per descobrir la vila' },
-	fr: { dobrir: 'Découvrir la ville  →', leu: 'Bientôt', ajuda: 'Clique pour découvrir la ville' }
+	fr: { dobrir: 'Découvrir la ville  →', leu: 'Bientôt', ajuda: 'Clique pour découvrir la ville' },
+	es: { dobrir: 'Descubrir la ciudad  →', leu: 'Pronto', ajuda: 'Haz clic para descubrir la ciudad' },
+	en: { dobrir: 'Discover the town  →', leu: 'Soon', ajuda: 'Click to discover the town' },
+	ca: { dobrir: 'Descobrir la ciutat  →', leu: 'Aviat', ajuda: 'Fes clic per descobrir la ciutat' }
 };
 
 const TEMAS = {
@@ -141,6 +144,9 @@ function aNomLuòc(e, t) {
 	if (e.tNom == null) return 1;
 	return easeS(clamp(((t - e.tNom) / 1000 - retardLuòc(e) - 0.2) / 0.7));
 }
+// los mots de la bulla (lo nom del dialècte e del sotdialècte demòran las donadas)
+const LIB_SOTDIALECTE = { oc: 'sotdialècte', fr: 'sous-dialecte', es: 'subdialecto', en: 'sub-dialect', ca: 'subdialecte' };
+const LIB_TRANSICION = { oc: 'parlar de transicion', fr: 'parler de transition', es: 'habla de transición', en: 'transitional speech', ca: 'parlar de transició' };
 // lo dialècte d'un luòc, dins la bulla (los de las autras lengas lo pòrtan),
 // e son sotdialècte quand es plan particular (lo niçard, lo bearnés…)
 const dialLuòc = (e, lang = 'oc') => {
@@ -153,10 +159,10 @@ const dialLuòc = (e, lang = 'oc') => {
 		// (un complement sourçat : los manlèus del niçard, las lengas d'un parlar de transicion)
 		const fr = lang === 'fr',
 			nota = fr ? s.fr : s.oc;
-		if (s.mena === 'transicion') return `${d} · ${s.nom}, ${fr ? 'parler de transition' : 'parlar de transicion'}${nota ? ' ' + nota : ''}`;
-		return `${d} · ${fr ? 'sous-dialecte' : 'sotdialècte'} ${s.nom}${nota ? ', ' + nota : ''}`;
+		if (s.mena === 'transicion') return `${d} · ${s.nom}, ${LIB_TRANSICION[lang] ?? LIB_TRANSICION.oc}${nota ? ' ' + nota : ''}`;
+		return `${d} · ${LIB_SOTDIALECTE[lang] ?? LIB_SOTDIALECTE.oc} ${s.nom}${nota ? ', ' + nota : ''}`;
 	}
-	return `${d} · ${lang === 'fr' ? 'sous-dialecte' : 'sotdialècte'} ${s}`;
+	return `${d} · ${LIB_SOTDIALECTE[lang] ?? LIB_SOTDIALECTE.oc} ${s}`;
 };
 // Lo subrenom d'una vila, dins un pichon encastre jos son nom : la forma
 // occitana, e la francesa dejós sus la version francesa. (x, y) : lo caire
@@ -631,7 +637,13 @@ const CLAU_AJUDA = 'lo-ligam-carta-ajuda-repèr';
 // départements de « 30 km » à « 10 km » environ (aussi sur la carte
 // détaillée). Format : [code, nom, [anneaux [[lon, lat], …]]].
 const menaTerritori = (z) => (z < Z.REG_0 ? null : z < Z.DEP_0 ? 'region' : z < Z.DEP_1 ? 'despartament' : null);
-const TÈXTES_TER = { oc: { region: 'Region', despartament: 'Despartament' }, fr: { region: 'Région', despartament: 'Département' } };
+const TÈXTES_TER = {
+	oc: { region: 'Region', despartament: 'Despartament' },
+	fr: { region: 'Région', despartament: 'Département' },
+	es: { region: 'Región', despartament: 'Departamento' },
+	en: { region: 'Region', despartament: 'Department' },
+	ca: { region: 'Regió', despartament: 'Departament' }
+};
 // centre (pondéré) du plus grand anneau : là où s'écrit le nom
 const centreDe = (anels) => {
 	let best = null,
