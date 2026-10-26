@@ -21,7 +21,7 @@
 				'Un audit complet foguèt pas encara fach : sèm pas en mesura de dire que lo site es conforme. Aquí çò que sabèm, après un contraròtle de la pagina d’acuèlh e del còdi.',
 			fachT: 'Çò que fonciona ja',
 			fach: [
-				'La lenga de la pagina cambia amb ta causida (occitan, francés, espanhòl), e los lectors d’ecran la seguisson.',
+				'La lenga de la pagina cambia amb ta causida (occitan, francés, espanhòl, anglés, catalan), e los lectors d’ecran la seguisson.',
 				'Los títols e los espacis de navigacion son marcats ; los menuts an un nom.',
 				'Se pòt navigar al claviar, amb un contorn ben visible sus l’element activat.',
 				'Las animacions se reduson quand ton aparelh o demanda.',
@@ -40,7 +40,7 @@
 			],
 			lengasT: 'Lengas del site',
 			lengas:
-				'Occitan, francés e espanhòl. Una part de las paginas es pas encara traduita en espanhòl : l’occitan s’aficha alara.',
+				'Occitan, francés, espanhòl, anglés e catalan. L’interfàcia e l’acuèlh son traduches en espanhòl ; lo rèsta es pas encara traduch en espanhòl, en anglés nimai en catalan : l’occitan s’aficha alara.',
 			tipoT: 'Poliça',
 			tipo:
 				'Lo site utiliza la poliça Luciole, concebuda per melhorar la lectura de las personas malvesentas. Luciole © Laurent Bourcellier e Jonathan Perez (CTRDV), licéncia CC BY 4.0.',
@@ -61,7 +61,7 @@
 				'Aucun audit complet n’a encore été réalisé : nous ne pouvons pas affirmer que le site est conforme. Voici ce que nous savons, après un contrôle de la page d’accueil et du code.',
 			fachT: 'Ce qui fonctionne déjà',
 			fach: [
-				'La langue de la page change avec ton choix (occitan, français, espagnol), et les lecteurs d’écran la suivent.',
+				'La langue de la page change avec ton choix (occitan, français, espagnol, anglais, catalan), et les lecteurs d’écran la suivent.',
 				'Les titres et les zones de navigation sont balisés ; les boutons ont un nom.',
 				'On peut naviguer au clavier, avec un contour bien visible sur l’élément actif.',
 				'Les animations se réduisent quand ton appareil le demande.',
@@ -80,7 +80,7 @@
 			],
 			lengasT: 'Langues du site',
 			lengas:
-				'Occitan, français et espagnol. Une partie des pages n’est pas encore traduite en espagnol : l’occitan s’affiche alors.',
+				'Occitan, français, espagnol, anglais et catalan. L’interface et l’accueil sont traduits en espagnol ; le reste n’est pas encore traduit en espagnol, en anglais ni en catalan : l’occitan s’affiche alors.',
 			tipoT: 'Police de caractères',
 			tipo:
 				'Le site utilise la police Luciole, conçue pour améliorer la lecture des personnes malvoyantes. Luciole © Laurent Bourcellier et Jonathan Perez (CTRDV), licence CC BY 4.0.',
