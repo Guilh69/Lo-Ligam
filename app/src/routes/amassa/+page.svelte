@@ -7,23 +7,22 @@
 	// les groupes et la boîte à idées reste à trancher (options du 24-10).
 	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
 	import { PLAN } from '$lib/data/planSite.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { tria } from '$lib/stores/lang.svelte.js';
 	import { iniciar } from '$lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('amassa', data.elements);
 	$effect(() => () => lèvaEdicion?.());
 
-	let fr = $derived(langStore.current === 'fr');
 	const RUBRICA = PLAN.find((r) => r.id === 'viu');
 </script>
 
 <svelte:head>
-	<title>{fr ? 'Rassemble' : 'Amassa'} · Lo Ligam</title>
+	<title>{tria({ oc: 'Amassa', fr: 'Rassemble', es: 'Reúne', en: 'Gather', ca: 'Reuneix' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Rencontrar d’autras personas que parlan occitan : grops, cercles, fòrum, boita d’idèas. Rencontrer d’autres personnes qui parlent occitan : groupes, cercles, forum, boîte à idées."
 	/>
 </svelte:head>
 
-<PaginaTeulas pagina="amassa" rubrica={RUBRICA} etiqueta={{ oc: 'Çò que nos amassa', fr: 'Ce qui nous rassemble' }} />
+<PaginaTeulas pagina="amassa" rubrica={RUBRICA} etiqueta={{ oc: 'Çò que nos amassa', fr: 'Ce qui nous rassemble', es: 'Lo que nos une', en: 'What brings us together', ca: 'El que ens uneix' }} />

@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 	import { supabase } from '$lib/supabaseClient';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { grops, MENAS, rejonher } from '$lib/grops/grops.svelte.js';
+	import { grops, MENAS, rejonher, nomLigne } from '$lib/grops/grops.svelte.js';
 	import { X_ERRORS } from '$lib/grops/textes.js';
 
 	let fr = $derived(langStore.current === 'fr');
@@ -37,9 +37,48 @@
 			dobrir: 'Ouvrir',
 			ton: 'Ton groupe',
 			...X_ERRORS.fr
+		},
+		es: {
+			titol: 'Todos los grupos',
+			tornar: 'Volver a la lista',
+			frasa: 'Un grupo propuesto abre con su primera persona.',
+			cercar: 'Buscar',
+			exemple: 'Una ciudad, un dialecto, una pasión…',
+			cap: 'Ningún resultado.',
+			membres: (n) => `${n} miembro${n > 1 ? 's' : ''}`,
+			rejonher: 'Unirse',
+			dobrir: 'Abrir',
+			ton: 'Tu grupo',
+			...X_ERRORS.es
+		},
+		en: {
+			titol: 'All groups',
+			tornar: 'Back to the list',
+			frasa: 'A suggested group opens with its first member.',
+			cercar: 'Search',
+			exemple: 'A city, a dialect, a passion…',
+			cap: 'No results.',
+			membres: (n) => `${n} member${n > 1 ? 's' : ''}`,
+			rejonher: 'Join',
+			dobrir: 'Open',
+			ton: 'Your group',
+			...X_ERRORS.en
+		},
+		ca: {
+			titol: 'Tots els grups',
+			tornar: 'Torna a la llista',
+			frasa: 'Un grup proposat s’obre amb la seva primera persona.',
+			cercar: 'Cerca',
+			exemple: 'Una ciutat, un dialecte, una passió…',
+			cap: 'Cap resultat.',
+			membres: (n) => `${n} membre${n > 1 ? 's' : ''}`,
+			rejonher: 'Uneix-te',
+			dobrir: 'Obre',
+			ton: 'El teu grup',
+			...X_ERRORS.ca
 		}
 	};
-	let x = $derived(fr ? X.fr : X.oc);
+	let x = $derived(X[langStore.current] ?? X.oc);
 
 	let totes = $state([]);
 	let comptes = $state({});
@@ -63,7 +102,7 @@
 	let seccions = $derived.by(() => {
 		const q = plan(cèrca.trim());
 		const tròba = q ? totes.filter((g) => plan(g.nom_oc + ' ' + g.nom_fr).includes(q)) : totes;
-		return MENAS.map(([mena, oc, fr_]) => ({ mena, nom: fr ? fr_ : oc, grops: tròba.filter((g) => g.mena === mena) })).filter(
+		return MENAS.map((m) => ({ mena: m[0], nom: nomLigne(m, langStore.current), grops: tròba.filter((g) => g.mena === m[0]) })).filter(
 			(s) => s.grops.length
 		);
 	});

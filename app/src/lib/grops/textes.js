@@ -1,5 +1,5 @@
-// Les refus de la base (clés de clauError, grops.svelte.js), en occitan et en
-// français : communs au catalogue et à la discussion.
+// Les refus de la base (clés de clauError, grops.svelte.js), dans les cinq
+// langues : communs au catalogue et à la discussion.
 export const X_ERRORS = {
 	oc: {
 		grops_compte: 'Cal un compte per rejónher un grop.',
@@ -34,5 +34,56 @@ export const X_ERRORS = {
 		contactes_inconegut: 'Cette demande n’existe plus.',
 		privats_contacte: 'Pour écrire, il faut être en contact.',
 		error: 'Une erreur : réessaie.'
+	},
+	es: {
+		grops_compte: 'Necesitas una cuenta para unirte a un grupo.',
+		grops_adreca: 'Verifica primero tu dirección: el enlace está en tu correo electrónico.',
+		grops_bandit: 'Tu cuenta está suspendida por la moderación.',
+		grops_inconegut: 'Este grupo no existe.',
+		grops_tampat: 'Este grupo está cerrado.',
+		grops_limit: 'Máximo treinta grupos.',
+		messatges_mot: 'Este mensaje contiene una palabra prohibida por la carta de los grupos.',
+		messatges_limit: 'Demasiados mensajes de golpe: espera un poco.',
+		messatges_ligam: 'Los enlaces se pueden usar cuando tu cuenta tiene una semana.',
+		messatges_verificacion: 'Tu perfil está pendiente: la moderación lo leerá pronto. Ya puedes leer los grupos.',
+		contactes_impossible: 'Esta solicitud no es posible.',
+		contactes_limit: 'Demasiadas solicitudes hoy: espera hasta mañana.',
+		contactes_inconegut: 'Esta solicitud ya no existe.',
+		privats_contacte: 'Para escribir, hay que estar en contacto.',
+		error: 'Ha habido un error: inténtalo de nuevo.'
+	},
+	en: {
+		grops_compte: 'You need an account to join a group.',
+		grops_adreca: 'First verify your address: the link is in your email.',
+		grops_bandit: 'Your account has been suspended by the moderators.',
+		grops_inconegut: 'This group doesn’t exist.',
+		grops_tampat: 'This group is closed.',
+		grops_limit: 'Thirty groups at most.',
+		messatges_mot: 'This message contains a word banned by the groups’ charter.',
+		messatges_limit: 'Too many messages at once: wait a moment.',
+		messatges_ligam: 'Links are allowed once your account is a week old.',
+		messatges_verificacion: 'Your profile is pending: the moderators will read it soon. You can already read the groups.',
+		contactes_impossible: 'This request isn’t possible.',
+		contactes_limit: 'Too many requests today: wait until tomorrow.',
+		contactes_inconegut: 'This request no longer exists.',
+		privats_contacte: 'To write, you need to be in contact.',
+		error: 'Something went wrong: try again.'
+	},
+	ca: {
+		grops_compte: 'Necessites un compte per unir-te a un grup.',
+		grops_adreca: 'Verifica primer la teva adreça: l’enllaç és al teu correu electrònic.',
+		grops_bandit: 'El teu compte està suspès per la moderació.',
+		grops_inconegut: 'Aquest grup no existeix.',
+		grops_tampat: 'Aquest grup està tancat.',
+		grops_limit: 'Com a màxim trenta grups.',
+		messatges_mot: 'Aquest missatge conté una paraula prohibida per la carta dels grups.',
+		messatges_limit: 'Massa missatges de cop: espera una mica.',
+		messatges_ligam: 'Els enllaços es poden fer servir quan el teu compte té una setmana.',
+		messatges_verificacion: 'El teu perfil està pendent: la moderació el llegirà aviat. Ja pots llegir els grups.',
+		contactes_impossible: 'Aquesta sol·licitud no és possible.',
+		contactes_limit: 'Massa sol·licituds avui: espera fins demà.',
+		contactes_inconegut: 'Aquesta sol·licitud ja no existeix.',
+		privats_contacte: 'Per escriure, cal estar en contacte.',
+		error: 'Hi ha hagut un error: torna-ho a provar.'
 	}
 };

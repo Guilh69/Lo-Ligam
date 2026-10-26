@@ -10,7 +10,7 @@
 	import Icona from '$lib/components/Icona.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, cargarIeu } from '$lib/grops/grops.svelte.js';
+	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, cargarIeu, nomLigne } from '$lib/grops/grops.svelte.js';
 	import { cargarComunas, cercarComunas, cercarMonde, normC, luòcAfichat } from '$lib/comunas.js';
 	import Crotz from '$lib/components/Crotz.svelte';
 	import Avatar from '$lib/grops/Avatar.svelte';
@@ -75,9 +75,96 @@
 			perfil_mot: 'Un mot n’est pas possible dans un profil.',
 			perfil_ligam: 'Pas de liens dans un profil.',
 			error: 'Une erreur : réessaie.'
+		},
+		es: {
+			titol: 'Mi perfil',
+			tornar: 'Volver a la lista',
+			estats: {
+				en_espèra: 'Tu perfil está pendiente: la moderación lo leerá pronto. Ya puedes leer los grupos.',
+				verificat: 'Tu perfil está verificado: los demás miembros lo ven.',
+				refusat: 'Tu perfil no ha sido aceptado. Puedes escribir a la moderación:'
+			},
+			contacte: 'Contacto',
+			nivel: 'Nivel',
+			cerca: 'Lo que busco',
+			agrada: 'Lo que me gusta',
+			ont: 'De dónde',
+			ont_ajuda: 'Escribe el principio del nombre, en occitano o en francés: un municipio de Occitania o cualquier lugar del mundo.',
+			occitania: 'Occitania',
+			ont_lista: 'No está en la lista: guardamos lo que has escrito.',
+			dialecte: 'Dialecto',
+			cap: '(ninguno)',
+			presentacion: 'Además, si quieres',
+			presentacion_ajuda: 'Lo que quieras: de dónde vienes, por qué el occitano…',
+			enregistrar: 'Guardar',
+			enregistrat: 'Guardado.',
+			veire: 'Ver mi perfil',
+			questionnaire: 'Para empezar, elige un seudónimo.',
+			causir: 'Elegir un seudónimo',
+			perfil_mot: 'Una palabra no está permitida en un perfil.',
+			perfil_ligam: 'No se admiten enlaces en un perfil.',
+			error: 'Ha habido un error: inténtalo de nuevo.'
+		},
+		en: {
+			titol: 'My profile',
+			tornar: 'Back to the list',
+			estats: {
+				en_espèra: 'Your profile is pending: the moderators will read it soon. You can already read the groups.',
+				verificat: 'Your profile is verified: other members can see it.',
+				refusat: 'Your profile was not accepted. You can write to the moderators:'
+			},
+			contacte: 'Contact',
+			nivel: 'Level',
+			cerca: 'What I’m looking for',
+			agrada: 'What I like',
+			ont: 'Where from',
+			ont_ajuda: 'Type the start of the name, in Occitan or French: a municipality in Occitania or anywhere in the world.',
+			occitania: 'Occitania',
+			ont_lista: 'Not in the list: we’ll keep what you typed.',
+			dialecte: 'Dialect',
+			cap: '(none)',
+			presentacion: 'Also, if you like',
+			presentacion_ajuda: 'Whatever you like: where you come from, why Occitan…',
+			enregistrar: 'Save',
+			enregistrat: 'Saved.',
+			veire: 'View my profile',
+			questionnaire: 'To get started, choose a nickname.',
+			causir: 'Choose a nickname',
+			perfil_mot: 'A word isn’t allowed in a profile.',
+			perfil_ligam: 'No links in a profile.',
+			error: 'Something went wrong: try again.'
+		},
+		ca: {
+			titol: 'El meu perfil',
+			tornar: 'Torna a la llista',
+			estats: {
+				en_espèra: 'El teu perfil està pendent: la moderació el llegirà aviat. Ja pots llegir els grups.',
+				verificat: 'El teu perfil està verificat: els altres membres el veuen.',
+				refusat: 'El teu perfil no ha estat acceptat. Pots escriure a la moderació:'
+			},
+			contacte: 'Contacte',
+			nivel: 'Nivell',
+			cerca: 'El que cerco',
+			agrada: 'El que m’agrada',
+			ont: 'D’on',
+			ont_ajuda: 'Escriu el començament del nom, en occità o en francès: un municipi d’Occitània o qualsevol lloc del món.',
+			occitania: 'Occitània',
+			ont_lista: 'No és a la llista: guardem el que has escrit.',
+			dialecte: 'Dialecte',
+			cap: '(cap)',
+			presentacion: 'A més, si vols',
+			presentacion_ajuda: 'El que vulguis: d’on véns, per què l’occità…',
+			enregistrar: 'Desa',
+			enregistrat: 'Desat.',
+			veire: 'Veure el meu perfil',
+			questionnaire: 'Per començar, tria un pseudònim.',
+			causir: 'Triar un pseudònim',
+			perfil_mot: 'Una paraula no està permesa en un perfil.',
+			perfil_ligam: 'Cap enllaç en un perfil.',
+			error: 'Hi ha hagut un error: torna-ho a provar.'
 		}
 	};
-	let x = $derived(fr ? X.fr : X.oc);
+	let x = $derived(X[langStore.current] ?? X.oc);
 
 	let cargat = $state(false);
 	let existís = $state(false);
@@ -239,7 +326,8 @@
 	<fieldset class="camp">
 		<legend>{x[nom]}</legend>
 		<div class="chips">
-			{#each lista as [v, oc, fr_] (v)}
+			{#each lista as r (r[0])}
+				{@const v = r[0]}
 				<!-- (pas de bind:group ici : Svelte regroupe les cases par expression,
 				     et les trois listes du gabarit se mêleraient) -->
 				<label class="chip">
@@ -253,7 +341,7 @@
 							onchange={(e) => (f[nom] = e.currentTarget.checked ? [...f[nom], v] : f[nom].filter((y) => y !== v))}
 						/>
 					{/if}
-					{fr ? fr_ : oc}
+					{nomLigne(r, langStore.current)}
 				</label>
 			{/each}
 		</div>
@@ -336,7 +424,7 @@
 				<span>{x.dialecte}</span>
 				<select bind:value={f.dialecte}>
 					<option value="">{x.cap}</option>
-					{#each DIALECTES as [v, oc, fr_] (v)}<option value={v}>{fr ? fr_ : oc}</option>{/each}
+					{#each DIALECTES as r (r[0])}<option value={r[0]}>{nomLigne(r, langStore.current)}</option>{/each}
 				</select>
 			</label>
 			<label class="camp">

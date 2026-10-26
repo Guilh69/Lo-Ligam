@@ -1,14 +1,12 @@
 <script>
 	// L'accueil des groupes, à droite sur grand écran (sur téléphone, la liste
 	// prend toute la place) : l'esprit des groupes, avant d'en choisir un.
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { tria } from '$lib/stores/lang.svelte.js';
 	import Tèxte from '$lib/grops/Tèxte.svelte';
-
-	let fr = $derived(langStore.current === 'fr');
 </script>
 
 <svelte:head>
-	<title>{fr ? 'Groupes' : 'Grops'} · Lo Ligam</title>
+	<title>{tria({ oc: 'Grops', fr: 'Groupes', es: 'Grupos', en: 'Groups', ca: 'Grups' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Grops per parlar occitan amassa, prèp de tu o en linha. Des groupes pour parler occitan ensemble, près de chez toi ou en ligne."
@@ -18,7 +16,7 @@
 <div class="acuelh">
 	<Tèxte clau="grops.acuelh" class="frasa" />
 	<Tèxte clau="grops.pseudo" class="nota" />
-	<p class="causir">{fr ? 'Choisis un groupe dans la liste.' : 'Causís un grop dins la lista.'}</p>
+	<p class="causir">{tria({ oc: 'Causís un grop dins la lista.', fr: 'Choisis un groupe dans la liste.', es: 'Elige un grupo de la lista.', en: 'Pick a group from the list.', ca: 'Tria un grup de la llista.' })}</p>
 </div>
 
 <style>
