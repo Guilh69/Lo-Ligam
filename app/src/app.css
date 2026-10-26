@@ -319,3 +319,16 @@ html.post-dobert {
 	overflow: hidden;
 	scrollbar-gutter: stable;
 }
+
+/* Droite à gauche (arabe, 2026-10-26) : les flèches « suivant » se retournent pour
+   pointer dans le sens de la lecture. La propriété « scale » se combine avec les
+   animations déjà en place (survol, rotation du menu) sans les remplacer. Les
+   flèches de l'icône (data-nom) et celles dessinées dans les pages sont visées par
+   leur tracé. */
+html[dir='rtl'] .icona[data-nom='suivant'],
+html[dir='rtl'] .icona[data-nom='precedent'],
+html[dir='rtl'] .icona[data-nom='revenir'],
+html[dir='rtl'] .icona[data-nom='mandar'],
+html[dir='rtl'] svg:has(> path[d='M2 8h12M9 3l5 5-5 5']) {
+	scale: -1 1;
+}

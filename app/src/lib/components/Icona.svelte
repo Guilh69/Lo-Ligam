@@ -42,6 +42,7 @@
 
 <svg
 	class="icona"
+	data-nom={nom}
 	viewBox="0 0 24 24"
 	width={size}
 	height={size}
