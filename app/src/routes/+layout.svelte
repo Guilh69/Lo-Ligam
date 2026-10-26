@@ -8,6 +8,7 @@
 	// l'édition sur place (bouton, barre, panneau) : ne montre rien tant
 	// qu'une page ne s'y est pas branchée (2026-10-24)
 	import Edicion from '$lib/components/Edicion.svelte';
+	import { tria } from '$lib/stores/lang.svelte.js';
 
 	let { children } = $props();
 
@@ -27,12 +28,25 @@
 	let ambPè = $derived(
 		!id.startsWith('/admin') && !id.startsWith('/grops') && id !== '/ensag/clar' && id !== '/ensag/blanc'
 	);
+
+	// Lien d'évitement (2026-10-26, page accessibilité) : première étape du
+	// clavier, il envoie le focus sur le contenu principal de la page.
+	function anarAlContengut(e) {
+		e.preventDefault();
+		const cible = document.querySelector('main') ?? document.querySelector('h1');
+		if (!cible) return;
+		if (!cible.hasAttribute('tabindex')) cible.setAttribute('tabindex', '-1');
+		cible.focus();
+		cible.scrollIntoView({ block: 'start' });
+	}
 </script>
 
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={favicon} />
 	<title>Lo Ligam</title>
 </svelte:head>
+
+<a class="evitar" href="#contengut" onclick={anarAlContengut}>{tria({ oc: 'Anar al contengut', fr: 'Aller au contenu', es: 'Ir al contenido' })}</a>
 
 {@render children()}
 
@@ -45,3 +59,24 @@
 {/if}
 
 <Edicion />
+
+<style>
+	.evitar {
+		position: fixed;
+		top: 0.6rem;
+		left: 0.6rem;
+		z-index: 1000;
+		padding: 0.6rem 1rem;
+		border-radius: 0.5rem;
+		background: #1c1410;
+		color: #fff;
+		font-weight: 600;
+		text-decoration: none;
+		transform: translateY(-200%);
+	}
+	.evitar:focus-visible {
+		transform: none;
+		outline: 2px solid #f6b73c;
+		outline-offset: 2px;
+	}
+</style>

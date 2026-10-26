@@ -80,11 +80,9 @@
 			<a class="footer-legal-link" href="/confidencialitat"
 				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', lang }}>{tria({ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad' })}</span></a
 			>
-			<span class="footer-legal-leu"
-				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', lang }}>{tria({ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad' })}</span><em
-					use:scramble={{ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto', lang }}
-				>{tria({ oc: '· Lèu', fr: '· Bientôt', es: '· Pronto' })}</em></span
-			>
+			<a class="footer-legal-link" href="/accessibilitat"
+				><span use:scramble={{ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad', lang }}>{tria({ oc: 'Accessibilitat', fr: 'Accessibilité', es: 'Accesibilidad' })}</span></a
+				>
 		</div>
 	</div>
 </footer>
