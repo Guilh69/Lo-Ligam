@@ -17,11 +17,11 @@
 </script>
 
 <svelte:head>
-	<title>{tria({ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres' })} · Lo Ligam</title>
+	<title>{tria({ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres', ar: 'أعمال إبداعية' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Las òbras en occitan, art per art : musica, literatura, cinema, afichas, scèna. Les œuvres en occitan, art par art : musique, littérature, cinéma, affiches, scène."
 	/>
 </svelte:head>
 
-<PaginaTeulas pagina="obras" rubrica={RUBRICA} etiqueta={{ oc: 'Las òbras, art per art', fr: 'Les œuvres, art par art', es: 'Las obras, arte por arte', en: 'The works, art by art', ca: 'Les obres, art per art' }} paleta="verd" />
+<PaginaTeulas pagina="obras" rubrica={RUBRICA} etiqueta={{ oc: 'Las òbras, art per art', fr: 'Les œuvres, art par art', es: 'Las obras, arte por arte', en: 'The works, art by art', ca: 'Les obres, art per art', ar: 'الأعمال حسب الفنون' }} paleta="verd" />

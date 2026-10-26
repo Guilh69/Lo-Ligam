@@ -60,6 +60,16 @@
 			tampar: 'Tancar',
 			dp: ':',
 			font: 'Font'
+		},
+		ar: {
+			title: 'الملصقات',
+			lead: 'ملصقات تجعل اللغة تتحدّث على الجدران.',
+			parla: 'نتحدّث',
+			obras: 'أعمال إبداعية',
+			agrandir: 'عرض بحجم أكبر',
+			tampar: 'إغلاق',
+			dp: ':',
+			font: 'المصدر'
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);
@@ -89,7 +99,7 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="obras">
-	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
 		<a href="/parla">{tx.parla}</a><span aria-hidden="true">›</span>
 		<a href="/obras">{tx.obras}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.title}</span>

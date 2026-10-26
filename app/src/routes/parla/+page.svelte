@@ -17,11 +17,11 @@
 </script>
 
 <svelte:head>
-	<title>{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })} · Lo Ligam</title>
+	<title>{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla', ar: 'نتحدّث' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="L’occitan se parla : la carta, lo wiki, las òbras, los articles. L’occitan se parle : la carte, le wiki, les œuvres, les articles."
 	/>
 </svelte:head>
 
-<PaginaTeulas pagina="parla" rubrica={RUBRICA} etiqueta={{ oc: 'Çò que se ditz e se fa aicí', fr: 'Ce qui se dit et se fait ici', es: 'Lo que se dice y se hace aquí', en: 'What is said and done here', ca: 'El que es diu i es fa aquí' }} />
+<PaginaTeulas pagina="parla" rubrica={RUBRICA} etiqueta={{ oc: 'Çò que se ditz e se fa aicí', fr: 'Ce qui se dit et se fait ici', es: 'Lo que se dice y se hace aquí', en: 'What is said and done here', ca: 'El que es diu i es fa aquí', ar: 'ما نقوله ونفعله هنا' }} />

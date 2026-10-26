@@ -95,3 +95,29 @@ Conventions : le site tutoie ; on évite de genrer. Les boutons utilisent le nom
 | FichaVideo | La vidéo est hébergée par Canva. En cliquant, tu charges leur lecteur. | هذا الفيديو مستضاف لدى Canva، وبالنقر عليه يُحمَّل مشغّله. | Passif impersonnel (« يُحمَّل ») : évite le genre, mais demande la vocalisation pour le lecteur d'écran. | |
 
 **Points hors texte (à voir côté code, non modifiés)** : 1) les flèches des boutons (`M2 8h12M9 3l5 5-5 5` dans `visio/+page.svelte`, et sans doute les cases de `/apren`) pointent vers la droite : en arabe (lecture de droite à gauche) elles devraient pointer vers la gauche ; 2) `aprene/carnet/+page.svelte` formate une date avec `'fr-FR'` (hors périmètre de ce lot) : en arabe il faudra `'ar-u-nu-latn'` pour garder les chiffres 0-9.
+
+
+## E. Rubrique Se parla (lot 3, 2026-10-26) : doutes de formulation
+
+| clé | français | arabe | doute | réponse de l'ami |
+|---|---|---|---|---|
+| parla (titre), PLAN | Se parle | نتحدّث | Confirmé, même logique que les autres rubriques. | |
+| parla : étiquette de la page | Ce qui se dit et se fait ici | ما نقوله ونفعله هنا | « نا » inclusif, sans genre. Naturel pour un titre de section ? | |
+| obras : étiquette de la page | Les œuvres, art par art | الأعمال حسب الفنون | Réécrit : « فنًّا بعد فنّ » aurait été un calque. Compris comme « classées par discipline » ? | |
+| obras.teulas.obras.sota (et obras.frasa) | Ce que j'écoute, ce que je lis, ce que je te fais découvrir | ما أستمع إليه، وما أقرؤه، وما أدعوك لاكتشافه | « أدعوك » : le « ك » ne marque pas le genre. Romain parle (« أنا »). | |
+| obras.teulas.scena | Scène (théâtre, danse, contes) | العروض الحيّة | « Scène » seul ne dit rien en arabe ; « العروض الحيّة » = spectacles vivants. Autre : « خشبة المسرح » (plus littéral, mais ne couvre pas la danse et les contes). | |
+| obras.teulas.pintura.sota, afichas.lead | Des affiches qui font parler la langue sur les murs. | ملصقات تجعل اللغة تتحدّث على الجدران. | L'image « faire parler » est gardée (les murs qui parlent est courant en arabe). Autre, plus sobre : « ملصقات تُظهر اللغة على الجدران ». | |
+| obras.teulas.pintura.ligam | Peinture et affiches | الرسم والملصقات | « الرسم » couvre la peinture et le dessin ; « اللوحات » serait plus précis pour la peinture d'art. | |
+| medias : radios, télé | Radios ; Télévision et vidéo | الإذاعات ; التلفزيون والفيديو | « الإذاعات » (radiodiffusion) et non « الراديوهات » (parlé). | |
+| radios.avís | En écoutant, la radio recevra ton adresse IP. | عند الاستماع، تطّلع الإذاعة على عنوان IP الخاص بك. | « IP » en lettres latines (usage courant). « تطّلع على » = prend connaissance de. Clair pour un avertissement vie privée ? | |
+| radios.site | Son site | موقعها | Court pour tenir dans le bouton ; « موقعها الإلكتروني » est plus complet. | |
+| RITMES : « En ligne » | En ligne | على الإنترنت | Ici « en ligne » = paraît sur le web (pas « متصل »). | |
+| PREMSA/TELES : lieux dans les phrases | Provença, Lemosin, Roergue, Peiregòrd, Segalar, Orlhac, Auvèrnhe, Nimes, Pau, Alps, Massís Central | en lettres latines | Règle des noms de lieux occitans en lettres latines. Doute : Alps et Massís Central ont des noms arabes établis (الألب، الكتلة الجبلية الوسطى) ; Provença se dit « بروفانس » partout. La phrase reste-t-elle lisible avec ces mots latins au milieu ? | |
+| adrian (arts.js) | Caméra d'or à Cannes | جائزة الكاميرا الذهبية في Canas | « Canas » (forme occitane, comme en es/en/ca) est méconnaissable pour un arabophone qui connaît « كان » (le festival). À trancher : garder « Canas » ou écrire « مهرجان كان » ? | |
+| ventterral, pernoste... | née en 1973 / depuis 1960 | تأسّست عام 1973 / منذ عام 1960 | « عام » devant l'année (plus naturel que l'année seule). | |
+| IEO, Escòla Gaston Febus | noms d'institutions | laissés en lettres latines | Aucun usage arabe établi ; la ligne « معهد » au-dessus aide à comprendre. | |
+| FILMES.sorta | Téléfilm, Série | فيلم تلفزيوني, مسلسل | Usuels. « مسلسل » vaut aussi pour une série télé courte comme « La seria ». | |
+| aquodaqui, reclams (sorta) | Mensuel ; Revue gasconne | مجلة شهرية ; مجلة غاسكونية | « غاسكونية » : Gascon rendu par l'adjectif de « غاسكونيا » (usage de Wikipédia arabe). | |
+| afichas (légendes) | Lucha Occitana, Montpelhièr. ; Joan Carles Codèrc, lycée Saint-Géraud. | Lucha Occitana, Montpelhièr. ; Joan Carles Codèrc، ثانوية Saint-Géraud. | Noms propres en latin. Un caractère invisible (marque de lecture gauche-droite) suit le point de la première, pour que le point reste collé au mot latin. | |
+| mots : tx.fichas / tx.temas (correction du lot 1) | N cartes, N thèmes | N من البطاقات ; مواضيع | Le code met le mot APRÈS le nombre : « étiquette : nombre » n'est pas possible en touchant seulement le dictionnaire. Pour les cartes : « 12 من البطاقات » (« 12 des cartes ») est correct pour tout nombre. Pour les thèmes, le même mot sert aussi de titre seul (liste de gauche), donc « مواضيع » (juste pour 3 à 10, faux pour 35). Solution propre, côté code : une clé séparée pour le compte et pour le titre, ou l'étiquette placée avant le nombre en arabe (« عدد المواضيع: 35 »). | |
+| carnet : date | à revoir le … | (non modifié) | La phrase entière est en français en dur (« à revoir le », 'fr-FR') et n'est pas choisie selon la langue du site : rien à changer côté arabe tant que cette phrase n'est pas traduite. | |

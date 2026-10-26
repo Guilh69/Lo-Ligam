@@ -47,6 +47,13 @@
 			editors: 'Les editorials',
 			trobar: 'On trobar els llibres',
 			veire: 'Veure'
+		},
+		ar: {
+			titol: 'الأدب',
+			frasa: 'دور النشر بالأوكسيتانية، وأين يمكن العثور على الكتب.',
+			editors: 'دور النشر',
+			trobar: 'أين يمكن العثور على الكتب',
+			veire: 'زيارة'
 		}
 	};
 	let tx = $derived(t[langStore.current] ?? t.oc);
@@ -74,9 +81,9 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="literatura">
-	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
-		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })}</a><span aria-hidden="true">›</span>
-		<a href="/obras">{tria({ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres' })}</a><span aria-hidden="true">›</span>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
+		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla', ar: 'نتحدّث' })}</a><span aria-hidden="true">›</span>
+		<a href="/obras">{tria({ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres', ar: 'أعمال إبداعية' })}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 

@@ -103,8 +103,12 @@
 			tema: 'الموضوع',
 			title: 'كلمات بالصور',
 			lead: 'في كل بطاقة موضوع، وكلماته بالأوكسيتانية، مع نطقها وترجمتها.',
-			fichas: 'بطاقة',
-			temas: 'موضوع',
+			// libellés seuls (en haut) ; les variantes « N » suivent un nombre : en arabe
+			// « من » évite l'accord, qui change selon le nombre (3-10, 11 et plus)
+			fichas: 'البطاقات',
+			temas: 'المواضيع',
+			fichasN: 'من البطاقات',
+			temasN: 'من المواضيع',
 			all: 'الكل',
 			close: 'إغلاق',
 			prev: 'السابقة',
@@ -396,8 +400,8 @@
 			<div class="intro-pe">
 				<p class="lead">{tx.lead}</p>
 				<p class="comptes">
-					<span><b>{fichas.length}</b> {tx.fichas}</span>
-					<span><b>{categories.length}</b> {tx.temas}</span>
+					<span><b>{fichas.length}</b> {tx.fichasN ?? tx.fichas}</span>
+					<span><b>{categories.length}</b> {tx.temasN ?? tx.temas}</span>
 				</p>
 			</div>
 		</header>
@@ -476,7 +480,7 @@
 										{/if}
 									</span>
 									<span class="tile-nom">{nomCat(g.cat)}</span>
-									<span class="tile-n">{g.fichas.length} {tx.fichas}</span>
+									<span class="tile-n">{g.fichas.length} {tx.fichasN ?? tx.fichas}</span>
 								</button>
 							</li>
 						{/each}

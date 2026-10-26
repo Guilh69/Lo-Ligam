@@ -16,11 +16,11 @@
 </script>
 
 <svelte:head>
-	<title>{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans' })} · Lo Ligam</title>
+	<title>{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans', ar: 'وسائل الإعلام' })} · Lo Ligam</title>
 	<meta
 		name="description"
 		content="Las ràdios, las televisions e la premsa en occitan. Les radios, les télévisions et la presse en occitan."
 	/>
 </svelte:head>
 
-<PaginaTeulas pagina="medias" rubrica={RUBRICA} etiqueta={{ oc: 'Los mèdias en occitan', fr: 'Les médias en occitan', es: 'Los medios en occitano', en: 'Media in Occitan', ca: 'Els mitjans en occità' }} paleta="aur" />
+<PaginaTeulas pagina="medias" rubrica={RUBRICA} etiqueta={{ oc: 'Los mèdias en occitan', fr: 'Les médias en occitan', es: 'Los medios en occitano', en: 'Media in Occitan', ca: 'Els mitjans en occità', ar: 'وسائل الإعلام بالأوكسيتانية' }} paleta="aur" />

@@ -36,6 +36,11 @@
 			titol: 'Premsa',
 			frasa: 'Els diaris i les revistes en occità.',
 			legir: 'Llegir'
+		},
+		ar: {
+			titol: 'الصحافة',
+			frasa: 'الصحف والمجلات بالأوكسيتانية.',
+			legir: 'قراءة'
 		}
 	};
 	let tx = $derived(t[langStore.current] ?? t.oc);
@@ -55,9 +60,9 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="premsa">
-	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
-		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })}</a><span aria-hidden="true">›</span>
-		<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans' })}</a><span aria-hidden="true">›</span>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
+		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla', ar: 'نتحدّث' })}</a><span aria-hidden="true">›</span>
+		<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans', ar: 'وسائل الإعلام' })}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 

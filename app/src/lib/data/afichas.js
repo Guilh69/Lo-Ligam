@@ -16,6 +16,7 @@ export const afichas = [
 		es: 'El cartel original.',
 		en: 'The original poster.',
 		ca: 'El cartell original.',
+		ar: 'الملصق الأصلي.',
 		font: 'Occitanica',
 		ligam: null
 	},
@@ -28,6 +29,7 @@ export const afichas = [
 		es: 'Lucha Occitana, Montpelhièr.',
 		en: 'Lucha Occitana, Montpelhièr.',
 		ca: 'Lucha Occitana, Montpelhièr.',
+		ar: 'Lucha Occitana, Montpelhièr.‎',
 		epoca: 'Larzac, 1971-1981',
 		font: 'Occitanica',
 		ligam: null
@@ -41,6 +43,7 @@ export const afichas = [
 		es: 'Dos carteles en una pared, en occitano y en francés.',
 		en: 'Two posters on a wall, in Occitan and in French.',
 		ca: 'Dos cartells en una paret, en occità i en francès.',
+		ar: 'ملصقان على جدار، بالأوكسيتانية وبالفرنسية.',
 		font: 'Occitanica',
 		ligam: null
 	},
@@ -53,6 +56,7 @@ export const afichas = [
 		es: 'Proyección de la película de Michel Cabirou.',
 		en: 'Screening of the film by Michel Cabirou.',
 		ca: 'Projecció de la pel·lícula de Michel Cabirou.',
+		ar: 'عرض فيلم من إخراج Michel Cabirou.',
 		epoca: 'Larzac, 1971-1981',
 		font: 'Occitanica',
 		ligam: null
@@ -66,6 +70,7 @@ export const afichas = [
 		es: 'El campesinado del Larzac y los comités Larzac.',
 		en: 'Larzac farmers and Larzac committees.',
 		ca: 'La pagesia del Larzac i els comitès Larzac.',
+		ar: 'فلّاحو Larzac ولجان Larzac.',
 		epoca: 'Larzac, 1971-1981',
 		font: 'Occitanica',
 		ligam: null
@@ -79,6 +84,7 @@ export const afichas = [
 		es: 'Carteles pegados en una señal de carretera.',
 		en: 'Posters stuck on a road sign.',
 		ca: 'Cartells enganxats a un panell de carretera.',
+		ar: 'ملصقات لُصقت على لافتة طريق.',
 		font: 'Occitanica',
 		ligam: null
 	},
@@ -91,6 +97,7 @@ export const afichas = [
 		es: 'Joan Carles Codèrc, liceo Saint-Géraud.',
 		en: 'Joan Carles Codèrc, Lycée Saint-Géraud.',
 		ca: 'Joan Carles Codèrc, liceu Saint-Géraud.',
+		ar: 'Joan Carles Codèrc، ثانوية Saint-Géraud.',
 		epoca: '2025',
 		font: 'Occitanica',
 		ligam: null

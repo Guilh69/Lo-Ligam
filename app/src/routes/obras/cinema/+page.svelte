@@ -47,6 +47,13 @@
 			filmes: 'Les pel·lícules',
 			ont: 'On veure-les',
 			veire: 'Veure'
+		},
+		ar: {
+			titol: 'السينما',
+			frasa: 'الأفلام بالأوكسيتانية، وأين يمكن مشاهدتها.',
+			filmes: 'الأفلام',
+			ont: 'أين يمكن مشاهدتها',
+			veire: 'مشاهدة'
 		}
 	};
 	let tx = $derived(t[langStore.current] ?? t.oc);
@@ -72,9 +79,9 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="cinema">
-	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
-		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })}</a><span aria-hidden="true">›</span>
-		<a href="/obras">{tria({ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres' })}</a><span aria-hidden="true">›</span>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
+		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla', ar: 'نتحدّث' })}</a><span aria-hidden="true">›</span>
+		<a href="/obras">{tria({ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres', ar: 'أعمال إبداعية' })}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 

@@ -45,6 +45,13 @@
 			veire: 'Veure',
 			dirècte: 'En directe',
 			cadenas: 'Els canals'
+		},
+		ar: {
+			titol: 'التلفزيون والفيديو',
+			frasa: 'القنوات والبرامج ومقاطع الفيديو بالأوكسيتانية.',
+			veire: 'مشاهدة',
+			dirècte: 'بثّ مباشر',
+			cadenas: 'القنوات'
 		}
 	};
 	let tx = $derived(t[langStore.current] ?? t.oc);
@@ -61,7 +68,7 @@
 </script>
 
 <svelte:head>
-	<title>{tria({ oc: 'Television', fr: 'Télévision', es: 'Televisión', en: 'Television', ca: 'Televisió' })} · Lo Ligam</title>
+	<title>{tria({ oc: 'Television', fr: 'Télévision', es: 'Televisión', en: 'Television', ca: 'Televisió', ar: 'التلفزيون' })} · Lo Ligam</title>
 </svelte:head>
 
 {#snippet dirècte(e)}
@@ -74,9 +81,9 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="tele">
-	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació' })}>
-		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla' })}</a><span aria-hidden="true">›</span>
-		<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans' })}</a><span aria-hidden="true">›</span>
+	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
+		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla', ar: 'نتحدّث' })}</a><span aria-hidden="true">›</span>
+		<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans', ar: 'وسائل الإعلام' })}</a><span aria-hidden="true">›</span>
 		<span aria-current="page">{tx.titol}</span>
 	</nav>
 
