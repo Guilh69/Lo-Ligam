@@ -1943,9 +1943,15 @@
 			for (const ev of escotas) window.removeEventListener(ev, acabarIntro, true);
 			document.removeEventListener('visibilitychange', amagada);
 		};
+		// L'écran de chargement s'efface quand les données de l'entrée en scène
+		// sont VRAIMENT là (limites, courbes, côte, dialectes). Avant (2026-10-26),
+		// un délai de 4 s le coupait même si le chargement durait encore : sur
+		// téléphone ou connexion lente, l'emblème disparaissait avant la fin
+		// (retour de Romain). Un chargement qui ÉCHOUE ne bloque pas (allSettled) ;
+		// le plafond de 30 s ne sert qu'au cas où quelque chose resterait suspendu.
 		Promise.race([
-			Promise.all([colaEstelas?.prèsta(), colaDonadas.prèsta()]),
-			new Promise((r) => setTimeout(r, 4000))
+			Promise.allSettled([colaEstelas?.prèsta(), colaDonadas.prèsta()]),
+			new Promise((r) => setTimeout(r, 30000))
 		]).then(() => {
 			estatCarta.cargament = 1;
 			requestAnimationFrame(() =>
