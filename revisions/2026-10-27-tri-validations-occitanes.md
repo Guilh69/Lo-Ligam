@@ -14,5 +14,5 @@ Décisions de Romain (questions à boutons, séance « 5 % de crédit »). Rien 
 
 ## État en fin de séance (27-10)
 - Fait et poussé : 242 communes top'Òc appliquées (nom français identique à la commune actuelle ; 8 anciennes communes fusionnées ignorées) ; 6 pays alignés sur l'API ; 21 communes du Lot-et-Garonne et du Médoc (forme soudée, puis 4 cas tranchés).
-- Reste 5 communes à deux formes de l'API : Castelculier, Labastide-Castel-Amouroux, Laussou, Madaillan, Monteton. Et les 8 anciennes communes ignorées (Cransac-les-Thermes, Conques-en-Rouergue, Cap d'Astarac, Les Artigues-de-Lussac, Pern-Lhospitalet, Sousceyrac-en-Quercy, Montgaillard-en-Albret, Ance Féas) : chercher par nom, pas par code.
+- Les 5 dernières communes à deux formes sont tranchées (Castèl Culhèr-Grand Fons, La Bastida-Veirias, Lo Laurés del Laussó, Fraishes de Madalhan, Monteton). Les 8 communes fusionnées n’ont pas d’entrée dans top’Òc : nom actuel conservé.
 - Build non lancé (worktree sans dépendances) : seuls des textes JSON ont changé, JSON contrôlés valides.
