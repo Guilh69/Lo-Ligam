@@ -22,3 +22,7 @@ Décisions de Romain (questions à boutons, séance « 5 % de crédit »). Rien 
 - Défaut retenu : ces noms restent **sans forme occitane, donc masqués** (règle « sans forme connue on masque »). Rien n'est inventé.
 - Piste à garder, non appliquée : « Calancas » (massif) et « Parc nacional de las Calancas » (assemblage de Claude, à valider).
 - À reprendre quand Romain a une source (dicodòc, locuteur de la zone).
+
+## Communes hors zone top'Òc (604) : fait le 27-10
+- 292 désaccords : choix déjà fait conservé (OSM). Wikidata n'apporte rien : environ 190 de ses « noms occitans » copient le français ; 87 cas où il diffère vraiment, non retenus.
+- 312 sans nom : 150 reçoivent le libellé occitan de Wikidata (décision de Romain), **à valider** (surtout formes vivaro-alpines et provençales). 162 restent sans nom.
