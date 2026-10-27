@@ -183,7 +183,7 @@ export function crearColaDonadas(
 					this._bandas = d;
 					this._update();
 				});
-			// zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes
+			// zònas mixtas (Ròia, Monegue, comunas declaradas) : amb los dialèctes
 			if ((this._jaces.dialectes || this._jaces.frontiera) && !this._mix)
 				(mixPromesa ??= cargarJson('/data/zonas-mixtas.geojson')).then((d) => {
 					this._mix = d;
@@ -1239,7 +1239,7 @@ export function crearColaDonadas(
 			// en retard, « pas naturel, un peu chaotique » (Romain, 2026-10-12) ;
 			// las limits lusisson ara amb las tacas, ont se tòcan : _introDial)
 
-			/* Zònas mixtas (Ròia, Mónegue, comunas declaradas) : amb los dialèctes */
+			/* Zònas mixtas (Ròia, Monegue, comunas declaradas) : amb los dialèctes */
 			if (G.mix) {
 				const pus = this._pus?.startsWith('mix-') || this._pus?.startsWith('enc-');
 				// domeni istoric (gascon escantit) : la tencha pus palla, sens asclas

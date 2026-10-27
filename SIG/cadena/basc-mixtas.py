@@ -1,7 +1,7 @@
 # Las zònas mixtas occitanas al contacte del basc (retorns de Romain,
 # 2026-10-09) : las comunas basquas de tradicion gascona son dins lo basc (estat
 # actual) ; del costat occitan, son de zònas mixtas en asclas (coma Ròia o
-# Mónegue), de bendas de la color del gascon (« mescla ») que s'entremesclan
+# Monegue), de bendas de la color del gascon (« mescla ») que s'entremesclan
 # amb lo verd basc, e un encadrat al survòl. Tres zònas, cadun son tèxt (lo
 # tèxt de Baiona parlava pas de Bidaishe) : Baiona-Anglet-Biàrritz-lo Bocau ;
 # Bidaishe e l'Ador ; Esquiula e Lishòs. Sens etiqueta sus la carta (lo nom

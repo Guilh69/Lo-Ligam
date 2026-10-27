@@ -244,8 +244,8 @@ CATALOGUE.push({
 			fr: 'Langues d’oïl',
 			estat: 'disponible',
 			defaut: false,
-			nota_oc: 'Una familha de lengas, del nòrd a l’oèst de França : picard, normand, galò, peitavin-santongés, campanés, lorren… ; tanben en Bèlgica e en Soïssa',
-			nota_fr: 'Une famille de langues, du nord à l’ouest de la France : picard, normand, gallo, poitevin-saintongeais, champenois, lorrain… ; aussi en Belgique et en Suisse', nota_es: 'Una familia de lenguas, del norte al oeste de Francia: picardo, normando, galó, poitevino-saintongés, champañés, lorenés…; también en Bélgica y Suiza', nota_en: 'A family of languages, from the north to the west of France: Picard, Norman, Gallo, Poitevin-Saintongeais, Champenois, Lorrain…; also in Belgium and Switzerland', nota_ca: 'Una família de llengües, del nord a l’oest de França: picard, normand, gal·ló, poitevin-saintongès, champanyès, lorenès…; també a Bèlgica i a Suïssa', nota_ar: 'عائلة من اللغات، من شمال فرنسا إلى غربها: picard، normand، gallo، poitevin-saintongeais، champenois، lorrain…؛ وكذلك في بلجيكا وسويسرا'
+			nota_oc: 'Una familha de lengas, del nòrd a l’oèst de França : picard, normand, galò, peitavin-santongés, campanés, lorren… ; tanben en Belgica e en Soïssa',
+			nota_fr: 'Une famille de langues, du nord à l’ouest de la France : picard, normand, gallo, poitevin-saintongeais, champenois, lorrain… ; aussi en Belgique et en Suisse', nota_es: 'Una familia de lenguas, del norte al oeste de Francia: picardo, normando, galó, poitevino-saintongés, champañés, lorenés…; también en Bélgica y Suiza', nota_en: 'A family of languages, from the north to the west of France: Picard, Norman, Gallo, Poitevin-Saintongeais, Champenois, Lorrain…; also in Belgium and Switzerland', nota_ca: 'Una família de llengües, del nord a l’oest de França: picard, normand, gal·ló, poitevin-saintongès, champanyès, lorenès…; també a Belgica i a Suïssa', nota_ar: 'عائلة من اللغات، من شمال فرنسا إلى غربها: picard، normand، gallo، poitevin-saintongeais، champenois، lorrain…؛ وكذلك في بلجيكا وسويسرا'
 		}
 	]
 });
