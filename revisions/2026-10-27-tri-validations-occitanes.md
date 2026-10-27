@@ -16,3 +16,9 @@ Décisions de Romain (questions à boutons, séance « 5 % de crédit »). Rien 
 - Fait et poussé : 242 communes top'Òc appliquées (nom français identique à la commune actuelle ; 8 anciennes communes fusionnées ignorées) ; 6 pays alignés sur l'API ; 21 communes du Lot-et-Garonne et du Médoc (forme soudée, puis 4 cas tranchés).
 - Les 5 dernières communes à deux formes sont tranchées (Castèl Culhèr-Grand Fons, La Bastida-Veirias, Lo Laurés del Laussó, Fraishes de Madalhan, Monteton). Les 8 communes fusionnées n’ont pas d’entrée dans top’Òc : nom actuel conservé.
 - Build non lancé (worktree sans dépendances) : seuls des textes JSON ont changé, JSON contrôlés valides.
+
+## Point 2 : parcs et reliefs sans nom occitan (décision de Romain : ne pas chercher plus longtemps)
+- Recherches faites le 27-10 : Wikipédia occitan et Wikidata n'ont rien pour Devès, Tanargue, Monts du Forez, ni pour les parcs (Vercors, Verdon, Calanques, etc.). Seuls « calanca », « massís », « pargue » sont confirmés par lo Basic ; « Calanco » est la graphie mistralienne, « calanca » la classique.
+- Défaut retenu : ces noms restent **sans forme occitane, donc masqués** (règle « sans forme connue on masque »). Rien n'est inventé.
+- Piste à garder, non appliquée : « Calancas » (massif) et « Parc nacional de las Calancas » (assemblage de Claude, à valider).
+- À reprendre quand Romain a une source (dicodòc, locuteur de la zone).
