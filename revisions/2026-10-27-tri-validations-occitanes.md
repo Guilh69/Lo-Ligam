@@ -11,3 +11,8 @@ Décisions de Romain (questions à boutons, séance « 5 % de crédit »). Rien 
 - Appliquer 1 et 2 aux fichiers (`SIG/comunas`, `SIG/mond`) puis régénérer ce qui en dépend.
 - Comparer avec Wikidata (point 3), puis questions à boutons pour les contradictions.
 - Parcs, reliefs, provinces, surnoms, sous-dialectes, Calandretas, mots LISN : pas de source dans l'API, passer par Wikidata puis questions à Romain.
+
+## État en fin de séance (27-10)
+- Fait et poussé : 242 communes top'Òc appliquées (nom français identique à la commune actuelle ; 8 anciennes communes fusionnées ignorées) ; 6 pays alignés sur l'API ; 21 communes du Lot-et-Garonne et du Médoc (forme soudée, puis 4 cas tranchés).
+- Reste 5 communes à deux formes de l'API : Castelculier, Labastide-Castel-Amouroux, Laussou, Madaillan, Monteton. Et les 8 anciennes communes ignorées (Cransac-les-Thermes, Conques-en-Rouergue, Cap d'Astarac, Les Artigues-de-Lussac, Pern-Lhospitalet, Sousceyrac-en-Quercy, Montgaillard-en-Albret, Ance Féas) : chercher par nom, pas par code.
+- Build non lancé (worktree sans dépendances) : seuls des textes JSON ont changé, JSON contrôlés valides.
