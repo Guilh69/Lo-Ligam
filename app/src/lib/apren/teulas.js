@@ -89,6 +89,7 @@ export function pictoPer(href = '') {
 	// Òbras par art et Médias (2026-10-25)
 	if (href.startsWith('/medias/television')) return 'television';
 	if (href.startsWith('/medias/premsa')) return 'articles';
+	if (href.startsWith('/medias/livres')) return 'literatura';
 	if (href.startsWith('/medias')) return 'medias';
 	if (href.startsWith('/obras/literatura')) return 'literatura';
 	if (href.startsWith('/obras/cinema')) return 'cinema';

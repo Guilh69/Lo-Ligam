@@ -137,7 +137,10 @@
     { "clau": "medias.teulas.television.sota", "tipe": "text", "lista": "medias.teulas.television", "oc": "Las cadenas, las emissions e las videos.", "fr": "Les chaînes, les émissions et les vidéos.", "es": "Los canales, los programas y los vídeos.", "en": "The channels, the programmes and the videos.", "ca": "Els canals, els programes i els vídeos.", "ar": "القنوات والبرامج ومقاطع الفيديو." },
     { "clau": "medias.teulas.premsa", "tipe": "bloc", "lista": "medias.teulas", "ordre": 3 },
     { "clau": "medias.teulas.premsa.ligam", "tipe": "ligam", "lista": "medias.teulas.premsa", "oc": "Premsa", "fr": "Presse", "ligam": "/medias/premsa", "es": "Prensa", "en": "Press", "ca": "Premsa", "ar": "الصحافة" },
-    { "clau": "medias.teulas.premsa.sota", "tipe": "text", "lista": "medias.teulas.premsa", "oc": "Los jornals e las revistas.", "fr": "Les journaux et les revues.", "es": "Los periódicos y las revistas.", "en": "Newspapers and magazines.", "ca": "Els diaris i les revistes.", "ar": "الصحف والمجلات." }
+    { "clau": "medias.teulas.premsa.sota", "tipe": "text", "lista": "medias.teulas.premsa", "oc": "Los jornals e las revistas.", "fr": "Les journaux et les revues.", "es": "Los periódicos y las revistas.", "en": "Newspapers and magazines.", "ca": "Els diaris i les revistes.", "ar": "الصحف والمجلات." },
+    { "clau": "medias.teulas.livres", "tipe": "bloc", "lista": "medias.teulas", "ordre": 4 },
+    { "clau": "medias.teulas.livres.ligam", "tipe": "ligam", "lista": "medias.teulas.livres", "oc": "Libres", "fr": "Livres", "ligam": "/medias/livres", "es": "Libros", "en": "Books", "ca": "Llibres", "ar": "الكتب"},
+    { "clau": "medias.teulas.livres.sota", "tipe": "text", "lista": "medias.teulas.livres", "oc": "Los libres ancians de fulhetar.", "fr": "Les livres anciens à feuilleter.", "es": "Los libros antiguos para hojear.", "en": "Old books to browse.", "ca": "Els llibres antics per fullejar.", "ar": "كتب قديمة للتصفّح."}
   ],
   "apren": [
     { "clau": "apren.titol", "tipe": "text", "oc": "S’apren", "fr": "S’apprend", "es": "Se aprende", "en": "Learn", "ca": "S’aprèn", "ar": "نتعلّم" },
