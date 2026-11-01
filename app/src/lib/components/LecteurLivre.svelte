@@ -1,17 +1,22 @@
 <script>
 	// Lecteur de livre à pages tournantes (2026-10-29) : la bibliothèque libre
 	// StPageFlip (page-flip, MIT) fait tourner les pages ; le bruit du papier
-	// est fabriqué sur place (aucun fichier son), discret et désactivable ;
+	// est fabriqué sur place (aucun fichier son), doux et désactivable ;
 	// un mode texte donne le texte réel de chaque page (lecteurs d'écran,
 	// petits écrans). Sobriété : les images des pages ne sont chargées qu'à
 	// l'approche de la page lue.
-	import { onMount } from 'svelte';
+	// 2026-11-01 (Romain) : plein écran, flèches du clavier sur toute la page,
+	// son plus doux, recherche dans le livre (Ctrl+F).
+	import { onMount, tick } from 'svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
 
 	let { base, total, titol = '' } = $props();
 
+	let lectorEl = $state();
 	let livreEl = $state();
+	let champCerca = $state();
 	let flip = null;
+	let PF = null;
 	let pagina = $state(0); // page affichée, à partir de 0
 	let mode = $state('libre'); // 'libre' | 'tèxte'
 	let son = $state(true);
@@ -20,6 +25,10 @@
 	let textes = $state(null);
 	let erreur = $state(false);
 	let aller = $state('');
+	let plenEcran = $state(false);
+	let plenPossible = $state(false);
+	let cerca = $state(false);
+	let requeta = $state('');
 	let ctx = null;
 
 	const CLAU_SON = 'lo-ligam-livre-son';
@@ -33,31 +42,61 @@
 		}
 	}
 
-	// le bruit du papier : un souffle filtré, court, qui monte dans les aigus
+	// le bruit du papier (2026-11-01, plus doux) : un souffle de bruit rose,
+	// lissé, qui monte à peine dans les médiums, puis un petit « tap » sourd
+	// quand la page se pose. Rien d'aigu, volume bas.
 	function souffle() {
 		if (!son || reduit) return;
 		try {
 			ctx ??= new (window.AudioContext || window.webkitAudioContext)();
 			if (ctx.state === 'suspended') ctx.resume();
-			const d = 0.34;
 			const sr = ctx.sampleRate;
+			const now = ctx.currentTime;
+			const d = 0.46;
 			const buf = ctx.createBuffer(1, Math.floor(sr * d), sr);
 			const data = buf.getChannelData(0);
+			let b0 = 0;
+			let b1 = 0;
+			let b2 = 0;
 			for (let i = 0; i < data.length; i++) {
 				const t = i / data.length;
-				data[i] = (Math.random() * 2 - 1) * Math.pow(Math.sin(Math.PI * t), 1.6);
+				const blanc = Math.random() * 2 - 1;
+				b0 = 0.99765 * b0 + blanc * 0.099046;
+				b1 = 0.963 * b1 + blanc * 0.2965164;
+				b2 = 0.57 * b2 + blanc * 1.0526913;
+				const rose = b0 + b1 + b2 + blanc * 0.1848;
+				const env = Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.05)), 2) * (1 - 0.45 * t);
+				data[i] = rose * 0.17 * env;
 			}
 			const src = ctx.createBufferSource();
 			src.buffer = buf;
-			const f = ctx.createBiquadFilter();
-			f.type = 'bandpass';
-			f.Q.value = 0.8;
-			f.frequency.setValueAtTime(1300, ctx.currentTime);
-			f.frequency.exponentialRampToValueAtTime(5400, ctx.currentTime + d);
+			const bande = ctx.createBiquadFilter();
+			bande.type = 'bandpass';
+			bande.Q.value = 0.45;
+			bande.frequency.setValueAtTime(650, now);
+			bande.frequency.exponentialRampToValueAtTime(1700, now + d);
+			const doux = ctx.createBiquadFilter();
+			doux.type = 'lowpass';
+			doux.frequency.value = 2800;
 			const g = ctx.createGain();
-			g.gain.value = 0.2;
-			src.connect(f).connect(g).connect(ctx.destination);
-			src.start();
+			g.gain.value = 0.55;
+			src.connect(bande).connect(doux).connect(g).connect(ctx.destination);
+			src.start(now);
+
+			// le tap : un grain de bruit très court, filtré dans les graves
+			const nt = Math.floor(sr * 0.06);
+			const tb = ctx.createBuffer(1, nt, sr);
+			const td = tb.getChannelData(0);
+			for (let i = 0; i < nt; i++) td[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / nt, 3);
+			const tap = ctx.createBufferSource();
+			tap.buffer = tb;
+			const grave = ctx.createBiquadFilter();
+			grave.type = 'lowpass';
+			grave.frequency.value = 520;
+			const gt = ctx.createGain();
+			gt.gain.value = 0.35;
+			tap.connect(grave).connect(gt).connect(ctx.destination);
+			tap.start(now + 0.34);
 		} catch {
 			/* pas de son : le livre se feuillette quand même */
 		}
@@ -73,6 +112,72 @@
 		if (son) souffle();
 	}
 
+	// construit (ou reconstruit) le livre, à la page demandée, à la taille
+	// de l'écran du moment (utile en entrant dans le plein écran ou en sortant)
+	function creer(depart = 0) {
+		if (!PF || !livreEl) return;
+		const haut = document.fullscreenElement ? window.innerHeight - 150 : window.innerHeight - 230;
+		const pages = [];
+		for (let i = 0; i < total; i++) {
+			const p = document.createElement('div');
+			p.className = 'pg';
+			p.dataset.density = i === 0 || i === total - 1 ? 'hard' : 'soft';
+			const img = document.createElement('img');
+			img.dataset.i = String(i);
+			img.alt = '';
+			img.decoding = 'async';
+			img.draggable = false;
+			p.appendChild(img);
+			pages.push(p);
+		}
+		flip = new PF(livreEl, {
+			width: 420,
+			height: 664,
+			size: 'stretch',
+			minWidth: 230,
+			maxWidth: 760,
+			minHeight: 360,
+			maxHeight: Math.max(360, Math.min(1100, Math.round(haut))),
+			showCover: true,
+			usePortrait: true,
+			maxShadowOpacity: 0.45,
+			mobileScrollSupport: false,
+			flippingTime: reduit ? 1 : 780,
+			drawShadow: !reduit,
+			startPage: depart
+		});
+		flip.loadFromHTML(pages);
+		chargar(depart);
+		flip.on('flip', (e) => {
+			pagina = e.data;
+			chargar(e.data);
+		});
+		flip.on('changeState', (e) => {
+			if (e.data === 'flipping') souffle();
+		});
+	}
+
+	function refaire() {
+		if (!PF || !livreEl || mode !== 'libre') return;
+		const p = pagina;
+		try {
+			flip?.destroy();
+		} catch {
+			/* déjà démonté */
+		}
+		livreEl.innerHTML = '';
+		creer(p);
+	}
+
+	async function basculerPlenEcran() {
+		try {
+			if (document.fullscreenElement) await document.exitFullscreen();
+			else await lectorEl?.requestFullscreen?.();
+		} catch {
+			/* plein écran refusé par le navigateur */
+		}
+	}
+
 	onMount(() => {
 		try {
 			son = localStorage.getItem(CLAU_SON) !== '0';
@@ -81,57 +186,32 @@
 		}
 		reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (reduit) son = false;
+		plenPossible = !!document.fullscreenEnabled;
 		let mort = false;
 
 		(async () => {
 			try {
-				const { PageFlip } = await import('page-flip');
+				const mod = await import('page-flip');
 				if (mort || !livreEl) return;
-				const pages = [];
-				for (let i = 0; i < total; i++) {
-					const p = document.createElement('div');
-					p.className = 'pg';
-					p.dataset.density = i === 0 || i === total - 1 ? 'hard' : 'soft';
-					const img = document.createElement('img');
-					img.dataset.i = String(i);
-					img.alt = '';
-					img.decoding = 'async';
-					img.draggable = false;
-					p.appendChild(img);
-					pages.push(p);
-				}
-				flip = new PageFlip(livreEl, {
-					width: 420,
-					height: 664,
-					size: 'stretch',
-					minWidth: 230,
-					maxWidth: 620,
-					minHeight: 360,
-					maxHeight: Math.max(360, Math.min(980, Math.round(window.innerHeight - 230))),
-					showCover: true,
-					usePortrait: true,
-					maxShadowOpacity: 0.45,
-					mobileScrollSupport: false,
-					flippingTime: reduit ? 1 : 780,
-					drawShadow: !reduit
-				});
-				flip.loadFromHTML(pages);
-				chargar(0);
-				flip.on('flip', (e) => {
-					pagina = e.data;
-					chargar(e.data);
-				});
-				flip.on('changeState', (e) => {
-					if (e.data === 'flipping') souffle();
-				});
+				PF = mod.PageFlip;
+				creer(0);
 				pret = true;
 			} catch {
 				erreur = true;
 			}
 		})();
 
+		const quandPleinEcran = () => {
+			plenEcran = !!document.fullscreenElement;
+			setTimeout(refaire, 180);
+		};
+		document.addEventListener('fullscreenchange', quandPleinEcran);
+		window.addEventListener('keydown', clavier);
+
 		return () => {
 			mort = true;
+			document.removeEventListener('fullscreenchange', quandPleinEcran);
+			window.removeEventListener('keydown', clavier);
 			try {
 				flip?.destroy();
 			} catch {
@@ -162,16 +242,19 @@
 		aller = '';
 	}
 
+	async function chargarTextes() {
+		if (textes) return;
+		try {
+			textes = await (await fetch(`${base}/texte.json`)).json();
+		} catch {
+			erreur = true;
+		}
+	}
+
 	async function basculerMode() {
 		if (mode === 'libre') {
 			mode = 'tèxte';
-			if (!textes) {
-				try {
-					textes = await (await fetch(`${base}/texte.json`)).json();
-				} catch {
-					erreur = true;
-				}
-			}
+			await chargarTextes();
 		} else {
 			mode = 'libre';
 			queueMicrotask(() => {
@@ -182,14 +265,74 @@
 		}
 	}
 
+	// la recherche dans le livre : Ctrl+F (ou ⌘F) l'ouvre, Échap la ferme
+	async function ouvrirCerca() {
+		cerca = true;
+		await chargarTextes();
+		await tick();
+		champCerca?.focus();
+		champCerca?.select();
+	}
+	function tancarCerca() {
+		cerca = false;
+		requeta = '';
+	}
+	function anarResultat(i) {
+		anar(i);
+		if (window.matchMedia('(max-width: 700px)').matches) tancarCerca();
+	}
+
+	const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+	let resultats = $derived.by(() => {
+		const q = norm(requeta.trim());
+		if (q.length < 2 || !textes) return [];
+		const sortida = [];
+		for (let i = 0; i < textes.length && sortida.length < 80; i++) {
+			const lignes = textes[i];
+			for (const l of lignes) {
+				const p = norm(l).indexOf(q);
+				if (p >= 0) {
+					const debut = Math.max(0, p - 28);
+					sortida.push({
+						i,
+						avant: (debut > 0 ? '…' : '') + l.slice(debut, p),
+						trobat: l.slice(p, p + q.length),
+						apres: l.slice(p + q.length, p + q.length + 40)
+					});
+					break;
+				}
+			}
+		}
+		return sortida;
+	});
+
 	function clavier(e) {
-		if (e.target instanceof HTMLInputElement) return;
-		if (e.key === 'ArrowRight') {
+		// Ctrl+F / ⌘F : la recherche du livre (le navigateur ne voit pas le texte des images)
+		if ((e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey && (e.key === 'f' || e.key === 'F')) {
+			e.preventDefault();
+			ouvrirCerca();
+			return;
+		}
+		if (e.ctrlKey || e.metaKey || e.altKey) return;
+		const el = e.target;
+		const saisie = el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el?.isContentEditable;
+		if (e.key === 'Escape' && cerca) {
+			tancarCerca();
+			return;
+		}
+		if (saisie) return;
+		if (e.key === 'ArrowRight' || e.key === 'PageDown') {
 			e.preventDefault();
 			suivante();
-		} else if (e.key === 'ArrowLeft') {
+		} else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
 			e.preventDefault();
 			precedenta();
+		} else if (e.key === 'Home') {
+			e.preventDefault();
+			anar(0);
+		} else if (e.key === 'End') {
+			e.preventDefault();
+			anar(total - 1);
 		}
 	}
 
@@ -203,6 +346,13 @@
 		sonN: { oc: 'Son : copat', fr: 'Son : coupé', es: 'Sonido: silenciado', en: 'Sound: off', ca: 'So: silenciat', ar: 'الصوت: مكتوم' },
 		legir: { oc: 'Legir lo tèxte', fr: 'Lire le texte', es: 'Leer el texto', en: 'Read the text', ca: 'Llegir el text', ar: 'قراءة النص' },
 		libre: { oc: 'Tornar al libre', fr: 'Revenir au livre', es: 'Volver al libro', en: 'Back to the book', ca: 'Tornar al llibre', ar: 'العودة إلى الكتاب' },
+		plen: { oc: 'Plen ecran', fr: 'Plein écran', es: 'Pantalla completa', en: 'Full screen', ca: 'Pantalla completa', ar: 'ملء الشاشة' },
+		sortir: { oc: 'Quitar lo plen ecran', fr: 'Quitter le plein écran', es: 'Salir de pantalla completa', en: 'Exit full screen', ca: 'Sortir de la pantalla completa', ar: 'إنهاء ملء الشاشة' },
+		cerca: { oc: 'Cercar', fr: 'Chercher', es: 'Buscar', en: 'Search', ca: 'Cercar', ar: 'بحث' },
+		cercaDins: { oc: 'Cercar dins lo libre', fr: 'Chercher dans le livre', es: 'Buscar en el libro', en: 'Search in the book', ca: 'Cercar dins el llibre', ar: 'البحث في الكتاب' },
+		barrar: { oc: 'Barrar', fr: 'Fermer', es: 'Cerrar', en: 'Close', ca: 'Tancar', ar: 'إغلاق' },
+		cap: { oc: 'Cap de resultat.', fr: 'Aucun résultat.', es: 'Ningún resultado.', en: 'No result.', ca: 'Cap resultat.', ar: 'لا توجد نتائج.' },
+		trobat: { oc: 'paginas trobadas', fr: 'pages trouvées', es: 'páginas encontradas', en: 'pages found', ca: 'pàgines trobades', ar: 'صفحات وُجدت' },
 		pag: { oc: 'Pagina', fr: 'Page', es: 'Página', en: 'Page', ca: 'Pàgina', ar: 'صفحة' },
 		sus: { oc: 'sus', fr: 'sur', es: 'de', en: 'of', ca: 'de', ar: 'من' },
 		nota: {
@@ -214,12 +364,12 @@
 			ar: 'النسخ قيد المراجعة: الأوكسيتانية هي نفسها في كتاب 1913 بإملاء ذلك العصر.'
 		},
 		aida: {
-			oc: 'Las sagetas ← → viran las paginas. « Legir lo tèxte » dona la version legibla al ecran.',
-			fr: 'Les flèches ← → tournent les pages. « Lire le texte » donne la version lisible à l’écran.',
-			es: 'Las flechas ← → pasan las páginas. « Leer el texto » ofrece la versión legible en pantalla.',
-			en: 'The ← → arrow keys turn the pages. “Read the text” gives the screen-reader version.',
-			ca: 'Les fletxes ← → giren les pàgines. « Llegir el text » ofereix la versió llegible a la pantalla.',
-			ar: 'مفتاحا السهم ← → يقلّبان الصفحات. «قراءة النص» تعرض النسخة المقروءة على الشاشة.'
+			oc: 'Las sagetas ← → viran las paginas. Ctrl+F cèrca dins lo libre. « Legir lo tèxte » dona la version legibla al ecran.',
+			fr: 'Les flèches ← → tournent les pages. Ctrl+F cherche dans le livre. « Lire le texte » donne la version lisible à l’écran.',
+			es: 'Las flechas ← → pasan las páginas. Ctrl+F busca en el libro. « Leer el texto » ofrece la versión legible en pantalla.',
+			en: 'The ← → arrow keys turn the pages. Ctrl+F searches the book. “Read the text” gives the screen-reader version.',
+			ca: 'Les fletxes ← → giren les pàgines. Ctrl+F cerca dins el llibre. « Llegir el text » ofereix la versió llegible a la pantalla.',
+			ar: 'مفتاحا السهم ← → يقلّبان الصفحات. Ctrl+F يبحث في الكتاب. «قراءة النص» تعرض النسخة المقروءة على الشاشة.'
 		},
 		cargar: { oc: 'Cargament…', fr: 'Chargement…', es: 'Cargando…', en: 'Loading…', ca: 'Carregant…', ar: 'جارٍ التحميل…' },
 		err: {
@@ -233,7 +383,7 @@
 	};
 </script>
 
-<section class="lector" aria-label={titol}>
+<section class="lector" class:plen={plenEcran} bind:this={lectorEl} aria-label={titol}>
 	<div class="barra" role="toolbar" aria-label={titol}>
 		<button type="button" class="bot" onclick={precedenta} disabled={pagina <= 0} aria-label={tria(t.prec)}>
 			<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -248,9 +398,38 @@
 			<button type="submit" class="bot mot">{tria(t.ok)}</button>
 		</form>
 		<span class="espaci"></span>
+		<button type="button" class="bot mot" class:actiu={cerca} onclick={() => (cerca ? tancarCerca() : ouvrirCerca())} aria-keyshortcuts="Control+F">{tria(t.cerca)}</button>
+		{#if plenPossible}
+			<button type="button" class="bot mot" class:actiu={plenEcran} onclick={basculerPlenEcran}>{plenEcran ? tria(t.sortir) : tria(t.plen)}</button>
+		{/if}
 		<button type="button" class="bot mot" class:actiu={son} onclick={basculerSon}>{son ? tria(t.sonA) : tria(t.sonN)}</button>
 		<button type="button" class="bot mot" class:actiu={mode === 'tèxte'} onclick={basculerMode}>{mode === 'libre' ? tria(t.legir) : tria(t.libre)}</button>
 	</div>
+
+	{#if cerca}
+		<div class="cerca" role="search">
+			<div class="cerca-cap">
+				<label class="sr" for="livre-cerca">{tria(t.cercaDins)}</label>
+				<input id="livre-cerca" type="search" bind:this={champCerca} bind:value={requeta} placeholder={tria(t.cercaDins)} autocomplete="off" spellcheck="false" />
+				<button type="button" class="bot mot" onclick={tancarCerca}>{tria(t.barrar)}</button>
+			</div>
+			{#if requeta.trim().length >= 2}
+				<p class="cerca-etat" aria-live="polite">
+					{#if !textes}{tria(t.cargar)}{:else if resultats.length === 0}{tria(t.cap)}{:else}{resultats.length}{resultats.length >= 80 ? '+' : ''} {tria(t.trobat)}{/if}
+				</p>
+				<ul class="cerca-lista" lang="fr">
+					{#each resultats as r (r.i)}
+						<li>
+							<button type="button" onclick={() => anarResultat(r.i)}>
+								<span class="cerca-pag">{r.i + 1}</span>
+								<span class="cerca-extrait">{r.avant}<mark>{r.trobat}</mark>{r.apres}</span>
+							</button>
+						</li>
+					{/each}
+				</ul>
+			{/if}
+		</div>
+	{/if}
 
 	<p class="aida" id="livre-aida">{tria(t.aida)}</p>
 
@@ -260,8 +439,7 @@
 		<p class="err" role="alert">{tria(t.err)}</p>
 	{/if}
 
-	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-	<div class="scena" class:amagat={mode === 'tèxte'} role="group" aria-label={titol} aria-describedby="livre-aida" tabindex="0" onkeydown={clavier}>
+	<div class="scena" class:amagat={mode === 'tèxte'} role="group" aria-label={titol} aria-describedby="livre-aida">
 		{#if !pret && !erreur}<p class="cargament">{tria(t.cargar)}</p>{/if}
 		<div class="livre" bind:this={livreEl}></div>
 	</div>
@@ -287,6 +465,19 @@
 	.lector {
 		display: grid;
 		gap: 1rem;
+	}
+	.lector.plen,
+	.lector:fullscreen {
+		align-content: start;
+		gap: 0.6rem;
+		padding: 0.8rem clamp(0.6rem, 2vw, 1.6rem);
+		overflow: auto;
+		color: var(--t-tinta);
+		background: var(--t-fons);
+	}
+	.lector:fullscreen .scena {
+		min-height: 0;
+		padding-block: 0.3rem;
 	}
 	.sr {
 		position: absolute;
@@ -331,15 +522,10 @@
 		border-color: var(--t-aur);
 	}
 	.bot:focus-visible,
-	.scena:focus-visible,
-	input:focus-visible {
+	input:focus-visible,
+	.cerca-lista button:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;
-	}
-	.aida {
-		margin: 0;
-		color: var(--t-tinta-2);
-		font-size: 0.9rem;
 	}
 	.compte {
 		min-width: 9.5rem;
@@ -351,15 +537,87 @@
 		align-items: center;
 		gap: 0.4rem;
 	}
-	.anar input {
-		width: 4.6rem;
+	.anar input,
+	.cerca-cap input {
 		min-height: 2.75rem;
-		padding: 0 0.6rem;
+		padding: 0 0.7rem;
 		font: inherit;
 		color: inherit;
 		background: transparent;
 		border: 1px solid color-mix(in srgb, var(--t-tinta) 35%, transparent);
 		border-radius: 0.6rem;
+	}
+	.anar input {
+		width: 4.6rem;
+	}
+	.cerca {
+		display: grid;
+		gap: 0.5rem;
+		padding: 0.8rem;
+		background: color-mix(in srgb, var(--t-tinta) 7%, transparent);
+		border: 1px solid color-mix(in srgb, var(--t-aur) 40%, transparent);
+		border-radius: 0.9rem;
+	}
+	.cerca-cap {
+		display: flex;
+		gap: 0.55rem;
+	}
+	.cerca-cap input {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+	.cerca-etat {
+		margin: 0;
+		color: var(--t-tinta-2);
+		font-size: 0.92rem;
+	}
+	.cerca-lista {
+		display: grid;
+		gap: 0.15rem;
+		max-height: 14rem;
+		margin: 0;
+		padding: 0;
+		overflow: auto;
+		list-style: none;
+	}
+	.cerca-lista button {
+		display: flex;
+		gap: 0.7rem;
+		width: 100%;
+		padding: 0.4rem 0.5rem;
+		font: inherit;
+		font-size: 0.95rem;
+		text-align: left;
+		color: inherit;
+		background: transparent;
+		border: 0;
+		border-radius: 0.5rem;
+		cursor: pointer;
+	}
+	.cerca-lista button:hover {
+		background: color-mix(in srgb, var(--t-aur) 20%, transparent);
+	}
+	.cerca-pag {
+		flex: none;
+		min-width: 2.4rem;
+		color: var(--t-aur);
+		font-variant-numeric: tabular-nums;
+		font-weight: 600;
+	}
+	.cerca-extrait {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	mark {
+		color: inherit;
+		background: color-mix(in srgb, var(--t-aur) 45%, transparent);
+		border-radius: 0.2rem;
+	}
+	.aida {
+		margin: 0;
+		color: var(--t-tinta-2);
+		font-size: 0.9rem;
 	}
 	.scena {
 		position: relative;
@@ -377,7 +635,7 @@
 	}
 	.livre {
 		width: 100%;
-		max-width: 1240px;
+		max-width: 1500px;
 	}
 	.cargament,
 	.err {
