@@ -3,6 +3,7 @@
 // Chaque livre : ses pages sont des images légères dans static/livres/<id>/
 // (p001.webp…) et son texte dans static/livres/<id>/texte.json (une liste de
 // lignes par page, pour le mode texte). Source : scan de Romain, 2026-09-23.
+// Pages exportées de DesignCraft (scan 2026-09-23), WebP 602 x 952, 36 Ko en moyenne.
 
 export const LIVRES = [
 	{
