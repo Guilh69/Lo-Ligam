@@ -41,7 +41,7 @@ Versions précédentes dictées le même jour (pour mémoire) : un cours 0 sur �
 
 ## 3. Points relevés à la vérification (à trancher par Romain)
 
-1. **Cohérence des mots avec le module 1.1** : le module autonome dit *Va plan, mercé* (ça va bien, merci) ; le cours dit *Vau plan, mercés* (je vais bien, merci) et ajoute *Al còp que ven*. Les deux formes sont justes ; il faut choisir lesquelles les deux supports partagent.
+1. ✅ *Tranché le 2026-11-01 : les formules de Romain font foi ; module 1.1 aligné (Vau plan, mercés ; Al còp que ven ; mercés en 1.1 et 1.2).* **Cohérence des mots avec le module 1.1** : le module autonome dit *Va plan, mercé* (ça va bien, merci) ; le cours dit *Vau plan, mercés* (je vais bien, merci) et ajoute *Al còp que ven*. Les deux formes sont justes ; il faut choisir lesquelles les deux supports partagent.
 2. **Les droits** : Max Roqueta est mort en 2005, ses textes sont protégés ; en visio, lire un court extrait à l'élève reste un usage de cours, mais le parcours autonome ne pourra pas le reproduire sans accord. Pour les chansons, on renvoie à l'écoute sur une plateforme, sans copier l'enregistrement ni les paroles sur le site (décision du chantier 21). *Mirèio* (Mistral, 1859) est libre de droits.
 3. **« Une langue dialectale »** : la formule peut être entendue comme « un dialecte », l'idée reçue du patois. Variante possible : « une langue riche de six grands dialectes ».
 4. **Les chiffres** : 600 000 locuteurs vient de l'enquête de l'OPLO (2020, déjà sourcée sur le site) ; le haut de la fourchette (« plusieurs millions ») est à rattacher à une source avant d'être affiché sur le site.

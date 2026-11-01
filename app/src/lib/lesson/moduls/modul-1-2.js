@@ -46,7 +46,7 @@ export const modul12 = {
 						},
 						{
 							q: 'Ton ami te demande *Cossí vas ?* Tu réponds :',
-							options: ['Va plan, mercé. E tu ?', 'Va plan, mercé. E vos ?'],
+							options: ['Va plan, mercés. E tu ?', 'Va plan, mercés. E vos ?'],
 							correct: 0,
 							oc: true,
 							choses: ['va-plan-e-tu'],
@@ -61,7 +61,7 @@ export const modul12 = {
 						},
 						{
 							q: 'À bientôt !',
-							options: ['A lèu !', 'A deman !', 'Plan mercé !'],
+							options: ['A lèu !', 'A deman !', 'Plan mercés !'],
 							correct: 0,
 							oc: true,
 							choses: ['a-leu'],
@@ -241,7 +241,7 @@ export const modul12 = {
 							ditz: 'Cossí vos dison ?',
 							options: [
 								{ oc: 'Me dison…', bon: true },
-								{ oc: 'Va plan, mercé.', reaccion: 'Marià rit : elle ne t’a pas demandé comment tu vas, mais ton nom.' },
+								{ oc: 'Va plan, mercés.', reaccion: 'Marià rit : elle ne t’a pas demandé comment tu vas, mais ton nom.' },
 								{ oc: 'Encantat !', reaccion: 'Un peu tôt : elle ne t’a pas encore dit son nom.' }
 							],
 							choses: ['cossi-vos-dison', 'me-dison'],
@@ -270,8 +270,8 @@ export const modul12 = {
 						{
 							ditz: 'Cossí anatz ?',
 							options: [
-								{ oc: 'Va plan, mercé. E vos ?', bon: true },
-								{ oc: 'Va plan, mercé. E tu ?', reaccion: 'Marià te vouvoie : tu peux la vouvoyer aussi.' },
+								{ oc: 'Va plan, mercés. E vos ?', bon: true },
+								{ oc: 'Va plan, mercés. E tu ?', reaccion: 'Marià te vouvoie : tu peux la vouvoyer aussi.' },
 								{ oc: 'M’apèli Marià.', reaccion: 'Marià rit : c’est elle, Marià !' }
 							],
 							choses: ['va-plan-e-tu'],
