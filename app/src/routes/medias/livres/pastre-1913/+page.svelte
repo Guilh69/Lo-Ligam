@@ -16,6 +16,14 @@
 		ca: { dreches: 'Llibre de domini públic (Louis Pastre, mort el 1927). Escaneig: Romain Perier, 2026.' },
 		ar: { dreches: 'كتاب في الملكية العامة (لوي باستر، توفي عام 1927). المسح: رومان بيريي، 2026.' }
 	};
+	const sonLabel = {
+		oc: 'Son de las paginas :',
+		fr: 'Bruit des pages :',
+		es: 'Sonido de las páginas:',
+		en: 'Page-turning sound:',
+		ca: 'So de les pàgines:',
+		ar: 'صوت تقليب الصفحات:'
+	};
 	let tx = $derived(t[langStore.current] ?? t.oc);
 	let titol = $derived(livre.titolOriginal);
 	let traduccion = $derived(langStore.current === 'fr' ? '' : tria(livre.titol));
@@ -46,6 +54,7 @@
 		<LecteurLivre base="/livres/{livre.id}" total={livre.pagines} {titol} />
 
 		<p class="dreches" lang={langStore.current}>{tx.dreches}</p>
+		<p class="dreches" lang={langStore.current}>{tria(sonLabel)} <a href="https://opengameart.org/content/10-book-page-flips" target="_blank" rel="noopener noreferrer">StarNinjas (CC0), OpenGameArt</a></p>
 	</main>
 </div>
 
@@ -102,6 +111,11 @@
 		margin: 0.4rem 0 0;
 		color: var(--t-tinta-2);
 		font-size: 1.05rem;
+	}
+	.dreches a {
+		color: inherit;
+		text-decoration-color: var(--t-terra);
+		text-underline-offset: 3px;
 	}
 	.dreches {
 		margin: 1.6rem 0 0;

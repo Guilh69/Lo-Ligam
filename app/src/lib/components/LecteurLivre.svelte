@@ -13,7 +13,8 @@
 	let { base, total, titol = '' } = $props();
 
 	let lectorEl = $state();
-	let livreEl = $state();
+	let hoteEl = $state(); // l'élément de la page, jamais supprimé
+	let livreEl = null; // celui que la bibliothèque de feuilletage prend en charge (recréé à chaque fois)
 	let champCerca = $state();
 	let flip = null;
 	let PF = null;
@@ -29,7 +30,6 @@
 	let plenPossible = $state(false);
 	let cerca = $state(false);
 	let requeta = $state('');
-	let ctx = null;
 
 	const CLAU_SON = 'lo-ligam-livre-son';
 	const url = (i) => `${base}/p${String(i + 1).padStart(3, '0')}.webp`;
@@ -42,61 +42,37 @@
 		}
 	}
 
-	// le bruit du papier (2026-11-01, plus doux) : un souffle de bruit rose,
-	// lissé, qui monte à peine dans les médiums, puis un petit « tap » sourd
-	// quand la page se pose. Rien d'aigu, volume bas.
+	// le bruit des pages (2026-11-01, Romain : « un vrai bruit ») : dix vrais
+	// enregistrements de pages de livre tournées (StarNinjas, CC0,
+	// OpenGameArt, static/livres/son/), joués au hasard, jamais deux fois le
+	// même d'affilée. Un navigateur sans Ogg n'a pas de son plutôt qu'un faux.
+	const SON_DOSSIER = '/livres/son';
+	const SONS = 10;
+	let dernierSon = -1;
+	let echantillons = [];
+	function preparerSons() {
+		if (echantillons.length || typeof Audio === 'undefined') return;
+		if (!new Audio().canPlayType('audio/ogg; codecs="vorbis"')) return;
+		for (let k = 1; k <= SONS; k++) {
+			const a = new Audio(`${SON_DOSSIER}/page-${k}.ogg`);
+			a.preload = 'auto';
+			a.volume = 0.7;
+			echantillons.push(a);
+		}
+	}
 	function souffle() {
 		if (!son || reduit) return;
+		preparerSons();
+		if (!echantillons.length) return;
+		let k;
+		do {
+			k = Math.floor(Math.random() * echantillons.length);
+		} while (k === dernierSon && echantillons.length > 1);
+		dernierSon = k;
+		const a = echantillons[k];
 		try {
-			ctx ??= new (window.AudioContext || window.webkitAudioContext)();
-			if (ctx.state === 'suspended') ctx.resume();
-			const sr = ctx.sampleRate;
-			const now = ctx.currentTime;
-			const d = 0.46;
-			const buf = ctx.createBuffer(1, Math.floor(sr * d), sr);
-			const data = buf.getChannelData(0);
-			let b0 = 0;
-			let b1 = 0;
-			let b2 = 0;
-			for (let i = 0; i < data.length; i++) {
-				const t = i / data.length;
-				const blanc = Math.random() * 2 - 1;
-				b0 = 0.99765 * b0 + blanc * 0.099046;
-				b1 = 0.963 * b1 + blanc * 0.2965164;
-				b2 = 0.57 * b2 + blanc * 1.0526913;
-				const rose = b0 + b1 + b2 + blanc * 0.1848;
-				const env = Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.05)), 2) * (1 - 0.45 * t);
-				data[i] = rose * 0.17 * env;
-			}
-			const src = ctx.createBufferSource();
-			src.buffer = buf;
-			const bande = ctx.createBiquadFilter();
-			bande.type = 'bandpass';
-			bande.Q.value = 0.45;
-			bande.frequency.setValueAtTime(650, now);
-			bande.frequency.exponentialRampToValueAtTime(1700, now + d);
-			const doux = ctx.createBiquadFilter();
-			doux.type = 'lowpass';
-			doux.frequency.value = 2800;
-			const g = ctx.createGain();
-			g.gain.value = 0.55;
-			src.connect(bande).connect(doux).connect(g).connect(ctx.destination);
-			src.start(now);
-
-			// le tap : un grain de bruit très court, filtré dans les graves
-			const nt = Math.floor(sr * 0.06);
-			const tb = ctx.createBuffer(1, nt, sr);
-			const td = tb.getChannelData(0);
-			for (let i = 0; i < nt; i++) td[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / nt, 3);
-			const tap = ctx.createBufferSource();
-			tap.buffer = tb;
-			const grave = ctx.createBiquadFilter();
-			grave.type = 'lowpass';
-			grave.frequency.value = 520;
-			const gt = ctx.createGain();
-			gt.gain.value = 0.35;
-			tap.connect(grave).connect(gt).connect(ctx.destination);
-			tap.start(now + 0.34);
+			a.currentTime = 0;
+			a.play()?.catch(() => {});
 		} catch {
 			/* pas de son : le livre se feuillette quand même */
 		}
@@ -115,7 +91,12 @@
 	// construit (ou reconstruit) le livre, à la page demandée, à la taille
 	// de l'écran du moment (utile en entrant dans le plein écran ou en sortant)
 	function creer(depart = 0) {
-		if (!PF || !livreEl) return;
+		if (!PF || !hoteEl) return;
+		// la bibliothèque supprime l'élément qu'on lui confie quand on la détruit :
+		// on lui en donne donc un neuf, posé dans l'élément de la page
+		livreEl = document.createElement('div');
+		livreEl.className = 'livre-int';
+		hoteEl.appendChild(livreEl);
 		const haut = document.fullscreenElement ? window.innerHeight - 150 : window.innerHeight - 230;
 		const pages = [];
 		for (let i = 0; i < total; i++) {
@@ -158,14 +139,14 @@
 	}
 
 	function refaire() {
-		if (!PF || !livreEl || mode !== 'libre') return;
+		if (!PF || !hoteEl || mode !== 'libre') return;
 		const p = pagina;
 		try {
 			flip?.destroy();
 		} catch {
 			/* déjà démonté */
 		}
-		livreEl.innerHTML = '';
+		livreEl?.remove();
 		creer(p);
 	}
 
@@ -186,13 +167,14 @@
 		}
 		reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (reduit) son = false;
+		if (son) preparerSons();
 		plenPossible = !!document.fullscreenEnabled;
 		let mort = false;
 
 		(async () => {
 			try {
 				const mod = await import('page-flip');
-				if (mort || !livreEl) return;
+				if (mort || !hoteEl) return;
 				PF = mod.PageFlip;
 				creer(0);
 				pret = true;
@@ -217,7 +199,6 @@
 			} catch {
 				/* déjà démonté */
 			}
-			ctx?.close?.();
 		};
 	});
 
@@ -320,6 +301,10 @@
 			tancarCerca();
 			return;
 		}
+		if (e.key === 'Escape' && document.fullscreenElement) {
+			document.exitFullscreen?.();
+			return;
+		}
 		if (saisie) return;
 		if (e.key === 'ArrowRight' || e.key === 'PageDown') {
 			e.preventDefault();
@@ -400,11 +385,23 @@
 		<span class="espaci"></span>
 		<button type="button" class="bot mot" class:actiu={cerca} onclick={() => (cerca ? tancarCerca() : ouvrirCerca())} aria-keyshortcuts="Control+F">{tria(t.cerca)}</button>
 		{#if plenPossible}
-			<button type="button" class="bot mot" class:actiu={plenEcran} onclick={basculerPlenEcran}>{plenEcran ? tria(t.sortir) : tria(t.plen)}</button>
+			<button type="button" class="bot icona" class:actiu={plenEcran} onclick={basculerPlenEcran} aria-label={plenEcran ? tria(t.sortir) : tria(t.plen)} title={plenEcran ? tria(t.sortir) : tria(t.plen)}>
+				{#if plenEcran}
+					<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+				{:else}
+					<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+				{/if}
+			</button>
 		{/if}
 		<button type="button" class="bot mot" class:actiu={son} onclick={basculerSon}>{son ? tria(t.sonA) : tria(t.sonN)}</button>
 		<button type="button" class="bot mot" class:actiu={mode === 'tèxte'} onclick={basculerMode}>{mode === 'libre' ? tria(t.legir) : tria(t.libre)}</button>
 	</div>
+
+	{#if plenEcran}
+		<button type="button" class="fermar" onclick={basculerPlenEcran} aria-label={tria(t.sortir)} title="{tria(t.sortir)} (Échap)">
+			<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" /></svg>
+		</button>
+	{/if}
 
 	{#if cerca}
 		<div class="cerca" role="search">
@@ -441,7 +438,7 @@
 
 	<div class="scena" class:amagat={mode === 'tèxte'} role="group" aria-label={titol} aria-describedby="livre-aida">
 		{#if !pret && !erreur}<p class="cargament">{tria(t.cargar)}</p>{/if}
-		<div class="livre" bind:this={livreEl}></div>
+		<div class="livre" bind:this={hoteEl}></div>
 	</div>
 
 	{#if mode === 'tèxte'}
@@ -495,6 +492,32 @@
 	}
 	.espaci {
 		flex: 1 1 0;
+	}
+	.bot.icona {
+		padding: 0;
+		width: 2.75rem;
+	}
+	.fermar {
+		position: fixed;
+		top: 0.8rem;
+		right: 0.8rem;
+		z-index: 20;
+		display: grid;
+		place-items: center;
+		width: 3rem;
+		height: 3rem;
+		color: var(--t-tinta);
+		background: color-mix(in srgb, var(--t-fons) 85%, transparent);
+		border: 2px solid var(--t-aur);
+		border-radius: 999px;
+		cursor: pointer;
+	}
+	.fermar:hover {
+		background: color-mix(in srgb, var(--t-aur) 35%, var(--t-fons));
+	}
+	.fermar:focus-visible {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 3px;
 	}
 	.bot {
 		display: inline-flex;
