@@ -56,7 +56,7 @@
 		for (let k = 1; k <= SONS; k++) {
 			const a = new Audio(`${SON_DOSSIER}/page-${k}.ogg`);
 			a.preload = 'auto';
-			a.volume = 0.7;
+			a.volume = 0.35;
 			echantillons.push(a);
 		}
 	}
@@ -97,7 +97,7 @@
 		livreEl = document.createElement('div');
 		livreEl.className = 'livre-int';
 		hoteEl.appendChild(livreEl);
-		const haut = document.fullscreenElement ? window.innerHeight - 150 : window.innerHeight - 230;
+		const plein = plenEcran;
 		const pages = [];
 		for (let i = 0; i < total; i++) {
 			const p = document.createElement('div');
@@ -116,9 +116,9 @@
 			height: 664,
 			size: 'stretch',
 			minWidth: 230,
-			maxWidth: 760,
-			minHeight: 360,
-			maxHeight: Math.max(360, Math.min(1100, Math.round(haut))),
+			maxWidth: plein ? 1100 : 760,
+			minHeight: plein ? 200 : 360,
+			maxHeight: plein ? Math.round(window.innerHeight) : Math.max(360, Math.min(1100, Math.round(window.innerHeight - 230))),
 			showCover: true,
 			usePortrait: true,
 			maxShadowOpacity: 0.45,
@@ -150,14 +150,41 @@
 		creer(p);
 	}
 
+	// plein écran : celui du navigateur quand il existe, sinon (iPhone, cadre
+	// intégré…) un cadre fixe qui couvre tout l'écran ; même rendu dans les deux cas
 	async function basculerPlenEcran() {
-		try {
-			if (document.fullscreenElement) await document.exitFullscreen();
-			else await lectorEl?.requestFullscreen?.();
-		} catch {
-			/* plein écran refusé par le navigateur */
+		if (document.fullscreenElement) {
+			try {
+				await document.exitFullscreen();
+			} catch {
+				/* sortie refusée */
+			}
+			return;
 		}
+		if (plenEcran) {
+			plenEcran = false;
+			setTimeout(refaire, 120);
+			return;
+		}
+		plenEcran = true; // le cadre couvre l'écran tout de suite
+		if (document.fullscreenEnabled && lectorEl?.requestFullscreen) {
+			try {
+				await lectorEl.requestFullscreen();
+				return; // l'évènement « fullscreenchange » recompose le livre
+			} catch {
+				/* refusé : on garde le cadre fixe */
+			}
+		}
+		setTimeout(refaire, 120);
 	}
+
+	// pendant le plein écran, la page derrière ne défile plus
+	$effect(() => {
+		document.documentElement.style.overflow = plenEcran ? 'hidden' : '';
+		return () => {
+			document.documentElement.style.overflow = '';
+		};
+	});
 
 	onMount(() => {
 		try {
@@ -168,7 +195,7 @@
 		reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (reduit) son = false;
 		if (son) preparerSons();
-		plenPossible = !!document.fullscreenEnabled;
+		plenPossible = true;
 		let mort = false;
 
 		(async () => {
@@ -301,8 +328,8 @@
 			tancarCerca();
 			return;
 		}
-		if (e.key === 'Escape' && document.fullscreenElement) {
-			document.exitFullscreen?.();
+		if (e.key === 'Escape' && plenEcran) {
+			if (!document.fullscreenElement) basculerPlenEcran();
 			return;
 		}
 		if (saisie) return;
@@ -384,15 +411,6 @@
 		</form>
 		<span class="espaci"></span>
 		<button type="button" class="bot mot" class:actiu={cerca} onclick={() => (cerca ? tancarCerca() : ouvrirCerca())} aria-keyshortcuts="Control+F">{tria(t.cerca)}</button>
-		{#if plenPossible}
-			<button type="button" class="bot icona" class:actiu={plenEcran} onclick={basculerPlenEcran} aria-label={plenEcran ? tria(t.sortir) : tria(t.plen)} title={plenEcran ? tria(t.sortir) : tria(t.plen)}>
-				{#if plenEcran}
-					<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-				{:else}
-					<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-				{/if}
-			</button>
-		{/if}
 		<button type="button" class="bot mot" class:actiu={son} onclick={basculerSon}>{son ? tria(t.sonA) : tria(t.sonN)}</button>
 		<button type="button" class="bot mot" class:actiu={mode === 'tèxte'} onclick={basculerMode}>{mode === 'libre' ? tria(t.legir) : tria(t.libre)}</button>
 	</div>
@@ -439,6 +457,24 @@
 	<div class="scena" class:amagat={mode === 'tèxte'} role="group" aria-label={titol} aria-describedby="livre-aida">
 		{#if !pret && !erreur}<p class="cargament">{tria(t.cargar)}</p>{/if}
 		<div class="livre" bind:this={hoteEl}></div>
+		{#if plenPossible}
+			<button type="button" class="plen-bot" onclick={basculerPlenEcran} aria-label={plenEcran ? tria(t.sortir) : tria(t.plen)} title={plenEcran ? tria(t.sortir) : tria(t.plen)}>
+				{#if plenEcran}
+					<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+				{:else}
+					<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+				{/if}
+			</button>
+		{/if}
+		{#if plenEcran}
+			<button type="button" class="fleche gauche" onclick={precedenta} disabled={pagina <= 0} aria-label={tria(t.prec)}>
+				<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+			</button>
+			<button type="button" class="fleche droite" onclick={suivante} disabled={pagina >= total - 1} aria-label={tria(t.seg)}>
+				<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+			</button>
+			<span class="compte-plen" aria-hidden="true">{pagina + 1} / {total}</span>
+		{/if}
 	</div>
 
 	{#if mode === 'tèxte'}
@@ -463,18 +499,48 @@
 		display: grid;
 		gap: 1rem;
 	}
-	.lector.plen,
-	.lector:fullscreen {
-		align-content: start;
-		gap: 0.6rem;
-		padding: 0.8rem clamp(0.6rem, 2vw, 1.6rem);
-		overflow: auto;
+	/* plein écran : le livre seul, calé sur l'écran, sans défilement */
+	.lector.plen {
+		display: block;
+		position: fixed;
+		inset: 0;
+		z-index: 2000;
+		width: 100vw;
+		height: 100vh;
+		height: 100dvh;
+		padding: 0;
+		overflow: hidden;
+		overscroll-behavior: contain;
+		color: #f4ecdf;
+		background: #120d0a;
+	}
+	.lector.plen .barra,
+	.lector.plen .aida,
+	.lector.plen .tèxte {
+		display: none;
+	}
+	.lector.plen .scena {
+		height: 100vh;
+		height: 100dvh;
+		min-height: 0;
+		padding: 0;
+		border-radius: 0;
+		align-items: center;
+		background: #120d0a;
+	}
+	.lector.plen .livre {
+		max-width: none;
+		height: 100%;
+	}
+	.lector.plen .cerca {
+		position: absolute;
+		top: 4.2rem;
+		left: 50%;
+		z-index: 15;
+		width: min(36rem, 92vw);
+		transform: translateX(-50%);
 		color: var(--t-tinta);
 		background: var(--t-fons);
-	}
-	.lector:fullscreen .scena {
-		min-height: 0;
-		padding-block: 0.3rem;
 	}
 	.sr {
 		position: absolute;
@@ -493,9 +559,59 @@
 	.espaci {
 		flex: 1 1 0;
 	}
-	.bot.icona {
-		padding: 0;
+	.plen-bot,
+	.fleche {
+		position: absolute;
+		z-index: 10;
+		display: grid;
+		place-items: center;
 		width: 2.75rem;
+		height: 2.75rem;
+		color: #fff;
+		background: color-mix(in srgb, #140e0a 72%, transparent);
+		border: 1px solid color-mix(in srgb, #fff 35%, transparent);
+		border-radius: 999px;
+		cursor: pointer;
+	}
+	.plen-bot {
+		right: 0.8rem;
+		bottom: 0.8rem;
+	}
+	.plen-bot:hover,
+	.fleche:hover:not(:disabled) {
+		background: color-mix(in srgb, var(--t-aur) 55%, #140e0a);
+	}
+	.plen-bot:focus-visible,
+	.fleche:focus-visible {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 2px;
+	}
+	.fleche {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	.fleche:disabled {
+		opacity: 0.25;
+		cursor: default;
+	}
+	.fleche.gauche {
+		left: 0.8rem;
+	}
+	.fleche.droite {
+		right: 0.8rem;
+	}
+	.compte-plen {
+		position: absolute;
+		left: 50%;
+		bottom: 0.7rem;
+		z-index: 10;
+		padding: 0.15rem 0.8rem;
+		font-size: 0.9rem;
+		font-variant-numeric: tabular-nums;
+		color: #f4ecdf;
+		background: color-mix(in srgb, #140e0a 70%, transparent);
+		border-radius: 999px;
+		transform: translateX(-50%);
 	}
 	.fermar {
 		position: fixed;
@@ -672,6 +788,10 @@
 	.err {
 		position: static;
 		color: inherit;
+	}
+	:global(.lector.plen .livre-int) {
+		width: 100%;
+		height: 100%;
 	}
 	:global(.livre .pg) {
 		background: #fbf8f0;
