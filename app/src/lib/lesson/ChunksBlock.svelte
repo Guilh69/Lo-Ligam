@@ -1,6 +1,8 @@
 <script>
 	import Icona from '$lib/components/Icona.svelte';
-	// Les expressions à retenir : le mot, « ça sonne comme », le sens.
+	import { rich } from '$lib/lesson/rich.js';
+	// Les expressions à retenir : le mot, « ça sonne comme », le sens
+	// (l'intro et le sens acceptent l'italique *…* comme les autres blocs).
 	// Le bouton audio s'active dès qu'un fichier existe (c.audio).
 	let { block } = $props();
 
@@ -15,7 +17,7 @@
 
 <section class="block">
 	<h3 class="block-title">{block.title}</h3>
-	{#if block.intro}<p class="intro"><em>{block.intro}</em></p>{/if}
+	{#if block.intro}<p class="intro"><em>{@html rich(block.intro)}</em></p>{/if}
 	<ul class="chunks">
 		{#each block.items as c}
 			<li class="chunk">
@@ -27,7 +29,7 @@
 				<span class="c-body">
 					<span class="c-oc">{c.oc}</span>
 					<span class="c-sound">{c.sound}</span>
-					<span class="c-fr">{c.fr}</span>
+					<span class="c-fr">{@html rich(c.fr)}</span>
 				</span>
 			</li>
 		{/each}

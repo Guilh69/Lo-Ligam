@@ -39,4 +39,10 @@ describe('écrire au clavier : la règle de l’A1', () => {
 	it('netejar garde les accents', () => {
 		expect(netejar('Òc, Marià !')).toBe('òc marià');
 	});
+	it('un début qui finit par une apostrophe se colle à la suite', () => {
+		const item = { debut: ['Soi d’'] };
+		expect(corregir('Soi d’Albi', item).statut).toBe('just');
+		expect(corregir("Soi d'Albi", item).statut).toBe('just');
+		expect(corregir('Soi d’', item).statut).toBe('non');
+	});
 });

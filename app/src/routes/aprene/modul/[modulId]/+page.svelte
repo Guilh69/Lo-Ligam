@@ -33,6 +33,10 @@
 	let posicion = $derived(ordre.indexOf($page.params.modulId));
 	let precedent = $derived(posicion > 0 ? ordre[posicion - 1] : null);
 	let seguent = $derived(posicion >= 0 && posicion < ordre.length - 1 ? ordre[posicion + 1] : null);
+	// Le fil ne montre que les modules de la même unité (tout l'A1 compte
+	// une quarantaine de modules) ; le numéro seulement pour « 2-1 », « 2-2 »…
+	let filUnitat = $derived(modul ? ordre.filter((id) => moduls[id].unitat === modul.unitat) : []);
+	const numeroDe = (id) => (/^\d+-\d+$/.test(id) ? id.replace('-', '.') : '');
 
 	// 'list' = sommaire des étapes ; un nombre = l'étape ouverte.
 	let view = $state('list');
@@ -298,9 +302,9 @@
 
 			<!-- Les quatre modules de l'unité, pour voir où l'on est -->
 			<nav class="fil" aria-label="Modules de l’unité">
-				{#each ordre as id}
+				{#each filUnitat as id}
 					<a href="/aprene/modul/{id}" class:actual={id === $page.params.modulId} aria-current={id === $page.params.modulId ? 'page' : undefined}>
-						<b>{id.replace('-', '.')}</b> <span lang="oc">{moduls[id].oc}</span>
+						{#if numeroDe(id)}<b>{numeroDe(id)}</b> {/if}<span lang="oc">{moduls[id].oc}</span>
 					</a>
 				{/each}
 			</nav>

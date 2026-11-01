@@ -50,9 +50,9 @@ export const modul11 = {
 			blocks: [
 				{
 					type: 'reveal',
-					title: 'Premier module : rien à réviser',
+					title: 'Ce qui revient du module 0',
 					intro:
-						'Dès le module suivant, cette étape te resservira ce que tu as appris. Pour aujourd’hui, trois questions au feeling : pense ta réponse, puis regarde.',
+						'Cette étape te resservira, à chaque module, ce que tu as appris avant. Pour commencer, trois questions sur ce que tu as découvert au module 0 : pense ta réponse, puis regarde.',
 					items: [
 						{
 							q: 'À Toulouse, quelqu’un te lance « Adieu ! » en arrivant, tout sourire. Il te dit bonjour ou au revoir ?',

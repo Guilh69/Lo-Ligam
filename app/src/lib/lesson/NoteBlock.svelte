@@ -44,9 +44,23 @@
 			{#each block.list as li}<li>{@html rich(li)}</li>{/each}
 		</ul>
 	{/if}
+	<!-- Un lien (chanson à écouter, carnet, carte) : lien = { href, texte } ;
+	     un site extérieur s'ouvre dans un nouvel onglet. -->
+	{#if block.lien?.href}
+		{@const dehors = /^https?:\/\//.test(block.lien.href)}
+		<p class="para lien">
+			<a href={block.lien.href} target={dehors ? '_blank' : undefined} rel={dehors ? 'noopener noreferrer' : undefined}
+				>{block.lien.texte ?? block.lien.href}{#if dehors}<span class="dehors"> (site extérieur)</span>{/if}</a
+			>
+		</p>
+	{/if}
 </section>
 
 <style>
+	.lien .dehors {
+		font-size: 0.85em;
+		opacity: 0.8;
+	}
 	.block {
 		position: relative;
 		border-radius: 20px;

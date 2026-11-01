@@ -41,13 +41,16 @@ export function corregir(saisie, item) {
 	for (const r of item.answers ?? []) {
 		if (sensAccents(r) === plat) return { statut: 'quasi', modele: r };
 	}
+	// Un début qui finit par une apostrophe (« Soi d’ ») se colle à la suite
+	// (« Soi d’Albi ») ; sinon, une espace sépare le début du reste.
+	const suite = (n) => (/['’]$/.test(n) ? n : n + ' ');
 	for (const d of item.debut ?? []) {
-		const n = netejar(d);
-		if (brut.startsWith(n + ' ') && brut.length > n.length + 1) return { statut: 'just', modele: d };
+		const n = suite(netejar(d));
+		if (brut.startsWith(n) && brut.length > n.length) return { statut: 'just', modele: d };
 	}
 	for (const d of item.debut ?? []) {
-		const n = sensAccents(d);
-		if (plat.startsWith(n + ' ') && plat.length > n.length + 1) return { statut: 'quasi', modele: d };
+		const n = suite(sensAccents(d));
+		if (plat.startsWith(n) && plat.length > n.length) return { statut: 'quasi', modele: d };
 	}
 	return { statut: 'non', modele: item.answers?.[0] ?? item.debut?.[0] ?? null };
 }

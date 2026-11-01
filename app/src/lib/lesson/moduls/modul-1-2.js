@@ -288,7 +288,7 @@ export const modul12 = {
 							explain: '*A lèu ! Adieu-siatz !* : à bientôt, au revoir.'
 						}
 					],
-					fin: 'Bravo ! Ta première vraie conversation en occitan : saluer, se nommer, demander comment ça va, partir.'
+					fin: 'Bravo ! Une vraie conversation en occitan : saluer, se nommer, demander comment ça va, partir.'
 				}
 			]
 		},

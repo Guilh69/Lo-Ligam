@@ -6,38 +6,22 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { session } from '$lib/authStore';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
 
-	// Structure en chapitres (contextes de vie) > modules (une compétence
-	// précise chacun). Seul le module 1 a un contenu réel pour l'instant —
-	// le reste est volontairement minimaliste tant que les leçons ne sont
-	// pas écrites (cf. méthode-pedagogique.md).
-	const chapters = [
-		{
-			oc: 'Las basas',
-			fr: 'Les bases', es: 'Lo básico', en: 'The basics', ca: 'Les bases', ar: 'الأساسيات',
-			modules: [
-				{ oc: 'Se saludar', fr: 'Saluer', es: 'Saludar', en: 'Saying hello', ca: 'Saludar', ar: 'إلقاء التحية', href: '/aprene/essai', status: 'available' },
-				{ oc: 'Mercejar', fr: 'Remercier', es: 'Dar las gracias', en: 'Saying thank you', ca: 'Donar les gràcies', ar: 'الشكر', status: 'locked' },
-				{ oc: 'Se presentar', fr: 'Se présenter', es: 'Presentarse', en: 'Introducing yourself', ca: 'Presentar-se', ar: 'التعريف بالنفس', status: 'locked' }
-			]
-		},
-		{
-			oc: 'A la botiga',
-			fr: 'Au magasin', es: 'En la tienda', en: 'At the shop', ca: 'A la botiga', ar: 'في المتجر',
-			modules: [
-				{ oc: 'Crompar', fr: 'Faire ses courses', es: 'Hacer la compra', en: 'Shopping', ca: 'Fer la compra', ar: 'التسوّق', status: 'locked' },
-				{ oc: 'Los nombres', fr: 'Les nombres', es: 'Los números', en: 'Numbers', ca: 'Els números', ar: 'الأعداد', status: 'locked' }
-			]
-		},
-		{
-			oc: 'A la bolangariá',
-			fr: 'À la boulangerie', es: 'En la panadería', en: 'At the bakery', ca: 'A la fleca', ar: 'في المخبز',
-			modules: [
-				{ oc: 'Al forn', fr: 'À la boulangerie', es: 'En la panadería', en: 'At the bakery', ca: 'A la fleca', ar: 'في المخبز', status: 'locked' },
-				{ oc: 'Demandar un servici', fr: 'Demander un service', es: 'Pedir un servicio', en: 'Asking for a service', ca: 'Demanar un servei', ar: 'طلب خدمة', status: 'locked' }
-			]
+	// Le parcours de l'A1 (carte du 2026-10-25), tiré du registre des modules :
+	// un chapitre par unité, halte ou mission, dans l'ordre du chemin. Version
+	// simple pour l'essai de Romain (2026-11-01) ; le « Camin » dessiné viendra
+	// avec S'apren (chantier 6).
+	const chapters = [];
+	for (const id of ordre) {
+		const m = moduls[id];
+		let c = chapters.at(-1);
+		if (!c || c.cle !== m.unitat) {
+			c = { cle: m.unitat, oc: m.unitat, fr: m.ouverture?.fr ?? m.fr, modules: [] };
+			chapters.push(c);
 		}
-	];
+		c.modules.push({ oc: m.oc, fr: m.fr, href: `/aprene/modul/${id}`, status: 'available' });
+	}
 
 	let moduleOneDone = $state(false);
 
@@ -113,7 +97,7 @@
 									<span class="module-oc">{m.oc}</span>
 									<span class="module-fr"><em>({glosa(m)})</em></span>
 								</span>
-								<span class="module-status" aria-hidden="true"><Icona nom={moduleOneDone ? 'valide' : 'suivant'} /></span>
+								<span class="module-status" aria-hidden="true"><Icona nom="suivant" /></span>
 							</a>
 						{:else}
 							<div class="module-card locked" aria-disabled="true">
