@@ -14,6 +14,8 @@
 
 Ce plan est celui qu'on suit **par défaut**. En séance, Romain l'adapte à la personne : rien n'est bloqué.
 
+**Un cours par unité** (Romain, 2026-11-01) : en A1, neuf cours par défaut. Le cours 0 accompagne le module 0, puis un cours par unité, de 1 à 8. Le temps 4 reprend les mots et formes de l'unité ; culture, chanson et texte sont le plus de la visio et nourrissent l'encart culture de l'unité.
+
 ## 2. Cours 0 · *Benvengut dins lo mond occitan* (version de Romain du 2026-11-01)
 
 **1. Culture et contexte : qu'est-ce que l'occitan ?**
