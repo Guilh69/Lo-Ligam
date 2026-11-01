@@ -38,6 +38,7 @@ export const modul11 = {
 	notesRelecture: [
 		'*Adieu* : prononcé « a-DIOU » et *Adieu-siatz* « a-di-SSIATS », comme tu l’as validé le 29-08 ; à confirmer à l’enregistrement.',
 		'*Bon ser* : « bou(n) SÉ », le r final muet. *Bonjorn* : « boun-DJOUR ».',
+		'Formules alignées sur ton cours 0 en visio (2026-11-01) : *Vau plan, mercés* (je vais bien) et *Al còp que ven* (à la prochaine) ajoutés, *mercé* devient *mercés* ici et au module 1.2. Sons proposés : *Vau plan* « baou PLA », *mercés* « mér-SÉS » (s final prononcé), *Al còp que ven* « al COP qué BÈN ». À confirmer à l’enregistrement.',
 		'La règle donnée : *Adieu* est familier (entre amis, entre jeunes, même à la première rencontre) ; à une personne qu’on vouvoie, plutôt *Bonjorn*. Est-ce bien ton usage ?'
 	],
 
@@ -88,10 +89,10 @@ export const modul11 = {
 							lines: [
 								{ oc: 'Bonjorn, Yasmine !', sound: 'boun-DJOUR, yas-MI-ne !', fr: 'Bonjour, Yasmine !' },
 								{ oc: 'Adieu, Loís ! Cossí vas ?', sound: 'a-DIOU, lou-ÍS ! cou-si BAS ?', fr: 'Salut, Loís ! Comment vas-tu ?' },
-								{ oc: 'Va plan, mercé. E tu ?', sound: 'ba PLA, mér-SÉ. é TU ?', fr: 'Ça va bien, merci. Et toi ?' },
-								{ oc: 'Va plan, plan mercé !', sound: 'ba PLA, pla mér-SÉ !', fr: 'Ça va bien, merci beaucoup !' },
+								{ oc: 'Vau plan, mercés. E tu ?', sound: 'baou PLA, mér-SÉS. é TU ?', fr: 'Je vais bien, merci. Et toi ?' },
+								{ oc: 'Va plan, plan mercés !', sound: 'ba PLA, pla mér-SÉS !', fr: 'Ça va bien, merci beaucoup !' },
 								{ oc: 'A lèu, Yasmine !', sound: 'a LÈOU, yas-MI-ne !', fr: 'À bientôt, Yasmine !' },
-								{ oc: 'Adieu !', sound: 'a-DIOU !', fr: 'Salut !' }
+								{ oc: 'Adieu ! Al còp que ven !', sound: 'a-DIOU ! al COP qué BÈN !', fr: 'Salut ! À la prochaine !' }
 							]
 						},
 						{
@@ -99,7 +100,7 @@ export const modul11 = {
 							subtitle: '(le soir)',
 							lines: [
 								{ oc: 'Bon ser ! Cossí anatz ?', sound: 'bou(n) SÉ ! cou-si a-NATS ?', fr: 'Bonsoir ! Comment allez-vous ?' },
-								{ oc: 'Adieu-siatz, Yasmine ! Va plan, mercé. E tu ?', sound: 'a-di-SSIATS, yas-MI-ne ! ba PLA, mér-SÉ. é TU ?', fr: 'Bonjour, Yasmine ! Ça va bien, merci. Et toi ?' },
+								{ oc: 'Adieu-siatz, Yasmine ! Va plan, mercés. E tu ?', sound: 'a-di-SSIATS, yas-MI-ne ! ba PLA, mér-SÉS. é TU ?', fr: 'Bonjour, Yasmine ! Ça va bien, merci. Et toi ?' },
 								{ oc: 'Va plan !', sound: 'ba PLA !', fr: 'Ça va bien !' },
 								{ oc: 'A deman, Yasmine !', sound: 'a dé-MA, yas-MI-ne !', fr: 'À demain, Yasmine !' },
 								{ oc: 'A deman ! Adieu-siatz !', sound: 'a dé-MA ! a-di-SSIATS !', fr: 'À demain ! Au revoir !' }
@@ -125,11 +126,11 @@ export const modul11 = {
 							explain: 'Avec Loís : *Cossí vas ?* (tu). Avec Marià et ses amies : *Cossí anatz ?* (vous).'
 						},
 						{
-							q: 'Combien de fois entends-tu *Va plan* dans les deux scènes ?',
+							q: 'Combien de fois entends-tu *Va plan* ou *Vau plan* dans les deux scènes ?',
 							options: ['4 fois', '3 fois', '2 fois'],
 							correct: 0,
 							choses: ['va-plan-e-tu'],
-							explain: 'Quatre fois : *Va plan* (ça va bien) est la réponse passe-partout.'
+							explain: 'Quatre fois : trois fois *Va plan* (ça va bien), la réponse passe-partout, et une fois *Vau plan* (je vais bien), la réponse directe à *Cossí vas ?*'
 						},
 						{
 							q: 'Marià dit *Adieu-siatz !* à Yasmine au moment où elle…',
@@ -197,18 +198,19 @@ export const modul11 = {
 						['saluer (bonjour et au revoir)', '*Adieu !*', '*Adieu-siatz !*'],
 						['le matin, le soir', '*Bonjorn !* · *Bon ser !*', '*Bonjorn !* · *Bon ser !*'],
 						['demander comment ça va', '*Cossí vas ?*', '*Cossí anatz ?*'],
-						['répondre, retourner', '*Va plan, mercé. E tu ?*', '*Va plan, mercé. E vos ?*'],
-						['partir', '*A lèu !* · *A deman !*', '*A lèu !* · *A deman !*']
+						['répondre, retourner', '*Vau plan, mercés. E tu ?* · *Va plan !*', '*Va plan, mercés. E vos ?*'],
+						['partir', '*A lèu !* · *A deman !* · *Al còp que ven !*', '*A lèu !* · *A deman !* · *Al còp que ven !*']
 					],
 					notes: [
 						'*Adieu* ouvre et ferme la rencontre, comme « ciao » en italien. Il est familier : entre amis, entre jeunes. À une personne qu’on vouvoie, on dit plutôt *Bonjorn*.',
-						'*Plan* veut dire « bien » : *Va plan* (ça va bien), *plan mercé* (merci beaucoup).'
+						'*Plan* veut dire « bien » : *Va plan* (ça va bien), *Vau plan* (je vais bien), *plan mercés* (merci beaucoup).',
+						'*Al còp que ven* : mot à mot « à la fois qui vient », c’est-à-dire à la prochaine.'
 					]
 				},
 				{
 					type: 'chunks',
 					title: 'À retenir',
-					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces dix expressions entrent dans ton carnet de révision.',
+					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces douze expressions entrent dans ton carnet de révision.',
 					items: [
 						{ id: 'adieu', oc: 'Adieu !', sound: 'a-DIOU', fr: 'salut ! (bonjour et au revoir, entre amis)' },
 						{ id: 'adieu-siatz', oc: 'Adieu-siatz !', sound: 'a-di-SSIATS', fr: 'pareil, à plusieurs ou en vouvoyant' },
@@ -217,9 +219,11 @@ export const modul11 = {
 						{ id: 'cossi-vas', oc: 'Cossí vas ?', sound: 'cou-si BAS', fr: 'comment vas-tu ? (le v sonne « b »)' },
 						{ id: 'cossi-anatz', oc: 'Cossí anatz ?', sound: 'cou-si a-NATS', fr: 'comment allez-vous ?' },
 						{ id: 'va-plan-e-tu', oc: 'Va plan. E tu ? · E vos ?', sound: 'ba PLA. é TU ? · é BOUS ?', fr: 'ça va bien. Et toi ? · Et vous ?' },
-						{ id: 'merce', oc: 'Mercé ! · Plan mercé !', sound: 'mér-SÉ · pla mér-SÉ', fr: 'merci ! · merci beaucoup !' },
+						{ id: 'vau-plan', oc: 'Vau plan, mercés !', sound: 'baou PLA, mér-SÉS', fr: 'je vais bien, merci ! (réponse à *Cossí vas ?*)' },
+						{ id: 'merce', oc: 'Mercés ! · Plan mercés !', sound: 'mér-SÉS · pla mér-SÉS', fr: 'merci ! · merci beaucoup !' },
 						{ id: 'a-leu', oc: 'A lèu !', sound: 'a LÈOU', fr: 'à bientôt !' },
-						{ id: 'a-deman', oc: 'A deman !', sound: 'a dé-MA', fr: 'à demain !' }
+						{ id: 'a-deman', oc: 'A deman !', sound: 'a dé-MA', fr: 'à demain !' },
+						{ id: 'al-cop-que-ven', oc: 'Al còp que ven !', sound: 'al COP qué BÈN', fr: 'à la prochaine !' }
 					]
 				}
 			]
@@ -249,7 +253,7 @@ export const modul11 = {
 						{
 							ditz: { qui: 'Loís', oc: 'Cossí vas ?' },
 							q: 'Tu réponds :',
-							options: ['Va plan, mercé. E tu ?', 'Va plan, mercé. E vos ?', 'A lèu !'],
+							options: ['Va plan, mercés. E tu ?', 'Va plan, mercés. E vos ?', 'A lèu !'],
 							correct: 0,
 							oc: true,
 							choses: ['va-plan-e-tu'],
@@ -265,13 +269,13 @@ export const modul11 = {
 							explain: 'Le soir : *Bon ser*. Une voisine âgée, on la vouvoie : *Cossí anatz ?*'
 						},
 						{
-							ditz: { qui: 'Marià', oc: 'Va plan, mercé. E vos ?' },
+							ditz: { qui: 'Marià', oc: 'Va plan, mercés. E vos ?' },
 							q: 'Tu réponds :',
-							options: ['Va plan, plan mercé !', 'Cossí vas ?', 'Bonjorn !'],
+							options: ['Va plan, plan mercés !', 'Cossí vas ?', 'Bonjorn !'],
 							correct: 0,
 							oc: true,
 							choses: ['merce'],
-							explain: '*Plan mercé* : merci beaucoup, pour une réponse chaleureuse.'
+							explain: '*Plan mercés* : merci beaucoup, pour une réponse chaleureuse.'
 						},
 						{
 							ditz: { qui: 'Le marchand, le matin', oc: 'Bonjorn !' },
@@ -328,7 +332,7 @@ export const modul11 = {
 					items: [
 						{ consigne: 'À demain !', answers: ['A deman !'], choses: ['a-deman'] },
 						{ consigne: 'Demande à ton ami comment il va.', answers: ['Cossí vas ?'], choses: ['cossi-vas'] },
-						{ consigne: 'Réponds : ça va bien, merci.', answers: ['Va plan, mercé.'], choses: ['va-plan-e-tu', 'merce'] },
+						{ consigne: 'Réponds à *Cossí vas ?* : je vais bien, merci.', answers: ['Vau plan, mercés.', 'Va plan, mercés.'], choses: ['vau-plan', 'merce'] },
 						{ consigne: 'Le soir, salue en arrivant.', answers: ['Bon ser !'], choses: ['bon-ser'] },
 						{ consigne: 'Dis au revoir à un groupe d’amis.', answers: ['Adieu-siatz !'], choses: ['adieu-siatz'] },
 						{ consigne: 'À bientôt !', answers: ['A lèu !'], choses: ['a-leu'] }
@@ -340,10 +344,10 @@ export const modul11 = {
 					intro: 'Touche les mots dans l’ordre. Un mauvais mot tremble, rien de grave.',
 					items: [
 						{
-							prompt: 'Ça va bien, merci. Et toi ?',
-							tiles: ['Va', 'plan,', 'mercé.', 'E', 'tu ?'],
-							choses: ['va-plan-e-tu', 'merce'],
-							explain: '*Va plan, mercé. E tu ?* : répondre, puis retourner la question.'
+							prompt: 'Je vais bien, merci. Et toi ?',
+							tiles: ['Vau', 'plan,', 'mercés.', 'E', 'tu ?'],
+							choses: ['vau-plan', 'merce'],
+							explain: '*Vau plan, mercés. E tu ?* : répondre, puis retourner la question.'
 						},
 						{
 							prompt: 'Bonsoir ! Comment allez-vous ?',
@@ -361,11 +365,11 @@ export const modul11 = {
 					items: [
 						{
 							q: 'Le matin, avec un ami.',
-							a: 'Par exemple : *Bonjorn, Lisa ! · Adieu ! Cossí vas ? · Va plan, mercé. E tu ? · Va plan ! A lèu !*'
+							a: 'Par exemple : *Bonjorn, Lisa ! · Adieu ! Cossí vas ? · Vau plan, mercés. E tu ? · Va plan ! Al còp que ven !*'
 						},
 						{
 							q: 'Le soir, avec ta voisine âgée.',
-							a: 'Par exemple : *Bon ser ! Cossí anatz ? · Va plan, plan mercé. E vos ? · Va plan ! A deman ! · Adieu-siatz !*'
+							a: 'Par exemple : *Bon ser ! Cossí anatz ? · Va plan, plan mercés. E vos ? · Va plan ! A deman ! · Adieu-siatz !*'
 						}
 					]
 				}
