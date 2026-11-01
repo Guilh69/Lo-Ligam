@@ -72,8 +72,12 @@ jobs:
             ${{ env.REGISTRE }}/${{ env.IMATGE }}:${{ github.sha }}
           # Réutilise les couches d'une construction à l'autre : les
           # dépendances ne sont réinstallées que si package.json change.
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # 2026-11-01 : le cache GitHub (type=gha) faisait échouer la construction
+          # avec « DeadlineExceeded: context deadline exceeded » (déploiements
+          # n° 495 à 497). Désactivé : la construction repart de zéro à chaque
+          # envoi, un peu plus longue mais sûre.
+          # cache-from: type=gha
+          # cache-to: type=gha,mode=max
 
       # Mandar l'imatge basta pas : lo conteneire garda la version qu'a ja
       # cargada. Cal li demandar de tornar quèrre l'imatge « latest ».
