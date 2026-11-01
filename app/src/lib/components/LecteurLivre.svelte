@@ -38,7 +38,10 @@
 		if (!livreEl) return;
 		for (let k = Math.max(0, i - 2); k <= Math.min(total - 1, i + 6); k++) {
 			const img = livreEl.querySelector(`img[data-i="${k}"]`);
-			if (img && !img.src) img.src = url(k);
+			if (img && !img.src) {
+				img.src = url(k);
+				img.decode?.().catch(() => {});
+			}
 		}
 	}
 
@@ -194,8 +197,8 @@
 		}
 		reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		if (reduit) son = false;
-		if (son) preparerSons();
 		plenPossible = true;
+		performance.mark?.('livre-debut');
 		let mort = false;
 
 		(async () => {
@@ -205,6 +208,11 @@
 				PF = mod.PageFlip;
 				creer(0);
 				pret = true;
+				performance.mark?.('livre-pret');
+				const repos = window.requestIdleCallback ?? ((f) => setTimeout(f, 800));
+				repos(() => {
+					if (son) preparerSons();
+				}, { timeout: 3000 });
 			} catch {
 				erreur = true;
 			}
@@ -455,7 +463,10 @@
 	{/if}
 
 	<div class="scena" class:amagat={mode === 'tèxte'} role="group" aria-label={titol} aria-describedby="livre-aida">
-		{#if !pret && !erreur}<p class="cargament">{tria(t.cargar)}</p>{/if}
+		{#if !pret && !erreur}
+			<img class="affiche" src={url(0)} alt="" width="602" height="952" decoding="async" fetchpriority="high" />
+			<p class="sr" role="status">{tria(t.cargar)}</p>
+		{/if}
 		<div class="livre" bind:this={hoteEl}></div>
 		{#if plenPossible}
 			<button type="button" class="plen-bot" onclick={basculerPlenEcran} aria-label={plenEcran ? tria(t.sortir) : tria(t.plen)} title={plenEcran ? tria(t.sortir) : tria(t.plen)}>
@@ -775,6 +786,15 @@
 	.livre {
 		width: 100%;
 		max-width: 1500px;
+	}
+	.affiche {
+		display: block;
+		width: auto;
+		height: min(62vh, 640px);
+		aspect-ratio: 602 / 952;
+		margin: auto;
+		background: #fbf8f0;
+		box-shadow: 0 8px 26px color-mix(in srgb, #000 40%, transparent);
 	}
 	.cargament,
 	.err {
