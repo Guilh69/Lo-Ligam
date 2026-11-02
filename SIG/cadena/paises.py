@@ -10,7 +10,7 @@
 #     contorns (BAILLIAGES_1789_BRETTE.shp) e noms amb accents
 #     (BAILLIAGES_1789_BRETTE.txt, encodatge Windows-1252).
 #   - Los territòris fòra del reialme, fabricats per provincias.py (Avinhon, Comtat,
-#     comtat de Saut, Bidaishe, Niça, Mónegue, Aran, valadas d'Itàlia).
+#     comtat de Saut, Bidaishe, Niça, Monegue, Aran, valadas d'Itàlia).
 # Dintradas seguidas per Git :
 #   - SIG/provincias/taula-bailliages.csv : bailiatge -> província -> governament.
 #   - SIG/paises/taula-paises.csv : país atestat e nom occitan de cada unitat, amb

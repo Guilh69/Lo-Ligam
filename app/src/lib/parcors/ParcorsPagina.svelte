@@ -28,6 +28,7 @@
 	let fachas = $state({});
 	let fogassas = $state(0);
 	let prèst = $state(false);
+	let ambCompte = $state(false);
 	const parcors = $derived(estatParcors(etapas, fachas));
 	const simul = $derived(essai ? $page.url.searchParams.get('simul') : null);
 
@@ -51,6 +52,7 @@
 			if (!viu) return;
 			fachas = r.fachas;
 			fogassas = r.fogassas;
+			ambCompte = r.compte;
 			prèst = true;
 			// un compte sans profil passe d'abord par le questionnaire (comme avant)
 			if (!essai && s) {
@@ -158,13 +160,15 @@
 
 		{@render children({ parcors, admin: $esAdmin, glosa, lg })}
 
-		<p class="nota">
-			<Icona nom="persona" />
-			<span>
-				<span lang="oc">{NOTA_COMPTE.oc}</span>
-				<em lang={lg}>({glosa(NOTA_COMPTE)})</em>
-			</span>
-		</p>
+		{#if prèst && !ambCompte}
+			<p class="nota">
+				<Icona nom="persona" />
+				<span>
+					<span lang="oc">{NOTA_COMPTE.oc}</span>
+					<span class="glosa" lang={lg}>({glosa(NOTA_COMPTE)})</span>
+				</span>
+			</p>
+		{/if}
 	</main>
 </div>
 
@@ -196,6 +200,14 @@
 		max-width: calc(72rem + 2 * var(--marge));
 		margin: 0 auto;
 		padding: clamp(1.5rem, 5vh, 3.5rem) var(--marge) var(--esp-96);
+		--aur-pichon: var(--t-aur);
+	}
+	/* Thème clair : sur le dégradé chaud et les fonds teintés de l'en-tête,
+	   l'ocre des petits textes tombait à 3,4 à 4,3:1 (relecture de Joan,
+	   2026-11-02) ; un ocre plus sombre pour eux seuls (5,3 à 5,8:1, 4,6 sur
+	   la pastille des fogassas), les grands aplats gardent --t-aur */
+	:global([data-tema='clar']) .parcors {
+		--aur-pichon: #7d4700;
 	}
 	/* le temps de lire l'avancement : le chemin attend, sans clignoter */
 	.parcors.cargant :global(.camin-estat) {
@@ -223,10 +235,10 @@
 		font-size: 1rem;
 		text-decoration: none;
 	}
+	/* un petit chiffre : en Luciole (le zéro de Limelight se lit comme ◐) */
 	.ariana b {
-		font-family: var(--font-heading);
-		font-weight: 400;
-		color: var(--t-aur);
+		font-weight: 700;
+		color: var(--aur-pichon);
 	}
 	.ariana a:hover span,
 	.ariana a:focus-visible span {
@@ -279,7 +291,7 @@
 		font-size: 0.78rem;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
-		color: var(--t-aur);
+		color: var(--aur-pichon);
 	}
 	/* la glose sur sa ligne : « (Niveau A1 · Bloc 1 sur 2) » ne se coupe plus */
 	.sur .glosa {
@@ -321,9 +333,9 @@
 		font-size: 0.95rem;
 		color: var(--t-tinta-2);
 	}
+	/* en Luciole : « 0 moduls » se lisait « ◐ moduls » en Limelight */
 	.comptes b {
-		font-family: var(--font-heading);
-		font-weight: 400;
+		font-weight: 700;
 		font-size: 1.25rem;
 		color: var(--t-tinta);
 	}
@@ -335,7 +347,7 @@
 		padding: 0.2rem 0.7rem;
 		border-radius: 999px;
 		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
-		color: var(--t-aur);
+		color: var(--aur-pichon);
 		font-weight: 700;
 	}
 	.sr {
@@ -445,12 +457,19 @@
 		background: var(--t-fons);
 		color: var(--t-tinta-2);
 	}
+	/* petits sur téléphone : en Luciole ; Limelight quand ils deviennent
+	   de gros chiffres (plus bas) */
 	.nivels li b {
-		font-family: var(--font-heading);
-		font-weight: 400;
+		font-weight: 700;
 		font-size: clamp(1rem, 4.2cqi, 2.4rem);
 		line-height: 1;
 		color: var(--t-tinta);
+	}
+	@container parcors (min-width: 640px) {
+		.nivels li b {
+			font-family: var(--font-heading);
+			font-weight: 400;
+		}
 	}
 	.nivels li.actual {
 		border: 2px solid var(--t-aur);
@@ -458,7 +477,7 @@
 	}
 	.nivels li.actual b,
 	.pct {
-		color: var(--t-aur);
+		color: var(--aur-pichon);
 	}
 	.pct {
 		font-size: 0.85rem;
@@ -467,11 +486,14 @@
 		font-size: 0.72rem;
 	}
 
+	/* dans la colonne du chemin ; sans italique, la seule de la page, qui
+	   faisait charger une police de plus (44 Ko) */
 	.nota {
 		display: flex;
 		gap: var(--esp-12);
-		max-width: 40rem;
-		margin: 0;
+		width: 100%;
+		max-width: 52rem;
+		margin: 0 auto;
 		font-size: 0.88rem;
 		line-height: 1.5;
 		color: var(--t-tinta-2);
@@ -480,7 +502,10 @@
 		margin-top: 0.2em;
 		color: var(--t-aur);
 	}
-	.nota em {
+	.nota > span {
+		max-width: 40rem;
+	}
+	.nota .glosa {
 		display: block;
 	}
 

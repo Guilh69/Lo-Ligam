@@ -21,7 +21,7 @@ aran = ogr.CreateGeometryFromJson(json.dumps(aran['geometries'][0] if aran.get('
 valadas = valadas.Union(aran)
 # Frontièras d'Estat respectadas (retorn de Romain) : lo domeni s'arrèsta a la
 # França (union dels despartaments, Etalab), levat ont l'occitan es atestat
-# fòra de França : Val d'Aran e valadas d'Itàlia (Andòrra e Mónegue defòra)
+# fòra de França : Val d'Aran e valadas d'Itàlia (Andòrra e Monegue defòra)
 deps = json.load(open(RAIZ + '/app/static/data/departements.geojson', encoding='utf-8'))
 franca = None
 for f in deps['features']:
