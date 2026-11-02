@@ -3,7 +3,7 @@
 // Occitan passé par l'API de lo Congrès le 2026-11-02 (nivèl, blòc, sus,
 // contunhar, començar, siás, aicí, clavat, acaba, dobrir, fach, etapa,
 // fogassa ; clavada et facha vérifiés par Joan ; preparacion le même jour) :
-// à relire par Romain.
+// relu et validé par Romain le 2026-11-02, note du compte comprise.
 
 export const T = {
 	titol: { oc: 'Lo parcors', fr: 'Le parcours', es: 'El recorrido', en: 'The learning path', ca: 'El recorregut', ar: 'مسار التعلّم' },
@@ -22,7 +22,7 @@ export const T = {
 	fach: { oc: 'fach', fr: 'fait', es: 'hecho', en: 'done', ca: 'fet', ar: 'مكتمل' },
 	clavada: { oc: 'clavada', fr: 'fermée', es: 'cerrada', en: 'locked', ca: 'tancada', ar: 'مقفلة' },
 	facha: { oc: 'facha', fr: 'faite', es: 'hecha', en: 'done', ca: 'feta', ar: 'مكتملة' },
-	fogassas: { oc: 'fogassas', fr: 'fougasses', es: 'fogassas', en: 'fogassas', ca: 'fogasses', ar: 'فوغاسات' },
+	fogassas: { oc: 'fogassas', fr: 'fougasses', es: 'fougasses', en: 'fougasses', ca: 'fogasses', ar: 'فوغاسات' },
 	acabat: { oc: 'Nivèl A1 acabat, òsca !', fr: 'niveau A1 terminé, bravo !', es: '¡nivel A1 terminado, bravo!', en: 'level A1 complete, well done!', ca: 'nivell A1 acabat, enhorabona!', ar: 'أنهيت المستوى A1، أحسنت!' }
 };
 
