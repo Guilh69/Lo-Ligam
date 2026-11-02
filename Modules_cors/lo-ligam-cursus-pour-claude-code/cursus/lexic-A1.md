@@ -76,10 +76,10 @@ items: [
 
 ### 2.2 · `2-2` · *Parlas occitan ?* (Parles-tu occitan ?)
 
-**Forme du jour** : *parlar* et *comprene* au singulier ; la négation : *pas* après le verbe, rien devant.
+**Forme du jour** : *parlar* et *comprene* au singulier ; la négation, forme du livre (*Gramatica de l'occitan estandard*, p54) : *non* devant le verbe, *pas* après. Une ligne signale la forme familière, *pas* seul, à reconnaître (Romain, 2026-11-02).
 - *parlar* : *parli, parlas, parla* ✓
 - *comprene* : *compreni, comprenes, compren* ✓
-- *Parli pas catalan. Compreni pas.*
+- *Non parli pas catalan. Non compreni pas.*
 
 **À retenir** (7 items ; carte : 8) :
 
@@ -87,15 +87,15 @@ items: [
 items: [
 	{ id: 'parlar-singular', oc: 'parlar : parli · parlas · parla', sound: 'par-LA : PAR-li · PAR-los · PAR-lo', fr: 'parler : je parle · tu parles · il ou elle parle' },
 	{ id: 'comprene-singular', oc: 'comprene : compreni · comprenes · compren', sound: 'coum-PRÉ-né : coum-PRÉ-ni · coum-PRÉ-nés · coum-PRÉ(N)', fr: 'comprendre : je comprends · tu comprends · il ou elle comprend' },
-	{ id: 'pas', oc: 'Parli pas… · Compreni pas.', sound: 'PAR-li PAS · coum-PRÉ-ni PAS', fr: 'je ne parle pas… · je ne comprends pas. (*pas* après le verbe, et rien devant)' },
+	{ id: 'pas', oc: 'Non parli pas… · Non compreni pas.', sound: 'nou PAR-li PAS · nou coum-PRÉ-ni PAS', fr: 'je ne parle pas… · je ne comprends pas. (*non* devant le verbe, *pas* après)' },
 	{ id: 'un-pauc-plan', oc: 'un pauc · plan', sound: 'un PAOUK · PLA', fr: 'un peu · bien (*Parli un pauc occitan. Compreni plan.*)' },
-	{ id: 'mas', oc: 'mas', sound: 'MAS', fr: 'mais (*Compreni, mas parli pas.*)' },
+	{ id: 'mas', oc: 'mas', sound: 'MAS', fr: 'mais (*Compreni, mas non parli pas.*)' },
 	{ id: 'tanben', oc: 'tanben', sound: 'tam-BÉ', fr: 'aussi (*Parli tanben catalan.*)' },
 	{ id: 'la-lenga', oc: 'la lenga', sound: 'la LÉN-go', fr: 'la langue' }
 ]
 ```
 
-**Vérification** : ✓ parlar, pauc, plan, mas, tanben, lenga, pas (Basic) ; parli, parlas, parla, comprene, compreni, comprenes, compren (vèrb'Òc).
+**Vérification** : ✓ parlar, pauc, plan, mas, tanben, lenga, non, pas (Basic) ; parli, parlas, parla, comprene, compreni, comprenes, compren (vèrb'Òc).
 **À gloser en passant** : les phrases du jeu « l'oreille des pays » (gascon, provençal) : `glosa`, voir `alhors-en-occitania-A1.md`.
 **Son du jour** : *é* fermé, *è* ouvert ; sans accent, *e* est fermé : *francés* « fran-SÉS », *mercés* « mér-SÉS », *deman* « dé-MA » ; *Besièrs* « bé-ZYÈS », *lèu* « LÈOU ».
 **Spirale** : les nationalités de 2.1 deviennent des langues au masculin (*Parli francés*) ; `va-plan-e-tu` (*plan*) ; `demori-a`.
@@ -112,7 +112,7 @@ items: [
 	{ id: 'cossi-se-ditz', oc: 'Cossí se ditz… en occitan ?', sound: 'cou-si sé DITS… én ou-tsi-TA', fr: 'comment dit-on… en occitan ?' },
 	{ id: 'que-vol-dire', oc: 'Qué vòl dire… ?', sound: 'ké BÒL DI-ré', fr: 'que veut dire… ?' },
 	{ id: 'podes-repetir', oc: 'Pòdes repetir, se te plai ?', sound: 'PÒ-dés ré-pé-TI, sé té PLAÏ', fr: 'tu peux répéter, s’il te plaît ?' },
-	{ id: 'sabi-pas', oc: 'Sabi pas.', sound: 'SA-bi PAS', fr: 'je ne sais pas.' },
+	{ id: 'sabi-pas', oc: 'Non sabi pas.', sound: 'nou SA-bi PAS', fr: 'je ne sais pas.' },
 	{ id: 'qui-es', oc: 'Qui es ?', sound: 'ki ÉS', fr: 'qui est-ce ? (on attend un nom : *Es Loís*)' },
 	{ id: 'qual-es', oc: 'Qual es ?', sound: 'kal ÉS', fr: 'qui est-ce ? (on attend ce qu’est la personne, son rôle)' },
 	{ id: 'quin-quina', oc: 'Quin… ? · Quina… ?', sound: 'KI(N) · KI-no', fr: 'quel… ? · quelle… ? (*Quina lenga parlas ?*)' },
@@ -122,7 +122,7 @@ items: [
 
 **Vérification** : ✓ qué, aquò, dire, vòl, repetir, qui, qual, quin, quina (Basic) ; ditz, pòdes, plai, sabi (vèrb'Òc) ; *se, en, te, o* : outils.
 **Son du jour** : la voix qui monte dans la question sans mot pour questionner : *Parlas occitan ?*, *Siás occitana ?*, *Comprenes ?*, *Pòdes repetir ?*
-**Spirale** : `comprene-singular`, `pas` (*Compreni pas. Pòdes repetir ?*) ; `cossi-te-dison` (*cossí*) ; `d-ont-sias`, `ont-demoras` (*ont*).
+**Spirale** : `comprene-singular`, `pas` (*Non compreni pas. Pòdes repetir ?*) ; `cossi-te-dison` (*cossí*) ; `d-ont-sias`, `ont-demoras` (*ont*).
 
 ### 2.4 · `2-4` · tâche · titre proposé *Quina lenga parla ?* (Quelle langue parle-t-il, parle-t-elle ?)
 
@@ -217,8 +217,8 @@ items: [
 items: [
 	{ id: 'aver-singular', oc: 'aver : ai · as · a', sound: 'a-BÉ : AÏ · AS · A', fr: 'avoir : j’ai · tu as · il ou elle a' },
 	{ id: 'un-una-article', oc: 'un fraire · una sòrre', sound: 'un FRAÏ-ré · U-no SÒ-rré', fr: 'un frère · une sœur (*un, una* : comme le nombre 1)' },
-	{ id: 'i-a', oc: 'I a… · I a pas de…', sound: 'YA · ya PAS dé', fr: 'il y a… · il n’y a pas de…' },
-	{ id: 'ai-pas-de', oc: 'Ai pas de can.', sound: 'aï PAS dé CA', fr: 'je n’ai pas de chien. (après *pas*, on dit *de*)' },
+	{ id: 'i-a', oc: 'I a… · Non i a pas de…', sound: 'YA · nou ya PAS dé', fr: 'il y a… · il n’y a pas de…' },
+	{ id: 'ai-pas-de', oc: 'Non ai pas de can.', sound: 'nou aï PAS dé CA', fr: 'je n’ai pas de chien. (après *pas*, on dit *de*)' },
 	{ id: 'lo-can', oc: 'lo can', sound: 'lou CA', fr: 'le chien' },
 	{ id: 'lo-cat', oc: 'lo cat · la cata', sound: 'lou CAT · la CA-to', fr: 'le chat · la chatte' },
 	{ id: 'l-aucel', oc: 'l’aucèl', sound: 'laou-SÈL', fr: 'l’oiseau' },
@@ -423,7 +423,7 @@ items: [
 	{ id: 'poder-singular', oc: 'poder : pòdi · pòdes · pòt', sound: 'pou-DÉ : PÒ-di · PÒ-dés · PÒT', fr: 'pouvoir : je peux · tu peux · il ou elle peut' },
 	{ id: 'volriai', oc: 'Volriái…', sound: 'boul-RYOÏ', fr: 'je voudrais… (plus poli que *Vòli*)' },
 	{ id: 'se-vos-plai', oc: 'Se vos plai.', sound: 'sé bous PLAÏ', fr: 's’il vous plaît. (à un ami : *se te plai*)' },
-	{ id: 'm-agrada', oc: 'M’agrada… · M’agradan… · T’agrada ?', sound: 'ma-GRA-do · ma-GRA-don · ta-GRA-do', fr: 'j’aime… (une chose) · j’aime… (plusieurs) · tu aimes ? (*M’agrada pas* : je n’aime pas)' },
+	{ id: 'm-agrada', oc: 'M’agrada… · M’agradan… · T’agrada ?', sound: 'ma-GRA-do · ma-GRA-don · ta-GRA-do', fr: 'j’aime… (une chose) · j’aime… (plusieurs) · tu aimes ? (*Non m’agrada pas* : je n’aime pas)' },
 	{ id: 'quicom-mai', oc: 'Quicòm mai ? · Es tot.', sound: 'ki-CÒM MAÏ · és TOUT', fr: 'autre chose ? · c’est tout.' },
 	{ id: 'de-res', oc: 'Mercés ! · De res.', sound: 'mér-SÉS · dé RÉS', fr: 'merci ! · de rien.' }
 ]
@@ -723,7 +723,7 @@ Aucun mot nouveau. Lire une affiche de fête : jours (4.3), heures (6.1), prix (
 | *e* (et), *a* (à), *al* (bloc), *que* (seulement dans *Al còp que ven*) | 1.1 | | *amb* (avec) | 4.3 |
 | *de, d', del* (bloc) ; *lo, la* ; *ont* ; *aquí* | 1.3 | | *dins* | 4.2 (bloc), 7.1 |
 | *òc, non* ; *el, ela* | 2.1 | | *sus, sul, jos, davant, darrièr, entre, al costat de* ; *al, del, als, dels* expliqués | 7.2 |
-| *pas, mas, tanben, un pauc* | 2.2 | | *puèi, totjorn, ara, uèi* | 6.1 à 6.3 |
+| *non… pas, mas, tanben, un pauc* | 2.2 | | *puèi, totjorn, ara, uèi* | 6.1 à 6.3 |
 | *qué, qual, quin, quina, aquò, o* (ou), *en*, *se* | 2.3 | | *son* (ils sont) | 6.1 |
 | *quant* (bloc) ; *un, una* | 3.1 | | *i* (y) ; *anar* | 8.2 (*i* dès 3.3 dans *i a*) |
 | *l', los, las* ; *mon, ma, ton, ta* | 3.2 | | *per* (pour) | 8.3 |

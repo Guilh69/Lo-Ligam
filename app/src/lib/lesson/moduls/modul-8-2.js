@@ -109,7 +109,7 @@ export const modul82 = {
 								{ oc: 'Adieu, Núria ! Soi a la gara. E tu, ont siás ?', sound: 'a-DIOU, NOU-ria ! souï a la GA-ro. é TU, oun SYOS ?', fr: 'Salut, Núria ! Je suis à la gare. Et toi, où es-tu ?' },
 								{ oc: 'Al mercat, amb Yasmine. Benvenguda a Tolosa !', sound: 'al mér-CAT, am yas-MI-ne. bém-bén-GU-do a tou-LOU-zo !', fr: 'Au marché, avec Yasmine. Bienvenue à Toulouse !' },
 								{ oc: 'Mercés ! Lo mercat… Cossí i vau ?', sound: 'mér-SÉS ! lou mér-CAT… cou-si i BAOU ?', fr: 'Merci ! Le marché… Comment j’y vais ?' },
-								{ oc: 'Es pas luènh : i vas a pè. Tot drech, e pren la segonda carrièra a esquèrra.', sound: 'és pas LUÈN : i BAS a PÈ. tout DRÉTCH, é PRÉ(N) la sé-GOUN-do ca-RRYÈ-ro a es-KÈ-rro.', fr: 'Ce n’est pas loin : tu y vas à pied. Tout droit, et prends la deuxième rue à gauche.' },
+								{ oc: 'Non es pas luènh : i vas a pè. Tot drech, e pren la segonda carrièra a esquèrra.', sound: 'nou és pas LUÈN : i BAS a PÈ. tout DRÉTCH, é PRÉ(N) la sé-GOUN-do ca-RRYÈ-ro a es-KÈ-rro.', fr: 'Ce n’est pas loin : tu y vas à pied. Tout droit, et prends la deuxième rue à gauche.' },
 								{ oc: 'La primièra a esquèrra ?', sound: 'la pri-MYÈ-ro a es-KÈ-rro ?', fr: 'La première à gauche ?' },
 								{ oc: 'Non, la segonda ! A la primièra, i a una botiga.', sound: 'NOU, la sé-GOUN-do ! a la pri-MYÈ-ro, YA U-no bou-TI-go.', fr: 'Non, la deuxième ! À la première, il y a une boutique.' },
 								{ oc: 'Òc : la segonda a esquèrra. A lèu !', sound: 'OK : la sé-GOUN-do a es-KÈ-rro. a LÈOU !', fr: 'Oui : la deuxième à gauche. À bientôt !' }
@@ -125,7 +125,7 @@ export const modul82 = {
 								{ oc: 'Òc ! Mas cossí i vau ?', sound: 'OK ! mas cou-si i BAOU ?', fr: 'Oui ! Mais comment j’y vais ?' },
 								{ oc: 'Es prèp : tot drech, puèi vira a esquèrra.', sound: 'és PRÈP : tout DRÉTCH, PUÈÏ BI-ro a es-KÈ-rro.', fr: 'C’est près : tout droit, puis tourne à gauche.' },
 								{ oc: 'E Lisa e Núria ?', sound: 'é LI-zo é NOU-ria ?', fr: 'Et Lisa et Núria ?' },
-								{ oc: 'Elas tanben ! I anatz a pè : es pas luènh.', sound: 'É-los tam-BÉ ! i a-NATS a PÈ : és pas LUÈN.', fr: 'Elles aussi ! Vous y allez à pied : ce n’est pas loin.' },
+								{ oc: 'Elas tanben ! I anatz a pè : non es pas luènh.', sound: 'É-los tam-BÉ ! i a-NATS a PÈ : nou és pas LUÈN.', fr: 'Elles aussi ! Vous y allez à pied : ce n’est pas loin.' },
 								{ oc: 'A miègjorn, Karim !', sound: 'a myèd-DJOUR, ka-RIM !', fr: 'À midi, Karim !' }
 							]
 						}
@@ -145,7 +145,7 @@ export const modul82 = {
 							options: ['à pied : ce n’est pas loin', 'en bus : c’est loin', 'avec Karim, en voiture'],
 							correct: 0,
 							choses: ['a-pe', 'cossi-i-vau'],
-							explain: '*I vas a pè* : tu y vas à pied. *Es pas luènh* : ce n’est pas loin.'
+							explain: '*I vas a pè* : tu y vas à pied. *Non es pas luènh* : ce n’est pas loin.'
 						},
 						{
 							q: 'Pour aller au marché, Lisa prend…',
@@ -384,7 +384,7 @@ export const modul82 = {
 						},
 						{
 							q: 'Et toi : de chez toi jusqu’à la place, ou jusqu’à la gare ?',
-							a: 'Par exemple : *Vau a la gara a pè. Tot drech, puèi pren la segonda carrièra a esquèrra. Es pas luènh !*'
+							a: 'Par exemple : *Vau a la gara a pè. Tot drech, puèi pren la segonda carrièra a esquèrra. Non es pas luènh !*'
 						}
 					]
 				}

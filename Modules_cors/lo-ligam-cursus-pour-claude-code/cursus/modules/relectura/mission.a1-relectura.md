@@ -12,7 +12,7 @@ Mission A1 au format du DCL (lire, écouter, parler, écrire). Générée depuis
 | Dissabte, soi a la gara a onze oras e mièja. | Samedi, je suis à la gare à onze heures et demie. |
 | La fèsta, es luènh de la gara ? Cossí i vau ? | La fête, c’est loin de la gare ? Comment j’y vais ? |
 | M’agrada lo balèti… e canti dins una corala ! | J’aime le bal… et je chante dans une chorale ! |
-| Mas lo caçolet… m’agrada pas. | Mais le cassoulet… je n’aime pas. |
+| Mas lo caçolet… non m’agrada pas. | Mais le cassoulet… je n’aime pas. |
 | Dimenge, a doas oras, vau a la gara. | Dimanche, à deux heures, je vais à la gare. |
 | E quin temps fa, al vilatge ? | Et quel temps fait-il, au village ? |
 | Mercés, e a dissabte ! | Merci, et à samedi ! |
@@ -32,7 +32,7 @@ En gras : ce qui entre dans le carnet. Sans gras : expliqué en passant (glossai
 
 Elles ne répondent pas à la question, mais l’élève les lit : elles doivent rester du bon occitan.
 
-*Dissabte, lo caçolet a miègjorn, e lo balèti a nòu oras. Dimenge, lo rugbi a tres oras.* · *Dissabte, lo mercat a dètz oras, e la corala a quatre oras. Dimenge, lo rugbi a tres oras.* · *Cinc oras.* · *Cinquanta euros.* · *Fa bèl ! Lo balèti es sus la plaça.* · *Plòu… e i a pas de balèti.* · *Compreni pas.* · *Dimenge, a tres oras, i a lo rugbi.* · *Òc, es luènh : al costat de la glèisa.* · *Non, es prèp : jos la glèisa.* · *De res ! A dimenge, Giulia !* · *Mercés ! Adieu-siatz, Giulia !*
+*Dissabte, lo caçolet a miègjorn, e lo balèti a nòu oras. Dimenge, lo rugbi a tres oras.* · *Dissabte, lo mercat a dètz oras, e la corala a quatre oras. Dimenge, lo rugbi a tres oras.* · *Cinc oras.* · *Cinquanta euros.* · *Fa bèl ! Lo balèti es sus la plaça.* · *Plòu… e non i a pas de balèti.* · *Non compreni pas.* · *Dimenge, a tres oras, i a lo rugbi.* · *Òc, es luènh : al costat de la glèisa.* · *Non, es prèp : jos la glèisa.* · *De res ! A dimenge, Giulia !* · *Mercés ! Adieu-siatz, Giulia !*
 
 ## Mots que l’outil n’a pas confirmés
 
@@ -43,5 +43,5 @@ Aucun : tout est connu de lo Basic ou de vèrb’Òc (un ✓ ne valide ni le sen
 1. Sur l’affiche, la condition passe par une question : *Plòu ? Lo balèti es dins la sala del vilatge.* (*se* au sens de « si » n’est pas enseigné à l’A1). D’accord ?
 2. *A dissabte !* (à samedi !) pour finir un message : d’accord ?
 3. Dans son message, Giulia dit *Dissabte, soi a la gara a onze oras e mièja* (« je suis à la gare » pour « j’arrive », le verbe *arribar* n’étant pas enseigné à l’A1) : d’accord ?
-4. Giulia n’aime pas le cassoulet (*Mas lo caçolet… m’agrada pas.*) : la touche d’humour te va ?
+4. Giulia n’aime pas le cassoulet (*Mas lo caçolet… non m’agrada pas.*) : la touche d’humour te va ?
 5. La dernière note propose de présenter la mission en visio, avec toi dans le rôle de Giulia : d’accord ?

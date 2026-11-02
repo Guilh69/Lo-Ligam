@@ -447,10 +447,10 @@ export const modul61 = {
 						},
 						{
 							consigne: 'Et toi ? À quelle heure travailles-tu, ou étudies-tu ? Commence par *Trabalhi a…* (ou bien : je ne travaille pas).',
-							answers: ['Trabalhi pas.'],
+							answers: ['Non trabalhi pas.'],
 							debut: ['Trabalhi a', 'Lo matin, trabalhi a', 'Ieu, trabalhi a'],
 							choses: ['a-quina-ora', 'trabalhar'],
-							explain: 'Par exemple : *Trabalhi a nòu oras.* Ou *Trabalhi pas.*'
+							explain: 'Par exemple : *Trabalhi a nòu oras.* Ou *Non trabalhi pas.*'
 						},
 						{
 							consigne: 'Ton voisin part travailler. Souhaite-lui une bonne journée.',

@@ -74,9 +74,9 @@ export const modul52 = {
 						},
 						{
 							consigne: 'Il n’y a pas de lait.',
-							answers: ['I a pas de lach.'],
+							answers: ['Non i a pas de lach.'],
 							choses: ['i-a', 'lo-lach'],
-							explain: '*I a pas de lach* : chez Yasmine, des poules, pas de vaches.'
+							explain: '*Non i a pas de lach* : chez Yasmine, des poules, pas de vaches.'
 						},
 						{
 							consigne: 'Écris en lettres : 20',

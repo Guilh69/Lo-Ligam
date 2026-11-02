@@ -64,11 +64,11 @@ export const modul74 = {
 							explain: '*la pòrta* : féminin, donc *verda*, « BÉR-do ».'
 						},
 						{
-							q: '*I a pas de fenèstra dins la sala de banh.* Dans la salle de bain…',
+							q: '*Non i a pas de fenèstra dins la sala de banh.* Dans la salle de bain…',
 							options: ['il n’y a pas de fenêtre', 'il y a une fenêtre', 'il n’y a pas de porte'],
 							correct: 0,
 							choses: ['la-fenestra', 'la-sala-de-banh', 'i-a'],
-							explain: '*I a pas de…* : il n’y a pas de…'
+							explain: '*Non i a pas de…* : il n’y a pas de…'
 						}
 					]
 				},
@@ -111,7 +111,7 @@ export const modul74 = {
 							subtitle: '(Marià pose la question à chacun)',
 							lines: [
 								{ oc: 'Karim, e ton ostal, a Tolosa ?', sound: 'ka-RIM, é toun ous-TAL, a tou-LOU-zo ?', fr: 'Karim, et ta maison, à Toulouse ?' },
-								{ oc: 'Demòri amb dos amics. I a tres cambras, una cosina e una sala… mas i a pas de jardin !', sound: 'dé-MÒ-ri am dou-za-MITS. ya TRÉS CAM-bros, U-no cou-ZI-no é U-no SA-lo… mas ya PAS dé djar-DI !', fr: 'J’habite avec deux amis. Il y a trois chambres, une cuisine et un séjour… mais il n’y a pas de jardin !' },
+								{ oc: 'Demòri amb dos amics. I a tres cambras, una cosina e una sala… mas non i a pas de jardin !', sound: 'dé-MÒ-ri am dou-za-MITS. ya TRÉS CAM-bros, U-no cou-ZI-no é U-no SA-lo… mas nou ya PAS dé djar-DI !', fr: 'J’habite avec deux amis. Il y a trois chambres, une cuisine et un séjour… mais il n’y a pas de jardin !' },
 								{ oc: 'E tu, Núria ?', sound: 'é TU, NOU-ria ?', fr: 'Et toi, Núria ?' },
 								{ oc: 'Ieu, demòri dins una cambra, a Tolosa. Es pichona, mas la fenèstra es granda.', sound: 'YÉOU, dé-MÒ-ri dins U-no CAM-bro, a tou-LOU-zo. és pi-TCHOU-no, mas la fé-NÈS-tro és GRAN-do.', fr: 'Moi, j’habite dans une chambre, à Toulouse. Elle est petite, mais la fenêtre est grande.' },
 								{ oc: 'E tu, Lisa ?', sound: 'é TU, LI-zo ?', fr: 'Et toi, Lisa ?' },
@@ -175,7 +175,7 @@ export const modul74 = {
 					rows: [
 						['où tu habites', '*Demòri a Montpelhièr, dins un apartament.*'],
 						['avec qui', '*Demòri amb dos amics.* · *amb mon companh*'],
-						['ce qu’il y a, et ce qu’il n’y a pas', '*I a tres cambras.* · *I a pas de jardin.*'],
+						['ce qu’il y a, et ce qu’il n’y a pas', '*I a tres cambras.* · *Non i a pas de jardin.*'],
 						['comment c’est', '*La cosina es blava.* · *Lo jardin es grand.*'],
 						['deux idées à la fois', '*Es pichona, mas la fenèstra es granda.*']
 					],
@@ -215,11 +215,11 @@ export const modul74 = {
 						},
 						{
 							q: 'Karim dit qu’il n’a pas de jardin :',
-							options: ['I a pas de jardin.', 'Es pas un jardin.', 'I a un jardin.'],
+							options: ['Non i a pas de jardin.', 'Non es pas un jardin.', 'I a un jardin.'],
 							correct: 0,
 							oc: true,
 							choses: ['i-a', 'lo-jardin'],
-							explain: '*I a pas de…* : il n’y a pas de… *Es pas un jardin*, ce serait « ce n’est pas un jardin ».'
+							explain: '*Non i a pas de…* : il n’y a pas de… *Non es pas un jardin*, ce serait « ce n’est pas un jardin ».'
 						}
 					]
 				},
@@ -230,7 +230,7 @@ export const modul74 = {
 					items: [
 						{
 							prompt: 'J’habite à Toulouse, avec deux amis. Il y a trois chambres, une cuisine et un séjour, mais il n’y a pas de jardin.',
-							tiles: ['Demòri a Tolosa,', 'amb dos amics.', 'I a tres cambras,', 'una cosina e una sala,', 'mas i a pas de jardin.'],
+							tiles: ['Demòri a Tolosa,', 'amb dos amics.', 'I a tres cambras,', 'una cosina e una sala,', 'mas non i a pas de jardin.'],
 							choses: ['la-cambra', 'i-a', 'lo-jardin'],
 							explain: 'Où, avec qui, ce qu’il y a, ce qu’il n’y a pas : tout le logement de Karim.'
 						},
@@ -316,7 +316,7 @@ export const modul74 = {
 							options: [
 								{ oc: 'Pòdes repetir, se te plai ?', bon: true },
 								{ oc: 'Òc, òc…', reaccion: 'Núria continue en français, ravie… et la visite aussi passe au français. Demande-lui plutôt de répéter : elle le fera en occitan.' },
-								{ oc: 'Sabi pas.', reaccion: 'Núria, gentille, réexplique tout en français. Demande-lui plutôt de répéter : elle le fera en occitan, plus lentement.' }
+								{ oc: 'Non sabi pas.', reaccion: 'Núria, gentille, réexplique tout en français. Demande-lui plutôt de répéter : elle le fera en occitan, plus lentement.' }
 							],
 							choses: ['podes-repetir'],
 							explain: 'Pour rester en occitan : *Pòdes repetir, se te plai ?*'
@@ -324,22 +324,22 @@ export const modul74 = {
 						{
 							ditz: 'As un can ? Un cat ?',
 							options: [
-								{ oc: 'Ai pas de can. Mas ai una cata negra.', bon: true },
-								{ oc: 'Ai pas de can. Mas ai una cata negre.', reaccion: 'Núria comprend… mais *la cata* est féminine : *negra*.' },
+								{ oc: 'Non ai pas de can. Mas ai una cata negra.', bon: true },
+								{ oc: 'Non ai pas de can. Mas ai una cata negre.', reaccion: 'Núria comprend… mais *la cata* est féminine : *negra*.' },
 								{ oc: 'Ai un can negre.', reaccion: 'Núria recule d’un pas : un chien ? Chez toi, il n’y en a pas : seulement une chatte noire.' }
 							],
 							choses: ['ai-pas-de', 'negre-negra'],
-							explain: '*Ai pas de can* (unité 3) ; *una cata negra* : la couleur au féminin.'
+							explain: '*Non ai pas de can* (unité 3) ; *una cata negra* : la couleur au féminin.'
 						},
 						{
 							ditz: 'E i a un jardin ?',
 							options: [
-								{ oc: 'Non, i a pas de jardin.', bon: true },
+								{ oc: 'Non i a pas de jardin.', bon: true },
 								{ oc: 'Òc, i a un jardin.', reaccion: 'Núria se voit déjà au soleil… Mais chez toi, pas de jardin.' },
-								{ oc: 'Non, i a un jardin.', reaccion: 'Núria fronce les sourcils : non, ou oui ? Si c’est non : *I a pas de jardin.*' }
+								{ oc: 'Non, i a un jardin.', reaccion: 'Núria fronce les sourcils : non, ou oui ? Si c’est non : *Non i a pas de jardin.*' }
 							],
 							choses: ['i-a', 'lo-jardin'],
-							explain: '*I a pas de jardin* : après *pas*, on dit *de*.'
+							explain: '*Non i a pas de jardin* : après *pas*, on dit *de*.'
 						},
 						{
 							ditz: 'Mercés ! A deman ?',
@@ -400,10 +400,10 @@ export const modul74 = {
 							explain: 'Par exemple : *I a doas cambras, una cosina e una sala de banh.*'
 						},
 						{
-							consigne: '4. Ce qu’il n’y a pas : *I a pas de…*',
-							debut: ['I a pas de', 'I a pas d’'],
+							consigne: '4. Ce qu’il n’y a pas : *Non i a pas de…*',
+							debut: ['Non i a pas de', 'Non i a pas d’'],
 							choses: ['i-a'],
-							explain: 'Par exemple : *I a pas de jardin.* · *I a pas de canapè !*'
+							explain: 'Par exemple : *Non i a pas de jardin.* · *Non i a pas de canapè !*'
 						},
 						{
 							consigne: '5. Où est une pièce ? *al costat de…*, *davant…*, *darrièr…*',
@@ -437,7 +437,7 @@ export const modul74 = {
 					items: [
 						{
 							q: 'Quand tu as fini, et pas avant, regarde la description de Karim.',
-							a: '*Demòri a Tolosa, dins un apartament. Demòri amb dos amics. I a tres cambras, una cosina e una sala. I a pas de jardin ! Ma cambra es al costat de la sala de banh. La cosina es jauna. L’apartament es vièlh, mas lo canapè es nòu. Benvengut dins l’ostal, Loís !*'
+							a: '*Demòri a Tolosa, dins un apartament. Demòri amb dos amics. I a tres cambras, una cosina e una sala. Non i a pas de jardin ! Ma cambra es al costat de la sala de banh. La cosina es jauna. L’apartament es vièlh, mas lo canapè es nòu. Benvengut dins l’ostal, Loís !*'
 						}
 					]
 				},
@@ -447,7 +447,7 @@ export const modul74 = {
 					title: 'Critères de réussite',
 					items: [
 						'huit phrases : où, avec qui, ce qu’il y a et ce qu’il n’y a pas, où sont les pièces, une couleur, une taille',
-						'*I a…*, et *I a pas de…*',
+						'*I a…*, et *Non i a pas de…*',
 						'les petits mots soudés : *al costat del lièch*, mais *al costat de la sala*',
 						'le féminin : *la cosina es jauna*, *la cambra es granda*',
 						'la prononciation : le *l* final de *ostal*, le *d* muet de *grand*'
@@ -548,7 +548,7 @@ export const modul74 = {
 					head: ['pour…', 'tu dis'],
 					rows: [
 						['demander ce qu’il y a', '*Qué i a dins l’ostal ?* · *I a una cosina.*'],
-						['dire ce qu’il n’y a pas', '*I a pas de jardin.*'],
+						['dire ce qu’il n’y a pas', '*Non i a pas de jardin.*'],
 						['faire visiter', '*Aquí, i a la sala.*'],
 						['demander où est une chose', '*Ont es Mimí ?* · *Es jos la taula.*'],
 						['dire où sont les choses', '*sus* · *jos* · *davant* · *darrièr* · *al costat de* · *entre*'],

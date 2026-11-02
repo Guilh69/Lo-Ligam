@@ -25,32 +25,59 @@ export function sensAccents(texte) {
 		.trim();
 }
 
+// La négation s'enseigne sous la forme du livre, « non… pas » (Gramatica de
+// l'occitan estandard, p54). Sa forme familière, « pas » sans « non » (Parli
+// pas), est juste aussi, sans remarque (Romain, 2026-11-02, cahier §11) :
+// une réponse en « non… pas » accepte chaque « non » retiré ou gardé.
+const NEGACION = /(?<!\p{L})non (?=[^,.;:!?…]*(?<!\p{L})pas(?!\p{L}))/giu;
+export function formas(r) {
+	const posicions = [...r.matchAll(NEGACION)].map((m) => m.index);
+	if (!posicions.length || posicions.length > 3) return [r];
+	const formas = [];
+	for (let tria = 0; tria < 2 ** posicions.length; tria++) {
+		// Chaque « non » choisi par les bits de « tria » est retiré (de droite à gauche).
+		let f = r;
+		for (let i = posicions.length - 1; i >= 0; i--) {
+			if (tria & (1 << i)) f = f.slice(0, posicions[i]) + f.slice(posicions[i] + 'non '.length);
+		}
+		// « Non parli pas » → « Parli pas » : la majuscule passe au verbe.
+		if (/^\p{Lu}/u.test(r) && /^\p{Ll}/u.test(f)) f = f[0].toUpperCase() + f.slice(1);
+		formas.push(f);
+	}
+	return formas;
+}
+
 // Compare la saisie aux réponses attendues de l'item.
 //   item.answers : réponses complètes acceptées (la première sert de modèle)
 //   item.debut   : débuts acceptés, suivis de ce que l'élève veut (son nom,
 //                  sa ville…) : « Me dison » + n'importe quel prénom
-// Renvoie { statut: 'just' | 'quasi' | 'non', modele }.
+// Renvoie { statut: 'just' | 'quasi' | 'non', modele }, et debut: true quand
+// c'est un début qui a répondu.
 export function corregir(saisie, item) {
 	const brut = netejar(saisie);
 	if (!brut) return { statut: 'non', modele: null };
 	const plat = sensAccents(saisie);
+	// « Non, non ai pas de can » : la réponse, puis la négation ; juste aussi.
+	const bruts = [brut, brut.replace(/^non non /, 'non ')];
+	const answers = (item.answers ?? []).flatMap(formas);
+	const debuts = (item.debut ?? []).flatMap(formas);
 
-	for (const r of item.answers ?? []) {
-		if (netejar(r) === brut) return { statut: 'just', modele: r };
+	for (const r of answers) {
+		if (bruts.includes(netejar(r))) return { statut: 'just', modele: r };
 	}
-	for (const r of item.answers ?? []) {
+	for (const r of answers) {
 		if (sensAccents(r) === plat) return { statut: 'quasi', modele: r };
 	}
 	// Un début qui finit par une apostrophe (« Soi d’ ») se colle à la suite
 	// (« Soi d’Albi ») ; sinon, une espace sépare le début du reste.
 	const suite = (n) => (/['’]$/.test(n) ? n : n + ' ');
-	for (const d of item.debut ?? []) {
+	for (const d of debuts) {
 		const n = suite(netejar(d));
-		if (brut.startsWith(n) && brut.length > n.length) return { statut: 'just', modele: d };
+		if (bruts.some((b) => b.startsWith(n) && b.length > n.length)) return { statut: 'just', modele: d, debut: true };
 	}
-	for (const d of item.debut ?? []) {
+	for (const d of debuts) {
 		const n = suite(sensAccents(d));
-		if (plat.startsWith(n) && plat.length > n.length) return { statut: 'quasi', modele: d };
+		if (plat.startsWith(n) && plat.length > n.length) return { statut: 'quasi', modele: d, debut: true };
 	}
 	return { statut: 'non', modele: item.answers?.[0] ?? item.debut?.[0] ?? null };
 }

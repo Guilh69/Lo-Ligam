@@ -278,7 +278,7 @@ export const modulPausa4 = {
 								'Le serveur arrive. Il a entendu de l’occitan, mais il passe au français, vite : « Bonjour ! Alors, deux cafés, c’est ça ? »',
 							options: [
 								{ oc: 'Non : per ieu, un cafè ; per el, un suc de fruta, se vos plai.', bon: true },
-								{ oc: 'Compreni pas.', reaccion: 'Le serveur répète en français, plus fort… et la conversation passe au français. Tu avais pourtant compris : réponds-lui en occitan !' },
+								{ oc: 'Non compreni pas.', reaccion: 'Le serveur répète en français, plus fort… et la conversation passe au français. Tu avais pourtant compris : réponds-lui en occitan !' },
 								{ oc: 'Òc, òc…', reaccion: 'Le serveur apporte deux cafés. Jordi fait la grimace : il voulait un jus de fruit.' }
 							],
 							choses: ['per-ieu', 'un-cafe', 'suc-de-fruta', 'se-vos-plai'],

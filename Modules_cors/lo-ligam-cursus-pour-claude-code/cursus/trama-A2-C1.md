@@ -183,7 +183,7 @@ Même chemin qu'en A1 (carte A1, §2 et §3) : la scène, trois modules titrés 
 |---|---|---|---|---|---|---|
 | 17.1 | *I vas en tren ?* | dire comment tu voyages | le pronom *i* (*i vau, i anam*) ; ◆ *pel, pels* (*per* + *lo, los*), *jol* à reconnaître ; ◆ *cap a* | 8 : *tren, bus, avion, veitura, bicicleta, bilhet…* | le *r* roulé (*tren, veitura*) ; ◆ l'alphabet, pour épeler son nom | « Ont es ? » : placer les gares sur la carte |
 | 17.2 | *Es mai car ?* | comparer deux trajets | *mai… que, mens… que, tan… coma* ; *melhor* | 8 : *car, bon mercat, rapid, lent, confortable…* | *ai* (*mai*) | choisir le bon billet |
-| 17.3 | *Vòls quicòm ?* | proposer, refuser, dire qu'il n'y a rien | *quicòm, res, degun, jamai* ; ◆ *pas mai* (ne… plus) ; ◆ *ni… ni* ; ◆ *Si !* pour répondre oui à une question négative | 6 : *quicòm, res, degun, jamai, clau…* | la syllabe forte à la fin (*quiCÒM*) | dialogue à choix |
+| 17.3 | *Vòls quicòm ?* | proposer, refuser, dire qu'il n'y a rien | *quicòm, res, degun, jamai*, avec *non* devant le verbe et sans *pas* (*Non i a res*, *Non i a degun* : p54) ; ◆ *non… pas mai* (ne… plus) ; ◆ *ni… ni* ; ◆ *Si !* pour répondre oui à une question négative | 6 : *quicòm, res, degun, jamai, clau…* | la syllabe forte à la fin (*quiCÒM*) | dialogue à choix |
 | 17.4 | Tâche | choisir un trajet et réserver un billet | rien de nouveau | aucun | | jeu de rôle enregistré |
 
 ### Unité 18 · *Lo temps que farà* (scène : la carte de la météo et ses vents)
@@ -274,7 +274,7 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
 | 37 | *E se plòu ?* | le festival en plein air : prévoir le pire | la condition (*se* + présent) ; ◆ *se… e que* + subjonctif · la supposition (*supausem que* + subjonctif) · l'hypothèse irréelle (question 8) et le conditionnel | un plan de repli (oral, 4 min ; note de 200 mots) |
-| 38 | *Qué podèm respondre ?* | les voisins écrivent pour se plaindre du bruit | la concession (*encara que* + subjonctif, *malgrat*) ; ◆ le subjonctif passé et plus-que-parfait · la restriction (*sonque, levat*) · la négation nuancée (*pas brica, pas gaire, pas jamai*) | répondre au courrier des voisins (200 mots) |
+| 38 | *Qué podèm respondre ?* | les voisins écrivent pour se plaindre du bruit | la concession (*encara que* + subjonctif, *malgrat*) ; ◆ le subjonctif passé et plus-que-parfait · la restriction (*sonque, levat*) · la négation nuancée (*non… brica, non… gaire, non… jamai* : avec *non*, pas de *pas*, p54) | répondre au courrier des voisins (200 mots) |
 | 39 | *Qual a rason ?* | un débat à la radio locale sur les horaires du festival | construire un argument (*primièr, puèi, enfin, en efièch*) · le pronom neutre *o* (*o sabi*) · citer (*segon*, les guillemets) | la synthèse des deux points de vue (200 mots) |
 | 40 | *Qué recomandas ?* | trois solutions pour le stationnement du festival | recommander (*calriá que* + subjonctif imparfait) · peser avantages et inconvénients · hiérarchiser (*subretot*) | note de recommandation (200 mots) et présentation de 5 minutes |
 
@@ -328,7 +328,7 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
-| 57 | *Comprenes lo gascon ?* | une rencontre en visio avec des locuteurs de Gascogne et de Provence | comprendre tous les dialectes sans aide · s'accorder à son interlocuteur · la variation admise par la norme ; ◆ la négation avec *non* devant le verbe, à reconnaître | une conversation en visio avec un locuteur d'un autre dialecte |
+| 57 | *Comprenes lo gascon ?* | une rencontre en visio avec des locuteurs de Gascogne et de Provence | comprendre tous les dialectes sans aide · s'accorder à son interlocuteur · la variation admise par la norme | une conversation en visio avec un locuteur d'un autre dialecte |
 | 58 | *O pòdes resumir ?* | un dossier en français à présenter à une assemblée occitanophone | la médiation : résumer, reformuler · la terminologie de lo Congrès · adapter le registre au public | résumer en occitan un dossier en français (300 mots) |
 | 59 | *Cossí far viure la lenga ?* | un débat sur la transmission | l'argumentation nuancée · l'implicite · tous les temps et modes au service du propos ; ◆ le récapitulatif des conjugaisons et des verbes irréguliers (tableaux du livre en appui) | une tribune (400 mots) |
 | 60 | *E ara, qué fasèm ?* | l'épreuve blanche | révision ciblée avec le carnet · gérer son temps pendant l'épreuve · s'évaluer avec la grille du DCL | une épreuve blanche complète (2 h 30) |

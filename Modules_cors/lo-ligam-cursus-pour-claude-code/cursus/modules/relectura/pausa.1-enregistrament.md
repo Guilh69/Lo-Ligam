@@ -29,6 +29,6 @@
 16. Ieu, me dison Karim. D’ont siás ?
 17. E parlas occitan ?
 18. Parli francés e espanhòl, e un pauc occitan. E tu, comprenes ?
-19. Sabi pas ! Mas es bon. A lèu !
+19. Non sabi pas ! Mas es bon. A lèu !
 
 Envoie le fichier tel quel : Claude le découpe, l’allège et le range dans `app/static/audio/moduls/pausa-1/`.

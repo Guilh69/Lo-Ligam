@@ -242,9 +242,9 @@ export const modul84 = {
 						},
 						{
 							prompt: 'Ce n’est pas loin : tout droit, puis tourne à droite.',
-							tiles: ['Es', 'pas', 'luènh :', 'tot drech,', 'puèi', 'vira', 'a drecha.'],
+							tiles: ['Non', 'es', 'pas', 'luènh :', 'tot drech,', 'puèi', 'vira', 'a drecha.'],
 							choses: ['es-luenh', 'tot-drech', 'vira', 'a-drecha'],
-							explain: '*Es pas luènh* : ce n’est pas loin. Puis le chemin, dans l’ordre où on le fait.'
+							explain: '*Non es pas luènh* : ce n’est pas loin. Puis le chemin, dans l’ordre où on le fait.'
 						}
 					]
 				}
@@ -292,7 +292,7 @@ export const modul84 = {
 							options: [
 								{ oc: 'Ieu tanben ! Un cafè, sus la plaça ?', bon: true },
 								{ oc: 'Ieu tanben ! Un veire de vin, a dètz oras ?', reaccion: 'Loís éclate de rire : du vin, à dix heures du matin ? Il préfère un café.' },
-								{ oc: 'Ieu tanben ! Sabi pas…', reaccion: 'Loís attend une idée… C’est toi qui connais la ville : propose-lui quelque chose !' }
+								{ oc: 'Ieu tanben ! Non sabi pas…', reaccion: 'Loís attend une idée… C’est toi qui connais la ville : propose-lui quelque chose !' }
 							],
 							choses: ['un-cafe', 'ai-set'],
 							explain: 'Il a soif : tu lui proposes *Un cafè, sus la plaça ?*'
@@ -301,7 +301,7 @@ export const modul84 = {
 							ditz: 'Òc ! Es luènh ?',
 							options: [
 								{ oc: 'Un pauc. Mas es tot drech, a pè !', bon: true },
-								{ oc: 'Sabi pas.', reaccion: 'Loís te regarde, étonné : c’est toi qui l’accueilles, et tu ne sais pas ?' },
+								{ oc: 'Non sabi pas.', reaccion: 'Loís te regarde, étonné : c’est toi qui l’accueilles, et tu ne sais pas ?' },
 								{ oc: 'Vira a esquèrra, puèi vira a esquèrra, puèi vira a esquèrra !', reaccion: 'Loís tourne sur lui-même : à gauche, à gauche, à gauche… et le voilà revenu devant la gare !' }
 							],
 							choses: ['es-luenh', 'tot-drech', 'a-pe'],
@@ -315,7 +315,7 @@ export const modul84 = {
 								{ oc: 'Pòdes repetir, se te plai ?', bon: true },
 								{ oc: 'En occitan, se te plai !', bon: true },
 								{ oc: 'Òc, òc…', reaccion: 'Loís continue en français, soulagé… et toute la matinée passe au français. Ramène-le vers l’occitan !' },
-								{ oc: 'Compreni pas.', reaccion: 'Loís, gentil, réexplique tout en français, plus lentement. Ramène-le plutôt vers l’occitan !' }
+								{ oc: 'Non compreni pas.', reaccion: 'Loís, gentil, réexplique tout en français, plus lentement. Ramène-le plutôt vers l’occitan !' }
 							],
 							choses: ['podes-repetir'],
 							explain: 'Pour rester en occitan : *Pòdes repetir, se te plai ?*, ou *En occitan, se te plai !* Loís reprend aussitôt en occitan.'

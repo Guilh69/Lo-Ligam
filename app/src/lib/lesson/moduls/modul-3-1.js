@@ -94,11 +94,11 @@ export const modul31 = {
 						},
 						{
 							q: 'Je ne sais pas.',
-							options: ['Sabi pas.', 'Compreni pas.', 'Parli pas.'],
+							options: ['Non sabi pas.', 'Non compreni pas.', 'Non parli pas.'],
 							correct: 0,
 							oc: true,
 							choses: ['sabi-pas'],
-							explain: '*Sabi pas* : je ne sais pas. *Compreni pas* : je ne comprends pas.'
+							explain: '*Non sabi pas* : je ne sais pas. *Non compreni pas* : je ne comprends pas.'
 						}
 					]
 				}

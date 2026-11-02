@@ -110,7 +110,7 @@ export const modul83 = {
 								{ oc: 'Un cafè ? Fa caud !', sound: 'un ca-FÈ ? fa CAOU !', fr: 'Un café ? Il fait chaud !' },
 								{ oc: 'Preni totjorn un cafè : lo matin, lo tantòst, lo ser…', sound: 'PRÉ-ni tout-DJOUR un ca-FÈ : lou ma-TI, lou tan-TÒST, lou SÉR…', fr: 'Je prends toujours un café : le matin, l’après-midi, le soir…' },
 								{ oc: 'Ieu, preni un tè. E Núria ?', sound: 'YÉOU, PRÉ-ni un TÈ. é NOU-ria ?', fr: 'Moi, je prends un thé. Et Núria ?' },
-								{ oc: 'Núria pren un suc de fruta. E Lisa… sabi pas !', sound: 'NOU-ria PRÉ(N) un SUC dé FRU-to. é LI-zo… SA-bi PAS !', fr: 'Núria prend un jus de fruit. Et Lisa… je ne sais pas !' }
+								{ oc: 'Núria pren un suc de fruta. E Lisa… non sabi pas !', sound: 'NOU-ria PRÉ(N) un SUC dé FRU-to. é LI-zo… nou SA-bi PAS !', fr: 'Núria prend un jus de fruit. Et Lisa… je ne sais pas !' }
 							]
 						},
 						{

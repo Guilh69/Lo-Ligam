@@ -106,13 +106,13 @@ export const modul72 = {
 							subtitle: '(Núria arrive, le jeudi)',
 							lines: [
 								{ oc: 'Bonjorn, Marià ! Jogam a las cartas ?', sound: 'boun-DJOUR, ma-ri-A ! djou-GAN a las CAR-tos ?', fr: 'Bonjour, Marià ! On joue aux cartes ?' },
-								{ oc: 'Òc ! Mas… ont es Mimí ? Es pas sul canapè.', sound: 'OK ! mas… oun ÉS mi-MI ? és PAS sul ca-na-PÈ.', fr: 'Oui ! Mais… où est Mimí ? Elle n’est pas sur le canapé.' },
+								{ oc: 'Òc ! Mas… ont es Mimí ? Non es pas sul canapè.', sound: 'OK ! mas… oun ÉS mi-MI ? nou és PAS sul ca-na-PÈ.', fr: 'Oui ! Mais… où est Mimí ? Elle n’est pas sur le canapé.' },
 								{ oc: 'Es jos la taula ?', sound: 'és DJOUS la TAOU-lo ?', fr: 'Elle est sous la table ?' },
 								{ oc: 'Non. Darrièr la pòrta ?', sound: 'NOU. da-RRYÈ la PÒR-to ?', fr: 'Non. Derrière la porte ?' },
 								{ oc: 'Non. Al costat del lièch, dins la cambra ?', sound: 'NOU. al cous-TAT dél LYÈTCH, dins la CAM-bro ?', fr: 'Non. À côté du lit, dans la chambre ?' },
 								{ oc: 'Non. Entre l’armari e la fenèstra ?', sound: 'NOU. ÉN-tré lar-MA-ri é la fé-NÈS-tro ?', fr: 'Non. Entre l’armoire et la fenêtre ?' },
 								{ oc: 'Non… Davant l’ostal, dins lo jardin ?', sound: 'NOU… da-BAN lous-TAL, dins lou djar-DI ?', fr: 'Non… Devant la maison, dans le jardin ?' },
-								{ oc: 'Sabi pas…', sound: 'SA-bi PAS…', fr: 'Je ne sais pas…' }
+								{ oc: 'Non sabi pas…', sound: 'nou SA-bi PAS…', fr: 'Je ne sais pas…' }
 							]
 						},
 						{
@@ -121,7 +121,7 @@ export const modul72 = {
 							lines: [
 								{ oc: 'E las cartas, ont son ?', sound: 'é las CAR-tos, oun SOUN ?', fr: 'Et les cartes, où sont-elles ?' },
 								{ oc: 'Sus la taula, al costat del pan.', sound: 'sus la TAOU-lo, al cous-TAT dél PA.', fr: 'Sur la table, à côté du pain.' },
-								{ oc: 'Sus la taula ? I a pas de cartas… I a Mimí !', sound: 'sus la TAOU-lo ? ya PAS dé CAR-tos… ya mi-MI !', fr: 'Sur la table ? Il n’y a pas de cartes… Il y a Mimí !' },
+								{ oc: 'Sus la taula ? Non i a pas de cartas… I a Mimí !', sound: 'sus la TAOU-lo ? nou ya PAS dé CAR-tos… ya mi-MI !', fr: 'Sur la table ? Il n’y a pas de cartes… Il y a Mimí !' },
 								{ oc: 'Mimí es sus las cartas !', sound: 'mi-MI és sus las CAR-tos !', fr: 'Mimí est sur les cartes !' },
 								{ oc: 'Mimí jòga a las cartas amb nosautras !', sound: 'mi-MI DJÒ-go a las CAR-tos am nou-ZAOU-tros !', fr: 'Mimí joue aux cartes avec nous !' },
 								{ oc: 'Mimí, al jardin ! E nosautras, a las cartas !', sound: 'mi-MI, al djar-DI ! é nou-ZAOU-tros, a las CAR-tos !', fr: 'Mimí, au jardin ! Et nous, aux cartes !' }
@@ -175,7 +175,7 @@ export const modul72 = {
 					intro: 'Regarde les phrases de la recherche : à chaque fois, un petit mot dit où.',
 					items: [
 						{
-							q: '*Es pas sul canapè.* *Sul*, c’est…',
+							q: '*Non es pas sul canapè.* *Sul*, c’est…',
 							options: ['sur le', 'sous le', 'dans le'],
 							correct: 0,
 							choses: ['sus-sul'],

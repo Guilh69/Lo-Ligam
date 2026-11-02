@@ -2,7 +2,7 @@
 // par Claude le 2026-11-01 sur le modèle de l'unité 1. Chemin commun :
 // 1 révision du jour · 2 Escota · 3 Obsèrva · 4 Lo jòc del jorn · 5 A tu ! ·
 // 6 Lo son e lo bilanç. Forme du jour : parlar et comprene au singulier, et
-// la négation avec pas. Encadrés « À retenir » repris tels quels de
+// la négation non… pas. Encadrés « À retenir » repris tels quels de
 // Modules_cors/lo-ligam-cursus-pour-claude-code/cursus/lexic-A1.md (2.2).
 // Ne pas changer `slug` ni `unitat` (le fil de l'unité regroupe les modules par `unitat`).
 // ⚠️ Occitan vérifié par l'API de lo Congrès, à valider par Romain.
@@ -97,7 +97,7 @@ export const modul22 = {
 							lines: [
 								{ oc: 'Núria, parlas occitan ?', sound: 'NOU-ria, PAR-los ou-tsi-TA ?', fr: 'Núria, tu parles occitan ?' },
 								{ oc: 'Un pauc. Parli catalan e espanhòl.', sound: 'un PAOUK. PAR-li ca-ta-LA é es-pa-GNÒL.', fr: 'Un peu. Je parle catalan et espagnol.' },
-								{ oc: 'Ieu, parli pas catalan…', sound: 'YÉOU, PAR-li PAS ca-ta-LA…', fr: 'Moi, je ne parle pas catalan…' },
+								{ oc: 'Ieu, non parli pas catalan…', sound: 'YÉOU, nou PAR-li PAS ca-ta-LA…', fr: 'Moi, je ne parle pas catalan…' },
 								{ oc: 'Mas comprenes un pauc ?', sound: 'mas coum-PRÉ-nés un PAOUK ?', fr: 'Mais tu comprends un peu ?' },
 								{ oc: 'Òc, compreni un pauc. E tu ?', sound: 'OK, coum-PRÉ-ni un PAOUK. é TU ?', fr: 'Oui, je comprends un peu. Et toi ?' },
 								{ oc: 'Ieu ? Compreni plan !', sound: 'YÉOU ? coum-PRÉ-ni PLA !', fr: 'Moi ? Je comprends bien !' }
@@ -135,7 +135,7 @@ export const modul22 = {
 							options: ['il ne le parle pas, mais il le comprend un peu', 'il le parle un peu', 'il le parle bien'],
 							correct: 0,
 							choses: ['pas', 'comprene-singular', 'un-pauc-plan'],
-							explain: '*Parli pas catalan…* puis *Òc, compreni un pauc.*'
+							explain: '*Non parli pas catalan…* puis *Òc, compreni un pauc.*'
 						},
 						{
 							q: 'Marià demande : *E Núria, parla occitan tanben ?* Ici, *tanben* veut dire…',
@@ -185,12 +185,12 @@ export const modul22 = {
 							explain: 'Ni *-i* ni *-es* : « il » ou « elle ». *Compren* : elle comprend (Núria).'
 						},
 						{
-							q: '*Ieu, parli pas catalan.* Quel mot dit « ne… pas » ?',
-							options: ['pas', 'parli', 'Ieu'],
+							q: '*Ieu, non parli pas catalan.* Quels mots disent « ne… pas » ?',
+							options: ['non… pas', 'pas', 'Ieu… pas'],
 							correct: 0,
 							oc: true,
 							choses: ['pas'],
-							explain: 'Un seul mot, *pas*, après le verbe. Rien devant.'
+							explain: 'Deux mots : *non* devant le verbe, *pas* après.'
 						},
 						{
 							q: '*Un pauc. Mas compren plan.* Ici, *mas* veut dire…',
@@ -218,8 +218,9 @@ export const modul22 = {
 						['il, elle', '*parla*', '*compren*']
 					],
 					notes: [
-						'Comme *soi*, *siás*, *es* : pas besoin de « je » ni de « tu ». On ajoute *ieu* ou *tu* seulement pour insister : *Ieu, parli pas catalan.*',
-						'Pour dire « ne… pas » : *pas*, après le verbe, et rien devant : *Parli pas anglés.*',
+						'Comme *soi*, *siás*, *es* : pas besoin de « je » ni de « tu ». On ajoute *ieu* ou *tu* seulement pour insister : *Ieu, non parli pas catalan.*',
+						'Pour dire « ne… pas » : *non* devant le verbe, *pas* après : *Non parli pas anglés.*',
+						'À l’oral, on entend souvent *pas* tout seul : *Parli pas anglés.* C’est la forme familière ; ici, on apprend la forme complète, avec *non*.',
 						'La langue porte le nom du masculin : *Parli francés.* · *Parla italian.*'
 					]
 				},
@@ -230,7 +231,7 @@ export const modul22 = {
 					items: [
 						{ id: 'parlar-singular', oc: 'parlar : parli · parlas · parla', sound: 'par-LA : PAR-li · PAR-los · PAR-lo', fr: 'parler : je parle · tu parles · il ou elle parle' },
 						{ id: 'comprene-singular', oc: 'comprene : compreni · comprenes · compren', sound: 'coum-PRÉ-né : coum-PRÉ-ni · coum-PRÉ-nés · coum-PRÉ(N)', fr: 'comprendre : je comprends · tu comprends · il ou elle comprend' },
-						{ id: 'pas', oc: 'Parli pas… · Compreni pas.', sound: 'PAR-li PAS · coum-PRÉ-ni PAS', fr: 'je ne parle pas… · je ne comprends pas. (*pas* après le verbe, et rien devant)' }
+						{ id: 'pas', oc: 'Non parli pas… · Non compreni pas.', sound: 'nou PAR-li PAS · nou coum-PRÉ-ni PAS', fr: 'je ne parle pas… · je ne comprends pas. (*non* devant le verbe, *pas* après)' }
 					]
 				}
 			]
@@ -248,7 +249,7 @@ export const modul22 = {
 					intro: 'Quatre petits mots, puis le jeu.',
 					items: [
 						{ id: 'un-pauc-plan', oc: 'un pauc · plan', sound: 'un PAOUK · PLA', fr: 'un peu · bien (*Parli un pauc occitan. Compreni plan.*)' },
-						{ id: 'mas', oc: 'mas', sound: 'MAS', fr: 'mais (*Compreni, mas parli pas.*)' },
+						{ id: 'mas', oc: 'mas', sound: 'MAS', fr: 'mais (*Compreni, mas non parli pas.*)' },
 						{ id: 'tanben', oc: 'tanben', sound: 'tam-BÉ', fr: 'aussi (*Parli tanben catalan.*)' },
 						{ id: 'la-lenga', oc: 'la lenga', sound: 'la LÉN-go', fr: 'la langue' }
 					]
@@ -333,9 +334,9 @@ export const modul22 = {
 						},
 						{
 							consigne: 'Dis une langue que tu ne parles pas.',
-							debut: ['Parli pas'],
+							debut: ['Non parli pas'],
 							choses: ['pas', 'parlar-singular'],
-							explain: '*pas* juste après le verbe : *Parli pas italian.*'
+							explain: '*non* devant le verbe, *pas* juste après : *Non parli pas italian.*'
 						},
 						{
 							consigne: 'Et l’occitan ? Dis si tu le comprends un peu, ou bien.',
@@ -352,7 +353,7 @@ export const modul22 = {
 						},
 						{
 							consigne: 'Je comprends, mais je ne parle pas.',
-							answers: ['Compreni, mas parli pas.'],
+							answers: ['Compreni, mas non parli pas.'],
 							choses: ['mas', 'pas', 'comprene-singular']
 						},
 						{ consigne: 'Demande à Núria si elle comprend.', answers: ['Comprenes ?'], choses: ['comprene-singular'] }
@@ -377,7 +378,7 @@ export const modul22 = {
 						},
 						{
 							prompt: 'Je ne parle pas catalan, mais je comprends un peu.',
-							tiles: ['Parli', 'pas', 'catalan,', 'mas', 'compreni', 'un', 'pauc.'],
+							tiles: ['Non', 'parli', 'pas', 'catalan,', 'mas', 'compreni', 'un', 'pauc.'],
 							choses: ['pas', 'mas', 'comprene-singular'],
 							explain: '*pas* après *parli* ; puis *mas* (mais).'
 						}
@@ -391,7 +392,7 @@ export const modul22 = {
 					items: [
 						{
 							q: 'Une amie, ton grand-père, une collègue…',
-							a: 'Par exemple : *Es Karim. Parla francés e occitan. Parla pas catalan, mas compren un pauc.*'
+							a: 'Par exemple : *Es Karim. Parla francés e occitan. Non parla pas catalan, mas compren un pauc.*'
 						}
 					]
 				}
@@ -454,7 +455,7 @@ export const modul22 = {
 					lien: { href: 'https://www.deezer.com/track/3277993551', texte: 'Écouter sur Deezer' },
 					paragraphs: [
 						'Claudi Martí, né à Carcassonne en 1940, a été instituteur à Couffoulens, dans l’Aude. C’est une voix de la *Nòva cançon* (la nouvelle chanson occitane).',
-						'Écoute sa chanson *Perqué m’an pas dit ?* (pourquoi ne m’a-t-on pas dit ?) : dans le titre, tu reconnais *pas*. Pour l’écouter : la version de 2023, dans l’album *Retorn* (retour), sur Deezer. Source : Wikipédia, article « Martí (chanteur occitan) ».'
+						'Écoute sa chanson *Perqué m’an pas dit ?* (pourquoi ne m’a-t-on pas dit ?) : dans le titre, tu reconnais *pas*, sans *non* : la forme familière. Pour l’écouter : la version de 2023, dans l’album *Retorn* (retour), sur Deezer. Source : Wikipédia, article « Martí (chanteur occitan) ».'
 					]
 				},
 				{
@@ -464,7 +465,7 @@ export const modul22 = {
 					intro: 'Coche seulement ce que tu sais faire seul. Le reste reviendra : ton carnet de révision te le resservira.',
 					items: [
 						'dire les langues que je parle, un peu ou bien',
-						'dire ce que je ne parle pas, ou ne comprends pas, avec *pas*',
+						'dire ce que je ne parle pas, ou ne comprends pas, avec *non… pas*',
 						'demander à quelqu’un s’il parle ou comprend une langue',
 						'reconnaître la même question en gascon et en provençal'
 					]

@@ -26,7 +26,7 @@ export const modul24 = {
 	notesRelecture: [
 		'Titre du module : *Quina lenga parla ?* (quelle langue parle-t-il, parle-t-elle ?), proposé par le lexique à la place de *Tasca*. Il te va ?',
 		'Tour où Loís passe au français (règle 13) : la bonne réplique est *Pòdes repetir en occitan, se te plai ?*, vue en 2.3. Elle te va ?',
-		'Fiche « langues » en six phrases, à la troisième personne : *Es Núria. Es catalana : es de Barcelona, mas demòra a Tolosa. Parla catalan e espanhòl. Parla tanben un pauc occitan, e compren plan. Parla pas anglés !* Tu valides l’enchaînement ?'
+		'Fiche « langues » en six phrases, à la troisième personne : *Es Núria. Es catalana : es de Barcelona, mas demòra a Tolosa. Parla catalan e espanhòl. Parla tanben un pauc occitan, e compren plan. Non parla pas anglés !* Tu valides l’enchaînement ?'
 	],
 
 	sessions: [
@@ -50,7 +50,7 @@ export const modul24 = {
 						},
 						{
 							q: 'Tu n’as pas compris ce qu’on vient de te dire :',
-							options: ['Pòdes repetir, se te plai ?', 'Qué es aquò ?', 'Sabi pas.'],
+							options: ['Pòdes repetir, se te plai ?', 'Qué es aquò ?', 'Non sabi pas.'],
 							correct: 0,
 							oc: true,
 							choses: ['podes-repetir'],
@@ -71,7 +71,7 @@ export const modul24 = {
 					title: 'Escriu (écris)',
 					intro: 'Écris en occitan. Majuscules et ponctuation ne comptent pas ; un accent oublié, on te le montre.',
 					items: [
-						{ consigne: 'Je ne parle pas anglais.', answers: ['Parli pas anglés.'], choses: ['pas', 'angles-anglesa'] },
+						{ consigne: 'Je ne parle pas anglais.', answers: ['Non parli pas anglés.'], choses: ['pas', 'angles-anglesa'] },
 						{ consigne: 'Quelle langue parles-tu ?', answers: ['Quina lenga parlas ?'], choses: ['quin-quina', 'la-lenga'] }
 					]
 				}
@@ -98,7 +98,7 @@ export const modul24 = {
 								{ oc: 'Encantada, Núria ! E parla occitan ?', sound: 'én-can-TA-do, NOU-ria ! é PAR-lo ou-tsi-TA ?', fr: 'Enchantée, Núria ! Et elle parle occitan ?' },
 								{ oc: 'Parla catalan e espanhòl. Parla tanben un pauc occitan, e compren plan.', sound: 'PAR-lo ca-ta-LA é es-pa-GNÒL. PAR-lo tam-BÉ un PAOUK ou-tsi-TA, é coum-PRÉ(N) PLA.', fr: 'Elle parle catalan et espagnol. Elle parle aussi un peu occitan, et elle comprend bien.' },
 								{ oc: 'E anglés ?', sound: 'é an-GLÉS ?', fr: 'Et anglais ?' },
-								{ oc: 'Non, parla pas anglés !', sound: 'NOU, PAR-lo PAS an-GLÉS !', fr: 'Non, elle ne parle pas anglais !' }
+								{ oc: 'Non parla pas anglés !', sound: 'nou PAR-lo PAS an-GLÉS !', fr: 'Non, elle ne parle pas anglais !' }
 							]
 						}
 					]
@@ -126,7 +126,7 @@ export const modul24 = {
 							options: ['l’anglais', 'l’espagnol', 'le catalan'],
 							correct: 0,
 							choses: ['pas'],
-							explain: '*Non, parla pas anglés !*'
+							explain: '*Non parla pas anglés !* Pour répondre non, un seul *non* suffit, devant le verbe.'
 						}
 					]
 				}
@@ -188,7 +188,7 @@ export const modul24 = {
 						['d’où il ou elle est, où il ou elle habite', '*Es de Barcelona, mas demòra a Tolosa.*', '*Es d’aquí.* · *Demòra a Montpelhièr.*'],
 						['ses langues', '*Parla catalan e espanhòl.*', '*Parla francés e occitan.*'],
 						['un peu, aussi', '*Parla tanben un pauc occitan, e compren plan.*', '*Compren un pauc.* · *Parla plan italian.*'],
-						['ce qu’il ou elle ne parle pas', '*Parla pas anglés !*', '*Parla pas catalan.* · *Compren pas.*']
+						['ce qu’il ou elle ne parle pas', '*Non parla pas anglés !*', '*Non parla pas catalan.* · *Non compren pas.*']
 					],
 					notes: [
 						'Tout est à la troisième personne : *es*, *demòra*, *parla*, *compren*. Pour toi, ce serait *soi*, *demòri*, *parli*, *compreni*.',
@@ -214,13 +214,13 @@ export const modul24 = {
 					items: [
 						{
 							prompt: 'C’est Giulia. Elle est italienne. Elle parle italien et occitan. Elle parle aussi un peu français. Mais elle ne parle pas anglais.',
-							tiles: ['Es Giulia.', 'Es italiana.', 'Parla italian e occitan.', 'Parla tanben un pauc francés.', 'Mas parla pas anglés.'],
+							tiles: ['Es Giulia.', 'Es italiana.', 'Parla italian e occitan.', 'Parla tanben un pauc francés.', 'Mas non parla pas anglés.'],
 							choses: ['italian-italiana', 'parlar-singular', 'tanben', 'pas'],
 							explain: 'Qui, la nationalité, les langues, ce qu’elle parle un peu, ce qu’elle ne parle pas.'
 						},
 						{
 							prompt: 'C’est Karim. Il est de Béziers, mais il habite à Toulouse. Il parle français et occitan. Il ne parle pas catalan, mais il comprend un peu.',
-							tiles: ['Es Karim.', 'Es de Besièrs,', 'mas demòra a Tolosa.', 'Parla francés e occitan.', 'Parla pas catalan,', 'mas compren un pauc.'],
+							tiles: ['Es Karim.', 'Es de Besièrs,', 'mas demòra a Tolosa.', 'Parla francés e occitan.', 'Non parla pas catalan,', 'mas compren un pauc.'],
 							choses: ['es-de', 'demori-a', 'parlar-singular', 'pas', 'mas', 'comprene-singular'],
 							explain: 'Deux fois *mas* : le premier pour la ville, le second pour le catalan.'
 						}
@@ -241,7 +241,7 @@ export const modul24 = {
 							options: [
 								{ oc: 'Es Giulia.', bon: true },
 								{ oc: 'Soi Giulia.', reaccion: 'Loís te regarde, perplexe : c’est toi, Giulia ?' },
-								{ oc: 'Sabi pas.', reaccion: 'Loís rit : tu ne connais pas le nom de ton amie ?' }
+								{ oc: 'Non sabi pas.', reaccion: 'Loís rit : tu ne connais pas le nom de ton amie ?' }
 							],
 							choses: ['qui-es'],
 							explain: '*Qui es ?* : qui est-ce ? Tu réponds par un nom : *Es Giulia.*'
@@ -282,7 +282,7 @@ export const modul24 = {
 							options: [
 								{ oc: 'Òc, parla plan !', bon: true },
 								{ oc: 'Òc, parli plan !', reaccion: 'Loís rit : bravo pour toi, mais il parlait de Giulia.' },
-								{ oc: 'Non, compren pas.', reaccion: 'Giulia proteste en riant : elle vient de tout comprendre.' }
+								{ oc: 'Non compren pas.', reaccion: 'Giulia proteste en riant : elle vient de tout comprendre.' }
 							],
 							choses: ['un-pauc-plan', 'parlar-singular'],
 							explain: '*Parla plan* : elle parle bien.'
@@ -291,14 +291,14 @@ export const modul24 = {
 							ditz: 'E tu, parlas italian ?',
 							options: [
 								{ oc: 'Un pauc. E tu ?', bon: true },
-								{ oc: 'Parli pas italian. E tu ?', bon: true },
-								{ oc: 'Parla pas italian.', reaccion: 'Loís éclate de rire : Giulia est italienne ! Il te demandait si toi, tu parles italien.' }
+								{ oc: 'Non parli pas italian. E tu ?', bon: true },
+								{ oc: 'Non parla pas italian.', reaccion: 'Loís éclate de rire : Giulia est italienne ! Il te demandait si toi, tu parles italien.' }
 							],
 							choses: ['parlar-singular', 'pas'],
-							explain: '*Un pauc* ou *Parli pas italian*, selon ce qui est vrai pour toi. Puis *E tu ?*'
+							explain: '*Un pauc* ou *Non parli pas italian*, selon ce qui est vrai pour toi. Puis *E tu ?*'
 						},
 						{
-							ditz: 'Ieu ? Parli pas italian… mas compreni un pauc ! A lèu, Giulia !',
+							ditz: 'Ieu ? Non parli pas italian… mas compreni un pauc ! A lèu, Giulia !',
 							options: [
 								{ oc: 'A lèu, Loís !', bon: true },
 								{ oc: 'Bonjorn !', reaccion: 'Loís s’arrête, surpris : il s’en allait. C’est le moment de dire au revoir.' },
@@ -362,9 +362,9 @@ export const modul24 = {
 						},
 						{
 							consigne: '6. Dis une langue qu’il ou elle ne parle pas.',
-							debut: ['Parla pas', 'Mas parla pas'],
+							debut: ['Non parla pas', 'Mas non parla pas'],
 							choses: ['pas'],
-							explain: 'Par exemple : *Mas parla pas italian !*'
+							explain: 'Par exemple : *Mas non parla pas italian !*'
 						}
 					]
 				},
@@ -374,7 +374,7 @@ export const modul24 = {
 					items: [
 						{
 							q: 'Quand tu as fini, et pas avant, regarde un exemple.',
-							a: '*Es Lisa. Es francesa : es de Nimes, mas demòra a Montpelhièr. Parla francés e anglés. Parla tanben un pauc occitan, e compren plan. Mas parla pas italian !*'
+							a: '*Es Lisa. Es francesa : es de Nimes, mas demòra a Montpelhièr. Parla francés e anglés. Parla tanben un pauc occitan, e compren plan. Mas non parla pas italian !*'
 						}
 					]
 				},
@@ -386,7 +386,7 @@ export const modul24 = {
 						'les six phrases y sont, dans un ordre naturel',
 						'tout est à la troisième personne : *es*, *demòra*, *parla*, *compren*',
 						'la nationalité est accordée : *-a* pour une femme',
-						'*pas* vient après le verbe, et rien devant',
+						'*non* vient devant le verbe, *pas* après',
 						'à voix haute : *nh* sonne « gn », *é* reste fermé, *è* est ouvert'
 					]
 				},
@@ -488,8 +488,8 @@ export const modul24 = {
 					rows: [
 						['dire sa nationalité', '*Soi francés.* · *Soi occitana.* · *Es catalana.* · *El es portugués.*'],
 						['répondre', '*Òc !* · *Non !*'],
-						['parler des langues', '*Parlas occitan ?* · *Parli un pauc occitan.* · *Compreni plan.* · *Parli pas anglés.* · *Parli tanben catalan.*'],
-						['se débrouiller', '*Pòdes repetir, se te plai ?* · *Qué vòl dire… ?* · *Cossí se ditz… en occitan ?* · *Sabi pas.*'],
+						['parler des langues', '*Parlas occitan ?* · *Parli un pauc occitan.* · *Compreni plan.* · *Non parli pas anglés.* · *Parli tanben catalan.*'],
+						['se débrouiller', '*Pòdes repetir, se te plai ?* · *Qué vòl dire… ?* · *Cossí se ditz… en occitan ?* · *Non sabi pas.*'],
 						['questionner', '*Qué es aquò ?* · *Qui es ?* · *Qual es ?* · *Quina lenga parlas ?* · *Occitan o francés ?*']
 					]
 				},
@@ -502,7 +502,7 @@ export const modul24 = {
 						['tu', '*siás*', '*parlas*', '*comprenes*'],
 						['il, elle', '*es*', '*parla*', '*compren*']
 					],
-					notes: ['Au féminin, on ajoute *-a* : *occitan*, *occitana*.', '*pas* après le verbe, et rien devant : *Compreni pas.*']
+					notes: ['Au féminin, on ajoute *-a* : *occitan*, *occitana*.', '*non* devant le verbe, *pas* après : *Non compreni pas.*']
 				},
 				// Encart de l'unité 2, collé tel quel depuis cursus/alhors-en-occitania-A1.md.
 				{

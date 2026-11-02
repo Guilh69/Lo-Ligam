@@ -38,13 +38,13 @@ En gras : ce qui entre dans le carnet. Sans gras : expliqué en passant (glossai
 
 ## Aussi dans les exercices
 
-*Bonjorn ! Cossí anatz ?* · *Parli pas catalan, mas compreni.* · *Ieu, me dison Karim. D’ont siás ?* · *E parlas occitan ?* · *Parli un pauc occitan.* · *E tu, parlas occitan ?* · *Parli francés e espanhòl, e un pauc occitan. E tu, comprenes ?* · *Òc, compreni plan !* · *Sabi pas ! Mas es bon. A lèu !* · *A lèu, Karim !* · *Bon ser, Marià ! Cossí anatz ?* · *Es italiana, mas demòra aquí.* · *Qué es aquò ? Sabi pas.*
+*Bonjorn ! Cossí anatz ?* · *Non parli pas catalan, mas compreni.* · *Ieu, me dison Karim. D’ont siás ?* · *E parlas occitan ?* · *Parli un pauc occitan.* · *E tu, parlas occitan ?* · *Parli francés e espanhòl, e un pauc occitan. E tu, comprenes ?* · *Òc, compreni plan !* · *Non sabi pas ! Mas es bon. A lèu !* · *A lèu, Karim !* · *Bon ser, Marià ! Cossí anatz ?* · *Es italiana, mas demòra aquí.* · *Qué es aquò ? Non sabi pas.*
 
 ## Mauvaises réponses proposées
 
 Elles ne répondent pas à la question, mais l’élève les lit : elles doivent rester du bon occitan.
 
-*Bonjorn ! Cossí vas ?* · *catalan* · *italiana* · *Qui es ?* · *Va plan, e tu ?* · *Parla un pauc occitan.* · *Parlas un pauc occitan.* · *E tu, siás occitan ?* · *Qué vòl dire occitan ?* · *Compreni pas.* · *Sabi pas.* · *Òc, compren plan !* · *D’ont siás ?* · *Bonjorn, Karim !* · *Cossí vas ?*
+*Bonjorn ! Cossí vas ?* · *catalan* · *italiana* · *Qui es ?* · *Va plan, e tu ?* · *Parla un pauc occitan.* · *Parlas un pauc occitan.* · *E tu, siás occitan ?* · *Qué vòl dire occitan ?* · *Non compreni pas.* · *Non sabi pas.* · *Òc, compren plan !* · *D’ont siás ?* · *Bonjorn, Karim !* · *Cossí vas ?*
 
 ## Mots que l’outil n’a pas confirmés
 
@@ -54,4 +54,4 @@ Aucun : tout est connu de lo Basic ou de vèrb’Òc (un ✓ ne valide ni le sen
 
 1. Yasmine dit *Parli plan occitan* : *plan* à cette place, ou plutôt *Parli occitan plan* ?
 2. Tour « rester en occitan » : Karim passe au français parce que tu hésites (« Bon, je te le dis en français, ce sera plus simple ! ») ; la bonne réponse est *Pòdes repetir, se te plai ?* La scène sonne juste pour toi ?
-3. Karim, devant un gâteau qu’il ne connaît pas : *Sabi pas ! Mas es bon.* D’accord pour « c’est bon » ?
+3. Karim, devant un gâteau qu’il ne connaît pas : *Non sabi pas ! Mas es bon.* D’accord pour « c’est bon » ?

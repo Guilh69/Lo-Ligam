@@ -51,7 +51,7 @@ En gras : ce qui entre dans le carnet. Sans gras : expliqué en passant (glossai
 
 Elles ne répondent pas à la question, mais l’élève les lit : elles doivent rester du bon occitan.
 
-*sus la taula* · *davant la taula* · *roge* · *blava* · *Per tu, un tè.* · *Per ela, un tè.* · *Adieu, Jordi ! Benvenguda !* · *Adieu-siatz, Jordi !* · *Òc, sus la plaça : tot drech, puèi a esquèrra.* · *Òc, jos la plaça : tot drech, puèi a drecha.* · *Prenes un cafè.* · *Pren un cafè.* · *Compreni pas.* · *Òc, òc…* · *Non, es prèp : la primièra carrièra a esquèrra.* · *Òc, es luènh : la segonda carrièra a esquèrra.* · *Es jos la taula.* · *Es dins lo jardin.* · *Òc, es per ieu !* · *Non, es blau.* · *Mercés ! Benvengut, Jordi !* · *De res ! Adieu-siatz, Jordi !*
+*sus la taula* · *davant la taula* · *roge* · *blava* · *Per tu, un tè.* · *Per ela, un tè.* · *Adieu, Jordi ! Benvenguda !* · *Adieu-siatz, Jordi !* · *Òc, sus la plaça : tot drech, puèi a esquèrra.* · *Òc, jos la plaça : tot drech, puèi a drecha.* · *Prenes un cafè.* · *Pren un cafè.* · *Non compreni pas.* · *Òc, òc…* · *Non, es prèp : la primièra carrièra a esquèrra.* · *Òc, es luènh : la segonda carrièra a esquèrra.* · *Es jos la taula.* · *Es dins lo jardin.* · *Òc, es per ieu !* · *Non, es blau.* · *Mercés ! Benvengut, Jordi !* · *De res ! Adieu-siatz, Jordi !*
 
 ## Mots que l’outil n’a pas confirmés
 

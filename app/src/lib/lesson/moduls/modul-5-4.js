@@ -54,11 +54,11 @@ export const modul54 = {
 							explain: '*Volriái…* : je voudrais. *Vòli* : je veux, plus direct ; *vòls* : tu veux.'
 						},
 						{
-							q: 'Inès dit *M’agrada pas lo formatge.* Elle dit…',
+							q: 'Inès dit *Non m’agrada pas lo formatge.* Elle dit…',
 							options: ['qu’elle n’aime pas le fromage', 'qu’elle veut du fromage', 'que le fromage est cher'],
 							correct: 0,
 							choses: ['m-agrada'],
-							explain: '*M’agrada pas* : je n’aime pas. Vouloir, c’est *vòli* ; cher, *car*.'
+							explain: '*Non m’agrada pas* : je n’aime pas. Vouloir, c’est *vòli* ; cher, *car*.'
 						}
 					]
 				},
@@ -285,7 +285,7 @@ export const modul54 = {
 							options: [
 								{ oc: 'Òc ! Yasmine es d’aquí.', bon: true },
 								{ oc: 'Òc, òc…', reaccion: 'Marià continue en français, ravie… et l’étal passe au français. Réponds-lui en occitan, avec les mots que tu as : elle te suivra.' },
-								{ oc: 'Compreni pas.', reaccion: 'Marià répète tout en français, plus lentement. Tu avais pourtant compris l’essentiel : réponds-lui en occitan.' }
+								{ oc: 'Non compreni pas.', reaccion: 'Marià répète tout en français, plus lentement. Tu avais pourtant compris l’essentiel : réponds-lui en occitan.' }
 							],
 							choses: ['es-de', 'soi-d-aqui'],
 							explain: 'Avec les mots que tu as, tu restes en occitan : *Yasmine es d’aquí.* Et Marià repasse à l’occitan.'
@@ -544,7 +544,7 @@ export const modul54 = {
 						['dire combien tu en veux', '*un quilò de pomas* · *un pauc de formatge*'],
 						['demander un prix', '*Quant còsta ?* · *Quant còstan ?*'],
 						['demander poliment', '*Volriái…, se vos plai.*'],
-						['dire ce que tu aimes', '*M’agrada…* · *M’agradan…* · *M’agrada pas.*'],
+						['dire ce que tu aimes', '*M’agrada…* · *M’agradan…* · *Non m’agrada pas.*'],
 						['finir et payer', '*Es tot. Quant fa ?* · *Vaquí !*']
 					]
 				},

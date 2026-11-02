@@ -80,9 +80,9 @@ export const modul51 = {
 					items: [
 						{
 							consigne: 'Il n’y a pas de chien.',
-							answers: ['I a pas de can.'],
+							answers: ['Non i a pas de can.'],
 							choses: ['i-a', 'lo-can'],
-							explain: '*I a pas de…* : il n’y a pas de… Au marché, il va beaucoup servir.'
+							explain: '*Non i a pas de…* : il n’y a pas de… Au marché, il va beaucoup servir.'
 						},
 						{
 							consigne: 'Écris 2 devant un mot féminin, comme *sòrres* ou *amigas*.',
@@ -431,9 +431,9 @@ export const modul51 = {
 						},
 						{
 							consigne: 'On te demande s’il y a du raisin. Réponds : non, il n’y a pas de raisin.',
-							answers: ['Non, i a pas de rasim.', 'I a pas de rasim.'],
+							answers: ['Non i a pas de rasim.'],
 							choses: ['i-a', 'lo-rasim'],
-							explain: '*I a pas de rasim* : *pas* après le verbe, puis *de*.'
+							explain: '*Non i a pas de rasim* : *non* devant, *pas* après le verbe, puis *de*.'
 						},
 						{
 							consigne: 'Les fruits et les légumes.',
@@ -557,7 +557,7 @@ export const modul51 = {
 					intro: 'Coche seulement ce que tu sais faire seul. Le reste reviendra : ton carnet de révision te le resservira.',
 					items: [
 						'nommer quinze produits du marché',
-						'dire ce qu’il y a, ou ce qu’il n’y a pas : *I a de pomas*, *I a pas de lach*',
+						'dire ce qu’il y a, ou ce qu’il n’y a pas : *I a de pomas*, *Non i a pas de lach*',
 						'mettre un nom au pluriel : *la poma*, *las pomas* ; *l’uòu*, *los uòus*',
 						'écrire une liste de courses, au kilo : *dos quilòs de tomatas*'
 					]

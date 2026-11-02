@@ -107,10 +107,10 @@ export const modul43 = {
 								{ oc: 'Loís, qué fas lo dimenge ?', sound: 'lou-ÍS, ké FAS lou di-MÉN-djé ?', fr: 'Loís, que fais-tu le dimanche ?' },
 								{ oc: 'Lo dimenge ? Trabalhi ! La setmana, trabalhi de dimars a dimenge.', sound: 'lou di-MÉN-djé ? tra-BA-lyi ! la sém-MA-no, tra-BA-lyi dé di-MARS a di-MÉN-djé.', fr: 'Le dimanche ? Je travaille ! La semaine, je travaille du mardi au dimanche.' },
 								{ oc: 'E lo diluns ?', sound: 'é lou di-LUNS ?', fr: 'Et le lundi ?' },
-								{ oc: 'Lo diluns, trabalhi pas : jògui al rugbi amb los amics. E lo ser, canti a la corala.', sound: 'lou di-LUNS, tra-BA-lyi PAS : DJÒ-gui al RUG-bi am lou-za-MITS. é lou SÉR, CAN-ti a la cou-RA-lo.', fr: 'Le lundi, je ne travaille pas : je joue au rugby avec les amis. Et le soir, je chante à la chorale.' },
+								{ oc: 'Lo diluns, non trabalhi pas : jògui al rugbi amb los amics. E lo ser, canti a la corala.', sound: 'lou di-LUNS, nou tra-BA-lyi PAS : DJÒ-gui al RUG-bi am lou-za-MITS. é lou SÉR, CAN-ti a la cou-RA-lo.', fr: 'Le lundi, je ne travaille pas : je joue au rugby avec les amis. Et le soir, je chante à la chorale.' },
 								{ oc: 'E dissabte, dançam al balèti ?', sound: 'é di-SAT-té, dan-SAN al ba-LÈ-ti ?', fr: 'Et samedi, on danse au bal ?' },
 								{ oc: 'Dissabte, trabalhi… Mas diluns, òc !', sound: 'di-SAT-té, tra-BA-lyi… mas di-LUNS, OK !', fr: 'Samedi, je travaille… Mais lundi, oui !' },
-								{ oc: 'I a pas de balèti lo diluns, Loís !', sound: 'ya PAS dé ba-LÈ-ti lou di-LUNS, lou-ÍS !', fr: 'Il n’y a pas de bal le lundi, Loís !' }
+								{ oc: 'Non i a pas de balèti lo diluns, Loís !', sound: 'nou ya PAS dé ba-LÈ-ti lou di-LUNS, lou-ÍS !', fr: 'Il n’y a pas de bal le lundi, Loís !' }
 							]
 						},
 						{
@@ -145,7 +145,7 @@ export const modul43 = {
 							options: ['le lundi', 'le samedi', 'le dimanche'],
 							correct: 0,
 							choses: ['diluns'],
-							explain: '*Trabalhi de dimars a dimenge* : du mardi au dimanche. *Lo diluns, trabalhi pas.*'
+							explain: '*Trabalhi de dimars a dimenge* : du mardi au dimanche. *Lo diluns, non trabalhi pas.*'
 						},
 						{
 							q: 'Le lundi, Loís…',
@@ -193,7 +193,7 @@ export const modul43 = {
 							explain: 'Sans *lo* : un jour précis, ce samedi. Avec *lo* : chaque samedi, comme *Lo dissabte, trabalhi a l’espital*.'
 						},
 						{
-							q: '*I a pas de balèti lo diluns*, répond Yasmine. Ça veut dire…',
+							q: '*Non i a pas de balèti lo diluns*, répond Yasmine. Ça veut dire…',
 							options: ['il n’y a jamais de bal le lundi', 'il n’y a pas de bal ce lundi'],
 							correct: 0,
 							noShuffle: true,
@@ -232,7 +232,7 @@ export const modul43 = {
 					head: ['', 'une fois (ce jour-là)', 'chaque semaine'],
 					rows: [
 						['samedi', '*Dissabte, dançam ?*', '*Lo dissabte, trabalhi.*'],
-						['lundi', '*Mas diluns, òc !*', '*Lo diluns, trabalhi pas.*'],
+						['lundi', '*Mas diluns, òc !*', '*Lo diluns, non trabalhi pas.*'],
 						['dimanche', '*Dimenge, canti.*', '*Lo dimenge, trabalhi.*']
 					],
 					notes: [

@@ -121,7 +121,7 @@ export const modul53 = {
 								{ oc: 'Vaquí. E tu, qué vòls ?', sound: 'ba-KI. é TU, ké BÒLS ?', fr: 'Voilà. Et toi, que veux-tu ?' },
 								{ oc: 'Vòli d’olivas… Volriái d’olivas, se vos plai !', sound: 'BÒ-li dou-LI-bos… boul-RYOÏ dou-LI-bos, sé bous PLAÏ !', fr: 'Je veux des olives… Je voudrais des olives, s’il vous plaît !' },
 								{ oc: 'T’agradan, las olivas ?', sound: 'ta-GRA-don, la-zou-LI-bos ?', fr: 'Tu les aimes, les olives ?' },
-								{ oc: 'M’agradan fòrça ! Mas lo formatge… m’agrada pas.', sound: 'ma-GRA-don FÒR-so ! mas lou four-MA-djé… ma-GRA-do PAS.', fr: 'Je les aime beaucoup ! Mais le fromage… je n’aime pas.' },
+								{ oc: 'M’agradan fòrça ! Mas lo formatge… non m’agrada pas.', sound: 'ma-GRA-don FÒR-so ! mas lou four-MA-djé… nou ma-GRA-do PAS.', fr: 'Je les aime beaucoup ! Mais le fromage… je n’aime pas.' },
 								{ oc: 'Ai, ai, ai ! Quicòm mai ?', sound: 'AÏ, AÏ, AÏ ! ki-CÒM MAÏ ?', fr: 'Aïe, aïe, aïe ! Autre chose ?' },
 								{ oc: 'Es tot. Quant fa ?', sound: 'és TOUT. KAN FA ?', fr: 'C’est tout. Ça fait combien ?' },
 								{ oc: 'Vint euros.', sound: 'BIN ÉOU-rous.', fr: 'Vingt euros.' },
@@ -145,7 +145,7 @@ export const modul53 = {
 							options: ['Inès', 'Karim', 'Ramon'],
 							correct: 0,
 							choses: ['m-agrada', 'lo-formatge'],
-							explain: 'Inès : *Lo formatge… m’agrada pas.* Et Ramon, le fromager : *Ai, ai, ai !*'
+							explain: 'Inès : *Lo formatge… non m’agrada pas.* Et Ramon, le fromager : *Ai, ai, ai !*'
 						},
 						{
 							q: 'Inès dit d’abord *Vòli d’olivas !* Puis elle se reprend, plus poliment :',
@@ -272,7 +272,7 @@ export const modul53 = {
 					intro: 'Encore quatre expressions : pouvoir, aimer, et finir tes courses.',
 					items: [
 						{ id: 'poder-singular', oc: 'poder : pòdi · pòdes · pòt', sound: 'pou-DÉ : PÒ-di · PÒ-dés · PÒT', fr: 'pouvoir : je peux · tu peux · il ou elle peut' },
-						{ id: 'm-agrada', oc: 'M’agrada… · M’agradan… · T’agrada ?', sound: 'ma-GRA-do · ma-GRA-don · ta-GRA-do', fr: 'j’aime… (une chose) · j’aime… (plusieurs) · tu aimes ? (*M’agrada pas* : je n’aime pas)' },
+						{ id: 'm-agrada', oc: 'M’agrada… · M’agradan… · T’agrada ?', sound: 'ma-GRA-do · ma-GRA-don · ta-GRA-do', fr: 'j’aime… (une chose) · j’aime… (plusieurs) · tu aimes ? (*Non m’agrada pas* : je n’aime pas)' },
 						{ id: 'quicom-mai', oc: 'Quicòm mai ? · Es tot.', sound: 'ki-CÒM MAÏ · és TOUT', fr: 'autre chose ? · c’est tout.' },
 						{ id: 'de-res', oc: 'Mercés ! · De res.', sound: 'mér-SÉS · dé RÉS', fr: 'merci ! · de rien.' }
 					]
@@ -356,7 +356,7 @@ export const modul53 = {
 							options: [
 								{ oc: 'M’agradan fòrça !', bon: true },
 								{ oc: 'M’agrada fòrça !', reaccion: 'Ramon sourit, mais tu parles de ses olives : elles sont plusieurs. Devant un pluriel, *m’agradan*.' },
-								{ oc: 'M’agradan pas.', reaccion: 'Ramon a l’air vexé : tu viens de dire que tu ne les aimes pas !' }
+								{ oc: 'Non m’agradan pas.', reaccion: 'Ramon a l’air vexé : tu viens de dire que tu ne les aimes pas !' }
 							],
 							choses: ['m-agrada'],
 							explain: '*M’agradan* devant plusieurs choses ; *fòrça* : beaucoup.'
@@ -430,7 +430,7 @@ export const modul53 = {
 							consigne: 'Et toi, au marché, qu’est-ce que tu aimes ? Commence par *M’agrada…* ou *M’agradan…*',
 							debut: ['M’agrada', 'M’agradan'],
 							choses: ['m-agrada'],
-							explain: 'Par exemple : *M’agradan las tomatas.* · *M’agrada lo formatge.* · *M’agrada pas lo lach.*'
+							explain: 'Par exemple : *M’agradan las tomatas.* · *M’agrada lo formatge.* · *Non m’agrada pas lo lach.*'
 						},
 						{
 							consigne: 'Ramon te demande *Quicòm mai ?* Réponds que c’est tout.',
@@ -546,7 +546,7 @@ export const modul53 = {
 					items: [
 						'demander poliment : *Volriái…, se vos plai*',
 						'demander ce que l’autre veut : *Qué vòls ?*, *Qué volètz ?*',
-						'dire ce que j’aime, ou pas : *M’agrada…*, *M’agradan…*, *M’agrada pas*',
+						'dire ce que j’aime, ou pas : *M’agrada…*, *M’agradan…*, *Non m’agrada pas*',
 						'finir mes courses : *Es tot*, *Mercés*, *De res*'
 					]
 				},

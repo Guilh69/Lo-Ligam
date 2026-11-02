@@ -31,7 +31,7 @@ export const modulPausa1 = {
 	notesRelecture: [
 		'Yasmine dit *Parli plan occitan* : *plan* à cette place, ou plutôt *Parli occitan plan* ?',
 		'Tour « rester en occitan » : Karim passe au français parce que tu hésites (« Bon, je te le dis en français, ce sera plus simple ! ») ; la bonne réponse est *Pòdes repetir, se te plai ?* La scène sonne juste pour toi ?',
-		'Karim, devant un gâteau qu’il ne connaît pas : *Sabi pas ! Mas es bon.* D’accord pour « c’est bon » ?'
+		'Karim, devant un gâteau qu’il ne connaît pas : *Non sabi pas ! Mas es bon.* D’accord pour « c’est bon » ?'
 	],
 
 	sessions: [
@@ -87,9 +87,9 @@ export const modulPausa1 = {
 						},
 						{
 							consigne: 'Dis : je ne parle pas catalan, mais je comprends.',
-							answers: ['Parli pas catalan, mas compreni.'],
+							answers: ['Non parli pas catalan, mas compreni.'],
 							choses: ['pas', 'mas'],
-							explain: '*Pas* vient après le verbe, et rien devant : *Parli pas catalan.*'
+							explain: '*Non* devant le verbe, *pas* après : *Non parli pas catalan.*'
 						}
 					]
 				}
@@ -243,8 +243,8 @@ export const modulPausa1 = {
 								'Karim répond, ravi, mais très vite, en mélangeant tout. Tu hésites ; alors il passe au français, encore plus vite : « Bon, je te le dis en français, ce sera plus simple ! »',
 							options: [
 								{ oc: 'Pòdes repetir, se te plai ?', bon: true },
-								{ oc: 'Compreni pas.', reaccion: 'Karim, gentil, te réexplique tout en français… et l’occitan s’arrête là. Demande-lui plutôt de répéter : il le fera en occitan.' },
-								{ oc: 'Sabi pas.', reaccion: 'Karim continue en français, un peu perdu : qu’est-ce que tu ne sais pas ? Demande-lui plutôt de répéter.' }
+								{ oc: 'Non compreni pas.', reaccion: 'Karim, gentil, te réexplique tout en français… et l’occitan s’arrête là. Demande-lui plutôt de répéter : il le fera en occitan.' },
+								{ oc: 'Non sabi pas.', reaccion: 'Karim continue en français, un peu perdu : qu’est-ce que tu ne sais pas ? Demande-lui plutôt de répéter.' }
 							],
 							choses: ['podes-repetir'],
 							explain: 'Pour rester en occitan : *Pòdes repetir, se te plai ?* Karim répète en occitan, plus lentement.'
@@ -254,7 +254,7 @@ export const modulPausa1 = {
 							options: [
 								{ oc: 'Òc, compreni plan !', bon: true },
 								{ oc: 'Òc, compren plan !', reaccion: 'Karim cherche des yeux : qui ça, « il comprend » ? C’est toi qu’il interrogeait.' },
-								{ oc: 'Sabi pas.', reaccion: 'Karim sourit, perplexe : tu ne sais pas si tu comprends ? Il a pourtant parlé lentement.' }
+								{ oc: 'Non sabi pas.', reaccion: 'Karim sourit, perplexe : tu ne sais pas si tu comprends ? Il a pourtant parlé lentement.' }
 							],
 							choses: ['comprene-singular'],
 							explain: '*Compreni* : je comprends. *Comprenes* : tu comprends ; *compren* : il ou elle comprend.'
@@ -270,7 +270,7 @@ export const modulPausa1 = {
 							explain: '*Qué es aquò ?* : qu’est-ce que c’est ? Pour une personne : *Qui es ?*'
 						},
 						{
-							ditz: 'Sabi pas ! Mas es bon. A lèu !',
+							ditz: 'Non sabi pas ! Mas es bon. A lèu !',
 							options: [
 								{ oc: 'A lèu, Karim !', bon: true },
 								{ oc: 'Bonjorn, Karim !', reaccion: 'Karim, déjà en route, se retourne : c’est l’heure de se dire au revoir, pas bonjour.' },
@@ -347,9 +347,9 @@ export const modulPausa1 = {
 						},
 						{
 							prompt: 'Qu’est-ce que c’est ? Je ne sais pas.',
-							tiles: ['Qué', 'es', 'aquò ?', 'Sabi', 'pas.'],
+							tiles: ['Qué', 'es', 'aquò ?', 'Non', 'sabi', 'pas.'],
 							choses: ['que-es-aquo', 'sabi-pas'],
-							explain: '*Qué es aquò ? Sabi pas.* Et *pas* vient après le verbe.'
+							explain: '*Qué es aquò ? Non sabi pas.* *Non* devant le verbe, *pas* après.'
 						}
 					]
 				},

@@ -78,7 +78,7 @@ Comment c'est construit :
 
 **4. Les mots** (unité 2)
 - 2.1 : *occitan / occitana, francés, catalan, espanhòl, italian…* (masculin et féminin) ;
-- 2.2 : *parlar, comprene* au singulier, *pas* ; *un pauc, plan, lenga* ;
+- 2.2 : *parlar, comprene* au singulier, *non… pas* ; *un pauc, plan, lenga* ;
 - 2.3 : *qué, ont, cossí, qual, quin, quina* ; *repetir* ;
 - sons : *nh*, *e* et *è*, la voix qui monte dans la question.
 

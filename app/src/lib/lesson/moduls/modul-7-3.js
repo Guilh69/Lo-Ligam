@@ -62,7 +62,7 @@ export const modul73 = {
 						},
 						{
 							q: 'Elle n’est pas sur le canapé.',
-							options: ['Es pas sul canapè.', 'Es pas jos lo canapè.', 'Es pas sus la taula.'],
+							options: ['Non es pas sul canapè.', 'Non es pas jos lo canapè.', 'Non es pas sus la taula.'],
 							correct: 0,
 							oc: true,
 							choses: ['sus-sul'],
@@ -125,7 +125,7 @@ export const modul73 = {
 								{ oc: 'Vaquí una cata grisa, al costat del cat negre !', sound: 'ba-KI U-no CA-to GRI-zo, al cous-TAT dél CAT NÉ-gré !', fr: 'Voilà une chatte grise, à côté du chat noir !' },
 								{ oc: 'Mimí ! Es ton amic, lo cat negre ?', sound: 'mi-MI ! és toun a-MIC, lou CAT NÉ-gré ?', fr: 'Mimí ! C’est ton ami, le chat noir ?' },
 								{ oc: 'Mimí, a l’ostal !', sound: 'mi-MI, a lous-TAL !', fr: 'Mimí, à la maison !' },
-								{ oc: 'Mimí vòl pas…', sound: 'mi-MI BÒL PAS…', fr: 'Mimí ne veut pas…' },
+								{ oc: 'Mimí non vòl pas…', sound: 'mi-MI nou BÒL PAS…', fr: 'Mimí ne veut pas…' },
 								{ oc: 'Mimí es d’aquí, ara !', sound: 'mi-MI és da-KI, A-ro !', fr: 'Mimí est d’ici, maintenant !' }
 							]
 						}

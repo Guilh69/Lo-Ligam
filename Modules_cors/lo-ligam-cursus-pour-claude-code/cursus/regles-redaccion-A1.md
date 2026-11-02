@@ -63,6 +63,7 @@ Décision de Romain du 2026-11-01 : pas de son pour l'essai. Chaque réplique et
 ## 7. La langue et le ton
 
 - Languedocien, graphie classique ; formes fixées par Romain : *Vau plan, mercés*, *Al còp que ven*, *siás* pour « tu es » (cadre §3).
+- La négation, forme du livre (*Gramatica de l'occitan estandard*, p54 ; Romain, 2026-11-02) : *non* devant le verbe et ses pronoms, *pas* après (*Non parli pas*, *Non m’agrada pas*, *Non i a pas de…*). Pour répondre non, un seul *non* : *Non ai pas de can* (jamais « Non, non… »). Sans verbe, *pas* seul (*pas de vacas*). Avec un autre mot négatif (*res, degun, jamai, ges, gaire, brica, tanpauc*), pas de *pas* : *Non val res* (sauf *pas mai*, « plus »). *Pas* sans *non*, la forme familière, seulement dans une citation (titre, chanson) ou pour la reconnaître (note du 2.2) ; à l'écrit, l'élève qui l'emploie a juste aussi (le correcteur l'accepte). Son : « nou », sans liaison (*Non es pas luènh* « nou és pas LUÈN »).
 - Tutoiement partout. Pas de tiret long « — » (sauf tirets de dialogue), pas de jargon anglais, ponctuation légère. Pas de slogan inventé.
 - L'esprit : la langue est vivante, portée par des gens, ancrée dans des lieux. La culture passe par de petites notes justes et sourcées (`cultura-A1.md`), jamais par la grandiloquence. Humour fin par touches.
 - Personnages déjà vus : Yasmine, Loís, Marià, Lisa, Núria, Karim. L'unité 4 suit la semaine de Loís, l'unité 7 se passe dans la maison de Marià. Une distribution variée (âges, origines), sans cliché.

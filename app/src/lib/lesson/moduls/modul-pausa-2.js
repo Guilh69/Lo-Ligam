@@ -229,11 +229,11 @@ export const modulPausa2 = {
 							ditz: 'Ieu, soi fornièr. E as de fraires ?',
 							options: [
 								{ oc: 'Òc, ai una sòrre.', bon: true },
-								{ oc: 'Non, ai pas de fraires.', bon: true },
+								{ oc: 'Non ai pas de fraires.', bon: true },
 								{ oc: 'Òc, ai un can.', reaccion: 'Rachid rit : un chien, ce n’est pas tout à fait un frère… Il te demandait tes frères et sœurs.' }
 							],
 							choses: ['un-una-article', 'ai-pas-de'],
-							explain: '*Ai una sòrre* : j’ai une sœur. *Ai pas de fraires* : après *pas*, on dit *de*.'
+							explain: '*Ai una sòrre* : j’ai une sœur. *Non ai pas de fraires* : après *pas*, on dit *de*.'
 						},
 						{
 							ditz: 'E quant as d’ans ?',
@@ -261,8 +261,8 @@ export const modulPausa2 = {
 								'Inès, douze ans, s’en mêle, très vite et en français : « Tu parles occitan avec papa ? Ça, alors ! Moi, je vais plus vite en français ! »',
 							options: [
 								{ oc: 'Òc, parli un pauc occitan. E tu ?', bon: true },
-								{ oc: 'Compreni pas.', reaccion: 'Inès, ravie, te répond en français… et toute la table passe au français. Réponds-lui plutôt en occitan, avec une phrase que tu connais.' },
-								{ oc: 'Sabi pas.', reaccion: 'Inès hausse les épaules et continue en français. Dommage : une phrase que tu connais aurait suffi.' }
+								{ oc: 'Non compreni pas.', reaccion: 'Inès, ravie, te répond en français… et toute la table passe au français. Réponds-lui plutôt en occitan, avec une phrase que tu connais.' },
+								{ oc: 'Non sabi pas.', reaccion: 'Inès hausse les épaules et continue en français. Dommage : une phrase que tu connais aurait suffi.' }
 							],
 							choses: ['parlar-singular', 'un-pauc-plan'],
 							explain: 'Rester en occitan, avec une phrase déjà connue : *Òc, parli un pauc occitan. E tu ?*'
@@ -320,7 +320,7 @@ export const modulPausa2 = {
 						},
 						{
 							consigne: 'Il y a un chat, mais il n’y a pas de chien.',
-							answers: ['I a un cat, mas i a pas de can.'],
+							answers: ['I a un cat, mas non i a pas de can.'],
 							choses: ['i-a', 'lo-cat', 'lo-can']
 						},
 						{
