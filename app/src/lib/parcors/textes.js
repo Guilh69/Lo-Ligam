@@ -1,0 +1,82 @@
+// Les mots de la page du parcours. L'occitan reste en vedette ; la glose entre
+// parenthèses suit la langue choisie (le français quand on lit en occitan).
+// Occitan passé par l'API de lo Congrès le 2026-11-02 (nivèl, blòc, sus,
+// contunhar, començar, siás, aicí, clavat, acaba, dobrir, fach, etapa,
+// fogassa ; clavada et facha vérifiés par Joan) : à relire par Romain.
+
+export const T = {
+	titol: { oc: 'Lo parcors', fr: 'Le parcours', es: 'El recorrido', en: 'The learning path', ca: 'El recorregut', ar: 'مسار التعلّم' },
+	sApren: { oc: 'S’apren', fr: 'S’apprend', es: 'Se aprende', en: 'Learn', ca: 'S’aprèn', ar: 'نتعلّم' },
+	nivel: { oc: 'Nivèl', fr: 'Niveau', es: 'Nivel', en: 'Level', ca: 'Nivell', ar: 'المستوى' },
+	nivels: { oc: 'Los nivèls', fr: 'Les niveaux', es: 'Los niveles', en: 'The levels', ca: 'Els nivells', ar: 'المستويات' },
+	bloc: { oc: 'Blòc', fr: 'Bloc', es: 'Bloque', en: 'Block', ca: 'Bloc', ar: 'المرحلة' },
+	sus: { oc: 'sus', fr: 'sur', es: 'de', en: 'of', ca: 'de', ar: 'من' },
+	moduls: { oc: 'moduls', fr: 'modules', es: 'módulos', en: 'modules', ca: 'mòduls', ar: 'وحدات' },
+	etapas: { oc: 'etapas', fr: 'étapes', es: 'etapas', en: 'steps', ca: 'etapes', ar: 'خطوات' },
+	unitat: { oc: 'Unitat', fr: 'Unité', es: 'Unidad', en: 'Unit', ca: 'Unitat', ar: 'الفصل' },
+	contunhar: { oc: 'Contunhar', fr: 'continuer', es: 'continuar', en: 'continue', ca: 'continuar', ar: 'تابِع' },
+	començar: { oc: 'Començar', fr: 'commencer', es: 'empezar', en: 'start', ca: 'començar', ar: 'ابدأ' },
+	siasAici: { oc: 'Siás aicí', fr: 'tu es ici', es: 'estás aquí', en: 'you are here', ca: 'ets aquí', ar: 'أنت هنا' },
+	clavat: { oc: 'clavat', fr: 'fermé', es: 'cerrado', en: 'locked', ca: 'tancat', ar: 'مقفل' },
+	fach: { oc: 'fach', fr: 'fait', es: 'hecho', en: 'done', ca: 'fet', ar: 'مكتمل' },
+	clavada: { oc: 'clavada', fr: 'fermée', es: 'cerrada', en: 'locked', ca: 'tancada', ar: 'مقفلة' },
+	facha: { oc: 'facha', fr: 'faite', es: 'hecha', en: 'done', ca: 'feta', ar: 'مكتملة' },
+	fogassas: { oc: 'fogassas', fr: 'fougasses', es: 'fogassas', en: 'fogassas', ca: 'fogasses', ar: 'فوغاسات' },
+	acabat: { oc: 'Nivèl A1 acabat, òsca !', fr: 'niveau A1 terminé, bravo !', es: '¡nivel A1 terminado, bravo!', en: 'level A1 complete, well done!', ca: 'nivell A1 acabat, enhorabona!', ar: 'أنهيت المستوى A1، أحسنت!' }
+};
+
+/** « Unitat 2 », « Pausa 1 »… : le nom court d'une étape, dans chaque langue */
+export function nomEtapa(e) {
+	if (e.tipe === 'unitat')
+		return { oc: `Unitat ${e.numero}`, fr: `unité ${e.numero}`, es: `unidad ${e.numero}`, en: `unit ${e.numero}`, ca: `unitat ${e.numero}`, ar: `الفصل ${e.numero}` };
+	if (e.tipe === 'pausa')
+		return { oc: `Pausa ${e.numero}`, fr: `halte ${e.numero}`, es: `parada ${e.numero}`, en: `stopover ${e.numero}`, ca: `parada ${e.numero}`, ar: `الاستراحة ${e.numero}` };
+	if (e.tipe === 'mission') return { oc: 'Mission A1', fr: 'mission A1', es: 'misión A1', en: 'A1 mission', ca: 'missió A1', ar: 'مهمة A1' };
+	return { oc: 'Modul 0', fr: 'module 0', es: 'módulo 0', en: 'module 0', ca: 'mòdul 0', ar: 'الوحدة 0' };
+}
+
+/**
+ * « Acaba l'unitat 1 per la dobrir » : ce qui ouvre l'étape fermée suivante.
+ * L'étape fermée (unitat, pausa, mission) est féminine en occitan, en espagnol
+ * et en catalan, d'où « la » ; en arabe, le chapitre (الفصل) est masculin.
+ */
+export function acabaPer(precedenta, clavada) {
+	const n = precedenta.numero;
+	const ar = clavada?.tipe === 'unitat' ? 'لفتحه' : 'لفتحها';
+	if (precedenta.tipe === 'pausa')
+		return { oc: `Acaba la pausa ${n} per la dobrir`, fr: `termine la halte ${n} pour l’ouvrir`, es: `termina la parada ${n} para abrirla`, en: `finish stopover ${n} to unlock it`, ca: `acaba la parada ${n} per obrir-la`, ar: `أكمل الاستراحة ${n} ${ar}` };
+	if (precedenta.tipe === 'partença')
+		return { oc: 'Acaba lo modul 0 per la dobrir', fr: 'termine le module 0 pour l’ouvrir', es: 'termina el módulo 0 para abrirla', en: 'finish module 0 to unlock it', ca: 'acaba el mòdul 0 per obrir-la', ar: `أكمل الوحدة 0 ${ar}` };
+	return { oc: `Acaba l’unitat ${n} per la dobrir`, fr: `termine l’unité ${n} pour l’ouvrir`, es: `termina la unidad ${n} para abrirla`, en: `finish unit ${n} to unlock it`, ca: `acaba la unitat ${n} per obrir-la`, ar: `أكمل الفصل ${n} ${ar}` };
+}
+
+/**
+ * « fach » ou « facha », « clavat » ou « clavada » : l'état accordé (le modul
+ * est masculin ; l'unitat, la pausa et la mission sont féminines). Rien pour
+ * une étape ouverte ou en cours.
+ */
+export function motEstat(estat, femenina = false) {
+	if (estat === 'fach') return femenina ? T.facha : T.fach;
+	if (estat === 'clavat') return femenina ? T.clavada : T.clavat;
+	return null;
+}
+
+/** au bout du chemin, la porte du niveau suivant (lo nivèl : masculin) */
+export const ACABA_MISSION = {
+	oc: 'Acaba la mission A1 per lo dobrir',
+	fr: 'termine la mission A1 pour l’ouvrir',
+	es: 'termina la misión A1 para abrirlo',
+	en: 'finish the A1 mission to unlock it',
+	ca: 'acaba la missió A1 per obrir-lo',
+	ar: 'أكمل مهمة A1 لفتحه'
+};
+
+/** la note du bas de page, gardée de l'ancienne version */
+export const NOTA_COMPTE = {
+	oc: 'Los moduls venents demandaràn un compte gratuit per contunhar e gardar ta progression.',
+	fr: 'Les prochains modules demanderont un compte gratuit pour continuer et garder ta progression.',
+	es: 'Los próximos módulos pedirán una cuenta gratuita para continuar y guardar tu progreso.',
+	en: 'The next modules will ask for a free account so you can carry on and keep your progress.',
+	ca: 'Els propers mòduls demanaran un compte gratuït per continuar i guardar el teu progrés.',
+	ar: 'ستتطلّب الوحدات القادمة حسابًا مجانيًا لمتابعة التعلّم وحفظ تقدّمك.'
+};
