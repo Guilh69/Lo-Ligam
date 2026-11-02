@@ -3,7 +3,7 @@
 // Occitan passé par l'API de lo Congrès le 2026-11-02 (nivèl, blòc, sus,
 // contunhar, començar, siás, aicí, clavat, acaba, dobrir, fach, etapa,
 // fogassa ; clavada et facha vérifiés par Joan ; preparacion le même jour) :
-// à relire par Romain.
+// relu et validé par Romain le 2026-11-02, note du compte comprise.
 
 export const T = {
 	titol: { oc: 'Lo parcors', fr: 'Le parcours', es: 'El recorrido', en: 'The learning path', ca: 'El recorregut', ar: 'مسار التعلّم' },
