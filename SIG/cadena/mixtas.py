@@ -1,6 +1,6 @@
 # Zònas mixtas (causida de Romain, 2026-10-07) : mostradas en asclas, dins lo
 # domeni o a son bòrd, amb una nòta al survòl. Ròia e Briga (ligur de traches
-# occitans), Mónegue (ligur, niçard tanben), comunas italianas declaradas
+# occitans), Monegue (ligur, niçard tanben), comunas italianas declaradas
 # occitanas per la lei 482 mas de parlar piemontés. Noms occitans de validar.
 import os
 import json
@@ -25,7 +25,7 @@ def poli(pts):
 
 # Ròia : contorn de la recèrca, arredondit (es una zòna d'escala de valada)
 roia = poli([c for c in R if c['id'] == 'roya'][0]['polygone']).Buffer(1500, 16).Buffer(-1500, 16)
-# Mónegue : contorn fach a la man (pus fin que lo de la recèrca, que desbòrda sus Bèlsolelh)
+# Monegue : contorn fach a la man (pus fin que lo de la recèrca, que desbòrda sus Bèlsolelh)
 monegue = poli([[7.4085, 43.7245], [7.4170, 43.7240], [7.4305, 43.7395], [7.4395, 43.7485], [7.4400, 43.7525], [7.4315, 43.7500], [7.4175, 43.7335]])
 # Comunas declaradas : contorns OSM de las comunas
 def anels_de(rel):
@@ -72,7 +72,7 @@ for kod, g, oc, fr, sota_oc, sota_fr in [
     ('mix-gavacharia', gavacharia, 'La Pichona Gavachariá', 'La Petite Gavacherie', "ancian illòt de lenga d'oïl (saintongés), del sègle XV al sègle XX", "ancien îlot de langue d'oïl (saintongeais), du XVe au XXe siècle"),
     ('ist-gascon', istoric, 'Gascon', 'Gascon', 'domeni istoric, parlar escantit', 'domaine historique, parler éteint'),
     ('mix-roia', roia, 'Ròia e Briga', 'Roya et Brigue', 'parlar ligur de traches occitans', 'parler ligure à traits occitans'),
-    ('mix-monegue', monegue, 'Mónegue', 'Monaco', 'ligur (monegasc), niçard tanben', 'ligure (monégasque), niçois aussi'),
+    ('mix-monegue', monegue, 'Monegue', 'Monaco', 'ligur (monegasc), niçard tanben', 'ligure (monégasque), niçois aussi'),
     ('mix-lei482', declaradas, 'Comunas declaradas occitanas', 'Communes déclarées occitanes', 'per la lei italiana, de parlar piemontés', 'par la loi italienne, de parler piémontais'),
 ]:
     g = g.SimplifyPreserveTopology(120)

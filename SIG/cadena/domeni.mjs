@@ -15,7 +15,7 @@ const g = JSON.parse(fs.readFileSync(dir + (process.argv[3] ?? 'domeni.geojson')
 // anèls de mens de 2 km² levats : trauquets entre los contorns de las comunas
 // d'Itàlia o de l'Aran e la carta Occitanica (pas de frontièra a l'entorn)
 const km2 = (r) => { let x = 0; for (let i = 0, j = r.length - 1; i < r.length; j = i++) x += (r[j][0] - r[i][0]) * (r[j][1] + r[i][1]); return Math.abs(x / 2) * 111 * 111 * Math.cos((r[0][1] * Math.PI) / 180); };
-const grands = (rs) => rs.filter((r) => km2(r) >= 2); // (Mónegue, ~3 km², demòra un trauc ; l'escart França / Aran, 1 km², s'en va)
+const grands = (rs) => rs.filter((r) => km2(r) >= 2); // (Monegue, ~3 km², demòra un trauc ; l'escart França / Aran, 1 km², s'en va)
 const anels = grands(g.type === 'Polygon' ? g.coordinates : g.coordinates.flat());
 
 const KX = 111 * Math.cos((44 * Math.PI) / 180), KY = 111; // km par degré

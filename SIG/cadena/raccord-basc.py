@@ -8,7 +8,7 @@
 # Las comunas basquas : las de SIG/basc/dialectes-basc.csv (domeni « basc »,
 # França). Baiona, Anglet, Biàrritz e las autras comunas d'influéncia gascona
 # ne fan partida (decision de Romain : demòran dins lo basc) ; son marcadas del
-# costat occitan per tres zònas mixtas (basc-mixtas.py), en asclas coma Ròia o Mónegue.
+# costat occitan per tres zònas mixtas (basc-mixtas.py), en asclas coma Ròia o Monegue.
 #
 # Entradas : SIG/brut/comunas/ADE-COG-CARTO_2026.gpkg, SIG/basc/dialectes-basc.csv.
 # S'aplica APRÈP raccord-arpitan.py e ABANS basc-mixtas.py e basc.py ; puèi tornar lançar
