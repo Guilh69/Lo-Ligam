@@ -107,7 +107,7 @@ export const modul43 = {
 								{ oc: 'Loís, qué fas lo dimenge ?', sound: 'lou-ÍS, ké FAS lou di-MÉN-djé ?', fr: 'Loís, que fais-tu le dimanche ?' },
 								{ oc: 'Lo dimenge ? Trabalhi ! La setmana, trabalhi de dimars a dimenge.', sound: 'lou di-MÉN-djé ? tra-BA-lyi ! la sém-MA-no, tra-BA-lyi dé di-MARS a di-MÉN-djé.', fr: 'Le dimanche ? Je travaille ! La semaine, je travaille du mardi au dimanche.' },
 								{ oc: 'E lo diluns ?', sound: 'é lou di-LUNS ?', fr: 'Et le lundi ?' },
-								{ oc: 'Lo diluns, trabalhi pas : jògui al rugbi amb los amics. E lo ser, canti a la corala.', sound: 'lou di-LUNS, tra-BA-lyi PAS : DJÒ-gui al RUG-bi am lou-za-MITS. é lou SÉ, CAN-ti a la cou-RA-lo.', fr: 'Le lundi, je ne travaille pas : je joue au rugby avec les amis. Et le soir, je chante à la chorale.' },
+								{ oc: 'Lo diluns, trabalhi pas : jògui al rugbi amb los amics. E lo ser, canti a la corala.', sound: 'lou di-LUNS, tra-BA-lyi PAS : DJÒ-gui al RUG-bi am lou-za-MITS. é lou SÉR, CAN-ti a la cou-RA-lo.', fr: 'Le lundi, je ne travaille pas : je joue au rugby avec les amis. Et le soir, je chante à la chorale.' },
 								{ oc: 'E dissabte, dançam al balèti ?', sound: 'é di-SAT-té, dan-SAN al ba-LÈ-ti ?', fr: 'Et samedi, on danse au bal ?' },
 								{ oc: 'Dissabte, trabalhi… Mas diluns, òc !', sound: 'di-SAT-té, tra-BA-lyi… mas di-LUNS, OK !', fr: 'Samedi, je travaille… Mais lundi, oui !' },
 								{ oc: 'I a pas de balèti lo diluns, Loís !', sound: 'ya PAS dé ba-LÈ-ti lou di-LUNS, lou-ÍS !', fr: 'Il n’y a pas de bal le lundi, Loís !' }

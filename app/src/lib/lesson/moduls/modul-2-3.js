@@ -25,7 +25,7 @@ export const modul23 = {
 	notesRelecture: [
 		'Núria découvre que *fogassa* se dit aussi *fogassa* en catalan (le mot existe en catalan : Wikipédia en catalan, article « Fogassa »). Tu gardes cette touche ?',
 		'*Pòdes repetir en occitan, se te plai ?* : la réplique pour ramener l’occitan quand l’autre passe au français (reprise dans la tâche, en 2.4). Elle te va ?',
-		'*Qual es ?* « kal ÉS », *Quina* « KI-no », *aquò* « a-KÒ » : bon pour l’enregistrement ?'
+		'*Qui es ?* « ki ÉS », *Qual es ?* « kal ÉS », *Quina* « KI-no », *aquò* « a-KÒ » : bon pour l’enregistrement ?'
 	],
 
 	sessions: [
@@ -110,7 +110,7 @@ export const modul23 = {
 							title: 'Giulia e Karim',
 							subtitle: '(Giulia montre le garçon à Karim)',
 							lines: [
-								{ oc: 'Karim, qual es ?', sound: 'ka-RIM, kal ÉS ?', fr: 'Karim, qui est-ce ?' },
+								{ oc: 'Karim, qui es ?', sound: 'ka-RIM, ki ÉS ?', fr: 'Karim, qui est-ce ?' },
 								{ oc: 'Es Loís, del vilatge.', sound: 'és lou-ÍS, dél bi-LA-djé.', fr: 'C’est Loís, du village.' },
 								{ oc: 'Quina lenga parla ? Occitan o francés ?', sound: 'KI-no LÉN-go PAR-lo ? ou-tsi-TA ou fran-SÉS ?', fr: 'Quelle langue parle-t-il ? Occitan ou français ?' },
 								{ oc: 'Occitan ! E francés tanben.', sound: 'ou-tsi-TA ! é fran-SÉS tam-BÉ.', fr: 'Occitan ! Et français aussi.' },
@@ -130,7 +130,7 @@ export const modul23 = {
 							q: 'Que font Núria et Giulia ?',
 							options: ['elles posent des questions', 'elles se présentent', 'elles disent au revoir'],
 							correct: 0,
-							explain: 'Núria demande ce qu’est ce pain : *Qué es aquò ?* Giulia demande qui est le garçon : *Qual es ?*'
+							explain: 'Núria demande ce qu’est ce pain : *Qué es aquò ?* Giulia demande qui est le garçon : *Qui es ?*'
 						},
 						{
 							q: 'Pourquoi Núria dit-elle *Pòdes repetir, se te plai ?*',
@@ -171,12 +171,12 @@ export const modul23 = {
 							explain: '*qué* : quoi, pour une chose. *aquò* : ça.'
 						},
 						{
-							q: '*Qual es ?* Giulia demande…',
+							q: '*Qui es ?* Giulia demande…',
 							options: ['ce que c’est', 'qui c’est', 'où c’est'],
 							correct: 1,
 							noShuffle: true,
-							choses: ['qual-es'],
-							explain: '*qual* : qui, pour une personne.'
+							choses: ['qui-es'],
+							explain: '*qui* : qui, quand on attend un nom (*Es Loís*).'
 						},
 						{
 							q: '*E ont demòra ?* Giulia demande…',
@@ -214,7 +214,8 @@ export const modul23 = {
 					head: ['', 'il questionne sur…', 'exemple'],
 					rows: [
 						['*qué*', 'une chose', '*Qué es aquò ?* · *Qué vòl dire… ?*'],
-						['*qual*', 'une personne', '*Qual es ?*'],
+						['*qui*', 'une personne, quand on attend son nom', '*Qui es ?* · *Es Loís.*'],
+							['*qual*', 'ce qu’est la personne, son rôle (tu le retrouveras au module 3.2)', '*Qual es ?*'],
 						['*quin*, *quina*', 'un choix, avec un mot masculin ou féminin', '*Quin país ?* · *Quina lenga parlas ?*'],
 						['*ont*', 'un lieu (module 1.3)', '*Ont demòras ?* · *D’ont siás ?*'],
 						['*cossí*', 'la manière (module 1.1)', '*Cossí vas ?* · *Cossí se ditz… ?*']
@@ -230,7 +231,8 @@ export const modul23 = {
 					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces expressions entrent dans ton carnet de révision.',
 					items: [
 						{ id: 'que-es-aquo', oc: 'Qué es aquò ?', sound: 'ké és a-KÒ', fr: 'qu’est-ce que c’est ?' },
-						{ id: 'qual-es', oc: 'Qual es ?', sound: 'kal ÉS', fr: 'qui est-ce ? (*qual* : qui, lequel)' },
+						{ id: 'qui-es', oc: 'Qui es ?', sound: 'ki ÉS', fr: 'qui est-ce ? (on attend un nom : *Es Loís*)' },
+						{ id: 'qual-es', oc: 'Qual es ?', sound: 'kal ÉS', fr: 'qui est-ce ? (on attend ce qu’est la personne, son rôle)' },
 						{ id: 'quin-quina', oc: 'Quin… ? · Quina… ?', sound: 'KI(N) · KI-no', fr: 'quel… ? · quelle… ? (*Quina lenga parlas ?*)' },
 						{ id: 'o-ou', oc: 'Occitan o francés ?', sound: 'ou-tsi-TA ou fran-SÉS', fr: 'occitan ou français ? (*o* : ou)' }
 					]
@@ -371,7 +373,7 @@ export const modul23 = {
 							choses: ['podes-repetir'],
 							explain: '*Pòdes repetir en occitan, se te plai ?* : sans reproche, et la conversation repart en occitan.'
 						},
-						{ consigne: 'Tu vois quelqu’un que tu ne connais pas. Demande à ton ami qui c’est.', answers: ['Qual es ?'], choses: ['qual-es'] },
+						{ consigne: 'Tu vois quelqu’un que tu ne connais pas. Demande à ton ami qui c’est.', answers: ['Qui es ?'], choses: ['qui-es'] },
 						{ consigne: 'Demande à Giulia : occitan ou italien ?', answers: ['Occitan o italian ?'], choses: ['o-ou'] }
 					]
 				},

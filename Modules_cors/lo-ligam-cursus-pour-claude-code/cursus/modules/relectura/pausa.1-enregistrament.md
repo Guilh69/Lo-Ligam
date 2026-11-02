@@ -17,7 +17,7 @@
 **scène « Yasmine e Marià »**
 
 9. Bonjorn, Marià ! Cossí anatz ?
-10. Va plan, mercés. E tu ? Qual es ?
+10. Va plan, mercés. E tu ? Qui es ?
 11. Es Núria. Es catalana, de Barcelona.
 12. Parla occitan ?
 13. Un pauc. Mas compren plan !

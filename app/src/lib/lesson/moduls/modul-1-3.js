@@ -194,8 +194,10 @@ export const modul13 = {
 					notes: [
 						'On ajoute *Ieu* seulement pour insister : *Ieu, soi de Besièrs* (moi, je suis de Béziers).',
 						'*de* devient *d’* devant une voyelle : *D’ont siás ?* *Soi d’aquí.*',
-						'*de* + *lo* se disent *del* : *del vilatge*, *del país*.'
-					]
+						'*de* + *lo* se disent *del* : *del vilatge*, *del país*.',
+						'Dans d’autres régions, et dans la grammaire de référence, tu trouveras aussi *ès* pour « tu es » : *D’ont ès ?*'
+					],
+					glosa: { ès: 'tu es (autre forme de *siás*)' }
 				},
 				{
 					type: 'chunks',

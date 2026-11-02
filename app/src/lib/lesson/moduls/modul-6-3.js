@@ -128,8 +128,8 @@ export const modul63 = {
 								{ oc: 'Vau plan ! Mas deman, me lèvi a cinc oras…', sound: 'baou PLA ! mas dé-MA, mé LÈ-bi a SIN-kou-ros…', fr: 'Je vais bien ! Mais demain, je me lève à cinq heures…' },
 								{ oc: 'Ieu tanben ! E puèi ?', sound: 'YÉOU tam-BÉ ! é PUÈÏ ?', fr: 'Moi aussi ! Et ensuite ?' },
 								{ oc: 'Dejuni, e a sièis oras, vau al trabalh. A miègjorn, dinni a l’espital.', sound: 'dé-DJU-ni, é a SYÈÏ-zou-ros, baou al tra-BAL. a myèd-DJOUR, DI-ni a lés-pi-TAL.', fr: 'Je prends mon petit déjeuner, et à six heures, je vais au travail. À midi, je déjeune à l’hôpital.' },
-								{ oc: 'E lo ser ?', sound: 'é lou SÉ ?', fr: 'Et le soir ?' },
-								{ oc: 'Lo ser, sopi a sèt oras… e a nòu oras, vau al lièch !', sound: 'lou SÉ, SOU-pi a SÈ-tou-ros… é a NÒOU OU-ros, baou al LYÈTCH !', fr: 'Le soir, je dîne à sept heures… et à neuf heures, je vais au lit !' },
+								{ oc: 'E lo ser ?', sound: 'é lou SÉR ?', fr: 'Et le soir ?' },
+								{ oc: 'Lo ser, sopi a sèt oras… e a nòu oras, vau al lièch !', sound: 'lou SÉR, SOU-pi a SÈ-tou-ros… é a NÒOU OU-ros, baou al LYÈTCH !', fr: 'Le soir, je dîne à sept heures… et à neuf heures, je vais au lit !' },
 								{ oc: 'A nòu oras ? Adieu, Karim, e a lèu !', sound: 'a NÒOU OU-ros ? a-DIOU, ka-RIM, é a LÈOU !', fr: 'À neuf heures ? Salut, Karim, et à bientôt !' }
 							]
 						}
@@ -329,7 +329,7 @@ export const modul63 = {
 					intro: 'Tu les as vus dès l’unité 1 : ils entrent maintenant dans ton carnet de révision.',
 					items: [
 						{ id: 'lo-matin', oc: 'lo matin', sound: 'lou ma-TI', fr: 'le matin' },
-						{ id: 'lo-ser', oc: 'lo ser', sound: 'lou SÉ', fr: 'le soir' }
+						{ id: 'lo-ser', oc: 'lo ser', sound: 'lou SÉR', fr: 'le soir' }
 					]
 				},
 				{

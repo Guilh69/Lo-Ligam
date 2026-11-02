@@ -99,7 +99,7 @@ export const modul12 = {
 							title: 'Marià e Karim',
 							subtitle: '(Marià et Karim, en se vouvoyant)',
 							lines: [
-								{ oc: 'Bon ser ! Cossí vos dison ?', sound: 'bou(n) SÉ ! cou-si bous DI-zoun ?', fr: 'Bonsoir ! Comment vous appelez-vous ?' },
+								{ oc: 'Bon ser ! Cossí vos dison ?', sound: 'bou(n) SÉR ! cou-si bous DI-zoun ?', fr: 'Bonsoir ! Comment vous appelez-vous ?' },
 								{ oc: 'Me dison Karim. E vos ?', sound: 'mé DI-zoun ka-RIM. é BOUS ?', fr: 'Je m’appelle Karim. Et vous ?' },
 								{ oc: 'Ieu, me dison Marià. Encantada !', sound: 'YÉOU, mé DI-zoun ma-ri-A. én-can-TA-do !', fr: 'Moi, je m’appelle Marià. Enchantée !' },
 								{ oc: 'Encantat !', sound: 'én-can-TAT !', fr: 'Enchanté !' }
