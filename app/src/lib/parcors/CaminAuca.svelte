@@ -363,9 +363,9 @@
 		clip-path: none;
 		white-space: normal;
 		margin-top: var(--esp-8);
-		font-family: var(--font-heading);
-		font-size: 1.05rem;
-		line-height: 1.15;
+		font-weight: 700;
+		font-size: 1rem;
+		line-height: 1.2;
 	}
 	.c-glosa {
 		margin-top: var(--esp-4);
@@ -489,13 +489,15 @@
 	.glosa {
 		color: var(--t-tinta-2);
 	}
+	/* Limelight seulement pour les gros titres et les gros chiffres, le reste
+	   en Luciole (Romain, 2026-11-02 : « assez difficile à lire ») */
 	.g-nom {
-		font-family: var(--font-heading);
-		font-size: 1.1rem;
+		font-weight: 700;
+		font-size: 1.05rem;
 		color: var(--t-aur);
 	}
 	.g-nom .glosa {
-		font-family: var(--font-body);
+		font-weight: 400;
 		font-size: 0.82rem;
 	}
 	.g-nom + .v-bloc,
@@ -530,20 +532,24 @@
 		flex-wrap: wrap;
 		align-items: baseline;
 		gap: 0 0.45rem;
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: clamp(1.15rem, 3.8cqi, 1.5rem);
+		line-height: 1.2;
+	}
+	/* le numéro de l'unité, un gros chiffre : lui reste en Limelight */
+	.u-nom b {
 		font-family: var(--font-heading);
 		font-weight: 400;
-		font-size: clamp(1.3rem, 4.5cqi, 2rem);
-		line-height: 1.1;
-	}
-	.u-nom b {
-		font-weight: 400;
+		font-size: 1.35em;
+		line-height: 1;
 		color: var(--t-aur);
 	}
 	.u-nom.clavat {
 		color: var(--t-tinta-2);
 	}
 	.u-compte {
-		font-family: var(--font-body);
+		font-weight: 400;
 		font-size: 0.8rem;
 		color: var(--t-tinta-2);
 	}
@@ -599,10 +605,10 @@
 	}
 	.s-nom {
 		margin-top: var(--esp-4);
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: clamp(1.15rem, 4cqi, 1.6rem);
-		line-height: 1.1;
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: clamp(1.05rem, 3.6cqi, 1.3rem);
+		line-height: 1.2;
 	}
 	.sola .glosa {
 		font-size: 0.85rem;
@@ -647,16 +653,12 @@
 			clip-path: none;
 			white-space: normal;
 			margin-top: var(--esp-8);
-			font-family: var(--font-heading);
+			font-weight: 700;
 			font-size: 0.92rem;
-			line-height: 1.12;
-			text-transform: uppercase;
-			letter-spacing: 0.02em;
+			line-height: 1.2;
 		}
 		.gran .c-nom {
-			font-size: 1.2rem;
-			text-transform: none;
-			letter-spacing: 0;
+			font-size: 1.1rem;
 		}
 		.c-num {
 			font-size: 2rem;

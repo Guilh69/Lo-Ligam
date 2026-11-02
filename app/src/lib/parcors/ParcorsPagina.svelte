@@ -287,14 +287,16 @@
 		letter-spacing: 0;
 		text-transform: none;
 	}
+	/* Limelight seulement pour les gros titres et les gros chiffres, le reste
+	   en Luciole (Romain, 2026-11-02 : « assez difficile à lire ») */
 	.bloc-nom {
 		margin: var(--esp-4) 0 0;
-		font-family: var(--font-heading);
-		font-size: 1.5rem;
-		line-height: 1.1;
+		font-weight: 700;
+		font-size: 1.25rem;
+		line-height: 1.2;
 	}
 	.bloc-nom .glosa {
-		font-family: var(--font-body);
+		font-weight: 400;
 		font-size: 0.9rem;
 	}
 	.barra {
@@ -334,7 +336,7 @@
 		border-radius: 999px;
 		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
 		color: var(--t-aur);
-		font-family: var(--font-heading);
+		font-weight: 700;
 	}
 	.sr {
 		position: absolute;
@@ -365,19 +367,14 @@
 		grid-row: span 2;
 	}
 	.c-verb {
-		font-family: var(--font-heading);
-		font-size: 1.3rem;
-		line-height: 1.1;
-		text-transform: uppercase;
-		letter-spacing: 0.02em;
+		font-weight: 700;
+		font-size: 1.2rem;
+		line-height: 1.15;
 	}
 	.c-verb .glosa {
-		font-family: var(--font-body);
+		font-weight: 400;
 		font-size: 0.85rem;
-		text-transform: none;
-		letter-spacing: 0;
 		color: inherit;
-		opacity: 0.85;
 	}
 	.c-modul {
 		font-size: 0.95rem;
@@ -393,12 +390,12 @@
 	}
 	.acabat {
 		margin: 0;
-		font-family: var(--font-heading);
-		font-size: 1.3rem;
+		font-weight: 700;
+		font-size: 1.2rem;
 		color: var(--t-aur);
 	}
 	.acabat .glosa {
-		font-family: var(--font-body);
+		font-weight: 400;
 		font-size: 0.9rem;
 	}
 	.admin {
