@@ -98,6 +98,7 @@ Depuis le 12-10 : 211 changements, dont la moitié pour la carte, un tiers pour 
 11. **22-10** : tutoiement partout.
 12. **23-10** : règle B des couleurs : le rouge du logo pour ce qui se clique, l'or et l'ocre pour mettre en valeur.
 13. **Pas d'agents ni de longs enchaînements sans l'accord de Romain** (forfait).
+14. **2026-11-02** : deux IA, une équipe. Mistral = garde-fou et regard extérieur, sans concurrence ni dénigrement (dans les deux sens) ; brief dans `BRIEF-MISTRAL.md`, fiche de passation pour expliquer les choix.
 
 ## 6. Les vraies questions ouvertes
 
