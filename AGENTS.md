@@ -26,7 +26,7 @@ Site d'apprentissage de l'occitan (languedocien, norme classique) : https://loli
 ## Occitan
 - Tout mot occitan que tu écris : **le vérifier avant de le montrer** avec l'API de lo Congrès : `cd app` puis `node scripts/verificar-oc.mjs mot1 mot2` (ou `--fr mot` pour partir du français). Clé dans `app/.env` : ne jamais l'afficher.
 - « Absent du Basic » ou une erreur d'appel ne veut pas dire que le mot est faux : vérifier sur dicodòc, ne pas remplacer le mot.
-- Grammaire de référence depuis le 2026-11-02 : *Gramatica de l'occitan estandard* (Academia Occitana), hors Git.
+- Grammaire de référence depuis le 2026-11-02 : *Gramatica de l'occitan estandard* (Academia Occitana), hors Git. Négation : *non* devant le verbe et ses pronoms, *pas* après (*Non parli pas*), partout ; *pas* seul seulement dans une citation ou pour reconnaître la forme familière (`cursus/regles-redaccion-A1.md` §7).
 - **Tout occitan est validé par Romain avant publication.** Prononciation : son usage vivant, pas un outil de phonétique.
 
 ## Textes publics
