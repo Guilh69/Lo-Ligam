@@ -112,7 +112,7 @@
 			{#if gran}<span class="c-glosa" lang="fr">({insecable(glosaCorta(m.fr))})</span>{/if}
 			<span class="c-estat">
 				{#if mot}<Icona nom={m.estat === 'fach' ? 'valide' : 'cadenat'} label={tria(mot)} />
-				{:else if m.estat === 'en-cors'}<span class="mini" role="img" aria-label="{m.fachas}/{m.etapas} {tria(T.etapas)}" style:--p={m.fachas / m.etapas}></span>{/if}
+				{:else if m.estat === 'en-cors'}<span class="mini" role="img" aria-label="{m.fachas} {tria(T.sus)} {m.etapas} {tria(T.etapas)}" style:--p={m.fachas / m.etapas}></span>{/if}
 			</span>
 		</svelte:element>
 		{#if m.actual}<span class="aici" lang="oc">{T.siasAici.oc}</span>{/if}
