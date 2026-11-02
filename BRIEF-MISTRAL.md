@@ -2,6 +2,8 @@
 
 > **Écrit par Claude le 2026-11-02, à la demande de Romain.** Romain passe à Mistral pour quelques mois (budget, et envie d'aller plus loin avec une IA française) et garde Claude en contrôle. La logique s'inverse : **Mistral devient l'agent principal, Claude le regard de contrôle.** Ce document remplace l'ancien brief où Mistral était le garde-fou.
 >
+> **Calendrier** (Romain, 2026-11-02) : **jusqu'au 6 novembre, Claude garde la main**, et c'est « un peu des deux, en fonction de ce que je demande ». **Le vrai changement se fait après le 6 novembre**, à la fin du forfait Claude. Pendant ces quelques jours, Mistral peut déjà travailler sur ce que Romain lui confie, mais ne reprend pas un chantier en cours de Claude sans qu'il le demande ; `git pull` avant tout, Claude pousse encore sur `master`.
+>
 > Il contient tout ce qu'il faut pour reprendre efficacement : qui est Romain et comment il travaille (§2, la partie la plus précieuse : elle ne se lit nulle part ailleurs dans le dépôt), ce qui est fait (§4), ce qui reste (§5), où sont les choses (§6), les pièges techniques (§7) et la façon dont Claude contrôle (§10).
 >
 > Les règles courtes sont dans `AGENTS.md` (lu automatiquement par Mistral Vibe). Ce fichier est la référence complète : à lire en entier une fois, puis par extraits. Les libellés occitans cités ici sont ceux qui existent déjà sur le site.
@@ -25,7 +27,7 @@
 
 ## 1. La nouvelle répartition des rôles
 
-| | Rôle à partir du 2026-11-02 |
+| | Rôle après le 6 novembre 2026 (jusque-là, Claude garde la main) |
 |---|---|
 | **Romain** | Urbaniste, locuteur d'occitan, seul sur le projet. Fixe le cap, décide, installe, héberge, paie, **valide l'occitan**. Non développeur. |
 | **Mistral** | **Agent principal.** Conçoit, code, rédige les unités du cursus, explique. Tient `PILOTATGE.md` et le journal des décisions (`cahier-des-charges.md` §11). Écrit une fiche de passation pour chaque changement sensible. |
@@ -163,7 +165,7 @@ Romain modifie lui-même textes, liens, images et listes, connecté en administr
 ## 5. Ce qui reste à faire, par ordre de priorité
 
 ### 5.1 Les points chauds, à traiter en premier
-1. **Une branche non fusionnée** : `claude/projet-5-pourcent-credit-33d7e8` (dix commits du 2026-10-27) contient le **tri des validations occitanes des noms de la carte, avec des décisions de Romain** (communes du Lot-et-Garonne, reliefs, 242 communes alignées sur lo Congrès, 150 communes nommées depuis Wikidata « à valider »). Une fusion à blanc ne donne aucun conflit (vérifié le 2026-11-02 avec `git merge-tree`). À relire (`revisions/2026-10-27-tri-validations-occitanes.md`, présent seulement dans cette branche), fusionner dans `master`, puis `npm test` et `npm run build` avant de pousser. Sans cela, ces décisions restent hors du site.
+1. **Le tri des noms de la carte du 27-10** (décisions de Romain : 242 communes alignées sur lo Congrès, six pays, communes du Lot-et-Garonne et du Médoc, reliefs et parcs sans forme sûre masqués) est **fusionné et en ligne depuis le 2026-11-02** (commit `3edeab5`, 85 tests et construction au vert). **Reste** : les 150 communes nommées depuis Wikidata sont « à valider » par Romain (surtout les formes vivaro-alpines et provençales) ; 162 communes restent sans nom ; parcs, reliefs, provinces, surnoms, sous-dialectes, Calandretas et mots LISN attendent une source. Détail : `revisions/2026-10-27-tri-validations-occitanes.md`.
 2. **Les doutes A1 restants** : A1-13 à A1-20 et A1-27 à A1-36 (`DOBTES-OCCITAN.md` §5). Les poser à Romain **un par un**, dans la conversation, avec deux ou trois options ; appliquer, puis régénérer les fiches (`node scripts/fichas-relectura.mjs`) et relancer le contrôle des explications.
 3. **Vérifier l'A1 contre la grammaire de référence**, par lots (unité par unité).
 4. **« Lo camin »** : la contre-relecture n'a pas été finie. Non vérifiés : clavier, lecteur d'écran, traductions es/en/ca/ar des nouveaux libellés. Les trois questions à creuser sont dans la fiche `revisions/2026-11-02-parcors-passation.md` §6.
@@ -308,7 +310,7 @@ Le cahier §11 fait foi ; `PILOTATGE.md` §5 en est l'aide-mémoire. Si une déc
 13. *Gramatica de l'occitan estandard* comme référence ; le cursus de l'A1 au C1 doit couvrir tout le livre (02-11).
 14. Pas de demande de fusion tant que le site n'est pas public ; pousser sur `master` = mettre en ligne.
 15. Pas d'agents multiples ni de longs enchaînements sans l'accord de Romain.
-16. Deux IA, une équipe (02-11) ; Mistral agent principal et Claude en contrôle (02-11, ce document).
+16. Deux IA, une équipe (02-11) ; Mistral agent principal et Claude en contrôle après le 6 novembre, Claude garde la main jusque-là (02-11, ce document).
 
 ## 10. Le contrôle par Claude : mode opératoire
 

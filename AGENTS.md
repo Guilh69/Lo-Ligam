@@ -1,6 +1,6 @@
 # Lo Ligam : consignes de travail pour Mistral
 
-> Lu automatiquement par Mistral Vibe à chaque séance (fichier `AGENTS.md` à la racine du dépôt). Depuis le 2026-11-02, **Mistral est l'agent principal du projet et Claude garde un rôle de contrôle** (choix de Romain : budget, et envie d'aller plus loin avec une IA française).
+> Lu automatiquement par Mistral Vibe à chaque séance (fichier `AGENTS.md` à la racine du dépôt). **Après le 6 novembre 2026** (fin du forfait Claude de Romain), **Mistral devient l'agent principal du projet et Claude garde un rôle de contrôle** (choix de Romain : budget, et envie d'aller plus loin avec une IA française). **Jusqu'au 6 novembre, Claude garde la main** ; Romain fait appel à l'une ou l'autre selon ce qu'il demande. Dans cette période, ne pas reprendre un chantier que Claude a en cours sans que Romain le demande.
 >
 > **Première séance : lire `BRIEF-MISTRAL.md` en entier** (le briefing de passation complet : Romain, l'état du projet, ce qui reste, les pièges). Ensuite, le relire par extraits quand un sujet s'y prête. Les consignes équivalentes de Claude sont dans `CLAUDE.md`.
 
