@@ -2,7 +2,8 @@
 // parenthèses suit la langue choisie (le français quand on lit en occitan).
 // Occitan passé par l'API de lo Congrès le 2026-11-02 (nivèl, blòc, sus,
 // contunhar, començar, siás, aicí, clavat, acaba, dobrir, fach, etapa,
-// fogassa ; clavada et facha vérifiés par Joan) : à relire par Romain.
+// fogassa ; clavada et facha vérifiés par Joan ; preparacion le même jour) :
+// à relire par Romain.
 
 export const T = {
 	titol: { oc: 'Lo parcors', fr: 'Le parcours', es: 'El recorrido', en: 'The learning path', ca: 'El recorregut', ar: 'مسار التعلّم' },
@@ -71,12 +72,26 @@ export const ACABA_MISSION = {
 	ar: 'أكمل مهمة A1 لفتحه'
 };
 
-/** la note du bas de page, gardée de l'ancienne version */
+/** la mission faite, la porte reste fermée : l'A2 n'est pas encore écrit */
+export const A2_EN_PREPARACION = {
+	oc: 'Lo nivèl A2 es en preparacion',
+	fr: 'le niveau A2 est en préparation',
+	es: 'el nivel A2 está en preparación',
+	en: 'level A2 is being prepared',
+	ca: 'el nivell A2 està en preparació',
+	ar: 'المستوى A2 قيد الإعداد'
+};
+
+/** la note du bas de page, pour qui n'a pas de compte. L'ancienne disait que
+ *  les modules suivants demanderaient un compte : faux, tout se joue sans
+ *  (cahier §11) ; remplacée sur le choix de Romain le 2026-11-02. API de lo
+ *  Congrès : sens, demòra, aqueste, tos, aparelh ✓ ; « navigator » est son mot
+ *  pour « navigateur » ; garda et totes : l'API a planté (gardar, tot ✓) */
 export const NOTA_COMPTE = {
-	oc: 'Los moduls venents demandaràn un compte gratuit per contunhar e gardar ta progression.',
-	fr: 'Les prochains modules demanderont un compte gratuit pour continuer et garder ta progression.',
-	es: 'Los próximos módulos pedirán una cuenta gratuita para continuar y guardar tu progreso.',
-	en: 'The next modules will ask for a free account so you can carry on and keep your progress.',
-	ca: 'Els propers mòduls demanaran un compte gratuït per continuar i guardar el teu progrés.',
-	ar: 'ستتطلّب الوحدات القادمة حسابًا مجانيًا لمتابعة التعلّم وحفظ تقدّمك.'
+	oc: 'Sens compte, ta progression demòra dins aqueste navigator. Un compte gratuit la garda sus totes tos aparelhs.',
+	fr: 'Sans compte, ta progression reste dans ce navigateur. Un compte gratuit la garde sur tous tes appareils.',
+	es: 'Sin cuenta, tu progreso se queda en este navegador. Una cuenta gratuita lo guarda en todos tus dispositivos.',
+	en: 'Without an account, your progress stays in this browser. A free account keeps it on all your devices.',
+	ca: 'Sense compte, el teu progrés es queda en aquest navegador. Un compte gratuït el guarda a tots els teus dispositius.',
+	ar: 'من دون حساب، يبقى تقدّمك في هذا المتصفّح. الحساب المجاني يحفظه على كل أجهزتك.'
 };

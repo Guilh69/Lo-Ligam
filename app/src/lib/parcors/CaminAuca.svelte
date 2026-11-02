@@ -13,7 +13,7 @@
 	import { insecable } from '$lib/lesson/rich.js';
 	import { tria } from '$lib/stores/lang.svelte.js';
 	import { AUR, PRUNA, teula } from './colors.js';
-	import { T, nomEtapa, acabaPer, motEstat, ACABA_MISSION } from './textes.js';
+	import { T, nomEtapa, acabaPer, motEstat, ACABA_MISSION, A2_EN_PREPARACION } from './textes.js';
 	import { seguentaClavada, glosaCorta } from './parcors.js';
 
 	let { parcors, admin = false, glosa, lg } = $props();
@@ -107,7 +107,7 @@
 			aria-current={m.actual ? 'step' : undefined}
 			title={gran ? undefined : `${m.oc} (${glosaCorta(m.fr)})`}
 		>
-			<span class="c-num">{#if m.num}{m.num}{:else}<Icona nom="senhal" />{/if}</span>
+			<span class="c-num" class:zero={m.num === '0'}>{#if m.num}{m.num}{:else}<Icona nom="senhal" />{/if}</span>
 			<span class="c-nom" lang="oc">{insecable(m.oc)}</span>
 			{#if gran}<span class="c-glosa" lang="fr">({insecable(glosaCorta(m.fr))})</span>{/if}
 			<span class="c-estat">
@@ -134,6 +134,7 @@
 			</div>
 		{:else if b.tipe === 'nivel'}
 			{@const [fons, tinta] = teula(AUR)}
+			{@const indiciA2 = b.fach ? A2_EN_PREPARACION : ACABA_MISSION}
 			<!-- le chemin ne s'arrête pas à l'A1 : la porte de l'A2, fermée -->
 			<div class="sola nivel" class:a-drecha={b.col === 4}>
 				<ol class="rang">
@@ -147,13 +148,11 @@
 				<div class="sola-tèxt">
 					<h2 class="s-nom" lang="oc">{T.nivel.oc}&nbsp;A2</h2>
 					<p class="glosa" lang={lg}>({glosa(T.nivel)}&nbsp;A2)</p>
-					{#if !b.fach}
-						<p class="indici"><Icona nom="cadenat" /> <span><span lang="oc">{ACABA_MISSION.oc}</span> <span class="glosa" lang={lg}>({insecable(glosa(ACABA_MISSION))})</span></span></p>
-					{/if}
+					<p class="indici"><Icona nom="cadenat" /> <span><span lang="oc">{indiciA2.oc}</span> <span class="glosa" lang={lg}>({insecable(glosa(indiciA2))})</span></span></p>
 				</div>
 			</div>
 		{:else if b.tipe === 'virada'}
-			<div class="virada" class:corta={b.corta} class:a-drecha={b.col === 4} class:vengut={b.vengut} class:vengut-aval={b.vengutAval}>
+			<div class="virada" class:corta={b.corta} class:amb-gara={!!b.pausa} class:a-drecha={b.col === 4} class:vengut={b.vengut} class:vengut-aval={b.vengutAval}>
 				{#if b.pausa}
 					{@const p = b.pausa.moduls[0]}
 					{@const obert = p.estat !== 'clavat' || admin}
@@ -271,6 +270,11 @@
 		font-family: var(--font-heading);
 		font-size: clamp(1.35rem, 5cqi, 2.4rem);
 		line-height: 1;
+	}
+	/* seul, le zéro de Limelight se lit comme un demi-disque (◐) */
+	.c-num.zero {
+		font-family: var(--font-body);
+		font-weight: 700;
 	}
 	/* le nom : lu par le lecteur d'écran, écrit seulement quand la place le permet */
 	.c-nom,
@@ -401,6 +405,7 @@
 	/* Le virage : le chemin descend dans la colonne du bord, la halte s'y
 	   pose comme une gare, le titre de l'unité suivante l'accompagne */
 	.virada {
+		--gara: 2.6rem;
 		position: relative;
 		display: grid;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -437,6 +442,20 @@
 	.virada.vengut-aval::after {
 		border-left: 3px solid var(--t-aur);
 	}
+	/* La halte et son nom sur la même ligne, le titre de l'unité qui suit en
+	   dessous : le rond et « Siás aicí » ne se lisent plus comme ceux de
+	   l'unité (relecture de Joan, 2026-11-02). Le chemin change d'allure au
+	   centre du rond. */
+	.virada.amb-gara {
+		align-items: start;
+	}
+	.amb-gara::before {
+		bottom: auto;
+		height: calc(var(--esp-32) + var(--gara) / 2);
+	}
+	.amb-gara::after {
+		top: calc(var(--esp-32) + var(--gara) / 2);
+	}
 	.v-tèxt {
 		grid-column: 2 / span 3;
 		grid-row: 1;
@@ -458,8 +477,8 @@
 	.g-ligam {
 		display: grid;
 		place-items: center;
-		width: 2.6rem;
-		height: 2.6rem;
+		width: var(--gara);
+		height: var(--gara);
 		border: 3px solid var(--t-aur);
 		border-radius: 50%;
 		background: var(--t-fons);
@@ -492,6 +511,12 @@
 	/* Limelight seulement pour les gros titres et les gros chiffres, le reste
 	   en Luciole (Romain, 2026-11-02 : « assez difficile à lire ») */
 	.g-nom {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		align-content: center;
+		column-gap: 0.3em;
+		min-height: var(--gara);
 		font-weight: 700;
 		font-size: 1.05rem;
 		color: var(--t-aur);
@@ -660,12 +685,21 @@
 		.gran .c-nom {
 			font-size: 1.1rem;
 		}
+		/* une case seule a déjà son nom écrit à côté */
+		.sola .c-nom {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+			margin: 0;
+		}
 		.c-num {
 			font-size: 2rem;
 		}
-		.g-ligam {
-			width: 3.2rem;
-			height: 3.2rem;
+		.virada {
+			--gara: 3.2rem;
 		}
 	}
 
