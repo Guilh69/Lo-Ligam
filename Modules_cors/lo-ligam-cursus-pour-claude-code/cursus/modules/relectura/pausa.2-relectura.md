@@ -37,13 +37,13 @@ En gras : ce qui entre dans le carnet. Sans gras : expliqué en passant (glossai
 
 ## Aussi dans les exercices
 
-*ta mameta* · *Trabalhi a Tolosa.* · *Ieu, soi fornièr. E as de fraires ?* · *Òc, ai una sòrre.* · *Non, ai pas de fraires.* · *E quant as d’ans ?* · *Lo dimenge, canti e danci.* · *Òc, parli un pauc occitan. E tu ?* · *Inès parla occitan e francés. A lèu !* · *Lo dimenge, canti amb mon papeta.* · *I a un cat, mas i a pas de can.* · *Manjam amb la familha.* · *Ma maire es infirmièra, e trabalha a Besièrs.* · *Lo dissabte, dançam amb los amics.*
+*ta mameta* · *Trabalhi a Tolosa.* · *Ieu, soi fornièr. E as de fraires ?* · *Òc, ai una sòrre.* · *Non ai pas de fraires.* · *E quant as d’ans ?* · *Lo dimenge, canti e danci.* · *Òc, parli un pauc occitan. E tu ?* · *Inès parla occitan e francés. A lèu !* · *Lo dimenge, canti amb mon papeta.* · *I a un cat, mas non i a pas de can.* · *Manjam amb la familha.* · *Ma maire es infirmièra, e trabalha a Besièrs.* · *Lo dissabte, dançam amb los amics.*
 
 ## Mauvaises réponses proposées
 
 Elles ne répondent pas à la question, mais l’élève les lit : elles doivent rester du bon occitan.
 
-*sièis* · *quatre* · *ta tanta* · *ta cosina* · *diluns* · *divendres* · *Es…* · *Qué fas ?* · *E tu ?* · *E ela ?* · *Òc, ai un can.* · *A… ans.* · *Lo dimenge, canta e dança.* · *Lo diluns, canti e danci.* · *Compreni pas.* · *Sabi pas.* · *A lèu ! Adieu !*
+*sièis* · *quatre* · *ta tanta* · *ta cosina* · *diluns* · *divendres* · *Es…* · *Qué fas ?* · *E tu ?* · *E ela ?* · *Òc, ai un can.* · *A… ans.* · *Lo dimenge, canta e dança.* · *Lo diluns, canti e danci.* · *Non compreni pas.* · *Non sabi pas.* · *A lèu ! Adieu !*
 
 ## Mots que l’outil n’a pas confirmés
 

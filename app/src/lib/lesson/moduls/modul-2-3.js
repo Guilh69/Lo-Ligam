@@ -41,7 +41,7 @@ export const modul23 = {
 					items: [
 						{
 							q: 'Tu veux dire « je ne comprends pas » :',
-							options: ['Compreni pas.', 'Parli pas.', 'Comprenes ?'],
+							options: ['Non compreni pas.', 'Non parli pas.', 'Comprenes ?'],
 							correct: 0,
 							oc: true,
 							choses: ['pas', 'comprene-singular'],
@@ -102,7 +102,7 @@ export const modul23 = {
 								{ oc: 'Pòdes repetir, se te plai ?', sound: 'PÒ-dés ré-pé-TI, sé té PLAÏ ?', fr: 'Tu peux répéter, s’il te plaît ?' },
 								{ oc: 'Una fogassa !', sound: 'U-no fou-GA-sso !', fr: 'Une fougasse !' },
 								{ oc: 'Fogassa… Qué vòl dire ?', sound: 'fou-GA-sso… ké BÒL DI-ré ?', fr: 'Fougasse… Qu’est-ce que ça veut dire ?' },
-								{ oc: 'Sabi pas cossí se ditz en catalan !', sound: 'SA-bi PAS cou-si sé DITS én ca-ta-LA !', fr: 'Je ne sais pas comment on le dit en catalan !' },
+								{ oc: 'Non sabi pas cossí se ditz en catalan !', sound: 'nou SA-bi PAS cou-si sé DITS én ca-ta-LA !', fr: 'Je ne sais pas comment on le dit en catalan !' },
 								{ oc: 'Fogassa ? En catalan, es fogassa tanben !', sound: 'fou-GA-sso ? én ca-ta-LA, és fou-GA-sso tam-BÉ !', fr: 'Fougasse ? En catalan aussi, c’est fogassa !' }
 							]
 						},
@@ -140,11 +140,11 @@ export const modul23 = {
 							explain: '*Pòdes repetir, se te plai ?* : tu peux répéter, s’il te plaît ? Loís redit le mot : *Una fogassa !*'
 						},
 						{
-							q: 'Loís dit : *Sabi pas cossí se ditz en catalan !* Il veut dire…',
+							q: 'Loís dit : *Non sabi pas cossí se ditz en catalan !* Il veut dire…',
 							options: ['je ne sais pas comment on le dit en catalan', 'je ne parle pas catalan', 'je ne comprends pas le catalan'],
 							correct: 0,
 							choses: ['sabi-pas', 'cossi-se-ditz'],
-							explain: '*Sabi pas* : je ne sais pas. *Cossí se ditz…* : comment le dit-on…'
+							explain: '*Non sabi pas* : je ne sais pas. *Cossí se ditz…* : comment le dit-on…'
 						}
 					]
 				}
@@ -254,7 +254,7 @@ export const modul23 = {
 						{ id: 'cossi-se-ditz', oc: 'Cossí se ditz… en occitan ?', sound: 'cou-si sé DITS… én ou-tsi-TA', fr: 'comment dit-on… en occitan ?' },
 						{ id: 'que-vol-dire', oc: 'Qué vòl dire… ?', sound: 'ké BÒL DI-ré', fr: 'que veut dire… ?' },
 						{ id: 'podes-repetir', oc: 'Pòdes repetir, se te plai ?', sound: 'PÒ-dés ré-pé-TI, sé té PLAÏ', fr: 'tu peux répéter, s’il te plaît ?' },
-						{ id: 'sabi-pas', oc: 'Sabi pas.', sound: 'SA-bi PAS', fr: 'je ne sais pas.' }
+						{ id: 'sabi-pas', oc: 'Non sabi pas.', sound: 'nou SA-bi PAS', fr: 'je ne sais pas.' }
 					]
 				},
 				// jeu prévu par la carte : lettres à cocher, compléter les mots (à coder) ;
@@ -291,11 +291,11 @@ export const modul23 = {
 							explain: 'Le *r* de *repetir* se tait, comme celui de *parlar*.'
 						},
 						{
-							consigne: '« Sabi pa _. » · ça sonne « SA-bi PAS »',
-							answers: ['pas', 'Sabi pas.'],
-							indici: 'Le petit mot de « ne… pas » (module 2.2).',
+							consigne: '« Non sabi pa _. » · ça sonne « nou SA-bi PAS »',
+							answers: ['pas', 'Non sabi pas.'],
+							indici: 'Le mot d’après le verbe, dans « ne… pas » (module 2.2).',
 							choses: ['sabi-pas', 'pas'],
-							explain: '*Sabi pas* : je ne sais pas. Le *s* final se dit.'
+							explain: '*Non sabi pas* : je ne sais pas. Le *s* final se dit.'
 						},
 						{
 							consigne: '« Q _ al es ? » · ça sonne « kal ÉS »',
@@ -350,7 +350,7 @@ export const modul23 = {
 						{ consigne: 'Tu montres un objet. Demande comment on le dit en occitan.', answers: ['Cossí se ditz en occitan ?'], choses: ['cossi-se-ditz'] },
 						{
 							consigne: 'On te demande *Qué vòl dire « òsca » ?* Tu as oublié. Réponds.',
-							answers: ['Sabi pas.'],
+							answers: ['Non sabi pas.'],
 							choses: ['sabi-pas'],
 							explain: '*Òsca*, c’est « bravo ! » : tu l’as vu à la fin de l’unité 1.'
 						},
@@ -384,9 +384,9 @@ export const modul23 = {
 					items: [
 						{
 							prompt: 'Je ne sais pas comment on le dit en catalan.',
-							tiles: ['Sabi', 'pas', 'cossí', 'se', 'ditz', 'en', 'catalan.'],
+							tiles: ['Non', 'sabi', 'pas', 'cossí', 'se', 'ditz', 'en', 'catalan.'],
 							choses: ['sabi-pas', 'cossi-se-ditz'],
-							explain: '*Sabi pas* d’abord, puis *cossí se ditz*.'
+							explain: '*Non sabi pas* d’abord, puis *cossí se ditz*.'
 						},
 						{
 							prompt: 'Qu’est-ce que c’est ? Tu peux répéter, s’il te plaît ?',
@@ -403,7 +403,7 @@ export const modul23 = {
 					items: [
 						{
 							q: 'Une dame te parle très vite. Tu n’as rien compris.',
-							a: 'Par exemple : *Compreni pas. Pòdes repetir, se te plai ?*'
+							a: 'Par exemple : *Non compreni pas. Pòdes repetir, se te plai ?*'
 						},
 						{
 							q: 'Sur un stand, un gâteau que tu ne connais pas.',

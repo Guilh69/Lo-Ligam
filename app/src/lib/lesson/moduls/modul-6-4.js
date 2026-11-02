@@ -303,7 +303,7 @@ export const modul64 = {
 							options: [
 								{ oc: 'Cossí se ditz en occitan ?', bon: true },
 								{ oc: 'Òc, òc…', reaccion: 'Karim continue en français, ravi… et votre conversation passe au français. Demande-lui plutôt comment on le dit en occitan.' },
-								{ oc: 'Sabi pas.', reaccion: 'Karim s’arrête : tu ne sais pas quoi ? Il te réexplique tout… en français. Demande-lui plutôt comment on le dit en occitan.' }
+								{ oc: 'Non sabi pas.', reaccion: 'Karim s’arrête : tu ne sais pas quoi ? Il te réexplique tout… en français. Demande-lui plutôt comment on le dit en occitan.' }
 							],
 							choses: ['cossi-se-ditz'],
 							explain: 'Pour rester en occitan : *Cossí se ditz en occitan ?* Karim cherche ses mots, et repasse à l’occitan.'

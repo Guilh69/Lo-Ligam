@@ -33,7 +33,7 @@ export const modulMissionA1 = {
 		'Sur l’affiche, la condition passe par une question : *Plòu ? Lo balèti es dins la sala del vilatge.* (*se* au sens de « si » n’est pas enseigné à l’A1). D’accord ?',
 		'*A dissabte !* (à samedi !) pour finir un message : d’accord ?',
 		'Dans son message, Giulia dit *Dissabte, soi a la gara a onze oras e mièja* (« je suis à la gare » pour « j’arrive », le verbe *arribar* n’étant pas enseigné à l’A1) : d’accord ?',
-		'Giulia n’aime pas le cassoulet (*Mas lo caçolet… m’agrada pas.*) : la touche d’humour te va ?',
+		'Giulia n’aime pas le cassoulet (*Mas lo caçolet… non m’agrada pas.*) : la touche d’humour te va ?',
 		'La dernière note propose de présenter la mission en visio, avec toi dans le rôle de Giulia : d’accord ?'
 	],
 
@@ -157,7 +157,7 @@ export const modulMissionA1 = {
 									sound: 'ma-GRA-do lou ba-LÈ-ti… é CAN-ti dins U-no cou-RA-lo !',
 									fr: 'J’aime le bal… et je chante dans une chorale !'
 								},
-								{ oc: 'Mas lo caçolet… m’agrada pas.', sound: 'mas lou ca-sou-LÉT… ma-GRA-do PAS.', fr: 'Mais le cassoulet… je n’aime pas.' },
+								{ oc: 'Mas lo caçolet… non m’agrada pas.', sound: 'mas lou ca-sou-LÉT… nou ma-GRA-do PAS.', fr: 'Mais le cassoulet… je n’aime pas.' },
 								{
 									oc: 'Dimenge, a doas oras, vau a la gara.',
 									sound: 'di-MÉN-djé, a DOUOS OU-ros, baou a la GA-ro.',
@@ -193,7 +193,7 @@ export const modulMissionA1 = {
 							options: ['le cassoulet', 'le bal', 'chanter'],
 							correct: 0,
 							choses: ['m-agrada'],
-							explain: '*Mas lo caçolet… m’agrada pas* : le cassoulet, elle n’aime pas. Le bal, elle aime ; et elle chante dans une chorale.'
+							explain: '*Mas lo caçolet… non m’agrada pas* : le cassoulet, elle n’aime pas. Le bal, elle aime ; et elle chante dans une chorale.'
 						}
 					]
 				}
@@ -316,7 +316,7 @@ export const modulMissionA1 = {
 							options: [
 								{ oc: 'Plòu… mas lo balèti es dins la sala del vilatge.', bon: true },
 								{ oc: 'Fa bèl ! Lo balèti es sus la plaça.', reaccion: 'Giulia fronce les sourcils : chez elle, la radio annonce de la pluie au village…' },
-								{ oc: 'Plòu… e i a pas de balèti.', reaccion: 'Giulia, déçue : pas de bal ? Pourtant, l’affiche le dit : s’il pleut, il a lieu dans la salle du village.' }
+								{ oc: 'Plòu… e non i a pas de balèti.', reaccion: 'Giulia, déçue : pas de bal ? Pourtant, l’affiche le dit : s’il pleut, il a lieu dans la salle du village.' }
 							],
 							choses: ['plou', 'quin-temps-fa', 'la-sala'],
 							explain: '*Plòu* : il pleut. *Mas lo balèti es dins la sala del vilatge* : mais le bal est dans la salle du village.'
@@ -327,7 +327,7 @@ export const modulMissionA1 = {
 								'Giulia hésite, puis passe au français, plus vite : « Et dimanche matin, il y a quelque chose, avant mon train ? »',
 							options: [
 								{ oc: 'Dimenge, a onze oras, i a las cartas, al cafè de la plaça.', bon: true },
-								{ oc: 'Compreni pas.', reaccion: 'Giulia répète en français, plus lentement… et la visio glisse vers le français. Tu avais pourtant compris : réponds-lui en occitan !' },
+								{ oc: 'Non compreni pas.', reaccion: 'Giulia répète en français, plus lentement… et la visio glisse vers le français. Tu avais pourtant compris : réponds-lui en occitan !' },
 								{ oc: 'Dimenge, a tres oras, i a lo rugbi.', reaccion: 'Giulia secoue la tête : à trois heures, elle sera déjà dans le train !' }
 							],
 							choses: ['dimenge', 'i-a', 'a-quina-ora'],

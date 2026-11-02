@@ -123,7 +123,7 @@ export const modulPausa3 = {
 									fr: 'Il est cinq heures et demie. Le dimanche, je me lève toujours à cinq heures !'
 								},
 								{ oc: 'A cinc oras ! E quin temps fa ?', sound: 'a SIN-kou-ros ! é kin TÉMS FA ?', fr: 'À cinq heures ! Et quel temps fait-il ?' },
-								{ oc: 'Fa freg, mas plòu pas.', sound: 'fa FRÉTCH, mas PLÒOU PAS.', fr: 'Il fait froid, mais il ne pleut pas.' },
+								{ oc: 'Fa freg, mas non plòu pas.', sound: 'fa FRÉTCH, mas nou PLÒOU PAS.', fr: 'Il fait froid, mais il ne pleut pas.' },
 								{ oc: 'E lo mercat, a quina ora ?', sound: 'é lou mér-CAT, a KI-no OU-ro ?', fr: 'Et le marché, à quelle heure ?' },
 								{
 									oc: 'A sèt oras. Dejuni, e puèi, vau al mercat !',
@@ -284,7 +284,7 @@ export const modulPausa3 = {
 						{
 							situacion:
 								'À midi, Yasmine et Núria vont déjeuner : pour une heure, c’est toi qui tiens l’étal. Marià arrive. Elle te tutoie ; toi, tu la vouvoies.',
-							ditz: 'Adieu ! Yasmine es pas aquí ?',
+							ditz: 'Adieu ! Yasmine non es pas aquí ?',
 							options: [
 								{ oc: 'Non, dinna. Qué volètz ?', bon: true },
 								{ oc: 'Non, dinni. Qué volètz ?', reaccion: 'Marià sourit : c’est toi qui déjeunes ? Pourtant, tu es bien là, derrière l’étal.' },
@@ -331,7 +331,7 @@ export const modulPausa3 = {
 								'Tu cherches les œufs. Marià croit que tu n’as pas compris ; gentille, elle passe au français, plus vite : « Bon, je te le dis en français, ce sera plus simple : six œufs, et de l’ail aussi. Combien, l’ail ? » (Sur l’étiquette de l’ail : 1 €.)',
 							options: [
 								{ oc: 'Vaquí sièis uòus ! E l’alh còsta un euro.', bon: true },
-								{ oc: 'Compreni pas.', reaccion: 'Marià, patiente, te réexplique tout en français… et l’occitan s’arrête là. Tu avais pourtant compris : réponds-lui en occitan !' },
+								{ oc: 'Non compreni pas.', reaccion: 'Marià, patiente, te réexplique tout en français… et l’occitan s’arrête là. Tu avais pourtant compris : réponds-lui en occitan !' },
 								{ oc: 'Òc, òc…', reaccion: 'Marià continue en français, ravie de t’aider. Réponds-lui plutôt en occitan, avec des mots que tu connais : elle te suivra.' }
 							],
 							choses: ['vaqui', 'l-uou', 'l-alh', 'quant-costa'],

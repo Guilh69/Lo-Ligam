@@ -54,7 +54,7 @@ Exclus des **modèles à apprendre** : panoccitan.org (lexique forgé) et la gra
 | Nuit / œil / lit | **nuèch / uèlh / lièch** | *nuòch / uòlh / lièch* (Roergue, Albigés, Carcin) | 8.1 |
 | Après-midi | **lo tantòst** | *l'aprèp-miègjorn* (Roergue), *la vesprada* (Besierenc, Narbonés) | 11.1 |
 | Pronom neutre | **o** | *zo* (Roergue, Gavaudan) | C1 44.1 |
-| Négation | **… pas** ; *non … pas* emphatique | — (*ne … pas* = francisme) | 4.1 |
+| Négation | **non … pas** (forme du livre, p54 ; Romain, 2026-11-02) | *… pas* seul, forme familière, à reconnaître (2.2) ; *ne … pas* = francisme | 2.2 |
 | Démonstratifs | *aqueste/-a*, *aquel/-a*, *aquò* | *aquò d'aquí*, *aquel d'ailà* | 7.2 |
 | Futur proche | **futur simple** (*manjarai*) | *vau manjar* (ambigu selon zones) | 13.1 |
 | Prétérit 1ᵉʳ gr. | **-èri, -ères, -èt, -èrem, -èretz, -èron** | — | 21.1 |

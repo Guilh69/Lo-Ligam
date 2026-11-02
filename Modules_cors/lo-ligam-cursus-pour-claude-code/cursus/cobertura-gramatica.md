@@ -24,7 +24,7 @@
 | 46-48 | Relatifs, interrogatifs, exclamatifs | 2.3, 5.x | 16.3, 20.1, 31 | ◐ | 15. *dont* et *qui* après une préposition en 31 ; 16. les exclamations (*Quina fèsta !*) en 12.3 |
 | 49-51 | Les indéfinis ; le tour indéfini (*òm*, *se*) | 5.4, 8.x | 15.3, 17.3, 26, 41 | ✅ | |
 | 52-53 | Les nombres : cardinaux, ordinaux, emplois | 3.1, 5.2, 8.2 | 12.1, 34 | ◐ | 17. les ordinaux après *segond* (*tresen*…) et *trenta un* (fixé le 02-11) en 12.1 |
-| 54 | La négation | 2.2, 3.3 | 17.3, 38 | ◐ | 18. *pas mai* (ne… plus) et *ni… ni* en 17.3 ; *non* devant le verbe, à reconnaître, en 57 (depuis le 02-11, *non… pas* est enseigné dès l'A1 : voir §4) ; *Si !* (réponse à une question négative) en 17.3, ajouté le 02-11 |
+| 54 | La négation | 2.2, 3.3 | 17.3, 38 | ◐ | 18. *non… pas* enseigné dès l'A1 (2.2, fait le 02-11 : voir §4 ; le point prévu en 57 y est passé) ; *non… pas mai* (ne… plus), *ni… ni*, et *non* sans *pas* avec *res, degun, jamai* en 17.3 ; *non… brica, gaire, jamai* en 38 ; *Si !* (réponse à une question négative) en 17.3, ajouté le 02-11 |
 | 55 | Les adverbes | 1.x à 8.x | 15.3, 30 | ◐ | 19. les adverbes en *-ment*, formés sur le féminin, en 30 |
 | 56-59 | Les conjonctions de coordination et de subordination | 2.3 | 14, 18.2, 20.1, 28, 29, 31, 33, 35, 38 | ✅ | |
 | 60 | Les prépositions | 1.x à 8.x | 20.1, 25, 39 | ◐ | 20. *cap a* en 17.1 ; *sense*, *contra*, *pendent*, *malgrat* en 29 (liste complète p60) |
@@ -67,7 +67,7 @@
 | Point | L'A1 disait | Le livre | Choix de Romain |
 |---|---|---|---|
 | « tu es » | *siás* | *ès* (p66) | garder *siás*, forme languedocienne de lo Congrès ; *ès* à reconnaître (note en 1.3) |
-| la négation | *pas* après le verbe, rien devant | *non* devant le verbe, *pas* le renforce ; sans *non*, c'est la forme familière (p54) | enseigner *non… pas* dans tout l'A1 : **à faire**, en un seul bloc |
+| la négation | *pas* après le verbe, rien devant | *non* devant le verbe, *pas* le renforce ; sans *non*, c'est la forme familière (p54) | enseigner *non… pas* dans tout l'A1 : **fait le 02-11**, en un seul bloc (une ligne au 2.2 signale la forme familière ; à l'écrit, elle est juste aussi, sans remarque ; son « nou », sans liaison) |
 | « qui est-ce ? » | *Qual es ?* pour toute personne | *Qui es ?* demande l'identité, *Qual es ?* la qualité (p47) | suivre le livre : *Qui es ?* quand on attend un nom (2.3, 2.4, 3.1, halte 1), *Qual es ?* pour le rôle (3.2) |
 | *Bon ser* | « bou(n) SÉ » | le *r* final se dit dans les mots d'une syllabe (p11) | « bou(n) SÉR » partout ; contre-exemple au 4.2 |
 

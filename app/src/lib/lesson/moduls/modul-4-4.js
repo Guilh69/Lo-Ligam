@@ -109,7 +109,7 @@ export const modul44 = {
 							subtitle: '(sur la place ; Loís vouvoie Marià)',
 							lines: [
 								{ oc: 'Bonjorn, Marià ! E vos, lo dimenge, cantatz ?', sound: 'boun-DJOUR, ma-ri-A ! é BOUS, lou di-MÉN-djé, can-TATS ?', fr: 'Bonjour, Marià ! Et vous, le dimanche, vous chantez ?' },
-								{ oc: 'Lo dimenge ? Canti pas : danci ! Al balèti, amb las amigas.', sound: 'lou di-MÉN-djé ? CAN-ti PAS : DAN-si ! al ba-LÈ-ti, am la-za-MI-gos.', fr: 'Le dimanche ? Je ne chante pas : je danse ! Au bal, avec les amies.' },
+								{ oc: 'Lo dimenge ? Non canti pas : danci ! Al balèti, amb las amigas.', sound: 'lou di-MÉN-djé ? nou CAN-ti PAS : DAN-si ! al ba-LÈ-ti, am la-za-MI-gos.', fr: 'Le dimanche ? Je ne chante pas : je danse ! Au bal, avec les amies.' },
 								{ oc: 'E la setmana ?', sound: 'é la sém-MA-no ?', fr: 'Et la semaine ?' },
 								{ oc: 'Lo dijòus, jògui a las cartas amb Núria.', sound: 'lou di-DJÒOUS, DJÒ-gui a las CAR-tos am NOU-ria.', fr: 'Le jeudi, je joue aux cartes avec Núria.' },
 								{ oc: 'Òsca ! Mercés, Marià !', sound: 'ÒS-co ! mér-SÉS, ma-ri-A !', fr: 'Bravo ! Merci, Marià !' },
@@ -149,7 +149,7 @@ export const modul44 = {
 							options: ['danse au bal avec les amies', 'joue aux cartes avec Núria', 'chante à la chorale'],
 							correct: 0,
 							choses: ['dancar', 'amic-amiga'],
-							explain: '*Lo dimenge ? Canti pas : danci !* Les cartes, c’est le jeudi.'
+							explain: '*Lo dimenge ? Non canti pas : danci !* Les cartes, c’est le jeudi.'
 						},
 						{
 							q: 'Le samedi, Karim…',
@@ -287,7 +287,7 @@ export const modul44 = {
 							options: [
 								{ oc: 'Pòdes repetir, se te plai ?', bon: true },
 								{ oc: 'Òc, òc…', reaccion: 'Núria continue en français, ravie… et ton sondage aussi passe au français. Demande-lui plutôt de répéter : elle le fera en occitan.' },
-								{ oc: 'Compreni pas.', reaccion: 'Núria, gentille, te réexplique tout en français. Demande-lui plutôt de répéter : elle le fera en occitan, plus lentement.' }
+								{ oc: 'Non compreni pas.', reaccion: 'Núria, gentille, te réexplique tout en français. Demande-lui plutôt de répéter : elle le fera en occitan, plus lentement.' }
 							],
 							choses: ['podes-repetir'],
 							explain: 'Pour rester en occitan : *Pòdes repetir, se te plai ?*'

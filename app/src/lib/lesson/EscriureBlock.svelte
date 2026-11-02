@@ -41,7 +41,7 @@
 		// attendu est corrigé, le prénom ou la ville restent ceux de l'élève).
 		if (r.statut === 'quasi') {
 			const saisie = st.saisie.trim();
-			st.saisie = block.items[i].debut?.includes(r.modele) ? r.modele + saisie.slice(r.modele.length) : r.modele;
+			st.saisie = r.debut ? r.modele + saisie.slice(r.modele.length) : r.modele;
 			st.remarca = remarca(saisie.slice(0, r.modele.length), r.modele);
 		}
 		onCorrect();

@@ -19,13 +19,13 @@ export const modul33 = {
 	oc: 'As de fraires ?',
 	fr: 'As-tu des frères ? Dire ce qu’on a',
 	cando:
-		'Je peux dire si j’ai des frères, des sœurs ou des animaux avec *ai, as, a*, *un, una* et *Ai pas de…*, et dire ce qu’il y a avec *I a…*.',
+		'Je peux dire si j’ai des frères, des sœurs ou des animaux avec *ai, as, a*, *un, una* et *Non ai pas de…*, et dire ce qu’il y a avec *I a…*.',
 	durada: '~55 min · 6 étapes',
 	// Prénoms des personnages et des bêtes : ni contrôlés ni vérifiés.
 	nomsPropris: ['Joana', 'Núria', 'Jordi', 'Inès', 'Karim', 'Mistral', 'Mimí'],
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
-		'Humour : *I a pas de cat : Mistral es aquí !* (pas de chat ici, le chien Mistral est là) : ça te va ?',
+		'Humour : *Non i a pas de cat : Mistral es aquí !* (pas de chat ici, le chien Mistral est là) : ça te va ?',
 		'*As de fraires ?* : le *de* est seulement expliqué « des », sans grammaire du partitif : ça te va ?',
 		'Jordi, le frère de Núria, est catalan : « JOR-di », à la catalane.',
 		'Anagrammes en version simple : les lettres sont des tuiles séparées, la réponse s’affiche « c a n ». À coder : des tuiles collées sans espace.'
@@ -100,8 +100,8 @@ export const modul33 = {
 							subtitle: '(après le repas, dans la cour)',
 							lines: [
 								{ oc: 'Núria, as de fraires ?', sound: 'NOU-ria, as dé FRAÏ-rés ?', fr: 'Núria, as-tu des frères ?' },
-								{ oc: 'Òc, ai un fraire, Jordi. Mas ai pas de sòrre. E tu ?', sound: 'OK, aï un FRAÏ-ré, JOR-di. mas aï PAS dé SÒ-rré. é TU ?', fr: 'Oui, j’ai un frère, Jordi. Mais je n’ai pas de sœur. Et toi ?' },
-								{ oc: 'Ieu, ai pas de fraire e ai pas de sòrre… mas ai un can !', sound: 'YÉOU, aï PAS dé FRAÏ-ré é aï PAS dé SÒ-rré… mas aï un CA !', fr: 'Moi, je n’ai pas de frère et pas de sœur… mais j’ai un chien !' },
+								{ oc: 'Òc, ai un fraire, Jordi. Mas non ai pas de sòrre. E tu ?', sound: 'OK, aï un FRAÏ-ré, JOR-di. mas nou aï PAS dé SÒ-rré. é TU ?', fr: 'Oui, j’ai un frère, Jordi. Mais je n’ai pas de sœur. Et toi ?' },
+								{ oc: 'Ieu, non ai pas de fraire e non ai pas de sòrre… mas ai un can !', sound: 'YÉOU, nou aï PAS dé FRAÏ-ré é nou aï PAS dé SÒ-rré… mas aï un CA !', fr: 'Moi, je n’ai pas de frère et pas de sœur… mais j’ai un chien !' },
 								{ oc: 'Un can ? Ont es ?', sound: 'un CA ? OUN ÉS ?', fr: 'Un chien ? Où est-il ?' },
 								{ oc: 'Es aquí : es Mistral !', sound: 'és a-KI : és mis-TRAL !', fr: 'Il est là : c’est Mistral !' },
 								{ oc: 'Ieu, ai un aucèl, a Barcelona.', sound: 'YÉOU, aï u-naou-SÈL, a bar-sé-LOU-no.', fr: 'Moi, j’ai un oiseau, à Barcelone.' }
@@ -115,7 +115,7 @@ export const modul33 = {
 								{ oc: 'Una, doas, tres… I a sèt galinas !', sound: 'U-no, DOUOS, TRÉS… ya SÈT ga-LI-nos !', fr: 'Une, deux, trois… Il y a sept poules !' },
 								{ oc: 'Òc. E aquí, i a lo caval.', sound: 'OK. é a-KI, ya lou ca-BAL.', fr: 'Oui. Et ici, il y a le cheval.' },
 								{ oc: 'Un caval ! E i a un cat ?', sound: 'un ca-BAL ! é ya un CAT ?', fr: 'Un cheval ! Et il y a un chat ?' },
-								{ oc: 'Non, i a pas de cat : Mistral es aquí !', sound: 'NOU, ya PAS dé CAT : mis-TRAL és a-KI !', fr: 'Non, il n’y a pas de chat : Mistral est là !' },
+								{ oc: 'Non i a pas de cat : Mistral es aquí !', sound: 'nou ya PAS dé CAT : mis-TRAL és a-KI !', fr: 'Non, il n’y a pas de chat : Mistral est là !' },
 								{ oc: 'E Inès ? A un can ?', sound: 'é i-NÈS ? a un CA ?', fr: 'Et Inès ? Elle a un chien ?' },
 								{ oc: 'Non, Inès a una cata, Mimí.', sound: 'NOU, i-NÈS a U-no CA-to, mi-MI.', fr: 'Non, Inès a une chatte, Mimí.' }
 							]
@@ -140,7 +140,7 @@ export const modul33 = {
 							options: ['un frère, et pas de sœur', 'une sœur, et pas de frère', 'un frère et une sœur'],
 							correct: 0,
 							choses: ['ai-pas-de', 'un-una-article'],
-							explain: '*Ai un fraire, Jordi. Mas ai pas de sòrre* : un frère, Jordi, mais pas de sœur.'
+							explain: '*Ai un fraire, Jordi. Mas non ai pas de sòrre* : un frère, Jordi, mais pas de sœur.'
 						},
 						{
 							q: 'Combien de poules y a-t-il chez Papeta ?',
@@ -187,13 +187,13 @@ export const modul33 = {
 							explain: '*I a* : il y a, « ya ». Pas besoin de *el* ni de *ela*.'
 						},
 						{
-							q: '*Ai pas de sòrre* : après *pas*, on dit…',
+							q: '*Non ai pas de sòrre* : après *pas*, on dit…',
 							options: ['de', 'una'],
 							correct: 0,
 							oc: true,
 							noShuffle: true,
 							choses: ['ai-pas-de'],
-							explain: '*Ai una sòrre*, mais *Ai pas de sòrre* : après *pas*, on dit *de*. Comme en français : « je n’ai pas de sœur ».'
+							explain: '*Ai una sòrre*, mais *Non ai pas de sòrre* : après *pas*, on dit *de*. Comme en français : « je n’ai pas de sœur ».'
 						},
 						{
 							q: '*un can*, mais *una cata* : on dit *una* devant…',
@@ -218,7 +218,7 @@ export const modul33 = {
 					notes: [
 						'La forme dit déjà qui parle : pas besoin de *ieu* ou de *tu*. *Ai un can* suffit.',
 						'*As de fraires ?* : as-tu des frères ? Ici, *de* veut dire « des ».',
-						'*I a* : il y a. *I a un caval*, *i a pas de cat*.',
+						'*I a* : il y a. *I a un caval*, *non i a pas de cat*.',
 						'*un, una* : comme le nombre 1. *un can*, *una cata*.'
 					]
 				},
@@ -229,8 +229,8 @@ export const modul33 = {
 					items: [
 						{ id: 'aver-singular', oc: 'aver : ai · as · a', sound: 'a-BÉ : AÏ · AS · A', fr: 'avoir : j’ai · tu as · il ou elle a' },
 						{ id: 'un-una-article', oc: 'un fraire · una sòrre', sound: 'un FRAÏ-ré · U-no SÒ-rré', fr: 'un frère · une sœur (*un, una* : comme le nombre 1)' },
-						{ id: 'i-a', oc: 'I a… · I a pas de…', sound: 'YA · ya PAS dé', fr: 'il y a… · il n’y a pas de…' },
-						{ id: 'ai-pas-de', oc: 'Ai pas de can.', sound: 'aï PAS dé CA', fr: 'je n’ai pas de chien. (après *pas*, on dit *de*)' }
+						{ id: 'i-a', oc: 'I a… · Non i a pas de…', sound: 'YA · nou ya PAS dé', fr: 'il y a… · il n’y a pas de…' },
+						{ id: 'ai-pas-de', oc: 'Non ai pas de can.', sound: 'nou aï PAS dé CA', fr: 'je n’ai pas de chien. (après *pas*, on dit *de*)' }
 					]
 				}
 			]
@@ -373,22 +373,22 @@ export const modul33 = {
 					glosa: { conilh: 'lapin', peis: 'poisson' },
 					items: [
 						{ consigne: 'Demande à Núria : « As-tu un chien ? »', answers: ['As un can ?'], choses: ['aver-singular', 'lo-can'] },
-						{ consigne: 'Réponds : « Non, je n’ai pas de chien. »', answers: ['Non, ai pas de can.'], choses: ['ai-pas-de'] },
+						{ consigne: 'Réponds : « Non, je n’ai pas de chien. »', answers: ['Non ai pas de can.'], choses: ['ai-pas-de'] },
 						{ consigne: 'Papeta montre la cour : « Il y a un cheval. »', answers: ['I a un caval.'], choses: ['i-a', 'lo-caval', 'un-una-article'] },
-						{ consigne: 'Il n’y a pas de chat.', answers: ['I a pas de cat.'], choses: ['i-a', 'lo-cat'] },
+						{ consigne: 'Il n’y a pas de chat.', answers: ['Non i a pas de cat.'], choses: ['i-a', 'lo-cat'] },
 						{ consigne: 'Inès a une chatte.', answers: ['Inès a una cata.'], choses: ['aver-singular', 'un-una-article', 'lo-cat'] },
 						{ consigne: 'J’ai une sœur et deux frères.', answers: ['Ai una sòrre e dos fraires.'], choses: ['un-una-article', 'la-sorre', 'lo-fraire'] },
 						{
 							consigne: 'As-tu des frères ou des sœurs ? Réponds pour toi, ou pour un personnage inventé.',
-							debut: ['Òc, ai', 'Non, ai pas de', 'Ai'],
+							debut: ['Òc, ai', 'Non ai pas de', 'Ai'],
 							choses: ['aver-singular', 'ai-pas-de'],
-							explain: 'Par exemple : *Òc, ai un fraire.* ou *Non, ai pas de sòrre.*'
+							explain: 'Par exemple : *Òc, ai un fraire.* ou *Non ai pas de sòrre.*'
 						},
 						{
 							consigne: 'As-tu un animal ? Dis-le, ou invente-le.',
-							debut: ['Ai un', 'Ai una', 'Ai pas de', 'I a'],
+							debut: ['Ai un', 'Ai una', 'Non ai pas de', 'I a'],
 							choses: ['aver-singular', 'un-una-article'],
-							explain: 'Par exemple : *Ai una cata.* ou *Ai pas de can, mas ai un peis.*'
+							explain: 'Par exemple : *Ai una cata.* ou *Non ai pas de can, mas ai un peis.*'
 						}
 					]
 				},
@@ -399,9 +399,9 @@ export const modul33 = {
 					items: [
 						{
 							prompt: 'Je n’ai pas de chien, mais j’ai une chatte.',
-							tiles: ['Ai', 'pas', 'de', 'can,', 'mas', 'ai', 'una', 'cata.'],
+							tiles: ['Non', 'ai', 'pas', 'de', 'can,', 'mas', 'ai', 'una', 'cata.'],
 							choses: ['ai-pas-de', 'lo-can', 'lo-cat'],
-							explain: '*Ai pas de can* : après *pas*, on dit *de*.'
+							explain: '*Non ai pas de can* : après *pas*, on dit *de*.'
 						},
 						{
 							prompt: 'Il y a une poule et un oiseau.',
@@ -424,7 +424,7 @@ export const modul33 = {
 					items: [
 						{
 							q: 'Trois phrases sur une personne : frères, sœurs, animaux.',
-							a: 'Par exemple : *Inès a dotze ans. A un fraire, Karim. A pas de can, mas a una cata, Mimí.*'
+							a: 'Par exemple : *Inès a dotze ans. A un fraire, Karim. Non a pas de can, mas a una cata, Mimí.*'
 						}
 					]
 				}
@@ -494,7 +494,7 @@ export const modul33 = {
 					title: 'Bilan : je peux…',
 					intro: 'Coche seulement ce que tu sais faire seul. Le reste reviendra dans ton carnet.',
 					items: [
-						'dire si j’ai des frères, des sœurs, des animaux : *Ai un fraire*, *Ai pas de can*',
+						'dire si j’ai des frères, des sœurs, des animaux : *Ai un fraire*, *Non ai pas de can*',
 						'demander à quelqu’un ce qu’il a : *As un cat ?*',
 						'dire ce qu’il y a : *I a un caval*',
 						'choisir entre *un* et *una*'
@@ -506,7 +506,7 @@ export const modul33 = {
 					title: 'Défi de la semaine',
 					paragraphs: [
 						'Tu sais maintenant dire ce que tu as, et ce qu’il y a autour de toi.',
-						'Si tu en as envie : présente ton animal à une personne proche, vrai ou rêvé, *Ai un can*… ou, si tu n’en as pas : *Ai pas de can.* Quand ? Où ? Choisis-le maintenant.'
+						'Si tu en as envie : présente ton animal à une personne proche, vrai ou rêvé, *Ai un can*… ou, si tu n’en as pas : *Non ai pas de can.* Quand ? Où ? Choisis-le maintenant.'
 					]
 				}
 			]

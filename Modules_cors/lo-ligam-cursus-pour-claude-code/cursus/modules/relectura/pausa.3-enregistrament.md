@@ -8,7 +8,7 @@
 1. Quina ora es ?
 2. Son cinc oras e mièja. Lo dimenge, me lèvi totjorn a cinc oras !
 3. A cinc oras ! E quin temps fa ?
-4. Fa freg, mas plòu pas.
+4. Fa freg, mas non plòu pas.
 5. E lo mercat, a quina ora ?
 6. A sèt oras. Dejuni, e puèi, vau al mercat !
 
@@ -63,7 +63,7 @@
 
 **Marià, dialogue à choix**
 
-29. Adieu ! Yasmine es pas aquí ?
+29. Adieu ! Yasmine non es pas aquí ?
 30. Las pomas, quant còstan ?
 31. Volriái un quilò, se te plai.
 32. Òc, sièis uòus. E… quina ora es ?

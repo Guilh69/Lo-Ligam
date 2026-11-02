@@ -121,7 +121,7 @@ export const modul62 = {
 							lines: [
 								{ oc: 'Yasmine ! Quin temps fa al vilatge ?', sound: 'yas-MI-ne ! kin TÉMS FA al bi-LA-djé ?', fr: 'Yasmine ! Quel temps fait-il au village ?' },
 								{ oc: 'Uèi, plòu. E a Tolosa ?', sound: 'UÈÏ, PLÒOU. é a tou-LOU-zo ?', fr: 'Aujourd’hui, il pleut. Et à Toulouse ?' },
-								{ oc: 'A Tolosa, plòu pas, mas fa vent… e fa freg !', sound: 'a tou-LOU-zo, PLÒOU PAS, mas fa BÉN… é fa FRÉTCH !', fr: 'À Toulouse, il ne pleut pas, mais il y a du vent… et il fait froid !' },
+								{ oc: 'A Tolosa, non plòu pas, mas fa vent… e fa freg !', sound: 'a tou-LOU-zo, nou PLÒOU PAS, mas fa BÉN… é fa FRÉTCH !', fr: 'À Toulouse, il ne pleut pas, mais il y a du vent… et il fait froid !' },
 								{ oc: 'Dimenge, nèva al vilatge. Caminam amb Lisa ?', sound: 'di-MÉN-djé, NÈ-bo al bi-LA-djé. ca-mi-NAN am LI-za ?', fr: 'Dimanche, il neige au village. On se promène avec Lisa ?' },
 								{ oc: 'Òc ! Amb Lisa… e amb la nèu !', sound: 'OK ! am LI-za… é am la NÈOU !', fr: 'Oui ! Avec Lisa… et avec la neige !' }
 							]
@@ -153,7 +153,7 @@ export const modul62 = {
 							options: ['il ne pleut pas, mais il y a du vent', 'il pleut, et il y a du vent', 'il fait chaud'],
 							correct: 0,
 							choses: ['fa-vent'],
-							explain: '*plòu pas* : il ne pleut pas. *fa vent* : il y a du vent.'
+							explain: '*non plòu pas* : il ne pleut pas. *fa vent* : il y a du vent.'
 						}
 					]
 				}
@@ -209,11 +209,11 @@ export const modul62 = {
 							explain: '*Quin temps fa ?* : quel temps fait-il ? *Quina ora es ?*, c’est l’heure ; *Qué fas ?*, ce qu’on fait.'
 						},
 						{
-							q: '*A Tolosa, plòu pas.*',
+							q: '*A Tolosa, non plòu pas.*',
 							options: ['À Toulouse, il ne pleut pas.', 'À Toulouse, il pleut un peu.', 'À Toulouse, il pleut aussi.'],
 							correct: 0,
 							choses: ['plou'],
-							explain: '*pas* après le verbe, comme *Parli pas* : il ne pleut pas.'
+							explain: '*non* devant le verbe, *pas* après, comme *Non parli pas* : il ne pleut pas.'
 						}
 					]
 				},
@@ -234,7 +234,7 @@ export const modul62 = {
 					notes: [
 						'Avec *fa* (il fait) : *Fa caud*, *Fa freg*, *Fa bèl*, et aussi *Fa solelh*, *Fa vent* : mot à mot, il fait soleil, il fait vent.',
 						'En un seul mot : *Plòu* (il pleut), *Nèva* (il neige). Avec *la* devant, ce sont les noms : *la pluèja* (la pluie), *la nèu* (la neige).',
-						'Pour dire non, *pas* après le verbe : *Plòu pas.* *Fa pas freg.*',
+						'Pour dire le contraire, *non* devant le verbe et *pas* après : *Non plòu pas.* *Non fa pas freg.*',
 						'*uèi* (aujourd’hui) et *deman* (demain) ouvrent la phrase : *Uèi, plòu. Deman, fa solelh.*'
 					]
 				},
@@ -386,9 +386,9 @@ export const modul62 = {
 						},
 						{
 							consigne: 'Il ne neige pas.',
-							answers: ['Nèva pas.'],
+							answers: ['Non nèva pas.'],
 							choses: ['neva'],
-							explain: '*pas* après le verbe.'
+							explain: '*non* devant le verbe, *pas* après.'
 						},
 						{
 							consigne: 'Il fait chaud, et il y a du soleil.',
@@ -410,9 +410,9 @@ export const modul62 = {
 						},
 						{
 							consigne: 'Je n’aime pas la pluie.',
-							answers: ['M’agrada pas la pluèja.'],
+							answers: ['Non m’agrada pas la pluèja.'],
 							choses: ['m-agrada', 'la-plueja'],
-							explain: '*M’agrada pas* : je n’aime pas. *la pluèja* : la pluie.'
+							explain: '*Non m’agrada pas* : je n’aime pas. *la pluèja* : la pluie.'
 						},
 						{
 							consigne: 'Et chez toi ? Dis le temps qu’il fait aujourd’hui, pour de vrai. Commence par *Uèi,…*',

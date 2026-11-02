@@ -9,7 +9,7 @@
 2. Dissabte, soi a la gara a onze oras e mièja.
 3. La fèsta, es luènh de la gara ? Cossí i vau ?
 4. M’agrada lo balèti… e canti dins una corala !
-5. Mas lo caçolet… m’agrada pas.
+5. Mas lo caçolet… non m’agrada pas.
 6. Dimenge, a doas oras, vau a la gara.
 7. E quin temps fa, al vilatge ?
 8. Mercés, e a dissabte !

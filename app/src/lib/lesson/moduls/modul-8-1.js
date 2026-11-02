@@ -147,7 +147,7 @@ export const modul81 = {
 					glossary: [
 						{ oc: 'l’espital', sound: 'lés-pi-TAL', fr: 'l’hôpital' },
 						{ oc: 'Benvengut ! · Benvenguda !', sound: 'bém-bén-GUT · bém-bén-GU-do', fr: 'bienvenu ! · bienvenue ! (à un homme · à une femme)' },
-						{ oc: 'sabi', sound: 'SA-bi', fr: 'je sais (*Sabi pas* : je ne sais pas)' },
+						{ oc: 'sabi', sound: 'SA-bi', fr: 'je sais (*Non sabi pas* : je ne sais pas)' },
 						{ oc: 'Òsca !', sound: 'ÒS-co', fr: 'bravo !' }
 					]
 				},
@@ -409,9 +409,9 @@ export const modul81 = {
 						},
 						{
 							consigne: 'Une passante cherche la place. Réponds-lui : tout droit, ce n’est pas loin.',
-							answers: ['Tot drech, es pas luènh.', 'Es tot drech, es pas luènh.', 'Tot drech. Es pas luènh.'],
+							answers: ['Tot drech, non es pas luènh.', 'Es tot drech, non es pas luènh.', 'Tot drech. Non es pas luènh.'],
 							choses: ['tot-drech', 'es-luenh'],
-							explain: '*Es pas luènh* : ce n’est pas loin. *Pas* après le verbe, comme toujours.'
+							explain: '*Non es pas luènh* : ce n’est pas loin. *Non* devant le verbe, *pas* après, comme toujours.'
 						},
 						{
 							consigne: 'Dis : l’église est sur la place.',
@@ -420,11 +420,11 @@ export const modul81 = {
 							explain: '*sus* : sur. *La glèisa*, *la plaça* : deux mots féminins.'
 						},
 						{
-							consigne: 'Et chez toi ? Dis si la gare est loin ou près. (S’il n’y en a pas, dis-le : *I a pas de…*)',
-							answers: ['Es luènh.', 'Es prèp.', 'Es pas luènh.', 'La gara es luènh.', 'La gara es prèp.', 'La gara es pas luènh.', 'I a pas de gara.'],
-							debut: ['La gara es', 'Es', 'I a pas de gara'],
+							consigne: 'Et chez toi ? Dis si la gare est loin ou près. (S’il n’y en a pas, dis-le : *Non i a pas de…*)',
+							answers: ['Es luènh.', 'Es prèp.', 'Non es pas luènh.', 'La gara es luènh.', 'La gara es prèp.', 'La gara non es pas luènh.', 'Non i a pas de gara.'],
+							debut: ['La gara es', 'Es', 'Non i a pas de gara'],
 							choses: ['la-gara', 'es-luenh'],
-							explain: 'Par exemple : *La gara es prèp.* · *I a pas de gara !*'
+							explain: 'Par exemple : *La gara es prèp.* · *Non i a pas de gara !*'
 						}
 					]
 				},
@@ -461,7 +461,7 @@ export const modul81 = {
 					items: [
 						{
 							q: 'Ta voisine, un cousin, une collègue…',
-							a: 'Par exemple : *La plaça ? Es pas luènh : tot drech, puèi a drecha. La glèisa es sus la plaça.*'
+							a: 'Par exemple : *La plaça ? Non es pas luènh : tot drech, puèi a drecha. La glèisa es sus la plaça.*'
 						}
 					]
 				}

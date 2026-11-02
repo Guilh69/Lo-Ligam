@@ -95,7 +95,7 @@ export const modul71 = {
 						},
 						{
 							consigne: 'Il n’y a pas de chien.',
-							answers: ['I a pas de can.'],
+							answers: ['Non i a pas de can.'],
 							choses: ['i-a', 'lo-can'],
 							explain: '*I a* : il y a (unité 3). Aujourd’hui, il revient dans chaque phrase.'
 						}
@@ -137,7 +137,7 @@ export const modul71 = {
 								{ oc: 'La cosina ! Mimí manja dins la cosina ?', sound: 'la cou-ZI-no ! mi-MI MAN-djo dins la cou-ZI-no ?', fr: 'La cuisine ! Mimí mange dans la cuisine ?' },
 								{ oc: 'Òc, amb ieu ! E aquí, i a la cambra, e la sala de banh.', sound: 'OK, am YÉOU ! é a-KI, ya la CAM-bro, é la SA-lo dé BAN.', fr: 'Oui, avec moi ! Et ici, il y a la chambre, et la salle de bain.' },
 								{ oc: 'I a un can, dins l’ostal ?', sound: 'ya un CA, dins lous-TAL ?', fr: 'Il y a un chien, dans la maison ?' },
-								{ oc: 'Non, i a pas de can. Mas i a un jardin !', sound: 'NOU, ya PAS dé CA. mas ya un djar-DI !', fr: 'Non, il n’y a pas de chien. Mais il y a un jardin !' },
+								{ oc: 'Non i a pas de can. Mas i a un jardin !', sound: 'nou ya PAS dé CA. mas ya un djar-DI !', fr: 'Non, il n’y a pas de chien. Mais il y a un jardin !' },
 								{ oc: 'E Mimí ? Ont es ?', sound: 'é mi-MI ? oun ÉS ?', fr: 'Et Mimí ? Où est-elle ?' },
 								{ oc: 'Es dins l’armari… Non ! Es a la fenèstra !', sound: 'és dins lar-MA-ri… NOU ! és a la fé-NÈS-tro !', fr: 'Elle est dans l’armoire… Non ! Elle est à la fenêtre !' },
 								{ oc: 'E ara… es dins lo jardin !', sound: 'é A-ro… és dins lou djar-DI !', fr: 'Et maintenant… elle est dans le jardin !' },
@@ -174,7 +174,7 @@ export const modul71 = {
 							options: ['de chien', 'de jardin', 'de salle de bain'],
 							correct: 0,
 							choses: ['i-a', 'lo-can'],
-							explain: '*I a pas de can* : pas de chien. Mais *i a un jardin* !'
+							explain: '*Non i a pas de can* : pas de chien. Mais *i a un jardin* !'
 						}
 					]
 				}
@@ -227,7 +227,7 @@ export const modul71 = {
 					title: 'Trois repères, pas de grammaire',
 					head: ['', 'dans la scène', 'à retenir'],
 					rows: [
-						['*i a* : il y a', '*I a un jardin.* · *I a pas de can.*', 'une chose ou plusieurs, *i a* ne change pas ; après *pas*, on dit *de*'],
+						['*i a* : il y a', '*I a un jardin.* · *Non i a pas de can.*', 'une chose ou plusieurs, *i a* ne change pas ; après *pas*, on dit *de*'],
 						['*dins* : dans', '*dins la cosina* · *dins l’armari*', 'comme *dins la vida* (unité 4)'],
 						['*l’* : le, la', '*l’ostal* · *l’armari*', 'devant une voyelle ; on ne voit plus si le mot est masculin ou féminin']
 					],
@@ -312,12 +312,12 @@ export const modul71 = {
 							explain: '*la galina* : la poule (3.3). Mimí, elle, la regarde déjà.'
 						},
 						{
-							ditz: { qui: 'Marià', oc: 'Dins la sala de banh, i a pas de cadièra.' },
+							ditz: { qui: 'Marià', oc: 'Dins la sala de banh, non i a pas de cadièra.' },
 							q: 'Elle te dit…',
 							options: ['pas de chaise dans la salle de bain', 'une chaise dans la salle de bain', 'pas de chaise dans le séjour'],
 							correct: 0,
 							choses: ['la-sala-de-banh', 'la-cadiera', 'i-a'],
-							explain: '*I a pas de cadièra* : il n’y a pas de chaise. Après *pas*, on dit *de*.'
+							explain: '*Non i a pas de cadièra* : il n’y a pas de chaise. Après *pas*, on dit *de*.'
 						},
 						{
 							ditz: { qui: 'Marià', oc: 'Ma cosina es dins la cosina !' },
@@ -370,12 +370,12 @@ export const modul71 = {
 							explain: '*l’armari* : l’armoire, et c’est un mot masculin : *un armari*.'
 						},
 						{
-							ditz: { qui: 'Marià', oc: 'Dins la cosina, i a pas de fenèstra.' },
+							ditz: { qui: 'Marià', oc: 'Dins la cosina, non i a pas de fenèstra.' },
 							q: 'Elle te dit…',
 							options: ['pas de fenêtre dans la cuisine', 'une fenêtre dans la cuisine', 'pas de porte dans la cuisine'],
 							correct: 0,
 							choses: ['la-fenestra', 'i-a'],
-							explain: '*la fenèstra* : la fenêtre. *I a pas de fenèstra* : il n’y en a pas.'
+							explain: '*la fenèstra* : la fenêtre. *Non i a pas de fenèstra* : il n’y en a pas.'
 						},
 						{
 							ditz: { qui: 'Marià', oc: 'Mimí es a la pòrta.' },
@@ -403,9 +403,9 @@ export const modul71 = {
 					items: [
 						{
 							consigne: 'Chez toi, il y a un jardin ? Réponds pour toi : il y en a un, ou il n’y en a pas.',
-							answers: ['I a un jardin.', 'Òc, i a un jardin.', 'I a pas de jardin.', 'Non, i a pas de jardin.'],
+							answers: ['I a un jardin.', 'Òc, i a un jardin.', 'Non i a pas de jardin.'],
 							choses: ['lo-jardin', 'i-a'],
-							explain: '*I a un jardin*, ou *I a pas de jardin* : après *pas*, on dit *de*.'
+							explain: '*I a un jardin*, ou *Non i a pas de jardin* : après *pas*, on dit *de*.'
 						},
 						{
 							consigne: 'Il y a une table dans la cuisine.',
@@ -437,7 +437,7 @@ export const modul71 = {
 						},
 						{
 							consigne: 'Il n’y a pas de chaise dans la salle de bain.',
-							answers: ['I a pas de cadièra dins la sala de banh.', 'Dins la sala de banh, i a pas de cadièra.'],
+							answers: ['Non i a pas de cadièra dins la sala de banh.', 'Dins la sala de banh, non i a pas de cadièra.'],
 							choses: ['la-cadiera', 'la-sala-de-banh']
 						},
 						{

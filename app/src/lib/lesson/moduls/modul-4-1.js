@@ -36,7 +36,7 @@ export const modul41 = {
 		'*vosautres, vosautras* : l’API a renvoyé une erreur (⚠️, déjà signalé dans le lexique). Tu les valides tels quels ?',
 		'*nautres, vautres* : absents du Basic (⚠️), montrés seulement en note avec leurs pays (Rouergue, Quercy, Albigeois), comme le cadre §3. On les garde ?',
 		'Sons proposés : *parlam* « par-LAN » (le m final sonne « n ») et *parlan* « PAR-lon ». C’est bien ton usage ?',
-		'*Canti pas plan* (je ne chante pas bien), dit Karim : naturel pour toi ?'
+		'*Non canti pas plan* (je ne chante pas bien), dit Karim : naturel pour toi ?'
 	],
 
 	sessions: [
@@ -83,9 +83,9 @@ export const modul41 = {
 					items: [
 						{
 							consigne: 'Je n’ai pas de chien.',
-							answers: ['Ai pas de can.'],
+							answers: ['Non ai pas de can.'],
 							choses: ['ai-pas-de', 'lo-can'],
-							explain: 'Après *pas*, on dit *de* : *Ai pas de can.*'
+							explain: 'Après *pas*, on dit *de* : *Non ai pas de can.*'
 						},
 						{
 							consigne: 'Demande à une amie quel âge elle a.',
@@ -115,7 +115,7 @@ export const modul41 = {
 							subtitle: '(Loís et Karim, qui se tutoient)',
 							lines: [
 								{ oc: 'Adieu, Karim ! Qué fas aquí ?', sound: 'a-DIOU, ka-RIM ! ké FAS a-KI ?', fr: 'Salut, Karim ! Que fais-tu ici ?' },
-								{ oc: 'Adieu ! Escoti la corala. Canti pas plan…', sound: 'a-DIOU ! es-COU-ti la cou-RA-lo. CAN-ti pas PLA…', fr: 'Salut ! J’écoute la chorale. Je ne chante pas bien…' },
+								{ oc: 'Adieu ! Escoti la corala. Non canti pas plan…', sound: 'a-DIOU ! es-COU-ti la cou-RA-lo. nou CAN-ti pas PLA…', fr: 'Salut ! J’écoute la chorale. Je ne chante pas bien…' },
 								{ oc: 'Aquí, cantam en occitan. Parlas occitan ?', sound: 'a-KI, can-TAN én ou-tsi-TA. PAR-los ou-tsi-TA ?', fr: 'Ici, nous chantons en occitan. Tu parles occitan ?' },
 								{ oc: 'Òc, un pauc. E tu, ont trabalhas ?', sound: 'OK, un PAOUK. é TU, oun tra-BA-lyos ?', fr: 'Oui, un peu. Et toi, où travailles-tu ?' },
 								{ oc: 'Trabalhi aquí, al vilatge : cosini !', sound: 'tra-BA-lyi a-KI, al bi-LA-djé : cou-ZI-ni !', fr: 'Je travaille ici, au village : je cuisine !' },
@@ -128,9 +128,9 @@ export const modul41 = {
 							lines: [
 								{ oc: 'Bon ser ! Vosautres, parlatz o cantatz ?', sound: 'bou(n) SÉR ! bou-ZAOU-trés, par-LATS ou can-TATS ?', fr: 'Bonsoir ! Vous deux, vous parlez ou vous chantez ?' },
 								{ oc: 'Parlam ! Loís canta… e ieu, escoti.', sound: 'par-LAN ! lou-ÍS CAN-to… é YÉOU, es-COU-ti.', fr: 'Nous parlons ! Loís chante… et moi, j’écoute.' },
-								{ oc: 'Aquí, escotam pas : cantam ! Ont trabalhatz, vosautres ?', sound: 'a-KI, es-cou-TAN PAS : can-TAN ! oun tra-ba-LYATS, bou-ZAOU-trés ?', fr: 'Ici, on n’écoute pas : on chante ! Où travaillez-vous, vous deux ?' },
+								{ oc: 'Aquí, non escotam pas : cantam ! Ont trabalhatz, vosautres ?', sound: 'a-KI, nou es-cou-TAN PAS : can-TAN ! oun tra-ba-LYATS, bou-ZAOU-trés ?', fr: 'Ici, on n’écoute pas : on chante ! Où travaillez-vous, vous deux ?' },
 								{ oc: 'Ieu, trabalhi a Tolosa, e Loís trabalha aquí. E vos ?', sound: 'YÉOU, tra-BA-lyi a tou-LOU-zo, é lou-ÍS tra-BA-lyo a-KI. é BOUS ?', fr: 'Moi, je travaille à Toulouse, et Loís travaille ici. Et vous ?' },
-								{ oc: 'Ieu ? Trabalhi pas : canti, camini ! Yasmine e Núria cantan tanben.', sound: 'YÉOU ? tra-BA-lyi PAS : CAN-ti, ca-MI-ni ! yas-MI-ne é NOU-ria CAN-ton tam-BÉ.', fr: 'Moi ? Je ne travaille pas : je chante, je marche ! Yasmine et Núria chantent aussi.' },
+								{ oc: 'Ieu ? Non trabalhi pas : canti, camini ! Yasmine e Núria cantan tanben.', sound: 'YÉOU ? nou tra-BA-lyi PAS : CAN-ti, ca-MI-ni ! yas-MI-ne é NOU-ria CAN-ton tam-BÉ.', fr: 'Moi ? Je ne travaille pas : je chante, je marche ! Yasmine et Núria chantent aussi.' },
 								{ oc: 'E parlan occitan ?', sound: 'é PAR-lon ou-tsi-TA ?', fr: 'Et elles parlent occitan ?' },
 								{ oc: 'Òc ! Aquí, parlam occitan, e cantam en occitan.', sound: 'OK ! a-KI, par-LAN ou-tsi-TA, é can-TAN én ou-tsi-TA.', fr: 'Oui ! Ici, nous parlons occitan, et nous chantons en occitan.' }
 							]
@@ -152,7 +152,7 @@ export const modul41 = {
 							options: ['Loís et Marià chantent, Karim écoute.', 'Karim chante, Loís écoute.', 'Marià écoute, Karim chante.'],
 							correct: 0,
 							choses: ['cantar', 'escotar'],
-							explain: 'Karim : *Escoti la corala. Canti pas plan…* Marià : *Aquí, escotam pas : cantam !*'
+							explain: 'Karim : *Escoti la corala. Non canti pas plan…* Marià : *Aquí, non escotam pas : cantam !*'
 						},
 						{
 							q: '*Qué fas aquí ?* demande Loís. Karim répond…',
@@ -297,7 +297,7 @@ export const modul41 = {
 							explain: '*-am* : nous, « man-DJAN ».'
 						},
 						{
-							q: '*Danci pas.*',
+							q: '*Non danci pas.*',
 							options: ['je ne danse pas', 'elle ne danse pas', 'tu ne danses pas'],
 							correct: 0,
 							choses: ['dancar'],
@@ -385,10 +385,10 @@ export const modul41 = {
 					items: [
 						{
 							consigne: 'Dis où tu travailles : je travaille à… (ta ville). Ou bien : je ne travaille pas.',
-							answers: ['Trabalhi pas.', 'Trabalhi aquí.'],
-							debut: ['Trabalhi a', 'Ieu, trabalhi a', 'Trabalhi pas', 'Ieu, trabalhi pas'],
+							answers: ['Non trabalhi pas.', 'Trabalhi aquí.'],
+							debut: ['Trabalhi a', 'Ieu, trabalhi a', 'Non trabalhi pas', 'Ieu, non trabalhi pas'],
 							choses: ['trabalhar'],
-							explain: '*Trabalhi a…*, puis ta ville. Ou *Trabalhi pas.*'
+							explain: '*Trabalhi a…*, puis ta ville. Ou *Non trabalhi pas.*'
 						},
 						{
 							consigne: 'Demande à ton amie où elle travaille.',
@@ -404,13 +404,13 @@ export const modul41 = {
 						},
 						{
 							consigne: 'Tu cuisines ? Réponds pour toi : je cuisine, je cuisine un peu, ou je ne cuisine pas.',
-							answers: ['Cosini.', 'Òc, cosini.', 'Cosini un pauc.', 'Cosini plan.', 'Cosini pas.', 'Non, cosini pas.'],
+							answers: ['Cosini.', 'Òc, cosini.', 'Cosini un pauc.', 'Cosini plan.', 'Non cosini pas.'],
 							choses: ['cosinar'],
-							explain: '*Cosini*, et *pas* après le verbe pour dire non.'
+							explain: '*Cosini* ; pour dire non : *Non cosini pas*, avec *non* devant le verbe et *pas* après.'
 						},
 						{
 							consigne: 'Et le soir, tu marches ? Réponds pour toi.',
-							answers: ['Òc, camini.', 'Camini.', 'Lo ser, camini.', 'Non, camini pas.', 'Camini pas.', 'Lo ser, camini pas.'],
+							answers: ['Òc, camini.', 'Camini.', 'Lo ser, camini.', 'Non camini pas.', 'Lo ser, non camini pas.'],
 							choses: ['caminar'],
 							explain: '*Lo ser, camini* : le soir, je marche.'
 						},
@@ -428,7 +428,7 @@ export const modul41 = {
 						},
 						{
 							consigne: 'À la chorale : nous écoutons, nous ne parlons pas !',
-							answers: ['Escotam, parlam pas !', 'Nosautres, escotam, parlam pas !', 'Nosautras, escotam, parlam pas !'],
+							answers: ['Escotam, non parlam pas !', 'Nosautres, escotam, non parlam pas !', 'Nosautras, escotam, non parlam pas !'],
 							choses: ['escotar', 'parlar-plural'],
 							explain: '*-am* deux fois : *escotam*, *parlam*.'
 						}

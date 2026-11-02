@@ -46,7 +46,7 @@ export const modul34 = {
 					intro: 'Deux phrases du module 3.3, sans regarder. Un accent oublié, on te le montre.',
 					items: [
 						{ consigne: 'J’ai un frère et une sœur.', answers: ['Ai un fraire e una sòrre.'], choses: ['un-una-article', 'lo-fraire', 'la-sorre'] },
-						{ consigne: 'Il n’y a pas de chien.', answers: ['I a pas de can.'], choses: ['i-a', 'lo-can'] }
+						{ consigne: 'Il n’y a pas de chien.', answers: ['Non i a pas de can.'], choses: ['i-a', 'lo-can'] }
 					]
 				},
 				{
@@ -106,10 +106,10 @@ export const modul34 = {
 								{ oc: 'Ma familha es de Barcelona.', sound: 'ma fa-MI-lyo és dé bar-sé-LOU-no.', fr: 'Ma famille est de Barcelone.' },
 								{ oc: 'Mon paire es catalan, e ma maire es espanhòla.', sound: 'moun PAÏ-ré és ca-ta-LA, é ma MAÏ-ré és es-pa-GNÒ-lo.', fr: 'Mon père est catalan, et ma mère est espagnole.' },
 								{ oc: 'Ai un fraire, Jordi : a dètz-e-sèt ans.', sound: 'aï un FRAÏ-ré, JOR-di : a dèts-é-SÈT ANS.', fr: 'J’ai un frère, Jordi : il a dix-sept ans.' },
-								{ oc: 'Ai pas de sòrre.', sound: 'aï PAS dé SÒ-rré.', fr: 'Je n’ai pas de sœur.' },
+								{ oc: 'Non ai pas de sòrre.', sound: 'nou aï PAS dé SÒ-rré.', fr: 'Je n’ai pas de sœur.' },
 								{ oc: 'Ma mameta es de la Val d’Aran : parla occitan !', sound: 'ma ma-MÉ-to és dé la BAL da-RAN : PAR-lo ou-tsi-TA !', fr: 'Ma grand-mère est du Val d’Aran : elle parle occitan !' },
 								{ oc: 'Ieu, parli catalan, espanhòl… e un pauc occitan.', sound: 'YÉOU, PAR-li ca-ta-LA, es-pa-GNÒL… é un PAOUK ou-tsi-TA.', fr: 'Moi, je parle catalan, espagnol… et un peu occitan.' },
-								{ oc: 'Ai un aucèl, mas ai pas de can.', sound: 'aï u-naou-SÈL, mas aï PAS dé CA.', fr: 'J’ai un oiseau, mais je n’ai pas de chien.' },
+								{ oc: 'Ai un aucèl, mas non ai pas de can.', sound: 'aï u-naou-SÈL, mas nou aï PAS dé CA.', fr: 'J’ai un oiseau, mais je n’ai pas de chien.' },
 								{ oc: 'E tu, Joana ?', sound: 'é TU, djou-A-no ?', fr: 'Et toi, Joana ?' }
 							]
 						},
@@ -176,10 +176,10 @@ export const modul34 = {
 						['1. d’où vient la famille', '*Ma familha es de Barcelona.*', '*Ma familha es d’aquí.* · *Demòri a Tolosa.*'],
 						['2. les parents', '*Mon paire es catalan, e ma maire es espanhòla.*', '*Ai doas maires.* · *Lo companh de ma maire es de Besièrs.*'],
 						['3. frères et sœurs', '*Ai un fraire, Jordi : a dètz-e-sèt ans.*', '*Ai una sòrre.* · *Ai dos fraires.*'],
-						['4. ce qu’on n’a pas', '*Ai pas de sòrre.*', '*Ai pas de fraire.*'],
+						['4. ce qu’on n’a pas', '*Non ai pas de sòrre.*', '*Non ai pas de fraire.*'],
 						['5. grands-parents, oncles, tantes', '*Ma mameta es de la Val d’Aran : parla occitan !*', '*Mon papeta demòra a Carcassona.* · *Ma tanta es italiana.*'],
 						['6. toi', '*Ieu, parli catalan, espanhòl… e un pauc occitan.*', '*Ai vint ans.* · *Parli francés.*'],
-						['7. les animaux', '*Ai un aucèl, mas ai pas de can.*', '*I a un cat.* · *Ai pas de can.*'],
+						['7. les animaux', '*Ai un aucèl, mas non ai pas de can.*', '*I a un cat.* · *Non ai pas de can.*'],
 						['8. une question pour finir', '*E tu, Joana ?*', '*E tu, as de fraires ?* · *E ta familha ?*']
 					],
 					notes: [
@@ -248,16 +248,16 @@ export const modul34 = {
 						},
 						{
 							consigne: '3. Frères et sœurs : combien ?',
-							answers: ['Ai pas de fraire.', 'Ai pas de sòrre.', 'Ai pas de fraire e ai pas de sòrre.'],
+							answers: ['Non ai pas de fraire.', 'Non ai pas de sòrre.', 'Non ai pas de fraire e non ai pas de sòrre.'],
 							debut: ['Ai un', 'Ai una', 'Ai dos', 'Ai doas', 'Ai tres'],
 							choses: ['aver-singular', 'un-una-article', 'lo-fraire', 'la-sorre'],
 							explain: 'Par exemple : *Ai un fraire, Jordi.*'
 						},
 						{
 							consigne: '4. Leur âge, ou ce que tu n’as pas.',
-							debut: ['Mon fraire a', 'Ma sòrre a', 'A', 'Ai pas de'],
+							debut: ['Mon fraire a', 'Ma sòrre a', 'A', 'Non ai pas de'],
 							choses: ['a-ans', 'ai-pas-de'],
-							explain: 'Par exemple : *Ma sòrre a nòu ans.* ou *Ai pas de sòrre.*'
+							explain: 'Par exemple : *Ma sòrre a nòu ans.* ou *Non ai pas de sòrre.*'
 						},
 						{
 							consigne: '5. Un grand-parent, un oncle, une tante, un cousin…',
@@ -273,10 +273,10 @@ export const modul34 = {
 						},
 						{
 							consigne: '7. Les animaux, vrais ou rêvés.',
-							answers: ['Ai pas de can.', 'Ai pas de cat.', 'I a pas de can.'],
-							debut: ['Ai un', 'Ai una', 'Ai pas de', 'I a'],
+							answers: ['Non ai pas de can.', 'Non ai pas de cat.', 'Non i a pas de can.'],
+							debut: ['Ai un', 'Ai una', 'Non ai pas de', 'I a'],
 							choses: ['aver-singular', 'i-a', 'lo-can', 'lo-cat'],
-							explain: 'Par exemple : *Ai una cata, mas ai pas de can.*'
+							explain: 'Par exemple : *Ai una cata, mas non ai pas de can.*'
 						},
 						{
 							consigne: '8. Une question pour finir.',
@@ -302,11 +302,11 @@ export const modul34 = {
 					items: [
 						{
 							q: 'Quand tu as fini, et pas avant, regarde un premier exemple : Lisa, que tu connais depuis l’unité 1.',
-							a: '*Demòri a Montpelhièr. Ma familha : ma maire, mon fraire e ieu. Mon fraire a quinze ans. Ai pas de sòrre. Ma mameta es de Nimes : parla occitan ! Ieu, ai vint ans e parli francés. Ai pas de can, mas ai una cata. E tu, as de fraires ?*'
+							a: '*Demòri a Montpelhièr. Ma familha : ma maire, mon fraire e ieu. Mon fraire a quinze ans. Non ai pas de sòrre. Ma mameta es de Nimes : parla occitan ! Ieu, ai vint ans e parli francés. Non ai pas de can, mas ai una cata. E tu, as de fraires ?*'
 						},
 						{
 							q: 'Et un deuxième, avec une famille inventée.',
-							a: '*Ma familha es de Besièrs. Ai dos paires, Marc e Samuel.* (deux pères) *Ai una sòrre, Lina : a nòu ans. Ai pas de fraire. Mon papeta es portugués. Ieu, ai dètz-e-uèch ans e parli francés. I a un can e un cat. E ta familha ?*'
+							a: '*Ma familha es de Besièrs. Ai dos paires, Marc e Samuel.* (deux pères) *Ai una sòrre, Lina : a nòu ans. Non ai pas de fraire. Mon papeta es portugués. Ieu, ai dètz-e-uèch ans e parli francés. I a un can e un cat. E ta familha ?*'
 						}
 					]
 				},
@@ -317,7 +317,7 @@ export const modul34 = {
 					items: [
 						'les huit phrases y sont : la famille, frères et sœurs, un grand-parent ou un oncle, toi, les animaux, une question',
 						'*mon* et *ma* devant le bon mot : *mon paire*, *ma maire*',
-						'*Ai pas de…* pour ce que tu n’as pas',
+						'*Non ai pas de…* pour ce que tu n’as pas',
 						'*Ai… ans*, *a… ans* pour l’âge',
 						'la prononciation : *vint* « BIN », *familha* « fa-MI-lyo », *can* « CA »'
 					]
@@ -343,7 +343,7 @@ export const modul34 = {
 							ditz: 'Adieu ! Quant as d’ans ?',
 							options: [
 								{ oc: 'Ai… ans. E tu ?', bon: true },
-								{ oc: 'Ai pas de fraire.', reaccion: 'Inès rit : elle te demande ton âge, pas tes frères.' },
+								{ oc: 'Non ai pas de fraire.', reaccion: 'Inès rit : elle te demande ton âge, pas tes frères.' },
 								{ oc: 'Es ma sòrre.', reaccion: 'Inès regarde autour d’elle : qui ça ? Elle te demande ton âge.' }
 							],
 							choses: ['quant-as-d-ans'],
@@ -353,18 +353,18 @@ export const modul34 = {
 							ditz: 'Ai dotze ans. As de fraires ?',
 							options: [
 								{ oc: 'Òc, ai un fraire.', bon: true },
-								{ oc: 'Non, ai pas de fraire.', bon: true },
+								{ oc: 'Non ai pas de fraire.', bon: true },
 								{ oc: 'Òc, a un fraire.', reaccion: 'Inès fronce les sourcils : *a*, c’est « il ou elle a ». Pour toi, on dit *ai*.' }
 							],
 							choses: ['aver-singular', 'ai-pas-de'],
-							explain: '*Ai un fraire* ou *Ai pas de fraire* : les deux vont, c’est ta réponse.'
+							explain: '*Ai un fraire* ou *Non ai pas de fraire* : les deux vont, c’est ta réponse.'
 						},
 						{
 							situacion:
 								'Tout à coup, Inès passe au français, très vite : « Ah ouais ? Moi, mon frère, c’est Karim, il habite à Toulouse, il vient presque jamais… Et toi, t’as des animaux ? »',
 							options: [
 								{ oc: 'Pòdes repetir, se te plai ?', bon: true },
-								{ oc: 'Compreni pas.', reaccion: 'Inès, gentille, te réexplique tout… en français, encore plus vite. Demande-lui plutôt de répéter.' },
+								{ oc: 'Non compreni pas.', reaccion: 'Inès, gentille, te réexplique tout… en français, encore plus vite. Demande-lui plutôt de répéter.' },
 								{ oc: 'Òc !', reaccion: 'Inès attend la suite : quels animaux ? Tu as répondu un peu au hasard.' }
 							],
 							choses: ['podes-repetir'],
@@ -375,11 +375,11 @@ export const modul34 = {
 							ditz: 'As un can ? O un cat ?',
 							options: [
 								{ oc: 'Ai un cat.', bon: true },
-								{ oc: 'Ai pas de can.', bon: true },
+								{ oc: 'Non ai pas de can.', bon: true },
 								{ oc: 'Ai una sòrre.', reaccion: 'Inès rit : une sœur, ce n’est pas un animal !' }
 							],
 							choses: ['lo-can', 'lo-cat', 'ai-pas-de'],
-							explain: '*Ai un cat*, *Ai un can* ou *Ai pas de can* : c’est ta réponse, vraie ou inventée.'
+							explain: '*Ai un cat*, *Ai un can* ou *Non ai pas de can* : c’est ta réponse, vraie ou inventée.'
 						},
 						{
 							ditz: 'Ieu, ai una cata, Mimí. E ta familha ?',
@@ -455,8 +455,8 @@ export const modul34 = {
 					title: 'Répète à voix haute',
 					items: [
 						{
-							q: 'Dis à voix haute : *Ai vint ans. Ma familha. Ai pas de can.*',
-							a: '« aï BIN ANS », « ma fa-MI-lyo », « aï PAS dé CA ».'
+							q: 'Dis à voix haute : *Ai vint ans. Ma familha. Non ai pas de can.*',
+							a: '« aï BIN ANS », « ma fa-MI-lyo », « nou aï PAS dé CA ».'
 						}
 					]
 				},
@@ -478,7 +478,7 @@ export const modul34 = {
 						'dire mon âge et demander celui des autres : *Quant as d’ans ?*',
 						'compter jusqu’à vingt',
 						'nommer les gens d’une famille avec *mon, ma, ton, ta*',
-						'dire ce que j’ai et ce que je n’ai pas : *Ai un can*, *Ai pas de cat*',
+						'dire ce que j’ai et ce que je n’ai pas : *Ai un can*, *Non ai pas de cat*',
 						'présenter une famille, la mienne ou une famille inventée, en huit phrases'
 					]
 				},
@@ -513,8 +513,8 @@ export const modul34 = {
 						['à moi, à toi', '*mon paire, ma maire* · *ton fraire, ta sòrre*', 'mon père, ma mère · ton frère, ta sœur'],
 						['la famille', '*lo paire, la maire, lo fraire, la sòrre, lo filh, la filha, lo papeta, la mameta, l’oncle, la tanta, lo cosin, la cosina, los dròlles, lo companh, la companha*', 'le père, la mère, le frère, la sœur, le fils, la fille, le grand-père, la grand-mère, l’oncle, la tante, le cousin, la cousine, les enfants, le compagnon, la compagne'],
 						['avoir', '*ai* · *as* · *a*', 'j’ai · tu as · il ou elle a'],
-						['il y a', '*I a un caval.* · *I a pas de cat.*', 'il y a un cheval. · il n’y a pas de chat.'],
-						['ne… pas de', '*Ai pas de can.*', 'je n’ai pas de chien.'],
+						['il y a', '*I a un caval.* · *Non i a pas de cat.*', 'il y a un cheval. · il n’y a pas de chat.'],
+						['ne… pas de', '*Non ai pas de can.*', 'je n’ai pas de chien.'],
 						['les bêtes', '*lo can, lo cat, la cata, l’aucèl, lo caval, la galina*', 'le chien, le chat, la chatte, l’oiseau, le cheval, la poule']
 					]
 				},
