@@ -2,7 +2,8 @@
 // 2026-11-02 sur le modèle de l'unité 1 (règles communes : cursus/regles-redaccion-A1.md).
 // Forme du jour : sus, jos, davant, darrièr, al costat de, entre ; les petits
 // mots soudés al, del, als, dels, sul, suls (lexic-A1.md, 7.2). Al est déjà connu
-// par Vau al lièch (6.3).
+// par Vau al lièch (6.3). Soudure obligatoire avec a et de, au choix avec sus et
+// jos (grammaire de référence p21, choix de Romain du 2026-11-02).
 // Scène : c'est jeudi, Núria vient jouer aux cartes chez Marià (4.4) ; Mimí,
 // gardée par Marià toute la semaine (7.1), a disparu.
 // Jeu du jour : glisser l'objet à sa place (order, voir le commentaire).
@@ -26,6 +27,7 @@ export const modul72 = {
 	notesRelecture: [
 		'*darrièr* « da-RRYÈ », *davant* « da-BAN », *jos* « DJOUS » : c’est bien ton usage ?',
 		'Ajouté le 2026-11-02 d’après la grammaire de référence : *suls* (*sus* + *los*), avec *suls canapès*, dans le tableau et l’encadré. À relire.',
+		'Ton choix du 2026-11-02 (grammaire de référence, p21) : la soudure est obligatoire avec *a* et *de*, au choix avec *sus* et *jos*. Notes du tableau revues, *jol canapè* signalé, *Mimí es sus lo canapè* accepté. À relire.',
 		'Son : *als amics* « al-za-MITS », le *s* lié devant la voyelle, comme *los amics* « lou-za-MITS » (4.3). D’accord ?',
 		'Pendant la recherche, Núria et Marià se répondent sans verbe (*Jos la taula ?* · *Non. Darrièr la pòrta ?*) : ça sonne naturel ?',
 		'*Mimí, al jardin !* pour envoyer la chatte dehors : naturel pour toi ?'
@@ -228,7 +230,7 @@ export const modul72 = {
 				{
 					type: 'table',
 					title: 'Les petits mots qui se soudent',
-					glosa: { canapès: 'canapés' },
+					glosa: { canapès: 'canapés', jol: 'jos lo' },
 					head: ['', 'avec *lo*', 'avec *la*', 'avec *los*', 'avec *las*'],
 					rows: [
 						['*a* (à)', '*al jardin* (au jardin)', '*a la fenèstra*', '*als amics* (aux amis)', '*a las cartas*'],
@@ -236,9 +238,10 @@ export const modul72 = {
 						['*sus* (sur)', '*sul canapè* (sur le canapé)', '*sus la taula*', '*suls canapès* (sur les canapés)', '*sus las cadièras*']
 					],
 					notes: [
-						'Seuls *lo* et *los* se soudent ; *la* et *las* restent à part, comme en français : « au jardin », mais « à la fenêtre ».',
-						'*sus* se soude de la même façon : *sus* + *lo* = *sul*, *sus* + *los* = *suls*. Mais *sus la taula*, *sus las cadièras*.',
-						'Devant une voyelle, *l’* ne se soude pas : *a l’ostal*, *de l’armari*.'
+						'Avec *a* et *de*, *lo* et *los* se soudent toujours ; *la* et *las* restent à part, comme en français : « au jardin », mais « à la fenêtre ».',
+						'Avec *sus*, c’est au choix : *sul canapè* ou *sus lo canapè*, *suls canapès* ou *sus los canapès*. Mais toujours *sus la taula*, *sus las cadièras*.',
+						'Avec *jos*, c’est au choix aussi : *jos lo canapè* ou *jol canapè*.',
+						'Devant une voyelle, *l’* ne se soude jamais : *a l’ostal*, *de l’armari*.'
 					]
 				},
 				{
@@ -329,7 +332,7 @@ export const modul72 = {
 							options: ['sous le canapé', 'sur le canapé', 'derrière le canapé'],
 							correct: 0,
 							choses: ['jos'],
-							explain: '*jos* : sous. *Jos* ne se soude pas : *jos lo canapè*.'
+							explain: '*jos* : sous. *Jos lo canapè*, ou *jol canapè* : avec *jos*, la soudure est au choix.'
 						},
 						{
 							ditz: { qui: 'Marià', oc: 'Mimí es davant la pòrta.' },
@@ -392,9 +395,9 @@ export const modul72 = {
 						},
 						{
 							consigne: 'Mimí est sur le canapé.',
-							answers: ['Mimí es sul canapè.'],
+							answers: ['Mimí es sul canapè.', 'Mimí es sus lo canapè.'],
 							choses: ['sus-sul', 'lo-canape'],
-							explain: '*sus* + *lo* = *sul*.'
+							explain: '*sus* + *lo* = *sul*. *Sus lo canapè* se dit aussi.'
 						},
 						{
 							consigne: 'Le jardin est devant la maison.',

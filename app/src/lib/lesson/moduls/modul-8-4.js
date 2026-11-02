@@ -34,7 +34,8 @@ export const modul84 = {
 		'Tour « rester en occitan » : Loís passe au français ; deux bonnes répliques, *Pòdes repetir, se te plai ?* (2.3) et *En occitan, se te plai !* D’accord ?',
 		'Godolin, *Béni t’en admira la Bilo de Toulouso* : vers lu sur des numérisations anciennes, pas encore contrôlé sur une édition savante (⚠️). On le garde ?',
 		'*Consistori del Gay Saber* : nom historique cité tel quel (*consistòri* est absent du Basic, ⚠️). D’accord ?',
-		'La tâche : accueillir pour de vrai une personne choisie (ou le prof, au cours en visio), de la gare au café. Ça te va ?'
+		'La tâche : accueillir pour de vrai une personne choisie (ou le prof, au cours en visio), de la gare au café. Ça te va ?',
+		'Tes choix du 2026-11-02 (grammaire de référence), repris ici : *la dosena*, *un suc de frucha*, *préner*, *Fa caud* « fa CAOUT ». À relire.'
 	],
 
 	sessions: [
@@ -57,11 +58,11 @@ export const modul84 = {
 							explain: '*Perdon…* pour aborder ; *la glèisa* : l’église (*la gara*, c’est la gare).'
 						},
 						{
-							q: '*Pren la segonda a drecha.*',
+							q: '*Pren la dosena a drecha.*',
 							options: ['prends la deuxième à droite', 'prends la première à droite', 'tourne deux fois à droite'],
 							correct: 0,
 							choses: ['pren', 'primier-segond'],
-							explain: '*Pren !* : prends ! *la segonda* : la deuxième.'
+							explain: '*Pren !* : prends ! *la dosena* : la deuxième.'
 						},
 						{
 							q: '*Ela pren un tè.*',
@@ -113,7 +114,7 @@ export const modul84 = {
 								{ oc: 'Adieu, Giulia ! Benvenguda a Tolosa !', sound: 'a-DIOU, DJOU-lia ! bém-bén-GU-do a tou-LOU-zo !', fr: 'Salut, Giulia ! Bienvenue à Toulouse !' },
 								{ oc: 'Adieu, Núria ! Cossí vas ?', sound: 'a-DIOU, NOU-ria ! cou-si BAS ?', fr: 'Salut, Núria ! Comment vas-tu ?' },
 								{ oc: 'Vau plan, mercés ! E tu ?', sound: 'BAOU PLA, mér-SÉS ! é TU ?', fr: 'Je vais bien, merci ! Et toi ?' },
-								{ oc: 'Va plan ! Mas fa caud, uèi… Ai set !', sound: 'ba PLA ! mas fa CAOU, UÈÏ… aï SÉT !', fr: 'Ça va ! Mais il fait chaud, aujourd’hui… J’ai soif !' },
+								{ oc: 'Va plan ! Mas fa caud, uèi… Ai set !', sound: 'ba PLA ! mas fa CAOUT, UÈÏ… aï SÉT !', fr: 'Ça va ! Mais il fait chaud, aujourd’hui… J’ai soif !' },
 								{ oc: 'Un cafè ? Lo cafè de Bernat es sus la plaça.', sound: 'un ca-FÈ ? lou ca-FÈ dé bér-NAT és sus la PLA-ço.', fr: 'Un café ? Le café de Bernat est sur la place.' },
 								{ oc: 'Es luènh ?', sound: 'és LUÈN ?', fr: 'C’est loin ?' },
 								{ oc: 'Un pauc. Mas es tot drech, a pè !', sound: 'un PAOUK. mas és tout DRÉTCH, a PÈ !', fr: 'Un peu. Mais c’est tout droit, à pied !' }
@@ -125,7 +126,7 @@ export const modul84 = {
 							lines: [
 								{ oc: 'Bonjorn ! Qué volètz ?', sound: 'boun-DJOUR ! ké bou-LÈTS ?', fr: 'Bonjour ! Que voulez-vous ?' },
 								{ oc: 'Bonjorn, Bernat ! Giulia, qué prenes ?', sound: 'boun-DJOUR, bér-NAT ! DJOU-lia, ké PRÉ-nés ?', fr: 'Bonjour, Bernat ! Giulia, que prends-tu ?' },
-								{ oc: 'Per ieu, un suc de fruta… e un veire d’aiga, se vos plai !', sound: 'pér YÉOU, un SUC dé FRU-to… é un BÉÏ-ré DAÏ-go, sé bous PLAÏ !', fr: 'Pour moi, un jus de fruit… et un verre d’eau, s’il vous plaît !' },
+								{ oc: 'Per ieu, un suc de frucha… e un veire d’aiga, se vos plai !', sound: 'pér YÉOU, un SUC dé FRU-tcho… é un BÉÏ-ré DAÏ-go, sé bous PLAÏ !', fr: 'Pour moi, un jus de fruit… et un verre d’eau, s’il vous plaît !' },
 								{ oc: 'E per ieu, un tè.', sound: 'é pér YÉOU, un TÈ.', fr: 'Et pour moi, un thé.' },
 								{ oc: 'Vaquí ! Quicòm mai ?', sound: 'ba-KI ! ki-CÒM MAÏ ?', fr: 'Voilà ! Autre chose ?' },
 								{ oc: 'Es tot, mercés. L’addicion, se vos plai.', sound: 'és TOUT, mér-SÉS. la-di-SYOU, sé bous PLAÏ.', fr: 'C’est tout, merci. L’addition, s’il vous plaît.' },
@@ -236,7 +237,7 @@ export const modul84 = {
 						},
 						{
 							prompt: 'Au café : de la commande jusqu’au départ.',
-							tiles: ['Qué volètz ?', 'Per ieu, un suc de fruta.', 'Quicòm mai ?', 'Es tot.', 'L’addicion, se vos plai.', 'Al còp que ven !'],
+							tiles: ['Qué volètz ?', 'Per ieu, un suc de frucha.', 'Quicòm mai ?', 'Es tot.', 'L’addicion, se vos plai.', 'Al còp que ven !'],
 							choses: ['per-ieu', 'suc-de-fruta', 'l-addicion', 'al-cop-que-ven'],
 							explain: 'Le serveur demande, tu commandes ; puis l’addition, et on se quitte.'
 						},
@@ -456,7 +457,7 @@ export const modul84 = {
 					items: [
 						{
 							q: 'Quand tu as fini, et pas avant, regarde l’accueil de Karim : sa petite sœur Inès, douze ans, vient passer la journée à Toulouse.',
-							a: '*Adieu, Inès ! Benvenguda a Tolosa ! Cossí vas ? … Uèi, fa caud ! Un suc de fruta ? Lo cafè es sus la plaça : es un pauc luènh, mas es tot drech. … Inès, qué prenes ? … Per ela, un suc de fruta ; per ieu, un cafè, se vos plai. … L’addicion, se vos plai. … Mercés, Bernat ! … Al còp que ven, Inès !*'
+							a: '*Adieu, Inès ! Benvenguda a Tolosa ! Cossí vas ? … Uèi, fa caud ! Un suc de frucha ? Lo cafè es sus la plaça : es un pauc luènh, mas es tot drech. … Inès, qué prenes ? … Per ela, un suc de frucha ; per ieu, un cafè, se vos plai. … L’addicion, se vos plai. … Mercés, Bernat ! … Al còp que ven, Inès !*'
 						}
 					]
 				},
@@ -587,7 +588,7 @@ export const modul84 = {
 						['aborder quelqu’un', '*Perdon…*'],
 						['demander où est un lieu', '*Ont es la gara ?* · *Es luènh ?* · *Es prèp.*'],
 						['demander le chemin', '*Cossí i vau ?*'],
-						['indiquer le chemin', '*tot drech* · *Vira a drecha !* · *Pren la segonda carrièra a esquèrra.* · *a pè*'],
+						['indiquer le chemin', '*tot drech* · *Vira a drecha !* · *Pren la dosena carrièra a esquèrra.* · *a pè*'],
 						['commander', '*Qué prenes ?* · *Per ieu, un cafè.* · *un veire d’aiga* · *Ai set.*'],
 						['payer', '*L’addicion, se vos plai.*']
 					]
@@ -595,7 +596,7 @@ export const modul84 = {
 				{
 					type: 'table',
 					title: 'Mémo : deux verbes au singulier',
-					head: ['', '*anar* (aller)', '*prene* (prendre)'],
+					head: ['', '*anar* (aller)', '*préner* (prendre)'],
 					rows: [
 						['je', '*vau*', '*preni*'],
 						['tu', '*vas*', '*prenes*'],

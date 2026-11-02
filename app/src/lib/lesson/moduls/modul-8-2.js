@@ -8,7 +8,8 @@
 // appelle Yasmine. Le plan est celui de 8.1.
 // Jeu du jour : remettre l'itinéraire dans l'ordre (order), plan sous les yeux.
 // ⚠️ Occitan vérifié par l'API de lo Congrès (lexique ; bastida, bastir le
-// 2026-11-02), à valider par Romain.
+// 2026-11-02), à valider par Romain. Dosen, dosena (deuxième) : grammaire de
+// référence p52, choix de Romain du 2026-11-02 ; absents du Basic, dicodòc (Laus) ✓.
 // Ne pas changer `slug` ni `unitat` (le fil de l'unité regroupe les modules par `unitat`).
 
 export const modul82 = {
@@ -26,11 +27,12 @@ export const modul82 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Lisa', 'Núria', 'Yasmine', 'Karim'],
 	notesRelecture: [
-		'*Pren la segonda carrièra a esquèrra* (prends la deuxième rue à gauche), puis *la segonda a esquèrra* sans redire *carrièra* : naturel pour toi ?',
+		'*Pren la dosena carrièra a esquèrra* (prends la deuxième rue à gauche), puis *la dosena a esquèrra* sans redire *carrièra* : naturel pour toi ?',
 		'*I anatz a pè* (vous y allez à pied), dit Karim à Yasmine et à ses amies : naturel ?',
 		'*lo cafè* paraît ici avec une glose, un module avant d’être appris (8.3) : d’accord ?',
 		'*A miègjorn !* (à midi !) pour se quitter quand on se revoit à midi : naturel ?',
-		'Son du jour : *vira* « BI-ro », *esquèrra* « es-KÈ-rro », *segonda* « sé-GOUN-do ». C’est bien ton usage ?'
+		'Son du jour : *vira* « BI-ro », *esquèrra* « es-KÈ-rro », *dosena* « dou-ZÉ-no ». C’est bien ton usage ?',
+		'Ton choix du 2026-11-02 (grammaire de référence, p52) : *dosen*, *dosena* pour « deuxième », à la place de *segond*, *segonda*, gardés dans l’encadré pour « le second », quand il n’y en a que deux. Sons « dou-ZÉN », « dou-ZÉ-no » (le *n* de *dosen* se dit, comme dans *seten*, p11). À relire.'
 	],
 
 	sessions: [
@@ -109,10 +111,10 @@ export const modul82 = {
 								{ oc: 'Adieu, Núria ! Soi a la gara. E tu, ont siás ?', sound: 'a-DIOU, NOU-ria ! souï a la GA-ro. é TU, oun SYOS ?', fr: 'Salut, Núria ! Je suis à la gare. Et toi, où es-tu ?' },
 								{ oc: 'Al mercat, amb Yasmine. Benvenguda a Tolosa !', sound: 'al mér-CAT, am yas-MI-ne. bém-bén-GU-do a tou-LOU-zo !', fr: 'Au marché, avec Yasmine. Bienvenue à Toulouse !' },
 								{ oc: 'Mercés ! Lo mercat… Cossí i vau ?', sound: 'mér-SÉS ! lou mér-CAT… cou-si i BAOU ?', fr: 'Merci ! Le marché… Comment j’y vais ?' },
-								{ oc: 'Non es pas luènh : i vas a pè. Tot drech, e pren la segonda carrièra a esquèrra.', sound: 'nou és pas LUÈN : i BAS a PÈ. tout DRÉTCH, é PRÉ(N) la sé-GOUN-do ca-RRYÈ-ro a es-KÈ-rro.', fr: 'Ce n’est pas loin : tu y vas à pied. Tout droit, et prends la deuxième rue à gauche.' },
+								{ oc: 'Non es pas luènh : i vas a pè. Tot drech, e pren la dosena carrièra a esquèrra.', sound: 'nou és pas LUÈN : i BAS a PÈ. tout DRÉTCH, é PRÉ(N) la dou-ZÉ-no ca-RRYÈ-ro a es-KÈ-rro.', fr: 'Ce n’est pas loin : tu y vas à pied. Tout droit, et prends la deuxième rue à gauche.' },
 								{ oc: 'La primièra a esquèrra ?', sound: 'la pri-MYÈ-ro a es-KÈ-rro ?', fr: 'La première à gauche ?' },
-								{ oc: 'Non, la segonda ! A la primièra, i a una botiga.', sound: 'NOU, la sé-GOUN-do ! a la pri-MYÈ-ro, YA U-no bou-TI-go.', fr: 'Non, la deuxième ! À la première, il y a une boutique.' },
-								{ oc: 'Òc : la segonda a esquèrra. A lèu !', sound: 'OK : la sé-GOUN-do a es-KÈ-rro. a LÈOU !', fr: 'Oui : la deuxième à gauche. À bientôt !' }
+								{ oc: 'Non, la dosena ! A la primièra, i a una botiga.', sound: 'NOU, la dou-ZÉ-no ! a la pri-MYÈ-ro, YA U-no bou-TI-go.', fr: 'Non, la deuxième ! À la première, il y a une boutique.' },
+								{ oc: 'Òc : la dosena a esquèrra. A lèu !', sound: 'OK : la dou-ZÉ-no a es-KÈ-rro. a LÈOU !', fr: 'Oui : la deuxième à gauche. À bientôt !' }
 							]
 						},
 						{
@@ -152,7 +154,7 @@ export const modul82 = {
 							options: ['la deuxième rue à gauche', 'la première rue à gauche', 'la deuxième rue à droite'],
 							correct: 0,
 							choses: ['pren', 'primier-segond'],
-							explain: '*Pren la segonda carrièra a esquèrra.* Lisa hésite, *La primièra ?*, et Núria insiste : *la segonda !*'
+							explain: '*Pren la dosena carrièra a esquèrra.* Lisa hésite, *La primièra ?*, et Núria insiste : *la dosena !*'
 						},
 						{
 							q: 'Karim va sur la place. Il propose à Yasmine…',
@@ -200,7 +202,7 @@ export const modul82 = {
 							explain: '*i* : y. Tu le connais depuis *I a…* (il y a). « Et », c’est *e* ; « il », *el*.'
 						},
 						{
-							q: '*Pren la segonda carrièra*, dit Núria à Lisa. Elle veut dire…',
+							q: '*Pren la dosena carrièra*, dit Núria à Lisa. Elle veut dire…',
 							options: ['prends la deuxième rue', 'je prends la deuxième rue', 'la deuxième rue est loin'],
 							correct: 0,
 							choses: ['pren', 'primier-segond'],
@@ -261,10 +263,11 @@ export const modul82 = {
 					type: 'chunks',
 					title: 'À retenir : pour guider quelqu’un',
 					intro: 'Deux ordres tout faits, et de quoi compter les rues.',
+					glosa: { segond: 'le second', segonda: 'la seconde' },
 					items: [
 						{ id: 'vira', oc: 'Vira a drecha ! · Vira a esquèrra !', sound: 'BI-ro a DRÉ-tcho · BI-ro a es-KÈ-rro', fr: 'tourne à droite ! · tourne à gauche !' },
 						{ id: 'pren', oc: 'Pren la carrièra…', sound: 'PRÉ(N) la ca-RRYÈ-ro', fr: 'prends la rue…' },
-						{ id: 'primier-segond', oc: 'lo primièr · la primièra · lo segond · la segonda', sound: 'lou pri-MYÈ · la pri-MYÈ-ro · lou sé-GOUN · la sé-GOUN-do', fr: 'le premier · la première · le deuxième · la deuxième' }
+						{ id: 'primier-segond', oc: 'lo primièr · la primièra · lo dosen · la dosena', sound: 'lou pri-MYÈ · la pri-MYÈ-ro · lou dou-ZÉN · la dou-ZÉ-no', fr: 'le premier · la première · le deuxième · la deuxième (*lo segond*, *la segonda* : le second, quand il n’y en a que deux)' }
 					]
 				},
 				// jeu prévu par la carte : remettre l'itinéraire dans l'ordre sur le plan
@@ -278,7 +281,7 @@ export const modul82 = {
 					head: ['', '*a esquèrra*', '*tot drech*', '*a drecha*'],
 					rows: [
 						['au bout', '', '*la plaça* : *la glèisa*, *lo cafè*', ''],
-						['*la segonda carrièra*', '*lo mercat*', '↑', '*l’escòla* (l’école)'],
+						['*la dosena carrièra*', '*lo mercat*', '↑', '*l’escòla* (l’école)'],
 						['*la primièra carrièra*', '*la botiga* (la boutique)', '↑', '*l’espital* (l’hôpital)'],
 						['départ', '', '*la gara*', '']
 					]
@@ -290,7 +293,7 @@ export const modul82 = {
 					items: [
 						{
 							prompt: 'Tu es à la gare. Explique le chemin jusqu’à l’école.',
-							tiles: ['Tot drech,', 'puèi', 'pren', 'la segonda carrièra', 'a drecha.'],
+							tiles: ['Tot drech,', 'puèi', 'pren', 'la dosena carrièra', 'a drecha.'],
 							choses: ['tot-drech', 'pren', 'primier-segond', 'a-drecha'],
 							explain: 'L’école : la deuxième rue, à droite. *Pren* : prends.'
 						},
@@ -384,7 +387,7 @@ export const modul82 = {
 						},
 						{
 							q: 'Et toi : de chez toi jusqu’à la place, ou jusqu’à la gare ?',
-							a: 'Par exemple : *Vau a la gara a pè. Tot drech, puèi pren la segonda carrièra a esquèrra. Non es pas luènh !*'
+							a: 'Par exemple : *Vau a la gara a pè. Tot drech, puèi pren la dosena carrièra a esquèrra. Non es pas luènh !*'
 						}
 					]
 				}
@@ -404,7 +407,7 @@ export const modul82 = {
 					paragraphs: [
 						'Dans chaque mot, la voix appuie plus fort sur une syllabe : *vira* « BI-ro », *anar* « a-NA ».',
 						'Un accent écrit montre où appuyer : *carrièra* « ca-RRYÈ-ro », *esquèrra* « es-KÈ-rro », *primièra* « pri-MYÈ-ro ».',
-						'Sans accent écrit, un mot qui finit par *a* se dit appuyé juste avant : *segonda* « sé-GOUN-do », *drecha* « DRÉ-tcho ».'
+						'Sans accent écrit, un mot qui finit par *a* se dit appuyé juste avant : *dosena* « dou-ZÉ-no », *drecha* « DRÉ-tcho ».'
 					]
 				},
 				{
@@ -446,7 +449,7 @@ export const modul82 = {
 					lien: { href: 'https://fr.wikipedia.org/wiki/Bastide_(ville)', texte: 'Lire l’article « Bastide (ville) » sur Wikipédia' },
 					paragraphs: [
 						'Dans le Sud-Ouest, entre 1222 et 1373, on a fondé des centaines de villes neuves : les bastides, de l’occitan *bastida*, du verbe *bastir*, construire. On en compte entre trois cents et cinq cents, presque toutes dans quatorze départements d’aujourd’hui.',
-						'Si tu te promènes dans l’une d’elles, *tot drech* et *la segonda a drecha* te serviront.',
+						'Si tu te promènes dans l’une d’elles, *tot drech* et *la dosena a drecha* te serviront.',
 						'Source : Wikipédia, article « Bastide (ville) ».'
 					]
 				},
@@ -458,7 +461,7 @@ export const modul82 = {
 					items: [
 						'demander comment aller quelque part : *Cossí i vau ?*',
 						'dire où je vais : *Vau a la gara*, *Vau al trabalh*',
-						'expliquer un chemin : *Vira a drecha*, *Pren la segonda carrièra*',
+						'expliquer un chemin : *Vira a drecha*, *Pren la dosena carrièra*',
 						'dire qu’on y va à pied',
 						'appuyer au bon endroit : *carrièra*, *esquèrra*, *vira*'
 					]

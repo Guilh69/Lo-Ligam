@@ -19,8 +19,8 @@ Halte 4 : réemploi des unités 7 et 8, puis bilan. Générée depuis le site (`
 | occitan | français |
 |---|---|
 | Qué prenes, Lisa ? | Qu’est-ce que tu prends, Lisa ? |
-| Un veire d’aiga… e un suc de fruta ! | Un verre d’eau… et un jus de fruit ! |
-| Se vos plai ! Per ieu, un tè ; per ela, un veire d’aiga e un suc de fruta. | S’il vous plaît ! Pour moi, un thé ; pour elle, un verre d’eau et un jus de fruit. |
+| Un veire d’aiga… e un suc de frucha ! | Un verre d’eau… et un jus de fruit ! |
+| Se vos plai ! Per ieu, un tè ; per ela, un veire d’aiga e un suc de frucha. | S’il vous plaît ! Pour moi, un thé ; pour elle, un verre d’eau et un jus de fruit. |
 | E ton ostal, es luènh ? | Et ta maison, c’est loin ? |
 | Non, es prèp : darrièr la glèisa. L’addicion, se vos plai ! | Non, c’est près : derrière l’église. L’addition, s’il vous plaît ! |
 
@@ -45,13 +45,13 @@ En gras : ce qui entre dans le carnet. Sans gras : expliqué en passant (glossai
 
 ## Aussi dans les exercices
 
-*Vira a esquèrra, puèi tot drech.* · *De la gara : tot drech, puèi vira a esquèrra.* · *Pren la segonda carrièra : l’ostal es al costat de la glèisa.* · *La pòrta es verda, entre lo cafè e la glèisa.* · *Adieu ! Ieu, me dison Jordi.* · *Adieu, Jordi ! Benvengut !* · *Ai set ! I a un cafè, prèp de la gara ?* · *Òc, sus la plaça : tot drech, puèi a drecha.* · *Ieu, vòli un suc de fruta. E tu, qué prenes ?* · *Preni un cafè.* · *Non : per ieu, un cafè ; per el, un suc de fruta, se vos plai.* · *Non, es prèp : la segonda carrièra a esquèrra.* · *Òsca ! E ma cambra, ont es ?* · *L’armari verd es per ieu ?* · *Òc, es per tu !* · *Mercés per tot !* · *De res ! Benvengut, Jordi !* · *Ma cambra es al costat de la sala de banh.* · *La pòrta es blava, e la fenèstra es verda.* · *Perdon… La glèisa, es luènh ? Cossí i vau ?* · *Perdon… Es luènh, la glèisa ? Cossí i vau ?* · *Pren la primièra carrièra a drecha.* · *Per ieu, un veire d’aiga. L’addicion, se vos plai !*
+*Vira a esquèrra, puèi tot drech.* · *De la gara : tot drech, puèi vira a esquèrra.* · *Pren la dosena carrièra : l’ostal es al costat de la glèisa.* · *La pòrta es verda, entre lo cafè e la glèisa.* · *Adieu ! Ieu, me dison Jordi.* · *Adieu, Jordi ! Benvengut !* · *Ai set ! I a un cafè, prèp de la gara ?* · *Òc, sus la plaça : tot drech, puèi a drecha.* · *Ieu, vòli un suc de frucha. E tu, qué prenes ?* · *Preni un cafè.* · *Non : per ieu, un cafè ; per el, un suc de frucha, se vos plai.* · *Non, es prèp : la dosena carrièra a esquèrra.* · *Òsca ! E ma cambra, ont es ?* · *L’armari verd es per ieu ?* · *Òc, es per tu !* · *Mercés per tot !* · *De res ! Benvengut, Jordi !* · *Ma cambra es al costat de la sala de banh.* · *La pòrta es blava, e la fenèstra es verda.* · *Perdon… La glèisa, es luènh ? Cossí i vau ?* · *Perdon… Es luènh, la glèisa ? Cossí i vau ?* · *Pren la primièra carrièra a drecha.* · *Per ieu, un veire d’aiga. L’addicion, se vos plai !*
 
 ## Mauvaises réponses proposées
 
 Elles ne répondent pas à la question, mais l’élève les lit : elles doivent rester du bon occitan.
 
-*sus la taula* · *davant la taula* · *roge* · *blava* · *Per tu, un tè.* · *Per ela, un tè.* · *Adieu, Jordi ! Benvenguda !* · *Adieu-siatz, Jordi !* · *Òc, sus la plaça : tot drech, puèi a esquèrra.* · *Òc, jos la plaça : tot drech, puèi a drecha.* · *Prenes un cafè.* · *Pren un cafè.* · *Non compreni pas.* · *Òc, òc…* · *Non, es prèp : la primièra carrièra a esquèrra.* · *Òc, es luènh : la segonda carrièra a esquèrra.* · *Es jos la taula.* · *Es dins lo jardin.* · *Òc, es per ieu !* · *Non, es blau.* · *Mercés ! Benvengut, Jordi !* · *De res ! Adieu-siatz, Jordi !*
+*sus la taula* · *davant la taula* · *roge* · *blava* · *Per tu, un tè.* · *Per ela, un tè.* · *Adieu, Jordi ! Benvenguda !* · *Adieu-siatz, Jordi !* · *Òc, sus la plaça : tot drech, puèi a esquèrra.* · *Òc, jos la plaça : tot drech, puèi a drecha.* · *Prenes un cafè.* · *Pren un cafè.* · *Non compreni pas.* · *Òc, òc…* · *Non, es prèp : la primièra carrièra a esquèrra.* · *Òc, es luènh : la dosena carrièra a esquèrra.* · *Es jos la taula.* · *Es dins lo jardin.* · *Òc, es per ieu !* · *Non, es blau.* · *Mercés ! Benvengut, Jordi !* · *De res ! Adieu-siatz, Jordi !*
 
 ## Mots que l’outil n’a pas confirmés
 
@@ -65,3 +65,4 @@ Aucun : tout est connu de lo Basic ou de vèrb’Òc (un ✓ ne valide ni le sen
 4. *Un cafè sus la plaça, prèp de la gara* (près de la gare) : *prèp de* te va ?
 5. *Mercés per tot !* (merci pour tout) : d’accord ?
 6. *Benvengut !* tout seul, pour accueillir un garçon (*Benvenguda !* pour une fille) : d’accord ?
+7. Tes choix du 2026-11-02 (grammaire de référence), repris ici : *la dosena carrièra*, *un suc de frucha*, *fa caud* « CAOUT ». À relire.

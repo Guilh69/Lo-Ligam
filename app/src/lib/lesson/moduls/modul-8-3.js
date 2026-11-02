@@ -1,8 +1,8 @@
 // Module 8.3 · A1 · « Qué prenes ? » : unité 8 (En vila), rédigé par Claude
 // le 2026-11-02 sur le modèle des unités 1 et 4 (même chemin en six étapes ;
 // règles communes : cursus/regles-redaccion-A1.md).
-// Forme du jour : prene au singulier (preni, prenes, pren), comme comprene (2.2).
-// Pas de pluriel de prene. Pour commander : Per ieu, …
+// Forme du jour : préner au singulier (preni, prenes, pren), comme compréner (2.2).
+// Pas de pluriel de préner. Pour commander : Per ieu, …
 // Scène : midi, au café de la place (le plan de 8.1). Karim, Yasmine, puis
 // Núria et Lisa ; Bernat, le serveur, vouvoie ses clients.
 // Jeu du jour : dialogue à choix avec le serveur (causida).
@@ -27,7 +27,8 @@ export const modul83 = {
 		'Le serveur dit *Qué volètz ?* (que voulez-vous ?) à ses clients : ça te va ?',
 		'*Per Yasmine, un tè* (pour Yasmine, un thé), pour commander pour quelqu’un : naturel ?',
 		'Bernat, le serveur du café de la place : prénom nouveau, qui revient en 8.4. D’accord ?',
-		'Chanson : *Parla patois* (Massilia Sound System, 1992), sur la page du groupe. Elle te va, ou tu préfères une chanson sur Toulouse ?'
+		'Chanson : *Parla patois* (Massilia Sound System, 1992), sur la page du groupe. Elle te va, ou tu préfères une chanson sur Toulouse ?',
+		'Tes choix du 2026-11-02 (grammaire de référence) : *préner* et *compréner* avec l’accent (p94, p20), une ligne dans le tableau dit pourquoi ; *un suc de frucha* « FRU-tcho » (p33) ; *la dosena carrièra* (p52) ; *Fa caud* « fa CAOUT » (p9). À relire.'
 	],
 
 	sessions: [
@@ -58,11 +59,11 @@ export const modul83 = {
 						},
 						{
 							q: 'la deuxième rue :',
-							options: ['la segonda carrièra', 'la primièra carrièra', 'lo segond carrièra'],
+							options: ['la dosena carrièra', 'la primièra carrièra', 'lo dosen carrièra'],
 							correct: 0,
 							oc: true,
 							choses: ['primier-segond', 'la-carriera'],
-							explain: '*la carrièra* est féminin : *la segonda*. *Lo segond* va avec un mot masculin.'
+							explain: '*la carrièra* est féminin : *la dosena*. *Lo dosen* va avec un mot masculin.'
 						}
 					]
 				},
@@ -104,13 +105,13 @@ export const modul83 = {
 							title: 'Karim e Yasmine',
 							subtitle: '(à la terrasse ; ils se tutoient)',
 							lines: [
-								{ oc: 'Fa caud, uèi ! Ai set.', sound: 'fa CAOU, UÈÏ ! aï SÉT.', fr: 'Il fait chaud, aujourd’hui ! J’ai soif.' },
+								{ oc: 'Fa caud, uèi ! Ai set.', sound: 'fa CAOUT, UÈÏ ! aï SÉT.', fr: 'Il fait chaud, aujourd’hui ! J’ai soif.' },
 								{ oc: 'Ieu tanben ! Qué prenes ?', sound: 'YÉOU tam-BÉ ! ké PRÉ-nés ?', fr: 'Moi aussi ! Que prends-tu ?' },
 								{ oc: 'Un cafè !', sound: 'un ca-FÈ !', fr: 'Un café !' },
-								{ oc: 'Un cafè ? Fa caud !', sound: 'un ca-FÈ ? fa CAOU !', fr: 'Un café ? Il fait chaud !' },
+								{ oc: 'Un cafè ? Fa caud !', sound: 'un ca-FÈ ? fa CAOUT !', fr: 'Un café ? Il fait chaud !' },
 								{ oc: 'Preni totjorn un cafè : lo matin, lo tantòst, lo ser…', sound: 'PRÉ-ni tout-DJOUR un ca-FÈ : lou ma-TI, lou tan-TÒST, lou SÉR…', fr: 'Je prends toujours un café : le matin, l’après-midi, le soir…' },
 								{ oc: 'Ieu, preni un tè. E Núria ?', sound: 'YÉOU, PRÉ-ni un TÈ. é NOU-ria ?', fr: 'Moi, je prends un thé. Et Núria ?' },
-								{ oc: 'Núria pren un suc de fruta. E Lisa… non sabi pas !', sound: 'NOU-ria PRÉ(N) un SUC dé FRU-to. é LI-zo… nou SA-bi PAS !', fr: 'Núria prend un jus de fruit. Et Lisa… je ne sais pas !' }
+								{ oc: 'Núria pren un suc de frucha. E Lisa… non sabi pas !', sound: 'NOU-ria PRÉ(N) un SUC dé FRU-tcho. é LI-zo… nou SA-bi PAS !', fr: 'Núria prend un jus de fruit. Et Lisa… je ne sais pas !' }
 							]
 						},
 						{
@@ -118,8 +119,8 @@ export const modul83 = {
 							subtitle: '(Bernat, le serveur, vouvoie ses clients. Karim commande pour la table ; Lisa arrive juste à temps.)',
 							lines: [
 								{ oc: 'Bonjorn ! Qué volètz ?', sound: 'boun-DJOUR ! ké bou-LÈTS ?', fr: 'Bonjour ! Que voulez-vous ?' },
-								{ oc: 'Per ieu, un cafè, se vos plai. Per Yasmine, un tè, e per Núria, un suc de fruta.', sound: 'pér YÉOU, un ca-FÈ, sé bous PLAÏ. pér yas-MI-ne, un TÈ, é pér NOU-ria, un SUC dé FRU-to.', fr: 'Pour moi, un café, s’il vous plaît. Pour Yasmine, un thé, et pour Núria, un jus de fruit.' },
-								{ oc: 'Un cafè, un tè, un suc de fruta… Quicòm mai ?', sound: 'un ca-FÈ, un TÈ, un SUC dé FRU-to… ki-CÒM MAÏ ?', fr: 'Un café, un thé, un jus de fruit… Autre chose ?' },
+								{ oc: 'Per ieu, un cafè, se vos plai. Per Yasmine, un tè, e per Núria, un suc de frucha.', sound: 'pér YÉOU, un ca-FÈ, sé bous PLAÏ. pér yas-MI-ne, un TÈ, é pér NOU-ria, un SUC dé FRU-tcho.', fr: 'Pour moi, un café, s’il vous plaît. Pour Yasmine, un thé, et pour Núria, un jus de fruit.' },
+								{ oc: 'Un cafè, un tè, un suc de frucha… Quicòm mai ?', sound: 'un ca-FÈ, un TÈ, un SUC dé FRU-tcho… ki-CÒM MAÏ ?', fr: 'Un café, un thé, un jus de fruit… Autre chose ?' },
 								{ oc: 'Òc ! Per ieu, un veire d’aiga, se vos plai. Ai set !', sound: 'OK ! pér YÉOU, un BÉÏ-ré DAÏ-go, sé bous PLAÏ. aï SÉT !', fr: 'Oui ! Pour moi, un verre d’eau, s’il vous plaît. J’ai soif !' },
 								{ oc: 'Vaquí !', sound: 'ba-KI !', fr: 'Voilà !' },
 								{ oc: 'Mercés ! L’addicion, se vos plai.', sound: 'mér-SÉS ! la-di-SYOU, sé bous PLAÏ.', fr: 'Merci ! L’addition, s’il vous plaît.' },
@@ -143,7 +144,7 @@ export const modul83 = {
 							],
 							correct: 0,
 							choses: ['prene-singular', 'un-cafe', 'un-te', 'suc-de-fruta'],
-							explain: 'Karim : *Per ieu, un cafè… Per Yasmine, un tè, e per Núria, un suc de fruta.* Lisa : *un veire d’aiga*.'
+							explain: 'Karim : *Per ieu, un cafè… Per Yasmine, un tè, e per Núria, un suc de frucha.* Lisa : *un veire d’aiga*.'
 						},
 						{
 							q: 'Pourquoi Lisa demande-t-elle un verre d’eau ?',
@@ -191,7 +192,7 @@ export const modul83 = {
 							explain: '*-i* : je, comme *compreni*, *parli*. *Un tè* : un thé.'
 						},
 						{
-							q: '*Núria pren un suc de fruta.* Ici, *pren* veut dire…',
+							q: '*Núria pren un suc de frucha.* Ici, *pren* veut dire…',
 							options: ['elle prend', 'je prends', 'prends !'],
 							correct: 0,
 							choses: ['prene-singular'],
@@ -216,9 +217,9 @@ export const modul83 = {
 				},
 				{
 					type: 'table',
-					title: 'Le verbe prene (prendre), au singulier',
-					intro: 'Il se conjugue comme *comprene*, que tu connais depuis l’unité 2 :',
-					head: ['', '*prene*', 'ça sonne comme', 'comme *comprene*'],
+					title: 'Le verbe préner (prendre), au singulier',
+					intro: 'Il se conjugue comme *compréner*, que tu connais depuis l’unité 2 :',
+					head: ['', '*préner*', 'ça sonne comme', 'comme *compréner*'],
 					rows: [
 						['je', '*preni*', '« PRÉ-ni »', '*compreni*'],
 						['tu', '*prenes*', '« PRÉ-nés »', '*comprenes*'],
@@ -227,7 +228,8 @@ export const modul83 = {
 					notes: [
 						'*Pren !* sert aussi pour guider : *Pren la carrièra…* (prends la rue…), comme au module 8.2.',
 						'Pour commander : *Per ieu, un cafè.* Ou bien *Preni un cafè.* Avec *se vos plai*, c’est plus poli.',
-						'Le pluriel de *prene* viendra plus tard.'
+						'L’accent de *préner* montre où appuyer : « PRÉ-né ». Sans lui, on appuierait à la fin, comme dans *anar* « a-NA ».',
+						'Le pluriel de *préner* viendra plus tard.'
 					]
 				},
 				{
@@ -235,11 +237,11 @@ export const modul83 = {
 					title: 'À retenir',
 					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces expressions entrent dans ton carnet de révision.',
 					items: [
-						{ id: 'prene-singular', oc: 'prene : preni · prenes · pren', sound: 'PRÉ-né : PRÉ-ni · PRÉ-nés · PRÉ(N)', fr: 'prendre : je prends · tu prends · il ou elle prend' },
+						{ id: 'prene-singular', oc: 'préner : preni · prenes · pren', sound: 'PRÉ-né : PRÉ-ni · PRÉ-nés · PRÉ(N)', fr: 'prendre : je prends · tu prends · il ou elle prend' },
 						{ id: 'per-ieu', oc: 'Per ieu, …', sound: 'pér YÉOU', fr: 'pour moi, … (pour commander)' },
 						{ id: 'un-cafe', oc: 'un cafè · lo cafè', sound: 'un ca-FÈ · lou ca-FÈ', fr: 'un café · le café (la boisson, et aussi le lieu)' },
 						{ id: 'un-te', oc: 'un tè', sound: 'un TÈ', fr: 'un thé' },
-						{ id: 'suc-de-fruta', oc: 'un suc de fruta', sound: 'un SUC dé FRU-to', fr: 'un jus de fruit' }
+						{ id: 'suc-de-fruta', oc: 'un suc de frucha', sound: 'un SUC dé FRU-tcho', fr: 'un jus de fruit' }
 					]
 				}
 			]
@@ -292,10 +294,10 @@ export const modul83 = {
 							explain: '*prenes* : tu prends. *Qué prenes ?* : que prends-tu ?'
 						},
 						{
-							situacion: 'Núria te répond : *Un suc de fruta !* Dis-le à Bernat.',
+							situacion: 'Núria te répond : *Un suc de frucha !* Dis-le à Bernat.',
 							options: [
-								{ oc: 'Ela pren un suc de fruta.', bon: true },
-								{ oc: 'Ela preni un suc de fruta.', reaccion: 'Bernat hésite : « elle », puis « je prends » ? Il regarde Núria, puis toi : qui veut le jus ?' },
+								{ oc: 'Ela pren un suc de frucha.', bon: true },
+								{ oc: 'Ela preni un suc de frucha.', reaccion: 'Bernat hésite : « elle », puis « je prends » ? Il regarde Núria, puis toi : qui veut le jus ?' },
 								{ oc: 'Ela pren un veire de vin.', reaccion: 'Núria ouvre de grands yeux : du vin, à midi ? Elle voulait un jus de fruit !' }
 							],
 							choses: ['prene-singular', 'suc-de-fruta'],
@@ -303,7 +305,7 @@ export const modul83 = {
 						},
 						{
 							situacion: 'Il fait chaud, et tu as soif.',
-							ditz: 'Un cafè, un suc de fruta… Quicòm mai ?',
+							ditz: 'Un cafè, un suc de frucha… Quicòm mai ?',
 							options: [
 								{ oc: 'Òc, un veire d’aiga, se vos plai : ai set !', bon: true },
 								{ oc: 'Òc, un veire de lach, se vos plai : ai set !', reaccion: 'Bernat apporte un grand verre de lait. Contre la soif, un peu étrange… mais il ne discute pas.' },
@@ -380,7 +382,7 @@ export const modul83 = {
 						},
 						{
 							consigne: 'Ton amie prend un jus de fruit : dis-le au serveur.',
-							answers: ['Ela pren un suc de fruta.', 'Ela pren un suc de fruta, se vos plai.', 'Per ela, un suc de fruta.', 'Per ela, un suc de fruta, se vos plai.'],
+							answers: ['Ela pren un suc de frucha.', 'Ela pren un suc de frucha, se vos plai.', 'Per ela, un suc de frucha.', 'Per ela, un suc de frucha, se vos plai.'],
 							choses: ['prene-singular', 'suc-de-fruta'],
 							explain: '*pren* : elle prend. Ou bien : *Per ela, …*'
 						},

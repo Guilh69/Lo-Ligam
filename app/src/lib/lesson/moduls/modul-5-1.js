@@ -1,7 +1,8 @@
 // Module 5.1 · A1 · « Qué i a al mercat ? » : unité 5 (Al mercat), rédigé par
 // Claude le 2026-11-02 sur le modèle de l'unité 1 (même chemin en six étapes,
 // carte de l'A1 §3 ; règles communes : cursus/regles-redaccion-A1.md).
-// Forme du jour : le pluriel (on ajoute -s ; -a devient -as) ; un quilò de ;
+// Forme du jour : le pluriel (on ajoute -s ; -a devient -as) ; la frucha, nom
+// collectif sans pluriel (grammaire de référence p33, choix de Romain du 2026-11-02) ; un quilò de ;
 // al mercat en bloc (al s'explique en 7.2). Lexique : cursus/lexic-A1.md, 5.1,
 // items copiés tels quels (mêmes id), en quatre blocs.
 // Scène de l'unité : le marché du dimanche matin, au village. Yasmine y vend
@@ -41,6 +42,7 @@ export const modul51 = {
 		'La blague de Yasmine : *Ai de galinas… pas de vacas !* (*vaca* ✓ ; *vacas*, pluriel régulier) : d’accord ?',
 		'Marià parle occitan depuis toujours, mais on ne lui a appris à écrire qu’en français : sa liste est en français, l’élève la recopie en occitan. La remarque te va ?',
 		'Sons proposés : *los uòus* « lou-ZUÒOUS », *las olivas* « la-zou-LI-bos », *d’alh* « DAL », *dotze uòus* « DOUT-sé UÒOUS ». À confirmer à l’enregistrement.',
+		'Ton choix du 2026-11-02 (grammaire de référence, p33) : *la frucha* « la FRU-tcho » pour « les fruits », un mot collectif sans pluriel, à la place de *las frutas* ; une ligne l’explique dans l’Obsèrva. Même mot dans *un suc de frucha* (8.3). À relire.',
 		'Culture : l’aïoli (provençal *ai*, *oli* ; chez toi *alh*, *òli* ✓) et le cassoulet (*caçolet*, « petite terrine »), d’après le TLFi. *caçòla* (terrine) est absent du Basic : je ne l’ai pas écrit. On garde la note ?'
 	],
 
@@ -118,7 +120,7 @@ export const modul51 = {
 							subtitle: '(sur la place)',
 							lines: [
 								{ oc: 'Adieu, Loís ! Qué i a al mercat ?', sound: 'a-DIOU, lou-ÍS ! ké YA al mér-CAT ?', fr: 'Salut, Loís ! Qu’y a-t-il au marché ?' },
-								{ oc: 'Bonjorn, Marià ! I a de frutas e de legums : de pomas, de peras, de rasim…', sound: 'boun-DJOUR, ma-ri-A ! YA dé FRU-tos é dé lé-GUNS : dé POU-mos, dé PÉ-ros, dé ra-ZIN…', fr: 'Bonjour, Marià ! Il y a des fruits et des légumes : des pommes, des poires, du raisin…' },
+								{ oc: 'Bonjorn, Marià ! I a de frucha e de legums : de pomas, de peras, de rasim…', sound: 'boun-DJOUR, ma-ri-A ! YA dé FRU-tcho é dé lé-GUNS : dé POU-mos, dé PÉ-ros, dé ra-ZIN…', fr: 'Bonjour, Marià ! Il y a des fruits et des légumes : des pommes, des poires, du raisin…' },
 								{ oc: 'E tu, qué as aquí ?', sound: 'é TU, ké AS a-KI ?', fr: 'Et toi, qu’est-ce que tu as là ?' },
 								{ oc: 'Dos quilòs de tomatas, un quilò de cebas, d’alh e de patanas. Lo dimenge, cosini !', sound: 'dous ki-LÒS dé tou-MA-tos, un ki-LÒ dé SÉ-bos, DAL é dé pa-TA-nos. lou di-MÉN-djé, cou-ZI-ni !', fr: 'Deux kilos de tomates, un kilo d’oignons, de l’ail et des pommes de terre. Le dimanche, je cuisine !' },
 								{ oc: 'E lo pan ? E lo formatge ?', sound: 'é lou PA ? é lou four-MA-djé ?', fr: 'Et le pain ? Et le fromage ?' },
@@ -252,11 +254,11 @@ export const modul51 = {
 							explain: 'Pour « des » comme pour « du », un seul petit mot : *de*. *I a de rasim* : il y a du raisin.'
 						},
 						{
-							q: '*las frutas e los legums*',
+							q: '*la frucha e los legums*',
 							options: ['les fruits et les légumes', 'le fruit et le légume', 'les fruits et le légume'],
 							correct: 0,
 							choses: ['frutas-legums'],
-							explain: '*las*, *los*, et un *-s* à la fin des deux noms : tout est au pluriel.'
+							explain: '*los legums* : *los* et un *-s*, c’est le pluriel. *La frucha*, ce sont les fruits, tous ensemble : ce mot-là reste sans *-s*.'
 						}
 					]
 				},
@@ -273,6 +275,7 @@ export const modul51 = {
 					notes: [
 						'Le *-s* se lie au mot qui suit : *los uòus* « lou-ZUÒOUS », *las olivas* « la-zou-LI-bos ».',
 						'« Des » et « du » se disent tous les deux *de* : *I a de pomas* (des pommes), *I a de rasim* (du raisin). Tu le connais depuis *As de fraires ?* Devant une voyelle : *d’olivas*, *d’alh*.',
+						'*La frucha* veut dire « les fruits », tous ensemble : le mot reste au singulier, sans *-s*, comme « la volaille » en français.',
 						'*Al mercat* : au marché. Garde-le en bloc : *al* s’explique à l’unité 7.'
 					]
 				}
@@ -415,7 +418,7 @@ export const modul51 = {
 					items: [
 						{ id: 'lo-rasim', oc: 'lo rasim', sound: 'lou ra-ZIN', fr: 'le raisin' },
 						{ id: 'l-oliva', oc: 'l’oliva · las olivas', sound: 'lou-LI-bo · la-zou-LI-bos', fr: 'l’olive · les olives' },
-						{ id: 'frutas-legums', oc: 'las frutas · los legums', sound: 'las FRU-tos · lous lé-GUNS', fr: 'les fruits · les légumes' }
+						{ id: 'frutas-legums', oc: 'la frucha · los legums', sound: 'la FRU-tcho · lous lé-GUNS', fr: 'les fruits (tous ensemble, sans *-s*) · les légumes' }
 					]
 				},
 				{
@@ -437,9 +440,9 @@ export const modul51 = {
 						},
 						{
 							consigne: 'Les fruits et les légumes.',
-							answers: ['Las frutas e los legums.'],
+							answers: ['La frucha e los legums.'],
 							choses: ['frutas-legums'],
-							explain: '*las frutas* « las FRU-tos », *los legums* « lous lé-GUNS ».'
+							explain: '*la frucha* « la FRU-tcho », sans *-s* ; *los legums* « lous lé-GUNS ».'
 						},
 						{
 							consigne: 'Le marché près de chez toi : écris ce qu’il y a. Commence par *Al mercat, i a de…* ou *I a de…*',

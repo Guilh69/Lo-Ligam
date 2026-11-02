@@ -36,7 +36,8 @@ export const modulPausa4 = {
 		'Pour appeler le serveur : *Se vos plai !* D’accord ?',
 		'*Un cafè sus la plaça, prèp de la gara* (près de la gare) : *prèp de* te va ?',
 		'*Mercés per tot !* (merci pour tout) : d’accord ?',
-		'*Benvengut !* tout seul, pour accueillir un garçon (*Benvenguda !* pour une fille) : d’accord ?'
+		'*Benvengut !* tout seul, pour accueillir un garçon (*Benvenguda !* pour une fille) : d’accord ?',
+		'Tes choix du 2026-11-02 (grammaire de référence), repris ici : *la dosena carrièra*, *un suc de frucha*, *fa caud* « CAOUT ». À relire.'
 	],
 
 	sessions: [
@@ -116,7 +117,7 @@ export const modulPausa4 = {
 							subtitle: '(samedi, six heures du soir ; elles se tutoient)',
 							lines: [
 								{ oc: 'Adieu, Lisa ! Cossí vas ?', sound: 'a-DIOU, LI-za ! cou-si BAS ?', fr: 'Salut, Lisa ! Comment vas-tu ?' },
-								{ oc: 'Vau plan, mercés ! Mas ai set, e fa caud…', sound: 'baou PLA, mér-SÉS ! mas aï SÉT, é fa CAOU…', fr: 'Je vais bien, merci ! Mais j’ai soif, et il fait chaud…' },
+								{ oc: 'Vau plan, mercés ! Mas ai set, e fa caud…', sound: 'baou PLA, mér-SÉS ! mas aï SÉT, é fa CAOUT…', fr: 'Je vais bien, merci ! Mais j’ai soif, et il fait chaud…' },
 								{
 									oc: 'Un cafè ? I a un cafè sus la plaça, prèp de la gara.',
 									sound: 'un ca-FÈ ? YA un ca-FÈ sus la PLA-ço, PRÈP dé la GA-ro.',
@@ -131,10 +132,10 @@ export const modulPausa4 = {
 							subtitle: '(sur la place ; Núria appelle le serveur, qu’elle vouvoie)',
 							lines: [
 								{ oc: 'Qué prenes, Lisa ?', sound: 'ké PRÉ-nés, LI-za ?', fr: 'Qu’est-ce que tu prends, Lisa ?' },
-								{ oc: 'Un veire d’aiga… e un suc de fruta !', sound: 'un BÉÏ-ré DAÏ-go… é un SUC dé FRU-to !', fr: 'Un verre d’eau… et un jus de fruit !' },
+								{ oc: 'Un veire d’aiga… e un suc de frucha !', sound: 'un BÉÏ-ré DAÏ-go… é un SUC dé FRU-tcho !', fr: 'Un verre d’eau… et un jus de fruit !' },
 								{
-									oc: 'Se vos plai ! Per ieu, un tè ; per ela, un veire d’aiga e un suc de fruta.',
-									sound: 'sé bous PLAÏ ! pér YÉOU, un TÈ ; pér É-lo, un BÉÏ-ré DAÏ-go é un SUC dé FRU-to.',
+									oc: 'Se vos plai ! Per ieu, un tè ; per ela, un veire d’aiga e un suc de frucha.',
+									sound: 'sé bous PLAÏ ! pér YÉOU, un TÈ ; pér É-lo, un BÉÏ-ré DAÏ-go é un SUC dé FRU-tcho.',
 									fr: 'S’il vous plaît ! Pour moi, un thé ; pour elle, un verre d’eau et un jus de fruit.'
 								},
 								{ oc: 'E ton ostal, es luènh ?', sound: 'é toun ous-TAL, és LUÈN ?', fr: 'Et ta maison, c’est loin ?' },
@@ -185,7 +186,7 @@ export const modulPausa4 = {
 							options: ['un verre d’eau et un jus de fruit', 'un thé', 'un café'],
 							correct: 0,
 							choses: ['un-veire-de', 'l-aiga', 'suc-de-fruta'],
-							explain: '*Un veire d’aiga… e un suc de fruta !* Le thé, c’est pour Núria : *Per ieu, un tè.*'
+							explain: '*Un veire d’aiga… e un suc de frucha !* Le thé, c’est pour Núria : *Per ieu, un tè.*'
 						},
 						{
 							q: 'La maison de Núria est…',
@@ -219,9 +220,9 @@ export const modulPausa4 = {
 						},
 						{
 							prompt: 'Prends la deuxième rue : la maison est à côté de l’église.',
-							tiles: ['Pren', 'la segonda', 'carrièra :', 'l’ostal', 'es', 'al costat de', 'la glèisa.'],
+							tiles: ['Pren', 'la dosena', 'carrièra :', 'l’ostal', 'es', 'al costat de', 'la glèisa.'],
 							choses: ['pren', 'primier-segond', 'la-carriera', 'al-costat-de', 'la-gleisa'],
-							explain: '*Pren la segonda carrièra* : prends la deuxième rue (*segonda* au féminin, comme *carrièra*).'
+							explain: '*Pren la dosena carrièra* : prends la deuxième rue (*dosena* au féminin, comme *carrièra*).'
 						},
 						{
 							prompt: 'La porte est verte, entre le café et l’église.',
@@ -263,7 +264,7 @@ export const modulPausa4 = {
 						},
 						{
 							situacion: 'Au café, sur la place.',
-							ditz: 'Ieu, vòli un suc de fruta. E tu, qué prenes ?',
+							ditz: 'Ieu, vòli un suc de frucha. E tu, qué prenes ?',
 							options: [
 								{ oc: 'Preni un cafè.', bon: true },
 								{ oc: 'Prenes un cafè.', reaccion: 'Jordi fronce les sourcils : c’est lui qui prend un café ? Il voulait un jus de fruit.' },
@@ -277,7 +278,7 @@ export const modulPausa4 = {
 							situacion:
 								'Le serveur arrive. Il a entendu de l’occitan, mais il passe au français, vite : « Bonjour ! Alors, deux cafés, c’est ça ? »',
 							options: [
-								{ oc: 'Non : per ieu, un cafè ; per el, un suc de fruta, se vos plai.', bon: true },
+								{ oc: 'Non : per ieu, un cafè ; per el, un suc de frucha, se vos plai.', bon: true },
 								{ oc: 'Non compreni pas.', reaccion: 'Le serveur répète en français, plus fort… et la conversation passe au français. Tu avais pourtant compris : réponds-lui en occitan !' },
 								{ oc: 'Òc, òc…', reaccion: 'Le serveur apporte deux cafés. Jordi fait la grimace : il voulait un jus de fruit.' }
 							],
@@ -288,12 +289,12 @@ export const modulPausa4 = {
 							situacion: 'Ta maison est dans la deuxième rue à gauche, après le café.',
 							ditz: 'E ton ostal, es luènh ?',
 							options: [
-								{ oc: 'Non, es prèp : la segonda carrièra a esquèrra.', bon: true },
+								{ oc: 'Non, es prèp : la dosena carrièra a esquèrra.', bon: true },
 								{ oc: 'Non, es prèp : la primièra carrièra a esquèrra.', reaccion: 'Jordi file dans la première rue à gauche… et tombe sur une impasse. C’était la deuxième !' },
-								{ oc: 'Òc, es luènh : la segonda carrièra a esquèrra.', reaccion: 'Jordi soupire en regardant son gros sac : loin ? La deuxième rue, ce n’est pourtant pas loin.' }
+								{ oc: 'Òc, es luènh : la dosena carrièra a esquèrra.', reaccion: 'Jordi soupire en regardant son gros sac : loin ? La deuxième rue, ce n’est pourtant pas loin.' }
 							],
 							choses: ['es-luenh', 'primier-segond', 'la-carriera', 'a-esquerra'],
-							explain: '*Es prèp* : c’est près. *La segonda carrièra* : la deuxième rue.'
+							explain: '*Es prèp* : c’est près. *La dosena carrièra* : la deuxième rue.'
 						},
 						{
 							situacion: 'Chez toi. La chambre de Jordi est à côté de la salle de bain.',
@@ -391,7 +392,7 @@ export const modulPausa4 = {
 					items: [
 						{
 							q: 'Ton accueil, en cinq phrases.',
-							a: 'Par exemple : *Benvengut !* (à une amie : *Benvenguda !*) *L’ostal es prèp : tot drech, puèi la segonda carrièra a esquèrra. I a una cosina, una sala e una cambra per tu. Ta cambra es al costat de la sala de banh. Un cafè ? Un veire d’aiga ?*'
+							a: 'Par exemple : *Benvengut !* (à une amie : *Benvenguda !*) *L’ostal es prèp : tot drech, puèi la dosena carrièra a esquèrra. I a una cosina, una sala e una cambra per tu. Ta cambra es al costat de la sala de banh. Un cafè ? Un veire d’aiga ?*'
 						}
 					]
 				}

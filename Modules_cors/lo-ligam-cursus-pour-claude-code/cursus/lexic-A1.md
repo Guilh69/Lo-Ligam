@@ -76,9 +76,9 @@ items: [
 
 ### 2.2 · `2-2` · *Parlas occitan ?* (Parles-tu occitan ?)
 
-**Forme du jour** : *parlar* et *comprene* au singulier ; la négation, forme du livre (*Gramatica de l'occitan estandard*, p54) : *non* devant le verbe, *pas* après. Une ligne signale la forme familière, *pas* seul, à reconnaître (Romain, 2026-11-02).
+**Forme du jour** : *parlar* et *compréner* au singulier (forme du livre, p94 et p20, depuis le 2026-11-02 ; avant, *comprene*) ; la négation, forme du livre (*Gramatica de l'occitan estandard*, p54) : *non* devant le verbe, *pas* après. Une ligne signale la forme familière, *pas* seul, à reconnaître (Romain, 2026-11-02).
 - *parlar* : *parli, parlas, parla* ✓
-- *comprene* : *compreni, comprenes, compren* ✓
+- *compréner* : *compreni, comprenes, compren* ✓
 - *Non parli pas catalan. Non compreni pas.*
 
 **À retenir** (7 items ; carte : 8) :
@@ -86,7 +86,7 @@ items: [
 ```js
 items: [
 	{ id: 'parlar-singular', oc: 'parlar : parli · parlas · parla', sound: 'par-LA : PAR-li · PAR-los · PAR-lo', fr: 'parler : je parle · tu parles · il ou elle parle' },
-	{ id: 'comprene-singular', oc: 'comprene : compreni · comprenes · compren', sound: 'coum-PRÉ-né : coum-PRÉ-ni · coum-PRÉ-nés · coum-PRÉ(N)', fr: 'comprendre : je comprends · tu comprends · il ou elle comprend' },
+	{ id: 'comprene-singular', oc: 'compréner : compreni · comprenes · compren', sound: 'coum-PRÉ-né : coum-PRÉ-ni · coum-PRÉ-nés · coum-PRÉ(N)', fr: 'comprendre : je comprends · tu comprends · il ou elle comprend' },
 	{ id: 'pas', oc: 'Non parli pas… · Non compreni pas.', sound: 'nou PAR-li PAS · nou coum-PRÉ-ni PAS', fr: 'je ne parle pas… · je ne comprends pas. (*non* devant le verbe, *pas* après)' },
 	{ id: 'un-pauc-plan', oc: 'un pauc · plan', sound: 'un PAOUK · PLA', fr: 'un peu · bien (*Parli un pauc occitan. Compreni plan.*)' },
 	{ id: 'mas', oc: 'mas', sound: 'MAS', fr: 'mais (*Compreni, mas non parli pas.*)' },
@@ -95,7 +95,7 @@ items: [
 ]
 ```
 
-**Vérification** : ✓ parlar, pauc, plan, mas, tanben, lenga, non, pas (Basic) ; parli, parlas, parla, comprene, compreni, comprenes, compren (vèrb'Òc).
+**Vérification** : ✓ parlar, pauc, plan, mas, tanben, lenga, non, pas (Basic) ; parli, parlas, parla, comprene, compreni, comprenes, compren (vèrb'Òc) ; *compréner* ✓ (Basic, 2026-11-02).
 **À gloser en passant** : les phrases du jeu « l'oreille des pays » (gascon, provençal) : `glosa`, voir `alhors-en-occitania-A1.md`.
 **Son du jour** : *é* fermé, *è* ouvert ; sans accent, *e* est fermé : *francés* « fran-SÉS », *mercés* « mér-SÉS », *deman* « dé-MA » ; *Besièrs* « bé-ZYÈS », *lèu* « LÈOU ».
 **Spirale** : les nationalités de 2.1 deviennent des langues au masculin (*Parli francés*) ; `va-plan-e-tu` (*plan*) ; `demori-a`.
@@ -346,7 +346,7 @@ Aucun mot nouveau. Un dimanche en famille : âge et nombres (3.1), famille (3.2,
 
 ### 5.1 · `5-1` · *Qué i a al mercat ?* (Qu'y a-t-il au marché ?)
 
-**Forme du jour** : le pluriel : on ajoute *-s* (*l'uòu → los uòus*) ; *-a* devient *-as* (*la poma → las pomas*) ; *un quilò de* + nom ; *al mercat* en bloc (*al* = *a* + *lo*, expliqué en 7.2).
+**Forme du jour** : le pluriel : on ajoute *-s* (*l'uòu → los uòus*) ; *-a* devient *-as* (*la poma → las pomas*) ; *la frucha* (les fruits), nom collectif sans pluriel (grammaire de référence p33, choix de Romain du 2026-11-02 ; avant, *las frutas*) ; *un quilò de* + nom ; *al mercat* en bloc (*al* = *a* + *lo*, expliqué en 7.2).
 
 **À retenir** (17 items ; carte : 15) :
 
@@ -368,11 +368,11 @@ items: [
 	{ id: 'la-salada', oc: 'la salada', sound: 'la sa-LA-do', fr: 'la salade' },
 	{ id: 'l-oliva', oc: 'l’oliva · las olivas', sound: 'lou-LI-bo · la-zou-LI-bos', fr: 'l’olive · les olives' },
 	{ id: 'la-patana', oc: 'la patana · las patanas', sound: 'la pa-TA-no · las pa-TA-nos', fr: 'la pomme de terre · les pommes de terre' },
-	{ id: 'frutas-legums', oc: 'las frutas · los legums', sound: 'las FRU-tos · lous lé-GUNS', fr: 'les fruits · les légumes' }
+	{ id: 'frutas-legums', oc: 'la frucha · los legums', sound: 'la FRU-tcho · lous lé-GUNS', fr: 'les fruits (tous ensemble, sans *-s*) · les légumes' }
 ]
 ```
 
-**Vérification** : ✓ mercat, quilò, pan, formatge, vin, uòu, lach, poma, pera, rasim, tomata, ceba, alh, salada, oliva, patana, fruta, legum (Basic) ; *quilòs, uòus, pomas…* ✓ (pluriel). Le Basic donne *patana* (pas *trufa*) et *crompar* (pas *comprar*).
+**Vérification** : ✓ mercat, quilò, pan, formatge, vin, uòu, lach, poma, pera, rasim, tomata, ceba, alh, salada, oliva, patana, fruta, legum (Basic), *frucha* ✓ (Basic, 2026-11-02) ; *quilòs, uòus, pomas…* ✓ (pluriel). Le Basic donne *patana* (pas *trufa*) et *crompar* (pas *comprar*).
 **À gloser en passant** : *la carn* ✓ (viande), *la salsissa* ✓ (saucisse), *lo caçolet* ✓ ; *crompar* ✓ (acheter) à l'infinitif seulement : *crompi* est inconnu de vèrb'Òc. *mèl* (miel) : erreur d'appel, à éviter.
 **Son du jour** : le *-as* final sonne « os » : *pomas* « POU-mos », *peras* « PÉ-ros », *parlas* « PAR-los », *demòras* « dé-MÒ-ros ».
 **Spirale** : nombres (*dos quilòs*) ; `i-a`, `un-una-article` ; le féminin en *-a* de 2.1 ; `bonjorn`, `merce`.
@@ -478,7 +478,7 @@ items: [
 ```js
 items: [
 	{ id: 'quin-temps-fa', oc: 'Quin temps fa ?', sound: 'kin TÉMS FA', fr: 'quel temps fait-il ?' },
-	{ id: 'fa-caud', oc: 'Fa caud.', sound: 'fa CAOU', fr: 'il fait chaud.' },
+	{ id: 'fa-caud', oc: 'Fa caud.', sound: 'fa CAOUT', fr: 'il fait chaud.' },
 	{ id: 'fa-freg', oc: 'Fa freg.', sound: 'fa FRÉTCH', fr: 'il fait froid.' },
 	{ id: 'fa-bel', oc: 'Fa bèl.', sound: 'fa BÈL', fr: 'il fait beau.' },
 	{ id: 'fa-solelh', oc: 'Fa solelh.', sound: 'fa sou-LÉL', fr: 'il y a du soleil (*lo solelh* : le soleil).' },
@@ -569,7 +569,7 @@ items: [
 
 ### 7.2 · `7-2` · *Ont es ?* (Où est-ce ?)
 
-**Forme du jour** : *sus* (sur), *jos* (sous), *davant* (devant), *darrièr* (derrière), *al costat de* (à côté de), *entre* ; les petits mots qui se soudent : *a + lo = al*, *de + lo = del*, *a + los = als*, *de + los = dels*, *sus + lo = sul*, *sus + los = suls* (ajouté le 2026-11-02, grammaire de référence) ; devant *la*, rien ne change (*a la, de la, sus la*).
+**Forme du jour** : *sus* (sur), *jos* (sous), *davant* (devant), *darrièr* (derrière), *al costat de* (à côté de), *entre* ; les petits mots qui se soudent : *a + lo = al*, *de + lo = del*, *a + los = als*, *de + los = dels*, *sus + lo = sul*, *sus + los = suls* (ajouté le 2026-11-02, grammaire de référence) ; la soudure est obligatoire avec *a* et *de*, au choix avec *sus* et *jos* (*sus lo canapè*, *jol canapè* : p21, choix de Romain du 2026-11-02) ; devant *la*, rien ne change (*a la, de la, sus la*).
 
 **À retenir** (7 items ; carte : 8) :
 
@@ -585,7 +585,7 @@ items: [
 ]
 ```
 
-**Vérification** : ✓ sus, jos, als, dels, costat, entre (Basic). ⚠️ À VÉRIFIER (dicodòc) : *davant, darrièr* (erreur d'appel dans les deux sens ; déjà signalés par la carte) ; *sul* et *suls* (absents du Basic, qui ne donne pas les contractions ; le cadre §3 cite *sul* ; la grammaire de référence emploie les deux, 2026-11-02) ; *canapès* (pluriel régulier en *-s*, grammaire de référence).
+**Vérification** : ✓ sus, jos, als, dels, costat, entre (Basic). ⚠️ À VÉRIFIER (dicodòc) : *davant, darrièr* (erreur d'appel dans les deux sens ; déjà signalés par la carte) ; *sul* et *suls* (absents du Basic, qui ne donne pas les contractions ; le cadre §3 cite *sul* ; la grammaire de référence emploie les deux, 2026-11-02) ; *jol* (signalé dans une note le 2026-11-02 : grammaire de référence p21 ; absent du Basic et de dicodòc, qui ne donnent pas les contractions) ; *canapès* (pluriel régulier en *-s*, grammaire de référence).
 **Son du jour** : *al* et *del* se lient au mot qui suit : *al còp que ven* « al COP qué BÈN », *del vilatge* « dél bi-LA-djé », *al mercat* « al mér-CAT », *al lièch* « al LYÈTCH ».
 **Spirale** : pièces et meubles de 7.1 ; animaux (*Ont es lo cat ? Es jos la taula.*) ; `soi-d-aqui` (*aquí*) ; *ont*.
 
@@ -603,7 +603,7 @@ items: [
 	{ id: 'verd-verda', oc: 'verd · verda', sound: 'BÉRT · BÉR-do', fr: 'vert · verte' },
 	{ id: 'jaune-jauna', oc: 'jaune · jauna', sound: 'DJAOU-né · DJAOU-no', fr: 'jaune (au masculin · au féminin)' },
 	{ id: 'negre-negra', oc: 'negre · negra', sound: 'NÉ-gré · NÉ-gro', fr: 'noir · noire' },
-	{ id: 'blanc-blanca', oc: 'blanc · blanca', sound: 'BLAN · BLAN-co', fr: 'blanc · blanche' },
+	{ id: 'blanc-blanca', oc: 'blanc · blanca', sound: 'BLANK · BLAN-co', fr: 'blanc · blanche' },
 	{ id: 'gris-grisa', oc: 'gris · grisa', sound: 'GRIS · GRI-zo', fr: 'gris · grise' },
 	{ id: 'grand-granda', oc: 'grand · granda', sound: 'GRAN · GRAN-do', fr: 'grand · grande' },
 	{ id: 'pichon-pichona', oc: 'pichon · pichona', sound: 'pi-TCHOU · pi-TCHOU-no', fr: 'petit · petite' },
@@ -615,7 +615,7 @@ items: [
 **Vérification** : ✓ color, roge, roja, blau, blava, verd, verda, jaune, jauna, negre, negra, blanc, blanca, gris, grisa, pichon, pichona, vièlh, vièlha, nòva (Basic). ⚠️ À VÉRIFIER (dicodòc) : *grand, granda* (absents ; « grand » sans traduction ; déjà signalé par la carte).
 **À gloser en passant** : *aur* ✓ (or) et *la crotz* ✓ (la croix) : *la crotz d'aur*, pour les couleurs occitanes.
 **À éviter** : le pluriel des adjectifs (*blaus, blavas*), non listé.
-**Son du jour** : la consonne finale ne se dit pas : *grand* « GRAN », *blanc* « BLAN » ; au féminin, on l'entend : *granda* « GRAN-do », *blanca* « BLAN-co ». Après *r*, le *d* final sonne « t » : *verd* « BÉRT », *verda* « BÉR-do » (grammaire de référence ; tranché le 2026-11-02).
+**Son du jour** : la consonne du bout. Elle se tait dans *grand* « GRAN », *jardin* « djar-DI », et revient au féminin : *granda* « GRAN-do ». Elle se dit dans *blanc* « BLANK », comme *cinc* « SINK » (*-nc* final, grammaire de référence p16, tranché le 2026-11-02), puis *blanca* « BLAN-co ». Après *r*, le *d* final sonne « t » : *verd* « BÉRT », *verda* « BÉR-do » (grammaire de référence ; tranché le 2026-11-02).
 **Spirale** : masculin et féminin de 2.1 ; objets de 7.1 (*la pòrta blava*) ; animaux (*un cat negre*) ; `sus-sul`.
 
 ### 7.4 · `7-4` · tâche · titre proposé *E ton ostal ?* (Et ta maison ?)
@@ -656,7 +656,7 @@ items: [
 ### 8.2 · `8-2` · *Cossí i vau ?* (Comment j'y vais ?)
 
 **Forme du jour** : *anar* au singulier : *vau, vas, va* (déjà entendus dans *Vau plan*, *Cossí vas ?*, *Va plan* : c'est le verbe aller) ; *i* (y) ; deux ordres en bloc : *Vira…* (tourne), *Pren…* (prends).
-- *anar* : *vau, vas, va* ✓ ; *virar* : *vira* (ordre) ✓ ; *prene* : *pren* (ordre) ✓
+- *anar* : *vau, vas, va* ✓ ; *virar* : *vira* (ordre) ✓ ; *préner* : *pren* (ordre) ✓
 
 **À retenir** (6 items ; carte : 6) :
 
@@ -666,30 +666,30 @@ items: [
 	{ id: 'anar-singular', oc: 'anar : vau · vas · va', sound: 'a-NA : BAOU · BAS · BA', fr: 'aller : je vais · tu vas · il ou elle va (comme dans *Vau plan* et *Cossí vas ?*)' },
 	{ id: 'vira', oc: 'Vira a drecha ! · Vira a esquèrra !', sound: 'BI-ro a DRÉ-tcho · BI-ro a es-KÈ-rro', fr: 'tourne à droite ! · tourne à gauche !' },
 	{ id: 'pren', oc: 'Pren la carrièra…', sound: 'PRÉ(N) la ca-RRYÈ-ro', fr: 'prends la rue…' },
-	{ id: 'primier-segond', oc: 'lo primièr · la primièra · lo segond · la segonda', sound: 'lou pri-MYÈ · la pri-MYÈ-ro · lou sé-GOUN · la sé-GOUN-do', fr: 'le premier · la première · le deuxième · la deuxième' },
+	{ id: 'primier-segond', oc: 'lo primièr · la primièra · lo dosen · la dosena', sound: 'lou pri-MYÈ · la pri-MYÈ-ro · lou dou-ZÉN · la dou-ZÉ-no', fr: 'le premier · la première · le deuxième · la deuxième (*lo segond*, *la segonda* : le second, quand il n’y en a que deux)' },
 	{ id: 'a-pe', oc: 'a pè', sound: 'a PÈ', fr: 'à pied' }
 ]
 ```
 
-**Vérification** : ✓ anar, primièr, primièra, segond, segonda, pè (Basic) ; vira, pren (vèrb'Òc) ; *vau, vas, va* ✓ (unité 1, cours 0).
+**Vérification** : ✓ anar, primièr, primièra, segond, segonda, pè (Basic) ; ⚠️ *dosen, dosena* (grammaire de référence p52, choix de Romain du 2026-11-02) : absents du Basic, dicodòc (Laus) ✓ ; vira, pren (vèrb'Òc) ; *vau, vas, va* ✓ (unité 1, cours 0).
 **À éviter** : le pluriel d'*anar* (seul *anatz* est connu, depuis 1.1).
 **Son du jour** : la syllabe forte, revue : *vira* « BI-ro », *anar* « a-NA », *carrièra* « ca-RRYÈ-ro », *esquèrra* « es-KÈ-rro », *primièra* « pri-MYÈ-ro ».
-**Spirale** : 8.1 ; `vau-plan`, `cossi-vas`, `va-plan-e-tu` ; nombres (*dos* et *la segonda*) ; `i-a` (*i*).
+**Spirale** : 8.1 ; `vau-plan`, `cossi-vas`, `va-plan-e-tu` ; nombres (*dos* et *la dosena*) ; `i-a` (*i*).
 
 ### 8.3 · `8-3` · *Qué prenes ?* (Que prends-tu ?)
 
-**Forme du jour** : *prene* au singulier.
-- *prene* : *preni, prenes, pren* ✓
+**Forme du jour** : *préner* au singulier (forme du livre, p94, depuis le 2026-11-02 ; avant, *prene*).
+- *préner* : *preni, prenes, pren* ✓
 
 **À retenir** (9 items ; carte : 8) :
 
 ```js
 items: [
-	{ id: 'prene-singular', oc: 'prene : preni · prenes · pren', sound: 'PRÉ-né : PRÉ-ni · PRÉ-nés · PRÉ(N)', fr: 'prendre : je prends · tu prends · il ou elle prend' },
+	{ id: 'prene-singular', oc: 'préner : preni · prenes · pren', sound: 'PRÉ-né : PRÉ-ni · PRÉ-nés · PRÉ(N)', fr: 'prendre : je prends · tu prends · il ou elle prend' },
 	{ id: 'un-cafe', oc: 'un cafè · lo cafè', sound: 'un ca-FÈ · lou ca-FÈ', fr: 'un café · le café (la boisson, et aussi le lieu)' },
 	{ id: 'l-aiga', oc: 'l’aiga', sound: 'LAÏ-go', fr: 'l’eau' },
 	{ id: 'un-te', oc: 'un tè', sound: 'un TÈ', fr: 'un thé' },
-	{ id: 'suc-de-fruta', oc: 'un suc de fruta', sound: 'un SUC dé FRU-to', fr: 'un jus de fruit' },
+	{ id: 'suc-de-fruta', oc: 'un suc de frucha', sound: 'un SUC dé FRU-tcho', fr: 'un jus de fruit' },
 	{ id: 'un-veire-de', oc: 'un veire de…', sound: 'un BÉÏ-ré dé', fr: 'un verre de… (*un veire d’aiga*)' },
 	{ id: 'per-ieu', oc: 'Per ieu, …', sound: 'pér YÉOU', fr: 'pour moi, … (pour commander)' },
 	{ id: 'l-addicion', oc: 'L’addicion, se vos plai.', sound: 'la-di-SYOU, sé bous PLAÏ', fr: 'l’addition, s’il vous plaît.' },
@@ -697,7 +697,7 @@ items: [
 ]
 ```
 
-**Vérification** : ✓ prene, cafè, aiga, tè, suc, fruta, veire, per, addicion, set (Basic) ; preni, prenes, pren (vèrb'Òc).
+**Vérification** : ✓ prene, cafè, aiga, tè, suc, fruta, veire, per, addicion, set (Basic) ; preni, prenes, pren (vèrb'Òc). Le 2026-11-02 : ⚠️ *préner* (grammaire de référence p94 ; le Basic n'a que *prene*) et *frucha* ✓ (Basic) remplacent *prene* et *fruta*.
 **À gloser en passant** : *la nòta* ✓ (se dit aussi pour l'addition), *la bièrra* ✓, *lo chocolat* ✓, *lo sucre* ✓ ; *amb de lach* n'a que des mots connus.
 **Son du jour** : *é* et *è*, revus : *set* « SÉT » (la soif) et *sèt* « SÈT » (sept) ; *cafè* « ca-FÈ », *tè* « TÈ » ; *prenes* « PRÉ-nés », *veire* « BÉÏ-ré ».
 **Spirale** : `volriai`, `se-vos-plai`, `que-vols` ; `quant-costa`, `euro-centim` ; `lo-lach`, `lo-vin` ; `fa-caud` (*Fa caud : ai set*) ; `merce`.
@@ -730,13 +730,13 @@ Aucun mot nouveau. Lire une affiche de fête : jours (4.3), heures (6.1), prix (
 | *i a* ; *pas de* | 3.3 | | *tot* (*Es tot*, *tot drech*), *mai* (*Quicòm mai*) | 5.3, 8.1 |
 | *nosautres, vosautres, eles, elas* | 4.1 | | | |
 
-**Pas enseigné en A1 (à éviter, ou à gloser)** : *èsser* au pluriel sauf *son* (*sèm, sètz*) ; *aver, far, anar, voler, poder, prene* au pluriel (sauf *anatz* et *volètz*) ; *mos, mas, tos, tas, son, sa* (possessifs) ; *aquel, aquela, aqueste* ; *li, lor, ne* ; *s'apèla* ; le passé et le futur ; les verbes en *-ir* (sauf *repetir* à l'infinitif) ; *quand, perqué, fins a* ; le pluriel des adjectifs ; les nombres de 31 à 99 hors dizaines (forme fixée le 2026-11-02 : *trenta un*, en deux mots) ; les ordinaux après *segond*.
+**Pas enseigné en A1 (à éviter, ou à gloser)** : *èsser* au pluriel sauf *son* (*sèm, sètz*) ; *aver, far, anar, voler, poder, préner* au pluriel (sauf *anatz* et *volètz*) ; *mos, mas, tos, tas, son, sa* (possessifs) ; *aquel, aquela, aqueste* ; *li, lor, ne* ; *s'apèla* ; le passé et le futur ; les verbes en *-ir* (sauf *repetir* à l'infinitif) ; *quand, perqué, fins a* ; le pluriel des adjectifs ; les nombres de 31 à 99 hors dizaines (forme fixée le 2026-11-02 : *trenta un*, en deux mots) ; les ordinaux après *dosen*.
 
 ---
 
 ## Doutes pour Romain
 
-Tranchés par Romain le 2026-11-02 (cahier des charges §11), la grammaire de référence à l'appui quand elle en parle : *zèro* ; *lo can* ; *papeta, mameta* ; *Soi regent* (*Fau de* retiré) ; de 31 à 99, *trenta un* en deux mots ; *mens lo quart* ; *verd* « BÉRT » ; *dimars* « di-MARS » ; *volriái* « boul-RYOÏ » ; *occitan* « ou-tsi-TA » (la grammaire dit « ou-tsi-TAN », mot savant : note au son du jour de 2.1) ; *sul* et *suls*.
+Tranchés par Romain le 2026-11-02 (cahier des charges §11), la grammaire de référence à l'appui quand elle en parle : *zèro* ; *lo can* ; *papeta, mameta* ; *Soi regent* (*Fau de* retiré) ; de 31 à 99, *trenta un* en deux mots ; *mens lo quart* ; *verd* « BÉRT » ; *dimars* « di-MARS » ; *volriái* « boul-RYOÏ » ; *occitan* « ou-tsi-TA » (la grammaire dit « ou-tsi-TAN », mot savant : note au son du jour de 2.1) ; *sul* et *suls*. Lot 2 (unités 5 à 8) : *la frucha*, collectif sans pluriel ; soudure au choix avec *sus* et *jos* (*sus lo*, *jol*) ; *dosen, dosena* (*segond* : le second, quand il n'y en a que deux) ; *préner, compréner* ; *setanta* et *lo lach* gardés ; *blanc* « BLANK » ; *caud* « CAOUT ».
 
 Restent :
 
@@ -766,8 +766,8 @@ Restent :
 | 4.2 | 14 | 2 (féminins de *mètge*, *vinhairon*, laissés hors encadré) | | 7.3 | 12 | 1 (*grand*) |
 | 4.3 | 11 | 0 | | 7.4 · tâche | 0 | 0 |
 | 4.4 · tâche | 0 | 0 | | 8.1 | 9 | 0 |
-| Halte 2 | 0 | 0 | | 8.2 | 6 | 0 |
-| | | | | 8.3 | 9 | 0 |
+| Halte 2 | 0 | 0 | | 8.2 | 6 | 1 (*dosen*, dicodòc ✓) |
+| | | | | 8.3 | 9 | 1 (*préner*, grammaire de référence) |
 | | | | | 8.4 · tâche, Halte 4, Mission | 0 | 0 |
 
-**Total** : 232 items avec `id` (unités 2 à 8) et 6 sans `id` (module 0), soit 238. 11 ⚠️ : 9 dans les encadrés (*francés, zèro, sòrre, vosautres, cent, davant, darrièr, sul, grand*), 2 sur des féminins laissés hors encadré ; 7 étaient déjà signalés par la carte du 2026-10-25. Hors encadré, à gloser seulement : *cèrs, autan, ostau, cantou, nautres, vautres* ⚠️.
+**Total** : 232 items avec `id` (unités 2 à 8) et 6 sans `id` (module 0), soit 238. 13 ⚠️ : 11 dans les encadrés (*francés, zèro, sòrre, vosautres, cent, davant, darrièr, sul, grand* ; *dosen* et *préner* depuis le 2026-11-02), 2 sur des féminins laissés hors encadré ; 7 étaient déjà signalés par la carte du 2026-10-25. Hors encadré, à gloser seulement : *cèrs, autan, ostau, cantou, nautres, vautres* ⚠️.

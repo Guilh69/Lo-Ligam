@@ -563,7 +563,7 @@ export const modul74 = {
 					rows: [
 						['*a* : à', '*al jardin*', '*a la fenèstra*'],
 						['*de* : de', '*al costat del lièch*', '*al costat de la taula*'],
-						['*sus* : sur', '*sul canapè*', '*sus la taula*'],
+						['*sus* : sur', '*sul canapè* (ou *sus lo canapè*)', '*sus la taula*'],
 						['une couleur', '*lo canapè roge*', '*la pòrta roja*'],
 						['une taille', '*lo jardin es grand*', '*la cambra es granda*']
 					],

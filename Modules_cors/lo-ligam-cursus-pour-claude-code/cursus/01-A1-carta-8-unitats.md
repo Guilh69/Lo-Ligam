@@ -81,7 +81,7 @@ Les noms des blocs (*Ieu e los meus*, *Lo monde a l'entorn*) s'affichent toujour
 | Module | La question | Tu sauras | Forme du jour | Mots nouveaux | Son du jour | Le jeu |
 |---|---|---|---|---|---|---|
 | 2.1 | *Siás occitana ?* | dire sa nationalité et celle des autres | masculin et féminin (*occitan / occitana*) | 10 : *francés, catalan, espanhòl, italian…* | *nh* (*espanhòl*) | l'intrus |
-| 2.2 | *Parlas occitan ?* | dire les langues qu'on parle, un peu ou bien | *parlar, comprene* au singulier ; *pas* | 8 : *un pauc, plan, pas, lenga…* | *e* et *è* (*francés, Besièrs*) | l'oreille des pays : la même phrase en gascon, provençal, languedocien |
+| 2.2 | *Parlas occitan ?* | dire les langues qu'on parle, un peu ou bien | *parlar, compréner* au singulier ; *pas* | 8 : *un pauc, plan, pas, lenga…* | *e* et *è* (*francés, Besièrs*) | l'oreille des pays : la même phrase en gascon, provençal, languedocien |
 | 2.3 | *Cossí se ditz… ?* | se débrouiller : faire répéter, demander un mot | les mots pour questionner (*qué, ont, cossí, qual, quin, quina*) | 8 : *repetir…* | la voix qui monte dans la question | lettres à cocher : compléter les mots |
 | 2.4 | Tâche | présenter la fiche « langues » d'un personnage | rien de nouveau | aucun | | remettre la présentation dans l'ordre |
 
@@ -146,7 +146,7 @@ Les noms des blocs (*Ieu e los meus*, *Lo monde a l'entorn*) s'affichent toujour
 |---|---|---|---|---|---|---|
 | 8.1 | *Ont es la gara ?* | demander son chemin | *a drecha, a esquèrra, tot drech* | 8 : *gara, carrièra, plaça…* | *ch* (*drecha*) | « Ont es ? » sur un plan de ville |
 | 8.2 | *Cossí i vau ?* | donner un chemin simple | *anar* au singulier ; *vira, pren* (en bloc tout fait) | 6 | la syllabe forte, revue | remettre l'itinéraire dans l'ordre |
-| 8.3 | *Qué prenes ?* | commander au café | *prene* au singulier | 8 : *cafè, aiga…* | *e* et *è*, revus | dialogue à choix avec le serveur |
+| 8.3 | *Qué prenes ?* | commander au café | *préner* au singulier | 8 : *cafè, aiga…* | *e* et *è*, revus | dialogue à choix avec le serveur |
 | 8.4 | Tâche | accueillir un visiteur : chemin et café | rien de nouveau | aucun | | jeu de rôle enregistré |
 
 **▸ Halte 4** : un visiteur à accompagner dans la ville, puis le bilan de tout le carnet de l'A1.

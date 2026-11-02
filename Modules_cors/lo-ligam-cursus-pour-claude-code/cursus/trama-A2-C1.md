@@ -98,7 +98,7 @@ Même chemin qu'en A1 (carte A1, §2 et §3) : la scène, trois modules titrés 
 | Module | La question | Tu sauras | Forme du jour | Mots nouveaux | Son du jour | Le jeu |
 |---|---|---|---|---|---|---|
 | 9.1 | *Qual es aquela ?* | montrer et nommer les gens autour de toi | *aqueste, aquesta* (tout près) ; *aquel, aquela* (plus loin) ; *aquestes* ; ◆ les neutres *aquò, aiçò* | 10 : *òme, femna, dròlle, dròlla, vesin, vesina, amic, amiga, gent…* | *qu* sonne « k » (*qual, aquela*) | toucher la personne dans la scène |
-| 9.2 | *Cossí son ?* | décrire quelqu'un, seul ou en groupe | *èsser* au pluriel (*sèm, sètz, son*) ; l'adjectif au pluriel ; ◆ *aver* au pluriel (*avèm, avètz, an*) ; ◆ le pluriel en *-es* (*peis, peisses*) ; ◆ quelques adjectifs devant le nom (*un bèl ostal*) | 8 : *jove, vièlh, vièlha, bèl, polit, prim…* | *-tz* final sonne « ts » (*sètz*) | l'intrus |
+| 9.2 | *Cossí son ?* | décrire quelqu'un, seul ou en groupe | *èsser* au pluriel (*sèm, sètz, son*) ; l'adjectif au pluriel ; ◆ *aver* au pluriel (*avèm, avètz, an*) ; ◆ le pluriel en *-es* (*peis, peisses*) ; ◆ quelques adjectifs devant le nom (*un bèl ostal*) ; ◆ les noms collectifs sans pluriel (*la polalha, la lenha* ; *la frucha* est connu depuis 5.1) et les noms toujours au pluriel (*Pascas, vendémias*) ; ◆ le féminin pareil au masculin dans des expressions figées (*grand carrièra, grand maire*) | 8 : *jove, vièlh, vièlha, bèl, polit, prim…* | *-tz* final sonne « ts » (*sètz*) | l'intrus |
 | 9.3 | *De quina color son tos uèlhs ?* | faire un portrait | possessifs : *mos* ⚠️, *mas, tos, tas, sos, sas* (plusieurs choses) ; *nòstre, vòstre, lor* (à plusieurs) ; ◆ *son, sa* (un seul objet) | 8 : *uèlhs, pels, nas, boca, barba, lunetas…* | *o* sonne « ou », revu (*color, boca*) | portrait à écouter, puis à remettre dans l'ordre |
 | 9.4 | Tâche | faire le portrait d'un ami de ta còla en 8 phrases, à l'oral et à l'écrit | rien de nouveau | aucun | | écrire sous la photo |
 
@@ -126,7 +126,7 @@ Même chemin qu'en A1 (carte A1, §2 et §3) : la scène, trois modules titrés 
 
 | Module | La question | Tu sauras | Forme du jour | Mots nouveaux | Son du jour | Le jeu |
 |---|---|---|---|---|---|---|
-| 12.1 | *Quand es la fèsta ?* | dire une date, un mois, une année | les mois ; les nombres au-delà de 100 (*cent, mila*) ; les années ; ◆ les ordinaux après *segond* (*tresen*…) ; ◆ de 31 à 99 : *trenta un*, en deux mots | 14 : les mois (*genièr… decembre*), *mila, fèsta* | le *-e* final se dit (*decembre*) | dictée de dates |
+| 12.1 | *Quand es la fèsta ?* | dire une date, un mois, une année | les mois ; les nombres au-delà de 100 (*cent, mila*) ; les années ; ◆ les ordinaux après *dosen* (*tresen*…) ; ◆ de 31 à 99 : *trenta un*, en deux mots | 14 : les mois (*genièr… decembre*), *mila, fèsta* | le *-e* final se dit (*decembre*) | dictée de dates |
 | 12.2 | *Qué faràs deman ?* | dire ce que tu feras | futur des verbes réguliers (*parlarai, parlaràs, parlarà, parlarem, parlaretz, parlaràn* ; *partirai, beurai*) | 6 : *carnaval, vacanças, viatge…* | la syllabe forte à la fin (*parlaRAI*) | l'agenda : remettre la semaine dans l'ordre |
 | 12.3 | *Seràs a la fèsta ?* | promettre, dire si tu seras là | futur des irréguliers (*serai, aurai, farai, poirai, volrai, vendrai*) ; ◆ les exclamations (*Quina fèsta !*) | 6 : *segur, benlèu…* | *ai* et *au* (*serai, aurai*) | lettres à cocher : compléter les terminaisons |
 | 12.4 | Tâche | présenter le programme de la fête en une minute | rien de nouveau | aucun | | parler 60, puis 45, puis 30 secondes |
@@ -241,7 +241,7 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
 | 25 | *Qué fas aicí ?* | premier jour de Yasmine dans une association culturelle | la durée (*dempuèi* + présent) · les noms de métiers et de fonctions, au masculin et au féminin (dérivation) · l'obligation (*cal*, *dever* + infinitif) | te présenter à l'équipe et dire ton rôle (oral, 2 min) |
-| 26 | *Cossí vos pòdi ajudar ?* | l'accueil de l'association : des visiteurs se renseignent | le vouvoiement (*vos*, deuxième personne du pluriel) · les déterminants variés (chaque, aucun, quelques, tout) ; ◆ *unes, unas* ; ◆ l'article : omission et emplois particuliers ; ◆ *lo mieu* et les pronoms possessifs ; ◆ les noms dont le genre diffère du français · *i* et *ne* ensemble (*n'i a*) | accueillir un visiteur et le renseigner (jeu de rôle en visio) |
+| 26 | *Cossí vos pòdi ajudar ?* | l'accueil de l'association : des visiteurs se renseignent | le vouvoiement (*vos*, deuxième personne du pluriel) · les déterminants variés (chaque, aucun, quelques, tout) ; ◆ *unes, unas* ; ◆ l'article : omission et emplois particuliers ; ◆ *lo mieu* et les pronoms possessifs ; ◆ les noms dont le genre diffère du français ; ◆ le partitif déterminé (*del pan d'aqueste panièr*) · *i* et *ne* ensemble (*n'i a*) | accueillir un visiteur et le renseigner (jeu de rôle en visio) |
 | 27 | *Qué cal far primièr ?* | la fiche des bénévoles pour installer une salle | les étapes (*primièr, puèi, enfin*) · l'impératif avec un pronom, étendu ; ◆ l'impératif négatif, formé sur le subjonctif (*Parles pas !*) · *cal que* + subjonctif présent des verbes réguliers (*cal que parles*) | rédiger la consigne pour un nouveau bénévole (120 mots) |
 | 28 | *As recebut mon corrièl ?* | les courriels de l'équipe : confirmer, relancer | le courriel de travail (ouverture, clôture, *Coralament*) · les liens logiques (*perque, alara, mas, doncas*) · dates, heures et délais | écrire un courriel de travail (120 mots) |
 
@@ -285,7 +285,7 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
 | 41 | *Qué s'es dich ?* | le compte rendu pour les collègues absents | discours rapporté au passé et concordance (*a dich que vendriá*) · les tournures impersonnelles (*òm*, *se* + verbe) · la nominalisation (*la decision de*) | le compte rendu (200 mots) |
-| 42 | *Qual vòl prene la paraula ?* | animer une réunion en visio | donner et prendre la parole · reformuler, résumer · interrompre poliment, recentrer | animer 10 minutes de réunion (visio) |
+| 42 | *Qual vòl préner la paraula ?* | animer une réunion en visio | donner et prendre la parole · reformuler, résumer · interrompre poliment, recentrer | animer 10 minutes de réunion (visio) |
 | 43 | *Qué nos dison las chifras ?* | l'enquête sur la fréquentation de la médiathèque | décrire une évolution (*aumentar, demesir*) · pourcentages et proportions · le passé simple au pluriel (*venguèron*) | commenter un graphique (oral, 5 min) |
 | 44 | *Cossí o presentam a la comuna ?* | présenter le bilan aux élus | le plan d'un exposé (annoncer, enchaîner, conclure) · le registre soutenu et les formes d'adresse · la phrase complexe (relatives, subordonnées) | exposé de 6 minutes (visio) et note écrite (250 mots) |
 

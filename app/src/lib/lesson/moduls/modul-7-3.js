@@ -30,7 +30,8 @@ export const modul73 = {
 		'*Es ton amic, lo cat negre ?* demande Inès à Mimí : naturel ?',
 		'Ajouté le 2026-11-02 d’après la grammaire de référence : l’adjectif après le nom, *un ostal vièlh* (note du tableau, À retenir, un exercice). À relire.',
 		'Pour finir, Marià reprend sa phrase de 7.1 : *Mimí es d’aquí, ara !* On garde ce rappel ?',
-		'Culture : le drapeau rouge et or, *l’aur* (l’or), « LAOUR » : c’est bien ton usage ?'
+		'Culture : le drapeau rouge et or, *l’aur* (l’or), « LAOUR » : c’est bien ton usage ?',
+		'Ton choix du 2026-11-02 (grammaire de référence, p16) : *blanc* « BLANK », le *c* final se dit, comme *cinc* « SINK » ; avant, « BLAN ». Le son du jour garde *grand* « GRAN » et *jardin* « djar-DI » pour la consonne qui se tait. À relire.'
 	],
 
 	sessions: [
@@ -274,7 +275,7 @@ export const modul73 = {
 					intro: 'Les couleurs de Mimí et de son ami.',
 					items: [
 						{ id: 'negre-negra', oc: 'negre · negra', sound: 'NÉ-gré · NÉ-gro', fr: 'noir · noire' },
-						{ id: 'blanc-blanca', oc: 'blanc · blanca', sound: 'BLAN · BLAN-co', fr: 'blanc · blanche' },
+						{ id: 'blanc-blanca', oc: 'blanc · blanca', sound: 'BLANK · BLAN-co', fr: 'blanc · blanche' },
 						{ id: 'gris-grisa', oc: 'gris · grisa', sound: 'GRIS · GRI-zo', fr: 'gris · grise' }
 					]
 				},
@@ -527,11 +528,11 @@ export const modul73 = {
 				{
 					type: 'note',
 					variant: 'son',
-					title: 'Le son du jour : la consonne qui se tait',
+					title: 'Le son du jour : la consonne du bout',
 					paragraphs: [
-						'Au bout de certains mots, la consonne ne se dit pas : *grand* « GRAN », *blanc* « BLAN ».',
-						'Au féminin, elle revient, parce qu’une voyelle la suit : *granda* « GRAN-do », *blanca* « BLAN-co ».',
-						'Attention à *verd* : après le *r*, le *d* ne se tait pas, il sonne « t » : *verd* « BÉRT », puis *verda* « BÉR-do ».',
+						'Au bout de certains mots, la consonne ne se dit pas : *grand* « GRAN », *jardin* « djar-DI ».',
+						'Au féminin, elle revient, parce qu’une voyelle la suit : *granda* « GRAN-do ».',
+						'D’autres se disent, là où le français se tait : *blanc* « BLANK », comme *cinc* « SINK », puis *blanca* « BLAN-co ». Et après le *r*, le *d* sonne « t » : *verd* « BÉRT », puis *verda* « BÉR-do ».',
 						'Écoute, puis répète : *grand, granda* ; *blanc, blanca* ; *verd, verda*.'
 					]
 				},
@@ -547,11 +548,11 @@ export const modul73 = {
 							explain: 'Après le *r*, le *d* final sonne « t » : « BÉRT ». Au féminin, *verda* : « BÉR-do ».'
 						},
 						{
-							q: '*blanca* (blanche) se dit…',
-							options: ['BLAN-co', 'BLAN'],
+							q: '*blanc* (blanc) se dit…',
+							options: ['BLANK', 'BLAN'],
 							correct: 0,
 							noShuffle: true,
-							explain: 'Au féminin, le *c* s’entend : « BLAN-co ». Au masculin, *blanc* : « BLAN ».'
+							explain: '« BLAN », c’est la lecture à la française. En occitan, le *c* final se dit : « BLANK », comme *cinc* « SINK ». Au féminin, *blanca* : « BLAN-co ».'
 						}
 					]
 				},

@@ -31,6 +31,7 @@ export const modul62 = {
 	notesRelecture: [
 		'Chanson *Plòu a Marselha* (Lou Dalfin) : la recherche n’a vérifié que le titre, pas les paroles. Tu la gardes ?',
 		'*freg* : « FRÉTCH », le g final sonne « tch » (lexique). D’accord ?',
+		'*caud* : « CAOUT », le *d* final se dit « t » (grammaire de référence, p9), ton choix du 2026-11-02 ; avant, « CAOU ». À relire.',
 		'Dans la note culture, *cers* et *autan* restent écrits en français (absents du Basic) : d’accord ?'
 	],
 
@@ -223,7 +224,7 @@ export const modul62 = {
 					intro: 'Tu l’as entendu au téléphone : souvent *fa*, parfois un seul mot.',
 					head: ['', 'tu dis', 'ça sonne comme'],
 					rows: [
-						['chaud', '*Fa caud.*', '« fa CAOU »'],
+						['chaud', '*Fa caud.*', '« fa CAOUT »'],
 						['froid', '*Fa freg.*', '« fa FRÉTCH »'],
 						['beau', '*Fa bèl.*', '« fa BÈL »'],
 						['du soleil', '*Fa solelh.*', '« fa sou-LÉL »'],
@@ -264,7 +265,7 @@ export const modul62 = {
 					title: 'À retenir : la suite du bulletin',
 					intro: 'Quatre de plus : tu les entends à la radio.',
 					items: [
-						{ id: 'fa-caud', oc: 'Fa caud.', sound: 'fa CAOU', fr: 'il fait chaud.' },
+						{ id: 'fa-caud', oc: 'Fa caud.', sound: 'fa CAOUT', fr: 'il fait chaud.' },
 						{ id: 'fa-freg', oc: 'Fa freg.', sound: 'fa FRÉTCH', fr: 'il fait froid.' },
 						{ id: 'fa-vent', oc: 'Fa vent.', sound: 'fa BÉN', fr: 'il y a du vent (*lo vent* : le vent).' },
 						{ id: 'neva', oc: 'Nèva.', sound: 'NÈ-bo', fr: 'il neige.' }
@@ -284,7 +285,7 @@ export const modul62 = {
 							lines: [
 								{ oc: 'Bon ser ! Lo temps de deman.', sound: 'bou(n) SÉR ! lou TÉMS dé dé-MA.', fr: 'Bonsoir ! Le temps de demain.' },
 								{ oc: 'A Tolosa, fa vent, e fa freg.', sound: 'a tou-LOU-zo, fa BÉN, é fa FRÉTCH.', fr: 'À Toulouse, il y a du vent, et il fait froid.' },
-								{ oc: 'A Montpelhièr, fa bèl : fa solelh, e fa caud.', sound: 'a moun-pé-LYÈ, fa BÈL : fa sou-LÉL, é fa CAOU.', fr: 'À Montpellier, il fait beau : il y a du soleil, et il fait chaud.' },
+								{ oc: 'A Montpelhièr, fa bèl : fa solelh, e fa caud.', sound: 'a moun-pé-LYÈ, fa BÈL : fa sou-LÉL, é fa CAOUT.', fr: 'À Montpellier, il fait beau : il y a du soleil, et il fait chaud.' },
 								{ oc: 'A Carcassona, plòu lo matin ; lo ser, fa bèl.', sound: 'a car-ca-SOU-no, PLÒOU lou ma-TI ; lou SÉR, fa BÈL.', fr: 'À Carcassonne, il pleut le matin ; le soir, il fait beau.' },
 								{ oc: 'A Besièrs, fa solelh, mas fa vent.', sound: 'a bé-ZYÈS, fa sou-LÉL, mas fa BÉN.', fr: 'À Béziers, il y a du soleil, mais il y a du vent.' },
 								{ oc: 'A Rodés… nèva !', sound: 'a rou-DÉS… NÈ-bo !', fr: 'À Rodez… il neige !' },
