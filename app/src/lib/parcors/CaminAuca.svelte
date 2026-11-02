@@ -695,6 +695,10 @@
 			white-space: nowrap;
 			margin: 0;
 		}
+		/* sans son nom, elle s'aplatissait en bandeau : la hauteur des autres */
+		.sola .cas {
+			align-self: stretch;
+		}
 		.c-num {
 			font-size: 2rem;
 		}
