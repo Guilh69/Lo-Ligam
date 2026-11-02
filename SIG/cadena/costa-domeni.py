@@ -94,7 +94,7 @@ for i in range(pieces.GetGeometryCount()):
 occ = occ.UnaryUnion(); autres = autres.UnaryUnion()
 print('domaine découpé km2', round(occ.GetArea() / 1e6), '; autres terres km2', round(autres.GetArea() / 1e6))
 fin = occ.Buffer(1500).Difference(autres).Buffer(0).SimplifyPreserveTopology(300)
-# Mónegue (enclava de parlar ligur sus la còsta) : la marga de 1,5 km l'aviá
+# Monegue (enclava de parlar ligur sus la còsta) : la marga de 1,5 km l'aviá
 # tornat metre dins lo domeni
 monegue = ogr.CreateGeometryFromWkt('POLYGON((7.4085 43.7245,7.4170 43.7240,7.4305 43.7395,7.4395 43.7485,7.4400 43.7525,7.4315 43.7500,7.4175 43.7335,7.4085 43.7245))')
 monegue.Transform(versL93)
