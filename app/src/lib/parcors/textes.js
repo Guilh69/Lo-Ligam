@@ -4,6 +4,9 @@
 // contunhar, començar, siás, aicí, clavat, acaba, dobrir, fach, etapa,
 // fogassa ; clavada et facha vérifiés par Joan ; preparacion le même jour) :
 // relu et validé par Romain le 2026-11-02, note du compte comprise.
+// Espagnol, anglais et catalan relus par Aran le même jour ; « cerrado / abrir »
+// et « tancat / obrir » gardés plutôt que « bloqueado » et « bloquejat »,
+// fidèles à « clavat / dobrir » (choix de Romain). L'arabe n'est pas relu.
 
 export const T = {
 	titol: { oc: 'Lo parcors', fr: 'Le parcours', es: 'El recorrido', en: 'The learning path', ca: 'El recorregut', ar: 'مسار التعلّم' },
