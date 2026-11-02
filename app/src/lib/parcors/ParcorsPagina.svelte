@@ -81,7 +81,7 @@
 				<li class:actual={i === 0} class:clavat={i > 0}>
 					<b>{n.id}</b>
 					{#if i === 0}
-						<span class="pct">{parcors.percent} %</span>
+						<span class="pct" dir="ltr">{parcors.percent} %</span>
 					{:else}
 						<Icona nom="cadenat" label="{n.id} : {tria(T.clavat)}" />
 					{/if}
@@ -116,7 +116,7 @@
 							<span lang="oc">{onSem((v) => v.oc)}</span>
 							<span class="glosa" lang={lg}>({onSem(glosa)})</span>
 						</p>
-						{#if bloc}<p class="bloc-nom"><span lang="oc">{bloc.oc}</span> <span class="glosa">({bloc.fr})</span></p>{/if}
+						{#if bloc}<p class="bloc-nom"><span lang="oc">{bloc.oc}</span> <span class="glosa" lang="fr">({bloc.fr})</span></p>{/if}
 					</div>
 				</div>
 
@@ -132,7 +132,7 @@
 						<span style:width="{parcors.percent}%"></span>
 					</div>
 					<p class="comptes">
-						<span><b>{parcors.modulsFachs}</b> <span lang="oc">{T.moduls.oc} {T.sus.oc} {parcors.totalModuls}</span></span>
+						<span lang="oc"><b>{parcors.modulsFachs}</b> {T.moduls.oc} {T.sus.oc} {parcors.totalModuls}</span>
 						<span class="fogassas" title={tria(T.fogassas)}><FougasseIcon size={18} /> {fogassas}<span class="sr">{T.fogassas.oc}</span></span>
 					</p>
 				</div>
@@ -221,6 +221,16 @@
 
 	.glosa {
 		color: var(--t-tinta-2);
+	}
+	/* En arabe la page passe de droite à gauche : l'occitan et le français
+	   gardent leur sens de lecture (« Cossí vas ? » et non « ? Cossí vas »),
+	   calés comme le texte qui les entoure (Chromium ne connaît que la
+	   forme préfixée de match-parent, Firefox que la forme standard) */
+	:global(html[dir='rtl']) .parcors :global(:is([lang='oc'], [lang='fr'])) {
+		direction: ltr;
+		unicode-bidi: isolate;
+		text-align: -webkit-match-parent;
+		text-align: match-parent;
 	}
 
 	/* Le titre, au gabarit des pages de rubrique ; S'apren en fil d'Ariane */
@@ -343,7 +353,7 @@
 		display: inline-flex;
 		align-items: center;
 		gap: 0.3rem;
-		margin-left: auto;
+		margin-inline-start: auto;
 		padding: 0.2rem 0.7rem;
 		border-radius: 999px;
 		background: color-mix(in srgb, var(--t-aur) 16%, transparent);

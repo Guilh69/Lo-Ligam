@@ -322,11 +322,13 @@
 		width: var(--g);
 		border-top: 2px dashed var(--camin);
 	}
+	/* côtés logiques (début et fin de ligne) : en arabe la page passe de
+	   droite à gauche, la grille s'inverse et le chemin doit la suivre */
 	.cas.dreit::before {
-		right: 100%;
+		inset-inline-end: 100%;
 	}
 	.cas.esquèr::before {
-		left: 100%;
+		inset-inline-start: 100%;
 	}
 	.cas.vengut::before {
 		border-top: 3px solid var(--t-aur);
@@ -379,8 +381,8 @@
 	/* sur une grande case, l'étiquette va dans le coin : au milieu, elle
 	   cachait le chemin qui descend de la case d'au-dessus */
 	.gran .aici {
-		left: auto;
-		right: var(--esp-8);
+		inset-inline-start: auto;
+		inset-inline-end: var(--esp-8);
 		transform: none;
 	}
 
@@ -422,7 +424,7 @@
 	.virada::after {
 		content: '';
 		position: absolute;
-		left: calc(var(--mitan) - 1px);
+		inset-inline-start: calc(var(--mitan) - 1px);
 		border-left: 2px dashed var(--camin);
 	}
 	.virada::before {
@@ -435,8 +437,8 @@
 	}
 	.virada.a-drecha::before,
 	.virada.a-drecha::after {
-		left: auto;
-		right: calc(var(--mitan) - 1px);
+		inset-inline-start: auto;
+		inset-inline-end: calc(var(--mitan) - 1px);
 	}
 	.virada.vengut::before,
 	.virada.vengut-aval::after {
@@ -466,7 +468,7 @@
 	   Joan, 2026-11-02) */
 	.a-drecha .v-tèxt {
 		grid-column: 1 / span 3;
-		text-align: right;
+		text-align: end;
 	}
 	.a-drecha .g-nom,
 	.a-drecha .u-nom {
@@ -476,7 +478,7 @@
 		display: block;
 	}
 	.a-drecha .v-tèxt .indici :global(.icona) {
-		margin-right: 0.35rem;
+		margin-inline-end: 0.35rem;
 		vertical-align: -0.1em;
 	}
 	.gara {
@@ -626,7 +628,7 @@
 	}
 	.sola.a-drecha .sola-tèxt {
 		grid-column: 1 / span 3;
-		text-align: right;
+		text-align: end;
 	}
 	/* texte calé à droite : le cadenas suit la première ligne au lieu de
 	   rester seul au bord gauche */
@@ -634,7 +636,7 @@
 		display: block;
 	}
 	.sola.a-drecha .indici :global(.icona) {
-		margin-right: 0.35rem;
+		margin-inline-end: 0.35rem;
 		vertical-align: -0.1em;
 	}
 	.sur {
@@ -666,14 +668,14 @@
 		content: '';
 		position: absolute;
 		top: 100%;
-		left: calc(var(--mitan) - 1px);
+		inset-inline-start: calc(var(--mitan) - 1px);
 		height: var(--esp-48);
 		border-left: 2px dashed var(--camin);
 		mask-image: linear-gradient(#000, transparent);
 	}
 	.nivel.a-drecha::after {
-		left: auto;
-		right: calc(var(--mitan) - 1px);
+		inset-inline-start: auto;
+		inset-inline-end: calc(var(--mitan) - 1px);
 	}
 
 	/* Assez de place : le nom du module s'écrit dans la case */
