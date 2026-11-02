@@ -321,6 +321,11 @@
 		font-weight: 400;
 		font-size: 0.9rem;
 	}
+	/* en arabe, la glose française ne se coupe pas autour du titre : elle
+	   descend entière dessous (relecture de Joan, 2026-11-02) */
+	:global(html[dir='rtl']) .bloc-nom .glosa {
+		display: inline-block;
+	}
 	.barra {
 		height: 0.55rem;
 		border-radius: 999px;
