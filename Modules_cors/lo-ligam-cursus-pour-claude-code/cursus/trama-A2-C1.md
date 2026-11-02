@@ -1,5 +1,7 @@
 # Trame des niveaux A2 à C1 (2026-11-01)
 
+> **2026-11-02** : les points de la grammaire de référence qui manquaient sont ajoutés, marqués ◆ (carte `cobertura-gramatica.md`, validée par Romain : « Oui, comme proposé »). Les verbes irréguliers : une trentaine de fréquents à répartir de l'A2 au B1, liste à établir avec les tableaux du livre (p92-96).
+
 La carte des unités, sans les exercices, de l'A2 au C1 : le chemin vers le DCL d'occitan (languedocien, norme classique). Elle prolonge `01-A1-carta-8-unitats.md` et en garde le format. Rédigée par Claude le 2026-11-01, à la demande de Romain.
 
 **Sources** (résumées, rien n'est recopié : documents sous droits) : les référentiels et les annales du DCL d'occitan ; les programmes des cours du CPNL (Consorci per a la Normalització Lingüística) ; `revisions/2026-10-24-progression-catala.md` ; la carte A1 ; `00-cadre-methodologique.md` ; `catalogue-exercicis.md` ; `alhors-en-occitania-A1.md`. Les anciennes cartes `02-A2.md` à `05-C1.md` restent en place tant que cette trame n'est pas validée.
@@ -95,9 +97,9 @@ Même chemin qu'en A1 (carte A1, §2 et §3) : la scène, trois modules titrés 
 
 | Module | La question | Tu sauras | Forme du jour | Mots nouveaux | Son du jour | Le jeu |
 |---|---|---|---|---|---|---|
-| 9.1 | *Qual es aquela ?* | montrer et nommer les gens autour de toi | *aqueste, aquesta* (tout près) ; *aquel, aquela* (plus loin) ; *aquestes* | 10 : *òme, femna, dròlle, dròlla, vesin, vesina, amic, amiga, gent…* | *qu* sonne « k » (*qual, aquela*) | toucher la personne dans la scène |
-| 9.2 | *Cossí son ?* | décrire quelqu'un, seul ou en groupe | *èsser* au pluriel (*sèm, sètz, son*) ; l'adjectif au pluriel | 8 : *jove, vièlh, vièlha, bèl, polit, prim…* | *-tz* final sonne « ts » (*sètz*) | l'intrus |
-| 9.3 | *De quina color son tos uèlhs ?* | faire un portrait | possessifs : *mos* ⚠️, *mas, tos, tas, sos, sas* (plusieurs choses) ; *nòstre, vòstre, lor* (à plusieurs) | 8 : *uèlhs, pels, nas, boca, barba, lunetas…* | *o* sonne « ou », revu (*color, boca*) | portrait à écouter, puis à remettre dans l'ordre |
+| 9.1 | *Qual es aquela ?* | montrer et nommer les gens autour de toi | *aqueste, aquesta* (tout près) ; *aquel, aquela* (plus loin) ; *aquestes* ; ◆ les neutres *aquò, aiçò* | 10 : *òme, femna, dròlle, dròlla, vesin, vesina, amic, amiga, gent…* | *qu* sonne « k » (*qual, aquela*) | toucher la personne dans la scène |
+| 9.2 | *Cossí son ?* | décrire quelqu'un, seul ou en groupe | *èsser* au pluriel (*sèm, sètz, son*) ; l'adjectif au pluriel ; ◆ *aver* au pluriel (*avèm, avètz, an*) ; ◆ le pluriel en *-es* (*peis, peisses*) ; ◆ quelques adjectifs devant le nom (*un bèl ostal*) | 8 : *jove, vièlh, vièlha, bèl, polit, prim…* | *-tz* final sonne « ts » (*sètz*) | l'intrus |
+| 9.3 | *De quina color son tos uèlhs ?* | faire un portrait | possessifs : *mos* ⚠️, *mas, tos, tas, sos, sas* (plusieurs choses) ; *nòstre, vòstre, lor* (à plusieurs) ; ◆ *son, sa* (un seul objet) | 8 : *uèlhs, pels, nas, boca, barba, lunetas…* | *o* sonne « ou », revu (*color, boca*) | portrait à écouter, puis à remettre dans l'ordre |
 | 9.4 | Tâche | faire le portrait d'un ami de ta còla en 8 phrases, à l'oral et à l'écrit | rien de nouveau | aucun | | écrire sous la photo |
 
 ### Unité 10 · *Lo temps liure* (scène : le forum des associations)
@@ -105,8 +107,8 @@ Même chemin qu'en A1 (carte A1, §2 et §3) : la scène, trois modules titrés 
 | Module | La question | Tu sauras | Forme du jour | Mots nouveaux | Son du jour | Le jeu |
 |---|---|---|---|---|---|---|
 | 10.1 | *Qué t'agrada far ?* | dire ce que tu aimes faire, et ce qu'aiment les autres | *agradar* avec *me, te, li, nos, vos, lor* ; *agrada* (une chose), *agradan* (plusieurs) | 8 : *dançar, nadar, caminar, musica, espòrt…* | l'élision (*m'agrada, t'agrada*) | sondage à écouter, puis cocher |
-| 10.2 | *Qué legisses ?* | parler de tes lectures, de ce que tu choisis | verbes en *-ir* avec *-iss-* (*legissi, legisses, legís* ; *causir, finir*) ; *dormir, sortir, partir* : question 10 | 8 : *libre, jornal, revista, roman…* | l'accent écrit sur la dernière syllabe (*legís*) | anagrammes |
-| 10.3 | *Venes al balèti ?* | proposer une sortie, dire comment tu te sens | verbes en *-ir* sans *-iss-* (*veni, venes, ven, venon* ; *senti, sentes*) | 8 : *balèti, concèrt, sortida, nuèch, tard, content, las, lassa* | *e* et *è*, revus (*venes, balèti*) | dialogue à choix avec Karim |
+| 10.2 | *Qué legisses ?* | parler de tes lectures, de ce que tu choisis | verbes en *-ir* avec *-iss-* (*legissi, legisses, legís* ; *causir, finir*) ; *dormir, sortir, partir* : question 10 | 8 : *libre, jornal, revista, roman…* | l'accent écrit sur la dernière syllabe (*legís*) ; ◆ la règle complète de l'accent écrit | anagrammes |
+| 10.3 | *Venes al balèti ?* | proposer une sortie, dire comment tu te sens | verbes en *-ir* sans *-iss-* (*veni, venes, ven, venon* ; *senti, sentes*) ; ◆ la règle de l'alternance de voyelle (*lèvi*, *jòga*) | 8 : *balèti, concèrt, sortida, nuèch, tard, content, las, lassa* | *e* et *è*, revus (*venes, balèti*) | dialogue à choix avec Karim |
 | 10.4 | Tâche | t'inscrire à une association : remplir la fiche, te présenter au groupe | rien de nouveau | aucun | | jeu de rôle enregistré |
 
 **▸ Halte 5** : au forum, tu présentes ta còla et ce que chacun aime (unités 9 et 10), puis le bilan du carnet.
@@ -116,17 +118,17 @@ Même chemin qu'en A1 (carte A1, §2 et §3) : la scène, trois modules titrés 
 | Module | La question | Tu sauras | Forme du jour | Mots nouveaux | Son du jour | Le jeu |
 |---|---|---|---|---|---|---|
 | 11.1 | *Qué fasètz dissabte ?* | organiser une sortie à plusieurs | *far* et *anar* au pluriel (*fasèm, fasètz, fan* ; *anam, anatz, van*) ; *dissabte* (ce samedi) et *lo dissabte* (chaque samedi) | 8 : *amassa, mar, montanha, riba…* | le *-n* final qui s'efface, revu (*fan, van*) | remettre dans l'ordre (tuiles) |
-| 11.2 | *Vòls venir ?* | inviter, accepter, refuser poliment | *voler, poder* au pluriel + infinitif (*volèm, volètz, vòlon* ; *podèm, podètz, pòdon*) ; en bloc : *Amb plaser !*, *Pòdi pas, desolat* (*desolada*) | 6 : *convidar, plaser, desolat, desolada…* | la voix de l'invitation et de l'exclamation | dialogue à choix |
-| 11.3 | *Qué bevèm ?* | proposer à boire, partager | verbes en *-re* (*bevi, beves, beu, bevèm, bevètz, bevon* ; *vendre, metre, escriure*) | 8 : *vin, bièrra, suc, botelha, tassa…* | la syllabe forte au début (*BEvon, VENdon*) | pendu |
+| 11.2 | *Vòls venir ?* | inviter, accepter, refuser poliment | *voler, poder* au pluriel + infinitif (*volèm, volètz, vòlon* ; *podèm, podètz, pòdon*) ; en bloc : *Amb plaser !*, *Pòdi pas, desolat* (*desolada*) ; ◆ *saber* et *dever* au présent, + infinitif | 6 : *convidar, plaser, desolat, desolada…* | la voix de l'invitation et de l'exclamation | dialogue à choix |
+| 11.3 | *Qué bevèm ?* | proposer à boire, partager | verbes en *-re* (*bevi, beves, beu, bevèm, bevètz, bevon* ; *vendre, metre, escriure*) ; ◆ *dire*, *veire*, *conéisser* au présent | 8 : *vin, bièrra, suc, botelha, tassa…* | la syllabe forte au début (*BEvon, VENdon*) | pendu |
 | 11.4 | Tâche | écrire une invitation au pique-nique, répondre à deux invitations | rien de nouveau | aucun | | écrire l'invitation |
 
 ### Unité 12 · *Las fèstas de l'an* (scène : l'affiche des fêtes à la mairie)
 
 | Module | La question | Tu sauras | Forme du jour | Mots nouveaux | Son du jour | Le jeu |
 |---|---|---|---|---|---|---|
-| 12.1 | *Quand es la fèsta ?* | dire une date, un mois, une année | les mois ; les nombres au-delà de 100 (*cent, mila*) ; les années | 14 : les mois (*genièr… decembre*), *mila, fèsta* | le *-e* final se dit (*decembre*) | dictée de dates |
+| 12.1 | *Quand es la fèsta ?* | dire une date, un mois, une année | les mois ; les nombres au-delà de 100 (*cent, mila*) ; les années ; ◆ les ordinaux après *segond* (*tresen*…) ; ◆ de 31 à 99 : *trenta un*, en deux mots | 14 : les mois (*genièr… decembre*), *mila, fèsta* | le *-e* final se dit (*decembre*) | dictée de dates |
 | 12.2 | *Qué faràs deman ?* | dire ce que tu feras | futur des verbes réguliers (*parlarai, parlaràs, parlarà, parlarem, parlaretz, parlaràn* ; *partirai, beurai*) | 6 : *carnaval, vacanças, viatge…* | la syllabe forte à la fin (*parlaRAI*) | l'agenda : remettre la semaine dans l'ordre |
-| 12.3 | *Seràs a la fèsta ?* | promettre, dire si tu seras là | futur des irréguliers (*serai, aurai, farai, poirai, volrai, vendrai*) | 6 : *segur, benlèu…* | *ai* et *au* (*serai, aurai*) | lettres à cocher : compléter les terminaisons |
+| 12.3 | *Seràs a la fèsta ?* | promettre, dire si tu seras là | futur des irréguliers (*serai, aurai, farai, poirai, volrai, vendrai*) ; ◆ les exclamations (*Quina fèsta !*) | 6 : *segur, benlèu…* | *ai* et *au* (*serai, aurai*) | lettres à cocher : compléter les terminaisons |
 | 12.4 | Tâche | présenter le programme de la fête en une minute | rien de nouveau | aucun | | parler 60, puis 45, puis 30 secondes |
 
 **▸ Halte 6** : préparer la fête du village avec la còla (unités 11 et 12), puis le bilan du carnet.
@@ -157,7 +159,7 @@ Même chemin qu'en A1 (carte A1, §2 et §3) : la scène, trois modules titrés 
 
 | Module | La question | Tu sauras | Forme du jour | Mots nouveaux | Son du jour | Le jeu |
 |---|---|---|---|---|---|---|
-| 15.1 | *Cossí se fa ?* | suivre une recette, en donner une | l'impératif (*pela, pelatz* ; *mescla, mesclatz* ; *metètz*, *mete* ⚠️) ; *Cossí se fa ?* en bloc | 10 : *pelar, talhar, mesclar, còire, òli, sal, uòu, farina…* | la syllabe forte qui change (*PEla, peLATZ*) | remettre la recette dans l'ordre |
+| 15.1 | *Cossí se fa ?* | suivre une recette, en donner une | l'impératif (*pela, pelatz* ; *mescla, mesclatz* ; *metètz*, *mete* ⚠️) ; *Cossí se fa ?* en bloc ; ◆ l'impératif négatif en bloc (*Parles pas !*) | 10 : *pelar, talhar, mesclar, còire, òli, sal, uòu, farina…* | la syllabe forte qui change (*PEla, peLATZ*) | remettre la recette dans l'ordre |
 | 15.2 | *Lo vòls ?* | servir, passer un objet | *lo, la, los, las* compléments ; après l'impératif (*pren-lo*) | 8 : *plat, sieta, cotèl, forqueta, culhièr…* | la liaison (*los uòus*) | dialogue à choix |
 | 15.3 | *Ne vòls encara ?* | parler de quantités, resservir | *ne* (*ne vòli, n'ai*) ; *pro, tròp, un tròç, un pauc* | 6 : *encara, pro, tròp, tròç…* | *ò* ouvert, revu (*tròp, tròç*) | pendu |
 | 15.4 | Tâche | écrire ta recette de famille, puis la dicter à quelqu'un | rien de nouveau | aucun | | écrire la recette |
@@ -179,9 +181,9 @@ Même chemin qu'en A1 (carte A1, §2 et §3) : la scène, trois modules titrés 
 
 | Module | La question | Tu sauras | Forme du jour | Mots nouveaux | Son du jour | Le jeu |
 |---|---|---|---|---|---|---|
-| 17.1 | *I vas en tren ?* | dire comment tu voyages | le pronom *i* (*i vau, i anam*) | 8 : *tren, bus, avion, veitura, bicicleta, bilhet…* | le *r* roulé (*tren, veitura*) | « Ont es ? » : placer les gares sur la carte |
+| 17.1 | *I vas en tren ?* | dire comment tu voyages | le pronom *i* (*i vau, i anam*) ; ◆ *pel, pels* (*per* + *lo, los*), *jol* à reconnaître ; ◆ *cap a* | 8 : *tren, bus, avion, veitura, bicicleta, bilhet…* | le *r* roulé (*tren, veitura*) ; ◆ l'alphabet, pour épeler son nom | « Ont es ? » : placer les gares sur la carte |
 | 17.2 | *Es mai car ?* | comparer deux trajets | *mai… que, mens… que, tan… coma* ; *melhor* | 8 : *car, bon mercat, rapid, lent, confortable…* | *ai* (*mai*) | choisir le bon billet |
-| 17.3 | *Vòls quicòm ?* | proposer, refuser, dire qu'il n'y a rien | *quicòm, res, degun, jamai* | 6 : *quicòm, res, degun, jamai, clau…* | la syllabe forte à la fin (*quiCÒM*) | dialogue à choix |
+| 17.3 | *Vòls quicòm ?* | proposer, refuser, dire qu'il n'y a rien | *quicòm, res, degun, jamai* ; ◆ *pas mai* (ne… plus) ; ◆ *ni… ni* | 6 : *quicòm, res, degun, jamai, clau…* | la syllabe forte à la fin (*quiCÒM*) | dialogue à choix |
 | 17.4 | Tâche | choisir un trajet et réserver un billet | rien de nouveau | aucun | | jeu de rôle enregistré |
 
 ### Unité 18 · *Lo temps que farà* (scène : la carte de la météo et ses vents)
@@ -228,8 +230,8 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
 | 21 | *Qué faguères ièr ?* | Karim revient de voyage et montre ses photos | passé simple des verbes en *-ar* (*parlèri, parlèt*) · passé simple des irréguliers courants (*faguèri, foguèri, anèri*) · passé simple ou passé composé (question 2) | raconter un voyage en 2 minutes, photos à l'appui |
-| 22 | *Qué t'es arribat ?* | Lisa raconte sa chute de vélo à sa voisine | plus-que-parfait (*aviái* ou *èri* + participe) · les trois passés dans un même récit · repères de temps (*abans, puèi, a la fin, tot d'un còp*) | le récit écrit pour l'assurance (120 mots) |
-| 23 | *Qué ditz ?* | le répondeur de l'association : Núria transmet les messages | discours rapporté au présent (*ditz que*) · la question indirecte (*demanda se*) · la place des pronoms avec l'infinitif et l'impératif | transmettre trois messages, à l'oral puis par écrit |
+| 22 | *Qué t'es arribat ?* | Lisa raconte sa chute de vélo à sa voisine | plus-que-parfait (*aviái* ou *èri* + participe) · les trois passés dans un même récit · repères de temps (*abans, puèi, a la fin, tot d'un còp*) ; ◆ le gérondif (*en parlant*) | le récit écrit pour l'assurance (120 mots) |
+| 23 | *Qué ditz ?* | le répondeur de l'association : Núria transmet les messages | discours rapporté au présent (*ditz que*) · la question indirecte (*demanda se*) ; ◆ *çò que* · la place des pronoms avec l'infinitif et l'impératif ; ◆ l'accord du participe avec *aver* quand le complément est placé avant | transmettre trois messages, à l'oral puis par écrit |
 | 24 | *Qué fariás a ma plaça ?* | le courrier des lecteurs d'une revue | conditionnel des verbes réguliers (*parlariái*) · conditionnel des irréguliers (*fariás, auriás*) · conseiller (*te conselhariái de* + infinitif) | répondre à la lettre d'un lecteur (120 mots) |
 
 ▸ Halte 11 après l'unité 22, halte 12 après l'unité 24.
@@ -239,8 +241,8 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
 | 25 | *Qué fas aicí ?* | premier jour de Yasmine dans une association culturelle | la durée (*dempuèi* + présent) · les noms de métiers et de fonctions, au masculin et au féminin (dérivation) · l'obligation (*cal*, *dever* + infinitif) | te présenter à l'équipe et dire ton rôle (oral, 2 min) |
-| 26 | *Cossí vos pòdi ajudar ?* | l'accueil de l'association : des visiteurs se renseignent | le vouvoiement (*vos*, deuxième personne du pluriel) · les déterminants variés (chaque, aucun, quelques, tout) · *i* et *ne* ensemble (*n'i a*) | accueillir un visiteur et le renseigner (jeu de rôle en visio) |
-| 27 | *Qué cal far primièr ?* | la fiche des bénévoles pour installer une salle | les étapes (*primièr, puèi, enfin*) · l'impératif avec un pronom, étendu · *cal que* + subjonctif présent des verbes réguliers (*cal que parles*) | rédiger la consigne pour un nouveau bénévole (120 mots) |
+| 26 | *Cossí vos pòdi ajudar ?* | l'accueil de l'association : des visiteurs se renseignent | le vouvoiement (*vos*, deuxième personne du pluriel) · les déterminants variés (chaque, aucun, quelques, tout) ; ◆ *unes, unas* ; ◆ l'article : omission et emplois particuliers ; ◆ *lo mieu* et les pronoms possessifs ; ◆ les noms dont le genre diffère du français · *i* et *ne* ensemble (*n'i a*) | accueillir un visiteur et le renseigner (jeu de rôle en visio) |
+| 27 | *Qué cal far primièr ?* | la fiche des bénévoles pour installer une salle | les étapes (*primièr, puèi, enfin*) · l'impératif avec un pronom, étendu ; ◆ l'impératif négatif, formé sur le subjonctif (*Parles pas !*) · *cal que* + subjonctif présent des verbes réguliers (*cal que parles*) | rédiger la consigne pour un nouveau bénévole (120 mots) |
 | 28 | *As recebut mon corrièl ?* | les courriels de l'équipe : confirmer, relancer | le courriel de travail (ouverture, clôture, *Coralament*) · les liens logiques (*perque, alara, mas, doncas*) · dates, heures et délais | écrire un courriel de travail (120 mots) |
 
 ▸ Halte 13 après l'unité 26, halte 14 après l'unité 28. ▸ **Mission B1.1** (§6).
@@ -249,9 +251,9 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
-| 29 | *Qué ne pensas ?* | débat au café associatif : rendre la place aux piétons | *pensi que* + indicatif, *pensi pas que* + subjonctif · subjonctif présent des irréguliers (*siá, faga, pòsca*) · l'opposition (*mas, pasmens, al contrari*) | donner ton avis dans un débat (oral, 3 min) |
-| 30 | *D'ont ven aquela informacion ?* | une rumeur au village et l'article du journal local | nuancer (*benlèu, segurament, sembla que*) · discours rapporté au passé (*a dich que veniá*) · la cause et la conséquence | expliquer d'où vient une information et ce qu'on en sait (160 mots) |
-| 31 | *Quina sala causissèm ?* | deux devis pour la salle de la fête | comparer finement · la condition (*se* + présent, *a condicion que* + subjonctif) · les relatifs composés (*la quala, dins la quala*) | comparer les devis et recommander (tableau et 160 mots) |
+| 29 | *Qué ne pensas ?* | débat au café associatif : rendre la place aux piétons | *pensi que* + indicatif, *pensi pas que* + subjonctif · subjonctif présent des irréguliers (*siá, faga, pòsca*) · l'opposition (*mas, pasmens, al contrari*) ; ◆ *sense*, *contra*, *pendent*, *malgrat* | donner ton avis dans un débat (oral, 3 min) |
+| 30 | *D'ont ven aquela informacion ?* | une rumeur au village et l'article du journal local | nuancer (*benlèu, segurament, sembla que*) ; ◆ les adverbes en *-ment*, formés sur le féminin · discours rapporté au passé (*a dich que veniá*) · la cause et la conséquence | expliquer d'où vient une information et ce qu'on en sait (160 mots) |
+| 31 | *Quina sala causissèm ?* | deux devis pour la salle de la fête | comparer finement ; ◆ les comparatifs irréguliers au-delà de *melhor* · la condition (*se* + présent, *a condicion que* + subjonctif) · les relatifs composés (*la quala, dins la quala*) ; ◆ *dont*, *qui* après une préposition | comparer les devis et recommander (tableau et 160 mots) |
 | 32 | *Qué se passa ?* | une réclamation au guichet : le car n'est pas venu | se plaindre poliment (le conditionnel, revu) · le subjonctif imparfait (*parlèsse, foguèsse*) · la concordance (*volriái que* + subjonctif imparfait) | écrire une lettre de réclamation (160 mots) |
 
 ▸ Halte 15 après l'unité 30, halte 16 après l'unité 32.
@@ -261,9 +263,9 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
 | 33 | *Qué volèm far ?* | première réunion du projet de balade contée | le but (*per* + infinitif, *per que* + subjonctif) · les périphrases (*anar* + infinitif, *se metre a*) · *vòli que* + subjonctif | présenter le projet en 3 minutes |
-| 34 | *Quant costarà ?* | le budget de la visite | grands nombres, pourcentages, fractions · futur et conditionnel dans les prévisions · comparer des chiffres | un budget commenté (160 mots) |
+| 34 | *Quant costarà ?* | le budget de la visite | grands nombres, pourcentages, fractions · futur et conditionnel dans les prévisions ; ◆ le futur antérieur · comparer des chiffres | un budget commenté (160 mots) |
 | 35 | *Qual s'ocupa de qué ?* | répartir les tâches de l'équipe | les pronoms groupés · l'avant et l'après (*abans que* + subjonctif) · les verbes pronominaux, à tous les temps | le compte rendu de la réunion (160 mots) |
-| 36 | *Qué vesèm aicí ?* | le repérage du parcours dans le village | les compléments du nom · diminutifs et augmentatifs · le passé simple pour l'histoire d'un lieu (*bastiguèron*) | le texte d'un panneau bilingue, puis sa présentation (160 mots, 3 min) |
+| 36 | *Qué vesèm aicí ?* | le repérage du parcours dans le village | les compléments du nom · diminutifs et augmentatifs ; ◆ les collectifs, les suffixes d'adjectifs · le passé simple pour l'histoire d'un lieu (*bastiguèron*) | le texte d'un panneau bilingue, puis sa présentation (160 mots, 3 min) |
 
 ▸ Halte 17 après l'unité 34, halte 18 après l'unité 36. ▸ **Mission B1.2** (§6).
 
@@ -271,8 +273,8 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
-| 37 | *E se plòu ?* | le festival en plein air : prévoir le pire | la condition (*se* + présent) · la supposition (*supausem que* + subjonctif) · l'hypothèse irréelle (question 8) et le conditionnel | un plan de repli (oral, 4 min ; note de 200 mots) |
-| 38 | *Qué podèm respondre ?* | les voisins écrivent pour se plaindre du bruit | la concession (*encara que* + subjonctif, *malgrat*) · la restriction (*sonque, levat*) · la négation nuancée (*pas brica, pas gaire, pas jamai*) | répondre au courrier des voisins (200 mots) |
+| 37 | *E se plòu ?* | le festival en plein air : prévoir le pire | la condition (*se* + présent) ; ◆ *se… e que* + subjonctif · la supposition (*supausem que* + subjonctif) · l'hypothèse irréelle (question 8) et le conditionnel | un plan de repli (oral, 4 min ; note de 200 mots) |
+| 38 | *Qué podèm respondre ?* | les voisins écrivent pour se plaindre du bruit | la concession (*encara que* + subjonctif, *malgrat*) ; ◆ le subjonctif passé et plus-que-parfait · la restriction (*sonque, levat*) · la négation nuancée (*pas brica, pas gaire, pas jamai*) | répondre au courrier des voisins (200 mots) |
 | 39 | *Qual a rason ?* | un débat à la radio locale sur les horaires du festival | construire un argument (*primièr, puèi, enfin, en efièch*) · le pronom neutre *o* (*o sabi*) · citer (*segon*, les guillemets) | la synthèse des deux points de vue (200 mots) |
 | 40 | *Qué recomandas ?* | trois solutions pour le stationnement du festival | recommander (*calriá que* + subjonctif imparfait) · peser avantages et inconvénients · hiérarchiser (*subretot*) | note de recommandation (200 mots) et présentation de 5 minutes |
 
@@ -304,10 +306,10 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
-| 49 | *Qué vòl dire, al fons ?* | la lettre ambiguë d'un élu | l'implicite et le sous-entendu · la modalisation fine · l'ironie (intonation et tournures) | analyser la lettre (300 mots) |
+| 49 | *Qué vòl dire, al fons ?* | la lettre ambiguë d'un élu | l'implicite et le sous-entendu · la modalisation fine ; ◆ l'adjectif devant le nom, qui change de sens · l'ironie (intonation et tournures) | analyser la lettre (300 mots) |
 | 50 | *Es objectiu, aqueste article ?* | deux articles sur le même fait | le passif (*èsser* + participe, *se* passif) · les marques de l'opinion · mots savants et emprunts | réécrire un article d'opinion en article neutre (300 mots) |
-| 51 | *Cossí o dirián los vièlhs ?* | un texte traduit du français, relu avec des anciens | les tournures propres à l'occitan · superlatifs et intensifs · les pronoms variés (*n'i a*…) | reformuler le texte dans des tournures propres à l'occitan (300 mots) |
-| 52 | *Qué auriás fach a ma plaça ?* | une amie raconte une décision difficile | le conditionnel passé (*auriás volgut*) · l'hypothèse irréelle au passé · la concordance complète | une lettre « et si… » (300 mots) |
+| 51 | *Cossí o dirián los vièlhs ?* | un texte traduit du français, relu avec des anciens | les tournures propres à l'occitan ; ◆ les temps surcomposés · superlatifs et intensifs · les pronoms variés (*n'i a*…) | reformuler le texte dans des tournures propres à l'occitan (300 mots) |
+| 52 | *Qué auriás fach a ma plaça ?* | une amie raconte une décision difficile | le conditionnel passé (*auriás volgut*) · l'hypothèse irréelle au passé · la concordance complète ; ◆ le subjonctif plus-que-parfait dans la concordance | une lettre « et si… » (300 mots) |
 
 ▸ Halte 25 après l'unité 50, halte 26 après l'unité 52.
 
@@ -326,9 +328,9 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
-| 57 | *Comprenes lo gascon ?* | une rencontre en visio avec des locuteurs de Gascogne et de Provence | comprendre tous les dialectes sans aide · s'accorder à son interlocuteur · la variation admise par la norme | une conversation en visio avec un locuteur d'un autre dialecte |
+| 57 | *Comprenes lo gascon ?* | une rencontre en visio avec des locuteurs de Gascogne et de Provence | comprendre tous les dialectes sans aide · s'accorder à son interlocuteur · la variation admise par la norme ; ◆ la négation avec *non* devant le verbe, à reconnaître | une conversation en visio avec un locuteur d'un autre dialecte |
 | 58 | *O pòdes resumir ?* | un dossier en français à présenter à une assemblée occitanophone | la médiation : résumer, reformuler · la terminologie de lo Congrès · adapter le registre au public | résumer en occitan un dossier en français (300 mots) |
-| 59 | *Cossí far viure la lenga ?* | un débat sur la transmission | l'argumentation nuancée · l'implicite · tous les temps et modes au service du propos | une tribune (400 mots) |
+| 59 | *Cossí far viure la lenga ?* | un débat sur la transmission | l'argumentation nuancée · l'implicite · tous les temps et modes au service du propos ; ◆ le récapitulatif des conjugaisons et des verbes irréguliers (tableaux du livre en appui) | une tribune (400 mots) |
 | 60 | *E ara, qué fasèm ?* | l'épreuve blanche | révision ciblée avec le carnet · gérer son temps pendant l'épreuve · s'évaluer avec la grille du DCL | une épreuve blanche complète (2 h 30) |
 
 ▸ Halte 29 après l'unité 58, halte 30 après l'unité 60. ▸ **Mission C1** (§6).
