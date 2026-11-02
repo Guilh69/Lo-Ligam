@@ -5,6 +5,8 @@
 > **Rangé le 2026-10-24** par la discussion mère (une ligne par chantier). L'ancienne version, avec tout l'historique détaillé des chantiers jusqu'au 23-10, est dans `revisions/PILOTATGE-archiu-2026-10-24.md`. Derniers points d'étape : `revisions/2026-10-22-analisi-profonda.md` (relecture profonde du 22-10) et `revisions/BILAN-2026-10-08.md`.
 >
 > **La discussion mère** (celle qui a ouvert ce tableau le 18-09) garde la vue d'ensemble : elle relit les autres discussions par Git, tient ce fichier à jour et signale les déséquilibres.
+>
+> **Depuis le 2026-11-02, Mistral est l'agent principal et Claude contrôle** (cahier §11) : consignes dans `AGENTS.md`, briefing de passation complet dans `BRIEF-MISTRAL.md` (état, reste à faire, pièges). Point chaud : la branche `claude/projet-5-pourcent-credit-33d7e8` (tri des noms de la carte du 27-10, décisions de Romain) n'est pas fusionnée dans `master` (BRIEF §5.1).
 
 ## 1. Ce que Romain a à faire, dans l'ordre
 
@@ -98,7 +100,7 @@ Depuis le 12-10 : 211 changements, dont la moitié pour la carte, un tiers pour 
 11. **22-10** : tutoiement partout.
 12. **23-10** : règle B des couleurs : le rouge du logo pour ce qui se clique, l'or et l'ocre pour mettre en valeur.
 13. **Pas d'agents ni de longs enchaînements sans l'accord de Romain** (forfait).
-14. **2026-11-02** : deux IA, une équipe. Mistral = garde-fou et regard extérieur, sans concurrence ni dénigrement (dans les deux sens) ; brief dans `BRIEF-MISTRAL.md`, fiche de passation pour expliquer les choix.
+14. **2026-11-02** : deux IA, une équipe, sans concurrence ni dénigrement (dans les deux sens). **Le même jour, logique inversée : Mistral agent principal, Claude en contrôle** sur fiche de passation pour les changements sensibles (`AGENTS.md`, `BRIEF-MISTRAL.md` §10).
 
 ## 6. Les vraies questions ouvertes
 
