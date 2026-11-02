@@ -461,8 +461,23 @@
 		grid-row: 1;
 		min-width: 0;
 	}
+	/* virage à droite : le texte se cale contre le chemin, comme à gauche
+	   (« Pausa N » restait au bord gauche, loin de son rond : relecture de
+	   Joan, 2026-11-02) */
 	.a-drecha .v-tèxt {
 		grid-column: 1 / span 3;
+		text-align: right;
+	}
+	.a-drecha .g-nom,
+	.a-drecha .u-nom {
+		justify-content: flex-end;
+	}
+	.a-drecha .v-tèxt .indici {
+		display: block;
+	}
+	.a-drecha .v-tèxt .indici :global(.icona) {
+		margin-right: 0.35rem;
+		vertical-align: -0.1em;
 	}
 	.gara {
 		position: relative;
