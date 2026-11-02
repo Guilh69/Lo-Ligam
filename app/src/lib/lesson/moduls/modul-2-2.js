@@ -26,7 +26,8 @@ export const modul22 = {
 		'Marià tutoie Giulia (*D’ont siás ?*), car le « vous » de *èsser* (*sètz*) n’est pas encore appris ; la scène dit qu’elle tutoie volontiers les jeunes. Ça te va ?',
 		'Jeu « l’oreille des pays » : gascon *Adiu* « a-DIOU » et *un chic* « un TCHIK » ; provençal *Parles* « PAR-lés » et *fòrça ben* « FÒR-so BÈN ». Ces formes et ces sons te vont ?',
 		'*compren* « coum-PRÉ(N) », le *n* final léger, comme le lexique : bon pour l’enregistrement ?',
-		'La chanson de Claudi Martí : on traduit seulement le titre (« pourquoi ne m’a-t-on pas dit ? »), sans décrire la chanson, dont le sens n’est pas vérifié. Ça te va ?'
+		'La chanson de Claudi Martí : on traduit seulement le titre (« pourquoi ne m’a-t-on pas dit ? »), sans décrire la chanson, dont le sens n’est pas vérifié. Ça te va ?',
+		'⚠️ *perqué*, dans ce titre : l’API a planté deux fois (erreur d’appel, pas une absence). C’est le titre exact de la chanson : on le garde tel quel ?'
 	],
 
 	sessions: [
