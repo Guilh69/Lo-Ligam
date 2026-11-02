@@ -35,7 +35,7 @@ export const modul84 = {
 		'Godolin, *Béni t’en admira la Bilo de Toulouso* : vers lu sur des numérisations anciennes, pas encore contrôlé sur une édition savante (⚠️). On le garde ?',
 		'*Consistori del Gay Saber* : nom historique cité tel quel (*consistòri* est absent du Basic, ⚠️). D’accord ?',
 		'La tâche : accueillir pour de vrai une personne choisie (ou le prof, au cours en visio), de la gare au café. Ça te va ?',
-		'Tes choix du 2026-11-02 (grammaire de référence), repris ici : *la dosena*, *un suc de frucha*, *préner*, *Fa caud* « fa CAOUT ». À relire.'
+		'Tes choix du 2026-11-02 (grammaire de référence), repris ici : *la dosena*, *un suc de frucha*, *Fa caud* « fa CAOUT ». À relire.'
 	],
 
 	sessions: [
@@ -596,7 +596,7 @@ export const modul84 = {
 				{
 					type: 'table',
 					title: 'Mémo : deux verbes au singulier',
-					head: ['', '*anar* (aller)', '*préner* (prendre)'],
+					head: ['', '*anar* (aller)', '*prene* (prendre)'],
 					rows: [
 						['je', '*vau*', '*preni*'],
 						['tu', '*vas*', '*prenes*'],

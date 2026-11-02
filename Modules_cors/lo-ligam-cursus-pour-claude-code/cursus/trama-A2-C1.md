@@ -285,7 +285,7 @@ Même chemin d'unité qu'en A1 et en A2. Les formes du jour sont données dans l
 | Unité | La question | La scène | Formes du jour (x.1 · x.2 · x.3) | La tâche |
 |---|---|---|---|---|
 | 41 | *Qué s'es dich ?* | le compte rendu pour les collègues absents | discours rapporté au passé et concordance (*a dich que vendriá*) · les tournures impersonnelles (*òm*, *se* + verbe) · la nominalisation (*la decision de*) | le compte rendu (200 mots) |
-| 42 | *Qual vòl préner la paraula ?* | animer une réunion en visio | donner et prendre la parole · reformuler, résumer · interrompre poliment, recentrer | animer 10 minutes de réunion (visio) |
+| 42 | *Qual vòl prene la paraula ?* | animer une réunion en visio | donner et prendre la parole · reformuler, résumer · interrompre poliment, recentrer | animer 10 minutes de réunion (visio) |
 | 43 | *Qué nos dison las chifras ?* | l'enquête sur la fréquentation de la médiathèque | décrire une évolution (*aumentar, demesir*) · pourcentages et proportions · le passé simple au pluriel (*venguèron*) | commenter un graphique (oral, 5 min) |
 | 44 | *Cossí o presentam a la comuna ?* | présenter le bilan aux élus | le plan d'un exposé (annoncer, enchaîner, conclure) · le registre soutenu et les formes d'adresse · la phrase complexe (relatives, subordonnées) | exposé de 6 minutes (visio) et note écrite (250 mots) |
 

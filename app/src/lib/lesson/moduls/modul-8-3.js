@@ -1,8 +1,10 @@
 // Module 8.3 · A1 · « Qué prenes ? » : unité 8 (En vila), rédigé par Claude
 // le 2026-11-02 sur le modèle des unités 1 et 4 (même chemin en six étapes ;
 // règles communes : cursus/regles-redaccion-A1.md).
-// Forme du jour : préner au singulier (preni, prenes, pren), comme compréner (2.2).
-// Pas de pluriel de préner. Pour commander : Per ieu, …
+// Forme du jour : prene au singulier (preni, prenes, pren), comme comprene (2.2).
+// Pas de pluriel de prene. Pour commander : Per ieu, …
+// Le livre de référence écrit préner (p94), absent des dictionnaires languedociens :
+// Romain garde prene (2026-11-02), une note du tableau fait reconnaître préner.
 // Scène : midi, au café de la place (le plan de 8.1). Karim, Yasmine, puis
 // Núria et Lisa ; Bernat, le serveur, vouvoie ses clients.
 // Jeu du jour : dialogue à choix avec le serveur (causida).
@@ -28,7 +30,7 @@ export const modul83 = {
 		'*Per Yasmine, un tè* (pour Yasmine, un thé), pour commander pour quelqu’un : naturel ?',
 		'Bernat, le serveur du café de la place : prénom nouveau, qui revient en 8.4. D’accord ?',
 		'Chanson : *Parla patois* (Massilia Sound System, 1992), sur la page du groupe. Elle te va, ou tu préfères une chanson sur Toulouse ?',
-		'Tes choix du 2026-11-02 (grammaire de référence) : *préner* et *compréner* avec l’accent (p94, p20), une ligne dans le tableau dit pourquoi ; *un suc de frucha* « FRU-tcho » (p33) ; *la dosena carrièra* (p52) ; *Fa caud* « fa CAOUT » (p9). À relire.'
+		'Tes choix du 2026-11-02 (grammaire de référence) : *prene* gardé (le livre écrit *préner*, p94, que dicodòc ne donne qu’en gascon), une ligne du tableau le fait reconnaître ; *un suc de frucha* « FRU-tcho » (p33) ; *la dosena carrièra* (p52) ; *Fa caud* « fa CAOUT » (p9). À relire.'
 	],
 
 	sessions: [
@@ -217,9 +219,10 @@ export const modul83 = {
 				},
 				{
 					type: 'table',
-					title: 'Le verbe préner (prendre), au singulier',
-					intro: 'Il se conjugue comme *compréner*, que tu connais depuis l’unité 2 :',
-					head: ['', '*préner*', 'ça sonne comme', 'comme *compréner*'],
+					title: 'Le verbe prene (prendre), au singulier',
+					intro: 'Il se conjugue comme *comprene*, que tu connais depuis l’unité 2 :',
+					glosa: { préner: 'prene', compréner: 'comprene' },
+					head: ['', '*prene*', 'ça sonne comme', 'comme *comprene*'],
 					rows: [
 						['je', '*preni*', '« PRÉ-ni »', '*compreni*'],
 						['tu', '*prenes*', '« PRÉ-nés »', '*comprenes*'],
@@ -228,8 +231,8 @@ export const modul83 = {
 					notes: [
 						'*Pren !* sert aussi pour guider : *Pren la carrièra…* (prends la rue…), comme au module 8.2.',
 						'Pour commander : *Per ieu, un cafè.* Ou bien *Preni un cafè.* Avec *se vos plai*, c’est plus poli.',
-						'L’accent de *préner* montre où appuyer : « PRÉ-né ». Sans lui, on appuierait à la fin, comme dans *anar* « a-NA ».',
-						'Le pluriel de *préner* viendra plus tard.'
+						'Dans d’autres régions, et dans la grammaire de référence, tu trouveras aussi *préner* et *compréner*, avec un accent et un *r* : ils se disent pareil.',
+						'Le pluriel de *prene* viendra plus tard.'
 					]
 				},
 				{
@@ -237,7 +240,7 @@ export const modul83 = {
 					title: 'À retenir',
 					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces expressions entrent dans ton carnet de révision.',
 					items: [
-						{ id: 'prene-singular', oc: 'préner : preni · prenes · pren', sound: 'PRÉ-né : PRÉ-ni · PRÉ-nés · PRÉ(N)', fr: 'prendre : je prends · tu prends · il ou elle prend' },
+						{ id: 'prene-singular', oc: 'prene : preni · prenes · pren', sound: 'PRÉ-né : PRÉ-ni · PRÉ-nés · PRÉ(N)', fr: 'prendre : je prends · tu prends · il ou elle prend' },
 						{ id: 'per-ieu', oc: 'Per ieu, …', sound: 'pér YÉOU', fr: 'pour moi, … (pour commander)' },
 						{ id: 'un-cafe', oc: 'un cafè · lo cafè', sound: 'un ca-FÈ · lou ca-FÈ', fr: 'un café · le café (la boisson, et aussi le lieu)' },
 						{ id: 'un-te', oc: 'un tè', sound: 'un TÈ', fr: 'un thé' },

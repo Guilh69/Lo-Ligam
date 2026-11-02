@@ -76,9 +76,9 @@ items: [
 
 ### 2.2 · `2-2` · *Parlas occitan ?* (Parles-tu occitan ?)
 
-**Forme du jour** : *parlar* et *compréner* au singulier (forme du livre, p94 et p20, depuis le 2026-11-02 ; avant, *comprene*) ; la négation, forme du livre (*Gramatica de l'occitan estandard*, p54) : *non* devant le verbe, *pas* après. Une ligne signale la forme familière, *pas* seul, à reconnaître (Romain, 2026-11-02).
+**Forme du jour** : *parlar* et *comprene* au singulier ; la négation, forme du livre (*Gramatica de l'occitan estandard*, p54) : *non* devant le verbe, *pas* après. Une ligne signale la forme familière, *pas* seul, à reconnaître (Romain, 2026-11-02).
 - *parlar* : *parli, parlas, parla* ✓
-- *compréner* : *compreni, comprenes, compren* ✓
+- *comprene* : *compreni, comprenes, compren* ✓
 - *Non parli pas catalan. Non compreni pas.*
 
 **À retenir** (7 items ; carte : 8) :
@@ -86,7 +86,7 @@ items: [
 ```js
 items: [
 	{ id: 'parlar-singular', oc: 'parlar : parli · parlas · parla', sound: 'par-LA : PAR-li · PAR-los · PAR-lo', fr: 'parler : je parle · tu parles · il ou elle parle' },
-	{ id: 'comprene-singular', oc: 'compréner : compreni · comprenes · compren', sound: 'coum-PRÉ-né : coum-PRÉ-ni · coum-PRÉ-nés · coum-PRÉ(N)', fr: 'comprendre : je comprends · tu comprends · il ou elle comprend' },
+	{ id: 'comprene-singular', oc: 'comprene : compreni · comprenes · compren', sound: 'coum-PRÉ-né : coum-PRÉ-ni · coum-PRÉ-nés · coum-PRÉ(N)', fr: 'comprendre : je comprends · tu comprends · il ou elle comprend' },
 	{ id: 'pas', oc: 'Non parli pas… · Non compreni pas.', sound: 'nou PAR-li PAS · nou coum-PRÉ-ni PAS', fr: 'je ne parle pas… · je ne comprends pas. (*non* devant le verbe, *pas* après)' },
 	{ id: 'un-pauc-plan', oc: 'un pauc · plan', sound: 'un PAOUK · PLA', fr: 'un peu · bien (*Parli un pauc occitan. Compreni plan.*)' },
 	{ id: 'mas', oc: 'mas', sound: 'MAS', fr: 'mais (*Compreni, mas non parli pas.*)' },
@@ -95,7 +95,7 @@ items: [
 ]
 ```
 
-**Vérification** : ✓ parlar, pauc, plan, mas, tanben, lenga, non, pas (Basic) ; parli, parlas, parla, comprene, compreni, comprenes, compren (vèrb'Òc) ; *compréner* ✓ (Basic, 2026-11-02).
+**Vérification** : ✓ parlar, pauc, plan, mas, tanben, lenga, non, pas (Basic) ; parli, parlas, parla, comprene, compreni, comprenes, compren (vèrb'Òc).
 **À gloser en passant** : les phrases du jeu « l'oreille des pays » (gascon, provençal) : `glosa`, voir `alhors-en-occitania-A1.md`.
 **Son du jour** : *é* fermé, *è* ouvert ; sans accent, *e* est fermé : *francés* « fran-SÉS », *mercés* « mér-SÉS », *deman* « dé-MA » ; *Besièrs* « bé-ZYÈS », *lèu* « LÈOU ».
 **Spirale** : les nationalités de 2.1 deviennent des langues au masculin (*Parli francés*) ; `va-plan-e-tu` (*plan*) ; `demori-a`.
@@ -656,7 +656,7 @@ items: [
 ### 8.2 · `8-2` · *Cossí i vau ?* (Comment j'y vais ?)
 
 **Forme du jour** : *anar* au singulier : *vau, vas, va* (déjà entendus dans *Vau plan*, *Cossí vas ?*, *Va plan* : c'est le verbe aller) ; *i* (y) ; deux ordres en bloc : *Vira…* (tourne), *Pren…* (prends).
-- *anar* : *vau, vas, va* ✓ ; *virar* : *vira* (ordre) ✓ ; *préner* : *pren* (ordre) ✓
+- *anar* : *vau, vas, va* ✓ ; *virar* : *vira* (ordre) ✓ ; *prene* : *pren* (ordre) ✓
 
 **À retenir** (6 items ; carte : 6) :
 
@@ -678,14 +678,14 @@ items: [
 
 ### 8.3 · `8-3` · *Qué prenes ?* (Que prends-tu ?)
 
-**Forme du jour** : *préner* au singulier (forme du livre, p94, depuis le 2026-11-02 ; avant, *prene*).
-- *préner* : *preni, prenes, pren* ✓
+**Forme du jour** : *prene* au singulier (forme des dictionnaires languedociens, Laus et Lagarde ; le livre écrit *préner*, p94, que dicodòc ne donne qu'en gascon : une note du 8.3 le fait reconnaître, choix de Romain du 2026-11-02).
+- *prene* : *preni, prenes, pren* ✓
 
 **À retenir** (9 items ; carte : 8) :
 
 ```js
 items: [
-	{ id: 'prene-singular', oc: 'préner : preni · prenes · pren', sound: 'PRÉ-né : PRÉ-ni · PRÉ-nés · PRÉ(N)', fr: 'prendre : je prends · tu prends · il ou elle prend' },
+	{ id: 'prene-singular', oc: 'prene : preni · prenes · pren', sound: 'PRÉ-né : PRÉ-ni · PRÉ-nés · PRÉ(N)', fr: 'prendre : je prends · tu prends · il ou elle prend' },
 	{ id: 'un-cafe', oc: 'un cafè · lo cafè', sound: 'un ca-FÈ · lou ca-FÈ', fr: 'un café · le café (la boisson, et aussi le lieu)' },
 	{ id: 'l-aiga', oc: 'l’aiga', sound: 'LAÏ-go', fr: 'l’eau' },
 	{ id: 'un-te', oc: 'un tè', sound: 'un TÈ', fr: 'un thé' },
@@ -697,7 +697,7 @@ items: [
 ]
 ```
 
-**Vérification** : ✓ prene, cafè, aiga, tè, suc, fruta, veire, per, addicion, set (Basic) ; preni, prenes, pren (vèrb'Òc). Le 2026-11-02 : ⚠️ *préner* (grammaire de référence p94 ; le Basic n'a que *prene*) et *frucha* ✓ (Basic) remplacent *prene* et *fruta*.
+**Vérification** : ✓ prene, cafè, aiga, tè, suc, fruta, veire, per, addicion, set (Basic) ; preni, prenes, pren (vèrb'Òc). Le 2026-11-02 : *frucha* ✓ (Basic) remplace *fruta* ; *préner* (grammaire de référence p94), absent du Basic et des dictionnaires languedociens de dicodòc, est seulement à reconnaître.
 **À gloser en passant** : *la nòta* ✓ (se dit aussi pour l'addition), *la bièrra* ✓, *lo chocolat* ✓, *lo sucre* ✓ ; *amb de lach* n'a que des mots connus.
 **Son du jour** : *é* et *è*, revus : *set* « SÉT » (la soif) et *sèt* « SÈT » (sept) ; *cafè* « ca-FÈ », *tè* « TÈ » ; *prenes* « PRÉ-nés », *veire* « BÉÏ-ré ».
 **Spirale** : `volriai`, `se-vos-plai`, `que-vols` ; `quant-costa`, `euro-centim` ; `lo-lach`, `lo-vin` ; `fa-caud` (*Fa caud : ai set*) ; `merce`.
@@ -730,13 +730,13 @@ Aucun mot nouveau. Lire une affiche de fête : jours (4.3), heures (6.1), prix (
 | *i a* ; *pas de* | 3.3 | | *tot* (*Es tot*, *tot drech*), *mai* (*Quicòm mai*) | 5.3, 8.1 |
 | *nosautres, vosautres, eles, elas* | 4.1 | | | |
 
-**Pas enseigné en A1 (à éviter, ou à gloser)** : *èsser* au pluriel sauf *son* (*sèm, sètz*) ; *aver, far, anar, voler, poder, préner* au pluriel (sauf *anatz* et *volètz*) ; *mos, mas, tos, tas, son, sa* (possessifs) ; *aquel, aquela, aqueste* ; *li, lor, ne* ; *s'apèla* ; le passé et le futur ; les verbes en *-ir* (sauf *repetir* à l'infinitif) ; *quand, perqué, fins a* ; le pluriel des adjectifs ; les nombres de 31 à 99 hors dizaines (forme fixée le 2026-11-02 : *trenta un*, en deux mots) ; les ordinaux après *dosen*.
+**Pas enseigné en A1 (à éviter, ou à gloser)** : *èsser* au pluriel sauf *son* (*sèm, sètz*) ; *aver, far, anar, voler, poder, prene* au pluriel (sauf *anatz* et *volètz*) ; *mos, mas, tos, tas, son, sa* (possessifs) ; *aquel, aquela, aqueste* ; *li, lor, ne* ; *s'apèla* ; le passé et le futur ; les verbes en *-ir* (sauf *repetir* à l'infinitif) ; *quand, perqué, fins a* ; le pluriel des adjectifs ; les nombres de 31 à 99 hors dizaines (forme fixée le 2026-11-02 : *trenta un*, en deux mots) ; les ordinaux après *dosen*.
 
 ---
 
 ## Doutes pour Romain
 
-Tranchés par Romain le 2026-11-02 (cahier des charges §11), la grammaire de référence à l'appui quand elle en parle : *zèro* ; *lo can* ; *papeta, mameta* ; *Soi regent* (*Fau de* retiré) ; de 31 à 99, *trenta un* en deux mots ; *mens lo quart* ; *verd* « BÉRT » ; *dimars* « di-MARS » ; *volriái* « boul-RYOÏ » ; *occitan* « ou-tsi-TA » (la grammaire dit « ou-tsi-TAN », mot savant : note au son du jour de 2.1) ; *sul* et *suls*. Lot 2 (unités 5 à 8) : *la frucha*, collectif sans pluriel ; soudure au choix avec *sus* et *jos* (*sus lo*, *jol*) ; *dosen, dosena* (*segond* : le second, quand il n'y en a que deux) ; *préner, compréner* ; *setanta* et *lo lach* gardés ; *blanc* « BLANK » ; *caud* « CAOUT ».
+Tranchés par Romain le 2026-11-02 (cahier des charges §11), la grammaire de référence à l'appui quand elle en parle : *zèro* ; *lo can* ; *papeta, mameta* ; *Soi regent* (*Fau de* retiré) ; de 31 à 99, *trenta un* en deux mots ; *mens lo quart* ; *verd* « BÉRT » ; *dimars* « di-MARS » ; *volriái* « boul-RYOÏ » ; *occitan* « ou-tsi-TA » (la grammaire dit « ou-tsi-TAN », mot savant : note au son du jour de 2.1) ; *sul* et *suls*. Lot 2 (unités 5 à 8) : *la frucha*, collectif sans pluriel ; soudure au choix avec *sus* et *jos* (*sus lo*, *jol*) ; *dosen, dosena* (*segond* : le second, quand il n'y en a que deux) ; *setanta*, *lo lach*, *prene* et *comprene* gardés ; *blanc* « BLANK » ; *caud* « CAOUT ».
 
 Restent :
 
@@ -767,7 +767,7 @@ Restent :
 | 4.3 | 11 | 0 | | 7.4 · tâche | 0 | 0 |
 | 4.4 · tâche | 0 | 0 | | 8.1 | 9 | 0 |
 | Halte 2 | 0 | 0 | | 8.2 | 6 | 1 (*dosen*, dicodòc ✓) |
-| | | | | 8.3 | 9 | 1 (*préner*, grammaire de référence) |
+| | | | | 8.3 | 9 | 0 |
 | | | | | 8.4 · tâche, Halte 4, Mission | 0 | 0 |
 
-**Total** : 232 items avec `id` (unités 2 à 8) et 6 sans `id` (module 0), soit 238. 13 ⚠️ : 11 dans les encadrés (*francés, zèro, sòrre, vosautres, cent, davant, darrièr, sul, grand* ; *dosen* et *préner* depuis le 2026-11-02), 2 sur des féminins laissés hors encadré ; 7 étaient déjà signalés par la carte du 2026-10-25. Hors encadré, à gloser seulement : *cèrs, autan, ostau, cantou, nautres, vautres* ⚠️.
+**Total** : 232 items avec `id` (unités 2 à 8) et 6 sans `id` (module 0), soit 238. 12 ⚠️ : 10 dans les encadrés (*francés, zèro, sòrre, vosautres, cent, davant, darrièr, sul, grand* ; *dosen* depuis le 2026-11-02), 2 sur des féminins laissés hors encadré ; 7 étaient déjà signalés par la carte du 2026-10-25. Hors encadré, à gloser seulement : *cèrs, autan, ostau, cantou, nautres, vautres* ⚠️.

@@ -1,7 +1,7 @@
 // Module 2.2 · A1 · « Parlas occitan ? » : unité 2 (Parlas occitan ?), rédigé
 // par Claude le 2026-11-01 sur le modèle de l'unité 1. Chemin commun :
 // 1 révision du jour · 2 Escota · 3 Obsèrva · 4 Lo jòc del jorn · 5 A tu ! ·
-// 6 Lo son e lo bilanç. Forme du jour : parlar et compréner au singulier, et
+// 6 Lo son e lo bilanç. Forme du jour : parlar et comprene au singulier, et
 // la négation non… pas. Encadrés « À retenir » repris tels quels de
 // Modules_cors/lo-ligam-cursus-pour-claude-code/cursus/lexic-A1.md (2.2).
 // Ne pas changer `slug` ni `unitat` (le fil de l'unité regroupe les modules par `unitat`).
@@ -26,7 +26,6 @@ export const modul22 = {
 		'Marià tutoie Giulia (*D’ont siás ?*), car le « vous » de *èsser* (*sètz*) n’est pas encore appris ; la scène dit qu’elle tutoie volontiers les jeunes. Ça te va ?',
 		'Jeu « l’oreille des pays » : gascon *Adiu* « a-DIOU » et *un chic* « un TCHIK » ; provençal *Parles* « PAR-lés » et *fòrça ben* « FÒR-so BÈN ». Ces formes et ces sons te vont ?',
 		'*compren* « coum-PRÉ(N) », le *n* final léger, comme le lexique : bon pour l’enregistrement ?',
-		'*compréner* s’écrit avec l’accent, comme dans la grammaire de référence (p20, p94) : ton choix du 2026-11-02 ; le son ne change pas. À relire.',
 		'La chanson de Claudi Martí : on traduit seulement le titre (« pourquoi ne m’a-t-on pas dit ? »), sans décrire la chanson, dont le sens n’est pas vérifié. Ça te va ?',
 		'⚠️ *perqué*, dans ce titre : l’API a planté deux fois (erreur d’appel, pas une absence). C’est le titre exact de la chanson : on le garde tel quel ?'
 	],
@@ -231,7 +230,7 @@ export const modul22 = {
 					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces expressions entrent dans ton carnet de révision.',
 					items: [
 						{ id: 'parlar-singular', oc: 'parlar : parli · parlas · parla', sound: 'par-LA : PAR-li · PAR-los · PAR-lo', fr: 'parler : je parle · tu parles · il ou elle parle' },
-						{ id: 'comprene-singular', oc: 'compréner : compreni · comprenes · compren', sound: 'coum-PRÉ-né : coum-PRÉ-ni · coum-PRÉ-nés · coum-PRÉ(N)', fr: 'comprendre : je comprends · tu comprends · il ou elle comprend' },
+						{ id: 'comprene-singular', oc: 'comprene : compreni · comprenes · compren', sound: 'coum-PRÉ-né : coum-PRÉ-ni · coum-PRÉ-nés · coum-PRÉ(N)', fr: 'comprendre : je comprends · tu comprends · il ou elle comprend' },
 						{ id: 'pas', oc: 'Non parli pas… · Non compreni pas.', sound: 'nou PAR-li PAS · nou coum-PRÉ-ni PAS', fr: 'je ne parle pas… · je ne comprends pas. (*non* devant le verbe, *pas* après)' }
 					]
 				}

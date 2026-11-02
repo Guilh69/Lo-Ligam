@@ -78,7 +78,7 @@ Comment c'est construit :
 
 **4. Les mots** (unité 2)
 - 2.1 : *occitan / occitana, francés, catalan, espanhòl, italian…* (masculin et féminin) ;
-- 2.2 : *parlar, compréner* au singulier, *non… pas* ; *un pauc, plan, lenga* ;
+- 2.2 : *parlar, comprene* au singulier, *non… pas* ; *un pauc, plan, lenga* ;
 - 2.3 : *qué, ont, cossí, qual, quin, quina* ; *repetir* ;
 - sons : *nh*, *e* et *è*, la voix qui monte dans la question.
 
@@ -177,7 +177,7 @@ Comment c'est construit :
 **4. Les mots** (unité 8)
 - 8.1 : *a drecha, a esquèrra, tot drech* ; *gara, carrièra, plaça…* ;
 - 8.2 : *anar* au singulier ; *vira, pren* ;
-- 8.3 : *préner* au singulier ; *cafè, aiga…* ;
+- 8.3 : *prene* au singulier ; *cafè, aiga…* ;
 - sons : *ch*, la syllabe forte, *e* et *è*.
 
 **Vérification lo Congrès du 2026-11-01** : *boièr, ostal, mas, mistral, marin, caçolet, dimars, diluns, dimenge, vida* confirmés dans le Basic. *Cers* et *autan* n'y sont pas : je les écris comme des mots français. Les mots du temps 4 sont ceux de la carte A1. Les titres d'œuvres sont laissés dans leur graphie d'origine (Mistral, Jasmin, Godolin, la *vida*) : l'API ne vérifie que l'occitan moderne en graphie classique.
