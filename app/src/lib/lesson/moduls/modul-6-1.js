@@ -125,7 +125,7 @@ export const modul61 = {
 								{ oc: 'Trabalhi a dètz oras. E tu, a quina ora trabalhas ?', sound: 'tra-BA-lyi a DÈ-dzou-ros. é TU, a KI-no OU-ro tra-BA-lyos ?', fr: 'Je travaille à dix heures. Et toi, à quelle heure travailles-tu ?' },
 								{ oc: 'Ieu ? A cinc oras !', sound: 'YÉOU ? a SIN-kou-ros !', fr: 'Moi ? À cinq heures !' },
 								{ oc: 'A cinc oras ? Òsca ! E a miègjorn, manjam amb Marià ?', sound: 'a SIN-kou-ros ? ÒS-co ! é a myèd-DJOUR, man-DJAN am ma-ri-A ?', fr: 'À cinq heures ? Bravo ! Et à midi, on mange avec Marià ?' },
-								{ oc: 'A miègjorn, cosinas, tu ! Lo ser, a uèch oras ?', sound: 'a myèd-DJOUR, cou-ZI-nos, TU ! lou SÉ, a UÈ-tchou-ros ?', fr: 'À midi, tu cuisines, toi ! Le soir, à huit heures ?' },
+								{ oc: 'A miègjorn, cosinas, tu ! Lo ser, a uèch oras ?', sound: 'a myèd-DJOUR, cou-ZI-nos, TU ! lou SÉR, a UÈ-tchou-ros ?', fr: 'À midi, tu cuisines, toi ! Le soir, à huit heures ?' },
 								{ oc: 'A uèch oras e mièja. Bona jornada, Yasmine !', sound: 'a UÈ-tchou-ros é MYÈ-djo. BOU-no djour-NA-do, yas-MI-ne !', fr: 'À huit heures et demie. Bonne journée, Yasmine !' },
 								{ oc: 'Bona jornada !', sound: 'BOU-no djour-NA-do !', fr: 'Bonne journée !' }
 							]

@@ -102,9 +102,9 @@ items: [
 
 ### 2.3 · `2-3` · *Cossí se ditz… ?* (Comment dit-on… ?)
 
-**Forme du jour** : les mots pour questionner : *qué* (quoi), *ont* (où, 1.3), *cossí* (comment, 1.1), *qual* (qui, lequel), *quin · quina* (quel · quelle). La question garde l'ordre de la phrase : c'est la voix qui la fait.
+**Forme du jour** : les mots pour questionner : *qué* (quoi), *ont* (où, 1.3), *cossí* (comment, 1.1), *qui* (qui : on attend un nom), *qual* (qui : on attend ce qu'est la personne, son rôle ; la grammaire de référence fait cette différence, p47), *quin · quina* (quel · quelle). La question garde l'ordre de la phrase : c'est la voix qui la fait.
 
-**À retenir** (8 items ; carte : 8) :
+**À retenir** (9 items ; carte : 9) :
 
 ```js
 items: [
@@ -113,13 +113,14 @@ items: [
 	{ id: 'que-vol-dire', oc: 'Qué vòl dire… ?', sound: 'ké BÒL DI-ré', fr: 'que veut dire… ?' },
 	{ id: 'podes-repetir', oc: 'Pòdes repetir, se te plai ?', sound: 'PÒ-dés ré-pé-TI, sé té PLAÏ', fr: 'tu peux répéter, s’il te plaît ?' },
 	{ id: 'sabi-pas', oc: 'Sabi pas.', sound: 'SA-bi PAS', fr: 'je ne sais pas.' },
-	{ id: 'qual-es', oc: 'Qual es ?', sound: 'kal ÉS', fr: 'qui est-ce ? (*qual* : qui, lequel)' },
+	{ id: 'qui-es', oc: 'Qui es ?', sound: 'ki ÉS', fr: 'qui est-ce ? (on attend un nom : *Es Loís*)' },
+	{ id: 'qual-es', oc: 'Qual es ?', sound: 'kal ÉS', fr: 'qui est-ce ? (on attend ce qu’est la personne, son rôle)' },
 	{ id: 'quin-quina', oc: 'Quin… ? · Quina… ?', sound: 'KI(N) · KI-no', fr: 'quel… ? · quelle… ? (*Quina lenga parlas ?*)' },
 	{ id: 'o-ou', oc: 'Occitan o francés ?', sound: 'ou-tsi-TA ou fran-SÉS', fr: 'occitan ou français ? (*o* : ou)' }
 ]
 ```
 
-**Vérification** : ✓ qué, aquò, dire, vòl, repetir, qual, quin, quina (Basic) ; ditz, pòdes, plai, sabi (vèrb'Òc) ; *se, en, te, o* : outils.
+**Vérification** : ✓ qué, aquò, dire, vòl, repetir, qui, qual, quin, quina (Basic) ; ditz, pòdes, plai, sabi (vèrb'Òc) ; *se, en, te, o* : outils.
 **Son du jour** : la voix qui monte dans la question sans mot pour questionner : *Parlas occitan ?*, *Siás occitana ?*, *Comprenes ?*, *Pòdes repetir ?*
 **Spirale** : `comprene-singular`, `pas` (*Compreni pas. Pòdes repetir ?*) ; `cossi-te-dison` (*cossí*) ; `d-ont-sias`, `ont-demoras` (*ont*).
 
@@ -298,7 +299,7 @@ items: [
 
 **Vérification** : ✓ far, fau, dins, vida, regent(a), mètge, paisan(a), cosinièr(a), infirmièr(a), estudiant(a), fornièr(a), vendeire, vendeira, engenhaire, engenhaira, obrièr(a), vinhairon, retirada (Basic) ; *fas, fa* ✓ (vèrb'Òc). ⚠️ À VÉRIFIER (dicodòc) : le féminin de *mètge* (*mètgessa* absent) et *vinhairona* (absent) : en attendant, ne pas employer de féminin pour ces deux métiers. Écartés car absents du Basic : *botiguièr, pastre* (le Basic donne *pastor*).
 **À gloser en passant** : *lo mestièr* ✓ (le métier) ; *mèstre · mèstra* ✓ (se dit aussi pour *regent*, cadre §3) ; *musician · musiciana* ✓ ; *pastor · pastora* ✓ ; *comerçant · comerçanta* ✓ ; *l'escòla, l'espital, la botiga* ✓.
-**Son du jour** : le *-r* final ne se dit pas : *cantar* « can-TA », *trabalhar* « tra-ba-LYA », *bon ser* « bou(n) SÉ », *Montpelhièr* « moun-pé-LYÈ », *cosinièr* « cou-zi-NYÈ ».
+**Son du jour** : le *-r* final ne se dit pas : *cantar* « can-TA », *trabalhar* « tra-ba-LYA », *Montpelhièr* « moun-pé-LYÈ », *cosinièr* « cou-zi-NYÈ ». Mais dans un mot d'une seule syllabe, il se dit : *Bon ser* « bou(n) SÉR » (grammaire de référence, p11 ; choix de Romain le 02-11).
 **Spirale** : verbes en *-ar* (*Trabalhi a l'espital*) ; masculin et féminin de 2.1 ; `es-de` ; la famille (*Mon paire fa de fornièr*).
 
 ### 4.3 · `4-3` · *Qué fas lo dimenge ?* (Que fais-tu le dimanche ?)
@@ -507,7 +508,7 @@ items: [
 	{ id: 'me-levi', oc: 'Me lèvi · te lèvas · se lèva', sound: 'mé LÈ-bi · té LÈ-bos · sé LÈ-bo', fr: 'je me lève · tu te lèves · il ou elle se lève' },
 	{ id: 'lo-matin', oc: 'lo matin', sound: 'lou ma-TI', fr: 'le matin' },
 	{ id: 'lo-tantost', oc: 'lo tantòst', sound: 'lou tan-TÒST', fr: 'l’après-midi' },
-	{ id: 'lo-ser', oc: 'lo ser', sound: 'lou SÉ', fr: 'le soir' },
+	{ id: 'lo-ser', oc: 'lo ser', sound: 'lou SÉR', fr: 'le soir' },
 	{ id: 'dejunar', oc: 'dejunar : dejuni · dejuna', sound: 'dé-dju-NA : dé-DJU-ni · dé-DJU-no', fr: 'prendre le petit déjeuner : je le prends · il ou elle le prend' },
 	{ id: 'dinnar', oc: 'dinnar : dinni · dinna', sound: 'di-NA : DI-ni · DI-no', fr: 'déjeuner, le repas de midi : je déjeune · il ou elle déjeune' },
 	{ id: 'sopar', oc: 'sopar : sopi · sopa', sound: 'sou-PA : SOU-pi · SOU-po', fr: 'dîner, le repas du soir : je dîne · il ou elle dîne' },

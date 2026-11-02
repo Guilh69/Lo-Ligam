@@ -37,7 +37,7 @@ export const modul11 = {
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
 		'*Adieu* : prononcé « a-DIOU » et *Adieu-siatz* « a-di-SSIATS », comme tu l’as validé le 29-08 ; à confirmer à l’enregistrement.',
-		'*Bon ser* : « bou(n) SÉ », le r final muet. *Bonjorn* : « boun-DJOUR ».',
+		'*Bon ser* : « bou(n) SÉR », le r se dit (mot d’une seule syllabe : grammaire de référence p11, ton choix du 02-11). *Bonjorn* : « boun-DJOUR ».',
 		'Formules alignées sur ton cours 0 en visio (2026-11-01) : *Vau plan, mercés* (je vais bien) et *Al còp que ven* (à la prochaine) ajoutés, *mercé* devient *mercés* ici et au module 1.2. Sons proposés : *Vau plan* « baou PLA », *mercés* « mér-SÉS » (s final prononcé), *Al còp que ven* « al COP qué BÈN ». À confirmer à l’enregistrement.',
 		'La règle donnée : *Adieu* est familier (entre amis, entre jeunes, même à la première rencontre) ; à une personne qu’on vouvoie, plutôt *Bonjorn*. Est-ce bien ton usage ?'
 	],
@@ -99,7 +99,7 @@ export const modul11 = {
 							title: 'Lo ser',
 							subtitle: '(le soir)',
 							lines: [
-								{ oc: 'Bon ser ! Cossí anatz ?', sound: 'bou(n) SÉ ! cou-si a-NATS ?', fr: 'Bonsoir ! Comment allez-vous ?' },
+								{ oc: 'Bon ser ! Cossí anatz ?', sound: 'bou(n) SÉR ! cou-si a-NATS ?', fr: 'Bonsoir ! Comment allez-vous ?' },
 								{ oc: 'Adieu-siatz, Yasmine ! Va plan, mercés. E tu ?', sound: 'a-di-SSIATS, yas-MI-ne ! ba PLA, mér-SÉS. é TU ?', fr: 'Bonjour, Yasmine ! Ça va bien, merci. Et toi ?' },
 								{ oc: 'Va plan !', sound: 'ba PLA !', fr: 'Ça va bien !' },
 								{ oc: 'A deman, Yasmine !', sound: 'a dé-MA, yas-MI-ne !', fr: 'À demain, Yasmine !' },
@@ -109,7 +109,7 @@ export const modul11 = {
 					],
 					glossary: [
 						{ oc: 'lo matin', sound: 'lou ma-TI', fr: 'le matin' },
-						{ oc: 'lo ser', sound: 'lou SÉ', fr: 'le soir' },
+						{ oc: 'lo ser', sound: 'lou SÉR', fr: 'le soir' },
 						{ oc: 'la plaça', sound: 'la PLA-ço', fr: 'la place du village' },
 						{ oc: 'lo mercat', sound: 'lou mér-CAT', fr: 'le marché' }
 					]
@@ -215,7 +215,7 @@ export const modul11 = {
 						{ id: 'adieu', oc: 'Adieu !', sound: 'a-DIOU', fr: 'salut ! (bonjour et au revoir, entre amis)' },
 						{ id: 'adieu-siatz', oc: 'Adieu-siatz !', sound: 'a-di-SSIATS', fr: 'pareil, à plusieurs ou en vouvoyant' },
 						{ id: 'bonjorn', oc: 'Bonjorn !', sound: 'boun-DJOUR', fr: 'bonjour !' },
-						{ id: 'bon-ser', oc: 'Bon ser !', sound: 'bou(n) SÉ', fr: 'bonsoir !' },
+						{ id: 'bon-ser', oc: 'Bon ser !', sound: 'bou(n) SÉR', fr: 'bonsoir !' },
 						{ id: 'cossi-vas', oc: 'Cossí vas ?', sound: 'cou-si BAS', fr: 'comment vas-tu ? (le v sonne « b »)' },
 						{ id: 'cossi-anatz', oc: 'Cossí anatz ?', sound: 'cou-si a-NATS', fr: 'comment allez-vous ?' },
 						{ id: 'va-plan-e-tu', oc: 'Va plan. E tu ? · E vos ?', sound: 'ba PLA. é TU ? · é BOUS ?', fr: 'ça va bien. Et toi ? · Et vous ?' },

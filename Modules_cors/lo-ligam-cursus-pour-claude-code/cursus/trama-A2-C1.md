@@ -183,7 +183,7 @@ Même chemin qu'en A1 (carte A1, §2 et §3) : la scène, trois modules titrés 
 |---|---|---|---|---|---|---|
 | 17.1 | *I vas en tren ?* | dire comment tu voyages | le pronom *i* (*i vau, i anam*) ; ◆ *pel, pels* (*per* + *lo, los*), *jol* à reconnaître ; ◆ *cap a* | 8 : *tren, bus, avion, veitura, bicicleta, bilhet…* | le *r* roulé (*tren, veitura*) ; ◆ l'alphabet, pour épeler son nom | « Ont es ? » : placer les gares sur la carte |
 | 17.2 | *Es mai car ?* | comparer deux trajets | *mai… que, mens… que, tan… coma* ; *melhor* | 8 : *car, bon mercat, rapid, lent, confortable…* | *ai* (*mai*) | choisir le bon billet |
-| 17.3 | *Vòls quicòm ?* | proposer, refuser, dire qu'il n'y a rien | *quicòm, res, degun, jamai* ; ◆ *pas mai* (ne… plus) ; ◆ *ni… ni* | 6 : *quicòm, res, degun, jamai, clau…* | la syllabe forte à la fin (*quiCÒM*) | dialogue à choix |
+| 17.3 | *Vòls quicòm ?* | proposer, refuser, dire qu'il n'y a rien | *quicòm, res, degun, jamai* ; ◆ *pas mai* (ne… plus) ; ◆ *ni… ni* ; ◆ *Si !* pour répondre oui à une question négative | 6 : *quicòm, res, degun, jamai, clau…* | la syllabe forte à la fin (*quiCÒM*) | dialogue à choix |
 | 17.4 | Tâche | choisir un trajet et réserver un billet | rien de nouveau | aucun | | jeu de rôle enregistré |
 
 ### Unité 18 · *Lo temps que farà* (scène : la carte de la météo et ses vents)

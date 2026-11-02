@@ -487,7 +487,7 @@ export const modul42 = {
 					variant: 'son',
 					title: 'Le son du jour : le r final ne se dit pas',
 					paragraphs: [
-						'À la fin du mot, le *r* se tait : *cosinièr* « cou-zi-NYÈ », *cantar* « can-TA », *Bon ser* « bou(n) SÉ ».',
+						'À la fin du mot, le *r* se tait : *cosinièr* « cou-zi-NYÈ », *cantar* « can-TA ». Mais dans un mot d’une seule syllabe, il se dit : *Bon ser* « bou(n) SÉR ».',
 						'Au féminin, une voyelle le suit, et il revient : *cosinièra* « cou-zi-NYÈ-ro », *fornièra* « four-NYÈ-ro ».',
 						'Écoute, puis répète : *fornièr*, *fornièra*, *trabalhar*.'
 					]

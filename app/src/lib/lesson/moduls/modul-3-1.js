@@ -78,11 +78,11 @@ export const modul31 = {
 					items: [
 						{
 							q: 'Qui est-ce ?',
-							options: ['Qual es ?', 'Qué es aquò ?', 'D’ont siás ?'],
+							options: ['Qui es ?', 'Qué es aquò ?', 'D’ont siás ?'],
 							correct: 0,
 							oc: true,
-							choses: ['qual-es'],
-							explain: '*Qual es ?* pour une personne ; *Qué es aquò ?* pour une chose.'
+							choses: ['qui-es'],
+							explain: '*Qui es ?* pour une personne ; *Qué es aquò ?* pour une chose.'
 						},
 						{
 							q: 'Lisa parle de Núria, qui est de Barcelone : « elle est catalane ».',

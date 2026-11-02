@@ -22,7 +22,7 @@ Halte 1 : réemploi des unités 1 et 2, puis bilan. Générée depuis le site (`
 | occitan | français |
 |---|---|
 | Bonjorn, Marià ! Cossí anatz ? | Bonjour, Marià ! Comment allez-vous ? |
-| Va plan, mercés. E tu ? Qual es ? | Ça va bien, merci. Et toi ? Qui est-ce ? |
+| Va plan, mercés. E tu ? Qui es ? | Ça va bien, merci. Et toi ? Qui est-ce ? |
 | Es Núria. Es catalana, de Barcelona. | C’est Núria. Elle est catalane, de Barcelone. |
 | Parla occitan ? | Elle parle occitan ? |
 | Un pauc. Mas compren plan ! | Un peu. Mais elle comprend bien ! |
@@ -44,7 +44,7 @@ En gras : ce qui entre dans le carnet. Sans gras : expliqué en passant (glossai
 
 Elles ne répondent pas à la question, mais l’élève les lit : elles doivent rester du bon occitan.
 
-*Bonjorn ! Cossí vas ?* · *catalan* · *italiana* · *Qual es ?* · *Va plan, e tu ?* · *Parla un pauc occitan.* · *Parlas un pauc occitan.* · *E tu, siás occitan ?* · *Qué vòl dire occitan ?* · *Compreni pas.* · *Sabi pas.* · *Òc, compren plan !* · *D’ont siás ?* · *Bonjorn, Karim !* · *Cossí vas ?*
+*Bonjorn ! Cossí vas ?* · *catalan* · *italiana* · *Qui es ?* · *Va plan, e tu ?* · *Parla un pauc occitan.* · *Parlas un pauc occitan.* · *E tu, siás occitan ?* · *Qué vòl dire occitan ?* · *Compreni pas.* · *Sabi pas.* · *Òc, compren plan !* · *D’ont siás ?* · *Bonjorn, Karim !* · *Cossí vas ?*
 
 ## Mots que l’outil n’a pas confirmés
 

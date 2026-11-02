@@ -126,7 +126,7 @@ export const modul41 = {
 							title: 'Marià e Karim',
 							subtitle: '(Marià parle à Karim et à Loís ; Karim répond)',
 							lines: [
-								{ oc: 'Bon ser ! Vosautres, parlatz o cantatz ?', sound: 'bou(n) SÉ ! bou-ZAOU-trés, par-LATS ou can-TATS ?', fr: 'Bonsoir ! Vous deux, vous parlez ou vous chantez ?' },
+								{ oc: 'Bon ser ! Vosautres, parlatz o cantatz ?', sound: 'bou(n) SÉR ! bou-ZAOU-trés, par-LATS ou can-TATS ?', fr: 'Bonsoir ! Vous deux, vous parlez ou vous chantez ?' },
 								{ oc: 'Parlam ! Loís canta… e ieu, escoti.', sound: 'par-LAN ! lou-ÍS CAN-to… é YÉOU, es-COU-ti.', fr: 'Nous parlons ! Loís chante… et moi, j’écoute.' },
 								{ oc: 'Aquí, escotam pas : cantam ! Ont trabalhatz, vosautres ?', sound: 'a-KI, es-cou-TAN PAS : can-TAN ! oun tra-ba-LYATS, bou-ZAOU-trés ?', fr: 'Ici, on n’écoute pas : on chante ! Où travaillez-vous, vous deux ?' },
 								{ oc: 'Ieu, trabalhi a Tolosa, e Loís trabalha aquí. E vos ?', sound: 'YÉOU, tra-BA-lyi a tou-LOU-zo, é lou-ÍS tra-BA-lyo a-KI. é BOUS ?', fr: 'Moi, je travaille à Toulouse, et Loís travaille ici. Et vous ?' },

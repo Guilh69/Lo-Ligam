@@ -237,14 +237,14 @@ export const modul24 = {
 					tours: [
 						{
 							situacion: 'Loís arrive. Il te tutoie, et il regarde ton amie.',
-							ditz: 'Adieu ! Qual es ?',
+							ditz: 'Adieu ! Qui es ?',
 							options: [
 								{ oc: 'Es Giulia.', bon: true },
 								{ oc: 'Soi Giulia.', reaccion: 'Loís te regarde, perplexe : c’est toi, Giulia ?' },
 								{ oc: 'Sabi pas.', reaccion: 'Loís rit : tu ne connais pas le nom de ton amie ?' }
 							],
-							choses: ['qual-es'],
-							explain: '*Qual es ?* : qui est-ce ? Tu réponds *Es Giulia.*'
+							choses: ['qui-es'],
+							explain: '*Qui es ?* : qui est-ce ? Tu réponds par un nom : *Es Giulia.*'
 						},
 						{
 							ditz: 'Es francesa ?',
@@ -490,7 +490,7 @@ export const modul24 = {
 						['répondre', '*Òc !* · *Non !*'],
 						['parler des langues', '*Parlas occitan ?* · *Parli un pauc occitan.* · *Compreni plan.* · *Parli pas anglés.* · *Parli tanben catalan.*'],
 						['se débrouiller', '*Pòdes repetir, se te plai ?* · *Qué vòl dire… ?* · *Cossí se ditz… en occitan ?* · *Sabi pas.*'],
-						['questionner', '*Qué es aquò ?* · *Qual es ?* · *Quina lenga parlas ?* · *Occitan o francés ?*']
+						['questionner', '*Qué es aquò ?* · *Qui es ?* · *Qual es ?* · *Quina lenga parlas ?* · *Occitan o francés ?*']
 					]
 				},
 				{

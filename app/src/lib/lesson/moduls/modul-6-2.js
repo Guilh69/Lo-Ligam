@@ -282,13 +282,13 @@ export const modul62 = {
 							title: 'Lo temps de deman',
 							subtitle: '(à la radio, le soir)',
 							lines: [
-								{ oc: 'Bon ser ! Lo temps de deman.', sound: 'bou(n) SÉ ! lou TÉMS dé dé-MA.', fr: 'Bonsoir ! Le temps de demain.' },
+								{ oc: 'Bon ser ! Lo temps de deman.', sound: 'bou(n) SÉR ! lou TÉMS dé dé-MA.', fr: 'Bonsoir ! Le temps de demain.' },
 								{ oc: 'A Tolosa, fa vent, e fa freg.', sound: 'a tou-LOU-zo, fa BÉN, é fa FRÉTCH.', fr: 'À Toulouse, il y a du vent, et il fait froid.' },
 								{ oc: 'A Montpelhièr, fa bèl : fa solelh, e fa caud.', sound: 'a moun-pé-LYÈ, fa BÈL : fa sou-LÉL, é fa CAOU.', fr: 'À Montpellier, il fait beau : il y a du soleil, et il fait chaud.' },
-								{ oc: 'A Carcassona, plòu lo matin ; lo ser, fa bèl.', sound: 'a car-ca-SOU-no, PLÒOU lou ma-TI ; lou SÉ, fa BÈL.', fr: 'À Carcassonne, il pleut le matin ; le soir, il fait beau.' },
+								{ oc: 'A Carcassona, plòu lo matin ; lo ser, fa bèl.', sound: 'a car-ca-SOU-no, PLÒOU lou ma-TI ; lou SÉR, fa BÈL.', fr: 'À Carcassonne, il pleut le matin ; le soir, il fait beau.' },
 								{ oc: 'A Besièrs, fa solelh, mas fa vent.', sound: 'a bé-ZYÈS, fa sou-LÉL, mas fa BÉN.', fr: 'À Béziers, il y a du soleil, mais il y a du vent.' },
 								{ oc: 'A Rodés… nèva !', sound: 'a rou-DÉS… NÈ-bo !', fr: 'À Rodez… il neige !' },
-								{ oc: 'Bon ser, e a deman !', sound: 'bou(n) SÉ, é a dé-MA !', fr: 'Bonne soirée, et à demain !' }
+								{ oc: 'Bon ser, e a deman !', sound: 'bou(n) SÉR, é a dé-MA !', fr: 'Bonne soirée, et à demain !' }
 							]
 						}
 					],

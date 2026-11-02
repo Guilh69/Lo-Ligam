@@ -65,11 +65,11 @@ export const modulPausa1 = {
 						},
 						{
 							q: 'Quelqu’un te parle trop vite. Tu lui demandes…',
-							options: ['Pòdes repetir, se te plai ?', 'Qué es aquò ?', 'Qual es ?'],
+							options: ['Pòdes repetir, se te plai ?', 'Qué es aquò ?', 'Qui es ?'],
 							correct: 0,
 							oc: true,
 							choses: ['podes-repetir'],
-							explain: '*Pòdes repetir, se te plai ?* : tu peux répéter, s’il te plaît ? *Qué es aquò ?*, c’est pour une chose ; *Qual es ?*, pour une personne.'
+							explain: '*Pòdes repetir, se te plai ?* : tu peux répéter, s’il te plaît ? *Qué es aquò ?*, c’est pour une chose ; *Qui es ?*, pour une personne.'
 						}
 					]
 				},
@@ -140,7 +140,7 @@ export const modulPausa1 = {
 							subtitle: '(un peu plus loin ; Yasmine vouvoie Marià)',
 							lines: [
 								{ oc: 'Bonjorn, Marià ! Cossí anatz ?', sound: 'boun-DJOUR, ma-ri-A ! cou-si a-NATS ?', fr: 'Bonjour, Marià ! Comment allez-vous ?' },
-								{ oc: 'Va plan, mercés. E tu ? Qual es ?', sound: 'ba PLA, mér-SÉS. é TU ? kal ÉS ?', fr: 'Ça va bien, merci. Et toi ? Qui est-ce ?' },
+								{ oc: 'Va plan, mercés. E tu ? Qui es ?', sound: 'ba PLA, mér-SÉS. é TU ? ki ÉS ?', fr: 'Ça va bien, merci. Et toi ? Qui est-ce ?' },
 								{ oc: 'Es Núria. Es catalana, de Barcelona.', sound: 'és NOU-ria. és ca-ta-LA-no, dé bar-sé-LOU-no.', fr: 'C’est Núria. Elle est catalane, de Barcelone.' },
 								{ oc: 'Parla occitan ?', sound: 'PAR-lo ou-tsi-TA ?', fr: 'Elle parle occitan ?' },
 								{ oc: 'Un pauc. Mas compren plan !', sound: 'un PAOUK. mas coum-PRÉ(N) PLA !', fr: 'Un peu. Mais elle comprend bien !' },
@@ -171,11 +171,11 @@ export const modulPausa1 = {
 							explain: '*Soi de Barcelona, mas demòri a Tolosa* : je suis de Barcelone, mais j’habite à Toulouse.'
 						},
 						{
-							q: 'Marià demande *Qual es ?* Elle veut savoir…',
+							q: 'Marià demande *Qui es ?* Elle veut savoir…',
 							options: ['qui est Núria', 'comment va Núria', 'd’où vient Núria'],
 							correct: 0,
-							choses: ['qual-es'],
-							explain: '*Qual es ?* : qui est-ce ? Yasmine répond : *Es Núria.*'
+							choses: ['qui-es'],
+							explain: '*Qui es ?* : qui est-ce ? Yasmine répond : *Es Núria.*'
 						}
 					]
 				}
@@ -212,7 +212,7 @@ export const modulPausa1 = {
 							options: [
 								{ oc: 'Soi de…', bon: true },
 								{ oc: 'Me dison…', reaccion: 'Karim sourit : ton nom, il le connaît déjà. Il veut savoir d’où tu es.' },
-								{ oc: 'Qual es ?', reaccion: 'Karim se retourne : il n’y a personne derrière lui. C’est d’où tu es qu’il veut savoir.' }
+								{ oc: 'Qui es ?', reaccion: 'Karim se retourne : il n’y a personne derrière lui. C’est d’où tu es qu’il veut savoir.' }
 							],
 							choses: ['d-ont-sias', 'soi-de'],
 							explain: '*D’ont siás ?* : d’où es-tu ? Réponds *Soi de…*, puis ta ville.'
@@ -263,11 +263,11 @@ export const modulPausa1 = {
 							situacion: 'Karim te tend une petite pâtisserie que tu ne connais pas.',
 							options: [
 								{ oc: 'Qué es aquò ?', bon: true },
-								{ oc: 'Qual es ?', reaccion: 'Karim rit : ce n’est pas quelqu’un, c’est un gâteau !' },
+								{ oc: 'Qui es ?', reaccion: 'Karim rit : ce n’est pas quelqu’un, c’est un gâteau !' },
 								{ oc: 'D’ont siás ?', reaccion: 'Karim répond qu’il est de Béziers, puis attend : c’est le gâteau qui t’intriguait, non ?' }
 							],
 							choses: ['que-es-aquo'],
-							explain: '*Qué es aquò ?* : qu’est-ce que c’est ? Pour une personne : *Qual es ?*'
+							explain: '*Qué es aquò ?* : qu’est-ce que c’est ? Pour une personne : *Qui es ?*'
 						},
 						{
 							ditz: 'Sabi pas ! Mas es bon. A lèu !',
