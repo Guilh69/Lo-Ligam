@@ -232,7 +232,7 @@ export const modulPausa1 = {
 							options: [
 								{ oc: 'E tu, parlas occitan ?', bon: true },
 								{ oc: 'E tu, siás occitan ?', reaccion: 'Karim répond qu’il est de Béziers… Mais toi, tu voulais savoir s’il parle la langue.' },
-								{ oc: 'Qué vòl dire occitan ?', reaccion: 'Karim ouvre de grands yeux : vous parlez occitan depuis le début !' }
+								{ oc: 'Qué vòl dire occitan ?', reaccion: 'Karim ouvre de grands yeux : tu parles occitan depuis le début !' }
 							],
 							choses: ['parlas-occitan'],
 							explain: '*E tu, parlas occitan ?* : et toi, tu parles occitan ?'
@@ -403,8 +403,7 @@ export const modulPausa1 = {
 						'Les exercices que tu fais remplissent ton carnet de révision, à l’adresse loligam.eu/aprene/carnet. Il marche sans compte : il reste dans ton navigateur.',
 						'Deux cartes par chose : « je reconnais », puis « je produis ». Une carte est acquise après deux réussites, à deux jours différents. Passe le voir avant l’unité 3.'
 					],
-					// NoteBlock n'affiche pas encore de lien : à coder sur le modèle de
-					// `lien` dans CartaBlock. En attendant, l'adresse est dans le texte.
+					// Lien vers le carnet, affiché par NoteBlock ; l'adresse reste aussi dans le texte.
 					lien: { href: '/aprene/carnet', texte: 'Ouvrir mon carnet de révision' }
 				}
 			]

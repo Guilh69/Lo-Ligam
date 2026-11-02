@@ -352,6 +352,15 @@ export const modul13 = {
 					paragraphs: [
 						'*Òc* veut dire « oui ». Au Moyen Âge, on a nommé les langues d’après leur façon de dire oui : au nord la langue d’oïl, au sud la *lenga d’òc* (la langue d’òc). L’occitan porte son « oui » dans son nom.'
 					]
+				},
+				{
+					type: 'note',
+					variant: 'task',
+					title: 'Défi de la semaine',
+					paragraphs: [
+						'Tu sais maintenant dire d’où tu es et où tu habites.',
+						'Si tu en as envie : demande *D’ont siás ?* à une personne de ton entourage, puis réponds à ton tour : *Soi de…* Quand ? Où ? Choisis-le maintenant.'
+					]
 				}
 			]
 		}

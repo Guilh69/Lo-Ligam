@@ -9,7 +9,7 @@
 	// block = { title, intro, personatge, tours: [{ situacion?, ditz?,
 	//   options: [{ oc, bon?, reaccion? }], choses?, explain? }], fin? }
 	import { tick } from 'svelte';
-	import { rich } from '$lib/lesson/rich.js';
+	import { rich, insecable } from '$lib/lesson/rich.js';
 
 	let { block, onCorrect = () => {}, onComplete = () => {}, onResult = () => {} } = $props();
 
@@ -66,13 +66,13 @@
 			{#if tour.ditz}
 				<li class="bulle eux">
 					<span class="qui">{block.personatge}</span>
-					<span lang="oc">{tour.ditz}</span>
+					<span lang="oc">{insecable(tour.ditz)}</span>
 				</li>
 			{/if}
 			{#if st.done}
 				<li class="bulle tu">
 					<span class="qui">Tu</span>
-					<span lang="oc">{tour.options[st.choix].oc}</span>
+					<span lang="oc">{insecable(tour.options[st.choix].oc)}</span>
 				</li>
 				{#if tour.explain}<li class="explain">✓ {@html rich(tour.explain)}</li>{/if}
 			{:else}
@@ -88,7 +88,7 @@
 								lang="oc"
 								onclick={() => causir(ti, oi)}
 							>
-								{tour.options[oi].oc}
+								{insecable(tour.options[oi].oc)}
 							</button>
 						{/each}
 					</div>

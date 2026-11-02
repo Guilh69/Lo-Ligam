@@ -449,9 +449,8 @@ export const modul22 = {
 					variant: 'culture',
 					title: 'Cultura : une chanson de Claudi Martí',
 					glosa: { 'perqué m’an pas dit': 'pourquoi ne m’a-t-on pas dit', 'nòva cançon': 'nouvelle chanson', retorn: 'retour' },
-					// lien : NoteBlock ne l'affiche pas encore (à coder) ; en attendant, le
-					// texte dit où écouter. Chanson donnée par son lien seulement
-					// (cursus/cultura-A1.md, unité 2 : année et sens non vérifiés).
+					// Lien d'écoute affiché par NoteBlock. Chanson donnée par son lien
+					// seulement (cursus/cultura-A1.md, unité 2 : année et sens non vérifiés).
 					lien: { href: 'https://www.deezer.com/track/3277993551', texte: 'Écouter sur Deezer' },
 					paragraphs: [
 						'Claudi Martí, né à Carcassonne en 1940, a été instituteur à Couffoulens, dans l’Aude. C’est une voix de la *Nòva cançon* (la nouvelle chanson occitane).',

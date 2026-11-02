@@ -5,7 +5,7 @@
 	// numéro en or et le titre en grand, posés sur le fond du site.
 	//
 	// ouverture = { numero, bloc: { oc, fr }, titre, fr, phrase }
-	import { rich } from '$lib/lesson/rich.js';
+	import { rich, insecable } from '$lib/lesson/rich.js';
 	import { animat } from '$lib/actions/animarText.js';
 
 	let { ouverture } = $props();
@@ -18,7 +18,7 @@
 	</p>
 	<h1 id="titol-unitat">
 		<b aria-hidden="true">{String(ouverture.numero).padStart(2, '0')}</b>
-		<span lang="oc" {@attach animat('decalatge')}>{ouverture.titre}</span>
+		<span lang="oc" {@attach animat('decalatge')}>{insecable(ouverture.titre)}</span>
 	</h1>
 	<p class="titre-fr">({ouverture.fr})</p>
 	<p class="phrase">{@html rich(ouverture.phrase)}</p>
@@ -38,7 +38,9 @@
 		color: var(--t-aur);
 	}
 
+	/* la glose passe à la ligne tout d'un bloc : jamais « autour) » seul */
 	.fr {
+		white-space: nowrap;
 		letter-spacing: 0;
 		text-transform: none;
 		color: var(--t-tinta-2);

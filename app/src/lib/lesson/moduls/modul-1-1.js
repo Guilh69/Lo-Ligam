@@ -432,6 +432,15 @@ export const modul11 = {
 						'À la fin du Carnaval, dans bien des villages, on brûle Sa Majesté Carnaval en chantant *Adieu paure Carnaval* (adieu, pauvre Carnaval). C’est sans doute l’adieu le plus célèbre de la culture occitane.',
 						'À Limoux, dans l’Aude, le Carnaval dure de janvier à mars : les masques dansent sur la place chaque fin de semaine.'
 					]
+				},
+				{
+					type: 'note',
+					variant: 'task',
+					title: 'Défi de la semaine',
+					paragraphs: [
+						'Tu sais maintenant saluer, demander comment ça va, et partir.',
+						'Si tu en as envie : en partant, dis *A deman !* ou *A lèu !* à quelqu’un que tu reverras bientôt, une collègue, un voisin, ton frère. Quand ? Où ? Choisis-le maintenant.'
+					]
 				}
 			]
 		}

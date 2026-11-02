@@ -2,7 +2,7 @@
 	// Exercice à choix : un item à la fois, retour immédiat, explication d'une
 	// ligne après la bonne réponse (gabarit du cursus §5). L'item suivant
 	// n'apparaît qu'une fois l'item courant réussi.
-	import { rich } from '$lib/lesson/rich.js';
+	import { rich, insecable } from '$lib/lesson/rich.js';
 
 	// item.ditz = { qui, oc } : quelqu'un te parle (jeu « Escota e causís ») ;
 	// la question devient une bulle, et l'on choisit sa réponse.
@@ -54,7 +54,7 @@
 	{#each block.items.slice(0, visibleCount) as item, i}
 		<div class="item" class:shake={states[i].shake}>
 			{#if item.ditz}
-				<p class="ditz"><span class="num">{i + 1}</span> <span class="qui">{item.ditz.qui}</span> <span class="paraula" lang="oc">{item.ditz.oc}</span></p>
+				<p class="ditz"><span class="num">{i + 1}</span> <span class="qui">{item.ditz.qui}</span> <span class="paraula" lang="oc">{insecable(item.ditz.oc)}</span></p>
 			{/if}
 			<p class="question">{#if !item.ditz}<span class="num">{i + 1}</span> {/if}{@html rich(item.q)}</p>
 			<div class="options">

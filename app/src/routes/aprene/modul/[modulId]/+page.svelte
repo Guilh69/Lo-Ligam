@@ -26,7 +26,7 @@
 	import CartaBlock from '$lib/lesson/CartaBlock.svelte';
 	import CartaTitol from '$lib/lesson/CartaTitol.svelte';
 	import Remarcas from '$lib/lesson/Remarcas.svelte';
-	import { rich } from '$lib/lesson/rich.js';
+	import { rich, insecable } from '$lib/lesson/rich.js';
 	import { demarrerCarnet, noterExercice } from '$lib/carnet/carnet.svelte.js';
 
 	let modul = $derived(moduls[$page.params.modulId]);
@@ -304,14 +304,14 @@
 			<nav class="fil" aria-label="Modules de l’unité">
 				{#each filUnitat as id}
 					<a href="/aprene/modul/{id}" class:actual={id === $page.params.modulId} aria-current={id === $page.params.modulId ? 'page' : undefined}>
-						{#if numeroDe(id)}<b>{numeroDe(id)}</b> {/if}<span lang="oc">{moduls[id].oc}</span>
+						{#if numeroDe(id)}<b>{numeroDe(id)}</b>{/if}<span lang="oc">{insecable(moduls[id].oc)}</span>
 					</a>
 				{/each}
 			</nav>
 
 			<section class="modul-head">
 				<p class="kicker">{modul.nivel}</p>
-				<svelte:element this={modul.ouverture ? 'h2' : 'h1'} class="title" lang="oc">{modul.oc}</svelte:element>
+				<svelte:element this={modul.ouverture ? 'h2' : 'h1'} class="title" lang="oc">{insecable(modul.oc)}</svelte:element>
 				<p class="subtitle">({modul.fr})</p>
 				<p class="cando">{modul.cando}</p>
 				<p class="durada">{modul.durada}</p>
@@ -323,7 +323,7 @@
 					<li class="teula" class:done={done[i]} style:--fons={fons} style:--tinta={tinta} style:--i={i}>
 						<button type="button" onclick={() => openSession(i)}>
 							<span class="num" aria-hidden="true">{#if done[i]}<Icona nom="valide" size="0.9em" />{:else}{String(i + 1).padStart(2, '0')}{/if}</span>
-							<span class="nom" lang="oc">{s.title}</span>
+							<span class="nom" lang="oc">{insecable(s.title)}</span>
 							{#if s.fr}<span class="nom-fr">({s.fr})</span>{/if}
 							<span class="min">{s.minutes} min{done[i] ? ' · fach' : ''}</span>
 						</button>
@@ -358,8 +358,8 @@
 		{:else}
 			{@const s = modul.sessions[view]}
 			<section class="session-head">
-				<p class="kicker"><span lang="oc">{modul.oc}</span> · {tria({ oc: 'Etapa', fr: 'Étape', es: 'Etapa', en: 'Step', ca: 'Etapa', ar: 'الخطوة' })} {view + 1}/{modul.sessions.length}</p>
-				<h1 class="session-h"><b>{String(view + 1).padStart(2, '0')}</b> <span lang="oc">{s.title}</span></h1>
+				<p class="kicker"><span lang="oc">{insecable(modul.oc)}</span> · {tria({ oc: 'Etapa', fr: 'Étape', es: 'Etapa', en: 'Step', ca: 'Etapa', ar: 'الخطوة' })} {view + 1}/{modul.sessions.length}</p>
+				<h1 class="session-h"><b>{String(view + 1).padStart(2, '0')}</b> <span lang="oc">{insecable(s.title)}</span></h1>
 				{#if s.fr}<p class="session-fr-h">({s.fr})</p>{/if}
 				<p class="session-min-line">~{s.minutes} min · à ton rythme</p>
 			</section>
@@ -569,7 +569,9 @@
 		text-decoration: none;
 	}
 
+	/* Svelte retire l'espace en fin de bloc {#if} : l'écart vient du CSS. */
 	.fil a b {
+		margin-right: 0.35em;
 		font-family: var(--font-heading);
 		font-weight: 400;
 		color: var(--t-aur);

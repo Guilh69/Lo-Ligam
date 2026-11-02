@@ -8,5 +8,20 @@ export function rich(text) {
 		.replace(/>/g, '&gt;');
 	s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 	s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-	return s;
+	// Un mot à trait d'union reste entier (classe globale .mot-lie, app.css),
+	// et une terminaison (-ar, -am, -ièra) ne se détache pas de son tiret.
+	s = s.replace(
+		/(^|[\s>(«])(-\p{L}[^\s<>]*)|[^\s<>]*\p{L}-\p{L}[^\s<>]*/gu,
+		(m, avant, fin) => (fin ? `${avant}<span class="mot-lie">${fin}</span>` : `<span class="mot-lie">${m}</span>`)
+	);
+	return insecable(s);
+}
+
+// Typographie française : espace insécable avant ! ? ; : » et après «, pour
+// qu'aucun « ! » ne se retrouve seul en début de ligne (titres compris) ; le
+// point médian des listes (« Adieu ! · Bonjorn ! ») reste en fin de ligne.
+export function insecable(text) {
+	return String(text ?? '')
+		.replace(/ ([!?;:»·])/g, ' $1')
+		.replace(/« /g, '« ');
 }

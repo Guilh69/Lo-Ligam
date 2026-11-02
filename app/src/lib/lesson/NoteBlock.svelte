@@ -50,7 +50,7 @@
 		{@const dehors = /^https?:\/\//.test(block.lien.href)}
 		<p class="para lien">
 			<a href={block.lien.href} target={dehors ? '_blank' : undefined} rel={dehors ? 'noopener noreferrer' : undefined}
-				>{block.lien.texte ?? block.lien.href}{#if dehors}<span class="dehors"> (site extérieur)</span>{/if}</a
+				>{block.lien.texte ?? block.lien.href}{#if dehors}{' '}<span class="dehors">(site extérieur)</span>{/if}</a
 			>
 		</p>
 	{/if}

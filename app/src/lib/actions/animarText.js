@@ -30,10 +30,11 @@ function copar(el, tèxt, unitat, quadre = false) {
 	cap.setAttribute('aria-hidden', 'true');
 	if (quadre) cap.style.cssText = 'display:inline-block;position:relative';
 	const unitats = [];
-	const mots = tèxt.split(/(\s+)/);
+	// (L'espace insécable de « Adieu ! » garde le mot et son point ensemble.)
+	const mots = tèxt.split(/([^\S ]+)/);
 	for (const m of mots) {
 		if (!m) continue;
-		if (/^\s+$/.test(m)) {
+		if (/^[^\S ]+$/.test(m)) {
 			cap.append(document.createTextNode(m));
 			continue;
 		}

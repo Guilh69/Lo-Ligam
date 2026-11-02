@@ -200,4 +200,4 @@ Ce qui demande du code, des enregistrements, ou seulement quelques élèves de v
 
 - Chaque source a été ouverte et son résumé relu le 2026-11-01. Aucune des études citées ne porte sur l'occitan ; les effets sont surtout mesurés sur des étudiants, dans d'autres langues : des ordres de grandeur, pas des promesses.
 - Langues minoritaires : surtout des entretiens et des rapports de programmes ; Euskaraldia donne des réponses déclarées de volontaires ; aucune évaluation indépendante trouvée de Mintzapraktika ni du Voluntariat per la llengua ; rien d'indépendant non plus sur Babbel (études d'éditeur écartées, état de l'art §2.1).
-- À corriger dans l'état de l'art (§3.1, point 8) : le lien « Bygate 2001 » mène à Lambert, Kormos et Minn (répétition de tâche).
+- Corrigé le 2026-11-02 dans l'état de l'art (§3.1, point 8, et liste des sources) : le lien donné pour « Bygate 2001 » menait à Lambert, Kormos et Minn 2017 (répétition de tâche) ; les deux références sont désormais distinctes.

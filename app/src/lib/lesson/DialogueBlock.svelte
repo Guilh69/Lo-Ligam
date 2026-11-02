@@ -6,7 +6,7 @@
 	// repères temporels (t: [début, fin] en secondes), un toucher la joue et
 	// affiche sa prononciation en même temps.
 	import { onDestroy } from 'svelte';
-	import { rich } from '$lib/lesson/rich.js';
+	import { rich, insecable } from '$lib/lesson/rich.js';
 
 	let { block } = $props();
 
@@ -159,7 +159,7 @@
 								>— {@html rich(l.oc)}{#if l.t && scene.audio}<span class="line-play" aria-hidden="true"> 🔉</span>{/if}</span
 							>
 							{#if open[`${si}-${li}`]}
-								<span class="line-sound">{l.sound}</span>
+								<span class="line-sound">{insecable(l.sound)}</span>
 							{/if}
 						</button>
 					{:else}
@@ -179,9 +179,9 @@
 						{#if g.audio}
 							<button type="button" class="g-listen" onclick={() => play(g.audio)} aria-label="Escotar {g.oc}"><Icona nom="son" size="1.2em" /></button>
 						{/if}
-						<strong class="g-oc">{g.oc}</strong>
-						<span class="g-sound">{g.sound}</span>
-						<span class="g-fr">{g.fr}</span>
+						<strong class="g-oc">{insecable(g.oc)}</strong>
+						<span class="g-sound">{insecable(g.sound)}</span>
+						<span class="g-fr">{@html rich(g.fr)}</span>
 					</li>
 				{/each}
 			</ul>

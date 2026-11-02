@@ -332,3 +332,9 @@ html[dir='rtl'] .icona[data-nom='mandar'],
 html[dir='rtl'] svg:has(> path[d='M2 8h12M9 3l5 5-5 5']) {
 	scale: -1 1;
 }
+
+/* Leçons : un mot à trait d'union ne se coupe pas en fin de ligne (« qui
+   est-ce ? », « Adieu-siatz », « a-di-SSIATS ») ; posé par rich(). */
+.mot-lie {
+	white-space: nowrap;
+}

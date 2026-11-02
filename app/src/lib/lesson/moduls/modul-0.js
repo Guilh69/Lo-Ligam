@@ -223,8 +223,7 @@ export const modul0 = {
 						'Une chanson du Béarn, chantée en gascon : un autre dialecte de l’occitan que le languedocien de ce cours. *Aussau*, c’est la vallée d’Ossau, dans les Pyrénées.',
 						'Cherche-la sur ta plateforme d’écoute, par exemple dans la version du groupe L’Ouzoum, et écoute-la une fois sans chercher à tout comprendre : seulement pour la musique de la langue.'
 					],
-					// Lien d'écoute (cursus/cultura-A1.md, module 0). NoteBlock n'affiche
-					// pas encore de lien : à coder sur le modèle de `lien` dans CartaBlock.
+					// Lien d'écoute (cursus/cultura-A1.md, module 0), affiché par NoteBlock.
 					lien: { href: 'https://www.deezer.com/track/4080142441', texte: 'Écouter Amor d’Aussau (L’Ouzoum) sur Deezer' }
 				},
 				{
@@ -333,7 +332,7 @@ export const modul0 = {
 							ditz: 'Va plan, e tu ?',
 							options: [
 								{ oc: 'Vau plan, mercés !', bon: true },
-								{ oc: 'Adieu !', reaccion: 'Loís rit : vous vous êtes déjà salués !' },
+								{ oc: 'Adieu !', reaccion: 'Loís rit : on s’est déjà salués !' },
 								{ oc: 'Cossí vas ?', reaccion: 'Loís sourit : tu viens de le lui demander.' }
 							],
 							choses: ['vau-plan'],

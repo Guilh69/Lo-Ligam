@@ -7,11 +7,15 @@
 	import { session } from '$lib/authStore';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
+	import { insecable } from '$lib/lesson/rich.js';
 
 	// Le parcours de l'A1 (carte du 2026-10-25), tiré du registre des modules :
 	// un chapitre par unité, halte ou mission, dans l'ordre du chemin. Version
 	// simple pour l'essai de Romain (2026-11-01) ; le « Camin » dessiné viendra
 	// avec S'apren (chantier 6).
+	// Le numéro est celui du fil des modules (« 2.1 ») ; le module 0 garde
+	// « 0 » ; haltes et mission n'en ont pas (un anneau vide, comme une gare).
+	const numero = (id) => (id === '0' ? '0' : /^\d+-\d+$/.test(id) ? id.replace('-', '.') : '');
 	const chapters = [];
 	for (const id of ordre) {
 		const m = moduls[id];
@@ -20,7 +24,7 @@
 			c = { cle: m.unitat, oc: m.unitat, fr: m.ouverture?.fr ?? m.fr, modules: [] };
 			chapters.push(c);
 		}
-		c.modules.push({ oc: m.oc, fr: m.fr, href: `/aprene/modul/${id}`, status: 'available' });
+		c.modules.push({ oc: m.oc, fr: m.fr, num: numero(id), href: `/aprene/modul/${id}`, status: 'available' });
 	}
 
 	let moduleOneDone = $state(false);
@@ -59,7 +63,6 @@
 		loadModuleOneStatus();
 	});
 
-	let counter = 0;
 </script>
 
 <svelte:head>
@@ -85,25 +88,25 @@
 			<section class="chapter">
 				<div class="chapter-head">
 					<p class="chapter-oc">{chapter.oc}</p>
-					<p class="chapter-fr"><em>({glosa(chapter)})</em></p>
+					<!-- un chapitre d'un seul module (module 0, halte, mission) : la glose est sur la carte -->
+					{#if chapter.modules.length > 1}<p class="chapter-fr"><em>({glosa(chapter)})</em></p>{/if}
 				</div>
 				<div class="modules">
 					{#each chapter.modules as m}
-						{@const num = ++counter}
 						{#if m.status === 'available'}
 							<a class="module-card available" href={m.href}>
-								<span class="module-num">{num}</span>
+								<span class="module-num" class:anel={!m.num}>{m.num}</span>
 								<span class="module-titles">
-									<span class="module-oc">{m.oc}</span>
+									<span class="module-oc">{insecable(m.oc)}</span>
 									<span class="module-fr"><em>({glosa(m)})</em></span>
 								</span>
 								<span class="module-status" aria-hidden="true"><Icona nom="suivant" /></span>
 							</a>
 						{:else}
 							<div class="module-card locked" aria-disabled="true">
-								<span class="module-num">{num}</span>
+								<span class="module-num" class:anel={!m.num}>{m.num}</span>
 								<span class="module-titles">
-									<span class="module-oc">{m.oc}</span>
+									<span class="module-oc">{insecable(m.oc)}</span>
 									<span class="module-fr"><em>({glosa(m)})</em></span>
 								</span>
 								<span class="module-status" aria-hidden="true">🔒</span>
@@ -281,6 +284,11 @@
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: 0.95rem;
+	}
+
+	.module-num.anel {
+		background: transparent;
+		border: 2px solid var(--color-gold);
 	}
 
 	.module-card.locked .module-num {

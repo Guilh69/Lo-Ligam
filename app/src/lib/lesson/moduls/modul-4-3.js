@@ -98,7 +98,7 @@ export const modul43 = {
 					type: 'dialogue',
 					title: 'La semaine de Loís',
 					intro:
-						'Au village, Yasmine croise Loís devant la boulangerie. Plus tard, à Toulouse, Núria retrouve Karim à la sortie de l’hôpital. Lis une première fois pour répondre à une seule question : quel jour Loís ne travaille-t-il pas ?',
+						'Au village, Yasmine croise Loís devant la boulangerie. Plus tard, à Toulouse, Núria retrouve Karim à la sortie de l’hôpital (le village de Yasmine et de Marià est à vingt minutes de Toulouse en train : Núria y revient souvent). Lis une première fois pour répondre à une seule question : quel jour Loís ne travaille-t-il pas ?',
 					scenes: [
 						{
 							title: 'Yasmine e Loís',

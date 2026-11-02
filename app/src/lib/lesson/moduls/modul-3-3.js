@@ -485,9 +485,10 @@ export const modul33 = {
 					title: 'Cultura : une chanson de famille',
 					glosa: { marida: 'marie (donne en mariage)' },
 					paragraphs: [
-						'Le groupe La Talvera, du Tarn, chante *Mon paire me marida* (mon père me marie) : une chanson courte, où tu reconnaîtras *paire* et *filha*.',
-						'À écouter sur Deezer : www.deezer.com/track/2569812'
-					]
+						'Le groupe La Talvera, du Tarn, chante *Mon paire me marida* (mon père me marie) : une chanson courte, dont le titre contient déjà un mot de la famille, *paire*.'
+					],
+					// Lien d'écoute (cursus/cultura-A1.md, unité 3), affiché par NoteBlock.
+					lien: { href: 'https://www.deezer.com/track/2569812', texte: 'Écouter Mon paire me marida (La Talvera) sur Deezer' }
 				},
 				{
 					type: 'checklist',

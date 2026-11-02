@@ -429,6 +429,15 @@ export const modul12 = {
 						'Dans les villages occitans, presque tout le monde avait son *escais* (son surnom) : affectueux, moqueur ou mystérieux, parfois transmis sur trois générations, au point qu’on en oubliait le nom de l’état civil.',
 						'Demande autour de toi : il y a peut-être un surnom de ce genre dans ta famille.'
 					]
+				},
+				{
+					type: 'note',
+					variant: 'task',
+					title: 'Défi de la semaine',
+					paragraphs: [
+						'Tu sais maintenant demander son nom à quelqu’un et dire le tien.',
+						'Si tu en as envie : avec un ami prêt à jouer le jeu, ou une personne qui parle occitan, fais les présentations : *Cossí te dison ?* · *Me dison…* · *Encantat !* ou *Encantada !* Quand ? Où ? Choisis-le maintenant.'
+					]
 				}
 			]
 		}

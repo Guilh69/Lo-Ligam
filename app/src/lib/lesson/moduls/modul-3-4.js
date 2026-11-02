@@ -395,7 +395,7 @@ export const modul34 = {
 							ditz: 'Parlas plan occitan, tu ! A lèu !',
 							options: [
 								{ oc: 'Mercés ! A lèu !', bon: true },
-								{ oc: 'Bonjorn !', reaccion: 'Inès rit : vous vous êtes déjà dit bonjour. C’est le moment de dire au revoir.' },
+								{ oc: 'Bonjorn !', reaccion: 'Inès rit : on s’est déjà dit bonjour. C’est le moment de dire au revoir.' },
 								{ oc: 'Quant as d’ans ?', reaccion: 'Inès soupire : douze ans, elle te l’a déjà dit !' }
 							],
 							choses: ['merce', 'a-leu'],

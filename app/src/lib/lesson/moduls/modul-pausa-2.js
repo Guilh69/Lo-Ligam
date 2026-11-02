@@ -8,7 +8,7 @@
 // (ce que je sais faire, puis le carnet de révision).
 // La famille est celle de Karim, telle que l'unité 3 la pose (Rachid, le père ;
 // Mirèlha, la mère ; Inès, la sœur, douze ans, et sa chatte Mimí en 3.3) ;
-// Karim est infirmier (4.2) et se promène le dimanche avec Yasmine (4.3) ;
+// Karim est infirmier (4.2) et joue au rugby le mercredi et le dimanche (4.3) ;
 // Yasmine est paysanne (4.2). Inventés ici, à harmoniser si 4.4 en dit
 // autre chose : les métiers des parents (Mirèlha regenta, Rachid fornièr) et
 // les frères et sœurs de Yasmine.
@@ -34,7 +34,7 @@ export const modulPausa2 = {
 		'Mirèlha, la mère de Karim, tutoie Yasmine (une amie de son fils) ; Yasmine la vouvoie, comme Marià en 1.1. D’accord ?',
 		'*Lo dimenge, Rachid cosina !* : *cosina* (il cuisine) s’écrit comme *la cosina* (la cousine) ; l’explication le dit. On garde ?',
 		'*Fau de paisana* (Yasmine) et *Soi regenta* (Mirèlha), côte à côte : les deux tournures du lexique. D’accord ?',
-		'Inès, douze ans, *compren plan, mas parla pas* : la transmission interrompue, dite en passant, sans commentaire. Ça te va ?'
+		'Inès, douze ans, parle occitan (comme en 3.4) mais passe au français quand ça va vite : *Inès parla occitan e francés.* Ça te va ?'
 	],
 
 	sessions: [
@@ -154,8 +154,8 @@ export const modulPausa2 = {
 									fr: 'Je joue avec Mimí. Et le samedi, je danse avec les copines.'
 								},
 								{ oc: 'E Karim, qué fa lo dimenge ?', sound: 'é ka-RIM, ké FA lou di-MÉN-djé ?', fr: 'Et Karim, que fait-il le dimanche ?' },
-								// Clin d'œil à 4.3, où Karim se promène le dimanche avec Yasmine.
-								{ oc: 'Camina amb tu !', sound: 'ca-MI-no am TU !', fr: 'Il se promène avec toi !' }
+								// Comme en 4.3 et 4.4 : Karim joue au rugby le mercredi et le dimanche.
+								{ oc: 'Jòga al rugbi !', sound: 'DJÒ-go al RUG-bi !', fr: 'Il joue au rugby !' }
 							]
 						}
 					]
@@ -259,7 +259,7 @@ export const modulPausa2 = {
 						{
 							// Règle 13 : rester en occitan quand l'autre passe au français.
 							situacion:
-								'Inès, douze ans, s’en mêle, très vite et en français : « Tu parles occitan avec papa ? Moi, je comprends rien ! »',
+								'Inès, douze ans, s’en mêle, très vite et en français : « Tu parles occitan avec papa ? Ça, alors ! Moi, je vais plus vite en français ! »',
 							options: [
 								{ oc: 'Òc, parli un pauc occitan. E tu ?', bon: true },
 								{ oc: 'Compreni pas.', reaccion: 'Inès, ravie, te répond en français… et toute la table passe au français. Réponds-lui plutôt en occitan, avec une phrase que tu connais.' },
@@ -270,7 +270,7 @@ export const modulPausa2 = {
 						},
 						{
 							situacion: 'Le repas se termine, tu t’en vas.',
-							ditz: 'Inès compren plan, mas parla pas. A lèu !',
+							ditz: 'Inès parla occitan e francés. A lèu !',
 							options: [
 								{ oc: 'A lèu ! Adieu-siatz !', bon: true },
 								{ oc: 'A lèu ! Adieu !', reaccion: 'Rachid sourit, un peu surpris : depuis le début, tu le vouvoies.' },
@@ -400,8 +400,7 @@ export const modulPausa2 = {
 						'Les exercices que tu fais remplissent ton carnet de révision, à l’adresse loligam.eu/aprene/carnet. Il marche sans compte : il reste dans ton navigateur.',
 						'Deux cartes par chose : « je reconnais », puis « je produis ». Une carte est acquise après deux réussites, à deux jours différents. Passe le voir avant l’unité 5.'
 					],
-					// NoteBlock n'affiche pas encore de lien : à coder sur le modèle de
-					// `lien` dans CartaBlock. En attendant, l'adresse est dans le texte.
+					// Lien vers le carnet, affiché par NoteBlock ; l'adresse reste aussi dans le texte.
 					lien: { href: '/aprene/carnet', texte: 'Ouvrir mon carnet de révision' }
 				}
 			]

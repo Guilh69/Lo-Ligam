@@ -341,6 +341,66 @@ export const modul14 = {
 					paragraphs: [
 						'*Òsca !* (bravo !) Tu sais te présenter en occitan. Dans l’unité 2, tu parleras des langues et des pays : qui parle quoi, et comment se débrouiller quand on ne comprend pas. Puis viendra la première halte, pour tout ressortir.'
 					]
+				},
+				{
+					type: 'note',
+					variant: 'task',
+					title: 'Défi de la semaine',
+					paragraphs: [
+						'Tu sais maintenant te présenter en six phrases.',
+						'Si tu en as envie : présente-toi en occitan à une personne de ton entourage, même si elle ne le parle pas, puis demande-lui *E tu ?* Quand ? Où ? Choisis-le maintenant.'
+					]
+				},
+				// Mémo de l'unité (regles-redaccion-A1.md §3) : pas d'id ici, les id
+				// vivent dans les encadrés de 1.1 à 1.3.
+				{
+					type: 'table',
+					title: 'Mémo de l’unité 1 : les phrases toutes faites',
+					head: ['pour…', 'tu dis'],
+					rows: [
+						['saluer', '*Adieu !* · *Adieu-siatz !* · *Bonjorn !* · *Bon ser !*'],
+						['demander comment ça va', '*Cossí vas ?* · *Cossí anatz ?*'],
+						['répondre', '*Vau plan, mercés !* · *Va plan. E tu ?* · *E vos ?*'],
+						['remercier', '*Mercés !* · *Plan mercés !*'],
+						['partir', '*A lèu !* · *A deman !* · *Al còp que ven !*'],
+						['demander le nom', '*Cossí te dison ?* · *Cossí t’apèlas ?* · *Cossí vos dison ?*'],
+						['dire son nom', '*Me dison…* · *M’apèli…* · *Encantat !* · *Encantada !*'],
+						['dire d’où on est', '*D’ont siás ?* · *Soi de…* · *Soi d’aquí.*'],
+						['dire où on habite', '*Ont demòras ?* · *Demòri a…*']
+					]
+				},
+				{
+					type: 'table',
+					title: 'Alhors en Occitània (ailleurs en Occitanie)',
+					intro: 'Les mêmes mots dans les autres grands dialectes. Pas à apprendre : seulement pour les reconnaître quand tu les entendras.',
+					head: ['', 'salut !', 'comment vas-tu ?', 'merci !'],
+					rows: [
+						['languedocien (ton cours)', '*Adieu !*', '*Cossí vas ?*', '*Mercés !*'],
+						['gascon', '*Adiu !*', '*Com vas ?* · *Quin te va ?*', '*Mercés !*'],
+						['provençal', '*Adieu !*', '*Coma vas ?*', '*Mercé !* · *Grandmercé !*'],
+						['limousin', '*Adieu !*', '*Coma vas ?*', '*Mercés !*'],
+						['auvergnat', '*Adiu !* · *Mainatja !*', '*Coma vas ?*', '*Bien brave !* · *Gramarcés !*'],
+						['vivaro-alpin', '*Adieu !*', '*Coma vas ?*', '*Mercí !* · *Grandmercí !*']
+					],
+					notes: [
+						'*Adieu* devient *Adiu* en gascon et en auvergnat (qui dit aussi *Mainatja !*).',
+						'« Comment » : *cossí* chez toi, *com* ou *quin* en gascon, *coma* dans les autres dialectes.',
+						'Merci : *mercé* en provençal, *mercí* en vivaro-alpin ; en auvergnat, on dit aussi *Bien brave !*',
+						'Formes tirées des dictionnaires et du conjugueur de lo Congrès (dicodòc, vèrb’Òc).'
+					],
+					glosa: {
+						adiu: 'salut, au revoir (gascon, auvergnat)',
+						'com vas': 'comment vas-tu ? (gascon)',
+						'quin te va': 'comment vas-tu ? (gascon)',
+						'coma vas': 'comment vas-tu ?',
+						mercé: 'merci (provençal)',
+						grandmercé: 'merci beaucoup (provençal)',
+						mainatja: 'salut, au revoir (auvergnat)',
+						'bien brave': 'merci (auvergnat)',
+						gramarcés: 'merci beaucoup (auvergnat)',
+						mercí: 'merci (vivaro-alpin)',
+						grandmercí: 'merci beaucoup (vivaro-alpin)'
+					}
 				}
 			]
 		}

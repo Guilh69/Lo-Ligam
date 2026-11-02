@@ -121,7 +121,7 @@ export const modul21 = {
 						},
 						{
 							title: 'Marià e Karim',
-							subtitle: '(Marià montre les gens de la foire à Karim)',
+							subtitle: '(Marià montre les gens de la foire à Karim, qu’elle vouvoie)',
 							lines: [
 								{ oc: 'E ela, d’ont es ?', sound: 'é É-lo, doun ÉS ?', fr: 'Et elle, d’où est-elle ?' },
 								{ oc: 'Ela ? Es catalana, de Barcelona.', sound: 'É-lo ? és ca-ta-LA-no, dé bar-sé-LOU-no.', fr: 'Elle ? Elle est catalane, de Barcelone.' },

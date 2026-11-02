@@ -542,8 +542,7 @@ export const modul42 = {
 						'Molinier, Molinié, Moullié… Ces noms de famille du Languedoc et de Gascogne viennent du meunier, *lo molinièr* : la même fin que *fornièr* ou *cosinièr*. (Source : Mistral, Lou Trésor dóu Felibrige, tome II, article « moulinié ».)',
 						'À écouter : *Lo Boièr* (le bouvier), un chant de métier traditionnel, d’origine incertaine, par Gacha Empega, un groupe de polyphonies de Marseille (album « Polyphonies marseillaises », 2002).'
 					],
-					// NoteBlock n'affiche pas encore de lien (à coder, comme `lien` dans
-					// CartaBlock) : la chanson s'écoute seulement par ce lien.
+					// Lien d'écoute affiché par NoteBlock : la chanson s'écoute seulement par ce lien.
 					lien: { href: 'https://www.deezer.com/track/462956072', texte: 'Écouter Lo Boièr (Gacha Empega)' }
 				},
 				{

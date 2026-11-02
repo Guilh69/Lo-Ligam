@@ -27,8 +27,8 @@
 					<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir"><Icona nom="son" size="1.25em" /></button>
 				{/if}
 				<span class="c-body">
-					<span class="c-oc">{c.oc}</span>
-					<span class="c-sound">{c.sound}</span>
+					<span class="c-oc">{@html rich(c.oc)}</span>
+					<span class="c-sound">{@html rich(c.sound ?? '')}</span>
 					<span class="c-fr">{@html rich(c.fr)}</span>
 				</span>
 			</li>
