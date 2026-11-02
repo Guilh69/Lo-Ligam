@@ -24,7 +24,6 @@ export const modul83 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Karim', 'Yasmine', 'Núria', 'Lisa', 'Bernat'],
 	notesRelecture: [
-		'*set* « SÉT » (la soif) et *sèt* « SÈT » (sept) : tu fais bien cette différence dans ton usage ?',
 		'Le serveur dit *Qué volètz ?* (que voulez-vous ?) à ses clients : ça te va ?',
 		'*Per Yasmine, un tè* (pour Yasmine, un thé), pour commander pour quelqu’un : naturel ?',
 		'Bernat, le serveur du café de la place : prénom nouveau, qui revient en 8.4. D’accord ?',

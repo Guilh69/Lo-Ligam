@@ -1,8 +1,10 @@
 // Module 4.2 · A1 · « Qué fas dins la vida ? » : unité 4 (Qué fas ?), rédigé
 // par Claude le 2026-11-01 sur le modèle de l'unité 1 (même chemin en six
 // étapes, carte de l'A1 §3 ; règles communes : cursus/regles-redaccion-A1.md).
-// Forme du jour : far au singulier (fau, fas, fa) ; far de + métier ; dins la
-// vida en bloc ; le féminin des métiers (lexic-A1.md, 4.2).
+// Forme du jour : far au singulier (fau, fas, fa) pour la question ; soi, es +
+// métier, sans article, pour la réponse (far de + métier, calque du catalan
+// absent de la grammaire de référence, retiré le 2026-11-02) ; dins la vida
+// en bloc ; le féminin des métiers (lexic-A1.md, 4.2).
 // Scène : à midi, au village, là où Loís cuisine.
 // Métiers des personnages (à garder dans la halte 2) : Karim (20 ans, unité 3)
 // infirmier à Toulouse ; Lisa ingénieure à Montpellier ; Núria (19 ans)
@@ -28,11 +30,9 @@ export const modul42 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Karim', 'Lisa', 'Núria', 'Yasmine', 'Marià'],
 	notesRelecture: [
-		'Pour dire son métier, *Fau de cosinièr* (et *d’* devant une voyelle : *Fau d’infirmièr*) ; avec *soi* : *Soi estudianta*, *Soi a la retirada*. Ça te va ?',
 		'Métiers des personnages : Karim (20 ans en unité 3) infirmier, Lisa ingénieure, Núria (19 ans) étudiante, Yasmine paysanne, Loís cuisinier, Marià à la retraite. D’accord ?',
 		'Son : *fornièr* « four-NYÈ », mais *fornièra* « four-NYÈ-ro » (le r revient au féminin). C’est bien ton usage ?',
 		'*Qué fas ?* compris « que fais-tu en ce moment ? » (Karim répond *Mangi !*), d’où *Qué fas dins la vida ?* pour le métier : la nuance te paraît juste ?',
-		'*Lo mètge del vilatge*, *Fau de mètge* : *far de mètge* te va, ou plutôt *Soi mètge* ?',
 		'Chanson : *Lo Boièr* par Gacha Empega (2002), la version de la fiche culture. On la garde ?'
 	],
 
@@ -113,9 +113,9 @@ export const modul42 = {
 								{ oc: 'Karim, qué fas ?', sound: 'ka-RIM, ké FAS ?', fr: 'Karim, que fais-tu ?' },
 								{ oc: 'Mangi !', sound: 'MAN-dji !', fr: 'Je mange !' },
 								{ oc: 'Non ! Qué fas dins la vida ?', sound: 'NOU ! ké FAS dins la BI-do ?', fr: 'Non ! Que fais-tu dans la vie ?' },
-								{ oc: 'Fau d’infirmièr, a Tolosa. E tu ?', sound: 'FAOU din-fir-MYÈ, a tou-LOU-zo. é TU ?', fr: 'Je suis infirmier, à Toulouse. Et toi ?' },
-								{ oc: 'Ieu, fau d’engenhaira, a Montpelhièr. E Núria, qué fa ?', sound: 'YÉOU, FAOU dén-djé-GNAÏ-ro, a moun-pé-LYÈ. é NOU-ria, ké FA ?', fr: 'Moi, je suis ingénieure, à Montpellier. Et Núria, que fait-elle ?' },
-								{ oc: 'Núria es estudianta, a Tolosa. E Yasmine, aquí, fa de paisana.', sound: 'NOU-ria és es-tu-DYAN-to, a tou-LOU-zo. é yas-MI-ne, a-KI, FA dé paï-ZA-no.', fr: 'Núria est étudiante, à Toulouse. Et Yasmine, ici, est paysanne.' }
+								{ oc: 'Soi infirmièr, a Tolosa. E tu ?', sound: 'souï in-fir-MYÈ, a tou-LOU-zo. é TU ?', fr: 'Je suis infirmier, à Toulouse. Et toi ?' },
+								{ oc: 'Ieu, soi engenhaira, a Montpelhièr. E Núria, qué fa ?', sound: 'YÉOU, souï én-djé-GNAÏ-ro, a moun-pé-LYÈ. é NOU-ria, ké FA ?', fr: 'Moi, je suis ingénieure, à Montpellier. Et Núria, que fait-elle ?' },
+								{ oc: 'Núria es estudianta, a Tolosa. E Yasmine, aquí, es paisana.', sound: 'NOU-ria és es-tu-DYAN-to, a tou-LOU-zo. é yas-MI-ne, a-KI, és paï-ZA-no.', fr: 'Núria est étudiante, à Toulouse. Et Yasmine, ici, est paysanne.' }
 							]
 						},
 						{
@@ -123,15 +123,15 @@ export const modul42 = {
 							subtitle: '(Marià arrive ; Loís la vouvoie)',
 							lines: [
 								{ oc: 'Adieu, Loís ! Qué fas aquí ?', sound: 'a-DIOU, lou-ÍS ! ké FAS a-KI ?', fr: 'Salut, Loís ! Que fais-tu ici ?' },
-								{ oc: 'Trabalhi ! Fau de cosinièr, aquí.', sound: 'tra-BA-lyi ! FAOU dé cou-zi-NYÈ, a-KI.', fr: 'Je travaille ! Je suis cuisinier, ici.' },
+								{ oc: 'Trabalhi ! Soi cosinièr, aquí.', sound: 'tra-BA-lyi ! souï cou-zi-NYÈ, a-KI.', fr: 'Je travaille ! Je suis cuisinier, ici.' },
 								{ oc: 'E Karim, qué fa dins la vida ?', sound: 'é ka-RIM, ké FA dins la BI-do ?', fr: 'Et Karim, que fait-il dans la vie ?' },
-								{ oc: 'Fa d’infirmièr, a Tolosa. E vos, Marià, trabalhatz ?', sound: 'FA din-fir-MYÈ, a tou-LOU-zo. é BOUS, ma-ri-A, tra-ba-LYATS ?', fr: 'Il est infirmier, à Toulouse. Et vous, Marià, vous travaillez ?' },
+								{ oc: 'Es infirmièr, a Tolosa. E vos, Marià, trabalhatz ?', sound: 'és in-fir-MYÈ, a tou-LOU-zo. é BOUS, ma-ri-A, tra-ba-LYATS ?', fr: 'Il est infirmier, à Toulouse. Et vous, Marià, vous travaillez ?' },
 								{ oc: 'Ieu ? Soi a la retirada. Canti… e mangi aquí !', sound: 'YÉOU ? souï a la ré-ti-RA-do. CAN-ti… é MAN-dji a-KI !', fr: 'Moi ? Je suis à la retraite. Je chante… et je mange ici !' }
 							]
 						}
 					],
 					glossary: [
-						{ oc: 'Fau d’infirmièr.', sound: 'FAOU din-fir-MYÈ', fr: 'je suis infirmier (mot à mot : je fais d’infirmier)' },
+						{ oc: 'Soi infirmièr.', sound: 'souï in-fir-MYÈ', fr: 'je suis infirmier (sans article, comme en français)' },
 						{ oc: 'la retirada', sound: 'la ré-ti-RA-do', fr: 'la retraite' }
 					]
 				},
@@ -159,7 +159,7 @@ export const modul42 = {
 							options: ['ingénieure', 'étudiante', 'infirmière'],
 							correct: 0,
 							choses: ['engenhaire-engenhaira'],
-							explain: '*Ieu, fau d’engenhaira.* C’est Núria qui est étudiante, et Karim infirmier.'
+							explain: '*Ieu, soi engenhaira.* C’est Núria qui est étudiante, et Karim infirmier.'
 						}
 					]
 				}
@@ -178,12 +178,12 @@ export const modul42 = {
 					intro: '*Qué fas ?*, tu le connais. Voici le verbe entier au singulier, et la façon de dire son métier.',
 					items: [
 						{
-							q: '*Fau d’infirmièr*, dit Karim. Qui est infirmier ?',
+							q: '*Soi infirmièr*, dit Karim. Qui est infirmier ?',
 							options: ['je', 'tu', 'il ou elle'],
 							correct: 0,
 							noShuffle: true,
-							choses: ['far-singular', 'infirmier-infirmiera'],
-							explain: '*fau* : je fais. *Far de* + le métier : c’est ainsi qu’on dit son métier.'
+							choses: ['infirmier-infirmiera'],
+							explain: '*soi* : je suis. Le métier suit, sans article, comme en français.'
 						},
 						{
 							q: '*E Núria, qué fa ?* demande Lisa. Elle veut savoir…',
@@ -193,12 +193,13 @@ export const modul42 = {
 							explain: '*fa* : il ou elle fait. *fau, fas, fa* : je, tu, il ou elle.'
 						},
 						{
-							q: '*Fau d’engenhaira*, dit Lisa. Pourquoi *d’*, et pas *de* ?',
-							options: ['devant une voyelle, *de* devient *d’*', 'parce que Lisa est une femme'],
+							q: 'Karim demande avec *far* : *Qué fas ?* Pour répondre, Lisa dit…',
+							options: ['Soi engenhaira.', 'Fau engenhaira.'],
 							correct: 0,
+							oc: true,
 							noShuffle: true,
-							choses: ['engenhaire-engenhaira'],
-							explain: 'Comme dans *D’ont siás ?* : *de* devient *d’* devant une voyelle.'
+							choses: ['engenhaire-engenhaira', 'que-fas-dins-la-vida'],
+							explain: 'On demande avec *far* (*Qué fas ?*), on répond avec *soi* : *Soi engenhaira*, je suis ingénieure.'
 						},
 						{
 							q: 'Une femme qui soigne à l’hôpital, comme Karim :',
@@ -238,8 +239,8 @@ export const modul42 = {
 						['vendeur', '*vendeire*', '*vendeira*', '-eire devient -eira']
 					],
 					notes: [
-						'*far* au singulier : *fau, fas, fa*. Pour dire son métier : *Fau de cosinièr*, et *d’* devant une voyelle : *Fau d’infirmièr*.',
-						'Avec *soi*, ça marche aussi : *Soi estudianta*, *Soi a la retirada*.',
+						'*far* au singulier : *fau, fas, fa*. On demande avec *far* (*Qué fas dins la vida ?*), on répond avec *soi* ou *es*, sans article : *Soi cosinièr*, *Es infirmièra*.',
+						'De même : *Soi estudianta*, *Soi a la retirada*.',
 						'On dit aussi *mèstre*, *mèstra* pour *regent*, *regenta* (instituteur, institutrice).'
 					],
 					glosa: { mèstre: 'maître d’école', mèstra: 'maîtresse d’école' }
@@ -250,7 +251,7 @@ export const modul42 = {
 					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces expressions entrent dans ton carnet de révision.',
 					items: [
 						{ id: 'far-singular', oc: 'far : fau · fas · fa', sound: 'FA : FAOU · FAS · FA', fr: 'faire : je fais · tu fais · il ou elle fait' },
-						{ id: 'que-fas-dins-la-vida', oc: 'Qué fas dins la vida ? · Fau de regent.', sound: 'ké FAS dins la BI-do · FAOU dé ré-DJÉN', fr: 'que fais-tu dans la vie ? · je suis instituteur (mot à mot : je fais d’instituteur ; on dit aussi *Soi regent*)' },
+						{ id: 'que-fas-dins-la-vida', oc: 'Qué fas dins la vida ? · Soi regent.', sound: 'ké FAS dins la BI-do · souï ré-DJÉN', fr: 'que fais-tu dans la vie ? · je suis instituteur (sans article, comme en français)' },
 						{ id: 'a-la-retirada', oc: 'Soi a la retirada.', sound: 'souï a la ré-ti-RA-do', fr: 'je suis à la retraite.' },
 						{ id: 'infirmier-infirmiera', oc: 'infirmièr · infirmièra', sound: 'in-fir-MYÈ · in-fir-MYÈ-ro', fr: 'infirmier · infirmière' },
 						{ id: 'engenhaire-engenhaira', oc: 'engenhaire · engenhaira', sound: 'én-djé-GNAÏ-ré · én-djé-GNAÏ-ro', fr: 'ingénieur · ingénieure' }
@@ -311,7 +312,7 @@ export const modul42 = {
 						},
 						{
 							q: 'Qui ne travaille plus ?',
-							options: ['Soi a la retirada.', 'Fau de mètge.', 'Fau d’infirmièra.'],
+							options: ['Soi a la retirada.', 'Soi mètge.', 'Soi infirmièra.'],
 							correct: 0,
 							oc: true,
 							choses: ['a-la-retirada', 'metge', 'infirmier-infirmiera'],
@@ -361,11 +362,11 @@ export const modul42 = {
 						},
 						{
 							q: 'Qui ne parle pas de lui-même ?',
-							options: ['Fa de fornièr.', 'Fau de fornièr.', 'Soi fornièr.'],
+							options: ['Es fornièr.', 'Soi fornièr.', 'Soi fornièra.'],
 							correct: 0,
 							oc: true,
-							choses: ['far-singular', 'fornier-forniera'],
-							explain: '*Fa* : il ou elle fait. *Fau de…* et *Soi…* : je.'
+							choses: ['fornier-forniera'],
+							explain: '*Es* : il ou elle est. *Soi* : je suis, au masculin comme au féminin.'
 						}
 					]
 				}
@@ -384,12 +385,11 @@ export const modul42 = {
 					intro: 'Écris en occitan. Majuscules et ponctuation ne comptent pas ; un accent oublié, on te le montre.',
 					items: [
 						{
-							consigne: 'Que fais-tu dans la vie ? Réponds pour toi : *Fau de…*, *Soi…*, ou *Soi a la retirada.*',
-							// « Fau » seul couvre aussi « Fau d’obrièra » : un début
-							// accepté doit être suivi d'une espace (escriure.js).
-							debut: ['Fau de', 'Fau', 'Soi', 'Ieu, fau', 'Ieu, soi'],
-							choses: ['far-singular'],
-							explain: 'Par exemple : *Fau d’obrièra.* · *Fau de vendeire.* · *Soi estudiant.*'
+							consigne: 'Que fais-tu dans la vie ? Réponds pour toi : *Soi…*, ou *Soi a la retirada.*',
+							// Un début accepté doit être suivi d'une espace (escriure.js).
+							debut: ['Soi', 'Ieu, soi'],
+							choses: ['que-fas-dins-la-vida'],
+							explain: 'Par exemple : *Soi obrièra.* · *Soi vendeire.* · *Soi estudiant.*'
 						},
 						{
 							consigne: 'Demande à une amie ce qu’elle fait dans la vie.',
@@ -398,9 +398,9 @@ export const modul42 = {
 						},
 						{
 							consigne: 'Écris : Karim est infirmier.',
-							answers: ['Karim fa d’infirmièr.', 'Karim es infirmièr.'],
-							choses: ['far-singular', 'infirmier-infirmiera'],
-							explain: '*Fa d’…* devant une voyelle ; *es* marche aussi.'
+							answers: ['Karim es infirmièr.'],
+							choses: ['infirmier-infirmiera'],
+							explain: '*es* : il est. Le métier suit, sans article.'
 						},
 						{
 							consigne: 'Au féminin : *vendeire*.',
@@ -415,15 +415,13 @@ export const modul42 = {
 							explain: '-ièr devient -ièra ; et le *r* s’entend.'
 						},
 						{
-							consigne: 'Le métier d’une personne de ta famille : *Mon paire fa de…*, *Ma sòrre es…*',
+							consigne: 'Le métier d’une personne de ta famille : *Mon paire es…*, *Ma sòrre es…*',
 							debut: [
-								'Mon paire fa', 'Ma maire fa', 'Mon fraire fa', 'Ma sòrre fa', 'Mon papeta fa', 'Ma mameta fa',
-								'Mon oncle fa', 'Ma tanta fa', 'Mon cosin fa', 'Ma cosina fa',
 								'Mon paire es', 'Ma maire es', 'Mon fraire es', 'Ma sòrre es', 'Mon papeta es', 'Ma mameta es',
 								'Mon oncle es', 'Ma tanta es', 'Mon cosin es', 'Ma cosina es'
 							],
-							choses: ['far-singular'],
-							explain: 'Par exemple : *Mon oncle fa de vinhairon.* · *Ma mameta es a la retirada.*'
+							choses: ['que-fas-dins-la-vida'],
+							explain: 'Par exemple : *Mon oncle es vinhairon.* · *Ma mameta es a la retirada.*'
 						}
 					]
 				},
@@ -440,19 +438,19 @@ export const modul42 = {
 						},
 						{
 							prompt: 'Il est instituteur, et elle est paysanne.',
-							tiles: ['Fa', 'de', 'regent,', 'e', 'ela', 'fa', 'de', 'paisana.'],
-							choses: ['regent-regenta', 'paisan-paisana', 'far-singular'],
-							explain: '*Fa de…* deux fois : *regent*, *paisana*.'
+							tiles: ['Es', 'regent,', 'e', 'ela', 'es', 'paisana.'],
+							choses: ['regent-regenta', 'paisan-paisana'],
+							explain: '*Es…* deux fois, sans article : *regent*, *paisana*.'
 						},
 						{
 							prompt: 'Loís est cuisinier, et Lisa est ingénieure.',
-							tiles: ['Loís', 'fa', 'de', 'cosinièr,', 'e', 'Lisa', 'fa', 'd’engenhaira.'],
-							choses: ['cosinier-cosiniera', 'engenhaire-engenhaira', 'far-singular'],
-							explain: '*de cosinièr*, mais *d’engenhaira* : devant une voyelle.'
+							tiles: ['Loís', 'es', 'cosinièr,', 'e', 'Lisa', 'es', 'engenhaira.'],
+							choses: ['cosinier-cosiniera', 'engenhaire-engenhaira'],
+							explain: '*cosinièr* au masculin, *engenhaira* au féminin : la fin du mot le dit.'
 						},
 						{
 							prompt: 'Mon grand-père est vigneron, et ma grand-mère est boulangère.',
-							tiles: ['Mon', 'papeta', 'fa', 'de', 'vinhairon,', 'e', 'ma', 'mameta', 'fa', 'de', 'fornièra.'],
+							tiles: ['Mon', 'papeta', 'es', 'vinhairon,', 'e', 'ma', 'mameta', 'es', 'fornièra.'],
 							choses: ['vinhairon', 'fornier-forniera'],
 							explain: '*fornièra* : au féminin, le *r* s’entend, « four-NYÈ-ro ».'
 						},
@@ -471,7 +469,7 @@ export const modul42 = {
 					items: [
 						{
 							q: 'Un oncle, une cousine, des voisins…',
-							a: 'Par exemple : *Mon oncle fa de fornièr : trabalha a Besièrs. Ma cosina es estudianta a Tolosa.*'
+							a: 'Par exemple : *Mon oncle es fornièr : trabalha a Besièrs. Ma cosina es estudianta a Tolosa.*'
 						}
 					]
 				}
@@ -520,12 +518,12 @@ export const modul42 = {
 					intro: 'Dis la phrase, puis regarde.',
 					items: [
 						{
-							q: '*Fau de cosinièr. Ela fa de cosinièra.*',
-							a: '« FAOU dé cou-zi-NYÈ. É-lo FA dé cou-zi-NYÈ-ro » : le *r* se tait à la fin du masculin, et s’entend au féminin.'
+							q: '*Soi cosinièr. Ela es cosinièra.*',
+							a: '« souï cou-zi-NYÈ. É-lo és cou-zi-NYÈ-ro » : le *r* se tait à la fin du masculin, et s’entend au féminin.'
 						},
 						{
-							q: '*Mon fraire fa d’obrièr, e ma sòrre fa d’obrièra.*',
-							a: '« moun FRAÏ-ré FA dou-BRYÈ, é ma SÒ-rré FA dou-BRYÈ-ro » : même jeu, *obrièr* puis *obrièra*.'
+							q: '*Mon fraire es obrièr, e ma sòrre es obrièra.*',
+							a: '« moun FRAÏ-ré és ou-BRYÈ, é ma SÒ-rré és ou-BRYÈ-ro » : même jeu, *obrièr* puis *obrièra*.'
 						},
 						{
 							q: '*Lo vinhairon, lo mètge e lo fornièr cantan a la corala, lo ser.*',
@@ -563,7 +561,7 @@ export const modul42 = {
 					title: 'Défi de la semaine',
 					paragraphs: [
 						'Tu sais maintenant dire ton métier, et demander celui des autres.',
-						'Si tu en as envie : à une personne précise, la boulangère, un voisin, une nouvelle collègue, dis *Fau de…* ou demande *Qué fas dins la vida ?* Quand ? Où ? Choisis-le maintenant.'
+						'Si tu en as envie : à une personne précise, la boulangère, un voisin, une nouvelle collègue, dis *Soi…* ou demande *Qué fas dins la vida ?* Quand ? Où ? Choisis-le maintenant.'
 					]
 				}
 			]

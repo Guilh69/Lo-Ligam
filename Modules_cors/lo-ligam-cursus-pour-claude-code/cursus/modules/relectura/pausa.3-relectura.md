@@ -69,4 +69,3 @@ Aucun : tout est connu de lo Basic ou de vèrb’Òc (un ✓ ne valide ni le sen
 3. Pour le total : *Quant fa ? · Fa onze euros.* D’accord ?
 4. *Es miègjorn e quart* (il est midi et quart) : d’accord ?
 5. Rester en occitan : Marià, locutrice native, passe au français pour t’aider ; la bonne réponse est de lui répondre en occitan (*Vaquí sièis uòus ! E l’alh còsta un euro.*). La scène sonne juste pour toi ?
-6. *Onze euros* « oun-ZÉOU-rous » et *tres euros* « tré-ZÉOU-rous », avec la liaison comme *dos euros* « dou-ZÉOU-rous » dans le lexique : d’accord ?

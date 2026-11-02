@@ -37,7 +37,6 @@ export const modulPausa3 = {
 		'Pour le total : *Quant fa ? · Fa onze euros.* D’accord ?',
 		'*Es miègjorn e quart* (il est midi et quart) : d’accord ?',
 		'Rester en occitan : Marià, locutrice native, passe au français pour t’aider ; la bonne réponse est de lui répondre en occitan (*Vaquí sièis uòus ! E l’alh còsta un euro.*). La scène sonne juste pour toi ?',
-		'*Onze euros* « oun-ZÉOU-rous » et *tres euros* « tré-ZÉOU-rous », avec la liaison comme *dos euros* « dou-ZÉOU-rous » dans le lexique : d’accord ?'
 	],
 
 	sessions: [

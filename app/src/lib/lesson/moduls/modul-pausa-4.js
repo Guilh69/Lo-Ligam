@@ -423,7 +423,7 @@ export const modulPausa4 = {
 						},
 						{
 							q: 'Unité 4 · Dis ton métier, et ce que tu fais le dimanche.',
-							a: 'Par exemple : *Fau d’infirmièr. Lo dimenge, cosini amb mon paire.*'
+							a: 'Par exemple : *Soi infirmièr. Lo dimenge, cosini amb mon paire.*'
 						},
 						{
 							q: 'Unité 5 · Au marché, demande poliment un kilo de tomates, et leur prix.',

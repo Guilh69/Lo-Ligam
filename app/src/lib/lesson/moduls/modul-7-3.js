@@ -1,8 +1,9 @@
 // Module 7.3 · A1 · « De quina color es ? » : unité 7 (L’ostal), rédigé par
 // Claude le 2026-11-02 sur le modèle de l'unité 1 (règles communes : cursus/regles-redaccion-A1.md).
 // Forme du jour : la couleur après le nom, et le féminin avec un -a au bout ;
-// grand, pichon, vièlh, nòu seulement après es, pour ne pas trancher leur
-// place devant le nom (lexic-A1.md, 7.3). Une chose à la fois : le pluriel
+// grand, pichon, vièlh, nòu après es, et après le nom, leur place habituelle
+// selon la grammaire de référence (un ostal vièlh ; décision du 2026-11-02).
+// Devant le nom, le sens change : pas avant l'A2 (lexic-A1.md, 7.3). Une chose à la fois : le pluriel
 // des adjectifs n'est pas au programme de l'A1.
 // Scène : fin de la semaine ; Karim revient avec Inès, sa petite sœur,
 // chercher Mimí chez Marià. Inès tutoie Mimí, Marià tutoie Inès.
@@ -26,9 +27,8 @@ export const modul73 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Karim', 'Inès', 'Marià', 'Mimí'],
 	notesRelecture: [
-		'*verd* « BÉR », le *d* muet (lexique) : ou « BÉRT » chez toi ?',
-		'Taille et âge seulement après *es* (*L’ostal es vièlh*, *Mimí es pichona*), pour ne pas trancher la place devant le nom (*un vièlh ostal* ?). Ça te va pour l’A1 ?',
 		'*Es ton amic, lo cat negre ?* demande Inès à Mimí : naturel ?',
+		'Ajouté le 2026-11-02 d’après la grammaire de référence : l’adjectif après le nom, *un ostal vièlh* (note du tableau, À retenir, un exercice). À relire.',
 		'Pour finir, Marià reprend sa phrase de 7.1 : *Mimí es d’aquí, ara !* On garde ce rappel ?',
 		'Culture : le drapeau rouge et or, *l’aur* (l’or), « LAOUR » : c’est bien ton usage ?'
 	],
@@ -242,6 +242,7 @@ export const modul73 = {
 					],
 					notes: [
 						'La couleur vient après le mot, comme en français : *la pòrta blava*, la porte bleue.',
+						'C’est la place habituelle de l’adjectif en occitan, même pour la taille et l’âge : *un ostal vièlh* (une vieille maison), *una taula nòva*. Devant le nom, le sens change un peu : tu le verras plus tard.',
 						'Au féminin, un *-a* au bout, qui sonne « o » : *blava* « BLA-bo ». *Roge* et *jaune* changent leur *-e* : *roja*, *jauna*.',
 						'Après *es*, c’est pareil : *Mimí es grisa*, *lo cat es negre*. Ici, une seule chose à la fois : pour plusieurs, la couleur change aussi, tu le verras plus tard.'
 					]
@@ -254,7 +255,7 @@ export const modul73 = {
 						{ id: 'la-color', oc: 'la color', sound: 'la cou-LOU', fr: 'la couleur' },
 						{ id: 'roge-roja', oc: 'roge · roja', sound: 'ROU-djé · ROU-djo', fr: 'rouge (au masculin · au féminin)' },
 						{ id: 'blau-blava', oc: 'blau · blava', sound: 'BLAOU · BLA-bo', fr: 'bleu · bleue' },
-						{ id: 'verd-verda', oc: 'verd · verda', sound: 'BÉR · BÉR-do', fr: 'vert · verte' },
+						{ id: 'verd-verda', oc: 'verd · verda', sound: 'BÉRT · BÉR-do', fr: 'vert · verte' },
 						{ id: 'jaune-jauna', oc: 'jaune · jauna', sound: 'DJAOU-né · DJAOU-no', fr: 'jaune (au masculin · au féminin)' }
 					]
 				}
@@ -329,7 +330,7 @@ export const modul73 = {
 							correct: 0,
 							oc: true,
 							choses: ['verd-verda', 'lo-jardin'],
-							explain: '*lo jardin* : masculin, *verd*, « BÉR ».'
+							explain: '*lo jardin* : masculin, *verd*, « BÉRT ».'
 						},
 						{
 							ditz: { qui: 'Inès', oc: 'E la fenèstra ?' },
@@ -372,7 +373,7 @@ export const modul73 = {
 				{
 					type: 'chunks',
 					title: 'À retenir : grand, petit, vieux, neuf',
-					intro: 'Pour dire la taille et l’âge. Pour l’instant, après *es* : *L’ostal es vièlh.*',
+					intro: 'Pour dire la taille et l’âge : après *es*, *L’ostal es vièlh* ; ou juste après le nom, comme les couleurs, *un ostal vièlh*.',
 					items: [
 						{ id: 'grand-granda', oc: 'grand · granda', sound: 'GRAN · GRAN-do', fr: 'grand · grande' },
 						{ id: 'pichon-pichona', oc: 'pichon · pichona', sound: 'pi-TCHOU · pi-TCHOU-no', fr: 'petit · petite' },
@@ -471,6 +472,12 @@ export const modul73 = {
 							explain: 'Piège : *l’ostal* est masculin, donc *vièlh*, sans *-a*.'
 						},
 						{
+							consigne: 'Une vieille maison (l’adjectif après le nom).',
+							answers: ['Un ostal vièlh.'],
+							choses: ['vielh-vielha', 'l-ostal'],
+							explain: 'Comme les couleurs, l’adjectif se met d’habitude après le nom : *un ostal vièlh*.'
+						},
+						{
 							consigne: 'Le jardin est grand, et la chambre est petite.',
 							answers: ['Lo jardin es grand, e la cambra es pichona.'],
 							choses: ['grand-granda', 'pichon-pichona']
@@ -522,9 +529,10 @@ export const modul73 = {
 					variant: 'son',
 					title: 'Le son du jour : la consonne qui se tait',
 					paragraphs: [
-						'Au bout de certains mots, la consonne ne se dit pas : *verd* « BÉR », *grand* « GRAN », *blanc* « BLAN ».',
-						'Au féminin, elle revient, parce qu’une voyelle la suit : *verda* « BÉR-do », *granda* « GRAN-do », *blanca* « BLAN-co ».',
-						'Écoute, puis répète : *verd, verda* ; *grand, granda* ; *blanc, blanca*.'
+						'Au bout de certains mots, la consonne ne se dit pas : *grand* « GRAN », *blanc* « BLAN ».',
+						'Au féminin, elle revient, parce qu’une voyelle la suit : *granda* « GRAN-do », *blanca* « BLAN-co ».',
+						'Attention à *verd* : après le *r*, le *d* ne se tait pas, il sonne « t » : *verd* « BÉRT », puis *verda* « BÉR-do ».',
+						'Écoute, puis répète : *grand, granda* ; *blanc, blanca* ; *verd, verda*.'
 					]
 				},
 				{
@@ -533,10 +541,10 @@ export const modul73 = {
 					items: [
 						{
 							q: '*verd* (vert) se dit…',
-							options: ['BÉR', 'BÉRD'],
+							options: ['BÉRT', 'BÉR'],
 							correct: 0,
 							noShuffle: true,
-							explain: 'Le *d* final se tait ; il revient au féminin : *verda* « BÉR-do ».'
+							explain: 'Après le *r*, le *d* final sonne « t » : « BÉRT ». Au féminin, *verda* : « BÉR-do ».'
 						},
 						{
 							q: '*blanca* (blanche) se dit…',
@@ -554,7 +562,7 @@ export const modul73 = {
 					items: [
 						{
 							q: '*Lo jardin es grand e verd.*',
-							a: '« lou djar-DI és GRAN é BÉR » : deux consonnes qui se taisent.'
+							a: '« lou djar-DI és GRAN é BÉRT » : deux consonnes qui se taisent, et un *d* qui sonne « t ».'
 						},
 						{
 							q: '*La cambra es granda e blanca.*',
@@ -582,8 +590,8 @@ export const modul73 = {
 					items: [
 						'demander une couleur : *De quina color es ?*',
 						'dire une couleur, au masculin et au féminin : *roge, roja*',
-						'dire la taille et l’âge : *grand*, *pichon*, *vièlh*, *nòu*',
-						'faire revenir la consonne au féminin : *verd*, *verda*'
+						'dire la taille et l’âge, après *es* ou après le nom : *un ostal vièlh*',
+						'faire revenir la consonne au féminin : *grand*, *granda*'
 					]
 				},
 				{

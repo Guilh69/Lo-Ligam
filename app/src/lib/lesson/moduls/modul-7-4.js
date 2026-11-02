@@ -33,7 +33,6 @@ export const modul74 = {
 		'Les logements : Karim en colocation (*amb dos amics*), Núria dans une chambre, Lisa dans un *apartament* (glosé), Yasmine dans un *mas* avec son *companh*, Marià dans la maison de sa famille. Ça te va ?',
 		'Tour « rester en occitan » : Núria passe au français ; la bonne réplique est *Pòdes repetir, se te plai ?*, comme en 4.4. D’accord ?',
 		'La tâche : décrire en huit phrases son logement ou un logement imaginé (au choix, sans avoir à le dire), puis le décrire à une personne choisie, le prof en visio par exemple. Pour vivre seul : *Demòri sol*, *Demòri sola* (glosés). Ça te va ?',
-		'*Benvengut dins l’ostal !* (ou *Benvenguda*) pour finir la description : naturel ?',
 		'⚠️ Chanson *A mon ostal* (Castanha é Vinovèl, lien Deezer) : est-ce la même chanson que celle recueillie dans l’Aude (Lo Bramàs) ? À écouter avant publication.'
 	],
 
@@ -478,7 +477,7 @@ export const modul74 = {
 					paragraphs: [
 						'Le *l* final s’entend : *l’ostal* « lous-TAL », *lo caval* « lou ca-BAL » (module 7.1).',
 						'*al* et *del* se disent d’un seul coup ; devant une voyelle, le *s* de *als*, *dels* se lie : *als amics* « al-za-MITS » (module 7.2).',
-						'La consonne finale se tait, puis revient au féminin : *verd* « BÉR », *verda* « BÉR-do » (module 7.3).'
+						'La consonne finale se tait, puis revient au féminin : *grand* « GRAN », *granda* « GRAN-do » ; mais *verd* sonne « BÉRT » (module 7.3).'
 					]
 				},
 				{

@@ -25,11 +25,9 @@ export const modul33 = {
 	nomsPropris: ['Joana', 'Núria', 'Jordi', 'Inès', 'Karim', 'Mistral', 'Mimí'],
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
-		'Le chien : le Basic donne *can* (occitan) et *gos* (languedocien). J’enseigne *can*, comme le lexique, et je glose *gos* « on dit aussi » : lequel dis-tu ?',
 		'Humour : *I a pas de cat : Mistral es aquí !* (pas de chat ici, le chien Mistral est là) : ça te va ?',
 		'*As de fraires ?* : le *de* est seulement expliqué « des », sans grammaire du partitif : ça te va ?',
 		'Jordi, le frère de Núria, est catalan : « JOR-di », à la catalane.',
-		'Son du jour (le « n » final s’efface) : l’unité 1 note *Al còp que ven* « qué BÈN », avec le « n ». C’est ton usage pour ce mot ? J’ai écrit « le plus souvent » pour ne pas le contredire.',
 		'Anagrammes en version simple : les lettres sont des tuiles séparées, la réponse s’affiche « c a n ». À coder : des tuiles collées sans espace.'
 	],
 

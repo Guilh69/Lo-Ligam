@@ -27,10 +27,9 @@ export const modul52 = {
 	nomsPropris: ['Lisa', 'Yasmine', 'Ramon', 'Karim'],
 	notesRelecture: [
 		'*cent* : l’API a renvoyé une erreur (⚠️, déjà signalé dans le lexique). Tu le valides ?',
-		'Les prix restent des dizaines, ou de 21 à 29, tant que tu n’as pas tranché 31 à 99 (*trenta-un* ou *trenta e un*, lexique, doute 7). D’accord ?',
 		'Un nouveau personnage : Ramon, le fromager, un monsieur âgé qu’on vouvoie (il revient en 5.3 et 5.4). Le prénom te va ?',
 		'*Es car, mas es bon !* (Ramon) et *Bon dimenge !* (bon dimanche) : naturels pour toi ?',
-		'Sons proposés : *tres euros* « tré-ZÉOU-rous » (comme *dos euros* du lexique), *vint euros* « BIN ÉOU-rous » (sans liaison, comme *vint ans* en 3.1), *car* « CAR », le *r* dit. À confirmer à l’enregistrement.',
+		'Son proposé : *car* « CAR », le *r* dit. À confirmer à l’enregistrement.',
 		'Le proverbe de Mistral, *A bon marcat, aviso-te*, gardé dans sa graphie, avec ma traduction (à relire, cultura-A1.md) : on le garde ?'
 	],
 

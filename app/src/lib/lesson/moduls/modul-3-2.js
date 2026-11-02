@@ -26,7 +26,6 @@ export const modul32 = {
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
 		'*sòrre, sòrres* sont absents du Basic (déjà signalé par la carte) : tu les valides ?',
-		'Grands-parents : *lo papeta, la mameta* (Basic) en forme d’apprentissage, *pepin, menina* glosés « on dit aussi » : ou l’inverse ?',
 		'« Enfant » : *lo dròlle, la dròlla, los dròlles* (le Basic n’a pas *enfant*), *mainatge* glosé « on dit aussi » : oui ?',
 		'Joana a deux mères, Clara et Sofia (*las maires de Joana*), dit sans commentaire, comme une famille parmi d’autres : ça te va ?',
 		'La mère de Karim s’appelle *Mirèlha* (Mireille), « mi-RÈ-lyo », ce qui fait entendre le son du jour : le prénom te va ?',

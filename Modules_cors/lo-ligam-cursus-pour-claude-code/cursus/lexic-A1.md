@@ -272,7 +272,7 @@ items: [
 
 ### 4.2 · `4-2` · *Qué fas dins la vida ?* (Que fais-tu dans la vie ?)
 
-**Forme du jour** : *far* au singulier ; *far de* + métier (*Fau de regent*) ; *dins la vida* en bloc (*dins* s'explique en 7.1). Le féminin des métiers, comme en 2.1 : *-a*, *-ièr → -ièra*, *-aire → -aira*, *-eire → -eira*.
+**Forme du jour** : *far* au singulier, pour la question ; *soi* + métier, sans article, pour la réponse (*Soi regent*) ; *far de* + métier (*Fau de regent*), calque du catalan absent de la grammaire de référence, retiré le 2026-11-02 ; *dins la vida* en bloc (*dins* s'explique en 7.1). Le féminin des métiers, comme en 2.1 : *-a*, *-ièr → -ièra*, *-aire → -aira*, *-eire → -eira*.
 - *far* : *fau, fas, fa* ✓
 
 **À retenir** (14 items ; carte : 12) :
@@ -280,7 +280,7 @@ items: [
 ```js
 items: [
 	{ id: 'far-singular', oc: 'far : fau · fas · fa', sound: 'FA : FAOU · FAS · FA', fr: 'faire : je fais · tu fais · il ou elle fait' },
-	{ id: 'que-fas-dins-la-vida', oc: 'Qué fas dins la vida ? · Fau de regent.', sound: 'ké FAS dins la BI-do · FAOU dé ré-DJÉN', fr: 'que fais-tu dans la vie ? · je suis instituteur (mot à mot : je fais d’instituteur ; on dit aussi *Soi regent*)' },
+	{ id: 'que-fas-dins-la-vida', oc: 'Qué fas dins la vida ? · Soi regent.', sound: 'ké FAS dins la BI-do · souï ré-DJÉN', fr: 'que fais-tu dans la vie ? · je suis instituteur (sans article, comme en français)' },
 	{ id: 'regent-regenta', oc: 'regent · regenta', sound: 'ré-DJÉN · ré-DJÉN-to', fr: 'instituteur · institutrice' },
 	{ id: 'metge', oc: 'mètge', sound: 'MÈ-djé', fr: 'médecin' },
 	{ id: 'paisan-paisana', oc: 'paisan · paisana', sound: 'paï-ZA · paï-ZA-no', fr: 'paysan · paysanne' },
@@ -311,7 +311,7 @@ items: [
 ```js
 items: [
 	{ id: 'diluns', oc: 'diluns', sound: 'di-LUNS', fr: 'lundi' },
-	{ id: 'dimars', oc: 'dimars', sound: 'di-MAS', fr: 'mardi' },
+	{ id: 'dimars', oc: 'dimars', sound: 'di-MARS', fr: 'mardi' },
 	{ id: 'dimecres', oc: 'dimècres', sound: 'di-MÈ-crés', fr: 'mercredi' },
 	{ id: 'dijous', oc: 'dijòus', sound: 'di-DJÒOUS', fr: 'jeudi' },
 	{ id: 'divendres', oc: 'divendres', sound: 'di-BÉN-drés', fr: 'vendredi' },
@@ -378,7 +378,7 @@ items: [
 
 ### 5.2 · `5-2` · *Quant còsta ?* (Combien ça coûte ?)
 
-**Forme du jour** : les nombres de 20 à 100 ; *còsta* (une chose), *còstan* (plusieurs) ; de 21 à 29 : *vint-e-un, vint-e-dos…* (avec *e*, comme *dètz-e-sèt*).
+**Forme du jour** : les nombres de 20 à 100 ; *còsta* (une chose), *còstan* (plusieurs) ; de 21 à 29 : *vint-e-un, vint-e-dos…* (avec *e*, comme *dètz-e-sèt*). De 31 à 99, hors A1 : *trenta un*, *quaranta dos*…, en deux mots, sans *e* ni trait d'union (grammaire de référence, fixé le 2026-11-02).
 - *costar* : *còsta, còstan* ✓
 
 **À retenir** (12 items ; carte : 10) :
@@ -568,13 +568,13 @@ items: [
 
 ### 7.2 · `7-2` · *Ont es ?* (Où est-ce ?)
 
-**Forme du jour** : *sus* (sur), *jos* (sous), *davant* (devant), *darrièr* (derrière), *al costat de* (à côté de), *entre* ; les petits mots qui se soudent : *a + lo = al*, *de + lo = del*, *a + los = als*, *de + los = dels*, *sus + lo = sul* ; devant *la*, rien ne change (*a la, de la, sus la*).
+**Forme du jour** : *sus* (sur), *jos* (sous), *davant* (devant), *darrièr* (derrière), *al costat de* (à côté de), *entre* ; les petits mots qui se soudent : *a + lo = al*, *de + lo = del*, *a + los = als*, *de + los = dels*, *sus + lo = sul*, *sus + los = suls* (ajouté le 2026-11-02, grammaire de référence) ; devant *la*, rien ne change (*a la, de la, sus la*).
 
 **À retenir** (7 items ; carte : 8) :
 
 ```js
 items: [
-	{ id: 'sus-sul', oc: 'sus · sul', sound: 'SUS · SUL', fr: 'sur · sur le (*sul* = *sus* + *lo*)' },
+	{ id: 'sus-sul', oc: 'sus · sul · suls', sound: 'SUS · SUL · SULS', fr: 'sur · sur le · sur les (*sul* = *sus* + *lo* ; *suls* = *sus* + *los*)' },
 	{ id: 'jos', oc: 'jos', sound: 'DJOUS', fr: 'sous' },
 	{ id: 'davant', oc: 'davant', sound: 'da-BAN', fr: 'devant' },
 	{ id: 'darrier', oc: 'darrièr', sound: 'da-RRYÈ', fr: 'derrière' },
@@ -584,13 +584,13 @@ items: [
 ]
 ```
 
-**Vérification** : ✓ sus, jos, als, dels, costat, entre (Basic). ⚠️ À VÉRIFIER (dicodòc) : *davant, darrièr* (erreur d'appel dans les deux sens ; déjà signalés par la carte) ; *sul* (absent du Basic, qui ne donne pas les contractions ; le cadre §3 la cite).
+**Vérification** : ✓ sus, jos, als, dels, costat, entre (Basic). ⚠️ À VÉRIFIER (dicodòc) : *davant, darrièr* (erreur d'appel dans les deux sens ; déjà signalés par la carte) ; *sul* et *suls* (absents du Basic, qui ne donne pas les contractions ; le cadre §3 cite *sul* ; la grammaire de référence emploie les deux, 2026-11-02) ; *canapès* (pluriel régulier en *-s*, grammaire de référence).
 **Son du jour** : *al* et *del* se lient au mot qui suit : *al còp que ven* « al COP qué BÈN », *del vilatge* « dél bi-LA-djé », *al mercat* « al mér-CAT », *al lièch* « al LYÈTCH ».
 **Spirale** : pièces et meubles de 7.1 ; animaux (*Ont es lo cat ? Es jos la taula.*) ; `soi-d-aqui` (*aquí*) ; *ont*.
 
 ### 7.3 · `7-3` · *De quina color es ?* (De quelle couleur est-ce ?)
 
-**Forme du jour** : l'accord, revu (2.1) : les couleurs suivent le nom et prennent *-a* au féminin (*un can blanc, una cata blanca*) ; attention à *roge → roja*, *blau → blava*, *nòu → nòva*.
+**Forme du jour** : l'accord, revu (2.1) : les couleurs suivent le nom et prennent *-a* au féminin (*un can blanc, una cata blanca*) ; attention à *roge → roja*, *blau → blava*, *nòu → nòva*. La taille et l'âge se placent aussi d'habitude après le nom : *un ostal vièlh* (grammaire de référence, ajouté le 2026-11-02) ; devant le nom, le sens change (pas avant l'A2).
 
 **À retenir** (12 items ; carte : 10) :
 
@@ -599,7 +599,7 @@ items: [
 	{ id: 'la-color', oc: 'la color', sound: 'la cou-LOU', fr: 'la couleur' },
 	{ id: 'roge-roja', oc: 'roge · roja', sound: 'ROU-djé · ROU-djo', fr: 'rouge (au masculin · au féminin)' },
 	{ id: 'blau-blava', oc: 'blau · blava', sound: 'BLAOU · BLA-bo', fr: 'bleu · bleue' },
-	{ id: 'verd-verda', oc: 'verd · verda', sound: 'BÉR · BÉR-do', fr: 'vert · verte' },
+	{ id: 'verd-verda', oc: 'verd · verda', sound: 'BÉRT · BÉR-do', fr: 'vert · verte' },
 	{ id: 'jaune-jauna', oc: 'jaune · jauna', sound: 'DJAOU-né · DJAOU-no', fr: 'jaune (au masculin · au féminin)' },
 	{ id: 'negre-negra', oc: 'negre · negra', sound: 'NÉ-gré · NÉ-gro', fr: 'noir · noire' },
 	{ id: 'blanc-blanca', oc: 'blanc · blanca', sound: 'BLAN · BLAN-co', fr: 'blanc · blanche' },
@@ -614,7 +614,7 @@ items: [
 **Vérification** : ✓ color, roge, roja, blau, blava, verd, verda, jaune, jauna, negre, negra, blanc, blanca, gris, grisa, pichon, pichona, vièlh, vièlha, nòva (Basic). ⚠️ À VÉRIFIER (dicodòc) : *grand, granda* (absents ; « grand » sans traduction ; déjà signalé par la carte).
 **À gloser en passant** : *aur* ✓ (or) et *la crotz* ✓ (la croix) : *la crotz d'aur*, pour les couleurs occitanes.
 **À éviter** : le pluriel des adjectifs (*blaus, blavas*), non listé.
-**Son du jour** : le *-d* final ne se dit pas : *verd* « BÉR », *grand* « GRAN », *caud* « CAOU » ; au féminin, on l'entend : *verda* « BÉR-do », *granda* « GRAN-do ».
+**Son du jour** : la consonne finale ne se dit pas : *grand* « GRAN », *blanc* « BLAN » ; au féminin, on l'entend : *granda* « GRAN-do », *blanca* « BLAN-co ». Après *r*, le *d* final sonne « t » : *verd* « BÉRT », *verda* « BÉR-do » (grammaire de référence ; tranché le 2026-11-02).
 **Spirale** : masculin et féminin de 2.1 ; objets de 7.1 (*la pòrta blava*) ; animaux (*un cat negre*) ; `sus-sul`.
 
 ### 7.4 · `7-4` · tâche · titre proposé *E ton ostal ?* (Et ta maison ?)
@@ -729,26 +729,21 @@ Aucun mot nouveau. Lire une affiche de fête : jours (4.3), heures (6.1), prix (
 | *i a* ; *pas de* | 3.3 | | *tot* (*Es tot*, *tot drech*), *mai* (*Quicòm mai*) | 5.3, 8.1 |
 | *nosautres, vosautres, eles, elas* | 4.1 | | | |
 
-**Pas enseigné en A1 (à éviter, ou à gloser)** : *èsser* au pluriel sauf *son* (*sèm, sètz*) ; *aver, far, anar, voler, poder, prene* au pluriel (sauf *anatz* et *volètz*) ; *mos, mas, tos, tas, son, sa* (possessifs) ; *aquel, aquela, aqueste* ; *li, lor, ne* ; *s'apèla* ; le passé et le futur ; les verbes en *-ir* (sauf *repetir* à l'infinitif) ; *quand, perqué, fins a* ; le pluriel des adjectifs ; les nombres de 31 à 99 hors dizaines (en attente) ; les ordinaux après *segond*.
+**Pas enseigné en A1 (à éviter, ou à gloser)** : *èsser* au pluriel sauf *son* (*sèm, sètz*) ; *aver, far, anar, voler, poder, prene* au pluriel (sauf *anatz* et *volètz*) ; *mos, mas, tos, tas, son, sa* (possessifs) ; *aquel, aquela, aqueste* ; *li, lor, ne* ; *s'apèla* ; le passé et le futur ; les verbes en *-ir* (sauf *repetir* à l'infinitif) ; *quand, perqué, fins a* ; le pluriel des adjectifs ; les nombres de 31 à 99 hors dizaines (forme fixée le 2026-11-02 : *trenta un*, en deux mots) ; les ordinaux après *segond*.
 
 ---
 
 ## Doutes pour Romain
 
-1. Mots que l'API n'a pas pu confirmer (*francés, zèro, sòrre, vosautres, cent, davant, darrièr, grand, sul, vinhairona*) : tu les valides tels quels ?
-2. « Chien » : *can* (comme la carte) ou *gos* (que le Basic donne pour le languedocien) ?
-3. Grands-parents : *lo papeta · la mameta* (Basic) ou *lo pepin · la menina* ?
-4. « Enfant » : *lo dròlle · la dròlla* (le Basic n'a pas *enfant*) : oui ?
-5. Le métier : *Fau de regent* (far de, comme la carte) ou *Soi regent* comme forme principale ?
-6. Médecin au féminin : *la mètge* ou *la mètgessa* (absente du Basic) ?
-7. De 31 à 99 : *trenta-un, quaranta-dos* ou *trenta e un, quaranta e dos* ?
-8. « Moins le quart » : *mens lo quart* ou *mens un quart* ?
-9. *verd* : « BÉR » (d muet, comme la carte) ou « BÉRT » (Chatbèrt : d final sonne « t ») ?
-10. *dimars* : « di-MAS » (Chatbèrt : le r se tait) ou « di-MARS » ?
-11. *volriái* : « boul-RYOÏ » (comme *siás* « SYOS » en 1.3) ou « boul-RYÈÏ » ?
-12. *occitan* : « ou-tsi-TA » (Chatbèrt) ou « ouk-si-TA » ?
-13. « Monde » : *mond* (titre du module 0) et *monde* (nom du bloc 2) cohabitent : on harmonise ?
-14. Au marché, *Quicòm mai ? · Es tot.* (autre chose ? c'est tout) te va, plutôt que *E amb aquò ?* (calque du français) ?
+Tranchés par Romain le 2026-11-02 (cahier des charges §11), la grammaire de référence à l'appui quand elle en parle : *zèro* ; *lo can* ; *papeta, mameta* ; *Soi regent* (*Fau de* retiré) ; de 31 à 99, *trenta un* en deux mots ; *mens lo quart* ; *verd* « BÉRT » ; *dimars* « di-MARS » ; *volriái* « boul-RYOÏ » ; *occitan* « ou-tsi-TA » (la grammaire dit « ou-tsi-TAN », mot savant : note au son du jour de 2.1) ; *sul* et *suls*.
+
+Restent :
+
+- **1.** Mots que l'API n'a pas pu confirmer (*francés, sòrre, vosautres, cent, davant, darrièr, grand, vinhairona*) : tu les valides tels quels ?
+- **4.** « Enfant » : *lo dròlle · la dròlla* (le Basic n'a pas *enfant*) : oui ?
+- **6.** Médecin au féminin : *la mètge* ou *la mètgessa* (absente du Basic) ?
+- **13.** « Monde » : *mond* (titre du module 0) et *monde* (nom du bloc 2) cohabitent : on harmonise ?
+- **14.** Au marché, *Quicòm mai ? · Es tot.* (autre chose ? c'est tout) te va, plutôt que *E amb aquò ?* (calque du français) ?
 
 ---
 

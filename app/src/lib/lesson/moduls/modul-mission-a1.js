@@ -30,7 +30,6 @@ export const modulMissionA1 = {
 	nomsPropris: ['Giulia'],
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
-		'*Mission* en occitan, le même mot qu’en français, dit « mi-SYOU » comme *l’addicion* « la-di-SYOU » : d’accord ?',
 		'Sur l’affiche, la condition passe par une question : *Plòu ? Lo balèti es dins la sala del vilatge.* (*se* au sens de « si » n’est pas enseigné à l’A1). D’accord ?',
 		'*A dissabte !* (à samedi !) pour finir un message : d’accord ?',
 		'Dans son message, Giulia dit *Dissabte, soi a la gara a onze oras e mièja* (« je suis à la gare » pour « j’arrive », le verbe *arribar* n’étant pas enseigné à l’A1) : d’accord ?',

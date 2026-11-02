@@ -33,7 +33,6 @@ export const modulPausa2 = {
 	notesRelecture: [
 		'Mirèlha, la mère de Karim, tutoie Yasmine (une amie de son fils) ; Yasmine la vouvoie, comme Marià en 1.1. D’accord ?',
 		'*Lo dimenge, Rachid cosina !* : *cosina* (il cuisine) s’écrit comme *la cosina* (la cousine) ; l’explication le dit. On garde ?',
-		'*Fau de paisana* (Yasmine) et *Soi regenta* (Mirèlha), côte à côte : les deux tournures du lexique. D’accord ?',
 		'Inès, douze ans, parle occitan (comme en 3.4) mais passe au français quand ça va vite : *Inès parla occitan e francés.* Ça te va ?'
 	],
 
@@ -126,10 +125,10 @@ export const modulPausa2 = {
 									sound: 'ba PLA, mér-SÉS ! é TU, ké FAS dins la BI-do ?',
 									fr: 'Ça va bien, merci ! Et toi, que fais-tu dans la vie ?'
 								},
-								{ oc: 'Fau de paisana. E vos ?', sound: 'FAOU dé paï-ZA-no. é BOUS ?', fr: 'Je suis paysanne. Et vous ?' },
+								{ oc: 'Soi paisana. E vos ?', sound: 'souï paï-ZA-no. é BOUS ?', fr: 'Je suis paysanne. Et vous ?' },
 								{
-									oc: 'Ieu, soi regenta. E Rachid, lo paire de Karim, fa de fornièr.',
-									sound: 'YÉOU, souï ré-DJÉN-to. é ra-CHID, lou PAÏ-ré dé ka-RIM, FA dé four-NYÈ.',
+									oc: 'Ieu, soi regenta. E Rachid, lo paire de Karim, es fornièr.',
+									sound: 'YÉOU, souï ré-DJÉN-to. é ra-CHID, lou PAÏ-ré dé ka-RIM, és four-NYÈ.',
 									fr: 'Moi, je suis institutrice. Et Rachid, le père de Karim, est boulanger.'
 								},
 								{ oc: 'E lo dimenge ?', sound: 'é lou di-MÉN-djé ?', fr: 'Et le dimanche ?' },
@@ -177,7 +176,7 @@ export const modulPausa2 = {
 							options: ['elle est institutrice', 'elle est boulangère', 'elle est paysanne'],
 							correct: 0,
 							choses: ['regent-regenta'],
-							explain: '*Soi regenta* : je suis institutrice. Le boulanger, c’est Rachid (*fa de fornièr*) ; la paysanne, c’est Yasmine (*Fau de paisana*).'
+							explain: '*Soi regenta* : je suis institutrice. Le boulanger, c’est Rachid (*es fornièr*) ; la paysanne, c’est Yasmine (*Soi paisana*).'
 						},
 						{
 							q: 'Combien Yasmine a-t-elle de sœurs ?',
@@ -209,12 +208,12 @@ export const modulPausa2 = {
 								'Dimanche midi, chez les parents de Karim, à Béziers : toi aussi, tu es à table. Rachid, le père de Karim, te tutoie ; toi, tu le vouvoies.',
 							ditz: 'E tu, qué fas dins la vida ?',
 							options: [
-								{ oc: 'Fau de…', bon: true },
-								{ oc: 'Fa de…', reaccion: 'Rachid se tourne vers Karim : c’est de lui que tu parles ? Il te demandait ton métier, à toi.' },
+								{ oc: 'Soi…', bon: true },
+								{ oc: 'Es…', reaccion: 'Rachid se tourne vers Karim : c’est de lui que tu parles ? Il te demandait ton métier, à toi.' },
 								{ oc: 'Qué fas ?', reaccion: 'Rachid rit : c’est lui qui vient de te poser la question.' }
 							],
-							choses: ['que-fas-dins-la-vida', 'far-singular'],
-							explain: '*Fau de…*, puis ton métier : *Fau de regent*, *Fau d’infirmièr*. On dit aussi *Soi estudianta*, *Soi a la retirada*.'
+							choses: ['que-fas-dins-la-vida'],
+							explain: '*Soi…*, puis ton métier, sans article : *Soi regent*, *Soi infirmièr*, *Soi estudianta*, *Soi a la retirada*.'
 						},
 						{
 							situacion: 'À ton tour, demande-lui la même chose. Tu le vouvoies.',
@@ -227,7 +226,7 @@ export const modulPausa2 = {
 							explain: 'Pour retourner la question en vouvoyant : *E vos ?*'
 						},
 						{
-							ditz: 'Ieu, fau de fornièr. E as de fraires ?',
+							ditz: 'Ieu, soi fornièr. E as de fraires ?',
 							options: [
 								{ oc: 'Òc, ai una sòrre.', bon: true },
 								{ oc: 'Non, ai pas de fraires.', bon: true },
@@ -310,9 +309,9 @@ export const modulPausa2 = {
 						},
 						{
 							consigne: 'Dis ce que tu fais dans la vie : je suis… (ton métier).',
-							debut: ['Fau de', 'Fau d’', 'Soi'],
-							choses: ['far-singular'],
-							explain: '*Fau de…*, puis ton métier. Ou bien : *Soi estudiant*, *Soi a la retirada*.'
+							debut: ['Soi', 'Ieu, soi'],
+							choses: ['que-fas-dins-la-vida'],
+							explain: '*Soi…*, puis ton métier, sans article : *Soi estudiant*, *Soi a la retirada*.'
 						},
 						{
 							consigne: 'Le dimanche, je chante avec mon grand-père.',

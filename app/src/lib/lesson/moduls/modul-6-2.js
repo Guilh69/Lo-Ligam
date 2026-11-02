@@ -30,8 +30,6 @@ export const modul62 = {
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
 		'Chanson *Plòu a Marselha* (Lou Dalfin) : la recherche n’a vérifié que le titre, pas les paroles. Tu la gardes ?',
-		'Le présent pour demain, comme le lexique : *Deman, fa solelh* ; et Lisa au téléphone : *Dimenge, soi al vilatge !* (dimanche, je serai au village). Naturel pour toi ?',
-		'*Fa solelh*, *Fa vent* (mot à mot : il fait soleil, il fait vent), donnés comme formules toutes faites : c’est bien ton usage ?',
 		'*freg* : « FRÉTCH », le g final sonne « tch » (lexique). D’accord ?',
 		'Dans la note culture, *cers* et *autan* restent écrits en français (absents du Basic) : d’accord ?'
 	],
