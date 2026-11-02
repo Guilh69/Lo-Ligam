@@ -22,7 +22,7 @@ import { browser } from '$app/environment';
 
 // Pages harmonisées avec la charte (les autres restent en clair). COPIE dans
 // src/app.html (script de départ), à tenir identique.
-export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/ideas', '/obras', '/obras/literatura', '/obras/cinema', '/obras/afichas', '/medias', '/medias/radios', '/medias/television', '/medias/premsa', '/medias/livres', '/medias/livres/pastre-1913']; // harmonisées le 2026-10-07 : accueil, mots, carte ; Mon istòria, S'apren et sa page visio le 2026-10-24 ; Se parla, Amassa, la boîte à idées et Òbras le 2026-10-25, puis Òbras par art et Médias, branchés sur le site le même jour
+export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/ideas', '/obras', '/obras/literatura', '/obras/cinema', '/obras/afichas', '/medias', '/medias/radios', '/medias/television', '/medias/premsa', '/medias/livres', '/medias/livres/pastre-1913', '/aprene']; // harmonisées le 2026-10-07 : accueil, mots, carte ; Mon istòria, S'apren et sa page visio le 2026-10-24 ; Se parla, Amassa, la boîte à idées et Òbras le 2026-10-25, puis Òbras par art et Médias, branchés sur le site le même jour ; le parcours (/aprene) le 2026-11-02
 
 // Les modules de leçon (/aprene/modul/1-1…) le 2026-10-25 : une famille de
 // pages, reconnue par son début (adresse réelle ou route de SvelteKit) ;

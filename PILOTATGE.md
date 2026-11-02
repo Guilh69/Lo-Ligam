@@ -50,14 +50,14 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 3 | Module 0 | bloqué depuis le 18-09 | brouillon d'une page | Romain |
 | 4 | Audio de l'unité 1 (sa voix) | 1 enregistrement sur 17 | enregistrer le soir du 1.1 | Romain |
 | 5 | Validation occitane des modules 1.1 à 1.4 | bloqué | une séance dicodòc | Romain |
-| 6 | /aprene en « Camin » (sommaire du cursus) | à faire | attend S'apren (barreau 6) | Claude |
+| 6 | /aprene en « Camin » (sommaire du cursus) | ✅ fait (02-11) : « Lo camin », plateau de jeu choisi par Romain | occitan nouveau à valider (clavada, facha, « Acaba la mission A1 per lo dobrir ») ; fiche Mistral dans `revisions/2026-11-02-parcors-passation.md` | Claude |
 | 7 | Transposition Racine² : A prepaus, Contacte, FAQ | à faire ; les liens du menu mènent à des pages vides (wiki, articles, forum, groupes, idées) ; istòria et contacte faits le 24-10 (chantier 23) | à ranger dans les barreaux 6 et 7 | Claude |
 | 8 | Photos « sang e aur » | bloqué | inventaire des photos et casting | Romain |
 | 9 | design-stock et Proton Drive | règle « rien de plus de 1 Mo dans Git » en place (12-10) ; projet sorti de Documents, fichiers lourds dans `Lo_Ligam_hors-git` (24-10) | l'autre ordinateur (point 1 de la liste) | Romain + Claude |
 | 12 | Autoformation de Romain (`autoformation-parcours.md`) | carnet ouvert le 04-10, pages encore vides | page de l'étape 1 | Romain |
 | 13 | **Carte /carta** (le gros du travail d'octobre) | remise en ordre en deux lots faite (23-10) ; langues de France, voix, lecture « Uèi », Ensenhament (970 lieux, 61 Calandretas), cercles (983), premiers pas en 11 étapes | validations du point 4 ; test iPhone ; plus tard la page qui vulgarise l'enquête OPLO, « Lo viatge » (voix), le mode d'export | Romain + Claude |
 | 13 bis | Fiches des communes | en ligne, la voix d'ici repliée en une ligne (23-10) | captures de Romain sur quelques communes | Romain |
-| 14 | Icônes pratiques | ✅ fait (12-10) | restes : cadenas de /aprene, carrousel de /mots flou au chargement | Claude |
+| 14 | Icônes pratiques | ✅ fait (12-10) | restes : carrousel de /mots flou au chargement | Claude |
 | 15 | Outils EffectCraft et VectorCraft | évalués, pilotés à l'écran (`outils/craft/`) | choisir les récompenses des cours (plus tard) | Romain |
 | 16 | Parcours pédagogique et scènes | méthode et « Lumière avec pastilles » validées (20-10) | **visuels Canva de Romain**, puis `/admin/scenas` | Romain puis Claude |
 | 18 | Infrastructure | loligam.eu (15-10), mémoire du navigateur (23-10), garde-fou Git (15-10), site fermé aux moteurs de recherche (24-10) | clé Scaleway à renouveler avant le 2027-08-08 ; namespace vide `lo-ligam-site` à supprimer | Romain |
