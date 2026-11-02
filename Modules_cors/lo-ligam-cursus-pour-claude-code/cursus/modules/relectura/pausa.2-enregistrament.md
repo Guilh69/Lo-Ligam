@@ -8,8 +8,8 @@
 1. Bonjorn, Yasmine ! Me dison Mirèlha, la maire de Karim. Encantada !
 2. Encantada ! Cossí anatz ?
 3. Va plan, mercés ! E tu, qué fas dins la vida ?
-4. Fau de paisana. E vos ?
-5. Ieu, soi regenta. E Rachid, lo paire de Karim, fa de fornièr.
+4. Soi paisana. E vos ?
+5. Ieu, soi regenta. E Rachid, lo paire de Karim, es fornièr.
 6. E lo dimenge ?
 7. Lo dimenge, Rachid cosina !
 
@@ -26,7 +26,7 @@
 **Rachid, dialogue à choix**
 
 15. E tu, qué fas dins la vida ?
-16. Ieu, fau de fornièr. E as de fraires ?
+16. Ieu, soi fornièr. E as de fraires ?
 17. E quant as d’ans ?
 18. Inès parla occitan e francés. A lèu !
 

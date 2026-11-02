@@ -35,7 +35,7 @@ export const modul21 = {
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
 		'⚠️ *francés · francesa* : absents du Basic et de vèrb’Òc (déjà signalé par la carte et le lexique). Tu les valides tels quels ?',
-		'*occitan* : « ou-tsi-TA » (Chatbèrt, comme le lexique) ou « ouk-si-TA » ?',
+		'Note ajoutée le 2026-11-02 au son du jour : la grammaire de référence dit *occitan* « ou-tsi-TAN » ; on garde ton « ou-tsi-TA ». La phrase te va ?',
 		'Deux portraits contre les clichés : Giulia, d’une vallée occitane d’Italie, se dit *italiana e occitana* ; Karim se dit *francés, e occitan*. Ils te vont ?',
 		'La règle donnée au féminin : *-és* perd son accent écrit (*francesa*), *ò* garde le sien (*espanhòla*). Tu la gardes telle quelle ?',
 		'Son du jour : *espanhòla* « es-pa-GNÒ-lo » (*nh* = « gn ») et *Montpelhièr* « moun-pé-LYÈ » (*lh* = « ly »). Bon pour l’enregistrement ?'
@@ -238,6 +238,7 @@ export const modul21 = {
 					],
 					notes: [
 						'Au féminin, le *n* revient à l’oreille : *occitan* « ou-tsi-TA », *occitana* « ou-tsi-TA-no ». Et le *s* entre deux voyelles sonne « z » : *francesa* « fran-SÉ-zo ».',
+						'La grammaire de référence fait sonner le *n* d’*occitan*, « ou-tsi-TAN », parce que c’est un mot savant. Tu entendras les deux ; ici, on dit « ou-tsi-TA ».',
 						'Pas besoin de *el* ou de *ela* : *Es catalana* suffit. On les ajoute pour montrer quelqu’un, ou pour insister : *E ela ?*',
 						'Pour répondre : *Òc* (oui) ou *Non*. *Siás francesa ? Non, soi catalana.*'
 					]

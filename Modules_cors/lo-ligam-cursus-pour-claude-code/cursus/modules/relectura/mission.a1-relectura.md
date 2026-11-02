@@ -40,9 +40,8 @@ Aucun : tout est connu de lo Basic ou de vèrb’Òc (un ✓ ne valide ni le sen
 
 ## Questions pour toi
 
-1. *Mission* en occitan, le même mot qu’en français, dit « mi-SYOU » comme *l’addicion* « la-di-SYOU » : d’accord ?
-2. Sur l’affiche, la condition passe par une question : *Plòu ? Lo balèti es dins la sala del vilatge.* (*se* au sens de « si » n’est pas enseigné à l’A1). D’accord ?
-3. *A dissabte !* (à samedi !) pour finir un message : d’accord ?
-4. Dans son message, Giulia dit *Dissabte, soi a la gara a onze oras e mièja* (« je suis à la gare » pour « j’arrive », le verbe *arribar* n’étant pas enseigné à l’A1) : d’accord ?
-5. Giulia n’aime pas le cassoulet (*Mas lo caçolet… m’agrada pas.*) : la touche d’humour te va ?
-6. La dernière note propose de présenter la mission en visio, avec toi dans le rôle de Giulia : d’accord ?
+1. Sur l’affiche, la condition passe par une question : *Plòu ? Lo balèti es dins la sala del vilatge.* (*se* au sens de « si » n’est pas enseigné à l’A1). D’accord ?
+2. *A dissabte !* (à samedi !) pour finir un message : d’accord ?
+3. Dans son message, Giulia dit *Dissabte, soi a la gara a onze oras e mièja* (« je suis à la gare » pour « j’arrive », le verbe *arribar* n’étant pas enseigné à l’A1) : d’accord ?
+4. Giulia n’aime pas le cassoulet (*Mas lo caçolet… m’agrada pas.*) : la touche d’humour te va ?
+5. La dernière note propose de présenter la mission en visio, avec toi dans le rôle de Giulia : d’accord ?

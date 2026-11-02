@@ -38,7 +38,6 @@ export const modul31 = {
 	nomsPropris: ['Karim', 'Núria', 'Joana', 'Inès', 'Pèire'],
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
-		'*zèro* est absent du Basic (déjà signalé par la carte) : tu le valides ?',
 		'La blague de Mameta, *Vint ans… quatre còps !* (vingt ans, quatre fois), dit 80 ans sans les dizaines, qui arrivent à l’unité 5 : la tournure te va ?',
 		'Joana, sept ans, tutoie sa grand-mère (*Mameta, quant as d’ans ?*) : c’est bien ton usage en famille ?',
 		'*Sèt ans… e un pauc !* (sept ans et un peu plus), réplique d’enfant : naturelle, oui ou non ?',

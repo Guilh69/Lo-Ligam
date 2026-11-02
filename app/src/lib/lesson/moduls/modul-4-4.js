@@ -53,7 +53,7 @@ export const modul44 = {
 							explain: '*-atz* : vous, à plusieurs. *Trabalhas* : tu ; *trabalham* : nous.'
 						},
 						{
-							q: '*Fa d’infirmièra.* Elle…',
+							q: '*Es infirmièra.* Elle…',
 							options: ['soigne à l’hôpital', 'fait le pain', 'fait la classe'],
 							correct: 0,
 							choses: ['infirmier-infirmiera'],
@@ -83,9 +83,9 @@ export const modul44 = {
 						},
 						{
 							consigne: 'Il est vigneron.',
-							answers: ['Fa de vinhairon.', 'Es vinhairon.'],
-							choses: ['vinhairon', 'far-singular'],
-							explain: '*Fa de vinhairon* : mot à mot, il fait de vigneron.'
+							answers: ['Es vinhairon.', 'El es vinhairon.'],
+							choses: ['vinhairon'],
+							explain: '*Es vinhairon* : le métier suit *es*, sans article.'
 						}
 					]
 				}
@@ -178,12 +178,11 @@ export const modul44 = {
 						['danser', '*Danci al balèti.*', '*Dança al balèti.*'],
 						['jouer', '*Jògui a las cartas.*', '*Jòga a las cartas.*'],
 						['travailler', '*Lo dissabte, trabalhi.*', '*Lo dissabte, trabalha.*'],
-						['faire', '*Fau de cosinièr.*', '*Fa de cosinièr.*'],
-						['être', '*Soi a la retirada.*', '*Es a la retirada.*']
+						['être', '*Soi cosinièr.* · *Soi a la retirada.*', '*Es cosinièr.* · *Es a la retirada.*']
 					],
 					notes: [
 						'La fin du verbe change : *-i* (je) devient *-a* (il ou elle) : *danci*, *dança* ; *jògui*, *jòga*.',
-						'*far* : *fau* devient *fa* ; et *soi* devient *es*.',
+						'*soi* devient *es* : *Soi cosinièr*, *Es cosinièr*.',
 						'Pour deux personnes ou plus, *-an* : *Marià e Núria jògan a las cartas.*'
 					]
 				},
@@ -209,12 +208,12 @@ export const modul44 = {
 							explain: '*trabalhi* (je) devient *trabalha* (il).'
 						},
 						{
-							q: '*Fau d’infirmièr*, dit Karim. Tu racontes :',
-							options: ['Karim fa d’infirmièr.', 'Karim fau d’infirmièr.', 'Karim fas d’infirmièr.'],
+							q: '*Soi infirmièr*, dit Karim. Tu racontes :',
+							options: ['Karim es infirmièr.', 'Karim soi infirmièr.', 'Karim siás infirmièr.'],
 							correct: 0,
 							oc: true,
-							choses: ['far-singular', 'infirmier-infirmiera'],
-							explain: '*fau* (je) devient *fa* (il) ; *fas*, c’est « tu ».'
+							choses: ['infirmier-infirmiera'],
+							explain: '*soi* (je) devient *es* (il) ; *siás*, c’est « tu ».'
 						},
 						{
 							q: '*Jogam a las cartas*, disent Marià et Núria. Tu racontes :',
@@ -369,10 +368,10 @@ export const modul44 = {
 							explain: 'Par exemple : *Lo dissabte, ma sòrre camina amb las amigas.*'
 						},
 						{
-							consigne: '4. Ta troisième personne : son métier. Commence par *Fa…* ou *Es…*',
-							debut: ['Fa', 'Es', 'Ela fa', 'El fa', 'Ela es', 'El es'],
-							choses: ['far-singular'],
-							explain: 'Par exemple : *Fa de regent.* · *Fa d’engenhaira.* · *Es a la retirada.*'
+							consigne: '4. Ta troisième personne : son métier. Commence par *Es…*',
+							debut: ['Es', 'Ela es', 'El es'],
+							choses: ['que-fas-dins-la-vida'],
+							explain: 'Par exemple : *Es regent.* · *Es engenhaira.* · *Es a la retirada.*'
 						},
 						{
 							consigne: '5. Et toi ? Ce que tu fais, toi, le dimanche.',
@@ -495,7 +494,7 @@ export const modul44 = {
 					rows: [
 						['demander ce qu’on fait', '*Qué fas ?* · *Qué fas aquí ?*'],
 						['demander où on travaille', '*Ont trabalhas ?* · *Trabalhi a Tolosa.*'],
-						['demander le métier', '*Qué fas dins la vida ?* · *Fau de regent.*'],
+						['demander le métier', '*Qué fas dins la vida ?* · *Soi regent.*'],
 						['dire qu’on ne travaille plus', '*Soi a la retirada.*'],
 						['parler d’une habitude', '*Qué fas lo dimenge ?* · *Lo dimenge, jògui.*'],
 						['dire avec qui', '*amb los amics* · *amb ma sòrre*']

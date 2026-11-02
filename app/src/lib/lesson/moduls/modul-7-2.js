@@ -1,7 +1,7 @@
 // Module 7.2 · A1 · « Ont es ? » : unité 7 (L’ostal), rédigé par Claude le
 // 2026-11-02 sur le modèle de l'unité 1 (règles communes : cursus/regles-redaccion-A1.md).
 // Forme du jour : sus, jos, davant, darrièr, al costat de, entre ; les petits
-// mots soudés al, del, als, dels, sul (lexic-A1.md, 7.2). Al est déjà connu
+// mots soudés al, del, als, dels, sul, suls (lexic-A1.md, 7.2). Al est déjà connu
 // par Vau al lièch (6.3).
 // Scène : c'est jeudi, Núria vient jouer aux cartes chez Marià (4.4) ; Mimí,
 // gardée par Marià toute la semaine (7.1), a disparu.
@@ -24,8 +24,8 @@ export const modul72 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Marià', 'Núria', 'Mimí'],
 	notesRelecture: [
-		'*sul* (*sus* + *lo*), *al*, *del*, *als*, *dels* : je n’ai pas mis *sus* + *los* dans le tableau, faute de forme sûre (*suls* ?). Laquelle dis-tu ?',
 		'*darrièr* « da-RRYÈ », *davant* « da-BAN », *jos* « DJOUS » : c’est bien ton usage ?',
+		'Ajouté le 2026-11-02 d’après la grammaire de référence : *suls* (*sus* + *los*), avec *suls canapès*, dans le tableau et l’encadré. À relire.',
 		'Son : *als amics* « al-za-MITS », le *s* lié devant la voyelle, comme *los amics* « lou-za-MITS » (4.3). D’accord ?',
 		'Pendant la recherche, Núria et Marià se répondent sans verbe (*Jos la taula ?* · *Non. Darrièr la pòrta ?*) : ça sonne naturel ?',
 		'*Mimí, al jardin !* pour envoyer la chatte dehors : naturel pour toi ?'
@@ -228,14 +228,16 @@ export const modul72 = {
 				{
 					type: 'table',
 					title: 'Les petits mots qui se soudent',
+					glosa: { canapès: 'canapés' },
 					head: ['', 'avec *lo*', 'avec *la*', 'avec *los*', 'avec *las*'],
 					rows: [
 						['*a* (à)', '*al jardin* (au jardin)', '*a la fenèstra*', '*als amics* (aux amis)', '*a las cartas*'],
-						['*de* (de)', '*del pan* (du pain)', '*de la cosina*', '*dels amics* (des amis)', '*de las cartas*']
+						['*de* (de)', '*del pan* (du pain)', '*de la cosina*', '*dels amics* (des amis)', '*de las cartas*'],
+						['*sus* (sur)', '*sul canapè* (sur le canapé)', '*sus la taula*', '*suls canapès* (sur les canapés)', '*sus las cadièras*']
 					],
 					notes: [
 						'Seuls *lo* et *los* se soudent ; *la* et *las* restent à part, comme en français : « au jardin », mais « à la fenêtre ».',
-						'*sus* se soude aussi avec *lo* : *sul canapè* (sur le canapé). Mais *sus la taula*.',
+						'*sus* se soude de la même façon : *sus* + *lo* = *sul*, *sus* + *los* = *suls*. Mais *sus la taula*, *sus las cadièras*.',
 						'Devant une voyelle, *l’* ne se soude pas : *a l’ostal*, *de l’armari*.'
 					]
 				},
@@ -244,7 +246,7 @@ export const modul72 = {
 					title: 'À retenir : sur, sous, devant, derrière',
 					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces expressions entrent dans ton carnet de révision.',
 					items: [
-						{ id: 'sus-sul', oc: 'sus · sul', sound: 'SUS · SUL', fr: 'sur · sur le (*sul* = *sus* + *lo*)' },
+						{ id: 'sus-sul', oc: 'sus · sul · suls', sound: 'SUS · SUL · SULS', fr: 'sur · sur le · sur les (*sul* = *sus* + *lo* ; *suls* = *sus* + *los*)' },
 						{ id: 'jos', oc: 'jos', sound: 'DJOUS', fr: 'sous' },
 						{ id: 'davant', oc: 'davant', sound: 'da-BAN', fr: 'devant' },
 						{ id: 'darrier', oc: 'darrièr', sound: 'da-RRYÈ', fr: 'derrière' }

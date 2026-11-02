@@ -40,7 +40,6 @@ export const modul71 = {
 	nomsPropris: ['Karim', 'Marià', 'Mimí', 'Inès'],
 	notesRelecture: [
 		'Scène de l’unité : la famille de Karim part une semaine, et Marià garde Mimí, la chatte d’Inès (3.3). Mimí se cache partout (7.2), puis Inès revient la chercher (7.3). Ça te va ?',
-		'*Benvenguda dins l’ostal !* (bienvenue dans la maison), dit Marià à Mimí, comme le titre du module 0 (*Benvengut dins lo mond occitan*) ; glosé en passant. D’accord, ou plutôt *Benvenguda a l’ostal* ?',
 		'La blague de Marià : *La cosina… o ta cosina ?* (la cuisine, ou ta cousine ?). On la garde ?',
 		'*Mimí es d’aquí, ara !* (Mimí est d’ici, maintenant), pour une chatte qui a déjà pris ses aises : naturel pour toi ?',
 		'Son du jour : le *l* final se dit « l » en languedocien (*ostal* « ous-TAL »), « ou » ailleurs (*ostau*). C’est bien ton usage ?'

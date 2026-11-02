@@ -39,7 +39,6 @@ export const modul61 = {
 	nomsPropris: ['Yasmine', 'Loís', 'Marià', 'Karim'],
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
-		'*mens lo quart* (moins le quart), comme le lexique, plutôt que *mens un quart* : d’accord ?',
 		'Liaisons proposées : *cinc oras* « SIN-kou-ros », *uèch oras* « UÈ-tchou-ros », *dètz oras* « DÈ-dzou-ros », comme *tres oras* « TRÉ-zou-ros » du lexique ; mais *nòu oras* « NÒOU OU-ros ». C’est ton usage ?',
 		'*Bona jornada !* (bonne journée), glosé dans la scène et repris dans le jeu : d’accord ?',
 		'*Ara, Loís trabalha* (en ce moment, Loís travaille), dit Yasmine : naturel pour toi ?',

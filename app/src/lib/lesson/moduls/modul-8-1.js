@@ -39,10 +39,8 @@ export const modul81 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Yasmine', 'Karim', 'Núria'],
 	notesRelecture: [
-		'*Perdon…* « pér-DOU », pour aborder quelqu’un dans la rue : c’est bien ton usage ?',
 		'*Es luènh ?* · *Un pauc.* (c’est loin ? un peu) : naturel pour toi ?',
 		'Son proposé pour *Benvenguda* (glosé en passant) : « bém-bén-GU-do ». C’est ton usage ?',
-		'*Es sus la plaça* (elle est sur la place) : *sus la plaça*, ou plutôt *a la plaça* ?',
 		'Karim plaisante : *Òsca, Yasmine ! Ara, siás de Tolosa !* (bravo, maintenant tu es de Toulouse). La touche d’humour te va ?',
 		'Culture : le métro de Toulouse annonce les stations en occitan, sans date (aucune source sûre ne la donne). D’accord ?'
 	],
