@@ -1,0 +1,19 @@
+# FICHE DE PASSATION : corrections de la page d'accueil : 2026-11-03
+
+Source : `Documents\6_Projectes\Lo_Ligam_hors-git\revisions\Corrections_page_accueil.pdf` (8 pages, captures de l'accueil annotées par Romain, exportées de PowerPoint).
+
+1. **Ce qui a changé** (dix demandes ; sept faites, trois attendent une décision) :
+   - `AppHeader.svelte` : le bouton « Menu » est le dernier du bandeau (p. 1). L'ordre de tabulation suit.
+   - `SiteFooter.svelte` : le grand « Lo Ligam » passe de `--t-terra` (3,8:1 sur le fond sombre) à `--t-terra-viu` (5,9:1) ; le © et les trois liens légaux ne se coupent plus sur écran large (`@media (min-width: 56em)`, `white-space: nowrap`) (p. 8).
+   - Six textes de l'accueil, écrits en direct dans la base (`pagina_elements`, publié) et dans le filet `elements-filet.json` par `elements-modificar.mjs`, puis dans les textes de repli de `MiegTres.svelte` : `acuelh.manifest.tèxt`, `acuelh.mondes.{parla,apren,viu}.sota`, `acuelh.chifras.c1.nom`, `acuelh.biais.visio.titol` (p. 3 à 6).
+   - `MiegTres.svelte` : le nombre d'un chiffre ne se coupe plus (`flex: none; white-space: nowrap` sur `dt`), car le libellé « locutors en Nòva Aquitània / Occitània (OPLO 2020) » est plus long.
+2. **Pourquoi** : demandes de Romain, une par annotation. Hors périmètre de cette fiche : le bandeau de mots (p. 2), la croix occitane dans les ronds du chemin (p. 5), les places disponibles du bouton « Réserver un premier cours » (p. 7).
+3. **Choix et options écartées** :
+   - Occitan : « avant tout » n'a pas de traduction dans le Basic ; « mai que mai » (languedocien, donné pour « surtout ») retenu. Impératifs pris dans vèrb'Òc (languedocien) : *descobrís, apren, practica, crèa*. Mes premières formes (*descuèrb, aprèn, crea*) étaient fausses et ont été corrigées avant publication (Romain : « Il y a des erreurs. Vérifie avec l'API »). Régions via Wikidata : *Nòva Aquitània*, *Occitània*. « A ta manièra » (verifié) gardé ; « a ton biais » (mot languedocien du Basic) écarté pour rester littéral.
+   - Contraste du grand nom : `--t-terra-viu` (jeton existant) plutôt que l'or (10,3:1) : même famille de couleur, aucune couleur nouvelle. À confirmer avec la règle B de la charte (pas de rouge en texte sur le sombre) : le grand nom était déjà terracotta depuis le 15-10.
+   - La parenthèse de la p. 6 (« tu es ici chez toi d'où que tu sois ») est prise comme une explication, pas comme du texte à afficher. Les corrections de frappe de la dictée (« apprends », « Nouvelle-Aquitaine », « lenga nòstra ») sont faites sans demander.
+   - L'arabe n'est pas touché (cahier §11 du 2026-11-02) : les anciennes phrases arabes restent sous les nouvelles.
+4. **Vérifié** : occitan à l'API (Basic, vèrb'Òc), puis validé par Romain le 2026-11-03 ; `npm run build` et `npx vitest run` (89/89) ; captures locales à 1830 px et 390 px (en-tête, pied de page à 1830, 1300 et 390 px, quatre sections) ; version française du pied de page et de l'en-tête comparée avant et après. **Non vérifié** : es, en et ca écrits par Claude sans relecture d'Aran ; compte connecté (l'en-tête avec le pseudo est plus large) ; Firefox et Safari ; lecteur d'écran sur le nouvel ordre du bandeau. L'API de traduction Revirada renvoyait une erreur 500 avec la clé du projet : non utilisée.
+5. **Risques** : la base est modifiée en direct (les textes sont publiés avant le déploiement du code) ; le filet et la base disent la même chose, mais une modification faite par Romain dans « Editar » sur ces six éléments prime sur le filet. Les anciennes phrases arabes ne correspondent plus au français.
+6. **À challenger** : la couleur du grand nom (terracotta vif ou or) ; le seuil de 56 em du pied de page ; le libellé du chiffre sur deux lignes à 390 px ; « mai que mai » contre « sustot » ; la parenthèse de la p. 6 à afficher ou non.
+7. **Périmètre** : ne pas toucher `app/src/lib/lesson/moduls/*.js` ni `DOBTES-OCCITAN.md` (autre conversation).
