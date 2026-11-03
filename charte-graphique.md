@@ -93,6 +93,17 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
   écartée : « je voudrais la croix avec les couleurs type Lo Ligam »). Sur
   le voile brique du menu : traits blancs, points or. Jetons `--logo-*`
   d'`app/src/app.css`, composant `Crotz.svelte` (`teula` = logo complet).
+- **La croix qui se charge (chemin de S'apren, Romain, 2026-11-03,
+  variante C)** : dans les quatre ronds du chemin, les douze points sont
+  d'abord petits et blancs, puis grands et or clair, un à un dans le sens
+  des aiguilles d'une montre ; un disque d'or (#FFD47F en sombre, #EEAF34
+  en clair, le point des recettes) grandit depuis le centre ; la croix
+  passe au brique #B53D17. État final, dans les deux thèmes : **croix
+  brique sur disque or**, identique sans animation (mouvement réduit).
+  Jamais de fondu entre le bleu nuit du rond et l'or (il passe par un
+  kaki sale) ; « éteint » se dit par la taille du point, pas par
+  l'opacité. Code : `MiegTres.svelte`, `crotz-geometria.js` ; essai
+  `/ensag/crotz`.
 
 ---
 
