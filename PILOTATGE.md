@@ -40,7 +40,7 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 | 3 | **L'accueil, la vue d'ensemble** (bloc 4) | **corrections de Romain du 03-11 (PDF de 8 pages)** : menu à droite, pied de page, six textes et places du premier cours faits (nombre à écrire par Romain dans « Editar », vide au départ) ; restent le bandeau de mots (francitan) et la croix occitane dans les ronds de S'apren (`revisions/2026-11-03-accueil-corrections-passation.md`) |
 | 4 | La charte et le mouvement (blocs 5 et 6), le cadre commun des pages | en partie : règle B des couleurs sur tout le site (23-10) ; reste la question du point 3 ci-dessus |
 | 5 | Les mots (bloc 7) | en partie : tutoiement partout, « uèi » validé (22-23-10) ; reste la pile de validations |
-| 6 | Les pages de rubrique : Se parla (carte, puis wiki), S'apren, Amassa | carte très avancée (prise en avance le 22-10) ; **les trois pages lancées le 24-10** (chantiers 19 à 23, une discussion chacun), S'apren d'abord ; Se parla et Amassa en ligne le 25-10 |
+| 6 | Les pages de rubrique : Se parla (carte, puis wiki), S'apren, Amassa | carte très avancée (prise en avance le 22-10) ; **les trois pages lancées le 24-10** (chantiers 19 à 23, une discussion chacun), S'apren d'abord ; Se parla et Amassa en ligne le 25-10 ; **03-11 : le wiki expliquera aussi la grammaire** (inspiration : la grammaire cognitive du CPNL, `design-stock/Inspiration/Gramatica/`, cahier §11) |
 | 7 | Les pages intérieures, l'administration remise en cohérence | **pris en avance le 24-10** : l'édition sur place, séance 1 faite (accueil, tout le niveau Contenu) ; séances 2 à 4 à faire |
 | 8 | Lancement (bloc 8) | à faire |
 
