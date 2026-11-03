@@ -126,8 +126,8 @@
 		<p class="retorn"><a href="/">← Lo Ligam</a></p>
 		<h1>La croix occitane dans les ronds du chemin</h1>
 		<p class="intro">
-			Les trois variantes partent de la même scène : le chemin de S'apren, ses quatre ronds. La croix est celle de ton logo :
-			douze points qui s'allument un à un, dans le sens des aiguilles d'une montre. Pleine, elle passe au rouge du logo sur un rond d'or.
+			Les trois variantes partent de la même scène : le chemin de S'apren, ses quatre ronds. La croix est celle de ton logo, en blanc et or : les douze
+			points, petits et blancs, deviennent grands et dorés un à un, dans le sens des aiguilles d'une montre. Pleine, elle passe au rouge du logo sur un rond d'or.
 		</p>
 		<div class="fons" role="group" aria-label="Fond de la page">
 			<button type="button" aria-pressed={!clar} onclick={() => (clar = false)}>Fond sombre</button>
@@ -150,8 +150,8 @@
 
 	<section class="var" use:vist={jogaB}>
 		<h2><span class="lletra">B</span> Une seule croix qui voyage</h2>
-		<p>Une croix suit le tracé en se chargeant et arrive pleine dans le dernier rond. Les ronds restent comme aujourd'hui.</p>
-		<div class="scena-ensag"><Scena ronds={false} plenas={bPlenas} viatge={b.viatge} /></div>
+		<p>Une croix suit le tracé en se chargeant et arrive pleine dans le dernier rond. Les autres ronds restent vides.</p>
+		<div class="scena-ensag"><Scena ronds={false} grans plenas={bPlenas} viatge={b.viatge} /></div>
 		<button type="button" class="rejoua" onclick={jogaB}>Rejouer</button>
 	</section>
 
