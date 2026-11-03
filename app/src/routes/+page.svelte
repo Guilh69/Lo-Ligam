@@ -66,7 +66,7 @@
 		en: `${n} ${n === 1 ? 'spot' : 'spots'}`,
 		ca: `${n} ${n === 1 ? 'plaça' : 'places'}`
 	});
-	const LIB_COMPLET = { oc: 'complèt', fr: 'complet', es: 'completo', en: 'full', ca: 'complet' };
+	const LIB_COMPLET = { oc: 'cors complèt', fr: 'cours complet', es: 'clase completa', en: 'fully booked', ca: 'classe completa' };
 
 	let racina;
 	let motor = $state.raw(null);
@@ -328,7 +328,7 @@
 							<a class="boton" href={e.href} data-magnet>
 								<span class="boton-emplenat"></span>
 								<span class="boton-tèxt">{@render bi('acuelh.crida.espera')}{@render sageta()}</span>
-								<span class="boton-places">{@render biTx(LIB_COMPLET)}</span>
+								<span class="boton-places complet">{@render biTx(LIB_COMPLET)}</span>
 							</a>
 						{:else if !amagat('acuelh.crida.reservar')}
 							{@const l = ligam('acuelh.crida.reservar')}
@@ -336,7 +336,7 @@
 								<span class="boton-emplenat"></span>
 								<span class="boton-tèxt">{@render bi('acuelh.crida.reservar')}{@render sageta()}</span>
 								{#if nbPlaces !== null || edicion.actiu}
-									<span class="boton-places" class:buit={nbPlaces === null} use:editar={'acuelh.crida.places'}>{#if nbPlaces === null}plaças ?{:else if complet}{@render biTx(LIB_COMPLET)}{:else}{@render biTx(libPlaces(nbPlaces))}{/if}</span>
+									<span class="boton-places" class:buit={nbPlaces === null} class:complet use:editar={'acuelh.crida.places'}>{#if nbPlaces === null}plaças ?{:else if complet}{@render biTx(LIB_COMPLET)}{:else}{@render biTx(libPlaces(nbPlaces))}{/if}</span>
 								{/if}
 							</a>
 						{/if}
