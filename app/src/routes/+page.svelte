@@ -31,7 +31,7 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
+	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre, cambiar } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
 	import MiegTres from '$lib/acuelh/MiegTres.svelte';
@@ -108,8 +108,19 @@
 	});
 
 
+	// Le bandeau de mots (Romain, 2026-11-03, Corrections_page_accueil.pdf p. 2) : deux listes,
+	// le francitan (par défaut : des mots d'oc que tout le monde connaît dans le français du Sud)
+	// et le Lexique de Max Rouquette. Romain choisit celle qui s'affiche dans « Editar »
+	// (élément acuelh.bandel.causida : « francitan » ou « roqueta »). La liste d'origine, celle de
+	// Max Rouquette, garde sa clé `acuelh.bandel` : ses lignes sont déjà dans la base.
+	const LISTAS_BANDEL = { francitan: 'acuelh.bandel.francitan', roqueta: 'acuelh.bandel' };
+	let bandelCausida = $derived(/roquet|rouquet/i.test(String(txt('acuelh.bandel.causida').oc || txt('acuelh.bandel.causida').fr || '')) ? 'roqueta' : 'francitan');
+	let listaBandel = $derived(LISTAS_BANDEL[bandelCausida]);
+	let fontBandel = $derived(bandelCausida === 'roqueta' ? 'acuelh.bandel.font' : 'acuelh.bandel.francitan.font');
+	const causirBandel = (v) => cambiar('acuelh.bandel.causida', { oc: v, fr: v }, { tot_d_un_còp: true });
+
 	// Ajouts dans les listes (mode édition) : un mot, un lien, une carte
-	const apondreMot = () => apondre('acuelh.bandel', 'text', { oc: 'mot', fr: 'mot' });
+	const apondreMot = () => apondre(listaBandel, 'text', { oc: 'mot', fr: 'mot' });
 </script>
 
 <svelte:head>
@@ -242,12 +253,12 @@
 			></div>
 		</section>
 
-		<!-- II. Le bandeau de mots (Lexique de Max Rouquette) -->
+		<!-- II. Le bandeau de mots (le francitan, ou le Lexique de Max Rouquette : au choix de Romain) -->
 		<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 		<div class="bandel" role="group" tabindex="0" aria-label={tria({ oc: 'Qualques mots', fr: 'Quelques mots', es: 'Algunas palabras', en: 'A few words', ca: 'Unes quantes paraules', ar: 'بعض الكلمات' })}>
 			<div class="bandel-pista">
 				{#each [false, true] as copia (copia)}
-					{#each lista('acuelh.bandel') as m (m.clau)}
+					{#each lista(listaBandel) as m (m.clau)}
 						{#if copia}
 							<span class="bandel-mot" lang="oc" aria-hidden="true">{m.oc}<small lang={autraLang}>{autra(m)}</small></span>
 						{:else}
@@ -257,8 +268,14 @@
 				{/each}
 			</div>
 		</div>
-		<p class="bandel-font" hidden={amagat('acuelh.bandel.font')}>
-			<span use:editar={'acuelh.bandel.font'}>{@render bim('acuelh.bandel.font')}</span>
+		<p class="bandel-font" hidden={amagat(fontBandel)}>
+			<span use:editar={fontBandel}>{@render bim(fontBandel)}</span>
+			{#if edicion.actiu}
+				<span class="bandel-causida" role="group" aria-label={esOc ? 'Lista de mots mostrada' : 'Liste de mots affichée'}>
+					<button type="button" class="ed-apondre" aria-pressed={bandelCausida === 'francitan'} onclick={() => causirBandel('francitan')}>{bandelCausida === 'francitan' ? '● ' : '○ '}{esOc ? 'Mots del francitan' : 'Mots du francitan'}</button>
+					<button type="button" class="ed-apondre" aria-pressed={bandelCausida === 'roqueta'} onclick={() => causirBandel('roqueta')}>{bandelCausida === 'roqueta' ? '● ' : '○ '}{esOc ? 'Mots de Max Roqueta' : 'Mots de Max Rouquette'}</button>
+				</span>
+			{/if}
 			{@render apondreBoton(apondreMot, 'Apondre un mot', 'Ajouter un mot')}
 		</p>
 
@@ -470,5 +487,14 @@
 	}
 	.bandel-font :global(.ed-apondre) {
 		margin-left: 1rem;
+	}
+	/* en édition : le choix de la liste de mots, juste avant « + Ajouter un mot » */
+	.bandel-causida {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+	.bandel-causida :global(.ed-apondre) {
+		margin-left: 0.6rem;
 	}
 </style>
