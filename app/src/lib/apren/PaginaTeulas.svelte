@@ -174,6 +174,12 @@
 		grid-row: span 2;
 		padding: var(--esp-32);
 	}
+	/* six cases (S'apren et sa grammaire, 2026-11-03) : la sixième en bandeau
+	   sur toute la largeur, sous les cinq autres, sans trou */
+	.teulas:has(> .teula:nth-child(6)):not(:has(> .teula:nth-child(7))) > .teula:nth-child(6) {
+		grid-column: 1 / -1;
+		aspect-ratio: auto;
+	}
 	/* trois cases seulement (Mèdias, 2026-10-25) : les deux petites prennent
 	   chacune une demi-hauteur sur toute la largeur restante, sans trou */
 	.teulas:has(> .teula:nth-child(3):last-child) .teula:not(.granda) {
