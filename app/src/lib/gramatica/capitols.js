@@ -12,7 +12,7 @@ export const PARTS = [
 	{
 		titol: 'Dès le début du parcours',
 		capitols: [
-			{ id: 'sons', fr: 'Les sons et l’accent écrit', unitat: 1, pages: '9-22' },
+			{ id: 'sons', fr: 'La prononciation', unitat: 1, pages: '9-22' },
 			{ id: 'preposicions', fr: 'Les prépositions', unitat: 1, pages: '62' },
 			{ id: 'adverbis', fr: 'Les adverbes', unitat: 1, pages: '57' },
 			{ id: 'present', fr: 'Le présent', detalh: 'avec *aver* et *èsser*', unitat: 1, pages: '67-68' },

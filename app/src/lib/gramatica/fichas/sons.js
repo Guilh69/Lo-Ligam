@@ -1,71 +1,17 @@
-// Les sons et la syllabe forte (unité 1). Les prononciations sont celles
-// des « sons du jour » du parcours (modules 0.1 à 6.3), déjà choisies par
-// Romain : usage vivant, pas de comparaison avec le français standard.
-// Règle de l'accent écrit : Gramatica, page 22. Occitan à relire par Romain.
+// Prononciation 2 : la syllabe forte et l'accent écrit (unité 1, revue en
+// 4.1 et 8.2). Les prononciations sont celles des « sons du jour » du
+// parcours, déjà choisies par Romain : usage vivant, pas de comparaison avec
+// le français standard. Règle : Gramatica, page 22. Occitan à relire par Romain.
 export default {
 	id: 'sons',
 	capitol: 'sons',
-	titol: 'Los sons e l’accent',
-	fr: 'Les sons et l’accent écrit',
-	resumit: 'Les lettres qui sonnent autrement, la fin des mots, la syllabe où la voix appuie.',
+	ordre: 2,
+	titol: 'La sillaba fòrta e l’accent',
+	fr: 'La syllabe forte et l’accent écrit',
+	resumit: 'La fin du mot dit où la voix appuie ; l’accent écrit signale les exceptions.',
 	validada: false,
-	colors: { a: 'pruna', o: 'oliva', nh: 'blau', v: 'pruna', fin: 'oliva' },
+	colors: { avant: 'pruna', fin: 'oliva', accent: 'blau' },
 	ecrans: [
-		{
-			titol: 'Los sons',
-			blocs: [
-				{
-					type: 'intro',
-					text: 'L’occitan s’écrit presque comme il se prononce. Quelques lettres ont **leur son à elles** : une fois connues, tu peux lire à voix haute n’importe quel mot.'
-				},
-				{
-					type: 'cartas',
-					items: [
-						{ titol: 'à la fin du mot', gros: '-a', color: 'a', exemples: [['plaç|a', 'la PLA-ço'], ['Tolos|a', 'tou-LOU-zo'], ['familh|a', 'fa-MI-lyo'], ['pom|as', 'las POU-mos']] },
-						{ titol: 'sans ou avec accent', gros: 'o ò', color: 'o', exemples: [['Tolosa', 'tou-LOU-zo'], ['ora', 'OU-ro'], ['demòri', 'dé-MÒ-ri'], ['òc', 'OK']] },
-						{ titol: 'deux lettres, un son', gros: 'nh lh', color: 'nh', exemples: [['espanhòl', 'es-pa-GNÒL'], ['Montpelhièr', 'moun-pé-LYÈ'], ['familha', 'fa-MI-lyo'], ['lo filh', 'lou FIL']] },
-						{ titol: 'consonnes', gros: 'v j', color: 'v', exemples: [['vint', 'BIN'], ['vau', 'BAOU'], ['dijòus', 'di-DJÒOUS'], ['dimenge', 'di-MÉN-djé']] }
-					]
-				},
-				{ type: 'indic', text: 'Touche une carte : chaque mot, et comment il sonne.' },
-				{
-					type: 'nota',
-					text: 'Le *a* final sonne « o » seulement quand la voix n’appuie pas dessus : *va plan* se dit « ba PLA ». Le *g* devant *e* ou *i* sonne « dj », comme le *j*.'
-				},
-				{ type: 'font', pages: 'pages 9 à 21' }
-			]
-		},
-		{
-			titol: 'La fin dels mots',
-			blocs: [
-				{
-					type: 'intro',
-					text: 'À la fin d’un mot, certaines consonnes **se taisent**. D’autres se disent, même en finale.'
-				},
-				{
-					type: 'colonas',
-					items: [
-						{
-							titol: 'Elle se tait',
-							frasas: [
-								{ oc: '*cantar*', fr: 'can-TA : le r final se tait' },
-								{ oc: '*can*', fr: 'CA : le n final s’efface' },
-								{ oc: '*vint*', fr: 'BIN : après un n, le t se tait' }
-							]
-						},
-						{
-							titol: 'Elle se dit',
-							frasas: [
-								{ oc: '*Bon ser*', fr: 'bou(n) SÉR : un mot d’une syllabe garde son r' },
-								{ oc: '*ans*', fr: 'ANS : le s final se dit' },
-								{ oc: '*Encantat*', fr: 'én-can-TAT' }
-							]
-						}
-					]
-				},
-				{ type: 'font', pages: 'pages 11 à 21' }
-			]
-		},
 		{
 			titol: 'La sillaba fòrta',
 			blocs: [
@@ -96,7 +42,62 @@ export default {
 				},
 				{
 					type: 'nota',
-					text: 'Quand un mot ne suit pas la règle, un **accent écrit** le dit : *apèli* « a-PÈ-li », *demòri* « dé-MÒ-ri ». Un *è* ou un *ò* est toujours sur la syllabe forte.'
+					text: 'Dans les prononciations du site, la syllabe forte est en CAPITALES. Le *-a* final, où la voix n’appuie jamais, sonne alors « o ».'
+				},
+				{ type: 'font', pages: 'page 22' }
+			]
+		},
+		{
+			titol: 'Las terminasons',
+			blocs: [
+				{
+					type: 'intro',
+					text: 'La règle marche aussi pour les verbes : avec *nosautres* et *vosautres*, la voix appuie **sur la terminaison** ; avec les autres personnes, **avant**.'
+				},
+				{
+					type: 'colonas',
+					items: [
+						{
+							titol: 'La voix appuie avant',
+							frasas: [
+								{ oc: 'tu *parlas*', fr: 'PAR-los' },
+								{ oc: 'tu *prenes*', fr: 'PRÉ-nés' },
+								{ oc: 'ils *parlan*', fr: 'PAR-lon' }
+							]
+						},
+						{
+							titol: 'La voix appuie sur la fin',
+							frasas: [
+								{ oc: 'nosautres *parlam*', fr: 'par-LAN' },
+								{ oc: 'vosautres *parlatz*', fr: 'par-LATS' },
+								{ oc: 'vosautres *anatz*', fr: 'a-NATS' }
+							]
+						}
+					]
+				},
+				{ type: 'nota', text: 'Le *-n* de *parlan* ne déplace pas la voix : c’est un *-n* de verbe, comme le *-s* d’un pluriel.' },
+				{ type: 'font', pages: 'page 22' }
+			]
+		},
+		{
+			titol: 'L’accent escrich',
+			blocs: [
+				{
+					type: 'intro',
+					text: 'Quand un mot ne suit pas la règle, un **accent écrit** le dit. La voix appuie sur la voyelle qui le porte.'
+				},
+				{
+					type: 'cartas',
+					items: [
+						{ titol: 'à la fin malgré le -s', gros: 'é', color: 'accent', exemples: [['mercés', 'mér-SÉS'], ['francés', 'fran-SÉS']] },
+						{ titol: 'avant la fin', gros: 'è', color: 'accent', exemples: [['apèli', 'a-PÈ-li'], ['cafè', 'ca-FÈ'], ['apèlas', 'a-PÈ-los']] },
+						{ titol: 'avant la fin', gros: 'ò', color: 'accent', exemples: [['demòri', 'dé-MÒ-ri'], ['pòdi', 'PÒ-di'], ['vòli', 'BÒ-li']] }
+					]
+				},
+				{ type: 'indic', text: 'Touche une carte pour voir des mots.' },
+				{
+					type: 'nota',
+					text: 'Un *è* ou un *ò* est **toujours** sur la syllabe forte. Et un mot d’une seule syllabe n’a pas besoin d’accent pour ça.'
 				},
 				{ type: 'font', pages: 'page 22' }
 			]
@@ -106,21 +107,21 @@ export default {
 			blocs: [
 				{
 					type: 'intro',
-					text: 'Mets chaque mot en face de sa prononciation. Regarde la fin du mot, les accents, les lettres doubles. L’œil montre la réponse d’une ligne.'
+					text: 'Mets chaque mot en face de sa prononciation. Regarde la fin du mot, et les accents. L’œil montre la réponse d’une ligne.'
 				},
 				{
 					type: 'relacionar',
 					etiqueta: 'Prononciations à placer',
 					linhas: [
-						{ oc: 'Tolosa', fr: 'Toulouse', forma: 'tou-LOU-zo|:o', sens: 'Toulouse', indici: 'le o sans accent sonne « ou », le a final « o »' },
-						{ oc: 'parlas', fr: 'tu parles', forma: 'PAR-los|:a', sens: 'tu parles', indici: 'un -s à la fin : la voix appuie avant' },
-						{ oc: 'parlam', fr: 'nous parlons', forma: 'par-LAN|:fin', sens: 'nous parlons', indici: 'un -m à la fin : la voix appuie sur la fin, et le m sonne « n »' },
-						{ oc: 'cantar', fr: 'chanter', forma: 'can-TA|:fin', sens: 'chanter', indici: 'le r final se tait' },
-						{ oc: 'demòri', fr: 'j’habite', forma: 'dé-MÒ-ri|:o', sens: 'j’habite', indici: 'l’accent écrit montre la syllabe forte' },
-						{ oc: 'la familha', fr: 'la famille', forma: 'la fa-MI-lyo|:nh', sens: 'la famille', indici: 'lh sonne « ly »' }
+						{ oc: 'Tolosa', fr: 'Toulouse', forma: 'tou-LOU-zo|:avant', sens: 'Tolosa', indici: 'une voyelle à la fin : la voix appuie avant' },
+						{ oc: 'parlas', fr: 'tu parles', forma: 'PAR-los|:avant', sens: 'parlas', indici: 'un -s à la fin : la voix appuie avant' },
+						{ oc: 'parlam', fr: 'nous parlons', forma: 'par-LAN|:fin', sens: 'parlam', indici: 'un -m à la fin : la voix appuie sur la fin' },
+						{ oc: 'cantar', fr: 'chanter', forma: 'can-TA|:fin', sens: 'cantar', indici: 'un -r à la fin : la voix appuie sur la fin' },
+						{ oc: 'demòri', fr: 'j’habite', forma: 'dé-MÒ-ri|:accent', sens: 'demòri', indici: 'l’accent écrit montre la syllabe forte' },
+						{ oc: 'mercés', fr: 'merci', forma: 'mér-SÉS|:accent', sens: 'mercés', indici: 'l’accent écrit tire la voix vers la fin' }
 					],
-					mescla: ['can-TA', 'la fa-MI-lyo', 'PAR-los', 'dé-MÒ-ri', 'tou-LOU-zo', 'par-LAN'],
-					bravo: 'Six sur six. Tu sais lire l’occitan à voix haute.'
+					mescla: ['can-TA', 'mér-SÉS', 'PAR-los', 'dé-MÒ-ri', 'tou-LOU-zo', 'par-LAN'],
+					bravo: 'Six sur six. Tu sais où poser la voix.'
 				}
 			]
 		},
@@ -129,7 +130,7 @@ export default {
 			blocs: [
 				{
 					type: 'intro',
-					text: 'Retiens trois choses : le **a** final sonne « o », le **o** sans accent sonne « ou », et la **fin du mot** dit où la voix appuie.'
+					text: 'Voyelle, **-s** ou **-n** à la fin : la voix appuie **avant**. Autre consonne : **sur la fin**. Un accent écrit : **là où il est**.'
 				},
 				{
 					type: 'indic',
@@ -142,8 +143,8 @@ export default {
 	],
 	fonts: [
 		{
-			de: 'Les règles',
-			text: '_oc:Gramatica de l’occitan estandard_, Collègi d’Occitania et Academia Occitana, sous la direction de Florian Vernet, pages 9 à 22.'
+			de: 'La règle',
+			text: '_oc:Gramatica de l’occitan estandard_, Collègi d’Occitania et Academia Occitana, sous la direction de Florian Vernet, page 22.'
 		},
 		{ de: 'Les prononciations', text: 'celles du parcours de Lo Ligam, en languedocien, choisies par Romain.' }
 	]
