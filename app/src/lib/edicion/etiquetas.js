@@ -11,7 +11,9 @@ const ETIQUETAS = [
 	['acuelh.eros.indici', 'L’indici (passa la mirga)', 'L’indice (survole les mots)'],
 	['acuelh.eros.carta', 'Boton « Dobrir la carta »', 'Bouton « Ouvrir la carte »'],
 	['acuelh.eros.aprene', 'Ligam « Aprene l’occitan »', 'Lien « Apprendre l’occitan »'],
-	['acuelh.bandel.font', 'La font de la lista de mots', 'La source du bandeau de mots'],
+	['acuelh.bandel.font', 'La font de la lista « Max Roqueta »', 'La source de la liste « Max Rouquette »'],
+	['acuelh.bandel.francitan.font', 'La font de la lista « francitan »', 'La source de la liste « francitan »'],
+	['acuelh.bandel.causida', 'La lista de mots mostrada (francitan o roqueta)', 'La liste de mots affichée (francitan ou roqueta)'],
 	['acuelh.manifest.titol', 'Títol « Qu’es aquò »', 'Titre « Qu’es aquò »'],
 	['acuelh.manifest.tèxt', 'Lo manifèst', 'Le manifeste'],
 	['acuelh.manifest.retrat', 'La fòto de Romain', 'La photo de Romain'],
@@ -62,6 +64,7 @@ const ETIQUETAS = [
 ];
 const PER_FIN = [
 	[/^acuelh\.bandel\.[^.]+$/, 'Un mot de la lista', 'Un mot du bandeau'],
+	[/^acuelh\.bandel\.francitan\.[^.]+$/, 'Un mot de la lista « francitan »', 'Un mot de la liste « francitan »'],
 	[/^acuelh\.parla\.ligams\.[^.]+$/, 'Un ligam de la rubrica 01', 'Un lien de la rubrique 01'],
 	[/^acuelh\.viure\.comunautat\.items\.[^.]+$/, 'Un ligam de la comunautat', 'Un lien de la communauté'],
 	[/^acuelh\.chifras\.[^.]+$/, 'Una chifra (carta)', 'Un chiffre (carte)'],
