@@ -162,7 +162,7 @@
 		<button type="button" class="rejoua" onclick={jogaC}>Rejouer</button>
 	</section>
 
-	<p class="fin">Dis-moi la lettre qui te plaît (A, B ou C), ou un mélange : je la mets alors sur le vrai chemin de S'apren.</p>
+	<p class="fin">Choix de Romain (03-11) : la C, posée sur le vrai chemin de S'apren. Cette page reste comme trace de l'essai.</p>
 </main>
 
 <style>

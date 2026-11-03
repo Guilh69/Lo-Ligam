@@ -11,11 +11,20 @@
 	import { tria } from '$lib/stores/lang.svelte.js';
 	import { PLAN } from '$lib/data/planSite.js';
 	import { AMASSA } from '$lib/acuelh/amassa.js';
+	import { PONCHS, RAIS, ARCS } from '$lib/acuelh/crotz-geometria.js';
 	import { ESTELAS, VISTA, COSTA_D } from '../../routes/ensag/blanc/donadas.js';
 	import { txt, lista } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 
 	const [PARLA, APREN, VIU] = PLAN;
+	// Les quatre ronds du chemin de S'apren, assez grands pour porter la croix du logo (au moins
+	// 40 px sur un téléphone) : variante C de /ensag/crotz, choisie par Romain le 2026-11-03.
+	const CAMIN_NODS = [
+		{ x: 22, y: 120, r: 15 },
+		{ x: 108, y: 84, r: 15 },
+		{ x: 178, y: 44, r: 15 },
+		{ x: 238, y: 20, r: 15 }
+	];
 	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer', es: 'Entrar', en: 'Enter', ca: 'Entrar', ar: 'ادخل' };
 	// accent = couleur claire qui ressort sur la braise (numéro et lueur de chaque bloc)
 	const ENTITATS = [
@@ -90,11 +99,24 @@
 		</svg>
 	{:else if type === 'camin'}
 		<svg class="vis camin" class:gran viewBox="0 0 260 140" role="img" aria-hidden="true">
-			<path class="camin-via" d="M22 120 C 70 120 66 88 108 84 S 168 70 178 44 S 214 24 238 20" pathLength="1" fill="none" stroke="#ffd98a" stroke-width="2.6" stroke-linecap="round" stroke-opacity="0.85" />
-			<circle class="camin-fita" cx="22" cy="120" r="6" style="--i: 0" />
-			<circle class="camin-fita" cx="108" cy="84" r="5" style="--i: 1" />
-			<circle class="camin-fita" cx="178" cy="44" r="5" style="--i: 2" />
-			<circle class="camin-fita camin-fin" cx="238" cy="20" r="6.5" style="--i: 3" />
+			<path class="camin-via" d="M22 120 C 70 120 66 88 108 84 S 168 70 178 44 S 214 24 238 20" pathLength="1" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-opacity="0.85" />
+			{#each CAMIN_NODS as nd, n (n)}
+				<g class="cn" style="--n: {n}">
+					<circle class="cn-fons" cx={nd.x} cy={nd.y} r={nd.r} />
+					<circle class="cn-or" cx={nd.x} cy={nd.y} r={nd.r} />
+					<circle class="cn-anell" cx={nd.x} cy={nd.y} r={nd.r} />
+					<g transform="translate({nd.x} {nd.y}) scale({nd.r - 2.4})">
+						<g class="cn-traç" fill="none" stroke-linecap="round">
+							<path d={RAIS} stroke-width="0.075" />
+							<path d={ARCS} stroke-width="0.08" />
+						</g>
+						<circle class="cn-moieu" cx="0" cy="0" r="0.15" />
+						{#each PONCHS as [x, y], k (k)}
+							<circle class="cn-ponch" cx={x} cy={y} r="0.125" style="--k: {k}" />
+						{/each}
+					</g>
+				</g>
+			{/each}
 		</svg>
 	{:else}
 		<svg class="vis rets" class:gran viewBox="0 0 400 300" role="img" aria-hidden="true">
@@ -146,7 +168,7 @@
 
 <section class="mieg" bind:this={racina} aria-label={tria({ oc: 'Las tres rubricas', fr: 'Les trois rubriques', es: 'Las tres secciones', en: 'The three sections', ca: 'Les tres seccions', ar: 'الأقسام الثلاثة' })}>
 		{#each ENTITATS as e, i (e.sec.id)}
-			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} style="--color: {e.accent}">
+			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} class:sec-camin={e.vis === 'camin'} style="--color: {e.accent}">
 				<div class="sist-cors">
 					<div class="sist-gauche">
 						<div class="sist-cap">
@@ -186,8 +208,25 @@
 	.estela { fill: #ffe6b8; fill-opacity: 0.6; }
 	.estela.vila { fill: #ffd98a; fill-opacity: 1; }
 	.vila-nom { font: 400 12px/1 var(--font-body), sans-serif; fill: var(--crema); fill-opacity: 0.85; }
-	.camin-fita { fill: #123; stroke: #ffd98a; stroke-width: 2.4; transform-box: fill-box; transform-origin: center; }
-	.camin-fin { fill: #ffd98a; }
+	/* La croix occitane du logo dans les ronds du chemin (Romain, 2026-11-03, variante C de /ensag/crotz) :
+	   chaque rond se charge à son tour, ses douze points deviennent grands et dorés un à un, puis le rond
+	   devient plein (croix rouge du logo sur or) ; à la fin, les quatre ronds sont pleins. Couleurs : les
+	   recettes du logo (jetons --logo-* de app.css, charte §1 bis), sans teinte dérivée. */
+	.camin { --via: #ffd98a; --cc-traç: var(--logo-traç); --cc-ponch: var(--logo-ponch); --cc-moieu: var(--logo-moieu); --cc-plena: var(--t-accion); --nod-fons: #123; --nod-traç: #ffd98a; --fin-fons: var(--logo-ponch); --fin-traç: #ffd98a; }
+	.camin-via { stroke: var(--via); }
+	/* l'état final : sans animation (moins d'animation, sans JavaScript) ou une fois chargé */
+	.cn-fons, .cn-or { fill: var(--fin-fons); }
+	.cn-or { transform-box: fill-box; transform-origin: center; }
+	.cn-anell { fill: none; stroke: var(--fin-traç); stroke-width: 2.4; }
+	.cn-traç { stroke: var(--cc-plena); }
+	.cn-ponch, .cn-moieu { fill: var(--cc-plena); transform-box: fill-box; transform-origin: center; }
+	/* avant le chargement (l'animation est permise) : rond sombre, croix blanche, petits points,
+	   disque d'or réduit à rien */
+	:global(.anim) .cn-fons { fill: var(--nod-fons); }
+	:global(.anim) .cn-or { transform: scale(0); }
+	:global(.anim) .cn-anell { stroke: var(--nod-traç); }
+	:global(.anim) .cn-traç { stroke: var(--cc-traç); }
+	:global(.anim) .cn-ponch, :global(.anim) .cn-moieu { fill: var(--cc-traç); transform: scale(0.5); }
 	.rets-domeni { fill: color-mix(in srgb, #ffd98a 12%, transparent); stroke: rgba(238, 175, 52, 0.55); stroke-width: 0.9; stroke-linejoin: round; }
 	.rets-arc { fill: none; stroke: #ffd98a; stroke-width: 1; opacity: 0.5; }
 	.rets-flux { fill: none; stroke: #fff; stroke-width: 2.2; stroke-dasharray: 0 7; stroke-linecap: round; opacity: 0.9; }
@@ -214,6 +253,9 @@
 		.sist-cors, .sistema-ent.invers .sist-cors { grid-template-columns: 1fr; }
 		.sistema-ent.invers .sist-gauche { order: 0; }
 		.sist-vis :global(.vis) { max-height: 52vh; }
+		/* le chemin de S'apren, un visuel bas : autant de blanc sous « Dintrar » qu'avant la section suivante */
+		.sist-vis :global(.camin) { margin-top: 2rem; }
+		.sec-camin { padding-bottom: 8vh; }
 	}
 
 	/* ——— Thème clair : le crème et l'or pâle du fond sombre disparaissent sur le fond clair ;
@@ -225,8 +267,8 @@
 	:global(:root[data-tema='clar']) .estela { fill: #b36d00; fill-opacity: 0.7; }
 	:global(:root[data-tema='clar']) .estela.vila { fill: #8f5400; fill-opacity: 1; }
 	:global(:root[data-tema='clar']) .vila-nom { fill-opacity: 1; }
-	:global(:root[data-tema='clar']) .camin-fita { fill: #fbf1e1; stroke: #8f5400; }
-	:global(:root[data-tema='clar']) .camin-fin { fill: #8f5400; }
+	/* fond clair : rond crème à anneau ocre, puis plein or avec anneau et croix rouge brique */
+	:global(:root[data-tema='clar']) .camin { --via: #8f5400; --nod-fons: #fbf1e1; --nod-traç: #8f5400; --fin-traç: var(--t-accion); }
 	:global(:root[data-tema='clar']) .rets-domeni { fill: color-mix(in srgb, #b36d00 16%, transparent); stroke: rgba(143, 84, 0, 0.85); stroke-width: 1.3; }
 	:global(:root[data-tema='clar']) .rets-arc { stroke: #8f5400; opacity: 0.75; }
 	:global(:root[data-tema='clar']) .rets-flux { stroke: #b53d17; opacity: 1; }
@@ -252,6 +294,21 @@
 	.anim [data-revela].vist { opacity: 1; transform: none; }
 	.anim .vist .costa { stroke-dashoffset: 1; animation: traçar 1.8s var(--lent) 0.2s forwards; }
 	.anim .vist .camin-via { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar 1.4s var(--lent) 0.2s forwards; }
+	/* chaque rond se charge à son tour (0,4 s d'attente, puis 1,45 s par rond) : un point toutes les
+	   85 ms ; puis un disque d'or grandit depuis le centre (jamais de fondu du bleu nuit à l'or, qui
+	   passerait par un kaki sale) ; la croix passe au rouge du logo quand le rond est presque plein */
+	:global(.anim .vist) .cn-ponch { animation: acendre 0.45s cubic-bezier(0.3, 1.7, 0.5, 1) calc(0.4s + var(--n) * 1.45s + var(--k) * 85ms) both, plena-ponch 0.3s ease calc(1.95s + var(--n) * 1.45s) forwards; }
+	:global(.anim .vist) .cn-moieu { animation: acendre-moieu 0.45s cubic-bezier(0.3, 1.7, 0.5, 1) calc(0.4s + var(--n) * 1.45s) both, plena-moieu 0.3s ease calc(1.95s + var(--n) * 1.45s) forwards; }
+	:global(.anim .vist) .cn-traç { animation: plena-traç 0.3s ease calc(1.95s + var(--n) * 1.45s) forwards; }
+	:global(.anim .vist) .cn-or { animation: plena-or 0.45s cubic-bezier(0.3, 0.9, 0.3, 1) calc(1.7s + var(--n) * 1.45s) forwards; }
+	:global(.anim .vist) .cn-anell { animation: plena-anell 0.45s ease calc(1.7s + var(--n) * 1.45s) forwards; }
+	@keyframes acendre { from { fill: var(--cc-traç); transform: scale(0.5); } to { fill: var(--cc-ponch); transform: scale(1); } }
+	@keyframes acendre-moieu { from { fill: var(--cc-traç); transform: scale(0.5); } to { fill: var(--cc-moieu); transform: scale(1); } }
+	@keyframes plena-ponch { from { fill: var(--cc-ponch); } to { fill: var(--cc-plena); } }
+	@keyframes plena-moieu { from { fill: var(--cc-moieu); } to { fill: var(--cc-plena); } }
+	@keyframes plena-traç { from { stroke: var(--cc-traç); } to { stroke: var(--cc-plena); } }
+	@keyframes plena-or { from { transform: scale(0); } to { transform: scale(1); } }
+	@keyframes plena-anell { from { stroke: var(--nod-traç); } to { stroke: var(--fin-traç); } }
 	.anim .vist .rets-flux { animation: fluir 1.1s linear infinite; }
 	.anim .vist .rets-arc { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar 1.2s var(--lent) both; animation-delay: calc(0.2s + var(--i) * 0.12s); }
 	.anim .vist .rets-vila { transform: scale(0); animation: naisser 0.6s var(--lent) both; animation-delay: calc(0.3s + var(--i) * 0.06s); }
