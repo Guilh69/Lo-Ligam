@@ -37,7 +37,7 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 |---|---|---|
 | 1 | L'ambiance : sombre « Éclat » et Venas d'aur par défaut, clair « Plâtre » au choix | ✅ fait (21-22-10) |
 | 2 | Pourquoi, pour qui, les trois rubriques (blocs 1 à 3) | ✅ fait (22-10) |
-| 3 | **L'accueil, la vue d'ensemble** (bloc 4) | **corrections de Romain du 03-11 (PDF de 8 pages)** : menu à droite, pied de page, six textes et places du premier cours faits (nombre à écrire par Romain dans « Editar », vide au départ) ; restent le bandeau de mots (francitan) et la croix occitane dans les ronds de S'apren (`revisions/2026-11-03-accueil-corrections-passation.md`) |
+| 3 | **L'accueil, la vue d'ensemble** (bloc 4) | **corrections de Romain du 03-11 (PDF de 8 pages)** : menu à droite, pied de page, six textes, places du premier cours et bandeau de mots faits (nombre de places à écrire par Romain dans « Editar », vide au départ ; liste du bandeau au choix de Romain, francitan par défaut) ; reste la croix occitane dans les ronds de S'apren (`revisions/2026-11-03-accueil-corrections-passation.md`) |
 | 4 | La charte et le mouvement (blocs 5 et 6), le cadre commun des pages | en partie : règle B des couleurs sur tout le site (23-10) ; reste la question du point 3 ci-dessus |
 | 5 | Les mots (bloc 7) | en partie : tutoiement partout, « uèi » validé (22-23-10) ; reste la pile de validations |
 | 6 | Les pages de rubrique : Se parla (carte, puis wiki), S'apren, Amassa | carte très avancée (prise en avance le 22-10) ; **les trois pages lancées le 24-10** (chantiers 19 à 23, une discussion chacun), S'apren d'abord ; Se parla et Amassa en ligne le 25-10 |
