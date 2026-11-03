@@ -36,6 +36,8 @@ export const PLAN = [
 			{ oc: 'Leiçon d’ensag', fr: 'Leçon d’essai', es: 'Lección de prueba', en: 'Trial lesson', ca: 'Lliçó de prova', ar: 'درس تجريبي', href: '/aprene/essai' },
 			// (venait d'Amassa : « c'est de l'apprentissage », Romain, 2026-10-22)
 			{ oc: 'Mots en imatges', fr: 'Mots en images', es: 'Palabras en imágenes', en: 'Words in pictures', ca: 'Paraules en imatges', ar: 'كلمات بالصور', href: '/mots' },
+			// (la grammaire, notion par notion : « plutôt dans apprendre la langue », Romain, 2026-11-03)
+			{ oc: 'Gramatica', fr: 'Grammaire', es: 'Gramática', en: 'Grammar', ca: 'Gramàtica', ar: 'قواعد اللغة', href: '/apren/gramatica' },
 			// (la page qui explique le cours avant le calendrier, Romain, 2026-10-24)
 			{ oc: 'Corses en visio', fr: 'Cours en visio', es: 'Clases por videollamada', en: 'Video lessons', ca: 'Classes per videotrucada', ar: 'دروس عبر الفيديو', href: VISIO },
 			// (était dans l'ancien pied de page : on ne retire aucune fonction)

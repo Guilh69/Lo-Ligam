@@ -26,9 +26,14 @@ export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apre
 
 // Les modules de leçon (/aprene/modul/1-1…) le 2026-10-25 : une famille de
 // pages, reconnue par son début (adresse réelle ou route de SvelteKit) ;
-// de même les groupes d'Amassa (/grops…), le 2026-10-25.
+// de même les groupes d'Amassa (/grops…), le 2026-10-25, le wiki (/wiki) et
+// la grammaire de S'apren et ses fiches (/apren/gramatica…), le 2026-11-03.
 export const armonizada = (cami) =>
-	ARMONIZADAS.includes(cami) || cami.startsWith('/aprene/modul/') || cami.startsWith('/grops');
+	ARMONIZADAS.includes(cami) ||
+	cami.startsWith('/aprene/modul/') ||
+	cami.startsWith('/grops') ||
+	cami.startsWith('/wiki') ||
+	cami.startsWith('/apren/gramatica');
 
 const CLAU = { tema: 'lo-ligam-tema', dalt: 'lo-ligam-dalt', fons: 'lo-ligam-fons', leugier: 'lo-ligam-leugier' };
 const TEMAS = ['sorne', 'clar', 'sistema'];

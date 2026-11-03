@@ -176,7 +176,10 @@
     { "clau": "apren.teulas.mots", "tipe": "bloc", "lista": "apren.teulas", "ordre": 4 },
     { "clau": "apren.teulas.mots.ligam", "tipe": "ligam", "lista": "apren.teulas.mots", "oc": "Mots en imatges", "fr": "Mots en images", "ligam": "/mots", "es": "Palabras en imágenes", "en": "Words in pictures", "ca": "Paraules en imatges", "ar": "كلمات بالصور" },
     { "clau": "apren.teulas.mots.sota", "tipe": "text", "lista": "apren.teulas.mots", "oc": "A escriure", "fr": "À écrire", "visible": false, "es": "Por escribir", "en": "To be written", "ca": "Per escriure", "ar": "سيُكتب لاحقًا" },
-    { "clau": "apren.teulas.progression", "tipe": "bloc", "lista": "apren.teulas", "ordre": 5 },
+    { "clau": "apren.teulas.gramatica", "tipe": "bloc", "lista": "apren.teulas", "ordre": 5 },
+    { "clau": "apren.teulas.gramatica.ligam", "tipe": "ligam", "lista": "apren.teulas.gramatica", "oc": "Gramatica", "fr": "Grammaire", "ligam": "/apren/gramatica", "es": "Gramática", "en": "Grammar", "ca": "Gramàtica", "ar": "قواعد اللغة" },
+    { "clau": "apren.teulas.gramatica.sota", "tipe": "text", "lista": "apren.teulas.gramatica", "oc": "Las règlas de la lenga, nocion per nocion.", "fr": "Les règles de la langue, notion par notion.", "es": "Las reglas de la lengua, noción por noción.", "en": "The rules of the language, one notion at a time.", "ca": "Les regles de la llengua, noció per noció.", "ar": "قواعد اللغة، مفهومًا بعد مفهوم." },
+    { "clau": "apren.teulas.progression", "tipe": "bloc", "lista": "apren.teulas", "ordre": 6 },
     { "clau": "apren.teulas.progression.ligam", "tipe": "ligam", "lista": "apren.teulas.progression", "oc": "Ma progression", "fr": "Ma progression", "ligam": "/compte", "es": "Mi progreso", "en": "My progress", "ca": "El meu progrés", "ar": "تقدّمي" },
     { "clau": "apren.teulas.progression.sota", "tipe": "text", "lista": "apren.teulas.progression", "oc": "A escriure", "fr": "À écrire", "visible": false, "es": "Por escribir", "en": "To be written", "ca": "Per escriure", "ar": "سيُكتب لاحقًا" }
   ],

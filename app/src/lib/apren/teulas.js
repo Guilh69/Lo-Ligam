@@ -79,6 +79,7 @@ export const PALETA_PER_DEFAUT = 'charta';
 export function pictoPer(href = '') {
 	if (href.startsWith('/apren/visio') || href.startsWith('https://calendar.proton.me')) return 'visio';
 	if (href.startsWith('/aprene/essai')) return 'ensag';
+	if (href.startsWith('/apren/gramatica')) return 'wiki';
 	if (href.startsWith('/aprene')) return 'parcors';
 	if (href.startsWith('/mots')) return 'mots';
 	if (href.startsWith('/compte')) return 'progression';

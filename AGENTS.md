@@ -28,6 +28,7 @@ Site d'apprentissage de l'occitan (languedocien, norme classique) : https://loli
 - « Absent du Basic » ou une erreur d'appel ne veut pas dire que le mot est faux : vérifier sur dicodòc, ne pas remplacer le mot.
 - Grammaire de référence depuis le 2026-11-02 : *Gramatica de l'occitan estandard* (Academia Occitana), hors Git. Négation : *non* devant le verbe et ses pronoms, *pas* après (*Non parli pas*), partout ; *pas* seul seulement dans une citation ou pour reconnaître la forme familière (`cursus/regles-redaccion-A1.md` §7). Formes tranchées au lot 2 (02-11) : *la frucha* (les fruits, sans pluriel) ; *dosen, dosena* (deuxième ; *segond* : le second, quand il n'y en a que deux) ; soudure obligatoire avec *a* et *de*, au choix avec *sus* et *jos* ; *setanta*, *lo lach*, *prene* et *comprene* gardés (le livre : *setenta*, *la lait*, *préner*) ; *blanc* « BLANK », *caud* « CAOUT » (`cursus/cobertura-gramatica.md` §4).
 - **Tout occitan est validé par Romain avant publication.** Prononciation : son usage vivant, pas un outil de phonétique.
+- Fiches de grammaire (`/apren/gramatica`, dans S'apren) : un fichier de données par fiche, mode d'emploi dans `app/src/lib/gramatica/LEGIR-ME.md` ; la source (livre et page) sous chaque écran ; on prend les informations du livre de référence, jamais son texte ni son plan.
 
 ## Textes publics
 Tutoiement partout · pas de tirets longs · pas de jargon anglais · **aucun slogan inventé** dans la voix de Romain · écriture inclusive · aucune adresse personnelle (seulement l'alias de contact).
