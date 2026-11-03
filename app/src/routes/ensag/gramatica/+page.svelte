@@ -4,11 +4,26 @@
 	// l'occitan », captures de la grammaire cognitive du CPNL rangées dans
 	// design-stock/Inspiration/Gramatica). Une idée par écran ; une couleur par
 	// terminaison de l'infinitif, gardée jusque dans les formes conjuguées.
+	// Retour de Romain (03-11) : « un peu trop calqué sur le catalan, avec le
+	// robot » ; le robot cède la place à l'encart culture des leçons, les
+	// cartes prennent les aplats des cases de S'apren, et chaque écran cite
+	// sa source (le livre et sa page ; le CPNL pour la forme).
 	// Formes reprises de l'A1 (4.1, 5.3) et de la trame (10.2, 10.3, 11.3),
 	// vérifiées avec lo Congrès et vèrb'Òc ; occitan à relire par Romain.
 	// Page de travail, pas indexée.
 	import { fly } from 'svelte/transition';
 	import Pictograma from '$lib/apren/Pictograma.svelte';
+	import NoteBlock from '$lib/lesson/NoteBlock.svelte';
+
+	// l'encart culture du module 4.1, tel quel (texte déjà vérifié)
+	const CULTURA = {
+		variant: 'culture',
+		title: 'Cultura : troubadour, un nom de métier',
+		paragraphs: [
+			'Le mot « troubadour » vient de l’occitan *trobador* : celui qui compose, de *trobar*, « trouver », un verbe en -ar comme *cantar*. Le français l’a emprunté : sa première trace écrite date de 1575.',
+			'Source : TLFi, article « troubadour ».'
+		]
+	};
 
 	const ECRANS = [
 		'L’infinitiu',
@@ -22,9 +37,9 @@
 	// -ar ; -ir, avec ou sans -iss- ; -re et -er. La couleur d'une fin vit dans
 	// --g-<fin> : -re et -er partagent celle du troisième groupe.
 	const GROPS = [
-		{ n: '1er', fins: ['ar'], ex: [['parlar', 'parler'], ['cantar', 'chanter'], ['trabalhar', 'travailler'], ['manjar', 'manger'], ['escotar', 'écouter']] },
-		{ n: '2e', fins: ['ir'], ex: [['legir', 'lire'], ['finir', 'finir'], ['causir', 'choisir'], ['venir', 'venir'], ['sentir', 'sentir']] },
-		{ n: '3e', fins: ['re', 'er'], ex: [['beure', 'boire'], ['vendre', 'vendre'], ['escriure', 'écrire'], ['voler', 'vouloir'], ['poder', 'pouvoir'], ['aver', 'avoir']] }
+		{ n: '1er', aplat: '#6b3a5b', fins: ['ar'], ex: [['parlar', 'parler'], ['cantar', 'chanter'], ['trabalhar', 'travailler'], ['manjar', 'manger'], ['escotar', 'écouter']] },
+		{ n: '2e', aplat: '#55702f', fins: ['ir'], ex: [['legir', 'lire'], ['finir', 'finir'], ['causir', 'choisir'], ['venir', 'venir'], ['sentir', 'sentir']] },
+		{ n: '3e', aplat: '#2f6a9c', fins: ['re', 'er'], ex: [['beure', 'boire'], ['vendre', 'vendre'], ['escriure', 'écrire'], ['voler', 'vouloir'], ['poder', 'pouvoir'], ['aver', 'avoir']] }
 	];
 	const FINS = ['ar', 'ir', 're', 'er'];
 	const finDe = (mot) => FINS.find((f) => mot.endsWith(f));
@@ -154,6 +169,8 @@
 
 {#snippet fins(rad, fin, g)}<span lang="oc">{rad}<b class="fin" style:color="var(--g-{g})">{fin}</b></span>{/snippet}
 
+{#snippet font(pages)}<p class="font">Source : <cite lang="oc">Gramatica de l’occitan estandard</cite> (Collègi d’Occitania, Academia Occitana), {pages}.</p>{/snippet}
+
 {#snippet picto(nom)}
 	<svg class="picto" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 		{#if nom === 'vendre'}
@@ -170,13 +187,6 @@
 		{:else if nom === 'escotar'}
 			<path d="M15 19a11 11 0 0 1 22 0c0 7-6 9-6 15a6 6 0 0 1-11 3" />
 			<path d="M21 20a5 5 0 0 1 10 0c0 3-3 4-3 6" />
-		{:else if nom === 'robot'}
-			<rect x="9" y="16" width="30" height="22" rx="5" />
-			<path d="M24 16V9" />
-			<circle cx="24" cy="7" r="2.5" />
-			<circle cx="18" cy="26" r="2.6" />
-			<circle cx="30" cy="26" r="2.6" />
-			<path d="M18 33h12M5 24v6M43 24v6" />
 		{/if}
 	</svg>
 {/snippet}
@@ -192,27 +202,19 @@
 		{#key ecran}
 			<section
 				class="ecran"
+				class:a-cultura={ecran === 0}
 				aria-labelledby="ecran-{ecran}"
 				in:fly={{ x: calme() ? 0 : sens * 48, duration: calme() ? 0 : 320, opacity: 0 }}
 			>
 				<h2 id="ecran-{ecran}" lang="oc" tabindex="-1" bind:this={titres[ecran]}>{ECRANS[ecran]}</h2>
 
 				{#if ecran === 0}
-					<p class="bandeau">
+					<p class="intro">
 						Pour nommer un verbe, on le dit à l’<strong>infinitif</strong>, comme dans le dictionnaire.
 						En occitan, il finit par
-						{#each FINS as f, i}<b style:color="var(--g-{f})">-{f}</b>{i < 2 ? ', ' : i === 2 ? ' ou ' : ''}{/each} :
+						{#each FINS as f, i}<b style:color="var(--g-{f})">-{f}</b>{i < 2 ? ', ' : i === 2 ? ' ou ' : ''}{/each} :
 						trois groupes de verbes.
 					</p>
-
-					<div class="robot">
-						{@render picto('robot')}
-						<p class="bulla" lang="oc">Ieu voler parlar occitan !</p>
-						<p class="robot-nota">
-							Tout à l’infinitif : on comprend, mais ça sonne robot. On conjugue le premier verbe :
-							<i lang="oc">Vòli parlar occitan.</i>
-						</p>
-					</div>
 
 					<ul class="cartas">
 						{#each GROPS as g (g.n)}
@@ -221,7 +223,7 @@
 									type="button"
 									class="carta"
 									class:ouverte={ouverte === g.n}
-									style:--g="var(--g-{g.fins[0]})"
+									style:--aplat={g.aplat}
 									aria-expanded={ouverte === g.n}
 									aria-controls="ex-{g.n}"
 									onclick={() => (ouverte = ouverte === g.n ? null : g.n)}
@@ -242,14 +244,13 @@
 					</ul>
 					<p class="indic">Touche une carte pour voir des exemples.</p>
 
-					<aside class="nota">
-						<span class="nota-signe" aria-hidden="true">!</span>
-						<p>
+					<p class="nota">
 							<strong>Un groupe</strong>, c’est une famille de verbes qui se conjuguent de la même façon.
-							Le deuxième en cache deux : <i lang="oc">legir</i> prend <i lang="oc">-iss-</i>
+							Le deuxième en cache deux : <i lang="oc">legir</i> prend <i lang="oc">-iss-</i>
 							(<i lang="oc">legissi</i>, je lis), <i lang="oc">venir</i> non (<i lang="oc">veni</i>, je viens).
-						</p>
-					</aside>
+					</p>
+					<div class="cultura"><NoteBlock block={CULTURA} /></div>
+					{@render font('pages 63 et 64')}
 				{:else if ecran === 1}
 					<p class="intro">
 						Un infinitif a deux parties : le <strong>radical</strong>, qui porte le sens, et la
@@ -272,7 +273,7 @@
 						<span class="nom-fin"><span lang="oc">la terminason</span><small>la terminaison</small></span>
 					</div>
 				{:else if ecran === 2}
-					<p class="bandeau">
+					<p class="intro">
 						<strong>Conjuguer</strong>, c’est changer la terminaison de l’infinitif. La nouvelle fin dit
 						<strong>qui</strong> fait l’action, et <strong>quand</strong>.
 					</p>
@@ -300,6 +301,7 @@
 							</div>
 						</div>
 					</div>
+					{@render font('page 63')}
 					<p class="indic">Le plus souvent, le radical reste et la fin change. La couleur rappelle le groupe de l’infinitif : <i lang="oc">parlar</i>, <i lang="oc">escotar</i>.</p>
 				{:else if ecran === 3}
 					<p class="intro">
@@ -359,6 +361,7 @@
 						<button type="button" class="boton tiers" lang="oc" onclick={reprendre}>Recomençar</button>
 					</div>
 					<p class="retorn" aria-live="polite">{retour}</p>
+					{@render font('page 63, les marques de personne')}
 				{:else}
 					<p class="intro">La toute dernière lettre du verbe, ou les deux dernières, dit qui parle : c’est la <strong>marque de la personne</strong>. La même pour presque tous les verbes :</p>
 					<ul class="resumit">
@@ -376,10 +379,22 @@
 					<p class="seguida">
 						Dans le parcours : <a href="/aprene/modul/4-1">le module 4.1 fait parler les verbes en -ar</a>.
 					</p>
-					<p class="fonts">
-						D’après la <cite lang="oc">Gramatica de l’occitan estandard</cite> (Academia Occitana), pages 63 et 64.
-						Forme inspirée de la grammaire cognitive du CPNL, en Catalogne.
-					</p>
+					<div class="credits">
+						<h3>Sources</h3>
+						<p>
+							<strong>La règle</strong> : <cite lang="oc">Gramatica de l’occitan estandard</cite>, Collègi d’Occitania et Academia Occitana,
+							sous la direction de Florian Vernet, pages 63 et 64.
+						</p>
+						<p>
+							<strong>La forme des écrans</strong> : inspirée de la grammaire cognitive du CPNL (Consorci per a la Normalització
+							Lingüística, Catalogne), de Magda Aragonès i Ros et Maria Badia Rabassa, avec l’équipe de grammaire
+							cognitive du CPNL et l’aide de Lourdes Miquel et Carles Vilches :
+							<a href="https://www.cpnl.cat/gramatica/" rel="noopener">cpnl.cat/gramatica</a>. Le CPNL s’inspire lui-même de la
+							<cite lang="es">Gramática básica del estudiante de español</cite> (Difusión) et de la
+							<cite lang="ca">Gramàtica pràctica del català</cite> (Teide).
+						</p>
+						<p><strong>Le mot <i lang="oc">trobador</i></strong> : TLFi, article « troubadour ».</p>
+					</div>
 				{/if}
 			</section>
 		{/key}
@@ -404,15 +419,15 @@
 
 <style>
 	/* Une couleur par groupe de verbes, prise dans la charte (prune, olive,
-	   bleu ciel), assombrie sur le clair pour le contraste (4,5 au moins dans
-	   le bandeau), éclaircie sur le fond sombre. Jamais le rouge du
+	   bleu ciel) : en aplat sur les cartes, comme les cases de S'apren ; en
+	   texte, assombrie sur le clair (4,5 au moins), éclaircie sur le sombre. Jamais le rouge du
 	   logo, réservé à ce qui se clique (règle B). */
 	.fiche {
 		--g-ar: #e3a0cf;
 		--g-ir: #b8d27c;
 		--g-re: #8cc3f0;
 		--g-er: var(--g-re);
-		--bandeau: color-mix(in srgb, var(--t-aur) 16%, var(--t-fons-2));
+		--pastilha: color-mix(in srgb, var(--t-aur) 16%, var(--t-fons-2));
 		container-type: inline-size;
 		max-width: 76rem;
 		margin: 0 auto;
@@ -478,82 +493,35 @@
 		color: var(--t-aur);
 		outline: none;
 	}
-	.bandeau,
 	.intro {
 		margin: 0;
 		max-width: 52rem;
 		font-size: clamp(1.1rem, 2.6cqi, 1.45rem);
 		line-height: 1.45;
 	}
-	.bandeau {
-		align-self: start;
-		padding: 1rem 1.25rem;
-		border-radius: 0.9rem;
-		background: var(--bandeau);
-	}
 	.indic {
 		margin: 0;
 		color: var(--t-tinta-2);
 	}
 
-	/* écran 1 : le robot, les quatre cartes, la remarque */
-	.robot {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		align-items: center;
-		gap: 0.3rem 0.8rem;
-		max-width: 30rem;
-	}
-	.robot :global(.picto) {
-		width: 3.2rem;
-		height: 3.2rem;
-		color: var(--t-tinta-2);
-	}
-	.bulla {
-		position: relative;
-		margin: 0;
-		padding: 0.55rem 0.9rem;
-		border-radius: 1rem;
-		background: var(--t-fons-2);
-		font-weight: 700;
-		font-size: 1.15rem;
-		justify-self: start;
-		transform: rotate(-2deg);
-	}
-	.bulla::before {
-		content: '';
-		position: absolute;
-		left: -0.45rem;
-		top: 50%;
-		border: 0.45rem solid transparent;
-		border-right-color: var(--t-fons-2);
-		border-left: 0;
-		translate: 0 -50%;
-	}
-	.robot-nota {
-		grid-column: 2;
-		margin: 0;
-		font-size: 0.92rem;
-		color: var(--t-tinta-2);
-	}
+	/* écran 1 : l'encart culture à droite sur grand écran, les trois cartes */
 	@container (min-width: 64rem) {
-		.ecran {
-			grid-template-columns: 1fr 22rem;
+		.ecran.a-cultura {
+			grid-template-columns: 1fr 24rem;
 			column-gap: 2.5rem;
 		}
-		.ecran > :not(.robot) {
-			grid-column: 1 / -1;
-		}
-		.ecran > .bandeau {
+		.ecran.a-cultura > :not(.cultura) {
 			grid-column: 1;
 		}
-		.robot {
+		.cultura {
 			grid-column: 2;
-			grid-row: 2;
-			align-self: center;
+			grid-row: 2 / span 4;
+			align-self: start;
 		}
 	}
-
+	.cultura :global(.block) {
+		margin: 0;
+	}
 	.cartas {
 		list-style: none;
 		margin: 0.4rem 0 0;
@@ -584,8 +552,8 @@
 		padding: 1rem 0.5rem 0.9rem;
 		border: 0;
 		border-radius: 1rem;
-		background: color-mix(in srgb, var(--g) 20%, var(--t-fons-2));
-		color: var(--t-tinta);
+		background: var(--aplat);
+		color: #fbf1e1;
 		font: inherit;
 		cursor: pointer;
 		transition:
@@ -594,26 +562,22 @@
 	}
 	.carta:hover,
 	.carta.ouverte {
-		background: color-mix(in srgb, var(--g) 32%, var(--t-fons-2));
+		background: color-mix(in srgb, var(--aplat) 88%, #000);
 		transform: translateY(-3px);
 	}
 	.carta:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 3px;
 	}
-	.carta-en {
+	.carta-en,
+	.carta-ex {
 		font-size: 0.95rem;
-		color: var(--t-tinta-2);
+		color: #fbf1e1;
 	}
 	.carta-fin {
 		font-size: clamp(2.2rem, 7cqi, 3.4rem);
 		font-weight: 700;
 		line-height: 1;
-		color: var(--g);
-	}
-	.carta-ex {
-		font-size: 0.95rem;
-		color: var(--t-tinta-2);
 	}
 	.exemples {
 		position: absolute;
@@ -647,26 +611,9 @@
 		opacity: 0.75;
 	}
 	.nota {
-		display: flex;
-		gap: 0.8rem;
-		align-items: flex-start;
+		margin: 0.4rem 0 0;
 		max-width: 52rem;
-		margin-top: 0.4rem;
-	}
-	.nota p {
-		margin: 0;
 		line-height: 1.5;
-	}
-	.nota-signe {
-		flex: none;
-		display: grid;
-		place-items: center;
-		width: 2rem;
-		height: 2rem;
-		border-radius: 50%;
-		background: var(--t-aur);
-		color: var(--t-fons);
-		font-weight: 700;
 	}
 
 	/* écran 2 : l'infinitif coupé en deux */
@@ -863,7 +810,7 @@
 	.place.plena {
 		border-style: solid;
 		border-color: transparent;
-		background: var(--bandeau);
+		background: var(--pastilha);
 	}
 	.place[aria-disabled='true'] {
 		cursor: default;
@@ -921,7 +868,7 @@
 		padding: 0.45rem 1.1rem;
 		border: 0;
 		border-radius: 1.4rem;
-		background: var(--bandeau);
+		background: var(--pastilha);
 		color: var(--t-tinta);
 		font: inherit;
 		font-size: 1.2rem;
@@ -1021,14 +968,31 @@
 		text-decoration-thickness: 2px;
 		text-underline-offset: 0.25em;
 	}
-	.seguida,
-	.fonts {
+	.seguida {
 		margin: 0;
 	}
-	.fonts {
+	.font {
+		margin: 0;
 		font-size: 0.85rem;
 		color: var(--t-tinta-2);
+	}
+	.credits {
 		max-width: 52rem;
+		font-size: 0.9rem;
+		color: var(--t-tinta-2);
+	}
+	.credits h3 {
+		margin: 0.4rem 0 0.3rem;
+		color: var(--t-tinta);
+	}
+	.credits p {
+		margin: 0 0 0.35rem;
+	}
+	.credits a {
+		color: var(--t-tinta);
+		text-decoration-color: var(--t-accion);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.2em;
 	}
 
 	/* la navigation, toujours en bas */
