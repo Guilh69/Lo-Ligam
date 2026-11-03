@@ -337,6 +337,17 @@ html[lang='ar'] .acuelh .bi > .oc { position: absolute; top: 0.06em; inset-inlin
 .acuelh .boton-tèxt { display: inline-flex; gap: 0.7rem; transition: transform 0.6s var(--ease); }
 .acuelh .boton svg { width: 1em; height: 1em; transition: transform 0.6s var(--ease); }
 .acuelh .boton:hover svg { transform: translateX(4px) rotate(-45deg); }
+/* Les places du premier cours : une pastille crème dans le bouton, 5,1:1 (terracotta sur crème) ; Romain, 2026-11-03 */
+.acuelh .boton-places {
+	position: relative; display: inline-flex; align-items: center;
+	padding: 0.18rem 0.7rem; border-radius: 999px; background: var(--accion-tinta); color: var(--accion);
+	font: 700 0.78rem var(--cors); letter-spacing: 0.02em; white-space: nowrap;
+}
+.acuelh .boton-places.buit { opacity: 0.65; }
+/* téléphone : la pastille passe sous le texte du bouton (le texte ne se coupe plus en « … primièr / cors ») */
+@media (max-width: 30em) {
+	.acuelh .boton:has(> .boton-places) { flex-wrap: wrap; justify-content: center; row-gap: 0.5rem; padding-block: 1rem; }
+}
 .acuelh .ligam-tèxt { position: relative; font-weight: 700; padding: 0.3rem 0; }
 .acuelh .ligam-tèxt::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--accion); transform-origin: left; transition: transform 0.7s var(--ease); }
 .acuelh .ligam-tèxt:hover::after { transform: scaleX(0); transform-origin: right; }

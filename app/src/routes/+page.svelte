@@ -48,6 +48,26 @@
 	let autraLang = $derived(esOc ? 'fr' : lang);
 	const autra = (v) => v?.[autraLang] || v?.fr || v?.oc || '';
 
+	// Les places du premier cours (Romain, 2026-11-03, Corrections_page_accueil.pdf p. 7).
+	// Proton Calendar ne donne pas le nombre de places : c'est Romain qui le tient, par
+	// « Editar » (élément acuelh.crida.places). Vide : rien ne s'affiche ; 1 et plus :
+	// « 3 places » dans le bouton ; 0 : le bouton devient « Liste d'attente »
+	// (acuelh.crida.espera, qui mène au questionnaire d'avant le premier cours).
+	let nbPlaces = $derived.by(() => {
+		const v = txt('acuelh.crida.places');
+		const brut = String(v?.oc || v?.fr || '').trim();
+		return /^\d{1,3}$/.test(brut) ? Number(brut) : null;
+	});
+	let complet = $derived(nbPlaces === 0);
+	const libPlaces = (n) => ({
+		oc: `${n} ${n === 1 ? 'plaça' : 'plaças'}`,
+		fr: `${n} ${n === 1 ? 'place' : 'places'}`,
+		es: `${n} ${n === 1 ? 'plaza' : 'plazas'}`,
+		en: `${n} ${n === 1 ? 'spot' : 'spots'}`,
+		ca: `${n} ${n === 1 ? 'plaça' : 'places'}`
+	});
+	const LIB_COMPLET = { oc: 'complèt', fr: 'complet', es: 'completo', en: 'full', ca: 'complet' };
+
 	let racina;
 	let motor = $state.raw(null);
 
@@ -112,6 +132,11 @@
 
 <!-- Un texte dans les deux langues (masques qui basculent), lu par sa clé -->
 {#snippet bi(clau)}{@const v = txt(clau)}<span class="bi"
+		><span class="oc" aria-hidden={!esOc}>{v.oc}</span><span class="autra" aria-hidden={esOc}>{autra(v)}</span></span
+	>{/snippet}
+
+<!-- Un texte du code (pas un élément modifiable), dans les deux langues comme bi() -->
+{#snippet biTx(v)}<span class="bi"
 		><span class="oc" aria-hidden={!esOc}>{v.oc}</span><span class="autra" aria-hidden={esOc}>{autra(v)}</span></span
 	>{/snippet}
 
@@ -297,13 +322,25 @@
 				</p>
 				<div class="esvani" style="--i: 4">
 					<div class="crida-accions">
-						{#if !amagat('acuelh.crida.reservar')}
+						<!-- Plus de place (0) : le bouton mène à la liste d'attente ; sinon, le bouton de réservation, avec ses places -->
+						{#if complet && !edicion.actiu}
+							{@const e = ligam('acuelh.crida.espera')}
+							<a class="boton" href={e.href} data-magnet>
+								<span class="boton-emplenat"></span>
+								<span class="boton-tèxt">{@render bi('acuelh.crida.espera')}{@render sageta()}</span>
+								<span class="boton-places">{@render biTx(LIB_COMPLET)}</span>
+							</a>
+						{:else if !amagat('acuelh.crida.reservar')}
 							{@const l = ligam('acuelh.crida.reservar')}
 							<a class="boton" href={l.href} target={l.defòra ? '_blank' : undefined} rel={l.defòra ? 'noopener' : undefined} data-magnet aria-describedby={l.defòra ? 'onglet-nou' : undefined} use:editar={'acuelh.crida.reservar'}>
 								<span class="boton-emplenat"></span>
 								<span class="boton-tèxt">{@render bi('acuelh.crida.reservar')}{@render sageta()}</span>
+								{#if nbPlaces !== null || edicion.actiu}
+									<span class="boton-places" class:buit={nbPlaces === null} use:editar={'acuelh.crida.places'}>{#if nbPlaces === null}plaças ?{:else if complet}{@render biTx(LIB_COMPLET)}{:else}{@render biTx(libPlaces(nbPlaces))}{/if}</span>
+								{/if}
 							</a>
 						{/if}
+						{#if edicion.actiu}{@render lg('acuelh.crida.espera', 'ligam-tèxt')}{/if}
 						{@render lg('acuelh.crida.sol', 'ligam-tèxt')}
 					</div>
 				</div>

@@ -31,6 +31,8 @@ const ETIQUETAS = [
 	['acuelh.crida.titol.2', 'Crida, linha 2', 'Appel, ligne 2'],
 	['acuelh.crida.sota', 'La frasa de la crida', 'La phrase de l’appel'],
 	['acuelh.crida.reservar', 'Boton « Reservar un cors »', 'Bouton « Réserver un cours »'],
+	['acuelh.crida.places', 'Nombre de plaças liuras (0 : lista d’espèra ; void : res)', 'Nombre de places libres (0 : liste d’attente ; vide : rien)'],
+	['acuelh.crida.espera', 'Boton « Lista d’espèra »', 'Bouton « Liste d’attente »'],
 	['acuelh.crida.sol', 'Ligam « Començar sol·a »', 'Lien « Commencer seul·e »'],
 	// page 02 S'apren et « Corses en visio » (2026-10-24)
 	['apren.titol', 'Títol de la pagina', 'Titre de la page'],

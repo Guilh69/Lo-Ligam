@@ -83,6 +83,8 @@
     { "clau": "acuelh.crida.titol.2", "tipe": "text", "oc": "començar ?", "fr": "commencer ?", "es": "ahora?", "en": "start?", "ca": "ara?", "ar": "الآن؟" },
     { "clau": "acuelh.crida.sota", "tipe": "text", "oc": "", "fr": "", "visible": false },
     { "clau": "acuelh.crida.reservar", "tipe": "ligam", "oc": "Reservar un primièr cors", "fr": "Réserver un premier cours", "ligam": "https://calendar.proton.me/bookings#6BO-KwKfCW0KRCL2AzR9cHUjmv11u_m_7A6Pfwpfu0w=", "es": "Reservar una primera clase", "en": "Book a first lesson", "ca": "Reservar una primera classe", "ar": "حجز الدرس الأول" },
+    { "clau": "acuelh.crida.places", "tipe": "text", "oc": "", "fr": "" },
+    { "clau": "acuelh.crida.espera", "tipe": "ligam", "oc": "Lista d’espèra", "fr": "Liste d’attente", "ligam": "/apren/visio#questionari", "es": "Lista de espera", "en": "Waiting list", "ca": "Llista d’espera", "ar": "قائمة الانتظار" },
     { "clau": "acuelh.crida.sol", "tipe": "ligam", "oc": "Començar sol·a", "fr": "Commencer seul·e", "ligam": "/aprene/essai", "es": "Empezar por tu cuenta", "en": "Start on your own", "ca": "Començar pel teu compte", "ar": "البدء بمفردك" }
   ],
   "parla": [
