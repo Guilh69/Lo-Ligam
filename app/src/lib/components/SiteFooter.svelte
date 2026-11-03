@@ -172,7 +172,9 @@
 		line-height: 0.8;
 		text-align: center;
 		white-space: nowrap;
-		color: var(--t-terra);
+		/* le terracotta vif de la palette : 5,9:1 sur le fond sombre, contre 3,8:1
+		   pour le terracotta ordinaire (Romain, 2026-11-03 : « un meilleur contraste ») */
+		color: var(--t-terra-viu);
 	}
 
 	.footer-legal {
@@ -195,6 +197,20 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.4rem 1.2rem;
+	}
+
+	/* « Mettre sur une ligne » (Romain, 2026-11-03) : un lien ne se coupe jamais
+	   en deux, et sur écran large les liens restent sur une seule ligne ; sur
+	   téléphone ils passent à la ligne. Le seuil est en em (réglage de taille de
+	   texte du navigateur compris). */
+	.footer-legal-links > * {
+		white-space: nowrap;
+	}
+
+	@media (min-width: 56em) {
+		.footer-legal-links {
+			flex-wrap: nowrap;
+		}
 	}
 
 	.footer-legal-link {

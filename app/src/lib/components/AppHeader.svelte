@@ -116,16 +116,6 @@
 		</a>
 
 		<div class="header-right">
-			<button
-				type="button"
-				class="menu-boton"
-				bind:this={botonMenu}
-				aria-haspopup="dialog"
-				aria-expanded={menuDobèrt}
-				onclick={() => (menuDobèrt = !menuDobèrt)}
-			>
-				<Icona nom="menu" size="1.15em" /><span>{tx.menu}</span>
-			</button>
 			<a class="reservar" href={VISIO}>{tx.reservar}</a>
 
 			{#if children}
@@ -189,6 +179,19 @@
 					{/if}
 				</div>
 			</div>
+
+			<!-- « Menu » à droite du bandeau (Romain, 2026-11-03) : le dernier
+			     élément ; l'ordre de tabulation suit l'ordre affiché. -->
+			<button
+				type="button"
+				class="menu-boton"
+				bind:this={botonMenu}
+				aria-haspopup="dialog"
+				aria-expanded={menuDobèrt}
+				onclick={() => (menuDobèrt = !menuDobèrt)}
+			>
+				<Icona nom="menu" size="1.15em" /><span>{tx.menu}</span>
+			</button>
 		</div>
 	</div>
 </header>
