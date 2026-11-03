@@ -10,26 +10,9 @@
 	// point) et « allumé » par la couleur (point doré), pas par une transparence. La scène donne
 	// --cc-traç (traits et points éteints), --cc-ponch (points allumés), --cc-moieu (moyeu allumé)
 	// et --cc-plena (croix pleine).
-	let { cx = 0, cy = 0, r = 10, acesa = 0, plena = false } = $props();
+	import { PONCHS, RAIS, ARCS } from './crotz-geometria.js';
 
-	// les douze points, dans l'ordre où ils s'allument
-	const PONCHS = [
-		[0, -1],
-		[0.486, -0.797],
-		[0.809, -0.48],
-		[1, 0],
-		[0.809, 0.48],
-		[0.486, 0.797],
-		[0, 0.992],
-		[-0.468, 0.797],
-		[-0.786, 0.48],
-		[-0.976, 0.009],
-		[-0.786, -0.48],
-		[-0.468, -0.797]
-	];
-	const RAIS = 'M0 0L0.486 -0.797M0 0L0.809 -0.48M0 0L0.809 0.48M0 0L0.486 0.797M0 0L-0.468 0.797M0 0L-0.786 0.48M0 0L-0.786 -0.48M0 0L-0.468 -0.797';
-	const ARCS =
-		'M-0.468 -0.797Q-0.194 -0.746 0 -1M0 -1Q0.202 -0.746 0.486 -0.797M0.809 -0.48Q0.751 -0.199 1 0M1 0Q0.751 0.199 0.809 0.48M0.486 0.797Q0.202 0.742 0 0.992M0 0.992Q-0.194 0.742 -0.468 0.797M-0.786 0.48Q-0.731 0.203 -0.976 0.009M-0.976 0.009Q-0.731 -0.195 -0.786 -0.48';
+	let { cx = 0, cy = 0, r = 10, acesa = 0, plena = false } = $props();
 </script>
 
 <g class="cc" class:plena transform="translate({cx} {cy}) scale({r})">
