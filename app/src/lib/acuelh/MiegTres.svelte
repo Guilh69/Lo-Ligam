@@ -19,9 +19,9 @@
 	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer', es: 'Entrar', en: 'Enter', ca: 'Entrar', ar: 'ادخل' };
 	// accent = couleur claire qui ressort sur la braise (numéro et lueur de chaque bloc)
 	const ENTITATS = [
-		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Lo país e sas lengas, en carta d’estelas.', fr: 'Le pays et ses langues, en carte d’étoiles.', es: 'El país y sus lenguas, en un mapa de estrellas.', en: 'The country and its languages, on a star map.', ca: 'El país i les seves llengües, en un mapa d’estrelles.', ar: 'أوكسيتانيا ولغاتها على خريطة مرصّعة بالنجوم.' } },
-		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Un camin, pas a pas, a ton ritme.', fr: 'Un chemin, pas à pas, à ton rythme.', es: 'Un camino, paso a paso, a tu ritmo.', en: 'One path, step by step, at your own pace.', ca: 'Un camí, pas a pas, al teu ritme.', ar: 'مسار خطوة بخطوة، بالوتيرة التي تناسبك.' } },
-		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'De monde, de ligams, pertot.', fr: 'Des gens, des liens, partout.', es: 'Gente, vínculos, por todas partes.', en: 'People, connections, everywhere.', ca: 'Gent, vincles, arreu.', ar: 'ناس وعلاقات في كل مكان.' } }
+		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Descobrís la geografia occitana e las produccions en lenga nòstra.', fr: 'Découvre la géographie occitane et les productions en lenga nòstra.', es: 'Descubre la geografía occitana y las producciones en lenga nòstra.', en: 'Discover Occitan geography and works created in lenga nòstra.', ca: 'Descobreix la geografia occitana i les produccions en lenga nòstra.', ar: 'أوكسيتانيا ولغاتها على خريطة مرصّعة بالنجوم.' } },
+		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Descobrís, apren e practica la lenga a ta manièra.', fr: 'Découvre, apprends et pratique la langue à ta manière.', es: 'Descubre, aprende y practica la lengua a tu manera.', en: 'Discover, learn and practise the language your way.', ca: 'Descobreix, aprèn i practica la llengua a la teva manera.', ar: 'مسار خطوة بخطوة، بالوتيرة التي تناسبك.' } },
+		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'Crèa ligam amb lo mond occitan.', fr: 'Crée du lien avec le monde occitan.', es: 'Crea vínculos con el mundo occitano.', en: 'Create connections with the Occitan world.', ca: 'Crea vincles amb el món occità.', ar: 'ناس وعلاقات في كل مكان.' } }
 	];
 
 	// Contenu riche RÉUTILISÉ de l'accueil actuel : les chiffres (acuelh.chifras) et
@@ -235,7 +235,8 @@
 	   n'élague pas ces styles, qui ne vivent que dans un extrait conditionnel) ——— */
 	.sist-tèxt :global(.mix-chifras) { display: flex; flex-direction: column; margin: 1.4rem 0 0; padding: 0; }
 	.sist-tèxt :global(.mix-chifras div) { display: flex; align-items: baseline; gap: 0.7rem; padding: 0.5rem 0; border-top: 1px solid color-mix(in srgb, var(--or) 20%, transparent); }
-	.sist-tèxt :global(.mix-chifras dt) { font-family: var(--font-heading), serif; font-size: clamp(1.4rem, 2vw, 2rem); line-height: 1; color: var(--or); }
+	/* le nombre ne se coupe jamais : c'est le libellé, plus long depuis « locutors en Nòva Aquitània / Occitània (OPLO 2020) », qui passe à la ligne */
+	.sist-tèxt :global(.mix-chifras dt) { flex: none; white-space: nowrap; font-family: var(--font-heading), serif; font-size: clamp(1.4rem, 2vw, 2rem); line-height: 1; color: var(--or); }
 	.sist-tèxt :global(.mix-chifras dd) { margin: 0; font-size: 0.85rem; color: var(--crema); opacity: 0.85; }
 	.sist-tèxt :global(.mix-biais) { list-style: none; margin: 1.4rem 0 0; padding: 0; }
 	.sist-tèxt :global(.mix-biais li) { list-style: none; display: flex; gap: 0.7rem; align-items: baseline; padding: 0.55rem 0; border-top: 1px solid color-mix(in srgb, var(--or) 18%, transparent); font-family: var(--font-heading), serif; font-size: clamp(1.05rem, 1.5vw, 1.3rem); color: var(--crema); }
