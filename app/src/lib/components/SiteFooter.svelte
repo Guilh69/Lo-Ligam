@@ -109,7 +109,9 @@
 
 	.footer-col-title {
 		margin: 0 0 0.9rem;
-		font-family: var(--font-heading);
+		/* Limelight seulement pour les gros titres et les gros chiffres (cahier §11 du 2026-11-02) */
+		font-family: var(--font-body);
+		font-weight: 700;
 		font-size: 1.25rem;
 		color: var(--t-aur);
 	}
@@ -183,8 +185,9 @@
 		flex-wrap: wrap;
 		gap: 0.8rem 1.6rem;
 		margin-top: 1.6rem;
-		/* place pour le bouton « Tornar amont » (46 px, fixé en bas à droite) */
-		padding-right: 3.6rem;
+		/* place pour le bouton « Tornar amont » (46 px, fixé en bas à droite) ; 4,2 rem
+		   laisse un vrai espace entre le dernier lien et le bouton (Joan, 2026-11-03) */
+		padding-right: 4.2rem;
 		font-size: 0.8rem;
 		color: var(--t-tinta-2);
 	}

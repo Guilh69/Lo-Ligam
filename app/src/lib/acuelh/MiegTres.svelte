@@ -112,7 +112,7 @@
 
 {#snippet lligams(sec)}
 	<p class="portas">
-		{#each portas(sec) as it, k (it.href)}{#if k}<span aria-hidden="true">·</span>{/if}<a
+		{#each portas(sec) as it, k (it.href)}{#if k}<span aria-hidden="true">·</span><wbr />{/if}<a
 				href={it.href}
 				target={it.defòra ? '_blank' : undefined}
 				rel={it.defòra ? 'noopener' : undefined}>{tria(it)}</a
@@ -169,10 +169,12 @@
 <style>
 	.mieg { --or: #eeaf34; --or-clar: #f0c877; --crema: #fbf1e1; --lent: cubic-bezier(0.22, 1, 0.36, 1); display: block; }
 	.mieg a { color: inherit; text-decoration: none; }
-	.sota { font-size: clamp(1rem, 1.4vw, 1.2rem); line-height: 1.5; color: var(--crema); opacity: 0.92; max-width: 34ch; margin: 0; }
+	/* balance : plus de mot seul sur la dernière ligne (« manièra. »), relecture de Joan du 2026-11-03 */
+	.sota { font-size: clamp(1rem, 1.4vw, 1.2rem); line-height: 1.5; color: var(--crema); opacity: 0.92; max-width: 34ch; margin: 0; text-wrap: balance; }
 	.portas { margin: 0.9rem 0 0; font-size: 0.95rem; line-height: 1.8; color: var(--crema); }
 	.portas span { margin-inline: 0.5em; color: var(--or); opacity: 0.7; }
-	.portas a { padding-bottom: 2px; background: linear-gradient(var(--or), var(--or)) 0 100% / 0 1.5px no-repeat; transition: background-size 0.5s var(--lent); }
+	/* un lien ne se coupe jamais (« Corses en / visio ») : la ligne ne se coupe qu'après un « · » (<wbr>) */
+	.portas a { white-space: nowrap; padding-bottom: 2px; background: linear-gradient(var(--or), var(--or)) 0 100% / 0 1.5px no-repeat; transition: background-size 0.5s var(--lent); }
 	.portas a:hover, .portas a:focus-visible { background-size: 100% 1.5px; }
 	.dintrar { display: inline-flex; align-items: center; gap: 8px; margin-top: 1.1rem; font-weight: 700; color: var(--crema); border-bottom: 2px solid var(--t-accion, #b53d17); padding-bottom: 2px; }
 	.fl { width: 1em; height: 1em; transition: transform 0.4s var(--lent); }
@@ -239,7 +241,7 @@
 	.sist-tèxt :global(.mix-chifras dt) { flex: none; white-space: nowrap; font-family: var(--font-heading), serif; font-size: clamp(1.4rem, 2vw, 2rem); line-height: 1; color: var(--or); }
 	.sist-tèxt :global(.mix-chifras dd) { margin: 0; font-size: 0.85rem; color: var(--crema); opacity: 0.85; }
 	.sist-tèxt :global(.mix-biais) { list-style: none; margin: 1.4rem 0 0; padding: 0; }
-	.sist-tèxt :global(.mix-biais li) { list-style: none; display: flex; gap: 0.7rem; align-items: baseline; padding: 0.55rem 0; border-top: 1px solid color-mix(in srgb, var(--or) 18%, transparent); font-family: var(--font-heading), serif; font-size: clamp(1.05rem, 1.5vw, 1.3rem); color: var(--crema); }
+	.sist-tèxt :global(.mix-biais li) { list-style: none; display: flex; gap: 0.7rem; align-items: baseline; padding: 0.55rem 0; border-top: 1px solid color-mix(in srgb, var(--or) 18%, transparent); font-family: var(--font-body), sans-serif; font-weight: 700; font-size: clamp(1.05rem, 1.5vw, 1.3rem); color: var(--crema); }
 	.sist-tèxt :global(.mix-n) { flex: none; min-width: 1.6em; font-family: var(--font-quote), serif; font-style: italic; color: var(--or); }
 	.sist-tèxt :global(.mix-lengas-cap) { margin: 1.3rem 0 0.5rem; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--crema); opacity: 0.7; }
 	.sist-tèxt :global(.mix-lengas) { display: flex; flex-wrap: wrap; gap: 0.4rem; }
