@@ -71,3 +71,19 @@ Carnaval* viendra d'un enregistrement dont on aura vérifié les droits.
 - La synthèse Votz n'est admise qu'en secours provisoire sur des corrigés,
   jamais sur les dialogues (clé à demander à info@locongres.org).
 - Sobriété : fichiers courts (moins de 300 Ko par scène si possible).
+
+## Zo ! (l'espace des petits, dossier `static/audio/zo/`)
+
+Essai `/ensag/zo` (cadrage du 2026-11-04). Dès qu'un fichier existe, la page
+le joue à la place du petit carillon. Voix douce, un peu lente, le mot seul.
+
+| Fichier | Contenu |
+|---|---|
+| `can.m4a` | « Lo can » |
+| `gat.m4a` | « Lo gat » |
+| `galina.m4a` | « La galina » |
+| `gal.m4a` | « Lo gal » |
+| `ont-es-can.m4a` | « Ont es lo can ? » (jeu « Ont es ? ») |
+| `ont-es-gat.m4a` | « Ont es lo gat ? » |
+| `ont-es-galina.m4a` | « Ont es la galina ? » |
+| `ont-es-gal.m4a` | « Ont es lo gal ? » |
