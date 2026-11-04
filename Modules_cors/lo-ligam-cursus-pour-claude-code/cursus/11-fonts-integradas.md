@@ -25,7 +25,7 @@ Repris le 2026-11-04 dans les fiches de prononciation :
 | `finalas` | voyelle jamais nasale devant un *n* qui se dit ; *lh*, *nh* finals « l », « n » ; *lach* ou *lait*, *nuèch* ou *nuèit* | 50, 52, 53, 59 |
 | `grops` | *femna* « FÉN-no » ; *rs* final souvent « s » (*dimars* « di-MAS », *Besièrs*) ; *n* devant *p, b, m, v* « m » (*son paire* « soum PAÏ-ré ») | 64 à 67 |
 
-- **Prononciations nouvelles** (absentes du parcours) : *Albi* « AL-bi » validée par Romain le 2026-11-04 ; restent à valider « FÉN-no », « soum PAÏ-ré », « BOOU », « NÈTCH ».
+- **Prononciations nouvelles** (absentes du parcours) : *Albi* « AL-bi » et *femna* « FÉN-no » validées par Romain le 2026-11-04 ; restent à valider « soum PAÏ-ré », « BOOU », « NÈTCH ».
 - **Concordances** : le parcours dit déjà *soi* « souï », *ieu* « YÉOU », *siás* « SYOS », *solelh* « sou-LÉL », *occitan* « ou-tsi-TA », *Besièrs* « bé-ZYÈS », *setmana* « sém-MA-no ».
 - **Écart tranché** : *dimars* était « di-MARS » dans le parcours (choix du 2026-11-02), « di-MAS » chez Chabbert (*rs* sonne souvent « s », comme dans *Besièrs*, page 65). Romain, le 2026-11-04 : « di-MAS ». Appliqué au module 4.3, au lexique et à la fiche des suites de consonnes.
 - **Laissé de côté**, trop fin pour l'A1 : détails des parlers du Tarn (limites Cordes–Cuq-Toulza, Vaour–Labruguière), triphtongues rares, *c, p, t* finals dans la phrase, *s* qui sonne « ï » devant consonne, articles contractés au pluriel, alternances *ç, qu, gu* des dérivés. À reprendre pour la variation (B1 28.x) et la dérivation, comme le prévoit `09-fiche`. La phrase dans trois dialectes (page 91) n'est pas reprise : c'est un exemple de l'auteur.
