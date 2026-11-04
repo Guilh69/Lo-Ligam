@@ -3,7 +3,8 @@
 // « sém-MA-no », miègjorn « myèd-DJOUR », blanc « BLANK » : choix du
 // 2026-11-02). Règles : Gramatica, pages 12 à 19. Précisions de Chabbert
 // (2026-11-04) : femna « FÉN-no », le n qui se ferme en « m » devant p, b,
-// m, v (son paire « soum PAÏ-ré ») : pages 64, 66 et 67. Prononciations
+// m, v (son paire « soum PAÏ-ré »), rs « s » (dimars « di-MAS », choix de
+// Romain du 2026-11-04) : pages 64 à 67. Prononciations
 // nouvelles, à faire valider par Romain. Occitan à relire par Romain.
 import { CHABBERT } from '../libres.js';
 
@@ -80,13 +81,15 @@ export default {
 					items: [
 						{ titol: 'nd, nt : on entend « n »', gros: 'nd nt', color: 'fin', exemples: [['grand', 'GRAN'], ['granda', 'GRAN-do'], ['vint', 'BIN'], ['fa vent', 'fa BÉN']] },
 						{ titol: 'rn : on entend « r »', gros: 'rn', color: 'fin', exemples: [['Bonjorn', 'boun-DJOUR'], ['totjorn', 'tout-DJOUR']] },
+						{ titol: 'rs : souvent « s »', gros: 'rs', color: 'fin', exemples: [['dimars', 'di-MAS'], ['Besièrs', 'bé-ZYÈS']] },
 						{ titol: 'rd : on entend « rt »', gros: 'rd', color: 'fin', exemples: [['verd', 'BÉRT'], ['verda', 'BÉR-do']] },
 						{ titol: 'nc : on entend « nk »', gros: 'nc', color: 'fin', exemples: [['blanc', 'BLANK'], ['blanca', 'BLAN-co'], ['cinc', 'SINK']] },
 						{ titol: 'cs : on entend « ts »', gros: 'cs', color: 'fin', exemples: [['los amics', 'lou-za-MITS'], ['als amics', 'al-za-MITS']] }
 					]
 				},
 				{ type: 'indic', text: 'Touche une carte pour voir des mots.' },
-				{ type: 'font', pages: 'pages 12 à 19' }
+				{ type: 'font', pages: 'pages 12 à 19' },
+				{ type: 'font', libre: CHABBERT, pages: 'page 65' }
 			]
 		},
 		{
@@ -151,7 +154,7 @@ export default {
 			blocs: [
 				{
 					type: 'intro',
-					text: 'Au milieu : **bt** « tt », **tm** « mm », **gj** « ddj » ; **tg**, **tj** « dj ». Au bout : **nd**, **nt** « n », **rn** « r », **rd** « rt », **nc** « nk », **cs** « ts ». Une voyelle derrière, et tout revient.'
+					text: 'Au milieu : **bt** « tt », **tm** « mm », **gj** « ddj » ; **tg**, **tj** « dj ». Au bout : **nd**, **nt** « n », **rn** « r », **rs** « s », **rd** « rt », **nc** « nk », **cs** « ts ». Une voyelle derrière, et tout revient.'
 				},
 				{ type: 'seguida', text: 'Dans le parcours : [le module 7.3 t’apprend la consonne du bout](/aprene/modul/7-3).' },
 				{ type: 'fonts' }
@@ -163,7 +166,7 @@ export default {
 			de: 'Les règles',
 			text: '_oc:Gramatica de l’occitan estandard_, Collègi d’Occitania et Academia Occitana, sous la direction de Florian Vernet, pages 12 à 19.'
 		},
-		{ de: 'Des précisions', text: '_Lire & écrire l’Occitan_, Raymond Chabbert, pages 64, 66 et 67.' },
+		{ de: 'Des précisions', text: '_Lire & écrire l’Occitan_, Raymond Chabbert, pages 64 à 67.' },
 		{ de: 'Les prononciations', text: 'celles du parcours de Lo Ligam, en languedocien, choisies par Romain.' }
 	]
 };

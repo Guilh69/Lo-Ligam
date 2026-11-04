@@ -23,11 +23,11 @@ Repris le 2026-11-04 dans les fiches de prononciation :
 | `sons` | *Albi* « AL-bi » ; accent grave toujours écrit sur *è* et *ò*, les autres accents seulement hors de la règle ; un seul accent par mot, pas de circonflexe ; *á* seulement dans *-iá* (« yo » ou « yè ») ; aucune prononciation meilleure qu'une autre | 26, 34, 36, 43, 89 |
 | `consonantas` | *s* entre « s » et « ch » ; *lh*, *nh* sur les panneaux (*Graulhet*, *Milhau*, top'Òc) ; pas de *k, w, y* pour les mots occitans, pas de *ph* ni de *h* initial | 49, 55, 60 |
 | `finalas` | voyelle jamais nasale devant un *n* qui se dit ; *lh*, *nh* finals « l », « n » ; *lach* ou *lait*, *nuèch* ou *nuèit* | 50, 52, 53, 59 |
-| `grops` | *femna* « FÉN-no » ; *n* devant *p, b, m, v* « m » (*son paire* « soum PAÏ-ré ») | 64, 66, 67 |
+| `grops` | *femna* « FÉN-no » ; *rs* final souvent « s » (*dimars* « di-MAS », *Besièrs*) ; *n* devant *p, b, m, v* « m » (*son paire* « soum PAÏ-ré ») | 64 à 67 |
 
 - **Prononciations nouvelles** (absentes du parcours), à faire valider par Romain : « AL-bi », « FÉN-no », « soum PAÏ-ré », « BOOU », « NÈTCH ».
 - **Concordances** : le parcours dit déjà *soi* « souï », *ieu* « YÉOU », *siás* « SYOS », *solelh* « sou-LÉL », *occitan* « ou-tsi-TA », *Besièrs* « bé-ZYÈS », *setmana* « sém-MA-no ».
-- **Écart à trancher** : *dimars* « di-MARS » dans le parcours (module 4.3), « di-MAS » chez Chabbert (*rs* sonne « s », comme dans *Besièrs*).
+- **Écart tranché** : *dimars* était « di-MARS » dans le parcours (choix du 2026-11-02), « di-MAS » chez Chabbert (*rs* sonne souvent « s », comme dans *Besièrs*, page 65). Romain, le 2026-11-04 : « di-MAS ». Appliqué au module 4.3, au lexique et à la fiche des suites de consonnes.
 - **Laissé de côté**, trop fin pour l'A1 : détails des parlers du Tarn (limites Cordes–Cuq-Toulza, Vaour–Labruguière), triphtongues rares, *c, p, t* finals dans la phrase, *s* qui sonne « ï » devant consonne, articles contractés au pluriel, alternances *ç, qu, gu* des dérivés. À reprendre pour la variation (B1 28.x) et la dérivation, comme le prévoit `09-fiche`. La phrase dans trois dialectes (page 91) n'est pas reprise : c'est un exemple de l'auteur.
 
 ## *Petit dictionnaire insolite de l'occitan et des Occitans*

@@ -312,7 +312,7 @@ items: [
 ```js
 items: [
 	{ id: 'diluns', oc: 'diluns', sound: 'di-LUNS', fr: 'lundi' },
-	{ id: 'dimars', oc: 'dimars', sound: 'di-MARS', fr: 'mardi' },
+	{ id: 'dimars', oc: 'dimars', sound: 'di-MAS', fr: 'mardi' },
 	{ id: 'dimecres', oc: 'dimècres', sound: 'di-MÈ-crés', fr: 'mercredi' },
 	{ id: 'dijous', oc: 'dijòus', sound: 'di-DJÒOUS', fr: 'jeudi' },
 	{ id: 'divendres', oc: 'divendres', sound: 'di-BÉN-drés', fr: 'vendredi' },
@@ -736,7 +736,7 @@ Aucun mot nouveau. Lire une affiche de fête : jours (4.3), heures (6.1), prix (
 
 ## Doutes pour Romain
 
-Tranchés par Romain le 2026-11-02 (cahier des charges §11), la grammaire de référence à l'appui quand elle en parle : *zèro* ; *lo can* ; *papeta, mameta* ; *Soi regent* (*Fau de* retiré) ; de 31 à 99, *trenta un* en deux mots ; *mens lo quart* ; *verd* « BÉRT » ; *dimars* « di-MARS » ; *volriái* « boul-RYOÏ » ; *occitan* « ou-tsi-TA » (la grammaire dit « ou-tsi-TAN », mot savant : note au son du jour de 2.1) ; *sul* et *suls*. Lot 2 (unités 5 à 8) : *la frucha*, collectif sans pluriel ; soudure au choix avec *sus* et *jos* (*sus lo*, *jol*) ; *dosen, dosena* (*segond* : le second, quand il n'y en a que deux) ; *setanta*, *lo lach*, *prene* et *comprene* gardés ; *blanc* « BLANK » ; *caud* « CAOUT ».
+Tranchés par Romain le 2026-11-02 (cahier des charges §11), la grammaire de référence à l'appui quand elle en parle : *zèro* ; *lo can* ; *papeta, mameta* ; *Soi regent* (*Fau de* retiré) ; de 31 à 99, *trenta un* en deux mots ; *mens lo quart* ; *verd* « BÉRT » ; *dimars* « di-MAS » (le 2026-11-04, Romain revient sur « di-MARS » : *rs* final sonne « s », comme dans *Besièrs*, Chabbert page 65) ; *volriái* « boul-RYOÏ » ; *occitan* « ou-tsi-TA » (la grammaire dit « ou-tsi-TAN », mot savant : note au son du jour de 2.1) ; *sul* et *suls*. Lot 2 (unités 5 à 8) : *la frucha*, collectif sans pluriel ; soudure au choix avec *sus* et *jos* (*sus lo*, *jol*) ; *dosen, dosena* (*segond* : le second, quand il n'y en a que deux) ; *setanta*, *lo lach*, *prene* et *comprene* gardés ; *blanc* « BLANK » ; *caud* « CAOUT ».
 
 Restent :
 
