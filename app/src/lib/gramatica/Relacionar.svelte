@@ -4,6 +4,13 @@
 	// par ligne, avec un indice sous ce qui n'est pas encore juste ; l'œil
 	// montre la réponse d'une ligne (elle ne compte plus dans le score).
 	import { copa, classeColor } from './marcar.js';
+	import { IU } from './lengas.js';
+	import Bulla from '$lib/components/Bulla.svelte';
+	import { lang, tria } from '$lib/stores/lang.svelte.js';
+	// l'habillage suit la langue choisie (lengas.js, Romain 2026-11-04) ; les
+	// trois boutons restent en occitan, comme dans le parcours, avec leur
+	// traduction en bulle dans une autre langue
+	const esOc = $derived(lang.current === 'oc');
 
 	/** bloc : { linhas: [{ oc, fr, forma: 'rad|fin:color', sens, indici }], mescla, etiqueta, bravo } */
 	let { bloc, colors } = $props();
@@ -63,10 +70,10 @@
 		!verifie
 			? ''
 			: resolue
-				? 'Voici la solution. Recommence quand tu veux, sans l’œil.'
+				? tria(IU.vaquiSolucion)
 				: justes === n
-					? (bloc.bravo ?? `Tout juste : ${n} sur ${n}.`)
-					: `${justes} sur ${n} trouvées sans aide${nbVues ? `, ${nbVues} avec l’œil` : ''}. Sous chaque ligne pas encore juste, un indice.`
+					? (bloc.bravo ?? tria(IU.totJust)(n))
+					: tria(IU.trobadas)(justes, n, nbVues)
 	);
 </script>
 
@@ -84,8 +91,8 @@
 					class:esperant={choisie && !vues[l.id]}
 					aria-disabled={vues[l.id]}
 					aria-label={pl
-						? `${l.fr} : ${pl}${verifie || vues[l.id] ? (ok ? ', juste' : ', pas encore') : ''}${vues[l.id] ? '' : ', toucher pour retirer'}`
-						: `Poser ici, pour ${l.fr}`}
+						? `${l.fr} : ${pl}${verifie || vues[l.id] ? `, ${ok ? tria(IU.just) : tria(IU.pasEncaraCurt)}` : ''}${vues[l.id] ? '' : `, ${tria(IU.tocarPerLevar)}`}`
+						: tria(IU.pausarAici)(l.fr)}
 					onclick={() => poser(l.id)}
 				>
 					{#if pl}
@@ -96,31 +103,33 @@
 						{/if}
 					{/if}
 				</button>
-				<button type="button" class="oeil" aria-label="Voir la réponse pour {l.fr}" title="Voir la réponse" aria-disabled={vues[l.id]} onclick={() => montrer(l)}>
+				<button type="button" class="oeil" aria-label={tria(IU.veireResponsaPer)(l.fr)} title={tria(IU.veireResponsa)} aria-disabled={vues[l.id]} onclick={() => montrer(l)}>
 					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>
 				</button>
 				<span class="marca">
 					{#if (verifie || vues[l.id]) && ok}
 						<span class="sens">{l.sens}</span>
 					{:else if verifie && pl}
-						<span class="indici"><span class="pe">Pas encore :</span> {l.indici}</span>
+						<span class="indici"><span class="pe">{tria(IU.pasEncara)}</span> {l.indici}</span>
 					{/if}
 				</span>
 			</li>
 		{/each}
 	</ol>
-	<div class="formas" role="group" aria-label={bloc.etiqueta ?? 'Formes à placer'}>
+	<div class="formas" role="group" aria-label={bloc.etiqueta ?? tria(IU.formasDePausar)}>
 		{#each restantes as f (f)}
 			<button type="button" class="forma" lang="oc" aria-pressed={choisie === f} onclick={() => choisir(f)}>{f}</button>
 		{:else}
-			<p class="formes-vides">Tout est posé.</p>
+			<p class="formes-vides">{tria(IU.totPausat)}</p>
 		{/each}
 	</div>
 </div>
 <div class="accions">
-	<button type="button" class="boton" lang="oc" disabled={!Object.keys(places).length} onclick={() => (verifie = true)}>Verificar</button>
-	<button type="button" class="boton segond" lang="oc" onclick={solution}>Solucion</button>
-	<button type="button" class="boton tiers" lang="oc" onclick={reprendre}>Recomençar</button>
+	{#each [['verificar', 'boton', !Object.keys(places).length, () => (verifie = true)], ['solucion', 'boton segond', false, solution], ['recomencar', 'boton tiers', false, reprendre]] as [k, classe, inactiu, accion] (k)}
+		<button type="button" class={classe} lang="oc" disabled={inactiu} aria-describedby={esOc ? undefined : `b-${k}`} onclick={accion}
+			>{IU[k].oc}{#if !esOc}<Bulla id="b-{k}" text={tria(IU[k])} lang={lang.current} />{/if}</button
+		>
+	{/each}
 </div>
 <p class="retorn" aria-live="polite">{retour}</p>
 

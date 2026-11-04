@@ -6,6 +6,7 @@ import { FICHAS } from './index.js';
 import { PARTS, TEMAS } from './capitols.js';
 import { copa, marcar } from './marcar.js';
 import { BLOCS, COLORS, PICTOS } from './listas.js';
+import { FICHAS_LENGAS, IU, paginas } from './lengas.js';
 
 const NOCIONS = PARTS.flatMap((p) => p.capitols.map((c) => c.id));
 
@@ -22,6 +23,25 @@ describe('le sommaire de la grammaire', () => {
 		const temas = TEMAS.map((t) => t.id);
 		for (const c of PARTS.flatMap((p) => p.capitols)) expect(temas).toContain(c.tema);
 	});
+	it('nomme chaque thème, partie et notion en occitan et en français, avec des exemples', () => {
+		for (const t of TEMAS) {
+			expect(t.nom.oc && t.nom.fr && t.detalh.oc && t.detalh.fr && t.exemple).toBeTruthy();
+		}
+		for (const p of PARTS) expect(p.id && p.titol.oc && p.titol.fr).toBeTruthy();
+		for (const c of PARTS.flatMap((p) => p.capitols)) {
+			expect(c.nom?.oc && c.nom?.fr && c.exemple, c.id).toBeTruthy();
+			if (c.detalh) expect(c.detalh.oc && c.detalh.fr, c.id).toBeTruthy();
+		}
+	});
+	it('a chaque texte d’interface en occitan et en français', () => {
+		for (const [k, v] of Object.entries(IU)) expect(v.oc && v.fr, k).toBeTruthy();
+	});
+	it('dit les pages dans la langue choisie', () => {
+		expect(paginas('pages 64 à 67', IU.paginas.oc)).toBe('paginas 64 a 67');
+		expect(paginas('page 65', IU.paginas.oc)).toBe('pagina 65');
+		expect(paginas('pages 11, 13 et 14', IU.paginas.oc)).toBe('paginas 11, 13 e 14');
+		expect(paginas('pages 11, 13 et 14', IU.paginas.ar)).toBe('الصفحات 11، 13 و14');
+	});
 	it('a au moins une fiche', () => {
 		expect(FICHAS.length).toBeGreaterThan(0);
 	});
@@ -36,6 +56,9 @@ for (const f of FICHAS) {
 	const cles = Object.keys(f.colors ?? {});
 
 	describe(`la fiche « ${f.id} »`, () => {
+		it('a son résumé en occitan (lengas.js)', () => {
+			expect(FICHAS_LENGAS[f.id]?.resumit?.oc).toBeTruthy();
+		});
 		it('a une adresse en ASCII et se range sous une notion du sommaire', () => {
 			expect(f.id).toMatch(/^[a-z0-9-]+$/);
 			expect(NOCIONS).toContain(f.capitol);

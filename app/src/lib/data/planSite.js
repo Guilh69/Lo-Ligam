@@ -19,7 +19,8 @@ export const PLAN = [
 		href: '/parla',
 		grops: [{ items: [
 			{ oc: 'La carta', fr: 'La carte', es: 'El mapa', en: 'The map', ca: 'El mapa', ar: 'الخريطة', href: '/carta' },
-			{ oc: 'Lo wiki', fr: 'Le wiki', es: 'El wiki', en: 'The wiki', ca: 'El wiki', ar: 'الويكي', href: '/wiki' }, // (« wiki » plutôt qu'« encyclopédie », Romain, 2026-10-15)
+			// Cultura à la place du wiki (Romain, 2026-11-04 : « ça va remplacer plutôt Wiki » ; /wiki y renvoie)
+			{ oc: 'Cultura', fr: 'Culture', es: 'Cultura', en: 'Culture', ca: 'Cultura', ar: 'الثقافة', href: '/cultura' },
 			// (venaient d'Amassa : le pays, ce qui s'y dit et s'y fait ; Romain, 2026-10-22)
 			{ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres', ar: 'أعمال إبداعية', href: '/obras' },
 			{ oc: 'Articles', fr: 'Articles', es: 'Artículos', en: 'Articles', ca: 'Articles', ar: 'مقالات', href: '/articles' },

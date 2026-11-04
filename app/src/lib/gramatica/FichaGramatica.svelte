@@ -13,8 +13,13 @@
 	import PictoFicha from './PictoFicha.svelte';
 	import Relacionar from './Relacionar.svelte';
 	import { marcar, copa, classeColor } from './marcar.js';
+	import { FICHAS_LENGAS, IU, paginas } from './lengas.js';
+	import { tria } from '$lib/stores/lang.svelte.js';
 
 	let { ficha } = $props();
+	// l'habillage suit la langue choisie (lengas.js) ; les explications de la
+	// fiche restent en français pour l'instant (option 1 de Romain, 2026-11-04)
+	const resumit = $derived(tria({ fr: ficha.resumit, ...FICHAS_LENGAS[ficha.id]?.resumit }));
 
 	const LIBRE = '_oc:Gramatica de l’occitan estandard_ (Collègi d’Occitania, Academia Occitana)';
 	const ECRANS = $derived(ficha.ecrans);
@@ -56,7 +61,7 @@
 
 <svelte:head>
 	<title>Gramatica · {ficha.titol} · Lo Ligam</title>
-	<meta name="description" content={ficha.resumit} />
+	<meta name="description" content={resumit} />
 	<!-- tant que Romain n'a pas relu l'occitan, la fiche n'est pas indexée -->
 	{#if !ficha.validada}<meta name="robots" content="noindex" />{/if}
 </svelte:head>
@@ -68,7 +73,7 @@
 	{#if b.type === 'intro' || b.type === 'nota' || b.type === 'indic' || b.type === 'seguida'}
 		<p class={b.type}>{@html m(b.text)}</p>
 	{:else if b.type === 'font'}
-		<p class="font">Source&nbsp;: {@html marcar(b.libre ?? ficha.libre ?? LIBRE)}, {b.pages}.</p>
+		<p class="font">{tria(IU.font)}&nbsp;: {@html marcar(b.libre ?? ficha.libre ?? LIBRE)}, {paginas(b.pages, tria(IU.paginas))}.</p>
 	{:else if b.type === 'cartas'}
 		<ul class="cartas">
 			{#each b.items as g, i}
@@ -104,7 +109,7 @@
 				{@const k = copa(it.mot)}
 				{@const c = classeColor(ficha.colors, k.color)}
 				<span class="copa-picto" style:--i={i}>{#if it.picto}<PictoFicha nom={it.picto} />{/if}</span>
-				<span class="copa-mot" lang="oc" title={it.fr}>{k.rad}<span class="colorat {c}">{k.fin}</span></span>
+				<span class="copa-mot" lang="oc">{k.rad}<span class="colorat {c}">{k.fin}</span></span>
 				<span class="copa-sageta" aria-hidden="true">⟶</span>
 				<span class="copa-rad" lang="oc" style:--i={i}>{k.rad}</span>
 				<span class="copa-fin colorat {c}" lang="oc" style:--i={i}>+{k.fin}</span>
@@ -135,7 +140,7 @@
 		<ul class="resumit">
 			{#each b.linhas as [marca, qui, ex]}
 				<li>
-					<span class="r-fin" class:rien={!marca}>{marca ? '-' + marca : 'rien'}</span>
+					<span class="r-fin" class:rien={!marca}>{marca ? '-' + marca : tria(IU.res)}</span>
 					<span class="r-qui" lang="oc">{qui}</span>
 					<span class="r-ex" lang="oc">{ex.slice(0, ex.length - marca.length)}<b>{marca}</b></span>
 				</li>
@@ -143,7 +148,7 @@
 		</ul>
 	{:else if b.type === 'fonts'}
 		<div class="credits">
-			<h3>Sources</h3>
+			<h3>{tria(IU.fonts)}</h3>
 			{#each ficha.fonts ?? [] as f}
 				<p><strong>{@html m(f.de)}</strong>&nbsp;: {@html m(f.text)}</p>
 			{/each}
@@ -156,7 +161,7 @@
 <main class="fiche" aria-labelledby="fiche-titol">
 	<header class="cap">
 		<span class="cap-picto"><Pictograma nom="wiki" size="2.2rem" /></span>
-		<nav class="cap-ruban" aria-label="Où je suis">
+		<nav class="cap-ruban" aria-label={tria(IU.ontSoi)}>
 			<a href="/apren" lang="oc">S’apren</a> <span aria-hidden="true">·</span> <a href="/apren/gramatica" lang="oc">Gramatica</a>
 		</nav>
 		<h1 id="fiche-titol" class="sr-only"><span lang="oc">Gramatica : {ficha.titol}</span></h1>
@@ -185,18 +190,18 @@
 		{/key}
 	</div>
 
-	<nav class="navegacion" aria-label="Écrans de la fiche">
-		<button type="button" class="sageta" aria-label="Écran précédent" disabled={ecran === 0} onclick={() => aller(ecran - 1)}>
+	<nav class="navegacion" aria-label={tria(IU.ecrans)}>
+		<button type="button" class="sageta" aria-label={tria(IU.ecranPrecedent)} disabled={ecran === 0} onclick={() => aller(ecran - 1)}>
 			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
 		</button>
 		<ol class="ponchs">
 			{#each ECRANS as t, i}
 				<li>
-					<button type="button" class="ponch" aria-label="Écran {i + 1} : {t.titol}" aria-current={i === ecran ? 'step' : undefined} onclick={() => aller(i)}></button>
+					<button type="button" class="ponch" aria-label="{tria(IU.ecran)} {i + 1} : {t.titol}" aria-current={i === ecran ? 'step' : undefined} onclick={() => aller(i)}></button>
 				</li>
 			{/each}
 		</ol>
-		<button type="button" class="sageta" aria-label="Écran suivant" disabled={ecran === ECRANS.length - 1} onclick={() => aller(ecran + 1)}>
+		<button type="button" class="sageta" aria-label={tria(IU.ecranSeguent)} disabled={ecran === ECRANS.length - 1} onclick={() => aller(ecran + 1)}>
 			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
 		</button>
 	</nav>
