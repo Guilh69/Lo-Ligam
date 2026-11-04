@@ -25,9 +25,10 @@
 	// claire (/ensag/clar, 2026-10-21) et l'esquisse « page presque blanche »
 	// (/ensag/blanc, 2026-10-22) dessinent leur propre pied de page. Les groupes
 	// (2026-10-25) tiennent à hauteur d'écran, comme une messagerie. La carte (2026-10-26) est une interface pleine et
-	// stable : ni pied de page ni défilement.
+	// stable : ni pied de page ni défilement. La pluie de mots (/ensag/plueja,
+	// 2026-11-04) occupe tout l'écran, comme un fond d'écran.
 	let ambPè = $derived(
-		!id.startsWith('/admin') && !id.startsWith('/grops') && id !== '/carta' && id !== '/ensag/clar' && id !== '/ensag/blanc'
+		!id.startsWith('/admin') && !id.startsWith('/grops') && id !== '/carta' && id !== '/ensag/clar' && id !== '/ensag/blanc' && id !== '/ensag/plueja'
 	);
 
 	// Lien d'évitement (2026-10-26, page accessibilité) : première étape du
