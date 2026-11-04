@@ -1,8 +1,8 @@
 <script>
 	// Essai : un code couleur par thème dans le sommaire de la grammaire
 	// (Romain, 2026-11-04 : « il pourrait y avoir un code couleur un peu plus
-	// clair en fonction des thématiques »). Trois pistes sur les vraies fiches,
-	// une à la fois (?piste=1, 2 ou 3). Page de travail, non indexée.
+	// clair en fonction des thématiques »). Deux pistes sur les vraies fiches,
+	// une à la fois (?piste=1 ou 2). Page de travail, non indexée.
 	// Couleurs : les accents de la charte, sans le rouge du logo (réservé à ce
 	// qui se clique, règle B). Contrastes mesurés le 2026-11-04 : texte sur
 	// aplat 5,0 à 8,6 ; trait sur le fond 4,5 à 10,9 dans les deux thèmes.
@@ -56,10 +56,11 @@
 
 	const PISTAS = [
 		{ n: '1', nom: 'Cases de couleur', text: 'L’ordre du parcours ne bouge pas ; chaque case prend la couleur de son thème.' },
-		{ n: '2', nom: 'Rangé par thème', text: 'Cinq blocs, un par thème ; dans chaque bloc, l’ordre du parcours et l’unité.' },
-		{ n: '3', nom: 'Filet fin', text: 'L’ordre du parcours ; des cases sobres, un filet et un point de couleur.' }
+		{ n: '2', nom: 'Rangé par thème', text: 'Cinq blocs, un par thème ; dans chaque bloc, l’ordre du parcours et l’unité.' }
 	];
-	let piste = $derived(['1', '2', '3'].includes(page.url.searchParams.get('piste')) ? page.url.searchParams.get('piste') : '1');
+	// La piste 3 (cases en verre fumé, filet de couleur à gauche) est retirée :
+	// Romain, 2026-11-04, « typique… ça se voit partout sur Internet ».
+	let piste = $derived(['1', '2'].includes(page.url.searchParams.get('piste')) ? page.url.searchParams.get('piste') : '1');
 
 	// la légende met un thème en avant ; un clic ailleurs rend tout
 	let tema = $state(null);
@@ -69,7 +70,7 @@
 
 	const tots = PARTS.flatMap((p) => p.capitols);
 	const capitolsDe = (t) => tots.filter((c) => TEMA_DE[c.id] === t);
-	const FRASA = marcar('Essai du 4 novembre : trois façons de donner une couleur à chaque thème. Touche une piste en haut pour changer.');
+	const FRASA = marcar('Essai du 4 novembre : deux façons de donner une couleur à chaque thème. Touche une piste en haut pour changer.');
 </script>
 
 <svelte:head>
@@ -221,7 +222,7 @@
 	}
 	@container pagina (min-width: 56rem) {
 		.pistas {
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 	.pista {
