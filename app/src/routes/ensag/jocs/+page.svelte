@@ -36,6 +36,7 @@
 		enPausa: { oc: 'En pausa', fr: 'En pause' },
 		clavier: { oc: 'Sagetas del clavièr · Espaci : pausa', fr: 'Flèches du clavier · Espace : pause' },
 		escriu: { oc: 'Escriu', fr: 'Écris' },
+		escrich: { oc: 'Escrich uèi :', fr: 'Écrit aujourd’hui :' },
 		letra: { oc: (n, t) => `Letra ${n} sus ${t}`, fr: (n, t) => `Lettre ${n} sur ${t}` },
 		amont: { oc: 'Amont', fr: 'Haut' },
 		aval: { oc: 'Aval', fr: 'Bas' },
@@ -66,6 +67,7 @@
 	let indici = $state(false);
 	let tremola = $state(null);
 	let anonci = $state('');
+	let escrichs = $state([]);
 	let sac = [];
 	let darrierProgres = 0;
 	let relòtge = null;
@@ -132,7 +134,8 @@
 		const teulas = posicions(p).map((t) => {
 			const k = `${numero}-${t.k}`;
 			const a = ancianas.get(k);
-			return { ...t, k, saut: !!a && (Math.abs(a.x - t.x) > 1 || Math.abs(a.y - t.y) > 1) };
+			// j : rang de la lettre dans le mot (pour l'onde de fin)
+			return { ...t, k, j: t.cors ? p.manjadas.indexOf(t.k) : 0, saut: !!a && (Math.abs(a.x - t.x) > 1 || Math.abs(a.y - t.y) > 1) };
 		});
 		const c = p.cors[0];
 		const ac = ancianas.get('cap');
@@ -140,7 +143,13 @@
 		const cap = { x: c.x, y: c.y, saut: !ac || Math.abs(ac.x - c.x) > 1 || Math.abs(ac.y - c.y) > 1 };
 		ancianas = new Map(teulas.map((t) => [t.k, t]));
 		ancianas.set('cap', cap);
-		vista = { teulas, cap, dir: nomDir(p.dir), seguenta: p.seguenta, attesa: letraAttesa(p) };
+		// la langue sort quand la lettre attendue est juste devant la tête
+		const att = letraAttesa(p);
+		const d = p.file[0] ?? p.dir;
+		const nx = (c.x + d.x + p.cols) % p.cols;
+		const ny = (c.y + d.y + p.rows) % p.rows;
+		const prop = !!att && p.teulas.some((t) => !t.manjada && t.l === att && t.x === nx && t.y === ny);
+		vista = { teulas, cap, dir: nomDir(p.dir), seguenta: p.seguenta, attesa: att, prop };
 	}
 
 	function avançar() {
@@ -161,6 +170,8 @@
 			estat = 'acabat';
 			if (son) setTimeout(playChime, 160);
 			anonci = `${frasaComplèta} · ${mot.son} · ${mot.fr}`;
+			// ce que la sèrp a écrit dans cette séance (les huit derniers)
+			escrichs = [...escrichs.slice(-7), frasaComplèta];
 		}
 		// aide douce : la bonne lettre s'éclaire après deux erreurs ou 12 s
 		indici = !p.acabat && (p.errors >= 2 || Date.now() - darrierProgres > 12000);
@@ -352,6 +363,7 @@
 					class="grasilha"
 					class:calme
 					class:pausa={estat === 'pausa'}
+					class:acabat={estat === 'acabat'}
 					style:--cols={cols}
 					style:--rows={rows}
 					role="application"
@@ -372,15 +384,16 @@
 							class:indici={indici && !t.cors && t.l === vista.attesa}
 							style:--x={t.x}
 							style:--y={t.y}
+							style:--j={t.j}
 							lang="oc"><span class="l" class:tremola={tremola === t.k}>{t.l}</span></span
 						>
 					{/each}
-					<span class="cap" class:saut={vista.cap.saut} class:barrada style:--x={vista.cap.x} style:--y={vista.cap.y}>
-						<span class="testa testa-{vista.dir}"><span class="uelh"></span><span class="uelh"></span></span>
+					<span class="cap" class:saut={vista.cap.saut} class:barrada class:prop={vista.prop} style:--x={vista.cap.x} style:--y={vista.cap.y}>
+						<span class="testa testa-{vista.dir}"><span class="uelh"></span><span class="uelh"></span><span class="lenga"></span></span>
 					</span>
 
 					{#if estat === 'acabat' && mot}
-						<div class="fin">
+						<div class="fin" style:--n={letras.length}>
 							<p class="fin-oc" lang="oc">{frasaComplèta}</p>
 							<p class="fin-son" lang="oc">{mot.son}</p>
 							<p class="fin-fr" lang="fr">{mot.fr}</p>
@@ -394,6 +407,12 @@
 					{:else if estat === 'pausa'}{tria(T.enPausa)}
 					{:else if estat === 'espera'}{tactil ? tria(T.partirTactil) : tria(T.partirClavier)}{/if}
 				</p>
+				{#if escrichs.length}
+					<p class="escrichs">
+						<span class="escrichs-tit">{tria(T.escrich)}</span>
+						{#each escrichs as e, i (i)}{#if i}<span class="sep"> · </span>{/if}<span lang="oc">{e}</span>{/each}
+					</p>
+				{/if}
 			</div>
 
 			<div class="comandas">
@@ -516,6 +535,13 @@
 	}
 	.casela.plena {
 		border-bottom-color: var(--or);
+		animation: pausar 0.25s ease-out;
+	}
+	@keyframes pausar {
+		from {
+			translate: 0 -0.25em;
+			opacity: 0;
+		}
 	}
 
 	/* ── La grille ── */
@@ -534,6 +560,8 @@
 		background:
 			radial-gradient(circle, var(--t-linha) 1px, transparent 1.5px) 0 0 / calc(100% / var(--cols)) calc(100% / var(--rows)),
 			var(--l-carta);
+		/* un léger assombrissement des bords : la grille a de la profondeur */
+		box-shadow: inset 0 0 3rem color-mix(in srgb, var(--t-fons) 24%, transparent);
 		margin-inline: auto;
 		touch-action: none;
 		user-select: none;
@@ -564,32 +592,55 @@
 	.calme .cap {
 		transition: none;
 	}
+	/* une lettre libre : un filet fin, rien de plus (raffiné = filets fins) */
 	.l {
 		display: grid;
 		place-items: center;
-		width: 76%;
-		height: 76%;
+		width: 74%;
+		height: 74%;
 		border-radius: 50%;
-		/* même teinte légère sur les deux thèmes (--l-sol disparaît sur le blanc du clair) */
-		background: color-mix(in srgb, var(--t-tinta) 8%, transparent);
+		background: color-mix(in srgb, var(--l-carta) 70%, transparent);
+		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--t-tinta) 45%, transparent);
 		font-size: calc(var(--cela) * 0.5);
-		font-weight: 700;
+		font-weight: 600;
 		line-height: 1;
 		color: var(--t-tinta);
 		transition:
 			border-radius 0.3s,
-			background-color 0.3s;
+			background-color 0.3s,
+			width 0.3s,
+			height 0.3s;
 	}
-	/* une lettre dans la queue : la tuile dorée du logo, un seul poids de trait */
+	/* une lettre dans la queue : la tuile dorée du logo, en chaîne (les tuiles se touchent) */
 	.cors .l {
-		width: 84%;
-		height: 84%;
-		border-radius: 28%;
-		background: color-mix(in srgb, var(--or) 22%, var(--l-carta));
+		width: 94%;
+		height: 94%;
+		border-radius: 30%;
+		background: color-mix(in srgb, var(--or) 26%, var(--l-carta));
 		box-shadow: inset 0 0 0 1.5px var(--or);
 	}
 	.cors.sota {
 		z-index: 1;
+	}
+	/* la lettre vient d'être mangée : elle se gonfle un instant, sans rebond */
+	.cors.sota .l {
+		animation: manjar 0.3s ease-out;
+	}
+	@keyframes manjar {
+		40% {
+			scale: 1.16;
+		}
+	}
+	/* mot écrit : une onde dorée court de la queue à la tête */
+	.acabat .cors .l {
+		animation: onda 0.55s ease-out calc(var(--j) * 90ms) both;
+	}
+	@keyframes onda {
+		45% {
+			background: var(--or);
+			color: var(--color-text);
+			scale: 1.1;
+		}
 	}
 	.indici .l {
 		box-shadow:
@@ -617,28 +668,54 @@
 	}
 	.testa {
 		position: relative;
-		width: 86%;
-		height: 86%;
-		border-radius: 50%;
-		/* l'or du logo sur les deux thèmes (le rouge est réservé à ce qui se clique) */
+		width: 94%;
+		height: 94%;
+		/* un museau arrondi, tourné vers la route ; l'or du logo sur les deux
+		   thèmes (le rouge est réservé à ce qui se clique) */
+		border-radius: 34% 50% 50% 34% / 45% 50% 50% 45%;
 		background: var(--color-gold);
-		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color-text) 25%, transparent);
+		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color-text) 55%, transparent);
 	}
 	/* deux yeux, tournés vers la route ; aucune autre figure */
 	.uelh {
 		position: absolute;
-		top: 30%;
-		width: 14%;
-		height: 14%;
+		top: 26%;
+		left: 60%;
+		width: 15%;
+		height: 15%;
 		border-radius: 50%;
 		background: var(--color-text);
 	}
-	.uelh:first-child {
-		left: 58%;
-	}
 	.uelh + .uelh {
-		top: 56%;
-		left: 58%;
+		top: 60%;
+	}
+	/* la langue : un trait fin qui sort quand la lettre attendue est juste devant */
+	.lenga {
+		position: absolute;
+		left: 96%;
+		top: 50%;
+		width: 24%;
+		height: 2px;
+		margin-top: -1px;
+		background: var(--color-text);
+		transform-origin: left center;
+		scale: 0 1;
+		transition: scale 0.15s;
+	}
+	.prop .lenga {
+		scale: 1 1;
+		animation: lengueta 0.5s ease-in-out infinite alternate;
+	}
+	@keyframes lengueta {
+		from {
+			scale: 0.45 1;
+		}
+		to {
+			scale: 1 1;
+		}
+	}
+	.calme .prop .lenga {
+		animation: none;
 	}
 	.testa-drecha {
 		rotate: 0deg;
@@ -667,27 +744,62 @@
 	.messatge.vis {
 		visibility: visible;
 	}
+	.escrichs {
+		margin: var(--esp-12) 0 0;
+		font-size: 0.92rem;
+		line-height: 1.6;
+		color: var(--t-tinta-2);
+		text-align: center;
+	}
+	.escrichs span[lang] {
+		color: var(--t-tinta);
+		font-weight: 600;
+	}
+	.escrichs-tit {
+		font-style: italic;
+	}
 	.pausa .teula,
 	.pausa .cap {
 		opacity: 0.45;
 	}
 
+	/* la carte du mot écrit : verre fumé au milieu de la grille, la sèrp reste
+	   visible autour ; elle paraît une fois l'onde passée */
 	.fin {
 		position: absolute;
-		inset: 0;
+		left: 50%;
+		top: 50%;
 		z-index: 4;
+		translate: -50% -50%;
+		width: min(86%, 26rem);
 		display: grid;
-		place-content: center;
 		justify-items: center;
 		gap: 0.25rem;
-		padding: 1rem;
-		background: color-mix(in srgb, var(--l-carta) 98%, transparent);
+		padding: 1.2rem 1.4rem 1.3rem;
+		border-radius: 1rem;
+		background: var(--t-veire-fort);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		box-shadow:
+			0 0 0 1px var(--t-linha),
+			0 18px 40px -20px rgba(0, 0, 0, 0.5);
 		text-align: center;
+		animation: apareisser 0.4s ease-out both;
+		animation-delay: calc(var(--n) * 90ms + 400ms);
+	}
+	@keyframes apareisser {
+		from {
+			opacity: 0;
+			translate: -50% calc(-50% + 0.5rem);
+		}
+	}
+	.calme .fin {
+		animation: none;
 	}
 	.fin-oc {
 		margin: 0;
 		font-size: clamp(1.8rem, 7cqi, 3rem);
-		font-weight: 700;
+		font-weight: 600;
 		line-height: 1.15;
 		color: var(--t-tinta);
 	}
@@ -697,8 +809,9 @@
 	}
 	.fin-fr {
 		margin: 0 0 var(--esp-16);
+		font-size: 1rem;
 		font-style: italic;
-		color: var(--t-tinta-2);
+		color: var(--t-tinta);
 	}
 
 	/* ── Commandes ── */
@@ -843,8 +956,16 @@
 	@media (prefers-reduced-motion: reduce) {
 		.teula,
 		.cap,
-		.l {
+		.l,
+		.lenga {
 			transition: none;
+		}
+		.casela.plena,
+		.cors.sota .l,
+		.acabat .cors .l,
+		.prop .lenga,
+		.fin {
+			animation: none;
 		}
 	}
 </style>
