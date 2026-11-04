@@ -858,14 +858,17 @@ export function lancarAcuelh(racina, opcions = {}) {
 			const tel = W <= 600;
 			const iy = lerp(tel ? 16 : 22, 0, k), ix = lerp(tel ? 12 : 32, 0, k), rad = lerp(28, 0, k);
 			if (indiciFenestra) indiciFenestra.style.opacity = String(clamp(1 - k * 5));
-			// Si la personne reste 2 s devant la fenêtre encore fermée (section arrivée en
-			// haut de l'écran), le défilement est poussé en douceur jusqu'à la fenêtre
-			// ouverte et au vers, au cas où le principe ne serait pas compris (Romain,
-			// 2026-10-16). Une seule fois ; un geste l'interrompt ; jamais en mode calme.
-			if (!fenestraPossada && k < 0.08 && rt.top < H * 0.2 && performance.now() - darrierDefil > 2000) {
+			// Dès que la fenêtre est entièrement à l'écran (section arrivée en haut) et encore
+			// fermée, et que le défilement s'est arrêté un instant, il est poussé vite et en
+			// douceur jusqu'à la fenêtre ouverte et au vers : personne ne doit rester bloqué
+			// devant une fenêtre fermée dont il ne comprend pas le principe (Romain, 2026-11-04 :
+			// « dès qu'on la voit entièrement, ce soit poussé rapidement et que ça s'ouvre » ;
+			// avant : 2 s d'attente, section dans les 20 % du haut, course de 2,4 s, 2026-10-16).
+			// Une seule fois par visite ; un geste l'interrompt ; jamais en mode calme.
+			if (!fenestraPossada && k < 0.08 && rt.top <= H * 0.03 && performance.now() - darrierDefil > 160) {
 				fenestraPossada = true;
 				const cibla = scrollY + rt.top + 0.64 * (rt.height - H); // k ≈ 0,97
-				if (lenis) lenis.scrollTo(cibla, { duration: 2.4 });
+				if (lenis) lenis.scrollTo(cibla, { duration: 1 });
 				else scrollTo({ top: cibla, behavior: 'smooth' });
 			}
 			fenestra.style.clipPath = `inset(${iy}% ${ix}% round ${rad}px)`;
