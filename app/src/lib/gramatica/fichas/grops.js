@@ -1,7 +1,12 @@
 // Prononciation 5 : les suites de consonnes (unités 1 à 7). Toutes les
 // prononciations sont celles du parcours, choisies par Romain (setmana
 // « sém-MA-no », miègjorn « myèd-DJOUR », blanc « BLANK » : choix du
-// 2026-11-02). Règles : Gramatica, pages 12 à 19. Occitan à relire par Romain.
+// 2026-11-02). Règles : Gramatica, pages 12 à 19. Précisions de Chabbert
+// (2026-11-04) : femna « FÉN-no », le n qui se ferme en « m » devant p, b,
+// m, v (son paire « soum PAÏ-ré ») : pages 64, 66 et 67. Prononciations
+// nouvelles, à faire valider par Romain. Occitan à relire par Romain.
+import { CHABBERT } from '../libres.js';
+
 export default {
 	id: 'grops',
 	capitol: 'sons',
@@ -32,7 +37,9 @@ export default {
 					type: 'nota',
 					text: 'Parfois, l’écriture a déjà suivi la prononciation : on écrit *dinnar* (déjeuner), « di-NA ».'
 				},
-				{ type: 'font', pages: 'pages 16 et 17' }
+				{ type: 'nota', text: 'Même chose dans *femna* (femme) : le *m* se fond dans le *n*, on entend « FÉN-no ».' },
+				{ type: 'font', pages: 'pages 16 et 17' },
+				{ type: 'font', libre: CHABBERT, pages: 'page 64' }
 			]
 		},
 		{
@@ -111,7 +118,9 @@ export default {
 					]
 				},
 				{ type: 'nota', text: 'Dans *vint-e-cinc*, le *t* revient : une voyelle le suit. C’est la même règle qu’au féminin.' },
-				{ type: 'font', pages: 'pages 12 à 19' }
+				{ type: 'nota', text: 'Devant *p*, *b*, *m* ou *v*, le *n* de la fin se ferme en « m » : *son paire* « soum PAÏ-ré ».' },
+				{ type: 'font', pages: 'pages 12 à 19' },
+				{ type: 'font', libre: CHABBERT, pages: 'pages 66 et 67' }
 			]
 		},
 		{
@@ -154,6 +163,7 @@ export default {
 			de: 'Les règles',
 			text: '_oc:Gramatica de l’occitan estandard_, Collègi d’Occitania et Academia Occitana, sous la direction de Florian Vernet, pages 12 à 19.'
 		},
+		{ de: 'Des précisions', text: '_Lire & écrire l’Occitan_, Raymond Chabbert, pages 64, 66 et 67.' },
 		{ de: 'Les prononciations', text: 'celles du parcours de Lo Ligam, en languedocien, choisies par Romain.' }
 	]
 };

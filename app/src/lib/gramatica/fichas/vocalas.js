@@ -1,7 +1,12 @@
 // Prononciation 1 : les voyelles et les diphtongues (unité 1, puis un « son
 // du jour » par module). Toutes les prononciations sont celles déjà écrites
 // dans le parcours, choisies par Romain (usage vivant, languedocien). Règles :
-// Gramatica, pages 10 et 11. Occitan à relire par Romain.
+// Gramatica, pages 10 et 11. Précisions de Chabbert (2026-11-04) : pas de e
+// muet, a final « a » à Montpellier, ai « ail », èi « soleil », oi
+// « fenouil », vau « BOOU » et nuèch « NÈTCH » ailleurs (pages 27 à 29, 37 à
+// 39, 47). Occitan à relire par Romain.
+import { CHABBERT } from '../libres.js';
+
 export default {
 	id: 'vocalas',
 	capitol: 'sons',
@@ -30,9 +35,14 @@ export default {
 				{ type: 'indic', text: 'Touche une carte. La prononciation est écrite avec les lettres du français ; la syllabe en CAPITALES est celle où la voix appuie.' },
 				{
 					type: 'nota',
-					text: 'Le *a* de la fin, quand la voix n’appuie pas dessus, sonne comme un « o » léger : *la plaça* « la PLA-ço ». Et *set* (la soif) n’est pas *sèt* (sept) : seul l’accent les sépare.'
+					text: 'Le *a* de la fin, quand la voix n’appuie pas dessus, sonne comme un « o » léger : *la plaça* « la PLA-ço ». Autour de Montpellier, de Lodève ou de Sète, il reste « a » : la différence s’entend à peine.'
 				},
-				{ type: 'font', pages: 'page 10' }
+				{
+					type: 'nota',
+					text: 'Il n’y a pas de *e* muet : chaque *e* se dit, même à la fin, fermé ou ouvert. *dimenge* « di-MÉN-djé ». Et *set* (la soif) n’est pas *sèt* (sept) : seul l’accent les sépare.'
+				},
+				{ type: 'font', pages: 'page 10' },
+				{ type: 'font', libre: CHABBERT, pages: 'pages 27 à 29' }
 			]
 		},
 		{
@@ -75,7 +85,16 @@ export default {
 					]
 				},
 				{ type: 'indic', text: 'Touche une carte pour voir chaque groupe.' },
-				{ type: 'font', pages: 'pages 10 et 11' }
+				{
+					type: 'nota',
+					text: 'Pour t’aider : *ai* se dit comme « ail », *èi* comme la fin de « soleil », *oi* comme la fin de « fenouil » : *soi* « souï ».'
+				},
+				{
+					type: 'nota',
+					text: 'Ailleurs, tu entendras aussi *vau* « BOOU », ou *nuèch* « NÈTCH » sans le « u ». On écrit pourtant toujours *vau* et *nuèch*.'
+				},
+				{ type: 'font', pages: 'pages 10 et 11' },
+				{ type: 'font', libre: CHABBERT, pages: 'pages 37 à 39 et 47' }
 			]
 		},
 		{
@@ -118,6 +137,7 @@ export default {
 			de: 'Les règles',
 			text: '_oc:Gramatica de l’occitan estandard_, Collègi d’Occitania et Academia Occitana, sous la direction de Florian Vernet, pages 10 et 11.'
 		},
+		{ de: 'Des précisions', text: '_Lire & écrire l’Occitan_, Raymond Chabbert, pages 27 à 29, 37 à 39 et 47.' },
 		{ de: 'Les prononciations', text: 'celles du parcours de Lo Ligam, en languedocien, choisies par Romain.' }
 	]
 };

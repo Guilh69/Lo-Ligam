@@ -1,7 +1,11 @@
 // Prononciation 4 : la fin des mots et les liaisons (unités 1 à 6). Toutes
 // les prononciations sont celles du parcours, choisies par Romain (caud
 // « CAOUT » : choix du 2026-11-02). Règles : Gramatica, pages 11 à 14.
-// Occitan à relire par Romain.
+// Précisions de Chabbert (2026-11-04) : voyelle jamais nasale devant un n
+// qui se dit, lh et nh finals « l » et « n », lach ou lait (pages 50, 52,
+// 53 et 59). Occitan à relire par Romain.
+import { CHABBERT } from '../libres.js';
+
 export default {
 	id: 'finalas',
 	capitol: 'sons',
@@ -52,7 +56,12 @@ export default {
 					]
 				},
 				{ type: 'indic', text: 'Touche une carte pour voir des mots.' },
-				{ type: 'font', pages: 'pages 12 à 14' }
+				{
+					type: 'nota',
+					text: 'Quand le *n* se dit, la voyelle devant lui garde son son : elle ne change pas comme en français dans « parent » ou « ancien ». *vint* « BIN » : un « i », puis un « n ».'
+				},
+				{ type: 'font', pages: 'pages 12 à 14' },
+				{ type: 'font', libre: CHABBERT, pages: 'pages 52 et 53' }
 			]
 		},
 		{
@@ -71,7 +80,13 @@ export default {
 					]
 				},
 				{ type: 'indic', text: 'Touche une carte pour voir des mots.' },
-				{ type: 'font', pages: 'pages 11 à 14' }
+				{ type: 'nota', text: 'À la fin, *lh* sonne « l » et *nh* sonne « n » : *solelh* « sou-LÉL ».' },
+				{
+					type: 'nota',
+					text: 'Vers Toulouse et le Lauragais, *ch* devient *it* ou *t* : *lach* ou *lait*, *nuèch* ou *nuèit*. Les deux formes s’écrivent, et les deux sont justes.'
+				},
+				{ type: 'font', pages: 'pages 11 à 14' },
+				{ type: 'font', libre: CHABBERT, pages: 'pages 50 et 59' }
 			]
 		},
 		{
@@ -145,6 +160,7 @@ export default {
 			de: 'Les règles',
 			text: '_oc:Gramatica de l’occitan estandard_, Collègi d’Occitania et Academia Occitana, sous la direction de Florian Vernet, pages 11 à 14.'
 		},
+		{ de: 'Des précisions', text: '_Lire & écrire l’Occitan_, Raymond Chabbert, pages 50, 52, 53 et 59.' },
 		{ de: 'Les prononciations', text: 'celles du parcours de Lo Ligam, en languedocien, choisies par Romain.' }
 	]
 };

@@ -29,7 +29,8 @@ export const modul32 = {
 		'« Enfant » : *lo dròlle, la dròlla, los dròlles* (le Basic n’a pas *enfant*), *mainatge* glosé « on dit aussi » : oui ?',
 		'Joana a deux mères, Clara et Sofia (*las maires de Joana*), dit sans commentaire, comme une famille parmi d’autres : ça te va ?',
 		'La mère de Karim s’appelle *Mirèlha* (Mireille), « mi-RÈ-lyo », ce qui fait entendre le son du jour : le prénom te va ?',
-		'*Es un amic* (glosé) : Núria répond à la question de Joana. On garde *amic* glosé, sans l’enseigner ?'
+		'*Es un amic* (glosé) : Núria répond à la question de Joana. On garde *amic* glosé, sans l’enseigner ?',
+		'Proverbe ajouté à la Cultura le 2026-11-04 (« Petit dictionnaire insolite », page 89) : *Lo buòu vièlh fa la rega drecha*. *buòu* est absent du Basic mais présent dans express’Òc (lo Congrès). Il te va ?'
 	],
 
 	sessions: [
@@ -526,7 +527,8 @@ export const modul32 = {
 					title: 'Cultura : la langue des grands-parents',
 					paragraphs: [
 						'Longtemps, le peuple du Midi a parlé occitan tous les jours. Le français ne s’est imposé comme langue du quotidien qu’au début du XXe siècle dans les villes, et après la Seconde Guerre mondiale dans les campagnes.',
-						'Voilà pourquoi, dans bien des familles, ce sont *lo papeta* et *la mameta* qui parlent occitan : la langue peut s’apprendre par les grands-parents, comme Joana avec Mameta. Sources : Jean Sibille (2007) ; Philippe Martel, revue « Langues et cité », n° 10.'
+						'Voilà pourquoi, dans bien des familles, ce sont *lo papeta* et *la mameta* qui parlent occitan : la langue peut s’apprendre par les grands-parents, comme Joana avec Mameta. Sources : Jean Sibille (2007) ; Philippe Martel, revue « Langues et cité », n° 10.',
+						'Un proverbe salue l’expérience des anciens : *Lo buòu vièlh fa la rega drecha*, le vieux bœuf trace le sillon droit. Source : « Petit dictionnaire insolite de l’occitan et des Occitans », page 89.'
 					]
 				},
 				{

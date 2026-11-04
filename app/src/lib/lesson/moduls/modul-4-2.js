@@ -33,7 +33,8 @@ export const modul42 = {
 		'Métiers des personnages : Karim (20 ans en unité 3) infirmier, Lisa ingénieure, Núria (19 ans) étudiante, Yasmine paysanne, Loís cuisinier, Marià à la retraite. D’accord ?',
 		'Son : *fornièr* « four-NYÈ », mais *fornièra* « four-NYÈ-ro » (le r revient au féminin). C’est bien ton usage ?',
 		'*Qué fas ?* compris « que fais-tu en ce moment ? » (Karim répond *Mangi !*), d’où *Qué fas dins la vida ?* pour le métier : la nuance te paraît juste ?',
-		'Chanson : *Lo Boièr* par Gacha Empega (2002), la version de la fiche culture. On la garde ?'
+		'Chanson : *Lo Boièr* par Gacha Empega (2002), la version de la fiche culture. On la garde ?',
+		'Proverbe ajouté à la Cultura le 2026-11-04 (« Petit dictionnaire insolite », page 88) : le livre écrit *sàp* ; j’ai mis *sap*, la forme de lo Congrès. Il te va ?'
 	],
 
 	sessions: [
@@ -538,6 +539,7 @@ export const modul42 = {
 					glosa: { molinièr: 'meunier', boièr: 'bouvier' },
 					paragraphs: [
 						'Molinier, Molinié, Moullié… Ces noms de famille du Languedoc et de Gascogne viennent du meunier, *lo molinièr* : la même fin que *fornièr* ou *cosinièr*. (Source : Mistral, Lou Trésor dóu Felibrige, tome II, article « moulinié ».)',
+						'Un proverbe dit ce que vaut un métier bien appris : *Val mai un que sap que cent que cercan*, mieux vaut une personne qui sait que cent qui cherchent. Source : « Petit dictionnaire insolite de l’occitan et des Occitans », page 88.',
 						'À écouter : *Lo Boièr* (le bouvier), un chant de métier traditionnel, d’origine incertaine, par Gacha Empega, un groupe de polyphonies de Marseille (album « Polyphonies marseillaises », 2002).'
 					],
 					// Lien d'écoute affiché par NoteBlock : la chanson s'écoute seulement par ce lien.

@@ -28,7 +28,8 @@ export const modul43 = {
 		'*La setmana, trabalhi de dimars a dimenge* (« de… a… » pour « du… au… ») : ça te va ?',
 		'*Jògui al rugbi*, *jogam a las cartas* : *al* et *a las* après *jogar*, d’accord ?',
 		'Son : *dijòus* « di-DJÒOUS », *dimenge* « di-MÉN-djé » : c’est bien ton usage ?',
-		'*Camini amb Yasmine* pour « je me promène avec Yasmine » : ça te va, sans verbe de plus ?'
+		'*Camini amb Yasmine* pour « je me promène avec Yasmine » : ça te va, sans verbe de plus ?',
+		'Proverbe ajouté à la Cultura le 2026-11-04 (« Petit dictionnaire insolite », page 89) : *La maire dels jorns es pas mòrta*. Il te va ?'
 	],
 
 	sessions: [
@@ -488,7 +489,8 @@ export const modul43 = {
 					title: 'Cultura : les jours viennent du latin',
 					paragraphs: [
 						'*Diluns* vient du latin « diēs Lūnae », le jour de la Lune ; *dimars*, de « diēs Mārtis », le jour de Mars ; *dimenge*, de « diēs Dominicus », le jour du Seigneur. Le catalan fait de même (« dilluns », « diumenge »), et le français aussi : « dimanche ».',
-						'Source : Wiktionnaire (en anglais), articles « diluns », « dimars », « dimenge ».'
+						'Source : Wiktionnaire (en anglais), articles « diluns », « dimars », « dimenge ».',
+						'Et pour dire qu’on a bien le temps, un proverbe : *La maire dels jorns es pas mòrta*, la mère des jours n’est pas morte. Il y aura bien d’autres jours. Source : « Petit dictionnaire insolite de l’occitan et des Occitans », page 89.'
 					]
 				},
 				{

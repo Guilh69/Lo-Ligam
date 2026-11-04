@@ -4,6 +4,7 @@ Une fiche = **un fichier** dans `fichas/` (modèle : `fichas/infinitiu.js`). Rie
 
 ## Avant d'écrire
 - **Source** : la *Gramatica de l'occitan estandard* (Collègi d'Occitania, Academia Occitana, dir. Florian Vernet) fait foi. OCR hors Git : `Documents\6_Projectes\Lo_Ligam_hors-git\Modules_cors\Base_donnees_linguistica\Gramatica_estandard\gramatica-linhas-per-pagina.txt` (page du PDF + 2 = page imprimée ; on cite la page imprimée). **On prend les informations du livre, on ne reproduit pas le livre** (Romain, 2026-11-03) : ni ses phrases, ni ses exemples, ni son plan. On explique avec nos mots et les exemples du parcours, et on croise avec d'autres sources quand Romain en fournit.
+- **Autres livres** (depuis le 2026-11-04) : rangés hors Git à côté de la Gramatica, un dossier par livre (`Base_donnees_linguistica\<livre>\` : le PDF et le texte reconnu) ; Romain dépose les nouveaux dans `_A_integrar`. On compare chapitre par chapitre avec les fiches et les leçons, on ne prend que ce qui est **plus clair** que l'existant ou qui **comble un manque**, on reformule, on vérifie chaque mot avec lo Congrès, et on ne change jamais une prononciation du parcours sans Romain (un écart = une question). La page est citée sous l'écran : `{ type: 'font', libre: CHABBERT, pages: 'page 26' }` (ouvrages dans `libres.js`). Méthode complète et relevé de ce qui a été repris : `Modules_cors/lo-ligam-cursus-pour-claude-code/cursus/11-fonts-integradas.md`.
 - **Notion** : son `id` dans `capitols.js` (ex. `verb`, `article-definit`, `negacion`) ; le sommaire suit l'ordre du parcours, et le champ `pages` y dit où lire la notion dans le livre.
 - **Occitan** : chaque mot vérifié avec l'API de lo Congrès (`cd app` puis `node scripts/verificar-oc.mjs mot1 mot2`), chaque forme verbale conjuguée avec vèrb'Òc. Exemples repris du parcours A1 de préférence (`src/lib/lesson/moduls/`). Romain relit l'occitan ; tant qu'il ne l'a pas fait, `validada: false` : la fiche est en ligne et dans le sommaire, mais les moteurs de recherche ne l'indexent pas.
 - **Esprit** (cahier §11, 2026-11-03) : une idée par écran ; on découvre la règle dans l'activité avant qu'elle soit dite ; rien de non expliqué avant ; tutoiement, écriture inclusive (*el, ela*), pas de tirets longs ni de jargon anglais ; une touche culturelle occitane plutôt qu'un personnage ; **la source sous chaque écran tiré du livre**, toutes les sources à la fin.
@@ -54,7 +55,7 @@ Une même couleur peut servir à deux clés (dans `infinitiu.js`, `re` et `er` s
 | `nota` | `text` | une remarque |
 | `indic` | `text` | une aide discrète (« Touche une carte… ») |
 | `seguida` | `text` | « Dans le parcours : [lien](/…) » |
-| `font` | `pages` | « Source : *Gramatica…*, page 63. » sous un écran tiré du livre |
+| `font` | `pages`, `libre` (facultatif) | « Source : *Gramatica…*, page 63. » sous un écran tiré du livre ; avec `libre: CHABBERT` (de `libres.js`), un autre ouvrage |
 | `cartas` | `items: [{ titol, gros, color, exemples: [['parl\|ar', 'parler'], …] }]` | des cartes de couleur ; au toucher, une bulle d'exemples |
 | `copas` | `items: [{ mot: 'parl\|ar', fr, picto }]`, `noms: [{ oc, fr }, { oc, fr }]` | des mots coupés en deux parties nommées |
 | `colonas` | `items: [{ titol, frasas: [{ picto, oc, fr }] }]` | deux colonnes de phrases (« Qui ? », « Quand ? ») |

@@ -23,7 +23,8 @@ export const modul13 = {
 		'*siás* pour « tu es », comme le cadre (§3) ; l’accueil du site dit *siès* (ton choix du 22-10). On garde *siás* dans les leçons ?',
 		'*Soi de…* (origine) et *Demòri a…* (habiter) : *demorar* te va pour « habiter » en A1 ?',
 		'Noms de villes pris dans Wikidata, dans la forme de leur dialecte : *Limòtges* (limousin), *Niça* (niçois), *Bordèu* (gascon). Prononciations à confirmer, surtout *Limòtges* et *Niça*.',
-		'Son du jour : *o* se dit « ou », *ò* se dit « o ». Je n’ai pas utilisé d’exemple qui s’appuie sur le français standard.'
+		'Son du jour : *o* se dit « ou », *ò* se dit « o ». Je n’ai pas utilisé d’exemple qui s’appuie sur le français standard.',
+		'Proverbe ajouté à la Cultura le 2026-11-04 (« Petit dictionnaire insolite », page 87) : le livre écrit *Roda* et *pais* sans accent ; j’ai mis *Ròda* et *país*, les formes de lo Congrès. Il te va ?'
 	],
 
 	sessions: [
@@ -352,7 +353,8 @@ export const modul13 = {
 					title: 'Cultura : le mot qui a donné son nom à la langue',
 					glosa: { lenga: 'langue' },
 					paragraphs: [
-						'*Òc* veut dire « oui ». Au Moyen Âge, on a nommé les langues d’après leur façon de dire oui : au nord la langue d’oïl, au sud la *lenga d’òc* (la langue d’òc). L’occitan porte son « oui » dans son nom.'
+						'*Òc* veut dire « oui ». Au Moyen Âge, on a nommé les langues d’après leur façon de dire oui : au nord la langue d’oïl, au sud la *lenga d’òc* (la langue d’òc). L’occitan porte son « oui » dans son nom.',
+						'Un proverbe dit l’attachement au pays : *Ròda que rodaràs, dins ton país tornaràs*. Tu auras beau tourner, tu reviendras dans ton pays. Source : « Petit dictionnaire insolite de l’occitan et des Occitans », page 87.'
 					]
 				},
 				{
