@@ -72,9 +72,9 @@ Carnaval* viendra d'un enregistrement dont on aura vérifié les droits.
   jamais sur les dialogues (clé à demander à info@locongres.org).
 - Sobriété : fichiers courts (moins de 300 Ko par scène si possible).
 
-## Zo ! (l'espace des petits, dossier `static/audio/zo/`)
+## Anem ! (l'espace des petits, dossier `static/audio/anem/`)
 
-Essai `/ensag/zo` (cadrage du 2026-11-04). Dès qu'un fichier existe, la page
+Essai `/ensag/anem` (cadrage du 2026-11-04). Dès qu'un fichier existe, la page
 le joue à la place du petit carillon. Voix douce, un peu lente, le mot seul.
 
 | Fichier | Contenu |

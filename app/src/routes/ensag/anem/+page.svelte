@@ -1,5 +1,5 @@
 <script>
-	// Zo ! — l'espace des 3 à 6 ans, qui ne lisent pas encore (cadrage de
+	// Anem ! (« Zo ! » jusqu'au 2026-11-05 : se lit comme il se dit, choix de Romain) — l'espace des 3 à 6 ans, qui ne lisent pas encore (cadrage de
 	// Romain du 2026-11-04, cahier §11 ; chantier 28 de PILOTATGE). Essai :
 	// page non indexée, hors menu. Trois coins : Escotar (l'imagier : on touche
 	// une bête, on entend son nom), L'ombra (retrouver la bête à sa silhouette :
@@ -11,8 +11,8 @@
 	// « réduire les animations » respecté ; la sortie est dans le coin des
 	// adultes (appui long), pour qu'un petit doigt ne quitte pas l'espace.
 	// Les bêtes sont découpées dans le visuel Canva de Romain « Nòstres amics
-	// las bèstias » (static/ensag/zo, 2 à 4 Ko chacune, fond #006169).
-	// La voix : un fichier par bête dans static/audio/zo/ (liste dans
+	// las bèstias » (static/ensag/anem, 2 à 4 Ko chacune, fond #006169).
+	// La voix : un fichier par bête dans static/audio/anem/ (liste dans
 	// static/audio/moduls/A-LIRE-enregistrements.md) ; tant qu'il manque, un
 	// petit carillon (Web Audio, aucun fichier) tient la place.
 	import { onMount, untrack } from 'svelte';
@@ -26,10 +26,10 @@
 		{ id: 'galina', oc: 'La galina', fr: 'La poule', pron: 'La galino', nota: 783.99 },
 		{ id: 'gal', oc: 'Lo gal', fr: 'Le coq', pron: 'Lou gal', nota: 880 }
 	];
-	const imatge = (b) => `/ensag/zo/${b.id}.webp`;
-	const ombra = (b) => `/ensag/zo/${b.id}-ombra.webp`;
-	const votz = (b) => `/audio/zo/${b.id}.m4a`;
-	const votzQuestion = (b) => `/audio/zo/ont-es-${b.id}.m4a`;
+	const imatge = (b) => `/ensag/anem/${b.id}.webp`;
+	const ombra = (b) => `/ensag/anem/${b.id}-ombra.webp`;
+	const votz = (b) => `/audio/anem/${b.id}.m4a`;
+	const votzQuestion = (b) => `/audio/anem/ont-es-${b.id}.m4a`;
 
 	// Textes pour l'adulte (l'enfant ne lit pas) : occitan et français ; les
 	// autres langues retombent sur l'occitan (tria) en attendant Aran.
@@ -48,8 +48,8 @@
 		tenir: { oc: 'Quicha longtemps', fr: 'Appuie longtemps' },
 		adultesTitol: { oc: 'Per los adultes', fr: 'Pour les adultes' },
 		adultesTexte: {
-			oc: 'Zo ! es un canton per los pichons de 3 a 6 ans, que legisson pas encara. Tòca una bèstia : ausiràs son nom en occitan. Ni compte, ni donadas, ni cronomètre.',
-			fr: 'Zo ! est un coin pour les petits de 3 à 6 ans, qui ne lisent pas encore. On touche une bête, on entend son nom en occitan. Ni compte, ni données, ni chronomètre.'
+			oc: 'Anem ! es un canton per los pichons de 3 a 6 ans, que legisson pas encara. Tòca una bèstia : ausiràs son nom en occitan. Ni compte, ni donadas, ni cronomètre.',
+			fr: 'Anem ! est un coin pour les petits de 3 à 6 ans, qui ne lisent pas encore. On touche une bête, on entend son nom en occitan. Ni compte, ni données, ni chronomètre.'
 		},
 		adultesVotz: {
 			oc: 'La votz de Romain arriba lèu. En esperant, legís lo mot a votz nauta amb ton mainatge.',
@@ -231,7 +231,7 @@
 </script>
 
 <svelte:head>
-	<title>Zo ! · Lo Ligam</title>
+	<title>Anem ! · Lo Ligam</title>
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
@@ -244,7 +244,7 @@
 		{:else}
 			<span class="redond vuege" aria-hidden="true"></span>
 		{/if}
-		<h1 class="titol">Zo<span class="bang"> !</span></h1>
+		<h1 class="titol">Anem<span class="bang"> !</span></h1>
 		<button
 			class="redond"
 			type="button"
@@ -374,7 +374,7 @@
 	/* Thème clair du site (plâtre, encre) ; les cases sont du bleu canard des
 	   visuels de Romain (#006169), pour que la découpe soit invisible. */
 	.zo {
-		--canard: #006169;
+		--canard: #006069; /* le fond exact de l'export Canva en 2580 px (2026-11-05) */
 		--ombra-carta: 28px;
 		min-height: 100dvh;
 		display: flex;
