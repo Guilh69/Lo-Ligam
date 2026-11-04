@@ -1,6 +1,6 @@
 // La géométrie de la croix occitane du logo (Crotz.svelte : favicon.svg normalisée, rayon 1,
-// centre en 0 0), partagée par CrotzCarga.svelte (essai /ensag/crotz) et par le chemin de
-// S'apren (MiegTres.svelte, variante C choisie par Romain le 2026-11-03).
+// centre en 0 0), utilisée par le chemin de S'apren (CaminCrotz.svelte, posé dans
+// MiegTres.svelte ; piste « hybride » choisie par Romain le 2026-11-04).
 
 // les douze points, dans l'ordre où ils s'allument : depuis le haut, dans le sens des aiguilles
 // d'une montre
