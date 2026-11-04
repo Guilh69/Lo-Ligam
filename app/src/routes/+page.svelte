@@ -63,10 +63,12 @@
 		oc: `${n} ${n === 1 ? 'plaça' : 'plaças'}`,
 		fr: `${n} ${n === 1 ? 'place' : 'places'}`,
 		es: `${n} ${n === 1 ? 'plaza' : 'plazas'}`,
-		en: `${n} ${n === 1 ? 'spot' : 'spots'}`,
-		ca: `${n} ${n === 1 ? 'plaça' : 'places'}`
+		en: `${n} ${n === 1 ? 'place' : 'places'}`,
+		ca: `${n} ${n === 1 ? 'plaça' : 'places'}`,
+		// arabe : le mot avant le chiffre, car le nombre change la forme du mot (1, 2, 3 à 10, 11 et plus)
+		ar: `المقاعد: ${n}`
 	});
-	const LIB_COMPLET = { oc: 'cors complèt', fr: 'cours complet', es: 'clase completa', en: 'fully booked', ca: 'classe completa' };
+	const LIB_COMPLET = { oc: 'cors complèt', fr: 'cours complet', es: 'clase completa', en: 'fully booked', ca: 'classe completa', ar: 'اكتمل العدد' };
 
 	let racina;
 	let motor = $state.raw(null);
