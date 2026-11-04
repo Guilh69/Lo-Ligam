@@ -12,13 +12,13 @@
 	// si on le demande.
 	import { onMount } from 'svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
-	import { SCENAS } from '$lib/plueja/scenas.js';
+	import { SCENAS, GROPS } from '$lib/plueja/scenas.js';
 	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
 
 	const T = {
 		titol: { oc: 'Pluèja de mots', fr: 'Pluie de mots' },
 		tornar: { oc: 'Tornar a l’acuèlh', fr: 'Revenir à l’accueil' },
-		imatge: { oc: 'Imatge', fr: 'Image' },
+		ambianca: { oc: 'Ambient', fr: 'Ambiance' }, // lo Congrès : ambiance → ambient (04-11)
 		forca: { oc: 'Fòrça', fr: 'Intensité' },
 		son: { oc: 'Son', fr: 'Son' },
 		pausa: { oc: 'Pausa', fr: 'Pause' },
@@ -42,7 +42,7 @@
 	let calme = $state(false); // préférence « réduire les animations »
 	let mots = $state([]);
 
-	let racina, tela, barra;
+	let racina, tela, barra, menu;
 	let son = null;
 
 	// ── Mots ─────────────────────────────────────────────────────────────
@@ -70,8 +70,11 @@
 		const id = ++compte;
 		let i = 0;
 		const partidas = def.split(' ').map((m) => [...m].map((l) => ({ l, i: i++ })));
+		// Les expressions des unités (« Pòdes repetir, se te plai ? ») : un peu
+		// plus petites, sans descendre sous 0,85 (Limelight reste gros).
+		const escala = Math.max(0.85, Math.min(1, 14 / oc.length));
 		fis.set(id, { el: null, x: -9999, y: -9999, prof, nais: ara, vida: 12 + Math.random() * 4, fase: Math.random() * 6.28, partit: false });
-		mots.push({ id, oc, def, partidas, prof });
+		mots.push({ id, oc, def, partidas, prof, escala });
 	}
 
 	// Place le mot là où il gêne le moins les autres (meilleur de 16 tirages)
@@ -268,10 +271,12 @@
 	function activitat() {
 		inactiu = false;
 		clearTimeout(minuteurInactiu);
-		minuteurInactiu = setTimeout(() => (inactiu = true), 3500);
+		// les commandes restent là tant que la liste des ambiances est ouverte
+		minuteurInactiu = setTimeout(() => (inactiu = !menu?.matches(':popover-open')), 3500);
 	}
 
 	function rodeta(e) {
+		if (menu?.contains(e.target)) return; // on fait défiler la liste des ambiances, pas la pluie
 		const d = Math.abs(e.deltaY || 0) * (e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 400 : 1);
 		donar((Math.min(d, 160) / 160) * 0.08);
 	}
@@ -330,6 +335,7 @@
 
 	// ── Commandes ────────────────────────────────────────────────────────
 	function causirScena(id) {
+		menu?.hidePopover?.();
 		if (id === scenaId) return;
 		vistas[id] = true;
 		scenaId = id;
@@ -423,6 +429,11 @@
 				{#if vistas[s.id]}
 					<img class="foto" class:vis={s.id === scenaId} src={s.imatge} alt="" style:object-position={s.posicion} decoding="async" />
 				{/if}
+			{:else if s.teinta}
+				<!-- en attendant la photo de Romain : un fond sombre teinté, 0 octet -->
+				{#if vistas[s.id]}
+					<div class="fons-teint" class:vis={s.id === scenaId} style:--teinta={s.teinta}></div>
+				{/if}
 			{:else}
 				<div class="cel-nuech" class:vis={s.id === scenaId}>
 					<!-- collines en silhouette : deux plans, quelques octets -->
@@ -440,7 +451,7 @@
 
 	<div class="mots" aria-hidden="true">
 		{#each mots as m (m.id)}
-			<div class="mot" style:--prof={m.prof} {@attach registrar(m.id)}>
+			<div class="mot" style:--prof={m.prof} style:--escala={m.escala} {@attach registrar(m.id)}>
 				<span class="oc" lang="oc">{m.oc}</span>
 				<span class="filet"></span>
 				<span class="def" lang="fr"
@@ -468,9 +479,26 @@
 	</p>
 
 	<div class="comandas" bind:this={barra}>
-		<div class="scenas" role="group" aria-label={tria(T.imatge)}>
-			{#each SCENAS as s (s.id)}
-				<button type="button" aria-pressed={s.id === scenaId} onclick={() => causirScena(s.id)}>{tria(s.nom)}</button>
+		<!-- Onze ambiances : un bouton qui ouvre la liste ; un clic ailleurs ou
+		     Échap la referme (popover natif, rien à programmer pour ça) -->
+		<button type="button" class="obrir-temas" popovertarget="temas">
+			<span class="etiqueta">{tria(T.ambianca)}</span>
+			{#if scena.numero}<span class="num">{scena.numero}</span>{' '}{/if}{tria(scena.nom)}
+		</button>
+		<div id="temas" class="temas" popover role="group" aria-label={tria(T.ambianca)} bind:this={menu} ontoggle={(e) => e.newState === 'closed' && activitat()}>
+			{#each GROPS as g (g.id)}
+				<section class="grop grop-{g.id}">
+					<h2>{tria(g.nom)}</h2>
+					<ul>
+						{#each SCENAS.filter((s) => s.grop === g.id) as s (s.id)}
+							<li>
+								<button type="button" aria-pressed={s.id === scenaId} onclick={() => causirScena(s.id)}>
+									{#if s.numero}<span class="num">{s.numero}</span>{' '}{/if}{tria(s.nom)}
+								</button>
+							</li>
+						{/each}
+					</ul>
+				</section>
 			{/each}
 		</div>
 		<label class="forca" style:--niv={niv}>
@@ -514,7 +542,8 @@
 		inset: 0;
 	}
 	.foto,
-	.cel-nuech {
+	.cel-nuech,
+	.fons-teint {
 		position: absolute;
 		inset: -4%;
 		width: 108%;
@@ -525,8 +554,16 @@
 		animation: respir 80s ease-in-out infinite alternate;
 	}
 	.foto.vis,
-	.cel-nuech.vis {
+	.cel-nuech.vis,
+	.fons-teint.vis {
 		opacity: 1;
+	}
+	/* Fond d'attente des unités : la teinte du thème, très assourdie */
+	.fons-teint {
+		background:
+			radial-gradient(ellipse 70% 55% at 28% 24%, color-mix(in srgb, var(--teinta) 34%, transparent), transparent 72%),
+			radial-gradient(ellipse 60% 50% at 82% 88%, color-mix(in srgb, var(--teinta) 18%, transparent), transparent 70%),
+			linear-gradient(165deg, #0e181a, #091214 60%, #060b0c);
 	}
 	@keyframes respir {
 		from {
@@ -573,7 +610,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		max-width: min(24rem, 78vw);
+		max-width: min(30rem, 84vw);
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -610,14 +647,15 @@
 	}
 	.oc {
 		font-family: var(--font-heading);
-		font-size: calc(clamp(1.7rem, 1rem + 2.4vw, 3.4rem) * (0.8 + (var(--prof) - 0.62) * 0.53)); /* plancher 0,8 : Limelight reste gros */
+		font-size: calc(clamp(1.7rem, 1rem + 2.4vw, 3.4rem) * (0.8 + (var(--prof) - 0.62) * 0.53) * var(--escala, 1)); /* plancher 0,8 : Limelight reste gros */
 		line-height: 1.05;
 		letter-spacing: 0.02em;
 		color: var(--crema);
 		text-shadow:
 			0 0 28px rgba(0, 0, 0, 0.55),
 			0 1px 2px rgba(0, 0, 0, 0.45);
-		white-space: nowrap;
+		/* une expression longue passe sur deux lignes égales */
+		text-wrap: balance;
 	}
 	.filet {
 		display: block;
@@ -753,10 +791,87 @@
 		font-size: 0.8rem;
 		letter-spacing: 0.05em;
 	}
-	.scenas,
 	.botons {
 		display: flex;
 		gap: 1.3rem;
+	}
+
+	/* ── Choix de l'ambiance ── */
+	.obrir-temas {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 0.55rem;
+		color: var(--crema);
+	}
+	.etiqueta {
+		color: rgba(247, 243, 238, 0.55);
+	}
+	.etiqueta::after {
+		content: ' ·';
+	}
+	.num {
+		display: inline-block;
+		min-width: 1.2em;
+		margin-right: 0.2em; /* plus l'espace du texte, lue par les lecteurs d'écran */
+		font-variant-numeric: tabular-nums;
+		color: var(--aur-clar);
+	}
+	.temas {
+		/* le popover natif se centre ; on le pose au-dessus de la barre */
+		position: fixed;
+		inset: auto auto calc(5.2rem + env(safe-area-inset-bottom)) 50%;
+		translate: -50% 0;
+		margin: 0;
+		width: min(36rem, calc(100vw - 32px));
+		max-height: min(70vh, 34rem);
+		overflow: auto;
+		overscroll-behavior: contain;
+		touch-action: pan-y;
+		padding: 1.1rem 1.4rem 1.2rem;
+		border: 1px solid rgba(255, 212, 127, 0.22);
+		border-radius: 0.9rem;
+		background: rgba(8, 15, 17, 0.84);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		color: var(--crema);
+		font-family: var(--font-body);
+		font-size: 0.9rem;
+		letter-spacing: 0.03em;
+	}
+	.temas::backdrop {
+		background: transparent;
+	}
+	.temas h2 {
+		margin: 0 0 0.5rem;
+		font-family: var(--font-body);
+		font-weight: 400;
+		font-size: 0.7rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: rgba(247, 243, 238, 0.55);
+	}
+	.grop + .grop {
+		margin-top: 1rem;
+		padding-top: 0.9rem;
+		border-top: 1px solid rgba(247, 243, 238, 0.12);
+	}
+	.temas ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0 1.6rem;
+	}
+	.grop-poesia ul {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	.temas li button {
+		width: 100%;
+		min-height: 2.6rem;
+		padding: 0.45rem 0;
+		text-align: left;
+		color: rgba(247, 243, 238, 0.78);
 	}
 	button {
 		appearance: none;
@@ -846,9 +961,19 @@
 			gap: 0.4rem 1.4rem;
 			font-size: 0.78rem;
 		}
-		.scenas,
 		.botons {
 			gap: 1rem;
+		}
+		.temas {
+			bottom: calc(7rem + env(safe-area-inset-bottom));
+			padding: 1rem 1.1rem;
+		}
+		.temas ul {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.grop-poesia ul {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 0 0.8rem;
 		}
 		.indici {
 			bottom: 7.4rem;
@@ -858,7 +983,8 @@
 	/* Réduire les animations : rien ne tombe, les mots apparaissent en fondu */
 	@media (prefers-reduced-motion: reduce) {
 		.foto,
-		.cel-nuech {
+		.cel-nuech,
+		.fons-teint {
 			animation: none;
 		}
 		.mot,
