@@ -104,6 +104,10 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
   kaki sale) ; « éteint » se dit par la taille du point, pas par
   l'opacité. Code : `MiegTres.svelte`, `crotz-geometria.js` ; essai
   `/ensag/crotz`.
+  **À revoir (Romain, 2026-11-04) : jugée lourde et « amateur » ; refonte en
+  cours sur `/ensag/crotz2` (rond de verre fumé, filet d'or, croix du logo
+  seule, un seul poids de trait de 0,7) ; ce paragraphe sera remplacé par le
+  choix de Romain.**
 
 ---
 
