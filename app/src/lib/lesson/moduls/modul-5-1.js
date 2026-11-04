@@ -43,7 +43,8 @@ export const modul51 = {
 		'Marià parle occitan depuis toujours, mais on ne lui a appris à écrire qu’en français : sa liste est en français, l’élève la recopie en occitan. La remarque te va ?',
 		'Sons proposés : *los uòus* « lou-ZUÒOUS », *las olivas* « la-zou-LI-bos », *d’alh* « DAL », *dotze uòus* « DOUT-sé UÒOUS ». À confirmer à l’enregistrement.',
 		'Ton choix du 2026-11-02 (grammaire de référence, p33) : *la frucha* « la FRU-tcho » pour « les fruits », un mot collectif sans pluriel, à la place de *las frutas* ; une ligne l’explique dans l’Obsèrva. Même mot dans *un suc de frucha* (8.3). À relire.',
-		'Culture : l’aïoli (provençal *ai*, *oli* ; chez toi *alh*, *òli* ✓) et le cassoulet (*caçolet*, « petite terrine »), d’après le TLFi. *caçòla* (terrine) est absent du Basic : je ne l’ai pas écrit. On garde la note ?'
+		'Culture : l’aïoli (provençal *ai*, *oli* ; chez toi *alh*, *òli* ✓) et le cassoulet (*caçolet*, « petite terrine »), d’après le TLFi. *caçòla* (terrine) est absent du Basic : je ne l’ai pas écrit. On garde la note ?',
+		'Proverbe ajouté à la Cultura le 2026-11-04 (« Petit dictionnaire insolite », page 85) : *Es coma demandar de peras a un pibol*. Il te va ?'
 	],
 
 	sessions: [
@@ -550,7 +551,8 @@ export const modul51 = {
 					paragraphs: [
 						'L’aïoli, c’est de l’ail et de l’huile : le mot vient du provençal *ai* (ail) et *oli* (huile), relevé par Mistral en 1879. Chez toi, on dit *l’alh* et *l’òli*.',
 						'Le cassoulet aussi a un nom occitan : *caçolet*, un mot languedocien, mot à mot « la petite terrine », celle où cuit le plat. Le français l’a pris en 1897.',
-						'Source : TLFi, articles « aïoli » et « cassoulet ».'
+						'Source : TLFi, articles « aïoli » et « cassoulet ».',
+						'Au marché, ne demande pas l’impossible : *Es coma demandar de peras a un pibol*, c’est comme demander des poires à un peuplier. Source : « Petit dictionnaire insolite de l’occitan et des Occitans », page 85.'
 					]
 				},
 				{

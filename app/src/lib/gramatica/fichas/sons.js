@@ -1,7 +1,13 @@
 // Prononciation 2 : la syllabe forte et l'accent écrit (unité 1, revue en
 // 4.1 et 8.2). Les prononciations sont celles des « sons du jour » du
 // parcours, déjà choisies par Romain : usage vivant, pas de comparaison avec
-// le français standard. Règle : Gramatica, page 22. Occitan à relire par Romain.
+// le français standard. Règle : Gramatica, page 22. Précisions de Chabbert
+// (2026-11-04) : Albi « AL-bi », l'accent grave toujours écrit sur è et ò,
+// un seul accent par mot, á seulement dans -iá (« yo » ou « yè »), aucune
+// prononciation meilleure qu'une autre (pages 26, 34, 36, 43 et 89).
+// Occitan à relire par Romain.
+import { CHABBERT } from '../libres.js';
+
 export default {
 	id: 'sons',
 	capitol: 'sons',
@@ -44,7 +50,9 @@ export default {
 					type: 'nota',
 					text: 'Dans les prononciations du site, la syllabe forte est en CAPITALES. Le *-a* final, où la voix n’appuie jamais, sonne alors « o ».'
 				},
-				{ type: 'font', pages: 'page 22' }
+				{ type: 'nota', text: 'Les noms de lieux suivent la règle, pas le français : *Albi* se dit « AL-bi ».' },
+				{ type: 'font', pages: 'page 22' },
+				{ type: 'font', libre: CHABBERT, pages: 'page 26' }
 			]
 		},
 		{
@@ -84,22 +92,27 @@ export default {
 			blocs: [
 				{
 					type: 'intro',
-					text: 'Quand un mot ne suit pas la règle, un **accent écrit** le dit. La voix appuie sur la voyelle qui le porte.'
+					text: 'Un **accent écrit** dit deux choses. Sur *è* et *ò*, il est **toujours là** : il montre le son ouvert. Sur les autres voyelles, il ne vient que si le mot **ne suit pas la règle**. Dans les deux cas, la voix appuie sur lui.'
 				},
 				{
 					type: 'cartas',
 					items: [
-						{ titol: 'à la fin malgré le -s', gros: 'é', color: 'accent', exemples: [['mercés', 'mér-SÉS'], ['francés', 'fran-SÉS']] },
-						{ titol: 'avant la fin', gros: 'è', color: 'accent', exemples: [['apèli', 'a-PÈ-li'], ['cafè', 'ca-FÈ'], ['apèlas', 'a-PÈ-los']] },
-						{ titol: 'avant la fin', gros: 'ò', color: 'accent', exemples: [['demòri', 'dé-MÒ-ri'], ['pòdi', 'PÒ-di'], ['vòli', 'BÒ-li']] }
+						{ titol: 'é, í : la voix va sur la fin', gros: 'é í', color: 'accent', exemples: [['mercés', 'mér-SÉS'], ['francés', 'fran-SÉS'], ['aquí', 'a-KI']] },
+						{ titol: 'è : toujours écrit', gros: 'è', color: 'accent', exemples: [['apèli', 'a-PÈ-li'], ['cafè', 'ca-FÈ'], ['apèlas', 'a-PÈ-los']] },
+						{ titol: 'ò : toujours écrit', gros: 'ò', color: 'accent', exemples: [['demòri', 'dé-MÒ-ri'], ['pòdi', 'PÒ-di'], ['vòli', 'BÒ-li']] }
 					]
 				},
 				{ type: 'indic', text: 'Touche une carte pour voir des mots.' },
 				{
 					type: 'nota',
-					text: 'Un *è* ou un *ò* est **toujours** sur la syllabe forte. Et un mot d’une seule syllabe n’a pas besoin d’accent pour ça.'
+					text: 'Un *è* ou un *ò* est **toujours** sur la syllabe forte, même dans un mot d’une syllabe : *sèt*, *òc*. Jamais plus d’un accent par mot, et pas d’accent circonflexe.'
 				},
-				{ type: 'font', pages: 'page 22' }
+				{
+					type: 'nota',
+					text: 'Le *á* ne se voit que dans *-iá* : *siás* « SYOS ». Selon les pays, on entend « yo » ou « yè ».'
+				},
+				{ type: 'font', pages: 'page 22' },
+				{ type: 'font', libre: CHABBERT, pages: 'pages 34, 36 et 43' }
 			]
 		},
 		{
@@ -134,7 +147,7 @@ export default {
 				},
 				{
 					type: 'indic',
-					text: 'Tu entendras d’autres façons de dire : l’occitan change d’un pays à l’autre. Ici, on suit le languedocien du cours.'
+					text: 'Tu entendras d’autres façons de dire : l’occitan change d’un pays à l’autre, et aucune n’est meilleure que les autres. Ici, on suit le languedocien du cours.'
 				},
 				{ type: 'seguida', text: 'Dans le parcours : [le module 1.2 t’apprend la syllabe forte](/aprene/modul/1-2).' },
 				{ type: 'fonts' }
@@ -146,6 +159,7 @@ export default {
 			de: 'La règle',
 			text: '_oc:Gramatica de l’occitan estandard_, Collègi d’Occitania et Academia Occitana, sous la direction de Florian Vernet, page 22.'
 		},
+		{ de: 'Des précisions', text: '_Lire & écrire l’Occitan_, Raymond Chabbert, pages 26, 34, 36, 43 et 89.' },
 		{ de: 'Les prononciations', text: 'celles du parcours de Lo Ligam, en languedocien, choisies par Romain.' }
 	]
 };

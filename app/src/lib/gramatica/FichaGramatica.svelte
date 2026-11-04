@@ -68,7 +68,7 @@
 	{#if b.type === 'intro' || b.type === 'nota' || b.type === 'indic' || b.type === 'seguida'}
 		<p class={b.type}>{@html m(b.text)}</p>
 	{:else if b.type === 'font'}
-		<p class="font">Source&nbsp;: {@html marcar(ficha.libre ?? LIBRE)}, {b.pages}.</p>
+		<p class="font">Source&nbsp;: {@html marcar(b.libre ?? ficha.libre ?? LIBRE)}, {b.pages}.</p>
 	{:else if b.type === 'cartas'}
 		<ul class="cartas">
 			{#each b.items as g, i}

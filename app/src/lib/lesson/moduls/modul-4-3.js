@@ -28,7 +28,8 @@ export const modul43 = {
 		'*La setmana, trabalhi de dimars a dimenge* (« de… a… » pour « du… au… ») : ça te va ?',
 		'*Jògui al rugbi*, *jogam a las cartas* : *al* et *a las* après *jogar*, d’accord ?',
 		'Son : *dijòus* « di-DJÒOUS », *dimenge* « di-MÉN-djé » : c’est bien ton usage ?',
-		'*Camini amb Yasmine* pour « je me promène avec Yasmine » : ça te va, sans verbe de plus ?'
+		'*Camini amb Yasmine* pour « je me promène avec Yasmine » : ça te va, sans verbe de plus ?',
+		'Proverbe ajouté à la Cultura le 2026-11-04 (« Petit dictionnaire insolite », page 89) : *La maire dels jorns es pas mòrta*. Il te va ?'
 	],
 
 	sessions: [
@@ -105,7 +106,7 @@ export const modul43 = {
 							subtitle: '(au village ; ils se tutoient)',
 							lines: [
 								{ oc: 'Loís, qué fas lo dimenge ?', sound: 'lou-ÍS, ké FAS lou di-MÉN-djé ?', fr: 'Loís, que fais-tu le dimanche ?' },
-								{ oc: 'Lo dimenge ? Trabalhi ! La setmana, trabalhi de dimars a dimenge.', sound: 'lou di-MÉN-djé ? tra-BA-lyi ! la sém-MA-no, tra-BA-lyi dé di-MARS a di-MÉN-djé.', fr: 'Le dimanche ? Je travaille ! La semaine, je travaille du mardi au dimanche.' },
+								{ oc: 'Lo dimenge ? Trabalhi ! La setmana, trabalhi de dimars a dimenge.', sound: 'lou di-MÉN-djé ? tra-BA-lyi ! la sém-MA-no, tra-BA-lyi dé di-MAS a di-MÉN-djé.', fr: 'Le dimanche ? Je travaille ! La semaine, je travaille du mardi au dimanche.' },
 								{ oc: 'E lo diluns ?', sound: 'é lou di-LUNS ?', fr: 'Et le lundi ?' },
 								{ oc: 'Lo diluns, non trabalhi pas : jògui al rugbi amb los amics. E lo ser, canti a la corala.', sound: 'lou di-LUNS, nou tra-BA-lyi PAS : DJÒ-gui al RUG-bi am lou-za-MITS. é lou SÉR, CAN-ti a la cou-RA-lo.', fr: 'Le lundi, je ne travaille pas : je joue au rugby avec les amis. Et le soir, je chante à la chorale.' },
 								{ oc: 'E dissabte, dançam al balèti ?', sound: 'é di-SAT-té, dan-SAN al ba-LÈ-ti ?', fr: 'Et samedi, on danse au bal ?' },
@@ -128,7 +129,7 @@ export const modul43 = {
 						}
 					],
 					glossary: [
-						{ oc: 'de dimars a dimenge', sound: 'dé di-MARS a di-MÉN-djé', fr: 'du mardi au dimanche' },
+						{ oc: 'de dimars a dimenge', sound: 'dé di-MAS a di-MÉN-djé', fr: 'du mardi au dimanche' },
 						{ oc: 'amb los amics', sound: 'am lou-za-MITS', fr: 'avec les amis' },
 						{ oc: 'lo rugbi', sound: 'lou RUG-bi', fr: 'le rugby' },
 						{ oc: 'lo balèti', sound: 'lou ba-LÈ-ti', fr: 'le bal' },
@@ -267,7 +268,7 @@ export const modul43 = {
 					title: 'À retenir : les quatre autres jours',
 					intro: 'Avec *diluns*, *dissabte* et *dimenge*, tu as toute la semaine.',
 					items: [
-						{ id: 'dimars', oc: 'dimars', sound: 'di-MARS', fr: 'mardi' },
+						{ id: 'dimars', oc: 'dimars', sound: 'di-MAS', fr: 'mardi' },
 						{ id: 'dimecres', oc: 'dimècres', sound: 'di-MÈ-crés', fr: 'mercredi' },
 						{ id: 'dijous', oc: 'dijòus', sound: 'di-DJÒOUS', fr: 'jeudi' },
 						{ id: 'divendres', oc: 'divendres', sound: 'di-BÉN-drés', fr: 'vendredi' }
@@ -488,7 +489,8 @@ export const modul43 = {
 					title: 'Cultura : les jours viennent du latin',
 					paragraphs: [
 						'*Diluns* vient du latin « diēs Lūnae », le jour de la Lune ; *dimars*, de « diēs Mārtis », le jour de Mars ; *dimenge*, de « diēs Dominicus », le jour du Seigneur. Le catalan fait de même (« dilluns », « diumenge »), et le français aussi : « dimanche ».',
-						'Source : Wiktionnaire (en anglais), articles « diluns », « dimars », « dimenge ».'
+						'Source : Wiktionnaire (en anglais), articles « diluns », « dimars », « dimenge ».',
+						'Et pour dire qu’on a bien le temps, un proverbe : *La maire dels jorns es pas mòrta*, la mère des jours n’est pas morte. Il y aura bien d’autres jours. Source : « Petit dictionnaire insolite de l’occitan et des Occitans », page 89.'
 					]
 				},
 				{

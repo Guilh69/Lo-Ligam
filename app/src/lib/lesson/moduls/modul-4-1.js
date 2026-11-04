@@ -36,7 +36,8 @@ export const modul41 = {
 		'*vosautres, vosautras* : l’API a renvoyé une erreur (⚠️, déjà signalé dans le lexique). Tu les valides tels quels ?',
 		'*nautres, vautres* : absents du Basic (⚠️), montrés seulement en note avec leurs pays (Rouergue, Quercy, Albigeois), comme le cadre §3. On les garde ?',
 		'Sons proposés : *parlam* « par-LAN » (le m final sonne « n ») et *parlan* « PAR-lon ». C’est bien ton usage ?',
-		'*Non canti pas plan* (je ne chante pas bien), dit Karim : naturel pour toi ?'
+		'*Non canti pas plan* (je ne chante pas bien), dit Karim : naturel pour toi ?',
+		'Paragraphe ajouté à la Cultura le 2026-11-04 (« Petit dictionnaire insolite », page 22) : « amour » garderait la forme occitane *amor*. Le livre dit lui-même qu’il n’est pas savant : je l’ai écrit au conditionnel. Il te va ?'
 	],
 
 	sessions: [
@@ -529,7 +530,8 @@ export const modul41 = {
 					glosa: { trobador: 'troubadour, poète et compositeur', trobar: 'trouver, composer' },
 					paragraphs: [
 						'Le mot « troubadour » vient de l’occitan *trobador* : celui qui compose, de *trobar*, « trouver », un verbe en -ar comme *cantar*. Le français l’a emprunté : sa première trace écrite date de 1575.',
-						'Source : TLFi, article « troubadour ».'
+						'Source : TLFi, article « troubadour ».',
+						'Les troubadours chantaient la *fin’amor*, l’amour courtois. Le mot français « amour » garderait d’ailleurs la forme occitane *amor* : venu tout droit du latin, il aurait donné « ameur », comme « dolor » a donné « douleur ». Source : « Petit dictionnaire insolite de l’occitan et des Occitans », page 22.'
 					]
 				},
 				{

@@ -1,6 +1,12 @@
 // Prononciation 3 : les consonnes qui sonnent autrement (unités 1 à 6, un
 // « son du jour » par module). Prononciations reprises du parcours, choisies
-// par Romain. Règles : Gramatica, pages 11 à 15. Occitan à relire par Romain.
+// par Romain. Règles : Gramatica, pages 11 à 15. Précisions de Chabbert
+// (2026-11-04) : le s entre « s » et « ch », lh et nh sur les panneaux
+// (Graulhet, Milhau : top'Òc), pas de k, w, y pour les mots occitans (le CLO
+// les admet pour les mots étrangers, cursus/09) ni de h initial (pages
+// 49, 55 et 60). Occitan à relire par Romain.
+import { CHABBERT } from '../libres.js';
+
 export default {
 	id: 'consonantas',
 	capitol: 'sons',
@@ -60,7 +66,12 @@ export default {
 						}
 					]
 				},
-				{ type: 'font', pages: 'page 14' }
+				{
+					type: 'nota',
+					text: 'Le *s* occitan se dit avec la pointe de la langue : un son entre le « s » et le « ch » du français, comme en espagnol.'
+				},
+				{ type: 'font', pages: 'page 14' },
+				{ type: 'font', libre: CHABBERT, pages: 'page 55' }
 			]
 		},
 		{
@@ -79,7 +90,9 @@ export default {
 					]
 				},
 				{ type: 'indic', text: 'Touche une carte pour voir des mots.' },
-				{ type: 'font', pages: 'pages 13 à 15' }
+				{ type: 'nota', text: 'Tu les vois encore sur les panneaux : *Graulhet*, *Milhau* (Millau).' },
+				{ type: 'font', pages: 'pages 13 à 15' },
+				{ type: 'font', libre: CHABBERT, pages: 'page 49' }
 			]
 		},
 		{
@@ -110,7 +123,12 @@ export default {
 						}
 					]
 				},
-				{ type: 'font', pages: 'pages 11, 13 et 14' }
+				{
+					type: 'nota',
+					text: 'Pour ses propres mots, l’occitan n’emploie ni *k*, ni *w*, ni *y* : le son « k » s’écrit *c* ou *qu*. Pas de *ph* non plus (*fotografia*), ni de *h* au début d’un mot : *ièr* (hier), *èrba* (herbe).'
+				},
+				{ type: 'font', pages: 'pages 11, 13 et 14' },
+				{ type: 'font', libre: CHABBERT, pages: 'page 60' }
 			]
 		},
 		{
@@ -153,6 +171,8 @@ export default {
 			de: 'Les règles',
 			text: '_oc:Gramatica de l’occitan estandard_, Collègi d’Occitania et Academia Occitana, sous la direction de Florian Vernet, pages 11 à 15.'
 		},
+		{ de: 'Des précisions', text: '_Lire & écrire l’Occitan_, Raymond Chabbert, pages 49, 55 et 60.' },
+		{ de: 'Les noms de lieux', text: 'vérifiés avec top’Òc (lo Congrès).' },
 		{ de: 'Les prononciations', text: 'celles du parcours de Lo Ligam, en languedocien, choisies par Romain.' }
 	]
 };
