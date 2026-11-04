@@ -109,7 +109,7 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
   plein, de lueur ni de fondu entre couleurs éloignées (il passe par un kaki
   sale). Code : `CaminCrotz.svelte`, `camin-plan.js`, `crotz-geometria.js` ;
   essais `/ensag/crotz2` (les trois pistes) et `/ensag/crotz` (variante C,
-  écartée).
+  écartée), retirés le 04-11 une fois la piste 1 choisie (visibles dans l'historique Git).
 
 ---
 

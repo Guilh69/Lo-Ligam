@@ -182,7 +182,7 @@
 	.estela.vila { fill: #ffd98a; fill-opacity: 1; }
 	.vila-nom { font: 400 12px/1 var(--font-body), sans-serif; fill: var(--crema); fill-opacity: 0.85; }
 	/* Le chemin de S'apren : la croix du logo dans des ronds de verre fumé cerclés d'un filet d'or (composant
-	   CaminCrotz.svelte, piste « hybride » choisie par Romain le 2026-11-04 ; essai /ensag/crotz2). Le composant
+	   CaminCrotz.svelte, piste « hybride » choisie par Romain le 2026-11-04). Le composant
 	   lit ces variables ; la croix lit les jetons --logo-* de app.css (charte §1 bis). Un seul poids de trait. */
 	.mieg { --cc-verre: rgba(34, 16, 10, 0.62); --cc-anell: var(--or); --cc-piste: rgba(238, 175, 52, 0.26); --cc-via: var(--or); }
 	.rets-domeni { fill: color-mix(in srgb, #ffd98a 12%, transparent); stroke: rgba(238, 175, 52, 0.55); stroke-width: 0.9; stroke-linejoin: round; }
