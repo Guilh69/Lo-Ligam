@@ -391,7 +391,8 @@
 	.carta-fin {
 		font-size: clamp(2.2rem, 7cqi, 3.4rem);
 		font-weight: 700;
-		line-height: 1;
+		/* 1.2 : les jambages de g, j, p ne mordent pas sur l'exemple dessous */
+		line-height: 1.2;
 	}
 	.exemples {
 		position: absolute;
