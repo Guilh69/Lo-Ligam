@@ -3,7 +3,7 @@
 // source oubliée…) fait échouer `npm test` au lieu de partir en ligne.
 import { describe, it, expect } from 'vitest';
 import { FICHAS } from './index.js';
-import { PARTS } from './capitols.js';
+import { PARTS, TEMAS } from './capitols.js';
 import { copa, marcar } from './marcar.js';
 import { BLOCS, COLORS, PICTOS } from './listas.js';
 
@@ -17,6 +17,10 @@ const colorats = (s) => [...s.matchAll(/\[([^\]|]*)\|([^\]]*)\](?!\()/g)].map((m
 describe('le sommaire de la grammaire', () => {
 	it('a des notions uniques', () => {
 		expect(new Set(NOCIONS).size).toBe(NOCIONS.length);
+	});
+	it('range chaque notion sous un thème qui existe', () => {
+		const temas = TEMAS.map((t) => t.id);
+		for (const c of PARTS.flatMap((p) => p.capitols)) expect(temas).toContain(c.tema);
 	});
 	it('a au moins une fiche', () => {
 		expect(FICHAS.length).toBeGreaterThan(0);
