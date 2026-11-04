@@ -199,14 +199,11 @@ export const SCENAS = [
 			['los dròlles', 'les enfants'],
 			['la companha', 'la compagne'],
 			['Quant as d’ans ?', 'quel âge as-tu ? mot à mot : combien as-tu d’ans ?'],
-			['dètz', 'dix'],
-			['vint', 'vingt'],
-			['I a…', 'il y a…'],
-			['lo can', 'le chien'],
-			['lo cat', 'le chat'],
-			['l’aucèl', 'l’oiseau'],
-			['lo caval', 'le cheval'],
-			['la galina', 'la poule']
+			// Romain (05-11) : poule et cheval n'ont rien à faire dans la famille.
+			// On garde le chien et le chat, les bêtes de la maison ; les nombres,
+			// l'oiseau, le cheval et la poule (leçons 3.1 et 3.3) sont retirés.
+			['lo can', 'le chien de la maison'],
+			['lo cat', 'le chat de la maison']
 		]
 	},
 	{
