@@ -33,22 +33,22 @@ describe('croix du logo, rayons et arcs un par un', () => {
 
 describe('chemin de S’apren', () => {
 	it('trois courbes qui s’arrêtent à la marge des ronds, sans y entrer', () => {
-		const r = 15;
+		const rayons = [15, 15, 15, 17.6]; // le dernier rond porte un double cercle
 		const marge = 2;
-		const segments = segmentsCamin(r, marge);
+		const segments = segmentsCamin(rayons, marge);
 		expect(segments).toHaveLength(3);
 		segments.forEach((d, i) => {
 			const n = nombres(d);
 			expect(n).toHaveLength(8);
 			const depart = Math.hypot(n[0] - CAMIN_ROND[i].x, n[1] - CAMIN_ROND[i].y);
 			const arrivee = Math.hypot(n[6] - CAMIN_ROND[i + 1].x, n[7] - CAMIN_ROND[i + 1].y);
-			expect(Math.abs(depart - (r + marge))).toBeLessThan(0.05);
-			expect(Math.abs(arrivee - (r + marge))).toBeLessThan(0.05);
+			expect(Math.abs(depart - (rayons[i] + marge))).toBeLessThan(0.05);
+			expect(Math.abs(arrivee - (rayons[i + 1] + marge))).toBeLessThan(0.05);
 		});
 	});
 
 	it('chaque courbe va du rond i vers le rond i + 1', () => {
-		segmentsCamin(15, 2).forEach((d, i) => {
+		segmentsCamin([15, 15, 15, 17.6], 2).forEach((d, i) => {
 			const n = nombres(d);
 			const versSuivant = (x, y) => Math.hypot(x - CAMIN_ROND[i + 1].x, y - CAMIN_ROND[i + 1].y);
 			expect(versSuivant(n[0], n[1])).toBeGreaterThan(versSuivant(n[6], n[7]));
