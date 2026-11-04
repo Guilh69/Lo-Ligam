@@ -18,23 +18,39 @@
 	// puis celles du thème glissent de leur place à la nouvelle (technique
 	// « FLIP » : on mesure avant, on change, on mesure après, on anime l'écart).
 	// Moins de 1 s en tout ; avec « moins d'animation », le filtre est immédiat.
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { replaceState } from '$app/navigation';
 	import { page } from '$app/state';
 	import PaginaSimpla from '$lib/components/PaginaSimpla.svelte';
+	import Bulla from '$lib/components/Bulla.svelte';
 	import { PARTS, TEMAS, fichasDe } from '$lib/gramatica/index.js';
+	import { FICHAS_LENGAS, IU } from '$lib/gramatica/lengas.js';
 	import { marcar } from '$lib/gramatica/marcar.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
-	const FRASA = marcar(
-		'La grammaire de l’occitan, notion par notion, dans l’ordre où tu la rencontres dans le parcours. Chaque fiche cite ses sources. Les fiches arrivent une à une.'
-	);
+	// Les langues (Romain, 2026-11-04) : tout suit la langue choisie ; en
+	// occitan, la bulle de survol donne des exemples ; dans une autre langue,
+	// le nom occitan (et ses exemples). Textes : $lib/gramatica/lengas.js et
+	// capitols.js.
+	let lang = $derived(langStore.current);
+	let esOc = $derived(lang === 'oc');
+	// les textes balisés passent par {@html}, que Svelte ne corrige pas au
+	// chargement : ils partent en occitan (comme la page du serveur) et
+	// prennent la langue choisie une fois la page montée
+	let monte = $state(false);
+	onMount(() => (monte = true));
+	const balisat = (v) => marcar(monte ? tria(v) : v.oc);
+	let FRASA = $derived(balisat(IU.frasa));
+	const resumit = (f) => tria({ fr: f.resumit, ...FICHAS_LENGAS[f.id]?.resumit });
+	// le titre de la fiche dans la langue choisie (bulle), sauf en occitan
+	const titolTraduch = (f) => (lang === 'fr' ? f.fr : (FICHAS_LENGAS[f.id]?.titol?.[lang] ?? f.fr));
 
 	let filtre = $state(TEMAS.some((t) => t.id === page.url.searchParams.get('tema')) ? page.url.searchParams.get('tema') : null);
 	let tema = $derived(TEMAS.find((t) => t.id === filtre) ?? null);
 	// le thème demandé : le bouton le montre tout de suite, la liste suit
 	// après l'effacement
 	let visat = $state(filtre);
-	const nomTema = (id) => TEMAS.find((t) => t.id === id)?.fr ?? '';
+	const nomTema = (id) => tria(TEMAS.find((t) => t.id === id)?.nom ?? {});
 
 	// les parties et les notions qui restent avec un filtre donné
 	const triadas = (f) =>
@@ -77,7 +93,7 @@
 
 	async function animar(nou, url) {
 		// 1. où est chaque bloc avant ; ce qui reste après
-		const restan = new Set(triadas(nou).flatMap((p) => [p.titol, ...p.capitols.map((c) => c.id)]));
+		const restan = new Set(triadas(nou).flatMap((p) => [p.id, ...p.capitols.map((c) => c.id)]));
 		const blocs = () => [...lista.querySelectorAll('[data-clau]')];
 		const avant = new Map(blocs().map((el) => [el.dataset.clau, el.getBoundingClientRect()]));
 		// 2. ce qui part s'efface (au plus 0,3 s d'attente : un onglet en
@@ -128,49 +144,75 @@
 
 <svelte:head>
 	<title>Gramatica · S’apren · Lo Ligam</title>
-	<meta name="description" content="La grammaire de l’occitan, notion par notion, dans l’ordre du parcours de Lo Ligam." />
+	<meta name="description" content={tria(IU.descripcion)} />
 </svelte:head>
+
+<!-- la bulle d'un thème ou d'une notion : en occitan, des exemples ; dans
+     une autre langue, le nom occitan puis les exemples -->
+{#snippet bulla(id, nom, exemple)}
+	<Bulla {id} titol={esOc ? '' : nom.oc} etiqueta={esOc ? tria(IU.perExemple) : ''} text={exemple} />
+{/snippet}
 
 <PaginaSimpla titol="Gramatica" frasa={FRASA} parent={{ href: '/apren', nom: 'S’apren' }}>
 	<div class="filtre">
-		<ul class="temas" aria-label="Filtrer par thème">
+		<ul class="temas" aria-label={tria(IU.triarTema)}>
 			{#each TEMAS as t}
 				<li>
-					<button type="button" class="tema t-{t.id}" aria-pressed={visat === t.id} onclick={() => triar(t.id)}>
+					<button
+						type="button"
+						class="tema t-{t.id}"
+						aria-pressed={visat === t.id}
+						aria-describedby="b-tema-{t.id}"
+						onclick={() => triar(t.id)}
+					>
 						<span class="mostra" aria-hidden="true"></span>
-						<span><strong>{t.fr}</strong><span class="tema-detalh">{t.detalh}</span></span>
+						<span><strong>{tria(t.nom)}</strong><span class="tema-detalh">{tria(t.detalh)}</span></span>
+						{@render bulla(`b-tema-${t.id}`, t.nom, t.exemple)}
 					</button>
 				</li>
 			{/each}
 		</ul>
 		{#if visat}
-			<button type="button" class="tot" onclick={() => triar(null)}>Tout afficher</button>
+			<button type="button" class="tot" onclick={() => triar(null)}>{tria(IU.totVeire)}</button>
 		{/if}
-		<p class="estat" aria-live="polite">{tema ? `${tema.fr} : ${compte} fiches, dans l’ordre du parcours.` : ''}</p>
+		<p class="estat" aria-live="polite">{tema ? tria(IU.estat)(tria(tema.nom), compte) : ''}</p>
 	</div>
 
 	<div class="parts" bind:this={lista}>
-		{#each parts as p (p.titol)}
+		{#each parts as p (p.id)}
 			<section class="part" aria-labelledby="part-{p.n}">
-				<h2 id="part-{p.n}" data-clau={p.titol}>{p.titol}</h2>
+				<h2 id="part-{p.n}" data-clau={p.id}>{tria(p.titol)}</h2>
 				<ol class="capitols">
 					{#each p.capitols as c (c.id)}
 						{@const fichas = fichasDe(c.id)}
 						<li class="capitol" class:a-fichas={fichas.length} data-clau={c.id}>
 							<p class="capitol-nom">
-								<span>{c.fr}{#if c.detalh}<span class="detalh">&nbsp;: {@html marcar(c.detalh)}</span>{/if}</span>
-								{#if c.unitat}<span class="unitat">unité {c.unitat}</span>{/if}
+								<!-- tabindex : au téléphone, toucher le nom ouvre la bulle -->
+								<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+								<span class="capitol-titol" tabindex="0" aria-describedby="b-cap-{c.id}"
+									>{tria(c.nom)}{#if c.detalh}<span class="detalh">&nbsp;: {@html balisat(c.detalh)}</span>{/if}{@render bulla(
+										`b-cap-${c.id}`,
+										c.nom,
+										c.exemple
+									)}</span
+								>
+								{#if c.unitat}<span class="unitat">{tria(IU.unitat)} {c.unitat}</span>{/if}
 							</p>
 							{#if fichas.length}
 								<ul class="fichas">
 									{#each fichas as f (f.id)}
 										<li>
-											<a class="ficha t-{c.tema}" href="/apren/gramatica/{f.id}">
+											<a
+												class="ficha t-{c.tema}"
+												href="/apren/gramatica/{f.id}"
+												aria-describedby={esOc ? undefined : `b-ficha-${f.id}`}
+											>
 												<span class="ficha-cap">
 													<span class="ficha-titol" lang="oc">{f.titol}</span>
 													<span class="ficha-tema">{nomTema(c.tema)}</span>
 												</span>
-												<span class="ficha-resumit">{f.resumit}</span>
+												<span class="ficha-resumit">{resumit(f)}</span>
+												{#if !esOc}<Bulla id="b-ficha-{f.id}" text={titolTraduch(f)} {lang} />{/if}
 											</a>
 										</li>
 									{/each}
@@ -253,7 +295,7 @@
 		background: var(--aplat);
 		color: var(--sus);
 		font: inherit;
-		text-align: left;
+		text-align: start;
 		cursor: pointer;
 		transition: box-shadow 0.25s;
 	}
@@ -290,7 +332,7 @@
 	.tema[aria-pressed='true'] .mostra::after {
 		content: '';
 		position: absolute;
-		left: 0.2rem;
+		inset-inline-start: 0.2rem;
 		top: 0;
 		width: 0.25rem;
 		height: 0.46rem;
@@ -353,6 +395,15 @@
 		align-items: baseline;
 		gap: 1rem;
 		margin: 0;
+	}
+	/* le nom d'une notion porte sa bulle (exemples, ou l'occitan) */
+	.capitol-titol {
+		cursor: help;
+		border-radius: 3px;
+	}
+	.capitol-titol:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 3px;
 	}
 	.capitol:not(.a-fichas) .capitol-nom {
 		color: var(--t-tinta-2);
