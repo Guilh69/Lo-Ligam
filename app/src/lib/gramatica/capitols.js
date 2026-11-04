@@ -13,12 +13,13 @@
 // « pouvoir filtrer en haut… les cases de couleurs… dans l'ordre logique de
 // l'apprentissage »). Cinq thèmes, couleurs de la charte sans le rouge du
 // logo (réservé à ce qui se clique). Une nouvelle notion prend l'un de ces
-// thèmes (contrôlé par les tests).
+// thèmes (contrôlé par les tests). Possessifs et démonstratifs sous « Le
+// nom » (Romain, même jour : ils accompagnent le nom, comme les articles).
 
 export const TEMAS = [
 	{ id: 'sons', fr: 'Les sons', detalh: 'lire et prononcer' },
-	{ id: 'nom', fr: 'Le nom', detalh: 'articles, adjectifs, nombres, accords' },
-	{ id: 'pronoms', fr: 'Les pronoms', detalh: 'je, mon, celui-ci, quelqu’un' },
+	{ id: 'nom', fr: 'Le nom', detalh: 'articles, possessifs, adjectifs, nombres' },
+	{ id: 'pronoms', fr: 'Les pronoms', detalh: 'je, me, quelqu’un, rien' },
 	{ id: 'verb', fr: 'Le verbe', detalh: 'les temps, les modes, les formes' },
 	{ id: 'frasa', fr: 'La phrase', detalh: 'relier, nier, questionner, situer' }
 ];
@@ -38,7 +39,7 @@ export const PARTS = [
 			{ id: 'conjoncions', tema: 'frasa', fr: 'Relier deux idées : les conjonctions', unitat: 2, pages: '58-61' },
 			{ id: 'nombres', tema: 'nom', fr: 'Les nombres', unitat: 3, pages: '54-55' },
 			{ id: 'article-definit', tema: 'nom', fr: 'L’article défini', unitat: 3, pages: '23-24' },
-			{ id: 'possessius', tema: 'pronoms', fr: 'Les possessifs', unitat: 3, pages: '41-42' },
+			{ id: 'possessius', tema: 'nom', fr: 'Les possessifs', unitat: 3, pages: '41-42' },
 			{ id: 'article-indefinit', tema: 'nom', fr: 'L’article indéfini', unitat: 3, pages: '25-26' },
 			{ id: 'verb', tema: 'verb', fr: 'Le verbe : infinitif et groupes', unitat: 4, pages: '63-66' },
 			{ id: 'alternanca', tema: 'verb', fr: 'Quand la voyelle change', detalh: '*levar*, *lèvi*', unitat: 4, pages: '86-93' },
@@ -52,7 +53,7 @@ export const PARTS = [
 	{
 		titol: 'Pour aller plus loin',
 		capitols: [
-			{ id: 'demonstratius', tema: 'pronoms', fr: 'Les démonstratifs', pages: '46-47' },
+			{ id: 'demonstratius', tema: 'nom', fr: 'Les démonstratifs', pages: '46-47' },
 			{ id: 'futur', tema: 'verb', fr: 'Le futur', pages: '71-72' },
 			{ id: 'tempses-compausats', tema: 'verb', fr: 'Le passé composé et les temps composés', pages: '82-83' },
 			{ id: 'acords', tema: 'nom', fr: 'Les accords', pages: '36-37' },
