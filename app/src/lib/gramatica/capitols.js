@@ -20,18 +20,22 @@
 // faut que ce soit que de l'occitan, et quand on survole… que ce soit
 // expliqué avec d'autres mots mais en occitan, ou alors des exemples ») :
 // « nom » et « detalh » dans chaque langue du site (lus par tria()), et
-// « exemple », en occitan seulement, pour la bulle de survol. En occitan, la
+// « exemple », en occitan seulement, pour la bulle de survol (pour les sons :
+// « telle lettre = tel son », Romain 2026-11-04, pas des mots en vrac). En occitan, la
 // bulle donne les exemples ; dans une autre langue, le nom occitan et les
 // exemples. Les termes suivent la Gramatica (los tempses, los possessius…)
 // et lo Congrès. Occitan à relire par Romain. Une langue manquante retombe
 // sur l'occitan (tria).
+
+// « o = « ou » », chaque paire insécable : elle ne se coupe pas en fin de ligne
+const sons = (...p) => p.map(([l, s]) => `${l}\u00a0=\u00a0«\u00a0${s}\u00a0»`).join(', ');
 
 export const TEMAS = [
 	{
 		id: 'sons',
 		nom: { oc: 'Los sons', fr: 'Les sons', es: 'Los sonidos', en: 'Sounds', ca: 'Els sons', ar: 'الأصوات' },
 		detalh: { oc: 'legir e prononciar', fr: 'lire et prononcer', es: 'leer y pronunciar', en: 'reading and pronouncing', ca: 'llegir i pronunciar', ar: 'القراءة والنطق' },
-		exemple: 'vint, Tolosa, la familha, occitan'
+		exemple: sons(['o', 'ou'], ['ò', 'o'], ['v', 'b'], ['lh', 'ly'])
 	},
 	{
 		id: 'nom',
@@ -64,7 +68,7 @@ export const PARTS = [
 		id: 'debuta',
 		titol: { oc: 'Dempuèi lo començament del parcors', fr: 'Dès le début du parcours', es: 'Desde el principio del recorrido', en: 'From the start of the course', ca: 'Des del començament del recorregut', ar: 'منذ بداية المسار' },
 		capitols: [
-			{ id: 'sons', tema: 'sons', nom: { oc: 'La prononciacion', fr: 'La prononciation', es: 'La pronunciación', en: 'Pronunciation', ca: 'La pronunciació', ar: 'النطق' }, exemple: 'vint, Tolosa, la familha', unitat: 1, pages: '9-22' },
+			{ id: 'sons', tema: 'sons', nom: { oc: 'La prononciacion', fr: 'La prononciation', es: 'La pronunciación', en: 'Pronunciation', ca: 'La pronunciació', ar: 'النطق' }, exemple: sons(['-a', 'o'], ['ch', 'tch'], ['j', 'dj'], ['nh', 'gn']), unitat: 1, pages: '9-22' },
 			{ id: 'preposicions', tema: 'frasa', nom: { oc: 'Las preposicions', fr: 'Les prépositions', es: 'Las preposiciones', en: 'Prepositions', ca: 'Les preposicions', ar: 'حروف الجر' }, exemple: 'a, de, dins, amb, per ; al, del', unitat: 1, pages: '62' },
 			{ id: 'adverbis', tema: 'frasa', nom: { oc: 'Los advèrbis', fr: 'Les adverbes', es: 'Los adverbios', en: 'Adverbs', ca: 'Els adverbis', ar: 'الظروف' }, exemple: 'plan, tanben, uèi', unitat: 1, pages: '57' },
 			{
