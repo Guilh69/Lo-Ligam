@@ -93,22 +93,23 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
   écartée : « je voudrais la croix avec les couleurs type Lo Ligam »). Sur
   le voile brique du menu : traits blancs, points or. Jetons `--logo-*`
   d'`app/src/app.css`, composant `Crotz.svelte` (`teula` = logo complet).
-- **La croix qui se charge (chemin de S'apren, Romain, 2026-11-03,
-  variante C)** : dans les quatre ronds du chemin, les douze points sont
-  d'abord petits et blancs, puis grands et or clair, un à un dans le sens
-  des aiguilles d'une montre ; un disque d'or (#FFD47F en sombre, #EEAF34
-  en clair, le point des recettes) grandit depuis le centre ; la croix
-  passe au brique #B53D17. État final, dans les deux thèmes : **croix
-  brique sur disque or**, identique sans animation (mouvement réduit).
-  Jamais de fondu entre le bleu nuit du rond et l'or (il passe par un
-  kaki sale) ; « éteint » se dit par la taille du point, pas par
-  l'opacité. Code : `MiegTres.svelte`, `crotz-geometria.js` ; essai
-  `/ensag/crotz`.
-  **À revoir (Romain, 2026-11-04) : jugée lourde et « amateur » ; refonte en
-  cours sur `/ensag/crotz2` (rond de verre fumé, filet d'or, croix du logo
-  seule, un seul poids de trait de 0,7, quatre niveaux du débutant à la croix
-  pleine) ; ce paragraphe sera remplacé par le
-  choix de Romain.**
+- **La croix qui se charge (chemin de S'apren, Romain, 2026-11-04, piste 1
+  « le tour puis les liens »)** : quatre ronds de verre fumé (sombre :
+  rgba(34, 16, 10, 0.62) ; clair : rgba(251, 241, 225, 0.84)) cerclés d'un
+  filet d'or (`--or` : #EEAF34 en sombre, ocre #8F5400 en clair), un seul poids
+  de trait de 0,7 unité (celui du logo). La croix reste seule, aux couleurs des
+  recettes (jetons `--logo-*`), jamais animée en couleur. **Quatre niveaux, du
+  débutant à la croix pleine** : 3, 6, 9 puis 12 points allumés, cercle tracé
+  d'autant, rayons et arcs seulement entre points allumés ; les points pas
+  encore allumés restent de petites perles (la taille, pas l'opacité) ; le
+  dernier rond, la croix pleine, porte un double cercle. Un filet fait le tour
+  du rond et allume les points, puis le moyeu, les rayons et les arcs les
+  relient ; tout fini en moins de 5 s (RGAA 13.8), sans rebond ; sans animation,
+  les quatre niveaux s'affichent d'emblée. Jamais de rouge en aplat, de disque
+  plein, de lueur ni de fondu entre couleurs éloignées (il passe par un kaki
+  sale). Code : `CaminCrotz.svelte`, `camin-plan.js`, `crotz-geometria.js` ;
+  essais `/ensag/crotz2` (les trois pistes) et `/ensag/crotz` (variante C,
+  écartée).
 
 ---
 
