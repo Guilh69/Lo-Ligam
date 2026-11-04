@@ -247,16 +247,26 @@
 	.sist-tèxt :global(.mix-lengas) { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 	.sist-tèxt :global(.mix-lengas span) { font-family: var(--font-quote), serif; font-style: italic; font-size: 1rem; padding: 0.3rem 0.9rem; border: 1px solid color-mix(in srgb, var(--or) 30%, transparent); border-radius: 999px; color: var(--crema); }
 
-	/* ——— Révélation au défilement (classe « anim » posée hors « moins d'animation ») ——— */
-	.anim [data-revela] { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--lent), transform 0.9s var(--lent); }
-	.anim [data-revela].vist { opacity: 1; transform: none; }
-	.anim .vist .costa { stroke-dashoffset: 1; animation: traçar 1.8s var(--lent) 0.2s forwards; }
-	.anim .vist .rets-flux { animation: fluir 1.1s linear infinite; }
-	.anim .vist .rets-arc { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar 1.2s var(--lent) both; animation-delay: calc(0.2s + var(--i) * 0.12s); }
-	.anim .vist .rets-vila { transform: scale(0); animation: naisser 0.6s var(--lent) both; animation-delay: calc(0.3s + var(--i) * 0.06s); }
+	/* ——— Révélation au défilement (classe « anim » posée hors « moins d'animation »). Ces règles dormaient depuis le
+	   début : écrites « .anim … » sans :global, Svelte les supprimait (avertissements « Unused CSS selector ») ;
+	   remises en marche le 2026-11-04, à la demande de Romain. ——— */
+	:global(.anim) [data-revela] { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--lent), transform 0.9s var(--lent); }
+	:global(.anim) [data-revela]:global(.vist) { opacity: 1; transform: none; }
+	:global(.anim .vist) .costa { stroke-dashoffset: 1; animation: traçar 1.8s var(--lent) 0.2s forwards; }
+	/* les points qui coulent le long des liens : après le tracé des liens, quatre tours (moins de 5 s, RGAA 13.8) */
+	:global(.anim) .rets-flux { opacity: 0; }
+	:global(.anim .vist) .rets-flux { animation: flux-ven 0.5s ease 1.9s forwards, fluir 1.1s linear 1.9s 4; }
+	:global(.anim .vist) .rets-arc { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar 1.2s var(--lent) both; animation-delay: calc(0.2s + var(--i) * 0.12s); }
+	:global(.anim .vist) .rets-vila { transform: scale(0); animation: naisser 0.6s var(--lent) both; animation-delay: calc(0.3s + var(--i) * 0.06s); }
+	/* à l'impression, les blocs sont tous visibles (on n'a pas fait défiler la page) */
+	@media print {
+		:global(.anim) [data-revela] { opacity: 1; transform: none; }
+		:global(.anim) .rets-flux { opacity: 0.9; }
+	}
 	@keyframes traçar { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 	@keyframes fluir { to { stroke-dashoffset: -7; } }
 	@keyframes naisser { from { transform: scale(0); } to { transform: scale(1); } }
+	@keyframes flux-ven { from { opacity: 0; } to { opacity: 0.9; } }
 	@media (prefers-reduced-motion: reduce) {
 		.mieg *, .mieg *::before, .mieg *::after { animation: none !important; transition: none !important; }
 	}
