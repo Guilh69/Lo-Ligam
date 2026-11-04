@@ -3,7 +3,7 @@
 	// S'apren (Romain : « prends exemple sur la page S'apren »). Rôle distinct de
 	// l'accueil, qui nomme les portes : ici, chaque porte en case de couleur,
 	// avec une ligne sur ce qu'on y trouve (la carte en grand, le wiki, Òbras,
-	// Articles, les musiques).
+	// Articles, les musiques ; Cultura à la place du wiki le 2026-11-04).
 	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
 	import { PLAN } from '$lib/data/planSite.js';
 	import { tria } from '$lib/stores/lang.svelte.js';
@@ -20,7 +20,7 @@
 	<title>{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla', ar: 'نتحدّث' })} · Lo Ligam</title>
 	<meta
 		name="description"
-		content="L’occitan se parla : la carta, lo wiki, las òbras, los articles. L’occitan se parle : la carte, le wiki, les œuvres, les articles."
+		content="L’occitan se parla : la carta, la cultura, las òbras, los articles, los mèdias. L’occitan se parle : la carte, la culture, les œuvres, les articles, les médias."
 	/>
 </svelte:head>
 

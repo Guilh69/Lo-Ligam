@@ -26,7 +26,10 @@ const ANCIANAS = {
 	'/ensag/television': '/medias/television',
 	'/ensag/premsa': '/medias/premsa',
 	'/ensag/literatura': '/obras/literatura',
-	'/ensag/cinema': '/obras/cinema'
+	'/ensag/cinema': '/obras/cinema',
+	// le wiki devient Cultura (Romain, 2026-11-04 : « ça va remplacer plutôt
+	// Wiki ») ; la grammaire qu'il annonçait est dans S'apren
+	'/wiki': '/cultura'
 };
 
 // En-têtes de sécurité posés sur chaque réponse. Scaleway ne les met pas

@@ -86,6 +86,8 @@ export function pictoPer(href = '') {
 	// les portes de Se parla (2026-10-25)
 	if (href.startsWith('/carta')) return 'carta';
 	if (href.startsWith('/wiki')) return 'wiki';
+	// Cultura, à la place du wiki (2026-11-04) : un soleil
+	if (href.startsWith('/cultura')) return 'cultura';
 	if (href.startsWith('/obras#musicas') || href.startsWith('/ensag/musica')) return 'musica';
 	// Òbras par art et Médias (2026-10-25)
 	if (href.startsWith('/medias/television')) return 'television';

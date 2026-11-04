@@ -55,6 +55,13 @@
 	{:else if nom === 'wiki'}
 		<path d="M24 13c-5-4-12-4.5-18-2.5v27c6-2 13-1.5 18 2.5 5-4 12-4.5 18-2.5v-27c-6-2-13-1.5-18 2.5z" />
 		<path d="M24 13v27" />
+	{:else if nom === 'cultura'}
+		<!-- Cultura (2026-11-04) : le soleil qui se lève sur le Midi, celui du
+		     « Cant dóu soulèu » de Mistral ; à demi, sur l'horizon, pour ne pas
+		     ressembler au bouton clair/sombre du bandeau (Joan) -->
+		<path d="M14 34a10 10 0 0 1 20 0" />
+		<path d="M5 34h38M12 40h24" />
+		<path d="M24 21v-6M30.5 22.7l3-5.2M17.5 22.7l-3-5.2M35.3 27.5l5.2-3M12.7 27.5l-5.2-3" />
 	{:else if nom === 'obras'}
 		<rect x="6" y="9" width="13" height="30" rx="1.5" />
 		<path d="M9.5 15h6" />
