@@ -90,13 +90,13 @@ function sortie(P, c, r, fin) {
 	return dehors;
 }
 
-// Les trois courbes, rognées pour s'arrêter à `marge` unités des ronds de rayon `r` (le filet
-// n'entre pas dans les ronds) ; chaque courbe est un tracé « M… C… » prêt pour un <path>.
-export function segmentsCamin(r, marge) {
+// Les trois courbes, rognées pour s'arrêter à `marge` unités des ronds (le filet n'entre pas dans
+// les ronds ; `rayons[n]` est le rayon du rond n, double cercle compris) ; chaque courbe est un
+// tracé « M… C… » prêt pour un <path>.
+export function segmentsCamin(rayons, marge) {
 	return CAMIN_COURBES.map((P, i) => {
-		const lim = r + marge;
-		const t0 = sortie(P, [CAMIN_ROND[i].x, CAMIN_ROND[i].y], lim, false);
-		const t1 = sortie(P, [CAMIN_ROND[i + 1].x, CAMIN_ROND[i + 1].y], lim, true);
+		const t0 = sortie(P, [CAMIN_ROND[i].x, CAMIN_ROND[i].y], rayons[i] + marge, false);
+		const t1 = sortie(P, [CAMIN_ROND[i + 1].x, CAMIN_ROND[i + 1].y], rayons[i + 1] + marge, true);
 		const [a, b, c, d] = morceau(P, t0, t1);
 		const f = (p) => `${p[0].toFixed(2)} ${p[1].toFixed(2)}`;
 		return `M${f(a)}C${f(b)} ${f(c)} ${f(d)}`;

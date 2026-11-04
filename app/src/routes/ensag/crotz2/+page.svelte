@@ -49,6 +49,10 @@
 			dans un rond de verre fumé cerclé d'un filet d'or, d'un seul poids de trait, celui du logo. Le chemin devient un filet qui relie les ronds, comme le « ligam ». Trois façons
 			de la charger, toutes en moins de 5 secondes : dis-moi celle qui te plaît, ou un mélange.
 		</p>
+		<p class="intro">
+			Tu avais aussi raison sur les niveaux : les quatre ronds ne finissaient pas au même point. Maintenant le premier est le débutant (3 points allumés, un petit bout de cercle), le deuxième
+			en a 6, le troisième 9, et le dernier est la croix pleine : les 12 points, le cercle fermé, et un double cercle pour dire qu'on est arrivé. Chaque rond se charge jusqu'à son niveau.
+		</p>
 		<div class="fons" role="group" aria-label="Fond de la page">
 			<button type="button" aria-pressed={!clar} onclick={() => (clar = false)}>Fond sombre</button>
 			<button type="button" aria-pressed={clar} onclick={() => (clar = true)}>Fond clair</button>
@@ -57,21 +61,21 @@
 
 	<section class="var" id="hybride">
 		<h2><span class="lletra">1</span> Le tour, puis les liens</h2>
-		<p>Un filet d'or fait le tour du rond et allume les douze points à son passage. Puis le moyeu, les rayons et les arcs les relient : la croix n'existe que parce que les points sont liés, c'est l'idée du logo. Les ronds se chargent l'un après l'autre et le chemin se trace de l'un à l'autre. C'est celle que Joan met en premier : elle raconte le logo et reste la plus légère sur un téléphone lent.</p>
+		<p>Un filet d'or fait le tour du rond jusqu'à son niveau et allume les points à son passage. Puis le moyeu, les rayons et les arcs les relient : la croix n'existe que parce que les points sont liés, c'est l'idée du logo. Les ronds se chargent l'un après l'autre et le chemin se trace de l'un à l'autre. C'est celle que Joan met en premier : elle raconte le logo et reste la plus légère sur un téléphone lent.</p>
 		<div class="scena" use:vist><CaminCrotz variant="hybride" gran /></div>
 		<button type="button" class="rejoua" onclick={rejouer}>Rejouer</button>
 	</section>
 
 	<section class="var" id="balayage">
 		<h2><span class="lletra">2</span> Le balayage</h2>
-		<p>Le même tour, mais une aiguille d'or précède le filet : la croix se dessine derrière elle, rayon après rayon. Plus démonstrative, un peu « indicateur de chargement ».</p>
+		<p>Le même tour, mais une aiguille d'or précède le filet : la croix se dessine derrière elle, rayon après rayon, jusqu'au niveau du rond. Plus démonstrative, un peu « indicateur de chargement ».</p>
 		<div class="scena" use:vist><CaminCrotz variant="balayage" gran /></div>
 		<button type="button" class="rejoua" onclick={rejouer}>Rejouer</button>
 	</section>
 
 	<section class="var" id="constellation">
 		<h2><span class="lletra">3</span> La constellation</h2>
-		<p>Les points arrivent d'abord seuls, depuis le bord du rond, puis les rayons et les arcs les relient. Le filet d'or se referme à la fin. La plus lisible, mais celle qui demande le plus d'effort à un téléphone lent.</p>
+		<p>Les points arrivent d'abord seuls, depuis le bord du rond, puis les rayons et les arcs les relient. Le filet d'or se referme jusqu'au niveau du rond. La plus lisible, mais celle qui demande le plus d'effort à un téléphone lent.</p>
 		<div class="scena" use:vist><CaminCrotz variant="constellation" gran /></div>
 		<button type="button" class="rejoua" onclick={rejouer}>Rejouer</button>
 	</section>
@@ -92,7 +96,7 @@
 		--logo-moieu: #eeaf34;
 		--cc-verre: rgba(34, 16, 10, 0.62);
 		--cc-anell: #eeaf34;
-		--cc-piste: rgba(238, 175, 52, 0.34);
+		--cc-piste: rgba(238, 175, 52, 0.26);
 		--cc-via: #eeaf34;
 		min-height: 100vh;
 		padding: 2rem clamp(1rem, 4vw, 3rem) 4rem;
@@ -112,7 +116,7 @@
 		--logo-moieu: #b53d17;
 		--cc-verre: rgba(251, 241, 225, 0.84);
 		--cc-anell: #8f5400;
-		--cc-piste: rgba(143, 84, 0, 0.3);
+		--cc-piste: rgba(143, 84, 0, 0.26);
 		--cc-via: #8f5400;
 	}
 	.cap,

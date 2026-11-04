@@ -106,7 +106,8 @@ sens propre. Validé par les tests favicon, une-couleur et réduction.
   `/ensag/crotz`.
   **À revoir (Romain, 2026-11-04) : jugée lourde et « amateur » ; refonte en
   cours sur `/ensag/crotz2` (rond de verre fumé, filet d'or, croix du logo
-  seule, un seul poids de trait de 0,7) ; ce paragraphe sera remplacé par le
+  seule, un seul poids de trait de 0,7, quatre niveaux du débutant à la croix
+  pleine) ; ce paragraphe sera remplacé par le
   choix de Romain.**
 
 ---
