@@ -20,9 +20,9 @@
 	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer', es: 'Entrar', en: 'Enter', ca: 'Entrar', ar: 'ادخل' };
 	// accent = couleur claire qui ressort sur la braise (numéro et lueur de chaque bloc)
 	const ENTITATS = [
-		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Descobrís la geografia occitana e las produccions en lenga nòstra.', fr: 'Découvre la géographie occitane et les productions en lenga nòstra.', es: 'Descubre la geografía occitana y las producciones en lenga nòstra.', en: 'Discover Occitan geography and works created in lenga nòstra.', ca: 'Descobreix la geografia occitana i les produccions en lenga nòstra.', ar: 'أوكسيتانيا ولغاتها على خريطة مرصّعة بالنجوم.' } },
-		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Descobrís, apren e practica la lenga a ta manièra.', fr: 'Découvre, apprends et pratique la langue à ta manière.', es: 'Descubre, aprende y practica la lengua a tu manera.', en: 'Discover, learn and practise the language your way.', ca: 'Descobreix, aprèn i practica la llengua a la teva manera.', ar: 'مسار خطوة بخطوة، بالوتيرة التي تناسبك.' } },
-		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'Crèa ligam amb lo mond occitan.', fr: 'Crée du lien avec le monde occitan.', es: 'Crea vínculos con el mundo occitano.', en: 'Create connections with the Occitan world.', ca: 'Crea vincles amb el món occità.', ar: 'ناس وعلاقات في كل مكان.' } }
+		{ sec: PARLA, vis: 'carta', accent: '#d2542c', sota: { oc: 'Descobrís la geografia occitana e las produccions en lenga nòstra.', fr: 'Découvre la géographie occitane et les productions en lenga nòstra.', es: 'Descubre la geografía occitana y las producciones en lenga nòstra.', en: 'Discover Occitan geography and works created in lenga nòstra.', ca: 'Descobreix la geografia occitana i les produccions en lenga nòstra.', ar: 'اكتشاف جغرافيا أوكسيتانيا والأعمال الإبداعية بلغة lenga nòstra.' } },
+		{ sec: APREN, vis: 'camin', accent: '#3bb0a3', sota: { oc: 'Descobrís, apren e practica la lenga a ta manièra.', fr: 'Découvre, apprends et pratique la langue à ta manière.', es: 'Descubre, aprende y practica la lengua a tu manera.', en: 'Discover, learn and practise the language your way.', ca: 'Descobreix, aprèn i practica la llengua a la teva manera.', ar: 'اكتشاف اللغة وتعلّمها وممارستها بطريقتك.' } },
+		{ sec: VIU, vis: 'rets', accent: '#c974a6', sota: { oc: 'Crèa ligam amb lo mond occitan.', fr: 'Crée du lien avec le monde occitan.', es: 'Crea vínculos con el mundo occitano.', en: 'Create connections with the Occitan world.', ca: 'Crea vincles amb el món occità.', ar: 'بناء علاقات مع العالم الأوكسيتاني.' } }
 	];
 
 	// Contenu riche RÉUTILISÉ de l'accueil actuel : les chiffres (acuelh.chifras) et
@@ -247,16 +247,26 @@
 	.sist-tèxt :global(.mix-lengas) { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 	.sist-tèxt :global(.mix-lengas span) { font-family: var(--font-quote), serif; font-style: italic; font-size: 1rem; padding: 0.3rem 0.9rem; border: 1px solid color-mix(in srgb, var(--or) 30%, transparent); border-radius: 999px; color: var(--crema); }
 
-	/* ——— Révélation au défilement (classe « anim » posée hors « moins d'animation ») ——— */
-	.anim [data-revela] { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--lent), transform 0.9s var(--lent); }
-	.anim [data-revela].vist { opacity: 1; transform: none; }
-	.anim .vist .costa { stroke-dashoffset: 1; animation: traçar 1.8s var(--lent) 0.2s forwards; }
-	.anim .vist .rets-flux { animation: fluir 1.1s linear infinite; }
-	.anim .vist .rets-arc { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar 1.2s var(--lent) both; animation-delay: calc(0.2s + var(--i) * 0.12s); }
-	.anim .vist .rets-vila { transform: scale(0); animation: naisser 0.6s var(--lent) both; animation-delay: calc(0.3s + var(--i) * 0.06s); }
+	/* ——— Révélation au défilement (classe « anim » posée hors « moins d'animation »). Ces règles dormaient depuis le
+	   début : écrites « .anim … » sans :global, Svelte les supprimait (avertissements « Unused CSS selector ») ;
+	   remises en marche le 2026-11-04, à la demande de Romain. ——— */
+	:global(.anim) [data-revela] { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--lent), transform 0.9s var(--lent); }
+	:global(.anim) [data-revela]:global(.vist) { opacity: 1; transform: none; }
+	:global(.anim .vist) .costa { stroke-dashoffset: 1; animation: traçar 1.8s var(--lent) 0.2s forwards; }
+	/* les points qui coulent le long des liens : après le tracé des liens, quatre tours (moins de 5 s, RGAA 13.8) */
+	:global(.anim) .rets-flux { opacity: 0; }
+	:global(.anim .vist) .rets-flux { animation: flux-ven 0.5s ease 1.9s forwards, fluir 1.1s linear 1.9s 4; }
+	:global(.anim .vist) .rets-arc { stroke-dasharray: 1; stroke-dashoffset: 1; animation: traçar 1.2s var(--lent) both; animation-delay: calc(0.2s + var(--i) * 0.12s); }
+	:global(.anim .vist) .rets-vila { transform: scale(0); animation: naisser 0.6s var(--lent) both; animation-delay: calc(0.3s + var(--i) * 0.06s); }
+	/* à l'impression, les blocs sont tous visibles (on n'a pas fait défiler la page) */
+	@media print {
+		:global(.anim) [data-revela] { opacity: 1; transform: none; }
+		:global(.anim) .rets-flux { opacity: 0.9; }
+	}
 	@keyframes traçar { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 	@keyframes fluir { to { stroke-dashoffset: -7; } }
 	@keyframes naisser { from { transform: scale(0); } to { transform: scale(1); } }
+	@keyframes flux-ven { from { opacity: 0; } to { opacity: 0.9; } }
 	@media (prefers-reduced-motion: reduce) {
 		.mieg *, .mieg *::before, .mieg *::after { animation: none !important; transition: none !important; }
 	}
