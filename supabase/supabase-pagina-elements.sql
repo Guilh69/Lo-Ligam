@@ -1,6 +1,6 @@
 -- Lo Ligam — édition sur place : les éléments modifiables des pages
 -- =============================================================================
--- Fabriqué par app/scripts/elements-sql.mjs le 2026-11-03 ; ne pas modifier à la main.
+-- Fabriqué par app/scripts/elements-sql.mjs le 2026-11-04 ; ne pas modifier à la main.
 -- À coller dans Supabase : SQL Editor → New query → Run. Rejouable sans risque :
 -- la semence ne touche pas aux lignes déjà présentes.
 -- Suppose que supabase-admin-schema.sql a déjà été exécuté (public.is_admin(),
@@ -184,11 +184,11 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, es
 	('acuelh.bandel.francitan.f01', 'acuelh', 'text', 'acuelh.bandel.francitan', 1, 'lo cabanon', 'le cabanon', 'la cabaña', 'the little cabin', 'la caseta', null, null, true),
 	('acuelh.bandel.francitan.f02', 'acuelh', 'text', 'acuelh.bandel.francitan', 2, 'escagassar', 'esquinter (escagasser)', 'estropear', 'to wreck', 'fer malbé', null, null, true),
 	('acuelh.bandel.francitan.f03', 'acuelh', 'text', 'acuelh.bandel.francitan', 3, 'lo pichon', 'le petit (pitchoun)', 'el pequeño', 'the little one', 'el petit', null, null, true),
-	('acuelh.bandel.francitan.f04', 'acuelh', 'text', 'acuelh.bandel.francitan', 4, 'pecaire', 'hélas ! (peuchère)', '¡ay!', 'alas!', 'ai!', null, null, true),
+	('acuelh.bandel.francitan.f04', 'acuelh', 'text', 'acuelh.bandel.francitan', 4, 'pecaire', 'hélas ! (peuchère)', '¡pobrecito!', 'poor thing!', 'pobret!', null, null, true),
 	('acuelh.bandel.francitan.f05', 'acuelh', 'text', 'acuelh.bandel.francitan', 5, 'degun', 'personne (dégun)', 'nadie', 'nobody', 'ningú', null, null, true),
 	('acuelh.bandel.francitan.f06', 'acuelh', 'text', 'acuelh.bandel.francitan', 6, 'la galejada', 'la galéjade', 'la broma', 'the joke', 'la broma', null, null, true),
 	('acuelh.bandel.francitan.f07', 'acuelh', 'text', 'acuelh.bandel.francitan', 7, 'la fogassa', 'la fougasse', 'la fougasse', 'the fougasse', 'la fogassa', null, null, true),
-	('acuelh.bandel.francitan.f08', 'acuelh', 'text', 'acuelh.bandel.francitan', 8, 'lo pastís', 'le pastis', 'el pastís', 'the pastis', 'el pastís', null, null, true),
+	('acuelh.bandel.francitan.f08', 'acuelh', 'text', 'acuelh.bandel.francitan', 8, 'lo pastís', 'le pastis', 'el pastis', 'the pastis', 'el pastis (licor d’anís)', null, null, true),
 	('acuelh.bandel.francitan.f09', 'acuelh', 'text', 'acuelh.bandel.francitan', 9, 'lo caçolet', 'le cassoulet', 'el cassoulet', 'the cassoulet', 'el cassoulet', null, null, true),
 	('acuelh.bandel.francitan.f10', 'acuelh', 'text', 'acuelh.bandel.francitan', 10, 'la garriga', 'la garrigue', 'la garriga', 'the garrigue', 'la garriga', null, null, true),
 	('acuelh.bandel.francitan.f11', 'acuelh', 'text', 'acuelh.bandel.francitan', 11, 'lo mistral', 'le mistral', 'el mistral', 'the mistral', 'el mestral', null, null, true),
@@ -196,12 +196,12 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, es
 	('acuelh.bandel.francitan.f13', 'acuelh', 'text', 'acuelh.bandel.francitan', 13, 'la calanca', 'la calanque', 'la cala', 'the calanque', 'la cala', null, null, true),
 	('acuelh.bandel.francitan.f14', 'acuelh', 'text', 'acuelh.bandel.francitan', 14, 'la petanca', 'la pétanque', 'la petanca', 'pétanque', 'la petanca', null, null, true),
 	('acuelh.manifest.titol', 'acuelh', 'text', null, 0, 'Qu’es aquò, Lo Ligam ?', 'Qu’est-ce que Lo Ligam ?', '¿Qué es Lo Ligam?', 'What is Lo Ligam?', 'Què és Lo Ligam?', null, null, true),
-	('acuelh.manifest.tèxt', 'acuelh', 'text', null, 0, 'Aicí, l’occitan s’apren mai que mai en creant *ligam,* *sens vergonha* e *amb benvolença.*', 'Ici, l’occitan s’apprend avant tout en créant du *lien,* *sans honte* et *avec bienveillance.*', 'Aquí, el occitano se aprende, ante todo, creando *vínculos,* *sin vergüenza* y *con benevolencia.*', 'Here, Occitan is learned above all by creating *connections,* *without shame* and *with kindness.*', 'Aquí, l’occità s’aprèn, sobretot, creant *vincles,* *sense vergonya* i *amb benevolença.*', null, null, true),
+	('acuelh.manifest.tèxt', 'acuelh', 'text', null, 0, 'Aicí, l’occitan s’apren mai que mai en creant *ligam,* *sens vergonha* e *amb benvolença.*', 'Ici, l’occitan s’apprend avant tout en créant du *lien,* *sans honte* et *avec bienveillance.*', 'Aquí, el occitano se aprende, ante todo, creando *vínculos,* *sin vergüenza* y *con benevolencia.*', 'Here, you learn Occitan above all by creating *connections,* *without shame* and *with kindness.*', 'Aquí, l’occità s’aprèn, sobretot, creant *vincles,* *sense vergonya* i *amb benevolència.*', null, null, true),
 	('acuelh.manifest.retrat', 'acuelh', 'imatge', null, 0, null, null, null, null, null, null, '{"url":"/acuelh/romain.webp","largor":480,"nautor":600,"alt_oc":"Romain Périer davant lo pic Sant Lop, dins una fenèstra de pèira","alt_fr":"Romain Périer devant le pic Saint-Loup, dans une fenêtre de pierre"}'::jsonb, true),
 	('acuelh.manifest.legenda', 'acuelh', 'text', null, 0, 'ton professor', 'ton professeur', 'tu profesor', 'your teacher', 'el teu professor', null, null, true),
 	('acuelh.sec.parla.titol', 'acuelh', 'text', null, 0, 'Se parla', 'Se parle', 'Se habla', 'Speak', 'Es parla', null, null, true),
 	('acuelh.parla.carta', 'acuelh', 'ligam', null, 0, 'Dobrir la carta entièra', 'Ouvrir la carte entière', 'Abrir el mapa completo', 'Open the full map', 'Obrir el mapa complet', '/carta', null, true),
-	('acuelh.parla.ligams.wiki', 'acuelh', 'ligam', 'acuelh.parla.ligams', 1, 'Lo wiki de las lengas e dels luòcs', 'Le wiki des langues et des lieux', 'El wiki de las lenguas y los lugares', 'The wiki of languages and places', 'El wiki de les llengües i dels llocs', '/wiki', null, true),
+	('acuelh.parla.ligams.wiki', 'acuelh', 'ligam', 'acuelh.parla.ligams', 1, 'Cultura', 'Culture', 'Cultura', 'Culture', 'Cultura', '/cultura', null, true),
 	('acuelh.parla.ligams.obras', 'acuelh', 'ligam', 'acuelh.parla.ligams', 2, 'Òbras', 'Œuvres', 'Obras', 'Works', 'Obres', '/obras', null, true),
 	('acuelh.parla.ligams.articles', 'acuelh', 'ligam', 'acuelh.parla.ligams', 3, 'Articles', 'Articles', 'Artículos', 'Articles', 'Articles', '/articles', null, true),
 	('acuelh.chifras.c1', 'acuelh', 'bloc', 'acuelh.chifras', 1, null, null, null, null, null, null, null, true),
@@ -254,8 +254,8 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, es
 	('parla.teulas.carta.ligam', 'parla', 'ligam', 'parla.teulas.carta', 0, 'La carta', 'La carte', 'El mapa', 'The map', 'El mapa', '/carta', null, true),
 	('parla.teulas.carta.sota', 'parla', 'text', 'parla.teulas.carta', 0, 'L’aira culturala occitana, sas lengas e sos luòcs.', 'L’aire culturelle occitane, ses langues et ses lieux.', 'El área cultural occitana, sus lenguas y sus lugares.', 'The Occitan cultural area, its languages and its places.', 'L’àrea cultural occitana, les seves llengües i els seus llocs.', null, null, true),
 	('parla.teulas.wiki', 'parla', 'bloc', 'parla.teulas', 2, null, null, null, null, null, null, null, true),
-	('parla.teulas.wiki.ligam', 'parla', 'ligam', 'parla.teulas.wiki', 0, 'Lo wiki', 'Le wiki', 'El wiki', 'The wiki', 'El wiki', '/wiki', null, true),
-	('parla.teulas.wiki.sota', 'parla', 'text', 'parla.teulas.wiki', 0, 'A escriure', 'À écrire', 'Por escribir', 'To be written', 'Per escriure', null, null, false),
+	('parla.teulas.wiki.ligam', 'parla', 'ligam', 'parla.teulas.wiki', 0, 'Cultura', 'Culture', 'Cultura', 'Culture', 'Cultura', '/cultura', null, true),
+	('parla.teulas.wiki.sota', 'parla', 'text', 'parla.teulas.wiki', 0, 'La lenga, lo país, sos poètas e sas cançons, en fichas cortas.', 'La langue, le pays, ses poètes et ses chansons, en fiches courtes.', 'La lengua, el país, sus poetas y sus canciones, en fichas cortas.', 'The language, the country, its poets and its songs, in short sheets.', 'La llengua, el país, els seus poetes i les seves cançons, en fitxes curtes.', null, null, true),
 	('parla.teulas.obras', 'parla', 'bloc', 'parla.teulas', 3, null, null, null, null, null, null, null, true),
 	('parla.teulas.obras.ligam', 'parla', 'ligam', 'parla.teulas.obras', 0, 'Òbras', 'Œuvres', 'Obras', 'Works', 'Obres', '/obras', null, true),
 	('parla.teulas.obras.sota', 'parla', 'text', 'parla.teulas.obras', 0, 'Çò qu’escoti, çò que legissi, çò que te fau descobrir.', 'Ce que j’écoute, ce que je lis, ce que je te fais découvrir.', 'Lo que escucho, lo que leo, lo que te hago descubrir.', 'What I listen to, what I read, what I get you to discover.', 'El que escolto, el que llegeixo, el que et faig descobrir.', null, null, true),
