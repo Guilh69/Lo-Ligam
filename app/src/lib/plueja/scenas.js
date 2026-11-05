@@ -105,8 +105,10 @@ export const SCENAS = [
 	// Seulement des mots déjà appris dans les leçons, avec la forme et le
 	// sens qu'elles leur donnent (blocs « À retenir » des modules, relevés le
 	// 2026-11-04). On choisit l'unité qu'on a faite : la pluie devient une
-	// révision calme. Photos : à fournir par Romain ; en attendant, un fond
-	// sombre teinté (teinta), sans image à télécharger.
+	// révision calme. Photos de Romain (sa sélection du 2026-11-05, dossier
+	// design-stock/Fotos/Bases_foto, hors Git) : 1280 px, WebP, sans GPS ni
+	// autre métadonnée, de 45 à 135 Ko. La teinte (teinta) reste en réserve :
+	// elle sert de fond si une ambiance n'a pas d'image.
 	//
 	// Une seule source, les leçons (consolidation du 2026-11-05, Romain) :
 	// chaque mot est [forme montrée, définition, id de la chose apprise]. L'id
@@ -121,7 +123,8 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 1,
 		nom: { oc: 'Adieu !', fr: 'Salut !' },
-		imatge: null,
+		imatge: '/ensag/plueja/u1.webp',
+		posicion: '50% 55%',
 		teinta: '#c98a3a',
 		mots: [
 			['Adieu !', 'salut ! pour dire bonjour, et aussi au revoir', 'adieu'],
@@ -156,7 +159,8 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 2,
 		nom: { oc: 'Parlas occitan ?', fr: 'Parles-tu occitan ?' },
-		imatge: null,
+		imatge: '/ensag/plueja/u2.webp',
+		posicion: '35% 45%',
 		teinta: '#3f8a8c',
 		mots: [
 			['Parlas occitan ?', 'parles-tu occitan ?', 'parlas-occitan'],
@@ -189,7 +193,8 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 3,
 		nom: { oc: 'La familha', fr: 'La famille' },
-		imatge: null,
+		imatge: '/ensag/plueja/u3.webp',
+		posicion: '50% 60%',
 		teinta: '#b0583c',
 		mots: [
 			['la familha', 'la famille', 'la-familha'],
@@ -220,7 +225,8 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 4,
 		nom: { oc: 'Qué fas ?', fr: 'Que fais-tu ?' },
-		imatge: null,
+		imatge: '/ensag/plueja/u4.webp',
+		posicion: '50% 60%',
 		teinta: '#7d8a3c',
 		mots: [
 			['Qué fas ?', 'que fais-tu ?', 'que-fas'],
@@ -264,7 +270,8 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 5,
 		nom: { oc: 'Al mercat', fr: 'Au marché' },
-		imatge: null,
+		imatge: '/ensag/plueja/u5.webp',
+		posicion: '50% 55%',
 		teinta: '#c9733a',
 		mots: [
 			['lo mercat', 'le marché', 'al-mercat'],
@@ -300,7 +307,8 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 6,
 		nom: { oc: 'La jornada', fr: 'La journée' },
-		imatge: null,
+		imatge: '/ensag/plueja/u6.webp',
+		posicion: '50% 58%',
 		teinta: '#5a7fa8',
 		mots: [
 			['la jornada', 'la journée', 'la-jornada'],
@@ -336,7 +344,8 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 7,
 		nom: { oc: 'L’ostal', fr: 'La maison' },
-		imatge: null,
+		imatge: '/ensag/plueja/u7.webp',
+		posicion: '50% 50%',
 		teinta: '#9a6644',
 		mots: [
 			['l’ostal', 'la maison, et ceux qui y vivent', 'l-ostal'],
@@ -374,7 +383,8 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 8,
 		nom: { oc: 'En vila', fr: 'En ville' },
-		imatge: null,
+		imatge: '/ensag/plueja/u8.webp',
+		posicion: '50% 62%',
 		teinta: '#7a8494',
 		mots: [
 			['la gara', 'la gare', 'la-gara'],
