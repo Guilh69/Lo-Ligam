@@ -9,7 +9,11 @@
 // Toutes les unités ont des dessins depuis le 05-11 (Romain : « Oui, dessine ») ;
 // seuls les objets concrets en ont : salutations, lieux abstraits, nombres,
 // jours, couleurs et petits mots se forment sans dessin. Un dessin douteux vaut mieux absent
-// (Joan, 05-11).
+// (Joan, 05-11). Garriga, Fenèstra et Nuèch en ont aussi depuis le 05-11
+// (consolidation) : la pluie, les plantes, les pierres, les bêtes, le ciel ;
+// pierre, rosée et thym retirés sur avis de Joan (illisibles au trait) ;
+// les mots abstraits (silence, rêve, odeur, ombre…) restent sans.
+// Tous les dessins se voient sur /ensag/dessenhs.
 
 // ── Petites formes réutilisées ───────────────────────────────────────────
 const r1 = (v) => Math.round(v * 10) / 10;
@@ -59,6 +63,61 @@ function empreinte(x, y, s = 1, gauche = false) {
 	return `M${P(0, 8)}C${P(-5, 8)} ${P(-7, 0)} ${P(-6, -8)}C${P(-5, -16)} ${P(5, -18)} ${P(6, -10)}C${P(7, -2)} ${P(5, 8)} ${P(0, 8)}Z` + cercle(x, y + 15 * s, r1(4.5 * s));
 }
 const NUAGE = 'M28 58C18 58 14 50 18 44C20 40 24 38 28 39C28 28 40 22 50 28C54 20 68 20 72 30C82 30 88 40 84 50C82 55 78 58 72 58Z';
+/** Le même nuage, au milieu du carré (quand il est seul). */
+const NUAGE_MIEG = 'M28 70C18 70 14 62 18 56C20 52 24 50 28 51C28 40 40 34 50 40C54 32 68 32 72 42C82 42 88 52 84 62C82 67 78 70 72 70Z';
+/** Spirale qui s'enroule vers le centre (x, y), depuis le rayon r. */
+function spirale(x, y, r, tours = 2.4, a0 = 0) {
+	const pas = Math.round(40 * tours);
+	let d = '';
+	for (let i = 0; i <= pas; i++) {
+		const t = i / pas,
+			a = a0 + t * tours * 2 * Math.PI,
+			q = r * (1 - 0.88 * t);
+		d += `${i ? 'L' : 'M'}${r1(x + Math.cos(a) * q)} ${r1(y + Math.sin(a) * q)}`;
+	}
+	return d;
+}
+/** Étoile à n branches, rayons R (pointes) et r (creux). */
+function estela(x, y, R, r, n = 5) {
+	let d = '';
+	for (let k = 0; k < 2 * n; k++) {
+		const a = -Math.PI / 2 + (k * Math.PI) / n,
+			q = k % 2 ? r : R;
+		d += `${k ? 'L' : 'M'}${r1(x + Math.cos(a) * q)} ${r1(y + Math.sin(a) * q)}`;
+	}
+	return d + 'Z';
+}
+/** Brin de romarin : tige de (x0, y0) à (x1, y1), n paires d'aiguilles tournées vers la pointe. */
+function brin(x0, y0, x1, y1, n, l) {
+	const ang = Math.atan2(y1 - y0, x1 - x0);
+	let d = `M${x0} ${y0}L${x1} ${y1}`;
+	for (let i = 1; i <= n; i++) {
+		const t = 0.12 + (0.84 * i) / (n + 1),
+			px = x0 + (x1 - x0) * t,
+			py = y0 + (y1 - y0) * t,
+			ll = l * (1 - 0.45 * t);
+		for (const s of [-1, 1]) {
+			const a = ang + s * 0.7;
+			d += `M${r1(px)} ${r1(py)}L${r1(px + Math.cos(a) * ll)} ${r1(py + Math.sin(a) * ll)}`;
+		}
+	}
+	return d;
+}
+/** Épi de lavande : tige de (x0, y0) à (x1, y1), petits boutons sur le dernier tiers. */
+function epi(x0, y0, x1, y1, n = 6) {
+	let d = `M${x0} ${y0}L${x1} ${y1}`;
+	for (let i = 0; i < n; i++) {
+		const t = 0.64 + (0.36 * i) / (n - 1),
+			s = i % 2 ? 1 : -1;
+		d += cercle(x0 + (x1 - x0) * t + s * 2.6, y0 + (y1 - y0) * t, 2.2);
+	}
+	return d;
+}
+/** Silhouette symétrique : points de la moitié gauche, le premier et le dernier sur l'axe x = 50. */
+function simetrica(pts) {
+	const tot = [...pts, ...pts.slice(1, -1).reverse().map(([x, y]) => [100 - x, y])];
+	return tot.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join('') + 'Z';
+}
 /** La course du jour : l'horizon, l'arc du soleil en pointillé, et l'astre au point t (0 → 1). */
 function bez(t) {
 	const u = 1 - t;
@@ -457,17 +516,183 @@ export const DESSENHS = {
 		'M26 12L74 12L74 84L68 90L62 84L56 90L50 84L44 90L38 84L32 90L26 84Z', // ticket
 		'M34 26L66 26M34 38L58 38M34 48L62 48M34 58L54 58',
 		'M34 70L66 70'
+	],
+
+	// ── Garriga ──────────────────────────────────────────────────────────
+	// (pluèja et plòu reprennent les dessins des unités, voir MEMES plus bas)
+	plovina: [
+		NUAGE, // la bruine : une poussière de gouttes très courtes
+		'M24 66L23 69M36 64L35 67M48 66L47 69M60 64L59 67M72 66L71 69M30 76L29 79M42 74L41 77M54 76L53 79M66 74L65 77M36 86L35 89M48 84L47 87M60 86L59 89'
+	],
+	aigaci: [NUAGE, 'M24 64L14 92M36 64L26 92M48 64L38 92M60 64L50 92M72 64L62 92M84 62L76 84'], // l'averse : des traits longs et serrés
+	auratge: [NUAGE, 'M52 60L40 78L50 78L42 94L62 72L52 72L58 60', 'M28 64L24 74M74 64L70 74'],
+	liuç: ['M58 8L30 52L48 52L36 92L72 40L54 40L68 8Z'],
+	nívol: [NUAGE_MIEG],
+	gota: [goutte(50, 50, 15), 'M28 84C28 78 72 78 72 84C72 90 28 90 28 84Z'],
+	sompet: [
+		'M12 70C12 60 32 58 50 60C68 58 90 62 88 72C86 80 64 82 46 80C28 82 12 78 12 70Z', // la flaque
+		'M38 70C38 66 62 66 62 70C62 74 38 74 38 70Z', // un rond dans l'eau
+		goutte(50, 36, 6)
+	],
+	garric: [
+		// le gland du chêne kermès, cupule hérissée
+		'M38 50C38 72 44 84 50 86C56 84 62 72 62 50',
+		'M34 50L36 43L40 47L43 40L47 46L50 39L53 46L57 40L60 47L64 43L66 50Z',
+		'M50 39L53 28'
+	],
+	euse: [
+		'M50 64C24 66 14 50 22 38C20 24 36 14 50 20C64 14 80 24 78 38C86 50 76 66 50 64Z', // feuillage dense et rond
+		'M46 64L44 86M54 64L56 86',
+		'M22 86L78 86'
+	],
+	romanin: [brin(44, 92, 58, 10, 9, 13)],
+	espic: [epi(50, 92, 36, 22), epi(50, 92, 50, 14), epi(50, 92, 64, 24)],
+	cigala: [
+		'M40 20C44 16 56 16 60 20L60 28C56 30 44 30 40 28Z', // tête
+		cercle(38, 24, 3.5),
+		cercle(62, 24, 3.5),
+		'M47 30C30 40 28 70 44 90C48 80 50 50 49 30Z', // ailes en toit
+		'M53 30C70 40 72 70 56 90C52 80 50 50 51 30Z',
+		'M43 40C38 56 38 70 43 84M57 40C62 56 62 70 57 84'
+	],
+	cagaraula: [
+		spirale(56, 54, 24, 2.4, Math.PI / 2), // la coquille
+		'M18 80L84 80C88 80 89 75 84 74', // le pied
+		'M18 80C12 78 14 68 22 64C26 62 30 64 34 70', // la tête
+		'M22 64L15 50M25 63L28 48',
+		cercle(15, 48, 2),
+		cercle(28, 46, 2)
+	],
+	fuèlha: [
+		'M20 80C20 40 50 14 84 14C84 50 60 80 20 80Z',
+		'M20 80L70 28', // nervure
+		'M34 66L31 53M34 66L47 69M46 54L43 41M46 54L59 57M58 42L57 31M58 42L69 44',
+		'M20 80L12 88'
+	],
+	font: [
+		'M14 70C14 64 86 64 86 70C86 76 14 76 14 70Z', // le bord du bassin
+		'M14 70C16 82 32 88 50 88C68 88 84 82 86 70',
+		'M50 66L50 28', // le jet
+		'M50 28C40 24 31 36 29 58M50 28C60 24 69 36 71 58', // qui retombe
+		'M24 50L24 53M76 50L76 53M20 60L20 63M80 60L80 63' // quelques gouttes
+	],
+	arcolan: ['M12 78A38 38 0 0 1 88 78', 'M20 78A30 30 0 0 1 80 78', 'M28 78A22 22 0 0 1 72 78'],
+	camin: [
+		'M18 92C34 72 44 56 47 40', // le chemin qui file vers l'horizon
+		'M82 92C66 72 56 56 53 40',
+		'M8 40L44 40M56 40L92 40',
+		'M50 66L50 72M50 80L50 88'
+	],
+
+	// ── Fenèstra ─────────────────────────────────────────────────────────
+	fenèstra: [
+		'M30 88L30 42A20 20 0 0 1 70 42L70 88', // fenêtre en plein cintre
+		'M38 88L38 44A12 12 0 0 1 62 44L62 88', // l'ébrasement
+		'M24 88L76 88',
+		'M23 42A27 27 0 0 1 77 42', // l'arc de pierres
+		rayons(50, 42, 20, 27, 8, Math.PI, (8 * Math.PI) / 7)
+	],
+	castèl: [
+		'M8 88L92 88',
+		'M14 88L14 28L19 28L19 33L24 33L24 28L29 28L29 33L34 33L34 28L34 88', // tour de gauche
+		'M34 50L39 50L39 45L44 45L44 50L49 50L49 45L54 45L54 50L59 50L59 45L64 45L64 50L66 50', // courtine
+		'M66 88L66 20L71 20L71 25L76 25L76 20L81 20L81 25L86 25L86 20L86 88', // donjon
+		'M44 88L44 74A6 6 0 0 1 56 74L56 88', // porte
+		'M24 46L24 54M76 36L76 44' // archères
+	],
+	muralha: [
+		'M8 40L14 40L14 33L22 33L22 40L30 40L30 33L38 33L38 40L46 40L46 33L54 33L54 40L62 40L62 33L70 33L70 40L78 40L78 33L86 33L86 40L92 40',
+		'M8 40L8 84M92 40L92 84M6 84L94 84',
+		'M8 54L92 54M8 69L92 69', // assises de pierre
+		'M26 40L26 54M50 40L50 54M74 40L74 54M38 54L38 69M62 54L62 69M86 54L86 69M18 69L18 84M48 69L48 84M76 69L76 84'
+	],
+	pena: [
+		'M8 22L44 22C48 30 44 40 50 46C46 56 54 64 50 74C54 80 52 86 56 90', // la falaise et son à-pic
+		'M56 90L92 90',
+		'M8 40L42 40M8 58L46 58M8 76L48 76' // les strates
+	],
+	ròc: [
+		'M6 84L94 84',
+		'M14 84L22 52L38 34L60 30L76 44L86 84', // le rocher et ses faces
+		'M38 34L44 56L22 52M44 56L60 30M44 56L52 84M60 30L64 58L76 44M64 58L70 84'
+	],
+	bòsc: [
+		cercle(28, 48, 13), // trois arbres
+		'M28 61L28 84',
+		cercle(54, 38, 17),
+		'M54 55L54 84',
+		'M66 72L78 40L90 72Z',
+		'M78 72L78 84',
+		'M10 84L92 84'
+	],
+	orizont: [
+		'M6 46L94 46', // la ligne d'horizon, au loin
+		'M40 46A10 10 0 0 1 60 46', // le soleil posé dessus
+		'M6 62C22 54 36 56 50 62C64 68 80 60 94 56', // des collines de plus en plus proches
+		'M6 80C20 72 40 72 56 80C70 86 84 80 94 76'
+	],
+	aucèl: [
+		'M18 52C26 40 34 40 41 52C48 40 56 40 64 52', // des oiseaux en vol
+		'M60 28C64 23 68 23 71 28C74 23 78 23 82 28',
+		'M28 76C31 72 34 72 36 76C38 72 41 72 44 76'
+	],
+	agla: [
+		simetrica([
+			[50, 27], [47, 29], [45, 34], [44, 39], [32, 38], [18, 35], [8, 37], [5, 41], [11, 42],
+			[6, 45], [12, 46], [8, 49], [14, 50], [11, 53], [18, 53], [30, 53], [42, 52], [44, 58],
+			[38, 70], [44, 73], [50, 71]
+		]) // l'aigle qui plane, vu d'en bas
+	],
+	temps: [
+		'M28 14L72 14M28 86L72 86', // le sablier
+		'M33 14C33 36 47 44 47 50C47 56 33 64 33 86',
+		'M67 14C67 36 53 44 53 50C53 56 67 64 67 86',
+		'M40 30L60 30', // le sable du haut
+		'M50 52L50 74',
+		'M38 84C42 74 58 74 62 84' // et celui du bas
+	],
+
+	// ── Nuèch ────────────────────────────────────────────────────────────
+	nuèch: [lune(42, 50, 22), etoile(74, 26, 5), etoile(80, 60, 4), etoile(62, 80, 3)],
+	luna: [cercle(50, 50, 32), cercle(40, 40, 6), cercle(62, 58, 8), cercle(44, 66, 3.5)], // la pleine lune et ses mers
+	estèla: [estela(50, 52, 36, 15)],
+	lampa: [
+		'M34 88L66 88L60 80L40 80Z', // le pied de la lampe
+		'M42 80C30 68 34 48 44 42L44 32L56 32L56 42C66 48 70 68 58 80', // le verre
+		goutte(50, 62, 5), // la flamme
+		'M50 32L50 24'
+	],
+	chòt: [
+		'M30 42C30 24 70 24 70 42L70 66C70 82 30 82 30 66Z', // le corps
+		'M33 32L28 16L43 27M67 32L72 16L57 27', // les aigrettes
+		cercle(41, 42, 8),
+		cercle(59, 42, 8),
+		cercle(41, 42, 2.5),
+		cercle(59, 42, 2.5),
+		'M47 52L50 58L53 52',
+		'M35 56C37 66 40 72 44 77M65 56C63 66 60 72 56 77',
+		'M12 84L88 84M42 80L42 84M58 80L58 84' // la branche
 	]
 };
+
+// Les ambiances poétiques reprennent quelques dessins des unités.
+const MEMES = { pluèja: 'la pluèja', plòu: 'Plòu.', vent: 'Fa vent.', cat: 'lo cat' };
+for (const [mot, model] of Object.entries(MEMES)) DESSENHS[mot] = DESSENHS[model];
 
 // Un même mot dans deux unités avec deux sens : on ne dessine que le sens
 // prévu (la cosina : la cuisine en unité 7, la cousine en unité 3).
 const SENS = { 'la cosina': 'cuisine' };
 
+/** Les chemins SVG d'un mot (texte), ou null. */
+export function cheminsDe(oc, def = '') {
+	if (!DESSENHS[oc] || (SENS[oc] && !def.includes(SENS[oc]))) return null;
+	return DESSENHS[oc];
+}
+
 /** Les chemins d'un mot, prêts pour le canevas (Path2D), ou null. */
 const cache = new Map();
 export function dessenhDe(oc, def = '') {
-	if (!DESSENHS[oc] || (SENS[oc] && !def.includes(SENS[oc]))) return null;
+	if (!cheminsDe(oc, def)) return null;
 	if (!cache.has(oc)) cache.set(oc, DESSENHS[oc].map((d) => new Path2D(d)));
 	return cache.get(oc);
 }
