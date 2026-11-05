@@ -14,6 +14,7 @@
 	import { TEMAS, bonPanier } from '$lib/jocs/paniers-mots.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
 	import Reglatges from '$lib/jocs/Reglatges.svelte';
+	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
 
 	// Occitan passé à lo Congrès le 2026-11-05, à valider par Romain.
 	const T = {
@@ -53,6 +54,7 @@
 
 	// ── Réglages ─────────────────────────────────────────────────────────
 	let pasAPas = $state(false);
+	let immersiu = $state(false); // mode plein (BotonEcran)
 	let son = $state(true);
 	let tactil = $state(false);
 	let calme = $state(false);
@@ -202,6 +204,12 @@
 				aterrir();
 				return;
 			}
+			// au départ, la flèche du bas lance la chute sans lâcher le mot
+			// (Romain, 05-11 : « ça met le mot dans le panier sans qu'on le veuille »)
+			if (fase === 'espera') {
+				fase = 'tomba';
+				return;
+			}
 			rapid = true;
 		}
 		if (fase === 'espera' && !pasAPas) fase = 'tomba';
@@ -292,7 +300,7 @@
 	<svg viewBox="0 0 24 24" aria-hidden="true" class="sageta sageta-{nom}"><path d="M7 14.5l5-5 5 5" /></svg>
 {/snippet}
 
-<section class="joc" aria-labelledby="titol-paniers" bind:this={racina}>
+<section class="joc" class:immersiu aria-labelledby="titol-paniers" bind:this={racina}>
 	<div class="disposicion">
 		<header class="cap-joc">
 			<h2 id="titol-paniers" lang="oc">Los panièrs</h2>
@@ -300,11 +308,14 @@
 			<p class="consigna">{tria(T.consigna)}</p>
 		</header>
 
-		<div class="pista" aria-hidden="true">
-			<p class="sens" lang="oc">{tria(tema.nom)}</p>
-			<p class="compte">{tria(T.mots)(plaçats, tema.mots.length)}</p>
-			<!-- un grain par mot du thème, doré une fois rangé -->
-			<span class="granas">{#each tema.mots as m, k (m.oc)}<i class:rengat={k < plaçats}></i>{/each}</span>
+		<div class="pista">
+			<div class="pista-info" aria-hidden="true">
+				<p class="sens" lang="oc">{tria(tema.nom)}</p>
+				<p class="compte">{tria(T.mots)(plaçats, tema.mots.length)}</p>
+				<!-- un grain par mot du thème, doré une fois rangé -->
+				<span class="granas">{#each tema.mots as m, k (m.oc)}<i class:rengat={k < plaçats}></i>{/each}</span>
+			</div>
+			<BotonEcran bind:actiu={immersiu} cibla={racina} />
 		</div>
 
 		<div class="taula">
@@ -359,11 +370,6 @@
 							{#if col === i && !!mot && fase !== 'plen' && fase !== 'torna'}
 								<span class="ombra" style:--y={y} aria-hidden="true"></span>
 							{/if}
-							<span class="pila"
-								>{#each dins[i] as m, j (m.oc)}<span class="chip" class:dos={m.panier === 'ab'} style:--j={j} lang="oc"
-										>{m.oc}</span
-									>{/each}</span
-							>
 							<svg class="davant" viewBox="0 0 200 110" preserveAspectRatio="none" aria-hidden="true">
 								<defs>
 									<clipPath id="vim-{i}"><path d="M6 14 C9 58 17 96 32 107 L168 107 C183 96 191 58 194 14 A94 9 0 0 1 6 14 Z" /></clipPath>
@@ -379,6 +385,18 @@
 								<!-- deux anses sur les côtés, sous le bord -->
 								<path class="ansa" d="M8 22 C-10 22 -10 46 10.5 46 M192 22 C210 22 210 46 189.5 46" />
 							</svg>
+							<!-- les mots rangés se posent au fond et remplissent le panier en
+							     suivant ses bords (Romain, 05-11) : la pile est retournée pour se
+							     remplir de bas en haut, deux flottants taillés comme les bords
+							     intérieurs (shape-outside) resserrent chaque rang -->
+							<span class="pila"
+								><span class="bord bord-e"></span><span class="bord bord-d"></span>{#each dins[i] as m, j (m.oc)}<span
+										class="chip"
+										class:dos={m.panier === 'ab'}
+										style:--j={j}
+										lang="oc">{m.oc}</span
+									>{/each}</span
+							>
 							<span class="etiqueta" lang="oc">{tria(p)}</span>
 							{#if recep.i === i}
 								{#key recep.n}
@@ -475,6 +493,83 @@
 	}
 	.pista {
 		grid-area: pista;
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--esp-16);
+	}
+	.pista-info {
+		min-width: 0;
+	}
+
+	/* ── Mode plein (BotonEcran) : le jeu couvre tout l'écran, le terrain
+	   aussi grand que possible, le thème en haut, les flèches en bas ; les
+	   réglages s'effacent (Pausa et Tornar jogar restent) ── */
+	.joc.immersiu {
+		position: fixed;
+		inset: 0;
+		z-index: 30;
+		overflow: auto;
+		padding: max(0.75rem, env(safe-area-inset-top)) clamp(0.75rem, 3vw, 2rem) max(0.75rem, env(safe-area-inset-bottom));
+		background:
+			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			var(--t-fons);
+		--terren: min(100%, calc((100svh - 11rem) * 4 / 3));
+	}
+	.immersiu .disposicion {
+		min-height: 100%;
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: auto 1fr auto;
+		grid-template-areas: 'pista' 'taula' 'comandas';
+		gap: var(--esp-12);
+		align-items: center;
+	}
+	.immersiu .cap-joc {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+	.immersiu .pista {
+		align-items: center;
+		width: var(--terren);
+		margin-inline: auto;
+	}
+	.immersiu .pista-info {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.25rem var(--esp-16);
+	}
+	.immersiu .compte,
+	.immersiu .granas {
+		margin: 0;
+	}
+	.immersiu .camp {
+		max-width: var(--terren);
+	}
+	/* téléphone tenu droit : un terrain carré, plus de place pour la chute */
+	@media (orientation: portrait) {
+		.immersiu .camp {
+			aspect-ratio: 1;
+			max-width: min(100%, calc(100svh - 11rem));
+			--h: 30%;
+		}
+		.immersiu .pista {
+			width: min(100%, calc(100svh - 11rem));
+		}
+	}
+	.immersiu .comandas {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: var(--esp-12) var(--esp-24);
+	}
+	.immersiu .ajuda,
+	.immersiu .comandas :global(.reglatges .grop) {
+		display: none;
 	}
 	.taula {
 		grid-area: taula;
@@ -519,6 +614,12 @@
 		width: 100%;
 		max-width: calc(60svh * 4 / 3);
 		aspect-ratio: 4 / 3;
+		/* les tailles du terrain suivent sa largeur (cqi), en mode plein aussi */
+		container: camp / inline-size;
+		/* hauteur des paniers ; le bord de leur ouverture est à 12,7 % de cette
+		   hauteur, d'où la fin des couloirs et de la chute */
+		--h: 36%;
+		--chute: calc(84% - var(--h) * 0.873);
 		margin-inline: auto;
 		overflow: hidden;
 		border: 1px solid var(--t-linha);
@@ -568,7 +669,7 @@
 		position: absolute;
 		left: calc(var(--c) * 50% + 25%);
 		top: 4%;
-		height: 64%;
+		height: var(--chute);
 		width: 1.5px;
 		translate: -50% 0;
 		background: repeating-linear-gradient(to bottom, var(--t-linha) 0 2px, transparent 2px 9px);
@@ -584,7 +685,7 @@
 		position: absolute;
 		left: 4%;
 		right: 4%;
-		bottom: 5%;
+		bottom: 12%;
 		height: 1px;
 		background: linear-gradient(90deg, transparent, var(--t-linha) 18% 82%, transparent);
 	}
@@ -594,7 +695,7 @@
 		position: absolute;
 		left: calc(var(--col) * 50% + 25%);
 		/* en haut à y = 0 ; à y = 1, son bas touche l'ouverture du panier */
-		top: calc(4% + var(--y) * 64.5%);
+		top: calc(4% + var(--y) * var(--chute));
 		z-index: 3;
 		translate: -50% calc(var(--y) * -100%);
 		rotate: calc(var(--vira) * 4deg);
@@ -613,7 +714,7 @@
 		box-shadow:
 			inset 0 0 0 1.5px var(--or),
 			0 0.7em 1.2em -0.8em rgba(0, 0, 0, 0.6);
-		font-size: clamp(1rem, 4.2cqi, 1.4rem);
+		font-size: clamp(1rem, 3.6cqi, 1.8rem);
 		font-weight: 600;
 		line-height: 1.2;
 		text-align: center;
@@ -661,8 +762,8 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		bottom: 5%;
-		height: 30%;
+		bottom: 12%;
+		height: var(--h);
 		z-index: 2;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -674,7 +775,7 @@
 		--trait: color-mix(in srgb, var(--t-tinta) 62%, transparent);
 		position: relative;
 		min-width: 0;
-		margin: 0 9%;
+		margin: 0 7%;
 		padding: 0;
 		border: none;
 		background: none;
@@ -740,17 +841,54 @@
 		background: radial-gradient(closest-side, rgba(0, 0, 0, 0.5), transparent);
 		opacity: calc(0.25 + 0.75 * var(--y));
 	}
-	/* les mots rangés dépassent de l'ouverture et s'empilent vers le haut */
+	/* les mots rangés se posent au fond et remplissent le panier en suivant
+	   ses bords (Romain, 05-11). La pile couvre l'intérieur, du bord jusqu'au
+	   fond ; elle est retournée pour se remplir de bas en haut ; les deux
+	   flottants ont la forme des bords intérieurs (calculée sur la courbe du
+	   corps, avec une marge) et resserrent chaque rang. Plein à ras bord, les
+	   derniers mots dépassent de l'ouverture. */
 	.pila {
 		position: absolute;
-		left: 8%;
-		right: 8%;
-		bottom: 84%;
-		z-index: 2;
-		display: flex;
-		flex-wrap: wrap-reverse;
-		justify-content: center;
-		gap: 0.22rem;
+		left: 0;
+		right: 0;
+		top: 12.7%;
+		bottom: 4%;
+		z-index: 4;
+		scale: 1 -1;
+		text-align: center;
+		line-height: 0;
+	}
+	.bord {
+		width: 49.5%;
+		height: 100%;
+	}
+	.bord-e {
+		float: left;
+		shape-outside: polygon(0 0, 35.3% 0%, 32.8% 2.8%, 30.5% 6.1%, 28.1% 10.5%, 25.2% 17%, 21.5% 27.9%, 18.3% 41%, 15.5% 56.3%, 13.5% 71.6%, 12% 86.9%, 11% 100%, 0 100%);
+	}
+	.bord-d {
+		float: right;
+		shape-outside: polygon(100% 0, 64.7% 0%, 67.2% 2.8%, 69.5% 6.1%, 71.9% 10.5%, 74.8% 17%, 78.5% 27.9%, 81.7% 41%, 84.5% 56.3%, 86.5% 71.6%, 88% 86.9%, 89% 100%, 100% 100%);
+	}
+	.pila .chip {
+		display: inline-block;
+		scale: 1 -1;
+		/* pas plus large que le rang du fond, le plus étroit : une phrase longue
+		   passe sur deux lignes au lieu de sauter plus haut et de laisser un trou */
+		max-width: 60%;
+		text-wrap: balance;
+		margin: 0.12em 0.08em;
+		vertical-align: top;
+		font-size: clamp(0.62rem, 2.2cqi, 1.3rem);
+		white-space: normal;
+		/* la pile est retournée : un décalage positif part d'au-dessus */
+		animation: posar 0.32s ease-out;
+	}
+	@keyframes posar {
+		from {
+			translate: 0 1.8em;
+			opacity: 0;
+		}
 	}
 	.panier.non {
 		animation: secodre 0.4s ease-in-out;
@@ -767,28 +905,27 @@
 		outline: 3px solid var(--or);
 		outline-offset: 2px;
 	}
-	/* l'étiquette du panier, une plaque sur le devant, lisible sur la tresse */
+	/* l'étiquette du panier, sous le panier, sur le sol : le devant reste
+	   libre pour les mots */
 	.etiqueta {
 		position: absolute;
 		left: 50%;
-		top: 60%;
+		top: calc(100% + 0.45rem);
 		z-index: 4;
-		translate: -50% -50%;
-		max-width: 84%;
-		padding: 0.18rem 0.6rem;
-		border-radius: 0.35rem;
-		background: var(--l-carta);
-		box-shadow: inset 0 0 0 1px var(--trait);
-		font-size: clamp(0.8rem, 2.8cqi, 0.95rem);
+		translate: -50% 0;
+		max-width: 100%;
+		padding-bottom: 0.1rem;
+		border-bottom: 1.5px solid var(--trait);
+		font-size: clamp(0.78rem, 2.5cqi, 1.15rem);
 		font-weight: 600;
-		line-height: 1.25;
+		line-height: 1.2;
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		color: var(--t-tinta);
-		transition: box-shadow 0.25s;
+		transition: border-color 0.25s;
 	}
 	.chip {
 		padding: 0.1rem 0.45rem;
@@ -800,13 +937,6 @@
 		line-height: 1.3;
 		white-space: nowrap;
 		color: var(--t-tinta);
-		animation: pausar 0.28s ease-out;
-	}
-	@keyframes pausar {
-		from {
-			translate: 0 -0.5em;
-			opacity: 0;
-		}
 	}
 	/* le thème est plein : une onde dorée passe sur les mots, comme à la fin
 	   d'un mot de la sèrp */
@@ -881,15 +1011,16 @@
 		}
 	}
 	/* un grain par mot du thème, à côté du compte */
+	/* toujours sur une ligne : les grains se resserrent quand le thème est long */
 	.granas {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.32rem;
+		gap: 0.25rem;
 		margin-top: var(--esp-8);
 	}
 	.granas i {
-		width: 0.55rem;
-		height: 0.55rem;
+		flex: 0 1 0.55rem;
+		min-width: 0.3rem;
+		aspect-ratio: 1;
 		border-radius: 50%;
 		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--t-tinta) 40%, transparent);
 		transition:
@@ -1075,6 +1206,7 @@
 		}
 		.panier.non,
 		.chip,
+		.pila .chip,
 		.plen .pila .chip,
 		.mot > span,
 		.polsa,
