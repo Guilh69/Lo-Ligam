@@ -6,8 +6,78 @@
 // dessin se forme quand même : les grains du dessin rejoignent alors le mot.
 // Un seul poids de trait, pas de remplissage : c'est la poussière qui dessine.
 //
-// Unités couvertes : 5 (Al mercat) et 7 (L'ostal). Les autres viendront
-// unité par unité, après relecture de Romain.
+// Toutes les unités ont des dessins depuis le 05-11 (Romain : « Oui, dessine ») ;
+// seuls les objets concrets en ont : salutations, lieux abstraits, nombres,
+// jours, couleurs et petits mots se forment sans dessin. Un dessin douteux vaut mieux absent
+// (Joan, 05-11).
+
+// ── Petites formes réutilisées ───────────────────────────────────────────
+const r1 = (v) => Math.round(v * 10) / 10;
+/** Cercle complet de centre (x, y). */
+const cercle = (x, y, r) => `M${r1(x - r)} ${r1(y)}a${r} ${r} 0 1 0 ${r1(2 * r)} 0a${r} ${r} 0 1 0 ${r1(-2 * r)} 0`;
+/** n rayons entre les distances ra et rb du centre. */
+function rayons(x, y, ra, rb, n = 8, a0 = Math.PI / 8, arc = 2 * Math.PI) {
+	let d = '';
+	for (let k = 0; k < n; k++) {
+		const a = a0 + (k * arc) / n,
+			c = Math.cos(a),
+			s = Math.sin(a);
+		d += `M${r1(x + c * ra)} ${r1(y + s * ra)}L${r1(x + c * rb)} ${r1(y + s * rb)}`;
+	}
+	return d;
+}
+const soleil = (x, y, r) => [cercle(x, y, r), rayons(x, y, r * 1.5, r * 2.1)];
+/** Croissant de lune ouvert à droite (cercle de centre (x, y)). */
+const lune = (x, y, r) => `M${r1(x)} ${r1(y - r)}A${r} ${r} 0 1 0 ${r1(x)} ${r1(y + r)}A${r1((r * 4) / 3)} ${r1((r * 4) / 3)} 0 0 1 ${r1(x)} ${r1(y - r)}Z`;
+/** Petite étoile à quatre branches. */
+const etoile = (x, y, r) => `M${r1(x)} ${r1(y - r)}L${r1(x)} ${r1(y + r)}M${r1(x - r)} ${r1(y)}L${r1(x + r)} ${r1(y)}`;
+/** Goutte, pointe en haut, ventre de rayon r centré en (x, y). */
+const goutte = (x, y, r) =>
+	`M${r1(x)} ${r1(y - 2.2 * r)}C${r1(x - 0.3 * r)} ${r1(y - 1.4 * r)} ${r1(x - r)} ${r1(y - 0.6 * r)} ${r1(x - r)} ${r1(y)}A${r} ${r} 0 0 0 ${r1(x + r)} ${r1(y)}C${r1(x + r)} ${r1(y - 0.6 * r)} ${r1(x + 0.3 * r)} ${r1(y - 1.4 * r)} ${r1(x)} ${r1(y - 2.2 * r)}Z`;
+/** Flocon à six branches (avec ramures s'il est assez grand). */
+function flocon(x, y, r) {
+	let d = '';
+	for (let k = 0; k < 6; k++) {
+		const a = (k * Math.PI) / 3 - Math.PI / 2,
+			c = Math.cos(a),
+			s = Math.sin(a);
+		d += `M${r1(x)} ${r1(y)}L${r1(x + c * r)} ${r1(y + s * r)}`;
+		if (r > 12)
+			for (const sg of [-1, 1]) {
+				const bx = x + c * r * 0.6,
+					by = y + s * r * 0.6,
+					b = a + (sg * Math.PI) / 4;
+				d += `M${r1(bx)} ${r1(by)}L${r1(bx + Math.cos(b) * r * 0.28)} ${r1(by + Math.sin(b) * r * 0.28)}`;
+			}
+	}
+	return d;
+}
+/** Empreinte de pied droit (gauche en miroir), pointe en haut, talon compris. */
+function empreinte(x, y, s = 1, gauche = false) {
+	const m = gauche ? -1 : 1,
+		P = (dx, dy) => `${r1(x + dx * s * m)} ${r1(y + dy * s)}`;
+	return `M${P(0, 8)}C${P(-5, 8)} ${P(-7, 0)} ${P(-6, -8)}C${P(-5, -16)} ${P(5, -18)} ${P(6, -10)}C${P(7, -2)} ${P(5, 8)} ${P(0, 8)}Z` + cercle(x, y + 15 * s, r1(4.5 * s));
+}
+const NUAGE = 'M28 58C18 58 14 50 18 44C20 40 24 38 28 39C28 28 40 22 50 28C54 20 68 20 72 30C82 30 88 40 84 50C82 55 78 58 72 58Z';
+/** La course du jour : l'horizon, l'arc du soleil en pointillé, et l'astre au point t (0 → 1). */
+function bez(t) {
+	const u = 1 - t;
+	return [u * u * u * 14 + 3 * u * u * t * 14 + 3 * u * t * t * 86 + t * t * t * 86, u * u * u * 78 + 3 * u * u * t * 8 + 3 * u * t * t * 8 + t * t * t * 78];
+}
+function course(t, astre = 'soleil') {
+	const [x, y] = bez(t);
+	let d = 'M6 78L94 78';
+	for (let i = 0; i < 30; i += 2) {
+		const [x1, y1] = bez(i / 30),
+			[x2, y2] = bez((i + 1) / 30);
+		if (Math.hypot((x1 + x2) / 2 - x, (y1 + y2) / 2 - y) < 15) continue; // l'arc s'efface autour de l'astre
+		d += `M${r1(x1)} ${r1(y1)}L${r1(x2)} ${r1(y2)}`;
+	}
+	if (astre === 'lune') return [d, lune(x + 4, y, 9), etoile(x + 16, y - 12, 4), etoile(x - 18, y + 8, 3)];
+	if (astre === 'couchant')
+		return [d, `M${r1(x - 9)} 78A9 9 0 0 1 ${r1(x + 9)} 78`, rayons(x, 78, 13, 18, 4, Math.PI + Math.PI / 5, Math.PI * 0.8), `M${r1(x - 10)} 84L${r1(x + 6)} 84M${r1(x - 6)} 89L${r1(x + 2)} 89`];
+	return [d, ...soleil(x, y, 6)];
+}
 
 export const DESSENHS = {
 	// ── Unité 5 · Al mercat ──────────────────────────────────────────────
@@ -32,9 +102,11 @@ export const DESSENHS = {
 		'M50 34L42 26M50 34L58 26M50 34L38 37M50 34L62 37M50 34L50 22'
 	],
 	'la ceba': [
-		'M50 14C50 30 18 44 22 70C26 88 74 88 78 70C82 44 50 30 50 14Z',
-		'M50 30C40 46 36 64 42 84M50 30C60 46 64 64 58 84',
-		'M44 88L42 94M50 88L50 95M56 88L58 94'
+		// oignon rond et trapu, à tige recourbée (l'ail, lui, est haut et en gousses)
+		'M50 30C56 36 66 38 74 44C84 52 84 70 74 80C66 87 34 87 26 80C16 70 16 52 26 44C34 38 44 36 50 30Z',
+		'M50 34C40 46 38 66 44 84M50 34C60 46 62 66 56 84',
+		'M50 30C50 20 46 12 38 8',
+		'M44 87L42 93M50 87L50 94M56 87L58 93'
 	],
 	'la patana': [
 		'M30 36C44 22 72 26 80 44C88 62 74 82 54 82C34 82 16 66 24 48C26 44 28 40 30 36Z', // pomme de terre
@@ -147,12 +219,255 @@ export const DESSENHS = {
 		'M50 20C26 20 14 38 16 56C18 74 32 84 44 82C52 80 48 70 56 68C64 66 84 70 84 50C84 32 68 20 50 20Z', // palette
 		'M30 48a4 4 0 1 0 8 0a4 4 0 1 0-8 0M40 34a4 4 0 1 0 8 0a4 4 0 1 0-8 0M56 32a4 4 0 1 0 8 0a4 4 0 1 0-8 0M68 44a4 4 0 1 0 8 0a4 4 0 1 0-8 0'
 	],
+
+	// ── Unité 1 · Adieu ! ────────────────────────────────────────────────
+	'lo vilatge': [
+		'M6 82L94 82',
+		'M12 82L12 62L25 52L38 62L38 82', // maison
+		'M44 82L44 42L56 42L56 82', // clocher
+		'M44 42L50 26L56 42',
+		'M48 56L48 50C48 46 52 46 52 50L52 56',
+		'M62 82L62 64L75 54L88 64L88 82',
+		'M70 82L70 72L78 72L78 82'
+	],
+	'la vila': [
+		'M6 84L94 84',
+		'M10 84L10 50L26 50L26 84',
+		'M26 84L26 28L46 28L46 84',
+		'M46 84L46 58L58 58L58 84',
+		'M58 84L58 38L76 38L76 84',
+		'M76 84L76 54L90 54L90 84',
+		'M32 38L40 38M32 48L40 48M32 58L40 58M32 68L40 68', // fenêtres
+		'M64 48L70 48M64 58L70 58M64 68L70 68'
+	],
+
+	// ── Unité 2 · Parlas occitan ? ───────────────────────────────────────
+	'Parlas occitan ?': [
+		'M12 16L56 16C59 16 60 17 60 20L60 44C60 47 59 48 56 48L28 48L20 58L21 48L12 48C9 48 8 47 8 44L8 20C8 17 9 16 12 16Z',
+		'M28 28C28 23 40 23 40 29C40 33 34 33 34 38', // ?
+		'M34 42L34 43',
+		'M44 56L88 56C91 56 92 57 92 60L92 80C92 83 91 84 88 84L80 84L82 94L72 84L44 84C41 84 40 83 40 80L40 60C40 57 41 56 44 56Z',
+		'M48 66L84 66M48 74L74 74'
+	],
+
+	// ── Unité 3 · La familha ─────────────────────────────────────────────
+	'la familha': [
+		cercle(26, 34, 8), // deux grands
+		'M12 78L12 60C12 50 18 46 26 46C34 46 40 50 40 60L40 78',
+		cercle(74, 34, 8),
+		'M60 78L60 60C60 50 66 46 74 46C82 46 88 50 88 60L88 78',
+		cercle(50, 53, 5.5), // un petit
+		'M43 78L43 68C43 63 46 61 50 61C54 61 57 63 57 68L57 78',
+		'M6 78L94 78'
+	],
+	'lo can': [
+		'M54 32C54 22 60 16 68 18C72 19 74 22 76 25L86 28C90 29 90 35 86 36L74 38C70 40 66 44 64 50L64 84L70 84', // tête, museau, patte avant
+		'M54 32C46 40 36 50 32 64C30 74 32 82 40 84L64 84', // dos
+		'M38 66C46 60 56 64 56 76L56 84', // cuisse
+		'M60 56L60 84',
+		'M58 22C52 24 50 32 52 40C56 38 60 32 60 24', // oreille tombante
+		'M34 78C24 80 16 74 14 66', // queue
+		'M71 25L72 25'
+	],
+	'lo cat': [
+		'M36 34C36 26 42 22 50 22C58 22 64 26 64 34C64 42 58 46 50 46C42 46 36 42 36 34Z', // tête
+		'M38 28L36 14L46 22M54 22L64 14L62 28', // oreilles pointues
+		'M42 45C34 54 30 66 32 78C33 84 40 86 50 86C60 86 67 84 68 78C70 66 66 54 58 45', // corps assis
+		'M68 80C80 80 86 72 84 62', // queue
+		'M46 86L46 74M54 86L54 74',
+		'M28 36L40 37M28 42L40 40M72 36L60 37M72 42L60 40' // moustaches
+	],
+	'Quant as d’ans ?': [
+		'M22 56L78 56L78 84L22 84Z', // gâteau
+		'M22 64C28 70 34 70 40 64C46 70 54 70 60 64C66 70 72 70 78 64',
+		'M14 84L86 84',
+		'M36 56L36 44M50 56L50 44M64 56L64 44', // bougies
+		'M36 38C33 34 36 30 36 28C38 32 39 35 36 38Z',
+		'M50 38C47 34 50 30 50 28C52 32 53 35 50 38Z',
+		'M64 38C61 34 64 30 64 28C66 32 67 35 64 38Z'
+	],
+
+	// ── Unité 4 · Qué fas ? ──────────────────────────────────────────────
+	cantar: [
+		'M26 74C26 68 40 66 40 72C40 78 26 80 26 74Z', // deux croches
+		'M40 72L40 28',
+		'M60 66C60 60 74 58 74 64C74 70 60 72 60 66Z',
+		'M74 64L74 20',
+		'M40 28L74 20M40 36L74 28'
+	],
+	caminar: [empreinte(40, 76, 0.8, true), empreinte(60, 58, 0.8), empreinte(40, 40, 0.8, true), empreinte(60, 22, 0.8)],
+	escotar: [
+		'M22 60C22 34 34 22 50 22C66 22 78 34 78 60', // casque
+		'M18 56C14 56 12 60 12 64L12 76C12 80 14 84 18 84L28 84L28 56Z',
+		'M82 56C86 56 88 60 88 64L88 76C88 80 86 84 82 84L72 84L72 56Z'
+	],
+	cosinar: [
+		'M10 58C10 48 28 42 44 42C60 42 78 48 78 58C78 68 60 74 44 74C28 74 10 68 10 58Z', // poêle
+		'M77 53L92 45C94 44 96 47 94 49L78 61',
+		'M34 58C34 52 44 50 50 54C56 50 60 58 54 62C48 66 36 64 34 58Z', // un œuf
+		cercle(46, 57, 4)
+	],
+	manjar: ['M34 16L34 32C34 38 46 38 46 32L46 16M40 16L40 86', 'M62 86L62 16C70 20 72 34 70 48L62 50'], // fourchette et couteau
+	'la setmana': [
+		'M14 22L86 22L86 84L14 84Z', // calendrier
+		'M14 36L86 36',
+		'M30 16L30 28M70 16L70 28',
+		(() => {
+			let d = '';
+			for (let r = 0; r < 4; r++) for (let c = 0; c < 7; c++) d += `M${20 + c * 10} ${46 + r * 10}L${22 + c * 10} ${46 + r * 10}`;
+			return d;
+		})(),
+		cercle(51, 66, 5)
+	],
+
+	// ── Unité 6 · La jornada ─────────────────────────────────────────────
+	// La course du soleil : le matin bas à gauche, midi en haut, l'après-midi
+	// vers la droite, le soir sur l'horizon, minuit la lune.
+	'lo matin': course(0.12),
+	miègjorn: course(0.5),
+	'lo tantòst': course(0.78),
+	'lo ser': course(1, 'couchant'),
+	mièjanuèch: course(0.5, 'lune'),
+	'Quina ora es ?': [cercle(50, 50, 36), 'M50 50L50 26M50 50L66 58', 'M50 18L50 22M82 50L78 50M50 82L50 78M18 50L22 50'],
+	'Me lèvi.': [
+		cercle(50, 54, 26), // réveil
+		'M22 34C18 26 26 16 36 22',
+		'M78 34C82 26 74 16 64 22',
+		'M32 76L26 86M68 76L74 86',
+		'M50 54L50 38M50 54L60 60'
+	],
+	dejunar: [
+		'M26 50L70 50L66 76C65 80 62 82 58 82L38 82C34 82 31 80 30 76Z', // tasse
+		'M69 56C80 54 82 68 67 70',
+		'M16 86C30 92 70 92 84 86',
+		'M40 42C36 36 44 32 40 24M54 42C50 36 58 32 54 24' // vapeur
+	],
+	dinnar: [cercle(50, 52, 20), cercle(50, 52, 12), 'M16 26L16 40C16 44 22 44 22 40L22 26M19 26L19 80', 'M80 80L80 26C86 30 88 42 86 52L80 54'], // assiette et couverts
+	sopar: [
+		'M16 50L84 50C84 70 70 82 50 82C30 82 16 70 16 50Z', // bol de soupe
+		'M16 50C16 44 84 44 84 50',
+		'M62 48L80 20',
+		'M78 22C76 14 86 10 88 18C89 24 82 26 78 22Z', // cuillère
+		'M32 38C28 32 36 28 32 20M46 38C42 32 50 28 46 20' // vapeur : c'est de la soupe (Joan, 05-11)
+	],
+	'Vau al lièch.': ['M10 74L90 74M10 84L10 52M90 84L90 64M10 64L90 64', 'M16 64C16 58 30 58 30 64', lune(74, 26, 12)],
+	'Fa solelh.': soleil(50, 50, 16),
+	'Plòu.': [NUAGE, 'M30 66L26 76M44 66L40 76M58 66L54 76M72 66L68 76M37 80L33 90M51 80L47 90M65 80L61 90'],
+	'la pluèja': [goutte(30, 50, 8), goutte(62, 36, 8), goutte(54, 76, 8)],
+	'Fa vent.': ['M12 40L60 40C70 40 74 30 68 24C62 18 54 24 58 30', 'M12 56L76 56C86 56 92 66 86 74C80 80 70 74 74 66', 'M20 72L48 72'],
+	'Fa freg.': [
+		'M44 70L44 22C44 14 56 14 56 22L56 70A10 10 0 1 1 44 70', // thermomètre, presque vide
+		'M50 78L50 60',
+		'M62 30L66 30M62 40L66 40M62 50L66 50M62 60L66 60',
+		flocon(22, 28, 14)
+	],
+	'Fa caud.': [
+		'M44 70L44 22C44 14 56 14 56 22L56 70A10 10 0 1 1 44 70', // thermomètre, plein
+		'M50 78L50 26',
+		'M62 30L66 30M62 40L66 40M62 50L66 50M62 60L66 60',
+		...soleil(22, 30, 5)
+	],
+	'Nèva.': [NUAGE, flocon(32, 72, 6), flocon(52, 82, 6), flocon(70, 70, 6)],
+	'la nèu': [flocon(50, 50, 36)],
+
+	// ── Unité 8 · En vila ────────────────────────────────────────────────
+	'la gara': [
+		'M6 68L6 40L66 40C80 40 92 54 94 68Z', // train à nez allongé
+		'M14 48L56 48L56 56L14 56ZM28 48L28 56M42 48L42 56',
+		cercle(18, 72, 3.5),
+		cercle(30, 72, 3.5),
+		cercle(66, 72, 3.5),
+		cercle(78, 72, 3.5),
+		'M2 78L98 78', // rail et traverses
+		'M8 78L8 84M22 78L22 84M36 78L36 84M50 78L50 84M64 78L64 84M78 78L78 84M92 78L92 84'
+	],
+	'la carrièra': [
+		'M28 34L72 34', // rue en perspective (horizon entre les façades)
+		'M8 92L44 34M92 92L56 34',
+		'M50 90L50 82M50 74L50 66M50 59L50 53M50 47L50 43',
+		'M4 64L28 50L28 18L4 6', // façades
+		'M96 64L72 50L72 18L96 6',
+		// fenêtres en perspective sur les deux façades : une rue de ville, pas une route (Joan, 05-11)
+		(() => {
+			let d = '';
+			const haut = (x) => 6 + (x - 4) * 0.5,
+				bas = (x) => 64 - (x - 4) * 0.583,
+				y = (x, f) => r1(haut(x) + (bas(x) - haut(x)) * f);
+			for (const X of [(x) => x, (x) => 100 - x])
+				for (const [x1, x2] of [
+					[8, 13],
+					[18, 23]
+				])
+					for (const [f1, f2] of [
+						[0.18, 0.34],
+						[0.52, 0.68]
+					])
+						d += `M${X(x1)} ${y(x1, f1)}L${X(x2)} ${y(x2, f1)}L${X(x2)} ${y(x2, f2)}L${X(x1)} ${y(x1, f2)}Z`;
+			return d;
+		})()
+	],
+	'la plaça': [
+		'M10 66L90 66L84 84L16 84Z', // fontaine
+		'M47 66L47 48M53 66L53 48',
+		'M32 40L68 40C66 46 58 48 50 48C42 48 34 46 32 40Z',
+		'M50 38L50 22',
+		'M50 22C46 18 42 20 40 26M50 22C54 18 58 20 60 26',
+		'M32 42C26 48 24 56 24 64M68 42C74 48 76 56 76 64'
+	],
+	'la glèisa': [
+		'M8 84L92 84', // église
+		'M40 84L40 36L60 36L60 84',
+		'M40 36L50 16L60 36',
+		'M50 16L50 8M46 11L54 11',
+		'M40 50L14 60L14 84M60 50L86 60L86 84',
+		'M46 52L46 46C46 42 54 42 54 46L54 52',
+		'M45 84L45 74C45 68 55 68 55 74L55 84'
+	],
+	'tot drech': ['M50 88L50 16M34 32L50 16L66 32'],
+	'a drecha': ['M12 50L84 50M68 34L84 50L68 66'],
+	'a esquèrra': ['M88 50L16 50M32 34L16 50L32 66'],
+	'Vira a drecha !': ['M36 88L36 46C36 38 42 34 50 34L80 34M66 20L80 34L66 48'],
+	'a pè': [empreinte(38, 50, 1.2, true), empreinte(62, 44, 1.2)],
+	'Cossí i vau ?': ['M50 92L50 14', 'M50 22L78 22L86 30L78 38L50 38', 'M50 46L22 46L14 54L22 62L50 62', 'M40 92L60 92'], // poteau indicateur
+	'lo cafè': [
+		'M30 52L62 52L60 72C59 76 56 78 52 78L40 78C36 78 33 76 32 72Z', // petite tasse
+		'M61 56C70 55 70 67 60 68',
+		'M20 82C32 87 60 87 72 82',
+		'M46 44C42 38 50 34 46 28',
+		'M78 40C72 36 70 48 76 52C82 56 86 44 78 40Z', // un grain de café
+		'M77 41C79 45 75 48 77 51'
+	],
+	'un tè': [
+		'M26 46C26 36 74 36 74 46L74 66C74 78 64 82 50 82C36 82 26 78 26 66Z', // théière
+		'M38 38C38 30 62 30 62 38',
+		'M48 30L48 26L52 26L52 30',
+		'M26 54C18 52 14 44 10 40C14 46 16 58 26 64',
+		'M74 48C88 48 88 70 74 70'
+	],
+	'l’aiga': ['M50 14C50 14 26 44 26 60C26 74 36 84 50 84C64 84 74 74 74 60C74 44 50 14 50 14Z', 'M38 62C38 70 42 74 48 76'],
+	'un suc de frucha': [
+		'M30 30L70 30L64 86L36 86Z', // verre
+		'M32 46L68 46',
+		'M54 70L62 14L70 14', // paille
+		'M66 30A11 11 0 0 1 88 30', // rondelle d'orange
+		'M77 30L77 20M77 30L70 23M77 30L84 23'
+	],
+	'un veire d’aiga': ['M28 20L72 20L66 86L34 86Z', 'M31 42C40 46 60 38 69 42'],
+	'L’addicion, se vos plai.': [
+		'M26 12L74 12L74 84L68 90L62 84L56 90L50 84L44 90L38 84L32 90L26 84Z', // ticket
+		'M34 26L66 26M34 38L58 38M34 48L62 48M34 58L54 58',
+		'M34 70L66 70'
+	]
 };
+
+// Un même mot dans deux unités avec deux sens : on ne dessine que le sens
+// prévu (la cosina : la cuisine en unité 7, la cousine en unité 3).
+const SENS = { 'la cosina': 'cuisine' };
 
 /** Les chemins d'un mot, prêts pour le canevas (Path2D), ou null. */
 const cache = new Map();
-export function dessenhDe(oc) {
-	if (!DESSENHS[oc]) return null;
+export function dessenhDe(oc, def = '') {
+	if (!DESSENHS[oc] || (SENS[oc] && !def.includes(SENS[oc]))) return null;
 	if (!cache.has(oc)) cache.set(oc, DESSENHS[oc].map((d) => new Path2D(d)));
 	return cache.get(oc);
 }

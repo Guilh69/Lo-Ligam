@@ -76,7 +76,7 @@
 		const k = `${i}|${W}x${H}|${reserva.naut}|${reserva.bas}`;
 		if (plans.has(k)) return plans.get(k);
 		const [oc, def] = lista[i];
-		const dess = dessenhDe(oc);
+		const dess = dessenhDe(oc, def);
 		const Hu = Math.max(220, H - reserva.naut - reserva.bas);
 		const S = dess ? Math.min(Hu * 0.48, W * 0.6, 420) : 0;
 		// Limelight reste gros (Romain : « le mot pourrait être encore un peu plus gros »)
