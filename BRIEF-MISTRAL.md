@@ -160,7 +160,7 @@ Romain modifie lui-même textes, liens, images et listes, connecté en administr
 ### 4.10 Relecteurs et outils annexes
 - Trois relecteurs internes, qui étaient des instances de Claude : **Joan** (web designer et vérificateur, filtre tout visuel avant Romain), **Rodrigo** (sécurité : RLS, authentification, endpoints, CSP, dépendances), **Aran** (traducteur oc, fr, es, en, ca ; ne touche jamais à l'occitan ni au français). Voir §11 pour les reprendre.
 - `outils/craft/` : pilotage d'EffectCraft et VectorCraft (animations pour Canva), `canva-mp4.py` (Canva refuse les MP4 d'EffectCraft).
-- `outils/liens-hors-git.ps1` : recrée les six jonctions vers les fichiers lourds.
+- `outils/liens-hors-git.ps1` : recrée les sept jonctions vers les fichiers lourds.
 
 ## 5. Ce qui reste à faire, par ordre de priorité
 

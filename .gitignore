@@ -3,6 +3,10 @@
 # (Ancien dossier /Photo/ à la racine, rangé ici le 2026-10-12.)
 /design-stock/brut
 
+# Photos choisies par Romain (2026-11-05, 339 Mo) : rangées dans Lo_Ligam_hors-git,
+# rattachées ici par une jonction (outils/liens-hors-git.ps1).
+/design-stock/Fotos/Bases_foto
+
 # Bibliothèque de référence (carte de 71 Mo, lexique sous droits) : reste sur le disque.
 /Modules_cors/Base_donnees_linguistica
 
