@@ -32,7 +32,7 @@
 		<h1><span lang="oc">Los dessenhs</span> <span class="fr">Les dessins de la poussière d’or</span></h1>
 		<p>
 			{nDessenhs} mots dessinés sur {nMots}. Les mots sans dessin se forment quand même, en poussière, sans
-			image. Les dessins se voient en mouvement sur <a href="/ensag/plueja">la pluie de mots</a>.
+			image. Les dessins se voient en mouvement sur <a href="/apren/remira">Remira</a>.
 		</p>
 	</header>
 

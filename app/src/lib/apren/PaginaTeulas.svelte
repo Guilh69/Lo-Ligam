@@ -187,6 +187,13 @@
 		grid-column: span 2;
 		aspect-ratio: auto;
 	}
+	/* huit cases (S'apren avec Remira, 2026-11-05) : la dernière en demi-bandeau,
+	   sans trou à droite ; en deux colonnes aussi (sept cases après la grande,
+	   la dernière serait seule sur sa rangée) */
+	.teulas:has(> .teula:nth-child(8):last-child) > .teula:nth-child(8) {
+		grid-column: span 2;
+		aspect-ratio: auto;
+	}
 	/* trois cases seulement (Mèdias, 2026-10-25) : les deux petites prennent
 	   chacune une demi-hauteur sur toute la largeur restante, sans trou */
 	.teulas:has(> .teula:nth-child(3):last-child) .teula:not(.granda) {

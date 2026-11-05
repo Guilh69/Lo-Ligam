@@ -41,6 +41,18 @@
 		<circle cx="17" cy="17" r="2.4" fill="currentColor" stroke="none" />
 		<circle cx="24" cy="24" r="2.4" fill="currentColor" stroke="none" />
 		<circle cx="31" cy="31" r="2.4" fill="currentColor" stroke="none" />
+	{:else if nom === 'remira'}
+		<!-- Remira (2026-11-05) : des grains de poussière d'or qui se posent
+		     en un mot et sa définition, comme sur la page -->
+		<circle cx="13" cy="10" r="1.6" fill="currentColor" stroke="none" />
+		<circle cx="22" cy="7" r="1.6" fill="currentColor" stroke="none" />
+		<circle cx="31" cy="11" r="1.6" fill="currentColor" stroke="none" />
+		<circle cx="38" cy="8" r="1.6" fill="currentColor" stroke="none" />
+		<circle cx="17" cy="18" r="1.6" fill="currentColor" stroke="none" />
+		<circle cx="27" cy="16" r="1.6" fill="currentColor" stroke="none" />
+		<circle cx="35" cy="21" r="1.6" fill="currentColor" stroke="none" />
+		<circle cx="23" cy="24" r="1.6" fill="currentColor" stroke="none" />
+		<path d="M11 33h26M17 40h14" />
 	{:else if nom === 'anem'}
 		<!-- Anem ! (2026-11-05) : un poussin au trait, la première bête de
 		     l'imagier des petits ; enfantin sans être kitsch (Romain) -->

@@ -25,8 +25,8 @@
 	// claire (/ensag/clar, 2026-10-21) et l'esquisse « page presque blanche »
 	// (/ensag/blanc, 2026-10-22) dessinent leur propre pied de page. Les groupes
 	// (2026-10-25) tiennent à hauteur d'écran, comme une messagerie. La carte (2026-10-26) est une interface pleine et
-	// stable : ni pied de page ni défilement. La pluie de mots (/ensag/plueja,
-	// 2026-11-04) occupe tout l'écran, comme un fond d'écran ; l'espace des
+	// stable : ni pied de page ni défilement. Remira, la page de calme (/apren/remira,
+	// essai du 04-11, rubrique de S'apren le 05-11) occupe tout l'écran, comme un fond d'écran ; l'espace des
 	// petits (/anem, 2026-11-04, rubrique le 05-11) aussi : la sortie est dans son coin des adultes ;
 	// les jeux (/apren/jocs, rubrique de S'apren le 05-11) de même, la sortie est dans leur barre.
 	let ambPè = $derived(
@@ -35,7 +35,7 @@
 			id !== '/carta' &&
 			id !== '/ensag/clar' &&
 			id !== '/ensag/blanc' &&
-			id !== '/ensag/plueja' &&
+			id !== '/apren/remira' &&
 			id !== '/anem' &&
 			id !== '/apren/jocs'
 	);

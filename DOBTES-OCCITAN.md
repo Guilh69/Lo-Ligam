@@ -92,6 +92,12 @@ Claude te les pose une à une, avec des boutons, d'abord ce qui touche plusieurs
 | A1-35 | Mirèlha et la grand-mère du Val d'Aran ; familles diverses ; répartition des métiers | 3.x, 4.x |
 | A1-36 | La tâche 4.4 racontée au prof en visio | 4.4 |
 
+## 6. Interface des jeux (/apren/jocs, 2026-11-05) : à voir avec tes livres, sans urgence
+
+| # | La question | Où |
+|---|---|---|
+| J-1 | « Sageta tenguda : la sèrp accelèra. » (aide de la sèrp : quand on garde la flèche enfoncée, la sèrp va plus vite). API : `sageta`, `tenguda`, `sèrp` connus du Basic ; `accelèra` = 3e personne de `accelerar` (vèrb’Òc). Doute sur la tournure, pas sur les mots : dit-on « sageta tenguda » pour une touche maintenue ? | aide de la sèrp |
+
 ---
 
 ### Comment répondre

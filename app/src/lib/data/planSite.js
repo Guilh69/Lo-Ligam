@@ -42,6 +42,9 @@ export const PLAN = [
 			{ oc: 'Jòcs', fr: 'Jeux', es: 'Juegos', en: 'Games', ca: 'Jocs', ar: 'ألعاب', href: '/apren/jocs' },
 			// (venait d'Amassa : « c'est de l'apprentissage », Romain, 2026-10-22)
 			{ oc: 'Mots en imatges', fr: 'Mots en images', es: 'Palabras en imágenes', en: 'Words in pictures', ca: 'Paraules en imatges', ar: 'كلمات بالصور', href: '/mots' },
+			// Remira (contemple) : la page de calme où les mots se dessinent en poussière d'or, rubrique
+			// de S'apren (Romain, 2026-11-05 : « Je crois que je préfère Remira »). Un nom se lit comme il se dit.
+			{ oc: 'Remira', fr: 'Remira', es: 'Remira', en: 'Remira', ca: 'Remira', ar: 'Remira', href: '/apren/remira' },
 			// (la grammaire, notion par notion : « plutôt dans apprendre la langue », Romain, 2026-11-03)
 			{ oc: 'Gramatica', fr: 'Grammaire', es: 'Gramática', en: 'Grammar', ca: 'Gramàtica', ar: 'قواعد اللغة', href: '/apren/gramatica' },
 			// (la page qui explique le cours avant le calendrier, Romain, 2026-10-24)
