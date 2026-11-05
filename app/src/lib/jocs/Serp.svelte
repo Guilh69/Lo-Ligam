@@ -19,6 +19,7 @@
 	import { novelaPartida, virar, pas, posicions, letraAttesa, escupir, coa, DIRS } from '$lib/jocs/serp.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
 	import Reglatges from '$lib/jocs/Reglatges.svelte';
+	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
 
 	// Occitan passé à lo Congrès les 2026-11-04 et 05, à valider par Romain.
 	const T = {
@@ -77,6 +78,7 @@
 	// ── Réglages ─────────────────────────────────────────────────────────
 	let nivel = $state('1'); // '1', '2' ou 'doas'
 	let pasAPas = $state(false);
+	let immersiu = $state(false); // mode plein (BotonEcran)
 	let son = $state(true);
 	let tactil = $state(false);
 	let calme = $state(false);
@@ -417,7 +419,7 @@
 	<svg viewBox="0 0 24 24" aria-hidden="true" class="sageta sageta-{nom}"><path d="M7 14.5l5-5 5 5" /></svg>
 {/snippet}
 
-<section class="joc" aria-labelledby="titol-serp" style:--pas="{pasAPas ? 160 : PAS_MS}ms" bind:this={racina}>
+<section class="joc" class:immersiu aria-labelledby="titol-serp" style:--pas="{pasAPas ? 160 : PAS_MS}ms" bind:this={racina}>
 	<div class="disposicion">
 		<header class="cap-joc">
 			<h2 id="titol-serp" lang="oc">La sèrp de las letras</h2>
@@ -425,7 +427,8 @@
 			<p class="consigna">{tria(T.consigna)}</p>
 		</header>
 
-		<div class="pista" aria-hidden="true">
+		<div class="pista">
+			<div class="pista-info" aria-hidden="true">
 			{#if mot}
 				<p class="sens" lang="fr">{mot.fr}</p>
 				<p class="cadre" lang="oc">
@@ -434,6 +437,8 @@
 					>{#if partidas.apres}<span>{partidas.apres}</span>{/if}
 				</p>
 			{/if}
+			</div>
+			<BotonEcran bind:actiu={immersiu} cibla={racina} />
 		</div>
 
 		<div class="taula">
@@ -582,6 +587,77 @@
 	}
 	.pista {
 		grid-area: pista;
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--esp-16);
+	}
+	.pista-info {
+		min-width: 0;
+	}
+
+	/* ── Mode plein (BotonEcran) : le jeu couvre tout l'écran ; le mot à
+	   écrire en haut, la grille aussi grande que possible ; sur grand écran
+	   les flèches à côté, sur téléphone dessous ; les réglages s'effacent
+	   (Pausa et Un autre mot restent) ── */
+	.joc.immersiu {
+		position: fixed;
+		inset: 0;
+		z-index: 30;
+		overflow: auto;
+		padding: max(0.75rem, env(safe-area-inset-top)) clamp(0.75rem, 3vw, 2rem) max(0.75rem, env(safe-area-inset-bottom));
+		background:
+			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			var(--t-fons);
+		--reste: 20rem; /* la hauteur prise par le mot et les flèches */
+	}
+	.immersiu .disposicion {
+		min-height: 100%;
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: auto 1fr auto;
+		grid-template-areas: 'pista' 'taula' 'comandas';
+		gap: var(--esp-12);
+		align-items: center;
+	}
+	@container joc (min-width: 52rem) {
+		/* une requête de conteneur ne touche pas le conteneur lui-même : la
+		   variable passe par la disposition */
+		.immersiu .disposicion {
+			--reste: 9rem;
+			grid-template-columns: minmax(0, 1fr) auto;
+			grid-template-rows: auto 1fr;
+			grid-template-areas: 'pista pista' 'taula comandas';
+		}
+	}
+	.immersiu .cap-joc {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+	.immersiu .pista {
+		align-items: center;
+	}
+	.immersiu .pista-info {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.25rem var(--esp-24);
+	}
+	.immersiu .cadre {
+		margin: 0;
+	}
+	.immersiu .grasilha {
+		max-width: min(100%, calc((100svh - var(--reste)) * var(--cols) / var(--rows)));
+	}
+	.immersiu .comandas {
+		justify-items: center;
+		gap: var(--esp-16);
+	}
+	.immersiu .escrichs,
+	.immersiu .comandas :global(.reglatges .grop) {
+		display: none;
 	}
 	.taula {
 		grid-area: taula;

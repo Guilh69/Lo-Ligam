@@ -303,7 +303,8 @@
 		donar((Math.min(Math.abs(d), 160) / 160) * 0.08);
 	}
 
-	const susComandas = (e) => barra?.contains(e.target) || menu?.contains(e.target);
+	// commandes, en-tête et liens : un clic dessus ne fait pas éclater le mot
+	const susComandas = (e) => barra?.contains(e.target) || menu?.contains(e.target) || !!e.target?.closest?.('.cap, a, button, input, label');
 
 	let darrierTòc = null;
 	function bolegaPuntador(e) {
@@ -366,9 +367,9 @@
 		demandarMoviment();
 	}
 
-	function levar() {
+	function levar(e) {
 		darrierTòc = null;
-		polsa?.levar();
+		polsa?.levar(e); // un clic ou un toucher bref fait éclater le mot
 	}
 
 	function tecla(e) {
