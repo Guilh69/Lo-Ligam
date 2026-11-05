@@ -1,0 +1,98 @@
+// La carte de « Mon ligam amb l'occitan » (Romain, 2026-11-05 : « une carte à
+// l'échelle qui permette de naviguer entre Paris, Montpellier et Valencia,
+// Barcelone. Chaque point apparaît avec un focus animé sur la zone… des zooms
+// et dézooms selon l'endroit de l'histoire »).
+//
+// Données personnelles (Romain, 05-11) : pas de ville de naissance exacte, ni
+// pour lui ni pour sa famille. La famille de sa mère = la zone « Erau », pas une
+// commune ; Paris = la ville de son père, sans plus.
+
+/** Les lieux du récit, en occitan (comme le texte). */
+export const LUÒCS = {
+	paris: { nom: 'París', lon: 2.35, lat: 48.86 },
+	erau: { nom: 'Erau', lon: 3.42, lat: 43.6, zona: true },
+	montpelhier: { nom: 'Montpelhièr', lon: 3.877, lat: 43.611 },
+	valencia: { nom: 'Valéncia', lon: -0.376, lat: 39.47 },
+	barcelona: { nom: 'Barcelona', lon: 2.17, lat: 41.39 }
+};
+
+// Une étape par chapitre (clé de pagina_elements). Un chapitre ajouté plus tard
+// sans étape garde la vue du précédent.
+//   c : centre [lon, lat] ; r : demi-largeur visible en km (sur le petit côté)
+//   luòcs : les points montrés ; focus : [lieu, rayon du projecteur en km]
+//   segond : un deuxième point qui s'allume un instant après
+//   zona / domenis : les aplats à faire ressortir ; arc : un trait entre deux lieux
+//   estelas : les lieux d'Occitània s'allument (la communauté)
+export const ETAPAS = {
+	// avant le premier chapitre : d'où il vient (chapeau)
+	debuta: { c: [2.2, 45.9], r: 400, luòcs: ['paris', 'erau'], arc: ['paris', 'erau'], zona: 'erau' },
+	'istoria.capitols.c1': { c: [3.42, 43.62], r: 85, luòcs: ['erau'], zona: 'erau', focus: ['erau', 55] },
+	'istoria.capitols.c2': { c: [3.877, 43.611], r: 38, luòcs: ['montpelhier'], focus: ['montpelhier', 14] },
+	'istoria.capitols.c3': {
+		c: [1.0, 40.6],
+		r: 215,
+		luòcs: ['valencia', 'barcelona', 'montpelhier'],
+		domenis: ['catalan'],
+		focus: ['valencia', 70],
+		segond: 'barcelona'
+	},
+	'istoria.capitols.c4': { c: [2.5, 43.4], r: 330, luòcs: ['montpelhier'], domenis: ['occitan'], focus: ['montpelhier', 60] },
+	'istoria.capitols.c5': { c: [3.877, 43.611], r: 60, luòcs: ['montpelhier'], focus: ['montpelhier', 22] },
+	'istoria.capitols.c6': { c: [3.42, 43.62], r: 85, luòcs: ['erau', 'montpelhier'], zona: 'erau', focus: ['erau', 55] },
+	'istoria.espelida.c1': { c: [2.4, 44.4], r: 330, domenis: ['occitan'], estelas: true },
+	'istoria.espelida.c2': {
+		c: [2.0, 44.0],
+		r: 480,
+		luòcs: ['paris', 'montpelhier', 'valencia', 'barcelona'],
+		domenis: ['occitan', 'catalan'],
+		estelas: true
+	}
+};
+
+/** La première étape (dans l'ordre du récit) qui montre ce lieu. */
+export function etapaDe(luòc, ordre) {
+	return ordre.find((id) => {
+		const e = ETAPAS[id];
+		return e && (e.focus?.[0] === luòc || e.segond === luòc || (e.zona && e.zona === luòc));
+	});
+}
+
+// Le zoom « en vol » de van Wijk et Nuij (2003), celui de Prezi et de d3 :
+// on recule pour voir les deux endroits, puis on plonge. p = [x, y, largeur].
+const RHO = 1.4;
+export function vol(p0, p1) {
+	const [ux0, uy0, w0] = p0;
+	const [ux1, uy1, w1] = p1;
+	const dx = ux1 - ux0,
+		dy = uy1 - uy0,
+		d2 = dx * dx + dy * dy,
+		rho2 = RHO * RHO,
+		rho4 = rho2 * rho2;
+	let S, f;
+	if (d2 < 1e-9) {
+		S = Math.log(w1 / w0) / RHO;
+		f = (t) => [ux0 + t * dx, uy0 + t * dy, w0 * Math.exp(RHO * t * S)];
+	} else {
+		const d1 = Math.sqrt(d2);
+		const b0 = (w1 * w1 - w0 * w0 + rho4 * d2) / (2 * w0 * rho2 * d1);
+		const b1 = (w1 * w1 - w0 * w0 - rho4 * d2) / (2 * w1 * rho2 * d1);
+		const r0 = Math.log(Math.sqrt(b0 * b0 + 1) - b0);
+		const r1 = Math.log(Math.sqrt(b1 * b1 + 1) - b1);
+		S = (r1 - r0) / RHO;
+		f = (t) => {
+			const s = t * S;
+			const ch = Math.cosh(r0);
+			const u = (w0 / (rho2 * d1)) * (ch * Math.tanh(RHO * s + r0) - Math.sinh(r0));
+			return [ux0 + u * dx, uy0 + u * dy, (w0 * ch) / Math.cosh(RHO * s + r0)];
+		};
+	}
+	f.duracion = (Math.abs(S) * 1000 * RHO) / Math.SQRT2;
+	return f;
+}
+
+/** Une longueur « ronde » pour l'échelle : 1, 2, 5, 10, 20, 50… km */
+export function escalaRedona(km) {
+	const p = 10 ** Math.floor(Math.log10(km));
+	const n = km / p;
+	return (n >= 5 ? 5 : n >= 2 ? 2 : 1) * p;
+}

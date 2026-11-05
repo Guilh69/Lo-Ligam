@@ -13,6 +13,7 @@
 	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { editor } from '$lib/data/legal.js';
+	import CartaIstoria from '$lib/istoria/CartaIstoria.svelte';
 
 	let { data, form } = $props();
 
@@ -204,6 +205,9 @@
 	// le formulaire
 	let mandant = $state(false);
 	let adreçaVista = $state(false);
+
+	// la carte qui suit le récit (Romain, 2026-11-05) : elle lit les chapitres data-etapa
+	let recit = $state();
 	let error = $derived(form?.error ? (tx.error[form.error] ?? tx.error.mandadís) : null);
 	let ambAdreça = $derived(form?.error === 'mandadís' || form?.error === 'pas_brancat');
 </script>
@@ -243,7 +247,7 @@
 						src={retrat.url}
 						width={retrat.largor}
 						height={retrat.nautor}
-						alt={tria({ oc: retrat.alt_oc, fr: retrat.alt_fr }) || 'Romain Périer'}
+						alt={tria({ oc: retrat.alt_oc, fr: retrat.alt_fr }) || 'Romain'}
 						fetchpriority="high"
 					/>
 				</figure>
@@ -254,7 +258,7 @@
 			<ol class="capitols" start={debuta + 1}>
 				{#each l as c, i (c.clau)}
 					{@const cos = vista(c.clau + '.tèxt')}
-					<li class="capitol" use:editar={c.clau}>
+					<li class="capitol" data-etapa={c.clau} use:editar={c.clau}>
 						<span class="capitol-n" aria-hidden="true">{String(debuta + i + 1).padStart(2, '0')}</span>
 						<div>
 							{@render tèxt(c.clau + '.titol', etiqueta)}
@@ -268,6 +272,11 @@
 			{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={() => apondreCapitol(clauLista)}>+ {tx.apondre}</button>{/if}
 		{/snippet}
 
+		<div class="recit" bind:this={recit}>
+			<aside class="recit-carta">
+				<CartaIstoria racina={recit} />
+			</aside>
+			<div class="recit-tèxt">
 		{#if capitols.length || edicion.actiu}
 			{@render partida('istoria.capitols', capitols, 0, 'h2')}
 		{/if}
@@ -278,6 +287,8 @@
 				{@render partida('istoria.espelida', espelida, capitols.length, 'h3')}
 			</section>
 		{/if}
+			</div>
+		</div>
 
 		<section class="contacte" id="contacte" aria-labelledby="contacte-titol">
 			<div class="contacte-crida">
@@ -464,6 +475,51 @@
 			0 0 0 5px var(--t-terra),
 			0 0 0 10px var(--t-aur),
 			0 18px 40px rgba(0, 0, 0, 0.25);
+	}
+
+	/* ---------- Le récit et sa carte (Romain, 2026-11-05) ----------
+	   Au téléphone, la carte reste en bandeau en haut et le texte défile
+	   dessous ; sur grand écran, elle tient la colonne de droite. */
+	.recit-carta {
+		position: sticky;
+		top: 0;
+		z-index: 3;
+		height: max(13rem, 36svh);
+		margin-inline: calc(var(--marge) * -1);
+		background: var(--t-fons);
+	}
+	/* le texte se fond en passant sous la carte */
+	.recit-carta::after {
+		content: '';
+		position: absolute;
+		inset-inline: 0;
+		top: 100%;
+		height: 2.2rem;
+		background: linear-gradient(var(--t-fons), transparent);
+		pointer-events: none;
+	}
+	@container (min-width: 1000px) {
+		.recit {
+			display: grid;
+			grid-template-columns: minmax(0, 46rem) minmax(0, 1fr);
+			gap: clamp(1.5rem, 3cqi, 4rem);
+		}
+		.recit-carta {
+			grid-column: 2;
+			grid-row: 1;
+			align-self: start;
+			top: 1rem;
+			height: calc(100svh - 2rem);
+			margin-inline: 0 calc(var(--marge) * -1);
+			background: none;
+		}
+		.recit-carta::after {
+			display: none;
+		}
+		.recit-tèxt {
+			grid-column: 1;
+			grid-row: 1;
+		}
 	}
 
 	/* ---------- Les chapitres, reliés par un fil d'or ---------- */
