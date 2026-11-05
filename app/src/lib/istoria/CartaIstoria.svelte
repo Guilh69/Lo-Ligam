@@ -69,10 +69,16 @@
 	});
 	// une étape sans point (le domaine occitan) : son nom au milieu de l'aplat,
 	// le même que celui écrit au-dessus du chapitre
-	let etiqueta = $derived.by(() => {
-		if (!fons || !e.lòc || e.focus) return null;
-		const [px, py] = ecran(...proj(e.c[0], e.c[1]));
-		return { nom: e.lòc, px, py };
+	// et le nom d'une langue sur son aplat (lenga catalana : Romain, 05-11)
+	let etiquetas = $derived.by(() => {
+		if (!fons) return [];
+		const out = [];
+		if (e.lòc && !e.focus) out.push({ nom: e.lòc, xy: e.c, lenga: false });
+		if (e.lenga) out.push({ nom: e.lenga[0], xy: [e.lenga[1], e.lenga[2]], lenga: true });
+		return out.map((t) => {
+			const [px, py] = ecran(...proj(t.xy[0], t.xy[1]));
+			return { ...t, px, py };
+		});
 	});
 	let arc = $derived.by(() => {
 		if (!fons || !e.arc) return null;
@@ -92,7 +98,7 @@
 		const caixas = punts
 			.filter((p) => p.vist)
 			.map((p) => (p.actiu ? [p.px - 44, p.py - 40, p.px + 44 + p.nom.length * 8.5, p.py + 40] : [p.px - 16, p.py - 18, p.px + 16 + p.nom.length * 8, p.py + 18]));
-		if (etiqueta) caixas.push([etiqueta.px - 90, etiqueta.py - 30, etiqueta.px + 90, etiqueta.py + 30]);
+		for (const t of etiquetas) caixas.push([t.px - 90, t.py - 30, t.px + 90, t.py + 30]);
 		const out = [];
 		const max = e.estelas ? 6 : banda ? 8 : 11;
 		for (const l of luòcsOc) {
@@ -252,7 +258,7 @@
 			{#if arc}{#key arribada}<path class="arc" d={arc} pathLength="1" />{/key}{/if}
 		</svg>
 
-		{#if etiqueta}{#key etiqueta.nom + arribada}<span class="etiqueta" lang="oc" style:transform="translate({etiqueta.px}px, {etiqueta.py}px)">{etiqueta.nom}</span>{/key}{/if}
+		{#each etiquetas as t (t.nom + arribada)}<span class="etiqueta" class:lenga={t.lenga} lang="oc" style:transform="translate({t.px}px, {t.py}px)">{t.nom}</span>{/each}
 		{#each repèris as v (v.nom)}<span class="repèri" lang="oc" style:transform="translate({v.px}px, {v.py}px)">{v.nom}</span>{/each}
 
 		{#each punts as p (p.id)}
@@ -534,6 +540,15 @@
 			0 0 2px var(--t-fons);
 		pointer-events: none;
 		animation: aparéisser 0.9s 0.4s ease both;
+	}
+	/* une langue, pas un lieu : en clair et plus petit, sans rouge en texte
+	   sur le sombre (règle B) */
+	.etiqueta.lenga {
+		font-size: 0.92rem;
+		font-weight: 400;
+		letter-spacing: 0.1em;
+		color: var(--t-tinta);
+		animation-delay: 1s;
 	}
 	.repèri::before {
 		content: '';

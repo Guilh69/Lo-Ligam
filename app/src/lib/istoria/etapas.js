@@ -21,6 +21,7 @@ export const LUÒCS = {
 // nommé dans le chapitre, rien d'inventé. Un chapitre sans lieu (c5 : apprendre
 // seul, Assimil) n'a pas d'étape et garde la vue du précédent.
 //   lòc : le nom du lieu, affiché aussi au-dessus du titre du chapitre
+//   lenga : [nom, lon, lat] le nom d'une langue écrit sur son aplat
 //   c : centre [lon, lat] ; r : demi-largeur visible en km (sur le petit côté)
 //   luòcs : les points montrés ; focus : [lieu, rayon du projecteur en km]
 //   segond : un deuxième point qui s'allume un instant après
@@ -41,6 +42,9 @@ export const ETAPAS = {
 		r: 215,
 		luòcs: ['valencia', 'barcelona'],
 		domenis: ['catalan'],
+		// une seule langue de Valéncia à Barcelona (Romain, 05-11 : pas de
+		// quiproquo, le valencien n'est pas une autre langue que le catalan)
+		lenga: ['lenga catalana', 0.62, 40.95],
 		focus: ['valencia', 70],
 		segond: 'barcelona'
 	},

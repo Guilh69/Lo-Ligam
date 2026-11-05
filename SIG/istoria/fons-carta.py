@@ -173,7 +173,27 @@ with open(os.path.join(RAIC, 'app', 'static', 'data', 'dialectes.geojson'), enco
     for feat in json.load(fh)['features']:
         g = ogr.CreateGeometryFromJson(json.dumps(feat['geometry'])).MakeValid().Buffer(0.004)
         occ = g if occ is None else occ.Union(g)
-occ = occ.Buffer(-0.004).Intersection(terra.Buffer(0.02)).SimplifyPreserveTopology(0.015)
+
+
+def sens_traucs(g):
+    """Garde le contour extérieur de chaque polygone : pas d'enclave (Romain,
+    05-11 : la petite Gavacherie, près de Bordeaux, « ne doit pas apparaître »)."""
+    polys = [g] if g.GetGeometryName() == 'POLYGON' else [g.GetGeometryRef(i) for i in range(g.GetGeometryCount())]
+    out = ogr.Geometry(ogr.wkbMultiPolygon)
+    traucs = 0
+    for p in polys:
+        if p.GetGeometryName() != 'POLYGON':
+            continue
+        traucs += p.GetGeometryCount() - 1
+        q = ogr.Geometry(ogr.wkbPolygon)
+        q.AddGeometry(p.GetGeometryRef(0).Clone())
+        out.AddGeometry(q)
+    print(f'trous comblés : {traucs}')
+    return out.Buffer(0)
+
+
+# les trous comblés avant de couper par la côte : la mer reste hors de l'aplat
+occ = sens_traucs(occ.Buffer(-0.004)).Intersection(terra.Buffer(0.02)).SimplifyPreserveTopology(0.015)
 
 # 5. Le domaine catalan
 cat = None
