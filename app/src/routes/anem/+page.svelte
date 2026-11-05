@@ -1,17 +1,18 @@
 <script>
 	// Anem ! (« Zo ! » jusqu'au 2026-11-05 : se lit comme il se dit, choix de Romain) — l'espace des 3 à 6 ans, qui ne lisent pas encore (cadrage de
-	// Romain du 2026-11-04, cahier §11 ; chantier 28 de PILOTATGE). Essai :
-	// page non indexée, hors menu. Trois coins : Escotar (l'imagier : on touche
+	// Romain du 2026-11-04, cahier §11 ; chantier 28 de PILOTATGE). Page
+	// indexée, dans le menu et dans S'apren depuis le 05-11. Trois coins : Escotar (l'imagier : on touche
 	// une bête, on entend son nom), L'ombra (retrouver la bête à sa silhouette :
 	// marche sans voix) et Ont es ? (la voix de Romain demandera ; aujourd'hui
-	// l'adulte lit la question).
+	// l'adulte lit la question). Rubrique visible de S'apren depuis le 2026-11-05
+	// (Romain : « une rubrique vraiment visible »), à la place de la leçon d'essai.
 	// Règles : ni compte, ni donnée, ni chronomètre, ni score, ni classement ;
 	// grandes images, gros boutons ; rien de négatif quand on se trompe (la
 	// bête touchée dit juste son nom) ; sons discrets, coupés d'un bouton ;
 	// « réduire les animations » respecté ; la sortie est dans le coin des
 	// adultes (appui long), pour qu'un petit doigt ne quitte pas l'espace.
 	// Les bêtes sont découpées dans le visuel Canva de Romain « Nòstres amics
-	// las bèstias » (static/ensag/anem, 2 à 4 Ko chacune, fond #006169).
+	// las bèstias » (static/anem, 640 px, 2 à 23 Ko chacune, fond #006169).
 	// La voix : un fichier par bête dans static/audio/anem/ (liste dans
 	// static/audio/moduls/A-LIRE-enregistrements.md) ; tant qu'il manque, un
 	// petit carillon (Web Audio, aucun fichier) tient la place.
@@ -24,10 +25,18 @@
 		{ id: 'can', oc: 'Lo can', fr: 'Le chien', pron: 'Lou ka', nota: 523.25 },
 		{ id: 'gat', oc: 'Lo gat', fr: 'Le chat', pron: 'Lou gatt', nota: 659.25 },
 		{ id: 'galina', oc: 'La galina', fr: 'La poule', pron: 'La galino', nota: 783.99 },
-		{ id: 'gal', oc: 'Lo gal', fr: 'Le coq', pron: 'Lou gal', nota: 880 }
+		{ id: 'gal', oc: 'Lo gal', fr: 'Le coq', pron: 'Lou gal', nota: 880 },
+		// les quatre autres du même visuel (2026-11-05) ; prononciations de ses fiches
+		{ id: 'cabra', oc: 'La cabra', fr: 'La chèvre', pron: 'La kabro', nota: 587.33 },
+		{ id: 'caval', oc: 'Lo caval', fr: 'Le cheval', pron: 'Lou kabal', nota: 698.46 },
+		{ id: 'porc', oc: 'Lo pòrc', fr: 'Le cochon', pron: 'Lou pork', nota: 987.77 },
+		{ id: 'poleton', oc: 'Lo poleton', fr: 'Le poussin', pron: 'Lou poulétou', nota: 1046.5 }
 	];
-	const imatge = (b) => `/ensag/anem/${b.id}.webp`;
-	const ombra = (b) => `/ensag/anem/${b.id}-ombra.webp`;
+	// Dans les jeux, quatre choix par tour (la bête à trouver et trois autres,
+	// mêlées) : assez pour chercher, assez grand pour un doigt de trois ans.
+	const CAUSIDAS = 4;
+	const imatge = (b) => `/anem/${b.id}.webp`;
+	const ombra = (b) => `/anem/${b.id}-ombra.webp`;
 	const votz = (b) => `/audio/anem/${b.id}.m4a`;
 	const votzQuestion = (b) => `/audio/anem/ont-es-${b.id}.m4a`;
 
@@ -136,6 +145,14 @@
 		return a;
 	}
 
+	// les choix du tour : la cible et trois autres bêtes, dans un ordre mêlé
+	// (recalculé seulement quand la cible change)
+	let causidas = $derived.by(() => {
+		if (!cibla) return [];
+		const autras = melar(BESTIAS.filter((b) => b.id !== cibla.id)).slice(0, CAUSIDAS - 1);
+		return melar([cibla, ...autras]);
+	});
+
 	function anar(e) {
 		clearTimeout(seguentTimer);
 		ecran = e;
@@ -232,7 +249,7 @@
 
 <svelte:head>
 	<title>Anem ! · Lo Ligam</title>
-	<meta name="robots" content="noindex" />
+	<meta name="description" content="Anem ! L’occitan per los pichons de 3 a 6 ans : se tòca una bèstia, s’ausís son nom. Anem ! L’occitan pour les petits de 3 à 6 ans : on touche une bête, on entend son nom." />
 </svelte:head>
 
 <main id="contengut" class="zo" class:calme>
@@ -286,13 +303,14 @@
 					type="button"
 					onclick={() => tocar(b)}
 					aria-label={b.oc}
+					lang="oc"
 				>
 					<img src={imatge(b)} alt="" />
 				</button>
 			{/each}
 		</div>
 		<p class="bulla" class:vis={!!dicha} aria-hidden="true">
-			<strong>{dicha?.oc ?? ''}</strong>
+			<strong lang="oc">{dicha?.oc ?? ''}</strong>
 			<small>{dicha?.pron ?? ''}</small>
 		</p>
 	{:else if (ecran === 'ombra' || ecran === 'ont-es') && cibla}
@@ -311,7 +329,7 @@
 			</button>
 		{/if}
 		<div class="grasilha pichona">
-			{#each BESTIAS as b (b.id)}
+			{#each causidas as b (b.id)}
 				<button
 					class="bestia"
 					class:bolega={bolega === b.id}
@@ -319,13 +337,14 @@
 					type="button"
 					onclick={() => tocar(b)}
 					aria-label={b.oc}
+					lang="oc"
 				>
 					<img src={imatge(b)} alt="" />
 				</button>
 			{/each}
 		</div>
 		<p class="bulla" class:vis={trobada} aria-hidden="true">
-			<strong>{trobada ? cibla.oc : ''}</strong>
+			<strong lang="oc">{trobada ? cibla.oc : ''}</strong>
 			<small>{trobada ? cibla.pron : ''}</small>
 		</p>
 	{:else if ecran === 'osca'}
@@ -528,6 +547,13 @@
 		width: min(100%, 560px);
 		margin: 8px auto 0;
 	}
+	/* l'imagier : huit bêtes, deux colonnes au téléphone, quatre au-delà */
+	@media (min-width: 561px) {
+		.grasilha:not(.pichona) {
+			grid-template-columns: repeat(4, 1fr);
+			width: min(100%, 720px);
+		}
+	}
 	.grasilha.pichona {
 		grid-template-columns: repeat(4, 1fr);
 		gap: 10px;
@@ -571,9 +597,15 @@
 		}
 	}
 	.bulla {
+		/* collée au bas de l'écran tant que la grille déborde (huit bêtes au
+		   téléphone) : le mot reste visible quand on touche la dernière rangée */
+		position: sticky;
+		bottom: 0;
 		margin: 12px 0 0;
+		padding: 4px 0 6px;
 		min-height: 4.4rem;
 		text-align: center;
+		background: var(--t-fons);
 		opacity: 0;
 		transition: opacity 0.3s;
 	}
@@ -659,12 +691,14 @@
 	}
 	.farandola {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: center;
 		gap: 10px;
-		margin: 14px 0 6px;
+		width: min(100%, 560px);
+		margin: 14px auto 6px;
 	}
 	.farandola img {
-		width: min(20vw, 130px);
+		width: min(21vw, 110px);
 		border-radius: 20px;
 		animation: dançar 2.2s ease-in-out infinite;
 		animation-delay: calc(var(--i) * 0.25s);

@@ -34,7 +34,9 @@ export const PLAN = [
 		href: '/apren',
 		grops: [{ items: [
 			{ oc: 'Lo parcors', fr: 'Le parcours', es: 'El recorrido', en: 'The learning path', ca: 'El recorregut', ar: 'مسار التعلّم', href: '/aprene' },
-			{ oc: 'Leiçon d’ensag', fr: 'Leçon d’essai', es: 'Lección de prueba', en: 'Trial lesson', ca: 'Lliçó de prova', ar: 'درس تجريبي', href: '/aprene/essai' },
+			// Anem !, l'espace des petits (3 à 6 ans), à la place de la leçon d'essai, remplacée par le
+			// module 0 joué sans compte (Romain, 2026-11-05 ; cahier §11 du 29-08). Occitan vérifié ; es/en/ca/ar à relire par Aran.
+			{ oc: 'Anem ! Per los pichons', fr: 'Anem ! Pour les petits', es: 'Anem ! Para los pequeños', en: 'Anem! For little ones', ca: 'Anem ! Per als petits', ar: 'Anem ! للصغار', href: '/anem' },
 			// (venait d'Amassa : « c'est de l'apprentissage », Romain, 2026-10-22)
 			{ oc: 'Mots en imatges', fr: 'Mots en images', es: 'Palabras en imágenes', en: 'Words in pictures', ca: 'Paraules en imatges', ar: 'كلمات بالصور', href: '/mots' },
 			// (la grammaire, notion par notion : « plutôt dans apprendre la langue », Romain, 2026-11-03)

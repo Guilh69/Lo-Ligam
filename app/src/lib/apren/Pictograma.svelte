@@ -40,6 +40,15 @@
 		<circle cx="17" cy="17" r="2.4" fill="currentColor" stroke="none" />
 		<circle cx="24" cy="24" r="2.4" fill="currentColor" stroke="none" />
 		<circle cx="31" cy="31" r="2.4" fill="currentColor" stroke="none" />
+	{:else if nom === 'anem'}
+		<!-- Anem ! (2026-11-05) : un poussin au trait, la première bête de
+		     l'imagier des petits ; enfantin sans être kitsch (Romain) -->
+		<circle cx="17.5" cy="15.5" r="6.5" />
+		<circle cx="27" cy="30" r="10.5" />
+		<path d="M11 14.2l-5.5 1.8 5.5 1.8" />
+		<circle cx="15.5" cy="14" r="1.2" fill="currentColor" stroke="none" />
+		<path d="M22.5 30.5c2.5 3 6 3.5 9.5 1.5" />
+		<path d="M23 40.5v3.5M31 40.5v3.5M19.5 44h7M27.5 44h7" />
 	{:else if nom === 'mots'}
 		<rect x="5" y="9" width="38" height="30" rx="3" />
 		<circle cx="16" cy="19" r="3.5" />

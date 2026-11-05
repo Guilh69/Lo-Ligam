@@ -1,13 +1,12 @@
 // Logique de « La sèrp de las letras », sans affichage (testée dans
-// serp.test.js). La sèrp avance d'une case à chaque pas ; elle doit manger
-// les lettres du mot dans l'ordre. Rien n'est punitif (cahier §11, 25-10 :
-// ni classement ni mécanique culpabilisante) :
-// - une lettre qui n'est pas la bonne tremble et reste à sa place, la sèrp
-//   passe dessus ;
+// serp.test.js). La sèrp avance d'une case à chaque pas et mange toute lettre
+// qu'elle croise : la queue, lue de la queue vers la tête, écrit ce qu'elle a
+// mangé. Le mot est écrit quand la queue épelle exactement le mot. Une lettre
+// mangée à tort (`falsa`) se recrache (`escupir`, demande de Romain du
+// 2026-11-05) : elle retombe sur la grille devant la tête. Rien n'est
+// punitif (cahier §11, 25-10 : ni classement ni mécanique culpabilisante) :
 // - le bord de la grille fait passer de l'autre côté ;
 // - si la tête va toucher la queue, la sèrp s'arrête et attend qu'on tourne.
-// Chaque lettre mangée rejoint la queue, juste derrière la tête, comme sous
-// une plume : lue de la queue vers la tête, la sèrp écrit le mot.
 import { letrasDe } from './serp-mots.js';
 
 export const DIRS = {
@@ -19,6 +18,7 @@ export const DIRS = {
 
 const cle = (x, y) => `${x},${y}`;
 const oposadas = (a, b) => a.x === -b.x && a.y === -b.y;
+const mod = (n, m) => ((n % m) + m) % m;
 
 /**
  * Une partie pour un mot. `cap` : case de départ de la tête ; `rand` :
@@ -34,9 +34,10 @@ export function novelaPartida({ mot, trapas = [], cols, rows, cap, dir = DIRS.dr
 		dir: { ...dir },
 		file: [],
 		creisser: 0,
-		seguenta: 0,
-		manjadas: [], // clés des cases mangées, dans l'ordre du mot
-		errors: 0, // erreurs sur la lettre attendue (pour l'aide douce)
+		seguenta: 0, // lettres justes dans la queue (= la prochaine attendue)
+		falsas: 0, // lettres mangées à tort, toujours en fin de queue
+		manjadas: [], // k des tuiles mangées, dans l'ordre
+		errors: 0, // erreurs de suite (pour l'aide douce)
 		acabat: false,
 		teulas: [] // { k, l, x, y, manjada }
 	};
@@ -72,10 +73,11 @@ function placar(p, lista, rand) {
 	}
 }
 
-const mod = (n, m) => ((n % m) + m) % m;
+/** La lettre attendue ; null quand le mot est écrit, ou qu'une lettre fausse est à recracher. */
+export const letraAttesa = (p) => (p.acabat || p.falsas > 0 ? null : p.letras[p.seguenta]);
 
-/** La lettre attendue, ou null quand le mot est écrit. */
-export const letraAttesa = (p) => (p.acabat ? null : p.letras[p.seguenta]);
+/** Les lettres de la queue, de la queue vers la tête. */
+export const coa = (p) => p.manjadas.map((k) => p.teulas[k].l);
 
 /**
  * Demande un virage. Refusé s'il fait revenir la sèrp sur elle-même (dès
@@ -91,7 +93,7 @@ export function virar(p, d) {
 }
 
 /**
- * Un pas. Renvoie ce qui s'est passé : { tipe: 'res' | 'manjada' | 'error'
+ * Un pas. Renvoie ce qui s'est passé : { tipe: 'res' | 'manjada' | 'falsa'
  * | 'barrada' | 'acabat', teula? }.
  */
 export function pas(p) {
@@ -110,20 +112,55 @@ export function pas(p) {
 
 	const teula = p.teulas.find((t) => !t.manjada && t.x === nx && t.y === ny);
 	if (!teula) return { tipe: 'res' };
-	if (teula.l !== p.letras[p.seguenta]) {
-		p.errors++;
-		return { tipe: 'error', teula };
-	}
 	teula.manjada = true;
 	p.manjadas.push(teula.k);
-	p.seguenta++;
 	p.creisser++;
+	if (p.falsas > 0 || teula.l !== p.letras[p.seguenta]) {
+		p.falsas++;
+		p.errors++;
+		return { tipe: 'falsa', teula };
+	}
+	p.seguenta++;
 	p.errors = 0;
 	if (p.seguenta === p.letras.length) {
 		p.acabat = true;
 		return { tipe: 'acabat', teula };
 	}
 	return { tipe: 'manjada', teula };
+}
+
+/**
+ * Recrache la dernière lettre mangée : elle retombe sur la première case
+ * libre devant la tête, la queue raccourcit d'une case. Renvoie la tuile,
+ * ou null s'il n'y a rien à recracher.
+ */
+export function escupir(p) {
+	if (p.acabat || !p.manjadas.length) return null;
+	const teula = p.teulas[p.manjadas.pop()];
+	const cap = p.cors[0];
+	let c = null;
+	for (let i = 1; i <= p.cols + p.rows && !c; i++) {
+		const x = mod(cap.x + p.dir.x * i, p.cols);
+		const y = mod(cap.y + p.dir.y * i, p.rows);
+		if (p.cors.some((s) => s.x === x && s.y === y)) continue;
+		if (p.teulas.some((t) => !t.manjada && t.x === x && t.y === y)) continue;
+		c = { x, y };
+	}
+	if (!c) {
+		// aucune case libre devant (ne devrait pas arriver) : la première case libre
+		for (let y = 0; y < p.rows && !c; y++)
+			for (let x = 0; x < p.cols && !c; x++)
+				if (!p.cors.some((s) => s.x === x && s.y === y) && !p.teulas.some((t) => !t.manjada && t.x === x && t.y === y)) c = { x, y };
+	}
+	teula.manjada = false;
+	teula.x = c.x;
+	teula.y = c.y;
+	if (p.creisser > 0) p.creisser--;
+	else p.cors.pop();
+	if (p.falsas > 0) p.falsas--;
+	else p.seguenta--;
+	p.errors = 0;
+	return teula;
 }
 
 /**
