@@ -1,0 +1,99 @@
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.modes{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.modes button[aria-pressed="true"]{border-color:var(--border-stronger);background:var(--surface-1)}
+.bas{display:flex;align-items:center;gap:12px;margin:12px 0 0;flex-wrap:wrap;min-height:36px}
+#indice{font-size:14px;color:var(--text-secondary);flex:1}
+</style>
+<h2 class="sr-only">Quatrième version de deux esquisses pour la page de calme : la poussière d'or dont chaque grain glisse en douceur vers sa nouvelle place, de haut en bas, au rythme de la molette, et la roue avec un mot central plus gros.</h2>
+<div class="modes" role="group" aria-label="Mouvement">
+<button type="button" data-m="pols" aria-pressed="true">La poussière d'or, version 4</button>
+<button type="button" data-m="roda" aria-pressed="false">La roue, version 4</button>
+</div>
+<div style="background:var(--surface-1);border-radius:12px;padding:8px">
+<canvas id="c" style="display:block;width:100%;height:440px;border-radius:8px;touch-action:none;cursor:ns-resize" aria-hidden="true"></canvas>
+</div>
+<div class="bas">
+<span id="indice">Fais rouler la molette vers le bas, six crans environ : les grains glissent un à un vers le mot suivant, de haut en bas. Vers le haut, tu reviens. Au doigt, glisse vers le haut.</span>
+<button type="button" id="choix">Je garde celle-ci ↗</button>
+</div>
+<script>
+const cv=document.getElementById('c'),cx=cv.getContext('2d');
+const D={
+poma:['M50 30C35 18 12 28 15 55C18 80 38 92 50 84C62 92 82 80 85 55C88 28 65 18 50 30Z','M50 30C50 22 52 16 56 12','M53 20C60 12 70 12 74 16C68 22 60 23 53 20Z'],
+pera:['M50 18C44 18 42 30 40 40C36 52 24 60 26 76C28 90 44 94 50 94C56 94 72 90 74 76C76 60 64 52 60 40C58 30 56 18 50 18Z','M50 18C50 12 52 8 55 5'],
+pan:['M12 70C12 45 30 32 50 32C70 32 88 45 88 70Z','M32 52L40 43M47 48L55 39M62 52L70 43','M8 70L92 70'],
+formatge:['M15 55L80 35L85 45L85 72L15 72Z','M15 55L85 45','M36 62a4 4 0 1 0 8 0a4 4 0 1 0-8 0','M62 58a3 3 0 1 0 6 0a3 3 0 1 0-6 0'],
+tomata:['M50 34C26 34 14 50 18 66C22 84 40 90 50 90C60 90 78 84 82 66C86 50 74 34 50 34Z','M50 34L42 26M50 34L58 26M50 34L38 37M50 34L62 37M50 34L50 22'],
+ceba:['M50 14C50 30 18 44 22 70C26 88 74 88 78 70C82 44 50 30 50 14Z','M50 30C40 46 36 64 42 84M50 30C60 46 64 64 58 84','M44 88L42 94M50 88L50 95M56 88L58 94'],
+vin:['M32 14L68 14C70 34 64 50 50 52C36 50 30 34 32 14Z','M50 52L50 82','M36 86C44 82 56 82 64 86','M33 28C44 31 56 25 67 28'],
+lach:['M42 10L58 10M44 10L44 24C34 30 32 38 32 46L32 88L68 88L68 46C68 38 66 30 56 24L56 10','M32 54C44 58 56 50 68 54'],
+rasim:['M50 34L52 22C58 18 66 20 70 26','M32 40a6 6 0 1 0 12 0a6 6 0 1 0-12 0M44 40a6 6 0 1 0 12 0a6 6 0 1 0-12 0M56 40a6 6 0 1 0 12 0a6 6 0 1 0-12 0','M38 51a6 6 0 1 0 12 0a6 6 0 1 0-12 0M50 51a6 6 0 1 0 12 0a6 6 0 1 0-12 0','M44 62a6 6 0 1 0 12 0a6 6 0 1 0-12 0','M44 73a6 6 0 1 0 12 0a6 6 0 1 0-12 0'],
+olivas:['M14 30C40 34 66 44 88 66','M40 34C46 24 58 22 64 24C58 32 48 36 40 34Z','M30 50C30 42 44 42 44 52C44 62 30 62 30 50Z','M58 60C58 52 72 52 72 62C72 72 58 72 58 60Z','M37 43L34 33M65 53L62 44'],
+uou:['M50 14C30 14 22 50 24 66C26 82 38 90 50 90C62 90 74 82 76 66C78 50 70 14 50 14Z'],
+salada:['M20 62C18 40 34 28 50 28C66 28 82 40 80 62C78 80 64 88 50 88C36 88 22 80 20 62Z','M50 88C44 70 44 50 50 32M50 88C34 76 28 60 30 44M50 88C66 76 72 60 70 44']};
+const MOTS=[['la poma','la pomme','poma'],['la pera','la poire','pera'],['lo pan','le pain','pan'],['lo formatge','le fromage','formatge'],['la tomata','la tomate','tomata'],['la ceba','l’oignon','ceba'],['lo vin','le vin','vin'],['lo lach','le lait','lach'],['lo rasim','le raisin','rasim'],['las olivas','les olives','olivas'],['l’uòu','l’œuf','uou'],['la salada','la salade','salada']];
+const N=MOTS.length,CREMA='#f7f3ee',DEF='#f1dcb2',AUR='#ffd47f',FONS='#0b1416';
+const NOMS={pols:'la poussière d’or (version 4)',roda:'la roue (version 4)'};
+let mode='pols',W=680,H=440,last=performance.now(),t0=last;
+const rnd=(a,b)=>a+Math.random()*(b-a),mod=i=>((i%N)+N)%N,clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),lisse=e=>e*e*(3-2*e),sortie=x=>1-Math.pow(1-x,3.2);
+const P2=Object.fromEntries(Object.entries(D).map(([k,v])=>[k,v.map(s=>new Path2D(s))]));
+function geo(){const S=Math.min(H*.36,W*.3);return{S,X0:W/2-S/2,Y0:H*.1,yW:H*.1+S+66,yD:H*.1+S+106}}
+function trait(c,cle,lw){const g=geo();c.save();c.translate(g.X0,g.Y0);c.scale(g.S/100,g.S/100);c.lineWidth=lw*100/g.S;c.lineCap='round';c.lineJoin='round';for(const p of P2[cle])c.stroke(p);c.restore()}
+const hors=document.createElement('canvas'),hx=hors.getContext('2d',{willReadFrequently:true});
+function echant(dessin){hors.width=Math.ceil(W);hors.height=Math.ceil(H);hx.clearRect(0,0,W,H);hx.fillStyle='#fff';hx.strokeStyle='#fff';hx.textAlign='center';dessin(hx);const d=hx.getImageData(0,0,hors.width,hors.height).data,p=[];for(let y=0;y<hors.height;y+=2)for(let x=0;x<hors.width;x+=2)if(d[(y*hors.width+x)*4+3]>110)p.push([x,y]);return p}
+const cache=new Map();
+function pointsDe(i){const k=i+'|'+W+'x'+H;if(cache.has(k))return cache.get(k);const[oc,df,cle]=MOTS[i],g=geo();const v=[echant(c=>trait(c,cle,2.6)),echant(c=>{c.font='60px Limelight';c.fillText(oc,W/2,g.yW)}),echant(c=>{c.font='italic 27px "Cormorant Garamond"';c.fillText(df,W/2,g.yD)})];cache.set(k,v);return v}
+let parts=[],mi=0,u=0,dir=0,net=0,idle=0,autoVers=0,arr=0,dernierRoue=-9,tireP=null,py0=0,pyl=0,u0=0;
+const ETAL=.6;
+function placer(i,c){const P=pointsDe(i);for(const q of parts){const L=P[q.g];const r=L.length?L[Math.floor(q.r*L.length)]:[W/2,H/2];q[c+'x']=r[0];q[c+'y']=r[1]}}
+function initPols(){parts=Array.from({length:1150},(_,k)=>{const g=k<420?0:k<940?1:2;return{g,r:Math.random(),rang:0,ox:rnd(-1,1),ph:rnd(0,6.28),sx:rnd(0,W),sy:rnd(0,H),ax:0,ay:0,tx:0,ty:0,x:0,y:0,a:0}});
+ for(const q of parts)q.rang=(q.g===0?0:q.g===1?.42:.8)+q.r*(q.g===0?.42:q.g===1?.38:.2);
+ cache.clear();mi=Math.floor(Math.random()*N);placer(mi,'a');u=0;dir=0;net=0;idle=0;autoVers=0;arr=0}
+function pols(dt,t){
+ const now=performance.now()/1000,scrolling=now-dernierRoue<.16||tireP!==null;
+ idle+=dt;if(scrolling){idle=0;autoVers=0}
+ if(arr<1)arr=Math.min(1,arr+dt/1.8);
+ else if(!scrolling){const but=autoVers?dir:(Math.abs(u)>.5?Math.sign(u):0),k=autoVers?.8:3;u+=(but-u)*(1-Math.exp(-dt*k));if(Math.abs(but-u)<.002)u=but}
+ if(u!==0&&dir!==Math.sign(u)){dir=Math.sign(u);placer(mod(mi+dir),'t')}
+ if(Math.abs(u)>=1){mi=mod(mi+dir);for(const q of parts){q.ax=q.tx;q.ay=q.ty}u=0;dir=0;autoVers=0;idle=0;if(tireP!==null){u0=0;py0=pyl}}
+ if(idle>16&&u===0&&!autoVers){autoVers=1;dir=1;placer(mod(mi+1),'t');u=.001}
+ const pose=u===0&&!scrolling&&arr>=1;net=pose?Math.min(1,net+dt/.8):Math.max(0,net-dt/.25);
+ const au=Math.abs(u),s=dir||1,ea=lisse(arr),nv=net*(1-Math.min(1,au*6));
+ for(const q of parts){
+  let px,py;
+  if(dir===0){px=q.ax;py=q.ay}
+  else{const pg=clamp(au*(1+ETAL)-q.rang*ETAL,0,1),pe=sortie(pg),dx=q.tx-q.ax,dy=q.ty-q.ay,L=Math.hypot(dx,dy)||1,b=Math.sin(Math.PI*pe),amp=q.ox*Math.min(36,L*.3);
+   px=q.ax+dx*pe+(-dy/L)*amp*b;py=q.ay+dy*pe+(dx/L)*amp*b-s*20*b}
+  px+=Math.sin(t*.8+q.ph)*.4;py+=Math.cos(t*.6+q.ph)*.4;
+  if(arr<1){const ei=sortie(clamp(arr*1.5-q.rang*.5,0,1));px=q.sx+(px-q.sx)*ei;py=q.sy+(py-q.sy)*ei}
+  q.x=px;q.y=py;
+  const base=q.g===0?.55:.45,va=dir===0?base*(1-net)+(q.g===0?.16:.06)*net:(q.g===0?.88:.78);
+  q.a+=(va-q.a)*Math.min(1,dt*6);
+  cx.globalAlpha=q.a*(arr<1?ea*.9+.1:1);cx.fillStyle=q.g===0?AUR:q.g===1?CREMA:DEF;cx.fillRect(q.x,q.y,1.7,1.7)}
+ if(nv>0){const[oc,df,cle]=MOTS[mi],g=geo();cx.save();cx.translate(0,-s*au*24);cx.globalAlpha=nv*.95;cx.strokeStyle=AUR;trait(cx,cle,1.3);cx.textAlign='center';cx.globalAlpha=nv;cx.fillStyle=CREMA;cx.font='60px Limelight';cx.fillText(oc,W/2,g.yW);cx.globalAlpha=nv*.6;cx.fillStyle=AUR;cx.fillRect(W/2-18,g.yW+14,36,1);cx.globalAlpha=nv;cx.fillStyle=DEF;cx.font='italic 27px "Cormorant Garamond"';cx.fillText(df,W/2,g.yD);cx.restore();cx.textAlign='left'}
+ cx.globalAlpha=1}
+let rpos=0,rcib=0,acc=0,dernierPas=0,dernierCran=0,tireR=null,ry0=0,rp0=0,rvit=0,rly=0,rlt=0;const ITEM=70;
+function roda(dt){if(tireR===null)rpos+=(rcib-rpos)*(1-Math.exp(-dt*9));const cy=H*.46,k0=Math.round(rpos);cx.textAlign='center';
+ for(let k=k0-4;k<=k0+4;k++){const d=k-rpos,ad=Math.abs(d),sd=Math.sign(d),i=mod(k);
+  const voisin=sd<0?cy-106-(Math.max(ad,1)-1)*38:cy+104+(Math.max(ad,1)-1)*38;
+  const base=ad<1?(cy-8)+(voisin-(cy-8))*ad:voisin;
+  const s=ad<1?1-ad*.74:Math.max(.16,.26-(ad-1)*.03),al=ad<1?1-ad*.74:Math.max(0,.26-(ad-1)*.08);
+  if(al<=0)continue;
+  cx.save();cx.translate(W/2,base);cx.scale(s,s);cx.globalAlpha=al;cx.fillStyle=CREMA;cx.font='80px Limelight';cx.fillText(MOTS[i][0],0,0);cx.restore();
+  const tr=Math.max(0,1-ad*2.5);if(tr>0){cx.globalAlpha=tr*.6;cx.fillStyle=AUR;cx.fillRect(W/2-20,base+16,40,1);cx.globalAlpha=tr;cx.fillStyle=DEF;cx.font='italic 28px "Cormorant Garamond"';cx.fillText(MOTS[i][1],W/2,base+48)}}
+ cx.textAlign='left';cx.globalAlpha=1}
+function roue(dy){const now=performance.now();if(now-dernierCran>200)acc=0;dernierCran=now;acc+=dy;if(Math.abs(acc)>=70&&now-dernierPas>110){rcib+=Math.sign(acc);acc=0;dernierPas=now}}
+cv.addEventListener('wheel',e=>{e.preventDefault();const dy=e.deltaY*(e.deltaMode===1?33:1);if(mode==='roda')roue(dy);else if(arr>=1){u=clamp(u+dy/600,-1,1);dernierRoue=performance.now()/1000;autoVers=0}},{passive:false});
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);if(mode==='roda'){tireR=e.pointerId;ry0=e.clientY;rp0=rpos;rly=e.clientY;rlt=performance.now();rvit=0}else{tireP=e.pointerId;py0=e.clientY;pyl=e.clientY;u0=u;autoVers=0}});
+cv.addEventListener('pointermove',e=>{if(mode==='roda'&&tireR===e.pointerId){const now=performance.now();rpos=rp0-(e.clientY-ry0)/ITEM;rvit=-(e.clientY-rly)/ITEM/Math.max(.008,(now-rlt)/1000);rly=e.clientY;rlt=now}else if(tireP===e.pointerId&&arr>=1){pyl=e.clientY;u=clamp(u0+(py0-e.clientY)/380,-1,1)}});
+const lacher=()=>{if(tireR!==null){rcib=Math.round(rpos+clamp(rvit*.12,-3,3));tireR=null}tireP=null};
+cv.addEventListener('pointerup',lacher);cv.addEventListener('pointercancel',lacher);
+function taille(){const r=cv.getBoundingClientRect(),d=devicePixelRatio||1;W=r.width;H=r.height;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);if(parts.length){cache.clear();placer(mi,'a');if(dir!==0)placer(mod(mi+dir),'t')}}
+function boucle(now){const dt=Math.min(.05,(now-last)/1000);last=now;const t=(now-t0)/1000;cx.globalAlpha=1;cx.fillStyle=FONS;cx.fillRect(0,0,W,H);if(mode==='pols')pols(dt,t);else roda(dt);requestAnimationFrame(boucle)}
+Promise.all([document.fonts.load('40px Limelight'),document.fonts.load('italic 24px "Cormorant Garamond"')]).finally(()=>{taille();addEventListener('resize',taille);initPols();requestAnimationFrame(boucle)});
+const IND={pols:'Fais rouler la molette vers le bas, six crans environ : les grains glissent un à un vers le mot suivant, de haut en bas. Vers le haut, tu reviens. Au doigt, glisse vers le haut.',roda:'Un cran de molette, un mot. Au doigt, la roue suit puis se cale toujours sur un mot.'};
+document.querySelectorAll('.modes button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('.modes button').forEach(x=>x.setAttribute('aria-pressed',x===b));document.getElementById('indice').textContent=IND[mode];if(mode==='pols')initPols()});
+document.getElementById('choix').onclick=()=>sendPrompt('Pour la page de calme, je garde '+NOMS[mode]+'.');
+</script>
