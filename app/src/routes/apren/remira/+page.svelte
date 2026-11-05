@@ -17,6 +17,8 @@
 	import { SCENAS, GROPS, QUASERNET, motsDelQuasernet } from '$lib/plueja/scenas.js';
 	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
 	import Polsa from '$lib/plueja/Polsa.svelte';
+	import Paisatges from '$lib/paisatges/Paisatges.svelte';
+	import { PAISATGES } from '$lib/paisatges/paisatges.js';
 	import { carnet, demarrerCarnet } from '$lib/carnet/carnet.svelte.js';
 	import { aRevoir } from '$lib/carnet/regles.js';
 
@@ -27,6 +29,11 @@
 		movement: { oc: 'Movement', fr: 'Mouvement' }, // lo Congrès : mouvement → movement (05-11)
 		plueja: { oc: 'Pluèja', fr: 'Pluie' },
 		polsa: { oc: 'Polsa d’aur', fr: 'Poussière d’or' }, // lo Congrès : poussière → polsa (languedocien)
+		paisatges: { oc: 'Paisatges', fr: 'Paysages' }, // lo Congrès : paysage → paisatge (05-11)
+		ponchTactil: { oc: 'Tòca un ponch d’aur', fr: 'Touche un point d’or' }, // ponch, aur : lo Congrès (05-11)
+		ponch: { oc: 'Clica un ponch d’aur', fr: 'Clique sur un point d’or' }, // clica : impératif de clicar (vèrb'Òc)
+		precedent: { oc: 'Paisatge precedent', fr: 'Paysage précédent' },
+		seguent: { oc: 'Paisatge seguent', fr: 'Paysage suivant' },
 		det: { oc: 'Lisa lo det', fr: 'Fais glisser ton doigt' }, // lo Congrès : glisser → lisar, doigt → det ; même tournure que l'accueil (motor.js)
 		forca: { oc: 'Fòrça', fr: 'Intensité' },
 		son: { oc: 'Son', fr: 'Son' },
@@ -63,7 +70,9 @@
 	// dessine chaque mot et glisse vers le suivant au rythme de la molette.
 	// La poussière d'or s'ouvre par défaut (Romain, 05-11 : « une préférence
 	// pour la poussière d'or »).
-	let mòde = $state('polsa');
+	let mòde = $state('polsa'); // 'plueja', 'polsa' ou 'paisatges'
+	let paisatges = $state(); // le défilé de paysages (Romain, 05-11)
+	let nPaisatge = $state(0);
 	let reserva = $state({ naut: 64, bas: 110 }); // place de l'en-tête et des commandes, pour la poussière
 
 	let racina, tela, barra, menu, polsa;
@@ -310,8 +319,8 @@
 	function rodeta(e) {
 		if (menu?.contains(e.target)) return; // on fait défiler la liste des ambiances, pas la pluie
 		const d = (e.deltaY || 0) * (e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 400 : 1);
-		if (mòde === 'polsa') {
-			polsa?.rodeta(d);
+		if (mòde !== 'plueja') {
+			(mòde === 'polsa' ? polsa : paisatges)?.rodeta(d);
 			if (Math.abs(d) > 20) indici = false;
 			return;
 		}
@@ -324,8 +333,8 @@
 	let darrierTòc = null;
 	function bolegaPuntador(e) {
 		activitat();
-		if (mòde === 'polsa') {
-			polsa?.bolegar(e);
+		if (mòde !== 'plueja') {
+			if (mòde === 'polsa') polsa?.bolegar(e);
 			return;
 		}
 		if (e.pointerType === 'mouse') {
@@ -377,6 +386,7 @@
 			}
 			return;
 		}
+		if (mòde === 'paisatges') return; // les paysages ont leurs propres gestes
 		if (e.pointerType !== 'touch') return;
 		darrierTòc = { x: e.clientX, y: e.clientY };
 		demandarMoviment();
@@ -390,11 +400,11 @@
 	function tecla(e) {
 		activitat();
 		// flèches et Espace : mot suivant ou précédent, même quand un bouton garde le focus (Joan, 05-11)
-		if (mòde !== 'polsa' || menu?.matches(':popover-open')) return;
+		if (mòde === 'plueja' || menu?.matches(':popover-open')) return;
 		const cible = e.target;
 		if (cible?.matches?.('input, textarea, select')) return;
 		if (e.key === ' ' && cible?.matches?.('button, a')) return; // Espace active le bouton
-		polsa?.tecla(e);
+		(mòde === 'polsa' ? polsa : paisatges)?.tecla(e);
 	}
 
 	// ── Commandes ────────────────────────────────────────────────────────
@@ -402,7 +412,7 @@
 		if (m === mòde) return;
 		mòde = m;
 		clearTimeout(finIndici);
-		if (m === 'polsa') {
+		if (m !== 'plueja') {
 			for (const id of fis.keys()) partir(id); // les mots de la pluie s'effacent
 			if (sonAtiu) bascularSon(); // le son de la pluie n'a plus de sens
 			indici = !calme;
@@ -535,6 +545,8 @@
 
 	{#if mòde === 'polsa'}
 		<Polsa bind:this={polsa} mots={scena.mots} {pausa} {calme} {reserva} />
+	{:else if mòde === 'paisatges'}
+		<Paisatges bind:this={paisatges} bind:n={nPaisatge} {pausa} {calme} />
 	{/if}
 
 	<div class="mots" aria-hidden="true">
@@ -552,7 +564,7 @@
 	</div>
 
 	<!-- Pour les lecteurs d'écran : la liste des mots de l'ambiance, sans animation -->
-	<div class="sr">
+	<div class="sr" hidden={mòde === 'paisatges'}>
 		<h2>{tria(T.mots)} · {tria(scena.nom)}</h2>
 		<ul>
 			{#each scena.mots as [oc, def] (oc)}
@@ -563,21 +575,32 @@
 
 
 	<p class="indici" class:vis={indici && !calme} aria-hidden={!indici}>
-		{tactil ? tria(mòde === 'polsa' ? T.det : T.telefon) : tria(T.rodeta)}
+		{#if mòde === 'paisatges'}{tria(tactil ? T.ponchTactil : T.ponch)}{:else}{tactil ? tria(mòde === 'polsa' ? T.det : T.telefon) : tria(T.rodeta)}{/if}
 	</p>
 
 	<div class="comandas" bind:this={barra}>
-		<!-- Deux mouvements : la pluie, ou la poussière d'or -->
+		<!-- Trois mouvements : la pluie, la poussière d'or, ou les paysages -->
 		<div class="movements" role="group" aria-label={tria(T.movement)}>
 			<button type="button" aria-pressed={mòde === 'plueja'} onclick={() => causirMòde('plueja')}>{tria(T.plueja)}</button>
 			<button type="button" aria-pressed={mòde === 'polsa'} onclick={() => causirMòde('polsa')}>{tria(T.polsa)}</button>
+			<button type="button" aria-pressed={mòde === 'paisatges'} onclick={() => causirMòde('paisatges')}>{tria(T.paisatges)}</button>
 		</div>
 		<!-- Onze ambiances : un bouton qui ouvre la liste ; un clic ailleurs ou
 		     Échap la referme (popover natif, rien à programmer pour ça) -->
-		<button type="button" class="obrir-temas" popovertarget="temas">
-			<span class="etiqueta">{tria(T.ambianca)}</span>
-			{#if scena.numero}<span class="num">{scena.numero}</span>{' '}{/if}{tria(scena.nom)}
-		</button>
+		{#if mòde === 'paisatges'}
+			<!-- Les paysages : le précédent, le numéro, le suivant (les ambiances
+			     n'ont pas de sens ici) -->
+			<div class="navega" role="group" aria-label={tria(T.paisatges)}>
+				<button type="button" class="sageta" aria-label={tria(T.precedent)} onclick={() => paisatges?.precedent()}>‹</button>
+				<span class="compte-p"><span class="num">{nPaisatge + 1}</span> / {PAISATGES.length}</span>
+				<button type="button" class="sageta" aria-label={tria(T.seguent)} onclick={() => paisatges?.seguent()}>›</button>
+			</div>
+		{:else}
+			<button type="button" class="obrir-temas" popovertarget="temas">
+				<span class="etiqueta">{tria(T.ambianca)}</span>
+				{#if scena.numero}<span class="num">{scena.numero}</span>{' '}{/if}{tria(scena.nom)}
+			</button>
+		{/if}
 		<div id="temas" class="temas" popover role="group" aria-label={tria(T.ambianca)} bind:this={menu} ontoggle={(e) => e.newState === 'closed' && activitat()}>
 			<!-- les mots de son carnet d'abord : ce qu'on a appris soi-même -->
 			<section class="grop grop-quasernet">
@@ -635,6 +658,9 @@
 		position: fixed;
 		inset: 0;
 		overflow: hidden;
+		/* clip : ni un focus ni un clic ne font glisser la page (les fonds
+		   débordent de 4 %, 05-11) */
+		overflow: clip;
 		background: #0b1517;
 		color: var(--crema);
 		touch-action: none;
@@ -907,6 +933,24 @@
 	.movements {
 		display: flex;
 		gap: 1.3rem;
+	}
+
+	/* ── Paysages : précédent, numéro, suivant ── */
+	.navega {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.2rem;
+		color: rgba(247, 243, 238, 0.62);
+	}
+	.navega .sageta {
+		min-width: 2.25rem;
+		min-height: 2.25rem;
+		font-size: 1.35rem;
+		line-height: 1;
+		text-decoration: none;
+	}
+	.compte-p {
+		font-variant-numeric: tabular-nums;
 	}
 
 	/* ── Choix de l'ambiance ── */

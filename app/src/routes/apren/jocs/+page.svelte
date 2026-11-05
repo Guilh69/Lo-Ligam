@@ -3,8 +3,9 @@
 	// depuis le 05-11 (Romain : « une rubrique à part entière dans S'apren »),
 	// après un essai sur /ensag/jocs : l'espace de jeux, plein écran et stable,
 	// sans le pied de page ni la navigation du site, la sortie vers S'apren ;
-	// un jeu à la fois : La sèrp de las letras (04-11) et Los panièrs (05-11),
-	// choisi dans l'adresse (?joc=paniers). Allure « Teula », adoptée par
+	// un jeu à la fois : La sèrp de las letras (04-11), Los panièrs (05-11) et
+	// Ont es… ? (05-11, les paysages de Romain), choisi dans l'adresse
+	// (?joc=paniers, ?joc=paisatges). Allure « Teula », adoptée par
 	// Romain le 05-11 avec la palette crème : mise en page éditoriale (titre
 	// géant, aplats, filets), mots et lettres en tuiles, ni verre fumé, ni
 	// halo, ni lueur. Le rouge reste ce qui se clique, l'or ce qui est choisi.
@@ -13,6 +14,7 @@
 	import { page } from '$app/state';
 	import Serp from '$lib/jocs/Serp.svelte';
 	import Paniers from '$lib/jocs/Paniers.svelte';
+	import OntEs from '$lib/jocs/OntEs.svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
 
 	const T = {
@@ -21,7 +23,8 @@
 	};
 	const JOCS = [
 		{ id: 'serp', oc: 'La sèrp de las letras' },
-		{ id: 'paniers', oc: 'Los panièrs' }
+		{ id: 'paniers', oc: 'Los panièrs' },
+		{ id: 'paisatges', oc: 'Ont es… ?' }
 	];
 	const demandat = page.url.searchParams.get('joc');
 	let joc = $state(JOCS.some((j) => j.id === demandat) ? demandat : 'serp');
@@ -38,7 +41,7 @@
 	<title>Jòcs · Lo Ligam</title>
 	<meta
 		name="description"
-		content="Jòcs per aprene l’occitan : la sèrp de las letras e los panièrs. Jeux pour apprendre l’occitan : le serpent des lettres et les paniers."
+		content="Jòcs per aprene l’occitan : la sèrp de las letras, los panièrs, ont es… ? Jeux pour apprendre l’occitan : le serpent des lettres, les paniers, où est… ? (les paysages)."
 	/>
 </svelte:head>
 
@@ -55,8 +58,10 @@
 	<div class="scena brica">
 		{#if joc === 'serp'}
 			<Serp />
-		{:else}
+		{:else if joc === 'paniers'}
 			<Paniers />
+		{:else}
+			<OntEs />
 		{/if}
 	</div>
 </main>
