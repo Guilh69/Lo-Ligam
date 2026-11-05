@@ -12,9 +12,11 @@
 	// si on le demande.
 	import { onMount } from 'svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
-	import { SCENAS, GROPS } from '$lib/plueja/scenas.js';
+	import { SCENAS, GROPS, QUASERNET, motsDelQuasernet } from '$lib/plueja/scenas.js';
 	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
 	import Polsa from '$lib/plueja/Polsa.svelte';
+	import { carnet, demarrerCarnet } from '$lib/carnet/carnet.svelte.js';
+	import { aRevoir } from '$lib/carnet/regles.js';
 
 	const T = {
 		titol: { oc: 'Pluèja de mots', fr: 'Pluie de mots' },
@@ -30,11 +32,20 @@
 		plenEcran: { oc: 'Plen ecran', fr: 'Plein écran' },
 		rodeta: { oc: 'Vira la rodeta', fr: 'Fais tourner la molette' },
 		telefon: { oc: 'Bolega lo telefòn', fr: 'Bouge ton téléphone' },
-		mots: { oc: 'Los mots', fr: 'Les mots' }
+		mots: { oc: 'Los mots', fr: 'Les mots' },
+		quasernet: { oc: 'Ton quasernet', fr: 'Ton carnet' }, // lo Congrès : carnet → quasernet (05-11)
+		quasernetVoid: { oc: 'Los mots de tas leiçons venon aquí.', fr: 'Les mots de tes leçons viennent ici.' }
 	};
 
+	// « Tos mots » : les mots de son carnet. La liste est figée au moment où on
+	// choisit l'ambiance (une liste qui change relancerait la poussière d'or).
+	const TOTAS = [...SCENAS, QUASERNET];
+	let motsQuasernet = $state.raw([]);
+	let nQuasernet = $derived(motsDelQuasernet(carnet.cartes).length);
 	let scenaId = $state('garriga');
-	let scena = $derived(SCENAS.find((s) => s.id === scenaId));
+	let scena = $derived(
+		scenaId === QUASERNET.id ? { ...QUASERNET, mots: motsQuasernet } : SCENAS.find((s) => s.id === scenaId)
+	);
 	let vistas = $state({ garriga: true }); // fonds déjà demandés (chargés à la première visite seulement)
 	let fons = $state(0.2); // niveau de base choisi au curseur
 	let niv = $state(0.2); // niveau affiché (base + élan du geste), mis à jour sans excès
@@ -48,7 +59,9 @@
 	let mots = $state([]);
 	// Deux mouvements (Romain, 04-11) : la pluie, ou la poussière d'or qui
 	// dessine chaque mot et glisse vers le suivant au rythme de la molette.
-	let mòde = $state('plueja');
+	// La poussière d'or s'ouvre par défaut (Romain, 05-11 : « une préférence
+	// pour la poussière d'or »).
+	let mòde = $state('polsa');
 	let reserva = $state({ naut: 64, bas: 110 }); // place de l'en-tête et des commandes, pour la poussière
 
 	let racina, tela, barra, menu, polsa;
@@ -402,6 +415,10 @@
 	function causirScena(id) {
 		menu?.hidePopover?.();
 		if (id === scenaId) return;
+		if (id === QUASERNET.id) {
+			motsQuasernet = motsDelQuasernet($state.snapshot(carnet.cartes), aRevoir(carnet));
+			if (!motsQuasernet.length) return;
+		}
 		vistas[id] = true;
 		scenaId = id;
 		sac = [];
@@ -433,6 +450,7 @@
 		calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		tactil = matchMedia('(pointer: coarse)').matches;
 		plenPossible = !!document.fullscreenEnabled;
+		demarrerCarnet();
 		talhar();
 		activitat();
 		finIndici = setTimeout(() => (indici = false), 9000);
@@ -489,7 +507,7 @@
 
 	<!-- Fonds : une image par ambiance, chargée seulement à la première visite -->
 	<div class="fons" aria-hidden="true">
-		{#each SCENAS as s (s.id)}
+		{#each TOTAS as s (s.id)}
 			{#if s.imatge}
 				{#if vistas[s.id]}
 					<img class="foto" class:vis={s.id === scenaId} src={s.imatge} alt="" style:object-position={s.posicion} decoding="async" />
@@ -560,6 +578,21 @@
 			{#if scena.numero}<span class="num">{scena.numero}</span>{' '}{/if}{tria(scena.nom)}
 		</button>
 		<div id="temas" class="temas" popover role="group" aria-label={tria(T.ambianca)} bind:this={menu} ontoggle={(e) => e.newState === 'closed' && activitat()}>
+			<!-- les mots de son carnet d'abord : ce qu'on a appris soi-même -->
+			<section class="grop grop-quasernet">
+				<h2>{tria(T.quasernet)}</h2>
+				{#if nQuasernet}
+					<ul>
+						<li>
+							<button type="button" aria-pressed={scenaId === QUASERNET.id} onclick={() => causirScena(QUASERNET.id)}>
+								{tria(QUASERNET.nom)} <span class="compte">{nQuasernet}</span>
+							</button>
+						</li>
+					</ul>
+				{:else}
+					<p class="void">{tria(T.quasernetVoid)} <a href="/aprene">S’apren</a></p>
+				{/if}
+			</section>
 			{#each GROPS as g (g.id)}
 				<section class="grop grop-{g.id}">
 					<h2>{tria(g.nom)}</h2>
@@ -975,8 +1008,31 @@
 		color: var(--crema);
 		text-decoration-color: var(--aur-clar);
 	}
+	.compte {
+		margin-left: 0.4em;
+		font-size: 0.85em;
+		font-variant-numeric: tabular-nums;
+		color: var(--aur-clar);
+	}
+	.void {
+		margin: 0;
+		line-height: 1.55;
+		color: rgba(247, 243, 238, 0.62);
+	}
+	.void a {
+		color: var(--crema);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.3em;
+		text-decoration-color: rgba(247, 243, 238, 0.4);
+		transition: text-decoration-color 0.3s;
+	}
+	.void a:hover {
+		text-decoration-color: var(--crema);
+	}
 	button:focus-visible,
 	.tornar:focus-visible,
+	.void a:focus-visible,
 	input:focus-visible {
 		outline: 1px solid var(--aur-clar);
 		outline-offset: 4px;

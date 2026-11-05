@@ -20,6 +20,22 @@
 		{ id: 'serp', oc: 'La sèrp de las letras' },
 		{ id: 'paniers', oc: 'Los panièrs' }
 	];
+	// trois palettes à comparer (Romain, 05-11 : « les couleurs sont moches,
+	// on peut mieux faire »), prises dans la charte ; la palette reste dans
+	// l'adresse (?teinta=b)
+	const TEINTAS = [
+		{ id: 'a', nom: 'Crème', mostra: ['#efe1c6', '#e6d3b1', '#ffd47f'] },
+		{ id: 'b', nom: 'Bleu-vert', mostra: ['#2d6a6e', '#34767a', '#eeaf34'] },
+		{ id: 'c', nom: 'Ocre et olivier', mostra: ['#d6ae64', '#a4a15e', '#f7f3ee'] }
+	];
+	const teintaDemandada = page.url.searchParams.get('teinta');
+	let teinta = $state(TEINTAS.some((t) => t.id === teintaDemandada) ? teintaDemandada : 'a');
+	function causirTeinta(id) {
+		teinta = id;
+		const u = new URL(page.url);
+		u.searchParams.set('teinta', id);
+		replaceState(u, {});
+	}
 	const demandat = page.url.searchParams.get('joc');
 	let joc = $state(JOCS.some((j) => j.id === demandat) ? demandat : 'serp');
 	function triar(id) {
@@ -40,13 +56,20 @@
 	<header class="barra">
 		<a class="tornar" href="/" aria-label="Lo Ligam, {tria(T.tornar)}"><span aria-hidden="true">‹</span> Lo Ligam</a>
 		<p class="marca" lang="oc">Jòcs</p>
+		<div class="teintas" role="group" aria-label="Palette de l’essai">
+			{#each TEINTAS as t (t.id)}
+				<button type="button" aria-pressed={teinta === t.id} aria-label={t.nom} title={t.nom} onclick={() => causirTeinta(t.id)}
+					>{#each t.mostra as c (c)}<i style:background={c}></i>{/each}</button
+				>
+			{/each}
+		</div>
 		<nav class="onglets" aria-label={tria(T.triar)}>
 			{#each JOCS as j (j.id)}
 				<button type="button" aria-pressed={joc === j.id} onclick={() => triar(j.id)} lang="oc">{j.oc}</button>
 			{/each}
 		</nav>
 	</header>
-	<div class="scena brica">
+	<div class="scena brica teinta-{teinta}">
 		{#if joc === 'serp'}
 			<Serp />
 		{:else}
@@ -92,6 +115,37 @@
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		color: var(--t-tinta-2);
+	}
+	/* le choix de la palette : trois pastilles de trois carrés */
+	.teintas {
+		display: flex;
+		gap: 0.35rem;
+		align-self: center;
+	}
+	.teintas button {
+		display: flex;
+		gap: 2px;
+		min-height: 2.75rem;
+		min-width: 2.75rem;
+		align-items: center;
+		justify-content: center;
+		padding: 0 0.4rem;
+		border: none;
+		border-bottom: 2px solid transparent;
+		background: none;
+		cursor: pointer;
+	}
+	.teintas button[aria-pressed='true'] {
+		border-bottom-color: var(--t-aur);
+	}
+	.teintas button:focus-visible {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 2px;
+	}
+	.teintas i {
+		width: 0.8rem;
+		height: 0.8rem;
+		box-shadow: inset 0 0 0 1px rgba(42, 26, 16, 0.25);
 	}
 	/* les onglets : du texte, souligné d'or quand il est choisi */
 	.onglets {
@@ -144,15 +198,52 @@
 	/* Les règles des jeux sont précédées de « .espaci .brica » : elles passent
 	   devant celles des composants, quel que soit l'ordre des feuilles. */
 
-	/* ── Les tuiles : trois tons de terre cuite, l'encre du site dessus
-	   (contraste 5,2 à 7,2 contre 1) ; un joint de mortier, pas d'ombre ── */
+	/* ── Les tuiles : trois palettes à comparer, trois tons chacune, un joint
+	   fin, pas d'ombre ; contraste du texte d'au moins 4,8 contre 1 ── */
 	.brica {
-		--b1: #d8875e;
-		--b2: #cf7a52;
-		--b3: #e09a72;
-		--b-tinta: #2a1a10;
-		--b-joint: inset 0 -0.14em 0 rgba(42, 26, 16, 0.22);
+		--b-joint: inset -1px 0 0 rgba(42, 26, 16, 0.2), inset 0 -0.12em 0 rgba(42, 26, 16, 0.2);
 		--fons-camp: color-mix(in srgb, var(--t-tinta) 4%, var(--t-fons));
+	}
+	/* A · Crème : papier et parchemin, l'encre dessus ; l'or clair des
+	   pommettes du logo pour le mot des deux paniers */
+	.teinta-a {
+		--b1: #efe1c6;
+		--b2: #e6d3b1;
+		--b3: #f5ead6;
+		--b-mot: #f7f0e2;
+		--b-tinta: #2a1a10;
+		--b-dos: #ffd47f;
+		--b-dos-tinta: #2a1a10;
+	}
+	:global(:root[data-tema='clar']) .teinta-a {
+		--b1: #e6d2ad;
+		--b2: #dbc296;
+		--b3: #eddcbd;
+		--b-mot: #e8d4ae;
+		--b-joint: inset -1px 0 0 rgba(42, 26, 16, 0.3), inset 0 -0.12em 0 rgba(42, 26, 16, 0.3);
+	}
+	/* B · Bleu-vert : le bleu-vert de la charte, le crème dessus ; l'or pour
+	   le mot des deux paniers */
+	.teinta-b {
+		--b1: #2d6a6e;
+		--b2: #24585c;
+		--b3: #34767a;
+		--b-mot: #2f7276;
+		--b-tinta: #f7f3ee;
+		--b-dos: #eeaf34;
+		--b-dos-tinta: #2a1a10;
+		--b-joint: inset -1px 0 0 rgba(0, 0, 0, 0.28), inset 0 -0.12em 0 rgba(0, 0, 0, 0.28);
+	}
+	/* C · Ocre et olivier : l'ocre, l'olivier clair et le sable, l'encre
+	   dessus ; le crème pour le mot des deux paniers */
+	.teinta-c {
+		--b1: #d6ae64;
+		--b2: #a4a15e;
+		--b3: #dcc596;
+		--b-mot: #e3cf9f;
+		--b-tinta: #2a1a10;
+		--b-dos: #f7f3ee;
+		--b-dos-tinta: #2a1a10;
 	}
 
 	/* ── Mise en page : le titre du jeu, géant, sur toute la largeur ── */
@@ -269,7 +360,7 @@
 	   passe pas pour une touche rouge (Joan, 05-11 ; rouge = clic) */
 	.espaci .brica :global(.mot > span) {
 		border-radius: 0.1em;
-		background: var(--b3);
+		background: var(--b-mot);
 		box-shadow: none;
 		color: var(--b-tinta);
 	}
@@ -287,20 +378,17 @@
 		box-shadow: var(--b-joint);
 		color: var(--b-tinta);
 	}
-	.espaci .brica :global(.pila .chip:nth-child(3n + 1)) {
+	.espaci .brica :global(.reng .chip[data-t='1']) {
 		background: var(--b2);
 	}
-	.espaci .brica :global(.pila .chip:nth-child(3n + 2)) {
+	.espaci .brica :global(.reng .chip[data-t='2']) {
 		background: var(--b3);
 	}
-	/* le mot des deux paniers : la tuile d'or */
+	/* le mot des deux paniers : sa tuile à part */
 	.espaci .brica :global(.chip.dos),
-	.espaci .brica :global(.pila .chip.dos) {
-		background: var(--color-gold);
-		color: var(--color-text);
-	}
-	.espaci .brica :global(.pila .chip) {
-		margin: 0.1em 0.05em;
+	.espaci .brica :global(.reng .chip.dos) {
+		background: var(--b-dos);
+		color: var(--b-dos-tinta);
 	}
 	/* le panier : un aplat, la vannerie à peine marquée */
 	.espaci .brica :global(.davant .cors) {
