@@ -19,6 +19,7 @@
 	import { novelaPartida, virar, pas, posicions, letraAttesa, escupir, coa, DIRS } from '$lib/jocs/serp.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
 	import Reglatges from '$lib/jocs/Reglatges.svelte';
+	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
 
 	// Occitan passé à lo Congrès les 2026-11-04 et 05, à valider par Romain.
 	const T = {
@@ -77,6 +78,7 @@
 	// ── Réglages ─────────────────────────────────────────────────────────
 	let nivel = $state('1'); // '1', '2' ou 'doas'
 	let pasAPas = $state(false);
+	let immersiu = $state(false); // mode plein (BotonEcran)
 	let son = $state(true);
 	let tactil = $state(false);
 	let calme = $state(false);
@@ -94,6 +96,7 @@
 	let barrada = $state(false);
 	let indici = $state(false);
 	let mordida = $state(0); // compteur : la tête mord (manger, recracher)
+	let polsa = $state({ n: 0, x: 0, y: 0 }); // grains d'or sur la bonne lettre
 	let anonci = $state('');
 	let escrichs = $state([]);
 	let sac = [];
@@ -235,6 +238,9 @@
 			if (son) playTick();
 		}
 		if (r.tipe === 'manjada' || r.tipe === 'acabat') {
+			// la bonne lettre : quelques grains d'or montent de la tête, comme
+			// du panier qui reçoit le bon mot (Los panièrs)
+			polsa = { n: polsa.n + 1, x: p.cors[0].x, y: p.cors[0].y };
 			darrierProgres = Date.now();
 			anonci = `${r.teula.l} · ${tria(T.letra)(Math.min(p.seguenta + 1, letras.length), letras.length)}`;
 		}
@@ -413,7 +419,7 @@
 	<svg viewBox="0 0 24 24" aria-hidden="true" class="sageta sageta-{nom}"><path d="M7 14.5l5-5 5 5" /></svg>
 {/snippet}
 
-<section class="joc" aria-labelledby="titol-serp" style:--pas="{pasAPas ? 160 : PAS_MS}ms" bind:this={racina}>
+<section class="joc" class:immersiu aria-labelledby="titol-serp" style:--pas="{pasAPas ? 160 : PAS_MS}ms" bind:this={racina}>
 	<div class="disposicion">
 		<header class="cap-joc">
 			<h2 id="titol-serp" lang="oc">La sèrp de las letras</h2>
@@ -421,7 +427,8 @@
 			<p class="consigna">{tria(T.consigna)}</p>
 		</header>
 
-		<div class="pista" aria-hidden="true">
+		<div class="pista">
+			<div class="pista-info" aria-hidden="true">
 			{#if mot}
 				<p class="sens" lang="fr">{mot.fr}</p>
 				<p class="cadre" lang="oc">
@@ -430,6 +437,8 @@
 					>{#if partidas.apres}<span>{partidas.apres}</span>{/if}
 				</p>
 			{/if}
+			</div>
+			<BotonEcran bind:actiu={immersiu} cibla={racina} />
 		</div>
 
 		<div class="taula">
@@ -473,6 +482,13 @@
 						</span>
 					{/key}
 				</span>
+				{#if polsa.n > 0}
+					{#key polsa.n}
+						<span class="polsa" style:--x={polsa.x} style:--y={polsa.y} aria-hidden="true"
+							>{#each [0, 1, 2, 3, 4] as k (k)}<i style:--dx="{(k - 2) * 0.55}em" style:--dl="{(k % 2) * 70}ms"></i>{/each}</span
+						>
+					{/key}
+				{/if}
 
 				{#if ajuda}
 					<div class="carta ajuda-carta">
@@ -571,6 +587,77 @@
 	}
 	.pista {
 		grid-area: pista;
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--esp-16);
+	}
+	.pista-info {
+		min-width: 0;
+	}
+
+	/* ── Mode plein (BotonEcran) : le jeu couvre tout l'écran ; le mot à
+	   écrire en haut, la grille aussi grande que possible ; sur grand écran
+	   les flèches à côté, sur téléphone dessous ; les réglages s'effacent
+	   (Pausa et Un autre mot restent) ── */
+	.joc.immersiu {
+		position: fixed;
+		inset: 0;
+		z-index: 30;
+		overflow: auto;
+		padding: max(0.75rem, env(safe-area-inset-top)) clamp(0.75rem, 3vw, 2rem) max(0.75rem, env(safe-area-inset-bottom));
+		background:
+			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			var(--t-fons);
+		--reste: 20rem; /* la hauteur prise par le mot et les flèches */
+	}
+	.immersiu .disposicion {
+		min-height: 100%;
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: auto 1fr auto;
+		grid-template-areas: 'pista' 'taula' 'comandas';
+		gap: var(--esp-12);
+		align-items: center;
+	}
+	@container joc (min-width: 52rem) {
+		/* une requête de conteneur ne touche pas le conteneur lui-même : la
+		   variable passe par la disposition */
+		.immersiu .disposicion {
+			--reste: 9rem;
+			grid-template-columns: minmax(0, 1fr) auto;
+			grid-template-rows: auto 1fr;
+			grid-template-areas: 'pista pista' 'taula comandas';
+		}
+	}
+	.immersiu .cap-joc {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+	.immersiu .pista {
+		align-items: center;
+	}
+	.immersiu .pista-info {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.25rem var(--esp-24);
+	}
+	.immersiu .cadre {
+		margin: 0;
+	}
+	.immersiu .grasilha {
+		max-width: min(100%, calc((100svh - var(--reste)) * var(--cols) / var(--rows)));
+	}
+	.immersiu .comandas {
+		justify-items: center;
+		gap: var(--esp-16);
+	}
+	.immersiu .escrichs,
+	.immersiu .comandas :global(.reglatges .grop) {
+		display: none;
 	}
 	.taula {
 		grid-area: taula;
@@ -661,9 +748,12 @@
 		overflow: hidden;
 		border: 1px solid var(--t-linha);
 		border-radius: 1rem;
+		/* la même lumière douce que Los panièrs : elle vient d'en haut, le bas
+		   s'assombrit un peu ; un point fin marque chaque case */
 		background:
 			radial-gradient(circle, var(--t-linha) 1px, transparent 1.5px) 0 0 / calc(100% / var(--cols)) calc(100% / var(--rows)),
-			var(--l-carta);
+			radial-gradient(ellipse 70% 55% at 50% -6%, color-mix(in srgb, var(--or) 11%, transparent), transparent 72%),
+			linear-gradient(to bottom, var(--l-carta) 40%, color-mix(in srgb, var(--t-fons) 22%, var(--l-carta)));
 		/* un léger assombrissement des bords : la grille a de la profondeur */
 		box-shadow: inset 0 0 3rem color-mix(in srgb, var(--t-fons) 24%, transparent);
 		margin-inline: auto;
@@ -763,7 +853,10 @@
 		height: 94%;
 		border-radius: 30%;
 		background: color-mix(in srgb, var(--or) 26%, var(--l-carta));
-		box-shadow: inset 0 0 0 1.5px var(--or);
+		/* un peu soulevée du fond, comme le mot qui tombe dans Los panièrs */
+		box-shadow:
+			inset 0 0 0 1.5px var(--or),
+			0 0.22em 0.45em -0.28em rgba(0, 0, 0, 0.55);
 	}
 	/* mangée à tort : la tuile reste grise */
 	.cors.falsa .l {
@@ -812,7 +905,45 @@
 		   thèmes (le rouge est réservé à ce qui se clique) */
 		border-radius: 34% 50% 50% 34% / 45% 50% 50% 45%;
 		background: var(--color-gold);
-		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color-text) 55%, transparent);
+		box-shadow:
+			inset 0 0 0 1.5px color-mix(in srgb, var(--color-text) 55%, transparent),
+			0 0.25em 0.5em -0.3em rgba(0, 0, 0, 0.6);
+	}
+	/* la bonne lettre mangée : quelques grains d'or montent de la tête */
+	.polsa {
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 3;
+		width: calc(100% / var(--cols));
+		height: calc(100% / var(--rows));
+		transform: translate(calc(var(--x) * 100%), calc(var(--y) * 100%));
+		font-size: calc(var(--cela) * 0.5);
+		pointer-events: none;
+	}
+	.polsa i {
+		position: absolute;
+		left: 50%;
+		top: 35%;
+		width: 4px;
+		height: 4px;
+		margin: -2px;
+		border-radius: 50%;
+		background: var(--or);
+		opacity: 0;
+		animation: polsa 0.7s ease-out var(--dl) both;
+	}
+	@keyframes polsa {
+		20% {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+			translate: var(--dx) -1.8em;
+		}
+	}
+	.calme .polsa {
+		display: none;
 	}
 	/* deux yeux, tournés vers la route ; aucune autre figure */
 	.uelh {

@@ -2,11 +2,11 @@
 
 > Dictée par Romain le 2026-10-06 (conversation graphismes), remise au propre sans réécriture : ses mots, l'ordre de son récit, sans les hésitations de la dictée.
 > Servira à la future page « Qui suis-je / l'histoire du Ligam ». **Rien n'est à publier tel quel** : Romain relit, complète, puis on met en forme ensemble.
-> Confirmé par Romain le 2026-10-06 : « Périer » (un seul r, e accent aigu) · mère née à Clermont-l'Hérault.
+> Confirmé par Romain le 2026-10-06 : « Périer » (un seul r, e accent aigu) · le 2026-11-05, chapeau rendu plus vague à sa demande (données personnelles : ni année ni villes de naissance).
 
 ## 1. Présentation
 
-Je m'appelle Romain Périer. Je suis né à Montpellier en 1994, d'un père né à Paris et d'une mère née à Clermont-l'Hérault.
+Je m'appelle Romain. Je suis né dans l'Hérault au début des années 1990, d'un père parisien et d'une mère de la région.
 
 ## 2. Une langue sans nom
 

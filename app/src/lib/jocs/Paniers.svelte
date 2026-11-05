@@ -14,6 +14,7 @@
 	import { TEMAS, bonPanier } from '$lib/jocs/paniers-mots.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
 	import Reglatges from '$lib/jocs/Reglatges.svelte';
+	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
 
 	// Occitan passé à lo Congrès le 2026-11-05, à valider par Romain.
 	const T = {
@@ -53,6 +54,7 @@
 
 	// ── Réglages ─────────────────────────────────────────────────────────
 	let pasAPas = $state(false);
+	let immersiu = $state(false); // mode plein (BotonEcran)
 	let son = $state(true);
 	let tactil = $state(false);
 	let calme = $state(false);
@@ -71,9 +73,18 @@
 	let anonci = $state('');
 	let plaçats = $state(0); // mots rangés (un mot des deux paniers compte une fois)
 	let dosPaniers = $state(null); // le mot qui vient d'entrer dans les deux paniers
+	// l'allure (Romain, 05-11 : « L'allure ») : le mot se penche quand il change
+	// de couloir, une poussière d'or monte du panier qui le reçoit, et le mot des
+	// deux paniers vole de l'un à l'autre
+	let vira = $state(0);
+	let recep = $state({ i: -1, n: 0 });
+	let volada = $state(null);
+	let rapid = $state(false);
 	let sac = [];
 	let errors = 0;
-	let rapid = false;
+	let partida = 0; // un vol en cours ne retombe pas dans le thème suivant
+	let viraT = null;
+	const VOL_MS = 720;
 	let primier = true;
 	let faseAvant = 'tomba';
 	let darrier = 0;
@@ -94,6 +105,8 @@
 		dins = [[], []];
 		plaçats = 0;
 		dosPaniers = null;
+		volada = null;
+		partida++;
 		primier = true;
 		novelMot();
 	}
@@ -122,20 +135,29 @@
 		if (bonPanier(mot, p.id)) {
 			plaçats++;
 			if (son) playTick();
-			if (mot.panier === 'ab') {
-				// un mot des deux paniers entre dans les deux à la fois, et on le dit
-				// tout de suite (Romain, 05-11 : « on comprend pas que ça peut être
-				// dit dans les deux »)
-				dins[0].push(mot);
-				dins[1].push(mot);
-				const m = mot;
+			const m = mot;
+			dins[col].push(m);
+			recep = { i: col, n: recep.n + 1 };
+			if (m.panier === 'ab') {
+				// un mot des deux paniers entre dans les deux, et on le dit tout de
+				// suite (Romain, 05-11 : « on comprend pas que ça peut être dit dans
+				// les deux ») : une copie vole jusqu'à l'autre panier
+				const a = 1 - col;
+				const n = partida;
 				dosPaniers = m;
 				setTimeout(() => dosPaniers === m && (dosPaniers = null), 3200);
-				anonci = `${mot.oc} : ${tria(T.dos)}`;
-			} else {
-				dins[col].push(mot);
-				anonci = `${mot.oc} : ${tria(p)}`;
-			}
+				if (calme) dins[a].push(m);
+				else {
+					volada = { oc: m.oc, de: col, k: recep.n };
+					setTimeout(() => {
+						if (n !== partida) return;
+						dins[a].push(m);
+						recep = { i: a, n: recep.n + 1 };
+						volada = null;
+					}, VOL_MS);
+				}
+				anonci = `${m.oc} : ${tria(T.dos)}`;
+			} else anonci = `${m.oc} : ${tria(p)}`;
 			novelMot();
 			return;
 		}
@@ -167,13 +189,25 @@
 	function demandar(nom) {
 		if (!mot || fase === 'plen' || fase === 'torna') return;
 		if (fase === 'pausa') fase = faseAvant;
-		if (nom === 'esquerra') col = 0;
-		else if (nom === 'drecha') col = 1;
-		else if (nom === 'aval') {
+		if (nom === 'esquerra' || nom === 'drecha') {
+			const nou = nom === 'esquerra' ? 0 : 1;
+			if (nou !== col) {
+				vira = nou - col;
+				clearTimeout(viraT);
+				viraT = setTimeout(() => (vira = 0), 240);
+			}
+			col = nou;
+		} else if (nom === 'aval') {
 			if (pasAPas || calme) {
 				y = 1;
 				fase = 'tomba';
 				aterrir();
+				return;
+			}
+			// au départ, la flèche du bas lance la chute sans lâcher le mot
+			// (Romain, 05-11 : « ça met le mot dans le panier sans qu'on le veuille »)
+			if (fase === 'espera') {
+				fase = 'tomba';
 				return;
 			}
 			rapid = true;
@@ -254,6 +288,7 @@
 		document.addEventListener('visibilitychange', amagat);
 		return () => {
 			cancelAnimationFrame(rAF);
+			clearTimeout(viraT);
 			document.removeEventListener('visibilitychange', amagat);
 		};
 	});
@@ -265,7 +300,7 @@
 	<svg viewBox="0 0 24 24" aria-hidden="true" class="sageta sageta-{nom}"><path d="M7 14.5l5-5 5 5" /></svg>
 {/snippet}
 
-<section class="joc" aria-labelledby="titol-paniers" bind:this={racina}>
+<section class="joc" class:immersiu aria-labelledby="titol-paniers" bind:this={racina}>
 	<div class="disposicion">
 		<header class="cap-joc">
 			<h2 id="titol-paniers" lang="oc">Los panièrs</h2>
@@ -273,9 +308,14 @@
 			<p class="consigna">{tria(T.consigna)}</p>
 		</header>
 
-		<div class="pista" aria-hidden="true">
-			<p class="sens" lang="oc">{tria(tema.nom)}</p>
-			<p class="compte">{tria(T.mots)(plaçats, tema.mots.length)}</p>
+		<div class="pista">
+			<div class="pista-info" aria-hidden="true">
+				<p class="sens" lang="oc">{tria(tema.nom)}</p>
+				<p class="compte">{tria(T.mots)(plaçats, tema.mots.length)}</p>
+				<!-- un grain par mot du thème, doré une fois rangé -->
+				<span class="granas">{#each tema.mots as m, k (m.oc)}<i class:rengat={k < plaçats}></i>{/each}</span>
+			</div>
+			<BotonEcran bind:actiu={immersiu} cibla={racina} />
 		</div>
 
 		<div class="taula">
@@ -286,14 +326,30 @@
 				class="camp"
 				class:calme
 				class:pausa={fase === 'pausa'}
+				class:plen={fase === 'plen'}
 				role="application"
 				tabindex="0"
 				aria-label={tria(T.camp)}
 				aria-describedby="anonci-paniers"
 				onpointerdown={(e) => e.currentTarget.focus({ preventScroll: true })}
 			>
+				<!-- deux couloirs de chute, en pointillé ; celui du mot s'éclaire -->
+				<span class="corredor" class:actiu={!!mot && col === 0 && fase !== 'plen'} style:--c="0" aria-hidden="true"></span>
+				<span class="corredor" class:actiu={!!mot && col === 1 && fase !== 'plen'} style:--c="1" aria-hidden="true"></span>
+				<span class="sol" aria-hidden="true"></span>
 				{#if mot}
-					<div class="mot" class:torna={fase === 'torna'} style:--col={col} style:--y={y} lang="oc"><span>{mot.oc}</span></div>
+					<div
+						class="mot"
+						class:torna={fase === 'torna'}
+						class:rapid={rapid && fase === 'tomba'}
+						class:balanca={fase === 'tomba' && !rapid}
+						style:--col={col}
+						style:--y={y}
+						style:--vira={vira}
+						lang="oc"
+					>
+						<span>{mot.oc}</span>
+					</div>
 				{/if}
 				<div class="paniers">
 					{#each tema.paniers as p, i (p.id)}
@@ -306,12 +362,58 @@
 							aria-label="{tria(p)} : {tria(T.aval)}"
 							onclick={() => tocarPanier(i)}
 						>
-							<span class="etiqueta" lang="oc">{tria(p)}</span>
-							<span class="dedins"
-								>{#each dins[i] as m (m.oc)}<span class="chip" class:dos={m.panier === 'ab'} lang="oc">{m.oc}</span>{/each}</span
+							<!-- le panier tressé : l'ouverture derrière, les mots, le devant -->
+							<svg class="dalfons" viewBox="0 0 200 110" preserveAspectRatio="none" aria-hidden="true">
+								<ellipse cx="100" cy="14" rx="94" ry="9" />
+								<path d="M6 14 A94 9 0 0 1 194 14" />
+							</svg>
+							{#if col === i && !!mot && fase !== 'plen' && fase !== 'torna'}
+								<span class="ombra" style:--y={y} aria-hidden="true"></span>
+							{/if}
+							<svg class="davant" viewBox="0 0 200 110" preserveAspectRatio="none" aria-hidden="true">
+								<defs>
+									<clipPath id="vim-{i}"><path d="M6 14 C9 58 17 96 32 107 L168 107 C183 96 191 58 194 14 A94 9 0 0 1 6 14 Z" /></clipPath>
+								</defs>
+								<path class="cors" d="M6 14 C9 58 17 96 32 107 L168 107 C183 96 191 58 194 14 A94 9 0 0 1 6 14 Z" />
+								<!-- l'osier tressé : des montants droits, et des brins ondulés qui
+								     passent devant puis derrière, un rang sur deux à contretemps -->
+								<g class="vim" clip-path="url(#vim-{i})">
+									<path class="montants" d="M16 18 L16 112 M44 21.2 L44 112 M72 22.6 L72 112 M100 23 L100 112 M128 22.6 L128 112 M156 21.2 L156 112 M184 18 L184 112" />
+									<path d="M6 19 A94 9 0 0 0 194 19 M2 34 Q16 31.5 30 36.7 T58 38.5 T86 39.4 T114 39.4 T142 38.5 T170 36.7 T198 34 M2 50 Q16 55.5 30 52.7 T58 54.5 T86 55.4 T114 55.4 T142 54.5 T170 52.7 T198 50 M2 66 Q16 63.5 30 68.7 T58 70.5 T86 71.4 T114 71.4 T142 70.5 T170 68.7 T198 66 M2 82 Q16 87.5 30 84.7 T58 86.5 T86 87.4 T114 87.4 T142 86.5 T170 84.7 T198 82 M2 98 Q16 95.5 30 100.7 T58 102.5 T86 103.4 T114 103.4 T142 102.5 T170 100.7 T198 98" />
+								</g>
+								<path class="labre" d="M6 14 A94 9 0 0 0 194 14" />
+								<!-- deux anses sur les côtés, sous le bord -->
+								<path class="ansa" d="M8 22 C-10 22 -10 46 10.5 46 M192 22 C210 22 210 46 189.5 46" />
+							</svg>
+							<!-- les mots rangés se posent au fond et remplissent le panier en
+							     suivant ses bords (Romain, 05-11) : la pile est retournée pour se
+							     remplir de bas en haut, deux flottants taillés comme les bords
+							     intérieurs (shape-outside) resserrent chaque rang -->
+							<span class="pila"
+								><span class="bord bord-e"></span><span class="bord bord-d"></span>{#each dins[i] as m, j (m.oc)}<span
+										class="chip"
+										class:dos={m.panier === 'ab'}
+										style:--j={j}
+										lang="oc">{m.oc}</span
+									>{/each}</span
 							>
+							<span class="etiqueta" lang="oc">{tria(p)}</span>
+							{#if recep.i === i}
+								{#key recep.n}
+									<span class="polsa" aria-hidden="true"
+										>{#each [0, 1, 2, 3, 4, 5] as k (k)}<i style:--dx="{(k - 2.5) * 0.75}em" style:--dl="{(k % 3) * 60}ms"></i>{/each}</span
+									>
+								{/key}
+							{/if}
 						</button>
 					{/each}
+					{#if volada}
+						{#key volada.k}
+							<span class="volada" style:--de="{volada.de * 50 + 25}%" style:--a="{(1 - volada.de) * 50 + 25}%" aria-hidden="true"
+								><span class="chip dos" lang="oc">{volada.oc}</span></span
+							>
+						{/key}
+					{/if}
 				</div>
 
 				{#if fase === 'plen'}
@@ -391,6 +493,83 @@
 	}
 	.pista {
 		grid-area: pista;
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--esp-16);
+	}
+	.pista-info {
+		min-width: 0;
+	}
+
+	/* ── Mode plein (BotonEcran) : le jeu couvre tout l'écran, le terrain
+	   aussi grand que possible, le thème en haut, les flèches en bas ; les
+	   réglages s'effacent (Pausa et Tornar jogar restent) ── */
+	.joc.immersiu {
+		position: fixed;
+		inset: 0;
+		z-index: 30;
+		overflow: auto;
+		padding: max(0.75rem, env(safe-area-inset-top)) clamp(0.75rem, 3vw, 2rem) max(0.75rem, env(safe-area-inset-bottom));
+		background:
+			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			var(--t-fons);
+		--terren: min(100%, calc((100svh - 11rem) * 4 / 3));
+	}
+	.immersiu .disposicion {
+		min-height: 100%;
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: auto 1fr auto;
+		grid-template-areas: 'pista' 'taula' 'comandas';
+		gap: var(--esp-12);
+		align-items: center;
+	}
+	.immersiu .cap-joc {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+	.immersiu .pista {
+		align-items: center;
+		width: var(--terren);
+		margin-inline: auto;
+	}
+	.immersiu .pista-info {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.25rem var(--esp-16);
+	}
+	.immersiu .compte,
+	.immersiu .granas {
+		margin: 0;
+	}
+	.immersiu .camp {
+		max-width: var(--terren);
+	}
+	/* téléphone tenu droit : un terrain carré, plus de place pour la chute */
+	@media (orientation: portrait) {
+		.immersiu .camp {
+			aspect-ratio: 1;
+			max-width: min(100%, calc(100svh - 11rem));
+			--h: 30%;
+		}
+		.immersiu .pista {
+			width: min(100%, calc(100svh - 11rem));
+		}
+	}
+	.immersiu .comandas {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: var(--esp-12) var(--esp-24);
+	}
+	.immersiu .ajuda,
+	.immersiu .comandas :global(.reglatges .grop) {
+		display: none;
 	}
 	.taula {
 		grid-area: taula;
@@ -435,11 +614,21 @@
 		width: 100%;
 		max-width: calc(60svh * 4 / 3);
 		aspect-ratio: 4 / 3;
+		/* les tailles du terrain suivent sa largeur (cqi), en mode plein aussi */
+		container: camp / inline-size;
+		/* hauteur des paniers ; le bord de leur ouverture est à 12,7 % de cette
+		   hauteur, d'où la fin des couloirs et de la chute */
+		--h: 36%;
+		--chute: calc(84% - var(--h) * 0.873);
 		margin-inline: auto;
 		overflow: hidden;
 		border: 1px solid var(--t-linha);
 		border-radius: 1rem;
-		background: var(--l-carta);
+		/* une lumière douce tombe d'en haut, d'où viennent les mots ; le bas
+		   s'assombrit vers le sol où posent les paniers */
+		background:
+			radial-gradient(ellipse 70% 55% at 50% -6%, color-mix(in srgb, var(--or) 11%, transparent), transparent 72%),
+			linear-gradient(to bottom, var(--l-carta) 40%, color-mix(in srgb, var(--t-fons) 22%, var(--l-carta)));
 		box-shadow: inset 0 0 3rem color-mix(in srgb, var(--t-fons) 24%, transparent);
 		touch-action: manipulation;
 		user-select: none;
@@ -474,71 +663,232 @@
 		outline: 3px solid var(--or);
 		outline-offset: 3px;
 	}
-	/* le mot qui tombe : la tuile dorée de la sèrp */
+	/* deux couloirs de chute en pointillé fin, du haut jusqu'à l'ouverture du
+	   panier ; celui où tombe le mot s'éclaire d'or */
+	.corredor {
+		position: absolute;
+		left: calc(var(--c) * 50% + 25%);
+		top: 4%;
+		height: var(--chute);
+		width: 1.5px;
+		translate: -50% 0;
+		background: repeating-linear-gradient(to bottom, var(--t-linha) 0 2px, transparent 2px 9px);
+		transition: opacity 0.3s;
+		opacity: 0.8;
+	}
+	.corredor.actiu {
+		background: repeating-linear-gradient(to bottom, color-mix(in srgb, var(--or) 55%, transparent) 0 2px, transparent 2px 9px);
+		opacity: 1;
+	}
+	/* le sol, un filet qui s'efface vers les bords */
+	.sol {
+		position: absolute;
+		left: 4%;
+		right: 4%;
+		bottom: 12%;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--t-linha) 18% 82%, transparent);
+	}
+	/* le mot qui tombe : la tuile dorée de la sèrp, un peu soulevée du fond ;
+	   il se penche quand il change de couloir et se balance à peine en tombant */
 	.mot {
 		position: absolute;
 		left: calc(var(--col) * 50% + 25%);
-		top: calc(3% + var(--y) * 58%);
-		z-index: 2;
-		translate: -50% 0;
+		/* en haut à y = 0 ; à y = 1, son bas touche l'ouverture du panier */
+		top: calc(4% + var(--y) * var(--chute));
+		z-index: 3;
+		translate: -50% calc(var(--y) * -100%);
+		rotate: calc(var(--vira) * 4deg);
+		/* sa largeur est celle du mot, pas la place qui reste à droite */
+		width: max-content;
 		max-width: 46%;
-		padding: 0.35em 0.7em;
+		transition:
+			left 0.22s ease-out,
+			rotate 0.24s ease-out;
+	}
+	.mot > span {
+		display: block;
+		padding: 0.35em 0.75em;
 		border-radius: 0.6em;
 		background: color-mix(in srgb, var(--or) 26%, var(--l-carta));
-		box-shadow: inset 0 0 0 1.5px var(--or);
-		font-size: clamp(1rem, 4.2cqi, 1.4rem);
+		box-shadow:
+			inset 0 0 0 1.5px var(--or),
+			0 0.7em 1.2em -0.8em rgba(0, 0, 0, 0.6);
+		font-size: clamp(1rem, 3.6cqi, 1.8rem);
 		font-weight: 600;
 		line-height: 1.2;
 		text-align: center;
 		color: var(--t-tinta);
-		transition:
-			left 0.22s ease-out,
-			box-shadow 0.2s;
+		transform-origin: 50% -60%;
+		transition: box-shadow 0.2s;
 	}
-	.calme .mot {
+	.mot.balanca > span {
+		animation: balanca 2.8s ease-in-out infinite alternate;
+	}
+	@keyframes balanca {
+		from {
+			rotate: -1.4deg;
+		}
+		to {
+			rotate: 1.4deg;
+		}
+	}
+	/* lâché : une traînée dorée au-dessus du mot */
+	.mot.rapid::before {
+		content: '';
+		position: absolute;
+		left: 50%;
+		bottom: 100%;
+		width: 1.5px;
+		height: 3.2em;
+		translate: -50% 0;
+		background: linear-gradient(to top, var(--or), transparent);
+	}
+	.calme .mot,
+	.calme .mot > span {
 		transition: none;
+		animation: none;
 	}
-	.mot.torna {
+	.mot.torna > span {
 		box-shadow: inset 0 0 0 1.5px var(--t-tinta-2);
 	}
 	.pausa .mot {
 		opacity: 0.45;
 	}
+	.pausa .mot > span {
+		animation-play-state: paused;
+	}
 	.paniers {
 		position: absolute;
 		left: 0;
 		right: 0;
-		bottom: 0;
-		height: 36%;
+		bottom: 12%;
+		height: var(--h);
+		z-index: 2;
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 4%;
-		padding: 0 4% 4%;
 	}
-	/* un panier : un filet fin, l'étiquette en haut, les mots rangés dedans */
+	/* un panier tressé, dessiné d'un seul trait fin ; il prend l'or quand le
+	   mot tombe vers lui. Toute sa surface se touche, les mots qui dépassent
+	   compris. */
 	.panier {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+		--trait: color-mix(in srgb, var(--t-tinta) 62%, transparent);
+		position: relative;
 		min-width: 0;
-		padding: 0.4rem 0.5rem;
-		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 45%, transparent);
-		border-radius: 0.5rem 0.5rem 1rem 1rem;
-		background: color-mix(in srgb, var(--l-carta) 60%, transparent);
+		margin: 0 7%;
+		padding: 0;
+		border: none;
+		background: none;
 		font: inherit;
 		color: var(--t-tinta);
 		cursor: pointer;
-		overflow: hidden;
-		transition:
-			border-color 0.2s,
-			box-shadow 0.2s;
+		-webkit-tap-highlight-color: transparent;
 	}
-	.panier.visat {
-		border-color: var(--or);
-	}
+	.panier.visat,
 	.panier.indici {
-		border-color: var(--or);
-		box-shadow: 0 0 0 5px color-mix(in srgb, var(--or) 25%, transparent);
+		--trait: var(--or);
+	}
+	.panier svg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		overflow: visible;
+	}
+	.panier svg :is(ellipse, path) {
+		vector-effect: non-scaling-stroke;
+		stroke: var(--trait);
+		stroke-width: 1.5px;
+		fill: none;
+		transition: stroke 0.25s;
+	}
+	/* l'ouverture, plus sombre, avec le bord du fond */
+	.dalfons {
+		z-index: 0;
+	}
+	.dalfons ellipse {
+		fill: color-mix(in srgb, black 24%, var(--l-carta));
+		stroke: none;
+	}
+	.dalfons path {
+		opacity: 0.7;
+	}
+	.davant {
+		z-index: 3;
+	}
+	.davant .cors {
+		fill: color-mix(in srgb, var(--t-tinta) 5%, var(--l-carta));
+	}
+	.davant .vim path {
+		opacity: 0.42;
+	}
+	.davant .vim .montants {
+		opacity: 0.26;
+	}
+	.panier.indici .davant .cors {
+		fill: color-mix(in srgb, var(--or) 14%, var(--l-carta));
+	}
+	/* l'ombre du mot sur l'ouverture : elle grandit à mesure qu'il approche */
+	.ombra {
+		position: absolute;
+		left: 50%;
+		top: 12.7%;
+		z-index: 1;
+		width: calc((0.3 + 0.6 * var(--y)) * 80%);
+		height: 10%;
+		translate: -50% -50%;
+		border-radius: 50%;
+		background: radial-gradient(closest-side, rgba(0, 0, 0, 0.5), transparent);
+		opacity: calc(0.25 + 0.75 * var(--y));
+	}
+	/* les mots rangés se posent au fond et remplissent le panier en suivant
+	   ses bords (Romain, 05-11). La pile couvre l'intérieur, du bord jusqu'au
+	   fond ; elle est retournée pour se remplir de bas en haut ; les deux
+	   flottants ont la forme des bords intérieurs (calculée sur la courbe du
+	   corps, avec une marge) et resserrent chaque rang. Plein à ras bord, les
+	   derniers mots dépassent de l'ouverture. */
+	.pila {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 12.7%;
+		bottom: 4%;
+		z-index: 4;
+		scale: 1 -1;
+		text-align: center;
+		line-height: 0;
+	}
+	.bord {
+		width: 49.5%;
+		height: 100%;
+	}
+	.bord-e {
+		float: left;
+		shape-outside: polygon(0 0, 35.3% 0%, 32.8% 2.8%, 30.5% 6.1%, 28.1% 10.5%, 25.2% 17%, 21.5% 27.9%, 18.3% 41%, 15.5% 56.3%, 13.5% 71.6%, 12% 86.9%, 11% 100%, 0 100%);
+	}
+	.bord-d {
+		float: right;
+		shape-outside: polygon(100% 0, 64.7% 0%, 67.2% 2.8%, 69.5% 6.1%, 71.9% 10.5%, 74.8% 17%, 78.5% 27.9%, 81.7% 41%, 84.5% 56.3%, 86.5% 71.6%, 88% 86.9%, 89% 100%, 100% 100%);
+	}
+	.pila .chip {
+		display: inline-block;
+		scale: 1 -1;
+		/* pas plus large que le rang du fond, le plus étroit : une phrase longue
+		   passe sur deux lignes au lieu de sauter plus haut et de laisser un trou */
+		max-width: 60%;
+		text-wrap: balance;
+		margin: 0.12em 0.08em;
+		vertical-align: top;
+		font-size: clamp(0.62rem, 2.2cqi, 1.3rem);
+		white-space: normal;
+		/* la pile est retournée : un décalage positif part d'au-dessus */
+		animation: posar 0.32s ease-out;
+	}
+	@keyframes posar {
+		from {
+			translate: 0 1.8em;
+			opacity: 0;
+		}
 	}
 	.panier.non {
 		animation: secodre 0.4s ease-in-out;
@@ -555,18 +905,27 @@
 		outline: 3px solid var(--or);
 		outline-offset: 2px;
 	}
+	/* l'étiquette du panier, sous le panier, sur le sol : le devant reste
+	   libre pour les mots */
 	.etiqueta {
-		font-size: clamp(0.72rem, 2.6cqi, 0.9rem);
-		letter-spacing: 0.04em;
+		position: absolute;
+		left: 50%;
+		top: calc(100% + 0.45rem);
+		z-index: 4;
+		translate: -50% 0;
+		max-width: 100%;
+		padding-bottom: 0.1rem;
+		border-bottom: 1.5px solid var(--trait);
+		font-size: clamp(0.78rem, 2.5cqi, 1.15rem);
+		font-weight: 600;
+		line-height: 1.2;
+		letter-spacing: 0.05em;
 		text-transform: uppercase;
-		color: var(--t-tinta-2);
-	}
-	.dedins {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.25rem;
-		margin-top: 0.35rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		color: var(--t-tinta);
+		transition: border-color 0.25s;
 	}
 	.chip {
 		padding: 0.1rem 0.45rem;
@@ -575,14 +934,102 @@
 		box-shadow: inset 0 0 0 1.5px var(--or);
 		font-size: clamp(0.68rem, 2.4cqi, 0.85rem);
 		font-weight: 600;
+		line-height: 1.3;
 		white-space: nowrap;
-		animation: pausar 0.25s ease-out;
+		color: var(--t-tinta);
 	}
-	@keyframes pausar {
-		from {
-			translate: 0 -0.3em;
-			opacity: 0;
+	/* le thème est plein : une onde dorée passe sur les mots, comme à la fin
+	   d'un mot de la sèrp */
+	.plen .pila .chip {
+		animation: onda 0.6s ease-out calc(var(--j) * 80ms) both;
+	}
+	@keyframes onda {
+		45% {
+			background: var(--or);
+			color: var(--color-text);
 		}
+	}
+	/* le mot bien rangé : quelques grains d'or montent du panier */
+	.polsa {
+		position: absolute;
+		left: 50%;
+		top: 10%;
+		z-index: 5;
+		pointer-events: none;
+	}
+	.polsa i {
+		position: absolute;
+		width: 4px;
+		height: 4px;
+		margin: -2px;
+		border-radius: 50%;
+		background: var(--or);
+		opacity: 0;
+		animation: polsa 0.75s ease-out var(--dl) both;
+	}
+	@keyframes polsa {
+		20% {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+			translate: var(--dx) -2.6em;
+		}
+	}
+	/* le mot des deux paniers : une copie vole en arc jusqu'à l'autre panier */
+	.volada {
+		position: absolute;
+		top: 15%;
+		z-index: 6;
+		translate: -50% -100%;
+		pointer-events: none;
+		animation: volar-x 0.72s ease-in-out both;
+	}
+	.volada .chip {
+		display: block;
+		animation: volar-y 0.72s both;
+	}
+	@keyframes volar-x {
+		from {
+			left: var(--de);
+		}
+		to {
+			left: var(--a);
+		}
+	}
+	@keyframes volar-y {
+		from {
+			translate: 0 0;
+			animation-timing-function: ease-out;
+		}
+		50% {
+			translate: 0 -2.4em;
+			animation-timing-function: ease-in;
+		}
+		to {
+			translate: 0 0;
+		}
+	}
+	/* un grain par mot du thème, à côté du compte */
+	/* toujours sur une ligne : les grains se resserrent quand le thème est long */
+	.granas {
+		display: flex;
+		gap: 0.25rem;
+		margin-top: var(--esp-8);
+	}
+	.granas i {
+		flex: 0 1 0.55rem;
+		min-width: 0.3rem;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--t-tinta) 40%, transparent);
+		transition:
+			background-color 0.3s,
+			box-shadow 0.3s;
+	}
+	.granas i.rengat {
+		background: var(--or);
+		box-shadow: none;
 	}
 
 	/* une ligne réservée sous le terrain : rien ne bouge quand elle se vide */
@@ -753,13 +1200,21 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		.mot,
-		.panier {
+		.panier,
+		.corredor {
 			transition: none;
 		}
 		.panier.non,
 		.chip,
+		.pila .chip,
+		.plen .pila .chip,
+		.mot > span,
+		.polsa,
 		.fin {
 			animation: none;
+		}
+		.polsa {
+			display: none;
 		}
 	}
 </style>
