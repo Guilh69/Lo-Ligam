@@ -74,7 +74,7 @@ Carnaval* viendra d'un enregistrement dont on aura vérifié les droits.
 
 ## Anem ! (l'espace des petits, dossier `static/audio/anem/`)
 
-Essai `/ensag/anem` (cadrage du 2026-11-04). Dès qu'un fichier existe, la page
+Rubrique `/anem` (cadrage du 2026-11-04, rubrique de S'apren le 05-11). Dès qu'un fichier existe, la page
 le joue à la place du petit carillon. Voix douce, un peu lente, le mot seul.
 
 | Fichier | Contenu |
@@ -87,3 +87,11 @@ le joue à la place du petit carillon. Voix douce, un peu lente, le mot seul.
 | `ont-es-gat.m4a` | « Ont es lo gat ? » |
 | `ont-es-galina.m4a` | « Ont es la galina ? » |
 | `ont-es-gal.m4a` | « Ont es lo gal ? » |
+| `cabra.m4a` | « La cabra » |
+| `caval.m4a` | « Lo caval » |
+| `porc.m4a` | « Lo pòrc » |
+| `poleton.m4a` | « Lo poleton » |
+| `ont-es-cabra.m4a` | « Ont es la cabra ? » |
+| `ont-es-caval.m4a` | « Ont es lo caval ? » |
+| `ont-es-porc.m4a` | « Ont es lo pòrc ? » |
+| `ont-es-poleton.m4a` | « Ont es lo poleton ? » |

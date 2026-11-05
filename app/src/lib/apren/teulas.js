@@ -78,7 +78,8 @@ export const PALETA_PER_DEFAUT = 'charta';
 /** le pictogramme d'une case, d'après l'endroit où elle mène */
 export function pictoPer(href = '') {
 	if (href.startsWith('/apren/visio') || href.startsWith('https://calendar.proton.me')) return 'visio';
-	if (href.startsWith('/aprene/essai')) return 'ensag';
+	// Anem !, l'espace des petits, à la place de la leçon d'essai (2026-11-05)
+	if (href.startsWith('/anem')) return 'anem';
 	if (href.startsWith('/apren/gramatica')) return 'wiki';
 	if (href.startsWith('/aprene')) return 'parcors';
 	if (href.startsWith('/mots')) return 'mots';

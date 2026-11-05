@@ -30,12 +30,12 @@ export const families = [
 				status: 'live'
 			},
 			{
-				id: 'ensag',
-				oc: 'Leiçon d’ensag',
-				fr: 'Leçon d’essai',
-				desc_oc: 'Una leiçon gratuita, sens compte.',
-				desc_fr: 'Une leçon gratuite, sans compte.',
-				href: '/aprene/essai',
+				id: 'anem',
+				oc: 'Anem ! Per los pichons',
+				fr: 'Anem ! Pour les petits',
+				desc_oc: 'De 3 a 6 ans : se tòca una bèstia, s’ausís son nom.',
+				desc_fr: 'De 3 à 6 ans : on touche une bête, on entend son nom.',
+				href: '/anem',
 				status: 'live'
 			},
 			{

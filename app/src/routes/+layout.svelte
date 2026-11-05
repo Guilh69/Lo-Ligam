@@ -27,9 +27,9 @@
 	// (2026-10-25) tiennent à hauteur d'écran, comme une messagerie. La carte (2026-10-26) est une interface pleine et
 	// stable : ni pied de page ni défilement. La pluie de mots (/ensag/plueja,
 	// 2026-11-04) occupe tout l'écran, comme un fond d'écran ; l'espace des
-	// petits (/ensag/anem, 2026-11-04) aussi : la sortie est dans son coin des adultes.
+	// petits (/anem, 2026-11-04, rubrique le 05-11) aussi : la sortie est dans son coin des adultes.
 	let ambPè = $derived(
-		!id.startsWith('/admin') && !id.startsWith('/grops') && id !== '/carta' && id !== '/ensag/clar' && id !== '/ensag/blanc' && id !== '/ensag/plueja' && id !== '/ensag/anem'
+		!id.startsWith('/admin') && !id.startsWith('/grops') && id !== '/carta' && id !== '/ensag/clar' && id !== '/ensag/blanc' && id !== '/ensag/plueja' && id !== '/anem'
 	);
 
 	// Lien d'évitement (2026-10-26, page accessibilité) : première étape du
