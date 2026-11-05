@@ -80,12 +80,24 @@
 			return { ...t, px, py };
 		});
 	});
-	let arc = $derived.by(() => {
-		if (!fons || !e.arc) return null;
-		const [a, b] = e.arc.map((id) => ecran(...proj(LUÒCS[id].lon, LUÒCS[id].lat)));
-		const mx = (a[0] + b[0]) / 2 + (b[1] - a[1]) * 0.22;
-		const my = (a[1] + b[1]) / 2 - (b[0] - a[0]) * 0.22;
-		return `M${a[0]} ${a[1]}Q${mx} ${my} ${b[0]} ${b[1]}`;
+	// les liens (Lo Ligam) : entre Occitans, avec la Catalogne, vers le monde.
+	// Un lieu du récit, une ville de la carte en étoiles, ou [lon, lat].
+	let vilas = new Map();
+	const xy = (r) => (Array.isArray(r) ? proj(r[0], r[1]) : LUÒCS[r] ? proj(LUÒCS[r].lon, LUÒCS[r].lat) : vilas.get(r));
+	let ligams = $derived.by(() => {
+		if (!fons || !e.ligams) return [];
+		return e.ligams
+			.map(([de, a, retard]) => {
+				const p = xy(de);
+				const q = xy(a);
+				if (!p || !q) return null;
+				const [ax, ay] = ecran(...p);
+				const [bx, by] = ecran(...q);
+				const mx = (ax + bx) / 2 + (by - ay) * 0.2;
+				const my = (ay + by) / 2 - (bx - ax) * 0.2;
+				return { d: `M${ax} ${ay}Q${mx} ${my} ${bx} ${by}`, retard, mond: Array.isArray(a), de: [ax, ay], a: [bx, by] };
+			})
+			.filter(Boolean);
 	});
 	// quelques villes autour, en petit, pour se repérer quand on zoome : les
 	// grandes villes d'abord, sans chevauchement, jamais sur un point du récit
@@ -204,6 +216,7 @@
 				// famille, qu'on ne nomme pas : Romain, 05-11), ni Valença (Drôme), qu'on
 				// confondrait avec Valéncia (Joan, 05-11)
 				const tirats = new Set(['Montpelhièr', "Clarmont d'Erau", 'Valença']);
+				vilas = new Map(LUOCS.map(([lon, lat, nom]) => [nom, proj(lon, lat)]));
 				luòcsOc = LUOCS.filter(([, , nom]) => !tirats.has(nom)).map(([lon, lat, nom, vila]) => ({ nom, vila, xy: proj(lon, lat) }));
 				fons = f;
 				calcular();
@@ -255,7 +268,14 @@
 			<rect class="ombra" class:vist={projector} width={W} height={H} mask="url(#carta-projector)" />
 			<!-- un filet d'or qui se resserre sur la zone -->
 			{#if projector}{#key arribada}<circle class="iris cèrcle" cx={projector.px} cy={projector.py} r={projector.r} />{/key}{/if}
-			{#if arc}{#key arribada}<path class="arc" d={arc} pathLength="1" />{/key}{/if}
+			{#key arribada}
+				{#each ligams as l, i (i)}
+					<path class="ligam" class:mond={l.mond} d={l.d} pathLength="1" style:--r="{l.retard}ms" />
+					<circle class="cap" cx={l.de[0]} cy={l.de[1]} r="2.2" style:--r="{l.retard}ms" />
+					<!-- un point à l'arrivée : aucun lien ne finit dans le vide (Joan, 05-11) -->
+					{#if !l.mond}<circle class="cap" cx={l.a[0]} cy={l.a[1]} r="2.2" style:--r="{l.retard + 1100}ms" />{/if}
+				{/each}
+			{/key}
 		</svg>
 
 		{#each etiquetas as t (t.nom + arribada)}<span class="etiqueta" class:lenga={t.lenga} lang="oc" style:transform="translate({t.px}px, {t.py}px)">{t.nom}</span>{/each}
@@ -398,14 +418,25 @@
 			transform: scale(3.2);
 		}
 	}
-	.arc {
+	/* les liens : un filet d'or qui se trace (un seul poids de trait) ; ceux qui
+	   partent vers le monde, plus légers, sortent par les bords de la carte */
+	.ligam {
 		fill: none;
 		stroke: var(--t-aur);
-		stroke-width: 1.4;
+		stroke-width: 1.2;
 		stroke-linecap: round;
 		stroke-dasharray: 1;
-		opacity: 0.75;
-		animation: traçar 1.6s 0.3s ease-out both;
+		opacity: 0.8;
+		animation: traçar 1.4s var(--r) ease-out both;
+	}
+	.ligam.mond {
+		opacity: 0.4;
+		animation-duration: 2.2s;
+		animation-timing-function: ease-in;
+	}
+	.cap {
+		fill: var(--t-aur);
+		animation: aparéisser 0.4s var(--r) ease both;
 	}
 	@keyframes traçar {
 		from {
@@ -602,7 +633,8 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		.iris,
-		.arc,
+		.ligam,
+		.cap,
 		.etiqueta,
 		.anèl {
 			animation: none;
