@@ -114,7 +114,8 @@ export const modul51 = {
 					type: 'fotos',
 					// Photos de Romain (05-11), sans GPS : static/aprene/fotos/
 					imatges: [
-						{ clau: '5-1-mercat', amples: [720, 1200], l: 720, h: 330, oc: 'lo mercat', fr: 'le marché', alt: 'Des bottes d’asperges violettes, vertes et blanches sur un étal de marché.' }
+						{ clau: '5-1-mercat', amples: [400, 800], l: 400, h: 500, oc: 'lo mercat', fr: 'le marché (ici, de Noël)', alt: 'Un marché de Noël la nuit : chalets rouges illuminés, cœurs en pain d’épices, une tour d’horloge au fond.' },
+						{ clau: '5-1-legums', amples: [400, 800], l: 400, h: 500, oc: 'los legums', fr: 'les légumes', alt: 'Une botte d’asperges violettes sur un étal, devant un mur de carreaux blancs.' }
 					]
 				},
 				{
