@@ -94,6 +94,7 @@
 	let barrada = $state(false);
 	let indici = $state(false);
 	let mordida = $state(0); // compteur : la tête mord (manger, recracher)
+	let polsa = $state({ n: 0, x: 0, y: 0 }); // grains d'or sur la bonne lettre
 	let anonci = $state('');
 	let escrichs = $state([]);
 	let sac = [];
@@ -235,6 +236,9 @@
 			if (son) playTick();
 		}
 		if (r.tipe === 'manjada' || r.tipe === 'acabat') {
+			// la bonne lettre : quelques grains d'or montent de la tête, comme
+			// du panier qui reçoit le bon mot (Los panièrs)
+			polsa = { n: polsa.n + 1, x: p.cors[0].x, y: p.cors[0].y };
 			darrierProgres = Date.now();
 			anonci = `${r.teula.l} · ${tria(T.letra)(Math.min(p.seguenta + 1, letras.length), letras.length)}`;
 		}
@@ -473,6 +477,13 @@
 						</span>
 					{/key}
 				</span>
+				{#if polsa.n > 0}
+					{#key polsa.n}
+						<span class="polsa" style:--x={polsa.x} style:--y={polsa.y} aria-hidden="true"
+							>{#each [0, 1, 2, 3, 4] as k (k)}<i style:--dx="{(k - 2) * 0.55}em" style:--dl="{(k % 2) * 70}ms"></i>{/each}</span
+						>
+					{/key}
+				{/if}
 
 				{#if ajuda}
 					<div class="carta ajuda-carta">
@@ -661,9 +672,12 @@
 		overflow: hidden;
 		border: 1px solid var(--t-linha);
 		border-radius: 1rem;
+		/* la même lumière douce que Los panièrs : elle vient d'en haut, le bas
+		   s'assombrit un peu ; un point fin marque chaque case */
 		background:
 			radial-gradient(circle, var(--t-linha) 1px, transparent 1.5px) 0 0 / calc(100% / var(--cols)) calc(100% / var(--rows)),
-			var(--l-carta);
+			radial-gradient(ellipse 70% 55% at 50% -6%, color-mix(in srgb, var(--or) 11%, transparent), transparent 72%),
+			linear-gradient(to bottom, var(--l-carta) 40%, color-mix(in srgb, var(--t-fons) 22%, var(--l-carta)));
 		/* un léger assombrissement des bords : la grille a de la profondeur */
 		box-shadow: inset 0 0 3rem color-mix(in srgb, var(--t-fons) 24%, transparent);
 		margin-inline: auto;
@@ -763,7 +777,10 @@
 		height: 94%;
 		border-radius: 30%;
 		background: color-mix(in srgb, var(--or) 26%, var(--l-carta));
-		box-shadow: inset 0 0 0 1.5px var(--or);
+		/* un peu soulevée du fond, comme le mot qui tombe dans Los panièrs */
+		box-shadow:
+			inset 0 0 0 1.5px var(--or),
+			0 0.22em 0.45em -0.28em rgba(0, 0, 0, 0.55);
 	}
 	/* mangée à tort : la tuile reste grise */
 	.cors.falsa .l {
@@ -812,7 +829,45 @@
 		   thèmes (le rouge est réservé à ce qui se clique) */
 		border-radius: 34% 50% 50% 34% / 45% 50% 50% 45%;
 		background: var(--color-gold);
-		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color-text) 55%, transparent);
+		box-shadow:
+			inset 0 0 0 1.5px color-mix(in srgb, var(--color-text) 55%, transparent),
+			0 0.25em 0.5em -0.3em rgba(0, 0, 0, 0.6);
+	}
+	/* la bonne lettre mangée : quelques grains d'or montent de la tête */
+	.polsa {
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 3;
+		width: calc(100% / var(--cols));
+		height: calc(100% / var(--rows));
+		transform: translate(calc(var(--x) * 100%), calc(var(--y) * 100%));
+		font-size: calc(var(--cela) * 0.5);
+		pointer-events: none;
+	}
+	.polsa i {
+		position: absolute;
+		left: 50%;
+		top: 35%;
+		width: 4px;
+		height: 4px;
+		margin: -2px;
+		border-radius: 50%;
+		background: var(--or);
+		opacity: 0;
+		animation: polsa 0.7s ease-out var(--dl) both;
+	}
+	@keyframes polsa {
+		20% {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+			translate: var(--dx) -1.8em;
+		}
+	}
+	.calme .polsa {
+		display: none;
 	}
 	/* deux yeux, tournés vers la route ; aucune autre figure */
 	.uelh {
