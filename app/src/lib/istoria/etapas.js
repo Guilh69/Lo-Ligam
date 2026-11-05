@@ -24,8 +24,9 @@ export const LUÒCS = {
 //   zona / domenis : les aplats à faire ressortir ; arc : un trait entre deux lieux
 //   estelas : les lieux d'Occitània s'allument (la communauté)
 export const ETAPAS = {
-	// avant le premier chapitre : d'où il vient (chapeau)
-	debuta: { c: [2.2, 45.9], r: 400, luòcs: ['paris', 'erau'], arc: ['paris', 'erau'], zona: 'erau' },
+	// avant le premier chapitre : l'Hérault dans sa région, sans Paris (Romain,
+	// 05-11 : « il faut pas que ça commence à Paris ») ; le chapitre 1 resserre
+	debuta: { c: [3.2, 43.75], r: 170, luòcs: ['erau'], zona: 'erau' },
 	'istoria.capitols.c1': { c: [3.42, 43.62], r: 85, luòcs: ['erau'], zona: 'erau', focus: ['erau', 55] },
 	'istoria.capitols.c2': { c: [3.877, 43.611], r: 38, luòcs: ['montpelhier'], focus: ['montpelhier', 14] },
 	'istoria.capitols.c3': {
@@ -49,12 +50,14 @@ export const ETAPAS = {
 	}
 };
 
-/** La première étape (dans l'ordre du récit) qui montre ce lieu. */
+/** La première étape (dans l'ordre du récit) qui met ce lieu en avant, sinon
+ *  la première qui le montre (Paris : seulement à la fin, depuis le 05-11). */
 export function etapaDe(luòc, ordre) {
-	return ordre.find((id) => {
+	const met = (id) => {
 		const e = ETAPAS[id];
 		return e && (e.focus?.[0] === luòc || e.segond === luòc || (e.zona && e.zona === luòc));
-	});
+	};
+	return ordre.find(met) ?? ordre.find((id) => ETAPAS[id]?.luòcs?.includes(luòc));
 }
 
 // Le zoom « en vol » de van Wijk et Nuij (2003), celui de Prezi et de d3 :
