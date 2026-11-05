@@ -6,7 +6,7 @@
 
 ## 1. Présentation
 
-Je m'appelle Romain Périer. Je suis né dans l'Hérault au début des années 1990, d'un père parisien et d'une mère de la région.
+Je m'appelle Romain. Je suis né dans l'Hérault au début des années 1990, d'un père parisien et d'une mère de la région.
 
 ## 2. Une langue sans nom
 
