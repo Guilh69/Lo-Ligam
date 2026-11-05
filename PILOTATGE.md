@@ -26,6 +26,7 @@
 
 **Avant le lancement** (barreau 8)
 - **Mentions légales (24-10)** : une adresse et un téléphone à afficher, obligatoires dès que le site vend (Romain ne veut ni son domicile ni louer une domiciliation : solution à trouver) ; élargir l'activité de la micro-entreprise sur procedures.inpi.fr (aujourd'hui : vente de cartes seulement ; ajouter cours en visio, déco et textile, prestations intellectuelles) avant le premier cours payant.
+- **Rendre le dépôt GitHub privé (05-11, « je le ferai plus tard »)** : l’ancien chapeau de Mon ligam (nom, année, villes de naissance) reste lisible dans l’historique du dépôt public. Rien ne casse (aucune copie, rien sur le site n’en dépend ; mise en ligne ≈ 1 100 min/mois sur 2 000 gratuites). Marche à suivre : github.com/Guilh69/Lo-Ligam/settings › Danger Zone › Change visibility › Change to private, trois confirmations ; puis Claude vérifie.
 9. Accord écrit du LISN pour les voix de l'Atlas ; droit de réutiliser la carte d'Occitanica ; mention de la carte de l'OPLO ; relecture du pays mentonnais par quelqu'un qui connaît la zone (`revisions/2026-10-12-zona-mentonasca.md`).
 10. Rouvrir le site aux moteurs de recherche (fermé le 24-10 : `app/static/robots.txt` et `X-Robots-Tag` dans `app/src/hooks.server.js`).
 
