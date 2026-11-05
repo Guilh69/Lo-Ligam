@@ -168,8 +168,9 @@ export const DESSENHS = {
 		'M44 87L42 93M50 87L50 94M56 87L58 93'
 	],
 	'la patana': [
-		'M30 36C44 22 72 26 80 44C88 62 74 82 54 82C34 82 16 66 24 48C26 44 28 40 30 36Z', // pomme de terre
-		'M40 48a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0M60 42a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0M52 66a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0M68 60a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0-3 0' // yeux
+		// pomme de terre : un tubercule allongé et bosselé, couché (Romain, 05-11 : « un peu plus en forme de patate »)
+		'M14 54C12 44 20 36 32 34C40 32 48 35 56 32C68 30 86 38 88 50C90 60 80 70 68 70C56 73 44 72 34 70C24 70 16 64 14 54Z',
+		cercle(32, 48, 1.3) + cercle(50, 42, 1.3) + cercle(44, 60, 1.3) + cercle(66, 54, 1.3) + cercle(74, 44, 1.3) // les yeux
 	],
 	'l’alh': [
 		'M50 22C36 36 24 46 24 64C24 80 36 88 50 88C64 88 76 80 76 64C76 46 64 36 50 22Z', // tête d'ail

@@ -8,7 +8,7 @@
 	// attend en haut, la flèche du bas le fait tomber), d'office avec « réduire
 	// les animations ». Trois thèmes : arriver ou partir (unité 1), masculin ou
 	// féminin (unité 2), question ou réponse (unités 1 et 2). Composant affiché
-	// par la page /ensag/jocs, à côté de la sèrp (Serp.svelte). Aucun fichier.
+	// par la page /apren/jocs, à côté de la sèrp (Serp.svelte). Aucun fichier.
 	import { onMount } from 'svelte';
 	import { tria, lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { TEMAS, bonPanier } from '$lib/jocs/paniers-mots.js';

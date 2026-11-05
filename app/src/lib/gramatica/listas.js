@@ -11,6 +11,6 @@ export const COLORS = ['pruna', 'oliva', 'blau'];
 export const PICTOS_PROPRES = ['vendre', 'voler', 'ieu', 'escotar'];
 
 // ceux des cases du site ($lib/apren/Pictograma.svelte), à tenir à jour avec lui
-export const PICTOS_SITE = ['visio', 'parcors', 'ensag', 'mots', 'progression', 'carta', 'wiki', 'obras', 'musica', 'articles', 'grops', 'forum', 'ideas', 'imatges', 'medias', 'television', 'literatura', 'cinema', 'pintura', 'scena'];
+export const PICTOS_SITE = ['visio', 'parcors', 'jocs', 'mots', 'progression', 'carta', 'wiki', 'obras', 'musica', 'articles', 'grops', 'forum', 'ideas', 'imatges', 'medias', 'television', 'literatura', 'cinema', 'pintura', 'scena'];
 
 export const PICTOS = [...PICTOS_PROPRES, ...PICTOS_SITE];

@@ -1,12 +1,14 @@
 <script>
-	// Jòcs (chantier 27, idée de Romain du 2026-11-04) : l'espace de jeux, plein
-	// écran et stable, sans le pied de page ni la navigation du site ; un jeu à
-	// la fois : La sèrp de las letras (04-11) et Los panièrs (05-11), choisi
-	// dans l'adresse (?joc=paniers). Allure « Teula », adoptée par Romain le
-	// 05-11 avec la palette crème : mise en page éditoriale (titre géant,
-	// aplats, filets), mots et lettres en tuiles, ni verre fumé, ni halo, ni
-	// lueur. Le rouge reste ce qui se clique, l'or ce qui est choisi. Non
-	// indexée, pas dans le menu. Les jeux : $lib/jocs/.
+	// Jòcs (chantier 27, idée de Romain du 2026-11-04), rubrique de S'apren
+	// depuis le 05-11 (Romain : « une rubrique à part entière dans S'apren »),
+	// après un essai sur /ensag/jocs : l'espace de jeux, plein écran et stable,
+	// sans le pied de page ni la navigation du site, la sortie vers S'apren ;
+	// un jeu à la fois : La sèrp de las letras (04-11) et Los panièrs (05-11),
+	// choisi dans l'adresse (?joc=paniers). Allure « Teula », adoptée par
+	// Romain le 05-11 avec la palette crème : mise en page éditoriale (titre
+	// géant, aplats, filets), mots et lettres en tuiles, ni verre fumé, ni
+	// halo, ni lueur. Le rouge reste ce qui se clique, l'or ce qui est choisi.
+	// Les jeux : $lib/jocs/.
 	import { replaceState } from '$app/navigation';
 	import { page } from '$app/state';
 	import Serp from '$lib/jocs/Serp.svelte';
@@ -14,7 +16,7 @@
 	import { tria } from '$lib/stores/lang.svelte.js';
 
 	const T = {
-		tornar: { oc: 'Tornar a l’acuèlh', fr: 'Revenir à l’accueil' },
+		tornar: { oc: 'Tornar a S’apren', fr: 'Revenir à S’apprend' },
 		triar: { oc: 'Triar un jòc', fr: 'Choisir un jeu' }
 	};
 	const JOCS = [
@@ -34,12 +36,15 @@
 
 <svelte:head>
 	<title>Jòcs · Lo Ligam</title>
-	<meta name="robots" content="noindex" />
+	<meta
+		name="description"
+		content="Jòcs per aprene l’occitan : la sèrp de las letras e los panièrs. Jeux pour apprendre l’occitan : le serpent des lettres et les paniers."
+	/>
 </svelte:head>
 
 <main id="contengut" class="espaci">
 	<header class="barra">
-		<a class="tornar" href="/" aria-label="Lo Ligam, {tria(T.tornar)}"><span aria-hidden="true">‹</span> Lo Ligam</a>
+		<a class="tornar" href="/apren" aria-label={tria(T.tornar)} lang="oc"><span aria-hidden="true">‹</span> S’apren</a>
 		<h1 class="marca" lang="oc">Jòcs</h1>
 		<nav class="onglets" aria-label={tria(T.triar)}>
 			{#each JOCS as j (j.id)}

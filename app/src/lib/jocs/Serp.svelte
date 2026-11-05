@@ -12,7 +12,7 @@
 	// flèches), pause, son désactivable, « pas à pas » d'office avec « réduire
 	// les animations ». Aucun fichier : ni image ni son (les sons des leçons
 	// sont fabriqués dans le navigateur). Composant affiché par la page
-	// /ensag/jocs, à côté de Los panièrs (Paniers.svelte).
+	// /apren/jocs, à côté de Los panièrs (Paniers.svelte).
 	import { onMount, tick } from 'svelte';
 	import { tria, lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { UNITATS, copar, letrasDe } from '$lib/jocs/serp-mots.js';

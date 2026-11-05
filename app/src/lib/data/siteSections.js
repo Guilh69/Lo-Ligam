@@ -39,6 +39,16 @@ export const families = [
 				status: 'live'
 			},
 			{
+				// les jeux pour apprendre, rubrique de S'apren (Romain, 2026-11-05)
+				id: 'jocs',
+				oc: 'Jòcs',
+				fr: 'Jeux',
+				desc_oc: 'Dos jòcs per jogar amb los mots : la sèrp de las letras e los panièrs.',
+				desc_fr: 'Deux jeux pour jouer avec les mots : le serpent des lettres et les paniers.',
+				href: '/apren/jocs',
+				status: 'live'
+			},
+			{
 				id: 'progression',
 				oc: 'Ma progression',
 				fr: 'Ma progression',

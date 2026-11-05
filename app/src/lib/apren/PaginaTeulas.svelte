@@ -180,6 +180,13 @@
 		grid-column: 1 / -1;
 		aspect-ratio: auto;
 	}
+	/* sept cases (S'apren avec les jeux, 2026-11-05) : les deux dernières en
+	   demi-bandeaux sous les cinq autres, sans trou à droite (sinon, en quatre
+	   colonnes, la troisième rangée restait à moitié vide ; vu par Joan) */
+	.teulas:has(> .teula:nth-child(7):last-child) > .teula:nth-child(n + 6) {
+		grid-column: span 2;
+		aspect-ratio: auto;
+	}
 	/* trois cases seulement (Mèdias, 2026-10-25) : les deux petites prennent
 	   chacune une demi-hauteur sur toute la largeur restante, sans trou */
 	.teulas:has(> .teula:nth-child(3):last-child) .teula:not(.granda) {
@@ -320,6 +327,11 @@
 			grid-row: auto;
 			aspect-ratio: 1.15;
 			padding: var(--esp-24);
+		}
+		/* à sept cases, en deux colonnes il n'y a pas de trou : les deux
+		   dernières restent côte à côte, comme les autres paires */
+		.teulas:has(> .teula:nth-child(7):last-child) > .teula:nth-child(n + 6) {
+			grid-column: auto;
 		}
 		.granda .picto-plaça :global(.picto) {
 			width: 4.5rem;

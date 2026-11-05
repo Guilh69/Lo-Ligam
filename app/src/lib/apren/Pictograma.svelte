@@ -1,7 +1,8 @@
 <script>
 	// Pictogrammes des cases de S'apren (2026-10-24), dessinés maison au trait
 	// comme les icônes d'identité (charte §5ter) : un écran et une personne
-	// (visio), un chemin (parcours), un dé (leçon d'essai), une image (mots en
+	// (visio), un chemin (parcours), un dé (les jeux ; d'abord la leçon d'essai,
+	// jusqu'au 2026-11-05), une image (mots en
 	// images), des barres qui montent (progression) ; pour Se parla (25-10), une
 	// carte pliée, un livre ouvert (wiki), un livre et un disque (œuvres), deux
 	// notes (musiques), une page d'écriture (articles) ; pour Amassa (25-10),
@@ -35,7 +36,7 @@
 		<path d="M10 40c0-8 28-6 28-15S12 19 12 11" />
 		<circle cx="10" cy="40" r="2.6" fill="currentColor" />
 		<path d="M12 11V4l9 3.5-9 3.5" />
-	{:else if nom === 'ensag'}
+	{:else if nom === 'jocs'}
 		<rect x="8" y="8" width="32" height="32" rx="6" />
 		<circle cx="17" cy="17" r="2.4" fill="currentColor" stroke="none" />
 		<circle cx="24" cy="24" r="2.4" fill="currentColor" stroke="none" />
