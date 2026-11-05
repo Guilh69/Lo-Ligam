@@ -95,3 +95,7 @@ le joue à la place du petit carillon. Voix douce, un peu lente, le mot seul.
 | `ont-es-caval.m4a` | « Ont es lo caval ? » |
 | `ont-es-porc.m4a` | « Ont es lo pòrc ? » |
 | `ont-es-poleton.m4a` | « Ont es lo poleton ? » |
+| `teulat.m4a` | « Lo teulat » (coin « L’ostal », la maison à toucher) |
+| `fenestras.m4a` | « Las fenèstras » |
+| `porta.m4a` | « La pòrta » |
+| `claus.m4a` | « Las claus » |

@@ -16,8 +16,13 @@
 	// La voix : un fichier par bête dans static/audio/anem/ (liste dans
 	// static/audio/moduls/A-LIRE-enregistrements.md) ; tant qu'il manque, un
 	// petit carillon (Web Audio, aucun fichier) tient la place.
+	// Quatrième coin depuis le 2026-11-05 : L'ostal, la maison à toucher (choix
+	// de Romain parmi trois fiches proposées), composant ScenaTocar, données
+	// dans $lib/anem/scenas.js ; le corps suivra de la même façon.
 	import { onMount, untrack } from 'svelte';
 	import Icona from '$lib/components/Icona.svelte';
+	import ScenaTocar from '$lib/anem/ScenaTocar.svelte';
+	import { OSTAL } from '$lib/anem/scenas.js';
 	import { tria } from '$lib/stores/lang.svelte.js';
 
 	// pron : la prononciation de Romain, telle qu'elle est sur ses fiches Canva
@@ -48,6 +53,7 @@
 		escotar: { oc: 'Escotar', fr: 'Écouter' },
 		ombra: { oc: 'L’ombra', fr: 'L’ombre' },
 		ontEs: { oc: 'Ont es', fr: 'Où est' },
+		ostal: { oc: 'L’ostal', fr: 'La maison' },
 		tornar: { oc: 'Tornar', fr: 'Retour' },
 		son: { oc: 'Son', fr: 'Son' },
 		osca: { oc: 'Òsca !', fr: 'Bravo !' },
@@ -68,8 +74,10 @@
 		tampar: { oc: 'Tampar', fr: 'Fermer' }
 	};
 
-	// 'acuelh' | 'imatgier' | 'ombra' | 'ont-es' | 'osca'
+	// 'acuelh' | 'imatgier' | 'ombra' | 'ont-es' | 'osca' | 'ostal'
 	let ecran = $state('acuelh');
+	let partida = $state(0); // la scène de la maison repart de zéro à chaque partie
+	let ostalFach = $state(false); // tout est allumé dans la maison
 	let sonActiu = $state(true);
 	let calme = $state(false); // préférence « réduire les animations »
 	let dicha = $state(null); // imagier : la bête qu'on vient de toucher
@@ -159,6 +167,8 @@
 		dicha = null;
 		trobada = false;
 		avis = '';
+		ostalFach = false;
+		if (e === 'ostal') partida += 1;
 		if (e === 'ombra' || e === 'ont-es') {
 			jocPrecedent = e;
 			seria = melar(BESTIAS);
@@ -198,6 +208,25 @@
 				}
 			},
 			calme ? 900 : 1500
+		);
+	}
+
+	// La maison : chaque chose touchée dit son nom (voix de Romain, sinon
+	// carillon) ; tout allumé, un temps pour regarder, puis Òsca !
+	function tocarObjecte(o) {
+		dicha = o;
+		dire(o);
+		avis = o.oc;
+	}
+	function ostalComplet() {
+		clearTimeout(seguentTimer);
+		seguentTimer = setTimeout(
+			() => {
+				ostalFach = true;
+				carillon(OSTAL.objectes[0].nota, true);
+				avis = tria(T.osca);
+			},
+			calme ? 900 : 1600
 		);
 	}
 
@@ -292,7 +321,26 @@
 				<span class="vinheta interrogacion" aria-hidden="true">?</span>
 				<span class="nom">{tria(T.ontEs)} ?</span>
 			</button>
+			<button class="canton" type="button" onclick={() => anar('ostal')}>
+				<span class="vinheta rovilh"><img src="{OSTAL.imatge}-360.webp" alt="" /></span>
+				<span class="nom">{tria(T.ostal)}</span>
+			</button>
 		</nav>
+	{:else if ecran === 'ostal'}
+		{#key partida}
+			<ScenaTocar scena={OSTAL} {calme} ontocar={tocarObjecte} oncompleta={ostalComplet} />
+		{/key}
+		{#if ostalFach}
+			<p class="osca">{tria(T.osca)}</p>
+			<div class="accions">
+				<button class="gros" type="button" onclick={() => anar('ostal')}>{tria(T.tornarJogar)}</button>
+			</div>
+		{:else}
+			<p class="bulla" class:vis={!!dicha} aria-hidden="true">
+				<strong lang="oc">{dicha?.oc ?? ''}</strong>
+				<small>{dicha?.pron ?? ''}</small>
+			</p>
+		{/if}
 	{:else if ecran === 'imatgier'}
 		<div class="grasilha">
 			{#each BESTIAS as b (b.id)}
@@ -475,10 +523,11 @@
 		color: var(--t-aur);
 	}
 
-	/* --- Accueil : trois coins */
+	/* --- Accueil : quatre coins (la maison depuis le 05-11), en ligne ; deux
+	   par deux au téléphone */
 	.cantons {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		gap: 14px;
 	}
 	.canton {
@@ -510,6 +559,9 @@
 		object-fit: cover;
 		display: block;
 	}
+	.vinheta.rovilh {
+		background: #b34725; /* le fond du visuel de la maison */
+	}
 	.interrogacion {
 		font-family: var(--font-heading);
 		font-size: clamp(4rem, 14vw, 6.5rem);
@@ -522,20 +574,19 @@
 	}
 	@media (max-width: 560px) {
 		.cantons {
-			grid-template-columns: 1fr;
+			grid-template-columns: 1fr 1fr;
+			gap: 12px;
 		}
 		.canton {
-			flex-direction: row;
-			justify-content: flex-start;
-			gap: 18px;
+			gap: 8px;
 			padding: 10px;
+			border-radius: 24px;
 		}
 		.vinheta {
-			width: 112px;
-			flex: none;
+			border-radius: 18px;
 		}
 		.nom {
-			font-size: 1.5rem;
+			font-size: 1.25rem;
 		}
 	}
 

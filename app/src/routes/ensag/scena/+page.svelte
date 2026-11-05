@@ -28,7 +28,7 @@
 					fr: 'Le toit',
 					son: 'Lou téwlatt',
 					zonas: [[433, 362, 222, 84]],
-					// pastilha sus la teulada, pas entre las finèstras
+					// pastilha sus la teulada, pas entre las fenèstras
 					pastilha: [290, 410],
 					etiqueta: [76, 196],
 					sageta: [[262, 222], [350, 200], [352, 272]]
@@ -37,8 +37,8 @@
 					id: 'fenestras',
 					oc: 'Las fenèstras',
 					fr: 'Les fenêtres',
-					son: 'Lass finèstross',
-					nota: 'Ton visuel écrit « finèstras » ; lo Congrès ne connaît que « fenèstra » (languedocien), vérifié le 15-10. Coquille probable : à confirmer, et la prononciation avec.',
+					// « fenèstras », pas « finèstras » de l'ancien visuel : choix de Romain du 05-11
+					son: 'Lass fénèstross',
 					zonas: [
 						[332, 523, 42, 56],
 						[524, 523, 42, 56],
