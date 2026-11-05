@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { UNITATS, copar, letrasDe } from './serp-mots.js';
-import { novelaPartida, virar, pas, posicions, letraAttesa, DIRS } from './serp.js';
+import { novelaPartida, virar, pas, posicions, letraAttesa, escupir, coa, DIRS } from './serp.js';
 import { moduls, ordre } from '$lib/lesson/moduls/index.js';
 
 // Les choses des encadrés « À retenir » des unités 1 et 2, par id.
@@ -63,7 +63,7 @@ describe('sèrp : le jeu', () => {
 		expect(p.cors[0]).toEqual({ x: 0, y: 5 });
 	});
 
-	it('mange dans l’ordre, la lettre fausse reste, la queue écrit le mot', () => {
+	it('mange dans l’ordre ; la lettre fausse est mangée, se recrache devant la tête, puis la queue écrit le mot', () => {
 		const p = novelaPartida({ mot: 'mas', cols: 10, rows: 5, cap: { x: 0, y: 2 }, rand: graine() });
 		// lettres posées à la main sur la route : m, i (piège), a, s
 		p.teulas = [
@@ -74,16 +74,40 @@ describe('sèrp : le jeu', () => {
 		];
 		expect(pas(p).tipe).toBe('manjada');
 		expect(letraAttesa(p)).toBe('a');
-		expect(pas(p).tipe).toBe('error');
-		expect(p.teulas[1].manjada).toBe(false);
-		expect(pas(p).tipe).toBe('manjada');
-		expect(pas(p).tipe).toBe('res');
-		expect(pas(p).tipe).toBe('acabat');
+		expect(pas(p).tipe).toBe('falsa');
+		expect(coa(p)).toEqual(['m', 'i']);
+		expect(letraAttesa(p)).toBeNull(); // tant que la fausse est dans la queue
+		// même une bonne lettre est fausse derrière une fausse
+		expect(pas(p).tipe).toBe('falsa');
+		expect(p.falsas).toBe(2);
+		expect(p.cors).toHaveLength(3); // la dernière croissance attend le pas suivant
+		// on recrache deux fois : a puis i retombent devant la tête (x = 4, puis 5 est pris par s → 6)
+		expect(escupir(p).l).toBe('a');
+		expect(p.teulas[2]).toMatchObject({ manjada: false, x: 4, y: 2 });
+		expect(escupir(p).l).toBe('i');
+		expect(p.teulas[1]).toMatchObject({ manjada: false, x: 6, y: 2 });
+		expect(coa(p)).toEqual(['m']);
+		expect(letraAttesa(p)).toBe('a');
+		expect(p.cors).toHaveLength(2);
+		expect(pas(p).tipe).toBe('manjada'); // a, en 4
+		expect(pas(p).tipe).toBe('acabat'); // s, en 5
 		expect(p.acabat).toBe(true);
+		expect(escupir(p)).toBeNull();
 		// lue de la queue vers la tête : m, a, s (le s encore sous la tête)
 		const pos = posicions(p).filter((t) => t.cors).sort((a, b) => a.x - b.x);
 		expect(pos.map((t) => t.l).join('')).toBe('mas');
 		expect(pos.at(-1).sotaCap).toBe(true);
+	});
+
+	it('recracher une bonne lettre est permis : la suivante attendue recule', () => {
+		const p = novelaPartida({ mot: 'mas', cols: 10, rows: 5, cap: { x: 0, y: 2 }, rand: graine() });
+		p.teulas = [{ k: 0, l: 'm', x: 1, y: 2, manjada: false }];
+		pas(p);
+		expect(p.seguenta).toBe(1);
+		escupir(p);
+		expect(p.seguenta).toBe(0);
+		expect(p.cors).toHaveLength(1);
+		expect(letraAttesa(p)).toBe('m');
 	});
 
 	it('une lettre répétée : n’importe laquelle des deux convient', () => {
@@ -91,12 +115,12 @@ describe('sèrp : le jeu', () => {
 		p.teulas = [
 			{ k: 0, l: 'e', x: 1, y: 2, manjada: false },
 			{ k: 1, l: 'l', x: 3, y: 2, manjada: false },
-			{ k: 2, l: 'l', x: 5, y: 2, manjada: false },
-			{ k: 3, l: 'a', x: 7, y: 2, manjada: false }
+			{ k: 2, l: 'a', x: 5, y: 2, manjada: false },
+			{ k: 3, l: 'l', x: 7, y: 2, manjada: false }
 		];
 		const tipes = [];
-		for (let i = 0; i < 7; i++) tipes.push(pas(p).tipe);
-		expect(tipes).toEqual(['manjada', 'res', 'manjada', 'res', 'error', 'res', 'acabat']);
+		for (let i = 0; i < 5; i++) tipes.push(pas(p).tipe);
+		expect(tipes).toEqual(['manjada', 'res', 'manjada', 'res', 'acabat']);
 	});
 
 	it('ne fait jamais demi-tour sur sa queue, et s’arrête au lieu de se mordre', () => {
