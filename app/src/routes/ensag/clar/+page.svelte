@@ -109,7 +109,7 @@
 			<h2 id="decl-titol">Qu’es aquò, Lo Ligam ?</h2>
 			<blockquote>
 				<p>Aicí, l’occitan s’apren <mark>sens vergonha</mark> e <mark>amb benvolença,</mark> e cada leiçon fa <mark>ligam.</mark></p>
-				<div class="signatura"><img src="/ensag/clar/romain-480.webp" alt="" loading="lazy" />Romain Périer</div>
+				<div class="signatura"><img src="/ensag/clar/romain-480.webp" alt="" loading="lazy" />Romain</div>
 			</blockquote>
 		</section>
 	</main>

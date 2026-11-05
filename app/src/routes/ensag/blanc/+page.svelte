@@ -124,7 +124,7 @@
 			</div>
 			<figure class="retrat">
 				<img src="/ensag/clar/romain-480.webp" width="480" height="496" alt="" loading="lazy" />
-				<figcaption>Romain Périer</figcaption>
+				<figcaption>Romain</figcaption>
 			</figure>
 		</section>
 
