@@ -11,8 +11,8 @@
 //   pastilha = où poser la pastille, centre de la première zone par défaut
 // Formes vérifiées avec lo Congrès le 2026-11-05 (ostal, teulat, fenèstra, pòrta,
 // clau) ; prononciations du visuel Canva de Romain « L'ostal en occitan »,
-// sauf fenèstras : son visuel écrit « finèstras », le cursus validé (unité 7)
-// dit « fé-NÈS-tro ».
+// sauf fenèstras : son visuel écrivait « finèstras », le cursus validé (unité 7)
+// dit « fé-NÈS-tro » ; Romain garde « fenèstras » (« Garder fenèstras », 05-11).
 
 export const OSTAL = {
 	id: 'ostal',
