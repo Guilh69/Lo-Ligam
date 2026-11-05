@@ -697,3 +697,49 @@ export function dessenhDe(oc, def = '') {
 	if (!cache.has(oc)) cache.set(oc, DESSENHS[oc].map((d) => new Path2D(d)));
 	return cache.get(oc);
 }
+
+// ── L'explication de première visite (Remira, Romain, 05-11 : « pour une
+// première fois, il faudrait qu'on explique un peu le principe ») ─────────
+// Trois étapes qui se forment en poussière comme les mots : ce que c'est,
+// le geste, les ambiances. Même style : un seul trait, carré de 100 × 100.
+const GUIDA = {
+	// la poussière qui se pose en mot (comme le pictogramme de la case)
+	remira: [
+		cercle(24, 22, 0.5) + cercle(40, 14, 0.5) + cercle(55, 20, 0.5) + cercle(68, 11, 0.5) + cercle(80, 19, 0.5),
+		cercle(31, 34, 0.5) + cercle(46, 30, 0.5) + cercle(61, 35, 0.5) + cercle(74, 30, 0.5),
+		cercle(38, 45, 0.5) + cercle(52, 42, 0.5) + cercle(66, 46, 0.5),
+		'M22 62H78',
+		'M33 75H67'
+	],
+	// la souris et sa molette qu'on fait tourner
+	rodeta: [
+		'M44 20C33 20 28 28 28 40V62C28 75 35 82 44 82C53 82 60 75 60 62V40C60 28 55 20 44 20Z',
+		'M28 45H60M44 20V45',
+		'M44 28V36',
+		'M71 30C78 38 78 50 71 58',
+		'M66 54L71 58L76 54'
+	],
+	// le doigt qui glisse vers le haut sur le téléphone
+	det: [
+		'M36 12H64C67 12 70 15 70 18V82C70 85 67 88 64 88H36C33 88 30 85 30 82V18C30 15 33 12 36 12Z',
+		'M50 64V30',
+		'M43 37L50 30L57 37',
+		cercle(50, 70, 4)
+	],
+	// la liste des ambiances, en bas de l'écran
+	ambient: [
+		'M30 22H70M30 34H70M30 46H60',
+		cercle(23, 34, 0.6),
+		'M50 56V78',
+		'M43 71L50 78L57 71',
+		'M24 88H76'
+	]
+};
+
+/** Les dessins de l'explication, prêts pour le canevas (Path2D), ou null. */
+export function dessenhGuida(clau) {
+	if (!GUIDA[clau]) return null;
+	const k = `guida:${clau}`;
+	if (!cache.has(k)) cache.set(k, GUIDA[clau].map((d) => new Path2D(d)));
+	return cache.get(k);
+}

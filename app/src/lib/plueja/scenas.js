@@ -14,9 +14,10 @@ export const SCENAS = [
 	{
 		id: 'garriga',
 		grop: 'poesia',
-		nom: { oc: 'Garriga', fr: 'Garrigue' },
+		nom: { oc: 'Garriga', fr: 'Garrigue', es: 'Garriga', en: 'Garrigue', ca: 'Garriga', ar: 'Garriga' },
 		imatge: '/ensag/plueja/garriga.webp',
 		posicion: '50% 40%',
+		teinta: '#8a7aa8', // lavande : la lueur du ciel calme
 		mots: [
 			['pluèja', 'la pluie'],
 			['plòu', 'il pleut'],
@@ -51,9 +52,10 @@ export const SCENAS = [
 	{
 		id: 'fenestra',
 		grop: 'poesia',
-		nom: { oc: 'Fenèstra', fr: 'Fenêtre' },
+		nom: { oc: 'Fenèstra', fr: 'Fenêtre', es: 'Ventana', en: 'Window', ca: 'Finestra', ar: 'النافذة' },
 		imatge: '/ensag/plueja/fenestra.webp',
 		posicion: '50% 52%',
+		teinta: '#6f8f9a', // pierre grise
 		mots: [
 			['fenèstra', 'la fenêtre'],
 			['pèira', 'la pierre'],
@@ -80,7 +82,7 @@ export const SCENAS = [
 	{
 		id: 'nuech',
 		grop: 'poesia',
-		nom: { oc: 'Nuèch', fr: 'Nuit' },
+		nom: { oc: 'Nuèch', fr: 'Nuit', es: 'Noche', en: 'Night', ca: 'Nit', ar: 'الليل' },
 		imatge: null,
 		mots: [
 			['nuèch', 'la nuit'],
@@ -107,8 +109,10 @@ export const SCENAS = [
 	// 2026-11-04). On choisit l'unité qu'on a faite : la pluie devient une
 	// révision calme. Photos de Romain (sa sélection du 2026-11-05, dossier
 	// design-stock/Fotos/Bases_foto, hors Git) : 1280 px, WebP, sans GPS ni
-	// autre métadonnée, de 45 à 135 Ko. La teinte (teinta) reste en réserve :
-	// elle sert de fond si une ambiance n'a pas d'image.
+	// autre métadonnée, de 45 à 135 Ko. Depuis le 2026-11-05 au soir, la photo
+	// est un choix (« Fons : Fòto ») : le fond par défaut est un ciel calme, et
+	// la teinte (teinta) y fait la lueur de l'horizon, une couleur par ambiance
+	// (Romain : « des fonds calmes, parce que les photos, ça crée du bruit »).
 	//
 	// Une seule source, les leçons (consolidation du 2026-11-05, Romain) :
 	// chaque mot est [forme montrée, définition, id de la chose apprise]. L'id
@@ -122,7 +126,7 @@ export const SCENAS = [
 		id: 'u1',
 		grop: 'unitat',
 		numero: 1,
-		nom: { oc: 'Adieu !', fr: 'Salut !' },
+		nom: { oc: 'Adieu !', fr: 'Salut !', es: '¡Hola!', en: 'Hi!', ca: 'Salut!', ar: 'مرحبًا!' },
 		imatge: '/ensag/plueja/u1.webp',
 		posicion: '50% 55%',
 		teinta: '#c98a3a',
@@ -158,7 +162,7 @@ export const SCENAS = [
 		id: 'u2',
 		grop: 'unitat',
 		numero: 2,
-		nom: { oc: 'Parlas occitan ?', fr: 'Parles-tu occitan ?' },
+		nom: { oc: 'Parlas occitan ?', fr: 'Parles-tu occitan ?', es: '¿Hablas occitano?', en: 'Do you speak Occitan?', ca: 'Parles occità?', ar: 'هل تتحدث الأوكسيتانية؟' },
 		imatge: '/ensag/plueja/u2.webp',
 		posicion: '35% 45%',
 		teinta: '#3f8a8c',
@@ -192,7 +196,7 @@ export const SCENAS = [
 		id: 'u3',
 		grop: 'unitat',
 		numero: 3,
-		nom: { oc: 'La familha', fr: 'La famille' },
+		nom: { oc: 'La familha', fr: 'La famille', es: 'La familia', en: 'The family', ca: 'La família', ar: 'العائلة' },
 		imatge: '/ensag/plueja/u3.webp',
 		posicion: '50% 60%',
 		teinta: '#b0583c',
@@ -224,7 +228,7 @@ export const SCENAS = [
 		id: 'u4',
 		grop: 'unitat',
 		numero: 4,
-		nom: { oc: 'Qué fas ?', fr: 'Que fais-tu ?' },
+		nom: { oc: 'Qué fas ?', fr: 'Que fais-tu ?', es: '¿Qué haces?', en: 'What are you doing?', ca: 'Què fas?', ar: 'ماذا تفعل؟' },
 		imatge: '/ensag/plueja/u4.webp',
 		posicion: '50% 60%',
 		teinta: '#7d8a3c',
@@ -269,7 +273,7 @@ export const SCENAS = [
 		id: 'u5',
 		grop: 'unitat',
 		numero: 5,
-		nom: { oc: 'Al mercat', fr: 'Au marché' },
+		nom: { oc: 'Al mercat', fr: 'Au marché', es: 'En el mercado', en: 'At the market', ca: 'Al mercat', ar: 'في السوق' },
 		imatge: '/ensag/plueja/u5.webp',
 		posicion: '50% 55%',
 		teinta: '#c9733a',
@@ -306,7 +310,7 @@ export const SCENAS = [
 		id: 'u6',
 		grop: 'unitat',
 		numero: 6,
-		nom: { oc: 'La jornada', fr: 'La journée' },
+		nom: { oc: 'La jornada', fr: 'La journée', es: 'El día', en: 'The day', ca: 'El dia', ar: 'اليوم' },
 		imatge: '/ensag/plueja/u6.webp',
 		posicion: '50% 58%',
 		teinta: '#5a7fa8',
@@ -343,7 +347,7 @@ export const SCENAS = [
 		id: 'u7',
 		grop: 'unitat',
 		numero: 7,
-		nom: { oc: 'L’ostal', fr: 'La maison' },
+		nom: { oc: 'L’ostal', fr: 'La maison', es: 'La casa', en: 'The house', ca: 'La casa', ar: 'البيت' },
 		imatge: '/ensag/plueja/u7.webp',
 		posicion: '50% 50%',
 		teinta: '#9a6644',
@@ -382,7 +386,7 @@ export const SCENAS = [
 		id: 'u8',
 		grop: 'unitat',
 		numero: 8,
-		nom: { oc: 'En vila', fr: 'En ville' },
+		nom: { oc: 'En vila', fr: 'En ville', es: 'En la ciudad', en: 'In town', ca: 'A la ciutat', ar: 'في المدينة' },
 		imatge: '/ensag/plueja/u8.webp',
 		posicion: '50% 62%',
 		teinta: '#7a8494',
@@ -415,8 +419,8 @@ export const SCENAS = [
 
 /** Les deux familles d'ambiances, dans l'ordre du menu. */
 export const GROPS = [
-	{ id: 'unitat', nom: { oc: 'Las unitats de l’A1', fr: 'Les unités de l’A1' } },
-	{ id: 'poesia', nom: { oc: 'Poesia', fr: 'Poésie' } }
+	{ id: 'unitat', nom: { oc: 'Las unitats de l’A1', fr: 'Les unités de l’A1', es: 'Las unidades del A1', en: 'The A1 units', ca: 'Les unitats de l’A1', ar: 'وحدات المستوى A1' } },
+	{ id: 'poesia', nom: { oc: 'Poesia', fr: 'Poésie', es: 'Poesía', en: 'Poetry', ca: 'Poesia', ar: 'الشعر' } }
 ];
 
 /** L'ambiance « Tos mots » (05-11) : les mots du carnet de l'élève. Ses mots
@@ -424,7 +428,7 @@ export const GROPS = [
 export const QUASERNET = {
 	id: 'quasernet',
 	grop: 'quasernet',
-	nom: { oc: 'Tos mots', fr: 'Tes mots' }, // lo Congrès : tos, mot (05-11)
+	nom: { oc: 'Tos mots', fr: 'Tes mots', es: 'Tus palabras', en: 'Your words', ca: 'Les teves paraules', ar: 'كلماتك' }, // lo Congrès : tos, mot (05-11)
 	imatge: null,
 	teinta: '#b08d3e'
 };

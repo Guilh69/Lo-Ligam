@@ -8,12 +8,14 @@
 	// S'apren sous le nom « Remira » (contemple ; Romain, 2026-11-05 : « Je
 	// crois que je préfère Remira ») ; l'ancienne adresse y renvoie.
 	//
-	// Sobriété : deux fonds de 55 et 64 ko (adoucis dans le fichier, pas par un
-	// filtre CSS qui coûterait à chaque image), le troisième en pur CSS ; le son
-	// est fabriqué dans le navigateur (aucun fichier audio) et ne démarre que
-	// si on le demande.
+	// Sobriété : le fond par défaut est un ciel de nuit en pur CSS (zéro octet,
+	// Romain, 05-11 : « des fonds calmes, parce que les photos, je trouve que ça
+	// crée du bruit ») ; les photos (45 à 135 ko, adoucies dans le fichier) ne
+	// se chargent que si on les demande ; le son est fabriqué dans le navigateur
+	// (aucun fichier audio) et ne démarre que si on le demande.
 	import { onMount } from 'svelte';
-	import { tria } from '$lib/stores/lang.svelte.js';
+	import { tria, lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
+	import Icona from '$lib/components/Icona.svelte';
 	import { SCENAS, GROPS, QUASERNET, motsDelQuasernet } from '$lib/plueja/scenas.js';
 	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
 	import Polsa from '$lib/plueja/Polsa.svelte';
@@ -22,21 +24,46 @@
 
 	const T = {
 		titol: { oc: 'Remira', fr: 'Remira' }, // impératif de remirar, contempler (vèrb'Òc, 05-11) ; un nom se lit comme il se dit, dans toutes les langues
-		tornar: { oc: 'Tornar a l’acuèlh', fr: 'Revenir à l’accueil' },
-		ambianca: { oc: 'Ambient', fr: 'Ambiance' }, // lo Congrès : ambiance → ambient (04-11)
-		movement: { oc: 'Movement', fr: 'Mouvement' }, // lo Congrès : mouvement → movement (05-11)
-		plueja: { oc: 'Pluèja', fr: 'Pluie' },
-		polsa: { oc: 'Polsa d’aur', fr: 'Poussière d’or' }, // lo Congrès : poussière → polsa (languedocien)
-		det: { oc: 'Lisa lo det', fr: 'Fais glisser ton doigt' }, // lo Congrès : glisser → lisar, doigt → det ; même tournure que l'accueil (motor.js)
-		forca: { oc: 'Fòrça', fr: 'Intensité' },
-		son: { oc: 'Son', fr: 'Son' },
-		pausa: { oc: 'Pausa', fr: 'Pause' },
-		plenEcran: { oc: 'Plen ecran', fr: 'Plein écran' },
-		rodeta: { oc: 'Vira la rodeta', fr: 'Fais tourner la molette' },
-		telefon: { oc: 'Bolega lo telefòn', fr: 'Bouge ton téléphone' },
-		mots: { oc: 'Los mots', fr: 'Les mots' },
-		quasernet: { oc: 'Ton quasernet', fr: 'Ton carnet' }, // lo Congrès : carnet → quasernet (05-11)
-		quasernetVoid: { oc: 'Los mots de tas leiçons venon aquí.', fr: 'Les mots de tes leçons viennent ici.' }
+		tornar: { oc: 'Tornar a S’apren', fr: 'Revenir à S’apprend', es: 'Volver a S’apren', en: 'Back to S’apren', ca: 'Tornar a S’apren', ar: 'العودة إلى S’apren' }, // Remira est une rubrique de S'apren (comme les jeux)
+		lenga: { oc: 'Lenga', fr: 'Langue', es: 'Idioma', en: 'Language', ca: 'Llengua', ar: 'اللغة' },
+		lengas: { oc: 'Autras lengas', fr: 'Autres langues', es: 'Otros idiomas', en: 'Other languages', ca: 'Altres llengües', ar: 'لغات أخرى' }, // comme le globe du bandeau
+		ajuda: { oc: 'Cossí far ?', fr: 'Comment faire ?', es: '¿Cómo se hace?', en: 'How does it work?', ca: 'Com es fa?', ar: 'كيف يعمل هذا؟' }, // revoir l'explication
+		ambianca: { oc: 'Ambient', fr: 'Ambiance', es: 'Ambiente', en: 'Mood', ca: 'Ambient', ar: 'الجو' }, // lo Congrès : ambiance → ambient (04-11)
+		movement: { oc: 'Movement', fr: 'Mouvement', es: 'Movimiento', en: 'Motion', ca: 'Moviment', ar: 'الحركة' }, // lo Congrès : mouvement → movement (05-11)
+		plueja: { oc: 'Pluèja', fr: 'Pluie', es: 'Lluvia', en: 'Rain', ca: 'Pluja', ar: 'المطر' },
+		polsa: { oc: 'Polsa d’aur', fr: 'Poussière d’or', es: 'Polvo de oro', en: 'Gold dust', ca: 'Pols d’or', ar: 'غبار الذهب' }, // lo Congrès : poussière → polsa (languedocien)
+		polsaDesc: { oc: 'Los mots se dessenhan un per un.', fr: 'Les mots se dessinent un par un.', es: 'Las palabras se dibujan una a una.', en: 'Words draw themselves one by one.', ca: 'Les paraules es dibuixen una a una.', ar: 'ترتسم الكلمات واحدة تلو الأخرى.' },
+		pluejaDesc: { oc: 'Los mots tomban doçament.', fr: 'Les mots tombent doucement.', es: 'Las palabras caen con suavidad.', en: 'Words fall gently.', ca: 'Les paraules cauen suaument.', ar: 'تتساقط الكلمات بلطف.' },
+		fons: { oc: 'Fons', fr: 'Fond', es: 'Fondo', en: 'Background', ca: 'Fons', ar: 'الخلفية' },
+		cel: { oc: 'Cèl', fr: 'Ciel', es: 'Cielo', en: 'Sky', ca: 'Cel', ar: 'السماء' },
+		celDesc: { oc: 'Un cèl escur e doç.', fr: 'Un ciel sombre et doux.', es: 'Un cielo oscuro y suave.', en: 'A dark, soft sky.', ca: 'Un cel fosc i suau.', ar: 'سماء داكنة وهادئة.' },
+		foto: { oc: 'Fòto', fr: 'Photo', es: 'Foto', en: 'Photo', ca: 'Foto', ar: 'صورة' },
+		fotoDesc: { oc: 'Una fòto per ambient.', fr: 'Une photo par ambiance.', es: 'Una foto por ambiente.', en: 'One photo per mood.', ca: 'Una foto per ambient.', ar: 'صورة لكل جو.' },
+		fotoCap: { oc: 'Aqueste ambient a pas de fòto.', fr: 'Cette ambiance n’a pas de photo.', es: 'Este ambiente no tiene foto.', en: 'This mood has no photo.', ca: 'Aquest ambient no té foto.', ar: 'ليس لهذا الجو صورة.' },
+		// L'explication de première visite, en trois étapes formées en poussière.
+		// La première reprend le texte de la case de S'apren (apren.teulas.remira.sota).
+		guida1: {
+			oc: 'Los mots se dessenhan en polsa d’aur, un per un, per los aprene en calma.',
+			fr: 'Les mots se dessinent en poussière d’or, un par un, pour les apprendre au calme.',
+			es: 'Las palabras se dibujan en polvo de oro, una a una, para aprenderlas con calma.',
+			en: 'The words draw themselves in gold dust, one by one, so you can learn them calmly.',
+			ca: 'Les paraules es dibuixen en pols d’or, una a una, per aprendre-les amb calma.',
+			ar: 'ترتسم الكلمات بغبار الذهب واحدة تلو الأخرى، لتتعلمها بهدوء.'
+		},
+		guida2: { oc: 'Lo mot esclata e lo seguent se forma.', fr: 'Le mot éclate et le suivant se forme.', es: 'La palabra estalla y se forma la siguiente.', en: 'The word bursts and the next one forms.', ca: 'La paraula esclata i es forma la següent.', ar: 'تتبدد الكلمة وتتشكل التي تليها.' },
+		guida2Clic: { oc: 'Lo mot esclata e lo seguent se forma. Un clic tanben.', fr: 'Le mot éclate et le suivant se forme. Un clic aussi.', es: 'La palabra estalla y se forma la siguiente. Un clic también.', en: 'The word bursts and the next one forms. So does a click.', ca: 'La paraula esclata i es forma la següent. Un clic també.', ar: 'تتبدد الكلمة وتتشكل التي تليها. والنقر يفعل ذلك أيضًا.' },
+		guida3: { oc: 'Causís l’ambient', fr: 'Choisis l’ambiance', es: 'Elige el ambiente', en: 'Pick the mood', ca: 'Tria l’ambient', ar: 'اختيار الجو' }, // vèrb'Òc : causís, 2 sg. impératif
+		guida3Def: { oc: 'Tas leiçons, tos mots o la poesia, en bas de l’ecran.', fr: 'Tes leçons, tes mots ou la poésie, en bas de l’écran.', es: 'Tus lecciones, tus palabras o la poesía, abajo en la pantalla.', en: 'Your lessons, your words or poetry, at the bottom of the screen.', ca: 'Les teves lliçons, les teves paraules o la poesia, a baix de la pantalla.', ar: 'دروسك أو كلماتك أو الشعر، في أسفل الشاشة.' },
+		det: { oc: 'Lisa lo det', fr: 'Fais glisser ton doigt', es: 'Desliza el dedo', en: 'Slide your finger', ca: 'Llisca el dit', ar: 'مرّر إصبعك' }, // lo Congrès : glisser → lisar, doigt → det ; même tournure que l'accueil (motor.js)
+		forca: { oc: 'Fòrça', fr: 'Intensité', es: 'Intensidad', en: 'Intensity', ca: 'Intensitat', ar: 'الشدة' },
+		son: { oc: 'Son', fr: 'Son', es: 'Sonido', en: 'Sound', ca: 'So', ar: 'الصوت' },
+		pausa: { oc: 'Pausa', fr: 'Pause', es: 'Pausa', en: 'Pause', ca: 'Pausa', ar: 'إيقاف مؤقت' },
+		plenEcran: { oc: 'Plen ecran', fr: 'Plein écran', es: 'Pantalla completa', en: 'Full screen', ca: 'Pantalla completa', ar: 'ملء الشاشة' },
+		rodeta: { oc: 'Vira la rodeta', fr: 'Fais tourner la molette', es: 'Gira la rueda del ratón', en: 'Turn the mouse wheel', ca: 'Gira la roda del ratolí', ar: 'حرّك عجلة الفأرة' },
+		telefon: { oc: 'Bolega lo telefòn', fr: 'Bouge ton téléphone', es: 'Mueve el teléfono', en: 'Move your phone', ca: 'Mou el telèfon', ar: 'حرّك هاتفك' },
+		mots: { oc: 'Los mots', fr: 'Les mots', es: 'Las palabras', en: 'The words', ca: 'Les paraules', ar: 'الكلمات' },
+		quasernet: { oc: 'Ton quasernet', fr: 'Ton carnet', es: 'Tu cuaderno', en: 'Your notebook', ca: 'El teu quadern', ar: 'دفترك' }, // lo Congrès : carnet → quasernet (05-11)
+		quasernetVoid: { oc: 'Los mots de tas leiçons venon aquí.', fr: 'Les mots de tes leçons viennent ici.', es: 'Las palabras de tus lecciones llegan aquí.', en: 'The words from your lessons show up here.', ca: 'Les paraules de les teves lliçons arriben aquí.', ar: 'تظهر هنا كلمات دروسك.' }
 	};
 
 	// « Tos mots » : les mots de son carnet. La liste est figée au moment où on
@@ -64,9 +91,67 @@
 	// La poussière d'or s'ouvre par défaut (Romain, 05-11 : « une préférence
 	// pour la poussière d'or »).
 	let mòde = $state('polsa');
+	// Les mouvements : une liste qui s'allongera (la roue, le tunnel… en esquisse)
+	const MOVEMENTS = [
+		{ id: 'polsa', nom: T.polsa, desc: T.polsaDesc },
+		{ id: 'plueja', nom: T.plueja, desc: T.pluejaDesc }
+	];
 	let reserva = $state({ naut: 64, bas: 110 }); // place de l'en-tête et des commandes, pour la poussière
 
-	let racina, tela, barra, menu, polsa;
+	// Fond calme par défaut (Romain, 05-11) : un ciel de nuit teinté selon
+	// l'ambiance ; la photo devient un choix, mémorisé d'une visite à l'autre.
+	let fonsFoto = $state(false);
+	let fotoVisible = $derived(fonsFoto && !!scena.imatge);
+	let fotosDemandadas = $state({}); // photos déjà demandées (chargées une fois, gardées ensuite)
+
+	// Première visite : l'explication se forme en poussière, en trois étapes,
+	// puis les mots de l'ambiance (Romain, 05-11 : « pour une première fois,
+	// il faudrait qu'on explique un peu le principe »). « Cossí far ? » la
+	// remontre. Mémorisée dans le navigateur ; sans stockage, elle revient.
+	let guidaActiva = $state(false);
+	let lengaAra = $derived(langStore.current);
+	let guida = $derived([
+		[tria(T.titol), tria(T.guida1), null, 'remira', lengaAra],
+		[tria(tactil ? T.det : T.rodeta), tria(tactil ? T.guida2 : T.guida2Clic), null, tactil ? 'det' : 'rodeta', lengaAra],
+		[tria(T.guida3), tria(T.guida3Def), null, 'ambient', lengaAra]
+	]);
+	const CLAU_REMIRA = 'lo-ligam-remira';
+	function gardar() {
+		try {
+			localStorage.setItem(CLAU_REMIRA, JSON.stringify({ fons: fonsFoto ? 'foto' : 'cel', guida: true }));
+		} catch {
+			/* mode privé : le choix vaut pour la visite */
+		}
+	}
+	function finirGuida() {
+		if (!guidaActiva) return;
+		guidaActiva = false;
+		gardar();
+		activitat(); // les commandes peuvent de nouveau s'effacer
+	}
+	function tornarGuida() {
+		if (mòde !== 'polsa') causirMòde('polsa');
+		indici = false;
+		guidaActiva = true;
+		activitat();
+	}
+
+	// Choix de la langue, comme le bandeau du site : Òc, la seconde langue, le globe
+	let segonda = $derived(langStore.segonda);
+	let autras = $derived(SEGONDAS.filter((c) => c !== segonda));
+	function causirLenga(v) {
+		langStore.current = v;
+		tamparPanel();
+	}
+
+	function tamparPanel() {
+		racina?.querySelector(':popover-open')?.hidePopover?.();
+	}
+	const panelDobert = () => !!racina?.querySelector(':popover-open');
+	// une liste refermée : les commandes peuvent de nouveau s'effacer
+	const tornarActiu = (e) => e.newState === 'closed' && activitat();
+
+	let racina, tela, barra, polsa;
 	let son = null;
 
 	// ── Mots ─────────────────────────────────────────────────────────────
@@ -187,7 +272,7 @@
 		cx.setTransform(dpr, 0, 0, dpr, 0, 0);
 		cx.lineCap = 'round';
 		mesurarReserva();
-		estelas = Array.from({ length: Math.round((W * H) / 16000) }, () => ({
+		estelas = Array.from({ length: Math.round((W * H) / 20000) }, () => ({
 			x: Math.random() * W,
 			y: Math.random() * H * 0.62,
 			r: 0.3 + Math.random() * 0.9,
@@ -206,8 +291,9 @@
 	function dessenhar(dt, temps) {
 		if (!cx) return;
 		cx.clearRect(0, 0, W, H);
-		if (scenaId === 'nuech') {
-			cx.fillStyle = '#fff4dc';
+		if (!fotoVisible) {
+			// les étoiles du ciel calme : d'un blanc froid, pour ne pas se confondre avec la poussière d'or
+			cx.fillStyle = '#e4ecf7';
 			for (const s of estelas) {
 				cx.globalAlpha = s.a * (0.55 + 0.45 * Math.sin(temps * s.w + s.f));
 				cx.beginPath();
@@ -303,12 +389,13 @@
 	function activitat() {
 		inactiu = false;
 		clearTimeout(minuteurInactiu);
-		// les commandes restent là tant que la liste des ambiances est ouverte
-		minuteurInactiu = setTimeout(() => (inactiu = !menu?.matches(':popover-open')), 3500);
+		// les commandes restent là tant qu'une liste (ambiance, mouvement, fond, langue) est ouverte
+		// pendant l'explication aussi : sa dernière étape montre les commandes
+		minuteurInactiu = setTimeout(() => (inactiu = !panelDobert() && !guidaActiva), 3500);
 	}
 
 	function rodeta(e) {
-		if (menu?.contains(e.target)) return; // on fait défiler la liste des ambiances, pas la pluie
+		if (e.target?.closest?.('[popover]')) return; // on fait défiler une liste, pas la pluie
 		const d = (e.deltaY || 0) * (e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 400 : 1);
 		if (mòde === 'polsa') {
 			polsa?.rodeta(d);
@@ -319,7 +406,7 @@
 	}
 
 	// commandes, en-tête et liens : un clic dessus ne fait pas éclater le mot
-	const susComandas = (e) => barra?.contains(e.target) || menu?.contains(e.target) || !!e.target?.closest?.('.cap, a, button, input, label');
+	const susComandas = (e) => barra?.contains(e.target) || !!e.target?.closest?.('.cap, [popover], a, button, input, label');
 
 	let darrierTòc = null;
 	function bolegaPuntador(e) {
@@ -390,7 +477,7 @@
 	function tecla(e) {
 		activitat();
 		// flèches et Espace : mot suivant ou précédent, même quand un bouton garde le focus (Joan, 05-11)
-		if (mòde !== 'polsa' || menu?.matches(':popover-open')) return;
+		if (mòde !== 'polsa' || panelDobert()) return;
 		const cible = e.target;
 		if (cible?.matches?.('input, textarea, select')) return;
 		if (e.key === ' ' && cible?.matches?.('button, a')) return; // Espace active le bouton
@@ -399,9 +486,11 @@
 
 	// ── Commandes ────────────────────────────────────────────────────────
 	function causirMòde(m) {
+		tamparPanel();
 		if (m === mòde) return;
 		mòde = m;
 		clearTimeout(finIndici);
+		if (m !== 'polsa') finirGuida(); // l'explication parle de la poussière d'or
 		if (m === 'polsa') {
 			for (const id of fis.keys()) partir(id); // les mots de la pluie s'effacent
 			if (sonAtiu) bascularSon(); // le son de la pluie n'a plus de sens
@@ -415,17 +504,26 @@
 	}
 
 	function causirScena(id) {
-		menu?.hidePopover?.();
+		tamparPanel();
 		if (id === scenaId) return;
 		if (id === QUASERNET.id) {
 			motsQuasernet = motsDelQuasernet($state.snapshot(carnet.cartes), aRevoir(carnet));
 			if (!motsQuasernet.length) return;
 		}
+		finirGuida(); // on a choisi une ambiance : l'explication a servi
 		vistas[id] = true;
 		scenaId = id;
+		if (fonsFoto) fotosDemandadas[id] = true;
 		sac = [];
 		for (const id2 of fis.keys()) partir(id2);
 		darrierNais = temps - 3.4; // un premier mot arrive vite
+	}
+
+	function causirFons(foto) {
+		tamparPanel();
+		fonsFoto = foto;
+		if (foto) fotosDemandadas[scenaId] = true;
+		gardar();
 	}
 
 	async function bascularSon() {
@@ -452,10 +550,22 @@
 		calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		tactil = matchMedia('(pointer: coarse)').matches;
 		plenPossible = !!document.fullscreenEnabled;
+		let prefs = {};
+		try {
+			prefs = JSON.parse(localStorage.getItem(CLAU_REMIRA) || '{}') || {};
+		} catch {
+			/* stockage indisponible : fond calme et explication, comme une première fois */
+		}
+		fonsFoto = prefs.fons === 'foto';
+		if (fonsFoto) fotosDemandadas[scenaId] = true;
+		if (!prefs.guida) {
+			guidaActiva = true;
+			indici = false;
+		}
 		demarrerCarnet();
 		talhar();
 		activitat();
-		finIndici = setTimeout(() => (indici = false), 9000);
+		if (!guidaActiva) finIndici = setTimeout(() => (indici = false), 9000);
 		addEventListener('resize', talhar);
 		addEventListener('wheel', rodeta, { passive: true });
 		addEventListener('devicemotion', moviment);
@@ -499,42 +609,68 @@
 	class:inactiu
 	class:pausa
 	class:calme
+	style:--naut="{reserva.naut}px"
+	style:--bas="{reserva.bas}px"
 	bind:this={racina}
 >
 	<header class="cap">
-		<a class="tornar" href="/" aria-label="Lo Ligam, {tria(T.tornar)}"><span aria-hidden="true">‹</span> Lo Ligam</a>
-		<h1>{tria(T.titol)}</h1>
+		<div class="cap-nom">
+			<a class="tornar" href="/apren" aria-label={tria(T.tornar)} lang="oc"><span aria-hidden="true">‹</span> S’apren</a>
+			<h1>{tria(T.titol)}</h1>
+		</div>
+		<div class="cap-dreita">
+			<!-- toujours là, quel que soit le mouvement (Joan) : l'explication repasse à la poussière d'or -->
+			<button type="button" class="ajuda" aria-pressed={guidaActiva} onclick={tornarGuida}>{tria(T.ajuda)}</button>
+			<!-- La langue, comme dans le bandeau du site (Romain, 05-11 : « quand on
+			     est dedans, on est bloqué avec l'occitan ») -->
+			<div class="lengas" role="group" aria-label="Lenga / Langue">
+				<button type="button" aria-pressed={lengaAra === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
+				<button type="button" aria-pressed={lengaAra === segonda} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
+				<button type="button" class="globe" popovertarget="remira-lengas" title={tria(T.lengas)}>
+					<Icona nom="mond" size="1.1rem" />
+					<span class="sr">{tria(T.lengas)}</span>
+				</button>
+			</div>
+			<div id="remira-lengas" class="panel panel-lengas" popover role="group" aria-label={tria(T.lengas)} ontoggle={tornarActiu}>
+				{#each autras as code (code)}
+					<button type="button" lang={code} onclick={() => causirLenga(code)}>{LENGAS[code].nom}</button>
+				{/each}
+			</div>
+		</div>
 	</header>
 
-	<!-- Fonds : une image par ambiance, chargée seulement à la première visite -->
+	<!-- Fonds : un ciel calme par défaut, teinté selon l'ambiance ; la photo
+	     sur demande, chargée seulement quand on la choisit -->
 	<div class="fons" aria-hidden="true">
 		{#each TOTAS as s (s.id)}
-			{#if s.imatge}
-				{#if vistas[s.id]}
-					<img class="foto" class:vis={s.id === scenaId} src={s.imatge} alt="" style:object-position={s.posicion} decoding="async" />
-				{/if}
-			{:else if s.teinta}
-				<!-- en attendant la photo de Romain : un fond sombre teinté, 0 octet -->
-				{#if vistas[s.id]}
-					<div class="fons-teint" class:vis={s.id === scenaId} style:--teinta={s.teinta}></div>
-				{/if}
-			{:else}
-				<div class="cel-nuech" class:vis={s.id === scenaId}>
-					<!-- collines en silhouette : deux plans, quelques octets -->
-					<svg class="collas" viewBox="0 0 1000 200" preserveAspectRatio="none">
-						<path d="M0 118C120 82 220 96 330 72S560 92 680 62 900 70 1000 52V200H0Z" fill="#0b1626" />
-						<path d="M0 160C150 126 260 150 400 131S640 150 780 128 950 136 1000 124V200H0Z" fill="#060c16" />
-					</svg>
-				</div>
+			{#if vistas[s.id] || s.id === scenaId}
+				<div class="cel" class:nuech={!s.teinta} class:vis={s.id === scenaId && !fotoVisible} style:--teinta={s.teinta}></div>
+			{/if}
+			{#if s.imatge && fotosDemandadas[s.id]}
+				<img class="foto" class:vis={s.id === scenaId && fotoVisible} src={s.imatge} alt="" style:object-position={s.posicion} decoding="async" />
 			{/if}
 		{/each}
+		<!-- collines en silhouette : deux plans, quelques octets -->
+		<svg class="collas" class:vis={!fotoVisible} viewBox="0 0 1000 200" preserveAspectRatio="none">
+			<path d="M0 118C120 82 220 96 330 72S560 92 680 62 900 70 1000 52V200H0Z" fill="#0b1626" />
+			<path d="M0 160C150 126 260 150 400 131S640 150 780 128 950 136 1000 124V200H0Z" fill="#060c16" />
+		</svg>
 		<div class="vela"></div>
 	</div>
 
 	<canvas bind:this={tela} class="tela" aria-hidden="true"></canvas>
 
 	{#if mòde === 'polsa'}
-		<Polsa bind:this={polsa} mots={scena.mots} {pausa} {calme} {reserva} />
+		<Polsa
+			bind:this={polsa}
+			mots={guidaActiva ? guida : scena.mots}
+			clau={guidaActiva ? 'guida' : scenaId}
+			boucla={!guidaActiva}
+			onfin={finirGuida}
+			{pausa}
+			{calme}
+			{reserva}
+		/>
 	{/if}
 
 	<div class="mots" aria-hidden="true">
@@ -561,24 +697,46 @@
 		</ul>
 	</div>
 
-
-	<p class="indici" class:vis={indici && !calme} aria-hidden={!indici}>
-		{tactil ? tria(mòde === 'polsa' ? T.det : T.telefon) : tria(T.rodeta)}
+	<!-- Le rappel du geste, pour la pluie seulement : pour la poussière d'or,
+	     l'explication le montre, et le rappel se posait sur la définition -->
+	<p class="indici" class:vis={indici && !calme && mòde === 'plueja'} aria-hidden={!indici || mòde !== 'plueja'}>
+		{tactil ? tria(T.telefon) : tria(T.rodeta)}
 	</p>
 
 	<div class="comandas" bind:this={barra}>
-		<!-- Deux mouvements : la pluie, ou la poussière d'or -->
-		<div class="movements" role="group" aria-label={tria(T.movement)}>
-			<button type="button" aria-pressed={mòde === 'plueja'} onclick={() => causirMòde('plueja')}>{tria(T.plueja)}</button>
-			<button type="button" aria-pressed={mòde === 'polsa'} onclick={() => causirMòde('polsa')}>{tria(T.polsa)}</button>
+		<!-- Trois choix rangés de la même façon (Romain, 05-11 : « rendre plus
+		     cohérente l'interface ») : le mouvement, l'ambiance, le fond. Chacun
+		     ouvre sa liste ; un clic ailleurs ou Échap la referme (popover natif). -->
+		<div class="causidas">
+			<button type="button" class="causida" popovertarget="remira-movements">
+				<span class="etiqueta">{tria(T.movement)}</span>
+				<span class="valor">{tria(mòde === 'polsa' ? T.polsa : T.plueja)}</span>
+			</button>
+			<button type="button" class="causida" popovertarget="temas">
+				<span class="etiqueta">{tria(T.ambianca)}</span>
+				<span class="valor">{#if scena.numero}<span class="num">{scena.numero}</span>{' '}{/if}{tria(scena.nom)}</span>
+			</button>
+			<button type="button" class="causida" popovertarget="remira-fons">
+				<span class="etiqueta">{tria(T.fons)}</span>
+				<span class="valor">{tria(fotoVisible ? T.foto : T.cel)}</span>
+			</button>
 		</div>
-		<!-- Onze ambiances : un bouton qui ouvre la liste ; un clic ailleurs ou
-		     Échap la referme (popover natif, rien à programmer pour ça) -->
-		<button type="button" class="obrir-temas" popovertarget="temas">
-			<span class="etiqueta">{tria(T.ambianca)}</span>
-			{#if scena.numero}<span class="num">{scena.numero}</span>{' '}{/if}{tria(scena.nom)}
-		</button>
-		<div id="temas" class="temas" popover role="group" aria-label={tria(T.ambianca)} bind:this={menu} ontoggle={(e) => e.newState === 'closed' && activitat()}>
+
+		<div id="remira-movements" class="panel panel-pichon" popover role="group" aria-label={tria(T.movement)} ontoggle={tornarActiu}>
+			<h2>{tria(T.movement)}</h2>
+			<ul class="opcions">
+				{#each MOVEMENTS as m (m.id)}
+					<li>
+						<button type="button" aria-pressed={mòde === m.id} onclick={() => causirMòde(m.id)}>
+							<span class="nom">{tria(m.nom)}</span>
+							<span class="desc">{tria(m.desc)}</span>
+						</button>
+					</li>
+				{/each}
+			</ul>
+		</div>
+
+		<div id="temas" class="panel temas" popover role="group" aria-label={tria(T.ambianca)} ontoggle={tornarActiu}>
 			<!-- les mots de son carnet d'abord : ce qu'on a appris soi-même -->
 			<section class="grop grop-quasernet">
 				<h2>{tria(T.quasernet)}</h2>
@@ -591,7 +749,7 @@
 						</li>
 					</ul>
 				{:else}
-					<p class="void">{tria(T.quasernetVoid)} <a href="/aprene">S’apren</a></p>
+					<p class="void">{tria(T.quasernetVoid)} <a href="/aprene" lang="oc">S’apren</a></p>
 				{/if}
 			</section>
 			{#each GROPS as g (g.id)}
@@ -609,14 +767,31 @@
 				</section>
 			{/each}
 		</div>
-		{#if mòde === 'plueja'}
-			<label class="forca" style:--niv={niv}>
-				<span>{tria(T.forca)}</span>
-				<input type="range" min="0" max="1" step="0.05" bind:value={fons} />
-			</label>
-		{/if}
+
+		<div id="remira-fons" class="panel panel-pichon" popover role="group" aria-label={tria(T.fons)} ontoggle={tornarActiu}>
+			<h2>{tria(T.fons)}</h2>
+			<ul class="opcions">
+				<li>
+					<button type="button" aria-pressed={!fonsFoto} onclick={() => causirFons(false)}>
+						<span class="nom">{tria(T.cel)}</span>
+						<span class="desc">{tria(T.celDesc)}</span>
+					</button>
+				</li>
+				<li>
+					<button type="button" aria-pressed={fonsFoto} onclick={() => causirFons(true)}>
+						<span class="nom">{tria(T.foto)}</span>
+						<span class="desc">{tria(scena.imatge ? T.fotoDesc : T.fotoCap)}</span>
+					</button>
+				</li>
+			</ul>
+		</div>
+
 		<div class="botons">
 			{#if mòde === 'plueja'}
+				<label class="forca" style:--niv={niv}>
+					<span>{tria(T.forca)}</span>
+					<input type="range" min="0" max="1" step="0.05" bind:value={fons} />
+				</label>
 				<button type="button" aria-pressed={sonAtiu} onclick={bascularSon}>{tria(T.son)}</button>
 			{/if}
 			<button type="button" aria-pressed={pausa} onclick={() => (pausa = !pausa)}>{tria(T.pausa)}</button>
@@ -654,8 +829,7 @@
 		inset: 0;
 	}
 	.foto,
-	.cel-nuech,
-	.fons-teint {
+	.cel {
 		position: absolute;
 		inset: -4%;
 		width: 108%;
@@ -666,16 +840,17 @@
 		animation: respir 80s ease-in-out infinite alternate;
 	}
 	.foto.vis,
-	.cel-nuech.vis,
-	.fons-teint.vis {
+	.cel.vis {
 		opacity: 1;
 	}
-	/* Fond d'attente des unités : la teinte du thème, très assourdie */
-	.fons-teint {
+	/* Le ciel calme, fond par défaut (Romain, 05-11) : la nuit de « Nuèch »,
+	   et pour chaque autre ambiance une lueur de sa teinte sur l'horizon,
+	   comme une heure du soir à chacune. Tout en dégradés : zéro octet. */
+	.cel {
 		background:
-			radial-gradient(ellipse 70% 55% at 28% 24%, color-mix(in srgb, var(--teinta) 34%, transparent), transparent 72%),
-			radial-gradient(ellipse 60% 50% at 82% 88%, color-mix(in srgb, var(--teinta) 18%, transparent), transparent 70%),
-			linear-gradient(165deg, #0e181a, #091214 60%, #060b0c);
+			radial-gradient(ellipse 85% 34% at 50% 80%, color-mix(in srgb, var(--teinta, #22324a) 30%, transparent), transparent 72%),
+			radial-gradient(ellipse 55% 30% at 78% 6%, color-mix(in srgb, var(--teinta, #22324a) 8%, transparent), transparent 70%),
+			linear-gradient(#050a14, #0a1524 52%, #121d31);
 	}
 	@keyframes respir {
 		from {
@@ -687,7 +862,7 @@
 			translate: -1.5% -1%;
 		}
 	}
-	.cel-nuech {
+	.cel.nuech {
 		background:
 			radial-gradient(circle at 76% 21%, #f6ead0 0 2.4vmin, rgba(255, 236, 200, 0.28) 2.7vmin, rgba(255, 226, 170, 0.08) 7vmin, transparent 20vmin),
 			radial-gradient(ellipse at 50% 120%, #22324a 0%, transparent 60%),
@@ -699,6 +874,11 @@
 		bottom: 0;
 		width: 100%;
 		height: 30%;
+		opacity: 0;
+		transition: opacity 1.6s ease;
+	}
+	.collas.vis {
+		opacity: 1;
 	}
 	.vela {
 		position: absolute;
@@ -816,7 +996,7 @@
 	.pausa .mot,
 	.pausa .mot *,
 	.pausa .foto,
-	.pausa .cel-nuech {
+	.pausa .cel {
 		animation-play-state: paused;
 	}
 
@@ -842,10 +1022,36 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+		right: 0;
 		padding: 1.1rem clamp(1rem, 3vw, 2rem);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+	.cap-nom {
 		display: flex;
 		align-items: baseline;
 		gap: 1.1rem;
+	}
+	/* à droite : revoir l'explication, puis la langue (comme le bandeau du site) */
+	.cap-dreita {
+		display: flex;
+		align-items: center;
+		gap: 1.6rem;
+		font-family: var(--font-body);
+		font-size: 0.8rem;
+		letter-spacing: 0.05em;
+	}
+	.lengas {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+	}
+	.globe {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.3rem 0;
 	}
 	.tornar {
 		font-family: var(--font-body);
@@ -870,7 +1076,7 @@
 	.indici {
 		position: absolute;
 		left: 50%;
-		bottom: 5.6rem;
+		bottom: calc(var(--bas, 5rem) + 1.2rem);
 		translate: -50% 0;
 		margin: 0;
 		font-family: var(--font-quote);
@@ -898,29 +1104,71 @@
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
-		gap: 0.7rem 2.4rem;
+		gap: 0.7rem 2.6rem;
 		font-family: var(--font-body);
 		font-size: 0.8rem;
 		letter-spacing: 0.05em;
 	}
-	.botons,
-	.movements {
+	.botons button {
+		min-height: 2.75rem; /* 44 px à toucher */
+	}
+	.botons {
 		display: flex;
+		align-items: center;
 		gap: 1.3rem;
+		padding-inline-start: 2.6rem;
+		border-inline-start: 1px solid rgba(247, 243, 238, 0.16);
 	}
 
-	/* ── Choix de l'ambiance ── */
-	.obrir-temas {
-		display: inline-flex;
-		align-items: baseline;
-		gap: 0.55rem;
-		color: var(--crema);
+	/* ── Les trois choix : le mouvement, l'ambiance, le fond ── */
+	.causidas {
+		display: flex;
+		align-items: flex-end;
+		gap: 2.4rem;
+	}
+	.causida {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-end;
+		gap: 0.22rem;
+		max-width: 15rem;
+		min-height: 2.75rem; /* 44 px à toucher */
+		padding: 0.3rem 0;
+		text-align: start;
+		text-decoration-line: none;
 	}
 	.etiqueta {
-		color: rgba(247, 243, 238, 0.55);
+		font-size: 0.7rem; /* lisible aussi sur une photo (Joan) */
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: rgba(247, 243, 238, 0.66);
 	}
-	.etiqueta::after {
-		content: ' ·';
+	.valor {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 0.15em;
+		max-width: 100%;
+		font-size: 0.92rem;
+		color: var(--crema);
+		white-space: nowrap;
+	}
+	/* un petit chevron : la liste s'ouvre vers le haut */
+	.valor::after {
+		content: '';
+		flex: none;
+		width: 0.36em;
+		height: 0.36em;
+		margin-inline-start: 0.5em;
+		border-top: 1px solid currentColor;
+		border-left: 1px solid currentColor;
+		rotate: 45deg;
+		translate: 0 0.05em;
+		opacity: 0.55;
+		transition: opacity 0.3s;
+	}
+	.causida:hover .valor::after {
+		opacity: 1;
 	}
 	.num {
 		display: inline-block;
@@ -929,16 +1177,18 @@
 		font-variant-numeric: tabular-nums;
 		color: var(--aur-clar);
 	}
-	.temas {
+	.panel {
 		/* le popover natif se centre ; on le pose au-dessus de la barre */
 		position: fixed;
-		inset: auto auto calc(5.2rem + env(safe-area-inset-bottom)) 50%;
+		inset: auto auto calc(var(--bas, 5.2rem) + 0.4rem) 50%;
 		translate: -50% 0;
 		margin: 0;
 		width: min(36rem, calc(100vw - 32px));
 		max-height: min(70vh, 34rem);
 		overflow: auto;
 		overscroll-behavior: contain;
+		scrollbar-width: thin; /* pas de barre claire sur le sombre */
+		scrollbar-color: rgba(247, 243, 238, 0.25) transparent;
 		touch-action: pan-y;
 		padding: 1.1rem 1.4rem 1.2rem;
 		border: 1px solid rgba(255, 212, 127, 0.22);
@@ -951,10 +1201,10 @@
 		font-size: 0.9rem;
 		letter-spacing: 0.03em;
 	}
-	.temas::backdrop {
+	.panel::backdrop {
 		background: transparent;
 	}
-	.temas h2 {
+	.panel h2 {
 		margin: 0 0 0.5rem;
 		font-family: var(--font-body);
 		font-weight: 400;
@@ -978,6 +1228,58 @@
 	}
 	.grop-poesia ul {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+	/* le mouvement et le fond : peu de choix, chacun avec une ligne qui le dit */
+	.panel-pichon {
+		width: min(24rem, calc(100vw - 32px));
+	}
+	.panel ul.opcions {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.1rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.opcions button {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.2rem;
+		padding: 0.55rem 0;
+		text-align: start;
+		text-decoration-line: none;
+	}
+	.opcions .nom {
+		font-size: 0.95rem;
+		color: rgba(247, 243, 238, 0.85);
+		text-decoration: underline 1px transparent;
+		text-underline-offset: 0.45em;
+		transition: text-decoration-color 0.3s;
+	}
+	.opcions button[aria-pressed='true'] .nom {
+		color: var(--crema);
+		text-decoration-color: var(--aur-clar);
+	}
+	.opcions .desc {
+		font-size: 0.8rem;
+		line-height: 1.4;
+		color: rgba(247, 243, 238, 0.6);
+	}
+	/* la langue : une petite liste sous l'en-tête, à droite */
+	.panel-lengas {
+		inset: calc(var(--naut, 3.6rem) - 0.2rem) clamp(1rem, 3vw, 2rem) auto auto;
+		translate: none;
+		width: auto;
+		min-width: 9rem;
+		padding: 0.5rem 1.2rem;
+	}
+	.panel-lengas button {
+		display: block;
+		width: 100%;
+		min-height: 2.4rem;
+		text-align: start;
 	}
 	.temas li button {
 		width: 100%;
@@ -1097,12 +1399,26 @@
 			gap: 0.4rem 1.4rem;
 			font-size: 0.78rem;
 		}
-		.botons,
-		.movements {
+		.botons {
+			gap: 1rem;
+			padding-inline-start: 0;
+			border-inline-start: 0;
+		}
+		.causidas {
+			width: 100%;
+			justify-content: space-between;
 			gap: 1rem;
 		}
-		.temas {
-			bottom: calc(7rem + env(safe-area-inset-bottom));
+		.causida {
+			max-width: 40vw;
+		}
+		.valor {
+			font-size: 0.86rem;
+		}
+		.cap-dreita {
+			gap: 1rem;
+		}
+		.panel {
 			padding: 1rem 1.1rem;
 		}
 		.temas ul {
@@ -1112,16 +1428,12 @@
 			grid-template-columns: repeat(3, minmax(0, 1fr));
 			gap: 0 0.8rem;
 		}
-		.indici {
-			bottom: 7.4rem;
-		}
 	}
 
 	/* Réduire les animations : rien ne tombe, les mots apparaissent en fondu */
 	@media (prefers-reduced-motion: reduce) {
 		.foto,
-		.cel-nuech,
-		.fons-teint {
+		.cel {
 			animation: none;
 		}
 		.mot,
