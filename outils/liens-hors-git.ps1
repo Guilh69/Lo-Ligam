@@ -7,7 +7,7 @@
 # Décision : cahier des charges §11, 2026-10-24.
 $projet = Split-Path -Parent $PSScriptRoot
 $horsGit = Join-Path ([Environment]::GetFolderPath('MyDocuments')) '6_Projectes\Lo_Ligam_hors-git'
-$dossiers = 'SIG\brut', 'SIG\Limsi', 'Modules_cors\Base_donnees_linguistica', 'design-stock\MP4', 'design-stock\brut', 'design-stock\animations'
+$dossiers = 'SIG\brut', 'SIG\Limsi', 'Modules_cors\Base_donnees_linguistica', 'design-stock\MP4', 'design-stock\brut', 'design-stock\animations', 'design-stock\Fotos\Bases_foto'
 foreach ($d in $dossiers) {
 	$lien = Join-Path $projet $d
 	$cible = Join-Path $horsGit $d
