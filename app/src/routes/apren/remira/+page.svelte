@@ -4,7 +4,9 @@
 	// une image ; la définition de chacun s'écrit en petit, en italique. Tourner
 	// la molette (ordinateur) ou bouger le téléphone fait forcir la pluie : les
 	// mots tombent plus vite, s'agitent un peu, le son monte ; puis tout se
-	// calme seul. Essai : page non indexée, pas encore reliée au menu.
+	// calme seul. Essai à /ensag/plueja du 04-11 au 05-11, puis rubrique de
+	// S'apren sous le nom « Remira » (contemple ; Romain, 2026-11-05 : « Je
+	// crois que je préfère Remira ») ; l'ancienne adresse y renvoie.
 	//
 	// Sobriété : deux fonds de 55 et 64 ko (adoucis dans le fichier, pas par un
 	// filtre CSS qui coûterait à chaque image), le troisième en pur CSS ; le son
@@ -19,7 +21,7 @@
 	import { aRevoir } from '$lib/carnet/regles.js';
 
 	const T = {
-		titol: { oc: 'Pluèja de mots', fr: 'Pluie de mots' },
+		titol: { oc: 'Remira', fr: 'Remira' }, // impératif de remirar, contempler (vèrb'Òc, 05-11) ; un nom se lit comme il se dit, dans toutes les langues
 		tornar: { oc: 'Tornar a l’acuèlh', fr: 'Revenir à l’accueil' },
 		ambianca: { oc: 'Ambient', fr: 'Ambiance' }, // lo Congrès : ambiance → ambient (04-11)
 		movement: { oc: 'Movement', fr: 'Mouvement' }, // lo Congrès : mouvement → movement (05-11)
@@ -489,7 +491,6 @@
 
 <svelte:head>
 	<title>{tria(T.titol)} · Lo Ligam</title>
-	<meta name="robots" content="noindex" />
 </svelte:head>
 
 <main

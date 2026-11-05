@@ -49,6 +49,16 @@ export const families = [
 				status: 'live'
 			},
 			{
+				// Remira, la page de calme : les mots se dessinent en poussière d'or (Romain, 2026-11-05)
+				id: 'remira',
+				oc: 'Remira',
+				fr: 'Remira',
+				desc_oc: 'Los mots se dessenhan en polsa d’aur, un per un, per los aprene en calma.',
+				desc_fr: 'Les mots se dessinent en poussière d’or, un par un, pour les apprendre au calme.',
+				href: '/apren/remira',
+				status: 'live'
+			},
+			{
 				id: 'progression',
 				oc: 'Ma progression',
 				fr: 'Ma progression',

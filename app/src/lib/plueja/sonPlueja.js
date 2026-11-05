@@ -1,4 +1,4 @@
-// Son de pluie fabriqué dans le navigateur (Web Audio), pour /ensag/plueja.
+// Son de pluie fabriqué dans le navigateur (Web Audio), pour Remira (/apren/remira).
 // Aucun fichier à télécharger : sobriété (0 octet de plus pour la page).
 //
 // Trois couches, réglées par une seule intensité entre 0 (bruine) et 1

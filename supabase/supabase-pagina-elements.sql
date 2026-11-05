@@ -154,7 +154,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (299 lignes). Jamais écrasés s'ils existent déjà.
+-- (302 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, es, en, ca, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', 'El occitano', 'Occitan', 'L’occità', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', 'Se habla.', 'Speak.', 'Es parla.', null, null, true),
@@ -313,10 +313,13 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, es
 	('apren.teulas.mots', 'apren', 'bloc', 'apren.teulas', 5, null, null, null, null, null, null, null, true),
 	('apren.teulas.mots.ligam', 'apren', 'ligam', 'apren.teulas.mots', 0, 'Mots en imatges', 'Mots en images', 'Palabras en imágenes', 'Words in pictures', 'Paraules en imatges', '/mots', null, true),
 	('apren.teulas.mots.sota', 'apren', 'text', 'apren.teulas.mots', 0, 'A escriure', 'À écrire', 'Por escribir', 'To be written', 'Per escriure', null, null, false),
-	('apren.teulas.gramatica', 'apren', 'bloc', 'apren.teulas', 6, null, null, null, null, null, null, null, true),
+	('apren.teulas.remira', 'apren', 'bloc', 'apren.teulas', 6, null, null, null, null, null, null, null, true),
+	('apren.teulas.remira.ligam', 'apren', 'ligam', 'apren.teulas.remira', 0, 'Remira', 'Remira', 'Remira', 'Remira', 'Remira', '/apren/remira', null, true),
+	('apren.teulas.remira.sota', 'apren', 'text', 'apren.teulas.remira', 0, 'Los mots se dessenhan en polsa d’aur, un per un, per los aprene en calma.', 'Les mots se dessinent en poussière d’or, un par un, pour les apprendre au calme.', 'Las palabras se dibujan en polvo de oro, una a una, para aprenderlas con calma.', 'The words draw themselves in gold dust, one by one, so you can learn them calmly.', 'Les paraules es dibuixen en pols d’or, una a una, per aprendre-les amb calma.', null, null, true),
+	('apren.teulas.gramatica', 'apren', 'bloc', 'apren.teulas', 7, null, null, null, null, null, null, null, true),
 	('apren.teulas.gramatica.ligam', 'apren', 'ligam', 'apren.teulas.gramatica', 0, 'Gramatica', 'Grammaire', 'Gramática', 'Grammar', 'Gramàtica', '/apren/gramatica', null, true),
 	('apren.teulas.gramatica.sota', 'apren', 'text', 'apren.teulas.gramatica', 0, 'Las règlas de la lenga, nocion per nocion.', 'Les règles de la langue, notion par notion.', 'Las reglas de la lengua, noción por noción.', 'The rules of the language, one notion at a time.', 'Les regles de la llengua, noció per noció.', null, null, true),
-	('apren.teulas.progression', 'apren', 'bloc', 'apren.teulas', 7, null, null, null, null, null, null, null, true),
+	('apren.teulas.progression', 'apren', 'bloc', 'apren.teulas', 8, null, null, null, null, null, null, null, true),
 	('apren.teulas.progression.ligam', 'apren', 'ligam', 'apren.teulas.progression', 0, 'Ma progression', 'Ma progression', 'Mi progreso', 'My progress', 'El meu progrés', '/compte', null, true),
 	('apren.teulas.progression.sota', 'apren', 'text', 'apren.teulas.progression', 0, 'A escriure', 'À écrire', 'Por escribir', 'To be written', 'Per escriure', null, null, false),
 	('visio.titol', 'visio', 'text', null, 0, 'Corses en visio', 'Cours en visio', 'Clases por videollamada', 'Video lessons', 'Classes per videotrucada', null, null, true),

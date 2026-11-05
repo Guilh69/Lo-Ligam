@@ -1,4 +1,4 @@
-// Pluie de mots (/ensag/plueja, idée de Romain du 2026-11-04) : un moment de
+// Pluie de mots (Remira, /apren/remira ; essai /ensag/plueja, idée de Romain du 2026-11-04) : un moment de
 // calme où des mots occitans tombent lentement devant une image, chacun avec
 // sa définition qui s'écrit en petit. Les mots sont liés à l'image de fond.
 //

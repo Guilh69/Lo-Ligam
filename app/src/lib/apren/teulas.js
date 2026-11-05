@@ -82,6 +82,8 @@ export function pictoPer(href = '') {
 	if (href.startsWith('/anem')) return 'anem';
 	// Jòcs, les jeux pour apprendre, rubrique de S'apren (2026-11-05) : le dé
 	if (href.startsWith('/apren/jocs')) return 'jocs';
+	// Remira, la page de calme, rubrique de S'apren (2026-11-05) : la poussière qui se pose en mot
+	if (href.startsWith('/apren/remira')) return 'remira';
 	if (href.startsWith('/apren/gramatica')) return 'wiki';
 	if (href.startsWith('/aprene')) return 'parcors';
 	if (href.startsWith('/mots')) return 'mots';
