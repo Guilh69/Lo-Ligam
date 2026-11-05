@@ -154,7 +154,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (296 lignes). Jamais écrasés s'ils existent déjà.
+-- (299 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, es, en, ca, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', 'El occitano', 'Occitan', 'L’occità', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', 'Se habla.', 'Speak.', 'Es parla.', null, null, true),
@@ -307,13 +307,16 @@ insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, es
 	('apren.teulas.ensag', 'apren', 'bloc', 'apren.teulas', 3, null, null, null, null, null, null, null, true),
 	('apren.teulas.ensag.ligam', 'apren', 'ligam', 'apren.teulas.ensag', 0, 'Anem ! Per los pichons', 'Anem ! Pour les petits', 'Anem ! Para los pequeños', 'Anem! For little ones', 'Anem ! Per als petits', '/anem', null, true),
 	('apren.teulas.ensag.sota', 'apren', 'text', 'apren.teulas.ensag', 0, 'De 3 a 6 ans : se tòca una bèstia, s’ausís son nom.', 'De 3 à 6 ans : on touche une bête, on entend son nom.', 'De 3 a 6 años: se toca un animal, se oye su nombre.', 'Ages 3 to 6: touch an animal, hear its name.', 'De 3 a 6 anys: es toca un animal, se sent el seu nom.', null, null, true),
-	('apren.teulas.mots', 'apren', 'bloc', 'apren.teulas', 4, null, null, null, null, null, null, null, true),
+	('apren.teulas.jocs', 'apren', 'bloc', 'apren.teulas', 4, null, null, null, null, null, null, null, true),
+	('apren.teulas.jocs.ligam', 'apren', 'ligam', 'apren.teulas.jocs', 0, 'Jòcs', 'Jeux', 'Juegos', 'Games', 'Jocs', '/apren/jocs', null, true),
+	('apren.teulas.jocs.sota', 'apren', 'text', 'apren.teulas.jocs', 0, 'Dos jòcs per jogar amb los mots : la sèrp de las letras e los panièrs.', 'Deux jeux pour jouer avec les mots : le serpent des lettres et les paniers.', 'Dos juegos para jugar con las palabras: la serpiente de las letras y las cestas.', 'Two games to play with words: the letter snake and the word baskets.', 'Dos jocs per jugar amb les paraules: la serp de les lletres i els cistells.', null, null, true),
+	('apren.teulas.mots', 'apren', 'bloc', 'apren.teulas', 5, null, null, null, null, null, null, null, true),
 	('apren.teulas.mots.ligam', 'apren', 'ligam', 'apren.teulas.mots', 0, 'Mots en imatges', 'Mots en images', 'Palabras en imágenes', 'Words in pictures', 'Paraules en imatges', '/mots', null, true),
 	('apren.teulas.mots.sota', 'apren', 'text', 'apren.teulas.mots', 0, 'A escriure', 'À écrire', 'Por escribir', 'To be written', 'Per escriure', null, null, false),
-	('apren.teulas.gramatica', 'apren', 'bloc', 'apren.teulas', 5, null, null, null, null, null, null, null, true),
+	('apren.teulas.gramatica', 'apren', 'bloc', 'apren.teulas', 6, null, null, null, null, null, null, null, true),
 	('apren.teulas.gramatica.ligam', 'apren', 'ligam', 'apren.teulas.gramatica', 0, 'Gramatica', 'Grammaire', 'Gramática', 'Grammar', 'Gramàtica', '/apren/gramatica', null, true),
 	('apren.teulas.gramatica.sota', 'apren', 'text', 'apren.teulas.gramatica', 0, 'Las règlas de la lenga, nocion per nocion.', 'Les règles de la langue, notion par notion.', 'Las reglas de la lengua, noción por noción.', 'The rules of the language, one notion at a time.', 'Les regles de la llengua, noció per noció.', null, null, true),
-	('apren.teulas.progression', 'apren', 'bloc', 'apren.teulas', 6, null, null, null, null, null, null, null, true),
+	('apren.teulas.progression', 'apren', 'bloc', 'apren.teulas', 7, null, null, null, null, null, null, null, true),
 	('apren.teulas.progression.ligam', 'apren', 'ligam', 'apren.teulas.progression', 0, 'Ma progression', 'Ma progression', 'Mi progreso', 'My progress', 'El meu progrés', '/compte', null, true),
 	('apren.teulas.progression.sota', 'apren', 'text', 'apren.teulas.progression', 0, 'A escriure', 'À écrire', 'Por escribir', 'To be written', 'Per escriure', null, null, false),
 	('visio.titol', 'visio', 'text', null, 0, 'Corses en visio', 'Cours en visio', 'Clases por videollamada', 'Video lessons', 'Classes per videotrucada', null, null, true),

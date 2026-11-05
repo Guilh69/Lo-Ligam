@@ -37,6 +37,9 @@ export const PLAN = [
 			// Anem !, l'espace des petits (3 à 6 ans), à la place de la leçon d'essai, remplacée par le
 			// module 0 joué sans compte (Romain, 2026-11-05 ; cahier §11 du 29-08). Occitan vérifié ; es/en/ca/ar à relire par Aran.
 			{ oc: 'Anem ! Per los pichons', fr: 'Anem ! Pour les petits', es: 'Anem ! Para los pequeños', en: 'Anem! For little ones', ca: 'Anem ! Per als petits', ar: 'Anem ! للصغار', href: '/anem' },
+			// Jòcs, les jeux pour apprendre (la sèrp de las letras, los panièrs), rubrique de S'apren
+			// (Romain, 2026-11-05 : « une rubrique à part entière dans S'apren »). Occitan vérifié ; es/en/ca/ar à relire par Aran.
+			{ oc: 'Jòcs', fr: 'Jeux', es: 'Juegos', en: 'Games', ca: 'Jocs', ar: 'ألعاب', href: '/apren/jocs' },
 			// (venait d'Amassa : « c'est de l'apprentissage », Romain, 2026-10-22)
 			{ oc: 'Mots en imatges', fr: 'Mots en images', es: 'Palabras en imágenes', en: 'Words in pictures', ca: 'Paraules en imatges', ar: 'كلمات بالصور', href: '/mots' },
 			// (la grammaire, notion par notion : « plutôt dans apprendre la langue », Romain, 2026-11-03)

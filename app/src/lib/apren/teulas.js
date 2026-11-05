@@ -80,6 +80,8 @@ export function pictoPer(href = '') {
 	if (href.startsWith('/apren/visio') || href.startsWith('https://calendar.proton.me')) return 'visio';
 	// Anem !, l'espace des petits, à la place de la leçon d'essai (2026-11-05)
 	if (href.startsWith('/anem')) return 'anem';
+	// Jòcs, les jeux pour apprendre, rubrique de S'apren (2026-11-05) : le dé
+	if (href.startsWith('/apren/jocs')) return 'jocs';
 	if (href.startsWith('/apren/gramatica')) return 'wiki';
 	if (href.startsWith('/aprene')) return 'parcors';
 	if (href.startsWith('/mots')) return 'mots';
