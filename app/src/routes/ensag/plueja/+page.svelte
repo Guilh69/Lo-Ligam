@@ -14,11 +14,16 @@
 	import { tria } from '$lib/stores/lang.svelte.js';
 	import { SCENAS, GROPS } from '$lib/plueja/scenas.js';
 	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
+	import Polsa from '$lib/plueja/Polsa.svelte';
 
 	const T = {
 		titol: { oc: 'Pluèja de mots', fr: 'Pluie de mots' },
 		tornar: { oc: 'Tornar a l’acuèlh', fr: 'Revenir à l’accueil' },
 		ambianca: { oc: 'Ambient', fr: 'Ambiance' }, // lo Congrès : ambiance → ambient (04-11)
+		movement: { oc: 'Movement', fr: 'Mouvement' }, // lo Congrès : mouvement → movement (05-11)
+		plueja: { oc: 'Pluèja', fr: 'Pluie' },
+		polsa: { oc: 'Polsa d’aur', fr: 'Poussière d’or' }, // lo Congrès : poussière → polsa (languedocien)
+		det: { oc: 'Lisa lo det', fr: 'Fais glisser ton doigt' }, // lo Congrès : glisser → lisar, doigt → det ; même tournure que l'accueil (motor.js)
 		forca: { oc: 'Fòrça', fr: 'Intensité' },
 		son: { oc: 'Son', fr: 'Son' },
 		pausa: { oc: 'Pausa', fr: 'Pause' },
@@ -41,8 +46,12 @@
 	let plenPossible = $state(false);
 	let calme = $state(false); // préférence « réduire les animations »
 	let mots = $state([]);
+	// Deux mouvements (Romain, 04-11) : la pluie, ou la poussière d'or qui
+	// dessine chaque mot et glisse vers le suivant au rythme de la molette.
+	let mòde = $state('plueja');
+	let reserva = $state({ naut: 64, bas: 110 }); // place de l'en-tête et des commandes, pour la poussière
 
-	let racina, tela, barra, menu;
+	let racina, tela, barra, menu, polsa;
 	let son = null;
 
 	// ── Mots ─────────────────────────────────────────────────────────────
@@ -162,6 +171,7 @@
 		cx = tela.getContext('2d');
 		cx.setTransform(dpr, 0, 0, dpr, 0, 0);
 		cx.lineCap = 'round';
+		mesurarReserva();
 		estelas = Array.from({ length: Math.round((W * H) / 16000) }, () => ({
 			x: Math.random() * W,
 			y: Math.random() * H * 0.62,
@@ -170,6 +180,12 @@
 			w: 0.4 + Math.random() * 1.6,
 			f: Math.random() * 6.28
 		}));
+	}
+
+	function mesurarReserva() {
+		const naut = racina?.querySelector('.cap')?.offsetHeight || 64;
+		const bas = barra?.offsetHeight || 110;
+		if (naut !== reserva.naut || bas !== reserva.bas) reserva = { naut, bas };
 	}
 
 	function dessenhar(dt, temps) {
@@ -185,7 +201,7 @@
 			}
 			cx.globalAlpha = 1;
 		}
-		if (calme) return;
+		if (calme || mòde !== 'plueja') return; // la poussière d'or a son propre canevas
 		const n = Math.round((70 + 90 * nivLis + 480 * nivLis * nivLis) * Math.max(0.6, Math.min(2.2, (W * H) / (1440 * 900))));
 		const vBase = 460 + 950 * nivLis;
 		const ang = vent + 0.14 * nivLis * nivLis * Math.sign(vent || 1); // l'averse penche davantage
@@ -239,7 +255,7 @@
 			const maxi = Math.round((4 + 6 * nivLis) * Math.max(0.65, Math.min(1.3, (W * H) / (1100 * 700)))); // moins de mots sur un petit écran
 			let actius = 0;
 			for (const f of fis.values()) if (!f.partit) actius++;
-			if (temps - darrierNais > escart && actius < maxi) {
+			if (mòde === 'plueja' && temps - darrierNais > escart && actius < maxi) {
 				darrierNais = temps;
 				nàisser(temps);
 			}
@@ -267,7 +283,8 @@
 	}
 
 	// ── Gestes ───────────────────────────────────────────────────────────
-	let minuteurInactiu = 0;
+	let minuteurInactiu = 0,
+		finIndici = 0;
 	function activitat() {
 		inactiu = false;
 		clearTimeout(minuteurInactiu);
@@ -277,13 +294,24 @@
 
 	function rodeta(e) {
 		if (menu?.contains(e.target)) return; // on fait défiler la liste des ambiances, pas la pluie
-		const d = Math.abs(e.deltaY || 0) * (e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 400 : 1);
-		donar((Math.min(d, 160) / 160) * 0.08);
+		const d = (e.deltaY || 0) * (e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? 400 : 1);
+		if (mòde === 'polsa') {
+			polsa?.rodeta(d);
+			if (Math.abs(d) > 20) indici = false;
+			return;
+		}
+		donar((Math.min(Math.abs(d), 160) / 160) * 0.08);
 	}
+
+	const susComandas = (e) => barra?.contains(e.target) || menu?.contains(e.target);
 
 	let darrierTòc = null;
 	function bolegaPuntador(e) {
 		activitat();
+		if (mòde === 'polsa') {
+			polsa?.bolegar(e);
+			return;
+		}
 		if (e.pointerType === 'mouse') {
 			ventCibla = 0.07 + (e.clientX / W - 0.5) * 0.22;
 		} else if (e.pointerType === 'touch' && darrierTòc) {
@@ -326,14 +354,50 @@
 
 	function tòc(e) {
 		activitat(); // un toucher fait revenir les commandes (sinon elles restent cachées sur téléphone)
+		if (mòde === 'polsa') {
+			if (!susComandas(e)) {
+				polsa?.tocar(e);
+				if (e.pointerType === 'touch') indici = false;
+			}
+			return;
+		}
 		if (e.pointerType !== 'touch') return;
 		darrierTòc = { x: e.clientX, y: e.clientY };
 		demandarMoviment();
 	}
 
-	const levar = () => (darrierTòc = null);
+	function levar() {
+		darrierTòc = null;
+		polsa?.levar();
+	}
+
+	function tecla(e) {
+		activitat();
+		// flèches et Espace : mot suivant ou précédent, même quand un bouton garde le focus (Joan, 05-11)
+		if (mòde !== 'polsa' || menu?.matches(':popover-open')) return;
+		const cible = e.target;
+		if (cible?.matches?.('input, textarea, select')) return;
+		if (e.key === ' ' && cible?.matches?.('button, a')) return; // Espace active le bouton
+		polsa?.tecla(e);
+	}
 
 	// ── Commandes ────────────────────────────────────────────────────────
+	function causirMòde(m) {
+		if (m === mòde) return;
+		mòde = m;
+		clearTimeout(finIndici);
+		if (m === 'polsa') {
+			for (const id of fis.keys()) partir(id); // les mots de la pluie s'effacent
+			if (sonAtiu) bascularSon(); // le son de la pluie n'a plus de sens
+			indici = !calme;
+			finIndici = setTimeout(() => (indici = false), 7000);
+		} else {
+			indici = false;
+			darrierNais = temps - 3.4;
+		}
+		requestAnimationFrame(mesurarReserva); // les commandes ont changé de taille
+	}
+
 	function causirScena(id) {
 		menu?.hidePopover?.();
 		if (id === scenaId) return;
@@ -370,12 +434,12 @@
 		plenPossible = !!document.fullscreenEnabled;
 		talhar();
 		activitat();
-		const finIndici = setTimeout(() => (indici = false), 9000);
+		finIndici = setTimeout(() => (indici = false), 9000);
 		addEventListener('resize', talhar);
 		addEventListener('wheel', rodeta, { passive: true });
 		addEventListener('devicemotion', moviment);
 		addEventListener('deviceorientation', orientacion);
-		addEventListener('keydown', activitat);
+		addEventListener('keydown', tecla);
 		addEventListener('pointermove', bolegaPuntador);
 		addEventListener('pointerdown', tòc);
 		addEventListener('pointerup', levar);
@@ -393,7 +457,7 @@
 			removeEventListener('wheel', rodeta);
 			removeEventListener('devicemotion', moviment);
 			removeEventListener('deviceorientation', orientacion);
-			removeEventListener('keydown', activitat);
+			removeEventListener('keydown', tecla);
 			removeEventListener('pointermove', bolegaPuntador);
 			removeEventListener('pointerdown', tòc);
 			removeEventListener('pointerup', levar);
@@ -449,6 +513,10 @@
 
 	<canvas bind:this={tela} class="tela" aria-hidden="true"></canvas>
 
+	{#if mòde === 'polsa'}
+		<Polsa bind:this={polsa} mots={scena.mots} {pausa} {calme} {reserva} />
+	{/if}
+
 	<div class="mots" aria-hidden="true">
 		{#each mots as m (m.id)}
 			<div class="mot" style:--prof={m.prof} style:--escala={m.escala} {@attach registrar(m.id)}>
@@ -475,10 +543,15 @@
 
 
 	<p class="indici" class:vis={indici && !calme} aria-hidden={!indici}>
-		{tactil ? tria(T.telefon) : tria(T.rodeta)}
+		{tactil ? tria(mòde === 'polsa' ? T.det : T.telefon) : tria(T.rodeta)}
 	</p>
 
 	<div class="comandas" bind:this={barra}>
+		<!-- Deux mouvements : la pluie, ou la poussière d'or -->
+		<div class="movements" role="group" aria-label={tria(T.movement)}>
+			<button type="button" aria-pressed={mòde === 'plueja'} onclick={() => causirMòde('plueja')}>{tria(T.plueja)}</button>
+			<button type="button" aria-pressed={mòde === 'polsa'} onclick={() => causirMòde('polsa')}>{tria(T.polsa)}</button>
+		</div>
 		<!-- Onze ambiances : un bouton qui ouvre la liste ; un clic ailleurs ou
 		     Échap la referme (popover natif, rien à programmer pour ça) -->
 		<button type="button" class="obrir-temas" popovertarget="temas">
@@ -501,12 +574,16 @@
 				</section>
 			{/each}
 		</div>
-		<label class="forca" style:--niv={niv}>
-			<span>{tria(T.forca)}</span>
-			<input type="range" min="0" max="1" step="0.05" bind:value={fons} />
-		</label>
+		{#if mòde === 'plueja'}
+			<label class="forca" style:--niv={niv}>
+				<span>{tria(T.forca)}</span>
+				<input type="range" min="0" max="1" step="0.05" bind:value={fons} />
+			</label>
+		{/if}
 		<div class="botons">
-			<button type="button" aria-pressed={sonAtiu} onclick={bascularSon}>{tria(T.son)}</button>
+			{#if mòde === 'plueja'}
+				<button type="button" aria-pressed={sonAtiu} onclick={bascularSon}>{tria(T.son)}</button>
+			{/if}
 			<button type="button" aria-pressed={pausa} onclick={() => (pausa = !pausa)}>{tria(T.pausa)}</button>
 			{#if plenPossible}
 				<button type="button" onclick={bascularPlen}>{tria(T.plenEcran)}</button>
@@ -791,7 +868,8 @@
 		font-size: 0.8rem;
 		letter-spacing: 0.05em;
 	}
-	.botons {
+	.botons,
+	.movements {
 		display: flex;
 		gap: 1.3rem;
 	}
@@ -961,7 +1039,8 @@
 			gap: 0.4rem 1.4rem;
 			font-size: 0.78rem;
 		}
-		.botons {
+		.botons,
+		.movements {
 			gap: 1rem;
 		}
 		.temas {
