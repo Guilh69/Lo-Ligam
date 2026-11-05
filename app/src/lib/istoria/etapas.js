@@ -16,8 +16,11 @@ export const LUÒCS = {
 	barcelona: { nom: 'Barcelona', lon: 2.17, lat: 41.39 }
 };
 
-// Une étape par chapitre (clé de pagina_elements). Un chapitre ajouté plus tard
-// sans étape garde la vue du précédent.
+// Une étape par chapitre (clé de pagina_elements), calée sur ce que dit le
+// texte (Romain, 05-11 : « une lecture accompagnée et guidée ») : le lieu
+// nommé dans le chapitre, rien d'inventé. Un chapitre sans lieu (c5 : apprendre
+// seul, Assimil) n'a pas d'étape et garde la vue du précédent.
+//   lòc : le nom du lieu, affiché aussi au-dessus du titre du chapitre
 //   c : centre [lon, lat] ; r : demi-largeur visible en km (sur le petit côté)
 //   luòcs : les points montrés ; focus : [lieu, rayon du projecteur en km]
 //   segond : un deuxième point qui s'allume un instant après
@@ -27,20 +30,27 @@ export const ETAPAS = {
 	// avant le premier chapitre : l'Hérault dans sa région, sans Paris (Romain,
 	// 05-11 : « il faut pas que ça commence à Paris ») ; le chapitre 1 resserre
 	debuta: { c: [3.2, 43.75], r: 170, luòcs: ['erau'], zona: 'erau' },
-	'istoria.capitols.c1': { c: [3.42, 43.62], r: 85, luòcs: ['erau'], zona: 'erau', focus: ['erau', 55] },
-	'istoria.capitols.c2': { c: [3.877, 43.611], r: 38, luòcs: ['montpelhier'], focus: ['montpelhier', 14] },
+	// la famille de sa mère, les mots qu'il ne comprenait pas
+	'istoria.capitols.c1': { lòc: 'Erau', c: [3.42, 43.62], r: 85, luòcs: ['erau'], zona: 'erau', focus: ['erau', 55] },
+	// « Montpelhièr, una vila sens istòria ? »
+	'istoria.capitols.c2': { lòc: 'Montpelhièr', c: [3.877, 43.611], r: 38, luòcs: ['montpelhier'], focus: ['montpelhier', 14] },
+	// Erasmus à Valéncia, le débat « encara mai fòrt en Catalonha »
 	'istoria.capitols.c3': {
+		lòc: 'Valéncia · Barcelona',
 		c: [1.0, 40.6],
 		r: 215,
-		luòcs: ['valencia', 'barcelona', 'montpelhier'],
+		luòcs: ['valencia', 'barcelona'],
 		domenis: ['catalan'],
 		focus: ['valencia', 70],
 		segond: 'barcelona'
 	},
-	'istoria.capitols.c4': { c: [2.5, 43.4], r: 330, luòcs: ['montpelhier'], domenis: ['occitan'], focus: ['montpelhier', 60] },
-	'istoria.capitols.c5': { c: [3.877, 43.611], r: 60, luòcs: ['montpelhier'], focus: ['montpelhier', 22] },
-	'istoria.capitols.c6': { c: [3.42, 43.62], r: 85, luòcs: ['erau', 'montpelhier'], zona: 'erau', focus: ['erau', 55] },
-	'istoria.espelida.c1': { c: [2.4, 44.4], r: 330, domenis: ['occitan'], estelas: true },
+	// le retour en France, « la riquesa jos mos pès » : le domaine occitan
+	'istoria.capitols.c4': { lòc: 'Occitània', c: [2.5, 44.2], r: 330, domenis: ['occitan'] },
+	// les mots de la famille, le grand-père
+	'istoria.capitols.c6': { lòc: 'Erau', c: [3.42, 43.62], r: 85, luòcs: ['erau'], zona: 'erau', focus: ['erau', 55] },
+	// le compte Instagram, une communauté : les lieux d'Occitània s'allument
+	'istoria.espelida.c1': { lòc: 'Occitània', c: [2.4, 44.4], r: 330, domenis: ['occitan'], estelas: true },
+	// « la realitat occitana d'ara en França » : vue d'ensemble, tout le parcours
 	'istoria.espelida.c2': {
 		c: [2.0, 44.0],
 		r: 480,

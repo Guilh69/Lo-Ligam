@@ -9,8 +9,10 @@
 	import { tria } from '$lib/stores/lang.svelte.js';
 	import { LUÒCS, ETAPAS, etapaDe, vol, escalaRedona } from './etapas.js';
 
-	/** racina : l'élément qui contient les chapitres, marqués data-etapa={clé} */
-	let { racina } = $props();
+	/** racina : l'élément qui contient les chapitres, marqués data-etapa={clé} ;
+	 *  actiu : le chapitre en cours de lecture (lecture guidée : la page le fait
+	 *  ressortir), même s'il n'a pas d'étape sur la carte */
+	let { racina, actiu = $bindable(null) } = $props();
 
 	const KM = 1.112; // km par unité (1/100 de degré de latitude)
 	const fontsTèxt = { oc: 'Fonts', fr: 'Sources', es: 'Fuentes', en: 'Sources', ca: 'Fonts', ar: 'المصادر' };
@@ -65,6 +67,13 @@
 		const [px, py] = ecran(...proj(l.lon, l.lat));
 		return { px, py, r: (e.focus[1] / KM) * s };
 	});
+	// une étape sans point (le domaine occitan) : son nom au milieu de l'aplat,
+	// le même que celui écrit au-dessus du chapitre
+	let etiqueta = $derived.by(() => {
+		if (!fons || !e.lòc || e.focus) return null;
+		const [px, py] = ecran(...proj(e.c[0], e.c[1]));
+		return { nom: e.lòc, px, py };
+	});
 	let arc = $derived.by(() => {
 		if (!fons || !e.arc) return null;
 		const [a, b] = e.arc.map((id) => ecran(...proj(LUÒCS[id].lon, LUÒCS[id].lat)));
@@ -83,6 +92,7 @@
 		const caixas = punts
 			.filter((p) => p.vist)
 			.map((p) => (p.actiu ? [p.px - 44, p.py - 40, p.px + 44 + p.nom.length * 8.5, p.py + 40] : [p.px - 16, p.py - 18, p.px + 16 + p.nom.length * 8, p.py + 18]));
+		if (etiqueta) caixas.push([etiqueta.px - 90, etiqueta.py - 30, etiqueta.px + 90, etiqueta.py + 30]);
 		const out = [];
 		const max = e.estelas ? 6 : banda ? 8 : 11;
 		for (const l of luòcsOc) {
@@ -133,10 +143,17 @@
 		if (!el) return;
 		banda = el.getBoundingClientRect().width > innerWidth * 0.8;
 		let id = 'debuta';
-		for (const c of capitols()) {
+		let lec = null;
+		const cs = capitols();
+		for (const c of cs) {
 			if (c.getBoundingClientRect().top >= linha()) break;
-			if (ETAPAS[c.dataset.etapa]) id = c.dataset.etapa;
+			lec = c.dataset.etapa;
+			if (ETAPAS[lec]) id = lec;
 		}
+		// le dernier chapitre reste actif jusqu'à ce qu'on l'ait quitté
+		const fin = cs.at(-1);
+		if (lec && fin && lec === fin.dataset.etapa && fin.getBoundingClientRect().bottom < innerHeight * 0.2) lec = null;
+		actiu = lec;
 		if (id !== etapa) {
 			etapa = id;
 			arribada++;
@@ -235,6 +252,7 @@
 			{#if arc}{#key arribada}<path class="arc" d={arc} pathLength="1" />{/key}{/if}
 		</svg>
 
+		{#if etiqueta}{#key etiqueta.nom + arribada}<span class="etiqueta" lang="oc" style:transform="translate({etiqueta.px}px, {etiqueta.py}px)">{etiqueta.nom}</span>{/key}{/if}
 		{#each repèris as v (v.nom)}<span class="repèri" lang="oc" style:transform="translate({v.px}px, {v.py}px)">{v.nom}</span>{/each}
 
 		{#each punts as p (p.id)}
@@ -499,6 +517,24 @@
 		pointer-events: none;
 		animation: aparéisser 0.5s ease both;
 	}
+	.etiqueta {
+		position: absolute;
+		top: 0;
+		left: 0;
+		translate: -50% -50%;
+		font-size: 1.05rem;
+		font-style: italic;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		line-height: 1;
+		white-space: nowrap;
+		color: var(--t-aur);
+		text-shadow:
+			0 0 8px var(--t-fons),
+			0 0 2px var(--t-fons);
+		pointer-events: none;
+		animation: aparéisser 0.9s 0.4s ease both;
+	}
 	.repèri::before {
 		content: '';
 		width: 0.22rem;
@@ -552,6 +588,7 @@
 	@media (prefers-reduced-motion: reduce) {
 		.iris,
 		.arc,
+		.etiqueta,
 		.anèl {
 			animation: none;
 		}

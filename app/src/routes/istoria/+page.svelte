@@ -14,6 +14,7 @@
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { editor } from '$lib/data/legal.js';
 	import CartaIstoria from '$lib/istoria/CartaIstoria.svelte';
+	import { ETAPAS } from '$lib/istoria/etapas.js';
 
 	let { data, form } = $props();
 
@@ -208,6 +209,8 @@
 
 	// la carte qui suit le récit (Romain, 2026-11-05) : elle lit les chapitres data-etapa
 	let recit = $state();
+	// lecture guidée (Romain, 05-11) : le chapitre lu ressort, les autres s'estompent
+	let actiu = $state(null);
 	let error = $derived(form?.error ? (tx.error[form.error] ?? tx.error.mandadís) : null);
 	let ambAdreça = $derived(form?.error === 'mandadís' || form?.error === 'pas_brancat');
 </script>
@@ -240,6 +243,15 @@
 						{#each paragrafs(v.t) as p, i (i)}<p>{p}</p>{/each}
 					</div>
 				{/if}
+				{#if !amagat('istoria.contacte.titol')}
+					<!-- raccourci vers « Escambiem », en bas de page (Romain, 05-11) -->
+					{@const e = vista('istoria.contacte.titol')}
+					<a class="vers-escambi" href="#contacte"
+						><span lang={e.lang}>{e.t}</span><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"
+							><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" /></svg
+						></a
+					>
+				{/if}
 			</div>
 			{#if retrat?.url}
 				<figure class="retrat" use:editar={'istoria.retrat'} hidden={amagat('istoria.retrat')}>
@@ -258,9 +270,10 @@
 			<ol class="capitols" start={debuta + 1}>
 				{#each l as c, i (c.clau)}
 					{@const cos = vista(c.clau + '.tèxt')}
-					<li class="capitol" data-etapa={c.clau} use:editar={c.clau}>
+					<li class="capitol" class:actiu={actiu === c.clau} data-etapa={c.clau} use:editar={c.clau}>
 						<span class="capitol-n" aria-hidden="true">{String(debuta + i + 1).padStart(2, '0')}</span>
 						<div>
+							{#if ETAPAS[c.clau]?.lòc}<p class="capitol-lòc" lang="oc">{ETAPAS[c.clau].lòc}</p>{/if}
 							{@render tèxt(c.clau + '.titol', etiqueta)}
 							<div class="capitol-cos" lang={cos.lang} hidden={amagat(c.clau + '.tèxt')} use:editar={c.clau + '.tèxt'}>
 								{#each paragrafs(cos.t) as p, k (k)}<p>{p}</p>{/each}
@@ -272,9 +285,9 @@
 			{#if edicion.actiu}<button type="button" class="ed-apondre" onclick={() => apondreCapitol(clauLista)}>+ {tx.apondre}</button>{/if}
 		{/snippet}
 
-		<div class="recit" bind:this={recit}>
+		<div class="recit" class:guidat={actiu && !edicion.actiu} bind:this={recit}>
 			<aside class="recit-carta">
-				<CartaIstoria racina={recit} />
+				<CartaIstoria racina={recit} bind:actiu />
 			</aside>
 			<div class="recit-tèxt">
 		{#if capitols.length || edicion.actiu}
@@ -449,6 +462,38 @@
 	.chapèu p {
 		margin: 0 0 0.8em;
 	}
+	/* le raccourci vers « Escambiem » : un lien souligné de rouge (règle B :
+	   rouge = clic), la flèche dit qu'on descend */
+	.vers-escambi {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-top: 0.6rem;
+		padding-block: 0.3rem;
+		color: var(--t-tinta);
+		font-size: 1.05rem;
+		font-weight: 700;
+		text-decoration: underline;
+		text-decoration-color: var(--t-accion);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.3em;
+	}
+	.vers-escambi svg {
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.6;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: transform 0.25s ease;
+	}
+	.vers-escambi:hover svg {
+		transform: translateY(2px);
+	}
+	.vers-escambi:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 4px;
+		border-radius: 2px;
+	}
 
 	/* Le portrait « sang e aur » : liseré terracotta, puis or (charte §3bis) */
 	.retrat {
@@ -571,6 +616,49 @@
 	.capitol-cos {
 		line-height: 1.7;
 		font-size: 1.05rem;
+	}
+	/* le lieu du chapitre, le même nom que sur la carte */
+	.capitol-lòc {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		margin: 0.5rem 0 -0.1rem;
+		font-size: 0.82rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		color: var(--t-aur);
+	}
+	.capitol-lòc::before {
+		content: '';
+		width: 0.42rem;
+		height: 0.42rem;
+		border-radius: 50%;
+		background: currentColor;
+	}
+
+	/* Lecture guidée (Romain, 05-11) : le chapitre qu'on lit ressort, les
+	   autres s'estompent ; sa pastille s'emplit d'or, comme son lieu sur la carte */
+	.capitol {
+		transition: opacity 0.5s ease;
+	}
+	.capitol-n {
+		transition:
+			background 0.4s ease,
+			color 0.4s ease;
+	}
+	/* 0,55 : le texte estompé garde un contraste de 5,6:1 (RGAA, Joan 05-11) */
+	.recit.guidat .capitol:not(.actiu) {
+		opacity: 0.55;
+	}
+	.capitol.actiu .capitol-n {
+		background: var(--t-aur);
+		color: var(--t-fons);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.capitol,
+		.capitol-n {
+			transition: none;
+		}
 	}
 	.capitol-cos p {
 		margin: 0 0 0.9em;
