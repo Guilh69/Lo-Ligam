@@ -33,6 +33,7 @@
 		partirTactil: { oc: 'Tòca un panièr per partir.', fr: 'Touche un panier pour partir.' },
 		enPausa: { oc: 'En pausa', fr: 'En pause' },
 		torna: { oc: 'Lo mot torna.', fr: 'Le mot remonte.' },
+		dos: { oc: 'dins los dos panièrs !', fr: 'dans les deux paniers !' },
 		clavier: {
 			oc: 'Sagetas : esquèrra, drecha · Espaci o aval : lo mot tomba · Escap : pausa',
 			fr: 'Flèches : gauche, droite · Espace ou bas : le mot tombe · Échap : pause'
@@ -68,7 +69,8 @@
 	let secos = $state(-1);
 	let indici = $state(false);
 	let anonci = $state('');
-	let plaçats = $derived(dins[0].length + dins[1].length);
+	let plaçats = $state(0); // mots rangés (un mot des deux paniers compte une fois)
+	let dosPaniers = $state(null); // le mot qui vient d'entrer dans les deux paniers
 	let sac = [];
 	let errors = 0;
 	let rapid = false;
@@ -90,6 +92,8 @@
 		temaId = id;
 		sac = barrejar(tema.mots.slice());
 		dins = [[], []];
+		plaçats = 0;
+		dosPaniers = null;
 		primier = true;
 		novelMot();
 	}
@@ -116,9 +120,22 @@
 	function aterrir() {
 		const p = tema.paniers[col];
 		if (bonPanier(mot, p.id)) {
-			dins[col].push(mot);
+			plaçats++;
 			if (son) playTick();
-			anonci = `${mot.oc} : ${tria(p)}`;
+			if (mot.panier === 'ab') {
+				// un mot des deux paniers entre dans les deux à la fois, et on le dit
+				// tout de suite (Romain, 05-11 : « on comprend pas que ça peut être
+				// dit dans les deux »)
+				dins[0].push(mot);
+				dins[1].push(mot);
+				const m = mot;
+				dosPaniers = m;
+				setTimeout(() => dosPaniers === m && (dosPaniers = null), 3200);
+				anonci = `${mot.oc} : ${tria(T.dos)}`;
+			} else {
+				dins[col].push(mot);
+				anonci = `${mot.oc} : ${tria(p)}`;
+			}
 			novelMot();
 			return;
 		}
@@ -290,7 +307,9 @@
 							onclick={() => tocarPanier(i)}
 						>
 							<span class="etiqueta" lang="oc">{tria(p)}</span>
-							<span class="dedins">{#each dins[i] as m (m.oc)}<span class="chip" lang="oc">{m.oc}</span>{/each}</span>
+							<span class="dedins"
+								>{#each dins[i] as m (m.oc)}<span class="chip" class:dos={m.panier === 'ab'} lang="oc">{m.oc}</span>{/each}</span
+							>
 						</button>
 					{/each}
 				</div>
@@ -305,8 +324,9 @@
 				{/if}
 			</div>
 			<!-- sous le terrain, pour ne rien cacher -->
-			<p class="messatge" class:vis={fase === 'espera' || fase === 'pausa' || fase === 'torna'}>
-				{#if fase === 'torna'}{tria(T.torna)}
+			<p class="messatge" class:vis={fase === 'espera' || fase === 'pausa' || fase === 'torna' || !!dosPaniers} class:dos={!!dosPaniers}>
+				{#if dosPaniers}<span lang="oc">{dosPaniers.oc}</span> : {tria(T.dos)}
+				{:else if fase === 'torna'}{tria(T.torna)}
 				{:else if fase === 'pausa'}{tria(T.enPausa)}
 				{:else if fase === 'espera'}{tactil ? tria(T.partirTactil) : tria(T.partirClavier)}{/if}
 			</p>
@@ -575,6 +595,17 @@
 	}
 	.messatge.vis {
 		visibility: visible;
+	}
+	.messatge.dos {
+		color: var(--t-tinta);
+	}
+	.messatge.dos span {
+		font-weight: 600;
+	}
+	/* un mot des deux paniers : la puce entièrement dorée, dans les deux */
+	.chip.dos {
+		background: var(--or);
+		color: var(--color-text);
 	}
 
 	/* la carte de fin de thème : verre fumé au milieu du terrain */
