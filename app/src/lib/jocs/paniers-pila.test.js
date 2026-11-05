@@ -62,6 +62,25 @@ describe('le remplissage des paniers (paniers-pila.js)', () => {
 			}
 	});
 
+	// Romain, 05-11 : « le el est trop petit » ; le premier mot posé, même court,
+	// et chaque étape de la partie doivent rester lisibles sur téléphone
+	it('sur téléphone, le texte reste lisible à chaque étape, dès le premier mot', () => {
+		const [pw, ph] = [161, 223];
+		const k = ph / VB.h / (pw / VB.l);
+		for (const t of TEMAS)
+			for (const p of t.paniers) {
+				const totes = t.mots.filter((m) => bonPanier(m, p.id));
+				for (const graine of [1, 7, 42, 99, 2026]) {
+					const ordre = melhar(totes, graine);
+					for (let n = 1; n <= ordre.length; n++) {
+						const r = rengs(ordre.slice(0, n), totes, k);
+						const px = Math.min(...r.map((x) => Math.min((x.fh * ph) / 100, (x.fw * pw) / 100)));
+						expect(px, `${t.id} ${p.id} graine ${graine}, ${n} mot(s)`).toBeGreaterThanOrEqual(11.5);
+					}
+				}
+			}
+	});
+
 	it('en cours de partie, le niveau monte avec les mots rangés', () => {
 		const t = TEMAS[0];
 		const totes = t.mots.filter((m) => bonPanier(m, t.paniers[0].id));

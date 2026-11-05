@@ -73,16 +73,19 @@ export const largor = (y) => VB.l - 2 * flanc(y);
 // le niveau monte régulièrement, mot après mot : chaque mot reçoit une part
 // de la hauteur du panier à la mesure de sa longueur (avec une part en
 // volume, le haut, plus large, se remplissait trop vite : à 4 mots sur 5 le
-// panier paraissait plein)
+// panier paraissait plein) ; la puissance 0,75 fait monter un peu plus vite
+// au début : le premier mot posé reçoit une bande assez haute pour se lire
+// (Romain, 05-11 : « le el est trop petit »)
 const HAUT = FONS - LABRE;
 /** hauteur y du niveau quand la fraction f du panier est remplie */
 export function nivel(f) {
-	return FONS - Math.min(Math.max(f, 0), 1) * HAUT;
+	return FONS - Math.pow(Math.min(Math.max(f, 0), 1), 0.75) * HAUT;
 }
 
-// la part d'un mot : sa longueur, plus un fond fixe (un mot court ne fait
-// pas monter le niveau d'un rien)
-const pes = (m) => m.oc.length + 5;
+// la part d'un mot : sa longueur, plus un fond fixe ; un mot court compte
+// comme un mot de 9 lettres (sinon « el » ne fait monter le niveau d'un rien
+// et son texte reste minuscule)
+const pes = (m) => Math.max(m.oc.length, 9) + 5;
 const chassa = (t) => [...t].reduce((s, c) => s + (CHASSA[c] ?? 0.686), 0) * SEGUR;
 // la plus longue ligne d'un texte, en em, sur une ligne ou deux : une phrase
 // se coupe à l'espace qui équilibre le mieux les deux lignes (jamais devant
