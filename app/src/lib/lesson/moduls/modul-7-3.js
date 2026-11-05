@@ -98,6 +98,13 @@ export const modul73 = {
 			minutes: 10,
 			blocks: [
 				{
+					type: 'fotos',
+					// Photos de Romain (05-11), sans GPS : static/aprene/fotos/
+					imatges: [
+						{ clau: '7-3-porta', amples: [720, 1200], l: 720, h: 480, oc: 'la pòrta blava', fr: 'la porte bleue', alt: 'Une vieille porte de bois peinte en bleu, avec au milieu une petite porte en arc, couleur bois.' }
+					]
+				},
+				{
 					type: 'dialogue',
 					title: 'La porte bleue',
 					intro:

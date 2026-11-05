@@ -24,6 +24,7 @@
 	import EscriureBlock from '$lib/lesson/EscriureBlock.svelte';
 	import CausidaBlock from '$lib/lesson/CausidaBlock.svelte';
 	import CartaBlock from '$lib/lesson/CartaBlock.svelte';
+	import FotosBlock from '$lib/lesson/FotosBlock.svelte';
 	import CartaTitol from '$lib/lesson/CartaTitol.svelte';
 	import Remarcas from '$lib/lesson/Remarcas.svelte';
 	import { rich, insecable } from '$lib/lesson/rich.js';
@@ -390,6 +391,8 @@
 								<NoteBlock {block} />
 							{:else if block.type === 'checklist'}
 								<ChecklistBlock {block} storagePrefix={`lo-ligam-${modul.id}`} />
+							{:else if block.type === 'fotos'}
+								<FotosBlock {block} />
 							{/if}
 						</div>
 					{/each}

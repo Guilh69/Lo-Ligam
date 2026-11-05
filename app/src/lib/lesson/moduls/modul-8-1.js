@@ -278,6 +278,16 @@ export const modul81 = {
 			minutes: 12,
 			blocks: [
 				{
+					type: 'fotos',
+					// Photos de Romain (05-11), sans GPS : static/aprene/fotos/
+					imatges: [
+						{ clau: '8-1-gara', amples: [400, 800], l: 400, h: 500, oc: 'la gara', fr: 'la gare (Limoges)', alt: 'La gare des Bénédictins à Limoges et sa tour de l’horloge.' },
+						{ clau: '8-1-carriera', amples: [400, 800], l: 400, h: 500, oc: 'la carrièra', fr: 'la rue', alt: 'Une ruelle étroite entre de vieilles façades de pierre.' },
+						{ clau: '8-1-placa', amples: [400, 800], l: 400, h: 500, oc: 'la plaça', fr: 'la place (Bordeaux)', alt: 'La place du Parlement à Bordeaux, ses façades de pierre et sa fontaine.' },
+						{ clau: '8-1-gleisa', amples: [400, 800], l: 400, h: 500, oc: 'la glèisa', fr: 'l’église', alt: 'Le chevet d’une église romane en pierre claire, sous un ciel bleu.' }
+					]
+				},
+				{
 					type: 'chunks',
 					title: 'À retenir : quatre lieux de la ville',
 					intro: 'Tous féminins : *la*. Tu les retrouves sur le plan, juste en dessous.',

@@ -111,6 +111,13 @@ export const modul71 = {
 			minutes: 10,
 			blocks: [
 				{
+					type: 'fotos',
+					// Photos de Romain (05-11), sans GPS : static/aprene/fotos/
+					imatges: [
+						{ clau: '7-1-ostal', amples: [720, 1200], l: 720, h: 454, oc: 'l’ostal', fr: 'la maison', alt: 'Une maison de pierre au soleil, une grande table de bois devant, sous les arbres.' }
+					]
+				},
+				{
 					type: 'dialogue',
 					title: 'Mimí chez Marià',
 					intro:

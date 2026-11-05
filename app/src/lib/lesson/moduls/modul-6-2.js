@@ -99,6 +99,15 @@ export const modul62 = {
 			minutes: 10,
 			blocks: [
 				{
+					type: 'fotos',
+					// Photos de Romain (05-11), sans GPS : static/aprene/fotos/
+					imatges: [
+						{ clau: '6-2-montpelhier', amples: [400, 800], l: 400, h: 500, oc: 'A Montpelhièr, fa solelh.', fr: 'À Montpellier, il y a du soleil.', alt: 'La promenade du Peyrou à Montpellier sous un grand soleil, quelques passants.' },
+						{ clau: '6-2-tolosa', amples: [400, 603], l: 400, h: 500, oc: 'A Tolosa, fa vent.', fr: 'À Toulouse, il y a du vent.', alt: 'Des façades de brique rose à Toulouse, des rideaux blancs soulevés par le vent aux fenêtres.' },
+						{ clau: '6-2-neva', amples: [400, 800], l: 400, h: 500, oc: 'Nèva.', fr: 'Il neige.', alt: 'Une fontaine couverte de neige au milieu d’une place.' }
+					]
+				},
+				{
 					type: 'dialogue',
 					title: 'Trois villes, trois temps',
 					intro:
