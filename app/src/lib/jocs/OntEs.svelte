@@ -31,6 +31,7 @@
 		compte: { oc: (n, t) => `${n} sus ${t}`, fr: (n, t) => `${n} sur ${t}` },
 		pasAqui: { oc: 'Pas aquí.', fr: 'Pas ici.' },
 		aqui: { oc: 'Es aquí.', fr: 'C’est ici.' },
+		aquiCort: { oc: 'es aquí', fr: 'c’est ici' },
 		fin: { oc: 'Òsca !', fr: 'Bravo !' },
 		mots: { oc: 'Los mots', fr: 'Les mots' },
 		camp: { oc: 'La fòto', fr: 'La photo' },
@@ -55,7 +56,17 @@
 	let vist = $state(null); // le mot montré sur la photo : { oc, x, y, bon, id }
 	let tocs = $state([]); // un rond là où on a touché à côté
 	let tremola = $state(false);
-	let anonci = $state('');
+	// ce que lit le lecteur d'écran : des morceaux [texte, langue] (l'occitan
+	// et le français ne se prononcent pas pareil)
+	let anonci = $state([]);
+	let finAnonci = 0;
+	function anoncar(...tros) {
+		// vider puis remplir : la même phrase deux fois de suite est relue (Joan, 06-11)
+		anonci = [];
+		clearTimeout(finAnonci);
+		finAnonci = setTimeout(() => (anonci = tros), 60);
+	}
+	const lengaInterfacia = () => tria({ oc: 'oc', fr: 'fr' }); // les libellés n'existent qu'en oc et fr
 	let seq = 0;
 	let minuteur = 0;
 
@@ -105,7 +116,7 @@
 		errors = 0;
 		vist = null;
 		tocs = [];
-		anonci = `Ont es ${q.oc} ? Où est ${primier(q.oc)} ?`;
+		anoncar([`Ont es ${q.oc} ?`, 'oc'], [`Où est ${primier(q.oc)} ?`, 'fr']);
 		precargar(pas + 1);
 	}
 
@@ -114,7 +125,7 @@
 		if (pas + 1 >= TOTAL) {
 			fase = 'fin';
 			vist = null;
-			anonci = `${tria(T.fin)} ${partida.map((r) => r.oc).join(', ')}.`;
+			anoncar([tria(T.fin), lengaInterfacia()], [`${partida.map((r) => r.oc).join(', ')}.`, 'oc']);
 			if (son) setTimeout(playChime, 150);
 			return;
 		}
@@ -133,7 +144,7 @@
 		if (distancia(fx, fy, cibla[1], cibla[2]) < TOCA) {
 			fase = 'trobat';
 			vist = { oc: q.oc, x: cibla[1], y: cibla[2], bon: true, id: ++seq };
-			anonci = `${q.oc} : ${MOTS[q.oc]}.`;
+			anoncar([`${q.oc} :`, 'oc'], [`${MOTS[q.oc]}.`, 'fr']);
 			if (son) playChime();
 			minuteur = setTimeout(seguent, 2600);
 			return;
@@ -152,7 +163,10 @@
 			tremola = false;
 			requestAnimationFrame(() => (tremola = true));
 		}
-		anonci = `${autre ? `${autre[0]} : ${MOTS[autre[0]]}. ` : ''}${tria(T.pasAqui)}${errors >= 2 ? ' ' + tria(T.aqui) : ''}`;
+		anoncar(
+			...(autre ? [[`${autre[0]} :`, 'oc'], [`${MOTS[autre[0]]}.`, 'fr']] : []),
+			[`${tria(T.pasAqui)}${errors >= 2 ? ' ' + tria(T.aqui) : ''}`, lengaInterfacia()]
+		);
 	}
 
 	function tocar(e) {
@@ -181,7 +195,10 @@
 			/* rien de gardé */
 		}
 		començar();
-		return () => clearTimeout(minuteur);
+		return () => {
+			clearTimeout(minuteur);
+			clearTimeout(finAnonci);
+		};
 	});
 </script>
 
@@ -251,7 +268,7 @@
 									class:bon={vist?.bon && vist.oc === oc}
 									style:left="{x * 100}%"
 									style:top="{y * 100}%"
-									aria-label={tria(T.endrech)(i + 1, p.mots.length)}
+									aria-label={`${tria(T.endrech)(i + 1, p.mots.length)}${fase === 'cerca' && errors >= 2 && oc === q.oc ? ', ' + tria(T.aquiCort) : ''}`}
 									disabled={fase === 'fin'}
 									onclick={() => causir(x, y)}
 								></button>
@@ -304,7 +321,7 @@
 			</Reglatges>
 		</div>
 	</div>
-	<p class="sr" aria-live="polite">{anonci}</p>
+	<p class="sr" aria-live="polite">{#each anonci as [t, l], k (k)}<span lang={l}>{t}</span>{' '}{/each}</p>
 </section>
 
 <style>
