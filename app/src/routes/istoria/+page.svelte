@@ -564,6 +564,9 @@
 		.recit-tèxt {
 			grid-column: 1;
 			grid-row: 1;
+			/* une pause sous « Uèi » : la carte reste entière pendant que les
+			   liens de la fin se tracent (sinon elle remonte avec le texte) */
+			padding-bottom: 38svh;
 		}
 	}
 

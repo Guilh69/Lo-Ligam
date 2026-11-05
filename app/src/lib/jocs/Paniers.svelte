@@ -12,6 +12,7 @@
 	import { onMount } from 'svelte';
 	import { tria, lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { TEMAS, bonPanier } from '$lib/jocs/paniers-mots.js';
+	import { rengs, DECOPA, VB, FONS, insecable } from '$lib/jocs/paniers-pila.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
 	import Reglatges from '$lib/jocs/Reglatges.svelte';
 	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
@@ -90,6 +91,15 @@
 	let darrier = 0;
 	let rAF = null;
 	let racina;
+	// les rangs de chaque panier (paniers-pila.js) : tous les mots qu'il
+	// recevra donnent la part de chacun ; la taille du panier à l'écran
+	// règle le choix des rangs
+	let pw = $state(0);
+	let ph = $state(0);
+	let totes = $derived(tema.paniers.map((p) => tema.mots.filter((m) => bonPanier(m, p.id))));
+	let k = $derived(pw && ph ? ph / VB.h / (pw / VB.l) : 1.3);
+	let piles = $derived(dins.map((d, i) => rengs(d, totes[i], k)));
+	let nivels = $derived(piles.map((r) => (r.length ? r.at(-1).y1 : FONS)));
 
 	function barrejar(a) {
 		for (let i = a.length - 1; i > 0; i--) {
@@ -348,7 +358,7 @@
 						style:--vira={vira}
 						lang="oc"
 					>
-						<span>{mot.oc}</span>
+						<span>{insecable(mot.oc)}</span>
 					</div>
 				{/if}
 				<div class="paniers">
@@ -360,6 +370,8 @@
 							class:non={secos === i}
 							class:indici={indici && !!mot && bonPanier(mot, p.id)}
 							aria-label="{tria(p)} : {tria(T.aval)}"
+							bind:clientWidth={() => pw, (v) => i === 0 && (pw = v)}
+							bind:clientHeight={() => ph, (v) => i === 0 && (ph = v)}
 							onclick={() => tocarPanier(i)}
 						>
 							<!-- le panier tressé : l'ouverture derrière, les mots, le devant -->
@@ -381,26 +393,36 @@
 									<path class="montants" d="M16 18 L16 112 M44 21.2 L44 112 M72 22.6 L72 112 M100 23 L100 112 M128 22.6 L128 112 M156 21.2 L156 112 M184 18 L184 112" />
 									<path d="M6 19 A94 9 0 0 0 194 19 M2 34 Q16 31.5 30 36.7 T58 38.5 T86 39.4 T114 39.4 T142 38.5 T170 36.7 T198 34 M2 50 Q16 55.5 30 52.7 T58 54.5 T86 55.4 T114 55.4 T142 54.5 T170 52.7 T198 50 M2 66 Q16 63.5 30 68.7 T58 70.5 T86 71.4 T114 71.4 T142 70.5 T170 68.7 T198 66 M2 82 Q16 87.5 30 84.7 T58 86.5 T86 87.4 T114 87.4 T142 86.5 T170 84.7 T198 82 M2 98 Q16 95.5 30 100.7 T58 102.5 T86 103.4 T114 103.4 T142 102.5 T170 100.7 T198 98" />
 								</g>
+							</svg>
+							<!-- les mots rangés remplissent le panier rang par rang, du fond au
+							     bord (Romain, 05-11 : « que ça épouse parfaitement la forme jusqu'à
+							     remplir totalement ») : chaque rang couvre toute la largeur du
+							     panier à sa hauteur, découpé par sa courbe (paniers-pila.js) -->
+							<span class="pila" style:clip-path={DECOPA}
+								>{#each piles[i] as r (r.k)}<span
+										class="reng"
+										class:doas={r.lin === 2}
+										style:--y0={r.y0}
+										style:--y1={r.y1 - r.ras}
+										style:--ras={r.ras}
+										style:--ins={r.ins}
+										style:--fh={r.fh}
+										style:--fw={r.fw}
+										>{#each r.mots as m (m.oc)}<span class="chip" class:dos={m.dos} style:--n={m.n} style:--j={m.j} data-t={m.j % 3} lang="oc">{insecable(m.oc)}</span
+											>{/each}</span
+									>{/each}</span
+							>
+							<!-- le contour, par-dessus les mots : ils restent dans le panier -->
+							<svg class="contorn" viewBox="0 0 200 110" preserveAspectRatio="none" aria-hidden="true">
+								<path d="M6 14 C9 58 17 96 32 107 L168 107 C183 96 191 58 194 14" />
 								<path class="labre" d="M6 14 A94 9 0 0 0 194 14" />
 								<!-- deux anses sur les côtés, sous le bord -->
 								<path class="ansa" d="M8 22 C-10 22 -10 46 10.5 46 M192 22 C210 22 210 46 189.5 46" />
 							</svg>
-							<!-- les mots rangés se posent au fond et remplissent le panier en
-							     suivant ses bords (Romain, 05-11) : la pile est retournée pour se
-							     remplir de bas en haut, deux flottants taillés comme les bords
-							     intérieurs (shape-outside) resserrent chaque rang -->
-							<span class="pila"
-								><span class="bord bord-e"></span><span class="bord bord-d"></span>{#each dins[i] as m, j (m.oc)}<span
-										class="chip"
-										class:dos={m.panier === 'ab'}
-										style:--j={j}
-										lang="oc">{m.oc}</span
-									>{/each}</span
-							>
 							<span class="etiqueta" lang="oc">{tria(p)}</span>
 							{#if recep.i === i}
 								{#key recep.n}
-									<span class="polsa" aria-hidden="true"
+									<span class="polsa" style:top="{(nivels[i] / VB.h) * 100}%" aria-hidden="true"
 										>{#each [0, 1, 2, 3, 4, 5] as k (k)}<i style:--dx="{(k - 2.5) * 0.75}em" style:--dl="{(k % 3) * 60}ms"></i>{/each}</span
 									>
 								{/key}
@@ -410,7 +432,7 @@
 					{#if volada}
 						{#key volada.k}
 							<span class="volada" style:--de="{volada.de * 50 + 25}%" style:--a="{(1 - volada.de) * 50 + 25}%" aria-hidden="true"
-								><span class="chip dos" lang="oc">{volada.oc}</span></span
+								><span class="chip dos" lang="oc">{insecable(volada.oc)}</span></span
 							>
 						{/key}
 					{/if}
@@ -427,7 +449,7 @@
 			</div>
 			<!-- sous le terrain, pour ne rien cacher -->
 			<p class="messatge" class:vis={fase === 'espera' || fase === 'pausa' || fase === 'torna' || !!dosPaniers} class:dos={!!dosPaniers}>
-				{#if dosPaniers}<span lang="oc">{dosPaniers.oc}</span> : {tria(T.dos)}
+				{#if dosPaniers}<span lang="oc">{insecable(dosPaniers.oc)}</span> : {tria(T.dos)}
 				{:else if fase === 'torna'}{tria(T.torna)}
 				{:else if fase === 'pausa'}{tria(T.enPausa)}
 				{:else if fase === 'espera'}{tactil ? tria(T.partirTactil) : tria(T.partirClavier)}{/if}
@@ -549,12 +571,13 @@
 	.immersiu .camp {
 		max-width: var(--terren);
 	}
-	/* téléphone tenu droit : un terrain carré, plus de place pour la chute */
+	/* téléphone tenu droit : un terrain plus haut que large, de grands paniers
+	   et de la place pour la chute */
 	@media (orientation: portrait) {
 		.immersiu .camp {
-			aspect-ratio: 1;
-			max-width: min(100%, calc(100svh - 11rem));
-			--h: 30%;
+			aspect-ratio: 4 / 5;
+			max-width: min(100%, calc((100svh - 11rem) * 0.8));
+			--h: 50%;
 		}
 		.immersiu .pista {
 			width: min(100%, calc(100svh - 11rem));
@@ -618,7 +641,7 @@
 		container: camp / inline-size;
 		/* hauteur des paniers ; le bord de leur ouverture est à 12,7 % de cette
 		   hauteur, d'où la fin des couloirs et de la chute */
-		--h: 36%;
+		--h: 42%;
 		--chute: calc(84% - var(--h) * 0.873);
 		margin-inline: auto;
 		overflow: hidden;
@@ -637,8 +660,15 @@
 	/* Téléphone : tout doit tenir sans défiler ; le titre du jeu est déjà dans
 	   l'onglet, il reste pour les lecteurs d'écran */
 	@media (max-width: 559px) {
+		/* un terrain un peu plus haut que large et de grands paniers : les mots
+		   rangés gardent au moins 12 px, même quand le panier est plein */
 		.camp {
-			max-width: calc(44svh * 4 / 3);
+			aspect-ratio: 4 / 5;
+			max-width: min(100%, 46svh);
+			--h: 52%;
+		}
+		.paniers .panier {
+			margin: 0 3%;
 		}
 		.disposicion {
 			gap: var(--esp-12);
@@ -708,6 +738,7 @@
 	}
 	.mot > span {
 		display: block;
+		text-wrap: balance;
 		padding: 0.35em 0.75em;
 		border-radius: 0.6em;
 		background: color-mix(in srgb, var(--or) 26%, var(--l-carta));
@@ -819,6 +850,10 @@
 	.davant .cors {
 		fill: color-mix(in srgb, var(--t-tinta) 5%, var(--l-carta));
 	}
+	/* le trait du corps est dans le contour, au-dessus des mots */
+	.panier .davant .cors {
+		stroke: none;
+	}
 	.davant .vim path {
 		opacity: 0.42;
 	}
@@ -841,54 +876,98 @@
 		background: radial-gradient(closest-side, rgba(0, 0, 0, 0.5), transparent);
 		opacity: calc(0.25 + 0.75 * var(--y));
 	}
-	/* les mots rangés se posent au fond et remplissent le panier en suivant
-	   ses bords (Romain, 05-11). La pile couvre l'intérieur, du bord jusqu'au
-	   fond ; elle est retournée pour se remplir de bas en haut ; les deux
-	   flottants ont la forme des bords intérieurs (calculée sur la courbe du
-	   corps, avec une marge) et resserrent chaque rang. Plein à ras bord, les
-	   derniers mots dépassent de l'ouverture. */
+	/* les mots rangés remplissent le panier rang par rang (paniers-pila.js) :
+	   la pile couvre tout le dessin du panier (ses unités : 200 × 110), découpée
+	   par la courbe intérieure ; chaque rang va d'un flanc à l'autre, ses
+	   tuiles se partagent la largeur à la mesure de leurs mots, avec un joint
+	   fin ; le texte reste en deçà de la courbe (retrait --ins). Le dernier mot
+	   du thème arrive pile au bord. */
 	.pila {
+		position: absolute;
+		inset: 0;
+		z-index: 4;
+		container-type: size;
+		pointer-events: none;
+	}
+	.reng {
 		position: absolute;
 		left: 0;
 		right: 0;
-		top: 12.7%;
-		bottom: 4%;
-		z-index: 4;
-		scale: 1 -1;
-		text-align: center;
-		line-height: 0;
+		top: calc(var(--y1) * 100% / 110);
+		height: calc((var(--y0) - var(--y1)) * 100% / 110);
+		display: flex;
+		justify-content: center;
+		/* les tuiles se touchent : pas de jour entre elles, ni entre les rangs */
+		padding: 0 calc(var(--ins) * 100cqw / 200);
+		font-size: min(calc(var(--fh) * 1cqh), calc(var(--fw) * 1cqw), 1.35rem);
+		transition:
+			top 0.35s ease-out,
+			height 0.35s ease-out,
+			font-size 0.35s ease-out;
 	}
-	.bord {
-		width: 49.5%;
-		height: 100%;
+	.reng .chip {
+		display: grid;
+		place-items: center;
+		flex: var(--n) 1 0;
+		min-width: 0;
+		padding: 0 0.2em;
+		/* panier plein : la tuile couvre l'ouverture, son texte reste sous la lèvre */
+		padding-top: calc(var(--ras, 0) * 100cqh / 110);
+		border-radius: 0.2em;
+		font-size: inherit;
+		line-height: 1;
+		overflow: hidden;
+		transform-origin: 50% 100%;
+		/* il tombe de l'ouverture jusqu'à son rang, s'écrase un rien en
+		   touchant, et prend sa place en poussant ses voisins */
+		animation: posar 0.5s both;
 	}
-	.bord-e {
-		float: left;
-		shape-outside: polygon(0 0, 35.3% 0%, 32.8% 2.8%, 30.5% 6.1%, 28.1% 10.5%, 25.2% 17%, 21.5% 27.9%, 18.3% 41%, 15.5% 56.3%, 13.5% 71.6%, 12% 86.9%, 11% 100%, 0 100%);
-	}
-	.bord-d {
-		float: right;
-		shape-outside: polygon(100% 0, 64.7% 0%, 67.2% 2.8%, 69.5% 6.1%, 71.9% 10.5%, 74.8% 17%, 78.5% 27.9%, 81.7% 41%, 84.5% 56.3%, 86.5% 71.6%, 88% 86.9%, 89% 100%, 100% 100%);
-	}
-	.pila .chip {
-		display: inline-block;
-		scale: 1 -1;
-		/* pas plus large que le rang du fond, le plus étroit : une phrase longue
-		   passe sur deux lignes au lieu de sauter plus haut et de laisser un trou */
-		max-width: 60%;
-		text-wrap: balance;
-		margin: 0.12em 0.08em;
-		vertical-align: top;
-		font-size: clamp(0.62rem, 2.2cqi, 1.3rem);
+	/* un rang haut et des phrases : le texte passe sur deux lignes */
+	.reng.doas .chip {
 		white-space: normal;
-		/* la pile est retournée : un décalage positif part d'au-dessus */
-		animation: posar 0.32s ease-out;
+		text-wrap: balance;
+		line-height: 1.15;
+		text-align: center;
+	}
+	/* les tuiles des bords vont jusqu'à la paroi (la courbe les découpe) */
+	.reng .chip:first-child {
+		margin-inline-start: calc(var(--ins) * -100cqw / 200);
+		padding-inline-start: calc(var(--ins) * 100cqw / 200 + 0.2em);
+	}
+	.reng .chip:last-child {
+		margin-inline-end: calc(var(--ins) * -100cqw / 200);
+		padding-inline-end: calc(var(--ins) * 100cqw / 200 + 0.2em);
 	}
 	@keyframes posar {
-		from {
-			translate: 0 1.8em;
+		0% {
+			translate: 0 calc((var(--y0) - 14) * -100cqh / 110);
+			flex-grow: 0.001;
 			opacity: 0;
+			animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
 		}
+		12% {
+			opacity: 1;
+		}
+		68% {
+			translate: 0 0;
+			scale: 1.05 0.84;
+			animation-timing-function: ease-out;
+		}
+		to {
+			translate: 0 0;
+			scale: 1 1;
+		}
+	}
+	.calme .reng {
+		transition: none;
+	}
+	.calme .reng .chip {
+		animation: none;
+	}
+	/* le contour du panier, par-dessus les mots */
+	.contorn {
+		z-index: 5;
+		pointer-events: none;
 	}
 	.panier.non {
 		animation: secodre 0.4s ease-in-out;
@@ -1055,18 +1134,19 @@
 		color: var(--color-text);
 	}
 
-	/* la carte de fin de thème : verre fumé au milieu du terrain */
+	/* la carte de fin de thème : verre fumé au-dessus des paniers, qu'on voie
+	   les paniers pleins */
 	.fin {
 		position: absolute;
 		left: 50%;
-		top: 50%;
+		top: 2%;
 		z-index: 4;
-		translate: -50% -50%;
-		width: min(86%, 26rem);
+		translate: -50% 0;
+		width: min(94%, 26rem);
 		display: grid;
 		justify-items: center;
-		gap: 0.25rem;
-		padding: 1.2rem 1.4rem 1.3rem;
+		gap: 0.1rem;
+		padding: 0.7rem 1rem 0.8rem;
 		border-radius: 1rem;
 		background: var(--t-veire-fort);
 		backdrop-filter: blur(8px);
@@ -1080,30 +1160,30 @@
 	@keyframes apareisser {
 		from {
 			opacity: 0;
-			translate: -50% calc(-50% + 0.5rem);
+			translate: -50% 0.5rem;
 		}
 	}
 	.fin-oc {
 		margin: 0;
-		font-size: clamp(1.8rem, 7cqi, 3rem);
+		font-size: clamp(1.4rem, 5cqi, 2.2rem);
 		font-weight: 600;
 		line-height: 1.15;
 		color: var(--t-tinta);
 	}
 	.fin-fr {
 		margin: 0;
-		font-size: 1rem;
+		font-size: 0.95rem;
 		font-style: italic;
 		color: var(--t-tinta);
 	}
 	.fin-nota {
-		margin: var(--esp-8) 0 0;
-		font-size: 0.92rem;
-		line-height: 1.45;
+		margin: 0.25rem 0 0;
+		font-size: 0.85rem;
+		line-height: 1.35;
 		color: var(--t-tinta-2);
 	}
 	.fin .accion {
-		margin-top: var(--esp-16);
+		margin-top: var(--esp-8);
 	}
 
 	/* ── Commandes ── */

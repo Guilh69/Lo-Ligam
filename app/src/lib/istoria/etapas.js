@@ -22,6 +22,9 @@ export const LUÒCS = {
 // seul, Assimil) n'a pas d'étape et garde la vue du précédent.
 //   lòc : le nom du lieu, affiché aussi au-dessus du titre du chapitre
 //   lenga : [nom, lon, lat] le nom d'une langue écrit sur son aplat
+//   ligams : [de, a, retard en ms] des arcs qui se tracent l'un après l'autre ;
+//            de / a : un lieu du récit (LUÒCS), une ville de la carte en étoiles
+//            (carta-estelas.js), ou [lon, lat] hors de la carte (vers le monde)
 //   c : centre [lon, lat] ; r : demi-largeur visible en km (sur le petit côté)
 //   luòcs : les points montrés ; focus : [lieu, rayon du projecteur en km]
 //   segond : un deuxième point qui s'allume un instant après
@@ -52,15 +55,53 @@ export const ETAPAS = {
 	'istoria.capitols.c4': { lòc: 'Occitània', c: [2.5, 44.2], r: 330, domenis: ['occitan'] },
 	// les mots de la famille, le grand-père
 	'istoria.capitols.c6': { lòc: 'Erau', c: [3.42, 43.62], r: 85, luòcs: ['erau'], zona: 'erau', focus: ['erau', 55] },
-	// le compte Instagram, une communauté : les lieux d'Occitània s'allument
-	'istoria.espelida.c1': { lòc: 'Occitània', c: [2.4, 44.4], r: 330, domenis: ['occitan'], estelas: true },
-	// « la realitat occitana d'ara en França » : vue d'ensemble, tout le parcours
+	// le compte Instagram, une communauté : les lieux d'Occitània s'allument et
+	// des liens se tracent entre Occitans (Romain, 05-11 : « finir avec des liens
+	// inter-occitans, Occitanie / Catalogne et Occitanie / reste du monde »)
+	'istoria.espelida.c1': {
+		lòc: 'Occitània',
+		// de Baiona à Draonier, tout le réseau dans le cadre (Joan, 05-11)
+		c: [2.95, 44.2],
+		r: 400,
+		domenis: ['occitan'],
+		estelas: true,
+		ligams: [
+			['Baiona', 'Pau', 0],
+			['Bordèu', 'Tolosa', 150],
+			['Bordèu', 'Limòtges', 300],
+			['Limòtges', 'Clarmont-Ferrand', 450],
+			['Pau', 'Tolosa', 600],
+			['Tolosa', 'Vielha', 750],
+			['Tolosa', 'montpelhier', 900],
+			['Clarmont-Ferrand', 'montpelhier', 1050],
+			['montpelhier', 'Marselha', 1200],
+			['Avinhon', 'Valença', 1350],
+			['Marselha', 'Niça', 1500],
+			['Niça', 'Draonier', 1650]
+		]
+	},
+	// « crear un espaci d'escambi » : les liens avec la Catalogne, puis des arcs
+	// qui partent vers le monde, sans nom de lieu (choix de Romain, 05-11)
 	'istoria.espelida.c2': {
-		c: [2.0, 44.0],
+		c: [2.0, 42.5],
 		r: 480,
-		luòcs: ['paris', 'montpelhier', 'valencia', 'barcelona'],
+		luòcs: ['montpelhier', 'valencia', 'barcelona'],
 		domenis: ['occitan', 'catalan'],
-		estelas: true
+		estelas: true,
+		ligams: [
+			['Tolosa', 'barcelona', 200],
+			['Vielha', 'barcelona', 400],
+			['montpelhier', 'barcelona', 600],
+			['montpelhier', 'valencia', 800],
+			// vers le monde : [lon, lat] hors de la carte ; depuis les bords du
+			// domaine, pour ne traverser aucun nom de ville (Joan, 05-11)
+			['Bordèu', [-20, 47], 2000],
+			['Baiona', [-18, 36], 2250],
+			['Limòtges', [-11, 55], 2500],
+			['Clarmont-Ferrand', [4, 57], 2750],
+			['Niça', [20, 45], 3000],
+			['Niça', [14, 36], 3250]
+		]
 	}
 };
 
