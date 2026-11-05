@@ -17,12 +17,26 @@
 	// Sobriété : rien à charger (les dessins sont des chemins de quelques octets),
 	// un seul canevas, les points de chaque mot calculés une fois puis gardés.
 	import { onMount, untrack } from 'svelte';
-	import { dessenhDe } from './dessenhs.js';
+	import { dessenhDe, dessenhGuida } from './dessenhs.js';
 
-	/** mots : [[oc, définition], …] ; pausa arrête l'avance automatique ;
+	/** mots : [[oc, définition, id, dessin, langue], …] (les deux derniers pour
+	 *  l'explication de première visite : un dessin à elle, la langue choisie) ;
+	 *  pausa arrête l'avance automatique ;
 	 *  calme (réduire les animations) : les grains se posent sans voler ;
-	 *  reserva : hauteurs prises en haut (en-tête) et en bas (commandes). */
-	let { mots = [], pausa = false, calme = false, reserva = { naut: 64, bas: 110 } } = $props();
+	 *  reserva : hauteurs prises en haut (en-tête) et en bas (commandes) ;
+	 *  boucla : après le dernier mot, revenir au premier (sinon onfin est appelé,
+	 *  c'est l'explication qui se termine) ;
+	 *  clau : nom de la liste ; une liste du même nom qui change (la langue)
+	 *  se reforme sur place, sans éclat ni retour au début. */
+	let {
+		mots = [],
+		pausa = false,
+		calme = false,
+		reserva = { naut: 64, bas: 110 },
+		boucla = true,
+		onfin = null,
+		clau = null
+	} = $props();
 
 	const CREMA = '#f7f3ee',
 		DEF = '#f1dcb2',
@@ -86,8 +100,9 @@
 	function plan(i) {
 		const k = `${i}|${W}x${H}|${reserva.naut}|${reserva.bas}`;
 		if (plans.has(k)) return plans.get(k);
-		const [oc, def] = lista[i];
-		const dess = dessenhDe(oc, def);
+		const [oc, def, , clauDess, lg] = lista[i];
+		const dess = clauDess ? dessenhGuida(clauDess) : dessenhDe(oc, def);
+		const dir = lg === 'ar' ? 'rtl' : 'ltr'; // l'arabe de l'explication ; les mots et leurs définitions restent de gauche à droite
 		const Hu = Math.max(220, H - reserva.naut - reserva.bas);
 		const S = dess ? Math.min(Hu * 0.48, W * 0.6, 420) : 0;
 		// Limelight reste gros (Romain : « le mot pourrait être encore un peu plus gros »)
@@ -109,7 +124,7 @@
 		const yFilet = y + gap2 * 0.4;
 		y += gap2;
 		const linhasD = defi.linhas.map((t, j) => ({ t, y: y + defi.px * 0.8 + j * lhD }));
-		const p = { dess, S, X0: W / 2 - S / 2, Y0, fW: mot.px, fD: defi.px, linhasW, linhasD, yFilet };
+		const p = { dess, dir, S, X0: W / 2 - S / 2, Y0, fW: mot.px, fD: defi.px, linhasW, linhasD, yFilet };
 		plans.set(k, p);
 		return p;
 	}
@@ -124,9 +139,10 @@
 		for (const ch of p.dess) c.stroke(ch);
 		c.restore();
 	}
-	function textes(c, linhas, font) {
+	function textes(c, linhas, font, dir = 'ltr') {
 		c.font = font;
 		c.textAlign = 'center';
+		c.direction = dir; // sinon le canevas suit la page : en arabe, le « ! » final passerait à gauche
 		for (const l of linhas) c.fillText(l.t, W / 2, l.y);
 	}
 
@@ -152,8 +168,8 @@
 		const banda = (linhas, px) => [0, linhas[0].y - px * 1.05, W, linhas.at(-1).y - linhas[0].y + px * 1.45];
 		const v = [
 			p.dess ? echant([p.X0 - 4, p.Y0 - 4, p.S + 8, p.S + 8], (c) => trait(c, p, 2.6)) : [],
-			echant(banda(p.linhasW, p.fW), (c) => textes(c, p.linhasW, fontOc(p.fW))),
-			echant(banda(p.linhasD, p.fD), (c) => textes(c, p.linhasD, fontDef(p.fD)))
+			echant(banda(p.linhasW, p.fW), (c) => textes(c, p.linhasW, fontOc(p.fW), p.dir)),
+			echant(banda(p.linhasD, p.fD), (c) => textes(c, p.linhasD, fontDef(p.fD), p.dir))
 		];
 		cache.set(k, v);
 		return v;
@@ -244,7 +260,18 @@
 	function eclater(s, force = 1) {
 		if (!N) return;
 		const [cx0, cy0] = centre;
-		mi = mod(mi + s);
+		if (boucla) mi = mod(mi + s);
+		else {
+			// l'explication : pas de retour en arrière avant le début, et après la
+			// dernière étape c'est la page qui charge les mots (leur éclat suit)
+			if (mi + s >= N) {
+				idle = 0; // l'avance automatique ne rappelle pas onfin à chaque image
+				onfin?.();
+				return;
+			}
+			if (mi + s < 0) return;
+			mi += s;
+		}
 		placer(mi);
 		actual = lista[mi];
 		preparat = false;
@@ -282,8 +309,26 @@
 
 	/** Nouvelle liste de mots : à l'ouverture les grains arrivent de partout ;
 	 *  ensuite le mot en cours éclate et le premier mot du thème se forme. */
+	let pret = false, // polices chargées : on peut « photographier » les textes
+		clauAnciana = null;
 	function cargar(l) {
-		if (!hx) return;
+		if (!hx || !pret) return;
+		const memaLista = clau !== null && clau === clauAnciana && grans.length && N && l.length === N;
+		clauAnciana = clau;
+		if (memaLista) {
+			// la même liste dans une autre langue : le mot du moment se reforme sur place
+			lista = l;
+			cache.clear();
+			plans.clear();
+			preparat = false;
+			net = 0;
+			netG.fill(0);
+			silenci = 0;
+			idle = 0;
+			placer(mi);
+			actual = lista[mi];
+			return;
+		}
 		lista = l;
 		N = l.length;
 		cache.clear();
@@ -304,7 +349,7 @@
 				}
 			else rappeler(0.1);
 		} else {
-			mi = N - 1;
+			mi = -1; // le premier mot de la nouvelle liste
 			eclater(1, 0.7);
 		}
 		idle = 0;
@@ -541,7 +586,7 @@
 			if (netG[1] > 0) {
 				cx.globalAlpha = netG[1];
 				cx.fillStyle = CREMA;
-				textes(cx, p.linhasW, fontOc(p.fW));
+				textes(cx, p.linhasW, fontOc(p.fW), p.dir);
 			}
 			if (netG[2] > 0) {
 				cx.globalAlpha = netG[2] * 0.6;
@@ -549,7 +594,7 @@
 				cx.fillRect(W / 2 - 18, p.yFilet, 36, 1);
 				cx.globalAlpha = netG[2];
 				cx.fillStyle = DEF;
-				textes(cx, p.linhasD, fontDef(p.fD));
+				textes(cx, p.linhasD, fontDef(p.fD), p.dir);
 			}
 		}
 		cx.globalAlpha = 1;
@@ -614,6 +659,7 @@
 			.catch(() => {})
 			.finally(() => {
 				if (!viu) return;
+				pret = true;
 				cargar(mots);
 				t0 = darrier = performance.now();
 				raf = requestAnimationFrame(tick);
@@ -630,7 +676,7 @@
 <canvas bind:this={tela} class="polsa" aria-hidden="true"></canvas>
 <!-- Pour les lecteurs d'écran : le mot formé du moment -->
 <p class="sr" aria-live="polite">
-	{#if actual}<span lang="oc">{actual[0]}</span> : <span lang="fr">{actual[1]}</span>{/if}
+	{#if actual}<span lang={actual[4] ?? 'oc'}>{actual[0]}</span> : <span lang={actual[4] ?? 'fr'}>{actual[1]}</span>{/if}
 </p>
 
 <style>
