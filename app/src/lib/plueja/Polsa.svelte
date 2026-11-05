@@ -27,10 +27,13 @@
 	const CREMA = '#f7f3ee',
 		DEF = '#f1dcb2',
 		AUR = '#ffd47f';
-	const RESSORT = 130, // raideur : un grain lâché rejoint sa place en un tiers de seconde environ
+	const RESSORT = 160, // raideur : un grain lâché rejoint sa place en un tiers de seconde environ
 		SEUIL = 300, // molette : trois crans pour faire éclater le mot
 		RAYON = 90, // portée de la main dans la poussière (px)
-		ETAL = 0.4; // étalement des retours : du haut du dessin au bas de la définition (s)
+		ETAL = 0.4, // étalement des retours : du haut du dessin au bas de la définition (s)
+		COURANT = 1500, // force des courants qui font tourbillonner la poussière en vol (px/s²)
+		K1 = 0.021, // tourbillons d'environ 300 px…
+		K2 = 0.037; // … et d'environ 170 px, inclinés, pour casser toute régularité
 	const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 	const ara = () => performance.now() / 1000;
 	const fontOc = (px) => `${px}px Limelight, Georgia, serif`;
@@ -163,11 +166,16 @@
 		carga = 0, // tension donnée par la molette, de -1 (précédent) à 1 (suivant)
 		net = 0, // netteté, dès que les grains sont regroupés
 		ecartPrec = 99, // écart moyen des grains à leur place (px), au dernier calcul
+		pose = [0, 0, 0], // part des grains posés à leur place, par groupe : dessin, mot, définition
+		netG = [0, 0, 0], // netteté de chaque groupe : le dessin, puis le mot, puis la définition
+		comptes = [1, 1, 1], // nombre de grains de chaque groupe
+		fase = [0, 0, 0, 0], // dessin des courants, tiré à chaque éclat
+		silenci = 0, // images au repos déjà dessinées : au-delà, on ne redessine plus rien
 		idle = 0,
 		preparat = false, // les voisins du mot net sont-ils déjà photographiés ?
 		darrierRodeta = -9,
 		esclat = -9, // instant du dernier éclat
-		tocat = -9, // dernier instant où la main a touché des grains
+		tocat = [-9, -9, -9], // dernier instant où la main a touché des grains, par groupe
 		garda = 0, // jusqu'à quand la molette est ignorée après un éclat
 		tempsAnim = 0,
 		main = null, // la souris ou le doigt dans la poussière : { x, y, vx, vy, t }
@@ -190,9 +198,12 @@
 	function crearGrans() {
 		const Hu = Math.max(220, H - reserva.naut - reserva.bas);
 		const S = Math.min(Hu * 0.48, W * 0.6, 420);
-		const n0 = clamp(Math.round((S * S) / 60), 300, 1800),
-			n1 = clamp(Math.round(W * 0.75), 300, 900),
-			n2 = clamp(Math.round(W * 0.4), 180, 520);
+		// des grains fins et nombreux : une poussière, pas des confettis
+		const n0 = clamp(Math.round((S * S) / 36), 500, 2600),
+			n1 = clamp(Math.round(W * 1.2), 500, 1300),
+			n2 = clamp(Math.round(W * 0.65), 300, 800);
+		comptes = [n0, n1, n2];
+		fase = fase.map(() => Math.random() * 6.28);
 		grans = Array.from({ length: n0 + n1 + n2 }, (_, k) => {
 			const g = k < n0 ? 0 : k < n0 + n1 ? 1 : 2;
 			const r = Math.random();
@@ -204,6 +215,9 @@
 				r,
 				rang,
 				ph: Math.random() * 6.28,
+				s: 0.75 + Math.random() * 0.6, // taille (px) : chacun la sienne
+				d: 99, // écart à sa place (px)
+				m: 0.35, // durée de la montée du ressort (s)
 				k: RESSORT * (0.8 + Math.random() * 0.4), // chacun sa raideur : un retour vivant, pas mécanique
 				x: Math.random() * W,
 				y: Math.random() * H,
@@ -220,7 +234,10 @@
 	/** Chaque grain rejoint sa place à son tour, de haut en bas. */
 	function rappeler(delai) {
 		const t = tempsAnim;
-		for (const q of grans) q.act = t + delai + q.rang * ETAL;
+		for (const q of grans) {
+			q.act = t + delai + q.rang * ETAL;
+			q.m = 0.35; // après un éclat, le retour démarre en douceur
+		}
 	}
 
 	/** Le mot éclate ; le suivant (s = 1) ou le précédent (s = -1) se reconstitue. */
@@ -233,6 +250,7 @@
 		preparat = false;
 		carga = 0;
 		net = 0;
+		netG.fill(0);
 		idle = 0;
 		esclat = tempsAnim;
 		garda = tempsAnim + 0.4;
@@ -247,6 +265,7 @@
 			return;
 		}
 		const tour = (Math.random() < 0.5 ? -1 : 1) * 0.3; // l'éclat tourne un peu, comme un tourbillon
+		fase = fase.map(() => Math.random() * 6.28); // chaque éclat a ses propres courants
 		for (const q of grans) {
 			const dx = q.x - cx0,
 				dy = q.y - cy0,
@@ -277,6 +296,7 @@
 			placer(mi);
 			actual = lista[mi];
 			net = 0;
+			netG.fill(0);
 			if (calme)
 				for (const q of grans) {
 					q.x = q.hx;
@@ -372,9 +392,15 @@
 	function physique(dt, t, forceMain) {
 		const ten = calme ? 0 : Math.abs(carga), // réduire les animations : pas de frémissement
 			[cx0, cy0] = centre,
-			R2 = RAYON * RAYON;
+			R2 = RAYON * RAYON,
+			[p0, p1, p2, p3] = fase,
+			// les courants sont forts juste après un éclat, puis s'apaisent : la main ne fait
+			// qu'un sillage léger, le dessin revient vite
+			vigor = Math.max(0.15, 1 - (tempsAnim - esclat) / 1.6);
 		let ecart = 0;
+		const proches = [0, 0, 0];
 		for (const q of grans) {
+			let libre = 1; // part des courants : entière en vol, elle s'efface pendant le retour
 			if (tempsAnim >= q.act) {
 				// tenu à sa place par un ressort amorti juste ce qu'il faut (aucun rebond) ;
 				// la tension de la molette écarte un peu le mot et le fait frémir
@@ -384,15 +410,30 @@
 					tx += (q.hx - cx0) * 0.25 * ten + Math.sin(t * 9 + q.ph * 7) * 8 * ten;
 					ty += (q.hy - cy0) * 0.25 * ten + Math.cos(t * 7 + q.ph * 5) * 8 * ten;
 				}
-				const montee = Math.min(1, (tempsAnim - q.act) / 0.3),
+				const montee = Math.min(1, (tempsAnim - q.act) / q.m),
 					k = q.k * (0.15 + 0.85 * montee * montee),
 					c = 2 * Math.sqrt(k);
 				q.vx += (k * (tx - q.x) - c * q.vx) * dt;
 				q.vy += (k * (ty - q.y) - c * q.vy) * dt;
+				libre = (1 - montee) * (1 - montee);
 			} else {
 				const fr = Math.exp(-dt * 6); // en vol, l'air freine vite : l'éclat part d'un coup puis flotte
 				q.vx *= fr;
 				q.vy *= fr;
+			}
+			if (libre > 0.01 && !calme) {
+				// Courants : deux couches de tourbillons doux qui dérivent lentement (un champ
+				// sans source ni puits, la poussière s'enroule sans s'entasser) ; le retour
+				// suit donc des chemins courbes, jamais des lignes droites.
+				const a = K1 * q.x + p0 + t * 0.6,
+					b = K1 * q.y + p1 - t * 0.45,
+					u = K2 * (0.8 * q.x + 0.6 * q.y) + p2 - t * 0.5,
+					w = K2 * (0.8 * q.y - 0.6 * q.x) + p3 + t * 0.35,
+					vu = Math.sin(u) * Math.cos(w),
+					vw = -Math.cos(u) * Math.sin(w),
+					f = COURANT * vigor * libre * dt;
+				q.vx += (Math.sin(a) * Math.cos(b) + 0.6 * (0.8 * vu - 0.6 * vw)) * f;
+				q.vy += (-Math.cos(a) * Math.sin(b) + 0.6 * (0.6 * vu + 0.8 * vw)) * f;
 			}
 			if (forceMain) {
 				// la main écarte les grains sur son passage et les entraîne un peu, comme un
@@ -404,22 +445,26 @@
 					const d = Math.sqrt(d2),
 						f = 1 - d / RAYON,
 						p = (forceMain * f * f) / d;
-					q.vx += (dx * p + main.vx * 1.5 * f) * dt;
-					q.vy += (dy * p + main.vy * 1.5 * f) * dt;
+					q.vx += (dx * p + main.vx * 0.9 * f) * dt;
+					q.vy += (dy * p + main.vy * 0.9 * f) * dt;
 					const v = Math.hypot(q.vx, q.vy);
-					if (v > 700) {
+					if (v > 500) {
 						// la main ne lance pas les grains au loin : le sillage reste local
-						q.vx *= 700 / v;
-						q.vy *= 700 / v;
+						q.vx *= 500 / v;
+						q.vy *= 500 / v;
 					}
-					q.act = Math.max(q.act, tempsAnim + 0.18 + q.r * 0.25);
-					tocat = tempsAnim;
+					q.act = Math.max(q.act, tempsAnim + 0.06 + q.r * 0.14);
+					q.m = 0.15; // écarté par la main : il revient plus vite qu'après un éclat
+					tocat[q.g] = tempsAnim;
 				}
 			}
 			q.x += q.vx * dt;
 			q.y += q.vy * dt;
-			ecart += Math.abs(q.x - q.hx) + Math.abs(q.y - q.hy);
+			q.d = Math.abs(q.x - q.hx) + Math.abs(q.y - q.hy);
+			ecart += q.d;
+			if (q.d < 2.5) proches[q.g]++;
 		}
+		for (let g = 0; g < 3; g++) pose[g] = proches[g] / comptes[g];
 		return ecart / grans.length;
 	}
 
@@ -443,11 +488,18 @@
 			const n = Math.ceil(dt / 0.017); // petits pas : le ressort reste stable même à 30 images par seconde
 			for (let i = 0; i < n; i++) ecartPrec = physique(dt / n, t, forceMain);
 		}
-		// La netteté vient pendant que les grains se posent, sans attendre le dernier :
-		// nulle à 7 px d'écart moyen, entière à 1,5 px. Un geste la défait aussitôt.
-		const cible =
-			immobile ? 1 : (carga && !calme) || tempsAnim - tocat < 0.2 || tempsAnim - esclat < 0.3 ? 0 : clamp((7 - ecartPrec) / 5.5, 0, 1);
-		net = cible > net ? Math.min(cible, net + dt / 0.12) : Math.max(cible, net - dt / 0.07);
+		// La netteté vient pendant que les grains se posent : elle commence quand six
+		// sur dix sont à leur place, elle est entière à 95 sur 100 ; les derniers arrivés
+		// s'effacent (voir plus bas), on ne voit jamais de poussière à côté du mot net.
+		// Un geste la défait aussitôt.
+		// Chaque groupe devient net à son tour, comme il se reforme : le dessin, le mot, la définition.
+		// La main ne défait que le groupe qu'elle touche : le reste reste net.
+		const bloc = (carga && !calme) || tempsAnim - esclat < 0.3;
+		for (let g = 0; g < 3; g++) {
+			const c = immobile ? 1 : bloc || tempsAnim - tocat[g] < 0.2 ? 0 : clamp((pose[g] - 0.6) / 0.35, 0, 1);
+			netG[g] = c > netG[g] ? Math.min(c, netG[g] + dt / 0.12) : Math.max(c, netG[g] - dt / 0.07);
+		}
+		net = Math.min(netG[0], netG[1], netG[2]);
 		if (net >= 1 && !preparat) {
 			// pendant le repos, on photographie déjà les deux voisins : aucun à-coup au premier éclat
 			pointsDe(mod(mi + 1));
@@ -463,33 +515,42 @@
 				gCor = q.g;
 				cx.fillStyle = gCor === 0 ? AUR : gCor === 1 ? CREMA : DEF;
 			}
-			const v2 = immobile ? 0 : q.vx * q.vx + q.vy * q.vy,
-				base = q.g === 0 ? 0.6 : 0.5,
-				va = Math.min(1, base * (1 - net) + (q.g === 0 ? 0.16 : 0.06) * net + Math.min(0.4, Math.sqrt(v2) / 900) + ten * 0.3);
+			const nq = netG[q.g],
+				v2 = immobile ? 0 : q.vx * q.vx + q.vy * q.vy,
+				base = q.g === 0 ? 0.75 : 0.6,
+				// en vol, l'or scintille doucement ; posé, le grain se fond sous le trait net
+				scint = calme || nq >= 1 ? 1 : 0.78 + 0.3 * Math.sin(t * 4 + q.ph * 13),
+				poussa = (base + Math.min(0.35, Math.sqrt(v2) / 1000)) * (1 - nq) * scint + ten * 0.3,
+				// un grain encore en route quand le mot devient net s'efface au lieu de traîner à côté
+				va = Math.min(1, poussa + (q.d < 2.5 ? (q.g === 0 ? 0.09 : 0.05) * nq : 0));
 			q.a += (va - q.a) * Math.min(1, dt * 10);
 			cx.globalAlpha = q.a;
 			const px = q.x + (calme ? 0 : Math.sin(t * 0.8 + q.ph) * 0.4), // respiration
 				py = q.y + (calme ? 0 : Math.cos(t * 0.6 + q.ph) * 0.4),
-				taille = v2 > 40000 ? 2.2 : 1.7; // un grain lancé brille un peu plus
+				taille = v2 > 40000 ? q.s + 0.35 : q.s; // un grain lancé brille un peu plus
 			cx.fillRect(px, py, taille, taille);
 		}
-		if (net > 0) {
-			// regroupés : le trait, le mot et sa définition deviennent nets
+		if (netG[0] + netG[1] + netG[2] > 0) {
+			// regroupés : le trait, le mot et sa définition deviennent nets, chacun à son tour
 			const p = plan(mi);
-			if (p.dess) {
-				cx.globalAlpha = net * 0.95;
+			if (p.dess && netG[0] > 0) {
+				cx.globalAlpha = netG[0] * 0.95;
 				cx.strokeStyle = AUR;
 				trait(cx, p, 1.3);
 			}
-			cx.globalAlpha = net;
-			cx.fillStyle = CREMA;
-			textes(cx, p.linhasW, fontOc(p.fW));
-			cx.globalAlpha = net * 0.6;
-			cx.fillStyle = AUR;
-			cx.fillRect(W / 2 - 18, p.yFilet, 36, 1);
-			cx.globalAlpha = net;
-			cx.fillStyle = DEF;
-			textes(cx, p.linhasD, fontDef(p.fD));
+			if (netG[1] > 0) {
+				cx.globalAlpha = netG[1];
+				cx.fillStyle = CREMA;
+				textes(cx, p.linhasW, fontOc(p.fW));
+			}
+			if (netG[2] > 0) {
+				cx.globalAlpha = netG[2] * 0.6;
+				cx.fillStyle = AUR;
+				cx.fillRect(W / 2 - 18, p.yFilet, 36, 1);
+				cx.globalAlpha = netG[2];
+				cx.fillStyle = DEF;
+				textes(cx, p.linhasD, fontDef(p.fD));
+			}
 		}
 		cx.globalAlpha = 1;
 	}
@@ -505,10 +566,19 @@
 		}
 		// Au repos (tout est net, rien ne bouge que la respiration), 30 images par
 		// seconde suffisent : moitié moins de travail pour une page de calme.
-		const repaus = net >= 1 && !carga && tireP === null && !(main && ara() - main.t < 0.1);
+		const repaus = net >= 1 && ecartPrec < 0.3 && !carga && tireP === null && !(main && ara() - main.t < 0.1);
 		if (repaus && now - darrier < 28) return;
 		const dt = Math.min(0.05, (now - darrier) / 1000 || 0); // onglet en arrière-plan : on ne rattrape pas
 		darrier = now;
+		if (repaus && silenci > 20) {
+			// tout est net et posé depuis un instant : l'image reste telle quelle, plus aucun
+			// dessin ni calcul ; seul compte le temps, pour passer au mot suivant
+			tempsAnim += dt;
+			idle += dt;
+			if (idle > 16 && !pausa && !calme && N > 1) eclater(1, 0.55);
+			return;
+		}
+		silenci = repaus ? silenci + 1 : 0;
 		pas(dt, (now - t0) / 1000);
 	}
 
@@ -524,6 +594,7 @@
 		hors.width = Math.ceil(W);
 		hors.height = Math.ceil(H);
 		hx.textAlign = 'center';
+		silenci = 0; // le canevas vient d'être vidé : il faut le redessiner
 		// au téléphone, la barre d'adresse qui se replie redimensionne en rafale :
 		// on ne photographie à nouveau qu'une fois le mouvement fini
 		clearTimeout(minutaTalh);
