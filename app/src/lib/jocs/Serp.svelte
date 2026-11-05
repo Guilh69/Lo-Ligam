@@ -57,6 +57,8 @@
 			fr: 'Touche la grille, ou le bouton du milieu : recracher la dernière lettre.'
 		},
 		ajuda4: { oc: 'Escap : pausa.', fr: 'Échap : pause.' },
+		// passé à lo Congrès le 2026-11-05 (tenguda, accelèra), à valider par Romain
+		ajudaRapid: { oc: 'Sageta tenguda : la sèrp accelèra.', fr: 'Flèche maintenue : la sèrp accélère.' },
 		partir: { oc: 'Partir', fr: 'Partir' },
 		escupir: { oc: 'Escupir la darrièra letra', fr: 'Recracher la dernière lettre' },
 		falsa: { oc: 'Letra falsa : Espaci per l’escupir.', fr: 'Mauvaise lettre : Espace pour la recracher.' },
@@ -72,7 +74,13 @@
 		drecha: { oc: 'Drecha', fr: 'Droite' }
 	};
 
-	const PAS_MS = 380; // un pas toutes les 0,38 s : lent, constant, jamais accéléré
+	const PAS_MS = 380; // un pas toutes les 0,38 s : lent par défaut
+	// flèche maintenue : la sèrp accélère (Romain, 05-11 : « il faudrait pouvoir
+	// accélérer »), le temps que la flèche reste appuyée
+	const PAS_RAPID = 130;
+	// un virage se fait tout de suite, sans attendre le pas suivant (Romain,
+	// 05-11 : « pas assez responsive ») ; pas deux pas à moins de 90 ms
+	const PAS_MIN = 90;
 	const CLAU_SON = 'lo-ligam-jocs-son';
 
 	// ── Réglages ─────────────────────────────────────────────────────────
@@ -102,6 +110,13 @@
 	let sac = [];
 	let darrierProgres = 0;
 	let relòtge = null;
+	let rapid = $state(false); // flèche maintenue
+	let darrierPas = 0; // heure du dernier pas (performance.now)
+	// l'angle de la tête, cumulé : elle tourne d'un quart de tour par le plus
+	// court chemin au lieu de sauter d'une orientation à l'autre
+	let angle = 0;
+	const ANGLES = { drecha: 0, aval: 90, esquerra: 180, amont: 270 };
+	let pasActual = $derived(pasAPas ? 160 : rapid ? PAS_RAPID : PAS_MS);
 	let ancianas = new Map(); // k → position logique et de dessin au pas d'avant
 	let racina;
 
@@ -147,6 +162,7 @@
 
 	function novelMot() {
 		arrestar();
+		rapid = false;
 		mot = tirar();
 		numero++;
 		mesurar();
@@ -212,7 +228,9 @@
 		const nx = (c.x + d.x + p.cols) % p.cols;
 		const ny = (c.y + d.y + p.rows) % p.rows;
 		const prop = !!att && p.teulas.some((t) => !t.manjada && t.l === att && t.x === nx && t.y === ny);
-		vista = { teulas: dessin, cap, dir: nomDir(p.dir), seguenta: p.seguenta, coa: coa(p), falsas: p.falsas, attesa: att, prop };
+		const dir = nomDir(p.dir);
+		angle += ((((ANGLES[dir] - angle) % 360) + 540) % 360) - 180;
+		vista = { teulas: dessin, cap, dir, rot: angle, seguenta: p.seguenta, coa: coa(p), falsas: p.falsas, attesa: att, prop };
 		if (segond.length) {
 			// second temps : une fois la position hors grille posée (et calculée
 			// par le navigateur), on glisse vers la case
@@ -231,6 +249,7 @@
 
 	function avançar() {
 		if (!p || estat === 'acabat') return;
+		darrierPas = performance.now();
 		const r = pas(p);
 		barrada = r.tipe === 'barrada';
 		if (r.tipe === 'manjada' || r.tipe === 'falsa' || r.tipe === 'acabat') {
@@ -270,7 +289,16 @@
 
 	function demarrar() {
 		arrestar();
-		if (!pasAPas) relòtge = setInterval(avançar, PAS_MS);
+		if (!pasAPas) relòtge = setInterval(avançar, rapid ? PAS_RAPID : PAS_MS);
+	}
+	// accélérer ou ralentir : le pas change de durée sans à-coup ; en
+	// accélérant, un pas part tout de suite s'il en est temps
+	function accelerar(v) {
+		if (v === rapid) return;
+		rapid = v;
+		if (estat !== 'joc' || pasAPas) return;
+		if (v && performance.now() - darrierPas >= PAS_RAPID) avançar();
+		if (estat === 'joc') demarrar();
 	}
 	function arrestar() {
 		if (relòtge) clearInterval(relòtge);
@@ -283,6 +311,7 @@
 		const d = DIRS[nom];
 		// le délai de l'aide douce part du premier mouvement, pas de l'affichage
 		if (estat === 'espera') darrierProgres = Date.now();
+		const memoDir = p.dir;
 		const ok = virar(p, d);
 		if (pasAPas) {
 			// en pas à pas, chaque appui fait un pas (sauf le demi-tour, refusé)
@@ -297,11 +326,24 @@
 			estat = 'joc';
 			avançar();
 			demarrar();
+			return;
+		}
+		// la flèche du sens où elle va : rien à tourner, elle accélère tant
+		// que la flèche est tenue (relâcher : accelerar(false))
+		if (!ok && d.x === memoDir.x && d.y === memoDir.y && !p.file.length) {
+			accelerar(true);
+			return;
+		}
+		// un virage : le pas part tout de suite et l'horloge repart de là
+		if (ok && estat === 'joc' && p.file.length === 1 && performance.now() - darrierPas >= PAS_MIN) {
+			avançar();
+			if (estat === 'joc') demarrar();
 		}
 	}
 
 	function bascularPausa() {
 		if (estat === 'joc') {
+			rapid = false;
 			arrestar();
 			estat = 'pausa';
 			rafrescar(); // une case sortie par un bord rentre, pour rester visible
@@ -371,27 +413,54 @@
 		}
 	}
 
+	function levarTòca(e) {
+		if (TOCAS[e.code]) accelerar(false);
+	}
+	// les flèches à l'écran : le geste part à l'appui (pas au relâché, plus
+	// tardif sur un téléphone) ; tenue, la flèche accélère ; au clavier
+	// (Entrée, Espace sur le bouton), le clic suffit
+	function apuejarDir(e, nom) {
+		if (e.button > 0) return;
+		try {
+			e.currentTarget.setPointerCapture(e.pointerId);
+		} catch {
+			// pas de capture possible : le relâché arrivera quand même au bouton
+		}
+		demandar(nom);
+	}
+	function clicDir(e, nom) {
+		if (e.detail === 0) demandar(nom);
+	}
+
 	// ── Doigt : glisser sur la grille pour tourner, toucher pour recracher ─
 	let origina = null;
 	let bolegat = false;
+	let lisat = null; // le sens déjà demandé pendant ce geste
 	function tocar(e) {
 		// la grille prend le focus : le clavier marche ensuite à coup sûr
 		e.currentTarget.focus({ preventScroll: true });
 		origina = { x: e.clientX, y: e.clientY };
 		bolegat = false;
+		lisat = null;
 	}
 	function lisar(e) {
 		if (!origina) return;
 		const dx = e.clientX - origina.x;
 		const dy = e.clientY - origina.y;
-		if (Math.max(Math.abs(dx), Math.abs(dy)) < 24) return;
+		if (Math.max(Math.abs(dx), Math.abs(dy)) < 18) return;
 		bolegat = true;
-		demandar(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'drecha' : 'esquerra') : dy > 0 ? 'aval' : 'amont');
+		const nom = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'drecha' : 'esquerra') : dy > 0 ? 'aval' : 'amont';
 		origina = { x: e.clientX, y: e.clientY };
+		// le doigt qui continue dans le même sens ne redemande rien ; glisser
+		// dans le sens de la sèrp et garder le doigt posé : elle accélère
+		if (nom === lisat) return;
+		lisat = nom;
+		demandar(nom);
 	}
 	function levar(e) {
 		if (origina && !bolegat && e.pointerType !== 'mouse' && !ajuda) escupirLetra();
 		origina = null;
+		accelerar(false);
 	}
 
 	onMount(() => {
@@ -413,13 +482,13 @@
 	});
 </script>
 
-<svelte:window onkeydown={tòca} />
+<svelte:window onkeydown={tòca} onkeyup={levarTòca} onblur={() => accelerar(false)} />
 
 {#snippet sageta(nom)}
 	<svg viewBox="0 0 24 24" aria-hidden="true" class="sageta sageta-{nom}"><path d="M7 14.5l5-5 5 5" /></svg>
 {/snippet}
 
-<section class="joc" class:immersiu aria-labelledby="titol-serp" style:--pas="{pasAPas ? 160 : PAS_MS}ms" bind:this={racina}>
+<section class="joc" class:immersiu aria-labelledby="titol-serp" style:--pas="{pasActual}ms" bind:this={racina}>
 	<div class="disposicion">
 		<header class="cap-joc">
 			<h2 id="titol-serp" lang="oc">La sèrp de las letras</h2>
@@ -477,7 +546,7 @@
 				{/each}
 				<span class="cap" class:saut={vista.cap.saut} class:barrada class:prop={vista.prop} style:--x={vista.cap.rx} style:--y={vista.cap.ry}>
 					{#key mordida}
-						<span class="testa testa-{vista.dir}" class:mossega={mordida > 0}>
+						<span class="testa" class:mossega={mordida > 0} style:rotate="{vista.rot ?? 0}deg">
 							<span class="uelh"></span><span class="uelh"></span><span class="lenga"></span><span class="boca"></span>
 						</span>
 					{/key}
@@ -497,6 +566,7 @@
 							<li>{tria(tactil ? T.ajuda1Tactil : T.ajuda1)}</li>
 							<li>{tria(T.ajuda2)}</li>
 							<li>{tria(tactil ? T.ajuda3Tactil : T.ajuda3)}</li>
+							<li>{tria(T.ajudaRapid)}</li>
 							{#if !tactil}<li>{tria(T.ajuda4)}</li>{/if}
 						</ul>
 						<button type="button" class="accion" onclick={() => (ajuda = false)}>{tria(T.partir)}</button>
@@ -527,7 +597,15 @@
 		<div class="comandas">
 			<div class="crotz" role="group" aria-label={tria(T.grasilha)}>
 				{#each ['amont', 'esquerra', 'drecha', 'aval'] as nom (nom)}
-					<button type="button" class="dir dir-{nom}" aria-label={tria(T[nom])} onclick={() => demandar(nom)}>
+					<button
+						type="button"
+						class="dir dir-{nom}"
+						aria-label={tria(T[nom])}
+						onpointerdown={(e) => apuejarDir(e, nom)}
+						onpointerup={() => accelerar(false)}
+						onpointercancel={() => accelerar(false)}
+						onclick={(e) => clicDir(e, nom)}
+					>
 						{@render sageta(nom)}
 					</button>
 				{/each}
@@ -908,6 +986,10 @@
 		box-shadow:
 			inset 0 0 0 1.5px color-mix(in srgb, var(--color-text) 55%, transparent),
 			0 0.25em 0.5em -0.3em rgba(0, 0, 0, 0.6);
+		transition: rotate 0.14s ease-out;
+	}
+	.calme .testa {
+		transition: none;
 	}
 	/* la bonne lettre mangée : quelques grains d'or montent de la tête */
 	.polsa {
@@ -1015,18 +1097,6 @@
 		40% {
 			scale: 1.12;
 		}
-	}
-	.testa-drecha {
-		rotate: 0deg;
-	}
-	.testa-aval {
-		rotate: 90deg;
-	}
-	.testa-esquerra {
-		rotate: 180deg;
-	}
-	.testa-amont {
-		rotate: 270deg;
 	}
 	.barrada .testa {
 		box-shadow: 0 0 0 3px color-mix(in srgb, var(--t-tinta) 35%, transparent);
