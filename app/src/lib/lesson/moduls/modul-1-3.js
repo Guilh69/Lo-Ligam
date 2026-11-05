@@ -81,6 +81,15 @@ export const modul13 = {
 			minutes: 10,
 			blocks: [
 				{
+					type: 'fotos',
+					// Photos de Romain (05-11), sans GPS : static/aprene/fotos/
+					imatges: [
+						{ clau: '1-3-barcelona', amples: [400, 800], l: 400, h: 500, oc: 'Barcelona', fr: 'Barcelone', alt: 'Une rue de Barcelone, avec au fond la tour Glòries en forme d’obus.' },
+						{ clau: '1-3-besiers', amples: [400, 800], l: 400, h: 500, oc: 'Besièrs', fr: 'Béziers, devant le CIRDÒC', alt: 'La façade vitrée du CIRDÒC, la médiathèque occitane de Béziers, sous un ciel bleu.' },
+						{ clau: '1-3-tolosa', amples: [400, 800], l: 400, h: 500, oc: 'Tolosa', fr: 'Toulouse, la Garonne', alt: 'La Garonne à Toulouse : l’eau tombe du seuil du Bazacle, les toits de brique au loin.' }
+					]
+				},
+				{
 					type: 'dialogue',
 					title: 'Sur la place, après la fête',
 					intro:

@@ -111,6 +111,13 @@ export const modul51 = {
 			minutes: 10,
 			blocks: [
 				{
+					type: 'fotos',
+					// Photos de Romain (05-11), sans GPS : static/aprene/fotos/
+					imatges: [
+						{ clau: '5-1-mercat', amples: [720, 1200], l: 720, h: 330, oc: 'lo mercat', fr: 'le marché', alt: 'Des bottes d’asperges violettes, vertes et blanches sur un étal de marché.' }
+					]
+				},
+				{
 					type: 'dialogue',
 					title: 'Jour de marché au village',
 					intro:
