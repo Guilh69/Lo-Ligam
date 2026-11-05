@@ -1197,6 +1197,27 @@
 		color: var(--or);
 		font-weight: 700;
 	}
+	/* la carte tient toujours dans la grille : plus serrée sur téléphone, et
+	   elle défile plutôt que d'être coupée */
+	.grasilha .carta {
+		max-height: calc(100% - 0.75rem);
+		overflow-y: auto;
+	}
+	@media (max-width: 559px) {
+		.grasilha .carta {
+			width: 94%;
+			padding: 0.8rem 1rem 0.9rem;
+		}
+		.carta .carta-titol {
+			margin-bottom: 0.1rem;
+		}
+		.carta .ajuda-lista {
+			margin-bottom: var(--esp-8);
+			gap: 0.2rem;
+			font-size: 0.86rem;
+			line-height: 1.3;
+		}
+	}
 	.fin-oc {
 		margin: 0;
 		font-size: clamp(1.8rem, 7cqi, 3rem);
