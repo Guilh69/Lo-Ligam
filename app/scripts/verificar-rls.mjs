@@ -176,6 +176,22 @@ async function verificarEscritura(supabase) {
 	const decision = await supabase.rpc('decidir_perfil', { u: '00000000-0000-0000-0000-000000000001', d: 'verificat' });
 	verificar('VALIDER un profil sans compte est refusé', !!decision.error);
 
+	// Les notes du talhièr (supabase-notas.sql, 06-11) : un visiteur envoie une
+	// remarque pour l'IA, jamais au nom de Romain, jamais comme une question de
+	// l'IA, jamais déjà répondue ; il ne lit rien. (Refusé = erreur : l'anonyme
+	// ne peut pas relire la table pour vérifier.)
+	const nòta = { pagina: '/_essai-verrolhs', tèxte: 'Essai des verrous' };
+	const deRomain = await supabase.from('remarcas').insert({ ...nòta, de_romain: true });
+	verificar('ÉCRIRE une note au nom de Romain sans compte est refusé', !!deRomain.error);
+	const perRomain = await supabase.from('remarcas').insert({ ...nòta, per: 'romain', autor: 'Claude' });
+	verificar('FABRIQUER une question de l’IA sans compte est refusé', !!perRomain.error);
+	const respondut = await supabase.from('remarcas').insert({ ...nòta, responsa: 'déjà fait', autor_responsa: 'IA' });
+	verificar('ÉCRIRE une réponse de l’IA sans compte est refusé', !!respondut.error);
+	const legirNòtas = await supabase.from('remarcas').select('id').limit(1);
+	verificar('LIRE les notes sans compte est refusé', !!legirNòtas.error || !legirNòtas.data?.length);
+	const demanda = await supabase.rpc('ia_demandar', { p_clau_secreta: 'pas-la-bona', p_pagina: '/_essai-verrolhs', p_text: 'Essai', p_autor: 'IA' });
+	verificar('POSER une question au nom de l’IA sans sa clé est refusé', !!demanda.error);
+
 	// La tentative la plus grave : se déclarer administrateur.
 	const promocion = await supabase
 		.from('admins')

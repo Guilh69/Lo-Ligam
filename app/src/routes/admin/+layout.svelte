@@ -10,12 +10,23 @@
 	import { session, authReady } from '$lib/authStore';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { page } from '$app/state';
+	import { browser, dev } from '$app/environment';
+	import { TALHIÈRS } from '$lib/talhier/talhiers.js';
 
 	let { children } = $props();
 
 	let estat = $state('cargament'); // cargament | pas-connectat | pas-admin | admin
 
+	// en développement, « ?edicion=simular » ouvre la liste Per tu sans compte,
+	// avec des notes d'exemple (rien n'est écrit) ; les ateliers, eux, restent
+	// vides sans la base
+	const simular = dev && browser && new URLSearchParams(location.search).get('edicion') === 'simular';
+
 	$effect(() => {
+		if (simular) {
+			estat = 'admin';
+			return;
+		}
 		if (!$authReady) return;
 		if (!$session) {
 			estat = 'pas-connectat';
@@ -26,18 +37,9 @@
 		});
 	});
 
-	const menut = [
-		{ href: '/admin', oc: 'Verrolhs', fr: 'Verrous' },
-		{ href: '/admin/grops', oc: 'Grops', fr: 'Groupes' },
-		{ href: '/admin/designs', oc: 'Designs', fr: 'Designs' },
-		{ href: '/admin/musica', oc: 'Musica', fr: 'Musique' },
-		{ href: '/admin/carta', oc: 'Carta', fr: 'Carte' },
-		{ href: '/admin/carta/luocs', oc: 'Luòcs', fr: 'Lieux' },
-		{ href: '/admin/textes', oc: 'Tèxtes', fr: 'Textes' },
-		{ href: '/admin/ideas', oc: 'Idèas', fr: 'Idées' },
-		{ href: '/admin/perfils', oc: 'Perfils', fr: 'Profils' },
-		{ href: '/admin/triar', oc: 'Triar', fr: 'Trier' } // valider un par un, croix ou cœur (Romain, 06-11)
-	];
+	// La porte est la liste Per tu (/admin, Lo talhièr, 2026-11-06) ; sur les
+	// ateliers, une barre les reprend, rangés par usage (lib/talhier/talhiers.js)
+	let surPerTu = $derived(page.url.pathname === '/admin');
 </script>
 
 <svelte:head>
@@ -69,11 +71,19 @@
 			</p>
 		</section>
 	{:else}
-		<nav class="menut" aria-label="Espaci d'administracion">
-			{#each menut as m (m.href)}
-				<a href={m.href} class:actiu={page.url.pathname === m.href}>{m.oc}</a>
-			{/each}
-		</nav>
+		{#if !surPerTu}
+			<nav class="menut" aria-label="Espaci d'administracion">
+				<a href="/admin" class="pertu">Per tu</a>
+				{#each TALHIÈRS as g (g.grop)}
+					<span class="grop">
+						<span class="grop-nom">{g.grop}</span>
+						{#each g.ateliers as m (m.href)}
+							<a href={m.href} title={m.fr} class:actiu={page.url.pathname === m.href} aria-current={page.url.pathname === m.href ? 'page' : undefined}>{m.oc}</a>
+						{/each}
+					</span>
+				{/each}
+			</nav>
+		{/if}
 
 		{@render children()}
 	{/if}
@@ -124,18 +134,43 @@
 
 	.menut {
 		display: flex;
-		gap: 0.35rem;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.3rem 1.1rem;
+		max-width: 62rem;
 		background: rgba(255, 255, 255, 0.75);
-		padding: 0.3rem;
-		border-radius: 999px;
+		padding: 0.35rem 0.7rem;
+		border-radius: 20px;
 		margin-top: 1rem;
 	}
 
+	.menut .grop {
+		display: inline-flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.1rem;
+	}
+
+	.menut .grop-nom {
+		margin-right: 0.3rem;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-teal);
+	}
+
+	.menut a.pertu {
+		font-weight: 800;
+	}
+
+	/* (Luciole : Limelight est réservé aux grands titres, 02-11) */
 	.menut a {
-		padding: 0.5rem 1.1rem;
+		padding: 0.45rem 0.85rem;
 		border-radius: 999px;
 		text-decoration: none;
-		font-family: var(--font-heading);
+		font-family: var(--font-body);
 		font-weight: 600;
 		font-size: 0.92rem;
 		color: var(--color-text);

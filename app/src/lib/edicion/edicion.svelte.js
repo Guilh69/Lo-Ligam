@@ -31,7 +31,10 @@ export const edicion = $state({
 	causit: null,
 	ancora: null,
 	ocupat: false,
-	messatge: null
+	messatge: null,
+	// le rail du talhièr (lib/talhier, 2026-11-06) est là et porte l'entrée
+	// « Modificar » : l'éditeur n'affiche plus son propre bouton
+	talhièr: false
 });
 
 const VUEJ = { oc: '', fr: '', es: '', en: '', ca: '', ar: '' };
