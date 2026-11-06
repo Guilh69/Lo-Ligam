@@ -61,7 +61,7 @@ Le site suit trois étapes, qui sont aussi son menu : **Se parla. S'apren. Amass
 
 **Une pédagogie construite.** Un objectif clair par leçon ; aucun mot ni aucune notion employés avant d'avoir été expliqués ; de la répétition, de la découverte et des jeux variés. La progression s'inspire des cours de catalan pour adultes du CPNL et vise le DCL. La prononciation suit l'usage vivant.
 
-**Des valeurs tenues.** Pas de publicité, pas de pistage, le moins de données possible. Des pages légères, par sobriété. Un hébergement en Europe : Scaleway, à Paris, et une base de données Supabase en région européenne (la société est américaine, ce que la politique de confidentialité dit clairement). Aucune image générée par intelligence artificielle : les photos sont celles de Romain.
+**Des valeurs tenues.** Pas de publicité, pas de pistage, le moins de données possible. Des pages légères, par sobriété. Un hébergement en Europe : Scaleway, à Paris, et une base de données Supabase en région européenne (la société est américaine, ce que la politique de confidentialité dit clairement). Les photos sont celles de Romain.
 
 **Une façon de travailler.** Romain conçoit, décide et valide l'occitan. Le code, la mise en page et le premier jet des leçons ont été réalisés avec des assistants d'intelligence artificielle (Claude, puis Mistral), dans le cadre fixé par Romain ; tout l'occitan passe par les sources de référence, puis par sa relecture. 1 321 modifications enregistrées en un peu plus de trois mois, 918 contrôles automatiques du code. Romain modifie lui-même les textes du site, directement sur la page.
 
