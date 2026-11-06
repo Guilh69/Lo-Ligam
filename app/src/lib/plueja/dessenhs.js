@@ -829,14 +829,16 @@ function arcFleca(x, y, r, a0, a1, l = 6) {
 }
 /** Note de musique (une croche) : la tête en (x, y), la hampe vers le haut. */
 const nota = (x, y, s = 1) => tr('M-3 0C-3 -3 3 -4 3 -1C3 2 -3 3 -3 0ZM3 -1L3 -15C5 -12 9 -11 9 -7', x, y, s);
-// ── Les drapeaux des nationalités, en couleur (Romain, 06-11 : « juste le
-// drapeau avec une attention sur les couleurs et le fond », puis « en couleur ») :
-// la seule exception à l'or. Le dessin lui-même n'est que le contour d'or du
+// ── Les drapeaux des nationalités et les couleurs, en couleur (Romain, 06-11 :
+// « juste le drapeau avec une attention sur les couleurs et le fond », « en
+// couleur », puis « pour les couleurs, un rond dans la couleur en question ») :
+// les seules exceptions à l'or. Le dessin lui-même n'est que le contour d'or du
 // drapeau ; ses couleurs sont dans TINTAS, zone par zone, dans l'ordre où on les
 // peint : { c: couleur, d: chemin fermé } est rempli, { c, d, s: true } est tracé.
 // Les couleurs officielles sont éclaircies pour se lire sur le ciel de nuit
 // (#0e1a2b) : un bleu de France sombre y disparaîtrait. Tous en 3 × 2 (72 × 48).
 const BANDIERA = 'M14 26L86 26L86 74L14 74Z';
+const ROND = cercle(50, 50, 27); // le rond d'une couleur
 const rect = (x0, y0, x1, y1) => `M${r1(x0)} ${r1(y0)}L${r1(x1)} ${r1(y0)}L${r1(x1)} ${r1(y1)}L${r1(x0)} ${r1(y1)}Z`;
 const T = {
 	blanc: '#f7f3ee',
@@ -893,6 +895,21 @@ export const TINTAS = {
 		{ c: T.verd, d: rect(14, 26, 50, 74) },
 		{ c: T.roge, d: lune(51, 50, 11) },
 		{ c: T.roge, d: estela(59.5, 50, 5, 2.1, 5) }
+	],
+	// les couleurs : un rond plein, cerné d'or ; les mêmes teintes que les drapeaux
+	roge: [{ c: T.roge, d: ROND }],
+	blava: [{ c: T.blau, d: ROND }],
+	verd: [{ c: T.verd, d: ROND }],
+	jaune: [{ c: T.jaune, d: ROND }],
+	negra: [{ c: '#000000', d: ROND }], // le seul rond plus sombre que le ciel : le cerne d'or le dessine
+	blanc: [{ c: T.blanc, d: ROND }],
+	gris: [{ c: '#9a9ea4', d: ROND }],
+	// la palette : ses quatre godets en couleur (dessin de la palette dans DESSENHS)
+	'la color': [
+		{ c: T.roge, d: cercle(34, 48, 4) },
+		{ c: T.jaune, d: cercle(44, 34, 4) },
+		{ c: T.verd, d: cercle(60, 32, 4) },
+		{ c: T.blau, d: cercle(72, 44, 4) }
 	]
 };
 
@@ -1613,38 +1630,13 @@ Object.assign(DESSENHS, {
 	],
 	davant: ['M51.9 66L78 66L78 22L34 22L34 48.1', cercle(36, 64, 16)], // la balle devant la boîte
 	darrièr: ['M22 40L66 40L66 84L22 84Z', 'M48 40A16 16 0 1 1 66 55.9'], // la balle cachée derrière
-	roge: [cercle(36, 68, 12), cercle(64, 72, 12), 'M36 56C38 40 46 26 56 18M64 60C62 44 58 30 56 18', 'M56 18C64 10 76 12 80 18C72 24 62 24 56 18Z'], // les cerises
-	blava: [
-		// les vagues de la mer
-		'M8 40C16 32 24 32 32 40C40 48 48 48 56 40C64 32 72 32 80 40C86 46 90 46 94 42',
-		'M8 58C16 50 24 50 32 58C40 66 48 66 56 58C64 50 72 50 80 58C86 64 90 64 94 60',
-		'M8 76C16 68 24 68 32 76C40 84 48 84 56 76C64 68 72 68 80 76C86 82 90 82 94 78'
-	],
-	verd: ['M50 88C50 66 46 46 36 26', 'M50 88C52 64 58 46 70 30', 'M50 88C46 72 36 60 22 54', 'M50 88C56 74 66 66 80 62', 'M50 88C50 70 50 54 52 40', 'M30 88L70 88'], // l'herbe
-	jaune: ['M10 54C18 36 34 30 50 30C66 30 82 36 90 54C82 72 66 78 50 78C34 78 18 72 10 54Z', 'M50 30C54 20 64 16 72 18C66 26 58 30 50 30Z'], // le citron
-	negra: [
-		// le corbeau
-		'M12 44L24 40C26 34 34 32 40 36C52 38 66 46 76 54L94 60L78 62C70 70 54 72 42 66C32 62 26 54 24 48Z',
-		cercle(30, 40, 1.5),
-		'M48 68L46 82M56 68L58 82',
-		'M40 46C52 50 62 56 72 60'
-	],
-	blanc: [
-		// le mouton
-		'M30 64C22 66 18 56 24 52C22 42 32 38 38 42C42 34 54 34 58 40C64 34 76 38 76 46C84 48 84 60 76 62C74 70 36 72 30 64Z',
-		'M24 50C16 46 8 52 10 58C12 64 20 64 24 60',
-		'M18 50L14 44',
-		'M36 68L36 84M46 70L46 84M60 70L60 84M70 66L70 84'
-	],
-	gris: [
-		// la souris grise
-		'M14 72C14 56 30 48 46 48C62 48 76 58 86 70L90 72Z',
-		cercle(62, 46, 7),
-		cercle(76, 62, 1.5),
-		'M14 72C6 72 4 62 10 56C16 50 12 40 6 38',
-		'M86 66L96 62M86 68L96 70',
-		'M8 72L92 72'
-	],
+	roge: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	blava: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	verd: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	jaune: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	negra: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	blanc: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	gris: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
 	pichona: [...persona(36, 30, 11, 90, { punts: true }), ...persona(70, 60, 6, 90, { cabels: true }), 'M6 90L94 90'],
 	grand: [...persona(36, 30, 11, 90), ...persona(70, 60, 6, 90, { punts: true }), 'M6 90L94 90'],
 	vièlh: [...persona(44, 34, 10, 90, { baston: 1 }), 'M40 30L44 31M50 31L54 30', 'M6 90L94 90'],
