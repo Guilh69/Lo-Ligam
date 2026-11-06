@@ -93,7 +93,8 @@ export function iniciar(pagina, publicats) {
 	simulacion = import.meta.env.DEV && new URLSearchParams(location.search).get('edicion') === 'simular';
 	if (simulacion) {
 		edicion.admin = true;
-		return;
+		// en partant, la page range aussi le mode d'essai (sinon « Editar » la suit)
+		return quitar;
 	}
 	// le bouton « Editar » n'apparaît que pour l'administrateur (la base refuse
 	// de toute façon les écritures des autres)

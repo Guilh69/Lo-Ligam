@@ -134,7 +134,7 @@
 	<header>
 		<h1>Per tu</h1>
 		<p class="intro">
-			Ce qui attend ta main, puis ce qui attend l’IA. Pour épingler une note : sur n’importe quelle page du site, touche « Comentar » dans le rail à droite, puis l’endroit ;
+			Ce qui attend ta main, puis ce qui attend l’IA. Pour épingler une note : sur n’importe quelle page du site, touche « Comentar » dans la barre à droite, puis l’endroit ;
 			choisis « Per l’IA » (Claude ou Mistral la relève à la prochaine séance et te répond ici) ou « Nòta » (pour toi).
 		</p>
 	</header>

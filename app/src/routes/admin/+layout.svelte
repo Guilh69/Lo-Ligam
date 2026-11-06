@@ -10,8 +10,8 @@
 	import { session, authReady } from '$lib/authStore';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { page } from '$app/state';
-	import { browser, dev } from '$app/environment';
 	import { TALHIÈRS } from '$lib/talhier/talhiers.js';
+	import { simulacion } from '$lib/talhier/notas.svelte.js';
 
 	let { children } = $props();
 
@@ -20,7 +20,7 @@
 	// en développement, « ?edicion=simular » ouvre la liste Per tu sans compte,
 	// avec des notes d'exemple (rien n'est écrit) ; les ateliers, eux, restent
 	// vides sans la base
-	const simular = dev && browser && new URLSearchParams(location.search).get('edicion') === 'simular';
+	const simular = simulacion();
 
 	$effect(() => {
 		if (simular) {

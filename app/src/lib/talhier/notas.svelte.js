@@ -13,8 +13,11 @@ export const PAGINA_TRIAR = '/admin/triar';
 const COLOMNAS = 'id,pagina,modul,etapa,bloc,cibla,clau,extrait,tèxte,autor,estat,responsa,autor_responsa,per,de_romain,vista,created_at';
 
 /** En développement, « ?edicion=simular » montre le talhièr sans compte, avec
- *  des notes d'exemple, sans rien écrire dans la base (comme l'éditeur). */
-export const simulacion = () => browser && import.meta.env.DEV && new URLSearchParams(location.search).get('edicion') === 'simular';
+ *  des notes d'exemple, sans rien écrire dans la base (comme l'éditeur). Le
+ *  mode tient jusqu'au rechargement de la page : les liens internes (Per tu,
+ *  « Veire ») n'ont pas à recopier le paramètre. */
+let simulant = false;
+export const simulacion = () => (simulant ||= browser && import.meta.env.DEV && new URLSearchParams(location.search).get('edicion') === 'simular');
 
 export const notas = $state({ lista: [], cargat: false, error: null });
 
