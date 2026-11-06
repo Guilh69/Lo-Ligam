@@ -8,6 +8,8 @@
 >
 > Les règles courtes sont dans `AGENTS.md` (lu automatiquement par Mistral Vibe). Ce fichier est la référence complète : à lire en entier une fois, puis par extraits. Les libellés occitans cités ici sont ceux qui existent déjà sur le site.
 
+> **Mise à jour du 2026-11-06 au soir** : le forfait Claude est fini et Claude n'est plus joignable pour quelques mois. Le contrôle décrit au §10 est suspendu jusqu'à son retour : les fiches de passation s'écrivent quand même, dans `revisions/passation/`, et Romain décide seul (`AGENTS.md`, « Sans Claude »). Le relais du jour, les réglages à vérifier et l'état des discussions laissées ouvertes sont dans `COORDINATION.md` ; les outils de cet ordinateur (Node hors du PATH, capture d'écran par Firefox) dans `AGENTS.md`, « Sur cet ordinateur ».
+
 ## Sommaire
 1. La nouvelle répartition des rôles
 2. Romain, et comment travailler avec lui
@@ -393,6 +395,6 @@ Le 2026-11-02, Mistral avait fait un premier passage en regard extérieur, sans 
 
 **Ce qui demandera de l'aide plus tard**
 - Installer Mistral Vibe s'il ne l'est pas encore (demander à Mistral dans Le Chat de te guider pas à pas, ou à Claude).
-- Recréer Joan, Rodrigo et Aran comme agents Mistral.
-- Donner à Mistral les règles communes à tous tes projets : copier l'esprit de `C:\Users\perie\.claude\CLAUDE.md` (ta carte des projets) dans le fichier d'instructions global de Mistral Vibe (`C:\Users\perie\.vibe\AGENTS.md`).
+- ~~Recréer Joan, Rodrigo et Aran comme agents Mistral~~ : fait le 06-11, ce sont des compétences de Vibe (`C:\Users\perie\.vibe\skills\joan`, `rodrigo`, `aran`), qui renvoient à leurs grilles complètes.
+- ~~Donner à Mistral les règles communes à tous tes projets~~ : fait le 06-11, `C:\Users\perie\.vibe\AGENTS.md`, écrit à partir de ta carte des projets (`C:\Users\perie\.claude\CLAUDE.md`, qui fait foi).
 - Sur l'autre ordinateur : cloner le dépôt et lancer le script des jonctions (§7).

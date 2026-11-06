@@ -2,6 +2,8 @@
 
 > Lu automatiquement par Mistral Vibe à chaque séance (fichier `AGENTS.md` à la racine du dépôt). **Après le 6 novembre 2026** (fin du forfait Claude de Romain), **Mistral devient l'agent principal du projet et Claude garde un rôle de contrôle** (choix de Romain : budget, et envie d'aller plus loin avec une IA française). **Jusqu'au 6 novembre, Claude garde la main** ; Romain fait appel à l'une ou l'autre selon ce qu'il demande. Dans cette période, ne pas reprendre un chantier que Claude a en cours sans que Romain le demande.
 >
+> **Depuis le 6 novembre au soir, c'est toi qui as la main.** Le forfait Claude de Romain est fini : **Claude n'est plus joignable** tant que Romain n'a pas repris d'abonnement (quelques mois). Le contrôle par Claude (`BRIEF-MISTRAL.md` §10) est donc **suspendu** : voir « Sans Claude » plus bas. Où en est chaque chantier : `COORDINATION.md` (le relais du 06-11), puis `PILOTATGE.md`.
+>
 > **Première séance : lire `BRIEF-MISTRAL.md` en entier** (le briefing de passation complet : Romain, l'état du projet, ce qui reste, les pièges). Ensuite, le relire par extraits quand un sujet s'y prête. Les consignes équivalentes de Claude sont dans `CLAUDE.md`.
 
 ## Le projet
@@ -22,6 +24,28 @@ Site d'apprentissage de l'occitan (languedocien, norme classique) : https://loli
 - Dans `app/` : `npm test` puis `npm run build` doivent passer. Le `Dockerfile` lance `npm test` : un test rouge bloque la mise en ligne.
 - Changement visuel : **regarder la page** (capture), à 1830 px de large **et** en vue téléphone (390 px), dans les deux thèmes si la page en a deux. Des mesures justes ont déjà masqué des chevauchements visibles.
 - Montrer la preuve (sortie de commande, capture). Écrire « vérifié », « déduit » ou « non vérifié » ; un chiffre estimé s'écrit « estimation ». Ne jamais citer un commit, une branche ou une sortie qu'on ne peut pas montrer.
+
+## Sur cet ordinateur : lancer les outils toi-même
+**Node et npm ne sont pas dans le PATH de Windows.** C'est pour ça que `node` ou `npm` répondent « command not found » : ce n'est pas qu'ils manquent. Ils sont dans `C:\Users\perie\AppData\Local\Programs\nodejs`. Dans ton terminal (Git Bash), commence chaque commande par :
+```
+export PATH="/c/Users/perie/AppData/Local/Programs/nodejs:$PATH"; cd /c/Users/perie/Depots/Lo_Ligam/app && node scripts/verificar-oc.mjs plaça velhada
+```
+Le Vibe Hub (`C:\Users\perie\Depots\vibe-hub`) ajoute ce chemin tout seul depuis le 06-11. Ensuite, `npm test`, `npm run build`, `node scripts/…` marchent normalement.
+- **Ne fais pas lancer de fichiers `.cmd` à Romain** pour exécuter une commande à ta place : lance-la toi-même avec la ligne ci-dessus et lis la sortie. Les essais du 05-11 (`trobar-node.cmd`, `verificar-mistral.*`, `sortida-*.txt`) sont rangés dans `C:\Users\perie\Documents\6_Projectes\Lo_Ligam_hors-git\revisions\mistral-essais-2026-11-05`.
+- Python : `py` (Python 3.14) ; `python` existe aussi dans le PATH. GDAL : le Python de QGIS (`C:\Program Files\QGIS 4.2.3\bin\python-qgis.bat`).
+- Git Bash : un argument qui commence par `/` (`/ensag/…`) est transformé en chemin Windows ; préfixer par `MSYS_NO_PATHCONV=1`.
+- **Voir une page** : tu n'as pas de navigateur intégré. Lance `npm run dev` puis demande à Romain une capture d'écran (ses captures sont le meilleur diagnostic), ou une capture sans fenêtre par Firefox, sur un profil vierge (jamais celui de Romain), avec des chemins Windows entre guillemets (vérifié le 06-11) :
+```
+mkdir -p /c/Users/perie/AppData/Local/Temp/ff-capture; "/c/Program Files/Mozilla Firefox/firefox.exe" --headless --no-remote --profile "C:\Users\perie\AppData\Local\Temp\ff-capture" --window-size=1830,1100 --screenshot "C:\Users\perie\AppData\Local\Temp\capture.png" https://loligam.eu/
+```
+puis lis l'image. `--window-size=390,844` pour la vue téléphone. Limite : c'est l'état au chargement, avant les animations d'apparition (l'accueil paraît presque vide) et sans clic ; pour le reste, demande une capture à Romain. Dis toujours ce que tu as vu et ce que tu n'as pas pu voir.
+- **Vérifier une mise en ligne** : après un envoi, attendre trois à cinq minutes, puis chercher sur https://loligam.eu un texte du dernier changement (`curl -s https://loligam.eu/… | grep "…"`).
+
+## Sans Claude (depuis le 06-11, jusqu'au retour de son abonnement)
+- **Changement sensible** (SQL, règles RLS, authentification, point d'entrée serveur, en-têtes et CSP, dépendances, suppression, refonte large, décision du cahier remise en cause) : tu le fais sur une branche `mistral/<sujet>`, tu écris la fiche de passation (`BRIEF-MISTRAL.md` §10.2) dans `revisions/passation/AAAA-MM-JJ-<sujet>.md`, tu expliques à Romain le risque en deux lignes, et **Romain décide seul** de fusionner ou d'attendre. Claude relira les fiches à son retour.
+- Relecteurs : Joan (visuel), Rodrigo (sécurité) et Aran (traduction) étaient des instances de Claude. Leurs grilles sont dans `C:\Users\perie\.claude\agents\joan.md`, `rodrigo.md`, `aran.md` : applique-les toi-même avant de montrer un résultat (dans Vibe, ce sont aussi des compétences : `joan`, `rodrigo`, `aran`).
+- Supabase : Claude y avait un accès direct, toi non. Le SQL, tu l'écris dans un fichier de `supabase/`, et Romain le colle dans le *SQL Editor* (dis-lui exactement quoi copier et où cliquer), puis `npm run verificar:rls`.
+- Le crochet Git de Claude (`.claude/hooks/garde-fou-git.mjs`) ne te protège pas : les interdits Git plus bas sont à toi de les tenir.
 
 ## Occitan
 - Tout mot occitan que tu écris : **le vérifier avant de le montrer** avec l'API de lo Congrès : `cd app` puis `node scripts/verificar-oc.mjs mot1 mot2` (ou `--fr mot` pour partir du français). Clé dans `app/.env` : ne jamais l'afficher.
