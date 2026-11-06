@@ -25,7 +25,7 @@ Pas concernées : ses photos (`app/static/apren/paisatges`, `cultura`, `aprene/f
 1. La mention est un lien direct vers la page (un clic), petite mais lisible (contraste RGAA), dans la langue choisie ; pas de pastille ni de verre fumé.
 2. Aucun formulaire de carte bancaire sur le site : le bouton de don ouvre la page sécurisée du prestataire. Un simple lien ne demande ni code de paiement ni changement d'en-têtes.
 3. Le montant récolté est tenu à la main par Romain avec « Editar » (un élément de page). Un compteur automatique seulement plus tard, avec un contrôle de sécurité.
-4. La page dit dès le départ : l'objectif (fixé après un devis), ce qui se passe s'il est dépassé ou pas atteint, le devis puis la facture publiés (Romain : « je mettrai le justificatif » ; coordonnées personnelles de l'illustrateur ou de l'illustratrice masquées s'il ou elle le demande).
+4. La page dit dès le départ : l'objectif (fixé après un devis), ce qui se passe s'il est dépassé ou pas atteint. Elle montre l'argent récolté, l'argent dépensé poste par poste et le nom des artistes ; **pas de facture publiée** (Romain, 06-11 vers 23 h : « je vais pas mettre la facture, c'est ridicule », il veut que l'on voie « le montant qu'il y a », « le montant qui a été dépensé pour le design », « les postes de dépenses » et « qui sont les artistes qui ont été mobilisés »).
 5. Écriture inclusive ; texte factuel, pas d'accroche dans la voix de Romain.
 
 ## Deux voies pour l'argent : B choisie
@@ -36,8 +36,17 @@ Pas concernées : ses photos (`app/static/apren/paisatges`, `cultura`, `aprene/f
 
 Sources lues le 06-11 : selectra.info (cagnotte d'un commerçant, dons = recettes), helloasso.com (gratuité pour les associations).
 
-## Service de paiement : Mollie
-**Romain, 06-11 vers 22 h : « il faut celui qui est le plus compatible avec mon projet. Voilà, donc choisi »** : Claude choisit **Mollie** (cahier §11).
+## Service de paiement : ROUVERT (06-11, 23 h)
+**Romain, 06-11 vers 23 h : « est-ce que c'est le plus éthique et le plus engagé ? […] tu as pris la décision un peu vite sans me présenter les différentes alternatives »**. Le choix de Mollie (ci-dessous) est suspendu ; attendre son choix entre :
+- **A. Open Collective Europe (OCE)**, association belge sans but lucratif qui tient la caisse d'un collectif : comptes publics automatiques (argent reçu, chaque dépense avec son poste, qui a été payé) ; l'argent n'entre pas dans la micro-entreprise (ni cotisations ni impôt dessus) ; OCE paie l'illustrateur ou l'illustratrice sur note de dépense. Frais : 8 % plus les frais de carte (paiement par Stripe ou PayPal, américains). Conditions (page « Is OCE right for your group? », lue le 06-11) : but d'intérêt public, approche non lucrative, groupe sans structure juridique à part, normalement deux administrateurs (exception possible pour une personne seule, à expliquer). Risque : refus parce que le site vend des cours ; atout possible : publier les illustrations payées sous licence libre.
+- **B. Mollie par la micro-entreprise** (détail ci-dessous) : européen, frais bas, lien permanent ; mais société financée par de grands fonds d'investissement (TCV en 2020 ; Blackstone Growth, General Atlantic, EQT Growth en 2021) ; l'argent compte comme recette (cotisations et impôt) ; comptes tenus à la main avec Editar.
+- **C. Ulule** (français, financement participatif, « don sans contrepartie ») : commission de 5 à 8 % TTC, plus, depuis avril 2025, 2,2 % + 0,10 € payés par le donateur ; campagne limitée dans le temps ; l'argent va à la micro-entreprise (impôt) ; le compteur est public, pas les dépenses.
+- Écartés : HelloAsso (associations seulement), Liberapay (association française sans commission, mais compte obligatoire pour donner, pensé pour les dons réguliers, paiement par Stripe ou PayPal), Tipeee (8 %), Stripe en direct (américain). Les banques éthiques (La Nef, Crédit Coopératif) : aucun lien de paiement trouvé ; elles restent une option pour le compte qui reçoit l'argent.
+
+Sources ajoutées le 06-11 : docs.opencollective.com/oceurope (éligibilité, frais), annonces des levées de Mollie (General Atlantic, Weil, Journal du Net), support.ulule.com (commission), mac4ever et clubic (frais donateurs Ulule), lafabriquedunet.fr (Liberapay, Tipeee).
+
+### Mollie, tel que choisi à 22 h (suspendu)
+**Romain, 06-11 vers 22 h : « il faut celui qui est le plus compatible avec mon projet. Voilà, donc choisi »** : Claude avait choisi **Mollie** (cahier §11) sans présenter les autres options.
 - Société néerlandaise, sans abonnement ; lien de paiement où la personne choisit le montant ; page de paiement hébergée chez Mollie : rien à coder, aucun compte à créer pour donner.
 - Frais lus le 06-11 dans des comparatifs (sources secondaires, à vérifier sur la page des tarifs de Mollie à l'ouverture) : environ 1,2 % + 0,25 € par carte de particulier européenne, davantage pour les cartes d'entreprise ou hors d'Europe.
 - Dons : la page d'aide française de Mollie dit qu'on peut « recevoir des dons », sans condition écrite ; la version britannique exige un statut d'organisme caritatif ; Mollie étudie chaque dossier. À l'ouverture, décrire l'activité telle qu'elle est (micro-entreprise de cours d'occitan ; contributions volontaires pour payer un illustrateur ou une illustratrice). Si Mollie refuse, revenir vers Romain avec une autre option.
@@ -60,4 +69,4 @@ Sources : mollie.com/products/payment-links ; help.mollie.com, articles 11500063
 ## Suite
 1. Romain : relire l'occitan de la mention et de `/illustracions` (les textes n'y sont pas encore modifiables avec Editar : dire les corrections) ; ouvrir le compte Mollie au nom de la micro-entreprise (SIRET, pièce d'identité, IBAN, de préférence celui du compte professionnel), en décrivant l'activité telle qu'elle est ; vérifier les tarifs.
 2. Avant d'ouvrir la cagnotte : mentions légales et activité de la micro-entreprise élargie (PILOTATGE, « Avant le lancement ») ; traitement des dons confirmé auprès de l'Urssaf ou du service des impôts des entreprises ; illustrateur ou illustratrice choisi, devis obtenu ; objectif fixé, et la règle s'il est dépassé ou pas atteint.
-3. Puis (Claude ou Mistral) : le lien de paiement Mollie à montant libre sur `/illustracions`, le montant reçu tenu par Romain avec Editar, le devis puis la facture publiés.
+3. Puis (Claude ou Mistral) : le lien de paiement Mollie à montant libre sur `/illustracions`, un encart des comptes (récolté, dépensé, une ligne par poste de dépense, les artistes) tenu par Romain avec Editar.
