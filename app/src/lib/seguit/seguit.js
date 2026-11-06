@@ -63,7 +63,7 @@ export const GROPS = [
 	{
 		nom: 'Coulisses',
 		chantiers: [
-			C('talhier', 'Lo talhièr, ton espace d’administration', 30, 'en-cors', 'La pile de validation (lot 4) est en cours ce soir ; puis les lots 2, 3 et 5.', 'Claude', '/admin', 'Refonte espace administrateur'),
+			C('talhier', 'Lo talhièr, ton espace d’administration', 45, 'en-cors', 'La pile de validation (lot 4) est en ligne depuis ce soir ; puis les lots 2, 3 et 5.', 'Claude', '/admin', 'Refonte espace administrateur'),
 			C('ia', 'Illustrations faites par IA et cagnotte', 50, 'en-cors', 'Relire l’occitan de la mention ; ouvrir le compte Mollie.', 'Toi, puis Claude', '/illustracions', 'Système de disclosure et financement pour illustrations IA'),
 			C('hub', 'Le Vibe Hub (Mistral en soutien)', 90, 'acabat', 'Il marche ; sa sauvegarde sur GitHub est dans tes cartes.', 'Claude'),
 			C('infra', 'Hébergement, courriels, sécurité', 95, 'acabat', 'Rappel : renouveler la clé des courriels avant le 25-10-2027.', 'Toi'),
