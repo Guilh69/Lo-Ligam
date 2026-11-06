@@ -175,8 +175,11 @@ function aLaTalha(img, lw, lh) {
  * Pose le relief sur un canevas qui couvre la boîte visible, sous le cadre qui
  * glisse (où restent la photo, cachée une fois le relief prêt, et les points).
  * Le canevas calcule lui-même le glissement, à chaque image, comme l'essai
- * « Profondeur » : laissé au navigateur, un glissement si lent avance par
- * pixels entiers, et donnait des à-coups (Romain, 06-11, deux fois).
+ * « Profondeur », et déplace le cadre à la même image : l'animation du cadre
+ * ne sert plus que d'horloge (sa cible est retirée). Firefox, quand le cadre
+ * glissait de son côté, n'affichait plus le canevas que toutes les deux ou
+ * trois secondes, d'où des à-coups (Romain, 06-11, trois fois ; filmé à
+ * l'écran : 170 images figées sur 200, aucune une fois le cadre déplacé ici).
  * estat() rend { a, w, h, t0, t1, s1, W, H } ou null : l'animation CSS du cadre
  * (aller-retour adouci, d'un déplacement t0 à t1 et d'un grossissement 1 à s1
  * autour de son milieu), le cadre (w, h) et la boîte visible (W, H).
@@ -193,7 +196,22 @@ export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 		darrier = '',
 		talhaFoto = '',
 		ara = null; // les réglages dessinés
+	// l'animation du cadre devient une horloge : le cadre suit le canevas
+	let pres = null; // { a, q, t } : l'animation, son cadre, sa transformation d'avant
+	const prendre = (a) => {
+		if (!a?.effect?.target || pres?.a === a) return;
+		rendre();
+		pres = { a, q: a.effect.target, t: a.effect.target.style.transform };
+		a.effect.target = null;
+	};
+	function rendre() {
+		if (!pres) return;
+		if (pres.a.playState !== 'idle') pres.a.effect.target = pres.q;
+		pres.q.style.transform = pres.t;
+		pres = null;
+	}
 	const remetre = () => {
+		rendre();
 		for (const [el] of ponches()) {
 			el.style.transform = '';
 			delete el.dataset.rel;
@@ -242,6 +260,8 @@ export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 				m.foto(aLaTalha(img, tw, th));
 			}
 			m.dessenhar(rg, e, T, S);
+			prendre(e.a);
+			if (pres) pres.q.style.transform = `translate(${T[0]}px, ${T[1]}px) scale(${S})`;
 			if (cv.style.opacity !== '1') {
 				cv.style.opacity = '1'; // d'un coup : il est sous la photo
 				img.style.transition = 'opacity 0.6s ease';

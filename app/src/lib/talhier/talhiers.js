@@ -6,6 +6,7 @@ export const TALHIÈRS = [
 	{
 		grop: 'Contenu',
 		ateliers: [
+			{ href: '/admin/pila', oc: 'La pila', fr: 'valider une carte à la fois : questions de l’IA, occitan des pages, fiches' },
 			{ href: '/admin/textes', oc: 'Tèxtes', fr: 'tous les textes modifiables du site, rangés par endroit' },
 			{ href: '/admin/triar', oc: 'Triar', fr: 'garder ou refaire, un élément à la fois' },
 			{ href: '/admin/musica', oc: 'Musica', fr: 'trier les artistes de l’espace musique' },

@@ -97,6 +97,14 @@ describe('les images de Cultura', async () => {
 			for (const a of amples(id)) expect(existsSync(`static/cultura/${id}-${a}.webp`), `${id}-${a}`).toBe(true);
 		}
 		expect(amples('calandreta')).toEqual([480, 800, 1200]);
+		// cadrage serré (zoom) : la photo recadrée ne fait que 1070 de large
+		expect(amples('roge-e-aur')).toEqual([480, 800, 1070]);
+		for (const s of Object.values(STOCK)) if (s.zoom) expect(s.zoom).toBeGreaterThan(1);
+	});
+
+	it('illustrent toutes les fiches (Romain, 06-11 : « Il manque des illustrations »)', () => {
+		const tots = new Set([...Object.keys(FOTOS), ...Object.keys(COMMONS), ...Object.keys(STOCK)]);
+		for (const id of ids) expect(tots.has(id), id).toBe(true);
 	});
 
 	it('créditent les photos de Wikimedia Commons et ont leurs tailles', () => {

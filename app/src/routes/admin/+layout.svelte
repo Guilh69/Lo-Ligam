@@ -39,7 +39,9 @@
 
 	// La porte est la liste Per tu (/admin, Lo talhièr, 2026-11-06) ; sur les
 	// ateliers, une barre les reprend, rangés par usage (lib/talhier/talhiers.js)
-	let surPerTu = $derived(page.url.pathname === '/admin');
+	// (la pile de validation, lot 4, s'en passe aussi : une carte à la fois, sans
+	// rien autour ; elle a son propre retour vers Per tu)
+	let barra = $derived(!['/admin', '/admin/pila'].includes(page.url.pathname));
 </script>
 
 <svelte:head>
@@ -71,7 +73,7 @@
 			</p>
 		</section>
 	{:else}
-		{#if !surPerTu}
+		{#if barra}
 			<nav class="menut" aria-label="Espaci d'administracion">
 				<a href="/admin" class="pertu">Per tu</a>
 				{#each TALHIÈRS as g (g.grop)}
@@ -122,6 +124,41 @@
 		right: -100px;
 	}
 
+	/* L'administration est un espace clair (fond crème, cartes blanches), quel
+	   que soit le thème du site : elle prend les couleurs du thème clair
+	   (« Plâtre », app.css). Sans ça, en thème sombre (celui par défaut), le
+	   texte crème disparaissait sur le blanc (constaté le 06-11, lot 4). */
+	.admin-screen {
+		--t-fons: #f7f3ee;
+		--t-fons-2: #ede6dc;
+		--t-tinta: #2a1a10;
+		--t-tinta-2: rgba(42, 26, 16, 0.72);
+		--t-linha: rgba(42, 26, 16, 0.14);
+		--t-vel: rgba(247, 243, 238, 0.8);
+		--t-aur: #9c5611;
+		--t-aur-clar: #8a3f12;
+		--t-terra: #b53d17;
+		--t-terra-viu: #b53d17;
+		--l-carta: #ffffff;
+		--l-sol: #fbf6ec;
+		--l-marca: #a5342a;
+		--l-teal: #1f5f63;
+		--l-bon: #55702f;
+		--logo-traç: #b53d17;
+		--logo-ponch: #eeaf34;
+		--logo-moieu: #b53d17;
+		color-scheme: light;
+		color: var(--color-text);
+	}
+	/* (les couleurs adaptées au daltonisme, version claire) */
+	:global(:root[data-dalt='on']) .admin-screen {
+		--t-terra: #1f5f8f;
+		--t-terra-viu: #1f5f8f;
+		--t-aur: #8a4f00;
+		--t-aur-clar: #6b3a00;
+		--t-tinta-2: rgba(42, 26, 16, 0.88);
+		--t-linha: rgba(42, 26, 16, 0.3);
+	}
 	.admin-screen {
 		position: relative;
 		min-height: 100dvh;
