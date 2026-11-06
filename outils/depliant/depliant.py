@@ -106,7 +106,7 @@ STYLES = {
     'Couverture adresse': ({'align': 'center'}, luc(14, 17, gras=True, fill='Or')),
     'Note de montage': ({}, luc(9, 11.5, fill='Bleu')),
 }
-GRAS_OCRE = {'fontStyle': 'Bold', 'fill': 'Ocre'}
+GRAS_BRIQUE = {'fontStyle': 'Bold', 'fill': 'Brique'}  # le même rouge partout (Romain, 06-11)
 EMPASA = {'fontStyle': 'Bold', 'fill': 'Brique'}  # mots mis en avant du manifeste : gras gardé (Romain, 06-11 : le problème était la couleur, pas le gras)
 GRAS = {'fontStyle': 'Bold'}
 
@@ -300,7 +300,7 @@ def texte(spread, rect, paras, nom, inset=None, vjust=None):
     return i, octets(brut)
 
 
-def filet(spread, x0, x1, y, nuance='Ocre', epaisseur=0.6, nom='Filet'):
+def filet(spread, x0, x1, y, nuance='Brique', epaisseur=0.6, nom='Filet'):  # le même rouge partout (Romain, 06-11)
     i = S('line.create', {'spread': spread, 'a': [round(x0, 2), round(y, 2)], 'b': [round(x1, 2), round(y, 2)]})
     S('object.stroke', {'swatch': nuance, 'weight': epaisseur, 'ids': [ref(i)]})
     S('object.rename', {'id': ref(i), 'name': nom})
@@ -406,7 +406,7 @@ def construire(base=NOM):
             filet(1, x0, x1, y_f, nom='Filet du francitan')
             # une paire par ligne, la traduction calée sur une tabulation (vu par Joan)
             titre_f = 'Des mots d’oc que tu connais déjà : le francitan'
-            liste = [('Liste', [(oc, GRAS_OCRE), ('\t' + fr, None)]) for oc, fr in FRANCITAN]
+            liste = [('Liste', [(oc, GRAS_BRIQUE), ('\t' + fr, None)]) for oc, fr in FRANCITAN]
             i, total = texte(1, (x0, y_f + 9, x1, bas), [('Intertitre', titre_f)] + liste, 'Le francitan')
             S('text.select', {'story': ref(i, 'story'), 'anchor': octets(typo(titre_f)) + 1, 'focus': total})
             S('type.tabs.add', {'position': 64})
