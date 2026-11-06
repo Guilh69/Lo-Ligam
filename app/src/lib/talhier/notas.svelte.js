@@ -148,6 +148,10 @@ export function suprimir(r) {
 	);
 }
 
+/** Le lien vers l'endroit d'une note. La base exige une adresse qui commence
+ *  par « / », mais « //ailleurs.com » en est une : seul un chemin du site passe. */
+export const ligamNota = (r) => `${/^\/(?!\/)/.test(r.pagina ?? '') ? r.pagina : '/'}?nota=${r.id}`;
+
 /** La note toute prête, pour la coller dans une conversation avec l'IA */
 export function tèxteACopiar(r) {
 	return [

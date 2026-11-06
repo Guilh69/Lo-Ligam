@@ -10,7 +10,7 @@
 	//   1 à 6 : une réponse toute prête ; Ctrl+Z : revenir sur le dernier geste.
 	import { onMount, tick, untrack } from 'svelte';
 	import { page } from '$app/state';
-	import { bon, pasEncara, respondre, restablir, suprimir, mandarNotaId } from '$lib/talhier/notas.svelte.js';
+	import { bon, pasEncara, respondre, restablir, suprimir, mandarNotaId, ligamNota } from '$lib/talhier/notas.svelte.js';
 	import { pila, cargarPila, cartas, validar, legirMaiTard, gardarMaiTard } from '$lib/talhier/pila.svelte.js';
 	import { nomPagina } from '$lib/talhier/pila.js';
 	import { dictadaPossibla, dictar } from '$lib/talhier/dictada.js';
@@ -325,12 +325,12 @@
 		<p class="sòrta"><span lang="oc">Question</span> · {c.r.autor ?? 'IA'}</p>
 		{#if c.r.extrait}<p class="ont">« {c.r.extrait} »</p>{/if}
 		<p class="demanda">{c.r.tèxte}</p>
-		{#if viu && veireNota(c.r)}<a class="veire" href="{c.r.pagina}?nota={c.r.id}" lang="oc">Veire sus la pagina</a>{/if}
+		{#if viu && veireNota(c.r)}<a class="veire" href={ligamNota(c.r)} lang="oc">Veire sus la pagina</a>{/if}
 	{:else}
 		<p class="sòrta"><span lang="oc">Responsa</span> · {c.r.autor_responsa ?? 'IA'}</p>
 		<p class="nòta"><span class="qui">{c.r.de_romain ? 'Ta note' : `Remarque de ${c.r.autor ?? 'quelqu’un'}`} :</span> {c.r.tèxte}</p>
 		<p class="responsa">{c.r.responsa ?? (c.r.estat === 'escartada' ? 'Écartée, sans explication.' : 'Fait.')}</p>
-		{#if viu}<a class="veire" href="{c.r.pagina}?nota={c.r.id}" lang="oc">Veire sus la pagina</a>{/if}
+		{#if viu}<a class="veire" href={ligamNota(c.r)} lang="oc">Veire sus la pagina</a>{/if}
 	{/if}
 {/snippet}
 

@@ -7,7 +7,7 @@
 	// L'ancienne page d'entrée (le contrôle des verrous) est sur /admin/verrolhs.
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
-	import { notas, cargarNotas, sòrta, bon, pasEncara, respondre, suprimir, tèxteACopiar, simulacion } from '$lib/talhier/notas.svelte.js';
+	import { notas, cargarNotas, sòrta, bon, pasEncara, respondre, suprimir, tèxteACopiar, simulacion, ligamNota } from '$lib/talhier/notas.svelte.js';
 	import { dictadaPossibla, dictar } from '$lib/talhier/dictada.js';
 	import { TALHIÈRS, VERROLHS } from '$lib/talhier/talhiers.js';
 	import { pila, cargarPila, cartas } from '$lib/talhier/pila.svelte.js';
@@ -105,7 +105,7 @@
 	}
 	const PAGINAS = { '/': 'l’accueil', '/apren': 'S’apren', '/visio': 'les cours en visio', '/carta': 'la carte' };
 	const ontEs = (r) => (r.modul ? `leçon ${r.modul.replace('-', '.')}` : (PAGINAS[r.pagina] ?? r.pagina));
-	const ligam = (r) => `${r.pagina}?nota=${r.id}`;
+	const ligam = ligamNota;
 </script>
 
 <svelte:head>
