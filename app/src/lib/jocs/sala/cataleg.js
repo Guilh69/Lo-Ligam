@@ -9,7 +9,7 @@
 // des mots simples, sans promesse sur le cerveau. Un jeu « a venir » est
 // montré sans lien : la salle grandit avec le cursus (décision du 25-10 :
 // « un espace de jeux qui grandit avec les blocs »). Les consignes des jeux
-// en ligne sont reprises de leur composant (Serp, Paniers, OntEs).
+// en ligne sont reprises de leur composant (Serp, Paniers, PausaMots).
 // Occitan passé à lo Congrès le 2026-11-06 (sala, adreça, memòria,
 // observacion, escotar, atencion, ortografia, vocabulari, gramatica, logica,
 // joiós, calme, jogar, venir, crosat, mesclat, parelh, tèma, trabalhar, tot,
@@ -86,10 +86,12 @@ export const JOCS_SALA = [
 		id: 'paisatges',
 		familha: 'observacion',
 		disponible: true,
-		nom: 'Ont es…\u00a0?',
+		// « Ont es… ? » jusqu'au 06-11 ; refait et renommé par Romain : une case
+		// sur la photo pour chaque mot
+		nom: 'Pausa los mots',
 		consigna: {
-			oc: 'Un mot s’escriu\u00a0: tòca son endrech sus la fòto.',
-			fr: 'Un mot s’écrit\u00a0: touche sa place sur la photo.'
+			oc: 'Pausa cada mot dins sa casa sus la fòto.',
+			fr: 'Pose chaque mot dans sa case sur la photo.'
 		},
 		capacitats: ['observacion', 'vocabulari']
 	},

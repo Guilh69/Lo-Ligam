@@ -1,5 +1,5 @@
 // Paysages de Romain (Bases_foto, choisis le 2026-11-05) : la troisième façon
-// de regarder de Remira (« Paisatges », /apren/remira) et le jeu « Ont es… ? »
+// de regarder de Remira (« Paisatges », /apren/remira) et le jeu « Pausa los mots »
 // (/apren/jocs?joc=paisatges). Une photo entière à la fois, des points d'or
 // posés sur ce qu'elle montre ; on touche un point, le mot s'écrit.
 //

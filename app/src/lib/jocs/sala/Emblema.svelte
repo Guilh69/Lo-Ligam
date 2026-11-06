@@ -21,10 +21,12 @@
 			<path d="M7 19 H33 L30 34 H10 Z" />
 			<path d="M8.5 25 H31.5 M9.7 30 H30.3 M16 19 L15 34 M24 19 L25 34" stroke-width="1" />
 		{:else if id === 'paisatges'}
-			<!-- une photo de paysage, un point d'or posé dessus -->
+			<!-- une photo de paysage, un point d'or et sa case en tirets (Pausa los mots) -->
 			<rect x="5" y="8" width="30" height="24" rx="1.5" />
 			<path d="M5 27 L14 18 L20 24 L25 19 L35 28" />
-			<circle cx="25" cy="13" r="3" fill="var(--emb-aur)" stroke="none" />
+			<circle cx="27" cy="13" r="2.4" fill="var(--emb-aur)" stroke="none" />
+			<rect x="9" y="11" width="12" height="5" rx="0.6" stroke-width="1" stroke-dasharray="1.8 1.2" />
+			<path d="M21 13.5 H24.4" stroke-width="0.8" />
 		{:else if id === 'mots-crosats'}
 			<!-- une grille, trois cases noires -->
 			<rect x="6" y="6" width="28" height="28" rx="1" />

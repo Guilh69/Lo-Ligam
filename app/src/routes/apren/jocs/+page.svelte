@@ -4,7 +4,8 @@
 	// après un essai sur /ensag/jocs : l'espace de jeux, plein écran et stable,
 	// sans le pied de page ni la navigation du site, la sortie vers S'apren ;
 	// un jeu à la fois : La sèrp de las letras (04-11), Los panièrs (05-11) et
-	// Ont es… ? (05-11, les paysages de Romain), choisi dans l'adresse
+	// Pausa los mots (05-11 sous le nom « Ont es… ? », refait le 06-11 : les
+	// paysages de Romain, chaque mot dans sa case), choisi dans l'adresse
 	// (?joc=paniers, ?joc=paisatges). Allure « Teula », adoptée par
 	// Romain le 05-11 avec la palette crème : mise en page éditoriale (titre
 	// géant, aplats, filets), mots et lettres en tuiles, ni verre fumé, ni
@@ -19,7 +20,7 @@
 	import { page } from '$app/state';
 	import Serp from '$lib/jocs/Serp.svelte';
 	import Paniers from '$lib/jocs/Paniers.svelte';
-	import OntEs from '$lib/jocs/OntEs.svelte';
+	import PausaMots from '$lib/jocs/PausaMots.svelte';
 	import Sala from '$lib/jocs/sala/Sala.svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
 
@@ -31,7 +32,7 @@
 	const JOCS = [
 		{ id: 'serp', oc: 'La sèrp de las letras' },
 		{ id: 'paniers', oc: 'Los panièrs' },
-		{ id: 'paisatges', oc: 'Ont es… ?' }
+		{ id: 'paisatges', oc: 'Pausa los mots' }
 	];
 	// sans ?joc= : la salle de jeux ; avec : le jeu (un lien, donc le bouton
 	// « retour » du navigateur ramène à la salle)
@@ -92,7 +93,7 @@
 		{:else if joc === 'paniers'}
 			<Paniers />
 		{:else if joc === 'paisatges'}
-			<OntEs />
+			<PausaMots />
 		{:else}
 			<Sala {tema} {causirTema} />
 		{/if}
@@ -181,8 +182,14 @@
 			margin-inline-start: 0;
 			justify-content: space-between;
 		}
+		/* les trois noms de jeux tiennent sur une ligne, même sur un
+		   téléphone de 360 px (« Pausa los mots », 06-11) ; plus petit encore,
+		   ils passent à la ligne */
+		.onglets {
+			gap: 0 0.5rem;
+		}
 		.onglets a {
-			font-size: 0.95rem;
+			font-size: max(0.78rem, min(0.95rem, calc((100vw - 3rem) / 24.5)));
 		}
 	}
 	.scena {
@@ -252,13 +259,8 @@
 		.espaci .brica :global(.joc:not(.immersiu) .grasilha) {
 			max-width: calc(58svh * var(--cols) / var(--rows));
 		}
-		.espaci .brica :global(.joc:not(.immersiu):not(.ont-es) .camp) {
+		.espaci .brica :global(.joc:not(.immersiu) .camp) {
 			max-width: calc(54svh * 4 / 3);
-		}
-		/* Ont es… ? : la colonne porte aussi les mots de la photo (06-11) */
-		.espaci .brica :global(.joc.ont-es:not(.immersiu) .disposicion) {
-			grid-template-rows: auto auto auto 1fr;
-			grid-template-areas: 'cap cap' 'taula pista' 'taula mots' 'taula comandas';
 		}
 	}
 	/* le mode plein couvre tout l'écran, même au-delà de 90rem (06-11 : sur un
