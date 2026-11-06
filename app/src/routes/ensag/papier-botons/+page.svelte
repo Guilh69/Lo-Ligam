@@ -224,7 +224,7 @@
 		--t-aur-clar: #ffd98a;
 		--t-accion: #b53d17;
 		--t-accion-tinta: #fbf1e1;
-		--pc-carton: #573828;
+		--pc-carton: #8a4a2a; /* terre cuite vive (parti B, Romain 07-11) ; avant #573828 */
 		--pc-ombre: rgba(0, 0, 0, 0.6);
 	}
 	.theme-clar {
@@ -237,7 +237,7 @@
 		--t-aur-clar: #8a3f12;
 		--t-accion: #b53d17;
 		--t-accion-tinta: #fbf1e1;
-		--pc-carton: #e1d3bd;
+		--pc-carton: #e6c9a8; /* sable chaud (parti B) ; avant #e1d3bd */
 		--pc-ombre: rgba(20, 10, 5, 0.32);
 	}
 	h1 {
