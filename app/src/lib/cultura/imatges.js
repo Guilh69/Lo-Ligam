@@ -38,12 +38,13 @@ export const FOTOS = {
 	tolosa: { clau: 'garona', pos: '50% 50%' } // la Garonne à Toulouse
 };
 
-/** fiche → dessin au trait de Remira (clé de lib/plueja/dessenhs.js) */
-export const DESSENHS = {
-	oc: 'Òc !',
-	'papeta-mameta': 'la mameta',
-	rocafort: 'lo formatge'
-};
+/**
+ * fiche → dessin au trait de Remira (clé de lib/plueja/dessenhs.js), pour une
+ * fiche sans photo. Vide depuis le 06-11 au soir (Romain : « Il manque des
+ * illustrations sur certains blocs ») : òc, papeta-mameta et rocafort ont une
+ * photo. Exemple : { oc: 'Òc !' }.
+ */
+export const DESSENHS = {};
 
 /**
  * fiches sans photo de Romain : une photo libre de Wikimedia Commons (Romain,
@@ -75,6 +76,47 @@ export const COMMONS = {
 		licencia: 'CC0',
 		licenciaLigam: 'https://creativecommons.org/publicdomain/zero/1.0/deed.fr',
 		ligam: 'https://commons.wikimedia.org/wiki/File:CopaSantaN.JPG'
+	},
+	// la langue des grands-parents : une cuisine rouergate du XIXe siècle,
+	// cantou et marmites, reconstituée au musée Joseph Vaylet d'Espalion
+	// (Romain, 06-11 : « Oui, les quatre »)
+	'papeta-mameta': {
+		font: 'papeta-mameta-vaylet-jojan.jpg',
+		largor: 1920,
+		pos: '50% 50%',
+		autor: 'JoJan',
+		licencia: 'CC BY 3.0',
+		licenciaLigam: 'https://creativecommons.org/licenses/by/3.0/deed.fr',
+		ligam: 'https://commons.wikimedia.org/wiki/File:Espalion_-_Mus%C3%A9e_Joseph_Vaylet_(16).jpg'
+	},
+	// des fromages en affinage dans les caves de Roquefort
+	rocafort: {
+		font: 'rocafort-afinatge-villafruela.jpg',
+		largor: 1920,
+		pos: '50% 50%',
+		autor: 'Daniel Villafruela',
+		licencia: 'CC BY-SA 3.0',
+		licenciaLigam: 'https://creativecommons.org/licenses/by-sa/3.0/deed.fr',
+		ligam: 'https://commons.wikimedia.org/wiki/File:Roquefort_sur_Soulzon-Affinage_des_tomes-20140628.jpg'
+	},
+	// le rouge et l'or : le drapeau occitan dans le ciel du Burgaud. Romain,
+	// 06-11 : « la croix que tu choisis n'a pas les couleurs rouge et or »
+	// (une porte à croix dorée, essayée une heure) ; choisi parmi trois.
+	// colors : la seule photo laissée en couleurs, sans la teinte du thème,
+	// puisque la fiche parle justement de ses couleurs
+	'roge-e-aur': {
+		font: 'roge-e-aur-luka-martin.jpg',
+		// cadre un peu serré, calé à gauche : le drapeau passe à droite, hors
+		// du titre (Joan, 06-11 : le titre couvrait la croix sur grand écran)
+		largor: 1041,
+		pos: '0% 34%',
+		zoom: 1.23,
+		posFicha: '50% 30%',
+		colors: true,
+		autor: 'Luka Martin 01',
+		licencia: 'CC0',
+		licenciaLigam: 'https://creativecommons.org/publicdomain/zero/1.0/deed.fr',
+		ligam: 'https://commons.wikimedia.org/wiki/File:OCCITANIA_02.jpg'
 	}
 };
 
@@ -88,7 +130,12 @@ export const STOCK = {
 	// la plaque « Rue de l'Escola » sous les roses (Romain, 06-11 : choisie
 	// plutôt que l'Ostal dels Pichonets, une crèche au nom occitan)
 	// posFicha : cadrage dans la case large de la fiche (la plaque au-dessus du titre, les roses dessous)
-	calandreta: { font: 'PXL_20230521_104030960.jpg', largor: 3024, pos: '50% 46%', posFicha: '50% 66%' }
+	calandreta: { font: 'PXL_20230521_104030960.jpg', largor: 3024, pos: '50% 46%', posFicha: '50% 66%' },
+	// le mot òc : la vitrine de la Librariá occitana (« Cors de lenga »)
+	// (Romain, 06-11 : « Oui, les quatre »)
+	oc: { font: 'DSCF1944.JPG', largor: 1776, pos: '50% 50%', posFicha: '50% 28%' }
+	// zoom (> 1) : un cadre plus serré, par exemple pour laisser hors champ un
+	// numéro de maison ; ex. { font, largor: 1070, pos, zoom: 1.66 }
 };
 
 /** photo hors des paysages (Commons ou stock de Romain), tirée par scripts/cultura-fotos.mjs */
@@ -105,6 +152,8 @@ export const amples = (id) => {
 };
 export const foto = (id) => FOTOS[id] ?? extern(id);
 export const credit = (id) => COMMONS[id] ?? null;
+/** photo laissée en couleurs, sans la teinte du thème (le rouge et l'or) */
+export const colors = (id) => !!extern(id)?.colors;
 /** srcset des petites images ; max : largeur la plus grande proposée (800 au sommaire) */
 export const srcset = (id, max = 800) =>
 	amples(id)

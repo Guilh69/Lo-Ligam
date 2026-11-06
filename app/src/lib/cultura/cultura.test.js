@@ -80,7 +80,7 @@ describe('l’interface de Cultura', () => {
 // dessin qui existe ; jamais photo et dessin à la fois.
 describe('les images de Cultura', async () => {
 	const { existsSync } = await import('node:fs');
-	const { FOTOS, COMMONS, STOCK, DESSENHS, AMPLES, amples, srcset } = await import('./imatges.js');
+	const { FOTOS, COMMONS, STOCK, DESSENHS, AMPLES, amples, srcset, colors } = await import('./imatges.js');
 	const { PAISATGES } = await import('$lib/paisatges/paisatges.js');
 	const { dessenh } = await import('./dessenhs.server.js');
 	const ids = new Set(FICHAS.map((f) => f.id));
@@ -97,6 +97,19 @@ describe('les images de Cultura', async () => {
 			for (const a of amples(id)) expect(existsSync(`static/cultura/${id}-${a}.webp`), `${id}-${a}`).toBe(true);
 		}
 		expect(amples('calandreta')).toEqual([480, 800, 1200]);
+		for (const s of Object.values(STOCK)) if (s.zoom) expect(s.zoom).toBeGreaterThan(1);
+	});
+
+	it('gardent la teinte du thème, sauf le rouge et l’or, en couleurs', () => {
+		const enColors = [...Object.entries(COMMONS), ...Object.entries(STOCK)].filter(([, x]) => x.colors).map(([id]) => id);
+		expect(enColors).toEqual(['roge-e-aur']);
+		expect(colors('roge-e-aur')).toBe(true);
+		expect(colors('carnaval')).toBe(false);
+	});
+
+	it('illustrent toutes les fiches (Romain, 06-11 : « Il manque des illustrations »)', () => {
+		const tots = new Set([...Object.keys(FOTOS), ...Object.keys(COMMONS), ...Object.keys(STOCK)]);
+		for (const id of ids) expect(tots.has(id), id).toBe(true);
 	});
 
 	it('créditent les photos de Wikimedia Commons et ont leurs tailles', () => {
