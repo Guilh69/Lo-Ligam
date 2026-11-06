@@ -7,9 +7,10 @@
 	// L'ancienne page d'entrée (le contrôle des verrous) est sur /admin/verrolhs.
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
-	import { notas, cargarNotas, sòrta, bon, pasEncara, respondre, suprimir, tèxteACopiar, simulacion } from '$lib/talhier/notas.svelte.js';
+	import { notas, cargarNotas, sòrta, bon, pasEncara, respondre, suprimir, tèxteACopiar, simulacion, ligamNota } from '$lib/talhier/notas.svelte.js';
 	import { dictadaPossibla, dictar } from '$lib/talhier/dictada.js';
 	import { TALHIÈRS, VERROLHS } from '$lib/talhier/talhiers.js';
+	import { pila, cargarPila, cartas } from '$lib/talhier/pila.svelte.js';
 
 	let regarder = $derived(notas.lista.filter((r) => sòrta(r) === 'regarder'));
 	let questions = $derived(notas.lista.filter((r) => sòrta(r) === 'question'));
@@ -19,15 +20,16 @@
 	// ce qui attend ailleurs dans l'administration
 	let perfils = $state(0);
 	let ideas = $state(0);
-	let fichas = $state(null);
 	let uèi = $derived(regarder.length + questions.length + tasNòtas.length + (perfils ? 1 : 0) + (ideas ? 1 : 0));
+	// la pile de validation (lot 4) : ce qui attend un « Bon » ; les fiches de
+	// grammaire qui restent à valider en font partie
+	let enPila = $derived(pila.cargat ? cartas().length : null);
+	let fichas = $derived(pila.cargat ? cartas({ lot: 'gramatica' }).length : null);
 
 	onMount(() => {
-		cargarNotas();
+		cargarPila();
 		const vista = () => document.visibilityState === 'visible' && cargarNotas();
 		document.addEventListener('visibilitychange', vista);
-		// les fiches de grammaire encore à relire (le module est déjà celui de S'apren)
-		import('$lib/gramatica/index.js').then(({ FICHAS }) => (fichas = FICHAS.filter((f) => !f.validada).length));
 		if (simulacion()) {
 			perfils = 2;
 			ideas = 1;
@@ -103,7 +105,7 @@
 	}
 	const PAGINAS = { '/': 'l’accueil', '/apren': 'S’apren', '/visio': 'les cours en visio', '/carta': 'la carte' };
 	const ontEs = (r) => (r.modul ? `leçon ${r.modul.replace('-', '.')}` : (PAGINAS[r.pagina] ?? r.pagina));
-	const ligam = (r) => `${r.pagina}?nota=${r.id}`;
+	const ligam = ligamNota;
 </script>
 
 <svelte:head>
@@ -141,6 +143,12 @@
 
 	{#if notas.error}<p class="msg error" role="alert">{notas.error}</p>{/if}
 	{#if error}<p class="msg error" role="alert">{error}</p>{/if}
+
+	<a class="entrada-pila" href="/admin/pila">
+		<span class="nom"><span lang="oc">La pila</span>{#if enPila !== null}&nbsp;<span class="xifra">· {enPila}</span>{/if}</span>
+		<span class="ditz">{enPila === 0 ? 'Rien à valider pour l’instant.' : 'Valider une carte à la fois : les questions de l’IA, ses réponses, l’occitan des pages, les fiches. Au clavier ou du doigt.'}</span>
+		<span class="anar" aria-hidden="true">→</span>
+	</a>
 
 	<h2>Aujourd’hui{uèi ? ` · ${uèi}` : ''}</h2>
 	{#if !notas.cargat && !notas.error}
@@ -241,7 +249,7 @@
 
 	<h2>En fond</h2>
 	<ul class="fons">
-		{#if fichas}<li><a href="/apren/gramatica">{fichas} fiches de grammaire</a> à relire</li>{/if}
+		{#if fichas}<li><a href="/admin/pila?lot=gramatica">{fichas} {fichas > 1 ? 'fiches' : 'fiche'} de grammaire</a> à relire et valider, une à une (<a href="/apren/gramatica">le sommaire</a>)</li>{/if}
 		<li><a href="/admin/triar">Triar</a> : les dessins de Remira, puis <a href="/admin/triar?lot=releu" data-sveltekit-reload>le relief des paysages</a>, à garder ou à refaire</li>
 		<li><a href="/admin/musica">Musica</a> : les artistes à trier</li>
 	</ul>
@@ -432,6 +440,44 @@
 	textarea:focus-visible {
 		outline: 2px solid var(--t-aur);
 		outline-offset: 1px;
+	}
+	/* l'entrée de la pile : un filet fin, le nombre en or (pas de pastille) */
+	.entrada-pila {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+		gap: 0.15rem 1rem;
+		margin-top: 0.4rem;
+		padding: 0.85rem 1.1rem;
+		border: 1px solid var(--t-linha);
+		border-radius: 14px;
+		color: inherit;
+		text-decoration: none;
+		transition: border-color 150ms ease;
+	}
+	.entrada-pila:hover {
+		border-color: var(--t-aur);
+	}
+	.entrada-pila:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 2px;
+	}
+	.entrada-pila .nom {
+		font: 700 1.1rem/1.2 var(--font-body);
+	}
+	.entrada-pila .xifra {
+		color: var(--t-aur);
+	}
+	.entrada-pila .ditz {
+		grid-column: 1;
+		color: var(--t-tinta-2);
+		font-size: 0.9rem;
+	}
+	.entrada-pila .anar {
+		grid-column: 2;
+		grid-row: 1 / 3;
+		font-size: 1.3rem;
+		color: var(--t-aur);
 	}
 	.fons {
 		margin: 0;
