@@ -107,24 +107,28 @@
 		};
 	};
 
-	// Le relief : un canevas par-dessus la photo, dans le cadre qui glisse ;
-	// les points d'or et le mot suivent leur objet (./releu.js).
+	// Le relief : un canevas fixe sous le cadre qui glisse ; il calcule lui-même
+	// le glissement, la photo du cadre s'efface dessus, les points d'or et le mot
+	// restent dans le cadre et suivent leur objet (./releu.js).
 	const relevarVista = (q, id) => (cv) =>
-		untrack(() =>
-			relevar(cv, {
+		untrack(() => {
+			const quadre = cv.nextElementSibling;
+			return relevar(cv, {
 				clau: q.clau,
-				img: cv.previousElementSibling,
+				img: quadre.querySelector('img'),
 				estat: () => {
 					const an = anims.get(id);
-					return an && { a: an.a, w: an.c.w, h: an.c.h, du: an.c.uB - an.c.uA, dv: an.c.vB - an.c.vA };
+					if (!an) return null;
+					const { a, c } = an;
+					return { a, w: c.w, h: c.h, t0: [-c.uA, -c.vA], t1: [-c.uB, -c.vB], s1: 1.04, W, H };
 				},
 				ponches: () =>
-					[...cv.parentElement.querySelectorAll('[data-i]')].map((el) => {
+					[...quadre.querySelectorAll('[data-i]')].map((el) => {
 						const m = q.mots[Number(el.dataset.i)];
 						return [el, m[1], m[2]];
 					})
-			})
-		);
+			});
+		});
 
 	// Le paysage qui arrive : un disque qui grandit depuis le milieu, une fois
 	// la photo prête (sinon le disque montrerait du noir).
@@ -368,6 +372,7 @@
 {#snippet vista(q, id, rangs)}
 	{@const actiu = id === actiuId}
 	{@const ambRelèu = relèu && !calme && (relèuTotas || GARDATS.has(q.clau))}
+	{#if ambRelèu}<canvas class="releu-c" aria-hidden="true" {@attach relevarVista(q, id)}></canvas>{/if}
 	<!-- les points paraissent après le disque (après l'arrivée de la page pour le premier) -->
 	<div class="quadre" class:releu={ambRelèu} style:--d0={id === 0 ? '0.6s' : '1.25s'} {@attach glissar(q, id)}>
 		<img
@@ -379,7 +384,6 @@
 			alt={actiu ? q.alt : ''}
 			fetchpriority={actiu ? 'high' : undefined}
 		/>
-		{#if ambRelèu}<canvas class="releu-c" aria-hidden="true" {@attach relevarVista(q, id)}></canvas>{/if}
 		{#if actiu}
 			{#each q.mots as [oc, x, y], i (oc)}
 				<button
@@ -466,7 +470,7 @@
 		-webkit-user-drag: none;
 	}
 	/* Le relief : la photo agrandie de la marge du relief (1 / 0,98, ./releu.js),
-	   pour que le canevas se pose dessus sans saut */
+	   pour qu'elle s'efface sur le canevas sans saut */
 	.quadre.releu img {
 		scale: 1.0204;
 	}
@@ -475,8 +479,7 @@
 		inset: 0;
 		width: 100%;
 		height: 100%;
-		opacity: 0;
-		transition: opacity 0.6s ease;
+		opacity: 0; /* jusqu'au premier dessin, sous la photo */
 		pointer-events: none;
 	}
 	/* l'en-tête et les commandes restent lisibles sur un ciel clair */
