@@ -154,11 +154,18 @@ export const MOTS = {
 	'lo bòl': 'le bol',
 	'l’estadi': 'le stade',
 	'lo projector': 'le projecteur',
-	// 06-11, lot 5 (compléments mer et montagne) : lo Congrès (grotte → balma en lengadoc, sable → sabla, clôture → barralha), genre d'après lo Basic
-	'la balma': 'la grotte',
+	// 06-11, lot 5 (compléments mer et montagne) : lo Congrès (gouffre → avenc, sable → sabla, clôture → barralha), genre d'après lo Basic
+	'l’avenc': 'le gouffre, l’aven',
 	'la sabla': 'le sable',
-	'la barralha': 'la barrière, la clôture',
-	'lo destrech': 'la gorge, le défilé'
+	'la barralha': 'la clôture',
+	'lo destrech': 'la gorge',
+	// 06-11, lot 6 (compléments de la ville) : lo Congrès (fruit → fruch en lengadoc, vitrine → veirina, puits → potz), genre d'après lo Basic
+	'lo fruch': 'le fruit',
+	'la veirina': 'la vitrine',
+	'l’olivièr': 'l’olivier',
+	'lo ciprès': 'le cyprès',
+	'lo musèu': 'le musée',
+	'lo potz': 'le puits'
 };
 
 export const PAISATGES = [
@@ -1351,7 +1358,7 @@ export const PAISATGES = [
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1076,
-		alt: 'Un chemin de sable vers la plage, bordé de barrières de bois, entre les dunes et les buissons.',
+		alt: 'Un chemin de sable vers la plage, bordé d’une clôture de bois, entre les dunes et les buissons.',
 		mots: [
 			['lo camin', 0.55, 0.85],
 			['la barralha', 0.84, 0.74],
@@ -1370,7 +1377,7 @@ export const PAISATGES = [
 			['la mar', 0.15, 0.54],
 			['lo teulat', 0.4, 0.89],
 			['l’ostal', 0.78, 0.54],
-			['lo puèg', 0.64, 0.44],
+			['lo puèg', 0.64, 0.46],
 			['lo cèl', 0.4, 0.14]
 		]
 	},
@@ -1391,9 +1398,9 @@ export const PAISATGES = [
 	{
 		clau: 'montanha-paret',
 		tema: 'montanha',
-		amples: [800, 1600],
-		l: 1600,
-		h: 2133,
+		amples: [800, 1280],
+		l: 1280,
+		h: 1707,
 		alt: 'Un muret de pierre au bord d’un chemin, des arbres d’un vert éclatant, et derrière une montagne de calcaire clair.',
 		mots: [
 			['la paret', 0.28, 0.75],
@@ -1408,11 +1415,11 @@ export const PAISATGES = [
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
-		alt: 'Vue du fond d’une grotte : une large ouverture laisse voir le ciel bleu, bordée d’arbres et de lierre.',
+		alt: 'Vue du fond d’un gouffre : une large ouverture ronde laisse voir le ciel bleu, bordée de feuillages.',
 		mots: [
 			['lo cèl', 0.56, 0.44],
 			['l’arbre', 0.62, 0.65],
-			['la balma', 0.12, 0.6]
+			['l’avenc', 0.47, 0.76]
 		]
 	},
 	{
@@ -1421,7 +1428,7 @@ export const PAISATGES = [
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
-		alt: 'Un grand pré de montagne en pente ; plus bas, une forêt de sapins et une mer de nuages qui cache la vallée.',
+		alt: 'Un grand pré de montagne en pente ; plus bas, une forêt de conifères et une mer de nuages qui cache la vallée.',
 		mots: [
 			['lo prat', 0.4, 0.79],
 			['la nívol', 0.43, 0.45],
@@ -1435,7 +1442,7 @@ export const PAISATGES = [
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
-		alt: 'Des dunes de sable du désert dorées par le soleil couchant, des montagnes au loin.',
+		alt: 'Des dunes de sable du désert dorées par le soleil bas, des montagnes au loin.',
 		mots: [
 			['la duna', 0.61, 0.61],
 			['la montanha', 0.2, 0.34],
@@ -1560,7 +1567,7 @@ export const PAISATGES = [
 		amples: [1024, 1136],
 		l: 1136,
 		h: 640,
-		alt: 'Un gros rocher et une petite tour en ruine au bout d’un plateau d’herbe sèche ; en bas, une vallée dans la brume.',
+		alt: 'Un gros rocher et un reste de tour en ruine au bout d’un plateau d’herbe sèche ; en bas, une vallée dans la brume.',
 		mots: [
 			['la ròca', 0.2, 0.29],
 			['la torre', 0.42, 0.55],
@@ -1595,6 +1602,522 @@ export const PAISATGES = [
 			['lo camin', 0.75, 0.89],
 			['la flor', 0.45, 0.8],
 			['la nívol', 0.3, 0.29]
+		]
+	},
+	// ── Lot 6 des thèmes : compléments de la vila (06-11) ──
+	{
+		clau: 'vila-veire',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Des tours de verre et d’acier vues d’en bas, qui reflètent le ciel, dans un quartier d’affaires.',
+		mots: [
+			['la torre', 0.39, 0.3],
+			['lo cèl', 0.6, 0.2],
+			['lo veire', 0.64, 0.71]
+		]
+	},
+	{
+		clau: 'vila-piramida',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'À San Francisco, une tour en forme de pyramide très pointue domine les immeubles, sous un ciel bleu.',
+		mots: [
+			['la torre', 0.5, 0.39],
+			['lo cèl', 0.3, 0.15],
+			['l’immòble', 0.86, 0.55]
+		]
+	},
+	{
+		clau: 'vila-cirdoc',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Le bâtiment du CIRDÒC, l’Institut occitan de cultura : une façade de béton clair et de verre, une grande bannière rouge, un ciel de nuages.',
+		mots: [
+			['lo fanal', 0.2, 0.59],
+			['la nívol', 0.35, 0.15],
+			['l’arbre', 0.95, 0.39],
+			['la fenèstra', 0.6, 0.75]
+		]
+	},
+	{
+		clau: 'vila-platana',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une petite place entre des façades de pierre blonde, un clocher pointu au fond, les branches d’un arbre doré au-dessus.',
+		mots: [
+			['l’arbre', 0.5, 0.18],
+			['lo cloquièr', 0.48, 0.61],
+			['lo balcon', 0.83, 0.69],
+			['l’ostal', 0.12, 0.65]
+		]
+	},
+	{
+		clau: 'vila-teulats',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Au-dessus des toits de tuiles d’une vieille ville, la flèche d’un clocher dans la lumière du soir ; des balcons de fer.',
+		mots: [
+			['lo cloquièr', 0.455, 0.29],
+			['lo teulat', 0.75, 0.44],
+			['lo balcon', 0.79, 0.65],
+			['la fenèstra', 0.16, 0.58],
+			['lo cèl', 0.2, 0.15]
+		]
+	},
+	{
+		clau: 'vila-relotge',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1843,
+		alt: 'Une rue étroite au crépuscule mène à une vieille porte de ville coiffée de tours pointues et d’une horloge ; des balcons, une lanterne.',
+		mots: [
+			['lo relòtge', 0.52, 0.66],
+			['la torre', 0.58, 0.51],
+			['lo balcon', 0.21, 0.75],
+			['lo fanal', 0.65, 0.79]
+		]
+	},
+	{
+		clau: 'vila-cheminiera',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Depuis le haut d’une colline, une rue étroite plonge entre de vieilles façades ; au loin, des clochers et une tour moderne.',
+		mots: [
+			['lo teulat', 0.08, 0.48],
+			['la cheminièra', 0.13, 0.3],
+			['la torre', 0.62, 0.45],
+			['l’arbre', 0.9, 0.3],
+			['lo cèl', 0.4, 0.1]
+		]
+	},
+	{
+		clau: 'vila-font',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2294,
+		alt: 'Dans un grand parc, un bassin à balustrade blanche, un petit pont et un kiosque, sous de grands arbres.',
+		mots: [
+			['la font', 0.44, 0.93],
+			['l’arbre', 0.54, 0.39],
+			['lo pont', 0.16, 0.79],
+			['l’escalièr', 0.59, 0.82],
+			['lo cèl', 0.11, 0.12]
+		]
+	},
+	{
+		clau: 'vila-catedrala',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une cathédrale éclairée au crépuscule domine les toits d’une vieille ville ; une grande rosace, un clocher carré.',
+		mots: [
+			['la catedrala', 0.64, 0.45],
+			['lo teulat', 0.41, 0.86],
+			['lo cloquièr', 0.73, 0.29],
+			['la rosassa', 0.36, 0.51],
+			['lo cèl', 0.3, 0.15]
+		]
+	},
+	{
+		clau: 'vila-garlanda',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une ruelle très étroite entre de hauts murs sombres, décorée de fanions de couleur ; au bout, la lumière.',
+		mots: [
+			['la carrièra', 0.5, 0.8],
+			['la garlanda', 0.57, 0.12],
+			['la paret', 0.12, 0.5]
+		]
+	},
+	{
+		clau: 'vila-bicicleta',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Deux passants de dos, l’un poussant un vélo, dans une rue aux murs couverts de graffitis ; des marches au premier plan.',
+		mots: [
+			['la bicicleta', 0.65, 0.66],
+			['l’escalièr', 0.5, 0.88],
+			['la paret', 0.1, 0.45],
+			['lo balcon', 0.44, 0.14]
+		]
+	},
+	{
+		clau: 'vila-copola',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Un immeuble d’angle très orné, coiffé d’une tourelle blanche, entre de grandes façades à balcons ; une coupole bleue à gauche.',
+		mots: [
+			['la torre', 0.45, 0.3],
+			['la copòla', 0.27, 0.33],
+			['lo balcon', 0.85, 0.54],
+			['lo cèl', 0.6, 0.1],
+			['l’immòble', 0.49, 0.66]
+		]
+	},
+	{
+		clau: 'vila-porta',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une vieille porte de bois peinte en bleu, avec une petite porte jaune en arc, des clous et une plaque de rue.',
+		mots: [
+			['la pòrta', 0.45, 0.61],
+			['la fusta', 0.8, 0.7],
+			['l’arc', 0.44, 0.29]
+		]
+	},
+	{
+		clau: 'vila-pan',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'La vitrine d’une boulangerie pleine de pains et de viennoiseries, un mur de brique, une porte vitrée, une ardoise posée devant.',
+		mots: [
+			['lo pan', 0.2, 0.45],
+			['la pòrta', 0.7, 0.57],
+			['la paret', 0.49, 0.61],
+			['la veirina', 0.22, 0.7]
+		]
+	},
+	{
+		clau: 'vila-parc',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Un jardin public au printemps, des arbres et de vieux murets ; derrière, un grand bâtiment à tourelles.',
+		mots: [
+			['l’arbre', 0.24, 0.3],
+			['la torre', 0.39, 0.25],
+			['la paret', 0.6, 0.88],
+			['l’èrba', 0.4, 0.75],
+			['lo cèl', 0.6, 0.08]
+		]
+	},
+	{
+		clau: 'vila-fruch',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Le soir dans une rue de Paris : l’étal éclairé d’un marchand de fruits et légumes, un arrêt de bus, des arbres.',
+		mots: [
+			['l’arbre', 0.23, 0.29],
+			['lo fruch', 0.65, 0.6],
+			['la carrièra', 0.15, 0.75]
+		]
+	},
+	{
+		clau: 'vila-teula',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Un mur crépi aux encadrements de brique rouge sous un toit de tuiles, entre les feuilles d’un arbre.',
+		mots: [
+			['la fenèstra', 0.49, 0.53],
+			['lo teulat', 0.8, 0.56],
+			['la fuèlha', 0.35, 0.16],
+			['la paret', 0.59, 0.85]
+		]
+	},
+	{
+		clau: 'vila-ciutat',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une rue tranquille mène vers les remparts et les tours d’une cité médiévale, au loin ; de grands bâtiments de pierre de chaque côté.',
+		mots: [
+			['la muralha', 0.41, 0.57],
+			['la torre', 0.58, 0.49],
+			['la carrièra', 0.5, 0.92],
+			['la fenèstra', 0.05, 0.35]
+		]
+	},
+	{
+		clau: 'vila-flors',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Des maisons blanches aux balcons fleuris, sous le ciel bleu ; des antennes sur les toits, un réverbère.',
+		mots: [
+			['lo balcon', 0.65, 0.58],
+			['lo fanal', 0.27, 0.86],
+			['la flor', 0.67, 0.86],
+			['lo cèl', 0.4, 0.12]
+		]
+	},
+	{
+		clau: 'vila-zinc',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Les toits de zinc gris d’une grande ville, hérissés de cheminées de terre cuite et d’antennes, sous un ciel bleu.',
+		mots: [
+			['lo teulat', 0.76, 0.75],
+			['la cheminièra', 0.52, 0.54],
+			['lo cèl', 0.5, 0.15]
+		]
+	},
+	{
+		clau: 'vila-jardin',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Un parc récent : des massifs de fleurs violettes, de jeunes arbres, une pelouse ; derrière, un vieux bâtiment à deux tours.',
+		mots: [
+			['la flor', 0.29, 0.78],
+			['l’arbre', 0.76, 0.41],
+			['la torre', 0.53, 0.32],
+			['l’èrba', 0.59, 0.73],
+			['lo camin', 0.4, 0.93]
+		]
+	},
+	{
+		clau: 'vila-panorama',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1015,
+		alt: 'Depuis un toit, la vue sur une vieille ville aux toits de tuiles ; au premier plan, une grande toiture de zinc et une balustrade de pierre.',
+		mots: [
+			['lo teulat', 0.21, 0.6],
+			['lo cèl', 0.5, 0.12],
+			['la vila', 0.64, 0.43],
+			['la baranda', 0.85, 0.86]
+		]
+	},
+	{
+		clau: 'vila-arcs',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1076,
+		alt: 'Des façades de brique rose aux balcons de fer forgé, des arcades, une lanterne et des enseignes de boutiques.',
+		mots: [
+			['lo balcon', 0.24, 0.41],
+			['lo fanal', 0.63, 0.54],
+			['la fenèstra', 0.56, 0.2],
+			['l’arc', 0.75, 0.68]
+		]
+	},
+	{
+		clau: 'vila-prat',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1076,
+		alt: 'Une grande pelouse au soleil le long d’une promenade ; au fond, des immeubles modernes et quelques promeneurs.',
+		mots: [
+			['l’èrba', 0.5, 0.85],
+			['l’arbre', 0.15, 0.19],
+			['l’immòble', 0.31, 0.41],
+			['lo camin', 0.86, 0.66]
+		]
+	},
+	{
+		clau: 'vila-olivier',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1920,
+		alt: 'Une ville vue d’en haut, sa grande cathédrale au milieu des toits, des oliveraies et des montagnes derrière.',
+		mots: [
+			['la catedrala', 0.24, 0.68],
+			['la vila', 0.6, 0.66],
+			['la montanha', 0.4, 0.27],
+			['la ròca', 0.85, 0.85],
+			['l’olivièr', 0.5, 0.45]
+		]
+	},
+	{
+		clau: 'vila-ruela',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une rue étroite entre de hautes façades de pierre blonde ; au fond, la tour carrée d’une cathédrale gothique.',
+		mots: [
+			['lo cloquièr', 0.455, 0.2],
+			['la carrièra', 0.51, 0.82],
+			['lo teulat', 0.23, 0.375],
+			['l’arbre', 0.45, 0.61],
+			['la fenèstra', 0.88, 0.71]
+		]
+	},
+	{
+		clau: 'vila-cipres',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Un village de pierre : un haut cyprès, un olivier, un mur de pierres sèches et le clocher pointu de l’église.',
+		mots: [
+			['lo cloquièr', 0.5, 0.45],
+			['l’olivièr', 0.75, 0.59],
+			['lo ciprès', 0.29, 0.45],
+			['la paret', 0.5, 0.875],
+			['lo cèl', 0.7, 0.15]
+		]
+	},
+	{
+		clau: 'vila-terrassa',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une maison de pierre dans la verdure, une porte orange, de longues tables de bois sur la terrasse, une guirlande d’ampoules.',
+		mots: [
+			['l’ostal', 0.6, 0.35],
+			['la taula', 0.68, 0.67],
+			['l’arbre', 0.09, 0.12],
+			['la cheminièra', 0.75, 0.23],
+			['la pòrta', 0.59, 0.55]
+		]
+	},
+	{
+		clau: 'vila-toledo',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Tolède, en Espagne, au soleil couchant : la vieille ville sur sa colline, sa cathédrale et son château carré, le fleuve en bas.',
+		mots: [
+			['la vila', 0.49, 0.59],
+			['lo flume', 0.5, 0.87],
+			['lo castèl', 0.76, 0.39],
+			['la catedrala', 0.41, 0.39],
+			['lo cèl', 0.5, 0.12]
+		]
+	},
+	{
+		clau: 'vila-grimpanta',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Un immeuble ocre à l’angle de deux rues, ses balcons de fer et ses fenêtres à volets envahis de plantes grimpantes.',
+		mots: [
+			['lo balcon', 0.5, 0.35],
+			['la planta', 0.47, 0.75],
+			['la fenèstra', 0.72, 0.5],
+			['lo cèl', 0.15, 0.15],
+			['la veitura', 0.08, 0.85]
+		]
+	},
+	{
+		clau: 'vila-plana',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Depuis une ville haute, la vue sur une grande ville de plaine aux toits rouges, des montagnes bleues à l’horizon, des arbres au premier plan.',
+		mots: [
+			['la vila', 0.45, 0.55],
+			['la montanha', 0.12, 0.455],
+			['l’arbre', 0.66, 0.8],
+			['la nívol', 0.25, 0.12]
+		]
+	},
+	{
+		clau: 'vila-rosa',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une rue de Vérone aux façades roses et ocre, des balcons débordant de plantes, une porte gothique en brique.',
+		mots: [
+			['lo balcon', 0.72, 0.4],
+			['la planta', 0.82, 0.25],
+			['la pòrta', 0.61, 0.875],
+			['la fenèstra', 0.65, 0.59],
+			['lo cèl', 0.3, 0.12]
+		]
+	},
+	{
+		clau: 'vila-museu',
+		tema: 'vila',
+		amples: [800, 1280],
+		l: 1280,
+		h: 1707,
+		alt: 'À Stockholm, à travers les arbres et un érable rouge, la façade de brique à pignons du musée nordique.',
+		mots: [
+			['lo musèu', 0.49, 0.48],
+			['la fuèlha', 0.85, 0.64],
+			['l’arbre', 0.2, 0.61],
+			['lo cèl', 0.61, 0.32]
+		]
+	},
+	{
+		clau: 'vila-volets',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une haute façade de pierre aux volets gris et aux balcons de fer, dans une rue ancienne, sous des nuages roses du soir.',
+		mots: [
+			['la fenèstra', 0.655, 0.25],
+			['lo balcon', 0.66, 0.54],
+			['lo fanal', 0.25, 0.75],
+			['la nívol', 0.31, 0.09],
+			['la pèira', 0.86, 0.59]
+		]
+	},
+	{
+		clau: 'vila-baranda',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Un carrefour de ruelles en pente, des bornes de pierre, une grille et quelques marches ; du lierre sur un vieux mur.',
+		mots: [
+			['l’escalièr', 0.75, 0.89],
+			['la baranda', 0.75, 0.72],
+			['la carrièra', 0.38, 0.79],
+			['la fenèstra', 0.83, 0.47],
+			['la planta', 0.63, 0.62]
+		]
+	},
+	{
+		clau: 'vila-potz',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une petite place aux maisons colorées, à l’ombre d’un platane ; un vieux puits de pierre à la ferronnerie ouvragée.',
+		mots: [
+			['l’arbre', 0.63, 0.25],
+			['la fenèstra', 0.28, 0.51],
+			['lo balcon', 0.55, 0.54],
+			['lo potz', 0.85, 0.75],
+			['la plaça', 0.35, 0.84]
 		]
 	}
 ];
