@@ -26,3 +26,22 @@ Relevé fait le 2026-11-06 par requêtes directes (pas de moissonnage complet). 
 1. **Encart « mot + prononciation »** : sur un mot de la leçon, un petit lecteur avec le nom du locuteur et le lien vers la source. Les sons seraient récupérés une fois, convertis en fichier compressé léger (le .wav est lourd) et servis par le site, avec mention CC BY-SA. À valider : voix, variété, poids total.
 2. **Vitrine Occitanica dans Cultura** : notices filtrées (domaine public ou Licence ouverte), vignette, titre, auteur, lien vers la fiche, mention de source obligatoire. Mise à jour par relevé périodique (pas d'appel en direct depuis le navigateur du visiteur).
 3. **Relier les deux** : un mot d'une leçon pointe vers un document sonore d'Occitanica (conte, chant) où il apparaît. Plus tard.
+
+## Exploration d'Occitanica, suite (relevé complet de dix collections, 3 138 notices)
+
+Moissonnage poli (pause 1,2 s, une seule fois) de : phonothèque 699, vidéothèque 956, iconothèque 199, Campus 361, encyclopédie 130, Labo de Lenga 27, Maleta 52, Ràdio Lenga d'òc 271, archives orales 68, répertoire du patrimoine culturel occitan 375.
+
+**Droits (champ `dc:rights`, classement automatique à vérifier à la main)** :
+- Domaine public : 72 notices seulement (iconothèque 23, répertoire 22, encyclopédie 13, Campus 7, phonothèque 5, Ràdio Lenga d'òc 2). Aucune notice marquée « Licence ouverte » dans ce relevé.
+- Creative Commons : 28 sans « NC » apparent, 21 avec NC (surtout la Maleta, 20).
+- Autorisation contractuelle : 29. Tous droits réservés (©) : 675. **Environ 2 300 notices ne donnent que le nom du détenteur** (Ràdio Lenga d'òc, Tè Vé Òc, Radio CFM, La Granja, associations, photographes) **sans licence** : réutilisation à demander, pas à supposer.
+- Langues : la phonothèque est à 574 notices sur 699 en occitan, la vidéothèque 754 sur 956, Ràdio Lenga d'òc 268 sur 271.
+
+**Intégration propre** : chaque fiche Occitanica propose un **code d'intégration officiel** (`https://www.occitanica.eu/items/embed/<numéro>`, cadre 560 × 315). C'est la voie recommandée pour sons et vidéos : le lecteur et les mentions de droits restent chez le CIRDÒC, on ne copie rien. À vérifier : poids du cadre (sobriété), consentement (aucun traceur à charger avant le clic), accessibilité.
+
+**Pépite pour les apprenants** : le service de questions-réponses du CIRDÒC (« Sondaqui », 130 notices d'encyclopédie en grande partie des questions : « Cossí se ditz : coquille Saint-Jacques en occitan ? ») : un lien « poser la question » ou des entrées liées aux mots des leçons.
+
+**Pistes** (par ordre de risque croissant) :
+1. Page Culture : sélection de 10 à 20 documents, fiche courte (titre, auteur, date, vignette, lien), intégration du lecteur officiel au clic.
+2. Domaine public (72 notices, dont photos de l'iconothèque) : vignette et image réutilisables avec la mention « Auteur - Source occitanica.eu / CIRDOC - Institut occitan de cultura ».
+3. Convention avec le CIRDÒC pour aller plus loin (sons, vidéos, relevé régulier). Contact : informatica@oc-cultura.eu.
