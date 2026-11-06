@@ -21,7 +21,7 @@
 	import Crotz from '$lib/components/Crotz.svelte';
 	import { flip } from '$lib/components/flip.js';
 	import { FICHAS, TEMAS, IU, nomModul } from '$lib/cultura/index.js';
-	import { foto, srcset } from '$lib/cultura/imatges.js';
+	import { foto, srcset, COMMONS } from '$lib/cultura/imatges.js';
 	import { IU as IU_G } from '$lib/gramatica/lengas.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
@@ -149,6 +149,12 @@
 			</li>
 		{/each}
 	</ul>
+	<!-- crédit des photos libres de Wikimedia Commons (licence CC BY-SA) -->
+	<p class="credits" lang={lang}>
+		{tria(IU.fotosCommons)}
+		{#each Object.values(COMMONS) as c, k}{#if k}{', '}{/if}<a href={c.ligam} target="_blank" rel="noopener noreferrer">{c.autor}</a>
+			(<a href={c.licenciaLigam} target="_blank" rel="noopener noreferrer license">{c.licencia}</a>){/each}.
+	</p>
 </PaginaSimpla>
 
 <style>
@@ -277,6 +283,16 @@
 	}
 	.fichas li {
 		display: grid;
+	}
+	.credits {
+		margin: var(--esp-32) 0 0;
+		color: var(--t-tinta-2);
+		font-size: 0.8rem;
+	}
+	.credits a {
+		color: inherit;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.15em;
 	}
 	.ficha {
 		position: relative;

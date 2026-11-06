@@ -80,6 +80,7 @@ Pour aller plus vite : le cercle 3 peut se faire en janvier, et « Parlem ! » d
 | 1 | Synthèse du projet | base de tous les autres | ✅ fait le 06-11 | `diffusion/synthese.md` |
 | 2 | Courriels de présentation, un par destinataire (une quinzaine de lignes) | Congrès, OPLO, Occitanica, Région | cercle 2 | ✅ brouillons prêts le 06-11, `diffusion/messages.md` §2 ; envoyés par toi |
 | 3 | Fiche d'une page | jointe aux courriels | cercle 2 | ✅ texte prêt le 06-11, `diffusion/fiche.md` ; mise en page à faire (PDF) |
+| 3 bis | Dépliant trois volets (A4, pli roulé) | testeurs, rencontres, envoi en PDF | cercles 1 à 3 | ✅ proposition montée le 06-11 dans DesignCraft, à relire élément par élément ; fichiers dans `Lo_Ligam_hors-git/diffusion/depliant/`, refait par `outils/depliant/depliant.py` |
 | 4 | Dossier de présentation (8 à 10 pages) | Région, OPLO, presse, sur demande | cercle 2 ou 3 | PDF |
 | 5 | Diaporama (10 à 12 vues) | un rendez-vous, en visio ou sur place | seulement si un rendez-vous est obtenu | diaporama |
 | 6 | Communiqué de presse et visuels Instagram | médias, ta communauté | cercle 3 | texte, Canva |
