@@ -71,6 +71,8 @@
 }
 :root {
 	--pc-or-fons: #eeaf34;
+	/* le texte posé sur le carton : toujours crème (le carton est sombre ou vif dans les deux thèmes) */
+	--pc-carton-tinta: #fbf1e1;
 }
 /* Couleurs de la croix-constellation : celles des logos de Romain (Canva,
    design-stock/logo/svg, charte §1 bis), rien d'autre (Romain, 2026-10-21).
@@ -119,7 +121,7 @@
 	--t-aur-clar: #8a3f12;
 	--t-terra: #b53d17;
 	--t-terra-viu: #b53d17;
-	--pc-carton: #e6c9a8; /* sable chaud (parti B) ; avant #e1d3bd */
+	--pc-carton: #1f5f63; /* sarcelle des jeux de mémoire (Romain, 07-11 : thème clair vif) ; avant #e6c9a8 puis #e1d3bd */
 	--pc-ombre: rgba(20, 10, 5, 0.32);
 }
 /* Verre des éléments posés sur la carte (rail, panneau qui s'ouvre à côté,

@@ -237,7 +237,7 @@
 		--t-aur-clar: #8a3f12;
 		--t-accion: #b53d17;
 		--t-accion-tinta: #fbf1e1;
-		--pc-carton: #e6c9a8; /* sable chaud (parti B) ; avant #e1d3bd */
+		--pc-carton: #1f5f63; /* sarcelle (thème clair, 07-11) */
 		--pc-ombre: rgba(20, 10, 5, 0.32);
 	}
 	h1 {

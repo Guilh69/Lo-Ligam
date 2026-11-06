@@ -422,7 +422,7 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 /* 01 compacte (la carte est montée dans l'ouverture, 2026-10-22) : liens à gauche, en ligne */
 .acuelh .chifras.compacta { padding-top: 14vh; }
 .acuelh .chifras.compacta .carta-dobrir { justify-content: flex-start; align-items: center; gap: var(--esp-32); flex-wrap: wrap; margin: 0 0 var(--esp-48); }
-.acuelh .boton-traç { background: var(--pc-carton); color: var(--crema); }
+.acuelh .boton-traç { background: var(--pc-carton); color: var(--pc-carton-tinta); }
 .acuelh .crida-accions { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
 .acuelh .chifras-grasilha { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--crema-3); }
 .acuelh .chifra { padding: 2.6rem 2rem 0 0; }

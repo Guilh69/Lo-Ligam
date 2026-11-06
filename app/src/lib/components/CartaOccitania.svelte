@@ -3128,7 +3128,7 @@
 		height: 2.4rem;
 		line-height: 2.4rem;
 		background: var(--pc-carton);
-		color: var(--t-tinta);
+		color: var(--pc-carton-tinta);
 		border-bottom: 0;
 		font: 400 1.2rem var(--font-body);
 	}
@@ -3151,7 +3151,7 @@
 	.carta :global(.leaflet-bar a:hover),
 	.carta :global(.leaflet-bar a:focus) {
 		background: color-mix(in srgb, var(--pc-carton) 78%, var(--pc-or-fons));
-		color: var(--t-tinta);
+		color: var(--pc-carton-tinta);
 	}
 
 	.carta :global(.leaflet-bar a:focus:not(:focus-visible)) {
@@ -3177,7 +3177,7 @@
 		background: var(--pc-or-fons);
 	}
 	.carta :global(.leaflet-bar a.leaflet-disabled) {
-		color: var(--t-tinta-2);
+		color: var(--pc-carton-tinta);
 		background: var(--pc-carton);
 		opacity: 0.5;
 	}

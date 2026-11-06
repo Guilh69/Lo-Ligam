@@ -89,7 +89,7 @@
 	}
 
 	.listen.active {
-		--pc-tinta: var(--l-marca);
+		--pc-tinta: var(--pc-carton-tinta);
 	}
 
 	.c-body {
