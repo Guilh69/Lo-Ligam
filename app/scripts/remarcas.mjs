@@ -9,14 +9,21 @@
 //   cd app && node scripts/remarcas.mjs --totas         tout, traité compris
 //   cd app && node scripts/remarcas.mjs --tractar 12 --responsa "…" --autor Mistral
 //   cd app && node scripts/remarcas.mjs --escartar 12 --responsa "pourquoi" --autor Claude
-//   cd app && node scripts/remarcas.mjs --demandar /apren "La question…" [--clau acuelh.titol] [--extrait "…"] --autor Claude
+//   cd app && node scripts/remarcas.mjs --demandar /apren "La question…" [--opcions "Oui|Non|Autre chose"] [--clau acuelh.titol] [--extrait "…"] --autor Claude
 //   cd app && node scripts/remarcas.mjs --legida 12     ranger une réponse de Romain lue et appliquée
 //
 // La réponse arrive dans la liste « Per tu » de Romain (/admin) ; il la ferme
-// d'un « Bon » ou la rouvre avec une précision (« Pas encara »).
+// d'un « Bon » ou la rouvre avec une précision (« Pas encara »). Une question
+// avec --opcions (2 à 6, séparées par « | ») arrive dans sa pile (/admin/pila)
+// avec ces réponses en boutons ; il peut aussi répondre autre chose.
+//
+// La liste montre aussi les fiches de grammaire que Romain a validées dans sa
+// pile (lot 4) et qui sont encore « validada: false » dans le code : passer
+// le drapeau à true dans le fichier de la fiche, rien d'autre.
 import { readFileSync, existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
+import { tèxteFicha, empremta } from '../src/lib/talhier/empremtas.js';
 
 const aquí = dirname(fileURLToPath(import.meta.url));
 const envPath = join(aquí, '..', '.env');
@@ -99,7 +106,34 @@ function afichar(r, publicats) {
 	}
 	if (r.extrait) console.log(`     sur : ${q(r.extrait)}`);
 	console.log(`     note : ${q(r.tèxte)}`);
+	if (r.opcions?.length) console.log(`     réponses proposées : ${r.opcions.map((o) => `« ${net(o)} »`).join(' · ')}`);
 	if (r.responsa) console.log(`     réponse${r.autor_responsa ? ` (${net(r.autor_responsa)})` : ''} : ${net(r.responsa)}`);
+}
+
+/** Les fiches validées par Romain (sa pile) et encore « validada: false » dans
+ *  le code. Une fiche modifiée depuis sa validation n'est pas à passer : elle
+ *  est revenue dans la pile de Romain. Rend le nombre de fiches à passer. */
+async function fichasValidadas() {
+	let lignes;
+	try {
+		lignes = (await rpc('ia_legir_validacions', {})).filter((v) => v.tipe === 'ficha' && CLAU_VALIDA.test(v.clau));
+	} catch (e) {
+		console.log(`\n(Validations illisibles : ${net(e.message).slice(0, 160)})`);
+		return 0;
+	}
+	const aPassar = [];
+	for (const v of lignes) {
+		const fichièr = join(aquí, '..', 'src', 'lib', 'gramatica', 'fichas', `${v.clau}.js`);
+		if (!existsSync(fichièr)) continue;
+		const f = (await import(pathToFileURL(fichièr).href)).default;
+		if (f?.validada === true) continue;
+		const pareilha = (await empremta(tèxteFicha(f))) === v.empremta;
+		if (pareilha) aPassar.push({ v, chemin: `app/src/lib/gramatica/fichas/${v.clau}.js` });
+	}
+	if (!aPassar.length) return 0;
+	console.log(`\n■ Fiches validées par Romain, encore « validada: false » dans le code (passer le drapeau à true, rien d'autre) : ${aPassar.length}`);
+	for (const { v, chemin } of aPassar) console.log(`  ${v.clau} · validée le ${String(v.created_at).slice(0, 10)} · ${chemin}`);
+	return aPassar.length;
 }
 
 const autor = val('--autor') ?? 'IA';
@@ -121,8 +155,12 @@ try {
 		const clau = val('--clau') ?? null;
 		if (clau && !CLAU_VALIDA.test(clau)) throw new Error(`clé d'élément invalide : ${clau}`);
 		const extrait = val('--extrait');
-		const id = await rpc('ia_demandar', { p_pagina: net(pagina), p_text: tèxte, p_autor: net(autor), p_clau: clau, p_extrait: extrait ? net(extrait) : null });
-		console.log(`Question ${id} posée à Romain (liste « Per tu »).`);
+		const brut = val('--opcions');
+		const opcions = brut === undefined ? null : brut.split('|').map((o) => net(o)).filter(Boolean);
+		if (opcions && (opcions.length < 2 || opcions.length > 6 || opcions.some((o) => o.length > 200)))
+			throw new Error('--opcions : de 2 à 6 réponses, séparées par « | », de 200 caractères au plus');
+		const id = await rpc('ia_demandar', { p_pagina: net(pagina), p_text: tèxte, p_autor: net(autor), p_clau: clau, p_extrait: extrait ? net(extrait) : null, p_opcions: opcions });
+		console.log(`Question ${id} posée à Romain (liste « Per tu »${opcions ? `, et sa pile avec ${opcions.length} réponses en boutons` : ''}).`);
 	} else if (args.includes('--legida')) {
 		const id = Number(val('--legida'));
 		const n = await rpc('ia_legida', { p_id: id });
@@ -153,6 +191,7 @@ try {
 				afichar(r, publicats);
 			}
 		}
+		if ((await fichasValidadas()) > 0) res = false;
 		if (res) console.log('Rien n’attend l’IA.');
 	}
 } catch (e) {

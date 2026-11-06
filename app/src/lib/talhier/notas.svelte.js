@@ -10,7 +10,8 @@ import { browser } from '$app/environment';
 import { supabase } from '$lib/supabaseClient';
 
 export const PAGINA_TRIAR = '/admin/triar';
-const COLOMNAS = 'id,pagina,modul,etapa,bloc,cibla,clau,extrait,tèxte,autor,estat,responsa,autor_responsa,per,de_romain,vista,created_at';
+// opcions : les réponses toutes prêtes d'une question de l'IA (lot 4)
+const COLOMNAS = 'id,pagina,modul,etapa,bloc,cibla,clau,extrait,tèxte,autor,estat,responsa,autor_responsa,per,de_romain,vista,opcions,created_at';
 
 /** En développement, « ?edicion=simular » montre le talhièr sans compte, avec
  *  des notes d'exemple, sans rien écrire dans la base (comme l'éditeur). Le
@@ -75,8 +76,9 @@ async function escriure(fach, local) {
 	return null;
 }
 
-/** Épingler une note : per = 'ia' (à faire par l'IA) ou 'romain' (pour lui) */
-export function mandarNota({ pagina, clau = null, cibla = null, extrait = null, tèxte, per = 'ia' }) {
+/** Épingler une note : per = 'ia' (à faire par l'IA) ou 'romain' (pour lui).
+ *  Rend { id } (pour pouvoir la reprendre : Ctrl+Z dans la pile) ou { error }. */
+export async function mandarNotaId({ pagina, clau = null, cibla = null, extrait = null, tèxte, per = 'ia' }) {
 	const ligne = {
 		pagina: linha(pagina, 200) || '/',
 		clau: linha(clau, 120) || null,
@@ -87,9 +89,27 @@ export function mandarNota({ pagina, clau = null, cibla = null, extrait = null, 
 		per,
 		de_romain: true
 	};
+	if (simulacion()) {
+		const id = Date.now();
+		notas.lista.unshift({ ...ligne, id, estat: 'dubèrta', vista: false, responsa: null, autor_responsa: null, opcions: null, created_at: new Date().toISOString() });
+		return { id };
+	}
+	const { data, error } = await supabase.from('remarcas').insert(ligne).select('id').single();
+	if (error) return { error: 'L’envoi n’a pas marché. Réessaie dans un instant.' };
+	await cargarNotas();
+	return { id: data.id };
+}
+export const mandarNota = (n) => mandarNotaId(n).then((r) => r.error ?? null);
+
+/** Revenir en arrière (Ctrl+Z dans la pile) : la note retrouve ses champs d'avant */
+export function restablir(r, avant) {
 	return escriure(
-		() => supabase.from('remarcas').insert(ligne),
-		() => notas.lista.unshift({ ...ligne, id: Date.now(), estat: 'dubèrta', vista: false, responsa: null, autor_responsa: null, created_at: new Date().toISOString() })
+		() => supabase.from('remarcas').update(avant).eq('id', r.id),
+		() => {
+			const n = notas.lista.find((x) => x.id === r.id);
+			if (n) Object.assign(n, avant);
+			else notas.lista.unshift({ ...r, ...avant });
+		}
 	);
 }
 
@@ -155,6 +175,7 @@ function exemples() {
 	const ara = Date.now();
 	const jorn = (n) => new Date(ara - n * 86400000).toISOString();
 	return [
+		{ id: 6, pagina: '/apren/visio', clau: null, extrait: null, tèxte: 'Pour la photo du haut de la page Visio, tu la préfères en couleur ou en noir et blanc ?', autor: 'Claude', per: 'romain', de_romain: false, estat: 'dubèrta', responsa: null, autor_responsa: null, vista: false, opcions: ['En couleur', 'En noir et blanc', 'Je choisirai sur la page'], created_at: jorn(0) },
 		{ id: 5, pagina: '/', clau: 'acuelh.eros.titol.1', extrait: 'Se parla.', tèxte: 'Ce titre un peu plus gros sur téléphone.', autor: 'Romain', per: 'ia', de_romain: true, estat: 'tractada', responsa: 'Fait : le titre passe de 2,4 à 2,8 rem sur les petits écrans.', autor_responsa: 'Mistral', vista: false, created_at: jorn(1) },
 		{ id: 4, pagina: '/apren', clau: null, extrait: null, tèxte: 'Pour la fiche « L’article défini », tu préfères garder les deux exemples, ou un seul ?', autor: 'Claude', per: 'romain', de_romain: false, estat: 'dubèrta', responsa: null, autor_responsa: null, vista: false, created_at: jorn(0) },
 		{ id: 3, pagina: '/visio', clau: null, extrait: null, tèxte: 'Refaire la photo du haut de la page Visio.', autor: 'Romain', per: 'romain', de_romain: true, estat: 'dubèrta', responsa: null, autor_responsa: null, vista: false, created_at: jorn(2) },

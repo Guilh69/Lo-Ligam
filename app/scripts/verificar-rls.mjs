@@ -202,6 +202,18 @@ async function verificarEscritura(supabase) {
 	const demanda = await supabase.rpc('ia_demandar', { p_clau_secreta: 'pas-la-bona', p_pagina: '/_essai-verrolhs', p_text: 'Essai', p_autor: 'IA' });
 	verificar('POSER une question au nom de l’IA sans sa clé est refusé', !!demanda.error);
 
+	// La pile de validation (supabase-validacions.sql, lot 4) : seul Romain lit
+	// et écrit les validations ; un visiteur ne glisse pas de réponses toutes
+	// prêtes dans une remarque ; l'IA ne lit les validations qu'avec sa clé.
+	const ambOpcions = await supabase.from('remarcas').insert({ ...nòta, opcions: ['A', 'B'] });
+	verificar('GLISSER des réponses toutes prêtes sans compte est refusé', !!ambOpcions.error);
+	const legirValidacions = await supabase.from('validacions').select('clau').limit(1);
+	verificar('LIRE les validations sans compte est refusé', !!legirValidacions.error || !legirValidacions.data?.length);
+	const validacion = await supabase.from('validacions').insert({ tipe: 'element', clau: '_verrolh', empremta: '0'.repeat(64) });
+	verificar('VALIDER un texte sans compte est refusé', !!validacion.error);
+	const legirIA = await supabase.rpc('ia_legir_validacions', { p_clau_secreta: 'pas-la-bona' });
+	verificar('LIRE les validations au nom de l’IA sans sa clé est refusé', !!legirIA.error);
+
 	// La tentative la plus grave : se déclarer administrateur.
 	const promocion = await supabase
 		.from('admins')
