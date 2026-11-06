@@ -13,9 +13,12 @@
 	import { onMount, untrack } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { MOTS, camin, srcset, deTema } from './paisatges.js';
+	import { GARDATS, relevar } from './releu.js';
 
-	// tema : le thème choisi (la page remonte le composant quand il change)
-	let { pausa = false, calme = false, n = $bindable(0), tema = null } = $props();
+	// tema : le thème choisi (la page remonte le composant quand il change) ;
+	// relèu : l'option « relief » (06-11), sur les photos gardées dans Triar
+	// (toutes avec relèuTotas, pour les essais en local)
+	let { pausa = false, calme = false, n = $bindable(0), tema = null, relèu = false, relèuTotas = false } = $props();
 	const LISTA = untrack(() => deTema(tema));
 
 	// L'ordre des paysages change à chaque visite, le premier aussi ; l'ordre
@@ -103,6 +106,25 @@
 			anims.delete(id);
 		};
 	};
+
+	// Le relief : un canevas par-dessus la photo, dans le cadre qui glisse ;
+	// les points d'or et le mot suivent leur objet (./releu.js).
+	const relevarVista = (q, id) => (cv) =>
+		untrack(() =>
+			relevar(cv, {
+				clau: q.clau,
+				img: cv.previousElementSibling,
+				estat: () => {
+					const an = anims.get(id);
+					return an && { a: an.a, w: an.c.w, h: an.c.h, du: an.c.uB - an.c.uA, dv: an.c.vB - an.c.vA };
+				},
+				ponches: () =>
+					[...cv.parentElement.querySelectorAll('[data-i]')].map((el) => {
+						const m = q.mots[Number(el.dataset.i)];
+						return [el, m[1], m[2]];
+					})
+			})
+		);
 
 	// Le paysage qui arrive : un disque qui grandit depuis le milieu, une fois
 	// la photo prête (sinon le disque montrerait du noir).
@@ -345,8 +367,9 @@
 
 {#snippet vista(q, id, rangs)}
 	{@const actiu = id === actiuId}
+	{@const ambRelèu = relèu && !calme && (relèuTotas || GARDATS.has(q.clau))}
 	<!-- les points paraissent après le disque (après l'arrivée de la page pour le premier) -->
-	<div class="quadre" style:--d0={id === 0 ? '0.6s' : '1.25s'} {@attach glissar(q, id)}>
+	<div class="quadre" class:releu={ambRelèu} style:--d0={id === 0 ? '0.6s' : '1.25s'} {@attach glissar(q, id)}>
 		<img
 			src={camin(q.clau, q.amples[0])}
 			srcset={srcset(q)}
@@ -356,6 +379,7 @@
 			alt={actiu ? q.alt : ''}
 			fetchpriority={actiu ? 'high' : undefined}
 		/>
+		{#if ambRelèu}<canvas class="releu-c" aria-hidden="true" {@attach relevarVista(q, id)}></canvas>{/if}
 		{#if actiu}
 			{#each q.mots as [oc, x, y], i (oc)}
 				<button
@@ -379,6 +403,7 @@
 				{#key mostrat}
 					<div
 						class="eticeta {costat}"
+						data-i={mostrat}
 						style:left="{x * 100}%"
 						style:top="{y * 100}%"
 						aria-hidden="true"
@@ -439,6 +464,20 @@
 		height: 100%;
 		object-fit: cover;
 		-webkit-user-drag: none;
+	}
+	/* Le relief : la photo agrandie de la marge du relief (1 / 0,98, ./releu.js),
+	   pour que le canevas se pose dessus sans saut */
+	.quadre.releu img {
+		scale: 1.0204;
+	}
+	.releu-c {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		transition: opacity 0.6s ease;
+		pointer-events: none;
 	}
 	/* l'en-tête et les commandes restent lisibles sur un ciel clair */
 	.vela {

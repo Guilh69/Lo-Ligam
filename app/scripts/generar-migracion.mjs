@@ -70,6 +70,8 @@ function escriure() {
 -- 1) Nettoyage des lignes d'essai laissées par le contrôle de sécurité.
 --    Le « \\_ » est échappé : dans un LIKE, un « _ » seul signifie
 --    « n'importe quel caractère ».
+--    Les lignes « _verrolh… » ne sont PAS effacées : ce sont les fiches dont
+--    le contrôle a besoin (supabase/supabase-verrolhs-fichas.sql, 06-11).
 delete from public.fichas where id like '\\_essai%' or id like '\\_ensag%';
 
 delete from public.temas where id like '\\_essai%' or id like '\\_ensag%';

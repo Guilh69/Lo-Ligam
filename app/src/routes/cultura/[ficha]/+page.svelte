@@ -3,9 +3,12 @@
 	// tel qu'écrit dans le parcours (texte en français, comme les explications
 	// de la grammaire), sous une case de la couleur de son thème ; puis la
 	// leçon où on le croise, et les fiches voisines dans l'ordre du parcours.
-	// Même fond que le sommaire.
+	// Même fond que le sommaire. Depuis le 2026-11-06, la case du titre porte
+	// la photo de la fiche passée dans cette couleur, comme sur le sommaire
+	// (ou son dessin au trait, ou la croix du logo).
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Bulla from '$lib/components/Bulla.svelte';
+	import Crotz from '$lib/components/Crotz.svelte';
 	import { rich } from '$lib/lesson/rich.js';
 	import { FICHAS, IU, ficha as trobar, tema as temaDe, nomModul } from '$lib/cultura/index.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
@@ -35,7 +38,18 @@
 	<main class="principal">
 		<a class="parent" href="/cultura" lang="oc">Cultura</a>
 
-		<header class="cap" style:--aplat={t.color[0]} style:--sus={t.color[1]}>
+		<header class="cap" class:amb-foto={data.foto} class:amb-objecte={data.foto?.objecte} class:amb-dessenh={!data.foto && (data.dessenh?.length || f.id === 'roge-e-aur')} style:--aplat={t.color[0]} style:--sus={t.color[1]}>
+			<span class="cap-media" aria-hidden="true">
+				{#if data.foto}
+					<img class:objecte={data.foto.objecte} src={data.foto.src} srcset={data.foto.srcset} sizes={data.foto.srcset ? '(min-width: 60rem) 52rem, 100vw' : undefined} alt="" style:object-position={data.foto.pos} />
+				{:else if data.dessenh?.length}
+					<svg class="dessenh" viewBox="0 0 100 100">
+						{#each data.dessenh as d}<path {d} />{/each}
+					</svg>
+				{:else if f.id === 'roge-e-aur'}
+					<span class="dessenh crotz"><Crotz talha="100%" teula /></span>
+				{/if}
+			</span>
 			<a class="cap-tema" href="/cultura?tema={f.tema}">{tria(t.nom)}</a>
 			<h1>
 				<!-- dans une autre langue, le titre occitan au survol (toucher au téléphone) -->
@@ -45,6 +59,14 @@
 				>
 			</h1>
 		</header>
+		{#if data.foto?.credit}
+			{@const c = data.foto.credit}
+			<!-- photo libre de Wikimedia Commons : auteur, licence, lien (CC BY-SA) -->
+			<p class="credit-foto" lang={lang}>
+				{tria(IU.fotoDe)} <a href={c.ligam} target="_blank" rel="noopener noreferrer">{c.autor}</a>, Wikimedia Commons,
+				<a href={c.licenciaLigam} target="_blank" rel="noopener noreferrer license">{c.licencia}</a>, {tria(IU.modificada)}
+			</p>
+		{/if}
 
 		<div class="texte" lang="fr" dir="ltr">
 			{#if lang !== 'fr'}<p class="nota-lenga" lang={lang} dir="auto">{tria(IU.enFrances)}</p>{/if}
@@ -75,13 +97,13 @@
 		{#if prec || seg}
 			<nav class="vesinas" aria-label={tria(IU.vesinas)}>
 				{#if prec}
-					<a class="vesina" style:--aplat={temaDe(prec.tema).color[0]} style:--sus={temaDe(prec.tema).color[1]} href="/cultura/{prec.id}" rel="prev">
+					<a class="vesina" href="/cultura/{prec.id}" rel="prev">
 						<span class="vesina-nom">{tria(IU.precedenta)}</span>
 						<span class="vesina-titol" lang={lang}>{tria(prec.titol)}</span>
 					</a>
 				{/if}
 				{#if seg}
-					<a class="vesina seguenta" style:--aplat={temaDe(seg.tema).color[0]} style:--sus={temaDe(seg.tema).color[1]} href="/cultura/{seg.id}" rel="next">
+					<a class="vesina seguenta" href="/cultura/{seg.id}" rel="next">
 						<span class="vesina-nom">{tria(IU.seguenta)}</span>
 						<span class="vesina-titol" lang={lang}>{tria(seg.titol)}</span>
 					</a>
@@ -125,12 +147,100 @@
 	/* la case du titre, de la couleur du thème ; le nom du thème mène au
 	   sommaire filtré sur ce thème */
 	.cap {
+		position: relative;
+		isolation: isolate;
 		display: grid;
+		align-content: end;
 		gap: 0.6rem;
 		padding: clamp(1.1rem, 3vw, 1.8rem) clamp(1.1rem, 3vw, 2rem) clamp(1.3rem, 3.4vw, 2.2rem);
 		border-radius: 6px;
 		background: var(--aplat);
 		color: var(--sus);
+	}
+	/* la photo passée dans la couleur du thème, un voile sous le texte */
+	.cap.amb-foto {
+		min-height: clamp(12rem, 34vw, 18rem);
+	}
+	.cap-media {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		overflow: hidden;
+		border-radius: inherit;
+	}
+	.cap-media img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: grayscale(1) contrast(1.08);
+		mix-blend-mode: luminosity;
+		opacity: 0.62;
+	}
+	/* un objet en petite photo (la Copa Santa) : entier, au bout de la case,
+	   avec de l'air ; posé en « éclaircir » (screen), son fond noir disparaît
+	   dans la couleur du thème au lieu d'y faire un bloc sombre (Joan, 06-11) ;
+	   le titre lui laisse la place */
+	.cap-media img.objecte {
+		position: absolute;
+		inset-block: 7%;
+		inset-inline-end: 4%;
+		width: auto;
+		height: 86%;
+		max-width: 45%;
+		object-fit: contain;
+		filter: grayscale(1) contrast(1.25);
+		mix-blend-mode: screen;
+		opacity: 0.7;
+	}
+	/* le calque de l'image forme son propre empilement : il lui faut la couleur
+	   du thème pour que « éclaircir » s'y applique */
+	.amb-objecte .cap-media {
+		background: var(--aplat);
+	}
+	.amb-objecte h1 {
+		padding-inline-end: clamp(5rem, 24%, 13rem);
+	}
+	.amb-foto .cap-media::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to top, rgba(20, 8, 4, 0.6), transparent 75%);
+	}
+	.credit-foto {
+		margin: 0.45rem 0 0;
+		color: var(--t-tinta-2);
+		font-size: 0.8rem;
+		text-align: end;
+	}
+	.credit-foto a {
+		color: inherit;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.15em;
+	}
+	.dessenh {
+		position: absolute;
+		top: 0.9rem;
+		inset-inline-end: 1rem;
+		width: clamp(4rem, 12vw, 6.5rem);
+		height: clamp(4rem, 12vw, 6.5rem);
+		fill: none;
+		stroke: var(--sus);
+		stroke-width: 1.8;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		opacity: 0.55;
+	}
+	/* le titre laisse la place du dessin */
+	.amb-dessenh h1 {
+		padding-inline-end: clamp(4.5rem, 13vw, 7.5rem);
+	}
+	.dessenh.crotz {
+		stroke: none;
+		opacity: 1;
+	}
+	.dessenh.crotz :global(svg) {
+		display: block;
 	}
 	.cap-tema {
 		justify-self: start;
@@ -208,7 +318,8 @@
 		outline-offset: 2px;
 	}
 
-	/* les fiches voisines : deux petites cases de leur couleur */
+	/* les fiches voisines : deux cases neutres à filet fin (Joan, 06-11 : en
+	   aplat, elles tiraient l'œil plus que la tête de fiche) */
 	/* deux colonnes dès qu'il y a la place ; la suivante toujours à droite,
 	   même seule (première fiche), la précédente à gauche */
 	.vesinas {
@@ -228,13 +339,13 @@
 		display: grid;
 		gap: 0.2rem;
 		padding: 0.8rem 1rem;
+		border: 1px solid var(--t-linha);
 		border-radius: 6px;
-		background: var(--aplat);
-		color: var(--sus);
+		color: var(--t-tinta);
 		text-decoration: none;
 		transition:
 			transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
-			box-shadow 0.3s;
+			border-color 0.3s;
 	}
 	.vesina.seguenta {
 		text-align: end;
@@ -242,7 +353,10 @@
 	.vesina:hover,
 	.vesina:focus-visible {
 		transform: translateY(-3px);
-		box-shadow: 0 12px 26px -12px rgba(0, 0, 0, 0.45);
+		border-color: var(--t-tinta-2);
+	}
+	.vesina-nom {
+		color: var(--t-tinta-2);
 	}
 	.vesina:focus-visible {
 		outline: 3px solid var(--t-aur);

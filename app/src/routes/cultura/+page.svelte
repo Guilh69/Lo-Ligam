@@ -6,15 +6,26 @@
 	// avec « moins d'animation »). Le thème choisi reste dans l'adresse
 	// (?tema=noms) : on le retrouve en revenant d'une fiche. Données :
 	// $lib/cultura/index.js.
+	//
+	// Allure « photo teintée » (Romain, 2026-11-06, trois allures comparées sur
+	// /cultura/ensag ; « pas ouf » avant) : chaque case montre une photo de
+	// Romain passée dans la couleur de son thème ; la couleur n'est que là. Le
+	// filtre est neutre, le thème choisi prend sa couleur. Sans photo : un
+	// dessin au trait de Remira, la croix du logo, ou l'aplat seul. Photos et
+	// dessins : $lib/cultura/imatges.js.
 	import { onMount, tick } from 'svelte';
 	import { replaceState } from '$app/navigation';
 	import { page } from '$app/state';
 	import PaginaSimpla from '$lib/components/PaginaSimpla.svelte';
 	import Bulla from '$lib/components/Bulla.svelte';
+	import Crotz from '$lib/components/Crotz.svelte';
 	import { flip } from '$lib/components/flip.js';
 	import { FICHAS, TEMAS, IU, nomModul } from '$lib/cultura/index.js';
+	import { foto, srcset, COMMONS } from '$lib/cultura/imatges.js';
 	import { IU as IU_G } from '$lib/gramatica/lengas.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+
+	let { data } = $props();
 
 	let lang = $derived(langStore.current);
 	let esOc = $derived(lang === 'oc');
@@ -96,7 +107,6 @@
 						aria-describedby="b-tema-{t.id}"
 						onclick={() => triar(t.id)}
 					>
-						<span class="mostra" aria-hidden="true"></span>
 						<span><strong>{tria(t.nom)}</strong><span class="tema-detalh">{tria(t.detalh)}</span></span>
 						<!-- en occitan, des exemples ; dans une autre langue, le nom occitan puis les exemples -->
 						<Bulla
@@ -119,7 +129,18 @@
 		{#each fichas as f (f.id)}
 			<li data-clau={f.id}>
 				<a class="ficha" style:--aplat={colorDe(f.tema)[0]} style:--sus={colorDe(f.tema)[1]} href="/cultura/{f.id}" aria-describedby={esOc || tria(f.titol) === f.titol.oc ? undefined : `b-ficha-${f.id}`}>
-					<span class="ficha-tema">{nomTema(f.tema)}</span>
+					<span class="ficha-media" aria-hidden="true">
+						{#if foto(f.id)}
+							<img src="/cultura/{f.id}-480.webp" srcset={srcset(f.id)} sizes="(min-width: 1100px) 24rem, (min-width: 640px) 46vw, 92vw" alt="" loading="lazy" decoding="async" />
+						{:else if data.dessenhs[f.id]?.length}
+							<svg class="dessenh" viewBox="0 0 100 100">
+								{#each data.dessenhs[f.id] as d}<path {d} />{/each}
+							</svg>
+						{:else if f.id === 'roge-e-aur'}
+							<span class="dessenh crotz"><Crotz talha="100%" teula /></span>
+						{/if}
+					</span>
+					<span class="ficha-tema" lang={lang}>{nomTema(f.tema)}</span>
 					<span class="ficha-titol" lang={lang}>{tria(f.titol)}</span>
 					<span class="ficha-modul">{tria(nomModul(f.modul))}</span>
 					<!-- dans une autre langue, le titre occitan au survol (sauf s'il est le même : « Lo mas ») -->
@@ -128,12 +149,18 @@
 			</li>
 		{/each}
 	</ul>
+	<!-- crédit des photos libres de Wikimedia Commons (licence CC BY-SA) -->
+	<p class="credits" lang={lang}>
+		{tria(IU.fotosCommons)}
+		{#each Object.values(COMMONS) as c, k}{#if k}{', '}{/if}<a href={c.ligam} target="_blank" rel="noopener noreferrer">{c.autor}</a>
+			(<a href={c.licenciaLigam} target="_blank" rel="noopener noreferrer license">{c.licencia}</a>){/each}.
+	</p>
 </PaginaSimpla>
 
 <style>
-	/* le filtre, comme celui de la grammaire : six cases de couleur ; sur
-	   grand écran, six colonnes avec le détail de chaque thème ; sur
-	   téléphone, les noms seuls, à la suite */
+	/* le filtre, rangé comme celui de la grammaire : sur grand écran, six
+	   colonnes avec le détail de chaque thème ; sur téléphone, les noms seuls,
+	   à la suite */
 	.filtre {
 		display: flex;
 		flex-wrap: wrap;
@@ -166,19 +193,23 @@
 			display: block;
 		}
 	}
+	/* neutres, un filet fin ; le thème choisi prend sa couleur et un anneau
+	   (la couleur ne dit pas seule qu'il est choisi) */
 	.tema {
 		display: flex;
 		align-items: center;
-		gap: 0.6rem;
-		padding: 0.5rem 0.85rem 0.5rem 0.55rem;
-		border: none;
+		padding: 0.5rem 0.85rem;
+		border: 1px solid var(--t-linha);
 		border-radius: 6px;
-		background: var(--aplat);
-		color: var(--sus);
+		background: none;
+		color: var(--t-tinta);
 		font: inherit;
 		text-align: start;
 		cursor: pointer;
-		transition: box-shadow 0.25s;
+		transition:
+			background-color 0.25s,
+			border-color 0.25s,
+			box-shadow 0.25s;
 	}
 	.tema strong {
 		display: block;
@@ -186,37 +217,21 @@
 	.tema-detalh {
 		display: none;
 		font-size: 0.82rem;
+		color: var(--t-tinta-2);
 	}
-	.mostra {
-		flex: none;
-		width: 0.8rem;
-		height: 0.8rem;
-		border-radius: 50%;
-		background: var(--sus);
-		opacity: 0.85;
-	}
-	/* le thème choisi : un anneau autour, et sa pastille devient une coche */
-	.tema[aria-pressed='true'] .mostra {
-		background: none;
-		border: 2px solid var(--sus);
-		opacity: 1;
-		position: relative;
+	.tema:hover {
+		border-color: var(--t-tinta-2);
 	}
 	.tema[aria-pressed='true'] {
+		border-color: transparent;
+		background: var(--aplat);
+		color: var(--sus);
 		box-shadow:
 			0 0 0 2px var(--t-fons),
 			0 0 0 4px var(--t-tinta);
 	}
-	.tema[aria-pressed='true'] .mostra::after {
-		content: '';
-		position: absolute;
-		inset-inline-start: 0.2rem;
-		top: 0;
-		width: 0.25rem;
-		height: 0.46rem;
-		border: solid var(--sus);
-		border-width: 0 2px 2px 0;
-		transform: rotate(45deg);
+	.tema[aria-pressed='true'] .tema-detalh {
+		color: inherit;
 	}
 	.tot {
 		padding: 0.4rem 0.2rem;
@@ -240,9 +255,10 @@
 		font-size: 0.92rem;
 	}
 
-	/* les fiches : une case par fiche, de la couleur de son thème, comme les
-	   cases de S'apren ; le nom du thème écrit dessus, pour ne pas dépendre de
-	   la couleur seule */
+	/* les fiches : une case par fiche, de la couleur de son thème, la photo
+	   passée dans cette couleur (sa lumière sur l'aplat) ; un voile sombre sous
+	   le texte ; le nom du thème écrit dessus, pour ne pas dépendre de la
+	   couleur seule */
 	.fichas {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -257,7 +273,7 @@
 			grid-template-columns: repeat(2, 1fr);
 		}
 		.fichas .ficha {
-			min-height: 9rem;
+			min-height: 11rem;
 		}
 	}
 	@container pagina (min-width: 60rem) {
@@ -268,11 +284,23 @@
 	.fichas li {
 		display: grid;
 	}
+	.credits {
+		margin: var(--esp-32) 0 0;
+		color: var(--t-tinta-2);
+		font-size: 0.8rem;
+	}
+	.credits a {
+		color: inherit;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.15em;
+	}
 	.ficha {
+		position: relative;
+		isolation: isolate;
 		display: grid;
-		grid-template-rows: auto 1fr auto;
-		gap: 0.35rem;
-		min-height: 6rem;
+		align-content: end;
+		gap: 0.3rem;
+		min-height: 7rem;
 		padding: 0.9rem 1.05rem 0.85rem;
 		border-radius: 6px;
 		background: var(--aplat);
@@ -291,24 +319,92 @@
 		outline: 3px solid var(--t-aur);
 		outline-offset: 3px;
 	}
-	.ficha-tema,
-	.ficha-modul {
-		font-size: 0.82rem;
+	.ficha-media {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		overflow: hidden;
+		border-radius: inherit;
+	}
+	.ficha-media img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: grayscale(1) contrast(1.08);
+		mix-blend-mode: luminosity;
+		opacity: 0.62;
+		transition:
+			opacity 0.5s,
+			transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+	.ficha:hover .ficha-media img,
+	.ficha:focus-visible .ficha-media img {
+		opacity: 0.8;
+		transform: scale(1.04);
+	}
+	.ficha-media::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to top, rgba(20, 8, 4, 0.62) 10%, rgba(20, 8, 4, 0.2) 60%, transparent);
+	}
+	/* sans photo : un dessin au trait dans un coin, couleur du texte */
+	.dessenh {
+		position: absolute;
+		top: 0.7rem;
+		inset-inline-end: 0.8rem;
+		width: 5.2rem;
+		height: 5.2rem;
+		fill: none;
+		stroke: var(--sus);
+		stroke-width: 1.8;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		opacity: 0.55;
+	}
+	/* la croix garde ses traits et les couleurs du logo */
+	.dessenh.crotz {
+		width: 4.4rem;
+		height: 4.4rem;
+		stroke: none;
+		opacity: 1;
+	}
+	.dessenh.crotz :global(svg) {
+		display: block;
+	}
+	@container pagina (max-width: 36rem) {
+		.dessenh {
+			width: 3.6rem;
+			height: 3.6rem;
+		}
+	}
+	.ficha-tema {
+		font-size: 0.76rem;
 		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+	.ficha-tema:lang(ar) {
+		letter-spacing: 0;
 	}
 	.ficha-modul {
-		font-weight: 400;
+		font-size: 0.82rem;
 	}
 	.ficha-titol {
 		font-weight: 700;
-		font-size: 1.3rem;
+		font-size: 1.28rem;
 		line-height: 1.15;
 		text-wrap: balance;
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.ficha,
-		.tema {
+		.tema,
+		.ficha-media img {
 			transition: none;
+		}
+		.ficha:hover .ficha-media img {
+			transform: none;
 		}
 	}
 </style>

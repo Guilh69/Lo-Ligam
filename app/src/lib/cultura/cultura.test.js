@@ -74,3 +74,51 @@ describe('l’interface de Cultura', () => {
 			}
 	});
 });
+
+// Les images des fiches (2026-11-06) : une photo de paysage qui existe, ses
+// deux petites tailles dans static/cultura (scripts/cultura-fotos.mjs), un
+// dessin qui existe ; jamais photo et dessin à la fois.
+describe('les images de Cultura', async () => {
+	const { existsSync } = await import('node:fs');
+	const { FOTOS, COMMONS, DESSENHS, AMPLES, amples, srcset } = await import('./imatges.js');
+	const { PAISATGES } = await import('$lib/paisatges/paisatges.js');
+	const { dessenh } = await import('./dessenhs.server.js');
+	const ids = new Set(FICHAS.map((f) => f.id));
+
+	it('vont à des fiches qui existent, une seule image par fiche', () => {
+		const tots = [...Object.keys(FOTOS), ...Object.keys(COMMONS), ...Object.keys(DESSENHS)];
+		for (const id of tots) expect(ids.has(id), id).toBe(true);
+		expect(new Set(tots).size).toBe(tots.length);
+	});
+
+	it('créditent les photos de Wikimedia Commons et ont leurs tailles', () => {
+		for (const [id, c] of Object.entries(COMMONS)) {
+			expect(c.autor, id).toBeTruthy();
+			expect(c.licencia, id).toMatch(/^(CC0|CC BY(-SA)? \d\.\d)$/);
+			expect(c.ligam, id).toMatch(/^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
+			expect(c.licenciaLigam, id).toMatch(/^https:\/\/creativecommons\.org\//);
+			for (const a of amples(id)) expect(existsSync(`static/cultura/${id}-${a}.webp`), `${id}-${a}`).toBe(true);
+			expect(amples(id).at(-1), id).toBeLessThanOrEqual(c.largor);
+		}
+		// au sommaire, pas plus de 800 ; la copa (532 de large) s'arrête à 532
+		expect(srcset('carnaval')).toBe('/cultura/carnaval-480.webp 480w, /cultura/carnaval-800.webp 800w');
+		expect(amples('copa-santa')).toEqual([480, 532]);
+	});
+
+	it('créditent dans toutes les langues', () => {
+		for (const clau of ['fotoDe', 'modificada', 'fotosCommons'])
+			for (const l of LENGAS) expect(IU[clau][l], `${clau}.${l}`).toBeTruthy();
+	});
+
+	it('ont leur photo et ses petites tailles', () => {
+		for (const [id, { clau, pos }] of Object.entries(FOTOS)) {
+			expect(PAISATGES.some((p) => p.clau === clau), clau).toBe(true);
+			expect(pos, id).toMatch(/^\d{1,3}% \d{1,3}%$/);
+			for (const a of AMPLES) expect(existsSync(`static/cultura/${id}-${a}.webp`), `${id}-${a}`).toBe(true);
+		}
+	});
+
+	it('ont leur dessin', () => {
+		for (const id of Object.keys(DESSENHS)) expect(dessenh(id)?.length, id).toBeGreaterThan(0);
+	});
+});

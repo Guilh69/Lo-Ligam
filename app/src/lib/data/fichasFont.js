@@ -38,11 +38,16 @@ export async function cargarCatalog() {
 		if (f.error) throw f.error;
 		if (!t.data?.length || !f.data?.length) throw new Error('la basa a res tornat');
 
+		// Les lignes dont le nom commence par « _ » servent au contrôle de
+		// sécurité (supabase/supabase-verrolhs-fichas.sql) : jamais montrées.
+		const temas = t.data.filter((x) => !x.id.startsWith('_'));
+		const brutas = f.data.filter((x) => !x.id.startsWith('_'));
+
 		// L'ordre d'affichage est celui des THÈMES d'abord, des fiches ensuite.
 		// Trier les fiches sur leur seul « ordre » mettrait toutes les premières
 		// fiches de chaque thème en tête — ce n'est pas le classement de Romain.
-		const rang = new Map(t.data.map((x, i) => [x.id, i]));
-		const fichas = f.data
+		const rang = new Map(temas.map((x, i) => [x.id, i]));
+		const fichas = brutas
 			.map((x) => ({
 				id: x.id,
 				cat: x.tema_id,
@@ -57,7 +62,7 @@ export async function cargarCatalog() {
 
 		return {
 			font: 'basa',
-			categories: t.data.map(({ id, oc, fr, color }) => ({ id, oc, fr, color })),
+			categories: temas.map(({ id, oc, fr, color }) => ({ id, oc, fr, color })),
 			fichas
 		};
 	} catch (e) {
