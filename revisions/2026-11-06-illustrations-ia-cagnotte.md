@@ -36,6 +36,13 @@ Pas concernées : ses photos (`app/static/apren/paisatges`, `cultura`, `aprene/f
 
 Sources lues le 06-11 : selectra.info (cagnotte d'un commerçant, dons = recettes), helloasso.com (gratuité pour les associations).
 
+## Façon de la mention : choisie
+**Romain, 06-11 vers 21 h : « Signature et ligne »** (essai `/ensag/ia`) : la signature sur une illustration seule (affiches de la salle de jeux ; Remira, en mode Polsa d'aur seulement, avec « dessenh fach per l'IA » pour ne pas désigner les photos), une seule ligne là où les dessins sont nombreux (`/ensag/dessenhs`). À écrire au cahier §11.
+
+**Lot en cours, interrompu le 06-11 au soir (fin du forfait Claude), sur la branche `claude/ai-illustration-disclosure-funding-fa4163`, PAS sur master :**
+- fait, non construit ni regardé : `app/src/lib/components/MencionIA.svelte` (formes `signatura` avec `cadre` et `quina="dessenh"`, et `linha` ; textes oc/fr vérifiés, es/en/ca/ar par Aran ; doutes d'Aran : arabe « صنع بالذكاء الاصطناعي » à faire valider par l'ami arabophone) et la page `app/src/routes/illustracions/+page.svelte` (textes oc/fr/es/en/ca/ar) ;
+- reste : ajouter `'/illustracions'` à ARMONIZADAS (`app/src/app.html` et `app/src/lib/stores/ambianca.svelte.js`, à tenir identiques) ; poser `<MencionIA cadre />` dans `.quadre` de `app/src/lib/jocs/sala/Sala.svelte` (`.quadre` : `position: relative; padding-bottom: 1.9rem`) ; dans `app/src/routes/apren/remira/+page.svelte`, une signature `quina="dessenh"` visible seulement si `mòde === 'polsa'`, en bas à droite au-dessus de `.comandas` (`bottom: calc(var(--bas, 5rem) + 0.5rem)`), couleurs fixes car Remira est toujours sombre (`--mencion-tinta`, `--mencion-tinta-fort`, `--mencion-trait`) ; `<MencionIA forma="linha" />` sur `/ensag/dessenhs` ; puis `npm run build`, `npm test`, regarder les pages (clair, sombre, téléphone), relecture de Joan, fusion sur master.
+
 ## Suite
 1. Romain choisit A ou B.
 2. Puis : essai de la mention sur une page `/ensag/…` (deux ou trois façons, sur de vrais dessins), la page de la cagnotte sans bouton de don, et le bouton quand le compte existe.
