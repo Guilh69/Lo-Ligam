@@ -130,7 +130,7 @@ function course(t, astre = 'soleil') {
 		if (Math.hypot((x1 + x2) / 2 - x, (y1 + y2) / 2 - y) < 15) continue; // l'arc s'efface autour de l'astre
 		d += `M${r1(x1)} ${r1(y1)}L${r1(x2)} ${r1(y2)}`;
 	}
-	if (astre === 'lune') return [d, lune(x + 4, y, 9), etoile(x + 16, y - 12, 4), etoile(x - 18, y + 8, 3)];
+	if (astre === 'lune') return [d, lune(x + 4, y, 9), etoile(x + 22, y - 15, 4)]; // une étoile, loin de l’arc et de la lune (06-11)
 	if (astre === 'couchant')
 		return [d, `M${r1(x - 9)} 78A9 9 0 0 1 ${r1(x + 9)} 78`, rayons(x, 78, 13, 18, 4, Math.PI + Math.PI / 5, Math.PI * 0.8), `M${r1(x - 10)} 84L${r1(x + 6)} 84M${r1(x - 6)} 89L${r1(x + 2)} 89`];
 	return [d, ...soleil(x, y, 6)];
@@ -212,11 +212,16 @@ export const DESSENHS = {
 		'M50 50L52 42' // queue
 	],
 	'los legums': [
-		'M20 56L80 56L74 88L26 88Z', // cageot
-		'M20 56L26 44L74 44L80 56',
-		'M34 44C34 28 42 24 46 30', // carotte qui dépasse
-		'M54 44C54 34 60 30 66 34', // fane
-		'M30 70L70 70' // lame du cageot
+		// la carotte, le poireau et la tomate (refait le 06-11)
+		'M16 44C16 39 32 39 32 44L26 88Q24 91 22 88Z',
+		'M19 54L24 54M21 68L25 68',
+		'M21 41C18 33 14 28 10 25M24 40L24 22M27 41C30 33 33 29 37 26',
+		'M47 88L47 46M57 88L57 46M47 88Q52 94 57 88',
+		'M49 92L48 96M52 93L52 97M55 92L56 96',
+		'M47 62L57 62',
+		'M47 46C45 32 42 20 38 12M52 46C52 32 52 20 53 8M57 46C59 34 62 24 68 16',
+		cercle(76, 74, 13),
+		'M70 62L76 64L82 62M76 64L76 58'
 	],
 	'un quilò de…': [
 		'M50 20L50 36', // fléau
@@ -304,8 +309,7 @@ export const DESSENHS = {
 	// ── Unité 2 · Parlas occitan ? ───────────────────────────────────────
 	'Parlas occitan ?': [
 		'M12 16L56 16C59 16 60 17 60 20L60 44C60 47 59 48 56 48L28 48L20 58L21 48L12 48C9 48 8 47 8 44L8 20C8 17 9 16 12 16Z',
-		'M28 28C28 23 40 23 40 29C40 33 34 33 34 38', // ?
-		'M34 42L34 43',
+		'M27.1 25.8C27.1 20 40.9 20 40.9 26.9C40.9 31.5 34 31.5 34 37.3M34 41.9L34 43', // ? au milieu de la bulle (06-11)
 		'M44 56L88 56C91 56 92 57 92 60L92 80C92 83 91 84 88 84L80 84L82 94L72 84L44 84C41 84 40 83 40 80L40 60C40 57 41 56 44 56Z',
 		'M48 66L84 66M48 74L74 74'
 	],
@@ -348,13 +352,6 @@ export const DESSENHS = {
 	],
 
 	// ── Unité 4 · Qué fas ? ──────────────────────────────────────────────
-	cantar: [
-		'M26 74C26 68 40 66 40 72C40 78 26 80 26 74Z', // deux croches
-		'M40 72L40 28',
-		'M60 66C60 60 74 58 74 64C74 70 60 72 60 66Z',
-		'M74 64L74 20',
-		'M40 28L74 20M40 36L74 28'
-	],
 	caminar: [empreinte(40, 76, 0.8, true), empreinte(60, 58, 0.8), empreinte(40, 40, 0.8, true), empreinte(60, 22, 0.8)],
 	escotar: [
 		'M22 60C22 34 34 22 50 22C66 22 78 34 78 60', // casque
@@ -806,6 +803,32 @@ const fleca = (x, y, a, l = 7) =>
 	`M${r1(x - l * Math.cos(a - 0.5))} ${r1(y - l * Math.sin(a - 0.5))}L${r1(x)} ${r1(y)}L${r1(x - l * Math.cos(a + 0.5))} ${r1(y - l * Math.sin(a + 0.5))}`;
 /** Cœur centré en (x, y) ; s = 1 : large de 32, haut de 28. */
 const cor = (x, y, s = 1) => tr('M0 -6C0 -12 -8 -15 -12 -11C-17 -6 -14 1 -10 5L0 14L10 5C14 1 17 -6 12 -11C8 -15 0 -12 0 -6Z', x, y, s);
+/** Boule de pétanque : le cercle et deux stries parallèles, en biais. */
+function bola(x, y, r, a = -0.5) {
+	const t = [Math.cos(a), Math.sin(a)],
+		n = [-Math.sin(a), Math.cos(a)],
+		out = [cercle(x, y, r)];
+	for (const d of [-0.2, 0.2]) {
+		const h = Math.sqrt(1 - d * d) * r,
+			cx = x + n[0] * d * r,
+			cy = y + n[1] * d * r,
+			b = 0.44 * r; // la strie suit la courbure de la boule
+		out.push(`M${r1(cx - t[0] * h)} ${r1(cy - t[1] * h)}Q${r1(cx + n[0] * b)} ${r1(cy + n[1] * b)} ${r1(cx + t[0] * h)} ${r1(cy + t[1] * h)}`);
+	}
+	return out;
+}
+/** Flèche en arc de cercle (centre x, y ; rayon r ; de l'angle a0 à a1, sens horaire).
+ *  La pointe suit la corde des derniers millimètres de l'arc, pas sa tangente :
+ *  elle prolonge ce que l'œil voit de la courbe (Romain, 06-11 : « bout de flèche pas propre »). */
+function arcFleca(x, y, r, a0, a1, l = 6) {
+	const P = (a) => [x + r * Math.cos(a), y + r * Math.sin(a)];
+	const [x0, y0] = P(a0),
+		[x1, y1] = P(a1),
+		[xb, yb] = P(a1 - l / r);
+	return [`M${r1(x0)} ${r1(y0)}A${r} ${r} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${r1(x1)} ${r1(y1)}`, fleca(x1, y1, Math.atan2(y1 - yb, x1 - xb), l)];
+}
+/** Note de musique (une croche) : la tête en (x, y), la hampe vers le haut. */
+const nota = (x, y, s = 1) => tr('M-3 0C-3 -3 3 -4 3 -1C3 2 -3 3 -3 0ZM3 -1L3 -15C5 -12 9 -11 9 -7', x, y, s);
 /** Roue dentée. */
 function engrenatge(x, y, r, n = 8, dent = 5) {
 	const pts = [];
@@ -1080,27 +1103,28 @@ Object.assign(DESSENHS, {
 		'M60 58L76 58M60 69L76 69M60 79L74 79'
 	],
 	'Plan mercés !': [
-		// les deux mains jointes
-		'M50 18C46 18 44 22 44 28L42 58C40 66 34 72 28 76L34 88C42 82 48 76 50 68C52 76 58 82 66 88L72 76C66 72 60 66 58 58L56 28C56 22 54 18 50 18Z',
-		'M50 22L50 66',
-		rayons(50, 22, 12, 17, 3, (5 * Math.PI) / 4, (3 * Math.PI) / 4)
+		// merci de tout cœur : la personne parle, un cœur qui rayonne dans la bulle (refait le 06-11)
+		...persona(24, 62, 10, 96),
+		bulla(40, 6, 94, 56, 0.2),
+		cor(67, 36, 0.75),
+		rayons(67, 33, 15, 20, 3, (5 * Math.PI) / 4, (3 * Math.PI) / 4)
 	],
 	'A lèu !': [...salut(8, 26, 0.66), cercle(70, 48, 17), 'M70 48L70 37M70 48L79 53', 'M70 33L70 35M85 48L83 48M70 63L70 61M55 48L57 48'],
 	'A deman !': [...salut(8, 26, 0.66), 'M52 30L90 30L90 74L52 74Z', 'M52 42L90 42', 'M60 25L60 35M82 25L82 35', 'M60 58L82 58', fleca(83, 58, 0, 6)],
-	'Al còp que ven !': [...salut(8, 26, 0.66), 'M84.1 55.1A15 15 0 1 1 81.5 40.4', fleca(81.5, 40.4, 0.873, 6)],
+	'Al còp que ven !': [...salut(12, 26, 0.66), ...arcFleca(70, 50, 15, 0.35, 5.59, 5)],
 	'Cossí te dison ?': [
-		'M20 36L80 36Q84 36 84 40L84 82Q84 86 80 86L20 86Q16 86 16 82L16 40Q16 36 20 36Z', // l'étiquette du prénom, à son cordon
-		'M44 43L56 43',
-		'M44 36C38 22 40 10 50 8C60 10 62 22 56 36',
-		'M16 52L84 52',
-		interrogant(50, 65, 0.9)
+		// la personne et l'étiquette de son prénom, encore vide (refait le 06-11)
+		...persona(50, 22, 12, 96),
+		'M37 62L63 62Q66 62 66 65L66 86Q66 89 63 89L37 89Q34 89 34 86L34 65Q34 62 37 62Z',
+		'M34 69L66 69',
+		interrogant(50, 79.5, 0.72)
 	],
 	'M’apèli…': [
-		'M20 36L80 36Q84 36 84 40L84 82Q84 86 80 86L20 86Q16 86 16 82L16 40Q16 36 20 36Z', // l'étiquette du prénom, à son cordon
-		'M44 43L56 43',
-		'M44 36C38 22 40 10 50 8C60 10 62 22 56 36',
-		'M16 52L84 52',
-		'M26 66C30 56 34 72 38 62C42 52 46 70 50 62C54 56 58 68 62 62C64 59 68 59 72 64'
+		// la même étiquette, le prénom écrit (refait le 06-11)
+		...persona(50, 22, 12, 96),
+		'M37 62L63 62Q66 62 66 65L66 86Q66 89 63 89L37 89Q34 89 34 86L34 65Q34 62 37 62Z',
+		'M34 69L66 69',
+		'M39 81C41 73 44 85 47 78C50 71 52 83 55 78C57 75 59 82 62 77'
 	],
 	'Encantat !': [...persona(30, 38, 9, 90), ...persona(70, 38, 9, 90, { punts: true }), etoile(50, 22, 5), etoile(60, 12, 2.5)],
 	'Encantada !': [...persona(30, 38, 9, 90, { cabels: true }), ...persona(70, 38, 9, 90, { punts: true }), etoile(50, 22, 5), etoile(60, 12, 2.5)],
@@ -1121,47 +1145,62 @@ Object.assign(DESSENHS, {
 		'M72 54L80 62M80 54L72 62'
 	],
 	Tolosa: (() => {
-		// Saint-Sernin : le clocher en étages qui se resserrent, les baies en mitre
+		// Saint-Sernin : le clocher octogonal au-dessus de la croisée, cinq étages qui se resserrent,
+		// les trois du bas en plein cintre, les deux du haut en mitre ; deux baies par face,
+		// une sur les faces de biais ; la flèche, le globe et la croix (vérifié le 06-11)
 		const etatges = [
-			[86, 71, 22, 3],
-			[71, 60, 18, 3],
-			[60, 50, 14.5, 3],
-			[50, 41, 11.5, 2],
-			[41, 33, 8.5, 2]
+			[86, 72, 21, 'c'],
+			[72, 60, 18.5, 'c'],
+			[60, 49, 16, 'c'],
+			[49, 40, 13.5, 'm'],
+			[40, 32, 11, 'm']
 		];
-		let d = 'M8 86L92 86M8 78L28 72M92 78L72 72';
-		for (const [b, h, w, n] of etatges) {
-			d += `M${50 - w} ${b}L${50 - w} ${h}L${50 + w} ${h}L${50 + w} ${b}`;
-			const larg = (2 * w) / n,
-				ow = larg * 0.42,
+		let d = 'M8 86L92 86M8 78L29 72M92 78L71 72';
+		const baia = (x, ow, b, h, H, forma) =>
+			forma === 'c'
+				? `M${r1(x - ow / 2)} ${r1(b - 1.5)}L${r1(x - ow / 2)} ${r1(h + H * 0.42)}A${r1(ow / 2)} ${r1(ow / 2)} 0 0 1 ${r1(x + ow / 2)} ${r1(h + H * 0.42)}L${r1(x + ow / 2)} ${r1(b - 1.5)}`
+				: `M${r1(x - ow / 2)} ${r1(b - 1.5)}L${r1(x - ow / 2)} ${r1(h + H * 0.5)}L${r1(x)} ${r1(h + H * 0.22)}L${r1(x + ow / 2)} ${r1(h + H * 0.5)}L${r1(x + ow / 2)} ${r1(b - 1.5)}`;
+		for (const [b, h, w, forma] of etatges) {
+			const f = 0.414 * w, // le bord de la face de devant
 				H = b - h;
-			for (let k = 0; k < n; k++) {
-				const x = 50 - w + larg * (k + 0.5);
-				d += `M${r1(x - ow / 2)} ${r1(b - 1.5)}L${r1(x - ow / 2)} ${r1(h + H * 0.5)}L${r1(x)} ${r1(h + H * 0.22)}L${r1(x + ow / 2)} ${r1(h + H * 0.5)}L${r1(x + ow / 2)} ${r1(b - 1.5)}`;
-			}
+			d += `M${r1(50 - w)} ${b}L${r1(50 - w)} ${h}L${r1(50 + w)} ${h}L${r1(50 + w)} ${b}`;
+			d += `M${r1(50 - f)} ${h}L${r1(50 - f)} ${b}M${r1(50 + f)} ${h}L${r1(50 + f)} ${b}`;
+			for (const x of [50 - f / 2, 50 + f / 2]) d += baia(x, f * 0.55, b, h, H, forma);
+			for (const x of [50 - (w + f) / 2, 50 + (w + f) / 2]) d += baia(x, (w - f) * 0.45, b, h, H, forma);
 		}
-		return [d, 'M41.5 33L50 8L58.5 33', 'M50 8L50 3'];
+		return [d, 'M39 32L50 9L61 32', cercle(50, 7, 1.6), 'M50 5.4L50 1M48.2 2.8L51.8 2.8'];
 	})(),
 	Montpelhièr: [
-		// l'arc de triomphe du Peyrou
+		// l'arc de triomphe du Peyrou : plus large que haut (18 m sur 15), une seule baie,
+		// un médaillon sculpté sur chaque pile, l'inscription sur l'attique (vérifié le 06-11)
 		'M8 86L92 86',
-		'M18 86L18 34L82 34L82 86',
-		'M12 34L88 34L88 27L12 27Z',
-		'M24 27L24 16L76 16L76 27',
-		'M30 22L70 22',
-		'M38 86L38 58A12 12 0 0 1 62 58L62 86',
-		'M26 40L26 86M74 40L74 86'
+		'M16 86L16 40L84 40L84 86',
+		'M12 40L88 40L88 33L12 33Z',
+		'M20 33L20 22L80 22L80 33',
+		'M28 27.5L72 27.5',
+		'M41 86L41 66A9 9 0 0 1 59 66L59 86',
+		'M16 66L41 66M59 66L84 66',
+		'M21 40L21 86M79 40L79 86M36 40L36 86M64 40L64 86',
+		cercle(28.5, 53, 5),
+		cercle(71.5, 53, 5)
 	],
 	Besièrs: [
-		// la cathédrale sur sa colline, le pont Vieux sur l'Orb
-		'M4 94C20 91 34 96 50 93C66 90 80 95 96 92',
-		'M4 76L96 76',
-		'M6 88C6 79 28 79 28 88M28 88C28 79 50 79 50 88M50 88C50 79 72 79 72 88M72 88C72 79 94 79 94 88',
-		'M4 76C14 70 22 62 32 58L76 58C84 62 90 70 96 74',
-		'M36 58L36 26L36 22L40 22L40 26L43 26L43 22L46 22L46 26L50 26L50 22L50 58',
-		'M50 58L50 38L50 35L54 35L54 38L58 38L58 35L62 35L62 38L66 38L66 35L70 35L70 38L72 38L72 58',
-		cercle(61, 48, 5),
-		'M41 48L41 38C41 35 45 35 45 38L45 48'
+		// la cathédrale Saint-Nazaire sur son promontoire au-dessus de l'Orb : la façade ouest
+		// crénelée, sa rose entre deux tours ; la grande tour carrée et son campanile ;
+		// en bas, le pont Vieux (vérifié le 06-11)
+		'M4 95C20 92 34 97 50 94C66 91 80 96 96 93',
+		'M4 78L96 78',
+		'M5 89C5 82.5 20 82.5 20 89M20 89C20 82.5 35 82.5 35 89M35 89C35 82.5 50 82.5 50 89M50 89C50 82.5 65 82.5 65 89M65 89C65 82.5 80 82.5 80 89M80 89C80 82.5 95 82.5 95 89',
+		'M4 78C12 72 18 64 26 61L80 61C86 64 92 70 96 75',
+		'M22 61L22 31L23.5 31L23.5 29L26.5 29L26.5 31L28 31L28 61',
+		'M42 61L42 31L43.5 31L43.5 29L46.5 29L46.5 31L48 31L48 61',
+		'M28 39L30 39L30 37L33 37L33 39L37 39L37 37L40 37L40 39L42 39',
+		cercle(35, 48, 5),
+		'M48 47L60 47',
+		'M60 61L60 22L74 22L74 61',
+		'M64 22L64 15C64 11 70 11 70 15L70 22',
+		'M67 11L67 8',
+		'M64.5 30L64.5 40M69.5 30L69.5 40'
 	],
 	Carcassona: [
 		// les tours rondes coiffées de cônes, les remparts crénelés
@@ -1181,44 +1220,46 @@ Object.assign(DESSENHS, {
 	// ── Unité 2 · Parlas occitan ? ──────────────────────────────────────
 	'Òc !': [bulla(14, 16, 86, 68), 'M32 42L44 54L68 30'],
 	'Non !': [bulla(14, 16, 86, 68), 'M36 28L64 56M64 28L36 56'],
-	'la lenga': [bulla(14, 16, 86, 68), cercle(40, 46, 8), 'M35 29L41 34', 'M66.4 39.6A9 9 0 1 0 66.4 52.4'], // « òc » dans la bulle
+	'la lenga': [bulla(14, 16, 86, 68), cercle(30, 45, 7), 'M37 38L37 52', 'M43 30L43 52', cercle(50, 45, 7), 'M75.4 40.5A7 7 0 1 0 75.4 49.5'], // « a b c » dans la bulle (refait le 06-11)
 	occitan: (() => {
-		// la croix occitane, vidée et pommetée : quatre bras qui s'évasent, douze pommes
-		const bras = [
-			[-5, -5],
-			[-21, -33],
-			[-10, -29],
-			[0, -41],
-			[10, -29],
-			[21, -33]
-		];
-		const rot = ([x, y], k) => {
-			let p = [x, y];
-			for (let i = 0; i < k; i++) p = [-p[1], p[0]];
-			return p;
-		};
-		const P = ([x, y]) => [50 + x * 0.9, 50 + y * 0.9];
-		const q = (a, c, b, n = 6) =>
-			Array.from({ length: n }, (_, i) => {
-				const s = (i + 1) / n,
+		// la croix-constellation du logo de Lo Ligam (Romain, 06-11 : « utiliser ma croix ») :
+		// la géométrie de Crotz.svelte, huit rayons, douze pommes et les courbes entre les pointes ;
+		// pas de remplissage, les traits s'arrêtent au bord des pommes
+		const S = 38,
+			C = ([x, y]) => [50 + x * S, 50 + y * S],
+			rp = 1.7, // de petits anneaux : pas de remplissage, ils se lisent comme les pommes pleines du logo
+			rm = 2.2;
+		const pommes = [[0, -1], [0.486, -0.797], [0.809, -0.48], [1, 0], [0.809, 0.48], [0.486, 0.797], [0, 0.992], [-0.468, 0.797], [-0.786, 0.48], [-0.976, 0.009], [-0.786, -0.48], [-0.468, -0.797]];
+		const hors = (p, c, r) => Math.hypot(p[0] - c[0], p[1] - c[1]) > r + 2;
+		const corba = (a, q, b) => {
+			const [A, Q, B] = [a, q, b].map(C);
+			const pts = Array.from({ length: 33 }, (_, i) => {
+				const s = i / 32,
 					u = 1 - s;
-				return [u * u * a[0] + 2 * u * s * c[0] + s * s * b[0], u * u * a[1] + 2 * u * s * c[1] + s * s * b[1]];
+				return [0, 1].map((k) => u * u * A[k] + 2 * u * s * Q[k] + s * s * B[k]);
 			});
-		// un bras : du centre, un côté creusé jusqu'au coin, la pointe, l'autre côté creusé
-		const unBras = [bras[0], ...q(bras[0], [-6, -25], bras[1]), bras[2], bras[3], bras[4], bras[5], ...q(bras[5], [6, -25], [5, -5]).slice(0, -1)];
-		const contorn = [];
-		for (let k = 0; k < 4; k++) for (const p of unBras) contorn.push(P(rot(p, k)));
-		let pom = '';
-		for (let k = 0; k < 4; k++)
-			for (const p of [
-				[-23.5, -35],
-				[0, -45],
-				[23.5, -35]
-			]) {
-				const [x, y] = P(rot(p, k));
-				pom += cercle(x, y, 2.5);
-			}
-		return [linha(contorn) + 'Z', pom];
+			return linha(pts.filter((p) => hors(p, A, rp) && hors(p, B, rp)));
+		};
+		const rais = [1, 2, 4, 5, 7, 8, 10, 11].map((i) => {
+			const [x, y] = pommes[i],
+				n = Math.hypot(x, y) * S;
+			const a = (rm + 2) / n,
+				b = (n - rp - 2) / n;
+			return `M${r1(50 + x * S * a)} ${r1(50 + y * S * a)}L${r1(50 + x * S * b)} ${r1(50 + y * S * b)}`;
+		});
+		return [
+			...rais,
+			corba([-0.468, -0.797], [-0.194, -0.746], [0, -1]),
+			corba([0, -1], [0.202, -0.746], [0.486, -0.797]),
+			corba([0.809, -0.48], [0.751, -0.199], [1, 0]),
+			corba([1, 0], [0.751, 0.199], [0.809, 0.48]),
+			corba([0.486, 0.797], [0.202, 0.742], [0, 0.992]),
+			corba([0, 0.992], [-0.194, 0.742], [-0.468, 0.797]),
+			corba([-0.786, 0.48], [-0.731, 0.203], [-0.976, 0.009]),
+			corba([-0.976, 0.009], [-0.731, -0.195], [-0.786, -0.48]),
+			cercle(50, 50, rm),
+			...pommes.map((p) => cercle(...C(p), rp))
+		];
 	})(),
 	francesa: [
 		// la tour Eiffel
@@ -1321,21 +1362,34 @@ Object.assign(DESSENHS, {
 	],
 	tanben: [cercle(30, 50, 14), pointilla(cerclePts(70, 50, 14)), 'M64 50L76 50M70 44L70 56'], // une chose, et une autre en plus
 	mas: [
-		'M6 84L94 84', // le mur de briques sur le chemin : on saute par-dessus, mais on passe
-		'M34 84L34 60L66 60L66 84M34 72L66 72M50 60L50 72M42 72L42 84M58 72L58 84',
-		pointilla(bezierPts([12, 82], [20, 26], [80, 26], [86, 72], 16), 3, 2.6),
-		fleca(86.4, 76, 1.42, 7)
+		// d'un côté le soleil, mais de l'autre la pluie (refait le 06-11)
+		...soleil(26, 44, 9),
+		'M50 16L50 84',
+		tr(NUAGE, 50.6, 23, 0.46),
+		'M66 56L63 64M76 56L73 64M86 56L83 64'
 	],
 	'Qu’es aquò ?': ['M50 40L76 52L76 80L50 92L24 80L24 52Z', 'M24 52L50 64L76 52', 'M50 64L50 92', interrogant(50, 20, 1)],
 	'Qui es ?': [...persona(50, 34, 16, 96), interrogant(50, 34, 0.9)],
 	'Qué vòl dire… ?': [
 		'M50 34C40 28 24 28 12 32L12 80C24 76 40 76 50 82C60 76 76 76 88 80L88 32C76 28 60 28 50 34Z', // le livre ouvert
 		'M50 34L50 82',
-		'M20 44L42 42M20 52L42 50M20 60L42 58M20 68L42 66',
+		// les lignes suivent la courbe de la page (06-11)
+		...[10, 18, 26, 34].map((dy) =>
+			linha(
+				bezierPts([12, 32], [24, 28], [40, 28], [50, 34], 40)
+					.filter(([x]) => x > 18 && x < 44)
+					.map(([x, y]) => [x, y + dy])
+			)
+		),
 		interrogant(69, 54, 1.2)
 	],
-	'Cossí se ditz… ?': ['M8 34L38 34L38 62L8 62Z', 'M14 48L32 48', 'M42 48L54 48', fleca(56, 48, 0, 6), bulla(60, 26, 94, 62, 0.3), interrogant(77, 44, 0.8)],
-	'Pòdes repetir, se te plai ?': [bulla(12, 12, 88, 66), 'M62.2 44.4A13 13 0 1 1 60 31.6', fleca(60, 31.6, 0.873, 6)],
+	'Cossí se ditz… ?': [
+		// une chose, et la bulle qui demande son nom (Romain, 06-11)
+		...DESSENHS['la pera'].map((d) => tr(d, 4, 39, 0.48)),
+		bulla(46, 8, 92, 46, 0.2),
+		interrogant(69, 27, 1)
+	],
+	'Pòdes repetir, se te plai ?': [bulla(12, 12, 88, 66), ...arcFleca(50, 39, 13, 0.35, 5.59, 5)],
 	'Non sabi pas.': [
 		...persona(50, 40, 9, 92), // les épaules haussées, les mains ouvertes
 		'M34 64L20 72L14 58',
@@ -1360,10 +1414,27 @@ Object.assign(DESSENHS, {
 	'la companha': [...persona(34, 40, 9, 90, { cabels: true }), ...persona(66, 40, 9, 90, { punts: true }), cor(50, 16, 0.4), 'M6 90L94 90'],
 
 	// ── Unité 4 · Qué fas ? ─────────────────────────────────────────────
-	'Qué fas ?': ['M30 88L46 52M36 90L52 54M30 88L36 90', 'M34 44L58 56L62 48L38 36Z', interrogant(76, 32, 1.4)],
+	cantar: [
+		// la personne chante, la bouche grande ouverte, les notes s'envolent (Romain, 06-11 ; ici : il lui faut persona)
+		...persona(30, 50, 13, 96),
+		'M25 53L35 53A5 5 0 0 1 25 53Z',
+		nota(52, 50, 0.8),
+		nota(66, 38, 0.9),
+		tr('M26 74C26 68 40 66 40 72C40 78 26 80 26 74ZM40 72L40 28M60 66C60 60 74 58 74 64C74 70 60 72 60 66ZM74 64L74 20M40 28L74 20M40 36L74 28', 64, 4, 0.36)
+	],
+	'Qué fas ?': [
+		// la personne, la question, et une idée d'activité : la musique (refait le 06-11)
+		...persona(50, 56, 12, 96),
+		interrogant(54, 24, 1.1),
+		'M23 36L23 16L35 12L35 32',
+		cercle(19, 36, 4),
+		cercle(31, 32, 4)
+	],
 	'Qué fas dins la vida ?': [
-		tr('M14 40L86 40L86 84L14 84ZM38 40L38 30C38 26 62 26 62 30L62 40M14 58L86 58M46 54L54 54L54 62L46 62Z', 2, 14, 0.66),
-		interrogant(80, 40, 1.4)
+		// le chemin de la vie, et la question au bout : pas seulement le travail (Romain, 06-11)
+		...persona(18, 72, 8, 96),
+		pointilla(bezierPts([36, 92], [76, 92], [42, 52], [74, 44], 24), 3, 2.6),
+		interrogant(78, 26, 1.1)
 	],
 	trabalhar: ['M14 40L86 40L86 84L14 84Z', 'M38 40L38 30C38 26 62 26 62 30L62 40', 'M14 58L86 58', 'M46 54L54 54L54 62L46 62Z'], // la mallette
 	dançar: [
@@ -1374,20 +1445,22 @@ Object.assign(DESSENHS, {
 		'M8 62C8 58 14 58 14 61C14 64 8 65 8 62ZM14 61L14 48L20 50'
 	],
 	jogar: [
-		cercle(30, 66, 13), // les boules de pétanque et le cochonnet
-		'M18 60C26 66 36 66 42 60M24 54C28 60 36 62 40 56',
-		cercle(62, 64, 13),
-		'M50 58C56 64 68 64 74 58M54 52C58 58 66 60 72 54',
-		cercle(86, 76, 3.5),
-		'M6 80L94 80'
+		// la pétanque : deux boules, le bouchon, et la boule qui arrive (refait le 06-11)
+		...bola(30, 68, 12),
+		...bola(58, 70, 10, -0.9),
+		cercle(80, 76.5, 3.5),
+		pointilla(bezierPts([6, 30], [22, 8], [56, 10], [70, 48], 16), 3, 2.6),
+		'M4 80L96 80'
 	],
 	regent: [
-		'M12 18L88 18L88 66L12 66Z', // le tableau noir
-		'M24 52L30 32L36 52M27 44L33 44',
-		'M44 32L44 52M44 42C48 36 56 38 56 44C56 50 48 52 44 47',
-		'M64 42L74 42M69 37L69 47',
-		'M10 66L90 66',
-		'M24 66L18 90M76 66L82 90'
+		// le maître devant le tableau, la baguette sur « 1 2 3 » (refait le 06-11)
+		'M38 12L92 12L92 62L38 62Z',
+		'M42 16L88 16L88 58L42 58Z',
+		'M50 34L53.5 31L53.5 43',
+		'M60 34C60 30 67 30 67 34C67 37.5 60 39.5 60 43L67 43',
+		'M73 32.5C74.5 30.5 80.5 30.5 80.5 33.5C80.5 36 77.5 37 76 37C78 37 81 38 81 40.5C81 44 75 44.5 73 42',
+		...persona(20, 62, 10, 96),
+		'M32 77L48 52'
 	],
 	infirmièra: [
 		'M18 44L82 44L82 86L18 86Z', // la trousse et sa croix
@@ -1491,7 +1564,7 @@ Object.assign(DESSENHS, {
 Object.assign(DESSENHS, {
 	// ── Unité 5 · Al mercat ─────────────────────────────────────────────
 	'Quant còsta ?': ['M84 26L84 74L40 74L18 50L40 26Z', cercle(32, 50, 4), 'M28 50C20 40 18 30 24 20', interrogant(62, 50, 1.3)],
-	'Vaquí !': [PALMA, ...DESSENHS['la poma'].map((d) => tr(d, 43, 34.7, 0.34)), 'M70 28L86 28', fleca(88, 28, 0, 6)], // la main qui tend une pomme
+	'Vaquí !': [PALMA, ...DESSENHS['la poma'].map((d) => tr(d, 50, 31, 0.4)), rayons(70, 50, 22, 27, 3, (5 * Math.PI) / 4, (3 * Math.PI) / 4)], // la main qui tend une pomme : « la voilà ! » (refait le 06-11)
 	'Volriái…': [
 		tr(NUAGE, 26, -8, 0.75), // la bulle de l'envie, une pomme dedans
 		...DESSENHS['la poma'].map((d) => tr(d, 54, 12, 0.2)),
