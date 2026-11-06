@@ -42,7 +42,7 @@
 		<header class="cap" class:amb-foto={data.foto} class:amb-objecte={data.foto?.objecte} class:amb-dessenh={!data.foto && (data.dessenh?.length || f.id === 'roge-e-aur')} style:--aplat={t.color[0]} style:--sus={t.color[1]}>
 			<span class="cap-media" aria-hidden="true">
 				{#if data.foto}
-					<img class:objecte={data.foto.objecte} src={data.foto.src} srcset={data.foto.srcset} sizes={data.foto.srcset ? '(min-width: 60rem) 52rem, 100vw' : undefined} alt="" style:object-position={data.foto.pos} />
+					<img class:objecte={data.foto.objecte} class:colors={data.foto.colors} src={data.foto.src} srcset={data.foto.srcset} sizes={data.foto.srcset ? '(min-width: 60rem) 52rem, 100vw' : undefined} alt="" style:object-position={data.foto.pos} />
 				{:else if data.dessenh?.length}
 					<svg class="dessenh" viewBox="0 0 100 100">
 						{#each data.dessenh as d}<path {d} />{/each}
@@ -181,6 +181,12 @@
 		filter: grayscale(1) contrast(1.08);
 		mix-blend-mode: luminosity;
 		opacity: 0.62;
+	}
+	/* le rouge et l'or : la seule photo gardée en couleurs (Romain, 06-11) */
+	.cap-media img.colors {
+		filter: none;
+		mix-blend-mode: normal;
+		opacity: 1;
 	}
 	/* un objet en petite photo (la Copa Santa) : entier, au bout de la case,
 	   avec de l'air ; posé en « éclaircir » (screen), son fond noir disparaît

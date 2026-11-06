@@ -26,3 +26,40 @@ Relevé fait le 2026-11-06 par requêtes directes (pas de moissonnage complet). 
 1. **Encart « mot + prononciation »** : sur un mot de la leçon, un petit lecteur avec le nom du locuteur et le lien vers la source. Les sons seraient récupérés une fois, convertis en fichier compressé léger (le .wav est lourd) et servis par le site, avec mention CC BY-SA. À valider : voix, variété, poids total.
 2. **Vitrine Occitanica dans Cultura** : notices filtrées (domaine public ou Licence ouverte), vignette, titre, auteur, lien vers la fiche, mention de source obligatoire. Mise à jour par relevé périodique (pas d'appel en direct depuis le navigateur du visiteur).
 3. **Relier les deux** : un mot d'une leçon pointe vers un document sonore d'Occitanica (conte, chant) où il apparaît. Plus tard.
+
+## Exploration d'Occitanica, suite (relevé complet de dix collections, 3 138 notices)
+
+Moissonnage poli (pause 1,2 s, une seule fois) de : phonothèque 699, vidéothèque 956, iconothèque 199, Campus 361, encyclopédie 130, Labo de Lenga 27, Maleta 52, Ràdio Lenga d'òc 271, archives orales 68, répertoire du patrimoine culturel occitan 375.
+
+**Droits (champ `dc:rights`, classement automatique à vérifier à la main)** :
+- Domaine public : 72 notices seulement (iconothèque 23, répertoire 22, encyclopédie 13, Campus 7, phonothèque 5, Ràdio Lenga d'òc 2). Aucune notice marquée « Licence ouverte » dans ce relevé.
+- Creative Commons : 28 sans « NC » apparent, 21 avec NC (surtout la Maleta, 20).
+- Autorisation contractuelle : 29. Tous droits réservés (©) : 675. **Environ 2 300 notices ne donnent que le nom du détenteur** (Ràdio Lenga d'òc, Tè Vé Òc, Radio CFM, La Granja, associations, photographes) **sans licence** : réutilisation à demander, pas à supposer.
+- Langues : la phonothèque est à 574 notices sur 699 en occitan, la vidéothèque 754 sur 956, Ràdio Lenga d'òc 268 sur 271.
+
+**Intégration propre** : chaque fiche Occitanica propose un **code d'intégration officiel** (`https://www.occitanica.eu/items/embed/<numéro>`, cadre 560 × 315). C'est la voie recommandée pour sons et vidéos : le lecteur et les mentions de droits restent chez le CIRDÒC, on ne copie rien. À vérifier : poids du cadre (sobriété), consentement (aucun traceur à charger avant le clic), accessibilité.
+
+**Pépite pour les apprenants** : le service de questions-réponses du CIRDÒC (« Sondaqui », 130 notices d'encyclopédie en grande partie des questions : « Cossí se ditz : coquille Saint-Jacques en occitan ? ») : un lien « poser la question » ou des entrées liées aux mots des leçons.
+
+**Pistes** (par ordre de risque croissant) :
+1. Page Culture : sélection de 10 à 20 documents, fiche courte (titre, auteur, date, vignette, lien), intégration du lecteur officiel au clic.
+2. Domaine public (72 notices, dont photos de l'iconothèque) : vignette et image réutilisables avec la mention « Auteur - Source occitanica.eu / CIRDOC - Institut occitan de cultura ».
+3. Convention avec le CIRDÒC pour aller plus loin (sons, vidéos, relevé régulier). Contact : informatica@oc-cultura.eu.
+
+## Documents libres d'Occitanica : relevé et sélection (2026-11-06, soir)
+
+Relevé de 18 collections (dont patrimoine écrit : imprimés, manuscrits, partitions, périodiques-titres, patrimoine culturel immatériel). **834 notices uniques portent une mention « domaine public »** (ou équivalent) : manuscrits 374, imprimés 240, patrimoine immatériel 65, partitions 36, iconothèque 23, répertoire 20, encyclopédie 13, Campus 7, phonothèque 5, Ràdio Lenga d'òc 1 ; plus 70 titres de périodiques (revues, almanachs).
+
+**Correction importante** : les 26 enregistrements de la phonothèque classés « Creative Commons » ne le sont **pas** pour le son. Le texte des droits dit : « Contrat d'autorisation de diffusion en ligne signé… Images (photo d'illustration) sous licence Creative Commons ». Seule la **vignette** est en CC ; le son est autorisé à la **diffusion sur Occitanica**, pas à la reprise. Même chose pour la Maleta (les CC sont des illustrations d'une illustrice, probablement avec NC). **Sons réellement marqués domaine public : 4 seulement** (Dançarèla 1991, La Cronica etnobotanica 2006, deux exposés de Catherine Bonafé 2016). La mention est celle du CIRDÒC : à confirmer pour les contenus récents (1991, 2006).
+
+**Fichiers** : un document = un ou plusieurs gros fichiers (images ou PDF de 1 à 65 Mo). Pas de copie dans le dépôt ; si on affiche, vignette légère (une dizaine de Ko) et lien.
+
+Sélection proposée (42 documents en 8 familles) : voir `2026-11-06-selection-occitanica.html` (vignettes intégrées, chaque carte renvoie à la fiche d'origine) :
+1. Godolin en images (20 lithographies de Perrin, 1843) ;
+2. images d'histoire (Jeux floraux de Laurens 1912, Junior Sans 1885, carnaval de Béziers vers 1900, Tarasque, affiches du Larzac) ;
+3. chants et partitions (Mistral, Saboly, Roumanille, Aquellos mountagnos…) ;
+4. textes fondateurs (Canso de la Crozada, rapport de 1876 sur la limite oc/oïl, Bellaud de la Bellaudière 1595, Fizes 1705, Achille Mir) ;
+5. revues et almanachs (Lo Gai Saber, L'Aiòli, Reclams de Biarn, Cacalaca et L'Echo des Gourbis, journaux de tranchées 1916) ;
+6. sons (4 documents) ;
+7. fiches de l'encyclopédie (troubadours, trobairitz, conteuse Marguerite Priolo) ;
+8. patrimoine immatériel (fête des Caritats, Nadal toulousan).
