@@ -97,7 +97,7 @@ export const modul23 = {
 							title: 'Núria e Loís',
 							subtitle: '(Núria montre le pain à Loís)',
 							lines: [
-								{ oc: 'Loís, qué es aquò ?', sound: 'lou-ÍS, ké és a-KÒ ?', fr: 'Loís, qu’est-ce que c’est ?' },
+								{ oc: 'Loís, qu’es aquò ?', sound: 'lou-ÍS, kés a-KÒ ?', fr: 'Loís, qu’est-ce que c’est ?' },
 								{ oc: 'Es una fogassa.', sound: 'és U-no fou-GA-sso.', fr: 'C’est une fougasse.' },
 								{ oc: 'Pòdes repetir, se te plai ?', sound: 'PÒ-dés ré-pé-TI, sé té PLAÏ ?', fr: 'Tu peux répéter, s’il te plaît ?' },
 								{ oc: 'Una fogassa !', sound: 'U-no fou-GA-sso !', fr: 'Une fougasse !' },
@@ -130,7 +130,7 @@ export const modul23 = {
 							q: 'Que font Núria et Giulia ?',
 							options: ['elles posent des questions', 'elles se présentent', 'elles disent au revoir'],
 							correct: 0,
-							explain: 'Núria demande ce qu’est ce pain : *Qué es aquò ?* Giulia demande qui est le garçon : *Qui es ?*'
+							explain: 'Núria demande ce qu’est ce pain : *Qu’es aquò ?* (devant *es*, *qué* perd son *é* : *qu’es*) Giulia demande qui est le garçon : *Qui es ?*'
 						},
 						{
 							q: 'Pourquoi Núria dit-elle *Pòdes repetir, se te plai ?*',
@@ -163,7 +163,7 @@ export const modul23 = {
 					intro: 'Chaque question commence par un petit mot. Regarde ce qu’il demande.',
 					items: [
 						{
-							q: '*Qué es aquò ?* Núria demande…',
+							q: '*Qu’es aquò ?* Núria demande…',
 							options: ['ce que c’est', 'qui c’est', 'où c’est'],
 							correct: 0,
 							noShuffle: true,
@@ -213,7 +213,7 @@ export const modul23 = {
 					title: 'Les petits mots pour questionner',
 					head: ['', 'il questionne sur…', 'exemple'],
 					rows: [
-						['*qué*', 'une chose', '*Qué es aquò ?* · *Qué vòl dire… ?*'],
+						['*qué*', 'une chose ; devant *es*, il perd son *é* : *qu’es*', '*Qu’es aquò ?* · *Qué vòl dire… ?*'],
 						['*qui*', 'une personne, quand on attend son nom', '*Qui es ?* · *Es Loís.*'],
 							['*qual*', 'ce qu’est la personne, son rôle (tu le retrouveras au module 3.2)', '*Qual es ?*'],
 						['*quin*, *quina*', 'un choix, avec un mot masculin ou féminin', '*Quin país ?* · *Quina lenga parlas ?*'],
@@ -230,7 +230,7 @@ export const modul23 = {
 					title: 'À retenir (1/2)',
 					intro: 'Ça sonne comme : la syllabe forte en capitales. Ces expressions entrent dans ton carnet de révision.',
 					items: [
-						{ id: 'que-es-aquo', oc: 'Qué es aquò ?', sound: 'ké és a-KÒ', fr: 'qu’est-ce que c’est ?' },
+						{ id: 'que-es-aquo', oc: 'Qu’es aquò ?', sound: 'kés a-KÒ', fr: 'qu’est-ce que c’est ?' },
 						{ id: 'qui-es', oc: 'Qui es ?', sound: 'ki ÉS', fr: 'qui est-ce ? (on attend un nom : *Es Loís*)' },
 						{ id: 'qual-es', oc: 'Qual es ?', sound: 'kal ÉS', fr: 'qui est-ce ? (on attend ce qu’est la personne, son rôle)' },
 						{ id: 'quin-quina', oc: 'Quin… ? · Quina… ?', sound: 'KI(N) · KI-no', fr: 'quel… ? · quelle… ? (*Quina lenga parlas ?*)' },
@@ -312,8 +312,8 @@ export const modul23 = {
 							explain: '*quina* : le *a* final sonne « o ».'
 						},
 						{
-							consigne: '« Qué es aqu _ ? » · ça sonne « ké és a-KÒ »',
-							answers: ['aquò', 'Qué es aquò ?'],
+							consigne: '« Qu’es aqu _ ? » · ça sonne « kés a-KÒ »',
+							answers: ['aquò', 'Qu’es aquò ?'],
 							indici: 'Le son « o » sur lequel la voix appuie s’écrit avec un accent, comme dans *òc*.',
 							choses: ['que-es-aquo'],
 							explain: '*aquò* : ça. *ò* sonne « o ».'
@@ -407,7 +407,7 @@ export const modul23 = {
 						},
 						{
 							q: 'Sur un stand, un gâteau que tu ne connais pas.',
-							a: '*Qué es aquò ?* Et si on te répond par un mot que tu ne connais pas : *Qué vòl dire ?*'
+							a: '*Qu’es aquò ?* Et si on te répond par un mot que tu ne connais pas : *Qué vòl dire ?*'
 						},
 						{
 							q: 'Tu parles occitan avec quelqu’un, et il passe au français.',
@@ -447,10 +447,10 @@ export const modul23 = {
 						},
 						{
 							q: 'Laquelle n’a besoin que de la voix pour être une question ?',
-							options: ['Comprenes ?', 'Qué es aquò ?'],
+							options: ['Comprenes ?', 'Qu’es aquò ?'],
 							correct: 0,
 							noShuffle: true,
-							explain: '*Comprenes ?* n’a pas de petit mot pour questionner : seule la voix en fait une question. *Qué es aquò ?* a déjà *qué*.'
+							explain: '*Comprenes ?* n’a pas de petit mot pour questionner : seule la voix en fait une question. *Qu’es aquò ?* a déjà *qu’*, c’est *qué* devant *es*.'
 						}
 					]
 				},

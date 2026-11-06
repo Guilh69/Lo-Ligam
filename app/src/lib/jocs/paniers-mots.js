@@ -83,7 +83,7 @@ export const TEMAS = [
 			{ id: 'demori-a', oc: 'Demòri a…', fr: 'j’habite à…', panier: 'b' },
 			{ id: 'parlas-occitan', oc: 'Parlas occitan ?', fr: 'parles-tu occitan ?', panier: 'a' },
 			{ id: 'oc-non', oc: 'Òc !', fr: 'oui !', panier: 'b' },
-			{ id: 'que-es-aquo', oc: 'Qué es aquò ?', fr: 'qu’est-ce que c’est ?', panier: 'a' },
+			{ id: 'que-es-aquo', oc: 'Qu’es aquò ?', fr: 'qu’est-ce que c’est ?', panier: 'a' },
 			{ id: 'sabi-pas', oc: 'Non sabi pas.', fr: 'je ne sais pas.', panier: 'b' },
 			{ id: 'qui-es', oc: 'Qui es ?', fr: 'qui est-ce ?', panier: 'a' },
 			{ id: 'soi-d-aqui', oc: 'Soi d’aquí.', fr: 'je suis d’ici.', panier: 'b' },

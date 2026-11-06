@@ -6,6 +6,9 @@
 import { SCENAS, GROPS } from '../plueja/scenas.js';
 import { cheminsDe } from '../plueja/dessenhs.js';
 
+// Un mot corrigé après le tri garde sa clé d’origine : le choix de Romain le suit.
+const CLAUS_ANCIANAS = { 'Qu’es aquò ?': 'Qué es aquò ?' }; // corrigé le 06-11 (Romain : « Qu’es aquò »)
+
 /** Les dessins de la poussière d'or (Remira), chacun une seule fois. */
 function dessenhs() {
 	const parDessenh = new Map(); // un même dessin peut servir à plusieurs ambiances
@@ -18,7 +21,8 @@ function dessenhs() {
 				let el = parDessenh.get(chemins);
 				if (!el) {
 					// deux dessins pour un même mot (« la cosina ») : la définition les distingue
-					const clau = clausPresas.has(oc) ? `${oc} · ${def}` : oc;
+					const nom = CLAUS_ANCIANAS[oc] ?? oc;
+					const clau = clausPresas.has(nom) ? `${nom} · ${def}` : nom;
 					clausPresas.add(clau);
 					el = { clau, titol: oc, sotstitol: def, context: [], dessenh: chemins };
 					parDessenh.set(chemins, el);

@@ -21,7 +21,7 @@ export default {
 					type: 'cartas',
 					items: [
 						{ titol: 'qui ?', gros: 'qui', color: 'qui', exemples: [['Qui es ?', 'qui est-ce ?']] },
-						{ titol: 'quoi ?', gros: 'qué', color: 'que', exemples: [['Qué es aquò ?', 'qu’est-ce que c’est ?'], ['Qué fas dins la vida ?', 'que fais-tu dans la vie ?'], ['Qué prenes ?', 'que prends-tu ?']] },
+						{ titol: 'quoi ?', gros: 'qué', color: 'que', exemples: [['Qu’es aquò ?', 'qu’est-ce que c’est ?'], ['Qué fas dins la vida ?', 'que fais-tu dans la vie ?'], ['Qué prenes ?', 'que prends-tu ?']] },
 						{ titol: 'où ?', gros: 'ont', color: 'ont', exemples: [['Ont demòras ?', 'où habites-tu ?'], ['Ont es la gara ?', 'où est la gare ?'], ['D’ont siás ?', 'd’où es-tu ?']] },
 						{ titol: 'comment ?', gros: 'cossí', color: 'qui', exemples: [['Cossí vas ?', 'comment vas-tu ?'], ['Cossí te dison ?', 'comment t’appelles-tu ?'], ['Cossí i vau ?', 'comment j’y vais ?']] },
 						{ titol: 'combien ?', gros: 'quant', color: 'que', exemples: [['Quant fa ?', 'combien ça fait ?'], ['Quant còsta ?', 'combien ça coûte ?'], ['Quant as d’ans ?', 'quel âge as-tu ?']] },
@@ -101,13 +101,13 @@ export default {
 					etiqueta: 'Mots à placer',
 					linhas: [
 						{ oc: '… vas ?', fr: 'comment vas-tu ?', forma: '|Cossí:qui', sens: 'Cossí vas ?', indici: 'comment : cossí' },
-						{ oc: '… es aquò ?', fr: 'qu’est-ce que c’est ?', forma: '|Qué:que', sens: 'Qué es aquò ?', indici: 'quoi : qué, avec l’accent' },
+						{ oc: '…es aquò ?', fr: 'qu’est-ce que c’est ?', forma: '|Qu’:que', sens: 'Qu’es aquò ?', indici: 'quoi : qué, qui devient qu’ devant es' },
 						{ oc: '… demòras ?', fr: 'où habites-tu ?', forma: '|Ont:ont', sens: 'Ont demòras ?', indici: 'où : ont' },
 						{ oc: '… fa ?', fr: 'combien ça fait ?', forma: '|Quant:que', sens: 'Quant fa ?', indici: 'combien : quant' },
 						{ oc: '… ora es ?', fr: 'quelle heure est-il ?', forma: '|Quina:ont', sens: 'Quina ora es ?', indici: 'ora est féminin : quina' },
 						{ oc: '… es ?', fr: 'qui est-ce ?', forma: '|Qui:qui', sens: 'Qui es ?', indici: 'qui : qui' }
 					],
-					mescla: ['Quant', 'Qui', 'Ont', 'Quina', 'Cossí', 'Qué'],
+					mescla: ['Quant', 'Qui', 'Ont', 'Quina', 'Cossí', 'Qu’'],
 					bravo: 'Six sur six. Tu peux poser toutes les questions du parcours.'
 				}
 			]
