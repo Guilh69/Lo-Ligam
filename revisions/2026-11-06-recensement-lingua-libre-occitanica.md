@@ -45,3 +45,21 @@ Moissonnage poli (pause 1,2 s, une seule fois) de : phonothèque 699, vidéothè
 1. Page Culture : sélection de 10 à 20 documents, fiche courte (titre, auteur, date, vignette, lien), intégration du lecteur officiel au clic.
 2. Domaine public (72 notices, dont photos de l'iconothèque) : vignette et image réutilisables avec la mention « Auteur - Source occitanica.eu / CIRDOC - Institut occitan de cultura ».
 3. Convention avec le CIRDÒC pour aller plus loin (sons, vidéos, relevé régulier). Contact : informatica@oc-cultura.eu.
+
+## Documents libres d'Occitanica : relevé et sélection (2026-11-06, soir)
+
+Relevé de 18 collections (dont patrimoine écrit : imprimés, manuscrits, partitions, périodiques-titres, patrimoine culturel immatériel). **834 notices uniques portent une mention « domaine public »** (ou équivalent) : manuscrits 374, imprimés 240, patrimoine immatériel 65, partitions 36, iconothèque 23, répertoire 20, encyclopédie 13, Campus 7, phonothèque 5, Ràdio Lenga d'òc 1 ; plus 70 titres de périodiques (revues, almanachs).
+
+**Correction importante** : les 26 enregistrements de la phonothèque classés « Creative Commons » ne le sont **pas** pour le son. Le texte des droits dit : « Contrat d'autorisation de diffusion en ligne signé… Images (photo d'illustration) sous licence Creative Commons ». Seule la **vignette** est en CC ; le son est autorisé à la **diffusion sur Occitanica**, pas à la reprise. Même chose pour la Maleta (les CC sont des illustrations d'une illustrice, probablement avec NC). **Sons réellement marqués domaine public : 4 seulement** (Dançarèla 1991, La Cronica etnobotanica 2006, deux exposés de Catherine Bonafé 2016). La mention est celle du CIRDÒC : à confirmer pour les contenus récents (1991, 2006).
+
+**Fichiers** : un document = un ou plusieurs gros fichiers (images ou PDF de 1 à 65 Mo). Pas de copie dans le dépôt ; si on affiche, vignette légère (une dizaine de Ko) et lien.
+
+Sélection proposée (42 documents en 8 familles) : voir `2026-11-06-selection-occitanica.html` (vignettes intégrées, chaque carte renvoie à la fiche d'origine) :
+1. Godolin en images (20 lithographies de Perrin, 1843) ;
+2. images d'histoire (Jeux floraux de Laurens 1912, Junior Sans 1885, carnaval de Béziers vers 1900, Tarasque, affiches du Larzac) ;
+3. chants et partitions (Mistral, Saboly, Roumanille, Aquellos mountagnos…) ;
+4. textes fondateurs (Canso de la Crozada, rapport de 1876 sur la limite oc/oïl, Bellaud de la Bellaudière 1595, Fizes 1705, Achille Mir) ;
+5. revues et almanachs (Lo Gai Saber, L'Aiòli, Reclams de Biarn, Cacalaca et L'Echo des Gourbis, journaux de tranchées 1916) ;
+6. sons (4 documents) ;
+7. fiches de l'encyclopédie (troubadours, trobairitz, conteuse Marguerite Priolo) ;
+8. patrimoine immatériel (fête des Caritats, Nadal toulousan).

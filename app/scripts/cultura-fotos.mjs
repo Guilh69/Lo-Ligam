@@ -20,7 +20,7 @@ let total = 0;
 // recadrage en 3:2 autour du point pos (« x% y% ») de la fiche ; zoom > 1 :
 // un cadre plus serré (pour laisser hors champ un numéro de maison, par exemple)
 const RATIO = 3 / 2;
-async function tirar(id, src, pos, largors, zoom = 1) {
+async function tirar(id, src, pos, largors, zoom = 1, colors = false) {
 	const [px, py] = pos.split(' ').map((v) => parseFloat(v) / 100);
 	const { width: w, height: h } = await sharp(src).metadata();
 	const cw = Math.round(Math.min(w, Math.round(h * RATIO)) / zoom), ch = Math.round(cw / RATIO);
@@ -31,8 +31,9 @@ async function tirar(id, src, pos, largors, zoom = 1) {
 		let img = sharp(src).extract({ left, top, width: cw, height: ch }).resize({ width: a, withoutEnlargement: true });
 		// la grande taille ne sert qu'en tête de fiche, où la photo est passée
 		// en gris sous un voile : en gris et à peine adoucie, elle pèse moitié
-		// moins sans différence visible (comparé en capture le 06-11 : 166 → 83 Ko)
-		if (a >= 1200) img = img.grayscale().blur(0.6);
+		// moins sans différence visible (comparé en capture le 06-11 : 166 → 83 Ko) ;
+		// sauf une photo laissée en couleurs (colors)
+		if (a >= 1200 && !colors) img = img.grayscale().blur(0.6);
 		await img.webp({ quality: a >= 1200 ? 45 : 50, effort: 6 }).toFile(out);
 		total += statSync(out).size;
 	}
@@ -57,7 +58,7 @@ for (const [id, c, dossier] of EXTERNS) {
 		console.warn(`source absente, images gardées telles quelles : ${src}`);
 		continue;
 	}
-	const cw = await tirar(id, src, c.pos, amples(id), c.zoom);
+	const cw = await tirar(id, src, c.pos, amples(id), c.zoom, c.colors);
 	if (cw !== c.largor) throw new Error(`${id} : largor ${c.largor} dans imatges.js, ${cw} en vrai`);
 	if (c.objecte) {
 		// l'objet entier, sans recadrage, pour le bout de la case de la fiche

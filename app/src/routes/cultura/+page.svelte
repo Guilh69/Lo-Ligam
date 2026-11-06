@@ -22,7 +22,7 @@
 	import MencionIA from '$lib/components/MencionIA.svelte';
 	import { flip } from '$lib/components/flip.js';
 	import { FICHAS, TEMAS, IU, nomModul } from '$lib/cultura/index.js';
-	import { foto, srcset, COMMONS } from '$lib/cultura/imatges.js';
+	import { foto, srcset, colors, COMMONS } from '$lib/cultura/imatges.js';
 	import { IU as IU_G } from '$lib/gramatica/lengas.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
@@ -132,7 +132,7 @@
 				<a class="ficha" style:--aplat={colorDe(f.tema)[0]} style:--sus={colorDe(f.tema)[1]} href="/cultura/{f.id}" aria-describedby={esOc || tria(f.titol) === f.titol.oc ? undefined : `b-ficha-${f.id}`}>
 					<span class="ficha-media" aria-hidden="true">
 						{#if foto(f.id)}
-							<img src="/cultura/{f.id}-480.webp" srcset={srcset(f.id)} sizes="(min-width: 1100px) 24rem, (min-width: 640px) 46vw, 92vw" alt="" loading="lazy" decoding="async" />
+							<img class:colors={colors(f.id)} src="/cultura/{f.id}-480.webp" srcset={srcset(f.id)} sizes="(min-width: 1100px) 24rem, (min-width: 640px) 46vw, 92vw" alt="" loading="lazy" decoding="async" />
 						{:else if data.dessenhs[f.id]?.length}
 							<svg class="dessenh" viewBox="0 0 100 100">
 								{#each data.dessenhs[f.id] as d}<path {d} />{/each}
@@ -343,10 +343,20 @@
 			opacity 0.5s,
 			transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
 	}
+	/* le rouge et l'or : la seule photo gardée en couleurs (Romain, 06-11) */
+	.ficha .ficha-media img.colors {
+		filter: none;
+		mix-blend-mode: normal;
+		opacity: 1;
+	}
 	.ficha:hover .ficha-media img,
 	.ficha:focus-visible .ficha-media img {
 		opacity: 0.8;
 		transform: scale(1.04);
+	}
+	.ficha:hover .ficha-media img.colors,
+	.ficha:focus-visible .ficha-media img.colors {
+		opacity: 1;
 	}
 	.ficha-media::after {
 		content: '';
