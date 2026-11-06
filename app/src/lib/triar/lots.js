@@ -5,6 +5,7 @@
 // et des clés stables (elles servent à retrouver l'élément dans le code).
 import { SCENAS, GROPS } from '../plueja/scenas.js';
 import { cheminsDe, TINTAS } from '../plueja/dessenhs.js';
+import { PAISATGES, TEMAS } from '../paisatges/paisatges.js';
 
 // Un mot corrigé après le tri garde sa clé d’origine : le choix de Romain le suit.
 const CLAUS_ANCIANAS = { 'Qu’es aquò ?': 'Qué es aquò ?' }; // corrigé le 06-11 (Romain : « Qu’es aquò »)
@@ -41,5 +42,25 @@ export const LOTS = [
 		nom: { oc: 'Los dessenhs de Remira', fr: 'Les dessins de Remira' },
 		consigna: 'Le cœur garde le dessin tel quel ; la croix le renvoie à refaire, avec ce qu’il faut changer.',
 		elements: dessenhs
+	},
+	{
+		// le sas du relief (Romain, 06-11 : « en option et d'abord dans un sas de
+		// validation ») : un cœur ouvre le relief à tous sur cette photo (sa clé va
+		// dans GARDATS, lib/paisatges/releu.js) ; une croix la renvoie à refaire
+		id: 'releu',
+		nom: { oc: 'Lo relèu dels paisatges', fr: 'Le relief des paysages' },
+		consigna:
+			'Regarde la photo glisser, en grand au besoin : ce qui est proche doit bouger à peine plus que le fond, sans bord qui se déchire ni tache. Le cœur ouvre le relief à tous sur cette photo ; la croix le renvoie à refaire, avec ce qui gêne.',
+		elements: () =>
+			PAISATGES.map((p) => ({
+				clau: p.clau,
+				titol: p.mots
+					.slice(0, 3)
+					.map((m) => m[0])
+					.join(' · '),
+				sotstitol: TEMAS.find((t) => t.id === p.tema)?.nom.fr ?? '',
+				context: [],
+				relèu: p
+			}))
 	}
 ];

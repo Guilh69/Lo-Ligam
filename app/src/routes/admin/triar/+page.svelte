@@ -9,6 +9,7 @@
 	import { page } from '$app/state';
 	import { supabase } from '$lib/supabaseClient';
 	import { LOTS } from '$lib/triar/lots.js';
+	import CartaReleu from '$lib/paisatges/CartaReleu.svelte';
 	import { PAGINA, estatDe, aTriar, comptes, paquetsGardats, tèxteGardats, tèxteRefar } from '$lib/triar/triar.js';
 
 	const lot = LOTS.find((l) => l.id === page.url.searchParams.get('lot')) ?? LOTS[0];
@@ -289,7 +290,7 @@
 		<div class="pila" class:reduch={fasa === 'comentari'}>
 			{#if seguent}
 				<div class="carta darrier" aria-hidden="true">
-					{@render contengut(seguent)}
+					{@render contengut(seguent, false)}
 				</div>
 			{/if}
 			{#key actual.clau}
@@ -352,7 +353,7 @@
 	<p class="masc" aria-live="polite">{anonci}</p>
 </section>
 
-{#snippet contengut(el)}
+{#snippet contengut(el, viu = true)}
 	{#if estat[el.clau]?.v === 'refach'}
 		<p class="refach">
 			Refait{#if estat[el.clau].responsa} : {estat[el.clau].responsa}{/if}
@@ -364,6 +365,8 @@
 			{#each el.tintas ?? [] as z, k (k)}<path d={z.d} style={z.s ? `stroke: ${z.c}` : `fill: ${z.c}; stroke: none`} />{/each}
 			{#each el.dessenh as d, k (k)}<path {d} />{/each}
 		</svg>
+	{:else if el.relèu}
+		<CartaReleu foto={el.relèu} {viu} />
 	{:else if el.imatge}
 		<img class="imatge" src={el.imatge} alt="" draggable="false" />
 	{:else if el.tèxte}
