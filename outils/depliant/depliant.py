@@ -101,6 +101,7 @@ STYLES = {
     'Note de montage': ({}, luc(9, 11.5, fill='Bleu')),
 }
 GRAS_OCRE = {'fontStyle': 'Bold', 'fill': 'Ocre'}
+EMPASA = {'fill': 'Brique'}  # mots mis en avant du manifeste : en couleur, sans gras (Romain, 06-11)
 GRAS = {'fontStyle': 'Bold'}
 
 # --- textes -----------------------------------------------------------------------------
@@ -130,10 +131,10 @@ VOLETS_INTERIEURS = [
         (4, 'Instagram', 'Les visuels de Lo Ligam.', 'imatges'),
     ]),
 ]
-MANIFESTE_OC = [('Aicí, l’occitan s’apren mai que mai en creant ', None), ('ligam,', GRAS_OCRE),
-                (' ', None), ('sens vergonha', GRAS_OCRE), (' e ', None), ('amb benvolença.', GRAS_OCRE)]
-MANIFESTE_FR = [('Ici, l’occitan s’apprend avant tout en créant du ', None), ('lien,', GRAS_OCRE),
-                (' ', None), ('sans honte', GRAS_OCRE), (' et ', None), ('avec bienveillance.', GRAS_OCRE)]
+MANIFESTE_OC = [('Aicí, l’occitan s’apren mai que mai en creant ', None), ('ligam,', EMPASA),
+                (' ', None), ('sens vergonha', EMPASA), (' e ', None), ('amb benvolença.', EMPASA)]
+MANIFESTE_FR = [('Ici, l’occitan s’apprend avant tout en créant du ', None), ('lien,', EMPASA),
+                (' ', None), ('sans honte', EMPASA), (' et ', None), ('avec bienveillance.', EMPASA)]
 CHIFFRES = [  # site : acuelh.chifras
     ('≈ 600 000', 'locuteurs en Nouvelle-Aquitaine / Occitanie',
      'Estimation, enquête sociolinguistique OPLO, 2020'),
@@ -475,9 +476,18 @@ def lancer():
     dcs = SORTIDA / f'{NOM}.dcs'
     doc = SORTIDA / f'{NOM}.designcraft'
     base = NOM
+    # Essai de teinte : « py depliant.py <hexa> [etiqueta] » refait toute la mise en
+    # page avec la brique remplacée par la teinte donnée, sous un autre nom.
+    if len(sys.argv) > 1:
+        if not re.fullmatch(r'[0-9a-fA-F]{6}', sys.argv[1]):
+            sys.exit(f'Teinte à donner en hexadécimal : {sys.argv[1]!r}')
+        NUANCES['Brique'] = f'#{sys.argv[1].lower()}'
+        base = f'{NOM}-{sys.argv[2]}' if len(sys.argv) > 2 else f'{NOM}-teinta'
+        doc = SORTIDA / f'{base}.designcraft'
+        print(f'Brique remplacée par {NUANCES["Brique"]} (essai : {base})')
     # Ne jamais écraser un dépliant retouché à la main dans DesignCraft : s'il a été
     # enregistré après la dernière génération, le nouveau (et ses PDF) part sous un autre nom.
-    if doc.exists() and dcs.exists() and doc.stat().st_mtime > dcs.stat().st_mtime + 120:
+    elif doc.exists() and dcs.exists() and doc.stat().st_mtime > dcs.stat().st_mtime + 120:
         from datetime import datetime
         base = f'{NOM}-{datetime.now():%Y-%m-%d-%Hh%M}'
         doc = SORTIDA / f'{base}.designcraft'
