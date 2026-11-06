@@ -12,7 +12,7 @@ Site d'apprentissage de l'occitan (languedocien, norme classique) : https://loli
 - Il **dicte à la voix** (clavier en panne) : lire à travers les fautes de frappe et les « euh ». Il n'a pas de touche accent grave : rétablir les accents occitans (nòstra, Occitània) et les vérifier.
 - **Non développeur** : français simple, une étape à la fois, dire quoi cliquer, donner le **chemin complet** de tout fichier ou dossier à ouvrir (par exemple `C:\Users\perie\Documents\6_Projectes\…`).
 - **Une décision à la fois**, deux ou trois options concrètes, ta recommandation en premier, les explications écrites **avant** la question.
-- **Ne jamais lui demander de clé d'API.** Ne jamais lui demander d'écrire dans un fichier : les doutes se posent un par un dans la conversation ; la relecture des textes se fait sur la page (bouton « Editar »).
+- **Ne jamais lui demander de clé d'API.** Ne jamais lui demander d'écrire dans un fichier : les doutes se posent un par un dans la conversation ; la relecture des textes se fait sur la page (bouton « Editar »). **Pour faire valider une série d'éléments** (dessins, photos, mots…) : un lot dans `app/src/lib/triar/lots.js`, Romain trie sur `/admin/triar` (cœur = garder, croix = refaire, avec un commentaire), et `node scripts/triar.mjs` lit ses choix (Romain, 06-11 : « ça ira plus vite et ça clarifie mon choix »).
 - Contredire quand c'est justifié ; signaler coûts, risques et dérives de périmètre. À « Es-tu sûr ? » : revérifier la source et répondre avec la preuve.
 - Rôles : l'IA conçoit, code, rédige, explique ; Romain installe, héberge, paie, décide et valide l'occitan.
 - Dans tout plan, distinguer ce qu'il peut faire seul maintenant de ce qui demandera de l'aide plus tard.

@@ -57,7 +57,8 @@ try {
 		const n = await rpc('claude_tractar_remarca', { p_id: id, p_estat: accion, p_responsa: val('--responsa') ?? null });
 		console.log(n ? `Remarque ${id} : ${accion}.` : `Remarque ${id} introuvable.`);
 	} else {
-		const totas = await rpc('claude_legir_remarcas', { p_totas: args.includes('--totas') });
+		// les choix de /admin/triar (croix ou cœur) se lisent avec scripts/triar.mjs
+		const totas = (await rpc('claude_legir_remarcas', { p_totas: args.includes('--totas') })).filter((r) => r.pagina !== '/admin/triar');
 		if (!totas.length) console.log('Aucune remarque ouverte.');
 		let modul = null;
 		for (const r of totas) {
