@@ -388,7 +388,7 @@ export const SCENAS = [
 		numero: 8,
 		nom: { oc: 'En vila', fr: 'En ville', es: 'En la ciudad', en: 'In town', ca: 'A la ciutat', ar: 'في المدينة' },
 		imatge: '/ensag/plueja/u8.webp',
-		posicion: '50% 62%',
+		posicion: '50% 50%', // ruelle de l'Écusson, Montpellier (photo de Romain, choisie le 06-11)
 		teinta: '#7a8494',
 		mots: [
 			['la gara', 'la gare', 'la-gara'],
