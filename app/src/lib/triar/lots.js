@@ -4,10 +4,14 @@
 // avec un id court (20 signes au plus, il sert de « modul » dans les remarques)
 // et des clés stables (elles servent à retrouver l'élément dans le code).
 import { SCENAS, GROPS } from '../plueja/scenas.js';
-import { cheminsDe } from '../plueja/dessenhs.js';
+import { cheminsDe, TINTAS } from '../plueja/dessenhs.js';
+import { PAISATGES, TEMAS } from '../paisatges/paisatges.js';
 
 // Un mot corrigé après le tri garde sa clé d’origine : le choix de Romain le suit.
 const CLAUS_ANCIANAS = { 'Qu’es aquò ?': 'Qué es aquò ?' }; // corrigé le 06-11 (Romain : « Qu’es aquò »)
+
+// Un dessin gardé puis refait revient dans la pile : sa clé prend le numéro de sa nouvelle version.
+const VERSIONS = { marroquina: 2, argerian: 2 }; // en drapeau, comme les autres nationalités (06-11)
 
 /** Les dessins de la poussière d'or (Remira), chacun une seule fois. */
 function dessenhs() {
@@ -22,9 +26,9 @@ function dessenhs() {
 				if (!el) {
 					// deux dessins pour un même mot (« la cosina ») : la définition les distingue
 					const nom = CLAUS_ANCIANAS[oc] ?? oc;
-					const clau = clausPresas.has(nom) ? `${nom} · ${def}` : nom;
+					const clau = (clausPresas.has(nom) ? `${nom} · ${def}` : nom) + (VERSIONS[oc] ? ` · v${VERSIONS[oc]}` : '');
 					clausPresas.add(clau);
-					el = { clau, titol: oc, sotstitol: def, context: [], dessenh: chemins };
+					el = { clau, titol: oc, sotstitol: def, context: [], dessenh: chemins, tintas: TINTAS[oc] ?? null };
 					parDessenh.set(chemins, el);
 				}
 				if (!el.context.includes(s.nom.oc)) el.context.push(s.nom.oc);
@@ -38,5 +42,25 @@ export const LOTS = [
 		nom: { oc: 'Los dessenhs de Remira', fr: 'Les dessins de Remira' },
 		consigna: 'Le cœur garde le dessin tel quel ; la croix le renvoie à refaire, avec ce qu’il faut changer.',
 		elements: dessenhs
+	},
+	{
+		// le sas du relief (Romain, 06-11 : « en option et d'abord dans un sas de
+		// validation ») : un cœur ouvre le relief à tous sur cette photo (sa clé va
+		// dans GARDATS, lib/paisatges/releu.js) ; une croix la renvoie à refaire
+		id: 'releu',
+		nom: { oc: 'Lo relèu dels paisatges', fr: 'Le relief des paysages' },
+		consigna:
+			'Regarde la photo glisser, en grand au besoin : ce qui est proche doit bouger à peine plus que le fond, sans bord qui se déchire ni tache. Le cœur ouvre le relief à tous sur cette photo ; la croix le renvoie à refaire, avec ce qui gêne.',
+		elements: () =>
+			PAISATGES.map((p) => ({
+				clau: p.clau,
+				titol: p.mots
+					.slice(0, 3)
+					.map((m) => m[0])
+					.join(' · '),
+				sotstitol: TEMAS.find((t) => t.id === p.tema)?.nom.fr ?? '',
+				context: [],
+				relèu: p
+			}))
 	}
 ];

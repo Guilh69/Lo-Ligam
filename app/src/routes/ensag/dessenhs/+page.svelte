@@ -4,7 +4,7 @@
 	// garder, refaire ou retirer. Page de travail, non indexée. Les dessins
 	// sont dans $lib/plueja/dessenhs.js, les mots dans $lib/plueja/scenas.js.
 	import { SCENAS, GROPS } from '$lib/plueja/scenas.js';
-	import { cheminsDe } from '$lib/plueja/dessenhs.js';
+	import { cheminsDe, TINTAS } from '$lib/plueja/dessenhs.js';
 
 	const ambiancas = GROPS.flatMap((g) =>
 		SCENAS.filter((s) => s.grop === g.id).map((s) => {
@@ -12,7 +12,7 @@
 			const sensDessenh = [];
 			for (const [oc, def] of s.mots) {
 				const chemins = cheminsDe(oc, def);
-				if (chemins) ambDessenh.push({ oc, def, chemins });
+				if (chemins) ambDessenh.push({ oc, def, chemins, tintas: TINTAS[oc] ?? [] }); // un drapeau : ses couleurs
 				else sensDessenh.push(oc);
 			}
 			return { ...s, ambDessenh, sensDessenh };
@@ -48,6 +48,7 @@
 					{#each a.ambDessenh as m (m.oc)}
 						<li>
 							<svg viewBox="0 0 100 100" aria-hidden="true">
+								{#each m.tintas as z, k (k)}<path d={z.d} style={z.s ? `stroke: ${z.c}` : `fill: ${z.c}; stroke: none`} />{/each}
 								{#each m.chemins as d, k (k)}<path {d} />{/each}
 							</svg>
 							<span class="oc" lang="oc">{m.oc}</span>

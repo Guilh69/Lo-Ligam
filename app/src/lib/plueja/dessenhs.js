@@ -266,14 +266,6 @@ export const DESSENHS = {
 		'M14 76L38 76'
 	],
 	'la taula': ['M12 42L88 42', 'M20 42L20 84M80 42L80 84', 'M20 58L80 58'],
-	'la cadièra': ['M34 20L34 86', 'M34 56L66 56L66 86', 'M34 20L62 20', 'M34 36L62 36'],
-	'lo canapè': [
-		'M12 54L12 80L88 80L88 54', // assise et accoudoirs
-		'M22 54L22 38L78 38L78 54', // dossier
-		'M22 54L78 54',
-		'M50 54L50 38', // deux coussins
-		'M18 80L18 88M82 80L82 88' // pieds
-	],
 	'l’armari': ['M22 14L78 14L78 86L22 86Z', 'M50 14L50 86', 'M44 48L44 54M56 48L56 54', 'M26 86L26 92M74 86L74 92'],
 	'la pòrta': ['M28 12L72 12L72 90L28 90Z', 'M36 20L64 20L64 82L36 82Z', 'M58 52a2 2 0 1 0 4 0a2 2 0 1 0-4 0'],
 	'la fenèstra': ['M18 18L82 18L82 82L18 82Z', 'M50 18L50 82', 'M18 50L82 50'],
@@ -428,41 +420,6 @@ export const DESSENHS = {
 	'la nèu': [flocon(50, 50, 36)],
 
 	// ── Unité 8 · En vila ────────────────────────────────────────────────
-	'la gara': [
-		'M6 68L6 40L66 40C80 40 92 54 94 68Z', // train à nez allongé
-		'M14 48L56 48L56 56L14 56ZM28 48L28 56M42 48L42 56',
-		cercle(18, 72, 3.5),
-		cercle(30, 72, 3.5),
-		cercle(66, 72, 3.5),
-		cercle(78, 72, 3.5),
-		'M2 78L98 78', // rail et traverses
-		'M8 78L8 84M22 78L22 84M36 78L36 84M50 78L50 84M64 78L64 84M78 78L78 84M92 78L92 84'
-	],
-	'la carrièra': [
-		'M28 34L72 34', // rue en perspective (horizon entre les façades)
-		'M8 92L44 34M92 92L56 34',
-		'M50 90L50 82M50 74L50 66M50 59L50 53M50 47L50 43',
-		'M4 64L28 50L28 18L4 6', // façades
-		'M96 64L72 50L72 18L96 6',
-		// fenêtres en perspective sur les deux façades : une rue de ville, pas une route (Joan, 05-11)
-		(() => {
-			let d = '';
-			const haut = (x) => 6 + (x - 4) * 0.5,
-				bas = (x) => 64 - (x - 4) * 0.583,
-				y = (x, f) => r1(haut(x) + (bas(x) - haut(x)) * f);
-			for (const X of [(x) => x, (x) => 100 - x])
-				for (const [x1, x2] of [
-					[8, 13],
-					[18, 23]
-				])
-					for (const [f1, f2] of [
-						[0.18, 0.34],
-						[0.52, 0.68]
-					])
-						d += `M${X(x1)} ${y(x1, f1)}L${X(x2)} ${y(x2, f1)}L${X(x2)} ${y(x2, f2)}L${X(x1)} ${y(x1, f2)}Z`;
-			return d;
-		})()
-	],
 	'la plaça': [
 		'M10 66L90 66L84 84L16 84Z', // fontaine
 		'M47 66L47 48M53 66L53 48',
@@ -544,7 +501,6 @@ export const DESSENHS = {
 		'M22 86L78 86'
 	],
 	romanin: [brin(44, 92, 58, 10, 9, 13)],
-	espic: [epi(50, 92, 36, 22), epi(50, 92, 50, 14), epi(50, 92, 64, 24)],
 	cigala: [
 		'M40 20C44 16 56 16 60 20L60 28C56 30 44 30 40 28Z', // tête
 		cercle(38, 24, 3.5),
@@ -574,22 +530,8 @@ export const DESSENHS = {
 		'M50 28C40 24 31 36 29 58M50 28C60 24 69 36 71 58', // qui retombe
 		'M24 50L24 53M76 50L76 53M20 60L20 63M80 60L80 63' // quelques gouttes
 	],
-	arcolan: ['M12 78A38 38 0 0 1 88 78', 'M20 78A30 30 0 0 1 80 78', 'M28 78A22 22 0 0 1 72 78'],
-	camin: [
-		'M18 92C34 72 44 56 47 40', // le chemin qui file vers l'horizon
-		'M82 92C66 72 56 56 53 40',
-		'M8 40L44 40M56 40L92 40',
-		'M50 66L50 72M50 80L50 88'
-	],
 
 	// ── Fenèstra ─────────────────────────────────────────────────────────
-	fenèstra: [
-		'M30 88L30 42A20 20 0 0 1 70 42L70 88', // fenêtre en plein cintre
-		'M38 88L38 44A12 12 0 0 1 62 44L62 88', // l'ébrasement
-		'M24 88L76 88',
-		'M23 42A27 27 0 0 1 77 42', // l'arc de pierres
-		rayons(50, 42, 20, 27, 8, Math.PI, (8 * Math.PI) / 7)
-	],
 	castèl: [
 		'M8 88L92 88',
 		'M14 88L14 28L19 28L19 33L24 33L24 28L29 28L29 33L34 33L34 28L34 88', // tour de gauche
@@ -597,17 +539,6 @@ export const DESSENHS = {
 		'M66 88L66 20L71 20L71 25L76 25L76 20L81 20L81 25L86 25L86 20L86 88', // donjon
 		'M44 88L44 74A6 6 0 0 1 56 74L56 88', // porte
 		'M24 46L24 54M76 36L76 44' // archères
-	],
-	muralha: [
-		'M8 40L14 40L14 33L22 33L22 40L30 40L30 33L38 33L38 40L46 40L46 33L54 33L54 40L62 40L62 33L70 33L70 40L78 40L78 33L86 33L86 40L92 40',
-		'M8 40L8 84M92 40L92 84M6 84L94 84',
-		'M8 54L92 54M8 69L92 69', // assises de pierre
-		'M26 40L26 54M50 40L50 54M74 40L74 54M38 54L38 69M62 54L62 69M86 54L86 69M18 69L18 84M48 69L48 84M76 69L76 84'
-	],
-	pena: [
-		'M8 22L44 22C48 30 44 40 50 46C46 56 54 64 50 74C54 80 52 86 56 90', // la falaise et son à-pic
-		'M56 90L92 90',
-		'M8 40L42 40M8 58L46 58M8 76L48 76' // les strates
 	],
 	ròc: [
 		'M6 84L94 84',
@@ -640,14 +571,6 @@ export const DESSENHS = {
 			[6, 45], [12, 46], [8, 49], [14, 50], [11, 53], [18, 53], [30, 53], [42, 52], [44, 58],
 			[38, 70], [44, 73], [50, 71]
 		]) // l'aigle qui plane, vu d'en bas
-	],
-	temps: [
-		'M28 14L72 14M28 86L72 86', // le sablier
-		'M33 14C33 36 47 44 47 50C47 56 33 64 33 86',
-		'M67 14C67 36 53 44 53 50C53 56 67 64 67 86',
-		'M40 30L60 30', // le sable du haut
-		'M50 52L50 74',
-		'M38 84C42 74 58 74 62 84' // et celui du bas
 	],
 
 	// ── Nuèch ────────────────────────────────────────────────────────────
@@ -829,6 +752,90 @@ function arcFleca(x, y, r, a0, a1, l = 6) {
 }
 /** Note de musique (une croche) : la tête en (x, y), la hampe vers le haut. */
 const nota = (x, y, s = 1) => tr('M-3 0C-3 -3 3 -4 3 -1C3 2 -3 3 -3 0ZM3 -1L3 -15C5 -12 9 -11 9 -7', x, y, s);
+// ── Les drapeaux des nationalités et les couleurs, en couleur (Romain, 06-11 :
+// « juste le drapeau avec une attention sur les couleurs et le fond », « en
+// couleur », puis « pour les couleurs, un rond dans la couleur en question ») :
+// les seules exceptions à l'or. Le dessin lui-même n'est que le contour d'or du
+// drapeau ; ses couleurs sont dans TINTAS, zone par zone, dans l'ordre où on les
+// peint : { c: couleur, d: chemin fermé } est rempli, { c, d, s: true } est tracé.
+// Les couleurs officielles sont éclaircies pour se lire sur le ciel de nuit
+// (#0e1a2b) : un bleu de France sombre y disparaîtrait. Tous en 3 × 2 (72 × 48).
+const BANDIERA = 'M14 26L86 26L86 74L14 74Z';
+const ROND = cercle(50, 50, 27); // le rond d'une couleur
+const rect = (x0, y0, x1, y1) => `M${r1(x0)} ${r1(y0)}L${r1(x1)} ${r1(y0)}L${r1(x1)} ${r1(y1)}L${r1(x0)} ${r1(y1)}Z`;
+const T = {
+	blanc: '#f7f3ee',
+	blau: '#5b8ff9', // bleu de France (#0055a4), éclairci
+	roge: '#e8453c', // un seul rouge pour tous, éclairci et un peu chaud (Joan, 06-11 : deux familles de rouges faisaient désaccord)
+	verd: '#2fb062', // verts d'Italie, du Portugal, du Maroc, d'Algérie (#009246, #006600, #006233, #006633), éclaircis
+	jaune: '#f6c400' // jaunes d'Espagne et de Catalogne, sphère du Portugal
+};
+// Deux zones voisines se recouvrent au lieu de se toucher : sinon le fond sombre
+// passe en un fin liseré à la jonction (anticrénelage). D'où le fond plein d'abord.
+/** Trois bandes verticales : la bande du milieu en fond, les deux autres par-dessus. */
+const tres = (a, b, c) => [{ c: b, d: BANDIERA }, { c: a, d: rect(14, 26, 38, 74) }, { c: c, d: rect(62, 26, 86, 74) }];
+/** L'étoile à cinq branches tracée d'un seul trait (pentagramme), centre (x, y), rayon r. */
+function pentagrama(x, y, r) {
+	const P = (k) => [x + r * Math.cos(-Math.PI / 2 + (k * 2 * Math.PI) / 5), y + r * Math.sin(-Math.PI / 2 + (k * 2 * Math.PI) / 5)];
+	return linha([0, 2, 4, 1, 3, 0].map(P));
+}
+export const TINTAS = {
+	francesa: tres(T.blau, T.blanc, T.roge),
+	italian: tres(T.verd, T.blanc, T.roge),
+	espanhòla: [
+		// rouge, jaune deux fois plus large, rouge (le drapeau civil, sans les armoiries)
+		{ c: T.jaune, d: BANDIERA },
+		{ c: T.roge, d: rect(14, 26, 86, 38) },
+		{ c: T.roge, d: rect(14, 62, 86, 74) }
+	],
+	// la senyera : neuf bandes, quatre rouges sur le jaune
+	catalan: [
+		{ c: T.jaune, d: BANDIERA },
+		...[1, 3, 5, 7].map((k) => ({ c: T.roge, d: rect(14, 26 + (k * 48) / 9, 86, 26 + ((k + 1) * 48) / 9) }))
+	],
+	anglesa: [
+		// la croix de saint Georges, rouge sur blanc
+		{ c: T.blanc, d: BANDIERA },
+		{ c: T.roge, d: rect(45.2, 26, 54.8, 74) },
+		{ c: T.roge, d: rect(14, 45.2, 86, 54.8) }
+	],
+	portugués: [
+		// vert aux deux cinquièmes, rouge, la sphère armillaire et l'écu sur la limite
+		{ c: T.roge, d: BANDIERA },
+		{ c: T.verd, d: rect(14, 26, 42.8, 74) },
+		{ c: T.jaune, d: cercle(42.8, 50, 10), s: true },
+		{ c: T.jaune, d: 'M32.8 50C36 54 49.6 54 52.8 50', s: true },
+		{ c: T.blanc, d: 'M38.6 44.5L47 44.5L47 51C47 54 42.8 56 42.8 56C42.8 56 38.6 54 38.6 51Z' }
+	],
+	marroquina: [
+		// rouge, l'étoile verte à cinq branches tracée d'un seul trait
+		{ c: T.roge, d: BANDIERA },
+		{ c: T.verd, d: pentagrama(50, 51, 12), s: true }
+	],
+	argerian: [
+		// vert et blanc, le croissant et l'étoile rouges au milieu
+		{ c: T.blanc, d: BANDIERA },
+		{ c: T.verd, d: rect(14, 26, 50, 74) },
+		{ c: T.roge, d: lune(51, 50, 11) },
+		{ c: T.roge, d: estela(59.5, 50, 5, 2.1, 5) }
+	],
+	// les couleurs : un rond plein, cerné d'or ; les mêmes teintes que les drapeaux
+	roge: [{ c: T.roge, d: ROND }],
+	blava: [{ c: T.blau, d: ROND }],
+	verd: [{ c: T.verd, d: ROND }],
+	jaune: [{ c: T.jaune, d: ROND }],
+	negra: [{ c: '#000000', d: ROND }], // le seul rond plus sombre que le ciel : le cerne d'or le dessine
+	blanc: [{ c: T.blanc, d: ROND }],
+	gris: [{ c: '#9a9ea4', d: ROND }],
+	// la palette : ses quatre godets en couleur (dessin de la palette dans DESSENHS)
+	'la color': [
+		{ c: T.roge, d: cercle(34, 48, 4) },
+		{ c: T.jaune, d: cercle(44, 34, 4) },
+		{ c: T.verd, d: cercle(60, 32, 4) },
+		{ c: T.blau, d: cercle(72, 44, 4) }
+	]
+};
+
 /** Roue dentée. */
 function engrenatge(x, y, r, n = 8, dent = 5) {
 	const pts = [];
@@ -884,42 +891,6 @@ Object.assign(DESSENHS, {
 		goutte(68, 72, 3.5),
 		'M48 90C48 86 92 86 92 90C92 94 48 94 48 90Z' // la petite flaque
 	],
-	garriga: [
-		// refaite le 06-11 (Romain : « l'icône garrigue va pas ») : le pin parasol au-dessus
-		// d'un rocher de calcaire, d'un buisson de chêne kermès et d'une touffe de thym
-		'M4 86C24 84 44 85 62 84C76 83 86 84 96 85',
-		'M68 85C68 72 66 62 62 52', // le tronc qui penche, puis les branches en éventail
-		'M62 52C58 46 52 42 44 40M62 52C66 46 72 42 80 40M62 52L63 40',
-		'M36 40C34 32 42 28 50 29C54 22 66 21 72 26C80 24 90 28 90 35C92 37 91 40 88 40', // le parasol, ouvert dessous
-		'M6 86L10 75L19 69L30 71L36 79L38 86', // le rocher et sa facette
-		'M19 69L22 77',
-		'M40 86C38 81 41 77 46 78C47 73 54 73 56 77C59 76 62 80 60 86', // le chêne kermès
-		'M84 86L84 78M80 86L78 80M88 86L90 80', // le thym en fleur
-		cercle(84, 76.6, 1.4) + cercle(77.6, 78.6, 1.4) + cercle(90.4, 78.6, 1.4)
-	],
-	ferigola: [
-		// le thym : des tiges fines, de toutes petites feuilles, des fleurs en boule
-		'M50 92C48 74 40 58 32 42',
-		'M50 92L52 32',
-		'M50 92C54 74 62 60 70 46',
-		cercle(38, 66, 1.4) + cercle(45, 76, 1.4) + cercle(34, 54, 1.4) + cercle(42, 60, 1.4),
-		cercle(48, 70, 1.4) + cercle(55, 62, 1.4) + cercle(48, 52, 1.4) + cercle(55, 44, 1.4),
-		cercle(57, 76, 1.4) + cercle(64, 68, 1.4) + cercle(60, 58, 1.4) + cercle(70, 58, 1.4),
-		cercle(30, 36, 3) + cercle(35, 33, 3) + cercle(31, 30, 3), // les fleurs
-		cercle(52, 26, 3) + cercle(56, 23, 3) + cercle(51, 20, 3),
-		cercle(70, 40, 3) + cercle(75, 42, 3) + cercle(73, 36, 3)
-	],
-	granhòta: [
-		'M24 70C20 52 34 42 50 42C66 42 80 52 76 70C72 82 28 82 24 70Z', // la grenouille, de face
-		cercle(38, 38, 7),
-		cercle(62, 38, 7),
-		cercle(38, 38, 2),
-		cercle(62, 38, 2),
-		'M36 58C44 64 56 64 64 58',
-		'M24 70C14 72 12 84 20 88L30 88', // les pattes
-		'M76 70C86 72 88 84 80 88L70 88',
-		'M38 78L34 88M62 78L66 88'
-	],
 	sentor: [
 		'M8 84L92 84', // la terre mouillée, et l'odeur qui monte
 		'M20 84C30 76 70 76 80 84',
@@ -958,14 +929,6 @@ Object.assign(DESSENHS, {
 	],
 
 	// ── Fenèstra ────────────────────────────────────────────────────────
-	pèira: [
-		// un tas de pierres posées l'une sur l'autre : la pierre se lit mieux à plusieurs
-		'M8 86L92 86',
-		'M18 86C14 74 28 66 50 66C72 66 88 74 82 86',
-		'M30 66C28 56 38 50 50 50C62 50 72 56 70 66',
-		'M40 50C40 42 46 36 52 36C58 36 62 42 60 50',
-		'M30 76L36 78M62 74L68 72M46 58L52 60'
-	],
 	cèl: [
 		...soleil(26, 30, 7),
 		'M54 64C48 64 46 59 48 56C49 53 52 52 54 53C55 47 62 44 67 48C70 43 78 44 80 50C86 50 88 58 84 62C83 63 81 64 78 64Z', // un nuage
@@ -978,23 +941,6 @@ Object.assign(DESSENHS, {
 		'M44 62L46 50L50 56L54 50L56 62',
 		rayons(50, 42, 30, 38, 5, (9 * Math.PI) / 8, (15 * Math.PI) / 16)
 	],
-	ombra: [
-		...soleil(18, 20, 6),
-		'M44 74L44 56', // l'arbre et son ombre couchée sur le sol
-		'M44 56C28 58 24 38 38 34C40 22 58 22 60 34C72 38 68 58 44 56Z',
-		'M6 74L94 74',
-		'M44 76C52 74 84 74 90 79C84 84 52 84 44 76Z',
-		'M58 77L55 82M66 76L63 82M74 77L71 82M82 78L80 81'
-	],
-	comba: [
-		'M4 30C18 32 32 52 42 76C45 82 55 82 58 76C68 52 82 32 96 30', // le vallon encaissé, en coupe
-		'M44 79C47 77 53 77 56 79', // le ruisseau au fond
-		'M16 33L16 26M12 26L16 16L20 26Z', // des arbres droits sur les pentes
-		'M27 42L27 35M23 35L27 25L31 35Z',
-		'M73 42L73 35M69 35L73 25L77 35Z',
-		'M85 33L85 26M81 26L85 16L89 26Z',
-		'M36 56L36 50M33 50L36 42L39 50Z'
-	],
 	luènh: [
 		'M6 44L94 44', // l'horizon, et tout au bout du chemin une maison minuscule
 		'M38 94L60 44M86 94L64 44',
@@ -1004,21 +950,6 @@ Object.assign(DESSENHS, {
 		]),
 		'M58 44L58 39L62 35.5L66 39L66 44',
 		...persona(17, 66, 6, 94)
-	],
-	silenci: [
-		cercle(50, 46, 30), // « chut » : le doigt sur la bouche
-		'M36 38C38 41 42 41 44 38M56 38C58 41 62 41 64 38',
-		'M40 60L46 60M54 60L60 60',
-		'M47 78L47 52C47 48 53 48 53 52L53 78',
-		'M42 78L58 78C61 78 62 80 62 83L62 92L38 92L38 83C38 80 39 78 42 78Z'
-	],
-	trevar: [
-		// trevar, c'est aussi hanter : un petit fantôme qui revient toujours au même endroit
-		'M30 82L30 42C30 22 70 22 70 42L70 82L63 76L57 82L50 76L43 82L37 76Z',
-		cercle(42, 44, 3),
-		cercle(58, 44, 3),
-		cercle(50, 56, 3),
-		'M30 54C24 52 20 46 20 40M70 54C76 52 80 46 80 40'
 	],
 
 	// ── Nuèch ───────────────────────────────────────────────────────────
@@ -1059,23 +990,6 @@ Object.assign(DESSENHS, {
 		'M56 44L70 44L56 58L70 58',
 		'M72 26L82 26L72 36L82 36',
 		'M84 12L90 12L84 18L90 18'
-	],
-	pantais: [
-		tr(NUAGE, 12, -8, 0.95), // la bulle du rêve, une étoile dedans
-		estela(57, 30, 9, 4),
-		cercle(30, 62, 3),
-		cercle(24, 70, 2),
-		cercle(20, 84, 9),
-		'M15 84C17 86 19 86 21 84'
-	],
-	repaus: [
-		'M14 32L14 86M86 32L86 86', // le hamac tendu entre deux arbres
-		cercle(14, 22, 10),
-		cercle(86, 22, 10),
-		'M14 44L24 54M86 44L76 54',
-		'M24 54C38 66 62 66 76 54',
-		'M24 54C38 74 62 74 76 54',
-		'M6 86L94 86'
 	],
 	grilh: [
 		'M28 62C28 54 42 50 58 52C70 54 80 58 80 64C80 68 72 70 58 70C42 70 28 68 28 62Z', // le grillon, ses longues antennes
@@ -1261,86 +1175,14 @@ Object.assign(DESSENHS, {
 			...pommes.map((p) => cercle(...C(p), rp))
 		];
 	})(),
-	francesa: [
-		// la tour Eiffel
-		'M26 90C36 68 43 44 47 12',
-		'M74 90C64 68 57 44 53 12',
-		'M36 90C40 78 60 78 64 90',
-		'M33 68L67 68',
-		'M41 44L59 44',
-		'M36 68L50 56L64 68M42 44L50 32L58 44',
-		'M46 12L54 12L52 6L48 6Z',
-		'M50 6L50 2',
-		'M14 90L86 90'
-	],
-	catalan: (() => {
-		// un castell, la tour humaine : trois, puis deux, puis un, et l'enfant qui lève la main
-		const fig = (x, yb, r) => [
-			cercle(x, r1(yb - 4.4 * r), r),
-			`M${r1(x - 1.6 * r)} ${yb}L${r1(x - 1.3 * r)} ${r1(yb - 2.8 * r)}C${r1(x - 1.2 * r)} ${r1(yb - 3.3 * r)} ${r1(x + 1.2 * r)} ${r1(yb - 3.3 * r)} ${r1(x + 1.3 * r)} ${r1(yb - 2.8 * r)}L${r1(x + 1.6 * r)} ${yb}`
-		];
-		return [...fig(26, 92, 5), ...fig(50, 92, 5), ...fig(74, 92, 5), ...fig(38, 78, 5), ...fig(62, 78, 5), ...fig(50, 64, 5), ...fig(50, 50, 4), 'M54 42L60 26'];
-	})(),
-	espanhòla: [
-		// la guitare
-		'M50 50C40 50 36 56 38 62C30 64 26 72 28 80C30 92 70 92 72 80C74 72 70 64 62 62C64 56 60 50 50 50Z',
-		cercle(50, 70, 5),
-		'M44 84L56 84',
-		'M47 50L47 20M53 50L53 20',
-		'M45 20L45 8L55 8L55 20Z',
-		'M43 11L45 11M43 16L45 16M55 11L57 11M55 16L57 16',
-		'M50 20L50 84'
-	],
-	italian: (() => {
-		// la tour penchée de Pise
-		const t = (8 * Math.PI) / 180,
-			P = (u, v) => [44 + u * Math.cos(t) + v * Math.sin(t), 88 + u * Math.sin(t) - v * Math.cos(t)];
-		const L = (...pts) => linha(pts.map(([u, v]) => P(u, v)));
-		let etatges = '';
-		for (const v of [11, 22, 33, 44, 55]) etatges += L([-13, v], [13, v]);
-		let colonas = '';
-		for (const v of [0, 11, 22, 33, 44, 55]) for (const u of [-6.5, 0, 6.5]) colonas += L([u, v + 2.5], [u, v + 8.5]);
-		return ['M8 88L92 88', L([-13, 0], [-13, 66], [13, 66], [13, 0]), etatges, colonas, L([-9, 66], [-9, 76], [9, 76], [9, 66]), L([-3, 69], [-3, 74]) + L([3, 69], [3, 74])];
-	})(),
-	anglesa: [
-		// Big Ben
-		'M40 92L40 44L60 44L60 92',
-		'M37 44L37 22L63 22L63 44Z',
-		cercle(50, 33, 8),
-		'M50 33L50 27M50 33L54 35',
-		'M39 22L39 16L61 16L61 22',
-		'M41 16L50 4L59 16',
-		'M46 52L46 60M54 52L54 60M46 68L46 76M54 68L54 76',
-		'M24 92L76 92'
-	],
-	portugués: [
-		// le tramway de Lisbonne
-		'M12 72L12 42C12 36 16 34 22 34L78 34C84 34 88 36 88 42L88 72Z',
-		'M18 34L18 28L82 28L82 34',
-		'M18 42L30 42L30 54L18 54ZM36 42L48 42L48 54L36 54ZM54 42L66 42L66 54L54 54ZM72 42L82 42L82 54L72 54Z',
-		'M12 62L88 62',
-		'M50 28L40 14L56 8',
-		'M4 8L96 8',
-		cercle(28, 76, 5),
-		cercle(72, 76, 5),
-		'M4 82L96 82'
-	],
-	marroquina: [
-		// l'arc en fer à cheval et l'étoile à huit branches
-		'M18 92L18 14L82 14L82 92',
-		'M34 92L34 62A22.6 22.6 0 1 1 66 62L66 92',
-		estela(50, 46, 9, 6.3, 8),
-		'M10 92L90 92'
-	],
-	argerian: [
-		// la casbah blanche au-dessus de la mer, le minaret
-		'M10 80L10 66L26 66L26 58L42 58L42 50L58 50L58 62L74 62L74 80',
-		'M74 80L74 30L84 30L84 80',
-		'M72 30L86 30M76 30L76 22L82 22L82 30M79 22L79 16',
-		'M10 80L92 80',
-		'M16 72L16 76M32 64L32 70M48 56L48 62M64 68L64 74',
-		'M6 88C14 84 22 84 30 88C38 92 46 92 54 88C62 84 70 84 78 88C84 91 90 91 94 88'
-	],
+	francesa: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	catalan: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	espanhòla: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	italian: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	anglesa: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	portugués: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	marroquina: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	argerian: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
 	'Parli un pauc.': [
 		bulla(14, 12, 86, 56, 0.25), // la bulle à moitié remplie : un peu, et le reste en pointillé
 		'M26 28L46 28',
@@ -1361,13 +1203,6 @@ Object.assign(DESSENHS, {
 		rayons(74, 23, 13, 17, 5, (9 * Math.PI) / 8, (15 * Math.PI) / 16)
 	],
 	tanben: [cercle(30, 50, 14), pointilla(cerclePts(70, 50, 14)), 'M64 50L76 50M70 44L70 56'], // une chose, et une autre en plus
-	mas: [
-		// d'un côté le soleil, mais de l'autre la pluie (refait le 06-11)
-		...soleil(26, 44, 9),
-		'M50 16L50 84',
-		tr(NUAGE, 50.6, 23, 0.46),
-		'M66 56L63 64M76 56L73 64M86 56L83 64'
-	],
 	'Qu’es aquò ?': ['M50 40L76 52L76 80L50 92L24 80L24 52Z', 'M24 52L50 64L76 52', 'M50 64L50 92', interrogant(50, 20, 1)],
 	'Qui es ?': [...persona(50, 34, 16, 96), interrogant(50, 34, 0.9)],
 	'Qué vòl dire… ?': [
@@ -1421,14 +1256,6 @@ Object.assign(DESSENHS, {
 		nota(52, 50, 0.8),
 		nota(66, 38, 0.9),
 		tr('M26 74C26 68 40 66 40 72C40 78 26 80 26 74ZM40 72L40 28M60 66C60 60 74 58 74 64C74 70 60 72 60 66ZM74 64L74 20M40 28L74 20M40 36L74 28', 64, 4, 0.36)
-	],
-	'Qué fas ?': [
-		// la personne, la question, et une idée d'activité : la musique (refait le 06-11)
-		...persona(50, 56, 12, 96),
-		interrogant(54, 24, 1.1),
-		'M23 36L23 16L35 12L35 32',
-		cercle(19, 36, 4),
-		cercle(31, 32, 4)
 	],
 	'Qué fas dins la vida ?': [
 		// le chemin de la vie, et la question au bout : pas seulement le travail (Romain, 06-11)
@@ -1607,49 +1434,15 @@ Object.assign(DESSENHS, {
 	'Fa bèl.': [...soleil(30, 32, 8), 'M6 76C24 62 40 62 56 72C68 64 82 62 94 70', 'M62 30C65 26 68 26 70 30C72 26 75 26 78 30', 'M6 86L94 86'],
 
 	// ── Unité 7 · L'ostal ───────────────────────────────────────────────
-	'la sala': [
-		'M20 66L20 20L80 20L80 66', // la pièce en perspective, le canapé contre le mur
-		'M20 66L33 66M67 66L80 66',
-		'M20 66L6 92M80 66L94 92',
-		'M20 20L6 6M80 20L94 6',
-		'M58 28L74 28L74 46L58 46ZM66 28L66 46',
-		'M28 30L44 30L44 42L28 42Z',
-		...DESSENHS['lo canapè'].map((d) => tr(d, 29, 41, 0.42))
-	],
 	davant: ['M51.9 66L78 66L78 22L34 22L34 48.1', cercle(36, 64, 16)], // la balle devant la boîte
 	darrièr: ['M22 40L66 40L66 84L22 84Z', 'M48 40A16 16 0 1 1 66 55.9'], // la balle cachée derrière
-	roge: [cercle(36, 68, 12), cercle(64, 72, 12), 'M36 56C38 40 46 26 56 18M64 60C62 44 58 30 56 18', 'M56 18C64 10 76 12 80 18C72 24 62 24 56 18Z'], // les cerises
-	blava: [
-		// les vagues de la mer
-		'M8 40C16 32 24 32 32 40C40 48 48 48 56 40C64 32 72 32 80 40C86 46 90 46 94 42',
-		'M8 58C16 50 24 50 32 58C40 66 48 66 56 58C64 50 72 50 80 58C86 64 90 64 94 60',
-		'M8 76C16 68 24 68 32 76C40 84 48 84 56 76C64 68 72 68 80 76C86 82 90 82 94 78'
-	],
-	verd: ['M50 88C50 66 46 46 36 26', 'M50 88C52 64 58 46 70 30', 'M50 88C46 72 36 60 22 54', 'M50 88C56 74 66 66 80 62', 'M50 88C50 70 50 54 52 40', 'M30 88L70 88'], // l'herbe
-	jaune: ['M10 54C18 36 34 30 50 30C66 30 82 36 90 54C82 72 66 78 50 78C34 78 18 72 10 54Z', 'M50 30C54 20 64 16 72 18C66 26 58 30 50 30Z'], // le citron
-	negra: [
-		// le corbeau
-		'M12 44L24 40C26 34 34 32 40 36C52 38 66 46 76 54L94 60L78 62C70 70 54 72 42 66C32 62 26 54 24 48Z',
-		cercle(30, 40, 1.5),
-		'M48 68L46 82M56 68L58 82',
-		'M40 46C52 50 62 56 72 60'
-	],
-	blanc: [
-		// le mouton
-		'M30 64C22 66 18 56 24 52C22 42 32 38 38 42C42 34 54 34 58 40C64 34 76 38 76 46C84 48 84 60 76 62C74 70 36 72 30 64Z',
-		'M24 50C16 46 8 52 10 58C12 64 20 64 24 60',
-		'M18 50L14 44',
-		'M36 68L36 84M46 70L46 84M60 70L60 84M70 66L70 84'
-	],
-	gris: [
-		// la souris grise
-		'M14 72C14 56 30 48 46 48C62 48 76 58 86 70L90 72Z',
-		cercle(62, 46, 7),
-		cercle(76, 62, 1.5),
-		'M14 72C6 72 4 62 10 56C16 50 12 40 6 38',
-		'M86 66L96 62M86 68L96 70',
-		'M8 72L92 72'
-	],
+	roge: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	blava: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	verd: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	jaune: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	negra: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	blanc: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	gris: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
 	pichona: [...persona(36, 30, 11, 90, { punts: true }), ...persona(70, 60, 6, 90, { cabels: true }), 'M6 90L94 90'],
 	grand: [...persona(36, 30, 11, 90), ...persona(70, 60, 6, 90, { punts: true }), 'M6 90L94 90'],
 	vièlh: [...persona(44, 34, 10, 90, { baston: 1 }), 'M40 30L44 31M50 31L54 30', 'M6 90L94 90'],
@@ -1663,17 +1456,333 @@ Object.assign(DESSENHS, {
 	],
 
 	// ── Unité 8 · En vila ───────────────────────────────────────────────
-	'Perdon…': [
-		'M44 92L44 58L40 52C38 48 42 44 46 48L48 52L48 22C48 18 56 18 56 22L56 52', // l'index levé
-		'M56 52C56 48 64 48 64 52L64 56C64 52 72 52 72 56L72 72C72 82 66 88 64 92',
-		bulla(70, 10, 94, 30, 0.3),
-		cercle(77, 20, 0.6) + cercle(82, 20, 0.6) + cercle(87, 20, 0.6)
-	],
 	'Es luènh ?': [...DESSENHS.luènh, interrogant(20, 22, 1.2)],
-	'Es prèp.': [...persona(26, 44, 8, 88), 'M44 52L68 32L92 52', 'M48 49L48 88L88 88L88 49', 'M62 88L62 70L74 70L74 88', 'M6 88L94 88'],
 	'Pren la carrièra…': ['M38 6L38 94', 'M62 6L62 38L94 38', 'M62 94L62 62L94 62', 'M50 90L50 56C50 52 52 50 56 50L84 50', fleca(86, 50, 0, 7)],
 	'Ai set.': ['M30 34L70 34L64 88L36 88Z', goutte(50, 18, 5)], // le verre vide, la goutte qu'on attend
 	'Per ieu…': [...persona(40, 40, 10, 92), 'M88 16C88 40 76 56 62 62', fleca(62, 62, 2.74, 7)]
+});
+
+// ── Lot 3 : les dessins refaits après le tri complet de Romain (06-11) ──────
+// Chacun répond au commentaire de sa croix dans Triar (entre parenthèses).
+const CANAPE = [
+	'M22 56L22 38C22 33 25 30 30 30L70 30C75 30 78 33 78 38L78 56', // le dossier, deux coussins
+	'M50 32L50 56',
+	'M12 74L12 50C12 45 22 45 22 50L22 74', // les accoudoirs ronds
+	'M78 74L78 50C78 45 88 45 88 50L88 74',
+	'M22 56L78 56M22 65L78 65M50 56L50 65', // l'assise
+	'M12 74L88 74',
+	'M16 74L16 80M84 74L84 80'
+];
+/** Une personne en pied : le buste fermé à la taille, deux jambes jusqu'au sol (le buste seul jusqu'au sol faisait un pion). */
+function enPed(x, y, r, sol) {
+	const a = 1.75 * r,
+		talha = r1(y + 4.6 * r);
+	return [cercle(x, y, r), bust(x, y, r, talha), `M${r1(x - a)} ${talha}L${r1(x + a)} ${talha}`, `M${r1(x - 0.7 * r)} ${talha}L${r1(x - 1.1 * r)} ${sol}M${r1(x + 0.7 * r)} ${talha}L${r1(x + 1.1 * r)} ${sol}`];
+}
+/** Point d'une courbe de Bézier cubique. */
+const bz = (a, b, c, d, t) => [0, 1].map((k) => (1 - t) ** 3 * a[k] + 3 * (1 - t) ** 2 * t * b[k] + 3 * (1 - t) * t * t * c[k] + t ** 3 * d[k]);
+const courba = (a, b, c, d) => `M${a.map(r1).join(' ')}C${[b, c, d].map((p) => p.map(r1).join(' ')).join(' ')}`;
+/** Un brin de thym : la tige, des paires de feuilles minuscules, une tête de fleurs. */
+function brinFerigola(a, b, c, d, n = 5) {
+	const out = [courba(a, b, c, d)];
+	for (let k = 1; k <= n; k++) {
+		const t = 0.25 + (0.6 * k) / n,
+			[x, y] = bz(a, b, c, d, t),
+			[x2, y2] = bz(a, b, c, d, t + 0.01),
+			ang = Math.atan2(y2 - y, x2 - x);
+		for (const s of [-1, 1]) {
+			const g = ang + s * 0.8;
+			out.push(`M${r1(x)} ${r1(y)}L${r1(x + 3.4 * Math.cos(g))} ${r1(y + 3.4 * Math.sin(g))}`);
+		}
+	}
+	const [hx, hy] = d;
+	out.push(cercle(hx, hy - 1.5, 1.6) + cercle(hx - 2.6, hy + 0.6, 1.6) + cercle(hx + 2.6, hy + 0.6, 1.6) + cercle(hx, hy + 2.6, 1.6));
+	return out;
+}
+/** Une tige de lavande : la tige nue, puis l'épi en verticilles serrés vers le haut. */
+function tijaEspic(a, b, c, d) {
+	const out = [courba(a, b, c, d)];
+	for (const t of [0.62, 0.72, 0.8, 0.87, 0.93, 0.98]) {
+		const [x, y] = bz(a, b, c, d, t),
+			rx = t > 0.95 ? 1.4 : 2.3;
+		out.push(`M${r1(x - rx)} ${r1(y)}a${rx} 1.2 0 1 0 ${r1(2 * rx)} 0a${rx} 1.2 0 1 0 ${r1(-2 * rx)} 0`);
+	}
+	return out;
+}
+/** Une façade en perspective vers le point de fuite F : bord xa, haut h0, bas b0 ; quad(x0, x1, t0, t1) = une fenêtre. */
+function fuga(F, xa, h0, b0) {
+	const top = (x) => h0 + ((F[1] - h0) * (x - xa)) / (F[0] - xa),
+		bas = (x) => b0 + ((F[1] - b0) * (x - xa)) / (F[0] - xa),
+		y = (x, t) => top(x) + t * (bas(x) - top(x));
+	return (x0, x1, t0, t1) =>
+		linha([
+			[x0, y(x0, t0)],
+			[x1, y(x1, t0)],
+			[x1, y(x1, t1)],
+			[x0, y(x0, t1)],
+			[x0, y(x0, t0)]
+		]);
+}
+
+/** Un petit pin : le tronc et le triangle, pied en (x, y), haut de h. */
+const pinhon = (x, y, h) => `M${r1(x)} ${r1(y)}L${r1(x)} ${r1(y - 2)}M${r1(x - h * 0.32)} ${r1(y - 2)}L${r1(x)} ${r1(y - h)}L${r1(x + h * 0.32)} ${r1(y - 2)}Z`;
+
+Object.assign(DESSENHS, {
+	// (« pas logique ») : on allait tout droit, mais on tourne avant le mur
+	mas: [
+		'M8 66L52 66C60 66 64 62 64 54L64 24',
+		fleca(64, 24, -Math.PI / 2, 7),
+		pointilla([
+			[67, 66],
+			[83, 66]
+		]),
+		'M84 34L84 90'
+	],
+	// (« Pourquoi musique ? ») : quelqu'un d'affairé, les mains qui s'agitent, et la question
+	'Qué fas ?': [...persona(42, 36, 10, 88), 'M15 64L20 67M13 72L19 72M15 80L20 77', 'M69 64L64 67M71 72L65 72M69 80L64 77', interrogant(80, 26, 1.4)],
+	// (« Faire mieux ») : le canapé de face, accoudoirs ronds, deux coussins
+	'lo canapè': CANAPE,
+	// (« Ratée ») : la chaise de trois quarts, quatre pieds, le dossier à barreaux
+	'la cadièra': [
+		'M28 58L60 58L74 48L42 48Z',
+		'M28 58L28 62L60 62L74 52L74 48M60 58L60 62',
+		'M42 48L42 12L74 12L74 48M42 20L74 20M52.7 20L52.7 48M63.3 20L63.3 48',
+		'M28 62L28 90M60 62L60 90M74 52L74 82M42 62L42 80'
+	],
+	// (« Pas clair ») : le canapé, un tableau au mur, la lampe
+	'la sala': [
+		...CANAPE.map((d) => tr(d, 2.6, 34.4, 0.62)),
+		'M18 22L48 22L48 42L18 42Z',
+		'M22 38L30 30L35 34L40 29L45 38',
+		'M70 84L86 84M78 84L78 34',
+		'M70 34L86 34L82 22L74 22Z',
+		'M4 84L96 84'
+	],
+	// (« c'est un train pas une gare là ») : le bâtiment de la gare, l'horloge, les marquises, les voies
+	'la gara': [
+		'M20 40L50 22L80 40Z',
+		cercle(50, 33, 4.5),
+		'M50 33L50 30M50 33L52.4 34',
+		'M24 40L24 78M76 40L76 78',
+		'M30 78L30 58C30 52 40 52 40 58L40 78M45 78L45 58C45 52 55 52 55 58L55 78M60 78L60 58C60 52 70 52 70 58L70 78',
+		'M4 54L24 58M96 54L76 58M10 55.2L10 78M90 55.2L90 78',
+		'M4 78L96 78',
+		'M4 86L96 86M4 92L96 92',
+		...[8, 18, 28, 38, 48, 58, 68, 78, 88].map((x) => `M${x} 86L${x} 92`)
+	],
+	// (« Améliorer la perspective ») : un seul point de fuite, les fenêtres suivent les façades
+	'la carrièra': (() => {
+		const F = [50, 40],
+			G = fuga(F, 6, 8, 88),
+			D = fuga(F, 94, 8, 88),
+			out = ['M6 8L38 31.3L38 53.1L6 88', 'M94 8L62 31.3L62 53.1L94 88', 'M38 40L62 40', 'M16 100L42.8 52M84 100L57.2 52'];
+		for (const [x0, x1] of [
+			[11, 18],
+			[25, 31]
+		])
+			for (const [t0, t1] of [
+				[0.12, 0.27],
+				[0.4, 0.55],
+				[0.68, 0.84]
+			])
+				out.push(G(x0, x1, t0, t1), D(100 - x0, 100 - x1, t0, t1));
+		out.push(...[[96, 89], [82, 77], [70, 66.5], [61, 58.5], [54.5, 52.5]].map(([a, b]) => `M50 ${a}L50 ${b}`));
+		return out;
+	})(),
+	// (« La main est chelou ») : on se bouscule, une goutte de gêne
+	'Perdon…': [...persona(32, 40, 9, 88), ...persona(67, 40, 9, 88), 'M49.5 50L49.5 56M43.5 52L46.5 57M55.5 52L52.5 57', goutte(16, 30, 2.6)],
+	// (« Pourquoi un pion ? ») : une personne en pied, à deux pas de la maison
+	'Es prèp.': [cercle(22, 44, 6), 'M16 58A6 6 0 0 1 28 58L28 68A6 6 0 0 1 16 68Z', 'M19.5 73.5L19.5 88M24.5 73.5L24.5 88', 'M32 82L44 82', fleca(44, 82, 0, 3), fleca(32, 82, Math.PI, 3), 'M44 52L68 32L92 52', 'M48 49L48 88L88 88L88 49', 'M62 88L62 70L74 70L74 88', 'M6 88L94 88'],
+	// (« Améliorer le visuel ») : la colline, le calcaire, les touffes de kermès et de thym
+	garriga: [
+		'M4 56C18 38 34 36 48 44C60 51 78 36 96 41',
+		'M4 80C20 76 32 78 46 76C62 74 78 78 96 76',
+		'M6 79L9 70L16 64L26 65L32 72L33 79', 'M16 64L18 71L26 74',
+		'M50 77L50 67', 'M40 67C37 61 41 56 46 58C48 52 56 52 58 58C63 56 66 62 62 67Z', // le chêne kermès
+		'M70 76C69 71 74 68 77 70C79 66 85 67 86 71C89 71 90 75 89 76',
+		...[
+			[35, 77.5],
+			[67.5, 76],
+			[93, 76]
+		].map(([x, y]) => `M${x - 1.5} ${y}C${x - 1.8} ${y - 2.5} ${x - 2.8} ${y - 4} ${x - 4} ${y - 5}M${x} ${y}L${x} ${y - 6.5}M${x + 1.5} ${y}C${x + 1.8} ${y - 2.5} ${x + 2.8} ${y - 4} ${x + 4} ${y - 5}`) // les touffes de thym
+	],
+	// (« Pas ressemblant ») : trois brins ligneux, les feuilles par paires, les têtes de fleurs
+	ferigola: [
+		...brinFerigola([50, 92], [50, 72], [48, 52], [50, 28]),
+		...brinFerigola([50, 92], [44, 74], [34, 56], [28, 40], 4),
+		...brinFerigola([50, 92], [56, 74], [66, 56], [72, 38], 4),
+		'M38 92L62 92'
+	],
+	// (sans commentaire) : la lavande aspic, ses tiges nues qui se ramifient, les épis
+	espic: [
+		...tijaEspic([50, 90], [48, 70], [40, 48], [34, 22]),
+		...tijaEspic([50, 90], [50, 66], [52, 44], [54, 18]),
+		...tijaEspic([50, 90], [54, 70], [66, 50], [74, 26]),
+		...tijaEspic([42.5, 55], [36, 48], [28, 44], [22, 34]),
+		'M50 90C46 84 40 82 32 82M50 90C54 84 60 82 68 82M50 90C47 86 42 86 38 88M50 90C53 86 58 86 62 88'
+	],
+	// (« les yeux sur la tête ») : le contour passe sous les yeux, sans les traverser
+	granhòta: [
+		'M26 64C20 56 22 44 29.9 37.5',
+		'M41.4 38.5C46 42 54 42 58.6 38.5',
+		'M70.1 37.5C78 44 80 56 74 64',
+		'M26 64C32 70 68 70 74 64',
+		cercle(36, 34, 7),
+		cercle(64, 34, 7),
+		cercle(37, 34, 2.4),
+		cercle(63, 34, 2.4),
+		'M40 52C45 56 55 56 60 52',
+		'M26 64C16 62 12 70 18 76L32 76',
+		'M74 64C84 62 88 70 82 76L68 76',
+		'M42 68L40 78M58 68L60 78M36 78L44 78M56 78L64 78'
+	],
+	// (« le bon nombre de bandes ») : sept bandes, comme les sept couleurs
+	arcolan: [38, 35, 32, 29, 26, 23, 20].map((r) => `M${50 - r} 76A${r} ${r} 0 0 1 ${50 + r} 76`),
+	// (« plutôt une route ça ; un chemin plus sinueux ») : un sentier qui serpente et se perd vers la colline
+	camin: (() => {
+		// le bord gauche et le bord droit à la même hauteur (comme vu en perspective) : jamais croisés
+		const P = [
+				[40, 100],
+				[84, 84],
+				[14, 64],
+				[54, 46]
+			],
+			g = [],
+			d = [];
+		for (let k = 0; k <= 32; k++) {
+			const t = k / 32,
+				[x, y] = bz(...P, t),
+				w = 12 * (1 - t) ** 1.2 + 0.8 * t;
+			g.push([x - w, y]);
+			d.push([x + w, y]);
+		}
+		return [linha(g), linha(d), 'M4 45C24 42 40 43 50 44C62 45 80 42 96 43', ...[[14, 88], [86, 66], [24, 58], [88, 92]].map(([x, y]) => `M${x - 1.5} ${y}C${x - 1.8} ${y - 2.5} ${x - 2.8} ${y - 4} ${x - 4} ${y - 5}M${x} ${y}L${x} ${y - 6.5}M${x + 1.5} ${y}C${x + 1.8} ${y - 2.5} ${x + 2.8} ${y - 4} ${x + 4} ${y - 5}`)];
+	})(),
+	// (« pourquoi 2 fenêtres ? ») : une seule fenêtre, ouverte, ses volets, la vue
+	fenèstra: [
+		'M34 72L34 44A16 16 0 0 1 66 44L66 72',
+		'M28 72L72 72L72 77L28 77Z',
+		'M20 42L34 44L34 72L20 74Z',
+		'M80 42L66 44L66 72L80 74Z',
+		'M20 51L34 52.3M20 58L34 58.9M20 65L34 65.5M80 51L66 52.3M80 58L66 58.9M80 65L66 65.5',
+		'M34 62C42 56 50 58 56 55C60 53 64 52 66 52',
+		'M34 68C44 64 56 66 66 62'
+	],
+	// (« on dirait un caca ») : une pierre anguleuse, à facettes
+	pèira: ['M18 80L24 60L40 46L62 44L80 56L86 80Z', 'M40 46L46 62L24 60M46 62L62 44M46 62L54 80M46 62L82.3 66', 'M6 80L94 80', 'M6 80L8 75L13 74L15 80'],
+	// (« attention à la cohérence des lignes ») : les assises alignées, les joints alternés, les créneaux réguliers
+	muralha: (() => {
+		const out = [];
+		let c = 'M12 84L12 30';
+		for (let k = 0; k < 5; k++) {
+			const x = 12 + k * 16.4;
+			c += `L${r1(x + 10.4)} 30`;
+			if (k < 4) c += `L${r1(x + 10.4)} 38L${r1(x + 16.4)} 38L${r1(x + 16.4)} 30`;
+		}
+		out.push(c + 'L88 84');
+		for (const y of [44, 54, 64, 74]) out.push(`M12 ${y}L88 ${y}`);
+		for (let row = 0; row < 4; row++) {
+			const y0 = 44 + row * 10,
+				dec = row % 2 ? 7.6 : 15.2;
+			for (let x = 12 + dec; x < 88; x += 15.2) out.push(`M${r1(x)} ${y0}L${r1(x)} ${y0 + 10}`);
+		}
+		out.push('M4 84L96 84');
+		return out;
+	})(),
+	// (« raté ») : la falaise, ses strates, la mer au pied, une mouette
+	pena: [
+		'M96 22L46 22L42 30L46 38L38 48L42 56L34 66L37 76L30 86',
+		'M48 34L66 34M62 44L82 44M44 52L60 52M58 62L78 62M40 70L56 70M52 78L72 78',
+		'M4 86L96 86',
+		'M6 92C10 89 14 89 18 92C22 95 26 95 30 92',
+		'M14 38C17 35 20 35 22 38C24 35 27 35 30 38'
+	],
+	// (« fais mieux ») : le soleil, l'arbre, et son ombre couchée au sol, de l'autre côté
+	ombra: [
+		...soleil(14, 16, 5),
+		'M38 82L39 54M44 82L43 54',
+		'M24 50C20 40 28 32 36 34C38 24 52 24 54 34C62 32 66 42 60 50C56 56 28 56 24 50Z',
+		'M4 68L36 68M46 68L96 68',
+		'M38 82L56 86.5M44 82L57 84.5',
+		'M55 88C53 84 57 81 62 82C64 77 73 77 76 81C80 77 88 78 90 82C94 82 96 85 95 88Z',
+		'M61 87.5L64 83M66 87.5L70 80M72 87.5L76 79.5M78 87.5L82 80M84 87.5L87.5 81.5M90 87.5L92.5 84'
+	],
+	// (« améliore la composition ») : deux versants serrés, des pins, le ruisseau au fond
+	comba: [
+		'M4 32L24 32C32 34 34 50 40 68C43 78 46 86 50 86', // en coupe : le plateau, puis les parois raides
+		'M96 30L76 30C68 32 66 50 60 68C57 78 54 86 50 86',
+		'M44 82C46 80 48 80 50 82C52 84 54 84 56 82', // le ruisseau tout au fond
+		pinhon(10, 32, 9),
+		pinhon(17, 32, 7),
+		pinhon(88, 30, 9),
+		pinhon(31, 44, 8),
+		pinhon(36, 58, 8),
+		pinhon(69, 42, 8),
+		pinhon(64, 56, 8),
+		'M60 14C63 11 66 11 68 14C70 11 73 11 76 14'
+	],
+	// (« on dirait un… ») : plus de main, le visage aux yeux clos et la bulle muette
+	silenci: [cercle(40, 56, 20), 'M29 52C31 55 35 55 37 52M43 52C45 55 49 55 51 52', 'M36 66L44 66', ...[[26, 0], [32, 1], [38, 2]].map(([r, k]) => {
+		const pts = Array.from({ length: 9 }, (_, i) => {
+			const a = -0.6 + (1.2 * i) / 8;
+			return [40 + r * Math.cos(a), 56 + r * Math.sin(a)];
+		});
+		return k === 0 ? linha(pts) : k === 1 ? pointilla(pts) : pointilla(pts, 1, 4);
+	})],
+	// (« ok mais améliore le dessin ») : le sablier, son cadre, le sable qui coule
+	temps: [
+		'M24 10L76 10L76 16L24 16Z',
+		'M24 84L76 84L76 90L24 90Z',
+		'M30 16L30 84M70 16L70 84',
+		'M37 16C37 34 48 42 48 50C48 58 37 66 37 84',
+		'M63 16C63 34 52 42 52 50C52 58 63 66 63 84',
+		'M40 30L60 30',
+		'M50 50L50 74',
+		'M40 84C43 76 47 74 50 74C53 74 57 76 60 84'
+	],
+	// (« on ne comprend pas le sens ») : un lieu où tout le monde revient, les pas qui y convergent
+	trevar: [
+		'M36 32L50 18L64 32',
+		'M40 30L40 46L60 46L60 30',
+		'M47 46L47 38L53 38L53 46',
+		'M47 38L44 39.5L44 46.8L47 46', // la porte entrouverte
+		'M4 46L36 46M64 46L96 46',
+		...[
+			[47, 92, 1],
+			[53, 84, 0.9],
+			[46.5, 76.5, 0.8],
+			[52.5, 69.5, 0.7],
+			[48, 63.5, 0.6],
+			[51.5, 58.5, 0.52],
+			[49, 54, 0.45]
+		].map(([x, y, s]) => `M${r1(x - 2 * s)} ${r1(y)}a${r1(2 * s)} ${r1(4 * s)} 0 1 0 ${r1(4 * s)} 0a${r1(2 * s)} ${r1(4 * s)} 0 1 0 ${r1(-4 * s)} 0` + cercle(x, r1(y + 6 * s), r1(1.5 * s)))
+	],
+	// (« fais mieux ») : endormi dans son lit, le rêve dans le nuage
+	pantais: [
+		cercle(22, 57, 7),
+		'M18 57C20 59 22 59 24 57',
+		'M12 66C12 61 30 61 30 66Z',
+		'M28 64C40 56 60 58 88 62L88 74',
+		'M8 74L92 74M8 60L8 88M92 64L92 88M8 82L92 82',
+		tr(NUAGE, 42.3, -6.1, 0.55),
+		lune(64, 16, 4),
+		estela(78, 17, 3, 1.3, 5),
+		cercle(33, 46, 1.4) + cercle(39, 39, 2) + cercle(46, 31, 2.6)
+	],
+	// (« je comprends pas le dessin ») : quelqu'un allongé dans un hamac, entre deux arbres
+	repaus: [
+		'M14 92L14 40M86 92L86 40',
+		cercle(14, 30, 10),
+		cercle(86, 30, 10),
+		'M14 48L26 60M86 48L74 60',
+		'M26 60C40 76 60 76 74 60',
+		'M26 60C40 66 60 66 74 60',
+		cercle(33, 57, 5),
+		'M38 61C48 66 60 66 70 61',
+		'M58 36L64 36L58 42L64 42',
+		'M68 26L72 26L68 30L72 30',
+		'M4 92L96 92'
+	]
 });
 
 // lo cosin et la cosina : le même arbre, l'enfant de droite est un garçon ou une fille
@@ -1706,6 +1815,15 @@ export function dessenhDe(oc, def = '') {
 	const k = autreSens(oc, def) ? `${oc}·${AUTRE_SENS[oc].mot}` : oc;
 	if (!cache.has(k)) cache.set(k, chemins.map((d) => new Path2D(d)));
 	return cache.get(k);
+}
+
+const cacheTintas = new Map();
+/** Les zones de couleur d'un dessin (drapeaux), prêtes pour le canevas, ou null. */
+export function tintasDe(oc) {
+	const z = TINTAS[oc];
+	if (!z) return null;
+	if (!cacheTintas.has(oc)) cacheTintas.set(oc, z.map((t) => ({ ...t, p: new Path2D(t.d) })));
+	return cacheTintas.get(oc);
 }
 
 // ── L'explication de première visite (Remira, Romain, 05-11 : « pour une

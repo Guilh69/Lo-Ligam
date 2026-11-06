@@ -3,6 +3,8 @@
 //
 //   cd app && node scripts/triar.mjs                 l'état de chaque lot, et les croix à traiter
 //   cd app && node scripts/triar.mjs --lot dessenhs  un seul lot
+//   cd app && node scripts/triar.mjs --lot releu --gardats  et la liste des clés gardées (à recopier
+//                                                    dans GARDATS, lib/paisatges/releu.js)
 //   cd app && node scripts/triar.mjs --clore-cors    range les paquets de cœurs (estat « tractada »),
 //                                                    pour qu'ils ne chargent plus remarcas.mjs
 //
@@ -63,6 +65,7 @@ try {
 				console.log(`  #${e.id} ✕ ${el.clau}${el.sotstitol ? ` (${el.sotstitol})` : ''}`);
 				console.log(`     ${e.comentari || '(sans commentaire)'}`);
 			}
+			if (args.includes('--gardats')) console.log(`  ♥ ${JSON.stringify(elements.filter((el) => estat[el.clau]?.v === 'gardar').map((el) => el.clau))}`);
 		}
 	}
 } catch (e) {
