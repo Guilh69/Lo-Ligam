@@ -32,6 +32,7 @@
 
 - 2026-11-06, 20 h : **tri des 257 dessins de Remira fini par Romain** (231 gardés). Les 7 couleurs sont en ronds de leur couleur (`TINTAS` de `dessenhs.js`, comme les drapeaux) ; les 26 croix restantes refaites (bloc « Lot 3 »), relues par Joan, marquées « refaites » : elles attendent son cœur ou sa croix en tête de `/admin/triar`. Une nouvelle croix : redessiner d'après son commentaire, faire relire par Joan, puis `node scripts/remarcas.mjs --tractar <id> --responsa "…"`.
 - 2026-11-06, 20 h 10 : **salle de jeux : Joiós par défaut, cinq affiches redessinées** (Romain : « Je préfère joios en fait », « pas assez travaillées »), relues deux fois par Joan, sur `master`. Les affiches sont dessinées dans le navigateur par `app/src/lib/jocs/sala/afica-scenas.js` (une fonction par paysage, hasard fixe) ; ce qui bouge en joiós est dans `Afica.svelte` (classes `nivols`, `ondas-a`…). Ajouter une affiche : une fonction dans `SCENAS`, sa couleur d'attente dans `Afica.svelte` ; `afica-scenas.test.js` vérifie le reste (identifiants, poids sous 60 Ko). Romain doit dire quelles affiches lui plaisent.
+- 2026-11-06, 20 h 15 : **idée de Romain, les illustrations faites par IA signalées et une cagnotte pour un illustrateur** (PILOTATGE chantier 31) : proposition dans `revisions/2026-11-06-illustrations-ia-cagnotte.md`, rien de codé ; attendre son choix de la voie pour l'argent avant de coder.
 
 ## Consignes pour les deux agents
 - Lire ce fichier avant de commencer une tâche ; y noter toute décision qui concerne l'autre agent, en une ligne datée.
