@@ -28,7 +28,9 @@ Pas concernées : ses photos (`app/static/apren/paisatges`, `cultura`, `aprene/f
 4. La page dit dès le départ : l'objectif (fixé après un devis), ce qui se passe s'il est dépassé ou pas atteint, la facture publiée (avec l'accord de l'illustrateur).
 5. Écriture inclusive ; texte factuel, pas d'accroche dans la voix de Romain.
 
-## Deux voies pour l'argent (à trancher par Romain)
+## Deux voies pour l'argent : B choisie
+**Choix de Romain (06-11, vers 20 h 30) : B**, « le pb de l'asso c'est que je suis tout seul et j'ai déjà créé la micro entreprise » (cahier §11). Reste à choisir le service de paiement ; Romain ouvre le compte lui-même.
+
 - **A. Une association et HelloAsso.** HelloAsso est gratuit pour les associations, financé par les pourboires des donateurs (vérifié : sa propre présentation). Une association sans but lucratif ne paie pas d'impôt sur les dons (déduit). Reçus fiscaux pour les donateurs seulement si l'association est d'intérêt général (à vérifier). Il faut au moins deux personnes et quelques semaines.
 - **B. La micro-entreprise et un lien de paiement** (Mollie, néerlandais, ou Stripe). Prêt en quelques jours. Les dons comptent comme des recettes : cotisations et impôt, donc collecter plus que le devis (sources secondaires, à confirmer auprès du service des impôts des entreprises ou de l'Urssaf). Pas de réduction d'impôt pour les donateurs. L'activité déclarée de la micro-entreprise est à élargir (PILOTATGE, « Avant le lancement »).
 
