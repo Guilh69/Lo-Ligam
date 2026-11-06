@@ -242,7 +242,7 @@
 	<h2>En fond</h2>
 	<ul class="fons">
 		{#if fichas}<li><a href="/apren/gramatica">{fichas} fiches de grammaire</a> à relire</li>{/if}
-		<li><a href="/admin/triar">Triar</a> : les dessins à garder ou à refaire</li>
+		<li><a href="/admin/triar">Triar</a> : les dessins de Remira, puis <a href="/admin/triar?lot=releu" data-sveltekit-reload>le relief des paysages</a>, à garder ou à refaire</li>
 		<li><a href="/admin/musica">Musica</a> : les artistes à trier</li>
 	</ul>
 

@@ -260,7 +260,19 @@
 <section class="triar" aria-labelledby="triar-titol">
 	<header>
 		<h1 id="triar-titol"><span lang="oc">Triar</span> <em>(Trier)</em></h1>
-		<p class="lot"><span lang="oc">{lot.nom.oc}</span> <em>({lot.nom.fr})</em></p>
+		{#if LOTS.length > 1}
+			<!-- le choix du lot (Romain, 06-11 : « il y a écrit tout a été trié » : il voyait le premier lot, déjà fini) ;
+			     la page se recharge, chaque lot a ses propres cœurs en attente -->
+			<nav class="lots" aria-label="Lots à trier">
+				{#each LOTS as l (l.id)}
+					<a href="?lot={l.id}" data-sveltekit-reload aria-current={l.id === lot.id ? 'page' : undefined}
+						><span lang="oc">{l.nom.oc}</span> <em>({l.nom.fr})</em></a
+					>
+				{/each}
+			</nav>
+		{:else}
+			<p class="lot"><span lang="oc">{lot.nom.oc}</span> <em>({lot.nom.fr})</em></p>
+		{/if}
 		{#if cargat}
 			<div class="avanc" role="progressbar" aria-valuemin="0" aria-valuemax={elements.length} aria-valuenow={fach} aria-label="Avancement">
 				<span style:width="{(100 * fach) / elements.length}%"></span>
@@ -282,6 +294,9 @@
 		<div class="fin">
 			<p class="fin-titol" lang="oc">Tot es triat.</p>
 			<p><em>(Tout est trié.)</em> {n.gardar} gardés, {n.refar} à refaire. Claude lit tes croix et tes commentaires ; les éléments refaits reviendront ici.</p>
+			{#each LOTS.filter((l) => l.id !== lot.id) as l (l.id)}
+				<p><a href="?lot={l.id}" data-sveltekit-reload>Trier « <span lang="oc">{l.nom.oc}</span> »</a> <em>({l.nom.fr})</em></p>
+			{/each}
 		</div>
 	{:else}
 		<p class="consigna">{lot.consigna}</p>
@@ -406,6 +421,20 @@
 	}
 	.lot {
 		margin: 0.2rem 0 0.6rem;
+	}
+	.lots {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 1.1rem;
+		margin: 0.2rem 0 0.6rem;
+	}
+	.lots a {
+		color: inherit;
+		text-underline-offset: 0.2em;
+	}
+	.lots a[aria-current='page'] {
+		font-weight: 700;
+		text-decoration: none;
 	}
 	.avanc {
 		height: 4px;
