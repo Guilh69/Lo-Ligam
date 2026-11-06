@@ -2,7 +2,7 @@
 
 *Brouillons du 6 novembre 2026, à relire et à envoyer par Romain lui-même. Diffusion « en trois cercles », choisie le 6 novembre (cahier §11, `diffusion/strategie.md`).*
 
-*Les phrases marquées ◆ parlent de l'intelligence artificielle : à garder ou à retirer selon ton choix (`diffusion/strategie.md` §5). Les mots entre crochets sont à remplacer.*
+*Les mots entre crochets sont à remplacer. Les textes disent simplement que l'intelligence artificielle a servi (choix de Romain du 6 novembre 2026, cahier §11).*
 
 ## 1. Cercle 1 : les testeurs de confiance (maintenant)
 
@@ -30,7 +30,7 @@
 >
 > Accepterais-tu de regarder le module d'accueil et l'unité 1 (loligam.eu/aprene) ? Ce qui m'importe le plus : les fautes, les tournures qui sonnent faux, et ce qu'un débutant risquerait de mal comprendre. Une capture d'écran avec un mot suffit.
 >
-> Chaque mot a été vérifié dans les ressources de lo Congrès, mais rien ne remplace le regard de quelqu'un qui enseigne. ◆ Le premier jet des leçons a été écrit avec un assistant d'intelligence artificielle, dans le cadre que j'ai fixé ; c'est pour ça que je tiens à des relectures humaines.
+> Chaque mot a été vérifié dans les ressources de lo Congrès, mais rien ne remplace le regard de quelqu'un qui enseigne. Le premier jet des leçons a été écrit avec un assistant d'intelligence artificielle, dans le cadre que j'ai fixé ; c'est pour ça que je tiens à des relectures humaines.
 >
 > Merci d'avance, et à charge de revanche !
 > Romain
@@ -49,7 +49,7 @@
 >
 > Je suis Romain Perier, urbaniste et locuteur d'occitan. Depuis l'été 2026, je construis Lo Ligam (loligam.eu), un site gratuit pour découvrir, apprendre et pratiquer l'occitan languedocien, en graphie classique.
 >
-> Vos ressources sont au cœur de ce travail, et je tenais d'abord à vous en remercier : chaque mot des leçons est vérifié dans vos dictionnaires et dans vèrb'Òc avant ma relecture. ◆ Le premier jet des leçons a été écrit avec un assistant d'intelligence artificielle, dans le cadre que j'ai fixé ; c'est précisément pourquoi rien ne passe sans vos outils ni sans relecture humaine.
+> Vos ressources sont au cœur de ce travail, et je tenais d'abord à vous en remercier : chaque mot des leçons est vérifié dans vos dictionnaires et dans vèrb'Òc avant ma relecture. Le premier jet des leçons a été écrit avec un assistant d'intelligence artificielle, dans le cadre que j'ai fixé ; c'est précisément pourquoi rien ne passe sans vos outils ni sans relecture humaine.
 >
 > Le site propose aujourd'hui tout le niveau A1 (huit unités, environ 300 exercices, une mission finale sur le modèle du DCL), une carte du domaine occitan, 36 fiches de grammaire, des fiches de culture et des jeux. L'essentiel est gratuit et sans publicité.
 >

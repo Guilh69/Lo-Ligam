@@ -64,7 +64,7 @@ Pour aller plus vite : le cercle 3 peut se faire en janvier, et « Parlem ! » d
 - Relire l'occitan des premières leçons (au moins le module d'accueil et l'unité 1), puis trancher les doutes restants de l'A1 (A1-13 à A1-20 et A1-27 à A1-36, dans `DOBTES-OCCITAN.md`).
 - Enregistrer ta voix pour le module d'accueil et l'unité 1 (il manque 16 enregistrements sur 17 pour l'unité 1).
 - Rendre le dépôt GitHub privé : cinq minutes, marche à suivre dans `PILOTATGE.md` (« Avant le lancement »). Des informations personnelles restent lisibles dans son historique, et un partenaire curieux peut tomber dessus.
-- Décider comment parler de l'intelligence artificielle. Recommandation : le dire simplement, comme le fait la synthèse (« Comment c'est fait »). Le monde occitan est attentif à la qualité de la langue : mieux vaut qu'il l'apprenne de toi, avec les garde-fous (les sources, ta relecture), que le découvrir seul.
+- ✅ **Parler de l'intelligence artificielle : le dire simplement** (choix de Romain, 6 novembre 2026, cahier §11), comme le font la synthèse (« Comment c'est fait »), les messages et la fiche. Le monde occitan est attentif à la qualité de la langue : mieux vaut qu'il l'apprenne de toi, avec les garde-fous (les sources, ta relecture), que le découvrir seul.
 
 **Ce qui demandera de l'aide (Mistral, ou Claude plus tard)**
 - **Les voix de l'Atlas sonore** : leur licence interdit l'usage commercial, et un site qui propose des cours payants risque d'être jugé commercial. Obtenir l'accord écrit du LISN, ou masquer les voix jusque-là. À régler avant le cercle 2, avec les autres autorisations de la liste « Avant le lancement » de `PILOTATGE.md`.
