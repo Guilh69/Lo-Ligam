@@ -6,6 +6,7 @@
 import { SCENAS, GROPS } from '../plueja/scenas.js';
 import { cheminsDe, TINTAS } from '../plueja/dessenhs.js';
 import { PAISATGES, TEMAS } from '../paisatges/paisatges.js';
+import { DECISIONS } from './decisions.js';
 
 // Un mot corrigé après le tri garde sa clé d’origine : le choix de Romain le suit.
 const CLAUS_ANCIANAS = { 'Qu’es aquò ?': 'Qué es aquò ?' }; // corrigé le 06-11 (Romain : « Qu’es aquò »)
@@ -37,6 +38,20 @@ function dessenhs() {
 }
 
 export const LOTS = [
+	{
+		// les décisions à trancher (point d'étape du 06-11 au soir) : en tête, la page s'ouvre dessus
+		id: 'decisions',
+		nom: { oc: 'Las decisions', fr: 'Les décisions à trancher' },
+		consigna:
+			'Le cœur valide la proposition ; la croix la refuse, avec ce que tu préfères si tu veux. Claude applique tes cœurs et revient vers toi sur les croix.',
+		mots: {
+			gardar: { oc: 'D’acòrdi', fr: 'je valide', compte: 'validées', titol: 'Valider', anonci: 'Validé' },
+			refar: { oc: 'Non', fr: 'je refuse', compte: 'refusées', titol: 'Ne pas valider', anonci: 'Refusé' },
+			comentari: 'Pourquoi, ou que préfères-tu ? Dicte ou écris ; tu peux laisser vide.'
+		},
+		fin: 'une décision reformulée reviendra ici.',
+		elements: () => DECISIONS
+	},
 	{
 		id: 'dessenhs',
 		nom: { oc: 'Los dessenhs de Remira', fr: 'Les dessins de Remira' },

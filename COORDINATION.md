@@ -3,13 +3,14 @@
 > Lue par Mistral (Vibe, Vibe Hub) et par Claude avant toute tâche. Elle dit **qui a la main** et **ce qui est en cours entre deux agents**. Le détail de chaque chantier est dans `PILOTATGE.md`, les décisions dans `cahier-des-charges.md` §11 : ne pas les recopier ici. Une ligne par point, datée.
 
 ## Qui a la main
+- **Depuis le 2026-11-06, 23 h : Claude** (Romain : « finalement je vais rester sur Claude… Mistral reste en soutien »). Mistral travaille quand Romain le lui demande, sur une branche `mistral/<sujet>` ; Claude relit et met en ligne. La bascule vers Mistral est reportée, peut-être au mois suivant. La ligne ci-dessous est caduque.
 - **Depuis le 2026-11-06 au soir : Mistral.** Le forfait Claude de Romain est fini ; Claude reviendra quand Romain reprendra un abonnement (quelques mois). D'ici là, pas de contrôle par Claude : voir `AGENTS.md`, « Sans Claude ».
 
 ## Relais de Claude (2026-11-06)
 - **Tout le travail de Claude est sur `master` et en ligne**, sauf ce qui suit.
 - **Deux discussions Claude tournaient encore ce soir-là** (jeux de l'A1 ; correction « Qu'es aquò ? » dans les dessins de Remira). **Mise à jour du 06-11, 20 h : les deux sont closes, tout est sur `master`** (89030a4 compris).
 - **Outil d'interpellation des parlementaires** : un commit jamais envoyé (`f8520d4`, script `app/scripts/elus-generar.mjs` et `app/static/data/elus.json`), sur la branche locale `claude/occitan-parliament-tool-c4e7c1` ; le dernier message de Romain était « Phase 3 », sans suite. À reprendre seulement si Romain le demande.
-- **En attente d'un choix de Romain** (ne rien coder avant) : essai « Profondeur » v2 sur `/ensag/prigondor` (chantier 29) ; tri des 257 dessins de Remira sur `/admin/triar` (chantier 26).
+- ~~En attente d'un choix de Romain : essai « Profondeur » v2, tri des 257 dessins~~ : **tous deux faits le 06-11** (relief « Relèu » dans le sas de Triar ; 231 dessins gardés). Les choix encore ouverts sont désormais en cartes : `/admin/triar?lot=decisions`.
 - **Ce que Romain a à faire seul** : la liste du §1 de `PILOTATGE.md`.
 
 ## À faire par Mistral en premier (réglages, une fois)

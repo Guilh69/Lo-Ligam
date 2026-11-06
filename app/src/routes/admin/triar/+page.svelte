@@ -14,6 +14,13 @@
 
 	const lot = LOTS.find((l) => l.id === page.url.searchParams.get('lot')) ?? LOTS[0];
 	const elements = lot.elements();
+	// les mots des boutons : un lot peut les changer (les décisions : « D’acòrdi » / « Non », 06-11)
+	const MOTS = {
+		gardar: { oc: 'Gardar', fr: 'garder', compte: 'gardés', titol: 'Garder tel quel' },
+		refar: { oc: 'Refar', fr: 'refaire', compte: 'à refaire', titol: 'Refuser' },
+		comentari: 'Que faut-il changer ? Dicte ou écris ; tu peux laisser vide.',
+		...lot.mots
+	};
 	const CLAU_LOCALA = `lo-ligam-triar-${lot.id}`; // les cœurs pas encore envoyés
 	const LLINDAR = 110; // px à glisser pour décider
 
@@ -134,7 +141,7 @@
 		pendents = [...pendents, el.clau];
 		salvar();
 		istòria.push({ clau: el.clau, v: 'gardar' });
-		anonci = `Gardé : ${el.titol}`;
+		anonci = `${MOTS.gardar.anonci ?? 'Gardé'} : ${el.titol}`;
 		seguir();
 		if (pendents.length >= 20) mandarGardats();
 	}
@@ -187,7 +194,7 @@
 		}
 		estat = { ...estat, [el.clau]: { v: 'refar', id: data.id, comentari: comentari.trim() } };
 		istòria.push({ clau: el.clau, v: 'refar', id: data.id });
-		anonci = `À refaire : ${el.titol}`;
+		anonci = `${MOTS.refar.anonci ?? 'À refaire'} : ${el.titol}`;
 		await far_partir(-1);
 		fasa = 'triar';
 		seguir();
@@ -260,6 +267,7 @@
 <section class="triar" aria-labelledby="triar-titol">
 	<header>
 		<h1 id="triar-titol"><span lang="oc">Triar</span> <em>(Trier)</em></h1>
+		<p class="vers-seguit"><a href="/admin/seguit">Où on en est, chantier par chantier <span aria-hidden="true">→</span></a></p>
 		{#if LOTS.length > 1}
 			<!-- le choix du lot (Romain, 06-11 : « il y a écrit tout a été trié » : il voyait le premier lot, déjà fini) ;
 			     la page se recharge, chaque lot a ses propres cœurs en attente -->
@@ -280,9 +288,9 @@
 			<p class="comptes">
 				{fach} / {elements.length}
 				<span class="sep">·</span>
-				<span aria-hidden="true">♥ {n.gardar}</span><span class="masc">{n.gardar} gardés</span>
+				<span aria-hidden="true">♥ {n.gardar}</span><span class="masc">{n.gardar} {MOTS.gardar.compte}</span>
 				<span class="sep">·</span>
-				<span aria-hidden="true">✕ {n.refar}</span><span class="masc">{n.refar} à refaire</span>
+				<span aria-hidden="true">✕ {n.refar}</span><span class="masc">{n.refar} {MOTS.refar.compte}</span>
 				{#if n.refach}<span class="sep">·</span> <span>{n.refach} refaits à revoir</span>{/if}
 			</p>
 		{/if}
@@ -293,7 +301,7 @@
 	{:else if !actual}
 		<div class="fin">
 			<p class="fin-titol" lang="oc">Tot es triat.</p>
-			<p><em>(Tout est trié.)</em> {n.gardar} gardés, {n.refar} à refaire. Claude lit tes croix et tes commentaires ; les éléments refaits reviendront ici.</p>
+			<p><em>(Tout est trié.)</em> {n.gardar} {MOTS.gardar.compte}, {n.refar} {MOTS.refar.compte}. Claude lit tes croix et tes commentaires ; {lot.fin ?? 'les éléments refaits reviendront ici.'}</p>
 			{#each LOTS.filter((l) => l.id !== lot.id) as l (l.id)}
 				<p><a href="?lot={l.id}" data-sveltekit-reload>Trier « <span lang="oc">{l.nom.oc}</span> »</a> <em>({l.nom.fr})</em></p>
 			{/each}
@@ -325,8 +333,8 @@
 					aria-roledescription="carte"
 					aria-label="{actual.titol}, {pos + 1} sur {cua.length}"
 				>
-					<span class="tampon tampon-gardar" style:opacity={Math.max(0, senhal)} aria-hidden="true">♥ <span lang="oc">Gardar</span></span>
-					<span class="tampon tampon-refar" style:opacity={fasa === 'comentari' ? 1 : Math.max(0, -senhal)} aria-hidden="true">✕ <span lang="oc">Refar</span></span>
+					<span class="tampon tampon-gardar" style:opacity={Math.max(0, senhal)} aria-hidden="true">♥ <span lang="oc">{MOTS.gardar.oc}</span></span>
+					<span class="tampon tampon-refar" style:opacity={fasa === 'comentari' ? 1 : Math.max(0, -senhal)} aria-hidden="true">✕ <span lang="oc">{MOTS.refar.oc}</span></span>
 					{@render contengut(actual)}
 				</div>
 			{/key}
@@ -337,13 +345,13 @@
 				<button type="button" class="b-tornar" onclick={tornar} disabled={!istòria.length} title="Revenir à la carte d’avant (Ctrl+Z)">
 					<span aria-hidden="true">↶</span> <span lang="oc">Tornar</span>
 				</button>
-				<button type="button" class="b-refar" bind:this={botoRefar} onclick={refusar} title="Refuser (flèche gauche)">
+				<button type="button" class="b-refar" bind:this={botoRefar} onclick={refusar} title="{MOTS.refar.titol} (flèche gauche)">
 					<span class="icona" aria-hidden="true">✕</span>
-					<span class="etiqueta"><span lang="oc">Refar</span> <em>(refaire)</em></span>
+					<span class="etiqueta"><span lang="oc">{MOTS.refar.oc}</span> <em>({MOTS.refar.fr})</em></span>
 				</button>
-				<button type="button" class="b-gardar" onclick={gardar} title="Garder tel quel (flèche droite)">
+				<button type="button" class="b-gardar" onclick={gardar} title="{MOTS.gardar.titol} (flèche droite)">
 					<span class="icona" aria-hidden="true">♥</span>
-					<span class="etiqueta"><span lang="oc">Gardar</span> <em>(garder)</em></span>
+					<span class="etiqueta"><span lang="oc">{MOTS.gardar.oc}</span> <em>({MOTS.gardar.fr})</em></span>
 				</button>
 			</div>
 		{:else}
@@ -354,7 +362,7 @@
 					mandarRefus();
 				}}
 			>
-				<label for="triar-comentari"><span lang="oc">Qué cal cambiar ?</span> <em>(Que faut-il changer ? Dicte ou écris ; tu peux laisser vide.)</em></label>
+				<label for="triar-comentari"><span lang="oc">Qué cal cambiar ?</span> <em>({MOTS.comentari})</em></label>
 				<textarea id="triar-comentari" bind:this={camp} bind:value={comentari} onkeydown={teclaComentari} rows="3" maxlength="2000"></textarea>
 				<div class="botons-com">
 					<button type="button" class="b-secondari" onclick={anullar} disabled={mandant}><span lang="oc">Anullar</span></button>
@@ -384,12 +392,22 @@
 		<CartaReleu foto={el.relèu} {viu} />
 	{:else if el.imatge}
 		<img class="imatge" src={el.imatge} alt="" draggable="false" />
+	{:else if el.decision}
+		<!-- une décision à trancher (lot « decisions », 06-11) : en français, en Luciole, l'avis de Claude à part -->
+		<div class="decision" lang="fr">
+			{#if el.context?.length}<p class="d-context">{el.context.join(' · ')}</p>{/if}
+			<p class="d-titol">{el.titol}</p>
+			<p class="d-tèxte">{el.decision.tèxte}</p>
+			{#if el.decision.avís}<p class="d-avís"><span>Mon avis</span> {el.decision.avís}</p>{/if}
+		</div>
 	{:else if el.tèxte}
 		<p class="tèxte" lang="oc">{el.tèxte}</p>
 	{/if}
-	<p class="titol" lang="oc">{el.titol}</p>
-	{#if el.sotstitol}<p class="sotstitol">{el.sotstitol}</p>{/if}
-	{#if el.context?.length}<p class="context">Ambiance : <span lang="oc">{el.context.join(' · ')}</span></p>{/if}
+	{#if !el.decision}
+		<p class="titol" lang="oc">{el.titol}</p>
+		{#if el.sotstitol}<p class="sotstitol">{el.sotstitol}</p>{/if}
+		{#if el.context?.length}<p class="context">Ambiance : <span lang="oc">{el.context.join(' · ')}</span></p>{/if}
+	{/if}
 {/snippet}
 
 <style>
@@ -421,6 +439,14 @@
 	}
 	.lot {
 		margin: 0.2rem 0 0.6rem;
+	}
+	.vers-seguit {
+		margin: 0.2rem 0 0.4rem;
+		font-size: 0.9rem;
+	}
+	.vers-seguit a {
+		color: inherit;
+		text-underline-offset: 0.2em;
 	}
 	.lots {
 		display: flex;
@@ -530,6 +556,55 @@
 		max-height: 50vh;
 		object-fit: contain;
 		border-radius: 0.75rem;
+	}
+	.decision {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		padding: 0.4rem 0.3rem 0;
+		text-align: left;
+	}
+	.d-context {
+		margin: 0;
+		font-size: 0.8rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: #e0b45a;
+	}
+	.d-titol {
+		margin: 0;
+		font-size: 1.3rem;
+		font-weight: 700;
+		line-height: 1.3;
+	}
+	.d-tèxte {
+		margin: 0;
+		font-size: 1rem;
+		line-height: 1.5;
+		opacity: 0.9;
+	}
+	.d-avís {
+		margin: 0.2rem 0 0;
+		padding-top: 0.6rem;
+		border-top: 1px solid rgba(243, 234, 214, 0.25);
+		font-size: 0.95rem;
+		line-height: 1.45;
+	}
+	.d-avís span {
+		display: block;
+		font-size: 0.75rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: #e0b45a;
+	}
+	/* la carte de dessous : sa forme seule, sans son texte qui se lirait à travers */
+	.darrier .decision {
+		visibility: hidden;
+	}
+	.reduch .d-tèxte,
+	.reduch .d-avís {
+		display: none;
 	}
 	.tèxte {
 		font-size: 1.2rem;

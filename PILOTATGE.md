@@ -6,6 +6,8 @@
 >
 > **La discussion mère** (celle qui a ouvert ce tableau le 18-09) garde la vue d'ensemble : elle relit les autres discussions par Git, tient ce fichier à jour et signale les déséquilibres.
 >
+> **06-11, 23 h : Romain reste sur Claude. Claude garde la main, Mistral en soutien** (branche `mistral/<sujet>`, Claude relit et met en ligne) ; la bascule est reportée, peut-être au mois suivant (cahier §11). Le paragraphe suivant est caduc. **Point d'étape du 06-11 au soir** : suivi des chantiers sur `/admin/seguit` (données : `app/src/lib/seguit/seguit.js`, à tenir à jour avec ce tableau), décisions en cartes sur `/admin/triar?lot=decisions` (`app/src/lib/triar/decisions.js`).
+>
 > **Après le 6 novembre 2026, Mistral devient l'agent principal et Claude contrôle ; jusque-là, Claude garde la main, un peu des deux selon les demandes de Romain** (cahier §11, 02-11) : consignes dans `AGENTS.md`, briefing de passation complet dans `BRIEF-MISTRAL.md` (état, reste à faire, pièges). Le tri des noms de la carte du 27-10 est fusionné et en ligne (02-11). **06-11 au soir : le relais est passé, Mistral a la main** et Claude n'est plus joignable jusqu'au retour de l'abonnement : lire d'abord `COORDINATION.md` (qui a la main, discussions laissées ouvertes, réglages à vérifier), puis `AGENTS.md` (« Sur cet ordinateur », « Sans Claude »).
 
 ## 1. Ce que Romain a à faire, dans l'ordre
@@ -109,7 +111,7 @@ Depuis le 12-10 : 211 changements, dont la moitié pour la carte, un tiers pour 
 11. **22-10** : tutoiement partout.
 12. **23-10** : règle B des couleurs : le rouge du logo pour ce qui se clique, l'or et l'ocre pour mettre en valeur.
 13. **Pas d'agents ni de longs enchaînements sans l'accord de Romain** (forfait).
-14. **2026-11-02** : deux IA, une équipe, sans concurrence ni dénigrement (dans les deux sens). **Le même jour, logique inversée à partir du 7 novembre : Mistral agent principal, Claude en contrôle** (Claude garde la main jusqu'au 6) sur fiche de passation pour les changements sensibles (`AGENTS.md`, `BRIEF-MISTRAL.md` §10).
+14. **2026-11-02** : deux IA, une équipe, sans concurrence ni dénigrement (dans les deux sens). **Le même jour, logique inversée à partir du 7 novembre : Mistral agent principal, Claude en contrôle** (Claude garde la main jusqu'au 6) sur fiche de passation pour les changements sensibles (`AGENTS.md`, `BRIEF-MISTRAL.md` §10). **Reporté le 06-11 au soir : Claude garde la main, Mistral en soutien.**
 
 ## 6. Les vraies questions ouvertes
 
