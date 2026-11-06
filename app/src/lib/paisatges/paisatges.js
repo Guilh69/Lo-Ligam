@@ -1682,10 +1682,10 @@ export const PAISATGES = [
 		h: 1843,
 		alt: 'Une rue étroite au crépuscule mène à une vieille porte de ville coiffée de tours pointues et d’une horloge ; des balcons, une lanterne.',
 		mots: [
-			['lo relòtge', 0.52, 0.66],
+			['lo relòtge', 0.51, 0.795],
 			['la torre', 0.58, 0.51],
 			['lo balcon', 0.21, 0.75],
-			['lo fanal', 0.65, 0.79]
+			['lo fanal', 0.66, 0.91]
 		]
 	},
 	{
@@ -1709,7 +1709,7 @@ export const PAISATGES = [
 		amples: [800, 1600],
 		l: 1600,
 		h: 2294,
-		alt: 'Dans un grand parc, un bassin à balustrade blanche, un petit pont et un kiosque, sous de grands arbres.',
+		alt: 'Dans un grand parc, un bassin à balustrade blanche, un petit pont et un petit pavillon, sous de grands arbres.',
 		mots: [
 			['la font', 0.44, 0.93],
 			['l’arbre', 0.54, 0.39],
@@ -1752,7 +1752,7 @@ export const PAISATGES = [
 		amples: [1024, 1776],
 		l: 1776,
 		h: 1184,
-		alt: 'Deux passants de dos, l’un poussant un vélo, dans une rue aux murs couverts de graffitis ; des marches au premier plan.',
+		alt: 'Deux passants, l’un poussant un vélo, dans une rue aux murs couverts de graffitis ; des marches au premier plan.',
 		mots: [
 			['la bicicleta', 0.65, 0.66],
 			['l’escalièr', 0.5, 0.88],
@@ -1797,7 +1797,7 @@ export const PAISATGES = [
 		alt: 'La vitrine d’une boulangerie pleine de pains et de viennoiseries, un mur de brique, une porte vitrée, une ardoise posée devant.',
 		mots: [
 			['lo pan', 0.2, 0.45],
-			['la pòrta', 0.7, 0.57],
+			['la pòrta', 0.73, 0.62],
 			['la paret', 0.49, 0.61],
 			['la veirina', 0.22, 0.7]
 		]
@@ -1878,7 +1878,7 @@ export const PAISATGES = [
 		amples: [1024, 1776],
 		l: 1776,
 		h: 1184,
-		alt: 'Les toits de zinc gris d’une grande ville, hérissés de cheminées de terre cuite et d’antennes, sous un ciel bleu.',
+		alt: 'Les toits de zinc gris d’une grande ville, hérissés de cheminées de terre cuite et d’antennes, sous un ciel sombre.',
 		mots: [
 			['lo teulat', 0.76, 0.75],
 			['la cheminièra', 0.52, 0.54],
@@ -1954,7 +1954,7 @@ export const PAISATGES = [
 			['la vila', 0.6, 0.66],
 			['la montanha', 0.4, 0.27],
 			['la ròca', 0.85, 0.85],
-			['l’olivièr', 0.5, 0.45]
+			['l’olivièr', 0.3, 0.49]
 		]
 	},
 	{
@@ -1978,7 +1978,7 @@ export const PAISATGES = [
 		amples: [800, 1600],
 		l: 1600,
 		h: 2133,
-		alt: 'Un village de pierre : un haut cyprès, un olivier, un mur de pierres sèches et le clocher pointu de l’église.',
+		alt: 'Un village de pierre : un haut cyprès, un olivier, un mur de pierre et le clocher pointu de l’église.',
 		mots: [
 			['lo cloquièr', 0.5, 0.45],
 			['l’olivièr', 0.75, 0.59],
@@ -2052,7 +2052,7 @@ export const PAISATGES = [
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
-		alt: 'Une rue de Vérone aux façades roses et ocre, des balcons débordant de plantes, une porte gothique en brique.',
+		alt: 'Une rue aux façades roses et ocre, des balcons débordant de plantes, une porte gothique en brique.',
 		mots: [
 			['lo balcon', 0.72, 0.4],
 			['la planta', 0.82, 0.25],
@@ -2111,7 +2111,7 @@ export const PAISATGES = [
 		amples: [800, 1600],
 		l: 1600,
 		h: 2133,
-		alt: 'Une petite place aux maisons colorées, à l’ombre d’un platane ; un vieux puits de pierre à la ferronnerie ouvragée.',
+		alt: 'Une petite place aux maisons colorées, à l’ombre d’un grand arbre ; un vieux puits de pierre à la ferronnerie ouvragée.',
 		mots: [
 			['l’arbre', 0.63, 0.25],
 			['la fenèstra', 0.28, 0.51],
