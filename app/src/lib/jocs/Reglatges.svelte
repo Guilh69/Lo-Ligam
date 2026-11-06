@@ -7,24 +7,28 @@
 	// (boutons simples, passés en enfants).
 	/**
 	 * causida : { titol, opcions: [{ id, label, detalh? }], valor, causir(id) }
+	 * causidas : d'autres choix pareils, chacun son bloc (le thème, 06-11)
 	 * bascules : [{ id, label, valor, bascular() }]
 	 * titolOpcions : titre du bloc des options ; children : les actions
 	 */
-	let { causida, bascules = [], titolOpcions = '', children } = $props();
+	let { causida = null, causidas = [], bascules = [], titolOpcions = '', children } = $props();
 	const id = `reg-${Math.random().toString(36).slice(2, 8)}`;
+	const totas = $derived(causida ? [causida, ...causidas] : causidas);
 </script>
 
 <div class="reglatges">
-	<div class="grop">
-		<span class="grop-titol" id="{id}-c">{causida.titol}</span>
-		<div class="segments" role="group" aria-labelledby="{id}-c">
-			{#each causida.opcions as o (o.id)}
-				<button type="button" aria-pressed={causida.valor === o.id} onclick={() => causida.causir(o.id)}>
-					<span>{o.label}</span>{#if o.detalh}<span class="detalh" lang="oc">{o.detalh}</span>{/if}
-				</button>
-			{/each}
+	{#each totas as c, k (k)}
+		<div class="grop">
+			<span class="grop-titol" id="{id}-c{k}">{c.titol}</span>
+			<div class="segments" role="group" aria-labelledby="{id}-c{k}">
+				{#each c.opcions as o (o.id)}
+					<button type="button" aria-pressed={c.valor === o.id} onclick={() => c.causir(o.id)}>
+						<span>{o.label}</span>{#if o.detalh}<span class="detalh" lang="oc">{o.detalh}</span>{/if}
+					</button>
+				{/each}
+			</div>
 		</div>
-	</div>
+	{/each}
 	{#if bascules.length}
 		<div class="grop">
 			<span class="grop-titol" id="{id}-o">{titolOpcions}</span>

@@ -14,6 +14,12 @@
 // lo Basic) ; l'occitan reste à relire par Romain. Chaque photo garde les mots
 // qui lui sont propres : « lo cèl » n'est que là où le ciel est le sujet
 // (Romain, 06-11 : « il y a 4 fois le mot ciel »).
+//
+// Thèmes (Romain, 06-11 : « par milieu, et aussi par thématique, ça dépend de
+// la nature de la photo » ; une photo prise hors d'Occitanie peut illustrer un
+// thème) : chaque paysage a son tema, voir TEMAS plus bas. Lot 1 (06-11) : 18
+// photos de plus, rangées en trois milieux ; mots de la ville surtout, déjà
+// croisés dans les leçons pour beaucoup.
 
 /** Le français de chaque mot (repli de tria() pour les autres langues). */
 export const MOTS = {
@@ -50,12 +56,34 @@ export const MOTS = {
 	'lo pic': 'le pic',
 	'la bruma': 'la brume',
 	'la pena': 'la falaise',
-	'lo pòrt': 'le port'
+	'lo pòrt': 'le port',
+	// 06-11, lot 1 des thèmes (lo Congrès : clocher → cloquièr lengadoc, toit →
+	// teulat ; campanar et teulada absents du Basic languedocien ; genre d'après
+	// lo Basic)
+	'lo pin': 'le pin',
+	'lo cap': 'le cap',
+	'la paret': 'le mur',
+	'la valada': 'la vallée',
+	'lo prat': 'le pré',
+	'lo fanal': 'la lanterne',
+	'lo cloquièr': 'le clocher',
+	'lo teulat': 'le toit',
+	'lo balcon': 'le balcon',
+	'la fenèstra': 'la fenêtre',
+	'la planta': 'la plante',
+	'la pòrta': 'la porte',
+	'la carrièra': 'la rue',
+	'lo palmièr': 'le palmier',
+	'la piscina': 'la piscine',
+	'l’escalièr': 'l’escalier',
+	'lo pont': 'le pont',
+	'la crotz': 'la croix'
 };
 
 export const PAISATGES = [
 	{
 		clau: 'calanca',
+		tema: 'mar',
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
@@ -70,6 +98,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'riu',
+		tema: 'montanha',
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
@@ -82,6 +111,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'lac',
+		tema: 'montanha',
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1076,
@@ -95,6 +125,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'camin',
+		tema: 'mar',
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
@@ -108,6 +139,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'plaja',
+		tema: 'mar',
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
@@ -120,6 +152,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'arcada',
+		tema: 'montanha',
 		amples: [800, 1600],
 		l: 1600,
 		h: 2133,
@@ -133,6 +166,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'montanha',
+		tema: 'montanha',
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
@@ -146,6 +180,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'vilatge',
+		tema: 'vila',
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
@@ -159,6 +194,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'port',
+		tema: 'mar',
 		amples: [800, 1600],
 		l: 1600,
 		h: 2133,
@@ -172,6 +208,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'aigoal',
+		tema: 'montanha',
 		amples: [800, 1600],
 		l: 1600,
 		h: 2133,
@@ -185,6 +222,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'garona',
+		tema: 'vila',
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
@@ -197,6 +235,7 @@ export const PAISATGES = [
 	},
 	{
 		clau: 'plana',
+		tema: 'montanha',
 		amples: [1024, 1920],
 		l: 1920,
 		h: 1440,
@@ -207,8 +246,271 @@ export const PAISATGES = [
 			['la plana', 0.6, 0.55],
 			['l’orizont', 0.4, 0.49]
 		]
+	},
+	// ── Lot 1 des thèmes (06-11) ──
+	{
+		clau: 'mar-paret',
+		tema: 'mar',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une ouverture ronde dans un vieux mur de pierre donne sur la mer bleue, avec des rochers au bord et une côte au loin.',
+		mots: [
+			['la mar', 0.45, 0.43],
+			['la ròca', 0.55, 0.66],
+			['la paret', 0.1, 0.55]
+		]
+	},
+	{
+		clau: 'mar-pena',
+		tema: 'mar',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'De hautes falaises blanches tombent sur une plage de galets, une arche de roche s’avance dans la mer bleue, de l’herbe verte au premier plan.',
+		mots: [
+			['la pena', 0.72, 0.38],
+			['la plaja', 0.57, 0.62],
+			['la mar', 0.2, 0.33],
+			['l’èrba', 0.15, 0.8]
+		]
+	},
+	{
+		clau: 'mar-illas',
+		tema: 'mar',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Marseille au coucher du soleil : des toits et des immeubles au premier plan, la mer calme, des îles à l’horizon.',
+		mots: [
+			['l’illa', 0.42, 0.46],
+			['la mar', 0.62, 0.56],
+			['la vila', 0.3, 0.75],
+			['la torre', 0.86, 0.64]
+		]
+	},
+	{
+		clau: 'mar-cap',
+		tema: 'mar',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une côte de rochers rouges sous une pente couverte de pins, une eau si claire qu’on voit le fond, un cap au loin.',
+		mots: [
+			['la mar', 0.75, 0.62],
+			['l’aiga', 0.45, 0.88],
+			['la ròca', 0.25, 0.66],
+			['la montanha', 0.15, 0.3],
+			['lo cap', 0.66, 0.47]
+		]
+	},
+	{
+		clau: 'mar-pin',
+		tema: 'mar',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Un pin tordu penché au-dessus d’une falaise, la mer d’un bleu profond, un petit voilier au loin.',
+		mots: [
+			['lo pin', 0.6, 0.25],
+			['la mar', 0.3, 0.5],
+			['lo batèl', 0.555, 0.52],
+			['la ròca', 0.4, 0.88]
+		]
+	},
+	{
+		clau: 'montanha-pena',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1080,
+		alt: 'Vue depuis le pic Saint-Loup : la longue falaise blanche de l’Hortus au-dessus d’une forêt sombre, une plaine jusqu’à l’horizon, un ciel de nuages.',
+		mots: [
+			['la pena', 0.62, 0.52],
+			['la plana', 0.85, 0.44],
+			['lo bòsc', 0.4, 0.82],
+			['la nívol', 0.5, 0.15]
+		]
+	},
+	{
+		clau: 'montanha-rocas',
+		tema: 'montanha',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Des montagnes de roche grise découpée en aiguilles, des pentes couvertes de garrigue, quelques arbres au premier plan.',
+		mots: [
+			['la montanha', 0.18, 0.28],
+			['la ròca', 0.78, 0.28],
+			['la garriga', 0.5, 0.65],
+			['l’arbre', 0.68, 0.86]
+		]
+	},
+	{
+		clau: 'montanha-valada',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une vallée verte entre deux montagnes boisées, des chalets aux toits bruns au premier plan, des prés, des nuages accrochés aux sommets.',
+		mots: [
+			['la montanha', 0.85, 0.33],
+			['la valada', 0.3, 0.5],
+			['l’ostal', 0.17, 0.82],
+			['lo prat', 0.35, 0.77],
+			['la nívol', 0.4, 0.15]
+		]
+	},
+	{
+		clau: 'montanha-pins',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une clairière d’herbe et de grands pins ; derrière, une chaîne de montagnes bleues avec un pic pointu, des nuages blancs.',
+		mots: [
+			['lo pic', 0.47, 0.37],
+			['la montanha', 0.18, 0.43],
+			['lo pin', 0.6, 0.5],
+			['l’èrba', 0.45, 0.88],
+			['la nívol', 0.58, 0.14]
+		]
+	},
+	{
+		clau: 'vila-aiga',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1505,
+		alt: 'Un grand bâtiment de briques aux portes rayées de bleu et de blanc, au bord d’une eau calme qui le reflète, un saule à gauche.',
+		mots: [
+			['l’aiga', 0.45, 0.78],
+			['l’arbre', 0.1, 0.33],
+			['la pòrta', 0.52, 0.5]
+		]
+	},
+	{
+		clau: 'vila-carriera',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une rue étroite et pavée à Montpellier, entre de hautes façades de pierre ; une lanterne accrochée au mur, un bout de ciel bleu tout en haut.',
+		mots: [
+			['la carrièra', 0.6, 0.78],
+			['lo fanal', 0.66, 0.375],
+			['la paret', 0.12, 0.55]
+		]
+	},
+	{
+		clau: 'vila-balcon',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Vue d’un balcon sur des immeubles de pierre aux balcons de fer, à Montpellier ; un clocher pointu, le soleil qui se couche, des plantes au premier plan.',
+		mots: [
+			['lo cloquièr', 0.8, 0.3],
+			['la vila', 0.4, 0.55],
+			['lo balcon', 0.62, 0.86],
+			['la planta', 0.18, 0.85]
+		]
+	},
+	{
+		clau: 'vila-cloquier',
+		tema: 'vila',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une rue entre des maisons à pans de bois et des immeubles de brique ; au fond, un haut clocher de pierre se détache sur le ciel.',
+		mots: [
+			['lo cloquièr', 0.5, 0.45],
+			['l’ostal', 0.15, 0.45],
+			['la fenèstra', 0.77, 0.43]
+		]
+	},
+	{
+		clau: 'vila-palmier',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1076,
+		alt: 'Vue sur les toits d’un quartier de maisons : tuiles roses, jardins, une petite piscine, un palmier, la plaine au loin.',
+		mots: [
+			['lo teulat', 0.6, 0.88],
+			['lo palmièr', 0.73, 0.46],
+			['l’ostal', 0.33, 0.6],
+			['la piscina', 0.22, 0.78]
+		]
+	},
+	{
+		clau: 'vila-plantas',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une ruelle d’Arles, en pierre blonde, aux volets bleus ; des plantes grimpantes et des pots de fleurs le long des murs.',
+		mots: [
+			['la carrièra', 0.55, 0.82],
+			['la planta', 0.53, 0.5],
+			['la pòrta', 0.06, 0.6],
+			['la fenèstra', 0.335, 0.33]
+		]
+	},
+	{
+		clau: 'vila-escalier',
+		tema: 'vila',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Des maisons de bois peintes en bleu, rouge et jaune au bord d’un canal, à Amiens ; une passerelle, un escalier de pierre aux rampes de fer, des branches nues d’hiver.',
+		mots: [
+			['l’ostal', 0.15, 0.43],
+			['l’escalièr', 0.43, 0.54],
+			['lo pont', 0.36, 0.72],
+			['l’arbre', 0.18, 0.1]
+		]
+	},
+	{
+		clau: 'vila-montanha',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une petite ville de montagne aux toits de pierre grise, une maison rose au premier plan, une rue en pente, des sommets et des nuages.',
+		mots: [
+			['la montanha', 0.07, 0.36],
+			['la nívol', 0.67, 0.2],
+			['lo teulat', 0.72, 0.6],
+			['la carrièra', 0.44, 0.84]
+		]
+	},
+	{
+		clau: 'vila-crotz',
+		tema: 'vila',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une grande esplanade de pierre à Montpellier sous un ciel bleu : une porte monumentale, des immeubles anciens, un clocher pointu, un crucifix sur une colonne, à droite.',
+		mots: [
+			['la crotz', 0.92, 0.41],
+			['la glèisa', 0.79, 0.49],
+			['la pòrta', 0.12, 0.59]
+		]
 	}
 ];
+
+/** Les thèmes du défilé et du jeu (06-11). D'abord trois milieux ; viendront
+ *  par lots les thèmes tirés de la nature des photos (les monuments, le temps
+ *  qu'il fait, à table, les fêtes…). */
+export const TEMAS = [
+	{ id: 'mar', nom: { oc: 'La mar', fr: 'La mer', es: 'El mar', en: 'The sea', ca: 'El mar', ar: 'البحر' } },
+	{ id: 'montanha', nom: { oc: 'La montanha', fr: 'La montagne', es: 'La montaña', en: 'The mountains', ca: 'La muntanya', ar: 'الجبل' } },
+	{ id: 'vila', nom: { oc: 'La vila', fr: 'La ville', es: 'La ciudad', en: 'The town', ca: 'La ciutat', ar: 'المدينة' } }
+];
+
+/** Les paysages d'un thème (tous, sans thème). */
+export const deTema = (tema) => PAISATGES.filter((p) => !tema || p.tema === tema);
 
 /** Chemin d'un fichier de paysage. */
 export const camin = (clau, a) => `/apren/paisatges/${clau}-${a}.webp`;

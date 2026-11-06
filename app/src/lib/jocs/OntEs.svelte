@@ -10,9 +10,11 @@
 	// d'or, puis la question vient (Romain, 06-11 : découvrir, puis deviner) ;
 	// « Sens ajuda » : la question tout de suite, les points cachés.
 	// Au clavier, Tab passe d'un endroit à l'autre de la photo, Entrée choisit.
+	// Thème (06-11) : tout, ou un milieu (la mer, la montagne, la ville) ;
+	// changer de thème relance la partie.
 	import { onMount } from 'svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
-	import { PAISATGES, MOTS, camin, srcset } from '$lib/paisatges/paisatges.js';
+	import { PAISATGES, MOTS, TEMAS, camin, srcset } from '$lib/paisatges/paisatges.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
 	import Reglatges from '$lib/jocs/Reglatges.svelte';
 	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
@@ -44,7 +46,9 @@
 		mots: { oc: 'Los mots', fr: 'Les mots' },
 		camp: { oc: 'La fòto', fr: 'La photo' },
 		endrech: { oc: (k, t) => `Endrech ${k} sus ${t}`, fr: (k, t) => `Endroit ${k} sur ${t}` },
-		jogar: { oc: 'Jogar', fr: 'Jouer' }
+		jogar: { oc: 'Jogar', fr: 'Jouer' },
+		tema: { oc: 'Tèma', fr: 'Thème' }, // lo Congrès : thème → tèma (06-11)
+		tot: { oc: 'Tot', fr: 'Tout' }
 	};
 
 	const CLAU_SON = 'lo-ligam-jocs-son'; // partagé avec la sèrp et les paniers
@@ -52,6 +56,7 @@
 	const TOCA = 0.11; // un bon toucher : à moins de 11 % du grand côté de la photo
 
 	let nivel = $state('amb');
+	let tema = $state(null); // null : tous les paysages
 	let immersiu = $state(false);
 	let son = $state(true);
 	let calme = $state(false);
@@ -109,7 +114,7 @@
 		clearTimeout(minuteur);
 		// huit photos différentes, un mot chacune, le moins de redites possible
 		const demandats = new Set();
-		partida = barrejar(PAISATGES.map((_, k) => k))
+		partida = barrejar(PAISATGES.flatMap((q, k) => (!tema || q.tema === tema ? [k] : [])))
 			.slice(0, TOTAL)
 			.map((k) => {
 				const mots = barrejar(PAISATGES[k].mots.map(([oc]) => oc));
@@ -371,6 +376,19 @@
 						{ id: 'sens', label: tria(T.sens) }
 					]
 				}}
+				causidas={[
+					{
+						titol: tria(T.tema),
+						valor: tema,
+						causir: (id) => {
+							if (id === tema) return;
+							tema = id;
+							començar(); // une partie neuve, sur ce thème
+						},
+						// libellés en oc et fr seulement, comme le reste du jeu
+						opcions: [{ id: null, label: tria(T.tot) }, ...TEMAS.map((t) => ({ id: t.id, label: tria({ oc: t.nom.oc, fr: t.nom.fr }) }))]
+					}
+				]}
 				bascules={[{ id: 'son', label: tria(T.son), valor: son, bascular: bascularSon }]}
 				titolOpcions={tria(T.reglatges)}
 			>

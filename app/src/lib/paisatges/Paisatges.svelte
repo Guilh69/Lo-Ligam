@@ -12,9 +12,11 @@
 	// Données : ./paisatges.js. Les gestes viennent de la page (rodeta, tecla).
 	import { onMount, untrack } from 'svelte';
 	import { fade } from 'svelte/transition';
-	import { PAISATGES, MOTS, camin, srcset } from './paisatges.js';
+	import { MOTS, camin, srcset, deTema } from './paisatges.js';
 
-	let { pausa = false, calme = false, n = $bindable(0) } = $props();
+	// tema : le thème choisi (la page remonte le composant quand il change)
+	let { pausa = false, calme = false, n = $bindable(0), tema = null } = $props();
+	const LISTA = untrack(() => deTema(tema));
 
 	// L'ordre des paysages change à chaque visite, le premier aussi ; l'ordre
 	// d'apparition des points aussi (Romain, 06-11 : « s'assurer de la variation »)
@@ -25,8 +27,8 @@
 		}
 		return t;
 	}
-	const ordre = barrejar(PAISATGES.map((_, k) => k));
-	const pais = (pos) => PAISATGES[ordre[(pos + ordre.length) % ordre.length]];
+	const ordre = barrejar(LISTA.map((_, k) => k));
+	const pais = (pos) => LISTA[ordre[(pos + ordre.length) % ordre.length]];
 	const novela = (id, k) => ({ id, k, rangs: barrejar(pais(k).mots.map((_, i) => i)) });
 
 	let racina = $state();
@@ -152,7 +154,7 @@
 		if (vistas.length > 1) return; // un disque à la fois
 		causit = null;
 		tornarAuto();
-		n = (n + d + PAISATGES.length) % PAISATGES.length;
+		n = (n + d + LISTA.length) % LISTA.length;
 		const v = novela(++seq, n);
 		vistas = calme ? [v] : [...vistas, v];
 		precargar(n + d);

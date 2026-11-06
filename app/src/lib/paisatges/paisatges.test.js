@@ -2,7 +2,7 @@
 // chaque mot a son français, chaque fichier existe.
 import { describe, it, expect } from 'vitest';
 import { existsSync } from 'node:fs';
-import { PAISATGES, MOTS, camin } from './paisatges.js';
+import { PAISATGES, MOTS, TEMAS, camin, deTema } from './paisatges.js';
 
 // les tests tournent depuis app/ (comme fichas.test.js)
 const statique = 'static';
@@ -31,6 +31,16 @@ describe('paysages', () => {
 			}
 		});
 	}
+
+	it('chaque paysage a un thème connu ; chaque thème a de quoi faire une partie (8 photos)', () => {
+		const ids = new Set(TEMAS.map((t) => t.id));
+		for (const p of PAISATGES) expect(ids.has(p.tema), `${p.clau} : thème ${p.tema}`).toBe(true);
+		for (const t of TEMAS) {
+			expect(deTema(t.id).length, t.id).toBeGreaterThanOrEqual(8);
+			for (const l of ['oc', 'fr', 'es', 'en', 'ca', 'ar']) expect(t.nom[l], `${t.id} ${l}`).toBeTruthy();
+		}
+		expect(deTema(null).length).toBe(PAISATGES.length);
+	});
 
 	it('chaque mot du lexique sert au moins une fois', () => {
 		const servits = new Set(PAISATGES.flatMap((p) => p.mots.map(([oc]) => oc)));

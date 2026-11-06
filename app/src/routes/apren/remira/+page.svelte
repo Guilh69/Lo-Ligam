@@ -20,7 +20,7 @@
 	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
 	import Polsa from '$lib/plueja/Polsa.svelte';
 	import Paisatges from '$lib/paisatges/Paisatges.svelte';
-	import { PAISATGES } from '$lib/paisatges/paisatges.js';
+	import { TEMAS, deTema } from '$lib/paisatges/paisatges.js';
 	import { carnet, demarrerCarnet } from '$lib/carnet/carnet.svelte.js';
 	import { aRevoir } from '$lib/carnet/regles.js';
 
@@ -41,6 +41,9 @@
 		ponchTactil: { oc: 'Tòca un ponch d’aur', fr: 'Touche un point d’or', es: 'Toca un punto dorado', en: 'Touch a gold dot', ca: 'Toca un punt daurat', ar: 'المس نقطة ذهبية' }, // ponch, aur : lo Congrès (05-11)
 		ponch: { oc: 'Clica un ponch d’aur', fr: 'Clique sur un point d’or', es: 'Haz clic en un punto dorado', en: 'Click a gold dot', ca: 'Fes clic en un punt daurat', ar: 'انقر على نقطة ذهبية' }, // clica : impératif de clicar (vèrb'Òc)
 		precedent: { oc: 'Paisatge precedent', fr: 'Paysage précédent', es: 'Paisaje anterior', en: 'Previous landscape', ca: 'Paisatge anterior', ar: 'المنظر السابق' },
+		// le thème des paysages (06-11) ; lo Congrès : thème → tèma, tot
+		tema: { oc: 'Tèma', fr: 'Thème', es: 'Tema', en: 'Theme', ca: 'Tema', ar: 'الموضوع' },
+		tot: { oc: 'Tot', fr: 'Tout', es: 'Todo', en: 'All', ca: 'Tot', ar: 'الكل' },
 		seguent: { oc: 'Paisatge seguent', fr: 'Paysage suivant', es: 'Paisaje siguiente', en: 'Next landscape', ca: 'Paisatge següent', ar: 'المنظر التالي' },
 		pluejaDesc: { oc: 'Los mots tomban doçament.', fr: 'Les mots tombent doucement.', es: 'Las palabras caen con suavidad.', en: 'Words fall gently.', ca: 'Les paraules cauen suaument.', ar: 'تتساقط الكلمات بلطف.' },
 		fons: { oc: 'Fons', fr: 'Fond', es: 'Fondo', en: 'Background', ca: 'Fons', ar: 'الخلفية' },
@@ -108,6 +111,9 @@
 	];
 	let paisatges = $state(); // le défilé de paysages (Romain, 05-11)
 	let nPaisatge = $state(0);
+	// le thème des paysages : la mer, la montagne, la ville… ou tout (06-11)
+	let temaPaisatges = $state(null);
+	const nomTema = $derived(temaPaisatges ? TEMAS.find((t) => t.id === temaPaisatges).nom : T.tot);
 	let reserva = $state({ naut: 64, bas: 110 }); // place de l'en-tête et des commandes, pour la poussière
 
 	// Fond calme par défaut (Romain, 05-11) : un ciel de nuit teinté selon
@@ -532,6 +538,13 @@
 		darrierNais = temps - 3.4; // un premier mot arrive vite
 	}
 
+	function causirTema(id) {
+		tamparPanel();
+		if (id === temaPaisatges) return;
+		temaPaisatges = id;
+		nPaisatge = 0; // le défilé repart sur ce thème, dans un ordre neuf
+	}
+
 	function causirFons(foto) {
 		tamparPanel();
 		fonsFoto = foto;
@@ -685,7 +698,9 @@
 			{reserva}
 		/>
 	{:else if mòde === 'paisatges'}
-		<Paisatges bind:this={paisatges} bind:n={nPaisatge} {pausa} {calme} />
+		{#key temaPaisatges}
+			<Paisatges bind:this={paisatges} bind:n={nPaisatge} tema={temaPaisatges} {pausa} {calme} />
+		{/key}
 	{/if}
 
 	<div class="mots" aria-hidden="true">
@@ -728,13 +743,17 @@
 				<span class="valor">{tria(MOVEMENTS.find((m) => m.id === mòde).nom)}</span>
 			</button>
 			{#if mòde === 'paisatges'}
-				<!-- Les paysages : le précédent, le numéro, le suivant, à la place de
-				     l'ambiance et du fond (qui n'ont pas de sens ici) -->
+				<!-- Les paysages : le thème, puis le précédent, le numéro, le suivant,
+				     à la place de l'ambiance et du fond (qui n'ont pas de sens ici) -->
+				<button type="button" class="causida" popovertarget="remira-tema">
+					<span class="etiqueta">{tria(T.tema)}</span>
+					<span class="valor">{tria(nomTema)}</span>
+				</button>
 				<div class="causida navega" role="group" aria-label={tria(T.paisatges)}>
 					<span class="etiqueta" aria-hidden="true">{tria(T.paisatges)}</span>
 					<span class="valor">
 						<button type="button" class="sageta" aria-label={tria(T.precedent)} onclick={() => paisatges?.precedent()}>‹</button>
-						<span class="compte-p"><span class="num">{nPaisatge + 1}</span> / {PAISATGES.length}</span>
+						<span class="compte-p"><span class="num">{nPaisatge + 1}</span> / {deTema(temaPaisatges).length}</span>
 						<button type="button" class="sageta" aria-label={tria(T.seguent)} onclick={() => paisatges?.seguent()}>›</button>
 					</span>
 				</div>
@@ -794,6 +813,19 @@
 					</ul>
 				</section>
 			{/each}
+		</div>
+
+		<div id="remira-tema" class="panel panel-pichon" popover role="group" aria-label={tria(T.tema)} ontoggle={tornarActiu}>
+			<h2>{tria(T.tema)}</h2>
+			<ul class="opcions">
+				{#each [{ id: null, nom: T.tot }, ...TEMAS] as t (t.id ?? 'tot')}
+					<li>
+						<button type="button" aria-pressed={temaPaisatges === t.id} onclick={() => causirTema(t.id)}>
+							<span class="nom">{tria(t.nom)}<span class="compte">{deTema(t.id).length}</span></span>
+						</button>
+					</li>
+				{/each}
+			</ul>
 		</div>
 
 		<div id="remira-fons" class="panel panel-pichon" popover role="group" aria-label={tria(T.fons)} ontoggle={tornarActiu}>
@@ -1314,6 +1346,11 @@
 	.opcions button[aria-pressed='true'] .nom {
 		color: var(--crema);
 		text-decoration-color: var(--aur-clar);
+	}
+	/* le compte d'un thème : hors du souligné du nom (Joan, 06-11) */
+	.opcions .nom .compte {
+		display: inline-block;
+		text-decoration: none;
 	}
 	.opcions .desc {
 		font-size: 0.8rem;
