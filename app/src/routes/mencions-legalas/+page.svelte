@@ -19,6 +19,9 @@
 			proprietatT: 'Proprietat intellectuala',
 			proprietat:
 				'Los contenguts d’aqueste site (tèxtes, illustracions, fichas de vocabulari) son l’òbra de l’editor, levat mencion contrària. Tota reproduccion demanda son acòrd.',
+			// Romain, 06-11 : dire que les illustrations faites par IA ne sont pas son œuvre
+			ia: 'Las illustracions marcadas « facha per l’IA » son pas l’òbra de l’editor : l’IA las a fachas. Tot es detalhat sus la pagina dedicada :',
+			iaLink: 'Las illustracions',
 			ligamsT: 'Ligams extèrnes',
 			ligams:
 				'Aqueste site mena cap a de sites tèrces (Lo Congrès, OPLO, CIRDOC e autres). Sèm pas responsables de lor contengut.',
@@ -41,6 +44,8 @@
 			proprietatT: 'Propriété intellectuelle',
 			proprietat:
 				'Les contenus de ce site (textes, illustrations, fiches de vocabulaire) sont l’œuvre de l’éditeur, sauf mention contraire. Toute reproduction nécessite son accord.',
+			ia: 'Les illustrations marquées « faite par IA » ne sont pas l’œuvre de l’éditeur : elles sont faites par IA. Tout est détaillé sur la page dédiée :',
+			iaLink: 'Les illustrations',
 			ligamsT: 'Liens externes',
 			ligams:
 				'Ce site renvoie vers des sites tiers (Lo Congrès, OPLO, CIRDOC et autres). Nous ne sommes pas responsables de leur contenu.',
@@ -63,6 +68,8 @@
 			proprietatT: 'Propiedad intelectual',
 			proprietat:
 				'Los contenidos de este sitio (textos, ilustraciones, fichas de vocabulario) son obra del editor, salvo mención en contrario. Toda reproducción requiere su acuerdo.',
+			ia: 'Las ilustraciones marcadas «hecha por IA» no son obra del editor: las ha hecho una IA. Todo se detalla en la página dedicada:',
+			iaLink: 'Las ilustraciones',
 			ligamsT: 'Enlaces externos',
 			ligams:
 				'Este sitio remite a sitios de terceros (Lo Congrès, OPLO, CIRDOC y otros). No somos responsables de su contenido.',
@@ -85,6 +92,8 @@
 			proprietatT: 'Intellectual property',
 			proprietat:
 				'The content of this site (texts, illustrations, vocabulary cards) is the work of the publisher, unless otherwise stated. Any reproduction requires the publisher’s agreement.',
+			ia: 'Illustrations marked “made by AI” are not the work of the publisher: they were made by AI. Full details are on the dedicated page:',
+			iaLink: 'The illustrations',
 			ligamsT: 'External links',
 			ligams:
 				'This site links to third-party sites (Lo Congrès, OPLO, CIRDOC and others). We are not responsible for their content.',
@@ -107,6 +116,8 @@
 			proprietatT: 'Propietat intel·lectual',
 			proprietat:
 				'Els continguts d’aquest web (textos, il·lustracions, fitxes de vocabulari) són obra de l’editor, tret que s’indiqui el contrari. Qualsevol reproducció requereix el seu acord.',
+			ia: 'Les il·lustracions marcades «feta per IA» no són obra de l’editor: les ha fetes una IA. Tot es detalla a la pàgina dedicada:',
+			iaLink: 'Les il·lustracions',
 			ligamsT: 'Enllaços externs',
 			ligams:
 				'Aquest web remet a llocs de tercers (Lo Congrès, OPLO, CIRDOC i altres). No som responsables del seu contingut.',
@@ -129,6 +140,8 @@
 			proprietatT: 'الملكية الفكرية',
 			proprietat:
 				'محتويات هذا الموقع (من نصوص ورسوم وبطاقات مفردات) هي من إنتاج الناشر، ما لم يُذكر خلاف ذلك. ويتطلّب أي استنساخ لها موافقته.',
+			ia: 'الرسوم التي تحمل عبارة «صنع بالذكاء الاصطناعي» ليست من إنتاج الناشر، بل صنعها الذكاء الاصطناعي. وتجد التفاصيل في الصفحة المخصّصة:',
+			iaLink: 'الرسومات',
 			ligamsT: 'روابط خارجية',
 			ligams:
 				'يحيل هذا الموقع إلى مواقع أطراف ثالثة (Lo Congrès، OPLO، CIRDOC وغيرها). ولسنا مسؤولين عن محتواها.',
@@ -202,6 +215,7 @@
 		<section>
 			<h2>{tx.proprietatT}</h2>
 			<p>{tx.proprietat}</p>
+			<p>{tx.ia} <a href="/illustracions">{tx.iaLink}</a></p>
 		</section>
 
 		<section>
@@ -272,6 +286,10 @@
 		margin: 0;
 		line-height: 1.6;
 		text-wrap: pretty;
+	}
+	/* deux paragraphes dans une section (illustrations faites par IA) */
+	p + p {
+		margin-top: 0.6rem;
 	}
 
 	a {
