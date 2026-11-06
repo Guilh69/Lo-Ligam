@@ -49,31 +49,41 @@ export function desplaçament(x, y, d, { O, P }, w, h) {
 	return [(ont(x, O[0]) - x) * w, (ont(y, O[1]) - y) * h];
 }
 
-const VS = 'attribute vec2 p; varying vec2 vUv; void main() { vUv = vec2(0.5 + 0.5 * p.x, 0.5 - 0.5 * p.y); gl_Position = vec4(p, 0.0, 1.0); }';
+const VS = 'attribute vec2 p; void main() { gl_Position = vec4(p, 0.0, 1.0); }';
 const FS = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
 precision mediump float;
-varying vec2 vUv;
+#endif
 uniform sampler2D uFoto;
 uniform sampler2D uProf;
 uniform vec2 uO;   // décalage pour un écart de profondeur de 1 (part de la photo)
 uniform float uP;  // grossissement en plus du proche
 uniform float uF;  // profondeur fixe
 uniform float uM;  // marge
+uniform vec2 uPix; // le canevas, en pixels réels
+uniform vec2 uRes; // le canevas, en pixels CSS (la boîte visible)
+uniform vec2 uW;   // le cadre de la photo (pixels CSS)
+uniform vec2 uT;   // son déplacement…
+uniform float uS;  // … et son grossissement (autour de son milieu), comme l'animation CSS
 vec2 mapa(vec2 uv, float d) {
 	float k = d - uF;
 	vec2 m = 0.5 + (uv - 0.5) / (1.0 + uP * k) - uO * k;
 	return 0.5 + (m - 0.5) * uM;
 }
 void main() {
-	float d = texture2D(uProf, vUv).r;
-	d = texture2D(uProf, mapa(vUv, d)).r;
-	gl_FragColor = vec4(texture2D(uFoto, mapa(vUv, d)).rgb, 1.0);
+	vec2 X = vec2(gl_FragCoord.x, uPix.y - gl_FragCoord.y) / uPix * uRes;
+	vec2 C = 0.5 * uW;
+	vec2 uv = (C + (X - uT - C) / uS) / uW;
+	float d = texture2D(uProf, uv).r;
+	d = texture2D(uProf, mapa(uv, d)).r;
+	gl_FragColor = vec4(texture2D(uFoto, mapa(uv, d)).rgb, 1.0);
 }`;
 
 /** Le moteur WebGL d'un canevas, ou null si le navigateur ne sait pas. */
 function motor(cv) {
-	// l'image dessinée est gardée : on ne redessine que quand le relief bouge, et les captures la voient
-	const gl = cv.getContext('webgl', { antialias: false, alpha: false, depth: false, preserveDrawingBuffer: true, powerPreference: 'low-power' });
+	const gl = cv.getContext('webgl', { antialias: false, alpha: false, depth: false, powerPreference: 'low-power' });
 	if (!gl) return null;
 	const sh = (tipe, src) => {
 		const o = gl.createShader(tipe);
@@ -96,14 +106,15 @@ function motor(cv) {
 	gl.enableVertexAttribArray(a);
 	gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
 	const loc = {};
-	for (const n of ['uO', 'uP', 'uF', 'uM']) loc[n] = gl.getUniformLocation(pr, n);
+	for (const n of ['uO', 'uP', 'uF', 'uM', 'uPix', 'uRes', 'uW', 'uT', 'uS']) loc[n] = gl.getUniformLocation(pr, n);
 	gl.uniform1i(gl.getUniformLocation(pr, 'uFoto'), 0);
 	gl.uniform1i(gl.getUniformLocation(pr, 'uProf'), 1);
 	gl.uniform1f(loc.uF, FIX);
 	gl.uniform1f(loc.uM, MARGE);
+	const tex = [gl.createTexture(), gl.createTexture()]; // la photo, la carte (réutilisées si la taille change)
 	const texturar = (unitat, im) => {
 		gl.activeTexture(gl.TEXTURE0 + unitat);
-		gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+		gl.bindTexture(gl.TEXTURE_2D, tex[unitat]);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, im);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -112,14 +123,17 @@ function motor(cv) {
 	};
 	return {
 		max: gl.getParameter(gl.MAX_TEXTURE_SIZE),
-		texturas(foto, carta) {
-			texturar(0, foto);
-			texturar(1, carta);
-		},
-		dessenhar({ O, P }) {
+		foto: (im) => texturar(0, im),
+		carta: (im) => texturar(1, im),
+		dessenhar({ O, P }, e, T, S) {
 			gl.viewport(0, 0, cv.width, cv.height);
 			gl.uniform2f(loc.uO, O[0], O[1]);
 			gl.uniform1f(loc.uP, P);
+			gl.uniform2f(loc.uPix, cv.width, cv.height);
+			gl.uniform2f(loc.uRes, e.W, e.H);
+			gl.uniform2f(loc.uW, e.w, e.h);
+			gl.uniform2f(loc.uT, T[0], T[1]);
+			gl.uniform1f(loc.uS, S);
 			gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 		},
 		destruir() {
@@ -143,12 +157,32 @@ function lectorProf(im) {
 }
 
 /**
- * Pose le relief sur un canevas placé par-dessus la photo, dans le même cadre
- * qui glisse. estat() rend { a, w, h, du, dv } : l'animation du glissement
- * (aller-retour adouci), la photo à l'écran et le glissement, ou null.
+ * La photo à la taille où elle paraît, une fois pour toutes : sans cela, une
+ * photo plus grande que l'écran scintille quand elle glisse d'une fraction de
+ * pixel (la mer de « calanca », Romain, 06-11).
+ */
+function aLaTalha(img, lw, lh) {
+	const c = document.createElement('canvas');
+	c.width = lw;
+	c.height = lh;
+	const x = c.getContext('2d');
+	x.imageSmoothingQuality = 'high';
+	x.drawImage(img, 0, 0, lw, lh);
+	return c;
+}
+
+/**
+ * Pose le relief sur un canevas qui couvre la boîte visible, sous le cadre qui
+ * glisse (où restent la photo, cachée une fois le relief prêt, et les points).
+ * Le canevas calcule lui-même le glissement, à chaque image, comme l'essai
+ * « Profondeur » : laissé au navigateur, un glissement si lent avance par
+ * pixels entiers, et donnait des à-coups (Romain, 06-11, deux fois).
+ * estat() rend { a, w, h, t0, t1, s1, W, H } ou null : l'animation CSS du cadre
+ * (aller-retour adouci, d'un déplacement t0 à t1 et d'un grossissement 1 à s1
+ * autour de son milieu), le cadre (w, h) et la boîte visible (W, H).
  * ponches() rend les éléments à déplacer avec leur objet : [[élément, x, y]].
- * Rend la fonction qui arrête tout. Le canevas reste invisible tant qu'il n'a
- * rien dessiné : dessous, la même photo, agrandie de la même marge.
+ * Rend la fonction qui arrête tout. À l'arrêt (pause, point ouvert), rien
+ * n'est redessiné.
  */
 export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 	const m = motor(cv);
@@ -157,18 +191,21 @@ export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 		raf = 0,
 		prof = null,
 		darrier = '',
+		talhaFoto = '',
 		ara = null; // les réglages dessinés
 	const remetre = () => {
 		for (const [el] of ponches()) {
 			el.style.transform = '';
 			delete el.dataset.rel;
 		}
+		img.style.opacity = '';
 	};
+	// mémoire graphique reprise : la photo revient, à sa taille
 	const perdut = (e) => {
 		e.preventDefault();
 		arrestar();
 		cv.style.display = 'none';
-		cv.parentElement?.classList.remove('releu'); // la photo de dessous reprend sa taille (Joan, 06-11)
+		img.style.scale = '1';
 	};
 	cv.addEventListener('webglcontextlost', perdut);
 	function arrestar() {
@@ -180,23 +217,36 @@ export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 		if (!viu) return;
 		raf = requestAnimationFrame(pas);
 		const e = estat();
-		if (!e) return;
+		if (!e || !e.W || !e.H) return;
 		const p = e.a?.effect?.getComputedTiming().progress ?? 0.5;
 		const r = Math.min(devicePixelRatio || 1, 1.5);
-		const lw = Math.min(Math.round(e.w * r), m.max, 4096),
-			lh = Math.min(Math.round(e.h * r), m.max, 4096);
-		const rg = reglatges(p, e.du, e.dv, e.w, e.h);
-		// redessiner seulement quand quelque chose a bougé d'un dixième de pixel
-		const clau2 = [lw, lh, Math.round(rg.O[0] * e.w * 10), Math.round(rg.O[1] * e.h * 10), Math.round(rg.P * e.w * 10)].join();
+		const lw = Math.min(Math.round(e.W * r), m.max, 4096),
+			lh = Math.min(Math.round(e.H * r), m.max, 4096);
+		const clau2 = `${lw}x${lh} ${e.w}x${e.h} ${p}`;
 		if (clau2 !== darrier) {
 			darrier = clau2;
+			const T = [e.t0[0] + (e.t1[0] - e.t0[0]) * p, e.t0[1] + (e.t1[1] - e.t0[1]) * p];
+			const S = 1 + (e.s1 - 1) * p;
+			const rg = reglatges(p, e.t0[0] - e.t1[0], e.t0[1] - e.t1[1], e.w, e.h);
 			ara = { rg, w: e.w, h: e.h };
 			if (cv.width !== lw || cv.height !== lh) {
 				cv.width = lw;
 				cv.height = lh;
 			}
-			m.dessenhar(rg);
-			cv.style.opacity = '1';
+			// la photo à la taille où elle paraît (jamais plus grande que l'originale)
+			const k = Math.min((e.w * r * e.s1) / img.naturalWidth, 1, m.max / img.naturalWidth, m.max / img.naturalHeight);
+			const tw = Math.round(img.naturalWidth * k),
+				th = Math.round(img.naturalHeight * k);
+			if (`${tw}x${th}` !== talhaFoto) {
+				talhaFoto = `${tw}x${th}`;
+				m.foto(aLaTalha(img, tw, th));
+			}
+			m.dessenhar(rg, e, T, S);
+			if (cv.style.opacity !== '1') {
+				cv.style.opacity = '1'; // d'un coup : il est sous la photo
+				img.style.transition = 'opacity 0.6s ease';
+				img.style.opacity = '0'; // la photo du cadre s'efface sur le relief, identique
+			}
 		}
 		// les points (et le mot qui vient de paraître) suivent leur objet
 		for (const [el, x, y] of ponches()) {
@@ -211,13 +261,14 @@ export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 	Promise.all([img.decode(), carta.decode()])
 		.then(() => {
 			if (!viu) return;
-			m.texturas(img, carta);
+			m.carta(carta);
 			prof = lectorProf(carta);
 			pas();
 		})
 		.catch(() => {}); // pas de carte : la photo, sans relief
 	return () => {
 		arrestar();
+		img.style.scale = '';
 		cv.removeEventListener('webglcontextlost', perdut);
 		m.destruir();
 	};

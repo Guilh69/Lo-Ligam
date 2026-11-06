@@ -14,7 +14,7 @@
 		H = $state(0);
 	let gran = $state(false);
 	let calme = $state(false);
-	let anim = null; // { a, w, h, du, dv }
+	let anim = null; // { a, w, h, t0, t1, s1, W, H }
 
 	$effect(() => {
 		calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -41,14 +41,15 @@
 			[{ transform: 'translate(0px, 0px) scale(1)' }, { transform: `translate(${-du}px, ${-dv}px) scale(1.04)` }],
 			{ duration: Math.max(28000, (Math.hypot(du, dv) / 14) * 1000), iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' }
 		);
-		anim = { a, w, h, du, dv };
+		anim = { a, w, h, t0: [0, 0], t1: [-du, -dv], s1: 1.04, W, H };
 		return () => {
 			a.cancel();
 			anim = null;
 		};
 	};
 
-	const relevarFoto = (cv) => relevar(cv, { clau: foto.clau, img: cv.previousElementSibling, estat: () => anim });
+	// le canevas, fixe sous le cadre, calcule lui-même le glissement (./releu.js)
+	const relevarFoto = (cv) => relevar(cv, { clau: foto.clau, img: cv.nextElementSibling.querySelector('img'), estat: () => anim });
 
 	// En grand : la boîte passe au bout de la page le temps de regarder (la carte
 	// qui la contient bouge et tourne : dedans, « fixed » ne couvrirait pas l'écran)
@@ -80,9 +81,9 @@
 <!-- en grand, les gestes de la carte (glisser pour trier) ne passent pas -->
 <div class="releu" class:gran bind:this={boita} onpointerdown={(e) => gran && e.stopPropagation()} role="presentation" {@attach portal}>
 	{#if viu && !calme}
+		<canvas aria-hidden="true" {@attach relevarFoto}></canvas>
 		<div class="quadre" {@attach glissar}>
 			<img src={camin(foto.clau, foto.amples[0])} srcset={srcset(foto)} sizes="100vw" alt="" draggable="false" />
-			<canvas aria-hidden="true" {@attach relevarFoto}></canvas>
 		</div>
 	{:else}
 		<img class="fixa" src={camin(foto.clau, foto.amples[0])} alt="" draggable="false" />
@@ -135,8 +136,7 @@
 		inset: 0;
 		width: 100%;
 		height: 100%;
-		opacity: 0;
-		transition: opacity 0.6s ease;
+		opacity: 0; /* jusqu'au premier dessin, sous la photo */
 		pointer-events: none;
 	}
 	.b-gran {
