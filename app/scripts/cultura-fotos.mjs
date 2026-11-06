@@ -17,12 +17,13 @@ const DEST = 'static/cultura';
 mkdirSync(DEST, { recursive: true });
 
 let total = 0;
-// recadrage en 3:2 autour du point pos (« x% y% ») de la fiche
+// recadrage en 3:2 autour du point pos (« x% y% ») de la fiche ; zoom > 1 :
+// un cadre plus serré (pour laisser hors champ un numéro de maison, par exemple)
 const RATIO = 3 / 2;
-async function tirar(id, src, pos, largors) {
+async function tirar(id, src, pos, largors, zoom = 1) {
 	const [px, py] = pos.split(' ').map((v) => parseFloat(v) / 100);
 	const { width: w, height: h } = await sharp(src).metadata();
-	const cw = Math.min(w, Math.round(h * RATIO)), ch = Math.round(cw / RATIO);
+	const cw = Math.round(Math.min(w, Math.round(h * RATIO)) / zoom), ch = Math.round(cw / RATIO);
 	const left = Math.round(Math.min(w - cw, Math.max(0, px * w - cw / 2)));
 	const top = Math.round(Math.min(h - ch, Math.max(0, py * h - ch / 2)));
 	for (const a of largors) {
@@ -56,7 +57,7 @@ for (const [id, c, dossier] of EXTERNS) {
 		console.warn(`source absente, images gardées telles quelles : ${src}`);
 		continue;
 	}
-	const cw = await tirar(id, src, c.pos, amples(id));
+	const cw = await tirar(id, src, c.pos, amples(id), c.zoom);
 	if (cw !== c.largor) throw new Error(`${id} : largor ${c.largor} dans imatges.js, ${cw} en vrai`);
 	if (c.objecte) {
 		// l'objet entier, sans recadrage, pour le bout de la case de la fiche
