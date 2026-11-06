@@ -3,6 +3,7 @@
 import { describe, it, expect } from 'vitest';
 import { existsSync } from 'node:fs';
 import { PAISATGES, MOTS, TEMAS, camin, deTema } from './paisatges.js';
+import { GARDATS, cartaDe, reglatges, desplaçament, font } from './releu.js';
 
 // les tests tournent depuis app/ (comme fichas.test.js)
 const statique = 'static';
@@ -58,5 +59,33 @@ describe('paysages', () => {
 						q = p.h / Math.max(p.l, p.h);
 					expect(Math.hypot((xa - xb) * r, (ya - yb) * q), `${p.clau} : ${a} / ${b}`).toBeGreaterThan(0.12);
 				}
+	});
+
+	it('le relief : chaque photo a sa carte de profondeur, seules des photos connues sont gardées', () => {
+		for (const p of PAISATGES) expect(existsSync(statique + cartaDe(p.clau)), p.clau).toBe(true);
+		const claus = new Set(PAISATGES.map((p) => p.clau));
+		for (const c of GARDATS) expect(claus.has(c), c).toBe(true);
+	});
+
+	it('le relief reste dans sa marge, et les points suivent leur objet', () => {
+		for (const p of [0, 0.25, 0.5, 1])
+			for (const [du, dv] of [
+				[3000, 0],
+				[0, 3000],
+				[300, 80]
+			]) {
+				const rg = reglatges(p, du, dv, 1000, 800);
+				for (const d of [0, 0.2, 0.45, 0.8, 1]) {
+					// les bords du canevas prennent toujours dans la photo : rien ne s'étire
+					for (const u of [0, 1]) {
+						expect(font(u, d, rg.O[0], rg.P), `p ${p} d ${d}`).toBeGreaterThanOrEqual(0);
+						expect(font(u, d, rg.O[0], rg.P), `p ${p} d ${d}`).toBeLessThanOrEqual(1);
+					}
+					// un point d'or déplacé retombe sur le même endroit de la photo
+					const [dx, dy] = desplaçament(0.3, 0.7, d, rg, 1000, 800);
+					expect(font(0.3 + dx / 1000, d, rg.O[0], rg.P)).toBeCloseTo(0.3, 3);
+					expect(font(0.7 + dy / 800, d, rg.O[1], rg.P)).toBeCloseTo(0.7, 3);
+				}
+			}
 	});
 });

@@ -21,9 +21,15 @@ import { dirname, join } from 'node:path';
 
 const racina = join(dirname(fileURLToPath(import.meta.url)), '..');
 
-const FICHA_PUBLICADA = '_essai--publicada';
-const FICHA_RESCONDIDA = '_essai--rescondida';
-const FICHA_PIRATA = '_essai--pirata';
+// Les fiches du contrôle : supabase/supabase-verrolhs-fichas.sql (06-11). Les
+// « _essai » d'origine ont été effacées par l'import des vraies fiches, qui
+// nettoie « _essai% » ; « _verrolh » lui échappe, et le site ne montre aucune
+// ligne dont le nom commence par « _ » (lib/data/fichasFont.js).
+const FICHA_PUBLICADA = '_verrolh--publicada';
+const FICHA_RESCONDIDA = '_verrolh--rescondida';
+const FICHA_PIRATA = '_verrolh--pirata';
+const TEMA_VERROLH = '_verrolh';
+const TITRE_PUBLICADA = 'Contrôle de sécurité, ne pas toucher (fiche publiée)';
 
 // Sortie propre : on pose le code de sortie et on laisse Node se terminer de
 // lui-même. Un process.exit() brutal pendant qu'une requête réseau est encore
@@ -70,7 +76,11 @@ async function verificarLectura(supabase) {
 	seccion("1. Ce qu'un visiteur a le droit de LIRE");
 
 	const publicada = await supabase.from('fichas').select('id').eq('id', FICHA_PUBLICADA);
-	verificar('Une fiche publiée est bien visible', publicada.data?.length === 1);
+	verificar(
+		'Une fiche publiée est bien visible',
+		publicada.data?.length === 1,
+		publicada.data?.length ? '' : "fiche de contrôle absente : coller supabase/supabase-verrolhs-fichas.sql, avec l'accord de Romain"
+	);
 
 	const rescondida = await supabase.from('fichas').select('id').eq('id', FICHA_RESCONDIDA);
 	verificar(
@@ -124,7 +134,7 @@ async function verificarEscritura(supabase) {
 
 	await supabase.from('fichas').insert({
 		id: FICHA_PIRATA,
-		tema_id: '_essai',
+		tema_id: TEMA_VERROLH,
 		titre: 'Ajoutée par un inconnu',
 		mini_url: '/x.webp',
 		grand_url: '/x.webp'
@@ -137,7 +147,7 @@ async function verificarEscritura(supabase) {
 	const titre = modificat.data?.[0]?.titre;
 	verificar(
 		'MODIFIER une fiche est refusé',
-		titre === "Fiche d'essai publiée",
+		titre === TITRE_PUBLICADA,
 		`titre après tentative : « ${titre} »`
 	);
 

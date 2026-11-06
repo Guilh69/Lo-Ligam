@@ -21,6 +21,8 @@
 	import Polsa from '$lib/plueja/Polsa.svelte';
 	import Paisatges from '$lib/paisatges/Paisatges.svelte';
 	import { TEMAS, deTema } from '$lib/paisatges/paisatges.js';
+	import { GARDATS } from '$lib/paisatges/releu.js';
+	import { dev } from '$app/environment';
 	import { carnet, demarrerCarnet } from '$lib/carnet/carnet.svelte.js';
 	import { aRevoir } from '$lib/carnet/regles.js';
 
@@ -69,6 +71,8 @@
 		det: { oc: 'Lisa lo det', fr: 'Fais glisser ton doigt', es: 'Desliza el dedo', en: 'Slide your finger', ca: 'Llisca el dit', ar: 'مرّر إصبعك' }, // lo Congrès : glisser → lisar, doigt → det ; même tournure que l'accueil (motor.js)
 		forca: { oc: 'Fòrça', fr: 'Intensité', es: 'Intensidad', en: 'Intensity', ca: 'Intensitat', ar: 'الشدة' },
 		son: { oc: 'Son', fr: 'Son', es: 'Sonido', en: 'Sound', ca: 'So', ar: 'الصوت' },
+		// le relief des paysages (06-11) ; lo Congrès : relief → relèu ; es/en/ca/ar à relire par Aran
+		relèu: { oc: 'Relèu', fr: 'Relief', es: 'Relieve', en: 'Depth', ca: 'Relleu', ar: 'العمق' },
 		pausa: { oc: 'Pausa', fr: 'Pause', es: 'Pausa', en: 'Pause', ca: 'Pausa', ar: 'إيقاف مؤقت' },
 		plenEcran: { oc: 'Plen ecran', fr: 'Plein écran', es: 'Pantalla completa', en: 'Full screen', ca: 'Pantalla completa', ar: 'ملء الشاشة' },
 		rodeta: { oc: 'Vira la rodeta', fr: 'Fais tourner la molette', es: 'Gira la rueda del ratón', en: 'Turn the mouse wheel', ca: 'Gira la roda del ratolí', ar: 'حرّك عجلة الفأرة' },
@@ -97,6 +101,11 @@
 	let tactil = $state(false);
 	let plenPossible = $state(false);
 	let calme = $state(false); // préférence « réduire les animations »
+	// Le relief des paysages, en option (Romain, 06-11) : seulement sur les photos
+	// gardées dans Triar ; en local, ?releu=totas le montre sur toutes
+	let relèu = $state(false);
+	let relèuTotas = $state(false);
+	const relèuPossible = $derived(!calme && (relèuTotas || GARDATS.size > 0));
 	let mots = $state([]);
 	// Deux mouvements (Romain, 04-11) : la pluie, ou la poussière d'or qui
 	// dessine chaque mot et glisse vers le suivant au rythme de la molette.
@@ -136,7 +145,7 @@
 	const CLAU_REMIRA = 'lo-ligam-remira';
 	function gardar() {
 		try {
-			localStorage.setItem(CLAU_REMIRA, JSON.stringify({ fons: fonsFoto ? 'foto' : 'cel', guida: true }));
+			localStorage.setItem(CLAU_REMIRA, JSON.stringify({ fons: fonsFoto ? 'foto' : 'cel', guida: true, relèu }));
 		} catch {
 			/* mode privé : le choix vaut pour la visite */
 		}
@@ -583,6 +592,8 @@
 			/* stockage indisponible : fond calme et explication, comme une première fois */
 		}
 		fonsFoto = prefs.fons === 'foto';
+		relèu = prefs.relèu === true;
+		relèuTotas = dev && new URLSearchParams(location.search).get('releu') === 'totas';
 		if (fonsFoto) fotosDemandadas[scenaId] = true;
 		if (!prefs.guida) {
 			guidaActiva = true;
@@ -699,7 +710,7 @@
 		/>
 	{:else if mòde === 'paisatges'}
 		{#key temaPaisatges}
-			<Paisatges bind:this={paisatges} bind:n={nPaisatge} tema={temaPaisatges} {pausa} {calme} />
+			<Paisatges bind:this={paisatges} bind:n={nPaisatge} tema={temaPaisatges} {pausa} {calme} {relèu} {relèuTotas} />
 		{/key}
 	{/if}
 
@@ -853,6 +864,16 @@
 					<input type="range" min="0" max="1" step="0.05" bind:value={fons} />
 				</label>
 				<button type="button" aria-pressed={sonAtiu} onclick={bascularSon}>{tria(T.son)}</button>
+			{/if}
+			{#if mòde === 'paisatges' && relèuPossible}
+				<button
+					type="button"
+					aria-pressed={relèu}
+					onclick={() => {
+						relèu = !relèu;
+						gardar();
+					}}>{tria(T.relèu)}</button
+				>
 			{/if}
 			<button type="button" aria-pressed={pausa} onclick={() => (pausa = !pausa)}>{tria(T.pausa)}</button>
 			{#if plenPossible}
