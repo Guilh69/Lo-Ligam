@@ -102,8 +102,8 @@ export const COMMONS = {
 	// le rouge et l'or : le drapeau occitan dans le ciel du Burgaud. Romain,
 	// 06-11 : « la croix que tu choisis n'a pas les couleurs rouge et or »
 	// (une porte à croix dorée, essayée une heure) ; choisi parmi trois.
-	// colors : la seule photo laissée en couleurs, sans la teinte du thème,
-	// puisque la fiche parle justement de ses couleurs
+	// Teinté comme les autres (Romain : laissé seul en couleurs, « ça fait
+	// bizarre ») ; ses vraies couleurs reviennent au survol, comme pour toutes
 	'roge-e-aur': {
 		font: 'roge-e-aur-luka-martin.jpg',
 		// cadre un peu serré, calé à gauche : le drapeau passe à droite, hors
@@ -112,7 +112,6 @@ export const COMMONS = {
 		pos: '0% 34%',
 		zoom: 1.23,
 		posFicha: '50% 30%',
-		colors: true,
 		autor: 'Luka Martin 01',
 		licencia: 'CC0',
 		licenciaLigam: 'https://creativecommons.org/publicdomain/zero/1.0/deed.fr',
@@ -152,8 +151,6 @@ export const amples = (id) => {
 };
 export const foto = (id) => FOTOS[id] ?? extern(id);
 export const credit = (id) => COMMONS[id] ?? null;
-/** photo laissée en couleurs, sans la teinte du thème (le rouge et l'or) */
-export const colors = (id) => !!extern(id)?.colors;
 /** srcset des petites images ; max : largeur la plus grande proposée (800 au sommaire) */
 export const srcset = (id, max = 800) =>
 	amples(id)
