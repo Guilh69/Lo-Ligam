@@ -207,12 +207,25 @@ async function verificarEscritura(supabase) {
 	// prêtes dans une remarque ; l'IA ne lit les validations qu'avec sa clé.
 	const ambOpcions = await supabase.from('remarcas').insert({ ...nòta, opcions: ['A', 'B'] });
 	verificar('GLISSER des réponses toutes prêtes sans compte est refusé', !!ambOpcions.error);
+	// L'anonyme n'a aucun droit sur la table : refusé = erreur, même quand la
+	// table est vide (un tableau vide ne prouverait rien ; Rodrigo, 06-11)
 	const legirValidacions = await supabase.from('validacions').select('clau').limit(1);
-	verificar('LIRE les validations sans compte est refusé', !!legirValidacions.error || !legirValidacions.data?.length);
+	verificar('LIRE les validations sans compte est refusé', !!legirValidacions.error);
 	const validacion = await supabase.from('validacions').insert({ tipe: 'element', clau: '_verrolh', empremta: '0'.repeat(64) });
 	verificar('VALIDER un texte sans compte est refusé', !!validacion.error);
+	const cambiValidacion = await supabase.from('validacions').update({ empremta: '0'.repeat(64) }).eq('tipe', 'element');
+	verificar('CHANGER une validation sans compte est refusé', !!cambiValidacion.error);
+	const suprimirValidacion = await supabase.from('validacions').delete().eq('tipe', 'element');
+	verificar('EFFACER une validation sans compte est refusé', !!suprimirValidacion.error);
 	const legirIA = await supabase.rpc('ia_legir_validacions', { p_clau_secreta: 'pas-la-bona' });
 	verificar('LIRE les validations au nom de l’IA sans sa clé est refusé', !!legirIA.error);
+	const legirIAVoida = await supabase.rpc('ia_legir_validacions', { p_clau_secreta: '' });
+	verificar('LIRE les validations au nom de l’IA avec une clé vide est refusé', !!legirIAVoida.error);
+	const demandaOpcions = await supabase.rpc('ia_demandar', { p_clau_secreta: 'pas-la-bona', p_pagina: '/_essai-verrolhs', p_text: 'Essai', p_autor: 'IA', p_opcions: ['A', 'B'] });
+	verificar('POSER une question à boutons au nom de l’IA sans sa clé est refusé', !!demandaOpcions.error);
+	// « /\ailleurs.com » mènerait hors du site depuis « Veire sus la pagina »
+	const barraInversa = await supabase.from('remarcas').insert({ ...nòta, pagina: '/\\_essai-verrolhs' });
+	verificar('ENVOYER une remarque dont l’adresse a une barre inverse est refusé', !!barraInversa.error);
 
 	// La tentative la plus grave : se déclarer administrateur.
 	const promocion = await supabase

@@ -589,7 +589,7 @@
 				</p>
 				<div class="accions">
 					{#if nA && vSegur}
-						<span>Valider les {nA} textes à tirets ?</span>
+						<span>Valider les {nA} textes encore à valider sur cette page ?</span>
 						<button type="button" class="primari" onclick={totBonV} disabled={vOcupat}>Òc</button>
 						<button type="button" class="segond" onclick={() => (vSegur = false)}>Non</button>
 					{:else if nA}

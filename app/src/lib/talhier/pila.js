@@ -8,6 +8,12 @@
 // page par page, enfin les fiches de grammaire. « Mai tard » envoie une carte
 // au bout de la pile.
 
+/** Le lien vers l'endroit d'une note. La base exige une adresse qui commence
+ *  par « / », mais « //ailleurs.com » en est une, et « /\ailleurs.com » aussi
+ *  (le navigateur lit la barre inverse comme une barre ; Rodrigo, 06-11) : seul
+ *  un chemin du site passe, sinon le lien mène à l'accueil. */
+export const ligamNota = (r) => `${/^\/(?![/\\])/.test(r.pagina ?? '') ? r.pagina : '/'}?nota=${r.id}`;
+
 /** Les pages modifiables sur place (iniciar('…') dans src/routes) et leur
  *  adresse. Une page de plus : une ligne ici (pila.test.js le vérifie). */
 export const CAMINS = {

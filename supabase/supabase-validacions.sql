@@ -113,6 +113,15 @@ alter table public.remarcas add constraint remarcas_opcions_bonas check (
 	and (opcions is null or per = 'romain')
 );
 
+-- L'adresse d'une remarque n'a pas de barre inverse (Rodrigo, 06-11) : le
+-- navigateur lit « /\ailleurs.com » comme « //ailleurs.com », un autre site.
+-- Le lien « Veire sus la pagina » se garde déjà (ligamNota, pila.js) ; la
+-- base refuse en plus de l'enregistrer. chr(92) est la barre inverse.
+alter table public.remarcas drop constraint if exists remarcas_pagina_camin;
+alter table public.remarcas add constraint remarcas_pagina_camin check (
+	strpos(pagina, chr(92)) = 0
+);
+
 -- Les visiteurs et les proches : comme au lot 1 (supabase-notas.sql), et
 -- jamais d'options
 drop policy if exists "remarcas : envoyer" on public.remarcas;

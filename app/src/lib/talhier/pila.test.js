@@ -3,7 +3,7 @@
 import { describe, it, expect } from 'vitest';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { fargarCartas, estatElement, CAMINS } from './pila.js';
+import { fargarCartas, estatElement, CAMINS, ligamNota } from './pila.js';
 import { tèxteElement, tèxteFicha, empremta } from './empremtas.js';
 
 const nota = (o) => ({ estat: 'dubèrta', vista: false, de_romain: false, per: 'ia', clau: null, pagina: '/', ...o });
@@ -85,5 +85,15 @@ describe('pila : les empreintes', () => {
 	it('une fiche passée à « validada » garde son empreinte', () => {
 		expect(tèxteFicha({ id: 'a', validada: false, ecrans: [1] })).toBe(tèxteFicha({ id: 'a', validada: true, ecrans: [1] }));
 		expect(tèxteFicha({ id: 'a', ecrans: [1] })).not.toBe(tèxteFicha({ id: 'a', ecrans: [2] }));
+	});
+});
+
+describe('ligamNota', () => {
+	it('mène vers un chemin du site, jamais ailleurs', () => {
+		expect(ligamNota({ id: 3, pagina: '/apren/visio' })).toBe('/apren/visio?nota=3');
+		expect(ligamNota({ id: 3, pagina: '//ailleurs.com' })).toBe('/?nota=3');
+		expect(ligamNota({ id: 3, pagina: '/\\ailleurs.com' })).toBe('/?nota=3');
+		expect(ligamNota({ id: 3, pagina: 'https://ailleurs.com' })).toBe('/?nota=3');
+		expect(ligamNota({ id: 3, pagina: null })).toBe('/?nota=3');
 	});
 });

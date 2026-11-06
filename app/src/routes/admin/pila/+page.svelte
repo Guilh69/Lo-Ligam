@@ -6,7 +6,7 @@
 	// grammaire. Même geste que Triar :
 	//   → ou glisser à droite : Bon (le texte est validé, ou la réponse vue) ;
 	//   ← ou glisser à gauche : Corregir (une note pour l'IA, sur l'élément) ;
-	//   ↑ : Question (à l'IA, sur l'élément) ; ↓ : Mai tard (au bout de la pile) ;
+	//   ↑ : Demandar (une question à l'IA, sur l'élément) ; ↓ : Mai tard (au bout de la pile) ;
 	//   1 à 6 : une réponse toute prête ; Ctrl+Z : revenir sur le dernier geste.
 	import { onMount, tick, untrack } from 'svelte';
 	import { page } from '$app/state';
@@ -330,6 +330,7 @@
 		<p class="sòrta"><span lang="oc">Responsa</span> · {c.r.autor_responsa ?? 'IA'}</p>
 		<p class="nòta"><span class="qui">{c.r.de_romain ? 'Ta note' : `Remarque de ${c.r.autor ?? 'quelqu’un'}`} :</span> {c.r.tèxte}</p>
 		<p class="responsa">{c.r.responsa ?? (c.r.estat === 'escartada' ? 'Écartée, sans explication.' : 'Fait.')}</p>
+		{#if viu}<p class="ont">C’est fait comme tu voulais : <span lang="oc">Bon</span>. Il manque quelque chose : <span lang="oc">Pas encara</span>.</p>{/if}
 		{#if viu}<a class="veire" href={ligamNota(c.r)} lang="oc">Veire sus la pagina</a>{/if}
 	{/if}
 {/snippet}
@@ -408,7 +409,7 @@
 				</div>
 			{:else}
 				<div class="grands">
-					<button type="button" class="b-corregir" onclick={() => obrir(actual.tipe === 'responsa' ? 'precision' : 'corregir')} disabled={mandant} title="Flèche gauche">
+					<button type="button" class="b-corregir" onclick={() => obrir(actual.tipe === 'responsa' ? 'precision' : 'corregir')} disabled={mandant} title={actual.tipe === 'responsa' ? 'Pas encore : dire ce qui manque, la note repart vers l’IA (flèche gauche)' : 'Corriger le texte (flèche gauche)'}>
 						<span aria-hidden="true">←</span> <span lang="oc">{actual.tipe === 'responsa' ? 'Pas encara' : 'Corregir'}</span>
 					</button>
 					<button type="button" class="b-bon" onclick={bonCarta} disabled={mandant} title="Flèche droite">
@@ -421,8 +422,8 @@
 					<span aria-hidden="true">↶</span> <span lang="oc">Tornar</span>
 				</button>
 				{#if actual.tipe === 'element' || actual.tipe === 'ficha'}
-					<button type="button" class="segond" onclick={() => obrir('question')} disabled={mandant} title="Flèche haut">
-						<span aria-hidden="true">↑</span> <span lang="oc">Question</span>
+					<button type="button" class="segond" onclick={() => obrir('question')} disabled={mandant} title="Poser une question à l’IA (flèche haut)">
+						<span aria-hidden="true">↑</span> <span lang="oc">Demandar</span>
 					</button>
 				{/if}
 				<button type="button" class="segond" onclick={maiTardCarta} disabled={mandant} title="Flèche bas">
@@ -451,7 +452,20 @@
 		{/if}
 
 		{#if error}<p class="msg error" role="alert">{error}</p>{/if}
-		<p class="tecas">Au clavier : → <span lang="oc">Bon</span> · ← <span lang="oc">Corregir</span> · ↑ <span lang="oc">Question</span> · ↓ <span lang="oc">Mai tard</span> · Ctrl+Z pour revenir</p>
+		{#if actual}
+			<p class="tecas">
+				Au clavier :
+				{#if actual.tipe === 'question'}
+					{#if actual.r.opcions?.length}1 à {actual.r.opcions.length} une réponse prête ·{/if}
+					↑ <span lang="oc">{actual.r.opcions?.length ? 'Autra responsa' : 'Respondre'}</span>
+				{:else if actual.tipe === 'responsa'}
+					→ <span lang="oc">Bon</span> · ← <span lang="oc">Pas encara</span>
+				{:else}
+					→ <span lang="oc">Bon</span> · ← <span lang="oc">Corregir</span> · ↑ <span lang="oc">Demandar</span>
+				{/if}
+				· ↓ <span lang="oc">Mai tard</span> · Ctrl+Z pour revenir
+			</p>
+		{/if}
 	{/if}
 	<p class="anonci" role="status" aria-live="polite">{anonci}</p>
 </section>
