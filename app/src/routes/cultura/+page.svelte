@@ -19,6 +19,7 @@
 	import PaginaSimpla from '$lib/components/PaginaSimpla.svelte';
 	import Bulla from '$lib/components/Bulla.svelte';
 	import Crotz from '$lib/components/Crotz.svelte';
+	import MencionIA from '$lib/components/MencionIA.svelte';
 	import { flip } from '$lib/components/flip.js';
 	import { FICHAS, TEMAS, IU, nomModul } from '$lib/cultura/index.js';
 	import { foto, srcset, COMMONS } from '$lib/cultura/imatges.js';
@@ -149,6 +150,10 @@
 			</li>
 		{/each}
 	</ul>
+	<!-- les fiches sans photo montrent un dessin de Remira, fait par IA (06-11) -->
+	{#if fichas.some((f) => !foto(f.id) && data.dessenhs[f.id]?.length)}
+		<MencionIA forma="linha" quina="dessenh" />
+	{/if}
 	<!-- crédit des photos libres de Wikimedia Commons (licence CC BY-SA) -->
 	<p class="credits" lang={lang}>
 		{tria(IU.fotosCommons)}

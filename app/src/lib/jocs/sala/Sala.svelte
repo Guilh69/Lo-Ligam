@@ -13,6 +13,7 @@
 	import { CAPACITATS, FAMILHAS, jocsDe } from './cataleg.js';
 	import Afica from './Afica.svelte';
 	import Emblema from './Emblema.svelte';
+	import MencionIA from '$lib/components/MencionIA.svelte';
 
 	let { tema = 'joios', causirTema = () => {} } = $props();
 
@@ -64,7 +65,7 @@
 	<div class="familhas">
 		{#each familhas as f, k (f.id)}
 			<section class="familha f-{f.id}" style="--k: {k}" aria-labelledby="fam-{f.id}">
-				<div class="quadre"><Afica id={f.afica} {tema} /></div>
+				<div class="quadre"><Afica id={f.afica} {tema} /><MencionIA cadre /></div>
 				<h3 id="fam-{f.id}" class="familha-nom" lang={lg(f)}>{tria(f)}</h3>
 				<ul class="jocs">
 					{#each f.jocs as j (j.id)}
@@ -231,8 +232,11 @@
 		align-content: start;
 		gap: 0.9rem;
 	}
+	/* la marge basse porte la signature « facha per l'IA » (Romain, 06-11 :
+	   « Signature et ligne », MencionIA) */
 	.quadre {
-		padding: 0.5rem;
+		position: relative;
+		padding: 0.5rem 0.5rem 1.9rem;
 		border: 1px solid var(--t-linha);
 		background: var(--t-fons-2);
 	}
@@ -389,6 +393,11 @@
 		--f-linha: rgba(251, 241, 225, 0.28);
 	}
 	.joios .quadre {
+		/* cadre crème sur toutes les cartes : la signature prend l'encre sombre,
+		   pas la teinte claire de la carte (sinon crème sur crème) */
+		--mencion-tinta: rgba(42, 26, 16, 0.86);
+		--mencion-tinta-fort: #2a1a10;
+		--mencion-trait: #b53d17;
 		border: none;
 		background: #fbf6ee;
 		box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.7);

@@ -5,6 +5,7 @@
 	// sont dans $lib/plueja/dessenhs.js, les mots dans $lib/plueja/scenas.js.
 	import { SCENAS, GROPS } from '$lib/plueja/scenas.js';
 	import { cheminsDe, TINTAS } from '$lib/plueja/dessenhs.js';
+	import MencionIA from '$lib/components/MencionIA.svelte';
 
 	const ambiancas = GROPS.flatMap((g) =>
 		SCENAS.filter((s) => s.grop === g.id).map((s) => {
@@ -34,6 +35,7 @@
 			{nDessenhs} mots dessinés sur {nMots}. Les mots sans dessin se forment quand même, en poussière, sans
 			image. Les dessins se voient en mouvement sur <a href="/apren/remira">Remira</a>.
 		</p>
+		<MencionIA forma="linha" />
 	</header>
 
 	{#each ambiancas as a (a.id)}
@@ -68,6 +70,10 @@
 	.dessenhs {
 		--crema: #f7f3ee;
 		--aur-clar: #ffd47f;
+		/* la ligne « facha per l'IA » : page toujours sombre, couleurs fixes */
+		--mencion-tinta: rgba(247, 243, 238, 0.66);
+		--mencion-tinta-fort: #f7f3ee;
+		--mencion-trait: #ef6a35;
 		background: #0b1517;
 		color: var(--crema);
 		font-family: var(--font-body);
