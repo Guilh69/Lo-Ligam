@@ -134,7 +134,9 @@ export const MOTS = {
 	'lo solelh': 'le soleil',
 	'la baranda': 'la rambarde',
 	// 06-11, lot 4 (fèstas e lésers) : lo Congrès (sapin → sap en lengadoc, drapeau → drapèl, cheminée → cheminièra, rail → ralh, manège → manètge), genre d'après lo Basic
-	'lo camion': 'le camion',
+	'lo forgon': 'le fourgon',
+	'l’immòble': 'l’immeuble',
+	'la vapor': 'la vapeur',
 	'l’escala': 'l’échelle',
 	'lo ralh': 'le rail',
 	'lo sap': 'le sapin',
@@ -1016,7 +1018,7 @@ export const PAISATGES = [
 		mots: [
 			['lo ris', 0.3, 0.88],
 			['la cambaròta', 0.77, 0.51],
-			['lo fum', 0.4, 0.18]
+			['la vapor', 0.4, 0.18]
 		]
 	},
 	{
@@ -1182,9 +1184,8 @@ export const PAISATGES = [
 		h: 1440,
 		alt: 'Un fourgon aménagé garé dans un pré, toutes portes ouvertes : un lit à l’arrière, une table pliante à côté, de grands arbres derrière.',
 		mots: [
-			['lo camion', 0.35, 0.38],
+			['lo forgon', 0.35, 0.38],
 			['la pòrta', 0.78, 0.45],
-			['la taula', 0.95, 0.65],
 			['l’èrba', 0.3, 0.88],
 			['l’arbre', 0.5, 0.1]
 		]
@@ -1199,7 +1200,7 @@ export const PAISATGES = [
 		mots: [
 			['la piscina', 0.5, 0.5],
 			['l’escala', 0.91, 0.6],
-			['l’ostal', 0.77, 0.1],
+			['l’immòble', 0.77, 0.1],
 			['l’arbre', 0.26, 0.24]
 		]
 	},
@@ -1253,7 +1254,7 @@ export const PAISATGES = [
 		alt: 'Une rue piétonne décorée de milliers de boules roses et bleues suspendues, entre un immeuble de brique et de pierre blanche.',
 		mots: [
 			['la bòla', 0.3, 0.81],
-			['l’ostal', 0.72, 0.35],
+			['l’immòble', 0.72, 0.35],
 			['lo cèl', 0.3, 0.14],
 			['l’arbre', 0.15, 0.51]
 		]
@@ -1320,13 +1321,13 @@ export const PAISATGES = [
 		tema: 'festas',
 		amples: [1024, 1920],
 		l: 1920,
-		h: 1440,
+		h: 1094,
 		alt: 'Un grand stade de football plein à la tombée du jour : la pelouse sous les projecteurs, des tribunes peintes de bleu et de rouge.',
 		mots: [
-			['l’estadi', 0.84, 0.47],
-			['l’èrba', 0.62, 0.56],
-			['lo projector', 0.05, 0.29],
-			['lo cèl', 0.5, 0.1]
+			['l’estadi', 0.84, 0.618],
+			['l’èrba', 0.62, 0.737],
+			['lo projector', 0.05, 0.382],
+			['lo cèl', 0.5, 0.132]
 		]
 	},
 	// ── Lot 5 des thèmes : compléments de la mar e la montanha (06-11) ──
@@ -1607,7 +1608,7 @@ export const TEMAS = [
 	{ id: 'vila', nom: { oc: 'La vila', fr: 'La ville', es: 'La ciudad', en: 'The town', ca: 'La ciutat', ar: 'المدينة' } },
 	{ id: 'monuments', nom: { oc: 'Los monuments', fr: 'Les monuments', es: 'Los monumentos', en: 'Landmarks', ca: 'Els monuments', ar: 'المعالم' } },
 	{ id: 'taula', nom: { oc: 'A taula', fr: 'À table', es: 'A la mesa', en: 'At the table', ca: 'A taula', ar: 'على المائدة' } },
-	{ id: 'temps', nom: { oc: 'Lo temps que fa', fr: 'Le temps qu’il fait', es: 'El tiempo', en: 'The weather', ca: 'El temps', ar: 'الطقس' } },
+	{ id: 'temps', nom: { oc: 'Lo temps que fa', fr: 'Le temps qu’il fait', es: 'El tiempo que hace', en: 'The weather', ca: 'El temps que fa', ar: 'الطقس' } },
 	{ id: 'festas', nom: { oc: 'Fèstas e lésers', fr: 'Fêtes et loisirs', es: 'Fiestas y ocio', en: 'Festivities and leisure', ca: 'Festes i lleure', ar: 'الأعياد والترفيه' } }
 ];
 
