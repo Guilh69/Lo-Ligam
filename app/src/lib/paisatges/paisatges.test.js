@@ -1,4 +1,4 @@
-// Paysages de Remira et du jeu « Ont es… ? » : chaque point est sur la photo,
+// Paysages de Remira et du jeu « Pausa los mots » : chaque point est sur la photo,
 // chaque mot a son français, chaque fichier existe.
 import { describe, it, expect } from 'vitest';
 import { existsSync } from 'node:fs';

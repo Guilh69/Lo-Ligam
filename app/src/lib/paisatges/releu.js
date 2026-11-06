@@ -1,3 +1,5 @@
+import { PAISATGES } from './paisatges.js';
+
 // Relèu : l'option « relief » de Remira › Paisatges (Romain, 06-11 : l'essai
 // « Profondeur » lui plaît ; « il faut le mettre en option et d'abord dans un
 // sas de validation »). La photo reste entière ; sa carte de profondeur
@@ -5,13 +7,19 @@
 // pendant le glissement, ce qui est proche bouge à peine plus que le fond.
 //
 // Le sas : chaque photo passe d'abord dans Triar (/admin/triar, lot « releu »).
-// Seules les photos gardées d'un cœur ont le relief sur le site : leurs clés
-// vont dans GARDATS, recopiées depuis `node scripts/triar.mjs --lot releu --gardats`.
+// Romain, 06-11 : « je ne vais pas revérifier […] que l'animation est stable
+// pour chaque photo » ; Claude a donc fait le tri : l'étirement de chaque photo
+// mesuré au plus fort du glissement, puis les douze cas les plus marqués
+// regardés à l'œil. Une seule perd le relief (REFUSATS) ; une croix dans Triar
+// en ajoute une autre ici.
 // Sans WebGL, sans carte, si le téléphone reprend la mémoire graphique, ou si
 // l'appareil demande moins d'animation : la photo, sans relief.
 
-/** Les photos dont Romain a gardé le relief dans Triar (clés de paisatges.js). */
-export const GARDATS = new Set([]);
+/** Les photos sans relief : vila-teulats, la rambarde toute proche tord les piliers. */
+const REFUSATS = new Set(['vila-teulats']);
+
+/** Les photos qui ont le relief sur le site (clés de paisatges.js). */
+export const GARDATS = new Set(PAISATGES.map((p) => p.clau).filter((c) => !REFUSATS.has(c)));
 
 /** La carte de profondeur d'une photo (proche = clair). */
 export const cartaDe = (clau) => `/apren/paisatges/prigondor/${clau}.webp`;

@@ -126,7 +126,8 @@
 		<p class="estat" aria-live="polite">{tema ? tria(IU_G.estat)(tria(tema.nom), fichas.length) : ''}</p>
 	</div>
 
-	<ul class="fichas" aria-label={tria(IU.fichas)} bind:this={lista}>
+	<!-- ontouchstart vide : sans lui, Safari (iPhone) n'applique pas :active sous le doigt -->
+	<ul class="fichas" aria-label={tria(IU.fichas)} bind:this={lista} ontouchstart={() => {}}>
 		{#each fichas as f (f.id)}
 			<li data-clau={f.id}>
 				<a class="ficha" style:--aplat={colorDe(f.tema)[0]} style:--sus={colorDe(f.tema)[1]} href="/cultura/{f.id}" aria-describedby={esOc || tria(f.titol) === f.titol.oc ? undefined : `b-ficha-${f.id}`}>
@@ -331,12 +332,18 @@
 		mix-blend-mode: luminosity;
 		opacity: 0.62;
 		transition:
+			filter 0.5s,
 			opacity 0.5s,
 			transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
 	}
+	/* sous la souris, au clavier ou sous le doigt : la photo reprend ses
+	   vraies couleurs (Romain, 06-11 : « quand on survole avec la souris ou
+	   le doigt, la case devrait afficher la vraie couleur de la photo ») */
 	.ficha:hover .ficha-media img,
-	.ficha:focus-visible .ficha-media img {
-		opacity: 0.8;
+	.ficha:focus-visible .ficha-media img,
+	.ficha:active .ficha-media img {
+		filter: grayscale(0) contrast(1);
+		opacity: 1;
 		transform: scale(1.04);
 	}
 	.ficha-media::after {
@@ -399,7 +406,9 @@
 		.ficha-media img {
 			transition: none;
 		}
-		.ficha:hover .ficha-media img {
+		.ficha:hover .ficha-media img,
+		.ficha:focus-visible .ficha-media img,
+		.ficha:active .ficha-media img {
 			transform: none;
 		}
 	}

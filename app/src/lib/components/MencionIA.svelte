@@ -9,6 +9,10 @@
 	//     d'un cadre (le parent : position relative, marge basse d'environ 1,9rem) ;
 	//     `quina="dessenh"` dit « dessin » (Remira : le dessin peut être posé sur
 	//     une photo de Romain, que la mention ne doit pas désigner) ;
+	//   - rond : un petit rond « IA » dans le coin d'une illustration, pour une
+	//     page où elles se suivent (salle de jeux ; Romain, 06-11 : « un petit
+	//     rond avec IA, plutôt discret, en gardant le lien »). Avec `cadre`, il
+	//     se pose en bas à droite du cadre (le parent : position relative) ;
 	//   - linha : une seule ligne pour une page où les dessins sont nombreux
 	//     (avec `quina="dessenh"` : « les dessins », quand la page a aussi des photos).
 	// Occitan passé à lo Congrès le 06-11 ; es, en, ca, ar par Aran (06-11).
@@ -18,6 +22,7 @@
 	let { forma = 'signatura', quina = 'illustracion', cadre = false, class: classa = '' } = $props();
 
 	const T = {
+		sigla: { oc: 'IA', fr: 'IA', es: 'IA', en: 'AI', ca: 'IA', ar: 'AI' },
 		signatura: { oc: 'facha per l’IA', fr: 'faite par IA', es: 'hecha por IA', en: 'made by AI', ca: 'feta per IA', ar: 'صنع بالذكاء الاصطناعي' },
 		nomComplet: {
 			oc: 'Illustracion facha per l’IA',
@@ -60,6 +65,15 @@
 	<p class="linha {classa}">
 		<a class="mencion" href={PAGINA} lang={lg(linha)}>{tria(linha)} <span aria-hidden="true">{sageta}</span></a>
 	</p>
+{:else if forma === 'rond'}
+	<a
+		class="mencion rond {classa}"
+		class:cadre
+		href={PAGINA}
+		lang={lg(T.nomComplet)}
+		aria-label={tria(T.nomComplet)}
+		title={tria(T.nomComplet)}><span aria-hidden="true">{tria(T.sigla)}</span></a
+	>
 {:else}
 	<a
 		class="mencion signatura {classa}"
@@ -102,6 +116,43 @@
 		position: absolute;
 		inset-inline-end: 0.7rem;
 		bottom: 0;
+	}
+
+	/* le rond : petit (20 px), à peine visible, plus net au survol ; le doigt
+	   a 44 px (zone invisible autour), « IA » à 4,5:1 au moins (Joan, 06-11) */
+	.rond {
+		position: relative;
+		display: inline-grid;
+		place-items: center;
+		box-sizing: border-box;
+		inline-size: 1.25rem;
+		block-size: 1.25rem;
+		padding: 0;
+		border: 1px solid currentColor;
+		border-radius: 50%;
+		background: var(--mencion-fons, transparent);
+		font-family: var(--font-body);
+		font-size: 0.6rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		line-height: 1;
+		text-decoration: none;
+		opacity: 0.9;
+		transition: opacity 0.2s ease;
+	}
+	.rond::after {
+		content: '';
+		position: absolute;
+		inset: -12px;
+	}
+	.rond:hover,
+	.rond:focus-visible {
+		opacity: 1;
+	}
+	.rond.cadre {
+		position: absolute;
+		inset-inline-end: 0.35rem;
+		bottom: 0.35rem;
 	}
 
 	.linha {
