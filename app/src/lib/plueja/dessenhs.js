@@ -862,12 +862,17 @@ Object.assign(DESSENHS, {
 		'M48 90C48 86 92 86 92 90C92 94 48 94 48 90Z' // la petite flaque
 	],
 	garriga: [
-		'M6 58L22 52L36 56L52 48L70 54L94 50', // les collines de calcaire, au loin
-		'M6 82L94 82',
-		'M10 82C10 72 18 68 24 72C28 64 40 66 40 74C44 72 48 76 48 82', // des buissons bas et ronds
-		'M60 82C60 74 68 70 74 74C78 68 88 70 88 78L90 82',
-		'M50 82L54 76L60 77L62 82', // une pierre
-		'M18 60L22 66L26 62L30 68' // un éboulis de cailloux
+		// refaite le 06-11 (Romain : « l'icône garrigue va pas ») : le pin parasol au-dessus
+		// d'un rocher de calcaire, d'un buisson de chêne kermès et d'une touffe de thym
+		'M4 86C24 84 44 85 62 84C76 83 86 84 96 85',
+		'M68 85C68 72 66 62 62 52', // le tronc qui penche, puis les branches en éventail
+		'M62 52C58 46 52 42 44 40M62 52C66 46 72 42 80 40M62 52L63 40',
+		'M36 40C34 32 42 28 50 29C54 22 66 21 72 26C80 24 90 28 90 35C92 37 91 40 88 40', // le parasol, ouvert dessous
+		'M6 86L10 75L19 69L30 71L36 79L38 86', // le rocher et sa facette
+		'M19 69L22 77',
+		'M40 86C38 81 41 77 46 78C47 73 54 73 56 77C59 76 62 80 60 86', // le chêne kermès
+		'M84 86L84 78M80 86L78 80M88 86L90 80', // le thym en fleur
+		cercle(84, 76.6, 1.4) + cercle(77.6, 78.6, 1.4) + cercle(90.4, 78.6, 1.4)
 	],
 	ferigola: [
 		// le thym : des tiges fines, de toutes petites feuilles, des fleurs en boule
@@ -1675,45 +1680,3 @@ export function dessenhGuida(clau) {
 	if (!cache.has(k)) cache.set(k, GUIDA[clau].map((d) => new Path2D(d)));
 	return cache.get(k);
 }
-
-// ── Petites animations (lot 2 ; Romain, 05-11 : « faire des petites
-// animations quand il faut. Par exemple, le tonnerre, de faire qu'on sent
-// qu'il y a un tonnerre ») ───────────────────────────────────────────────
-// Elles se jouent une fois, quand le mot vient d'être net, et s'arrêtent
-// seules (la page retrouve son repos) ; rien si l'on a demandé de réduire
-// les animations. Les zones sont dans le carré du dessin (0 à 100).
-//   flash : instants des lueurs d'éclair (s) ; deux au plus, à plus de 0,2 s
-//     l'une de l'autre (moins de trois flashs par seconde, RGAA) ;
-//   tremol : le dessin tremble, le mot un peu { a : amplitude (px), f : fréquence
-//     (Hz), t : [début, fin] (s), gronh : le grondement qui enfle et s'éteint } ;
-//   pluja : des gouttes d'or tombent { n : par seconde, v : vitesse (px/s pour un
-//     dessin de 300 px), zona : [x0, x1, y de départ], fins : y d'arrivée,
-//     long : traîne, biais : inclinaison, gravetat : la goutte pend puis tombe } ;
-//   vent : des filets d'air traversent le dessin ; neu : des flocons descendent ;
-//   belugas : de petites étoiles s'allument autour ;
-//   vibrar : au téléphone, une courte vibration, juste après un geste ;
-//   dur : durée de l'émission (s).
-const PLUJA = { n: 16, v: 380, zona: [24, 80, 60], fins: 100, long: 10, biais: 0.12 };
-export const ANIMACIONS = {
-	tron: { dur: 1.8, tremol: { a: 3.2, f: 12, t: [0.05, 1.7], gronh: true }, vibrar: [70, 90, 140] },
-	auratge: { dur: 3.2, flash: [0.1, 0.36], tremol: { a: 2.6, f: 12, t: [0.8, 2.3], gronh: true }, pluja: { ...PLUJA, n: 20 }, vibrar: [0, 800, 60, 90, 120] },
-	liuç: { dur: 0.8, flash: [0.05, 0.3] },
-	'Plòu.': { dur: 5, pluja: PLUJA },
-	plòu: { dur: 5, pluja: PLUJA },
-	'la pluèja': { dur: 5, pluja: { ...PLUJA, zona: [12, 88, -4], fins: 100 } },
-	pluèja: { dur: 5, pluja: { ...PLUJA, zona: [12, 88, -4], fins: 100 } },
-	plovina: { dur: 5, pluja: { n: 34, v: 150, zona: [18, 84, 60], fins: 100, long: 3, biais: 0.05 } },
-	aigaci: { dur: 4, pluja: { n: 42, v: 680, zona: [16, 92, 60], fins: 102, long: 18, biais: 0.32 } },
-	gotejar: { dur: 5, pluja: { n: 1.4, v: 0, gravetat: 520, zona: [67.5, 68.5, 51], fins: 89, long: 0 } },
-	'Fa vent.': { dur: 4, vent: { n: 7, v: 520 } },
-	vent: { dur: 4, vent: { n: 7, v: 520 } },
-	marin: { dur: 4, vent: { n: 6, v: 420 } },
-	'Nèva.': { dur: 6, neu: { n: 9, v: 46, zona: [20, 84, 60] } },
-	'la nèu': { dur: 6, neu: { n: 9, v: 46, zona: [-20, 120, -12] } },
-	'Fa freg.': { dur: 1.4, tremol: { a: 1.1, f: 24, t: [0.05, 1.3] } },
-	cigala: { dur: 1.3, tremol: { a: 0.9, f: 30, t: [0.05, 1.2] } },
-	grilh: { dur: 1.3, tremol: { a: 0.9, f: 30, t: [0.05, 1.2] } },
-	'Me lèvi.': { dur: 1.2, tremol: { a: 1.8, f: 20, t: [0.05, 1.1] } },
-	estèla: { dur: 3, belugas: { n: 2.5 } },
-	nòu: { dur: 2.4, belugas: { n: 3 } }
-};

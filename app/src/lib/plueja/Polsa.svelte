@@ -17,7 +17,8 @@
 	// Sobriété : rien à charger (les dessins sont des chemins de quelques octets),
 	// un seul canevas, les points de chaque mot calculés une fois puis gardés.
 	import { onMount, untrack } from 'svelte';
-	import { dessenhDe, dessenhGuida, ANIMACIONS } from './dessenhs.js';
+	import { dessenhDe, dessenhGuida } from './dessenhs.js';
+	import { prepAnim, traçarAnim } from './animacions.js';
 
 	/** mots : [[oc, définition, id, dessin, langue], …] (les deux derniers pour
 	 *  l'explication de première visite : un dessin à elle, la langue choisie) ;
@@ -199,28 +200,26 @@
 		toc0 = null; // début d'un toucher ou d'un clic : { x, y, t, bouge }
 
 	// ── Petites animations (Romain, 05-11 : « le tonnerre, faire qu'on sent qu'il
-	// y a un tonnerre ») : une seule fois par mot, quand il vient d'être net, puis
-	// la page retrouve son repos. Réglages par mot dans ANIMACIONS (dessenhs.js).
-	let anim = null, // { a : réglages, t0 : début, acum : gouttes ou flocons à faire naître }
+	// y a un tonnerre » ; 06-11 : « faire bouger le dessin en lui-même, pas rajouter
+	// des petits éléments en plus ») : une seule fois par mot, quand il vient d'être
+	// net ; seuls les traits du dessin bougent, chacun finit à sa place, le mot reste
+	// immobile. Réglages et calculs dans animacions.js.
+	let anim = null, // { prep, t0 }
 		animFacha = false, // l'animation de ce mot a déjà été lancée
-		particulas = [], // gouttes, flocons, filets de vent, petites étoiles
 		darrierGest = -9; // dernier geste (molette, clic, toucher, touche)
-	const MAX_PART = 80,
-		sx = [0, 0, 0], // tremblement de chaque groupe : le dessin entier, le texte un peu
-		sy = [0, 0, 0];
-	const alea = (a, b) => a + Math.random() * (b - a);
 
 	function lancarAnim() {
 		animFacha = true;
-		const [oc, , , clauDess] = lista[mi] ?? [];
-		const a = !clauDess && !calme && ANIMACIONS[oc];
-		if (!a) return;
-		anim = { a, t0: tempsAnim, acum: 0.7 };
+		const [oc, def, , clauDess] = lista[mi] ?? [];
+		const prep = !clauDess && !calme && prepAnim(oc, def);
+		if (!prep) return;
+		anim = { prep, t0: tempsAnim };
+		const { vibrar } = prep.a;
 		// au téléphone, on sent aussi le tonnerre ; seulement juste après un geste
 		// (une vibration sans geste surprendrait)
-		if (a.vibrar && tempsAnim - darrierGest < 5 && navigator.userActivation?.hasBeenActive !== false)
+		if (vibrar && tempsAnim - darrierGest < 5 && navigator.userActivation?.hasBeenActive !== false)
 			try {
-				navigator.vibrate?.(a.vibrar);
+				navigator.vibrate?.(vibrar);
 			} catch {
 				/* l'appareil ne vibre pas : tant pis */
 			}
@@ -228,160 +227,19 @@
 	function arrestarAnim() {
 		anim = null;
 		animFacha = false;
-		particulas.length = 0;
-		sx.fill(0);
-		sy.fill(0);
 	}
 
-	/** Une goutte, un flocon, un filet de vent ou une petite étoile, dans le carré du dessin. */
-	function naisser(a, p, k) {
-		const X = (x) => p.X0 + (x * p.S) / 100,
-			Y = (y) => p.Y0 + (y * p.S) / 100;
-		if (a.pluja) {
-			const e = a.pluja,
-				vy = e.v * k * alea(0.85, 1.15);
-			return {
-				t: 'p',
-				age: 0,
-				x: X(alea(e.zona[0], e.zona[1])),
-				y: Y(e.zona[2] + alea(0, 4)),
-				vy,
-				vx: vy * (e.biais ?? 0),
-				g: (e.gravetat ?? 0) * k,
-				creis: e.gravetat ? 0.55 : 0, // la goutte qui pend grossit avant de tomber
-				long: e.long * k,
-				fins: Y(e.fins)
-			};
-		}
-		if (a.neu) {
-			const e = a.neu;
-			return { t: 'n', age: 0, x0: X(alea(e.zona[0], e.zona[1])), x: 0, y: Y(e.zona[2]), vy: e.v * k * alea(0.7, 1.3), ph: alea(0, 6.28), amp: alea(4, 10) * k, s: alea(1.2, 2.1), fins: Y(e.fins ?? 100) };
-		}
-		if (a.vent) {
-			const e = a.vent;
-			return { t: 'v', age: 0, x: X(-12) - alea(0, 30) * k, y: Y(alea(26, 80)), vx: e.v * k * alea(0.8, 1.25), len: alea(16, 30) * (p.S / 100), ph: alea(0, 6.28), x1: X(112) };
-		}
-		// petites étoiles autour du dessin
-		const ang = alea(0, 6.28),
-			r = alea(38, 50);
-		return { t: 'b', age: 0, x: X(50 + Math.cos(ang) * r), y: Y(50 + Math.sin(ang) * r), vida: alea(0.7, 1.1), s: alea(3, 5) * (p.S / 100) };
-	}
-
-	/** Avance l'animation du mot ; rend la lueur de l'éclair (0 à 1) et règle le tremblement. */
-	function avancarAnim(dt, p) {
-		const { a } = anim,
-			ta = tempsAnim - anim.t0,
-			k = p.S / 300; // réglages donnés pour un dessin de 300 px
-		const em = a.pluja || a.neu || a.vent || a.belugas;
-		if (em && ta < a.dur) {
-			anim.acum += em.n * dt;
-			while (anim.acum >= 1 && particulas.length < MAX_PART) {
-				anim.acum--;
-				particulas.push(naisser(a, p, k));
-			}
-			anim.acum = Math.min(anim.acum, 1);
-		}
-		for (let i = particulas.length - 1; i >= 0; i--) {
-			const q = particulas[i];
-			q.age += dt;
-			let fin = false;
-			if (q.t === 'p') {
-				if (q.age > q.creis) {
-					q.vy += q.g * dt;
-					q.x += q.vx * dt;
-					q.y += q.vy * dt;
-				}
-				fin = q.y > q.fins;
-			} else if (q.t === 'n') {
-				q.y += q.vy * dt;
-				q.x = q.x0 + Math.sin(q.age * 1.5 + q.ph) * q.amp; // le flocon se balance en descendant
-				fin = q.y > q.fins;
-			} else if (q.t === 'v') {
-				q.x += q.vx * dt;
-				fin = q.x - q.len > q.x1;
-			} else fin = q.age > q.vida;
-			if (fin) particulas.splice(i, 1);
-		}
-		// le tremblement : le grondement enfle vite et s'éteint lentement ; le froid,
-		// la cigale ou le réveil frémissent d'un bout à l'autre
-		let ox = 0,
-			oy = 0;
-		const tr = a.tremol;
-		if (tr && ta >= tr.t[0] && ta <= tr.t[1]) {
-			const u = (ta - tr.t[0]) / (tr.t[1] - tr.t[0]),
-				env = tr.gronh ? Math.pow(Math.sin(Math.PI * Math.pow(u, 0.6)), 1.5) * (0.75 + 0.25 * Math.sin(ta * 17)) : Math.min(1, u * 8, (1 - u) * 5),
-				w = 2 * Math.PI * tr.f * ta,
-				amp = tr.a * clamp(k, 0.7, 1.3) * env;
-			ox = (amp * (Math.sin(w) + 0.5 * Math.sin(w * 1.73 + 1.3))) / 1.5;
-			oy = amp * 0.6 * Math.sin(w * 1.31 + 2.1);
-		}
-		sx[0] = ox;
-		sy[0] = oy;
-		sx[1] = sx[2] = ox * 0.4;
-		sy[1] = sy[2] = oy * 0.4;
-		// l'éclair s'allume d'un coup et s'éteint en un cinquième de seconde
-		let eclat = 0;
-		if (a.flash) for (const tf of a.flash) if (ta >= tf) eclat = Math.max(eclat, Math.exp(-(ta - tf) / 0.07));
-		const finit = ta > a.dur && !particulas.length && (!tr || ta > tr.t[1]) && eclat < 0.01;
-		if (finit) {
-			anim = null;
-			sx.fill(0);
-			sy.fill(0);
-		}
-		return eclat;
-	}
-
-	function dessenharParticulas(p) {
-		const k = p.S / 300;
-		cx.strokeStyle = AUR;
-		cx.fillStyle = AUR;
-		cx.lineWidth = 1.3;
-		cx.lineCap = 'round';
-		for (const q of particulas) {
-			if (q.t === 'p') {
-				const f = clamp((q.fins - q.y) / (14 * k), 0, 1); // la goutte s'efface en arrivant
-				if (q.long) {
-					const v = Math.hypot(q.vx, q.vy) || 1;
-					cx.globalAlpha = 0.75 * f * clamp(q.age / 0.06, 0, 1);
-					cx.beginPath();
-					cx.moveTo(q.x - (q.vx / v) * q.long, q.y - (q.vy / v) * q.long);
-					cx.lineTo(q.x, q.y);
-					cx.stroke();
-				} else {
-					cx.globalAlpha = 0.85 * f;
-					cx.beginPath();
-					cx.arc(q.x, q.y, 2.2 * k * Math.min(1, 0.3 + q.age / (q.creis || 1)), 0, 6.283);
-					cx.fill();
-				}
-			} else if (q.t === 'n') {
-				cx.globalAlpha = 0.85 * clamp(q.age / 0.4, 0, 1) * clamp((q.fins - q.y) / (14 * k), 0, 1);
-				cx.beginPath();
-				cx.arc(q.x, q.y, q.s, 0, 6.283);
-				cx.fill();
-			} else if (q.t === 'v') {
-				// un filet d'air ondule et s'efface aux deux bouts
-				cx.beginPath();
-				for (let j = 0; j <= 8; j++) {
-					const xx = q.x - (q.len * j) / 8,
-						yy = q.y + Math.sin(xx * 0.03 + q.ph) * 3 * k;
-					if (j) cx.lineTo(xx, yy);
-					else cx.moveTo(xx, yy);
-				}
-				const x0 = p.X0 - 0.12 * p.S;
-				cx.globalAlpha = 0.5 * Math.sin(Math.PI * clamp((q.x - q.len / 2 - x0) / (q.x1 - x0), 0, 1));
-				cx.stroke();
-			} else {
-				const e = Math.sin((Math.PI * q.age) / q.vida),
-					s = q.s * e;
-				cx.globalAlpha = 0.9 * e;
-				cx.beginPath();
-				cx.moveTo(q.x - s, q.y);
-				cx.lineTo(q.x + s, q.y);
-				cx.moveTo(q.x, q.y - s);
-				cx.lineTo(q.x, q.y + s);
-				cx.stroke();
-			}
-		}
+	/** Le dessin net, ses traits en mouvement ; rend false quand l'animation est finie. */
+	function traitAnim(c, p, lw) {
+		c.save();
+		c.translate(p.X0, p.Y0);
+		c.scale(p.S / 100, p.S / 100);
+		c.lineWidth = (lw * 100) / p.S;
+		c.lineCap = 'round';
+		c.lineJoin = 'round';
+		const encara = traçarAnim(c, p.dess, anim.prep, tempsAnim - anim.t0, p.S);
+		c.restore();
+		return encara;
 	}
 
 	function placer(i) {
@@ -743,8 +601,6 @@
 		}
 		if (net >= 1 && !animFacha) lancarAnim();
 		if (calme && anim) arrestarAnim();
-		const pA = anim ? plan(mi) : null,
-			eclat = anim ? avancarAnim(dt, pA) : 0;
 
 		const ten = calme ? 0 : Math.abs(carga);
 		cx.clearRect(0, 0, W, H);
@@ -761,34 +617,23 @@
 				scint = calme || nq >= 1 ? 1 : 0.78 + 0.3 * Math.sin(t * 4 + q.ph * 13),
 				poussa = (base + Math.min(0.35, Math.sqrt(v2) / 1000)) * (1 - nq) * scint + ten * 0.3,
 				// un grain encore en route quand le mot devient net s'efface au lieu de traîner à côté
-				va = Math.min(1, poussa + (q.d < 2.5 ? (q.g === 0 ? 0.09 : 0.05) * nq : 0));
+				va = Math.min(1, poussa + (q.d < 2.5 ? (q.g === 0 ? (anim ? 0 : 0.09) : 0.05) * nq : 0));
 			q.a += (va - q.a) * Math.min(1, dt * 10);
 			cx.globalAlpha = q.a;
-			const px = q.x + sx[q.g] + (calme ? 0 : Math.sin(t * 0.8 + q.ph) * 0.4), // respiration
-				py = q.y + sy[q.g] + (calme ? 0 : Math.cos(t * 0.6 + q.ph) * 0.4),
+			const px = q.x + (calme ? 0 : Math.sin(t * 0.8 + q.ph) * 0.4), // respiration
+				py = q.y + (calme ? 0 : Math.cos(t * 0.6 + q.ph) * 0.4),
 				taille = v2 > 40000 ? q.s + 0.35 : q.s; // un grain lancé brille un peu plus
 			cx.fillRect(px, py, taille, taille);
 		}
 		if (netG[0] + netG[1] + netG[2] > 0) {
 			// regroupés : le trait, le mot et sa définition deviennent nets, chacun à son tour
 			const p = plan(mi);
-			const trem = sx[0] || sy[0];
-			if (trem) {
-				cx.save();
-				cx.translate(sx[0], sy[0]);
-			}
 			if (p.dess && netG[0] > 0) {
 				cx.globalAlpha = netG[0] * 0.95;
 				cx.strokeStyle = AUR;
-				trait(cx, p, 1.3);
-				if (eclat > 0.01) {
-					// sous l'éclair, le dessin s'illumine
-					cx.globalAlpha = eclat * 0.9;
-					cx.strokeStyle = '#fff6e2';
-					trait(cx, p, 2);
-				}
+				if (!anim) trait(cx, p, 1.3);
+				else if (!traitAnim(cx, p, 1.3)) anim = null;
 			}
-			if (trem) cx.translate(sx[1] - sx[0], sy[1] - sy[0]);
 			if (netG[1] > 0) {
 				cx.globalAlpha = netG[1];
 				cx.fillStyle = CREMA;
@@ -802,20 +647,6 @@
 				cx.fillStyle = DEF;
 				textes(cx, p.linhasD, fontDef(p.fD), p.dir);
 			}
-			if (trem) cx.restore();
-		}
-		if (particulas.length) dessenharParticulas(pA ?? plan(mi));
-		if (eclat > 0.01) {
-			// la lueur de l'éclair : tout le ciel s'éclaire un instant, plus fort autour du
-			// dessin ; deux éclairs au plus, à plus d'un quart de seconde (sous le seuil
-			// de trois flashs par seconde)
-			const yc = pA.Y0 + pA.S * 0.45,
-				g = cx.createRadialGradient(W / 2, yc, 0, W / 2, yc, Math.max(W, H) * 0.75);
-			g.addColorStop(0, 'rgba(255,242,218,0.28)');
-			g.addColorStop(1, 'rgba(255,242,218,0.07)');
-			cx.globalAlpha = eclat;
-			cx.fillStyle = g;
-			cx.fillRect(0, 0, W, H);
 		}
 		cx.globalAlpha = 1;
 	}
