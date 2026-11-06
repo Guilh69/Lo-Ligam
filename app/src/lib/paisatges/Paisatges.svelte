@@ -4,11 +4,14 @@
 	// elle glisse lentement d'un bout à l'autre de ce qu'elle montre (sur un
 	// téléphone, le paysage défile sous les yeux). Des points d'or fins sont
 	// posés dessus : on en touche un, le mot occitan s'écrit, le français
-	// dessous. Un toucher ailleurs le referme. On glisse le doigt, on fait
+	// dessous. Un toucher ailleurs le referme. Sans rien toucher, les mots
+	// paraissent seuls, un à un, quand la photo passe dessus (Romain, 06-11 :
+	// le jeu est dans Jòcs, ici on regarde). On glisse le doigt, on fait
 	// tourner la molette ou on prend les flèches pour le paysage suivant, qui
 	// arrive dans un disque qui grandit (jamais de fondu entre deux photos).
 	// Données : ./paisatges.js. Les gestes viennent de la page (rodeta, tecla).
 	import { onMount, untrack } from 'svelte';
+	import { fade } from 'svelte/transition';
 	import { PAISATGES, MOTS, camin, srcset } from './paisatges.js';
 
 	let { pausa = false, calme = false, n = $bindable(0) } = $props();
@@ -35,6 +38,8 @@
 	let vistas = $state([novela(0, n)]);
 	const actiuId = $derived(vistas.at(-1).id);
 	let causit = $state(null); // le point ouvert
+	let auto = $state(null); // le point qui parle seul, au défilement
+	const mostrat = $derived(causit ?? auto); // le mot écrit à l'écran
 	let costat = $state('drecha'); // l'étiquette à droite ou à gauche du point
 	const anims = new Map(); // id → { a, c } : le glissement et son cadre
 	const sizes = (q) => `(min-aspect-ratio: ${q.l}/${q.h}) 100vw, ${Math.ceil((q.l / q.h) * 100)}vh`;
@@ -146,6 +151,7 @@
 	function anar(d) {
 		if (vistas.length > 1) return; // un disque à la fois
 		causit = null;
+		tornarAuto();
 		n = (n + d + PAISATGES.length) % PAISATGES.length;
 		const v = novela(++seq, n);
 		vistas = calme ? [v] : [...vistas, v];
@@ -155,15 +161,73 @@
 	export const precedent = () => anar(-1);
 
 	// ── Points ─────────────────────────────────────────────────────────
+	// l'étiquette va du côté où il y a de la place à l'écran
+	const costatDe = (el) => {
+		const r = el.getBoundingClientRect();
+		return r.left + r.width / 2 > W * 0.58 ? 'esquerra' : 'drecha';
+	};
 	function dobrir(i, el) {
+		auto = null;
+		autoDempuei = performance.now() + 2500; // après un toucher, un temps de silence
 		if (causit === i) {
 			causit = null;
 			return;
 		}
-		// l'étiquette va du côté où il y a de la place à l'écran
-		const r = el.getBoundingClientRect();
-		costat = r.left + r.width / 2 > W * 0.58 ? 'esquerra' : 'drecha';
+		costat = costatDe(el);
 		causit = i;
+	}
+
+	// ── Les mots qui paraissent seuls ──────────────────────────────────
+	// Toutes les demi-secondes : si rien n'est écrit, le point visible le plus
+	// près du milieu (pas encore dit sur cette photo) dit son mot 4 s ; puis
+	// 3,5 s de silence : un mot toutes les 8 à 9 s, pas un diaporama (Joan,
+	// 06-11). Tous dits : on recommence. La photo ne s'arrête pas.
+	const DIRE = 4200,
+		SILENCI = 3500;
+	let autoDempuei = 0; // l'heure du dernier changement
+	const dits = new Set();
+	let darrierDit = -1;
+	function tornarAuto() {
+		auto = null;
+		dits.clear();
+		darrierDit = -1;
+		autoDempuei = performance.now() + 2600; // le disque, puis les points qui naissent
+	}
+	function vigilar() {
+		const ara = performance.now();
+		// en pause, le mot reste, et il aura encore ses 4 s à la reprise
+		if (pausa) autoDempuei = Math.max(autoDempuei, ara);
+		if (pausa || causit !== null || vistas.length > 1 || !racina || !W) return;
+		if (auto !== null) {
+			if (ara - autoDempuei > DIRE) {
+				auto = null;
+				autoDempuei = ara;
+			}
+			return;
+		}
+		if (ara - autoDempuei < SILENCI) return;
+		const visibles = [];
+		for (const b of racina.querySelectorAll('.ponch')) {
+			if (+getComputedStyle(b).opacity < 0.9) continue;
+			const r = b.getBoundingClientRect();
+			const x = r.left + r.width / 2,
+				y = r.top + r.height / 2;
+			// loin des bords, de l'en-tête et des commandes : le mot a sa place
+			if (x < W * 0.12 || x > W * 0.88 || y < H * 0.16 || y > H * 0.78) continue;
+			visibles.push({ b, i: Number(b.dataset.i), d: Math.hypot(x - W / 2, y - H / 2) });
+		}
+		let cands = visibles.filter((v) => !dits.has(v.i));
+		if (!cands.length && visibles.length) {
+			dits.clear();
+			cands = visibles.filter((v) => v.i !== darrierDit);
+		}
+		if (!cands.length) return;
+		const v = cands.reduce((a, c) => (c.d < a.d ? c : a));
+		costat = costatDe(v.b);
+		auto = v.i;
+		dits.add(v.i);
+		darrierDit = v.i;
+		autoDempuei = ara;
 	}
 
 	// Au clavier, un point hors de l'écran revient au milieu. Au doigt ou à la
@@ -213,7 +277,7 @@
 		} else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) {
 			e.preventDefault();
 			anar(-1);
-		} else if (e.key === 'Escape') causit = null;
+		} else if (e.key === 'Escape') causit = auto = null;
 	}
 
 	// Glisser le doigt : paysage suivant ou précédent. Le temps du toucher, la
@@ -251,7 +315,10 @@
 		} else if (!e.target.closest?.('.ponch')) {
 			const b = ponchProche(e.clientX, e.clientY);
 			if (b) dobrir(Number(b.dataset.i), b);
-			else causit = null;
+			else if (causit !== null || auto !== null) {
+				causit = auto = null;
+				autoDempuei = performance.now() + 2500;
+			}
 		}
 	}
 
@@ -264,9 +331,12 @@
 		const ro = new ResizeObserver(mesurar);
 		ro.observe(racina);
 		precargar(n + 1);
+		autoDempuei = performance.now() + 1500; // la page arrive, puis les points
+		const vigia = setInterval(vigilar, 500);
 		return () => {
 			ro.disconnect();
 			clearTimeout(finAcum);
+			clearInterval(vigia);
 		};
 	});
 </script>
@@ -289,7 +359,7 @@
 				<button
 					type="button"
 					class="ponch"
-					class:causit={causit === i}
+					class:causit={mostrat === i}
 					style:left="{x * 100}%"
 					style:top="{y * 100}%"
 					style:--i={rangs[i]}
@@ -302,10 +372,16 @@
 					<span class="sr"><span lang="oc">{oc}</span>, <span lang="fr">{MOTS[oc]}</span></span>
 				</button>
 			{/each}
-			{#if causit !== null}
-				{@const [oc, x, y] = q.mots[causit]}
-				{#key causit}
-					<div class="eticeta {costat}" style:left="{x * 100}%" style:top="{y * 100}%" aria-hidden="true">
+			{#if mostrat !== null}
+				{@const [oc, x, y] = q.mots[mostrat]}
+				{#key mostrat}
+					<div
+						class="eticeta {costat}"
+						style:left="{x * 100}%"
+						style:top="{y * 100}%"
+						aria-hidden="true"
+						out:fade|global={{ duration: calme ? 0 : 700 }}
+					>
 						<span class="oc" lang="oc">{oc}</span>
 						<span class="filet"></span>
 						<span class="def" lang="fr">{MOTS[oc]}</span>
