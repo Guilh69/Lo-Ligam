@@ -7,8 +7,9 @@
 //
 // pos : le point de la photo à garder au centre quand la case la recadre.
 // Les petites images sont déjà recadrées en 3:2 autour de ce point.
-// Sans photo qui corresponde : un dessin au trait de Remira (même famille que
-// la poussière d'or), ou rien.
+// Sans photo qui corresponde : une photo libre de Wikimedia Commons (COMMONS,
+// créditée), un dessin au trait de Remira (même famille que la poussière
+// d'or), ou rien.
 
 /** fiche → photo de paysage (clau de lib/paisatges) et point à garder */
 export const FOTOS = {
@@ -44,6 +45,53 @@ export const DESSENHS = {
 	rocafort: 'lo formatge'
 };
 
+/**
+ * fiches sans photo de Romain : une photo libre de Wikimedia Commons (Romain,
+ * 06-11 : « Oui, les deux », après un aperçu des candidates ; écartées : les
+ * photos où l'on reconnaît des visages). La source réduite est gardée hors Git
+ * (Lo_Ligam_hors-git/design-stock/brut/commons-cultura/<font>), sans métadonnée
+ * dans les images tirées. Le crédit (auteur, licence, lien, « modifiée ») est
+ * affiché sous la case de la fiche et au pied du sommaire, comme l'exige la
+ * licence CC BY-SA. largor : largeur de la source une fois recadrée en 3:2.
+ */
+export const COMMONS = {
+	carnaval: {
+		font: 'carnaval-tivoli-unuaiga.jpg',
+		largor: 1280,
+		pos: '50% 40%', // les masques du Tivoli, carnaval de Limoux 2015
+		autor: 'Unuaiga',
+		licencia: 'CC BY-SA 4.0',
+		licenciaLigam: 'https://creativecommons.org/licenses/by-sa/4.0/deed.fr',
+		ligam: 'https://commons.wikimedia.org/wiki/File:Le_Tivoli_-_Sortie_du_soir_-_Carnaval_de_Limoux_2015_(05).jpg'
+	},
+	'copa-santa': {
+		font: 'copa-santa-capsot.jpg',
+		largor: 532,
+		pos: '50% 30%', // la coupe elle-même (Louis Guillaume Fulconis)
+		// trop petite pour remplir la case de la fiche : la coupe entière, au
+		// bout de la case, comme les dessins (<fiche>-objecte.webp)
+		objecte: true,
+		autor: 'Capsot',
+		licencia: 'CC0',
+		licenciaLigam: 'https://creativecommons.org/publicdomain/zero/1.0/deed.fr',
+		ligam: 'https://commons.wikimedia.org/wiki/File:CopaSantaN.JPG'
+	}
+};
+
 export const AMPLES = [480, 800];
-export const foto = (id) => FOTOS[id] ?? null;
-export const srcset = (id) => AMPLES.map((a) => `/cultura/${id}-${a}.webp ${a}w`).join(', ');
+const AMPLES_COMMONS = [480, 800, 1200]; // la plus grande sert à la case de la fiche
+/** largeurs tirées pour une fiche ; une photo de Commons plus étroite s'arrête à sa largeur */
+export const amples = (id) => {
+	const c = COMMONS[id];
+	if (!c) return AMPLES;
+	const max = Math.min(c.largor, AMPLES_COMMONS.at(-1));
+	return [...AMPLES_COMMONS.filter((a) => a < max), max];
+};
+export const foto = (id) => FOTOS[id] ?? COMMONS[id] ?? null;
+export const credit = (id) => COMMONS[id] ?? null;
+/** srcset des petites images ; max : largeur la plus grande proposée (800 au sommaire) */
+export const srcset = (id, max = 800) =>
+	amples(id)
+		.filter((a, k) => k === 0 || a <= max)
+		.map((a) => `/cultura/${id}-${a}.webp ${a}w`)
+		.join(', ');

@@ -149,5 +149,17 @@ export const IU = {
 	seguenta: { oc: 'Ficha seguenta', fr: 'Fiche suivante', es: 'Ficha siguiente', en: 'Next sheet', ca: 'Fitxa següent', ar: 'البطاقة التالية' },
 	vesinas: { oc: 'Las fichas vesinas', fr: 'Les fiches voisines', es: 'Fichas vecinas', en: 'Nearby sheets', ca: 'Fitxes veïnes', ar: 'بطاقات مجاورة' },
 	autreSite: { oc: 'autre site', fr: 'site extérieur', es: 'sitio externo', en: 'external site', ca: 'lloc extern', ar: 'موقع خارجي' },
+	// crédit des photos libres de Wikimedia Commons (fiche, pied du sommaire)
+	// (deux-points à la française en occitan et en français seulement)
+	fotoDe: { oc: 'Fòto :', fr: 'Photo :', es: 'Foto:', en: 'Photo:', ca: 'Foto:', ar: 'صورة:' },
+	modificada: { oc: 'modificada', fr: 'modifiée', es: 'modificada', en: 'modified', ca: 'modificada', ar: 'معدّلة' },
+	fotosCommons: {
+		oc: 'Fòtos de Wikimedia Commons, modificadas :',
+		fr: 'Photos de Wikimedia Commons, modifiées :',
+		es: 'Fotos de Wikimedia Commons, modificadas:',
+		en: 'Photos from Wikimedia Commons, modified:',
+		ca: 'Fotos de Wikimedia Commons, modificades:',
+		ar: 'صور من ويكيميديا كومنز، معدّلة:'
+	},
 	enFrances: { oc: 'Tèxte en francés', fr: '', es: 'Texto en francés', en: 'Text in French', ca: 'Text en francès', ar: 'النص بالفرنسية' }
 };
