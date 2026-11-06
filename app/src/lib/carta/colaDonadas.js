@@ -39,7 +39,7 @@ export const COLORS = {
 };
 const TEMAS = {
 	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: '#d9343f', occitanTèxt: '#ffc2b8', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: 0.3 },
-	clar: { estela: '#9a6a1c', lenga: '#b53d17', occitan: '#b0202c', occitanTèxt: '#7e121c', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: 0.36 } // (tèma clar : tenchas mai fòrtas, retorn de Romain 2026-10-10 : zònas e noms pauc legibles)
+	clar: { estela: '#9a6a1c', lenga: '#b53d17', occitan: '#b0202c', occitanTèxt: '#4a0a12', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: 0.36 } // (tèma clar : tenchas mai fòrtas, retorn de Romain 2026-10-10 : zònas e noms pauc legibles)
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
