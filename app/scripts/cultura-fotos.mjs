@@ -31,7 +31,8 @@ async function tirar(id, src, pos, largors, zoom = 1) {
 		let img = sharp(src).extract({ left, top, width: cw, height: ch }).resize({ width: a, withoutEnlargement: true });
 		// la grande taille ne sert qu'en tête de fiche, où la photo est passée
 		// en gris sous un voile : en gris et à peine adoucie, elle pèse moitié
-		// moins sans différence visible (comparé en capture le 06-11 : 166 → 83 Ko)
+		// moins sans différence visible (comparé en capture le 06-11 : 166 → 83 Ko).
+		// Les petites tailles (sommaire) restent en couleurs : elles reviennent au survol
 		if (a >= 1200) img = img.grayscale().blur(0.6);
 		await img.webp({ quality: a >= 1200 ? 45 : 50, effort: 6 }).toFile(out);
 		total += statSync(out).size;

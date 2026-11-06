@@ -11,7 +11,7 @@
 	// immobile si l'appareil demande moins d'animations. Catalogue : cataleg.js.
 	import { tria, lang } from '$lib/stores/lang.svelte.js';
 	import { CAPACITATS, FAMILHAS, jocsDe } from './cataleg.js';
-	import Afica from './Afica.svelte';
+	import Illustracion from './Illustracion.svelte';
 	import Emblema from './Emblema.svelte';
 	import MencionIA from '$lib/components/MencionIA.svelte';
 
@@ -65,7 +65,7 @@
 	<div class="familhas">
 		{#each familhas as f, k (f.id)}
 			<section class="familha f-{f.id}" style="--k: {k}" aria-labelledby="fam-{f.id}">
-				<div class="quadre"><Afica id={f.afica} {tema} /><MencionIA cadre /></div>
+				<div class="quadre"><Illustracion id={f.id} {tema} /><MencionIA forma="rond" cadre /></div>
 				<h3 id="fam-{f.id}" class="familha-nom" lang={lg(f)}>{tria(f)}</h3>
 				<ul class="jocs">
 					{#each f.jocs as j (j.id)}
@@ -232,11 +232,12 @@
 		align-content: start;
 		gap: 0.9rem;
 	}
-	/* la marge basse porte la signature « facha per l'IA » (Romain, 06-11 :
-	   « Signature et ligne », MencionIA) */
+	/* le petit rond « IA » se pose dans le coin bas du dessin (Romain, 06-11 :
+	   « facha per l'IA » sous chaque dessin était « trop répétitif et visible ») */
 	.quadre {
+		--mencion-fons: var(--t-fons-2);
 		position: relative;
-		padding: 0.5rem 0.5rem 1.9rem;
+		padding: 0.5rem;
 		border: 1px solid var(--t-linha);
 		background: var(--t-fons-2);
 	}
@@ -393,24 +394,19 @@
 		--f-linha: rgba(251, 241, 225, 0.28);
 	}
 	.joios .quadre {
-		/* cadre crème sur toutes les cartes : la signature prend l'encre sombre,
-		   pas la teinte claire de la carte (sinon crème sur crème) */
-		--mencion-tinta: rgba(42, 26, 16, 0.86);
-		--mencion-tinta-fort: #2a1a10;
-		--mencion-trait: #b53d17;
+		/* Joiós : l'illustration est posée à même la carte (papier découpé,
+		   Romain 06-11) ; la signature prend l'encre de la carte, soulignée de
+		   cette encre (le rouge ne se verrait pas sur la carte rouge) */
+		--mencion-tinta: var(--f-tinta-2);
+		--mencion-tinta-fort: var(--f-tinta);
+		--mencion-trait: var(--f-tinta);
+		--mencion-fons: transparent;
+		padding: 0;
 		border: none;
-		background: #fbf6ee;
-		box-shadow: 0 12px 26px -16px rgba(0, 0, 0, 0.7);
-		rotate: -1.2deg;
-		transition:
-			rotate 0.4s ease,
-			translate 0.4s ease;
-	}
-	.joios .familha:nth-child(even) .quadre {
-		rotate: 1deg;
+		background: none;
+		transition: translate 0.4s ease;
 	}
 	.joios .familha:hover .quadre {
-		rotate: 0deg;
 		translate: 0 -3px;
 	}
 	.joios .jogar {
@@ -471,8 +467,8 @@
 			flex: none;
 			white-space: nowrap;
 		}
-		/* des affiches plus basses : les jeux restent près de leur affiche */
-		.quadre :global(.afica) {
+		/* des illustrations plus basses : les jeux restent près de leur dessin */
+		.quadre :global(.illus) {
 			aspect-ratio: 16 / 9;
 		}
 	}

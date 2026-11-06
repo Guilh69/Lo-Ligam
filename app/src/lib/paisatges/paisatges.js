@@ -14,6 +14,11 @@
 // lo Basic) ; l'occitan reste à relire par Romain. Chaque photo garde les mots
 // qui lui sont propres : « lo cèl » n'est que là où le ciel est le sujet
 // (Romain, 06-11 : « il y a 4 fois le mot ciel »).
+// Relecture photo par photo, 06-11 au soir (Romain : « que les mots ne se
+// répètent pas trop », « fais attention à ce genre de détails ») : 171 mots
+// différents au lieu de 133, « l'arbre » 17 fois au lieu de 39, « lo cèl » 9
+// au lieu de 37 ; chaque point sur une chose bien visible de près (l'olivier
+// vu de très loin est devenu « la campanha »).
 //
 // Thèmes (Romain, 06-11 : « par milieu, et aussi par thématique, ça dépend de
 // la nature de la photo » ; une photo prise hors d'Occitanie peut illustrer un
@@ -165,7 +170,47 @@ export const MOTS = {
 	'l’olivièr': 'l’olivier',
 	'lo ciprès': 'le cyprès',
 	'lo musèu': 'le musée',
-	'lo potz': 'le puits'
+	'lo potz': 'le puits',
+	// 06-11, relecture des mots photo par photo (Romain : « que les mots ne se répètent pas trop », « fais attention à ce genre de détails ») :
+	// chaque mot pointe une chose bien visible ; lo Congrès (carreau → carrèu, empreinte → pesada, ruine → roïna, terrain → terren, tas → molon), genre d’après lo Basic
+	'la botiga': 'le magasin',
+	'la branca': 'la branche',
+	'la brica': 'la brique',
+	'la campanha': 'la campagne',
+	'la faciada': 'la façade',
+	'la grua': 'la grue (de chantier)',
+	'la lausa': 'la lauze',
+	'la persiana': 'le volet',
+	'la pesada': 'l’empreinte de pas',
+	'la piramida': 'la pyramide',
+	'la platana': 'le platane',
+	'la riba': 'la rive',
+	'la roïna': 'la ruine',
+	'la ròda': 'la roue',
+	'la terrassa': 'la terrasse',
+	'la travèrsa': 'la traverse',
+	'la tribuna': 'la tribune',
+	'lo boisson': 'le buisson',
+	'lo camp': 'le champ',
+	'lo carrèu': 'le carreau',
+	'lo cotèl': 'le couteau',
+	'lo gratacèl': 'le gratte-ciel',
+	'lo lum': 'la lumière',
+	'lo merlet': 'le créneau',
+	'lo molon': 'le tas (de pierres)',
+	'lo numèro': 'le numéro',
+	'lo pal': 'le piquet',
+	'lo panèl': 'le panneau',
+	'lo penjal': 'la pente',
+	'lo ridèl': 'le rideau',
+	'lo sause': 'le saule',
+	'lo terren': 'le terrain',
+	'lo tronc': 'le tronc',
+	'lo veirial': 'le vitrail',
+	'l’agulha': 'l’aiguille (de roche)',
+	'l’antena': 'l’antenne',
+	'l’arcada': 'l’arcade',
+	'l’èura': 'le lierre'
 };
 
 export const PAISATGES = [
@@ -207,7 +252,7 @@ export const PAISATGES = [
 		mots: [
 			['lo lac', 0.5, 0.62],
 			['lo bòsc', 0.4, 0.38],
-			['la nívol', 0.1, 0.21],
+			['la riba', 0.85, 0.51],
 			['l’èrba', 0.3, 0.86]
 		]
 	},
@@ -222,7 +267,7 @@ export const PAISATGES = [
 			['lo camin', 0.58, 0.82],
 			['la mar', 0.2, 0.55],
 			['la duna', 0.82, 0.55],
-			['lo cèl', 0.5, 0.22]
+			['lo pal', 0.08, 0.78]
 		]
 	},
 	{
@@ -248,7 +293,7 @@ export const PAISATGES = [
 		mots: [
 			['lo pic', 0.62, 0.38],
 			['la montanha', 0.28, 0.445],
-			['la ròca', 0.88, 0.55],
+			['l’arcada', 0.88, 0.55],
 			['la garriga', 0.45, 0.7]
 		]
 	},
@@ -263,7 +308,7 @@ export const PAISATGES = [
 			['la montanha', 0.7, 0.33],
 			['lo bòsc', 0.3, 0.88],
 			['la vinha', 0.78, 0.77],
-			['la nívol', 0.25, 0.3]
+			['lo camp', 0.35, 0.58]
 		]
 	},
 	{
@@ -276,7 +321,7 @@ export const PAISATGES = [
 		mots: [
 			['lo vilatge', 0.72, 0.38],
 			['la glèisa', 0.52, 0.39],
-			['l’arbre', 0.42, 0.52],
+			['lo ciprès', 0.42, 0.52],
 			['la pena', 0.44, 0.24]
 		]
 	},
@@ -317,8 +362,9 @@ export const PAISATGES = [
 		alt: 'La Garonne à Toulouse : l’eau large et bleue, une chaussée qui écume, la ville de brique sous le ciel.',
 		mots: [
 			['l’aiga', 0.5, 0.85],
-			['la vila', 0.5, 0.48],
-			['la paissièra', 0.3, 0.58]
+			['la vila', 0.72, 0.47],
+			['la paissièra', 0.3, 0.58],
+			['la grua', 0.4, 0.43]
 		]
 	},
 	{
@@ -329,7 +375,7 @@ export const PAISATGES = [
 		h: 1440,
 		alt: 'Sous deux arbres, un muret de pierres sèches et, au loin, une plaine immense jusqu’à l’horizon.',
 		mots: [
-			['l’arbre', 0.27, 0.4],
+			['lo tronc', 0.27, 0.4],
 			['la pèira', 0.4, 0.75],
 			['la plana', 0.6, 0.55],
 			['l’orizont', 0.4, 0.49]
@@ -374,7 +420,7 @@ export const PAISATGES = [
 			['l’illa', 0.42, 0.46],
 			['la mar', 0.62, 0.56],
 			['la vila', 0.3, 0.75],
-			['la torre', 0.86, 0.64]
+			['la terrassa', 0.75, 0.88]
 		]
 	},
 	{
@@ -388,7 +434,7 @@ export const PAISATGES = [
 			['la mar', 0.75, 0.62],
 			['l’aiga', 0.45, 0.88],
 			['la ròca', 0.25, 0.66],
-			['la montanha', 0.15, 0.3],
+			['lo penjal', 0.15, 0.3],
 			['lo cap', 0.66, 0.47]
 		]
 	},
@@ -431,7 +477,7 @@ export const PAISATGES = [
 			['la montanha', 0.18, 0.28],
 			['la ròca', 0.78, 0.28],
 			['la garriga', 0.5, 0.65],
-			['l’arbre', 0.68, 0.86]
+			['lo pin', 0.68, 0.86]
 		]
 	},
 	{
@@ -459,7 +505,7 @@ export const PAISATGES = [
 		mots: [
 			['lo pic', 0.47, 0.37],
 			['la montanha', 0.18, 0.43],
-			['lo pin', 0.6, 0.5],
+			['lo sap', 0.6, 0.5],
 			['l’èrba', 0.45, 0.88],
 			['la nívol', 0.58, 0.14]
 		]
@@ -473,7 +519,7 @@ export const PAISATGES = [
 		alt: 'Un grand bâtiment de briques aux portes rayées de bleu et de blanc, au bord d’une eau calme qui le reflète, un saule à gauche.',
 		mots: [
 			['l’aiga', 0.45, 0.78],
-			['l’arbre', 0.1, 0.33],
+			['lo sause', 0.1, 0.33],
 			['la pòrta', 0.52, 0.5]
 		]
 	},
@@ -499,7 +545,7 @@ export const PAISATGES = [
 		alt: 'Vue d’un balcon sur des immeubles de pierre aux balcons de fer, à Montpellier ; un clocher pointu, le soleil qui se couche, des plantes au premier plan.',
 		mots: [
 			['lo cloquièr', 0.8, 0.3],
-			['la vila', 0.4, 0.55],
+			['la faciada', 0.4, 0.55],
 			['lo balcon', 0.62, 0.86],
 			['la planta', 0.18, 0.85]
 		]
@@ -542,7 +588,7 @@ export const PAISATGES = [
 			['la carrièra', 0.55, 0.82],
 			['la planta', 0.53, 0.5],
 			['la pòrta', 0.06, 0.6],
-			['la fenèstra', 0.335, 0.33]
+			['la persiana', 0.335, 0.33]
 		]
 	},
 	{
@@ -556,7 +602,7 @@ export const PAISATGES = [
 			['l’ostal', 0.15, 0.43],
 			['l’escalièr', 0.43, 0.54],
 			['lo pont', 0.36, 0.72],
-			['l’arbre', 0.18, 0.1]
+			['la branca', 0.18, 0.1]
 		]
 	},
 	{
@@ -569,7 +615,7 @@ export const PAISATGES = [
 		mots: [
 			['la montanha', 0.07, 0.36],
 			['la nívol', 0.67, 0.2],
-			['lo teulat', 0.72, 0.6],
+			['la lausa', 0.72, 0.6],
 			['la carrièra', 0.44, 0.84]
 		]
 	},
@@ -692,7 +738,6 @@ export const PAISATGES = [
 		mots: [
 			['l’estatua', 0.48, 0.55],
 			['lo teulat', 0.12, 0.76],
-			['la fenèstra', 0.3, 0.84],
 			['la paret', 0.82, 0.5]
 		]
 	},
@@ -706,7 +751,7 @@ export const PAISATGES = [
 		mots: [
 			['lo cloquièr', 0.38, 0.28],
 			['la montanha', 0.83, 0.33],
-			['la fenèstra', 0.52, 0.66],
+			['lo ciprès', 0.285, 0.65],
 			['la pèira', 0.66, 0.8]
 		]
 	},
@@ -720,7 +765,7 @@ export const PAISATGES = [
 		mots: [
 			['la campana', 0.66, 0.3],
 			['lo relòtge', 0.77, 0.5],
-			['la fenèstra', 0.52, 0.84],
+			['lo veirial', 0.52, 0.84],
 			['la paret', 0.15, 0.55]
 		]
 	},
@@ -735,7 +780,7 @@ export const PAISATGES = [
 			['la copòla', 0.52, 0.36],
 			['la crotz', 0.51, 0.12],
 			['la pòrta', 0.43, 0.86],
-			['la fenèstra', 0.24, 0.66]
+			['l’arcada', 0.93, 0.6]
 		]
 	},
 	{
@@ -763,7 +808,7 @@ export const PAISATGES = [
 			['la torre', 0.49, 0.38],
 			['la muralha', 0.78, 0.52],
 			['l’èrba', 0.5, 0.82],
-			['la nívol', 0.3, 0.14]
+			['lo merlet', 0.28, 0.4]
 		]
 	},
 	{
@@ -775,7 +820,7 @@ export const PAISATGES = [
 		alt: 'Un sentier de terre longe le pied des remparts de Carcassonne : une tour ronde, de hauts murs couverts de lierre, des fleurs roses.',
 		mots: [
 			['la torre', 0.38, 0.45],
-			['la muralha', 0.8, 0.3],
+			['l’èura', 0.7, 0.38],
 			['lo camin', 0.43, 0.85],
 			['la flor', 0.84, 0.6]
 		]
@@ -789,7 +834,7 @@ export const PAISATGES = [
 		alt: 'Une rue neuve de Barcelone entre des immeubles de verre et de béton ; au fond, une tour ronde et pointue qui brille au soleil.',
 		mots: [
 			['la torre', 0.57, 0.36],
-			['l’arbre', 0.66, 0.63],
+			['lo panèl', 0.79, 0.66],
 			['la carrièra', 0.55, 0.9]
 		]
 	},
@@ -844,7 +889,7 @@ export const PAISATGES = [
 		mots: [
 			['la torre', 0.25, 0.6],
 			['lo teulat', 0.25, 0.86],
-			['l’arbre', 0.88, 0.7]
+			['lo ciprès', 0.435, 0.65]
 		]
 	},
 	{
@@ -858,7 +903,7 @@ export const PAISATGES = [
 			['lo balcon', 0.55, 0.63],
 			['la muralha', 0.22, 0.5],
 			['la fenèstra', 0.78, 0.17],
-			['la nívol', 0.15, 0.27]
+			['l’èura', 0.1, 0.65]
 		]
 	},
 	{
@@ -939,7 +984,7 @@ export const PAISATGES = [
 		mots: [
 			['lo polet', 0.44, 0.59],
 			['l’oliva', 0.24, 0.8],
-			['la sieta', 0.8, 0.69],
+			['lo cotèl', 0.5, 0.76],
 			['la salada', 0.34, 0.24],
 			['lo pichièr', 0.07, 0.28]
 		]
@@ -1039,7 +1084,7 @@ export const PAISATGES = [
 			['lo fum', 0.51, 0.2],
 			['la grasilha', 0.5, 0.54],
 			['la botelha', 0.61, 0.66],
-			['l’arbre', 0.15, 0.13],
+			['la veitura', 0.72, 0.45],
 			['la paret', 0.54, 0.87]
 		]
 	},
@@ -1080,8 +1125,7 @@ export const PAISATGES = [
 		mots: [
 			['la font', 0.47, 0.65],
 			['l’estatua', 0.48, 0.29],
-			['la nèu', 0.4, 0.86],
-			['la fenèstra', 0.07, 0.18]
+			['la nèu', 0.4, 0.86]
 		]
 	},
 	{
@@ -1108,7 +1152,7 @@ export const PAISATGES = [
 			['la nívol', 0.4, 0.3],
 			['lo flume', 0.4, 0.72],
 			['lo cloquièr', 0.53, 0.58],
-			['l’arbre', 0.88, 0.45],
+			['la branca', 0.88, 0.45],
 			['l’èrba', 0.3, 0.9]
 		]
 	},
@@ -1122,7 +1166,7 @@ export const PAISATGES = [
 		mots: [
 			['la nívol', 0.5, 0.38],
 			['lo cèl', 0.2, 0.12],
-			['l’arbre', 0.88, 0.1],
+			['la fuèlha', 0.88, 0.1],
 			['lo puèg', 0.7, 0.9]
 		]
 	},
@@ -1135,7 +1179,6 @@ export const PAISATGES = [
 		alt: 'Le soir au-dessus de la garrigue : un ciel bleu et rose, des collines vertes, un chemin clair, des toits blancs au premier plan.',
 		mots: [
 			['la nívol', 0.41, 0.34],
-			['lo cèl', 0.6, 0.1],
 			['la garriga', 0.45, 0.6],
 			['lo camin', 0.87, 0.71]
 		]
@@ -1150,8 +1193,7 @@ export const PAISATGES = [
 		mots: [
 			['lo solelh', 0.5, 0.47],
 			['la mar', 0.75, 0.75],
-			['la pena', 0.21, 0.54],
-			['lo cèl', 0.5, 0.12]
+			['la pena', 0.21, 0.54]
 		]
 	},
 	{
@@ -1163,7 +1205,7 @@ export const PAISATGES = [
 		alt: 'Par une fenêtre ouverte dans un mur épais, la brume efface tout : on devine à peine une montagne derrière.',
 		mots: [
 			['la bruma', 0.55, 0.4],
-			['la paret', 0.1, 0.45],
+			['lo ridèl', 0.1, 0.45],
 			['la baranda', 0.5, 0.94]
 		]
 	},
@@ -1178,8 +1220,7 @@ export const PAISATGES = [
 			['la bruma', 0.45, 0.09],
 			['lo cloquièr', 0.52, 0.34],
 			['la carrièra', 0.45, 0.8],
-			['la paret', 0.25, 0.5],
-			['la fenèstra', 0.74, 0.43]
+			['la paret', 0.25, 0.5]
 		]
 	},
 	// ── Lot 4 des thèmes : fèstas e lésers (06-11) ──
@@ -1194,7 +1235,7 @@ export const PAISATGES = [
 			['lo forgon', 0.35, 0.38],
 			['la pòrta', 0.78, 0.45],
 			['l’èrba', 0.3, 0.88],
-			['l’arbre', 0.5, 0.1]
+			['la ròda', 0.385, 0.7]
 		]
 	},
 	{
@@ -1208,7 +1249,7 @@ export const PAISATGES = [
 			['la piscina', 0.5, 0.5],
 			['l’escala', 0.91, 0.6],
 			['l’immòble', 0.77, 0.1],
-			['l’arbre', 0.26, 0.24]
+			['lo carrèu', 0.55, 0.85]
 		]
 	},
 	{
@@ -1222,7 +1263,7 @@ export const PAISATGES = [
 			['lo ralh', 0.83, 0.53],
 			['la pèira', 0.29, 0.85],
 			['la montanha', 0.4, 0.32],
-			['lo cèl', 0.5, 0.12]
+			['la travèrsa', 0.6, 0.68]
 		]
 	},
 	{
@@ -1247,9 +1288,9 @@ export const PAISATGES = [
 		alt: 'Une fête foraine au crépuscule : un manège illuminé de rose et de vert au pied d’une montagne boisée.',
 		mots: [
 			['lo manètge', 0.47, 0.8],
-			['la montanha', 0.7, 0.55],
+			['lo puèg', 0.7, 0.55],
 			['lo cèl', 0.4, 0.2],
-			['l’arbre', 0.92, 0.85]
+			['lo lum', 0.12, 0.9]
 		]
 	},
 	{
@@ -1262,7 +1303,7 @@ export const PAISATGES = [
 		mots: [
 			['la bòla', 0.3, 0.81],
 			['l’immòble', 0.72, 0.35],
-			['lo cèl', 0.3, 0.14],
+			['lo gratacèl', 0.47, 0.48],
 			['l’arbre', 0.15, 0.51]
 		]
 	},
@@ -1277,7 +1318,7 @@ export const PAISATGES = [
 			['lo lustre', 0.58, 0.51],
 			['la garlanda', 0.42, 0.41],
 			['lo parasòl', 0.75, 0.9],
-			['la fenèstra', 0.08, 0.34]
+			['la botiga', 0.1, 0.75]
 		]
 	},
 	{
@@ -1304,7 +1345,7 @@ export const PAISATGES = [
 		mots: [
 			['la bicicleta', 0.47, 0.61],
 			['la cheminièra', 0.21, 0.13],
-			['l’arbre', 0.66, 0.13],
+			['la branca', 0.66, 0.13],
 			['l’èrba', 0.7, 0.4],
 			['la planta', 0.1, 0.46]
 		]
@@ -1332,9 +1373,9 @@ export const PAISATGES = [
 		alt: 'Un grand stade de football plein à la tombée du jour : la pelouse sous les projecteurs, des tribunes peintes de bleu et de rouge.',
 		mots: [
 			['l’estadi', 0.84, 0.618],
-			['l’èrba', 0.62, 0.737],
+			['lo terren', 0.62, 0.737],
 			['lo projector', 0.05, 0.382],
-			['lo cèl', 0.5, 0.132]
+			['la tribuna', 0.15, 0.55]
 		]
 	},
 	// ── Lot 5 des thèmes : compléments de la mar e la montanha (06-11) ──
@@ -1348,7 +1389,6 @@ export const PAISATGES = [
 		mots: [
 			['lo bòsc', 0.44, 0.51],
 			['la duna', 0.58, 0.93],
-			['lo cèl', 0.33, 0.14],
 			['l’orizont', 0.67, 0.35]
 		]
 	},
@@ -1363,7 +1403,7 @@ export const PAISATGES = [
 			['lo camin', 0.55, 0.85],
 			['la barralha', 0.84, 0.74],
 			['la duna', 0.07, 0.58],
-			['l’arbre', 0.6, 0.3]
+			['lo boisson', 0.6, 0.3]
 		]
 	},
 	{
@@ -1377,8 +1417,7 @@ export const PAISATGES = [
 			['la mar', 0.15, 0.54],
 			['lo teulat', 0.4, 0.89],
 			['l’ostal', 0.78, 0.54],
-			['lo puèg', 0.64, 0.46],
-			['lo cèl', 0.4, 0.14]
+			['lo puèg', 0.64, 0.46]
 		]
 	},
 	{
@@ -1404,7 +1443,7 @@ export const PAISATGES = [
 		alt: 'Un muret de pierre au bord d’un chemin, des arbres d’un vert éclatant, et derrière une montagne de calcaire clair.',
 		mots: [
 			['la paret', 0.28, 0.75],
-			['l’arbre', 0.85, 0.5],
+			['la fuèlha', 0.85, 0.5],
 			['la montanha', 0.4, 0.38],
 			['lo camin', 0.09, 0.91]
 		]
@@ -1432,8 +1471,7 @@ export const PAISATGES = [
 		mots: [
 			['lo prat', 0.4, 0.79],
 			['la nívol', 0.43, 0.45],
-			['lo bòsc', 0.65, 0.55],
-			['lo cèl', 0.4, 0.12]
+			['lo bòsc', 0.65, 0.55]
 		]
 	},
 	{
@@ -1446,7 +1484,7 @@ export const PAISATGES = [
 		mots: [
 			['la duna', 0.61, 0.61],
 			['la montanha', 0.2, 0.34],
-			['lo cèl', 0.5, 0.12],
+			['la pesada', 0.8, 0.75],
 			['la sabla', 0.5, 0.9]
 		]
 	},
@@ -1459,8 +1497,7 @@ export const PAISATGES = [
 		alt: 'De hautes falaises de roche rouge au-dessus d’une forêt de pins, sous un ciel bleu sans nuage.',
 		mots: [
 			['la ròca', 0.4, 0.45],
-			['lo cèl', 0.5, 0.14],
-			['l’arbre', 0.1, 0.39],
+			['lo pin', 0.1, 0.39],
 			['lo bòsc', 0.44, 0.64]
 		]
 	},
@@ -1501,7 +1538,6 @@ export const PAISATGES = [
 		mots: [
 			['l’arbre', 0.6, 0.36],
 			['la ròca', 0.1, 0.64],
-			['lo cèl', 0.3, 0.12],
 			['la pèira', 0.65, 0.91]
 		]
 	},
@@ -1516,8 +1552,7 @@ export const PAISATGES = [
 			['l’arc', 0.5, 0.1],
 			['la plana', 0.5, 0.52],
 			['la paret', 0.88, 0.5],
-			['la pèira', 0.45, 0.875],
-			['l’arbre', 0.34, 0.58]
+			['la pèira', 0.45, 0.875]
 		]
 	},
 	{
@@ -1543,8 +1578,8 @@ export const PAISATGES = [
 		alt: 'Un grand tas de pierres au sommet, surmonté de deux croix de pierre, sous le ciel bleu.',
 		mots: [
 			['la crotz', 0.62, 0.28],
-			['la pèira', 0.5, 0.7],
-			['lo cèl', 0.14, 0.2]
+			['lo molon', 0.5, 0.7],
+			['la pèira', 0.35, 0.75]
 		]
 	},
 	{
@@ -1555,10 +1590,9 @@ export const PAISATGES = [
 		h: 1184,
 		alt: 'Des aiguilles de roche claire dressées au-dessus d’une large vallée sèche, des montagnes à perte de vue.',
 		mots: [
-			['la ròca', 0.72, 0.55],
+			['l’agulha', 0.72, 0.55],
 			['la valada', 0.3, 0.6],
-			['la montanha', 0.26, 0.35],
-			['lo cèl', 0.4, 0.1]
+			['la montanha', 0.26, 0.35]
 		]
 	},
 	{
@@ -1570,7 +1604,7 @@ export const PAISATGES = [
 		alt: 'Un gros rocher et un reste de tour en ruine au bout d’un plateau d’herbe sèche ; en bas, une vallée dans la brume.',
 		mots: [
 			['la ròca', 0.2, 0.29],
-			['la torre', 0.42, 0.55],
+			['la roïna', 0.42, 0.55],
 			['l’èrba', 0.35, 0.85],
 			['la valada', 0.8, 0.6]
 		]
@@ -1585,7 +1619,6 @@ export const PAISATGES = [
 		mots: [
 			['la garriga', 0.15, 0.5],
 			['la ròca', 0.55, 0.75],
-			['lo cèl', 0.4, 0.15],
 			['l’arbre', 0.86, 0.39]
 		]
 	},
@@ -1613,7 +1646,7 @@ export const PAISATGES = [
 		h: 2133,
 		alt: 'Des tours de verre et d’acier vues d’en bas, qui reflètent le ciel, dans un quartier d’affaires.',
 		mots: [
-			['la torre', 0.39, 0.3],
+			['lo gratacèl', 0.39, 0.3],
 			['lo cèl', 0.6, 0.2],
 			['lo veire', 0.64, 0.71]
 		]
@@ -1626,8 +1659,8 @@ export const PAISATGES = [
 		h: 2133,
 		alt: 'À San Francisco, une tour en forme de pyramide très pointue domine les immeubles, sous un ciel bleu.',
 		mots: [
-			['la torre', 0.5, 0.39],
-			['lo cèl', 0.3, 0.15],
+			['la piramida', 0.5, 0.39],
+			['lo panèl', 0.09, 0.71],
 			['l’immòble', 0.86, 0.55]
 		]
 	},
@@ -1641,7 +1674,6 @@ export const PAISATGES = [
 		mots: [
 			['lo fanal', 0.2, 0.59],
 			['la nívol', 0.35, 0.15],
-			['l’arbre', 0.95, 0.39],
 			['la fenèstra', 0.6, 0.75]
 		]
 	},
@@ -1653,7 +1685,7 @@ export const PAISATGES = [
 		h: 2133,
 		alt: 'Une petite place entre des façades de pierre blonde, un clocher pointu au fond, les branches d’un arbre doré au-dessus.',
 		mots: [
-			['l’arbre', 0.5, 0.18],
+			['la platana', 0.5, 0.18],
 			['lo cloquièr', 0.48, 0.61],
 			['lo balcon', 0.83, 0.69],
 			['l’ostal', 0.12, 0.65]
@@ -1671,7 +1703,7 @@ export const PAISATGES = [
 			['lo teulat', 0.75, 0.44],
 			['lo balcon', 0.79, 0.65],
 			['la fenèstra', 0.16, 0.58],
-			['lo cèl', 0.2, 0.15]
+			['l’antena', 0.72, 0.2]
 		]
 	},
 	{
@@ -1698,9 +1730,8 @@ export const PAISATGES = [
 		mots: [
 			['lo teulat', 0.08, 0.48],
 			['la cheminièra', 0.13, 0.3],
-			['la torre', 0.62, 0.45],
-			['l’arbre', 0.9, 0.3],
-			['lo cèl', 0.4, 0.1]
+			['lo gratacèl', 0.62, 0.45],
+			['la branca', 0.9, 0.3]
 		]
 	},
 	{
@@ -1714,8 +1745,7 @@ export const PAISATGES = [
 			['la font', 0.44, 0.93],
 			['l’arbre', 0.54, 0.39],
 			['lo pont', 0.16, 0.79],
-			['l’escalièr', 0.59, 0.82],
-			['lo cèl', 0.11, 0.12]
+			['l’escalièr', 0.59, 0.82]
 		]
 	},
 	{
@@ -1729,8 +1759,7 @@ export const PAISATGES = [
 			['la catedrala', 0.64, 0.45],
 			['lo teulat', 0.41, 0.86],
 			['lo cloquièr', 0.73, 0.29],
-			['la rosassa', 0.36, 0.51],
-			['lo cèl', 0.3, 0.15]
+			['la rosassa', 0.36, 0.51]
 		]
 	},
 	{
@@ -1771,7 +1800,6 @@ export const PAISATGES = [
 			['la torre', 0.45, 0.3],
 			['la copòla', 0.27, 0.33],
 			['lo balcon', 0.85, 0.54],
-			['lo cèl', 0.6, 0.1],
 			['l’immòble', 0.49, 0.66]
 		]
 	},
@@ -1785,7 +1813,8 @@ export const PAISATGES = [
 		mots: [
 			['la pòrta', 0.45, 0.61],
 			['la fusta', 0.8, 0.7],
-			['l’arc', 0.44, 0.29]
+			['l’arc', 0.44, 0.29],
+			['lo numèro', 0.85, 0.29]
 		]
 	},
 	{
@@ -1798,7 +1827,7 @@ export const PAISATGES = [
 		mots: [
 			['lo pan', 0.2, 0.45],
 			['la pòrta', 0.73, 0.62],
-			['la paret', 0.49, 0.61],
+			['la brica', 0.49, 0.61],
 			['la veirina', 0.22, 0.7]
 		]
 	},
@@ -1813,8 +1842,7 @@ export const PAISATGES = [
 			['l’arbre', 0.24, 0.3],
 			['la torre', 0.39, 0.25],
 			['la paret', 0.6, 0.88],
-			['l’èrba', 0.4, 0.75],
-			['lo cèl', 0.6, 0.08]
+			['l’èrba', 0.4, 0.75]
 		]
 	},
 	{
@@ -1841,7 +1869,7 @@ export const PAISATGES = [
 			['la fenèstra', 0.49, 0.53],
 			['lo teulat', 0.8, 0.56],
 			['la fuèlha', 0.35, 0.16],
-			['la paret', 0.59, 0.85]
+			['la paret', 0.4, 0.7]
 		]
 	},
 	{
@@ -1882,7 +1910,7 @@ export const PAISATGES = [
 		mots: [
 			['lo teulat', 0.76, 0.75],
 			['la cheminièra', 0.52, 0.54],
-			['lo cèl', 0.5, 0.15]
+			['l’antena', 0.21, 0.37]
 		]
 	},
 	{
@@ -1909,7 +1937,6 @@ export const PAISATGES = [
 		alt: 'Depuis un toit, la vue sur une vieille ville aux toits de tuiles ; au premier plan, une grande toiture de zinc et une balustrade de pierre.',
 		mots: [
 			['lo teulat', 0.21, 0.6],
-			['lo cèl', 0.5, 0.12],
 			['la vila', 0.64, 0.43],
 			['la baranda', 0.85, 0.86]
 		]
@@ -1954,7 +1981,7 @@ export const PAISATGES = [
 			['la vila', 0.6, 0.66],
 			['la montanha', 0.4, 0.27],
 			['la ròca', 0.85, 0.85],
-			['l’olivièr', 0.3, 0.49]
+			['la campanha', 0.3, 0.49]
 		]
 	},
 	{
@@ -1983,8 +2010,7 @@ export const PAISATGES = [
 			['lo cloquièr', 0.5, 0.45],
 			['l’olivièr', 0.75, 0.59],
 			['lo ciprès', 0.29, 0.45],
-			['la paret', 0.5, 0.875],
-			['lo cèl', 0.7, 0.15]
+			['la paret', 0.5, 0.875]
 		]
 	},
 	{
@@ -2013,8 +2039,7 @@ export const PAISATGES = [
 			['la vila', 0.49, 0.59],
 			['lo flume', 0.5, 0.87],
 			['lo castèl', 0.76, 0.39],
-			['la catedrala', 0.41, 0.39],
-			['lo cèl', 0.5, 0.12]
+			['la catedrala', 0.41, 0.39]
 		]
 	},
 	{
@@ -2028,7 +2053,6 @@ export const PAISATGES = [
 			['lo balcon', 0.5, 0.35],
 			['la planta', 0.47, 0.75],
 			['la fenèstra', 0.72, 0.5],
-			['lo cèl', 0.15, 0.15],
 			['la veitura', 0.08, 0.85]
 		]
 	},
@@ -2057,7 +2081,7 @@ export const PAISATGES = [
 			['lo balcon', 0.72, 0.4],
 			['la planta', 0.82, 0.25],
 			['la pòrta', 0.61, 0.875],
-			['la fenèstra', 0.65, 0.59],
+			['la paret', 0.65, 0.59],
 			['lo cèl', 0.3, 0.12]
 		]
 	},
@@ -2071,8 +2095,7 @@ export const PAISATGES = [
 		mots: [
 			['lo musèu', 0.49, 0.48],
 			['la fuèlha', 0.85, 0.64],
-			['l’arbre', 0.2, 0.61],
-			['lo cèl', 0.61, 0.32]
+			['l’arbre', 0.2, 0.61]
 		]
 	},
 	{
@@ -2113,7 +2136,7 @@ export const PAISATGES = [
 		h: 2133,
 		alt: 'Une petite place aux maisons colorées, à l’ombre d’un grand arbre ; un vieux puits de pierre à la ferronnerie ouvragée.',
 		mots: [
-			['l’arbre', 0.63, 0.25],
+			['la platana', 0.63, 0.25],
 			['la fenèstra', 0.28, 0.51],
 			['lo balcon', 0.55, 0.54],
 			['lo potz', 0.85, 0.75],
