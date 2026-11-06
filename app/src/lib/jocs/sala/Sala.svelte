@@ -44,8 +44,8 @@
 		<div class="tema" role="group" aria-labelledby="sala-tema">
 			<span id="sala-tema" class="pichon">{tria(T.tema)}</span>
 			<div class="tema-botons">
-				<button type="button" aria-pressed={tema === 'calme'} onclick={() => causirTema('calme')}>{tria(T.calme)}</button>
-				<button type="button" aria-pressed={tema === 'joios'} onclick={() => causirTema('joios')}>{tria(T.joios)}</button>
+				<button type="button" class="pc pc-2 pc-chip" aria-pressed={tema === 'calme'} onclick={() => causirTema('calme')}>{tria(T.calme)}</button>
+				<button type="button" class="pc pc-2 pc-chip" aria-pressed={tema === 'joios'} onclick={() => causirTema('joios')}>{tria(T.joios)}</button>
 			</div>
 		</div>
 	</header>
@@ -53,9 +53,9 @@
 	<div class="filtre" role="group" aria-labelledby="sala-filtre">
 		<span id="sala-filtre" class="pichon">{tria(T.faTrabalhar)}</span>
 		<div class="causidas">
-			<button type="button" aria-pressed={filtre === null} onclick={() => (filtre = null)}>{tria(T.tot)}</button>
+			<button type="button" class="pc pc-2 pc-chip" aria-pressed={filtre === null} onclick={() => (filtre = null)}>{tria(T.tot)}</button>
 			{#each CAPACITATS as c (c.id)}
-				<button type="button" aria-pressed={filtre === c.id} onclick={() => (filtre = filtre === c.id ? null : c.id)}
+				<button type="button" class="pc pc-2 pc-chip" aria-pressed={filtre === c.id} onclick={() => (filtre = filtre === c.id ? null : c.id)}
 					>{tria(c)}</button
 				>
 			{/each}
@@ -151,11 +151,12 @@
 		display: grid;
 		gap: 0.35rem;
 	}
-	button {
+	button:not(.pc) {
 		font: inherit;
 		color: var(--t-tinta);
 		cursor: pointer;
 	}
+
 	button:focus-visible,
 	.joc:focus-visible {
 		outline: 3px solid var(--t-aur);
@@ -180,25 +181,7 @@
 		flex-wrap: wrap;
 		gap: 0 1.1rem;
 	}
-	.tema-botons button,
-	.causidas button {
-		min-height: 2.75rem;
-		padding: 0.3rem 0 0.45rem;
-		border: none;
-		border-bottom: 2px solid transparent;
-		background: none;
-		color: var(--t-tinta-2);
-	}
-	.tema-botons button:hover,
-	.causidas button:hover {
-		color: var(--t-tinta);
-	}
-	.tema-botons button[aria-pressed='true'],
-	.causidas button[aria-pressed='true'] {
-		border-bottom-color: var(--t-aur);
-		color: var(--t-tinta);
-		font-weight: 600;
-	}
+	/* le thème et le filtre : des pastilles de papier (lib/styles/papier.css), l'or marque la pièce choisie */
 
 	/* ── les familles : une affiche encadrée, ses jeux dessous ── */
 	.familhas {
@@ -419,10 +402,6 @@
 	}
 	.joios a.joc:hover .emb {
 		animation: bolegar 0.5s ease;
-	}
-	.joios .tema-botons button[aria-pressed='true'],
-	.joios .causidas button[aria-pressed='true'] {
-		border-bottom-color: var(--t-terra-viu);
 	}
 	@keyframes onda-titol {
 		0%,

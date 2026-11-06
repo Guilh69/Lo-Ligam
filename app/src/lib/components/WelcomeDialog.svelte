@@ -134,7 +134,7 @@
 				{/each}
 			</ul>
 
-			<button type="button" class="btn" onclick={fermer}>{tx.commencar}</button>
+			<button type="button" class="pc pc-or btn" onclick={fermer}>{tx.commencar}</button>
 		</div>
 	</div>
 {/if}
@@ -224,22 +224,12 @@
 		opacity: 0.75;
 	}
 
+	/* pièce de papier (lib/styles/papier.css) */
 	.btn {
-		border: none;
-		background: var(--color-gold);
-		color: var(--color-text);
+		--r: 12px;
+		padding: 0.8rem 1.6rem;
 		font-family: var(--font-heading);
 		font-weight: 600;
-		font-size: 1rem;
-		padding: 0.8rem 1.6rem;
-		border-radius: 999px;
-		cursor: pointer;
-		box-shadow: 0 6px 18px rgba(238, 175, 52, 0.45);
-		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
-	}
-
-	.btn:hover {
-		transform: translateY(-2px) scale(1.03);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

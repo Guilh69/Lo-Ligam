@@ -116,7 +116,7 @@
 		</a>
 
 		<div class="header-right">
-			<a class="reservar" href={VISIO}>{tx.reservar}</a>
+			<a class="pc reservar" href={VISIO}>{tx.reservar}</a>
 
 			{#if children}
 				<div class="compte">
@@ -125,12 +125,12 @@
 			{/if}
 
 			{#if $session}
-				<a class="compte-ligam connectat" href="/compte" aria-current={surCompte ? 'page' : undefined} title={tx.compte}>
+				<a class="pc pc-2 compte-ligam connectat" href="/compte" aria-current={surCompte ? 'page' : undefined} title={tx.compte}>
 					<Avatar pseudo={$pseudoCompte ?? $session.user.email ?? '?'} id={$session.user.id} size="1.6rem" />
 					<span class="compte-tèxte">{tx.compte}</span>
 				</a>
 			{:else if $authReady}
-				<a class="compte-ligam" href={tornar} aria-current={surCompte ? 'page' : undefined} title={tx.connectar}>
+				<a class="pc pc-2 compte-ligam" href={tornar} aria-current={surCompte ? 'page' : undefined} title={tx.connectar}>
 					<Icona nom="persona" size="1.15em" />
 					<span class="compte-tèxte">{tx.connectar}</span>
 				</a>
@@ -139,7 +139,7 @@
 			<!-- Visible seulement pour un administrateur. C'est du confort, pas une
 			     protection : les verrous sont dans la base (RLS). -->
 			{#if $esAdmin}
-				<a class="admin-link" href="/admin" title={tx.admin}>
+				<a class="pc pc-2 admin-link" href="/admin" title={tx.admin}>
 					<Icona nom="reglages" size="1.1em" />
 					<span class="admin-tèxte">{tx.admin}</span>
 				</a>
@@ -149,8 +149,8 @@
 
 			<div class="lengas">
 				<div class="lang-toggle" class:en-avant={crida} role="group" aria-label="Lenga / Langue">
-					<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
-					<button type="button" aria-pressed={lang === segonda} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
+					<button type="button" class="pc pc-2" aria-pressed={lang === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
+					<button type="button" class="pc pc-2" aria-pressed={lang === segonda} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
 					{#if crida}
 						<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
 					{/if}
@@ -158,7 +158,7 @@
 				<div class="lang-globe">
 					<button
 						type="button"
-						class="globe-boton"
+						class="pc pc-2 globe-boton"
 						bind:this={botonGlobe}
 						aria-expanded={globeDobert}
 						aria-controls="globe-panel"
@@ -184,7 +184,7 @@
 			     élément ; l'ordre de tabulation suit l'ordre affiché. -->
 			<button
 				type="button"
-				class="menu-boton"
+				class="pc pc-2 menu-boton"
 				bind:this={botonMenu}
 				aria-haspopup="dialog"
 				aria-expanded={menuDobèrt}
@@ -254,47 +254,34 @@
 		gap: 0.7rem;
 	}
 
-	.menu-boton {
-		display: inline-flex;
-		align-items: center;
+	/* pièces de papier (lib/styles/papier.css) : les boutons de la barre ; ouverts, ils passent à l'or */
+	.menu-boton,
+	.globe-boton {
+		--r: 9px;
 		gap: 0.45rem;
+		min-height: 0;
 		height: 2.2rem;
 		padding: 0 0.9rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: transparent;
-		color: var(--t-tinta);
 		font: inherit;
 		font-weight: 700;
 		font-size: 0.82rem;
-		cursor: pointer;
-		transition: border-color 0.3s;
 	}
 
-	.menu-boton:hover,
-	.menu-boton[aria-expanded='true'] {
-		border-color: var(--t-accion);
+	.menu-boton[aria-expanded='true'],
+	.globe-boton[aria-expanded='true'] {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
 	}
 
 	/* La seule action en couleur de la barre, comme « Nous rejoindre » chez l'Alliance ;
 	   en tuile du rouge du logo, la couleur de ce qui se clique (app.css, 2026-10-23) */
 	.reservar {
-		display: inline-flex;
-		align-items: center;
+		--r: 9px;
+		min-height: 0;
 		height: 2.2rem;
 		padding: 0 1.1rem;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		font-weight: 700;
 		font-size: 0.82rem;
-		text-decoration: none;
 		white-space: nowrap;
-		transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-	}
-
-	.reservar:hover {
-		transform: translateY(-1px);
 	}
 
 	/* Le bloc compte fourni par la page : encadré discret, pour qu'un pseudo
@@ -316,74 +303,52 @@
 
 	/* le compte : même pastille discrète que l'administration, l'initiale
 	   devant ; le rouge reste à « Reservar un cors » */
+	/* pièce de papier (lib/styles/papier.css) : le compte, comme les autres boutons de la barre */
 	.compte-ligam {
-		display: inline-flex;
-		align-items: center;
+		--r: 9px;
 		gap: 0.4rem;
+		min-height: 0;
 		height: 2.2rem;
 		padding: 0 0.75rem;
-		border-radius: 999px;
-		border: 1px solid var(--t-linha);
-		color: var(--t-tinta);
-		font-weight: 700;
 		font-size: 0.78rem;
-		text-decoration: none;
 		white-space: nowrap;
-		transition: border-color 0.3s;
 	}
+	.compte-ligam[aria-current='page'] {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
+	}
+
 	.compte-ligam.connectat {
 		padding-left: 0.3rem;
 	}
-	.compte-ligam:hover,
-	.compte-ligam[aria-current='page'] {
-		border-color: var(--t-aur);
-	}
-
 	.admin-link {
-		display: inline-flex;
-		align-items: center;
+		--r: 9px;
 		gap: 0.35rem;
+		min-height: 0;
 		height: 2.2rem;
 		padding: 0 0.75rem;
-		border-radius: 999px;
-		border: 1px solid var(--t-linha);
-		color: var(--t-tinta);
-		font-weight: 700;
 		font-size: 0.78rem;
-		text-decoration: none;
 		white-space: nowrap;
-		transition: border-color 0.3s;
 	}
 
-	.admin-link:hover {
-		border-color: var(--t-accion);
-	}
-
+	/* la bascule Òc / Fr : deux pièces de papier, l'or marque la langue choisie */
 	.lang-toggle {
 		display: inline-flex;
-		gap: 2px;
-		padding: 3px;
-		border-radius: 999px;
-		border: 1px solid var(--t-linha);
+		gap: 0.5rem;
+		border-radius: 12px;
 	}
 
 	.lang-toggle button {
-		border: 0;
-		background: transparent;
-		color: var(--t-tinta);
-		font-weight: 700;
+		--r: 9px;
+		min-height: 0;
+		height: 2.2rem;
+		padding: 0 0.85rem;
 		font-size: 0.78rem;
-		padding: 0.35rem 0.75rem;
-		border-radius: 999px;
-		cursor: pointer;
-		transition:
-			background 0.5s cubic-bezier(0.19, 1, 0.22, 1),
-			color 0.5s;
 	}
 
 	.lang-toggle button[aria-pressed='true'] {
-		background: var(--t-tinta);
-		color: var(--t-fons);
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
 	}
 
 	/* Globe : les langues de découverte (es / en / ca), à côté de la bascule. */
@@ -400,27 +365,11 @@
 	   une pilule quand le code Es/En/Ca s'affiche ; bordure rouge (--t-accion)
 	   au survol et à l'ouverture, comme Ambiance (règle B). */
 	.globe-boton {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
 		gap: 4px;
 		min-width: 2.2rem;
-		height: 2.2rem;
-		padding: 0 0.45rem;
-		border: 1px solid var(--t-linha);
-		background: transparent;
-		color: var(--t-tinta);
-		border-radius: 999px;
-		cursor: pointer;
-		transition:
-			background 0.5s cubic-bezier(0.19, 1, 0.22, 1),
-			color 0.5s,
-			border-color 0.4s;
+		padding: 0 0.55rem;
 	}
-	.globe-boton:hover,
-	.globe-boton[aria-expanded='true'] {
-		border-color: var(--t-accion);
-	}
+
 	/* Panneau d'en-tête opaque, comme celui d'Ambiance. */
 	.globe-panel {
 		position: absolute;

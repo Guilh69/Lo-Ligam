@@ -40,7 +40,7 @@
 </script>
 
 <!-- pas d'aria-pressed : le libellé change déjà (« Sortir, enfoncé » se lisait mal, Joan, 06-11) -->
-<button type="button" class="ecran" onclick={bascular}>
+<button type="button" class="pc pc-2 ecran" onclick={bascular}>
 	<svg viewBox="0 0 24 24" aria-hidden="true">
 		{#if actiu}
 			<path d="M7 7l10 10M17 7L7 17" />
@@ -52,27 +52,17 @@
 </button>
 
 <style>
+	/* pièce de papier (lib/styles/papier.css) */
 	.ecran {
-		display: inline-flex;
-		align-items: center;
+		--r: 10px;
 		gap: 0.45rem;
 		min-height: 2.75rem;
 		padding: 0.3rem 0.85rem 0.3rem 0.65rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 0.6rem;
-		background: none;
 		font: inherit;
-		color: var(--t-tinta);
-		cursor: pointer;
+		font-weight: 600;
 		white-space: nowrap;
 	}
-	.ecran:hover {
-		border-color: var(--t-tinta-2);
-	}
-	.ecran:focus-visible {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 2px;
-	}
+
 	svg {
 		width: 1.25rem;
 		height: 1.25rem;

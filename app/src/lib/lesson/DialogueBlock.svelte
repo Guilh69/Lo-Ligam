@@ -117,7 +117,7 @@
 				<div class="audio-controls">
 					<button
 						type="button"
-						class="listen active"
+						class="pc pc-2 listen active"
 						onclick={() => toggleScene(si)}
 						aria-label={playingScene === si ? 'Pausa' : 'Escotar la scèna'}
 					>
@@ -126,7 +126,7 @@
 					</button>
 					<button
 						type="button"
-						class="speed"
+						class="pc pc-2 speed"
 						class:on={slow}
 						onclick={toggleSlow}
 						aria-pressed={slow}
@@ -139,7 +139,7 @@
 				</div>
 			{:else}
 				<div class="audio-controls">
-					<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
+					<button type="button" class="pc pc-2 listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
 						<span class="listen-icon" aria-hidden="true"><Icona nom="lire" /></span>
 						Àudio a venir
 					</button>
@@ -246,41 +246,33 @@
 		margin: 0.35rem 0 0.75rem;
 	}
 
+	/* pièces de papier (lib/styles/papier.css) : écouter la scène, vitesse lente */
 	.listen,
 	.speed {
-		display: inline-flex;
-		align-items: center;
+		--r: 10px;
+		min-height: 0;
 		gap: 0.4rem;
-		border: 1.5px solid color-mix(in srgb, var(--t-accion) 50%, transparent);
-		background: var(--l-carta);
-		border-radius: 999px;
 		padding: 0.4rem 0.85rem;
 		font-family: var(--font-heading);
 		font-size: 0.88rem;
 		font-weight: 600;
-		color: var(--l-marca);
-		cursor: pointer;
 	}
 
 	.listen:disabled {
-		border-color: color-mix(in srgb, var(--t-tinta) 18%, transparent);
-		color: color-mix(in srgb, var(--t-tinta) 45%, transparent);
-		background: color-mix(in srgb, var(--l-carta) 70%, transparent);
 		cursor: default;
 	}
 
-	.listen.active:hover,
-	.speed:hover {
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+	.listen.active {
+		--pc-tinta: var(--l-marca);
+	}
+
+	.speed {
+		padding: 0.25rem 0.7rem;
 	}
 
 	.listen-icon {
 		display: inline-flex;
 		font-size: 1.05rem;
-	}
-
-	.speed {
-		padding: 0.25rem 0.7rem;
 	}
 
 	.speed-icon {

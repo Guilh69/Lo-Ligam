@@ -31,7 +31,7 @@
 			{#if revealed[i]}
 				<p class="answer">{@html rich(item.a)}</p>
 			{:else}
-				<button type="button" class="reveal-btn" onclick={() => reveal(i)}>
+				<button type="button" class="pc pc-2 reveal-btn" onclick={() => reveal(i)}>
 					Voir la réponse
 				</button>
 			{/if}
@@ -101,18 +101,12 @@
 		color: var(--t-tinta);
 	}
 
+	/* pièce de papier (lib/styles/papier.css) */
 	.reveal-btn {
-		border: 1.5px dashed color-mix(in srgb, var(--t-tinta) 30%, transparent);
-		background: none;
-		border-radius: 12px;
+		min-height: 0;
 		padding: 0.45rem 0.9rem;
 		font-size: 0.88rem;
-		color: var(--l-marca);
-		cursor: pointer;
-	}
-
-	.reveal-btn:hover {
-		border-color: var(--l-marca);
+		font-weight: 600;
 	}
 
 	.answer {

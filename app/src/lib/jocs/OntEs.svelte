@@ -354,7 +354,7 @@
 					{/each}
 				</ul>
 				{#if fase === 'descobre'}
-					<button type="button" class="accion jogar" onclick={demandar}>{tria(T.jogar)} ›</button>
+					<button type="button" class="pc accion jogar" onclick={demandar}>{tria(T.jogar)} ›</button>
 				{/if}
 			</div>
 		{/if}
@@ -388,7 +388,7 @@
 						{/each}
 					</ul>
 					<div class="fin-accions">
-						<button type="button" class="accion" onclick={començar}>{tria(T.tornarJogar)}</button>
+						<button type="button" class="pc accion" onclick={començar}>{tria(T.tornarJogar)}</button>
 						<button type="button" class="segond" onclick={cambiarTema}>{tria(T.cambiar)}</button>
 					</div>
 				</div>
@@ -477,8 +477,8 @@
 			>
 				<!-- à la fin, ces deux-là sont sur la carte : pas de redite -->
 				{#if enPartida}
-					<button type="button" onclick={començar}>{tria(T.tornarJogar)}</button>
-					<button type="button" onclick={cambiarTema}>{tria(T.cambiar)}</button>
+					<button type="button" class="pc pc-2" onclick={començar}>{tria(T.tornarJogar)}</button>
+					<button type="button" class="pc pc-2" onclick={cambiarTema}>{tria(T.cambiar)}</button>
 				{/if}
 			</Reglatges>
 		</div>
@@ -1120,24 +1120,16 @@
 		margin-top: var(--esp-8);
 	}
 
-	button {
+	button:not(.pc) {
 		font: inherit;
 	}
+
+	/* pièce de papier (lib/styles/papier.css) */
 	.accion {
+		--r: 10px;
 		padding: 0.6rem 1.2rem;
-		border: none;
-		border-radius: 0.6rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		cursor: pointer;
 	}
-	.accion:hover {
-		background: var(--t-accion-viu);
-	}
-	.accion:focus-visible {
-		outline: 3px solid var(--or);
-		outline-offset: 2px;
-	}
+
 	.sr {
 		position: absolute;
 		width: 1px;

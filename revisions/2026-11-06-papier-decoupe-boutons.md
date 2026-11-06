@@ -1,0 +1,49 @@
+# Boutons en papier découpé : recensement et essai (06-11)
+
+Demande de Romain (06-11, soir) : le papier découpé des illustrations de jeux appliqué à **tous les boutons**, pour que ce soit « vraiment la marque de fabrique du site » et que ça fasse « beaucoup moins IA ». Rien n'est encore décidé : essai seulement, pas de changement sur le site.
+
+## Essai visible
+`/ensag/papier-botons` (noindex ; `?tema=clar` pour le thème clair, `?zoom=2.4` pour regarder de près). Code : `app/src/routes/ensag/papier-botons/` (`papier.css` = le style, prêt à devenir le socle commun).
+
+## Le principe (reprise du 06-11, soir)
+Romain a choisi la manière **A** (une pièce posée) mais l'a refusée telle quelle : les bords irréguliers et les petites inclinaisons du premier essai faisaient « un faux découpage raté ». Il veut **la même netteté que les illustrations des jeux**, juste l'effet. La manière B (deux feuilles) est abandonnée.
+- Une pièce pleine, aux bords nets, coins arrondis comme les tuiles des dessins (10 px bouton, 12 px icône et réponse, 8 px pastille, 18 px carte). Pas de découpe irrégulière, pas d'inclinaison, pas de reflet.
+- L'ombre est celle des illustrations (`drop-shadow(0 3px 2px)`), écrite en `box-shadow: 0 3px 4px` : même rendu, moins cher à dessiner (centaines de boutons possibles sur une page).
+- États : survol = la pièce se soulève d'un pixel ; appui = elle se pose à plat, l'ombre se resserre ; clavier = anneau doré net qui suit le coin arrondi ; inactif = pièce éteinte. Sans rebond.
+- Couleurs de pièces : rouge du logo (action principale, règle B du 23-10), carton (secondaire), or (choisi, mise en valeur), vert (bonne réponse). Bonne et mauvaise réponse portent aussi une icône ✓ / ✗ (la couleur seule ne suffit pas).
+- Poids : 0 octet d'image, environ 2 Ko de CSS, `box-shadow` seulement (pas de `filter`, pas de pseudo-élément).
+- Accessibilité : texte ≥ 5,15:1 sur toutes les pièces ; cible 44 px conservée ; `prefers-reduced-motion` et `forced-colors` traités. Le contour des pièces « carton » n'atteint pas 3:1 sur le fond (1,3 clair, 1,75 sombre), comme les pilules à trait fin d'aujourd'hui : c'est le texte qui identifie le bouton.
+
+## Recensement (relevé du 06-11 dans `app/src`)
+Aucun bouton commun aujourd'hui : **36 fichiers publics définissent chacun leur style** (135 règles `border-radius: 999px` dans 62 fichiers, 37 aplats rouges `--t-accion`).
+
+| Zone | Boutons | Fichiers | Remarque |
+|---|---|---|---|
+| Structure (barre du haut, menu, bienvenue, ambiance, langues, retour) | 15 | 6 | la barre du haut est déjà une tuile du logo ; la croix ne bouge pas |
+| Pages publiques (accueil, Mots, S'apren, Remira, Anem, Cultura, Òbras, Médias, Idées, lecteur) | 106 | 19 | Remira, Anem et le lecteur sont des pages de calme : papier plus discret |
+| Leçons et grammaire | 37 | 12 | réponses QCM, Verificar, Contunhar : là que le papier plaît le plus |
+| Jeux (Serp, Paniers, OntEs, Reglatges, BotonEcran, Sala) | 25 | 6 | les cartes des familles deviennent des feuilles |
+| Compte et groupes (Amassa) | 46 | 9 | champs de saisie inchangés, à décider |
+| Carte et récit (RailJaces 39, fiches, recherche, Mon istòria) | 70 | 14 | à traiter à part : le verre translucide du 15-10 est une autre décision |
+| **Total public** | **299** | **66** | + liens en forme de bouton dans 9 pages, interrupteurs/onglets/cases dans 11 fichiers |
+| Non public (admin 90, Lo talhièr 28, essais 31) | 149 | 21 | à laisser |
+
+Ne change pas : les liens soulignés (pied de page, « ligam »).
+
+## Branché le 06-11 au soir (« Oui, c'est ça » de Romain), pas encore en ligne
+Socle : `app/src/lib/styles/papier.css` (importé par `app.css`) + jetons `--pc-carton`, `--pc-ombre`, `--pc-or-fons` dans `app.css` (sombre et clair). Classes : `.pc` (pièce rouge), `.pc-2` (carton), `.pc-or`, `.pc-vert`, formats `.pc-icone`, `.pc-chip`, `.pc-rep`, `.pc-grand`. Un composant ajoute `pc …` à son bouton et garde seulement sa mise en page dans sa propre feuille (elle l'emporte sur `.pc` : même poids, chargée après).
+- Leçons et grammaire : QCM, répliques, ordre, révéler, écrire (touches, Verificar), boutons d'écoute (phrases, note, dialogue), vitesse lente, Remarcas, Relacionar (Verificar, œil, formes), flèches des fiches, page d'un module (retour, son, « Acabada »). La logique des leçons est gardée : réponse juste en or, fausses grisées et barrées.
+- Jeux : boutons d'action de Serp, Paniers, OntEs ; flèches et bouton du milieu du serpent et des paniers ; Pausa, Un autre mot, Tornar jogar ; bouton plein écran ; thème et filtres de la salle (pastilles, l'or marque la pièce choisie) ; réglages (Reglatges : niveaux et choix en pièces, l'or pour la pièce choisie). La page `/apren/jocs` carrait les touches (0,2 rem) et soulignait les réglages (allure « Teula ») : ces règles sont retirées, le papier prend le relais.
+- Structure : barre du haut (Menú, langues, Òc / Fr, compte, administration, thème), retour en haut, fenêtre de bienvenue.
+- **Pas encore fait** : MenuVel (palette propre du voile), TriaLenga (emblèmes ronds), panneaux d'AmbiancaPanel et de langues, interrupteurs « Son / Pas a pas » des réglages (`.bascula`), tuiles et lettres des jeux, vignettes « Jogar » de la salle, pages publiques (accueil, Mots, Remira, Anem, lecteur), compte et groupes, carte, admin.
+- Piège rencontré : un script de remplacement a supprimé ses propres règles neuves (règle insérée puis cherchée par le même sélecteur) : toujours relire le diff.
+
+## Ordre proposé
+0. Socle : `papier.css` global + jetons dans `app.css` (+ petit composant si besoin). Rien de visible.
+1. Leçons, jeux, structure (le cœur de l'apprentissage).
+2. Pages publiques, compte et groupes.
+3. Carte (décision séparée).
+4. Admin : plus tard ou jamais.
+
+## À trancher par Romain
+Manière A reprise : Romain valide-t-il la netteté ? La carte est-elle incluse ? Les champs de saisie suivent-ils ? Joan n'a pas encore relu l'essai (règle : tout visuel passe par lui avant Romain).

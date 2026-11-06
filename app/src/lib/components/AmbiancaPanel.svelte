@@ -111,7 +111,7 @@
 <div class="ambianca">
 	<button
 		type="button"
-		class="ambianca-boton"
+		class="pc pc-2 ambianca-boton"
 		bind:this={boton}
 		aria-expanded={dobèrt}
 		aria-controls="ambianca-panel"
@@ -186,36 +186,32 @@
 		position: relative;
 	}
 
+	/* pièce de papier (lib/styles/papier.css) ; c'est le soleil qui tourne, pas la pièce */
 	.ambianca-boton {
-		display: grid;
-		place-items: center;
+		--r: 9px;
 		width: 2.2rem;
 		height: 2.2rem;
+		min-height: 0;
 		padding: 0;
-		border-radius: 50%;
-		border: 1px solid var(--t-linha);
-		background: transparent;
-		color: var(--t-tinta);
-		cursor: pointer;
-		transition:
-			border-color 0.4s,
-			transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.ambianca-boton[aria-expanded='true'] {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
+	}
+
+	.ambianca-boton svg {
+		transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.ambianca-boton:hover svg,
+	.ambianca-boton[aria-expanded='true'] svg {
+		transform: rotate(45deg);
 	}
 
 	.ambianca-boton svg {
 		width: 1.2rem;
 		height: 1.2rem;
-	}
-
-	.ambianca-boton:hover,
-	.ambianca-boton[aria-expanded='true'] {
-		border-color: var(--t-accion);
-		transform: rotate(45deg);
-	}
-
-	.ambianca-boton:focus-visible {
-		outline: 2px solid var(--t-aur);
-		outline-offset: 3px;
 	}
 
 	.ambianca-panel {

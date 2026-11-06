@@ -63,7 +63,7 @@
 				{#each states[i].bank as tile (tile.id)}
 					<button
 						type="button"
-						class="tile"
+						class="pc pc-rep tile"
 						class:used={tile.used}
 						class:wrong={tile.wrong}
 						disabled={tile.used}
@@ -152,30 +152,24 @@
 		gap: 0.5rem;
 	}
 
+	/* pièce de papier (lib/styles/papier.css) ; ici, seulement ce qui est propre aux tuiles */
 	.tile {
-		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 18%, transparent);
-		background: var(--l-carta);
-		border-radius: 12px;
+		min-height: 0;
 		padding: 0.45rem 0.8rem;
 		font-size: 0.98rem;
-		color: var(--t-tinta);
-		cursor: pointer;
-		transition: transform 150ms ease, opacity 150ms ease;
-	}
-
-	.tile:hover:not(:disabled) {
-		transform: translateY(-1px);
-		border-color: var(--l-teal);
+		font-weight: 500;
 	}
 
 	.tile.used {
 		opacity: 0.25;
 		cursor: default;
+		box-shadow: none;
 	}
 
 	.tile.wrong {
 		animation: shake 260ms ease;
-		border-color: var(--l-marca);
+		--pc-fons: var(--t-accion);
+		--pc-tinta: var(--t-accion-tinta);
 	}
 
 	.explain {

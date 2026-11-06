@@ -101,7 +101,7 @@
 			{#if !fait(st)}
 				<div class="letras" role="group" aria-label="Lettres accentuées">
 					{#each LETRAS as l}
-						<button type="button" class="letra" onmousedown={(e) => e.preventDefault()} onclick={() => inserir(i, l)} aria-label="Ajouter {l}">{l}</button>
+						<button type="button" class="pc pc-2 letra" onmousedown={(e) => e.preventDefault()} onclick={() => inserir(i, l)} aria-label="Ajouter {l}">{l}</button>
 					{/each}
 				</div>
 			{/if}
@@ -127,7 +127,7 @@
 					aria-describedby="{uid}-{i}"
 				/>
 				{#if !fait(st)}
-					<button type="submit" class="verif" disabled={!st.saisie.trim()}>Verificar</button>
+					<button type="submit" class="pc verif" disabled={!st.saisie.trim()}>Verificar</button>
 				{/if}
 			</form>
 			<p class="retorn" id="{uid}-{i}" aria-live="polite">
@@ -224,21 +224,15 @@
 		margin-bottom: 0.4rem;
 	}
 
+	/* pièce de papier (lib/styles/papier.css) ; ici, la touche carrée d'une lettre */
 	.letra {
+		--r: 10px;
 		min-width: 2.2rem;
 		height: 2.2rem;
-		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 15%, transparent);
-		border-radius: 10px;
-		background: var(--l-sol);
+		min-height: 0;
+		padding: 0;
 		font-size: 1.05rem;
-		color: var(--t-tinta);
-		cursor: pointer;
-		transition: transform 120ms ease, border-color 120ms ease;
-	}
-
-	.letra:hover {
-		border-color: var(--l-teal);
-		transform: translateY(-1px);
+		font-weight: 600;
 	}
 
 	.ligne {
@@ -270,14 +264,10 @@
 	}
 
 	.verif {
-		border: none;
-		border-radius: 12px;
-		padding: 0 1rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
+		min-height: 0;
+		padding: 0 1.1rem;
 		font-family: var(--font-heading);
 		font-weight: 600;
-		cursor: pointer;
 	}
 
 	.verif:disabled {

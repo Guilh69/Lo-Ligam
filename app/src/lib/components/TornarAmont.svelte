@@ -24,7 +24,7 @@
 
 <button
 	type="button"
-	class="amont"
+	class="pc pc-2 amont"
 	class:vist
 	aria-label={tèxt}
 	title={tèxt}
@@ -44,30 +44,23 @@
 </button>
 
 <style>
+	/* pièce de papier (lib/styles/papier.css) : posée au bord de la page, elle apparaît en montant */
 	.amont {
 		position: fixed;
 		z-index: 55;
 		right: clamp(1rem, 4vw, 3.4rem);
 		bottom: calc(1.4rem + env(safe-area-inset-bottom, 0px));
-		display: grid;
-		place-items: center;
+		--r: 14px;
 		width: 46px;
 		height: 46px;
 		padding: 0;
-		border-radius: 50%;
-		border: 1px solid var(--t-linha);
-		background: color-mix(in srgb, var(--t-fons) 75%, transparent);
-		backdrop-filter: blur(6px);
-		color: var(--t-tinta);
-		cursor: pointer;
-		-webkit-tap-highlight-color: transparent;
 		opacity: 0;
 		transform: translateY(14px);
 		pointer-events: none;
 		transition:
 			opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
 			transform 0.6s cubic-bezier(0.19, 1, 0.22, 1),
-			border-color 0.4s;
+			box-shadow 0.3s;
 	}
 
 	.amont svg {
@@ -80,10 +73,6 @@
 		opacity: 1;
 		transform: none;
 		pointer-events: auto;
-	}
-
-	.amont:hover {
-		border-color: var(--t-accion);
 	}
 
 	.amont:hover svg {

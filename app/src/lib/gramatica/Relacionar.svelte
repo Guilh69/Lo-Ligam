@@ -103,7 +103,7 @@
 						{/if}
 					{/if}
 				</button>
-				<button type="button" class="oeil" aria-label={tria(IU.veireResponsaPer)(l.fr)} title={tria(IU.veireResponsa)} aria-disabled={vues[l.id]} onclick={() => montrer(l)}>
+				<button type="button" class="pc pc-2 oeil" aria-label={tria(IU.veireResponsaPer)(l.fr)} title={tria(IU.veireResponsa)} aria-disabled={vues[l.id]} onclick={() => montrer(l)}>
 					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg>
 				</button>
 				<span class="marca">
@@ -118,14 +118,14 @@
 	</ol>
 	<div class="formas" role="group" aria-label={bloc.etiqueta ?? tria(IU.formasDePausar)}>
 		{#each restantes as f (f)}
-			<button type="button" class="forma" lang="oc" aria-pressed={choisie === f} onclick={() => choisir(f)}>{f}</button>
+			<button type="button" class="pc forma" lang="oc" aria-pressed={choisie === f} onclick={() => choisir(f)}>{f}</button>
 		{:else}
 			<p class="formes-vides">{tria(IU.totPausat)}</p>
 		{/each}
 	</div>
 </div>
 <div class="accions">
-	{#each [['verificar', 'boton', !Object.keys(places).length, () => (verifie = true)], ['solucion', 'boton segond', false, solution], ['recomencar', 'boton tiers', false, reprendre]] as [k, classe, inactiu, accion] (k)}
+	{#each [['verificar', 'pc boton', !Object.keys(places).length, () => (verifie = true)], ['solucion', 'pc pc-2 boton segond', false, solution], ['recomencar', 'boton tiers', false, reprendre]] as [k, classe, inactiu, accion] (k)}
 		<button type="button" class={classe} lang="oc" disabled={inactiu} aria-describedby={esOc ? undefined : `b-${k}`} onclick={accion}
 			>{IU[k].oc}{#if !esOc}<Bulla id="b-{k}" text={tria(IU[k])} lang={lang.current} />{/if}</button
 		>
@@ -199,16 +199,13 @@
 	}
 	.oeil {
 		grid-area: u;
-		display: grid;
-		place-items: center;
+		--r: 10px;
 		width: 2.4rem;
 		height: 2.4rem;
-		border: 0;
-		border-radius: 50%;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		cursor: pointer;
+		min-height: 0;
+		padding: 0;
 	}
+
 	.oeil[aria-disabled='true'] {
 		opacity: 0.3;
 		cursor: default;
@@ -244,16 +241,16 @@
 		}
 	}
 	.forma {
+		--r: 12px;
+		--pc-fons: var(--pastilha);
+		--pc-tinta: var(--t-tinta);
+		min-height: 0;
 		padding: 0.45rem 1.1rem;
-		border: 0;
-		border-radius: 1.4rem;
-		background: var(--pastilha);
-		color: var(--t-tinta);
 		font: inherit;
 		font-size: 1.2rem;
-		cursor: pointer;
-		transition: transform 0.15s ease;
+		font-weight: 600;
 	}
+
 	.forma[aria-pressed='true'] {
 		box-shadow: 0 0 0 3px var(--t-aur);
 		transform: translateY(-2px);
@@ -267,32 +264,27 @@
 		flex-wrap: wrap;
 		gap: 0.6rem;
 	}
+	/* pièces de papier (lib/styles/papier.css) ; « tiers » reste un lien souligné */
 	.boton {
+		min-height: 0;
+		padding: 0.6rem 1.3rem;
+	}
+	.boton.tiers {
 		padding: 0.6rem 1.3rem;
 		border: 0;
-		border-radius: 1.6rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
+		background: none;
+		color: var(--t-tinta);
 		font: inherit;
 		font-weight: 700;
-		cursor: pointer;
-	}
-	.boton.segond,
-	.boton.tiers {
-		background: transparent;
-		color: var(--t-tinta);
-		box-shadow: inset 0 0 0 2px var(--t-accion);
-	}
-	.boton.tiers {
-		box-shadow: none;
 		text-decoration: underline;
 		text-decoration-color: var(--t-accion);
 		text-underline-offset: 0.25em;
+		cursor: pointer;
 	}
 	.boton:disabled {
-		opacity: 0.4;
 		cursor: default;
 	}
+
 	.retorn {
 		margin: 0;
 		min-height: 1.5em;

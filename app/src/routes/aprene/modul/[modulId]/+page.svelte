@@ -266,11 +266,11 @@
 			<span>{tria({ oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici', ar: 'الرئيسية' })}</span>
 		</a>
 		{#if modul && view !== 'list'}
-			<button type="button" class="tornar" onclick={() => openSession('list')}>
+			<button type="button" class="pc pc-2 tornar" onclick={() => openSession('list')}>
 				<Icona nom="precedent" size="1em" /> {tria({ oc: 'Somari', fr: 'Sommaire', es: 'Índice', en: 'Contents', ca: 'Índex', ar: 'الفهرس' })}
 			</button>
 		{:else}
-			<a class="tornar" href="/apren"><Icona nom="precedent" size="1em" /> S’apren</a>
+			<a class="pc pc-2 tornar" href="/apren"><Icona nom="precedent" size="1em" /> S’apren</a>
 		{/if}
 		<span class="espaci"></span>
 		{#if modul}
@@ -279,7 +279,7 @@
 			</div>
 			<button
 				type="button"
-				class="rond"
+				class="pc pc-2 pc-icone rond"
 				onclick={() => (muted = !muted)}
 				aria-label={muted ? 'Activar lo son' : 'Copar lo son'}
 			>
@@ -292,7 +292,7 @@
 		{#if !modul}
 			<section class="missing">
 				<p>Ce module n'existe pas (encore).</p>
-				<a class="btn-primary" href="/apren">Tornar a S’apren</a>
+				<a class="pc btn-primary" href="/apren">Tornar a S’apren</a>
 			</section>
 		{:else if view === 'list'}
 			{#if modul.ouverture}
@@ -400,7 +400,7 @@
 					{#if allBlocksDone}
 						<button
 							type="button"
-							class="btn-primary finish"
+							class="pc btn-primary finish"
 							bind:this={finishBtnEl}
 							onclick={() => finishSession(view)}
 						>
@@ -468,24 +468,16 @@
 		text-underline-offset: 4px;
 	}
 
+	/* pièce de papier (lib/styles/papier.css) */
 	.tornar {
-		display: inline-flex;
-		align-items: center;
+		--r: 10px;
+		min-height: 0;
 		gap: 0.4rem;
 		margin-left: var(--esp-8);
 		padding: 0.4rem 0.85rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: none;
-		color: var(--t-tinta);
 		font: inherit;
 		font-size: 0.9rem;
-		text-decoration: none;
-		cursor: pointer;
-	}
-
-	.tornar:hover {
-		border-color: var(--t-aur);
+		font-weight: 600;
 	}
 
 	.espaci {
@@ -510,20 +502,10 @@
 	}
 
 	.rond {
-		display: flex;
-		align-items: center;
-		justify-content: center;
 		width: 2.3rem;
 		height: 2.3rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 50%;
-		background: none;
-		color: var(--t-tinta);
-		cursor: pointer;
-	}
-
-	.rond:hover {
-		border-color: var(--t-aur);
+		min-height: 0;
+		--r: 10px;
 	}
 
 	.screen {
@@ -806,25 +788,13 @@
 	/* chaque bouton est une tuile du logo : le rouge du fond, le texte crème */
 	.btn-primary {
 		align-self: center;
-		display: flex;
 		flex-direction: column;
-		align-items: center;
 		gap: 0.1rem;
-		border: none;
-		border-radius: 6px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
+		min-height: 0;
+		padding: 0.8rem 1.8rem;
 		font-family: var(--font-heading);
 		font-size: 1.05rem;
-		padding: 0.8rem 1.8rem;
-		cursor: pointer;
-		text-decoration: none;
-		transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1), background 180ms ease;
-	}
-
-	.btn-primary:hover {
-		transform: translateY(-2px);
-		background: var(--t-accion-viu);
+		font-weight: 600;
 	}
 
 	.finish {

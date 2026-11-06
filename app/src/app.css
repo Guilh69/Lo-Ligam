@@ -1,4 +1,6 @@
 @import './fonts.css';
+/* Le bouton en papier découpé, commun à tout le site (Romain, 2026-11-06) */
+@import './lib/styles/papier.css';
 
 :root {
 	/* Chaudes — cœur de marque. Paleta alinhada sul lògo lo 2026-09-30
@@ -61,6 +63,14 @@
 	--t-aur-clar: #ffd98a;
 	--t-terra: #c8481c;
 	--t-terra-viu: #ef6a35;
+	/* Pièces de papier (2026-11-06, lib/styles/papier.css) : le carton est la
+	   pièce discrète, l'ombre est celle des illustrations (plus dense sur le
+	   fond sombre, où elle se voit moins). */
+	--pc-carton: #573828;
+	--pc-ombre: rgba(0, 0, 0, 0.6);
+}
+:root {
+	--pc-or-fons: #eeaf34;
 }
 /* Couleurs de la croix-constellation : celles des logos de Romain (Canva,
    design-stock/logo/svg, charte §1 bis), rien d'autre (Romain, 2026-10-21).
@@ -109,6 +119,8 @@
 	--t-aur-clar: #8a3f12;
 	--t-terra: #b53d17;
 	--t-terra-viu: #b53d17;
+	--pc-carton: #e1d3bd;
+	--pc-ombre: rgba(20, 10, 5, 0.32);
 }
 /* Verre des éléments posés sur la carte (rail, panneau qui s'ouvre à côté,
    boutons ronds) : sans trait, un fond un peu plus chaud que la carte (une

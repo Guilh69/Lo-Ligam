@@ -235,7 +235,7 @@
 				<textarea bind:this={camp} bind:value={tèxte} rows="4" maxlength="2000" placeholder={Reconeissença ? 'Ta remarque : touche « Dictar » et parle' : 'Ta remarque'} aria-label="Ta remarque"></textarea>
 				{#if Reconeissença}
 					<div class="dicta">
-						<button type="button" class="micro" class:escota onclick={dictar} aria-pressed={escota}>
+						<button type="button" class="pc pc-2 micro" class:escota onclick={dictar} aria-pressed={escota}>
 							<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21" /></svg>
 							{escota ? 'Arrestar' : 'Dictar'}
 						</button>
@@ -250,7 +250,7 @@
 				{#if error}<p class="error" role="alert">{error}</p>{/if}
 				<div class="accions">
 					<button type="button" class="ligam" onclick={anullar}>Anullar</button>
-					<button type="button" class="mandar" onclick={mandar} disabled={tèxte.trim().length < 2 || mandant}>Mandar</button>
+					<button type="button" class="pc mandar" onclick={mandar} disabled={tèxte.trim().length < 2 || mandant}>Mandar</button>
 				</div>
 			</div>
 		{:else if fasa === 'mandat'}
@@ -278,12 +278,12 @@
 
 		{#if fasa === 'repaus' || fasa === 'mandat'}
 			<div class="botons">
-				<button type="button" class="boton" onclick={començar}>
+				<button type="button" class="pc pc-2 boton" onclick={començar}>
 					<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z" /></svg>
 					Remarca
 				</button>
 				{#if $esAdmin && lista.length}
-					<button type="button" class="compte" onclick={() => (listaDobèrta = !listaDobèrta)} aria-label="{dubèrtas} remarques ouvertes sur {lista.length}">{dubèrtas}/{lista.length}</button>
+					<button type="button" class="pc pc-2 compte" onclick={() => (listaDobèrta = !listaDobèrta)} aria-label="{dubèrtas} remarques ouvertes sur {lista.length}">{dubèrtas}/{lista.length}</button>
 				{/if}
 			</div>
 		{/if}
@@ -306,30 +306,21 @@
 		gap: var(--esp-8);
 	}
 
+	/* pièces de papier (lib/styles/papier.css) : le bouton « Remarque » posé sur la page */
 	.boton,
 	.compte {
-		display: inline-flex;
-		align-items: center;
+		--r: 10px;
+		min-height: 0;
 		gap: 0.4rem;
 		padding: 0.55rem 1rem;
-		border: 1px solid var(--t-aur);
-		border-radius: 999px;
-		background: var(--t-vel);
-		backdrop-filter: blur(8px);
-		color: var(--t-tinta);
 		font: inherit;
-		cursor: pointer;
+		font-weight: 600;
 	}
 
 	.compte {
 		padding: 0.55rem 0.8rem;
 		font-family: var(--font-heading);
 		color: var(--t-aur);
-	}
-
-	.boton:hover,
-	.compte:hover {
-		background: color-mix(in srgb, var(--t-aur) 18%, var(--t-vel));
 	}
 
 	.consigna,
@@ -397,17 +388,13 @@
 	}
 
 	.micro {
-		display: inline-flex;
+		--r: 10px;
+		min-height: 0;
 		flex-shrink: 0;
-		align-items: center;
 		gap: 0.4rem;
 		padding: 0.5rem 1rem;
-		border: 1px solid var(--t-aur);
-		border-radius: 999px;
-		background: none;
-		color: var(--t-tinta);
 		font: inherit;
-		cursor: pointer;
+		font-weight: 600;
 	}
 
 	.micro.escota {
@@ -448,13 +435,10 @@
 	}
 
 	.mandar {
+		--r: 10px;
+		min-height: 0;
 		padding: 0.5rem 1.3rem;
-		border: none;
-		border-radius: 6px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font-family: var(--font-heading);
-		cursor: pointer;
 	}
 
 	.mandar:disabled {

@@ -28,11 +28,11 @@
 <section class="block {block.variant ?? 'info'}">
 	<h3 class="block-title">{#if icon}<span aria-hidden="true">{icon}</span> {/if}{block.title}</h3>
 	{#if block.audioSrc}
-		<button type="button" class="listen active" onclick={() => play(block.audioSrc)} aria-label="Escotar">
+		<button type="button" class="pc pc-2 listen active" onclick={() => play(block.audioSrc)} aria-label="Escotar">
 			<Icona nom="son" size="1.2em" /> <span class="listen-label">escotar</span>
 		</button>
 	{:else if block.audio}
-		<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
+		<button type="button" class="pc pc-2 listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir">
 			<Icona nom="son" size="1.2em" /> <span class="listen-label">a venir</span>
 		</button>
 	{/if}
@@ -95,24 +95,23 @@
 		color: var(--l-marca);
 	}
 
+	/* pièce de papier (lib/styles/papier.css) : le bouton d'écoute en haut à droite */
 	.listen {
 		position: absolute;
 		top: 1.1rem;
 		right: 1.1rem;
-		border: none;
-		background: color-mix(in srgb, var(--l-carta) 70%, transparent);
-		border-radius: 999px;
+		--r: 10px;
+		min-height: 0;
 		padding: 0.25rem 0.6rem;
 		font-size: 0.8rem;
-		color: color-mix(in srgb, var(--t-tinta) 50%, transparent);
+	}
+
+	.listen:disabled {
 		cursor: default;
 	}
 
 	.listen.active {
-		color: var(--l-marca);
-		cursor: pointer;
-		background: var(--l-carta);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		--pc-tinta: var(--l-marca);
 	}
 
 	.listen-label {

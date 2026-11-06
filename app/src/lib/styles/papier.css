@@ -1,0 +1,161 @@
+/* Papier découpé : le bouton comme une pièce de papier posée (reprise du 06-11).
+   Même netteté que les illustrations des jeux, et rien d'autre : une pièce
+   pleine, aux bords nets (coins arrondis comme les tuiles des dessins), une
+   ombre courte. Pas de bord irrégulier, pas d'inclinaison, pas de reflet : le
+   premier essai (bords « coupés aux ciseaux ») faisait un faux découpage raté
+   (Romain, 06-11).
+
+   L'ombre est celle des illustrations : drop-shadow(0 3px 2px), c'est-à-dire
+   box-shadow 0 3px 4px (le flou d'une box-shadow vaut deux fois celui d'un
+   drop-shadow). Une box-shadow coûte moins cher à dessiner : on peut en avoir
+   des centaines sur une page. Rien que du CSS, aucune image. */
+
+.pc {
+	--r: 10px;
+	--pc-fons: var(--t-accion);
+	--pc-tinta: var(--t-accion-tinta);
+	--pc-lev: 0 3px 4px var(--pc-ombre);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	min-height: 44px;
+	padding: 0.62rem 1.35rem;
+	border: 0;
+	border-radius: var(--r);
+	background: var(--pc-fons);
+	color: var(--pc-tinta);
+	font: 700 1rem/1.15 var(--font-body);
+	text-decoration: none;
+	cursor: pointer;
+	box-shadow: var(--pc-lev);
+	transition:
+		transform 0.15s ease,
+		box-shadow 0.15s ease;
+	-webkit-tap-highlight-color: transparent;
+}
+
+/* survol : la pièce se soulève d'un pixel, l'ombre s'allonge */
+.pc:hover:not(:disabled),
+.pc.est-survol {
+	transform: translateY(-1px);
+	box-shadow: 0 5px 5px var(--pc-ombre);
+}
+/* appui : la pièce se pose à plat, l'ombre se resserre */
+.pc:active:not(:disabled),
+.pc.est-appui {
+	transform: translateY(2px);
+	box-shadow: 0 1px 2px var(--pc-ombre);
+	transition-duration: 0.06s;
+}
+/* clavier : un anneau doré net, qui suit le coin arrondi */
+.pc:focus-visible,
+.pc.est-focus {
+	outline: 3px solid var(--t-aur-clar, #ffd98a);
+	outline-offset: 3px;
+}
+.pc:disabled,
+.pc[aria-disabled='true'],
+.pc.est-inactif {
+	opacity: 0.5;
+	cursor: not-allowed;
+	box-shadow: 0 1px 2px var(--pc-ombre);
+}
+
+/* ---- les couleurs de pièces ---- */
+/* carton : la pièce discrète (action secondaire) */
+.pc-2 {
+	--pc-fons: var(--pc-carton);
+	--pc-tinta: var(--t-tinta);
+}
+/* or : la mise en valeur (choisi, sélectionné) */
+.pc-or {
+	--pc-fons: var(--pc-or-fons, #eeaf34);
+	--pc-tinta: #2a1a10;
+}
+/* vert : « bravo » */
+.pc-vert {
+	--pc-fons: #4f6a2f;
+	--pc-tinta: #fbf1e1;
+}
+
+/* ---- les formats ---- */
+.pc-icone {
+	--r: 12px;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+}
+.pc-icone svg {
+	width: 1.3rem;
+	height: 1.3rem;
+}
+.pc-chip {
+	--r: 8px;
+	min-height: 38px;
+	padding: 0.4rem 0.95rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	box-shadow: 0 2px 3px var(--pc-ombre);
+}
+.pc-chip[aria-pressed='true'],
+.pc-chip.est-choisi {
+	--pc-fons: var(--pc-or-fons, #eeaf34);
+	--pc-tinta: #2a1a10;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 4px var(--pc-ombre);
+}
+.pc-rep {
+	--r: 12px;
+	--pc-fons: var(--pc-carton);
+	--pc-tinta: var(--t-tinta);
+	justify-content: flex-start;
+	min-height: 48px;
+	padding: 0.6rem 1.1rem;
+	font-weight: 600;
+	text-align: left;
+}
+.pc-rep svg {
+	margin-left: auto;
+	width: 1.15rem;
+	height: 1.15rem;
+}
+.pc-rep.est-choisi {
+	--pc-fons: var(--pc-or-fons, #eeaf34);
+	--pc-tinta: #2a1a10;
+	transform: translateY(-2px);
+	box-shadow: 0 5px 5px var(--pc-ombre);
+}
+.pc-rep.est-bon {
+	--pc-fons: #4f6a2f;
+	--pc-tinta: #fbf1e1;
+}
+.pc-rep.est-faux {
+	--pc-fons: var(--t-accion);
+	--pc-tinta: var(--t-accion-tinta);
+	animation: pc-tremble 0.4s ease-out;
+}
+@keyframes pc-tremble {
+	20% { transform: translateX(-3px); }
+	45% { transform: translateX(3px); }
+	70% { transform: translateX(-2px); }
+}
+.pc-grand {
+	--r: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pc {
+		transition: none;
+	}
+	.pc-rep.est-faux {
+		animation: none;
+	}
+}
+/* contraste forcé (Windows) : les fonds disparaissent, on remet un vrai bord */
+@media (forced-colors: active) {
+	.pc {
+		border: 2px solid ButtonText;
+		box-shadow: none;
+	}
+}

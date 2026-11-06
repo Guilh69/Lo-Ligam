@@ -82,7 +82,7 @@
 						{#each st.ordre as oi}
 							<button
 								type="button"
-								class="opt"
+								class="pc pc-rep opt"
 								class:faux={st.faux.includes(oi)}
 								disabled={st.faux.includes(oi)}
 								lang="oc"
@@ -218,29 +218,18 @@
 		gap: 0.45rem;
 	}
 
+	/* pièce de papier (lib/styles/papier.css) ; ici, seulement ce qui est propre aux répliques */
 	.opt {
-		border: 1.5px dashed color-mix(in srgb, var(--l-marca) 50%, var(--l-carta));
-		background: var(--l-carta);
-		border-radius: 14px;
+		--r: 14px;
+		min-height: 0;
 		padding: 0.5rem 0.85rem;
 		font-size: 0.95rem;
-		color: var(--t-tinta);
-		cursor: pointer;
-		transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
-	}
-
-	.opt:hover:not(:disabled) {
-		transform: translateY(-1px);
-		border-style: solid;
-		border-color: var(--l-marca);
+		font-weight: 500;
 	}
 
 	.opt.faux {
-		border-color: transparent;
-		background: color-mix(in srgb, var(--t-tinta) 5%, transparent);
-		color: color-mix(in srgb, var(--t-tinta) 40%, transparent);
-		text-decoration: line-through;
 		cursor: default;
+		text-decoration: line-through;
 	}
 
 	.reaccion {

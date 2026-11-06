@@ -414,52 +414,23 @@
 		color: var(--t-tinta);
 	}
 
-	/* ── Les commandes : la croix en un seul bloc de touches rouges ── */
-	.espaci .brica :global(.crotz) {
-		gap: 3px;
-	}
-	.espaci .brica :global(.dir),
-	.espaci .brica :global(.accion) {
-		border-radius: 0.2rem;
-	}
-	.espaci .brica :global(.escupir) {
-		border-radius: 0.2rem;
-	}
-	.espaci .brica :global(.ecran) {
-		border-radius: 0.2rem;
-	}
-	/* les réglages : du texte, souligné d'or quand il est choisi */
-	.espaci .brica :global(.segments) {
-		gap: 0 var(--esp-16);
-		border: none;
-		border-radius: 0;
-		overflow: visible;
-	}
-	.espaci .brica :global(.segments button) {
-		min-height: 2.75rem;
-		padding: 0.3rem 0 0.35rem;
-		border: none;
-		border-bottom: 2px solid var(--t-linha);
-	}
-	.espaci .brica :global(.segments button:hover) {
-		background: none;
-		border-bottom-color: var(--t-tinta-2);
-	}
-	.espaci .brica :global(.segments button[aria-pressed='true']) {
-		background: none;
-		border-bottom-color: var(--or);
-		color: var(--t-tinta);
-		font-weight: 600;
-	}
+	/* ── Les commandes : des pièces de papier (lib/styles/papier.css) ── */
+
+
+
+
+	/* les réglages : des pièces de papier, l'or marque la pièce choisie (Reglatges.svelte) */
+
+
 	/* les chiffres des unités (06-11) : serrés, chacun assez large pour le doigt */
 	.espaci .brica :global(.segments.compacte) {
-		gap: 0 0.25rem;
+		gap: 0.4rem;
 	}
+
 	.espaci .brica :global(.segments.compacte button) {
 		min-width: 2rem;
 		justify-items: center;
 	}
-	.espaci .brica :global(.accions button) {
-		border-radius: 0.2rem;
-	}
+
+
 </style>
