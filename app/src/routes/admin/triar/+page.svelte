@@ -362,6 +362,7 @@
 	{/if}
 	{#if el.dessenh}
 		<svg class="dessenh" viewBox="0 0 100 100" aria-hidden="true">
+			{#each el.tintas ?? [] as z, k (k)}<path d={z.d} style={z.s ? `stroke: ${z.c}` : `fill: ${z.c}; stroke: none`} />{/each}
 			{#each el.dessenh as d, k (k)}<path {d} />{/each}
 		</svg>
 	{:else if el.relèu}
