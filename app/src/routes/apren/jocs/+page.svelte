@@ -151,6 +151,7 @@
 	}
 	.scena {
 		overflow: auto;
+		scrollbar-gutter: stable; /* la photo ne bouge pas quand la colonne s'allonge */
 		padding: clamp(1rem, 3vh, 2.5rem) clamp(1rem, 4vw, 3.5rem) var(--esp-32);
 	}
 	.scena > :global(.joc) {
@@ -215,11 +216,19 @@
 		.espaci .brica :global(.joc:not(.immersiu) .grasilha) {
 			max-width: calc(58svh * var(--cols) / var(--rows));
 		}
-		.espaci .brica :global(.joc:not(.immersiu) .camp) {
+		.espaci .brica :global(.joc:not(.immersiu):not(.ont-es) .camp) {
 			max-width: calc(54svh * 4 / 3);
 		}
+		/* Ont es… ? : la colonne porte aussi les mots de la photo (06-11) */
+		.espaci .brica :global(.joc.ont-es:not(.immersiu) .disposicion) {
+			grid-template-rows: auto auto auto 1fr;
+			grid-template-areas: 'cap cap' 'taula pista' 'taula mots' 'taula comandas';
+		}
 	}
+	/* le mode plein couvre tout l'écran, même au-delà de 90rem (06-11 : sur un
+	   écran large, les bords de la page restaient visibles) */
 	.espaci .brica :global(.joc.immersiu) {
+		max-width: none;
 		background: var(--t-fons);
 	}
 

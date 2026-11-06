@@ -117,7 +117,7 @@ export const MOTS = {
 	'lo pan': 'le pain',
 	'lo pebròt': 'le poivron',
 	'la botelha': 'la bouteille',
-	'la frita': 'la frite',
+	'las fritas': 'les frites',
 	'lo veire': 'le verre',
 	'la pera': 'la poire',
 	'l’amètla': 'l’amande',
@@ -980,7 +980,7 @@ export const PAISATGES = [
 		h: 1184,
 		alt: 'Une assiette de frites, une salade aux carottes râpées et un chausson doré, sur une table de bois en terrasse ; des verres et une bouteille verte.',
 		mots: [
-			['la frita', 0.45, 0.62],
+			['las fritas', 0.45, 0.62],
 			['la salada', 0.66, 0.42],
 			['lo veire', 0.44, 0.17],
 			['la botelha', 0.06, 0.3],

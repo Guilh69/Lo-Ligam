@@ -12,6 +12,14 @@
 	// Au clavier, Tab passe d'un endroit à l'autre de la photo, Entrée choisit.
 	// Thème (06-11) : tout, ou un milieu (la mer, la montagne, la ville) ;
 	// changer de thème relance la partie.
+	// Réorganisé le 06-11 au soir (Romain : « la compréhension du jeu n'est pas
+	// bonne, l'organisation des fonctionnalités n'est pas optimale, le plein
+	// écran n'est pas un vrai plein écran ») : on entre par le choix du thème
+	// (une vignette par thème, un toucher lance la partie) avec la règle en
+	// deux étapes à côté ; pendant la partie, la question en haut de la
+	// colonne, puis « Los mots de la fòto » qui se remplissent à mesure qu'on
+	// touche les points d'or, les réglages à part en bas ; le mode plein
+	// couvre tout l'écran, la photo aussi haute que l'écran.
 	import { onMount } from 'svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
 	import { PAISATGES, MOTS, TEMAS, camin, srcset } from '$lib/paisatges/paisatges.js';
@@ -38,7 +46,13 @@
 		reglatges: { oc: 'Reglatges', fr: 'Réglages' },
 		son: { oc: 'Son', fr: 'Son' },
 		tornarJogar: { oc: 'Tornar jogar', fr: 'Rejouer' },
-		compte: { oc: (n, t) => `${n} sus ${t}`, fr: (n, t) => `${n} sur ${t}` },
+		// le 06-11 au soir : causís (vèrb'Òc), cambiar (lo Basic)
+		foto: { oc: (n, t) => `Fòto ${n} sus ${t}`, fr: (n, t) => `Photo ${n} sur ${t}` },
+		fotos: { oc: (n) => `${n} fòtos`, fr: (n) => `${n} photos` },
+		causir: { oc: 'Causís un tèma', fr: 'Choisis un thème' },
+		cambiar: { oc: 'Cambiar de tèma', fr: 'Changer de thème' },
+		motsFoto: { oc: 'Los mots de la fòto', fr: 'Les mots de la photo' },
+		descobrir: { oc: 'Descobrís los mots', fr: 'Découvre les mots' },
 		pasAqui: { oc: 'Pas aquí.', fr: 'Pas ici.' },
 		aqui: { oc: 'Es aquí.', fr: 'C’est ici.' },
 		aquiCort: { oc: 'es aquí', fr: 'c’est ici' },
@@ -52,8 +66,14 @@
 	};
 
 	const CLAU_SON = 'lo-ligam-jocs-son'; // partagé avec la sèrp et les paniers
+	const CLAU_NIVEL = 'lo-ligam-ont-es-nivel';
 	const TOTAL = 8;
 	const TOCA = 0.11; // un bon toucher : à moins de 11 % du grand côté de la photo
+	// les vignettes du choix : tirées des photos publiées, 480 × 320
+	const OPCIONS_TEMA = [
+		{ id: null, vinheta: 'tot', nom: { oc: 'Tot', fr: 'Tout' }, n: PAISATGES.length },
+		...TEMAS.map((t) => ({ id: t.id, vinheta: t.id, nom: { oc: t.nom.oc, fr: t.nom.fr }, n: PAISATGES.filter((p) => p.tema === t.id).length }))
+	];
 
 	let nivel = $state('amb');
 	let tema = $state(null); // null : tous les paysages
@@ -65,7 +85,7 @@
 
 	let partida = $state([]); // [{ k, oc }]
 	let pas = $state(0);
-	let fase = $state('cerca'); // 'descobre', 'cerca', 'trobat', 'fin'
+	let fase = $state('tria'); // 'tria' (le choix du thème), 'descobre', 'cerca', 'trobat', 'fin'
 	let descoberts = $state([]); // les mots déjà découverts sur la photo
 	let errors = $state(0);
 	let vist = $state(null); // le mot montré sur la photo : { oc, x, y, bon, id }
@@ -89,6 +109,8 @@
 	const p = $derived(q ? PAISATGES[q.k] : null);
 	const cibla = $derived(q && p ? p.mots.find(([oc]) => oc === q.oc) : null);
 	const trobats = $derived(pas + (fase === 'trobat' || fase === 'fin' ? 1 : 0));
+	const nomTema = $derived(tria(OPCIONS_TEMA.find((o) => o.id === tema)?.nom ?? T.tot));
+	const enPartida = $derived(fase !== 'tria' && fase !== 'fin' && !!p);
 	// le premier sens seulement dans la question (« le bois », pas « le bois, la forêt »)
 	const primier = (oc) => MOTS[oc].split(',')[0];
 
@@ -124,6 +146,31 @@
 			});
 		pas = 0;
 		apreparar();
+	}
+
+	// un toucher sur une vignette : ce thème, une partie neuve
+	function jogar(id) {
+		tema = id;
+		començar();
+	}
+
+	// revenir au choix du thème (la partie en cours s'arrête)
+	function cambiarTema() {
+		clearTimeout(minuteur);
+		fase = 'tria';
+		vist = null;
+		tocs = [];
+		anoncar([tria(T.causir), lengaInterfacia()]);
+	}
+
+	function causirNivel(id) {
+		nivel = id;
+		try {
+			localStorage.setItem(CLAU_NIVEL, id);
+		} catch {
+			/* navigation privée */
+		}
+		if (id === 'sens' && fase === 'descobre') demandar(); // sans aide : la question tout de suite
 	}
 
 	function apreparar() {
@@ -238,10 +285,10 @@
 		calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
 		try {
 			son = localStorage.getItem(CLAU_SON) !== '0';
+			if (localStorage.getItem(CLAU_NIVEL) === 'sens') nivel = 'sens';
 		} catch {
 			/* rien de gardé */
 		}
-		començar();
 		return () => {
 			clearTimeout(minuteur);
 			clearTimeout(finAnonci);
@@ -249,38 +296,87 @@
 	});
 </script>
 
-<section class="joc ont-es" class:immersiu aria-labelledby="titol-ont-es" bind:this={racina}>
+<section class="joc ont-es" class:immersiu class:ambfoto={enPartida} style:--r={p ? p.l / p.h : 1.5} aria-labelledby="titol-ont-es" bind:this={racina}>
 	<div class="disposicion">
 		<header class="cap-joc">
 			<h2 id="titol-ont-es" lang="oc">Ont es… ?</h2>
-			<!-- les deux consignes à la même place : la hauteur ne change pas d'une étape à l'autre -->
-			<p class="consigna">
-				<span class:amagat={fase === 'descobre'}>{tria(T.consigna)}</span>
-				<span class:amagat={fase !== 'descobre'} aria-hidden={fase !== 'descobre'}>{tria(T.consignaDescobrir)}</span>
-			</p>
+			<!-- pas de consigne ici : la règle est dans la colonne au choix du
+			     thème, puis chaque étape dit la sienne (Joan, 06-11 : la phrase
+			     d'ici contredisait la découverte) -->
 		</header>
 
 		<div class="pista">
+			<!-- où on en est : le thème, la photo, et le plein écran à portée -->
+			<div class="pista-cap">
+				{#if fase !== 'tria'}
+					<div class="avancament">
+						<p class="compte">{nomTema} · {tria(T.foto)(Math.min(pas + 1, TOTAL), TOTAL)}</p>
+						<span class="granas" aria-hidden="true">{#each partida as r, k (r.k)}<i class:rengat={k < trobats} class:ara={k === pas && fase !== 'fin'}></i>{/each}</span>
+					</div>
+				{/if}
+				<BotonEcran bind:actiu={immersiu} cibla={racina} />
+			</div>
 			<div class="pista-info">
-				{#if q && fase === 'descobre'}
+				{#if fase === 'tria'}
+					<!-- la règle, en deux étapes ; la première seulement avec l'aide -->
+					<ol class="etapas">
+						<li class:passada={nivel === 'sens'}>
+							<span class="etapa-n" aria-hidden="true">1</span>
+							<span><b lang="oc">Descobrís los mots</b>{tria(T.consignaDescobrir)}</span>
+						</li>
+						<li>
+							<span class="etapa-n" aria-hidden="true">{nivel === 'sens' ? 1 : 2}</span>
+							<span><b lang="oc">Ont es… ?</b>{tria(T.consigna)}</span>
+						</li>
+					</ol>
+				{:else if enPartida && fase === 'descobre'}
 					<p class="question" lang="oc">Descobrís los mots</p>
 					<p class="trad" lang="fr">Découvre les mots</p>
-				{:else if q && fase !== 'fin'}
+				{:else if enPartida}
 					<p class="question" lang="oc">Ont es <span class="nowrap"><span class="chip">{q.oc}</span>&nbsp;?</span></p>
 					<p class="trad" lang="fr">Où est {primier(q.oc)} ?</p>
 				{/if}
-				{#if q && fase !== 'fin'}
-					<!-- « Jogar › » garde sa place pendant la question : la photo ne bouge pas -->
-					<button type="button" class="passar" class:amagat={fase !== 'descobre'} tabindex={fase === 'descobre' ? 0 : -1} aria-hidden={fase !== 'descobre'} onclick={demandar}>{tria(T.jogar)} ›</button>
-				{/if}
-				<p class="compte" aria-hidden="true">{tria(T.compte)(trobats, TOTAL)}</p>
-				<span class="granas" aria-hidden="true">{#each partida as r, k (r.k)}<i class:rengat={k < trobats}></i>{/each}</span>
 			</div>
-			<BotonEcran bind:actiu={immersiu} cibla={racina} />
 		</div>
 
+		<!-- les mots de la photo : ils se remplissent à mesure qu'on touche les
+		     points d'or (avec l'aide) ; sous la photo sur téléphone -->
+		{#if enPartida && nivel === 'amb'}
+			<div class="mots">
+				<p class="mots-titol">{tria(T.motsFoto)}</p>
+				{#if fase === 'descobre'}<p class="mots-ajuda">{tria(T.consignaDescobrir)}</p>{/if}
+				<ul>
+					{#each p.mots as [oc] (oc)}
+						{@const conegut = descoberts.includes(oc) || ((fase === 'trobat') && oc === q.oc)}
+						<li class:conegut class:demandat={fase !== 'descobre' && oc === q.oc}>
+							{#if conegut}<span class="oc" lang="oc">{oc}</span> <span class="fr" lang="fr">{primier(oc)}</span>{:else}<span class="vuege">?</span>{/if}
+						</li>
+					{/each}
+				</ul>
+				{#if fase === 'descobre'}
+					<button type="button" class="accion jogar" onclick={demandar}>{tria(T.jogar)} ›</button>
+				{/if}
+			</div>
+		{/if}
+
 		<div class="taula">
-			{#if fase === 'fin'}
+			{#if fase === 'tria'}
+				<!-- l'entrée du jeu : un thème, une vignette ; un toucher lance la partie -->
+				<div class="causida">
+					<p class="causida-titol">{tria(T.causir)}</p>
+					<ul class="temas">
+						{#each OPCIONS_TEMA as o (o.vinheta)}
+							<li>
+								<button type="button" class="tema" class:actiu={partida.length && tema === o.id} onclick={() => jogar(o.id)}>
+									<img src="/apren/paisatges/tema-{o.vinheta}.webp" alt="" width="480" height="320" draggable="false" />
+									<span class="tema-nom">{tria(o.nom)}</span>
+									<span class="tema-n">{tria(T.fotos)(o.n)}</span>
+								</button>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{:else if fase === 'fin'}
 				<!-- la fin : à la place de la photo, toute la liste visible (sur
 				     téléphone, une photo large est trop basse pour la porter) -->
 				<div class="fin">
@@ -291,7 +387,10 @@
 							<li><span lang="oc">{r.oc}</span> <span class="fr" lang="fr">{MOTS[r.oc]}</span></li>
 						{/each}
 					</ul>
-					<button type="button" class="accion" onclick={començar}>{tria(T.tornarJogar)}</button>
+					<div class="fin-accions">
+						<button type="button" class="accion" onclick={començar}>{tria(T.tornarJogar)}</button>
+						<button type="button" class="segond" onclick={cambiarTema}>{tria(T.cambiar)}</button>
+					</div>
 				</div>
 			{:else if p}
 				{#key pas}
@@ -367,32 +466,20 @@
 				causida={{
 					titol: tria(T.nivel),
 					valor: nivel,
-					causir: (id) => {
-						nivel = id;
-						if (id === 'sens' && fase === 'descobre') demandar(); // sans aide : la question tout de suite
-					},
+					causir: causirNivel,
 					opcions: [
 						{ id: 'amb', label: tria(T.amb) },
 						{ id: 'sens', label: tria(T.sens) }
 					]
 				}}
-				causidas={[
-					{
-						titol: tria(T.tema),
-						valor: tema,
-						causir: (id) => {
-							if (id === tema) return;
-							tema = id;
-							començar(); // une partie neuve, sur ce thème
-						},
-						// libellés en oc et fr seulement, comme le reste du jeu
-						opcions: [{ id: null, label: tria(T.tot) }, ...TEMAS.map((t) => ({ id: t.id, label: tria({ oc: t.nom.oc, fr: t.nom.fr }) }))]
-					}
-				]}
 				bascules={[{ id: 'son', label: tria(T.son), valor: son, bascular: bascularSon }]}
 				titolOpcions={tria(T.reglatges)}
 			>
-				<button type="button" onclick={començar}>{tria(T.tornarJogar)}</button>
+				<!-- à la fin, ces deux-là sont sur la carte : pas de redite -->
+				{#if enPartida}
+					<button type="button" onclick={començar}>{tria(T.tornarJogar)}</button>
+					<button type="button" onclick={cambiarTema}>{tria(T.cambiar)}</button>
+				{/if}
 			</Reglatges>
 		</div>
 	</div>
@@ -405,17 +492,81 @@
 		--or: var(--t-aur);
 		--aur-clar: #ffd47f;
 	}
+	/* téléphone : la question, la photo, ses mots dessous, les réglages au
+	   bout ; grand écran : la photo à gauche, la colonne à droite (question,
+	   mots, puis les réglages séparés par un filet, en bas) */
 	.disposicion {
 		display: grid;
 		gap: var(--esp-24) var(--esp-48);
-		grid-template-areas: 'cap' 'pista' 'taula' 'comandas';
+		grid-template-areas: 'cap' 'pista' 'taula' 'mots' 'comandas';
 	}
 	@container joc (min-width: 52rem) {
 		.disposicion {
 			grid-template-columns: minmax(0, 1fr) 21rem;
-			grid-template-rows: auto auto 1fr;
-			grid-template-areas: 'taula cap' 'taula pista' 'taula comandas';
+			grid-template-rows: auto auto auto 1fr;
+			grid-template-areas: 'taula cap' 'taula pista' 'taula mots' 'taula comandas';
 			align-items: start;
+		}
+		.comandas {
+			align-self: end;
+			padding-top: var(--esp-24);
+			border-top: 1px solid var(--t-linha);
+		}
+		.mots ul {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+		.taula .camp {
+			max-width: calc((100svh - 18rem) * var(--r));
+		}
+	}
+
+	/* ── Mode plein (BotonEcran) : le jeu couvre tout l'écran, la photo
+	   aussi haute que l'écran, la colonne à côté (dessous sur téléphone) ── */
+	.joc.immersiu {
+		position: fixed;
+		inset: 0;
+		z-index: 30;
+		overflow: auto;
+		/* une marge égale tout autour, plus large sur grand écran (une requête
+		   de conteneur ne touche pas le conteneur lui-même : d'où vw) */
+		--m: clamp(0.75rem, 2vw, 1.5rem);
+		padding: max(var(--m), env(safe-area-inset-top)) var(--m) max(var(--m), env(safe-area-inset-bottom));
+		background: var(--t-fons);
+	}
+	.immersiu .disposicion {
+		min-height: 100%;
+		gap: var(--esp-16) var(--esp-32);
+		grid-template-areas: 'pista' 'taula' 'mots' 'comandas';
+		align-content: start;
+	}
+	.immersiu .cap-joc {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+	.immersiu .camp {
+		max-width: min(100%, calc((100svh - 14rem) * var(--r)));
+	}
+	@container joc (min-width: 52rem) {
+		.immersiu .disposicion {
+			grid-template-columns: minmax(0, 1fr) 20rem;
+			grid-template-rows: auto auto 1fr;
+			grid-template-areas: 'taula pista' 'taula mots' 'taula comandas';
+		}
+		.immersiu .taula {
+			align-self: center;
+		}
+		/* la photo et la colonne centrées ensemble : la même marge à gauche et
+		   à droite, la même en haut et en bas (Joan, 06-11) */
+		.immersiu.ambfoto .disposicion {
+			grid-template-columns: minmax(0, calc((100svh - 6rem) * var(--r))) 20rem;
+			justify-content: center;
+		}
+		.immersiu .camp {
+			max-width: calc((100svh - 6rem) * var(--r));
 		}
 	}
 	.cap-joc {
@@ -436,21 +587,202 @@
 		line-height: 1.5;
 		color: var(--t-tinta-2);
 	}
-	.consigna > span {
-		grid-area: 1 / 1;
-	}
-	.consigna .amagat {
-		visibility: hidden;
-	}
 	.pista {
 		grid-area: pista;
-		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
+		display: grid;
 		gap: var(--esp-16);
+		min-width: 0;
+	}
+	.pista-cap {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--esp-12) var(--esp-16);
+	}
+	.pista-cap :global(.ecran) {
+		margin-inline-start: auto;
+	}
+	.avancament {
+		flex: 1 1 0;
+		min-width: 0;
 	}
 	.pista-info {
 		min-width: 0;
+	}
+
+	/* la règle, avant de jouer : deux étapes numérotées */
+	.etapas {
+		display: grid;
+		gap: var(--esp-16);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.etapas li {
+		display: grid;
+		grid-template-columns: 2rem minmax(0, 1fr);
+		gap: 0.75rem;
+		line-height: 1.45;
+		color: var(--t-tinta-2);
+	}
+	.etapas li.passada {
+		display: none;
+	}
+	.etapas b {
+		display: block;
+		margin-bottom: 0.1rem;
+		font-size: 1.15rem;
+		color: var(--t-tinta);
+	}
+	.etapa-n {
+		display: grid;
+		place-items: center;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		box-shadow: inset 0 0 0 1.5px var(--or);
+		color: var(--or);
+		font-weight: 700;
+	}
+
+	/* les mots de la photo : une case vide par point, remplie quand on l'a
+	   touché ; le mot demandé en or */
+	.mots {
+		grid-area: mots;
+		min-width: 0;
+	}
+	.mots-titol {
+		margin: 0;
+		font-size: 0.78rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--t-tinta-2);
+	}
+	.mots-ajuda {
+		margin: 0.35rem 0 0;
+		line-height: 1.45;
+		color: var(--t-tinta-2);
+	}
+	.mots ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin: 0.6rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+	.mots li {
+		display: inline-flex;
+		align-items: baseline;
+		justify-content: center;
+		gap: 0.45em;
+		min-width: 5rem;
+		min-height: 2.25rem;
+		padding: 0.35rem 0.65rem;
+		border-radius: 0.1em;
+		box-shadow: inset 0 0 0 1px var(--t-linha);
+		line-height: 1.3;
+	}
+	.mots li.conegut {
+		background: var(--b1, #efe1c6);
+		box-shadow: var(--b-joint, none);
+		color: var(--b-tinta, #2a1a10);
+		animation: emplenar 0.35s ease-out;
+	}
+	.mots li.demandat:not(.conegut) {
+		box-shadow: inset 0 0 0 1.5px var(--or);
+	}
+	.mots li.demandat.conegut {
+		background: var(--b-dos, #ffd47f);
+	}
+	.mots .oc {
+		font-weight: 700;
+	}
+	.mots .fr {
+		font-size: 0.9em;
+		font-style: italic;
+		opacity: 0.8;
+	}
+	.vuege {
+		color: var(--t-tinta-2);
+	}
+	@keyframes emplenar {
+		from {
+			opacity: 0.3;
+			scale: 0.9;
+		}
+	}
+	.jogar {
+		margin-top: var(--esp-16);
+	}
+
+	/* le choix du thème : une vignette par thème */
+	.causida-titol {
+		margin: 0 0 var(--esp-16);
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: var(--t-tinta);
+	}
+	.temas {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--esp-16) var(--esp-12);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	@container joc (min-width: 36rem) {
+		.temas {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+	}
+	.tema {
+		display: grid;
+		gap: 0.1rem;
+		width: 100%;
+		padding: 0;
+		border: none;
+		background: none;
+		color: var(--t-tinta);
+		text-align: start;
+		cursor: pointer;
+	}
+	.tema img {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 3 / 2;
+		object-fit: cover;
+		border-radius: 0.2rem;
+		transition: filter 0.25s;
+	}
+	.tema:hover img {
+		filter: brightness(1.08);
+	}
+	.tema.actiu img {
+		box-shadow: 0 0 0 2px var(--or);
+	}
+	/* souligné rouge au survol : ce qui se clique */
+	.tema-nom {
+		margin-top: 0.45rem;
+		font-weight: 600;
+		line-height: 1.3;
+		text-decoration: underline 2px transparent;
+		text-underline-offset: 0.25em;
+		transition: text-decoration-color 0.2s;
+	}
+	.tema:hover .tema-nom,
+	.tema:focus-visible .tema-nom {
+		text-decoration-color: var(--t-accion);
+	}
+	.tema:focus-visible {
+		outline: 3px solid var(--or);
+		outline-offset: 3px;
+		border-radius: 0.2rem;
+	}
+	.tema-n {
+		font-size: 0.85rem;
+		color: var(--t-tinta-2);
 	}
 	.question {
 		margin: 0;
@@ -471,13 +803,16 @@
 		color: var(--t-tinta-2);
 	}
 	.compte {
-		margin: var(--esp-12) 0 0;
+		margin: 0;
 		color: var(--t-tinta-2);
 	}
 	.granas {
 		display: flex;
 		gap: 0.25rem;
-		margin-top: var(--esp-8);
+		margin-top: 0.35rem;
+	}
+	.granas i.ara {
+		box-shadow: inset 0 0 0 1.5px var(--or);
 	}
 	.granas i {
 		flex: 0 1 0.55rem;
@@ -520,9 +855,6 @@
 		position: absolute;
 		inset: 0;
 		animation: dintrar 0.7s cubic-bezier(0.55, 0, 0.25, 1) both;
-	}
-	.immersiu .camp {
-		max-width: calc((100svh - 12rem) * var(--r));
 	}
 	/* la photo suivante arrive dans un disque qui grandit */
 	@keyframes dintrar {
@@ -601,24 +933,18 @@
 	.ponch.vist::before {
 		background: rgba(255, 212, 127, 0.55);
 	}
-	/* « Jogar › » : passer la découverte, un lien discret (souligné = clic) */
-	.passar {
+	/* « Cambiar de tèma » à la fin : un lien (souligné = clic) */
+	.segond {
 		min-height: 2.75rem;
-		margin-top: var(--esp-4, 0.25rem);
-		padding: 0;
+		padding: 0 0.25rem;
 		border: none;
 		background: none;
 		color: var(--t-tinta);
-		text-decoration: underline;
-		text-decoration-color: var(--t-accion);
-		text-decoration-thickness: 2px;
+		text-decoration: underline 2px var(--t-accion);
 		text-underline-offset: 0.25em;
 		cursor: pointer;
 	}
-	.passar.amagat {
-		visibility: hidden;
-	}
-	.passar:focus-visible {
+	.segond:focus-visible {
 		outline: 3px solid var(--or);
 		outline-offset: 2px;
 	}
@@ -785,7 +1111,12 @@
 		font-style: italic;
 		color: var(--t-tinta-2);
 	}
-	.fin .accion {
+	.fin-accions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: var(--esp-8) var(--esp-16);
 		margin-top: var(--esp-8);
 	}
 
@@ -822,6 +1153,7 @@
 		.toc,
 		.esclat,
 		.eticeta,
+		.mots li.conegut,
 		.ponch.indici::before {
 			animation: none;
 		}

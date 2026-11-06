@@ -39,7 +39,8 @@
 	});
 </script>
 
-<button type="button" class="ecran" aria-pressed={actiu} onclick={bascular}>
+<!-- pas d'aria-pressed : le libellé change déjà (« Sortir, enfoncé » se lisait mal, Joan, 06-11) -->
+<button type="button" class="ecran" onclick={bascular}>
 	<svg viewBox="0 0 24 24" aria-hidden="true">
 		{#if actiu}
 			<path d="M7 7l10 10M17 7L7 17" />
