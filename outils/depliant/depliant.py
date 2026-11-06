@@ -16,6 +16,7 @@ Les textes sont ceux du site (filet des éléments du 06-11), sauf ceux marqués
 « À VALIDER » ci-dessous. Lancer :  py outils/depliant/depliant.py
 Sorties : Documents/6_Projectes/Lo_Ligam_hors-git/diffusion/depliant/
 """
+import colorsys
 import json
 import re
 import subprocess
@@ -30,6 +31,8 @@ SORTIDA = Path.home() / 'Documents' / '6_Projectes' / 'Lo_Ligam_hors-git' / 'dif
 IMG = SORTIDA / 'img'
 CLI = Path('C:/Program Files/DesignCraft/designcraft-cli.exe')
 NOM = 'depliant-lo-ligam'
+AUR_VIU = '#f6b73c'  # l'or vif par défaut (suivi par « py depliant.py … <hexa or> »)
+OR_CROTZ = ('#ffffff', '#ffd47f', '#eeaf34')  # trait, or clair et or du moyeu de la croix
 
 MM = 72 / 25.4
 W, H = 297 * MM, 210 * MM
@@ -181,6 +184,21 @@ PONCHS = [(0, -1), (0.486, -0.797), (0.809, -0.48), (1, 0), (0.809, 0.48), (0.48
           (-0.468, 0.797), (-0.786, 0.48), (-0.976, 0.009), (-0.786, -0.48), (-0.468, -0.797)]
 
 
+def crotz_desplaçats(hexa):
+    """Applique aux ors de la croix le décalage (teinte, clarté) de l'or vif donné."""
+    def hls(h):
+        r, g, b = [int(h[i:i+2], 16) / 255 for i in (1, 3, 5)]
+        return colorsys.rgb_to_hls(r, g, b)
+    _, l0, _ = hls(AUR_VIU)
+    h1, l1, _ = hls(hexa)
+    dh, dl = h1 - hls(AUR_VIU)[0], l1 - l0
+    def desplaça(c):
+        h, l, s = hls(c)
+        r, g, b = colorsys.hls_to_rgb((h + dh) % 1, min(1, max(0, l + dl)), s)
+        return '#%02x%02x%02x' % (round(r*255), round(g*255), round(b*255))
+    return (OR_CROTZ[0], desplaça(OR_CROTZ[1]), desplaça(OR_CROTZ[2]))
+
+
 def crotz(fichier, trac, ponch, moieu):
     """La croix du logo, d'après Crotz.svelte (recettes de Romain : jetons --logo-*)."""
     cercles = ''.join(f'<circle cx="{x}" cy="{y}" r="0.109" fill="{ponch}"/>' for x, y in PONCHS)
@@ -325,7 +343,7 @@ def case(spread, rect, couleur, num, nom, sota, picto, granda=False):
 
 def construire(base=NOM):
     IMG.mkdir(parents=True, exist_ok=True)
-    croix = crotz(IMG / 'crotz-sombre.svg', '#ffffff', '#ffd47f', '#eeaf34')
+    croix = crotz(IMG / 'crotz-sombre.svg', *OR_CROTZ)
     pictogrammes(sorted({t[3] for _, _, _, cases in VOLETS_INTERIEURS for t in cases}))
     vilatge = photo(APP / 'static/apren/paisatges/vilatge-1920.webp', 'vilatge.jpg')
     retrat = photo(APP / 'static/acuelh/romain.webp', 'romain.jpg')
@@ -476,15 +494,24 @@ def lancer():
     dcs = SORTIDA / f'{NOM}.dcs'
     doc = SORTIDA / f'{NOM}.designcraft'
     base = NOM
-    # Essai de teinte : « py depliant.py <hexa> [etiqueta] » refait toute la mise en
-    # page avec la brique remplacée par la teinte donnée, sous un autre nom.
+    # Essai de teinte : « py depliant.py <hexa> [<hexa or>] <etiqueta> » refait toute
+    # la mise en page avec la brique (ou la brique et l'or vif) remplacée(s), sous un
+    # autre nom ; les ors de la croix suivent l'or vif.
     if len(sys.argv) > 1:
-        if not re.fullmatch(r'[0-9a-fA-F]{6}', sys.argv[1]):
-            sys.exit(f'Teinte à donner en hexadécimal : {sys.argv[1]!r}')
-        NUANCES['Brique'] = f'#{sys.argv[1].lower()}'
-        base = f'{NOM}-{sys.argv[2]}' if len(sys.argv) > 2 else f'{NOM}-teinta'
+        args = sys.argv[1:]
+        hexa = [a for a in args if re.fullmatch(r'[0-9a-fA-F]{6}', a)]
+        noms = [a for a in args if not re.fullmatch(r'[0-9a-fA-F]{6}', a)]
+        if not hexa or not noms or len(hexa) > 2:
+            sys.exit('Essai : « py depliant.py <hexa brica> [<hexa or>] <etiqueta> »')
+        NUANCES['Brique'] = f'#{hexa[0].lower()}'
+        if len(hexa) == 2:
+            NUANCES['Or vif'] = f'#{hexa[1].lower()}'
+            global OR_CROTZ
+            OR_CROTZ = crotz_desplaçats(hexa[1])
+        etiqueta = noms[0]
+        base = f'{NOM}-{etiqueta}'
         doc = SORTIDA / f'{base}.designcraft'
-        print(f'Brique remplacée par {NUANCES["Brique"]} (essai : {base})')
+        print(f'Essai {etiqueta} : Brique = {NUANCES["Brique"]}, Or vif = {NUANCES["Or vif"]}')
     # Ne jamais écraser un dépliant retouché à la main dans DesignCraft : s'il a été
     # enregistré après la dernière génération, le nouveau (et ses PDF) part sous un autre nom.
     elif doc.exists() and dcs.exists() and doc.stat().st_mtime > dcs.stat().st_mtime + 120:
