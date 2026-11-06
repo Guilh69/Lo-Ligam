@@ -17,7 +17,7 @@
 	import { tria, lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
 	import Icona from '$lib/components/Icona.svelte';
 	import MencionIA from '$lib/components/MencionIA.svelte';
-	import { SCENAS, GROPS, QUASERNET, motsDelQuasernet } from '$lib/plueja/scenas.js';
+	import { SCENAS, GROPS, QUASERNET, motsDelQuasernet, fotoCamin, fotoSrcset, fotoSizes } from '$lib/plueja/scenas.js';
 	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
 	import Polsa from '$lib/plueja/Polsa.svelte';
 	import Paisatges from '$lib/paisatges/Paisatges.svelte';
@@ -130,7 +130,9 @@
 	// l'ambiance ; la photo devient un choix, mémorisé d'une visite à l'autre.
 	let fonsFoto = $state(false);
 	let fotoVisible = $derived(fonsFoto && !!scena.imatge);
-	let fotosDemandadas = $state({}); // photos déjà demandées (chargées une fois, gardées ensuite)
+	// les photos dans la page : celle de l'ambiance, et celle qui s'efface dessous ; les autres en
+	// sortent (1920 px décodées : la mémoire d'un téléphone ne les garderait pas toutes, 06-11)
+	let fotosDemandadas = $state({});
 
 	// Première visite : l'explication se forme en poussière, en trois étapes,
 	// puis les mots de l'ambiance (Romain, 05-11 : « pour une première fois,
@@ -540,9 +542,10 @@
 			if (!motsQuasernet.length) return;
 		}
 		finirGuida(); // on a choisi une ambiance : l'explication a servi
+		const anciana = scenaId;
 		vistas[id] = true;
 		scenaId = id;
-		if (fonsFoto) fotosDemandadas[id] = true;
+		if (fonsFoto) fotosDemandadas = fotosDemandadas[anciana] ? { [anciana]: true, [id]: true } : { [id]: true };
 		sac = [];
 		for (const id2 of fis.keys()) partir(id2);
 		darrierNais = temps - 3.4; // un premier mot arrive vite
@@ -690,7 +693,16 @@
 				<div class="cel" class:nuech={!s.teinta} class:vis={s.id === scenaId && !fotoVisible} style:--teinta={s.teinta}></div>
 			{/if}
 			{#if s.imatge && fotosDemandadas[s.id]}
-				<img class="foto" class:vis={s.id === scenaId && fotoVisible} src={s.imatge} alt="" style:object-position={s.posicion} decoding="async" />
+				<img
+					class="foto"
+					class:vis={s.id === scenaId && fotoVisible}
+					src={fotoCamin(s.imatge, s.imatge.amples[0])}
+					srcset={fotoSrcset(s.imatge)}
+					sizes={fotoSizes(s.imatge)}
+					alt=""
+					style:object-position={s.posicion}
+					decoding="async"
+				/>
 			{/if}
 		{/each}
 		<!-- collines en silhouette : deux plans, quelques octets -->
@@ -926,16 +938,20 @@
 		position: absolute;
 		inset: 0;
 	}
+	/* Les fonds couvrent juste l'écran et ne bougent plus (Romain, 06-11 : « trop zoomé et
+	   mauvaise qualité + à-coups ») : la lente respiration (zoom de 8 % sur un cadre déjà
+	   agrandi de 8 %) obligeait à zoomer la photo, et Firefox avance une image très lente
+	   pixel par pixel, donc par à-coups. Au repos rien ne bouge, comme la poussière ; seul
+	   reste le fondu d'une ambiance à l'autre. */
 	.foto,
 	.cel {
 		position: absolute;
-		inset: -4%;
-		width: 108%;
-		height: 108%;
+		inset: 0;
+		width: 100%;
+		height: 100%;
 		object-fit: cover;
 		opacity: 0;
 		transition: opacity 1.6s ease;
-		animation: respir 80s ease-in-out infinite alternate;
 	}
 	.foto.vis,
 	.cel.vis {
@@ -949,16 +965,6 @@
 			radial-gradient(ellipse 85% 34% at 50% 80%, color-mix(in srgb, var(--teinta, #22324a) 30%, transparent), transparent 72%),
 			radial-gradient(ellipse 55% 30% at 78% 6%, color-mix(in srgb, var(--teinta, #22324a) 8%, transparent), transparent 70%),
 			linear-gradient(#050a14, #0a1524 52%, #121d31);
-	}
-	@keyframes respir {
-		from {
-			scale: 1;
-			translate: 0 0;
-		}
-		to {
-			scale: 1.08;
-			translate: -1.5% -1%;
-		}
 	}
 	.cel.nuech {
 		background:
@@ -1092,9 +1098,7 @@
 		}
 	}
 	.pausa .mot,
-	.pausa .mot *,
-	.pausa .foto,
-	.pausa .cel {
+	.pausa .mot * {
 		animation-play-state: paused;
 	}
 
@@ -1568,10 +1572,6 @@
 
 	/* Réduire les animations : rien ne tombe, les mots apparaissent en fondu */
 	@media (prefers-reduced-motion: reduce) {
-		.foto,
-		.cel {
-			animation: none;
-		}
 		.mot,
 		.mot.part {
 			animation-name: fondu;

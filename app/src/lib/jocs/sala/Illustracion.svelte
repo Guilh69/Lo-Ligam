@@ -4,18 +4,19 @@
 	// montrent vraiment le type de jeu » ; manière B, « papier découpé », choisie
 	// sur l'essai /ensag/illustracions-jocs). Des pièces pleines posées sur la
 	// carte, une ombre courte, le grain du papier.
-	// Joiós : posée à même la carte ; le dessin bouge un peu, seulement quand il
+	// Posée à même la carte ; le dessin bouge un peu, seulement quand il
 	// est à l'écran, et seulement là où le mouvement dit le jeu (le serpent
 	// ondule et la tuile tombe dans le panier, la loupe cherche, une carte se
 	// retourne, la voix sonne ; les mots croisés, déjà clairs, ne bougent pas).
-	// Calme : sur un fond de la couleur de la famille, passé comme une vieille
-	// affiche, immobile. Rien ne bouge si l'appareil demande moins d'animations.
+	// Rien ne bouge si l'appareil demande moins d'animations.
 	// Décoratif : rien à lire pour un lecteur d'écran (le nom de la famille suit).
+	// Le coin bas à droite (x > 344, y > 248) reste vide : le rond « IA » s'y pose
+	// (Romain, 06-11 : « pas en conflit avec l'image »).
 	// Les anciennes affiches de paysage (Afica.svelte) restent dans le code, et
 	// les tableaux peints dans design-stock/pinturas, pour un autre usage.
 	import { onMount } from 'svelte';
 
-	let { id, tema = 'joios' } = $props();
+	let { id } = $props();
 	const uid = $props.id();
 	let vista = $state(true);
 	let cadre;
@@ -31,7 +32,6 @@
 <div
 	bind:this={cadre}
 	class="illus i-{id}"
-	class:joios={tema === 'joios'}
 	class:pausa={!vista}
 	aria-hidden="true"
 >
@@ -50,17 +50,21 @@
 				<feComposite in2="SourceGraphic" operator="in" />
 			</filter>
 		</defs>
-		<g class="pecas" filter="url(#gra-{uid})">
+		<!-- tout le dessin un peu resserré vers le haut à gauche : le coin du rond reste libre -->
+		<g class="pecas" filter="url(#gra-{uid})" transform="translate(190 140) scale(0.94) translate(-190 -140)">
 			{#if id === 'adreca'}
 				<!-- le serpent : sa queue a déjà écrit L I G A, il va manger le M ;
 				     à côté, le panier où tombe une tuile -->
 				<path class="l pontilh" d="M262 104 Q288 82 300 80" />
-				<path class="l pontilh" d="M338 150 V176" />
-				<g class="tomba">
-					<rect class="f" x="322" y="180" width="32" height="32" rx="7" transform="rotate(-8 338 196)" />
+				<!-- loin du coin bas à droite, où se pose le rond « IA » -->
+				<g transform="translate(-34 -16)">
+					<path class="l pontilh" d="M338 150 V176" />
+					<g class="tomba">
+						<rect class="f" x="322" y="180" width="32" height="32" rx="7" transform="rotate(-8 338 196)" />
+					</g>
+					<path class="f2" d="M294 222 H382 L371 272 H305 Z" />
+					<path class="c" d="M298 238 H378 M302 255 H374 M324 222 L322 272 M352 222 L354 272" />
 				</g>
-				<path class="f2" d="M294 222 H382 L371 272 H305 Z" />
-				<path class="c" d="M298 238 H378 M302 255 H374 M324 222 L322 272 M352 222 L354 272" />
 				{#each [['L', 52, 214, 8], ['I', 100, 224, -4], ['G', 148, 208, -18], ['A', 189, 174, -32]] as [t, x, y, r], k (t)}
 					<g class="onda" style="--k: {k}">
 						<g transform="translate({x} {y}) rotate({r})">
@@ -105,7 +109,7 @@
 				<g class="lopia">
 					<circle class="verre" cx="252" cy="176" r="56" />
 					<circle class="anel" cx="252" cy="176" r="56" />
-					<path class="manga" d="M293 216 L346 268" />
+					<path class="manga" d="M293 216 L334 256" />
 				</g>
 			{:else if id === 'memoria'}
 				<!-- les paires : deux soleils pareils ; une carte se soulève et se
@@ -155,7 +159,7 @@
 </div>
 
 <style>
-	/* les couleurs : celles des cartes Joiós (Sala.svelte) */
+	/* les couleurs : celles des cartes de la salle (Sala.svelte) */
 	.illus {
 		--fons: #b53d17;
 		--clar: #fbf1e1;
@@ -166,7 +170,6 @@
 		--mitjan: color-mix(in oklab, var(--fons), #fff 30%);
 		position: relative;
 		aspect-ratio: 4 / 3;
-		background: var(--fons);
 	}
 	.i-mots {
 		--fons: #eeaf34;
@@ -183,14 +186,6 @@
 	}
 	.i-escota {
 		--fons: #2b6496;
-	}
-	/* Joiós : à même la carte */
-	.joios {
-		background: none;
-	}
-	/* calme : passé comme une vieille affiche */
-	.illus:not(.joios) {
-		filter: saturate(0.55) sepia(0.16) brightness(1.05) contrast(0.9);
 	}
 	svg {
 		position: absolute;
@@ -289,15 +284,15 @@
 		stroke-linecap: round;
 	}
 
-	/* Joiós : le dessin bouge, à peine */
-	.joios .onda {
+	/* le dessin bouge, à peine */
+	.onda {
 		animation: illus-onda 3.4s ease-in-out infinite;
 		animation-delay: calc(var(--k) * -0.32s);
 	}
-	.joios .tomba {
+	.tomba {
 		animation: illus-tomba 4.2s ease-in infinite;
 	}
-	.joios .lopia {
+	.lopia {
 		animation: illus-lopia 9s ease-in-out infinite;
 	}
 	.dos,
@@ -308,13 +303,13 @@
 	.cara {
 		transform: scaleX(0);
 	}
-	.joios .dos {
+	.dos {
 		animation: illus-dos 7s ease-in-out infinite;
 	}
-	.joios .cara {
+	.cara {
 		animation: illus-cara 7s ease-in-out infinite;
 	}
-	.joios .son {
+	.son {
 		animation: illus-son 2.6s ease-in-out infinite;
 		animation-delay: calc(var(--k) * 0.22s);
 	}

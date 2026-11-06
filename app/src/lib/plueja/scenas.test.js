@@ -62,3 +62,15 @@ describe('pluie de mots : les unités suivent les leçons', () => {
 		}
 	});
 });
+
+describe('fonds photo de Remira', () => {
+	it('chaque fond a ses deux largeurs, la grande étant celle de la photo', async () => {
+		const { existsSync } = await import('node:fs');
+		const { fotoCamin } = await import('./scenas.js');
+		for (const s of SCENAS) {
+			if (!s.imatge) continue;
+			expect(s.imatge.amples.at(-1), s.id).toBe(s.imatge.l);
+			for (const a of s.imatge.amples) expect(existsSync(`static${fotoCamin(s.imatge, a)}`), `${s.id} ${a}`).toBe(true);
+		}
+	});
+});

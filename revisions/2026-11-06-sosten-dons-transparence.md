@@ -46,6 +46,8 @@ Idée de Romain, 2026-11-06 vers 23 h 15, née de la cagnotte des illustrations 
 
 Sources : lejournaldesentreprises.com (Lyra Network), ecommerce-nation.fr et wizishop.fr (tarifs Lyra Collect), docs.lyra.com, leptidigital.fr et kolonell.com (Payplug), kolonell.com (GoCardless), mollie.com/products/recurring.
 
+**Question ouverte de Romain (06-11, clôture) : un service de paiement est-il vraiment utile, ou un lien direct vers son compte suffit-il ?** Piste de Claude, à trancher plus tard : commencer par le virement (RIB du compte de la micro-entreprise affiché sur la page « Soutenir », virement permanent pour donner chaque mois), sans frais ni code ; ne prendre un service (Lyra, sinon Mollie) que pour la carte et pour l'accès payant qui s'ouvre tout seul. Limites du virement : plus d'étapes pour la personne, pas de carte, rapprochement des dons à la main, IBAN rendu public. Le formulaire Lyra n'est pas envoyé.
+
 ## Décisions suivantes (une à la fois)
 2. Le service de paiement : fait (Lyra Collect pressenti, Mollie en repli, voir plus haut) ; à confirmer après l'appel.
 3. Ce qui est derrière l'accès symbolique (§6 : où placer la limite gratuit / payant).

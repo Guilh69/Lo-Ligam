@@ -6,22 +6,18 @@
 	// lignes d'une boutique d'applications : l'icône, le nom, la consigne, ce
 	// que le jeu fait travailler, « Jogar » (un clic : on joue). Le filtre
 	// « Fa trabalhar » ne garde que les jeux qui travaillent ce qu'on choisit.
-	// Deux tèmas : calme (par défaut : épuré, rien ne bouge) et joiós (des
-	// cases de couleur comme S'apren, les affiches s'animent, le titre ondule),
-	// immobile si l'appareil demande moins d'animations. Catalogue : cataleg.js.
+	// Des cases de couleur comme S'apren, les dessins bougent un peu, le titre
+	// ondule ; immobile si l'appareil demande moins d'animations. Le tèma calme
+	// (épuré, immobile) a été retiré le 07-11 (Romain : « tu peux supprimer le
+	// thème calme »). Catalogue : cataleg.js.
 	import { tria, lang } from '$lib/stores/lang.svelte.js';
 	import { CAPACITATS, FAMILHAS, jocsDe } from './cataleg.js';
 	import Illustracion from './Illustracion.svelte';
 	import Emblema from './Emblema.svelte';
 	import MencionIA from '$lib/components/MencionIA.svelte';
 
-	let { tema = 'joios', causirTema = () => {} } = $props();
-
 	const T = {
 		titol: { oc: 'La sala de jòcs', fr: 'La salle de jeux' },
-		tema: { oc: 'Tèma', fr: 'Thème' },
-		calme: { oc: 'Calme', fr: 'Calme' },
-		joios: { oc: 'Joiós', fr: 'Festif' },
 		faTrabalhar: { oc: 'Fa trabalhar', fr: 'Fait travailler' },
 		tot: { oc: 'Tot', fr: 'Tout' },
 		jogar: { oc: 'Jogar', fr: 'Jouer' },
@@ -36,18 +32,11 @@
 	let letras = $derived([...tria(T.titol)]);
 </script>
 
-<div class="sala" class:joios={tema === 'joios'}>
+<div class="sala">
 	<header class="entrada">
 		<h2 class="titol" lang={lg(T.titol)} aria-label={tria(T.titol)}>
 			{#each letras as c, i (i)}<span aria-hidden="true" style="--i: {i}">{c === ' ' ? ' ' : c}</span>{/each}
 		</h2>
-		<div class="tema" role="group" aria-labelledby="sala-tema">
-			<span id="sala-tema" class="pichon">{tria(T.tema)}</span>
-			<div class="tema-botons">
-				<button type="button" aria-pressed={tema === 'calme'} onclick={() => causirTema('calme')}>{tria(T.calme)}</button>
-				<button type="button" aria-pressed={tema === 'joios'} onclick={() => causirTema('joios')}>{tria(T.joios)}</button>
-			</div>
-		</div>
 	</header>
 
 	<div class="filtre" role="group" aria-labelledby="sala-filtre">
@@ -65,7 +54,7 @@
 	<div class="familhas">
 		{#each familhas as f, k (f.id)}
 			<section class="familha f-{f.id}" style="--k: {k}" aria-labelledby="fam-{f.id}">
-				<div class="quadre"><Illustracion id={f.id} {tema} /><MencionIA cadre /></div>
+				<div class="quadre"><Illustracion id={f.id} /><MencionIA forma="rond" cadre /></div>
 				<h3 id="fam-{f.id}" class="familha-nom" lang={lg(f)}>{tria(f)}</h3>
 				<ul class="jocs">
 					{#each f.jocs as j (j.id)}
@@ -140,16 +129,20 @@
 	}
 	.titol span {
 		display: inline-block;
+		animation: onda-titol 3.6s ease-in-out infinite;
+		animation-delay: calc(var(--i) * 80ms);
+	}
+	.titol span:nth-child(3n + 2) {
+		color: var(--t-aur);
+	}
+	.titol span:nth-child(3n) {
+		color: var(--t-terra-viu);
 	}
 	.pichon {
 		font-size: 0.78rem;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
 		color: var(--t-tinta-2);
-	}
-	.tema {
-		display: grid;
-		gap: 0.35rem;
 	}
 	button {
 		font: inherit;
@@ -161,12 +154,6 @@
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;
 	}
-	/* le tèma et le filtre : du texte, souligné d'or quand il est choisi */
-	.tema-botons {
-		display: flex;
-		gap: 0 1.1rem;
-	}
-
 	/* ── le filtre ── */
 	.filtre {
 		display: flex;
@@ -180,7 +167,7 @@
 		flex-wrap: wrap;
 		gap: 0 1.1rem;
 	}
-	.tema-botons button,
+	/* le filtre : du texte, souligné quand il est choisi */
 	.causidas button {
 		min-height: 2.75rem;
 		padding: 0.3rem 0 0.45rem;
@@ -189,13 +176,11 @@
 		background: none;
 		color: var(--t-tinta-2);
 	}
-	.tema-botons button:hover,
 	.causidas button:hover {
 		color: var(--t-tinta);
 	}
-	.tema-botons button[aria-pressed='true'],
 	.causidas button[aria-pressed='true'] {
-		border-bottom-color: var(--t-aur);
+		border-bottom-color: var(--t-terra-viu);
 		color: var(--t-tinta);
 		font-weight: 600;
 	}
@@ -225,20 +210,70 @@
 			--n: 5;
 		}
 	}
+	/* des cases de couleur, comme S'apren */
 	.familha {
+		--t-tinta: var(--f-tinta);
+		--t-tinta-2: var(--f-tinta-2);
+		--t-linha: var(--f-linha);
 		flex: 0 0 calc((100% - (var(--n) - 1) * var(--gap)) / var(--n));
 		min-width: 0;
 		display: grid;
 		align-content: start;
 		gap: 0.9rem;
+		padding: 1rem 1rem 0.4rem;
+		border-radius: 0.9rem;
+		background: var(--f-fons);
+		color: var(--f-tinta);
+		animation: dintrar 0.6s ease-out both;
+		animation-delay: calc(var(--k) * 90ms);
 	}
-	/* la marge basse porte la signature « facha per l'IA » (Romain, 06-11 :
-	   « Signature et ligne », MencionIA) */
+	.f-adreca {
+		--f-fons: var(--color-terracotta);
+		--f-boton: #fbf1e1;
+		--f-boton-tinta: var(--color-terracotta);
+	}
+	.f-mots {
+		--t-aur: #7a2e0c;
+		--f-fons: var(--color-gold);
+		--f-tinta: #2a1a10;
+		--f-tinta-2: rgba(42, 26, 16, 0.86);
+		--f-linha: rgba(42, 26, 16, 0.22);
+		--f-boton: #2a1a10;
+		--f-boton-tinta: #ffd47f;
+	}
+	.f-observacion {
+		--f-fons: #4f6a2f;
+		--f-boton: #fbf1e1;
+		--f-boton-tinta: #4f6a2f;
+	}
+	.f-memoria {
+		--f-fons: var(--color-teal);
+		--f-boton: #fbf1e1;
+		--f-boton-tinta: var(--color-teal);
+	}
+	.f-escota {
+		--f-fons: #2b6496;
+		--f-boton: #fbf1e1;
+		--f-boton-tinta: #1d4f7a;
+	}
+	.familha:not(.f-mots) {
+		--f-tinta: #fbf1e1;
+		--f-tinta-2: rgba(251, 241, 225, 0.94);
+		--f-linha: rgba(251, 241, 225, 0.28);
+	}
+	/* l'illustration est posée à même la carte (papier découpé, Romain 06-11) ;
+	   le petit rond « IA » se pose dans son coin bas (« facha per l'IA » sous
+	   chaque dessin était « trop répétitif et visible »), à l'encre de la carte */
 	.quadre {
+		--mencion-tinta: var(--f-tinta-2);
+		--mencion-tinta-fort: var(--f-tinta);
+		--mencion-trait: var(--f-tinta);
+		--mencion-fons: transparent;
 		position: relative;
-		padding: 0.5rem 0.5rem 1.9rem;
-		border: 1px solid var(--t-linha);
-		background: var(--t-fons-2);
+		transition: translate 0.4s ease;
+	}
+	.familha:hover .quadre {
+		translate: 0 -3px;
 	}
 	.familha-nom {
 		margin: 0.15rem 0 0;
@@ -262,6 +297,9 @@
 		border-bottom: 1px solid var(--t-linha);
 		color: inherit;
 		text-decoration: none;
+	}
+	a.joc:hover .emb {
+		animation: bolegar 0.5s ease;
 	}
 	a.joc:hover .nom {
 		text-decoration: underline;
@@ -291,8 +329,8 @@
 		flex: none;
 		padding: 0.3rem 0.85rem;
 		border-radius: 0.5rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
+		background: var(--f-boton);
+		color: var(--f-boton-tinta);
 		font-size: 0.88rem;
 		font-weight: 600;
 	}
@@ -336,88 +374,6 @@
 		color: var(--t-tinta-2);
 	}
 
-	/* ── joiós : des cases de couleur, les affiches accrochées de travers ── */
-	.joios .titol span:nth-child(3n + 2) {
-		color: var(--t-aur);
-	}
-	.joios .titol span:nth-child(3n) {
-		color: var(--t-terra-viu);
-	}
-	.joios .titol span {
-		animation: onda-titol 3.6s ease-in-out infinite;
-		animation-delay: calc(var(--i) * 80ms);
-	}
-	.joios .familha {
-		--t-tinta: var(--f-tinta);
-		--t-tinta-2: var(--f-tinta-2);
-		--t-linha: var(--f-linha);
-		padding: 1rem 1rem 0.4rem;
-		border-radius: 0.9rem;
-		background: var(--f-fons);
-		color: var(--f-tinta);
-		animation: dintrar 0.6s ease-out both;
-		animation-delay: calc(var(--k) * 90ms);
-	}
-	.joios .f-adreca {
-		--f-fons: var(--color-terracotta);
-		--f-boton: #fbf1e1;
-		--f-boton-tinta: var(--color-terracotta);
-	}
-	.joios .f-mots {
-		--t-aur: #7a2e0c;
-		--f-fons: var(--color-gold);
-		--f-tinta: #2a1a10;
-		--f-tinta-2: rgba(42, 26, 16, 0.86);
-		--f-linha: rgba(42, 26, 16, 0.22);
-		--f-boton: #2a1a10;
-		--f-boton-tinta: #ffd47f;
-	}
-	.joios .f-observacion {
-		--f-fons: #4f6a2f;
-		--f-boton: #fbf1e1;
-		--f-boton-tinta: #4f6a2f;
-	}
-	.joios .f-memoria {
-		--f-fons: var(--color-teal);
-		--f-boton: #fbf1e1;
-		--f-boton-tinta: var(--color-teal);
-	}
-	.joios .f-escota {
-		--f-fons: #2b6496;
-		--f-boton: #fbf1e1;
-		--f-boton-tinta: #1d4f7a;
-	}
-	.joios .familha:not(.f-mots) {
-		--f-tinta: #fbf1e1;
-		--f-tinta-2: rgba(251, 241, 225, 0.94);
-		--f-linha: rgba(251, 241, 225, 0.28);
-	}
-	.joios .quadre {
-		/* Joiós : l'illustration est posée à même la carte (papier découpé,
-		   Romain 06-11) ; la signature prend l'encre de la carte, soulignée de
-		   cette encre (le rouge ne se verrait pas sur la carte rouge) */
-		--mencion-tinta: var(--f-tinta-2);
-		--mencion-tinta-fort: var(--f-tinta);
-		--mencion-trait: var(--f-tinta);
-		padding: 0 0 1.9rem;
-		border: none;
-		background: none;
-		transition: translate 0.4s ease;
-	}
-	.joios .familha:hover .quadre {
-		translate: 0 -3px;
-	}
-	.joios .jogar {
-		background: var(--f-boton);
-		color: var(--f-boton-tinta);
-	}
-	.joios a.joc:hover .emb {
-		animation: bolegar 0.5s ease;
-	}
-	.joios .tema-botons button[aria-pressed='true'],
-	.joios .causidas button[aria-pressed='true'] {
-		border-bottom-color: var(--t-terra-viu);
-	}
 	@keyframes onda-titol {
 		0%,
 		60%,
