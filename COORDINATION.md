@@ -31,6 +31,7 @@
 - 2026-11-06 : `npm run verificar:rls` donne 3 échecs sur les fiches, sans lien avec le lot 1 (son SQL ne touche que `remarcas`) : les deux fiches d'essai `_essai--publicada` et `_essai--rescondida` (`supabase/supabase-admin-schema.sql`) ne sont plus dans la table `fichas` ; ses règles d'accès sont en place (lues dans la base le 06-11). Ne rien changer en base sans l'accord de Romain.
 
 - 2026-11-06, 20 h : **tri des 257 dessins de Remira fini par Romain** (231 gardés). Les 7 couleurs sont en ronds de leur couleur (`TINTAS` de `dessenhs.js`, comme les drapeaux) ; les 26 croix restantes refaites (bloc « Lot 3 »), relues par Joan, marquées « refaites » : elles attendent son cœur ou sa croix en tête de `/admin/triar`. Une nouvelle croix : redessiner d'après son commentaire, faire relire par Joan, puis `node scripts/remarcas.mjs --tractar <id> --responsa "…"`.
+- 2026-11-06, 20 h 15 : **idée de Romain, les illustrations faites par IA signalées et une cagnotte pour un illustrateur** (PILOTATGE chantier 31) : proposition dans `revisions/2026-11-06-illustrations-ia-cagnotte.md`, rien de codé ; attendre son choix de la voie pour l'argent avant de coder.
 
 ## Consignes pour les deux agents
 - Lire ce fichier avant de commencer une tâche ; y noter toute décision qui concerne l'autre agent, en une ligne datée.
