@@ -14,7 +14,7 @@
 	import Afica from './Afica.svelte';
 	import Emblema from './Emblema.svelte';
 
-	let { tema = 'calme', causirTema = () => {} } = $props();
+	let { tema = 'joios', causirTema = () => {} } = $props();
 
 	const T = {
 		titol: { oc: 'La sala de jòcs', fr: 'La salle de jeux' },

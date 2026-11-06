@@ -12,8 +12,9 @@
 	// Les jeux : $lib/jocs/. Depuis le 06-11 (Romain : « arriver dans une salle
 	// de jeu… dans la logique du café pour la musique »), sans ?joc= on entre
 	// dans la salle de jeux ($lib/jocs/sala/) : les familles de jeux, leurs
-	// affiches, ce que chaque jeu fait travailler ; deux tèmas, calme par défaut
-	// et joiós, gardés sur l'appareil. Dans un jeu, « ‹ Sala de jòcs » y ramène.
+	// affiches, ce que chaque jeu fait travailler ; deux tèmas, joiós par défaut
+	// (Romain, 06-11 au soir : « Je préfère joios en fait ») et calme, gardés sur
+	// l'appareil. Dans un jeu, « ‹ Sala de jòcs » y ramène.
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import Serp from '$lib/jocs/Serp.svelte';
@@ -38,17 +39,17 @@
 		const d = page.url.searchParams.get('joc');
 		return JOCS.some((j) => j.id === d) ? d : null;
 	});
-	// le tèma de la salle : calme par défaut, gardé sur cet appareil
+	// le tèma de la salle : joiós par défaut, gardé sur cet appareil
 	const CLAU_TEMA = 'loligam-jocs-tema';
-	let tema = $state('calme');
+	let tema = $state('joios');
 	onMount(() => {
 		// ?tema=joios ou ?tema=calme : un lien qui ouvre la salle dans ce tèma
 		const demandat = page.url.searchParams.get('tema');
 		if (demandat === 'joios' || demandat === 'calme') return causirTema(demandat);
 		try {
-			if (localStorage.getItem(CLAU_TEMA) === 'joios') tema = 'joios';
+			if (localStorage.getItem(CLAU_TEMA) === 'calme') tema = 'calme';
 		} catch {
-			// stockage refusé : on reste au calme
+			// stockage refusé : on reste au tèma par défaut
 		}
 	});
 	function causirTema(t) {
