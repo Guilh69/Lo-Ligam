@@ -40,14 +40,14 @@ export const DECISIONS = [
 		'una-sola-pila',
 		'Organisation',
 		'Toutes tes relectures d’occitan dans une seule pile',
-		'Aujourd’hui elles sont éparpillées : fichier des doutes, listes de la carte, leçons, jeux. La pile de validation du talhièr (codée en ce moment) les rassemble : tu valides sur la page, mot par mot.',
+		'Aujourd’hui elles sont éparpillées : fichier des doutes, listes de la carte, leçons, jeux. La pile de validation du talhièr (en ligne depuis ce soir) les rassemble : tu valides sur la page, mot par mot.',
 		'Oui : je n’ouvre plus de nouvelle liste ailleurs.'
 	),
 	D(
 		'per-tu-unic',
 		'Organisation',
 		'« Per tu » reste la seule porte d’entrée de ce que tu as à faire',
-		'Le suivi des chantiers et ces cartes y seront reliés dès que la discussion du talhièr aura fini son lot en cours.',
+		'J’y relie le suivi des chantiers et ces cartes, pour que tu n’aies qu’une adresse à retenir : /admin.',
 		'Oui.'
 	),
 
