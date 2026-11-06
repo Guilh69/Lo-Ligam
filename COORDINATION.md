@@ -24,6 +24,7 @@
 
 ## Dernier point Claude
 - 2026-11-06 : relais écrit (ce fichier, `AGENTS.md` « Sur cet ordinateur » et « Sans Claude », `C:\Users\perie\.vibe\AGENTS.md`, compétences joan/rodrigo/aran) ; Vibe Hub corrigé (Node dans le PATH, anciens dossiers de Lo Ligam retirés, messages d'erreur en français ; copie d'avant dans `C:\Users\perie\Depots\vibe-hub\.copies`).
+- 2026-11-06, 18 h 55 : la discussion des jeux de l'A1 est close, tout est sur `master` : la salle de jeux de `/apren/jocs` (cinq familles, deux tèmas Calme et Joiós, jeux à venir montrés sans lien ; cahier §11 du 06-11). Ajouter un jeu : une entrée dans `app/src/lib/jocs/sala/cataleg.js` (ses tests disent ce qui manque) et son composant dans `app/src/routes/apren/jocs/+page.svelte`. Romain doit dire quel tèma et quelles affiches lui plaisent ; doutes d'occitan J-6 à J-10 dans `DOBTES-OCCITAN.md` §6.
 
 ## Consignes pour les deux agents
 - Lire ce fichier avant de commencer une tâche ; y noter toute décision qui concerne l'autre agent, en une ligne datée.
