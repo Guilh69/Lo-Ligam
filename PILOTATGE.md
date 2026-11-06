@@ -6,7 +6,7 @@
 >
 > **La discussion mère** (celle qui a ouvert ce tableau le 18-09) garde la vue d'ensemble : elle relit les autres discussions par Git, tient ce fichier à jour et signale les déséquilibres.
 >
-> **Après le 6 novembre 2026, Mistral devient l'agent principal et Claude contrôle ; jusque-là, Claude garde la main, un peu des deux selon les demandes de Romain** (cahier §11, 02-11) : consignes dans `AGENTS.md`, briefing de passation complet dans `BRIEF-MISTRAL.md` (état, reste à faire, pièges). Le tri des noms de la carte du 27-10 est fusionné et en ligne (02-11).
+> **Après le 6 novembre 2026, Mistral devient l'agent principal et Claude contrôle ; jusque-là, Claude garde la main, un peu des deux selon les demandes de Romain** (cahier §11, 02-11) : consignes dans `AGENTS.md`, briefing de passation complet dans `BRIEF-MISTRAL.md` (état, reste à faire, pièges). Le tri des noms de la carte du 27-10 est fusionné et en ligne (02-11). **06-11 au soir : le relais est passé, Mistral a la main** et Claude n'est plus joignable jusqu'au retour de l'abonnement : lire d'abord `COORDINATION.md` (qui a la main, discussions laissées ouvertes, réglages à vérifier), puis `AGENTS.md` (« Sur cet ordinateur », « Sans Claude »).
 
 ## 1. Ce que Romain a à faire, dans l'ordre
 
