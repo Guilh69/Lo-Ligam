@@ -77,7 +77,25 @@ export const MOTS = {
 	'la piscina': 'la piscine',
 	'l’escalièr': 'l’escalier',
 	'lo pont': 'le pont',
-	'la crotz': 'la croix'
+	'la crotz': 'la croix',
+	// 06-11, lot 2 (los monuments) : lo Congrès (coupole → copòla, lampe → lampa ; cupòla refusé), genre d'après lo Basic
+	'lo fèrre': 'le fer',
+	'l’arc': 'l’arc',
+	'la rosassa': 'la rosace',
+	'l’estatua': 'la statue',
+	'la catedrala': 'la cathédrale',
+	'lo castèl': 'le château',
+	'la muralha': 'la muraille, le rempart',
+	'la copòla': 'la coupole',
+	'la campana': 'la cloche',
+	'lo relòtge': 'l’horloge',
+	'la gara': 'la gare',
+	'la flor': 'la fleur',
+	'la lampa': 'la lampe',
+	'la colomna': 'la colonne',
+	'la fusta': 'le bois',
+	'la plaça': 'la place',
+	'lo puèg': 'la colline'
 };
 
 export const PAISATGES = [
@@ -497,6 +515,308 @@ export const PAISATGES = [
 			['la glèisa', 0.79, 0.49],
 			['la pòrta', 0.12, 0.59]
 		]
+	},
+	// ── Lot 2 des thèmes : los monuments (06-11) ──
+	{
+		clau: 'mon-ferre',
+		tema: 'monuments',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'La tour Eiffel vue d’en dessous : une dentelle de fer brun contre le ciel bleu, ses étages, ses grands arcs.',
+		mots: [
+			['la torre', 0.5, 0.15],
+			['lo fèrre', 0.25, 0.65],
+			['l’arc', 0.5, 0.9]
+		]
+	},
+	{
+		clau: 'mon-catedrala',
+		tema: 'monuments',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'La façade de Notre-Dame de Paris dorée par le soleil : deux tours, une grande rosace, une rangée de statues, des portails sculptés.',
+		mots: [
+			['la torre', 0.37, 0.15],
+			['la rosassa', 0.55, 0.53],
+			['l’estatua', 0.3, 0.65],
+			['la pòrta', 0.6, 0.92]
+		]
+	},
+	{
+		clau: 'mon-pont',
+		tema: 'monuments',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Le pont du Golden Gate à San Francisco, rouge au-dessus de la baie, des collines brunes derrière, des rochers et des vagues au premier plan.',
+		mots: [
+			['lo pont', 0.43, 0.32],
+			['la mar', 0.5, 0.72],
+			['lo puèg', 0.7, 0.48],
+			['la ròca', 0.15, 0.63]
+		]
+	},
+	{
+		clau: 'mon-castel',
+		tema: 'monuments',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1280,
+		alt: 'Un château de pierre vu d’en bas : une tourelle ronde, de hautes fenêtres, un vieux mur de pierres à gauche, le ciel bleu.',
+		mots: [
+			['la torre', 0.55, 0.3],
+			['la muralha', 0.15, 0.65],
+			['la fenèstra', 0.66, 0.53],
+			['lo castèl', 0.8, 0.8]
+		]
+	},
+	{
+		clau: 'mon-copola',
+		tema: 'monuments',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Le chevet d’une église romane en pierre blonde, sa coupole et son petit clocheton, sous un grand ciel bleu ; des fanions rouges et blancs.',
+		mots: [
+			['la copòla', 0.5, 0.66],
+			['la glèisa', 0.55, 0.86],
+			['lo cèl', 0.5, 0.25]
+		]
+	},
+	{
+		clau: 'mon-fort',
+		tema: 'monuments',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2134,
+		alt: 'Le fort Saint-Jean à Marseille : une tour ronde au bout d’un haut mur de pierre, un chemin de ronde, la mer à gauche.',
+		mots: [
+			['la torre', 0.65, 0.42],
+			['la muralha', 0.9, 0.3],
+			['la mar', 0.14, 0.72],
+			['lo camin', 0.62, 0.88]
+		]
+	},
+	{
+		clau: 'mon-balcons',
+		tema: 'monuments',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'À Montpellier, un immeuble blanc hérissé de grands balcons qui partent dans tous les sens, comme les branches d’un arbre, sous le ciel bleu.',
+		mots: [
+			['lo balcon', 0.55, 0.35],
+			['l’arbre', 0.88, 0.77],
+			['la planta', 0.4, 0.64]
+		]
+	},
+	{
+		clau: 'mon-estatua',
+		tema: 'monuments',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une statue de bronze aux bras levés, tenant un bouquet, entre un toit de tuiles et un grand mur de pierre striée, sous un ciel bleu profond.',
+		mots: [
+			['l’estatua', 0.48, 0.55],
+			['lo teulat', 0.12, 0.76],
+			['la fenèstra', 0.3, 0.84],
+			['la paret', 0.82, 0.5]
+		]
+	},
+	{
+		clau: 'mon-gleisa',
+		tema: 'monuments',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une petite église de pierre sombre au pied des montagnes, un clocher carré, une fenêtre ronde, le ciel bleu.',
+		mots: [
+			['lo cloquièr', 0.38, 0.28],
+			['la montanha', 0.83, 0.33],
+			['la fenèstra', 0.52, 0.66],
+			['la pèira', 0.66, 0.8]
+		]
+	},
+	{
+		clau: 'mon-campana',
+		tema: 'monuments',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une grande église de brique vue d’en bas : une haute fenêtre gothique, une horloge, et tout en haut une cloche dans une cage de fer forgé.',
+		mots: [
+			['la campana', 0.66, 0.3],
+			['lo relòtge', 0.77, 0.5],
+			['la fenèstra', 0.52, 0.84],
+			['la paret', 0.15, 0.55]
+		]
+	},
+	{
+		clau: 'mon-basilica',
+		tema: 'monuments',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une basilique rose et blanche à Valence, en Espagne, coiffée d’une coupole aux tuiles bleues ; une foule minuscule devant les portes.',
+		mots: [
+			['la copòla', 0.52, 0.36],
+			['la crotz', 0.51, 0.12],
+			['la pòrta', 0.43, 0.86],
+			['la fenèstra', 0.24, 0.66]
+		]
+	},
+	{
+		clau: 'mon-gara',
+		tema: 'monuments',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'La gare de Limoges, en pierre blanche : une haute tour à horloge coiffée de cuivre vert, une coupole, de grandes verrières.',
+		mots: [
+			['lo relòtge', 0.22, 0.36],
+			['la copòla', 0.6, 0.38],
+			['la gara', 0.4, 0.62],
+			['la fenèstra', 0.91, 0.68]
+		]
+	},
+	{
+		clau: 'mon-muralha',
+		tema: 'monuments',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Les remparts de Carcassonne au-dessus d’un talus d’herbes hautes : des murailles crénelées et des tours rondes sous un ciel voilé.',
+		mots: [
+			['la torre', 0.49, 0.38],
+			['la muralha', 0.78, 0.52],
+			['l’èrba', 0.5, 0.82],
+			['la nívol', 0.3, 0.14]
+		]
+	},
+	{
+		clau: 'mon-camin',
+		tema: 'monuments',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Un sentier de terre longe le pied des remparts de Carcassonne : une tour ronde, de hauts murs couverts de lierre, des fleurs roses.',
+		mots: [
+			['la torre', 0.38, 0.45],
+			['la muralha', 0.8, 0.3],
+			['lo camin', 0.43, 0.85],
+			['la flor', 0.84, 0.6]
+		]
+	},
+	{
+		clau: 'mon-torre',
+		tema: 'monuments',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une rue neuve de Barcelone entre des immeubles de verre et de béton ; au fond, une tour ronde et pointue qui brille au soleil.',
+		mots: [
+			['la torre', 0.57, 0.36],
+			['l’arbre', 0.66, 0.63],
+			['la carrièra', 0.55, 0.9]
+		]
+	},
+	{
+		clau: 'mon-valentre',
+		tema: 'monuments',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Le pont Valentré à Cahors : de grandes arches de pierre et une haute tour carrée, entre la verdure et un ciel de nuages.',
+		mots: [
+			['la torre', 0.58, 0.3],
+			['lo pont', 0.62, 0.68],
+			['lo bòsc', 0.1, 0.38],
+			['la nívol', 0.84, 0.12]
+		]
+	},
+	{
+		clau: 'mon-arcs',
+		tema: 'monuments',
+		amples: [1024, 1600],
+		l: 1600,
+		h: 914,
+		alt: 'Dans la grande mosquée de Cordoue, une forêt de colonnes portant des arcs rayés de rouge et de blanc, une lampe suspendue.',
+		mots: [
+			['l’arc', 0.66, 0.22],
+			['la lampa', 0.46, 0.51],
+			['la colomna', 0.39, 0.8]
+		]
+	},
+	{
+		clau: 'mon-prat',
+		tema: 'monuments',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1540,
+		alt: 'Un château blanc à tourelles pointues au-dessus des arbres, un grand pré d’herbes folles au premier plan, un ciel moutonné.',
+		mots: [
+			['lo castèl', 0.48, 0.45],
+			['l’arbre', 0.19, 0.25],
+			['lo prat', 0.5, 0.82],
+			['la nívol', 0.68, 0.2]
+		]
+	},
+	{
+		clau: 'mon-tor',
+		tema: 'monuments',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une tour de pierre surmontée d’une flèche ajourée, au-dessus des toits d’un village, entre les cyprès et les arbres, sous le ciel bleu.',
+		mots: [
+			['la torre', 0.25, 0.6],
+			['lo teulat', 0.25, 0.86],
+			['l’arbre', 0.88, 0.7]
+		]
+	},
+	{
+		clau: 'mon-verona',
+		tema: 'monuments',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une cour de Vérone : un petit balcon de pierre sur une façade de brique et de pierre, un mur crénelé couvert de lierre, des nuages.',
+		mots: [
+			['lo balcon', 0.55, 0.63],
+			['la muralha', 0.22, 0.5],
+			['la fenèstra', 0.78, 0.17],
+			['la nívol', 0.15, 0.27]
+		]
+	},
+	{
+		clau: 'mon-fusta',
+		tema: 'monuments',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Deux bâtiments neufs habillés de bois, l’un de planches, l’autre de petites tuiles de bois, autour d’une pelouse, sous un ciel de printemps.',
+		mots: [
+			['la fusta', 0.88, 0.5],
+			['la fenèstra', 0.61, 0.46],
+			['l’èrba', 0.4, 0.86],
+			['la nívol', 0.33, 0.25]
+		]
+	},
+	{
+		clau: 'mon-milan',
+		tema: 'monuments',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Depuis les toits de la cathédrale de Milan : des flèches de marbre sculpté, une statue tout en haut, et loin en bas la grande place.',
+		mots: [
+			['l’estatua', 0.38, 0.11],
+			['la catedrala', 0.18, 0.45],
+			['la plaça', 0.7, 0.82]
+		]
 	}
 ];
 
@@ -506,7 +826,8 @@ export const PAISATGES = [
 export const TEMAS = [
 	{ id: 'mar', nom: { oc: 'La mar', fr: 'La mer', es: 'El mar', en: 'The sea', ca: 'El mar', ar: 'البحر' } },
 	{ id: 'montanha', nom: { oc: 'La montanha', fr: 'La montagne', es: 'La montaña', en: 'The mountains', ca: 'La muntanya', ar: 'الجبل' } },
-	{ id: 'vila', nom: { oc: 'La vila', fr: 'La ville', es: 'La ciudad', en: 'The town', ca: 'La ciutat', ar: 'المدينة' } }
+	{ id: 'vila', nom: { oc: 'La vila', fr: 'La ville', es: 'La ciudad', en: 'The town', ca: 'La ciutat', ar: 'المدينة' } },
+	{ id: 'monuments', nom: { oc: 'Los monuments', fr: 'Les monuments', es: 'Los monumentos', en: 'Landmarks', ca: 'Els monuments', ar: 'المعالم' } }
 ];
 
 /** Les paysages d'un thème (tous, sans thème). */
