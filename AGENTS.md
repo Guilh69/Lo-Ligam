@@ -10,6 +10,7 @@
 Site d'apprentissage de l'occitan (languedocien, norme classique) : https://loligam.eu. Support des cours en visio de Romain, prolongement de son compte Instagram « Lo Ligam ». **Pas encore ouvert au public**, volontairement (fermé aux moteurs de recherche jusqu'au lancement).
 
 ## Travailler avec Romain
+**Façon de lui répondre** : la section « Comment lui répondre » de tes consignes générales (`C:\Users\perie\.vibe\AGENTS.md`) vaut ici, avec ses exemples. Deux encadrés courts, aucun mot technique, jamais de commande à lui faire taper.
 - **Toujours en français**, messages d'avancement compris.
 - Il **dicte à la voix** (clavier en panne) : lire à travers les fautes de frappe et les « euh ». Il n'a pas de touche accent grave : rétablir les accents occitans (nòstra, Occitània) et les vérifier.
 - **Non développeur** : français simple, une étape à la fois, dire quoi cliquer, donner le **chemin complet** de tout fichier ou dossier à ouvrir (par exemple `C:\Users\perie\Documents\6_Projectes\…`).
