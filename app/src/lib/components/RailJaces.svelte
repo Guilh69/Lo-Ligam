@@ -2107,10 +2107,11 @@
 		display: block;
 		width: 26px;
 		height: 18px;
-		border-radius: 9px 4px 4px 9px;
+		border-radius: 5px;
 		overflow: hidden;
 		background: var(--t-fons);
 	}
+
 	.chip-ap svg {
 		display: block;
 		width: 100%;
@@ -2124,11 +2125,11 @@
 		width: 22px;
 		height: 22px;
 		padding: 3.5px;
-		border-radius: 50%;
-		background: color-mix(in srgb, var(--t-fons-2) 88%, transparent);
-		border: 1.2px solid var(--ponch);
+		border-radius: 6px;
+		background: color-mix(in srgb, var(--t-fons) 92%, transparent);
 		color: var(--ponch);
 	}
+
 	/* la couche active (téléphone) : plus remplie, un point doré */
 	.chip.activa::after {
 		content: '';
@@ -2352,16 +2353,18 @@
 	.linha.escantida {
 		opacity: 0.55;
 	}
+	/* pièces de papier (lib/styles/papier.css) : toutes les vignettes de jaces ont la même forme et la même ombre */
 	.apercebut {
 		display: block;
 		width: 52px;
 		height: 36px;
-		border-radius: 6px;
+		border-radius: 8px;
 		overflow: hidden;
 		background: var(--t-fons);
-		border: 1px solid var(--t-linha);
+		box-shadow: 0 3px 4px var(--pc-ombre);
 		color: var(--t-tinta);
 	}
+
 	.apercebut svg {
 		display: block;
 		width: 100%;
@@ -2374,18 +2377,19 @@
 		place-items: center;
 		width: 52px;
 		height: 36px;
+		border-radius: 8px;
+		background: var(--t-fons);
+		box-shadow: 0 3px 4px var(--pc-ombre);
 		color: var(--ponch);
 	}
+
 	.ponch-j svg {
 		box-sizing: border-box;
-		width: 32px;
-		height: 32px;
-		padding: 6px;
-		border-radius: 50%;
-		background: color-mix(in srgb, var(--t-fons-2) 88%, transparent);
-		border: 1.5px solid var(--ponch);
-		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+		width: 28px;
+		height: 28px;
+		padding: 3px;
 	}
+
 	.titolet.grop-j {
 		margin: 14px 0 2px;
 		color: var(--t-aur);
@@ -2417,32 +2421,38 @@
 	}
 
 	/* bascula (interruptor) */
+	/* l'interrupteur : une piste de papier et une pièce qui glisse */
 	.basc {
 		position: relative;
 		flex: none;
-		width: 34px;
-		height: 20px;
+		width: 36px;
+		height: 22px;
 		padding: 0;
 		border: 0;
-		border-radius: 999px;
-		background: color-mix(in srgb, var(--t-tinta) 20%, transparent);
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--t-tinta) 24%, transparent);
+		box-shadow: inset 0 1px 2px var(--pc-ombre);
 		cursor: pointer;
 		transition: background 0.2s;
 	}
+
 	.basc::after {
 		content: '';
 		position: absolute;
 		top: 3px;
 		left: 3px;
-		width: 14px;
-		height: 14px;
-		border-radius: 50%;
+		width: 16px;
+		height: 16px;
+		border-radius: 5px;
 		background: var(--t-tinta);
+		box-shadow: 0 1px 2px var(--pc-ombre);
 		transition: transform 0.2s;
 	}
+
 	.basc[aria-checked='true'] {
-		background: var(--t-aur);
+		background: var(--pc-or-fons);
 	}
+
 	.basc[aria-checked='true']::after {
 		transform: translateX(14px);
 		background: var(--t-fons);
