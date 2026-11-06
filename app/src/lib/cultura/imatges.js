@@ -7,9 +7,9 @@
 //
 // pos : le point de la photo à garder au centre quand la case la recadre.
 // Les petites images sont déjà recadrées en 3:2 autour de ce point.
-// Sans photo qui corresponde : une photo libre de Wikimedia Commons (COMMONS,
-// créditée), un dessin au trait de Remira (même famille que la poussière
-// d'or), ou rien.
+// Sans photo qui corresponde : une autre photo du stock de Romain (STOCK), une
+// photo libre de Wikimedia Commons (COMMONS, créditée), un dessin au trait de
+// Remira (même famille que la poussière d'or), ou rien.
 
 /** fiche → photo de paysage (clau de lib/paisatges) et point à garder */
 export const FOTOS = {
@@ -78,16 +78,32 @@ export const COMMONS = {
 	}
 };
 
-export const AMPLES = [480, 800];
-const AMPLES_COMMONS = [480, 800, 1200]; // la plus grande sert à la case de la fiche
-/** largeurs tirées pour une fiche ; une photo de Commons plus étroite s'arrête à sa largeur */
-export const amples = (id) => {
-	const c = COMMONS[id];
-	if (!c) return AMPLES;
-	const max = Math.min(c.largor, AMPLES_COMMONS.at(-1));
-	return [...AMPLES_COMMONS.filter((a) => a < max), max];
+/**
+ * fiches illustrées par une photo de Romain qui n'est pas dans les paysages :
+ * son stock hors Git (Lo_Ligam_hors-git/design-stock/Fotos/Bases_foto/<font>),
+ * sans métadonnée ni GPS dans les images tirées. Pas de crédit (comme les
+ * paysages). largor : largeur une fois recadrée en 3:2.
+ */
+export const STOCK = {
+	// la plaque « Rue de l'Escola » sous les roses (Romain, 06-11 : choisie
+	// plutôt que l'Ostal dels Pichonets, une crèche au nom occitan)
+	// posFicha : cadrage dans la case large de la fiche (la plaque au-dessus du titre, les roses dessous)
+	calandreta: { font: 'PXL_20230521_104030960.jpg', largor: 3024, pos: '50% 46%', posFicha: '50% 66%' }
 };
-export const foto = (id) => FOTOS[id] ?? COMMONS[id] ?? null;
+
+/** photo hors des paysages (Commons ou stock de Romain), tirée par scripts/cultura-fotos.mjs */
+export const extern = (id) => COMMONS[id] ?? STOCK[id] ?? null;
+
+export const AMPLES = [480, 800];
+const AMPLES_EXTERNS = [480, 800, 1200]; // la plus grande sert à la case de la fiche
+/** largeurs tirées pour une fiche ; une photo plus étroite s'arrête à sa largeur */
+export const amples = (id) => {
+	const x = extern(id);
+	if (!x) return AMPLES;
+	const max = Math.min(x.largor, AMPLES_EXTERNS.at(-1));
+	return [...AMPLES_EXTERNS.filter((a) => a < max), max];
+};
+export const foto = (id) => FOTOS[id] ?? extern(id);
 export const credit = (id) => COMMONS[id] ?? null;
 /** srcset des petites images ; max : largeur la plus grande proposée (800 au sommaire) */
 export const srcset = (id, max = 800) =>
