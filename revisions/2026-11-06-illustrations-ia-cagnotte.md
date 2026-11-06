@@ -25,7 +25,7 @@ Pas concernées : ses photos (`app/static/apren/paisatges`, `cultura`, `aprene/f
 1. La mention est un lien direct vers la page (un clic), petite mais lisible (contraste RGAA), dans la langue choisie ; pas de pastille ni de verre fumé.
 2. Aucun formulaire de carte bancaire sur le site : le bouton de don ouvre la page sécurisée du prestataire. Un simple lien ne demande ni code de paiement ni changement d'en-têtes.
 3. Le montant récolté est tenu à la main par Romain avec « Editar » (un élément de page). Un compteur automatique seulement plus tard, avec un contrôle de sécurité.
-4. La page dit dès le départ : l'objectif (fixé après un devis), ce qui se passe s'il est dépassé ou pas atteint, le devis puis la facture publiés (Romain : « je mettrai le justificatif » ; coordonnées personnelles de l'illustrateur ou de l'illustratrice masquées s'il ou elle le demande).
+4. La page dit dès le départ : l'objectif (fixé après un devis), ce qui se passe s'il est dépassé ou pas atteint. Elle montre l'argent récolté, l'argent dépensé poste par poste et le nom des artistes ; **pas de facture publiée** (Romain, 06-11 vers 23 h : « je vais pas mettre la facture, c'est ridicule », il veut que l'on voie « le montant qu'il y a », « le montant qui a été dépensé pour le design », « les postes de dépenses » et « qui sont les artistes qui ont été mobilisés »).
 5. Écriture inclusive ; texte factuel, pas d'accroche dans la voix de Romain.
 
 ## Deux voies pour l'argent : B choisie
@@ -60,4 +60,4 @@ Sources : mollie.com/products/payment-links ; help.mollie.com, articles 11500063
 ## Suite
 1. Romain : relire l'occitan de la mention et de `/illustracions` (les textes n'y sont pas encore modifiables avec Editar : dire les corrections) ; ouvrir le compte Mollie au nom de la micro-entreprise (SIRET, pièce d'identité, IBAN, de préférence celui du compte professionnel), en décrivant l'activité telle qu'elle est ; vérifier les tarifs.
 2. Avant d'ouvrir la cagnotte : mentions légales et activité de la micro-entreprise élargie (PILOTATGE, « Avant le lancement ») ; traitement des dons confirmé auprès de l'Urssaf ou du service des impôts des entreprises ; illustrateur ou illustratrice choisi, devis obtenu ; objectif fixé, et la règle s'il est dépassé ou pas atteint.
-3. Puis (Claude ou Mistral) : le lien de paiement Mollie à montant libre sur `/illustracions`, le montant reçu tenu par Romain avec Editar, le devis puis la facture publiés.
+3. Puis (Claude ou Mistral) : le lien de paiement Mollie à montant libre sur `/illustracions`, un encart des comptes (récolté, dépensé, une ligne par poste de dépense, les artistes) tenu par Romain avec Editar.

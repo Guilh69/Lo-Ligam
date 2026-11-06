@@ -3,9 +3,10 @@
 	// « facha per l'IA » posée sur les illustrations faites par IA. Elle dit
 	// pourquoi (le projet a commencé sans budget) et annonce la cagnotte qui
 	// paiera un illustrateur ou une illustratrice. Rien n'est promis ici que
-	// Romain n'ait dit : l'argent sert uniquement à ça, le devis puis la facture
-	// sont publiés ici. Quand la cagnotte ouvrira : objectif (après un devis),
-	// montant reçu modifiable avec « Editar », règles si l'objectif est dépassé
+	// Romain n'ait dit : l'argent sert uniquement à ça ; la page montrera l'argent
+	// récolté, l'argent dépensé poste par poste et les artistes (pas de facture :
+	// Romain, 06-11). Quand la cagnotte ouvrira : objectif (après un devis),
+	// montants modifiables avec « Editar », règles si l'objectif est dépassé
 	// ou pas atteint, bouton vers la page du service de paiement (jamais de
 	// formulaire de carte bancaire sur le site). Fiche :
 	// revisions/2026-11-06-illustrations-ia-cagnotte.md
@@ -42,12 +43,14 @@
 			ar: 'سيُخصَّص هذا المال لهذا الغرض فقط.'
 		},
 		p4: {
-			oc: 'Aquí se publicarà lo prètzfach, puèi la factura.',
-			fr: 'Le devis, puis la facture, seront publiés ici.',
-			es: 'Aquí se publicarán el presupuesto y, después, la factura.',
-			en: 'The quote, then the invoice, will be published here.',
-			ca: 'Aquí es publicaran el pressupost i, després, la factura.',
-			ar: 'سننشر هنا عرض السعر، ثم الفاتورة.'
+			// pas de facture publiée (Romain, 06-11 : « c'est ridicule ») : les montants,
+			// les postes de dépense et les artistes
+			oc: 'Aquí veiràs l’argent amassat, l’argent despensat, despensa per despensa, e lo nom de las personas que i an trabalhat.',
+			fr: 'Ici, tu verras l’argent récolté, l’argent dépensé, poste par poste, et le nom des artistes qui y ont travaillé.',
+			es: 'Aquí verás el dinero recaudado, el dinero gastado, partida por partida, y el nombre de quienes han trabajado en ello.',
+			en: 'Here you’ll see the money raised, the money spent, item by item, and the names of the artists who worked on it.',
+			ca: 'Aquí veuràs els diners recollits, els diners gastats, partida per partida, i el nom de qui hi ha treballat.',
+			ar: 'ستجد هنا المبلغ الذي جُمع، والمبلغ الذي أُنفق بندًا بندًا، وأسماء الفنانين الذين عملوا عليه.'
 		},
 		p5: {
 			oc: 'La canhòta es pas encara dobèrta.',
