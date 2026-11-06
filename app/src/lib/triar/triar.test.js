@@ -65,3 +65,18 @@ describe('triar : les lots', () => {
 		}
 	});
 });
+
+describe('triar : les décisions', () => {
+	it('chaque carte a une clé unique et courte, un titre, un texte et pas de tiret long', () => {
+		const lot = LOTS.find((l) => l.id === 'decisions');
+		expect(LOTS[0]).toBe(lot); // la page s'ouvre sur les décisions
+		const els = lot.elements();
+		expect(new Set(els.map((el) => el.clau)).size).toBe(els.length);
+		for (const el of els) {
+			expect(el.clau.length, el.clau).toBeLessThanOrEqual(40);
+			expect(el.titol.length, el.clau).toBeGreaterThan(10);
+			expect(el.decision.tèxte.length, el.clau).toBeGreaterThan(10);
+			expect(el.titol + el.decision.tèxte + el.decision.avís, el.clau).not.toMatch(/[—–]/);
+		}
+	});
+});
