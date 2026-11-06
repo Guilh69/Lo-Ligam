@@ -95,7 +95,44 @@ export const MOTS = {
 	'la colomna': 'la colonne',
 	'la fusta': 'le bois',
 	'la plaça': 'la place',
-	'lo puèg': 'la colline'
+	'lo puèg': 'la colline',
+	// 06-11, lot 3 (a taula, lo temps) : lo Congrès (asperge → espargue, poulet → polet, champignon → camparòl, jambon → cambajon, crevette → cambaròta, crêpe → pescajon, saucisse → salsissa, pichet → pichièr, poivron → pebròt, rambarde → baranda), genre d'après lo Basic
+	'l’espargue': 'l’asperge',
+	'la carchòfa': 'l’artichaut',
+	'la caissa': 'la caisse, la cagette',
+	'lo pescajon': 'la crêpe',
+	'la salsissa': 'la saucisse',
+	'l’uòu': 'l’œuf',
+	'la salada': 'la salade',
+	'l’oliva': 'l’olive',
+	'l’etiqueta': 'l’étiquette',
+	'lo prètz': 'le prix',
+	'lo polet': 'le poulet',
+	'la sieta': 'l’assiette',
+	'lo pichièr': 'le pichet, la cruche',
+	'lo camparòl': 'le champignon',
+	'la taula': 'la table',
+	'lo vin': 'le vin',
+	'lo cambajon': 'le jambon',
+	'lo pan': 'le pain',
+	'lo pebròt': 'le poivron',
+	'la botelha': 'la bouteille',
+	'la frita': 'la frite',
+	'lo veire': 'le verre',
+	'la pera': 'la poire',
+	'l’amètla': 'l’amande',
+	'la tarta': 'la tarte',
+	'lo ris': 'le riz',
+	'la cambaròta': 'la crevette',
+	'lo fum': 'la fumée',
+	'la grasilha': 'le gril',
+	'la veitura': 'la voiture',
+	'lo parapluèja': 'le parapluie',
+	'la font': 'la fontaine',
+	'la fuèlha': 'la feuille',
+	'lo flume': 'le fleuve',
+	'lo solelh': 'le soleil',
+	'la baranda': 'la rambarde'
 };
 
 export const PAISATGES = [
@@ -817,6 +854,300 @@ export const PAISATGES = [
 			['la catedrala', 0.18, 0.45],
 			['la plaça', 0.7, 0.82]
 		]
+	},
+	// ── Lot 3 des thèmes : a taula, lo temps que fa (06-11) ──
+	{
+		clau: 'taula-espargue',
+		tema: 'taula',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Un étal de marché : des bottes d’asperges violettes, vertes et blanches dans des cagettes de bois, des artichauts à gauche, des haricots verts.',
+		mots: [
+			['l’espargue', 0.33, 0.42],
+			['la carchòfa', 0.06, 0.58],
+			['la caissa', 0.55, 0.77]
+		]
+	},
+	{
+		clau: 'taula-pescajon',
+		tema: 'taula',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une galette de sarrasin garnie de rondelles de saucisse et d’un œuf, une petite salade dans un bol de métal, une bouteille verte.',
+		mots: [
+			['lo pescajon', 0.15, 0.7],
+			['la salsissa', 0.33, 0.6],
+			['l’uòu', 0.6, 0.49],
+			['la salada', 0.2, 0.35]
+		]
+	},
+	{
+		clau: 'taula-oliva',
+		tema: 'taula',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Au marché, des bassines d’olives vertes, noires et violettes, chacune avec son étiquette et son prix.',
+		mots: [
+			['l’oliva', 0.46, 0.43],
+			['l’etiqueta', 0.28, 0.51],
+			['lo prètz', 0.09, 0.8]
+		]
+	},
+	{
+		clau: 'taula-polet',
+		tema: 'taula',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une table vue d’en haut : un poulet rôti aux pommes de terre dans un plat, une salade d’endives, un bol d’olives, des assiettes blanches, une cruche de terre.',
+		mots: [
+			['lo polet', 0.44, 0.59],
+			['l’oliva', 0.24, 0.8],
+			['la sieta', 0.8, 0.69],
+			['la salada', 0.34, 0.24],
+			['lo pichièr', 0.07, 0.28]
+		]
+	},
+	{
+		clau: 'taula-camparol',
+		tema: 'taula',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une galette de céréales garnie de champignons et de jeunes pousses, un filet de sauce brune autour, dans une assiette ronde sur une table de granito.',
+		mots: [
+			['lo camparòl', 0.4, 0.33],
+			['la sieta', 0.83, 0.65],
+			['la taula', 0.05, 0.9]
+		]
+	},
+	{
+		clau: 'taula-vin',
+		tema: 'taula',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1113,
+		alt: 'Une main verse du vin rouge dans un verre ; sur la table, une assiette de jambon cru en fines tranches, des tartines grillées et des poivrons rouges.',
+		mots: [
+			['lo vin', 0.26, 0.489],
+			['lo cambajon', 0.42, 0.638],
+			['lo pan', 0.7, 0.489],
+			['lo pebròt', 0.6, 0.819],
+			['la botelha', 0.4, 0.17]
+		]
+	},
+	{
+		clau: 'taula-frita',
+		tema: 'taula',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une assiette de frites, une salade aux carottes râpées et un chausson doré, sur une table de bois en terrasse ; des verres et une bouteille verte.',
+		mots: [
+			['la frita', 0.45, 0.62],
+			['la salada', 0.66, 0.42],
+			['lo veire', 0.44, 0.17],
+			['la botelha', 0.06, 0.3],
+			['la taula', 0.19, 0.86]
+		]
+	},
+	{
+		clau: 'taula-pera',
+		tema: 'taula',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une tarte aux poires et aux amandes effilées dans un plat noir, au soleil ; un verre de vin blanc, une main qui coupe la première part.',
+		mots: [
+			['la pera', 0.52, 0.62],
+			['l’amètla', 0.31, 0.5],
+			['la tarta', 0.38, 0.76],
+			['lo veire', 0.06, 0.45]
+		]
+	},
+	{
+		clau: 'taula-cambajon',
+		tema: 'taula',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une assiette de jambon cru en fines tranches et des tartines frottées de tomate, sur une table de bois sombre.',
+		mots: [
+			['lo cambajon', 0.35, 0.59],
+			['lo pan', 0.65, 0.26],
+			['la sieta', 0.79, 0.4],
+			['la taula', 0.85, 0.75]
+		]
+	},
+	{
+		clau: 'taula-ris',
+		tema: 'taula',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une paella dans sa grande poêle noire : du riz doré, des crevettes, des palourdes, de la vapeur qui monte.',
+		mots: [
+			['lo ris', 0.3, 0.88],
+			['la cambaròta', 0.77, 0.51],
+			['lo fum', 0.4, 0.18]
+		]
+	},
+	{
+		clau: 'taula-grasilha',
+		tema: 'taula',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une grillade dans un jardin : un petit barbecue fume sur un muret de parpaings, des assiettes posées à côté, des arbres derrière.',
+		mots: [
+			['lo fum', 0.51, 0.2],
+			['la grasilha', 0.5, 0.54],
+			['la botelha', 0.61, 0.66],
+			['l’arbre', 0.15, 0.13],
+			['la paret', 0.54, 0.87]
+		]
+	},
+	{
+		clau: 'temps-neu',
+		tema: 'temps',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une avenue sous la neige : des platanes nus, des voitures blanchies, un tapis de neige épais au milieu.',
+		mots: [
+			['la nèu', 0.5, 0.8],
+			['l’arbre', 0.3, 0.3],
+			['la veitura', 0.9, 0.58],
+			['lo fanal', 0.2, 0.56]
+		]
+	},
+	{
+		clau: 'temps-parapluja',
+		tema: 'temps',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une rue de ville sous la neige qui tombe : de hauts immeubles de pierre à balcons, un passant sous un parapluie jaune, un scooter enneigé.',
+		mots: [
+			['lo parapluèja', 0.56, 0.575],
+			['lo balcon', 0.88, 0.3],
+			['la nèu', 0.38, 0.7]
+		]
+	},
+	{
+		clau: 'temps-font',
+		tema: 'temps',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Une fontaine à statues couverte de neige au milieu d’une place, entre des façades de pierre blonde.',
+		mots: [
+			['la font', 0.47, 0.65],
+			['l’estatua', 0.48, 0.29],
+			['la nèu', 0.4, 0.86],
+			['la fenèstra', 0.07, 0.18]
+		]
+	},
+	{
+		clau: 'temps-fuelha',
+		tema: 'temps',
+		amples: [800, 1280],
+		l: 1280,
+		h: 1707,
+		alt: 'Un grand arbre d’automne aux feuilles dorées devant un immeuble de pierre ; ses feuilles couvrent le sol.',
+		mots: [
+			['la fuèlha', 0.5, 0.88],
+			['l’arbre', 0.36, 0.5],
+			['la veitura', 0.14, 0.77]
+		]
+	},
+	{
+		clau: 'temps-flume',
+		tema: 'temps',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Un ciel rose de fin de journée au-dessus d’un grand fleuve ; en face, les quais d’une ville et deux clochers pointus, une branche nue à droite.',
+		mots: [
+			['la nívol', 0.4, 0.3],
+			['lo flume', 0.4, 0.72],
+			['lo cloquièr', 0.53, 0.58],
+			['l’arbre', 0.88, 0.45],
+			['l’èrba', 0.3, 0.9]
+		]
+	},
+	{
+		clau: 'temps-cel',
+		tema: 'temps',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Un coucher de soleil rouge et orange : de longues traînées de nuages enflammés, la silhouette noire des collines et d’un arbre.',
+		mots: [
+			['la nívol', 0.5, 0.38],
+			['lo cèl', 0.2, 0.12],
+			['l’arbre', 0.88, 0.1],
+			['lo puèg', 0.7, 0.9]
+		]
+	},
+	{
+		clau: 'temps-garriga',
+		tema: 'temps',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Le soir au-dessus de la garrigue : un ciel bleu et rose, des collines vertes, un chemin clair, des toits blancs au premier plan.',
+		mots: [
+			['la nívol', 0.41, 0.34],
+			['lo cèl', 0.6, 0.1],
+			['la garriga', 0.45, 0.6],
+			['lo camin', 0.87, 0.71]
+		]
+	},
+	{
+		clau: 'temps-solelh',
+		tema: 'temps',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Le soleil se couche sur la mer derrière une haute falaise ; l’eau est lisse, le ciel passe du jaune au bleu.',
+		mots: [
+			['lo solelh', 0.5, 0.47],
+			['la mar', 0.75, 0.75],
+			['la pena', 0.21, 0.54],
+			['lo cèl', 0.5, 0.12]
+		]
+	},
+	{
+		clau: 'temps-fenestra',
+		tema: 'temps',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Par une fenêtre ouverte dans un mur épais, la brume efface tout : on devine à peine une montagne derrière.',
+		mots: [
+			['la bruma', 0.55, 0.4],
+			['la paret', 0.1, 0.45],
+			['la baranda', 0.5, 0.94]
+		]
+	},
+	{
+		clau: 'temps-bruma',
+		tema: 'temps',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Une ruelle de village pavée dans la brume, entre de hauts murs de pierre ; au bout, un clocher à peine visible.',
+		mots: [
+			['la bruma', 0.45, 0.09],
+			['lo cloquièr', 0.52, 0.34],
+			['la carrièra', 0.45, 0.8],
+			['la paret', 0.25, 0.5],
+			['la fenèstra', 0.74, 0.43]
+		]
 	}
 ];
 
@@ -827,7 +1158,9 @@ export const TEMAS = [
 	{ id: 'mar', nom: { oc: 'La mar', fr: 'La mer', es: 'El mar', en: 'The sea', ca: 'El mar', ar: 'البحر' } },
 	{ id: 'montanha', nom: { oc: 'La montanha', fr: 'La montagne', es: 'La montaña', en: 'The mountains', ca: 'La muntanya', ar: 'الجبل' } },
 	{ id: 'vila', nom: { oc: 'La vila', fr: 'La ville', es: 'La ciudad', en: 'The town', ca: 'La ciutat', ar: 'المدينة' } },
-	{ id: 'monuments', nom: { oc: 'Los monuments', fr: 'Les monuments', es: 'Los monumentos', en: 'Landmarks', ca: 'Els monuments', ar: 'المعالم' } }
+	{ id: 'monuments', nom: { oc: 'Los monuments', fr: 'Les monuments', es: 'Los monumentos', en: 'Landmarks', ca: 'Els monuments', ar: 'المعالم' } },
+	{ id: 'taula', nom: { oc: 'A taula', fr: 'À table', es: 'A la mesa', en: 'At the table', ca: 'A taula', ar: 'على المائدة' } },
+	{ id: 'temps', nom: { oc: 'Lo temps que fa', fr: 'Le temps qu’il fait', es: 'El tiempo', en: 'The weather', ca: 'El temps', ar: 'الطقس' } }
 ];
 
 /** Les paysages d'un thème (tous, sans thème). */
