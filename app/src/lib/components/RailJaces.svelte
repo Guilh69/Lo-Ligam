@@ -1316,7 +1316,7 @@
 			{#each familhaDe(banda)?.jaces ?? [] as j (j.id)}
 				<button
 					type="button"
-					class="chip"
+					class="pc pc-2 pc-chip chip"
 					data-jaca={j.id}
 					class:on={actiu(j) && visibility[j.id]}
 					class:fora={actiu(j) && visibility[j.id] && foraEscala(j)}
@@ -1329,7 +1329,7 @@
 					{#if j.icona}<span class="chip-ponch" style:--ponch="var(--t-{j.color ?? 'aur'})" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{@html ICONAS[j.icona]}</svg></span>{:else}<span class="chip-ap"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>{/if}{nomJ(j)}{#if estatCarta.activa === j.id && visibility[j.id]}<span class="sr"> ({tx.jaçaActiva})</span>{/if}
 				</button>
 			{/each}
-			<button type="button" class="chip mai" aria-label={tx.totDetalh} title={tx.totDetalh} aria-expanded={dobert === banda} aria-controls="tirador-jaces" onclick={() => alternar(banda)}>⋯</button>
+			<button type="button" class="pc pc-2 pc-chip chip mai" aria-label={tx.totDetalh} title={tx.totDetalh} aria-expanded={dobert === banda} aria-controls="tirador-jaces" onclick={() => alternar(banda)}>⋯</button>
 		</div>
 	{:else}
 	{#each RAIL as id (id)}
@@ -1388,24 +1388,24 @@
 		></button>
 		<header>
 			<h2>{nomFam(dobert)}</h2>
-			<button type="button" class="tampar" onclick={tamparTirador} aria-label={tx.tampar}><Icona nom="fermer" size="1.25em" /></button>
+			<button type="button" class="pc pc-2 pc-icone tampar" onclick={tamparTirador} aria-label={tx.tampar}><Icona nom="fermer" size="1.25em" /></button>
 		</header>
 
 		{#if dobert === 'sus'}
 			<p class="sota">{tx.afichadas(afichadas.length)} · {tx.fonsCarta.toLowerCase()}{tx.dp ?? ' :'} {tx.basemaps[baseLayer] ?? baseLayer}</p>
 			<div class="botons botons-sus">
-				<button type="button" class="boton" onclick={anullar} disabled={!istoric.length} title={tx.anullarTitol}>
+				<button type="button" class="pc pc-2 boton" onclick={anullar} disabled={!istoric.length} title={tx.anullarTitol}>
 					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
 					{tx.anullar}
 				</button>
-				<button type="button" class="boton" onclick={netejar} disabled={!afichadas.length} title={tx.netejarTitol}>{tx.netejar}</button>
+				<button type="button" class="pc pc-2 boton" onclick={netejar} disabled={!afichadas.length} title={tx.netejarTitol}>{tx.netejar}</button>
 			</div>
 			{#if !afichadas.length}
 				<p class="res">{tx.res}</p>
 			{/if}
 			<!-- la lenga occitana levada (« Netejar la carta ») : la tornar d'un clic -->
 			{#if !visibility.dialectes && !visibility.unificat}
-				<button type="button" class="boton boton-oc" onclick={afichatOccitan}>{tx.afichatOc}</button>
+				<button type="button" class="pc boton boton-oc" onclick={afichatOccitan}>{tx.afichatOc}</button>
 			{/if}
 			<!-- la legenda de sa carta, rengada per tematica (demanda de Romain, 2026-10-09) -->
 			{#each familhas.filter((f) => f.jaces.some((j) => afichadas.includes(j))) as f (f.id)}
@@ -1456,11 +1456,11 @@
 				</div>
 			{/each}
 			<div class="botons">
-				<button type="button" class="boton" onclick={sonqueContorns}>{tx.sonqueContorns}</button>
-				<button type="button" class="boton" onclick={totTornar}>{tx.totTornar}</button>
-				<button type="button" class="boton" aria-pressed={sons} onclick={alternarSons}>{tx.sons(sons)}</button>
+				<button type="button" class="pc pc-2 boton" onclick={sonqueContorns}>{tx.sonqueContorns}</button>
+				<button type="button" class="pc pc-2 boton" onclick={totTornar}>{tx.totTornar}</button>
+				<button type="button" class="pc pc-2 boton" aria-pressed={sons} onclick={alternarSons}>{tx.sons(sons)}</button>
 				{#if Object.keys(colors).length}
-					<button type="button" class="boton" onclick={() => (colors = {})}>{tx.colorsTema}</button>
+					<button type="button" class="pc pc-2 boton" onclick={() => (colors = {})}>{tx.colorsTema}</button>
 				{/if}
 			</div>
 		{:else}
@@ -2083,21 +2083,26 @@
 	.banda-jaces::-webkit-scrollbar {
 		display: none;
 	}
+	/* la pastille choisie passe à l'or (lib/styles/papier.css) */
+	.chip.on,
+	.chip.activa {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
+	}
+
 	.chip {
+		--r: 10px;
+		min-height: 0;
 		flex: 0 0 auto;
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
 		height: 36px;
 		padding: 0 12px 0 5px;
-		border: 1px solid var(--t-linha);
-		border-radius: 18px;
-		background: none;
-		color: var(--t-tinta);
 		font: 700 0.8125rem/1 var(--font-body);
 		white-space: nowrap;
-		cursor: pointer;
 	}
+
 	.chip-ap {
 		display: block;
 		width: 26px;
@@ -2124,15 +2129,7 @@
 		border: 1.2px solid var(--ponch);
 		color: var(--ponch);
 	}
-	.chip.on {
-		border-color: var(--t-aur);
-		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
-		color: var(--t-aur-clar);
-	}
 	/* la couche active (téléphone) : plus remplie, un point doré */
-	.chip.activa {
-		background: color-mix(in srgb, var(--t-aur) 30%, transparent);
-	}
 	.chip.activa::after {
 		content: '';
 		width: 6px;
@@ -2141,19 +2138,6 @@
 		background: var(--t-aur);
 	}
 	/* alucada mas pas vesibla a aquesta escala */
-	.chip.fora {
-		border-style: dashed;
-	}
-	.chip:disabled {
-		opacity: 0.4;
-		cursor: default;
-	}
-	.chip.mai {
-		padding: 0 14px;
-		font-size: 1.1rem;
-		letter-spacing: 1px;
-	}
-
 	/* l'ansa de la fuèlha : pas qu'al telefòn */
 	.ansa {
 		display: none;
@@ -2192,22 +2176,16 @@
 		font: 700 1.125rem/1.25 var(--font-body);
 	}
 	.tampar {
+		--r: 10px;
+		min-height: 0;
 		display: grid;
 		place-items: center;
 		width: 2rem;
 		height: 2rem;
 		padding: 0;
-		border: 1px solid var(--t-linha);
-		border-radius: 50%;
-		background: none;
-		color: var(--t-tinta-2);
 		font-size: 1.1rem;
-		cursor: pointer;
 	}
-	.tampar:hover {
-		color: var(--t-tinta);
-		border-color: var(--t-accion);
-	}
+
 	.sota {
 		margin: 4px 0 12px;
 		font-size: 0.8125rem;
@@ -2942,17 +2920,18 @@
 		margin: 0 0 0.4rem;
 	}
 	.boton {
+		--r: 10px;
+		min-height: 0;
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
+		padding: 6px 12px;
+		font: 700 0.8125rem/1.2 var(--font-body);
 	}
+
 	.boton svg {
 		width: 15px;
 		height: 15px;
-	}
-	.boton:disabled {
-		opacity: 0.4;
-		cursor: default;
 	}
 	/* « Afichar l'occitan » : en aur, pus visible que los autres */
 	.boton-oc {
@@ -2965,19 +2944,6 @@
 		flex-wrap: wrap;
 		gap: 6px;
 		margin-top: 0.8rem;
-	}
-	.boton {
-		padding: 6px 12px;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: none;
-		color: var(--t-tinta);
-		font: 700 0.8125rem/1.2 var(--font-body);
-		cursor: pointer;
-	}
-	.boton:hover {
-		border-color: var(--t-accion);
-		color: var(--t-tinta);
 	}
 	.admin {
 		display: block;

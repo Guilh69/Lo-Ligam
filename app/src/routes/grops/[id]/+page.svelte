@@ -446,12 +446,12 @@
 			</p>
 		</div>
 		{#if membre}
-			<button type="button" class="accion" onclick={convidar}>
+			<button type="button" class="pc pc-2 accion" onclick={convidar}>
 				<Icona nom={copiat ? 'valide' : 'partejar'} />
 				<span>{copiat ? x.copiat : x.convidar}</span>
 			</button>
 			<span class="vist" role="status">{copiat ? x.copiat : ''}</span>
-			<button type="button" class="accion" onclick={quitarGrop}><Icona nom="quitar" /><span>{x.quitar}</span></button>
+			<button type="button" class="pc pc-2 accion" onclick={quitarGrop}><Icona nom="quitar" /><span>{x.quitar}</span></button>
 		{/if}
 	</header>
 
@@ -460,7 +460,7 @@
 			<Tèxte clau="grops.acuelh" class="nota" />
 			{#if benvenguda}<Tèxte clau="grops.pseudo" class="nota" />{/if}
 			{#if cargat && !totCargat}
-				<button type="button" class="ancians" onclick={ancians}>{x.ancians}</button>
+				<button type="button" class="pc pc-2 ancians" onclick={ancians}>{x.ancians}</button>
 			{/if}
 			{#if cargat && !messatges.length}<p class="vuèg">{x.vuèg}</p>{/if}
 			<ol>
@@ -522,7 +522,7 @@
 					placeholder={x.camp}
 					onkeydown={tecla}
 				></textarea>
-				<button type="submit" class="mandar" disabled={mandant || !tèxte.trim()}>
+				<button type="submit" class="pc mandar" disabled={mandant || !tèxte.trim()}>
 					<Icona nom="mandar" size="1.3em" label={x.mandar} />
 				</button>
 			</form>
@@ -536,10 +536,10 @@
 			{#if grop.estat === 'prepausat'}<p class="nota">{x.prepausat}</p>{/if}
 			{#if !grops.uid}
 				<Tèxte clau="grops.compte" class="nota" />
-				<a class="boton" href="/compte?tornar={encodeURIComponent(page.url.pathname)}">{x.connectar}</a>
+				<a class="pc boton" href="/compte?tornar={encodeURIComponent(page.url.pathname)}">{x.connectar}</a>
 			{:else if grop.estat !== 'tampat'}
 				<Tèxte clau="grops.pseudo" class="nota" />
-				<button type="button" class="boton" disabled={rejonhent} onclick={rejónher}>
+				<button type="button" class="pc boton" disabled={rejonhent} onclick={rejónher}>
 					{rejonhent ? '…' : grop.estat === 'dobèrt' ? x.rejonher : x.dobrir}
 				</button>
 			{:else}
@@ -556,7 +556,7 @@
 		{#if senhalat}<blockquote>{senhalat.tèxte}</blockquote>{/if}
 		{#if mercé}
 			<p class="mercé" role="status">{x.mercé}</p>
-			<div class="botons"><button type="button" class="boton" onclick={() => dialòg.close()}>{x.tampar}</button></div>
+			<div class="botons"><button type="button" class="pc boton" onclick={() => dialòg.close()}>{x.tampar}</button></div>
 		{:else}
 			<fieldset>
 				<legend>{x.motiu}</legend>
@@ -570,8 +570,8 @@
 			</label>
 			{#if senhalError}<p class="error" role="alert">{x[senhalError]}</p>{/if}
 			<div class="botons">
-				<button type="button" class="secondari" onclick={() => dialòg.close()}>{x.anullar}</button>
-				<button type="submit" class="boton" disabled={!motiu}>{x.senhalar}</button>
+				<button type="button" class="pc pc-2 secondari" onclick={() => dialòg.close()}>{x.anullar}</button>
+				<button type="submit" class="pc boton" disabled={!motiu}>{x.senhalar}</button>
 			</div>
 		{/if}
 	</form>
@@ -622,22 +622,15 @@
 	/* actions secondaires : un contour, l'icône et son nom écrit */
 	.accion,
 	.secondari {
+		--r: 10px;
 		display: inline-flex;
 		align-items: center;
 		gap: var(--esp-8);
 		min-height: 40px;
 		padding: 0.4rem 0.9rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: transparent;
-		color: var(--t-tinta);
 		font: 400 0.9rem var(--font-body);
-		cursor: pointer;
 	}
-	.accion:hover,
-	.secondari:hover {
-		border-color: var(--t-aur);
-	}
+
 
 	/* Le fil : défile seul, les nouveaux messages en bas */
 	.log {
@@ -657,17 +650,15 @@
 		color: var(--t-tinta-2);
 	}
 	.ancians {
+		--r: 10px;
+		min-height: 0;
 		display: block;
 		margin: var(--esp-8) auto var(--esp-16);
 		padding: 0.4rem 0.9rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: transparent;
-		color: var(--t-tinta);
 		font: inherit;
 		font-size: 0.85rem;
-		cursor: pointer;
 	}
+
 	.vuèg {
 		margin: var(--esp-32) 0;
 		text-align: center;
@@ -817,24 +808,14 @@
 		resize: none;
 	}
 	.mandar {
+		--r: 14px;
+		min-height: 0;
 		display: grid;
 		place-items: center;
 		width: 44px;
 		height: 44px;
-		border: 0;
-		border-radius: 50%;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		cursor: pointer;
-		transition: background-color 0.25s;
 	}
-	.mandar:hover {
-		background: var(--t-accion-viu);
-	}
-	.mandar:disabled {
-		opacity: 0.45;
-		cursor: default;
-	}
+
 	.pè-tampat {
 		margin: 0;
 		padding: var(--esp-16);
@@ -866,26 +847,14 @@
 		color: var(--t-tinta-2);
 	}
 	.boton {
+		--r: 10px;
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;
 		padding: 0.6rem 1.3rem;
-		border: 0;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: 700 1rem/1 var(--font-body);
-		text-decoration: none;
-		cursor: pointer;
-		transition: background-color 0.25s;
 	}
-	.boton:hover {
-		background: var(--t-accion-viu);
-	}
-	.boton:disabled {
-		opacity: 0.6;
-		cursor: default;
-	}
+
 	.error {
 		margin: 0;
 		padding-left: var(--esp-12);

@@ -164,7 +164,7 @@
 						{#if mevas.has(g.id)}
 							<a class="ton" href="/grops/{g.id}">{x.ton}</a>
 						{:else}
-							<button type="button" class="boton" disabled={en_cors === g.id} onclick={() => rejónher(g.id)}>
+							<button type="button" class="pc boton" disabled={en_cors === g.id} onclick={() => rejónher(g.id)}>
 								{en_cors === g.id ? '…' : g.estat === 'dobèrt' ? x.rejonher : x.dobrir}
 							</button>
 						{/if}
@@ -288,23 +288,12 @@
 		color: var(--t-tinta-2);
 	}
 	.boton {
+		--r: 10px;
 		min-height: 40px;
 		padding: 0.5rem 1.1rem;
-		border: 0;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: 700 0.95rem/1 var(--font-body);
-		cursor: pointer;
-		transition: background-color 0.25s;
 	}
-	.boton:hover {
-		background: var(--t-accion-viu);
-	}
-	.boton:disabled {
-		opacity: 0.6;
-		cursor: wait;
-	}
+
 	.ton {
 		padding: 0.5rem 0.2rem;
 		color: var(--t-aur);

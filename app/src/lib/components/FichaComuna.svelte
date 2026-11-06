@@ -342,7 +342,7 @@
 {#if comuna}
 	<div class="ficha-comuna" transition:fly={{ y: 16, duration: 260 }}>
 		<section class="cara" class:amb-emblemas={lenguasTèxt.length > 1} class:cascada aria-label={nom} bind:this={cara}>
-			<button type="button" class="tampar" aria-label={t.tampar} onclick={() => onTampar?.()}><Icona nom="fermer" size="1.25em" /></button>
+			<button type="button" class="pc pc-2 pc-icone tampar" aria-label={t.tampar} onclick={() => onTampar?.()}><Icona nom="fermer" size="1.25em" /></button>
 			<div class="cap">
 				{#if dades?.fòto}
 					<div class="vinheta">
@@ -358,7 +358,7 @@
 					{#if gentilici}<p class="gentilici" style:--i="2">{t.gentilici}{t.dp} {gentilici}</p>{/if}
 					{#if cargant}<p class="cargant" aria-hidden="true">…</p>{/if}
 					{#if dades && (lenguasTèxt.length || fichaSite)}
-						<button type="button" class="desplegar" style:--i="3" aria-expanded={dobèrta} onclick={() => (dobèrta = !dobèrta)}
+						<button type="button" class="pc pc-2 desplegar" style:--i="3" aria-expanded={dobèrta} onclick={() => (dobèrta = !dobèrta)}
 							>{dobèrta ? t.plegar : t.legirMai}<span class="chev" aria-hidden="true">▾</span></button
 						>
 					{/if}
@@ -424,18 +424,16 @@
 		color: var(--t-tinta);
 	}
 	.tampar {
+		--r: 10px;
+		min-height: 0;
 		position: absolute;
 		top: 8px;
 		right: 8px;
 		width: 30px;
 		height: 30px;
-		border: 1px solid var(--t-linha);
-		border-radius: 50%;
-		background: none;
-		color: var(--t-tinta-2);
 		font-size: 1.1rem;
-		cursor: pointer;
 	}
+
 	/* la fòto, lo nom e sas chifras, lo tria de la lenga a drecha (que passa
 	   dejós quand la ficha es estrecha) */
 	/* los emblèmas de las lengas, pausats sul canton naut a esquèrra, un pauc
@@ -554,15 +552,13 @@
 		color: var(--t-tinta); text-decoration: underline; text-decoration-color: var(--t-accion); text-decoration-thickness: 2px; text-underline-offset: 0.2em;
 	}
 	.desplegar {
+		--r: 10px;
+		min-height: 0;
 		margin-top: 8px;
 		padding: 4px 10px 4px 12px;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: none;
-		color: var(--t-tinta); border-color: var(--t-accion);
 		font: 600 0.8125rem/1.2 var(--font-body);
-		cursor: pointer;
 	}
+
 	.desplegar .chev {
 		display: inline-block;
 		margin-inline-start: 6px;

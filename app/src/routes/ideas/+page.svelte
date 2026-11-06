@@ -182,7 +182,7 @@
 			<p class="cargament">…</p>
 		{:else if !$session}
 			<p class="compte" hidden={amagat('ideas.compte')} use:editar={'ideas.compte'}>{@render t('ideas.compte')}</p>
-			<a class="boton" href="/compte?tornar=/ideas">{x.connectar}</a>
+			<a class="pc boton" href="/compte?tornar=/ideas">{x.connectar}</a>
 		{:else}
 			<form onsubmit={mandar}>
 				<label class="camp">
@@ -197,7 +197,7 @@
 					></textarea>
 				</label>
 				<div class="accions">
-					<button type="submit" class="boton" disabled={mandant}>{mandant ? '…' : x.mandar}</button>
+					<button type="submit" class="pc boton" disabled={mandant}>{mandant ? '…' : x.mandar}</button>
 					<span id="ideas-comptador" class="comptador">{tèxte.length} / {MAX}</span>
 				</div>
 				{#if error}<p class="error" role="alert">{x[error]}</p>{/if}
@@ -219,7 +219,7 @@
 						<div class="linha">
 							<span class="estat estat-{i.estat}">{x.estats[i.estat]}</span>
 							<time datetime={i.created_at}>{data_(i.created_at)}</time>
-							<button type="button" class="suprimir" onclick={() => suprimir(i.id)}>{x.suprimir}</button>
+							<button type="button" class="pc pc-2 suprimir" onclick={() => suprimir(i.id)}>{x.suprimir}</button>
 						</div>
 						<p class="tèxte">{i.tèxte}</p>
 						{#if i.responsa}
@@ -334,26 +334,14 @@
 	}
 	/* ce qui se clique : une tuile du rouge du logo (règle B, 23-10) */
 	.boton {
+		--r: 10px;
 		display: inline-flex;
 		align-items: center;
 		min-height: 48px;
 		padding: 0.8rem 1.6rem;
-		border: 0;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: 700 1rem/1 var(--font-body);
-		text-decoration: none;
-		cursor: pointer;
-		transition: background-color 0.25s;
 	}
-	.boton:hover {
-		background: var(--t-accion-viu);
-	}
-	.boton:disabled {
-		opacity: 0.6;
-		cursor: wait;
-	}
+
 	.comptador {
 		font-size: 0.85rem;
 		color: var(--t-tinta-2);
@@ -424,19 +412,13 @@
 		color: var(--t-aur);
 	}
 	.suprimir {
+		--r: 10px;
 		margin-left: auto;
 		min-height: 32px;
 		padding: 0.3rem 0.8rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: transparent;
-		color: var(--t-tinta);
 		font: inherit;
-		cursor: pointer;
 	}
-	.suprimir:hover {
-		border-color: var(--t-aur);
-	}
+
 	.tèxte {
 		margin: var(--esp-12) 0 0;
 		line-height: 1.55;

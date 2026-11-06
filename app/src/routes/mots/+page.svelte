@@ -445,7 +445,7 @@
 					<h2 id="tema-actiu" class="tema-actiu">{nomActiu}</h2>
 					<div class="views" role="group" aria-label={tx.vista}>
 						{#each ['mosaica', 'carrossel', 'tunel'] as v (v)}
-							<button type="button" class="view" aria-pressed={view === v} onclick={() => (view = v)}>
+							<button type="button" class="pc pc-2 view" aria-pressed={view === v} onclick={() => (view = v)}>
 								{tx.views[v]}
 							</button>
 						{/each}
@@ -524,13 +524,13 @@
 							{/each}
 						</div>
 						<div class="controls">
-							<button type="button" class="rond" onclick={() => go(-1)} disabled={carIndex === 0} aria-label={tx.prev}
+							<button type="button" class="pc pc-2 rond" onclick={() => go(-1)} disabled={carIndex === 0} aria-label={tx.prev}
 								><Icona nom="precedent" size="1.2em" /></button
 							>
 							<span class="counter">{carIndex + 1} / {visibles.length}</span>
 							<button
 								type="button"
-								class="rond"
+								class="pc pc-2 rond"
 								onclick={() => go(1)}
 								disabled={carIndex === visibles.length - 1}
 								aria-label={tx.next}><Icona nom="suivant" size="1.2em" /></button
@@ -571,12 +571,12 @@
 					{/each}
 				</div>
 				{#if fichasPost.length > 1}
-					<button type="button" class="rond post-prev" onclick={() => anar(-1)} disabled={postActiu === 0} aria-label={tx.prev}
+					<button type="button" class="pc pc-2 rond post-prev" onclick={() => anar(-1)} disabled={postActiu === 0} aria-label={tx.prev}
 						><Icona nom="precedent" size="1.2em" /></button
 					>
 					<button
 						type="button"
-						class="rond post-next"
+						class="pc pc-2 rond post-next"
 						onclick={() => anar(1)}
 						disabled={postActiu === fichasPost.length - 1}
 						aria-label={tx.next}><Icona nom="suivant" size="1.2em" /></button
@@ -606,7 +606,7 @@
 			</div>
 		</div>
 
-		<button type="button" class="rond post-tampar" bind:this={tamparEl} onclick={tampar} aria-label={tx.close}><Icona nom="fermer" size="1.25em" /></button>
+		<button type="button" class="pc pc-2 rond post-tampar" bind:this={tamparEl} onclick={tampar} aria-label={tx.close}><Icona nom="fermer" size="1.25em" /></button>
 	</div>
 {/if}
 
@@ -915,25 +915,15 @@
 	}
 
 	.view {
-		border: none;
-		background: transparent;
+		--r: 9px;
+		min-height: 0;
 		font: 700 0.82rem var(--font-body);
-		color: var(--t-tinta-2);
 		padding: 0.45rem 0.85rem;
-		border-radius: 9px;
-		cursor: pointer;
-		transition:
-			background 0.4s,
-			color 0.4s;
-	}
-
-	.view:hover {
-		color: var(--t-tinta);
 	}
 
 	.view[aria-pressed='true'] {
-		background: var(--t-tinta);
-		color: var(--t-fons);
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
 	}
 
 	/* Écran étroit : repère, titre, puis le choix d'affichage sur sa propre
@@ -1077,30 +1067,14 @@
 
 	/* Boutons ronds (carrousel, visionneuse) : verre sombre, flèche d'or */
 	.rond {
+		--r: 14px;
+		min-height: 0;
 		display: grid;
 		place-items: center;
 		width: 2.6rem;
 		height: 2.6rem;
 		padding: 0;
-		border-radius: 50%;
-		border: 1px solid var(--t-linha);
-		background: color-mix(in srgb, var(--t-fons) 75%, transparent);
-		backdrop-filter: blur(6px);
-		color: var(--t-tinta);
 		font-size: 1.1rem;
-		cursor: pointer;
-		transition:
-			border-color 0.4s,
-			transform 0.5s var(--ease);
-	}
-
-	.rond:hover:not(:disabled) {
-		border-color: var(--t-accion);
-	}
-
-	.rond:disabled {
-		opacity: 0.35;
-		cursor: default;
 	}
 
 	/* ---------- Vignettes de thème (vue par défaut) ---------- */

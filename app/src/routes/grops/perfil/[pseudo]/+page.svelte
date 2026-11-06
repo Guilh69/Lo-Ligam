@@ -281,29 +281,29 @@
 				{#if confirmar}
 					<p>{confirmar === 'blocar' ? x.segur_blocar : x.segur_quitar}</p>
 					<div class="botons">
-						<button type="button" class="boton" disabled={ocupat} onclick={() => far(confirmar === 'blocar' ? blocar : quitarContacte)}>{x.òc}</button>
-						<button type="button" class="boton segond" onclick={() => (confirmar = null)}>{x.non}</button>
+						<button type="button" class="pc boton" disabled={ocupat} onclick={() => far(confirmar === 'blocar' ? blocar : quitarContacte)}>{x.òc}</button>
+						<button type="button" class="pc pc-2 boton segond" onclick={() => (confirmar = null)}>{x.non}</button>
 					</div>
 				{:else if relacion === 'cap'}
 					<div class="botons">
-						<button type="button" class="boton" disabled={ocupat} onclick={() => far(demandarContacte)}>{x.apondre}</button>
+						<button type="button" class="pc boton" disabled={ocupat} onclick={() => far(demandarContacte)}>{x.apondre}</button>
 						<button type="button" class="ligam" onclick={() => (confirmar = 'blocar')}>{x.blocar}</button>
 					</div>
 				{:else if relacion === 'mandada'}
 					<p>{x.mandada}</p>
 					<div class="botons">
-						<button type="button" class="boton segond" disabled={ocupat} onclick={() => far(quitarContacte)}>{x.anullar}</button>
+						<button type="button" class="pc pc-2 boton segond" disabled={ocupat} onclick={() => far(quitarContacte)}>{x.anullar}</button>
 					</div>
 				{:else if relacion === 'recebuda'}
 					<p>{x.recebuda}</p>
 					<div class="botons">
-						<button type="button" class="boton" disabled={ocupat} onclick={() => far(respondreContacte, true)}>{x.acceptar}</button>
-						<button type="button" class="boton segond" disabled={ocupat} onclick={() => far(respondreContacte, false)}>{x.refusar}</button>
+						<button type="button" class="pc boton" disabled={ocupat} onclick={() => far(respondreContacte, true)}>{x.acceptar}</button>
+						<button type="button" class="pc pc-2 boton segond" disabled={ocupat} onclick={() => far(respondreContacte, false)}>{x.refusar}</button>
 						<button type="button" class="ligam" onclick={() => (confirmar = 'blocar')}>{x.blocar}</button>
 					</div>
 				{:else if relacion === 'acceptat'}
 					<div class="botons">
-						<a class="boton" href="/grops/amb/{perfil.pseudo}">{x.escriure}</a>
+						<a class="pc boton" href="/grops/amb/{perfil.pseudo}">{x.escriure}</a>
 						<span class="segonds">
 							<button type="button" class="ligam" onclick={() => (confirmar = 'quitar')}>{x.quitar}</button>
 							<button type="button" class="ligam" onclick={() => (confirmar = 'blocar')}>{x.blocar}</button>
@@ -312,7 +312,7 @@
 				{:else if relacion === 'blocat'}
 					<p>{x.blocat}</p>
 					<div class="botons">
-						<button type="button" class="boton segond" disabled={ocupat} onclick={() => far(desblocar)}>{x.desblocar}</button>
+						<button type="button" class="pc pc-2 boton segond" disabled={ocupat} onclick={() => far(desblocar)}>{x.desblocar}</button>
 					</div>
 				{/if}
 				{#if error}<p class="error" role="alert">{xe[error] ?? xe.error}</p>{/if}
@@ -353,7 +353,7 @@
 				{/if}
 			</section>
 		{:else}
-			<a class="boton" href="/grops/perfil">{x.ieu}</a>
+			<a class="pc boton" href="/grops/perfil">{x.ieu}</a>
 		{/if}
 	{/if}
 </div>
@@ -478,35 +478,18 @@
 		color: var(--t-tinta-2);
 	}
 	.boton {
+		--r: 10px;
 		justify-self: start;
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;
 		padding: 0.6rem 1.3rem;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: 700 1rem/1 var(--font-body);
-		text-decoration: none;
 	}
-	.boton:hover {
-		background: var(--t-accion-viu);
-	}
+
 	button.boton {
 		border: 0;
 		cursor: pointer;
-	}
-	.boton:disabled {
-		opacity: 0.6;
-		cursor: wait;
-	}
-	.boton.segond {
-		background: transparent;
-		color: var(--t-tinta);
-		box-shadow: inset 0 0 0 1px var(--t-linha);
-	}
-	.boton.segond:hover {
-		background: color-mix(in srgb, var(--t-tinta) 7%, transparent);
 	}
 	/* le lien avec la personne : ce qu'on peut faire, juste sous son nom */
 	.relacion {

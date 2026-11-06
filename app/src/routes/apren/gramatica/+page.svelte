@@ -160,7 +160,7 @@
 				<li>
 					<button
 						type="button"
-						class="tema t-{t.id}"
+						class="pc tema t-{t.id}"
 						aria-pressed={visat === t.id}
 						aria-describedby="b-tema-{t.id}"
 						onclick={() => triar(t.id)}
@@ -286,19 +286,18 @@
 		}
 	}
 	.tema {
+		--r: 10px;
+		min-height: 0;
 		display: flex;
 		align-items: center;
 		gap: 0.6rem;
 		padding: 0.5rem 0.85rem 0.5rem 0.55rem;
-		border: none;
-		border-radius: 6px;
-		background: var(--aplat);
-		color: var(--sus);
 		font: inherit;
 		text-align: start;
-		cursor: pointer;
-		transition: box-shadow 0.25s;
+		--pc-fons: var(--aplat);
+		--pc-tinta: var(--sus);
 	}
+
 	.tema strong {
 		display: block;
 	}
