@@ -6,7 +6,9 @@
 	// ne sont pas dans l'A1 : ils viennent toujours avec leur français.
 	// Toucher un autre point dit son nom (on apprend en se trompant) ; après
 	// deux essais, le bon endroit se montre ; pas de score. Niveau « Amb
-	// ajuda » : les points d'or se voient ; « Sens ajuda » : à chercher soi-même.
+	// ajuda » : on découvre d'abord les mots de la photo en touchant ses points
+	// d'or, puis la question vient (Romain, 06-11 : découvrir, puis deviner) ;
+	// « Sens ajuda » : la question tout de suite, les points cachés.
 	// Au clavier, Tab passe d'un endroit à l'autre de la photo, Entrée choisit.
 	import { onMount } from 'svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
@@ -17,10 +19,16 @@
 
 	// Occitan passé à lo Congrès le 2026-11-05 (endrech, fòto, ajuda, amb,
 	// sens, aquí, òsca ; escriu, tòca, es par vèrb'Òc), à valider par Romain.
+	// Le 06-11 : descobrís (vèrb'Òc), jogar, ponch, aur.
 	const T = {
 		consigna: {
 			oc: 'Un mot s’escriu : tòca son endrech sus la fòto.',
 			fr: 'Un mot s’écrit : touche sa place sur la photo.'
+		},
+		// pendant la découverte (mots déjà vérifiés : tòca, ponch, aur, mot, s'escriu)
+		consignaDescobrir: {
+			oc: 'Tòca un ponch d’aur : son mot s’escriu.',
+			fr: 'Touche un point d’or : son mot s’écrit.'
 		},
 		nivel: { oc: 'Nivèl', fr: 'Niveau' },
 		amb: { oc: 'Amb ajuda', fr: 'Avec aide' },
@@ -35,7 +43,8 @@
 		fin: { oc: 'Òsca !', fr: 'Bravo !' },
 		mots: { oc: 'Los mots', fr: 'Les mots' },
 		camp: { oc: 'La fòto', fr: 'La photo' },
-		endrech: { oc: (k, t) => `Endrech ${k} sus ${t}`, fr: (k, t) => `Endroit ${k} sur ${t}` }
+		endrech: { oc: (k, t) => `Endrech ${k} sus ${t}`, fr: (k, t) => `Endroit ${k} sur ${t}` },
+		jogar: { oc: 'Jogar', fr: 'Jouer' }
 	};
 
 	const CLAU_SON = 'lo-ligam-jocs-son'; // partagé avec la sèrp et les paniers
@@ -51,7 +60,8 @@
 
 	let partida = $state([]); // [{ k, oc }]
 	let pas = $state(0);
-	let fase = $state('cerca'); // 'cerca', 'trobat', 'fin'
+	let fase = $state('cerca'); // 'descobre', 'cerca', 'trobat', 'fin'
+	let descoberts = $state([]); // les mots déjà découverts sur la photo
 	let errors = $state(0);
 	let vist = $state(null); // le mot montré sur la photo : { oc, x, y, bon, id }
 	let tocs = $state([]); // un rond là où on a touché à côté
@@ -73,7 +83,7 @@
 	const q = $derived(partida[pas]);
 	const p = $derived(q ? PAISATGES[q.k] : null);
 	const cibla = $derived(q && p ? p.mots.find(([oc]) => oc === q.oc) : null);
-	const trobats = $derived(pas + (fase === 'cerca' ? 0 : 1));
+	const trobats = $derived(pas + (fase === 'trobat' || fase === 'fin' ? 1 : 0));
 	// le premier sens seulement dans la question (« le bois », pas « le bois, la forêt »)
 	const primier = (oc) => MOTS[oc].split(',')[0];
 
@@ -112,12 +122,43 @@
 	}
 
 	function apreparar() {
-		fase = 'cerca';
 		errors = 0;
 		vist = null;
 		tocs = [];
-		anoncar([`Ont es ${q.oc} ?`, 'oc'], [`Où est ${primier(q.oc)} ?`, 'fr']);
+		descoberts = [];
 		precargar(pas + 1);
+		if (nivel === 'amb') {
+			fase = 'descobre';
+			anoncar(['Descobrís los mots.', 'oc'], ['Découvre les mots : touche un point d’or.', 'fr']);
+		} else demandar();
+	}
+
+	// la question, après la découverte (ou tout de suite sans aide)
+	function demandar() {
+		clearTimeout(minuteur);
+		fase = 'cerca';
+		vist = null;
+		anoncar([`Ont es ${q.oc} ?`, 'oc'], [`Où est ${primier(q.oc)} ?`, 'fr']);
+	}
+
+	// découvrir : le point touché dit son nom ; tous vus, la question vient
+	function descobrir(fx, fy) {
+		let melhor = null,
+			d0 = TOCA;
+		for (const m of p.mots) {
+			const d = distancia(fx, fy, m[1], m[2]);
+			if (d < d0) {
+				d0 = d;
+				melhor = m;
+			}
+		}
+		if (!melhor) return;
+		const [oc, x, y] = melhor;
+		vist = { oc, x, y, bon: false, id: ++seq };
+		if (!descoberts.includes(oc)) descoberts = [...descoberts, oc];
+		anoncar([`${oc} :`, 'oc'], [`${MOTS[oc]}.`, 'fr']);
+		clearTimeout(minuteur);
+		if (descoberts.length === p.mots.length) minuteur = setTimeout(demandar, 2400);
 	}
 
 	function seguent() {
@@ -139,6 +180,7 @@
 	};
 
 	function causir(fx, fy) {
+		if (fase === 'descobre') return descobrir(fx, fy);
 		if (fase === 'trobat') return seguent(); // un toucher fait passer plus vite
 		if (fase !== 'cerca' || !cibla) return;
 		if (distancia(fx, fy, cibla[1], cibla[2]) < TOCA) {
@@ -206,14 +248,25 @@
 	<div class="disposicion">
 		<header class="cap-joc">
 			<h2 id="titol-ont-es" lang="oc">Ont es… ?</h2>
-			<p class="consigna">{tria(T.consigna)}</p>
+			<!-- les deux consignes à la même place : la hauteur ne change pas d'une étape à l'autre -->
+			<p class="consigna">
+				<span class:amagat={fase === 'descobre'}>{tria(T.consigna)}</span>
+				<span class:amagat={fase !== 'descobre'} aria-hidden={fase !== 'descobre'}>{tria(T.consignaDescobrir)}</span>
+			</p>
 		</header>
 
 		<div class="pista">
 			<div class="pista-info">
-				{#if q && fase !== 'fin'}
+				{#if q && fase === 'descobre'}
+					<p class="question" lang="oc">Descobrís los mots</p>
+					<p class="trad" lang="fr">Découvre les mots</p>
+				{:else if q && fase !== 'fin'}
 					<p class="question" lang="oc">Ont es <span class="nowrap"><span class="chip">{q.oc}</span>&nbsp;?</span></p>
 					<p class="trad" lang="fr">Où est {primier(q.oc)} ?</p>
+				{/if}
+				{#if q && fase !== 'fin'}
+					<!-- « Jogar › » garde sa place pendant la question : la photo ne bouge pas -->
+					<button type="button" class="passar" class:amagat={fase !== 'descobre'} tabindex={fase === 'descobre' ? 0 : -1} aria-hidden={fase !== 'descobre'} onclick={demandar}>{tria(T.jogar)} ›</button>
 				{/if}
 				<p class="compte" aria-hidden="true">{tria(T.compte)(trobats, TOTAL)}</p>
 				<span class="granas" aria-hidden="true">{#each partida as r, k (r.k)}<i class:rengat={k < trobats}></i>{/each}</span>
@@ -266,6 +319,7 @@
 									class="ponch"
 									class:indici={fase === 'cerca' && errors >= 2 && oc === q.oc}
 									class:bon={vist?.bon && vist.oc === oc}
+									class:vist={fase === 'descobre' && descoberts.includes(oc)}
 									style:left="{x * 100}%"
 									style:top="{y * 100}%"
 									aria-label={`${tria(T.endrech)(i + 1, p.mots.length)}${fase === 'cerca' && errors >= 2 && oc === q.oc ? ', ' + tria(T.aquiCort) : ''}`}
@@ -308,7 +362,10 @@
 				causida={{
 					titol: tria(T.nivel),
 					valor: nivel,
-					causir: (id) => (nivel = id),
+					causir: (id) => {
+						nivel = id;
+						if (id === 'sens' && fase === 'descobre') demandar(); // sans aide : la question tout de suite
+					},
 					opcions: [
 						{ id: 'amb', label: tria(T.amb) },
 						{ id: 'sens', label: tria(T.sens) }
@@ -355,10 +412,17 @@
 		color: var(--or);
 	}
 	.consigna {
+		display: grid;
 		max-width: 36ch;
 		margin: var(--esp-12) 0 0;
 		line-height: 1.5;
 		color: var(--t-tinta-2);
+	}
+	.consigna > span {
+		grid-area: 1 / 1;
+	}
+	.consigna .amagat {
+		visibility: hidden;
 	}
 	.pista {
 		grid-area: pista;
@@ -514,6 +578,31 @@
 	.ponch.bon::before {
 		background: var(--aur-clar);
 		scale: 0.6;
+	}
+	/* découvert : l'anneau se remplit à moitié (on voit ce qui reste à toucher) */
+	.ponch.vist::before {
+		background: rgba(255, 212, 127, 0.55);
+	}
+	/* « Jogar › » : passer la découverte, un lien discret (souligné = clic) */
+	.passar {
+		min-height: 2.75rem;
+		margin-top: var(--esp-4, 0.25rem);
+		padding: 0;
+		border: none;
+		background: none;
+		color: var(--t-tinta);
+		text-decoration: underline;
+		text-decoration-color: var(--t-accion);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 0.25em;
+		cursor: pointer;
+	}
+	.passar.amagat {
+		visibility: hidden;
+	}
+	.passar:focus-visible {
+		outline: 3px solid var(--or);
+		outline-offset: 2px;
 	}
 	/* après deux essais : le bon endroit respire, même sans aide */
 	.ponch.indici::before {
