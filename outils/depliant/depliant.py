@@ -86,7 +86,7 @@ STYLES = {
     'Texte courant': ({'spaceAfter': 6}, luc(9, 12.6, fill='Encre')),
     'Intertitre': ({'spaceAfter': 3}, luc(9, 12, gras=True, fill='Encre')),
     'Légende photo': ({}, luc(8.6, 12, fill='Encre douce')),
-    'Chiffre': ({'spaceAfter': 1}, lim(28, 30, fill='Ocre')),
+    'Chiffre': ({'spaceAfter': 1}, lim(28, 30, fill='Brique')),
     'Légende de chiffre': ({'spaceAfter': 1}, luc(8.6, 11, gras=True, fill='Encre')),
     'Source de chiffre': ({'spaceAfter': 18}, luc(7.6, 10, fill='Encre douce')),
     'Adresse du site': ({'spaceAfter': 4}, luc(15, 18, gras=True, fill='Brique')),
@@ -342,7 +342,7 @@ def construire(base=NOM):
     fp = FONS_PERDUT
     # un seul aplat clair sous tout le recto (pas de joint visible au pli), la nuit par-dessus
     fond(0, (-fp, -fp, W + fp, H + fp), 'Plâtre', 'Fond du rabat et du dos')
-    fond(0, (RECTO['C'][0], -fp, W + fp, H + fp), 'Nuit', 'Fond de la couverture')
+    fond(0, (RECTO['C'][0], -fp, W + fp, H + fp), 'Brique', 'Fond de la couverture')
     fond(1, (-fp, -fp, W + fp, H + fp), 'Plâtre', 'Fond de l’intérieur')
 
     calque_textes = S('layer.new', {'name': 'Cases et textes'})
@@ -410,7 +410,7 @@ def construire(base=NOM):
            ('Manifeste fr', MANIFESTE_FR)], 'Rabat : manifeste')
     texte(0, (a0 + 88 + 12, 190, a1, 300),
           [('Intertitre', PORTRAIT[0]), ('Légende photo', PORTRAIT[1])], 'Rabat : légende du portrait')
-    filet(0, a0, a1, 318, nom='Filet des chiffres')
+    filet(0, a0, a1, 318, nuance='Brique', nom='Filet des chiffres')
     paras = []
     for num, nom, source in CHIFFRES:
         # Limelight n'a pas le signe ≈ : il passe en Luciole
