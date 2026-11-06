@@ -16,6 +16,7 @@ Les textes sont ceux du site (filet des éléments du 06-11), sauf ceux marqués
 « À VALIDER » ci-dessous. Lancer :  py outils/depliant/depliant.py
 Sorties : Documents/6_Projectes/Lo_Ligam_hors-git/diffusion/depliant/
 """
+import colorsys
 import json
 import re
 import subprocess
@@ -30,6 +31,8 @@ SORTIDA = Path.home() / 'Documents' / '6_Projectes' / 'Lo_Ligam_hors-git' / 'dif
 IMG = SORTIDA / 'img'
 CLI = Path('C:/Program Files/DesignCraft/designcraft-cli.exe')
 NOM = 'depliant-lo-ligam'
+AUR_VIU = '#f6b73c'  # l'or vif par défaut (suivi par « py depliant.py … <hexa or> »)
+OR_CROTZ = ('#ffffff', '#ffd47f', '#eeaf34')  # trait, or clair et or du moyeu de la croix
 
 MM = 72 / 25.4
 W, H = 297 * MM, 210 * MM
@@ -48,6 +51,9 @@ NUANCES = {
     'Plâtre': '#f7f3ee', 'Encre': '#2a1a10', 'Encre douce': '#63574e', 'Ocre': '#9c5611',
     'Brique': '#b53d17', 'Pétrole': '#1f5f63', 'Olive': '#55702f', 'Bleu': '#2f6a9c',
     'Or': '#eeaf34', 'Prune': '#6b3a5b',
+    # Brique du depliant : mieja (#982913), entre fonda et grenat, choisie par
+    # Romain le 06-11 au soir ; l'or du flyer reprend celui du logo.
+    'Brique': '#982913',
 }
 # palette « charta » des cases, dans l'ordre du site (i % 6)
 PALETA = [('Brique', 'Crème'), ('Pétrole', 'Crème'), ('Olive', 'Crème'),
@@ -86,21 +92,22 @@ STYLES = {
     'Texte courant': ({'spaceAfter': 6}, luc(9, 12.6, fill='Encre')),
     'Intertitre': ({'spaceAfter': 3}, luc(9, 12, gras=True, fill='Encre')),
     'Légende photo': ({}, luc(8.6, 12, fill='Encre douce')),
-    'Chiffre': ({'spaceAfter': 1}, lim(28, 30, fill='Ocre')),
+    'Chiffre': ({'spaceAfter': 1}, lim(28, 30, fill='Brique')),
     'Légende de chiffre': ({'spaceAfter': 1}, luc(8.6, 11, gras=True, fill='Encre')),
     'Source de chiffre': ({'spaceAfter': 18}, luc(7.6, 10, fill='Encre douce')),
     'Adresse du site': ({'spaceAfter': 4}, luc(15, 18, gras=True, fill='Brique')),
     'Note': ({}, luc(7.6, 10, fill='Encre douce')),
     'Couverture titre': ({'align': 'center'}, lim(46, 50, fill='Crème')),
     'Couverture surtitre': ({'align': 'center', 'spaceAfter': 7},
-                            luc(8.5, 11, gras=True, tracking=150, fill='Or vif', **CAPS)),
+                            luc(8.5, 11, gras=True, tracking=150, fill='Or', **CAPS)),
     'Couverture trois mots': ({'align': 'center'}, lim(21, 25, fill='Crème')),
     'Couverture accueil oc': ({'align': 'center', 'spaceAfter': 6}, luc(9.5, 13.5, fill='Crème')),
     'Couverture accueil fr': ({'align': 'center'}, luc(9, 12.5, fill='Crème douce')),
-    'Couverture adresse': ({'align': 'center'}, luc(14, 17, gras=True, fill='Or vif')),
+    'Couverture adresse': ({'align': 'center'}, luc(14, 17, gras=True, fill='Or')),
     'Note de montage': ({}, luc(9, 11.5, fill='Bleu')),
 }
-GRAS_OCRE = {'fontStyle': 'Bold', 'fill': 'Ocre'}
+GRAS_BRIQUE = {'fontStyle': 'Bold', 'fill': 'Brique'}  # le même rouge partout (Romain, 06-11)
+EMPASA = {'fontStyle': 'Bold', 'fill': 'Brique'}  # mots mis en avant du manifeste : gras gardé (Romain, 06-11 : le problème était la couleur, pas le gras)
 GRAS = {'fontStyle': 'Bold'}
 
 # --- textes -----------------------------------------------------------------------------
@@ -130,10 +137,10 @@ VOLETS_INTERIEURS = [
         (4, 'Instagram', 'Les visuels de Lo Ligam.', 'imatges'),
     ]),
 ]
-MANIFESTE_OC = [('Aicí, l’occitan s’apren mai que mai en creant ', None), ('ligam,', GRAS_OCRE),
-                (' ', None), ('sens vergonha', GRAS_OCRE), (' e ', None), ('amb benvolença.', GRAS_OCRE)]
-MANIFESTE_FR = [('Ici, l’occitan s’apprend avant tout en créant du ', None), ('lien,', GRAS_OCRE),
-                (' ', None), ('sans honte', GRAS_OCRE), (' et ', None), ('avec bienveillance.', GRAS_OCRE)]
+MANIFESTE_OC = [('Aicí, l’occitan s’apren mai que mai en creant ', None), ('ligam,', EMPASA),
+                (' ', None), ('sens vergonha', EMPASA), (' e ', None), ('amb benvolença.', EMPASA)]
+MANIFESTE_FR = [('Ici, l’occitan s’apprend avant tout en créant du ', None), ('lien,', EMPASA),
+                (' ', None), ('sans honte', EMPASA), (' et ', None), ('avec bienveillance.', EMPASA)]
 CHIFFRES = [  # site : acuelh.chifras
     ('≈ 600 000', 'locuteurs en Nouvelle-Aquitaine / Occitanie',
      'Estimation, enquête sociolinguistique OPLO, 2020'),
@@ -178,6 +185,22 @@ ARCS = ('M-0.468 -0.797Q-0.194 -0.746 0 -1M0 -1Q0.202 -0.746 0.486 -0.797M0.809 
         'M-0.786 0.48Q-0.731 0.203 -0.976 0.009M-0.976 0.009Q-0.731 -0.195 -0.786 -0.48')
 PONCHS = [(0, -1), (0.486, -0.797), (0.809, -0.48), (1, 0), (0.809, 0.48), (0.486, 0.797), (0, 0.992),
           (-0.468, 0.797), (-0.786, 0.48), (-0.976, 0.009), (-0.786, -0.48), (-0.468, -0.797)]
+
+
+def crotz_desplaçats(hexa):
+    """Applique aux ors de la croix le décalage (teinte, clarté) de l'or vif donné."""
+    hexa = hexa if hexa.startswith('#') else f'#{hexa}'
+    def hls(h):
+        r, g, b = [int(h[i:i+2], 16) / 255 for i in (1, 3, 5)]
+        return colorsys.rgb_to_hls(r, g, b)
+    _, l0, _ = hls(AUR_VIU)
+    h1, l1, _ = hls(hexa)
+    dh, dl = h1 - hls(AUR_VIU)[0], l1 - l0
+    def desplaça(c):
+        h, l, s = hls(c)
+        r, g, b = colorsys.hls_to_rgb((h + dh) % 1, min(1, max(0, l + dl)), s)
+        return '#%02x%02x%02x' % (round(r*255), round(g*255), round(b*255))
+    return (OR_CROTZ[0], desplaça(OR_CROTZ[1]), desplaça(OR_CROTZ[2]))
 
 
 def crotz(fichier, trac, ponch, moieu):
@@ -277,7 +300,7 @@ def texte(spread, rect, paras, nom, inset=None, vjust=None):
     return i, octets(brut)
 
 
-def filet(spread, x0, x1, y, nuance='Ocre', epaisseur=0.6, nom='Filet'):
+def filet(spread, x0, x1, y, nuance='Brique', epaisseur=0.6, nom='Filet'):  # le même rouge partout (Romain, 06-11)
     i = S('line.create', {'spread': spread, 'a': [round(x0, 2), round(y, 2)], 'b': [round(x1, 2), round(y, 2)]})
     S('object.stroke', {'swatch': nuance, 'weight': epaisseur, 'ids': [ref(i)]})
     S('object.rename', {'id': ref(i), 'name': nom})
@@ -324,7 +347,7 @@ def case(spread, rect, couleur, num, nom, sota, picto, granda=False):
 
 def construire(base=NOM):
     IMG.mkdir(parents=True, exist_ok=True)
-    croix = crotz(IMG / 'crotz-sombre.svg', '#ffffff', '#ffd47f', '#eeaf34')
+    croix = crotz(IMG / 'crotz-sombre.svg', *OR_CROTZ)
     pictogrammes(sorted({t[3] for _, _, _, cases in VOLETS_INTERIEURS for t in cases}))
     vilatge = photo(APP / 'static/apren/paisatges/vilatge-1920.webp', 'vilatge.jpg')
     retrat = photo(APP / 'static/acuelh/romain.webp', 'romain.jpg')
@@ -342,7 +365,7 @@ def construire(base=NOM):
     fp = FONS_PERDUT
     # un seul aplat clair sous tout le recto (pas de joint visible au pli), la nuit par-dessus
     fond(0, (-fp, -fp, W + fp, H + fp), 'Plâtre', 'Fond du rabat et du dos')
-    fond(0, (RECTO['C'][0], -fp, W + fp, H + fp), 'Nuit', 'Fond de la couverture')
+    fond(0, (RECTO['C'][0], -fp, W + fp, H + fp), 'Brique', 'Fond de la couverture')
     fond(1, (-fp, -fp, W + fp, H + fp), 'Plâtre', 'Fond de l’intérieur')
 
     calque_textes = S('layer.new', {'name': 'Cases et textes'})
@@ -383,7 +406,7 @@ def construire(base=NOM):
             filet(1, x0, x1, y_f, nom='Filet du francitan')
             # une paire par ligne, la traduction calée sur une tabulation (vu par Joan)
             titre_f = 'Des mots d’oc que tu connais déjà : le francitan'
-            liste = [('Liste', [(oc, GRAS_OCRE), ('\t' + fr, None)]) for oc, fr in FRANCITAN]
+            liste = [('Liste', [(oc, GRAS_BRIQUE), ('\t' + fr, None)]) for oc, fr in FRANCITAN]
             i, total = texte(1, (x0, y_f + 9, x1, bas), [('Intertitre', titre_f)] + liste, 'Le francitan')
             S('text.select', {'story': ref(i, 'story'), 'anchor': octets(typo(titre_f)) + 1, 'focus': total})
             S('type.tabs.add', {'position': 64})
@@ -392,7 +415,7 @@ def construire(base=NOM):
     c0, c1 = RECTO['C']
     cx = (c0 + c1) / 2
     texte(0, (c0 + MX, 190, c1 - MX, 246), [('Couverture titre', 'Lo Ligam')], 'Couverture : Lo Ligam')
-    filet(0, cx - 18, cx + 18, 262, nuance='Or vif', epaisseur=0.75, nom='Filet de la couverture')
+    filet(0, cx - 18, cx + 18, 262, nuance='Or', epaisseur=0.75, nom='Filet de la couverture')
     texte(0, (c0 + MX, 276, c1 - MX, 380),
           [('Couverture surtitre', 'L’occitan'), ('Couverture trois mots', 'Se parla.'),
            ('Couverture trois mots', 'S’apren.'), ('Couverture trois mots', 'Amassa.')],
@@ -410,7 +433,7 @@ def construire(base=NOM):
            ('Manifeste fr', MANIFESTE_FR)], 'Rabat : manifeste')
     texte(0, (a0 + 88 + 12, 190, a1, 300),
           [('Intertitre', PORTRAIT[0]), ('Légende photo', PORTRAIT[1])], 'Rabat : légende du portrait')
-    filet(0, a0, a1, 318, nom='Filet des chiffres')
+    filet(0, a0, a1, 318, nuance='Brique', nom='Filet des chiffres')
     paras = []
     for num, nom, source in CHIFFRES:
         # Limelight n'a pas le signe ≈ : il passe en Luciole
@@ -475,9 +498,27 @@ def lancer():
     dcs = SORTIDA / f'{NOM}.dcs'
     doc = SORTIDA / f'{NOM}.designcraft'
     base = NOM
+    # Essai de teinte : « py depliant.py <hexa> [<hexa or>] <etiqueta> » refait toute
+    # la mise en page avec la brique (ou la brique et l'or vif) remplacée(s), sous un
+    # autre nom ; les ors de la croix suivent l'or vif.
+    if len(sys.argv) > 1:
+        args = sys.argv[1:]
+        hexa = [a for a in args if re.fullmatch(r'[0-9a-fA-F]{6}', a)]
+        noms = [a for a in args if not re.fullmatch(r'[0-9a-fA-F]{6}', a)]
+        if not hexa or not noms or len(hexa) > 2:
+            sys.exit('Essai : « py depliant.py <hexa brica> [<hexa or>] <etiqueta> »')
+        NUANCES['Brique'] = f'#{hexa[0].lower()}'
+        if len(hexa) == 2:
+            NUANCES['Or vif'] = f'#{hexa[1].lower()}'
+            global OR_CROTZ
+            OR_CROTZ = crotz_desplaçats(hexa[1])
+        etiqueta = noms[0]
+        base = f'{NOM}-{etiqueta}'
+        doc = SORTIDA / f'{base}.designcraft'
+        print(f'Essai {etiqueta} : Brique = {NUANCES["Brique"]}, Or vif = {NUANCES["Or vif"]}')
     # Ne jamais écraser un dépliant retouché à la main dans DesignCraft : s'il a été
     # enregistré après la dernière génération, le nouveau (et ses PDF) part sous un autre nom.
-    if doc.exists() and dcs.exists() and doc.stat().st_mtime > dcs.stat().st_mtime + 120:
+    elif doc.exists() and dcs.exists() and doc.stat().st_mtime > dcs.stat().st_mtime + 120:
         from datetime import datetime
         base = f'{NOM}-{datetime.now():%Y-%m-%d-%Hh%M}'
         doc = SORTIDA / f'{base}.designcraft'

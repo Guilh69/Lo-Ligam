@@ -80,15 +80,31 @@ describe('l’interface de Cultura', () => {
 // dessin qui existe ; jamais photo et dessin à la fois.
 describe('les images de Cultura', async () => {
 	const { existsSync } = await import('node:fs');
-	const { FOTOS, COMMONS, DESSENHS, AMPLES, amples, srcset } = await import('./imatges.js');
+	const { FOTOS, COMMONS, STOCK, DESSENHS, AMPLES, amples, srcset } = await import('./imatges.js');
 	const { PAISATGES } = await import('$lib/paisatges/paisatges.js');
 	const { dessenh } = await import('./dessenhs.server.js');
 	const ids = new Set(FICHAS.map((f) => f.id));
 
 	it('vont à des fiches qui existent, une seule image par fiche', () => {
-		const tots = [...Object.keys(FOTOS), ...Object.keys(COMMONS), ...Object.keys(DESSENHS)];
+		const tots = [...Object.keys(FOTOS), ...Object.keys(COMMONS), ...Object.keys(STOCK), ...Object.keys(DESSENHS)];
 		for (const id of tots) expect(ids.has(id), id).toBe(true);
 		expect(new Set(tots).size).toBe(tots.length);
+	});
+
+	it('ont les tailles des autres photos de Romain', () => {
+		for (const [id, s] of Object.entries(STOCK)) {
+			expect(s.pos, id).toMatch(/^\d{1,3}% \d{1,3}%$/);
+			for (const a of amples(id)) expect(existsSync(`static/cultura/${id}-${a}.webp`), `${id}-${a}`).toBe(true);
+		}
+		expect(amples('calandreta')).toEqual([480, 800, 1200]);
+		// cadrage serré (zoom) : la photo recadrée ne fait que 1070 de large
+		expect(amples('roge-e-aur')).toEqual([480, 800, 1070]);
+		for (const s of Object.values(STOCK)) if (s.zoom) expect(s.zoom).toBeGreaterThan(1);
+	});
+
+	it('illustrent toutes les fiches (Romain, 06-11 : « Il manque des illustrations »)', () => {
+		const tots = new Set([...Object.keys(FOTOS), ...Object.keys(COMMONS), ...Object.keys(STOCK)]);
+		for (const id of ids) expect(tots.has(id), id).toBe(true);
 	});
 
 	it('créditent les photos de Wikimedia Commons et ont leurs tailles', () => {

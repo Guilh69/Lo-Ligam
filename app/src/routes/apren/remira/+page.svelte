@@ -16,6 +16,7 @@
 	import { onMount } from 'svelte';
 	import { tria, lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
 	import Icona from '$lib/components/Icona.svelte';
+	import MencionIA from '$lib/components/MencionIA.svelte';
 	import { SCENAS, GROPS, QUASERNET, motsDelQuasernet } from '$lib/plueja/scenas.js';
 	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
 	import Polsa from '$lib/plueja/Polsa.svelte';
@@ -602,6 +603,10 @@
 		demarrerCarnet();
 		talhar();
 		activitat();
+		// la barre grandit quand ses polices arrivent, sans « resize » : remesurer
+		// la réserve (sur téléphone, la signature de l'IA touchait la barre)
+		const obsReserva = new ResizeObserver(mesurarReserva);
+		for (const e of [barra, racina?.querySelector('.cap')]) if (e) obsReserva.observe(e);
 		if (!guidaActiva) finIndici = setTimeout(() => (indici = false), 9000);
 		addEventListener('resize', talhar);
 		addEventListener('wheel', rodeta, { passive: true });
@@ -622,6 +627,7 @@
 			clearTimeout(finIndici);
 			clearTimeout(minuteurInactiu);
 			removeEventListener('resize', talhar);
+			obsReserva.disconnect();
 			removeEventListener('wheel', rodeta);
 			removeEventListener('devicemotion', moviment);
 			removeEventListener('deviceorientation', orientacion);
@@ -743,6 +749,14 @@
 	<p class="indici" class:vis={indici && !calme && mòde !== 'polsa'} aria-hidden={!indici || mòde === 'polsa'}>
 		{#if mòde === 'paisatges'}{tria(tactil ? T.ponchTactil : T.ponch)}{:else}{tactil ? tria(T.telefon) : tria(T.rodeta)}{/if}
 	</p>
+
+	<!-- La signature des dessins de la poussière d'or (Romain, 06-11 : « Signature
+	     et ligne ») : seulement quand l'IA dessine, jamais sur la pluie ni sur
+	     les paysages, qui sont des photos de Romain. « dessenh » et non
+	     « illustracion » : le fond peut être une de ses photos. -->
+	{#if mòde === 'polsa'}
+		<div class="signa-ia"><MencionIA quina="dessenh" /></div>
+	{/if}
 
 	<div class="comandas" bind:this={barra}>
 		<!-- Trois choix rangés de la même façon (Romain, 05-11 : « rendre plus
@@ -1176,6 +1190,17 @@
 	.indici.vis {
 		opacity: 1;
 		transition-delay: 1.2s;
+	}
+
+	/* la signature, en bas à droite au-dessus de la barre ; Remira est toujours
+	   sombre, d'où des couleurs fixes plutôt que celles du thème */
+	.signa-ia {
+		position: absolute;
+		right: clamp(1rem, 3vw, 2rem);
+		bottom: calc(var(--bas, 5rem) + 0.4rem);
+		--mencion-tinta: rgba(247, 243, 238, 0.66);
+		--mencion-tinta-fort: var(--crema);
+		--mencion-trait: #ef6a35;
 	}
 
 	.comandas {

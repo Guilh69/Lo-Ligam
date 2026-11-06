@@ -12,6 +12,7 @@
 	import { rich } from '$lib/lesson/rich.js';
 	import { FICHAS, IU, ficha as trobar, tema as temaDe, nomModul } from '$lib/cultura/index.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import MencionIA from '$lib/components/MencionIA.svelte';
 
 	let { data } = $props();
 	let f = $derived(trobar(data.id));
@@ -59,6 +60,10 @@
 				>
 			</h1>
 		</header>
+		{#if !data.foto && data.dessenh?.length}
+			<!-- le dessin de Remira repris ici : signé, à la place du crédit photo (06-11) -->
+			<p class="credit-foto"><MencionIA quina="dessenh" /></p>
+		{/if}
 		{#if data.foto?.credit}
 			{@const c = data.foto.credit}
 			<!-- photo libre de Wikimedia Commons : auteur, licence, lien (CC BY-SA) -->
