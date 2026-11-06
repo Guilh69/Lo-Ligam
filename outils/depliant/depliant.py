@@ -51,6 +51,9 @@ NUANCES = {
     'Plâtre': '#f7f3ee', 'Encre': '#2a1a10', 'Encre douce': '#63574e', 'Ocre': '#9c5611',
     'Brique': '#b53d17', 'Pétrole': '#1f5f63', 'Olive': '#55702f', 'Bleu': '#2f6a9c',
     'Or': '#eeaf34', 'Prune': '#6b3a5b',
+    # Brique du depliant : mieja (#982913), entre fonda et grenat, choisie par
+    # Romain le 06-11 au soir ; l'or du flyer reprend celui du logo.
+    'Brique': '#982913',
 }
 # palette « charta » des cases, dans l'ordre du site (i % 6)
 PALETA = [('Brique', 'Crème'), ('Pétrole', 'Crème'), ('Olive', 'Crème'),
@@ -96,11 +99,11 @@ STYLES = {
     'Note': ({}, luc(7.6, 10, fill='Encre douce')),
     'Couverture titre': ({'align': 'center'}, lim(46, 50, fill='Crème')),
     'Couverture surtitre': ({'align': 'center', 'spaceAfter': 7},
-                            luc(8.5, 11, gras=True, tracking=150, fill='Or vif', **CAPS)),
+                            luc(8.5, 11, gras=True, tracking=150, fill='Or', **CAPS)),
     'Couverture trois mots': ({'align': 'center'}, lim(21, 25, fill='Crème')),
     'Couverture accueil oc': ({'align': 'center', 'spaceAfter': 6}, luc(9.5, 13.5, fill='Crème')),
     'Couverture accueil fr': ({'align': 'center'}, luc(9, 12.5, fill='Crème douce')),
-    'Couverture adresse': ({'align': 'center'}, luc(14, 17, gras=True, fill='Or vif')),
+    'Couverture adresse': ({'align': 'center'}, luc(14, 17, gras=True, fill='Or')),
     'Note de montage': ({}, luc(9, 11.5, fill='Bleu')),
 }
 GRAS_OCRE = {'fontStyle': 'Bold', 'fill': 'Ocre'}
@@ -186,6 +189,7 @@ PONCHS = [(0, -1), (0.486, -0.797), (0.809, -0.48), (1, 0), (0.809, 0.48), (0.48
 
 def crotz_desplaçats(hexa):
     """Applique aux ors de la croix le décalage (teinte, clarté) de l'or vif donné."""
+    hexa = hexa if hexa.startswith('#') else f'#{hexa}'
     def hls(h):
         r, g, b = [int(h[i:i+2], 16) / 255 for i in (1, 3, 5)]
         return colorsys.rgb_to_hls(r, g, b)
@@ -411,7 +415,7 @@ def construire(base=NOM):
     c0, c1 = RECTO['C']
     cx = (c0 + c1) / 2
     texte(0, (c0 + MX, 190, c1 - MX, 246), [('Couverture titre', 'Lo Ligam')], 'Couverture : Lo Ligam')
-    filet(0, cx - 18, cx + 18, 262, nuance='Or vif', epaisseur=0.75, nom='Filet de la couverture')
+    filet(0, cx - 18, cx + 18, 262, nuance='Or', epaisseur=0.75, nom='Filet de la couverture')
     texte(0, (c0 + MX, 276, c1 - MX, 380),
           [('Couverture surtitre', 'L’occitan'), ('Couverture trois mots', 'Se parla.'),
            ('Couverture trois mots', 'S’apren.'), ('Couverture trois mots', 'Amassa.')],
