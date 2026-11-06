@@ -65,7 +65,7 @@
 	<div class="familhas">
 		{#each familhas as f, k (f.id)}
 			<section class="familha f-{f.id}" style="--k: {k}" aria-labelledby="fam-{f.id}">
-				<div class="quadre"><Illustracion id={f.id} {tema} /><MencionIA cadre /></div>
+				<div class="quadre"><Illustracion id={f.id} {tema} /><MencionIA forma="rond" cadre /></div>
 				<h3 id="fam-{f.id}" class="familha-nom" lang={lg(f)}>{tria(f)}</h3>
 				<ul class="jocs">
 					{#each f.jocs as j (j.id)}
@@ -232,11 +232,12 @@
 		align-content: start;
 		gap: 0.9rem;
 	}
-	/* la marge basse porte la signature « facha per l'IA » (Romain, 06-11 :
-	   « Signature et ligne », MencionIA) */
+	/* le petit rond « IA » se pose dans le coin bas du dessin (Romain, 06-11 :
+	   « facha per l'IA » sous chaque dessin était « trop répétitif et visible ») */
 	.quadre {
+		--mencion-fons: var(--t-fons-2);
 		position: relative;
-		padding: 0.5rem 0.5rem 1.9rem;
+		padding: 0.5rem;
 		border: 1px solid var(--t-linha);
 		background: var(--t-fons-2);
 	}
@@ -399,7 +400,8 @@
 		--mencion-tinta: var(--f-tinta-2);
 		--mencion-tinta-fort: var(--f-tinta);
 		--mencion-trait: var(--f-tinta);
-		padding: 0 0 1.9rem;
+		--mencion-fons: transparent;
+		padding: 0;
 		border: none;
 		background: none;
 		transition: translate 0.4s ease;

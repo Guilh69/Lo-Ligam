@@ -55,12 +55,15 @@
 				<!-- le serpent : sa queue a déjà écrit L I G A, il va manger le M ;
 				     à côté, le panier où tombe une tuile -->
 				<path class="l pontilh" d="M262 104 Q288 82 300 80" />
-				<path class="l pontilh" d="M338 150 V176" />
-				<g class="tomba">
-					<rect class="f" x="322" y="180" width="32" height="32" rx="7" transform="rotate(-8 338 196)" />
+				<!-- un peu à gauche du coin, où se pose le rond « IA » -->
+				<g transform="translate(-14 -6)">
+					<path class="l pontilh" d="M338 150 V176" />
+					<g class="tomba">
+						<rect class="f" x="322" y="180" width="32" height="32" rx="7" transform="rotate(-8 338 196)" />
+					</g>
+					<path class="f2" d="M294 222 H382 L371 272 H305 Z" />
+					<path class="c" d="M298 238 H378 M302 255 H374 M324 222 L322 272 M352 222 L354 272" />
 				</g>
-				<path class="f2" d="M294 222 H382 L371 272 H305 Z" />
-				<path class="c" d="M298 238 H378 M302 255 H374 M324 222 L322 272 M352 222 L354 272" />
 				{#each [['L', 52, 214, 8], ['I', 100, 224, -4], ['G', 148, 208, -18], ['A', 189, 174, -32]] as [t, x, y, r], k (t)}
 					<g class="onda" style="--k: {k}">
 						<g transform="translate({x} {y}) rotate({r})">
