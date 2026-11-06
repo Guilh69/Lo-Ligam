@@ -106,9 +106,12 @@ export const COMMONS = {
 	// puisque la fiche parle justement de ses couleurs
 	'roge-e-aur': {
 		font: 'roge-e-aur-luka-martin.jpg',
-		largor: 1280,
-		pos: '50% 28%',
-		posFicha: '50% 52%',
+		// cadre un peu serré, calé à gauche : le drapeau passe à droite, hors
+		// du titre (Joan, 06-11 : le titre couvrait la croix sur grand écran)
+		largor: 1041,
+		pos: '0% 34%',
+		zoom: 1.23,
+		posFicha: '50% 30%',
 		colors: true,
 		autor: 'Luka Martin 01',
 		licencia: 'CC0',
