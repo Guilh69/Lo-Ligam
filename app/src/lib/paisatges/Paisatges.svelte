@@ -107,9 +107,10 @@
 		};
 	};
 
-	// Le relief : un canevas fixe sous le cadre qui glisse ; il calcule lui-même
-	// le glissement, la photo du cadre s'efface dessus, les points d'or et le mot
-	// restent dans le cadre et suivent leur objet (./releu.js).
+	// Le relief : un canevas fixe sous le cadre ; il calcule lui-même le
+	// glissement et déplace le cadre à la même image (l'animation ne sert plus
+	// que d'horloge), la photo du cadre s'efface dessus, les points d'or et le
+	// mot restent dans le cadre et suivent leur objet (./releu.js).
 	const relevarVista = (q, id) => (cv) =>
 		untrack(() => {
 			const quadre = cv.nextElementSibling;

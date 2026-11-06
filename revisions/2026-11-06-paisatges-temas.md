@@ -37,7 +37,7 @@ Données : `app/src/lib/paisatges/paisatges.js` (champ `tema`, liste `TEMAS`). F
 
 ## Pas pour les paysages
 
-- **L'occitan dans la rue** (19, pour le jeu des plaques prévu à part) : 20250125_135500 · 20250512_174559 · 20251226_134451 · 20260811_152329 · 20260912_184203 · DSCF1753 · DSCF1872 · DSCF1926~2 · DSCF1944 · DSCF1945 · DSCF1948 · DSCF2263 · DSCF2319 · PXL_20230501_132702203 · PXL_20230501_134701664 · PXL_20230517_184110795 · PXL_20230521_104030960 (sert aussi à la fiche Cultura de l'escòla, 06-11) · received_194856153699914 · received_221816727548606
+- **L'occitan dans la rue** (19, pour le jeu des plaques prévu à part) : 20250125_135500 · 20250512_174559 · 20251226_134451 · 20260811_152329 · 20260912_184203 · DSCF1753 · DSCF1872 · DSCF1926~2 · DSCF1944 (sert aussi à la fiche Cultura du mot òc, 06-11) · DSCF1945 · DSCF1948 · DSCF2263 · DSCF2319 (sert aussi à la fiche Cultura du rouge et l'or, cadrée sans le numéro ni les boîtes aux lettres, 06-11) · PXL_20230501_132702203 · PXL_20230501_134701664 · PXL_20230517_184110795 · PXL_20230521_104030960 (sert aussi à la fiche Cultura de l'escòla, 06-11) · received_194856153699914 · received_221816727548606
 - **Gens reconnaissables** (13, jamais sans autorisation écrite) : 20250613_152116 · DSCF0629 · DSCF1606 · DSCF1785 · DSCF1800 · DSCF2415 · DSCF2418 · DSCF2420 · DSCF2425 · PXL_20230617_165347188 · PXL_20230701_150107287 · PXL_20240622_185333194 · received_717376503599719
 - **Écartées** : 20170319_152621 (penchée) · DSCF0600 (banderole politique) · DSCF0678 (illisible) · DSCF2574 (jambes) · IMAG0302~2 (inscription) · IMG_20170203_192205_235 (1080 px, floue en grand écran)
 
