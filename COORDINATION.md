@@ -9,7 +9,7 @@
 - **Tout le travail de Claude est sur `master` et en ligne**, sauf ce qui suit.
 - **Deux discussions Claude tournaient encore ce soir-là** (jeux de l'A1 ; correction « Qu'es aquò ? » dans les dessins de Remira, branche `claude/occitan-words-focus-interface-88d16a`, un fichier modifié non envoyé). Si au prochain `git pull` le commit 89030a4 n'est pas sur `master`, ne pas le refaire : demander à Romain.
 - **Outil d'interpellation des parlementaires** : un commit jamais envoyé (`f8520d4`, script `app/scripts/elus-generar.mjs` et `app/static/data/elus.json`), sur la branche locale `claude/occitan-parliament-tool-c4e7c1` ; le dernier message de Romain était « Phase 3 », sans suite. À reprendre seulement si Romain le demande.
-- **En attente d'un choix de Romain** (ne rien coder avant) : refonte de l'espace administrateur « Lo talhièr » (proposition du 06-11, PILOTATGE chantier 7) ; essai « Profondeur » v2 sur `/ensag/prigondor` (chantier 29) ; tri des 257 dessins de Remira sur `/admin/triar` (chantier 26) ; parler ou non de l'IA dans les textes de diffusion (phrases ◆ de `diffusion/messages.md` et `diffusion/fiche.md`, chantier 30).
+- **En attente d'un choix de Romain** (ne rien coder avant) : refonte de l'espace administrateur « Lo talhièr » (proposition du 06-11, PILOTATGE chantier 7) ; essai « Profondeur » v2 sur `/ensag/prigondor` (chantier 29) ; tri des 257 dessins de Remira sur `/admin/triar` (chantier 26).
 - **Ce que Romain a à faire seul** : la liste du §1 de `PILOTATGE.md`.
 
 ## À faire par Mistral en premier (réglages, une fois)

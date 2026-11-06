@@ -1,6 +1,6 @@
 # La fiche d'une page : le texte
 
-*Brouillon du 6 novembre 2026. Une page A4, à joindre aux courriels du cercle 2 (`diffusion/messages.md`). La mise en page est à choisir : toi dans Canva avec tes modèles Instagram, ou une page imprimable sur le site, dans la charte. Les chiffres datent du 6 novembre : les recompter avant l'envoi. La phrase marquée ◆ parle de l'intelligence artificielle : à garder ou à retirer selon ton choix.*
+*Brouillon du 6 novembre 2026. Une page A4, à joindre aux courriels du cercle 2 (`diffusion/messages.md`). La mise en page est à choisir : toi dans Canva avec tes modèles Instagram, ou une page imprimable sur le site, dans la charte. Les chiffres datent du 6 novembre : les recompter avant l'envoi.*
 
 ---
 
@@ -29,7 +29,7 @@ Un site gratuit et sans publicité, en occitan languedocien et en graphie classi
 **Comment c'est fait**
 - Chaque mot occitan est vérifié dans les ressources de lo Congrès et la *Gramatica de l'occitan estandard*, puis relu par Romain.
 - Hébergé en Europe ; ni publicité ni pistage ; des pages légères.
-- Les photos sont celles de Romain : aucune image générée par intelligence artificielle. ◆ Le code et le premier jet des leçons ont été réalisés avec des assistants d'intelligence artificielle, sous sa direction.
+- Les photos sont celles de Romain : aucune image générée par intelligence artificielle. Le code et le premier jet des leçons ont été réalisés avec des assistants d'intelligence artificielle, sous sa direction.
 
 **En chiffres** : 8 unités · 300 exercices · 36 fiches de grammaire · 6 langues
 
