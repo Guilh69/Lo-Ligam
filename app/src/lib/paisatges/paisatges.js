@@ -132,7 +132,26 @@ export const MOTS = {
 	'la fuèlha': 'la feuille',
 	'lo flume': 'le fleuve',
 	'lo solelh': 'le soleil',
-	'la baranda': 'la rambarde'
+	'la baranda': 'la rambarde',
+	// 06-11, lot 4 (fèstas e lésers) : lo Congrès (sapin → sap en lengadoc, drapeau → drapèl, cheminée → cheminièra, rail → ralh, manège → manètge), genre d'après lo Basic
+	'lo camion': 'le camion',
+	'l’escala': 'l’échelle',
+	'lo ralh': 'le rail',
+	'lo sap': 'le sapin',
+	'lo present': 'le cadeau',
+	'la bòla': 'la boule',
+	'lo manètge': 'le manège',
+	'lo lustre': 'le lustre',
+	'la garlanda': 'la guirlande',
+	'lo parasòl': 'le parasol',
+	'lo drapèl': 'le drapeau',
+	'la barraca': 'la baraque',
+	'la bicicleta': 'le vélo',
+	'la cheminièra': 'la cheminée',
+	'la tassa': 'la tasse',
+	'lo bòl': 'le bol',
+	'l’estadi': 'le stade',
+	'lo projector': 'le projecteur'
 };
 
 export const PAISATGES = [
@@ -1148,6 +1167,162 @@ export const PAISATGES = [
 			['la paret', 0.25, 0.5],
 			['la fenèstra', 0.74, 0.43]
 		]
+	},
+	// ── Lot 4 des thèmes : fèstas e lésers (06-11) ──
+	{
+		clau: 'festa-camion',
+		tema: 'festas',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Un fourgon aménagé garé dans un pré, toutes portes ouvertes : un lit à l’arrière, une table pliante à côté, de grands arbres derrière.',
+		mots: [
+			['lo camion', 0.35, 0.38],
+			['la pòrta', 0.78, 0.45],
+			['la taula', 0.95, 0.65],
+			['l’èrba', 0.3, 0.88],
+			['l’arbre', 0.5, 0.1]
+		]
+	},
+	{
+		clau: 'festa-piscina',
+		tema: 'festas',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une piscine d’un bleu vif au pied de grands immeubles blancs, une échelle de métal, des dalles claires au soleil.',
+		mots: [
+			['la piscina', 0.5, 0.5],
+			['l’escala', 0.91, 0.6],
+			['l’ostal', 0.77, 0.1],
+			['l’arbre', 0.26, 0.24]
+		]
+	},
+	{
+		clau: 'festa-ralh',
+		tema: 'festas',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une voie ferrée toute droite qui file dans le désert vers des montagnes lointaines, sous un ciel gris.',
+		mots: [
+			['lo ralh', 0.83, 0.53],
+			['la pèira', 0.29, 0.85],
+			['la montanha', 0.4, 0.32],
+			['lo cèl', 0.5, 0.12]
+		]
+	},
+	{
+		clau: 'festa-sap',
+		tema: 'festas',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2318,
+		alt: 'Un sapin de Noël décoré de boules et de guirlandes dans une maison, des paquets cadeaux rouges et bleus à son pied.',
+		mots: [
+			['lo sap', 0.49, 0.62],
+			['lo present', 0.77, 0.65],
+			['la bòla', 0.43, 0.36]
+		]
+	},
+	{
+		clau: 'festa-manetge',
+		tema: 'festas',
+		amples: [800, 1600],
+		l: 1600,
+		h: 1707,
+		alt: 'Une fête foraine au crépuscule : un manège illuminé de rose et de vert au pied d’une montagne boisée.',
+		mots: [
+			['lo manètge', 0.47, 0.8],
+			['la montanha', 0.7, 0.55],
+			['lo cèl', 0.4, 0.2],
+			['l’arbre', 0.92, 0.85]
+		]
+	},
+	{
+		clau: 'festa-bola',
+		tema: 'festas',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1878,
+		alt: 'Une rue piétonne décorée de milliers de boules roses et bleues suspendues, entre un immeuble de brique et de pierre blanche.',
+		mots: [
+			['la bòla', 0.3, 0.81],
+			['l’ostal', 0.72, 0.35],
+			['lo cèl', 0.3, 0.14],
+			['l’arbre', 0.15, 0.51]
+		]
+	},
+	{
+		clau: 'festa-lustre',
+		tema: 'festas',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 912,
+		alt: 'Une rue commerçante la nuit, sous d’immenses lustres de lumière suspendus entre les façades ; des parasols éclairés plus loin.',
+		mots: [
+			['lo lustre', 0.58, 0.51],
+			['la garlanda', 0.42, 0.41],
+			['lo parasòl', 0.75, 0.9],
+			['la fenèstra', 0.08, 0.34]
+		]
+	},
+	{
+		clau: 'festa-barraca',
+		tema: 'festas',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 876,
+		alt: 'Un marché de Noël la nuit : des chalets rouges illuminés, une église blanche, une haute tour à horloge, des drapeaux.',
+		mots: [
+			['lo relòtge', 0.6, 0.36],
+			['lo drapèl', 0.06, 0.33],
+			['la glèisa', 0.4, 0.72],
+			['la barraca', 0.72, 0.82]
+		]
+	},
+	{
+		clau: 'festa-bicicleta',
+		tema: 'festas',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Des vélos garés en rang sur une place, devant des massifs d’herbes hautes ; derrière, des arbres nus et une vieille cheminée de brique.',
+		mots: [
+			['la bicicleta', 0.47, 0.61],
+			['la cheminièra', 0.21, 0.13],
+			['l’arbre', 0.66, 0.13],
+			['l’èrba', 0.7, 0.4],
+			['la planta', 0.1, 0.46]
+		]
+	},
+	{
+		clau: 'festa-bol',
+		tema: 'festas',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Dans un atelier de poterie, une tasse et des bols d’argile crue qui sèchent sur une étagère blanche, une planche de bois devant.',
+		mots: [
+			['la tassa', 0.17, 0.5],
+			['lo bòl', 0.37, 0.51],
+			['la fusta', 0.2, 0.82],
+			['la paret', 0.55, 0.15]
+		]
+	},
+	{
+		clau: 'festa-estadi',
+		tema: 'festas',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Un grand stade de football plein à la tombée du jour : la pelouse sous les projecteurs, des tribunes peintes de bleu et de rouge.',
+		mots: [
+			['l’estadi', 0.84, 0.47],
+			['l’èrba', 0.62, 0.56],
+			['lo projector', 0.05, 0.29],
+			['lo cèl', 0.5, 0.1]
+		]
 	}
 ];
 
@@ -1160,7 +1335,8 @@ export const TEMAS = [
 	{ id: 'vila', nom: { oc: 'La vila', fr: 'La ville', es: 'La ciudad', en: 'The town', ca: 'La ciutat', ar: 'المدينة' } },
 	{ id: 'monuments', nom: { oc: 'Los monuments', fr: 'Les monuments', es: 'Los monumentos', en: 'Landmarks', ca: 'Els monuments', ar: 'المعالم' } },
 	{ id: 'taula', nom: { oc: 'A taula', fr: 'À table', es: 'A la mesa', en: 'At the table', ca: 'A taula', ar: 'على المائدة' } },
-	{ id: 'temps', nom: { oc: 'Lo temps que fa', fr: 'Le temps qu’il fait', es: 'El tiempo', en: 'The weather', ca: 'El temps', ar: 'الطقس' } }
+	{ id: 'temps', nom: { oc: 'Lo temps que fa', fr: 'Le temps qu’il fait', es: 'El tiempo', en: 'The weather', ca: 'El temps', ar: 'الطقس' } },
+	{ id: 'festas', nom: { oc: 'Fèstas e lésers', fr: 'Fêtes et loisirs', es: 'Fiestas y ocio', en: 'Festivities and leisure', ca: 'Festes i lleure', ar: 'الأعياد والترفيه' } }
 ];
 
 /** Les paysages d'un thème (tous, sans thème). */
