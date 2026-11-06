@@ -17,7 +17,7 @@
 	// Sobriété : rien à charger (les dessins sont des chemins de quelques octets),
 	// un seul canevas, les points de chaque mot calculés une fois puis gardés.
 	import { onMount, untrack } from 'svelte';
-	import { dessenhDe, dessenhGuida } from './dessenhs.js';
+	import { dessenhDe, dessenhGuida, tintasDe } from './dessenhs.js';
 	import { prepAnim, traçarAnim } from './animacions.js';
 
 	/** mots : [[oc, définition, id, dessin, langue], …] (les deux derniers pour
@@ -103,6 +103,7 @@
 		if (plans.has(k)) return plans.get(k);
 		const [oc, def, , clauDess, lg] = lista[i];
 		const dess = clauDess ? dessenhGuida(clauDess) : dessenhDe(oc, def);
+		const tint = clauDess ? null : tintasDe(oc); // un drapeau : ses zones de couleur
 		const dir = lg === 'ar' ? 'rtl' : 'ltr'; // l'arabe de l'explication ; les mots et leurs définitions restent de gauche à droite
 		const Hu = Math.max(220, H - reserva.naut - reserva.bas);
 		const S = dess ? Math.min(Hu * 0.48, W * 0.6, 420) : 0;
@@ -125,7 +126,7 @@
 		const yFilet = y + gap2 * 0.4;
 		y += gap2;
 		const linhasD = defi.linhas.map((t, j) => ({ t, y: y + defi.px * 0.8 + j * lhD }));
-		const p = { dess, dir, S, X0: W / 2 - S / 2, Y0, fW: mot.px, fD: defi.px, linhasW, linhasD, yFilet };
+		const p = { dess, tint, dir, S, X0: W / 2 - S / 2, Y0, fW: mot.px, fD: defi.px, linhasW, linhasD, yFilet };
 		plans.set(k, p);
 		return p;
 	}
@@ -138,6 +139,25 @@
 		c.lineCap = 'round';
 		c.lineJoin = 'round';
 		for (const ch of p.dess) c.stroke(ch);
+		c.restore();
+	}
+	/** Les zones de couleur d'un drapeau, sous le trait d'or. */
+	function tintar(c, p, lw) {
+		c.save();
+		c.translate(p.X0, p.Y0);
+		c.scale(p.S / 100, p.S / 100);
+		c.lineWidth = (lw * 100) / p.S;
+		c.lineCap = 'round';
+		c.lineJoin = 'round';
+		for (const z of p.tint) {
+			if (z.s) {
+				c.strokeStyle = z.c;
+				c.stroke(z.p);
+			} else {
+				c.fillStyle = z.c;
+				c.fill(z.p);
+			}
+		}
 		c.restore();
 	}
 	function textes(c, linhas, font, dir = 'ltr') {
@@ -161,6 +181,39 @@
 		for (let y = 0; y < rh; y += 2) for (let x = 0; x < rw; x += 2) if (d[(y * rw + x) * 4 + 3] > 110) pts.push([rx + x, ry + y]);
 		return pts;
 	}
+	// Un drapeau : chaque zone est peinte hors écran d'un rouge qui porte son numéro
+	// (20, 40, 60…), le trait d'or de 250 ; chaque point garde la couleur de sa zone.
+	// Un bord mêlé (anticrénelage) n'a pas de numéro exact : il compte pour l'or.
+	function echantTintas(rect, p) {
+		const [rx, ry, rw, rh] = rect.map(Math.round);
+		if (rw <= 0 || rh <= 0) return [];
+		hx.clearRect(rx, ry, rw, rh);
+		hx.save();
+		hx.translate(p.X0, p.Y0);
+		hx.scale(p.S / 100, p.S / 100);
+		hx.lineWidth = 260 / p.S;
+		hx.lineCap = 'round';
+		hx.lineJoin = 'round';
+		p.tint.forEach((z, k) => {
+			const id = `rgb(${20 * (k + 1)},0,0)`;
+			hx.fillStyle = hx.strokeStyle = id;
+			if (z.s) hx.stroke(z.p);
+			else hx.fill(z.p);
+		});
+		hx.strokeStyle = 'rgb(250,0,0)';
+		for (const ch of p.dess) hx.stroke(ch);
+		hx.restore();
+		const d = hx.getImageData(rx, ry, rw, rh).data;
+		const pts = [];
+		for (let y = 0; y < rh; y += 2)
+			for (let x = 0; x < rw; x += 2) {
+				const o = (y * rw + x) * 4;
+				if (d[o + 3] <= 110) continue;
+				const k = Math.round(d[o] / 20) - 1;
+				pts.push([rx + x, ry + y, Math.abs(d[o] - 20 * (k + 1)) <= 3 && k >= 0 && k < p.tint.length ? p.tint[k].c : null]);
+			}
+		return pts;
+	}
 	const cache = new Map();
 	function pointsDe(i) {
 		const k = `${i}|${W}x${H}|${reserva.naut}|${reserva.bas}`;
@@ -168,7 +221,7 @@
 		const p = plan(i);
 		const banda = (linhas, px) => [0, linhas[0].y - px * 1.05, W, linhas.at(-1).y - linhas[0].y + px * 1.45];
 		const v = [
-			p.dess ? echant([p.X0 - 4, p.Y0 - 4, p.S + 8, p.S + 8], (c) => trait(c, p, 2.6)) : [],
+			p.dess ? (p.tint ? echantTintas([p.X0 - 4, p.Y0 - 4, p.S + 8, p.S + 8], p) : echant([p.X0 - 4, p.Y0 - 4, p.S + 8, p.S + 8], (c) => trait(c, p, 2.6))) : [],
 			echant(banda(p.linhasW, p.fW), (c) => textes(c, p.linhasW, fontOc(p.fW), p.dir)),
 			echant(banda(p.linhasD, p.fD), (c) => textes(c, p.linhasD, fontDef(p.fD), p.dir))
 		];
@@ -249,6 +302,7 @@
 			const r = L.length ? L[Math.floor(q.r * L.length)] : [W / 2, H / 2];
 			q.hx = r[0];
 			q.hy = r[1];
+			q.c = q.g === 0 ? (r[2] ?? null) : null; // la couleur de sa zone, sur un drapeau
 		}
 		const p = plan(i);
 		centre = [W / 2, (p.Y0 + p.linhasD.at(-1).y) / 2];
@@ -285,6 +339,7 @@
 				vy: 0,
 				hx: 0,
 				hy: 0,
+				c: null, // couleur de sa zone (drapeau), sinon celle de son groupe
 				act: 0,
 				a: 0
 			};
@@ -604,11 +659,12 @@
 
 		const ten = calme ? 0 : Math.abs(carga);
 		cx.clearRect(0, 0, W, H);
-		let gCor = -1; // les grains sont rangés par groupe : la couleur ne change que trois fois
+		let gCor = ''; // les grains sont rangés par groupe : la couleur ne change que trois fois (sauf sur un drapeau)
 		for (const q of grans) {
-			if (q.g !== gCor) {
-				gCor = q.g;
-				cx.fillStyle = gCor === 0 ? AUR : gCor === 1 ? CREMA : DEF;
+			const cor = q.c ?? (q.g === 0 ? AUR : q.g === 1 ? CREMA : DEF);
+			if (cor !== gCor) {
+				gCor = cor;
+				cx.fillStyle = cor;
 			}
 			const nq = netG[q.g],
 				v2 = immobile ? 0 : q.vx * q.vx + q.vy * q.vy,
@@ -630,6 +686,7 @@
 			const p = plan(mi);
 			if (p.dess && netG[0] > 0) {
 				cx.globalAlpha = netG[0] * 0.95;
+				if (p.tint) tintar(cx, p, 1.3);
 				cx.strokeStyle = AUR;
 				if (!anim) trait(cx, p, 1.3);
 				else if (!traitAnim(cx, p, 1.3)) anim = null;

@@ -4,10 +4,13 @@
 // avec un id court (20 signes au plus, il sert de « modul » dans les remarques)
 // et des clés stables (elles servent à retrouver l'élément dans le code).
 import { SCENAS, GROPS } from '../plueja/scenas.js';
-import { cheminsDe } from '../plueja/dessenhs.js';
+import { cheminsDe, TINTAS } from '../plueja/dessenhs.js';
 
 // Un mot corrigé après le tri garde sa clé d’origine : le choix de Romain le suit.
 const CLAUS_ANCIANAS = { 'Qu’es aquò ?': 'Qué es aquò ?' }; // corrigé le 06-11 (Romain : « Qu’es aquò »)
+
+// Un dessin gardé puis refait revient dans la pile : sa clé prend le numéro de sa nouvelle version.
+const VERSIONS = { marroquina: 2, argerian: 2 }; // en drapeau, comme les autres nationalités (06-11)
 
 /** Les dessins de la poussière d'or (Remira), chacun une seule fois. */
 function dessenhs() {
@@ -22,9 +25,9 @@ function dessenhs() {
 				if (!el) {
 					// deux dessins pour un même mot (« la cosina ») : la définition les distingue
 					const nom = CLAUS_ANCIANAS[oc] ?? oc;
-					const clau = clausPresas.has(nom) ? `${nom} · ${def}` : nom;
+					const clau = (clausPresas.has(nom) ? `${nom} · ${def}` : nom) + (VERSIONS[oc] ? ` · v${VERSIONS[oc]}` : '');
 					clausPresas.add(clau);
-					el = { clau, titol: oc, sotstitol: def, context: [], dessenh: chemins };
+					el = { clau, titol: oc, sotstitol: def, context: [], dessenh: chemins, tintas: TINTAS[oc] ?? null };
 					parDessenh.set(chemins, el);
 				}
 				if (!el.context.includes(s.nom.oc)) el.context.push(s.nom.oc);
