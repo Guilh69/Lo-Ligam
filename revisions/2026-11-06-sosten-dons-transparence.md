@@ -34,6 +34,7 @@ Idée de Romain, 2026-11-06 vers 23 h 15, née de la cagnotte des illustrations 
 **Choix de Romain (06-11, vers 23 h 25) : « Lyra, je les appelle »** : Lyra Collect pressenti, sous réserve de leurs réponses ; Mollie en repli (cahier §11). Rien n'est ouvert ni codé.
 
 **L'appel à Lyra** (demander les réponses par courriel, pour les garder)
+- Vérifié sur lyra.com le 06-11 : pas d'ouverture de compte seul en ligne ; « Se lancer » mène à un formulaire de contact (lyra.com/fr/contact, case « Votre projet » pour les questions, réponse promise sous 48 h ouvrées) ; un appel n'est donc pas obligatoire. Tarifs affichés : cartes européennes 1,40 % + 0,20 €, prélèvement SEPA 0,90 % + 0,20 € (2 € au plus) ; Apple Pay, Google Pay et quelques autres « soumis à un abonnement mensuel et frais de mise en service ».
 - Se présenter : micro-entrepreneur (entreprise individuelle, micro-BIC, franchise de TVA), site loligam.eu pour apprendre l'occitan, presque tout gratuit ; petits volumes au départ.
 - Les besoins : dons libres sans contrepartie, une fois ou chaque mois, montant choisi par la personne ; accès à prix symbolique à une partie du site, ouvert automatiquement après paiement ; cours en visio payés par lien ; page de paiement chez Lyra, aucun formulaire de carte sur le site.
 - Les questions : 1. un micro-entrepreneur est-il accepté ? 2. les dons sans contrepartie sont-ils acceptés ? 3. les paiements mensuels, par carte et par prélèvement ? 4. les frais exacts : par paiement (carte européenne, prélèvement), mise en service, abonnement éventuel, versements ; 5. le montant libre sur un lien de paiement ? 6. une API avec notifications de paiement et un environnement de test (pour relier le site) ? 7. les pièces à fournir et le délai d'ouverture ? 8. où sont gardées les données (France, Union européenne) ?
@@ -44,6 +45,8 @@ Idée de Romain, 2026-11-06 vers 23 h 15, née de la cagnotte des illustrations 
 - Écartés : GoCardless (britannique, prélèvement seulement, 1 % + 0,20 €), Stripe (américain), Liberapay (compte obligatoire, reverse par Stripe ou PayPal), PayZen (demande un contrat de vente à distance avec une banque et un abonnement mensuel).
 
 Sources : lejournaldesentreprises.com (Lyra Network), ecommerce-nation.fr et wizishop.fr (tarifs Lyra Collect), docs.lyra.com, leptidigital.fr et kolonell.com (Payplug), kolonell.com (GoCardless), mollie.com/products/recurring.
+
+**Question ouverte de Romain (06-11, clôture) : un service de paiement est-il vraiment utile, ou un lien direct vers son compte suffit-il ?** Piste de Claude, à trancher plus tard : commencer par le virement (RIB du compte de la micro-entreprise affiché sur la page « Soutenir », virement permanent pour donner chaque mois), sans frais ni code ; ne prendre un service (Lyra, sinon Mollie) que pour la carte et pour l'accès payant qui s'ouvre tout seul. Limites du virement : plus d'étapes pour la personne, pas de carte, rapprochement des dons à la main, IBAN rendu public. Le formulaire Lyra n'est pas envoyé.
 
 ## Décisions suivantes (une à la fois)
 2. Le service de paiement : fait (Lyra Collect pressenti, Mollie en repli, voir plus haut) ; à confirmer après l'appel.

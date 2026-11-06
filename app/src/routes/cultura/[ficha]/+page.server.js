@@ -27,7 +27,7 @@ export function load({ params }) {
 				{ src: `/cultura/${f.id}-objecte.webp`, srcset: undefined, pos: '50% 50%', credit: c, objecte: true }
 			: x
 				? // ses images déjà recadrées, et son crédit s'il vient de Commons
-					{ src: `/cultura/${f.id}-${amples(f.id)[0]}.webp`, srcset: srcset(f.id, Infinity), pos: x.posFicha ?? '50% 50%', credit: c, colors: !!x.colors }
+					{ src: `/cultura/${f.id}-${amples(f.id)[0]}.webp`, srcset: srcset(f.id, Infinity), pos: x.posFicha ?? '50% 50%', credit: c }
 				: null;
 	return { id: f.id, encart: e, foto: fotoGranda, dessenh: dessenh(f.id) };
 }
