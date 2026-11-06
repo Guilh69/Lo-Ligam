@@ -72,8 +72,7 @@ void main() {
 
 /** Le moteur WebGL d'un canevas, ou null si le navigateur ne sait pas. */
 function motor(cv) {
-	// l'image dessinée est gardée : on ne redessine que quand le relief bouge, et les captures la voient
-	const gl = cv.getContext('webgl', { antialias: false, alpha: false, depth: false, preserveDrawingBuffer: true, powerPreference: 'low-power' });
+	const gl = cv.getContext('webgl', { antialias: false, alpha: false, depth: false, powerPreference: 'low-power' });
 	if (!gl) return null;
 	const sh = (tipe, src) => {
 		const o = gl.createShader(tipe);
@@ -101,9 +100,10 @@ function motor(cv) {
 	gl.uniform1i(gl.getUniformLocation(pr, 'uProf'), 1);
 	gl.uniform1f(loc.uF, FIX);
 	gl.uniform1f(loc.uM, MARGE);
+	const tex = [gl.createTexture(), gl.createTexture()]; // la photo, la carte (réutilisées si la taille change)
 	const texturar = (unitat, im) => {
 		gl.activeTexture(gl.TEXTURE0 + unitat);
-		gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+		gl.bindTexture(gl.TEXTURE_2D, tex[unitat]);
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, im);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
@@ -112,10 +112,8 @@ function motor(cv) {
 	};
 	return {
 		max: gl.getParameter(gl.MAX_TEXTURE_SIZE),
-		texturas(foto, carta) {
-			texturar(0, foto);
-			texturar(1, carta);
-		},
+		foto: (im) => texturar(0, im),
+		carta: (im) => texturar(1, im),
 		dessenhar({ O, P }) {
 			gl.viewport(0, 0, cv.width, cv.height);
 			gl.uniform2f(loc.uO, O[0], O[1]);
@@ -143,12 +141,29 @@ function lectorProf(im) {
 }
 
 /**
+ * La photo à la taille du canevas, une fois pour toutes : sans cela, une photo
+ * plus grande que l'écran scintille quand le relief la décale d'une fraction de
+ * pixel (la mer de « calanca » : des à-coups, Romain, 06-11).
+ */
+function aLaTalha(img, lw, lh) {
+	const c = document.createElement('canvas');
+	c.width = lw;
+	c.height = lh;
+	const x = c.getContext('2d');
+	x.imageSmoothingQuality = 'high';
+	x.drawImage(img, 0, 0, lw, lh);
+	return c;
+}
+
+/**
  * Pose le relief sur un canevas placé par-dessus la photo, dans le même cadre
  * qui glisse. estat() rend { a, w, h, du, dv } : l'animation du glissement
  * (aller-retour adouci), la photo à l'écran et le glissement, ou null.
  * ponches() rend les éléments à déplacer avec leur objet : [[élément, x, y]].
  * Rend la fonction qui arrête tout. Le canevas reste invisible tant qu'il n'a
- * rien dessiné : dessous, la même photo, agrandie de la même marge.
+ * rien dessiné : dessous, la même photo, agrandie de la même marge. Il est
+ * redessiné à chaque image tant que la photo glisse, comme dans l'essai (des
+ * redessins par paliers donnaient des à-coups), et plus du tout à l'arrêt.
  */
 export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 	const m = motor(cv);
@@ -185,15 +200,16 @@ export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 		const r = Math.min(devicePixelRatio || 1, 1.5);
 		const lw = Math.min(Math.round(e.w * r), m.max, 4096),
 			lh = Math.min(Math.round(e.h * r), m.max, 4096);
-		const rg = reglatges(p, e.du, e.dv, e.w, e.h);
-		// redessiner seulement quand quelque chose a bougé d'un dixième de pixel
-		const clau2 = [lw, lh, Math.round(rg.O[0] * e.w * 10), Math.round(rg.O[1] * e.h * 10), Math.round(rg.P * e.w * 10)].join();
+		// à l'arrêt (pause, point ouvert), rien n'est redessiné
+		const clau2 = `${lw}x${lh} ${p}`;
 		if (clau2 !== darrier) {
 			darrier = clau2;
+			const rg = reglatges(p, e.du, e.dv, e.w, e.h);
 			ara = { rg, w: e.w, h: e.h };
 			if (cv.width !== lw || cv.height !== lh) {
 				cv.width = lw;
 				cv.height = lh;
+				m.foto(aLaTalha(img, lw, lh));
 			}
 			m.dessenhar(rg);
 			cv.style.opacity = '1';
@@ -211,7 +227,7 @@ export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 	Promise.all([img.decode(), carta.decode()])
 		.then(() => {
 			if (!viu) return;
-			m.texturas(img, carta);
+			m.carta(carta);
 			prof = lectorProf(carta);
 			pas();
 		})

@@ -38,10 +38,10 @@
 	<main class="principal">
 		<a class="parent" href="/cultura" lang="oc">Cultura</a>
 
-		<header class="cap" class:amb-foto={data.foto} class:amb-dessenh={!data.foto && (data.dessenh?.length || f.id === 'roge-e-aur')} style:--aplat={t.color[0]} style:--sus={t.color[1]}>
+		<header class="cap" class:amb-foto={data.foto} class:amb-objecte={data.foto?.objecte} class:amb-dessenh={!data.foto && (data.dessenh?.length || f.id === 'roge-e-aur')} style:--aplat={t.color[0]} style:--sus={t.color[1]}>
 			<span class="cap-media" aria-hidden="true">
 				{#if data.foto}
-					<img src={data.foto.src} srcset={data.foto.srcset} sizes="(min-width: 60rem) 52rem, 100vw" alt="" style:object-position={data.foto.pos} />
+					<img class:objecte={data.foto.objecte} src={data.foto.src} srcset={data.foto.srcset} sizes={data.foto.srcset ? '(min-width: 60rem) 52rem, 100vw' : undefined} alt="" style:object-position={data.foto.pos} />
 				{:else if data.dessenh?.length}
 					<svg class="dessenh" viewBox="0 0 100 100">
 						{#each data.dessenh as d}<path {d} />{/each}
@@ -59,6 +59,14 @@
 				>
 			</h1>
 		</header>
+		{#if data.foto?.credit}
+			{@const c = data.foto.credit}
+			<!-- photo libre de Wikimedia Commons : auteur, licence, lien (CC BY-SA) -->
+			<p class="credit-foto" lang={lang}>
+				{tria(IU.fotoDe)} <a href={c.ligam} target="_blank" rel="noopener noreferrer">{c.autor}</a>, Wikimedia Commons,
+				<a href={c.licenciaLigam} target="_blank" rel="noopener noreferrer license">{c.licencia}</a>, {tria(IU.modificada)}
+			</p>
+		{/if}
 
 		<div class="texte" lang="fr" dir="ltr">
 			{#if lang !== 'fr'}<p class="nota-lenga" lang={lang} dir="auto">{tria(IU.enFrances)}</p>{/if}
@@ -169,11 +177,46 @@
 		mix-blend-mode: luminosity;
 		opacity: 0.62;
 	}
+	/* un objet en petite photo (la Copa Santa) : entier, au bout de la case,
+	   avec de l'air ; posé en « éclaircir » (screen), son fond noir disparaît
+	   dans la couleur du thème au lieu d'y faire un bloc sombre (Joan, 06-11) ;
+	   le titre lui laisse la place */
+	.cap-media img.objecte {
+		position: absolute;
+		inset-block: 7%;
+		inset-inline-end: 4%;
+		width: auto;
+		height: 86%;
+		max-width: 45%;
+		object-fit: contain;
+		filter: grayscale(1) contrast(1.25);
+		mix-blend-mode: screen;
+		opacity: 0.7;
+	}
+	/* le calque de l'image forme son propre empilement : il lui faut la couleur
+	   du thème pour que « éclaircir » s'y applique */
+	.amb-objecte .cap-media {
+		background: var(--aplat);
+	}
+	.amb-objecte h1 {
+		padding-inline-end: clamp(5rem, 24%, 13rem);
+	}
 	.amb-foto .cap-media::after {
 		content: '';
 		position: absolute;
 		inset: 0;
 		background: linear-gradient(to top, rgba(20, 8, 4, 0.6), transparent 75%);
+	}
+	.credit-foto {
+		margin: 0.45rem 0 0;
+		color: var(--t-tinta-2);
+		font-size: 0.8rem;
+		text-align: end;
+	}
+	.credit-foto a {
+		color: inherit;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.15em;
 	}
 	.dessenh {
 		position: absolute;
