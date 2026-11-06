@@ -101,7 +101,7 @@ STYLES = {
     'Note de montage': ({}, luc(9, 11.5, fill='Bleu')),
 }
 GRAS_OCRE = {'fontStyle': 'Bold', 'fill': 'Ocre'}
-EMPASA = {'fill': 'Brique'}  # mots mis en avant du manifeste : en couleur, sans gras (Romain, 06-11)
+EMPASA = {'fontStyle': 'Bold', 'fill': 'Brique'}  # mots mis en avant du manifeste : gras gardé (Romain, 06-11 : le problème était la couleur, pas le gras)
 GRAS = {'fontStyle': 'Bold'}
 
 # --- textes -----------------------------------------------------------------------------
