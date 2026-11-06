@@ -167,10 +167,12 @@
 <svelte:window onkeydown={clavièr} />
 
 {#if edicion.pagina && edicion.admin && !edicion.actiu}
-	<button type="button" class="ed-boton" onclick={activar} aria-label={t.editar} title={t.editar}>
-		<Icona nom="reglages" size="1.2em" />
-		<span>{fr ? 'Modifier' : 'Editar'}</span>
-	</button>
+	{#if !edicion.talhièr}
+		<button type="button" class="ed-boton" onclick={activar} aria-label={t.editar} title={t.editar}>
+			<Icona nom="reglages" size="1.2em" />
+			<span>{fr ? 'Modifier' : 'Editar'}</span>
+		</button>
+	{/if}
 	{#if edicion.messatge?.tipe === 'error'}
 		<p class="ed-mes-sol" role="alert">⚠ {edicion.messatge.text}</p>
 	{/if}

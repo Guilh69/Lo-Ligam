@@ -5,9 +5,12 @@ entière de quelques pixels selon la profondeur.
 Ici : profondeur relative (proche = clair) par Depth Anything V2 Small (ONNX, licence
 Apache 2.0, modèle de 99 Mo hors Git), puis les objets proches légèrement élargis
 et la carte adoucie, pour qu'en bougeant leur bord ne se déchire pas.
-Sortie : app/static/ensag/prigondor/<clau>-prigondor.png (768 px de large).
+Sortie : app/static/apren/paisatges/prigondor/<clau>.webp (768 px de large, WebP
+qualité 90 : 4 à 6 Ko, sept fois moins qu'en PNG, écart moyen d'un tiers de niveau
+sur 255 ; option « Relèu » de Remira › Paisatges, 06-11). Les trois cartes de l'essai
+(app/static/ensag/prigondor/*.png) ont été faites de la même façon, en PNG.
 Dépendances : numpy, pillow, onnxruntime.
-Usage (depuis la racine du dépôt) : py outils/prigondor/carta.py clau1 clau2 ..."""
+Usage (depuis la racine du dépôt) : py outils/prigondor/carta.py totas | clau1 clau2 ..."""
 import re, sys, pathlib
 import numpy as np
 import onnxruntime as ort
@@ -17,7 +20,7 @@ ICI = pathlib.Path(__file__).parent
 W = ICI.parents[1] / 'app'
 MODELE = pathlib.Path.home() / 'Documents' / '6_Projectes' / 'Lo_Ligam_hors-git' / 'outils' / 'prigondor' / 'model.onnx'
 D = W / 'static' / 'apren' / 'paisatges'
-SORT = W / 'static' / 'ensag' / 'prigondor'
+SORT = W / 'static' / 'apren' / 'paisatges' / 'prigondor'
 SORT.mkdir(parents=True, exist_ok=True)
 js = (W / 'src' / 'lib' / 'paisatges' / 'paisatges.js').read_text(encoding='utf-8')
 AMPLES = {m.group(1): [int(a) for a in m.group(2).split(',')] for m in re.finditer(r"clau: '([a-z-]+)',[\s\S]*?amples: \[([\d, ]+)\]", js)}
@@ -27,7 +30,7 @@ MEAN = np.array([0.485, 0.456, 0.406], dtype=np.float32)
 STD = np.array([0.229, 0.224, 0.225], dtype=np.float32)
 LARG = 768
 
-for clau in sys.argv[1:]:
+for clau in (AMPLES if sys.argv[1:] == ['totas'] else sys.argv[1:]):
     im = Image.open(D / f'{clau}-{AMPLES[clau][-1]}.webp').convert('RGB')
     w, h = im.size
     if w >= h:
@@ -41,6 +44,6 @@ for clau in sys.argv[1:]:
     c = Image.fromarray((y * 255).astype(np.uint8), 'L').resize((LARG, round(LARG * h / w)), Image.BICUBIC)
     # objets proches élargis d'environ 1 % de la largeur, puis fondu doux
     c = c.filter(ImageFilter.MedianFilter(5)).filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.GaussianBlur(4))
-    f = SORT / f'{clau}-prigondor.png'
-    c.save(f, optimize=True)
+    f = SORT / f'{clau}.webp'
+    c.save(f, 'WEBP', quality=90, method=6)
     print(clau, c.size, f.stat().st_size)

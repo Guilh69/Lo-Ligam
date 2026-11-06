@@ -9,7 +9,7 @@
 - **Tout le travail de Claude est sur `master` et en ligne**, sauf ce qui suit.
 - **Deux discussions Claude tournaient encore ce soir-là** (jeux de l'A1 ; correction « Qu'es aquò ? » dans les dessins de Remira, branche `claude/occitan-words-focus-interface-88d16a`, un fichier modifié non envoyé). Si au prochain `git pull` le commit 89030a4 n'est pas sur `master`, ne pas le refaire : demander à Romain.
 - **Outil d'interpellation des parlementaires** : un commit jamais envoyé (`f8520d4`, script `app/scripts/elus-generar.mjs` et `app/static/data/elus.json`), sur la branche locale `claude/occitan-parliament-tool-c4e7c1` ; le dernier message de Romain était « Phase 3 », sans suite. À reprendre seulement si Romain le demande.
-- **En attente d'un choix de Romain** (ne rien coder avant) : refonte de l'espace administrateur « Lo talhièr » (proposition du 06-11, PILOTATGE chantier 7) ; essai « Profondeur » v2 sur `/ensag/prigondor` (chantier 29) ; tri des 257 dessins de Remira sur `/admin/triar` (chantier 26).
+- **En attente d'un choix de Romain** (ne rien coder avant) : lots 2 à 5 de « Lo talhièr », la refonte de l'espace administrateur (PILOTATGE chantier 7 ; le lot 1 est en ligne, voir « Dernier point Claude ») ; essai « Profondeur » v2 sur `/ensag/prigondor` (chantier 29) ; tri des 257 dessins de Remira sur `/admin/triar` (chantier 26).
 - **Ce que Romain a à faire seul** : la liste du §1 de `PILOTATGE.md`.
 
 ## À faire par Mistral en premier (réglages, une fois)
@@ -26,6 +26,9 @@
 ## Dernier point Claude
 - 2026-11-06 : relais écrit (ce fichier, `AGENTS.md` « Sur cet ordinateur » et « Sans Claude », `C:\Users\perie\.vibe\AGENTS.md`, compétences joan/rodrigo/aran) ; Vibe Hub corrigé (Node dans le PATH, anciens dossiers de Lo Ligam retirés, messages d'erreur en français ; copie d'avant dans `C:\Users\perie\Depots\vibe-hub\.copies`).
 - 2026-11-06, 18 h 55 : la discussion des jeux de l'A1 est close, tout est sur `master` : la salle de jeux de `/apren/jocs` (cinq familles, deux tèmas Calme et Joiós, jeux à venir montrés sans lien ; cahier §11 du 06-11). Ajouter un jeu : une entrée dans `app/src/lib/jocs/sala/cataleg.js` (ses tests disent ce qui manque) et son composant dans `app/src/routes/apren/jocs/+page.svelte`. Romain doit dire quel tèma et quelles affiches lui plaisent ; doutes d'occitan J-6 à J-10 dans `DOBTES-OCCITAN.md` §6.
+- 2026-11-06, 19 h 31 : diffusion du site (chantier 30) : synthèse du projet et note de stratégie dans `diffusion/` ; rien n'a été envoyé à personne ; Romain a choisi « en trois cercles » (cahier §11) ; textes prêts dans `diffusion/messages.md` et `diffusion/fiche.md`. Pour la suite des supports : `diffusion/strategie.md` §8.
+- 2026-11-06, 19 h 46 : **Lo talhièr, lot 1 en ligne**, fait par Claude à la demande de Romain (« Lot 1 : Per tu et l'IA ») : `/admin` devient « Per tu », barre de l'administrateur sur les pages, notes dans la table `remarcas` (`supabase/supabase-notas.sql`, appliqué après deux relectures de Rodrigo). **Pour Mistral, à chaque début de séance** : `cd app` puis `node scripts/remarcas.mjs` (voir `AGENTS.md`). Passation : `revisions/2026-11-06-talhier.md` §12. Lots 2 à 5 : attendre le choix de Romain.
+- 2026-11-06 : `npm run verificar:rls` donne 3 échecs sur les fiches, sans lien avec le lot 1 (son SQL ne touche que `remarcas`) : les deux fiches d'essai `_essai--publicada` et `_essai--rescondida` (`supabase/supabase-admin-schema.sql`) ne sont plus dans la table `fichas` ; ses règles d'accès sont en place (lues dans la base le 06-11). Ne rien changer en base sans l'accord de Romain.
 
 ## Consignes pour les deux agents
 - Lire ce fichier avant de commencer une tâche ; y noter toute décision qui concerne l'autre agent, en une ligne datée.

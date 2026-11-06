@@ -9,8 +9,17 @@
 	// qu'une page ne s'y est pas branchée (2026-10-24)
 	import Edicion from '$lib/components/Edicion.svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
+	import { esAdmin } from '$lib/adminStore';
+	import { browser, dev } from '$app/environment';
 
 	let { children } = $props();
+
+	// Lo talhièr (2026-11-06) : le rail d'outils de l'administrateur (Modificar,
+	// Comentar, Per tu), chargé pour lui seul ; en développement,
+	// « ?edicion=simular » le montre sans compte, comme l'éditeur
+	const simular = dev && browser && new URLSearchParams(location.search).get('edicion') === 'simular';
+	// (l'administration a sa propre navigation, la liste Per tu en tête)
+	let talhièr = $derived(($esAdmin || simular) && !(page.route.id ?? '').startsWith('/admin'));
 
 	// Cadre commun (2026-10-07). Les pages sont harmonisées une à une avec la
 	// charte de l'esbòs de nuèch ; tant qu'une page n'est pas dans ARMONIZADAS
@@ -73,6 +82,12 @@
 {/if}
 
 <Edicion />
+
+{#if talhièr}
+	{#await import('$lib/talhier/Talhier.svelte') then m}
+		<m.default />
+	{/await}
+{/if}
 
 <style>
 	.evitar {

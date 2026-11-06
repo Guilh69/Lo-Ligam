@@ -26,6 +26,13 @@ export function editar(node, clau) {
 	// focusable qui ne l'était pas)
 	const sensTabindex = !node.hasAttribute('tabindex');
 
+	// pour l'administrateur, l'élément porte sa clé : une note du talhièr
+	// (lib/talhier) s'y accroche et le retrouve
+	$effect(() => {
+		if (edicion.admin) node.setAttribute('data-clau', c);
+		else node.removeAttribute('data-clau');
+	});
+
 	$effect(() => {
 		const actiu = edicion.actiu;
 		node.classList.toggle('ed', actiu);

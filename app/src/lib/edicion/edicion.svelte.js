@@ -31,7 +31,10 @@ export const edicion = $state({
 	causit: null,
 	ancora: null,
 	ocupat: false,
-	messatge: null
+	messatge: null,
+	// le rail du talhièr (lib/talhier, 2026-11-06) est là et porte l'entrée
+	// « Modificar » : l'éditeur n'affiche plus son propre bouton
+	talhièr: false
 });
 
 const VUEJ = { oc: '', fr: '', es: '', en: '', ca: '', ar: '' };
@@ -90,7 +93,8 @@ export function iniciar(pagina, publicats) {
 	simulacion = import.meta.env.DEV && new URLSearchParams(location.search).get('edicion') === 'simular';
 	if (simulacion) {
 		edicion.admin = true;
-		return;
+		// en partant, la page range aussi le mode d'essai (sinon « Editar » la suit)
+		return quitar;
 	}
 	// le bouton « Editar » n'apparaît que pour l'administrateur (la base refuse
 	// de toute façon les écritures des autres)

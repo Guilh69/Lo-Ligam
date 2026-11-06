@@ -171,10 +171,15 @@
 			modul: modul.id.replace('modul-', ''),
 			etapa,
 			bloc: cibla?.bloc ?? null,
-			cibla: [cibla?.titol].filter(Boolean).join(' · ').slice(0, 300) || null,
+			// (une seule ligne : la base refuse les retours à la ligne dans ces champs,
+			// supabase-notas.sql)
+			cibla: [cibla?.titol].filter(Boolean).join(' · ').replace(/\s+/g, ' ').slice(0, 300) || null,
 			extrait: cibla?.extrait || null,
 			tèxte: tèxte.trim(),
-			autor: autor.trim() || null
+			autor: autor.replace(/\s+/g, ' ').trim() || null,
+			// la remarque de Romain est une demande ; celle d'un proche, une remarque
+			// à vérifier (la base refuse ce drapeau à qui n'est pas administrateur)
+			de_romain: $esAdmin
 		});
 		mandant = false;
 		if (e) {
