@@ -11,6 +11,8 @@
 	// Calme : sur un fond de la couleur de la famille, passé comme une vieille
 	// affiche, immobile. Rien ne bouge si l'appareil demande moins d'animations.
 	// Décoratif : rien à lire pour un lecteur d'écran (le nom de la famille suit).
+	// Le coin bas à droite (x > 344, y > 248) reste vide : le rond « IA » s'y pose
+	// (Romain, 06-11 : « pas en conflit avec l'image »).
 	// Les anciennes affiches de paysage (Afica.svelte) restent dans le code, et
 	// les tableaux peints dans design-stock/pinturas, pour un autre usage.
 	import { onMount } from 'svelte';
@@ -50,13 +52,14 @@
 				<feComposite in2="SourceGraphic" operator="in" />
 			</filter>
 		</defs>
-		<g class="pecas" filter="url(#gra-{uid})">
+		<!-- tout le dessin un peu resserré vers le haut à gauche : le coin du rond reste libre -->
+		<g class="pecas" filter="url(#gra-{uid})" transform="translate(190 140) scale(0.94) translate(-190 -140)">
 			{#if id === 'adreca'}
 				<!-- le serpent : sa queue a déjà écrit L I G A, il va manger le M ;
 				     à côté, le panier où tombe une tuile -->
 				<path class="l pontilh" d="M262 104 Q288 82 300 80" />
-				<!-- un peu à gauche du coin, où se pose le rond « IA » -->
-				<g transform="translate(-14 -6)">
+				<!-- loin du coin bas à droite, où se pose le rond « IA » -->
+				<g transform="translate(-34 -16)">
 					<path class="l pontilh" d="M338 150 V176" />
 					<g class="tomba">
 						<rect class="f" x="322" y="180" width="32" height="32" rx="7" transform="rotate(-8 338 196)" />
@@ -108,7 +111,7 @@
 				<g class="lopia">
 					<circle class="verre" cx="252" cy="176" r="56" />
 					<circle class="anel" cx="252" cy="176" r="56" />
-					<path class="manga" d="M293 216 L346 268" />
+					<path class="manga" d="M293 216 L334 256" />
 				</g>
 			{:else if id === 'memoria'}
 				<!-- les paires : deux soleils pareils ; une carte se soulève et se

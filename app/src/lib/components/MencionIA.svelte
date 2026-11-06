@@ -118,32 +118,32 @@
 		bottom: 0;
 	}
 
-	/* le rond : petit, à peine visible, plus net au survol ; le doigt a 44 px
-	   (zone invisible autour), « IA » à 4,5:1 au moins (Joan, 06-11) */
+	/* le rond : petit (20 px), à peine visible, plus net au survol ; le doigt
+	   a 44 px (zone invisible autour), « IA » à 4,5:1 au moins (Joan, 06-11) */
 	.rond {
 		position: relative;
 		display: inline-grid;
 		place-items: center;
 		box-sizing: border-box;
-		inline-size: 1.5rem;
-		block-size: 1.5rem;
+		inline-size: 1.25rem;
+		block-size: 1.25rem;
 		padding: 0;
 		border: 1px solid currentColor;
 		border-radius: 50%;
 		background: var(--mencion-fons, transparent);
 		font-family: var(--font-body);
-		font-size: 0.65rem;
+		font-size: 0.6rem;
 		font-weight: 700;
 		letter-spacing: 0.04em;
 		line-height: 1;
 		text-decoration: none;
-		opacity: 0.85;
+		opacity: 0.9;
 		transition: opacity 0.2s ease;
 	}
 	.rond::after {
 		content: '';
 		position: absolute;
-		inset: -10px;
+		inset: -12px;
 	}
 	.rond:hover,
 	.rond:focus-visible {
@@ -151,8 +151,8 @@
 	}
 	.rond.cadre {
 		position: absolute;
-		inset-inline-end: 0.45rem;
-		bottom: 0.45rem;
+		inset-inline-end: 0.35rem;
+		bottom: 0.35rem;
 	}
 
 	.linha {
