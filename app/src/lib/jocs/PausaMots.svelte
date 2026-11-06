@@ -1125,8 +1125,11 @@
 	@container joc (min-width: 52rem) {
 		.marc {
 			grid-template-columns: minmax(0, 1fr) 19rem;
-			grid-template-rows: auto minmax(0, 1fr) auto;
-			grid-template-areas: 'taula cap' 'taula mots' 'taula comandas';
+			/* les réglages suivent les mots ; le reste de la hauteur va en bas
+			   (Romain, 07-11 : « trop d'espace » entre les mots et les réglages).
+			   Les mots ne défilent que si la colonne manque de hauteur. */
+			grid-template-rows: auto minmax(0, auto) auto minmax(0, 1fr);
+			grid-template-areas: 'taula cap' 'taula mots' 'taula comandas' 'taula .';
 		}
 		.mots {
 			overflow: auto;
@@ -1156,6 +1159,12 @@
 		   (1280 × 720), tous restent visibles sans défiler */
 		.tuiles > li {
 			flex: 1 1 auto;
+		}
+		/* la dernière ligne garde des mots à leur taille (sans cela, un mot
+		   seul s'étire sur toute la largeur) */
+		.tuiles::after {
+			content: '';
+			flex: 10 1 auto;
 		}
 	}
 	/* téléphone : les huit thèmes tiennent sans défiler (vignettes plus basses,
