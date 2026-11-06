@@ -7,7 +7,7 @@
 
 ## Relais de Claude (2026-11-06)
 - **Tout le travail de Claude est sur `master` et en ligne**, sauf ce qui suit.
-- **Deux discussions Claude tournaient encore ce soir-là** (jeux de l'A1 ; correction « Qu'es aquò ? » dans les dessins de Remira, branche `claude/occitan-words-focus-interface-88d16a`, un fichier modifié non envoyé). Si au prochain `git pull` le commit 89030a4 n'est pas sur `master`, ne pas le refaire : demander à Romain.
+- **Deux discussions Claude tournaient encore ce soir-là** (jeux de l'A1 ; correction « Qu'es aquò ? » dans les dessins de Remira). **Mise à jour du 06-11, 20 h : les deux sont closes, tout est sur `master`** (89030a4 compris).
 - **Outil d'interpellation des parlementaires** : un commit jamais envoyé (`f8520d4`, script `app/scripts/elus-generar.mjs` et `app/static/data/elus.json`), sur la branche locale `claude/occitan-parliament-tool-c4e7c1` ; le dernier message de Romain était « Phase 3 », sans suite. À reprendre seulement si Romain le demande.
 - **En attente d'un choix de Romain** (ne rien coder avant) : lots 2 à 5 de « Lo talhièr », la refonte de l'espace administrateur (PILOTATGE chantier 7 ; le lot 1 est en ligne, voir « Dernier point Claude ») ; essai « Profondeur » v2 sur `/ensag/prigondor` (chantier 29) ; tri des 257 dessins de Remira sur `/admin/triar` (chantier 26).
 - **Ce que Romain a à faire seul** : la liste du §1 de `PILOTATGE.md`.
@@ -29,6 +29,8 @@
 - 2026-11-06, 19 h 31 : diffusion du site (chantier 30) : synthèse du projet et note de stratégie dans `diffusion/` ; rien n'a été envoyé à personne ; Romain a choisi « en trois cercles » (cahier §11) ; textes prêts dans `diffusion/messages.md` et `diffusion/fiche.md`. Pour la suite des supports : `diffusion/strategie.md` §8.
 - 2026-11-06, 19 h 46 : **Lo talhièr, lot 1 en ligne**, fait par Claude à la demande de Romain (« Lot 1 : Per tu et l'IA ») : `/admin` devient « Per tu », barre de l'administrateur sur les pages, notes dans la table `remarcas` (`supabase/supabase-notas.sql`, appliqué après deux relectures de Rodrigo). **Pour Mistral, à chaque début de séance** : `cd app` puis `node scripts/remarcas.mjs` (voir `AGENTS.md`). Passation : `revisions/2026-11-06-talhier.md` §12. Lots 2 à 5 : attendre le choix de Romain.
 - 2026-11-06 : `npm run verificar:rls` donne 3 échecs sur les fiches, sans lien avec le lot 1 (son SQL ne touche que `remarcas`) : les deux fiches d'essai `_essai--publicada` et `_essai--rescondida` (`supabase/supabase-admin-schema.sql`) ne sont plus dans la table `fichas` ; ses règles d'accès sont en place (lues dans la base le 06-11). Ne rien changer en base sans l'accord de Romain.
+
+- 2026-11-06, 20 h : **tri des 257 dessins de Remira fini par Romain** (231 gardés). Les 7 couleurs sont en ronds de leur couleur (`TINTAS` de `dessenhs.js`, comme les drapeaux) ; les 26 croix restantes refaites (bloc « Lot 3 »), relues par Joan, marquées « refaites » : elles attendent son cœur ou sa croix en tête de `/admin/triar`. Une nouvelle croix : redessiner d'après son commentaire, faire relire par Joan, puis `node scripts/remarcas.mjs --tractar <id> --responsa "…"`.
 
 ## Consignes pour les deux agents
 - Lire ce fichier avant de commencer une tâche ; y noter toute décision qui concerne l'autre agent, en une ligne datée.
