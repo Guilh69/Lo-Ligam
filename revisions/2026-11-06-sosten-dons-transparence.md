@@ -25,9 +25,19 @@ Idée de Romain, 2026-11-06 vers 23 h 15, née de la cagnotte des illustrations 
 - la réserve.
 
 ## Première décision : où passe l'argent
+**Choix de Romain (06-11, vers 23 h 25) : A, « Une seule caisse »** (cahier §11). Open Collective Europe n'est plus retenu.
 - **A. Une seule caisse, la micro-entreprise** : dons, accès et visio au même endroit ; la page des comptes montre où va l'argent. Simple, cohérent avec « en vivre » ; tout est imposable ; pas de réduction d'impôt pour les donateurs (à dire sur la page).
 - **B. Deux caisses** : les projets d'intérêt public (illustrations sous licence libre, projets particuliers) par Open Collective Europe, s'il accepte ; le reste par la micro-entreprise. Comptes des projets publics d'office, mais deux systèmes à tenir, et un refus possible (personne seule, site qui vend).
 - Plus tard possible : une association, quand une deuxième personne s'engagera.
+
+## Deuxième décision : le service de paiement (comparé le 06-11, 23 h 30)
+À savoir d'abord : un don ponctuel peut passer par un simple lien, sans code, chez tous. Les **dons mensuels** et l'**accès payant qui s'ouvre tout seul** demandent de relier le service au site (du code, et la relecture de Rodrigo), quel que soit le service. Seul Liberapay gère les dons mensuels de son côté, mais il faut un compte pour donner et il reverse par Stripe ou PayPal.
+- **A. Lyra Collect** : Lyra Network, SAS créée en 2001, siège à Labège près de Toulouse, décrite comme une entreprise de taille intermédiaire indépendante (Le Journal des entreprises) ; Lyra Collect est un établissement de paiement agréé par l'ACPR. Environ 1,4 % + 0,20 € par paiement, pas d'abonnement, des frais de mise en service (190 € dans une offre partenaire). Liens de paiement, prélèvement SEPA, API avec notifications. **À demander à Lyra** : un micro-entrepreneur est-il accepté ? les paiements mensuels sont-ils possibles ? le prix de la mise en service ? des dons sans contrepartie sont-ils acceptés ?
+- **B. Mollie** : néerlandais, environ 1,2 % + 0,25 €, ni abonnement ni frais de mise en service, documentation et API très claires (le plus simple à relier au site, dons mensuels par l'API) ; mais financé par de grands fonds d'investissement.
+- **C. Payplug** : français, filiale de Natixis (groupe BPCE, banques coopératives) ; formule Starter à 10 € HT par mois plus des frais par paiement (environ 0,8 à 2,2 % selon les sources) ; l'abonnement pèse tant que les dons sont rares.
+- Écartés : GoCardless (britannique, prélèvement seulement, 1 % + 0,20 €), Stripe (américain), Liberapay (compte obligatoire, reverse par Stripe ou PayPal), PayZen (demande un contrat de vente à distance avec une banque et un abonnement mensuel).
+
+Sources : lejournaldesentreprises.com (Lyra Network), ecommerce-nation.fr et wizishop.fr (tarifs Lyra Collect), docs.lyra.com, leptidigital.fr et kolonell.com (Payplug), kolonell.com (GoCardless), mollie.com/products/recurring.
 
 ## Décisions suivantes (une à la fois)
 2. Le service de paiement, d'après la caisse choisie et ces critères : dons ponctuels et mensuels sans compte à créer, paiement de l'accès qui ouvre l'accès tout seul, européen, éthique, frais. Le besoin de dons mensuels change la comparaison du 06-11 (Liberapay, sans commission, est fait pour ça ; un accès payant demande un service qu'on relie au site).
