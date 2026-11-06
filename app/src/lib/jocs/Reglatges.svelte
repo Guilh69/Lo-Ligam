@@ -6,7 +6,11 @@
 	// joints), les options (interrupteurs : son, pas à pas), les actions
 	// (boutons simples, passés en enfants).
 	/**
-	 * causida : { titol, opcions: [{ id, label, detalh? }], valor, causir(id) }
+	 * causida : { titol, opcions: [{ id, label, detalh?, aria?, inactiu? }], valor, causir(id),
+	 *   compacte?, legenda? } ; compacte : des segments étroits (les chiffres des
+	 *   unités, 06-11) ; legenda : { nom, titol? }, dite sous les segments (le
+	 *   titre de l'unité choisie, en occitan) ; inactiu : un segment montré mais
+	 *   pas jouable (une unité sans thème, 06-11)
 	 * causidas : d'autres choix pareils, chacun son bloc (le thème, 06-11)
 	 * bascules : [{ id, label, valor, bascular() }]
 	 * titolOpcions : titre du bloc des options ; children : les actions
@@ -20,13 +24,18 @@
 	{#each totas as c, k (k)}
 		<div class="grop">
 			<span class="grop-titol" id="{id}-c{k}">{c.titol}</span>
-			<div class="segments" role="group" aria-labelledby="{id}-c{k}">
+			<div class="segments" class:compacte={c.compacte} role="group" aria-labelledby="{id}-c{k}">
 				{#each c.opcions as o (o.id)}
-					<button type="button" aria-pressed={c.valor === o.id} onclick={() => c.causir(o.id)}>
+					<button type="button" disabled={o.inactiu} aria-pressed={c.valor === o.id} aria-label={o.aria} onclick={() => c.causir(o.id)}>
 						<span>{o.label}</span>{#if o.detalh}<span class="detalh" lang="oc">{o.detalh}</span>{/if}
 					</button>
 				{/each}
 			</div>
+			{#if c.legenda}
+				<p class="legenda" aria-hidden="true">
+					{c.legenda.nom}{#if c.legenda.titol}{' · '}<span lang="oc">{c.legenda.titol}</span>{/if}
+				</p>
+			{/if}
 		</div>
 	{/each}
 	{#if bascules.length}
@@ -103,10 +112,34 @@
 		background: var(--color-gold);
 		color: var(--color-text);
 	}
+	/* un segment montré mais pas jouable : estompé, sans survol */
+	.segments button:disabled {
+		color: color-mix(in srgb, var(--t-tinta) 38%, transparent);
+		cursor: default;
+	}
+	.segments button:disabled:hover {
+		background: none;
+	}
 	.detalh {
 		font-size: 0.82rem;
 		font-style: italic;
 		opacity: 0.8;
+	}
+	/* des segments étroits : un chiffre, centré, assez large pour le doigt */
+	.segments.compacte button {
+		min-width: 2.2rem;
+		padding-inline: 0.5rem;
+		justify-items: center;
+		text-align: center;
+	}
+	.legenda {
+		margin: 0.1rem 0 0;
+		font-size: 0.88rem;
+		color: var(--t-tinta-2);
+	}
+	.legenda span[lang] {
+		font-style: italic;
+		color: var(--t-tinta);
 	}
 	/* les options : des interrupteurs */
 	.bascules {

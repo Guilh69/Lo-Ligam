@@ -11,9 +11,10 @@
 	// par la page /apren/jocs, à côté de la sèrp (Serp.svelte). Aucun fichier.
 	import { onMount } from 'svelte';
 	import { tria, lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { TEMAS, bonPanier } from '$lib/jocs/paniers-mots.js';
+	import { TEMAS, bonPanier, formaVista } from '$lib/jocs/paniers-mots.js';
 	import { rengs, DECOPA, VB, FONS, insecable } from '$lib/jocs/paniers-pila.js';
-	import { playTick, playChime } from '$lib/lesson/sounds.js';
+	import { playNota, playSorda, playArpegi } from '$lib/lesson/sounds.js';
+	import { UNITATS } from '$lib/jocs/serp-mots.js';
 	import Reglatges from '$lib/jocs/Reglatges.svelte';
 	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
 
@@ -24,6 +25,8 @@
 			fr: 'Un mot tombe : le panier de gauche ou le panier de droite ?'
 		},
 		tema: { oc: 'Tèma', fr: 'Thème' },
+		nivel: { oc: 'Nivèl', fr: 'Niveau' },
+		unitat: { oc: (n) => `Unitat ${n}`, fr: (n) => `Unité ${n}` },
 		reglatges: { oc: 'Reglatges', fr: 'Réglages' },
 		camp: { oc: 'Camp del jòc', fr: 'Terrain du jeu' },
 		pausa: { oc: 'Pausa', fr: 'Pause' },
@@ -64,6 +67,14 @@
 	// ── Partie ───────────────────────────────────────────────────────────
 	let temaId = $state('arribar');
 	let tema = $derived(TEMAS.find((t) => t.id === temaId));
+	// le choix en deux temps (06-11, cinq thèmes de plus) : l'unité, puis le
+	// thème quand l'unité en a plusieurs
+	const UNITATS_TEMAS = [...new Set(TEMAS.map((t) => t.unitat))];
+	const titolUnitat = (u) => UNITATS.find((x) => x.id === u)?.titol ?? '';
+	let temasUnitat = $derived(TEMAS.filter((t) => t.unitat === tema.unitat));
+	// le mot bien rangé et son sens, dits un moment sous les paniers
+	let sens = $state(null);
+	let sensT = null;
 	let mot = $state(null);
 	let col = $state(0);
 	let y = $state(0); // 0 en haut, 1 dans le panier
@@ -116,6 +127,7 @@
 		plaçats = 0;
 		dosPaniers = null;
 		volada = null;
+		sens = null;
 		partida++;
 		primier = true;
 		novelMot();
@@ -125,7 +137,9 @@
 		mot = sac.pop() ?? null;
 		if (!mot) {
 			fase = 'plen';
-			if (son) setTimeout(playChime, 120);
+			// la gamme remonte avec l'onde dorée des paniers (un rang toutes les
+			// 80 ms), puis la note douce
+			if (son) playArpegi(Math.max(dins[0].length, dins[1].length), 0.08, 0.27);
 			anonci = `${tria(T.plen)} ${tria(T.totDins)}${tema.nota ? ' ' + tria(tema.nota) : ''}`;
 			return;
 		}
@@ -144,7 +158,11 @@
 		const p = tema.paniers[col];
 		if (bonPanier(mot, p.id)) {
 			plaçats++;
-			if (son) playTick();
+			// la note monte à mesure que les paniers se remplissent, sur les onze
+			// degrés de la gamme (06-11) ; un mot des deux paniers en joue deux,
+			// qui montent jusqu'à son degré quand la copie arrive
+			const grau = Math.round(((plaçats - 1) / Math.max(1, tema.mots.length - 1)) * 10);
+			if (son) playNota(mot.panier === 'ab' && !calme ? Math.max(0, grau - 2) : grau);
 			const m = mot;
 			dins[col].push(m);
 			recep = { i: col, n: recep.n + 1 };
@@ -164,14 +182,23 @@
 						dins[a].push(m);
 						recep = { i: a, n: recep.n + 1 };
 						volada = null;
+						if (son) playNota(grau);
 					}, VOL_MS);
 				}
 				anonci = `${m.oc} : ${tria(T.dos)}`;
-			} else anonci = `${m.oc} : ${tria(p)}`;
+			} else {
+				// le sens du mot, un moment sous les paniers (06-11)
+				anonci = `${m.oc} : ${tria(p)}${m.fr ? ' · ' + m.fr : ''}`;
+				sens = m;
+				clearTimeout(sensT);
+				sensT = setTimeout(() => sens === m && (sens = null), 2800);
+			}
 			novelMot();
 			return;
 		}
 		errors++;
+		sens = null;
+		if (son) playSorda();
 		indici = errors >= 2;
 		secos = col;
 		setTimeout(() => (secos = -1), 450);
@@ -448,8 +475,13 @@
 				{/if}
 			</div>
 			<!-- sous le terrain, pour ne rien cacher -->
-			<p class="messatge" class:vis={fase === 'espera' || fase === 'pausa' || fase === 'torna' || !!dosPaniers} class:dos={!!dosPaniers}>
+			<p
+				class="messatge"
+				class:vis={fase === 'espera' || fase === 'pausa' || fase === 'torna' || !!dosPaniers || !!sens}
+				class:dos={!!dosPaniers || !!sens}
+			>
 				{#if dosPaniers}<span lang="oc">{insecable(dosPaniers.oc)}</span> : {tria(T.dos)}
+				{:else if sens}<span lang="oc">{insecable(formaVista(tema, sens))}</span> · <i lang="fr">{sens.fr}</i>
 				{:else if fase === 'torna'}{tria(T.torna)}
 				{:else if fase === 'pausa'}{tria(T.enPausa)}
 				{:else if fase === 'espera'}{tactil ? tria(T.partirTactil) : tria(T.partirClavier)}{/if}
@@ -468,11 +500,30 @@
 
 			<Reglatges
 				causida={{
-					titol: tria(T.tema),
-					valor: temaId,
-					causir: (id) => id !== temaId && començar(id),
-					opcions: TEMAS.map((t) => ({ id: t.id, label: tria(t.nom) }))
+					titol: tria(T.nivel),
+					valor: String(tema.unitat),
+					causir: (u) => u !== String(tema.unitat) && començar(TEMAS.find((t) => String(t.unitat) === u).id),
+					compacte: true,
+					// les huit unités, comme dans la sèrp ; celles sans thème restent
+					// grisées plutôt qu'absentes (« 1 2 3 4 5 7 » : Joan, 06-11)
+					opcions: UNITATS.map((u) => ({
+						id: String(u.id),
+						label: String(u.id),
+						aria: `${tria(T.unitat)(u.id)} · ${u.titol}`,
+						inactiu: !UNITATS_TEMAS.includes(u.id)
+					})),
+					legenda: { nom: tria(T.unitat)(tema.unitat), titol: titolUnitat(tema.unitat) }
 				}}
+				causidas={temasUnitat.length > 1
+					? [
+							{
+								titol: tria(T.tema),
+								valor: temaId,
+								causir: (id) => id !== temaId && començar(id),
+								opcions: temasUnitat.map((t) => ({ id: t.id, label: tria(t.nom) }))
+							}
+						]
+					: []}
 				bascules={[
 					{ id: 'son', label: tria(T.son), valor: son, bascular: bascularSon },
 					{ id: 'pas', label: tria(T.pasAPas), valor: pasAPas, bascular: () => (pasAPas = !pasAPas) }
@@ -1118,6 +1169,13 @@
 		color: var(--t-tinta-2);
 		text-align: center;
 		visibility: hidden;
+	}
+	/* sur téléphone, le mot et son sens peuvent prendre deux lignes : elles
+	   sont réservées, rien ne saute en dessous (06-11) */
+	@container joc (max-width: 34rem) {
+		.messatge {
+			min-height: 3em;
+		}
 	}
 	.messatge.vis {
 		visibility: visible;

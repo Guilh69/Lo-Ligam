@@ -415,6 +415,14 @@
 		color: var(--t-tinta);
 		font-weight: 600;
 	}
+	/* les chiffres des unités (06-11) : serrés, chacun assez large pour le doigt */
+	.espaci .brica :global(.segments.compacte) {
+		gap: 0 0.25rem;
+	}
+	.espaci .brica :global(.segments.compacte button) {
+		min-width: 2rem;
+		justify-items: center;
+	}
 	.espaci .brica :global(.accions button) {
 		border-radius: 0.2rem;
 	}

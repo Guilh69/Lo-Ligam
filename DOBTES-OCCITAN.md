@@ -97,6 +97,10 @@ Claude te les pose une à une, avec des boutons, d'abord ce qui touche plusieurs
 | # | La question | Où |
 |---|---|---|
 | J-1 | « Sageta tenguda : la sèrp accelèra. » (aide de la sèrp : quand on garde la flèche enfoncée, la sèrp va plus vite). API : `sageta`, `tenguda`, `sèrp` connus du Basic ; `accelèra` = 3e personne de `accelerar` (vèrb’Òc). Doute sur la tournure, pas sur les mots : dit-on « sageta tenguda » pour une touche maintenue ? | aide de la sèrp |
+| J-2 | « Totas » et « Unitats 1 a 8 » (toutes les unités mélangées). API : `totas` et `unitat` connus du Basic (*unitats* : pluriel régulier). Doute : « Totas » seul se comprend-il, ou faut-il « Totas las unitats » ? | choix du niveau de la sèrp |
+| J-3 | Les noms des thèmes nouveaux : « Lo o la », « Los nombres », « El o ela », « Singular o plural », « Un ostal o una pòrta ». API : `nombre`, `singular`, `plural`, `ostal`, `pòrta` connus du Basic. Doute : « Los nombres » ou « Los numèros » (`numèro` aussi connu) pour un débutant ? | thèmes des panièrs |
+| J-4 | Les étiquettes des paniers : « de 0 a 10 », « de 11 a 20 », « un ostal… », « una pòrta… ». Doute : les chiffres, comme en français, ou les nombres en toutes lettres ? (le mot pour « zéro » n’est pas dans le Basic) | étiquettes des panièrs |
+| J-5 | Les pièges voulus : « lo papeta » (grand-père) dans le panier *lo* malgré son *-a* ; « la frucha » (les fruits, tous ensemble) dans *singular*. Les deux viennent des modules 3-2 et 5-1 ; *la frucha* y est encore marquée « À relire » (ton choix du 02-11, grammaire de référence p. 33). Joan conseille de garder ce piège une fois l’usage vivant confirmé, sinon de retirer la paire. Même chose pour *regent* et *regenta* (module 4-2, proposition à valider). | thèmes « Lo o la », « Singular o plural », « El o ela » |
 
 ---
 

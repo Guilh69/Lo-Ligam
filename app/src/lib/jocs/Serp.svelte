@@ -16,8 +16,10 @@
 	import { onMount, tick } from 'svelte';
 	import { tria, lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { UNITATS, copar, letrasDe } from '$lib/jocs/serp-mots.js';
+	// l'espace avant « ? ! : » ne coupe jamais la ligne (le « ? » restait seul, 06-11)
+	import { insecable } from '$lib/jocs/paniers-pila.js';
 	import { novelaPartida, virar, pas, posicions, letraAttesa, escupir, coa, DIRS } from '$lib/jocs/serp.js';
-	import { playTick, playChime } from '$lib/lesson/sounds.js';
+	import { playTick, playNota, playSorda, playArpegi } from '$lib/lesson/sounds.js';
 	import Reglatges from '$lib/jocs/Reglatges.svelte';
 	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
 
@@ -28,7 +30,10 @@
 			fr: 'La sèrp mange les lettres dans l’ordre : sa queue écrit le mot.'
 		},
 		nivel: { oc: 'Nivèl', fr: 'Niveau' },
-		doas: { oc: 'Unitats 1 e 2', fr: 'Unités 1 et 2' },
+		// les huit unités de l'A1 (06-11) ; totas, unitat passés à lo Congrès le 2026-11-06
+		totas: { oc: 'Totas', fr: 'Toutes' },
+		unitatsTotas: { oc: 'Unitats 1 a 8', fr: 'Unités 1 à 8' },
+		unitat: { oc: (n) => `Unitat ${n}`, fr: (n) => `Unité ${n}` },
 		reglatges: { oc: 'Reglatges', fr: 'Réglages' },
 		pausa: { oc: 'Pausa', fr: 'Pause' },
 		son: { oc: 'Son', fr: 'Son' },
@@ -84,7 +89,7 @@
 	const CLAU_SON = 'lo-ligam-jocs-son';
 
 	// ── Réglages ─────────────────────────────────────────────────────────
-	let nivel = $state('1'); // '1', '2' ou 'doas'
+	let nivel = $state('1'); // l'unité, de '1' à '8', ou 'totas'
 	let pasAPas = $state(false);
 	let immersiu = $state(false); // mode plein (BotonEcran)
 	let son = $state(true);
@@ -120,6 +125,11 @@
 	let ancianas = new Map(); // k → position logique et de dessin au pas d'avant
 	let racina;
 
+	// sous les chiffres des unités : le nom et le titre de celle qu'on joue
+	let legendaNivel = $derived.by(() => {
+		const u = UNITATS.find((x) => String(x.id) === nivel);
+		return u ? { nom: tria(u.nom), titol: u.titol } : { nom: tria(T.unitatsTotas) };
+	});
 	let partidas = $derived(copar(mot?.cadre ?? '_'));
 	let letras = $derived(mot ? letrasDe(mot.mot) : []);
 	let frasaComplèta = $derived(mot ? partidas.avant + mot.mot + partidas.apres : '');
@@ -137,7 +147,7 @@
 		return a;
 	}
 	function lista() {
-		return nivel === 'doas' ? UNITATS.flatMap((u) => u.mots) : UNITATS.find((u) => String(u.id) === nivel).mots;
+		return nivel === 'totas' ? UNITATS.flatMap((u) => u.mots) : UNITATS.find((u) => String(u.id) === nivel).mots;
 	}
 	function tirar() {
 		if (!sac.length) {
@@ -254,7 +264,12 @@
 		barrada = r.tipe === 'barrada';
 		if (r.tipe === 'manjada' || r.tipe === 'falsa' || r.tipe === 'acabat') {
 			mordida++;
-			if (son) playTick();
+			// chaque bonne lettre monte d'une note : le mot se joue en s'écrivant ;
+			// la lettre fausse, une note sourde (06-11)
+			if (son) {
+				if (r.tipe === 'falsa') playSorda();
+				else playNota(p.seguenta - 1);
+			}
 		}
 		if (r.tipe === 'manjada' || r.tipe === 'acabat') {
 			// la bonne lettre : quelques grains d'or montent de la tête, comme
@@ -267,7 +282,9 @@
 		if (r.tipe === 'acabat') {
 			arrestar();
 			estat = 'acabat';
-			if (son) setTimeout(playChime, 160);
+			// la gamme remonte avec l'onde dorée (une lettre toutes les 90 ms), puis
+			// la note douce
+			if (son) playArpegi(letras.length, 0.09, 0.25);
 			anonci = `${frasaComplèta} · ${mot.son} · ${mot.fr}`;
 			// ce que la sèrp a écrit dans cette séance (les huit derniers)
 			escrichs = [...escrichs.slice(-7), frasaComplèta];
@@ -499,11 +516,11 @@
 		<div class="pista">
 			<div class="pista-info" aria-hidden="true">
 			{#if mot}
-				<p class="sens" lang="fr">{mot.fr}</p>
+				<p class="sens" lang="fr">{insecable(mot.fr)}</p>
 				<p class="cadre" lang="oc">
 					{#if partidas.avant}<span>{partidas.avant}</span>{/if}<span class="caselas"
 						>{#each cases as c, i (i)}<span class="casela" class:plena={c.l != null} class:falsa={c.falsa}>{c.l ?? ''}</span>{/each}</span
-					>{#if partidas.apres}<span>{partidas.apres}</span>{/if}
+					>{#if partidas.apres}<span>{insecable(partidas.apres)}</span>{/if}
 				</p>
 			{/if}
 			</div>
@@ -573,9 +590,9 @@
 					</div>
 				{:else if estat === 'acabat' && mot}
 					<div class="carta fin" style:--n={letras.length}>
-						<p class="fin-oc" lang="oc">{frasaComplèta}</p>
+						<p class="fin-oc" lang="oc">{insecable(frasaComplèta)}</p>
 						<p class="fin-son" lang="oc">{mot.son}</p>
-						<p class="fin-fr" lang="fr">{mot.fr}</p>
+						<p class="fin-fr" lang="fr">{insecable(mot.fr)}</p>
 						<button type="button" class="accion" onclick={novelMot}>{tria(T.autreMot)}</button>
 					</div>
 				{/if}
@@ -589,7 +606,7 @@
 			{#if escrichs.length}
 				<p class="escrichs">
 					<span class="escrichs-tit">{tria(T.escrich)}</span>
-					{#each escrichs as e, i (i)}{#if i}<span class="sep"> · </span>{/if}<span lang="oc">{e}</span>{/each}
+					{#each escrichs as e, i (i)}{#if i}<span class="sep">{' · '}</span>{/if}<span lang="oc">{insecable(e)}</span>{/each}
 				</p>
 			{/if}
 		</div>
@@ -619,11 +636,13 @@
 					titol: tria(T.nivel),
 					valor: nivel,
 					causir: causirNivel,
+					// les huit unités de l'A1 en chiffres, le titre de la choisie dessous (06-11)
+					compacte: true,
 					opcions: [
-						{ id: '1', label: tria(UNITATS[0].nom), detalh: UNITATS[0].titol },
-						{ id: '2', label: tria(UNITATS[1].nom), detalh: UNITATS[1].titol },
-						{ id: 'doas', label: tria(T.doas) }
-					]
+						...UNITATS.map((u) => ({ id: String(u.id), label: String(u.id), aria: `${tria(u.nom)} · ${u.titol}` })),
+						{ id: 'totas', label: tria(T.totas), aria: `${tria(T.totas)} · ${tria(T.unitatsTotas)}` }
+					],
+					legenda: legendaNivel
 				}}
 				bascules={[
 					{ id: 'son', label: tria(T.son), valor: son, bascular: bascularSon },
@@ -1196,6 +1215,26 @@
 		text-indent: 0;
 		color: var(--or);
 		font-weight: 700;
+	}
+	/* une grille étroite, donc basse (fenêtre réduite, tablette, téléphone) :
+	   la carte se serre pour tenir sans défiler (06-11 : à 800 px de large,
+	   l'aide défilait et cachait « Partir ») */
+	@container (max-width: 34rem) {
+		.grasilha .carta {
+			width: 94%;
+			gap: 0.1rem;
+			padding: 0.7rem 0.9rem 0.8rem;
+		}
+		.carta .carta-titol {
+			margin-bottom: 0;
+			font-size: 1.25rem;
+		}
+		.carta .ajuda-lista {
+			margin-bottom: var(--esp-8);
+			gap: 0.15rem;
+			font-size: 0.84rem;
+			line-height: 1.28;
+		}
 	}
 	/* la carte tient toujours dans la grille : plus serrée sur téléphone, et
 	   elle défile plutôt que d'être coupée */

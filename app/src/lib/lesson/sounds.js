@@ -84,3 +84,94 @@ export function playChime() {
 		/* Web Audio indisponible : on continue sans son, jamais bloquant. */
 	}
 }
+
+// ── Les notes des jeux (2026-11-06, « améliore encore les jeux ») ─────────
+// Une gamme pentatonique de sol, accordée sur la note douce (sol 6) : chaque
+// bonne lettre de la sèrp, chaque mot bien rangé dans un panier monte d'un
+// degré ; à la fin, la gamme remonte en arpège avec l'onde dorée, et la note
+// douce conclut. Une lettre fausse ou un mot mal rangé : une note grave et
+// sourde, brève (rien de punitif, jamais un buzzer). Sons de synthèse, aucun
+// fichier à charger (sobriété).
+const GAMMA = [392, 440, 493.88, 587.33, 659.25, 783.99, 880, 987.77, 1174.66, 1318.51, 1567.98];
+
+/** Une note de la gamme (degré 0 = sol 4), jouée dans `retard` secondes. */
+export function playNota(grau = 0, retard = 0) {
+	if (!browser) return;
+	try {
+		const ctx = (ctxAudio ??= new (window.AudioContext || window.webkitAudioContext)());
+		if (ctx.state === 'suspended') ctx.resume();
+		const t0 = ctx.currentTime + Math.max(0, retard);
+		const f = GAMMA[Math.max(0, Math.min(GAMMA.length - 1, Math.round(grau)))];
+
+		const filtre = ctx.createBiquadFilter();
+		filtre.type = 'lowpass';
+		filtre.frequency.value = 3200;
+		filtre.Q.value = 0.3;
+		filtre.connect(ctx.destination);
+
+		// le corps : un triangle, attaque courte, extinction en une demi-seconde
+		const osc = ctx.createOscillator();
+		osc.type = 'triangle';
+		osc.frequency.value = f;
+		const g = ctx.createGain();
+		g.gain.setValueAtTime(0.0001, t0);
+		g.gain.exponentialRampToValueAtTime(0.15, t0 + 0.012);
+		g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.5);
+		osc.connect(g).connect(filtre);
+		osc.start(t0);
+		osc.stop(t0 + 0.52);
+
+		// l'octave, très bas et très bref : le grain d'une petite cloche de bois
+		const o2 = ctx.createOscillator();
+		o2.type = 'sine';
+		o2.frequency.value = f * 2;
+		const g2 = ctx.createGain();
+		g2.gain.setValueAtTime(0.0001, t0);
+		g2.gain.exponentialRampToValueAtTime(0.035, t0 + 0.008);
+		g2.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.2);
+		o2.connect(g2).connect(filtre);
+		o2.start(t0);
+		o2.stop(t0 + 0.22);
+	} catch (e) {
+		/* Web Audio indisponible : on continue sans son, jamais bloquant. */
+	}
+}
+
+/** La note sourde : une lettre fausse, un mot qui remonte. */
+export function playSorda() {
+	if (!browser) return;
+	try {
+		const ctx = (ctxAudio ??= new (window.AudioContext || window.webkitAudioContext)());
+		if (ctx.state === 'suspended') ctx.resume();
+		const t0 = ctx.currentTime;
+		const filtre = ctx.createBiquadFilter();
+		filtre.type = 'lowpass';
+		filtre.frequency.value = 900;
+		filtre.connect(ctx.destination);
+		const osc = ctx.createOscillator();
+		osc.type = 'sine';
+		osc.frequency.setValueAtTime(196, t0); // sol 3
+		osc.frequency.exponentialRampToValueAtTime(174.6, t0 + 0.2);
+		const g = ctx.createGain();
+		g.gain.setValueAtTime(0.0001, t0);
+		g.gain.exponentialRampToValueAtTime(0.13, t0 + 0.015);
+		g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.26);
+		osc.connect(g).connect(filtre);
+		osc.start(t0);
+		osc.stop(t0 + 0.28);
+	} catch (e) {
+		/* Web Audio indisponible : on continue sans son, jamais bloquant. */
+	}
+}
+
+/**
+ * La gamme qui remonte avec l'onde dorée de fin : `n` notes, une toutes les
+ * `pas` secondes (le même pas que l'onde), dans `debut` secondes, puis la
+ * note douce.
+ */
+export function playArpegi(n = 5, pas = 0.09, debut = 0) {
+	const k = Math.max(1, Math.min(n, GAMMA.length - 1));
+	for (let i = 0; i < k; i++) playNota(i, debut + i * pas);
+	if (!browser) return;
+	setTimeout(playChime, Math.round((debut + k * pas + 0.06) * 1000));
+}

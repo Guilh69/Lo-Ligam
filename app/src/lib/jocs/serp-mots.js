@@ -1,6 +1,7 @@
 // Les mots de « La sèrp de las letras » (chantier 27, Romain 2026-11-04 :
 // option A sur 3). Seulement des mots déjà appris : chacun renvoie à une
-// chose d'un encadré « À retenir » des unités 1 et 2 (`id`), et le test
+// chose d'un encadré « À retenir » de son unité (`id`) ; les unités 3 à 8
+// rejoignent les deux premières le 2026-11-06 (« améliore encore les jeux »), et le test
 // serp.test.js vérifie, contre les modules eux-mêmes, que la formule
 // complétée (`cadre`, où `_` marque le mot) et sa prononciation (`son`) y
 // figurent telles quelles. Les modules restent la seule source : la page
@@ -68,6 +69,133 @@ export const UNITATS = [
 			{ id: 'que-vol-dire', mot: 'vòl', cadre: 'Qué _ dire… ?', fr: 'que veut dire… ?', son: 'ké BÒL DI-ré', trapas: ['o', 'b'] },
 			{ id: 'podes-repetir', mot: 'repetir', cadre: 'Pòdes _, se te plai ?', fr: 'tu peux répéter, s’il te plaît ?', son: 'PÒ-dés ré-pé-TI, sé té PLAÏ', trapas: ['é'] },
 			{ id: 'sabi-pas', mot: 'sabi', cadre: 'Non _ pas.', fr: 'je ne sais pas.', son: 'nou SA-bi PAS', trapas: ['v'] }
+		]
+	},
+	{
+		id: 3,
+		nom: { oc: 'Unitat 3', fr: 'Unité 3' },
+		titol: 'La familha',
+		mots: [
+			{ id: 'la-familha', mot: 'familha', cadre: 'la _', fr: 'la famille', son: 'la fa-MI-lyo', trapas: ['l', 'e'] },
+			{ id: 'nombre-5', mot: 'cinc', cadre: '_', fr: '5', son: 'SINK', trapas: ['q'] },
+			{ id: 'nombre-6', mot: 'sièis', cadre: '_', fr: '6', son: 'SYÈÏS', trapas: ['x', 'e'] },
+			{ id: 'nombre-8', mot: 'uèch', cadre: '_', fr: '8', son: 'UÈTCH', trapas: ['h', 't'] },
+			{ id: 'nombre-10', mot: 'dètz', cadre: '_', fr: '10', son: 'DÈTS', trapas: ['x', 's'] },
+			{ id: 'nombre-14', mot: 'catòrze', cadre: '_', fr: '14', son: 'ca-TÒR-zé', trapas: ['q', 'o'] },
+			{ id: 'nombre-20', mot: 'vint', cadre: '_', fr: '20', son: 'BIN', trapas: ['g'] },
+			{ id: 'lo-paire', mot: 'paire', cadre: 'lo _', fr: 'le père', son: 'lou PAÏ-ré', trapas: ['è'] },
+			{ id: 'la-maire', mot: 'maire', cadre: 'la _', fr: 'la mère', son: 'la MAÏ-ré', trapas: ['è'] },
+			{ id: 'la-sorre', mot: 'sòrre', cadre: 'la _', fr: 'la sœur', son: 'la SÒ-rré', trapas: ['u', 'o'] },
+			{ id: 'filh-filha', mot: 'filha', cadre: 'la _', fr: 'la fille', son: 'la FI-lyo', trapas: ['l', 'e'] },
+			{ id: 'cosin-cosina', mot: 'cosin', cadre: 'lo _', fr: 'le cousin', son: 'lou cou-ZI', trapas: ['u', 'z'] },
+			{ id: 'lo-caval', mot: 'caval', cadre: 'lo _', fr: 'le cheval', son: 'lou ca-BAL', trapas: ['h', 'b'] },
+			{ id: 'l-aucel', mot: 'aucèl', cadre: 'l’_', fr: 'l’oiseau', son: 'laou-SÈL', trapas: ['s', 'e'] }
+		]
+	},
+	{
+		id: 4,
+		nom: { oc: 'Unitat 4', fr: 'Unité 4' },
+		titol: 'Qué fas ?',
+		mots: [
+			{ id: 'trabalhar', mot: 'trabalhi', cadre: '_', fr: 'je travaille', son: 'tra-BA-lyi', trapas: ['v', 'e'] },
+			{ id: 'cantar', mot: 'canti', cadre: '_', fr: 'je chante', son: 'CAN-ti', trapas: ['h', 'e'] },
+			{ id: 'manjar', mot: 'mangi', cadre: '_', fr: 'je mange', son: 'MAN-dji', trapas: ['j', 'e'] },
+			{ id: 'dancar', mot: 'danci', cadre: '_', fr: 'je danse', son: 'DAN-si', trapas: ['s', 'ç'] },
+			{ id: 'escotar', mot: 'escotar', cadre: '_', fr: 'écouter', son: 'es-cou-TA', trapas: ['u', 'é'] },
+			{ id: 'far-singular', mot: 'fau', cadre: '_', fr: 'je fais', son: 'FAOU', trapas: ['i', 's'] },
+			{ id: 'regent-regenta', mot: 'regenta', cadre: '_', fr: 'institutrice', son: 'ré-DJÉN-to', trapas: ['j', 'é'] },
+			{ id: 'fornier-forniera', mot: 'fornièr', cadre: '_', fr: 'boulanger', son: 'four-NYÈ', trapas: ['u', 'e'] },
+			{ id: 'paisan-paisana', mot: 'paisana', cadre: '_', fr: 'paysanne', son: 'paï-ZA-no', trapas: ['y', 'n'] },
+			{ id: 'metge', mot: 'mètge', cadre: '_', fr: 'médecin', son: 'MÈ-djé', trapas: ['j', 'é'] },
+			{ id: 'dimenge', mot: 'dimenge', cadre: '_', fr: 'dimanche', son: 'di-MÉN-djé', trapas: ['a', 'j'] },
+			{ id: 'dijous', mot: 'dijòus', cadre: '_', fr: 'jeudi', son: 'di-DJÒOUS', trapas: ['e', 'o'] },
+			{ id: 'amic-amiga', mot: 'amiga', cadre: 'l’_', fr: 'l’amie', son: 'la-MI-go', trapas: ['e'] }
+		]
+	},
+	{
+		id: 5,
+		nom: { oc: 'Unitat 5', fr: 'Unité 5' },
+		titol: 'Al mercat',
+		mots: [
+			{ id: 'al-mercat', mot: 'mercat', cadre: 'al _', fr: 'au marché', son: 'al mér-CAT', trapas: ['h', 'é'] },
+			{ id: 'la-poma', mot: 'poma', cadre: 'la _', fr: 'la pomme', son: 'la POU-mo', trapas: ['m', 'e'] },
+			{ id: 'la-pera', mot: 'pera', cadre: 'la _', fr: 'la poire', son: 'la PÉ-ro', trapas: ['o', 'i'] },
+			{ id: 'l-uou', mot: 'uòu', cadre: 'l’_', fr: 'l’œuf', son: 'LUÒOU', trapas: ['f', 'o'] },
+			{ id: 'la-tomata', mot: 'tomata', cadre: 'la _', fr: 'la tomate', son: 'la tou-MA-to', trapas: ['e', 'u'] },
+			{ id: 'la-ceba', mot: 'ceba', cadre: 'la _', fr: 'l’oignon', son: 'la SÉ-bo', trapas: ['s', 'o'] },
+			{ id: 'lo-pan', mot: 'pan', cadre: 'lo _', fr: 'le pain', son: 'lou PA', trapas: ['i'] },
+			{ id: 'lo-formatge', mot: 'formatge', cadre: 'lo _', fr: 'le fromage', son: 'lou four-MA-djé', trapas: ['u', 'j'] },
+			{ id: 'lo-lach', mot: 'lach', cadre: 'lo _', fr: 'le lait', son: 'lou LATCH', trapas: ['i', 't'] },
+			{ id: 'lo-rasim', mot: 'rasim', cadre: 'lo _', fr: 'le raisin', son: 'lou ra-ZIN', trapas: ['z', 'n'] },
+			{ id: 'nombre-50', mot: 'cinquanta', cadre: '_', fr: '50', son: 'sin-KAN-to', trapas: ['e'] },
+			{ id: 'se-vos-plai', mot: 'plai', cadre: 'Se vos _.', fr: 's’il vous plaît.', son: 'sé bous PLAÏ', trapas: ['î', 't'] },
+			{ id: 'de-res', mot: 'res', cadre: 'De _.', fr: 'de rien.', son: 'dé RÉS', trapas: ['i', 'é'] },
+			{ id: 'volriai', mot: 'Volriái', cadre: '_…', fr: 'je voudrais…', son: 'boul-RYOÏ', trapas: ['d', 'u'] }
+		]
+	},
+	{
+		id: 6,
+		nom: { oc: 'Unitat 6', fr: 'Unité 6' },
+		titol: 'La jornada',
+		mots: [
+			{ id: 'quina-ora-es', mot: 'ora', cadre: 'Quina _ es ?', fr: 'quelle heure est-il ?', son: 'KI-no OU-ro ÉS', trapas: ['h', 'e'] },
+			{ id: 'miegjorn', mot: 'miègjorn', cadre: '_', fr: 'midi', son: 'myèd-DJOUR', trapas: ['u', 'd'] },
+			{ id: 'ara', mot: 'ara', cadre: '_', fr: 'maintenant', son: 'A-ro', trapas: ['o'] },
+			{ id: 'fa-bel', mot: 'bèl', cadre: 'Fa _.', fr: 'il fait beau.', son: 'fa BÈL', trapas: ['e', 'u'] },
+			{ id: 'fa-solelh', mot: 'solelh', cadre: 'Fa _.', fr: 'il y a du soleil.', son: 'fa sou-LÉL', trapas: ['i', 'u'] },
+			{ id: 'plou', mot: 'Plòu', cadre: '_.', fr: 'il pleut.', son: 'PLÒOU', trapas: ['e', 't'] },
+			{ id: 'fa-caud', mot: 'caud', cadre: 'Fa _.', fr: 'il fait chaud.', son: 'fa CAOUT', trapas: ['h', 't'] },
+			{ id: 'fa-freg', mot: 'freg', cadre: 'Fa _.', fr: 'il fait froid.', son: 'fa FRÉTCH', trapas: ['o', 'i'] },
+			{ id: 'neva', mot: 'Nèva', cadre: '_.', fr: 'il neige.', son: 'NÈ-bo', trapas: ['i', 'g'] },
+			{ id: 'la-plueja', mot: 'pluèja', cadre: 'la _', fr: 'la pluie', son: 'la PLUÈ-djo', trapas: ['i', 'e'] },
+			{ id: 'uei', mot: 'uèi', cadre: '_', fr: 'aujourd’hui', son: 'UÈÏ', trapas: ['h', 'e'] },
+			{ id: 'totjorn', mot: 'totjorn', cadre: '_', fr: 'toujours', son: 'tout-DJOUR', trapas: ['u', 's'] },
+			{ id: 'lo-tantost', mot: 'tantòst', cadre: 'lo _', fr: 'l’après-midi', son: 'lou tan-TÒST', trapas: ['o'] },
+			{ id: 'sopar', mot: 'sopar', cadre: '_', fr: 'dîner (le repas du soir)', son: 'sou-PA', trapas: ['u'] }
+		]
+	},
+	{
+		id: 7,
+		nom: { oc: 'Unitat 7', fr: 'Unité 7' },
+		titol: 'L’ostal',
+		mots: [
+			{ id: 'l-ostal', mot: 'ostal', cadre: 'l’_', fr: 'la maison', son: 'lous-TAL', trapas: ['u', 'e'] },
+			{ id: 'la-cosina', mot: 'cosina', cadre: 'la _', fr: 'la cuisine', son: 'la cou-ZI-no', trapas: ['u', 'z'] },
+			{ id: 'la-cambra', mot: 'cambra', cadre: 'la _', fr: 'la chambre', son: 'la CAM-bro', trapas: ['h', 'e'] },
+			{ id: 'la-sala', mot: 'sala', cadre: 'la _', fr: 'la salle, le séjour', son: 'la SA-lo', trapas: ['l', 'e'] },
+			{ id: 'la-taula', mot: 'taula', cadre: 'la _', fr: 'la table', son: 'la TAOU-lo', trapas: ['b', 'e'] },
+			{ id: 'la-cadiera', mot: 'cadièra', cadre: 'la _', fr: 'la chaise', son: 'la ca-DYÈ-ro', trapas: ['h', 'e'] },
+			{ id: 'lo-canape', mot: 'canapè', cadre: 'lo _', fr: 'le canapé', son: 'lou ca-na-PÈ', trapas: ['é'] },
+			{ id: 'l-armari', mot: 'armari', cadre: 'l’_', fr: 'l’armoire', son: 'lar-MA-ri', trapas: ['o', 'e'] },
+			{ id: 'la-porta', mot: 'pòrta', cadre: 'la _', fr: 'la porte', son: 'la PÒR-to', trapas: ['o', 'e'] },
+			{ id: 'la-fenestra', mot: 'fenèstra', cadre: 'la _', fr: 'la fenêtre', son: 'la fé-NÈS-tro', trapas: ['ê', 'é'] },
+			{ id: 'davant', mot: 'davant', cadre: '_', fr: 'devant', son: 'da-BAN', trapas: ['e', 'b'] },
+			{ id: 'darrier', mot: 'darrièr', cadre: '_', fr: 'derrière', son: 'da-RRYÈ', trapas: ['e'] },
+			{ id: 'roge-roja', mot: 'roja', cadre: '_', fr: 'rouge (au féminin)', son: 'ROU-djo', trapas: ['u', 'g'] },
+			{ id: 'blanc-blanca', mot: 'blanca', cadre: '_', fr: 'blanche', son: 'BLAN-co', trapas: ['h', 'e'] },
+			{ id: 'pichon-pichona', mot: 'pichona', cadre: '_', fr: 'petite', son: 'pi-TCHOU-no', trapas: ['t', 'u'] }
+		]
+	},
+	{
+		id: 8,
+		nom: { oc: 'Unitat 8', fr: 'Unité 8' },
+		titol: 'En vila',
+		mots: [
+			{ id: 'perdon', mot: 'Perdon', cadre: '_…', fr: 'pardon…', son: 'pér-DOU', trapas: ['a', 'u'] },
+			{ id: 'es-luenh', mot: 'luènh', cadre: 'Es _ ?', fr: 'c’est loin ?', son: 'és LUÈN', trapas: ['o', 'i'] },
+			{ id: 'es-luenh', mot: 'prèp', cadre: 'Es _.', fr: 'c’est près.', son: 'és PRÈP', trapas: ['s'] },
+			{ id: 'tot-drech', mot: 'drech', cadre: 'tot _', fr: 'tout droit', son: 'tout DRÉTCH', trapas: ['o', 'i'] },
+			{ id: 'a-esquerra', mot: 'esquèrra', cadre: 'a _', fr: 'à gauche', son: 'a es-KÈ-rro', trapas: ['k', 'e'] },
+			{ id: 'la-gara', mot: 'gara', cadre: 'la _', fr: 'la gare', son: 'la GA-ro', trapas: ['e'] },
+			{ id: 'la-carriera', mot: 'carrièra', cadre: 'la _', fr: 'la rue', son: 'la ca-RRYÈ-ro', trapas: ['e'] },
+			{ id: 'la-placa', mot: 'plaça', cadre: 'la _', fr: 'la place', son: 'la PLA-ço', trapas: ['c', 'e'] },
+			{ id: 'la-gleisa', mot: 'glèisa', cadre: 'la _', fr: 'l’église', son: 'la GLÈÏ-zo', trapas: ['é', 'z'] },
+			{ id: 'a-pe', mot: 'pè', cadre: 'a _', fr: 'à pied', son: 'a PÈ', trapas: ['i', 'é'] },
+			{ id: 'vira', mot: 'Vira', cadre: '_ a drecha !', fr: 'tourne à droite !', son: 'BI-ro a DRÉ-tcho', trapas: ['B'] },
+			{ id: 'un-cafe', mot: 'cafè', cadre: 'un _', fr: 'un café', son: 'un ca-FÈ', trapas: ['é'] },
+			{ id: 'l-aiga', mot: 'aiga', cadre: 'l’_', fr: 'l’eau', son: 'LAÏ-go', trapas: ['e', 'u'] },
+			{ id: 'un-veire-de', mot: 'veire', cadre: 'un _ de…', fr: 'un verre de…', son: 'un BÉÏ-ré dé', trapas: ['r', 'b'] },
+			{ id: 'ai-set', mot: 'set', cadre: 'Ai _.', fr: 'j’ai soif.', son: 'aï SÉT', trapas: ['o', 'f'] }
 		]
 	}
 ];
