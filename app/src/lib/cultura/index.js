@@ -20,9 +20,10 @@
 // charte et la terre du jeu « terra » ($lib/apren/teulas.js), sans le rouge du
 // logo (réservé à ce qui se clique) ; la langue prend le pétrole de la case
 // Cultura de Se parla. Contraste du texte : 5,0 à 8,6 (comme la grammaire),
-// 5,9 pour la terre.
+// 5,9 pour la terre. Depuis le 2026-11-06 (photos teintées, allure B choisie
+// par Romain), la musique passe de l'or (#eeaf34, texte foncé) à un or brun :
+// le texte est crème partout, 4,65 sur l'aplat seul.
 const CREMA = '#fbf1e1';
-const TINTA = '#2a1a10';
 
 export const TEMAS = [
 	{
@@ -55,7 +56,7 @@ export const TEMAS = [
 	},
 	{
 		id: 'musica',
-		color: ['#eeaf34', TINTA],
+		color: ['#8f6514', CREMA],
 		nom: { oc: 'La musica', fr: 'La musique', es: 'La música', en: 'Music', ca: 'La música', ar: 'الموسيقى' },
 		detalh: { oc: 'cançons d’ièr e d’uèi', fr: 'chansons d’hier et d’aujourd’hui', es: 'canciones de ayer y de hoy', en: 'songs of yesterday and today', ca: 'cançons d’ahir i d’avui', ar: 'أغانٍ من الأمس واليوم' },
 		exemple: 'Amor d’Aussau, A mon ostal, Parla patois'
