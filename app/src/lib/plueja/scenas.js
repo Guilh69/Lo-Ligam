@@ -184,7 +184,7 @@ export const SCENAS = [
 			['Compreni plan.', 'je comprends bien.', 'un-pauc-plan'],
 			['tanben', 'aussi', 'tanben'],
 			['mas', 'mais', 'mas'],
-			['Qué es aquò ?', 'qu’est-ce que c’est ?', 'que-es-aquo'],
+			['Qu’es aquò ?', 'qu’est-ce que c’est ?', 'que-es-aquo'],
 			['Qui es ?', 'qui est-ce ?', 'qui-es'],
 			['Qué vòl dire… ?', 'que veut dire… ?', 'que-vol-dire'],
 			['Cossí se ditz… ?', 'comment dit-on… ?', 'cossi-se-ditz'],

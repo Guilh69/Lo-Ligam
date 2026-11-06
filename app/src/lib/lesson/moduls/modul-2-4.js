@@ -50,11 +50,11 @@ export const modul24 = {
 						},
 						{
 							q: 'Tu n’as pas compris ce qu’on vient de te dire :',
-							options: ['Pòdes repetir, se te plai ?', 'Qué es aquò ?', 'Non sabi pas.'],
+							options: ['Pòdes repetir, se te plai ?', 'Qu’es aquò ?', 'Non sabi pas.'],
 							correct: 0,
 							oc: true,
 							choses: ['podes-repetir'],
-							explain: '*Pòdes repetir, se te plai ?* : tu peux répéter ? *Qué es aquò ?* demande ce qu’est une chose.'
+							explain: '*Pòdes repetir, se te plai ?* : tu peux répéter ? *Qu’es aquò ?* demande ce qu’est une chose.'
 						},
 						{
 							q: 'Elle comprend bien :',
@@ -490,7 +490,7 @@ export const modul24 = {
 						['répondre', '*Òc !* · *Non !*'],
 						['parler des langues', '*Parlas occitan ?* · *Parli un pauc occitan.* · *Compreni plan.* · *Non parli pas anglés.* · *Parli tanben catalan.*'],
 						['se débrouiller', '*Pòdes repetir, se te plai ?* · *Qué vòl dire… ?* · *Cossí se ditz… en occitan ?* · *Non sabi pas.*'],
-						['questionner', '*Qué es aquò ?* · *Qui es ?* · *Qual es ?* · *Quina lenga parlas ?* · *Occitan o francés ?*']
+						['questionner', '*Qu’es aquò ?* · *Qui es ?* · *Qual es ?* · *Quina lenga parlas ?* · *Occitan o francés ?*']
 					]
 				},
 				{

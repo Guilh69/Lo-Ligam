@@ -65,11 +65,11 @@ export const modulPausa1 = {
 						},
 						{
 							q: 'Quelqu’un te parle trop vite. Tu lui demandes…',
-							options: ['Pòdes repetir, se te plai ?', 'Qué es aquò ?', 'Qui es ?'],
+							options: ['Pòdes repetir, se te plai ?', 'Qu’es aquò ?', 'Qui es ?'],
 							correct: 0,
 							oc: true,
 							choses: ['podes-repetir'],
-							explain: '*Pòdes repetir, se te plai ?* : tu peux répéter, s’il te plaît ? *Qué es aquò ?*, c’est pour une chose ; *Qui es ?*, pour une personne.'
+							explain: '*Pòdes repetir, se te plai ?* : tu peux répéter, s’il te plaît ? *Qu’es aquò ?*, c’est pour une chose ; *Qui es ?*, pour une personne.'
 						}
 					]
 				},
@@ -262,12 +262,12 @@ export const modulPausa1 = {
 						{
 							situacion: 'Karim te tend une petite pâtisserie que tu ne connais pas.',
 							options: [
-								{ oc: 'Qué es aquò ?', bon: true },
+								{ oc: 'Qu’es aquò ?', bon: true },
 								{ oc: 'Qui es ?', reaccion: 'Karim rit : ce n’est pas quelqu’un, c’est un gâteau !' },
 								{ oc: 'D’ont siás ?', reaccion: 'Karim répond qu’il est de Béziers, puis attend : c’est le gâteau qui t’intriguait, non ?' }
 							],
 							choses: ['que-es-aquo'],
-							explain: '*Qué es aquò ?* : qu’est-ce que c’est ? Pour une personne : *Qui es ?*'
+							explain: '*Qu’es aquò ?* : qu’est-ce que c’est ? Pour une personne : *Qui es ?*'
 						},
 						{
 							ditz: 'Non sabi pas ! Mas es bon. A lèu !',
@@ -349,7 +349,7 @@ export const modulPausa1 = {
 							prompt: 'Qu’est-ce que c’est ? Je ne sais pas.',
 							tiles: ['Qué', 'es', 'aquò ?', 'Non', 'sabi', 'pas.'],
 							choses: ['que-es-aquo', 'sabi-pas'],
-							explain: '*Qué es aquò ? Non sabi pas.* *Non* devant le verbe, *pas* après.'
+							explain: '*Qu’es aquò ? Non sabi pas.* *Non* devant le verbe, *pas* après.'
 						}
 					]
 				},

@@ -64,7 +64,7 @@ export const UNITATS = [
 			{ id: 'mas', mot: 'mas', cadre: '_', fr: 'mais', son: 'MAS', trapas: ['i'] },
 			{ id: 'tanben', mot: 'tanben', cadre: '_', fr: 'aussi', son: 'tam-BÉ', trapas: ['m'] },
 			{ id: 'la-lenga', mot: 'lenga', cadre: 'la _', fr: 'la langue', son: 'la LÉN-go', trapas: ['u'] },
-			{ id: 'que-es-aquo', mot: 'aquò', cadre: 'Qué es _ ?', fr: 'qu’est-ce que c’est ?', son: 'ké és a-KÒ', trapas: ['o'] },
+			{ id: 'que-es-aquo', mot: 'aquò', cadre: 'Qu’es _ ?', fr: 'qu’est-ce que c’est ?', son: 'kés a-KÒ', trapas: ['o'] },
 			{ id: 'cossi-se-ditz', mot: 'ditz', cadre: 'Cossí se _…', fr: 'comment dit-on… ?', son: 'cou-si sé DITS…', trapas: ['s'] },
 			{ id: 'que-vol-dire', mot: 'vòl', cadre: 'Qué _ dire… ?', fr: 'que veut dire… ?', son: 'ké BÒL DI-ré', trapas: ['o', 'b'] },
 			{ id: 'podes-repetir', mot: 'repetir', cadre: 'Pòdes _, se te plai ?', fr: 'tu peux répéter, s’il te plaît ?', son: 'PÒ-dés ré-pé-TI, sé té PLAÏ', trapas: ['é'] },

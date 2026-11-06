@@ -108,7 +108,7 @@ items: [
 
 ```js
 items: [
-	{ id: 'que-es-aquo', oc: 'Qué es aquò ?', sound: 'ké és a-KÒ', fr: 'qu’est-ce que c’est ?' },
+	{ id: 'que-es-aquo', oc: 'Qu’es aquò ?', sound: 'kés a-KÒ', fr: 'qu’est-ce que c’est ?' },
 	{ id: 'cossi-se-ditz', oc: 'Cossí se ditz… en occitan ?', sound: 'cou-si sé DITS… én ou-tsi-TA', fr: 'comment dit-on… en occitan ?' },
 	{ id: 'que-vol-dire', oc: 'Qué vòl dire… ?', sound: 'ké BÒL DI-ré', fr: 'que veut dire… ?' },
 	{ id: 'podes-repetir', oc: 'Pòdes repetir, se te plai ?', sound: 'PÒ-dés ré-pé-TI, sé té PLAÏ', fr: 'tu peux répéter, s’il te plaît ?' },

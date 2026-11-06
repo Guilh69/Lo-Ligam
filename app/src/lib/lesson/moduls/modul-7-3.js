@@ -608,7 +608,7 @@ export const modul73 = {
 					title: 'Défi de la semaine',
 					paragraphs: [
 						'Tu sais maintenant dire de quelle couleur sont les choses.',
-						'Si tu en as envie : joue à « devine l’objet » en occitan avec une personne précise, un enfant, ton voisin : *Es roge, e es pichon. Qué es aquò ?* Quand ? Où ? Choisis-le maintenant.'
+						'Si tu en as envie : joue à « devine l’objet » en occitan avec une personne précise, un enfant, ton voisin : *Es roge, e es pichon. Qu’es aquò ?* Quand ? Où ? Choisis-le maintenant.'
 					]
 				}
 			]

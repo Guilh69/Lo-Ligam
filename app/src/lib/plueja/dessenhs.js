@@ -1326,7 +1326,7 @@ Object.assign(DESSENHS, {
 		pointilla(bezierPts([12, 82], [20, 26], [80, 26], [86, 72], 16), 3, 2.6),
 		fleca(86.4, 76, 1.42, 7)
 	],
-	'Qué es aquò ?': ['M50 40L76 52L76 80L50 92L24 80L24 52Z', 'M24 52L50 64L76 52', 'M50 64L50 92', interrogant(50, 20, 1)],
+	'Qu’es aquò ?': ['M50 40L76 52L76 80L50 92L24 80L24 52Z', 'M24 52L50 64L76 52', 'M50 64L50 92', interrogant(50, 20, 1)],
 	'Qui es ?': [...persona(50, 34, 16, 96), interrogant(50, 34, 0.9)],
 	'Qué vòl dire… ?': [
 		'M50 34C40 28 24 28 12 32L12 80C24 76 40 76 50 82C60 76 76 76 88 80L88 32C76 28 60 28 50 34Z', // le livre ouvert
