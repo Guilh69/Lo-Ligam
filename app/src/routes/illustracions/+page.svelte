@@ -26,12 +26,12 @@
 		},
 		canhota: { oc: 'La canhòta', fr: 'La cagnotte', es: 'La colecta', en: 'The fundraiser', ca: 'La col·lecta', ar: 'حملة التبرعات' },
 		p2: {
-			oc: 'Una canhòta se dobrirà per pagar una persona que dessenha. Remplaçarà los dessenhs de l’IA.',
-			fr: 'Une cagnotte va s’ouvrir pour payer un illustrateur ou une illustratrice, qui remplacera les dessins de l’IA.',
-			es: 'Se abrirá una colecta para pagar a una persona ilustradora, que sustituirá los dibujos de la IA.',
-			en: 'A fundraiser will open to pay an illustrator, who will replace the AI drawings.',
-			ca: 'S’obrirà una col·lecta per pagar una persona il·lustradora, que substituirà els dibuixos de la IA.',
-			ar: 'ستُفتح حملة تبرعات لدفع أجر شخص يرسم، وسيحلّ مكان رسومات الذكاء الاصطناعي.'
+			oc: 'Una canhòta se dobrirà per pagar una persona que dessenha. Remplaçarà pauc a pauc los dessenhs de l’IA.',
+			fr: 'Une cagnotte va s’ouvrir pour payer un illustrateur ou une illustratrice, qui remplacera peu à peu les dessins de l’IA.',
+			es: 'Se abrirá una colecta para pagar a una persona ilustradora, que sustituirá poco a poco los dibujos de la IA.',
+			en: 'A fundraiser will open to pay an illustrator, who will gradually replace the AI drawings.',
+			ca: 'S’obrirà una col·lecta per pagar una persona il·lustradora, que substituirà a poc a poc els dibuixos de la IA.',
+			ar: 'ستُفتح حملة تبرعات لدفع أجر شخص يرسم، وسيحلّ تدريجيًا مكان رسومات الذكاء الاصطناعي.'
 		},
 		p3: {
 			oc: 'Aquel argent servirà sonque a aquò.',
@@ -95,6 +95,17 @@
 </div>
 
 <style>
+	/* le cadre des pages intérieures, comme /ideas (--marge n'est pas global) */
+	.pagina {
+		--marge: clamp(1rem, 4vw, 3.4rem);
+		min-height: 100vh;
+		color: var(--t-tinta);
+		background:
+			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			var(--t-fons);
+		overflow-x: clip;
+	}
 	.capçal {
 		padding: 1.3rem var(--marge);
 	}

@@ -9,7 +9,8 @@
 	//     d'un cadre (le parent : position relative, marge basse d'environ 1,9rem) ;
 	//     `quina="dessenh"` dit « dessin » (Remira : le dessin peut être posé sur
 	//     une photo de Romain, que la mention ne doit pas désigner) ;
-	//   - linha : une seule ligne pour une page où les dessins sont nombreux.
+	//   - linha : une seule ligne pour une page où les dessins sont nombreux
+	//     (avec `quina="dessenh"` : « les dessins », quand la page a aussi des photos).
 	// Occitan passé à lo Congrès le 06-11 ; es, en, ca, ar par Aran (06-11).
 	// Le rouge souligne ce qui se clique (règle B) : --t-terra, plus vif en sombre.
 	import { tria, lang } from '$lib/stores/lang.svelte.js';
@@ -34,6 +35,15 @@
 			en: 'The illustrations on this page were made by AI',
 			ca: 'Les il·lustracions d’aquesta pàgina són fetes per IA',
 			ar: 'رسم الذكاء الاصطناعي الرسومات الموجودة في هذه الصفحة'
+		},
+		// une page où des dessins côtoient des photos de Romain (Cultura)
+		linhaDessenh: {
+			oc: 'L’IA a fach los dessenhs d’aquesta pagina',
+			fr: 'Les dessins de cette page sont faits par IA',
+			es: 'Los dibujos de esta página están hechos por IA',
+			en: 'The drawings on this page were made by AI',
+			ca: 'Els dibuixos d’aquesta pàgina són fets per IA',
+			ar: 'رسم الذكاء الاصطناعي الرسومات الموجودة في هذه الصفحة'
 		}
 	};
 
@@ -43,11 +53,12 @@
 	const lg = (o) => (o?.[lang.current] ? lang.current : o?.oc ? 'oc' : 'fr');
 	let sageta = $derived(lang.current === 'ar' ? '←' : '→');
 	let signa = $derived(quina === 'dessenh' ? T.dessenh : T.signatura);
+	let linha = $derived(quina === 'dessenh' ? T.linhaDessenh : T.linha);
 </script>
 
 {#if forma === 'linha'}
 	<p class="linha {classa}">
-		<a class="mencion" href={PAGINA} lang={lg(T.linha)}>{tria(T.linha)} <span aria-hidden="true">{sageta}</span></a>
+		<a class="mencion" href={PAGINA} lang={lg(linha)}>{tria(linha)} <span aria-hidden="true">{sageta}</span></a>
 	</p>
 {:else}
 	<a
