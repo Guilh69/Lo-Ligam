@@ -22,7 +22,7 @@
 	import MencionIA from '$lib/components/MencionIA.svelte';
 	import { flip } from '$lib/components/flip.js';
 	import { FICHAS, TEMAS, IU, nomModul } from '$lib/cultura/index.js';
-	import { foto, srcset, colors, COMMONS } from '$lib/cultura/imatges.js';
+	import { foto, srcset, COMMONS } from '$lib/cultura/imatges.js';
 	import { IU as IU_G } from '$lib/gramatica/lengas.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 
@@ -126,13 +126,14 @@
 		<p class="estat" aria-live="polite">{tema ? tria(IU_G.estat)(tria(tema.nom), fichas.length) : ''}</p>
 	</div>
 
-	<ul class="fichas" aria-label={tria(IU.fichas)} bind:this={lista}>
+	<!-- ontouchstart vide : sans lui, Safari (iPhone) n'applique pas :active sous le doigt -->
+	<ul class="fichas" aria-label={tria(IU.fichas)} bind:this={lista} ontouchstart={() => {}}>
 		{#each fichas as f (f.id)}
 			<li data-clau={f.id}>
 				<a class="ficha" style:--aplat={colorDe(f.tema)[0]} style:--sus={colorDe(f.tema)[1]} href="/cultura/{f.id}" aria-describedby={esOc || tria(f.titol) === f.titol.oc ? undefined : `b-ficha-${f.id}`}>
 					<span class="ficha-media" aria-hidden="true">
 						{#if foto(f.id)}
-							<img class:colors={colors(f.id)} src="/cultura/{f.id}-480.webp" srcset={srcset(f.id)} sizes="(min-width: 1100px) 24rem, (min-width: 640px) 46vw, 92vw" alt="" loading="lazy" decoding="async" />
+							<img src="/cultura/{f.id}-480.webp" srcset={srcset(f.id)} sizes="(min-width: 1100px) 24rem, (min-width: 640px) 46vw, 92vw" alt="" loading="lazy" decoding="async" />
 						{:else if data.dessenhs[f.id]?.length}
 							<svg class="dessenh" viewBox="0 0 100 100">
 								{#each data.dessenhs[f.id] as d}<path {d} />{/each}
@@ -340,23 +341,19 @@
 		mix-blend-mode: luminosity;
 		opacity: 0.62;
 		transition:
+			filter 0.5s,
 			opacity 0.5s,
 			transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
 	}
-	/* le rouge et l'or : la seule photo gardée en couleurs (Romain, 06-11) */
-	.ficha .ficha-media img.colors {
-		filter: none;
-		mix-blend-mode: normal;
-		opacity: 1;
-	}
+	/* sous la souris, au clavier ou sous le doigt : la photo reprend ses
+	   vraies couleurs (Romain, 06-11 : « quand on survole avec la souris ou
+	   le doigt, la case devrait afficher la vraie couleur de la photo ») */
 	.ficha:hover .ficha-media img,
-	.ficha:focus-visible .ficha-media img {
-		opacity: 0.8;
-		transform: scale(1.04);
-	}
-	.ficha:hover .ficha-media img.colors,
-	.ficha:focus-visible .ficha-media img.colors {
+	.ficha:focus-visible .ficha-media img,
+	.ficha:active .ficha-media img {
+		filter: grayscale(0) contrast(1);
 		opacity: 1;
+		transform: scale(1.04);
 	}
 	.ficha-media::after {
 		content: '';
@@ -418,7 +415,9 @@
 		.ficha-media img {
 			transition: none;
 		}
-		.ficha:hover .ficha-media img {
+		.ficha:hover .ficha-media img,
+		.ficha:focus-visible .ficha-media img,
+		.ficha:active .ficha-media img {
 			transform: none;
 		}
 	}
