@@ -30,7 +30,13 @@ Idée de Romain, 2026-11-06 vers 23 h 15, née de la cagnotte des illustrations 
 - **B. Deux caisses** : les projets d'intérêt public (illustrations sous licence libre, projets particuliers) par Open Collective Europe, s'il accepte ; le reste par la micro-entreprise. Comptes des projets publics d'office, mais deux systèmes à tenir, et un refus possible (personne seule, site qui vend).
 - Plus tard possible : une association, quand une deuxième personne s'engagera.
 
-## Deuxième décision : le service de paiement (comparé le 06-11, 23 h 30)
+## Deuxième décision : le service de paiement (comparé le 06-11 vers 23 h 20)
+**Choix de Romain (06-11, vers 23 h 25) : « Lyra, je les appelle »** : Lyra Collect pressenti, sous réserve de leurs réponses ; Mollie en repli (cahier §11). Rien n'est ouvert ni codé.
+
+**L'appel à Lyra** (demander les réponses par courriel, pour les garder)
+- Se présenter : micro-entrepreneur (entreprise individuelle, micro-BIC, franchise de TVA), site loligam.eu pour apprendre l'occitan, presque tout gratuit ; petits volumes au départ.
+- Les besoins : dons libres sans contrepartie, une fois ou chaque mois, montant choisi par la personne ; accès à prix symbolique à une partie du site, ouvert automatiquement après paiement ; cours en visio payés par lien ; page de paiement chez Lyra, aucun formulaire de carte sur le site.
+- Les questions : 1. un micro-entrepreneur est-il accepté ? 2. les dons sans contrepartie sont-ils acceptés ? 3. les paiements mensuels, par carte et par prélèvement ? 4. les frais exacts : par paiement (carte européenne, prélèvement), mise en service, abonnement éventuel, versements ; 5. le montant libre sur un lien de paiement ? 6. une API avec notifications de paiement et un environnement de test (pour relier le site) ? 7. les pièces à fournir et le délai d'ouverture ? 8. où sont gardées les données (France, Union européenne) ?
 À savoir d'abord : un don ponctuel peut passer par un simple lien, sans code, chez tous. Les **dons mensuels** et l'**accès payant qui s'ouvre tout seul** demandent de relier le service au site (du code, et la relecture de Rodrigo), quel que soit le service. Seul Liberapay gère les dons mensuels de son côté, mais il faut un compte pour donner et il reverse par Stripe ou PayPal.
 - **A. Lyra Collect** : Lyra Network, SAS créée en 2001, siège à Labège près de Toulouse, décrite comme une entreprise de taille intermédiaire indépendante (Le Journal des entreprises) ; Lyra Collect est un établissement de paiement agréé par l'ACPR. Environ 1,4 % + 0,20 € par paiement, pas d'abonnement, des frais de mise en service (190 € dans une offre partenaire). Liens de paiement, prélèvement SEPA, API avec notifications. **À demander à Lyra** : un micro-entrepreneur est-il accepté ? les paiements mensuels sont-ils possibles ? le prix de la mise en service ? des dons sans contrepartie sont-ils acceptés ?
 - **B. Mollie** : néerlandais, environ 1,2 % + 0,25 €, ni abonnement ni frais de mise en service, documentation et API très claires (le plus simple à relier au site, dons mensuels par l'API) ; mais financé par de grands fonds d'investissement.
@@ -40,7 +46,7 @@ Idée de Romain, 2026-11-06 vers 23 h 15, née de la cagnotte des illustrations 
 Sources : lejournaldesentreprises.com (Lyra Network), ecommerce-nation.fr et wizishop.fr (tarifs Lyra Collect), docs.lyra.com, leptidigital.fr et kolonell.com (Payplug), kolonell.com (GoCardless), mollie.com/products/recurring.
 
 ## Décisions suivantes (une à la fois)
-2. Le service de paiement, d'après la caisse choisie et ces critères : dons ponctuels et mensuels sans compte à créer, paiement de l'accès qui ouvre l'accès tout seul, européen, éthique, frais. Le besoin de dons mensuels change la comparaison du 06-11 (Liberapay, sans commission, est fait pour ça ; un accès payant demande un service qu'on relie au site).
+2. Le service de paiement : fait (Lyra Collect pressenti, Mollie en repli, voir plus haut) ; à confirmer après l'appel.
 3. Ce qui est derrière l'accès symbolique (§6 : où placer la limite gratuit / payant).
 4. La page « Soutenir » et la page des comptes (à quoi elles ressemblent).
 
