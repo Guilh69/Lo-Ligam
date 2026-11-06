@@ -286,6 +286,7 @@ Tous dans `app/scripts/`, à lancer depuis `C:\Users\perie\Depots\Lo_Ligam\app`.
 | `node scripts/controle-explications.mjs` | « Rien sans explication » : chaque mot occitan d'un module doit figurer dans son encadré « À retenir » ou dans celui d'un module précédent. |
 | `node scripts/fichas-relectura.mjs` | Régénère les fiches de relecture et les listes d'enregistrement des modules, tirées du contenu même du site. |
 | `node scripts/remarcas.mjs` | Lit les remarques de relecture posées par Romain sur les pages, et les marque traitées après correction. |
+| `node scripts/triar.mjs` | Lit les choix de Romain sur `/admin/triar` (cœur = garder, croix = refaire, avec commentaire), lot par lot. Un élément refait : `remarcas.mjs --tractar <id> --responsa "…"`, la carte revient en tête de son tri. `--clore-cors` range les paquets de cœurs. Nouveau lot : `app/src/lib/triar/lots.js`. |
 | `node scripts/elements-modificar.mjs <clau> --oc "…" --fr "…" --nota "…"` | Modifie un texte de page dans la base (publié, et brouillon de Romain s'il y en a un), après une photographie pour revenir en arrière. **Seulement à la demande de Romain.** |
 | `node scripts/elements-filet.mjs` | Rafraîchit le filet de secours depuis la base. |
 | `node scripts/elements-sql.mjs` | Produit le SQL des nouveaux éléments modifiables. |
