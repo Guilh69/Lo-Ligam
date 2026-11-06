@@ -35,7 +35,8 @@
 		{ href: '/admin/carta/luocs', oc: 'Luòcs', fr: 'Lieux' },
 		{ href: '/admin/textes', oc: 'Tèxtes', fr: 'Textes' },
 		{ href: '/admin/ideas', oc: 'Idèas', fr: 'Idées' },
-		{ href: '/admin/perfils', oc: 'Perfils', fr: 'Profils' }
+		{ href: '/admin/perfils', oc: 'Perfils', fr: 'Profils' },
+		{ href: '/admin/triar', oc: 'Triar', fr: 'Trier' } // valider un par un, croix ou cœur (Romain, 06-11)
 	];
 </script>
 
