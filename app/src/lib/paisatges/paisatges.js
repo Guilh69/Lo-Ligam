@@ -10,8 +10,10 @@
 //
 // Ces mots de nature ne sont pas dans l'A1 : ils viennent avec leur
 // traduction, toujours (choix de Romain, 05-11). Chaque forme passée à l'API
-// de lo Congrès le 05-11 (variété languedocienne, genre d'après lo Basic) ;
-// l'occitan reste à relire par Romain.
+// de lo Congrès le 05-11 et le 06-11 (variété languedocienne, genre d'après
+// lo Basic) ; l'occitan reste à relire par Romain. Chaque photo garde les mots
+// qui lui sont propres : « lo cèl » n'est que là où le ciel est le sujet
+// (Romain, 06-11 : « il y a 4 fois le mot ciel »).
 
 /** Le français de chaque mot (repli de tria() pour les autres langues). */
 export const MOTS = {
@@ -36,7 +38,19 @@ export const MOTS = {
 	'la glèisa': 'l’église',
 	'la torre': 'la tour',
 	'lo vilatge': 'le village',
-	'la vila': 'la ville'
+	'la vila': 'la ville',
+	// 06-11 : de quoi varier (lo Congrès : île → illa, digue → paissièra
+	// lengadoc, falaise → pena)
+	'l’illa': 'l’île',
+	'l’èrba': 'l’herbe',
+	'la paissièra': 'le barrage, la chaussée',
+	'l’orizont': 'l’horizon',
+	'la pèira': 'la pierre',
+	'la duna': 'la dune',
+	'lo pic': 'le pic',
+	'la bruma': 'la brume',
+	'la pena': 'la falaise',
+	'lo pòrt': 'le port'
 };
 
 export const PAISATGES = [
@@ -50,7 +64,8 @@ export const PAISATGES = [
 			['la mar', 0.22, 0.75],
 			['la ròca', 0.75, 0.66],
 			['l’ostal', 0.92, 0.48],
-			['la nívol', 0.42, 0.18]
+			['la nívol', 0.42, 0.18],
+			['l’illa', 0.2, 0.48]
 		]
 	},
 	{
@@ -62,8 +77,7 @@ export const PAISATGES = [
 		mots: [
 			['lo riu', 0.6, 0.83],
 			['la ròca', 0.32, 0.42],
-			['lo bòsc', 0.8, 0.5],
-			['lo cèl', 0.55, 0.12]
+			['lo bòsc', 0.8, 0.5]
 		]
 	},
 	{
@@ -76,7 +90,7 @@ export const PAISATGES = [
 			['lo lac', 0.5, 0.62],
 			['lo bòsc', 0.4, 0.38],
 			['la nívol', 0.1, 0.21],
-			['lo cèl', 0.75, 0.1]
+			['l’èrba', 0.3, 0.86]
 		]
 	},
 	{
@@ -88,6 +102,7 @@ export const PAISATGES = [
 		mots: [
 			['lo camin', 0.58, 0.82],
 			['la mar', 0.2, 0.55],
+			['la duna', 0.82, 0.55],
 			['lo cèl', 0.5, 0.22]
 		]
 	},
@@ -110,9 +125,9 @@ export const PAISATGES = [
 		h: 2133,
 		alt: 'Une arche de pierre s’ouvre sur un pic rocheux au-dessus de la garrigue, sous un ciel bleu et quelques nuages.',
 		mots: [
-			['la montanha', 0.62, 0.4],
+			['lo pic', 0.62, 0.38],
+			['la montanha', 0.28, 0.445],
 			['la ròca', 0.88, 0.55],
-			['lo cèl', 0.4, 0.2],
 			['la garriga', 0.45, 0.7]
 		]
 	},
@@ -126,8 +141,7 @@ export const PAISATGES = [
 			['la montanha', 0.7, 0.33],
 			['lo bòsc', 0.3, 0.88],
 			['la vinha', 0.78, 0.77],
-			['la nívol', 0.25, 0.3],
-			['lo cèl', 0.3, 0.12]
+			['la nívol', 0.25, 0.3]
 		]
 	},
 	{
@@ -140,7 +154,7 @@ export const PAISATGES = [
 			['lo vilatge', 0.72, 0.38],
 			['la glèisa', 0.52, 0.39],
 			['l’arbre', 0.42, 0.52],
-			['la montanha', 0.44, 0.25]
+			['la pena', 0.44, 0.24]
 		]
 	},
 	{
@@ -152,7 +166,7 @@ export const PAISATGES = [
 		mots: [
 			['la glèisa', 0.47, 0.43],
 			['lo batèl', 0.22, 0.63],
-			['la mar', 0.5, 0.82],
+			['lo pòrt', 0.72, 0.62],
 			['la vila', 0.8, 0.5]
 		]
 	},
@@ -166,7 +180,7 @@ export const PAISATGES = [
 			['la nèu', 0.3, 0.88],
 			['la torre', 0.33, 0.5],
 			['la montanha', 0.75, 0.6],
-			['lo cèl', 0.6, 0.2]
+			['la bruma', 0.85, 0.49]
 		]
 	},
 	{
@@ -178,7 +192,7 @@ export const PAISATGES = [
 		mots: [
 			['l’aiga', 0.5, 0.85],
 			['la vila', 0.5, 0.48],
-			['lo cèl', 0.5, 0.2]
+			['la paissièra', 0.3, 0.58]
 		]
 	},
 	{
@@ -189,9 +203,9 @@ export const PAISATGES = [
 		alt: 'Sous deux arbres, un muret de pierres sèches et, au loin, une plaine immense jusqu’à l’horizon.',
 		mots: [
 			['l’arbre', 0.27, 0.4],
-			['la ròca', 0.4, 0.75],
+			['la pèira', 0.4, 0.75],
 			['la plana', 0.6, 0.55],
-			['lo cèl', 0.6, 0.35]
+			['l’orizont', 0.4, 0.49]
 		]
 	}
 ];

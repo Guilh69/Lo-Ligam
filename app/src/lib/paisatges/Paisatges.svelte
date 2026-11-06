@@ -13,13 +13,26 @@
 
 	let { pausa = false, calme = false, n = $bindable(0) } = $props();
 
+	// L'ordre des paysages change à chaque visite, le premier aussi ; l'ordre
+	// d'apparition des points aussi (Romain, 06-11 : « s'assurer de la variation »)
+	function barrejar(t) {
+		for (let i = t.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[t[i], t[j]] = [t[j], t[i]];
+		}
+		return t;
+	}
+	const ordre = barrejar(PAISATGES.map((_, k) => k));
+	const pais = (pos) => PAISATGES[ordre[(pos + ordre.length) % ordre.length]];
+	const novela = (id, k) => ({ id, k, rangs: barrejar(pais(k).mots.map((_, i) => i)) });
+
 	let racina = $state();
 	let W = $state(0),
 		H = $state(0);
 	// Les paysages à l'écran : le montré, et pendant le disque celui qui s'en
 	// va dessous (le même élément, qui continue de glisser : rien ne saute).
 	let seq = 0;
-	let vistas = $state([{ id: 0, k: n }]);
+	let vistas = $state([novela(0, n)]);
 	const actiuId = $derived(vistas.at(-1).id);
 	let causit = $state(null); // le point ouvert
 	let costat = $state('drecha'); // l'étiquette à droite ou à gauche du point
@@ -123,7 +136,7 @@
 
 	// Le suivant et le précédent sont chargés d'avance, en silence.
 	function precargar(k) {
-		const q = PAISATGES[(k + PAISATGES.length) % PAISATGES.length];
+		const q = pais(k);
 		const i = new Image();
 		i.sizes = sizes(q);
 		i.srcset = srcset(q);
@@ -134,7 +147,7 @@
 		if (vistas.length > 1) return; // un disque à la fois
 		causit = null;
 		n = (n + d + PAISATGES.length) % PAISATGES.length;
-		const v = { id: ++seq, k: n };
+		const v = novela(++seq, n);
 		vistas = calme ? [v] : [...vistas, v];
 		precargar(n + d);
 	}
@@ -153,12 +166,15 @@
 		causit = i;
 	}
 
-	// Au clavier, un point hors de l'écran revient au milieu.
-	function focus(i) {
+	// Au clavier, un point hors de l'écran revient au milieu. Au doigt ou à la
+	// souris, jamais : la photo sautait sous le doigt et le toucher tombait à
+	// côté (Romain, 06-11, sur téléphone).
+	function focus(i, el) {
+		if (!el.matches(':focus-visible')) return;
 		const g = anims.get(actiuId);
 		if (!g) return;
 		const { a: anim, c } = g;
-		const [, x, y] = PAISATGES[n].mots[i];
+		const [, x, y] = pais(n).mots[i];
 		const frac = (val, a, b) => (b - a < 1 ? 0 : Math.min(Math.max((val - a) / (b - a), 0), 1));
 		const f = c.uB - c.uA >= c.vB - c.vA ? frac(x * c.w - W / 2, c.uA, c.uB) : frac(y * c.h - H / 2, c.vA, c.vB);
 		anim.currentTime = f * c.durada;
@@ -166,7 +182,7 @@
 
 	// Le glissement s'arrête le temps de lire un mot, et en pause.
 	$effect(() => {
-		const arrestat = pausa || causit !== null; // lu d'abord : l'effet en dépend toujours
+		const arrestat = pausa || causit !== null || tocant; // lu d'abord : l'effet en dépend toujours
 		const a = anims.get(actiuId)?.a;
 		if (!a) return;
 		if (arrestat) a.pause();
@@ -200,13 +216,31 @@
 		} else if (e.key === 'Escape') causit = null;
 	}
 
-	// Glisser le doigt : paysage suivant ou précédent ; toucher ailleurs
-	// qu'un point : le mot se referme.
+	// Glisser le doigt : paysage suivant ou précédent. Le temps du toucher, la
+	// photo ne bouge plus ; un doigt qui tombe tout près d'un point l'ouvre
+	// quand même ; ailleurs, le mot se referme.
 	let depart = null;
+	let tocant = $state(false);
 	function tocar(e) {
 		depart = { x: e.clientX, y: e.clientY };
+		tocant = true;
+	}
+	function ponchProche(x, y) {
+		let melhor = null,
+			dist = 40; // px depuis le milieu du point (la cible en fait 22)
+		for (const b of racina.querySelectorAll('.ponch')) {
+			if (+getComputedStyle(b).opacity < 0.5) continue; // pas encore paru (Joan, 06-11)
+			const r = b.getBoundingClientRect();
+			const d = Math.hypot(r.left + r.width / 2 - x, r.top + r.height / 2 - y);
+			if (d < dist) {
+				dist = d;
+				melhor = b;
+			}
+		}
+		return melhor;
 	}
 	function levar(e) {
+		tocant = false;
 		if (!depart) return;
 		const dx = e.clientX - depart.x,
 			dy = e.clientY - depart.y;
@@ -214,7 +248,11 @@
 		if (Math.max(Math.abs(dx), Math.abs(dy)) > 56) {
 			const d = Math.abs(dx) > Math.abs(dy) ? dx : dy;
 			anar(d < 0 ? 1 : -1);
-		} else if (!e.target.closest?.('.ponch')) causit = null;
+		} else if (!e.target.closest?.('.ponch')) {
+			const b = ponchProche(e.clientX, e.clientY);
+			if (b) dobrir(Number(b.dataset.i), b);
+			else causit = null;
+		}
 	}
 
 	onMount(() => {
@@ -233,9 +271,10 @@
 	});
 </script>
 
-{#snippet vista(q, id)}
+{#snippet vista(q, id, rangs)}
 	{@const actiu = id === actiuId}
-	<div class="quadre" {@attach glissar(q, id)}>
+	<!-- les points paraissent après le disque (après l'arrivée de la page pour le premier) -->
+	<div class="quadre" style:--d0={id === 0 ? '0.6s' : '1.25s'} {@attach glissar(q, id)}>
 		<img
 			src={camin(q.clau, q.amples[0])}
 			srcset={srcset(q)}
@@ -253,11 +292,13 @@
 					class:causit={causit === i}
 					style:left="{x * 100}%"
 					style:top="{y * 100}%"
-					style:--i={i}
+					style:--i={rangs[i]}
+					data-i={i}
 					aria-pressed={causit === i}
 					onclick={(e) => dobrir(i, e.currentTarget)}
-					onfocus={() => focus(i)}
+					onfocus={(e) => focus(i, e.currentTarget)}
 				>
+					<span class="onda" aria-hidden="true"></span>
 					<span class="sr"><span lang="oc">{oc}</span>, <span lang="fr">{MOTS[oc]}</span></span>
 				</button>
 			{/each}
@@ -276,9 +317,19 @@
 {/snippet}
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="paisatges" class:calme bind:this={racina} onpointerdown={tocar} onpointerup={levar} onpointercancel={() => (depart = null)}>
+<div
+	class="paisatges"
+	class:calme
+	bind:this={racina}
+	onpointerdown={tocar}
+	onpointerup={levar}
+	onpointercancel={() => {
+		depart = null;
+		tocant = false;
+	}}
+>
 	{#each vistas as v (v.id)}
-		<div class="vista" aria-hidden={v.id !== actiuId} {@attach dintrar(v.id)}>{@render vista(PAISATGES[v.k], v.id)}</div>
+		<div class="vista" aria-hidden={v.id !== actiuId} {@attach dintrar(v.id)}>{@render vista(pais(v.k), v.id, v.rangs)}</div>
 	{/each}
 	<div class="vela" aria-hidden="true"></div>
 </div>
@@ -333,8 +384,34 @@
 		background: none;
 		cursor: pointer;
 		opacity: 0;
-		animation: aparéisser 1.2s ease-out forwards;
-		animation-delay: calc(0.9s + var(--i) * 0.25s);
+		-webkit-tap-highlight-color: transparent;
+		/* un à un, dans un ordre qui change à chaque fois */
+		animation: aparéisser 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+		animation-delay: calc(var(--d0, 0.6s) + var(--i) * 0.42s);
+	}
+	/* l'onde : un filet d'or qui s'élargit et s'efface, une seule fois */
+	.onda {
+		position: absolute;
+		inset: 0;
+		margin: auto;
+		width: 1.5rem;
+		height: 1.5rem;
+		border: 1px solid var(--aur-clar, #ffd47f);
+		border-radius: 50%;
+		opacity: 0;
+		pointer-events: none;
+		animation: onda 1.6s cubic-bezier(0.1, 0.6, 0.3, 1) forwards;
+		animation-delay: calc(var(--d0, 0.6s) + var(--i) * 0.42s + 0.15s);
+	}
+	@keyframes onda {
+		from {
+			opacity: 0.9;
+			scale: 0.6;
+		}
+		to {
+			opacity: 0;
+			scale: 2.6;
+		}
 	}
 	.ponch::before,
 	.ponch::after {
@@ -377,8 +454,13 @@
 		outline-offset: 2px;
 	}
 	@keyframes aparéisser {
+		from {
+			opacity: 0;
+			scale: 0.35;
+		}
 		to {
 			opacity: 1;
+			scale: 1;
 		}
 	}
 	@keyframes respirar {
@@ -464,6 +546,9 @@
 	}
 
 	/* Réduire les animations : rien ne glisse ni ne respire, le mot paraît */
+	.calme .onda {
+		display: none;
+	}
 	.calme .ponch,
 	.calme .ponch::before,
 	.calme .oc,
