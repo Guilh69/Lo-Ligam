@@ -151,7 +151,12 @@ export const MOTS = {
 	'la tassa': 'la tasse',
 	'lo bòl': 'le bol',
 	'l’estadi': 'le stade',
-	'lo projector': 'le projecteur'
+	'lo projector': 'le projecteur',
+	// 06-11, lot 5 (compléments mer et montagne) : lo Congrès (grotte → balma en lengadoc, sable → sabla, clôture → barralha), genre d'après lo Basic
+	'la balma': 'la grotte',
+	'la sabla': 'le sable',
+	'la barralha': 'la barrière, la clôture',
+	'lo destrech': 'la gorge, le défilé'
 };
 
 export const PAISATGES = [
@@ -1322,6 +1327,273 @@ export const PAISATGES = [
 			['l’èrba', 0.62, 0.56],
 			['lo projector', 0.05, 0.29],
 			['lo cèl', 0.5, 0.1]
+		]
+	},
+	// ── Lot 5 des thèmes : compléments de la mar e la montanha (06-11) ──
+	{
+		clau: 'mar-duna',
+		tema: 'mar',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1600,
+		alt: 'Du haut d’une grande dune de sable blanc, une immense forêt de pins s’étend jusqu’à l’horizon.',
+		mots: [
+			['lo bòsc', 0.44, 0.51],
+			['la duna', 0.58, 0.93],
+			['lo cèl', 0.33, 0.14],
+			['l’orizont', 0.67, 0.35]
+		]
+	},
+	{
+		clau: 'mar-barralha',
+		tema: 'mar',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1076,
+		alt: 'Un chemin de sable vers la plage, bordé de barrières de bois, entre les dunes et les buissons.',
+		mots: [
+			['lo camin', 0.55, 0.85],
+			['la barralha', 0.84, 0.74],
+			['la duna', 0.07, 0.58],
+			['l’arbre', 0.6, 0.3]
+		]
+	},
+	{
+		clau: 'mar-teulats',
+		tema: 'mar',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une grande ville au bord de la mer, vue d’en haut le soir : des toits de tuiles, des immeubles blancs, un port, des collines au loin.',
+		mots: [
+			['la mar', 0.15, 0.54],
+			['lo teulat', 0.4, 0.89],
+			['l’ostal', 0.78, 0.54],
+			['lo puèg', 0.64, 0.44],
+			['lo cèl', 0.4, 0.14]
+		]
+	},
+	{
+		clau: 'montanha-vista',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Du haut d’un rocher sombre, une grande plaine s’étend jusqu’aux montagnes, sous un ciel chargé de nuages.',
+		mots: [
+			['la ròca', 0.15, 0.59],
+			['la plana', 0.59, 0.59],
+			['la montanha', 0.73, 0.42],
+			['la nívol', 0.46, 0.14]
+		]
+	},
+	{
+		clau: 'montanha-paret',
+		tema: 'montanha',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Un muret de pierre au bord d’un chemin, des arbres d’un vert éclatant, et derrière une montagne de calcaire clair.',
+		mots: [
+			['la paret', 0.28, 0.75],
+			['l’arbre', 0.85, 0.5],
+			['la montanha', 0.4, 0.38],
+			['lo camin', 0.09, 0.91]
+		]
+	},
+	{
+		clau: 'montanha-balma',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Vue du fond d’une grotte : une large ouverture laisse voir le ciel bleu, bordée d’arbres et de lierre.',
+		mots: [
+			['lo cèl', 0.56, 0.44],
+			['l’arbre', 0.62, 0.65],
+			['la balma', 0.12, 0.6]
+		]
+	},
+	{
+		clau: 'montanha-nivols',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Un grand pré de montagne en pente ; plus bas, une forêt de sapins et une mer de nuages qui cache la vallée.',
+		mots: [
+			['lo prat', 0.4, 0.79],
+			['la nívol', 0.43, 0.45],
+			['lo bòsc', 0.65, 0.55],
+			['lo cèl', 0.4, 0.12]
+		]
+	},
+	{
+		clau: 'montanha-sabla',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Des dunes de sable du désert dorées par le soleil couchant, des montagnes au loin.',
+		mots: [
+			['la duna', 0.61, 0.61],
+			['la montanha', 0.2, 0.34],
+			['lo cèl', 0.5, 0.12],
+			['la sabla', 0.5, 0.9]
+		]
+	},
+	{
+		clau: 'montanha-roja',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'De hautes falaises de roche rouge au-dessus d’une forêt de pins, sous un ciel bleu sans nuage.',
+		mots: [
+			['la ròca', 0.4, 0.45],
+			['lo cèl', 0.5, 0.14],
+			['l’arbre', 0.1, 0.39],
+			['lo bòsc', 0.44, 0.64]
+		]
+	},
+	{
+		clau: 'montanha-fenda',
+		tema: 'montanha',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Au fond d’un canyon très étroit, la roche rose et orange ondule comme une vague ; tout en haut, une fente de ciel.',
+		mots: [
+			['la ròca', 0.29, 0.59],
+			['lo cèl', 0.52, 0.27],
+			['lo destrech', 0.45, 0.47]
+		]
+	},
+	{
+		clau: 'montanha-torre',
+		tema: 'montanha',
+		amples: [800, 1280],
+		l: 1280,
+		h: 1707,
+		alt: 'Une vieille tour de pierre perdue dans une forêt très verte, au flanc d’une montagne ; une rambarde au premier plan.',
+		mots: [
+			['la torre', 0.52, 0.59],
+			['la montanha', 0.2, 0.29],
+			['lo bòsc', 0.29, 0.61],
+			['la baranda', 0.6, 0.83]
+		]
+	},
+	{
+		clau: 'montanha-arbres',
+		tema: 'montanha',
+		amples: [800, 1280],
+		l: 1280,
+		h: 1707,
+		alt: 'Un sous-bois au soleil, des arbres d’un vert vif au bord d’un ravin rocheux, un coin de ciel bleu.',
+		mots: [
+			['l’arbre', 0.6, 0.36],
+			['la ròca', 0.1, 0.64],
+			['lo cèl', 0.3, 0.12],
+			['la pèira', 0.65, 0.91]
+		]
+	},
+	{
+		clau: 'montanha-arc',
+		tema: 'montanha',
+		amples: [800, 1600],
+		l: 1600,
+		h: 2133,
+		alt: 'Par une arche de pierre en ruine, la vue s’ouvre sur une grande plaine boisée jusqu’à l’horizon.',
+		mots: [
+			['l’arc', 0.5, 0.1],
+			['la plana', 0.5, 0.52],
+			['la paret', 0.88, 0.5],
+			['la pèira', 0.45, 0.875],
+			['l’arbre', 0.34, 0.58]
+		]
+	},
+	{
+		clau: 'montanha-ramas',
+		tema: 'montanha',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Entre les branches d’un pin, une vallée profonde couverte de forêt et une montagne dans la lumière.',
+		mots: [
+			['lo pin', 0.3, 0.3],
+			['la valada', 0.5, 0.71],
+			['la montanha', 0.76, 0.45],
+			['lo bòsc', 0.61, 0.92]
+		]
+	},
+	{
+		clau: 'montanha-crotz',
+		tema: 'montanha',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Un grand tas de pierres au sommet, surmonté de deux croix de pierre, sous le ciel bleu.',
+		mots: [
+			['la crotz', 0.62, 0.28],
+			['la pèira', 0.5, 0.7],
+			['lo cèl', 0.14, 0.2]
+		]
+	},
+	{
+		clau: 'montanha-agulhas',
+		tema: 'montanha',
+		amples: [1024, 1776],
+		l: 1776,
+		h: 1184,
+		alt: 'Des aiguilles de roche claire dressées au-dessus d’une large vallée sèche, des montagnes à perte de vue.',
+		mots: [
+			['la ròca', 0.72, 0.55],
+			['la valada', 0.3, 0.6],
+			['la montanha', 0.26, 0.35],
+			['lo cèl', 0.4, 0.1]
+		]
+	},
+	{
+		clau: 'montanha-ruina',
+		tema: 'montanha',
+		amples: [1024, 1136],
+		l: 1136,
+		h: 640,
+		alt: 'Un gros rocher et une petite tour en ruine au bout d’un plateau d’herbe sèche ; en bas, une vallée dans la brume.',
+		mots: [
+			['la ròca', 0.2, 0.29],
+			['la torre', 0.42, 0.55],
+			['l’èrba', 0.35, 0.85],
+			['la valada', 0.8, 0.6]
+		]
+	},
+	{
+		clau: 'montanha-garriga',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Des collines couvertes de garrigue sous un ciel très bleu, une crête rocheuse, des arbres au premier plan.',
+		mots: [
+			['la garriga', 0.15, 0.5],
+			['la ròca', 0.55, 0.75],
+			['lo cèl', 0.4, 0.15],
+			['l’arbre', 0.86, 0.39]
+		]
+	},
+	{
+		clau: 'montanha-flors',
+		tema: 'montanha',
+		amples: [1024, 1920],
+		l: 1920,
+		h: 1440,
+		alt: 'Une prairie fleurie de violet au bord d’une forêt de pins, de hautes montagnes et des nuages blancs derrière.',
+		mots: [
+			['la montanha', 0.7, 0.38],
+			['lo pin', 0.6, 0.54],
+			['lo camin', 0.75, 0.89],
+			['la flor', 0.45, 0.8],
+			['la nívol', 0.3, 0.29]
 		]
 	}
 ];
