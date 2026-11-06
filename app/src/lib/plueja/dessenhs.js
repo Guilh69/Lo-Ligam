@@ -829,6 +829,90 @@ function arcFleca(x, y, r, a0, a1, l = 6) {
 }
 /** Note de musique (une croche) : la tête en (x, y), la hampe vers le haut. */
 const nota = (x, y, s = 1) => tr('M-3 0C-3 -3 3 -4 3 -1C3 2 -3 3 -3 0ZM3 -1L3 -15C5 -12 9 -11 9 -7', x, y, s);
+// ── Les drapeaux des nationalités et les couleurs, en couleur (Romain, 06-11 :
+// « juste le drapeau avec une attention sur les couleurs et le fond », « en
+// couleur », puis « pour les couleurs, un rond dans la couleur en question ») :
+// les seules exceptions à l'or. Le dessin lui-même n'est que le contour d'or du
+// drapeau ; ses couleurs sont dans TINTAS, zone par zone, dans l'ordre où on les
+// peint : { c: couleur, d: chemin fermé } est rempli, { c, d, s: true } est tracé.
+// Les couleurs officielles sont éclaircies pour se lire sur le ciel de nuit
+// (#0e1a2b) : un bleu de France sombre y disparaîtrait. Tous en 3 × 2 (72 × 48).
+const BANDIERA = 'M14 26L86 26L86 74L14 74Z';
+const ROND = cercle(50, 50, 27); // le rond d'une couleur
+const rect = (x0, y0, x1, y1) => `M${r1(x0)} ${r1(y0)}L${r1(x1)} ${r1(y0)}L${r1(x1)} ${r1(y1)}L${r1(x0)} ${r1(y1)}Z`;
+const T = {
+	blanc: '#f7f3ee',
+	blau: '#5b8ff9', // bleu de France (#0055a4), éclairci
+	roge: '#e8453c', // un seul rouge pour tous, éclairci et un peu chaud (Joan, 06-11 : deux familles de rouges faisaient désaccord)
+	verd: '#2fb062', // verts d'Italie, du Portugal, du Maroc, d'Algérie (#009246, #006600, #006233, #006633), éclaircis
+	jaune: '#f6c400' // jaunes d'Espagne et de Catalogne, sphère du Portugal
+};
+// Deux zones voisines se recouvrent au lieu de se toucher : sinon le fond sombre
+// passe en un fin liseré à la jonction (anticrénelage). D'où le fond plein d'abord.
+/** Trois bandes verticales : la bande du milieu en fond, les deux autres par-dessus. */
+const tres = (a, b, c) => [{ c: b, d: BANDIERA }, { c: a, d: rect(14, 26, 38, 74) }, { c: c, d: rect(62, 26, 86, 74) }];
+/** L'étoile à cinq branches tracée d'un seul trait (pentagramme), centre (x, y), rayon r. */
+function pentagrama(x, y, r) {
+	const P = (k) => [x + r * Math.cos(-Math.PI / 2 + (k * 2 * Math.PI) / 5), y + r * Math.sin(-Math.PI / 2 + (k * 2 * Math.PI) / 5)];
+	return linha([0, 2, 4, 1, 3, 0].map(P));
+}
+export const TINTAS = {
+	francesa: tres(T.blau, T.blanc, T.roge),
+	italian: tres(T.verd, T.blanc, T.roge),
+	espanhòla: [
+		// rouge, jaune deux fois plus large, rouge (le drapeau civil, sans les armoiries)
+		{ c: T.jaune, d: BANDIERA },
+		{ c: T.roge, d: rect(14, 26, 86, 38) },
+		{ c: T.roge, d: rect(14, 62, 86, 74) }
+	],
+	// la senyera : neuf bandes, quatre rouges sur le jaune
+	catalan: [
+		{ c: T.jaune, d: BANDIERA },
+		...[1, 3, 5, 7].map((k) => ({ c: T.roge, d: rect(14, 26 + (k * 48) / 9, 86, 26 + ((k + 1) * 48) / 9) }))
+	],
+	anglesa: [
+		// la croix de saint Georges, rouge sur blanc
+		{ c: T.blanc, d: BANDIERA },
+		{ c: T.roge, d: rect(45.2, 26, 54.8, 74) },
+		{ c: T.roge, d: rect(14, 45.2, 86, 54.8) }
+	],
+	portugués: [
+		// vert aux deux cinquièmes, rouge, la sphère armillaire et l'écu sur la limite
+		{ c: T.roge, d: BANDIERA },
+		{ c: T.verd, d: rect(14, 26, 42.8, 74) },
+		{ c: T.jaune, d: cercle(42.8, 50, 10), s: true },
+		{ c: T.jaune, d: 'M32.8 50C36 54 49.6 54 52.8 50', s: true },
+		{ c: T.blanc, d: 'M38.6 44.5L47 44.5L47 51C47 54 42.8 56 42.8 56C42.8 56 38.6 54 38.6 51Z' }
+	],
+	marroquina: [
+		// rouge, l'étoile verte à cinq branches tracée d'un seul trait
+		{ c: T.roge, d: BANDIERA },
+		{ c: T.verd, d: pentagrama(50, 51, 12), s: true }
+	],
+	argerian: [
+		// vert et blanc, le croissant et l'étoile rouges au milieu
+		{ c: T.blanc, d: BANDIERA },
+		{ c: T.verd, d: rect(14, 26, 50, 74) },
+		{ c: T.roge, d: lune(51, 50, 11) },
+		{ c: T.roge, d: estela(59.5, 50, 5, 2.1, 5) }
+	],
+	// les couleurs : un rond plein, cerné d'or ; les mêmes teintes que les drapeaux
+	roge: [{ c: T.roge, d: ROND }],
+	blava: [{ c: T.blau, d: ROND }],
+	verd: [{ c: T.verd, d: ROND }],
+	jaune: [{ c: T.jaune, d: ROND }],
+	negra: [{ c: '#000000', d: ROND }], // le seul rond plus sombre que le ciel : le cerne d'or le dessine
+	blanc: [{ c: T.blanc, d: ROND }],
+	gris: [{ c: '#9a9ea4', d: ROND }],
+	// la palette : ses quatre godets en couleur (dessin de la palette dans DESSENHS)
+	'la color': [
+		{ c: T.roge, d: cercle(34, 48, 4) },
+		{ c: T.jaune, d: cercle(44, 34, 4) },
+		{ c: T.verd, d: cercle(60, 32, 4) },
+		{ c: T.blau, d: cercle(72, 44, 4) }
+	]
+};
+
 /** Roue dentée. */
 function engrenatge(x, y, r, n = 8, dent = 5) {
 	const pts = [];
@@ -1261,86 +1345,14 @@ Object.assign(DESSENHS, {
 			...pommes.map((p) => cercle(...C(p), rp))
 		];
 	})(),
-	francesa: [
-		// la tour Eiffel
-		'M26 90C36 68 43 44 47 12',
-		'M74 90C64 68 57 44 53 12',
-		'M36 90C40 78 60 78 64 90',
-		'M33 68L67 68',
-		'M41 44L59 44',
-		'M36 68L50 56L64 68M42 44L50 32L58 44',
-		'M46 12L54 12L52 6L48 6Z',
-		'M50 6L50 2',
-		'M14 90L86 90'
-	],
-	catalan: (() => {
-		// un castell, la tour humaine : trois, puis deux, puis un, et l'enfant qui lève la main
-		const fig = (x, yb, r) => [
-			cercle(x, r1(yb - 4.4 * r), r),
-			`M${r1(x - 1.6 * r)} ${yb}L${r1(x - 1.3 * r)} ${r1(yb - 2.8 * r)}C${r1(x - 1.2 * r)} ${r1(yb - 3.3 * r)} ${r1(x + 1.2 * r)} ${r1(yb - 3.3 * r)} ${r1(x + 1.3 * r)} ${r1(yb - 2.8 * r)}L${r1(x + 1.6 * r)} ${yb}`
-		];
-		return [...fig(26, 92, 5), ...fig(50, 92, 5), ...fig(74, 92, 5), ...fig(38, 78, 5), ...fig(62, 78, 5), ...fig(50, 64, 5), ...fig(50, 50, 4), 'M54 42L60 26'];
-	})(),
-	espanhòla: [
-		// la guitare
-		'M50 50C40 50 36 56 38 62C30 64 26 72 28 80C30 92 70 92 72 80C74 72 70 64 62 62C64 56 60 50 50 50Z',
-		cercle(50, 70, 5),
-		'M44 84L56 84',
-		'M47 50L47 20M53 50L53 20',
-		'M45 20L45 8L55 8L55 20Z',
-		'M43 11L45 11M43 16L45 16M55 11L57 11M55 16L57 16',
-		'M50 20L50 84'
-	],
-	italian: (() => {
-		// la tour penchée de Pise
-		const t = (8 * Math.PI) / 180,
-			P = (u, v) => [44 + u * Math.cos(t) + v * Math.sin(t), 88 + u * Math.sin(t) - v * Math.cos(t)];
-		const L = (...pts) => linha(pts.map(([u, v]) => P(u, v)));
-		let etatges = '';
-		for (const v of [11, 22, 33, 44, 55]) etatges += L([-13, v], [13, v]);
-		let colonas = '';
-		for (const v of [0, 11, 22, 33, 44, 55]) for (const u of [-6.5, 0, 6.5]) colonas += L([u, v + 2.5], [u, v + 8.5]);
-		return ['M8 88L92 88', L([-13, 0], [-13, 66], [13, 66], [13, 0]), etatges, colonas, L([-9, 66], [-9, 76], [9, 76], [9, 66]), L([-3, 69], [-3, 74]) + L([3, 69], [3, 74])];
-	})(),
-	anglesa: [
-		// Big Ben
-		'M40 92L40 44L60 44L60 92',
-		'M37 44L37 22L63 22L63 44Z',
-		cercle(50, 33, 8),
-		'M50 33L50 27M50 33L54 35',
-		'M39 22L39 16L61 16L61 22',
-		'M41 16L50 4L59 16',
-		'M46 52L46 60M54 52L54 60M46 68L46 76M54 68L54 76',
-		'M24 92L76 92'
-	],
-	portugués: [
-		// le tramway de Lisbonne
-		'M12 72L12 42C12 36 16 34 22 34L78 34C84 34 88 36 88 42L88 72Z',
-		'M18 34L18 28L82 28L82 34',
-		'M18 42L30 42L30 54L18 54ZM36 42L48 42L48 54L36 54ZM54 42L66 42L66 54L54 54ZM72 42L82 42L82 54L72 54Z',
-		'M12 62L88 62',
-		'M50 28L40 14L56 8',
-		'M4 8L96 8',
-		cercle(28, 76, 5),
-		cercle(72, 76, 5),
-		'M4 82L96 82'
-	],
-	marroquina: [
-		// l'arc en fer à cheval et l'étoile à huit branches
-		'M18 92L18 14L82 14L82 92',
-		'M34 92L34 62A22.6 22.6 0 1 1 66 62L66 92',
-		estela(50, 46, 9, 6.3, 8),
-		'M10 92L90 92'
-	],
-	argerian: [
-		// la casbah blanche au-dessus de la mer, le minaret
-		'M10 80L10 66L26 66L26 58L42 58L42 50L58 50L58 62L74 62L74 80',
-		'M74 80L74 30L84 30L84 80',
-		'M72 30L86 30M76 30L76 22L82 22L82 30M79 22L79 16',
-		'M10 80L92 80',
-		'M16 72L16 76M32 64L32 70M48 56L48 62M64 68L64 74',
-		'M6 88C14 84 22 84 30 88C38 92 46 92 54 88C62 84 70 84 78 88C84 91 90 91 94 88'
-	],
+	francesa: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	catalan: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	espanhòla: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	italian: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	anglesa: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	portugués: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	marroquina: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
+	argerian: [BANDIERA], // le drapeau, en couleur : voir TINTAS (06-11)
 	'Parli un pauc.': [
 		bulla(14, 12, 86, 56, 0.25), // la bulle à moitié remplie : un peu, et le reste en pointillé
 		'M26 28L46 28',
@@ -1618,38 +1630,13 @@ Object.assign(DESSENHS, {
 	],
 	davant: ['M51.9 66L78 66L78 22L34 22L34 48.1', cercle(36, 64, 16)], // la balle devant la boîte
 	darrièr: ['M22 40L66 40L66 84L22 84Z', 'M48 40A16 16 0 1 1 66 55.9'], // la balle cachée derrière
-	roge: [cercle(36, 68, 12), cercle(64, 72, 12), 'M36 56C38 40 46 26 56 18M64 60C62 44 58 30 56 18', 'M56 18C64 10 76 12 80 18C72 24 62 24 56 18Z'], // les cerises
-	blava: [
-		// les vagues de la mer
-		'M8 40C16 32 24 32 32 40C40 48 48 48 56 40C64 32 72 32 80 40C86 46 90 46 94 42',
-		'M8 58C16 50 24 50 32 58C40 66 48 66 56 58C64 50 72 50 80 58C86 64 90 64 94 60',
-		'M8 76C16 68 24 68 32 76C40 84 48 84 56 76C64 68 72 68 80 76C86 82 90 82 94 78'
-	],
-	verd: ['M50 88C50 66 46 46 36 26', 'M50 88C52 64 58 46 70 30', 'M50 88C46 72 36 60 22 54', 'M50 88C56 74 66 66 80 62', 'M50 88C50 70 50 54 52 40', 'M30 88L70 88'], // l'herbe
-	jaune: ['M10 54C18 36 34 30 50 30C66 30 82 36 90 54C82 72 66 78 50 78C34 78 18 72 10 54Z', 'M50 30C54 20 64 16 72 18C66 26 58 30 50 30Z'], // le citron
-	negra: [
-		// le corbeau
-		'M12 44L24 40C26 34 34 32 40 36C52 38 66 46 76 54L94 60L78 62C70 70 54 72 42 66C32 62 26 54 24 48Z',
-		cercle(30, 40, 1.5),
-		'M48 68L46 82M56 68L58 82',
-		'M40 46C52 50 62 56 72 60'
-	],
-	blanc: [
-		// le mouton
-		'M30 64C22 66 18 56 24 52C22 42 32 38 38 42C42 34 54 34 58 40C64 34 76 38 76 46C84 48 84 60 76 62C74 70 36 72 30 64Z',
-		'M24 50C16 46 8 52 10 58C12 64 20 64 24 60',
-		'M18 50L14 44',
-		'M36 68L36 84M46 70L46 84M60 70L60 84M70 66L70 84'
-	],
-	gris: [
-		// la souris grise
-		'M14 72C14 56 30 48 46 48C62 48 76 58 86 70L90 72Z',
-		cercle(62, 46, 7),
-		cercle(76, 62, 1.5),
-		'M14 72C6 72 4 62 10 56C16 50 12 40 6 38',
-		'M86 66L96 62M86 68L96 70',
-		'M8 72L92 72'
-	],
+	roge: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	blava: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	verd: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	jaune: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	negra: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	blanc: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
+	gris: [ROND], // un rond de la couleur : voir TINTAS (Romain, 06-11)
 	pichona: [...persona(36, 30, 11, 90, { punts: true }), ...persona(70, 60, 6, 90, { cabels: true }), 'M6 90L94 90'],
 	grand: [...persona(36, 30, 11, 90), ...persona(70, 60, 6, 90, { punts: true }), 'M6 90L94 90'],
 	vièlh: [...persona(44, 34, 10, 90, { baston: 1 }), 'M40 30L44 31M50 31L54 30', 'M6 90L94 90'],
@@ -1706,6 +1693,15 @@ export function dessenhDe(oc, def = '') {
 	const k = autreSens(oc, def) ? `${oc}·${AUTRE_SENS[oc].mot}` : oc;
 	if (!cache.has(k)) cache.set(k, chemins.map((d) => new Path2D(d)));
 	return cache.get(k);
+}
+
+const cacheTintas = new Map();
+/** Les zones de couleur d'un dessin (drapeaux), prêtes pour le canevas, ou null. */
+export function tintasDe(oc) {
+	const z = TINTAS[oc];
+	if (!z) return null;
+	if (!cacheTintas.has(oc)) cacheTintas.set(oc, z.map((t) => ({ ...t, p: new Path2D(t.d) })));
+	return cacheTintas.get(oc);
 }
 
 // ── L'explication de première visite (Remira, Romain, 05-11 : « pour une

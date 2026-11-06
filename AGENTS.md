@@ -26,11 +26,11 @@ Site d'apprentissage de l'occitan (languedocien, norme classique) : https://loli
 - Montrer la preuve (sortie de commande, capture). Écrire « vérifié », « déduit » ou « non vérifié » ; un chiffre estimé s'écrit « estimation ». Ne jamais citer un commit, une branche ou une sortie qu'on ne peut pas montrer.
 
 ## Sur cet ordinateur : lancer les outils toi-même
-**Node et npm ne sont pas dans le PATH de Windows.** C'est pour ça que `node` ou `npm` répondent « command not found » : ce n'est pas qu'ils manquent. Ils sont dans `C:\Users\perie\AppData\Local\Programs\nodejs`. Dans ton terminal (Git Bash), commence chaque commande par :
-```
-export PATH="/c/Users/perie/AppData/Local/Programs/nodejs:$PATH"; cd /c/Users/perie/Depots/Lo_Ligam/app && node scripts/verificar-oc.mjs plaça velhada
-```
-Le Vibe Hub (`C:\Users\perie\Depots\vibe-hub`) ajoute ce chemin tout seul depuis le 06-11. Ensuite, `npm test`, `npm run build`, `node scripts/…` marchent normalement.
+**Node et npm ne sont pas dans le PATH de Windows.** C'est pour ça que `node` ou `npm` répondent « command not found » : ce n'est pas qu'ils manquent. Ils sont dans `C:\Users\perie\AppData\Local\Programs\nodejs`.
+- **Dans le Vibe Hub** (`C:\Users\perie\Depots\vibe-hub`), ce chemin est déjà ajouté (06-11). **Lance les commandes telles quelles**, sans rien devant : `cd app && npm test`, `cd app && npm run build`, `cd app && node scripts/verificar-oc.mjs plaça velhada`. Vérifié le 06-11 : ces formes passent. **Une commande précédée d'un `export …;` ou écrite `npm --prefix app …` n'est plus reconnue comme autorisée, et le Hub la refuse** (« Tool execution denied by approval callback »).
+- **Dans Vibe ouvert hors du Hub**, si `node` répond « command not found » : `export PATH="/c/Users/perie/AppData/Local/Programs/nodejs:$PATH"` une fois, puis les commandes ci-dessus (Vibe te demandera d'approuver).
+- Commandes autorisées sans question depuis le 06-11 (accord de Romain) : `npm test`, `npm run build`, `npm run check`, `npm run verificar:rls`, `npm run verificar:oc`, `node`, `git add`, `git commit`, `git push`, `git fetch`, `git branch`, `git switch`, `git show`, `git status`, `git log`, `git diff`, `git pull`. Envoyer sur `master` met le site en ligne : respecte les règles Git plus bas, personne d'autre ne les tient pour toi.
+- Si un test échoue sur un module introuvable (par exemple `ts-fsrs`), c'est un `npm install` manquant dans `app/` : propose-le à Romain avant de toucher au code.
 - **Ne fais pas lancer de fichiers `.cmd` à Romain** pour exécuter une commande à ta place : lance-la toi-même avec la ligne ci-dessus et lis la sortie. Les essais du 05-11 (`trobar-node.cmd`, `verificar-mistral.*`, `sortida-*.txt`) sont rangés dans `C:\Users\perie\Documents\6_Projectes\Lo_Ligam_hors-git\revisions\mistral-essais-2026-11-05`.
 - Python : `py` (Python 3.14) ; `python` existe aussi dans le PATH. GDAL : le Python de QGIS (`C:\Program Files\QGIS 4.2.3\bin\python-qgis.bat`).
 - Git Bash : un argument qui commence par `/` (`/ensag/…`) est transformé en chemin Windows ; préfixer par `MSYS_NO_PATHCONV=1`.

@@ -9,31 +9,55 @@
 	// Romain le 05-11 avec la palette crème : mise en page éditoriale (titre
 	// géant, aplats, filets), mots et lettres en tuiles, ni verre fumé, ni
 	// halo, ni lueur. Le rouge reste ce qui se clique, l'or ce qui est choisi.
-	// Les jeux : $lib/jocs/.
-	import { replaceState } from '$app/navigation';
+	// Les jeux : $lib/jocs/. Depuis le 06-11 (Romain : « arriver dans une salle
+	// de jeu… dans la logique du café pour la musique »), sans ?joc= on entre
+	// dans la salle de jeux ($lib/jocs/sala/) : les familles de jeux, leurs
+	// affiches, ce que chaque jeu fait travailler ; deux tèmas, calme par défaut
+	// et joiós, gardés sur l'appareil. Dans un jeu, « ‹ Sala de jòcs » y ramène.
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import Serp from '$lib/jocs/Serp.svelte';
 	import Paniers from '$lib/jocs/Paniers.svelte';
 	import OntEs from '$lib/jocs/OntEs.svelte';
+	import Sala from '$lib/jocs/sala/Sala.svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
 
 	const T = {
 		tornar: { oc: 'Tornar a S’apren', fr: 'Revenir à S’apprend' },
-		triar: { oc: 'Triar un jòc', fr: 'Choisir un jeu' }
+		triar: { oc: 'Triar un jòc', fr: 'Choisir un jeu' },
+		sala: { oc: 'Sala de jòcs', fr: 'Salle de jeux' }
 	};
 	const JOCS = [
 		{ id: 'serp', oc: 'La sèrp de las letras' },
 		{ id: 'paniers', oc: 'Los panièrs' },
 		{ id: 'paisatges', oc: 'Ont es… ?' }
 	];
-	const demandat = page.url.searchParams.get('joc');
-	let joc = $state(JOCS.some((j) => j.id === demandat) ? demandat : 'serp');
-	function triar(id) {
-		if (id === joc) return;
-		joc = id;
-		const u = new URL(page.url);
-		u.searchParams.set('joc', id);
-		replaceState(u, {});
+	// sans ?joc= : la salle de jeux ; avec : le jeu (un lien, donc le bouton
+	// « retour » du navigateur ramène à la salle)
+	let joc = $derived.by(() => {
+		const d = page.url.searchParams.get('joc');
+		return JOCS.some((j) => j.id === d) ? d : null;
+	});
+	// le tèma de la salle : calme par défaut, gardé sur cet appareil
+	const CLAU_TEMA = 'loligam-jocs-tema';
+	let tema = $state('calme');
+	onMount(() => {
+		// ?tema=joios ou ?tema=calme : un lien qui ouvre la salle dans ce tèma
+		const demandat = page.url.searchParams.get('tema');
+		if (demandat === 'joios' || demandat === 'calme') return causirTema(demandat);
+		try {
+			if (localStorage.getItem(CLAU_TEMA) === 'joios') tema = 'joios';
+		} catch {
+			// stockage refusé : on reste au calme
+		}
+	});
+	function causirTema(t) {
+		tema = t;
+		try {
+			localStorage.setItem(CLAU_TEMA, t);
+		} catch {
+			// stockage refusé : le choix vaut pour cette visite
+		}
 	}
 </script>
 
@@ -41,27 +65,35 @@
 	<title>Jòcs · Lo Ligam</title>
 	<meta
 		name="description"
-		content="Jòcs per aprene l’occitan : la sèrp de las letras, los panièrs, ont es… ? Jeux pour apprendre l’occitan : le serpent des lettres, les paniers, où est… ? (les paysages)."
+		content="La sala de jòcs per aprene l’occitan : jòcs d’adreça, de mots, d’observacion, de memòria e per escotar. La salle de jeux pour apprendre l’occitan : jeux d’adresse, de mots, d’observation, de mémoire et d’écoute."
 	/>
 </svelte:head>
 
 <main id="contengut" class="espaci">
 	<header class="barra">
-		<a class="tornar" href="/apren" aria-label={tria(T.tornar)} lang="oc"><span aria-hidden="true">‹</span> S’apren</a>
+		{#if joc}
+			<a class="tornar" href="/apren/jocs" lang="oc"><span aria-hidden="true">‹</span> {tria(T.sala)}</a>
+		{:else}
+			<a class="tornar" href="/apren" aria-label={tria(T.tornar)} lang="oc"><span aria-hidden="true">‹</span> S’apren</a>
+		{/if}
 		<h1 class="marca" lang="oc">Jòcs</h1>
-		<nav class="onglets" aria-label={tria(T.triar)}>
-			{#each JOCS as j (j.id)}
-				<button type="button" aria-pressed={joc === j.id} onclick={() => triar(j.id)} lang="oc">{j.oc}</button>
-			{/each}
-		</nav>
+		{#if joc}
+			<nav class="onglets" aria-label={tria(T.triar)}>
+				{#each JOCS as j (j.id)}
+					<a href="?joc={j.id}" data-sveltekit-replacestate aria-current={joc === j.id ? 'page' : undefined} lang="oc">{j.oc}</a>
+				{/each}
+			</nav>
+		{/if}
 	</header>
 	<div class="scena brica">
 		{#if joc === 'serp'}
 			<Serp />
 		{:else if joc === 'paniers'}
 			<Paniers />
-		{:else}
+		{:else if joc === 'paisatges'}
 			<OntEs />
+		{:else}
+			<Sala {tema} {causirTema} />
 		{/if}
 	</div>
 </main>
@@ -93,7 +125,7 @@
 		color: var(--t-tinta);
 	}
 	.tornar:focus-visible,
-	.onglets button:focus-visible {
+	.onglets a:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 3px;
 	}
@@ -112,9 +144,12 @@
 		gap: 0 var(--esp-24);
 		margin-inline-start: auto;
 	}
-	.onglets button {
+	.onglets a {
+		display: inline-flex;
+		align-items: center;
 		min-height: 2.75rem;
 		padding: 0.3rem 0 0.5rem;
+		text-decoration: none;
 		border: none;
 		border-bottom: 2px solid transparent;
 		margin-bottom: -1px;
@@ -123,10 +158,10 @@
 		color: var(--t-tinta-2);
 		cursor: pointer;
 	}
-	.onglets button:hover {
+	.onglets a:hover {
 		color: var(--t-tinta);
 	}
-	.onglets button[aria-pressed='true'] {
+	.onglets a[aria-current='page'] {
 		border-bottom-color: var(--t-aur);
 		color: var(--t-tinta);
 		font-weight: 600;
@@ -145,7 +180,7 @@
 			margin-inline-start: 0;
 			justify-content: space-between;
 		}
-		.onglets button {
+		.onglets a {
 			font-size: 0.95rem;
 		}
 	}

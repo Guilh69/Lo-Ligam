@@ -16,7 +16,8 @@
 1. Vérifier que `node` répond dans ton terminal (`node --version`). Sinon, voir `AGENTS.md`, « Sur cet ordinateur ».
 2. Vérifier que tes compétences `joan`, `rodrigo`, `aran` sont visibles (dossier `C:\Users\perie\.vibe\skills`, écrit par Claude le 06-11). Si Vibe ne les trouve pas, proposer à Romain d'ajouter `skill_paths = ["C:\\Users\\perie\\.vibe\\skills"]` en haut de `C:\Users\perie\.vibe\config.toml`.
 3. Vérifier que tes consignes générales sont lues : `C:\Users\perie\.vibe\AGENTS.md` (écrit par Claude le 06-11, à partir de la carte des projets de Romain).
-4. **Autorisations** : par défaut, Vibe demande avant `npm test`, `git commit`, `git push`. Dans le Vibe Hub (sans fenêtre de question), ces commandes sont refusées : **vérifié le 06-11**, `node --version` répond `v24.18.0` mais `npm --version` reçoit « Tool execution denied by approval callback ». Proposer à Romain, une fois, de les autoriser dans une séance Vibe en terminal (« toujours autoriser ») ; Claude n'a pas eu le droit de les ajouter lui-même.
+4. ~~**Autorisations**~~ : **réglé le 06-11** avec l'accord de Romain (« Tout, envoi compris ») : tests, construction, `git add`, `commit`, `push` autorisés sans question dans `C:\Users\perie\.vibe\config.toml` (copie d'avant : `config-2026-11-06.toml`, même dossier). Vérifié par le Hub : `npm --version` donne `11.16.0`, `cd app && npm test` passe (918 tests sur 918, après un `npm install` qui manquait). Lancer les commandes sans `export` devant (voir `AGENTS.md`).
+2 bis. ~~Compétences et consignes générales~~ : **vérifié le 06-11**, Mistral voit `joan`, `rodrigo`, `aran` et lit `C:\Users\perie\.vibe\AGENTS.md`.
 5. **Garde-fou Git pour toi** : Vibe sait lancer un crochet avant chaque commande (`hooks.toml`, point `pre_tool` ; il reçoit en JSON `tool_name` et `tool_input`, et refuse si la sortie est `{"decision": "deny", "reason": "…"}`). Adapter `.claude/hooks/garde-fou-git.mjs` (qui bloque `git add -A`, `commit -a`, `--no-verify`, `core.hooksPath`) en crochet Vibe serait la meilleure protection : à proposer à Romain, sur une branche `mistral/garde-fou`, après lecture de la documentation de Vibe.
 
 ## Dernier point Mistral
@@ -24,6 +25,7 @@
 
 ## Dernier point Claude
 - 2026-11-06 : relais écrit (ce fichier, `AGENTS.md` « Sur cet ordinateur » et « Sans Claude », `C:\Users\perie\.vibe\AGENTS.md`, compétences joan/rodrigo/aran) ; Vibe Hub corrigé (Node dans le PATH, anciens dossiers de Lo Ligam retirés, messages d'erreur en français ; copie d'avant dans `C:\Users\perie\Depots\vibe-hub\.copies`).
+- 2026-11-06, 18 h 55 : la discussion des jeux de l'A1 est close, tout est sur `master` : la salle de jeux de `/apren/jocs` (cinq familles, deux tèmas Calme et Joiós, jeux à venir montrés sans lien ; cahier §11 du 06-11). Ajouter un jeu : une entrée dans `app/src/lib/jocs/sala/cataleg.js` (ses tests disent ce qui manque) et son composant dans `app/src/routes/apren/jocs/+page.svelte`. Romain doit dire quel tèma et quelles affiches lui plaisent ; doutes d'occitan J-6 à J-10 dans `DOBTES-OCCITAN.md` §6.
 
 ## Consignes pour les deux agents
 - Lire ce fichier avant de commencer une tâche ; y noter toute décision qui concerne l'autre agent, en une ligne datée.

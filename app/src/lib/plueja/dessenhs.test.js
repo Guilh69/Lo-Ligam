@@ -2,7 +2,7 @@
 // (sinon il ne sert jamais), chaque mot a son dessin (lot 2), et un mot à deux
 // sens a un dessin par sens (la cosina : la cuisine, la cousine).
 import { describe, it, expect } from 'vitest';
-import { DESSENHS, cheminsDe } from './dessenhs.js';
+import { DESSENHS, TINTAS, cheminsDe } from './dessenhs.js';
 import { SCENAS } from './scenas.js';
 
 const MOTS = new Set(SCENAS.flatMap((s) => s.mots.map(([oc]) => oc)));
@@ -25,6 +25,22 @@ describe('dessins de la poussière d’or', () => {
 		}
 	});
 
+
+	it('les drapeaux et les couleurs en couleur (06-11) : un mot dessiné, des zones valides, des couleurs lisibles', () => {
+		expect(Object.keys(TINTAS).length).toBe(16);
+		for (const [k, zones] of Object.entries(TINTAS)) {
+			expect(DESSENHS[k], k).toBeTruthy();
+			expect(MOTS.has(k), k).toBe(true);
+			for (const z of zones) {
+				expect(z.d, k).toMatch(/^M/);
+				expect(z.d, k).not.toMatch(/NaN|undefined/);
+				expect(z.c, k).toMatch(/^#[0-9a-f]{6}$/);
+				// sur le ciel de nuit (#0e1a2b), une couleur trop sombre disparaît (sauf le noir, que son cerne d'or dessine)
+				const [r, g, b] = [1, 3, 5].map((i) => parseInt(z.c.slice(i, i + 2), 16) / 255);
+				if (k !== 'negra') expect(0.2126 * r + 0.7152 * g + 0.0722 * b, `${k} ${z.c}`).toBeGreaterThan(0.3);
+			}
+		}
+	});
 
 	it('chaque mot de chaque ambiance a un dessin', () => {
 		const sans = SCENAS.flatMap((s) => s.mots.filter(([oc, def]) => !cheminsDe(oc, def)).map(([oc]) => `${s.id} : ${oc}`));
