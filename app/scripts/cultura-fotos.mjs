@@ -10,7 +10,7 @@ import sharp from 'sharp';
 import { existsSync, mkdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { homedir, tmpdir } from 'node:os';
-import { FOTOS, COMMONS, AMPLES, amples } from '../src/lib/cultura/imatges.js';
+import { FOTOS, COMMONS, STOCK, AMPLES, amples } from '../src/lib/cultura/imatges.js';
 import { PAISATGES } from '../src/lib/paisatges/paisatges.js';
 
 const DEST = 'static/cultura';
@@ -27,11 +27,12 @@ async function tirar(id, src, pos, largors) {
 	const top = Math.round(Math.min(h - ch, Math.max(0, py * h - ch / 2)));
 	for (const a of largors) {
 		const out = join(DEST, `${id}-${a}.webp`);
-		await sharp(src)
-			.extract({ left, top, width: cw, height: ch })
-			.resize({ width: a, withoutEnlargement: true })
-			.webp({ quality: 50, effort: 6 })
-			.toFile(out);
+		let img = sharp(src).extract({ left, top, width: cw, height: ch }).resize({ width: a, withoutEnlargement: true });
+		// la grande taille ne sert qu'en tête de fiche, où la photo est passée
+		// en gris sous un voile : en gris et à peine adoucie, elle pèse moitié
+		// moins sans différence visible (comparé en capture le 06-11 : 166 → 83 Ko)
+		if (a >= 1200) img = img.grayscale().blur(0.6);
+		await img.webp({ quality: a >= 1200 ? 45 : 50, effort: 6 }).toFile(out);
 		total += statSync(out).size;
 	}
 	return cw;
@@ -41,11 +42,16 @@ for (const [id, { clau, pos }] of Object.entries(FOTOS)) {
 	if (!p) throw new Error(`paysage inconnu : ${clau} (${id})`);
 	await tirar(id, `static/apren/paisatges/${clau}-${p.amples[p.amples.length - 1]}.webp`, pos, AMPLES);
 }
-// photos libres de Wikimedia Commons : la source réduite est hors Git
-// (LO_LIGAM_HORS_GIT, sinon Documents/6_Projectes/Lo_Ligam_hors-git)
+// photos libres de Wikimedia Commons et autres photos du stock de Romain :
+// la source est hors Git (LO_LIGAM_HORS_GIT, sinon
+// Documents/6_Projectes/Lo_Ligam_hors-git) ; aucune métadonnée (GPS) n'est recopiée
 const HORS_GIT = process.env.LO_LIGAM_HORS_GIT ?? join(homedir(), 'Documents', '6_Projectes', 'Lo_Ligam_hors-git');
-for (const [id, c] of Object.entries(COMMONS)) {
-	const src = join(HORS_GIT, 'design-stock', 'brut', 'commons-cultura', c.font);
+const EXTERNS = [
+	...Object.entries(COMMONS).map(([id, c]) => [id, c, join('design-stock', 'brut', 'commons-cultura')]),
+	...Object.entries(STOCK).map(([id, c]) => [id, c, join('design-stock', 'Fotos', 'Bases_foto')])
+];
+for (const [id, c, dossier] of EXTERNS) {
+	const src = join(HORS_GIT, dossier, c.font);
 	if (!existsSync(src)) {
 		console.warn(`source absente, images gardées telles quelles : ${src}`);
 		continue;
@@ -59,7 +65,7 @@ for (const [id, c] of Object.entries(COMMONS)) {
 		total += statSync(out).size;
 	}
 }
-const n = Object.keys(FOTOS).length + Object.keys(COMMONS).length;
+const n = Object.keys(FOTOS).length + EXTERNS.length;
 console.log(`${n} fiches, ${Math.round(total / 1024)} Ko en tout`);
 
 if (process.argv.includes('--planca')) {
