@@ -215,13 +215,17 @@
 		stroke-linejoin: round;
 	}
 
-	/* 1 et 3 : la mention, petite, lisible, soulignée du rouge du logo (ce qui se clique) */
+	/* 1 et 3 : la mention, petite, lisible, soulignée du rouge (ce qui se clique) ;
+	   --t-terra plutôt que --t-accion : même rouge en clair, plus vif en sombre (Joan, 06-11).
+	   Zone de clic d'au moins 24 px de haut, sans changer l'aspect. */
 	.ia {
+		display: inline-block;
+		padding-block: 0.3em;
 		font-size: 0.8rem;
 		line-height: 1.4;
 		color: var(--t-tinta-2);
 		text-decoration: underline;
-		text-decoration-color: var(--t-accion);
+		text-decoration-color: var(--t-terra);
 		text-decoration-thickness: 1px;
 		text-underline-offset: 0.25em;
 	}
@@ -231,7 +235,7 @@
 		text-decoration-thickness: 2px;
 	}
 	figcaption {
-		margin-top: 0.45rem;
+		margin-top: 0.2rem;
 	}
 
 	/* 2 : la signature, dans la marge basse du cadre */
@@ -241,14 +245,15 @@
 	.signatura {
 		position: absolute;
 		right: 0.7rem;
-		bottom: 0.3rem;
+		bottom: 0;
+		padding-block: 0.3em;
 		font-family: var(--font-quote);
 		font-style: italic;
 		font-size: 1rem;
 		line-height: 1.3;
 		color: var(--t-tinta-2);
 		text-decoration: underline;
-		text-decoration-color: var(--t-accion);
+		text-decoration-color: var(--t-terra);
 		text-decoration-thickness: 1px;
 		text-underline-offset: 0.2em;
 	}
