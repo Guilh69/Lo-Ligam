@@ -17,6 +17,8 @@ Faire connaître le site seul, ou en informer aussi la Région Occitanie ? Le bu
 
 ## 3. Trois façons de faire
 
+**Choix de Romain, le 6 novembre 2026 : la deuxième, en trois cercles** (cahier §11).
+
 | | 1. Seul, tout de suite | 2. En trois cercles (recommandé) | 3. La Région d'abord |
 |---|---|---|---|
 | **Ce que c'est** | Ouvrir aux moteurs de recherche et annoncer sur Instagram maintenant ; écrire aux institutions dans quelques mois, chiffres de fréquentation en main | Des testeurs de confiance (novembre et décembre), puis les acteurs de la langue (décembre et janvier), puis le lancement public en février 2027, si possible pendant « Parlem ! » | Présenter le projet à la Région avant tout, chercher son soutien, lancer ensuite |
@@ -74,9 +76,10 @@ Pour aller plus vite : le cercle 3 peut se faire en janvier, et « Parlem ! » d
 
 | # | Support | Pour qui | Quand | Forme |
 |---|---|---|---|---|
+| 0 | Invitation aux testeurs (deux versions) | tes élèves, ta communauté, un ou deux enseignants | cercle 1, maintenant | ✅ texte prêt le 06-11, `diffusion/messages.md` §1 |
 | 1 | Synthèse du projet | base de tous les autres | ✅ fait le 06-11 | `diffusion/synthese.md` |
-| 2 | Courriels de présentation, un par destinataire (une quinzaine de lignes) | Congrès, OPLO, Occitanica, Région | cercle 2 | texte, envoyé par toi |
-| 3 | Fiche d'une page | jointe aux courriels | cercle 2 | PDF |
+| 2 | Courriels de présentation, un par destinataire (une quinzaine de lignes) | Congrès, OPLO, Occitanica, Région | cercle 2 | ✅ brouillons prêts le 06-11, `diffusion/messages.md` §2 ; envoyés par toi |
+| 3 | Fiche d'une page | jointe aux courriels | cercle 2 | ✅ texte prêt le 06-11, `diffusion/fiche.md` ; mise en page à faire (PDF) |
 | 4 | Dossier de présentation (8 à 10 pages) | Région, OPLO, presse, sur demande | cercle 2 ou 3 | PDF |
 | 5 | Diaporama (10 à 12 vues) | un rendez-vous, en visio ou sur place | seulement si un rendez-vous est obtenu | diaporama |
 | 6 | Communiqué de presse et visuels Instagram | médias, ta communauté | cercle 3 | texte, Canva |
