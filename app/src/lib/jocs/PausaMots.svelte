@@ -363,7 +363,7 @@
 						{/each}
 					</ul>
 					<div class="fin-accions">
-						<button type="button" class="accion" onclick={començar}>{tria(T.tornarJogar)}</button>
+						<button type="button" class="pc accion" onclick={començar}>{tria(T.tornarJogar)}</button>
 						<button type="button" class="segond" onclick={cambiarTema}>{tria(T.cambiar)}</button>
 					</div>
 				</div>
@@ -467,7 +467,7 @@
 					</ul>
 				{/key}
 				{#if fase === 'facha'}
-					<button type="button" class="accion seguent" onclick={seguent}
+					<button type="button" class="pc accion seguent" onclick={seguent}
 						>{pas + 1 >= Math.min(TOTAL, partida.length) ? tria(T.mots) : tria(T.seguenta)} ›</button
 					>
 				{/if}
@@ -475,7 +475,7 @@
 		</div>
 
 		<div class="comandas" class:obert={regObert}>
-			<button type="button" class="obrir-reg" aria-expanded={regObert} onclick={() => (regObert = !regObert)}>
+			<button type="button" class="pc pc-2 obrir-reg" aria-expanded={regObert} onclick={() => (regObert = !regObert)}>
 				{tria(T.reglatges)} <span aria-hidden="true">{regObert ? '▴' : '▾'}</span>
 			</button>
 			<div class="reg-panel">
@@ -493,8 +493,8 @@
 					titolOpcions={tria(T.reglatges)}
 				>
 					{#if enPartida}
-						<button type="button" onclick={començar}>{tria(T.tornarJogar)}</button>
-						<button type="button" onclick={cambiarTema}>{tria(T.cambiar)}</button>
+						<button type="button" class="pc pc-2" onclick={començar}>{tria(T.tornarJogar)}</button>
+						<button type="button" class="pc pc-2" onclick={cambiarTema}>{tria(T.cambiar)}</button>
 					{/if}
 				</Reglatges>
 			</div>
@@ -1069,37 +1069,27 @@
 		margin-top: var(--esp-8);
 	}
 	.obrir-reg {
+		--r: 10px;
 		min-height: 2.75rem;
 		padding: 0 0.25rem;
-		border: none;
-		background: none;
-		color: var(--t-tinta-2);
 		font: inherit;
-		cursor: pointer;
 	}
+
 	.obrir-reg:focus-visible {
 		outline: 3px solid var(--or);
 		outline-offset: 2px;
 	}
 
-	button {
+	button:not(.pc) {
 		font: inherit;
 	}
+
+	/* pièce de papier (lib/styles/papier.css) */
 	.accion {
+		--r: 10px;
 		padding: 0.6rem 1.2rem;
-		border: none;
-		border-radius: 0.6rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		cursor: pointer;
 	}
-	.accion:hover {
-		background: var(--t-accion-viu);
-	}
-	.accion:focus-visible {
-		outline: 3px solid var(--or);
-		outline-offset: 2px;
-	}
+
 	.segond {
 		min-height: 2.75rem;
 		padding: 0 0.25rem;
