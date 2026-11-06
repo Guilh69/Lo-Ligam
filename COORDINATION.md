@@ -9,7 +9,7 @@
 - **Tout le travail de Claude est sur `master` et en ligne**, sauf ce qui suit.
 - **Deux discussions Claude tournaient encore ce soir-là** (jeux de l'A1 ; correction « Qu'es aquò ? » dans les dessins de Remira, branche `claude/occitan-words-focus-interface-88d16a`, un fichier modifié non envoyé). Si au prochain `git pull` le commit 89030a4 n'est pas sur `master`, ne pas le refaire : demander à Romain.
 - **Outil d'interpellation des parlementaires** : un commit jamais envoyé (`f8520d4`, script `app/scripts/elus-generar.mjs` et `app/static/data/elus.json`), sur la branche locale `claude/occitan-parliament-tool-c4e7c1` ; le dernier message de Romain était « Phase 3 », sans suite. À reprendre seulement si Romain le demande.
-- **En attente d'un choix de Romain** (ne rien coder avant) : refonte de l'espace administrateur « Lo talhièr » (proposition du 06-11, PILOTATGE chantier 7) ; essai « Profondeur » v2 sur `/ensag/prigondor` (chantier 29) ; tri des 257 dessins de Remira sur `/admin/triar` (chantier 26).
+- **En attente d'un choix de Romain** (ne rien coder avant) : refonte de l'espace administrateur « Lo talhièr » (proposition du 06-11, PILOTATGE chantier 7) ; essai « Profondeur » v2 sur `/ensag/prigondor` (chantier 29) ; tri des 257 dessins de Remira sur `/admin/triar` (chantier 26) ; stratégie de diffusion, trois façons de faire (`diffusion/strategie.md` §3, chantier 30).
 - **Ce que Romain a à faire seul** : la liste du §1 de `PILOTATGE.md`.
 
 ## À faire par Mistral en premier (réglages, une fois)
@@ -26,6 +26,7 @@
 ## Dernier point Claude
 - 2026-11-06 : relais écrit (ce fichier, `AGENTS.md` « Sur cet ordinateur » et « Sans Claude », `C:\Users\perie\.vibe\AGENTS.md`, compétences joan/rodrigo/aran) ; Vibe Hub corrigé (Node dans le PATH, anciens dossiers de Lo Ligam retirés, messages d'erreur en français ; copie d'avant dans `C:\Users\perie\Depots\vibe-hub\.copies`).
 - 2026-11-06, 18 h 55 : la discussion des jeux de l'A1 est close, tout est sur `master` : la salle de jeux de `/apren/jocs` (cinq familles, deux tèmas Calme et Joiós, jeux à venir montrés sans lien ; cahier §11 du 06-11). Ajouter un jeu : une entrée dans `app/src/lib/jocs/sala/cataleg.js` (ses tests disent ce qui manque) et son composant dans `app/src/routes/apren/jocs/+page.svelte`. Romain doit dire quel tèma et quelles affiches lui plaisent ; doutes d'occitan J-6 à J-10 dans `DOBTES-OCCITAN.md` §6.
+- 2026-11-06, 19 h 31 : diffusion du site (chantier 30) : synthèse du projet et note de stratégie dans `diffusion/` ; rien n'a été envoyé à personne ; Romain doit choisir la façon de faire. Pour fabriquer les supports ensuite : `diffusion/strategie.md` §8.
 
 ## Consignes pour les deux agents
 - Lire ce fichier avant de commencer une tâche ; y noter toute décision qui concerne l'autre agent, en une ligne datée.
