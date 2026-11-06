@@ -98,6 +98,22 @@ export const COMMONS = {
 		licencia: 'CC BY-SA 3.0',
 		licenciaLigam: 'https://creativecommons.org/licenses/by-sa/3.0/deed.fr',
 		ligam: 'https://commons.wikimedia.org/wiki/File:Roquefort_sur_Soulzon-Affinage_des_tomes-20140628.jpg'
+	},
+	// le rouge et l'or : le drapeau occitan dans le ciel du Burgaud. Romain,
+	// 06-11 : « la croix que tu choisis n'a pas les couleurs rouge et or »
+	// (une porte à croix dorée, essayée une heure) ; choisi parmi trois.
+	// colors : la seule photo laissée en couleurs, sans la teinte du thème,
+	// puisque la fiche parle justement de ses couleurs
+	'roge-e-aur': {
+		font: 'roge-e-aur-luka-martin.jpg',
+		largor: 1280,
+		pos: '50% 28%',
+		posFicha: '50% 52%',
+		colors: true,
+		autor: 'Luka Martin 01',
+		licencia: 'CC0',
+		licenciaLigam: 'https://creativecommons.org/publicdomain/zero/1.0/deed.fr',
+		ligam: 'https://commons.wikimedia.org/wiki/File:OCCITANIA_02.jpg'
 	}
 };
 
@@ -113,12 +129,10 @@ export const STOCK = {
 	// posFicha : cadrage dans la case large de la fiche (la plaque au-dessus du titre, les roses dessous)
 	calandreta: { font: 'PXL_20230521_104030960.jpg', largor: 3024, pos: '50% 46%', posFicha: '50% 66%' },
 	// le mot òc : la vitrine de la Librariá occitana (« Cors de lenga »)
-	// (Romain, 06-11 : « Oui, les quatre », avec les trois suivantes)
-	oc: { font: 'DSCF1944.JPG', largor: 1776, pos: '50% 50%', posFicha: '50% 28%' },
-	// le rouge et l'or : la croix occitane dorée d'une porte noire, à la place
-	// de la croix du logo ; zoom : cadrage serré qui laisse hors champ le
-	// numéro de la maison et les boîtes aux lettres (pas d'adresse)
-	'roge-e-aur': { font: 'DSCF2319.JPG', largor: 1070, pos: '49% 52%', zoom: 1.66 }
+	// (Romain, 06-11 : « Oui, les quatre »)
+	oc: { font: 'DSCF1944.JPG', largor: 1776, pos: '50% 50%', posFicha: '50% 28%' }
+	// zoom (> 1) : un cadre plus serré, par exemple pour laisser hors champ un
+	// numéro de maison ; ex. { font, largor: 1070, pos, zoom: 1.66 }
 };
 
 /** photo hors des paysages (Commons ou stock de Romain), tirée par scripts/cultura-fotos.mjs */
@@ -135,6 +149,8 @@ export const amples = (id) => {
 };
 export const foto = (id) => FOTOS[id] ?? extern(id);
 export const credit = (id) => COMMONS[id] ?? null;
+/** photo laissée en couleurs, sans la teinte du thème (le rouge et l'or) */
+export const colors = (id) => !!extern(id)?.colors;
 /** srcset des petites images ; max : largeur la plus grande proposée (800 au sommaire) */
 export const srcset = (id, max = 800) =>
 	amples(id)
