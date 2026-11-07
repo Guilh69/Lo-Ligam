@@ -139,7 +139,8 @@
 		if (!actual || fasa !== 'triar' || volant || mandant) return;
 		const el = actual;
 		const nous = pausats[el.clau];
-		if (nous && JSON.stringify(nous) !== JSON.stringify(el.mots)) return mandarPausats(el, nous);
+		// (le 5e champ dit seulement d'où vient le mot : il ne compte pas comme un changement)
+		if (nous && JSON.stringify(nous.map((m) => m.slice(0, 4))) !== JSON.stringify(el.mots)) return mandarPausats(el, nous);
 		await far_partir(1);
 		estat = { ...estat, [el.clau]: { v: 'gardar' } };
 		pendents = [...pendents, el.clau];

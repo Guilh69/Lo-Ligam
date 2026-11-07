@@ -7,13 +7,22 @@
 	// renvoie avec ses boutons. Chaque changement remonte par onmots, en
 	// [occitan, français, x, y] (x et y en fraction de la photo, comme dans
 	// ./paisatges.js). La carte de derrière (viu = false) reste une image fixe.
+	//
+	// Le mot se choisit dans une recherche (Romain, 07-11 : « une barre de
+	// recherche… taper le mot en français ou en occitan… connectée à l'API du
+	// Congrès, comme ça je peux choisir directement en étant sûr de la
+	// véracité ») : les mots déjà sur le site viennent pendant la frappe, lo
+	// Basic à la demande (/api/congres/cercar, réservé à l'administrateur).
+	// Choisi, le rond ne montre plus que le mot et sa traduction en italique.
+	// font : d'où vient le mot (basic, site, man = écrit à la main).
 	import { tick, untrack } from 'svelte';
+	import { supabase } from '$lib/supabaseClient';
 	import { camin, srcset, MOTS } from './paisatges.js';
 
 	let { foto, mots = [], viu = true, onmots = () => {} } = $props();
 
 	let n = 0; // une clé stable par rond
-	let ronds = $state(untrack(() => mots.map(([oc, fr, x, y]) => ({ id: n++, oc, fr, x, y }))));
+	let ronds = $state(untrack(() => mots.map(([oc, fr, x, y, font]) => ({ id: n++, oc, fr, x, y, font: font ?? (MOTS[oc] ? 'site' : 'man') }))));
 	let causit = $state(null); // l'id du rond choisi
 	let camp = $state(null);
 	let zona = $state(null);
@@ -33,7 +42,57 @@
 	const tropPròche = (a) => ronds.find((b) => b !== a && b.oc.trim() && Math.hypot((a.x - b.x) * r, (a.y - b.y) * q) <= 0.12);
 	const doble = (a) => ronds.some((b) => b !== a && b.oc.trim() === a.oc.trim());
 
-	const mandar = () => onmots(ronds.filter((d) => d.oc.trim()).map((d) => [d.oc.trim(), d.fr.trim(), d.x, d.y]));
+	const mandar = () => onmots(ronds.filter((d) => d.oc.trim()).map((d) => [d.oc.trim(), d.fr.trim(), d.x, d.y, d.font]));
+
+	// ── la recherche ──
+	let consulta = $state('');
+	let cerca = $state({ estat: 'void', terme: '', resultats: [] }); // void | cargament | ok | sens-clau | error
+	const nuda = (s) =>
+		s
+			.normalize('NFD')
+			.replace(/\p{M}/gu, '')
+			.toLowerCase()
+			.replace(/^(l[’']|lo |la |los |las |le |les )/, '')
+			.trim();
+	// les mots du site, pendant la frappe (le début du mot, en occitan ou en français)
+	let locals = $derived.by(() => {
+		const t = nuda(consulta);
+		if (t.length < 2) return [];
+		return LEXIC.filter((oc) => nuda(oc).startsWith(t) || MOTS[oc].split(/,\s*/).some((f) => nuda(f).startsWith(t)))
+			.slice(0, 6)
+			.map((oc) => ({ oc, fr: MOTS[oc], font: 'site' }));
+	});
+	let basics = $derived(cerca.estat === 'ok' && cerca.terme === consulta.trim() ? cerca.resultats : []);
+
+	async function cercar(e) {
+		e?.preventDefault();
+		const q = consulta.trim();
+		if (q.length < 2 || cerca.estat === 'cargament') return;
+		cerca = { estat: 'cargament', terme: q, resultats: [] };
+		let r = { estat: 'error', terme: q, resultats: [] };
+		try {
+			const { data } = await supabase.auth.getSession();
+			const jeton = data?.session?.access_token;
+			const res = await fetch(`/api/congres/cercar?q=${encodeURIComponent(q)}`, { headers: jeton ? { Authorization: `Bearer ${jeton}` } : {} });
+			const d = await res.json();
+			if (res.ok) r = { estat: 'ok', terme: q, resultats: d.resultats.map((x) => ({ ...x, font: 'basic' })) };
+			else if (d.error === 'sens-clau') r.estat = 'sens-clau';
+		} catch {
+			/* reste « error » */
+		}
+		cerca = r;
+	}
+
+	async function causirMot(t) {
+		rond.oc = t.oc;
+		rond.fr = t.fr;
+		rond.font = t.font;
+		consulta = '';
+		cerca = { estat: 'void', terme: '', resultats: [] };
+		causit = null; // il ne reste que le mot et sa traduction
+		mandar();
+	}
+	const fontDe = (t) => (t.font === 'site' ? 'déjà sur le site' : t.var === 'lengadoc' ? 'lo Basic · languedocien' : 'lo Basic · occitan commun');
 
 	const bòrna = (v) => Math.round(Math.min(0.97, Math.max(0.03, v)) * 1000) / 1000;
 	const lòc = (e) => {
@@ -42,6 +101,10 @@
 	};
 
 	async function causir(id, focus = false) {
+		if (causit !== id) {
+			consulta = '';
+			cerca = { estat: 'void', terme: '', resultats: [] };
+		}
 		causit = id;
 		if (!focus) return;
 		await tick();
@@ -59,6 +122,7 @@
 		if (Math.hypot(e.clientX - tira.x0, e.clientY - tira.y0) > 6) tira.bolegat = true;
 		if (!tira.bolegat || tira.id == null) return;
 		const d = ronds.find((d) => d.id === tira.id);
+		if (!d) return;
 		[d.x, d.y] = lòc(e);
 		causit = d.id;
 	}
@@ -72,13 +136,13 @@
 		} else if (!t.bolegat) {
 			// un toucher sur la photo : un rond naît là
 			const [x, y] = lòc(e);
-			ronds.push({ id: n, oc: '', fr: '', x, y });
+			ronds.push({ id: n, oc: '', fr: '', x, y, font: 'man' });
 			causir(n++, true);
 		}
 	}
 
 	function apondre() {
-		ronds.push({ id: n, oc: '', fr: '', x: 0.5, y: 0.5 });
+		ronds.push({ id: n, oc: '', fr: '', x: 0.5, y: 0.5, font: 'man' });
 		causir(n++, true);
 	}
 	function levarRond() {
@@ -92,10 +156,12 @@
 		// un mot déjà connu : son français vient avec
 		const fr = MOTS[rond.oc.trim()];
 		if (fr) rond.fr = fr;
+		rond.font = fr ? 'site' : 'man';
 		mandar();
 	}
 	function traduire(e) {
 		rond.fr = e.target.value;
+		if (rond.font === 'basic') rond.font = 'man';
 		mandar();
 	}
 	function teclaForma(e) {
@@ -155,7 +221,10 @@
 					aria-label={d.oc.trim() ? `${d.oc}, changer ou déplacer (flèches)` : 'Rond sans mot'}
 				></button>
 				{#if d.oc.trim()}
-					<span class="nom {costat(d.x)}" class:naut={d.y > 0.8} style:left="{d.x * 100}%" style:top="{d.y * 100}%" lang="oc" aria-hidden="true">{d.oc}</span>
+					<!-- le mot et sa traduction en italique, comme dans Remira -->
+					<span class="nom {costat(d.x)}" class:naut={d.y > 0.78} style:left="{d.x * 100}%" style:top="{d.y * 100}%" aria-hidden="true"
+						><span class="n-oc" lang="oc">{d.oc}</span>{#if d.fr.trim()}<span class="n-filet"></span><span class="n-fr" lang="fr">{d.fr}</span>{/if}</span
+					>
 				{/if}
 			{:else}
 				<span class="rond" style:left="{d.x * 100}%" style:top="{d.y * 100}%" aria-hidden="true"></span>
@@ -166,25 +235,57 @@
 	{#if viu}
 		{#if rond}
 			<div class="forma">
-				<label>
-					<span>Le mot en occitan, avec son article</span>
-					<input
-						bind:this={camp}
-						value={rond.oc}
-						oninput={escriure}
-						onkeydown={teclaForma}
-						list={LISTA}
-						lang="oc"
-						placeholder="la mar"
-						autocomplete="off"
-						spellcheck="false"
-						maxlength="80"
-					/>
-				</label>
-				<label>
-					<span>En français</span>
-					<input value={rond.fr} oninput={traduire} onkeydown={teclaForma} placeholder="la mer" autocomplete="off" maxlength="80" />
-				</label>
+				<!-- la recherche : en français ou en occitan ; Entrée ou « Chercher » interroge lo Basic -->
+				<form class="cerca" role="search" onsubmit={cercar}>
+					<label for="cerca-{foto.clau}">Cherche le mot, en français ou en occitan</label>
+					<div class="cerca-linha">
+						<input
+							id="cerca-{foto.clau}"
+							type="search"
+							bind:this={camp}
+							bind:value={consulta}
+							onkeydown={(e) => e.key === 'Escape' && (e.preventDefault(), (causit = null))}
+							placeholder="nuage, nívol…"
+							autocomplete="off"
+							spellcheck="false"
+							maxlength="60"
+						/>
+						<button type="submit" class="b-cercar" disabled={consulta.trim().length < 2 || cerca.estat === 'cargament'}>Chercher</button>
+					</div>
+				</form>
+				{#if locals.length || basics.length}
+					<ul class="trobats" aria-label="Mots trouvés">
+						{#each [...basics, ...locals.filter((l) => !basics.some((b) => b.oc === l.oc))] as t (t.font + t.oc + t.fr)}
+							<li>
+								<button type="button" onclick={() => causirMot(t)}>
+									<span class="t-oc" lang="oc">{t.oc}</span>
+									<em class="t-fr" lang="fr">{t.fr}</em>
+									<span class="t-font">{fontDe(t)}</span>
+								</button>
+							</li>
+						{/each}
+					</ul>
+				{/if}
+				<p class="estat" aria-live="polite">
+					{#if cerca.estat === 'cargament'}Je cherche « {cerca.terme} » dans lo Congrès…
+					{:else if cerca.estat === 'ok' && !cerca.resultats.length && cerca.terme === consulta.trim()}Rien dans lo Basic pour « {cerca.terme} » : essaie le mot entier, ou dans l’autre langue.
+					{:else if cerca.estat === 'sens-clau'}La recherche dans lo Congrès n’est pas encore branchée en ligne : les mots déjà sur le site restent proposés.
+					{:else if cerca.estat === 'error'}Lo Congrès ne répond pas pour l’instant ; réessaie dans un moment.{/if}
+				</p>
+				{#if rond.oc.trim()}
+					<p class="actual">Sur ce rond : <span lang="oc">{rond.oc}</span>{#if rond.fr.trim()}{' · '}<em>{rond.fr}</em>{/if}</p>
+				{/if}
+				<details class="man">
+					<summary>Écrire le mot à la main</summary>
+					<label>
+						<span>Le mot en occitan, avec son article</span>
+						<input value={rond.oc} oninput={escriure} onkeydown={teclaForma} list={LISTA} lang="oc" placeholder="la mar" autocomplete="off" spellcheck="false" maxlength="80" />
+					</label>
+					<label>
+						<span>En français</span>
+						<input value={rond.fr} oninput={traduire} onkeydown={teclaForma} placeholder="la mer" autocomplete="off" maxlength="80" />
+					</label>
+				</details>
 				{#if rond.oc.trim() && doble(rond)}
 					<p class="avis">« <span lang="oc">{rond.oc.trim()}</span> » est déjà sur cette photo : un mot n’y paraît qu’une fois.</p>
 				{:else if rond.oc.trim() && tropPròche(rond)}
@@ -211,6 +312,7 @@
 <style>
 	.pausar {
 		width: 100%;
+		min-width: 0;
 		display: flex;
 		flex-direction: column;
 		gap: 0.6rem;
@@ -269,14 +371,33 @@
 	.nom {
 		position: absolute;
 		translate: var(--tx, -50%) var(--ty, 1.15rem);
-		padding: 0.05rem 0.4rem;
-		border-radius: 0.3rem;
-		background: rgba(4, 9, 11, 0.7);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 0.15rem 0.45rem 0.2rem;
+		border-radius: 0.35rem;
+		background: rgba(4, 9, 11, 0.72);
 		color: #f3ead6;
-		font-size: 0.78rem;
-		line-height: 1.35;
+		line-height: 1.25;
 		white-space: nowrap;
 		pointer-events: none;
+	}
+	.n-oc {
+		font-size: 0.82rem;
+		font-weight: 700;
+	}
+	.n-filet {
+		width: 1.4rem;
+		height: 1px;
+		margin: 0.12rem 0;
+		background: var(--aur-clar, #ffd47f);
+		opacity: 0.7;
+	}
+	.n-fr {
+		font-family: var(--font-quote);
+		font-style: italic;
+		font-size: 0.74rem;
+		color: #f1dcb2;
 	}
 	.nom.drecha {
 		--tx: calc(-100% + 0.95rem);
@@ -318,6 +439,112 @@
 	}
 	input::placeholder {
 		color: rgba(243, 234, 214, 0.45);
+	}
+	.cerca-linha {
+		display: flex;
+		gap: 0.4rem;
+	}
+	/* une largeur de départ modeste : sinon le champ (20 signes) élargit la carte au téléphone */
+	.cerca-linha input {
+		flex: 1 1 6rem;
+		width: 6rem;
+		min-width: 0;
+	}
+	.pausar .cerca label {
+		display: block;
+		margin-bottom: 0.25rem;
+		font-size: 0.85rem;
+		font-weight: 400;
+		color: #f3ead6;
+	}
+	.b-cercar {
+		padding: 0.45rem 0.9rem;
+		border: 1px solid var(--aur-clar, #ffd47f);
+		border-radius: 999px;
+		background: rgba(255, 212, 127, 0.14);
+		color: #f3ead6;
+		font: inherit;
+		font-size: 0.9rem;
+		cursor: pointer;
+	}
+	.b-cercar:disabled {
+		opacity: 0.45;
+		cursor: default;
+	}
+	.b-cercar:focus-visible {
+		outline: 2px solid var(--aur-clar, #ffd47f);
+		outline-offset: 2px;
+	}
+	.trobats {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+		max-height: 13.5rem;
+		overflow-y: auto;
+	}
+	.trobats button {
+		width: 100%;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		grid-template-areas: 'oc font' 'fr font';
+		align-items: center;
+		column-gap: 0.6rem;
+		padding: 0.4rem 0.65rem;
+		border: 1px solid rgba(243, 234, 214, 0.25);
+		border-radius: 0.5rem;
+		background: rgba(243, 234, 214, 0.06);
+		color: #f3ead6;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+	}
+	.trobats button:hover,
+	.trobats button:focus-visible {
+		border-color: var(--aur-clar, #ffd47f);
+		background: rgba(255, 212, 127, 0.12);
+		outline: none;
+	}
+	.t-oc {
+		grid-area: oc;
+		font-weight: 700;
+	}
+	.t-fr {
+		grid-area: fr;
+		font-family: var(--font-quote);
+		font-size: 0.85rem;
+		color: #f1dcb2;
+	}
+	.t-font {
+		grid-area: font;
+		justify-self: end;
+		font-size: 0.72rem;
+		opacity: 0.7;
+		text-align: right;
+	}
+	.estat,
+	.actual {
+		margin: 0;
+		font-size: 0.82rem;
+	}
+	.estat:empty {
+		display: none;
+	}
+	.actual em {
+		font-family: var(--font-quote);
+		color: #f1dcb2;
+	}
+	.man summary {
+		font-size: 0.82rem;
+		cursor: pointer;
+		opacity: 0.85;
+	}
+	.man[open] {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
 	}
 	.avis {
 		margin: 0;

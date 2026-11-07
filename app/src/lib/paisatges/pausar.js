@@ -17,7 +17,7 @@ export function diferéncias(p, nous, MOTS) {
 	const l = [];
 	for (const m of nous) {
 		const v = vielhs.find((w) => w[0] === cle(m[0]));
-		if (!v) l.push(`+ ${m[0]} (${m[1] || 'sans français'}) en ${m[2]}, ${m[3]}${MOTS[cle(m[0])] ? '' : '   ← mot nouveau : lo Congrès'}`);
+		if (!v) l.push(`+ ${m[0]} (${m[1] || 'sans français'}) en ${m[2]}, ${m[3]}${MOTS[cle(m[0])] ? '' : m[4] === 'basic' ? '   ← mot nouveau, choisi dans lo Basic' : '   ← mot nouveau, écrit à la main : lo Congrès'}`);
 		else {
 			if (Math.abs(v[2] - m[2]) > 0.005 || Math.abs(v[3] - m[3]) > 0.005) l.push(`~ ${m[0]} déplacé : ${v[2]}, ${v[3]} → ${m[2]}, ${m[3]}`);
 			if (m[1] && m[1] !== v[1]) l.push(`~ ${m[0]} : français « ${v[1]} » → « ${m[1]} »`);

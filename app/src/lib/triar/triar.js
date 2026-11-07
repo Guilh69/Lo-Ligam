@@ -12,7 +12,8 @@
 //   par ligne.
 // - une photo dont Romain a posé les mots (lot « pausar », 07-11) = une
 //   remarque : cibla = la clé de la photo, extrait = 'pausar', tèxte = « ◎ »
-//   et le nombre de mots, puis un mot par ligne : « occitan | français | x | y ».
+//   et le nombre de mots, puis un mot par ligne : « occitan | français | x | y »,
+//   et parfois « | basic » (choisi dans lo Basic), « | site » ou « | man » (écrit à la main).
 //   Elle compte comme un cœur ; Claude vérifie les mots avec lo Congrès, les
 //   écrit dans lib/paisatges/paisatges.js, puis la marque « tractada ».
 // Le dernier choix l'emporte. Une croix que Claude a marquée « tractada »
@@ -58,9 +59,11 @@ const net = (s) =>
 		.trim()
 		.slice(0, 80);
 
-/** Le texte d'une photo dont Romain a posé les mots ([[occitan, français, x, y]]). */
+/** Le texte d'une photo dont Romain a posé les mots ([[occitan, français, x, y, font?]]). */
 export function tèxtePausats(mots) {
-	const lignas = mots.map(([oc, fr, x, y]) => `${net(oc)} | ${net(fr)} | ${Math.round(x * 1000) / 1000} | ${Math.round(y * 1000) / 1000}`);
+	const lignas = mots.map(
+		([oc, fr, x, y, font]) => `${net(oc)} | ${net(fr)} | ${Math.round(x * 1000) / 1000} | ${Math.round(y * 1000) / 1000}` + (font ? ` | ${net(font)}` : '')
+	);
 	return [`${ROND} ${mots.length}`, ...lignas].join('\n');
 }
 
@@ -70,8 +73,8 @@ export function legirPausats(tèxte) {
 		.split('\n')
 		.slice(1)
 		.map((l) => l.split('|').map((s) => s.trim()))
-		.filter((c) => c.length === 4 && c[0])
-		.map(([oc, fr, x, y]) => [oc, fr, Number(x), Number(y)])
+		.filter((c) => (c.length === 4 || c.length === 5) && c[0])
+		.map(([oc, fr, x, y, font]) => (font ? [oc, fr, Number(x), Number(y), font] : [oc, fr, Number(x), Number(y)]))
 		.filter(([, , x, y]) => Number.isFinite(x) && Number.isFinite(y));
 }
 
