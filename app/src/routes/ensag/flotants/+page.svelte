@@ -8,7 +8,6 @@
 	import { OBJETS } from '$lib/flotants/objets.js';
 
 	let mode = $state('objets');
-	let devant = $state(true);
 	let attrapes = $state([]);
 	const attrape = (o) => {
 		if (!attrapes.some((x) => x.id === o.id)) attrapes = [...attrapes, o];
@@ -21,7 +20,7 @@
 </svelte:head>
 
 {#key mode}
-	<Flotants {mode} {devant} onattrape={attrape} />
+	<Flotants {mode} onattrape={attrape} />
 {/key}
 
 <div class="page">
@@ -40,17 +39,12 @@
 				<button type="button" class="pc pc-2 pc-chip" aria-pressed={mode === 'confettis'} onclick={() => (mode = 'confettis')}>Confettis minuscules</button>
 				<button type="button" class="pc pc-2 pc-chip" aria-pressed={mode === 'objets'} onclick={() => (mode = 'objets')}>Objets à attraper</button>
 			</div>
-			<div class="groupe" role="group" aria-label="Place des objets" class:inactif={mode !== 'objets'}>
-				<span class="etiq">Les objets passent</span>
-				<button type="button" class="pc pc-2 pc-chip" aria-pressed={devant} disabled={mode !== 'objets'} onclick={() => (devant = true)}>Devant le texte</button>
-				<button type="button" class="pc pc-2 pc-chip" aria-pressed={!devant} disabled={mode !== 'objets'} onclick={() => (devant = false)}>Derrière le texte</button>
-			</div>
 		</div>
 
 		{#if mode === 'objets'}
 			<p class="regle">
-				<b>Objets à attraper.</b> Clique ou touche un objet : il s’arrête, grossit, le mot s’affiche en occitan, puis il déguerpit et
-				revient plus tard. « Derrière le texte », on ne peut pas les attraper sous un bloc de texte, mais ils ne gênent jamais.
+				<b>Objets à attraper.</b> Ils flottent derrière tout, pâlis. Clique ou touche l’endroit où tu en vois un, même sous du texte :
+				il s’arrête, grossit, le mot s’affiche en occitan, puis il déguerpit et revient plus tard.
 			</p>
 			<p class="mots" aria-live="polite">
 				<span class="etiq">Mots attrapés : {attrapes.length} sur {OBJETS.length}</span>
@@ -58,8 +52,8 @@
 			</p>
 		{:else}
 			<p class="regle">
-				<b>Confettis minuscules.</b> Du papier de couleur qui flotte derrière tout. On ne peut pas les attraper, mais la main les
-				écarte et les emporte.
+				<b>Confettis minuscules.</b> Du papier de couleur, tout petit et pâli, qui flotte derrière tout. On ne peut pas les attraper,
+				mais la main les écarte et les emporte.
 			</p>
 		{/if}
 
@@ -74,13 +68,12 @@
 				<li style="--f: #4f6a2f">Amassa</li>
 			</ul>
 			<p>
-				Ce bloc de texte sert à juger la lecture : un objet qui passe devant doit rester petit et ne pas cacher un mot trop longtemps ;
-				derrière, il ne gêne pas, mais on ne peut plus l’attraper là où il y a du texte. Fais défiler : le fond reste à l’écran, comme
-				le ferait un fond fixe du site.
+				Ce bloc de texte sert à juger la lecture : le fond doit rester un fond, sans jamais rendre un mot plus difficile à lire. Fais
+				défiler : le fond reste à l’écran, comme le ferait un fond fixe du site.
 			</p>
 			<p>
-				Sur téléphone, un glissé du doigt sur le fond emporte les pièces sans bloquer le défilement ; un simple toucher sur un
-				objet l’attrape. Les confettis et les objets s’arrêtent si l’appareil demande moins d’animations.
+				Sur téléphone, un glissé du doigt sur le fond emporte les pièces sans bloquer le défilement ; un simple toucher à l’endroit
+				d’un objet l’attrape. Les confettis et les objets s’arrêtent si l’appareil demande moins d’animations.
 			</p>
 		</section>
 	</main>
@@ -128,9 +121,6 @@
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 0.5rem;
-	}
-	.groupe.inactif {
-		opacity: 0.55;
 	}
 	.etiq {
 		margin-right: 0.4rem;

@@ -63,7 +63,7 @@ export function flotter(zone, elements, options = {}) {
 		p.el.style.transform = `translate(${(p.x - p.w / 2).toFixed(1)}px, ${(p.y - p.h / 2).toFixed(1)}px) rotate(${p.rot.toFixed(1)}deg) scale(${p.s.toFixed(3)})`;
 	};
 	for (const p of pieces) poser(p);
-	if (o.immobile) return { pieces, attraper: () => false, arreter() {} };
+	if (o.immobile) return { pieces, attraper: () => false, attraperA: () => false, arreter() {} };
 
 	const ro = new ResizeObserver(() => {
 		L = zone.clientWidth;
@@ -80,6 +80,24 @@ export function flotter(zone, elements, options = {}) {
 		p.minuteur = setTimeout(() => lacher(p), o.tenue);
 		o.onAttrape?.(p, { x: p.x, y: p.y, L, H });
 		return true;
+	};
+	// attraper ce qui se trouve là où l'on vient de cliquer ou de toucher (en pixels de la fenêtre) :
+	// la pièce libre la plus proche, à son rayon plus une marge pour un doigt
+	const attraperA = (x, y) => {
+		const b = zone.getBoundingClientRect();
+		const mx = x - b.left;
+		const my = y - b.top;
+		let meilleure = null;
+		let dmin = Infinity;
+		for (const p of pieces) {
+			if (p.etat !== 'libre') continue;
+			const d = Math.hypot(p.x - mx, p.y - my);
+			if (d < p.r + 14 && d < dmin) {
+				dmin = d;
+				meilleure = p;
+			}
+		}
+		return meilleure ? attraper(meilleure) : false;
 	};
 	const lacher = (p) => {
 		if (p.etat !== 'attrape') return;
@@ -236,6 +254,7 @@ export function flotter(zone, elements, options = {}) {
 	return {
 		pieces,
 		attraper,
+		attraperA,
 		arreter() {
 			cancelAnimationFrame(enRoute);
 			for (const p of pieces) clearTimeout(p.minuteur);

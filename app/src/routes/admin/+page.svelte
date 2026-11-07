@@ -11,7 +11,11 @@
 	import { dictadaPossibla, dictar } from '$lib/talhier/dictada.js';
 	import { TALHIÈRS, VERROLHS } from '$lib/talhier/talhiers.js';
 	import { pila, cargarPila, cartas } from '$lib/talhier/pila.svelte.js';
+	import { ESSAIS } from '$lib/labo/registre-essais.js';
 
+	// les essais encore en cours (Romain, 2026-11-08 : « voir à cet endroit-là tous les essais, mais juste le
+	// temps qu'ils durent ») : la liste vient du registre du Laboratòri, un essai adopté ou retiré en sort seul
+	const essais = ESSAIS.filter((e) => e.etat === 'actif').sort((a, b) => b.date.localeCompare(a.date));
 	let regarder = $derived(notas.lista.filter((r) => sòrta(r) === 'regarder'));
 	let questions = $derived(notas.lista.filter((r) => sòrta(r) === 'question'));
 	let tasNòtas = $derived(notas.lista.filter((r) => sòrta(r) === 'nòta'));
@@ -219,8 +223,21 @@
 		</ul>
 	{/if}
 
+	{#if essais.length}
+		<h2>Essais à manier · {essais.length}</h2>
+		<p class="ajuda">
+			Les pages d’essai en cours, la plus récente en premier : chaque titre ouvre l’essai. Un essai sort de cette liste dès qu’il est adopté ou retiré.
+			<a href="/admin/labo">Tous les essais et les choix de design</a>
+		</p>
+		<ul class="fons">
+			{#each essais as e (e.chemin)}
+				<li><a href={e.chemin}>{e.titre}</a> : {e.raison}</li>
+			{/each}
+		</ul>
+	{/if}
+
 	{#if espèra.length}
-		<h2>En attente de l’IA · {espèra.length}</h2>
+	<h2>En attente de l’IA · {espèra.length}</h2>
 		<p class="ajuda">Relevées au début de la prochaine séance. Pour une demande tout de suite, « Copiar » met la note toute prête à coller dans la conversation.</p>
 		<ul class="lista calma">
 			{#each espèra as r (r.id)}

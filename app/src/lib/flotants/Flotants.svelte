@@ -1,8 +1,12 @@
 <script>
 	// Le fond qui flotte (page d'essai /ensag/flotants, 2026-11-07) : deux pistes de Romain.
-	//  - « confettis » : de tout petits morceaux de papier de couleur, nombreux, que la main écarte ;
+	//  - « confettis » : de tout petits morceaux de papier de couleur, que la main écarte ;
 	//  - « objets » : des objets en papier découpé (objets.js) qu'on peut faire virevolter et attraper :
 	//    le mot occitan s'affiche, puis l'objet déguerpit et revient plus tard.
+	// Retour de Romain (08-11) : « ça a parasité beaucoup trop le fond, il faut que ce soit en arrière » :
+	// la couche est derrière tout le contenu, pâlie et petite ; on attrape un objet en cliquant ou en
+	// touchant l'endroit où on le voit, même sous du texte (le clic passe au contenu comme d'habitude,
+	// et un objet est attrapé s'il est là ; jamais quand on clique un lien, un bouton ou un champ).
 	// Décor : rien n'est lu par un lecteur d'écran, sauf le mot attrapé (zone « polie » cachée).
 	// Rien ne bouge si l'appareil demande moins d'animations (les pièces sont juste posées).
 	import { onMount, tick } from 'svelte';
@@ -10,7 +14,7 @@
 	import { OBJETS } from './objets.js';
 	import { TEINTES as T } from '$lib/styles/palette.js';
 
-	let { mode = 'confettis', devant = false, onattrape = () => {} } = $props();
+	let { mode = 'confettis', onattrape = () => {} } = $props();
 
 	let zone;
 	let pieces = $state([]);
@@ -25,16 +29,15 @@
 		const alea = () => (s = (s * 16807) % 2147483647) / 2147483647;
 		return Array.from({ length: n }, (_, k) => ({
 			forme: FORMES[k % FORMES.length],
-			style: `--t: ${((5 + alea() * 6) * (petit ? 0.85 : 1)).toFixed(1)}px; --c: ${TEINTES[Math.floor(alea() * TEINTES.length)]}`
+			style: `--t: ${((4 + alea() * 5) * (petit ? 0.85 : 1)).toFixed(1)}px; --c: ${TEINTES[Math.floor(alea() * TEINTES.length)]}`
 		}));
 	};
 
 	onMount(() => {
 		const petit = innerWidth < 640;
-		// sur un grand écran, chaque objet est en deux exemplaires : le fond reste vivant sans être chargé
-		const copies = innerWidth >= 1100 ? 2 : 1;
-		pieces = mode === 'objets' ? Array.from({ length: OBJETS.length * copies }, (_, k) => ({ ...OBJETS[k % OBJETS.length] })) : confettis(petit ? 56 : 110, petit);
+		pieces = mode === 'objets' ? OBJETS.map((o) => ({ ...o })) : confettis(petit ? 46 : 90, petit);
 		let arret = false;
+		let toucher = null;
 		tick().then(() => {
 			if (arret) return;
 			const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.leugier === 'on';
@@ -58,23 +61,28 @@
 					mot = null;
 				}
 			});
+			if (objets && !reduit) {
+				toucher = (e) => {
+					// un lien, un bouton, un champ : on ne touche pas au jeu
+					if (e.target.closest?.('a, button, input, select, textarea, label, summary, [role="button"], [contenteditable]')) return;
+					if (getSelection()?.toString()) return;
+					moteur?.attraperA(e.clientX, e.clientY);
+				};
+				addEventListener('click', toucher);
+			}
 		});
 		return () => {
 			arret = true;
+			if (toucher) removeEventListener('click', toucher);
 			moteur?.arreter();
 		};
 	});
-
-	const attraper = (k) => {
-		if (moteur) moteur.attraper(moteur.pieces[k]);
-	};
 </script>
 
-<div class="couche" class:devant={devant && mode === 'objets'} class:objets={mode === 'objets'} bind:this={zone} aria-hidden="true">
+<div class="couche" class:objets={mode === 'objets'} bind:this={zone} aria-hidden="true">
 	{#each pieces as c, k (k)}
 		{#if mode === 'objets'}
-			<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-			<div class="p o" onclick={() => attraper(k)}>
+			<div class="p o">
 				<svg viewBox="0 0 48 48" focusable="false">{@html c.svg}</svg>
 			</div>
 		{:else}
@@ -88,6 +96,7 @@
 <p class="sr" aria-live="polite">{annonce}</p>
 
 <style>
+	/* derrière tout : le contenu des pages est au-dessus et reçoit les clics */
 	.couche {
 		position: fixed;
 		inset: 0;
@@ -95,15 +104,13 @@
 		overflow: hidden;
 		pointer-events: none;
 	}
-	.couche.devant {
-		z-index: 60;
-	}
-	/* ── les confettis : du papier découpé, tout petit ── */
+	/* ── les confettis : du papier découpé, tout petit et pâli ── */
 	.c {
 		display: block;
 		width: var(--t);
 		height: var(--t);
-		filter: drop-shadow(0 1.5px 1px rgba(20, 10, 5, 0.28));
+		opacity: 0.6;
+		filter: drop-shadow(0 1.5px 1px rgba(20, 10, 5, 0.25));
 	}
 	.c b {
 		display: block;
@@ -124,26 +131,18 @@
 		height: 50%;
 		border-radius: 999px 999px 0 0;
 	}
-	/* ── les objets : des pièces pleines, ombre courte, qu'on peut toucher ── */
+	/* ── les objets : des pièces pleines, ombre courte, un peu pâlies ── */
 	.o {
-		--t: 44px;
+		--t: 36px;
 		width: var(--t);
 		height: var(--t);
-		pointer-events: auto;
-		cursor: pointer;
-		filter: drop-shadow(0 3px 2px rgba(20, 10, 5, 0.3));
-		-webkit-tap-highlight-color: transparent;
+		opacity: 0.72;
+		filter: drop-shadow(0 2px 1.5px rgba(20, 10, 5, 0.25));
 	}
 	@media (max-width: 40rem) {
 		.o {
-			--t: 38px;
+			--t: 32px;
 		}
-	}
-	/* une zone à toucher plus large que le dessin : un doigt attrape plus facilement */
-	.o::before {
-		content: '';
-		position: absolute;
-		inset: -10px;
 	}
 	.o svg {
 		display: block;
@@ -151,7 +150,7 @@
 		height: 100%;
 		overflow: visible;
 	}
-	/* ── le mot attrapé : une pièce d'ocre, comme les pièces « choisies » du site ── */
+	/* ── le mot attrapé : une pièce d'ocre, bien lisible, comme les pièces « choisies » du site ── */
 	.mot {
 		position: absolute;
 		display: grid;
