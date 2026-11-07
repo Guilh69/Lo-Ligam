@@ -31,6 +31,11 @@ export const GROUPES = [
 				texte: 'La référence des essais de palette du 07-11, avec le panneau « Retoucher les couleurs » qui mesure la cohérence.'
 			},
 			{
+				chemin: '/ensag/palette-habillage',
+				titre: 'Palette : habiller un fond sobre',
+				texte: 'Un seul écran en trois habillages, à activer séparément ou ensemble : bandeaux de photos, photos teintées dans les tuiles, dessins et pictogrammes ; avec la logique des couleurs.'
+			},
+			{
 				chemin: '/ensag/palette-modeles',
 				titre: 'Palette : modèles de pages, base mêlée',
 				texte: 'Accueil, S’apren, jeux, leçon et menu en modèles simplifiés (ordinateur et téléphone, clair et sombre), avec le panneau pour retoucher les couleurs.'
