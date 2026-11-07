@@ -15,6 +15,7 @@ import { cadreDe } from './centrar.js';
 import { telaNoms } from './etiquetasVivas.js';
 import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranca } from './franca.js';
 import { trabalh, talhar, liberar } from './telas.js';
+import { CARTE, texteSur, luminance, nomSurAplat as nomSus } from '../styles/palette.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -24,13 +25,6 @@ const easeS = (t) => (1 - Math.cos(Math.PI * t)) / 2;
 const mesclar = (a, b, t) => {
 	const h = (c, i) => parseInt(c.slice(1 + 2 * i, 3 + 2 * i), 16);
 	return '#' + [0, 1, 2].map((i) => Math.round(lerp(h(a, i), h(b, i), t)).toString(16).padStart(2, '0')).join('');
-};
-// Le nom posé sur un aplat plein (07-11, comme colaDonadas.js) : crème sur
-// une teinte sombre, brun sur une teinte claire, avec une ombre qui contraste
-const nomSus = (color) => {
-	const n = parseInt(color.slice(1), 16),
-		clar = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 130;
-	return clar ? ['#2a1a10', 'rgba(251, 241, 225, 0.75)'] : ['#fbf1e1', 'rgba(20, 10, 5, 0.75)'];
 };
 
 const DURADA = 1700; // ms : difusion d'un dialècte causit
@@ -72,15 +66,11 @@ export function crearColaLenga(
 		// (07-11 : comme l'occitan, aplats presque pleins aux teintes des jeux,
 		// les mêmes dans les deux thèmes ; le nom de la langue en crème sur une
 		// teinte sombre, en brun sur l'or, avec une ombre qui contraste)
-		const lum = (h) => {
-			const n = parseInt(h.slice(1), 16);
-			return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255);
-		};
-		const tèxt = d ? lenga.tèxt[m] : lum(lenga.color[m]) > 130 ? '#2a1a10' : '#fbf1e1',
-			tèxtClar = lum(tèxt) > 150;
+		const tèxt = d ? lenga.tèxt[m] : texteSur(lenga.color[m]),
+			tèxtClar = luminance(tèxt) > 150;
 		return {
 			clar: c,
-			tencha: 0.88,
+			tencha: CARTE.intensite,
 			uni: 1,
 			ombra: c ? 'rgba(247, 243, 238, 0.95)' : 'rgba(18, 9, 6, 0.9)',
 			nomOmbra: tèxtClar ? 'rgba(20, 10, 5, 0.8)' : 'rgba(247, 243, 238, 0.9)',

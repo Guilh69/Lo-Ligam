@@ -18,6 +18,7 @@ import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranc
 import { trabalh, talhar, liberar } from './telas.js';
 import { LOCUTORS, classaDe, gamaLocutors, alfaLocutors, infoLocutors } from './locutors.js';
 import { nomTerritori } from './territoris.js';
+import { CARTE, TEINTES, texteSur, nomSurAplat as nomSus } from '../styles/palette.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -26,13 +27,6 @@ const dossa = (t) => 1 - Math.pow(1 - t, 3); // arribada doça
 const mesclar = (a, b, t) => {
 	const h = (c, i) => parseInt(c.slice(1 + 2 * i, 3 + 2 * i), 16);
 	return '#' + [0, 1, 2].map((i) => Math.round(lerp(h(a, i), h(b, i), t)).toString(16).padStart(2, '0')).join('');
-};
-// Le nom posé sur un aplat plein (07-11) : crème sur une teinte sombre, brun
-// sur une teinte claire (l'or), avec une ombre qui contraste
-const nomSus = (color) => {
-	const n = parseInt(color.slice(1), 16),
-		clar = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 130;
-	return clar ? ['#2a1a10', 'rgba(251, 241, 225, 0.75)'] : ['#fbf1e1', 'rgba(20, 10, 5, 0.75)'];
 };
 
 // Una color per dialècte, dins l'esperit de la carta d'Occitanica (violet
@@ -48,17 +42,18 @@ const nomSus = (color) => {
 // gascon en orange clair (#f4a261 ; avant bleu, qui touchait le bleu de
 // l'oïl). Avant le 07-11 : sorne #5b7fff #ff3f86 #ffb0dc #ffa22e #e8482a
 // #ffe27a ; clar #2350d8 #c2185b #e573ad #e07b00 #a8321a #c9a227.
-const PALETA_JOCS = { gas: '#f4a261', lan: '#cc2a14', pro: '#eeaf34', lem: '#6b3a5b', auv: '#4f6a2f', viv: '#1f5f63' };
+// Les couleurs elles-mêmes sont dans lib/styles/palette.js (CARTE.dialectes).
+const PALETA_JOCS = CARTE.dialectes;
 export const COLORS = {
 	sorne: PALETA_JOCS,
 	clar: PALETA_JOCS,
 	dalt: { gas: '#0072b2', lan: '#d55e00', pro: '#cc79a7', lem: '#e69f00', auv: '#009e73', viv: '#56b4e9' }
 };
 const TEMAS = {
-	// l'occitan unifié au rouge des boutons (#b53d17), le nom en crème
+	// l'occitan unifié au rouge des boutons (CARTE.occitan, palette.js), le nom en crème
 	// (avant : #d9343f à 0,48 en sombre, #b0202c à 0,58 en clair)
-	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: '#b53d17', occitanTèxt: '#ffc2b8', nomOccitan: '#fbf1e1', nomOmbra: 'rgba(30, 8, 3, 0.85)', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: 0.88, uni: 1 },
-	clar: { estela: '#9a6a1c', lenga: '#b53d17', occitan: '#b53d17', occitanTèxt: '#4a0a12', nomOccitan: '#fbf1e1', nomOmbra: 'rgba(58, 14, 4, 0.85)', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: 0.88, uni: 1 }
+	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: CARTE.occitan, occitanTèxt: '#ffc2b8', nomOccitan: texteSur(CARTE.occitan), nomOmbra: 'rgba(30, 8, 3, 0.85)', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: CARTE.intensite, uni: 1 },
+	clar: { estela: '#9a6a1c', lenga: TEINTES.brique, occitan: CARTE.occitan, occitanTèxt: '#4a0a12', nomOccitan: texteSur(CARTE.occitan), nomOmbra: 'rgba(58, 14, 4, 0.85)', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: CARTE.intensite, uni: 1 }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),

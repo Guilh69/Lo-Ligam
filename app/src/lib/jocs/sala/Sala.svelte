@@ -212,37 +212,38 @@
 		animation: dintrar 0.6s ease-out both;
 		animation-delay: calc(var(--k) * 90ms);
 	}
+	/* les teintes des familles : lib/styles/palette.js (JEUX) */
 	.f-adreca {
-		--f-fons: var(--color-terracotta);
-		--f-boton: #fbf1e1;
-		--f-boton-tinta: var(--color-terracotta);
+		--f-fons: var(--p-jeu-adresse);
+		--f-boton: var(--p-creme);
+		--f-boton-tinta: var(--p-jeu-adresse);
 	}
 	.f-mots {
 		--t-aur: #7a2e0c;
-		--f-fons: var(--color-gold);
-		--f-tinta: #2a1a10;
+		--f-fons: var(--p-jeu-mots);
+		--f-tinta: var(--p-encre);
 		--f-tinta-2: rgba(42, 26, 16, 0.86);
 		--f-linha: rgba(42, 26, 16, 0.22);
-		--f-boton: #2a1a10;
-		--f-boton-tinta: #ffd47f;
+		--f-boton: var(--p-encre);
+		--f-boton-tinta: var(--p-or-clair);
 	}
 	.f-observacion {
-		--f-fons: #4f6a2f;
-		--f-boton: #fbf1e1;
-		--f-boton-tinta: #4f6a2f;
+		--f-fons: var(--p-jeu-observation);
+		--f-boton: var(--p-creme);
+		--f-boton-tinta: var(--p-jeu-observation);
 	}
 	.f-memoria {
-		--f-fons: var(--color-teal);
-		--f-boton: #fbf1e1;
-		--f-boton-tinta: var(--color-teal);
+		--f-fons: var(--p-jeu-memoire);
+		--f-boton: var(--p-creme);
+		--f-boton-tinta: var(--p-jeu-memoire);
 	}
 	.f-escota {
-		--f-fons: #2b6496;
-		--f-boton: #fbf1e1;
+		--f-fons: var(--p-jeu-ecoute);
+		--f-boton: var(--p-creme);
 		--f-boton-tinta: #1d4f7a;
 	}
 	.familha:not(.f-mots) {
-		--f-tinta: #fbf1e1;
+		--f-tinta: var(--p-creme);
 		--f-tinta-2: rgba(251, 241, 225, 0.94);
 		--f-linha: rgba(251, 241, 225, 0.28);
 	}
