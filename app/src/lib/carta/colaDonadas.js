@@ -43,11 +43,12 @@ const nomSus = (color) => {
 // avec l'intensité et la teinte qu'on peut voir sur les boutons et sur les
 // en-têtes de la partie Jòcs ») : les mêmes couleurs dans les deux thèmes,
 // en aplats presque pleins (0,88) au lieu de voiles (0,3 en sombre, 0,36 en
-// clair) qui viraient au pastel. Le gascon reste bleu (choix du 10-10),
-// le languedocien prend le rouge du logo. Avant : sorne #5b7fff #ff3f86
-// #ffb0dc #ffa22e #e8482a #ffe27a ; clar #2350d8 #c2185b #e573ad #e07b00
-// #a8321a #c9a227.
-const PALETA_JOCS = { gas: '#2b6496', lan: '#b53d17', pro: '#eeaf34', lem: '#6b3a5b', auv: '#4f6a2f', viv: '#1f5f63' };
+// clair) qui viraient au pastel. Romain, 07-11 au soir : le languedocien
+// en rouge plus intense (#cc2a14 ; avant le rouge du logo #b53d17), le
+// gascon en orange clair (#f4a261 ; avant bleu, qui touchait le bleu de
+// l'oïl). Avant le 07-11 : sorne #5b7fff #ff3f86 #ffb0dc #ffa22e #e8482a
+// #ffe27a ; clar #2350d8 #c2185b #e573ad #e07b00 #a8321a #c9a227.
+const PALETA_JOCS = { gas: '#f4a261', lan: '#cc2a14', pro: '#eeaf34', lem: '#6b3a5b', auv: '#4f6a2f', viv: '#1f5f63' };
 export const COLORS = {
 	sorne: PALETA_JOCS,
 	clar: PALETA_JOCS,
