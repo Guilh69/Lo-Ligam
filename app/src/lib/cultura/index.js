@@ -23,33 +23,36 @@
 // 5,9 pour la terre. Depuis le 2026-11-06 (photos teintées, allure B choisie
 // par Romain), la musique passe de l'or (#eeaf34, texte foncé) à un or brun :
 // le texte est crème partout, 4,65 sur l'aplat seul.
-const CREMA = '#fbf1e1';
+import { TEINTES } from '$lib/styles/palette.js';
+
+// les teintes : lib/styles/palette.js ; l'or brun et la terre restent ici
+const CREMA = TEINTES.creme;
 
 export const TEMAS = [
 	{
 		id: 'lenga',
-		color: ['#1f5f63', CREMA],
+		color: [TEINTES.sarcelle, CREMA],
 		nom: { oc: 'La lenga', fr: 'La langue', es: 'La lengua', en: 'The language', ca: 'La llengua', ar: 'اللغة' },
 		detalh: { oc: 'd’ont venon los mots', fr: 'd’où viennent les mots', es: 'de dónde vienen las palabras', en: 'where words come from', ca: 'd’on vénen les paraules', ar: 'من أين جاءت الكلمات' },
 		exemple: 'òc, miègjorn, diluns, dimenge'
 	},
 	{
 		id: 'noms',
-		color: ['#2f6a9c', CREMA],
+		color: [TEINTES.bleu, CREMA],
 		nom: { oc: 'Los noms', fr: 'Les noms', es: 'Los nombres', en: 'Names', ca: 'Els noms', ar: 'الأسماء' },
 		detalh: { oc: 'de familha, d’ostal, dels vents', fr: 'de famille, de maison, des vents', es: 'de familia, de casa, de los vientos', en: 'of families, houses and winds', ca: 'de família, de casa, dels vents', ar: 'أسماء العائلات والبيوت والرياح' },
 		exemple: 'l’escais, lo molinièr, l’ostal'
 	},
 	{
 		id: 'pais',
-		color: ['#55702f', CREMA],
+		color: [TEINTES.olive, CREMA],
 		nom: { oc: 'Lo país', fr: 'Le pays', es: 'El país', en: 'The country', ca: 'El país', ar: 'البلاد' },
 		detalh: { oc: 'fèstas, taula, vilas', fr: 'fêtes, table, villes', es: 'fiestas, mesa, ciudades', en: 'festivals, food, towns', ca: 'festes, taula, ciutats', ar: 'الأعياد والمائدة والمدن' },
 		exemple: 'Carnaval, lo caçolet, lo mas, las bastidas'
 	},
 	{
 		id: 'poetas',
-		color: ['#6b3a5b', CREMA],
+		color: [TEINTES.prune, CREMA],
 		nom: { oc: 'Los poètas', fr: 'Les poètes', es: 'Los poetas', en: 'The poets', ca: 'Els poetes', ar: 'الشعراء' },
 		detalh: { oc: 'trobadors, Mistral, Tolosa', fr: 'troubadours, Mistral, Toulouse', es: 'trovadores, Mistral, Tolosa', en: 'troubadours, Mistral, Tolosa', ca: 'trobadors, Mistral, Tolosa', ar: 'التروبادور، Mistral، Tolosa' },
 		exemple: 'trobar, la fin’amor, lo solelh'

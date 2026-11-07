@@ -14,6 +14,7 @@
 	import { fly, slide } from 'svelte/transition';
 	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
 	import { COLORS as COLORS_DIAL } from '$lib/carta/colaDonadas.js';
+	import { CARTE } from '$lib/styles/palette.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
 	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
 	import { gamaLocutors } from '$lib/carta/locutors.js';
@@ -495,7 +496,7 @@
 			// (07-11 : pleins, comme les aplats de la carte)
 			dialectes: NOMS_DIAL.map(([k], i) => `<rect x="${i * 9}" y="0" width="9.5" height="36" fill="${d[k]}"/>`).join(''),
 			// la lenga unida : una sola color, son nom
-			unificat: '<rect width="52" height="36" fill="#b53d17"/><text x="26" y="21.5" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1.2" fill="#fff8ec">OCCITAN</text>',
+			unificat: `<rect width="52" height="36" fill="${CARTE.occitan}"/><text x="26" y="21.5" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1.2" fill="#fff8ec">OCCITAN</text>`,
 			creissent: '<defs><pattern id="ap-h" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.6" height="5" fill="#e0612f"/></pattern></defs><path d="M0 22 Q 26 4 52 20 V 36 H 0z" fill="url(#ap-h)" opacity=".8"/>',
 			// (les locuteurs, OPLO 2020 : les cinq classes de la légende de « Uèi »)
 			locutors: gamaLocutors(false).map((c, i) => `<rect x="${i * 10.4}" y="0" width="10.4" height="36" fill="${c}" opacity=".85"/>`).join(''),
@@ -1563,7 +1564,7 @@
 			</div>
 			<div class="ficha-dreita">
 				<button type="button" class="basc" role="switch" aria-checked={on} aria-label={tx.occitan} onclick={() => bascular('dialectes', !on)}></button>
-				{@render silhoeta('occitan', '#b53d17')}
+				{@render silhoeta('occitan', CARTE.occitan)}
 			</div>
 		</div>
 		<div class="desplegar-l">

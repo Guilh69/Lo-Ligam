@@ -70,13 +70,13 @@
 }
 /* or : la mise en valeur (choisi, sélectionné) */
 .pc-or {
-	--pc-fons: var(--pc-or-fons, #eeaf34);
-	--pc-tinta: #2a1a10;
+	--pc-fons: var(--pc-or-fons);
+	--pc-tinta: var(--pc-or-tinta);
 }
 /* vert : « bravo » */
 .pc-vert {
-	--pc-fons: #4f6a2f;
-	--pc-tinta: #fbf1e1;
+	--pc-fons: var(--pc-juste);
+	--pc-tinta: var(--pc-juste-tinta);
 }
 
 /* ---- les formats ---- */
@@ -100,8 +100,8 @@
 }
 .pc-chip[aria-pressed='true'],
 .pc-chip.est-choisi {
-	--pc-fons: var(--pc-or-fons, #eeaf34);
-	--pc-tinta: #2a1a10;
+	--pc-fons: var(--pc-or-fons);
+	--pc-tinta: var(--pc-or-tinta);
 	transform: translateY(-1px);
 	box-shadow: 0 4px 4px var(--pc-ombre);
 }
@@ -121,14 +121,14 @@
 	height: 1.15rem;
 }
 .pc-rep.est-choisi {
-	--pc-fons: var(--pc-or-fons, #eeaf34);
-	--pc-tinta: #2a1a10;
+	--pc-fons: var(--pc-or-fons);
+	--pc-tinta: var(--pc-or-tinta);
 	transform: translateY(-2px);
 	box-shadow: 0 5px 5px var(--pc-ombre);
 }
 .pc-rep.est-bon {
-	--pc-fons: #4f6a2f;
-	--pc-tinta: #fbf1e1;
+	--pc-fons: var(--pc-juste);
+	--pc-tinta: var(--pc-juste-tinta);
 }
 .pc-rep.est-faux {
 	--pc-fons: var(--t-accion);
