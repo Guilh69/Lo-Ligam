@@ -645,7 +645,7 @@
 	}
 	@container carta (max-width: 600px) {
 		.carta-wrap {
-			--barra-bas: calc(3.9rem + env(safe-area-inset-bottom, 0px));
+			--barra-bas: calc(5.8rem + env(safe-area-inset-bottom, 0px)); /* blocs de couleur du rail (2026-11-07) */
 		}
 		.info-trigger {
 			right: 0.75rem;

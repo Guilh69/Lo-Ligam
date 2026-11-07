@@ -14,7 +14,7 @@
 	import { fly, slide } from 'svelte/transition';
 	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
 	import { COLORS as COLORS_DIAL } from '$lib/carta/colaDonadas.js';
-	import { CARTE } from '$lib/styles/palette.js';
+	import { CARTE, CASES } from '$lib/styles/palette.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
 	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
 	import { gamaLocutors } from '$lib/carta/locutors.js';
@@ -546,6 +546,14 @@
 	};
 
 	const RAIL = ['sus', 'lenga', 'administracion', 'cultura', 'ensenhament', 'istoria', 'natura', 'lengas'];
+	// Téléphone (Romain, 2026-11-07) : chaque famille est un bloc de couleur, comme les cases des
+	// rubriques (mêmes couleurs que CASES, dans l'ordre du rail) ; la couleur est posée sur le
+	// bouton, seule la barre du téléphone s'en sert (ailleurs, le bouton reste une pièce carton)
+	const bloc = (id) => {
+		const i = Math.max(0, [...RAIL, 'donadas'].indexOf(id));
+		const [fons, tinta] = CASES[i % CASES.length];
+		return `--bloc-fons: ${fons}; --bloc-tinta: ${tinta};`;
+	};
 	let dobert = $state(null);
 	// los tèmas de « Sus la carta » enrotlats (demanda de Romain, 2026-10-09)
 	let enrotlats = $state([]);
@@ -1290,9 +1298,10 @@
 		</button>
 		<span class="rail-sep" aria-hidden="true"></span>
 		{#each ['sus', 'lengas', 'donadas'] as id (id)}
-			<button
-				type="button"
-				class="rail-b"
+		<button
+		type="button"
+		class="rail-b"
+		style={bloc(id)}
 				class:rail-sus={id === 'sus'}
 				data-familha={id}
 				bind:this={botons[id]}
@@ -1308,7 +1317,7 @@
 			</button>
 		{/each}
 	{:else if estreit && banda}
-		<button type="button" class="rail-b banda-fam" aria-expanded="true" aria-label={tx.tornarFamilhas(nomFam(banda))} onclick={sortirBanda}>
+		<button type="button" class="rail-b banda-fam" style={bloc(banda)} aria-expanded="true" aria-label={tx.tornarFamilhas(nomFam(banda))} onclick={sortirBanda}>
 			<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC[banda]}</svg>
 			<span class="lib">{nomFam(banda)}</span>
 		</button>
@@ -1335,8 +1344,9 @@
 	{#each RAIL as id (id)}
 		{#if id === 'lengas'}<span class="rail-sep" aria-hidden="true"></span>{/if}
 		<button
-			type="button"
-			class="rail-b"
+		type="button"
+		class="rail-b"
+		style={bloc(id)}
 			class:rail-sus={id === 'sus'}
 			data-familha={id}
 			bind:this={botons[id]}
@@ -3026,11 +3036,16 @@
 			width: auto;
 			height: var(--barra-bas, 3.9rem);
 			max-height: none;
-			overflow: visible;
+			/* défile de côté : les familles sont des blocs de couleur, comme les cases des rubriques (Romain, 2026-11-07) */
+			overflow-x: auto;
+			overflow-y: hidden;
+			overscroll-behavior-x: contain;
+			scroll-snap-type: x proximity;
+			scroll-padding-inline: 12px;
 			display: flex;
 			align-items: stretch;
-			gap: 4px;
-			padding: 3px 6px calc(4px + env(safe-area-inset-bottom, 0px));
+			gap: 8px;
+			padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px));
 			border-radius: 0;
 			box-shadow: none;
 			transform: none;
@@ -3046,24 +3061,44 @@
 			display: block;
 		}
 		.rail-b {
-			flex: 1 1 0;
+			flex: 0 0 5.4rem;
 			min-width: 0;
-			padding: 5px 0 3px;
-			font-size: 9.5px;
-			line-height: 1.1;
+			scroll-snap-align: start;
+			align-content: center;
+			gap: 5px;
+			padding: 7px 6px;
+			border-radius: 12px;
+			/* la couleur de la famille (--bloc-fons et --bloc-tinta, posées sur chaque bouton) */
+			background: var(--bloc-fons, var(--pc-carton));
+			color: var(--bloc-tinta, var(--pc-carton-tinta));
+			font: 700 11.5px/1.15 var(--font-body);
 		}
-		/* (sus la barra del telefon : la tèula garda la nautor de las autras) */
 		.rail-b.rail-sus {
 			margin: 0;
-			padding: 5px 0 3px;
+			padding: 7px 6px;
+			background: var(--bloc-fons, var(--t-accion));
+			color: var(--bloc-tinta, var(--t-accion-tinta));
 		}
-		.rail-b.rail-sus svg {
-			width: 22px;
-			height: 22px;
-		}
+		.rail-b.rail-sus svg,
 		.rail-b svg {
-			width: 20px;
-			height: 20px;
+			width: 26px;
+			height: 26px;
+		}
+		/* ouverte : le bloc se lève et prend un anneau ocre (« choisi ») au lieu de changer de couleur */
+		.rail-b[aria-expanded='true'],
+		.rail-b.rail-sus[aria-expanded='true'] {
+			background: var(--bloc-fons, var(--pc-or-fons));
+			color: var(--bloc-tinta, var(--pc-or-tinta));
+			outline: 3px solid var(--pc-or-fons);
+			outline-offset: 1px;
+			transform: translateY(-2px);
+		}
+		.rail-b.banda-fam {
+			flex: 0 0 5rem;
+			color: var(--bloc-tinta, var(--pc-or-tinta));
+		}
+		.rail-b.banda-fam::after {
+			color: var(--bloc-tinta, var(--pc-or-tinta));
 		}
 		.nombre {
 			right: calc(50% - 20px);
@@ -3081,9 +3116,7 @@
 			right: calc(50% - 22px);
 		}
 		.rail-sep {
-			width: 1px;
-			height: auto;
-			margin: 10px 2px;
+			display: none;
 		}
 		.tirador {
 			top: auto;
