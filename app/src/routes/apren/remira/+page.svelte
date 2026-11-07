@@ -728,7 +728,7 @@
 		/>
 	{:else if mòde === 'paisatges'}
 		{#key temaPaisatges}
-			<Paisatges bind:this={paisatges} bind:n={nPaisatge} tema={temaPaisatges} {pausa} {calme} {relèu} {relèuTotas} />
+			<Paisatges bind:this={paisatges} bind:n={nPaisatge} tema={temaPaisatges} {pausa} {calme} {relèu} {relèuTotas} {reserva} />
 		{/key}
 	{/if}
 

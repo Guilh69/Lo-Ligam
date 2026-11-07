@@ -4,7 +4,8 @@ import { PAISATGES } from './paisatges.js';
 // « Profondeur » lui plaît ; « il faut le mettre en option et d'abord dans un
 // sas de validation »). La photo reste entière ; sa carte de profondeur
 // (outils/prigondor/carta.py, 4 à 6 Ko) la déforme de quelques pixels en WebGL :
-// pendant le glissement, ce qui est proche bouge à peine plus que le fond.
+// ce qui est proche bouge à peine plus que le fond (depuis le 07-11, la photo
+// reste fixe et seule la profondeur respire).
 //
 // Le sas : chaque photo passe d'abord dans Triar (/admin/triar, lot « releu »).
 // Romain, 06-11 : « je ne vais pas revérifier […] que l'animation est stable
@@ -190,7 +191,9 @@ function aLaTalha(img, lw, lh) {
  * l'écran : 170 images figées sur 200, aucune une fois le cadre déplacé ici).
  * estat() rend { a, w, h, t0, t1, s1, W, H } ou null : l'animation CSS du cadre
  * (aller-retour adouci, d'un déplacement t0 à t1 et d'un grossissement 1 à s1
- * autour de son milieu), le cadre (w, h) et la boîte visible (W, H).
+ * autour de son milieu), le cadre (w, h) et la boîte visible (W, H) ; du, dv
+ * (facultatifs) : le glissement que suit la profondeur à la place du
+ * déplacement du cadre (Remira › Paisatges depuis le 07-11 : le cadre reste).
  * ponches() rend les éléments à déplacer avec leur objet : [[élément, x, y]].
  * Rend la fonction qui arrête tout. À l'arrêt (pause, point ouvert), rien
  * n'est redessiné.
@@ -253,7 +256,8 @@ export function relevar(cv, { clau, img, estat, ponches = () => [] }) {
 			darrier = clau2;
 			const T = [e.t0[0] + (e.t1[0] - e.t0[0]) * p, e.t0[1] + (e.t1[1] - e.t0[1]) * p];
 			const S = 1 + (e.s1 - 1) * p;
-			const rg = reglatges(p, e.t0[0] - e.t1[0], e.t0[1] - e.t1[1], e.w, e.h);
+			// du, dv : le glissement que suit la profondeur, quand le cadre ne bouge pas
+			const rg = reglatges(p, e.du ?? e.t0[0] - e.t1[0], e.dv ?? e.t0[1] - e.t1[1], e.w, e.h);
 			ara = { rg, w: e.w, h: e.h };
 			if (cv.width !== lw || cv.height !== lh) {
 				cv.width = lw;
