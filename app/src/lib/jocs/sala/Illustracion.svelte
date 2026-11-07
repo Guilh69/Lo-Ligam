@@ -159,33 +159,34 @@
 </div>
 
 <style>
-	/* les couleurs : celles des cartes de la salle (Sala.svelte) */
+	/* les couleurs : celles des cartes de la salle (Sala.svelte), tirées de
+	   lib/styles/palette.js (JEUX) */
 	.illus {
-		--fons: #b53d17;
-		--clar: #fbf1e1;
-		--aur: #ffd47f;
+		--fons: var(--p-jeu-adresse);
+		--clar: var(--p-creme);
+		--aur: var(--p-or-clair);
 		--lletra: var(--fons);
-		--tinta-aur: #2a1a10;
+		--tinta-aur: var(--p-encre);
 		--escur: color-mix(in oklab, var(--fons), #000 30%);
 		--mitjan: color-mix(in oklab, var(--fons), #fff 30%);
 		position: relative;
 		aspect-ratio: 4 / 3;
 	}
 	.i-mots {
-		--fons: #eeaf34;
+		--fons: var(--p-jeu-mots);
 		--clar: #fff8ea;
 		--aur: #7a2e0c;
-		--lletra: #2a1a10;
-		--tinta-aur: #fbf1e1;
+		--lletra: var(--p-encre);
+		--tinta-aur: var(--p-creme);
 	}
 	.i-observacion {
-		--fons: #4f6a2f;
+		--fons: var(--p-jeu-observation);
 	}
 	.i-memoria {
-		--fons: #1f5f63;
+		--fons: var(--p-jeu-memoire);
 	}
 	.i-escota {
-		--fons: #2b6496;
+		--fons: var(--p-jeu-ecoute);
 	}
 	svg {
 		position: absolute;

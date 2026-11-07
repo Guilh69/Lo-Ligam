@@ -1,23 +1,25 @@
 @import './fonts.css';
+/* La palette unique, générée depuis lib/styles/palette.js (2026-11-07) */
+@import './lib/styles/palette.css';
 /* Le bouton en papier découpé, commun à tout le site (Romain, 2026-11-06) */
 @import './lib/styles/papier.css';
 
 :root {
 	/* Chaudes — cœur de marque. Paleta alinhada sul lògo lo 2026-09-30
 	   (jornal §11) : èra #c8562e / #e0a43b abans. */
-	--color-terracotta: #b53d17;
+	--color-terracotta: var(--p-brique);
 	--color-brick: #a5342a;
-	--color-gold: #eeaf34;
-	--color-gold-light: #ffd47f; /* l'aur clar de las pomètas del lògo */
+	--color-gold: var(--p-or);
+	--color-gold-light: var(--p-or-clair); /* l'aur clar de las pomètas del lògo */
 	/* Le fond des pages pas encore harmonisées suit le Plâtre (2026-10-21) :
 	   avant #f5ead8 ; le crème reste la teinte des textes sur fond sombre. */
 	--color-cream: #f7f3ee;
 
 	/* Accents */
-	--color-teal: #1f5f63;
+	--color-teal: var(--p-sarcelle);
 	--color-sky: #3e7cb1;
 	--color-olive: #5e7b3a;
-	--color-text: #2a1a10; /* encre du Plâtre (2026-10-21), avant #3a2a20 */
+	--color-text: var(--p-encre); /* encre du Plâtre (2026-10-21), avant #3a2a20 */
 
 	/* Sistèma tipografic 2026-09-30, simplificat lo 2026-10-05 (jornal §11) :
 	   Limelight pels títols E pel nom « Lo Ligam » (lo lògo de Romain es
@@ -66,15 +68,8 @@
 	/* Pièces de papier (2026-11-06, lib/styles/papier.css) : le carton est la
 	   pièce discrète, l'ombre est celle des illustrations (plus dense sur le
 	   fond sombre, où elle se voit moins). */
-	/* clair sur le sombre, pour que « Se connecter », Menú… ressortent (Romain,
-	   07-11) : la crème des tuiles de jeu (Teula, /apren/jocs), texte brun ;
-	   avant #8a4a2a (terre cuite) puis #573828 */
-	--pc-carton: #efe1c6;
-	--pc-carton-tinta: #2a1a10;
+	/* le carton et son texte : palette.js (BOUTONS.carton) */
 	--pc-ombre: rgba(0, 0, 0, 0.6);
-}
-:root {
-	--pc-or-fons: #eeaf34;
 }
 /* Couleurs de la croix-constellation : celles des logos de Romain (Canva,
    design-stock/logo/svg, charte §1 bis), rien d'autre (Romain, 2026-10-21).
@@ -102,9 +97,8 @@
    en valeur. Jamais ce rouge en texte sur le fond sombre : il a la teinte du
    fond (14° contre 15°, contraste 3,2). */
 :root {
-	--t-accion: #b53d17;
-	--t-accion-tinta: #fbf1e1;
-	--t-accion-viu: color-mix(in srgb, #b53d17 82%, #000);
+	/* --t-accion et --t-accion-tinta : palette.js (BOUTONS.agir) */
+	--t-accion-viu: color-mix(in srgb, var(--t-accion) 82%, #000);
 }
 /* Gamme « Plâtre » (Romain, 2026-10-21, refonte claire, étape 1 : choisie
    contre « Terre cuite » et « Ciel du Sud » sur /ensag/clar) : plâtre, pierre
@@ -121,10 +115,8 @@
 	   textes dorés (« L'occitan », numéros) passent le seuil WCAG de 4,5 */
 	--t-aur: #9c5611;
 	--t-aur-clar: #8a3f12;
-	--t-terra: #b53d17;
-	--t-terra-viu: #b53d17;
-	--pc-carton: #1f5f63; /* sarcelle des jeux de mémoire (Romain, 07-11 : thème clair vif) ; avant #e6c9a8 puis #e1d3bd */
-	--pc-carton-tinta: #fbf1e1; /* texte crème sur la sarcelle */
+	--t-terra: var(--p-brique);
+	--t-terra-viu: var(--p-brique);
 	--pc-ombre: rgba(20, 10, 5, 0.32);
 }
 /* Verre des éléments posés sur la carte (rail, panneau qui s'ouvre à côté,
@@ -150,8 +142,8 @@
 	--l-carta: #ffffff;
 	--l-sol: #fbf6ec;
 	--l-marca: #a5342a;
-	--l-teal: #1f5f63;
-	--l-bon: #55702f;
+	--l-teal: var(--p-sarcelle);
+	--l-bon: var(--pc-juste); /* avant #55702f, aligné sur l'olive des jeux */
 }
 /* Colors adaptadas al daltonisme : lo terracòta ven blau (se destria de
    l'aur per totes los daltonismes roge-verd), mai de contraste. */
@@ -188,7 +180,7 @@
 	--t-ens-cal: #9c5611;
 	--t-ens-bil: #3e7cb1;
 	--t-ens-esc: #5e7b3a;
-	--t-ens-seg: #b53d17;
+	--t-ens-seg: var(--p-brique);
 	--t-ens-sup: #2a1a10;
 	--t-ens-adu: #8a3f12;
 }
