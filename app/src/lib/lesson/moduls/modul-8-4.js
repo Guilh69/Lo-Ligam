@@ -29,6 +29,7 @@ export const modul84 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Núria', 'Giulia', 'Bernat', 'Loís', 'Karim', 'Inès', 'Lisa'],
 	notesRelecture: [
+		'L’intrus (étape 1) : quatre séries de quatre mots, faites avec les mots de l’unité. Chaque famille doit être nette et l’intrus plausible : dis si une série a deux réponses possibles.',
 		'Titre du module : *Per tu, un cafè ?* (pour toi, un café ?), comme le propose le lexique. Ça te va ?',
 		'Giulia (unité 2) insiste pour payer : *Per tu, lo tè… e per ieu, l’addicion !* La plaisanterie te va ?',
 		'Tour « rester en occitan » : Loís passe au français ; deux bonnes répliques, *Pòdes repetir, se te plai ?* (2.3) et *En occitan, se te plai !* D’accord ?',
@@ -42,7 +43,7 @@ export const modul84 = {
 		// ————————————————————————————————— 1. Révision du jour
 		{
 			title: 'Révision du jour',
-			minutes: 5,
+			minutes: 7,
 			blocks: [
 				{
 					type: 'qcm',
@@ -70,6 +71,43 @@ export const modul84 = {
 							correct: 0,
 							choses: ['prene-singular', 'un-te'],
 							explain: '*pren* : il ou elle prend ; *un tè* : un thé. Un café, c’est *un cafè*.'
+						}
+					]
+				},
+				{
+					// L’intrus (chantier 33, 07-11) : conçu avec lo Basic et sinonimes
+					// (scripts/intrus-verificar.mjs), rien de leurs réponses n’est gardé.
+					type: 'intrus',
+					title: 'L’intrús (l’intrus)',
+					intro: 'Quatre mots : trois font une famille, le quatrième n’a rien à faire là. Touche l’intrus.',
+					items: [
+						{
+							mots: ['un cafè', 'un tè', 'un suc de frucha', 'un veire'],
+							intrus: 3,
+							familha: 'à boire',
+							choses: ['un-cafe', 'un-te', 'suc-de-fruta', 'un-veire-de'],
+							explain: '*Un veire*, c’est le verre qui les contient.'
+						},
+						{
+							mots: ['la gara', 'la plaça', 'la glèisa', 'la cambra'],
+							intrus: 3,
+							familha: 'en ville',
+							choses: ['la-gara', 'la-placa', 'la-gleisa', 'la-cambra'],
+							explain: '*La cambra*, la chambre, est dans la maison.'
+						},
+						{
+							mots: ['a drecha', 'a esquèrra', 'tot drech', 'a pè'],
+							intrus: 3,
+							familha: 'la direction',
+							choses: ['a-drecha', 'a-esquerra', 'tot-drech', 'a-pe'],
+							explain: '*A pè* dit comment on y va : à pied.'
+						},
+						{
+							mots: ['Per ieu, un tè', 'L’addicion, se vos plai', 'Ai set', 'Vira a drecha'],
+							intrus: 3,
+							familha: 'au café',
+							choses: ['per-ieu', 'l-addicion', 'ai-set', 'vira'],
+							explain: '*Vira a drecha* indique le chemin.'
 						}
 					]
 				},

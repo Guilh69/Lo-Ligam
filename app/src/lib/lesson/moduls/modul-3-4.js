@@ -27,6 +27,7 @@ export const modul34 = {
 	nomsPropris: ['Núria', 'Joana', 'Jordi', 'Inès', 'Karim', 'Mimí', 'Lisa', 'Marc', 'Samuel', 'Lina', 'Val d’Aran', 'Aran'],
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
+		'L’intrus (étape 1) : quatre séries de quatre mots, faites avec les mots de l’unité. Chaque famille doit être nette et l’intrus plausible : dis si une série a deux réponses possibles.',
 		'Titre proposé : *E ta familha ?* (et ta famille ?), en écho au *E tu ?* du module 1.4.',
 		'La grand-mère de Núria est du Val d’Aran (*la Val d’Aran*), en Catalogne, où l’occitan est langue officielle : ça te va ? Prononciation de *Aran* à confirmer : j’ai noté « da-RAN », avec le « n » aranais.',
 		'Deux exemples de présentation : Lisa (du module 1.4) avec sa mère et son frère, et une famille inventée avec deux pères (*dos paires*, glosé) : ça te va ?',
@@ -38,7 +39,7 @@ export const modul34 = {
 		// ————————————————————————————————— 1. Révision du jour
 		{
 			title: 'Révision du jour',
-			minutes: 5,
+			minutes: 7,
 			blocks: [
 				{
 					type: 'escriure',
@@ -76,6 +77,43 @@ export const modul34 = {
 							oc: true,
 							choses: ['aver-singular', 'lo-cat'],
 							explain: '*As* : tu as. *A un cat ?* : il ou elle a un chat ? *I a un cat ?* : il y a un chat ?'
+						}
+					]
+				},
+				{
+					// L’intrus (chantier 33, 07-11) : conçu avec lo Basic et sinonimes
+					// (scripts/intrus-verificar.mjs), rien de leurs réponses n’est gardé.
+					type: 'intrus',
+					title: 'L’intrús (l’intrus)',
+					intro: 'Quatre mots : trois font une famille, le quatrième n’a rien à faire là. Touche l’intrus.',
+					items: [
+						{
+							mots: ['la maire', 'la sòrre', 'la tanta', 'la galina'],
+							intrus: 3,
+							familha: 'des femmes de la famille',
+							choses: ['la-maire', 'la-sorre', 'oncle-tanta', 'la-galina'],
+							explain: '*La galina*, c’est la poule !'
+						},
+						{
+							mots: ['lo cat', 'lo can', 'lo caval', 'lo cosin'],
+							intrus: 3,
+							familha: 'des bêtes',
+							choses: ['lo-cat', 'lo-can', 'lo-caval', 'cosin-cosina'],
+							explain: '*Lo cosin*, c’est le cousin.'
+						},
+						{
+							mots: ['tretze', 'catòrze', 'quinze', 'quatre'],
+							intrus: 3,
+							familha: '13, 14, 15',
+							choses: ['nombre-13', 'nombre-14', 'nombre-15', 'nombre-4'],
+							explain: '*Quatre*, c’est 4 : ne le confonds pas avec *catòrze*, 14.'
+						},
+						{
+							mots: ['mon', 'ton', 'ma', 'la'],
+							intrus: 3,
+							familha: 'à qui c’est : mon, ton, ma',
+							choses: ['possessius-mon-ma', 'articles-lo-la'],
+							explain: '*La* est l’article : « la ».'
 						}
 					]
 				}

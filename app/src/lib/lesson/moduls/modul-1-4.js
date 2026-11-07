@@ -20,6 +20,7 @@ export const modul14 = {
 	durada: '~45 min · 6 étapes',
 	nomsPropris: ['Karim', 'Núria', 'Lisa'],
 	notesRelecture: [
+		'L’intrus (étape 1) : quatre séries de quatre mots, faites avec les mots de l’unité. Chaque famille doit être nette et l’intrus plausible : dis si une série a deux réponses possibles.',
 		'Le titre du module est la question qui revient dans toute l’unité : *E tu ?* Il ne demande aucun mot nouveau (la tâche n’en apprend pas).',
 		'La présentation modèle de Karim reprend uniquement les phrases des modules 1.1 à 1.3.'
 	],
@@ -28,7 +29,7 @@ export const modul14 = {
 		// ————————————————————————————————— 1. Révision du jour
 		{
 			title: 'Révision du jour',
-			minutes: 6,
+			minutes: 8,
 			blocks: [
 				{
 					type: 'qcm',
@@ -82,6 +83,43 @@ export const modul14 = {
 							oc: true,
 							choses: ['a-deman', 'adieu-siatz'],
 							explain: 'Demain précisément : *A deman*. Plusieurs personnes : *Adieu-siatz*.'
+						}
+					]
+				},
+				{
+					// L’intrus (chantier 33, 07-11) : conçu avec lo Basic et sinonimes
+					// (scripts/intrus-verificar.mjs), rien de leurs réponses n’est gardé.
+					type: 'intrus',
+					title: 'L’intrús (l’intrus)',
+					intro: 'Quatre mots : trois font une famille, le quatrième n’a rien à faire là. Touche l’intrus.',
+					items: [
+						{
+							mots: ['A lèu !', 'A deman !', 'Bonjorn !', 'Al còp que ven !'],
+							intrus: 2,
+							familha: 'pour partir',
+							choses: ['a-leu', 'a-deman', 'bonjorn', 'al-cop-que-ven'],
+							explain: '*Bonjorn*, on le dit en arrivant.'
+						},
+						{
+							mots: ['Cossí te dison ?', 'Cossí t’apèlas ?', 'Cossí vas ?', 'Cossí vos apelatz ?'],
+							intrus: 2,
+							familha: 'pour demander le nom',
+							choses: ['cossi-te-dison', 'cossi-t-apelas', 'cossi-vas', 'cossi-vos-dison'],
+							explain: '*Cossí vas ?* demande comment ça va.'
+						},
+						{
+							mots: ['Adieu-siatz !', 'Cossí anatz ?', 'Adieu !', 'Cossí vos dison ?'],
+							intrus: 2,
+							familha: 'pour vouvoyer, ou parler à plusieurs',
+							choses: ['adieu-siatz', 'cossi-anatz', 'adieu', 'cossi-vos-dison'],
+							explain: '*Adieu !*, c’est entre amis.'
+						},
+						{
+							mots: ['Soi de…', 'Demòri a…', 'M’apèli…', 'Soi d’aquí.'],
+							intrus: 2,
+							familha: 'le lieu : d’où je suis, où j’habite',
+							choses: ['soi-de', 'demori-a', 'm-apeli', 'soi-d-aqui'],
+							explain: '*M’apèli…* dit le nom.'
 						}
 					]
 				}

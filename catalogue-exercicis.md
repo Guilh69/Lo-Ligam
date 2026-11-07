@@ -44,7 +44,7 @@
 
 | Mécanique | Principes | Rôle plaisir | Phase | API (conception) | Bloc | Priorité proposée |
 |---|---|---|---|---|---|---|
-| **L'intrus** — 4 mots, un étranger à la famille | P4 (familles sémantiques) | Rapide, malin, satisfaisant | S4 | sinonimes + Basic | QcmBlock (existant !) | **1 — immédiat** (que du contenu) |
+| **L'intrus** — 4 mots, un étranger à la famille | P4 (familles sémantiques) | Rapide, malin, satisfaisant | S4 | sinonimes + Basic | QcmBlock, type `intrus` | ✅ fait le 07-11 : 32 séries, leçons 1.4 à 8.4 (cahier §11) |
 | **Jeux de lettres** — pendu, anagrammes, mots mêlés à fréquences réelles | P8, orthographe | L'arcade : on joue « pour de vrai » avec les lettres de la langue | S4 + futur espace Jòcs | letras + Basic | nouveau `letter-game` | **2** |
 | **Dialogue à choix** — mini jeu de rôle, tu choisis tes répliques face à un personnage de la còla | P5, P8 | Le théâtre : la place du marché, lo Drac en face | S5-S6 | — (contenu nôtre) | nouveau `branch-dialogue` | **3** (répète la tasca en jouant) |
 | **Ont es ?** — placer la ville, découvrir son nom occitan | P3 (ancrage réel), toponymie | La carte : « ma ville a un nom occitan ! » | S2 / Cultura / unités lieux | top'Òc | nouveau `map-quiz` (avec la carte existante) | **4** (coordination carte) |

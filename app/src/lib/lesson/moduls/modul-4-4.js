@@ -26,6 +26,7 @@ export const modul44 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Loís', 'Marià', 'Yasmine', 'Karim', 'Núria', 'Lisa'],
 	notesRelecture: [
+		'L’intrus (étape 1) : quatre séries de quatre mots, faites avec les mots de l’unité. Chaque famille doit être nette et l’intrus plausible : dis si une série a deux réponses possibles.',
 		'Titre du module : *Qué fa lo dimenge ?* (que fait-il, que fait-elle le dimanche ?), comme le propose le lexique. Ça te va ?',
 		'Loís vouvoie Marià sans le pluriel de *far*, pas encore vu : *E vos, lo dimenge, cantatz ?* Ça sonne juste ?',
 		'Tour « rester en occitan » : Núria passe au français, très vite ; la bonne réplique est *Pòdes repetir, se te plai ?* (2.3), comme dans la halte 1. D’accord ?',
@@ -37,7 +38,7 @@ export const modul44 = {
 		// ————————————————————————————————— 1. Révision du jour
 		{
 			title: 'Révision du jour',
-			minutes: 5,
+			minutes: 7,
 			blocks: [
 				{
 					type: 'qcm',
@@ -67,6 +68,43 @@ export const modul44 = {
 							noShuffle: true,
 							choses: ['dissabte'],
 							explain: 'Avec *lo* : chaque samedi, l’habitude. Sans *lo* : ce samedi-là.'
+						}
+					]
+				},
+				{
+					// L’intrus (chantier 33, 07-11) : conçu avec lo Basic et sinonimes
+					// (scripts/intrus-verificar.mjs), rien de leurs réponses n’est gardé.
+					type: 'intrus',
+					title: 'L’intrús (l’intrus)',
+					intro: 'Quatre mots : trois font une famille, le quatrième n’a rien à faire là. Touche l’intrus.',
+					items: [
+						{
+							mots: ['fornièr', 'cosinièr', 'vinhairon', 'regent'],
+							intrus: 3,
+							familha: 'des métiers de la table : le pain, la cuisine, le vin',
+							choses: ['fornier-forniera', 'cosinier-cosiniera', 'vinhairon', 'regent-regenta'],
+							explain: 'Le *regent* fait la classe.'
+						},
+						{
+							mots: ['cantam', 'parlam', 'manjam', 'cantatz'],
+							intrus: 3,
+							familha: '« nous » : la fin en *-am*',
+							choses: ['cantar', 'parlar-plural', 'manjar'],
+							explain: '*Cantatz* : « vous chantez ».'
+						},
+						{
+							mots: ['dimenge', 'dissabte', 'divendres', 'vendeire'],
+							intrus: 3,
+							familha: 'des jours de la semaine',
+							choses: ['dimenge', 'dissabte', 'divendres', 'vendeire-vendeira'],
+							explain: 'Le *vendeire*, c’est le vendeur, malgré *divendres* !'
+						},
+						{
+							mots: ['infirmièra', 'estudianta', 'obrièra', 'engenhaire'],
+							intrus: 3,
+							familha: 'des métiers au féminin',
+							choses: ['infirmier-infirmiera', 'estudiant-estudianta', 'obrier-obriera', 'engenhaire-engenhaira'],
+							explain: '*Engenhaire* est au masculin, malgré son *-e* ; au féminin, *engenhaira*.'
 						}
 					]
 				},

@@ -137,7 +137,7 @@ const FAMILLES_BRUT = [
 				'Couleurs de retour : juste, faux, attention',
 				'Comment le site dit « bravo », « raté » ou « fais attention », sans que la couleur soit le seul signal.',
 				'Juste : la pièce passe à l’or, avec un « ✓ » et une explication d’une ligne en vert (--l-bon : #b8d27c en sombre, #55702f en clair). Faux : la pièce est grisée et barrée, avec une secousse de 260 ms. Jamais de rouge pour « faux », pas de panneau teinté.',
-				['src/lib/lesson/QcmBlock.svelte:75,187-205', 'src/app.css:147,154'],
+				['src/lib/lesson/QcmBlock.svelte:119,232-251', 'src/app.css:147,154'],
 				{
 					inspirations: [
 						{
@@ -261,7 +261,7 @@ const FAMILLES_BRUT = [
 				'Ombres et profondeur',
 				'Quelle ombre sous une pièce, un bouton, une carte qui se soulève.',
 				'Une ombre courte sous les pièces (0 3px 4px, jeton --pc-ombre), plus longue au survol. Elle est déjà étendue aux cartes de leçon (0 8px 20px) et au survol des tuiles de rubrique (0 14px 30px).',
-				['src/lib/styles/papier.css:17,31,39-43', 'src/lib/lesson/QcmBlock.svelte:86', 'src/lib/apren/PaginaTeulas.svelte:258']
+				['src/lib/styles/papier.css:17,31,39-43', 'src/lib/lesson/QcmBlock.svelte:131', 'src/lib/apren/PaginaTeulas.svelte:258']
 			)
 		]
 	},
@@ -627,7 +627,7 @@ const FAMILLES_BRUT = [
 				'Écran de leçon',
 				'Combien de choses par écran, quelle mise en page, où sont les actions.',
 				'Une page qui défile : barre en haut (Acuèlh, Somari, compteur de fogaças, son), titre « Étape x/n », puis plusieurs exercices dévoilés un à un dans des cartes de 20 px. Pas de croix de sortie ni de barre fine en haut.',
-				['src/routes/aprene/modul/[modulId]/+page.svelte:263-290,361-411', 'src/lib/lesson/QcmBlock.svelte:80-90'],
+				['src/routes/aprene/modul/[modulId]/+page.svelte:263-290,361-411', 'src/lib/lesson/QcmBlock.svelte:126-132'],
 				{
 					inspirations: [
 						{
@@ -643,7 +643,7 @@ const FAMILLES_BRUT = [
 				'Retour sur une réponse',
 				'Ce qui se passe quand on répond : le panneau, le message, l’explication.',
 				'Le retour est dans la carte de l’exercice, sans panneau : la bonne pièce passe à l’or, les erreurs sont barrées, un « ✓ » et une explication d’une ligne en vert, une secousse de 260 ms ; l’exercice suivant se dévoile.',
-				['src/lib/lesson/QcmBlock.svelte:75,187-216'],
+				['src/lib/lesson/QcmBlock.svelte:119,232-251,346-354'],
 				{
 					inspirations: [
 						{ source: BUSUU, note: 'Un panneau blanc monte du bas : coche verte, « Correct », la réponse avec sa traduction, une phrase d’explication, puis le bouton « Continuer ».' }
@@ -655,7 +655,7 @@ const FAMILLES_BRUT = [
 				'Progression dans une leçon',
 				'Comment on voit qu’on avance dans une leçon.',
 				'Pas de barre fine en haut. Un compteur « n/N » par exercice, « Étape x/n » dans l’en-tête, le compteur de fogaças ; le parcours /aprene a une vraie barre de progression et « N modules sur M ».',
-				['src/lib/lesson/QcmBlock.svelte:51-54', 'src/routes/aprene/modul/[modulId]/+page.svelte:277,361', 'src/lib/parcors/ParcorsPagina.svelte:124-134'],
+				['src/lib/lesson/QcmBlock.svelte:64-67', 'src/routes/aprene/modul/[modulId]/+page.svelte:277,361', 'src/lib/parcors/ParcorsPagina.svelte:124-134'],
 				{ inspirations: [{ source: BUSUU, note: 'Barre fine en haut, bleue sur gris clair, sans pourcentage.' }] }
 			),
 			E('jauges', 'Jauges de maîtrise', 'Montrer ce qui est à travailler, à revoir, acquis.', {

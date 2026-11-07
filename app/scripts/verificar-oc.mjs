@@ -69,7 +69,7 @@ async function lexiqueDuModul(slug) {
 			}
 			// Jeux : réponses à écrire, tuiles, dialogue à choix, villes de la carte
 			for (const item of bloc.items ?? []) {
-				for (const t of [...(item.tiles ?? []), ...(item.answers ?? []), ...(item.debut ?? [])]) motsDe(t).forEach((m) => mots.add(m));
+				for (const t of [...(item.tiles ?? []), ...(item.answers ?? []), ...(item.debut ?? []), ...(item.mots ?? [])]) motsDe(t).forEach((m) => mots.add(m));
 				if (item.ditz?.oc) motsDe(item.ditz.oc).forEach((m) => mots.add(m));
 				if (bloc.type === 'carta') motsDe(item.oc).forEach((m) => mots.add(m));
 			}
