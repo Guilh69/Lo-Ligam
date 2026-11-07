@@ -4,7 +4,8 @@
 	// rassemble : les groupes en grand (« que les gens puissent se rencontrer et
 	// sachent qu'ils ont accès à d'autres locuteurs », 24-10), les cercles de la
 	// carte, le forum, la boîte à idées, Instagram. Ce que deviennent le forum,
-	// les groupes et la boîte à idées reste à trancher (options du 24-10).
+	// les groupes et la boîte à idées reste à trancher (options du 24-10). Le forum n'est
+	// pas ouvert au lancement : sa case est retirée par le code (RETIRATS, planSite.js, 2026-11-07).
 	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
 	import { PLAN } from '$lib/data/planSite.js';
 	import { tria } from '$lib/stores/lang.svelte.js';
@@ -21,7 +22,7 @@
 	<title>{tria({ oc: 'Amassa', fr: 'Rassemble', es: 'Reúne', en: 'Gather', ca: 'Reuneix', ar: 'نجتمع' })} · Lo Ligam</title>
 	<meta
 		name="description"
-		content="Rencontrar d’autras personas que parlan occitan : grops, cercles, fòrum, boita d’idèas. Rencontrer d’autres personnes qui parlent occitan : groupes, cercles, forum, boîte à idées."
+		content="Rencontrar d’autras personas que parlan occitan : grops, cercles, boita d’idèas. Rencontrer d’autres personnes qui parlent occitan : groupes, cercles, boîte à idées."
 	/>
 </svelte:head>
 

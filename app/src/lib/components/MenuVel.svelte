@@ -16,6 +16,7 @@
 	import Icona from './Icona.svelte';
 	import Crotz from './Crotz.svelte';
 	import { PLAN, LO_LIGAM, VISIO } from '$lib/data/planSite.js';
+	import PastilleAviat from './PastilleAviat.svelte';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { portal } from '$lib/actions/portal.js';
 	import { tria } from '$lib/stores/lang.svelte.js';
@@ -130,18 +131,25 @@
 														</li>
 													{/if}
 													{#each g.items as it, ii (it.href)}
-														<li class="vel-masc">
-															<a
-																class="vel-ligam"
-																href={it.href}
-																style:--i={gi * 3 + ii}
-																aria-current={!it.defòra && actiu(it.href) ? 'page' : undefined}
-																target={it.defòra ? '_blank' : undefined}
-																rel={it.defòra ? 'noopener noreferrer' : undefined}
-																onclick={tampar}
-																>{tria(it)}<Icona nom={it.defòra ? 'extern' : 'suivant'} size="0.8em" /></a
-															>
-														</li>
+														{#if it.aviat}
+															<!-- page pas encore ouverte : affichée, sans lien, avec la pastille (planSite.js, 2026-11-07) -->
+															<li class="vel-masc">
+																<span class="vel-ligam vel-aviat" style:--i={gi * 3 + ii}>{tria(it)}<PastilleAviat /></span>
+															</li>
+														{:else}
+															<li class="vel-masc">
+																<a
+																	class="vel-ligam"
+																	href={it.href}
+																	style:--i={gi * 3 + ii}
+																	aria-current={!it.defòra && actiu(it.href) ? 'page' : undefined}
+																	target={it.defòra ? '_blank' : undefined}
+																	rel={it.defòra ? 'noopener noreferrer' : undefined}
+																	onclick={tampar}
+																	>{tria(it)}<Icona nom={it.defòra ? 'extern' : 'suivant'} size="0.8em" /></a
+																>
+															</li>
+														{/if}
 													{/each}
 												</ul>
 											</div>
@@ -524,6 +532,15 @@
 
 	.desplegat .vel-ligam {
 		transform: none;
+	}
+
+	/* une page pas encore ouverte : rien à cliquer, pas de soulignement ni de flèche */
+	.vel-aviat {
+		cursor: default;
+	}
+
+	.vel-aviat::after {
+		display: none;
 	}
 
 	/* Téléphone et panneau étroit : les rubriques en liste sous le verbe */
