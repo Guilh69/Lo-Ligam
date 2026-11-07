@@ -337,6 +337,21 @@ html[lang='ar'] .acuelh .bi > .oc { position: absolute; top: 0.06em; inset-inlin
 }
 .acuelh .boton:hover { box-shadow: 0 5px 5px var(--pc-ombre); }
 .acuelh .boton:active { box-shadow: 0 1px 2px var(--pc-ombre); }
+/* Second bouton, en contour : même forme que le bouton plein, sans fond, pour que « Dobrir la carta » reste le premier geste.
+   Téléphone seulement : dès 44 rem, « Reservar un cors » est dans le bandeau (AppHeader, même seuil). */
+.acuelh .boton-contorn {
+	background: transparent; color: inherit;
+	box-shadow: inset 0 0 0 1.5px currentColor;
+}
+.acuelh .boton-contorn:hover { background: color-mix(in srgb, currentColor 10%, transparent); box-shadow: inset 0 0 0 1.5px currentColor; }
+.acuelh .boton-contorn:active { box-shadow: inset 0 0 0 1.5px currentColor; }
+@media (min-width: 44rem) {
+	.acuelh .boton-reservar { display: none; }
+}
+/* les deux boutons du premier écran ont alors la même largeur, texte centré */
+@media (max-width: 43.99rem) {
+	.acuelh .eros-accions .boton { min-width: min(100%, 16rem); justify-content: center; }
+}
 .acuelh .boton-emplenat {
 	display: none; /* le remplissage rond a cédé la place à la pièce pleine */
 	position: absolute; z-index: -1; left: var(--x, 50%); top: var(--y, 50%);

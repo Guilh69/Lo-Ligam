@@ -46,10 +46,11 @@ Demande de Romain : « est-ce que les gens comprennent bien ce qu'ils peuvent fa
 - **Le dernier rouge** : le menu plein écran, cinq pages (visio, radios, télévision, cinéma, littérature) et la croix de fermeture prenaient la brique du logo ou le sarcelle ; ils prennent maintenant le rouge des boutons. La brique reste dans le logo, sur la carte et sur l'administration.
 - **La légende de la photo de l'accueil** (« Max Rouquette · La pietat dau matin »), en brun sur fond sombre, devient lisible (or clair).
 - **Cibles de 44 px** pour les réglages du haut sur téléphone.
+- **La réservation (décision de Romain, « corrige la réservation »)** : le dernier gros bouton de l'accueil mène maintenant à `/apren/visio` (la page qui explique le cours), comme le bandeau et le menu, au lieu du calendrier Proton dans un nouvel onglet ; et le premier écran du téléphone a un second bouton « Reservar un cors » en contour, sous « Dobrir la carta » (même largeur, visible sous 44 rem, là où le lien du bandeau est masqué). Vérifié en cliquant : 1 toucher sur téléphone (avant : 4), à 390, 700 et 1830 px. Le texte du bouton final reste modifiable sur place ; sa destination est fixée dans le code (`routes/+page.svelte`, `VISIO`), ce qui évite d'écrire dans la base de production.
 
 ## À décider avec Romain (non fait)
 
-1. Réservation : faire pointer le dernier bouton de l'accueil vers `/apren/visio` comme les deux autres ; remettre une entrée « Reservar un cors » dans le premier écran du téléphone (second bouton sous « Dobrir la carta », comme dans l'essai 3).
+1. ~~Réservation~~ : fait (voir « Corrigé dans ce passage »). Reste, sur la page d'explication elle-même, les deux « Reservar un primièr cors » de suite avant le vrai lien (le premier mène à `#questionari`) : à regarder avec Romain.
 2. Articles et Fòrum : un état « bientôt » (lien grisé avec la mention) ou les retirer jusqu'à leur ouverture.
 3. Sarcelle des petits boutons : neutres (encre à 10 %) comme la bascule de langue ?
 4. Retours : un seul geste, par exemple le fil d'Ariane partout, ou « ‹ nom de la rubrique » partout.
