@@ -44,77 +44,184 @@
 	const FORMES = ['rond', 'carre', 'triangle', 'demi', 'carre'];
 	const ZONES = ['h', 'g', 'd', 'h', 'g', 'd', 'h']; // h : bandeau du titre, g : marge gauche, d : marge droite
 	let confetisEl;
-	// Les confettis réagissent à la souris et au doigt (Romain, 2026-11-07) : une pièce près du passage est
-	// chassée et tourne, puis revient comme sur un ressort. Rien de tout cela si l'appareil demande moins
-	// d'animations ou si le réglage « léger » est actif ; la boucle ne tourne que tant qu'une pièce bouge.
+	// Les confettis flottent (Romain, 2026-11-07 : « comme s'ils flottaient… imagine la physique dans
+	// l'espace ») : chacun dérive lentement et tourne sur lui-même ; la souris ou le doigt qui passe est
+	// une main dans l'apesanteur : elle les emporte dans son sens et les écarte, ils gardent leur élan,
+	// ralentissent à peine, rebondissent sur les bords et les uns sur les autres, et ne reviennent que
+	// très lentement vers leur coin (un rappel presque nul, pas de ressort qui claque). Rien de tout cela
+	// si l'appareil demande moins d'animations ou en réglage léger ; la boucle s'arrête hors écran.
 	onMount(() => {
 		if (matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.leugier === 'on') return;
-		const pieces = [...confetisEl.querySelectorAll('.c')].map((el, i) => ({ el, sens: i % 2 ? 1 : -1, dx: 0, dy: 0, vx: 0, vy: 0, dr: 0, vr: 0 }));
-		let tourne = false;
-		let attente = null; // le dernier passage pas encore traité : [x, y, rayon]
-		const image = () => {
-			let bouge = false;
-			for (const p of pieces) {
-				// le ressort, puis le frottement
-				p.vx = (p.vx - 0.05 * p.dx) * 0.91;
-				p.vy = (p.vy - 0.05 * p.dy) * 0.91;
-				p.vr = (p.vr - 0.05 * p.dr) * 0.91;
-				p.dx += p.vx;
-				p.dy += p.vy;
-				p.dr += p.vr;
-				if (Math.abs(p.dx) + Math.abs(p.dy) + Math.abs(p.dr) + Math.abs(p.vx) + Math.abs(p.vy) + Math.abs(p.vr) > 0.05) {
-					bouge = true;
-					p.el.style.translate = `${p.dx.toFixed(2)}px ${p.dy.toFixed(2)}px`;
-					p.el.style.rotate = `${p.dr.toFixed(1)}deg`;
-				} else if (p.dx || p.dy || p.dr) {
-					p.dx = p.dy = p.dr = p.vx = p.vy = p.vr = 0;
-					p.el.style.translate = '';
-					p.el.style.rotate = '';
+		const zone = confetisEl;
+		const bal = [...zone.querySelectorAll('.c')].map((el, i) => ({
+			el,
+			x: 0, y: 0, // décalage par rapport à la place de départ (chocs, élan)
+			vx: 0, vy: 0, // vitesse, en pixels par image à 60 images par seconde
+			rot: 0, vr: 0, // rotation ajoutée par les chocs (degrés) et sa vitesse
+			spin: (0.5 + ((i * 37) % 10) / 7) * (i % 2 ? 1 : -1), // sa rotation propre, en degrés par seconde
+			ax: 4 + ((i * 53) % 9), ay: 4 + ((i * 29) % 9), // l'amplitude de sa dérive, en pixels
+			fx: 0.35 + ((i * 17) % 10) / 14, fy: 0.3 + ((i * 11) % 10) / 15, // sa fréquence, radians par seconde
+			ph: i * 2.399, // son départ dans la dérive (angle d'or : jamais deux pareils)
+			hx: 0, hy: 0, r: 0 // sa place de départ et son rayon, mesurés
+		}));
+		let L = 0, H = 0;
+		const mesurer = () => {
+			L = zone.clientWidth;
+			H = zone.clientHeight;
+			for (const p of bal) {
+				p.hx = p.el.offsetLeft + p.el.offsetWidth / 2;
+				p.hy = p.el.offsetTop + p.el.offsetHeight / 2;
+				p.r = (Math.max(p.el.offsetWidth, p.el.offsetHeight) / 2) * 0.92;
+			}
+		};
+		mesurer();
+		const ro = new ResizeObserver(mesurer);
+		ro.observe(zone);
+
+		let vu = true;
+		let enRoute = 0;
+		let avant = performance.now();
+		const VMAX = 5;
+		const image = (maintenant) => {
+			enRoute = 0;
+			const dt = Math.min(2.5, (maintenant - avant) / 16.667);
+			avant = maintenant;
+			const s = maintenant / 1000;
+			const frot = 0.982 ** dt; // presque pas de frottement : on est dans l'espace
+			const frotR = 0.992 ** dt;
+			const pos = [];
+			for (const p of bal) {
+				// un rappel presque nul vers le coin d'origine : sans lui, tout finirait dans un coin de la salle
+				p.vx += -0.00018 * p.x * dt;
+				p.vy += -0.00018 * p.y * dt;
+				p.vx *= frot;
+				p.vy *= frot;
+				p.vr *= frotR;
+				const v = Math.hypot(p.vx, p.vy);
+				if (v > VMAX) {
+					p.vx *= VMAX / v;
+					p.vy *= VMAX / v;
+				}
+				p.x += p.vx * dt;
+				p.y += p.vy * dt;
+				p.rot += p.vr * dt + (p.spin / 60) * dt;
+				const dx = p.ax * Math.sin(s * p.fx + p.ph);
+				const dy = p.ay * Math.sin(s * p.fy + p.ph * 1.7);
+				pos.push([p.hx + p.x + dx, p.hy + p.y + dy]);
+			}
+			// les bords de la salle : on rebondit, sans tout perdre
+			for (let i = 0; i < bal.length; i++) {
+				const p = bal[i];
+				const q = pos[i];
+				if (q[0] < p.r) { p.x += p.r - q[0]; q[0] = p.r; p.vx = Math.abs(p.vx) * 0.85; }
+				else if (q[0] > L - p.r) { p.x -= q[0] - (L - p.r); q[0] = L - p.r; p.vx = -Math.abs(p.vx) * 0.85; }
+				if (q[1] < p.r) { p.y += p.r - q[1]; q[1] = p.r; p.vy = Math.abs(p.vy) * 0.85; }
+				else if (q[1] > H - p.r) { p.y -= q[1] - (H - p.r); q[1] = H - p.r; p.vy = -Math.abs(p.vy) * 0.85; }
+			}
+			// les chocs entre confettis : même masse, rebond presque élastique, et un peu de rotation donnée
+			for (let i = 0; i < bal.length; i++) {
+				for (let j = i + 1; j < bal.length; j++) {
+					const a = bal[i], b = bal[j];
+					const ex = pos[j][0] - pos[i][0], ey = pos[j][1] - pos[i][1];
+					const min = a.r + b.r;
+					if (Math.abs(ex) > min || Math.abs(ey) > min) continue;
+					const d = Math.hypot(ex, ey);
+					if (d >= min || d === 0) continue;
+					const nx = ex / d, ny = ey / d;
+					const rec = (min - d) / 2;
+					a.x -= nx * rec; a.y -= ny * rec; b.x += nx * rec; b.y += ny * rec;
+					pos[i][0] -= nx * rec; pos[i][1] -= ny * rec; pos[j][0] += nx * rec; pos[j][1] += ny * rec;
+					const rv = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
+					if (rv < 0) {
+						const j2 = (-(1 + 0.88) * rv) / 2;
+						a.vx -= j2 * nx; a.vy -= j2 * ny; b.vx += j2 * nx; b.vy += j2 * ny;
+						a.vr -= Math.min(3, -rv) * 0.4; b.vr += Math.min(3, -rv) * 0.4;
+					}
 				}
 			}
-			if (bouge) requestAnimationFrame(image);
-			else tourne = false;
-		};
-		const pousser = () => {
-			if (!attente) return;
-			const [x, y, rayon] = attente;
-			attente = null;
-			for (const p of pieces) {
-				const r = p.el.getBoundingClientRect();
-				const cx = r.left + r.width / 2;
-				const cy = r.top + r.height / 2;
-				const d = Math.hypot(cx - x, cy - y) || 1;
-				if (d > rayon) continue;
-				const f = (1 - d / rayon) ** 2;
-				p.vx += ((cx - x) / d) * f * 16;
-				p.vy += ((cy - y) / d) * f * 16;
-				p.vr += p.sens * f * 24;
+			// on ne dessine que ce qui est à l'écran
+			const haut = zone.getBoundingClientRect().top;
+			for (let i = 0; i < bal.length; i++) {
+				const p = bal[i];
+				const ecran = haut + pos[i][1];
+				if (ecran < -80 || ecran > innerHeight + 80) continue;
+				p.el.style.transform = `translate(${(pos[i][0] - p.hx).toFixed(2)}px, ${(pos[i][1] - p.hy).toFixed(2)}px) rotate(calc(var(--r) + ${p.rot.toFixed(2)}deg))`;
 			}
-			if (!tourne) {
-				tourne = true;
-				requestAnimationFrame(image);
+			if (vu && !document.hidden) enRoute = requestAnimationFrame(image);
+		};
+		const relancer = () => {
+			if (!enRoute && vu && !document.hidden) {
+				avant = performance.now();
+				enRoute = requestAnimationFrame(image);
+			}
+		};
+		const io = new IntersectionObserver(([e]) => {
+			vu = e.isIntersecting;
+			relancer();
+		});
+		io.observe(zone);
+		document.addEventListener('visibilitychange', relancer);
+		relancer();
+
+		// la main : le pointeur emporte et écarte ce qu'il frôle
+		let dernier = null;
+		let attente = null;
+		const main = (x, y, rayon) => {
+			const t = performance.now();
+			let pvx = 0, pvy = 0;
+			if (dernier) {
+				const k = Math.max(1, t - dernier[2]) / 16.667;
+				pvx = Math.max(-40, Math.min(40, (x - dernier[0]) / k));
+				pvy = Math.max(-40, Math.min(40, (y - dernier[1]) / k));
+			}
+			dernier = [x, y, t];
+			const b = zone.getBoundingClientRect();
+			const mx = x - b.left, my = y - b.top;
+			const s = t / 1000;
+			for (const p of bal) {
+				const cx = p.hx + p.x + p.ax * Math.sin(s * p.fx + p.ph);
+				const cy = p.hy + p.y + p.ay * Math.sin(s * p.fy + p.ph * 1.7);
+				const d = Math.hypot(cx - mx, cy - my);
+				if (d > rayon) continue;
+				const f = (1 - d / rayon) ** 1.5;
+				const nx = (cx - mx) / (d || 1), ny = (cy - my) / (d || 1);
+				p.vx += (nx * 1.4 + pvx * 0.12) * f;
+				p.vy += (ny * 1.4 + pvy * 0.12) * f;
+				p.vr += ((nx * pvy - ny * pvx) * 0.03 + p.spin * 0.01) * f;
 			}
 		};
 		// au plus un calcul par image affichée, quelle que soit la vitesse du pointeur
 		const passage = (x, y, rayon) => {
 			const libre = !attente;
 			attente = [x, y, rayon];
-			if (libre) requestAnimationFrame(pousser);
+			if (libre)
+				requestAnimationFrame(() => {
+					const a = attente;
+					attente = null;
+					if (a) main(a[0], a[1], a[2]);
+				});
 		};
 		const souris = (e) => {
-			if (e.pointerType !== 'touch') passage(e.clientX, e.clientY, 90);
+			if (e.pointerType !== 'touch') passage(e.clientX, e.clientY, 95);
 		};
 		const doigt = (e) => {
 			const t = e.touches[0];
-			if (t) passage(t.clientX, t.clientY, 110);
+			if (t) passage(t.clientX, t.clientY, 115);
 		};
+		const fin = () => (dernier = null);
 		addEventListener('pointermove', souris, { passive: true });
 		addEventListener('touchstart', doigt, { passive: true });
 		addEventListener('touchmove', doigt, { passive: true });
+		addEventListener('touchend', fin, { passive: true });
 		return () => {
+			cancelAnimationFrame(enRoute);
+			ro.disconnect();
+			io.disconnect();
+			document.removeEventListener('visibilitychange', relancer);
 			removeEventListener('pointermove', souris);
 			removeEventListener('touchstart', doigt);
 			removeEventListener('touchmove', doigt);
+			removeEventListener('touchend', fin);
 		};
 	});
 	const CONFETIS = (() => {
@@ -259,6 +366,7 @@
 		height: calc(var(--t) * var(--e));
 		transform: rotate(var(--r));
 		filter: drop-shadow(0 3px 2px rgba(20, 10, 5, 0.3));
+		will-change: transform;
 		/* (le flottement est sur la forme, « .c b » : le déplacement par la souris s'y ajoute sans le couper) */
 	}
 	.c b {
@@ -266,7 +374,6 @@
 		width: 100%;
 		height: 100%;
 		background: var(--c);
-		animation: flotar var(--d) ease-in-out var(--dl, 0s) infinite alternate;
 	}
 	.c .rond {
 		border-radius: 50%;
@@ -300,19 +407,6 @@
 			--yh: 0.4rem;
 			--e: 0.45;
 		}
-	}
-	@keyframes flotar {
-		to {
-			translate: 0 -6px;
-		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.c b {
-			animation: none;
-		}
-	}
-	:global(html[data-leugier='on']) .c b {
-		animation: none;
 	}
 	/* la puce choisie garde sa couleur : elle se lève et prend un anneau */
 	.causidas .pc-chip[aria-pressed='true'] {
