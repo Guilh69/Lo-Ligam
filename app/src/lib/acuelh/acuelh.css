@@ -223,12 +223,12 @@ html[lang='ar'] .acuelh .bi > .oc { position: absolute; top: 0.06em; inset-inlin
    se remplit d'or de bas en haut, comme une braise qu'on attise, puis
    refroidit lentement. Lumière crème sur la ligne déjà dorée (--lum-b :
    couleur de base, --lum : lumière). CSS seul. */
-.acuelh .eros-titol { --lum-b: var(--crema); --lum: var(--aur); }
+.acuelh .eros-titol { --lum-b: var(--crema); --lum: var(--t-aur-gros); }
 /* Une ligne du titre ne se replie jamais : les lettres en blocs pouvaient passer à
    la ligne, et la langue cachée (« S'apprend. », plus long) doublait la hauteur de
    la ligne sur téléphone, d'où un trou avant « Se viu. » (Romain, 2026-10-16) */
 .acuelh .eros-titol .bi > span { white-space: nowrap; }
-.acuelh .linha:nth-child(3) { --lum-b: var(--aur); --lum: var(--crema); }
+.acuelh .linha:nth-child(3) { --lum-b: var(--t-aur-gros); --lum: var(--crema); }
 .acuelh .eros-titol .letra:not(.espaci) {
 	display: inline-block;
 	color: transparent;

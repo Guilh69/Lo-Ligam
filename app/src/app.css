@@ -109,10 +109,16 @@
 :root {
 	--t-braise: color-mix(in srgb, var(--t-terra) 26%, transparent);
 	--t-braise-or: color-mix(in srgb, var(--t-aur) 9%, transparent);
+	/* L'ocre des GRANDS mots (les lettres du titre de l'accueil, « Amassa. ») : le texte courant
+	   garde --t-aur, assombri pour passer 4,5 ; un grand texte n'a besoin que de 3 (07-11) */
+	--t-aur-gros: var(--t-aur);
 }
 :root[data-tema='clar'] {
 	--t-braise: transparent;
 	--t-braise-or: transparent;
+	/* l'ocre de la palette validée (#c7811b) tombe à 2,89 sur le plâtre : #bb7616, même teinte,
+	   passe à 3,33 */
+	--t-aur-gros: #bb7616;
 }
 /* Gamme « Plâtre » (Romain, 2026-10-21, refonte claire, étape 1 : choisie
    contre « Terre cuite » et « Ciel du Sud » sur /ensag/clar) : plâtre, pierre

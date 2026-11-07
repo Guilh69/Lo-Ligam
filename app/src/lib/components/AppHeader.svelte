@@ -331,6 +331,39 @@
 		white-space: nowrap;
 	}
 
+	/* L'interrupteur Òc / Fr (Romain, 2026-11-07 : « ils sont séparés, on ne comprend pas que
+	   c'est un interrupteur… on bascule de l'une à l'autre ») : une seule piste de la couleur du
+	   carton, la langue choisie est une pièce d'ocre posée dessus, l'autre est à plat. L'autre
+	   langue remplace « Fr » quand on la choisit au globe (logique inchangée). */
+	.lengas .lang-toggle {
+		gap: 0;
+		padding: 3px;
+		border-radius: 12px;
+		background: var(--pc-carton);
+		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+	}
+	.lengas .lang-toggle button {
+		--pc-fons: transparent;
+		--pc-tinta: var(--pc-carton-tinta);
+		--pc-lev: none;
+		--r: 9px;
+		height: 1.85rem;
+		min-width: 2.7rem;
+		padding: 0 0.75rem;
+		box-shadow: none;
+	}
+	.lengas .lang-toggle button:hover:not(:disabled),
+	.lengas .lang-toggle button:active:not(:disabled) {
+		transform: none;
+		box-shadow: none;
+	}
+	.lengas .lang-toggle button[aria-pressed='true'],
+	.lengas .lang-toggle button[aria-pressed='true']:hover:not(:disabled) {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: var(--pc-or-tinta);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+	}
+
 	/* la bascule Òc / Fr : deux pièces de papier, l'or marque la langue choisie */
 	.lang-toggle {
 		display: inline-flex;

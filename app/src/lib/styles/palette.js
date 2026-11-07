@@ -12,7 +12,11 @@
 
 /** Les teintes : celles des en-têtes de la salle de jeux et des boutons */
 export const TEINTES = {
-	brique: '#b53d17', // le rouge du logo : agir, occitan unifié, jeux d'adresse
+	brique: '#b53d17', // le rouge du logo : occitan unifié, jeux d'adresse (le logo garde sa recette)
+	// Le rouge et l'ocre des boutons, ceux de la palette validée par Romain (07-11 : « le rouge de
+	// la palette qu'on a validé serait à utiliser, l'ocre aussi pour les boutons »)
+	rougeAction: '#9c2626', // ce qui se clique
+	ocreAction: '#c7811b', // ce qui est choisi, sélectionné
 	rougeVif: '#cc2a14', // le languedocien (Romain, 07-11 : « un rouge plus intense »)
 	or: '#eeaf34', // ce qui est choisi, jeux de mots
 	orClair: '#ffd47f', // l'or clair du logo
@@ -31,9 +35,9 @@ const T = TEINTES;
 
 /** Les boutons (lib/styles/papier.css) */
 export const BOUTONS = {
-	agir: T.brique, // la pièce rouge, texte crème
+	agir: T.rougeAction, // la pièce rouge, texte crème
 	agirTexte: T.creme,
-	choisi: T.or, // la pièce choisie, texte encre
+	choisi: T.ocreAction, // la pièce choisie, texte encre
 	choisiTexte: T.encre,
 	juste: T.olive, // la bonne réponse, texte crème
 	justeTexte: T.creme,
@@ -44,7 +48,7 @@ export const BOUTONS = {
 
 /** Les familles de jeux : une teinte par famille (Illustracion, Sala) */
 export const JEUX = {
-	adresse: T.brique,
+	adresse: T.rougeAction, // le même rouge que les boutons (07-11 : un seul rouge)
 	mots: T.or,
 	observation: T.olive,
 	memoire: T.sarcelle,
@@ -71,7 +75,7 @@ export const CARTE = {
 
 /** Les cases des rubriques (S'apren, Se parla…) et Cultura : [fond, texte] */
 export const CASES = [
-	[T.brique, T.creme],
+	[T.rougeAction, T.creme], // la grande case : le rouge des boutons
 	[T.sarcelle, T.creme],
 	[T.olive, T.creme],
 	[T.bleu, T.creme],
