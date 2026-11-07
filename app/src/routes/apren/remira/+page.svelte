@@ -666,20 +666,20 @@
 		</div>
 		<div class="cap-dreita">
 			<!-- toujours là, quel que soit le mouvement (Joan) : l'explication repasse à la poussière d'or -->
-			<button type="button" class="pc pc-2 pc-chip ajuda" aria-pressed={guidaActiva} onclick={tornarGuida}>{tria(T.ajuda)}</button>
+			<button type="button" class="ajuda" aria-pressed={guidaActiva} onclick={tornarGuida}>{tria(T.ajuda)}</button>
 			<!-- La langue, comme dans le bandeau du site (Romain, 05-11 : « quand on
 			     est dedans, on est bloqué avec l'occitan ») -->
 			<div class="lengas" role="group" aria-label="Lenga / Langue">
-				<button type="button" class="pc pc-2 pc-chip" aria-pressed={lengaAra === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
-				<button type="button" class="pc pc-2 pc-chip" aria-pressed={lengaAra === segonda} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
-				<button type="button" class="pc pc-2 pc-chip globe" popovertarget="remira-lengas" title={tria(T.lengas)}>
+				<button type="button" aria-pressed={lengaAra === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
+				<button type="button" aria-pressed={lengaAra === segonda} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
+				<button type="button" class="globe" popovertarget="remira-lengas" title={tria(T.lengas)}>
 					<Icona nom="mond" size="1.1rem" />
 					<span class="sr">{tria(T.lengas)}</span>
 				</button>
 			</div>
 			<div id="remira-lengas" class="panel panel-lengas" popover role="group" aria-label={tria(T.lengas)} ontoggle={tornarActiu}>
 				{#each autras as code (code)}
-					<button type="button" class="pc pc-2 pc-chip" lang={code} onclick={() => causirLenga(code)}>{LENGAS[code].nom}</button>
+					<button type="button" lang={code} onclick={() => causirLenga(code)}>{LENGAS[code].nom}</button>
 				{/each}
 			</div>
 		</div>
@@ -775,31 +775,31 @@
 		     cohérente l'interface ») : le mouvement, l'ambiance, le fond. Chacun
 		     ouvre sa liste ; un clic ailleurs ou Échap la referme (popover natif). -->
 		<div class="causidas">
-			<button type="button" class="pc pc-2 causida" popovertarget="remira-movements">
+			<button type="button" class="causida" popovertarget="remira-movements">
 				<span class="etiqueta">{tria(T.movement)}</span>
 				<span class="valor">{tria(MOVEMENTS.find((m) => m.id === mòde).nom)}</span>
 			</button>
 			{#if mòde === 'paisatges'}
 				<!-- Les paysages : le thème, puis le précédent, le numéro, le suivant,
 				     à la place de l'ambiance et du fond (qui n'ont pas de sens ici) -->
-				<button type="button" class="pc pc-2 causida" popovertarget="remira-tema">
+				<button type="button" class="causida" popovertarget="remira-tema">
 					<span class="etiqueta">{tria(T.tema)}</span>
 					<span class="valor">{tria(nomTema)}</span>
 				</button>
 				<div class="causida navega" role="group" aria-label={tria(T.paisatges)}>
 					<span class="etiqueta" aria-hidden="true">{tria(T.paisatges)}</span>
 					<span class="valor">
-						<button type="button" class="pc pc-2 pc-icone sageta" aria-label={tria(T.precedent)} onclick={() => paisatges?.precedent()}>‹</button>
+						<button type="button" class="sageta" aria-label={tria(T.precedent)} onclick={() => paisatges?.precedent()}>‹</button>
 						<span class="compte-p"><span class="num">{nPaisatge + 1}</span> / {deTema(temaPaisatges).length}</span>
-						<button type="button" class="pc pc-2 pc-icone sageta" aria-label={tria(T.seguent)} onclick={() => paisatges?.seguent()}>›</button>
+						<button type="button" class="sageta" aria-label={tria(T.seguent)} onclick={() => paisatges?.seguent()}>›</button>
 					</span>
 				</div>
 			{:else}
-				<button type="button" class="pc pc-2 causida" popovertarget="temas">
+				<button type="button" class="causida" popovertarget="temas">
 					<span class="etiqueta">{tria(T.ambianca)}</span>
 					<span class="valor">{#if scena.numero}<span class="num">{scena.numero}</span>{' '}{/if}{tria(scena.nom)}</span>
 				</button>
-				<button type="button" class="pc pc-2 causida" popovertarget="remira-fons">
+				<button type="button" class="causida" popovertarget="remira-fons">
 					<span class="etiqueta">{tria(T.fons)}</span>
 					<span class="valor">{tria(fotoVisible ? T.foto : T.cel)}</span>
 				</button>
@@ -811,7 +811,7 @@
 			<ul class="opcions">
 				{#each MOVEMENTS as m (m.id)}
 					<li>
-						<button type="button" class="pc pc-rep" aria-pressed={mòde === m.id} onclick={() => causirMòde(m.id)}>
+						<button type="button" aria-pressed={mòde === m.id} onclick={() => causirMòde(m.id)}>
 							<span class="nom">{tria(m.nom)}</span>
 							<span class="desc">{tria(m.desc)}</span>
 						</button>
@@ -827,7 +827,7 @@
 				{#if nQuasernet}
 					<ul>
 						<li>
-							<button type="button" class="pc pc-2 pc-chip" aria-pressed={scenaId === QUASERNET.id} onclick={() => causirScena(QUASERNET.id)}>
+							<button type="button" aria-pressed={scenaId === QUASERNET.id} onclick={() => causirScena(QUASERNET.id)}>
 								{tria(QUASERNET.nom)} <span class="compte">{nQuasernet}</span>
 							</button>
 						</li>
@@ -842,7 +842,7 @@
 					<ul>
 						{#each SCENAS.filter((s) => s.grop === g.id) as s (s.id)}
 							<li>
-								<button type="button" class="pc pc-2 pc-chip" aria-pressed={s.id === scenaId} onclick={() => causirScena(s.id)}>
+								<button type="button" aria-pressed={s.id === scenaId} onclick={() => causirScena(s.id)}>
 									{#if s.numero}<span class="num">{s.numero}</span>{' '}{/if}{tria(s.nom)}
 								</button>
 							</li>
@@ -857,7 +857,7 @@
 			<ul class="opcions">
 				{#each [{ id: null, nom: T.tot }, ...TEMAS] as t (t.id ?? 'tot')}
 					<li>
-						<button type="button" class="pc pc-rep" aria-pressed={temaPaisatges === t.id} onclick={() => causirTema(t.id)}>
+						<button type="button" aria-pressed={temaPaisatges === t.id} onclick={() => causirTema(t.id)}>
 							<span class="nom">{tria(t.nom)}<span class="compte">{deTema(t.id).length}</span></span>
 						</button>
 					</li>
@@ -869,13 +869,13 @@
 			<h2>{tria(T.fons)}</h2>
 			<ul class="opcions">
 				<li>
-					<button type="button" class="pc pc-rep" aria-pressed={!fonsFoto} onclick={() => causirFons(false)}>
+					<button type="button" aria-pressed={!fonsFoto} onclick={() => causirFons(false)}>
 						<span class="nom">{tria(T.cel)}</span>
 						<span class="desc">{tria(T.celDesc)}</span>
 					</button>
 				</li>
 				<li>
-					<button type="button" class="pc pc-rep" aria-pressed={fonsFoto} onclick={() => causirFons(true)}>
+					<button type="button" aria-pressed={fonsFoto} onclick={() => causirFons(true)}>
 						<span class="nom">{tria(T.foto)}</span>
 						<span class="desc">{tria(scena.imatge ? T.fotoDesc : T.fotoCap)}</span>
 					</button>
@@ -889,12 +889,11 @@
 					<span>{tria(T.forca)}</span>
 					<input type="range" min="0" max="1" step="0.05" bind:value={fons} />
 				</label>
-				<button type="button" class="pc pc-2 pc-chip" aria-pressed={sonAtiu} onclick={bascularSon}>{tria(T.son)}</button>
+				<button type="button" aria-pressed={sonAtiu} onclick={bascularSon}>{tria(T.son)}</button>
 			{/if}
 			{#if mòde === 'paisatges' && relèuPossible}
 				<button
 					type="button"
-					class="pc pc-2 pc-chip"
 					aria-pressed={relèu}
 					onclick={() => {
 						relèu = !relèu;
@@ -902,9 +901,9 @@
 					}}>{tria(T.relèu)}</button
 				>
 			{/if}
-			<button type="button" class="pc pc-2 pc-chip" aria-pressed={pausa} onclick={() => (pausa = !pausa)}>{tria(T.pausa)}</button>
+			<button type="button" aria-pressed={pausa} onclick={() => (pausa = !pausa)}>{tria(T.pausa)}</button>
 			{#if plenPossible}
-				<button type="button" class="pc pc-2 pc-chip" onclick={bascularPlen}>{tria(T.plenEcran)}</button>
+				<button type="button" onclick={bascularPlen}>{tria(T.plenEcran)}</button>
 			{/if}
 		</div>
 	</div>
@@ -1149,11 +1148,12 @@
 	.lengas {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.85rem;
 	}
-	.lengas .pc {
-		min-width: 38px;
-		padding-inline: 0.6rem;
+	.globe {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.3rem 0;
 	}
 	.tornar {
 		font-family: var(--font-body);
@@ -1237,7 +1237,7 @@
 	.causidas {
 		display: flex;
 		align-items: flex-end;
-		gap: 0.8rem;
+		gap: 2.4rem;
 	}
 	.causida {
 		display: flex;
@@ -1247,40 +1247,28 @@
 		gap: 0.22rem;
 		max-width: 15rem;
 		min-height: 2.75rem; /* 44 px à toucher */
-		padding: 0.45rem 0.95rem;
+		padding: 0.3rem 0;
 		text-align: start;
-	}
-	/* (le groupe des paysages n'est pas une pièce : ses flèches le sont) */
-	.navega {
-		padding-inline: 0;
-	}
-	/* dans une pièce de papier, le texte prend la couleur de la pièce */
-	.pc .etiqueta,
-	.pc .valor,
-	.pc .num,
-	.pc .compte,
-	.pc .desc {
-		color: inherit;
-	}
-	.pc .etiqueta,
-	.pc .desc {
-		opacity: 0.75;
+		text-decoration-line: none;
 	}
 	/* les paysages : ‹ 3 / 12 ›, rangé comme les autres choix */
 	.navega .valor {
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0;
 	}
 	.navega .valor::after {
 		content: none;
 	}
 	.navega .sageta {
-		--r: 9px;
-		width: 36px;
-		height: 36px;
-		min-height: 36px;
+		min-width: 2.75rem; /* 44 px à toucher */
+		min-height: 2.75rem;
+		margin-block: -0.7rem;
 		font-size: 1.35rem;
 		line-height: 1;
+		text-decoration: none;
+	}
+	.navega .sageta:first-child {
+		margin-inline-start: -0.9rem;
 	}
 	.compte-p {
 		font-variant-numeric: tabular-nums;
@@ -1371,7 +1359,7 @@
 		padding: 0;
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 0.5rem;
+		gap: 0 1.6rem;
 	}
 	.grop-poesia ul {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1383,25 +1371,41 @@
 	.panel ul.opcions {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
-		gap: 0.5rem;
+		gap: 0.1rem;
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
-	/* une option : une ligne de réponse en papier (pc-rep), l'or pour la choisie */
 	.opcions button {
 		width: 100%;
+		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 0.2rem;
+		padding: 0.55rem 0;
+		text-align: start;
+		text-decoration-line: none;
 	}
 	.opcions .nom {
 		font-size: 0.95rem;
+		color: rgba(247, 243, 238, 0.85);
+		text-decoration: underline 1px transparent;
+		text-underline-offset: 0.45em;
+		transition: text-decoration-color 0.3s;
+	}
+	.opcions button[aria-pressed='true'] .nom {
+		color: var(--crema);
+		text-decoration-color: var(--aur-clar);
+	}
+	/* le compte d'un thème : hors du souligné du nom (Joan, 06-11) */
+	.opcions .nom .compte {
+		display: inline-block;
+		text-decoration: none;
 	}
 	.opcions .desc {
 		font-size: 0.8rem;
-		font-weight: 400;
 		line-height: 1.4;
+		color: rgba(247, 243, 238, 0.6);
 	}
 	/* la langue : une petite liste sous l'en-tête, à droite */
 	.panel-lengas {
@@ -1411,17 +1415,41 @@
 		min-width: 9rem;
 		padding: 0.5rem 1.2rem;
 	}
-	/* tous les boutons de la page sont des pièces de papier (lib/styles/papier.css) */
-	/* (seulement ouvert : un display posé sur le popover l'empêcherait de se fermer) */
-	.panel-lengas:popover-open {
-		display: grid;
-		gap: 0.4rem;
+	.panel-lengas button {
+		display: block;
+		width: 100%;
+		min-height: 2.4rem;
+		text-align: start;
 	}
-	.panel-lengas button,
 	.temas li button {
 		width: 100%;
-		justify-content: flex-start;
-		text-align: start;
+		min-height: 2.6rem;
+		padding: 0.45rem 0;
+		text-align: left;
+		color: rgba(247, 243, 238, 0.78);
+	}
+	button {
+		appearance: none;
+		background: none;
+		border: 0;
+		padding: 0.35rem 0;
+		font: inherit;
+		letter-spacing: inherit;
+		color: rgba(247, 243, 238, 0.62);
+		cursor: pointer;
+		text-decoration: underline transparent;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.45em;
+		transition:
+			color 0.3s,
+			text-decoration-color 0.3s;
+	}
+	button:hover {
+		color: var(--crema);
+	}
+	button[aria-pressed='true'] {
+		color: var(--crema);
+		text-decoration-color: var(--aur-clar);
 	}
 	.compte {
 		margin-left: 0.4em;
@@ -1445,6 +1473,7 @@
 	.void a:hover {
 		text-decoration-color: var(--crema);
 	}
+	button:focus-visible,
 	.tornar:focus-visible,
 	.void a:focus-visible,
 	input:focus-visible {
@@ -1527,26 +1556,7 @@
 			font-size: 0.86rem;
 		}
 		.cap-dreita {
-			gap: 0.4rem;
-		}
-		/* les pièces de l'en-tête, plus serrées pour tenir sur une ligne */
-		.lengas {
-			gap: 0.3rem;
-		}
-		.lengas .pc,
-		.ajuda {
-			min-width: 34px;
-			padding-inline: 0.5rem;
-		}
-		.ajuda {
-			white-space: nowrap;
-			font-size: 0.8rem;
-		}
-		.cap {
-			gap: 0.6rem;
-		}
-		.cap-nom {
-			gap: 0.6rem;
+			gap: 1rem;
 		}
 		.panel {
 			padding: 1rem 1.1rem;
