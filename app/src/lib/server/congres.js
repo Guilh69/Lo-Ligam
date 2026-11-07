@@ -4,8 +4,9 @@
 // directement en étant sûr de la véracité »).
 //
 // La clé reste sur le serveur : variable LOCONGRES_API_KEY (app/.env en local ;
-// en ligne, dans les variables secrètes du conteneur Scaleway, jamais dans
-// Git). Rien n'est gardé : les CGU de lo Congrès interdisent de conserver les
+// en ligne, secret du namespace Scaleway « ligam-web », Paramètres du
+// namespace › Secrets, posé par Romain le 07-11 ; jamais dans Git). Un secret
+// changé ne sert qu'au déploiement suivant. Rien n'est gardé : les CGU de lo Congrès interdisent de conserver les
 // données brutes ; la réponse part au navigateur sans cache.
 //
 // lo Basic répond toujours forms = le français, trads = l'occitan (avec sa
