@@ -110,7 +110,7 @@
 				tèxte: tèxteGardats(paquet)
 			});
 			if (e) {
-				error = 'Les derniers cœurs ne sont pas encore partis ; ils restent gardés ici et repartiront.';
+				error = sensCompte(e) ? SENS_COMPTE : 'Les derniers cœurs ne sont pas encore partis ; ils restent gardés ici et repartiront.';
 				return false;
 			}
 			pendents = pendents.filter((c) => !paquet.includes(c));
@@ -151,6 +151,11 @@
 		if (pendents.length >= 20) mandarGardats();
 	}
 
+	// refus de la base faute de compte (aperçu en mode simulé, ou connexion
+	// expirée) : le dire, plutôt que « réessaie », qui ne servirait à rien
+	const sensCompte = (e) => e?.code === '42501' || e?.code === 'PGRST301' || /jwt|row-level/i.test(e?.message ?? '');
+	const SENS_COMPTE = 'Rien n’est parti : sur cette page, tu n’es pas connecté à ton compte. Ouvre-la sur loligam.eu, connecté, et recommence.';
+
 	// lot « pausar » : une photo aux mots changés part tout de suite, seule
 	async function mandarPausats(el, mots) {
 		mandant = true;
@@ -163,7 +168,7 @@
 			.single();
 		mandant = false;
 		if (e) {
-			error = 'Cette photo n’est pas partie. Réessaie dans un instant ; tes mots sont toujours là.';
+			error = sensCompte(e) ? SENS_COMPTE : 'Cette photo n’est pas partie. Réessaie dans un instant ; tes mots sont toujours là.';
 			return;
 		}
 		await far_partir(1);
@@ -216,7 +221,7 @@
 			.single();
 		mandant = false;
 		if (e) {
-			error = 'La croix n’est pas partie. Réessaie dans un instant ; ton commentaire est toujours là.';
+			error = sensCompte(e) ? SENS_COMPTE : 'La croix n’est pas partie. Réessaie dans un instant ; ton commentaire est toujours là.';
 			return;
 		}
 		estat = { ...estat, [el.clau]: { v: 'refar', id: data.id, comentari: comentari.trim() } };
