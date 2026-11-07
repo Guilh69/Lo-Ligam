@@ -24,6 +24,26 @@ export const GROUPES = [
 				chemin: '/ensag/papier-couleurs-clair',
 				titre: 'Couleurs des pièces, thème clair',
 				texte: 'Les mêmes partis sur fond clair, avec des pièces vives comme les en-têtes de la page des jeux.'
+			},
+			{
+				chemin: '/ensag/palette-actuel',
+				titre: 'Palette : le site d’aujourd’hui',
+				texte: 'La référence des essais de palette du 07-11, avec le panneau « Retoucher les couleurs » qui mesure la cohérence.'
+			},
+			{
+				chemin: '/ensag/palette-brique',
+				titre: 'Palette 1 : brique seule',
+				texte: 'Fond presque blanc, une seule couleur vive, la brique du logo ; le « juste » en vert pâle.'
+			},
+			{
+				chemin: '/ensag/palette-jaune',
+				titre: 'Palette 2 : brique et jaune pâle',
+				texte: 'Les deux couleurs du logo sur fond blanc, dans l’esprit de La Fourche.'
+			},
+			{
+				chemin: '/ensag/palette-accordee',
+				titre: 'Palette 3 : multicolore accordé',
+				texte: 'Les tuiles restent de couleur mais toutes à la même clarté et intensité, sur un fond très légèrement froid.'
 			}
 		]
 	},
