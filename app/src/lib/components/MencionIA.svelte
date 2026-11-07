@@ -1,30 +1,28 @@
 <script>
-	// La mention des illustrations faites par IA (Romain, 2026-11-06 : « en très
-	// discret, mais qu'on puisse le voir quand même »). C'est un lien vers
-	// /illustracions, qui dit pourquoi, et où sera la cagnotte pour payer un
-	// illustrateur ou une illustratrice. Deux formes, choisies par Romain sur
-	// l'essai /ensag/ia (« Signature et ligne », 06-11) :
-	//   - signatura : sur une illustration seule, en bas à droite, comme un
-	//     peintre signe sa toile. Avec `cadre`, elle se pose dans la marge basse
-	//     d'un cadre (le parent : position relative, marge basse d'environ 1,9rem) ;
-	//     `quina="dessenh"` dit « dessin » (Remira : le dessin peut être posé sur
-	//     une photo de Romain, que la mention ne doit pas désigner) ;
-	//   - rond : un petit rond « IA » dans le coin d'une illustration, pour une
-	//     page où elles se suivent (salle de jeux ; Romain, 06-11 : « un petit
-	//     rond avec IA, plutôt discret, en gardant le lien »). Avec `cadre`, il
-	//     se pose en bas à droite du cadre (le parent : position relative) ;
-	//   - linha : une seule ligne pour une page où les dessins sont nombreux
-	//     (avec `quina="dessenh"` : « les dessins », quand la page a aussi des photos).
+	// La mention des illustrations faites par IA : partout la même, un petit
+	// rond « IA », discret, qui mène à /illustracions (pourquoi l'IA, et la
+	// cagnotte pour payer un illustrateur ou une illustratrice).
+	// Romain, 06-11 : « en très discret, mais qu'on puisse le voir quand même »,
+	// « un petit rond avec IA, plutôt discret, en gardant le lien » ; 07-11 :
+	// « le logo IA devrait être cohérent partout » (la signature en italique et
+	// la ligne de texte, essayées le 06-11, sont retirées).
+	// `quina` choisit seulement ce que dit l'info-bulle et le lecteur d'écran :
+	//   - illustracion (une illustration), dessenh (un dessin : Remira, où le
+	//     dessin peut être posé sur une photo de Romain, que la mention ne doit
+	//     pas désigner) ;
+	//   - pagina, paginaDessenh (toutes les illustrations, ou tous les dessins,
+	//     d'une page où ils sont nombreux).
+	// Avec `cadre`, le rond se pose en bas à droite du cadre (le parent :
+	// position relative). Couleurs : --mencion-tinta, --mencion-tinta-fort,
+	// --mencion-fons (sinon celles du thème).
 	// Occitan passé à lo Congrès le 06-11 ; es, en, ca, ar par Aran (06-11).
-	// Le rouge souligne ce qui se clique (règle B) : --t-terra, plus vif en sombre.
 	import { tria, lang } from '$lib/stores/lang.svelte.js';
 
-	let { forma = 'signatura', quina = 'illustracion', cadre = false, class: classa = '' } = $props();
+	let { quina = 'illustracion', cadre = false, class: classa = '' } = $props();
 
 	const T = {
 		sigla: { oc: 'IA', fr: 'IA', es: 'IA', en: 'AI', ca: 'IA', ar: 'AI' },
-		signatura: { oc: 'facha per l’IA', fr: 'faite par IA', es: 'hecha por IA', en: 'made by AI', ca: 'feta per IA', ar: 'صنع بالذكاء الاصطناعي' },
-		nomComplet: {
+		illustracion: {
 			oc: 'Illustracion facha per l’IA',
 			fr: 'Illustration faite par IA',
 			es: 'Ilustración hecha por IA',
@@ -32,8 +30,8 @@
 			ca: 'Il·lustració feta per IA',
 			ar: 'رسم توضيحي صنع بالذكاء الاصطناعي'
 		},
-		dessenh: { oc: 'dessenh fach per l’IA', fr: 'dessin fait par IA', es: 'dibujo hecho por IA', en: 'drawing made by AI', ca: 'dibuix fet per IA', ar: 'رسم صنع بالذكاء الاصطناعي' },
-		linha: {
+		dessenh: { oc: 'Dessenh fach per l’IA', fr: 'Dessin fait par IA', es: 'Dibujo hecho por IA', en: 'Drawing made by AI', ca: 'Dibuix fet per IA', ar: 'رسم صنع بالذكاء الاصطناعي' },
+		pagina: {
 			oc: 'L’IA a fach las illustracions d’aquesta pagina',
 			fr: 'Les illustrations de cette page sont faites par IA',
 			es: 'Las ilustraciones de esta página están hechas por IA',
@@ -41,8 +39,7 @@
 			ca: 'Les il·lustracions d’aquesta pàgina són fetes per IA',
 			ar: 'رسم الذكاء الاصطناعي الرسومات الموجودة في هذه الصفحة'
 		},
-		// une page où des dessins côtoient des photos de Romain (Cultura)
-		linhaDessenh: {
+		paginaDessenh: {
 			oc: 'L’IA a fach los dessenhs d’aquesta pagina',
 			fr: 'Les dessins de cette page sont faits par IA',
 			es: 'Los dibujos de esta página están hechos por IA',
@@ -52,75 +49,24 @@
 		}
 	};
 
-	const PAGINA = '/illustracions';
-
 	// la langue réellement affichée (tria retombe sur l'occitan)
 	const lg = (o) => (o?.[lang.current] ? lang.current : o?.oc ? 'oc' : 'fr');
-	let sageta = $derived(lang.current === 'ar' ? '←' : '→');
-	let signa = $derived(quina === 'dessenh' ? T.dessenh : T.signatura);
-	let linha = $derived(quina === 'dessenh' ? T.linhaDessenh : T.linha);
+	let nom = $derived(T[quina] ?? T.illustracion);
 </script>
 
-{#if forma === 'linha'}
-	<p class="linha {classa}">
-		<a class="mencion" href={PAGINA} lang={lg(linha)}>{tria(linha)} <span aria-hidden="true">{sageta}</span></a>
-	</p>
-{:else if forma === 'rond'}
-	<a
-		class="mencion rond {classa}"
-		class:cadre
-		href={PAGINA}
-		lang={lg(T.nomComplet)}
-		aria-label={tria(T.nomComplet)}
-		title={tria(T.nomComplet)}><span aria-hidden="true">{tria(T.sigla)}</span></a
-	>
-{:else}
-	<a
-		class="mencion signatura {classa}"
-		class:cadre
-		href={PAGINA}
-		lang={lg(signa)}
-		aria-label={quina === 'dessenh' ? undefined : tria(T.nomComplet)}>{tria(signa)}</a
-	>
-{/if}
+<a
+	class="mencion {classa}"
+	class:cadre
+	href="/illustracions"
+	lang={lg(nom)}
+	aria-label={tria(nom)}
+	title={tria(nom)}><span aria-hidden="true">{tria(T.sigla)}</span></a
+>
 
 <style>
-	/* petite, lisible, soulignée du rouge (ce qui se clique) ; zone de clic
-	   d'au moins 24 px de haut sans changer l'aspect (Joan, 06-11) */
-	.mencion {
-		display: inline-block;
-		padding-block: 0.3em;
-		font-size: 0.8rem;
-		line-height: 1.4;
-		color: var(--mencion-tinta, var(--t-tinta-2));
-		text-decoration: underline;
-		text-decoration-color: var(--mencion-trait, var(--t-terra));
-		text-decoration-thickness: 1px;
-		text-underline-offset: 0.25em;
-	}
-	.mencion:hover,
-	.mencion:focus-visible {
-		color: var(--mencion-tinta-fort, var(--t-tinta));
-		text-decoration-thickness: 2px;
-	}
-
-	/* la signature : Cormorant italique, comme la main d'un peintre */
-	.signatura {
-		font-family: var(--font-quote);
-		font-style: italic;
-		font-size: 1rem;
-		line-height: 1.3;
-		text-underline-offset: 0.2em;
-	}
-	.cadre {
-		position: absolute;
-		inset-inline-end: 0.7rem;
-		bottom: 0;
-	}
-
 	/* le rond : petit (20 px), à peine visible, plus net au survol ; le doigt
 	   a 44 px (zone invisible autour), « IA » à 4,5:1 au moins (Joan, 06-11) */
-	.rond {
+	.mencion {
 		position: relative;
 		display: inline-grid;
 		place-items: center;
@@ -131,32 +77,32 @@
 		border: 1px solid currentColor;
 		border-radius: 50%;
 		background: var(--mencion-fons, transparent);
+		color: var(--mencion-tinta, var(--t-tinta-2));
 		font-family: var(--font-body);
 		font-size: 0.6rem;
 		font-weight: 700;
 		letter-spacing: 0.04em;
 		line-height: 1;
 		text-decoration: none;
+		vertical-align: middle;
 		opacity: 0.9;
-		transition: opacity 0.2s ease;
+		transition:
+			opacity 0.2s ease,
+			color 0.2s ease;
 	}
-	.rond::after {
+	.mencion::after {
 		content: '';
 		position: absolute;
 		inset: -12px;
 	}
-	.rond:hover,
-	.rond:focus-visible {
+	.mencion:hover,
+	.mencion:focus-visible {
 		opacity: 1;
+		color: var(--mencion-tinta-fort, var(--t-tinta));
 	}
-	.rond.cadre {
+	.cadre {
 		position: absolute;
 		inset-inline-end: 0.35rem;
 		bottom: 0.35rem;
-	}
-
-	.linha {
-		margin: 0.8rem 0 0;
-		text-align: end;
 	}
 </style>

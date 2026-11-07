@@ -1196,7 +1196,7 @@
 		transition-delay: 1.2s;
 	}
 
-	/* la signature, en bas à droite au-dessus de la barre ; Remira est toujours
+	/* le rond « IA », en bas à droite au-dessus de la barre ; Remira est toujours
 	   sombre, d'où des couleurs fixes plutôt que celles du thème */
 	.signa-ia {
 		position: absolute;
@@ -1204,7 +1204,6 @@
 		bottom: calc(var(--bas, 5rem) + 0.4rem);
 		--mencion-tinta: rgba(247, 243, 238, 0.66);
 		--mencion-tinta-fort: var(--crema);
-		--mencion-trait: #ef6a35;
 	}
 
 	.comandas {
