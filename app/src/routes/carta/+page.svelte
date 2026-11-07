@@ -485,6 +485,15 @@
 </div>
 
 <style>
+	/* Le fond clair de la carte (Romain, 2026-11-07, option A) : plus de halo rose derrière
+	   l'Occitània, ni de verre rosé sur les panneaux (rail, tiroir, guide, légende) : des panneaux
+	   blancs pleins, comme des pièces de papier. Le sombre ne change pas. */
+	:global(:root[data-tema='clar'] .carta-wrap),
+	:global(:root[data-tema='clar'] .carta-wrap :is(.comandas-carta, .leaflet-bar)) {
+		--t-veire: #ffffff;
+		--t-veire-fort: #ffffff;
+		--carta-braise: transparent;
+	}
 
 	/* Carte plein écran, harmonisée avec la charte de l'accueil (2026-10-07) :
 	   la carte occupe toute la fenêtre, le bandeau et les panneaux flottent

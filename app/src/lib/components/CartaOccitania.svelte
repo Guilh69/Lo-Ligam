@@ -3107,7 +3107,7 @@
 		width: 100%;
 		height: 100%;
 		background:
-			radial-gradient(ellipse 60% 55% at 45% 55%, color-mix(in srgb, var(--t-terra) 16%, transparent), transparent 75%),
+			radial-gradient(ellipse 60% 55% at 45% 55%, var(--carta-braise, color-mix(in srgb, var(--t-terra) 16%, transparent)), transparent 75%),
 			var(--t-fons);
 		font-family: var(--font-body);
 	}
