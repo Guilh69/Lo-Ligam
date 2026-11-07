@@ -18,10 +18,11 @@ export const LENGAS = {
 		eti: [1.15, 41.55],
 		// l'aur de la senhera, luènh del roge de l'Occitània unida
 		// (07-11 : les couleurs des langues sont celles des en-têtes des jeux,
-		// les mêmes dans les deux thèmes, comme l'occitan au rouge des boutons :
-		// catalan or, oïl ocre, arpitan bleu, basque et flamand olive, breton et
-		// francique sarcelle, alsacien et corse prune ; une teinte ne revient
-		// que pour deux langues éloignées)
+		// les mêmes dans les deux thèmes, comme l'occitan au rouge des boutons ;
+		// les langues d'oïl gardent leur bleu #006aa7, choisi par Romain le
+		// 10-10, en camaïeu de bleu : catalan et alsacien or, arpitan ocre,
+		// basque et flamand olive, breton sarcelle, francique et corse prune ;
+		// une teinte ne revient que pour deux langues éloignées)
 		color: { sorne: '#eeaf34', clar: '#eeaf34', dalt: '#e69f00' },
 		tèxt: { sorne: '#ffe2a0', clar: '#2a1a10', dalt: '#ffe0a0' },
 		// Los dos blòcs de Veny se legisson : l'oriental en blaus, l'occidental
@@ -69,7 +70,7 @@ export const LENGAS = {
 		eti: [5.65, 45.95],
 		// verd, coma sus las cartas de las lengas de França (Romain, 2026-10-09) ;
 		// lo basc aurà un verd pus escur (sorne #2f8a57, clar #1b5e20, dalt #004d40)
-		color: { sorne: '#2b6496', clar: '#2b6496', dalt: '#009e73' },
+		color: { sorne: '#c98a2b', clar: '#c98a2b', dalt: '#009e73' },
 		tèxt: { sorne: '#d6f5d8', clar: '#fbf1e1', dalt: '#c8f0e2' },
 		// violets e malvas : luènh de la paleta occitana cauda (roge auvernhat e
 		// jaune vivaroaupenc vesins) e dels blaus-verds del catalan
@@ -147,7 +148,7 @@ export const LENGAS = {
 		// (en Alsàcia : lo nom de luènh, causida de Romain)
 		eti: [7.55, 48.45],
 		// roges e irangets, las colors d'Alsàcia : luènh del blau lorren e del verd arpitan
-		color: { sorne: '#6b3a5b', clar: '#6b3a5b', dalt: '#d55e00' },
+		color: { sorne: '#eeaf34', clar: '#eeaf34', dalt: '#d55e00' },
 		tèxt: { sorne: '#ffe0da', clar: '#2a1a10', dalt: '#ffe8d8' },
 		dial: {
 			sorne: { niederalemannisch: '#ff6b5a', hochalemannisch: '#ff9a4d', hochstalemannisch: '#ffc44d', schwabisch: '#e0484f' },
@@ -182,7 +183,7 @@ export const LENGAS = {
 		// (en Mosèla, retorn de Romain : « le Platt devrait être sur la Moselle »)
 		eti: [6.75, 49.08],
 		// violets e ròses : luènh del blau lorren e del roge alsacian vesins
-		color: { sorne: '#1f5f63', clar: '#1f5f63', dalt: '#cc79a7' },
+		color: { sorne: '#6b3a5b', clar: '#6b3a5b', dalt: '#cc79a7' },
 		tèxt: { sorne: '#efe0ff', clar: '#fbf1e1', dalt: '#ffe0f0' },
 		dial: {
 			sorne: { letzebuergesch: '#e85d9f', moselfrankisch: '#c86bff', rheinfrankisch: '#9a7bff', sudfrankisch: '#ff8fd0', ripuarisch: '#b04fd0', limburgisch: '#d68fff' },
@@ -356,7 +357,7 @@ export const LENGAS = {
 		eti: [2.1, 48.3],
 		// lo blau de las cartas de las lengas de França, luènh del blau de la mar
 		// lo blau de Suècia (lo del drapèl, #006aa7 ; a l'ecran sus lo fons sorne, lo #005073 que Romain a mandat, 2026-10-10 : pas mai de blau violet)
-		color: { sorne: '#c98a2b', clar: '#c98a2b', dalt: '#0072b2' },
+		color: { sorne: '#006aa7', clar: '#006aa7', dalt: '#0072b2' },
 		tèxt: { sorne: '#d6ebf8', clar: '#fbf1e1', dalt: '#cfe4ff' },
 		// quatre familhas de blaus, una per grope : indigò al Nòrd (picard,
 		// normand, valon), blau petròli a l'Èst (lo franc-comtés tira cap al verd
