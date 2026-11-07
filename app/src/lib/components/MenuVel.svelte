@@ -94,7 +94,7 @@
 					<Crotz talha={24} traç="#ffffff" ponch="#ffd47f" moieu="#eeaf34" />
 					<span>{tria({ oc: 'Tornar a l’acuèlh', fr: 'Retour à l’accueil', es: 'Volver al inicio', en: 'Back to home', ca: 'Tornar a l’inici', ar: 'العودة إلى الصفحة الرئيسية' })}</span>
 				</a>
-				<button type="button" class="vel-tampar" onclick={tampar} aria-label={tria({ oc: 'Tampar lo menú', fr: 'Fermer le menu', es: 'Cerrar el menú', en: 'Close menu', ca: 'Tancar el menú', ar: 'إغلاق القائمة' })}>
+				<button type="button" class="pc pc-2 pc-icone vel-tampar" onclick={tampar} aria-label={tria({ oc: 'Tampar lo menú', fr: 'Fermer le menu', es: 'Cerrar el menú', en: 'Close menu', ca: 'Tancar el menú', ar: 'إغلاق القائمة' })}>
 					<Icona nom="fermer" size="1.6em" />
 				</button>
 			</div>
@@ -264,24 +264,9 @@
 		transform: rotate(90deg);
 	}
 
+	/* le bouton de fermeture : une pièce de papier (lib/styles/papier.css) */
 	.vel-tampar {
-		display: grid;
-		place-items: center;
-		width: 3rem;
-		height: 3rem;
-		border: 1px solid var(--vel-linha);
-		border-radius: 999px;
-		background: transparent;
-		color: var(--vel-tinta);
-		cursor: pointer;
-		transition:
-			background 0.4s,
-			transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-	}
-
-	.vel-tampar:hover {
-		background: rgba(245, 234, 216, 0.12);
-		transform: rotate(90deg);
+		flex: none;
 	}
 
 	.vel-grop {
@@ -415,12 +400,6 @@
 	}
 
 	.vel a:focus-visible,
-	.vel-tampar:focus-visible {
-		outline: 2px solid var(--vel-tinta);
-		outline-offset: 3px;
-		border-radius: 6px;
-	}
-
 	/* ---------- 01, 02, 03 empilés, qui se déroulent ---------- */
 	.vel-vertical {
 		position: relative;
