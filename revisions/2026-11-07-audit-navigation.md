@@ -13,7 +13,7 @@ Demande de Romain : « est-ce que les gens comprennent bien ce qu'ils peuvent fa
 
 ## Ce qui va
 
-- **Aucun débordement horizontal** sur les 34 pages. **Un seul titre h1** sur 33 pages. Pas de page sans issue : les 29 pages au bandeau commun ont les cinq onglets ; les 5 autres (carte, Anem !, jeux, Remira, leçon 0) ont leur propre en-tête d'immersion avec un retour.
+- **Aucun débordement horizontal** sur les 34 pages. **Un seul titre h1** sur 33 pages. Pas de page sans issue : les 29 pages au bandeau commun ont les cinq onglets ; les 5 autres (carte, Anem !, jeux, Remira, leçon 0) ont leur propre en-tête d'immersion, avec une sortie visible dans le premier écran (logo vers l'accueil sur la carte ; « ‹ S'apren » sur Jòcs et Remira ; « Acuèlh » et « S'apren » sur la leçon 0). **Anem !** n'a aucun lien visible dans son premier écran : c'est voulu, la sortie est un appui long de 1,5 s sur « Adultes » pour qu'un petit doigt ne quitte pas l'espace (vérifié dans le code ; je n'ai pas joué l'appui long).
 - **Les parcours sont courts** (touchers sur téléphone, entre parenthèses les clics sur ordinateur) :
 
 | But | Téléphone | Ordinateur |
