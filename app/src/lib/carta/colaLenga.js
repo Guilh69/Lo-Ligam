@@ -25,6 +25,13 @@ const mesclar = (a, b, t) => {
 	const h = (c, i) => parseInt(c.slice(1 + 2 * i, 3 + 2 * i), 16);
 	return '#' + [0, 1, 2].map((i) => Math.round(lerp(h(a, i), h(b, i), t)).toString(16).padStart(2, '0')).join('');
 };
+// Le nom posé sur un aplat plein (07-11, comme colaDonadas.js) : crème sur
+// une teinte sombre, brun sur une teinte claire, avec une ombre qui contraste
+const nomSus = (color) => {
+	const n = parseInt(color.slice(1), 16),
+		clar = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 130;
+	return clar ? ['#2a1a10', 'rgba(251, 241, 225, 0.75)'] : ['#fbf1e1', 'rgba(20, 10, 5, 0.75)'];
+};
 
 const DURADA = 1700; // ms : difusion d'un dialècte causit
 const APAR = 1.9; // s : las tacas de l'aparicion, quand la jaça s'aluca
@@ -62,17 +69,19 @@ export function crearColaLenga(
 		const m = d ? 'dalt' : c ? 'clar' : 'sorne';
 		const dial = {};
 		for (const [k, v] of Object.entries(lenga.dial[m])) dial[lenga.pref + k] = v;
-		// (le nom de la langue sur son aplat : ombre sombre sous un texte clair,
-		// claire sous un texte sombre)
-		const tèxt = lenga.tèxt[m],
-			n = parseInt(tèxt.slice(1), 16),
-			tèxtClar = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 150;
+		// (07-11 : comme l'occitan, aplats presque pleins aux teintes des jeux,
+		// les mêmes dans les deux thèmes ; le nom de la langue en crème sur une
+		// teinte sombre, en brun sur l'or, avec une ombre qui contraste)
+		const lum = (h) => {
+			const n = parseInt(h.slice(1), 16);
+			return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255);
+		};
+		const tèxt = d ? lenga.tèxt[m] : lum(lenga.color[m]) > 130 ? '#2a1a10' : '#fbf1e1',
+			tèxtClar = lum(tèxt) > 150;
 		return {
 			clar: c,
-			// (thème clair, 07-11 : dialectes en camaïeu posés francs, 0,6 au lieu
-			// de 0,36, au même ton que l'occitan unifié ; la langue seule à 0,86)
-			tencha: c ? 0.6 : 0.3,
-			uni: c ? 1.45 : 1.6,
+			tencha: 0.88,
+			uni: 1,
 			ombra: c ? 'rgba(247, 243, 238, 0.95)' : 'rgba(18, 9, 6, 0.9)',
 			nomOmbra: tèxtClar ? 'rgba(20, 10, 5, 0.8)' : 'rgba(247, 243, 238, 0.9)',
 			mòde: m,
@@ -853,7 +862,7 @@ export function crearColaLenga(
 				flo = mescla ? easeS(clamp(u / 0.6)) : 0,
 				aDialU = mescla ? 1 - easeS(clamp((u - 0.55) / 0.45)) : balet ? 1 : 1 - u,
 				vE = easeS(R.vuèg?.v ?? 0);
-			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas0 * aDialU;
+			const aT = T.tencha * lerp(1, 0.4, clamp((z - 8.5) / 3)) * aTenchas0 * aDialU; // (comme colaDonadas.js)
 			const an = this._anim,
 				p = an ? clamp((performance.now() - an.t0) / DURADA) : 1;
 			const tA = this._tA(),
@@ -1100,7 +1109,7 @@ export function crearColaLenga(
 					caixas.push(b);
 					const color = zn.props.apart ? T.color : (T.dial[zn.kod] ?? T.color);
 					cx.globalAlpha = a;
-					cx.fillStyle = T.clar ? mesclar(color, '#2a1a10', 0.7) : mesclar(color, '#fff8ec', 0.35);
+					[cx.fillStyle, cx.shadowColor] = nomSus(color);
 					cx.fillText(t, (b[0] + b[2]) / 2, (b[1] + b[3]) / 2);
 				}
 				cx.restore();

@@ -13,6 +13,7 @@
 	import { sonPapièr, sonsActius, gardarSons } from '$lib/carta/sons.js';
 	import { fly, slide } from 'svelte/transition';
 	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
+	import { COLORS as COLORS_DIAL } from '$lib/carta/colaDonadas.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
 	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
 	import { gamaLocutors } from '$lib/carta/locutors.js';
@@ -461,12 +462,9 @@
 		fons: '<path d="M12 4l9 5-9 5-9-5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>'
 	};
 
-	// Colors dels dialèctes (las de la carta, colaDonadas.js)
-	const DIAL = $derived(
-		clar
-			? { gas: '#2350d8', lan: '#c2185b', pro: '#e573ad', lem: '#e07b00', auv: '#a8321a', viv: '#c9a227' }
-			: { gas: '#5b7fff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' }
-	);
+	// Couleurs des dialectes : celles de la carte, lues dans colaDonadas.js
+	// (07-11 : les teintes des en-têtes de jeux, les mêmes dans les deux thèmes)
+	const DIAL = $derived(COLORS_DIAL[clar ? 'clar' : 'sorne']);
 	// Las autras lengas (lengas.js) : lors pastilhas e lors colors
 	// la color d'una pastilha d'una lenga (sa color de dialècte segon lo tèma)
 	const colorPastilha = (id, k) => LENGAS[id].dial[clar ? 'clar' : 'sorne'][k] ?? LENGAS[id].color[clar ? 'clar' : 'sorne'];
@@ -494,9 +492,10 @@
 		const d = DIAL;
 		const A = {
 			frontiera: '<path d="M4 26 C 16 10, 30 30, 48 8" fill="none" stroke="#e0612f" stroke-width="2.4" stroke-dasharray="0.1 5" stroke-linecap="round"/>',
-			dialectes: NOMS_DIAL.map(([k], i) => `<rect x="${i * 9}" y="0" width="9.5" height="36" fill="${d[k]}" opacity=".75"/>`).join(''),
+			// (07-11 : pleins, comme les aplats de la carte)
+			dialectes: NOMS_DIAL.map(([k], i) => `<rect x="${i * 9}" y="0" width="9.5" height="36" fill="${d[k]}"/>`).join(''),
 			// la lenga unida : una sola color, son nom
-			unificat: '<rect width="52" height="36" fill="#c4553f" opacity=".72"/><text x="26" y="21.5" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1.2" fill="#fff8ec">OCCITAN</text>',
+			unificat: '<rect width="52" height="36" fill="#b53d17"/><text x="26" y="21.5" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1.2" fill="#fff8ec">OCCITAN</text>',
 			creissent: '<defs><pattern id="ap-h" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.6" height="5" fill="#e0612f"/></pattern></defs><path d="M0 22 Q 26 4 52 20 V 36 H 0z" fill="url(#ap-h)" opacity=".8"/>',
 			// (les locuteurs, OPLO 2020 : les cinq classes de la légende de « Uèi »)
 			locutors: gamaLocutors(false).map((c, i) => `<rect x="${i * 10.4}" y="0" width="10.4" height="36" fill="${c}" opacity=".85"/>`).join(''),
@@ -1564,7 +1563,7 @@
 			</div>
 			<div class="ficha-dreita">
 				<button type="button" class="basc" role="switch" aria-checked={on} aria-label={tx.occitan} onclick={() => bascular('dialectes', !on)}></button>
-				{@render silhoeta('occitan', clar ? '#b0202c' : '#d9343f')}
+				{@render silhoeta('occitan', '#b53d17')}
 			</div>
 		</div>
 		<div class="desplegar-l">

@@ -17,12 +17,12 @@ export const LENGAS = {
 		// lo nom de la lenga unida, de luènh (entre Lhèida e Tarragona)
 		eti: [1.15, 41.55],
 		// l'aur de la senhera, luènh del roge de l'Occitània unida
-		// (thème clair, 07-11 : les couleurs des langues sont celles des
-		// en-têtes des jeux et de la charte, comme l'occitan au rouge des
-		// boutons : catalan or, oïl bleu, arpitan sarcelle, basque olive,
-		// francique prune, alsacien ocre, flamand brun, breton olive clair,
-		// corse bleu gris ; Romain : « des couleurs sur les mêmes tons »)
-		color: { sorne: '#f2b632', clar: '#eeaf34', dalt: '#e69f00' },
+		// (07-11 : les couleurs des langues sont celles des en-têtes des jeux,
+		// les mêmes dans les deux thèmes, comme l'occitan au rouge des boutons :
+		// catalan or, oïl ocre, arpitan bleu, basque et flamand olive, breton et
+		// francique sarcelle, alsacien et corse prune ; une teinte ne revient
+		// que pour deux langues éloignées)
+		color: { sorne: '#eeaf34', clar: '#eeaf34', dalt: '#e69f00' },
 		tèxt: { sorne: '#ffe2a0', clar: '#2a1a10', dalt: '#ffe0a0' },
 		// Los dos blòcs de Veny se legisson : l'oriental en blaus, l'occidental
 		// en verds (de tons freds, luènh de la paleta occitana, cauda)
@@ -69,7 +69,7 @@ export const LENGAS = {
 		eti: [5.65, 45.95],
 		// verd, coma sus las cartas de las lengas de França (Romain, 2026-10-09) ;
 		// lo basc aurà un verd pus escur (sorne #2f8a57, clar #1b5e20, dalt #004d40)
-		color: { sorne: '#6dbf73', clar: '#1f5f63', dalt: '#009e73' },
+		color: { sorne: '#2b6496', clar: '#2b6496', dalt: '#009e73' },
 		tèxt: { sorne: '#d6f5d8', clar: '#fbf1e1', dalt: '#c8f0e2' },
 		// violets e malvas : luènh de la paleta occitana cauda (roge auvernhat e
 		// jaune vivaroaupenc vesins) e dels blaus-verds del catalan
@@ -108,7 +108,7 @@ export const LENGAS = {
 		// (entre Donostia e Iruña)
 		eti: [-1.95, 43.08],
 		// lo verd pus escur de las cartas de las lengas de França (Romain, 2026-10-09)
-		color: { sorne: '#2f8a57', clar: '#4f6a2f', dalt: '#004d40' },
+		color: { sorne: '#4f6a2f', clar: '#4f6a2f', dalt: '#004d40' },
 		tèxt: { sorne: '#cdeedc', clar: '#fbf1e1', dalt: '#c8f0e2' },
 		// de verds, de l'oliva a l'aiga-marina : luènh del violet gascon vesin
 		dial: {
@@ -147,7 +147,7 @@ export const LENGAS = {
 		// (en Alsàcia : lo nom de luènh, causida de Romain)
 		eti: [7.55, 48.45],
 		// roges e irangets, las colors d'Alsàcia : luènh del blau lorren e del verd arpitan
-		color: { sorne: '#ef6f5f', clar: '#c98a2b', dalt: '#d55e00' },
+		color: { sorne: '#6b3a5b', clar: '#6b3a5b', dalt: '#d55e00' },
 		tèxt: { sorne: '#ffe0da', clar: '#2a1a10', dalt: '#ffe8d8' },
 		dial: {
 			sorne: { niederalemannisch: '#ff6b5a', hochalemannisch: '#ff9a4d', hochstalemannisch: '#ffc44d', schwabisch: '#e0484f' },
@@ -182,7 +182,7 @@ export const LENGAS = {
 		// (en Mosèla, retorn de Romain : « le Platt devrait être sur la Moselle »)
 		eti: [6.75, 49.08],
 		// violets e ròses : luènh del blau lorren e del roge alsacian vesins
-		color: { sorne: '#b77bff', clar: '#6b3a5b', dalt: '#cc79a7' },
+		color: { sorne: '#1f5f63', clar: '#1f5f63', dalt: '#cc79a7' },
 		tèxt: { sorne: '#efe0ff', clar: '#fbf1e1', dalt: '#ffe0f0' },
 		dial: {
 			sorne: { letzebuergesch: '#e85d9f', moselfrankisch: '#c86bff', rheinfrankisch: '#9a7bff', sudfrankisch: '#ff8fd0', ripuarisch: '#b04fd0', limburgisch: '#d68fff' },
@@ -219,7 +219,7 @@ export const LENGAS = {
 		eti: [4.9, 51.75],
 		// irangets (los Païses Basses) per lo neerlandés, bruns pel bas saxon,
 		// turquesa pel frison : luènh del blau picard vesin
-		color: { sorne: '#ff9a3c', clar: '#8a4f12', dalt: '#e69f00' },
+		color: { sorne: '#4f6a2f', clar: '#4f6a2f', dalt: '#e69f00' },
 		tèxt: { sorne: '#ffe6cc', clar: '#fbf1e1', dalt: '#fff0d0' },
 		dial: {
 			sorne: {
@@ -280,7 +280,7 @@ export const LENGAS = {
 		nom: { oc: 'còrs', fr: 'corse', endo: 'corsu' },
 		eti: [9.05, 42.15],
 		// ocres e tèrras cuechas (lo granit de Corsega), un blau pel ligur
-		color: { sorne: '#f08a5c', clar: '#6c92b1', dalt: '#e69f00' },
+		color: { sorne: '#6b3a5b', clar: '#6b3a5b', dalt: '#e69f00' },
 		tèxt: { sorne: '#ffe3d6', clar: '#2a1a10', dalt: '#fff0d0' },
 		dial: {
 			sorne: { cismuntincu: '#ff8a5c', transizione: '#ffbf6b', oltramuntincu: '#e0503a', gadduresu: '#d99a5a', sassaresu: '#b8783f', bunifazzinu: '#7fb0ff', capraiese: '#ff8a5c' },
@@ -317,7 +317,7 @@ export const LENGAS = {
 		// (al mitan de Bretanha)
 		eti: [-3.25, 48.2],
 		// turquesa e verds : luènh del blau ardesa del galò vesin
-		color: { sorne: '#4fd1b0', clar: '#879764', dalt: '#009e73' },
+		color: { sorne: '#1f5f63', clar: '#1f5f63', dalt: '#009e73' },
 		tèxt: { sorne: '#d3f7ec', clar: '#2a1a10', dalt: '#c8f0e2' },
 		dial: {
 			sorne: { leoneg: '#59d9a9', tregerieg: '#2fc4c4', kerneveg: '#7fd67a', gwenedeg: '#c8e070', gwenrann: '#c8e070' },
@@ -356,7 +356,7 @@ export const LENGAS = {
 		eti: [2.1, 48.3],
 		// lo blau de las cartas de las lengas de França, luènh del blau de la mar
 		// lo blau de Suècia (lo del drapèl, #006aa7 ; a l'ecran sus lo fons sorne, lo #005073 que Romain a mandat, 2026-10-10 : pas mai de blau violet)
-		color: { sorne: '#006aa7', clar: '#2b6496', dalt: '#0072b2' },
+		color: { sorne: '#c98a2b', clar: '#c98a2b', dalt: '#0072b2' },
 		tèxt: { sorne: '#d6ebf8', clar: '#fbf1e1', dalt: '#cfe4ff' },
 		// quatre familhas de blaus, una per grope : indigò al Nòrd (picard,
 		// normand, valon), blau petròli a l'Èst (lo franc-comtés tira cap al verd
@@ -412,21 +412,24 @@ export const LENGAS = {
 	}
 };
 
-// Thème clair (Romain, 07-11 : « trop de couleurs différentes qui se
-// baladent ») : les dialectes d'une langue sont un camaïeu de sa couleur,
-// comme les sous-pages de S'apren (vert pour Òbras, jaune pour Médias). Tour
-// à tour plus clair et plus sombre, pour que deux dialectes voisins se
-// distinguent. Le sombre et le daltonisme gardent leurs palettes.
-const CAMAIEU = [[0, null], [0.32, '#fbf1e1'], [0.3, '#2a1a10'], [0.55, '#fbf1e1'], [0.5, '#2a1a10'], [0.16, '#fbf1e1'], [0.16, '#2a1a10']];
+// Les dialectes d'une langue sont un camaïeu de sa couleur (Romain, 07-11 :
+// « trop de couleurs différentes qui se baladent »), comme les sous-pages de
+// S'apren (vert pour Òbras, jaune pour Médias) : tour à tour plus sombre et
+// plus clair, sans aller jusqu'au pastel, pour que deux dialectes voisins se
+// distinguent. Mêmes couleurs dans les deux thèmes ; le daltonisme garde sa
+// palette.
+const CAMAIEU = [[0, null], [0.25, '#2a1a10'], [0.2, '#fbf1e1'], [0.42, '#2a1a10'], [0.35, '#fbf1e1'], [0.12, '#2a1a10'], [0.1, '#fbf1e1']];
 const mesclar = (a, b, t) => {
 	const h = (c, i) => parseInt(c.slice(1 + 2 * i, 3 + 2 * i), 16);
 	return '#' + [0, 1, 2].map((i) => Math.round(h(a, i) + (h(b, i) - h(a, i)) * t).toString(16).padStart(2, '0')).join('');
 };
 for (const l of Object.values(LENGAS)) {
-	let i = 0;
-	for (const k of Object.keys(l.dial.clar)) {
-		const [t, b] = CAMAIEU[i++ % CAMAIEU.length];
-		l.dial.clar[k] = b ? mesclar(l.color.clar, b, t) : l.color.clar;
+	for (const m of ['sorne', 'clar']) {
+		let i = 0;
+		for (const k of Object.keys(l.dial[m])) {
+			const [t, b] = CAMAIEU[i++ % CAMAIEU.length];
+			l.dial[m][k] = b ? mesclar(l.color[m], b, t) : l.color[m];
+		}
 	}
 }
 
