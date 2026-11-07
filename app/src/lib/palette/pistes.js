@@ -61,6 +61,22 @@ export const PISTES = {
 };
 export const ORDRE_PISTES = ['actuel', 'brique', 'jaune', 'accordee'];
 
+// La base mêlée (Romain, 07-11, devant la planche Coolors / ses couleurs : « mélangé, j'aime bien ») :
+// le rouge, l'ocre, le brun, le vieux rose et le vert de Coolors (#5d4733, #729f1f, #9c2626,
+// #c7811b, #966258) avec son turquoise, son bleu, son sapin et son or mesurés sur ses visuels.
+// Fond blanc franc (le crème est banni), textes en blanc franc sur les teintes sombres. Hors
+// ORDRE_PISTES : elle n'a pas de page de comparaison, seulement les modèles de pages.
+// Le brun de texte (#3b2e22) est le brun de Coolors approfondi, pour tenir le texte courant ;
+// le rouge d'action est celui de Coolors, plus froid que la brique du logo (à regarder).
+const MELANGE = ['#9c2626', '#035e68', '#1e4d36', '#38668e', '#c7811b', '#966258'];
+PISTES.melange = {
+	nom: 'Base mêlée',
+	titre: 'La palette Coolors mêlée à tes couleurs',
+	mot: 'Fond blanc franc, rouge de Coolors pour agir, brun pour les pièces discrètes, or pour le choisi, vert de Coolors pour le juste ; turquoise, bleu, sapin, ocre et vieux rose en tuiles. Première lecture du thème sombre : à regarder dans un second temps.',
+	clair: { fond: '#ffffff', surface: '#f4f4f4', texte: '#3b2e22', surClair: '#2b2118', surSombre: '#ffffff', action: '#9c2626', choisi: '#ecb13f', juste: '#729f1f', carton: '#5d4733', valeur: '#9c2626', tuiles: MELANGE },
+	sombre: { fond: '#1c1612', surface: '#271f19', texte: '#ffffff', surClair: '#2b2118', surSombre: '#ffffff', action: '#9c2626', choisi: '#ecb13f', juste: '#729f1f', carton: '#5d4733', valeur: '#ecb13f', tuiles: MELANGE }
+};
+
 /** Les variables CSS du site (jetons de app.css, palette.css, papier.css) posées par une palette */
 export function variablesCss(r, mode) {
 	const txt = (f) => meilleurTexte(f, r.surSombre, r.surClair);

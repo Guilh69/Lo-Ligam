@@ -61,6 +61,14 @@ describe('pistes de palette du 07-11', () => {
 			});
 		}
 	}
+	for (const mode of ['clair', 'sombre']) {
+		it(`la base mêlée (${mode}) : tous les textes passent 4,5, avec des réserves sur les teintes vives et l'accord des tuiles`, () => {
+			const a = analyser(PISTES.melange[mode]);
+			expect(a.contrastes.filter((c) => !c.ok)).toEqual([]);
+			expect(a.verdict).toBe('Acceptable, avec réserves');
+			expect(a.criantes.length).toBe(3);
+		});
+	}
 	it('le site actuel (thème clair) sort « À revoir » : trop de teintes vives, teintes chaudes voisines, action et juste confondus', () => {
 		const a = analyser(PISTES.actuel.clair);
 		expect(a.verdict).toBe('À revoir');

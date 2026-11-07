@@ -31,6 +31,11 @@ export const GROUPES = [
 				texte: 'La référence des essais de palette du 07-11, avec le panneau « Retoucher les couleurs » qui mesure la cohérence.'
 			},
 			{
+				chemin: '/ensag/palette-modeles',
+				titre: 'Palette : modèles de pages, base mêlée',
+				texte: 'Accueil, S’apren, jeux, leçon et menu en modèles simplifiés (ordinateur et téléphone, clair et sombre), avec le panneau pour retoucher les couleurs.'
+			},
+			{
 				chemin: '/ensag/palette-brique',
 				titre: 'Palette 1 : brique seule',
 				texte: 'Fond presque blanc, une seule couleur vive, la brique du logo ; le « juste » en vert pâle.'
