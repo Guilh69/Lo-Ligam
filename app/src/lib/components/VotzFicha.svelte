@@ -137,8 +137,10 @@
 		border-radius: 50%;
 		display: grid;
 		place-items: center;
+		/* une pastille de papier, comme le bouton de lecture de l'atlas */
 		color: var(--t-accion-tinta);
-		background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--t-accion) 72%, #fff), var(--t-accion) 70%);
+		background: var(--t-accion);
+		box-shadow: 0 2px 3px var(--pc-ombre);
 	}
 	.boton svg {
 		width: 15px;

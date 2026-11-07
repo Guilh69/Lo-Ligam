@@ -172,7 +172,7 @@
 		<span class="bb-dirècte">{#if jòga}{@render onda()}{/if} {error ? '✕' : jòga ? tx.dirècte : '…'}</span>
 		<strong class="bb-nom" lang="oc">{radio.nom}</strong>
 		<a class="bb-site" href={radio.site} target="_blank" rel="noopener noreferrer">{tx.site} <Icona nom="extern" size="0.95em" /></a>
-		<button type="button" class="bb-arrestar" onclick={arrestar}><Icona nom="pause" size="1em" /> {tx.arrestar}</button>
+		<button type="button" class="pc pc-chip bb-arrestar" onclick={arrestar}><Icona nom="pause" size="1em" /> {tx.arrestar}</button>
 	</div>
 {/if}
 </div>
@@ -411,18 +411,9 @@
 		color: inherit;
 		font-weight: 700;
 	}
+	/* arrêter : un jeton de papier rouge (lib/styles/papier.css) */
 	.bb-arrestar {
-		display: inline-flex;
-		align-items: center;
 		gap: 0.4rem;
-		padding: 0.5rem 1rem;
-		border: 0;
-		border-radius: 999px;
-		background: #b53d17;
-		color: #fbf1e1;
-		font: inherit;
-		font-weight: 700;
-		cursor: pointer;
 	}
 
 	/* téléphone : les noms ne tiennent pas sur la carte, on les liste dessous */

@@ -284,7 +284,7 @@
 <main id="contengut" class="zo" class:calme>
 	<header class="cap">
 		{#if ecran !== 'acuelh'}
-			<button class="redond" type="button" onclick={() => anar('acuelh')} aria-label={tria(T.tornar)}>
+			<button class="pc pc-2 redond" type="button" onclick={() => anar('acuelh')} aria-label={tria(T.tornar)}>
 				<Icona nom="revenir" size="1.7em" trait={2.4} />
 			</button>
 		{:else}
@@ -292,7 +292,7 @@
 		{/if}
 		<h1 class="titol">Anem<span class="bang"> !</span></h1>
 		<button
-			class="redond"
+			class="pc pc-2 redond"
 			type="button"
 			onclick={() => (sonActiu = !sonActiu)}
 			aria-pressed={sonActiu}
@@ -333,7 +333,7 @@
 		{#if ostalFach}
 			<p class="osca">{tria(T.osca)}</p>
 			<div class="accions">
-				<button class="gros" type="button" onclick={() => anar('ostal')}>{tria(T.tornarJogar)}</button>
+				<button class="pc pc-grand gros" type="button" onclick={() => anar('ostal')}>{tria(T.tornarJogar)}</button>
 			</div>
 		{:else}
 			<p class="bulla" class:vis={!!dicha} aria-hidden="true">
@@ -404,7 +404,7 @@
 		</div>
 		<div class="accions">
 			<!-- un seul bouton : la flèche du haut ramène à l'accueil (Joan : « Tornar » et « Tornar jogar » côte à côte étaient redondants) -->
-			<button class="gros" type="button" onclick={() => anar(jocPrecedent)}>{tria(T.tornarJogar)}</button>
+			<button class="pc pc-grand gros" type="button" onclick={() => anar(jocPrecedent)}>{tria(T.tornarJogar)}</button>
 		</div>
 	{/if}
 	</div>
@@ -432,8 +432,8 @@
 	<p>{tria(T.adultesTexte)}</p>
 	<p>{tria(T.adultesVotz)}</p>
 	<div class="accions">
-		<a class="gros segond" href="/">{tria(T.tornarSite)}</a>
-		<form method="dialog"><button class="gros" type="submit">{tria(T.tampar)}</button></form>
+		<a class="pc pc-2 pc-grand gros" href="/">{tria(T.tornarSite)}</a>
+		<form method="dialog"><button class="pc pc-grand gros" type="submit">{tria(T.tampar)}</button></form>
 	</div>
 </dialog>
 
@@ -497,20 +497,15 @@
 	.bang {
 		color: var(--t-aur);
 	}
+	/* boutons ronds en papier (carton), assez grands pour les petits doigts */
 	.redond {
+		--r: 50%;
 		width: 64px;
 		height: 64px;
-		border-radius: 50%;
-		border: 2px solid var(--t-linha);
-		background: #fff;
-		color: var(--t-tinta);
-		display: grid;
-		place-items: center;
 		padding: 0;
-		cursor: pointer;
 	}
 	.redond[aria-pressed='false'] {
-		color: var(--t-aur);
+		opacity: 0.75;
 	}
 	.vuege {
 		border-color: transparent;
@@ -768,25 +763,11 @@
 		gap: 12px;
 		margin-top: 14px;
 	}
+	/* les gros boutons en papier (lib/styles/papier.css) : ici, plus hauts */
 	.gros {
-		display: inline-flex;
-		align-items: center;
 		min-height: 64px;
 		padding: 0 28px;
-		border-radius: 999px;
-		border: 0;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		font: inherit;
-		font-weight: 700;
 		font-size: 1.2rem;
-		text-decoration: none;
-		cursor: pointer;
-	}
-	.gros.segond {
-		background: #fff;
-		color: var(--t-tinta);
-		border: 2px solid var(--t-linha);
 	}
 	.pe {
 		margin-top: auto;

@@ -405,26 +405,26 @@
 
 <section class="lector" class:plen={plenEcran} bind:this={lectorEl} aria-label={titol}>
 	<div class="barra" role="toolbar" aria-label={titol}>
-		<button type="button" class="bot" onclick={precedenta} disabled={pagina <= 0} aria-label={tria(t.prec)}>
+		<button type="button" class="pc pc-2 pc-icone bot" onclick={precedenta} disabled={pagina <= 0} aria-label={tria(t.prec)}>
 			<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
 		</button>
 		<span class="compte">{tria(t.pag)} {pagina + 1} {tria(t.sus)} {total}</span>
-		<button type="button" class="bot" onclick={suivante} disabled={pagina >= total - 1} aria-label={tria(t.seg)}>
+		<button type="button" class="pc pc-2 pc-icone bot" onclick={suivante} disabled={pagina >= total - 1} aria-label={tria(t.seg)}>
 			<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
 		</button>
 		<form class="anar" onsubmit={validarAnar}>
 			<label class="sr" for="livre-anar">{tria(t.anar)}</label>
 			<input id="livre-anar" type="number" inputmode="numeric" min="1" max={total} bind:value={aller} placeholder="N°" />
-			<button type="submit" class="bot mot">{tria(t.ok)}</button>
+			<button type="submit" class="pc pc-chip bot mot">{tria(t.ok)}</button>
 		</form>
 		<span class="espaci"></span>
-		<button type="button" class="bot mot" class:actiu={cerca} onclick={() => (cerca ? tancarCerca() : ouvrirCerca())} aria-keyshortcuts="Control+F">{tria(t.cerca)}</button>
-		<button type="button" class="bot mot" class:actiu={son} onclick={basculerSon}>{son ? tria(t.sonA) : tria(t.sonN)}</button>
-		<button type="button" class="bot mot" class:actiu={mode === 'tèxte'} onclick={basculerMode}>{mode === 'libre' ? tria(t.legir) : tria(t.libre)}</button>
+		<button type="button" class="pc pc-2 pc-chip bot mot" class:est-choisi={cerca} onclick={() => (cerca ? tancarCerca() : ouvrirCerca())} aria-keyshortcuts="Control+F">{tria(t.cerca)}</button>
+		<button type="button" class="pc pc-2 pc-chip bot mot" class:est-choisi={son} onclick={basculerSon}>{son ? tria(t.sonA) : tria(t.sonN)}</button>
+		<button type="button" class="pc pc-2 pc-chip bot mot" class:est-choisi={mode === 'tèxte'} onclick={basculerMode}>{mode === 'libre' ? tria(t.legir) : tria(t.libre)}</button>
 	</div>
 
 	{#if plenEcran}
-		<button type="button" class="fermar" onclick={basculerPlenEcran} aria-label={tria(t.sortir)} title="{tria(t.sortir)} (Échap)">
+		<button type="button" class="pc pc-2 pc-icone fermar" onclick={basculerPlenEcran} aria-label={tria(t.sortir)} title="{tria(t.sortir)} (Échap)">
 			<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" /></svg>
 		</button>
 	{/if}
@@ -434,7 +434,7 @@
 			<div class="cerca-cap">
 				<label class="sr" for="livre-cerca">{tria(t.cercaDins)}</label>
 				<input id="livre-cerca" type="search" bind:this={champCerca} bind:value={requeta} placeholder={tria(t.cercaDins)} autocomplete="off" spellcheck="false" />
-				<button type="button" class="bot mot" onclick={tancarCerca}>{tria(t.barrar)}</button>
+				<button type="button" class="pc pc-2 pc-chip bot mot" onclick={tancarCerca}>{tria(t.barrar)}</button>
 			</div>
 			{#if requeta.trim().length >= 2}
 				<p class="cerca-etat" aria-live="polite">
@@ -469,7 +469,7 @@
 		{/if}
 		<div class="livre" bind:this={hoteEl}></div>
 		{#if plenPossible}
-			<button type="button" class="plen-bot" onclick={basculerPlenEcran} aria-label={plenEcran ? tria(t.sortir) : tria(t.plen)} title={plenEcran ? tria(t.sortir) : tria(t.plen)}>
+			<button type="button" class="pc pc-2 pc-icone plen-bot" onclick={basculerPlenEcran} aria-label={plenEcran ? tria(t.sortir) : tria(t.plen)} title={plenEcran ? tria(t.sortir) : tria(t.plen)}>
 				{#if plenEcran}
 					<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
 				{:else}
@@ -478,10 +478,10 @@
 			</button>
 		{/if}
 		{#if plenEcran}
-			<button type="button" class="fleche gauche" onclick={precedenta} disabled={pagina <= 0} aria-label={tria(t.prec)}>
+			<button type="button" class="pc pc-2 pc-icone fleche gauche" onclick={precedenta} disabled={pagina <= 0} aria-label={tria(t.prec)}>
 				<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
 			</button>
-			<button type="button" class="fleche droite" onclick={suivante} disabled={pagina >= total - 1} aria-label={tria(t.seg)}>
+			<button type="button" class="pc pc-2 pc-icone fleche droite" onclick={suivante} disabled={pagina >= total - 1} aria-label={tria(t.seg)}>
 				<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
 			</button>
 			<span class="compte-plen" aria-hidden="true">{pagina + 1} / {total}</span>
@@ -570,40 +570,20 @@
 	.espaci {
 		flex: 1 1 0;
 	}
+	/* les boutons sont des pièces de papier (lib/styles/papier.css) : ici,
+	   seulement leur place ; pas de transform pour centrer (le papier s'en
+	   sert au survol) */
 	.plen-bot,
 	.fleche {
 		position: absolute;
 		z-index: 10;
-		display: grid;
-		place-items: center;
-		width: 2.75rem;
-		height: 2.75rem;
-		color: #fff;
-		background: color-mix(in srgb, #140e0a 72%, transparent);
-		border: 1px solid color-mix(in srgb, #fff 35%, transparent);
-		border-radius: 999px;
-		cursor: pointer;
 	}
 	.plen-bot {
 		right: 0.8rem;
 		bottom: 0.8rem;
 	}
-	.plen-bot:hover,
-	.fleche:hover:not(:disabled) {
-		background: color-mix(in srgb, var(--t-aur) 55%, #140e0a);
-	}
-	.plen-bot:focus-visible,
-	.fleche:focus-visible {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 2px;
-	}
 	.fleche {
-		top: 50%;
-		transform: translateY(-50%);
-	}
-	.fleche:disabled {
-		opacity: 0.25;
-		cursor: default;
+		top: calc(50% - 22px);
 	}
 	.fleche.gauche {
 		left: 0.8rem;
@@ -629,49 +609,10 @@
 		top: 0.8rem;
 		right: 0.8rem;
 		z-index: 20;
-		display: grid;
-		place-items: center;
-		width: 3rem;
-		height: 3rem;
-		color: var(--t-tinta);
-		background: color-mix(in srgb, var(--t-fons) 85%, transparent);
-		border: 2px solid var(--t-aur);
-		border-radius: 999px;
-		cursor: pointer;
 	}
-	.fermar:hover {
-		background: color-mix(in srgb, var(--t-aur) 35%, var(--t-fons));
+	.bot.mot {
+		min-height: 44px;
 	}
-	.fermar:focus-visible {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 3px;
-	}
-	.bot {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		min-width: 2.75rem;
-		min-height: 2.75rem;
-		padding: 0 0.9rem;
-		font: inherit;
-		color: var(--t-tinta);
-		background: color-mix(in srgb, var(--t-tinta) 8%, transparent);
-		border: 1px solid color-mix(in srgb, var(--t-tinta) 28%, transparent);
-		border-radius: 999px;
-		cursor: pointer;
-	}
-	.bot:hover:not(:disabled) {
-		background: color-mix(in srgb, var(--t-aur) 22%, transparent);
-	}
-	.bot:disabled {
-		opacity: 0.4;
-		cursor: default;
-	}
-	.bot.actiu {
-		background: color-mix(in srgb, var(--t-aur) 30%, transparent);
-		border-color: var(--t-aur);
-	}
-	.bot:focus-visible,
 	input:focus-visible,
 	.cerca-lista button:focus-visible {
 		outline: 3px solid var(--t-aur);

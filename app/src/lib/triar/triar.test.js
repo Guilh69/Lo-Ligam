@@ -1,6 +1,6 @@
 // Triar (Romain, 06-11) : le format des choix et les lots.
 import { describe, it, expect } from 'vitest';
-import { estatDe, aTriar, comptes, paquetsGardats, tèxteGardats, tèxteRefar, SENS_COMENTARI } from './triar.js';
+import { estatDe, aTriar, comptes, paquetsGardats, tèxteGardats, tèxteRefar, tèxtePausats, legirPausats, SENS_COMENTARI } from './triar.js';
 import { LOTS } from './lots.js';
 import { DESSENHS } from '../plueja/dessenhs.js';
 
@@ -77,6 +77,44 @@ describe('triar : les décisions', () => {
 			expect(el.titol.length, el.clau).toBeGreaterThan(10);
 			expect(el.decision.tèxte.length, el.clau).toBeGreaterThan(10);
 			expect(el.titol + el.decision.tèxte + el.decision.avís, el.clau).not.toMatch(/[—–]/);
+		}
+	});
+});
+
+describe('triar : poser les mots (07-11)', () => {
+	it('une photo envoyée se relit telle quelle et compte comme un cœur', () => {
+		const mots = [
+			['la mar', 'la mer', 0.22, 0.75],
+			['l’illa', '', 0.6123, 0.3, 'basic'],
+			['lo | cap\nfaus', 'le cap', 0.1, 0.9]
+		];
+		const t = tèxtePausats(mots);
+		expect(t.length).toBeGreaterThanOrEqual(2); // la base refuse moins de deux signes
+		expect(t.split('\n')[0]).toBe('◎ 3');
+		expect(legirPausats(t)).toEqual([
+			['la mar', 'la mer', 0.22, 0.75],
+			['l’illa', '', 0.612, 0.3, 'basic'],
+			['lo cap faus', 'le cap', 0.1, 0.9]
+		]);
+		expect(tèxtePausats([])).toBe('◎ 0');
+		const e = estatDe([
+			{ id: 1, extrait: 'pausar', cibla: 'riu', tèxte: t, estat: 'dubèrta' },
+			{ id: 2, extrait: 'pausar', cibla: 'lac', tèxte: tèxtePausats([]), estat: 'tractada' }
+		]);
+		expect(e.riu).toMatchObject({ v: 'gardar', id: 1, integrat: false });
+		expect(e.riu.pausats).toHaveLength(3);
+		expect(e.lac).toMatchObject({ v: 'gardar', integrat: true, pausats: [] });
+	});
+
+	it('le lot a chaque photo, avec ses mots et leur français', () => {
+		const lot = LOTS.find((l) => l.id === 'pausar');
+		const els = lot.elements();
+		expect(els.length).toBe(new Set(els.map((el) => el.clau)).size);
+		for (const el of els) {
+			expect(el.mots.length, el.clau).toBe(el.pausar.mots.length);
+			for (const [oc, fr] of el.mots) expect(fr, `${el.clau} : ${oc}`).toBeTruthy();
+			// un cœur sans changement ne doit pas partir comme une photo modifiée
+			expect(legirPausats(tèxtePausats(el.mots)), el.clau).toEqual(el.mots);
 		}
 	});
 });

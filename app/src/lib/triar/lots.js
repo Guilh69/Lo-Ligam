@@ -5,7 +5,7 @@
 // et des clés stables (elles servent à retrouver l'élément dans le code).
 import { SCENAS, GROPS } from '../plueja/scenas.js';
 import { cheminsDe, TINTAS } from '../plueja/dessenhs.js';
-import { PAISATGES, TEMAS } from '../paisatges/paisatges.js';
+import { PAISATGES, TEMAS, MOTS } from '../paisatges/paisatges.js';
 import { DECISIONS } from './decisions.js';
 
 // Un mot corrigé après le tri garde sa clé d’origine : le choix de Romain le suit.
@@ -76,6 +76,35 @@ export const LOTS = [
 				sotstitol: TEMAS.find((t) => t.id === p.tema)?.nom.fr ?? '',
 				context: [],
 				relèu: p
+			}))
+	},
+	{
+		// Romain pose lui-même les mots sur ses photos (07-11 : « une possibilité
+		// d'écrire les mots et ajouter les ronds ») : le cœur envoie la photo
+		// telle qu'il la laisse (lib/paisatges/CartaPausar.svelte) ; Claude lit
+		// les changements (scripts/triar.mjs --lot pausar), vérifie chaque mot
+		// avec lo Congrès, puis l'écrit dans lib/paisatges/paisatges.js
+		id: 'pausar',
+		nom: { oc: 'Pausar los mots', fr: 'Poser les mots' },
+		consigna:
+			'Touche la photo pour poser un rond, puis cherche son mot en français ou en occitan : tu choisis parmi les mots de lo Congrès (lo Basic) ou ceux déjà sur le site. Touche deux fois un mot pour le changer, fais-le glisser pour le déplacer. « Plein écran » agrandit la photo. Le cœur envoie la photo telle que tu la laisses. La croix : si c’est la photo elle-même qui ne va pas.',
+		mots: {
+			gardar: { oc: 'Gardar', fr: 'c’est bon', compte: 'photos faites', titol: 'Envoyer la photo telle quelle', anonci: 'Envoyé' },
+			refar: { oc: 'Refar', fr: 'à revoir', compte: 'à revoir', titol: 'La photo ne va pas', anonci: 'À revoir' },
+			comentari: 'Qu’est-ce qui ne va pas sur cette photo ? Dicte ou écris ; tu peux laisser vide.'
+		},
+		fin: 'les mots que tu as posés passent par lo Congrès, puis en ligne.',
+		elements: () =>
+			PAISATGES.map((p) => ({
+				clau: p.clau,
+				titol: p.mots
+					.slice(0, 3)
+					.map((m) => m[0])
+					.join(' · '),
+				sotstitol: TEMAS.find((t) => t.id === p.tema)?.nom.fr ?? '',
+				context: [],
+				pausar: p,
+				mots: p.mots.map(([oc, x, y]) => [oc, MOTS[oc] ?? '', x, y])
 			}))
 	}
 ];

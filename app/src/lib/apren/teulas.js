@@ -7,19 +7,16 @@
 // première couleur) ; le texte est crème ou encre selon le fond, choisi pour
 // tenir au moins 4,5:1 (mesures du 2026-10-24). Trois jeux à comparer sur
 // /apren?ensag=colors, tous pris dans la charte ou dérivés d'elle.
-const CREMA = '#fbf1e1';
-const TINTA = '#2a1a10';
+// Les teintes viennent de lib/styles/palette.js (2026-11-07) : la palette
+// « charta » est CASES ; les camaïeux des sous-pages partent de la même teinte.
+import { CASES, TEINTES } from '$lib/styles/palette.js';
+
+const CREMA = TEINTES.creme;
+const TINTA = TEINTES.encre;
 
 export const PALETAS = {
 	// les accents de la charte (§1) : brique, pétrole, olive, bleu, or
-	charta: [
-		['#b53d17', CREMA],
-		['#1f5f63', CREMA],
-		['#55702f', CREMA],
-		['#2f6a9c', CREMA],
-		['#eeaf34', TINTA],
-		['#6b3a5b', CREMA]
-	],
+	charta: CASES,
 	// plus sourde : rouge brique, ocre, prune, olive, pétrole
 	terra: [
 		['#a5342a', CREMA],
@@ -44,7 +41,7 @@ export const PALETAS = {
 	// d'avant. La première case garde la couleur de la case mère ; texte
 	// choisi pour tenir 4,5:1 au moins.
 	verd: [
-		['#55702f', CREMA],
+		[TEINTES.olive, CREMA],
 		['#353c1a', CREMA],
 		['#879764', TINTA],
 		['#b0b791', TINTA],
@@ -52,7 +49,7 @@ export const PALETAS = {
 		['#4a5f28', CREMA]
 	],
 	aur: [
-		['#eeaf34', TINTA],
+		[TEINTES.or, TINTA],
 		['#79591c', CREMA],
 		['#f2c368', TINTA],
 		['#f5d393', TINTA],
@@ -60,7 +57,7 @@ export const PALETAS = {
 		['#c8932c', TINTA]
 	],
 	blau: [
-		['#2f6a9c', CREMA],
+		[TEINTES.bleu, CREMA],
 		['#233a4b', CREMA],
 		['#6c92b1', TINTA],
 		['#9fb4c2', TINTA],

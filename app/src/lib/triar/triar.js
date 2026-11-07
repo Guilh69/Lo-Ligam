@@ -10,6 +10,12 @@
 // - les cœurs partent par paquets (le site accepte 300 remarques par jour en
 //   tout) : cibla = 'gardats', extrait = 'gardar', tèxte = « ♥ » puis une clé
 //   par ligne.
+// - une photo dont Romain a posé les mots (lot « pausar », 07-11) = une
+//   remarque : cibla = la clé de la photo, extrait = 'pausar', tèxte = « ◎ »
+//   et le nombre de mots, puis un mot par ligne : « occitan | français | x | y »,
+//   et parfois « | basic » (choisi dans lo Basic), « | site » ou « | man » (écrit à la main).
+//   Elle compte comme un cœur ; Claude vérifie les mots avec lo Congrès, les
+//   écrit dans lib/paisatges/paisatges.js, puis la marque « tractada ».
 // Le dernier choix l'emporte. Une croix que Claude a marquée « tractada »
 // (l'élément a été refait) revient en tête du tri, avec sa réponse.
 // Ce fichier ne dépend de rien : la page et le script de Claude le partagent.
@@ -46,6 +52,32 @@ export function tèxteGardats(claus) {
 	return [COR, ...claus].join('\n');
 }
 
+const ROND = '◎';
+const net = (s) =>
+	String(s ?? '')
+		.replace(/[|\s]+/g, ' ')
+		.trim()
+		.slice(0, 80);
+
+/** Le texte d'une photo dont Romain a posé les mots ([[occitan, français, x, y, font?]]). */
+export function tèxtePausats(mots) {
+	const lignas = mots.map(
+		([oc, fr, x, y, font]) => `${net(oc)} | ${net(fr)} | ${Math.round(x * 1000) / 1000} | ${Math.round(y * 1000) / 1000}` + (font ? ` | ${net(font)}` : '')
+	);
+	return [`${ROND} ${mots.length}`, ...lignas].join('\n');
+}
+
+/** Les mots d'une photo envoyée, dans l'autre sens. */
+export function legirPausats(tèxte) {
+	return tèxte
+		.split('\n')
+		.slice(1)
+		.map((l) => l.split('|').map((s) => s.trim()))
+		.filter((c) => (c.length === 4 || c.length === 5) && c[0])
+		.map(([oc, fr, x, y, font]) => (font ? [oc, fr, Number(x), Number(y), font] : [oc, fr, Number(x), Number(y)]))
+		.filter(([, , x, y]) => Number.isFinite(x) && Number.isFinite(y));
+}
+
 /**
  * L'état de chaque élément d'après les remarques d'un lot (dans l'ordre des id).
  * Rend { clé: { v: 'gardar' | 'refar' | 'refach', id, comentari?, responsa? } }.
@@ -58,6 +90,9 @@ export function estatDe(remarcas) {
 		} else if (r.extrait === 'refar' && r.cibla) {
 			const comentari = r.tèxte === SENS_COMENTARI ? '' : r.tèxte;
 			e[r.cibla] = { v: r.estat === 'tractada' ? 'refach' : 'refar', id: r.id, comentari, responsa: r.responsa ?? null };
+		} else if (r.extrait === 'pausar' && r.cibla) {
+			// une photo aux mots posés : un cœur, avec ses mots
+			e[r.cibla] = { v: 'gardar', id: r.id, pausats: legirPausats(r.tèxte), integrat: r.estat === 'tractada' };
 		}
 	}
 	return e;
