@@ -62,13 +62,22 @@ export function crearColaLenga(
 		const m = d ? 'dalt' : c ? 'clar' : 'sorne';
 		const dial = {};
 		for (const [k, v] of Object.entries(lenga.dial[m])) dial[lenga.pref + k] = v;
+		// (le nom de la langue sur son aplat : ombre sombre sous un texte clair,
+		// claire sous un texte sombre)
+		const tèxt = lenga.tèxt[m],
+			n = parseInt(tèxt.slice(1), 16),
+			tèxtClar = 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) > 150;
 		return {
 			clar: c,
-			tencha: c ? 0.36 : 0.3, // (tèma clar : coma colaDonadas.js)
+			// (thème clair, 07-11 : dialectes en camaïeu posés francs, 0,6 au lieu
+			// de 0,36, au même ton que l'occitan unifié ; la langue seule à 0,86)
+			tencha: c ? 0.6 : 0.3,
+			uni: c ? 1.45 : 1.6,
 			ombra: c ? 'rgba(247, 243, 238, 0.95)' : 'rgba(18, 9, 6, 0.9)',
+			nomOmbra: tèxtClar ? 'rgba(20, 10, 5, 0.8)' : 'rgba(247, 243, 238, 0.9)',
 			mòde: m,
 			color: lenga.color[m],
-			tèxt: lenga.tèxt[m],
+			tèxt,
 			dial
 		};
 	};
@@ -978,7 +987,7 @@ export function crearColaLenga(
 						g.globalCompositeOperation = 'source-over';
 						img = c;
 					}
-					this._copiar(img, aUni * T.tencha * 1.6 * aTenchas0);
+					this._copiar(img, aUni * T.tencha * T.uni * aTenchas0);
 				}
 				cx.globalAlpha = aUni * lerp(0.7, 0.95, vE) * aTenchas0;
 				cx.strokeStyle = T.color;
@@ -1024,7 +1033,7 @@ export function crearColaLenga(
 						const { x, y, fs: fsO, w } = pos;
 						cx.textAlign = 'center';
 						cx.textBaseline = 'middle';
-						cx.shadowColor = T.ombra;
+						cx.shadowColor = T.nomOmbra;
 						cx.shadowBlur = 8;
 						cx.fillStyle = T.tèxt;
 						cx.globalAlpha = aUni * (1 - easeS(clamp(vE / 0.6)));

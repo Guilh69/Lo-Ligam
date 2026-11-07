@@ -38,8 +38,14 @@ export const COLORS = {
 	dalt: { gas: '#0072b2', lan: '#d55e00', pro: '#cc79a7', lem: '#e69f00', auv: '#009e73', viv: '#56b4e9' }
 };
 const TEMAS = {
-	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: '#d9343f', occitanTèxt: '#ffc2b8', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: 0.3 },
-	clar: { estela: '#9a6a1c', lenga: '#b53d17', occitan: '#b0202c', occitanTèxt: '#4a0a12', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: 0.36 } // (tèma clar : tenchas mai fòrtas, retorn de Romain 2026-10-10 : zònas e noms pauc legibles)
+	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: '#d9343f', occitanTèxt: '#ffc2b8', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: 0.3, uni: 1.6 },
+	// (tèma clar : tenchas mai fòrtas, retorn de Romain 2026-10-10 : zònas e noms pauc legibles)
+	// Thème clair : l'occitan unifié au rouge des boutons (#b53d17), posé
+	// franc (0,86) et non éclairci en rose sur le fond clair ; le nom en crème
+	// sur ce rouge (Romain, 07-11 : « la même couleur que le rouge occitan
+	// signature du site » ; avant #b0202c à 0,58). Les dialectes occitans
+	// gardent leurs couleurs et 0,36 (à 0,6, l'arc-en-ciel criait).
+	clar: { estela: '#9a6a1c', lenga: '#b53d17', occitan: '#b53d17', occitanTèxt: '#4a0a12', nomOccitan: '#fbf1e1', nomOmbra: 'rgba(58, 14, 4, 0.85)', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: 0.36, uni: 2.4 }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
@@ -1429,7 +1435,7 @@ export function crearColaDonadas(
 						img = c;
 					}
 					// (de fòrt prèp, coma las tenchas dels dialèctes, s'esvanís)
-					this._copiar(img, aUni * T.tencha * 1.6 * aTenchas0);
+					this._copiar(img, aUni * T.tencha * T.uni * aTenchas0);
 				}
 				// lo contorn s'afortís un pauc quand la color i es tornada
 				cx.globalAlpha = aUni * lerp(0.7, 0.95, vE) * aTenchas0;
@@ -1445,9 +1451,9 @@ export function crearColaDonadas(
 					cx.letterSpacing = (fsO * 0.4).toFixed(1) + 'px';
 					cx.textAlign = 'center';
 					cx.textBaseline = 'middle';
-					cx.shadowColor = T.ombra;
+					cx.shadowColor = T.nomOmbra ?? T.ombra;
 					cx.shadowBlur = 8;
-					cx.fillStyle = T.occitanTèxt;
+					cx.fillStyle = T.nomOccitan ?? T.occitanTèxt;
 					cx.globalAlpha = aUni * (1 - easeS(clamp(vE / 0.6)));
 					cx.fillText('OCCITAN', x, y);
 					if (cx.globalAlpha > 0.3) {
