@@ -9,7 +9,6 @@
 	//   ↑ : Demandar (une question à l'IA, sur l'élément) ; ↓ : Mai tard (au bout de la pile) ;
 	//   1 à 6 : une réponse toute prête ; Ctrl+Z : revenir sur le dernier geste.
 	import { onMount, tick, untrack } from 'svelte';
-	import { page } from '$app/state';
 	import { bon, pasEncara, respondre, restablir, suprimir, mandarNotaId, ligamNota } from '$lib/talhier/notas.svelte.js';
 	import { pila, cargarPila, cartas, validar, legirMaiTard, gardarMaiTard } from '$lib/talhier/pila.svelte.js';
 	import { nomPagina } from '$lib/talhier/pila.js';
@@ -22,7 +21,8 @@
 		{ id: 'tèxtes', oc: 'Tèxtes', fr: 'l’occitan des pages' },
 		{ id: 'gramatica', oc: 'Gramatica', fr: 'les fiches de grammaire' }
 	];
-	let lot = $derived(page.url.searchParams.get('lot'));
+	// le lot (Tot, Tèxtes, Gramatica) vient de la page « A validar » (?vue=pila&lot=…)
+	let { lot = null } = $props();
 
 	let cua = $state.raw([]);
 	let pos = $state(0);
@@ -301,9 +301,6 @@
 </script>
 
 <svelte:window onkeydown={tecla} />
-<svelte:head>
-	<title>La pila — Espaci d'administracion</title>
-</svelte:head>
 
 <!-- les marques des textes modifiables : *or* et _italique_ (lib/edicion/marcat.js) -->
 {#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
@@ -335,14 +332,11 @@
 	{/if}
 {/snippet}
 
-<section class="pila" aria-labelledby="pila-titol">
+<section class="pila" aria-label="La pila">
 	<header>
-		<a class="retorn" href="/admin"><span aria-hidden="true">←</span> <span lang="oc">Per tu</span></a>
-		<h1 id="pila-titol" lang="oc">La pila</h1>
-		<p class="intro">Ce qui attend ton œil, une carte à la fois : les questions de l’IA, ses réponses, l’occitan des pages, les fiches de grammaire.</p>
 		<nav class="lots" aria-label="Ce que montre la pile">
 			{#each LOTS as l (l.oc)}
-				<a href={l.id ? `?lot=${l.id}` : '/admin/pila'} title={l.fr} aria-current={(lot ?? null) === l.id ? 'page' : undefined} lang="oc">{l.oc}</a>
+				<a href={l.id ? `?vue=pila&lot=${l.id}` : '?vue=pila'} title={l.fr} aria-current={(lot ?? null) === l.id ? 'page' : undefined} lang="oc">{l.oc}</a>
 			{/each}
 		</nav>
 	</header>
@@ -479,7 +473,7 @@
 		--p-encre-2: rgba(42, 26, 16, 0.72);
 		--p-filet: rgba(42, 26, 16, 0.16);
 		--p-or: #9c5611;
-		width: min(100%, 34rem);
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -493,31 +487,6 @@
 		justify-items: center;
 		gap: 0.35rem;
 		text-align: center;
-	}
-	.retorn {
-		justify-self: start;
-		color: var(--p-encre-2);
-		font-size: 0.9rem;
-		font-weight: 600;
-		text-decoration: none;
-	}
-	.retorn:hover {
-		color: var(--p-encre);
-		text-decoration: underline;
-		text-underline-offset: 0.2em;
-	}
-	h1 {
-		margin: 0;
-		font-family: var(--font-heading);
-		font-size: 2rem;
-		font-weight: 400;
-	}
-	.intro {
-		margin: 0;
-		max-width: 30rem;
-		color: var(--p-encre-2);
-		font-size: 0.92rem;
-		line-height: 1.45;
 	}
 	.lots {
 		display: flex;

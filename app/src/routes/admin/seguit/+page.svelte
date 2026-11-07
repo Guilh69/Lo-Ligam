@@ -1,4 +1,5 @@
 <script>
+	import AdminTete from '$lib/talhier/AdminTete.svelte';
 	// Ont ne sèm : le suivi des chantiers, pour Romain (point d'étape du
 	// 2026-11-06 au soir). Données : $lib/seguit/seguit.js, tenues par Claude ;
 	// les décisions à trancher sont en cartes sur /admin/triar (lot « decisions »).
@@ -28,19 +29,18 @@
 </script>
 
 <svelte:head>
-	<title>Ont ne sèm · Lo Ligam</title>
+	<title>Ont ne sèm — Espaci d'administracion</title>
 </svelte:head>
 
 <section class="seguit" aria-labelledby="seguit-titol">
-	<header>
-		<h1 id="seguit-titol"><span lang="oc">Ont ne sèm</span> <em>(où on en est)</em></h1>
+	<AdminTete oc="Ont ne sèm" fr="où on en est" id="seguit-titol">
 		<p class="mesa">Mis à jour le {MESA_A_JORN}. L’avancement est une estimation de Claude.</p>
 		<ul class="resum">
 			{#each Object.entries(ESTATS) as [id, e] (id)}
 				<li class="badge {id}"><strong>{n[id]}</strong> {e.resum}</li>
 			{/each}
 		</ul>
-		<a class="decisions" href="/admin/triar?lot=decisions" data-sveltekit-reload>
+		<a class="decisions" href="/admin/valider?vue=triar&lot=decisions">
 			<span class="d-n">{decisionsRèsta ?? DECISIONS.length}</span>
 			<span>décisions à trancher en cartes <span aria-hidden="true">→</span></span>
 		</a>
@@ -48,7 +48,7 @@
 			<button type="button" aria-pressed={filtre === 'tot'} onclick={() => (filtre = 'tot')}>Tout</button>
 			<button type="button" aria-pressed={filtre === 'romain'} onclick={() => (filtre = 'romain')}>Ce qui m’attend</button>
 		</div>
-	</header>
+	</AdminTete>
 
 	{#each GROPS as g (g.nom)}
 		{#if g.chantiers.some(vesible)}
@@ -77,22 +77,10 @@
 
 <style>
 	.seguit {
-		width: min(100%, 46rem);
+		width: 100%;
 		margin: 0 auto;
 		font-family: var(--font-body);
 		color: var(--t-tinta, #2a1a10);
-	}
-	h1 {
-		font-family: var(--font-heading);
-		font-size: 2rem;
-		font-weight: 400;
-		margin: 0;
-	}
-	h1 em {
-		font-family: var(--font-body);
-		font-size: 0.5em;
-		font-style: italic;
-		opacity: 0.75;
 	}
 	.mesa {
 		margin: 0.3rem 0 0.9rem;

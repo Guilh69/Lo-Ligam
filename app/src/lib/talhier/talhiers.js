@@ -1,17 +1,29 @@
 // Les ateliers de l'administration, rangés par usage (Lo talhièr, lot 1,
 // 2026-11-06). La page Per tu (/admin) les présente avec une ligne
-// d'explication ; la barre des ateliers (admin/+layout.svelte) les reprend.
-// Un atelier de plus : une ligne ici.
+// d'explication ; la barre des ateliers (admin/+layout.svelte) les reprend,
+// sur toutes les pages. Un atelier de plus : une ligne ici.
+//
+// Gabarit commun du 2026-11-07 (Romain : « trop de pages différentes qui ne
+// fonctionnent pas dans un écosystème cohérent ») : La pila et Triar, deux
+// pages du même geste (une carte à la fois), sont réunies en « A validar »
+// (/admin/valider) ; chaque page a une largeur parmi trois (LARGEURS) ; « Ont ne
+// sèm » entre dans le menu, il n'était atteignable que par un lien caché.
 export const TALHIÈRS = [
 	{
 		grop: 'Contenu',
 		ateliers: [
-			{ href: '/admin/pila', oc: 'La pila', fr: 'valider une carte à la fois : questions de l’IA, occitan des pages, fiches' },
+			{ href: '/admin/valider', oc: 'A validar', fr: 'garder, refaire ou répondre, une carte à la fois : la pile de l’IA, l’occitan des pages, le tri des dessins et des photos' },
 			{ href: '/admin/textes', oc: 'Tèxtes', fr: 'tous les textes modifiables du site, rangés par endroit' },
-			{ href: '/admin/triar', oc: 'Triar', fr: 'garder ou refaire, un élément à la fois' },
 			{ href: '/admin/musica', oc: 'Musica', fr: 'trier les artistes de l’espace musique' },
 			{ href: '/admin/designs', oc: 'Designs', fr: 'les designs : ajouter, publier, réordonner' },
 			{ href: '/admin/grops', oc: 'Grops', fr: 'les groupes de designs' }
+		]
+	},
+	{
+		grop: 'Pilotage',
+		ateliers: [
+			{ href: '/admin/labo', oc: 'Laboratòri', fr: 'les choix de design à faire, les essais en cours et tes inspirations' },
+			{ href: '/admin/seguit', oc: 'Ont ne sèm', fr: 'où en est chaque chantier, et ce qui t’attend' }
 		]
 	},
 	{
@@ -32,3 +44,16 @@ export const TALHIÈRS = [
 
 // le contrôle des verrous (essai d'écriture dans la base) : tout en bas
 export const VERROLHS = { href: '/admin/verrolhs', oc: 'Verrolhs', fr: 'vérifier que la base refuse ce qu’elle doit refuser' };
+
+// Une largeur par type de page, pour que l'administration ait le même gabarit partout :
+//  - etroit : une carte à la fois (A validar) ;
+//  - normal : lire et répondre (Per tu, Ont ne sèm) ;
+//  - large  : comparer et trier (Laboratòri, Musica).
+// Les pages qui n'en déclarent pas (les anciennes pages en cartes) gardent leur largeur propre.
+export const LARGEURS = {
+	'/admin': 'normal',
+	'/admin/valider': 'etroit',
+	'/admin/seguit': 'normal',
+	'/admin/labo': 'large',
+	'/admin/musica': 'large'
+};
