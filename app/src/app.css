@@ -66,13 +66,15 @@
 	/* Pièces de papier (2026-11-06, lib/styles/papier.css) : le carton est la
 	   pièce discrète, l'ombre est celle des illustrations (plus dense sur le
 	   fond sombre, où elle se voit moins). */
-	--pc-carton: #8a4a2a; /* terre cuite vive (parti B, Romain 07-11) ; avant #573828 */
+	/* clair sur le sombre, pour que « Se connecter », Menú… ressortent (Romain,
+	   07-11) : la crème des tuiles de jeu (Teula, /apren/jocs), texte brun ;
+	   avant #8a4a2a (terre cuite) puis #573828 */
+	--pc-carton: #efe1c6;
+	--pc-carton-tinta: #2a1a10;
 	--pc-ombre: rgba(0, 0, 0, 0.6);
 }
 :root {
 	--pc-or-fons: #eeaf34;
-	/* le texte posé sur le carton : toujours crème (le carton est sombre ou vif dans les deux thèmes) */
-	--pc-carton-tinta: #fbf1e1;
 }
 /* Couleurs de la croix-constellation : celles des logos de Romain (Canva,
    design-stock/logo/svg, charte §1 bis), rien d'autre (Romain, 2026-10-21).
@@ -122,6 +124,7 @@
 	--t-terra: #b53d17;
 	--t-terra-viu: #b53d17;
 	--pc-carton: #1f5f63; /* sarcelle des jeux de mémoire (Romain, 07-11 : thème clair vif) ; avant #e6c9a8 puis #e1d3bd */
+	--pc-carton-tinta: #fbf1e1; /* texte crème sur la sarcelle */
 	--pc-ombre: rgba(20, 10, 5, 0.32);
 }
 /* Verre des éléments posés sur la carte (rail, panneau qui s'ouvre à côté,
