@@ -12,6 +12,7 @@
 
 	let { piste } = $props();
 
+	// svelte-ignore state_referenced_locally
 	const CLE = `lo-ligam-palette-essai-v1-${piste}`;
 	// svelte-ignore state_referenced_locally
 	let etat = $state(copierPiste(piste));
