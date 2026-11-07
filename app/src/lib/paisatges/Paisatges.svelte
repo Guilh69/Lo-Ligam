@@ -1,12 +1,16 @@
 <script>
 	// Paisatges : la troisième façon de regarder de Remira (Romain, 05-11 :
-	// « le défilé de paysages »). Une photo de Romain à la fois, plein écran ;
-	// elle glisse lentement d'un bout à l'autre de ce qu'elle montre (sur un
-	// téléphone, le paysage défile sous les yeux). Des points d'or fins sont
-	// posés dessus : on en touche un, le mot occitan s'écrit, le français
-	// dessous. Un toucher ailleurs le referme. Sans rien toucher, les mots
-	// paraissent seuls, un à un, quand la photo passe dessus (Romain, 06-11 :
-	// le jeu est dans Jòcs, ici on regarde). On glisse le doigt, on fait
+	// « le défilé de paysages »). Une photo de Romain à la fois, entière et
+	// fixe entre l'en-tête et les commandes, jamais agrandie au-delà de son
+	// fichier (Romain, 07-11 : « encore trop zoomées, avec une mauvaise
+	// qualité » ; elle couvrait l'écran et glissait, et Firefox avance pixel
+	// par pixel une photo qui glisse lentement, d'où des à-coups). Des points
+	// d'or fins sont posés dessus, chacun sur une zone floue : quand son mot
+	// paraît, la zone se défloute et le reste (Romain, 07-11 : « des zones de
+	// flou qui se défloutent quand les mots se révèlent »). On en touche un, le
+	// mot occitan s'écrit, le français dessous ; un toucher ailleurs le
+	// referme. Sans rien toucher, les mots paraissent seuls, un à un (Romain,
+	// 06-11 : le jeu est dans Jòcs, ici on regarde). On glisse le doigt, on fait
 	// tourner la molette ou on prend les flèches pour le paysage suivant, qui
 	// arrive dans un disque qui grandit (jamais de fondu entre deux photos).
 	// Données : ./paisatges.js. Les gestes viennent de la page (rodeta, tecla).
@@ -17,8 +21,9 @@
 
 	// tema : le thème choisi (la page remonte le composant quand il change) ;
 	// relèu : l'option « relief » (06-11), sur les photos gardées dans Triar
-	// (toutes avec relèuTotas, pour les essais en local)
-	let { pausa = false, calme = false, n = $bindable(0), tema = null, relèu = false, relèuTotas = false } = $props();
+	// (toutes avec relèuTotas, pour les essais en local) ; reserva : la place
+	// prise en haut par l'en-tête et en bas par les commandes
+	let { pausa = false, calme = false, n = $bindable(0), tema = null, relèu = false, relèuTotas = false, reserva = { naut: 64, bas: 110 } } = $props();
 	const LISTA = untrack(() => deTema(tema));
 
 	// L'ordre des paysages change à chaque visite, le premier aussi ; l'ordre
@@ -32,72 +37,58 @@
 	}
 	const ordre = barrejar(LISTA.map((_, k) => k));
 	const pais = (pos) => LISTA[ordre[(pos + ordre.length) % ordre.length]];
-	const novela = (id, k) => ({ id, k, rangs: barrejar(pais(k).mots.map((_, i) => i)) });
+	// nets : les points dont la zone s'est défloutée sur cette photo
+	const novela = (id, k) => ({ id, k, rangs: barrejar(pais(k).mots.map((_, i) => i)), nets: [] });
 
 	let racina = $state();
 	let W = $state(0),
 		H = $state(0);
 	// Les paysages à l'écran : le montré, et pendant le disque celui qui s'en
-	// va dessous (le même élément, qui continue de glisser : rien ne saute).
+	// va dessous (le même élément : rien ne saute).
 	let seq = 0;
 	let vistas = $state([novela(0, n)]);
 	const actiuId = $derived(vistas.at(-1).id);
 	let causit = $state(null); // le point ouvert
 	let auto = $state(null); // le point qui parle seul, au défilement
 	const mostrat = $derived(causit ?? auto); // le mot écrit à l'écran
-	let costat = $state('drecha'); // l'étiquette à droite ou à gauche du point
-	const anims = new Map(); // id → { a, c } : le glissement et son cadre
-	const sizes = (q) => `(min-aspect-ratio: ${q.l}/${q.h}) 100vw, ${Math.ceil((q.l / q.h) * 100)}vh`;
+	let costat = $state('drecha'); // l'étiquette à droite, à gauche, dessous ou dessus du point
+	const anims = new Map(); // id → l'horloge du relief
+	// la photo entière dans l'écran : sa largeur, environ
+	const sizes = (q) => `(min-aspect-ratio: ${q.l}/${q.h}) ${Math.ceil((q.l / q.h) * 82)}vh, 96vw`;
 
-	// La photo couvre l'écran ; le glissement va d'un bout à l'autre des points,
-	// avec assez de marge pour lire le mot ; tout tient dans l'écran : on reste.
-	function cadre(q) {
+	// La photo entière, centrée entre l'en-tête et les commandes, jamais plus
+	// grande que son plus grand fichier (en pixels CSS) ; fl : le diamètre des
+	// zones floues, flou : leur force (plus doux sur une petite photo)
+	function fenestra(q) {
 		if (!W || !H) return null;
-		const s = Math.max(W / q.l, H / q.h);
-		const w = q.l * s,
-			h = q.h * s;
-		const plaja = (lis, tot, vist) => {
-			const deb = tot - vist;
-			if (deb < 1) return [0, 0];
-			const m = vist * 0.2;
-			let a = Math.min(Math.max(Math.min(...lis) * tot - m, 0), deb);
-			let b = Math.min(Math.max(Math.max(...lis) * tot + m - vist, 0), deb);
-			if (b <= a) a = b = Math.min(Math.max(((Math.min(...lis) + Math.max(...lis)) / 2) * tot - vist / 2, 0), deb);
-			return [a, b];
-		};
-		const [uA, uB] = plaja(
-			q.mots.map((m) => m[1]),
+		const gora = Math.min(32, Math.max(12, W * 0.03));
+		const naut = reserva.naut + 8,
+			zh = Math.max(120, H - naut - reserva.bas - 8),
+			zw = Math.max(120, W - 2 * gora);
+		const s = Math.min(zw / q.l, zh / q.h, Math.max(...q.amples) / q.l);
+		const w = Math.round(q.l * s),
+			h = Math.round(q.h * s),
+			c = Math.min(w, h);
+		return {
+			x: Math.round((W - w) / 2),
+			y: Math.round(naut + (zh - h) / 2),
 			w,
-			W
-		);
-		const [vA, vB] = plaja(
-			q.mots.map((m) => m[2]),
 			h,
-			H
-		);
-		const camin = Math.hypot(uB - uA, vB - vA);
-		return { w, h, uA, uB, vA, vB, durada: Math.max(28000, (camin / 14) * 1000) };
+			fl: Math.round(Math.max(72, c * 0.26)),
+			flou: Math.round(Math.min(10, Math.max(4, c / 80)))
+		};
 	}
 
-	// Chaque paysage : sa taille, et son glissement (aller-retour, sans fin)
-	const glissar = (q, id) => (el) => {
-		const c = cadre(q);
-		if (!c) return;
-		el.style.width = `${c.w}px`;
-		el.style.height = `${c.h}px`;
-		const t0 = `translate(${-c.uA}px, ${-c.vA}px)`;
-		if (calme) {
-			el.style.transform = `translate(${-(c.uA + c.uB) / 2}px, ${-(c.vA + c.vB) / 2}px)`;
-			return;
-		}
-		el.style.transform = t0;
-		const a = el.animate([{ transform: `${t0} scale(1)` }, { transform: `translate(${-c.uB}px, ${-c.vB}px) scale(1.04)` }], {
-			duration: c.durada,
+	// Le relief : une horloge (une animation qui ne déplace rien) mène la
+	// profondeur ; le cadre, lui, ne bouge pas (07-11)
+	const rellotge = (id) => (el) => {
+		const a = el.animate([{ transform: 'none' }, { transform: 'none' }], {
+			duration: 16000,
 			iterations: Infinity,
 			direction: 'alternate',
 			easing: 'ease-in-out'
 		});
-		anims.set(id, { a, c });
+		anims.set(id, a);
 		untrack(() => {
 			if (id === actiuId && (pausa || causit !== null)) a.pause();
 		});
@@ -107,10 +98,11 @@
 		};
 	};
 
-	// Le relief : un canevas fixe sous le cadre ; il calcule lui-même le
-	// glissement et déplace le cadre à la même image (l'animation ne sert plus
-	// que d'horloge), la photo du cadre s'efface dessus, les points d'or et le
-	// mot restent dans le cadre et suivent leur objet (./releu.js).
+	// Le relief : un canevas sous la photo, à sa taille ; la photo s'efface
+	// dessus, les points d'or et le mot restent dans le cadre et suivent leur
+	// objet (./releu.js). Le cadre ne bouge pas : le proche glisse un peu sur le
+	// fond, comme si la photo glissait de la moitié de sa largeur (décalage
+	// borné à 1,2 % de la photo).
 	const relevarVista = (q, id) => (cv) =>
 		untrack(() => {
 			const quadre = cv.nextElementSibling;
@@ -118,10 +110,10 @@
 				clau: q.clau,
 				img: quadre.querySelector('img'),
 				estat: () => {
-					const an = anims.get(id);
-					if (!an) return null;
-					const { a, c } = an;
-					return { a, w: c.w, h: c.h, t0: [-c.uA, -c.vA], t1: [-c.uB, -c.vB], s1: 1.04, W, H };
+					const a = anims.get(id);
+					const f = fenestra(q);
+					if (!a || !f) return null;
+					return { a, w: f.w, h: f.h, t0: [0, 0], t1: [0, 0], s1: 1, W: f.w, H: f.h, du: f.w * 0.5, dv: f.h * 0.15 };
 				},
 				ponches: () =>
 					[...quadre.querySelectorAll('[data-i]')].map((el) => {
@@ -190,27 +182,43 @@
 	export const precedent = () => anar(-1);
 
 	// ── Points ─────────────────────────────────────────────────────────
-	// l'étiquette va du côté où il y a de la place à l'écran
-	const costatDe = (el) => {
-		const r = el.getBoundingClientRect();
-		return r.left + r.width / 2 > W * 0.58 ? 'esquerra' : 'drecha';
-	};
-	function dobrir(i, el) {
+	// L'étiquette, une fois écrite : à droite du point s'il y a la place,
+	// sinon à gauche, sinon dessous (dessus en bas de l'écran), centrée sans
+	// sortir de l'écran (téléphone, 07-11 : « la piramida » sortait à droite)
+	const plaçar = (x, y) => (el) =>
+		untrack(() => {
+			const q = el.parentElement.getBoundingClientRect();
+			const ax = q.left + x * q.width,
+				ay = q.top + y * q.height;
+			const wl = el.offsetWidth,
+				hl = el.offsetHeight,
+				e = 30,
+				m = 10;
+			let dx = 0;
+			if (ax + e + wl <= W - m) costat = 'drecha';
+			else if (ax - e - wl >= m) costat = 'esquerra';
+			else {
+				costat = ay + e + hl <= H - reserva.bas ? 'dessota' : 'dessus';
+				const l = ax - wl / 2;
+				dx = Math.min(Math.max(l, m), W - m - wl) - l;
+			}
+			el.style.setProperty('--dx', `${Math.round(dx)}px`);
+		});
+	function dobrir(i) {
 		auto = null;
 		autoDempuei = performance.now() + 2500; // après un toucher, un temps de silence
 		if (causit === i) {
 			causit = null;
 			return;
 		}
-		costat = costatDe(el);
 		causit = i;
 	}
 
 	// ── Les mots qui paraissent seuls ──────────────────────────────────
-	// Toutes les demi-secondes : si rien n'est écrit, le point visible le plus
-	// près du milieu (pas encore dit sur cette photo) dit son mot 4 s ; puis
-	// 3,5 s de silence : un mot toutes les 8 à 9 s, pas un diaporama (Joan,
-	// 06-11). Tous dits : on recommence. La photo ne s'arrête pas.
+	// Toutes les demi-secondes : si rien n'est écrit, le point suivant (dans
+	// l'ordre, mélangé, où les points sont nés ; pas encore dit sur cette photo)
+	// dit son mot 4 s ; puis 3,5 s de silence : un mot toutes les 8 à 9 s, pas
+	// un diaporama (Joan, 06-11). Tous dits : on recommence.
 	const DIRE = 4200,
 		SILENCI = 3500;
 	let autoDempuei = 0; // l'heure du dernier changement
@@ -235,48 +243,37 @@
 			return;
 		}
 		if (ara - autoDempuei < SILENCI) return;
-		const visibles = [];
+		const vista = vistas.at(-1);
+		const parescuts = [];
 		for (const b of racina.querySelectorAll('.ponch')) {
 			if (+getComputedStyle(b).opacity < 0.9) continue;
-			const r = b.getBoundingClientRect();
-			const x = r.left + r.width / 2,
-				y = r.top + r.height / 2;
-			// loin des bords, de l'en-tête et des commandes : le mot a sa place
-			if (x < W * 0.12 || x > W * 0.88 || y < H * 0.16 || y > H * 0.78) continue;
-			visibles.push({ b, i: Number(b.dataset.i), d: Math.hypot(x - W / 2, y - H / 2) });
+			parescuts.push({ b, i: Number(b.dataset.i) });
 		}
-		let cands = visibles.filter((v) => !dits.has(v.i));
-		if (!cands.length && visibles.length) {
+		let cands = parescuts.filter((v) => !dits.has(v.i));
+		if (!cands.length && parescuts.length) {
 			dits.clear();
-			cands = visibles.filter((v) => v.i !== darrierDit);
+			cands = parescuts.filter((v) => v.i !== darrierDit);
 		}
 		if (!cands.length) return;
-		const v = cands.reduce((a, c) => (c.d < a.d ? c : a));
-		costat = costatDe(v.b);
+		const v = cands.reduce((a, c) => (vista.rangs[c.i] < vista.rangs[a.i] ? c : a));
 		auto = v.i;
 		dits.add(v.i);
 		darrierDit = v.i;
 		autoDempuei = ara;
 	}
 
-	// Au clavier, un point hors de l'écran revient au milieu. Au doigt ou à la
-	// souris, jamais : la photo sautait sous le doigt et le toucher tombait à
-	// côté (Romain, 06-11, sur téléphone).
-	function focus(i, el) {
-		if (!el.matches(':focus-visible')) return;
-		const g = anims.get(actiuId);
-		if (!g) return;
-		const { a: anim, c } = g;
-		const [, x, y] = pais(n).mots[i];
-		const frac = (val, a, b) => (b - a < 1 ? 0 : Math.min(Math.max((val - a) / (b - a), 0), 1));
-		const f = c.uB - c.uA >= c.vB - c.vA ? frac(x * c.w - W / 2, c.uA, c.uB) : frac(y * c.h - H / 2, c.vA, c.vB);
-		anim.currentTime = f * c.durada;
-	}
+	// La zone du mot qui paraît se défloute, et le reste sur cette photo.
+	$effect(() => {
+		const i = mostrat;
+		if (i === null) return;
+		const v = untrack(() => vistas.at(-1));
+		if (!v.nets.includes(i)) v.nets.push(i);
+	});
 
-	// Le glissement s'arrête le temps de lire un mot, et en pause.
+	// Le relief s'arrête le temps de lire un mot, et en pause.
 	$effect(() => {
 		const arrestat = pausa || causit !== null || tocant; // lu d'abord : l'effet en dépend toujours
-		const a = anims.get(actiuId)?.a;
+		const a = anims.get(actiuId);
 		if (!a) return;
 		if (arrestat) a.pause();
 		else a.play();
@@ -343,7 +340,7 @@
 			anar(d < 0 ? 1 : -1);
 		} else if (!e.target.closest?.('.ponch')) {
 			const b = ponchProche(e.clientX, e.clientY);
-			if (b) dobrir(Number(b.dataset.i), b);
+			if (b) dobrir(Number(b.dataset.i));
 			else if (causit !== null || auto !== null) {
 				causit = auto = null;
 				autoDempuei = performance.now() + 2500;
@@ -370,12 +367,23 @@
 	});
 </script>
 
-{#snippet vista(q, id, rangs)}
+{#snippet vista(q, id, rangs, nets)}
 	{@const actiu = id === actiuId}
 	{@const ambRelèu = relèu && !calme && (relèuTotas || GARDATS.has(q.clau))}
+	{@const f = fenestra(q)}
+	<!-- la photo entière, à sa place entre l'en-tête et les commandes -->
+	<div
+		class="fenestra"
+		style:left="{f?.x ?? 0}px"
+		style:top="{f?.y ?? 0}px"
+		style:width="{f?.w ?? 0}px"
+		style:height="{f?.h ?? 0}px"
+		style:--fl="{f?.fl ?? 64}px"
+		style:--flou="{f?.flou ?? 6}px"
+	>
 	{#if ambRelèu}<canvas class="releu-c" aria-hidden="true" {@attach relevarVista(q, id)}></canvas>{/if}
 	<!-- les points paraissent après le disque (après l'arrivée de la page pour le premier) -->
-	<div class="quadre" class:releu={ambRelèu} style:--d0={id === 0 ? '0.6s' : '1.25s'} {@attach glissar(q, id)}>
+	<div class="quadre" class:releu={ambRelèu} style:--d0={id === 0 ? '0.6s' : '1.25s'} {@attach ambRelèu && rellotge(id)}>
 		<img
 			src={camin(q.clau, q.amples[0])}
 			srcset={srcset(q)}
@@ -386,6 +394,12 @@
 			fetchpriority={actiu ? 'high' : undefined}
 		/>
 		{#if actiu}
+			<!-- une zone floue sous chaque point : elle se défloute quand le mot paraît -->
+			<div class="flos" aria-hidden="true">
+				{#each q.mots as [oc, x, y], i (oc)}
+					<span class="flo" class:net={nets.includes(i)} style:left="{x * 100}%" style:top="{y * 100}%" style:--i={rangs[i]}></span>
+				{/each}
+			</div>
 			{#each q.mots as [oc, x, y], i (oc)}
 				<button
 					type="button"
@@ -396,8 +410,7 @@
 					style:--i={rangs[i]}
 					data-i={i}
 					aria-pressed={causit === i}
-					onclick={(e) => dobrir(i, e.currentTarget)}
-					onfocus={(e) => focus(i, e.currentTarget)}
+					onclick={() => dobrir(i)}
 				>
 					<span class="onda" aria-hidden="true"></span>
 					<span class="sr"><span lang="oc">{oc}</span>, <span lang="fr">{MOTS[oc]}</span></span>
@@ -409,6 +422,7 @@
 					<div
 						class="eticeta {costat}"
 						data-i={mostrat}
+						{@attach plaçar(x, y)}
 						style:left="{x * 100}%"
 						style:top="{y * 100}%"
 						aria-hidden="true"
@@ -421,6 +435,7 @@
 				{/key}
 			{/if}
 		{/if}
+	</div>
 	</div>
 {/snippet}
 
@@ -437,7 +452,7 @@
 	}}
 >
 	{#each vistas as v (v.id)}
-		<div class="vista" aria-hidden={v.id !== actiuId} {@attach dintrar(v.id)}>{@render vista(pais(v.k), v.id, v.rangs)}</div>
+		<div class="vista" aria-hidden={v.id !== actiuId} {@attach dintrar(v.id)}>{@render vista(pais(v.k), v.id, v.rangs, v.nets)}</div>
 	{/each}
 	<div class="vela" aria-hidden="true"></div>
 </div>
@@ -455,33 +470,74 @@
 		inset: 0;
 		/* clip, pas hidden : un point qui prend le focus ne fait pas défiler */
 		overflow: clip;
+		/* opaque : le disque qui grandit cache tout le paysage d'avant */
+		background: #0b1517;
 	}
+	.fenestra,
 	.quadre {
 		position: absolute;
-		top: 0;
-		left: 0;
-		transform-origin: 50% 50%;
-		will-change: transform;
+	}
+	.quadre {
+		inset: 0;
 	}
 	img {
 		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		border-radius: 6px;
 		-webkit-user-drag: none;
 	}
-	/* Le relief : la photo agrandie de la marge du relief (1 / 0,98, ./releu.js),
-	   pour qu'elle s'efface sur le canevas sans saut */
+	/* Le relief : la photo agrandie de la marge du relief (1 / 0,98, ./releu.js)
+	   et rognée d'autant, pour qu'elle s'efface sur le canevas sans saut */
 	.quadre.releu img {
 		scale: 1.0204;
+		clip-path: inset(1% round 6px);
 	}
 	.releu-c {
 		position: absolute;
 		inset: 0;
 		width: 100%;
 		height: 100%;
+		border-radius: 6px;
 		opacity: 0; /* jusqu'au premier dessin, sous la photo */
 		pointer-events: none;
+	}
+
+	/* ── Les zones floues : un disque aux bords fondus, qui naît avec son point
+	   et se défloute quand le mot paraît (un toucher, ou seul) ── */
+	.flos {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		border-radius: 6px;
+		pointer-events: none;
+	}
+	.flo {
+		position: absolute;
+		width: var(--fl, 64px);
+		aspect-ratio: 1;
+		translate: -50% -50%;
+		border-radius: 50%;
+		-webkit-backdrop-filter: blur(var(--flou, 6px));
+		backdrop-filter: blur(var(--flou, 6px));
+		-webkit-mask-image: radial-gradient(closest-side, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent);
+		mask-image: radial-gradient(closest-side, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent);
+		opacity: 0;
+		animation: aparéisser-flo 1.4s ease forwards;
+		animation-delay: calc(var(--d0, 0.6s) + var(--i) * 0.42s - 0.25s);
+		transition:
+			backdrop-filter 1.8s cubic-bezier(0.3, 0.6, 0.2, 1),
+			-webkit-backdrop-filter 1.8s cubic-bezier(0.3, 0.6, 0.2, 1);
+	}
+	.flo.net {
+		-webkit-backdrop-filter: blur(0px);
+		backdrop-filter: blur(0px);
+	}
+	@keyframes aparéisser-flo {
+		to {
+			opacity: 1;
+		}
 	}
 	/* l'en-tête et les commandes restent lisibles sur un ciel clair */
 	.vela {
@@ -615,6 +671,17 @@
 		text-align: end;
 		translate: calc(-100% - 1.9rem) -50%;
 	}
+	.eticeta.dessota,
+	.eticeta.dessus {
+		align-items: center;
+		text-align: center;
+	}
+	.eticeta.dessota {
+		translate: calc(-50% + var(--dx, 0px)) 1.6rem;
+	}
+	.eticeta.dessus {
+		translate: calc(-50% + var(--dx, 0px)) calc(-100% - 1.6rem);
+	}
 	.oc {
 		font-family: var(--font-heading);
 		font-size: clamp(1.7rem, 1rem + 2.4vw, 3rem);
@@ -666,9 +733,14 @@
 		white-space: nowrap;
 	}
 
-	/* Réduire les animations : rien ne glisse ni ne respire, le mot paraît */
+	/* Réduire les animations : rien ne respire, la zone et le mot paraissent */
 	.calme .onda {
 		display: none;
+	}
+	.calme .flo {
+		animation: none;
+		opacity: 1;
+		transition: none;
 	}
 	.calme .ponch,
 	.calme .ponch::before,
