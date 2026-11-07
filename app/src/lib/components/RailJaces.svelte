@@ -1810,16 +1810,17 @@
 		/* (la colomna despassa pas jamai lo panèl : los noms longs passan a la
 		   linha en luòc d'èsser copats, retorn de Romain) */
 		grid-template-columns: minmax(0, 1fr);
-		gap: 2px;
-		padding: 6px 5px;
+		gap: 6px;
+		padding: 4px 5px 9px; /* de la place pour l'ombre des pièces (le rail défile, il la couperait) */
 		/* Sans contour (Romain, 2026-10-15) : le rail se détache par un fond un
 		   peu plus chaud que la carte, légèrement transparent (--t-veire, app.css) ;
 		   le flou garde les icônes lisibles sur la carte */
-		background: var(--t-veire);
-		backdrop-filter: blur(10px);
+		/* Papier découpé (Romain, 2026-11-07) : plus de panneau de verre, chaque bouton est
+		   une pièce posée sur la carte (lib/styles/papier.css), comme les boutons du reste du site */
+		background: none;
 		border: 0;
-		border-radius: 18px;
-		box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+		border-radius: 0;
+		box-shadow: none;
 	}
 	/* déplacé : sa place (--rail-y), toute la hauteur entre bandeau et flèche */
 	@container carta (min-width: 601px) {
@@ -1836,7 +1837,11 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: 0;
-		padding: 0 0 3px;
+		padding: 0 2px;
+		border-radius: 8px;
+		background: var(--pc-carton);
+		color: var(--pc-carton-tinta);
+		box-shadow: 0 2px 3px var(--pc-ombre);
 	}
 	.prene {
 		flex: 1;
@@ -1857,7 +1862,7 @@
 	.prene span {
 		width: 16.5px;
 		height: 6px;
-		background: radial-gradient(circle, var(--t-tinta-2) 1.2px, transparent 1.6px) 0 0 / 5.5px 3px;
+		background: radial-gradient(circle, var(--pc-carton-tinta) 1.2px, transparent 1.6px) 0 0 / 5.5px 3px;
 		opacity: 0.7;
 	}
 	.prene:hover span,
@@ -1874,7 +1879,7 @@
 		border: 0;
 		border-radius: 6px;
 		background: none;
-		color: var(--t-tinta-2);
+		color: var(--pc-carton-tinta);
 		cursor: pointer;
 	}
 	.reduire svg {
@@ -1905,15 +1910,16 @@
 		gap: 4px;
 		padding: 9px 2px 7px;
 		border: 0;
-		border-radius: 12px;
-		background: none;
-		color: var(--t-tinta-2);
-		font: 400 10.5px/1.15 var(--font-body);
+		border-radius: 10px;
+		background: var(--pc-carton);
+		color: var(--pc-carton-tinta);
+		box-shadow: 0 3px 4px var(--pc-ombre);
+		font: 600 10.5px/1.15 var(--font-body);
 		text-align: center;
 		cursor: pointer;
 		transition:
-			background 0.25s,
-			color 0.25s;
+			transform 0.15s ease,
+			box-shadow 0.15s ease;
 	}
 	/* Arabe (Joan, 26-10) : 10,5 px et 9 px sont des tailles de latin ; l'arabe, plus
 	   dense, y est illisible. 12 px, partout, y compris sur écran bas. */
@@ -1926,13 +1932,20 @@
 		width: 22px;
 		height: 22px;
 	}
+	/* survol : la pièce se soulève d'un pixel ; ouverte : la pièce « choisie » passe à l'ocre */
 	.rail-b:hover {
-		color: var(--t-tinta);
-		background: color-mix(in srgb, var(--t-tinta) 6%, transparent);
+		transform: translateY(-1px);
+		box-shadow: 0 5px 5px var(--pc-ombre);
+	}
+	.rail-b:active {
+		transform: translateY(2px);
+		box-shadow: 0 1px 2px var(--pc-ombre);
 	}
 	.rail-b[aria-expanded='true'] {
-		color: var(--t-aur-clar);
-		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
+		color: var(--pc-or-tinta);
+		background: var(--pc-or-fons);
+		transform: translateY(-1px);
+		box-shadow: 0 4px 4px var(--pc-ombre);
 	}
 	.rail-b:focus-visible,
 	.tirador button:focus-visible,
@@ -1945,24 +1958,20 @@
 	}
 	/* « Sus la carta », lo còr de l'organizacion de sa carta (demanda de
 	   Romain, 2026-10-09) : una tèula a part, cerclada d'aur, pus granda */
+	/* (2026-11-07 : en papier découpé, la tuile à part est la pièce rouge, celle des actions) */
 	.rail-b.rail-sus {
-		margin: 2px 3px 0;
 		padding: 10px 2px 8px;
-		color: var(--t-aur-clar);
-		background: color-mix(in srgb, var(--t-aur) 10%, transparent);
-		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--t-aur) 55%, transparent);
+		color: var(--t-accion-tinta);
+		background: var(--t-accion);
 		font-weight: 700;
 	}
 	.rail-b.rail-sus svg {
 		width: 27px;
 		height: 27px;
 	}
-	.rail-b.rail-sus:hover {
-		background: color-mix(in srgb, var(--t-aur) 18%, transparent);
-	}
 	.rail-b.rail-sus[aria-expanded='true'] {
-		background: color-mix(in srgb, var(--t-aur) 24%, transparent);
-		box-shadow: inset 0 0 0 1.5px var(--t-aur);
+		color: var(--pc-or-tinta);
+		background: var(--pc-or-fons);
 	}
 	/* la chifra d'una familha : pichona, sens pastilha (decision de Romain, 2026-10-10) */
 	.nombre {
@@ -1971,19 +1980,15 @@
 		right: 9px;
 		font: 700 10px/1 var(--font-body);
 		font-variant-numeric: tabular-nums;
-		color: color-mix(in srgb, var(--t-aur) 75%, transparent);
+		color: currentColor;
+		opacity: 0.75;
 	}
 	/* la tòca mediterranèa : una linha fina a esquèrra de la familha dobèrta,
 	   e pas endacòm mai (decision de Romain, 2026-10-10) */
+	/* (le liseré de la famille ouverte est retiré : la pièce ocre dit déjà laquelle est ouverte,
+	   et Romain ne veut pas de filet coloré sur le côté) */
 	.rail-b[aria-expanded='true']::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 24%;
-		bottom: 24%;
-		width: 2px;
-		border-radius: 1px;
-		background: var(--t-terra-viu);
+		display: none;
 	}
 	.compte {
 		position: absolute;
@@ -2001,9 +2006,9 @@
 		font-variant-numeric: tabular-nums;
 	}
 	.rail-sep {
-		height: 1px;
-		margin: 4px 10px;
-		background: var(--t-linha);
+		height: 0;
+		margin: 2px 10px;
+		background: none;
 	}
 
 	/* la silhoeta-boton : veire la lenga dins son environament */
@@ -2027,7 +2032,7 @@
 
 	/* lo mòde : lo boton per tornar a l'occitan */
 	.rail-b.retorn {
-		color: var(--t-tinta);
+		color: var(--pc-carton-tinta);
 	}
 	.rail-b.retorn::after {
 		content: '';
@@ -2050,9 +2055,7 @@
 	/* La banda del telefòn : la familha a esquèrra, sas jaças en pastilhas */
 	.rail-b.banda-fam {
 		flex: 0 0 4.4rem;
-		color: var(--t-aur-clar);
-		border-right: 1px solid var(--t-linha);
-		border-radius: 0;
+		color: var(--pc-or-tinta);
 	}
 	.rail-b.banda-fam::after {
 		content: '';
@@ -2066,9 +2069,9 @@
 		top: 50%;
 		transform: translateY(-50%);
 		font-size: 1rem;
-		color: var(--t-tinta-2);
-	}
-	.banda-jaces {
+		color: var(--pc-or-tinta);
+		}
+		.banda-jaces {
 		flex: 1 1 auto;
 		min-width: 0;
 		display: flex;
@@ -2942,8 +2945,8 @@
 			overflow: visible;
 			display: flex;
 			align-items: stretch;
-			gap: 2px;
-			padding: 4px 8px 4px 4px;
+			gap: 6px;
+			padding: 4px 8px 9px 4px;
 		}
 		.rail.orizontal .encòca {
 			flex-direction: column;
@@ -2989,8 +2992,8 @@
 	   vertical se resserre encore pour tenir sans défiler */
 	@container carta (min-width: 601px) and (max-height: 600px) {
 		.rail:not(.orizontal) {
-			gap: 1px;
-			padding: 4px 5px;
+			gap: 3px;
+			padding: 3px 5px 8px;
 		}
 		.rail:not(.orizontal) .rail-b {
 			gap: 2px;
@@ -3026,10 +3029,10 @@
 			overflow: visible;
 			display: flex;
 			align-items: stretch;
-			gap: 0;
-			padding: 3px 4px env(safe-area-inset-bottom, 0px);
-			border-radius: 16px 16px 0 0;
-			box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3);
+			gap: 4px;
+			padding: 3px 6px calc(4px + env(safe-area-inset-bottom, 0px));
+			border-radius: 0;
+			box-shadow: none;
 			transform: none;
 		}
 		/* sul telefon la barra demòra en bas : ni encòca ni reduccion */
