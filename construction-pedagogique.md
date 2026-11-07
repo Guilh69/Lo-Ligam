@@ -73,7 +73,7 @@ par séance, dans une conversation à part, dans cet ordre :
 
 | # | Service | Où dans le site | Ce que ça apporte |
 |---|---|---|---|
-| 1 | sinonimes + lo Basic | jeu « L'intrus » des leçons (catalogue, priorité 1) | des intrus plausibles, ni trop faciles ni absurdes ; **fait le 07-11** (cahier §11) |
+| 1 | sinonimes + lo Basic | jeu « L'intrus » (catalogue, priorité 1) | des intrus plausibles, ni trop faciles ni absurdes ; **fait le 07-11**, dans la salle Jòcs (cahier §11) |
 | 2 | rimas | comptines d'« Anem ! », virelangues, chansons d'unité | des rimes justes et le nombre de syllabes |
 | 3 | punt de lenga | relecture des 36 fiches de grammaire ; lien « pour aller plus loin » vers leur article | nos explications contrôlées ; un lien n'est pas une copie |
 | 4 | vèrb'Òc | tableaux de conjugaison complets dans les fiches verbes | zéro faute de conjugaison |

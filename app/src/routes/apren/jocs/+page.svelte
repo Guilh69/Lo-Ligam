@@ -6,7 +6,7 @@
 	// un jeu à la fois : La sèrp de las letras (04-11), Los panièrs (05-11) et
 	// Pausa los mots (05-11 sous le nom « Ont es… ? », refait le 06-11 : les
 	// paysages de Romain, chaque mot dans sa case), choisi dans l'adresse
-	// (?joc=paniers, ?joc=paisatges). Allure « Teula », adoptée par
+	// (?joc=paniers, ?joc=paisatges, ?joc=intrus : L’intrús, 07-11). Allure « Teula », adoptée par
 	// Romain le 05-11 avec la palette crème : mise en page éditoriale (titre
 	// géant, aplats, filets), mots et lettres en tuiles, ni verre fumé, ni
 	// halo, ni lueur. Le rouge reste ce qui se clique, l'or ce qui est choisi.
@@ -20,6 +20,7 @@
 	import Serp from '$lib/jocs/Serp.svelte';
 	import Paniers from '$lib/jocs/Paniers.svelte';
 	import PausaMots from '$lib/jocs/PausaMots.svelte';
+	import Intrus from '$lib/jocs/Intrus.svelte';
 	import Sala from '$lib/jocs/sala/Sala.svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
 
@@ -31,7 +32,8 @@
 	const JOCS = [
 		{ id: 'serp', oc: 'La sèrp de las letras' },
 		{ id: 'paniers', oc: 'Los panièrs' },
-		{ id: 'paisatges', oc: 'Pausa los mots' }
+		{ id: 'paisatges', oc: 'Pausa los mots' },
+		{ id: 'intrus', oc: 'L’intrús' }
 	];
 	// sans ?joc= : la salle de jeux ; avec : le jeu (un lien, donc le bouton
 	// « retour » du navigateur ramène à la salle)
@@ -72,6 +74,8 @@
 			<Paniers />
 		{:else if joc === 'paisatges'}
 			<PausaMots />
+		{:else if joc === 'intrus'}
+			<Intrus />
 		{:else}
 			<Sala />
 		{/if}
@@ -155,19 +159,21 @@
 			overflow: hidden;
 			clip-path: inset(50%);
 		}
+		/* quatre jeux depuis le 07-11 (L'intrús) : ils ne tiennent plus sur
+		   une ligne ; deux colonnes nettes plutôt qu'un nom seul à la ligne
+		   (trois sur une ligne jusque-là, « Pausa los mots », 06-11) */
 		.onglets {
 			flex-basis: 100%;
 			margin-inline-start: 0;
-			justify-content: space-between;
-		}
-		/* les trois noms de jeux tiennent sur une ligne, même sur un
-		   téléphone de 360 px (« Pausa los mots », 06-11) ; plus petit encore,
-		   ils passent à la ligne */
-		.onglets {
-			gap: 0 0.5rem;
+			display: grid;
+			grid-template-columns: repeat(2, auto);
+			justify-content: start;
+			gap: 0 var(--esp-24);
 		}
 		.onglets a {
-			font-size: max(0.78rem, min(0.95rem, calc((100vw - 3rem) / 24.5)));
+			justify-self: start;
+			min-height: 2.5rem;
+			font-size: 0.95rem;
 		}
 	}
 	.scena {

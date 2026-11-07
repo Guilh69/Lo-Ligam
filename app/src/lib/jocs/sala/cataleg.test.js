@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { CAPACITATS, FAMILHAS, JOCS_SALA, jocsDe } from './cataleg.js';
 
 // les jeux en ligne : ceux que la page /apren/jocs sait afficher
-const EN_LINHA = ['serp', 'paniers', 'paisatges'];
+const EN_LINHA = ['serp', 'paniers', 'paisatges', 'intrus'];
 const AFICAS = ['garona', 'vilatge', 'riu', 'plana', 'mar'];
 
 describe('la salle de jeux', () => {

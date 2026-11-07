@@ -32,7 +32,6 @@ export const modul64 = {
 	nomsPropris: ['Lisa', 'Yasmine', 'Núria', 'Karim', 'Inès'],
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
-		'L’intrus (étape 1) : quatre séries de quatre mots, faites avec les mots de l’unité. Chaque famille doit être nette et l’intrus plausible : dis si une série a deux réponses possibles.',
 		'Titre du module : *E ta jornada ?* (et ta journée ?), comme le propose le lexique. Ça te va ?',
 		'Tour « rester en occitan » : Karim passe au français ; la bonne réplique est *Cossí se ditz en occitan ?* (2.3), sans le mot au milieu. Naturel ?',
 		'*Lo tantòst, trabalhi totjorn !* (l’après-midi, je travaille toujours) : *totjorn* au sens de « encore », comme en français. D’accord ?',
@@ -44,7 +43,7 @@ export const modul64 = {
 		// ————————————————————————————————— 1. Révision du jour
 		{
 			title: 'Révision du jour',
-			minutes: 7,
+			minutes: 5,
 			blocks: [
 				{
 					type: 'qcm',
@@ -73,43 +72,6 @@ export const modul64 = {
 							correct: 0,
 							choses: ['e-quart'],
 							explain: 'Dix heures moins le quart : 9 h 45. Pour 10 h 15 : *dètz oras e quart*.'
-						}
-					]
-				},
-				{
-					// L’intrus (chantier 33, 07-11) : conçu avec lo Basic et sinonimes
-					// (scripts/intrus-verificar.mjs), rien de leurs réponses n’est gardé.
-					type: 'intrus',
-					title: 'L’intrús (l’intrus)',
-					intro: 'Quatre mots : trois font une famille, le quatrième n’a rien à faire là. Touche l’intrus.',
-					items: [
-						{
-							mots: ['dejunar', 'dinnar', 'sopar', 'dançar'],
-							intrus: 3,
-							familha: 'les repas : le matin, à midi, le soir',
-							choses: ['dejunar', 'dinnar', 'sopar', 'dancar'],
-							explain: '*Dançar*, c’est danser : rien à manger !'
-						},
-						{
-							mots: ['la pluèja', 'la nèu', 'lo vent', 'lo tantòst'],
-							intrus: 3,
-							familha: 'le temps qu’il fait',
-							choses: ['la-plueja', 'la-neu', 'fa-vent', 'lo-tantost'],
-							explain: '*Lo tantòst*, c’est l’après-midi.'
-						},
-						{
-							mots: ['e mièja', 'e quart', 'mens lo quart', 'e tu'],
-							intrus: 3,
-							familha: 'pour dire l’heure',
-							choses: ['e-mieja', 'e-quart', 'va-plan-e-tu'],
-							explain: '*E tu*, c’est « et toi ».'
-						},
-						{
-							mots: ['me lèvi', 'te lèvas', 'se lèva', 'me dison'],
-							intrus: 3,
-							familha: 'le verbe se lever',
-							choses: ['me-levi', 'me-dison'],
-							explain: '*Me dison* : « on m’appelle ».'
 						}
 					]
 				},

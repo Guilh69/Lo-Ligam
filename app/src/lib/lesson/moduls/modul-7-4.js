@@ -29,7 +29,6 @@ export const modul74 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Marià', 'Karim', 'Núria', 'Lisa', 'Yasmine', 'Inès', 'Mimí', 'Loís'],
 	notesRelecture: [
-		'L’intrus (étape 1) : quatre séries de quatre mots, faites avec les mots de l’unité. Chaque famille doit être nette et l’intrus plausible : dis si une série a deux réponses possibles.',
 		'Titre du module : *E ton ostal ?* (et ta maison ?), comme le propose le lexique. Ça te va ?',
 		'Les logements : Karim en colocation (*amb dos amics*), Núria dans une chambre, Lisa dans un *apartament* (glosé), Yasmine dans un *mas* avec son *companh*, Marià dans la maison de sa famille. Ça te va ?',
 		'Tour « rester en occitan » : Núria passe au français ; la bonne réplique est *Pòdes repetir, se te plai ?*, comme en 4.4. D’accord ?',
@@ -41,7 +40,7 @@ export const modul74 = {
 		// ————————————————————————————————— 1. Révision du jour
 		{
 			title: 'Révision du jour',
-			minutes: 7,
+			minutes: 5,
 			blocks: [
 				{
 					type: 'qcm',
@@ -70,43 +69,6 @@ export const modul74 = {
 							correct: 0,
 							choses: ['la-fenestra', 'la-sala-de-banh', 'i-a'],
 							explain: '*Non i a pas de…* : il n’y a pas de…'
-						}
-					]
-				},
-				{
-					// L’intrus (chantier 33, 07-11) : conçu avec lo Basic et sinonimes
-					// (scripts/intrus-verificar.mjs), rien de leurs réponses n’est gardé.
-					type: 'intrus',
-					title: 'L’intrús (l’intrus)',
-					intro: 'Quatre mots : trois font une famille, le quatrième n’a rien à faire là. Touche l’intrus.',
-					items: [
-						{
-							mots: ['la cambra', 'la sala', 'la sala de banh', 'la taula'],
-							intrus: 3,
-							familha: 'des pièces de la maison',
-							choses: ['la-cambra', 'la-sala', 'la-sala-de-banh', 'la-taula'],
-							explain: '*La taula*, la table, est un meuble.'
-						},
-						{
-							mots: ['blanc', 'negre', 'gris', 'nòu'],
-							intrus: 3,
-							familha: 'des couleurs',
-							choses: ['blanc-blanca', 'negre-negra', 'gris-grisa', 'nou-nova'],
-							explain: '*Nòu* : neuf, ou 9 !'
-						},
-						{
-							mots: ['jos', 'davant', 'entre', 'tanben'],
-							intrus: 3,
-							familha: 'pour dire où',
-							choses: ['jos', 'davant', 'entre', 'tanben'],
-							explain: '*Tanben* veut dire « aussi ».'
-						},
-						{
-							mots: ['la cadièra', 'lo canapè', 'l’armari', 'lo jardin'],
-							intrus: 3,
-							familha: 'des meubles',
-							choses: ['la-cadiera', 'lo-canape', 'l-armari', 'lo-jardin'],
-							explain: '*Lo jardin* est dehors.'
 						}
 					]
 				},

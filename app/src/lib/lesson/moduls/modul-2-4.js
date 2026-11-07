@@ -24,7 +24,6 @@ export const modul24 = {
 	nomsPropris: ['Karim', 'Núria', 'Marià', 'Giulia', 'Loís', 'Lisa'],
 	// Questions pour la fiche de relecture de Romain.
 	notesRelecture: [
-		'L’intrus (étape 1) : quatre séries de quatre mots, faites avec les mots de l’unité. Chaque famille doit être nette et l’intrus plausible : dis si une série a deux réponses possibles.',
 		'Titre du module : *Quina lenga parla ?* (quelle langue parle-t-il, parle-t-elle ?), proposé par le lexique à la place de *Tasca*. Il te va ?',
 		'Tour où Loís passe au français (règle 13) : la bonne réplique est *Pòdes repetir en occitan, se te plai ?*, vue en 2.3. Elle te va ?',
 		'Fiche « langues » en six phrases, à la troisième personne : *Es Núria. Es catalana : es de Barcelona, mas demòra a Tolosa. Parla catalan e espanhòl. Parla tanben un pauc occitan, e compren plan. Non parla pas anglés !* Tu valides l’enchaînement ?'
@@ -34,7 +33,7 @@ export const modul24 = {
 		// ————————————————————————————————— 1. Révision du jour
 		{
 			title: 'Révision du jour',
-			minutes: 7,
+			minutes: 5,
 			blocks: [
 				{
 					type: 'qcm',
@@ -64,43 +63,6 @@ export const modul24 = {
 							oc: true,
 							choses: ['comprene-singular', 'un-pauc-plan'],
 							explain: '*Compren* : elle comprend. *Compreni* : je comprends ; *comprenes* : tu comprends.'
-						}
-					]
-				},
-				{
-					// L’intrus (chantier 33, 07-11) : conçu avec lo Basic et sinonimes
-					// (scripts/intrus-verificar.mjs), rien de leurs réponses n’est gardé.
-					type: 'intrus',
-					title: 'L’intrús (l’intrus)',
-					intro: 'Quatre mots : trois font une famille, le quatrième n’a rien à faire là. Touche l’intrus.',
-					items: [
-						{
-							mots: ['catalana', 'francesa', 'italian', 'espanhòla'],
-							intrus: 2,
-							familha: 'au féminin, en *-a*',
-							choses: ['catalan-catalana', 'frances-francesa', 'italian-italiana', 'espanhol-espanhola'],
-							explain: '*Italian* est au masculin ; au féminin, *italiana*.'
-						},
-						{
-							mots: ['parli', 'compreni', 'parlas', 'demòri'],
-							intrus: 2,
-							familha: '« je » : la fin en *-i*',
-							choses: ['parlar-singular', 'comprene-singular', 'demori-a'],
-							explain: '*Parlas* : « tu parles ».'
-						},
-						{
-							mots: ['Cossí se ditz… ?', 'Qué vòl dire… ?', 'D’ont siás ?', 'Pòdes repetir, se te plai ?'],
-							intrus: 2,
-							familha: 'pour se débrouiller quand on ne comprend pas',
-							choses: ['cossi-se-ditz', 'que-vol-dire', 'd-ont-sias', 'podes-repetir'],
-							explain: '*D’ont siás ?* demande d’où l’on est.'
-						},
-						{
-							mots: ['ieu', 'el', 'mas', 'ela'],
-							intrus: 2,
-							familha: 'des personnes : moi, lui, elle',
-							choses: ['ieu', 'el-ela', 'mas'],
-							explain: '*Mas* veut dire « mais ».'
 						}
 					]
 				},

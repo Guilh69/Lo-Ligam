@@ -2,7 +2,6 @@
 	// Exercice à choix : un item à la fois, retour immédiat, explication d'une
 	// ligne après la bonne réponse (gabarit du cursus §5). L'item suivant
 	// n'apparaît qu'une fois l'item courant réussi.
-	import { flip } from 'svelte/animate';
 	import { rich, insecable } from '$lib/lesson/rich.js';
 
 	// item.ditz = { qui, oc } : quelqu'un te parle (jeu « Escota e causís ») ;
@@ -10,19 +9,6 @@
 	// onResult(item, reussi) : une fois l'item trouvé, réussi s'il l'a été du
 	// premier coup (le carnet de révision note les choses qu'il teste).
 	let { block, onCorrect = () => {}, onComplete = () => {}, onResult = () => {} } = $props();
-
-	// « L'intrús » (type 'intrus', chantier 33, 07-11) : quatre mots, dont un
-	// étranger à la famille ; la bonne réponse est l'intrus. Une fois trouvé,
-	// les trois autres se rangent ensemble sous le nom de leur famille, et
-	// l'intrus reste à l'écart. item = { mots, intrus, familha, explain }.
-	const intrus = block.type === 'intrus';
-	const items = intrus
-		? block.items.map((it) => ({ ...it, options: it.mots, correct: it.intrus }))
-		: block.items;
-	// les pièces glissent à leur place (sans rebond) ; immobiles si l'appareil
-	// demande moins d'animations
-	const doux =
-		typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 	// L'ordre des options est mélangé à l'affichage (sinon la bonne réponse
 	// serait devinable par sa position), sauf Vrai/Faux (noShuffle).
@@ -37,18 +23,16 @@
 	}
 
 	let states = $state(
-		items.map((item) => ({ done: false, wrong: [], shake: false, order: shuffled(item) }))
+		block.items.map((item) => ({ done: false, wrong: [], shake: false, order: shuffled(item) }))
 	);
 	let doneCount = $derived(states.filter((s) => s.done).length);
-	let visibleCount = $derived(Math.min(doneCount + 1, items.length));
+	let visibleCount = $derived(Math.min(doneCount + 1, block.items.length));
 
 	function pick(i, oi) {
 		const st = states[i];
 		if (st.done) return;
-		if (oi === items[i].correct) {
+		if (oi === block.items[i].correct) {
 			st.done = true;
-			// l'intrus passe en bout de rang, la famille se resserre
-			if (intrus) st.order = [...st.order.filter((o) => o !== oi), oi];
 			onCorrect();
 			onResult(block.items[i], st.wrong.length === 0);
 			if (states.every((s) => s.done)) onComplete();
@@ -63,40 +47,12 @@
 <section class="block">
 	<header class="block-head">
 		<h3 class="block-title">{block.title}</h3>
-		<span class="counter" aria-label="Progression de l'exercice">{doneCount}/{items.length}</span>
+		<span class="counter" aria-label="Progression de l'exercice">{doneCount}/{block.items.length}</span>
 	</header>
 	{#if block.intro}<p class="intro">{@html rich(block.intro)}</p>{/if}
 
-	{#each items.slice(0, visibleCount) as item, i}
-		<div class="item" class:shake={states[i].shake} class:intrus>
-			{#if intrus}
-				<div class="seria">
-				<span class="num">{i + 1}</span>
-				<div class="tiras" class:resolguda={states[i].done} role="group" aria-label="Série {i + 1} : quatre mots, un intrus">
-					{#each states[i].order as oi (oi)}
-						<button
-							type="button"
-							lang="oc"
-							class="pc pc-rep opt mot"
-							class:familha={states[i].done && oi !== item.correct}
-							class:fora={states[i].done && oi === item.correct}
-							class:wrong={!states[i].done && states[i].wrong.includes(oi)}
-							disabled={states[i].done || states[i].wrong.includes(oi)}
-							onclick={() => pick(i, oi)}
-							animate:flip={{ duration: doux ? 0 : 420 }}
-						>
-							{insecable(item.options[oi])}
-						</button>
-					{/each}
-					{#if states[i].done}
-						<p class="familha-nom">{@html rich(item.familha)}</p>
-					{/if}
-				</div>
-				</div>
-				{#if states[i].done && item.explain}
-					<p class="explain">✓ {@html rich(item.explain)}</p>
-				{/if}
-			{:else}
+	{#each block.items.slice(0, visibleCount) as item, i}
+		<div class="item" class:shake={states[i].shake}>
 			{#if item.ditz}
 				<p class="ditz"><span class="num">{i + 1}</span> <span class="qui">{item.ditz.qui}</span> <span class="paraula" lang="oc">{insecable(item.ditz.oc)}</span></p>
 			{/if}
@@ -117,7 +73,6 @@
 			</div>
 			{#if states[i].done && item.explain}
 				<p class="explain">✓ {@html rich(item.explain)}</p>
-			{/if}
 			{/if}
 		</div>
 	{/each}
@@ -250,99 +205,6 @@
 		line-height: 1.5;
 	}
 
-	/* ---- L'intrús : quatre pièces, puis la famille se range sous son nom ---- */
-	.item.intrus {
-		container-type: inline-size;
-	}
-
-	.seria {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.25rem;
-	}
-
-	.seria > .num {
-		flex: none;
-		margin-top: 0.8rem;
-	}
-
-	/* deux par deux sur téléphone, quatre de front dès que la place le permet */
-	.tiras {
-		flex: 1;
-		min-width: 0;
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 0.5rem;
-	}
-
-	.mot {
-		justify-content: center;
-		min-height: 3rem;
-		padding: 0.5rem 0.6rem;
-		font-size: 1.02rem;
-		font-weight: 600;
-		line-height: 1.25;
-		text-align: center;
-	}
-
-	/* la famille passe à l'or, ensemble */
-	.mot.familha {
-		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: #2a1a10;
-		transform: translateY(-1px);
-		box-shadow: 0 4px 4px var(--pc-ombre);
-	}
-
-	/* l'intrus reste à l'écart, posé à plat (le papier ne s'incline pas) */
-	.mot.fora {
-		--pc-fons: var(--pc-carton);
-		--pc-tinta: var(--pc-carton-tinta, var(--t-tinta));
-		opacity: 0.6;
-		transform: translateY(3px);
-		box-shadow: 0 1px 2px var(--pc-ombre);
-	}
-
-	/* le nom de la famille, sous un filet d'or qui se trace */
-	.familha-nom {
-		position: relative;
-		grid-column: 1 / -1;
-		margin: 0.15rem 0 0;
-		padding-top: 0.5rem;
-		font-size: 0.85rem;
-		font-weight: 600;
-		text-align: center;
-		color: var(--t-aur);
-		animation: fade-in 350ms 200ms ease-out both;
-	}
-
-	.familha-nom::before {
-		content: '';
-		position: absolute;
-		inset: 0 0.75rem auto;
-		height: 1px;
-		background: var(--t-aur);
-		transform-origin: left;
-		animation: tracar 450ms ease-out both;
-	}
-
-	@container (min-width: 32rem) {
-		.tiras {
-			grid-template-columns: repeat(4, minmax(0, 1fr));
-		}
-		/* sous les trois pièces de la famille, pas sous l'intrus */
-		.familha-nom {
-			grid-column: 1 / 4;
-		}
-		.mot.fora {
-			margin-left: 0.6rem;
-		}
-	}
-
-	@keyframes tracar {
-		from { transform: scaleX(0); }
-		to { transform: scaleX(1); }
-	}
-
 	.shake {
 		animation: shake 260ms ease;
 	}
@@ -359,7 +221,7 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.item, .shake, .familha-nom, .familha-nom::before { animation: none; }
+		.item, .shake { animation: none; }
 		.opt { transition: none; }
 	}
 </style>

@@ -27,7 +27,6 @@ export const modul54 = {
 	// Prénoms des personnages : ni contrôlés ni vérifiés.
 	nomsPropris: ['Núria', 'Yasmine', 'Ramon', 'Marià', 'Inès'],
 	notesRelecture: [
-		'L’intrus (étape 1) : quatre séries de quatre mots, faites avec les mots de l’unité. Chaque famille doit être nette et l’intrus plausible : dis si une série a deux réponses possibles.',
 		'Titre du module : *Quicòm mai ?* (autre chose ?), comme le propose le lexique. Ça te va ?',
 		'Le jeu inverse les rôles : tu tiens l’étal de Yasmine et tu sers Marià, avant la tâche où tu redeviens client. D’accord pour ce détour ?',
 		'Tour « rester en occitan » : Marià passe au français ; la bonne réplique se débrouille avec les mots connus (*Òc ! Yasmine es d’aquí.*), car *Pòdes repetir* tutoie et le vouvoiement de *poder* n’est pas encore vu. Ça te va ?',
@@ -39,7 +38,7 @@ export const modul54 = {
 		// ————————————————————————————————— 1. Révision du jour
 		{
 			title: 'Révision du jour',
-			minutes: 7,
+			minutes: 5,
 			blocks: [
 				{
 					type: 'qcm',
@@ -60,43 +59,6 @@ export const modul54 = {
 							correct: 0,
 							choses: ['m-agrada'],
 							explain: '*Non m’agrada pas* : je n’aime pas. Vouloir, c’est *vòli* ; cher, *car*.'
-						}
-					]
-				},
-				{
-					// L’intrus (chantier 33, 07-11) : conçu avec lo Basic et sinonimes
-					// (scripts/intrus-verificar.mjs), rien de leurs réponses n’est gardé.
-					type: 'intrus',
-					title: 'L’intrús (l’intrus)',
-					intro: 'Quatre mots : trois font une famille, le quatrième n’a rien à faire là. Touche l’intrus.',
-					items: [
-						{
-							mots: ['la poma', 'la pera', 'lo rasim', 'la ceba'],
-							intrus: 3,
-							familha: 'des fruits',
-							choses: ['la-poma', 'la-pera', 'lo-rasim', 'la-ceba'],
-							explain: '*La ceba*, l’oignon, est un légume.'
-						},
-						{
-							mots: ['lo lach', 'lo formatge', 'l’uòu', 'lo pan'],
-							intrus: 3,
-							familha: 'ça vient des bêtes',
-							choses: ['lo-lach', 'lo-formatge', 'l-uou', 'lo-pan'],
-							explain: '*Lo pan* vient du blé.'
-						},
-						{
-							mots: ['seissanta', 'setanta', 'ochanta', 'setze'],
-							intrus: 3,
-							familha: '60, 70, 80',
-							choses: ['nombre-60', 'nombre-70', 'nombre-80', 'nombre-16'],
-							explain: '*Setze*, c’est 16.'
-						},
-						{
-							mots: ['vòli', 'vòls', 'vòl', 'pòt'],
-							intrus: 3,
-							familha: 'le verbe *voler* : vouloir',
-							choses: ['voler-singular', 'poder-singular'],
-							explain: '*Pòt* vient de *poder* : « il ou elle peut ».'
 						}
 					]
 				},

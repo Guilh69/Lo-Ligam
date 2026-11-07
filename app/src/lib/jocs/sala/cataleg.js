@@ -9,7 +9,7 @@
 // des mots simples, sans promesse sur le cerveau. Un jeu « a venir » est
 // montré sans lien : la salle grandit avec le cursus (décision du 25-10 :
 // « un espace de jeux qui grandit avec les blocs »). Les consignes des jeux
-// en ligne sont reprises de leur composant (Serp, Paniers, PausaMots).
+// en ligne sont reprises de leur composant (Serp, Paniers, PausaMots, Intrus).
 // Occitan passé à lo Congrès le 2026-11-06 (sala, adreça, memòria,
 // observacion, escotar, atencion, ortografia, vocabulari, gramatica, logica,
 // joiós, calme, jogar, venir, crosat, mesclat, parelh, tèma, trabalhar, tot,
@@ -65,6 +65,19 @@ export const JOCS_SALA = [
 			fr: 'Un mot tombe\u00a0: le panier de gauche ou le panier de droite\u00a0?'
 		},
 		capacitats: ['gramatica', 'vocabulari', 'adreca']
+	},
+	{
+		// chantier 33, 07-11 : d'abord dans les leçons de tâche, passé dans la
+		// salle le jour même (Romain) ; séries dans $lib/jocs/intrus-series.js
+		id: 'intrus',
+		familha: 'mots',
+		disponible: true,
+		nom: 'L’intrús',
+		consigna: {
+			oc: 'Quatre mots\u00a0: tres fan una familha. Tòca l’intrús.',
+			fr: 'Quatre mots\u00a0: trois font une famille. Touche l’intrus.'
+		},
+		capacitats: ['vocabulari', 'logica']
 	},
 	{
 		id: 'mots-crosats',

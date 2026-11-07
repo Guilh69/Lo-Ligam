@@ -150,7 +150,7 @@
 	// Déblocage progressif : dans une étape, un bloc interactif (questions,
 	// remise en ordre…) doit être réussi pour révéler la suite ; les blocs de
 	// lecture (dialogue, tableau, notes…) accompagnent sans bloquer.
-	const INTERACTIUS = new Set(['qcm', 'intrus', 'reveal', 'order', 'escriure', 'causida', 'carta']);
+	const INTERACTIUS = new Set(['qcm', 'reveal', 'order', 'escriure', 'causida', 'carta']);
 	let blockDone = $state([]);
 
 	let visibleBlockCount = $derived.by(() => {
@@ -369,7 +369,7 @@
 				<div class="blocks">
 					{#each s.blocks.slice(0, visibleBlockCount) as block, bi}
 						<div class="block-slot" data-bloc={bi}>
-							{#if block.type === 'qcm' || block.type === 'intrus'}
+							{#if block.type === 'qcm'}
 								<QcmBlock {block} {onCorrect} onResult={noterReconnais} onComplete={() => (blockDone[bi] = true)} />
 							{:else if block.type === 'reveal'}
 								<RevealBlock {block} {onCorrect} onComplete={() => (blockDone[bi] = true)} />

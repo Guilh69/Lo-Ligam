@@ -1,7 +1,9 @@
 // Contrôle de conception du jeu « L'intrus » (chantier 33, séance 1, 07-11).
 //
-//   node scripts/intrus-verificar.mjs                 (toutes les séries des leçons)
-//   node scripts/intrus-verificar.mjs --modul 3-4     (les séries d'une leçon)
+//   node scripts/intrus-verificar.mjs                 (toutes les séries du jeu)
+//   node scripts/intrus-verificar.mjs --unitat 3      (les séries d'une unité)
+//
+// Les séries : src/lib/jocs/intrus-series.js (jeu de la salle Jòcs).
 //   node scripts/intrus-verificar.mjs --mots "lo cat|lo can|lo caval|lo cosin" --intrus 4
 //
 // Pour chaque série de quatre mots, le script interroge deux API de lo Congrès
@@ -153,19 +155,14 @@ if (args[0] === '--mots') {
 	}
 	alertas += await verificarSeria(mots, intrus, 'série libre');
 } else {
-	const { moduls } = await import(pathToFileURL(join(racina, 'src/lib/lesson/moduls/index.js')));
-	const cles = args[0] === '--modul' ? [args[1]] : Object.keys(moduls);
-	for (const cle of cles) {
-		if (!moduls[cle]) {
-			console.error(`Module inconnu : ${cle}`);
+	const { SERIAS } = await import(pathToFileURL(join(racina, 'src/lib/jocs/intrus-series.js')));
+	const unitats = args[0] === '--unitat' ? [args[1]] : Object.keys(SERIAS);
+	for (const u of unitats) {
+		if (!SERIAS[u]) {
+			console.error(`Unité inconnue : ${u}`);
 			process.exit(1);
 		}
-		for (const etapa of moduls[cle].sessions) {
-			for (const bloc of etapa.blocks) {
-				if (bloc.type !== 'intrus') continue;
-				for (const [n, item] of bloc.items.entries()) alertas += await verificarSeria(item.mots, item.intrus, `${cle} · ${n + 1}`);
-			}
-		}
+		for (const [n, item] of SERIAS[u].entries()) alertas += await verificarSeria(item.mots, item.intrus, `unitat ${u} · ${n + 1}`);
 	}
 }
 console.log(`\n${alertas ? `⚠ ${alertas} alerte(s) à regarder` : '✓ aucune alerte'}. Rien n’a été gardé des réponses de lo Congrès.`);

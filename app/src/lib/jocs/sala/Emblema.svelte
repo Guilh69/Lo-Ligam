@@ -27,6 +27,13 @@
 			<circle cx="27" cy="13" r="2.4" fill="var(--emb-aur)" stroke="none" />
 			<rect x="9" y="11" width="12" height="5" rx="0.6" stroke-width="1" stroke-dasharray="1.8 1.2" />
 			<path d="M21 13.5 H24.4" stroke-width="0.8" />
+		{:else if id === 'intrus'}
+			<!-- trois tuiles d'une famille sur un filet d'or, la quatrième à l'écart -->
+			<rect x="4" y="7" width="9" height="9" rx="1.5" />
+			<rect x="15.5" y="7" width="9" height="9" rx="1.5" />
+			<rect x="27" y="7" width="9" height="9" rx="1.5" />
+			<path d="M4 20.5 H36" stroke="var(--emb-aur)" stroke-width="2" />
+			<rect x="25" y="25" width="9" height="9" rx="1.5" stroke-dasharray="2 1.6" transform="rotate(12 29.5 29.5)" />
 		{:else if id === 'mots-crosats'}
 			<!-- une grille, trois cases noires -->
 			<rect x="6" y="6" width="28" height="28" rx="1" />
