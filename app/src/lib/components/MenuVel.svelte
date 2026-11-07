@@ -176,10 +176,10 @@
 {/if}
 
 <style>
-	/* Couleurs fixes : le terracotta du logo et la crème, dans tous les thèmes
+	/* Le fond suit le rouge des boutons (--t-accion, 07-11 : un seul rouge) et la crème du texte, dans tous les thèmes
 	   (contraste crème sur terracotta ≈ 5,9 : AA) */
 	.vel-portal {
-		--vel-fons: #b53d17;
+		--vel-fons: var(--t-accion);
 		--vel-tinta: #f5ead8;
 		--vel-tinta-2: rgba(245, 234, 216, 0.72);
 		--vel-linha: rgba(245, 234, 216, 0.28);
@@ -267,6 +267,10 @@
 	/* le bouton de fermeture : une pièce de papier (lib/styles/papier.css) */
 	.vel-tampar {
 		flex: none;
+		/* sur le rouge, la croix est une pièce de la crème du texte à 18 % (plus de pièce turquoise : 07-11) */
+		--pc-fons: color-mix(in srgb, var(--vel-tinta) 18%, transparent);
+		--pc-tinta: var(--vel-tinta);
+		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--vel-tinta) 55%, transparent);
 	}
 
 	.vel-grop {

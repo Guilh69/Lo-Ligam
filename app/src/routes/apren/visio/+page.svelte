@@ -381,7 +381,7 @@
 
 	.visio {
 		/* la couleur de la case visio de /apren (jeu « Charte ») */
-		--visio: #b53d17;
+		--visio: var(--t-accion);
 		--visio-tinta: #fbf1e1;
 		container: visio / inline-size;
 		max-width: calc(72rem + 2 * var(--marge));

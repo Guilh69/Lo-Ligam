@@ -369,7 +369,7 @@
 		gap: 0.4rem;
 		padding: 0.6rem 1.2rem 0.6rem 1.6rem;
 		border-left: 2px dashed #b0b791;
-		color: #b53d17;
+		color: var(--t-accion);
 		font-weight: 700;
 		white-space: nowrap;
 	}

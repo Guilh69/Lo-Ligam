@@ -181,7 +181,7 @@
 		gap: 0.45rem;
 		padding: 0.3rem 0.75rem;
 		border-radius: 999px;
-		background: #b53d17;
+		background: var(--t-accion);
 		color: #fbf1e1;
 		font-size: 0.85rem;
 		font-weight: 700;
@@ -272,7 +272,7 @@
 		gap: 0.4rem;
 		padding: 0.6rem 1.3rem;
 		border-radius: 999px;
-		background: #b53d17;
+		background: var(--t-accion);
 		color: #fbf1e1;
 		font-weight: 700;
 		text-decoration: none;

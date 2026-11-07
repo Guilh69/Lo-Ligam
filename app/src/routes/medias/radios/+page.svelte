@@ -307,7 +307,7 @@
 		width: 1.5rem;
 		height: 1.5rem;
 		border-radius: 50%;
-		background: #b53d17;
+		background: var(--t-accion);
 		box-shadow: 0 0 0 3px #fbf1e1;
 	}
 	.punt.actiu .punt-rond::after {
@@ -315,7 +315,7 @@
 		position: absolute;
 		inset: -3px;
 		border-radius: 50%;
-		border: 3px solid #b53d17;
+		border: 3px solid var(--t-accion);
 		animation: espandir 1.4s ease-out infinite;
 	}
 	@keyframes espandir {

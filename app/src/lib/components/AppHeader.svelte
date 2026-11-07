@@ -629,6 +629,21 @@
 			outline-offset: -3px;
 			border-radius: 12px;
 		}
+		/* cibles de 44 px au doigt (la règle du site) : les réglages du haut faisaient 35 px */
+		.top.avec-onglets .compte-ligam,
+		.top.avec-onglets .admin-link,
+		.top.avec-onglets .globe-boton,
+		.top.avec-onglets :global(.ambianca-boton) {
+			min-width: 2.75rem;
+			height: 2.75rem;
+		}
+		.top.avec-onglets .lang-toggle button {
+			height: 2.35rem;
+		}
+		.top.avec-onglets .brand {
+			min-height: 2.75rem;
+			padding-right: 0.4rem;
+		}
 		/* la page ne passe pas sous la barre */
 		:global(body:has(.onglets-bas)) {
 			padding-bottom: calc(4.3rem + env(safe-area-inset-bottom, 0px));
