@@ -23,6 +23,17 @@
 	// « Cossí vas ? » → « Cossí vas » dans la remarque, pour qu'elle se lise bien.
 	const sensPonch = (t) => String(t ?? '').replace(/[\s?!.…]+$/u, '');
 	const fait = (st) => st.statut === 'just' || st.statut === 'quasi' || st.montre;
+	// Phrase à début imposé (« Me dison » + son prénom) : sans réponse complète,
+	// l'indice et la réponse montrée disent par quoi commencer (Romain, 07-11 :
+	// « Dis ton nom », il avait écrit son nom seul, et « Me dison + ce que tu
+	// veux. Puis ton prénom. » n'était « pas clair du tout »).
+	const debutSol = (item) => !item.answers?.length && item.debut?.length;
+	function debutsPrincipals(item) {
+		const simples = item.debut.filter((d) => !/^Ieu,/.test(d));
+		return [...new Set(simples.length ? simples : item.debut)].slice(0, 2);
+	}
+	const commencaPer = (item) =>
+		debutsPrincipals(item).map((d) => `<em>${d}</em>`).join(' ou ');
 
 	async function verificar(i) {
 		const st = states[i];
@@ -53,6 +64,8 @@
 		const st = states[i];
 		st.montre = true;
 		st.modele = block.items[i].answers?.[0] ?? block.items[i].debut?.[0] ?? '';
+		// la case montre le modèle, pas la réponse refusée (qui semblait validée)
+		st.saisie = debutSol(block.items[i]) ? st.modele + ' …' : st.modele;
 		onResult(block.items[i], false);
 		suivant(i);
 	}
@@ -135,8 +148,15 @@
 					<span class="bon">✓ {@html rich(item.explain ?? 'Òsca ! (bravo !)')}</span>
 				{:else if st.statut === 'quasi'}
 					<span class="bon">✓ Presque ! On écrit <em>{sensPonch(st.modele)}</em>, {st.remarca === 'accent' ? 'avec l’accent' : 'avec le trait d’union'}. {@html item.explain ? rich(item.explain) : ''}</span>
+				{:else if st.montre && debutSol(item)}
+					<span class="montre">La phrase commence par {@html commencaPer(item)}. {@html item.explain ? rich(item.explain) : ''}</span>
 				{:else if st.montre}
-					<span class="montre">La réponse : <em>{sensPonch(st.modele)}</em>{item.debut ? ' + ce que tu veux' : ''}. {@html item.explain ? rich(item.explain) : ''}</span>
+					<span class="montre">La réponse : <em>{sensPonch(st.modele)}</em>. {@html item.explain ? rich(item.explain) : ''}</span>
+				{:else if st.statut === 'non' && !item.indici && debutSol(item)}
+					<span class="pas-encara">Pas encore : commence par {@html commencaPer(item)}.</span>
+					{#if st.essais >= 2}
+						<button type="button" class="veire" onclick={() => montrar(i)}>Veire la responsa <em>(voir la réponse)</em></button>
+					{/if}
 				{:else if st.statut === 'non'}
 					<span class="pas-encara">Pas encore{item.indici ? ' : ' : '.'}{@html item.indici ? rich(item.indici) : ''}</span>
 					{#if st.essais >= 2}

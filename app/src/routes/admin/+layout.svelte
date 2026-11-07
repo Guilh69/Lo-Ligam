@@ -10,7 +10,7 @@
 	import { session, authReady } from '$lib/authStore';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { page } from '$app/state';
-	import { TALHIÈRS } from '$lib/talhier/talhiers.js';
+	import { TALHIÈRS, LARGEURS } from '$lib/talhier/talhiers.js';
 	import { simulacion } from '$lib/talhier/notas.svelte.js';
 
 	let { children } = $props();
@@ -41,7 +41,10 @@
 	// ateliers, une barre les reprend, rangés par usage (lib/talhier/talhiers.js)
 	// (la pile de validation, lot 4, s'en passe aussi : une carte à la fois, sans
 	// rien autour ; elle a son propre retour vers Per tu)
-	let barra = $derived(!['/admin', '/admin/pila'].includes(page.url.pathname));
+	// Gabarit commun (07-11) : la barre des ateliers est sur TOUTES les pages, y compris Per tu
+	// et A validar (elle manquait sur Per tu et La pila : on ne retombait pas sur la même
+	// interface en revenant en arrière). Chaque page a une largeur (LARGEURS).
+	let largeur = $derived(LARGEURS[page.route.id ?? ''] ?? null);
 </script>
 
 <svelte:head>
@@ -73,21 +76,21 @@
 			</p>
 		</section>
 	{:else}
-		{#if barra}
-			<nav class="menut" aria-label="Espaci d'administracion">
-				<a href="/admin" class="pertu">Per tu</a>
-				{#each TALHIÈRS as g (g.grop)}
-					<span class="grop">
-						<span class="grop-nom">{g.grop}</span>
-						{#each g.ateliers as m (m.href)}
-							<a href={m.href} title={m.fr} class:actiu={page.url.pathname === m.href} aria-current={page.url.pathname === m.href ? 'page' : undefined}>{m.oc}</a>
-						{/each}
-					</span>
-				{/each}
-			</nav>
-		{/if}
+		<nav class="menut" aria-label="Espaci d'administracion">
+			<a href="/admin" class="pertu" class:actiu={page.url.pathname === '/admin'} aria-current={page.url.pathname === '/admin' ? 'page' : undefined}>Per tu</a>
+			{#each TALHIÈRS as g (g.grop)}
+				<span class="grop">
+					<span class="grop-nom">{g.grop}</span>
+					{#each g.ateliers as m (m.href)}
+						<a href={m.href} title={m.fr} class:actiu={page.url.pathname === m.href} aria-current={page.url.pathname === m.href ? 'page' : undefined}>{m.oc}</a>
+					{/each}
+				</span>
+			{/each}
+		</nav>
 
-		{@render children()}
+		<div class="adm-corps" data-largeur={largeur}>
+			{@render children()}
+		</div>
 	{/if}
 </main>
 
@@ -217,6 +220,44 @@
 	.menut a.actiu {
 		background: var(--color-terracotta);
 		color: white;
+	}
+
+	/* Une largeur par type de page (gabarit commun, 07-11) : étroit = une carte à la fois,
+	   normal = lire et répondre, large = comparer et trier (voir LARGEURS dans talhiers.js).
+	   Les pages qui n'en déclarent pas (les anciennes pages en cartes) gardent leur largeur. */
+	.adm-corps {
+		display: contents;
+	}
+	.adm-corps[data-largeur] {
+		display: block;
+		width: 100%;
+		margin-inline: auto;
+	}
+	.adm-corps[data-largeur='etroit'] {
+		max-width: 34rem;
+	}
+	.adm-corps[data-largeur='normal'] {
+		max-width: 52rem;
+	}
+	.adm-corps[data-largeur='large'] {
+		max-width: 78rem;
+	}
+	/* téléphone : la barre des ateliers tient sur une ligne qui défile, au lieu de prendre un écran */
+	@media (max-width: 44rem) {
+		.menut {
+			flex-wrap: nowrap;
+			justify-content: flex-start;
+			width: 100%;
+			overflow-x: auto;
+			scrollbar-width: thin;
+		}
+		.menut .grop {
+			flex-wrap: nowrap;
+			white-space: nowrap;
+		}
+		.menut a {
+			white-space: nowrap;
+		}
 	}
 
 	/* Styles partagés par les pages de l'espace d'administration. Déclarés ici

@@ -204,10 +204,10 @@ export const modul14 = {
 							choses: ['adieu', 'bonjorn', 'bon-ser']
 						},
 						{
-							consigne: '2. Dis ton nom.',
+							consigne: '2. Dis comment tu t’appelles.',
 							debut: ['Me dison', 'M’apèli', 'Ieu, me dison', 'Ieu, m’apèli'],
 							choses: ['me-dison', 'm-apeli'],
-							explain: 'Puis ton prénom.'
+							explain: 'Avec ton prénom, par exemple : *Me dison Lisa.* · *M’apèli Karim.*'
 						},
 						{
 							consigne: '3. Dis d’où tu es.',

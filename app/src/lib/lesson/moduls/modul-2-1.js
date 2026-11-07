@@ -85,10 +85,10 @@ export const modul21 = {
 					items: [
 						{ consigne: 'Je suis de Toulouse.', answers: ['Soi de Tolosa.'], choses: ['soi-de', 'noms-vilas'] },
 						{
-							consigne: 'Dis ton nom.',
+							consigne: 'Dis comment tu t’appelles.',
 							debut: ['Me dison', 'M’apèli', 'Ieu, me dison', 'Ieu, m’apèli'],
 							choses: ['me-dison', 'm-apeli'],
-							explain: 'Puis ton prénom.'
+							explain: 'Avec ton prénom, par exemple : *Me dison Lisa.* · *M’apèli Karim.*'
 						}
 					]
 				}

@@ -18,7 +18,7 @@ describe('poser les mots : comparer', () => {
 		const l = diferéncias(p, nous, MOTS).join('\n');
 		expect(l).toContain(`~ ${p.mots[0][0]} déplacé`);
 		expect(l).toContain('+ lo cat fòl (le chat fou)');
-		expect(l).toContain('mot nouveau : lo Congrès');
+		expect(l).toContain('mot nouveau, écrit à la main : lo Congrès');
 		expect(l).not.toMatch(/l'aiga.*mot nouveau/);
 		for (const [oc] of p.mots.slice(1)) expect(l).toContain(`− ${oc} retiré`);
 		expect(cle(" l'illa ")).toBe('l’illa');

@@ -6,14 +6,16 @@
 	// Logique et format d'enregistrement : $lib/triar/triar.js ; lots :
 	// $lib/triar/lots.js ; lecture côté Claude : scripts/triar.mjs.
 	import { onMount, tick } from 'svelte';
-	import { page } from '$app/state';
 	import { supabase } from '$lib/supabaseClient';
 	import { LOTS } from '$lib/triar/lots.js';
 	import CartaReleu from '$lib/paisatges/CartaReleu.svelte';
 	import CartaPausar from '$lib/paisatges/CartaPausar.svelte';
 	import { PAGINA, estatDe, aTriar, comptes, paquetsGardats, tèxteGardats, tèxteRefar, tèxtePausats } from '$lib/triar/triar.js';
 
-	const lot = LOTS.find((l) => l.id === page.url.searchParams.get('lot')) ?? LOTS[0];
+	// le lot vient de la page « A validar » (?vue=triar&lot=…), qui remonte ce composant quand il change
+	let { lotId = null } = $props();
+	// svelte-ignore state_referenced_locally
+	const lot = LOTS.find((l) => l.id === lotId) ?? LOTS[0];
 	const elements = lot.elements();
 	// les mots des boutons : un lot peut les changer (les décisions : « D’acòrdi » / « Non », 06-11)
 	const MOTS = {
@@ -110,7 +112,7 @@
 				tèxte: tèxteGardats(paquet)
 			});
 			if (e) {
-				error = 'Les derniers cœurs ne sont pas encore partis ; ils restent gardés ici et repartiront.';
+				error = sensCompte(e) ? SENS_COMPTE : 'Les derniers cœurs ne sont pas encore partis ; ils restent gardés ici et repartiront.';
 				return false;
 			}
 			pendents = pendents.filter((c) => !paquet.includes(c));
@@ -139,7 +141,8 @@
 		if (!actual || fasa !== 'triar' || volant || mandant) return;
 		const el = actual;
 		const nous = pausats[el.clau];
-		if (nous && JSON.stringify(nous) !== JSON.stringify(el.mots)) return mandarPausats(el, nous);
+		// (le 5e champ dit seulement d'où vient le mot : il ne compte pas comme un changement)
+		if (nous && JSON.stringify(nous.map((m) => m.slice(0, 4))) !== JSON.stringify(el.mots)) return mandarPausats(el, nous);
 		await far_partir(1);
 		estat = { ...estat, [el.clau]: { v: 'gardar' } };
 		pendents = [...pendents, el.clau];
@@ -149,6 +152,11 @@
 		seguir();
 		if (pendents.length >= 20) mandarGardats();
 	}
+
+	// refus de la base faute de compte (aperçu en mode simulé, ou connexion
+	// expirée) : le dire, plutôt que « réessaie », qui ne servirait à rien
+	const sensCompte = (e) => e?.code === '42501' || e?.code === 'PGRST301' || /jwt|row-level/i.test(e?.message ?? '');
+	const SENS_COMPTE = 'Rien n’est parti : sur cette page, tu n’es pas connecté à ton compte. Ouvre-la sur loligam.eu, connecté, et recommence.';
 
 	// lot « pausar » : une photo aux mots changés part tout de suite, seule
 	async function mandarPausats(el, mots) {
@@ -162,7 +170,7 @@
 			.single();
 		mandant = false;
 		if (e) {
-			error = 'Cette photo n’est pas partie. Réessaie dans un instant ; tes mots sont toujours là.';
+			error = sensCompte(e) ? SENS_COMPTE : 'Cette photo n’est pas partie. Réessaie dans un instant ; tes mots sont toujours là.';
 			return;
 		}
 		await far_partir(1);
@@ -215,7 +223,7 @@
 			.single();
 		mandant = false;
 		if (e) {
-			error = 'La croix n’est pas partie. Réessaie dans un instant ; ton commentaire est toujours là.';
+			error = sensCompte(e) ? SENS_COMPTE : 'La croix n’est pas partie. Réessaie dans un instant ; ton commentaire est toujours là.';
 			return;
 		}
 		estat = { ...estat, [el.clau]: { v: 'refar', id: data.id, comentari: comentari.trim() } };
@@ -286,20 +294,14 @@
 
 <svelte:window onkeydown={tecla} />
 
-<svelte:head>
-	<title>Triar · Lo Ligam</title>
-</svelte:head>
-
-<section class="triar" aria-labelledby="triar-titol">
+<section class="triar" aria-label="Triar">
 	<header>
-		<h1 id="triar-titol"><span lang="oc">Triar</span> <em>(Trier)</em></h1>
-		<p class="vers-seguit"><a href="/admin/seguit">Où on en est, chantier par chantier <span aria-hidden="true">→</span></a></p>
 		{#if LOTS.length > 1}
 			<!-- le choix du lot (Romain, 06-11 : « il y a écrit tout a été trié » : il voyait le premier lot, déjà fini) ;
-			     la page se recharge, chaque lot a ses propres cœurs en attente -->
+			     le lot se remonte, chaque lot a ses propres cœurs en attente -->
 			<nav class="lots" aria-label="Lots à trier">
 				{#each LOTS as l (l.id)}
-					<a href="?lot={l.id}" data-sveltekit-reload aria-current={l.id === lot.id ? 'page' : undefined}
+					<a href="?vue=triar&lot={l.id}" aria-current={l.id === lot.id ? 'page' : undefined}
 						><span lang="oc">{l.nom.oc}</span> <em>({l.nom.fr})</em></a
 					>
 				{/each}
@@ -329,7 +331,7 @@
 			<p class="fin-titol" lang="oc">Tot es triat.</p>
 			<p><em>(Tout est trié.)</em> {n.gardar} {MOTS.gardar.compte}, {n.refar} {MOTS.refar.compte}. Claude lit tes croix et tes commentaires ; {lot.fin ?? 'les éléments refaits reviendront ici.'}</p>
 			{#each LOTS.filter((l) => l.id !== lot.id) as l (l.id)}
-				<p><a href="?lot={l.id}" data-sveltekit-reload>Trier « <span lang="oc">{l.nom.oc}</span> »</a> <em>({l.nom.fr})</em></p>
+				<p><a href="?vue=triar&lot={l.id}">Trier « <span lang="oc">{l.nom.oc}</span> »</a> <em>({l.nom.fr})</em></p>
 			{/each}
 		</div>
 	{:else}
@@ -443,7 +445,7 @@
 
 <style>
 	.triar {
-		width: min(100%, 30rem);
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -455,13 +457,6 @@
 		width: 100%;
 		text-align: center;
 	}
-	h1 {
-		font-family: var(--font-heading);
-		font-size: 2rem;
-		font-weight: 400;
-		margin: 0;
-	}
-	h1 em,
 	em {
 		font-family: var(--font-body);
 		font-size: 0.85em;
@@ -470,14 +465,6 @@
 	}
 	.lot {
 		margin: 0.2rem 0 0.6rem;
-	}
-	.vers-seguit {
-		margin: 0.2rem 0 0.4rem;
-		font-size: 0.9rem;
-	}
-	.vers-seguit a {
-		color: inherit;
-		text-underline-offset: 0.2em;
 	}
 	.lots {
 		display: flex;

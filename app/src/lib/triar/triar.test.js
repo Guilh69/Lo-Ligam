@@ -85,7 +85,7 @@ describe('triar : poser les mots (07-11)', () => {
 	it('une photo envoyée se relit telle quelle et compte comme un cœur', () => {
 		const mots = [
 			['la mar', 'la mer', 0.22, 0.75],
-			['l’illa', '', 0.6123, 0.3],
+			['l’illa', '', 0.6123, 0.3, 'basic'],
 			['lo | cap\nfaus', 'le cap', 0.1, 0.9]
 		];
 		const t = tèxtePausats(mots);
@@ -93,7 +93,7 @@ describe('triar : poser les mots (07-11)', () => {
 		expect(t.split('\n')[0]).toBe('◎ 3');
 		expect(legirPausats(t)).toEqual([
 			['la mar', 'la mer', 0.22, 0.75],
-			['l’illa', '', 0.612, 0.3],
+			['l’illa', '', 0.612, 0.3, 'basic'],
 			['lo cap faus', 'le cap', 0.1, 0.9]
 		]);
 		expect(tèxtePausats([])).toBe('◎ 0');

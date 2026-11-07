@@ -153,7 +153,7 @@
 	</ul>
 	<!-- les fiches sans photo montrent un dessin de Remira, fait par IA (06-11) -->
 	{#if fichas.some((f) => !foto(f.id) && data.dessenhs[f.id]?.length)}
-		<MencionIA forma="linha" quina="dessenh" />
+		<p class="mencion-ia"><MencionIA quina="paginaDessenh" /></p>
 	{/if}
 	<!-- crédit des photos libres de Wikimedia Commons (licence CC BY-SA) -->
 	<p class="credits" lang={lang}>
@@ -280,6 +280,11 @@
 	}
 	.fichas li {
 		display: grid;
+	}
+	/* le rond « IA » des dessins, au bout de la liste */
+	.mencion-ia {
+		margin: 0.8rem 0 0;
+		text-align: end;
 	}
 	.credits {
 		margin: var(--esp-32) 0 0;

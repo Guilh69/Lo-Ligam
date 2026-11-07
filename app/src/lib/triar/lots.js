@@ -87,7 +87,7 @@ export const LOTS = [
 		id: 'pausar',
 		nom: { oc: 'Pausar los mots', fr: 'Poser les mots' },
 		consigna:
-			'Touche la photo pour poser un rond, puis écris ou dicte son mot avec l’article (« la mar »). Touche un rond pour changer son mot, fais-le glisser pour le déplacer. Le cœur envoie la photo telle que tu la laisses ; Claude vérifie chaque mot avec lo Congrès avant de le mettre en ligne. La croix : si c’est la photo elle-même qui ne va pas.',
+			'Touche la photo pour poser un rond, puis cherche son mot en français ou en occitan : tu choisis parmi les mots de lo Congrès (lo Basic) ou ceux déjà sur le site ; pour un nom de lieu (la Méditerranée, un sommet, un village), Wikidata propose son nom occitan, à vérifier. Touche deux fois un mot pour le changer, fais-le glisser pour le déplacer. « Plein écran » agrandit la photo. Le cœur envoie la photo telle que tu la laisses. La croix : si c’est la photo elle-même qui ne va pas.',
 		mots: {
 			gardar: { oc: 'Gardar', fr: 'c’est bon', compte: 'photos faites', titol: 'Envoyer la photo telle quelle', anonci: 'Envoyé' },
 			refar: { oc: 'Refar', fr: 'à revoir', compte: 'à revoir', titol: 'La photo ne va pas', anonci: 'À revoir' },

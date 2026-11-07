@@ -78,7 +78,7 @@
 	<div class="familhas">
 		{#each familhas as f, k (f.id)}
 			<section class="familha f-{f.id}" style="--k: {k}" aria-labelledby="fam-{f.id}">
-				<div class="quadre"><Illustracion id={f.id} /><MencionIA forma="rond" cadre /></div>
+				<div class="quadre"><Illustracion id={f.id} /><MencionIA cadre /></div>
 				<h3 id="fam-{f.id}" class="familha-nom" lang={lg(f)}>{tria(f)}</h3>
 				<ul class="jocs">
 					{#each f.jocs as j (j.id)}

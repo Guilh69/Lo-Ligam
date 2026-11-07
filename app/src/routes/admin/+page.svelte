@@ -144,7 +144,7 @@
 	{#if notas.error}<p class="msg error" role="alert">{notas.error}</p>{/if}
 	{#if error}<p class="msg error" role="alert">{error}</p>{/if}
 
-	<a class="entrada-pila" href="/admin/pila">
+	<a class="entrada-pila" href="/admin/valider?vue=pila">
 		<span class="nom"><span lang="oc">La pila</span>{#if enPila !== null}&nbsp;<span class="xifra">· {enPila}</span>{/if}</span>
 		<span class="ditz">{enPila === 0 ? 'Rien à valider pour l’instant.' : 'Valider une carte à la fois : les questions de l’IA, ses réponses, l’occitan des pages, les fiches. Au clavier ou du doigt.'}</span>
 		<span class="anar" aria-hidden="true">→</span>
@@ -249,8 +249,8 @@
 
 	<h2>En fond</h2>
 	<ul class="fons">
-		{#if fichas}<li><a href="/admin/pila?lot=gramatica">{fichas} {fichas > 1 ? 'fiches' : 'fiche'} de grammaire</a> à relire et valider, une à une (<a href="/apren/gramatica">le sommaire</a>)</li>{/if}
-		<li><a href="/admin/triar">Triar</a> : les dessins de Remira, puis <a href="/admin/triar?lot=releu" data-sveltekit-reload>le relief des paysages</a>, à garder ou à refaire</li>
+		{#if fichas}<li><a href="/admin/valider?vue=pila&lot=gramatica">{fichas} {fichas > 1 ? 'fiches' : 'fiche'} de grammaire</a> à relire et valider, une à une (<a href="/apren/gramatica">le sommaire</a>)</li>{/if}
+		<li><a href="/admin/valider?vue=triar">Triar</a> : les dessins de Remira, puis <a href="/admin/valider?vue=triar&lot=releu">le relief des paysages</a>, à garder ou à refaire</li>
 		<li><a href="/admin/musica">Musica</a> : les artistes à trier</li>
 	</ul>
 
