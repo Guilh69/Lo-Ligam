@@ -29,7 +29,7 @@ export const TEINTES = {
 	prune: '#6b3a5b',
 	ocre: '#c98a2b',
 	orangeClair: '#f4a261', // le gascon (Romain, 07-11)
-	creme: '#fbf1e1', // texte posé sur une teinte sombre
+	creme: '#ffffff', // texte posé sur une teinte sombre : blanc (Romain, 2026-11-07 : « le texte sur des boutons foncés devrait être blanc ») ; le nom « creme » est resté
 	encre: '#2a1a10', // texte posé sur une teinte claire
 	tuile: '#efe1c6' // la crème des tuiles de jeu : carton du thème sombre
 };

@@ -16,7 +16,7 @@
 	--p-prune: #6b3a5b;
 	--p-ocre: #c98a2b;
 	--p-orange-clair: #f4a261;
-	--p-creme: #fbf1e1;
+	--p-creme: #ffffff;
 	--p-encre: #2a1a10;
 	--p-tuile: #efe1c6;
 	--p-jeu-adresse: #9c2626;
@@ -25,16 +25,16 @@
 	--p-jeu-memoire: #1f5f63;
 	--p-jeu-ecoute: #2b6496;
 	--t-accion: #9c2626;
-	--t-accion-tinta: #fbf1e1;
+	--t-accion-tinta: #ffffff;
 	--pc-or-fons: #c7811b;
 	--pc-or-tinta: #2a1a10;
 	--pc-juste: #4f6a2f;
-	--pc-juste-tinta: #fbf1e1;
+	--pc-juste-tinta: #ffffff;
 }
 :root,
 :root[data-tema='sorne'] {
 	--pc-carton: #3b332d;
-	--pc-carton-tinta: #fbf1e1;
+	--pc-carton-tinta: #ffffff;
 }
 :root[data-tema='clar'] {
 	--pc-carton: #e3ddd8;
