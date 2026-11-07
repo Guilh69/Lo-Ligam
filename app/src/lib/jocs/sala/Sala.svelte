@@ -16,6 +16,7 @@
 	import Emblema from './Emblema.svelte';
 	import MencionIA from '$lib/components/MencionIA.svelte';
 	import { TEINTES, PUCES } from '$lib/styles/palette.js';
+	import { onMount } from 'svelte';
 
 	const T = {
 		titol: { oc: 'La sala de jòcs', fr: 'La salle de jeux' },
@@ -42,19 +43,93 @@
 	const TEINTES_CONFETIS = [TEINTES.rougeAction, TEINTES.or, TEINTES.bleu, TEINTES.olive, TEINTES.prune, TEINTES.brique, TEINTES.sarcelle, TEINTES.orangeClair];
 	const FORMES = ['rond', 'carre', 'triangle', 'demi', 'carre'];
 	const ZONES = ['h', 'g', 'd', 'h', 'g', 'd', 'h']; // h : bandeau du titre, g : marge gauche, d : marge droite
+	let confetisEl;
+	// Les confettis réagissent à la souris et au doigt (Romain, 2026-11-07) : une pièce près du passage est
+	// chassée et tourne, puis revient comme sur un ressort. Rien de tout cela si l'appareil demande moins
+	// d'animations ou si le réglage « léger » est actif ; la boucle ne tourne que tant qu'une pièce bouge.
+	onMount(() => {
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.leugier === 'on') return;
+		const pieces = [...confetisEl.querySelectorAll('.c')].map((el, i) => ({ el, sens: i % 2 ? 1 : -1, dx: 0, dy: 0, vx: 0, vy: 0, dr: 0, vr: 0 }));
+		let tourne = false;
+		let attente = null; // le dernier passage pas encore traité : [x, y, rayon]
+		const image = () => {
+			let bouge = false;
+			for (const p of pieces) {
+				// le ressort, puis le frottement
+				p.vx = (p.vx - 0.05 * p.dx) * 0.91;
+				p.vy = (p.vy - 0.05 * p.dy) * 0.91;
+				p.vr = (p.vr - 0.05 * p.dr) * 0.91;
+				p.dx += p.vx;
+				p.dy += p.vy;
+				p.dr += p.vr;
+				if (Math.abs(p.dx) + Math.abs(p.dy) + Math.abs(p.dr) + Math.abs(p.vx) + Math.abs(p.vy) + Math.abs(p.vr) > 0.05) {
+					bouge = true;
+					p.el.style.translate = `${p.dx.toFixed(2)}px ${p.dy.toFixed(2)}px`;
+					p.el.style.rotate = `${p.dr.toFixed(1)}deg`;
+				} else if (p.dx || p.dy || p.dr) {
+					p.dx = p.dy = p.dr = p.vx = p.vy = p.vr = 0;
+					p.el.style.translate = '';
+					p.el.style.rotate = '';
+				}
+			}
+			if (bouge) requestAnimationFrame(image);
+			else tourne = false;
+		};
+		const pousser = () => {
+			if (!attente) return;
+			const [x, y, rayon] = attente;
+			attente = null;
+			for (const p of pieces) {
+				const r = p.el.getBoundingClientRect();
+				const cx = r.left + r.width / 2;
+				const cy = r.top + r.height / 2;
+				const d = Math.hypot(cx - x, cy - y) || 1;
+				if (d > rayon) continue;
+				const f = (1 - d / rayon) ** 2;
+				p.vx += ((cx - x) / d) * f * 16;
+				p.vy += ((cy - y) / d) * f * 16;
+				p.vr += p.sens * f * 24;
+			}
+			if (!tourne) {
+				tourne = true;
+				requestAnimationFrame(image);
+			}
+		};
+		// au plus un calcul par image affichée, quelle que soit la vitesse du pointeur
+		const passage = (x, y, rayon) => {
+			const libre = !attente;
+			attente = [x, y, rayon];
+			if (libre) requestAnimationFrame(pousser);
+		};
+		const souris = (e) => {
+			if (e.pointerType !== 'touch') passage(e.clientX, e.clientY, 90);
+		};
+		const doigt = (e) => {
+			const t = e.touches[0];
+			if (t) passage(t.clientX, t.clientY, 110);
+		};
+		addEventListener('pointermove', souris, { passive: true });
+		addEventListener('touchstart', doigt, { passive: true });
+		addEventListener('touchmove', doigt, { passive: true });
+		return () => {
+			removeEventListener('pointermove', souris);
+			removeEventListener('touchstart', doigt);
+			removeEventListener('touchmove', doigt);
+		};
+	});
 	const CONFETIS = (() => {
 		let s = 11;
 		const alea = () => (s = (s * 16807) % 2147483647) / 2147483647;
 		return Array.from({ length: 46 }, (_, k) => ({
 			zone: ZONES[k % ZONES.length],
 			forme: FORMES[k % FORMES.length],
-			style: `--x: ${alea().toFixed(3)}; --y: ${alea().toFixed(3)}; --t: ${10 + Math.round(alea() * 14)}px; --r: ${Math.floor(alea() * 360)}deg; --c: ${TEINTES_CONFETIS[Math.floor(alea() * TEINTES_CONFETIS.length)]}; --d: ${(5 + alea() * 5).toFixed(1)}s; animation-delay: -${(alea() * 6).toFixed(1)}s`
+			style: `--x: ${alea().toFixed(3)}; --y: ${alea().toFixed(3)}; --t: ${10 + Math.round(alea() * 14)}px; --r: ${Math.floor(alea() * 360)}deg; --c: ${TEINTES_CONFETIS[Math.floor(alea() * TEINTES_CONFETIS.length)]}; --d: ${(5 + alea() * 5).toFixed(1)}s; --dl: -${(alea() * 6).toFixed(1)}s`
 		}));
 	})();
 </script>
 
 <div class="sala">
-	<div class="confetis" aria-hidden="true">
+	<div class="confetis" aria-hidden="true" bind:this={confetisEl}>
 		{#each CONFETIS as c, k (k)}<i class="c {c.zone}" style={c.style}><b class={c.forme}></b></i>{/each}
 	</div>
 	<header class="entrada">
@@ -184,13 +259,14 @@
 		height: calc(var(--t) * var(--e));
 		transform: rotate(var(--r));
 		filter: drop-shadow(0 3px 2px rgba(20, 10, 5, 0.3));
-		animation: flotar var(--d) ease-in-out infinite alternate;
+		/* (le flottement est sur la forme, « .c b » : le déplacement par la souris s'y ajoute sans le couper) */
 	}
 	.c b {
 		display: block;
 		width: 100%;
 		height: 100%;
 		background: var(--c);
+		animation: flotar var(--d) ease-in-out var(--dl, 0s) infinite alternate;
 	}
 	.c .rond {
 		border-radius: 50%;
@@ -227,15 +303,15 @@
 	}
 	@keyframes flotar {
 		to {
-			transform: rotate(var(--r)) translateY(-6px);
+			translate: 0 -6px;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.c {
+		.c b {
 			animation: none;
 		}
 	}
-	:global(html[data-leugier='on']) .c {
+	:global(html[data-leugier='on']) .c b {
 		animation: none;
 	}
 	/* la puce choisie garde sa couleur : elle se lève et prend un anneau */
