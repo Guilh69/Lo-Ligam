@@ -2,7 +2,7 @@
 // ci-dessous sont des formes de réponse de l'API (structure seulement, mots
 // courants), pas des données gardées.
 import { describe, it, expect } from 'vitest';
-import { genre, ambArticle, couples } from './congres.js';
+import { genre, ambArticle, couples, nomsWikidata, lecturaRevirada } from './congres.js';
 
 const nuatge = {
 	query: [
@@ -67,5 +67,37 @@ describe('lo Basic : les couples proposés', () => {
 
 	it('une absence (erreur 8 de l’API) ne donne rien', () => {
 		expect(couples({ error: { code: '8', text: 'No entry found with your conditions' } }, 'nuag', 'fr')).toEqual([]);
+	});
+});
+
+describe('Wikidata : les noms de lieux', () => {
+	const entitats = {
+		Q1: { labels: { oc: { value: 'Mar Mediterranèa' }, fr: { value: 'mer Méditerranée' } }, descriptions: { fr: { value: 'mer entre l’Europe, l’Asie et l’Afrique' } } },
+		Q2: { labels: { fr: { value: 'Méditerranée' } }, descriptions: { fr: { value: 'ferry lancé en 1988' } } },
+		Q3: { labels: { oc: { value: 'Garrigue' }, fr: { value: 'Garrigue' } }, descriptions: { fr: { value: 'nom de famille' } } },
+		Q4: { labels: { oc: { value: 'Garriga' }, fr: { value: 'garrigue' } }, descriptions: { fr: { value: 'formation végétale' } } }
+	};
+	it('garde les entrées qui ont un libellé occitan, dans l’ordre de la recherche', () => {
+		expect(nomsWikidata(['Q1', 'Q2', 'Q4'], entitats)).toEqual([
+			{ oc: 'Mar Mediterranèa', fr: 'mer Méditerranée', font: 'wikidata', nota: 'mer entre l’Europe, l’Asie et l’Afrique' },
+			{ oc: 'Garriga', fr: 'garrigue', font: 'wikidata', nota: 'formation végétale' }
+		]);
+	});
+	it('écarte les noms de famille et ce qui n’est pas un lieu', () => {
+		expect(nomsWikidata(['Q3'], entitats)).toEqual([]);
+	});
+	it('ne plante pas sur une réponse vide', () => {
+		expect(nomsWikidata(['Q9'], undefined)).toEqual([]);
+	});
+});
+
+describe('Revirada : la traduction automatique', () => {
+	it('rend la traduction, marquée comme telle', () => {
+		expect(lecturaRevirada({ translated_text: ' la  mar ' }, 'la mer')).toEqual({ oc: 'la mar', fr: 'la mer', font: 'revirada' });
+	});
+	it('écarte un mot que le moteur ne connaît pas', () => {
+		expect(lecturaRevirada({ translated_text: '*zorglub' }, 'zorglub')).toBeNull();
+		expect(lecturaRevirada({ translated_text: 'zorglub' }, 'zorglub')).toBeNull();
+		expect(lecturaRevirada({}, 'mer')).toBeNull();
 	});
 });

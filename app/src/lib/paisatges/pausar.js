@@ -11,13 +11,21 @@ export const ecart = (p, [, , xa, ya], [, , xb, yb]) => {
 	return Math.hypot(((xa - xb) * p.l) / M, ((ya - yb) * p.h) / M);
 };
 
+// d'où vient un mot nouveau, et ce qu'il reste à vérifier avant de l'écrire
+const ORIGINA = {
+	basic: '   ← mot nouveau, choisi dans lo Basic',
+	wikidata: '   ← mot nouveau, nom pris dans Wikidata : à vérifier (lo Congrès, top’Òc)',
+	revirada: '   ← mot nouveau, traduction automatique de Revirada : à vérifier dans lo Congrès',
+	man: '   ← mot nouveau, écrit à la main : lo Congrès'
+};
+
 /** Ce qui change sur une photo ([[occitan, français, x, y]]), en lignes lisibles. */
 export function diferéncias(p, nous, MOTS) {
 	const vielhs = p.mots.map(([oc, x, y]) => [oc, MOTS[oc] ?? '', x, y]);
 	const l = [];
 	for (const m of nous) {
 		const v = vielhs.find((w) => w[0] === cle(m[0]));
-		if (!v) l.push(`+ ${m[0]} (${m[1] || 'sans français'}) en ${m[2]}, ${m[3]}${MOTS[cle(m[0])] ? '' : m[4] === 'basic' ? '   ← mot nouveau, choisi dans lo Basic' : '   ← mot nouveau, écrit à la main : lo Congrès'}`);
+		if (!v) l.push(`+ ${m[0]} (${m[1] || 'sans français'}) en ${m[2]}, ${m[3]}${MOTS[cle(m[0])] ? '' : (ORIGINA[m[4]] ?? ORIGINA.man)}`);
 		else {
 			if (Math.abs(v[2] - m[2]) > 0.005 || Math.abs(v[3] - m[3]) > 0.005) l.push(`~ ${m[0]} déplacé : ${v[2]}, ${v[3]} → ${m[2]}, ${m[3]}`);
 			if (m[1] && m[1] !== v[1]) l.push(`~ ${m[0]} : français « ${v[1]} » → « ${m[1]} »`);
