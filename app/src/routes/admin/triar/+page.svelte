@@ -10,7 +10,8 @@
 	import { supabase } from '$lib/supabaseClient';
 	import { LOTS } from '$lib/triar/lots.js';
 	import CartaReleu from '$lib/paisatges/CartaReleu.svelte';
-	import { PAGINA, estatDe, aTriar, comptes, paquetsGardats, tèxteGardats, tèxteRefar } from '$lib/triar/triar.js';
+	import CartaPausar from '$lib/paisatges/CartaPausar.svelte';
+	import { PAGINA, estatDe, aTriar, comptes, paquetsGardats, tèxteGardats, tèxteRefar, tèxtePausats } from '$lib/triar/triar.js';
 
 	const lot = LOTS.find((l) => l.id === page.url.searchParams.get('lot')) ?? LOTS[0];
 	const elements = lot.elements();
@@ -37,6 +38,7 @@
 	let calme = $state(false);
 	let anonci = $state(''); // annoncé aux lecteurs d'écran à chaque choix
 	let botoRefar = $state(null);
+	let pausats = $state({}); // lot « pausar » : les mots posés sur chaque photo, tels que Romain les laisse
 
 	// le geste
 	let dx = $state(0);
@@ -134,8 +136,10 @@
 	}
 
 	async function gardar() {
-		if (!actual || fasa !== 'triar' || volant) return;
+		if (!actual || fasa !== 'triar' || volant || mandant) return;
 		const el = actual;
+		const nous = pausats[el.clau];
+		if (nous && JSON.stringify(nous) !== JSON.stringify(el.mots)) return mandarPausats(el, nous);
 		await far_partir(1);
 		estat = { ...estat, [el.clau]: { v: 'gardar' } };
 		pendents = [...pendents, el.clau];
@@ -144,6 +148,28 @@
 		anonci = `${MOTS.gardar.anonci ?? 'Gardé'} : ${el.titol}`;
 		seguir();
 		if (pendents.length >= 20) mandarGardats();
+	}
+
+	// lot « pausar » : une photo aux mots changés part tout de suite, seule
+	async function mandarPausats(el, mots) {
+		mandant = true;
+		error = '';
+		await mandarGardats();
+		const { data, error: e } = await supabase
+			.from('remarcas')
+			.insert({ pagina: PAGINA, modul: lot.id, cibla: el.clau.slice(0, 300), extrait: 'pausar', tèxte: tèxtePausats(mots) })
+			.select('id')
+			.single();
+		mandant = false;
+		if (e) {
+			error = 'Cette photo n’est pas partie. Réessaie dans un instant ; tes mots sont toujours là.';
+			return;
+		}
+		await far_partir(1);
+		estat = { ...estat, [el.clau]: { v: 'gardar', id: data.id, pausats: mots } };
+		istòria.push({ clau: el.clau, v: 'pausar', id: data.id });
+		anonci = `${MOTS.gardar.anonci ?? 'Gardé'} : ${el.titol}`;
+		seguir();
 	}
 
 	// la carte reste sous les yeux pendant qu'on dit ce qu'il faut changer ;
@@ -209,7 +235,7 @@
 		if (d.v === 'gardar' && pendents.includes(d.clau)) {
 			pendents = pendents.filter((c) => c !== d.clau);
 			salvar();
-		} else if (d.v === 'refar' && d.id) {
+		} else if ((d.v === 'refar' || d.v === 'pausar') && d.id) {
 			await supabase.from('remarcas').delete().eq('id', d.id);
 		}
 		// un cœur déjà parti reste en base : le prochain choix sur cette carte l'emportera
@@ -242,7 +268,7 @@
 	}
 
 	function tecla(e) {
-		if (fasa !== 'triar' || e.target?.closest?.('input, textarea')) return;
+		if (fasa !== 'triar' || e.target?.closest?.('input, textarea, .pausar')) return;
 		if (e.key === 'ArrowRight') {
 			e.preventDefault();
 			gardar();
@@ -390,6 +416,8 @@
 		</svg>
 	{:else if el.relèu}
 		<CartaReleu foto={el.relèu} {viu} />
+	{:else if el.pausar}
+		<CartaPausar foto={el.pausar} mots={pausats[el.clau] ?? el.mots} {viu} onmots={(m) => (pausats[el.clau] = m)} />
 	{:else if el.imatge}
 		<img class="imatge" src={el.imatge} alt="" draggable="false" />
 	{:else if el.decision}
@@ -403,7 +431,10 @@
 	{:else if el.tèxte}
 		<p class="tèxte" lang="oc">{el.tèxte}</p>
 	{/if}
-	{#if !el.decision}
+	{#if el.pausar}
+		<!-- les mots sont sur la photo : seul le thème, en petit -->
+		{#if el.sotstitol}<p class="sotstitol">{el.sotstitol}</p>{/if}
+	{:else if !el.decision}
 		<p class="titol" lang="oc">{el.titol}</p>
 		{#if el.sotstitol}<p class="sotstitol">{el.sotstitol}</p>{/if}
 		{#if el.context?.length}<p class="context">Ambiance : <span lang="oc">{el.context.join(' · ')}</span></p>{/if}
