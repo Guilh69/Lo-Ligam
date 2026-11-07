@@ -7,6 +7,10 @@
 	// la couche est derrière tout le contenu, pâlie et petite ; on attrape un objet en cliquant ou en
 	// touchant l'endroit où on le voit, même sous du texte (le clic passe au contenu comme d'habitude,
 	// et un objet est attrapé s'il est là ; jamais quand on clique un lien, un bouton ou un champ).
+	// 2e retour (08-11) : « éviter absolument le conflit avec le texte » : les pièces contournent les blocs de
+	// texte dense (paragraphes, listes, titres), sans mur : lancées à la main, elles peuvent passer derrière ;
+	// objets plus gros et plus nombreux ; attraper plus clair : l'objet visé s'éclaire, grossit et ralentit,
+	// le curseur devient une main, et le toucher au doigt a une marge généreuse.
 	// Décor : rien n'est lu par un lecteur d'écran, sauf le mot attrapé (zone « polie » cachée).
 	// Rien ne bouge si l'appareil demande moins d'animations (les pièces sont juste posées).
 	import { onMount, tick } from 'svelte';
@@ -35,9 +39,12 @@
 
 	onMount(() => {
 		const petit = innerWidth < 640;
-		pieces = mode === 'objets' ? OBJETS.map((o) => ({ ...o })) : confettis(petit ? 46 : 90, petit);
+		// sur un grand écran, deux exemplaires de chaque objet (le texte les repousse vers les marges)
+		const copies = innerWidth >= 1100 ? 2 : 1;
+		pieces = mode === 'objets' ? Array.from({ length: OBJETS.length * copies }, (_, k) => ({ ...OBJETS[k % OBJETS.length] })) : confettis(petit ? 46 : 90, petit);
 		let arret = false;
 		let toucher = null;
+		let arretTexte = null;
 		tick().then(() => {
 			if (arret) return;
 			const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.leugier === 'on';
@@ -47,9 +54,11 @@
 				// les objets se laissent frôler sans fuir à toute vitesse : il faut pouvoir les attraper
 				rayon: objets ? 70 : 95,
 				rayonDoigt: objets ? 85 : 115,
-				radial: objets ? 0.55 : 1.4,
-				transfert: objets ? 0.07 : 0.12,
+				radial: objets ? 0.8 : 1.4,
+				transfert: objets ? 0.16 : 0.12,
+				vmax: 6,
 				collisions: objets,
+				attrapables: objets,
 				croisiere: objets ? [0.12, 0.3] : [0.1, 0.32],
 				onAttrape: (p, c) => {
 					const ob = pieces[p.i];
@@ -61,12 +70,54 @@
 					mot = null;
 				}
 			});
+			if (!reduit) {
+				// les blocs de texte dense, en pixels de la zone : relus au défilement, au redimensionnement et chaque 0,7 s
+				const lire = () => {
+					const b = zone.getBoundingClientRect();
+					const rects = [];
+					for (const e of document.querySelectorAll('p, li, h1, h2, h3, h4, blockquote, dd, figcaption, header, nav')) {
+						if (zone.contains(e) || (e.textContent || '').trim().length < 25) continue;
+						const r = e.getBoundingClientRect();
+						if (r.width < 60 || r.height < 14 || r.bottom < -80 || r.top > innerHeight + 80) continue;
+						rects.push({ l: r.left - b.left, t: r.top - b.top, r: r.right - b.left, b: r.bottom - b.top });
+						if (rects.length >= 220) break;
+					}
+					// les blocs qui se suivent à moins de 34 px (titre puis paragraphe, paragraphes entre eux) ne font plus qu'une
+					// zone : sinon une pièce se coincerait dans l'interstice, repoussée par les deux à la fois
+					rects.sort((a, c) => a.t - c.t);
+					const zones = [];
+					for (const r of rects) {
+						const g = zones.find((x) => Math.min(x.r, r.r) - Math.max(x.l, r.l) > 0.4 * Math.max(x.r - x.l, r.r - r.l) && r.t - x.b < 34);
+						if (g) {
+							g.l = Math.min(g.l, r.l);
+							g.r = Math.max(g.r, r.r);
+							g.t = Math.min(g.t, r.t);
+							g.b = Math.max(g.b, r.b);
+						} else zones.push({ ...r });
+					}
+					moteur?.eviter(zones);
+				};
+				let attendu = 0;
+				const planifier = () => {
+					if (!attendu) attendu = requestAnimationFrame(() => { attendu = 0; lire(); });
+				};
+				lire();
+				addEventListener('scroll', planifier, { passive: true });
+				addEventListener('resize', planifier);
+				const minuteurTexte = setInterval(lire, 700);
+				arretTexte = () => {
+					cancelAnimationFrame(attendu);
+					clearInterval(minuteurTexte);
+					removeEventListener('scroll', planifier);
+					removeEventListener('resize', planifier);
+				};
+			}
 			if (objets && !reduit) {
 				toucher = (e) => {
 					// un lien, un bouton, un champ : on ne touche pas au jeu
 					if (e.target.closest?.('a, button, input, select, textarea, label, summary, [role="button"], [contenteditable]')) return;
 					if (getSelection()?.toString()) return;
-					moteur?.attraperA(e.clientX, e.clientY);
+					moteur?.attraperA(e.clientX, e.clientY, e.pointerType === 'touch' ? 28 : undefined);
 				};
 				addEventListener('click', toucher);
 			}
@@ -74,6 +125,7 @@
 		return () => {
 			arret = true;
 			if (toucher) removeEventListener('click', toucher);
+			arretTexte?.();
 			moteur?.arreter();
 		};
 	});
@@ -133,7 +185,7 @@
 	}
 	/* ── les objets : des pièces pleines, ombre courte, un peu pâlies ── */
 	.o {
-		--t: 36px;
+		--t: 50px;
 		width: var(--t);
 		height: var(--t);
 		opacity: 0.72;
@@ -141,8 +193,17 @@
 	}
 	@media (max-width: 40rem) {
 		.o {
-			--t: 32px;
+			--t: 42px;
 		}
+	}
+	/* l'objet que la souris est sur le point d'attraper : plein, éclairé d'un liseré clair (il grossit aussi, côté moteur) */
+	.o:global(.chaud) {
+		opacity: 1;
+		filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 1.5px #fff) drop-shadow(0 3px 2px rgba(20, 10, 5, 0.3));
+	}
+	/* et le curseur devient une main, partout sauf sur ce qui se clique */
+	:global(html[data-flotant-chaud] body *:not(a):not(button):not(input):not(select):not(textarea):not(summary)) {
+		cursor: grab !important;
 	}
 	.o svg {
 		display: block;
