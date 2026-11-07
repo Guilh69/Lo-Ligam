@@ -253,7 +253,7 @@
 				<span class="guida-compte"><bdi dir="ltr">{fachas.length} / {etapas.length}</bdi></span>
 				<span class="guida-chevron" aria-hidden="true"><Icona nom="suivant" size="0.8em" /></span>
 			</button>
-			<button type="button" class="guida-tampar" onclick={tampar} aria-label={tx.tampar}><Icona nom="fermer" size="1em" /></button>
+			<button type="button" class="pc pc-2 pc-icone guida-tampar" onclick={tampar} aria-label={tx.tampar}><Icona nom="fermer" size="1em" /></button>
 		</header>
 		<div class="guida-barra" aria-hidden="true"><i style:width="{(fachas.length / Math.max(1, etapas.length)) * 100}%"></i></div>
 
@@ -319,8 +319,8 @@
 	.guida-compte { font-size: 0.78rem; font-weight: 700; color: var(--t-tinta-2); font-variant-numeric: tabular-nums; }
 	.guida-chevron { display: grid; color: var(--t-tinta-2); rotate: 90deg; transition: rotate 0.3s; }
 	.plegada .guida-chevron { rotate: -90deg; }
-	.guida-tampar { display: grid; place-items: center; flex: none; width: 32px; height: 32px; border: 0; border-radius: 50%; background: none; color: var(--t-tinta-2); cursor: pointer; }
-	.guida-tampar:hover { color: var(--t-tinta); background: color-mix(in srgb, var(--t-tinta) 10%, transparent); }
+	/* fermer : une petite pièce de papier (lib/styles/papier.css) */
+	.guida-tampar { --r: 8px; flex: none; width: 32px; height: 32px; }
 	.guida-lista button:focus-visible { outline: 2px solid var(--t-aur); outline-offset: 2px; }
 
 	/* la barre d'avancement, fine, sous le titre */
