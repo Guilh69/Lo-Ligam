@@ -1,4 +1,5 @@
 <script>
+	import AdminTete from '$lib/talhier/AdminTete.svelte';
 	// Le tri des artistes de l'espace musique (Romain, 2026-10-25, option A :
 	// « liste préparée, tu tries »). La liste vient de MusicBrainz (disques
 	// chantés en occitan) croisée avec Deezer (scripts/musica-candidats.mjs).
@@ -133,9 +134,12 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Musica — Espaci d'administracion</title>
+</svelte:head>
+
 <section class="tria">
-	<header>
-		<h1>Musica : la tria <em>(Musique : le tri)</em></h1>
+	<AdminTete oc="Musica : la tria" fr="Musique : le tri">
 		<p>
 			Causís qui va dins lo jornal del cafè, e pausa una estela sus tos còps de còr. De còps es un autre amb lo meteis nom : escota sus Deezer
 			se as un dobte.
@@ -147,7 +151,7 @@
 		{#if !cargant && !jaTriat}
 			<p class="nòta">Los exemples de la pagina d'ensag son ja causits. <em>(Les exemples de la page d'essai sont déjà cochés.)</em></p>
 		{/if}
-	</header>
+	</AdminTete>
 
 	<form class="apondre" onsubmit={cercar}>
 		<label for="nom-apondre">Apondre per lo nom <em>(Ajouter par le nom)</em></label>
@@ -228,17 +232,8 @@
 
 <style>
 	.tria {
-		width: min(100%, 72rem);
+		width: 100%;
 		padding-bottom: 6rem;
-	}
-	h1 {
-		margin: 0 0 0.6rem;
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: clamp(1.8rem, 4vw, 2.6rem);
-	}
-	h1 em {
-		font-size: 0.5em;
 	}
 	header p {
 		max-width: 62ch;

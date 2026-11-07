@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Aperçu téléphone et tablette</title>
+<!--
+  Outil de développement (hors ligne) : montre le site dans des cadres de téléphone
+  et de tablette, côte à côte, sans rien taper.
+  Ouvrir : http://localhost:5173/esbos-apercu.html pendant que « npm run dev » tourne.
+  Comme les autres esbos-*.html, il est retiré au build (scripts/levar-esbos.mjs) : il
+  n'arrive jamais en ligne, ce qui est voulu, car le vrai site interdit d'être affiché
+  dans un cadre (frame-ancestors, hooks.server.js).
+-->
+<style>
+@font-face{font-family:Luciole;src:url('/fonts/luciole-regular.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Luciole;src:url('/fonts/luciole-bold.woff2') format('woff2');font-weight:700;font-display:swap}
+:root{
+	--fond:#16110e;
+	--barre:#211914;
+	--filet:#3d2f26;
+	--creme:#f3e6d2;
+	--ocre:#f5a93a;
+	--ocre-texte:#2a1a08;
+	--discret:#b3a18e;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{height:100%}
+body{margin:0;display:flex;flex-direction:column;background:var(--fond);color:var(--creme);font:400 15px/1.4 Luciole,system-ui,sans-serif}
+button,input{font:inherit}
+
+.barre{background:var(--barre);border-bottom:1px solid var(--filet);padding:12px 20px 14px;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:flex-end}
+.groupe{display:flex;flex-direction:column;gap:6px}
+.etiq{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--discret)}
+.rang{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+
+.puce{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--filet);background:transparent;color:var(--creme);cursor:pointer}
+.puce:hover{border-color:var(--creme)}
+.puce[aria-pressed="true"]{background:var(--ocre);border-color:var(--ocre);color:var(--ocre-texte);font-weight:700}
+.puce:focus-visible,.autre input:focus-visible{outline:2px solid var(--creme);outline-offset:2px}
+a.puce{display:inline-flex;align-items:center;text-decoration:none}
+.puce small{font-size:12px;opacity:.75;margin-left:4px}
+.action{background:var(--creme);border-color:var(--creme);color:var(--ocre-texte)}
+.action:hover{background:#fff;border-color:#fff}
+
+.autre{display:flex;gap:6px}
+.autre input{min-height:40px;width:170px;padding:0 12px;border-radius:999px;border:1px solid var(--filet);background:transparent;color:var(--creme)}
+.autre input::placeholder{color:var(--discret)}
+#echelle{min-width:3.5em;text-align:right;color:var(--discret);font-variant-numeric:tabular-nums}
+
+.scene{flex:1;min-height:0;overflow:auto;display:flex;gap:40px;padding:24px;justify-content:safe center;align-items:safe center}
+.appareil{margin:0;flex:none;display:flex;flex-direction:column;align-items:center;gap:10px}
+.boitier{position:relative;flex:none}
+.cadre{position:absolute;left:0;top:0;transform-origin:0 0;padding:12px;background:#0a0706;border-radius:46px;box-shadow:0 0 0 1px #4a3a30,0 18px 50px rgba(0,0,0,.55)}
+.vitre{overflow:hidden;border-radius:34px;background:#000}
+.tab .cadre{border-radius:30px}
+.tab .vitre{border-radius:18px}
+iframe{display:block;border:0;background:#000}
+figcaption{white-space:nowrap;font-size:13px;color:var(--discret);text-align:center}
+figcaption b{color:var(--creme);font-weight:700}
+
+.note{margin:0;padding:8px 20px 10px;border-top:1px solid var(--filet);font-size:12.5px;color:var(--discret)}
+</style>
+</head>
+<body>
+
+<header class="barre">
+	<div class="groupe">
+		<span class="etiq">Page</span>
+		<div class="rang" id="pages"></div>
+	</div>
+	<div class="groupe">
+		<span class="etiq">Appareils</span>
+		<div class="rang" id="appareils"></div>
+	</div>
+	<div class="groupe">
+		<span class="etiq">Affichage</span>
+		<div class="rang" id="affichage"></div>
+	</div>
+	<div class="groupe">
+		<span class="etiq">Thème du site</span>
+		<div class="rang" id="theme"></div>
+	</div>
+	<div class="groupe">
+		<span class="etiq">Actions</span>
+		<div class="rang">
+			<button type="button" class="puce action" id="recharger">Recharger</button>
+			<button type="button" class="puce action" id="ouvrir">Ouvrir à part</button>
+			<a class="puce action" href="/admin/labo">Laboratoire</a>
+			<span id="echelle" aria-live="polite"></span>
+		</div>
+	</div>
+	<form class="groupe autre" id="autre" autocomplete="off" style="flex-direction:column">
+		<label class="etiq" for="chemin">Autre page</label>
+		<div class="rang">
+			<input id="chemin" type="text" inputmode="url" placeholder="/apren/remira">
+			<button type="submit" class="puce">Aller</button>
+		</div>
+	</form>
+</header>
+
+<main class="scene" id="scene"></main>
+
+<p class="note">Un cadre reproduit la largeur de l’écran, pas le toucher ni la barre d’adresse du téléphone. La carte lit la taille réelle de l’écran : pour elle, utilise plutôt le menu « Viewport » du panneau navigateur.</p>
+
+<script>
+(() => {
+'use strict';
+
+const CLE = 'ligam-apercu-appareils';
+const CADRE = 12; // épaisseur du boîtier, en pixels de l'appareil
+
+const APPAREILS = [
+	{ id: 'android',  nom: 'Android',         l: 360,  h: 800,  type: 'tel' },
+	{ id: 'iphone',   nom: 'iPhone',          l: 390,  h: 844,  type: 'tel' },
+	{ id: 'tablette', nom: 'Tablette',        l: 820,  h: 1180, type: 'tab' },
+	{ id: 'grande',   nom: 'Grande tablette', l: 1024, h: 1366, type: 'tab' }
+];
+
+const PAGES = [
+	['Accueil', '/'],
+	['Se parla', '/parla'],
+	['S’apren', '/apren'],
+	['Amassa', '/amassa'],
+	['Carte', '/carta'],
+	['Cultura', '/cultura'],
+	['Anem !', '/anem'],
+	['Remira', '/apren/remira'],
+	['Contact', '/contacte']
+];
+
+const ZOOMS = [
+	{ v: 'auto', t: 'Ajusté' },
+	{ v: 100, t: '100 %' },
+	{ v: 75, t: '75 %' },
+	{ v: 50, t: '50 %' }
+];
+
+// Le thème du site se lit dans la même mémoire que celle des cadres (même adresse).
+const TEMES = [{ v: 'sorne', t: 'Sombre' }, { v: 'clar', t: 'Clair' }];
+const CLE_TEMA = 'lo-ligam-tema';
+function temaActual() {
+	try { return localStorage.getItem(CLE_TEMA) || 'sorne'; } catch { return 'sorne'; }
+}
+
+const $ = (s) => document.querySelector(s);
+const scene = $('#scene');
+
+/* ---------- état, gardé d'une visite à l'autre ---------- */
+
+// Une adresse n'est acceptée que si elle reste sur ce site (jamais « //autre.site »).
+function normaliser(texte) {
+	try {
+		const u = new URL(String(texte).trim() || '/', location.origin);
+		if (u.origin !== location.origin) return null;
+		return u.pathname + u.search + u.hash;
+	} catch { return null; }
+}
+
+function lire() {
+	try { return JSON.parse(localStorage.getItem(CLE)) || {}; } catch { return {}; }
+}
+const defaut = { page: '/', actifs: ['android', 'tablette'], paysage: false, zoom: 'auto' };
+const etat = Object.assign({}, defaut, lire());
+etat.page = normaliser(etat.page) || '/';
+// Adresse de la forme esbos-apercu.html?page=/ensag/papier-botons (liens du banc d'essai)
+const demandee = normaliser(new URLSearchParams(location.search).get('page') || '');
+if (demandee && demandee !== '/') etat.page = demandee;
+etat.actifs = (Array.isArray(etat.actifs) ? etat.actifs : []).filter((id) => APPAREILS.some((a) => a.id === id));
+if (!etat.actifs.length) etat.actifs = defaut.actifs.slice();
+etat.paysage = !!etat.paysage;
+if (!ZOOMS.some((z) => z.v === etat.zoom)) etat.zoom = 'auto';
+
+function garder() {
+	try { localStorage.setItem(CLE, JSON.stringify(etat)); } catch { /* navigation privée : tant pis */ }
+}
+
+/* ---------- largeur de la barre de défilement ----------
+   Un téléphone n'en affiche pas. On élargit donc le cadre de cette largeur et on la
+   cache derrière le bord de l'écran, pour que la page voie bien 360, 390 ou 820 pixels. */
+function largeurAscenseur() {
+	const d = document.createElement('div');
+	d.style.cssText = 'position:absolute;top:-9999px;width:100px;height:100px;overflow:scroll';
+	document.body.appendChild(d);
+	const w = d.offsetWidth - d.clientWidth;
+	d.remove();
+	return w;
+}
+const ASCENSEUR = largeurAscenseur();
+
+/* ---------- un bloc par appareil, créé une fois (déplacer une iframe la recharge) ---------- */
+
+const blocs = new Map();
+for (const a of APPAREILS) {
+	const fig = document.createElement('figure');
+	fig.className = 'appareil ' + a.type;
+	const boitier = document.createElement('div'); boitier.className = 'boitier';
+	const cadre = document.createElement('div'); cadre.className = 'cadre';
+	const vitre = document.createElement('div'); vitre.className = 'vitre';
+	const iframe = document.createElement('iframe'); iframe.title = 'Aperçu ' + a.nom;
+	const leg = document.createElement('figcaption');
+	const nom = document.createElement('b'); nom.textContent = a.nom;
+	const dim = document.createElement('span');
+	const chemin = document.createElement('span');
+	leg.append(nom, ' · ', dim, ' · ', chemin);
+	vitre.append(iframe); cadre.append(vitre); boitier.append(cadre); fig.append(boitier, leg);
+	scene.append(fig);
+	const b = { a, fig, boitier, cadre, vitre, iframe, dim, chemin };
+	iframe.addEventListener('load', () => {
+		try {
+			const u = iframe.contentWindow.location;
+			chemin.textContent = u.pathname + u.search;
+		} catch { chemin.textContent = 'affichage refusé par la page'; }
+	});
+	blocs.set(a.id, b);
+}
+
+function dimensions(a) {
+	return etat.paysage ? { l: a.h, h: a.l } : { l: a.l, h: a.h };
+}
+
+function charger(b, force) {
+	if (force) {
+		// Recharger la page où l'on est (même si on a cliqué un lien dans le cadre), sauf si le
+		// cadre est encore vide ou en cours de chargement : un reload() l'annulerait.
+		let pret = false;
+		try {
+			pret = b.iframe.contentWindow.location.href !== 'about:blank' && b.iframe.contentDocument.readyState === 'complete';
+		} catch { /* page refusée : repli ci-dessous */ }
+		if (pret) {
+			try { b.iframe.contentWindow.location.reload(); return; } catch { /* repli ci-dessous */ }
+		}
+	}
+	if (force || b.iframe.dataset.page !== etat.page) {
+		b.iframe.dataset.page = etat.page;
+		b.iframe.src = etat.page;
+	}
+}
+
+function agencer() {
+	const visibles = APPAREILS.filter((a) => etat.actifs.includes(a.id));
+	const ECART = 40, MARGE = 24, LEGENDE = 44;
+	const dims = visibles.map(dimensions);
+	// L'écart et la légende gardent leur taille : on les retire de la place avant de diviser.
+	const totalL = dims.reduce((s, d) => s + d.l + 2 * CADRE, 0);
+	const maxH = Math.max(0, ...dims.map((d) => d.h + 2 * CADRE));
+	const dispoL = scene.clientWidth - 2 * MARGE - ECART * Math.max(0, visibles.length - 1);
+	const dispoH = scene.clientHeight - 2 * MARGE - LEGENDE;
+	let s = etat.zoom === 'auto' ? Math.min(1, dispoL / totalL, dispoH / maxH) : etat.zoom / 100;
+	s = Math.max(0.1, s);
+
+	for (const a of APPAREILS) {
+		const b = blocs.get(a.id);
+		const actif = etat.actifs.includes(a.id);
+		b.fig.hidden = !actif;
+		if (!actif) continue;
+		const { l, h } = dimensions(a);
+		const L = l + 2 * CADRE, H = h + 2 * CADRE;
+		b.fig.style.width = L * s + 'px';
+		b.boitier.style.width = L * s + 'px';
+		b.boitier.style.height = H * s + 'px';
+		b.cadre.style.width = L + 'px';
+		b.cadre.style.height = H + 'px';
+		b.cadre.style.transform = 'scale(' + s + ')';
+		b.vitre.style.width = l + 'px';
+		b.vitre.style.height = h + 'px';
+		b.iframe.style.width = l + ASCENSEUR + 'px';
+		b.iframe.style.height = h + 'px';
+		b.dim.textContent = l + '×' + h;
+		charger(b, false);
+	}
+	$('#echelle').textContent = Math.round(s * 100) + ' %';
+}
+
+/* ---------- barre de boutons ---------- */
+
+const boutons = [];
+function bouton(conteneur, texte, type, val, auClic, detail) {
+	const el = document.createElement('button');
+	el.type = 'button';
+	el.className = 'puce';
+	el.textContent = texte;
+	if (detail) { const p = document.createElement('small'); p.textContent = detail; el.append(p); }
+	el.dataset.type = type;
+	el.dataset.val = String(val);
+	el.addEventListener('click', auClic);
+	conteneur.append(el);
+	boutons.push(el);
+	return el;
+}
+
+function marquer() {
+	for (const el of boutons) {
+		const v = el.dataset.val;
+		let on = false;
+		if (el.dataset.type === 'page') on = v === etat.page;
+		else if (el.dataset.type === 'appareil') on = etat.actifs.includes(v);
+		else if (el.dataset.type === 'zoom') on = v === String(etat.zoom);
+		else if (el.dataset.type === 'paysage') on = etat.paysage;
+		else if (el.dataset.type === 'theme') on = v === temaActual();
+		el.setAttribute('aria-pressed', on ? 'true' : 'false');
+	}
+}
+
+function aller(page) {
+	etat.page = page;
+	for (const a of APPAREILS) {
+		if (etat.actifs.includes(a.id)) charger(blocs.get(a.id), false);
+	}
+	garder(); marquer();
+}
+
+for (const [t, p] of PAGES) bouton($('#pages'), t, 'page', p, () => {
+	if (etat.page === p) recharger(); else aller(p);
+});
+
+for (const a of APPAREILS) bouton($('#appareils'), a.nom, 'appareil', a.id, () => {
+	const i = etat.actifs.indexOf(a.id);
+	if (i >= 0) { if (etat.actifs.length > 1) etat.actifs.splice(i, 1); }
+	else etat.actifs.push(a.id);
+	garder(); marquer(); agencer();
+}, a.l + '×' + a.h);
+
+bouton($('#affichage'), 'Paysage', 'paysage', 'p', () => {
+	etat.paysage = !etat.paysage;
+	garder(); marquer(); agencer();
+});
+for (const z of ZOOMS) bouton($('#affichage'), z.t, 'zoom', z.v, () => {
+	etat.zoom = z.v;
+	garder(); marquer(); agencer();
+});
+
+for (const t of TEMES) bouton($('#theme'), t.t, 'theme', t.v, () => {
+	try { localStorage.setItem(CLE_TEMA, t.v); } catch { /* tant pis */ }
+	marquer(); recharger();
+});
+
+function recharger() {
+	for (const a of APPAREILS) {
+		if (etat.actifs.includes(a.id)) charger(blocs.get(a.id), true);
+	}
+}
+$('#recharger').addEventListener('click', recharger);
+$('#ouvrir').addEventListener('click', () => window.open(etat.page, '_blank', 'noopener'));
+
+$('#autre').addEventListener('submit', (e) => {
+	e.preventDefault();
+	const champ = $('#chemin');
+	const p = normaliser(champ.value);
+	champ.setCustomValidity('');
+	if (p === null) { champ.value = ''; champ.placeholder = 'Adresse de ce site seulement'; return; }
+	aller(p);
+});
+
+new ResizeObserver(agencer).observe(scene);
+marquer();
+agencer();
+})();
+</script>
+</body>
+</html>
