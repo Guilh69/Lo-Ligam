@@ -15,6 +15,11 @@
 	// Basic à la demande (/api/congres/cercar, réservé à l'administrateur).
 	// Choisi, le rond ne montre plus que le mot et sa traduction en italique.
 	// font : d'où vient le mot (basic, site, man = écrit à la main).
+	//
+	// Romain, 07-11 : « modifier ceux présents en double cliquant » (un double
+	// toucher sur le rond ou sur son mot : la recherche s'ouvre avec ce mot,
+	// prêt à être remplacé) et « un plein écran pour voir mieux » (la photo
+	// aussi grande que l'écran, la recherche à côté ou dessous).
 	import { tick, untrack } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { camin, srcset, MOTS } from './paisatges.js';
@@ -27,6 +32,9 @@
 	let camp = $state(null);
 	let zona = $state(null);
 	let tira = null; // { id, x0, y0, bolegat }
+	let darrièrTòc = { id: null, t: 0 }; // pour reconnaître un double toucher
+	let gran = $state(false); // le plein écran
+	let ecranComplet = false; // le navigateur est passé en plein écran pour nous
 
 	let rond = $derived(ronds.find((d) => d.id === causit) ?? null);
 	let comptats = $derived(ronds.filter((d) => d.oc.trim()).length);
@@ -67,13 +75,15 @@
 	async function cercar(e) {
 		e?.preventDefault();
 		const q = consulta.trim();
-		if (q.length < 2 || cerca.estat === 'cargament') return;
+		// lo Basic connaît le mot sans son article (« la mer » → mer)
+		const terme = q.replace(/^(l[’']|lo |la |los |las |le |les )/i, '').trim();
+		if (terme.length < 2 || cerca.estat === 'cargament') return;
 		cerca = { estat: 'cargament', terme: q, resultats: [] };
 		let r = { estat: 'error', terme: q, resultats: [] };
 		try {
 			const { data } = await supabase.auth.getSession();
 			const jeton = data?.session?.access_token;
-			const res = await fetch(`/api/congres/cercar?q=${encodeURIComponent(q)}`, { headers: jeton ? { Authorization: `Bearer ${jeton}` } : {} });
+			const res = await fetch(`/api/congres/cercar?q=${encodeURIComponent(terme)}`, { headers: jeton ? { Authorization: `Bearer ${jeton}` } : {} });
 			const d = await res.json();
 			if (res.ok) r = { estat: 'ok', terme: q, resultats: d.resultats.map((x) => ({ ...x, font: 'basic' })) };
 			else if (d.error === 'sens-clau') r.estat = 'sens-clau';
@@ -114,7 +124,12 @@
 	function abaissar(e) {
 		if (!viu || e.button > 0) return;
 		const id = e.target.closest('[data-rond]')?.dataset.rond;
-		tira = { id: id == null ? null : Number(id), x0: e.clientX, y0: e.clientY, bolegat: false };
+		// l'écart entre le doigt et le rond (pris par son étiquette, il ne saute pas)
+		const d = id == null ? null : ronds.find((x) => x.id === Number(id));
+		const b = zona.getBoundingClientRect();
+		const dx = d ? d.x - (e.clientX - b.left) / b.width : 0,
+			dy = d ? d.y - (e.clientY - b.top) / b.height : 0;
+		tira = { id: id == null ? null : Number(id), x0: e.clientX, y0: e.clientY, dx, dy, bolegat: false };
 		zona.setPointerCapture(e.pointerId);
 	}
 	function bolegar(e) {
@@ -123,16 +138,30 @@
 		if (!tira.bolegat || tira.id == null) return;
 		const d = ronds.find((d) => d.id === tira.id);
 		if (!d) return;
-		[d.x, d.y] = lòc(e);
-		causit = d.id;
+		const b = zona.getBoundingClientRect();
+		d.x = bòrna((e.clientX - b.left) / b.width + tira.dx);
+		d.y = bòrna((e.clientY - b.top) / b.height + tira.dy);
+		if (causit !== d.id) causir(d.id); // un autre rond : la recherche repart de zéro
 	}
 	function levar(e) {
 		if (!tira) return;
 		const t = tira;
 		tira = null;
 		if (t.id != null) {
-			if (t.bolegat) mandar();
-			causir(t.id);
+			if (t.bolegat) {
+				mandar();
+				causir(t.id);
+				return;
+			}
+			// deux touchers rapprochés sur le même rond : on change son mot
+			const ara = performance.now();
+			if (darrièrTòc.id === t.id && ara - darrièrTòc.t < 450) {
+				darrièrTòc = { id: null, t: 0 };
+				modificar(t.id);
+			} else {
+				darrièrTòc = { id: t.id, t: ara };
+				causir(t.id);
+			}
 		} else if (!t.bolegat) {
 			// un toucher sur la photo : un rond naît là
 			const [x, y] = lòc(e);
@@ -140,6 +169,75 @@
 			causir(n++, true);
 		}
 	}
+
+	/** Changer le mot d'un rond : la recherche s'ouvre avec ce mot, sélectionné. */
+	async function modificar(id) {
+		const d = ronds.find((x) => x.id === id);
+		causit = id;
+		consulta = d?.oc.trim() ? d.oc.trim().replace(/^(l[’']|lo |la |los |las )/i, '') : '';
+		cerca = { estat: 'void', terme: '', resultats: [] };
+		await tick();
+		camp?.focus();
+		camp?.select();
+	}
+
+	// ── le plein écran : la carte passe au bout de la page (dans la carte qui
+	// bouge et tourne, « fixed » ne couvrirait pas l'écran), et le navigateur
+	// passe en plein écran quand il le permet ──
+	const portal = (node) => {
+		if (!gran) return;
+		const pair = node.parentNode,
+			seguent = node.nextSibling;
+		document.body.appendChild(node);
+		// la page de dessous ne défile plus
+		const html = document.documentElement,
+			abans = html.style.overflow;
+		html.style.overflow = 'hidden';
+		return () => {
+			html.style.overflow = abans;
+			try {
+				pair.insertBefore(node, seguent);
+			} catch {
+				node.remove();
+			}
+		};
+	};
+	async function bascular() {
+		gran = !gran;
+		try {
+			if (gran && !document.fullscreenElement) {
+				await document.documentElement.requestFullscreen?.({ navigationUI: 'hide' });
+				ecranComplet = Boolean(document.fullscreenElement);
+			} else if (!gran && ecranComplet && document.fullscreenElement) {
+				ecranComplet = false;
+				await document.exitFullscreen();
+			}
+		} catch {
+			/* sans plein écran du navigateur, le calque couvre quand même la fenêtre */
+		}
+	}
+	$effect(() => {
+		// Échap dans le navigateur quitte son plein écran : le nôtre se ferme avec
+		const sortir = () => {
+			if (!document.fullscreenElement && ecranComplet) {
+				ecranComplet = false;
+				gran = false;
+			}
+		};
+		document.addEventListener('fullscreenchange', sortir);
+		return () => {
+			document.removeEventListener('fullscreenchange', sortir);
+			if (ecranComplet && document.fullscreenElement) document.exitFullscreen().catch(() => {});
+		};
+	});
+	// Échap ferme le plein écran (après avoir refermé la recherche, s'il y en a une)
+	const teclaFenestra = (e) => {
+		if (gran && e.key === 'Escape' && !e.defaultPrevented) {
+			e.preventDefault();
+			if (causit !== null) causit = null;
+			else bascular();
+		}
+	};
 
 	function apondre() {
 		ronds.push({ id: n, oc: '', fr: '', x: 0.5, y: 0.5, font: 'man' });
@@ -185,8 +283,31 @@
 	const costat = (x) => (x > 0.72 ? 'drecha' : x < 0.28 ? 'esquerra' : '');
 </script>
 
+<svelte:window onkeydown={teclaFenestra} />
+
 <!-- les gestes restent ici : la carte de Triar ne glisse pas -->
-<div class="pausar" onpointerdown={(e) => viu && e.stopPropagation()} role="presentation">
+<div
+	class="pausar"
+	class:gran
+	onpointerdown={(e) => viu && e.stopPropagation()}
+	role={gran ? 'dialog' : 'presentation'}
+	aria-modal={gran ? 'true' : undefined}
+	aria-label={gran ? 'Poser les mots, en plein écran' : undefined}
+	{@attach portal}
+>
+	{#if viu}
+		<div class="barra">
+			<span class="compte">{comptats} {comptats > 1 ? 'mots' : 'mot'}</span>
+			<button type="button" class="b-barra" onclick={apondre}>Ajouter un mot</button>
+			<button type="button" class="b-barra b-gran" onclick={bascular} aria-pressed={gran}>
+				<svg viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+					{#if gran}<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" />{:else}<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />{/if}
+				</svg>
+				{gran ? 'Quitter le plein écran' : 'Plein écran'}
+			</button>
+		</div>
+	{/if}
+	<div class="cadre">
 	<div
 		class="foto"
 		class:viu
@@ -202,7 +323,7 @@
 		<img
 			src={camin(foto.clau, foto.amples[0])}
 			srcset={srcset(foto)}
-			sizes="(max-width: 32rem) 100vw, 30rem"
+			sizes={gran ? '100vw' : '(max-width: 32rem) 100vw, 30rem'}
 			alt={viu ? foto.alt : ''}
 			draggable="false"
 		/>
@@ -221,8 +342,14 @@
 					aria-label={d.oc.trim() ? `${d.oc}, changer ou déplacer (flèches)` : 'Rond sans mot'}
 				></button>
 				{#if d.oc.trim()}
-					<!-- le mot et sa traduction en italique, comme dans Remira -->
-					<span class="nom {costat(d.x)}" class:naut={d.y > 0.78} style:left="{d.x * 100}%" style:top="{d.y * 100}%" aria-hidden="true"
+					<!-- le mot et sa traduction en italique, comme dans Remira ; on le touche comme le rond -->
+					<span
+						class="nom {costat(d.x)}"
+						class:naut={d.y > 0.78}
+						data-rond={d.id}
+						style:left="{d.x * 100}%"
+						style:top="{d.y * 100}%"
+						aria-hidden="true"
 						><span class="n-oc" lang="oc">{d.oc}</span>{#if d.fr.trim()}<span class="n-filet"></span><span class="n-fr" lang="fr">{d.fr}</span>{/if}</span
 					>
 				{/if}
@@ -231,8 +358,10 @@
 			{/if}
 		{/each}
 	</div>
+	</div>
 
 	{#if viu}
+		<div class="costat">
 		{#if rond}
 			<div class="forma">
 				<!-- la recherche : en français ou en occitan ; Entrée ou « Chercher » interroge lo Basic -->
@@ -297,15 +426,12 @@
 				</div>
 			</div>
 		{:else}
-			<p class="ajuda">
-				{comptats}
-				{comptats > 1 ? 'mots' : 'mot'} sur cette photo
-				<button type="button" class="b-apondre" onclick={apondre}>Ajouter un mot au milieu</button>
-			</p>
+			<p class="ajuda">Touche la photo pour poser un rond. Touche deux fois un mot pour le changer, fais-le glisser pour le déplacer.</p>
 		{/if}
 		<datalist id={LISTA}>
 			{#each LEXIC as oc (oc)}<option value={oc}>{MOTS[oc]}</option>{/each}
 		</datalist>
+		</div>
 	{/if}
 </div>
 
@@ -330,6 +456,10 @@
 	.foto.viu {
 		touch-action: none; /* le doigt pose et déplace, il ne fait pas défiler */
 		cursor: crosshair;
+		/* deux touchers de suite ne surlignent pas la photo */
+		user-select: none;
+		-webkit-user-select: none;
+		-webkit-tap-highlight-color: transparent;
 	}
 	img {
 		display: block;
@@ -380,7 +510,8 @@
 		color: #f3ead6;
 		line-height: 1.25;
 		white-space: nowrap;
-		pointer-events: none;
+		cursor: grab;
+		touch-action: none;
 	}
 	.n-oc {
 		font-size: 0.82rem;
@@ -557,7 +688,7 @@
 		gap: 0.5rem;
 	}
 	.b-forma button,
-	.b-apondre {
+	.b-barra {
 		padding: 0.45rem 0.9rem;
 		border: 1px solid rgba(243, 234, 214, 0.55);
 		border-radius: 999px;
@@ -572,7 +703,7 @@
 		background: rgba(255, 212, 127, 0.14);
 	}
 	.b-forma button:focus-visible,
-	.b-apondre:focus-visible {
+	.b-barra:focus-visible {
 		outline: 2px solid var(--aur-clar, #ffd47f);
 		outline-offset: 2px;
 	}
@@ -583,8 +714,84 @@
 		text-align: center;
 		opacity: 0.9;
 	}
-	.b-apondre {
-		display: block;
-		margin: 0.5rem auto 0;
+	/* la barre : le compte, ajouter un mot, le plein écran */
+	.barra {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.4rem;
+	}
+	.compte {
+		margin-right: auto;
+		font-size: 0.85rem;
+		opacity: 0.85;
+	}
+	.b-barra {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.35rem 0.8rem;
+		font-size: 0.85rem;
+	}
+	.cadre {
+		min-width: 0;
+	}
+	.costat {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		min-width: 0;
+	}
+
+	/* ── le plein écran : la photo aussi grande que l'écran le permet, la
+	   recherche dessous (téléphone) ou à côté (ordinateur) ── */
+	.pausar.gran {
+		position: fixed;
+		inset: 0;
+		z-index: 60;
+		display: grid;
+		grid-template-rows: auto minmax(0, 1fr) auto;
+		gap: 0.6rem;
+		padding: max(0.75rem, env(safe-area-inset-top)) max(0.75rem, env(safe-area-inset-right)) max(0.75rem, env(safe-area-inset-bottom))
+			max(0.75rem, env(safe-area-inset-left));
+		background: #0b1517;
+		color: #f3ead6;
+		font-family: var(--font-body);
+	}
+	.gran .cadre {
+		container-type: size;
+		display: grid;
+		place-items: center;
+		min-height: 0;
+	}
+	.gran .foto {
+		width: min(100cqw, calc(100cqh * var(--l)));
+		margin: 0;
+	}
+	/* hauteur fixe : ouvrir la recherche ne fait pas bouger la photo (le second
+	   toucher d'un double toucher tombe au même endroit que le premier) */
+	.gran .costat {
+		height: min(40vh, 16rem);
+		overflow-y: auto;
+	}
+	@media (min-width: 56rem) {
+		.pausar.gran {
+			grid-template-columns: minmax(0, 1fr) 22rem;
+			grid-template-rows: auto minmax(0, 1fr);
+			grid-template-areas: 'barra barra' 'cadre costat';
+			gap: 0.75rem 1.25rem;
+		}
+		.gran .barra {
+			grid-area: barra;
+		}
+		.gran .cadre {
+			grid-area: cadre;
+		}
+		.gran .costat {
+			grid-area: costat;
+			align-self: center;
+			height: auto;
+			max-height: 100%;
+		}
 	}
 </style>
