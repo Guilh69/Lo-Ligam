@@ -120,7 +120,8 @@
 	width: 1.15rem;
 	height: 1.15rem;
 }
-.pc-rep.est-choisi {
+.pc-rep.est-choisi,
+.pc-rep[aria-pressed='true'] {
 	--pc-fons: var(--pc-or-fons);
 	--pc-tinta: var(--pc-or-tinta);
 	transform: translateY(-2px);
