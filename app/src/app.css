@@ -100,6 +100,20 @@
 	/* --t-accion et --t-accion-tinta : palette.js (BOUTONS.agir) */
 	--t-accion-viu: color-mix(in srgb, var(--t-accion) 82%, #000);
 }
+/* La braise des pages intérieures : la lueur de terracotta en haut à gauche (et
+   celle d'or en haut à droite) du cadre commun des pages, un halo sans
+   information (Romain, 2026-11-07 : « savoir d'où vient ce halo et le
+   supprimer s'il n'est pas utile »). Un seul interrupteur : en clair, elles
+   sont retirées ; en sombre, elles gardent leur valeur. Pour les rendre au
+   clair, remettre ici les deux valeurs du sombre. */
+:root {
+	--t-braise: color-mix(in srgb, var(--t-terra) 26%, transparent);
+	--t-braise-or: color-mix(in srgb, var(--t-aur) 9%, transparent);
+}
+:root[data-tema='clar'] {
+	--t-braise: transparent;
+	--t-braise-or: transparent;
+}
 /* Gamme « Plâtre » (Romain, 2026-10-21, refonte claire, étape 1 : choisie
    contre « Terre cuite » et « Ciel du Sud » sur /ensag/clar) : plâtre, pierre
    et encre brun-noir, d'après les couleurs mesurées de leoparpeix.com ; la

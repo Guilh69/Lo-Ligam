@@ -65,6 +65,17 @@ Non vérifié : les mots « Aicí, l'occitan s'apren » (couleur pâle qui se re
 
 Même diagnostic, un cran moins grave : le fond `#22100a` est un brun très sombre (intensité 0,033, plus marquée que celle du plâtre clair) et l'accueil n'y montre que la brique et l'or. Les pages S'apren et jeux montrent les mêmes cinq ou six teintes en aplat. L'anomalie propre au sombre est « Se connecter » (voir plus haut).
 
+## Le halo : d'où il vient, et ce qui en a été retiré (demande de Romain, 07-11)
+
+Romain : « il faut savoir d'où vient ce halo et le supprimer s'il n'est pas utile ». Il y en a deux, de même famille, et aucun ne porte d'information :
+
+1. **L'accueil : le fond animé `#fons`** (`app/src/lib/acuelh/motor.js`, shader WebGL « Venas d'aur », la « Brasa » de 2026-10-07). Il est dessiné pour le thème sombre : un marbrage de brique et de corail, des veines d'or, une lueur sous la souris. En clair, le shader ne fait que reteindre ce même marbrage en saumon sur le plâtre (`col = mix(plâtre, #c26e42, intensité)`), d'où le halo rose : environ 61 % de l'écran sur téléphone, avec un texte à 4,05 de contraste au plus fort du halo. Il a un coût : 25 évaluations de bruit par pixel et par image (cinq marbrages de cinq niveaux), à demi-résolution. **Retiré en clair** : le fond est le plâtre nu. Les courbes de niveau de la carte (du vrai relief, tracées par le même shader) restent. Le fond léger CSS (`.brasa`) fait pareil en clair (lueurs, dégradé beige, vignettage) : retiré aussi.
+2. **Les pages intérieures : la « braise » en haut à gauche** (24 pages, un dégradé radial de terracotta à 26 % posé dans chaque page, et un coin d'or à 9 % en haut à droite dans 20 d'entre elles). C'est le cadre commun des pages depuis `/mots`. Remplacée dans les 24 fichiers par deux jetons, `--t-braise` et `--t-braise-or` (`app.css`) : **transparents en clair, inchangés en sombre**. Pour la rendre au clair, il suffit de remettre la valeur du sombre dans ces deux jetons.
+
+Vérifié : le coin haut-gauche de l'accueil et de S'apren passe de `rgb(238, 218, 208)` à `rgb(247, 243, 238)`, le plâtre exact ; même résultat sur `/mots`, `/ideas`, `/apren/visio`. Le thème sombre n'a pas bougé (S'apren sombre : 2 152 pixels différents avant et après, contre 5 421 entre deux captures identiques : ce sont les dessins animés des tuiles). Rien d'autre n'a été touché.
+
+Laissé tel quel, à dire à Romain : le thème sombre garde son « Venas d'aur » (choix de Romain des 07, 15 et 22-10) ; les petits points de poussière de l'accueil (`#estelas`) ; quelques dégradés radiaux isolés, de forme différente, dans la carte et les fiches ; le composant `PageBackground.svelte` (« halos colorés flous »), qui n'est utilisé nulle part.
+
 ## Les trois pistes et l'outil (pages d'essai, rien n'est changé sur le site)
 
 Pages : `/ensag/palette-actuel` (référence), `/ensag/palette-brique`, `/ensag/palette-jaune`, `/ensag/palette-accordee`. Chacune montre les vrais composants (pièces de `papier.css`, croix du logo, polices, tuiles de S'apren, familles de jeux, réponses, textes) en clair et en sombre, avec le panneau « Retoucher les couleurs ».

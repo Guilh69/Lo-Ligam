@@ -133,7 +133,7 @@
 		min-height: 100vh;
 		color: var(--t-tinta);
 		background:
-			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			radial-gradient(ellipse 70% 50% at 8% -8%, var(--t-braise), transparent 70%),
 			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, #55702f 14%, transparent), transparent 70%),
 			var(--t-fons);
 		overflow-x: clip;
