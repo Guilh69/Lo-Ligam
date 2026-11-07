@@ -133,6 +133,7 @@
 				{#each ['sorne', 'clar', 'sistema'] as v (v)}
 					<button
 						type="button"
+						class="pc pc-2 pc-chip"
 						aria-pressed={ambianca.tema === v}
 						disabled={ambianca.forçarClar}
 						onclick={() => (ambianca.tema = v)}>{tx[v]}</button
@@ -149,7 +150,7 @@
 				aria-pressed={ambianca.dalt}
 				onclick={() => (ambianca.dalt = !ambianca.dalt)}
 			>
-				<span class="interr" aria-hidden="true"></span>{tx.dalt}
+				<span class="pc-basc" aria-hidden="true"></span>{tx.dalt}
 			</button>
 
 			{#if ambianca.fonsPresent}
@@ -162,7 +163,7 @@
 					aria-pressed={ambianca.leugier}
 					onclick={() => (ambianca.leugier = !ambianca.leugier)}
 				>
-					<span class="interr" aria-hidden="true"></span>{tx.leugier}
+					<span class="pc-basc" aria-hidden="true"></span>{tx.leugier}
 				</button>
 				{#each ambianca.leugier ? [] : ORDRE_FONS as v (v)}
 					<label class="fons-opcion">
@@ -237,41 +238,19 @@
 		color: var(--t-tinta-2);
 	}
 
+	/* sombre / clair / système : trois jetons de papier, l'or pour le choisi */
 	.tema {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		gap: 4px;
-		padding: 3px;
+		gap: 6px;
 		margin-bottom: 0.9rem;
-		border-radius: 12px;
-		border: 1px solid var(--t-linha);
 	}
 
 	.tema button {
-		border: 0;
-		background: transparent;
-		padding: 0.45rem 0.2rem;
-		border-radius: 9px;
+		padding-inline: 0.2rem;
 		font-size: 0.82rem;
-		font-weight: 700;
-		color: var(--t-tinta-2);
-		cursor: pointer;
-		transition:
-			background 0.4s,
-			color 0.4s;
 	}
 
-	.tema button[aria-pressed='true'] {
-		background: var(--t-tinta);
-		color: var(--t-fons);
-	}
-
-	.tema button:disabled {
-		cursor: not-allowed;
-		opacity: 0.5;
-	}
-
-	.tema button:focus-visible,
 	.dalt:focus-visible {
 		outline: 2px solid var(--t-aur);
 		outline-offset: 2px;
@@ -303,48 +282,7 @@
 		color: var(--t-tinta);
 	}
 
-	.interr {
-		flex: none;
-		position: relative;
-		width: 34px;
-		height: 20px;
-		border-radius: 999px;
-		border: 1px solid var(--t-linha);
-		transition: background 0.35s;
-	}
-
-	.interr::after {
-		content: '';
-		position: absolute;
-		top: 3px;
-		left: 3px;
-		width: 12px;
-		height: 12px;
-		border-radius: 50%;
-		background: var(--t-tinta-2);
-		transition:
-			transform 0.35s cubic-bezier(0.19, 1, 0.22, 1),
-			background 0.35s;
-	}
-
-	.dalt[aria-pressed='true'] .interr {
-		background: #2f6fb0;
-		border-color: #2f6fb0;
-	}
-
-	.dalt[aria-pressed='true'] .interr::after {
-		transform: translateX(14px);
-		background: #fff;
-	}
-
-	.leugier[aria-pressed='true'] .interr {
-		background: var(--t-aur);
-		border-color: var(--t-aur);
-	}
-
-	.leugier[aria-pressed='true'] .interr::after {
-		background: var(--t-fons);
-	}
+	/* l'interrupteur : .pc-basc (lib/styles/papier.css) */
 
 	.fons-opcion {
 		position: relative;

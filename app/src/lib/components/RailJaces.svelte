@@ -1563,7 +1563,7 @@
 				</p>
 			</div>
 			<div class="ficha-dreita">
-				<button type="button" class="basc" role="switch" aria-checked={on} aria-label={tx.occitan} onclick={() => bascular('dialectes', !on)}></button>
+				<button type="button" class="pc-basc basc" role="switch" aria-checked={on} aria-label={tx.occitan} onclick={() => bascular('dialectes', !on)}></button>
 				{@render silhoeta('occitan', CARTE.occitan)}
 			</div>
 		</div>
@@ -1618,7 +1618,7 @@
 			<div class="ficha-dreita">
 				<button
 					type="button"
-					class="basc"
+					class="pc-basc basc"
 					role="switch"
 					aria-checked={!!visibility[j.id]}
 					aria-label={nomJ(j)}
@@ -1773,7 +1773,7 @@
 		</div>
 		<button
 			type="button"
-			class="basc"
+			class="pc-basc basc"
 			role="switch"
 			aria-checked={actiu(j) && !!visibility[j.id] && estatCarta.apercebut !== j.id}
 			aria-label={nomJ(j)}
@@ -2421,46 +2421,7 @@
 	}
 
 	/* bascula (interruptor) */
-	/* l'interrupteur : une piste de papier et une pièce qui glisse */
-	.basc {
-		position: relative;
-		flex: none;
-		width: 36px;
-		height: 22px;
-		padding: 0;
-		border: 0;
-		border-radius: 8px;
-		background: color-mix(in srgb, var(--t-tinta) 24%, transparent);
-		box-shadow: inset 0 1px 2px var(--pc-ombre);
-		cursor: pointer;
-		transition: background 0.2s;
-	}
-
-	.basc::after {
-		content: '';
-		position: absolute;
-		top: 3px;
-		left: 3px;
-		width: 16px;
-		height: 16px;
-		border-radius: 5px;
-		background: var(--t-tinta);
-		box-shadow: 0 1px 2px var(--pc-ombre);
-		transition: transform 0.2s;
-	}
-
-	.basc[aria-checked='true'] {
-		background: var(--pc-or-fons);
-	}
-
-	.basc[aria-checked='true']::after {
-		transform: translateX(14px);
-		background: var(--t-fons);
-	}
-	.basc:disabled {
-		opacity: 0.35;
-		cursor: default;
-	}
+	/* l'interrupteur : .pc-basc de lib/styles/papier.css ; ici, l'aperçu */
 	/* en apercebut : ni alucat ni escantit, un contorn d'aur, lo boton al
 	   mièg que bat doçament (demanda de Romain, 2026-10-10) */
 	.linha.apercebuda .basc {
