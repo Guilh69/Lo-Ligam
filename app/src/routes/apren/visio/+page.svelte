@@ -154,7 +154,7 @@
 <!-- Le bouton de réservation : dans la page, il mène au questionnaire ; après
      l'envoi (ou « sans répondre »), au calendrier -->
 {#snippet reservar(classe, vers = null)}{@const l = ligam('visio.reservar')}{@const defòra = !vers && l.defòra}<a
-		class="reservar {classe}"
+		class="pc pc-grand reservar {classe}"
 		href={vers ?? l.href}
 		target={defòra ? '_blank' : undefined}
 		rel={defòra ? 'noopener' : undefined}
@@ -337,7 +337,7 @@
 				{/if}
 
 				<div class="q-accions">
-					<button type="submit" class="reservar sus-fons" disabled={mandant}>
+					<button type="submit" class="pc pc-grand reservar sus-fons" disabled={mandant}>
 						{#if mandant}{x.mandant}{:else}<span use:editar={'visio.q.mandar'}>{@render t('visio.q.mandar')}</span>{/if}
 					</button>
 					{#if !amagat('visio.q.sens')}{@const l = ligam('visio.reservar')}<a
@@ -446,18 +446,11 @@
 	}
 
 	/* Le bouton : crème sur la couleur, couleur d'action ailleurs (règle B) */
+	/* « Réserver » : une grande pièce de papier (lib/styles/papier.css) */
 	.reservar {
-		display: inline-flex;
-		align-items: center;
 		gap: 0.6em;
 		min-height: 48px;
 		padding: 0.8rem 1.4rem;
-		border-radius: 999px;
-		font-weight: 700;
-		text-decoration: none;
-		transition:
-			transform 0.25s,
-			background-color 0.25s;
 	}
 	.reservar svg {
 		width: 1em;
@@ -467,21 +460,13 @@
 	.reservar:hover svg {
 		transform: translateX(4px);
 	}
+	/* sur l'aplat de couleur de l'en-tête : la pièce prend les couleurs inversées */
 	.sus-color {
-		background: var(--visio-tinta);
-		color: var(--visio);
+		--pc-fons: var(--visio-tinta);
+		--pc-tinta: var(--visio);
 	}
 	.sus-fons {
 		margin-top: var(--esp-24);
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-	}
-	.sus-fons:hover {
-		background: var(--t-accion-viu);
-	}
-	.reservar:focus-visible {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 3px;
 	}
 
 	/* Le corps : les explications à gauche, la pratique à droite */
@@ -756,10 +741,6 @@
 	}
 	button.reservar {
 		margin-top: 0;
-		border: 0;
-		font: inherit;
-		font-weight: 700;
-		cursor: pointer;
 	}
 	button.reservar:disabled {
 		opacity: 0.7;
@@ -838,7 +819,6 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.reservar,
 		.reservar svg {
 			transition: none;
 		}
