@@ -40,7 +40,12 @@ html.lenis, html.lenis body { height: auto; }
 	overflow-x: clip;
 	-webkit-font-smoothing: antialiased;
 }
-.acuelh a { color: inherit; text-decoration: none; }
+/* Les liens en pièce de papier (.pc : « Reservar un cors », « Se connecter »…) gardent la couleur
+   de leur pièce : sans le :not(.pc), « inherit » leur donnait la couleur du texte de la page,
+   soit de l'encre sur la brique (2,91) ou de la crème sur la crème en sombre (1,15) ; 07-11 */
+/* (:where garde la force d'origine de la règle : un simple :not(.pc) la rendait plus forte que
+   « .acuelh .boton » et faisait perdre au bouton « Dobrir la carta » sa couleur de texte) */
+.acuelh a:not(:where(.pc)) { color: inherit; text-decoration: none; }
 .acuelh ::selection { background: var(--aur); color: var(--nuech); }
 .acuelh :focus-visible { outline: 2px solid var(--aur); outline-offset: 4px; border-radius: 4px; }
 .acuelh .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

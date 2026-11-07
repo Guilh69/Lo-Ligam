@@ -55,7 +55,7 @@ Hypothèse de départ de la demande : confirmée sur le nombre de teintes et sur
 | Menu : « La comunautat », « Lo Ligam » | `#e3baa2` sur brique : **3,23** (11,5 px) | texte secondaire trop pâle sur la brique |
 | Accueil sur téléphone : paragraphe sur le halo | **4,05** à droite du paragraphe, 5,7 à gauche (pixels derrière le texte) | le halo saumon passe derrière un texte de 19 px ; seuil 4,5 |
 
-Un correctif d'une ligne règle les trois premiers (`.acuelh a:not(.pc)`). Je ne l'ai pas appliqué : à décider avec Romain, hors du choix de palette.
+**Corrigé le 07-11 (accord de Romain)** : `.acuelh a:not(:where(.pc))` dans `acuelh.css`. Un simple `:not(.pc)` aurait relevé la force de la règle au-dessus de `.acuelh .boton` et cassé « Dobrir la carta » (essayé, mesuré à 2,91, corrigé par `:where`). Mesures avant/après : « Reservar un cors » en clair 2,91 → 5,15 ; « Se connecter » en clair 2,29 → 6,53, en sombre 1,15 → 12,97 ; « Dobrir la carta » et « Aprene l'occitan » inchangés (5,15 ; 15,2 et 16,4). Il ne reste sur l'accueil que les mots d'animation, mesurés hors animation.
 
 Tout le reste passe : encre sur plâtre 15,2 ; texte secondaire 6,3 ; ocre sur plâtre 5,07 ; brique sur plâtre 5,2 ; crème sur brique 5,15 ; crème sur sarcelle 6,5 ; crème sur bleu 5,1 à 5,6 ; crème sur olive 5,0 à 5,5 ; crème sur prune 7,9 ; encre sur or 8,6. La page des jeux n'a aucune erreur de contraste. Le brique en texte sur le fond sombre est à 3,18 : c'est la règle B du 23-10 (jamais de rouge en texte sur le sombre), respectée.
 
