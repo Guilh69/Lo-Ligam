@@ -14,7 +14,7 @@
 	// véracité ») : les mots déjà sur le site viennent pendant la frappe, lo
 	// Basic à la demande (/api/congres/cercar, réservé à l'administrateur).
 	// Choisi, le rond ne montre plus que le mot et sa traduction en italique.
-	// font : d'où vient le mot (basic, site, man = écrit à la main).
+	// font : d'où vient le mot (basic, wikidata, revirada, site, man = écrit à la main).
 	//
 	// Romain, 07-11 : « modifier ceux présents en double cliquant » (un double
 	// toucher sur le rond ou sur son mot : la recherche s'ouvre avec ce mot,
@@ -54,7 +54,8 @@
 
 	// ── la recherche ──
 	let consulta = $state('');
-	let cerca = $state({ estat: 'void', terme: '', resultats: [] }); // void | cargament | ok | sens-clau | error
+	// estat : void | cargament | ok | error ; estats : l'état de chaque source (basic, wikidata, revirada)
+	let cerca = $state({ estat: 'void', terme: '', resultats: [], estats: {} });
 	const nuda = (s) =>
 		s
 			.normalize('NFD')
@@ -78,15 +79,14 @@
 		// lo Basic connaît le mot sans son article (« la mer » → mer)
 		const terme = q.replace(/^(l[’']|lo |la |los |las |le |les )/i, '').trim();
 		if (terme.length < 2 || cerca.estat === 'cargament') return;
-		cerca = { estat: 'cargament', terme: q, resultats: [] };
-		let r = { estat: 'error', terme: q, resultats: [] };
+		cerca = { estat: 'cargament', terme: q, resultats: [], estats: {} };
+		let r = { estat: 'error', terme: q, resultats: [], estats: {} };
 		try {
 			const { data } = await supabase.auth.getSession();
 			const jeton = data?.session?.access_token;
 			const res = await fetch(`/api/congres/cercar?q=${encodeURIComponent(terme)}`, { headers: jeton ? { Authorization: `Bearer ${jeton}` } : {} });
 			const d = await res.json();
-			if (res.ok) r = { estat: 'ok', terme: q, resultats: d.resultats.map((x) => ({ ...x, font: 'basic' })) };
-			else if (d.error === 'sens-clau') r.estat = 'sens-clau';
+			if (res.ok) r = { estat: 'ok', terme: q, resultats: d.resultats, estats: d.estats ?? {} };
 		} catch {
 			/* reste « error » */
 		}
@@ -98,11 +98,20 @@
 		rond.fr = t.fr;
 		rond.font = t.font;
 		consulta = '';
-		cerca = { estat: 'void', terme: '', resultats: [] };
+		cerca = { estat: 'void', terme: '', resultats: [], estats: {} };
 		causit = null; // il ne reste que le mot et sa traduction
 		mandar();
 	}
-	const fontDe = (t) => (t.font === 'site' ? 'déjà sur le site' : t.var === 'lengadoc' ? 'lo Basic · languedocien' : 'lo Basic · occitan commun');
+	const fontDe = (t) =>
+		t.font === 'site'
+			? 'déjà sur le site'
+			: t.font === 'wikidata'
+				? 'Wikidata · à vérifier'
+				: t.font === 'revirada'
+					? 'Revirada · traduction automatique, à vérifier'
+					: t.var === 'lengadoc'
+						? 'lo Basic · languedocien'
+						: 'lo Basic · occitan commun';
 
 	const bòrna = (v) => Math.round(Math.min(0.97, Math.max(0.03, v)) * 1000) / 1000;
 	const lòc = (e) => {
@@ -113,7 +122,7 @@
 	async function causir(id, focus = false) {
 		if (causit !== id) {
 			consulta = '';
-			cerca = { estat: 'void', terme: '', resultats: [] };
+			cerca = { estat: 'void', terme: '', resultats: [], estats: {} };
 		}
 		causit = id;
 		if (!focus) return;
@@ -175,7 +184,7 @@
 		const d = ronds.find((x) => x.id === id);
 		causit = id;
 		consulta = d?.oc.trim() ? d.oc.trim().replace(/^(l[’']|lo |la |los |las )/i, '') : '';
-		cerca = { estat: 'void', terme: '', resultats: [] };
+		cerca = { estat: 'void', terme: '', resultats: [], estats: {} };
 		await tick();
 		camp?.focus();
 		camp?.select();
@@ -259,7 +268,7 @@
 	}
 	function traduire(e) {
 		rond.fr = e.target.value;
-		if (rond.font === 'basic') rond.font = 'man';
+		if (['basic', 'wikidata', 'revirada'].includes(rond.font)) rond.font = 'man';
 		mandar();
 	}
 	function teclaForma(e) {
@@ -390,16 +399,18 @@
 									<span class="t-oc" lang="oc">{t.oc}</span>
 									<em class="t-fr" lang="fr">{t.fr}</em>
 									<span class="t-font">{fontDe(t)}</span>
+									{#if t.nota}<span class="t-nota">{t.nota}</span>{/if}
 								</button>
 							</li>
 						{/each}
 					</ul>
 				{/if}
 				<p class="estat" aria-live="polite">
-					{#if cerca.estat === 'cargament'}Je cherche « {cerca.terme} » dans lo Congrès…
-					{:else if cerca.estat === 'ok' && !cerca.resultats.length && cerca.terme === consulta.trim()}Rien dans lo Basic pour « {cerca.terme} » : essaie le mot entier, ou dans l’autre langue.
-					{:else if cerca.estat === 'sens-clau'}La recherche dans lo Congrès n’est pas encore branchée en ligne : les mots déjà sur le site restent proposés.
-					{:else if cerca.estat === 'error'}Lo Congrès ne répond pas pour l’instant ; réessaie dans un moment.{/if}
+					{#if cerca.estat === 'cargament'}Je cherche « {cerca.terme} » dans lo Congrès et Wikidata…
+					{:else if cerca.estat === 'ok' && cerca.terme === consulta.trim()}
+						{#if !cerca.resultats.length}Rien trouvé pour « {cerca.terme} » : essaie le mot entier, ou dans l’autre langue.{#if cerca.estats.revirada === 'sens-clau'}{' '}Pour une expression, il faudra Revirada (sa clé n’est pas encore là) : en attendant, écris-la à la main.{/if}{/if}
+						{#if cerca.estats.basic === 'sens-clau'}{' '}lo Basic n’est pas encore branché en ligne.{:else if cerca.estats.basic === 'error'}{' '}lo Basic ne répond pas pour l’instant.{/if}
+					{:else if cerca.estat === 'error'}Lo Congrès et Wikidata ne répondent pas pour l’instant ; réessaie dans un moment.{/if}
 				</p>
 				{#if rond.oc.trim()}
 					<p class="actual">Sur ce rond : <span lang="oc">{rond.oc}</span>{#if rond.fr.trim()}{' · '}<em>{rond.fr}</em>{/if}</p>
@@ -620,7 +631,7 @@
 		width: 100%;
 		display: grid;
 		grid-template-columns: auto 1fr;
-		grid-template-areas: 'oc font' 'fr font';
+		grid-template-areas: 'oc font' 'fr font' 'nota nota';
 		align-items: center;
 		column-gap: 0.6rem;
 		padding: 0.4rem 0.65rem;
@@ -647,6 +658,11 @@
 		font-family: var(--font-quote);
 		font-size: 0.85rem;
 		color: #f1dcb2;
+	}
+	.t-nota {
+		grid-area: nota;
+		font-size: 0.72rem;
+		opacity: 0.7;
 	}
 	.t-font {
 		grid-area: font;
