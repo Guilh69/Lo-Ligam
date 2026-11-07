@@ -8,6 +8,8 @@
 
 ## 1. Palette
 
+> **Dans le code, une seule source depuis le 2026-11-07 : `app/src/lib/styles/palette.js`** (teintes, boutons, familles de jeux, carte, cases des rubriques). Changer de direction artistique : modifier ce fichier, lancer `node scripts/palette-css.mjs` dans `app/`, puis `npm run build`. Hors palette : le logo (`--logo-*`), les dessins, le daltonisme.
+
 **Chaudes (cœur de marque)** — *alignées sur le logo le 2026-09-30 (§11) :
 le logo est le maître des couleurs, plus l'inverse.*
 - Brique du logo (ex-terracotta, token `--color-terracotta`) : **#B53D17** (était #C8562E)

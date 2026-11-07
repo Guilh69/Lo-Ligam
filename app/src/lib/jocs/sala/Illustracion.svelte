@@ -4,18 +4,29 @@
 	// montrent vraiment le type de jeu » ; manière B, « papier découpé », choisie
 	// sur l'essai /ensag/illustracions-jocs). Des pièces pleines posées sur la
 	// carte, une ombre courte, le grain du papier.
-	// Joiós : posée à même la carte ; le dessin bouge un peu, seulement quand il
+	// Posée à même la carte ; le dessin bouge un peu, seulement quand il
 	// est à l'écran, et seulement là où le mouvement dit le jeu (le serpent
 	// ondule et la tuile tombe dans le panier, la loupe cherche, une carte se
 	// retourne, la voix sonne ; les mots croisés, déjà clairs, ne bougent pas).
-	// Calme : sur un fond de la couleur de la famille, passé comme une vieille
-	// affiche, immobile. Rien ne bouge si l'appareil demande moins d'animations.
+	// Rien ne bouge si l'appareil demande moins d'animations.
 	// Décoratif : rien à lire pour un lecteur d'écran (le nom de la famille suit).
+	// Le coin bas à droite (x > 344, y > 248) reste vide : le rond « IA » s'y pose
+	// (Romain, 06-11 : « pas en conflit avec l'image »).
 	// Les anciennes affiches de paysage (Afica.svelte) restent dans le code, et
 	// les tableaux peints dans design-stock/pinturas, pour un autre usage.
 	import { onMount } from 'svelte';
+	import { TEINTES } from '$lib/styles/palette.js';
 
-	let { id, tema = 'joios' } = $props();
+	// Le serpent en couleurs (Romain, 2026-11-07 : « le serpent est trop blanc ») : des tuiles aux
+	// couleurs de la palette, [fond, lettre], dans l'ordre du serpent ; la tête reprend la première
+	const TUILES = [
+		[TEINTES.or, TEINTES.encre],
+		[TEINTES.bleu, TEINTES.creme],
+		[TEINTES.orangeClair, TEINTES.encre],
+		[TEINTES.olive, TEINTES.creme]
+	];
+
+	let { id } = $props();
 	const uid = $props.id();
 	let vista = $state(true);
 	let cadre;
@@ -31,7 +42,6 @@
 <div
 	bind:this={cadre}
 	class="illus i-{id}"
-	class:joios={tema === 'joios'}
 	class:pausa={!vista}
 	aria-hidden="true"
 >
@@ -50,29 +60,33 @@
 				<feComposite in2="SourceGraphic" operator="in" />
 			</filter>
 		</defs>
-		<g class="pecas" filter="url(#gra-{uid})">
+		<!-- tout le dessin un peu resserré vers le haut à gauche : le coin du rond reste libre -->
+		<g class="pecas" filter="url(#gra-{uid})" transform="translate(190 140) scale(0.94) translate(-190 -140)">
 			{#if id === 'adreca'}
 				<!-- le serpent : sa queue a déjà écrit L I G A, il va manger le M ;
 				     à côté, le panier où tombe une tuile -->
 				<path class="l pontilh" d="M262 104 Q288 82 300 80" />
-				<path class="l pontilh" d="M338 150 V176" />
-				<g class="tomba">
-					<rect class="f" x="322" y="180" width="32" height="32" rx="7" transform="rotate(-8 338 196)" />
+				<!-- loin du coin bas à droite, où se pose le rond « IA » -->
+				<g transform="translate(-34 -16)">
+					<path class="l pontilh" d="M338 150 V176" />
+					<g class="tomba">
+						<rect class="f" x="322" y="180" width="32" height="32" rx="7" transform="rotate(-8 338 196)" />
+					</g>
+					<path class="f2" d="M294 222 H382 L371 272 H305 Z" />
+					<path class="c" d="M298 238 H378 M302 255 H374 M324 222 L322 272 M352 222 L354 272" />
 				</g>
-				<path class="f2" d="M294 222 H382 L371 272 H305 Z" />
-				<path class="c" d="M298 238 H378 M302 255 H374 M324 222 L322 272 M352 222 L354 272" />
 				{#each [['L', 52, 214, 8], ['I', 100, 224, -4], ['G', 148, 208, -18], ['A', 189, 174, -32]] as [t, x, y, r], k (t)}
 					<g class="onda" style="--k: {k}">
 						<g transform="translate({x} {y}) rotate({r})">
-							<rect class="f" x="-21" y="-21" width="42" height="42" rx="9" />
-							<text class="t" y="8">{t}</text>
+							<rect class="f" style="fill: {TUILES[k % TUILES.length][0]}" x="-21" y="-21" width="42" height="42" rx="9" />
+							<text class="t" style="fill: {TUILES[k % TUILES.length][1]}" y="8">{t}</text>
 						</g>
 					</g>
 				{/each}
 				<g class="onda" style="--k: 4">
 					<g transform="translate(230 132) rotate(-38)">
 						<path class="lenga" d="M31 0 H44 M44 0 l7 -5 M44 0 l7 5" />
-						<path class="f" d="M-24 -18 C -6 -26 22 -22 32 -6 C 35 -2 35 2 32 6 C 22 22 -6 26 -24 18 C -30 10 -30 -10 -24 -18 Z" />
+						<path class="f" style="fill: {TUILES[0][0]}" d="M-24 -18 C -6 -26 22 -22 32 -6 C 35 -2 35 2 32 6 C 22 22 -6 26 -24 18 C -30 10 -30 -10 -24 -18 Z" />
 						<circle class="uelh" cx="12" cy="-8" r="4.4" />
 					</g>
 				</g>
@@ -105,7 +119,7 @@
 				<g class="lopia">
 					<circle class="verre" cx="252" cy="176" r="56" />
 					<circle class="anel" cx="252" cy="176" r="56" />
-					<path class="manga" d="M293 216 L346 268" />
+					<path class="manga" d="M293 216 L334 256" />
 				</g>
 			{:else if id === 'memoria'}
 				<!-- les paires : deux soleils pareils ; une carte se soulève et se
@@ -155,42 +169,34 @@
 </div>
 
 <style>
-	/* les couleurs : celles des cartes Joiós (Sala.svelte) */
+	/* les couleurs : celles des cartes de la salle (Sala.svelte), tirées de
+	   lib/styles/palette.js (JEUX) */
 	.illus {
-		--fons: #b53d17;
-		--clar: #fbf1e1;
-		--aur: #ffd47f;
+		--fons: var(--p-jeu-adresse);
+		--clar: var(--p-creme);
+		--aur: var(--p-or-clair);
 		--lletra: var(--fons);
-		--tinta-aur: #2a1a10;
+		--tinta-aur: var(--p-encre);
 		--escur: color-mix(in oklab, var(--fons), #000 30%);
 		--mitjan: color-mix(in oklab, var(--fons), #fff 30%);
 		position: relative;
 		aspect-ratio: 4 / 3;
-		background: var(--fons);
 	}
 	.i-mots {
-		--fons: #eeaf34;
+		--fons: var(--p-jeu-mots);
 		--clar: #fff8ea;
 		--aur: #7a2e0c;
-		--lletra: #2a1a10;
-		--tinta-aur: #fbf1e1;
+		--lletra: var(--p-encre);
+		--tinta-aur: var(--p-creme);
 	}
 	.i-observacion {
-		--fons: #4f6a2f;
+		--fons: var(--p-jeu-observation);
 	}
 	.i-memoria {
-		--fons: #1f5f63;
+		--fons: var(--p-jeu-memoire);
 	}
 	.i-escota {
-		--fons: #2b6496;
-	}
-	/* Joiós : à même la carte */
-	.joios {
-		background: none;
-	}
-	/* calme : passé comme une vieille affiche */
-	.illus:not(.joios) {
-		filter: saturate(0.55) sepia(0.16) brightness(1.05) contrast(0.9);
+		--fons: var(--p-jeu-ecoute);
 	}
 	svg {
 		position: absolute;
@@ -289,15 +295,15 @@
 		stroke-linecap: round;
 	}
 
-	/* Joiós : le dessin bouge, à peine */
-	.joios .onda {
+	/* le dessin bouge, à peine */
+	.onda {
 		animation: illus-onda 3.4s ease-in-out infinite;
 		animation-delay: calc(var(--k) * -0.32s);
 	}
-	.joios .tomba {
+	.tomba {
 		animation: illus-tomba 4.2s ease-in infinite;
 	}
-	.joios .lopia {
+	.lopia {
 		animation: illus-lopia 9s ease-in-out infinite;
 	}
 	.dos,
@@ -308,13 +314,13 @@
 	.cara {
 		transform: scaleX(0);
 	}
-	.joios .dos {
+	.dos {
 		animation: illus-dos 7s ease-in-out infinite;
 	}
-	.joios .cara {
+	.cara {
 		animation: illus-cara 7s ease-in-out infinite;
 	}
-	.joios .son {
+	.son {
 		animation: illus-son 2.6s ease-in-out infinite;
 		animation-delay: calc(var(--k) * 0.22s);
 	}

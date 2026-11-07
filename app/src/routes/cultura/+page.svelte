@@ -101,7 +101,7 @@
 				<li>
 					<button
 						type="button"
-						class="tema"
+						class="pc pc-2 tema"
 						style:--aplat={t.color[0]}
 						style:--sus={t.color[1]}
 						aria-pressed={visat === t.id}
@@ -153,7 +153,7 @@
 	</ul>
 	<!-- les fiches sans photo montrent un dessin de Remira, fait par IA (06-11) -->
 	{#if fichas.some((f) => !foto(f.id) && data.dessenhs[f.id]?.length)}
-		<MencionIA forma="linha" quina="dessenh" />
+		<p class="mencion-ia"><MencionIA quina="paginaDessenh" /></p>
 	{/if}
 	<!-- crédit des photos libres de Wikimedia Commons (licence CC BY-SA) -->
 	<p class="credits" lang={lang}>
@@ -202,21 +202,15 @@
 	/* neutres, un filet fin ; le thème choisi prend sa couleur et un anneau
 	   (la couleur ne dit pas seule qu'il est choisi) */
 	.tema {
+		--r: 10px;
+		min-height: 0;
 		display: flex;
 		align-items: center;
 		padding: 0.5rem 0.85rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 6px;
-		background: none;
-		color: var(--t-tinta);
 		font: inherit;
 		text-align: start;
-		cursor: pointer;
-		transition:
-			background-color 0.25s,
-			border-color 0.25s,
-			box-shadow 0.25s;
 	}
+
 	.tema strong {
 		display: block;
 	}
@@ -224,9 +218,6 @@
 		display: none;
 		font-size: 0.82rem;
 		color: var(--t-tinta-2);
-	}
-	.tema:hover {
-		border-color: var(--t-tinta-2);
 	}
 	.tema[aria-pressed='true'] {
 		border-color: transparent;
@@ -289,6 +280,11 @@
 	}
 	.fichas li {
 		display: grid;
+	}
+	/* le rond « IA » des dessins, au bout de la liste */
+	.mencion-ia {
+		margin: 0.8rem 0 0;
+		text-align: end;
 	}
 	.credits {
 		margin: var(--esp-32) 0 0;

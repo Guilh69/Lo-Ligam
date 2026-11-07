@@ -23,6 +23,17 @@
 	// « Cossí vas ? » → « Cossí vas » dans la remarque, pour qu'elle se lise bien.
 	const sensPonch = (t) => String(t ?? '').replace(/[\s?!.…]+$/u, '');
 	const fait = (st) => st.statut === 'just' || st.statut === 'quasi' || st.montre;
+	// Phrase à début imposé (« Me dison » + son prénom) : sans réponse complète,
+	// l'indice et la réponse montrée disent par quoi commencer (Romain, 07-11 :
+	// « Dis ton nom », il avait écrit son nom seul, et « Me dison + ce que tu
+	// veux. Puis ton prénom. » n'était « pas clair du tout »).
+	const debutSol = (item) => !item.answers?.length && item.debut?.length;
+	function debutsPrincipals(item) {
+		const simples = item.debut.filter((d) => !/^Ieu,/.test(d));
+		return [...new Set(simples.length ? simples : item.debut)].slice(0, 2);
+	}
+	const commencaPer = (item) =>
+		debutsPrincipals(item).map((d) => `<em>${d}</em>`).join(' ou ');
 
 	async function verificar(i) {
 		const st = states[i];
@@ -53,6 +64,8 @@
 		const st = states[i];
 		st.montre = true;
 		st.modele = block.items[i].answers?.[0] ?? block.items[i].debut?.[0] ?? '';
+		// la case montre le modèle, pas la réponse refusée (qui semblait validée)
+		st.saisie = debutSol(block.items[i]) ? st.modele + ' …' : st.modele;
 		onResult(block.items[i], false);
 		suivant(i);
 	}
@@ -101,7 +114,7 @@
 			{#if !fait(st)}
 				<div class="letras" role="group" aria-label="Lettres accentuées">
 					{#each LETRAS as l}
-						<button type="button" class="letra" onmousedown={(e) => e.preventDefault()} onclick={() => inserir(i, l)} aria-label="Ajouter {l}">{l}</button>
+						<button type="button" class="pc pc-2 letra" onmousedown={(e) => e.preventDefault()} onclick={() => inserir(i, l)} aria-label="Ajouter {l}">{l}</button>
 					{/each}
 				</div>
 			{/if}
@@ -127,7 +140,7 @@
 					aria-describedby="{uid}-{i}"
 				/>
 				{#if !fait(st)}
-					<button type="submit" class="verif" disabled={!st.saisie.trim()}>Verificar</button>
+					<button type="submit" class="pc verif" disabled={!st.saisie.trim()}>Verificar</button>
 				{/if}
 			</form>
 			<p class="retorn" id="{uid}-{i}" aria-live="polite">
@@ -135,8 +148,15 @@
 					<span class="bon">✓ {@html rich(item.explain ?? 'Òsca ! (bravo !)')}</span>
 				{:else if st.statut === 'quasi'}
 					<span class="bon">✓ Presque ! On écrit <em>{sensPonch(st.modele)}</em>, {st.remarca === 'accent' ? 'avec l’accent' : 'avec le trait d’union'}. {@html item.explain ? rich(item.explain) : ''}</span>
+				{:else if st.montre && debutSol(item)}
+					<span class="montre">La phrase commence par {@html commencaPer(item)}. {@html item.explain ? rich(item.explain) : ''}</span>
 				{:else if st.montre}
-					<span class="montre">La réponse : <em>{sensPonch(st.modele)}</em>{item.debut ? ' + ce que tu veux' : ''}. {@html item.explain ? rich(item.explain) : ''}</span>
+					<span class="montre">La réponse : <em>{sensPonch(st.modele)}</em>. {@html item.explain ? rich(item.explain) : ''}</span>
+				{:else if st.statut === 'non' && !item.indici && debutSol(item)}
+					<span class="pas-encara">Pas encore : commence par {@html commencaPer(item)}.</span>
+					{#if st.essais >= 2}
+						<button type="button" class="veire" onclick={() => montrar(i)}>Veire la responsa <em>(voir la réponse)</em></button>
+					{/if}
 				{:else if st.statut === 'non'}
 					<span class="pas-encara">Pas encore{item.indici ? ' : ' : '.'}{@html item.indici ? rich(item.indici) : ''}</span>
 					{#if st.essais >= 2}
@@ -224,21 +244,15 @@
 		margin-bottom: 0.4rem;
 	}
 
+	/* pièce de papier (lib/styles/papier.css) ; ici, la touche carrée d'une lettre */
 	.letra {
+		--r: 10px;
 		min-width: 2.2rem;
 		height: 2.2rem;
-		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 15%, transparent);
-		border-radius: 10px;
-		background: var(--l-sol);
+		min-height: 0;
+		padding: 0;
 		font-size: 1.05rem;
-		color: var(--t-tinta);
-		cursor: pointer;
-		transition: transform 120ms ease, border-color 120ms ease;
-	}
-
-	.letra:hover {
-		border-color: var(--l-teal);
-		transform: translateY(-1px);
+		font-weight: 600;
 	}
 
 	.ligne {
@@ -270,14 +284,10 @@
 	}
 
 	.verif {
-		border: none;
-		border-radius: 12px;
-		padding: 0 1rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
+		min-height: 0;
+		padding: 0 1.1rem;
 		font-family: var(--font-heading);
 		font-weight: 600;
-		cursor: pointer;
 	}
 
 	.verif:disabled {

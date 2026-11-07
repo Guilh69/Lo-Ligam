@@ -2771,7 +2771,7 @@
 		<div class="fonts-carta" role="dialog" aria-label={tria({ oc: 'Fonts de la carta', fr: 'Sources de la carte', es: 'Fuentes del mapa', en: 'Map sources', ca: 'Fonts del mapa', ar: 'مصادر الخريطة' })} transition:fly={{ y: 10, duration: 220 }}>
 			<header>
 				<h2>{tria({ oc: 'Fonts de la carta', fr: 'Sources de la carte', es: 'Fuentes del mapa', en: 'Map sources', ca: 'Fonts del mapa', ar: 'مصادر الخريطة' })}</h2>
-				<button type="button" class="tampar-fonts" aria-label={tria({ oc: 'Tampar', fr: 'Fermer', es: 'Cerrar', en: 'Close', ca: 'Tancar', ar: 'إغلاق' })} onclick={() => (fontsDobèrtas = false)}><Icona nom="fermer" size="20px" /></button>
+				<button type="button" class="pc pc-2 pc-icone tampar-fonts" aria-label={tria({ oc: 'Tampar', fr: 'Fermer', es: 'Cerrar', en: 'Close', ca: 'Tancar', ar: 'إغلاق' })} onclick={() => (fontsDobèrtas = false)}><Icona nom="fermer" size="20px" /></button>
 			</header>
 			<dl>
 				{#each fontsPerTèma as g (g.tèma)}
@@ -3107,7 +3107,7 @@
 		width: 100%;
 		height: 100%;
 		background:
-			radial-gradient(ellipse 60% 55% at 45% 55%, color-mix(in srgb, var(--t-terra) 16%, transparent), transparent 75%),
+			radial-gradient(ellipse 60% 55% at 45% 55%, var(--carta-braise, color-mix(in srgb, var(--t-terra) 16%, transparent)), transparent 75%),
 			var(--t-fons);
 		font-family: var(--font-body);
 	}
@@ -3117,18 +3117,18 @@
 	   boutons ni entre + et −), une ombre douce pour les détacher, or */
 	.carta :global(.leaflet-bar) {
 		border: 0;
-		border-radius: 14px;
+		border-radius: 12px;
 		overflow: hidden;
-		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+		/* pièce de papier (lib/styles/papier.css) : même ombre que les illustrations */
+		box-shadow: 0 3px 4px var(--pc-ombre);
 	}
 
 	.carta :global(.leaflet-bar a) {
 		width: 2.4rem;
 		height: 2.4rem;
 		line-height: 2.4rem;
-		background: var(--t-veire);
-		backdrop-filter: blur(10px);
-		color: var(--t-aur-clar);
+		background: var(--pc-carton);
+		color: var(--pc-carton-tinta);
 		border-bottom: 0;
 		font: 400 1.2rem var(--font-body);
 	}
@@ -3144,10 +3144,14 @@
 		user-select: none;
 	}
 
+	.carta :global(.leaflet-bar a:not(:last-child)) {
+		border-bottom: 1px solid color-mix(in srgb, var(--t-tinta) 18%, transparent);
+	}
+
 	.carta :global(.leaflet-bar a:hover),
 	.carta :global(.leaflet-bar a:focus) {
-		background: var(--t-veire-fort);
-		color: var(--t-aur);
+		background: color-mix(in srgb, var(--pc-carton) 78%, var(--pc-or-fons));
+		color: var(--pc-carton-tinta);
 	}
 
 	.carta :global(.leaflet-bar a:focus:not(:focus-visible)) {
@@ -3169,12 +3173,13 @@
 	}
 	/* lo boton del fons, quand son tirador es dobèrt (coma dins lo rail) */
 	.carta :global(.fons-carta a[aria-expanded='true']) {
-		color: var(--t-aur-clar);
-		background: color-mix(in srgb, var(--t-aur) 22%, var(--t-fons-2));
+		color: #2a1a10;
+		background: var(--pc-or-fons);
 	}
 	.carta :global(.leaflet-bar a.leaflet-disabled) {
-		color: var(--t-linha);
-		background: var(--t-veire);
+		color: var(--pc-carton-tinta);
+		background: var(--pc-carton);
+		opacity: 0.5;
 	}
 
 	/* Las fonts : una linha corta (© OpenStreetMap e lo boton « Fonts ») ; la
@@ -3218,14 +3223,12 @@
 		font: 700 1rem/1.25 var(--font-body);
 	}
 	.tampar-fonts {
+		--r: 9px;
+		min-height: 0;
 		width: 28px;
 		height: 28px;
-		border: 1px solid var(--t-linha);
-		border-radius: 50%;
-		background: none;
-		color: var(--t-tinta-2);
-		cursor: pointer;
 	}
+
 	.fonts-carta dl {
 		margin: 0;
 	}

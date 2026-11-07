@@ -9,6 +9,8 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Pictograma from '$lib/apren/Pictograma.svelte';
 	import { PALETAS, PALETA_PER_DEFAUT, pictoPer } from '$lib/apren/teulas.js';
+	import PastilleAviat from '$lib/components/PastilleAviat.svelte';
+	import { estAviat, estRetirat } from '$lib/data/planSite.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { edicion, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
@@ -18,6 +20,10 @@
 	let { pagina, rubrica, etiqueta, paleta = PALETA_PER_DEFAUT } = $props();
 
 	const color = (i) => PALETAS[paleta][i % PALETAS[paleta].length];
+
+	// Une case dont le lien est « retiré du lancement » (Fòrum, planSite.js) ne paraît pas : couleur et numéro
+	// suivent les cases qui restent. En édition, tout reste visible pour pouvoir y toucher.
+	const teulesVisibles = $derived(lista(`${pagina}.teulas`).filter((b) => edicion.actiu || !estRetirat(ligam(b.clau + '.ligam').href)));
 
 	const apondreTeula = () =>
 		apondre(`${pagina}.teulas`, 'bloc', {}, [
@@ -42,11 +48,12 @@
 	</header>
 
 	<ul class="teulas" aria-label={tria(etiqueta)}>
-		{#each lista(`${pagina}.teulas`) as b, i (b.clau)}
+		{#each teulesVisibles as b, i (b.clau)}
 			{@const l = ligam(b.clau + '.ligam')}
 			{@const [fons, tinta] = color(i)}
-			{@const sensPagina = l.href.startsWith('#')}
-			<li class="teula" class:granda={i === 0} style:--fons={fons} style:--tinta={tinta} style:--i={i} use:editar={b.clau}>
+			{@const aviat = estAviat(l.href)}
+			{@const sensPagina = l.href.startsWith('#') || aviat}
+			<li class="teula" class:granda={i === 0} class:aviat style:--fons={fons} style:--tinta={tinta} style:--i={i} use:editar={b.clau}>
 				<span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
 				<!-- un lien réduit à une ancre (« #scena ») : case sans page pour l'instant,
 				     affichée mais pas cliquable (Òbras, 2026-10-25) -->
@@ -64,6 +71,7 @@
 				</svelte:element>
 				<p class="sota" hidden={amagat(b.clau + '.sota')} use:editar={b.clau + '.sota'}>{@render t(b.clau + '.sota')}</p>
 				<span class="picto-plaça"><Pictograma nom={pictoPer(l.href)} size={i === 0 ? '7rem' : '3.6rem'} /></span>
+				{#if aviat}<span class="aviat-plaça"><PastilleAviat /></span>{/if}
 			</li>
 		{/each}
 		{#if edicion.actiu}
@@ -83,8 +91,8 @@
 		min-height: 100vh;
 		color: var(--t-tinta);
 		background:
-			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
-			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			radial-gradient(ellipse 70% 50% at 8% -8%, var(--t-braise), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, var(--t-braise-or), transparent 70%),
 			var(--t-fons);
 		overflow-x: clip;
 	}
@@ -194,6 +202,12 @@
 		grid-column: span 2;
 		aspect-ratio: auto;
 	}
+	/* quatre cases (Amassa sans le forum, 2026-11-07) : la dernière en demi-bandeau,
+	   sans trou à côté de la troisième */
+	.teulas:has(> .teula:nth-child(4):last-child) > .teula:nth-child(4) {
+		grid-column: span 2;
+		aspect-ratio: auto;
+	}
 	/* trois cases seulement (Mèdias, 2026-10-25) : les deux petites prennent
 	   chacune une demi-hauteur sur toute la largeur restante, sans trou */
 	.teulas:has(> .teula:nth-child(3):last-child) .teula:not(.granda) {
@@ -260,6 +274,23 @@
 	.teula:hover .picto-plaça,
 	.teula:focus-within .picto-plaça {
 		transform: scale(1.08) rotate(-4deg);
+	}
+	/* une page pas encore ouverte (Articles, planSite.js, 2026-11-07) : la case reste, en pointillé,
+	   sans couleur pleine, avec la pastille « Aviat » (option 3 de Romain) */
+	.teula.aviat {
+		background: transparent;
+		color: var(--t-tinta);
+		outline: 1.5px dashed color-mix(in srgb, var(--t-tinta) 45%, transparent);
+		outline-offset: -1.5px;
+	}
+	.teula.aviat .picto-plaça {
+		opacity: 0.4;
+	}
+	.aviat-plaça {
+		position: absolute;
+		top: var(--esp-12);
+		right: var(--esp-12);
+		z-index: 2;
 	}
 	/* une case sans page ne bouge pas au survol : rien à cliquer */
 	.teula:has(.sens-pagina):hover {

@@ -487,7 +487,7 @@
 						</label>
 					{/if}
 					{#if error}<p class="error" role="alert">{x[error]}</p>{/if}
-					<button type="submit" class="boton" disabled={ocupat}>{ocupat ? '…' : x['far_' + mode]}</button>
+					<button type="submit" class="pc boton" disabled={ocupat}>{ocupat ? '…' : x['far_' + mode]}</button>
 					{#if mode === 'login'}
 						<button type="button" class="ligam" onclick={() => cambiarMode('oblit')}>{x.vers_oblit}</button>
 					{/if}
@@ -516,7 +516,7 @@
 			{#if pseudo === null}
 				<div class="boita acabar">
 					<p>{x.pseudonim}</p>
-					<a class="boton" href="/compte/questionnaire">{x.acabar}</a>
+					<a class="pc boton" href="/compte/questionnaire">{x.acabar}</a>
 				</div>
 			{/if}
 
@@ -544,7 +544,7 @@
 						<input type="password" bind:value={mdpNòu} autocomplete="new-password" minlength="10" aria-describedby="mdp-nòu-ajuda" required />
 						<small id="mdp-nòu-ajuda">{x.mdp_ajuda}</small>
 					</label>
-					<button type="submit" class="boton segond" disabled={ocupat}>{x.cambiar}</button>
+					<button type="submit" class="pc pc-2 boton segond" disabled={ocupat}>{x.cambiar}</button>
 				</form>
 				{#if mdpMessatge}
 					<p class={mdpMessatge === 'mdp_cambiat' ? 'mandat' : 'error'} role="status">{x[mdpMessatge]}</p>
@@ -552,7 +552,7 @@
 			</section>
 
 			<section class="seccion">
-				<button type="button" class="boton segond" onclick={desconnectar}>{x.desconnectar}</button>
+				<button type="button" class="pc pc-2 boton segond" onclick={desconnectar}>{x.desconnectar}</button>
 			</section>
 
 			<section class="seccion perilh" aria-labelledby="compte-suprimir">
@@ -567,8 +567,8 @@
 							<input type="password" bind:value={suprimirMdp} autocomplete="current-password" required />
 						</label>
 						<div class="botons">
-							<button type="submit" class="boton" disabled={ocupat}>{x.òc_suprimir}</button>
-							<button type="button" class="boton segond" onclick={() => (suprimirSegur = false)}>{x.non}</button>
+							<button type="submit" class="pc boton" disabled={ocupat}>{x.òc_suprimir}</button>
+							<button type="button" class="pc pc-2 boton segond" onclick={() => (suprimirSegur = false)}>{x.non}</button>
 						</div>
 					</form>
 				{:else}
@@ -586,8 +586,8 @@
 		min-height: 100vh;
 		color: var(--t-tinta);
 		background:
-			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
-			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			radial-gradient(ellipse 70% 50% at 8% -8%, var(--t-braise), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, var(--t-braise-or), transparent 70%),
 			var(--t-fons);
 		overflow-x: clip;
 	}
@@ -656,36 +656,16 @@
 	}
 	/* ce qui se clique : le rouge du logo en aplat (règle B) */
 	.boton {
+		--r: 10px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		justify-self: start;
 		min-height: 44px;
 		padding: 0.6rem 1.4rem;
-		border: 0;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: 700 1rem/1 var(--font-body);
-		text-decoration: none;
-		cursor: pointer;
-		transition: background-color 0.25s;
 	}
-	.boton:hover {
-		background: var(--t-accion-viu);
-	}
-	.boton:disabled {
-		opacity: 0.6;
-		cursor: wait;
-	}
-	.boton.segond {
-		background: transparent;
-		color: var(--t-tinta);
-		box-shadow: inset 0 0 0 1px var(--t-linha);
-	}
-	.boton.segond:hover {
-		background: color-mix(in srgb, var(--t-tinta) 7%, transparent);
-	}
+
 	/* les liens secondaires : soulignés, en retrait */
 	.ligam {
 		justify-self: start;

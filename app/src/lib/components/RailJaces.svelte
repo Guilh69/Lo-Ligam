@@ -13,6 +13,8 @@
 	import { sonPapièr, sonsActius, gardarSons } from '$lib/carta/sons.js';
 	import { fly, slide } from 'svelte/transition';
 	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
+	import { COLORS as COLORS_DIAL } from '$lib/carta/colaDonadas.js';
+	import { CARTE, CASES } from '$lib/styles/palette.js';
 	import { ICONAS } from '$lib/carta/iconas.js';
 	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
 	import { gamaLocutors } from '$lib/carta/locutors.js';
@@ -461,12 +463,9 @@
 		fons: '<path d="M12 4l9 5-9 5-9-5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>'
 	};
 
-	// Colors dels dialèctes (las de la carta, colaDonadas.js)
-	const DIAL = $derived(
-		clar
-			? { gas: '#2350d8', lan: '#c2185b', pro: '#e573ad', lem: '#e07b00', auv: '#a8321a', viv: '#c9a227' }
-			: { gas: '#5b7fff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' }
-	);
+	// Couleurs des dialectes : celles de la carte, lues dans colaDonadas.js
+	// (07-11 : les teintes des en-têtes de jeux, les mêmes dans les deux thèmes)
+	const DIAL = $derived(COLORS_DIAL[clar ? 'clar' : 'sorne']);
 	// Las autras lengas (lengas.js) : lors pastilhas e lors colors
 	// la color d'una pastilha d'una lenga (sa color de dialècte segon lo tèma)
 	const colorPastilha = (id, k) => LENGAS[id].dial[clar ? 'clar' : 'sorne'][k] ?? LENGAS[id].color[clar ? 'clar' : 'sorne'];
@@ -494,9 +493,10 @@
 		const d = DIAL;
 		const A = {
 			frontiera: '<path d="M4 26 C 16 10, 30 30, 48 8" fill="none" stroke="#e0612f" stroke-width="2.4" stroke-dasharray="0.1 5" stroke-linecap="round"/>',
-			dialectes: NOMS_DIAL.map(([k], i) => `<rect x="${i * 9}" y="0" width="9.5" height="36" fill="${d[k]}" opacity=".75"/>`).join(''),
+			// (07-11 : pleins, comme les aplats de la carte)
+			dialectes: NOMS_DIAL.map(([k], i) => `<rect x="${i * 9}" y="0" width="9.5" height="36" fill="${d[k]}"/>`).join(''),
 			// la lenga unida : una sola color, son nom
-			unificat: '<rect width="52" height="36" fill="#c4553f" opacity=".72"/><text x="26" y="21.5" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1.2" fill="#fff8ec">OCCITAN</text>',
+			unificat: `<rect width="52" height="36" fill="${CARTE.occitan}"/><text x="26" y="21.5" text-anchor="middle" font-family="Luciole, sans-serif" font-weight="600" font-size="7" letter-spacing="1.2" fill="#fff8ec">OCCITAN</text>`,
 			creissent: '<defs><pattern id="ap-h" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1.6" height="5" fill="#e0612f"/></pattern></defs><path d="M0 22 Q 26 4 52 20 V 36 H 0z" fill="url(#ap-h)" opacity=".8"/>',
 			// (les locuteurs, OPLO 2020 : les cinq classes de la légende de « Uèi »)
 			locutors: gamaLocutors(false).map((c, i) => `<rect x="${i * 10.4}" y="0" width="10.4" height="36" fill="${c}" opacity=".85"/>`).join(''),
@@ -546,6 +546,14 @@
 	};
 
 	const RAIL = ['sus', 'lenga', 'administracion', 'cultura', 'ensenhament', 'istoria', 'natura', 'lengas'];
+	// Téléphone (Romain, 2026-11-07) : chaque famille est un bloc de couleur, comme les cases des
+	// rubriques (mêmes couleurs que CASES, dans l'ordre du rail) ; la couleur est posée sur le
+	// bouton, seule la barre du téléphone s'en sert (ailleurs, le bouton reste une pièce carton)
+	const bloc = (id) => {
+		const i = Math.max(0, [...RAIL, 'donadas'].indexOf(id));
+		const [fons, tinta] = CASES[i % CASES.length];
+		return `--bloc-fons: ${fons}; --bloc-tinta: ${tinta};`;
+	};
 	let dobert = $state(null);
 	// los tèmas de « Sus la carta » enrotlats (demanda de Romain, 2026-10-09)
 	let enrotlats = $state([]);
@@ -1290,9 +1298,10 @@
 		</button>
 		<span class="rail-sep" aria-hidden="true"></span>
 		{#each ['sus', 'lengas', 'donadas'] as id (id)}
-			<button
-				type="button"
-				class="rail-b"
+		<button
+		type="button"
+		class="rail-b"
+		style={bloc(id)}
 				class:rail-sus={id === 'sus'}
 				data-familha={id}
 				bind:this={botons[id]}
@@ -1308,7 +1317,7 @@
 			</button>
 		{/each}
 	{:else if estreit && banda}
-		<button type="button" class="rail-b banda-fam" aria-expanded="true" aria-label={tx.tornarFamilhas(nomFam(banda))} onclick={sortirBanda}>
+		<button type="button" class="rail-b banda-fam" style={bloc(banda)} aria-expanded="true" aria-label={tx.tornarFamilhas(nomFam(banda))} onclick={sortirBanda}>
 			<svg viewBox="0 0 24 24" aria-hidden="true">{@html IC[banda]}</svg>
 			<span class="lib">{nomFam(banda)}</span>
 		</button>
@@ -1316,7 +1325,7 @@
 			{#each familhaDe(banda)?.jaces ?? [] as j (j.id)}
 				<button
 					type="button"
-					class="chip"
+					class="pc pc-2 pc-chip chip"
 					data-jaca={j.id}
 					class:on={actiu(j) && visibility[j.id]}
 					class:fora={actiu(j) && visibility[j.id] && foraEscala(j)}
@@ -1329,14 +1338,15 @@
 					{#if j.icona}<span class="chip-ponch" style:--ponch="var(--t-{j.color ?? 'aur'})" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{@html ICONAS[j.icona]}</svg></span>{:else}<span class="chip-ap"><svg viewBox="0 0 52 36" preserveAspectRatio="none" aria-hidden="true">{@html apercebut(j.id)}</svg></span>{/if}{nomJ(j)}{#if estatCarta.activa === j.id && visibility[j.id]}<span class="sr"> ({tx.jaçaActiva})</span>{/if}
 				</button>
 			{/each}
-			<button type="button" class="chip mai" aria-label={tx.totDetalh} title={tx.totDetalh} aria-expanded={dobert === banda} aria-controls="tirador-jaces" onclick={() => alternar(banda)}>⋯</button>
+			<button type="button" class="pc pc-2 pc-chip chip mai" aria-label={tx.totDetalh} title={tx.totDetalh} aria-expanded={dobert === banda} aria-controls="tirador-jaces" onclick={() => alternar(banda)}>⋯</button>
 		</div>
 	{:else}
 	{#each RAIL as id (id)}
 		{#if id === 'lengas'}<span class="rail-sep" aria-hidden="true"></span>{/if}
 		<button
-			type="button"
-			class="rail-b"
+		type="button"
+		class="rail-b"
+		style={bloc(id)}
 			class:rail-sus={id === 'sus'}
 			data-familha={id}
 			bind:this={botons[id]}
@@ -1388,24 +1398,24 @@
 		></button>
 		<header>
 			<h2>{nomFam(dobert)}</h2>
-			<button type="button" class="tampar" onclick={tamparTirador} aria-label={tx.tampar}><Icona nom="fermer" size="1.25em" /></button>
+			<button type="button" class="pc pc-2 pc-icone tampar" onclick={tamparTirador} aria-label={tx.tampar}><Icona nom="fermer" size="1.25em" /></button>
 		</header>
 
 		{#if dobert === 'sus'}
 			<p class="sota">{tx.afichadas(afichadas.length)} · {tx.fonsCarta.toLowerCase()}{tx.dp ?? ' :'} {tx.basemaps[baseLayer] ?? baseLayer}</p>
 			<div class="botons botons-sus">
-				<button type="button" class="boton" onclick={anullar} disabled={!istoric.length} title={tx.anullarTitol}>
+				<button type="button" class="pc pc-2 boton" onclick={anullar} disabled={!istoric.length} title={tx.anullarTitol}>
 					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
 					{tx.anullar}
 				</button>
-				<button type="button" class="boton" onclick={netejar} disabled={!afichadas.length} title={tx.netejarTitol}>{tx.netejar}</button>
+				<button type="button" class="pc pc-2 boton" onclick={netejar} disabled={!afichadas.length} title={tx.netejarTitol}>{tx.netejar}</button>
 			</div>
 			{#if !afichadas.length}
 				<p class="res">{tx.res}</p>
 			{/if}
 			<!-- la lenga occitana levada (« Netejar la carta ») : la tornar d'un clic -->
 			{#if !visibility.dialectes && !visibility.unificat}
-				<button type="button" class="boton boton-oc" onclick={afichatOccitan}>{tx.afichatOc}</button>
+				<button type="button" class="pc boton boton-oc" onclick={afichatOccitan}>{tx.afichatOc}</button>
 			{/if}
 			<!-- la legenda de sa carta, rengada per tematica (demanda de Romain, 2026-10-09) -->
 			{#each familhas.filter((f) => f.jaces.some((j) => afichadas.includes(j))) as f (f.id)}
@@ -1456,11 +1466,11 @@
 				</div>
 			{/each}
 			<div class="botons">
-				<button type="button" class="boton" onclick={sonqueContorns}>{tx.sonqueContorns}</button>
-				<button type="button" class="boton" onclick={totTornar}>{tx.totTornar}</button>
-				<button type="button" class="boton" aria-pressed={sons} onclick={alternarSons}>{tx.sons(sons)}</button>
+				<button type="button" class="pc pc-2 boton" onclick={sonqueContorns}>{tx.sonqueContorns}</button>
+				<button type="button" class="pc pc-2 boton" onclick={totTornar}>{tx.totTornar}</button>
+				<button type="button" class="pc pc-2 boton" aria-pressed={sons} onclick={alternarSons}>{tx.sons(sons)}</button>
 				{#if Object.keys(colors).length}
-					<button type="button" class="boton" onclick={() => (colors = {})}>{tx.colorsTema}</button>
+					<button type="button" class="pc pc-2 boton" onclick={() => (colors = {})}>{tx.colorsTema}</button>
 				{/if}
 			</div>
 		{:else}
@@ -1563,8 +1573,8 @@
 				</p>
 			</div>
 			<div class="ficha-dreita">
-				<button type="button" class="basc" role="switch" aria-checked={on} aria-label={tx.occitan} onclick={() => bascular('dialectes', !on)}></button>
-				{@render silhoeta('occitan', clar ? '#b0202c' : '#d9343f')}
+				<button type="button" class="pc-basc basc" role="switch" aria-checked={on} aria-label={tx.occitan} onclick={() => bascular('dialectes', !on)}></button>
+				{@render silhoeta('occitan', CARTE.occitan)}
 			</div>
 		</div>
 		<div class="desplegar-l">
@@ -1618,7 +1628,7 @@
 			<div class="ficha-dreita">
 				<button
 					type="button"
-					class="basc"
+					class="pc-basc basc"
 					role="switch"
 					aria-checked={!!visibility[j.id]}
 					aria-label={nomJ(j)}
@@ -1773,7 +1783,7 @@
 		</div>
 		<button
 			type="button"
-			class="basc"
+			class="pc-basc basc"
 			role="switch"
 			aria-checked={actiu(j) && !!visibility[j.id] && estatCarta.apercebut !== j.id}
 			aria-label={nomJ(j)}
@@ -1810,16 +1820,17 @@
 		/* (la colomna despassa pas jamai lo panèl : los noms longs passan a la
 		   linha en luòc d'èsser copats, retorn de Romain) */
 		grid-template-columns: minmax(0, 1fr);
-		gap: 2px;
-		padding: 6px 5px;
+		gap: 6px;
+		padding: 4px 5px 9px; /* de la place pour l'ombre des pièces (le rail défile, il la couperait) */
 		/* Sans contour (Romain, 2026-10-15) : le rail se détache par un fond un
 		   peu plus chaud que la carte, légèrement transparent (--t-veire, app.css) ;
 		   le flou garde les icônes lisibles sur la carte */
-		background: var(--t-veire);
-		backdrop-filter: blur(10px);
+		/* Papier découpé (Romain, 2026-11-07) : plus de panneau de verre, chaque bouton est
+		   une pièce posée sur la carte (lib/styles/papier.css), comme les boutons du reste du site */
+		background: none;
 		border: 0;
-		border-radius: 18px;
-		box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+		border-radius: 0;
+		box-shadow: none;
 	}
 	/* déplacé : sa place (--rail-y), toute la hauteur entre bandeau et flèche */
 	@container carta (min-width: 601px) {
@@ -1836,7 +1847,11 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: 0;
-		padding: 0 0 3px;
+		padding: 0 2px;
+		border-radius: 8px;
+		background: var(--pc-carton);
+		color: var(--pc-carton-tinta);
+		box-shadow: 0 2px 3px var(--pc-ombre);
 	}
 	.prene {
 		flex: 1;
@@ -1857,7 +1872,7 @@
 	.prene span {
 		width: 16.5px;
 		height: 6px;
-		background: radial-gradient(circle, var(--t-tinta-2) 1.2px, transparent 1.6px) 0 0 / 5.5px 3px;
+		background: radial-gradient(circle, var(--pc-carton-tinta) 1.2px, transparent 1.6px) 0 0 / 5.5px 3px;
 		opacity: 0.7;
 	}
 	.prene:hover span,
@@ -1874,7 +1889,7 @@
 		border: 0;
 		border-radius: 6px;
 		background: none;
-		color: var(--t-tinta-2);
+		color: var(--pc-carton-tinta);
 		cursor: pointer;
 	}
 	.reduire svg {
@@ -1905,15 +1920,16 @@
 		gap: 4px;
 		padding: 9px 2px 7px;
 		border: 0;
-		border-radius: 12px;
-		background: none;
-		color: var(--t-tinta-2);
-		font: 400 10.5px/1.15 var(--font-body);
+		border-radius: 10px;
+		background: var(--pc-carton);
+		color: var(--pc-carton-tinta);
+		box-shadow: 0 3px 4px var(--pc-ombre);
+		font: 600 10.5px/1.15 var(--font-body);
 		text-align: center;
 		cursor: pointer;
 		transition:
-			background 0.25s,
-			color 0.25s;
+			transform 0.15s ease,
+			box-shadow 0.15s ease;
 	}
 	/* Arabe (Joan, 26-10) : 10,5 px et 9 px sont des tailles de latin ; l'arabe, plus
 	   dense, y est illisible. 12 px, partout, y compris sur écran bas. */
@@ -1926,13 +1942,20 @@
 		width: 22px;
 		height: 22px;
 	}
+	/* survol : la pièce se soulève d'un pixel ; ouverte : la pièce « choisie » passe à l'ocre */
 	.rail-b:hover {
-		color: var(--t-tinta);
-		background: color-mix(in srgb, var(--t-tinta) 6%, transparent);
+		transform: translateY(-1px);
+		box-shadow: 0 5px 5px var(--pc-ombre);
+	}
+	.rail-b:active {
+		transform: translateY(2px);
+		box-shadow: 0 1px 2px var(--pc-ombre);
 	}
 	.rail-b[aria-expanded='true'] {
-		color: var(--t-aur-clar);
-		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
+		color: var(--pc-or-tinta);
+		background: var(--pc-or-fons);
+		transform: translateY(-1px);
+		box-shadow: 0 4px 4px var(--pc-ombre);
 	}
 	.rail-b:focus-visible,
 	.tirador button:focus-visible,
@@ -1945,24 +1968,20 @@
 	}
 	/* « Sus la carta », lo còr de l'organizacion de sa carta (demanda de
 	   Romain, 2026-10-09) : una tèula a part, cerclada d'aur, pus granda */
+	/* (2026-11-07 : en papier découpé, la tuile à part est la pièce rouge, celle des actions) */
 	.rail-b.rail-sus {
-		margin: 2px 3px 0;
 		padding: 10px 2px 8px;
-		color: var(--t-aur-clar);
-		background: color-mix(in srgb, var(--t-aur) 10%, transparent);
-		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--t-aur) 55%, transparent);
+		color: var(--t-accion-tinta);
+		background: var(--t-accion);
 		font-weight: 700;
 	}
 	.rail-b.rail-sus svg {
 		width: 27px;
 		height: 27px;
 	}
-	.rail-b.rail-sus:hover {
-		background: color-mix(in srgb, var(--t-aur) 18%, transparent);
-	}
 	.rail-b.rail-sus[aria-expanded='true'] {
-		background: color-mix(in srgb, var(--t-aur) 24%, transparent);
-		box-shadow: inset 0 0 0 1.5px var(--t-aur);
+		color: var(--pc-or-tinta);
+		background: var(--pc-or-fons);
 	}
 	/* la chifra d'una familha : pichona, sens pastilha (decision de Romain, 2026-10-10) */
 	.nombre {
@@ -1971,19 +1990,15 @@
 		right: 9px;
 		font: 700 10px/1 var(--font-body);
 		font-variant-numeric: tabular-nums;
-		color: color-mix(in srgb, var(--t-aur) 75%, transparent);
+		color: currentColor;
+		opacity: 0.75;
 	}
 	/* la tòca mediterranèa : una linha fina a esquèrra de la familha dobèrta,
 	   e pas endacòm mai (decision de Romain, 2026-10-10) */
+	/* (le liseré de la famille ouverte est retiré : la pièce ocre dit déjà laquelle est ouverte,
+	   et Romain ne veut pas de filet coloré sur le côté) */
 	.rail-b[aria-expanded='true']::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		top: 24%;
-		bottom: 24%;
-		width: 2px;
-		border-radius: 1px;
-		background: var(--t-terra-viu);
+		display: none;
 	}
 	.compte {
 		position: absolute;
@@ -2001,9 +2016,9 @@
 		font-variant-numeric: tabular-nums;
 	}
 	.rail-sep {
-		height: 1px;
-		margin: 4px 10px;
-		background: var(--t-linha);
+		height: 0;
+		margin: 2px 10px;
+		background: none;
 	}
 
 	/* la silhoeta-boton : veire la lenga dins son environament */
@@ -2027,7 +2042,7 @@
 
 	/* lo mòde : lo boton per tornar a l'occitan */
 	.rail-b.retorn {
-		color: var(--t-tinta);
+		color: var(--pc-carton-tinta);
 	}
 	.rail-b.retorn::after {
 		content: '';
@@ -2050,9 +2065,7 @@
 	/* La banda del telefòn : la familha a esquèrra, sas jaças en pastilhas */
 	.rail-b.banda-fam {
 		flex: 0 0 4.4rem;
-		color: var(--t-aur-clar);
-		border-right: 1px solid var(--t-linha);
-		border-radius: 0;
+		color: var(--pc-or-tinta);
 	}
 	.rail-b.banda-fam::after {
 		content: '';
@@ -2066,9 +2079,9 @@
 		top: 50%;
 		transform: translateY(-50%);
 		font-size: 1rem;
-		color: var(--t-tinta-2);
-	}
-	.banda-jaces {
+		color: var(--pc-or-tinta);
+		}
+		.banda-jaces {
 		flex: 1 1 auto;
 		min-width: 0;
 		display: flex;
@@ -2083,29 +2096,35 @@
 	.banda-jaces::-webkit-scrollbar {
 		display: none;
 	}
+	/* la pastille choisie passe à l'or (lib/styles/papier.css) */
+	.chip.on,
+	.chip.activa {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
+	}
+
 	.chip {
+		--r: 10px;
+		min-height: 0;
 		flex: 0 0 auto;
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
 		height: 36px;
 		padding: 0 12px 0 5px;
-		border: 1px solid var(--t-linha);
-		border-radius: 18px;
-		background: none;
-		color: var(--t-tinta);
 		font: 700 0.8125rem/1 var(--font-body);
 		white-space: nowrap;
-		cursor: pointer;
 	}
+
 	.chip-ap {
 		display: block;
 		width: 26px;
 		height: 18px;
-		border-radius: 9px 4px 4px 9px;
+		border-radius: 5px;
 		overflow: hidden;
 		background: var(--t-fons);
 	}
+
 	.chip-ap svg {
 		display: block;
 		width: 100%;
@@ -2119,20 +2138,12 @@
 		width: 22px;
 		height: 22px;
 		padding: 3.5px;
-		border-radius: 50%;
-		background: color-mix(in srgb, var(--t-fons-2) 88%, transparent);
-		border: 1.2px solid var(--ponch);
+		border-radius: 6px;
+		background: color-mix(in srgb, var(--t-fons) 92%, transparent);
 		color: var(--ponch);
 	}
-	.chip.on {
-		border-color: var(--t-aur);
-		background: color-mix(in srgb, var(--t-aur) 16%, transparent);
-		color: var(--t-aur-clar);
-	}
+
 	/* la couche active (téléphone) : plus remplie, un point doré */
-	.chip.activa {
-		background: color-mix(in srgb, var(--t-aur) 30%, transparent);
-	}
 	.chip.activa::after {
 		content: '';
 		width: 6px;
@@ -2141,19 +2152,6 @@
 		background: var(--t-aur);
 	}
 	/* alucada mas pas vesibla a aquesta escala */
-	.chip.fora {
-		border-style: dashed;
-	}
-	.chip:disabled {
-		opacity: 0.4;
-		cursor: default;
-	}
-	.chip.mai {
-		padding: 0 14px;
-		font-size: 1.1rem;
-		letter-spacing: 1px;
-	}
-
 	/* l'ansa de la fuèlha : pas qu'al telefòn */
 	.ansa {
 		display: none;
@@ -2192,22 +2190,16 @@
 		font: 700 1.125rem/1.25 var(--font-body);
 	}
 	.tampar {
+		--r: 10px;
+		min-height: 0;
 		display: grid;
 		place-items: center;
 		width: 2rem;
 		height: 2rem;
 		padding: 0;
-		border: 1px solid var(--t-linha);
-		border-radius: 50%;
-		background: none;
-		color: var(--t-tinta-2);
 		font-size: 1.1rem;
-		cursor: pointer;
 	}
-	.tampar:hover {
-		color: var(--t-tinta);
-		border-color: var(--t-accion);
-	}
+
 	.sota {
 		margin: 4px 0 12px;
 		font-size: 0.8125rem;
@@ -2374,16 +2366,18 @@
 	.linha.escantida {
 		opacity: 0.55;
 	}
+	/* pièces de papier (lib/styles/papier.css) : toutes les vignettes de jaces ont la même forme et la même ombre */
 	.apercebut {
 		display: block;
 		width: 52px;
 		height: 36px;
-		border-radius: 6px;
+		border-radius: 8px;
 		overflow: hidden;
 		background: var(--t-fons);
-		border: 1px solid var(--t-linha);
+		box-shadow: 0 3px 4px var(--pc-ombre);
 		color: var(--t-tinta);
 	}
+
 	.apercebut svg {
 		display: block;
 		width: 100%;
@@ -2396,18 +2390,19 @@
 		place-items: center;
 		width: 52px;
 		height: 36px;
+		border-radius: 8px;
+		background: var(--t-fons);
+		box-shadow: 0 3px 4px var(--pc-ombre);
 		color: var(--ponch);
 	}
+
 	.ponch-j svg {
 		box-sizing: border-box;
-		width: 32px;
-		height: 32px;
-		padding: 6px;
-		border-radius: 50%;
-		background: color-mix(in srgb, var(--t-fons-2) 88%, transparent);
-		border: 1.5px solid var(--ponch);
-		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+		width: 28px;
+		height: 28px;
+		padding: 3px;
 	}
+
 	.titolet.grop-j {
 		margin: 14px 0 2px;
 		color: var(--t-aur);
@@ -2439,40 +2434,7 @@
 	}
 
 	/* bascula (interruptor) */
-	.basc {
-		position: relative;
-		flex: none;
-		width: 34px;
-		height: 20px;
-		padding: 0;
-		border: 0;
-		border-radius: 999px;
-		background: color-mix(in srgb, var(--t-tinta) 20%, transparent);
-		cursor: pointer;
-		transition: background 0.2s;
-	}
-	.basc::after {
-		content: '';
-		position: absolute;
-		top: 3px;
-		left: 3px;
-		width: 14px;
-		height: 14px;
-		border-radius: 50%;
-		background: var(--t-tinta);
-		transition: transform 0.2s;
-	}
-	.basc[aria-checked='true'] {
-		background: var(--t-aur);
-	}
-	.basc[aria-checked='true']::after {
-		transform: translateX(14px);
-		background: var(--t-fons);
-	}
-	.basc:disabled {
-		opacity: 0.35;
-		cursor: default;
-	}
+	/* l'interrupteur : .pc-basc de lib/styles/papier.css ; ici, l'aperçu */
 	/* en apercebut : ni alucat ni escantit, un contorn d'aur, lo boton al
 	   mièg que bat doçament (demanda de Romain, 2026-10-10) */
 	.linha.apercebuda .basc {
@@ -2942,17 +2904,18 @@
 		margin: 0 0 0.4rem;
 	}
 	.boton {
+		--r: 10px;
+		min-height: 0;
 		display: inline-flex;
 		align-items: center;
 		gap: 6px;
+		padding: 6px 12px;
+		font: 700 0.8125rem/1.2 var(--font-body);
 	}
+
 	.boton svg {
 		width: 15px;
 		height: 15px;
-	}
-	.boton:disabled {
-		opacity: 0.4;
-		cursor: default;
 	}
 	/* « Afichar l'occitan » : en aur, pus visible que los autres */
 	.boton-oc {
@@ -2965,19 +2928,6 @@
 		flex-wrap: wrap;
 		gap: 6px;
 		margin-top: 0.8rem;
-	}
-	.boton {
-		padding: 6px 12px;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: none;
-		color: var(--t-tinta);
-		font: 700 0.8125rem/1.2 var(--font-body);
-		cursor: pointer;
-	}
-	.boton:hover {
-		border-color: var(--t-accion);
-		color: var(--t-tinta);
 	}
 	.admin {
 		display: block;
@@ -3005,8 +2955,8 @@
 			overflow: visible;
 			display: flex;
 			align-items: stretch;
-			gap: 2px;
-			padding: 4px 8px 4px 4px;
+			gap: 6px;
+			padding: 4px 8px 9px 4px;
 		}
 		.rail.orizontal .encòca {
 			flex-direction: column;
@@ -3052,8 +3002,8 @@
 	   vertical se resserre encore pour tenir sans défiler */
 	@container carta (min-width: 601px) and (max-height: 600px) {
 		.rail:not(.orizontal) {
-			gap: 1px;
-			padding: 4px 5px;
+			gap: 3px;
+			padding: 3px 5px 8px;
 		}
 		.rail:not(.orizontal) .rail-b {
 			gap: 2px;
@@ -3086,13 +3036,18 @@
 			width: auto;
 			height: var(--barra-bas, 3.9rem);
 			max-height: none;
-			overflow: visible;
+			/* défile de côté : les familles sont des blocs de couleur, comme les cases des rubriques (Romain, 2026-11-07) */
+			overflow-x: auto;
+			overflow-y: hidden;
+			overscroll-behavior-x: contain;
+			scroll-snap-type: x proximity;
+			scroll-padding-inline: 12px;
 			display: flex;
 			align-items: stretch;
-			gap: 0;
-			padding: 3px 4px env(safe-area-inset-bottom, 0px);
-			border-radius: 16px 16px 0 0;
-			box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.3);
+			gap: 8px;
+			padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+			border-radius: 0;
+			box-shadow: none;
 			transform: none;
 		}
 		/* sul telefon la barra demòra en bas : ni encòca ni reduccion */
@@ -3106,24 +3061,44 @@
 			display: block;
 		}
 		.rail-b {
-			flex: 1 1 0;
+			flex: 0 0 5.4rem;
 			min-width: 0;
-			padding: 5px 0 3px;
-			font-size: 9.5px;
-			line-height: 1.1;
+			scroll-snap-align: start;
+			align-content: center;
+			gap: 5px;
+			padding: 7px 6px;
+			border-radius: 12px;
+			/* la couleur de la famille (--bloc-fons et --bloc-tinta, posées sur chaque bouton) */
+			background: var(--bloc-fons, var(--pc-carton));
+			color: var(--bloc-tinta, var(--pc-carton-tinta));
+			font: 700 11.5px/1.15 var(--font-body);
 		}
-		/* (sus la barra del telefon : la tèula garda la nautor de las autras) */
 		.rail-b.rail-sus {
 			margin: 0;
-			padding: 5px 0 3px;
+			padding: 7px 6px;
+			background: var(--bloc-fons, var(--t-accion));
+			color: var(--bloc-tinta, var(--t-accion-tinta));
 		}
-		.rail-b.rail-sus svg {
-			width: 22px;
-			height: 22px;
-		}
+		.rail-b.rail-sus svg,
 		.rail-b svg {
-			width: 20px;
-			height: 20px;
+			width: 26px;
+			height: 26px;
+		}
+		/* ouverte : le bloc se lève et prend un anneau ocre (« choisi ») au lieu de changer de couleur */
+		.rail-b[aria-expanded='true'],
+		.rail-b.rail-sus[aria-expanded='true'] {
+			background: var(--bloc-fons, var(--pc-or-fons));
+			color: var(--bloc-tinta, var(--pc-or-tinta));
+			outline: 3px solid var(--pc-or-fons);
+			outline-offset: 1px;
+			transform: translateY(-2px);
+		}
+		.rail-b.banda-fam {
+			flex: 0 0 5rem;
+			color: var(--bloc-tinta, var(--pc-or-tinta));
+		}
+		.rail-b.banda-fam::after {
+			color: var(--bloc-tinta, var(--pc-or-tinta));
 		}
 		.nombre {
 			right: calc(50% - 20px);
@@ -3141,9 +3116,7 @@
 			right: calc(50% - 22px);
 		}
 		.rail-sep {
-			width: 1px;
-			height: auto;
-			margin: 10px 2px;
+			display: none;
 		}
 		.tirador {
 			top: auto;

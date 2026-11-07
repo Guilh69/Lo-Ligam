@@ -10,6 +10,7 @@
 	import { onMount } from 'svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
 	import { PLAN } from '$lib/data/planSite.js';
+	import PastilleAviat from '$lib/components/PastilleAviat.svelte';
 	import { AMASSA } from '$lib/acuelh/amassa.js';
 	import CaminCrotz from '$lib/acuelh/CaminCrotz.svelte';
 	import { ESTELAS, VISTA, COSTA_D } from '../../routes/ensag/blanc/donadas.js';
@@ -107,11 +108,11 @@
 
 {#snippet lligams(sec)}
 	<p class="portas">
-		{#each portas(sec) as it, k (it.href)}{#if k}<span aria-hidden="true">·</span><wbr />{/if}<a
+		{#each portas(sec) as it, k (it.href)}{#if k}<span aria-hidden="true">·</span><wbr />{/if}{#if it.aviat}<em class="aviat-it">{tria(it)}<PastilleAviat /></em>{:else}<a
 				href={it.href}
 				target={it.defòra ? '_blank' : undefined}
 				rel={it.defòra ? 'noopener' : undefined}>{tria(it)}</a
-			>{/each}
+				>{/if}{/each}
 	</p>
 {/snippet}
 
@@ -171,6 +172,8 @@
 	/* un lien ne se coupe jamais (« Corses en / visio ») : la ligne ne se coupe qu'après un « · » (<wbr>) */
 	.portas a { white-space: nowrap; padding-bottom: 2px; background: linear-gradient(var(--or), var(--or)) 0 100% / 0 1.5px no-repeat; transition: background-size 0.5s var(--lent); }
 	.portas a:hover, .portas a:focus-visible { background-size: 100% 1.5px; }
+	/* une page pas encore ouverte : le nom sans lien, suivi de la pastille « Aviat » (planSite.js) */
+	.portas .aviat-it { display: inline-flex; align-items: center; gap: 0.45em; font-style: normal; white-space: nowrap; color: color-mix(in srgb, currentColor 72%, transparent); }
 	.dintrar { display: inline-flex; align-items: center; gap: 8px; margin-top: 1.1rem; font-weight: 700; color: var(--crema); border-bottom: 2px solid var(--t-accion, #b53d17); padding-bottom: 2px; }
 	.fl { width: 1em; height: 1em; transition: transform 0.4s var(--lent); }
 	.dintrar:hover .fl { transform: translateX(4px); }

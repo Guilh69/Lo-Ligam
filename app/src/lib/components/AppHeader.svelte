@@ -14,7 +14,7 @@
 	import MenuVel from './MenuVel.svelte';
 	import { lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { VISIO } from '$lib/data/planSite.js';
+	import { VISIO, PLAN } from '$lib/data/planSite.js';
 	import { esAdmin } from '$lib/adminStore';
 	import { session, authReady, pseudoCompte } from '$lib/authStore';
 	import { page } from '$app/state';
@@ -106,9 +106,53 @@
 	// « Mon compte » une fois connecté.
 	let surCompte = $derived(page.url.pathname.startsWith('/compte'));
 	let tornar = $derived(surCompte ? '/compte' : '/compte?tornar=' + encodeURIComponent(page.url.pathname));
+
+	// Téléphone d'abord (Romain, 2026-11-07, logique 3 de /ensag/palette-bandeaux) : sur téléphone, le haut
+	// garde les réglages (marque, langue, thème, compte) et la navigation passe en bas, en cinq onglets
+	// (Acuèlh, les trois verbes du plan, Menú) ; sur grand écran, les trois verbes entrent dans la barre.
+	// Pages d'immersion (la carte, l'administration) : pas d'onglets, le bouton Menú reste en haut.
+	const ACUELH = { oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici', ar: 'الرئيسية' };
+	const ETIQ_NAV = { oc: 'Navegacion principala', fr: 'Navigation principale', es: 'Navegación principal', en: 'Main navigation', ca: 'Navegació principal', ar: 'التنقل الرئيسي' };
+	const SANS_ONGLETS = ['/carta', '/admin'];
+	let avecOnglets = $derived(!SANS_ONGLETS.some((p) => page.url.pathname === p || page.url.pathname.startsWith(p + '/')));
+	let verbes = $derived(
+		PLAN.map((v) => ({
+			id: v.id,
+			href: v.href,
+			nom: v[lang] ?? v.oc,
+			// les pages de la rubrique ; « Ma progression » (/compte) n'allume aucun onglet
+			liens: v.grops.flatMap((g) => g.items.map((i) => i.href)).filter((h) => h.startsWith('/') && h !== '/compte')
+		}))
+	);
+	let actiu = $derived.by(() => {
+		const c = page.url.pathname;
+		if (c === '/') return 'acuelh';
+		const v = verbes.find((x) => c === x.href || c.startsWith(x.href + '/') || x.liens.some((h) => c === h || c.startsWith(h + '/')));
+		return v ? v.id : null;
+	});
+	let botonOnglet = $state(null);
+	// La barre du bas est rattachée au <body> : sur l'accueil, l'enveloppe du bandeau glisse hors de
+	// l'écran quand on descend (transform), et un élément fixe dans un élément qui bouge n'est plus
+	// fixe. Elle n'est posée qu'après le chargement (pas de saut au premier affichage).
+	let monte = $state(false);
+	$effect(() => {
+		monte = true;
+	});
+	function versBody(noeud) {
+		document.body.appendChild(noeud);
+		return { destroy: () => noeud.remove() };
+	}
+	let telephone = $state(false);
+	$effect(() => {
+		const mq = matchMedia('(max-width: 40rem)');
+		telephone = mq.matches;
+		const suit = (e) => (telephone = e.matches);
+		mq.addEventListener('change', suit);
+		return () => mq.removeEventListener('change', suit);
+	});
 </script>
 
-<header class="top">
+<header class="top" class:avec-onglets={avecOnglets}>
 	<div class="top-in">
 		<a class="brand" href="/" title={tx.acuelhLong} aria-label={`Lo Ligam, ${tx.acuelhLong}`}>
 			<Crotz talha={30} teula />
@@ -116,7 +160,13 @@
 		</a>
 
 		<div class="header-right">
-			<a class="reservar" href={VISIO}>{tx.reservar}</a>
+			<!-- sur grand écran : les trois verbes du plan dans la barre (cachés quand la place manque) -->
+			<nav class="verbes" aria-label={ETIQ_NAV[lang] ?? ETIQ_NAV.oc}>
+				{#each verbes as v (v.id)}
+					<a href={v.href} aria-current={actiu === v.id ? 'page' : undefined}>{v.nom}</a>
+				{/each}
+			</nav>
+			<a class="pc reservar" href={VISIO}>{tx.reservar}</a>
 
 			{#if children}
 				<div class="compte">
@@ -125,12 +175,12 @@
 			{/if}
 
 			{#if $session}
-				<a class="compte-ligam connectat" href="/compte" aria-current={surCompte ? 'page' : undefined} title={tx.compte}>
+				<a class="pc pc-2 compte-ligam connectat" href="/compte" aria-current={surCompte ? 'page' : undefined} title={tx.compte}>
 					<Avatar pseudo={$pseudoCompte ?? $session.user.email ?? '?'} id={$session.user.id} size="1.6rem" />
 					<span class="compte-tèxte">{tx.compte}</span>
 				</a>
 			{:else if $authReady}
-				<a class="compte-ligam" href={tornar} aria-current={surCompte ? 'page' : undefined} title={tx.connectar}>
+				<a class="pc pc-2 compte-ligam" href={tornar} aria-current={surCompte ? 'page' : undefined} title={tx.connectar}>
 					<Icona nom="persona" size="1.15em" />
 					<span class="compte-tèxte">{tx.connectar}</span>
 				</a>
@@ -139,7 +189,7 @@
 			<!-- Visible seulement pour un administrateur. C'est du confort, pas une
 			     protection : les verrous sont dans la base (RLS). -->
 			{#if $esAdmin}
-				<a class="admin-link" href="/admin" title={tx.admin}>
+				<a class="pc pc-2 admin-link" href="/admin" title={tx.admin}>
 					<Icona nom="reglages" size="1.1em" />
 					<span class="admin-tèxte">{tx.admin}</span>
 				</a>
@@ -149,8 +199,8 @@
 
 			<div class="lengas">
 				<div class="lang-toggle" class:en-avant={crida} role="group" aria-label="Lenga / Langue">
-					<button type="button" aria-pressed={lang === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
-					<button type="button" aria-pressed={lang === segonda} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
+					<button type="button" class="pc pc-2" aria-pressed={lang === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
+					<button type="button" class="pc pc-2" aria-pressed={lang === segonda} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
 					{#if crida}
 						<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
 					{/if}
@@ -158,7 +208,7 @@
 				<div class="lang-globe">
 					<button
 						type="button"
-						class="globe-boton"
+						class="pc pc-2 globe-boton"
 						bind:this={botonGlobe}
 						aria-expanded={globeDobert}
 						aria-controls="globe-panel"
@@ -184,7 +234,7 @@
 			     élément ; l'ordre de tabulation suit l'ordre affiché. -->
 			<button
 				type="button"
-				class="menu-boton"
+				class="pc pc-2 menu-boton"
 				bind:this={botonMenu}
 				aria-haspopup="dialog"
 				aria-expanded={menuDobèrt}
@@ -196,7 +246,34 @@
 	</div>
 </header>
 
-<MenuVel bind:dobèrt={menuDobèrt} {lang} boton={botonMenu} />
+<!-- sur téléphone : la navigation en bas, cinq onglets (hors du bandeau : un élément fixe dans un
+     conteneur de requêtes serait calé sur lui, pas sur l'écran) -->
+{#if avecOnglets && monte}
+	<nav class="onglets-bas" use:versBody aria-label={ETIQ_NAV[lang] ?? ETIQ_NAV.oc}>
+		<a href="/" aria-current={actiu === 'acuelh' ? 'page' : undefined}>
+			<span class="ic"
+				><svg viewBox="0 0 24 24" width="1.4rem" height="1.4rem" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7v9H4z" /><path d="M10 20v-6h4v6" /></svg></span
+			>
+			<span class="et">{ACUELH[lang] ?? ACUELH.oc}</span>
+		</a>
+		{#each verbes as v (v.id)}
+			<a href={v.href} aria-current={actiu === v.id ? 'page' : undefined}>
+				<span class="ic">
+					{#if v.id === 'parla'}<Icona nom="comentar" size="1.4rem" />
+					{:else if v.id === 'apren'}<svg viewBox="0 0 24 24" width="1.4rem" height="1.4rem" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5c3-1.3 5.5-1 8 1 2.5-2 5-2.3 8-1V19c-3-1.3-5.5-1-8 1-2.5-2-5-2.3-8-1z" /><path d="M12 6.5V20" /></svg>
+					{:else}<Icona nom="persona" size="1.4rem" />{/if}
+				</span>
+				<span class="et">{v.nom}</span>
+			</a>
+		{/each}
+		<button type="button" bind:this={botonOnglet} aria-haspopup="dialog" aria-expanded={menuDobèrt} onclick={() => (menuDobèrt = !menuDobèrt)}>
+			<span class="ic"><Icona nom="menu" size="1.4rem" /></span>
+			<span class="et">{tx.menu}</span>
+		</button>
+	</nav>
+{/if}
+
+<MenuVel bind:dobèrt={menuDobèrt} {lang} boton={avecOnglets && telephone ? botonOnglet : botonMenu} />
 
 <style>
 	.top {
@@ -254,47 +331,34 @@
 		gap: 0.7rem;
 	}
 
-	.menu-boton {
-		display: inline-flex;
-		align-items: center;
+	/* pièces de papier (lib/styles/papier.css) : les boutons de la barre ; ouverts, ils passent à l'or */
+	.menu-boton,
+	.globe-boton {
+		--r: 9px;
 		gap: 0.45rem;
+		min-height: 0;
 		height: 2.2rem;
 		padding: 0 0.9rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: transparent;
-		color: var(--t-tinta);
 		font: inherit;
 		font-weight: 700;
 		font-size: 0.82rem;
-		cursor: pointer;
-		transition: border-color 0.3s;
 	}
 
-	.menu-boton:hover,
-	.menu-boton[aria-expanded='true'] {
-		border-color: var(--t-accion);
+	.menu-boton[aria-expanded='true'],
+	.globe-boton[aria-expanded='true'] {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
 	}
 
 	/* La seule action en couleur de la barre, comme « Nous rejoindre » chez l'Alliance ;
 	   en tuile du rouge du logo, la couleur de ce qui se clique (app.css, 2026-10-23) */
 	.reservar {
-		display: inline-flex;
-		align-items: center;
+		--r: 9px;
+		min-height: 0;
 		height: 2.2rem;
 		padding: 0 1.1rem;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		font-weight: 700;
 		font-size: 0.82rem;
-		text-decoration: none;
 		white-space: nowrap;
-		transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-	}
-
-	.reservar:hover {
-		transform: translateY(-1px);
 	}
 
 	/* Le bloc compte fourni par la page : encadré discret, pour qu'un pseudo
@@ -316,74 +380,85 @@
 
 	/* le compte : même pastille discrète que l'administration, l'initiale
 	   devant ; le rouge reste à « Reservar un cors » */
+	/* pièce de papier (lib/styles/papier.css) : le compte, comme les autres boutons de la barre */
 	.compte-ligam {
-		display: inline-flex;
-		align-items: center;
+		--r: 9px;
 		gap: 0.4rem;
+		min-height: 0;
 		height: 2.2rem;
 		padding: 0 0.75rem;
-		border-radius: 999px;
-		border: 1px solid var(--t-linha);
-		color: var(--t-tinta);
-		font-weight: 700;
 		font-size: 0.78rem;
-		text-decoration: none;
 		white-space: nowrap;
-		transition: border-color 0.3s;
 	}
+	.compte-ligam[aria-current='page'] {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
+	}
+
 	.compte-ligam.connectat {
 		padding-left: 0.3rem;
 	}
-	.compte-ligam:hover,
-	.compte-ligam[aria-current='page'] {
-		border-color: var(--t-aur);
-	}
-
 	.admin-link {
-		display: inline-flex;
-		align-items: center;
+		--r: 9px;
 		gap: 0.35rem;
+		min-height: 0;
 		height: 2.2rem;
 		padding: 0 0.75rem;
-		border-radius: 999px;
-		border: 1px solid var(--t-linha);
-		color: var(--t-tinta);
-		font-weight: 700;
 		font-size: 0.78rem;
-		text-decoration: none;
 		white-space: nowrap;
-		transition: border-color 0.3s;
 	}
 
-	.admin-link:hover {
-		border-color: var(--t-accion);
+	/* L'interrupteur Òc / Fr (Romain, 2026-11-07 : « ils sont séparés, on ne comprend pas que
+	   c'est un interrupteur… on bascule de l'une à l'autre ») : une seule piste de la couleur du
+	   carton, la langue choisie est une pièce d'ocre posée dessus, l'autre est à plat. L'autre
+	   langue remplace « Fr » quand on la choisit au globe (logique inchangée). */
+	.lengas .lang-toggle {
+		gap: 0;
+		padding: 3px;
+		border-radius: 12px;
+		background: color-mix(in srgb, var(--t-tinta) 10%, transparent); /* la piste : l'encre à 10 %, sans troisième couleur (odd-squid-52) */
+		box-shadow: none;
+	}
+	.lengas .lang-toggle button {
+		--pc-fons: transparent;
+		--pc-tinta: var(--t-tinta);
+		--pc-lev: none;
+		--r: 9px;
+		height: 1.85rem;
+		min-width: 2.7rem;
+		padding: 0 0.75rem;
+		box-shadow: none;
+	}
+	.lengas .lang-toggle button:hover:not(:disabled),
+	.lengas .lang-toggle button:active:not(:disabled) {
+		transform: none;
+		box-shadow: none;
+	}
+	.lengas .lang-toggle button[aria-pressed='true'],
+	.lengas .lang-toggle button[aria-pressed='true']:hover:not(:disabled) {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: var(--pc-or-tinta);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 	}
 
+	/* la bascule Òc / Fr : deux pièces de papier, l'or marque la langue choisie */
 	.lang-toggle {
 		display: inline-flex;
-		gap: 2px;
-		padding: 3px;
-		border-radius: 999px;
-		border: 1px solid var(--t-linha);
+		gap: 0.5rem;
+		border-radius: 12px;
 	}
 
 	.lang-toggle button {
-		border: 0;
-		background: transparent;
-		color: var(--t-tinta);
-		font-weight: 700;
+		--r: 9px;
+		min-height: 0;
+		height: 2.2rem;
+		padding: 0 0.85rem;
 		font-size: 0.78rem;
-		padding: 0.35rem 0.75rem;
-		border-radius: 999px;
-		cursor: pointer;
-		transition:
-			background 0.5s cubic-bezier(0.19, 1, 0.22, 1),
-			color 0.5s;
 	}
 
 	.lang-toggle button[aria-pressed='true'] {
-		background: var(--t-tinta);
-		color: var(--t-fons);
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
 	}
 
 	/* Globe : les langues de découverte (es / en / ca), à côté de la bascule. */
@@ -400,27 +475,11 @@
 	   une pilule quand le code Es/En/Ca s'affiche ; bordure rouge (--t-accion)
 	   au survol et à l'ouverture, comme Ambiance (règle B). */
 	.globe-boton {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
 		gap: 4px;
 		min-width: 2.2rem;
-		height: 2.2rem;
-		padding: 0 0.45rem;
-		border: 1px solid var(--t-linha);
-		background: transparent;
-		color: var(--t-tinta);
-		border-radius: 999px;
-		cursor: pointer;
-		transition:
-			background 0.5s cubic-bezier(0.19, 1, 0.22, 1),
-			color 0.5s,
-			border-color 0.4s;
+		padding: 0 0.55rem;
 	}
-	.globe-boton:hover,
-	.globe-boton[aria-expanded='true'] {
-		border-color: var(--t-accion);
-	}
+
 	/* Panneau d'en-tête opaque, comme celui d'Ambiance. */
 	.globe-panel {
 		position: absolute;
@@ -459,6 +518,138 @@
 		background: var(--t-tinta);
 		color: var(--t-fons);
 	}
+	/* ---- téléphone d'abord (2026-11-07) ---- */
+	/* Les réglages et le menu sont de simples icônes et mots, sans pièce pleine (logique 3 choisie par
+	   Romain le 07-11) : seules la réservation (rouge) et la langue choisie (ocre) sont en couleur ;
+	   plus de troisième couleur à choisir. Les états ouverts et la page courante gardent leur pièce. */
+	.header-right .compte-ligam:not([aria-current='page']),
+	.header-right .admin-link,
+	.header-right .globe-boton:not([aria-expanded='true']),
+	.header-right .menu-boton:not([aria-expanded='true']),
+	.header-right :global(.ambianca-boton:not([aria-expanded='true'])) {
+		--pc-fons: transparent;
+		--pc-tinta: var(--t-tinta);
+		box-shadow: none;
+	}
+	.header-right .compte-ligam:not([aria-current='page']):hover:not(:disabled),
+	.header-right .admin-link:hover:not(:disabled),
+	.header-right .globe-boton:not([aria-expanded='true']):hover:not(:disabled),
+	.header-right .menu-boton:not([aria-expanded='true']):hover:not(:disabled),
+	.header-right :global(.ambianca-boton:not([aria-expanded='true']):hover:not(:disabled)) {
+		--pc-fons: color-mix(in srgb, var(--t-tinta) 9%, transparent);
+		transform: none;
+		box-shadow: none;
+	}
+	/* grand écran : les trois verbes dans la barre, s'il y a la place */
+	.verbes {
+		display: none;
+	}
+	@container (min-width: 62rem) {
+		.verbes {
+			display: flex;
+			gap: 1.5rem;
+			margin-right: 0.8rem;
+		}
+	}
+	.verbes a {
+		padding: 0.3rem 0;
+		border-bottom: 2px solid transparent;
+		color: var(--t-tinta);
+		font-size: 0.9rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.verbes a:hover,
+	.verbes a[aria-current='page'] {
+		border-bottom-color: var(--pc-or-fons);
+	}
+	.verbes a:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 3px;
+		border-radius: 4px;
+	}
+	/* téléphone : la navigation en bas */
+	.onglets-bas {
+		display: none;
+	}
+	@media (max-width: 40rem) {
+		.top.avec-onglets .menu-boton {
+			display: none;
+		}
+		.onglets-bas {
+			position: fixed;
+			inset: auto 0 0 0;
+			z-index: 70;
+			display: grid;
+			grid-template-columns: repeat(5, 1fr);
+			padding: 0.3rem 0.2rem calc(0.3rem + env(safe-area-inset-bottom, 0px));
+			background: var(--t-fons);
+			border-top: 1px solid var(--t-linha);
+			box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.08);
+		}
+		.onglets-bas a,
+		.onglets-bas button {
+			display: grid;
+			justify-items: center;
+			align-content: start;
+			gap: 0.15rem;
+			min-height: 3.6rem;
+			padding: 0.4rem 0 0.35rem;
+			border: 0;
+			background: transparent;
+			color: var(--t-tinta-2);
+			font: 600 0.72rem/1.1 var(--font-body);
+			text-decoration: none;
+			cursor: pointer;
+			-webkit-tap-highlight-color: transparent;
+		}
+		.onglets-bas .ic {
+			display: grid;
+			place-items: center;
+			width: 3.2rem;
+			height: 1.9rem;
+			border-radius: 999px;
+		}
+		/* l'onglet actif : l'accent du thème (l'ocre en sombre, jamais de rouge en texte sur le sombre ; le rouge en clair) */
+		.onglets-bas [aria-current='page'] {
+			color: var(--t-aur);
+		}
+		.onglets-bas [aria-current='page'] .ic {
+			background: color-mix(in srgb, var(--t-aur) 14%, transparent);
+		}
+		:global(:root[data-tema='clar']) .onglets-bas [aria-current='page'] {
+			color: var(--t-accion);
+		}
+		:global(:root[data-tema='clar']) .onglets-bas [aria-current='page'] .ic {
+			background: color-mix(in srgb, var(--t-accion) 12%, transparent);
+		}
+		.onglets-bas a:focus-visible,
+		.onglets-bas button:focus-visible {
+			outline: 3px solid var(--t-aur-clar, #c7811b);
+			outline-offset: -3px;
+			border-radius: 12px;
+		}
+		/* cibles de 44 px au doigt (la règle du site) : les réglages du haut faisaient 35 px */
+		.top.avec-onglets .compte-ligam,
+		.top.avec-onglets .admin-link,
+		.top.avec-onglets .globe-boton,
+		.top.avec-onglets :global(.ambianca-boton) {
+			min-width: 2.75rem;
+			height: 2.75rem;
+		}
+		.top.avec-onglets .lang-toggle button {
+			height: 2.35rem;
+		}
+		.top.avec-onglets .brand {
+			min-height: 2.75rem;
+			padding-right: 0.4rem;
+		}
+		/* la page ne passe pas sous la barre */
+		:global(body:has(.onglets-bas)) {
+			padding-bottom: calc(4.3rem + env(safe-area-inset-bottom, 0px));
+		}
+	}
+
 	.sr-only {
 		position: absolute;
 		width: 1px;

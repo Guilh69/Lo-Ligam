@@ -22,9 +22,9 @@
 		{#each block.items as c}
 			<li class="chunk">
 				{#if c.audio}
-					<button type="button" class="listen active" onclick={() => play(c.audio)} aria-label="Escotar {c.oc}"><Icona nom="son" size="1.25em" /></button>
+					<button type="button" class="pc pc-2 listen active" onclick={() => play(c.audio)} aria-label="Escotar {c.oc}"><Icona nom="son" size="1.25em" /></button>
 				{:else}
-					<button type="button" class="listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir"><Icona nom="son" size="1.25em" /></button>
+					<button type="button" class="pc pc-2 listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir"><Icona nom="son" size="1.25em" /></button>
 				{/if}
 				<span class="c-body">
 					<span class="c-oc">{@html rich(c.oc)}</span>
@@ -75,23 +75,21 @@
 		border-radius: 12px;
 	}
 
+	/* pièce de papier (lib/styles/papier.css) : le petit bouton d'écoute */
 	.listen {
-		border: none;
-		background: color-mix(in srgb, var(--l-carta) 70%, transparent);
-		border-radius: 999px;
-		padding: 0.2rem 0.45rem;
+		--r: 10px;
+		min-height: 0;
+		padding: 0.25rem 0.5rem;
 		font-size: 0.85rem;
-		opacity: 0.55;
-		cursor: default;
 		flex-shrink: 0;
 	}
 
+	.listen:disabled {
+		cursor: default;
+	}
+
 	.listen.active {
-		color: var(--l-marca);
-		opacity: 1;
-		cursor: pointer;
-		background: var(--l-carta);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		--pc-tinta: var(--pc-carton-tinta);
 	}
 
 	.c-body {

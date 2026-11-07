@@ -200,7 +200,7 @@
 		<main class="lèu">
 			<h1>{x.grops}</h1>
 			<Tèxte clau="grops.lèu" class="frasa" />
-			<a class="boton" href="/amassa">{x.amassa}</a>
+			<a class="pc boton" href="/amassa">{x.amassa}</a>
 		</main>
 	{:else}
 		<div class="cadre">
@@ -216,7 +216,7 @@
 								</a>
 							{/if}
 						</div>
-						<a class="crear" href="/grops/crear" aria-current={page.route.id === '/grops/crear' ? 'page' : undefined}>
+						<a class="pc crear" href="/grops/crear" aria-current={page.route.id === '/grops/crear' ? 'page' : undefined}>
 							<Icona nom="chercher" />
 							{x.crear}
 						</a>
@@ -224,7 +224,7 @@
 
 					{#if !uid}
 						<Tèxte clau="grops.compte" class="nota" />
-						<a class="boton" href="/compte?tornar={encodeURIComponent(page.url.pathname)}">{x.connectar}</a>
+						<a class="pc boton" href="/compte?tornar={encodeURIComponent(page.url.pathname)}">{x.connectar}</a>
 					{:else if grops.cargadas && !grops.mevas.length}
 						<h2 class="començar">{x.començar}</h2>
 						<ul class="grops">
@@ -279,8 +279,8 @@
 											</a>
 											{#if c.estat === 'recebuda'}
 												<span class="respondre">
-													<button type="button" class="pichon" disabled={respond === c.user_id} onclick={() => respondre(c, true)}>{x.acceptar}</button>
-													<button type="button" class="pichon segond" disabled={respond === c.user_id} onclick={() => respondre(c, false)}>{x.refusar}</button>
+													<button type="button" class="pc pichon" disabled={respond === c.user_id} onclick={() => respondre(c, true)}>{x.acceptar}</button>
+													<button type="button" class="pc pc-2 pichon segond" disabled={respond === c.user_id} onclick={() => respondre(c, false)}>{x.refusar}</button>
 												</span>
 											{/if}
 										{/if}
@@ -311,8 +311,8 @@
 		height: 100dvh;
 		color: var(--t-tinta);
 		background:
-			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
-			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			radial-gradient(ellipse 70% 50% at 8% -8%, var(--t-braise), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, var(--t-braise-or), transparent 70%),
 			var(--t-fons);
 		overflow: hidden;
 	}
@@ -417,27 +417,19 @@
 	/* ce qui se clique : le rouge du logo en aplat (règle B) */
 	.crear,
 	.boton {
+		--r: 10px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: var(--esp-8);
 		min-height: 44px;
 		padding: 0.6rem 1.2rem;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: 700 1rem/1 var(--font-body);
-		text-decoration: none;
-		transition: background-color 0.25s;
-	}
-	.crear:hover,
-	.boton:hover {
-		background: var(--t-accion-viu);
-	}
-	.boton {
 		justify-self: start;
 		align-self: flex-start;
 	}
+
+
 	.lista :global(.nota) {
 		margin: 0;
 		line-height: 1.5;
@@ -525,30 +517,12 @@
 		padding: 0 0.75rem 0.5rem calc(0.75rem + 1.9rem + var(--esp-8));
 	}
 	.pichon {
+		--r: 9px;
 		min-height: 36px;
 		padding: 0.35rem 0.9rem;
-		border: 0;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: 700 0.85rem/1 var(--font-body);
-		cursor: pointer;
 	}
-	.pichon:hover {
-		background: var(--t-accion-viu);
-	}
-	.pichon.segond {
-		background: transparent;
-		color: var(--t-tinta);
-		box-shadow: inset 0 0 0 1px var(--t-linha);
-	}
-	.pichon.segond:hover {
-		background: color-mix(in srgb, var(--t-tinta) 7%, transparent);
-	}
-	.pichon:disabled {
-		opacity: 0.6;
-		cursor: wait;
-	}
+
 	.pichon:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;

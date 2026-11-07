@@ -61,7 +61,7 @@
 				{#each states[i].order as oi}
 					<button
 						type="button"
-						class="opt"
+						class="pc pc-rep opt"
 						class:correct={states[i].done && oi === item.correct}
 						class:wrong={states[i].wrong.includes(oi)}
 						disabled={states[i].done || states[i].wrong.includes(oi)}
@@ -170,40 +170,32 @@
 		gap: 0.5rem;
 	}
 
+	/* pièce de papier (lib/styles/papier.css) ; ici, seulement ce qui est propre au QCM */
 	.opt {
-		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 18%, transparent);
-		background: var(--l-carta);
-		border-radius: 12px;
+		min-height: 0;
 		padding: 0.5rem 0.9rem;
 		font-size: 0.95rem;
-		color: var(--t-tinta);
-		cursor: pointer;
-		transition:
-			transform 150ms ease,
-			background 150ms ease,
-			border-color 150ms ease;
-	}
-
-	.opt:hover:not(:disabled) {
-		transform: translateY(-1px);
-		border-color: var(--l-teal);
-	}
-
-	.opt.correct {
-		background: rgba(238, 175, 52, 0.22);
-		border-color: var(--color-gold);
-		font-weight: 600;
-	}
-
-	.opt.wrong {
-		background: color-mix(in srgb, var(--t-tinta) 5%, transparent);
-		border-color: transparent;
-		color: color-mix(in srgb, var(--t-tinta) 40%, transparent);
-		text-decoration: line-through;
+		font-weight: 500;
 	}
 
 	.opt:disabled {
 		cursor: default;
+		opacity: 1;
+		box-shadow: var(--pc-lev);
+	}
+
+	.opt.correct {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
+		font-weight: 600;
+		transform: translateY(-1px);
+		box-shadow: 0 4px 4px var(--pc-ombre);
+	}
+
+	.opt.wrong {
+		opacity: 0.5;
+		text-decoration: line-through;
+		box-shadow: 0 1px 2px var(--pc-ombre);
 	}
 
 	.explain {

@@ -11,7 +11,11 @@
 	import { dictadaPossibla, dictar } from '$lib/talhier/dictada.js';
 	import { TALHIÈRS, VERROLHS } from '$lib/talhier/talhiers.js';
 	import { pila, cargarPila, cartas } from '$lib/talhier/pila.svelte.js';
+	import { ESSAIS } from '$lib/labo/registre-essais.js';
 
+	// les essais encore en cours (Romain, 2026-11-08 : « voir à cet endroit-là tous les essais, mais juste le
+	// temps qu'ils durent ») : la liste vient du registre du Laboratòri, un essai adopté ou retiré en sort seul
+	const essais = ESSAIS.filter((e) => e.etat === 'actif').sort((a, b) => b.date.localeCompare(a.date));
 	let regarder = $derived(notas.lista.filter((r) => sòrta(r) === 'regarder'));
 	let questions = $derived(notas.lista.filter((r) => sòrta(r) === 'question'));
 	let tasNòtas = $derived(notas.lista.filter((r) => sòrta(r) === 'nòta'));
@@ -144,7 +148,7 @@
 	{#if notas.error}<p class="msg error" role="alert">{notas.error}</p>{/if}
 	{#if error}<p class="msg error" role="alert">{error}</p>{/if}
 
-	<a class="entrada-pila" href="/admin/pila">
+	<a class="entrada-pila" href="/admin/valider?vue=pila">
 		<span class="nom"><span lang="oc">La pila</span>{#if enPila !== null}&nbsp;<span class="xifra">· {enPila}</span>{/if}</span>
 		<span class="ditz">{enPila === 0 ? 'Rien à valider pour l’instant.' : 'Valider une carte à la fois : les questions de l’IA, ses réponses, l’occitan des pages, les fiches. Au clavier ou du doigt.'}</span>
 		<span class="anar" aria-hidden="true">→</span>
@@ -219,8 +223,21 @@
 		</ul>
 	{/if}
 
+	{#if essais.length}
+		<h2>Essais à manier · {essais.length}</h2>
+		<p class="ajuda">
+			Les pages d’essai en cours, la plus récente en premier : chaque titre ouvre l’essai. Un essai sort de cette liste dès qu’il est adopté ou retiré.
+			<a href="/admin/labo">Tous les essais et les choix de design</a>
+		</p>
+		<ul class="fons">
+			{#each essais as e (e.chemin)}
+				<li><a href={e.chemin}>{e.titre}</a> : {e.raison}</li>
+			{/each}
+		</ul>
+	{/if}
+
 	{#if espèra.length}
-		<h2>En attente de l’IA · {espèra.length}</h2>
+	<h2>En attente de l’IA · {espèra.length}</h2>
 		<p class="ajuda">Relevées au début de la prochaine séance. Pour une demande tout de suite, « Copiar » met la note toute prête à coller dans la conversation.</p>
 		<ul class="lista calma">
 			{#each espèra as r (r.id)}
@@ -249,8 +266,8 @@
 
 	<h2>En fond</h2>
 	<ul class="fons">
-		{#if fichas}<li><a href="/admin/pila?lot=gramatica">{fichas} {fichas > 1 ? 'fiches' : 'fiche'} de grammaire</a> à relire et valider, une à une (<a href="/apren/gramatica">le sommaire</a>)</li>{/if}
-		<li><a href="/admin/triar">Triar</a> : les dessins de Remira, puis <a href="/admin/triar?lot=releu" data-sveltekit-reload>le relief des paysages</a>, à garder ou à refaire</li>
+		{#if fichas}<li><a href="/admin/valider?vue=pila&lot=gramatica">{fichas} {fichas > 1 ? 'fiches' : 'fiche'} de grammaire</a> à relire et valider, une à une (<a href="/apren/gramatica">le sommaire</a>)</li>{/if}
+		<li><a href="/admin/valider?vue=triar">Triar</a> : les dessins de Remira, puis <a href="/admin/valider?vue=triar&lot=releu">le relief des paysages</a>, à garder ou à refaire</li>
 		<li><a href="/admin/musica">Musica</a> : les artistes à trier</li>
 	</ul>
 

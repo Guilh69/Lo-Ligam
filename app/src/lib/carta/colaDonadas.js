@@ -18,6 +18,7 @@ import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranc
 import { trabalh, talhar, liberar } from './telas.js';
 import { LOCUTORS, classaDe, gamaLocutors, alfaLocutors, infoLocutors } from './locutors.js';
 import { nomTerritori } from './territoris.js';
+import { CARTE, TEINTES, texteSur, nomSurAplat as nomSus } from '../styles/palette.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -31,15 +32,28 @@ const mesclar = (a, b, t) => {
 // Una color per dialècte, dins l'esperit de la carta d'Occitanica (violet
 // gascon, magenta lengadocian, ròse provençal, irangis del nòrd) ; en
 // daltonisme, la paleta Okabe-Ito
+// Les couches de la carte ont la teinte et l'intensité des boutons et des
+// en-têtes de la salle de jeux (Romain, 07-11 : « représenter les couches
+// avec l'intensité et la teinte qu'on peut voir sur les boutons et sur les
+// en-têtes de la partie Jòcs ») : les mêmes couleurs dans les deux thèmes,
+// en aplats presque pleins (0,88) au lieu de voiles (0,3 en sombre, 0,36 en
+// clair) qui viraient au pastel. Romain, 07-11 au soir : le languedocien
+// en rouge plus intense (#cc2a14 ; avant le rouge du logo #b53d17), le
+// gascon en orange clair (#f4a261 ; avant bleu, qui touchait le bleu de
+// l'oïl). Avant le 07-11 : sorne #5b7fff #ff3f86 #ffb0dc #ffa22e #e8482a
+// #ffe27a ; clar #2350d8 #c2185b #e573ad #e07b00 #a8321a #c9a227.
+// Les couleurs elles-mêmes sont dans lib/styles/palette.js (CARTE.dialectes).
+const PALETA_JOCS = CARTE.dialectes;
 export const COLORS = {
-	// lo gascon en blau prigond, l'« otramar » (causida de Romain, 2026-10-10 ; abans violet)
-	sorne: { gas: '#5b7fff', lan: '#ff3f86', pro: '#ffb0dc', lem: '#ffa22e', auv: '#e8482a', viv: '#ffe27a' },
-	clar: { gas: '#2350d8', lan: '#c2185b', pro: '#e573ad', lem: '#e07b00', auv: '#a8321a', viv: '#c9a227' },
+	sorne: PALETA_JOCS,
+	clar: PALETA_JOCS,
 	dalt: { gas: '#0072b2', lan: '#d55e00', pro: '#cc79a7', lem: '#e69f00', auv: '#009e73', viv: '#56b4e9' }
 };
 const TEMAS = {
-	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: '#d9343f', occitanTèxt: '#ffc2b8', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: 0.3 },
-	clar: { estela: '#9a6a1c', lenga: '#b53d17', occitan: '#b0202c', occitanTèxt: '#7e121c', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: 0.36 } // (tèma clar : tenchas mai fòrtas, retorn de Romain 2026-10-10 : zònas e noms pauc legibles)
+	// l'occitan unifié au rouge des boutons (CARTE.occitan, palette.js), le nom en crème
+	// (avant : #d9343f à 0,48 en sombre, #b0202c à 0,58 en clair)
+	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: CARTE.occitan, occitanTèxt: '#ffc2b8', nomOccitan: texteSur(CARTE.occitan), nomOmbra: 'rgba(30, 8, 3, 0.85)', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: CARTE.intensite, uni: 1 },
+	clar: { estela: '#9a6a1c', lenga: TEINTES.brique, occitan: CARTE.occitan, occitanTèxt: '#4a0a12', nomOccitan: texteSur(CARTE.occitan), nomOmbra: 'rgba(58, 14, 4, 0.85)', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: CARTE.intensite, uni: 1 }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),
@@ -1175,7 +1189,9 @@ export function crearColaDonadas(
 			// (dialèctes e Creissent decochats : s'escantisson dins lo temps)
 			const aJDial = this._aJ('dialectes'),
 				aJCro = this._aJ('creissent');
-			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas0 * aMescla * aJDial;
+			// (de près, l'aplat s'allège pour laisser lire le fond ; à pleine
+			// intensité jusque vers 40 km, 07-11 : avant, il s'allégeait dès 7)
+			const aT = T.tencha * lerp(1, 0.4, clamp((z - 8.5) / 3)) * aTenchas0 * aMescla * aJDial;
 			const an = this._anim,
 				p = an ? clamp((performance.now() - an.t0) / DURADA) : 1;
 			// l'entrada en scèna : las zònas a part (Creissent, zònas mixtas) e los
@@ -1429,7 +1445,7 @@ export function crearColaDonadas(
 						img = c;
 					}
 					// (de fòrt prèp, coma las tenchas dels dialèctes, s'esvanís)
-					this._copiar(img, aUni * T.tencha * 1.6 * aTenchas0);
+					this._copiar(img, aUni * T.tencha * T.uni * aTenchas0);
 				}
 				// lo contorn s'afortís un pauc quand la color i es tornada
 				cx.globalAlpha = aUni * lerp(0.7, 0.95, vE) * aTenchas0;
@@ -1445,9 +1461,9 @@ export function crearColaDonadas(
 					cx.letterSpacing = (fsO * 0.4).toFixed(1) + 'px';
 					cx.textAlign = 'center';
 					cx.textBaseline = 'middle';
-					cx.shadowColor = T.ombra;
+					cx.shadowColor = T.nomOmbra ?? T.ombra;
 					cx.shadowBlur = 8;
-					cx.fillStyle = T.occitanTèxt;
+					cx.fillStyle = T.nomOccitan ?? T.occitanTèxt;
 					cx.globalAlpha = aUni * (1 - easeS(clamp(vE / 0.6)));
 					cx.fillText('OCCITAN', x, y);
 					if (cx.globalAlpha > 0.3) {
@@ -1546,7 +1562,7 @@ export function crearColaDonadas(
 					// glissa, sens sautar (retorn de Romain, 2026-10-09 : PROVENÇAL)
 					const [gx, gy] = this._glissar(zn.kod, dec);
 					cx.globalAlpha = a;
-					cx.fillStyle = T.clar ? mesclar(color, '#2a1a10', 0.7) : mesclar(color, '#fff8ec', 0.35);
+					[cx.fillStyle, cx.shadowColor] = nomSus(color);
 					cx.fillText(t, zn.eti[0] + gx, zn.eti[1] + gy);
 				}
 				cx.restore();

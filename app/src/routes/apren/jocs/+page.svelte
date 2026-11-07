@@ -4,22 +4,23 @@
 	// après un essai sur /ensag/jocs : l'espace de jeux, plein écran et stable,
 	// sans le pied de page ni la navigation du site, la sortie vers S'apren ;
 	// un jeu à la fois : La sèrp de las letras (04-11), Los panièrs (05-11) et
-	// Ont es… ? (05-11, les paysages de Romain), choisi dans l'adresse
-	// (?joc=paniers, ?joc=paisatges). Allure « Teula », adoptée par
+	// Pausa los mots (05-11 sous le nom « Ont es… ? », refait le 06-11 : les
+	// paysages de Romain, chaque mot dans sa case), choisi dans l'adresse
+	// (?joc=paniers, ?joc=paisatges, ?joc=intrus : L’intrús, 07-11). Allure « Teula », adoptée par
 	// Romain le 05-11 avec la palette crème : mise en page éditoriale (titre
 	// géant, aplats, filets), mots et lettres en tuiles, ni verre fumé, ni
 	// halo, ni lueur. Le rouge reste ce qui se clique, l'or ce qui est choisi.
 	// Les jeux : $lib/jocs/. Depuis le 06-11 (Romain : « arriver dans une salle
 	// de jeu… dans la logique du café pour la musique »), sans ?joc= on entre
 	// dans la salle de jeux ($lib/jocs/sala/) : les familles de jeux, leurs
-	// affiches, ce que chaque jeu fait travailler ; deux tèmas, joiós par défaut
-	// (Romain, 06-11 au soir : « Je préfère joios en fait ») et calme, gardés sur
-	// l'appareil. Dans un jeu, « ‹ Sala de jòcs » y ramène.
-	import { onMount } from 'svelte';
+	// illustrations, ce que chaque jeu fait travailler, en couleurs (le tèma
+	// calme a été retiré le 07-11 à la demande de Romain). Dans un jeu,
+	// « ‹ Sala de jòcs » y ramène.
 	import { page } from '$app/state';
 	import Serp from '$lib/jocs/Serp.svelte';
 	import Paniers from '$lib/jocs/Paniers.svelte';
-	import OntEs from '$lib/jocs/OntEs.svelte';
+	import PausaMots from '$lib/jocs/PausaMots.svelte';
+	import Intrus from '$lib/jocs/Intrus.svelte';
 	import Sala from '$lib/jocs/sala/Sala.svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
 
@@ -31,7 +32,8 @@
 	const JOCS = [
 		{ id: 'serp', oc: 'La sèrp de las letras' },
 		{ id: 'paniers', oc: 'Los panièrs' },
-		{ id: 'paisatges', oc: 'Ont es… ?' }
+		{ id: 'paisatges', oc: 'Pausa los mots' },
+		{ id: 'intrus', oc: 'L’intrús' }
 	];
 	// sans ?joc= : la salle de jeux ; avec : le jeu (un lien, donc le bouton
 	// « retour » du navigateur ramène à la salle)
@@ -39,27 +41,6 @@
 		const d = page.url.searchParams.get('joc');
 		return JOCS.some((j) => j.id === d) ? d : null;
 	});
-	// le tèma de la salle : joiós par défaut, gardé sur cet appareil
-	const CLAU_TEMA = 'loligam-jocs-tema';
-	let tema = $state('joios');
-	onMount(() => {
-		// ?tema=joios ou ?tema=calme : un lien qui ouvre la salle dans ce tèma
-		const demandat = page.url.searchParams.get('tema');
-		if (demandat === 'joios' || demandat === 'calme') return causirTema(demandat);
-		try {
-			if (localStorage.getItem(CLAU_TEMA) === 'calme') tema = 'calme';
-		} catch {
-			// stockage refusé : on reste au tèma par défaut
-		}
-	});
-	function causirTema(t) {
-		tema = t;
-		try {
-			localStorage.setItem(CLAU_TEMA, t);
-		} catch {
-			// stockage refusé : le choix vaut pour cette visite
-		}
-	}
 </script>
 
 <svelte:head>
@@ -92,9 +73,11 @@
 		{:else if joc === 'paniers'}
 			<Paniers />
 		{:else if joc === 'paisatges'}
-			<OntEs />
+			<PausaMots />
+		{:else if joc === 'intrus'}
+			<Intrus />
 		{:else}
-			<Sala {tema} {causirTema} />
+			<Sala />
 		{/if}
 	</div>
 </main>
@@ -176,12 +159,20 @@
 			overflow: hidden;
 			clip-path: inset(50%);
 		}
+		/* quatre jeux depuis le 07-11 (L'intrús) : ils ne tiennent plus sur
+		   une ligne ; deux colonnes nettes plutôt qu'un nom seul à la ligne
+		   (trois sur une ligne jusque-là, « Pausa los mots », 06-11) */
 		.onglets {
 			flex-basis: 100%;
 			margin-inline-start: 0;
-			justify-content: space-between;
+			display: grid;
+			grid-template-columns: repeat(2, auto);
+			justify-content: start;
+			gap: 0 var(--esp-24);
 		}
 		.onglets a {
+			justify-self: start;
+			min-height: 2.5rem;
 			font-size: 0.95rem;
 		}
 	}
@@ -252,13 +243,8 @@
 		.espaci .brica :global(.joc:not(.immersiu) .grasilha) {
 			max-width: calc(58svh * var(--cols) / var(--rows));
 		}
-		.espaci .brica :global(.joc:not(.immersiu):not(.ont-es) .camp) {
+		.espaci .brica :global(.joc:not(.immersiu) .camp) {
 			max-width: calc(54svh * 4 / 3);
-		}
-		/* Ont es… ? : la colonne porte aussi les mots de la photo (06-11) */
-		.espaci .brica :global(.joc.ont-es:not(.immersiu) .disposicion) {
-			grid-template-rows: auto auto auto 1fr;
-			grid-template-areas: 'cap cap' 'taula pista' 'taula mots' 'taula comandas';
 		}
 	}
 	/* le mode plein couvre tout l'écran, même au-delà de 90rem (06-11 : sur un
@@ -414,52 +400,23 @@
 		color: var(--t-tinta);
 	}
 
-	/* ── Les commandes : la croix en un seul bloc de touches rouges ── */
-	.espaci .brica :global(.crotz) {
-		gap: 3px;
-	}
-	.espaci .brica :global(.dir),
-	.espaci .brica :global(.accion) {
-		border-radius: 0.2rem;
-	}
-	.espaci .brica :global(.escupir) {
-		border-radius: 0.2rem;
-	}
-	.espaci .brica :global(.ecran) {
-		border-radius: 0.2rem;
-	}
-	/* les réglages : du texte, souligné d'or quand il est choisi */
-	.espaci .brica :global(.segments) {
-		gap: 0 var(--esp-16);
-		border: none;
-		border-radius: 0;
-		overflow: visible;
-	}
-	.espaci .brica :global(.segments button) {
-		min-height: 2.75rem;
-		padding: 0.3rem 0 0.35rem;
-		border: none;
-		border-bottom: 2px solid var(--t-linha);
-	}
-	.espaci .brica :global(.segments button:hover) {
-		background: none;
-		border-bottom-color: var(--t-tinta-2);
-	}
-	.espaci .brica :global(.segments button[aria-pressed='true']) {
-		background: none;
-		border-bottom-color: var(--or);
-		color: var(--t-tinta);
-		font-weight: 600;
-	}
+	/* ── Les commandes : des pièces de papier (lib/styles/papier.css) ── */
+
+
+
+
+	/* les réglages : des pièces de papier, l'or marque la pièce choisie (Reglatges.svelte) */
+
+
 	/* les chiffres des unités (06-11) : serrés, chacun assez large pour le doigt */
 	.espaci .brica :global(.segments.compacte) {
-		gap: 0 0.25rem;
+		gap: 0.4rem;
 	}
+
 	.espaci .brica :global(.segments.compacte button) {
 		min-width: 2rem;
 		justify-items: center;
 	}
-	.espaci .brica :global(.accions button) {
-		border-radius: 0.2rem;
-	}
+
+
 </style>

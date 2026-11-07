@@ -396,7 +396,7 @@
 
 	{#if cargat && !existís}
 		<p>{x.questionnaire}</p>
-		<a class="boton" href="/compte/questionnaire">{x.causir}</a>
+		<a class="pc boton" href="/compte/questionnaire">{x.causir}</a>
 	{:else if cargat}
 		<form onsubmit={enregistrar}>
 			{@render chips('nivel', NIVELS, 'radio')}
@@ -463,7 +463,7 @@
 				<small class="comptador">{f.presentacion.length} / {MAX}</small>
 			</label>
 			<div class="accions">
-				<button type="submit" class="boton" disabled={enregistrant}>{enregistrant ? '…' : x.enregistrar}</button>
+				<button type="submit" class="pc boton" disabled={enregistrant}>{enregistrant ? '…' : x.enregistrar}</button>
 				{#if grops.ieu?.verificacion === 'verificat'}
 					<a class="secondari" href="/grops/perfil/{encodeURIComponent(grops.ieu.pseudo)}">{x.veire}</a>
 				{/if}
@@ -661,25 +661,15 @@
 		gap: var(--esp-12);
 	}
 	.boton {
+		--r: 10px;
 		justify-self: start;
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;
 		padding: 0.6rem 1.3rem;
-		border: 0;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: 700 1rem/1 var(--font-body);
-		text-decoration: none;
-		cursor: pointer;
 	}
-	.boton:hover {
-		background: var(--t-accion-viu);
-	}
-	.boton:disabled {
-		opacity: 0.6;
-	}
+
 	.secondari {
 		display: inline-flex;
 		align-items: center;

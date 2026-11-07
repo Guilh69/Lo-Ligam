@@ -34,6 +34,10 @@
 	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre, cambiar } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
+	// La réservation passe par la page qui explique le cours (comme le bandeau et le menu),
+	// jamais droit au calendrier (décision du 24-10). Le texte du bouton final reste
+	// modifiable sur place ; sa destination, elle, est fixée ici.
+	import { VISIO } from '$lib/data/planSite.js';
 	import MiegTres from '$lib/acuelh/MiegTres.svelte';
 	import '$lib/acuelh/acuelh.css';
 
@@ -235,6 +239,10 @@
 								<span class="boton-tèxt">{@render bi('acuelh.eros.carta')}{@render sageta()}</span>
 							</a>
 						{/if}
+						<!-- Petit écran : le lien « Reservar un cors » du bandeau est masqué, on le remet ici dans le premier écran -->
+						<a class="boton boton-contorn boton-reservar" href={VISIO} data-magnet>
+							<span class="boton-tèxt">{tria({ oc: 'Reservar un cors', fr: 'Réserver un cours', es: 'Reservar una clase', en: 'Book a lesson', ca: 'Reservar una classe', ar: 'حجز درس' })}</span>
+						</a>
 						{@render lg('acuelh.eros.aprene', 'ligam-tèxt')}
 					</div>
 					<div class="davalar esvani" style="--i: 7" aria-hidden="true"><span></span></div>
@@ -350,8 +358,7 @@
 								<span class="boton-places complet">{@render biTx(LIB_COMPLET)}</span>
 							</a>
 						{:else if !amagat('acuelh.crida.reservar')}
-							{@const l = ligam('acuelh.crida.reservar')}
-							<a class="boton" href={l.href} target={l.defòra ? '_blank' : undefined} rel={l.defòra ? 'noopener' : undefined} data-magnet aria-describedby={l.defòra ? 'onglet-nou' : undefined} use:editar={'acuelh.crida.reservar'}>
+							<a class="boton" href={VISIO} data-magnet use:editar={'acuelh.crida.reservar'}>
 								<span class="boton-emplenat"></span>
 								<span class="boton-tèxt">{@render bi('acuelh.crida.reservar')}{@render sageta()}</span>
 								{#if nbPlaces !== null || edicion.actiu}

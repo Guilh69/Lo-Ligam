@@ -431,7 +431,7 @@
 			<div class="info-card" transition:fly={{ y: -12, duration: 260, easing: quintOut }}>
 				<button
 					type="button"
-					class="info-close"
+					class="pc pc-2 info-close"
 					onclick={() => (showInfo = false)}
 					aria-label={tx.close}><Icona nom="fermer" size="1.25em" /></button
 				>
@@ -445,7 +445,7 @@
 				</p>
 				{#if guida}<button
 					type="button"
-					class="info-guida"
+					class="pc pc-2 info-guida"
 					onclick={() => {
 						showInfo = false;
 						tick().then(() => guida?.lançar()); // (le bouton « ? » revient d'abord)
@@ -455,7 +455,7 @@
 		{:else}
 			<button
 				type="button"
-				class="info-trigger comandas-carta"
+				class="pc pc-2 info-trigger comandas-carta"
 				onclick={() => (showInfo = true)}
 				aria-label={tx.more}
 				transition:fly={{ y: -12, duration: 220, easing: quintOut }}
@@ -485,6 +485,15 @@
 </div>
 
 <style>
+	/* Le fond clair de la carte (Romain, 2026-11-07, option A) : plus de halo rose derrière
+	   l'Occitània, ni de verre rosé sur les panneaux (rail, tiroir, guide, légende) : des panneaux
+	   blancs pleins, comme des pièces de papier. Le sombre ne change pas. */
+	:global(:root[data-tema='clar'] .carta-wrap),
+	:global(:root[data-tema='clar'] .carta-wrap :is(.comandas-carta, .leaflet-bar)) {
+		--t-veire: #ffffff;
+		--t-veire-fort: #ffffff;
+		--carta-braise: transparent;
+	}
 
 	/* Carte plein écran, harmonisée avec la charte de l'accueil (2026-10-07) :
 	   la carte occupe toute la fenêtre, le bandeau et les panneaux flottent
@@ -542,28 +551,13 @@
 		color: var(--t-tinta);
 	}
 
+	/* pièces de papier (lib/styles/papier.css), posées sur la carte */
 	.info-trigger,
 	.info-close {
-		display: grid;
-		place-items: center;
+		--r: 12px;
+		min-height: 0;
 		padding: 0;
-		/* même verre que le rail et les boutons de la carte, sans trait (Romain, 2026-10-15) */
-		border: 0;
-		border-radius: 50%;
-		background: var(--t-veire);
-		backdrop-filter: blur(10px);
-		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-		color: var(--t-tinta);
-		cursor: pointer;
-		transition:
-			background 0.4s,
-			transform 0.6s var(--ease);
-	}
-
-	.info-trigger:hover,
-	.info-close:hover {
-		background: var(--t-veire-fort);
-		color: var(--t-accion);
+		line-height: 1;
 	}
 
 	.info-trigger:focus-visible,
@@ -596,22 +590,18 @@
 	}
 
 	.info-guida {
+		--r: 10px;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.45rem;
 		min-height: 44px;
 		margin-top: 0.8rem;
 		padding: 0 1rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		background: none;
-		color: var(--t-tinta);
 		font: inherit;
 		font-size: 0.88rem;
 		font-weight: 700;
-		cursor: pointer;
-		transition: background 0.3s, border-color 0.3s;
 	}
+
 	.info-guida:hover,
 	.info-guida:focus-visible {
 		background: color-mix(in srgb, var(--t-terra) 14%, transparent);
@@ -664,7 +654,7 @@
 	}
 	@container carta (max-width: 600px) {
 		.carta-wrap {
-			--barra-bas: calc(3.9rem + env(safe-area-inset-bottom, 0px));
+			--barra-bas: calc(5.8rem + env(safe-area-inset-bottom, 0px)); /* blocs de couleur du rail (2026-11-07) */
 		}
 		.info-trigger {
 			right: 0.75rem;

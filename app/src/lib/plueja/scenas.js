@@ -15,7 +15,7 @@ export const SCENAS = [
 		id: 'garriga',
 		grop: 'poesia',
 		nom: { oc: 'Garriga', fr: 'Garrigue', es: 'Garriga', en: 'Garrigue', ca: 'Garriga', ar: 'Garriga' },
-		imatge: '/ensag/plueja/garriga.webp',
+		imatge: { clau: 'garriga', l: 1748, h: 1211, amples: [1024, 1748] },
 		posicion: '50% 40%',
 		teinta: '#8a7aa8', // lavande : la lueur du ciel calme
 		mots: [
@@ -53,7 +53,7 @@ export const SCENAS = [
 		id: 'fenestra',
 		grop: 'poesia',
 		nom: { oc: 'Fenèstra', fr: 'Fenêtre', es: 'Ventana', en: 'Window', ca: 'Finestra', ar: 'النافذة' },
-		imatge: '/ensag/plueja/fenestra.webp',
+		imatge: { clau: 'fenestra', l: 1500, h: 2173, amples: [1024, 1500] },
 		posicion: '50% 52%',
 		teinta: '#6f8f9a', // pierre grise
 		mots: [
@@ -127,7 +127,7 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 1,
 		nom: { oc: 'Adieu !', fr: 'Salut !', es: '¡Hola!', en: 'Hi!', ca: 'Salut!', ar: 'مرحبًا!' },
-		imatge: '/ensag/plueja/u1.webp',
+		imatge: { clau: 'u1', l: 1920, h: 1440, amples: [1024, 1920] },
 		posicion: '50% 55%',
 		teinta: '#c98a3a',
 		mots: [
@@ -163,7 +163,7 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 2,
 		nom: { oc: 'Parlas occitan ?', fr: 'Parles-tu occitan ?', es: '¿Hablas occitano?', en: 'Do you speak Occitan?', ca: 'Parles occità?', ar: 'هل تتحدث الأوكسيتانية؟' },
-		imatge: '/ensag/plueja/u2.webp',
+		imatge: { clau: 'u2', l: 1776, h: 1184, amples: [1024, 1776] },
 		posicion: '35% 45%',
 		teinta: '#3f8a8c',
 		mots: [
@@ -197,7 +197,7 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 3,
 		nom: { oc: 'La familha', fr: 'La famille', es: 'La familia', en: 'The family', ca: 'La família', ar: 'العائلة' },
-		imatge: '/ensag/plueja/u3.webp',
+		imatge: { clau: 'u3', l: 1920, h: 1440, amples: [1024, 1920] },
 		posicion: '50% 60%',
 		teinta: '#b0583c',
 		mots: [
@@ -229,7 +229,7 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 4,
 		nom: { oc: 'Qué fas ?', fr: 'Que fais-tu ?', es: '¿Qué haces?', en: 'What are you doing?', ca: 'Què fas?', ar: 'ماذا تفعل؟' },
-		imatge: '/ensag/plueja/u4.webp',
+		imatge: { clau: 'u4', l: 1776, h: 1184, amples: [1024, 1776] },
 		posicion: '50% 60%',
 		teinta: '#7d8a3c',
 		mots: [
@@ -274,7 +274,7 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 5,
 		nom: { oc: 'Al mercat', fr: 'Au marché', es: 'En el mercado', en: 'At the market', ca: 'Al mercat', ar: 'في السوق' },
-		imatge: '/ensag/plueja/u5.webp',
+		imatge: { clau: 'u5', l: 1720, h: 1320, amples: [1024, 1720] },
 		posicion: '50% 55%',
 		teinta: '#c9733a',
 		mots: [
@@ -311,7 +311,7 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 6,
 		nom: { oc: 'La jornada', fr: 'La journée', es: 'El día', en: 'The day', ca: 'El dia', ar: 'اليوم' },
-		imatge: '/ensag/plueja/u6.webp',
+		imatge: { clau: 'u6', l: 1920, h: 2560, amples: [1024, 1920] },
 		posicion: '50% 58%',
 		teinta: '#5a7fa8',
 		mots: [
@@ -348,7 +348,7 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 7,
 		nom: { oc: 'L’ostal', fr: 'La maison', es: 'La casa', en: 'The house', ca: 'La casa', ar: 'البيت' },
-		imatge: '/ensag/plueja/u7.webp',
+		imatge: { clau: 'u7', l: 1776, h: 1184, amples: [1024, 1776] },
 		posicion: '50% 50%',
 		teinta: '#9a6644',
 		mots: [
@@ -387,7 +387,7 @@ export const SCENAS = [
 		grop: 'unitat',
 		numero: 8,
 		nom: { oc: 'En vila', fr: 'En ville', es: 'En la ciudad', en: 'In town', ca: 'A la ciutat', ar: 'في المدينة' },
-		imatge: '/ensag/plueja/u8.webp',
+		imatge: { clau: 'u8', l: 1920, h: 2560, amples: [1024, 1920] },
 		posicion: '50% 50%', // ruelle de l'Écusson, Montpellier (photo de Romain, choisie le 06-11)
 		teinta: '#7a8494',
 		mots: [
@@ -453,3 +453,14 @@ export function motsDelQuasernet(cartes, dues = []) {
 	}
 	return [...dAbord, ...ensuite];
 }
+
+// Les fonds photo (option « Fons : Fòto ») : deux largeurs par photo, faites par
+// outils/remira/fonds.py depuis les photos d'origine de Romain (06-11, note de
+// Romain « trop zoomé et mauvaise qualité ») ; le navigateur prend la plus petite
+// qui couvre l'écran (comme les paysages).
+/** Le chemin d'un fond à une largeur. */
+export const fotoCamin = (im, a) => `/apren/remira/${im.clau}-${a}.webp`;
+/** srcset d'un fond. */
+export const fotoSrcset = (im) => im.amples.map((a) => `${fotoCamin(im, a)} ${a}w`).join(', ');
+/** La largeur affichée d'un fond qui couvre l'écran (object-fit: cover). */
+export const fotoSizes = (im) => `(min-aspect-ratio: ${im.l}/${im.h}) 100vw, ${Math.ceil((im.l / im.h) * 100)}vh`;

@@ -191,7 +191,7 @@
 	</div>
 
 	<nav class="navegacion" aria-label={tria(IU.ecrans)}>
-		<button type="button" class="sageta" aria-label={tria(IU.ecranPrecedent)} disabled={ecran === 0} onclick={() => aller(ecran - 1)}>
+		<button type="button" class="pc sageta" aria-label={tria(IU.ecranPrecedent)} disabled={ecran === 0} onclick={() => aller(ecran - 1)}>
 			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
 		</button>
 		<ol class="ponchs">
@@ -201,7 +201,7 @@
 				</li>
 			{/each}
 		</ol>
-		<button type="button" class="sageta" aria-label={tria(IU.ecranSeguent)} disabled={ecran === ECRANS.length - 1} onclick={() => aller(ecran + 1)}>
+		<button type="button" class="pc sageta" aria-label={tria(IU.ecranSeguent)} disabled={ecran === ECRANS.length - 1} onclick={() => aller(ecran + 1)}>
 			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
 		</button>
 	</nav>
@@ -690,16 +690,13 @@
 		background: var(--t-aur);
 	}
 	.sageta {
-		display: grid;
-		place-items: center;
+		--r: 14px;
 		width: 3rem;
 		height: 3rem;
-		border: 0;
-		border-radius: 50%;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		cursor: pointer;
+		min-height: 0;
+		padding: 0;
 	}
+
 	.sageta:disabled {
 		visibility: hidden;
 	}

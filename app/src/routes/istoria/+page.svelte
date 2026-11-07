@@ -310,7 +310,7 @@
 				{#if !amagat('istoria.contacte.reservar')}
 					{@const l = ligam('istoria.contacte.reservar')}
 					<a
-						class="boton"
+						class="pc boton"
 						href={l.href}
 						target={l.defòra ? '_blank' : undefined}
 						rel={l.defòra ? 'noopener' : undefined}
@@ -378,7 +378,7 @@
 							</p>
 						{/if}
 
-						<button type="submit" class="boton" disabled={mandant}>{mandant ? tx.mandant : tx.mandar}</button>
+						<button type="submit" class="pc boton" disabled={mandant}>{mandant ? tx.mandant : tx.mandar}</button>
 						<p class="avís">{tx.avís} <a href="/confidencialitat">{tx.confid}</a></p>
 					</form>
 				{/if}
@@ -734,36 +734,22 @@
 
 	/* règle B : ce qui se clique, en aplat rouge sous un texte crème */
 	.boton {
+		--r: 10px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		min-height: 48px;
 		padding: 0.75rem 1.5rem;
-		border: 0;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: inherit;
 		font-weight: 700;
-		text-decoration: none;
-		cursor: pointer;
-		transition: background 0.3s var(--ease), transform 0.3s var(--ease);
 	}
-	.boton:hover {
-		background: var(--t-accion-viu);
-		transform: translateY(-2px);
-	}
+
 	.boton:focus-visible,
 	.ligam-boton:focus-visible,
 	.camp input:focus-visible,
 	.camp textarea:focus-visible {
 		outline: 2px solid var(--t-aur);
 		outline-offset: 3px;
-	}
-	.boton:disabled {
-		opacity: 0.7;
-		cursor: progress;
-		transform: none;
 	}
 	.adreça {
 		display: flex;

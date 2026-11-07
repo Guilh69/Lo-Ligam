@@ -16,6 +16,7 @@
 	import Icona from './Icona.svelte';
 	import Crotz from './Crotz.svelte';
 	import { PLAN, LO_LIGAM, VISIO } from '$lib/data/planSite.js';
+	import PastilleAviat from './PastilleAviat.svelte';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
 	import { portal } from '$lib/actions/portal.js';
 	import { tria } from '$lib/stores/lang.svelte.js';
@@ -94,7 +95,7 @@
 					<Crotz talha={24} traç="#ffffff" ponch="#ffd47f" moieu="#eeaf34" />
 					<span>{tria({ oc: 'Tornar a l’acuèlh', fr: 'Retour à l’accueil', es: 'Volver al inicio', en: 'Back to home', ca: 'Tornar a l’inici', ar: 'العودة إلى الصفحة الرئيسية' })}</span>
 				</a>
-				<button type="button" class="vel-tampar" onclick={tampar} aria-label={tria({ oc: 'Tampar lo menú', fr: 'Fermer le menu', es: 'Cerrar el menú', en: 'Close menu', ca: 'Tancar el menú', ar: 'إغلاق القائمة' })}>
+				<button type="button" class="pc pc-2 pc-icone vel-tampar" onclick={tampar} aria-label={tria({ oc: 'Tampar lo menú', fr: 'Fermer le menu', es: 'Cerrar el menú', en: 'Close menu', ca: 'Tancar el menú', ar: 'إغلاق القائمة' })}>
 					<Icona nom="fermer" size="1.6em" />
 				</button>
 			</div>
@@ -130,18 +131,25 @@
 														</li>
 													{/if}
 													{#each g.items as it, ii (it.href)}
-														<li class="vel-masc">
-															<a
-																class="vel-ligam"
-																href={it.href}
-																style:--i={gi * 3 + ii}
-																aria-current={!it.defòra && actiu(it.href) ? 'page' : undefined}
-																target={it.defòra ? '_blank' : undefined}
-																rel={it.defòra ? 'noopener noreferrer' : undefined}
-																onclick={tampar}
-																>{tria(it)}<Icona nom={it.defòra ? 'extern' : 'suivant'} size="0.8em" /></a
-															>
-														</li>
+														{#if it.aviat}
+															<!-- page pas encore ouverte : affichée, sans lien, avec la pastille (planSite.js, 2026-11-07) -->
+															<li class="vel-masc">
+																<span class="vel-ligam vel-aviat" style:--i={gi * 3 + ii}>{tria(it)}<PastilleAviat /></span>
+															</li>
+														{:else}
+															<li class="vel-masc">
+																<a
+																	class="vel-ligam"
+																	href={it.href}
+																	style:--i={gi * 3 + ii}
+																	aria-current={!it.defòra && actiu(it.href) ? 'page' : undefined}
+																	target={it.defòra ? '_blank' : undefined}
+																	rel={it.defòra ? 'noopener noreferrer' : undefined}
+																	onclick={tampar}
+																	>{tria(it)}<Icona nom={it.defòra ? 'extern' : 'suivant'} size="0.8em" /></a
+																>
+															</li>
+														{/if}
 													{/each}
 												</ul>
 											</div>
@@ -176,10 +184,10 @@
 {/if}
 
 <style>
-	/* Couleurs fixes : le terracotta du logo et la crème, dans tous les thèmes
+	/* Le fond suit le rouge des boutons (--t-accion, 07-11 : un seul rouge) et la crème du texte, dans tous les thèmes
 	   (contraste crème sur terracotta ≈ 5,9 : AA) */
 	.vel-portal {
-		--vel-fons: #b53d17;
+		--vel-fons: var(--t-accion);
 		--vel-tinta: #f5ead8;
 		--vel-tinta-2: rgba(245, 234, 216, 0.72);
 		--vel-linha: rgba(245, 234, 216, 0.28);
@@ -264,24 +272,13 @@
 		transform: rotate(90deg);
 	}
 
+	/* le bouton de fermeture : une pièce de papier (lib/styles/papier.css) */
 	.vel-tampar {
-		display: grid;
-		place-items: center;
-		width: 3rem;
-		height: 3rem;
-		border: 1px solid var(--vel-linha);
-		border-radius: 999px;
-		background: transparent;
-		color: var(--vel-tinta);
-		cursor: pointer;
-		transition:
-			background 0.4s,
-			transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-	}
-
-	.vel-tampar:hover {
-		background: rgba(245, 234, 216, 0.12);
-		transform: rotate(90deg);
+		flex: none;
+		/* sur le rouge, la croix est une pièce de la crème du texte à 18 % (plus de pièce turquoise : 07-11) */
+		--pc-fons: color-mix(in srgb, var(--vel-tinta) 18%, transparent);
+		--pc-tinta: var(--vel-tinta);
+		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--vel-tinta) 55%, transparent);
 	}
 
 	.vel-grop {
@@ -415,12 +412,6 @@
 	}
 
 	.vel a:focus-visible,
-	.vel-tampar:focus-visible {
-		outline: 2px solid var(--vel-tinta);
-		outline-offset: 3px;
-		border-radius: 6px;
-	}
-
 	/* ---------- 01, 02, 03 empilés, qui se déroulent ---------- */
 	.vel-vertical {
 		position: relative;
@@ -541,6 +532,15 @@
 
 	.desplegat .vel-ligam {
 		transform: none;
+	}
+
+	/* une page pas encore ouverte : rien à cliquer, pas de soulignement ni de flèche */
+	.vel-aviat {
+		cursor: default;
+	}
+
+	.vel-aviat::after {
+		display: none;
 	}
 
 	/* Téléphone et panneau étroit : les rubriques en liste sous le verbe */

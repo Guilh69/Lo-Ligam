@@ -316,7 +316,7 @@
 
 				{#if errorMsg}<p class="msg error" role="alert">{errorMsg}</p>{/if}
 
-				<button type="submit" class="btn-primary" disabled={loading}>
+				<button type="submit" class="pc btn-primary" disabled={loading}>
 					{loading ? '…' : main('Contunhar', 'Continuer', 'Continuar', 'Continue', 'Continua', 'متابعة')} <span class="arrow"><Icona nom="suivant" /></span>
 				</button>
 			</form>
@@ -517,43 +517,20 @@
 	}
 
 	.btn-primary {
+		--r: 10px;
+		min-height: 0;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		border: none;
 		padding: 0.9rem 1.5rem;
-		border-radius: 999px;
 		font-weight: 600;
 		font-family: var(--font-heading);
 		font-size: 1.05rem;
-		cursor: pointer;
-		transition:
-			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
-			box-shadow 220ms ease,
-			filter 80ms ease;
-		box-shadow: 0 6px 18px rgba(181, 61, 23, 0.35);
 	}
 
 	.btn-primary .arrow {
 		display: inline-block;
 		margin-left: 0.3rem;
-	}
-
-	.btn-primary:hover:not(:disabled) {
-		transform: translateY(-2px) scale(1.02);
-		box-shadow: 0 10px 24px rgba(181, 61, 23, 0.45);
-	}
-
-	.btn-primary:active:not(:disabled) {
-		transform: translateY(0) scale(0.97);
-		filter: brightness(0.95);
-	}
-
-	.btn-primary:disabled {
-		opacity: 0.6;
-		cursor: default;
 	}
 
 	@keyframes card-in {

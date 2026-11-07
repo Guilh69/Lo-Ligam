@@ -172,7 +172,7 @@
 		<span class="bb-dirècte">{#if jòga}{@render onda()}{/if} {error ? '✕' : jòga ? tx.dirècte : '…'}</span>
 		<strong class="bb-nom" lang="oc">{radio.nom}</strong>
 		<a class="bb-site" href={radio.site} target="_blank" rel="noopener noreferrer">{tx.site} <Icona nom="extern" size="0.95em" /></a>
-		<button type="button" class="bb-arrestar" onclick={arrestar}><Icona nom="pause" size="1em" /> {tx.arrestar}</button>
+		<button type="button" class="pc pc-chip bb-arrestar" onclick={arrestar}><Icona nom="pause" size="1em" /> {tx.arrestar}</button>
 	</div>
 {/if}
 </div>
@@ -183,8 +183,8 @@
 		min-height: 100vh;
 		color: var(--t-tinta);
 		background:
-			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
-			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			radial-gradient(ellipse 70% 50% at 8% -8%, var(--t-braise), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, var(--t-braise-or), transparent 70%),
 			var(--t-fons);
 		overflow-x: clip;
 	}
@@ -307,7 +307,7 @@
 		width: 1.5rem;
 		height: 1.5rem;
 		border-radius: 50%;
-		background: #b53d17;
+		background: var(--t-accion);
 		box-shadow: 0 0 0 3px #fbf1e1;
 	}
 	.punt.actiu .punt-rond::after {
@@ -315,7 +315,7 @@
 		position: absolute;
 		inset: -3px;
 		border-radius: 50%;
-		border: 3px solid #b53d17;
+		border: 3px solid var(--t-accion);
 		animation: espandir 1.4s ease-out infinite;
 	}
 	@keyframes espandir {
@@ -411,18 +411,9 @@
 		color: inherit;
 		font-weight: 700;
 	}
+	/* arrêter : un jeton de papier rouge (lib/styles/papier.css) */
 	.bb-arrestar {
-		display: inline-flex;
-		align-items: center;
 		gap: 0.4rem;
-		padding: 0.5rem 1rem;
-		border: 0;
-		border-radius: 999px;
-		background: #b53d17;
-		color: #fbf1e1;
-		font: inherit;
-		font-weight: 700;
-		cursor: pointer;
 	}
 
 	/* téléphone : les noms ne tiennent pas sur la carte, on les liste dessous */

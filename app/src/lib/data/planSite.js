@@ -23,7 +23,7 @@ export const PLAN = [
 			{ oc: 'Cultura', fr: 'Culture', es: 'Cultura', en: 'Culture', ca: 'Cultura', ar: 'الثقافة', href: '/cultura' },
 			// (venaient d'Amassa : le pays, ce qui s'y dit et s'y fait ; Romain, 2026-10-22)
 			{ oc: 'Òbras', fr: 'Œuvres', es: 'Obras', en: 'Works', ca: 'Obres', ar: 'أعمال إبداعية', href: '/obras' },
-			{ oc: 'Articles', fr: 'Articles', es: 'Artículos', en: 'Articles', ca: 'Articles', ar: 'مقالات', href: '/articles' },
+			{ oc: 'Articles', fr: 'Articles', es: 'Artículos', en: 'Articles', ca: 'Articles', ar: 'مقالات', href: '/articles', aviat: true },
 			// (la case Musicas de Se parla devenue Médias ; la musique est dans Òbras, 2026-10-25)
 			{ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans', ar: 'وسائل الإعلام', href: '/medias' }
 		] }]
@@ -64,13 +64,27 @@ export const PLAN = [
 		grops: [
 			// (s'appelait « Amassa », devenu le nom de la rubrique, 2026-10-21)
 			{ oc: 'La comunautat', fr: 'La communauté', es: 'La comunidad', en: 'The community', ca: 'La comunitat', ar: 'المجتمع', items: [
-				{ oc: 'Fòrum', fr: 'Forum', es: 'Foro', en: 'Forum', ca: 'Fòrum', ar: 'المنتدى', href: '/forum' },
+				// (Fòrum retiré le 2026-11-07, option 3 de Romain : le forum dans le site est écarté pour le
+				// lancement, faute de modération possible seul, cahier §11 du 25-10 ; voir RETIRATS plus bas)
 				{ oc: 'Grops', fr: 'Groupes', es: 'Grupos', en: 'Groups', ca: 'Grups', ar: 'المجموعات', href: '/grops' },
 				{ oc: 'Boita d’idèas', fr: 'Boîte à idées', es: 'Buzón de ideas', en: 'Idea box', ca: 'Bústia d’idees', ar: 'صندوق الاقتراحات', href: '/ideas' }
 			] }
 		]
 	}
 ];
+
+// Les pages pas encore ouvertes (Romain, 2026-11-07, option 3 : « Fòrum retiré, Articles Aviat »).
+// - « aviat: true » sur une entrée du PLAN : le lien reste affiché mais n'en est plus un, avec la
+//   pastille « Aviat » (pied de page, menu, accueil, cases de la rubrique). Quand la page ouvre :
+//   retirer « aviat: true », rien d'autre.
+// - RETIRATS : liens qui n'apparaissent nulle part au lancement, même dans les cases de rubrique
+//   qui viennent de la base (la case « Fòrum » de /amassa y est encore). Pas d'écriture en base.
+// es/en/ca/ar de « Aviat » : à relire par Aran.
+export const AVIAT = { oc: 'Aviat', fr: 'Bientôt', es: 'Pronto', en: 'Soon', ca: 'Aviat', ar: 'قريبًا' };
+export const RETIRATS = ['/forum'];
+const aviats = PLAN.flatMap((c) => c.grops.flatMap((g) => g.items)).filter((it) => it.aviat).map((it) => it.href);
+export const estAviat = (href) => aviats.includes(href);
+export const estRetirat = (href) => RETIRATS.includes(href);
 
 // La ligne du bas : qui est derrière Lo Ligam
 export const LO_LIGAM = [

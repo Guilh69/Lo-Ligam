@@ -12,6 +12,7 @@
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { externalLinks } from '$lib/data/siteSections';
 	import { PLAN, LO_LIGAM } from '$lib/data/planSite.js';
+	import PastilleAviat from './PastilleAviat.svelte';
 
 	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.', es: 'Hecho con amor en Occitania.', en: 'Made with love in Occitania.', ca: 'Fet amb amor a Occitània.', ar: 'صُنع بكلّ حبّ في أوكسيتانيا.' };
 	let { tagline = PER_DEFAUT } = $props();
@@ -24,7 +25,12 @@
 			>{tria(it)} <Icona nom="extern" size="0.9em" /></a
 		>
 	{:else}
-		<a class="footer-link" href={it.href}><span use:scramble={{ oc: it.oc, fr: it.fr, es: it.es, en: it.en, ca: it.ca, ar: it.ar, lang }}>{tria(it)}</span></a>
+		{#if it.aviat}
+			<!-- page pas encore ouverte : affichée, sans lien (planSite.js, 2026-11-07) -->
+			<span class="footer-link footer-aviat">{tria(it)} <PastilleAviat /></span>
+		{:else}
+			<a class="footer-link" href={it.href}><span use:scramble={{ oc: it.oc, fr: it.fr, es: it.es, en: it.en, ca: it.ca, ar: it.ar, lang }}>{tria(it)}</span></a>
+		{/if}
 	{/if}
 {/snippet}
 
@@ -158,6 +164,10 @@
 		transition:
 			color 0.4s,
 			transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+	}
+
+	.footer-aviat {
+		cursor: default;
 	}
 
 	a.footer-link:hover,

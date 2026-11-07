@@ -586,14 +586,14 @@
 							<li>{tria(T.ajudaRapid)}</li>
 							{#if !tactil}<li>{tria(T.ajuda4)}</li>{/if}
 						</ul>
-						<button type="button" class="accion" onclick={() => (ajuda = false)}>{tria(T.partir)}</button>
+						<button type="button" class="pc accion" onclick={() => (ajuda = false)}>{tria(T.partir)}</button>
 					</div>
 				{:else if estat === 'acabat' && mot}
 					<div class="carta fin" style:--n={letras.length}>
 						<p class="fin-oc" lang="oc">{insecable(frasaComplèta)}</p>
 						<p class="fin-son" lang="oc">{mot.son}</p>
 						<p class="fin-fr" lang="fr">{insecable(mot.fr)}</p>
-						<button type="button" class="accion" onclick={novelMot}>{tria(T.autreMot)}</button>
+						<button type="button" class="pc accion" onclick={novelMot}>{tria(T.autreMot)}</button>
 					</div>
 				{/if}
 			</div>
@@ -616,7 +616,7 @@
 				{#each ['amont', 'esquerra', 'drecha', 'aval'] as nom (nom)}
 					<button
 						type="button"
-						class="dir dir-{nom}"
+						class="pc dir dir-{nom}"
 						aria-label={tria(T[nom])}
 						onpointerdown={(e) => apuejarDir(e, nom)}
 						onpointerup={() => accelerar(false)}
@@ -626,7 +626,7 @@
 						{@render sageta(nom)}
 					</button>
 				{/each}
-				<button type="button" class="escupir" aria-label={tria(T.escupir)} title={tria(T.escupir)} onclick={escupirLetra}>
+				<button type="button" class="pc pc-2 escupir" aria-label={tria(T.escupir)} title={tria(T.escupir)} onclick={escupirLetra}>
 					<svg viewBox="0 0 24 24" aria-hidden="true" class="sageta"><path d="M9 14l-4-4 4-4" /><path d="M5 10h8a5 5 0 0 1 0 10h-3" /></svg>
 				</button>
 			</div>
@@ -650,10 +650,10 @@
 				]}
 				titolOpcions={tria(T.reglatges)}
 			>
-				<button type="button" aria-pressed={estat === 'pausa'} disabled={estat !== 'joc' && estat !== 'pausa'} onclick={bascularPausa}
+				<button type="button" class="pc pc-2" aria-pressed={estat === 'pausa'} disabled={estat !== 'joc' && estat !== 'pausa'} onclick={bascularPausa}
 					>{tria(T.pausa)}</button
 				>
-				<button type="button" onclick={novelMot}>{tria(T.autreMot)}</button>
+				<button type="button" class="pc pc-2" onclick={novelMot}>{tria(T.autreMot)}</button>
 			</Reglatges>
 		</div>
 	</div>
@@ -704,7 +704,7 @@
 		overflow: auto;
 		padding: max(0.75rem, env(safe-area-inset-top)) clamp(0.75rem, 3vw, 2rem) max(0.75rem, env(safe-area-inset-bottom));
 		background:
-			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			radial-gradient(ellipse 70% 50% at 8% -8%, var(--t-braise), transparent 70%),
 			var(--t-fons);
 		--reste: 20rem; /* la hauteur prise par le mot et les flèches */
 	}
@@ -1276,10 +1276,11 @@
 	}
 
 	/* ── Commandes ── */
-	button {
+	button:not(.pc) {
 		font: inherit;
 		cursor: pointer;
 	}
+
 	button:focus-visible {
 		outline: 3px solid var(--or);
 		outline-offset: 2px;
@@ -1297,19 +1298,14 @@
 			justify-content: start;
 		}
 	}
+	/* pièce de papier (lib/styles/papier.css) : les flèches du jeu */
 	.dir {
-		display: grid;
-		place-items: center;
+		--r: 12px;
+		min-height: 0;
 		padding: 0;
-		border: none;
-		border-radius: 0.8rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		touch-action: manipulation;
 	}
-	.dir:hover {
-		background: var(--t-accion-viu);
-	}
+
 	.dir-amont {
 		grid-area: amont;
 	}
@@ -1323,20 +1319,15 @@
 		grid-area: drecha;
 	}
 	/* au milieu de la croix : recracher, un filet fin (ce n'est pas une direction) */
+	/* au milieu de la croix : recracher, une pièce de carton (ce n'est pas une direction) */
 	.escupir {
 		grid-area: escupir;
-		display: grid;
-		place-items: center;
+		--r: 14px;
+		min-height: 0;
 		padding: 0;
-		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 45%, transparent);
-		border-radius: 50%;
-		background: none;
-		color: var(--t-tinta);
 		touch-action: manipulation;
 	}
-	.escupir:hover {
-		border-color: var(--or);
-	}
+
 	.sageta {
 		width: 1.6rem;
 		height: 1.6rem;
@@ -1355,15 +1346,10 @@
 	.sageta-drecha {
 		rotate: 90deg;
 	}
+	/* pièce de papier (lib/styles/papier.css) */
 	.accion {
+		--r: 10px;
 		padding: 0.6rem 1.2rem;
-		border: none;
-		border-radius: 0.6rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-	}
-	.accion:hover {
-		background: var(--t-accion-viu);
 	}
 
 	.sr {

@@ -132,10 +132,10 @@
 			<p class="nota">…</p>
 		{:else if fach}
 			<p class="mandat" role="status"><Icona nom="valide" size="1.2em" /> {x.fach}</p>
-			<a class="boton" href="/compte">{x.compte}</a>
+			<a class="pc boton" href="/compte">{x.compte}</a>
 		{:else if !$session}
 			<p class="error" role="alert">{x.expirat}</p>
-			<a class="boton" href="/compte?mode=oblit">{x.autre}</a>
+			<a class="pc boton" href="/compte?mode=oblit">{x.autre}</a>
 		{:else}
 			<p class="frasa">{x.frasa}</p>
 			<form class="boita" onsubmit={gardar}>
@@ -146,7 +146,7 @@
 					<small id="mdp-ajuda">{x.ajuda}</small>
 				</label>
 				{#if error}<p class="error" role="alert">{x[error]}</p>{/if}
-				<button type="submit" class="boton" disabled={ocupat}>{ocupat ? '…' : x.gardar}</button>
+				<button type="submit" class="pc boton" disabled={ocupat}>{ocupat ? '…' : x.gardar}</button>
 			</form>
 		{/if}
 	</main>
@@ -158,8 +158,8 @@
 		min-height: 100vh;
 		color: var(--t-tinta);
 		background:
-			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
-			radial-gradient(ellipse 50% 40% at 100% 0%, color-mix(in srgb, var(--t-aur) 9%, transparent), transparent 70%),
+			radial-gradient(ellipse 70% 50% at 8% -8%, var(--t-braise), transparent 70%),
+			radial-gradient(ellipse 50% 40% at 100% 0%, var(--t-braise-or), transparent 70%),
 			var(--t-fons);
 		overflow-x: clip;
 	}
@@ -220,28 +220,16 @@
 		font: 400 1rem/1.4 var(--font-body);
 	}
 	.boton {
+		--r: 10px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		justify-self: start;
 		min-height: 44px;
 		padding: 0.6rem 1.4rem;
-		border: 0;
-		border-radius: 999px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		font: 700 1rem/1 var(--font-body);
-		text-decoration: none;
-		cursor: pointer;
-		transition: background-color 0.25s;
 	}
-	.boton:hover {
-		background: var(--t-accion-viu);
-	}
-	.boton:disabled {
-		opacity: 0.6;
-		cursor: wait;
-	}
+
 	.error,
 	.mandat {
 		margin: 0;

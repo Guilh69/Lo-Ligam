@@ -15,6 +15,7 @@ import { cadreDe } from './centrar.js';
 import { telaNoms } from './etiquetasVivas.js';
 import { cargarFranca, francaCargada, dinsFranca, retalharFranca, pintarAmbFranca } from './franca.js';
 import { trabalh, talhar, liberar } from './telas.js';
+import { CARTE, texteSur, luminance, nomSurAplat as nomSus } from '../styles/palette.js';
 
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -62,13 +63,20 @@ export function crearColaLenga(
 		const m = d ? 'dalt' : c ? 'clar' : 'sorne';
 		const dial = {};
 		for (const [k, v] of Object.entries(lenga.dial[m])) dial[lenga.pref + k] = v;
+		// (07-11 : comme l'occitan, aplats presque pleins aux teintes des jeux,
+		// les mêmes dans les deux thèmes ; le nom de la langue en crème sur une
+		// teinte sombre, en brun sur l'or, avec une ombre qui contraste)
+		const tèxt = d ? lenga.tèxt[m] : texteSur(lenga.color[m]),
+			tèxtClar = luminance(tèxt) > 150;
 		return {
 			clar: c,
-			tencha: c ? 0.36 : 0.3, // (tèma clar : coma colaDonadas.js)
+			tencha: CARTE.intensite,
+			uni: 1,
 			ombra: c ? 'rgba(247, 243, 238, 0.95)' : 'rgba(18, 9, 6, 0.9)',
+			nomOmbra: tèxtClar ? 'rgba(20, 10, 5, 0.8)' : 'rgba(247, 243, 238, 0.9)',
 			mòde: m,
 			color: lenga.color[m],
-			tèxt: lenga.tèxt[m],
+			tèxt,
 			dial
 		};
 	};
@@ -844,7 +852,7 @@ export function crearColaLenga(
 				flo = mescla ? easeS(clamp(u / 0.6)) : 0,
 				aDialU = mescla ? 1 - easeS(clamp((u - 0.55) / 0.45)) : balet ? 1 : 1 - u,
 				vE = easeS(R.vuèg?.v ?? 0);
-			const aT = T.tencha * lerp(1, 0.3, clamp((z - 7) / 4)) * aTenchas0 * aDialU;
+			const aT = T.tencha * lerp(1, 0.4, clamp((z - 8.5) / 3)) * aTenchas0 * aDialU; // (comme colaDonadas.js)
 			const an = this._anim,
 				p = an ? clamp((performance.now() - an.t0) / DURADA) : 1;
 			const tA = this._tA(),
@@ -978,7 +986,7 @@ export function crearColaLenga(
 						g.globalCompositeOperation = 'source-over';
 						img = c;
 					}
-					this._copiar(img, aUni * T.tencha * 1.6 * aTenchas0);
+					this._copiar(img, aUni * T.tencha * T.uni * aTenchas0);
 				}
 				cx.globalAlpha = aUni * lerp(0.7, 0.95, vE) * aTenchas0;
 				cx.strokeStyle = T.color;
@@ -1024,7 +1032,7 @@ export function crearColaLenga(
 						const { x, y, fs: fsO, w } = pos;
 						cx.textAlign = 'center';
 						cx.textBaseline = 'middle';
-						cx.shadowColor = T.ombra;
+						cx.shadowColor = T.nomOmbra;
 						cx.shadowBlur = 8;
 						cx.fillStyle = T.tèxt;
 						cx.globalAlpha = aUni * (1 - easeS(clamp(vE / 0.6)));
@@ -1091,7 +1099,7 @@ export function crearColaLenga(
 					caixas.push(b);
 					const color = zn.props.apart ? T.color : (T.dial[zn.kod] ?? T.color);
 					cx.globalAlpha = a;
-					cx.fillStyle = T.clar ? mesclar(color, '#2a1a10', 0.7) : mesclar(color, '#fff8ec', 0.35);
+					[cx.fillStyle, cx.shadowColor] = nomSus(color);
 					cx.fillText(t, (b[0] + b[2]) / 2, (b[1] + b[3]) / 2);
 				}
 				cx.restore();

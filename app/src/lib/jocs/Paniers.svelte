@@ -470,7 +470,7 @@
 						<p class="fin-oc" lang="oc">{tria(T.plen)}</p>
 						<p class="fin-fr">{tria(T.totDins)}</p>
 						{#if tema.nota}<p class="fin-nota">{tria(tema.nota)}</p>{/if}
-						<button type="button" class="accion" onclick={seguentTema}>{tria(T.autreTema)}</button>
+						<button type="button" class="pc accion" onclick={seguentTema}>{tria(T.autreTema)}</button>
 					</div>
 				{/if}
 			</div>
@@ -491,7 +491,7 @@
 		<div class="comandas">
 			<div class="crotz" role="group" aria-label={tria(T.camp)}>
 				{#each ['esquerra', 'aval', 'drecha'] as nom (nom)}
-					<button type="button" class="dir dir-{nom}" aria-label={tria(T[nom])} onclick={() => demandar(nom)}>
+					<button type="button" class="pc dir dir-{nom}" aria-label={tria(T[nom])} onclick={() => demandar(nom)}>
 						{@render sageta(nom)}
 					</button>
 				{/each}
@@ -532,11 +532,12 @@
 			>
 				<button
 					type="button"
+					class="pc pc-2"
 					aria-pressed={fase === 'pausa'}
 					disabled={fase !== 'tomba' && fase !== 'torna' && fase !== 'pausa'}
 					onclick={bascularPausa}>{tria(T.pausa)}</button
 				>
-				<button type="button" onclick={() => començar(temaId)}>{tria(T.tornarJogar)}</button>
+				<button type="button" class="pc pc-2" onclick={() => començar(temaId)}>{tria(T.tornarJogar)}</button>
 			</Reglatges>
 		</div>
 	</div>
@@ -585,7 +586,7 @@
 		overflow: auto;
 		padding: max(0.75rem, env(safe-area-inset-top)) clamp(0.75rem, 3vw, 2rem) max(0.75rem, env(safe-area-inset-bottom));
 		background:
-			radial-gradient(ellipse 70% 50% at 8% -8%, color-mix(in srgb, var(--t-terra) 26%, transparent), transparent 70%),
+			radial-gradient(ellipse 70% 50% at 8% -8%, var(--t-braise), transparent 70%),
 			var(--t-fons);
 		--terren: min(100%, calc((100svh - 11rem) * 4 / 3));
 	}
@@ -1245,10 +1246,11 @@
 	}
 
 	/* ── Commandes ── */
-	button {
+	button:not(.pc) {
 		font: inherit;
 		cursor: pointer;
 	}
+
 	button:focus-visible {
 		outline: 3px solid var(--or);
 		outline-offset: 2px;
@@ -1266,19 +1268,14 @@
 			justify-content: start;
 		}
 	}
+	/* pièce de papier (lib/styles/papier.css) : les flèches du jeu */
 	.dir {
-		display: grid;
-		place-items: center;
+		--r: 12px;
+		min-height: 0;
 		padding: 0;
-		border: none;
-		border-radius: 0.8rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		touch-action: manipulation;
 	}
-	.dir:hover {
-		background: var(--t-accion-viu);
-	}
+
 	.dir-aval {
 		grid-area: aval;
 	}
@@ -1317,16 +1314,12 @@
 			text-align: start;
 		}
 	}
+	/* pièce de papier (lib/styles/papier.css) */
 	.accion {
+		--r: 10px;
 		padding: 0.6rem 1.2rem;
-		border: none;
-		border-radius: 0.6rem;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 	}
-	.accion:hover {
-		background: var(--t-accion-viu);
-	}
+
 	.sr {
 		position: absolute;
 		width: 1px;

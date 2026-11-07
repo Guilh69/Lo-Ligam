@@ -63,6 +63,28 @@ dans les mentions du site. La clé vit dans `app/.env`, jamais dans Git.
 - **Votz** (synthèse vocale languedocienne) : uniquement pour **prototyper en interne** le rythme des leçons audio. Le cadre v0.3 impose des voix humaines à la publication ; Votz n'est admis qu'en secours provisoire sur des corrigés. → Clé non demandée : l'audio passe par des voix humaines (Romain, cahier §11 du 2026-10-12).
 - **Revirada** (traduction automatique) : **non retenue pour produire du contenu** — la traduction automatique n'a pas le niveau d'un cours de langue. Au mieux un brouillon à tout relire, ce qui ne fait pas gagner de temps sur des textes courts et précis.
 
+
+### Répartition retenue le 07-11 (Romain : « Conception seule »)
+
+Constat du 07-11 : seuls lo Basic et vèrb'Òc servaient (vérification). Les API
+servent maintenant à **écrire notre propre contenu** : rien n'est copié ni
+gardé de leurs réponses, rien n'est appelé depuis le site public. Une ligne
+par séance, dans une conversation à part, dans cet ordre :
+
+| # | Service | Où dans le site | Ce que ça apporte |
+|---|---|---|---|
+| 1 | sinonimes + lo Basic | jeu « L'intrus » (catalogue, priorité 1) | des intrus plausibles, ni trop faciles ni absurdes ; **fait le 07-11**, dans la salle Jòcs (cahier §11) |
+| 2 | rimas | comptines d'« Anem ! », virelangues, chansons d'unité | des rimes justes et le nombre de syllabes |
+| 3 | punt de lenga | relecture des 36 fiches de grammaire ; lien « pour aller plus loin » vers leur article | nos explications contrôlées ; un lien n'est pas une copie |
+| 4 | vèrb'Òc | tableaux de conjugaison complets dans les fiches verbes | zéro faute de conjugaison |
+| 5 | top'Òc | noms de lieux des dialogues, fiches des communes de la carte | le nom occitan attesté (12 départements seulement, pas l'Hérault) |
+| 6 | fon'Òc | contrôle seulement : signaler à Romain les écarts | sa prononciation reste la référence |
+| 7 | express'Òc | idées de capsules culturelles, réécrites par nous | de la culture vivante sans copier |
+
+Écarté pour l'instant : l'affichage en direct (recherche de mots et conjugueur
+dans S'apren, module officiel « expression du jour ») tant que lo Congrès n'a
+pas été consulté. Revirada servira, une fois sa clé reçue, à la recherche de
+l'administrateur (« Pausar los mots » de Triar), résultat marqué « à vérifier ».
 ---
 
 ## 3. Ce que les API changent pour la construction

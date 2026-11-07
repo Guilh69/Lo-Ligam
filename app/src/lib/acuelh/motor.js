@@ -151,6 +151,12 @@ export function lancarAcuelh(racina, opcions = {}) {
 				// brica prigonda → terracòta #a84830, tacas coral #e84848, venas d'aur #f0a830.
 				vec3 b0 = vec3(0.20, 0.055, 0.03), b1 = vec3(0.56, 0.22, 0.13), b2 = vec3(0.91, 0.28, 0.28), b3 = vec3(0.98, 0.70, 0.22);
 				basa = b0;
+				if (cl > 0.5) {
+					// Sur fond clair, ni lavis, ni veines, ni lueur sous la souris : le plâtre
+					// nu (Romain, 2026-11-07 : « ce halo, le supprimer s'il n'est pas utile »).
+					// Restent plus bas les courbes de niveau de la carte, qui sont du relief réel.
+					col = b0;
+				} else {
 				float tt = t * 0.045;
 				st += normalize(dm + 1e-4) * exp(-d * 4.5) * -0.32;
 				vec2 q = vec2(fbm(st + tt), fbm(st + vec2(5.2, 1.3) - tt));
@@ -168,6 +174,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 				// éclats les plus vifs perdent environ un tiers
 				col = col / (1.0 + 0.6 * col) * 1.12;
 				col *= 1.0 - 0.4 * c;
+				}
 			} else if (mo < 1.5) {
 				// 1. Lum e estelas : grandas tacas de lum cauda que derivan, una candela jos la mirga
 				float T = t * 0.02;
@@ -218,8 +225,10 @@ export function lancarAcuelh(racina, opcions = {}) {
 				float dens = smoothstep(0.4, 0.1, fw);
 				col += aur * (lm * 0.1 * dens + lM * 0.2 * smoothstep(1.6, 0.4, fw)) * smoothstep(4.0, 40.0, e) * dins * c;
 			}
-			col *= mix(0.62, 1.0, smoothstep(0.0, 0.7, uv.x));
-			col *= smoothstep(1.45, 0.2, length((uv - vec2(0.58, 0.5)) * vec2(1.0, 1.25)));
+			float vig = mix(0.62, 1.0, smoothstep(0.0, 0.7, uv.x)) * smoothstep(1.45, 0.2, length((uv - vec2(0.58, 0.5)) * vec2(1.0, 1.25)));
+			// en clair (Venas d'aur), le vignettage n'agit que sur les courbes de niveau, jamais sur le plâtre
+			if (cl > 0.5 && mo < 0.5) col = basa + (col - basa) * vig; else col *= vig;
+			// (le second vignettage est dans « vig », juste au-dessus)
 			// Gamme « Éclat » (Romain, 2026-10-15 : « un peu trop sombre ») : un fond
 			// plus chaud et un peu plus lumineux, comme les couleurs du thème sombre
 			if (cl < 0.5) col = col * 1.18 + vec3(0.03, 0.013, 0.006);

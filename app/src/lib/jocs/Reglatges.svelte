@@ -26,7 +26,7 @@
 			<span class="grop-titol" id="{id}-c{k}">{c.titol}</span>
 			<div class="segments" class:compacte={c.compacte} role="group" aria-labelledby="{id}-c{k}">
 				{#each c.opcions as o (o.id)}
-					<button type="button" disabled={o.inactiu} aria-pressed={c.valor === o.id} aria-label={o.aria} onclick={() => c.causir(o.id)}>
+					<button type="button" class="pc pc-2" disabled={o.inactiu} aria-pressed={c.valor === o.id} aria-label={o.aria} onclick={() => c.causir(o.id)}>
 						<span>{o.label}</span>{#if o.detalh}<span class="detalh" lang="oc">{o.detalh}</span>{/if}
 					</button>
 				{/each}
@@ -44,7 +44,7 @@
 			<div class="bascules" role="group" aria-labelledby="{id}-o">
 				{#each bascules as b (b.id)}
 					<button type="button" class="bascula" role="switch" aria-checked={b.valor} onclick={b.bascular}>
-						<span class="pila" aria-hidden="true"><span class="punt"></span></span>
+						<span class="pc-basc" aria-hidden="true"></span>
 						<span>{b.label}</span>
 					</button>
 				{/each}
@@ -73,53 +73,43 @@
 		text-transform: uppercase;
 		color: var(--t-tinta-2);
 	}
-	button {
+	button:not(.pc) {
 		font: inherit;
 		color: var(--t-tinta);
 		cursor: pointer;
 	}
+
 	button:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;
 	}
 	/* le choix : des segments joints, un seul pressé (en or) */
+	/* le choix : des pièces de papier (lib/styles/papier.css), une seule pressée (en or) */
 	.segments {
 		display: flex;
 		flex-wrap: wrap;
-		border: 1px solid var(--t-linha);
-		border-radius: 0.7rem;
-		overflow: hidden;
+		gap: 0.5rem;
 		width: fit-content;
 		max-width: 100%;
 	}
 	.segments button {
+		--r: 10px;
 		display: grid;
 		gap: 0.05rem;
+		justify-items: start;
 		min-height: 2.75rem;
 		padding: 0.4rem 0.9rem;
-		border: none;
-		border-inline-start: 1px solid var(--t-linha);
-		background: none;
 		text-align: start;
 	}
-	.segments button:first-child {
-		border-inline-start: none;
-	}
-	.segments button:hover {
-		background: color-mix(in srgb, var(--t-tinta) 6%, transparent);
-	}
 	.segments button[aria-pressed='true'] {
-		background: var(--color-gold);
-		color: var(--color-text);
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
 	}
-	/* un segment montré mais pas jouable : estompé, sans survol */
 	.segments button:disabled {
-		color: color-mix(in srgb, var(--t-tinta) 38%, transparent);
 		cursor: default;
 	}
-	.segments button:disabled:hover {
-		background: none;
-	}
+
+	/* un segment montré mais pas jouable : estompé, sans survol */
 	.detalh {
 		font-size: 0.82rem;
 		font-style: italic;
@@ -156,37 +146,7 @@
 		border: none;
 		background: none;
 	}
-	.pila {
-		position: relative;
-		width: 2rem;
-		height: 1.1rem;
-		border-radius: 1rem;
-		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 45%, transparent);
-		transition:
-			background-color 0.2s,
-			border-color 0.2s;
-	}
-	.punt {
-		position: absolute;
-		top: 50%;
-		left: 0.15rem;
-		width: 0.7rem;
-		height: 0.7rem;
-		translate: 0 -50%;
-		border-radius: 50%;
-		background: color-mix(in srgb, var(--t-tinta) 55%, transparent);
-		transition:
-			left 0.2s,
-			background-color 0.2s;
-	}
-	.bascula[aria-checked='true'] .pila {
-		border-color: var(--color-gold);
-		background: var(--color-gold);
-	}
-	.bascula[aria-checked='true'] .punt {
-		left: calc(100% - 0.85rem);
-		background: var(--color-text);
-	}
+	/* l'interrupteur lui-même : .pc-basc (lib/styles/papier.css) */
 	/* les actions : des boutons simples */
 	.accions {
 		display: flex;
@@ -194,30 +154,17 @@
 		gap: 0.4rem;
 	}
 	.accions :global(button) {
+		--r: 10px;
 		min-height: 2.75rem;
 		padding: 0.45rem 0.9rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 0.6rem;
-		background: none;
 		font: inherit;
-		color: var(--t-tinta);
-		cursor: pointer;
+		font-weight: 600;
 	}
-	.accions :global(button:hover) {
-		border-color: var(--t-tinta-2);
+	.accions :global(button[aria-pressed='true']) {
+		--pc-fons: var(--pc-or-fons);
+		--pc-tinta: #2a1a10;
 	}
 	.accions :global(button:disabled) {
-		opacity: 0.45;
 		cursor: default;
-	}
-	.accions :global(button:focus-visible) {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 2px;
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.pila,
-		.punt {
-			transition: none;
-		}
 	}
 </style>

@@ -1,0 +1,41 @@
+/* FICHIER GÉNÉRÉ par scripts/palette-css.mjs depuis lib/styles/palette.js :
+   ne pas le modifier à la main, modifier palette.js puis relancer le script. */
+:root {
+	--p-brique: #b53d17;
+	--p-rouge-action: #9c2626;
+	--p-ocre-action: #c7811b;
+	--p-rouge-vif: #cc2a14;
+	--p-or: #eeaf34;
+	--p-or-clair: #ffd47f;
+	--p-olive: #4f6a2f;
+	--p-sarcelle: #1f5f63;
+	--p-bleu: #2b6496;
+	--p-bleu-oil: #006aa7;
+	--p-prune: #6b3a5b;
+	--p-brun: #5d4733;
+	--p-ocre: #c98a2b;
+	--p-orange-clair: #f4a261;
+	--p-creme: #ffffff;
+	--p-encre: #2a1a10;
+	--p-tuile: #efe1c6;
+	--p-jeu-adresse: #9c2626;
+	--p-jeu-mots: #eeaf34;
+	--p-jeu-observation: #4f6a2f;
+	--p-jeu-memoire: #1f5f63;
+	--p-jeu-ecoute: #2b6496;
+	--t-accion: #9c2626;
+	--t-accion-tinta: #ffffff;
+	--pc-or-fons: #c7811b;
+	--pc-or-tinta: #2a1a10;
+	--pc-juste: #4f6a2f;
+	--pc-juste-tinta: #ffffff;
+}
+:root,
+:root[data-tema='sorne'] {
+	--pc-carton: #1f5f63;
+	--pc-carton-tinta: #ffffff;
+}
+:root[data-tema='clar'] {
+	--pc-carton: #1f5f63;
+	--pc-carton-tinta: #ffffff;
+}
