@@ -46,6 +46,20 @@ Idée de Romain, 2026-11-06 vers 23 h 15, née de la cagnotte des illustrations 
 
 Sources : lejournaldesentreprises.com (Lyra Network), ecommerce-nation.fr et wizishop.fr (tarifs Lyra Collect), docs.lyra.com, leptidigital.fr et kolonell.com (Payplug), kolonell.com (GoCardless), mollie.com/products/recurring.
 
+## Un parcours de don étudié (08-11)
+Romain a fait un don de 5 € sur le site d'une campagne et a partagé les captures (« À étudier »). Le site n'est pas nommé ici.
+**À reprendre**
+- En tête, deux onglets : « don ponctuel » et « don mensuel », plus une case « faire ce don chaque mois ».
+- Cinq montants proposés, chacun avec ce qu'il finance concrètement (« tant de dons de 5 € financent… »), puis un montant libre. Pour nous : relier chaque montant à un poste de la page des comptes (hébergement, illustration…), avec de vrais chiffres.
+- Un lien préréglé (montant et régularité dans l'adresse) pour les messages et la lettre d'information.
+- Paiement sur la page de la banque, aucun formulaire de carte sur le site.
+- Page de remerciement : courriel de confirmation, historique des dons dans l'espace personnel (Lo Ligam a déjà des comptes), lien à partager.
+**À ne pas reprendre**
+- Les nombreuses données personnelles (date de naissance, adresse, nationalité, téléphone) : la loi électorale les impose à une campagne, pas à nous ; le courriel suffit.
+- Le pistage dans les liens (paramètres utm).
+- Le coût après déduction d'impôt : pas de déduction possible chez nous.
+**Le service derrière** : la page de paiement est celle du Crédit Coopératif (banque coopérative), avec l'outil Systempay, de la même technique que Lyra. Ce chemin demande un contrat de vente à distance avec la banque : commission de la banque (environ 0,4 à 0,9 %) plus un abonnement à l'outil (environ 20 à 150 € par mois selon un comparatif, kolonell.com, 2026, prix officiels non trouvés). Trop cher pour de petits volumes, mais à regarder si le compte de la micro-entreprise est dans une banque coopérative.
+
 **Question ouverte de Romain (06-11, clôture) : un service de paiement est-il vraiment utile, ou un lien direct vers son compte suffit-il ?** Piste de Claude, à trancher plus tard : commencer par le virement (RIB du compte de la micro-entreprise affiché sur la page « Soutenir », virement permanent pour donner chaque mois), sans frais ni code ; ne prendre un service (Lyra, sinon Mollie) que pour la carte et pour l'accès payant qui s'ouvre tout seul. Limites du virement : plus d'étapes pour la personne, pas de carte, rapprochement des dons à la main, IBAN rendu public. Le formulaire Lyra n'est pas envoyé.
 
 ## Décisions suivantes (une à la fois)
