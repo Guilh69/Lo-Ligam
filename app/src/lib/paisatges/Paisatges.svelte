@@ -5,9 +5,11 @@
 	// fichier (Romain, 07-11 : « encore trop zoomées, avec une mauvaise
 	// qualité » ; elle couvrait l'écran et glissait, et Firefox avance pixel
 	// par pixel une photo qui glisse lentement, d'où des à-coups). Des points
-	// d'or fins sont posés dessus, chacun sur une zone floue : quand son mot
-	// paraît, la zone se défloute et le reste (Romain, 07-11 : « des zones de
-	// flou qui se défloutent quand les mots se révèlent »). On en touche un, le
+	// d'or fins sont posés dessus ; la photo arrive floue, et chaque mot qui
+	// paraît y ouvre une large mise au point depuis son point ; tous dits, elle
+	// est nette (Romain, 07-11 : « des zones de flou qui se défloutent quand les
+	// mots se révèlent », puis « le flou n'est qu'autour du point, c'est un peu
+	// ridicule »). On en touche un, le
 	// mot occitan s'écrit, le français dessous ; un toucher ailleurs le
 	// referme. Sans rien toucher, les mots paraissent seuls, un à un (Romain,
 	// 06-11 : le jeu est dans Jòcs, ici on regarde). On glisse le doigt, on fait
@@ -57,8 +59,8 @@
 	const sizes = (q) => `(min-aspect-ratio: ${q.l}/${q.h}) ${Math.ceil((q.l / q.h) * 82)}vh, 96vw`;
 
 	// La photo entière, centrée entre l'en-tête et les commandes, jamais plus
-	// grande que son plus grand fichier (en pixels CSS) ; fl : le diamètre des
-	// zones floues, flou : leur force (plus doux sur une petite photo)
+	// grande que son plus grand fichier (en pixels CSS) ; flou : la force du
+	// flou (plus doux sur une petite photo)
 	function fenestra(q) {
 		if (!W || !H) return null;
 		const gora = Math.min(32, Math.max(12, W * 0.03));
@@ -74,9 +76,32 @@
 			y: Math.round(naut + (zh - h) / 2),
 			w,
 			h,
-			fl: Math.round(Math.max(72, c * 0.26)),
-			flou: Math.round(Math.min(10, Math.max(4, c / 80)))
+			flou: Math.round(Math.min(8, Math.max(3, c / 100)))
 		};
+	}
+
+	// Le flou couvre la photo ; chaque mot dit y retire un large disque aux
+	// bords fondus, centré sur son point, qui grandit (sa taille et sa place
+	// glissent ensemble : le centre ne bouge pas). Tous les disques sont
+	// toujours là (taille nulle tant que le mot n'est pas dit) : le nombre de
+	// calques ne change pas, la transition joue.
+	function masca(q, f, nets) {
+		if (!f) return '';
+		const R = Math.round(Math.max(f.w, f.h) * 0.42);
+		const im = ['linear-gradient(#000, #000)'],
+			ta = ['100% 100%'],
+			pl = ['0px 0px'],
+			co = ['subtract'];
+		q.mots.forEach(([, x, y], i) => {
+			const px = Math.round(x * f.w),
+				py = Math.round(y * f.h),
+				dit = nets.includes(i);
+			im.push('radial-gradient(closest-side, #000 40%, transparent)');
+			ta.push(dit ? `${2 * R}px ${2 * R}px` : '0px 0px');
+			pl.push(dit ? `${px - R}px ${py - R}px` : `${px}px ${py}px`);
+			co.push('add');
+		});
+		return `mask-image: ${im.join(', ')}; mask-size: ${ta.join(', ')}; mask-position: ${pl.join(', ')}; mask-composite: ${co.join(', ')}`;
 	}
 
 	// Le relief : une horloge (une animation qui ne déplace rien) mène la
@@ -185,25 +210,29 @@
 	// L'étiquette, une fois écrite : à droite du point s'il y a la place,
 	// sinon à gauche, sinon dessous (dessus en bas de l'écran), centrée sans
 	// sortir de l'écran (téléphone, 07-11 : « la piramida » sortait à droite)
-	const plaçar = (x, y) => (el) =>
-		untrack(() => {
-			const q = el.parentElement.getBoundingClientRect();
-			const ax = q.left + x * q.width,
-				ay = q.top + y * q.height;
-			const wl = el.offsetWidth,
-				hl = el.offsetHeight,
-				e = 30,
-				m = 10;
-			let dx = 0;
-			if (ax + e + wl <= W - m) costat = 'drecha';
-			else if (ax - e - wl >= m) costat = 'esquerra';
-			else {
-				costat = ay + e + hl <= H - reserva.bas ? 'dessota' : 'dessus';
-				const l = ax - wl / 2;
-				dx = Math.min(Math.max(l, m), W - m - wl) - l;
-			}
-			el.style.setProperty('--dx', `${Math.round(dx)}px`);
-		});
+	const plaçar = (x, y) => (el) => {
+		const ro = new ResizeObserver(() => untrack(() => plaçarAra(el, x, y)));
+		ro.observe(el);
+		return () => ro.disconnect();
+	};
+	const plaçarAra = (el, x, y) => {
+		const q = el.parentElement.getBoundingClientRect();
+		const ax = q.left + x * q.width,
+			ay = q.top + y * q.height;
+		const wl = el.offsetWidth,
+			hl = el.offsetHeight,
+			e = 30,
+			m = 10;
+		let dx = 0;
+		if (ax + e + wl <= W - m) costat = 'drecha';
+		else if (ax - e - wl >= m) costat = 'esquerra';
+		else {
+			costat = ay + e + hl <= H - reserva.bas ? 'dessota' : 'dessus';
+			const l = ax - wl / 2;
+			dx = Math.min(Math.max(l, m), W - m - wl) - l;
+		}
+		el.style.setProperty('--dx', `${Math.round(dx)}px`);
+	};
 	function dobrir(i) {
 		auto = null;
 		autoDempuei = performance.now() + 2500; // après un toucher, un temps de silence
@@ -378,8 +407,7 @@
 		style:top="{f?.y ?? 0}px"
 		style:width="{f?.w ?? 0}px"
 		style:height="{f?.h ?? 0}px"
-		style:--fl="{f?.fl ?? 64}px"
-		style:--flou="{f?.flou ?? 6}px"
+		style:--flou="{f?.flou ?? 5}px"
 	>
 	{#if ambRelèu}<canvas class="releu-c" aria-hidden="true" {@attach relevarVista(q, id)}></canvas>{/if}
 	<!-- les points paraissent après le disque (après l'arrivée de la page pour le premier) -->
@@ -394,12 +422,8 @@
 			fetchpriority={actiu ? 'high' : undefined}
 		/>
 		{#if actiu}
-			<!-- une zone floue sous chaque point : elle se défloute quand le mot paraît -->
-			<div class="flos" aria-hidden="true">
-				{#each q.mots as [oc, x, y], i (oc)}
-					<span class="flo" class:net={nets.includes(i)} style:left="{x * 100}%" style:top="{y * 100}%" style:--i={rangs[i]}></span>
-				{/each}
-			</div>
+			<!-- le flou sur la photo : chaque mot dit y ouvre une mise au point -->
+			<div class="flos" class:tot={nets.length >= q.mots.length} aria-hidden="true" style={masca(q, f, nets)}></div>
 			{#each q.mots as [oc, x, y], i (oc)}
 				<button
 					type="button"
@@ -504,40 +528,23 @@
 		pointer-events: none;
 	}
 
-	/* ── Les zones floues : un disque aux bords fondus, qui naît avec son point
-	   et se défloute quand le mot paraît (un toucher, ou seul) ── */
+	/* ── Le flou : sur toute la photo, percé d'une mise au point par mot dit ;
+	   tous dits, il s'efface ── */
 	.flos {
 		position: absolute;
 		inset: 0;
-		overflow: hidden;
 		border-radius: 6px;
 		pointer-events: none;
-	}
-	.flo {
-		position: absolute;
-		width: var(--fl, 64px);
-		aspect-ratio: 1;
-		translate: -50% -50%;
-		border-radius: 50%;
-		-webkit-backdrop-filter: blur(var(--flou, 6px));
-		backdrop-filter: blur(var(--flou, 6px));
-		-webkit-mask-image: radial-gradient(closest-side, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent);
-		mask-image: radial-gradient(closest-side, #000 30%, rgba(0, 0, 0, 0.55) 62%, transparent);
-		opacity: 0;
-		animation: aparéisser-flo 1.4s ease forwards;
-		animation-delay: calc(var(--d0, 0.6s) + var(--i) * 0.42s - 0.25s);
+		-webkit-backdrop-filter: blur(var(--flou, 5px));
+		backdrop-filter: blur(var(--flou, 5px));
+		mask-repeat: no-repeat;
 		transition:
-			backdrop-filter 1.8s cubic-bezier(0.3, 0.6, 0.2, 1),
-			-webkit-backdrop-filter 1.8s cubic-bezier(0.3, 0.6, 0.2, 1);
+			mask-size 2.2s cubic-bezier(0.3, 0.6, 0.2, 1),
+			mask-position 2.2s cubic-bezier(0.3, 0.6, 0.2, 1),
+			opacity 2.4s ease;
 	}
-	.flo.net {
-		-webkit-backdrop-filter: blur(0px);
-		backdrop-filter: blur(0px);
-	}
-	@keyframes aparéisser-flo {
-		to {
-			opacity: 1;
-		}
+	.flos.tot {
+		opacity: 0;
 	}
 	/* l'en-tête et les commandes restent lisibles sur un ciel clair */
 	.vela {
@@ -601,14 +608,15 @@
 	.ponch::before {
 		width: 1.5rem;
 		height: 1.5rem;
-		border: 1.5px solid var(--aur-clar, #ffd47f);
-		/* une ombre sombre autour du filet : lisible sur un ciel clair comme
-		   sur la roche (ce n'est pas une lueur) */
-		background: rgba(255, 212, 127, 0.1);
+		border: 2px solid var(--aur-clar, #ffd47f);
+		/* un filet sombre de chaque côté de l'or et un fond sombre léger :
+		   lisible sur un ciel blanc comme sur la roche (ce n'est pas une lueur ;
+		   Romain, 07-11 : « les ronds ne sont pas toujours visibles ») */
+		background: rgba(4, 9, 11, 0.28);
 		box-shadow:
-			0 0 0 1.5px rgba(4, 9, 11, 0.5),
-			0 0 10px rgba(4, 9, 11, 0.35),
-			inset 0 0 0 1px rgba(4, 9, 11, 0.3);
+			0 0 0 1.5px rgba(4, 9, 11, 0.72),
+			0 0 10px rgba(4, 9, 11, 0.45),
+			inset 0 0 0 1.5px rgba(4, 9, 11, 0.5);
 		animation: respirar 3.4s ease-in-out infinite;
 		animation-delay: calc(var(--i) * -0.8s);
 	}
@@ -644,7 +652,7 @@
 		0%,
 		100% {
 			scale: 1;
-			opacity: 0.7;
+			opacity: 0.88;
 		}
 		50% {
 			scale: 1.14;
@@ -737,9 +745,7 @@
 	.calme .onda {
 		display: none;
 	}
-	.calme .flo {
-		animation: none;
-		opacity: 1;
+	.calme .flos {
 		transition: none;
 	}
 	.calme .ponch,
