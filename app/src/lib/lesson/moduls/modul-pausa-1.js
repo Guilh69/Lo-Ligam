@@ -310,10 +310,10 @@ export const modulPausa1 = {
 							explain: 'En vouvoyant : *Cossí vos dison ?* ou *Cossí vos apelatz ?*'
 						},
 						{
-							consigne: 'Dis ton nom.',
+							consigne: 'Dis comment tu t’appelles.',
 							debut: ['Me dison', 'M’apèli', 'Ieu, me dison', 'Ieu, m’apèli'],
 							choses: ['me-dison'],
-							explain: '*Me dison…* ou *M’apèli…*, puis ton prénom.'
+							explain: 'Avec ton prénom, par exemple : *Me dison Núria.* · *M’apèli Karim.*'
 						},
 						{
 							consigne: 'Dis d’où tu es : je suis de… (ta ville).',
