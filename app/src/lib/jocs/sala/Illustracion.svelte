@@ -15,6 +15,16 @@
 	// Les anciennes affiches de paysage (Afica.svelte) restent dans le code, et
 	// les tableaux peints dans design-stock/pinturas, pour un autre usage.
 	import { onMount } from 'svelte';
+	import { TEINTES } from '$lib/styles/palette.js';
+
+	// Le serpent en couleurs (Romain, 2026-11-07 : « le serpent est trop blanc ») : des tuiles aux
+	// couleurs de la palette, [fond, lettre], dans l'ordre du serpent ; la tête reprend la première
+	const TUILES = [
+		[TEINTES.or, TEINTES.encre],
+		[TEINTES.bleu, TEINTES.creme],
+		[TEINTES.orangeClair, TEINTES.encre],
+		[TEINTES.olive, TEINTES.creme]
+	];
 
 	let { id } = $props();
 	const uid = $props.id();
@@ -68,15 +78,15 @@
 				{#each [['L', 52, 214, 8], ['I', 100, 224, -4], ['G', 148, 208, -18], ['A', 189, 174, -32]] as [t, x, y, r], k (t)}
 					<g class="onda" style="--k: {k}">
 						<g transform="translate({x} {y}) rotate({r})">
-							<rect class="f" x="-21" y="-21" width="42" height="42" rx="9" />
-							<text class="t" y="8">{t}</text>
+							<rect class="f" style="fill: {TUILES[k % TUILES.length][0]}" x="-21" y="-21" width="42" height="42" rx="9" />
+							<text class="t" style="fill: {TUILES[k % TUILES.length][1]}" y="8">{t}</text>
 						</g>
 					</g>
 				{/each}
 				<g class="onda" style="--k: 4">
 					<g transform="translate(230 132) rotate(-38)">
 						<path class="lenga" d="M31 0 H44 M44 0 l7 -5 M44 0 l7 5" />
-						<path class="f" d="M-24 -18 C -6 -26 22 -22 32 -6 C 35 -2 35 2 32 6 C 22 22 -6 26 -24 18 C -30 10 -30 -10 -24 -18 Z" />
+						<path class="f" style="fill: {TUILES[0][0]}" d="M-24 -18 C -6 -26 22 -22 32 -6 C 35 -2 35 2 32 6 C 22 22 -6 26 -24 18 C -30 10 -30 -10 -24 -18 Z" />
 						<circle class="uelh" cx="12" cy="-8" r="4.4" />
 					</g>
 				</g>

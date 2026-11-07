@@ -15,6 +15,7 @@
 	import Illustracion from './Illustracion.svelte';
 	import Emblema from './Emblema.svelte';
 	import MencionIA from '$lib/components/MencionIA.svelte';
+	import { TEINTES, PUCES } from '$lib/styles/palette.js';
 
 	const T = {
 		titol: { oc: 'La sala de jòcs', fr: 'La salle de jeux' },
@@ -30,12 +31,35 @@
 	let filtre = $state(null);
 	let familhas = $derived(FAMILHAS.map((f) => ({ ...f, jocs: jocsDe(f.id, filtre) })).filter((f) => f.jocs.length));
 	let letras = $derived([...tria(T.titol)]);
+
+	// La pièce de chaque puce « Fa trabalhar » : une couleur par thème (palette.js, PUCES ; Romain, 2026-11-07)
+	const puce = (id) => (PUCES[id] ? `--pc-fons: ${PUCES[id][0]}; --pc-tinta: ${PUCES[id][1]};` : undefined);
+	// Le titre : une couleur de la palette par lettre (l'or passe par --t-aur-gros pour se lire sur le clair)
+	const COULEURS_TITRE = [TEINTES.rougeAction, 'var(--t-aur-gros)', TEINTES.bleu, TEINTES.olive, TEINTES.prune, TEINTES.brique, TEINTES.sarcelle];
+	// Les confettis (option A de Romain, 2026-11-07) : des pièces de papier découpé, semées une fois pour
+	// toutes (même suite à chaque chargement, donc rien ne change entre serveur et navigateur), autour
+	// du titre et dans les marges ; elles restent derrière le contenu et bougent à peine
+	const TEINTES_CONFETIS = [TEINTES.rougeAction, TEINTES.or, TEINTES.bleu, TEINTES.olive, TEINTES.prune, TEINTES.brique, TEINTES.sarcelle, TEINTES.orangeClair];
+	const FORMES = ['rond', 'carre', 'triangle', 'demi', 'carre'];
+	const ZONES = ['h', 'g', 'd', 'h', 'g', 'd', 'h']; // h : bandeau du titre, g : marge gauche, d : marge droite
+	const CONFETIS = (() => {
+		let s = 11;
+		const alea = () => (s = (s * 16807) % 2147483647) / 2147483647;
+		return Array.from({ length: 46 }, (_, k) => ({
+			zone: ZONES[k % ZONES.length],
+			forme: FORMES[k % FORMES.length],
+			style: `--x: ${alea().toFixed(3)}; --y: ${alea().toFixed(3)}; --t: ${10 + Math.round(alea() * 14)}px; --r: ${Math.floor(alea() * 360)}deg; --c: ${TEINTES_CONFETIS[Math.floor(alea() * TEINTES_CONFETIS.length)]}; --d: ${(5 + alea() * 5).toFixed(1)}s; animation-delay: -${(alea() * 6).toFixed(1)}s`
+		}));
+	})();
 </script>
 
 <div class="sala">
+	<div class="confetis" aria-hidden="true">
+		{#each CONFETIS as c, k (k)}<i class="c {c.zone}" style={c.style}><b class={c.forme}></b></i>{/each}
+	</div>
 	<header class="entrada">
 		<h2 class="titol" lang={lg(T.titol)} aria-label={tria(T.titol)}>
-			{#each letras as c, i (i)}<span aria-hidden="true" style="--i: {i}">{c === ' ' ? ' ' : c}</span>{/each}
+			{#each letras as c, i (i)}<span aria-hidden="true" style="--i: {i}; --c: {COULEURS_TITRE[i % COULEURS_TITRE.length]}">{c ===' ' ? ' ' : c}</span>{/each}
 		</h2>
 	</header>
 
@@ -44,7 +68,7 @@
 		<div class="causidas">
 			<button type="button" class="pc pc-2 pc-chip" aria-pressed={filtre === null} onclick={() => (filtre = null)}>{tria(T.tot)}</button>
 			{#each CAPACITATS as c (c.id)}
-				<button type="button" class="pc pc-2 pc-chip" aria-pressed={filtre === c.id} onclick={() => (filtre = filtre === c.id ? null : c.id)}
+				<button type="button" class="pc pc-2 pc-chip" style={puce(c.id)} aria-pressed={filtre === c.id} onclick={() => (filtre = filtre === c.id ? null : c.id)}
 					>{tria(c)}</button
 				>
 			{/each}
@@ -103,6 +127,7 @@
 <style>
 	.sala {
 		container-type: inline-size;
+		position: relative;
 		box-sizing: border-box;
 		max-width: 1840px;
 		margin-inline: auto;
@@ -129,14 +154,96 @@
 	}
 	.titol span {
 		display: inline-block;
+		color: var(--c, var(--t-tinta));
 		animation: onda-titol 3.6s ease-in-out infinite;
 		animation-delay: calc(var(--i) * 80ms);
 	}
-	.titol span:nth-child(3n + 2) {
-		color: var(--t-aur);
+	/* en sombre, les teintes foncées de la palette s'éclaircissent pour se lire sur le fond */
+	:global(:root[data-tema='sorne']) .titol span {
+		color: color-mix(in oklab, var(--c, var(--t-tinta)), #fff 42%);
 	}
-	.titol span:nth-child(3n) {
-		color: var(--t-terra-viu);
+	/* ── les confettis : du papier découpé posé derrière le titre et dans les marges ── */
+	.sala > :not(.confetis) {
+		position: relative;
+		z-index: 1;
+	}
+	.confetis {
+		--zx0: 42cqw; /* le bandeau du titre commence à droite du titre */
+		--yh: 5.6rem;
+		--e: 1;
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		overflow: clip;
+		pointer-events: none;
+	}
+	.c {
+		position: absolute;
+		display: block;
+		width: calc(var(--t) * var(--e));
+		height: calc(var(--t) * var(--e));
+		transform: rotate(var(--r));
+		filter: drop-shadow(0 3px 2px rgba(20, 10, 5, 0.3));
+		animation: flotar var(--d) ease-in-out infinite alternate;
+	}
+	.c b {
+		display: block;
+		width: 100%;
+		height: 100%;
+		background: var(--c);
+	}
+	.c .rond {
+		border-radius: 50%;
+	}
+	.c .carre {
+		border-radius: 3px;
+	}
+	.c .triangle {
+		clip-path: polygon(50% 6%, 100% 94%, 0 94%);
+	}
+	.c .demi {
+		height: 50%;
+		border-radius: 999px 999px 0 0;
+	}
+	.c.h {
+		left: calc(var(--zx0) + var(--x) * (98cqw - var(--zx0)));
+		top: calc(0.2rem + var(--y) * var(--yh));
+	}
+	.c.g {
+		left: calc(var(--x) * 1.8cqw);
+		top: calc(var(--y) * 100%);
+	}
+	.c.d {
+		left: calc(98.2cqw - var(--x) * 1.8cqw);
+		top: calc(var(--y) * 100%);
+	}
+	/* téléphone : le titre prend presque toute la largeur, les confettis se serrent au-dessus de lui et dans les marges */
+	@container (max-width: 40rem) {
+		.confetis {
+			--zx0: 4cqw;
+			--yh: 0.4rem;
+			--e: 0.45;
+		}
+	}
+	@keyframes flotar {
+		to {
+			transform: rotate(var(--r)) translateY(-6px);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.c {
+			animation: none;
+		}
+	}
+	:global(html[data-leugier='on']) .c {
+		animation: none;
+	}
+	/* la puce choisie garde sa couleur : elle se lève et prend un anneau */
+	.causidas .pc-chip[aria-pressed='true'] {
+		box-shadow:
+			0 0 0 3px var(--t-fons),
+			0 0 0 5px var(--t-tinta),
+			0 4px 4px var(--pc-ombre);
 	}
 	.pichon {
 		font-size: 0.78rem;
@@ -399,6 +506,9 @@
 			flex-wrap: nowrap;
 			overflow-x: auto;
 			scrollbar-width: none;
+			/* de la place pour l'anneau de la puce choisie et l'ombre des pièces, que le défilement couperait */
+			padding: 7px 7px 9px;
+			margin: -7px -7px -9px;
 		}
 		.causidas button {
 			flex: none;

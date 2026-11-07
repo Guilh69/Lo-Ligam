@@ -25,6 +25,7 @@ export const TEINTES = {
 	bleu: '#2b6496', // jeux d'écoute
 	bleuOil: '#006aa7', // les langues d'oïl (choix de Romain, 2026-10-10)
 	prune: '#6b3a5b',
+	brun: '#5d4733', // le brun de la palette Coolors de Romain (07-11), une puce de la salle de jeux
 	ocre: '#c98a2b',
 	orangeClair: '#f4a261', // le gascon (Romain, 07-11)
 	creme: '#ffffff', // texte posé sur une teinte sombre : blanc (Romain, 2026-11-07 : « le texte sur des boutons foncés devrait être blanc ») ; le nom « creme » est resté
@@ -55,6 +56,20 @@ export const JEUX = {
 	observation: T.olive,
 	memoire: T.sarcelle,
 	ecoute: T.bleu
+};
+
+/** La salle de jeux (Romain, 2026-11-07 : « une couleur différente à chaque thème ») : la pièce de chaque
+ *  puce « Fa trabalhar », [fond, texte] ; la puce choisie se lève et prend un anneau (Sala.svelte) */
+export const PUCES = {
+	vocabulari: [T.or, T.encre],
+	ortografia: [T.brique, T.creme],
+	gramatica: [T.prune, T.creme],
+	memoria: [T.sarcelle, T.creme],
+	atencion: [T.orangeClair, T.encre],
+	observacion: [T.olive, T.creme],
+	escota: [T.bleu, T.creme],
+	logica: [T.brun, T.creme],
+	adreca: [T.rougeAction, T.creme]
 };
 
 /** La carte : aplats pleins, les mêmes couleurs dans les deux thèmes */
