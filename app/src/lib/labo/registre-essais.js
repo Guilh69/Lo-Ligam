@@ -236,6 +236,16 @@ export const ESSAIS = [
 		suppression: 'Rien ne l’importe ; elle partage lib/palette (HabillagePage) avec les autres pages palette-*.'
 	},
 	{
+		chemin: '/ensag/flotants',
+		titre: 'Fond clair : des flotteurs à attraper',
+		date: '2026-11-07',
+		choix: 'ambiances-accueil',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'Idée de Romain du 07-11 : des confettis minuscules ou des objets en papier découpé qui flottent sur le fond, qu’on fait virevolter et qu’on attrape pour voir le mot en occitan. Deux pistes jouables, en attente de son choix.',
+		suppression: 'À garder tant que la piste n’est pas tranchée. Elle importe lib/flotants (moteur, objets, composant) : à retirer avec la page si l’idée est abandonnée.'
+	},
+	{
 		chemin: '/ensag/palette-bandeaux',
 		titre: 'Palette : quatre logiques de barre',
 		date: '2026-11-07',
