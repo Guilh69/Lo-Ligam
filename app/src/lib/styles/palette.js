@@ -21,7 +21,9 @@ export const TEINTES = {
 	or: '#eeaf34', // ce qui est choisi, jeux de mots
 	orClair: '#ffd47f', // l'or clair du logo
 	olive: '#4f6a2f', // jeux d'observation, bonne réponse
-	sarcelle: '#1f5f63', // jeux de mémoire, carton du thème clair
+	sarcelle: '#1f5f63', // jeux de mémoire, cases de rubrique (n'est plus le carton depuis le 2026-11-07)
+	grisDoux: '#e3ddd8', // l'encre à 10 % sur le plâtre : carton du thème clair (Romain, 2026-11-07, option A « gris doux »)
+	grisNuit: '#3b332d', // la crème à 14 % sur le fond sombre : carton du thème sombre (plus de crème en fond de pièce)
 	bleu: '#2b6496', // jeux d'écoute
 	bleuOil: '#006aa7', // les langues d'oïl (choix de Romain, 2026-10-10)
 	prune: '#6b3a5b',
@@ -41,9 +43,10 @@ export const BOUTONS = {
 	choisiTexte: T.encre,
 	juste: T.olive, // la bonne réponse, texte crème
 	justeTexte: T.creme,
-	// le carton (boutons secondaires) : clair sur le sombre, vif sur le clair
-	carton: { sombre: T.tuile, clair: T.sarcelle },
-	cartonTexte: { sombre: T.encre, clair: T.creme }
+	// le carton (boutons secondaires, puces, réponses, commandes de la carte) : un neutre chaud,
+	// sans teinte propre, pour que le rouge reste « agir » et l'ocre « choisi » (Romain, 2026-11-07)
+	carton: { sombre: T.grisNuit, clair: T.grisDoux },
+	cartonTexte: { sombre: T.creme, clair: T.encre }
 };
 
 /** Les familles de jeux : une teinte par famille (Illustracion, Sala) */
