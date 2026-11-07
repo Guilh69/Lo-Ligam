@@ -326,16 +326,22 @@
 		color: #f2c368;
 		font-family: var(--font-heading);
 		font-size: 1.4rem;
-		box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
-		transition: transform 0.12s, box-shadow 0.12s, background 0.2s;
+		/* une pièce de papier (ombre de lib/styles/papier.css) ; la chaîne
+		   choisie reste rouge : l'or se perdrait sur le meuble doré */
+		box-shadow: 0 3px 4px var(--pc-ombre);
+		transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+	}
+	.tv-boton:hover .tv-boton-num {
+		transform: translateY(-1px);
+		box-shadow: 0 5px 5px var(--pc-ombre);
 	}
 	.tv-boton:active .tv-boton-num {
-		transform: translateY(3px);
-		box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+		transform: translateY(2px);
+		box-shadow: 0 1px 2px var(--pc-ombre);
 	}
 	.tv-boton[aria-pressed='true'] .tv-boton-num {
-		background: #b53d17;
-		color: #fbf1e1;
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
 	}
 	.tv-boton-nom {
 		font-size: 0.8rem;

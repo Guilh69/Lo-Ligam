@@ -142,7 +142,7 @@
 	<!-- « Un mot, cent parlars » : la carte écrit la forme locale du mot choisi -->
 	<div class="votz-mots" role="group" aria-label={tx.unmot}>
 		{#each Object.entries(MOTS) as [k, l] (k)}
-			<button type="button" class:actiu={mot === k} aria-pressed={mot === k} onclick={() => (mot = mot === k ? null : k)}>
+			<button type="button" class="pc pc-2 pc-chip" aria-pressed={mot === k} onclick={() => (mot = mot === k ? null : k)}>
 				{l[lang] ?? l.oc}
 			</button>
 		{/each}
@@ -152,7 +152,7 @@
 {#if actiu && mot && !punt}
 	<section class="votz-fuelha votz-formas" aria-label={MOTS[mot][lang] ?? MOTS[mot].oc}>
 		<div class="manha" aria-hidden="true"></div>
-		<button type="button" class="tampar" onclick={() => (mot = null)} aria-label={tx.tampar} title={tx.tampar}>
+		<button type="button" class="pc pc-2 pc-icone tampar" onclick={() => (mot = null)} aria-label={tx.tampar} title={tx.tampar}>
 			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
 		</button>
 		<p class="formas-cap"><span class="mot-titol">«&nbsp;{MOTS[mot][lang] ?? MOTS[mot].oc}&nbsp;»</span> <span class="titol">{tx.dins} {lòcs} {tx.parlars}</span></p>
@@ -173,7 +173,7 @@
 {#if punt}
 	<section class="votz-fuelha" style="--c: {color}" aria-label={nomDe(punt)}>
 		<div class="manha" aria-hidden="true"></div>
-		<button type="button" class="tampar" onclick={tampar} aria-label={tx.tampar} title={tx.tampar}>
+		<button type="button" class="pc pc-2 pc-icone tampar" onclick={tampar} aria-label={tx.tampar} title={tx.tampar}>
 			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
 		</button>
 
@@ -182,7 +182,7 @@
 				<h2>{nomDe(punt)}</h2>
 				<span class="chip">{dialècte + (punt.so2 ? ' · 2 ' + tx.votz : '')}</span>
 			</div>
-			<button type="button" class="boton" onclick={bascular} aria-label={jogant ? tx.pausa : tx.escotar}>
+			<button type="button" class="pc pc-icone boton" onclick={bascular} aria-label={jogant ? tx.pausa : tx.escotar}>
 				{#if jogant}
 					<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1.2" /><rect x="13.5" y="5" width="4" height="14" rx="1.2" /></svg>
 				{:else}
@@ -216,14 +216,14 @@
 
 		<div class="accions">
 			{#if seguenta}
-				<button type="button" class="aur" onclick={() => jogar(seguenta)}>{tx.seguenta}{lang === 'oc' || lang === 'fr' ? ' :' : ':'} {nomDe(seguenta)} {lang === 'ar' ? '←' : '→'}</button>
+				<button type="button" class="pc pc-chip" onclick={() => jogar(seguenta)}>{tx.seguenta}{lang === 'oc' || lang === 'fr' ? ' :' : ':'} {nomDe(seguenta)} {lang === 'ar' ? '←' : '→'}</button>
 			{/if}
 			{#if punt.so2}
-				<button type="button" class:actiu={!votz2} onclick={() => votz2 && jogar(punt, false)}>{tx.Votz} 1</button>
-				<button type="button" class:actiu={votz2} onclick={() => !votz2 && jogar(punt, true)}>{tx.Votz} 2</button>
+				<button type="button" class="pc pc-2 pc-chip" class:est-choisi={!votz2} onclick={() => votz2 && jogar(punt, false)}>{tx.Votz} 1</button>
+				<button type="button" class="pc pc-2 pc-chip" class:est-choisi={votz2} onclick={() => !votz2 && jogar(punt, true)}>{tx.Votz} 2</button>
 			{/if}
 			{#if punt.tx2}
-				<button type="button" onclick={() => (grafia2 = !grafia2)}>
+				<button type="button" class="pc pc-2 pc-chip" onclick={() => (grafia2 = !grafia2)}>
 					{grafia2 ? tx.classica : mistral ? tx.mistral : tx.autra}
 				</button>
 			{/if}
@@ -291,19 +291,15 @@
 		margin: 0 auto 10px;
 		flex: none;
 	}
+	/* les boutons sont des pièces de papier (lib/styles/papier.css) ; ici,
+	   seulement leur place et leur taille */
 	.tampar {
+		--r: 9px;
 		position: absolute;
-		top: 10px;
-		right: 12px;
-		width: 30px;
-		height: 30px;
-		border: 0;
-		border-radius: 50%;
-		background: transparent;
-		color: var(--t-tinta-2);
-		display: grid;
-		place-items: center;
-		cursor: pointer;
+		top: 8px;
+		right: 10px;
+		width: 34px;
+		height: 34px;
 	}
 	.tampar svg {
 		width: 16px;
@@ -349,19 +345,10 @@
 		flex: none;
 	}
 	.boton {
+		--r: 50%;
 		width: 56px;
 		height: 56px;
 		flex: none;
-		border: 0;
-		border-radius: 50%;
-		display: grid;
-		place-items: center;
-		cursor: pointer;
-		color: var(--t-accion-tinta);
-		background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--t-accion) 72%, #fff), var(--t-accion) 70%);
-		box-shadow:
-			0 0 0 6px color-mix(in srgb, var(--t-accion) 22%, transparent),
-			0 8px 24px color-mix(in srgb, var(--t-accion) 40%, transparent);
 	}
 	.boton svg {
 		width: 24px;
@@ -473,24 +460,6 @@
 		margin-top: 12px;
 		flex: none;
 	}
-	.accions button {
-		font: inherit;
-		font-size: 0.8rem;
-		padding: 6px 12px;
-		border-radius: 99px;
-		border: 1px solid var(--t-linha);
-		background: transparent;
-		color: var(--t-tinta);
-		cursor: pointer;
-	}
-	.accions button.aur {
-		border-color: var(--t-accion);
-		color: var(--t-tinta);
-	}
-	.accions button.actiu {
-		background: color-mix(in srgb, var(--t-aur) 18%, transparent);
-		border-color: color-mix(in srgb, var(--t-aur) 55%, transparent);
-	}
 	.font {
 		margin-top: 10px;
 		font-size: 0.68rem;
@@ -518,24 +487,13 @@
 		max-width: calc(100% - 7rem);
 		overflow-x: auto;
 		scrollbar-width: none;
+		padding: 2px 2px 6px; /* (l'ombre des pièces) */
 	}
 	.votz-mots button {
 		flex: none;
 		font-family: var(--font-quote);
 		font-style: italic;
 		font-size: 1.02rem;
-		padding: 3px 13px 4px;
-		border-radius: 99px;
-		border: 1px solid var(--t-linha);
-		background: color-mix(in srgb, var(--t-fons-2) 88%, transparent);
-		backdrop-filter: blur(6px);
-		color: var(--t-tinta);
-		cursor: pointer;
-	}
-	.votz-mots button.actiu {
-		background: var(--t-aur);
-		border-color: var(--t-aur);
-		color: #2a1408;
 	}
 	.formas-cap {
 		display: flex;

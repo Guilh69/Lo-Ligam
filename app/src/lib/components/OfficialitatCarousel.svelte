@@ -158,6 +158,7 @@
 	<div class="controls">
 		<button
 			type="button"
+			class="pc pc-2 pc-icone"
 			onclick={() => centerOn(index - 1)}
 			disabled={index === 0}
 			aria-label={T.prec[lang] ?? T.prec.oc}><Icona nom="precedent" size="1.2em" /></button
@@ -175,6 +176,7 @@
 		</div>
 		<button
 			type="button"
+			class="pc pc-2 pc-icone"
 			onclick={() => centerOn(index + 1)}
 			disabled={index === slides.length - 1}
 			aria-label={T.seg[lang] ?? T.seg.oc}><Icona nom="suivant" size="1.2em" /></button
@@ -270,29 +272,7 @@
 		gap: 1rem;
 	}
 
-	.controls > button {
-		border: none;
-		background: white;
-		color: var(--color-brick);
-		width: 2.4rem;
-		height: 2.4rem;
-		border-radius: 999px;
-		font-size: 1.1rem;
-		cursor: pointer;
-		box-shadow: 0 4px 12px rgba(58, 42, 32, 0.12);
-		transition:
-			transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1),
-			opacity 150ms ease;
-	}
-
-	.controls > button:hover:not(:disabled) {
-		transform: scale(1.1);
-	}
-
-	.controls > button:disabled {
-		opacity: 0.3;
-		cursor: default;
-	}
+	/* précédent, suivant : des pièces de papier (lib/styles/papier.css) */
 
 	.dots {
 		display: flex;

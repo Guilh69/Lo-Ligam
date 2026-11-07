@@ -44,7 +44,7 @@
 			<div class="bascules" role="group" aria-labelledby="{id}-o">
 				{#each bascules as b (b.id)}
 					<button type="button" class="bascula" role="switch" aria-checked={b.valor} onclick={b.bascular}>
-						<span class="pila" aria-hidden="true"><span class="punt"></span></span>
+						<span class="pc-basc" aria-hidden="true"></span>
 						<span>{b.label}</span>
 					</button>
 				{/each}
@@ -146,37 +146,7 @@
 		border: none;
 		background: none;
 	}
-	.pila {
-		position: relative;
-		width: 2rem;
-		height: 1.1rem;
-		border-radius: 1rem;
-		border: 1.5px solid color-mix(in srgb, var(--t-tinta) 45%, transparent);
-		transition:
-			background-color 0.2s,
-			border-color 0.2s;
-	}
-	.punt {
-		position: absolute;
-		top: 50%;
-		left: 0.15rem;
-		width: 0.7rem;
-		height: 0.7rem;
-		translate: 0 -50%;
-		border-radius: 50%;
-		background: color-mix(in srgb, var(--t-tinta) 55%, transparent);
-		transition:
-			left 0.2s,
-			background-color 0.2s;
-	}
-	.bascula[aria-checked='true'] .pila {
-		border-color: var(--color-gold);
-		background: var(--color-gold);
-	}
-	.bascula[aria-checked='true'] .punt {
-		left: calc(100% - 0.85rem);
-		background: var(--color-text);
-	}
+	/* l'interrupteur lui-même : .pc-basc (lib/styles/papier.css) */
 	/* les actions : des boutons simples */
 	.accions {
 		display: flex;
@@ -196,12 +166,5 @@
 	}
 	.accions :global(button:disabled) {
 		cursor: default;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.pila,
-		.punt {
-			transition: none;
-		}
 	}
 </style>

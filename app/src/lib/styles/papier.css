@@ -144,8 +144,56 @@
 	--r: 18px;
 }
 
+/* L'interrupteur (2026-11-07, repris du rail de la carte) : une piste
+   creusée et une pièce de papier qui glisse, l'or quand c'est allumé. Sur un
+   bouton role="switch" lui-même, ou sur un repère (span) à l'intérieur d'un
+   bouton aria-checked / aria-pressed. */
+.pc-basc {
+	position: relative;
+	display: inline-block;
+	flex: none;
+	width: 36px;
+	height: 22px;
+	padding: 0;
+	border: 0;
+	border-radius: 8px;
+	background: color-mix(in srgb, var(--t-tinta) 24%, transparent);
+	box-shadow: inset 0 1px 2px var(--pc-ombre);
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.pc-basc::after {
+	content: '';
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 16px;
+	height: 16px;
+	border-radius: 5px;
+	background: var(--t-tinta);
+	box-shadow: 0 1px 2px var(--pc-ombre);
+	transition: transform 0.2s;
+}
+.pc-basc[aria-checked='true'],
+[aria-checked='true'] > .pc-basc,
+[aria-pressed='true'] > .pc-basc {
+	background: var(--pc-or-fons);
+}
+.pc-basc[aria-checked='true']::after,
+[aria-checked='true'] > .pc-basc::after,
+[aria-pressed='true'] > .pc-basc::after {
+	transform: translateX(14px);
+	background: var(--t-fons);
+}
+.pc-basc:disabled {
+	opacity: 0.35;
+	cursor: default;
+}
+
 @media (prefers-reduced-motion: reduce) {
-	.pc {
+	.pc,
+	.pc-basc,
+	.pc-basc::after {
 		transition: none;
 	}
 	.pc-rep.est-faux {
