@@ -9,8 +9,6 @@
 	--p-or-clair: #ffd47f;
 	--p-olive: #4f6a2f;
 	--p-sarcelle: #1f5f63;
-	--p-gris-doux: #e3ddd8;
-	--p-gris-nuit: #3b332d;
 	--p-bleu: #2b6496;
 	--p-bleu-oil: #006aa7;
 	--p-prune: #6b3a5b;
@@ -33,10 +31,10 @@
 }
 :root,
 :root[data-tema='sorne'] {
-	--pc-carton: #3b332d;
+	--pc-carton: #1f5f63;
 	--pc-carton-tinta: #ffffff;
 }
 :root[data-tema='clar'] {
-	--pc-carton: #e3ddd8;
-	--pc-carton-tinta: #2a1a10;
+	--pc-carton: #1f5f63;
+	--pc-carton-tinta: #ffffff;
 }

@@ -21,9 +21,7 @@ export const TEINTES = {
 	or: '#eeaf34', // ce qui est choisi, jeux de mots
 	orClair: '#ffd47f', // l'or clair du logo
 	olive: '#4f6a2f', // jeux d'observation, bonne réponse
-	sarcelle: '#1f5f63', // jeux de mémoire, cases de rubrique (n'est plus le carton depuis le 2026-11-07)
-	grisDoux: '#e3ddd8', // l'encre à 10 % sur le plâtre : carton du thème clair (Romain, 2026-11-07, option A « gris doux »)
-	grisNuit: '#3b332d', // la crème à 14 % sur le fond sombre : carton du thème sombre (plus de crème en fond de pièce)
+	sarcelle: '#1f5f63', // le carton (petits boutons, puces, réponses, commandes de la carte) dans les deux thèmes (Romain, 2026-11-07 : « ce bleu turquoise pour les boutons pourrait être pas mal »), jeux de mémoire, cases de rubrique
 	bleu: '#2b6496', // jeux d'écoute
 	bleuOil: '#006aa7', // les langues d'oïl (choix de Romain, 2026-10-10)
 	prune: '#6b3a5b',
@@ -31,7 +29,7 @@ export const TEINTES = {
 	orangeClair: '#f4a261', // le gascon (Romain, 07-11)
 	creme: '#ffffff', // texte posé sur une teinte sombre : blanc (Romain, 2026-11-07 : « le texte sur des boutons foncés devrait être blanc ») ; le nom « creme » est resté
 	encre: '#2a1a10', // texte posé sur une teinte claire
-	tuile: '#efe1c6' // la crème des tuiles de jeu : carton du thème sombre
+	tuile: '#efe1c6' // la crème des tuiles de jeu (n'est plus le carton du thème sombre depuis le 2026-11-07)
 };
 const T = TEINTES;
 
@@ -43,10 +41,11 @@ export const BOUTONS = {
 	choisiTexte: T.encre,
 	juste: T.olive, // la bonne réponse, texte crème
 	justeTexte: T.creme,
-	// le carton (boutons secondaires, puces, réponses, commandes de la carte) : un neutre chaud,
-	// sans teinte propre, pour que le rouge reste « agir » et l'ocre « choisi » (Romain, 2026-11-07)
-	carton: { sombre: T.grisNuit, clair: T.grisDoux },
-	cartonTexte: { sombre: T.creme, clair: T.encre }
+	// le carton (boutons secondaires, puces, réponses, commandes de la carte) : le turquoise sombre,
+	// texte blanc, en clair comme en sombre (Romain, 2026-11-07 ; le gris doux, essayé le même soir,
+	// ne lui allait pas en sombre)
+	carton: { sombre: T.sarcelle, clair: T.sarcelle },
+	cartonTexte: { sombre: T.creme, clair: T.creme }
 };
 
 /** Les familles de jeux : une teinte par famille (Illustracion, Sala) */
