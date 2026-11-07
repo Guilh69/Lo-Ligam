@@ -73,8 +73,8 @@ PISTES.melange = {
 	nom: 'Base mêlée',
 	titre: 'La palette Coolors mêlée à tes couleurs',
 	mot: 'Fond blanc franc, rouge de Coolors pour agir, brun pour les pièces discrètes, or pour le choisi, vert de Coolors pour le juste ; turquoise, bleu, sapin, ocre et vieux rose en tuiles. Première lecture du thème sombre : à regarder dans un second temps.',
-	clair: { fond: '#ffffff', surface: '#f4f4f4', texte: '#3b2e22', surClair: '#2b2118', surSombre: '#ffffff', action: '#9c2626', choisi: '#ecb13f', juste: '#729f1f', carton: '#5d4733', valeur: '#9c2626', tuiles: MELANGE },
-	sombre: { fond: '#1c1612', surface: '#271f19', texte: '#ffffff', surClair: '#2b2118', surSombre: '#ffffff', action: '#9c2626', choisi: '#ecb13f', juste: '#729f1f', carton: '#5d4733', valeur: '#ecb13f', tuiles: MELANGE }
+	clair: { fond: '#ffffff', surface: '#f4f4f4', texte: '#3b2e22', surClair: '#2b2118', surSombre: '#ffffff', action: '#9c2626', choisi: '#c7811b', juste: '#729f1f', carton: '#5d4733', valeur: '#9c2626', tuiles: MELANGE },
+	sombre: { fond: '#1c1612', surface: '#271f19', texte: '#ffffff', surClair: '#2b2118', surSombre: '#ffffff', action: '#9c2626', choisi: '#c7811b', juste: '#729f1f', carton: '#5d4733', valeur: '#ecb13f', tuiles: MELANGE }
 };
 
 /** Les variables CSS du site (jetons de app.css, palette.css, papier.css) posées par une palette */

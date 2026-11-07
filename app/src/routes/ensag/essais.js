@@ -31,6 +31,11 @@ export const GROUPES = [
 				texte: 'La référence des essais de palette du 07-11, avec le panneau « Retoucher les couleurs » qui mesure la cohérence.'
 			},
 			{
+				chemin: '/ensag/palette-bandeaux',
+				titre: 'Palette : quatre logiques de barre',
+				texte: 'La barre actuelle, une barre calme comme Remira, une barre à deux niveaux, et une pensée pour le téléphone (onglets en bas), avec des interrupteurs qui marchent.'
+			},
+			{
 				chemin: '/ensag/palette-habillage',
 				titre: 'Palette : habiller un fond sobre',
 				texte: 'Un seul écran en trois habillages, à activer séparément ou ensemble : bandeaux de photos, photos teintées dans les tuiles, dessins et pictogrammes ; avec la logique des couleurs.'
