@@ -27,7 +27,7 @@
 	let { mode = 'confettis', fond = false, onattrape = () => {} } = $props();
 
 	let zone;
-	let fils; // le canevas des fils fins qui relient la main aux confettis qu'elle tient
+	let fils = $state(null); // le canevas des fils fins qui relient la main aux confettis qu'elle tient
 	let pieces = $state([]);
 	let mot = $state(null);
 	let annonce = $state('');

@@ -71,6 +71,7 @@ export function flotter(zone, elements, options = {}) {
 			minuteur: 0,
 			// l'aimant : tenue par la main ou non, orbite autour du pointeur, date avant laquelle elle ne se laisse pas rattraper
 			tenu: false, refus: 0, orb: 0, orbR: 0, orbV: 0,
+			force: 0, // de 0 (tout juste prise) à 1 (tenue pour de bon) : la prise monte progressivement
 			couleur: o.aimant && o.fils ? getComputedStyle(el).getPropertyValue('--c').trim() || '#7a4a20' : ''
 		};
 		el.style.position = 'absolute';
@@ -181,9 +182,29 @@ export function flotter(zone, elements, options = {}) {
 	const vP = [0, 0]; // la vitesse du pointeur, pour donner son élan à ce qu'on lance
 	const relacher = (p) => {
 		p.tenu = false;
+		p.force = 0;
 		nTenus--;
 		p.el.classList.remove('tenu');
 		if (p.etat === 'libre') p.sc = 1;
+	};
+	// les pièces tenues s'écartent un peu les unes des autres : un petit nuage, pas une grappe
+	const ecarter = (dt) => {
+		if (nTenus < 2) return;
+		const tenues = [];
+		for (const p of pieces) if (p.tenu) tenues.push(p);
+		for (let i = 0; i < tenues.length; i++) {
+			const a = tenues[i];
+			for (let j = i + 1; j < tenues.length; j++) {
+				const b = tenues[j];
+				const ex = b.x - a.x, ey = b.y - a.y;
+				if (Math.abs(ex) > 28 || Math.abs(ey) > 28) continue;
+				const d = Math.hypot(ex, ey);
+				if (d >= 28 || d < 0.01) continue;
+				const f = (28 - d) * 0.006 * dt / d;
+				a.vx -= ex * f; a.vy -= ey * f;
+				b.vx += ex * f; b.vy += ey * f;
+			}
+		}
 	};
 	const lancer = (t) => {
 		for (const p of pieces) {
@@ -202,17 +223,20 @@ export function flotter(zone, elements, options = {}) {
 		pt = curseur || touche;
 		portee = curseur ? o.portee : o.porteeDoigt;
 		if (nTenus && pt && vCurseur > o.seuilLance) lancer(t);
+		ecarter(dt);
 		// attraper, une à une et pas toutes à la fois : plus la pièce est près, plus vite elle est prise ;
 		// sans rien tenir quand le geste est trop vif pour qu'on ait voulu attraper
 		if (!pt || vCurseur > o.seuilLance || nTenus >= o.maxTenus) return;
 		for (const p of pieces) {
 			if (p.etat !== 'libre' || p.tenu || !p.dedans || t < p.refus) continue;
 			const d = Math.hypot(p.x - pt[0], p.y - pt[1]);
-			if (d > portee || alea() > 0.22 * dt * (1.15 - d / portee)) continue;
+			if (d > portee || alea() > 0.1 * dt * (1.15 - d / portee)) continue;
 			p.tenu = true;
+			p.force = 0;
 			nTenus++;
 			p.orb = Math.atan2(p.y - pt[1], p.x - pt[0]);
-			p.orbR = entre(14, portee * 0.7);
+			// une orbite large, de 20 px à presque toute la portée, tirée au hasard : un nuage plein, pas une couronne
+			p.orbR = entre(20, portee * 0.92);
 			p.orbV = (alea() < 0.5 ? -1 : 1) * entre(0.008, 0.03);
 			p.sc = 1.25;
 			p.el.classList.add('tenu');
@@ -238,8 +262,18 @@ export function flotter(zone, elements, options = {}) {
 		}
 		tx = Math.max(p.r, Math.min(L - p.r, tx));
 		ty = Math.max(p.r, Math.min(H - p.r, ty));
-		p.vx += ((tx - p.x) * 0.012 - p.vx * 0.14) * dt;
-		p.vy += ((ty - p.y) * 0.012 - p.vy * 0.14) * dt;
+		// la prise monte doucement (environ 1 s) : la pièce garde d'abord sa dérive, puis le ressort la tire
+		// de plus en plus, avec un léger rebond à l'arrivée
+		p.force = Math.min(1, p.force + 0.017 * dt);
+		const e = p.force * p.force * (3 - 2 * p.force);
+		const k = 0.010 * e;
+		const c = 0.03 + 0.11 * e;
+		p.vx += ((tx - p.x) * k - p.vx * c) * dt;
+		p.vy += ((ty - p.y) * k - p.vy * c) * dt;
+		// et, tant que la prise n'est pas ferme, une vitesse de plafond : même loin de son orbite, la pièce glisse
+		const plafond = 1.2 + 4.5 * e;
+		const v = Math.hypot(p.vx, p.vy);
+		if (v > plafond) { p.vx *= plafond / v; p.vy *= plafond / v; }
 		p.vr *= 0.97 ** dt;
 	};
 	// les fils : de la main à chaque pièce tenue, fins, de la couleur de la pièce, plus pâles avec la distance
@@ -254,7 +288,9 @@ export function flotter(zone, elements, options = {}) {
 		g.lineWidth = 0.9;
 		for (const p of pieces) {
 			if (!p.tenu) continue;
-			const a = (1 - Math.hypot(p.x - pt[0], p.y - pt[1]) / (portee * 1.3)) * 0.65 * p.fade;
+			// le fil apparaît avec la prise (il « pousse » en 1 s) et pâlit avec la distance
+			const e = p.force * p.force * (3 - 2 * p.force);
+			const a = (1 - Math.hypot(p.x - pt[0], p.y - pt[1]) / (portee * 1.6)) * 0.65 * p.fade * e;
 			if (a <= 0.02) continue;
 			g.globalAlpha = a;
 			g.strokeStyle = p.couleur;
