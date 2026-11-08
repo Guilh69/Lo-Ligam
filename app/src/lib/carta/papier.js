@@ -290,14 +290,11 @@ export function crearColaPapier(L, { mode = 'costura' } = {}) {
 				tx.setTransform(1, 0, 0, 1, 0, 0);
 				tx.clearRect(0, 0, tmp.width, tmp.height);
 				tx.setTransform(dpr, 0, 0, dpr, 0, 0);
-				tx.save();
-				tx.translate(-rx / dpr, -ry / dpr);
 				tx.fillStyle = tx.strokeStyle = zn.color;
 				tx.fill(zn.c, 'evenodd');
 				tx.lineWidth = 1.2;
 				tx.lineJoin = 'round';
 				tx.stroke(zn.c);
-				tx.restore();
 				g.save();
 				g.shadowColor = 'rgba(24, 12, 6, 0.3)';
 				g.shadowBlur = 3 * dpr;
