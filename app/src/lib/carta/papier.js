@@ -1,15 +1,20 @@
-// Essai du 08-11 : la couche des dialectes en papier découpé (demande de
-// Romain : « des couches cohérentes avec mon style papier découpé »).
+// La couche des dialectes de la carte en papier découpé (essai /ensag/carta-papier).
+// (Romain, 08-11 : « l'idée est là… pas du tout convaincu par les zones de
+// transition, en plus ça lag. Il faut quelque chose de plus quali et original.
+// J'imagine une transition douce, et pourquoi pas un fondu de couleur cohérent ».)
 //
-// Ce que ça change par rapport à colaDonadas.js (qui n'est pas touché) :
-//   - chaque dialecte est une PIÈCE de papier : aplat plein, bord net, ombre
-//     courte (celle des illustrations : 0 3px, flou 2px), jamais de flou ;
-//   - l'apparition est une COULÉE : la pièce naît au cœur de son dialecte et
-//     s'écoule dans son périmètre, en contournant les golfes et les vallées
-//     (distance « à pied » depuis le cœur, pas un cercle), jusqu'à tout
-//     occuper ; son front net projette son ombre sur ce qui est dessous ;
-//   - les zones de transition ne sont plus des fondus : trois logiques en
-//     essai (chevauchement, carreaux, confettis), toutes nettes.
+// Ce que ça change par rapport à la première mouture :
+//   - les zones de transition ne sont plus des confettis ni des carreaux :
+//     la couleur des deux parlers se fond continûment, d'un bord à l'autre
+//     de la bande, comme deux feuilles dont les teintes se boivent ;
+//   - le fondu est dessiné UNE fois par vue (une tranche de pixels), posé
+//     ensuite sans calcul à chaque image : plus de saccades ;
+//   - la coulée de chaque pièce n'est plus recalculée image par image :
+//     ses contours sont calculés une fois (en coordonnées de la carte, pas
+//     de l'écran), rangés par avance, puis simplement remplis pendant
+//     l'animation, à toute échelle.
+//   - deux allures au choix : « dous » (fondu net entre les couleurs) et
+//     « granie » (le même fondu, traversé d'un grain de papier à peine vu).
 //
 // Un seul fichier, une couche Leaflet autonome, qui lit les mêmes données que
 // la vraie carte (/data/dialectes.geojson, transicions.geojson, limits-carta).
@@ -19,8 +24,9 @@ import { CARTE, texteSur } from '../styles/palette.js';
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 const lis = (t) => t * t * (3 - 2 * t); // arrivée et fin douces
+const mai = (t) => t * t * t * (t * (t * 6 - 15) + 10); // encore plus doux (le fondu)
 
-export const MODES = ['net', 'chevauchement', 'carreaux', 'confettis'];
+export const MODES = ['dous', 'granie'];
 
 // L'ordre de la pile (le dernier est dessus : son ombre tombe sur les autres)
 const PILE = ['gas', 'lem', 'auv', 'viv', 'pro', 'lan'];
@@ -29,9 +35,10 @@ const DEPART = { lan: 0, gas: 1, pro: 2, auv: 3, lem: 4, viv: 5 };
 const DUREE = 2.6; // s : une pièce occupe tout son périmètre
 const PAS = 0.2; // s : décalage entre deux pièces
 const DUREE_FIN = DUREE + PAS * 5 + 0.2; // coulée finie (les transitions viennent ensuite)
-const DUREE_TRANS = 0.9; // s : les transitions se posent
+const DUREE_TRANS = 0.9; // s : le fondu se pose
 const TOTAL = DUREE_FIN + DUREE_TRANS + 0.2;
 const LOBES = 0.2; // à quel point le front est irrégulier (0 = rond comme un cercle)
+const NIVELS = 14; // contours de la coulée gardés en mémoire par pièce
 
 // Le nom d'un dialecte posé sur sa pièce, un peu à part de la donnée (comme colaDonadas.js)
 const ETI_NOM = { lan: [2.2, 43.95] };
@@ -241,7 +248,7 @@ function ligneDeNiveau(f, w, h, niveau, ax, bx, ay, by) {
 			const cas = (tl ? 1 : 0) | (tr ? 2 : 0) | (br ? 4 : 0) | (bl ? 8 : 0);
 			if (cas === 0 || cas === 15) continue;
 			const T = () => point(i, j, false),
-				B = () => point(i, j + 1, false),
+				B = () => point(i + 0, j + 1, false),
 				L = () => point(i, j, true),
 				R = () => point(i + 1, j, true);
 			switch (cas) {
@@ -311,6 +318,19 @@ function ligneDeNiveau(f, w, h, niveau, ax, bx, ay, by) {
 	return chemin;
 }
 
+// les contours de la coulée d'une pièce, calculés une fois pour toutes les vues
+// (en coordonnées de la carte, jamais de l'écran : mêmes à toute échelle)
+function contourNivel(C, k) {
+	const { w, h, dn, n1, n2, champ, cell, x0, y0 } = C;
+	const p = (k + 0.5) / NIVELS;
+	const ph = p * 1.6,
+		cs = Math.cos(ph),
+		sn = Math.sin(ph);
+	for (let q = 0; q < w * h; q++) champ[q] = dn[q] < 100 ? dn[q] + LOBES * (n1[q] * cs + n2[q] * sn) : 1e3;
+	const niveau = lerp(-LOBES - 0.02, 1.15 + LOBES + 0.02, lis(p));
+	return ligneDeNiveau(champ, w, h, niveau, cell, x0 + (0.5 - PAD) * cell, cell, y0 + (0.5 - PAD) * cell);
+}
+
 /* ---------- Distance (en cellules) jusqu'à la zone la plus proche, par deux passes ---------- */
 function distance(masque, w, h) {
 	const d = new Float32Array(w * h);
@@ -344,8 +364,11 @@ function distance(masque, w, h) {
 	return d;
 }
 
+// une couleur de la palette (« #rrggbb ») → [r, g, b]
+const rgb = (hex) => [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
+
 /* ---------- La couche Leaflet ---------- */
-export function crearColaPapier(L, { mode = 'confettis' } = {}) {
+export function crearColaPapier(L, { mode = 'dous' } = {}) {
 	const Cola = L.Layer.extend({
 		options: { pane: 'papier', padding: 0.25 },
 
@@ -384,7 +407,11 @@ export function crearColaPapier(L, { mode = 'confettis' } = {}) {
 					for (const z of this._G.zonas) z.rang = DEPART[z.kod] ?? 0;
 					this._G.zonas.sort((a, b) => PILE.indexOf(a.kod) - PILE.indexOf(b.kod));
 					this._update();
-					this.lancer();
+					// les fronts de coulée se préparent à l'écart des images d'animation,
+					// puis la coulée démarresse dès que tout est prêt
+					this._preparar().then(() => {
+						if (this._map) this.lancer();
+					});
 				}
 			);
 			document.fonts?.load('700 12px Luciole').then(() => this._dessiner(), () => {});
@@ -404,7 +431,11 @@ export function crearColaPapier(L, { mode = 'confettis' } = {}) {
 		/* --- commandes --- */
 		mode(m) {
 			this._mode = m;
-			this._prepBandes();
+			const G = this._G;
+			if (G?.dom_c) for (const b of G.bandas) {
+				b.img = null;
+				this._rasterFondu(b);
+			}
 			this._dessiner();
 		},
 		// rejoue la coulée ; t = un instant figé (secondes), pour les captures
@@ -431,6 +462,24 @@ export function crearColaPapier(L, { mode = 'confettis' } = {}) {
 		_temps() {
 			if (this._fige !== null) return this._fige;
 			return this._t0 === null ? Infinity : (performance.now() - this._t0) / 1000;
+		},
+
+		/* --- préparation des fronts de coulée, hors animation --- */
+		_preparar() {
+			const zonas = this._G.zonas.filter((z) => z.anels.length);
+			return new Promise((fin) => {
+				const etape = () => {
+					const zn = zonas.find((z) => !z.coulee || (z.fronts?.length ?? 0) < NIVELS);
+					if (!zn || !this._map) {
+						this._dessiner();
+						return fin();
+					}
+					if (!zn.coulee) zn.coulee = preparerCoulee(this._map, zn);
+					else (zn.fronts ??= []).push(contourNivel(zn.coulee, zn.fronts.length));
+					setTimeout(etape, 0);
+				};
+				setTimeout(etape, 0);
+			});
 		},
 
 		/* --- vue : tracés, à chaque déplacement ou zoom --- */
@@ -518,43 +567,33 @@ export function crearColaPapier(L, { mode = 'confettis' } = {}) {
 				const q = map.project([v.lat, v.lon], z);
 				v.px = [q.x - o.x, q.y - o.y];
 			}
-			this._prepBandes();
+			// les fondus sont refaits pour cette vue (une fois, pas à chaque image)
+			for (const b of G.bandas) {
+				b.img = null;
+				this._rasterFondu(b);
+			}
 			this._dessiner();
 		},
 
-		/* --- les zones de transition : préparées à chaque vue --- */
-		_prepBandes() {
-			const G = this._G;
-			if (!G?.dom_c) return;
-			this._tcOk = false;
+		/* --- le fondu d'une bande : dessiné une fois par vue --- */
+		_rasterFondu(b) {
+			if (b.img) return;
 			const o = this._o,
 				s2 = this._s2,
 				map = this._map;
-			const par = Object.fromEntries(G.zonas.map((z) => [z.kod, z]));
-			for (const b of G.bandas) {
-				b.A = par[b.paire[0]];
-				b.B = par[b.paire[1]];
-				// la pièce du dessus : celle qui est plus haut dans la pile
-				b.haut = PILE.indexOf(b.paire[0]) > PILE.indexOf(b.paire[1]) ? b.A : b.B;
-				b.bas = b.haut === b.A ? b.B : b.A;
-				b.carreaux = null;
-				if (this._mode === 'carreaux' || this._mode === 'confettis') this._champBande(b, o, s2, map);
-			}
-		},
-		// la part de A autour de chaque point de la bande (A flouté) et la « profondeur »
-		// dans la bande (0 au bord, 1 au milieu) ; puis, selon le mode, soit les
-		// carreaux ou confettis
-		_champBande(b, o, s2, map) {
-			const w0 = Math.max(b.largPx * 1.2, 16), // une bande trop fine reste lisible
-				sig = w0 * 0.36, // (marge autour de la bande)
-				c = 2.5; // pixels de carte par cellule
+			const par = Object.fromEntries(this._G.zonas.map((z) => [z.kod, z]));
+			const A = par[b.paire[0]],
+				B = par[b.paire[1]];
+			if (!A || !B || !b.c || !b.bbox) return;
+			const w0 = Math.max(b.largPx, 16), // une bande trop fine reste lisible
+				c = 2; // pixels de carte par cellule
 			const [x0, y0, x1, y1] = b.bbox;
-			const m = Math.ceil(sig * 2.2);
+			const m = Math.ceil(w0 * 0.6 + 16);
 			const bx = Math.floor(x0 - m),
 				by = Math.floor(y0 - m);
 			const gw = Math.ceil((x1 + m - bx) / c) + 2,
 				gh = Math.ceil((y1 + m - by) / c) + 2;
-			if (gw * gh > 400000) return;
+			if (gw * gh > 450000) return;
 			const lire = (chemin, flou) => {
 				const cv = document.createElement('canvas');
 				cv.width = gw;
@@ -569,15 +608,16 @@ export function crearColaPapier(L, { mode = 'confettis' } = {}) {
 				for (let i = 0; i < gw * gh; i++) r[i] = px[4 * i + 3] / 255;
 				return r;
 			};
-			// (la profondeur : la bande elle-même, floutée ; au bord de la bande ≈ 0,5)
-			const prof = lire(b.c, Math.max(b.largPx, 8) * 0.18);
-			// La proportion de A : les bandes des données sont posées d'un côté de la
-			// frontière (pas à cheval dessus). On mesure donc la position par la distance
-			// signée à la frontière, puis on l'étire sur la bande : couleur pure de B à un
-			// bord, couleur pure de A à l'autre.
-			const dur = (chemin) => Uint8Array.from(lire(chemin, 0), (v) => (v > 0.5 ? 1 : 0));
-			const dA = distance(dur(b.A.c), gw, gh),
-				dB = distance(dur(b.B.c), gw, gh);
+			// la position dans la bande : 0 bord de B, 1 bord de A
+			const prof = lire(b.c, Math.max(b.largPx, 8) * 0.16);
+			const dur = (chemin) => {
+				const r = lire(chemin, 0.01);
+				const n = new Uint8Array(gw * gh);
+				for (let i = 0; i < gw * gh; i++) n[i] = r[i] > 0.5 ? 1 : 0;
+				return n;
+			};
+			const dA = distance(dur(A.c), gw, gh),
+				dB = distance(dur(B.c), gw, gh);
 			const rho = new Float32Array(gw * gh),
 				vals = [];
 			for (let q = 0; q < gw * gh; q++) {
@@ -587,54 +627,55 @@ export function crearColaPapier(L, { mode = 'confettis' } = {}) {
 			vals.sort((p, q) => p - q);
 			const lo = vals.length ? vals[Math.floor(vals.length * 0.04)] : -1,
 				hi = vals.length ? Math.max(vals[Math.floor(vals.length * 0.96)], lo + 3) : 1;
-			const s = new Float32Array(gw * gh);
-			for (let q = 0; q < gw * gh; q++) s[q] = clamp((rho[q] - lo) / (hi - lo));
-			const poids = (v) => clamp((v - 0.5) / 0.4);
-			const lis2 = (t) => t * t * (3 - 2 * t);
-			const taille = w0;
-			const wx = (X) => (X + o.x) / s2, // pixel de carte → coordonnée du zoom 0
-				wy = (Y) => (Y + o.y) / s2;
-			// carreaux, confettis : une grille attachée à la géographie
-			const confettis = this._mode === 'confettis';
-			const t = clamp(taille / 3.2, 8, 20) * (confettis ? 0.8 : 1),
-				T0 = t / s2; // taille d'une case en zone 0
-			const f0 = proj0(map, b.anels[0]);
-			const i0 = Math.floor(wx(x0) / T0),
-				i1 = Math.ceil(wx(x1) / T0),
-				j0 = Math.floor(wy(y0) / T0),
-				j1 = Math.ceil(wy(y1) / T0);
+			// l'image du fondu : la couleur se fond d'un bord à l'autre (mai :
+			// plateau au milieu, pentes douces), invisible hors de la bande
+			const ca = rgb(A.color),
+				cb = rgb(B.color);
+			const img = document.createElement('canvas');
+			img.width = gw;
+			img.height = gh;
+			const g2 = img.getContext('2d');
+			const im = g2.createImageData(gw, gh);
+			const dt = im.data;
+			const granie = this._mode === 'granie';
 			const hache = (i, j, n = 0) => {
 				const h = Math.sin(i * 127.1 + j * 311.7 + n * 74.7) * 43758.5453;
 				return h - Math.floor(h);
 			};
-			const liste = [];
-			for (let j = j0; j <= j1; j++)
-				for (let i = i0; i <= i1; i++) {
-					const cx0 = (i + 0.5 + (confettis ? (hache(i, j, 1) - 0.5) * 0.7 : 0)) * T0,
-						cy0 = (j + 0.5 + (confettis ? (hache(i, j, 2) - 0.5) * 0.7 : 0)) * T0;
-					if (!pip(f0, cx0, cy0)) continue;
-					const X = cx0 * s2 - o.x,
-						Y = cy0 * s2 - o.y;
-					const gi = clamp(Math.round((X - bx) / c - 0.5), 0, gw - 1),
-						gj = clamp(Math.round((Y - by) / c - 0.5), 0, gh - 1);
-					const v = s[gj * gw + gi],
-						w = lis2(poids(prof[gj * gw + gi]));
-					liste.push({ X, Y, t, r: confettis ? t * (0.34 + 0.2 * hache(i, j, 3)) : 0, a: v + (hache(i, j) - 0.5) * 0.95 * w > 0.5 });
+			for (let j = 0; j < gh; j++)
+				for (let i = 0; i < gw; i++) {
+					const q = j * gw + i;
+					const w = lis(clamp((prof[q] - 0.5) / 0.42));
+					if (w <= 0.002) continue;
+					const u = mai(clamp((rho[q] - lo) / (hi - lo)));
+					let r = lerp(cb[0], ca[0], u),
+						gg = lerp(cb[1], ca[1], u),
+						bl = lerp(cb[2], ca[2], u);
+					if (granie) {
+						// le grain du papier : un chahut de fibres à peine vu
+						const e = (hache(i, j) - 0.5) * 7 + (hache(i, j, 3) - 0.5) * 3;
+						r += e;
+						gg += e;
+						bl += e;
+					}
+					const p4 = 4 * q;
+					dt[p4] = r;
+					dt[p4 + 1] = gg;
+					dt[p4 + 2] = bl;
+					dt[p4 + 3] = Math.round(255 * w);
 				}
-			b.carreaux = liste;
+			g2.putImageData(im, 0, 0);
+			b.img = img;
+			b.imgX = bx;
+			b.imgY = by;
+			b.imgS = c;
 		},
 
 		/* --- dessin --- */
-		_ombre(cx, dpr, a = 0.46) {
-			cx.shadowColor = `rgba(24, 12, 6, ${a})`;
-			cx.shadowBlur = 3 * dpr;
-			cx.shadowOffsetY = 3 * dpr;
-		},
 		_dessiner() {
 			const G = this._G;
 			if (!G?.dom_c || !this._cv) return;
 			const cx = this._cx,
-				dpr = this._dpr,
 				t = this._temps();
 			cx.setTransform(1, 0, 0, 1, 0, 0);
 			cx.clearRect(0, 0, this._cv.width, this._cv.height);
@@ -645,16 +686,19 @@ export function crearColaPapier(L, { mode = 'confettis' } = {}) {
 				if (p > 0) this._piece(zn, p);
 			}
 			if (aT > 0.01) {
-				this._transitions(aT);
+				this._fondu(aT);
 				this._noms(aT);
 			}
 		},
-		// une pièce, de 0 à 1 : naît au cœur et coule dans son périmètre
+		// une pièce : de 0 à 1, les fronts précalculés se remplissent l'un
+		// après l'autre (deux au plus à la fois, un fondu entre eux)
 		_piece(zn, p) {
 			const cx = this._cx,
 				tx = this._tx,
 				dpr = this._dpr,
-				G = this._G;
+				G = this._G,
+				o = this._o,
+				s2 = this._s2;
 			const [bx0, by0, bx1, by1] = zn.bbox;
 			const M = 12;
 			const rx = Math.max(0, Math.floor((bx0 - M) * dpr)),
@@ -675,18 +719,36 @@ export function crearColaPapier(L, { mode = 'confettis' } = {}) {
 				tx.lineWidth = 1.2;
 				tx.lineJoin = 'round';
 				tx.stroke(zn.c);
-				// chevauchement : la pièce du dessus déborde sur l'autre dans la bande
-				if (this._mode === 'chevauchement' && this._aTrans > 0.001) {
-					tx.globalAlpha = this._aTrans;
-					for (const b of G.bandas) if (b.haut === zn) tx.fill(b.c, 'evenodd');
-				}
 			} else {
+				if (!zn.coulee) zn.coulee = preparerCoulee(this._map, zn);
+				const fronts = (zn.fronts ??= []);
+				const v = p * NIVELS,
+					k = clamp(Math.floor(v), 0, NIVELS - 1);
+				// capture d'un instant figé : les fronts manquants se calculent
+				// séance tenante (une fois, l'image ne bouge plus ensuite)
+				if (this._fige !== null)
+					while (fronts.length < Math.min(k + 2, NIVELS)) fronts.push(contourNivel(zn.coulee, fronts.length));
+				if (!fronts.length) return tx.restore();
 				tx.clip(zn.c, 'evenodd');
-				tx.fill(this._front(zn, p), 'evenodd');
+				// les coordonnées des fronts sont celles de la carte (zoom 0) :
+				// on les amène à l'écran d'un seul changement de repère
+				tx.save();
+				tx.transform(s2, 0, 0, s2, -o.x, -o.y);
+				const kk = Math.min(k, fronts.length - 1);
+				tx.fill(fronts[kk], 'evenodd');
+				const frac = v - kk;
+				if (frac > 0.01 && kk + 1 < fronts.length) {
+					tx.globalAlpha = frac;
+					tx.fill(fronts[kk + 1], 'evenodd');
+				}
+				tx.restore();
 			}
 			tx.restore();
 			// deux ombres : une portée douce, et l'ombre de contact, serrée contre le bord
-			for (const [a, fl, dy] of [[0.26, 7, 4.5], [0.5, 1.6, 1.4]]) {
+			for (const [a, fl, dy] of [
+				[0.26, 7, 4.5],
+				[0.5, 1.6, 1.4]
+			]) {
 				cx.save();
 				cx.shadowColor = `rgba(24, 12, 6, ${a})`;
 				cx.shadowBlur = fl * dpr;
@@ -695,65 +757,24 @@ export function crearColaPapier(L, { mode = 'confettis' } = {}) {
 				cx.restore();
 			}
 		},
-		// le front de la coulée : la ligne de niveau de la distance « à pied »
-		_front(zn, p) {
-			const map = this._map;
-			const C = (zn.coulee ??= preparerCoulee(map, zn));
-			const { w, h, dn, n1, n2, champ } = C;
-			const ph = p * 1.6,
-				cs = Math.cos(ph),
-				sn = Math.sin(ph);
-			for (let q = 0; q < w * h; q++) champ[q] = dn[q] < 100 ? dn[q] + LOBES * (n1[q] * cs + n2[q] * sn) : 1e3;
-			const niveau = lerp(-LOBES - 0.02, 1.15 + LOBES + 0.02, lis(p));
-			const s2 = this._s2,
-				o = this._o;
-			const a = C.cell * s2;
-			return ligneDeNiveau(champ, w, h, niveau, a, (C.x0 + (0.5 - PAD) * C.cell) * s2 - o.x, a, (C.y0 + (0.5 - PAD) * C.cell) * s2 - o.y);
-		},
-		// Les cases des transitions : dessinées une fois par vue dans une toile à part
-		// (des centaines d'ombres coûtent cher), puis posées avec leur transparence
-		_transitions(a) {
-			const cx = this._cx,
-				mode = this._mode;
-			// (le chevauchement est dessiné avec la pièce du dessus : _piece)
-			if (mode === 'net' || mode === 'chevauchement') return;
-			if (!this._tcOk) this._rendreTransitions();
-			cx.save();
-			cx.setTransform(1, 0, 0, 1, 0, 0);
-			cx.globalAlpha = a;
-			cx.drawImage(this._tc, 0, 0);
-			cx.restore();
-		},
-		_rendreTransitions() {
+		// le fondu des transitions : les tranches déjà dessinées, posées sans calcul
+		_fondu(a) {
 			const G = this._G,
-				dpr = this._dpr,
-				w = this._cv.width,
-				h = this._cv.height;
-			const tc = (this._tc ??= document.createElement('canvas'));
-			if (tc.width !== w || tc.height !== h) {
-				tc.width = w;
-				tc.height = h;
-			}
-			const cx = tc.getContext('2d');
-			cx.setTransform(1, 0, 0, 1, 0, 0);
-			cx.clearRect(0, 0, w, h);
-			cx.setTransform(dpr, 0, 0, dpr, 0, 0);
-			cx.clip(G.dom_c, 'evenodd');
-			cx.shadowColor = 'rgba(24, 12, 6, 0.38)';
-			cx.shadowBlur = 2.5 * dpr;
-			cx.shadowOffsetY = 1.5 * dpr;
+				cx = this._cx,
+				dpr = this._dpr;
+			let alguna = false;
 			for (const b of G.bandas) {
-				if (!b.carreaux) continue;
-				for (const q of b.carreaux) {
-					const c = q.t * 0.88;
-					cx.fillStyle = q.a ? b.A.color : b.B.color;
-					cx.beginPath();
-					if (q.r) cx.arc(q.X, q.Y, q.r, 0, 6.2832);
-					else cx.roundRect(q.X - c / 2, q.Y - c / 2, c, c, 2);
-					cx.fill();
+				if (!b.img) continue;
+				if (!alguna) {
+					alguna = true;
+					cx.save();
+					cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+					cx.clip(G.dom_c, 'evenodd');
+					cx.globalAlpha = a;
 				}
+				cx.drawImage(b.img, b.imgX, b.imgY, b.img.width * b.imgS, b.img.height * b.imgS);
 			}
-			this._tcOk = true;
+			if (alguna) cx.restore();
 		},
 		_noms(a) {
 			const G = this._G,

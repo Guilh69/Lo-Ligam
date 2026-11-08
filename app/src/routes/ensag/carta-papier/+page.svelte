@@ -1,26 +1,23 @@
 <script>
-	// Essai du 08-11 : la couche des dialectes de la carte en papier découpé
-	// (demande de Romain : couches cohérentes avec le style papier, une
-	// animation fluide où le papier « coule » et prend possession de son
-	// périmètre, et des zones de transition qui ne soient plus des fondus).
+	// Essai du 08-11, deuxième mouture : la couche des dialectes en papier
+	// découpé, avec une transition en fondu de couleur entre parlers (demande
+	// de Romain : une transition douce et cohérente, sans saccade).
 	// La vraie carte n'est pas touchée : tout est dans lib/carta/papier.js.
-	// Adresses utiles : ?mode=net|chevauchement|carreaux|confettis ;
-	// ?t=1.4 fige la coulée à cet instant (en secondes) ; ?zoom=7&lat=43.9&lon=2.5
+	// Adresses utiles : ?mode=dous|granie ; ?t=1.4 fige la coulée à cet
+	// instant (en secondes) ; ?zoom=7&lat=43.9&lon=2.5
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/state';
 	import 'leaflet/dist/leaflet.css';
 	import { crearColaPapier, MODES } from '$lib/carta/papier.js';
 
 	const Q = page.url.searchParams;
-	let mode = $state(MODES.includes(Q.get('mode')) ? Q.get('mode') : 'confettis');
+	let mode = $state(MODES.includes(Q.get('mode')) ? Q.get('mode') : 'dous');
 	let eltCarta;
 	let carte, cola;
 
 	const NOMS = {
-		net: ['Net', 'Les pièces se touchent, sans rien entre elles'],
-		chevauchement: ['Chevauchement', 'La pièce du dessus déborde sur l’autre'],
-		carreaux: ['Carreaux', 'Une mosaïque de petits carrés des deux couleurs'],
-		confettis: ['Confettis', 'Des confettis de papier des deux couleurs, de plus en plus nombreux d’un côté']
+		dous: ['Fondu doux', 'Les couleurs des deux parlers se fondent l’une dans l’autre, sans coupure'],
+		granie: ['Fondu granulé', 'Le même fondu, traversé du grain fin du papier']
 	};
 
 	onMount(async () => {
@@ -72,7 +69,7 @@
 	<div class="commandes">
 		<p class="titre">Essai : la couche des dialectes en papier découpé</p>
 		<button class="pc pc-or" onclick={() => cola?.lancer()}>Rejouer la coulée</button>
-		<p class="legende">Zones de transition</p>
+		<p class="legende">Transition entre parlers</p>
 		<div class="choix">
 			{#each MODES as m}
 				<button class="pc {mode === m ? 'pc-or' : 'pc-2'}" aria-pressed={mode === m} onclick={() => choisir(m)}>{NOMS[m][0]}</button>
