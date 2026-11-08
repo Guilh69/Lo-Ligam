@@ -27,6 +27,7 @@
 	let { mode = 'confettis', fond = false, onattrape = () => {} } = $props();
 
 	let zone;
+	let fils; // le canevas des fils fins qui relient la main aux confettis qu'elle tient
 	let pieces = $state([]);
 	let mot = $state(null);
 	let annonce = $state('');
@@ -63,7 +64,11 @@
 				rayonDoigt: objets ? 85 : 115,
 				radial: objets ? 0.8 : 1.4,
 				transfert: objets ? 0.16 : 0.12,
-				vmax: 6,
+				// confettis (Romain, 08-11, sur le modèle de la constellation de l'accueil) : la main attrape ceux du
+				// secteur proche, les relie d'un fil fin, et un geste vif les lance dans tous les sens
+				aimant: !objets,
+				fils,
+				vmax: objets ? 6 : 11,
 				collisions: objets,
 				fondu: fond,
 				attrapables: objets,
@@ -153,6 +158,7 @@
 </script>
 
 <div class="couche" class:objets={mode === 'objets'} class:fond bind:this={zone} aria-hidden="true">
+	{#if mode !== 'objets'}<canvas class="fils" bind:this={fils}></canvas>{/if}
 	{#each pieces as c, k (k)}
 		{#if mode === 'objets'}
 			<div class="p o">
@@ -195,6 +201,20 @@
 		width: 100%;
 		height: 100%;
 		background: var(--c);
+	}
+	/* les fils de l'aimant : sous les confettis, sur toute la zone */
+	.fils {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+	/* un confetti tenu par la main : plus franc, pour qu'on voie qu'il est pris */
+	.c {
+		transition: opacity 0.25s;
+	}
+	.c:global(.tenu) {
+		opacity: calc(0.92 * var(--fade, 1));
 	}
 	.c .rond {
 		border-radius: 50%;
