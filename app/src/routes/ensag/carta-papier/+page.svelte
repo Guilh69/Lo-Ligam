@@ -3,7 +3,7 @@
 	// découpé, avec une transition en fondu de couleur entre parlers (demande
 	// de Romain : une transition douce et cohérente, sans saccade).
 	// La vraie carte n'est pas touchée : tout est dans lib/carta/papier.js.
-	// Adresses utiles : ?mode=dous|granie ; ?t=1.4 fige la coulée à cet
+	// Adresses utiles : ?mode=costura|zona ; ?t=1.4 fige la coulée à cet
 	// instant (en secondes) ; ?zoom=7&lat=43.9&lon=2.5
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/state';
@@ -11,13 +11,13 @@
 	import { crearColaPapier, MODES } from '$lib/carta/papier.js';
 
 	const Q = page.url.searchParams;
-	let mode = $state(MODES.includes(Q.get('mode')) ? Q.get('mode') : 'dous');
+	let mode = $state(MODES.includes(Q.get('mode')) ? Q.get('mode') : 'costura');
 	let eltCarta;
 	let carte, cola;
 
 	const NOMS = {
-		dous: ['Fondu doux', 'Les couleurs des deux parlers se fondent l’une dans l’autre, sans coupure'],
-		granie: ['Fondu granulé', 'Le même fondu, traversé du grain fin du papier']
+		costura: ['Couture fine', 'Les deux couleurs se fondent sur une étroite bande collée à la frontière'],
+		zona: ['Zone large', 'Le fondu s’étale sur toute la bande réelle de mélange entre les parlers']
 	};
 
 	onMount(async () => {

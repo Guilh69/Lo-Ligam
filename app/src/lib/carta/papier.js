@@ -5,16 +5,17 @@
 //
 // Ce que ça change par rapport à la première mouture :
 //   - les zones de transition ne sont plus des confettis ni des carreaux :
-//     la couleur des deux parlers se fond continûment, d'un bord à l'autre
-//     de la bande, comme deux feuilles dont les teintes se boivent ;
-//   - le fondu est dessiné UNE fois par vue (une tranche de pixels), posé
-//     ensuite sans calcul à chaque image : plus de saccades ;
+//     la couleur des deux parlers se fond, soit serrée le long de la
+//     frontière (« costura », essayée d'abord), soit sur toute la bande de
+//     vrai mélange des parlers (« zona », la bande des données) ;
+//   - le fondu d'une bande est dessiné quand la page est calme, jamais au
+//     milieu d'un déplacement ou de l'animation : plus de saccades ;
+//   - il ne couvre que ce qui est à l'écran, aux couleurs pleines (pas de
+//     empilements translucides : la bave brunâtre vient de là) ;
 //   - la coulée de chaque pièce n'est plus recalculée image par image :
 //     ses contours sont calculés une fois (en coordonnées de la carte, pas
 //     de l'écran), rangés par avance, puis simplement remplis pendant
 //     l'animation, à toute échelle.
-//   - deux allures au choix : « dous » (fondu net entre les couleurs) et
-//     « granie » (le même fondu, traversé d'un grain de papier à peine vu).
 //
 // Un seul fichier, une couche Leaflet autonome, qui lit les mêmes données que
 // la vraie carte (/data/dialectes.geojson, transicions.geojson, limits-carta).
@@ -26,7 +27,7 @@ const lerp = (a, b, t) => a + (b - a) * t;
 const lis = (t) => t * t * (3 - 2 * t); // arrivée et fin douces
 const mai = (t) => t * t * t * (t * (t * 6 - 15) + 10); // encore plus doux (le fondu)
 
-export const MODES = ['dous', 'granie'];
+export const MODES = ['costura', 'zona'];
 
 // L'ordre de la pile (le dernier est dessus : son ombre tombe sur les autres)
 const PILE = ['gas', 'lem', 'auv', 'viv', 'pro', 'lan'];
@@ -39,6 +40,7 @@ const DUREE_TRANS = 0.9; // s : le fondu se pose
 const TOTAL = DUREE_FIN + DUREE_TRANS + 0.2;
 const LOBES = 0.2; // à quel point le front est irrégulier (0 = rond comme un cercle)
 const NIVELS = 14; // contours de la coulée gardés en mémoire par pièce
+const COSTURA = 15; // px de chaque côté de la frontière où les couleurs se fondent (mode costura)
 
 // Le nom d'un dialecte posé sur sa pièce, un peu à part de la donnée (comme colaDonadas.js)
 const ETI_NOM = { lan: [2.2, 43.95] };
@@ -431,17 +433,22 @@ export function crearColaPapier(L, { mode = 'dous' } = {}) {
 		/* --- commandes --- */
 		mode(m) {
 			this._mode = m;
-			const G = this._G;
-			if (G?.dom_c) for (const b of G.bandas) {
-				b.img = null;
-				this._rasterFondu(b);
-			}
+			this._planjarFondus();
 			this._dessiner();
 		},
 		// rejoue la coulée ; t = un instant figé (secondes), pour les captures
 		lancer(t = null) {
 			cancelAnimationFrame(this._raf);
 			this._fige = t;
+			// un instant figé sert aux captures : les fondus se dessinent
+			// séance tenante, sans attendre un moment calme
+			if (t !== null && this._G?.dom_c) {
+				this._fondPend = [];
+				for (const b of this._G.bandas) {
+					b.img = null;
+					this._rasterFondu(b);
+				}
+			}
 			if (t !== null) {
 				this._t0 = null;
 				return this._dessiner();
@@ -567,33 +574,59 @@ export function crearColaPapier(L, { mode = 'dous' } = {}) {
 				const q = map.project([v.lat, v.lon], z);
 				v.px = [q.x - o.x, q.y - o.y];
 			}
-			// les fondus sont refaits pour cette vue (une fois, pas à chaque image)
-			for (const b of G.bandas) {
-				b.img = null;
-				this._rasterFondu(b);
-			}
+			// les fondus sont refaits pour cette vue, un par moment calme
+			this._planjarFondus();
 			this._dessiner();
 		},
 
-		/* --- le fondu d'une bande : dessiné une fois par vue --- */
+		/* --- les fondus : dessinés quand la page est calme, jamais au milieu d'un geste --- */
+		_planjarFondus() {
+			const G = this._G;
+			if (!G) return;
+			for (const b of G.bandas) b.img = null;
+			this._fondPend = G.bandas.slice();
+			this._contunharFondus();
+		},
+		_contunharFondus() {
+			if (!this._fondPend?.length) return;
+			const repaus = window.requestIdleCallback
+				? (cb) => requestIdleCallback(cb, { timeout: 400 })
+				: (cb) => setTimeout(cb, 40);
+			repaus(() => {
+				if (!this._map) return;
+				const b = this._fondPend.shift();
+				if (b) this._rasterFondu(b);
+				this._dessiner();
+				if (this._fondPend.length) this._contunharFondus();
+			});
+		},
+
+		/* --- le fondu d'une bande : une fois par vue, sur ce qui est à l'écran --- */
 		_rasterFondu(b) {
 			if (b.img) return;
-			const o = this._o,
-				s2 = this._s2,
-				map = this._map;
 			const par = Object.fromEntries(this._G.zonas.map((z) => [z.kod, z]));
 			const A = par[b.paire[0]],
 				B = par[b.paire[1]];
 			if (!A || !B || !b.c || !b.bbox) return;
-			const w0 = Math.max(b.largPx, 16), // une bande trop fine reste lisible
-				c = 2; // pixels de carte par cellule
+			const tail = this._map.getSize();
+			const costura = this._mode === 'costura';
 			const [x0, y0, x1, y1] = b.bbox;
-			const m = Math.ceil(w0 * 0.6 + 16);
-			const bx = Math.floor(x0 - m),
-				by = Math.floor(y0 - m);
-			const gw = Math.ceil((x1 + m - bx) / c) + 2,
-				gh = Math.ceil((y1 + m - by) / c) + 2;
-			if (gw * gh > 450000) return;
+			// la fenêtre : la bande réduite à l'écran (jamais la carte entière),
+			// avec la marge où le mélange peut encore se voir
+			const marg = costura ? COSTURA * 2.5 : Math.max(b.largPx * 0.2, 24);
+			const vx0 = Math.max(x0 - marg, 0),
+				vy0 = Math.max(y0 - marg, 0),
+				vx1 = Math.min(x1 + marg, tail.x),
+				vy1 = Math.min(y1 + marg, tail.y);
+			if (vx1 <= vx0 || vy1 <= vy0) return;
+			const aire = (vx1 - vx0) * (vy1 - vy0);
+			if (aire > 3600000) return; // trop zoomé pour que la couture reste juste
+			const c = aire > 120000 ? 3 : 2; // pixels de carte par cellule
+			const bx = Math.floor(vx0),
+				by = Math.floor(vy0);
+			const gw = Math.ceil((vx1 - bx) / c) + 2,
+				gh = Math.ceil((vy1 - by) / c) + 2;
+			// la distance à chaque parler, dans la fenêtre seule
 			const lire = (chemin, flou) => {
 				const cv = document.createElement('canvas');
 				cv.width = gw;
@@ -608,8 +641,6 @@ export function crearColaPapier(L, { mode = 'dous' } = {}) {
 				for (let i = 0; i < gw * gh; i++) r[i] = px[4 * i + 3] / 255;
 				return r;
 			};
-			// la position dans la bande : 0 bord de B, 1 bord de A
-			const prof = lire(b.c, Math.max(b.largPx, 8) * 0.16);
 			const dur = (chemin) => {
 				const r = lire(chemin, 0.01);
 				const n = new Uint8Array(gw * gh);
@@ -618,17 +649,26 @@ export function crearColaPapier(L, { mode = 'dous' } = {}) {
 			};
 			const dA = distance(dur(A.c), gw, gh),
 				dB = distance(dur(B.c), gw, gh);
-			const rho = new Float32Array(gw * gh),
-				vals = [];
-			for (let q = 0; q < gw * gh; q++) {
-				rho[q] = dB[q] - dA[q];
-				if (prof[q] > 0.7) vals.push(rho[q]);
-			}
-			vals.sort((p, q) => p - q);
-			const lo = vals.length ? vals[Math.floor(vals.length * 0.04)] : -1,
+			const rho = new Float32Array(gw * gh);
+			// la bande elle-même : mode zona, là où le mélange s'étale ;
+			// mode costura, un garde-fou (le mélange ne dépasse jamais la
+			// bande de transition des données, même à mi-distance des deux parlars)
+			let prof = null,
+				lo = -1,
+				hi = 1;
+			for (let q = 0; q < gw * gh; q++) rho[q] = dB[q] - dA[q];
+			if (costura) {
+				prof = lire(b.c, COSTURA * 1.2);
+			} else {
+				prof = lire(b.c, Math.max(b.largPx, 8) * 0.12);
+				const vals = [];
+				for (let q = 0; q < gw * gh; q++) if (prof[q] > 0.7) vals.push(rho[q]);
+				vals.sort((p, q) => p - q);
+				lo = vals.length ? vals[Math.floor(vals.length * 0.04)] : -1;
 				hi = vals.length ? Math.max(vals[Math.floor(vals.length * 0.96)], lo + 3) : 1;
-			// l'image du fondu : la couleur se fond d'un bord à l'autre (mai :
-			// plateau au milieu, pentes douces), invisible hors de la bande
+			}
+			// l'image du fondu : des couleurs pleines, un seul passage,
+			// l'opacité ne servant qu'à fermer le mélange aux deux bords
 			const ca = rgb(A.color),
 				cb = rgb(B.color);
 			const img = document.createElement('canvas');
@@ -637,31 +677,25 @@ export function crearColaPapier(L, { mode = 'dous' } = {}) {
 			const g2 = img.getContext('2d');
 			const im = g2.createImageData(gw, gh);
 			const dt = im.data;
-			const granie = this._mode === 'granie';
-			const hache = (i, j, n = 0) => {
-				const h = Math.sin(i * 127.1 + j * 311.7 + n * 74.7) * 43758.5453;
-				return h - Math.floor(h);
-			};
+			const AMPLA = COSTURA * 1.6; // en pixels, la demi-largeur du mélange
 			for (let j = 0; j < gh; j++)
 				for (let i = 0; i < gw; i++) {
 					const q = j * gw + i;
-					const w = lis(clamp((prof[q] - 0.5) / 0.42));
-					if (w <= 0.002) continue;
-					const u = mai(clamp((rho[q] - lo) / (hi - lo)));
-					let r = lerp(cb[0], ca[0], u),
-						gg = lerp(cb[1], ca[1], u),
-						bl = lerp(cb[2], ca[2], u);
-					if (granie) {
-						// le grain du papier : un chahut de fibres à peine vu
-						const e = (hache(i, j) - 0.5) * 7 + (hache(i, j, 3) - 0.5) * 3;
-						r += e;
-						gg += e;
-						bl += e;
+					let w, u;
+					if (costura) {
+						const r_px = rho[q] * c; // distance signée à la frontière, en pixels
+						w = lis(clamp(1 - Math.abs(r_px) / AMPLA)) * clamp(prof[q] * 2.2);
+						u = mai(clamp(0.5 + r_px / (AMPLA * 2)));
+						if (w <= 0.002) continue;
+					} else {
+						w = lis(clamp((prof[q] - 0.55) / 0.38));
+						if (w <= 0.002) continue;
+						u = mai(clamp((rho[q] - lo) / (hi - lo)));
 					}
 					const p4 = 4 * q;
-					dt[p4] = r;
-					dt[p4 + 1] = gg;
-					dt[p4 + 2] = bl;
+					dt[p4] = lerp(cb[0], ca[0], u);
+					dt[p4 + 1] = lerp(cb[1], ca[1], u);
+					dt[p4 + 2] = lerp(cb[2], ca[2], u);
 					dt[p4 + 3] = Math.round(255 * w);
 				}
 			g2.putImageData(im, 0, 0);
@@ -744,15 +778,13 @@ export function crearColaPapier(L, { mode = 'dous' } = {}) {
 				tx.restore();
 			}
 			tx.restore();
-			// deux ombres : une portée douce, et l'ombre de contact, serrée contre le bord
-			for (const [a, fl, dy] of [
-				[0.26, 7, 4.5],
-				[0.5, 1.6, 1.4]
-			]) {
+			// l'ombre du papier : une seule passe (deux mangeaient le temps des
+			// grandes vues, la première cause des saccades)
+			{
 				cx.save();
-				cx.shadowColor = `rgba(24, 12, 6, ${a})`;
-				cx.shadowBlur = fl * dpr;
-				cx.shadowOffsetY = dy * dpr;
+				cx.shadowColor = 'rgba(24, 12, 6, 0.34)';
+				cx.shadowBlur = 4.2 * dpr;
+				cx.shadowOffsetY = 2.8 * dpr;
 				cx.drawImage(this._tmp, rx, ry, rw, rh, rx, ry, rw, rh);
 				cx.restore();
 			}
