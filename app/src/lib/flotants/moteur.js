@@ -11,9 +11,11 @@
 // Option « aimant » (confettis du fond, idée de Romain 08-11, sur le modèle de la constellation de
 // l'accueil, où des traits fins relient les étoiles proches au curseur) : la main n'écarte plus, elle
 // attrape. Les pièces du secteur proche sont tenues par un ressort souple, chacune sur sa petite orbite
-// autour du pointeur, reliées à lui par un fil fin de leur couleur (tracé sur le canevas `fils`). Un
-// geste vif les lance dans tous les sens (elles ne peuvent être rattrapées qu'une seconde plus tard),
-// un doigt qui se lève ou une souris qui sort de la fenêtre les relâche avec leur élan.
+// autour du pointeur (elles gravitent toutes dans le même sens, les plus proches plus vite), reliées à
+// lui par un fil fin de leur couleur (tracé sur le canevas `fils`). Aimantées : elles suivent la main
+// sans retard et ne se détachent pas quand on la déplace ; seul un geste franc (deux mouvements de suite
+// au-delà de `seuilLance`) les lance dans tous les sens (elles ne peuvent être rattrapées qu'une
+// seconde plus tard) ; un doigt qui se lève ou une souris qui sort de la fenêtre les relâche avec leur élan.
 //
 // Les positions sont tenues ici (centre de la pièce, en pixels dans la zone) et posées par
 // transform : aucune mise en page à chaque image. La boucle s'arrête quand l'onglet est caché.
@@ -40,7 +42,8 @@ export function flotter(zone, elements, options = {}) {
 		portee: 120, // le secteur proche à la souris, en pixels
 		porteeDoigt: 150, // et au doigt
 		maxTenus: 16, // combien de pièces la main tient à la fois
-		seuilLance: 18, // vitesse du pointeur (pixels par image à 60 par seconde) au-delà de laquelle on lance
+		seuilLance: 28, // vitesse du pointeur (pixels par image à 60 par seconde, soit environ 1 700 px/s) au-delà de laquelle on lance
+		seuilPrise: 16, // et au-delà de laquelle on n'attrape plus rien (on ne cueille pas en balayant)
 		onAttrape: null,
 		onLache: null,
 		...options
@@ -71,6 +74,7 @@ export function flotter(zone, elements, options = {}) {
 			minuteur: 0,
 			// l'aimant : tenue par la main ou non, orbite autour du pointeur, date avant laquelle elle ne se laisse pas rattraper
 			tenu: false, refus: 0, orb: 0, orbR: 0, orbV: 0,
+			force: 0, // de 0 (tout juste prise) à 1 (tenue pour de bon) : la prise monte progressivement
 			couleur: o.aimant && o.fils ? getComputedStyle(el).getPropertyValue('--c').trim() || '#7a4a20' : ''
 		};
 		el.style.position = 'absolute';
@@ -178,12 +182,34 @@ export function flotter(zone, elements, options = {}) {
 	let portee = o.portee;
 	let nTenus = 0;
 	let filsSales = false; // des fils sont tracés : il faudra les effacer
-	const vP = [0, 0]; // la vitesse du pointeur, pour donner son élan à ce qu'on lance
+	const vP = [0, 0]; // la vitesse du pointeur : les pièces tenues la suivent (pas de retard), et elle donne son élan à ce qu'on lance
+	let fortes = 0; // combien de mouvements de suite ont dépassé le seuil du lancer : un seul à-coup ne lance rien
+	let sens = 1; // le sens de rotation de l'essaim, le même pour toutes les pièces : elles gravitent
 	const relacher = (p) => {
 		p.tenu = false;
+		p.force = 0;
 		nTenus--;
 		p.el.classList.remove('tenu');
 		if (p.etat === 'libre') p.sc = 1;
+	};
+	// les pièces tenues s'écartent un peu les unes des autres : un petit nuage, pas une grappe
+	const ecarter = (dt) => {
+		if (nTenus < 2) return;
+		const tenues = [];
+		for (const p of pieces) if (p.tenu) tenues.push(p);
+		for (let i = 0; i < tenues.length; i++) {
+			const a = tenues[i];
+			for (let j = i + 1; j < tenues.length; j++) {
+				const b = tenues[j];
+				const ex = b.x - a.x, ey = b.y - a.y;
+				if (Math.abs(ex) > 28 || Math.abs(ey) > 28) continue;
+				const d = Math.hypot(ex, ey);
+				if (d >= 28 || d < 0.01) continue;
+				const f = (28 - d) * 0.006 * dt / d;
+				a.vx -= ex * f; a.vy -= ey * f;
+				b.vx += ex * f; b.vy += ey * f;
+			}
+		}
 	};
 	const lancer = (t) => {
 		for (const p of pieces) {
@@ -201,19 +227,25 @@ export function flotter(zone, elements, options = {}) {
 	const aimanter = (t, dt) => {
 		pt = curseur || touche;
 		portee = curseur ? o.portee : o.porteeDoigt;
-		if (nTenus && pt && vCurseur > o.seuilLance) lancer(t);
+		// le lancer : un geste franc, deux mouvements de suite au-delà du seuil (et non un simple à-coup)
+		if (nTenus && pt && fortes >= 2) { lancer(t); fortes = 0; }
+		ecarter(dt);
 		// attraper, une à une et pas toutes à la fois : plus la pièce est près, plus vite elle est prise ;
-		// sans rien tenir quand le geste est trop vif pour qu'on ait voulu attraper
-		if (!pt || vCurseur > o.seuilLance || nTenus >= o.maxTenus) return;
+		// pas quand le geste est déjà vif (on ne cueille pas en balayant)
+		if (!pt || vCurseur > o.seuilPrise || nTenus >= o.maxTenus) return;
 		for (const p of pieces) {
 			if (p.etat !== 'libre' || p.tenu || !p.dedans || t < p.refus) continue;
 			const d = Math.hypot(p.x - pt[0], p.y - pt[1]);
-			if (d > portee || alea() > 0.22 * dt * (1.15 - d / portee)) continue;
+			if (d > portee || alea() > 0.1 * dt * (1.15 - d / portee)) continue;
 			p.tenu = true;
+			p.force = 0;
+			if (nTenus === 0) sens = alea() < 0.5 ? -1 : 1; // une nouvelle poignée : un nouveau sens de rotation
 			nTenus++;
 			p.orb = Math.atan2(p.y - pt[1], p.x - pt[0]);
-			p.orbR = entre(14, portee * 0.7);
-			p.orbV = (alea() < 0.5 ? -1 : 1) * entre(0.008, 0.03);
+			// une orbite large, de 20 px à presque toute la portée, tirée au hasard : un nuage plein, pas une couronne
+			p.orbR = entre(20, portee * 0.92);
+			// elles gravitent toutes dans le même sens, les plus proches plus vite (comme des planètes), sans emballement
+			p.orbV = sens * 0.03 * Math.sqrt(60 / p.orbR) * entre(0.85, 1.15);
 			p.sc = 1.25;
 			p.el.classList.add('tenu');
 			if (nTenus >= o.maxTenus) break;
@@ -222,7 +254,8 @@ export function flotter(zone, elements, options = {}) {
 	// le ressort : la pièce tenue vise un point de son orbite ; si ce point tombe dans un bloc de texte,
 	// on le ramène au bord le plus proche (sinon la pièce glisserait derrière les lettres et s'effacerait)
 	const tenir = (p, dt) => {
-		if (!pt || Math.hypot(p.x - pt[0], p.y - pt[1]) > portee * 1.7) { relacher(p); return; }
+		// aimantée : elle ne se détache que si la main s'en va, ou si elle se retrouve vraiment loin (le texte l'a retenue)
+		if (!pt || Math.hypot(p.x - pt[0], p.y - pt[1]) > portee * 3.2) { relacher(p); return; }
 		p.orb += p.orbV * dt;
 		let tx = pt[0] + Math.cos(p.orb) * p.orbR;
 		let ty = pt[1] + Math.sin(p.orb) * p.orbR;
@@ -238,8 +271,24 @@ export function flotter(zone, elements, options = {}) {
 		}
 		tx = Math.max(p.r, Math.min(L - p.r, tx));
 		ty = Math.max(p.r, Math.min(H - p.r, ty));
-		p.vx += ((tx - p.x) * 0.012 - p.vx * 0.14) * dt;
-		p.vy += ((ty - p.y) * 0.012 - p.vy * 0.14) * dt;
+		// la prise monte doucement (environ 1 s) : la pièce garde d'abord sa dérive, puis le ressort la tire
+		// de plus en plus, avec un léger rebond à l'arrivée
+		p.force = Math.min(1, p.force + 0.017 * dt);
+		const e = p.force * p.force * (3 - 2 * p.force);
+		const k = 0.010 * e;
+		const c = 0.03 + 0.11 * e;
+		// la vitesse du point visé : celle du pointeur plus celle de l'orbite ; le frein se mesure par rapport à elle,
+		// si bien que la pièce suit la main sans retard (l'aimant ne « lâche » pas quand on déplace la souris)
+		const tvx = e * (vP[0] - Math.sin(p.orb) * p.orbR * p.orbV);
+		const tvy = e * (vP[1] + Math.cos(p.orb) * p.orbR * p.orbV);
+		p.vx += ((tx - p.x) * k - (p.vx - tvx) * c) * dt;
+		p.vy += ((ty - p.y) * k - (p.vy - tvy) * c) * dt;
+		// et, tant que la prise n'est pas ferme, une vitesse de plafond (par rapport au point visé) : même loin de
+		// son orbite, la pièce glisse
+		const plafond = 1.2 + 4.5 * e;
+		const rx = p.vx - tvx, ry = p.vy - tvy;
+		const v = Math.hypot(rx, ry);
+		if (v > plafond) { p.vx = tvx + (rx * plafond) / v; p.vy = tvy + (ry * plafond) / v; }
 		p.vr *= 0.97 ** dt;
 	};
 	// les fils : de la main à chaque pièce tenue, fins, de la couleur de la pièce, plus pâles avec la distance
@@ -254,7 +303,9 @@ export function flotter(zone, elements, options = {}) {
 		g.lineWidth = 0.9;
 		for (const p of pieces) {
 			if (!p.tenu) continue;
-			const a = (1 - Math.hypot(p.x - pt[0], p.y - pt[1]) / (portee * 1.3)) * 0.65 * p.fade;
+			// le fil apparaît avec la prise (il « pousse » en 1 s) et pâlit avec la distance
+			const e = p.force * p.force * (3 - 2 * p.force);
+			const a = (1 - Math.hypot(p.x - pt[0], p.y - pt[1]) / (portee * 1.6)) * 0.65 * p.fade * e;
 			if (a <= 0.02) continue;
 			g.globalAlpha = a;
 			g.strokeStyle = p.couleur;
@@ -348,7 +399,9 @@ export function flotter(zone, elements, options = {}) {
 					p.el.style.setProperty('--fade', fade.toFixed(2));
 				}
 				const v = Math.hypot(p.vx, p.vy);
-				if (v > o.vmax) { p.vx *= o.vmax / v; p.vy *= o.vmax / v; }
+				// une pièce tenue suit la main, si vive soit-elle : elle n'a pas la limite des pièces libres
+				const vlim = p.tenu ? 60 : o.vmax;
+				if (v > vlim) { p.vx *= vlim / v; p.vy *= vlim / v; }
 			}
 			p.x += p.vx * dt;
 			p.y += p.vy * dt;
@@ -392,6 +445,12 @@ export function flotter(zone, elements, options = {}) {
 			}
 		}
 		for (const p of pieces) if (p.etat !== 'absent') poser(p);
+		if (o.aimant) {
+			// sans nouveau mouvement, la vitesse du pointeur retombe (la main s'est arrêtée) ; la prochaine image la relira à jour
+			vP[0] *= 0.8 ** dt;
+			vP[1] *= 0.8 ** dt;
+			if (!pt) fortes = 0;
+		}
 		tracer();
 		if (!document.hidden) enRoute = requestAnimationFrame(image);
 	};
@@ -418,6 +477,7 @@ export function flotter(zone, elements, options = {}) {
 		vCurseur = Math.hypot(pvx, pvy);
 		vP[0] = pvx;
 		vP[1] = pvy;
+		fortes = vCurseur > o.seuilLance ? fortes + 1 : 0;
 		dernier = [x, y, t];
 		if (o.aimant) return; // la main attrape (boucle d'animation) au lieu d'écarter
 		const b = zone.getBoundingClientRect();

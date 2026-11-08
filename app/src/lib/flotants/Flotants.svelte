@@ -27,7 +27,7 @@
 	let { mode = 'confettis', fond = false, onattrape = () => {} } = $props();
 
 	let zone;
-	let fils; // le canevas des fils fins qui relient la main aux confettis qu'elle tient
+	let fils = $state(null); // le canevas des fils fins qui relient la main aux confettis qu'elle tient
 	let pieces = $state([]);
 	let mot = $state(null);
 	let annonce = $state('');
@@ -88,11 +88,23 @@
 				const lire = () => {
 					const b = zone.getBoundingClientRect();
 					const rects = [];
+					const rg = document.createRange();
 					for (const e of document.querySelectorAll('p, li, h1, h2, h3, h4, blockquote, dd, figcaption, header, nav')) {
 						const r = e.getBoundingClientRect();
 						if (r.width < 60 || r.height < 14 || r.bottom < -80 || r.top > innerHeight + 80) continue;
-						if (zone.contains(e) || (e.textContent || '').trim().length < 25) continue;
-						rects.push({ l: r.left - b.left, t: r.top - b.top, r: r.right - b.left, b: r.bottom - b.top });
+						if (zone.contains(e)) continue;
+						const barre = e.tagName === 'HEADER' || e.tagName === 'NAV';
+						// un bandeau ou une barre qui contient déjà des titres ou des paragraphes : ce sont eux qu'on évite, pas le
+						// conteneur (sinon tout le bandeau d'une page, titre compris, devient un grand blanc où rien ne passe : /mots)
+						if (barre && e.querySelector('h1, h2, h3, h4, p')) continue;
+						// un texte court mais grand (un titre, de gros chiffres) compte aussi : ce sont eux qu'on ne doit pas parasiter
+						if ((e.textContent || '').trim().length < 25 && r.height < 34) continue;
+						// l'emprise du texte lui-même, pas celle de son bloc : un titre court occupe toute la largeur de son bloc
+						let t = r;
+						rg.selectNodeContents(e);
+						const tr = rg.getBoundingClientRect();
+						if (tr.width > 8 && tr.height > 8) t = tr;
+						rects.push({ l: t.left - b.left, t: t.top - b.top, r: t.right - b.left, b: t.bottom - b.top });
 						if (rects.length >= 220) break;
 					}
 					// les blocs qui se suivent à moins de 34 px (titre puis paragraphe, paragraphes entre eux) ne font plus qu'une
