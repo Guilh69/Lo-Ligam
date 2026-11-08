@@ -3,8 +3,8 @@
 	// découpé, avec une transition en fondu de couleur entre parlers (demande
 	// de Romain : une transition douce et cohérente, sans saccade).
 	// La vraie carte n'est pas touchée : tout est dans lib/carta/papier.js.
-	// Adresses utiles : ?mode=costura|zona ; ?t=1.4 fige la coulée à cet
-	// instant (en secondes) ; ?zoom=7&lat=43.9&lon=2.5
+	// Adresses utiles : ?mode=costura|zona ; ?t=99 montre la carte posée
+	// d'emblée (pour les captures) ; ?zoom=7&lat=43.9&lon=2.5
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/state';
 	import 'leaflet/dist/leaflet.css';
@@ -68,7 +68,7 @@
 	<div class="carte" bind:this={eltCarta}></div>
 	<div class="commandes">
 		<p class="titre">Essai : la couche des dialectes en papier découpé</p>
-		<button class="pc pc-or" onclick={() => cola?.lancer()}>Rejouer la coulée</button>
+		<button class="pc pc-or" onclick={() => cola?.lancer()}>Rejouer l’arrivée</button>
 		<p class="legende">Transition entre parlers</p>
 		<div class="choix">
 			{#each MODES as m}
