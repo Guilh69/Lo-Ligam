@@ -8,6 +8,13 @@
 // s'arrête, grossit, laisse voir ce qu'elle cache, puis déguerpit hors de la zone ; plus tard
 // elle revient par un bord.
 //
+// Option « aimant » (confettis du fond, idée de Romain 08-11, sur le modèle de la constellation de
+// l'accueil, où des traits fins relient les étoiles proches au curseur) : la main n'écarte plus, elle
+// attrape. Les pièces du secteur proche sont tenues par un ressort souple, chacune sur sa petite orbite
+// autour du pointeur, reliées à lui par un fil fin de leur couleur (tracé sur le canevas `fils`). Un
+// geste vif les lance dans tous les sens (elles ne peuvent être rattrapées qu'une seconde plus tard),
+// un doigt qui se lève ou une souris qui sort de la fenêtre les relâche avec leur élan.
+//
 // Les positions sont tenues ici (centre de la pièce, en pixels dans la zone) et posées par
 // transform : aucune mise en page à chaque image. La boucle s'arrête quand l'onglet est caché.
 
@@ -28,6 +35,12 @@ export function flotter(zone, elements, options = {}) {
 		marge: 16, // de combien on peut rater une pièce à la souris, en pixels
 		margeDoigt: 28, // et au doigt
 		fondu: false, // fond du site : une pièce qui entre dans un bloc de texte ou une image s'efface (variable --fade)
+		aimant: false, // la main attrape les pièces proches (fils fins) et un geste vif les lance ; remplace l'écartement
+		fils: null, // le canevas où tracer les fils de l'aimant
+		portee: 120, // le secteur proche à la souris, en pixels
+		porteeDoigt: 150, // et au doigt
+		maxTenus: 16, // combien de pièces la main tient à la fois
+		seuilLance: 18, // vitesse du pointeur (pixels par image à 60 par seconde) au-delà de laquelle on lance
 		onAttrape: null,
 		onLache: null,
 		...options
@@ -55,7 +68,10 @@ export function flotter(zone, elements, options = {}) {
 			rot: alea() * 360, vr: 0, spin: (0.8 + alea() * 2.6) * (alea() < 0.5 ? -1 : 1), // degrés par seconde
 			s: 1, sc: 1, // échelle actuelle et visée
 			fade: 1, // transparence due aux blocs de texte (option fondu)
-			minuteur: 0
+			minuteur: 0,
+			// l'aimant : tenue par la main ou non, orbite autour du pointeur, date avant laquelle elle ne se laisse pas rattraper
+			tenu: false, refus: 0, orb: 0, orbR: 0, orbV: 0,
+			couleur: o.aimant && o.fils ? getComputedStyle(el).getPropertyValue('--c').trim() || '#7a4a20' : ''
 		};
 		el.style.position = 'absolute';
 		el.style.left = '0';
@@ -70,9 +86,21 @@ export function flotter(zone, elements, options = {}) {
 	for (const p of pieces) poser(p);
 	if (o.immobile) return { pieces, attraper: () => false, attraperA: () => false, eviter() {}, arreter() {} };
 
+	// le canevas des fils de l'aimant : à la taille de la zone, net sur les écrans denses
+	const g = o.aimant && o.fils ? o.fils.getContext('2d') : null;
+	const tailleFils = () => {
+		if (!g) return;
+		const d = Math.min(devicePixelRatio || 1, 2);
+		o.fils.width = Math.round(L * d);
+		o.fils.height = Math.round(H * d);
+		g.setTransform(d, 0, 0, d, 0, 0);
+	};
+	tailleFils();
+
 	const ro = new ResizeObserver(() => {
 		L = zone.clientWidth;
 		H = zone.clientHeight;
+		tailleFils();
 		const b = zone.getBoundingClientRect();
 		ox = b.left;
 		oy = b.top;
@@ -144,6 +172,99 @@ export function flotter(zone, elements, options = {}) {
 	let ox = zone.getBoundingClientRect().left;
 	let oy = zone.getBoundingClientRect().top;
 
+	// ── l'aimant : la main (souris ou doigt) tient les pièces proches, un geste vif les lance ──
+	let touche = null; // le doigt posé, en pixels de la zone
+	let pt = null; // le pointeur actif à cette image : la souris, sinon le doigt
+	let portee = o.portee;
+	let nTenus = 0;
+	let filsSales = false; // des fils sont tracés : il faudra les effacer
+	const vP = [0, 0]; // la vitesse du pointeur, pour donner son élan à ce qu'on lance
+	const relacher = (p) => {
+		p.tenu = false;
+		nTenus--;
+		p.el.classList.remove('tenu');
+		if (p.etat === 'libre') p.sc = 1;
+	};
+	const lancer = (t) => {
+		for (const p of pieces) {
+			if (!p.tenu) continue;
+			relacher(p);
+			// dans tous les sens : vers l'extérieur à partir du pointeur, un peu au hasard, avec l'élan du geste
+			const a = (pt ? Math.atan2(p.y - pt[1], p.x - pt[0]) : alea() * 6.283) + (alea() - 0.5) * 1.6;
+			const v = entre(2.5, 7.5);
+			p.vx = Math.cos(a) * v + vP[0] * 0.4;
+			p.vy = Math.sin(a) * v + vP[1] * 0.4;
+			p.vr = (alea() < 0.5 ? -1 : 1) * entre(8, 18);
+			p.refus = t + 1000;
+		}
+	};
+	const aimanter = (t, dt) => {
+		pt = curseur || touche;
+		portee = curseur ? o.portee : o.porteeDoigt;
+		if (nTenus && pt && vCurseur > o.seuilLance) lancer(t);
+		// attraper, une à une et pas toutes à la fois : plus la pièce est près, plus vite elle est prise ;
+		// sans rien tenir quand le geste est trop vif pour qu'on ait voulu attraper
+		if (!pt || vCurseur > o.seuilLance || nTenus >= o.maxTenus) return;
+		for (const p of pieces) {
+			if (p.etat !== 'libre' || p.tenu || !p.dedans || t < p.refus) continue;
+			const d = Math.hypot(p.x - pt[0], p.y - pt[1]);
+			if (d > portee || alea() > 0.22 * dt * (1.15 - d / portee)) continue;
+			p.tenu = true;
+			nTenus++;
+			p.orb = Math.atan2(p.y - pt[1], p.x - pt[0]);
+			p.orbR = entre(14, portee * 0.7);
+			p.orbV = (alea() < 0.5 ? -1 : 1) * entre(0.008, 0.03);
+			p.sc = 1.25;
+			p.el.classList.add('tenu');
+			if (nTenus >= o.maxTenus) break;
+		}
+	};
+	// le ressort : la pièce tenue vise un point de son orbite ; si ce point tombe dans un bloc de texte,
+	// on le ramène au bord le plus proche (sinon la pièce glisserait derrière les lettres et s'effacerait)
+	const tenir = (p, dt) => {
+		if (!pt || Math.hypot(p.x - pt[0], p.y - pt[1]) > portee * 1.7) { relacher(p); return; }
+		p.orb += p.orbV * dt;
+		let tx = pt[0] + Math.cos(p.orb) * p.orbR;
+		let ty = pt[1] + Math.sin(p.orb) * p.orbR;
+		const m = p.r + 8;
+		for (const R of zonesTexte) {
+			if (tx <= R.l - m || tx >= R.r + m || ty <= R.t - m || ty >= R.b + m) continue;
+			const dg = tx - (R.l - m), dd = R.r + m - tx, dh = ty - (R.t - m), db = R.b + m - ty;
+			const dm = Math.min(dg, dd, dh, db);
+			if (dm === dg) tx = R.l - m;
+			else if (dm === dd) tx = R.r + m;
+			else if (dm === dh) ty = R.t - m;
+			else ty = R.b + m;
+		}
+		tx = Math.max(p.r, Math.min(L - p.r, tx));
+		ty = Math.max(p.r, Math.min(H - p.r, ty));
+		p.vx += ((tx - p.x) * 0.012 - p.vx * 0.14) * dt;
+		p.vy += ((ty - p.y) * 0.012 - p.vy * 0.14) * dt;
+		p.vr *= 0.97 ** dt;
+	};
+	// les fils : de la main à chaque pièce tenue, fins, de la couleur de la pièce, plus pâles avec la distance
+	const tracer = () => {
+		if (!g) return;
+		if (!nTenus || !pt) {
+			if (filsSales) { g.clearRect(0, 0, L, H); filsSales = false; }
+			return;
+		}
+		g.clearRect(0, 0, L, H);
+		filsSales = true;
+		g.lineWidth = 0.9;
+		for (const p of pieces) {
+			if (!p.tenu) continue;
+			const a = (1 - Math.hypot(p.x - pt[0], p.y - pt[1]) / (portee * 1.3)) * 0.65 * p.fade;
+			if (a <= 0.02) continue;
+			g.globalAlpha = a;
+			g.strokeStyle = p.couleur;
+			g.beginPath();
+			g.moveTo(pt[0], pt[1]);
+			g.lineTo(p.x, p.y);
+			g.stroke();
+		}
+	};
+
 	// ── la boucle ──
 	let enRoute = 0;
 	let avant = performance.now();
@@ -153,6 +274,7 @@ export function flotter(zone, elements, options = {}) {
 		avant = t;
 		// la pièce que la souris est sur le point d'attraper : elle grossit, ralentit et ne fuit plus
 		vCurseur *= 0.85 ** dt;
+		if (o.aimant) aimanter(t, dt);
 		if (o.attrapables) {
 		let visee = null;
 		if (curseur && vCurseur < 10) {
@@ -176,11 +298,20 @@ export function flotter(zone, elements, options = {}) {
 			if (p.etat === 'attrape') { p.rot += p.spin / 60 * 0.3 * dt; poser(p); continue; }
 			if (p.etat === 'libre') {
 				p.ang += p.dang * dt;
-				const bx = Math.cos(p.ang) * p.cr;
-				const by = Math.sin(p.ang) * p.cr;
-				p.vx += (bx - p.vx) * 0.004 * dt; // l'élan se perd doucement, la dérive reprend
-				p.vy += (by - p.vy) * 0.004 * dt;
-				p.vr *= 0.992 ** dt;
+				if (p.tenu) tenir(p, dt);
+				if (!p.tenu) {
+					const bx = Math.cos(p.ang) * p.cr;
+					const by = Math.sin(p.ang) * p.cr;
+					p.vx += (bx - p.vx) * 0.004 * dt; // l'élan se perd doucement, la dérive reprend
+					p.vy += (by - p.vy) * 0.004 * dt;
+					p.vr *= 0.992 ** dt;
+					// une pièce lancée (bien plus vite que sa dérive) freine plus franchement, puis reprend sa croisière
+					if (o.aimant && p.vx * p.vx + p.vy * p.vy > 4.8) {
+						const f = 1 - 0.012 * dt;
+						p.vx *= f;
+						p.vy *= f;
+					}
+				}
 				if (p === chaude) { p.vx *= 0.9 ** dt; p.vy *= 0.9 ** dt; }
 				else if (o.attrapables && curseur && vCurseur < 10 && Math.hypot(p.x - curseur[0], p.y - curseur[1]) < p.r + 70) { p.vx *= 0.97 ** dt; p.vy *= 0.97 ** dt; } // elle ralentit quand la souris approche
 				// le texte dense : on le contourne, sans mur (une pièce lancée peut passer derrière,
@@ -261,6 +392,7 @@ export function flotter(zone, elements, options = {}) {
 			}
 		}
 		for (const p of pieces) if (p.etat !== 'absent') poser(p);
+		tracer();
 		if (!document.hidden) enRoute = requestAnimationFrame(image);
 	};
 	const relancer = () => {
@@ -284,7 +416,10 @@ export function flotter(zone, elements, options = {}) {
 			pvy = Math.max(-40, Math.min(40, (y - dernier[1]) / k));
 		}
 		vCurseur = Math.hypot(pvx, pvy);
+		vP[0] = pvx;
+		vP[1] = pvy;
 		dernier = [x, y, t];
+		if (o.aimant) return; // la main attrape (boucle d'animation) au lieu d'écarter
 		const b = zone.getBoundingClientRect();
 		const mx = x - b.left, my = y - b.top;
 		for (const p of pieces) {
@@ -318,15 +453,21 @@ export function flotter(zone, elements, options = {}) {
 	};
 	const doigt = (e) => {
 		const t = e.touches[0];
-		if (t) passage(t.clientX, t.clientY, o.rayonDoigt);
+		if (!t) return;
+		touche = [t.clientX - ox, t.clientY - oy];
+		passage(t.clientX, t.clientY, o.rayonDoigt);
 	};
-	const fin = () => (dernier = null);
+	const fin = () => {
+		dernier = null;
+		touche = null; // le doigt se lève : ce qu'il tenait part avec son élan
+	};
 	const sorti = () => (curseur = null);
 	document.documentElement.addEventListener('mouseleave', sorti);
 	addEventListener('pointermove', souris, { passive: true });
 	addEventListener('touchstart', doigt, { passive: true });
 	addEventListener('touchmove', doigt, { passive: true });
 	addEventListener('touchend', fin, { passive: true });
+	addEventListener('touchcancel', fin, { passive: true });
 
 	return {
 		pieces,
@@ -347,6 +488,7 @@ export function flotter(zone, elements, options = {}) {
 			removeEventListener('touchstart', doigt);
 			removeEventListener('touchmove', doigt);
 			removeEventListener('touchend', fin);
+			removeEventListener('touchcancel', fin);
 		}
 	};
 }
