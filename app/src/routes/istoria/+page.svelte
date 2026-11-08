@@ -15,6 +15,7 @@
 	import { editor } from '$lib/data/legal.js';
 	import CartaIstoria from '$lib/istoria/CartaIstoria.svelte';
 	import { ETAPAS } from '$lib/istoria/etapas.js';
+	import Retour from '$lib/components/Retour.svelte';
 
 	let { data, form } = $props();
 
@@ -233,6 +234,7 @@
 	</div>
 
 	<main class="cors">
+		<Retour />
 		<header class="intro">
 			<div class="intro-tèxt">
 				{@render tèxt('istoria.kicker', 'p')}

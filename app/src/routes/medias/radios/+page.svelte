@@ -7,6 +7,7 @@
 	// écrit à côté ; « Arrestar » coupe le flux (rien ne se télécharge en
 	// fond). Un bandeau en bas dit ce qui joue (comme Online Radio Box).
 	import AppHeader from '$lib/components/AppHeader.svelte';
+	import Retour from '$lib/components/Retour.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { PALETAS } from '$lib/apren/teulas.js';
 	import { RADIOS } from '$lib/data/medias.js';
@@ -116,11 +117,7 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="radios">
-	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
-		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla', ar: 'نتحدّث' })}</a><span aria-hidden="true">›</span>
-		<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans', ar: 'وسائل الإعلام' })}</a><span aria-hidden="true">›</span>
-		<span aria-current="page">{tx.titol}</span>
-	</nav>
+	<Retour actuelle={tx.titol} />
 
 	<header class="cap">
 		<h1 lang={langStore.current}>{tx.titol}</h1>
@@ -202,18 +199,6 @@
 		max-width: calc(72rem + 2 * var(--marge));
 		margin: 0 auto;
 		padding: clamp(1.5rem, 4vh, 3rem) var(--marge) var(--esp-96);
-	}
-	.camin {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		color: var(--t-tinta-2);
-		font-size: 0.95rem;
-	}
-	.camin a {
-		color: inherit;
-		text-decoration-color: var(--t-terra);
-		text-underline-offset: 3px;
 	}
 	.cap {
 		margin: var(--esp-24) 0 var(--esp-32, 2rem);

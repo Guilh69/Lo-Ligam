@@ -13,6 +13,7 @@
 	import { FICHAS, IU, ficha as trobar, tema as temaDe, nomModul } from '$lib/cultura/index.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import MencionIA from '$lib/components/MencionIA.svelte';
+	import Retour from '$lib/components/Retour.svelte';
 
 	let { data } = $props();
 	let f = $derived(trobar(data.id));
@@ -37,7 +38,7 @@
 <div class="pagina">
 	<div class="entete"><AppHeader /></div>
 	<main class="principal">
-		<a class="parent" href="/cultura" lang="oc">Cultura</a>
+		<Retour actuelle={tria(f.titol)} />
 
 		<header class="cap" class:amb-foto={data.foto} class:amb-objecte={data.foto?.objecte} class:amb-dessenh={!data.foto && (data.dessenh?.length || f.id === 'roge-e-aur')} style:--aplat={t.color[0]} style:--sus={t.color[1]}>
 			<span class="cap-media" aria-hidden="true">
@@ -139,14 +140,6 @@
 		max-width: calc(52rem + 2 * var(--marge));
 		margin: 0 auto;
 		padding: clamp(1.5rem, 5vh, 3.5rem) var(--marge) var(--esp-96);
-	}
-	.parent {
-		display: inline-block;
-		margin-bottom: var(--esp-12);
-		color: var(--t-tinta-2);
-		text-decoration-color: var(--t-accion);
-		text-decoration-thickness: 2px;
-		text-underline-offset: 0.2em;
 	}
 
 	/* la case du titre, de la couleur du thème ; le nom du thème mène au
@@ -317,8 +310,7 @@
 		color: var(--t-tinta-2);
 	}
 	.lien a:focus-visible,
-	.parcors a:focus-visible,
-	.parent:focus-visible {
+	.parcors a:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;
 	}

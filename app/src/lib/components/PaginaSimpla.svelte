@@ -3,6 +3,7 @@
 	// sur le modèle des pages de rubrique (PaginaTeulas) : le titre en grand,
 	// une phrase, puis le contenu ; même fond de braise, même bandeau.
 	import AppHeader from '$lib/components/AppHeader.svelte';
+	import Retour from '$lib/components/Retour.svelte';
 
 	/** titol : en occitan ; frasa : texte déjà balisé (marcar) ; parent : { href, nom } */
 	let { titol, frasa = '', parent = null, children } = $props();
@@ -12,7 +13,7 @@
 	<div class="entete"><AppHeader /></div>
 	<main class="principal">
 		<header class="cap">
-			{#if parent}<a class="parent" href={parent.href} lang="oc">{parent.nom}</a>{/if}
+			{#if parent}<Retour actuelle={titol} />{/if}
 			<h1 lang="oc">{titol}</h1>
 			{#if frasa}<p class="frasa">{@html frasa}</p>{/if}
 		</header>
@@ -46,14 +47,6 @@
 	.cap {
 		margin-bottom: var(--esp-48);
 	}
-	.parent {
-		display: inline-block;
-		margin-bottom: var(--esp-8);
-		color: var(--t-tinta-2);
-		text-decoration-color: var(--t-accion);
-		text-decoration-thickness: 2px;
-		text-underline-offset: 0.2em;
-	}
 	h1 {
 		margin: 0;
 		font-family: var(--font-heading);
@@ -68,9 +61,5 @@
 		font-size: clamp(1.1rem, 1.6vw, 1.35rem);
 		line-height: 1.5;
 		color: var(--t-tinta-2);
-	}
-	.parent:focus-visible {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 2px;
 	}
 </style>

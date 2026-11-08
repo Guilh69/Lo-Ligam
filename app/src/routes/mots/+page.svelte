@@ -18,6 +18,7 @@
 	import FichaTunnel from '$lib/components/FichaTunnel.svelte';
 	import FichaVideo from '$lib/components/FichaVideo.svelte';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import Retour from '$lib/components/Retour.svelte';
 
 	// Les fiches arrivent de la base via +page.js, qui se replie sur le
 	// catalogue gelé si elle ne répond pas.
@@ -394,6 +395,7 @@
 	</div>
 
 	<main class="cors">
+		<Retour />
 		<header class="intro">
 			<p class="kicker">{tx.kicker}</p>
 			<h1>{tx.title}</h1>

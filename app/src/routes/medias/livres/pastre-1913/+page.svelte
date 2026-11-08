@@ -3,6 +3,7 @@
 	// du papier désactivable, mode texte. Le lecteur est dans
 	// $lib/components/LecteurLivre.svelte ; les pages dans static/livres/.
 	import AppHeader from '$lib/components/AppHeader.svelte';
+	import Retour from '$lib/components/Retour.svelte';
 	import LecteurLivre from '$lib/components/LecteurLivre.svelte';
 	import { LIVRES } from '$lib/data/livres.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
@@ -38,12 +39,7 @@
 	<div class="capçal"><AppHeader /></div>
 
 	<main class="libre">
-		<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
-			<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla', ar: 'نتحدّث' })}</a><span aria-hidden="true">›</span>
-			<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans', ar: 'وسائل الإعلام' })}</a><span aria-hidden="true">›</span>
-			<a href="/medias/livres">{tria({ oc: 'Libres', fr: 'Livres', es: 'Libros', en: 'Books', ca: 'Llibres', ar: 'الكتب' })}</a><span aria-hidden="true">›</span>
-			<span aria-current="page">{livre.autor}</span>
-		</nav>
+		<Retour actuelle={livre.autor} />
 
 		<header class="cap">
 			<p class="autor">{livre.autor} · {livre.any}</p>
@@ -79,19 +75,6 @@
 		max-width: calc(80rem + 2 * var(--marge));
 		margin: 0 auto;
 		padding: clamp(1rem, 3vh, 2rem) var(--marge) var(--esp-96, 6rem);
-	}
-	.camin {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-bottom: var(--esp-24, 1.5rem);
-		color: var(--t-tinta-2);
-		font-size: 0.95rem;
-	}
-	.camin a {
-		color: inherit;
-		text-decoration-color: var(--t-terra);
-		text-underline-offset: 3px;
 	}
 	.cap {
 		margin: 0 0 1rem;

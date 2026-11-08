@@ -15,6 +15,7 @@
 	import { marcar, copa, classeColor } from './marcar.js';
 	import { FICHAS_LENGAS, IU, paginas } from './lengas.js';
 	import { tria } from '$lib/stores/lang.svelte.js';
+	import Retour from '$lib/components/Retour.svelte';
 
 	let { ficha } = $props();
 	// l'habillage suit la langue choisie (lengas.js) ; les explications de la
@@ -161,9 +162,7 @@
 <main class="fiche" aria-labelledby="fiche-titol">
 	<header class="cap">
 		<span class="cap-picto"><Pictograma nom="wiki" size="2.2rem" /></span>
-		<nav class="cap-ruban" aria-label={tria(IU.ontSoi)}>
-			<a href="/apren" lang="oc">S’apren</a> <span aria-hidden="true">·</span> <a href="/apren/gramatica" lang="oc">Gramatica</a>
-		</nav>
+		<div class="cap-retour"><Retour actuelle={ficha.titol} /></div>
 		<h1 id="fiche-titol" class="sr-only"><span lang="oc">Gramatica : {ficha.titol}</span></h1>
 	</header>
 
@@ -270,16 +269,13 @@
 		gap: 0.6rem;
 		color: var(--t-tinta-2);
 	}
-	.cap-ruban {
-		margin: 0;
-		font-size: 0.95rem;
-		letter-spacing: 0.02em;
+	/* le retour commun (Retour.svelte) prend la place du ruban ; il occupe la largeur qui reste */
+	.cap-retour {
+		flex: 1;
+		min-width: 0;
 	}
-	.cap-ruban a {
-		color: inherit;
-		text-decoration-color: var(--t-accion);
-		text-decoration-thickness: 2px;
-		text-underline-offset: 0.2em;
+	.cap-retour :global(.retour) {
+		margin: 0;
 	}
 
 	.escena {

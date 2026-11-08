@@ -15,6 +15,7 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Avatar from '$lib/grops/Avatar.svelte';
 	import Icona from '$lib/components/Icona.svelte';
+	import Retour from '$lib/components/Retour.svelte';
 
 	const X = {
 		oc: {
@@ -456,6 +457,7 @@
 	<div class="capçal"><AppHeader /></div>
 
 	<main class="compte">
+		<Retour />
 		{#if !$authReady}
 			<p class="nota">…</p>
 		{:else if !sesilha}

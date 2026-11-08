@@ -6,6 +6,7 @@
 	// lecteur intégré : chaque chaîne mène à son site (rien ne se charge chez
 	// un tiers sans clic). Données dans $lib/data/medias.js.
 	import AppHeader from '$lib/components/AppHeader.svelte';
+	import Retour from '$lib/components/Retour.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { TELES } from '$lib/data/medias.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
@@ -81,11 +82,7 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="tele">
-	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
-		<a href="/parla">{tria({ oc: 'Se parla', fr: 'Se parle', es: 'Se habla', en: 'Speak', ca: 'Es parla', ar: 'نتحدّث' })}</a><span aria-hidden="true">›</span>
-		<a href="/medias">{tria({ oc: 'Mèdias', fr: 'Médias', es: 'Medios', en: 'Media', ca: 'Mitjans', ar: 'وسائل الإعلام' })}</a><span aria-hidden="true">›</span>
-		<span aria-current="page">{tx.titol}</span>
-	</nav>
+	<Retour actuelle={tx.titol} />
 
 	<header class="cap">
 		<h1 lang={langStore.current}>{tx.titol}</h1>
@@ -143,18 +140,6 @@
 		max-width: calc(72rem + 2 * var(--marge));
 		margin: 0 auto;
 		padding: clamp(1.5rem, 4vh, 3rem) var(--marge) var(--esp-96);
-	}
-	.camin {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		color: var(--t-tinta-2);
-		font-size: 0.95rem;
-	}
-	.camin a {
-		color: inherit;
-		text-decoration-color: var(--t-terra);
-		text-underline-offset: 3px;
 	}
 	.cap {
 		margin: var(--esp-24) 0 var(--esp-32, 2rem);

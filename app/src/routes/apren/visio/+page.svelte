@@ -13,6 +13,7 @@
 	import { enhance } from '$app/forms';
 	import { editor } from '$lib/data/legal.js';
 	import AppHeader from '$lib/components/AppHeader.svelte';
+	import Retour from '$lib/components/Retour.svelte';
 	import Pictograma from '$lib/apren/Pictograma.svelte';
 	import { PLAN } from '$lib/data/planSite.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
@@ -172,9 +173,7 @@
 <main class="visio" class:ed-actiu={edicion.actiu}>
 	<span id="visio-onglet" class="visually-hidden">{tria({ oc: 'Se dobrís dins un onglet novèl', fr: 'S’ouvre dans un nouvel onglet', es: 'Se abre en una pestaña nueva', en: 'Opens in a new tab', ca: 'S’obre en una pestanya nova', ar: 'يُفتح في تبويب جديد' })}</span>
 
-	<nav class="camin" aria-label={tria({ oc: 'Camin dins lo site', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
-		<a href="/apren"><b>{RUBRICA.n}</b> {tria(RUBRICA)}</a>
-	</nav>
+	<Retour />
 
 	<header class="eros">
 		<div class="eros-tèxt">
@@ -398,23 +397,6 @@
 		white-space: nowrap;
 	}
 
-	.camin {
-		margin-bottom: var(--esp-16);
-		font-size: 0.95rem;
-	}
-	.camin a {
-		color: var(--t-tinta-2);
-		text-decoration: none;
-	}
-	.camin a:hover {
-		color: var(--t-tinta);
-		text-decoration: underline;
-		text-underline-offset: 3px;
-	}
-	.camin b {
-		color: var(--t-aur);
-		font-weight: 700;
-	}
 
 	/* L'ouverture : la case visio en grand, avec le bouton tout de suite */
 	.eros {

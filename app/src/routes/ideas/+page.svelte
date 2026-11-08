@@ -11,6 +11,7 @@
 	import { edicion, iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
+	import Retour from '$lib/components/Retour.svelte';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('ideas', data.elements);
@@ -172,6 +173,7 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="ideas" class:ed-actiu={edicion.actiu}>
+	<Retour />
 	<header class="cap">
 		<h1 hidden={amagat('ideas.titol')} use:editar={'ideas.titol'}>{@render t('ideas.titol')}</h1>
 		<p class="frasa" hidden={amagat('ideas.frasa')} use:editar={'ideas.frasa'}>{@render t('ideas.frasa')}</p>

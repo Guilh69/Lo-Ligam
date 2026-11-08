@@ -4,6 +4,7 @@
 	// une porte par art (cahier §11), et la case « Pintura e afichas » mène ici.
 	// La grande image se charge seulement à l'ouverture.
 	import AppHeader from '$lib/components/AppHeader.svelte';
+	import Retour from '$lib/components/Retour.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { afichas } from '$lib/data/afichas.js';
@@ -99,11 +100,7 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="obras">
-	<nav class="camin" aria-label={tria({ oc: 'Camin', fr: 'Fil d’Ariane', es: 'Ruta de navegación', en: 'Breadcrumb', ca: 'Camí de navegació', ar: 'مسار التنقّل' })}>
-		<a href="/parla">{tx.parla}</a><span aria-hidden="true">›</span>
-		<a href="/obras">{tx.obras}</a><span aria-hidden="true">›</span>
-		<span aria-current="page">{tx.title}</span>
-	</nav>
+	<Retour actuelle={tx.title} />
 
 	<header class="cap">
 		<h1 lang={lang}>{tx.title}</h1>
@@ -315,19 +312,6 @@
 		max-width: calc(72rem + 2 * var(--marge));
 		margin: 0 auto;
 		padding: clamp(2rem, 6vh, 4.5rem) var(--marge) var(--esp-96);
-	}
-	.camin {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-bottom: var(--esp-24);
-		color: var(--t-tinta-2);
-		font-size: 0.95rem;
-	}
-	.camin a {
-		color: inherit;
-		text-decoration-color: var(--t-terra);
-		text-underline-offset: 3px;
 	}
 	.cap {
 		margin-bottom: var(--esp-48);

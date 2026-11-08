@@ -15,6 +15,7 @@
 	import { edicion, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { segments } from '$lib/edicion/marcat.js';
+	import Retour from '$lib/components/Retour.svelte';
 
 	/** pagina : 'apren', 'amassa'… ; rubrica : l'entrée du PLAN ; etiqueta : {oc, fr, es…} de la liste */
 	let { pagina, rubrica, etiqueta, paleta = PALETA_PER_DEFAUT } = $props();
@@ -39,6 +40,7 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="rubrica" class:ed-actiu={edicion.actiu}>
+	<Retour />
 	<header class="cap">
 		<h1>
 			<b aria-hidden="true">{rubrica.n}</b>

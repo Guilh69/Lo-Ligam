@@ -19,6 +19,7 @@
 	import { camin, estatParcors, simular, NIVELS } from './parcors.js';
 	import { legirAvancament } from './avancament.js';
 	import { T, NOTA_COMPTE } from './textes.js';
+	import Retour from '$lib/components/Retour.svelte';
 
 	/** essai : ?simul=n simule l'avancement (pages /ensag/parcors) */
 	let { essai = false, children } = $props();
@@ -103,7 +104,7 @@
 	<main class="parcors" class:cargant={!prèst}>
 		<div class="entrada">
 			<header class="cap">
-				<p class="ariana"><a href="/apren"><b>02</b><span lang="oc">{T.sApren.oc}</span></a></p>
+				<Retour />
 				<h1 lang="oc">{T.titol.oc}</h1>
 				<p class="glosa" lang={lg}>({glosa(T.titol)})</p>
 			</header>
@@ -233,29 +234,7 @@
 		text-align: match-parent;
 	}
 
-	/* Le titre, au gabarit des pages de rubrique ; S'apren en fil d'Ariane */
-	.ariana {
-		margin: 0;
-	}
-	.ariana a {
-		display: inline-flex;
-		align-items: baseline;
-		gap: 0.45em;
-		color: var(--t-tinta-2);
-		font-size: 1rem;
-		text-decoration: none;
-	}
-	/* un petit chiffre : en Luciole (le zéro de Limelight se lit comme ◐) */
-	.ariana b {
-		font-weight: 700;
-		color: var(--aur-pichon);
-	}
-	.ariana a:hover span,
-	.ariana a:focus-visible span {
-		color: var(--t-tinta);
-		text-decoration: underline 2px var(--t-accion);
-		text-underline-offset: 4px;
-	}
+	/* Le titre, au gabarit des pages de rubrique */
 	h1 {
 		margin: var(--esp-8) 0 0;
 		font-family: var(--font-heading);
