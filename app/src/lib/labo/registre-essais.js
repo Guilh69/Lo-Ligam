@@ -237,13 +237,13 @@ export const ESSAIS = [
 	},
 	{
 		chemin: '/ensag/flotants',
-		titre: 'Fond clair : des flotteurs à attraper',
+		titre: 'Flotteurs : confettis (adoptés) et objets à attraper (pour un jeu)',
 		date: '2026-11-07',
 		choix: 'ambiances-accueil',
 		etat: 'actif',
 		pret: 'non',
-		raison: 'Idée de Romain du 07-11 : des confettis minuscules ou des objets en papier découpé qui flottent sur le fond, qu’on fait virevolter et qu’on attrape pour voir le mot en occitan. Deux pistes jouables, en attente de son choix.',
-		suppression: 'À garder tant que la piste n’est pas tranchée. Elle importe lib/flotants (moteur, objets, composant) : à retirer avec la page si l’idée est abandonnée.'
+		raison: 'Tranché le 08-11 (Romain : « je préfère les confettis, on met ça dans le template ») : les confettis sont dans le gabarit racine, sur le fond clair de toutes les pages ordinaires, réglables dans le panneau d’ambiance. Les objets en papier découpé qu’on attrape pour voir le mot en occitan sont gardés pour un futur jeu : cette page reste le terrain d’essai du moteur et des objets.',
+		suppression: 'À garder : Romain veut réutiliser les objets (lib/flotants/objets.js et le mode « objets ») pour un jeu. Les confettis du gabarit n’en dépendent pas (ils importent lib/flotants/moteur.js et Flotants.svelte, qui restent de toute façon).'
 	},
 	{
 		chemin: '/ensag/palette-bandeaux',

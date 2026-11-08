@@ -18,7 +18,11 @@
 	import { OBJETS } from './objets.js';
 	import { TEINTES as T } from '$lib/styles/palette.js';
 
-	let { mode = 'confettis', onattrape = () => {} } = $props();
+	// fond : monté une fois dans le gabarit racine (routes/+layout.svelte), au-dessus du contenu mais
+	// fondu par multiplication : sur le fond clair la couleur se voit, sur le texte sombre elle disparaît,
+	// comme si les confettis passaient derrière (les pages ont des fonds pleins qui cacheraient une
+	// couche vraiment derrière). Rien du tout si l'appareil demande moins d'animations.
+	let { mode = 'confettis', fond = false, onattrape = () => {} } = $props();
 
 	let zone;
 	let pieces = $state([]);
@@ -38,6 +42,7 @@
 	};
 
 	onMount(() => {
+		if (fond && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		const petit = innerWidth < 640;
 		// sur un grand écran, deux exemplaires de chaque objet (le texte les repousse vers les marges)
 		const copies = innerWidth >= 1100 ? 2 : 1;
@@ -76,9 +81,9 @@
 					const b = zone.getBoundingClientRect();
 					const rects = [];
 					for (const e of document.querySelectorAll('p, li, h1, h2, h3, h4, blockquote, dd, figcaption, header, nav')) {
-						if (zone.contains(e) || (e.textContent || '').trim().length < 25) continue;
 						const r = e.getBoundingClientRect();
 						if (r.width < 60 || r.height < 14 || r.bottom < -80 || r.top > innerHeight + 80) continue;
+						if (zone.contains(e) || (e.textContent || '').trim().length < 25) continue;
 						rects.push({ l: r.left - b.left, t: r.top - b.top, r: r.right - b.left, b: r.bottom - b.top });
 						if (rects.length >= 220) break;
 					}
@@ -99,14 +104,14 @@
 				};
 				let attendu = 0;
 				const planifier = () => {
-					if (!attendu) attendu = requestAnimationFrame(() => { attendu = 0; lire(); });
+					if (!attendu) attendu = setTimeout(() => { attendu = 0; lire(); }, 150); // au plus une relecture tous les 150 ms pendant un défilement
 				};
 				lire();
 				addEventListener('scroll', planifier, { passive: true });
 				addEventListener('resize', planifier);
 				const minuteurTexte = setInterval(lire, 700);
 				arretTexte = () => {
-					cancelAnimationFrame(attendu);
+					clearTimeout(attendu);
 					clearInterval(minuteurTexte);
 					removeEventListener('scroll', planifier);
 					removeEventListener('resize', planifier);
@@ -131,7 +136,7 @@
 	});
 </script>
 
-<div class="couche" class:objets={mode === 'objets'} bind:this={zone} aria-hidden="true">
+<div class="couche" class:objets={mode === 'objets'} class:fond bind:this={zone} aria-hidden="true">
 	{#each pieces as c, k (k)}
 		{#if mode === 'objets'}
 			<div class="p o">
@@ -155,6 +160,11 @@
 		z-index: 0;
 		overflow: hidden;
 		pointer-events: none;
+	}
+	/* gabarit racine : au-dessus du contenu (sous la barre du haut et les fenêtres), fondu par multiplication */
+	.couche.fond {
+		z-index: 2;
+		mix-blend-mode: multiply;
 	}
 	/* ── les confettis : du papier découpé, tout petit et pâli ── */
 	.c {

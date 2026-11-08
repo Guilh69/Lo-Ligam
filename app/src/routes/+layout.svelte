@@ -11,6 +11,8 @@
 	import { tria } from '$lib/stores/lang.svelte.js';
 	import { esAdmin } from '$lib/adminStore';
 	import { browser, dev } from '$app/environment';
+	import { onMount } from 'svelte';
+	import { confetisSurPage } from '$lib/flotants/pages.js';
 
 	let { children } = $props();
 
@@ -29,6 +31,14 @@
 	$effect(() => {
 		ambianca.forçarClar = !armonizada(id);
 	});
+	// Les confettis qui flottent sur le fond clair (Romain, 2026-11-08 : « je préfère les confettis, on va
+	// mettre ça dans le template ») : une seule couche pour tout le site, chargée à la demande (rien pour
+	// le thème sombre, le fond léger, les écrans d'immersion et d'administration : lib/flotants/pages.js) ;
+	// réglable dans le panneau d'ambiance. Montée côté navigateur seulement, après l'hydratation.
+	let monte = $state(false);
+	onMount(() => (monte = true));
+	let confetis = $derived(monte && ambianca.clar && ambianca.confetis && !ambianca.leugier && confetisSurPage(id));
+
 	// Pied de page partout, sauf l'administration (l'accueil l'a aussi depuis
 	// qu'il est passé dans le cadre commun, 2026-10-07). L'essai de la refonte
 	// claire (/ensag/clar, 2026-10-21) et l'esquisse « page presque blanche »
@@ -72,6 +82,12 @@
 <a class="evitar" href="#contengut" onclick={anarAlContengut}>{tria({ oc: 'Anar al contengut', fr: 'Aller au contenu', es: 'Ir al contenido', en: 'Skip to content', ca: 'Anar al contingut', ar: 'الانتقال إلى المحتوى' })}</a>
 
 {@render children()}
+
+{#if confetis}
+	{#await import('$lib/flotants/Flotants.svelte') then m}
+		<m.default mode="confettis" fond />
+	{/await}
+{/if}
 
 {#if ambPè}
 	<SiteFooter />

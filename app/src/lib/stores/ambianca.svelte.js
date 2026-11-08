@@ -37,7 +37,7 @@ export const armonizada = (cami) =>
 	cami.startsWith('/cultura') ||
 	cami.startsWith('/apren/gramatica');
 
-const CLAU = { tema: 'lo-ligam-tema', dalt: 'lo-ligam-dalt', fons: 'lo-ligam-fons', leugier: 'lo-ligam-leugier' };
+const CLAU = { tema: 'lo-ligam-tema', dalt: 'lo-ligam-dalt', fons: 'lo-ligam-fons', leugier: 'lo-ligam-leugier', confetis: 'lo-ligam-confetis' };
 const TEMAS = ['sorne', 'clar', 'sistema'];
 // 0 Venas d'aur · 1 Lum e estelas · 2 Corbas de nivèl · 3 Simple
 const FONSES = [0, 1, 2, 3];
@@ -52,6 +52,9 @@ function crearEstat() {
 		// (cahier §11). Le clair Plâtre reste au choix dans le panneau Ambiance.
 		tema: 'sorne',
 		dalt: false,
+		// Les confettis qui flottent sur le fond clair des pages (lib/flotants, adoptés par
+		// Romain le 2026-11-08 « dans le template »). Allumés par défaut, désactivables.
+		confetis: true,
 		fons: 0, // Venas d'aur
 		leugier: false, // fond léger, sur choix du visiteur seulement
 		forçarClar: false,
@@ -130,6 +133,13 @@ export const ambianca = {
 		escriure(CLAU.leugier, e.leugier ? 'on' : 'off');
 		aplicar();
 	},
+	get confetis() {
+		return e.confetis;
+	},
+	set confetis(v) {
+		e.confetis = !!v;
+		escriure(CLAU.confetis, e.confetis ? 'on' : 'off');
+	},
 	/** Thème réellement affiché (après « système » et pages forcées en clair). */
 	get clar() {
 		return clarEfectiu();
@@ -160,6 +170,7 @@ if (browser && !G.__loLigamAmbiancaLegit) {
 	const f = legir(CLAU.fons);
 	if (f !== null && FONSES.includes(Number(f))) e.fons = Number(f);
 	e.leugier = legir(CLAU.leugier) === 'on';
+	e.confetis = legir(CLAU.confetis) !== 'off';
 	const mq = matchMedia('(prefers-color-scheme: light)');
 	e.sistèmaClar = mq.matches;
 	mq.addEventListener('change', (ev) => {

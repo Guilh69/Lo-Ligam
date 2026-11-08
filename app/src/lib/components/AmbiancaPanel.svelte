@@ -22,6 +22,7 @@
 			forçat: 'Aquesta pagina demòra en clar pel moment.',
 			fons: 'Fons',
 			leugier: 'Fons leugièr',
+			confetis: 'Confetis flotants',
 			fonses: ['Venas d’aur', 'Lum e estelas', 'Corbas de nivèl', 'Simple']
 		},
 		fr: {
@@ -34,6 +35,7 @@
 			forçat: 'Cette page reste en clair pour le moment.',
 			fons: 'Fond',
 			leugier: 'Fond léger',
+			confetis: 'Confettis qui flottent',
 			fonses: ['Veines d’or', 'Lumière et étoiles', 'Courbes de niveau', 'Sobre']
 		},
 		es: {
@@ -46,6 +48,7 @@
 			forçat: 'Esta página se queda en claro por ahora.',
 			fons: 'Fondo',
 			leugier: 'Fondo ligero',
+			confetis: 'Confeti flotante',
 			fonses: ['Vetas de oro', 'Luz y estrellas', 'Curvas de nivel', 'Sobrio']
 		},
 		en: {
@@ -58,6 +61,7 @@
 			forçat: 'This page stays light for now.',
 			fons: 'Background',
 			leugier: 'Lightweight background',
+			confetis: 'Floating confetti',
 			fonses: ['Veins of gold', 'Light and stars', 'Contour lines', 'Plain']
 		},
 		ca: {
@@ -70,6 +74,7 @@
 			forçat: 'Aquesta pàgina es queda en clar de moment.',
 			fons: 'Fons',
 			leugier: 'Fons lleuger',
+			confetis: 'Confeti flotant',
 			fonses: ['Vetes d’or', 'Llum i estrelles', 'Corbes de nivell', 'Sobri']
 		},
 		ar: {
@@ -82,6 +87,7 @@
 			forçat: 'تبقى هذه الصفحة فاتحة حاليًا.',
 			fons: 'الخلفية',
 			leugier: 'خلفية خفيفة',
+			confetis: 'قصاصات ملوّنة عائمة',
 			fonses: ['عروق ذهبية', 'ضوء ونجوم', 'خطوط الكنتور', 'بسيط']
 		}
 	};
@@ -152,6 +158,19 @@
 			>
 				<span class="pc-basc" aria-hidden="true"></span>{tx.dalt}
 			</button>
+
+			<!-- les confettis du fond clair (2026-11-08) : le réglage n'a de sens que sur un fond clair,
+			     et pas en fond léger (qui retire tout mouvement) -->
+			{#if ambianca.clar && !ambianca.leugier}
+				<button
+					type="button"
+					class="dalt"
+					aria-pressed={ambianca.confetis}
+					onclick={() => (ambianca.confetis = !ambianca.confetis)}
+				>
+					<span class="pc-basc" aria-hidden="true"></span>{tx.confetis}
+				</button>
+			{/if}
 
 			{#if ambianca.fonsPresent}
 				<p class="ambianca-titol">{tx.fons}</p>
