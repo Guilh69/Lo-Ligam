@@ -10,7 +10,7 @@ describe('fond de confettis : sur quelles pages', () => {
 	});
 
 	it('ne paraît ni sur la carte, ni dans l’immersion, ni dans l’administration, ni sur les essais', () => {
-		for (const id of ['/carta', '/anem', '/apren/remira', '/apren/jocs', '/aprene/modul/[modulId]', '/admin', '/admin/labo', '/ensag/flotants', '/compte', '/compte/questionnaire', '/accessibilitat'])
+		for (const id of ['/carta', '/anem', '/apren/remira', '/apren/jocs', '/aprene/modul/[modulId]', '/admin', '/admin/labo', '/ensag/flotants', '/compte', '/compte/questionnaire', '/accessibilitat', '/medias/livres', '/medias/livres/pastre-1913'])
 			expect(confetisSurPage(id), id).toBe(false);
 	});
 

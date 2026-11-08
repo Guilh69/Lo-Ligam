@@ -14,6 +14,7 @@
 	import MenuVel from './MenuVel.svelte';
 	import { lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
+	import { LANGUES } from '$lib/styles/palette.js';
 	import { VISIO, PLAN } from '$lib/data/planSite.js';
 	import { esAdmin } from '$lib/adminStore';
 	import { session, authReady, pseudoCompte } from '$lib/authStore';
@@ -22,6 +23,13 @@
 
 	let { children } = $props();
 	let lang = $derived(langStore.current);
+	// la pièce de la langue choisie prend la couleur de sa langue (palette.js, LANGUES) ; deux couleurs = pièce coupée en deux
+	const couleurLangue = (code) => {
+		const l = LANGUES[code];
+		if (!l) return undefined;
+		const fons = l.fons.length > 1 ? `linear-gradient(90deg, ${l.fons[0]} 50%, ${l.fons[1]} 50%)` : l.fons[0];
+		return `--pc-fons: ${fons}; --pc-tinta: ${l.tinta};`;
+	};
 
 	let menuDobèrt = $state(false);
 	let botonMenu = $state(null);
@@ -199,8 +207,8 @@
 
 			<div class="lengas">
 				<div class="lang-toggle" class:en-avant={crida} role="group" aria-label="Lenga / Langue">
-					<button type="button" class="pc pc-2" aria-pressed={lang === 'oc'} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
-					<button type="button" class="pc pc-2" aria-pressed={lang === segonda} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
+					<button type="button" class="pc pc-2" aria-pressed={lang === 'oc'} style={lang === 'oc' ? couleurLangue('oc') : undefined} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
+					<button type="button" class="pc pc-2" aria-pressed={lang === segonda} style={lang === segonda ? couleurLangue(segonda) : undefined} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
 					{#if crida}
 						<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
 					{/if}

@@ -58,6 +58,17 @@ export const JEUX = {
 	ecoute: T.bleu
 };
 
+/** Les langues du sélecteur de l'en-tête (Romain, 2026-11-08 : « Òc rouge plutôt que jaune ; le français, je vois du bleu ; le catalan du jaune ; l'anglais du bleu et du rouge ; l'arabe du vert »). La pièce de la langue choisie : `fons` = une couleur, ou deux (pièce coupée en deux) ; `tinta` = le texte. L'espagnol n'a pas été dit : l'orange, entre le rouge et le jaune de son drapeau, en attendant son avis.
+ *  Le rouge de l'occitan est le rouge du logo (T.brique : « occitan unifié ») ; le bleu du français est celui des langues d'oïl de la carte. */
+export const LANGUES = {
+	oc: { fons: [T.brique], tinta: T.creme },
+	fr: { fons: [T.bleuOil], tinta: T.creme },
+	ca: { fons: [T.or], tinta: T.encre },
+	en: { fons: [T.bleuOil, T.rougeAction], tinta: T.creme },
+	ar: { fons: [T.olive], tinta: T.creme },
+	es: { fons: [T.orangeClair], tinta: T.encre }
+};
+
 /** La salle de jeux (Romain, 2026-11-07 : « une couleur différente à chaque thème ») : la pièce de chaque
  *  puce « Fa trabalhar », [fond, texte] ; la puce choisie se lève et prend un anneau (Sala.svelte) */
 export const PUCES = {

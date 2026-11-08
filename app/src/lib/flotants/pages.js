@@ -5,7 +5,7 @@
 //  - la salle de jeux, qui a ses propres confettis ;
 //  - l'administration et le compte : des écrans de travail, des formulaires ;
 //  - les pages d'essai (/ensag), qui s'en occupent elles-mêmes ;
-//  - les pages légales et d'accessibilité : à lire sans rien autour.
+//  - les pages légales et d'accessibilité, et les livres : à lire sans rien autour.
 export const SANS_CONFETIS = [
 	'/admin',
 	'/carta',
@@ -15,6 +15,7 @@ export const SANS_CONFETIS = [
 	'/aprene/modul',
 	'/ensag',
 	'/compte',
+	'/medias/livres', // la lecture d'un livre (Romain, 2026-11-08 : « sur les livres, pas de confettis, ça c'est sûr »)
 	'/mencions-legalas',
 	'/confidencialitat',
 	'/accessibilitat'
