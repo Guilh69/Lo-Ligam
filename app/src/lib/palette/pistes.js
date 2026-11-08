@@ -34,7 +34,7 @@ export const PISTES = {
 		nom: 'Aujourd’hui',
 		titre: 'Le site tel qu’il est (référence)',
 		mot: 'Les valeurs de palette.js et d’app.css, pour comparer. Le verdict de l’outil est celui du site actuel.',
-		clair: { fond: '#f7f3ee', surface: '#ede6dc', texte: '#2a1a10', surClair: '#2a1a10', surSombre: '#fbf1e1', action: '#b53d17', choisi: '#eeaf34', juste: '#4f6a2f', carton: '#1f5f63', valeur: '#9c5611', tuiles: CASES },
+		clair: { fond: '#f7f7f7', surface: '#eeeeee', texte: '#2a1a10', surClair: '#2a1a10', surSombre: '#fbf1e1', action: '#b53d17', choisi: '#eeaf34', juste: '#4f6a2f', carton: '#1f5f63', valeur: '#9c5611', tuiles: CASES },
 		sombre: { fond: '#22100a', surface: '#2f170e', texte: '#fbf1e1', surClair: '#2a1a10', surSombre: '#fbf1e1', action: '#b53d17', choisi: '#eeaf34', juste: '#4f6a2f', carton: '#efe1c6', valeur: '#f6b73c', tuiles: CASES }
 	},
 	brique: {

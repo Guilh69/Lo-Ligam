@@ -53,7 +53,7 @@ const TEMAS = {
 	// l'occitan unifié au rouge des boutons (CARTE.occitan, palette.js), le nom en crème
 	// (avant : #d9343f à 0,48 en sombre, #b0202c à 0,58 en clair)
 	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: CARTE.occitan, occitanTèxt: '#ffc2b8', nomOccitan: texteSur(CARTE.occitan), nomOmbra: 'rgba(30, 8, 3, 0.85)', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: CARTE.intensite, uni: 1 },
-	clar: { estela: '#9a6a1c', lenga: TEINTES.brique, occitan: CARTE.occitan, occitanTèxt: '#4a0a12', nomOccitan: texteSur(CARTE.occitan), nomOmbra: 'rgba(58, 14, 4, 0.85)', admin: '42, 26, 16', ombra: 'rgba(247, 243, 238, 0.95)', clar: true, tencha: CARTE.intensite, uni: 1 }
+	clar: { estela: '#9a6a1c', lenga: TEINTES.brique, occitan: CARTE.occitan, occitanTèxt: '#4a0a12', nomOccitan: texteSur(CARTE.occitan), nomOmbra: 'rgba(58, 14, 4, 0.85)', admin: '42, 26, 16', ombra: 'rgba(247, 247, 247, 0.95)', clar: true, tencha: CARTE.intensite, uni: 1 }
 };
 const temaDe = (clar, dalt) => ({
 	...(clar ? TEMAS.clar : TEMAS.sorne),

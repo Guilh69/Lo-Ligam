@@ -4006,7 +4006,7 @@
 		text-align: center;
 		white-space: nowrap;
 		pointer-events: none;
-		-webkit-text-stroke: 3px rgba(247, 243, 238, 0.85);
+		-webkit-text-stroke: 3px rgba(247, 247, 247, 0.85);
 		paint-order: stroke fill;
 	}
 

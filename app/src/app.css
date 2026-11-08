@@ -13,7 +13,7 @@
 	--color-gold-light: var(--p-or-clair); /* l'aur clar de las pomètas del lògo */
 	/* Le fond des pages pas encore harmonisées suit le Plâtre (2026-10-21) :
 	   avant #f5ead8 ; le crème reste la teinte des textes sur fond sombre. */
-	--color-cream: #f7f3ee;
+	--color-cream: #f7f7f7;
 
 	/* Accents */
 	--color-teal: var(--p-sarcelle);
@@ -116,21 +116,22 @@
 :root[data-tema='clar'] {
 	--t-braise: transparent;
 	--t-braise-or: transparent;
-	/* l'ocre de la palette validée (#c7811b) tombe à 2,89 sur le plâtre : #bb7616, même teinte,
-	   passe à 3,33 */
-	--t-aur-gros: #bb7616;
+	/* l'ocre de la palette validée (#c7811b) tombe à 2,89 sur le fond : #bb7616 (essayé le 07-11) passait mais virait
+	   au brun (« terne », Romain, 08-11) ; #c28100 garde la même teinte, plus saturée, et passe 3,0 sur #f7f7f7 :
+	   c'est l'ocre des grands mots et des grands numéros (01, 02, 03, « Amassa. ») */
+	--t-aur-gros: #c28100;
 }
 /* Gamme « Plâtre » (Romain, 2026-10-21, refonte claire, étape 1 : choisie
    contre « Terre cuite » et « Ciel du Sud » sur /ensag/clar) : plâtre, pierre
    et encre brun-noir, d'après les couleurs mesurées de leoparpeix.com ; la
    brique reste la seule couleur vive. Avant : #f5ead8, #ecdcc3, #2e1d14. */
 :root[data-tema='clar'] {
-	--t-fons: #f7f3ee;
-	--t-fons-2: #ede6dc;
+	--t-fons: #f7f7f7;
+	--t-fons-2: #eeeeee;
 	--t-tinta: #2a1a10;
 	--t-tinta-2: rgba(42, 26, 16, 0.72);
 	--t-linha: rgba(42, 26, 16, 0.14);
-	--t-vel: rgba(247, 243, 238, 0.8);
+	--t-vel: rgba(247, 247, 247, 0.8);
 	/* #a85d12 → #9c5611 le 2026-10-21 : 4,16 → 4,70 sur --t-fons, les petits
 	   textes dorés (« L'occitan », numéros) passent le seuil WCAG de 4,5 */
 	--t-aur: #9c5611;
@@ -138,6 +139,16 @@
 	--t-terra: var(--p-brique);
 	--t-terra-viu: var(--p-brique);
 	--pc-ombre: rgba(20, 10, 5, 0.32);
+}
+/* Les confettis du fond clair (lib/flotants, 2026-11-08) passent DERRIÈRE tout le contenu : pour les voir, le
+   cadre commun des pages, plein, devient transparent tant que la couche est montée (le fond reste celui du
+   <body>, identique). Les photos, cartes, illustrations et tuiles gardent leur fond et les cachent. */
+:root[data-tema='clar'][data-confetis='on'] :is(.pagina, .acuelh) {
+	background: none;
+}
+/* L'accueil peint son fond lui-même (canevas #fons, plein écran, z-index 0) : sous la couche, qui est à -1. */
+:root[data-tema='clar'][data-confetis='on'] .acuelh #fons {
+	z-index: -2;
 }
 /* Verre des éléments posés sur la carte (rail, panneau qui s'ouvre à côté,
    boutons ronds) : sans trait, un fond un peu plus chaud que la carte (une
@@ -160,7 +171,7 @@
 }
 :root[data-tema='clar'] {
 	--l-carta: #ffffff;
-	--l-sol: #fbf6ec;
+	--l-sol: #f4f4f4;
 	--l-marca: #a5342a;
 	--l-teal: var(--p-sarcelle);
 	--l-bon: var(--pc-juste); /* avant #55702f, aligné sur l'olive des jeux */

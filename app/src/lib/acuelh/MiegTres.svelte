@@ -188,10 +188,12 @@
 	   CaminCrotz.svelte, piste « hybride » choisie par Romain le 2026-11-04). Le composant
 	   lit ces variables ; la croix lit les jetons --logo-* de app.css (charte §1 bis). Un seul poids de trait. */
 	.mieg { --cc-verre: rgba(34, 16, 10, 0.62); --cc-anell: var(--or); --cc-piste: rgba(238, 175, 52, 0.26); --cc-via: var(--or); }
-	.rets-domeni { fill: color-mix(in srgb, #ffd98a 12%, transparent); stroke: rgba(238, 175, 52, 0.55); stroke-width: 0.9; stroke-linejoin: round; }
-	.rets-arc { fill: none; stroke: #ffd98a; stroke-width: 1; opacity: 0.5; }
-	.rets-flux { fill: none; stroke: #fff; stroke-width: 2.2; stroke-dasharray: 0 7; stroke-linecap: round; opacity: 0.9; }
-	.rets-vila { fill: #ffe6b8; transform-box: fill-box; transform-origin: center; filter: drop-shadow(0 0 3px rgba(255, 217, 138, 0.55)); }
+	/* La carte d'Amassa en papier découpé (Romain, 2026-11-08) : une silhouette d'un seul rouge, celui de la charte,
+	   une ombre à peine posée dessous ; les liens et les villes en blanc, comme les pictogrammes des tuiles de couleur. */
+	.rets-domeni { fill: var(--p-brique, #b53d17); stroke: none; filter: drop-shadow(0 2px 2.5px rgba(20, 10, 5, 0.2)); }
+	.rets-arc { fill: none; stroke: #fff; stroke-width: 1.1; opacity: 0.6; }
+	.rets-flux { fill: none; stroke: #fff; stroke-width: 2.2; stroke-dasharray: 0 7; stroke-linecap: round; opacity: 0.95; }
+	.rets-vila { fill: #fff; transform-box: fill-box; transform-origin: center; }
 
 
 	/* ——— Piste « Système » (inspirée de Léo Parpeix) : braise unifiée (section transparente),
@@ -221,20 +223,18 @@
 
 	/* ——— Thème clair : le crème et l'or pâle du fond sombre disparaissent sur le fond clair ;
 	   encre brune pour les textes (≥ 9:1), ocre profond pour numéros et traits (≥ 3:1) ——— */
-	:global(:root[data-tema='clar']) .mieg { --or: #8f5400; --or-clar: #8f5400; --crema: #2a1a10; }
+	/* l'or est l'ocre des grands mots (--t-aur-gros, app.css) et les traits des cartes et du parcours le rouge de la charte (08-11 : « harmoniser les couleurs ») */
+	:global(:root[data-tema='clar']) .mieg { --or: var(--t-aur-gros); --or-clar: var(--p-brique, #b53d17); --crema: #2a1a10; }
 	:global(:root[data-tema='clar']) .sota { opacity: 1; }
 	:global(:root[data-tema='clar']) .portas span { opacity: 1; }
 	:global(:root[data-tema='clar']) .costa { stroke-opacity: 0.85; stroke-width: 1.5; }
-	:global(:root[data-tema='clar']) .estela { fill: #b36d00; fill-opacity: 0.7; }
-	:global(:root[data-tema='clar']) .estela.vila { fill: #8f5400; fill-opacity: 1; }
+	:global(:root[data-tema='clar']) .estela { fill: var(--p-brique, #b53d17); fill-opacity: 0.7; }
+	:global(:root[data-tema='clar']) .estela.vila { fill: var(--p-brique, #b53d17); fill-opacity: 1; }
 	:global(:root[data-tema='clar']) .vila-nom { fill-opacity: 1; }
 	/* fond clair : verre crème, piste ocre ; le filet et le chemin prennent déjà l'ocre de --or */
-	:global(:root[data-tema='clar']) .mieg { --cc-verre: rgba(251, 241, 225, 0.84); --cc-piste: rgba(143, 84, 0, 0.26); }
-	:global(:root[data-tema='clar']) .rets-domeni { fill: color-mix(in srgb, #b36d00 16%, transparent); stroke: rgba(143, 84, 0, 0.85); stroke-width: 1.3; }
-	:global(:root[data-tema='clar']) .rets-arc { stroke: #8f5400; opacity: 0.75; }
-	:global(:root[data-tema='clar']) .rets-flux { stroke: #b53d17; opacity: 1; }
-	:global(:root[data-tema='clar']) .rets-vila { fill: #8f5400; filter: none; }
-	:global(:root[data-tema='clar']) .sist-vis::before { opacity: 0.2; }
+	:global(:root[data-tema='clar']) .mieg { --cc-verre: rgba(255, 255, 255, 0.9); --cc-piste: rgba(181, 61, 23, 0.22); --cc-anell: var(--p-brique, #b53d17); --cc-via: var(--p-brique, #b53d17); }
+	/* en clair, plus de lueur dorée derrière les visuels (le voile « crème », 08-11) */
+	:global(:root[data-tema='clar']) .sist-vis::before { display: none; }
 
 	/* ——— Contenu riche de la variante « Combiné » (scope :global pour que Svelte
 	   n'élague pas ces styles, qui ne vivent que dans un extrait conditionnel) ——— */

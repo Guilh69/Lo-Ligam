@@ -62,7 +62,7 @@ html.lenis, html.lenis body { height: auto; }
 	--b-beluga: #ffd98a; --b-beluga-lum: #f6b73c; --b-ombra: rgba(0, 0, 0, 0.5);
 	background: linear-gradient(to top, var(--b-fons-2), var(--b-fons) 72%); transition: opacity 0.8s ease; }
 /* En clair, le fond léger est le plâtre nu : ni lueurs, ni dégradé, ni vignettage (07-11) */
-:root[data-tema='clar'] .acuelh .brasa { --b-fons: #f7f3ee; --b-fons-2: #f7f3ee; --b-lum-1: transparent;
+:root[data-tema='clar'] .acuelh .brasa { --b-fons: #f7f7f7; --b-fons-2: #f7f7f7; --b-lum-1: transparent;
 	--b-lum-2: transparent; --b-beluga: #8a3f12; --b-beluga-lum: #a85d12; --b-ombra: transparent; }
 :root[data-leugier='on'] .acuelh .brasa { display: block; }
 :root[data-leugier='on'] .acuelh #fons { display: none; }

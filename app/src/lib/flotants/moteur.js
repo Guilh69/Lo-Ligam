@@ -27,6 +27,7 @@ export function flotter(zone, elements, options = {}) {
 		attrapables: false, // survol : la pièce visée grossit, ralentit et ne fuit plus
 		marge: 16, // de combien on peut rater une pièce à la souris, en pixels
 		margeDoigt: 28, // et au doigt
+		fondu: false, // fond du site : une pièce qui entre dans un bloc de texte ou une image s'efface (variable --fade)
 		onAttrape: null,
 		onLache: null,
 		...options
@@ -53,6 +54,7 @@ export function flotter(zone, elements, options = {}) {
 			cr, ang, dang: (alea() - 0.5) * 0.004, // sa vitesse de croisière et son changement de cap
 			rot: alea() * 360, vr: 0, spin: (0.8 + alea() * 2.6) * (alea() < 0.5 ? -1 : 1), // degrés par seconde
 			s: 1, sc: 1, // échelle actuelle et visée
+			fade: 1, // transparence due aux blocs de texte (option fondu)
 			minuteur: 0
 		};
 		el.style.position = 'absolute';
@@ -183,7 +185,13 @@ export function flotter(zone, elements, options = {}) {
 				else if (o.attrapables && curseur && vCurseur < 10 && Math.hypot(p.x - curseur[0], p.y - curseur[1]) < p.r + 70) { p.vx *= 0.97 ** dt; p.vy *= 0.97 ** dt; } // elle ralentit quand la souris approche
 				// le texte dense : on le contourne, sans mur (une pièce lancée peut passer derrière,
 				// puis elle est repoussée vers la sortie la plus proche)
+				let fade = 1;
 				for (const R of zonesTexte) {
+					// dans le bloc lui-même : la pièce s'efface sur 14 px (elle passe « derrière », sans se voir entre les lettres)
+					if (o.fondu) {
+						const di = Math.min(p.x - R.l, R.r - p.x, p.y - R.t, R.b - p.y);
+						if (di > 0) fade = Math.min(fade, Math.max(0, 1 - di / 14));
+					}
 					const m = p.r + 8;
 					const g = R.l - m, d = R.r + m, h = R.t - m, b = R.b + m;
 					if (p.x <= g || p.x >= d || p.y <= h || p.y >= b) continue;
@@ -203,6 +211,10 @@ export function flotter(zone, elements, options = {}) {
 					let da = Math.atan2(ny, nx) - p.ang;
 					da = Math.atan2(Math.sin(da), Math.cos(da));
 					p.ang += da * 0.04 * dt;
+				}
+				if (o.fondu && Math.abs(fade - p.fade) > 0.04) {
+					p.fade = fade;
+					p.el.style.setProperty('--fade', fade.toFixed(2));
 				}
 				const v = Math.hypot(p.vx, p.vy);
 				if (v > o.vmax) { p.vx *= o.vmax / v; p.vy *= o.vmax / v; }

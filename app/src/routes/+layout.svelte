@@ -38,6 +38,12 @@
 	let monte = $state(false);
 	onMount(() => (monte = true));
 	let confetis = $derived(monte && ambianca.clar && ambianca.confetis && !ambianca.leugier && confetisSurPage(id));
+	// la couche est DERRIÈRE le contenu : tant qu'elle est là, le cadre des pages (.pagina, .acuelh), plein, devient
+	// transparent (app.css, data-confetis) pour la laisser voir ; le fond de la page est celui du <body>
+	$effect(() => {
+		document.documentElement.dataset.confetis = confetis ? 'on' : 'off';
+		return () => delete document.documentElement.dataset.confetis;
+	});
 
 	// Pied de page partout, sauf l'administration (l'accueil l'a aussi depuis
 	// qu'il est passé dans le cadre commun, 2026-10-07). L'essai de la refonte

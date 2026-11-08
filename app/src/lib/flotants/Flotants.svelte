@@ -18,10 +18,12 @@
 	import { OBJETS } from './objets.js';
 	import { TEINTES as T } from '$lib/styles/palette.js';
 
-	// fond : monté une fois dans le gabarit racine (routes/+layout.svelte), au-dessus du contenu mais
-	// fondu par multiplication : sur le fond clair la couleur se voit, sur le texte sombre elle disparaît,
-	// comme si les confettis passaient derrière (les pages ont des fonds pleins qui cacheraient une
-	// couche vraiment derrière). Rien du tout si l'appareil demande moins d'animations.
+	// fond : monté une fois dans le gabarit racine (routes/+layout.svelte), VRAIMENT derrière tout le contenu
+	// (z-index -1) : texte, photos, carte, illustrations, tuiles de couleur les cachent (Romain, 08-11 : « il faut
+	// que ce soit un vrai fond, que les objets cachent les confettis »). La multiplication essayée d'abord les
+	// laissait transparaître sur les images. Les pièces contournent aussi les photos, cartes et illustrations
+	// (zones d'évitement), pour qu'elles ne se glissent pas dans les transparences. Rien du tout si l'appareil
+	// demande moins d'animations.
 	let { mode = 'confettis', fond = false, onattrape = () => {} } = $props();
 
 	let zone;
@@ -63,6 +65,7 @@
 				transfert: objets ? 0.16 : 0.12,
 				vmax: 6,
 				collisions: objets,
+				fondu: fond,
 				attrapables: objets,
 				croisiere: objets ? [0.12, 0.3] : [0.1, 0.32],
 				onAttrape: (p, c) => {
@@ -99,6 +102,19 @@
 							g.t = Math.min(g.t, r.t);
 							g.b = Math.max(g.b, r.b);
 						} else zones.push({ ...r });
+					}
+					// les photos, cartes (canevas) et illustrations de bonne taille : zones à part, jamais fusionnées au texte
+					if (fond) {
+						let n = 0;
+						for (const e of document.querySelectorAll('img, canvas, video, picture, iframe, svg, [role="img"]')) {
+							if (zone.contains(e) || n >= 60) continue;
+							const r = e.getBoundingClientRect();
+							if (r.width < 90 || r.height < 90 || r.bottom < -80 || r.top > innerHeight + 80) continue;
+							// un canevas ou une image qui recouvre l'écran (les calques de l'accueil) est un fond, pas un objet
+							if (r.width * r.height > 0.55 * innerWidth * innerHeight) continue;
+							zones.push({ l: r.left - b.left, t: r.top - b.top, r: r.right - b.left, b: r.bottom - b.top });
+							n++;
+						}
 					}
 					moteur?.eviter(zones);
 				};
@@ -161,17 +177,17 @@
 		overflow: hidden;
 		pointer-events: none;
 	}
-	/* gabarit racine : au-dessus du contenu (sous la barre du haut et les fenêtres), fondu par multiplication */
+	/* gabarit racine : vraiment derrière tout le contenu (au-dessus du seul fond de la page) ; pour qu'il se voie,
+	   le cadre des pages (.pagina, .acuelh) devient transparent tant que la couche est là : voir app.css */
 	.couche.fond {
-		z-index: 2;
-		mix-blend-mode: multiply;
+		z-index: -1;
 	}
 	/* ── les confettis : du papier découpé, tout petit et pâli ── */
 	.c {
 		display: block;
 		width: var(--t);
 		height: var(--t);
-		opacity: 0.6;
+		opacity: calc(0.6 * var(--fade, 1));
 		filter: drop-shadow(0 1.5px 1px rgba(20, 10, 5, 0.25));
 	}
 	.c b {

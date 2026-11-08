@@ -128,7 +128,7 @@
 	h1 b {
 		font-weight: 400;
 		font-size: 0.42em;
-		color: var(--t-aur);
+		color: var(--t-aur-gros); /* grand numéro : l'ocre des grands mots (08-11), pas le brun du petit texte */
 	}
 	/* Arabe (Joan, 26-10) : à côté du chiffre en Limelight, le titre arabe en graisse
 	   normale paraît léger ; gras pour l'arabe */
