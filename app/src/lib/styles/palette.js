@@ -58,13 +58,13 @@ export const JEUX = {
 	ecoute: T.bleu
 };
 
-/** Les langues du sélecteur de l'en-tête (Romain, 2026-11-08 : « Òc rouge plutôt que jaune ; le français, je vois du bleu ; le catalan du jaune ; l'anglais du bleu et du rouge ; l'arabe du vert »). La pièce de la langue choisie : `fons` = une couleur, ou deux (pièce coupée en deux) ; `tinta` = le texte. L'espagnol n'a pas été dit : l'orange, entre le rouge et le jaune de son drapeau, en attendant son avis.
+/** Les langues du sélecteur de l'en-tête (Romain, 2026-11-08 : « Òc rouge plutôt que jaune ; le français, je vois du bleu ; le catalan du jaune ; l'arabe du vert »). L'anglais : violet, choisi sur trois essais (violet, turquoise, rose). La pièce de la langue choisie : `fons` = une couleur, ou deux (pièce coupée en deux) ; `tinta` = le texte. L'espagnol n'a pas été dit : l'orange, entre le rouge et le jaune de son drapeau, en attendant son avis.
  *  Le rouge de l'occitan est le rouge du logo (T.brique : « occitan unifié ») ; le bleu du français est celui des langues d'oïl de la carte. */
 export const LANGUES = {
 	oc: { fons: [T.brique], tinta: T.creme },
 	fr: { fons: [T.bleuOil], tinta: T.creme },
 	ca: { fons: [T.or], tinta: T.encre },
-	en: { fons: [T.bleuOil, T.rougeAction], tinta: T.creme },
+	en: { fons: [T.prune], tinta: T.creme }, // violet, choisi par Romain le 08-11 (le bleu et rouge essayé d'abord ne lui allait pas du tout)
 	ar: { fons: [T.olive], tinta: T.creme },
 	es: { fons: [T.orangeClair], tinta: T.encre }
 };
