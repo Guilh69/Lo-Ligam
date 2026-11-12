@@ -126,7 +126,7 @@ describe('pages d’essai', () => {
 		}
 	});
 
-	it('les 24 pages d’essai recensées par l’audit du 07-11 (celles du 12-11 tranchées le jour même)', () => {
-	expect(ESSAIS).toHaveLength(24);
+	it('les 24 pages d’essai de l’audit du 07-11 (celles du 12-11 tranchées le jour même) et l’essai du sombre neutre (12-11)', () => {
+	expect(ESSAIS).toHaveLength(25);
 	});
 });

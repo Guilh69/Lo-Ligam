@@ -19,6 +19,11 @@
 					(t === 'sistema' && matchMedia('(prefers-color-scheme: light)').matches);
 				d.tema = clar ? 'clar' : 'sorne';
 				d.dalt = localStorage.getItem('lo-ligam-dalt') === 'on' ? 'on' : 'off';
+				// ESSAI 2026-11-12 (/ensag/sombre-neutre) : sombre sans teinte, ?sombre=neutre ou ?sombre=actuel
+				var q = new URLSearchParams(location.search).get('sombre');
+				if (q === 'neutre') sessionStorage.setItem('lo-ligam-essai-sombre', 'neutre');
+				else if (q === 'actuel') sessionStorage.removeItem('lo-ligam-essai-sombre');
+				if (sessionStorage.getItem('lo-ligam-essai-sombre') === 'neutre') d.sombre = 'neutre';
 			} catch (e) {}
 		</script>
 		<!-- Les polices sont hébergées par nos soins (voir src/fonts.css) :
