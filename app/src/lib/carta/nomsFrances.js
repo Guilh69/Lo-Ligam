@@ -63,7 +63,7 @@ export const NOMS_FRANCES = {
 	'Vilafranca de Roergue': 'Villefranche-de-Rouergue',
 	Condòm: 'Condom',
 	Marmanda: 'Marmande',
-	"Vilanuèva d'Oùt": 'Villeneuve-sur-Lot',
+	"Vilanuèva d'Òut": 'Villeneuve-sur-Lot',
 	Dacs: 'Dax',
 	'Auloron e Senta Maria': 'Oloron-Sainte-Marie',
 	Arcaishon: 'Arcachon',
