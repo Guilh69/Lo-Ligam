@@ -330,7 +330,7 @@
 		inset: 0;
 		overflow: hidden;
 		z-index: -1;
-		background: radial-gradient(circle at 50% 0%, #faf3e6 0%, var(--color-cream) 60%);
+		background: var(--color-cream);
 	}
 
 	.blob {
