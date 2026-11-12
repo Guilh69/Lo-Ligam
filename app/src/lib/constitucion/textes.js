@@ -58,8 +58,9 @@ export const texteDeFin = (fin) => TEXTES.find((t) => t.href === '/constitucion'
 
 /** « 012 p Le texte… » → { id: '012', tag: 'p', txt: 'Le texte…' } */
 export function parser(brut) {
+	// fins de ligne Windows (CRLF) ou Unix (LF) : Git peut convertir les fichiers à l'extraction
 	return brut
-		.split('\n')
+		.split(/\r?\n/)
 		.filter((l) => l.trim())
 		.map((l) => {
 			const m = l.match(/^(\d+) (h2|h3|p) (.*)$/);

@@ -57,6 +57,17 @@ describe('les quatre textes : occitan et français bloc pour bloc', () => {
 	});
 });
 
+describe('lecture des fichiers', () => {
+	it('accepte les fins de ligne Windows comme Unix (Git convertit à l’extraction)', () => {
+		const attendu = [
+			{ id: '001', tag: 'h2', txt: 'PREAMBUL' },
+			{ id: '002', tag: 'p', txt: 'Lo pòble.' }
+		];
+		expect(parser('001 h2 PREAMBUL\n002 p Lo pòble.\n')).toEqual(attendu);
+		expect(parser('001 h2 PREAMBUL\r\n002 p Lo pòble.\r\n')).toEqual(attendu);
+	});
+});
+
 describe('aides d’affichage', () => {
 	it('etiqueta : article, titre numéroté, préambule', () => {
 		expect(etiqueta({ txt: 'ARTICLE 34-1.' })).toEqual({ gros: 'Article 34-1' });
