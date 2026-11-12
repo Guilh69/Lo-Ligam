@@ -1,0 +1,445 @@
+001 h2 PREAMBUL
+002 p Lo pòble francés proclama solemnament son estacament als Dreches de l'òme e als principis de la sobeiranetat nacionala tals coma foguèron definits per la Declaracion de 1789, confirmada e completada pel preambul de la Constitucion de 1946, e tanben als dreches e als devers definits dins la Carta de l'environament de 2004.
+003 p En vertut d'aquestes principis e d'aquel de la liura determinacion dels pòbles, la Republica ofrís als territòris d'otramar que manifèstan la volontat d'i aderir d'institucions novèlas fondadas sus l'ideal comun de libertat, d'egalitat e de fraternitat e concebudas en vista de lor evolucion democratica.
+004 h3 ARTICLE PRIMIÈR.
+005 p França es una Republica indivisibla, laïca, democratica e sociala. Assegura l'egalitat davant la lei de totes los ciutadans sens distincion d'origina, de raça o de religion. Respècta totas las crezenças. Son organizacion es descentralizada.
+006 p La lei favoriza l'egal accès de las femnas e dels òmes als mandats electorals e foncions electivas, e tanben a las responsabilitats professionalas e socialas.
+007 h2 Títol primièr - DE LA SOBEIRANETAT
+008 h3 ARTICLE 2.
+009 p La lenga de la Republica es lo francés.
+010 p L'emblèma nacional es la bandièra tricolora, blau, blanc, roge.
+011 p L'imne nacional es « La Marselhesa ».
+012 p La devisa de la Republica es « Libertat, Egalitat, Fraternitat ».
+013 p Son principi es : govèrn del pòble, pel pòble e pel pòble.
+014 h3 ARTICLE 3.
+015 p La sobeiranetat nacionala aperten al pòble que l'exercís per sos representants e per la via del referendum.
+016 p Cap de seccion del pòble ni cap d'individú non pòt s'en atribuir l'exercici.
+017 p Lo sufragi pòt èsser dirècte o indirècte dins las condicions previstas per la Constitucion. Es totjorn universal, egal e secret.
+018 p Son electors, dins las condicions determinadas per la lei, totes los nacionals franceses majors dels dos sèxes, que gaudisson de lors dreches civils e politics.
+019 h3 ARTICLE 4.
+020 p Los partits e agropaments politics concorron a l'expression del sufragi. Se forman e exercisson lor activitat liurament. Devon respectar los principis de la sobeiranetat nacionala e de la democracia.
+021 p Contribuïsson a la mesa en òbra del principi enonciat al segond alinèa de l'article 1èr dins las condicions determinadas per la lei.
+022 p La lei garantís las expressions pluralistas de las opinions e la participacion equitabla dels partits e agropaments politics a la vida democratica de la Nacion.
+023 h2 Títol II - LO PRESIDENT DE LA REPUBLICA
+024 h3 ARTICLE 5.
+025 p Lo President de la Republica velha al respècte de la Constitucion. Assegura, per son arbitratge, lo foncionament regular dels poders publics e tanben la continuitat de l'Estat.
+026 p Es lo garant de l'independéncia nacionala, de l'integritat del territòri e del respècte dels tractats.
+027 h3 ARTICLE 6.
+028 p Lo President de la Republica es elegit per cinc ans al sufragi universal dirècte.
+029 p Degun non pòt exercir mai de dos mandats consecutius.
+030 p Las modalitats d'aplicacion del present article son fixadas per una lei organica.
+031 h3 ARTICLE 7.
+032 p Lo President de la Republica es elegit a la majoritat absoluda dels sufragis exprimits. S'aquesta non es pas obtenguda al primièr torn d'escrutinh, es procedit, lo catorzen jorn seguent, a un segond torn. Sols pòdon s'i presentar los dos candidats que, s'es lo cas aprèp retirada de candidats mai favorizats, se tròban aver recampat lo mai grand nombre de sufragis al primièr torn.
+033 p L'escrutinh es dobèrt sus convocacion del Govèrn.
+034 p L'eleccion del nòu President a luòc vint jorns almens e trenta-cinc jorns al mai abans l'expiracion dels poders del president en exercici.
+035 p En cas de vacança de la Presidéncia de la Republica per quina causa que siá, o d'empachament constatat pel Conselh constitucional sasit pel Govèrn e que estatuís a la majoritat absoluda de sos membres, las foncions del President de la Republica, levat las que son previstas als articles 11 e 12 çai-jos, son provisòriament exercidas pel president del Senat e, s'aqueste es a son torn empachat d'exercir aquestas foncions, pel Govèrn.
+036 p En cas de vacança o quand l'empachament es declarat definitiu pel Conselh constitucional, l'escrutinh per l'eleccion del nòu President a luòc, levat cas de fòrça majora constatat pel Conselh constitucional, vint jorns almens e trenta-cinc jorns al mai aprèp la dobertura de la vacança o la declaracion del caractèr definitiu de l'empachament.
+037 p Se, dins los sèt jorns que precedisson la data limita del depaus de las presentacions de candidaturas, una de las personas qu'an, mens de trenta jorns abans aquesta data, anonciat publicament sa decision d'èsser candidata morís o se tròba empachada, lo Conselh constitucional pòt decidir de reportar l'eleccion.
+038 p Se, abans lo primièr torn, un dels candidats morís o se tròba empachat, lo Conselh constitucional pronóncia lo report de l'eleccion.
+039 p En cas de decès o d'empachament d'un dels dos candidats mai favorizats al primièr torn abans las retiradas eventualas, lo Conselh constitucional declara que cal procedir de nòu a l'ensemble de las operacions electoralas ; n'es parièr en cas de decès o d'empachament d'un dels dos candidats demorats en preséncia en vista del segond torn.
+040 p Dins totes los cases, lo Conselh constitucional es sasit dins las condicions fixadas al dosen alinèa de l'article 61 çai-jos o dins aquelas determinadas, per la presentacion d'un candidat, per la lei organica prevista a l'article 6 çai-sus.
+041 p Lo Conselh constitucional pòt prorogar los delais prevists als tresen e cinquen alinèas sens que l'escrutinh pòsca aver luòc mai de trenta-cinc jorns aprèp la data de la decision del Conselh constitucional. Se l'aplicacion de las disposicions del present alinèa a agut per efècte de reportar l'eleccion a una data posteriora a l'expiracion dels poders del President en exercici, aqueste demòra en foncion fins a la proclamacion de son succesor.
+042 p Non pòt èsser fach aplicacion ni dels articles 49 e 50 ni de l'article 89 de la Constitucion durant la vacança de la Presidéncia de la Republica o durant lo periòde que s'escola entre la declaracion del caractèr definitiu de l'empachament del President de la Republica e l'eleccion de son succesor.
+043 h3 ARTICLE 8.
+044 p Lo President de la Republica nomena lo Primièr ministre. Met fin a sas foncions sus la presentacion per aqueste de la demission del Govèrn.
+045 p Sus la proposicion del Primièr ministre, nomena los autres membres del Govèrn e met fin a lors foncions.
+046 h3 ARTICLE 9.
+047 p Lo President de la Republica presidís lo conselh dels ministres.
+048 h3 ARTICLE 10.
+049 p Lo President de la Republica promulga las leis dins los quinze jorns que seguisson la transmission al Govèrn de la lei definitivament adoptada.
+050 p Pòt, abans l'expiracion d'aqueste delai, demandar al Parlament una novèla deliberacion de la lei o d'unes de sos articles. Aquesta novèla deliberacion non pòt pas èsser refusada.
+051 h3 ARTICLE 11.
+052 p Lo President de la Republica, sus proposicion del Govèrn pendent la durada de las sessions o sus proposicion conjunta de las doas Assembladas, publicadas al Jornal Oficial, pòt sometre al referendum tot projècte de lei tocant l'organizacion dels poders publics, de reformas relativas a la politica economica, sociala o environamentala de la nacion e als servicis publics que i concorron, o tendent a autorizar la ratificacion d'un tractat que, sens èsser contrari a la Constitucion, auriá d'incidéncias sul foncionament de las institucions.
+053 p Quand lo referendum es organizat sus proposicion del Govèrn, aqueste fa, davant cada assemblada, una declaracion que es seguida d'un debat.
+054 p Un referendum tocant un objècte mencionat al primièr alinèa pòt èsser organizat a l'iniciativa d'un cinquen dels membres del Parlament, sostenguda per un desen dels electors inscrits sus las listas electoralas. Aquesta iniciativa pren la forma d'una proposicion de lei e non pòt pas aver per objècte l'abrogacion d'una disposicion legislativa promulgada dempuèi mens d'un an.
+055 p Las condicions de sa presentacion e aquelas dins las qualas lo Conselh constitucional contraròtla lo respècte de las disposicions de l'alinèa precedent son determinadas per una lei organica.
+056 p Se la proposicion de lei non es pas estada examinada per las doas assembladas dins un delai fixat per la lei organica, lo President de la Republica la sosmet al referendum.
+057 p Quand la proposicion de lei non es pas adoptada pel pòble francés, cap de novèla proposicion de referendum tocant lo meteis subjècte non pòt èsser presentada abans l'expiracion d'un delai de dos ans seguent la data de l'escrutinh.
+058 p Quand lo referendum a conclús a l'adopcion del projècte o de la proposicion de lei, lo President de la Republica promulga la lei dins los quinze jorns que seguisson la proclamacion dels resultats de la consultacion.
+059 h3 ARTICLE 12.
+060 p Lo President de la Republica pòt, aprèp consultacion del Primièr ministre e dels presidents de las assembladas, pronunciar la dissolucion de l'Assemblada nacionala.
+061 p Las eleccions generalas an luòc vint jorns almens e quaranta jorns al mai aprèp la dissolucion.
+062 p L'Assemblada nacionala se reünís de plen drech lo dosen dijòus que seguís son eleccion. S'aquesta reünion a luòc en defòra del periòde previst per la session ordinària, una session es dobèrta de drech per una durada de quinze jorns.
+063 p Non pòt èsser procedit a una novèla dissolucion dins l'an que seguís aquelas eleccions.
+064 h3 ARTICLE 13.
+065 p Lo President de la Republica signa las ordenanças e los decrets deliberats en conselh dels ministres.
+066 p Nomena als emplecs civils e militars de l'Estat.
+067 p Los conselhièrs d'Estat, lo grand cancelièr de la Legion d'ònor, los ambaissadors e enviats extraordinaris, los conselhièrs mèstres a la Cort dels comptes, los prefèctes, los representants de l'Estat dins las collectivitats d'otramar regidas per l'article 74 e en Nòva Caledònia, los oficièrs generals, los rectors de las acadèmias, los directors de las administracions centralas son nomenats en conselh dels ministres.
+068 p Una lei organica determina los autres emplecs als quals es provesit en conselh dels ministres e tanben las condicions dins las qualas lo poder de nominacion del President de la Republica pòt èsser per el delegat per èsser exercit en son nom.
+069 p Una lei organica determina los emplecs o foncions, autres que los mencionats al tresen alinèa, per los quals, en rason de lor impòrtancia per la garantia dels dreches e libertats o la vida economica e sociala de la Nacion, lo poder de nominacion del President de la Republica s'exercís aprèp avís public de la comission permanenta competenta de cada assemblada. Lo President de la Republica non pòt pas procedir a una nominacion quand l'adicion dels vòtes negatius dins cada comission representa almens tres cinquens dels sufragis exprimits al sen de las doas comissions. La lei determina las comissions permanentas competentas segon los emplecs o foncions concernits.
+070 h3 ARTICLE 14.
+071 p Lo President de la Republica acredita los ambaissadors e los enviats extraordinaris pròche de las poténcias estrangièras ; los ambaissadors e los enviats extraordinaris estrangièrs son acreditats pròche d'el.
+072 h3 ARTICLE 15.
+073 p Lo President de la Republica es lo cap de las armadas. Presidís los conselhs e los comitats superiors de la defensa nacionala.
+074 h3 ARTICLE 16.
+075 p Quand las institucions de la Republica, l'independéncia de la nacion, l'integritat de son territòri o l'execucion de sos engatjaments internacionals son menaçadas d'una manièra grèva e immediata e que lo foncionament regular dels poders publics constitucionals es interromput, lo President de la Republica pren las mesuras exigidas per aquelas circonstàncias, aprèp consultacion oficiala del Primièr ministre, dels presidents de las assembladas e tanben del Conselh constitucional.
+076 p N'informa la nacion per un messatge.
+077 p Aquelas mesuras devon èsser inspiradas per la volontat d'assegurar als poders publics constitucionals, dins los mendres delais, los mejans d'acomplir lor mission. Lo Conselh constitucional es consultat a lor subjècte.
+078 p Lo Parlament se reünís de plen drech.
+079 p L'Assemblada nacionala non pòt pas èsser dissolta durant l'exercici dels poders excepcionals.
+080 p Aprèp trenta jorns d'exercici dels poders excepcionals, lo Conselh constitucional pòt èsser sasit pel President de l'Assemblada nacionala, lo President del Senat, seissanta deputats o seissanta senators, a fin d'examinar se las condicions enonciadas al primièr alinèa demòran reünidas. Se pronóncia dins los delais los mai brèus per un avís public. Procedís de plen drech a aquel exame e se pronóncia dins las meteissas condicions al tèrme de seissanta jorns d'exercici dels poders excepcionals e a tot moment al delà d'aquela durada.
+081 h3 ARTICLE 17.
+082 p Lo President de la Republica a lo drech de far gràcia a títol individual.
+083 h3 ARTICLE 18.
+084 p Lo President de la Republica comunica amb las doas assembladas del Parlament per de messatges que fa legir e que non dònan luòc a cap de debat.
+085 p Pòt prene la paraula davant lo Parlament reünit a aquel efècte en Congrès. Sa declaracion pòt dar luòc, en defòra de sa preséncia, a un debat que non fa l'objècte de cap de vòte.
+086 p En defòra de session, las assembladas parlamentàrias son reünidas especialament a aquel efècte.
+087 h3 ARTICLE 19.
+088 p Los actes del President de la Republica autres que los prevists als articles 8 (1èr alinèa), 11, 12, 16, 18, 54, 56 e 61 son contrasignats pel Primièr ministre e, s'es lo cas, pels ministres responsables.
+089 h2 Títol III - LO GOVÈRN
+090 h3 ARTICLE 20.
+091 p Lo Govèrn determina e mena la politica de la nacion.
+092 p Dispausa de l'administracion e de la fòrça armada.
+093 p Es responsable davant lo Parlament dins las condicions e segon las proceduras prevists als articles 49 e 50.
+094 h3 ARTICLE 21.
+095 p Lo Primièr ministre dirigís l'accion del Govèrn. Es responsable de la defensa nacionala. Assegura l'execucion de las leis. Jos reserva de las disposicions de l'article 13, exercís lo poder reglamentari e nomena als emplecs civils e militars.
+096 p Pòt delegar d'unes de sos poders als ministres.
+097 p Suplís, s'es lo cas, lo President de la Republica dins la presidéncia dels conselhs e comitats prevists a l'article 15.
+098 p Pòt, a títol excepcional, lo suplir per la presidéncia d'un conselh dels ministres en vertut d'una delegacion expressa e per un òrdre del jorn determinat.
+099 h3 ARTICLE 22.
+100 p Los actes del Primièr ministre son contrasignats, s'es lo cas, pels ministres cargats de lor execucion.
+101 h3 ARTICLE 23.
+102 p Las foncions de membre del Govèrn son incompatiblas amb l'exercici de tot mandat parlamentari, de tota foncion de representacion professionala de caractèr nacional e de tot emplec public o de tota activitat professionala.
+103 p Una lei organica fixa las condicions dins las qualas es provesit al remplaçament dels titulars de tals mandats, foncions o emplecs.
+104 p Lo remplaçament dels membres del Parlament a luòc conformament a las disposicions de l'article 25.
+105 h2 Títol IV - LO PARLAMENT
+106 h3 ARTICLE 24.
+107 p Lo Parlament vòta la lei. Contraròtla l'accion del Govèrn. Evalua las politicas publicas.
+108 p Comprén l'Assemblada nacionala e lo Senat.
+109 p Los deputats a l'Assemblada nacionala, lo nombre dels quals non pòt excedir cinc cent setanta-sèt, son elegits al sufragi dirècte.
+110 p Lo Senat, lo nombre de membres del qual non pòt excedir tres cent quaranta-uèch, es elegit al sufragi indirècte. Assegura la representacion de las collectivitats territorialas de la Republica.
+111 p Los Franceses establits fòra de França son representats a l'Assemblada nacionala e al Senat.
+112 h3 ARTICLE 25.
+113 p Una lei organica fixa la durada dels poders de cada assemblada, lo nombre de sos membres, lor indemnitat, las condicions d'eligibilitat, lo regim de las ineligibilitats e de las incompatibilitats.
+114 p Fixa tanben las condicions dins las qualas son elegidas las personas apeladas a assegurar, en cas de vacança del sèti, lo remplaçament dels deputats o dels senators fins al renovelament general o parcial de l'assemblada a la quala apertenián o lor remplaçament temporari en cas d'acceptacion per eles de foncions governamentalas.
+115 p Una comission independenta, de la quala la lei fixa la composicion e las règlas d'organizacion e de foncionament, se pronóncia per un avís public sus los projèctes de tèxte e las proposicions de lei que delimitan las circonscripcions per l'eleccion dels deputats o que modifican lo repartiment dels sèties de deputats o de senators.
+116 h3 ARTICLE 26.
+117 p Cap de membre del Parlament non pòt èsser perseguit, recercat, arrestat, detengut o jutjat a l'ocasion de las opinions o dels vòtes emeses per el dins l'exercici de sas foncions.
+118 p Cap de membre del Parlament non pòt far l'objècte, en matièra criminala o correccionala, d'una arrestacion o de tota autra mesura privativa o restrictiva de libertat qu'amb l'autorizacion del burèu de l'assemblada de la quala fa partida. Aquesta autorizacion non es pas requerida en cas de crime o delicte flagrant o de condemnacion definitiva.
+119 p La detencion, las mesuras privativas o restrictivas de libertat o la persecucion d'un membre del Parlament son suspenduas per la durada de la session se l'assemblada de la quala fa partida o requerís.
+120 p L'assemblada interessada es reünida de plen drech per de sesilhas suplementàrias per permetre, s'es lo cas, l'aplicacion de l'alinèa çai-sus.
+121 h3 ARTICLE 27.
+122 p Tot mandat imperatiu es nul.
+123 p Lo drech de vòte dels membres del Parlament es personal.
+124 p La lei organica pòt autorizar excepcionalament la delegacion de vòte. Dins aquel cas, degun non pòt recebre delegacion de mai d'un mandat.
+125 h3 ARTICLE 28.
+126 p Lo Parlament se reünís de plen drech en una session ordinària que comença lo primièr jorn obrable d'octòbre e pren fin lo darrièr jorn obrable de junh.
+127 p Lo nombre de jorns de sesilha que cada assemblada pòt téner al cors de la session ordinària non pòt excedir cent vint. Las setmanas de sesilha son fixadas per cada assemblada.
+128 p Lo Primièr ministre, aprèp consultacion del president de l'assemblada concernida, o la majoritat dels membres de cada assemblada pòt decidir la tenguda de jorns suplementaris de sesilha.
+129 p Los jorns e los oraris de las sesilhas son determinats pel reglament de cada assemblada.
+130 h3 ARTICLE 29.
+131 p Lo Parlament es reünit en session extraordinària a la demanda del Primièr ministre o de la majoritat dels membres que compausan l'Assemblada nacionala, sus un òrdre del jorn determinat.
+132 p Quand la session extraordinària es tenguda a la demanda dels membres de l'Assemblada nacionala, lo decret de clausura intervèn tre que lo Parlament a agotat l'òrdre del jorn per lo qual es estat convocat e al mai tard dotze jorns a comptar de sa reünion.
+133 p Lo Primièr ministre sol pòt demandar una novèla session abans l'expiracion del mes que seguís lo decret de clausura.
+134 h3 ARTICLE 30.
+135 p En defòra dels cases dins los quals lo Parlament se reünís de plen drech, las sessions extraordinàrias son dobèrtas e clausuradas per decret del President de la Republica.
+136 h3 ARTICLE 31.
+137 p Los membres del Govèrn an accès a las doas assembladas. Son ausits quand o demandan.
+138 p Se pòdon far assistir per de comissaris del Govèrn.
+139 h3 ARTICLE 32.
+140 p Lo president de l'Assemblada nacionala es elegit per la durada de la legislatura. Lo president del Senat es elegit aprèp cada renovelament parcial.
+141 h3 ARTICLE 33.
+142 p Las sesilhas de las doas assembladas son publicas. Lo compte rendut integral dels debats es publicat al Jornal oficial.
+143 p Cada assemblada pòt sèire en comitat secret a la demanda del Primièr ministre o d'un desen de sos membres.
+144 h2 Títol V - DELS RAPÒRTS ENTRE LO PARLAMENT E LO GOVÈRN
+145 h3 ARTICLE 34.
+146 p La lei fixa las règlas tocant :
+147 p - los dreches civics e las garantias fondamentalas acordadas als ciutadans per l'exercici de las libertats publicas ; la libertat, lo pluralisme e l'independéncia dels mèdias ; las sujeccions impausadas per la defensa nacionala als ciutadans en lor persona e en lors bens ; ⏎ - la nacionalitat, l'estat e la capacitat de las personas, los regims matrimonials, las successions e liberalitats ; ⏎ - la determinacion dels crimes e delictes e tanben las penas que lor son aplicablas ; la procedura penala ; l'amnistia ; la creacion de novèls òrdres de jurisdiccion e l'estatut dels magistrats ; ⏎ - l'assetament, lo taus e las modalitats de recobrament de las impausicions de totas natures ; lo regim d'emission de la moneda.
+148 p La lei fixa tanben las règlas tocant :
+149 p - lo regim electoral de las assembladas parlamentàrias, de las assembladas localas e de las instàncias representativas dels Franceses establits fòra de França e tanben las condicions d'exercici dels mandats electorals e de las foncions electivas dels membres de las assembladas deliberantas de las collectivitats territorialas ; ⏎ - la creacion de categorias d'establiments publics ; ⏎ - las garantias fondamentalas acordadas als foncionaris civils e militars de l'Estat ; ⏎ - las nacionalizacions d'entrepresas e los transferiments de proprietat d'entrepresas del sector public al sector privat.
+150 p La lei determina los principis fondamentals :
+151 p - de l'organizacion generala de la defensa nacionala ; ⏎ - de la liura administracion de las collectivitats territorialas, de lors competéncias e de lors ressorsas ; ⏎ - de l'ensenhament ; ⏎ - de la preservacion de l'environament ; ⏎ - del regim de la proprietat, dels dreches reals e de las obligacions civilas e comercialas ; ⏎ - del drech del trabalh, del drech sindical e de la seguretat sociala.
+152 p La lei determina las condicions dins las qualas s'exercís la libertat garantida a la femna d'aver recors a una interrupcion volontària de grossessa.
+153 p Las leis de finanças determinan las ressorsas e las cargas de l'Estat dins las condicions e jos las reservas prevists per una lei organica.
+154 p Las leis de finançament de la seguretat sociala determinan las condicions generalas de son equilibri financièr e, tenent compte de lors previsions de recèptas, fixan sos objectius de despensas, dins las condicions e jos las reservas prevists per una lei organica.
+155 p De leis de programacion determinan los objectius de l'accion de l'Estat.
+156 p Las orientacions pluriannualas de las finanças publicas son definidas per de leis de programacion. S'inscrivon dins l'objectiu d'equilibri dels comptes de las administracions publicas.
+157 p Las disposicions del present article poiràn èsser precisadas e completadas per una lei organica.
+158 h3 ARTICLE 34-1.
+159 p Las assembladas pòdon votar de resolucions dins las condicions fixadas per la lei organica.
+160 p Son irrecebiblas e non pòdon pas èsser inscrichas a l'òrdre del jorn las proposicions de resolucion de las qualas lo Govèrn estima que lor adopcion o lor regèt seriá de natura a metre en causa sa responsabilitat o que contenon d'injoncions a son egard.
+161 h3 ARTICLE 35.
+162 p La declaracion de guèrra es autorizada pel Parlament.
+163 p Lo Govèrn informa lo Parlament de sa decision de far intervenir las fòrças armadas a l'estrangièr, al mai tard tres jorns aprèp lo començament de l'intervencion. Precisa los objectius perseguits. Aquesta informacion pòt dar luòc a un debat que non es seguit de cap de vòte.
+164 p Quand la durada de l'intervencion excedís quatre meses, lo Govèrn sosmet sa prolongacion a l'autorizacion del Parlament. Pòt demandar a l'Assemblada nacionala de decidir en darrièr ressòrt.
+165 p Se lo Parlament non es pas en session a l'expiracion del delai de quatre meses, se pronóncia a la dobertura de la session seguenta.
+166 h3 ARTICLE 36.
+167 p L'estat de setge es decretat en Conselh dels ministres.
+168 p Sa prorogacion al delà de dotze jorns non pòt èsser autorizada que pel Parlament.
+169 h3 ARTICLE 37.
+170 p Las matièras autras que las que son del domeni de la lei an un caractèr reglamentari.
+171 p Los tèxtes de forma legislativa intervenguts en aquelas matièras pòdon èsser modificats per decrets preses aprèp avís del Conselh d'Estat. Los d'aquestes tèxtes que intervendrián aprèp l'entrada en vigor de la presenta Constitucion non poiràn èsser modificats per decret que se lo Conselh constitucional a declarat qu'an un caractèr reglamentari en vertut de l'alinèa precedent.
+172 h3 ARTICLE 37-1.
+173 p La lei e lo reglament pòdon comportar, per un objècte e una durada limitats, de disposicions de caractèr experimental.
+174 h3 ARTICLE 38.
+175 p Lo Govèrn pòt, per l'execucion de son programa, demandar al Parlament l'autorizacion de prene per ordenanças, pendent un delai limitat, de mesuras que son normalament del domeni de la lei.
+176 p Las ordenanças son preses en conselh dels ministres aprèp avís del Conselh d'Estat. Entran en vigor tre lor publicacion mas venon caducas se lo projècte de lei de ratificacion non es pas depausat davant lo Parlament abans la data fixada per la lei d'abilitacion. Non pòdon èsser ratificadas que de manièra expressa.
+177 p A l'expiracion del delai mencionat al primièr alinèa del present article, las ordenanças non pòdon mai èsser modificadas que per la lei dins las matièras que son del domeni legislatiu.
+178 h3 ARTICLE 39.
+179 p L'iniciativa de las leis aperten concurrentament al Primièr ministre e als membres del Parlament.
+180 p Los projèctes de lei son deliberats en conselh dels ministres aprèp avís del Conselh d'Estat e depausats sul burèu d'una de las doas assembladas. Los projèctes de lei de finanças e de lei de finançament de la seguretat sociala son sometuts en primièr luòc a l'Assemblada nacionala. Sens prejudici del primièr alinèa de l'article 44, los projèctes de lei que an per objècte principal l'organizacion de las collectivitats territorialas son sometuts en primièr luòc al Senat.
+181 p La presentacion dels projèctes de lei depausats davant l'Assemblada nacionala o lo Senat respond a las condicions fixadas per una lei organica.
+182 p Los projèctes de lei non pòdon èsser inscrits a l'òrdre del jorn se la Conferéncia dels presidents de la primièra assemblada sasida constata que las règlas fixadas per la lei organica son desconegudas. En cas de desacòrdi entre la Conferéncia dels presidents e lo Govèrn, lo president de l'assemblada interessada o lo Primièr ministre pòt sasir lo Conselh constitucional que estatuís dins un delai d'uèch jorns.
+183 p Dins las condicions prevists per la lei, lo president d'una assemblada pòt sometre per avís al Conselh d'Estat, abans son examen en comission, una proposicion de lei depausada per un dels membres d'aquesta assemblada, levat se aqueste darrièr s'i opausa.
+184 h3 ARTICLE 40.
+185 p Las proposicions e los amendaments formulats pels membres del Parlament non son pas recebibles quand lor adopcion auriá per consequéncia siá una diminucion de las ressorsas publicas, siá la creacion o l'agravacion d'una carga publica.
+186 h3 ARTICLE 41.
+187 p S'apareis al cors de la procedura legislativa qu'una proposicion o un amendament non es pas del domeni de la lei o es contrari a una delegacion acordada en vertut de l'article 38, lo Govèrn o lo president de l'assemblada sasida pòt opausar l'irrecebibilitat.
+188 p En cas de desacòrdi entre lo Govèrn e lo president de l'assemblada interessada, lo Conselh constitucional, a la demanda de l'un o de l'autre, estatuís dins un delai d'uèch jorns.
+189 h3 ARTICLE 42.
+190 p La discussion dels projèctes e de las proposicions de lei pòrta, en sesilha, sul tèxte adoptat per la comission sasida en aplicacion de l'article 43 o, a manca d'aquò, sul tèxte del qual l'assemblada es estada sasida.
+191 p Pasmens, la discussion en sesilha dels projèctes de revision constitucionala, dels projèctes de lei de finanças e dels projèctes de lei de finançament de la seguretat sociala pòrta, en primièra leitura davant la primièra assemblada sasida, sul tèxte presentat pel Govèrn e, per las autras leituras, sul tèxte transmés per l'autra assemblada.
+192 p La discussion en sesilha, en primièra leitura, d'un projècte o d'una proposicion de lei non pòt intervenir, davant la primièra assemblada sasida, qu'a l'expiracion d'un delai de sièis setmanas aprèp son depaus. Non pòt intervenir, davant la segonda assemblada sasida, qu'a l'expiracion d'un delai de quatre setmanas a comptar de sa transmission.
+193 p L'alinèa precedent non s'aplica pas se la procedura accelerada es estada engatjada dins las condicions previstas a l'article 45. Non s'aplica pas tanpauc als projèctes de lei de finanças, als projèctes de lei de finançament de la seguretat sociala e als projèctes relatius als estats de crisi.
+194 h3 ARTICLE 43.
+195 p Los projèctes e proposicions de lei son mandats per examen a una de las comissions permanentas de las qualas lo nombre es limitat a uèch dins cada assemblada.
+196 p A la demanda del Govèrn o de l'assemblada que n'es sasida, los projèctes o proposicions de lei son mandats per examen a una comission especialament designada a aquel efècte.
+197 h3 ARTICLE 44.
+198 p Los membres del Parlament e lo Govèrn an lo drech d'amendament. Aqueste drech s'exercís en sesilha o en comission segon las condicions fixadas pels reglaments de las assembladas, dins lo quadre determinat per una lei organica.
+199 p Aprèp la dobertura del debat, lo Govèrn pòt s'opausar a l'examen de tot amendament que non es pas estat sometut anteriorament a la comission.
+200 p Se lo Govèrn o demanda, l'assemblada sasida se pronóncia per un sol vòte sus tot o part del tèxte en discussion en non retenent que los amendaments proposats o acceptats pel Govèrn.
+201 h3 ARTICLE 45.
+202 p Tot projècte o proposicion de lei es examinat successivament dins las doas assembladas del Parlament en vista de l'adopcion d'un tèxte identic. Sens prejudici de l'aplicacion dels articles 40 e 41, tot amendament es recebible en primièra leitura del moment que presenta un ligam, fins e tot indirècte, amb lo tèxte depausat o transmés.
+203 p Quand, a la seguida d'un desacòrdi entre las doas assembladas, un projècte o una proposicion de lei non a pas pogut èsser adoptat aprèp doas leituras per cada assemblada o, se lo Govèrn a decidit d'engatjar la procedura accelerada sens que las Conferéncias dels presidents s'i sián conjuntament opausadas, aprèp una sola leitura per caduna d'entre elas, lo Primièr ministre o, per una proposicion de lei, los presidents de las doas assembladas que agisson conjuntament, an la facultat de provocar la reünion d'una comission mixta paritària cargada de propausar un tèxte sus las disposicions que demòran en discussion.
+204 p Lo tèxte elaborat per la comission mixta pòt èsser sometut pel Govèrn per aprobacion a las doas assembladas. Cap d'amendament non es recebible levat acòrdi del Govèrn.
+205 p Se la comission mixta non arriba pas a l'adopcion d'un tèxte comun o se aqueste tèxte non es pas adoptat dins las condicions previstas a l'alinèa precedent, lo Govèrn pòt, aprèp una novèla leitura per l'Assemblada nacionala e pel Senat, demandar a l'Assemblada nacionala d'estatuir definitivament. En aquel cas, l'Assemblada nacionala pòt tornar prene siá lo tèxte elaborat per la comission mixta, siá lo darrièr tèxte votat per ela, modificat s'es lo cas per un o plusors dels amendaments adoptats pel Senat.
+206 h3 ARTICLE 46.
+207 p Las leis a las qualas la Constitucion conferís lo caractèr de leis organicas son votadas e modificadas dins las condicions seguentas.
+208 p Lo projècte o la proposicion non pòt, en primièra leitura, èsser sometut a la deliberacion e al vòte de las assembladas qu'a l'expiracion dels delais fixats al tresen alinèa de l'article 42. Pasmens, se la procedura accelerada es estada engatjada dins las condicions previstas a l'article 45, lo projècte o la proposicion non pòt èsser sometut a la deliberacion de la primièra assemblada sasida abans l'expiracion d'un delai de quinze jorns aprèp son depaus.
+209 p La procedura de l'article 45 es aplicabla. Pasmens, fauta d'acòrdi entre las doas assembladas, lo tèxte non pòt èsser adoptat per l'Assemblada nacionala en darrièra leitura qu'a la majoritat absoluda de sos membres.
+210 p Las leis organicas relativas al Senat devon èsser votadas dins los meteises tèrmes per las doas assembladas.
+211 p Las leis organicas non pòdon èsser promulgadas qu'aprèp la declaracion pel Conselh constitucional de lor conformitat a la Constitucion.
+212 h3 ARTICLE 47.
+213 p Lo Parlament vòta los projèctes de lei de finanças dins las condicions previstas per una lei organica.
+214 p Se l'Assemblada nacionala non s'es pas pronunciada en primièra leitura dins lo delai de quaranta jorns aprèp lo depaus d'un projècte, lo Govèrn sasís lo Senat que deu estatuir dins un delai de quinze jorns. Es puèi procedit dins las condicions previstas a l'article 45.
+215 p Se lo Parlament non s'es pas pronunciat dins un delai de setanta jorns, las disposicions del projècte pòdon èsser mesas en vigor per ordenança.
+216 p Se la lei de finanças que fixa las ressorsas e las cargas d'un exercici non es estada depausada en temps utile per èsser promulgada abans lo començament d'aqueste exercici, lo Govèrn demanda d'urgéncia al Parlament l'autorizacion de percebre los impòsts e dobrís per decret los crèdits que se rapòrtan als servicis votats.
+217 p Los delais prevists al present article son suspenduts quand lo Parlament non es pas en session.
+218 h3 ARTICLE 47-1.
+219 p Lo Parlament vòta los projèctes de lei de finançament de la seguretat sociala dins las condicions previstas per una lei organica.
+220 p Se l'Assemblada nacionala non s'es pas pronunciada en primièra leitura dins lo delai de vint jorns aprèp lo depaus d'un projècte, lo Govèrn sasís lo Senat que deu estatuir dins un delai de quinze jorns. Es puèi procedit dins las condicions previstas a l'article 45.
+221 p Se lo Parlament non s'es pas pronunciat dins un delai de cinquanta jorns, las disposicions del projècte pòdon èsser mesas en òbra per ordenança.
+222 p Los delais prevists al present article son suspenduts quand lo Parlament non es pas en session e, per cada assemblada, al cors de las setmanas ont a decidit de non téner sesilha, conformament al dosen alinèa de l'article 28.
+223 h3 ARTICLE 47-2.
+224 p La Cort dels comptes assistís lo Parlament dins lo contraròtle de l'accion del Govèrn. Assistís lo Parlament e lo Govèrn dins lo contraròtle de l'execucion de las leis de finanças e de l'aplicacion de las leis de finançament de la seguretat sociala e tanben dins l'evaluacion de las politicas publicas. Per sos rapòrts publics, contribuís a l'informacion dels ciutadans.
+225 p Los comptes de las administracions publicas son regulars e sincèrs. Donan una imatge fidèla del resultat de lor gestion, de lor patrimòni e de lor situacion financièra.
+226 h3 ARTICLE 48.
+227 p Sens prejudici de l'aplicacion dels tres darrièrs alinèas de l'article 28, l'òrdre del jorn es fixat per cada assemblada.
+228 p Doas setmanas de sesilha sus quatre son reservadas per prioritat, e dins l'òrdre que lo Govèrn a fixat, a l'examen dels tèxtes e dels debats dels quals demanda l'inscripcion a l'òrdre del jorn.
+229 p A mai d'aquò, l'examen dels projèctes de lei de finanças, dels projèctes de lei de finançament de la seguretat sociala e, jos reserva de las disposicions de l'alinèa seguent, dels tèxtes transmeses per l'autra assemblada dempuèi sièis setmanas almens, dels projèctes relatius als estats de crisi e de las demandas d'autorizacion visadas a l'article 35 es, a la demanda del Govèrn, inscrit a l'òrdre del jorn per prioritat.
+230 p Una setmana de sesilha sus quatre es reservada per prioritat e dins l'òrdre fixat per cada assemblada al contraròtle de l'accion del Govèrn e a l'evaluacion de las politicas publicas.
+231 p Un jorn de sesilha per mes es reservat a un òrdre del jorn establit per cada assemblada a l'iniciativa dels gropes d'oposicion de l'assemblada interessada e tanben a la dels gropes minoritaris.
+232 p Una sesilha per setmana almens, comprés durant las sessions extraordinàrias previstas a l'article 29, es reservada per prioritat a las questions dels membres del Parlament e a las responsas del Govèrn.
+233 h3 ARTICLE 49.
+234 p Lo Primièr ministre, aprèp deliberacion del conselh dels ministres, engatja davant l'Assemblada nacionala la responsabilitat del Govèrn sus son programa o eventualament sus una declaracion de politica generala.
+235 p L'Assemblada nacionala met en causa la responsabilitat del Govèrn pel vòte d'una mocion de censura. Una tala mocion non es recebibla que s'es signada per un desen almens dels membres de l'Assemblada nacionala. Lo vòte non pòt aver luòc que quaranta-uèch oras aprèp son depaus. Sols son recensats los vòtes favorables a la mocion de censura que non pòt èsser adoptada qu'a la majoritat dels membres que compausan l'Assemblada. Levat dins lo cas previst a l'alinèa çai-jos, un deputat non pòt èsser signatari de mai de tres mocions de censura al cors d'una meteissa session ordinària e de mai d'una al cors d'una meteissa session extraordinària.
+236 p Lo Primièr ministre pòt, aprèp deliberacion del conselh dels ministres, engatjar la responsabilitat del Govèrn davant l'Assemblada nacionala sul vòte d'un projècte de lei de finanças o de finançament de la seguretat sociala. Dins aquel cas, aqueste projècte es considerat coma adoptat, levat se una mocion de censura, depausada dins las vint-e-quatre oras que seguisson, es votada dins las condicions previstas a l'alinèa precedent. Lo Primièr ministre pòt, a mai d'aquò, recórrer a aquesta procedura per un autre projècte o una proposicion de lei per session.
+237 p Lo Primièr ministre a la facultat de demandar al Senat l'aprobacion d'una declaracion de politica generala.
+238 h3 ARTICLE 50.
+239 p Quand l'Assemblada nacionala adopta una mocion de censura o quand desaprova lo programa o una declaracion de politica generala del Govèrn, lo Primièr ministre deu remetre al President de la Republica la demission del Govèrn.
+240 h3 ARTICLE 50-1.
+241 p Davant l'una o l'autra de las assembladas, lo Govèrn pòt, de sa pròpria iniciativa o a la demanda d'un grop parlamentari al sens de l'article 51-1, far, sus un subjècte determinat, una declaracion que dòna luòc a debat e pòt, s'o decidís, far l'objècte d'un vòte sens engatjar sa responsabilitat.
+242 h3 ARTICLE 51.
+243 p La clausura de la session ordinària o de las sessions extraordinàrias es de drech retardada per permetre, s'es lo cas, l'aplicacion de l'article 49. A aquesta meteissa fin, de sesilhas suplementàrias son de drech.
+244 h3 ARTICLE 51-1.
+245 p Lo reglament de cada assemblada determina los dreches dels gropes parlamentaris constituits en son sen. Reconeis de dreches especifics als gropes d'oposicion de l'assemblada interessada e tanben als gropes minoritaris.
+246 h3 ARTICLE 51-2.
+247 p Per l'exercici de las missions de contraròtle e d'evaluacion definidas al primièr alinèa de l'article 24, de comissions d'enquèsta pòdon èsser creadas al sen de cada assemblada per recampar, dins las condicions previstas per la lei, d'elements d'informacion.
+248 p La lei determina lors règlas d'organizacion e de foncionament. Lors condicions de creacion son fixadas pel reglament de cada assemblada.
+249 h2 Títol VI - DELS TRACTATS INTERNACIONALS
+250 h3 ARTICLE 52.
+251 p Lo President de la Republica negocia e ratifica los tractats.
+252 p Es informat de tota negociacion tendent a la conclusion d'un acòrdi internacional non sometut a ratificacion.
+253 h3 ARTICLE 53.
+254 p Los tractats de patz, los tractats de comèrci, los tractats o acòrdis relatius a l'organizacion internacionala, aqueles que engatjan las finanças de l'Estat, aqueles que modifican de disposicions de natura legislativa, aqueles que son relatius a l'estat de las personas, aqueles que comportan cession, escambi o adjoncion de territòri, non pòdon èsser ratificats o aprovats qu'en vertut d'una lei.
+255 p Non prenon efècte qu'aprèp aver estat ratificats o aprovats.
+256 p Cap de cession, cap d'escambi, cap d'adjoncion de territòri non es valable sens lo consentiment de las populacions interessadas.
+257 h3 ARTICLE 53-1.
+258 p La Republica pòt conclure amb los Estats europèus que son ligats per d'engatjaments identics als sieus en matièra d'asil e de proteccion dels Dreches de l'òme e de las libertats fondamentalas, d'acòrdis que determinan lors competéncias respectivas per l'examen de las demandas d'asil que lor son presentadas.
+259 p Pasmens, fins e tot se la demanda non entra pas dins lor competéncia en vertut d'aqueles acòrdis, las autoritats de la Republica an totjorn lo drech de donar asil a tot estrangièr perseguit en rason de son accion en favor de la libertat o que sollicita la proteccion de França per un autre motiu.
+260 h3 ARTICLE 53-2.
+261 p La Republica pòt reconéisser la jurisdiccion de la Cort penala internacionala dins las condicions previstas pel tractat signat lo 18 de julhet de 1998.
+262 h3 ARTICLE 54.
+263 p Se lo Conselh constitucional, sasit pel President de la Republica, pel Primièr ministre, pel president de l'una o l'autra assemblada o per seissanta deputats o seissanta senators, a declarat qu'un engatjament internacional comporta una clausa contrària a la Constitucion, l'autorizacion de ratificar o d'aprovar l'engatjament internacional en causa non pòt intervenir qu'aprèp revision de la Constitucion.
+264 h3 ARTICLE 55.
+265 p Los tractats o acòrdis regularament ratificats o aprovats an, tre lor publicacion, una autoritat superiora a la de las leis, jos reserva, per cada acòrdi o tractat, de son aplicacion per l'autra partida.
+266 h2 Títol VII - LO CONSELH CONSTITUCIONAL
+267 h3 ARTICLE 56.
+268 p Lo Conselh constitucional comprén nòu membres, lo mandat dels quals dura nòu ans e non es pas renovelable. Lo Conselh constitucional se renovèla per tèrç cada tres ans. Tres dels membres son nomenats pel President de la Republica, tres pel president de l'Assemblada nacionala, tres pel president del Senat. La procedura prevista al darrièr alinèa de l'article 13 es aplicabla a aquelas nominacions. Las nominacions efectuadas pel president de cada assemblada son sometudas al sol avís de la comission permanenta competenta de l'assemblada concernida.
+269 p En mai dels nòu membres prevists çai-sus, fan de drech partida a vida del Conselh constitucional los ancians Presidents de la Republica.
+270 p Lo president es nomenat pel President de la Republica. A votz preponderanta en cas de partatge.
+271 h3 ARTICLE 57.
+272 p Las foncions de membre del Conselh constitucional son incompatiblas amb las de ministre o de membre del Parlament. Las autras incompatibilitats son fixadas per una lei organica.
+273 h3 ARTICLE 58.
+274 p Lo Conselh constitucional velha a la regularitat de l'eleccion del President de la Republica. ⏎ Examina las reclamacions e proclama los resultats de l'escrutinh.
+275 h3 ARTICLE 59.
+276 p Lo Conselh constitucional estatuís, en cas de contestacion, sus la regularitat de l'eleccion dels deputats e dels senators.
+277 h3 ARTICLE 60.
+278 p Lo Conselh constitucional velha a la regularitat de las operacions de referendum previstas als articles 11 e 89 e al títol XV. En proclama los resultats.
+279 h3 ARTICLE 61.
+280 p Las leis organicas, abans lor promulgacion, las proposicions de lei mencionadas a l'article 11 abans que sián sometudas al referendum, e los reglaments de las assembladas parlamentàrias, abans lor mesa en aplicacion, devon èsser sometuts al Conselh constitucional que se pronóncia sus lor conformitat a la Constitucion.
+281 p A las meteissas fins, las leis pòdon èsser deferidas al Conselh constitucional, abans lor promulgacion, pel President de la Republica, lo Primièr ministre, lo president de l'Assemblada nacionala, lo president del Senat o seissanta deputats o seissanta senators.
+282 p Dins los cases prevists als dos alinèas precedents, lo Conselh constitucional deu estatuir dins lo delai d'un mes. Pasmens, a la demanda del Govèrn, s'i a urgéncia, aqueste delai es reduch a uèch jorns.
+283 p Dins aquestes meteises cases, la sasina del Conselh constitucional suspend lo delai de promulgacion.
+284 h3 ARTICLE 61-1.
+285 p Quand, a l'ocasion d'una instància en cors davant una jurisdiccion, es sostengut qu'una disposicion legislativa pòrta tòrt als dreches e libertats que la Constitucion garantís, lo Conselh constitucional pòt èsser sasit d'aquesta question sus remandament del Conselh d'Estat o de la Cort de cassacion que se pronóncia dins un delai determinat.
+286 p Una lei organica determina las condicions d'aplicacion del present article.
+287 h3 ARTICLE 62.
+288 p Una disposicion declarada inconstitucionala sul fondament de l'article 61 non pòt èsser promulgada ni mesa en aplicacion.
+289 p Una disposicion declarada inconstitucionala sul fondament de l'article 61-1 es abrogada a comptar de la publicacion de la decision del Conselh constitucional o d'una data ulteriora fixada per aquesta decision. Lo Conselh constitucional determina las condicions e las limitas dins las qualas los efèctes que la disposicion a produsits son susceptibles d'èsser remeses en causa.
+290 p Las decisions del Conselh constitucional non son susceptiblas de cap de recors. S'impausan als poders publics e a totas las autoritats administrativas e jurisdiccionalas.
+291 h3 ARTICLE 63.
+292 p Una lei organica determina las règlas d'organizacion e de foncionament del Conselh constitucional, la procedura que es seguida davant el e notadament los delais dobèrts per lo sasir de contestacions.
+293 h2 Títol VIII - DE L'AUTORITAT JUDICIÀRIA
+294 h3 ARTICLE 64.
+295 p Lo President de la Republica es garant de l'independéncia de l'autoritat judiciària.
+296 p Es assistit pel Conselh superior de la magistratura.
+297 p Una lei organica pòrta estatut dels magistrats.
+298 p Los magistrats del sèti son inamovibles.
+299 h3 ARTICLE 65.
+300 p Lo Conselh superior de la magistratura comprén una formacion competenta a l'egard dels magistrats del sèti e una formacion competenta a l'egard dels magistrats del parquet.
+301 p La formacion competenta a l'egard dels magistrats del sèti es presidida pel primièr president de la Cort de cassacion. Comprén, en mai d'aquò, cinc magistrats del sèti e un magistrat del parquet, un conselhièr d'Estat designat pel Conselh d'Estat, un avocat e tanben sièis personalitats qualificadas que non apertenon ni al Parlament, ni a l'òrdre judiciari, ni a l'òrdre administratiu. Lo President de la Republica, lo President de l'Assemblada nacionala e lo President del Senat designan cadun doas personalitats qualificadas. La procedura prevista al darrièr alinèa de l'article 13 es aplicabla a las nominacions de las personalitats qualificadas. Las nominacions efectuadas pel president de cada assemblada del Parlament son sometudas al sol avís de la comission permanenta competenta de l'assemblada interessada.
+302 p La formacion competenta a l'egard dels magistrats del parquet es presidida pel procuraire general pròche la Cort de cassacion. Comprén, en mai d'aquò, cinc magistrats del parquet e un magistrat del sèti, e tanben lo conselhièr d'Estat, l'avocat e las sièis personalitats qualificadas mencionats al dosen alinèa.
+303 p La formacion del Conselh superior de la magistratura competenta a l'egard dels magistrats del sèti fa de proposicions per las nominacions dels magistrats del sèti a la Cort de cassacion, per aquelas de primièr president de cort d'apèl e per aquelas de president de tribunal de granda instància. Los autres magistrats del sèti son nomenats sus son avís conforme.
+304 p La formacion del Conselh superior de la magistratura competenta a l'egard dels magistrats del parquet dòna son avís sus las nominacions que concernisson los magistrats del parquet.
+305 p La formacion del Conselh superior de la magistratura competenta a l'egard dels magistrats del sèti estatuís coma conselh de disciplina dels magistrats del sèti. Comprén alara, en mai dels membres visats al dosen alinèa, lo magistrat del sèti que aperten a la formacion competenta a l'egard dels magistrats del parquet.
+306 p La formacion del Conselh superior de la magistratura competenta a l'egard dels magistrats del parquet dòna son avís sus las sancions disciplinàrias que los concernisson. Comprén alara, en mai dels membres visats al tresen alinèa, lo magistrat del parquet que aperten a la formacion competenta a l'egard dels magistrats del sèti.
+307 p Lo Conselh superior de la magistratura se reünís en formacion plenièra per respondre a las demandas d'avís formuladas pel President de la Republica al títol de l'article 64. Se pronóncia, dins la meteissa formacion, sus las questions relativas a la deontologia dels magistrats e tanben sus tota question relativa al foncionament de la justícia de la quala lo sasís lo ministre de la justícia. La formacion plenièra comprén tres dels cinc magistrats del sèti mencionats al dosen alinèa, tres dels cinc magistrats del parquet mencionats al tresen alinèa, e tanben lo conselhièr d'Estat, l'avocat e las sièis personalitats qualificadas mencionats al dosen alinèa. Es presidida pel primièr president de la Cort de cassacion, que pòt suplir lo procuraire general pròche aquela cort.
+308 p Levat en matièra disciplinària, lo ministre de la justícia pòt participar a las sesilhas de las formacions del Conselh superior de la magistratura.
+309 p Lo Conselh superior de la magistratura pòt èsser sasit per un justiciable dins las condicions fixadas per una lei organica.
+310 p La lei organica determina las condicions d'aplicacion del present article.
+311 h3 ARTICLE 66.
+312 p Degun non pòt èsser arbitràriament detengut.
+313 p L'autoritat judiciària, gardiana de la libertat individuala, assegura lo respècte d'aqueste principi dins las condicions previstas per la lei.
+314 h3 ARTICLE 66-1.
+315 p Degun non pòt èsser condemnat a la pena de mòrt.
+316 h2 Títol IX - L'AUTA CORT
+317 h3 ARTICLE 67.
+318 p Lo President de la Republica non es pas responsable dels actes acomplits en aquesta qualitat, jos reserva de las disposicions dels articles 53-2 e 68.
+319 p Non pòt, durant son mandat e davant cap de jurisdiccion o autoritat administrativa francesa, èsser requerit de testimoniar ni tanpauc far l'objècte d'una accion, d'un acte d'informacion, d'instruccion o de persecucion. Tot delai de prescripcion o de forclusion es suspendut.
+320 p Las instàncias e proceduras que son atal empachadas pòdon èsser represas o engatjadas contra el a l'expiracion d'un delai d'un mes que seguís la cessacion de las foncions.
+321 h3 ARTICLE 68.
+322 p Lo President de la Republica non pòt èsser destituit qu'en cas de mancament a sos devers manifestament incompatibla amb l'exercici de son mandat. La destitucion es pronunciada pel Parlament constituit en Auta Cort.
+323 p La proposicion de reünion de l'Auta Cort adoptada per una de las assembladas del Parlament es immediatament transmesa a l'autra que se pronóncia dins los quinze jorns.
+324 p L'Auta Cort es presidida pel president de l'Assemblada nacionala. Estatuís dins un delai d'un mes, a bulletins secrèts, sus la destitucion. Sa decision es d'efècte immediat.
+325 p Las decisions presas en aplicacion del present article o son a la majoritat dels dos tèrces dels membres que compausan l'assemblada concernida o l'Auta Cort. Tota delegacion de vòte es interdicha. Sols son recensats los vòtes favorables a la proposicion de reünion de l'Auta Cort o a la destitucion.
+326 p Una lei organica fixa las condicions d'aplicacion del present article.
+327 h2 Títol X - DE LA RESPONSABILITAT PENALA DELS MEMBRES DEL GOVÈRN
+328 h3 ARTICLE 68-1.
+329 p Los membres del Govèrn son penalament responsables dels actes acomplits dins l'exercici de lors foncions e qualificats crimes o delictes al moment que son estats comeses.
+330 p Son jutjats per la Cort de justícia de la Republica.
+331 p La Cort de justícia de la Republica es ligada per la definicion dels crimes e delictes e tanben per la determinacion de las penas tals coma resultan de la lei.
+332 h3 ARTICLE 68-2.
+333 p La Cort de justícia de la Republica comprén quinze jutges : dotze parlamentaris elegits, en lor sen e en nombre egal, per l'Assemblada nacionala e pel Senat aprèp cada renovelament general o parcial d'aquelas assembladas e tres magistrats del sèti a la Cort de cassacion, dels quals un presidís la Cort de justícia de la Republica.
+334 p Tota persona que se pretend lesida per un crime o un delicte comés per un membre del Govèrn dins l'exercici de sas foncions pòt depausar planh pròche una comission de las requèstas.
+335 p Aquesta comission ordena siá lo classament de la procedura, siá sa transmission al procuraire general pròche la Cort de cassacion a fin de sasina de la Cort de justícia de la Republica.
+336 p Lo procuraire general pròche la Cort de cassacion pòt tanben sasir d'ofici la Cort de justícia de la Republica sus avís conforme de la comission de las requèstas.
+337 p Una lei organica determina las condicions d'aplicacion del present article.
+338 h3 ARTICLE 68-3.
+339 p Las disposicions del present títol son aplicablas als fachs comeses abans son entrada en vigor.
+340 h2 Títol XI - LO CONSELH ECONOMIC, SOCIAL E ENVIRONAMENTAL
+341 h3 ARTICLE 69.
+342 p Lo Conselh economic, social e environamental, sasit pel Govèrn, dòna son avís sus los projèctes de lei, d'ordenança o de decret e tanben sus las proposicions de leis que li son sometudas.
+343 p Un membre del Conselh economic, social e environamental pòt èsser designat per aqueste per exposar davant las assembladas parlamentàrias l'avís del Conselh sus los projèctes o proposicions que li son estats sometuts.
+344 p Lo Conselh economic, social e environamental pòt èsser sasit per via de peticion dins las condicions fixadas per una lei organica. Aprèp examen de la peticion, fa conéisser al Govèrn e al Parlament las seguidas que propausa d'i donar.
+345 h3 ARTICLE 70.
+346 p Lo Conselh economic, social e environamental pòt èsser consultat pel Govèrn e lo Parlament sus tot problèma de caractèr economic, social o environamental. Lo Govèrn pòt tanben lo consultar sus los projèctes de lei de programacion que definisson las orientacions pluriannualas de las finanças publicas. Tot plan o tot projècte de lei de programacion de caractèr economic, social o environamental li es sometut per avís.
+347 h3 ARTICLE 71.
+348 p La composicion del Conselh economic, social e environamental, lo nombre de membres del qual non pòt excedir dos cent trenta-tres, e sas règlas de foncionament son fixadas per una lei organica.
+349 h2 Títol XI BIS - LO DEFENSOR DELS DRECHES
+350 h3 ARTICLE 71-1.
+351 p Lo Defensor dels dreches velha al respècte dels dreches e libertats per las administracions de l'Estat, las collectivitats territorialas, los establiments publics, e tanben per tot organisme investit d'una mission de servici public, o a l'egard del qual la lei organica li atribuís de competéncias.
+352 p Pòt èsser sasit, dins las condicions previstas per la lei organica, per tota persona que s'estima lesida pel foncionament d'un servici public o d'un organisme visat al primièr alinèa. Se pòt sasir d'ofici.
+353 p La lei organica definís las atribucions e las modalitats d'intervencion del Defensor dels dreches. Determina las condicions dins las qualas pòt èsser assistit per un collègi per l'exercici de certanas de sas atribucions.
+354 p Lo Defensor dels dreches es nomenat pel President de la Republica per un mandat de sièis ans non renovelable, aprèp aplicacion de la procedura prevista al darrièr alinèa de l'article 13. Sas foncions son incompatiblas amb las de membre del Govèrn e de membre del Parlament. Las autras incompatibilitats son fixadas per la lei organica.
+355 p Lo Defensor dels dreches rend compte de son activitat al President de la Republica e al Parlament.
+356 h2 Títol XII - DE LAS COLLECTIVITATS TERRITORIALAS
+357 h3 ARTICLE 72.
+358 p Las collectivitats territorialas de la Republica son las comunas, los departaments, las regions, las collectivitats d'estatut particular e las collectivitats d'otramar regidas per l'article 74. Tota autra collectivitat territoriala es creada per la lei, s'es lo cas en luòc e plaça d'una o de plusors collectivitats mencionadas al present alinèa.
+359 p Las collectivitats territorialas an vocacion a prene las decisions per l'ensemble de las competéncias que pòdon lo melhor èsser mesas en òbra a lor escalon.
+360 p Dins las condicions previstas per la lei, aquestas collectivitats s'administran liurament per de conselhs elegits e dispausan d'un poder reglamentari per l'exercici de lors competéncias.
+361 p Dins las condicions previstas per la lei organica, e levat quand son en causa las condicions essencialas d'exercici d'una libertat publica o d'un drech constitucionalament garantit, las collectivitats territorialas o lors agropaments pòdon, quand, segon lo cas, la lei o lo reglament l'a previst, derogar, a títol experimental e per un objècte e una durada limitats, a las disposicions legislativas o reglamentàrias que regisson l'exercici de lors competéncias.
+362 p Cap de collectivitat territoriala non pòt exercir una tutèla sus una autra. Pr'aquò, quand l'exercici d'una competéncia necessita lo concors de plusors collectivitats territorialas, la lei pòt autorizar l'una d'entre elas o un de lors agropaments a organizar las modalitats de lor accion comuna.
+363 p Dins las collectivitats territorialas de la Republica, lo representant de l'Estat, representant de cadun dels membres del Govèrn, a la carga dels interèsses nacionals, del contraròtle administratiu e del respècte de las leis.
+364 h3 ARTICLE 72-1.
+365 p La lei fixa las condicions dins las qualas los electors de cada collectivitat territoriala pòdon, per l'exercici del drech de peticion, demandar l'inscripcion a l'òrdre del jorn de l'assemblada deliberanta d'aquesta collectivitat d'una question que relèva de sa competéncia.
+366 p Dins las condicions previstas per la lei organica, los projèctes de deliberacion o d'acte que relevan de la competéncia d'una collectivitat territoriala pòdon, a son iniciativa, èsser sometuts, per la via del referendum, a la decision dels electors d'aquesta collectivitat.
+367 p Quand es considerat de crear una collectivitat territoriala dotada d'un estatut particular o de modificar son organizacion, pòt èsser decidit per la lei de consultar los electors inscrits dins las collectivitats interessadas. La modificacion de las limitas de las collectivitats territorialas pòt tanben dar luòc a la consultacion dels electors dins las condicions previstas per la lei.
+368 h3 ARTICLE 72-2.
+369 p Las collectivitats territorialas beneficián de ressorsas de las qualas pòdon dispausar liurament dins las condicions fixadas per la lei.
+370 p Pòdon recebre tot o part del produch de las impausicions de totas natures. La lei las pòt autorizar a en fixar l'assetament e lo taus dins las limitas qu'ela determina.
+371 p Las recèptas fiscalas e las autras ressorsas pròprias de las collectivitats territorialas representan, per cada categoria de collectivitats, una part determinanta de l'ensemble de lors ressorsas. La lei organica fixa las condicions dins las qualas aquesta règla es mesa en òbra.
+372 p Tot transferiment de competéncias entre l'Estat e las collectivitats territorialas s'acompanha de l'atribucion de ressorsas equivalentas a aquelas qu'èran consacradas a lor exercici. Tota creacion o extension de competéncias qu'a per consequéncia d'aumentar las despensas de las collectivitats territorialas es acompanhada de ressorsas determinadas per la lei.
+373 p La lei prevei de dispositius de perequacion destinats a favorizar l'egalitat entre las collectivitats territorialas.
+374 h3 ARTICLE 72-3.
+375 p La Republica reconeis, al sen del pòble francés, las populacions d'otramar, dins un ideal comun de libertat, d'egalitat e de fraternitat.
+376 p La Guadalope, la Guiana, la Martinica, La Reünion, Maiòta, Sant Bartomieu, Sant Martin, Sant Pèire e Miquelon, las illas Wallis e Futuna e la Polinesia francesa son regidas per l'article 73 pels departaments e las regions d'otramar e per las collectivitats territorialas creadas en aplicacion del darrièr alinèa de l'article 73, e per l'article 74 per las autras collectivitats.
+377 p L'estatut de Nòva Caledònia es regit pel títol XIII.
+378 p La lei determina lo regim legislatiu e l'organizacion particulara de las Tèrras australas e antarticas francesas e de Clipperton.
+379 h3 ARTICLE 72-4.
+380 p Cap de cambiament, per tot o part d'una de las collectivitats mencionadas al dosen alinèa de l'article 72-3, de l'un devèrs l'autre dels regims prevists pels articles 73 e 74, non pòt intervenir sens que lo consentiment dels electors de la collectivitat o de la partida de collectivitat interessada siá estat prealablament recampat dins las condicions previstas a l'alinèa seguent. Aqueste cambiament de regim es decidit per una lei organica.
+381 p Lo President de la Republica, sus proposicion del Govèrn pendent la durada de las sessions o sus proposicion conjunta de las doas assembladas, publicadas al Jornal oficial, pòt decidir de consultar los electors d'una collectivitat territoriala situada en otramar sus una question relativa a son organizacion, a sas competéncias o a son regim legislatiu. Quand la consultacion pòrta sus un cambiament previst a l'alinèa precedent e es organizada sus proposicion del Govèrn, aqueste fa, davant cada assemblada, una declaracion que es seguida d'un debat.
+382 h3 ARTICLE 73.
+383 p Dins los departaments e las regions d'otramar, las leis e reglaments son aplicables de plen drech. Pòdon far l'objècte d'adaptacions que tenon a las caracteristicas e a las constrenchas particularas d'aquestas collectivitats.
+384 p Aquestas adaptacions pòdon èsser decididas per aquestas collectivitats dins las matièras ont s'exercisson lors competéncias e s'i son estadas abilitadas, segon lo cas, per la lei o pel reglament.
+385 p Per derogacion al primièr alinèa e per téner compte de lors especificitats, las collectivitats regidas pel present article pòdon èsser abilitadas, segon lo cas, per la lei o pel reglament, a fixar elas meteissas las règlas aplicablas sus lor territòri, dins un nombre limitat de matièras que pòdon relevar del domeni de la lei o del reglament.
+386 p Aquelas règlas non pòdon portar sus la nacionalitat, los dreches civics, las garantias de las libertats publicas, l'estat e la capacitat de las personas, l'organizacion de la justícia, lo drech penal, la procedura penala, la politica estrangièra, la defensa, la seguretat e l'òrdre publics, la moneda, lo crèdit e los cambis, e tanben lo drech electoral. Aquesta enumeracion poirà èsser precisada e completada per una lei organica.
+387 p La disposicion prevista als dos alinèas precedents non es pas aplicabla al departament e a la region de La Reünion.
+388 p Las abilitacions previstas als dosen e tresen alinèas son decididas, a la demanda de la collectivitat concernida, dins las condicions e jos las reservas previstas per una lei organica. Non pòdon intervenir quand son en causa las condicions essencialas d'exercici d'una libertat publica o d'un drech constitucionalament garantit.
+389 p La creacion per la lei d'una collectivitat que se substituís a un departament e una region d'otramar o l'institucion d'una assemblada deliberanta unica per aquestas doas collectivitats non pòt intervenir sens que siá estat recampat, segon las formas previstas al segond alinèa de l'article 72-4, lo consentiment dels electors inscrits dins lo ressòrt d'aquestas collectivitats.
+390 h3 ARTICLE 74.
+391 p Las collectivitats d'otramar regidas pel present article an un estatut que ten compte dels interèsses pròpris de caduna d'elas al sen de la Republica.
+392 p Aqueste estatut es definit per una lei organica, adoptada aprèp avís de l'assemblada deliberanta, que fixa :
+393 p - las condicions dins las qualas las leis e reglaments i son aplicables ; ⏎ - las competéncias d'aquesta collectivitat ; jos reserva d'aquelas ja exercidas per ela, lo transferiment de competéncias de l'Estat non pòt portar sus las matièras enumeradas al quatren alinèa de l'article 73, precisadas e completadas, s'es lo cas, per la lei organica ; ⏎ - las règlas d'organizacion e de foncionament de las institucions de la collectivitat e lo regim electoral de son assemblada deliberanta ; ⏎ - las condicions dins las qualas sas institucions son consultadas sus los projèctes e proposicions de lei e los projèctes d'ordenança o de decret que comportan de disposicions particularas a la collectivitat, e tanben sus la ratificacion o l'aprobacion d'engatjaments internacionals concluses dins las matièras que relevan de sa competéncia.
+394 p La lei organica pòt tanben determinar, per aquelas d'aquestas collectivitats que son dotadas de l'autonomia, las condicions dins las qualas :
+395 p - lo Conselh d'Estat exercís un contraròtle jurisdiccional especific sus certanas categorias d'actes de l'assemblada deliberanta que intervenon al títol de las competéncias qu'exercís dins lo domeni de la lei ; ⏎ - l'assemblada deliberanta pòt modificar una lei promulgada posteriorament a l'entrada en vigor de l'estatut de la collectivitat, quand lo Conselh constitucional, sasit notadament per las autoritats de la collectivitat, a constatat que la lei èra intervenguda dins lo domeni de competéncia d'aquesta collectivitat ; ⏎ - de mesuras justificadas per las necessitats localas pòdon èsser presas per la collectivitat en favor de sa populacion, en matièra d'accès a l'emplec, de drech d'establiment per l'exercici d'una activitat professionala o de proteccion del patrimòni foncièr ; ⏎ - la collectivitat pòt participar, jos lo contraròtle de l'Estat, a l'exercici de las competéncias qu'a conservadas, dins lo respècte de las garantias acordadas sus l'ensemble del territòri nacional per l'exercici de las libertats publicas.
+396 p Las autras modalitats de l'organizacion particulara de las collectivitats que relevan del present article son definidas e modificadas per la lei aprèp consultacion de lor assemblada deliberanta.
+397 h3 ARTICLE 74-1.
+398 p Dins las collectivitats d'otramar visadas a l'article 74 e en Nòva Caledònia, lo Govèrn pòt, per ordenanças, dins las matièras que demòran de la competéncia de l'Estat, estendre, amb las adaptacions necessàrias, las disposicions de natura legislativa en vigor en metropòli o adaptar las disposicions de natura legislativa en vigor a l'organizacion particulara de la collectivitat concernida, jos reserva que la lei non aja pas expressament exclús, per las disposicions en causa, lo recors a aquesta procedura.
+399 p Las ordenanças son preses en conselh dels ministres aprèp avís de las assembladas deliberantas interessadas e del Conselh d'Estat. Entran en vigor tre lor publicacion. Venon caducas en l'abséncia de ratificacion pel Parlament dins lo delai de dètz-e-uèch meses seguent aquesta publicacion.
+400 h3 ARTICLE 75.
+401 p Los ciutadans de la Republica que non an pas l'estatut civil de drech comun, sol visat a l'article 34, conservan lor estatut personal tant qu'i non an pas renonciat.
+402 h3 ARTICLE 75-1.
+403 p Las lengas regionalas apertenon al patrimòni de França.
+404 h2 Títol XIII - DISPOSICIONS TRANSITÒRIAS RELATIVAS A NÒVA CALEDÒNIA
+405 h3 ARTICLE 76.
+406 p Las populacions de Nòva Caledònia son apeladas a se pronunciar abans lo 31 de decembre de 1998 sus las disposicions de l'acòrdi signat a Numèa lo 5 de mai de 1998 e publicat lo 27 de mai de 1998 al Jornal oficial de la Republica francesa.
+407 p Son admeses a participar a l'escrutinh las personas que remplisson las condicions fixadas a l'article 2 de la lei n° 88-1028 del 9 de novembre de 1988. ⏎ Las mesuras necessàrias a l'organizacion de l'escrutinh son presas per decret en Conselh d'Estat deliberat en conselh dels ministres.
+408 h3 ARTICLE 77.
+409 p Aprèp aprobacion de l'acòrdi al moment de la consultacion prevista a l'article 76, la lei organica, presa aprèp avís de l'assemblada deliberanta de Nòva Caledònia, determina, per assegurar l'evolucion de Nòva Caledònia dins lo respècte de las orientacions definidas per aqueste acòrdi e segon las modalitats necessàrias a sa mesa en òbra :
+410 p - las competéncias de l'Estat que seràn transferidas, de faiçon definitiva, a las institucions de Nòva Caledònia, l'escalonament e las modalitats d'aquestes transferiments, e tanben lo repartiment de las cargas que resultan d'aquestes ; ⏎ - las règlas d'organizacion e de foncionament de las institucions de Nòva Caledònia e notadament las condicions dins las qualas certanas categorias d'actes de l'assemblada deliberanta de Nòva Caledònia poiràn èsser sometudas abans publicacion al contraròtle del Conselh constitucional ; ⏎ - las règlas relativas a la ciutadanetat, al regim electoral, a l'emplec e a l'estatut civil costumièr ; ⏎ - las condicions e los delais dins los quals las populacions interessadas de Nòva Caledònia seràn menadas a se pronunciar sus l'accession a la plena sobeiranetat.
+411 p Las autras mesuras necessàrias a la mesa en òbra de l'acòrdi mencionat a l'article 76 son definidas per la lei.
+412 p Per la definicion del còs electoral apelat a elegir los membres de las assembladas deliberantas de Nòva Caledònia e de las províncias, lo tablèu al qual se referisson l'acòrdi mencionat a l'article 76 e los articles 188 e 189 de la lei organica n° 99-209 del 19 de març de 1999 relativa a Nòva Caledònia es lo tablèu dreçat a l'ocasion de l'escrutinh previst al dich article 76 e que comprén las personas non admeses a i participar.
+413 h2 Títol XIV - DE LA FRANCOFONIA E DELS ACÒRDIS D'ASSOCIACION
+414 h3 ARTICLE 87.
+415 p La Republica participa al desvolopament de la solidaritat e de la cooperacion entre los Estats e los pòbles que an lo francés en partatge.
+416 h3 ARTICLE 88.
+417 p La Republica pòt conclure d'acòrdis amb d'Estats que desiran s'associar a ela per desvolopar lors civilizacions.
+418 h2 Títol XV - DE L'UNION EUROPÈA
+419 h3 ARTICLE 88-1.
+420 p La Republica participa a l'Union europèa constituïda d'Estats qu'an causit liurament d'exercir en comun certanas de lors competéncias en vertut del tractat sus l'Union europèa e del tractat sul foncionament de l'Union europèa, tals coma resultan del tractat signat a Lisbona lo 13 de decembre de 2007.
+421 h3 ARTICLE 88-2.
+422 p La lei fixa las règlas relativas al mandat d'arrèst europèu en aplicacion dels actes preses per las institucions de l'Union europèa.
+423 h3 ARTICLE 88-3.
+424 p Jos reserva de reciprocitat e segon las modalitats previstas pel Tractat sus l'Union europèa signat lo 7 de febrièr de 1992, lo drech de vòte e d'eligibilitat a las eleccions municipalas pòt èsser acordat als sols ciutadans de l'Union que residisson en França. Aquestes ciutadans non pòdon exercir las foncions de maire o d'adjunt ni participar a la designacion dels electors senatorials e a l'eleccion dels senators. Una lei organica votada dins los meteises tèrmes per las doas assembladas determina las condicions d'aplicacion del present article.
+425 h3 ARTICLE 88-4.
+426 p Lo Govèrn sosmet a l'Assemblada nacionala e al Senat, tre lor transmission al Conselh de l'Union europèa, los projèctes d'actes legislatius europèus e los autres projèctes o proposicions d'actes de l'Union europèa.
+427 p Segon de modalitats fixadas pel reglament de cada assemblada, de resolucions europèas pòdon èsser adoptadas, s'es lo cas en defòra de las sessions, sus los projèctes o proposicions mencionats al primièr alinèa, e tanben sus tot document que emana d'una institucion de l'Union europèa.
+428 p Al sen de cada assemblada parlamentària es instituïda una comission cargada dels afars europèus.
+429 h3 ARTICLE 88-5.
+430 p Tot projècte de lei que autoriza la ratificacion d'un tractat relatiu a l'adesion d'un Estat a l'Union europèa es sometut al referendum pel President de la Republica.
+431 p Pasmens, pel vòte d'una mocion adoptada en tèrmes identics per cada assemblada a la majoritat dels tres cinquens, lo Parlament pòt autorizar l'adopcion del projècte de lei segon la procedura prevista al tresen alinèa de l'article 89.
+432 p [aqueste article non es pas aplicable a las adesions que fan seguida a una conferéncia intergovernamentala de la quala la convocacion es estada decidida pel Conselh europèu abans lo 1èr de julhet de 2004]
+433 h3 ARTICLE 88-6.
+434 p L'Assemblada nacionala o lo Senat pòdon emetre un avís motivat sus la conformitat d'un projècte d'acte legislatiu europèu al principi de subsidiaritat. L'avís es adreçat pel president de l'assemblada concernida als presidents del Parlament europèu, del Conselh e de la Comission europèa. Lo Govèrn n'es informat.
+435 p Cada assemblada pòt formar un recors davant la Cort de justícia de l'Union europèa contra un acte legislatiu europèu per violacion del principi de subsidiaritat. Aqueste recors es transmés a la Cort de justícia de l'Union europèa pel Govèrn.
+436 p A aquesta fin, de resolucions pòdon èsser adoptadas, s'es lo cas en defòra de las sessions, segon de modalitats d'iniciativa e de discussion fixadas pel reglament de cada assemblada. A la demanda de seissanta deputats o de seissanta senators, lo recors es de drech.
+437 h3 ARTICLE 88-7
+438 p Pel vòte d'una mocion adoptada en tèrmes identics per l'Assemblada nacionala e lo Senat, lo Parlament pòt s'opausar a una modificacion de las règlas d'adopcion d'actes de l'Union europèa dins los cases prevists, al títol de la revision simplificada dels tractats o de la cooperacion judiciària civila, pel tractat sus l'Union europèa e lo tractat sul foncionament de l'Union europèa, tals coma resultan del tractat signat a Lisbona lo 13 de decembre de 2007.
+439 h2 Títol XVI - DE LA REVISION
+440 h3 ARTICLE 89.
+441 p L'iniciativa de la revision de la Constitucion aperten concurrentament al President de la Republica sus proposicion del Primièr ministre e als membres del Parlament.
+442 p Lo projècte o la proposicion de revision deu èsser examinat dins las condicions de delai fixadas al tresen alinèa de l'article 42 e votat per las doas assembladas en tèrmes identics. La revision es definitiva aprèp aver estat aprovada per referendum.
+443 p Pasmens, lo projècte de revision non es pas presentat al referendum quand lo President de la Republica decidís de lo sometre al Parlament convocat en Congrès ; dins aquel cas, lo projècte de revision non es aprovat que se reünís la majoritat dels tres cinquens dels sufragis exprimits. Lo burèu del Congrès es lo de l'Assemblada nacionala.
+444 p Cap de procedura de revision non pòt èsser engatjada o seguida quand es portat tòrt a l'integritat del territòri.
+445 p La forma republicana del Govèrn non pòt far l'objècte d'una revision.

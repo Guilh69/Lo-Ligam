@@ -1,0 +1,36 @@
+001 p Los representants del pòble francés, constituits en Assemblada nacionala, considerant que l'ignorància, l'oblit o lo mesprètz dels dreches de l'òme son las solas causas dels malastres publics e de la corrupcion dels govèrns, an resolgut d'exposar, dins una declaracion solemna, los dreches naturals, inalienables e sacrats de l'òme, a fin que aquesta declaracion, constantament presenta a totes los membres del còs social, lor remembra sens cessa lors dreches e lors devers ; a fin que los actes del poder legislatiu, e los del poder executiu, podent èsser a cada instant comparats amb la tòca de tota institucion politica, ne sián mai respectats ; a fin que las reclamacions dels ciutadans, fondadas dorenavant sus de principis simples e incontestables, viron totjorn al manteniment de la Constitucion e a la bonaür de totes.
+002 p En consequéncia, l'Assemblada nacionala reconeis e declara, en preséncia e jos los auspicis de l'Èsser suprèm, los dreches seguents de l'òme e del ciutadan.
+003 h2 Article 1èr
+004 p Los òmes naisson e demòran liures e egals en dreches. Las distincions socialas non pòdon èsser fondadas que sus l'utilitat comuna.
+005 h2 Article 2
+006 p La tòca de tota associacion politica es la conservacion dels dreches naturals e imprescriptibles de l'òme. Aquestes dreches son la libertat, la proprietat, la seguretat, e la resisténcia a l'opression.
+007 h2 Article 3
+008 p Lo principi de tota sobeiranetat residís essencialament dins la nacion. Cap de còs, degun individú non pòt exercir d'autoritat que non n'emana expressament.
+009 h2 Article 4
+010 p La libertat consistís a poder far tot çò que non pòrta pas tòrt a autrú : atal, l'exercici dels dreches naturals de cada òme non a de bòrnas que las que asseguran als autres membres de la societat lo gaudiment d'aqueles meteises dreches. Aquelas bòrnas non pòdon èsser determinadas que per la lei.
+011 h2 Article 5
+012 p La lei non a lo drech de defendre que las accions que pòrtan tòrt a la societat. Tot çò que non es pas defendut per la lei non pòt èsser empachat, e degun non pòt èsser constrench a far çò qu'ela non ordena pas.
+013 h2 Article 6
+014 p La lei es l'expression de la volontat generala. Totes los ciutadans an drech de concórrer personalament, o per lors representants, a sa formacion. Deu èsser la meteissa per totes, siá que protegisca, siá que punisca. Totes los ciutadans, estent egals a sos uèlhs, son egalament admissibles a totas las dignitats, plaças e emplecs publics, segon lor capacitat, e sens autra distincion que la de lors vertuts e de lors talents.
+015 h2 Article 7
+016 p Degun òme non pòt èsser acusat, arrestat ni detengut que dins los cases determinats per la lei, e segon las formas qu'a prescrichas. Aqueles que sollicitan, expedisson, executan o fan executar d'òrdres arbitraris, devon èsser punits ; mas tot ciutadan apelat o sasit en vertut de la lei deu obeir a l'instant : se rend colpable per la resisténcia.
+017 h2 Article 8
+018 p La lei non deu establir que de penas estrictament e evidentament necessàrias, e degun non pòt èsser punit qu'en vertut d'una lei establida e promulgada anteriorament al delicte, e legalament aplicada.
+019 h2 Article 9
+020 p Tot òme estent presumit innocent fins a çò que siá estat declarat colpable, s'es jutjat indispensable de l'arrestar, tota rigor que non seriá pas necessària per s'assegurar de sa persona deu èsser severament reprimida per la lei.
+021 h2 Article 10
+022 p Degun non deu èsser inquietat per sas opinions, fins e tot religiosas, pro que lor manifestacion non pertòrbe pas l'òrdre public establit per la lei.
+023 h2 Article 11
+024 p La liura comunicacion dels pensaments e de las opinions es un dels dreches los mai precioses de l'òme : tot ciutadan pòt doncas parlar, escriure, imprimir liurament, levat a respondre de l'abús d'aquesta libertat dins los cases determinats per la lei.
+025 h2 Article 12
+026 p La garantia dels dreches de l'òme e del ciutadan necessita una fòrça publica : aquesta fòrça es doncas instituïda per l'avantatge de totes, e non pas per l'utilitat particulara d'aqueles als quals es confiada.
+027 h2 Article 13
+028 p Per l'entreten de la fòrça publica, e per las despensas d'administracion, una contribucion comuna es indispensabla : deu èsser egalament repartida entre totes los ciutadans, en rason de lors facultats.
+029 h2 Article 14
+030 p Totes los ciutadans an lo drech de constatar, per eles meteises o per lors representants, la necessitat de la contribucion publica, de la consentir liurament, d'en seguir l'emplec, e d'en determinar la quota, l'assetament, lo recobrament e la durada.
+031 h2 Article 15
+032 p La societat a lo drech de demandar compte a tot agent public de sa administracion.
+033 h2 Article 16
+034 p Tota societat dins la quala la garantia dels dreches non es pas assegurada, ni la separacion dels poders determinada, non a pas cap de Constitucion.
+035 h2 Article 17
+036 p La proprietat estent un drech inviolable e sacrat, degun non pòt n'èsser privat, levat quand la necessitat publica, legalament constatada, l'exigís evidentament, e jos la condicion d'una justa e prealabla indemnitat.

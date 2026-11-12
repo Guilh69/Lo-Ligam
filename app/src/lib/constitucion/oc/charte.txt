@@ -1,0 +1,30 @@
+001 p Lo pòble francés,
+002 p Considerant :
+003 p Que las ressorsas e los equilibris naturals an condicionat l'emergéncia de l'umanitat ;
+004 p Que l'avenir e l'existéncia meteissa de l'umanitat son indissociables de son mitan natural ;
+005 p Que l'environament es lo patrimòni comun dels èssers umans ;
+006 p Que l'òme exercís una influéncia creissenta sus las condicions de la vida e sus sa pròpria evolucion ;
+007 p Que la diversitat biologica, l'espelida de la persona e lo progrès de las societats umanas son afectats per certans modes de consomacion o de produccion e per l'espleitacion excessiva de las ressorsas naturalas ;
+008 p Que la preservacion de l'environament deu èsser recercada al meteis títol que los autres interèsses fondamentals de la Nacion ;
+009 p Qu'a fin d'assegurar un desvolopament durable, las causidas destinadas a respondre als besonhs del present non devon pas comprometre la capacitat de las generacions futuras e dels autres pòbles a satisfar lors pròpris besonhs,
+010 p Proclama :
+011 h2 Article 1èr
+012 p Cadun a lo drech de viure dins un environament equilibrat e respectuós de la santat.
+013 h2 Article 2
+014 p Tota persona a lo dever de prene part a la preservacion e a l'amelhoracion de l'environament.
+015 h2 Article 3
+016 p Tota persona deu, dins las condicions definidas per la lei, prevenir los tòrts que pòt portar a l'environament o, a manca d'aquò, ne limitar las consequéncias.
+017 h2 Article 4
+018 p Tota persona deu contribuir a la reparacion dels damnatges que causa a l'environament, dins las condicions definidas per la lei.
+019 h2 Article 5
+020 p Quand la realizacion d'un damnatge, encara qu'incertana en l'estat de las coneissenças scientificas, poiriá afectar de manièra grèva e irreversibla l'environament, las autoritats publicas velhan, per aplicacion del principi de precaucion e dins lors domenis d'atribucions, a la mesa en òbra de proceduras d'evaluacion dels risques e a l'adopcion de mesuras provisòrias e proporcionadas a fin de parar a la realizacion del damnatge.
+021 h2 Article 6
+022 p Las politicas publicas devon promòure un desvolopament durable. A aqueste efècte, concilian la proteccion e la mesa en valor de l'environament, lo desvolopament economic e lo progrès social.
+023 h2 Article 7
+024 p Tota persona a lo drech, dins las condicions e las limitas definidas per la lei, d'accedir a las informacions relativas a l'environament detengudas per las autoritats publicas e de participar a l'elaboracion de las decisions publicas que an una incidéncia sus l'environament.
+025 h2 Article 8
+026 p L'educacion e la formacion a l'environament devon contribuir a l'exercici dels dreches e devers definits per la presenta Carta.
+027 h2 Article 9
+028 p La recèrca e l'innovacion devon portar lor concors a la preservacion e a la mesa en valor de l'environament.
+029 h2 Article 10
+030 p La presenta Carta inspira l'accion europèa e internacionala de França.
