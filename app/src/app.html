@@ -10,11 +10,11 @@
 		     src/lib/stores/ambianca.svelte.js, à tenir identique. -->
 		<script nonce="%sveltekit.nonce%">
 			try {
-				var ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/ideas', '/illustracions', '/obras', '/obras/literatura', '/obras/cinema', '/obras/afichas', '/medias', '/medias/radios', '/medias/television', '/medias/premsa', '/medias/livres', '/medias/livres/pastre-1913', '/aprene', '/apren/jocs'];
+				var ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/imagina', '/ideas', '/illustracions', '/obras', '/obras/literatura', '/obras/cinema', '/obras/afichas', '/medias', '/medias/radios', '/medias/television', '/medias/premsa', '/medias/livres', '/medias/livres/pastre-1913', '/aprene', '/apren/jocs'];
 				var d = document.documentElement.dataset;
 				var t = localStorage.getItem('lo-ligam-tema') || 'sorne'; // sombre par défaut (Romain, 2026-10-22 ; clair le 21-10)
 				var clar =
-					(ARMONIZADAS.indexOf(location.pathname) < 0 && location.pathname.indexOf('/aprene/modul/') !== 0 && location.pathname.indexOf('/grops') !== 0 && location.pathname.indexOf('/wiki') !== 0 && location.pathname.indexOf('/cultura') !== 0 && location.pathname.indexOf('/apren/gramatica') !== 0) ||
+					(ARMONIZADAS.indexOf(location.pathname) < 0 && location.pathname.indexOf('/aprene/modul/') !== 0 && location.pathname.indexOf('/grops') !== 0 && location.pathname.indexOf('/wiki') !== 0 && location.pathname.indexOf('/cultura') !== 0 && location.pathname.indexOf('/constitucion') !== 0 && location.pathname.indexOf('/apren/gramatica') !== 0) ||
 					t === 'clar' ||
 					(t === 'sistema' && matchMedia('(prefers-color-scheme: light)').matches);
 				d.tema = clar ? 'clar' : 'sorne';

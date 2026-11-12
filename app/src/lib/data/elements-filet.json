@@ -324,6 +324,16 @@
     { "clau": "amassa.teulas.instagram.ligam", "tipe": "ligam", "lista": "amassa.teulas.instagram", "oc": "Instagram", "fr": "Instagram", "ligam": "https://www.instagram.com/lo_ligam/", "es": "Instagram", "en": "Instagram", "ca": "Instagram", "ar": "Instagram" },
     { "clau": "amassa.teulas.instagram.sota", "tipe": "text", "lista": "amassa.teulas.instagram", "oc": "Los visuals de Lo Ligam.", "fr": "Les visuels de Lo Ligam.", "es": "Las imágenes de Lo Ligam.", "en": "The visuals of Lo Ligam.", "ca": "Les imatges de Lo Ligam.", "ar": "صور وتصاميم Lo Ligam." }
   ],
+  "imagina": [
+    { "clau": "imagina.titol", "tipe": "text", "oc": "S’imagina", "fr": "S’imagine", "es": "Se imagina", "en": "Imagine", "ca": "S’imagina", "ar": "نتخيّل" },
+    { "clau": "imagina.frasa", "tipe": "text", "oc": "A escriure : ta frasa sus S’imagina", "fr": "À écrire : ta phrase sur S’imagine", "visible": false },
+    { "clau": "imagina.teulas.constitucion", "tipe": "bloc", "lista": "imagina.teulas", "ordre": 1 },
+    { "clau": "imagina.teulas.constitucion.ligam", "tipe": "ligam", "lista": "imagina.teulas.constitucion", "oc": "Constitucion", "fr": "Constitution", "ligam": "/constitucion", "es": "Constitución", "en": "Constitution", "ca": "Constitució", "ar": "الدستور" },
+    { "clau": "imagina.teulas.constitucion.sota", "tipe": "text", "lista": "imagina.teulas.constitucion", "oc": "La Constitucion de la Republica, en occitan.", "fr": "La Constitution de la République, en occitan.", "es": "La Constitución de la República, en occitano.", "en": "The Constitution of the Republic, in Occitan.", "ca": "La Constitució de la República, en occità.", "ar": "دستور الجمهورية بالأوكسيتانية." },
+    { "clau": "imagina.teulas.carrieras", "tipe": "bloc", "lista": "imagina.teulas", "ordre": 2 },
+    { "clau": "imagina.teulas.carrieras.ligam", "tipe": "ligam", "lista": "imagina.teulas.carrieras", "oc": "Las carrièras", "fr": "Les rues", "ligam": "/imagina/carrieras", "es": "Las calles", "en": "Streets", "ca": "Els carrers", "ar": "الشوارع" },
+    { "clau": "imagina.teulas.carrieras.sota", "tipe": "text", "lista": "imagina.teulas.carrieras", "oc": "Las plaças e las carrièras, en occitan.", "fr": "Les places et les rues, en occitan.", "es": "Las plazas y las calles, en occitano.", "en": "Squares and streets, in Occitan.", "ca": "Les places i els carrers, en occità.", "ar": "الساحات والشوارع بالأوكسيتانية." }
+  ],
   "ideas": [
     { "clau": "ideas.titol", "tipe": "text", "oc": "Boita d’idèas", "fr": "Boîte à idées", "es": "Buzón de ideas", "en": "Idea box", "ca": "Bústia d’idees", "ar": "صندوق الاقتراحات" },
     { "clau": "ideas.frasa", "tipe": "text", "oc": "Una idèa per melhorar Lo Ligam ? Escriu-la aquí : las legissi totas.", "fr": "Une idée pour améliorer Lo Ligam ? Écris-la ici : je les lis toutes.", "es": "¿Una idea para mejorar Lo Ligam? Escríbela aquí: las leo todas.", "en": "An idea to improve Lo Ligam? Write it here: I read them all.", "ca": "Una idea per millorar Lo Ligam? Escriu-la aquí: les llegeixo totes.", "ar": "هل لديك اقتراح لتحسين Lo Ligam؟ يمكنك كتابته هنا: أقرأ كل الاقتراحات." },

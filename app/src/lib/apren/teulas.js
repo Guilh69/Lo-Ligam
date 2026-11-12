@@ -107,5 +107,8 @@ export function pictoPer(href = '') {
 	if (href.startsWith('/forum')) return 'forum';
 	if (href.startsWith('/ideas')) return 'ideas';
 	if (href.includes('instagram.com')) return 'imatges';
+	// les cases de S'imagina (2026-11-12) : la Constitution (un fronton) et les rues (deux plaques)
+	if (href.startsWith('/constitucion')) return 'constitucion';
+	if (href.startsWith('/imagina/carrieras')) return 'carrieras';
 	return 'autre';
 }

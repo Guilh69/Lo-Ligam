@@ -22,6 +22,7 @@ export const CAMINS = {
 	visio: '/apren/visio',
 	istoria: '/istoria',
 	amassa: '/amassa',
+	imagina: '/imagina',
 	parla: '/parla',
 	obras: '/obras',
 	medias: '/medias',

@@ -21,13 +21,12 @@ const SOUS = {
 	'/medias/premsa': '/medias',
 	'/medias/livres': '/medias',
 	'/medias/livres/pastre-1913': '/medias/livres',
-	'/istoria': '/',
-	// la Constitution en occitan (2026-11-12) : sous Se parla, pas encore dans le menu (décision de Romain à prendre)
-	'/constitucion': '/parla'
+	'/istoria': '/'
+	// (la Constitution, /constitucion, est dans le plan sous S'imagina depuis le 2026-11-12 : elle remonte seule ;
+	// ses trois textes liés, /constitucion/<texte>, remontent à elle comme une fiche)
 };
 // les noms des pages qui ne sont pas dans le plan
-const CONSTITUCION = { oc: 'Constitucion', fr: 'Constitution', es: 'Constitución', en: 'Constitution', ca: 'Constitució', ar: 'الدستور' }; // es/en/ca/ar : à relire par Aran
-const ETIQUETAS = { '/': ACCUEIL, '/medias/livres': LIBRES, '/istoria': LO_LIGAM.find((x) => x.href === '/istoria'), '/constitucion': CONSTITUCION };
+const ETIQUETAS = { '/': ACCUEIL, '/medias/livres': LIBRES, '/istoria': LO_LIGAM.find((x) => x.href === '/istoria') };
 
 // chemin → { etiq, rubrica, parent }
 const PAGINAS = new Map();

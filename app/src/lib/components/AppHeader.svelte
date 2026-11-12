@@ -116,8 +116,8 @@
 	let tornar = $derived(surCompte ? '/compte' : '/compte?tornar=' + encodeURIComponent(page.url.pathname));
 
 	// Téléphone d'abord (Romain, 2026-11-07, logique 3 de /ensag/palette-bandeaux) : sur téléphone, le haut
-	// garde les réglages (marque, langue, thème, compte) et la navigation passe en bas, en cinq onglets
-	// (Acuèlh, les trois verbes du plan, Menú) ; sur grand écran, les trois verbes entrent dans la barre.
+	// garde les réglages (marque, langue, thème, compte) et la navigation passe en bas, en onglets
+	// (Acuèlh, les rubriques du plan, Menú) ; sur grand écran, les rubriques entrent dans la barre.
 	// Pages d'immersion (la carte, l'administration) : pas d'onglets, le bouton Menú reste en haut.
 	const ACUELH = { oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici', ar: 'الرئيسية' };
 	const ETIQ_NAV = { oc: 'Navegacion principala', fr: 'Navigation principale', es: 'Navegación principal', en: 'Main navigation', ca: 'Navegació principal', ar: 'التنقل الرئيسي' };
@@ -273,6 +273,7 @@
 				<span class="ic">
 					{#if v.id === 'parla'}<Icona nom="comentar" size="1.4rem" />
 					{:else if v.id === 'apren'}<svg viewBox="0 0 24 24" width="1.4rem" height="1.4rem" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5c3-1.3 5.5-1 8 1 2.5-2 5-2.3 8-1V19c-3-1.3-5.5-1-8 1-2.5-2-5-2.3-8-1z" /><path d="M12 6.5V20" /></svg>
+					{:else if v.id === 'imagina'}<svg viewBox="0 0 24 24" width="1.4rem" height="1.4rem" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3.5l1.9 5.6 5.6 1.9-5.6 1.9L11 18.5l-1.9-5.6L3.5 11l5.6-1.9z" /><path d="M19 15.5v4.5M16.75 17.75h4.5" /></svg>
 					{:else}<Icona nom="persona" size="1.4rem" />{/if}
 				</span>
 				<span class="et">{v.nom}</span>
@@ -620,7 +621,9 @@
 			inset: auto 0 0 0;
 			z-index: 70;
 			display: grid;
-			grid-template-columns: repeat(5, 1fr);
+			/* autant de colonnes égales que d'onglets : Acuèlh, les rubriques du plan (quatre depuis S'imagina, 2026-11-12), Menú */
+			grid-auto-flow: column;
+			grid-auto-columns: 1fr;
 			padding: 0.3rem 0.2rem calc(0.3rem + env(safe-area-inset-bottom, 0px));
 			background: var(--t-fons);
 			border-top: 1px solid var(--t-linha);
@@ -645,7 +648,7 @@
 		.onglets-bas .ic {
 			display: grid;
 			place-items: center;
-			width: 3.2rem;
+			width: min(3.2rem, 100%);
 			height: 1.9rem;
 			border-radius: 999px;
 		}
