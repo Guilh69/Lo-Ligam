@@ -7,7 +7,7 @@ export default {
 	titol: 'Los advèrbis',
 	fr: 'Les adverbes',
 	resumit: 'Comment, où, quand : les mots qui précisent le verbe, et ceux en -ment.',
-	validada: false,
+	validada: true,
 	colors: { cossi: 'pruna', ont: 'oliva', quand: 'blau', ment: 'oliva' },
 	ecrans: [
 		{

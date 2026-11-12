@@ -7,7 +7,7 @@ export default {
 	titol: 'L’imperatiu',
 	fr: 'L’impératif',
 	resumit: 'Pren, vira, prenètz, viratz : donner une indication ; et la défense, non vires pas.',
-	validada: false,
+	validada: true,
 	colors: { tu: 'pruna', vos: 'oliva', non: 'blau' },
 	ecrans: [
 		{

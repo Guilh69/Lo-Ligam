@@ -13,7 +13,7 @@ export default {
 	titol: 'La fin dels mots',
 	fr: 'La fin des mots',
 	resumit: 'Les lettres finales qui se taisent, celles qui sonnent, celles qui changent, et les liaisons.',
-	validada: false,
+	validada: true,
 	colors: { tais: 'pruna', son: 'oliva', cambia: 'blau' },
 	ecrans: [
 		{

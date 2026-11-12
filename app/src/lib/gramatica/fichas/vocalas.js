@@ -14,7 +14,7 @@ export default {
 	titol: 'Las vocalas',
 	fr: 'Les voyelles',
 	resumit: 'a, é, è, o, ò, u, et les voyelles qui glissent l’une dans l’autre : ai, au, èu, òu, uè.',
-	validada: false,
+	validada: true,
 	colors: { a: 'pruna', e: 'oliva', o: 'blau' },
 	ecrans: [
 		{

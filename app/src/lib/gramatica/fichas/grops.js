@@ -15,7 +15,7 @@ export default {
 	titol: 'Las consonantas que se seguisson',
 	fr: 'Les suites de consonnes',
 	resumit: 'Deux consonnes côte à côte : au milieu du mot, la première se fond dans la seconde ; au bout, souvent une seule s’entend.',
-	validada: false,
+	validada: true,
 	colors: { mitan: 'pruna', fin: 'oliva', dj: 'blau' },
 	ecrans: [
 		{

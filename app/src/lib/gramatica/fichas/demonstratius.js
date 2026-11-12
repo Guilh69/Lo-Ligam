@@ -7,7 +7,7 @@ export default {
 	titol: 'Los demonstratius',
 	fr: 'Les démonstratifs',
 	resumit: 'Aqueste, aquel, aquò : montrer ce qui est près ou plus loin, et désigner une chose sans la nommer.',
-	validada: false,
+	validada: true,
 	colors: { pres: 'oliva', luenh: 'pruna', neutre: 'blau' },
 	ecrans: [
 		{

@@ -8,7 +8,7 @@ export default {
 	titol: 'La vocala que càmbia',
 	fr: 'Quand la voyelle change',
 	resumit: 'Demòri mais demoram, lèvi mais levam : la voyelle suit la syllabe forte.',
-	validada: false,
+	validada: true,
 	colors: { ton: 'pruna', fin: 'oliva' },
 	ecrans: [
 		{

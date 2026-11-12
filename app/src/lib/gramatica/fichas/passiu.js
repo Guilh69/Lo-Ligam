@@ -7,7 +7,7 @@ export default {
 	titol: 'La votz passiva',
 	fr: 'La voix passive',
 	resumit: 'Lo pan es fach pel fornièr ; et plus souvent, une tournure avec se : aquí se vend de pan.',
-	validada: false,
+	validada: true,
 	colors: { passiu: 'pruna', se: 'blau', per: 'oliva' },
 	ecrans: [
 		{

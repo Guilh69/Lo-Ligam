@@ -7,7 +7,7 @@ export default {
 	titol: 'Las conjoncions',
 	fr: 'Les conjonctions',
 	resumit: 'E, mas, o, ni pour relier ; puèi, perque, quand pour enchaîner.',
-	validada: false,
+	validada: true,
 	colors: { e: 'pruna', mas: 'oliva', o: 'blau' },
 	ecrans: [
 		{

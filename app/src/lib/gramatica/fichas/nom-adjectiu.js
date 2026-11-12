@@ -7,7 +7,7 @@ export default {
 	titol: 'Lo nom e l’adjectiu',
 	fr: 'Le nom et l’adjectif',
 	resumit: 'Le féminin en -a, le pluriel en -s, et l’adjectif qui s’accorde.',
-	validada: false,
+	validada: true,
 	colors: { f: 'pruna', pl: 'oliva', m: 'blau' },
 	ecrans: [
 		{

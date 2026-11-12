@@ -7,7 +7,7 @@ export default {
 	titol: 'Los vèrbs pronominals',
 	fr: 'Les verbes pronominaux',
 	resumit: 'Me lèvi, te lèvas, se lèva : le petit pronom qui répète la personne.',
-	validada: false,
+	validada: true,
 	colors: { p: 'pruna', f: 'oliva' },
 	ecrans: [
 		{

@@ -7,7 +7,7 @@ export default {
 	titol: 'Lo futur',
 	fr: 'Le futur',
 	resumit: 'L’infinitif entier, plus ai, às, à, em, etz, àn : cantarai, partiràn. Et ce qui est sans doute vrai : seràn tres oras.',
-	validada: false,
+	validada: true,
 	colors: { fut: 'oliva', irr: 'pruna' },
 	ecrans: [
 		{

@@ -7,7 +7,7 @@ export default {
 	titol: 'L’article definit',
 	fr: 'L’article défini',
 	resumit: 'Lo, la, los, las ; l’ devant une voyelle ; al, del, als, dels.',
-	validada: false,
+	validada: true,
 	colors: { m: 'blau', f: 'pruna', c: 'oliva' },
 	ecrans: [
 		{

@@ -7,7 +7,7 @@ export default {
 	titol: 'Los tempses compausats',
 	fr: 'Le passé composé et les temps composés',
 	resumit: 'Aver ou èsser, puis le participe : ai manjat, soi anat, soi estat.',
-	validada: false,
+	validada: true,
 	colors: { aver: 'oliva', esser: 'pruna', part: 'blau' },
 	ecrans: [
 		{

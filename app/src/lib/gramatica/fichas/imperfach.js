@@ -7,7 +7,7 @@ export default {
 	titol: 'L’imperfach',
 	fr: 'L’imparfait',
 	resumit: 'Le passé qui dure : le décor, les habitudes. Cantavi, finissiái, èri.',
-	validada: false,
+	validada: true,
 	colors: { ar: 'pruna', autres: 'oliva', esser: 'blau' },
 	ecrans: [
 		{

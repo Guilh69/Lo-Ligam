@@ -7,7 +7,7 @@ export default {
 	titol: 'Los pronoms personals',
 	fr: 'Les pronoms personnels',
 	resumit: 'Ieu, tu, el, ela… qu’on dit rarement ; me, te, se devant le verbe ; vos pour vouvoyer.',
-	validada: false,
+	validada: true,
 	colors: { fort: 'pruna', feble: 'oliva', vos: 'blau' },
 	ecrans: [
 		{

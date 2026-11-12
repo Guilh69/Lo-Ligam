@@ -7,7 +7,7 @@ export default {
 	titol: 'La condicion',
 	fr: 'Exprimer une condition',
 	resumit: 'Se plòu, demòri ; s’aviái de temps, legiriái. Et a condicion que, suivi du subjonctif.',
-	validada: false,
+	validada: true,
 	colors: { real: 'oliva', irreal: 'pruna', subj: 'blau' },
 	ecrans: [
 		{

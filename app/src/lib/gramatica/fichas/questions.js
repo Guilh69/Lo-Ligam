@@ -7,7 +7,7 @@ export default {
 	titol: 'Las questions',
 	fr: 'Poser une question',
 	resumit: 'Qui, qué, ont, cossí, quant, quina : les mots pour demander ; que et ont pour relier.',
-	validada: false,
+	validada: true,
 	colors: { qui: 'pruna', que: 'oliva', ont: 'blau' },
 	ecrans: [
 		{

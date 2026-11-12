@@ -7,7 +7,7 @@ export default {
 	titol: 'Lo condicional',
 	fr: 'Le conditionnel',
 	resumit: 'Volriái, poiriás : demander poliment ; l’infinitif plus -iái, -iás, -iá.',
-	validada: false,
+	validada: true,
 	colors: { c: 'pruna', p: 'oliva' },
 	ecrans: [
 		{

@@ -7,7 +7,7 @@ export default {
 	titol: 'Lo subjonctiu',
 	fr: 'Le subjonctif',
 	resumit: 'Ce qui n’est pas encore réel : vòli que vengas, cal que partisca. En -e pour les verbes en -ar, en -a pour les autres.',
-	validada: false,
+	validada: true,
 	colors: { ar: 'pruna', autres: 'oliva', irr: 'blau' },
 	ecrans: [
 		{

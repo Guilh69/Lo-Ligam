@@ -8,7 +8,7 @@ export default {
 	titol: 'Los vèrbes irregulars',
 	fr: 'Les verbes irréguliers',
 	resumit: 'Anar, far, dire, veire, poder, voler, saber, venir, prene, beure : leurs formes au présent, et un truc pour nosautres.',
-	validada: false,
+	validada: true,
 	colors: { mov: 'pruna', dire: 'oliva', voler: 'blau' },
 	ecrans: [
 		{

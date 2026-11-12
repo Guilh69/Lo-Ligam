@@ -8,7 +8,7 @@ export default {
 	titol: 'Comparar',
 	fr: 'Comparer : plus, moins, le plus',
 	resumit: 'Mai… que, mens… que, tan… coma ; lo mai, plan ; melhor, pièger, mendre.',
-	validada: false,
+	validada: true,
 	colors: { mai: 'oliva', mens: 'pruna', tan: 'blau' },
 	ecrans: [
 		{

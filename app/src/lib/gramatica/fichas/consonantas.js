@@ -14,7 +14,7 @@ export default {
 	titol: 'Las consonantas',
 	fr: 'Les consonnes',
 	resumit: 'v qui sonne « b », j et g « dj », ch « tch », s et z, lh, nh, r roulé, tz, cc, qu.',
-	validada: false,
+	validada: true,
 	colors: { b: 'pruna', s: 'oliva', l: 'blau' },
 	ecrans: [
 		{

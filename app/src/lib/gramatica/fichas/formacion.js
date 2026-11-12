@@ -7,7 +7,7 @@ export default {
 	titol: 'La formacion dels mots',
 	fr: 'Comment se forment les mots',
 	resumit: 'Un suffixe change le sens : ostalet, ostalàs, cantaire, fornièr.',
-	validada: false,
+	validada: true,
 	colors: { dim: 'oliva', aug: 'pruna', mestier: 'blau' },
 	ecrans: [
 		{

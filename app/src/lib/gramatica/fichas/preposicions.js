@@ -7,7 +7,7 @@ export default {
 	titol: 'Las preposicions',
 	fr: 'Les prépositions',
 	resumit: 'Les petits mots qui relient : a, de, dins, amb, per, et leurs formes al et del.',
-	validada: false,
+	validada: true,
 	colors: { a: 'pruna', de: 'oliva', dins: 'blau', amb: 'pruna', per: 'oliva' },
 	ecrans: [
 		{

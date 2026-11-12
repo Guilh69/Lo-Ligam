@@ -7,7 +7,7 @@ export default {
 	titol: 'Los possessius',
 	fr: 'Les possessifs',
 	resumit: 'Mon, ma, mos, mas ; ton, ta ; son, sa ; nòstre, vòstre, lor.',
-	validada: false,
+	validada: true,
 	colors: { ieu: 'pruna', tu: 'oliva', el: 'blau' },
 	ecrans: [
 		{

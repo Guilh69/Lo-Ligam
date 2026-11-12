@@ -7,7 +7,7 @@ export default {
 	titol: 'La negacion',
 	fr: 'La négation',
 	resumit: 'Non devant le verbe, pas après ; et les autres mots qui disent non.',
-	validada: false,
+	validada: true,
 	colors: { non: 'pruna', pas: 'oliva', autre: 'blau' },
 	ecrans: [
 		{

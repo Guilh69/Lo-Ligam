@@ -7,7 +7,7 @@ export default {
 	titol: 'Los nombres',
 	fr: 'Les nombres',
 	resumit: 'Compter de zéro à cent, les dizaines, et dire « premier », « deuxième ».',
-	validada: false,
+	validada: true,
 	colors: { u: 'pruna', d: 'oliva', o: 'blau' },
 	ecrans: [
 		{

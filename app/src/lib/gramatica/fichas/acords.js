@@ -7,7 +7,7 @@ export default {
 	titol: 'Los acòrds',
 	fr: 'Les accords',
 	resumit: 'Tu e ieu parlam ; Pèire e Maria son arribats ; Arriban los amics.',
-	validada: false,
+	validada: true,
 	colors: { sg: 'oliva', pl: 'pruna' },
 	ecrans: [
 		{

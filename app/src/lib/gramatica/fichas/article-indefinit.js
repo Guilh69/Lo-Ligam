@@ -7,7 +7,7 @@ export default {
 	titol: 'L’article indefinit',
 	fr: 'L’article indéfini',
 	resumit: 'Un, una ; de pour « des », « du », « de la » ; d’ devant une voyelle.',
-	validada: false,
+	validada: true,
 	colors: { m: 'blau', f: 'pruna', de: 'oliva' },
 	ecrans: [
 		{

@@ -8,7 +8,7 @@ export default {
 	titol: 'Los indefinits',
 	fr: 'Les indéfinis',
 	resumit: 'Quicòm, res, tot, cada ; un pauc, fòrça, tròp ; et les façons de dire « on ».',
-	validada: false,
+	validada: true,
 	colors: { q: 'pruna', n: 'oliva', o: 'blau' },
 	ecrans: [
 		{

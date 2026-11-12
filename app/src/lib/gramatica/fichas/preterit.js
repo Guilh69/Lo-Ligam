@@ -7,7 +7,7 @@ export default {
 	titol: 'Lo preterit',
 	fr: 'Le passé simple',
 	resumit: 'Raconter ce qui arrive, du début à la fin : cantèri, prenguèri, foguèt.',
-	validada: false,
+	validada: true,
 	colors: { ar: 'pruna', autres: 'oliva', irr: 'blau' },
 	ecrans: [
 		{

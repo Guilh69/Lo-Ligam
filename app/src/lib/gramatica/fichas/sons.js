@@ -15,7 +15,7 @@ export default {
 	titol: 'La sillaba fòrta e l’accent',
 	fr: 'La syllabe forte et l’accent écrit',
 	resumit: 'La fin du mot dit où la voix appuie ; l’accent écrit signale les exceptions.',
-	validada: false,
+	validada: true,
 	colors: { avant: 'pruna', fin: 'oliva', accent: 'blau' },
 	ecrans: [
 		{

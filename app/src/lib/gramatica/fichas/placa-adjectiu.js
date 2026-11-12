@@ -8,7 +8,7 @@ export default {
 	titol: 'La plaça de l’adjectiu',
 	fr: 'La place de l’adjectif',
 	resumit: 'Après le nom d’habitude, même pour la taille et l’âge ; devant, le sens change.',
-	validada: false,
+	validada: true,
 	colors: { apres: 'oliva', davant: 'pruna' },
 	ecrans: [
 		{

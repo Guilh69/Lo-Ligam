@@ -9,7 +9,7 @@ export default {
 	titol: 'L’infinitiu',
 	fr: 'L’infinitif',
 	resumit: 'Les trois groupes de verbes, le radical et la terminaison, les marques de personne.',
-	validada: false,
+	validada: true,
 	// les trois groupes du livre (p. 63) : -ar ; -ir, avec ou sans -iss- ; -re et -er
 	colors: { ar: 'pruna', ir: 'oliva', re: 'blau', er: 'blau' },
 	ecrans: [

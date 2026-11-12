@@ -8,7 +8,7 @@ export default {
 	titol: 'Lo present',
 	fr: 'Le présent',
 	resumit: 'Ce qui se passe maintenant ou d’habitude ; èsser, aver, et un verbe en -ar.',
-	validada: false,
+	validada: true,
 	colors: { esser: 'pruna', aver: 'oliva', ar: 'blau' },
 	ecrans: [
 		{
