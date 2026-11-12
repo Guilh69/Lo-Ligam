@@ -763,11 +763,11 @@ export function lancarAcuelh(racina, opcions = {}) {
 
 	/* ================= Lo defilament pilòta tot ================= */
 	const head = racina.querySelector('.capçal');
-	const trobador = racina.querySelector('.trobador'), fenestra = racina.querySelector('.trobador-fenestra'), fenestraImg = fenestra?.querySelector('img'); // (absents pendant l'essai « ?fenestra= », 12-11)
+	const trobador = racina.querySelector('.trobador'), fenestra = racina.querySelector('.trobador-fenestra'), fenestraImg = fenestra.querySelector('img');
 	const vers = racina.querySelector('.trobador-vers');
 	const indiciFenestra = racina.querySelector('.trobador-indici');
 	let fenestraPossada = false; // la poussée automatique n'a lieu qu'une fois par visite
-	if (calm) vers?.classList.add('vist');
+	if (calm) { vers.classList.add('vist'); trobador.classList.add('dobèrta'); }
 	const manifest = racina.querySelector('[data-emplenar]');
 	const bandel = racina.querySelector('.bandel'), bandelPista = racina.querySelector('.bandel-pista');
 	let bandelX = 0, bandelSkew = 0, ultimY = scrollY;
@@ -860,8 +860,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// causida de Romain) : quatre cartas que se revelan coma lo rèsta (data-revela)
 
 		// Trobador : la fenèstra s'obrís fins a tota la pagina
-		const rt = fenestraImg ? trobador.getBoundingClientRect() : null;
-		if (rt && !calm && rt.top < H && rt.bottom > 0) {
+		const rt = trobador.getBoundingClientRect();
+		if (!calm && rt.top < H && rt.bottom > 0) {
 			const k = easeIO(clamp(-rt.top / (rt.height - H) * 1.25));
 			// téléphone : fenêtre de départ plus large (comme acuelh.css), 2026-10-16
 			const tel = W <= 600;
@@ -884,6 +884,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 			fenestraImg.style.transform = `scale(${lerp(1.3, 1, k)})`;
 			// Lo vèrs apareis sonque quand la fenèstra es pro larga per l'aculhir
 			vers.classList.toggle('vist', k > 0.62);
+			// et le voile léger qui le rend lisible n'arrive qu'avec lui (avant, la photo restait claire : 12-11)
+			trobador.classList.toggle('dobèrta', k > 0.62);
 		}
 	}
 

@@ -203,11 +203,12 @@ html[lang='ar'] .acuelh .bi > .oc { position: absolute; top: 0.06em; inset-inlin
 	html[lang='ar'] .acuelh.autra .eros.amb-carta .eros-titol { font-size: min(var(--eros-fs), 100cqi / 2.4); line-height: 0.95; }
 	html[lang='ar'] .acuelh .eros.amb-carta .carta-estelas { height: min(76svh, 48vw); translate: 2% -7%; }
 }
-/* Grand écran (Romain, 2026-11-12 : les deux actions de l'ouverture « collées » au bas de l'écran et
-   « mal centrées ») : l'ouverture tient dans l'écran, ses deux actions se posent tout en bas, au
-   milieu, à distance fixe du bord, et le fil qui invite à descendre part d'elles jusqu'au bord. La
-   taille du titre se règle sur la hauteur de l'écran pour que rien ne pousse les boutons dessous
-   (mesuré de 1280 × 620 à 1920 × 1080). Téléphone et tablette (≤ 1100 px) : inchangés. */
+/* Grand écran (Romain, 2026-11-12 : les deux actions de l'ouverture « collées » au bas de l'écran) :
+   l'ouverture tient dans l'écran, ses deux actions se posent tout en bas, à distance fixe du bord,
+   à gauche sous le texte (Romain, le même jour : au milieu, non, « ça allait bien sur la gauche »),
+   et le fil qui invite à descendre part d'elles jusqu'au bord. La taille du titre se règle sur la
+   hauteur de l'écran pour que rien ne pousse les boutons dessous (mesuré de 1280 × 620 à
+   1920 × 1080). Téléphone et tablette (≤ 1100 px) : inchangés. */
 @media (min-width: 1101px) {
 	.acuelh .eros.amb-carta {
 		padding-top: clamp(5.5rem, 11.5vh, 8rem); padding-bottom: 0;
@@ -216,8 +217,8 @@ html[lang='ar'] .acuelh .bi > .oc { position: absolute; top: 0.06em; inset-inlin
 	}
 	.acuelh .eros.amb-carta .eros-pe { display: contents; }
 	.acuelh .eros.amb-carta .eros-pe > .esvani:first-child { grid-column: 1; grid-row: 4; margin-top: clamp(1.6rem, 4vh, 2.6rem); }
-	.acuelh .eros.amb-carta .eros-accions { grid-column: 1 / -1; grid-row: 5; justify-self: center; justify-content: center; flex-wrap: nowrap; margin-top: clamp(1.25rem, 3.4vh, 2.25rem); }
-	.acuelh .eros.amb-carta .davalar { grid-column: 1 / -1; grid-row: 6; justify-self: center; margin-top: 0.75rem; }
+	.acuelh .eros.amb-carta .eros-accions { grid-column: 1; grid-row: 5; justify-self: start; justify-content: flex-start; flex-wrap: nowrap; margin-top: clamp(1.25rem, 3.4vh, 2.25rem); }
+	.acuelh .eros.amb-carta .davalar { grid-column: 1; grid-row: 6; justify-self: start; margin-top: 0.75rem; }
 	.acuelh .eros.amb-carta .davalar span { height: clamp(1.1rem, 3.2vh, 2rem); }
 	/* la carte se centre entre la barre et les deux actions (elle était relevée de 7 %) */
 	.acuelh .eros.amb-carta .carta-estelas { translate: -3% -1%; }
@@ -282,7 +283,24 @@ html[lang='ar'] .acuelh .bi > .oc { position: absolute; top: 0.06em; inset-inlin
 .acuelh .davalar span { width: 1px; height: 56px; background: var(--crema-3); position: relative; overflow: hidden; }
 .acuelh .davalar span::after { content: ''; position: absolute; left: 0; top: -100%; width: 100%; height: 100%; background: var(--aur); animation: acuelh-davala 2s var(--ease-io) infinite; }
 @keyframes acuelh-davala { to { top: 100%; } }
-.acuelh .indici { font-size: 0.72rem; color: var(--crema-2); letter-spacing: 0.04em; margin-top: 0.9rem; }
+/* « Passa la mirga suls tres mots » (Romain, 2026-11-12 : pas sous le paragraphe) : une note furtive sous le
+   titre, qui paraît une fois par visite si l'on s'attarde en haut de l'accueil sans avoir touché aux trois
+   mots, puis s'efface (+page.svelte, indiciVist). Toujours là en mode édition (.fix), pour qu'on la modifie. */
+.acuelh .eros-entitol { position: relative; }
+.acuelh .indici {
+	position: absolute; inset-inline-start: 0; top: 100%; margin: 0;
+	display: flex; align-items: center; gap: 0.7rem; white-space: nowrap;
+	font-size: 0.78rem; line-height: 1.2; color: var(--crema-2); letter-spacing: 0.04em;
+	opacity: 0; translate: -0.6rem 0; pointer-events: none;
+	transition: opacity 0.9s var(--ease), translate 0.9s var(--ease);
+}
+.acuelh .indici::before { content: ''; flex: none; width: 1.6rem; height: 1px; background: var(--aur); transform-origin: left; transform: scaleX(0); transition: transform 0.9s var(--ease) 0.15s; }
+.acuelh .indici.vist, .acuelh .indici.fix { opacity: 1; translate: 0 0; }
+.acuelh .indici.vist::before, .acuelh .indici.fix::before { transform: scaleX(1); }
+.acuelh .indici.fix { pointer-events: auto; }
+@media (prefers-reduced-motion: reduce) {
+	.acuelh .indici { translate: none; }
+}
 @media (hover: none) {
 	.acuelh .indici { display: none; }
 }
@@ -483,10 +501,18 @@ html.cursor-viu .acuelh .bandel.glissa, .acuelh .bandel.glissa { cursor: grabbin
 .acuelh .trobador-pin { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
 .acuelh .trobador-fenestra { position: absolute; inset: 0; clip-path: inset(22% 32% round 28px); will-change: clip-path; }
 .acuelh .trobador-fenestra img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 56%; transform-origin: 50% 56%; transform: scale(1.3); will-change: transform; }
-.acuelh .trobador-fenestra::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(18, 9, 6, 0.5), rgba(18, 9, 6, 0.15) 75%), linear-gradient(rgba(18, 9, 6, 0.1), rgba(40, 14, 6, 0.45)); }
+/* Le voile (Romain, 2026-11-12 : « ce halo un peu fort ») : il ternissait toute la photo, plus sombre au
+   centre, dès la fenêtre fermée. Désormais la photo garde ses couleurs pendant l'ouverture ; un voile léger,
+   large et sans bord, n'arrive qu'avec le vers (classe « dobèrta », motor.js), juste assez pour le lire. */
+.acuelh .trobador-fenestra::after {
+	content: ''; position: absolute; inset: 0; pointer-events: none;
+	background: radial-gradient(ellipse 75% 55% at 50% 50%, rgba(14, 8, 5, 0.34), rgba(14, 8, 5, 0.12) 65%, rgba(14, 8, 5, 0.04));
+	opacity: 0; transition: opacity 1.4s var(--ease);
+}
+.acuelh .trobador.dobèrta .trobador-fenestra::after { opacity: 1; }
 .acuelh .trobador-vers { position: relative; z-index: 2; text-align: center; padding: 0 var(--marge); }
 /* Lo vèrs ten dins la fenèstra de pèira de la fòto */
-.acuelh .trobador-vers p { max-width: 12.5em; margin-inline: auto; font-family: var(--votz); font-style: italic; font-size: clamp(1.9rem, 4.2vw, 4rem); line-height: 1.08; color: #fff; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
+.acuelh .trobador-vers p { max-width: 12.5em; margin-inline: auto; font-family: var(--votz); font-style: italic; font-size: clamp(1.9rem, 4.2vw, 4rem); line-height: 1.08; color: #fff; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.28), 0 2px 18px rgba(0, 0, 0, 0.22); }
 .acuelh .trobador-vers cite { display: block; margin-top: 1.8rem; font-style: normal; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: #ffd98a; }
 /* Repère de défilement sous la fenêtre (Romain, 2026-10-16 : « rendre plus
    intuitif le défilement ») : la même ligne que sous l'ouverture ; elle

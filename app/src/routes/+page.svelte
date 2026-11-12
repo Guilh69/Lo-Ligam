@@ -39,8 +39,6 @@
 	// modifiable sur place ; sa destination, elle, est fixée ici.
 	import { VISIO } from '$lib/data/planSite.js';
 	import MiegTres from '$lib/acuelh/MiegTres.svelte';
-	import TrobadorEssai from '$lib/acuelh/TrobadorEssai.svelte';
-	import { page } from '$app/state';
 	import '$lib/acuelh/acuelh.css';
 
 	let { data } = $props();
@@ -76,13 +74,27 @@
 	});
 	const LIB_COMPLET = { oc: 'cors complèt', fr: 'cours complet', es: 'clase completa', en: 'fully booked', ca: 'classe completa', ar: 'اكتمل العدد' };
 
-	// Essai du 2026-11-12 (/ensag/fenestra, chantier 37) : « ?fenestra=pagina | peira » montre une autre
-	// façon de poser la photo et le vers de Max Rouquette ; sans ce paramètre, rien ne change. À retirer après le choix.
-	const FENESTRAS = ['pagina', 'peira'];
-	let fenestraEssai = $derived(FENESTRAS.includes(page.url.searchParams.get('fenestra')) ? page.url.searchParams.get('fenestra') : '');
-
 	let racina;
 	let motor = $state.raw(null);
+	// la note « trois mots » : une fois par visite, après 7 s en haut de l'accueil sans avoir survolé le titre, pendant 6 s
+	let indiciVist = $state(false);
+	const CLAU_INDICI = 'lo-ligam-indici-tres-mots';
+	function noteIndici() {
+		let dejà = false;
+		try { dejà = sessionStorage.getItem(CLAU_INDICI) === '1'; } catch {}
+		if (dejà || !matchMedia('(hover: hover)').matches) return () => {};
+		const titol = racina.querySelector('.eros-titol');
+		let fin = 0;
+		const toca = () => { clearTimeout(apareis); indiciVist = false; };
+		titol?.addEventListener('pointerenter', toca, { once: true });
+		const apareis = setTimeout(() => {
+			if (scrollY > innerHeight * 0.3) return;
+			indiciVist = true;
+			try { sessionStorage.setItem(CLAU_INDICI, '1'); } catch {}
+			fin = setTimeout(() => (indiciVist = false), 6000);
+		}, 7000);
+		return () => { clearTimeout(apareis); clearTimeout(fin); titol?.removeEventListener('pointerenter', toca); };
+	}
 
 
 
@@ -94,12 +106,14 @@
 	onMount(() => {
 		ambianca.fonsPresent = true;
 		let quitada = false;
+		const lèvaIndici = noteIndici();
 		import('$lib/acuelh/motor.js').then(({ lancarAcuelh }) => {
 			if (quitada) return;
 			motor = lancarAcuelh(racina, { clar: ambianca.clar, dalt: ambianca.dalt, fons: ambianca.fons, leugier: ambianca.leugier });
 		});
 		return () => {
 			quitada = true;
+			lèvaIndici();
 			ambianca.fonsPresent = false;
 			motor?.destruir();
 			motor = null;
@@ -230,13 +244,15 @@
 					<span class="linha masc" hidden={amagat('acuelh.eros.titol.2')}><span class="masc-in" style="--i: 2" use:editar={'acuelh.eros.titol.2'}>{@render letras('acuelh.eros.titol.2')}</span></span>
 					<span class="linha masc" hidden={amagat('acuelh.eros.titol.3')}><span class="masc-in" style="--i: 3" use:editar={'acuelh.eros.titol.3'}>{@render letras('acuelh.eros.titol.3')}</span></span>
 				</h1>
+				<!-- « Passa la mirga suls tres mots » : plus sous le paragraphe ; une note furtive sous le titre, si l'on
+				     s'attarde sans y avoir touché (Romain, 2026-11-12). Toujours visible en mode édition. -->
+				<p class="indici" class:vist={indiciVist} class:fix={edicion.actiu} aria-hidden="true" hidden={amagat('acuelh.eros.indici')} use:editar={'acuelh.eros.indici'}>
+					{@render bi('acuelh.eros.indici')}
+				</p>
 			</div>
 				<div class="eros-pe">
 					<div class="esvani" style="--i: 5">
 						<p class="eros-sub" hidden={amagat('acuelh.eros.frasa')} use:editar={'acuelh.eros.frasa'}>{@render bi('acuelh.eros.frasa')}</p>
-						<p class="indici" aria-hidden="true" hidden={amagat('acuelh.eros.indici')} use:editar={'acuelh.eros.indici'}>
-							{@render bi('acuelh.eros.indici')}
-						</p>
 					</div>
 					<div class="eros-accions esvani" style="--i: 6">
 						{#if !amagat('acuelh.eros.carta')}
@@ -326,9 +342,6 @@
 		<!-- IV. Le milieu : les trois mondes (Se parla · S'apren · Amassa) -->
 		<MiegTres />
 		<!-- VII. Le troubadour (Max Rouquette), qui clôt « Amassa » -->
-		{#if fenestraEssai}
-			<TrobadorEssai forma={fenestraEssai} />
-		{:else}
 		<section class="trobador" id="trobador">
 			<div class="trobador-pin">
 				<div class="trobador-fenestra" hidden={amagat('acuelh.trobador.fenestra')} use:editar={'acuelh.trobador.fenestra'}>
@@ -346,7 +359,6 @@
 				<div class="trobador-indici" aria-hidden="true"><span></span></div>
 			</div>
 		</section>
-		{/if}
 
 		<!-- VIII. L'appel : les cours, en fin de parcours -->
 		<section class="crida centrat" id="crida" data-revela>
