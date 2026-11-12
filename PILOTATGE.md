@@ -1,5 +1,7 @@
 # Pilotatge — tableau de bord de Lo Ligam
 
+> **Une seule porte (12-11, cahier §11).** Romain ne lit plus ce fichier : tout ce qui l'attend passe par « Per tu » (`/admin`), cinq cartes de décision au plus par semaine, choisies par Claude. Ce fichier, le suivi, le Laboratòri et les fichiers de doutes sont des archives pour les IA. **À chaque séance : relever ses réponses (`node scripts/remarcas.mjs`, `node scripts/triar.mjs`), les appliquer, les noter au §11, et les marquer appliquées.**
+>
 > **Rituel.** Toute discussion l'OUVRE en début de séance et le MET À JOUR en fin de séance : une ligne, pas un paragraphe. Les décisions vont au §11 du cahier des charges ; ici, seulement l'état et la prochaine action.
 >
 > **Rangé le 2026-10-24** par la discussion mère (une ligne par chantier). L'ancienne version, avec tout l'historique détaillé des chantiers jusqu'au 23-10, est dans `revisions/PILOTATGE-archiu-2026-10-24.md`. Derniers points d'étape : `revisions/2026-10-22-analisi-profonda.md` (relecture profonde du 22-10) et `revisions/BILAN-2026-10-08.md`.
@@ -15,8 +17,8 @@
 **Maintenant**
 1. **Proton Drive et Git** : ✅ réglé pour de bon le 24-10. Le projet est sorti de Documents, dans `C:\Users\perie\Depots\Lo_Ligam` (dossier `.git` normal, sauvegarde GitHub) ; les fichiers lourds hors Git sont dans `Documents › 6_Projectes › Lo_Ligam_hors-git` (sauvegarde Proton), rattachés au projet par des raccourcis. Les discussions en un clic remarchent. **Pour toi** : ouvrir désormais les sessions de Lo Ligam depuis le dossier `C:\Users\perie\Depots\Lo_Ligam` ; l'ancien dossier `Documents › 6_Projectes › Lo_Ligam` est dans la corbeille de Windows depuis le 24-10 (la vider quand tu veux ; le dossier vide qui reste disparaît après un redémarrage de l'application, ou se supprime à la main) ; vers le 31-10, si tout va bien, jeter `C:\Users\perie\Lo_Ligam_quarantena` (ancienne quarantaine et ancien carnet). **Sur l'autre ordinateur, avec Claude** : cloner dans `Depots`, puis lancer le script des raccourcis.
 2. **L'édition sur place, séance 1 faite dans la nuit du 24-10** (`revisions/2026-10-24-edicion-sus-plaça.md`, cahier §11) : SQL collé dans Supabase par Romain le 24-10 ✅, l'éditeur marche (« ok ça marche ») ; connecté sur loligam.eu, touche le bouton « Editar » en bas à droite de l'accueil, change un mot, « Publicar », vérifie en navigation privée que le public le voit ; essaie aussi une image, un lien, « + Apondre », ↑ ↓, Suprimir, sur téléphone et sur ordinateur. Ensuite : séance 2 (historique, aperçu téléphone), 3 (apparence), 4 (mouvement, autres pages, Atelier).
-3. **Répondre au bloc 4 de `DIRECCION.md`** (l'accueil, vue d'ensemble) : barreau 3, après l'éditeur.
-4. **Une question de couleur** : le rouge du logo aussi sur les boutons de zoom de la carte et sur « Écouter la voix la plus proche » ? (règle B, 23-10)
+3. ~~Répondre au bloc 4 de `DIRECCION.md`~~ : **clos le 06-11** (carte « clau-direccion » : l'accueil est fait avec tes corrections du 03-11).
+4. ~~Une question de couleur~~ : **oui le 06-11** (carte « rotge-carta ») : le rouge du logo aussi sur les boutons de zoom de la carte et sur « Écouter la voix la plus proche ». **À appliquer par Claude.**
 5. **Mon ligam amb l’occitan, ex-Mon istòria (24-10)** : ① recoller `supabase/supabase-pagina-elements.sql` dans Supabase (ajoute les textes de la page, n'écrase rien) ; ② ~~Scaleway et clé dans le conteneur~~ **fait le 25-10** (message d'essai parti) ; ③ relire ton récit, affiché tel que dicté (« Editar »), et écrire l'occitan, puis publier ; ④ confirmer la conservation des messages un an au plus.
 6. **Diffusion, cercle 1 (06-11, chantier 30)** : envoyer l'invitation aux testeurs (`diffusion/messages.md` §1) ; rendre le dépôt GitHub privé (ci-dessous, « Avant le lancement ») ; enregistrer ta voix pour le module d'accueil et l'unité 1.
 7. **Lo talhièr, lot 1 (06-11, chantier 7)** : connecté avec ton compte, épingle une note sur une page (« Comentar » dans la barre à droite, touche l'endroit, écris ou dicte, « Mandar »), puis retrouve-la dans « Per tu » (`/admin`). L'IA répond à sa séance suivante, pas en direct. **Lot 4 en ligne (06-11, nuit)** : « La pila » en tête de Per tu, une carte à la fois (→ Bon, ← Corregir, ↑ Demandar, ↓ Mai tard), et « Validar » dans la barre des pages. Lots 2, 3, 5 : Claude les code dans cet ordre (`revisions/2026-11-06-talhier.md` §13).
@@ -53,15 +55,15 @@ Une seule marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refo
 
 | # | Chantier | État | Prochaine action | Qui |
 |---|---|---|---|---|
-| 2 | **Direction du site** (`DIRECCION.md`) | blocs 1 à 3 répondus (22-10) | bloc 4 | Romain |
-| 3 | Module 0 | bloqué depuis le 18-09 | brouillon d'une page | Romain |
+| 2 | **Direction du site** (`DIRECCION.md`) | ✅ clos le 06-11 (carte de Romain) : l'accueil est fait, les blocs 5 à 8 avancent dans leurs chantiers | — | — |
+| 3 | Module 0 | ✅ clos le 06-11 (carte de Romain) : en ligne avec tout l'A1 ; sa relecture et sa voix sont suivies dans les chantiers 4 et 5 | — | — |
 | 4 | Audio de l'unité 1 (sa voix) | 1 enregistrement sur 17 | enregistrer le soir du 1.1 | Romain |
-| 5 | Validation occitane des modules 1.1 à 1.4 | bloqué | une séance dicodòc | Romain |
+| 5 | Validation occitane des modules 1.1 à 1.4 | la séance dicodòc est close le 06-11 (carte de Romain) : remplacée par les questions une à une et la pile de validation | relectures dans la pile de Per tu | Romain |
 | 6 | /aprene en « Camin » (sommaire du cursus) | ✅ fait (02-11) : « Lo camin », plateau de jeu choisi par Romain | occitan nouveau validé par Romain (02-11 : clavada, facha, « Acaba la mission A1 per lo dobrir », « Lo nivèl A2 es en preparacion », note « Sens compte, ta progression demòra dins aqueste navigator… ») ; relecture finale de Joan appliquée (02-11), page jugée annonçable ; page en arabe réparée (chemin et ponctuation de droite à gauche) et arabe relu par Aran (02-11), reste l'ami arabophone ; fiche Mistral dans `revisions/2026-11-02-parcors-passation.md` | Claude |
 | 7 | Transposition Racine² : A prepaus, Contacte, FAQ | à faire ; les liens du menu mènent à des pages vides (articles, forum, groupes, idées) ; istòria et contacte faits le 24-10 (chantier 23) | à ranger dans les barreaux 6 et 7 | Claude |
-| 8 | Photos « sang e aur » | bloqué | inventaire des photos et casting | Romain |
+| 8 | Photos « sang e aur » | ⏸ en pause depuis le 06-11 (carte de Romain) : ses photos illustrent déjà leçons, Cultura et Remira | le casting reviendra avec les scènes des unités | Romain |
 | 9 | design-stock et Proton Drive | règle « rien de plus de 1 Mo dans Git » en place (12-10) ; projet sorti de Documents, fichiers lourds dans `Lo_Ligam_hors-git` (24-10) | l'autre ordinateur (point 1 de la liste) | Romain + Claude |
-| 12 | Autoformation de Romain (`autoformation-parcours.md`) | carnet ouvert le 04-10, pages encore vides | page de l'étape 1 | Romain |
+| 12 | Autoformation de Romain (`autoformation-parcours.md`) | ⏸ en pause depuis le 06-11 (carte de Romain) : pages vides depuis le 04-10 | reviendra quand tu auras du temps pour toi | Romain |
 | 13 | **Carte /carta** (le gros du travail d'octobre) | remise en ordre en deux lots faite (23-10) ; langues de France, voix, lecture « Uèi », Ensenhament (970 lieux, 61 Calandretas), cercles (983), premiers pas en 11 étapes | validations du point 4 ; test iPhone ; plus tard la page qui vulgarise l'enquête OPLO, « Lo viatge » (voix), le mode d'export | Romain + Claude |
 | 13 bis | Fiches des communes | en ligne, la voix d'ici repliée en une ligne (23-10) | captures de Romain sur quelques communes | Romain |
 | 14 | Icônes pratiques | ✅ fait (12-10) | restes : carrousel de /mots flou au chargement | Claude |
@@ -125,8 +127,8 @@ Depuis le 12-10 : 211 changements, dont la moitié pour la carte, un tiers pour 
 
 ## 6. Les vraies questions ouvertes
 
-1. **Modèle économique** : limite gratuit / payant du parcours autonome ; logique solidaire (ouverte depuis le 31-07).
-2. **Combien d'unités A1 pour lancer ?**
+1. ~~**Modèle économique**~~ : **repoussé le 06-11** (carte de Romain) : au lancement, tout le parcours en ligne est gratuit ; l'argent vient des cours en visio et de la cagnotte. La limite gratuit / payant se décidera quand il y aura des utilisateurs.
+2. ~~**Combien d'unités A1 pour lancer ?**~~ : **tranché le 06-11** (carte de Romain) : lancement en février avec l'A1 seul, sans attendre l'A2.
 3. ~~**Statut juridique**~~ : tranché le 24-10, micro-entreprise (cahier §11).
 4. **Les 14 questions du §9** de l'état de l'art des parcours (répétition espacée, courriel hebdo…).
 5. **Casting** des personnages et autorisations écrites.
