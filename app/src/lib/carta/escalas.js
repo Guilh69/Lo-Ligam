@@ -48,13 +48,6 @@ export const zDès = (km, lat = LAT_REF) => zÈscala(cranSus(km), lat);
 // lo primièr cran de zoom ont la barra marca `km` : per anar en quauque lòc
 // (arribada, recadratge), pas per un sulhet
 export const zCran = (km, lat = LAT_REF) => Math.ceil(zDès(km, lat) / PAS_ZOOM - 1e-6) * PAS_ZOOM;
-// la valor que la barra aficha a un zoom
-export function kmBarra(z, lat = LAT_REF) {
-	const m = (ESCALA_PX * MERC * Math.cos((lat * Math.PI) / 180)) / 2 ** z;
-	const p = 10 ** (String(Math.floor(m)).length - 1),
-		d = m / p;
-	return (p * (CRANS.find((v) => d >= v) ?? 1)) / 1000;
-}
 
 // Los sulhets, en km de barra (« dès » : a partir d'aquela valor en s'aprochant)
 export const KM = {

@@ -2668,7 +2668,7 @@
 	.ficha .meta b {
 		color: var(--t-tinta);
 	}
-	.ficha .vital i {
+	.ficha .vital :global(i) {
 		display: inline-block;
 		width: 7px;
 		height: 7px;

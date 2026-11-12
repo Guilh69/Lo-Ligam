@@ -439,7 +439,6 @@ for (const l of Object.values(LENGAS)) {
 
 // Los prefixes de totas las lengas : un còdi sens prefix es occitan
 const PREFIXES = Object.values(LENGAS).map((l) => l.pref);
-export const lengaDeKod = (k) => Object.values(LENGAS).find((l) => k.startsWith(l.pref))?.kod ?? 'occitan';
 export const esOccitan = (k) => !PREFIXES.some((p) => k.startsWith(p));
 
 // Çò que la carta en estelas pren d'una lenga : sas vilas (nom dins la lenga,
