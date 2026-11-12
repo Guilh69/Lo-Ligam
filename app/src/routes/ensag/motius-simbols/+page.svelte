@@ -1,16 +1,19 @@
 <script>
-	// Essai du 12-11 (seconde piste) : des motifs-symboles qui s'assemblent au défilement.
-	// Romain a trouvé la carte des dialectes « bof » et voulait des motifs « un peu plus
-	// proches de ceux de Bourgogne mais qui représentent différents territoires et
-	// symboles occitans » : ici, une mosaïque d'aplats vifs, neuf tuiles rangées comme sur
-	// une petite carte (le nord en haut, la mer en bas à droite) ; chaque tuile est un
-	// territoire et dessine l'un de ses symboles. Au centre, la croix occitane.
-	// Les dessins sont faits pour Lo Ligam : ce qui est repris de languesdebourgogne.com,
-	// c'est seulement l'idée d'une mosaïque d'aplats qui glisse avec la page.
+	// Essai du 12-11 (seconde piste, refaite le soir : « fais mieux ») : des motifs-symboles
+	// qui se posent au défilement.
+	// Romain voulait des motifs « un peu plus proches de ceux de Bourgogne mais qui
+	// représentent différents territoires et symboles occitans ». Ici : neuf tuiles de
+	// papier découpé, rangées comme une petite carte (le nord en haut, la mer en bas à
+	// droite). Chaque tuile est un territoire ; son dessin est fait de formes simples
+	// (demi-disques, triangles, bandes) dans les couleurs franches de la palette, et il se
+	// construit pendant que la tuile se pose. À gauche (au-dessus sur téléphone), un cartel
+	// annonce le territoire qui arrive : le numéro, le nom, le symbole.
+	// Les dessins sont faits pour Lo Ligam : de languesdebourgogne.com ne reste que l'idée
+	// d'une mosaïque d'aplats qui suit la page.
 	//
 	// Comment ça marche : le JavaScript n'écrit qu'UN nombre (--p, l'avancement de 0 à 1)
 	// sur la scène ; tout le mouvement est du CSS qui lit ce nombre. Le nombre est amorti,
-	// et la boucle s'arrête dès que tout est posé.
+	// et la boucle s'arrête dès que tout est posé. Le cartel change neuf fois en tout.
 	//
 	// Version légère (charte, § 5quinquies) : bouton « Léger », « Fons leugièr » ou
 	// mouvement réduit demandé par l'appareil : aucun JavaScript de défilement, mosaïque
@@ -23,7 +26,7 @@
 	import Crotz from '$lib/components/Crotz.svelte';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 	import '$lib/styles/papier.css';
-	import { CARTE, TEINTES as T, texteSur } from '$lib/styles/palette.js';
+	import { CARTE, TEINTES as T } from '$lib/styles/palette.js';
 
 	const Q = page.url.searchParams;
 	let leger = $state(Q.get('leger') === '1');
@@ -31,78 +34,71 @@
 	const fige = Q.get('p') === null ? null : Math.min(1, Math.max(0, Number(Q.get('p')) || 0));
 
 	let vivant = $derived(!leger && !reduit && !ambianca.leugier);
-	let pour100 = $state(100);
 
-	// ---- les couleurs : un aplat par tuile, deux autres tons du même aplat pour le dessin ----
-	const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
-	const mel = (a, b, t) => {
-		const x = hex(a);
-		const y = hex(b);
-		return '#' + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, '0')).join('');
-	};
-	// m1 : le trait fort (blanc sur un fond sombre, encre sur un fond clair) ; m2 : le même aplat assombri ;
-	// m3 : le même aplat éclairci
-	const tons = (fond) => [texteSur(fond), mel(fond, '#000000', 0.26), mel(fond, '#ffffff', 0.4)];
+	const BLANC = '#ffffff';
+	const DUR = 0.3; // part de l'avancement que met une tuile à se poser
 
 	// ---- les neuf tuiles, dans l'ordre de lecture de la mosaïque (haut gauche → bas droite) ----
 	// d : d'où la tuile arrive, en largeurs de tuile (x, y) ; r : inclinaison de départ (degrés) ;
-	// ini et dur : où, dans l'avancement 0 → 1, la tuile commence et combien elle met ;
-	// sc : à quel point elle est plus petite au départ.
+	// ini : où, dans l'avancement 0 → 1, elle commence ; tinta : la couleur de son nom ;
+	// mot : le symbole en occitan ; glosa : ce que c'est.
 	const TUILES = [
-		{ id: 'lemosin', nom: 'Lemosin', simbol: 'porcelana', fond: CARTE.dialectes.lem, d: [-1.7, -1.5], r: -18, ini: 0.1 },
-		{ id: 'auvernhat', nom: 'Auvèrnha', simbol: 'volcan', fond: CARTE.dialectes.auv, d: [0.3, -2.1], r: 9, ini: 0.18 },
-		{ id: 'vivaroaupenc', nom: 'Vivarés', simbol: 'Pont d’Arc', fond: CARTE.dialectes.viv, d: [1.9, -1.4], r: 16, ini: 0.26 },
-		{ id: 'gascon', nom: 'Gasconha', simbol: 'pin', fond: CARTE.dialectes.gas, d: [-2.3, 0.3], r: -12, ini: 0.02 },
-		{ id: 'crotz', nom: 'Occitània', simbol: 'crotz', fond: T.brique, d: [0, 0], r: 90, ini: 0.66, sc: 0.7 },
-		{ id: 'provençal', nom: 'Provença', simbol: 'lavanda', fond: CARTE.dialectes.pro, d: [2.3, 0.4], r: 12, ini: 0.34, m: [T.prune, T.brique, T.orClair] },
-		{ id: 'aran', nom: 'Aran', simbol: 'Pirenèus', fond: T.brun, d: [-1.8, 1.7], r: 14, ini: 0.58 },
-		{ id: 'lengadocian', nom: 'Lengadòc', simbol: 'Pont del Gard', fond: CARTE.dialectes.lan, d: [-0.2, 2.2], r: -8, ini: 0.5 },
-		{ id: 'mar', nom: 'Mar', simbol: 'onda', fond: T.bleu, d: [1.8, 1.6], r: -15, ini: 0.42 }
-	].map((t, i) => {
-		const m = t.m ?? tons(t.fond);
-		return {
-			...t,
-			n: String(i + 1).padStart(2, '0'),
-			style:
-				`--fond:${t.fond};--m1:${m[0]};--m2:${m[1]};--m3:${m[2]};--dx:${t.d[0]};--dy:${t.d[1]};` +
-				`--r0:${t.r};--ini:${t.ini};--dur:0.32;--sc:${t.sc ?? 0.14}`
-		};
-	});
+		{ id: 'lemosin', nom: 'Lemosin', mot: 'porcelana', glosa: 'la porcelaine de Limoges', fond: CARTE.dialectes.lem, tinta: BLANC, d: [-1.1, -1], r: -14, ini: 0.1 },
+		{ id: 'auvernhat', nom: 'Auvèrnha', mot: 'volcan', glosa: 'la chaîne des Puys', fond: CARTE.dialectes.auv, tinta: BLANC, d: [0.2, -1.4], r: 8, ini: 0.18 },
+		{ id: 'vivaroaupenc', nom: 'Vivarés', mot: 'Pont d’Arc', glosa: 'l’arche de pierre sur l’Ardèche', fond: CARTE.dialectes.viv, tinta: BLANC, d: [1.2, -1], r: 13, ini: 0.26 },
+		{ id: 'gascon', nom: 'Gasconha', mot: 'pin', glosa: 'les pins des Landes', fond: CARTE.dialectes.gas, tinta: T.encre, d: [-1.5, 0.2], r: -10, ini: 0.02 },
+		{ id: 'crotz', nom: 'Occitània', mot: 'crotz', glosa: 'la croix occitane', fond: T.brique, tinta: BLANC, d: [0, 0], r: 90, ini: 0.68, sc: 0.7 },
+		{ id: 'provençal', nom: 'Provença', mot: 'lavanda', glosa: 'les champs de lavande', fond: CARTE.dialectes.pro, tinta: T.encre, d: [1.5, 0.3], r: 10, ini: 0.34 },
+		{ id: 'aran', nom: 'Aran', mot: 'Pirenèus', glosa: 'les Pyrénées', fond: T.encre, tinta: BLANC, d: [-1.2, 1.1], r: 12, ini: 0.58 },
+		{ id: 'lengadocian', nom: 'Lengadòc', mot: 'Pont del Gard', glosa: 'le pont du Gard', fond: CARTE.dialectes.lan, tinta: BLANC, d: [-0.2, 1.4], r: -7, ini: 0.5 },
+		{ id: 'mar', nom: 'Mar', mot: 'onda', glosa: 'la Méditerranée', fond: T.bleu, tinta: BLANC, d: [1.2, 1.1], r: -12, ini: 0.42 }
+	].map((t, i) => ({
+		...t,
+		n: String(i + 1).padStart(2, '0'),
+		style:
+			`--fond:${t.fond};--tinta:${t.tinta};--dx:${t.d[0]};--dy:${t.d[1]};` +
+			`--r0:${t.r};--ini:${t.ini};--dur:${DUR};--sc:${t.sc ?? 0.1}`
+	}));
+	// dans l'ordre d'arrivée : c'est l'ordre du cartel
+	const ORDRE = [...TUILES].sort((a, b) => a.ini - b.ini);
 
 	// ---- les dessins qui demandent un peu de calcul ----
 	// La fleur de l'assiette : huit pétales autour du centre.
 	const petales = Array.from({ length: 8 }, (_, k) => k * 45);
-	// Le pont du Gard : trois étages d'arches dans une même masse (le dessin se fait par « trous » : evenodd).
-	const pont = (() => {
-		const etages = [
-			{ y: 60, h: 28, n: 3, haut: 0.78 },
-			{ y: 40, h: 20, n: 6, haut: 0.7 },
-			{ y: 28, h: 12, n: 11, haut: 0.6 }
-		];
-		const x0 = 6;
-		const larg = 88;
-		return etages
-			.map((e) => {
-				const fente = larg / e.n;
-				const w = fente * 0.6;
-				const r = w / 2;
-				const bas = e.y + e.h;
-				const ouvertures = Array.from({ length: e.n }, (_, k) => {
-					const a = x0 + fente * k + (fente - w) / 2;
-					const sommet = bas - e.h * e.haut;
-					return `M${a.toFixed(1)} ${bas}V${(sommet + r).toFixed(1)}A${r.toFixed(1)} ${r.toFixed(1)} 0 0 1 ${(a + w).toFixed(1)} ${(sommet + r).toFixed(1)}V${bas}Z`;
-				}).join('');
-				return `M${x0} ${e.y}H${x0 + larg}V${bas}H${x0}Z${ouvertures}`;
-			})
-			.join('');
-	})();
+	// Le pont du Gard : trois étages d'arches, chacun d'un seul tenant (les arches sont des « trous » : evenodd).
+	const etages = [
+		{ y: 60, h: 42, n: 3, larg: 26, haut: 34 },
+		{ y: 34, h: 24, n: 6, larg: 12, haut: 19 },
+		{ y: 20, h: 12, n: 12, larg: 6, haut: 9 }
+	].map((e) => {
+		const x0 = -2;
+		const tot = 124;
+		const fente = tot / e.n;
+		const r = e.larg / 2;
+		const bas = e.y + e.h;
+		const naissance = bas - e.haut + r; // là où le demi-cercle commence
+		const trous = Array.from({ length: e.n }, (_, k) => {
+			const a = x0 + fente * k + (fente - e.larg) / 2;
+			return `M${a.toFixed(2)} ${bas}V${naissance}A${r} ${r} 0 0 1 ${(a + e.larg).toFixed(2)} ${naissance}V${bas}Z`;
+		}).join('');
+		return `M${x0} ${e.y}H${x0 + tot}V${bas}H${x0}Z${trous}`;
+	});
+	// La mer : une vague régulière (demi-période de 15), plus longue que la tuile pour pouvoir glisser.
+	const vague = (y) => {
+		let d = `M-45 ${y}Q-37.5 ${y - 9} -30 ${y}`;
+		for (let x = -15; x <= 165; x += 15) d += `T${x} ${y}`;
+		return d;
+	};
 
 	let piste = $state();
 	let scene = $state();
+	let courant = $state(ORDRE.length - 1); // la tuile annoncée par le cartel ; -1 : aucune encore
 	let p = 1;
 	let but = 1;
 	let raf = 0;
 	let avant = 0;
+
+	let fiche = $derived(courant < 0 ? null : ORDRE[courant]);
 
 	function viser() {
 		if (fige !== null) return fige;
@@ -112,8 +108,10 @@
 	}
 	function ecrire() {
 		scene.style.setProperty('--p', p.toFixed(4));
-		const c = Math.round(p * 100);
-		if (c !== pour100) pour100 = c;
+		// le cartel annonce une tuile dès qu'elle est bien visible (au tiers de son trajet)
+		let c = -1;
+		for (let i = 0; i < ORDRE.length; i++) if (p >= ORDRE[i].ini + DUR * 0.33) c = i;
+		if (c !== courant) courant = c;
 	}
 	function boucle(t) {
 		const dt = Math.min(0.05, (t - avant) / 1000);
@@ -147,7 +145,7 @@
 			raf = 0;
 			p = but = 1;
 			scene.style.removeProperty('--p');
-			pour100 = 100;
+			courant = ORDRE.length - 1;
 			return;
 		}
 		p = but = viser();
@@ -175,17 +173,17 @@
 	<main id="contengut" class="essai">
 		<h1>Essai : des motifs-symboles</h1>
 		<p class="intro">
-			Neuf tuiles en aplats, rangées comme sur une petite carte : le Lemosin, l’Auvèrnha et le Vivarés en haut, la Gasconha, la croix occitane et la
-			Provença au milieu, l’Aran, le Lengadòc et la mer en bas. Chacune dessine un symbole de son territoire. Elles glissent en place quand on descend, et
-			repartent si on remonte.
+			Neuf tuiles de papier, rangées comme une petite carte : le Lemosin, l’Auvèrnha et le Vivarés en haut ; la Gasconha, la croix occitane et la Provença
+			au milieu ; l’Aran, le Lengadòc et la mer en bas. Chacune porte un symbole de son territoire, dessiné avec des formes simples. Elles se posent une à
+			une quand on descend, et se relèvent si on remonte.
 		</p>
 		<p class="intro">
-			Cette fois la forme d’ensemble (une mosaïque d’aplats vifs qui suit la page) se rapproche de celle de
-			<a href="https://languesdebourgogne.com/" rel="noopener">Langues de Bourgogne</a> ; les dessins, eux, sont faits pour Lo Ligam.
+			L’allure d’ensemble (une mosaïque d’aplats qui suit la page) vient de
+			<a href="https://languesdebourgogne.com/" rel="noopener">Langues de Bourgogne</a> ; les dessins sont faits pour Lo Ligam.
 		</p>
 	</main>
 
-	<section class="piste" class:vivant bind:this={piste} aria-label="Les motifs s’assemblent">
+	<section class="piste" class:vivant bind:this={piste} aria-label="Les motifs se posent">
 		<div class="scene" class:vivant bind:this={scene}>
 			<div class="commandes">
 				<span class="etiq">Mouvement</span>
@@ -193,91 +191,104 @@
 				<button type="button" class="pc pc-2 pc-chip" aria-pressed={leger} onclick={() => (leger = true)}>Léger</button>
 			</div>
 
-			<div class="texte">
-				<h2>Occitània</h2>
-				<ol class="legende">
-					{#each TUILES as t (t.id)}
-						<li style={t.style}>
-							<span class="coin" aria-hidden="true"></span>
-							<span class="nom">{t.nom}</span>
-							<span class="simbol">{t.simbol}</span>
-						</li>
-					{/each}
-				</ol>
+			<!-- le cartel : il annonce la tuile qui arrive (les noms sont aussi sous chaque tuile) -->
+			<div class="cartel" aria-hidden="true">
+				{#key courant}
+					<div class="fiche" style={fiche ? `--fond:${fiche.fond}` : ''}>
+						{#if fiche}
+							<p class="rang"><span class="coin"></span>{fiche.n}</p>
+							<p class="titre">{fiche.nom}</p>
+							<p class="simbol"><strong>{fiche.mot}</strong><span>{fiche.glosa}</span></p>
+						{:else}
+							<p class="rang">&nbsp;</p>
+							<p class="titre">Occitània</p>
+							<p class="simbol"><span>Descends : les tuiles se posent une à une.</span></p>
+						{/if}
+					</div>
+				{/key}
 			</div>
 
 			<ol class="mur">
 				{#each TUILES as t (t.id)}
-					<li class="teula" style={t.style}>
-						{#if t.id === 'crotz'}
-							<div class="motiu crotz"><Crotz talha="100%" traç="#ffffff" ponch={T.orClair} moieu={T.or} /></div>
-						{:else}
-							<svg class="motiu" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-								{#if t.id === 'gascon'}
-									<!-- les pins des Lanas : trois troncs, des cimes plates, une dune, un soleil bas -->
-									<circle class="m3" cx="80" cy="24" r="11" />
-									<path class="m2" d="M0 76Q28 64 52 74T100 68V100H0Z" />
-									<g class="m1">
-										<rect x="21" y="40" width="4" height="48" /><ellipse cx="23" cy="38" rx="15" ry="6.5" />
-										<rect x="47" y="28" width="4" height="60" /><ellipse cx="49" cy="26" rx="18" ry="7.5" />
-										<rect x="72" y="48" width="3.5" height="40" /><ellipse cx="73.7" cy="46" rx="12" ry="5.5" />
-									</g>
-								{:else if t.id === 'aran'}
-									<!-- les Pirenèus : deux chaînes superposées, des neiges aux sommets -->
-									<path class="m3" d="M0 84L24 46L40 66L62 28L100 84Z" />
-									<path class="m1" d="M62 28L52 45L58 42L63 48L69 41L74 45Z" />
-									<path class="m1" d="M24 46L17 57L22 55L26 60L30 53Z" />
-									<path class="m2" d="M0 100V80L30 62L52 84L76 66L100 82V100Z" />
-								{:else if t.id === 'lemosin'}
-									<!-- la porcelaine de Limòtges : une assiette blanche, deux filets d'or, une fleur à huit pétales -->
-									<circle class="m1" cx="50" cy="48" r="37" />
-									<circle fill="none" stroke={T.or} stroke-width="3" cx="50" cy="48" r="32" />
-									<circle fill="none" stroke={T.or} stroke-width="1.3" cx="50" cy="48" r="27.5" />
-									{#each petales as a}
-										<ellipse class="m2" cx="50" cy="31" rx="4.6" ry="10" transform="rotate({a} 50 48)" />
-									{/each}
-									<circle fill={T.or} cx="50" cy="48" r="6.5" />
-								{:else if t.id === 'auvernhat'}
-									<!-- la chaîne des Puys : un grand cône entre deux petits, un cratère -->
-									<path class="m2" d="M0 86L18 58H26L42 86Z" />
-									<path class="m2" d="M60 86L76 62H84L100 86Z" />
-									<path fill={T.orClair} d="M22 88L44 34H58L80 88Z" />
-									<ellipse class="m2" cx="51" cy="34.5" rx="7.5" ry="2.8" />
-									<path class="m2" d="M0 86Q30 80 52 86T100 84V100H0Z" />
-								{:else if t.id === 'lengadocian'}
-									<!-- le pont du Gard : trois étages d'arches, la rivière dessous, un soleil -->
-									<circle fill={T.or} cx="82" cy="13" r="7" />
-									<path class="m1" fill-rule="evenodd" d={pont} />
-									<path class="m2" d="M0 90Q12 85 25 90T50 90T75 90T100 90V100H0Z" />
-								{:else if t.id === 'provençal'}
-									<!-- la lavande : des rangs courbes qui s'élargissent vers nous, un soleil à l'horizon -->
-									<circle class="m2" cx="50" cy="36" r="16" />
-									<path class="m3" d="M0 42H100V100H0Z" />
-									<path class="m1" d="M0 52Q50 47 100 52V54Q50 49 0 54Z" />
-									<path class="m1" d="M0 60Q50 54 100 60V64Q50 58 0 64Z" />
-									<path class="m1" d="M0 71Q50 64 100 71V77Q50 70 0 77Z" />
-									<path class="m1" d="M0 84Q50 76 100 84V92Q50 84 0 92Z" />
-								{:else if t.id === 'vivaroaupenc'}
-									<!-- le pont d'Arc : une masse de roche percée d'une arche, la rivière, un soleil dans l'arche -->
-									<circle fill={T.orClair} cx="50" cy="58" r="9" />
-									<path class="m3" d="M10 100V30Q10 18 22 18H78Q90 18 90 30V100H72V62A22 22 0 0 0 28 62V100Z" />
-									<path class="m1" d="M0 90Q12 84 25 90T50 90T75 90T100 90V100H0Z" />
-								{:else if t.id === 'mar'}
-									<!-- la mer : un soleil, quatre vagues -->
-									<circle fill={T.or} cx="74" cy="24" r="12" />
-									<path class="s1" fill="none" stroke-width="4.5" stroke-linecap="round" d="M-5 46Q7.5 37 20 46T45 46T70 46T95 46T120 46" />
-									<path class="s3" fill="none" stroke-width="4.5" stroke-linecap="round" d="M-18 60Q-5.5 51 7 60T32 60T57 60T82 60T107 60" />
-									<path class="s1" fill="none" stroke-width="4.5" stroke-linecap="round" d="M-5 74Q7.5 65 20 74T45 74T70 74T95 74T120 74" />
-									<path class="s3" fill="none" stroke-width="4.5" stroke-linecap="round" d="M-18 88Q-5.5 79 7 88T32 88T57 88T82 88T107 88" />
+					<li class="cas" style={t.style}>
+						<div class="teula">
+							<div class="face">
+								{#if t.id === 'crotz'}
+									<div class="motiu crotz"><Crotz talha="100%" traç={BLANC} ponch={T.orClair} moieu={T.or} /></div>
+								{:else}
+									<svg class="motiu" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+										{#if t.id === 'lemosin'}
+											<!-- la porcelaine de Limòtges : une assiette, un filet d'or, une fleur qui tourne en se posant -->
+											<circle cx="60" cy="60" r="50" fill={BLANC} />
+											<circle cx="60" cy="60" r="42" fill="none" stroke={T.or} stroke-width="5" />
+											<g class="vira">
+												{#each petales as a}
+													<ellipse cx="60" cy="37.5" rx="6.5" ry="13.5" fill={t.fond} transform="rotate({a} 60 60)" />
+												{/each}
+											</g>
+											<circle cx="60" cy="60" r="9" fill={T.or} />
+										{:else if t.id === 'auvernhat'}
+											<!-- la chaîne des Puys : deux dômes sombres, le grand volcan monte entre eux, son cratère au sommet -->
+											<path d="M-6 96A24 24 0 0 1 42 96Z" fill={T.encre} />
+											<path d="M82 96A22 22 0 0 1 126 96Z" fill={T.encre} />
+											<g class="monta" style="--h:72">
+												<path d="M16 96L48 30H76L108 96Z" fill={T.or} />
+												<path d="M51 30A11 11 0 0 0 73 30Z" fill={t.fond} />
+											</g>
+											<rect x="0" y="96" width="120" height="24" fill={T.encre} />
+										{:else if t.id === 'vivaroaupenc'}
+											<!-- le pont d'Arc : la falaise percée d'une arche descend, deux reflets glissent sur la rivière -->
+											<path class="davala" style="--h:96" fill-rule="evenodd" d="M0 30H120V92H0ZM20 92A40 40 0 0 1 100 92Z" fill={T.orClair} />
+											<rect class="lisa" style="--s:-1" x="0" y="100" width="120" height="4" fill={BLANC} />
+											<rect class="lisa" style="--s:1" x="0" y="110" width="120" height="4" fill={BLANC} />
+										{:else if t.id === 'gascon'}
+											<!-- les pins des Lanas : trois troncs, trois cimes en demi-disque, ils sortent du sable -->
+											<g class="monta" style="--h:70">
+												<rect x="27.5" y="52" width="5" height="50" fill={T.encre} />
+												<path d="M10 52A20 20 0 0 1 50 52Z" fill={T.olive} />
+											</g>
+											<g class="monta" style="--h:100">
+												<rect x="61.5" y="36" width="5" height="66" fill={T.encre} />
+												<path d="M38 36A26 26 0 0 1 90 36Z" fill={T.olive} />
+											</g>
+											<g class="monta" style="--h:60">
+												<rect x="93.5" y="64" width="5" height="38" fill={T.encre} />
+												<path d="M79 64A17 17 0 0 1 113 64Z" fill={T.olive} />
+											</g>
+											<rect x="0" y="100" width="120" height="20" fill={T.brique} />
+										{:else if t.id === 'provençal'}
+											<!-- la lavande : le soleil se lève derrière le champ, les rangs glissent chacun de son côté -->
+											<path class="monta" style="--h:26" d="M38 50A22 22 0 0 1 82 50Z" fill={T.brique} />
+											<rect x="0" y="50" width="120" height="70" fill={T.orClair} />
+											<path class="lisa" style="--s:-1" d="M-10 58Q60 52 130 58V61Q60 55 -10 61Z" fill={T.prune} />
+											<path class="lisa" style="--s:1" d="M-10 68Q60 61 130 68V73Q60 66 -10 73Z" fill={T.prune} />
+											<path class="lisa" style="--s:-1" d="M-10 82Q60 73 130 82V89Q60 80 -10 89Z" fill={T.prune} />
+											<path class="lisa" style="--s:1" d="M-10 100Q60 89 130 100V110Q60 99 -10 110Z" fill={T.prune} />
+										{:else if t.id === 'aran'}
+											<!-- les Pirenèus : deux triangles qui se dressent dans la nuit -->
+											<path class="monta" style="--h:90" d="M-8 104L44 22L96 104Z" fill={BLANC} />
+											<path class="monta" style="--h:70" d="M48 104L86 48L124 104Z" fill={T.ocre} />
+										{:else if t.id === 'lengadocian'}
+											<!-- le pont du Gard : trois étages d'arches qui se posent l'un sur l'autre -->
+											<path class="davala" style="--h:70" fill-rule="evenodd" d={etages[0]} fill={BLANC} />
+											<path class="davala" style="--h:100" fill-rule="evenodd" d={etages[1]} fill={BLANC} />
+											<path class="davala" style="--h:130" fill-rule="evenodd" d={etages[2]} fill={BLANC} />
+										{:else if t.id === 'mar'}
+											<!-- la mer : le soleil monte, les vagues glissent en sens contraires -->
+											<circle class="monta" style="--h:40" cx="84" cy="30" r="15" fill={T.or} />
+											<path class="onda" style="--s:-1" d={vague(60)} stroke={BLANC} />
+											<path class="onda" style="--s:1" d={vague(78)} stroke={T.orClair} />
+											<path class="onda" style="--s:-1" d={vague(96)} stroke={BLANC} />
+											<path class="onda" style="--s:1" d={vague(114)} stroke={T.orClair} />
+										{/if}
+									</svg>
 								{/if}
-							</svg>
-						{/if}
-						<p class="etiq-teula"><span class="n">{t.n}</span><span class="t">{t.nom}</span></p>
+								<p class="etiq-teula"><span class="n">{t.n}</span><span class="t">{t.nom}</span><span class="vh">, {t.mot} : {t.glosa}</span></p>
+							</div>
+						</div>
 					</li>
 				{/each}
 			</ol>
-
-			<p class="mesure" aria-hidden="true">{vivant ? `Avancement : ${pour100} %` : 'Version légère : tout est posé'}</p>
 		</div>
 	</section>
 
@@ -328,23 +339,33 @@
 		color: inherit;
 		text-underline-offset: 0.2em;
 	}
+	.vh {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
 
 	/* ---- la piste : une hauteur de plusieurs écrans, dans laquelle la scène reste collée ---- */
 	.piste {
 		position: relative;
 	}
 	.piste.vivant {
-		height: 340svh;
+		height: 420svh;
 	}
 	.scene {
 		--p: 1; /* sans JavaScript, ou en version légère : tout est posé */
 		--reserve: 8rem; /* de la hauteur d'écran, ce qui n'est pas pour la mosaïque */
-		--v: 1; /* à quel point les tuiles arrivent de haut et de bas (moins sur téléphone) */
+		/* la mosaïque prend la hauteur disponible, sans pousser le cartel hors de l'écran */
+		--larg-mur: min(calc((100svh - var(--reserve)) / 1.28), calc(100vw - 2 * var(--marge) - 21rem));
 		position: relative;
 		display: grid;
-		grid-template-columns: minmax(15rem, 0.3fr) minmax(0, 1fr);
+		grid-template-columns: minmax(15rem, 25rem) auto;
+		justify-content: center;
 		align-items: center;
-		gap: clamp(1rem, 4vw, 4rem);
+		gap: clamp(1.5rem, 5vw, 5rem);
 		padding: 4.5rem var(--marge) 3rem;
 		overflow: clip;
 	}
@@ -374,92 +395,111 @@
 		text-transform: uppercase;
 		color: var(--t-tinta-2);
 	}
-	.mesure {
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0.9rem;
+
+	/* ---- le cartel : le numéro, le nom en grand, le symbole ---- */
+	.cartel {
+		position: relative;
+		z-index: 3;
+		min-height: 11rem;
+	}
+	.fiche {
+		animation: arriba 0.28s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+	}
+	@keyframes arriba {
+		from {
+			opacity: 0;
+			transform: translateY(0.6rem);
+		}
+	}
+	.fiche p {
 		margin: 0;
-		text-align: center;
-		font-size: 0.8rem;
+	}
+	.rang {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		font-size: 1rem;
 		font-variant-numeric: tabular-nums;
 		color: var(--t-tinta-2);
 	}
-
-	/* ---- le texte : un titre, neuf lignes qui s'allument quand leur tuile se pose ---- */
-	.texte {
-		position: relative;
-		z-index: 3;
-	}
-	h2 {
-		margin: 0 0 1.4rem;
-		font-family: var(--font-heading);
-		font-weight: 400;
-		font-size: clamp(2.2rem, 5.4vw, 4.4rem);
-		line-height: 1;
-	}
-	.legende {
-		display: grid;
-		gap: 0.5rem;
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-	.legende li {
-		--q: clamp(0, (var(--p) - var(--ini)) / var(--dur), 1);
-		display: flex;
-		align-items: baseline;
-		gap: 0.6rem;
-		font-size: clamp(0.98rem, 1.35vw, 1.2rem);
-		/* la ligne s'éclaire quand la tuile a fait les trois quarts du chemin */
-		opacity: calc(0.22 + 0.78 * clamp(0, (var(--q) - 0.7) / 0.3, 1));
-	}
 	.coin {
-		flex: none;
-		align-self: center;
-		width: 0.8em;
-		height: 0.8em;
+		width: 0.85em;
+		height: 0.85em;
 		background: var(--fond);
 	}
-	.nom {
-		font-weight: 700;
+	.titre {
+		margin-top: 0.5rem !important;
+		font-family: var(--font-heading);
+		font-size: clamp(2.4rem, 4.6vw, 4.2rem);
+		line-height: 1;
 	}
 	.simbol {
+		display: grid;
+		gap: 0.15rem;
+		margin-top: 1rem !important;
+		font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+		line-height: 1.35;
+	}
+	.simbol span {
 		color: var(--t-tinta-2);
 	}
 
-	/* ---- la mosaïque : neuf tuiles, chacune arrive de son côté ---- */
+	/* ---- la mosaïque : neuf cases au filet fin, neuf tuiles de papier qui viennent les remplir ---- */
 	.mur {
 		position: relative;
 		z-index: 2;
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 3px;
-		width: min(100%, calc((100svh - var(--reserve)) / 1.28));
+		gap: 4px;
+		width: var(--larg-mur);
 		margin: 0;
 		padding: 0;
 		list-style: none;
-		justify-self: center;
 	}
-	.teula {
+	.cas {
 		/* avancement propre à la tuile : q (0 → 1), puis « ce qui reste à faire » i (1 → 0), freinage doux */
 		--q: clamp(0, (var(--p) - var(--ini)) / var(--dur), 1);
 		--k: calc(1 - var(--q));
 		--i: calc(var(--k) * var(--k));
-		display: flex;
-		flex-direction: column;
-		container-type: inline-size;
-		overflow: hidden;
+		/* le dessin se construit dans la seconde moitié de la pose : j (1 → 0), freinage doux */
+		--jl: calc(1 - clamp(0, (var(--q) - 0.45) / 0.55, 1));
+		--j: calc(var(--jl) * var(--jl));
+		position: relative;
 		border-radius: 3px;
-		background: var(--fond);
-		color: var(--m1);
-		opacity: calc(1 - 0.9 * var(--k));
-		transform-origin: center;
-		transform: translate(calc(var(--dx) * var(--i) * 100%), calc(var(--dy) * var(--v) * var(--i) * 100%)) rotate(calc(var(--r0) * 1deg * var(--i)))
-			scale(calc(1 - var(--sc) * var(--i)));
+		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--t-tinta) 14%, transparent);
+	}
+	.teula {
+		position: relative;
+		height: 100%;
+		border-radius: inherit;
+		/* la tuile apparaît dès qu'elle bouge, puis elle est pleine */
+		opacity: clamp(0, var(--q) * 5, 1);
+		transform: translate(calc(var(--dx) * var(--i) * 100%), calc(var(--dy) * var(--i) * 100%)) rotate(calc(var(--r0) * 1deg * var(--i)))
+			scale(calc(1 + var(--sc) * var(--i)));
 	}
 	.vivant .teula {
 		will-change: transform, opacity;
+	}
+	/* l'ombre du papier : longue quand la tuile est en l'air, courte quand elle est posée (comme les pièces du site) */
+	.teula::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		background: var(--pc-ombre, rgb(0 0 0 / 0.3));
+		filter: blur(3px);
+		transform: translate(calc(var(--i) * 8px), calc(2px + var(--i) * 18px));
+	}
+	.face {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		container-type: inline-size;
+		overflow: hidden;
+		border-radius: inherit;
+		background: var(--fond);
+		color: var(--tinta);
 	}
 	.motiu {
 		display: block;
@@ -468,7 +508,7 @@
 	}
 	.crotz {
 		box-sizing: border-box;
-		padding: 11%;
+		padding: 12%;
 	}
 	.etiq-teula {
 		display: flex;
@@ -479,56 +519,74 @@
 		font-size: clamp(0.64rem, 8.2cqi, 1.05rem);
 		font-weight: 700;
 		line-height: 1.15;
-		/* le nom apparaît quand la tuile est presque posée */
-		opacity: clamp(0, (var(--q) - 0.7) / 0.3, 1);
 	}
 	.n {
 		font-weight: 400;
-		opacity: 0.7;
+		opacity: 0.72;
 		font-variant-numeric: tabular-nums;
 	}
 
-	/* les tons du dessin : le trait fort, l'aplat assombri, l'aplat éclairci */
-	.m1 {
-		fill: var(--m1);
+	/* ---- le dessin qui se construit (mesures en unités du dessin : 120 de côté) ---- */
+	/* monte du bas */
+	.monta {
+		transform: translateY(calc(var(--j) * var(--h) * 1px));
 	}
-	.m2 {
-		fill: var(--m2);
+	/* descend du haut */
+	.davala {
+		transform: translateY(calc(var(--j) * var(--h) * -1px));
 	}
-	.m3 {
-		fill: var(--m3);
+	/* glisse de côté (s : -1 depuis la gauche, 1 depuis la droite) */
+	.lisa {
+		transform: translateX(calc(var(--j) * var(--s) * 140px));
 	}
-	.s1 {
-		stroke: var(--m1);
+	/* tourne sur place */
+	.vira {
+		transform-origin: 60px 60px;
+		transform: rotate(calc(var(--j) * -135deg));
 	}
-	.s3 {
-		stroke: var(--m3);
+	/* la vague : un trait épais qui glisse d'une longueur d'onde */
+	.onda {
+		fill: none;
+		stroke-width: 7;
+		transform: translateX(calc(var(--j) * var(--s) * 30px));
 	}
 
-	/* ---- téléphone : la mosaïque pleine largeur sous le titre ; les noms sont dans les tuiles ---- */
-	@media (max-width: 640px) {
+	/* ---- téléphone : le cartel au-dessus, la mosaïque dessous ---- */
+	@media (max-width: 720px) {
 		.scene {
-			--reserve: 10rem;
-			--v: 0.6;
+			--reserve: 16.5rem;
+			--larg-mur: min(100%, calc((100svh - var(--reserve)) / 1.28));
 			grid-template-columns: minmax(0, 1fr);
+			justify-items: center;
 			align-content: center;
-			gap: 0.9rem;
+			gap: 1rem;
 		}
 		.scene.vivant {
 			padding-top: 3.6rem;
-			padding-bottom: 1.6rem;
+			padding-bottom: 4.6rem; /* la barre du bas du site */
 		}
-		h2 {
-			margin-bottom: 0;
-			font-size: 2rem;
+		.cartel {
+			width: 100%;
+			min-height: 6.6rem;
 		}
-		.legende {
-			display: none;
+		.rang {
+			font-size: 0.9rem;
+		}
+		.titre {
+			margin-top: 0.2rem !important;
+			font-size: 2.1rem;
+		}
+		.simbol {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0 0.6em;
+			margin-top: 0.45rem !important;
+			font-size: 1rem;
 		}
 	}
 
 	/* l'appareil demande moins de mouvement : tout est posé, la page ne se fige pas
-	   (le même résultat que la version légère, avant même que le JavaScript ne le sache) */
+	   (le JavaScript arrive au même résultat ; ceci vaut avant même qu'il ne le sache) */
 	@media (prefers-reduced-motion: reduce) {
 		.piste.vivant {
 			height: auto;
@@ -538,13 +596,8 @@
 			height: auto;
 			padding-block: 4.5rem 3rem;
 		}
-		.vivant .legende li,
-		.vivant .etiq-teula {
-			opacity: 1;
-		}
-		.vivant .teula {
-			opacity: 1;
-			transform: none;
+		.fiche {
+			animation: none;
 		}
 	}
 </style>
