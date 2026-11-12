@@ -912,7 +912,7 @@
 <style>
 	.plueja {
 		--crema: #f7f3ee;
-		--aur-clar: #ffd47f;
+		--aur-clar: var(--p-or-clair);
 		--def: #f1dcb2;
 		position: fixed;
 		inset: 0;

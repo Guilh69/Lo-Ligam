@@ -255,6 +255,8 @@ export const ESSAIS = [
 		raison: 'Adopté : la logique « téléphone d’abord » est sur les vraies pages (barre du bas sur téléphone, trois verbes sur ordinateur, commit 158f9b05).',
 		suppression: 'Rien ne l’importe ; elle partage lib/palette (BandeauxEssai) avec les autres pages palette-*.'
 	}
+	// Les trois essais du 12-11 (/ensag/barra, /ensag/confetis, /ensag/fenestra) ont été tranchés le jour même
+	// par Romain (barre « selon la page », confettis raffinés, fenêtre d'origine gardée et retouchée) : pages retirées.
 ];
 
 // Essais cachés hors du dossier /ensag, trouvés par l'audit du 07-11 et jamais recensés :

@@ -277,7 +277,7 @@
 		padding: 0;
 		border: 0;
 		background: none;
-		color: #2a1a10;
+		color: var(--p-encre);
 		font: inherit;
 		text-decoration: none;
 		cursor: pointer;
@@ -321,8 +321,8 @@
 	}
 	.punt:hover .punt-nom,
 	.punt.actiu .punt-nom {
-		background: #2a1a10;
-		color: #eeaf34;
+		background: var(--p-encre);
+		color: var(--p-or);
 	}
 	.punt:focus-visible .punt-nom {
 		outline: 2px solid var(--t-tinta);
@@ -373,8 +373,8 @@
 		align-items: center;
 		gap: clamp(0.6rem, 2vw, 1.4rem);
 		padding: 0.8rem var(--marge);
-		background: #eeaf34;
-		color: #2a1a10;
+		background: var(--p-or);
+		color: var(--p-encre);
 		box-shadow: 0 -10px 30px -12px rgba(0, 0, 0, 0.6);
 	}
 	.bb-dirècte {

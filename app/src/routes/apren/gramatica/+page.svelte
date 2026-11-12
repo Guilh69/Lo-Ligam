@@ -231,7 +231,7 @@
 	   du logo), le texte posé dessus (5,0 à 8,6 de contraste, mesuré le
 	   2026-11-04) et la pastille de la légende */
 	.t-sons {
-		--aplat: #1f5f63;
+		--aplat: var(--p-sarcelle);
 		--sus: #fbf1e1;
 	}
 	.t-nom {
@@ -243,12 +243,12 @@
 		--sus: #fbf1e1;
 	}
 	.t-verb {
-		--aplat: #6b3a5b;
+		--aplat: var(--p-prune);
 		--sus: #fbf1e1;
 	}
 	.t-frasa {
-		--aplat: #eeaf34;
-		--sus: #2a1a10;
+		--aplat: var(--p-or);
+		--sus: var(--p-encre);
 	}
 
 	/* le filtre : cinq cases de couleur ; sur grand écran, cinq colonnes avec

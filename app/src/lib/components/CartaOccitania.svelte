@@ -3183,7 +3183,7 @@
 	}
 	/* lo boton del fons, quand son tirador es dobèrt (coma dins lo rail) */
 	.carta :global(.fons-carta a[aria-expanded='true']) {
-		color: #2a1a10;
+		color: var(--p-encre);
 		background: var(--pc-or-fons);
 	}
 	.carta :global(.leaflet-bar a.leaflet-disabled) {

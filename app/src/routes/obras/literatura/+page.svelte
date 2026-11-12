@@ -262,7 +262,7 @@
 		background:
 			linear-gradient(90deg, rgba(0, 0, 0, 0.12), transparent 6%),
 			#f3efdc;
-		color: #2a1a10;
+		color: var(--p-encre);
 		box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.8);
 	}
 	.pl-contengut {

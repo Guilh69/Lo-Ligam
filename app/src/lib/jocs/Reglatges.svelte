@@ -103,7 +103,7 @@
 	}
 	.segments button[aria-pressed='true'] {
 		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: #2a1a10;
+		--pc-tinta: var(--p-encre);
 	}
 	.segments button:disabled {
 		cursor: default;
@@ -162,7 +162,7 @@
 	}
 	.accions :global(button[aria-pressed='true']) {
 		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: #2a1a10;
+		--pc-tinta: var(--p-encre);
 	}
 	.accions :global(button:disabled) {
 		cursor: default;

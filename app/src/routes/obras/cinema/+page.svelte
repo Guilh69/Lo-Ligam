@@ -317,7 +317,7 @@
 		height: 100%;
 		padding: 1.2rem 1.6rem 1.2rem 1.8rem;
 		background: #f3efdc;
-		color: #2a1a10;
+		color: var(--p-encre);
 		text-decoration: none;
 		-webkit-mask: var(--encòca);
 		mask: var(--encòca);

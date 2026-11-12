@@ -2100,7 +2100,7 @@
 	.chip.on,
 	.chip.activa {
 		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: #2a1a10;
+		--pc-tinta: var(--p-encre);
 	}
 
 	.chip {
@@ -2668,7 +2668,7 @@
 	.ficha .meta b {
 		color: var(--t-tinta);
 	}
-	.ficha .vital i {
+	.ficha .vital :global(i) {
 		display: inline-block;
 		width: 7px;
 		height: 7px;

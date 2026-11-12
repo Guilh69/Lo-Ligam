@@ -217,7 +217,7 @@
 
 	.ambianca-boton[aria-expanded='true'] {
 		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: #2a1a10;
+		--pc-tinta: var(--p-encre);
 	}
 
 	.ambianca-boton svg {

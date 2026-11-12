@@ -766,8 +766,12 @@ export function lancarAcuelh(racina, opcions = {}) {
 	const trobador = racina.querySelector('.trobador'), fenestra = racina.querySelector('.trobador-fenestra'), fenestraImg = fenestra.querySelector('img');
 	const vers = racina.querySelector('.trobador-vers');
 	const indiciFenestra = racina.querySelector('.trobador-indici');
-	let fenestraPossada = false; // la poussée automatique n'a lieu qu'une fois par visite
-	if (calm) vers.classList.add('vist');
+	let fenestraPossada = false; // la poussée d'arrivée (fenêtre fermée) n'a lieu qu'une fois par visite
+	let sensDefil = 1, poussadaFins = 0; // le sens du dernier défilement ; une poussée en cours (rien d'autre d'ici là)
+	let dit = false; // un doigt tient l'écran : on ne pousse pas sous lui
+	addEventListener('touchstart', () => (dit = true), { passive: true, signal });
+	['touchend', 'touchcancel'].forEach((ev) => addEventListener(ev, () => { dit = false; darrierDefil = performance.now(); }, { passive: true, signal }));
+	if (calm) { vers.classList.add('vist'); trobador.classList.add('dobèrta'); }
 	const manifest = racina.querySelector('[data-emplenar]');
 	const bandel = racina.querySelector('.bandel'), bandelPista = racina.querySelector('.bandel-pista');
 	let bandelX = 0, bandelSkew = 0, ultimY = scrollY;
@@ -873,17 +877,31 @@ export function lancarAcuelh(racina, opcions = {}) {
 			// devant une fenêtre fermée dont il ne comprend pas le principe (Romain, 2026-11-04 :
 			// « dès qu'on la voit entièrement, ce soit poussé rapidement et que ça s'ouvre » ;
 			// avant : 2 s d'attente, section dans les 20 % du haut, course de 2,4 s, 2026-10-16).
-			// Une seule fois par visite ; un geste l'interrompt ; jamais en mode calme.
-			if (!fenestraPossada && k < 0.08 && rt.top <= H * 0.03 && performance.now() - darrierDefil > 160) {
-				fenestraPossada = true;
-				const cibla = scrollY + rt.top + 0.64 * (rt.height - H); // k ≈ 0,97
-				if (lenis) lenis.scrollTo(cibla, { duration: 1 });
-				else scrollTo({ top: cibla, behavior: 'smooth' });
+			// Un geste l'interrompt ; jamais en mode calme.
+			// Et partout dans l'ouverture (Romain, 2026-11-12 : « il faut que le mouvement se fasse
+			// automatiquement si la personne arrête de défiler ») : arrêté à mi-course, on finit le
+			// mouvement dans le sens où l'on allait, jusqu'à la fenêtre ouverte en descendant, jusqu'à
+			// la fenêtre fermée en remontant. Jamais pendant qu'un doigt tient l'écran.
+			const ara = performance.now();
+			if (rt.top <= H * 0.03 && !dit && ara > poussadaFins) {
+				const pausa = ara - darrierDefil;
+				let cibla = null;
+				if (!fenestraPossada && k < 0.08 && pausa > 160) cibla = 0.64;
+				else if (k >= 0.08 && k < 0.95 && pausa > 280) cibla = sensDefil < 0 ? 0 : 0.64; // 0,64 de la course : k ≈ 0,97
+				if (cibla !== null) {
+					fenestraPossada = true;
+					poussadaFins = ara + 1100;
+					const y = scrollY + rt.top + cibla * (rt.height - H);
+					if (lenis) lenis.scrollTo(y, { duration: 1 });
+					else scrollTo({ top: y, behavior: 'smooth' });
+				}
 			}
 			fenestra.style.clipPath = `inset(${iy}% ${ix}% round ${rad}px)`;
 			fenestraImg.style.transform = `scale(${lerp(1.3, 1, k)})`;
 			// Lo vèrs apareis sonque quand la fenèstra es pro larga per l'aculhir
 			vers.classList.toggle('vist', k > 0.62);
+			// et le voile léger qui le rend lisible n'arrive qu'avec lui (avant, la photo restait claire : 12-11)
+			trobador.classList.toggle('dobèrta', k > 0.62);
 		}
 	}
 
@@ -893,7 +911,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		if (!viu) return;
 		lenis?.raf(t);
 		const sy = scrollY, vel = lenis ? lenis.velocity : 0;
-		if (Math.abs(sy - syAbans) > 0.5) darrierDefil = performance.now();
+		if (Math.abs(sy - syAbans) > 0.5) { darrierDefil = performance.now(); sensDefil = Math.sign(sy - syAbans); }
 		syAbans = sy;
 		ax = lerp(ax, mx, 0.16); ay = lerp(ay, my, 0.16);
 		anel.style.transform = `translate(${ax}px, ${ay}px)`;

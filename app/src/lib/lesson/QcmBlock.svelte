@@ -186,7 +186,7 @@
 
 	.opt.correct {
 		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: #2a1a10;
+		--pc-tinta: var(--p-encre);
 		font-weight: 600;
 		transform: translateY(-1px);
 		box-shadow: 0 4px 4px var(--pc-ombre);
