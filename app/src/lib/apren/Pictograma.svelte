@@ -140,6 +140,17 @@
 		<rect x="5" y="7" width="38" height="34" rx="2" />
 		<path d="M5 13c6 3 13 3 19 0 6 3 13 3 19 0" />
 		<path d="M17 14c-1 6-4 10-9 13 2 4 3 9 3 14M31 14c1 6 4 10 9 13-2 4-3 9-3 14" />
+	{:else if nom === 'constitucion'}
+		<!-- S'imagina (2026-11-12), la Constitution : un fronton et ses colonnes, au trait -->
+		<path d="M5 19L24 7l19 12z" />
+		<path d="M11 23v15M19 23v15M29 23v15M37 23v15" />
+		<path d="M7 42h34" />
+	{:else if nom === 'carrieras'}
+		<!-- S'imagina (2026-11-12), les rues en occitan : deux plaques sur un poteau -->
+		<rect x="6" y="9" width="30" height="11" rx="1.5" />
+		<rect x="14" y="25" width="28" height="11" rx="1.5" />
+		<path d="M24 20v5M24 36v8" />
+		<path d="M11 14.5h16M19 30.5h18" />
 	{:else}
 		<circle cx="24" cy="24" r="17" />
 		<path d="M16 24h16M26 17l7 7-7 7" />

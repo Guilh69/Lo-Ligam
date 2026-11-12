@@ -1,6 +1,6 @@
 # La Constitution en occitan (/constitucion)
 
-Demande de Romain, 2026-11-12 : « intégrer dans le site la Constitution française traduite en occitan, pour montrer à quoi pourrait ressembler un pays qui respecte ses langues ; il ne faut pas changer les mots ».
+Demande de Romain, 2026-11-12 (la page est rangée depuis le même jour sous la 4e rubrique « S’imagina », `/imagina`, case « Constitution ») : « intégrer dans le site la Constitution française traduite en occitan, pour montrer à quoi pourrait ressembler un pays qui respecte ses langues ; il ne faut pas changer les mots ».
 
 ## Ce qui existait avant (recherche du 12-11)
 

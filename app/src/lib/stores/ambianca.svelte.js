@@ -22,19 +22,21 @@ import { browser } from '$app/environment';
 
 // Pages harmonisées avec la charte (les autres restent en clair). COPIE dans
 // src/app.html (script de départ), à tenir identique.
-export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/ideas', '/illustracions', '/obras', '/obras/literatura', '/obras/cinema', '/obras/afichas', '/medias', '/medias/radios', '/medias/television', '/medias/premsa', '/medias/livres', '/medias/livres/pastre-1913', '/aprene', '/apren/jocs']; // harmonisées le 2026-10-07 : accueil, mots, carte ; Mon istòria, S'apren et sa page visio le 2026-10-24 ; Se parla, Amassa, la boîte à idées et Òbras le 2026-10-25, puis Òbras par art et Médias, branchés sur le site le même jour ; le parcours (/aprene) le 2026-11-02 ; les jeux le 2026-11-04 (essai sur /ensag/jocs, allure « Teula » adoptée puis rubrique de S'apren, /apren/jocs, le 2026-11-05)
+export const ARMONIZADAS = ['/', '/mots', '/carta', '/istoria', '/parla', '/apren', '/apren/visio', '/amassa', '/imagina', '/ideas', '/illustracions', '/obras', '/obras/literatura', '/obras/cinema', '/obras/afichas', '/medias', '/medias/radios', '/medias/television', '/medias/premsa', '/medias/livres', '/medias/livres/pastre-1913', '/aprene', '/apren/jocs']; // harmonisées le 2026-10-07 : accueil, mots, carte ; Mon istòria, S'apren et sa page visio le 2026-10-24 ; Se parla, Amassa, la boîte à idées et Òbras le 2026-10-25, puis Òbras par art et Médias, branchés sur le site le même jour ; le parcours (/aprene) le 2026-11-02 ; les jeux le 2026-11-04 (essai sur /ensag/jocs, allure « Teula » adoptée puis rubrique de S'apren, /apren/jocs, le 2026-11-05)
 
 // Les modules de leçon (/aprene/modul/1-1…) le 2026-10-25 : une famille de
 // pages, reconnue par son début (adresse réelle ou route de SvelteKit) ;
 // de même les groupes d'Amassa (/grops…), le 2026-10-25, le wiki (/wiki) et
 // la grammaire de S'apren et ses fiches (/apren/gramatica…), le 2026-11-03,
-// Cultura et ses fiches (/cultura…), à la place du wiki, le 2026-11-04.
+// Cultura et ses fiches (/cultura…), à la place du wiki, le 2026-11-04, la Constitution en occitan et ses
+// trois textes (/constitucion…), le 2026-11-12.
 export const armonizada = (cami) =>
 	ARMONIZADAS.includes(cami) ||
 	cami.startsWith('/aprene/modul/') ||
 	cami.startsWith('/grops') ||
 	cami.startsWith('/wiki') ||
 	cami.startsWith('/cultura') ||
+	cami.startsWith('/constitucion') ||
 	cami.startsWith('/apren/gramatica');
 
 const CLAU = { tema: 'lo-ligam-tema', dalt: 'lo-ligam-dalt', fons: 'lo-ligam-fons', leugier: 'lo-ligam-leugier', confetis: 'lo-ligam-confetis' };

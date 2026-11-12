@@ -70,6 +70,21 @@ export const PLAN = [
 				{ oc: 'Boita d’idèas', fr: 'Boîte à idées', es: 'Buzón de ideas', en: 'Idea box', ca: 'Bústia d’idees', ar: 'صندوق الاقتراحات', href: '/ideas' }
 			] }
 		]
+	},
+	{
+		// 4e rubrique « S'imagina » / « S'imagine » (Romain, 2026-11-12 : « une catégorie s'imagine, un peu plus
+		// revendicatrice, avec la Constitution en occitan, des photomontages de plaques de rue en occitan, ce à quoi
+		// pourrait ressembler l'espace public avec de l'occitan… créer un imaginaire » ; option « une 4e rubrique »).
+		// Le ton reste celui du 22-10 : montrer par les faits, jamais militant au sens pesant. L'accueil garde pour
+		// l'instant ses trois mondes (MiegTres lit les trois premières entrées) : sa 4e place est à trancher.
+		// Occitan nouveau : À VALIDER par Romain ; es/en/ca/ar : à relire par Aran.
+		id: 'imagina', n: '04', oc: 'S’imagina', fr: 'S’imagine', es: 'Se imagina', en: 'Imagine', ca: 'S’imagina', ar: 'نتخيّل',
+		href: '/imagina',
+		grops: [{ items: [
+			{ oc: 'Constitucion', fr: 'Constitution', es: 'Constitución', en: 'Constitution', ca: 'Constitució', ar: 'الدستور', href: '/constitucion' },
+			// les plaques de rue et l'espace public en occitan : pas encore faits (case « Aviat » jusqu'à la première pièce)
+			{ oc: 'Las carrièras', fr: 'Les rues', es: 'Las calles', en: 'Streets', ca: 'Els carrers', ar: 'الشوارع', href: '/imagina/carrieras', aviat: true }
+		] }]
 	}
 ];
 

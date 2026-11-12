@@ -1,6 +1,6 @@
 -- Lo Ligam — édition sur place : les éléments modifiables des pages
 -- =============================================================================
--- Fabriqué par app/scripts/elements-sql.mjs le 2026-11-05 ; ne pas modifier à la main.
+-- Fabriqué par app/scripts/elements-sql.mjs le 2026-11-12 ; ne pas modifier à la main.
 -- À coller dans Supabase : SQL Editor → New query → Run. Rejouable sans risque :
 -- la semence ne touche pas aux lignes déjà présentes.
 -- Suppose que supabase-admin-schema.sql a déjà été exécuté (public.is_admin(),
@@ -154,7 +154,7 @@ drop policy if exists "paginas : suprimir (admin)" on storage.objects;
 create policy "paginas : suprimir (admin)" on storage.objects for delete using (bucket_id = 'paginas' and public.is_admin ());
 
 -- La semence : les éléments tels que le site les affiche aujourd'hui
--- (302 lignes). Jamais écrasés s'ils existent déjà.
+-- (310 lignes). Jamais écrasés s'ils existent déjà.
 insert into public.pagina_elements (clau, pagina, tipe, lista, ordre, oc, fr, es, en, ca, ligam, imatge, visible) values
 	('acuelh.eros.kicker', 'acuelh', 'text', null, 0, 'L’occitan', 'L’occitan', 'El occitano', 'Occitan', 'L’occità', null, null, true),
 	('acuelh.eros.titol.1', 'acuelh', 'text', null, 0, 'Se parla.', 'Se parle.', 'Se habla.', 'Speak.', 'Es parla.', null, null, true),
@@ -489,6 +489,14 @@ La idea és aprendre alhora que comparteixo. No em presento com un guia suprem n
 	('amassa.teulas.instagram', 'amassa', 'bloc', 'amassa.teulas', 5, null, null, null, null, null, null, null, true),
 	('amassa.teulas.instagram.ligam', 'amassa', 'ligam', 'amassa.teulas.instagram', 0, 'Instagram', 'Instagram', 'Instagram', 'Instagram', 'Instagram', 'https://www.instagram.com/lo_ligam/', null, true),
 	('amassa.teulas.instagram.sota', 'amassa', 'text', 'amassa.teulas.instagram', 0, 'Los visuals de Lo Ligam.', 'Les visuels de Lo Ligam.', 'Las imágenes de Lo Ligam.', 'The visuals of Lo Ligam.', 'Les imatges de Lo Ligam.', null, null, true),
+	('imagina.titol', 'imagina', 'text', null, 0, 'S’imagina', 'S’imagine', 'Se imagina', 'Imagine', 'S’imagina', null, null, true),
+	('imagina.frasa', 'imagina', 'text', null, 0, 'A escriure : ta frasa sus S’imagina', 'À écrire : ta phrase sur S’imagine', null, null, null, null, null, false),
+	('imagina.teulas.constitucion', 'imagina', 'bloc', 'imagina.teulas', 1, null, null, null, null, null, null, null, true),
+	('imagina.teulas.constitucion.ligam', 'imagina', 'ligam', 'imagina.teulas.constitucion', 0, 'Constitucion', 'Constitution', 'Constitución', 'Constitution', 'Constitució', '/constitucion', null, true),
+	('imagina.teulas.constitucion.sota', 'imagina', 'text', 'imagina.teulas.constitucion', 0, 'La Constitucion de la Republica, en occitan.', 'La Constitution de la République, en occitan.', 'La Constitución de la República, en occitano.', 'The Constitution of the Republic, in Occitan.', 'La Constitució de la República, en occità.', null, null, true),
+	('imagina.teulas.carrieras', 'imagina', 'bloc', 'imagina.teulas', 2, null, null, null, null, null, null, null, true),
+	('imagina.teulas.carrieras.ligam', 'imagina', 'ligam', 'imagina.teulas.carrieras', 0, 'Las carrièras', 'Les rues', 'Las calles', 'Streets', 'Els carrers', '/imagina/carrieras', null, true),
+	('imagina.teulas.carrieras.sota', 'imagina', 'text', 'imagina.teulas.carrieras', 0, 'Las plaças e las carrièras, en occitan.', 'Les places et les rues, en occitan.', 'Las plazas y las calles, en occitano.', 'Squares and streets, in Occitan.', 'Les places i els carrers, en occità.', null, null, true),
 	('ideas.titol', 'ideas', 'text', null, 0, 'Boita d’idèas', 'Boîte à idées', 'Buzón de ideas', 'Idea box', 'Bústia d’idees', null, null, true),
 	('ideas.frasa', 'ideas', 'text', null, 0, 'Una idèa per melhorar Lo Ligam ? Escriu-la aquí : las legissi totas.', 'Une idée pour améliorer Lo Ligam ? Écris-la ici : je les lis toutes.', '¿Una idea para mejorar Lo Ligam? Escríbela aquí: las leo todas.', 'An idea to improve Lo Ligam? Write it here: I read them all.', 'Una idea per millorar Lo Ligam? Escriu-la aquí: les llegeixo totes.', null, null, true),
 	('ideas.compte', 'ideas', 'text', null, 0, 'Per mandar una idèa, cal un compte : es gratuit.', 'Pour envoyer une idée, il faut un compte : c’est gratuit.', 'Para enviar una idea hace falta una cuenta: es gratuita.', 'To send an idea, you need an account: it’s free.', 'Per enviar una idea cal un compte: és gratuït.', null, null, true),
