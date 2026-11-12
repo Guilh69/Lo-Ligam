@@ -766,11 +766,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 	const trobador = racina.querySelector('.trobador'), fenestra = racina.querySelector('.trobador-fenestra'), fenestraImg = fenestra.querySelector('img');
 	const vers = racina.querySelector('.trobador-vers');
 	const indiciFenestra = racina.querySelector('.trobador-indici');
-	let fenestraPossada = false; // la poussée d'arrivée (fenêtre fermée) n'a lieu qu'une fois par visite
-	let sensDefil = 1, poussadaFins = 0; // le sens du dernier défilement ; une poussée en cours (rien d'autre d'ici là)
-	let dit = false; // un doigt tient l'écran : on ne pousse pas sous lui
-	addEventListener('touchstart', () => (dit = true), { passive: true, signal });
-	['touchend', 'touchcancel'].forEach((ev) => addEventListener(ev, () => { dit = false; darrierDefil = performance.now(); }, { passive: true, signal }));
+	let pDobèrta = 0, tDobèrta = performance.now(); // l'ouverture qui avance d'elle-même (0 : fermée, 1 : ouverte)
 	if (calm) { vers.classList.add('vist'); trobador.classList.add('dobèrta'); }
 	const manifest = racina.querySelector('[data-emplenar]');
 	const bandel = racina.querySelector('.bandel'), bandelPista = racina.querySelector('.bandel-pista');
@@ -866,36 +862,21 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// Trobador : la fenèstra s'obrís fins a tota la pagina
 		const rt = trobador.getBoundingClientRect();
 		if (!calm && rt.top < H && rt.bottom > 0) {
-			const k = easeIO(clamp(-rt.top / (rt.height - H) * 1.25));
+			// L'image s'agrandit d'elle-même (Romain, 2026-11-12 : « ce que je veux, c'est que l'image
+			// s'agrandisse automatiquement ») : dès que la fenêtre arrive en haut de l'écran, elle s'ouvre
+			// en grand en 1,3 s, comme une animation, qu'on défile ou non ; en remontant au-dessus, elle se
+			// referme de même. Le défilement peut toujours l'ouvrir plus vite. Avant : la page était poussée
+			// (scrollTo) quand on s'arrêtait de défiler (04-11, puis à mi-course le 12-11), ce qui dépendait
+			// de la détection de l'arrêt et restait bloqué chez Romain.
+			const ara = performance.now();
+			const dtF = Math.min(100, ara - tDobèrta);
+			tDobèrta = ara;
+			pDobèrta = rt.top <= H * 0.03 ? Math.min(1, pDobèrta + dtF / 1300) : Math.max(0, pDobèrta - dtF / 900);
+			const k = Math.max(easeIO(clamp(-rt.top / (rt.height - H) * 1.25)), easeIO(pDobèrta));
 			// téléphone : fenêtre de départ plus large (comme acuelh.css), 2026-10-16
 			const tel = W <= 600;
 			const iy = lerp(tel ? 16 : 22, 0, k), ix = lerp(tel ? 12 : 32, 0, k), rad = lerp(28, 0, k);
 			if (indiciFenestra) indiciFenestra.style.opacity = String(clamp(1 - k * 5));
-			// Dès que la fenêtre est entièrement à l'écran (section arrivée en haut) et encore
-			// fermée, et que le défilement s'est arrêté un instant, il est poussé vite et en
-			// douceur jusqu'à la fenêtre ouverte et au vers : personne ne doit rester bloqué
-			// devant une fenêtre fermée dont il ne comprend pas le principe (Romain, 2026-11-04 :
-			// « dès qu'on la voit entièrement, ce soit poussé rapidement et que ça s'ouvre » ;
-			// avant : 2 s d'attente, section dans les 20 % du haut, course de 2,4 s, 2026-10-16).
-			// Un geste l'interrompt ; jamais en mode calme.
-			// Et partout dans l'ouverture (Romain, 2026-11-12 : « il faut que le mouvement se fasse
-			// automatiquement si la personne arrête de défiler ») : arrêté à mi-course, on finit le
-			// mouvement dans le sens où l'on allait, jusqu'à la fenêtre ouverte en descendant, jusqu'à
-			// la fenêtre fermée en remontant. Jamais pendant qu'un doigt tient l'écran.
-			const ara = performance.now();
-			if (rt.top <= H * 0.03 && !dit && ara > poussadaFins) {
-				const pausa = ara - darrierDefil;
-				let cibla = null;
-				if (!fenestraPossada && k < 0.08 && pausa > 160) cibla = 0.64;
-				else if (k >= 0.08 && k < 0.95 && pausa > 280) cibla = sensDefil < 0 ? 0 : 0.64; // 0,64 de la course : k ≈ 0,97
-				if (cibla !== null) {
-					fenestraPossada = true;
-					poussadaFins = ara + 1100;
-					const y = scrollY + rt.top + cibla * (rt.height - H);
-					if (lenis) lenis.scrollTo(y, { duration: 1 });
-					else scrollTo({ top: y, behavior: 'smooth' });
-				}
-			}
 			fenestra.style.clipPath = `inset(${iy}% ${ix}% round ${rad}px)`;
 			fenestraImg.style.transform = `scale(${lerp(1.3, 1, k)})`;
 			// Lo vèrs apareis sonque quand la fenèstra es pro larga per l'aculhir
@@ -911,7 +892,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		if (!viu) return;
 		lenis?.raf(t);
 		const sy = scrollY, vel = lenis ? lenis.velocity : 0;
-		if (Math.abs(sy - syAbans) > 0.5) { darrierDefil = performance.now(); sensDefil = Math.sign(sy - syAbans); }
+		if (Math.abs(sy - syAbans) > 0.5) darrierDefil = performance.now();
 		syAbans = sy;
 		ax = lerp(ax, mx, 0.16); ay = lerp(ay, my, 0.16);
 		anel.style.transform = `translate(${ax}px, ${ay}px)`;
