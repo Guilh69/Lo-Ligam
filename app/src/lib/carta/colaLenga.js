@@ -1023,6 +1023,10 @@ export function crearColaLenga(
 								py = y0 + dy * fs;
 							if (autres.some((b) => px - w < b[2] && px + w > b[0] && py - fs < b[3] && py + fs > b[1])) continue;
 							if (G.dom && (dx || dy) && !tc.isPointInPath(G.dom, px, py, 'evenodd')) continue;
+							// (la part francesa sola : lo nom entièr dins çò que se vei, o pas de
+							// nom ; retalhat per la frontièra o la còsta, se legissiá « ORSU »,
+							// « RA », « ELSÄSS » ; audit del 2026-11-12)
+							if (!this._entièrFr(G, px, py, w - 6)) continue;
 							pos = { x: px, y: py, fs, w };
 							break;
 						}
@@ -1089,7 +1093,8 @@ export function crearColaLenga(
 					for (const [dx, dy] of DECALATGES_NOM) {
 						const c = [zn.eti[0] + dx - w / 2, zn.eti[1] + dy - h / 2, zn.eti[0] + dx + w / 2, zn.eti[1] + dy + h / 2];
 						const cm = [c[0] - 10, c[1] - 9, c[2] + 10, c[3] + 9];
-						if (!ocup.some((q) => se(c, q)) && !caixas.some((q) => se(cm, q))) {
+						// (la part francesa sola : pas de nom copat per la frontièra, cf. _entièrFr)
+						if (!ocup.some((q) => se(c, q)) && !caixas.some((q) => se(cm, q)) && this._entièrFr(G, (c[0] + c[2]) / 2, (c[1] + c[3]) / 2, w / 2 - 3)) {
 							b = c;
 							break;
 						}
@@ -1111,6 +1116,24 @@ export function crearColaLenga(
 			if (clau !== this._caixasNoms?.clau) this._caixasNoms = caixas.length ? { clau, z, cs: caixas, L: caixaL, prio: this._prio ?? 0 } : null;
 		},
 
+		// Un nom (centrat en px, py, mièja largor mw, en coordenadas de la tela)
+		// es entièr dins çò que la jaça mòstra ? Sonque quand la lenga es
+		// reducha a sa part francesa : lo dessenh es alara retalhat pel contorn de
+		// França (retalharFranca), e un nom a caval sus la frontièra o la còsta
+		// sortiriá copat. Cinc ponches de la linha del tèxt, dins lo domeni e
+		// dins França. Dins los autres cases : totjorn verai.
+		_entièrFr(G, px, py, mw) {
+			if (!(this._franca && francaCargada() && G.dom && this._min)) return true;
+			const tc = (this._cxTest ??= document.createElement('canvas').getContext('2d')),
+				o = this._map.getPixelOrigin().add(this._min);
+			for (const k of [-1, -0.5, 0, 0.5, 1]) {
+				const x = px + k * mw;
+				if (!tc.isPointInPath(G.dom, x, py, 'evenodd')) return false;
+				const ll = this._map.unproject([x + o.x, py + o.y], this._zoom);
+				if (!dinsFranca(ll.lat, ll.lng)) return false;
+			}
+			return true;
+		},
 		_copiar(img, a) {
 			if (a < 0.005) return;
 			const cx = this._cx;
