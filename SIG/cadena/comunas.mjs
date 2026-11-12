@@ -12,6 +12,10 @@
 //   3. noms OSM (name:oc) des communes françaises, une requête par département ;
 //   4. noms occitans : OSM name:oc, sinon BdTopoc, sinon rien ; liste des
 //      désaccords et des manques pour Romain (SIG/comunas/noms-a-validar.csv) ;
+//      les noms écartés par Romain (SIG/comunas/noms-escartats.csv, 2026-11-12 :
+//      français à peine retouché, nom d'une commune voisine) comptent comme
+//      manquants ; comunas-escartar.mjs applique la même liste aux fichiers déjà
+//      fabriqués, sans relancer la chaîne ;
 //   5. simplification topologique (mapshaper, 20 m) et découpe par département ;
 //   6. écriture de app/static/data/comunas/<dep>.json et index.json ;
 //   7. comunas.py verificar : géométries valides, ni trou ni chevauchement.
@@ -23,6 +27,7 @@ import path from 'path';
 import zlib from 'zlib';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
+import { legirEscartats } from './comunas-escartar.mjs';
 
 const CADENA = path.dirname(fileURLToPath(import.meta.url));
 const BRUT = path.resolve(CADENA, '../brut/comunas');
@@ -201,6 +206,7 @@ async function principal() {
 	// celui de la commune 2026 ; sinon il est seulement montré à Romain, avec le
 	// nom français de la fiche BdTopoc entre parenthèses.
 	const bdt = lireBdtopoc();
+	const escartats = legirEscartats();
 	const revision = [['i', 'fr', 'oc_osm', 'oc_bdtopoc', 'retengut', 'motiu']];
 	const sources = { osm: 0, bdtopoc: 0, aran: 0 };
 	for (const [i, a] of Object.entries(atributs)) {
@@ -213,12 +219,16 @@ async function principal() {
 		}
 		a.oc = o ?? memes[0] ?? null;
 		if (o) sources.osm++; else if (memes[0]) sources.bdtopoc++;
+		// (un nom escartat per Romain : tractat coma mancant, sens res a la plaça ;
+		// sonque se es encara lo de la lista, una correccion de la font lo tòrna)
+		const escartat = a.oc != null && escartats.get(i)?.oc === a.oc;
+		if (escartat) a.oc = null;
 		// Aran : le nom officiel est déjà aranais (occitan) ; on le garde quand OSM n'a pas de name:oc.
 		if (a.d === 'ARAN' && !a.oc) { a.oc = a.fr; sources.aran++; }
 		const autres = lignes.filter((x) => clauFr(x.fr) !== clauFr(a.fr));
 		const colBdt = [...memes, ...autres.map((x) => `${x.oc} (BdTopoc : ${x.fr})`)].join(' / ');
 		let motiu = null;
-		if (!a.oc) motiu = 'mancant';
+		if (!a.oc) motiu = escartat ? 'escartat' : 'mancant';
 		else if (o && lignes.length && !lignes.some((x) => x.oc === o)) motiu = 'desacòrd';
 		else if (!o && memes.length > 1) motiu = 'desacòrd';
 		if (motiu) revision.push([i, a.fr, o, colBdt, a.oc, motiu]);
