@@ -138,6 +138,29 @@
 		const v = verbes.find((x) => c === x.href || c.startsWith(x.href + '/') || x.liens.some((h) => c === h || c.startsWith(h + '/')));
 		return v ? v.id : null;
 	});
+	// Essai du 2026-11-12 (/ensag/barra, chantier 37) : sur grand écran, trois formes de barre à
+	// comparer sur les vraies pages, au choix de Romain. « ?barra=vuda | plan | pagina » pose la
+	// forme pour le temps de la visite (elle suit de page en page) ; « ?barra=actuala » l'enlève.
+	// Sans ce paramètre, rien ne change. À retirer une fois la forme choisie.
+	//   vuda   : barre presque vide partout (décision du 15-10), les trois verbes restent au menu ;
+	//   plan   : les trois verbes à gauche, à côté du nom, séparés des réglages, sur toutes les pages ;
+	//   pagina : vide sur l'accueil (le titre est déjà le plan), « plan » sur les autres pages.
+	const FORMAS = ['vuda', 'plan', 'pagina'];
+	const CLAU_FORMA = 'lo-ligam-essai-barra';
+	let forma = $state('');
+	$effect(() => {
+		const p = page.url.searchParams.get('barra');
+		try {
+			if (p !== null) {
+				if (FORMAS.includes(p)) sessionStorage.setItem(CLAU_FORMA, p);
+				else sessionStorage.removeItem(CLAU_FORMA);
+			}
+			forma = sessionStorage.getItem(CLAU_FORMA) ?? '';
+		} catch {
+			forma = FORMAS.includes(p) ? p : '';
+		}
+	});
+	let formaVista = $derived(forma === 'pagina' ? (page.url.pathname === '/' ? 'vuda' : 'plan') : forma);
 	let botonOnglet = $state(null);
 	// La barre du bas est rattachée au <body> : sur l'accueil, l'enveloppe du bandeau glisse hors de
 	// l'écran quand on descend (transform), et un élément fixe dans un élément qui bouge n'est plus
@@ -160,7 +183,7 @@
 	});
 </script>
 
-<header class="top" class:avec-onglets={avecOnglets}>
+<header class="top" class:avec-onglets={avecOnglets} data-forma={formaVista || undefined}>
 	<div class="top-in">
 		<a class="brand" href="/" title={tx.acuelhLong} aria-label={`Lo Ligam, ${tx.acuelhLong}`}>
 			<Crotz talha={30} teula />
@@ -575,6 +598,33 @@
 		outline: 2px solid var(--t-aur);
 		outline-offset: 3px;
 		border-radius: 4px;
+	}
+	/* Essai « barra » (2026-11-12, voir le script) : à retirer une fois la forme choisie */
+	.top[data-forma='vuda'] .verbes {
+		display: none;
+	}
+	/* le plan à gauche : un filet fin le sépare du nom ; les réglages restent à droite. Il lui faut
+	   un peu plus de place qu'à droite (davantage encore avec le lien d'administration). */
+	.top[data-forma='plan'] .header-right {
+		justify-self: stretch;
+		justify-content: flex-end;
+	}
+	.top[data-forma='plan'] .verbes {
+		display: none;
+		gap: 1.7rem;
+		margin: 0 auto 0 0;
+		padding-left: 1.6rem;
+		border-left: 1px solid color-mix(in srgb, var(--t-tinta) 28%, transparent);
+	}
+	@container (min-width: 66rem) {
+		.top[data-forma='plan'] .header-right:not(:has(.admin-link)) .verbes {
+			display: flex;
+		}
+	}
+	@container (min-width: 76rem) {
+		.top[data-forma='plan'] .verbes {
+			display: flex;
+		}
 	}
 	/* téléphone : la navigation en bas */
 	.onglets-bas {
