@@ -515,7 +515,7 @@
 		container: joc / inline-size;
 		height: 100%;
 		--or: var(--t-aur);
-		--aur-clar: #ffd47f;
+		--aur-clar: var(--p-or-clair);
 		--sombre: rgba(8, 15, 17, 0.62);
 	}
 	/* téléphone : le titre, la photo (la hauteur qui reste), les mots, les

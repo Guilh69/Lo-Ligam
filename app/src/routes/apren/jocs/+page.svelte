@@ -196,13 +196,13 @@
 	.brica {
 		--b-joint: inset -1px 0 0 rgba(42, 26, 16, 0.2), inset 0 -0.12em 0 rgba(42, 26, 16, 0.2);
 		--fons-camp: color-mix(in srgb, var(--t-tinta) 4%, var(--t-fons));
-		--b1: #efe1c6;
+		--b1: var(--p-tuile);
 		--b2: #e6d3b1;
 		--b3: #f5ead6;
 		--b-mot: #f7f0e2;
-		--b-tinta: #2a1a10;
-		--b-dos: #ffd47f;
-		--b-dos-tinta: #2a1a10;
+		--b-tinta: var(--p-encre);
+		--b-dos: var(--p-or-clair);
+		--b-dos-tinta: var(--p-encre);
 	}
 	:global(:root[data-tema='clar']) .brica {
 		--b1: #e6d2ad;

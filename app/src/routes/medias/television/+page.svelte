@@ -198,7 +198,7 @@
 		padding: var(--esp-24);
 		border-radius: 28px;
 		background: linear-gradient(160deg, #f2c368, #c8932c 60%, #aa7d26);
-		color: #2a1a10;
+		color: var(--p-encre);
 		box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
 	}
 	.tv-ecran {
@@ -225,7 +225,7 @@
 	.tv-num {
 		font-family: var(--font-heading);
 		font-size: 1.6rem;
-		color: #eeaf34;
+		color: var(--p-or);
 	}
 	.tv-contengut .sorta {
 		color: #f2c368;
@@ -307,7 +307,7 @@
 		width: 3.2rem;
 		height: 3.2rem;
 		border-radius: 50%;
-		background: #2a1a10;
+		background: var(--p-encre);
 		color: #f2c368;
 		font-family: var(--font-heading);
 		font-size: 1.4rem;
@@ -338,7 +338,7 @@
 		outline: none;
 	}
 	.tv-boton:focus-visible .tv-boton-num {
-		outline: 3px solid #2a1a10;
+		outline: 3px solid var(--p-encre);
 		outline-offset: 3px;
 	}
 

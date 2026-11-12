@@ -153,7 +153,7 @@
 		cursor: pointer;
 	}
 	.b-gran:focus-visible {
-		outline: 2px solid #ffd47f;
+		outline: 2px solid var(--p-or-clair);
 		outline-offset: 2px;
 	}
 </style>

@@ -2100,7 +2100,7 @@
 	.chip.on,
 	.chip.activa {
 		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: #2a1a10;
+		--pc-tinta: var(--p-encre);
 	}
 
 	.chip {

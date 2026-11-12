@@ -925,7 +925,7 @@
 
 	.view[aria-pressed='true'] {
 		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: #2a1a10;
+		--pc-tinta: var(--p-encre);
 	}
 
 	/* Écran étroit : repère, titre, puis le choix d'affichage sur sa propre

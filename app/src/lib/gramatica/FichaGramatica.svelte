@@ -216,7 +216,7 @@
 		--pruna: #e3a0cf;
 		--oliva: #b8d27c;
 		--blau: #8cc3f0;
-		--pruna-aplat: #6b3a5b;
+		--pruna-aplat: var(--p-prune);
 		--oliva-aplat: #55702f;
 		--blau-aplat: #2f6a9c;
 		--pastilha: color-mix(in srgb, var(--t-aur) 16%, var(--t-fons-2));
