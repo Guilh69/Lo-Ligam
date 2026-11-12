@@ -416,6 +416,14 @@
 		font-size: clamp(2.6rem, 7vw, 5.5rem);
 		line-height: 1;
 		text-transform: uppercase;
+		/* un mot long (« videotrucada » en catalan) ne sort jamais du bloc (note 127 de Romain, 12-11) */
+		overflow-wrap: break-word;
+		hyphens: auto;
+	}
+	@media (max-width: 30rem) {
+		h1 {
+			font-size: clamp(1.9rem, 9vw, 2.6rem);
+		}
 	}
 	.chapeu {
 		max-width: 40ch;
