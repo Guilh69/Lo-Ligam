@@ -38,6 +38,22 @@
 	let monte = $state(false);
 	onMount(() => (monte = true));
 	let confetis = $derived(monte && ambianca.clar && ambianca.confetis && !ambianca.leugier && confetisSurPage(id));
+	// Essai du 2026-11-12 (/ensag/confetis, chantier 37) : « ?confetis=fin » montre les confettis raffinés
+	// (profondeur, cadence de repos) pour le temps de la visite ; « ?confetis=actuel » revient à ceux en place.
+	// Sans ce paramètre, rien ne change. À retirer une fois le choix fait.
+	let confetisFin = $state(false);
+	$effect(() => {
+		const p = page.url.searchParams.get('confetis');
+		try {
+			if (p !== null) {
+				if (p === 'fin') sessionStorage.setItem('lo-ligam-essai-confetis', 'fin');
+				else sessionStorage.removeItem('lo-ligam-essai-confetis');
+			}
+			confetisFin = sessionStorage.getItem('lo-ligam-essai-confetis') === 'fin';
+		} catch {
+			confetisFin = p === 'fin';
+		}
+	});
 	// la couche est DERRIÈRE le contenu : tant qu'elle est là, le cadre des pages (.pagina, .acuelh), plein, devient
 	// transparent (app.css, data-confetis) pour la laisser voir ; le fond de la page est celui du <body>
 	$effect(() => {
@@ -91,7 +107,7 @@
 
 {#if confetis}
 	{#await import('$lib/flotants/Flotants.svelte') then m}
-		<m.default mode="confettis" fond />
+		{#key confetisFin}<m.default mode="confettis" fond fin={confetisFin} />{/key}
 	{/await}
 {/if}
 

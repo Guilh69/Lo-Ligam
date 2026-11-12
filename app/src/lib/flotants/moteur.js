@@ -44,6 +44,11 @@ export function flotter(zone, elements, options = {}) {
 		maxTenus: 16, // combien de pièces la main tient à la fois
 		seuilLance: 28, // vitesse du pointeur (pixels par image à 60 par seconde, soit environ 1 700 px/s) au-delà de laquelle on lance
 		seuilPrise: 16, // et au-delà de laquelle on n'attrape plus rien (on ne cueille pas en balayant)
+		// sobriété (essai « confettis raffinés », 2026-11-12) : au repos (personne ne touche, rien n'a été lancé), la dérive
+		// fait quelques pixels par seconde : on n'affiche que « repos » images par seconde (0 = toutes), et on revient à
+		// la cadence de l'écran dès que la main bouge, tient ou lance une pièce
+		repos: 0,
+		filsAuBesoin: false, // le canevas des fils n'est affiché que lorsqu'un fil est tracé (sinon l'écran le recompose pour rien)
 		onAttrape: null,
 		onLache: null,
 		...options
@@ -55,7 +60,8 @@ export function flotter(zone, elements, options = {}) {
 	const entre = (a, b) => a + alea() * (b - a);
 
 	const pieces = elements.map((el, i) => {
-		const cr = entre(o.croisiere[0], o.croisiere[1]);
+		// (data-k : une pièce « lointaine » dérive moins vite qu'une proche ; 1 si rien n'est dit)
+		const cr = entre(o.croisiere[0], o.croisiere[1]) * (Number(el.dataset.k) || 1);
 		const ang = alea() * Math.PI * 2;
 		const w = el.offsetWidth;
 		const h = el.offsetHeight;
@@ -292,12 +298,14 @@ export function flotter(zone, elements, options = {}) {
 		p.vr *= 0.97 ** dt;
 	};
 	// les fils : de la main à chaque pièce tenue, fins, de la couleur de la pièce, plus pâles avec la distance
+	if (g && o.filsAuBesoin) o.fils.style.display = 'none';
 	const tracer = () => {
 		if (!g) return;
 		if (!nTenus || !pt) {
-			if (filsSales) { g.clearRect(0, 0, L, H); filsSales = false; }
+			if (filsSales) { g.clearRect(0, 0, L, H); filsSales = false; if (o.filsAuBesoin) o.fils.style.display = 'none'; }
 			return;
 		}
+		if (!filsSales && o.filsAuBesoin) o.fils.style.display = '';
 		g.clearRect(0, 0, L, H);
 		filsSales = true;
 		g.lineWidth = 0.9;
@@ -319,10 +327,17 @@ export function flotter(zone, elements, options = {}) {
 	// ── la boucle ──
 	let enRoute = 0;
 	let avant = performance.now();
+	let eveil = 0; // jusqu'à quand on garde la cadence de l'écran (la main vient de bouger, une pièce est tenue ou lancée)
 	const image = (t) => {
 		enRoute = 0;
-		const dt = Math.min(2.5, (t - avant) / 16.667);
+		// au repos : on saute les images en trop (rien n'est calculé ni redessiné)
+		if (o.repos && t >= eveil && t - avant < 1000 / o.repos - 4) {
+			if (!document.hidden) enRoute = requestAnimationFrame(image);
+			return;
+		}
+		const dt = Math.min(o.repos ? 4 : 2.5, (t - avant) / 16.667);
 		avant = t;
+		let vive = false;
 		// la pièce que la souris est sur le point d'attraper : elle grossit, ralentit et ne fuit plus
 		vCurseur *= 0.85 ** dt;
 		if (o.aimant) aimanter(t, dt);
@@ -399,6 +414,7 @@ export function flotter(zone, elements, options = {}) {
 					p.el.style.setProperty('--fade', fade.toFixed(2));
 				}
 				const v = Math.hypot(p.vx, p.vy);
+				if (v > 1.2 || p.tenu) vive = true;
 				// une pièce tenue suit la main, si vive soit-elle : elle n'a pas la limite des pièces libres
 				const vlim = p.tenu ? 60 : o.vmax;
 				if (v > vlim) { p.vx *= vlim / v; p.vy *= vlim / v; }
@@ -452,6 +468,7 @@ export function flotter(zone, elements, options = {}) {
 			if (!pt) fortes = 0;
 		}
 		tracer();
+		if (vive || nTenus) eveil = Math.max(eveil, t + 600);
 		if (!document.hidden) enRoute = requestAnimationFrame(image);
 	};
 	const relancer = () => {
@@ -479,6 +496,7 @@ export function flotter(zone, elements, options = {}) {
 		vP[1] = pvy;
 		fortes = vCurseur > o.seuilLance ? fortes + 1 : 0;
 		dernier = [x, y, t];
+		eveil = t + 1500; // la main bouge : cadence de l'écran pendant 1,5 s
 		if (o.aimant) return; // la main attrape (boucle d'animation) au lieu d'écarter
 		const b = zone.getBoundingClientRect();
 		const mx = x - b.left, my = y - b.top;
