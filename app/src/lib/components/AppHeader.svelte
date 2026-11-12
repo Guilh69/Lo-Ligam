@@ -138,29 +138,10 @@
 		const v = verbes.find((x) => c === x.href || c.startsWith(x.href + '/') || x.liens.some((h) => c === h || c.startsWith(h + '/')));
 		return v ? v.id : null;
 	});
-	// Essai du 2026-11-12 (/ensag/barra, chantier 37) : sur grand écran, trois formes de barre à
-	// comparer sur les vraies pages, au choix de Romain. « ?barra=vuda | plan | pagina » pose la
-	// forme pour le temps de la visite (elle suit de page en page) ; « ?barra=actuala » l'enlève.
-	// Sans ce paramètre, rien ne change. À retirer une fois la forme choisie.
-	//   vuda   : barre presque vide partout (décision du 15-10), les trois verbes restent au menu ;
-	//   plan   : les trois verbes à gauche, à côté du nom, séparés des réglages, sur toutes les pages ;
-	//   pagina : vide sur l'accueil (le titre est déjà le plan), « plan » sur les autres pages.
-	const FORMAS = ['vuda', 'plan', 'pagina'];
-	const CLAU_FORMA = 'lo-ligam-essai-barra';
-	let forma = $state('');
-	$effect(() => {
-		const p = page.url.searchParams.get('barra');
-		try {
-			if (p !== null) {
-				if (FORMAS.includes(p)) sessionStorage.setItem(CLAU_FORMA, p);
-				else sessionStorage.removeItem(CLAU_FORMA);
-			}
-			forma = sessionStorage.getItem(CLAU_FORMA) ?? '';
-		} catch {
-			forma = FORMAS.includes(p) ? p : '';
-		}
-	});
-	let formaVista = $derived(forma === 'pagina' ? (page.url.pathname === '/' ? 'vuda' : 'plan') : forma);
+	// Forme de la barre sur grand écran, choisie par Romain le 2026-11-12 (essai /ensag/barra) :
+	// sur l'accueil, barre presque vide (le titre est déjà le plan, décision du 15-10) ; ailleurs,
+	// les trois verbes à gauche, à côté du nom, séparés des réglages. Le menu les garde partout.
+	let formaVista = $derived(page.url.pathname === '/' ? 'vuda' : 'plan');
 	let botonOnglet = $state(null);
 	// La barre du bas est rattachée au <body> : sur l'accueil, l'enveloppe du bandeau glisse hors de
 	// l'écran quand on descend (transform), et un élément fixe dans un élément qui bouge n'est plus
@@ -599,7 +580,7 @@
 		outline-offset: 3px;
 		border-radius: 4px;
 	}
-	/* Essai « barra » (2026-11-12, voir le script) : à retirer une fois la forme choisie */
+	/* forme de la barre (voir le script) : vide sur l'accueil, le plan à gauche ailleurs */
 	.top[data-forma='vuda'] .verbes {
 		display: none;
 	}
