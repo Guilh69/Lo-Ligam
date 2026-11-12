@@ -11,7 +11,7 @@
 // (consolidation). Depuis le lot 2 (Romain, 05-11 : « des icônes pour tous les
 // mots »), chaque mot a le sien, salutations, jours, couleurs et petits mots
 // compris, avec des conventions communes (voir « Lot 2 » plus bas).
-// Tous les dessins se voient sur /ensag/dessenhs.
+// Tous les dessins se voient dans le tri (/admin/valider?vue=triar, lot « dessenhs »).
 
 // ── Petites formes réutilisées ───────────────────────────────────────────
 const r1 = (v) => Math.round(v * 10) / 10;

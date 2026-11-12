@@ -53,10 +53,10 @@ describe('registre des choix de design', () => {
 		}
 	});
 
-	it('les compléments ne visent que des clés qui existent et qui sont encore ouvertes', () => {
+	it('les compléments ne visent que des clés qui existent, ouvertes ou en place (« ou changer pour »)', () => {
 		for (const k of Object.keys(COMPLEMENTS)) {
 			expect(choix(k), k).toBeTruthy();
-			expect(OUVERTS, k).toContain(choix(k).statut);
+			expect([...OUVERTS, 'enplace'], k).toContain(choix(k).statut);
 		}
 	});
 
@@ -86,11 +86,11 @@ describe('registre des choix de design', () => {
 		for (let i = 1; i < liste.length; i++) expect(liste[i - 1].debloque).toBeGreaterThanOrEqual(liste[i].debloque);
 	});
 
-	it('la palette claire, rouverte le 07-11, est le choix qui en débloque le plus', () => {
+	it('un choix en place est tenu pour validé : il n’est plus à faire et ne bloque rien (« une seule porte », 12-11)', () => {
 		expect(choix('palette-claire').statut).toBe('enplace');
-		expect(bloquants(choix('couleurs-retour')).map((c) => c.clau)).toContain('palette-claire');
-		expect(bloquants(choix('tuiles-rubriques')).map((c) => c.clau)).toContain('palette-claire');
-		expect(afaire()[0].c.clau).toBe('palette-claire');
+		expect(OUVERTS).not.toContain('enplace');
+		expect(bloquants(choix('couleurs-retour')).map((c) => c.clau)).not.toContain('palette-claire');
+		expect(afaire().map(({ c }) => c.clau)).not.toContain('palette-claire');
 	});
 
 	it('le bouton principal est retenu comme pièce de papier, pas comme pilule (audit du 07-11)', () => {
@@ -126,7 +126,7 @@ describe('pages d’essai', () => {
 		}
 	});
 
-	it('les 24 pages d’essai de l’audit du 07-11 (celles du 12-11 tranchées le jour même) et les trois essais recensés le 12-11', () => {
-	expect(ESSAIS).toHaveLength(27);
+	it('les 24 pages d’essai de l’audit du 07-11 (celles du 12-11 tranchées le jour même) et les trois essais recensés le 12-11, moins les cinq retirés le 12-11 au soir', () => {
+	expect(ESSAIS).toHaveLength(22);
 	});
 });

@@ -28,19 +28,21 @@ import { COMPLEMENTS } from './registre-options.js';
 // code sans que Romain les ait jamais validées ; la question n'est pas « quoi explorer ? »
 // mais « on garde tel quel, ou on change ? ».
 //  - 'explorer'    : rien n'existe encore ;
-//  - 'enplace'     : existe dans le site, jamais validé par Romain ;
+//  - 'enplace'     : existe dans le site ; depuis le 12-11 (« une seule porte », cahier §11),
+//                    tenu pour validé tant que Romain ne le signale pas (« Comentar ») :
+//                    ce n'est plus une question, et il ne bloque aucun autre choix ;
 //  - 'comparaison' : des essais existent (page /ensag/…), Romain doit choisir ;
 //  - 'retenu'      : tranché (et appliqué, sauf `ecart`) ;
 //  - 'archive'     : périmé, remplacé ou abandonné ; gardé pour mémoire, avec la raison.
 export const STATUTS = {
 	explorer: { nom: 'À explorer', court: 'à explorer' },
-	enplace: { nom: 'En place, à valider', court: 'en place' },
+	enplace: { nom: 'En place, validé par défaut', court: 'en place' },
 	comparaison: { nom: 'En comparaison', court: 'en comparaison' },
 	retenu: { nom: 'Retenu', court: 'retenus' },
 	archive: { nom: 'Archivé', court: 'archivés' }
 };
-/** Les états où il reste quelque chose à décider. */
-export const OUVERTS = ['explorer', 'enplace', 'comparaison'];
+/** Les états où il reste quelque chose à décider (« en place » n'en est plus un depuis le 12-11). */
+export const OUVERTS = ['explorer', 'comparaison'];
 
 // Constructeurs courts : R retenu, C en comparaison, E à explorer, P en place (vérifié dans
 // le code), A archivé (périmé, avec sa raison).
@@ -281,8 +283,7 @@ const FAMILLES_BRUT = [
 						{ titol: 'Pilule pleine rouge', raison: 'L’ancien bouton, remplacé par la pièce de papier (06-11).' },
 						{ titol: 'Papier découpé aux bords irréguliers', raison: 'Jugé « un faux découpage raté » (06-11) ; la reprise a des bords nets et une ombre courte.' }
 					],
-					ecart: 'Le bouton « Contunhar » du parcours (rouge à coins de 6 px) et le lien btn-primary de la page de module n’ont pas encore la pièce de papier. Les formulaires gardent leurs champs inchangés.',
-					essais: [essai('/ensag/papier-botons', 'Essai du papier découpé (adopté)')]
+					ecart: 'Le bouton « Contunhar » du parcours (rouge à coins de 6 px) et le lien btn-primary de la page de module n’ont pas encore la pièce de papier. Les formulaires gardent leurs champs inchangés.'
 				}
 			),
 			R(
@@ -536,8 +537,7 @@ const FAMILLES_BRUT = [
 				'Le style B « papier découpé » : cinq dessins, un par famille, sur la couleur de la famille, animés dans Joiós, avec un petit rond « IA ».',
 				'Romain, 06-11 ; jocs/sala/Illustracion.svelte ; cahier §11',
 				{
-					ecartes: [{ titol: 'Les deux autres manières de l’essai', raison: 'Non retenues (06-11).' }],
-					essais: [essai('/ensag/illustracions-jocs', 'Essai des trois manières (adopté)')]
+					ecartes: [{ titol: 'Les deux autres manières de l’essai', raison: 'Non retenues (06-11).' }]
 				}
 			),
 			P(
@@ -561,8 +561,7 @@ const FAMILLES_BRUT = [
 				'Le composant MencionIA en trois formes : signature (illustration seule, Remira), petit rond « IA » (salle de jeux), ligne (Cultura), toutes liées à la page /illustracions.',
 				'Romain, 06-11 (« signature et ligne ») ; MencionIA.svelte ; cahier §11',
 				{
-					ecart: 'La cagnotte annoncée pour engager un illustrateur ou une illustratrice n’est pas encore ouverte (service de paiement non tranché).',
-					essais: [essai('/ensag/ia', 'Essai des trois façons (adopté)')]
+					ecart: 'La cagnotte annoncée pour engager un illustrateur ou une illustratrice n’est pas encore ouverte (service de paiement non tranché).'
 				}
 			)
 		]
@@ -597,8 +596,7 @@ const FAMILLES_BRUT = [
 				'Adoptée comme option « Relèu » de Remira › Paisatges : la photo entière, déformée par une carte de profondeur (WebGL), décalage de 1,2 % au plus, éteinte par défaut ; validée photo par photo dans Triar (138 photos sur 139).',
 				'Romain, 06-11 ; paisatges/releu.js ; cahier §11',
 				{
-					ecartes: [{ titol: 'Photo découpée en quatre plans', raison: 'Jugée « moche » ; Romain veut « naturel et discret » (06-11).' }],
-					essais: [essai('/ensag/prigondor', 'Essai de la profondeur (adopté sous forme de Relèu)')]
+					ecartes: [{ titol: 'Photo découpée en quatre plans', raison: 'Jugée « moche » ; Romain veut « naturel et discret » (06-11).' }]
 				}
 			),
 			R(

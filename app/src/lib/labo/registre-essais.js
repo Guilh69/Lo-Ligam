@@ -14,26 +14,6 @@
 
 export const ESSAIS = [
 	{
-		chemin: '/ensag/papier-botons',
-		titre: 'Boutons en papier découpé',
-		date: '2026-11-07',
-		choix: 'bouton-principal',
-		etat: 'adopte',
-		pret: 'oui',
-		raison: 'Adopté : le style est dans papier.css, importé par app.css (commits 6ee21f9b, fbaf9b21).',
-		suppression: 'Rien ne l’importe. Elle importe Icona, illustracions-jocs/Illustracion.svelte et le catalogue des jeux : à retirer avec « Illustrations des jeux ».'
-	},
-	{
-		chemin: '/ensag/illustracions-jocs',
-		titre: 'Illustrations des jeux',
-		date: '2026-11-06',
-		choix: 'illustrations-jeux',
-		etat: 'adopte',
-		pret: 'oui',
-		raison: 'Le style B « papier découpé » est en place dans la salle de jeux (jocs/sala/Illustracion.svelte).',
-		suppression: 'À retirer en même temps que « Boutons en papier découpé », qui importe son composant.'
-	},
-	{
 		chemin: '/ensag/papier-couleurs',
 		titre: 'Couleurs des pièces, thème sombre',
 		date: '2026-11-07',
@@ -102,36 +82,6 @@ export const ESSAIS = [
 		pret: 'oui',
 		raison: 'Adopté : animarText.js est utilisé par les leçons (CartaBlock, CartaTitol).',
 		suppression: 'Rien ne l’importe ; la charte §5quinquies la cite comme banc. Elle peut rester comme démonstration des onze effets, si tu veux.'
-	},
-	{
-		chemin: '/ensag/ia',
-		titre: 'Mention IA',
-		date: '2026-11-06',
-		choix: 'mention-ia',
-		etat: 'adopte',
-		pret: 'oui',
-		raison: 'Adopté : le composant MencionIA est posé à Remira, dans la salle de jeux et à Cultura.',
-		suppression: 'Rien ne la lie. Afica.svelte, qui n’est plus importé que par cette page, devient du code mort.'
-	},
-	{
-		chemin: '/ensag/dessenhs',
-		titre: 'Dessins de Remira',
-		date: '2026-11-06',
-		choix: 'dessins-remira',
-		etat: 'obsolete',
-		pret: 'oui',
-		raison: 'Remplacé : le tri se fait maintenant dans /admin/triar (lot « dessenhs »).',
-		suppression: 'Aucun import ; seulement des commentaires dans dessenhs.js et PILOTATGE.'
-	},
-	{
-		chemin: '/ensag/prigondor',
-		titre: 'Profondeur',
-		date: '2026-11-06',
-		choix: 'profondeur-photo',
-		etat: 'adopte',
-		pret: 'oui',
-		raison: 'Adopté sous une autre forme : le Relèu (Remira › Paisatges) en est la suite, validée photo par photo.',
-		suppression: 'releu.js n’importe pas la page. Deux images (static/ensag/prigondor) et une mention dans outils/prigondor/carta.py deviennent orphelines.'
 	},
 	{
 		chemin: '/ensag/scena',

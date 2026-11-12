@@ -139,7 +139,7 @@
 			{/each}
 		</ol>
 		<p class="total">
-			Au total : <strong>{n.retenu}</strong> tranchés ({nEcarts} pas encore appliqués partout), <strong>{n.enplace}</strong> en place à valider,
+			Au total : <strong>{n.retenu}</strong> tranchés ({nEcarts} pas encore appliqués partout), <strong>{n.enplace}</strong> en place (validés tant que tu ne les signales pas),
 			<strong>{n.comparaison}</strong> en comparaison, <strong>{n.explorer}</strong> à explorer
 			({n.archive} archivés à part).
 			{#if dev}<a class="outil" href="/esbos-apercu.html" data-sveltekit-reload>Voir le site sur téléphone et tablette</a>{/if}
