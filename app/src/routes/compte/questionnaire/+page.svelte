@@ -428,7 +428,6 @@
 	}
 
 	input[type='text'],
-	input[type='email'],
 	select {
 		font-family: var(--font-body);
 		font-size: 1rem;
