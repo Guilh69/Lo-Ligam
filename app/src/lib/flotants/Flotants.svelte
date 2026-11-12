@@ -24,12 +24,12 @@
 	// laissait transparaître sur les images. Les pièces contournent aussi les photos, cartes et illustrations
 	// (zones d'évitement), pour qu'elles ne se glissent pas dans les transparences. Rien du tout si l'appareil
 	// demande moins d'animations.
-	// fin (essai du 2026-11-12, /ensag/confetis) : les confettis raffinés. Rien n'est retiré : mêmes pièces, même main.
+	// Raffinés (choix de Romain du 2026-11-12, essai /ensag/confetis) : mêmes pièces, même main.
 	//  - de la profondeur : les petites pièces sont plus pâles, plus lentes et sans ombre (elles sont loin), les
 	//    grandes plus franches et plus vives (elles sont près) ; beaucoup de lointaines, peu de proches ;
 	//  - de la sobriété : 20 images par seconde au repos, la cadence de l'écran dès que la main bouge, et le
 	//    canevas des fils n'est affiché que lorsqu'un fil est tracé.
-	let { mode = 'confettis', fond = false, fin = false, onattrape = () => {} } = $props();
+	let { mode = 'confettis', fond = false, onattrape = () => {} } = $props();
 
 	let zone;
 	let fils = $state(null); // le canevas des fils fins qui relient la main aux confettis qu'elle tient
@@ -44,7 +44,6 @@
 		let s = 29;
 		const alea = () => (s = (s * 16807) % 2147483647) / 2147483647;
 		return Array.from({ length: n }, (_, k) => {
-			if (!fin) return { forme: FORMES[k % FORMES.length], style: `--t: ${((4 + alea() * 5) * (petit ? 0.85 : 1)).toFixed(1)}px; --c: ${TEINTES[Math.floor(alea() * TEINTES.length)]}` };
 			// la profondeur, de 0 (loin) à 1 (près) : davantage de lointaines que de proches ; en moyenne, la même taille
 			// (6,6 px) et la même présence (0,58) qu'avant : rien n'est retiré, c'est réparti autrement
 			const prof = alea() ** 1.5;
@@ -81,8 +80,8 @@
 				// secteur proche, les relie d'un fil fin, et un geste vif les lance dans tous les sens
 				aimant: !objets,
 				fils,
-				repos: fin && !objets ? 20 : 0,
-				filsAuBesoin: fin,
+				repos: objets ? 0 : 20,
+				filsAuBesoin: true,
 				vmax: objets ? 6 : 11,
 				collisions: objets,
 				fondu: fond,
@@ -144,7 +143,9 @@
 							if (r.width < 90 || r.height < 90 || r.bottom < -80 || r.top > innerHeight + 80) continue;
 							// un canevas ou une image qui recouvre l'écran (les calques de l'accueil) est un fond, pas un objet
 							if (r.width * r.height > 0.55 * innerWidth * innerHeight) continue;
-							zones.push({ l: r.left - b.left, t: r.top - b.top, r: r.right - b.left, b: r.bottom - b.top });
+							// « m » : une image ; « d » : la profondeur sur laquelle une pièce s'y efface peu à peu (moteur.js)
+							const d = Math.max(40, Math.min(110, 0.16 * Math.min(r.width, r.height)));
+							zones.push({ l: r.left - b.left, t: r.top - b.top, r: r.right - b.left, b: r.bottom - b.top, m: 1, d });
 							n++;
 						}
 					}
@@ -223,7 +224,7 @@
 		opacity: calc(var(--o, 0.6) * var(--fade, 1));
 		filter: drop-shadow(0 1.5px 1px rgba(20, 10, 5, 0.25));
 	}
-	/* essai « raffiné » : une pièce lointaine n'a pas d'ombre */
+	/* une pièce lointaine n'a pas d'ombre */
 	.c.loin {
 		filter: none;
 	}

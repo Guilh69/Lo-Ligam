@@ -76,7 +76,8 @@ export function flotter(zone, elements, options = {}) {
 			cr, ang, dang: (alea() - 0.5) * 0.004, // sa vitesse de croisière et son changement de cap
 			rot: alea() * 360, vr: 0, spin: (0.8 + alea() * 2.6) * (alea() < 0.5 ? -1 : 1), // degrés par seconde
 			s: 1, sc: 1, // échelle actuelle et visée
-			fade: 1, // transparence due aux blocs de texte (option fondu)
+			fade: 1, // transparence due aux blocs de texte et aux images (option fondu)
+			fadeE: 1, // la dernière valeur écrite dans la page
 			minuteur: 0,
 			// l'aimant : tenue par la main ou non, orbite autour du pointeur, date avant laquelle elle ne se laisse pas rattraper
 			tenu: false, refus: 0, orb: 0, orbR: 0, orbV: 0,
@@ -267,6 +268,9 @@ export function flotter(zone, elements, options = {}) {
 		let ty = pt[1] + Math.sin(p.orb) * p.orbR;
 		const m = p.r + 8;
 		for (const R of zonesTexte) {
+			// une image ne retient pas la ronde : la pièce suit la main et s'y enfonce en s'effaçant (sinon la ronde
+			// s'écrase contre un mur invisible, le bord du rectangle de la carte)
+			if (R.m) continue;
 			if (tx <= R.l - m || tx >= R.r + m || ty <= R.t - m || ty >= R.b + m) continue;
 			const dg = tx - (R.l - m), dd = R.r + m - tx, dh = ty - (R.t - m), db = R.b + m - ty;
 			const dm = Math.min(dg, dd, dh, db);
@@ -382,13 +386,7 @@ export function flotter(zone, elements, options = {}) {
 				else if (o.attrapables && curseur && vCurseur < 10 && Math.hypot(p.x - curseur[0], p.y - curseur[1]) < p.r + 70) { p.vx *= 0.97 ** dt; p.vy *= 0.97 ** dt; } // elle ralentit quand la souris approche
 				// le texte dense : on le contourne, sans mur (une pièce lancée peut passer derrière,
 				// puis elle est repoussée vers la sortie la plus proche)
-				let fade = 1;
 				for (const R of zonesTexte) {
-					// dans le bloc lui-même : la pièce s'efface sur 14 px (elle passe « derrière », sans se voir entre les lettres)
-					if (o.fondu) {
-						const di = Math.min(p.x - R.l, R.r - p.x, p.y - R.t, R.b - p.y);
-						if (di > 0) fade = Math.min(fade, Math.max(0, 1 - di / 14));
-					}
 					const m = p.r + 8;
 					const g = R.l - m, d = R.r + m, h = R.t - m, b = R.b + m;
 					if (p.x <= g || p.x >= d || p.y <= h || p.y >= b) continue;
@@ -409,10 +407,6 @@ export function flotter(zone, elements, options = {}) {
 					da = Math.atan2(Math.sin(da), Math.cos(da));
 					p.ang += da * 0.04 * dt;
 				}
-				if (o.fondu && Math.abs(fade - p.fade) > 0.04) {
-					p.fade = fade;
-					p.el.style.setProperty('--fade', fade.toFixed(2));
-				}
 				const v = Math.hypot(p.vx, p.vy);
 				if (v > 1.2 || p.tenu) vive = true;
 				// une pièce tenue suit la main, si vive soit-elle : elle n'a pas la limite des pièces libres
@@ -422,6 +416,26 @@ export function flotter(zone, elements, options = {}) {
 			p.x += p.vx * dt;
 			p.y += p.vy * dt;
 			p.rot += (p.vr + p.spin / 60) * dt;
+			// derrière un bloc de texte ou une image, la pièce s'efface (elle ne se voit pas entre les lettres ni dans les
+			// transparences d'une carte). Sans à-coup (Romain, 12-11 : près de la carte, « que ça ne fasse pas comme un bug ») :
+			// sur 14 px pour le texte, mais en s'enfonçant peu à peu dans une image (zone « m », profondeur « d »), et toujours
+			// en fondu dans le temps, si vite qu'elle aille
+			if (o.fondu) {
+				let cible = 1;
+				for (const R of zonesTexte) {
+					const di = Math.min(p.x - R.l, R.r - p.x, p.y - R.t, R.b - p.y);
+					if (di <= 0) continue;
+					const f = Math.max(0, 1 - di / (R.m ? R.d : 14));
+					cible = Math.min(cible, R.m ? f * f * (3 - 2 * f) : f);
+				}
+				p.fade += (cible - p.fade) * Math.min(1, 0.1 * dt);
+				if (Math.abs(cible - p.fade) < 0.02) p.fade = cible;
+				if (Math.abs(p.fade - p.fadeE) > 0.03 || (p.fade === cible && p.fade !== p.fadeE)) {
+					p.fadeE = p.fade;
+					p.el.style.setProperty('--fade', p.fade.toFixed(2));
+				}
+				if (p.fade !== cible) vive = true;
+			}
 			if (p.etat === 'fuite') {
 				if (p.x < -p.r - 60 || p.x > L + p.r + 60 || p.y < -p.r - 60 || p.y > H + p.r + 60) {
 					p.etat = 'absent';
