@@ -769,15 +769,6 @@
 	.paginas a:hover {
 		border-color: var(--t-aur);
 	}
-	.linha {
-		display: grid;
-		grid-template-columns: 1fr auto;
-		align-items: start;
-		gap: var(--esp-12);
-	}
-	.linha .boton {
-		margin-top: calc(1.4em + var(--esp-8));
-	}
 	.botons {
 		display: flex;
 		flex-wrap: wrap;
@@ -798,14 +789,5 @@
 	.autre a:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;
-	}
-
-	@container (width < 26rem) {
-		.linha {
-			grid-template-columns: 1fr;
-		}
-		.linha .boton {
-			margin-top: 0;
-		}
 	}
 </style>

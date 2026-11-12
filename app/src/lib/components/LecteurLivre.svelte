@@ -737,7 +737,6 @@
 		background: #fbf8f0;
 		box-shadow: 0 8px 26px color-mix(in srgb, #000 40%, transparent);
 	}
-	.cargament,
 	.err {
 		position: absolute;
 		inset: 0;

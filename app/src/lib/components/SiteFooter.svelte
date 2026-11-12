@@ -238,11 +238,6 @@
 		text-decoration-color: var(--t-accion);
 	}
 
-	.footer-legal-leu em {
-		font-style: normal;
-		margin-left: 0.3rem;
-	}
-
 	a:focus-visible {
 		outline: 2px solid var(--t-aur);
 		outline-offset: 3px;

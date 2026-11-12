@@ -254,6 +254,36 @@ export const ESSAIS = [
 		pret: 'attendre',
 		raison: 'Adopté : la logique « téléphone d’abord » est sur les vraies pages (barre du bas sur téléphone, trois verbes sur ordinateur, commit 158f9b05).',
 		suppression: 'Rien ne l’importe ; elle partage lib/palette (BandeauxEssai) avec les autres pages palette-*.'
+	},
+	{
+		chemin: '/ensag/carta-papier',
+		titre: 'La carte en papier découpé (couche des dialectes)',
+		date: '2026-11-08',
+		choix: 'style-carte',
+		etat: 'confirmer',
+		pret: 'attendre',
+		raison: 'Essai du 08-11 (quatre modes de coutures et un fondu de couleur entre parlers) : aucune mention dans le cahier ni dans PILOTATGE, la vraie carte n’a pas été changée.',
+		suppression: 'À supprimer avec lib/carta/papier.js (seule cette page l’importe) si la piste est abandonnée.'
+	},
+	{
+		chemin: '/ensag/pieces-defilement',
+		titre: 'La carte qui s’assemble au défilement',
+		date: '2026-11-12',
+		choix: 'accueil',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'PILOTATGE 34 : essai en ligne le 12-11, jugé « bof » par Romain ; il regarde et dit s’il garde le mouvement lié au défilement.',
+		suppression: 'Elle importe lib/data/carta-dialectes.js, que la carte des radios utilise aussi : ne pas le retirer avec la page.'
+	},
+	{
+		chemin: '/ensag/motius-simbols',
+		titre: 'Motifs-symboles qui se posent au défilement',
+		date: '2026-11-12',
+		choix: 'accueil',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'PILOTATGE 35 : refait le soir du 12-11 après un « non, fais mieux » (neuf tuiles de papier découpé, un territoire chacune) ; Romain regarde.',
+		suppression: 'Rien ne l’importe ; elle n’utilise que des composants et styles partagés (AppHeader, Crotz, papier.css, palette.js).'
 	}
 	// Les trois essais du 12-11 (/ensag/barra, /ensag/confetis, /ensag/fenestra) ont été tranchés le jour même
 	// par Romain (barre « selon la page », confettis raffinés, fenêtre d'origine gardée et retouchée) : pages retirées.
