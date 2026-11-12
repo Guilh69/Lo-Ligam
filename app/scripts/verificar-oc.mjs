@@ -110,12 +110,15 @@ if (args[0] === '--fr' && args.length > 1) {
 // Los noms de luòcs (API top'Òc de lo Congrès) : vila o país, del francés cap a l'occitan
 //   node scripts/verificar-oc.mjs --topo Strasbourg:city Pays-Bas:country Auch:32 64001
 // (nom:city, nom:country, nom:despartament, o un còdi de comuna INSEE sol)
+// top'Òc cobrís pas que dotze despartaments (09, 12, 31, 32, 33, 40, 46, 47, 64, 65, 81, 82) :
+// endacòm mai, « No toponym found » vòl dire « fòra cobertura », pas « nom fals ». E garda los
+// còdis sens lo zèro del davant (Arièja : « 9145 », pas « 09145 ») : lo levam aicí (audit del 2026-11-12).
 if (args[0] === '--topo' && args.length > 1) {
 	for (const a of args.slice(1)) {
 		const url = new URL('https://api.locongres.org/topoc.php');
 		url.searchParams.set('key', clau);
 		const [nom, t] = a.split(':');
-		if (/^\d[\dAB]\d{3}$/.test(a)) url.searchParams.set('code', a);
+		if (/^\d[\dAB]\d{3}$/.test(a)) url.searchParams.set('code', a.replace(/^0/, ''));
 		else {
 			url.searchParams.set('name', nom);
 			url.searchParams.set('lang', 'fr');
