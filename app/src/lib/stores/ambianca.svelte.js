@@ -88,24 +88,9 @@ function clarEfectiu() {
 	return e.forçarClar || e.tema === 'clar' || (e.tema === 'sistema' && e.sistèmaClar);
 }
 
-// ESSAI du 2026-11-12 (/ensag/sombre-neutre) : ?sombre=neutre allume le thème sombre sans teinte pour l'onglet
-// (sessionStorage), ?sombre=actuel l'éteint. À retirer avec l'essai (bloc de app.css, app.html, cette fonction).
-function sombreEssai() {
-	try {
-		const q = new URL(location.href).searchParams.get('sombre');
-		if (q === 'neutre') sessionStorage.setItem('lo-ligam-essai-sombre', 'neutre');
-		else if (q === 'actuel') sessionStorage.removeItem('lo-ligam-essai-sombre');
-		return sessionStorage.getItem('lo-ligam-essai-sombre') === 'neutre';
-	} catch {
-		return false;
-	}
-}
-
 function aplicar() {
 	if (!browser) return;
 	const d = document.documentElement.dataset;
-	if (sombreEssai()) d.sombre = 'neutre';
-	else delete d.sombre;
 	d.tema = clarEfectiu() ? 'clar' : 'sorne';
 	d.dalt = e.dalt ? 'on' : 'off';
 	d.fons = String(e.fons);

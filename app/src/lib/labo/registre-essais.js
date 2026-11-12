@@ -256,16 +256,6 @@ export const ESSAIS = [
 		suppression: 'Rien ne l’importe ; elle partage lib/palette (BandeauxEssai) avec les autres pages palette-*.'
 	},
 	{
-		chemin: '/ensag/sombre-neutre',
-		titre: 'Thème sombre : brun actuel ou neutre',
-		date: '2026-11-12',
-		choix: 'palette-sombre',
-		etat: 'actif',
-		pret: 'non',
-		raison: 'Demandé par Romain le 12-11 (audit C : le sombre est brun #22100a alors que la consigne du 07-11 dit noir, gris et blanc sans teinte). Les vraies pages s’ouvrent en neutre avec ?sombre=neutre (retour : ?sombre=actuel) ; rien ne change par défaut.',
-		suppression: 'Si l’actuel est gardé : retirer la page, le bloc « ESSAI du 2026-11-12 » d’app.css, la fonction sombreEssai d’ambianca.svelte.js et les lignes « ESSAI » d’app.html. Si le neutre est adopté : reporter ses valeurs dans le bloc « sorne » d’app.css, couvrir le nuanceur de l’accueil (motor.js) et les couleurs de la carte, puis retirer l’essai.'
-	},
-	{
 		chemin: '/ensag/carta-papier',
 		titre: 'La carte en papier découpé (couche des dialectes)',
 		date: '2026-11-08',

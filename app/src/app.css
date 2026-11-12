@@ -150,35 +150,6 @@
 :root[data-tema='clar'][data-confetis='on'] .acuelh #fons {
 	z-index: -2;
 }
-/* ESSAI du 2026-11-12 (/ensag/sombre-neutre, audit C, question de Romain : « essai neutre ») : le thème sombre
-   sans teinte, comme le clair l'est devenu le 08-11 (consigne du 07-11 : noir, gris et blanc ; l'or seulement en
-   touche). Inactif par défaut : il s'allume avec ?sombre=neutre (retenu pour l'onglet, ?sombre=actuel l'éteint),
-   voir lib/stores/ambianca.svelte.js. Ne change que les jetons ; les valeurs en dur restent brunes.
-   Pour l'adopter : remplacer les valeurs du bloc « sorne » plus haut par celles-ci et retirer ce bloc.
-   Pour l'abandonner : retirer ce bloc, le réglage de ambianca.svelte.js, app.html et la page de l'essai. */
-:root[data-sombre='neutre']:not([data-tema='clar']) {
-	--t-fons: #131313;
-	--t-fons-2: #1e1e1e;
-	--t-tinta: #f4f4f4;
-	--t-tinta-2: rgba(244, 244, 244, 0.76);
-	--t-linha: rgba(244, 244, 244, 0.18);
-	--t-vel: rgba(19, 19, 19, 0.74);
-	--t-aur: var(--p-or);
-	--t-aur-clar: var(--p-or-clair);
-	--t-braise: transparent;
-	--t-braise-or: transparent;
-	--t-veire: color-mix(in srgb, var(--t-fons-2) 78%, transparent);
-	--t-veire-fort: color-mix(in srgb, var(--t-fons-2) 92%, transparent);
-	--l-carta: var(--t-fons-2);
-}
-:root[data-sombre='neutre'][data-dalt='on']:not([data-tema='clar']) {
-	--t-tinta-2: rgba(244, 244, 244, 0.88);
-	--t-linha: rgba(244, 244, 244, 0.3);
-}
-/* le fond dessiné de l'accueil est un canevas brun : en gris pour l'essai (les étoiles dorées y passent en gris aussi) */
-:root[data-sombre='neutre']:not([data-tema='clar']) .acuelh #fons {
-	filter: grayscale(1);
-}
 /* Verre des éléments posés sur la carte (rail, panneau qui s'ouvre à côté,
    boutons ronds) : sans trait, un fond un peu plus chaud que la carte (une
    pointe de terracotta) et légèrement transparent (Romain, 2026-10-15). Suit
