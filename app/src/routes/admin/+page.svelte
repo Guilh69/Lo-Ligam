@@ -5,6 +5,11 @@
 	// ce qui attend l'IA ; puis ce qui avance en fond ; enfin les ateliers,
 	// rangés par usage. Chaque note mène à son endroit, sur sa page (?nota=…).
 	// L'ancienne page d'entrée (le contrôle des verrous) est sur /admin/verrolhs.
+	// « Une seule porte » (Romain, 2026-11-12, cahier §11) : tout ce qui attend Romain
+	// est ici. En tête, ses décisions : les questions de l'IA, cinq au plus à la fois
+	// (les plus anciennes d'abord), avec leurs réponses toutes prêtes en boutons et
+	// « Plus tard ». Une réponse que l'IA n'a pas encore appliquée reste visible dans
+	// « Pas encore appliqué » jusqu'à ce que l'IA la range (remarcas.mjs --legida).
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { notas, cargarNotas, sòrta, bon, pasEncara, respondre, suprimir, tèxteACopiar, simulacion, ligamNota } from '$lib/talhier/notas.svelte.js';
@@ -17,14 +22,18 @@
 	// temps qu'ils durent ») : la liste vient du registre du Laboratòri, un essai adopté ou retiré en sort seul
 	const essais = ESSAIS.filter((e) => e.etat === 'actif').sort((a, b) => b.date.localeCompare(a.date));
 	let regarder = $derived(notas.lista.filter((r) => sòrta(r) === 'regarder'));
-	let questions = $derived(notas.lista.filter((r) => sòrta(r) === 'question'));
+	// les décisions : cinq au plus à la fois, les plus anciennes d'abord (les autres attendent leur tour)
+	const MAX_DECISIONS = 5;
+	let questions = $derived(notas.lista.filter((r) => sòrta(r) === 'question').sort((a, b) => a.id - b.id));
+	let decisions = $derived(questions.slice(0, MAX_DECISIONS));
+	let aSegre = $derived(questions.length - decisions.length);
 	let tasNòtas = $derived(notas.lista.filter((r) => sòrta(r) === 'nòta'));
 	let espèra = $derived(notas.lista.filter((r) => ['espèra', 'respost'].includes(sòrta(r))));
 
 	// ce qui attend ailleurs dans l'administration
 	let perfils = $state(0);
 	let ideas = $state(0);
-	let uèi = $derived(regarder.length + questions.length + tasNòtas.length + (perfils ? 1 : 0) + (ideas ? 1 : 0));
+	let uèi = $derived(regarder.length + tasNòtas.length + (perfils ? 1 : 0) + (ideas ? 1 : 0));
 	// la pile de validation (lot 4) : ce qui attend un « Bon » ; les fiches de
 	// grammaire qui restent à valider en font partie
 	let enPila = $derived(pila.cargat ? cartas().length : null);
@@ -87,6 +96,14 @@
 		if (err) return (error = err);
 		tampar();
 	}
+	// une réponse toute prête (ou « Plus tard ») : la décision part à l'IA d'un seul geste
+	async function causir(r, responsa) {
+		if (mandant) return;
+		mandant = true;
+		const err = await respondre(r, responsa);
+		mandant = false;
+		if (err) error = err;
+	}
 	async function copiar(r) {
 		try {
 			await navigator.clipboard.writeText(tèxteACopiar(r));
@@ -140,13 +157,42 @@
 	<header>
 		<h1>Per tu</h1>
 		<p class="intro">
-			Ce qui attend ta main, puis ce qui attend l’IA. Pour épingler une note : sur n’importe quelle page du site, touche « Comentar » dans la barre à droite, puis l’endroit ;
-			choisis « Per l’IA » (Claude ou Mistral la relève à la prochaine séance et te répond ici) ou « Nòta » (pour toi).
+			Tout ce qui t’attend est ici, et nulle part ailleurs : cinq décisions au plus à la fois, puis ce que l’IA t’a répondu. Ce qui est déjà en place sur le site est tenu pour bon.
+			S’il te déplaît : sur la page, touche « Comentar » dans la barre à droite, puis l’endroit, et choisis « Per l’IA » (Claude ou Mistral la relève à la prochaine séance et te répond ici) ou « Nòta » (pour toi).
 		</p>
 	</header>
 
 	{#if notas.error}<p class="msg error" role="alert">{notas.error}</p>{/if}
 	{#if error}<p class="msg error" role="alert">{error}</p>{/if}
+
+	<h2>Tes décisions{decisions.length ? ` · ${decisions.length}` : ''}</h2>
+	{#if !notas.cargat && !notas.error}
+		<p class="calme">Un momenton…</p>
+	{:else if !decisions.length}
+		<p class="calme">Aucune décision ne t’attend.</p>
+	{:else}
+		<ul class="lista">
+			{#each decisions as r (r.id)}
+				<li>
+					<p class="sòrta acte">Décision · {r.autor ?? 'IA'} <span class="quand">{quand(r.created_at)}</span></p>
+					{#if r.extrait || r.pagina !== '/'}{@render endreit(r)}{/if}
+					<p class="nòta">{r.tèxte}</p>
+					{#if obèrt?.r.id === r.id}
+						{@render escritura()}
+					{:else}
+						<div class="accions">
+							{#each r.opcions ?? [] as o, i (i)}
+								<button type="button" class="agir" onclick={() => causir(r, o)} disabled={mandant}>{o}</button>
+							{/each}
+							<button type="button" class="segond" onclick={() => obrir(r, 'responsa')}><span lang="oc">{r.opcions?.length ? 'Autra responsa' : 'Respondre'}</span></button>
+							<button type="button" class="segond" onclick={() => causir(r, 'Plus tard')} disabled={mandant}>Plus tard</button>
+						</div>
+					{/if}
+				</li>
+			{/each}
+		</ul>
+		{#if aSegre}<p class="ajuda">{aSegre === 1 ? 'Une autre attend son tour' : `${aSegre} autres attendent leur tour`} : elles viendront quand celles-ci seront répondues.</p>{/if}
+	{/if}
 
 	<a class="entrada-pila" href="/admin/valider?vue=pila">
 		<span class="nom"><span lang="oc">La pila</span>{#if enPila !== null}&nbsp;<span class="xifra">· {enPila}</span>{/if}</span>
@@ -175,19 +221,6 @@
 							<button type="button" class="agir" onclick={() => bon(r)}>Bon</button>
 							<button type="button" class="segond" onclick={() => obrir(r, 'precision')}>Pas encara</button>
 						</div>
-					{/if}
-				</li>
-			{/each}
-
-			{#each questions as r (r.id)}
-				<li>
-					<p class="sòrta acte">Question · {r.autor ?? 'IA'} <span class="quand">{quand(r.created_at)}</span></p>
-					{#if r.extrait || r.pagina !== '/'}{@render endreit(r)}{/if}
-					<p class="nòta">{r.tèxte}</p>
-					{#if obèrt?.r.id === r.id}
-						{@render escritura()}
-					{:else}
-						<div class="accions"><button type="button" class="agir" onclick={() => obrir(r, 'responsa')}>Respondre</button></div>
 					{/if}
 				</li>
 			{/each}
@@ -223,27 +256,14 @@
 		</ul>
 	{/if}
 
-	{#if essais.length}
-		<h2>Essais à manier · {essais.length}</h2>
-		<p class="ajuda">
-			Les pages d’essai en cours, la plus récente en premier : chaque titre ouvre l’essai. Un essai sort de cette liste dès qu’il est adopté ou retiré.
-			<a href="/admin/labo">Tous les essais et les choix de design</a>
-		</p>
-		<ul class="fons">
-			{#each essais as e (e.chemin)}
-				<li><a href={e.chemin}>{e.titre}</a> : {e.raison}</li>
-			{/each}
-		</ul>
-	{/if}
-
 	{#if espèra.length}
-	<h2>En attente de l’IA · {espèra.length}</h2>
-		<p class="ajuda">Relevées au début de la prochaine séance. Pour une demande tout de suite, « Copiar » met la note toute prête à coller dans la conversation.</p>
+	<h2>Pas encore appliqué · {espèra.length}</h2>
+		<p class="ajuda">Tes réponses et tes demandes que l’IA n’a pas encore faites. Elle les relève au début de sa prochaine séance, les applique, puis te le dit dans « Aujourd’hui ». Pour une demande tout de suite, « Copiar » met la note toute prête à coller dans la conversation.</p>
 		<ul class="lista calma">
 			{#each espèra as r (r.id)}
 				<li>
 					<p class="sòrta">
-						{sòrta(r) === 'respost' ? 'Respondut, l’IA va lire' : r.de_romain ? 'Ta demande' : `Remarque de ${r.autor ?? 'quelqu’un'} (relecture)`}
+						{sòrta(r) === 'respost' ? 'Ta réponse, pas encore appliquée' : r.de_romain ? 'Ta demande, pas encore faite' : `Remarque de ${r.autor ?? 'quelqu’un'} (relecture)`}
 						<span class="quand">{quand(r.created_at)}</span>
 					</p>
 					{@render endreit(r)}
@@ -264,7 +284,18 @@
 		</ul>
 	{/if}
 
-	<h2>En fond</h2>
+	{#if essais.length}
+		<h2>Essais en cours · {essais.length}</h2>
+		<p class="ajuda">À regarder quand tu veux, le plus récent en premier. Quand l’un d’eux demande ton avis, il arrive dans « Tes décisions ».</p>
+		<ul class="fons">
+			{#each essais as e (e.chemin)}
+				<li><a href={e.chemin}>{e.titre}</a></li>
+			{/each}
+		</ul>
+	{/if}
+
+	<h2>Quand tu veux</h2>
+	<p class="ajuda">Rien d’obligatoire : des tris à faire à ton rythme.</p>
 	<ul class="fons">
 		{#if fichas}<li><a href="/admin/valider?vue=pila&lot=gramatica">{fichas} {fichas > 1 ? 'fiches' : 'fiche'} de grammaire</a> à relire et valider, une à une (<a href="/apren/gramatica">le sommaire</a>)</li>{/if}
 		<li><a href="/admin/valider?vue=triar">Triar</a> : les dessins de Remira, puis <a href="/admin/valider?vue=triar&lot=releu">le relief des paysages</a>, à garder ou à refaire</li>
