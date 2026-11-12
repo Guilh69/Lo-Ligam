@@ -254,6 +254,36 @@ export const ESSAIS = [
 		pret: 'attendre',
 		raison: 'Adopté : la logique « téléphone d’abord » est sur les vraies pages (barre du bas sur téléphone, trois verbes sur ordinateur, commit 158f9b05).',
 		suppression: 'Rien ne l’importe ; elle partage lib/palette (BandeauxEssai) avec les autres pages palette-*.'
+	},
+	{
+		chemin: '/ensag/barra',
+		titre: 'Barre du haut : où ranger les trois verbes',
+		date: '2026-11-12',
+		choix: 'barre-haut',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'Audit de l’accueil (chantier 37) : trois formes de barre sur grand écran (presque vide, plan à gauche, selon la page), à essayer sur les vraies pages par « ?barra= ». En attente du choix de Romain ; recommandation : selon la page.',
+		suppression: 'Après le choix : garder la forme retenue dans AppHeader.svelte, retirer le bloc « Essai barra » (script, attribut data-forma, styles) et cette page. Rien d’autre ne l’importe.'
+	},
+	{
+		chemin: '/ensag/confetis',
+		titre: 'Confettis raffinés : profondeur et sobriété',
+		date: '2026-11-12',
+		choix: 'ambiances-accueil',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'Audit de l’accueil (chantier 37) : mêmes confettis, avec de la profondeur (petites pièces pâles et lentes, grandes plus franches) et 20 images par seconde au repos ; coût mesuré de 72,7 % à 25 % d’un cœur sur Amassa. À comparer par « ?confetis=fin ». En attente du choix de Romain.',
+		suppression: 'Après le choix : si retenu, passer « fin » par défaut dans routes/+layout.svelte et retirer le paramètre d’essai ; sinon retirer la propriété « fin » de Flotants.svelte et les options « repos » et « filsAuBesoin » de moteur.js. Puis retirer cette page.'
+	},
+	{
+		chemin: '/ensag/fenestra',
+		titre: 'Fenêtre de Max Rouquette : deux intégrations',
+		date: '2026-11-12',
+		choix: 'accueil',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'Audit de l’accueil (chantier 37) : la photo est déjà une fenêtre de pierre ; deux façons de la poser sans fenêtre dessinée ni voile (dans la page, sur la pierre ; une troisième, plein écran, écartée à la relecture de Joan), à voir sur l’accueil par « ?fenestra= ». En attente du choix de Romain ; recommandation : sur la pierre.',
+		suppression: 'Après le choix : porter la forme retenue dans routes/+page.svelte à la place de la section « trobador » (et retirer son bloc de motor.js et d’acuelh.css), ou retirer lib/acuelh/TrobadorEssai.svelte et le paramètre d’essai. Puis retirer cette page.'
 	}
 ];
 

@@ -126,7 +126,7 @@ describe('pages d’essai', () => {
 		}
 	});
 
-	it('les 24 pages d’essai du dossier /ensag sont toutes recensées', () => {
-	expect(ESSAIS).toHaveLength(24);
+	it('les 27 pages d’essai recensées (24 de l’audit du 07-11, plus les trois du 12-11)', () => {
+	expect(ESSAIS).toHaveLength(27);
 	});
 });

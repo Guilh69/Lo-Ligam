@@ -39,6 +39,8 @@
 	// modifiable sur place ; sa destination, elle, est fixée ici.
 	import { VISIO } from '$lib/data/planSite.js';
 	import MiegTres from '$lib/acuelh/MiegTres.svelte';
+	import TrobadorEssai from '$lib/acuelh/TrobadorEssai.svelte';
+	import { page } from '$app/state';
 	import '$lib/acuelh/acuelh.css';
 
 	let { data } = $props();
@@ -73,6 +75,11 @@
 		ar: `المقاعد: ${n}`
 	});
 	const LIB_COMPLET = { oc: 'cors complèt', fr: 'cours complet', es: 'clase completa', en: 'fully booked', ca: 'classe completa', ar: 'اكتمل العدد' };
+
+	// Essai du 2026-11-12 (/ensag/fenestra, chantier 37) : « ?fenestra=pagina | peira » montre une autre
+	// façon de poser la photo et le vers de Max Rouquette ; sans ce paramètre, rien ne change. À retirer après le choix.
+	const FENESTRAS = ['pagina', 'peira'];
+	let fenestraEssai = $derived(FENESTRAS.includes(page.url.searchParams.get('fenestra')) ? page.url.searchParams.get('fenestra') : '');
 
 	let racina;
 	let motor = $state.raw(null);
@@ -319,7 +326,10 @@
 		<!-- IV. Le milieu : les trois mondes (Se parla · S'apren · Amassa) -->
 		<MiegTres />
 		<!-- VII. Le troubadour (Max Rouquette), qui clôt « Amassa » -->
-		<section class="trobador">
+		{#if fenestraEssai}
+			<TrobadorEssai forma={fenestraEssai} />
+		{:else}
+		<section class="trobador" id="trobador">
 			<div class="trobador-pin">
 				<div class="trobador-fenestra" hidden={amagat('acuelh.trobador.fenestra')} use:editar={'acuelh.trobador.fenestra'}>
 					<img src={fen.url} alt={alt(fen)} loading="lazy" decoding="async" width={fen.largor} height={fen.nautor} />
@@ -336,6 +346,7 @@
 				<div class="trobador-indici" aria-hidden="true"><span></span></div>
 			</div>
 		</section>
+		{/if}
 
 		<!-- VIII. L'appel : les cours, en fin de parcours -->
 		<section class="crida centrat" id="crida" data-revela>
