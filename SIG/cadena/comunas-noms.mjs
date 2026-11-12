@@ -7,7 +7,9 @@
 //
 // Entrada : app/static/data/comunas/<dep>.json (TopoJSON fabricat per comunas.mjs).
 // Sortida : app/static/data/comunas/noms.json
-//   { font, c: [[nom francés, nom occitan o 0 se es lo meteis, lon, lat, populacion, dep], …] }
+//   { font, c: [[nom francés, nom occitan (0 se es lo meteis, null se cap es pas conegut), lon, lat, populacion, dep], …] }
+// (null : la carta aficha pas lo nom en occitan, « quand tu ne sais pas, tu effaces », Romain 2026-10-10 ;
+// la comuna demòra trobabla per la recèrca amb son nom francés ; audit del 2026-11-12)
 // (coordenadas a 3 decimalas : environ 100 m, pro per una distància)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,7 +25,7 @@ for (const { d } of index.deps) {
 		const q = g.properties;
 		if (!q?.p) continue;
 		const fr = q.fr || q.oc;
-		c.push([fr, q.oc && q.oc !== fr ? q.oc : 0, r3(q.p[0]), r3(q.p[1]), q.pop ?? 0, d]);
+		c.push([fr, q.oc ? (q.oc !== fr ? q.oc : 0) : null, r3(q.p[0]), r3(q.p[1]), q.pop ?? 0, d]);
 	}
 }
 const sortida = path.join(DIR, 'noms.json');

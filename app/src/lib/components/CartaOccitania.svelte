@@ -1279,7 +1279,8 @@
 			nomsLengas?.c.length ?? 0,
 			ids.map((id) => id + (nomésFrança(id) ? '·fr' : '')).join(','),
 			fs.map(([id, f]) => id + f.vilas.length).join(','),
-			francaCargada()
+			francaCargada(),
+			lang === 'fr'
 		].join('|');
 		if (clau !== clauNoms) {
 			clauNoms = clau;
@@ -1293,8 +1294,11 @@
 				.map(([nom, lon, lat, pop, i]) => ({ id: nomsLengas.lengas[i], nom, lon, lat, pop }))
 				.filter((c) => dins.has(c.id) && !(nomésFrança(c.id) && francaCargada() && !dinsFranca(c.lat, c.lon)) && !nomenada(c))
 				.map((c) => ({ fr: c.nom, oc: c.nom, lon: c.lon, lat: c.lat, renc: 4, pop: c.pop ?? 1000, dep: c.id }));
+			// (una comuna sens forma occitana coneguda : pas de nom francés a la
+			// plaça ; en interfàcia francesa, lo nom francés es lo bon)
+			const comunasOc = lang === 'fr' ? (nomsComunas ?? []) : (nomsComunas ?? []).filter((c) => !c.sens);
 			listaNoms = [
-				...(nomsComunas ?? []),
+				...comunasOc,
 				...fs.flatMap(([id, f]) => f.vilas.map((v) => ({ fr: v.nom, oc: v.nom, lon: v.lon, lat: v.lat, renc: v.renc ?? 4, pop: POP_RENC[v.renc] ?? 2500, dep: id }))),
 				...comunasLengas
 			];
@@ -1587,11 +1591,17 @@
 				.catch(() => null),
 			Promise.all(['18px Limelight', "italic 500 14px 'Cormorant Garamond'", '400 12px Luciole'].map((f) => document.fonts?.load(f))).catch(() => {})
 		]);
+		// (la font dels noms e dels ponches, dins lo panèl « Fonts » : IGN, OSM, BdTopoc)
+		if (d?.font) map?.attributionControl?.addAttribution(d.font);
 		// (las vilas de la carta gardan lor nom : « Rodés », pas « Rodès »)
+		// « sens » : cap de forma occitana coneguda (oc0 null dins noms.json ; 0 :
+		// la meteissa que lo francés). Lo nom s'aficha pas sus la carta occitana
+		// (« quand tu ne sais pas, tu effaces », Romain 2026-10-10) ; la comuna
+		// demòra trobabla per la recèrca.
 		nomsComunas = (d?.c ?? []).map(([fr, oc0, lon, lat, pop, dep]) => {
 			const v = vilaCarta(fr, lon, lat);
 			const oc = v ?? (oc0 || null);
-			return { fr, oc, lon, lat, pop, dep, renc: v ? rencVila(v) : 4, k: [normC(fr), ...(oc ? [normC(oc)] : []), ...(oc0 && oc0 !== oc ? [normC(oc0)] : [])] };
+			return { fr, oc, sens: oc0 === null && !v, lon, lat, pop, dep, renc: v ? rencVila(v) : 4, k: [normC(fr), ...(oc ? [normC(oc)] : []), ...(oc0 && oc0 !== oc ? [normC(oc0)] : [])] };
 		});
 		if (qComuna) cercarComuna(qComuna);
 		majNomsComunas();
