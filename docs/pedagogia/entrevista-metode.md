@@ -18,3 +18,12 @@ Pour les règles oui et c'est la force de parler et entendre. On sait que Cultur
 
 [IA] Écouter puis répéter est son geste de base. Les règles s'installent par la bouche et l'oreille, pas par l'explication. Il accepte de laisser des subtilités de côté pour continuer à parler. À éclaircir : « l'accent français » (celui des voix d'Assimil, ou le sien ?).
 [IA] Besoin pratique exprimé : enregistrer facilement, avec un volume et une qualité réguliers d'un fichier à l'autre.
+
+## Q3. Comment s'est fait le passage entre répéter seul et parler à une vraie personne ? Et « l'accent français » ?
+
+**Romain (13-11)** : « Au début répéter les audios de ma leçon, ensuite faire les audios de mes publications --> ensuite rajouter des mots occitan dans mon français (un peu par l'humour et par des petites phrases : bona nuèche, adiou...) --> puis un premier appel en occitan où je ne pensais pas pouvoir le faire mais j'ai réussi --> des cours avec le CFPO et lo collègi d'occitania et aujourd'hui capable d'avoir des discussions en mettant quelques mots français.
+
+Pour l'accent français les 2 mais pour moi je peux bien reproduire l'accent méridional mais il faut que je me débloque car même s'il est naturel pour moi j'ai comme une honte de le laisser s'exprimer fort chez moi. »
+
+[IA] Son chemin est une échelle d'audace, chaque marche un peu plus exposée : répéter seul, s'enregistrer, glisser des mots dans son français, un premier appel, des cours, des discussions. Le mélange avec le français est admis à chaque marche.
+[IA] La honte de l'accent, chez lui, fait écho à celle de son grand-père pour le « patois » (récit §7). À manier avec tact, et seulement s'il le souhaite.
