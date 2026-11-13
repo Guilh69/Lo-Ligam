@@ -14,7 +14,6 @@
 	import MenuVel from './MenuVel.svelte';
 	import { lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { LANGUES } from '$lib/styles/palette.js';
 	import { VISIO, PLAN } from '$lib/data/planSite.js';
 	import { esAdmin } from '$lib/adminStore';
 	import { session, authReady, pseudoCompte } from '$lib/authStore';
@@ -23,13 +22,6 @@
 
 	let { children } = $props();
 	let lang = $derived(langStore.current);
-	// la pièce de la langue choisie prend la couleur de sa langue (palette.js, LANGUES) ; deux couleurs = pièce coupée en deux
-	const couleurLangue = (code) => {
-		const l = LANGUES[code];
-		if (!l) return undefined;
-		const fons = l.fons.length > 1 ? `linear-gradient(90deg, ${l.fons[0]} 50%, ${l.fons[1]} 50%)` : l.fons[0];
-		return `--pc-fons: ${fons}; --pc-tinta: ${l.tinta};`;
-	};
 
 	let menuDobèrt = $state(false);
 	let botonMenu = $state(null);
@@ -69,6 +61,8 @@
 	// sont pas déjà dans la bascule, en ordre alphabétique (Romain, 2026-10-26).
 	let segonda = $derived(langStore.segonda);
 	let autras = $derived(SEGONDAS.filter((c) => c !== segonda));
+	// le bouton de langue bascule entre l'occitan et la seconde langue : il montre celle où l'on passe
+	let cible = $derived(lang === 'oc' ? segonda : 'oc');
 	const GLOBE_ETIQ = { oc: 'Autras lengas', fr: 'Autres langues', es: 'Otros idiomas', en: 'Other languages', ca: 'Altres llengües', ar: 'لغات أخرى' };
 	let globeEtiq = $derived(GLOBE_ETIQ[lang] ?? GLOBE_ETIQ.oc);
 	function basculaGlobe() {
@@ -210,9 +204,16 @@
 			<AmbiancaPanel />
 
 			<div class="lengas">
-				<div class="lang-toggle" class:en-avant={crida} role="group" aria-label="Lenga / Langue">
-					<button type="button" class="pc pc-2" aria-pressed={lang === 'oc'} style={lang === 'oc' ? couleurLangue('oc') : undefined} lang="oc" onclick={() => causirLenga('oc')}>Òc</button>
-					<button type="button" class="pc pc-2" aria-pressed={lang === segonda} style={lang === segonda ? couleurLangue(segonda) : undefined} lang={segonda} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
+				<div class="lang-toggle" class:en-avant={crida}>
+					<!-- Un seul bouton uni, qui bascule d'une langue à l'autre (Romain, 2026-11-13, note 128) :
+					     il montre la langue où l'on passe. Rouge du logo, comme tout ce qui se clique (règle B). -->
+					<button
+						type="button"
+						class="pc lang-boto"
+						lang={cible}
+						title={LENGAS[cible].nom}
+						aria-label="{LENGAS[cible].curt} · {LENGAS[cible].nom}"
+						onclick={() => causirLenga(cible)}>{LENGAS[cible].curt}</button>
 					{#if crida}
 						<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
 					{/if}
@@ -421,57 +422,22 @@
 		white-space: nowrap;
 	}
 
-	/* L'interrupteur Òc / Fr (Romain, 2026-11-07 : « ils sont séparés, on ne comprend pas que
-	   c'est un interrupteur… on bascule de l'une à l'autre ») : une seule piste de la couleur du
-	   carton, la langue choisie est une pièce d'ocre posée dessus, l'autre est à plat. L'autre
-	   langue remplace « Fr » quand on la choisit au globe (logique inchangée). */
-	.lengas .lang-toggle {
-		gap: 0;
-		padding: 3px;
-		border-radius: 12px;
-		background: color-mix(in srgb, var(--t-tinta) 10%, transparent); /* la piste : l'encre à 10 %, sans troisième couleur (odd-squid-52) */
-		box-shadow: none;
-	}
-	.lengas .lang-toggle button {
-		--pc-fons: transparent;
-		--pc-tinta: var(--t-tinta);
-		--pc-lev: none;
-		--r: 9px;
-		height: 1.85rem;
-		min-width: 2.7rem;
-		padding: 0 0.75rem;
-		box-shadow: none;
-	}
-	.lengas .lang-toggle button:hover:not(:disabled),
-	.lengas .lang-toggle button:active:not(:disabled) {
-		transform: none;
-		box-shadow: none;
-	}
-	.lengas .lang-toggle button[aria-pressed='true'],
-	.lengas .lang-toggle button[aria-pressed='true']:hover:not(:disabled) {
-		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: var(--pc-or-tinta);
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-	}
-
-	/* la bascule Òc / Fr : deux pièces de papier, l'or marque la langue choisie */
+	/* La langue (Romain, 2026-11-13, note 128 : « la couleur ne va pas et la séparation oc et autre
+	   langue n'a pas été demandée ; un bouton uni qui bascule d'une langue à l'autre ») : un seul bouton,
+	   aplat du rouge du logo (--t-accion, la couleur de ce qui se clique, règle B ; défaut de .pc) sous un
+	   texte crème. Il montre la langue où l'on passe ; sa largeur ne bouge pas d'une langue à l'autre. */
 	.lang-toggle {
 		display: inline-flex;
-		gap: 0.5rem;
-		border-radius: 12px;
+		border-radius: 9px;
 	}
 
-	.lang-toggle button {
+	.lang-boto {
 		--r: 9px;
 		min-height: 0;
+		min-width: 3rem;
 		height: 2.2rem;
 		padding: 0 0.85rem;
-		font-size: 0.78rem;
-	}
-
-	.lang-toggle button[aria-pressed='true'] {
-		--pc-fons: var(--pc-or-fons);
-		--pc-tinta: #2a1a10;
+		font-size: 0.82rem;
 	}
 
 	/* Globe : les langues de découverte (es / en / ca), à côté de la bascule. */
@@ -679,8 +645,9 @@
 			min-width: 2.75rem;
 			height: 2.75rem;
 		}
-		.top.avec-onglets .lang-toggle button {
-			height: 2.35rem;
+		.top.avec-onglets .lang-boto {
+			min-width: 2.75rem;
+			height: 2.75rem;
 		}
 		.top.avec-onglets .brand {
 			min-height: 2.75rem;
@@ -717,7 +684,7 @@
 		.lang-crida { animation: none; }
 	}
 
-	.lang-toggle button:focus-visible,
+	.lang-boto:focus-visible,
 	.globe-boton:focus-visible,
 	.globe-panel button:focus-visible,
 	.compte-ligam:focus-visible,
