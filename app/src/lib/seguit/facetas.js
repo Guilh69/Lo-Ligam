@@ -85,7 +85,10 @@ export const RUBRIQUES = [
 				'38 modules écrits, aucun marqué relu ; voix : le studio est prêt, 0 phrase enregistrée sur environ 770.',
 				'PILOTATGE chantiers 46 et 51'
 			),
-			acc: E(),
+			acc: M(
+				'Aucun audit d’accessibilité complet ni test automatique : la déclaration du site le dit elle-même.',
+				'app/src/routes/accessibilitat/+page.svelte (déclaration du 26 octobre)'
+			),
 			vie: B(
 				'Le carnet vit dans le navigateur sans compte ; rien ne part sur les serveurs avant l’inscription.',
 				'cahier des charges §11, décision du 2026-10-24 (carnet sans compte)'
@@ -108,14 +111,23 @@ export const RUBRIQUES = [
 		],
 		cases: {
 			xp: E(),
-			tec: E(),
+			tec: B(
+				'Sept fichiers de test couvrent les jeux (serpent, paniers, pause, intrus, salle de jeux).',
+				'app/src/lib/jocs/*.test.js et app/src/lib/jocs/sala/*.test.js'
+			),
 			aut: E(),
 			lan: M(
 				'« L’intrús » est vérifié par un script contre l’API de lo Congrès ; les autres jeux n’ont pas de contrôle écrit.',
 				'app/scripts/intrus-verificar.mjs ; PILOTATGE chantiers 27 et 33'
 			),
-			acc: E(),
-			vie: E(),
+			acc: M(
+				'Aucun audit d’accessibilité complet ni test automatique : la déclaration du site le dit elle-même.',
+				'app/src/routes/accessibilitat/+page.svelte (déclaration du 26 octobre)'
+			),
+			vie: B(
+				'Le code des jeux n’appelle pas la base de données ; les en-têtes de sécurité du site s’appliquent.',
+				'app/src/lib/jocs (aucun import de supabase) ; app/src/hooks.server.js'
+			),
 			fai: E(),
 			cou: E()
 		}
@@ -148,8 +160,14 @@ export const RUBRIQUES = [
 				'Des noms de lieux inconnus ont dû être corrigés ; la relecture du pays mentonnais reste à faire.',
 				'PILOTATGE chantier 36 ; revisions/2026-10-12-zona-mentonasca.md'
 			),
-			acc: E(),
-			vie: E(),
+			acc: M(
+				'Aucun audit d’accessibilité complet ni test automatique : la déclaration du site le dit elle-même.',
+				'app/src/routes/accessibilitat/+page.svelte (déclaration du 26 octobre)'
+			),
+			vie: M(
+				'La carte charge des fonds de carte et une aide à la saisie de lieux hébergés ailleurs : l’adresse IP du visiteur leur est transmise (c’est dit dans la page de confidentialité).',
+				'app/svelte.config.js (img-src, connect-src) ; app/src/routes/confidencialitat/+page.svelte'
+			),
 			fai: E(),
 			cou: E('Héberger soi-même les photos satellite (environ 6 Go) est une question ouverte, non chiffrée.')
 		}
@@ -167,14 +185,26 @@ export const RUBRIQUES = [
 		],
 		cases: {
 			xp: E(),
-			tec: E(),
+			tec: B(
+				'La Constitution a ses tests : même nombre de blocs en français et en occitan, chiffres et renvois identiques, ancres.',
+				'app/src/lib/constitucion/textes.test.js (11 tests)'
+			),
 			aut: X(
 				'Les premières pièces, qui viennent de Romain, ne sont pas encore là.',
 				'PILOTATGE chantier 41'
 			),
-			lan: E(),
-			acc: E(),
-			vie: E(),
+			lan: M(
+				'Mots clés vérifiés par l’API de lo Congrès (environ 330 lemmes, 950 formes) ; les mots ordinaires n’ont pas été relus un par un et Romain n’a pas relu.',
+				'app/src/lib/constitucion/LEGIR-ME.md (sections « Comment l’occitan a été fait » et « À valider »)'
+			),
+			acc: M(
+				'Aucun audit d’accessibilité complet ni test automatique : la déclaration du site le dit elle-même.',
+				'app/src/routes/accessibilitat/+page.svelte (déclaration du 26 octobre)'
+			),
+			vie: B(
+				'Pages de texte : aucun appel à la base, aucune donnée de visiteur ; les en-têtes de sécurité du site s’appliquent.',
+				'app/src/lib/constitucion et app/src/routes/imagina (aucun import de supabase) ; app/src/hooks.server.js'
+			),
 			fai: E(),
 			cou: E()
 		}
@@ -193,13 +223,19 @@ export const RUBRIQUES = [
 				'Romain les dit « déjà bien abouties » (13-11).',
 				'docs/vision/facetas-romain-2026-11-13.md'
 			),
-			tec: E(),
+			tec: M(
+				'Un seul fichier de test (16 tests) pour toute la rubrique.',
+				'app/src/lib/cultura/cultura.test.js'
+			),
 			aut: E(),
 			lan: M(
 				'Deux doutes de vocabulaire du cinéma restent à trancher.',
 				'app/src/lib/seguit/seguit.js, chantier « cultura »'
 			),
-			acc: E(),
+			acc: M(
+				'Aucun audit d’accessibilité complet ni test automatique : la déclaration du site le dit elle-même.',
+				'app/src/routes/accessibilitat/+page.svelte (déclaration du 26 octobre)'
+			),
 			vie: E(),
 			fai: E(),
 			cou: E()
@@ -213,11 +249,20 @@ export const RUBRIQUES = [
 		ia: ['Rien tant que la modération n’est pas réglée.'],
 		cases: {
 			xp: E(),
-			tec: E(),
+			tec: M(
+				'Les règles d’accès en base sont vérifiées (54 contrôles SQL du 25 octobre), mais le code côté site n’a aucun test.',
+				'supabase/verificacion-grops.sql ; app/src/lib/grops (aucun fichier de test)'
+			),
 			aut: E(),
 			lan: E(),
-			acc: E(),
-			vie: E(),
+			acc: M(
+				'Aucun audit d’accessibilité complet ni test automatique : la déclaration du site le dit elle-même.',
+				'app/src/routes/accessibilitat/+page.svelte (déclaration du 26 octobre)'
+			),
+			vie: B(
+				'Règles d’accès par table, vérifiées en jouant visiteur, membre, personne suspendue et administrateur ; la liste des groupes est aussi contrôlée par le script de verrous.',
+				'supabase/supabase-grops.sql ; supabase/verificacion-grops.sql ; app/scripts/verificar-rls.mjs'
+			),
 			fai: X(
 				'La modération demande du temps et Romain est seul : c’est la facette la moins sûre pour lui.',
 				'docs/vision/facetas-romain-2026-11-13.md'
