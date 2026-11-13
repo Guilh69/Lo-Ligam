@@ -13,6 +13,8 @@ export const TALHIÈRS = [
 		grop: 'Contenu',
 		ateliers: [
 			{ href: '/admin/valider', oc: 'A validar', fr: 'garder, refaire ou répondre, une carte à la fois : la pile de l’IA, l’occitan des pages, le tri des dessins et des photos' },
+			// libellé en français : pas de mot d'occitan nouveau sans vérification (lot 2 du studio, 2026-11-13)
+			{ href: '/admin/voix', oc: 'Studio de voix', fr: 'enregistrer ta voix pour les phrases du parcours A1, une à une' },
 			{ href: '/admin/textes', oc: 'Tèxtes', fr: 'tous les textes modifiables du site, rangés par endroit' },
 			{ href: '/admin/musica', oc: 'Musica', fr: 'trier les artistes de l’espace musique' },
 			{ href: '/admin/designs', oc: 'Designs', fr: 'les designs : ajouter, publier, réordonner' },
@@ -54,6 +56,7 @@ export const VERROLHS = { href: '/admin/verrolhs', oc: 'Verrolhs', fr: 'vérifie
 export const LARGEURS = {
 	'/admin': 'normal',
 	'/admin/valider': 'etroit',
+	'/admin/voix': 'etroit',
 	'/admin/seguit': 'normal',
 	'/admin/libret': 'normal',
 	'/admin/labo': 'large',

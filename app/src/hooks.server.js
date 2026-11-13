@@ -65,11 +65,13 @@ export async function handle({ event, resolve }) {
 	// externes (ressources occitanes, cartes) : juste le domaine.
 	response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-	// Aucune de ces capacités n'est utilisée par le site : on les refuse
-	// pour que rien ne puisse les demander à l'insu du visiteur.
+	// Ces capacités sont refusées pour que rien ne puisse les demander à l'insu
+	// du visiteur. Seule exception : le micro, pour le site lui-même et aucun
+	// cadre venu d'ailleurs (studio de voix de l'administration, 2026-11-13) ;
+	// le navigateur demande quand même l'accord avant de l'ouvrir.
 	response.headers.set(
 		'Permissions-Policy',
-		'camera=(), microphone=(), geolocation=(), payment=(), usb=()'
+		'camera=(), microphone=(self), geolocation=(), payment=(), usb=()'
 	);
 
 	// Double sécurité avec frame-ancestors de la CSP, pour les vieux
