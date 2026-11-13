@@ -50,3 +50,11 @@ Origine de chaque principe : [R] vient de Romain (question), [S] appuyé par la 
 6. **Nommer la vergonha et l'illégitimité**, dès l'accueil, pour les trois profils (locuteurs, néolocuteurs, curieux). [R Q3, Q4, récit §7]
 7. **Lire tôt de vrais textes.** Poser ses propres questions et discuter, ce qui forme le plus, c'est la plus-value du cours en visio : le parcours en ligne y prépare et y renvoie, il ne cherche pas à le remplacer. [R Q4 ; Romain, 13-11 : « Cet aspect est la plus-value d'un cours en visio »]
 8. **Se tester, espacer, expliquer chaque erreur en une ligne, peu mais souvent.** [S Roediger et Karpicke 2006 ; Van der Kleij 2015 ; Sudina et Plonsky 2024]
+
+## Suite de l'interview : le parcours pour Romain lui-même (2026-11-13, après les huit principes)
+
+### Q5. Dans ton occitan d'aujourd'hui, qu'est-ce qui te résiste ?
+
+Réponse de Romain, mot pour mot : « Les accords, la conjugaison et certains mots de vocabulaire du quotidien »
+
+Lecture de L'amic (interprétation, pas une parole de Romain) : ces trois résistances relèvent de la grammaire et du lexique courant, pas de l'entrée dans la langue. Elles se situent donc au-delà de l'A1 du site. À rapprocher du principe 3 (des phrases entières avant la grammaire) : pour Romain, les phrases sont là, c'est la grammaire qui manque maintenant.
