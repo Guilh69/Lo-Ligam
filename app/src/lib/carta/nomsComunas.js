@@ -34,7 +34,10 @@ export function crearNomsComunas(
 		// las bóstias dels noms de las autras còlas, en ponches del contenedor
 		obstacles = () => [],
 		// a la fin d'un movement : las bóstias de las vilas e de totes los noms
-		onRepaus = null
+		onRepaus = null,
+		// los noms que passan darrièr totes los autres (l'ensag « gris », 2026-11-12) : jamai a
+		// la plaça d'un nom relegit ; per defaut degun, l'òrdre cambia pas
+		darrièr = () => false
 	} = {}
 ) {
 	if (!map.getPane('nomsComunas')) {
@@ -93,17 +96,18 @@ export function crearNomsComunas(
 		// (los dos noms, centrats ensemble sul ponch)
 		const y1 = h / 2 - hS / 2,
 			y2 = y1 + e.px * 0.62 + e.pxSota * 0.62;
+		const ombra = e.ombra ?? '18, 9, 6';
 		const letras = (s, x, y) => {
-			g.shadowColor = 'rgba(18, 9, 6, 0.75)';
+			g.shadowColor = `rgba(${ombra}, 0.75)`;
 			g.shadowBlur = 8 * dpr;
 			g.fillText(s, x, y);
-			g.shadowColor = 'rgba(18, 9, 6, 0.95)';
+			g.shadowColor = `rgba(${ombra}, 0.95)`;
 			g.shadowBlur = 3 * dpr;
 			g.fillText(s, x, y);
 			g.shadowColor = 'transparent';
 			g.fillText(s, x, y);
 		};
-		g.fillStyle = aur ? '#f3c25a' : '#f5ead8';
+		g.fillStyle = aur ? '#f3c25a' : e.color ?? '#f5ead8';
 		letras(tx, ox, y1);
 		if (e.sota) {
 			g.font = e.fontSota;
@@ -112,7 +116,7 @@ export function crearNomsComunas(
 			g.fillStyle = aur ? '#f6d68c' : e.colorSota ?? '#ecd29c';
 			letras(e.sota, ox + R, y2);
 		}
-		im = { t, w, h, ox, bL: L - 3, bR: R + 3, bh: e.px * 1.24 + hS, dpr, clau: e.clau, repaus };
+		im = { t, w, h, ox, bL: L - 3, bR: R + 3, bh: e.px * 1.24 + hS, dpr, clau: e.clau, repaus, alpha: e.alpha ?? 1 };
 		cache.set(c, im);
 		return im;
 	}
@@ -135,7 +139,7 @@ export function crearNomsComunas(
 			const l = lista();
 			if (l !== listaFont) {
 				listaFont = l;
-				ordenada = [...l].sort((a, b) => a.renc - b.renc || b.pop - a.pop);
+				ordenada = [...l].sort((a, b) => Number(darrièr(a)) - Number(darrièr(b)) || a.renc - b.renc || b.pop - a.pop);
 			}
 			const pm = popMin(z),
 				obst = obstacles(z),
@@ -233,7 +237,7 @@ export function crearNomsComunas(
 				cx.shadowBlur = 0;
 				cx.shadowColor = 'transparent';
 			}
-			cx.globalAlpha = st.a * k;
+			cx.globalAlpha = st.a * k * (c === causit ? 1 : im.alpha);
 			cx.drawImage(im.t, st.x - im.ox, st.y - im.h / 2, im.w, im.h);
 		}
 		cx.globalAlpha = 1;

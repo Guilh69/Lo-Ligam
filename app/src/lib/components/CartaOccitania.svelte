@@ -11,6 +11,7 @@
 	import { tria } from '$lib/stores/lang.svelte.js';
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
 	import { supabase } from '$lib/supabaseClient';
 	import { cargarColas } from '$lib/carta/colasBasa.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
@@ -1205,10 +1206,42 @@
 	// pas ») : lo nom francés d'en primièr, l'occitan en pichon e en italica
 	// dejós (causit per Romain entre los dos òrdres). Las comunas de las autras
 	// lengas (lo camp fr es alara lor nom local) gardan un sol nom.
+	// Essai du 2026-11-12 (« Essai en gris », audit final de la carte) : les 237 communes sans
+	// forme occitane relue, masquées en interface occitane (« quand tu ne sais pas, tu effaces »),
+	// montrées avec leur nom français ou italien, d'une façon visiblement à part. « ?noms=gris |
+	// pale | actuel » allume l'essai pour le temps de la visite (sessionStorage) ; un sélecteur
+	// posé sur la carte change l'état à la volée ; « ?noms=non » l'éteint. Sans ce paramètre,
+	// rien ne change. À retirer une fois l'état choisi (note F-noms-gris.md).
+	//   actuel : masquées (comportement d'aujourd'hui) ;
+	//   gris   : nom droit (Luciole), gris clair neutre, sans dorure ;
+	//   pale   : même italique que les villages, mais gris très pâle.
+	const ESSAI_NOMS = ['actuel', 'gris', 'pale'];
+	const CLAU_ESSAI_NOMS = 'lo-ligam-essai-noms';
+	let essaiNoms = $state('');
+	$effect(() => {
+		const p = page.url.searchParams.get('noms');
+		try {
+			if (p !== null) {
+				if (ESSAI_NOMS.includes(p)) sessionStorage.setItem(CLAU_ESSAI_NOMS, p);
+				else sessionStorage.removeItem(CLAU_ESSAI_NOMS);
+			}
+			essaiNoms = sessionStorage.getItem(CLAU_ESSAI_NOMS) ?? '';
+		} catch {
+			essaiNoms = ESSAI_NOMS.includes(p) ? p : '';
+		}
+	});
+	function causirEssaiNoms(e) {
+		essaiNoms = e;
+		try {
+			sessionStorage.setItem(CLAU_ESSAI_NOMS, e);
+		} catch {}
+	}
+	// (une commune sans forme occitane, montrée en interface occitane : état de l'essai, ou '')
+	const essaiVist = (c) => (essaiNoms && essaiNoms !== 'actuel' && lang !== 'fr' && c.sens ? essaiNoms : '');
 	let clauEstil = '',
 		polissaSota = $state(false);
 	$effect(() => {
-		clauEstil = lang + (polissaSota ? '|l' : '');
+		clauEstil = lang + (polissaSota ? '|l' : '') + (essaiNoms && essaiNoms !== 'actuel' ? '|n' + essaiNoms : '');
 		motorNoms?.tornarPintar();
 		colaEstelas?.setNomsDobles?.(lang === 'fr' ? 'fr' : null, polissaSota);
 	});
@@ -1221,7 +1254,12 @@
 			.catch(() => {});
 	});
 	function estilNom(c) {
-		const e = estilVila(c.renc, talhaNom(c.renc, c.pop));
+		const ev = essaiVist(c);
+		// (essai « gris » : un nom droit, en Luciole, que l'italique des villages ne couvre pas)
+		const e =
+			ev === 'gris'
+				? { font: `400 ${(talhaNom(c.renc, c.pop) * 0.94).toFixed(1)}px Luciole, sans-serif`, esp: 0.12, majus: false }
+				: estilVila(c.renc, talhaNom(c.renc, c.pop));
 		const oc = c.oc || c.fr,
 			fr = JACES_LENGAS.includes(c.dep) ? null : c.fr;
 		let nom = oc,
@@ -1232,6 +1270,12 @@
 		if ('letterSpacing' in g) g.letterSpacing = e.esp.toFixed(2) + 'px';
 		const px = parseFloat(e.font.match(/([\d.]+)px/)[1]);
 		const r = { nom, px, font: e.font, esp: e.esp, majus: e.majus, w: g.measureText(e.majus ? nom.toUpperCase() : nom).width, clau: clauEstil };
+		// (gris neutre, sans teinte, ni crème ni doré. Sur le satellite : gris clair, alo noir.
+		// Les vallées d'Italie n'ont pas de satellite, leur fond est clair : gris foncé, alo blanc)
+		if (ev) {
+			const clar = c.dep === 'IT';
+			Object.assign(r, ev === 'gris' ? { color: clar ? '#4d4d4d' : '#bdbdbd', alpha: 1 } : { color: clar ? '#5c5c5c' : '#dcdcdc', alpha: clar ? 0.85 : 0.8 }, { ombra: clar ? '255, 255, 255' : '0, 0, 0' });
+		}
 		if (sota) {
 			// (una autra letra que lo nom principal : Luciole, dessenhada per
 			// demorar legibla en pichon, en italica, daurada ; retorn de Romain :
@@ -1280,7 +1324,8 @@
 			ids.map((id) => id + (nomésFrança(id) ? '·fr' : '')).join(','),
 			fs.map(([id, f]) => id + f.vilas.length).join(','),
 			francaCargada(),
-			lang === 'fr'
+			lang === 'fr',
+			essaiNoms === 'actuel' ? '' : essaiNoms
 		].join('|');
 		if (clau !== clauNoms) {
 			clauNoms = clau;
@@ -1296,7 +1341,8 @@
 				.map((c) => ({ fr: c.nom, oc: c.nom, lon: c.lon, lat: c.lat, renc: 4, pop: c.pop ?? 1000, dep: c.id }));
 			// (una comuna sens forma occitana coneguda : pas de nom francés a la
 			// plaça ; en interfàcia francesa, lo nom francés es lo bon)
-			const comunasOc = lang === 'fr' ? (nomsComunas ?? []) : (nomsComunas ?? []).filter((c) => !c.sens);
+			// (essai « gris » : elles reviennent, au dernier rang, avec leur nom français ou italien)
+			const comunasOc = lang === 'fr' || (essaiNoms && essaiNoms !== 'actuel') ? (nomsComunas ?? []) : (nomsComunas ?? []).filter((c) => !c.sens);
 			listaNoms = [
 				...comunasOc,
 				...fs.flatMap(([id, f]) => f.vilas.map((v) => ({ fr: v.nom, oc: v.nom, lon: v.lon, lat: v.lat, renc: v.renc ?? 4, pop: POP_RENC[v.renc] ?? 2500, dep: id }))),
@@ -2030,6 +2076,8 @@
 		zoomDoç(L, map);
 		motorNoms = crearNomsComunas(L, map, {
 			lista: nomsDeLaCarta,
+			// (les noms de l'essai « gris » passent après tous les autres : ils ne prennent jamais la place d'un nom relu)
+			darrièr: (c) => !!essaiVist(c),
 			estil: (c) => (c.estil?.clau === clauEstil ? c.estil : (c.estil = estilNom(c))),
 			// (pendent la revelacion, los nívols que se dissipan : cap de nom)
 			// (ni en mode écoute : les points des voix portent leurs noms)
@@ -2803,6 +2851,26 @@
 		</button>
 	{/if}
 
+	<!-- Essai « noms en gris » (2026-11-12), seulement avec ?noms=… dans l'adresse : trois états à
+	     comparer sur la carte même ; à retirer une fois l'état choisi -->
+	{#if essaiNoms && !visualizacion}
+		<div class="essai-noms" role="group" aria-label={tria({ oc: 'Ensag : noms sens forma occitana', fr: 'Essai : noms sans forme occitane' })}>
+			<p class="essai-titol">{tria({ oc: 'Ensag : noms sens forma occitana', fr: 'Essai : noms sans forme occitane' })}</p>
+			<div class="essai-botons">
+				{#each ESSAI_NOMS as e (e)}
+					<button type="button" class:actiu={essaiNoms === e} aria-pressed={essaiNoms === e} onclick={() => causirEssaiNoms(e)}>
+						{e === 'actuel' ? tria({ oc: 'Amagats', fr: 'Masqués' }) : e === 'gris' ? tria({ oc: 'Gris drech', fr: 'Gris droit' }) : tria({ oc: 'Italica palla', fr: 'Italique pâle' })}
+					</button>
+				{/each}
+			</div>
+			{#if lang === 'fr'}
+				<p class="essai-nota">Sans effet en français : le nom français y est déjà le nom principal.</p>
+			{:else if essaiNoms !== 'actuel'}
+				<p class="essai-nota">{tria({ oc: 'Nom en gris : forma occitana pas encara validada', fr: 'Nom en gris : forme occitane pas encore validée' })}</p>
+			{/if}
+		</div>
+	{/if}
+
 	<!-- Flèche du nord (dessin de Romain, 2026-10-15, design-stock/icones/Fleche_nord.webp,
 	     redessiné en tracé) : deux cercles, le fin dehors, l'épais dedans ; la pointe
 	     touche le cercle extérieur et s'effile jusqu'au centre -->
@@ -3109,6 +3177,76 @@
 		position: relative;
 		width: 100%;
 		height: 100%;
+	}
+
+	/* Essai « noms en gris » (2026-11-12) : un aplat, des angles droits, un filet fin ; rien de
+	   décoratif. Posé en bas à droite, au-dessus de la ligne des sources et à gauche de la colonne
+	   de boutons (44 px de large). Pas de commentaire dans une règle : Svelte en perd la
+	   déclaration suivante. */
+	.essai-noms {
+		position: absolute;
+		z-index: 900;
+		right: 68px;
+		bottom: calc(24px + var(--barra-bas, 0px));
+		width: max-content;
+		max-width: min(24rem, calc(100% - 24px));
+		box-sizing: border-box;
+		padding: 9px 12px 10px;
+		border-top: 1px solid var(--t-tinta);
+		background: color-mix(in srgb, var(--t-fons-2) 94%, transparent);
+		color: var(--t-tinta);
+		font: 400 12px/1.4 var(--font-body);
+	}
+	.essai-noms p {
+		margin: 0;
+	}
+	.essai-titol {
+		margin-bottom: 7px !important;
+		font-weight: 700;
+	}
+	.essai-botons {
+		display: flex;
+	}
+	.essai-botons button {
+		flex: 1 1 auto;
+		padding: 6px 10px;
+		border: 0;
+		border-left: 1px solid color-mix(in srgb, var(--t-tinta) 30%, transparent);
+		border-radius: 0;
+		background: transparent;
+		color: inherit;
+		font: inherit;
+		cursor: pointer;
+		white-space: nowrap;
+	}
+	.essai-botons button:first-child {
+		border-left: 0;
+	}
+	.essai-botons button.actiu {
+		background: var(--t-accion);
+		color: var(--t-accion-tinta);
+	}
+	.essai-botons button:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 1px;
+	}
+	.essai-nota {
+		margin-top: 8px !important;
+		padding-top: 7px;
+		border-top: 1px solid color-mix(in srgb, var(--t-tinta) 25%, transparent);
+		font-size: 11.5px;
+		opacity: 0.85;
+	}
+	/* téléphone : toute la largeur libre, entre le bord gauche et la colonne de boutons de droite,
+	   au-dessus de la flèche du nord et de l'échelle qui tiennent le bas à gauche */
+	@container carta (max-width: 600px) {
+		.essai-noms {
+			bottom: calc(108px + var(--barra-bas, 0px));
+			left: 12px;
+			right: 62px;
+			width: auto;
+			max-width: none;
+		}
 	}
 
 	/* La nuit sous les étoiles (ou le papier crème en thème clair), avec une
