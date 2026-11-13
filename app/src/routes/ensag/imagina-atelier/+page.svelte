@@ -87,7 +87,7 @@
 		if (innerWidth >= 1000 || !escenaEl || !motsEl) return;
 		requestAnimationFrame(() => {
 			// le titre « Un mot » vient se placer juste sous la photo
-			const ecart = motsEl.getBoundingClientRect().top - escenaEl.getBoundingClientRect().bottom - 8;
+			const ecart = motsEl.getBoundingClientRect().top - escenaEl.getBoundingClientRect().bottom - 16;
 			if (Math.abs(ecart) > 24) {
 				const doux = !matchMedia('(prefers-reduced-motion: reduce)').matches;
 				scrollBy({ top: ecart, behavior: doux ? 'smooth' : 'auto' });
@@ -285,14 +285,15 @@
 			<article>
 				<p class="nn">02</p>
 				<h3>Une question : pourquoi l’occitan n’est-il pas dans la rue ?</h3>
-				<p>Dans ces rues, on a parlé occitan pendant des siècles. Les plaques, elles, sont en français.</p>
+				<p>Dans ces rues, on a parlé occitan pendant des siècles. Les plaques, elles, sont le plus souvent en français seulement.</p>
 				<p>
 					En 1794, l’abbé Grégoire présente à la Convention un rapport intitulé « sur la nécessité et les moyens d’anéantir les patois et d’universaliser
 					l’usage de la langue française ». Les parlers d’oc y sont rangés parmi les patois.
 					<a href="https://fr.wikisource.org/wiki/Rapport_Gr%C3%A9goire" rel="noopener">Le texte du rapport</a>
 				</p>
 				<p>
-					Depuis 1992, l’article 2 de la Constitution dit : « La langue de la République est le français. »
+					Depuis 1992, l’article 2 de la Constitution dit : « La langue de la République est le français. » Depuis 2008, l’article 75-1 ajoute : « Les langues
+					régionales appartiennent au patrimoine de la France. »
 					<a
 						href="https://www.conseil-constitutionnel.fr/le-bloc-de-constitutionnalite/texte-integral-de-la-constitution-du-4-octobre-1958-en-vigueur"
 						rel="noopener">La Constitution</a

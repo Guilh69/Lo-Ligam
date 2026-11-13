@@ -132,7 +132,7 @@ export function esquissa({ estil, mot, prop, px, mesura, cobrir = false, rempla√
 				h: H,
 				r: p(6),
 				fons: 'papier',
-				opacitat: 0.98
+				opacitat: 1
 			});
 		const i = mp(4, 0.025);
 		f.push({
@@ -163,6 +163,20 @@ export function esquissa({ estil, mot, prop, px, mesura, cobrir = false, rempla√
 			mesura,
 			lignes: mot.lignes
 		});
+		// sur la pierre nue, un liser√© de papier sous les lettres : le mot se lit m√™me petit
+		if (!cobrir)
+			f.push(
+				...textes(c, {
+					cx: W / 2,
+					cy: H / 2,
+					familha: 'luciole',
+					pes: 700,
+					tinta: 'papier',
+					opacitat: 0.85,
+					contorn: p(3.2),
+					retard: 0.45
+				}).map((t) => ({ ...t, pausar: true }))
+			);
 		f.push(
 			...textes(c, {
 				cx: W / 2,
@@ -170,7 +184,7 @@ export function esquissa({ estil, mot, prop, px, mesura, cobrir = false, rempla√
 				familha: 'luciole',
 				pes: 700,
 				tinta: 'tra√ß',
-				contorn: p(0.8),
+				contorn: p(1),
 				tra√ßar: true,
 				retard: 0.45
 			})
