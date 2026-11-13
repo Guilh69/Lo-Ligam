@@ -448,8 +448,14 @@
 			color: var(--t-tinta-2);
 			align-items: end;
 		}
+		/* Jamais de coupure au milieu d'un mot (« Authentici / té », Romain, 13-11) : à 52 rem les
+		   colonnes font 73 px et « Authenticité » en demande 82. Le mot garde sa largeur entière ;
+		   la marge négative la prend dans l'espace entre colonnes, sans toucher à la grille. Seuls
+		   les espaces coupent encore (« Langue / fiable »). */
 		.col {
-			overflow-wrap: anywhere;
+			overflow-wrap: normal;
+			margin-inline: -0.3rem;
+			letter-spacing: 0;
 			line-height: 1.15;
 		}
 		.rubriques {
