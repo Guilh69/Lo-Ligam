@@ -1,5 +1,5 @@
 <script>
-	// Livret technique : le plan du projet en neuf briques, la fiche de la brique touchée en dessous.
+	// Livret technique : le plan du projet en dix briques, la fiche de la brique touchée en dessous.
 	// Données : $lib/libret/fichas.js (texte brut). Maquette validée par Romain, 2026-11-13.
 	import { FICHAS } from '$lib/libret/fichas.js';
 
@@ -42,7 +42,7 @@
 	</p>
 
 	<div class="plan">
-		<svg viewBox="0 0 360 400" role="group" aria-label="Plan du projet : neuf briques reliées">
+		<svg viewBox="0 0 360 400" role="group" aria-label="Plan du projet : dix briques reliées">
 			<defs>
 				<marker id="f" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
 					<path class="pointe" d="M0 0 8 4 0 8z" />
@@ -104,6 +104,11 @@
 				<rect x="130" y="320" width="100" height="56" rx="5" />
 				<text x="180" y="344">Les courriels</text>
 				<text class="lieu" x="180" y="361">le facteur</text>
+			</g>
+			<g class="brique" data-id="voix" role="button" tabindex="0" aria-pressed={choix === 'voix'} onclick={() => montrer('voix')} onkeydown={(e) => touche(e, 'voix')}>
+				<rect x="246" y="320" width="100" height="56" rx="5" />
+				<text x="296" y="344">La voix</text>
+				<text class="lieu" x="296" y="361">le studio</text>
 			</g>
 		</svg>
 		<p class="legende">Les flèches montrent qui parle à qui.</p>

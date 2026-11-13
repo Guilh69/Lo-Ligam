@@ -86,6 +86,20 @@ export const FICHAS = [
 		mots: []
 	},
 	{
+		id: 'voix',
+		titol: 'La voix',
+		imatge: "C'est un petit studio d'enregistrement : ta voix y entre brute, elle en sort nettoyée et légère.",
+		quoi: "Tu enregistres chaque phrase du parcours avec ton téléphone, depuis la page « Voix » de ton espace d'administration. Un script la rend propre : même volume pour toutes les phrases, silences du début et de la fin coupés, fichier très léger. La leçon peut alors la jouer.",
+		ou: "Trajet d'une phrase : ton téléphone l'envoie dans un dossier privé chez Supabase (toi seul y accèdes) ; sur ton ordinateur, un double-clic sur « voix-polir » la télécharge, la nettoie avec ffmpeg et la range dans le dossier du site ; une fois le changement déposé au coffre, la livraison la met en ligne.",
+		tombe: "Les boutons de son disparaissent des leçons : le texte reste là. Tes prises brutes restent dans le dossier privé, rien n'est perdu ; on relance la mise au propre.",
+		retenir: "13 novembre : une phrase = un fichier, nommé d'après la phrase elle-même. Si une phrase est corrigée, elle change de nom et devient « à refaire ». Le script ne retraite que ce qui a changé. Il lit le dossier privé avec un compte à part, qui ne peut que lire.",
+		mots: [
+			{ mot: 'ffmpeg', explication: "un outil gratuit, installé sur ton ordinateur, qui traite le son et la vidéo" },
+			{ mot: 'AAC (m4a)', explication: "un format de son compressé : il garde la voix nette dans un fichier très léger" },
+			{ mot: 'script', explication: "un petit programme qui enchaîne des étapes à ta place" }
+		]
+	},
+	{
 		id: 'courriels',
 		titol: 'Les courriels',
 		imatge: "C'est le facteur du site.",

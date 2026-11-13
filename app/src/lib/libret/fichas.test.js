@@ -5,9 +5,9 @@ import { FICHAS } from './fichas.js';
 const CHAMPS = ['id', 'titol', 'imatge', 'quoi', 'ou', 'tombe', 'retenir'];
 
 describe('fiches du livret technique', () => {
-	it('compte neuf fiches aux identifiants uniques', () => {
-		expect(FICHAS).toHaveLength(9);
-		expect(new Set(FICHAS.map((f) => f.id)).size).toBe(9);
+	it('compte dix fiches aux identifiants uniques', () => {
+		expect(FICHAS).toHaveLength(10);
+		expect(new Set(FICHAS.map((f) => f.id)).size).toBe(10);
 	});
 
 	it('remplit tous les champs, sans HTML', () => {
@@ -28,7 +28,7 @@ describe('fiches du livret technique', () => {
 	it('donne une fiche à chaque brique du plan', () => {
 		const page = readFileSync('src/routes/admin/libret/+page.svelte', 'utf8');
 		const briques = [...page.matchAll(/data-id="([a-z]+)"/g)].map((m) => m[1]);
-		expect(briques).toHaveLength(9);
+		expect(briques).toHaveLength(10);
 		expect(briques.sort()).toEqual(FICHAS.map((f) => f.id).sort());
 	});
 });
