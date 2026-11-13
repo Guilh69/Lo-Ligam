@@ -70,3 +70,9 @@ Lecture de L'amic (interprétation, non vérifiée par l'API de lo Congrès, sé
 Réponse de Romain, mot pour mot : « Je peux vérifier ou reformuler »
 
 (Il n'a pas précisé où il vérifie, ni si cela le rassure.)
+
+### Essai au passé (proposé après la Q7)
+
+Texte de Romain, mot pour mot, non corrigé : « Ièr soi demorat a l'ostal lo vespre perque deviai revisar lo concors de la foncion publica mas finalement ai trabalhat sus mon site occitan. èri un pauc decebut mas es pas grèu »
+
+Lecture de L'amic (interprétation, non vérifiée par l'API de lo Congrès) : passé composé avec le bon auxiliaire (soi demorat, ai trabalhat), imparfait juste (èri, deviái à l'accent près), négation en « pas » seule. Écarts : deviái (accent), finalament (adverbe en -ament, calque du français), « site » à vérifier (sit ?). Même motif que la Q6 : la mécanique tient, les écarts sont des accents et des formes calquées du français.
