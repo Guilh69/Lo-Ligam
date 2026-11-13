@@ -48,5 +48,5 @@ Origine de chaque principe : [R] vient de Romain (question), [S] appuyé par la 
 4. **Le droit de laisser de côté et de mélanger.** On peut garder des mots de français et remettre une subtilité à plus tard. [R Q2, Q3]
 5. **L'échelle d'audace.** Chaque unité se termine par une audace à tenter dans la vraie vie : répéter seul, s'enregistrer, glisser un mot dans son français, un premier échange, une discussion. [R Q3]
 6. **Nommer la vergonha et l'illégitimité**, dès l'accueil, pour les trois profils (locuteurs, néolocuteurs, curieux). [R Q3, Q4, récit §7]
-7. **Lire tôt de vrais textes, et pouvoir poser ses questions.** La discussion, ce qui forme le plus, se vit en visio et dans Amassa ; le parcours y prépare. [R Q4]
+7. **Lire tôt de vrais textes.** Poser ses propres questions et discuter, ce qui forme le plus, c'est la plus-value du cours en visio : le parcours en ligne y prépare et y renvoie, il ne cherche pas à le remplacer. [R Q4 ; Romain, 13-11 : « Cet aspect est la plus-value d'un cours en visio »]
 8. **Se tester, espacer, expliquer chaque erreur en une ligne, peu mais souvent.** [S Roediger et Karpicke 2006 ; Van der Kleij 2015 ; Sudina et Plonsky 2024]
