@@ -131,3 +131,6 @@ Depuis le 2026-11-13 : une discussion mère (L'amic) et des sous-discussions par
 - 45 Séances dans le nuage : `app/.env` absent, donc pas de relève de « Per tu » ni de vérification de l'occitan. À décider avec Romain.
 - 46 Feuille de route (13-11) : cœur = apprendre l'A1 et explorer la carte ; février n'est plus une date ; à-côtés à trier au cas par cas avec Romain. Constat : 38 modules A1 sur 38 écrits et jouables, 1 fichier audio sur 39 pour la seule unité 1, aucun son branché, 26 pages d'essai `/ensag/`, deux parcours (`/apren`, `/aprene`). À écrire avec Romain.
 - 47 Alertes de langue : avertissement « des erreurs peuvent subsister » et filtre qui regroupe les alertes reçues par le contact. À cadrer.
+- 48 LISN (13-11) : visio tenue, le LISN est favorable à l'usage de ses voix sur le site ; nouvelle visio en décembre où Romain présente le site. Sujet : utiliser leurs audios en leur apportant du trafic, tout en gardant l'écoute sur le site. À préparer : propositions concrètes et page à montrer.
+- 49 Voix de l'A1 (13-11) : Romain enregistrera, et veut d'abord une étude de faisabilité de Votz (synthèse vocale de lo Congrès). Étude lancée le 13-11.
+- 50 Principes de l'A1 à reprendre (13-11) : Romain n'aime pas « Tu l'as déjà entendu » (pas forcément vrai) et trouve le contenu du module 0 peu logique. À reprendre avec lui avant la passe de fiabilité.
