@@ -18,7 +18,7 @@ export const ESTATS_CASA = {
 	'sens-objècte': { nom: 'Sans objet', cort: 'sans objet' }
 };
 
-/** Les états d'une rubrique. « en chantier » : deux au plus (décision de Romain, 13-11). */
+/** Les états d'une rubrique. Pas de limite au nombre de rubriques « en chantier » (Romain, 13-11 : « je ne veux pas me brider ») : l'état dit où on en est, il n'interdit rien. */
 export const ESTATS_RUBRICA = {
 	chantier: { nom: 'En chantier', explic: 'on y travaille activement' },
 	velha: { nom: 'En veille', explic: 'on entretient, on n’ajoute pas' },
@@ -244,7 +244,7 @@ export function enChantier(rubriques = RUBRIQUES) {
 	return rubriques.filter((r) => r.estat === 'chantier');
 }
 
-/** Le contrôle « deux en chantier au plus » (décision de Romain). */
+/** Simple repère (pas une règle) : dit si le nombre de rubriques en chantier dépasse le repère. */
 export function chantiersRespectes(rubriques = RUBRIQUES) {
 	return enChantier(rubriques).length <= MAX_EN_CHANTIER;
 }

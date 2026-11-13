@@ -1,4 +1,4 @@
-// La grille par facettes (13-11) : complète, états valides, deux rubriques en chantier au plus,
+// La grille par facettes (13-11) : complète, états valides,
 // et aucune case « bon / à améliorer / manque » sans preuve écrite (règle d'honnêteté).
 import { describe, it, expect } from 'vitest';
 import {
@@ -6,10 +6,8 @@ import {
 	EXIGENCES,
 	ESTATS_CASA,
 	ESTATS_RUBRICA,
-	MAX_EN_CHANTIER,
 	comptesCases,
-	enChantier,
-	chantiersRespectes
+	enChantier
 } from './facetas.js';
 
 describe('facetas', () => {
@@ -30,13 +28,6 @@ describe('facetas', () => {
 				expect(c.phrase.trim().length, `${r.clau}/${e.clau}`).toBeGreaterThan(5);
 			}
 		}
-	});
-
-	it('au plus deux rubriques en chantier', () => {
-		expect(enChantier().length).toBeLessThanOrEqual(MAX_EN_CHANTIER);
-		expect(chantiersRespectes()).toBe(true);
-		const trois = RUBRIQUES.map((r) => ({ ...r, estat: 'chantier' }));
-		expect(chantiersRespectes(trois)).toBe(false);
 	});
 
 	it('chaque case « bon », « à améliorer » ou « manque » a une preuve non vide', () => {

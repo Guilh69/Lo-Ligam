@@ -72,9 +72,9 @@
 	</ul>
 
 	<p class="prop">
-		<strong>Ton choix du 13 novembre :</strong> « en chantier » (deux au plus) pour l’Apprentissage (lo
-		parcors) et S’imagina. Proposition de l’IA, pas encore validée par toi : « en sommeil » pour les
-		Groupes ; « en veille » pour le reste.
+		<strong>Où tu es en ce moment :</strong> l’Apprentissage (lo parcors) et S’imagina. Ce n’est pas
+		une limite : une idée pour une autre rubrique se note et se suit ici. Les Groupes dorment tant que
+		la modération n’est pas réglée.
 	</p>
 
 	<div class="tete" aria-hidden="true">

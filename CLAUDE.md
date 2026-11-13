@@ -14,6 +14,8 @@ Le cerveau du projet, c'est **Romain et `PILOTATGE.md`**. Romain entre par une s
 
 ## Travailler avec Romain
 - **Toujours en français**, sans exception : réponses, messages d'avancement, légendes de captures, questions. Jamais d'anglais (Romain s'en est agacé plusieurs fois).
+- **Il fait ce projet pour s'amuser et se stimuler** (13-11) : ne pas le brider. Une idée pour une autre rubrique en plein travail est bienvenue : la noter, la ranger dans la grille des facettes (`/admin/seguit`), y revenir. Le rôle de l'IA est de lui faciliter la tâche et de lui dire à tout moment où on en est.
+- **Il pense par le visuel et le schéma** : montrer d'abord (capture, schéma, tableau, maquette), expliquer ensuite en peu de mots. Un état des lieux se donne en image ou en grille, pas en paragraphe.
 - **Non développeur.** Expliquer en français simple, une étape à la fois, dire quoi cliquer.
 - **Ne jamais demander de clé API** : il utilise son abonnement.
 - Contredire quand c'est justifié ; signaler coûts, risques et dérives de périmètre.
