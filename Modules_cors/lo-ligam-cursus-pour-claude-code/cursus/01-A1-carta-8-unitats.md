@@ -1,6 +1,6 @@
 # Carte de l'A1 en 8 unités (validée par Romain le 2026-10-25)
 
-Remplace la carte en 10 unités de `01-A1.md` (gardée pour l'historique et le module 4.1 rédigé). Rédigée par Claude depuis la décision du 2026-10-25 (cahier §11), à partir des décisions du 2026-10-24 (`revisions/2026-10-24-progression-catala.md`), du catalogue des jeux du 2026-08-29 (`catalogue-exercicis.md`) et du cadre (`00-cadre-methodologique.md`).
+Remplace la carte en 10 unités de `01-A1.md` (gardée pour l'historique et le module 4.1 rédigé). Rédigée par Claude depuis la décision du 2026-10-25 (cahier §11), à partir des décisions du 2026-10-24 (`revisions/2026-10-24-progression-catala.md`), du catalogue des jeux du 2026-08-29 (`docs/pedagogia/catalogue-exercicis.md`) et du cadre (`00-cadre-methodologique.md`).
 
 **Statut** : validée par Romain le 2026-10-25 (« La carte de l'A1 me va »). Tout l'occitan de cette page est passé par l'API de lo Congrès (`verificar-oc.mjs`, 2026-10-25) : 141 mots confirmés, deux corrigés (*paisan*, *bilanç*). Restent à vérifier à la main sur dicodòc : six mots où l'API a renvoyé une erreur (*cent, darrièr, davant, maire, país, vos*) six mots absents de l'outil (*francés, grand, ieu, meus, sòrre, zèro*) ; les pluriels *ans* et *oras* sont confirmés par leur singulier. Les sons sont proposés : c'est ta prononciation qui tranche.
 

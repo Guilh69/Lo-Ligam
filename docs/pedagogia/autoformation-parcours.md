@@ -195,7 +195,7 @@ enseignant seul, sans moyens, fabrique des exercices qui font parler.
 commandé, présenté quelqu'un) ; la grammaire vient après, en regardant ce
 qu'on a dit ; un exercice qui n'exige pas de comprendre le sens n'apprend
 rien. **Ta page** : réécris la tâche finale de l'unité 2 ; choisis trois
-mécaniques du `catalogue-exercicis.md` pour cette unité et justifie chacune
+mécaniques du `docs/pedagogia/catalogue-exercicis.md` pour cette unité et justifie chacune
 par un principe et un plaisir ; dis laquelle du catalogue tu supprimerais.
 
 ### Étape 7 · Quoi mettre à l'écran, quoi retirer
@@ -213,7 +213,7 @@ détails séduisants ; une chose à la fois à l'écran ; l'exemple travaillé
 avant l'exercice libre pour un débutant. **Ta page** : audit de l'écran du
 module 1.1 (joue-le sur le site) : pour chaque bloc, un principe respecté ou
 violé, et la correction. Puis reprends le tableau §6 de
-`etat-de-l-art-parcours.md` et coche la colonne « Ton choix ».
+`docs/pedagogia/etat-de-l-art-parcours.md` et coche la colonne « Ton choix ».
 
 ### Étape 8 · Ce qui a marché ailleurs (les retours d'expérience)
 
@@ -298,7 +298,7 @@ langue · ⭐ à lire en premier dans l'axe.
 | ⭐ Webb & Nation, *How Vocabulary Is Learned* (Oxford, 2017) | 💶 🇬🇧 environ 35 € | combien de mots, lesquels, à quel rythme, en paires ou en contexte |
 | Willis & Willis, *Doing Task-Based Teaching* (Oxford, 2007) ; documents gratuits de Jane Willis | 💶 🇬🇧 environ 35 € ; 🆓 http://willis-elt.co.uk | la tâche comme colonne vertébrale d'une unité |
 | Conti, blog *The Language Gym* | 🆓 🇬🇧 https://gianfrancoconti.com | un enseignant seul, des exercices à bas coût qui font parler ; les livres (Smith & Conti) sont payants et facultatifs |
-| Catalogue d'exercices de Lo Ligam | déjà dans le dépôt : `catalogue-exercicis.md` | à relire à l'étape 6 avec un œil neuf |
+| Catalogue d'exercices de Lo Ligam | déjà dans le dépôt : `docs/pedagogia/catalogue-exercicis.md` | à relire à l'étape 6 avec un œil neuf |
 
 ### 5.5 Les retours d'expérience (applications, langues minoritaires, occitan)
 
@@ -312,7 +312,7 @@ langue · ⭐ à lire en premier dans l'axe.
 | Centre national gallois, « Le CECR, un chemin clair » | 🆓 🇬🇧 https://learnwelsh.cymru/news/the-cefr-a-clear-pathway-to-learning-welsh/ | comment un secteur entier s'aligne sur les niveaux |
 | Gouvernement gallois, revue rapide du Centre national (2023) | 🆓 🇬🇧 https://www.gov.wales/rapid-review-national-centre-learning-welsh-html | ce qu'a donné dix ans de politique « gallois pour adultes » |
 | ⭐ Olko & Sallabank (dir.), *Revitalizing Endangered Languages: A Practical Guide* (Cambridge, 2021) | 🆓 🇬🇧 https://doi.org/10.1017/9781108641142 (accès libre) | le guide pratique de la revitalisation, écrit par des gens de terrain |
-| SpeakGaelic, Gymcorsu, Desketa (breton) | 🆓 liens dans `etat-de-l-art-parcours.md` §10 | trois plateformes publiques de langues minoritaires à essayer dix minutes chacune |
+| SpeakGaelic, Gymcorsu, Desketa (breton) | 🆓 liens dans `docs/pedagogia/etat-de-l-art-parcours.md` §10 | trois plateformes publiques de langues minoritaires à essayer dix minutes chacune |
 | Assimil, *L'occitan* (Quint, 2014) | 💶 🇫🇷 environ 25 € le livre seul | la méthode d'autoapprentissage la plus complète en languedocien ; à disséquer |
 | *Òc-Ben !* première année (Canopé) | 💶 🇫🇷 https://www.reseau-canope.fr/notice/oc-ben-premiere-annee-doccitan.html | le manuel scolaire de référence ; à disséquer |
 | Rigouste, *Parli occitan* (IEO) | 💶 🇫🇷 https://www.libraria-occitana.org/produit/parli-occitan-manual-diniciacion-edicion-lengadociana/ | l'initiation classique ; à disséquer |
@@ -368,8 +368,8 @@ page : cinq questions, tes désaccords, les documents à amender.
 
 ## 9. Ce que ça change pour les documents du projet
 
-- `00-cadre-methodologique.md`, `01-A1.md`, `etat-de-l-art-parcours.md`,
-  `catalogue-exercicis.md`, `gamification.md` : hypothèses à éprouver,
+- `00-cadre-methodologique.md`, `01-A1.md`, `docs/pedagogia/etat-de-l-art-parcours.md`,
+  `docs/pedagogia/catalogue-exercicis.md`, `docs/pedagogia/gamification.md` : hypothèses à éprouver,
   encadré « Relecture de Romain » attendu après les étapes 1, 2, 6 et 7.
 - `10-plan-redaccion-A1.md` : le circuit « Romain écrit, Claude contrôle »
   reste ; mais c'est désormais toi qui fixes les critères du contrôle, à

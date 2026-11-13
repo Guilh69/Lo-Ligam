@@ -15,12 +15,12 @@
 | `cahier-des-charges.md` | Source de vérité + journal de décisions (§11) | Vivant, v0.5+ |
 | `Modules_cors/…/cursus/` | **Cursus complet A1→C2 v0.3** : cadre méthodologique (8 principes SLA sourcés), cartes des 6 niveaux (261 modules), fiche phonétique Chatbèrt, lecture par 10 personas | La référence pédagogique |
 | `corpus-design.md` | Science de l'apprentissage × design (Mayer, Sweller, revue Duolingo 2012-2020), registres RÉCIT/OUTIL, daltonisme, identité méditerranéenne | La référence design |
-| `plan-pedagogique-phase1.md`, `parcours-utilisateur-mvp.md`, `methode-pedagogique.md`, `unitat-1-adieu.md` | Docs de la première époque (avant le cursus v0.3) | Partiellement remplacés par le cursus — à réconcilier (voir §4, étape B) |
+| `docs/pedagogia/plan-pedagogique-phase1.md`, `docs/pedagogia/parcours-utilisateur-mvp.md`, `docs/pedagogia/methode-pedagogique.md`, `docs/pedagogia/unitat-1-adieu.md` | Docs de la première époque (avant le cursus v0.3) | Partiellement remplacés par le cursus — à réconcilier (voir §4, étape B) |
 
 ### L'application
 - **Moteur de leçon** data-driven (`/aprene/modul/1-1`) : 8 types de blocs réutilisables, un module = un fichier de contenu, progression par étape (navigateur ou Supabase), points-fougasses, sons validés, mobile OK.
 - **Module 1.1 « Adieu, cossí vas ? »** rédigé selon le gabarit v0.3 et jouable de bout en bout (6 étapes). Occitan en attente de validation finale.
-- **Essai libre** (`/aprene/essai`) : la leçon de découverte sans compte, avec sa propre méthode (`methode-pedagogique.md`). Articulation avec le cursus **non tranchée**.
+- **Essai libre** (`/aprene/essai`) : la leçon de découverte sans compte, avec sa propre méthode (`docs/pedagogia/methode-pedagogique.md`). Articulation avec le cursus **non tranchée**.
 - Comptes, questionnaire d'accueil, carte, admin, hébergement Scaleway : hérités des autres chantiers.
 
 ### La chaîne de vérification linguistique (nouvelle)
@@ -297,7 +297,7 @@ Décisions de Romain : **còla validée** (troupe v0.1, un personnage par unité
 chacun son pays) · **Arbre del Ligam** (unique, racines = les anciens) ·
 série = **lo Fuòc de l'ostal** (jours pratiqués + stats, foyer majestueux,
 jamais éteint — les braises restent) · **crostadas et badges reportés** à des
-plans spécifiques. Spécification : **`gamification.md`** (v0.2). Consigné au
+plans spécifiques. Spécification : **`docs/pedagogia/gamification.md`** (v0.2). Consigné au
 §11 du cahier des charges.
 
 ## 8. Étape D — Grammaire des exercices (close le 29/08/2026)
@@ -305,7 +305,7 @@ plans spécifiques. Spécification : **`gamification.md`** (v0.2). Consigné au
 Catalogue écrit et tranché : socle v0.3 (moteur) + 6 nouvelles mécaniques
 validées (l'intrus, jeux de lettres, dialogue à choix, Ont es ?, rimes &
 virelangues, l'oreille des pays) ; **« vrai/inventé » écarté définitivement**
-(plagiat du jeu du Congrès). Voir **`catalogue-exercicis.md`** ; consigné au
+(plagiat du jeu du Congrès). Voir **`docs/pedagogia/catalogue-exercicis.md`** ; consigné au
 §11. Reste ouvert dans le catalogue : ordre de construction, espace Jòcs.
 
 ## 8 bis. Chantier « parcours de référence » (demande Romain, 31/08/2026)
@@ -313,7 +313,7 @@ virelangues, l'oreille des pays) ; **« vrai/inventé » écarté définitivemen
 Trois étapes : (1) état de l'art des parcours en autonomie et fil recommandé
 A1→C2, avec une proposition d'animation par exercice pour arbitrage ;
 (2) adaptation à la culture et à la langue occitanes ; (3) corpus A1→C2.
-**L'étape 1 est livrée** : `etat-de-l-art-parcours.md` (v0.1, cinq
+**L'étape 1 est livrée** : `docs/pedagogia/etat-de-l-art-parcours.md` (v0.1, cinq
 recherches vérifiées, synthèse, relecture critique consignée en §11 pour la
 v0.2). Les dix questions d'arbitrage sont en §9 de ce document.
 
@@ -326,12 +326,12 @@ court terme. Toute recommandation se range désormais en deux colonnes :
 - **Évolution possible** : quand des bénévoles, des natifs ou des partenaires
   arrivent (clips de natifs, cercle de correction humaine, binômes, voix
   natives sur les dialogues).
-Le plan §8 de `etat-de-l-art-parcours.md` est à relire avec cette grille.
+Le plan §8 de `docs/pedagogia/etat-de-l-art-parcours.md` est à relire avec cette grille.
 
 **Changement de posture (Romain, 04/10/2026).** Romain veut monter en
 compétence lui-même en conception de parcours : « faire tout par IA, c'est
 ne plus réfléchir ». Le parcours d'autoformation est dans
-`autoformation-parcours.md` (huit étapes, A1 → B2 d'abord), ses pages dans
+`docs/pedagogia/autoformation-parcours.md` (huit étapes, A1 → B2 d'abord), ses pages dans
 `carnet-concepcion/`. À partir de cette date, les étapes 2 et 3 du chantier
 « parcours de référence » (§8 bis) ne sont plus lancées par Claude : c'est
 Romain qui les mènera, avec Claude en vérification. Ce document et ses

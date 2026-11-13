@@ -30,7 +30,7 @@
 
 ## 2. L'échelle unique (écrite le 2026-10-22)
 
-Une marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refonte-claire.md` et les 8 blocs de `DIRECCION.md`. Chaque séance dit son barreau ; on n'en change pas sans l'écrire ici.
+Une marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refonte-claire.md` et les 8 blocs de `docs/archius/DIRECCION.md`. Chaque séance dit son barreau ; on n'en change pas sans l'écrire ici.
 
 1. L'ambiance (sombre « Éclat », Venas d'aur par défaut, clair « Plâtre ») : fait (21-22-10).
 2. Pourquoi, pour qui, trois rubriques (blocs 1 à 3) : fait (22-10).
@@ -45,7 +45,7 @@ Une marche à suivre, qui fond les 7 étapes de `revisions/2026-10-21-refonte-cl
 
 Format : numéro, chantier, état, prochaine action, référence. Détail dans l'archive du 13-11.
 
-- 2 Direction du site (`DIRECCION.md`) : fait, clos le 06-11. Rien.
+- 2 Direction du site (`docs/archius/DIRECCION.md`) : fait, clos le 06-11. Rien.
 - 3 Module 0 : fait, clos le 06-11 ; relecture et voix suivies en 4 et 5.
 - 4 Audio de l'unité 1 : 1 enregistrement sur 17. Romain enregistre le soir du 1.1.
 - 5 Validation occitane des modules 1.1 à 1.4 : séance dicodòc close le 06-11. Relectures dans la pile de Per tu (Romain).
@@ -53,7 +53,7 @@ Format : numéro, chantier, état, prochaine action, référence. Détail dans l
 - 7 Transposition Racine² (A prepaus, Contacte, FAQ) : à faire ; liens du menu vers pages vides ; istòria et contacte faits (24-10). Ranger aux barreaux 6 et 7 (Claude).
 - 8 Photos « sang e aur » : en pause depuis le 06-11. Le casting reviendra avec les scènes des unités.
 - 9 design-stock et Proton Drive : règle 1 Mo en place, projet sorti de Documents (24-10). Reste l'autre ordinateur.
-- 12 Autoformation (`autoformation-parcours.md`) : en pause depuis le 06-11, pages vides depuis le 04-10.
+- 12 Autoformation (`docs/pedagogia/autoformation-parcours.md`) : en pause depuis le 06-11, pages vides depuis le 04-10.
 - 13 Carte /carta : remise en ordre (23-10), langues, voix, Ensenhament, cercles, premiers pas. Validations (point 6), test iPhone, page enquête OPLO, « Lo viatge ».
 - 13 bis Fiches des communes : en ligne. Captures de Romain sur quelques communes.
 - 14 Icônes pratiques : fait (12-10). Reste : carrousel de /mots flou au chargement.
@@ -74,7 +74,7 @@ Format : numéro, chantier, état, prochaine action, référence. Détail dans l
 - 30 Diffusion : trois cercles choisis (06-11), `diffusion/`. Romain : invitations, dépôt privé, voix ; décembre : appel « Parlem ! » 2027, fiche, courriels.
 - 31 Illustrations IA et cagnotte : mention en ligne, `/illustracions` ; une seule caisse, la micro-entreprise. Avant la cagnotte : mentions légales, Urssaf, devis illustrateur (`revisions/2026-11-06-sosten-dons-transparence.md`).
 - 32 Papier découpé et couleurs : en ligne (07-11), `lib/styles/papier.css`, palette unique. Reste exprès : édition, onglets en verre, admin, Lo talhièr ; relecture de Joan.
-- 33 API de lo Congrès : séance 1 faite, « L'intrús » dans Jòcs (07-11). Romain joue aux séries ; séance 2 rimas ; `construction-pedagogique.md` §2.
+- 33 API de lo Congrès : séance 1 faite, « L'intrús » dans Jòcs (07-11). Romain joue aux séries ; séance 2 rimas ; `docs/pedagogia/construction-pedagogique.md` §2.
 - 34 Carte qui s'assemble au défilement : essai `/ensag/pieces-defilement` jugé « bof » (12-11). Romain regarde ; sinon abandon.
 - 35 Motifs-symboles au défilement : essai refait `/ensag/motius-simbols` (12-11). Romain regarde sur téléphone ; s'il garde, intégration à l'accueil.
 - 36 Audit final, la carte : fait (12-11), correction des noms inconnus (c0c4338f). Romain répond aux questions ; ensuite Claude.
@@ -85,7 +85,7 @@ Format : numéro, chantier, état, prochaine action, référence. Détail dans l
 - 41 S'imagina, 4e rubrique : étape 1 en ligne (12-11), `/imagina`. Romain : SQL, valider l'occitan, premières pièces ; accueil à rouvrir plus tard.
 - 42 Colors : en ligne et essayé (13-11), `revisions/2026-11-13-colors-sus-plaça.md`. Claude : mettre au registre ce qui est « écrit en dur », à la demande de Romain.
 
-Clos et archivés : 1, 2b, 2c, 2d, 10, 11, 17. Petits restes, détaillés dans l'archive : côte OpenStreetMap, Lomagne, photos des vallées d'Italie, attribution Duolingo, `unitat-1-adieu.md`, maquettes photo. Application installable (PWA), page `/accessibilitat` et Laboratòri `/admin/labo` : séances closes, détail dans l'archive.
+Clos et archivés : 1, 2b, 2c, 2d, 10, 11, 17. Petits restes, détaillés dans l'archive : côte OpenStreetMap, Lomagne, photos des vallées d'Italie, attribution Duolingo, `docs/pedagogia/unitat-1-adieu.md`, maquettes photo. Application installable (PWA), page `/accessibilitat` et Laboratòri `/admin/labo` : séances closes, détail dans l'archive.
 
 ## 4. Le déséquilibre à surveiller (constat du 24-10)
 
@@ -126,6 +126,6 @@ Depuis le 2026-11-13 : une discussion mère (L'amic) et des sous-discussions par
 
 ## 8. Chantiers de la méthode L'amic (ouverts le 13-11)
 
-- 43 Ménage des consignes : `CLAUDE.md` et ce tableau allégés (13-11). Reste : ranger les 30 documents de la racine, alléger `AGENTS.md`, `COORDINATION.md`, `BRIEF-MISTRAL.md`.
-- 44 Livret technique : page illustrée dans `/admin` (schéma du projet, une brique touchée ouvre son explication en 5 lignes), choisie par Romain le 13-11. À cadrer puis déléguer.
+- 43 Ménage des consignes : `CLAUDE.md` et ce tableau allégés ; 18 documents de la racine rangés dans `docs/pedagogia/` et `docs/archius/` (13-11, index `docs/LEGIR-ME.md`). Reste : alléger `AGENTS.md`, `COORDINATION.md`, `BRIEF-MISTRAL.md`.
+- 44 Livret technique : page illustrée dans `/admin` (schéma du projet, une brique touchée ouvre son explication en 5 lignes), choisie par Romain le 13-11. Maquette montrée à Romain le 13-11 (neuf briques), en attente de son avis ; ensuite la coder dans `/admin` (déléguer).
 - 45 Séances dans le nuage : `app/.env` absent, donc pas de relève de « Per tu » ni de vérification de l'occitan. À décider avec Romain.

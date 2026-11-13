@@ -1,6 +1,6 @@
 # Gamification — spécification (étape C)
 
-> Version 0.2 · 29 août 2026 · Livrable de l'étape C de `construction-pedagogique.md`.
+> Version 0.2 · 29 août 2026 · Livrable de l'étape C de `docs/pedagogia/construction-pedagogique.md`.
 > Décisions de Romain intégrées : còla de personnages qui se débloque (troupe
 > v0.1 validée « OK ») · arbre unique (racines = les anciens) · **série = lo
 > Fuòc de l'ostal** (voir §5 bis) · usage des crostadas à trancher plus tard ·

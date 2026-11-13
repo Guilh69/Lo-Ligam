@@ -1,6 +1,6 @@
 # Catalogue des exercices — grammaire des mécaniques (étape D)
 
-> Version 0.1 · 29 août 2026 · Livrable de l'étape D de `construction-pedagogique.md`.
+> Version 0.1 · 29 août 2026 · Livrable de l'étape D de `docs/pedagogia/construction-pedagogique.md`.
 > Règle d'entrée au catalogue : chaque mécanique se justifie **deux fois** —
 > par un principe d'acquisition (cadre v0.3 §4, P1-P8) **et** par un rôle de
 > plaisir. L'une sans l'autre ne suffit pas.
