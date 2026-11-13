@@ -81,7 +81,7 @@
 		<div class="footer-legal-links">
 			<span>© 2026 Lo Ligam</span>
 			<a class="footer-legal-link" href="/mencions-legalas"
-				><span use:scramble={{ oc: 'Mentions legalas', fr: 'Mentions légales', es: 'Avisos legales', en: 'Legal notice', ca: 'Avís legal', ar: 'الإشعار القانوني', lang }}>{tria({ oc: 'Mentions legalas', fr: 'Mentions légales', es: 'Avisos legales', en: 'Legal notice', ca: 'Avís legal', ar: 'الإشعار القانوني' })}</span></a
+				><span use:scramble={{ oc: 'Mencions legalas', fr: 'Mentions légales', es: 'Avisos legales', en: 'Legal notice', ca: 'Avís legal', ar: 'الإشعار القانوني', lang }}>{tria({ oc: 'Mencions legalas', fr: 'Mentions légales', es: 'Avisos legales', en: 'Legal notice', ca: 'Avís legal', ar: 'الإشعار القانوني' })}</span></a
 			>
 			<a class="footer-legal-link" href="/confidencialitat"
 				><span use:scramble={{ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', en: 'Privacy', ca: 'Privadesa', ar: 'الخصوصية', lang }}>{tria({ oc: 'Confidencialitat', fr: 'Confidentialité', es: 'Privacidad', en: 'Privacy', ca: 'Privadesa', ar: 'الخصوصية' })}</span></a

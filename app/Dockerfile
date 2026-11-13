@@ -32,6 +32,9 @@ RUN addgroup -S ligam && adduser -S ligam -G ligam
 COPY --from=constructor --chown=ligam:ligam /app/build ./build
 COPY --from=constructor --chown=ligam:ligam /app/node_modules ./node_modules
 COPY --from=constructor --chown=ligam:ligam /app/package.json ./
+# Compression du HTML/JSON et durée de cache des polices et images : préchargés
+# avant le serveur de l'adaptateur (audit du 2026-11-13, src/serveur/).
+COPY --from=constructor --chown=ligam:ligam /app/src/serveur ./serveur
 
 USER ligam
 
@@ -41,4 +44,4 @@ ENV NODE_ENV=production
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["node", "build/index.js"]
+CMD ["node", "--import", "./serveur/precharge.js", "build/index.js"]

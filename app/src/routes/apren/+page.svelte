@@ -45,7 +45,7 @@
 	<title>{tria({ oc: 'S’apren', fr: 'S’apprend', es: 'Se aprende', en: 'Learn', ca: 'S’aprèn', ar: 'نتعلّم' })} · Lo Ligam</title>
 	<meta
 		name="description"
-		content="Aprene l’occitan : corses en visio, parcors, leiçon d’ensag, mots en imatges. Apprendre l’occitan : cours en visio, parcours, leçon d’essai, mots en images."
+		content="Aprene l’occitan : corses en visio, parcors, jòcs, mots en imatges. Apprendre l’occitan : cours en visio, parcours, jeux, mots en images."
 	/>
 </svelte:head>
 

@@ -61,7 +61,7 @@
 				'Précision que nous préférons dire clairement : tes données sont stockées sur des serveurs situés dans l’Union européenne, mais la société qui gère la base de données est américaine. Les autorités des États-Unis peuvent donc, en droit, en demander l’accès (c’est ce qu’on appelle le CLOUD Act). L’hébergement du site, lui, est français. Nous cherchons un prestataire européen pour la base de données ; aucun ne réunit à ce jour la maturité et la compatibilité nécessaires.',
 			cookiesT: 'Traceurs et stockage',
 			cookies:
-				'Aucun traceur publicitaire, aucune mesure d’audience. Le site garde seulement quelques réglages dans ton navigateur : la langue choisie, la progression de la leçon d’essai, et le fait que tu aies déjà vu certains messages d’accueil. Ces informations ne quittent jamais ton appareil et ne servent pas à t’identifier.',
+				'Aucun traceur publicitaire, aucune mesure d’audience. Le site garde seulement quelques réglages dans ton navigateur : la langue et le thème choisis, ta progression dans les leçons, ton carnet de mots, et le fait que tu aies déjà vu certains messages d’accueil. Si tu es connecté, ton navigateur garde aussi ta connexion, et ta progression et ton carnet sont aussi enregistrés dans ton compte. Ces informations servent seulement à faire fonctionner le site, jamais à t’identifier ni à te suivre.',
 			roleBasa: 'base de données et authentification',
 			roleAlbergament: 'hébergement, et envoi des messages du formulaire de contact',
 			tiersT: 'Ressources chargées depuis d’autres sites',
@@ -125,7 +125,7 @@
 				'Precision que valèm mai dire clarament : tas donadas son gardadas sus de servidors situats dins l’Union europèa, mas la societat que gerís la basa de donadas es americana. Las autoritats dels Estats-Units pòdon doncas, en drech, ne demandar l’accès (çò que s’apèla lo CLOUD Act). L’albergament del site, el, es francés. Cercam un prestatari europèu per la basa de donadas ; cap reünís pas encara la maduretat e la compatibilitat necessàrias.',
 			cookiesT: 'Pistaires e emmagazinatge',
 			cookies:
-				'Cap de pistaire publicitari, cap de mesura d’audiéncia. Lo site garda solament qualques reglatges dins ton navegador : la lenga causida, la progression de la leiçon d’ensag, e lo fach qu’ajas ja vist certans messatges d’acuèlh. Aquelas informacions quitan pas jamai ton aparelh e servisson pas a t’identificar.',
+				'Cap de pistaire publicitari, cap de mesura d’audiéncia. Lo site garda solament qualques reglatges dins ton navegador : la lenga e lo tèma causits, ta progression dins las leiçons, ton quasernet de mots, e lo fach qu’ajas ja vist certans messatges d’acuèlh. Se siás connectat, ton navegador garda tanben ta connexion, e ta progression e ton quasernet son tanben gardats dins ton compte. Aquelas informacions servisson solament a far foncionar lo site, pas jamai a t’identificar ni a te seguir.',
 			roleBasa: 'basa de donadas e autentificacion',
 			roleAlbergament: 'albergament, e mandadís dels messatges del formulari de contacte',
 			tiersT: 'Ressorsas cargadas d’autres sites',
@@ -189,7 +189,7 @@
 				'Una precisión que preferimos decir con claridad: tus datos se almacenan en servidores situados en la Unión Europea, pero la empresa que gestiona la base de datos es estadounidense. Por tanto, las autoridades de Estados Unidos pueden, en derecho, solicitar acceso a ellos (es lo que se llama CLOUD Act). El alojamiento del sitio, en cambio, es francés. Buscamos un proveedor europeo para la base de datos; a día de hoy ninguno reúne la madurez y la compatibilidad necesarias.',
 			cookiesT: 'Rastreadores y almacenamiento',
 			cookies:
-				'Ningún rastreador publicitario, ninguna medición de audiencia. El sitio solo guarda unos pocos ajustes en tu navegador: la lengua elegida, el progreso de la lección de prueba y el hecho de que ya hayas visto ciertos mensajes de bienvenida. Esta información nunca sale de tu dispositivo y no sirve para identificarte.',
+				'Ningún rastreador publicitario, ninguna medición de audiencia. El sitio solo guarda unos pocos ajustes en tu navegador: la lengua y el tema elegidos, tu progreso en las lecciones, tu cuaderno de palabras y el hecho de que ya hayas visto ciertos mensajes de bienvenida. Si has iniciado sesión, tu navegador guarda también tu conexión, y tu progreso y tu cuaderno se guardan además en tu cuenta. Esta información solo sirve para que el sitio funcione, nunca para identificarte ni para seguirte.',
 			roleBasa: 'base de datos y autenticación',
 			roleAlbergament: 'alojamiento y envío de los mensajes del formulario de contacto',
 			tiersT: 'Recursos cargados desde otros sitios',
@@ -253,7 +253,7 @@
 				'A point we prefer to state clearly: your data is stored on servers located in the European Union, but the company that manages the database is American. The authorities of the United States can therefore, in law, request access to it (this is what is known as the CLOUD Act). The hosting of the site itself is French. We are looking for a European provider for the database; none currently combines the maturity and compatibility required.',
 			cookiesT: 'Trackers and storage',
 			cookies:
-				'No advertising tracker, no audience measurement. The site only keeps a few settings in your browser: the language you chose, the progress of the trial lesson, and the fact that you have already seen certain welcome messages. This information never leaves your device and is not used to identify you.',
+				'No advertising tracker, no audience measurement. The site only keeps a few settings in your browser: the language and theme you chose, your progress in the lessons, your word notebook, and the fact that you have already seen certain welcome messages. If you are signed in, your browser also keeps your sign-in, and your progress and notebook are also saved in your account. This information is only used to make the site work, never to identify or follow you.',
 			roleBasa: 'database and authentication',
 			roleAlbergament: 'hosting, and sending of the contact form messages',
 			tiersT: 'Resources loaded from other sites',
@@ -317,7 +317,7 @@
 				'Una precisió que preferim dir amb claredat: les teves dades s’emmagatzemen en servidors situats a la Unió Europea, però l’empresa que gestiona la base de dades és estatunidenca. Per tant, les autoritats dels Estats Units poden, en dret, demanar-ne l’accés (és el que s’anomena CLOUD Act). L’allotjament del web, en canvi, és francès. Cerquem un proveïdor europeu per a la base de dades; cap reuneix avui la maduresa i la compatibilitat necessàries.',
 			cookiesT: 'Rastrejadors i emmagatzematge',
 			cookies:
-				'Cap rastrejador publicitari, cap mesura d’audiència. El web només guarda uns quants ajustos al teu navegador: la llengua triada, el progrés de la lliçó de prova i el fet que ja hagis vist certs missatges de benvinguda. Aquesta informació no surt mai del teu dispositiu i no serveix per identificar-te.',
+				'Cap rastrejador publicitari, cap mesura d’audiència. El web només guarda uns quants ajustos al teu navegador: la llengua i el tema triats, el teu progrés a les lliçons, el teu quadern de paraules i el fet que ja hagis vist certs missatges de benvinguda. Si has iniciat la sessió, el navegador també guarda la teva connexió, i el teu progrés i el teu quadern es desen a més al teu compte. Aquesta informació només serveix perquè el web funcioni, mai per identificar-te ni per seguir-te.',
 			roleBasa: 'base de dades i autenticació',
 			roleAlbergament: 'allotjament i enviament dels missatges del formulari de contacte',
 			tiersT: 'Recursos carregats des d’altres llocs',
@@ -381,7 +381,7 @@
 				'توضيح نفضّل قوله بصراحة: تُخزَّن بياناتك على خوادم تقع في الاتحاد الأوروبي، لكن الشركة التي تدير قاعدة البيانات أمريكية. ولذلك يمكن لسلطات الولايات المتحدة، من حيث القانون، أن تطلب الوصول إليها (وهو ما يُعرف باسم CLOUD Act). أما استضافة الموقع نفسه فهي فرنسية. ونبحث عن مزوّد أوروبي لقاعدة البيانات، ولا يجمع أي منهم حتى اليوم النضج والتوافق اللازمين.',
 			cookiesT: 'أدوات التتبّع والتخزين',
 			cookies:
-				'لا أدوات تتبّع إعلانية ولا قياس للزيارات. يحتفظ الموقع فقط ببعض الإعدادات في متصفحك: اللغة المختارة، وتقدّم الدرس التجريبي، وكونك قد رأيت بعض رسائل الترحيب. ولا تغادر هذه المعلومات جهازك أبدًا، ولا تُستخدم للتعرّف عليك.',
+				'لا أدوات تتبّع إعلانية ولا قياس للزيارات. يحتفظ الموقع فقط ببعض الإعدادات في متصفحك: اللغة والمظهر اللذان اخترتهما، وتقدّمك في الدروس، ودفتر كلماتك، وكونك قد رأيت بعض رسائل الترحيب. وإذا كنت متصلًا بحسابك، يحتفظ متصفحك أيضًا باتصالك، ويُحفظ تقدّمك ودفترك كذلك في حسابك. لا تُستخدم هذه المعلومات إلا لتشغيل الموقع، وليس للتعرّف عليك أو تتبّعك.',
 			roleBasa: 'قاعدة البيانات والمصادقة',
 			roleAlbergament: 'الاستضافة، وإرسال رسائل نموذج التواصل',
 			tiersT: 'موارد تُحمَّل من مواقع أخرى',

@@ -166,6 +166,10 @@
 		   plus haute de sa rangée (sinon, à taille intermédiaire, une case au
 		   texte long dépasse ses voisines ; Romain, 2026-10-25) */
 		align-self: stretch;
+		/* idem en largeur : sans cela, sous Chrome et Edge, une case carrée
+		   étirée en hauteur par la grande case voisine devient plus large que
+		   sa colonne et déborde sur sa voisine (Amassa et Mèdias, audit du 2026-11-13) */
+		justify-self: stretch;
 		padding: var(--esp-16);
 		border-radius: 6px;
 		background: var(--fons);
