@@ -13,6 +13,9 @@
 	import { browser, dev } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { confetisSurPage } from '$lib/flotants/pages.js';
+	// le signal des couleurs (2026-11-13) : les pages suivent quand Romain change une couleur depuis le site
+	import '$lib/colors/senhal.svelte.js';
+	import { adminSabut } from '$lib/adminStore';
 
 	let { children } = $props();
 
@@ -22,6 +25,17 @@
 	const simular = dev && browser && new URLSearchParams(location.search).get('edicion') === 'simular';
 	// (l'administration a sa propre navigation, la liste Per tu en tête)
 	let talhièr = $derived(($esAdmin || simular) && !(page.route.id ?? '').startsWith('/admin'));
+
+	// Un brouillon de couleurs resté dans l'onglet (outil « Colors ») ne vaut que pour l'administrateur :
+	// une fois qu'on sait que ce n'est pas lui, il est oublié (la page suivante remontre le publié).
+	$effect(() => {
+		if (!$adminSabut || $esAdmin || simular || !globalThis.__loLigamColorsVista) return;
+		try {
+			for (const k of ['vista', 'vista-css', 'dubert']) sessionStorage.removeItem('lo-ligam-colors-' + k);
+		} catch {
+			// stockage indisponible : rien à oublier
+		}
+	});
 
 	// Cadre commun (2026-10-07). Les pages sont harmonisées une à une avec la
 	// charte de l'esbòs de nuèch ; tant qu'une page n'est pas dans ARMONIZADAS

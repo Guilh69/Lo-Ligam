@@ -33,7 +33,7 @@
   traverse pas des « thèmes », il vit une année avec des gens.
 - **Le fil merveilleux : la còla.** Un personnage de la mythologie se
   débloque à la fin de chaque unité, choisi pour résonner avec elle (§4,
-  colonne còla — propositions ⚠️ à valider, gamification.md).
+  colonne còla — propositions ⚠️ à valider, docs/pedagogia/gamification.md).
 
 ## 3. Vue d'ensemble des niveaux (où écrire, dans l'ordre)
 

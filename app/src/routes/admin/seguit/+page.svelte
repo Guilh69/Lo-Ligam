@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { GROPS, ESTATS, MESA_A_JORN, comptes } from '$lib/seguit/seguit.js';
+	import GrilhaFacetas from '$lib/seguit/GrilhaFacetas.svelte';
 	import { DECISIONS } from '$lib/triar/decisions.js';
 	import { PAGINA, estatDe } from '$lib/triar/triar.js';
 
@@ -49,6 +50,8 @@
 			<button type="button" aria-pressed={filtre === 'romain'} onclick={() => (filtre = 'romain')}>Ce qui m’attend</button>
 		</div>
 	</AdminTete>
+
+	<GrilhaFacetas />
 
 	{#each GROPS as g (g.nom)}
 		{#if g.chantiers.some(vesible)}

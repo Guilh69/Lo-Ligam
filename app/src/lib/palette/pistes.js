@@ -1,5 +1,5 @@
 // Les pistes de palette du 07-11 (Romain : « les couleurs ne vont pas ensemble »),
-// montrées sur /ensag/palette-actuel, -brique, -jaune et -accordee. Rien ici ne
+// montrées sur /ensag/palette-actuel (les pages -brique, -jaune et -accordee ont été retirées le 13-11, récupérables dans Git). Rien ici ne
 // touche le site : tant que Romain n'a pas choisi, palette.js et app.css restent
 // tels quels. Une piste choisie se recopie dans lib/styles/palette.js (TEINTES,
 // BOUTONS, CASES) et dans les jetons de fond de app.css.

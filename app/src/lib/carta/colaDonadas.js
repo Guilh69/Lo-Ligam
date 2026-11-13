@@ -49,14 +49,16 @@ export const COLORS = {
 	clar: PALETA_JOCS,
 	dalt: { gas: '#0072b2', lan: '#d55e00', pro: '#cc79a7', lem: '#e69f00', auv: '#009e73', viv: '#56b4e9' }
 };
-const TEMAS = {
+// (une fonction : les couleurs sont lues quand la carte se prépare, pas à l'évaluation du module ;
+// Romain les règle depuis le site, lib/colors, 2026-11-13)
+const TEMAS = () => ({
 	// l'occitan unifié au rouge des boutons (CARTE.occitan, palette.js), le nom en crème
 	// (avant : #d9343f à 0,48 en sombre, #b0202c à 0,58 en clair)
 	sorne: { estela: '#ffe9b8', lenga: '#e0612f', occitan: CARTE.occitan, occitanTèxt: '#ffc2b8', nomOccitan: texteSur(CARTE.occitan), nomOmbra: 'rgba(30, 8, 3, 0.85)', admin: '245, 234, 216', ombra: 'rgba(18, 9, 6, 0.9)', clar: false, tencha: CARTE.intensite, uni: 1 },
 	clar: { estela: '#9a6a1c', lenga: TEINTES.brique, occitan: CARTE.occitan, occitanTèxt: '#4a0a12', nomOccitan: texteSur(CARTE.occitan), nomOmbra: 'rgba(58, 14, 4, 0.85)', admin: '42, 26, 16', ombra: 'rgba(247, 247, 247, 0.95)', clar: true, tencha: CARTE.intensite, uni: 1 }
-};
+});
 const temaDe = (clar, dalt) => ({
-	...(clar ? TEMAS.clar : TEMAS.sorne),
+	...(clar ? TEMAS().clar : TEMAS().sorne),
 	...(dalt ? { lenga: clar ? '#1f5f8f' : '#6fb1ff', occitan: clar ? '#1f5f8f' : '#4a90d9', occitanTèxt: clar ? '#123a57' : '#cfe4ff' } : {}),
 	dial: dalt ? COLORS.dalt : clar ? COLORS.clar : COLORS.sorne,
 	dalt: !!dalt

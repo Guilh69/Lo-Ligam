@@ -162,11 +162,7 @@ const FAMILLES_BRUT = [
 						{ titol: 'Les autres partis des deux essais papier-couleurs', raison: 'Non retenus (07-11).' }
 					],
 					ecart: 'Les classes .pc-vert, .est-bon et .est-faux sont définies mais n’ont aucun usage ; le jeton --pc-icone (bleu) n’a jamais été adopté.',
-					avis: 'Remis en cause avec la palette claire (« la palette ne va pas bien ensemble ») : la sarcelle du thème clair fait partie de ce que la session palette-couleurs réexamine.',
-					essais: [
-						essai('/ensag/papier-couleurs', 'Essai thème sombre (adopté)'),
-						essai('/ensag/papier-couleurs-clair', 'Essai thème clair (adopté)')
-					]
+					avis: 'Remis en cause avec la palette claire (« la palette ne va pas bien ensemble ») : la sarcelle du thème clair fait partie de ce que la session palette-couleurs réexamine.'
 				}
 			)
 		]
@@ -769,7 +765,6 @@ const FAMILLES_BRUT = [
 				{
 					essais: [
 						essai('/ensag/blanc', 'Page presque blanche (adoptée en partie)'),
-						essai('/ensag/clar', 'Refonte claire (adoptée)'),
 						essai('/ensag/mondes', 'Les trois mondes (sans suite, à confirmer)')
 					]
 				}

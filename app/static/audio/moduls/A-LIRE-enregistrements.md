@@ -1,5 +1,15 @@
 # Audio des modules : mode d'emploi pour Romain
 
+> **Nouveau principe (2026-11-13).** Une phrase = un fichier, nommé par sa clé
+> (`<module>/<id>` pour une expression, `<module>/d-<empreinte>` pour une
+> réplique ; clés calculées par `src/lib/voix/phrases.js`). Plus rien à nommer
+> à la main : le studio enregistre, le script de mise au propre range les
+> fichiers et réécrit `src/lib/voix/voix-index.js`. La leçon joue le son d'une
+> phrase dès que cet index le connaît (sinon le bouton n'apparaît pas). Une
+> réplique corrigée change de clé : elle est « à refaire ». Les listes de
+> fichiers et règles de nommage ci-dessous (modules 1.1 à 1.4) sont PÉRIMÉES ;
+> seule la rubrique « Anem ! » reste valable.
+
 > **Depuis le téléphone** : dépose tes enregistrements dans le dossier
 > **Proton Drive › My files › Lo-Ligam-Audios** (la boîte de dépôt), via
 > l'appli Proton Drive ou le menu Partager de ton enregistreur. Pas besoin

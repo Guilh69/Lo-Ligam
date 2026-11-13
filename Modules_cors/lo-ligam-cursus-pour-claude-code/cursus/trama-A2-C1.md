@@ -4,7 +4,7 @@
 
 La carte des unités, sans les exercices, de l'A2 au C1 : le chemin vers le DCL d'occitan (languedocien, norme classique). Elle prolonge `01-A1-carta-8-unitats.md` et en garde le format. Rédigée par Claude le 2026-11-01, à la demande de Romain.
 
-**Sources** (résumées, rien n'est recopié : documents sous droits) : les référentiels et les annales du DCL d'occitan ; les programmes des cours du CPNL (Consorci per a la Normalització Lingüística) ; `revisions/2026-10-24-progression-catala.md` ; la carte A1 ; `00-cadre-methodologique.md` ; `catalogue-exercicis.md` ; `alhors-en-occitania-A1.md`. Les anciennes cartes `02-A2.md` à `05-C1.md` restent en place tant que cette trame n'est pas validée.
+**Sources** (résumées, rien n'est recopié : documents sous droits) : les référentiels et les annales du DCL d'occitan ; les programmes des cours du CPNL (Consorci per a la Normalització Lingüística) ; `revisions/2026-10-24-progression-catala.md` ; la carte A1 ; `00-cadre-methodologique.md` ; `docs/pedagogia/catalogue-exercicis.md` ; `alhors-en-occitania-A1.md`. Les anciennes cartes `02-A2.md` à `05-C1.md` restent en place tant que cette trame n'est pas validée.
 
 **Statut** : proposition, **à relire par Romain**. Les décisions déjà prises ne sont pas rediscutées (DCL pour cap, blocs de 45 h, 4 unités et 2 haltes par bloc, une mission par niveau, le carnet au centre).
 

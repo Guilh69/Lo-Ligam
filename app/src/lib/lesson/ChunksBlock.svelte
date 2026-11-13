@@ -3,26 +3,47 @@
 	import { rich } from '$lib/lesson/rich.js';
 	// Les expressions à retenir : le mot, « ça sonne comme », le sens
 	// (l'intro et le sens acceptent l'italique *…* comme les autres blocs).
-	// Le bouton audio s'active dès qu'un fichier existe (c.audio).
-	let { block } = $props();
+	// Le bouton audio s'active dès qu'un fichier existe : c.audio d'abord, sinon
+	// le son de la phrase (lib/voix, retrouvé par sa clé).
+	import { onDestroy } from 'svelte';
+	import { sonDe } from '$lib/voix/phrases.js';
+	import { jouer } from '$lib/voix/lecteur.js';
+	let { block, modulId = '' } = $props();
 
-	function play(src) {
-		try {
-			new Audio(src).play();
-		} catch (e) {
-			/* audio indisponible : jamais bloquant */
+	let playing = $state(null);
+	let arret = null;
+
+	// Un seul son à la fois : jouer() arrête le précédent.
+	function play(cle, src) {
+		if (playing === cle && arret) {
+			arret();
+			return;
 		}
+		playing = cle;
+		const a = jouer(src, () => {
+			if (playing === cle) playing = null;
+		});
+		arret = a;
 	}
+
+	onDestroy(() => arret?.());
 </script>
 
 <section class="block">
 	<h3 class="block-title">{block.title}</h3>
 	{#if block.intro}<p class="intro"><em>{@html rich(block.intro)}</em></p>{/if}
 	<ul class="chunks">
-		{#each block.items as c}
+		{#each block.items as c, ci}
+			{@const src = c.audio ?? sonDe(modulId, c)}
 			<li class="chunk">
-				{#if c.audio}
-					<button type="button" class="pc pc-2 listen active" onclick={() => play(c.audio)} aria-label="Escotar {c.oc}"><Icona nom="son" size="1.25em" /></button>
+				{#if src}
+					<button
+						type="button"
+						class="pc pc-2 listen active"
+						class:on={playing === ci}
+						aria-pressed={playing === ci}
+						onclick={() => play(ci, src)}
+						aria-label="Écouter : {c.oc.replace(/\*/g, '')}"><Icona nom={playing === ci ? 'pause' : 'son'} size="1.25em" /></button>
 				{:else}
 					<button type="button" class="pc pc-2 listen" disabled title="Àudio a venir (audio à venir)" aria-label="Àudio a venir"><Icona nom="son" size="1.25em" /></button>
 				{/if}
@@ -90,6 +111,14 @@
 
 	.listen.active {
 		--pc-tinta: var(--pc-carton-tinta);
+		/* cible tactile de 44 px */
+		min-width: 44px;
+		min-height: 44px;
+	}
+
+	.listen.on {
+		background: var(--color-gold);
+		color: var(--t-tinta);
 	}
 
 	.c-body {

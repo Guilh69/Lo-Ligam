@@ -22,6 +22,8 @@
 	import { estatElement } from './pila.js';
 	import { tèxteElement, tèxteFicha, empremta } from './empremtas.js';
 	import { dictadaPossibla, dictar } from './dictada.js';
+	// Colors (2026-11-13) : régler les couleurs du site depuis la page (lib/colors)
+	import { colors, dobrir as dobrirColors, tampar as tamparColors, eraDubert as colorsEraDubert } from '$lib/colors/colors.svelte.js';
 
 	let camin = $derived(page.url.pathname);
 	// dans les leçons, les remarques ont leur propre outil, qui garde l'étape et
@@ -52,6 +54,8 @@
 	onMount(() => {
 		edicion.talhièr = true;
 		cargarNotas();
+		// l'outil des couleurs était ouvert avant un rechargement : il se rouvre
+		if (colorsEraDubert()) dobrirColors();
 		const vista = () => document.visibilityState === 'visible' && cargarNotas();
 		document.addEventListener('visibilitychange', vista);
 		return () => {
@@ -603,7 +607,13 @@
 		</div>
 	{/if}
 
-	<nav class="rail" class:amagat={panèl} class:causint={fasa === 'causir' || validant} aria-label="Talhièr">
+	{#if colors.dubert}
+		{#await import('$lib/colors/ColorsPanel.svelte') then m}
+			<m.default />
+		{/await}
+	{/if}
+
+	<nav class="rail" class:amagat={panèl || colors.dubert} class:causint={fasa === 'causir' || validant} aria-label="Talhièr">
 		{#if pòtModificar}
 			<button
 				type="button"
@@ -636,6 +646,18 @@
 				</button>
 			{/if}
 		{/if}
+		<button
+			type="button"
+			onclick={() => {
+				if (validant) quitarValidar();
+				fasa = 'repaus';
+				tampar();
+				dobrirColors();
+			}}
+		>
+			<Icona nom="colors" size="1.35em" />
+			<span>Colors</span>
+		</button>
 		<a href="/admin" aria-label={compte ? `Per tu : ${compte} choses t’attendent` : 'Per tu'}>
 			<span class="ic"><Icona nom="lista" size="1.35em" />{#if compte}<span class="xifra">{compte}</span>{/if}</span>
 			<span>Per tu</span>

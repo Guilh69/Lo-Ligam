@@ -7,6 +7,6 @@ Date de lecture :
 |---|---|---|
 | | | |
 
-## Mes choix d'animation (tableau §6 de `etat-de-l-art-parcours.md`)
+## Mes choix d'animation (tableau §6 de `docs/pedagogia/etat-de-l-art-parcours.md`)
 Coche A (animation), S (sobre) ou N (non) dans le document, puis note ici les
 trois choix qui t'ont le plus fait hésiter.

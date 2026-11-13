@@ -382,9 +382,9 @@
 							{:else if block.type === 'carta'}
 								<CartaBlock {block} {onCorrect} onResult={noterReconnais} onComplete={() => (blockDone[bi] = true)} />
 							{:else if block.type === 'dialogue'}
-								<DialogueBlock {block} />
+								<DialogueBlock {block} modulId={$page.params.modulId} />
 							{:else if block.type === 'chunks'}
-								<ChunksBlock {block} />
+								<ChunksBlock {block} modulId={$page.params.modulId} />
 							{:else if block.type === 'table'}
 								<TableBlock {block} />
 							{:else if block.type === 'note'}

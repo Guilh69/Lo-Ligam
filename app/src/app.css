@@ -55,12 +55,16 @@
 	/* gamme « Éclat » (Romain, 2026-10-15 : l'interface était « un peu trop
 	   sombre ») : fond brun chaud un peu plus clair, crème, or et terracotta
 	   plus vifs ; avant : #120906, #1d0f0a, #f5ead8, #eeaf34, #ffd47f, #b53d17, #e0612f */
+	/* Depuis le 2026-11-13, Romain change les couleurs depuis le site (outil « Colors », lib/colors) : les
+	   valeurs écrites ici sont celles d'origine, à tenir identiques à lib/colors/registre.js (un test le
+	   vérifie). Le texte secondaire, les filets et le voile sont calculés depuis le texte et le fond, pour
+	   suivre ses choix ; mêmes rendus qu'avant (rgba du texte à 78 %, 20 %, du fond à 72 %). */
 	--t-fons: #22100a;
 	--t-fons-2: #2f170e;
 	--t-tinta: #fbf1e1;
-	--t-tinta-2: rgba(251, 241, 225, 0.78);
-	--t-linha: rgba(251, 241, 225, 0.2);
-	--t-vel: rgba(34, 16, 10, 0.72);
+	--t-tinta-2: color-mix(in srgb, var(--t-tinta) 78%, transparent);
+	--t-linha: color-mix(in srgb, var(--t-tinta) 20%, transparent);
+	--t-vel: color-mix(in srgb, var(--t-fons) 72%, transparent);
 	--t-aur: #f6b73c;
 	--t-aur-clar: #ffd98a;
 	--t-terra: #c8481c;
@@ -129,9 +133,9 @@
 	--t-fons: #f7f7f7;
 	--t-fons-2: #eeeeee;
 	--t-tinta: #2a1a10;
-	--t-tinta-2: rgba(42, 26, 16, 0.72);
-	--t-linha: rgba(42, 26, 16, 0.14);
-	--t-vel: rgba(247, 247, 247, 0.8);
+	--t-tinta-2: color-mix(in srgb, var(--t-tinta) 72%, transparent);
+	--t-linha: color-mix(in srgb, var(--t-tinta) 14%, transparent);
+	--t-vel: color-mix(in srgb, var(--t-fons) 80%, transparent);
 	/* #a85d12 → #9c5611 le 2026-10-21 : 4,16 → 4,70 sur --t-fons, les petits
 	   textes dorés (« L'occitan », numéros) passent le seuil WCAG de 4,5 */
 	--t-aur: #9c5611;
@@ -181,16 +185,16 @@
 :root[data-dalt='on'] {
 	--t-terra: #2f6fb0;
 	--t-terra-viu: #6fb1ff;
-	--t-tinta-2: rgba(251, 241, 225, 0.86);
-	--t-linha: rgba(251, 241, 225, 0.28);
+	--t-tinta-2: color-mix(in srgb, var(--t-tinta) 86%, transparent);
+	--t-linha: color-mix(in srgb, var(--t-tinta) 28%, transparent);
 }
 :root[data-tema='clar'][data-dalt='on'] {
 	--t-terra: #1f5f8f;
 	--t-terra-viu: #1f5f8f;
 	--t-aur: #8a4f00;
 	--t-aur-clar: #6b3a00;
-	--t-tinta-2: rgba(42, 26, 16, 0.88);
-	--t-linha: rgba(42, 26, 16, 0.3);
+	--t-tinta-2: color-mix(in srgb, var(--t-tinta) 88%, transparent);
+	--t-linha: color-mix(in srgb, var(--t-tinta) 30%, transparent);
 }
 
 /* Couleurs de l'enseignement sur la carte (Romain, 2026-10-23) : celles de la

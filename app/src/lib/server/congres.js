@@ -200,3 +200,67 @@ export async function cercarTot(terme) {
 	});
 	return { resultats, estats };
 }
+
+// ── Vérification mot à mot (Revirar, 2026-11-13) ──
+// Romain traduit une phrase sans aide ; chaque mot qu'il a écrit (et chaque mot
+// du modèle) est cherché dans lo Basic, côté occitan. Un mot est « ok » si lo
+// Basic le connaît (languedocien ou occitan commun), « absent » sinon, « error »
+// si lo Basic n'a pas répondu. Un pluriel régulier est essayé aussi sans son « s » ; un mot absent
+// de lo Basic est cherché comme forme conjuguée dans vèrb'Òc. Rien n'est gardé ici.
+const MAX_MOTS = 30;
+const SIMULTANIS = 3; // sobriété envers l'API : trois demandes à la fois au plus
+
+// Seconde passe : lo Basic ne connaît que les mots de base ; vèrb'Òc remonte
+// d'une forme conjuguée à son infinitif (mêmes paramètres que
+// scripts/verificar-oc.mjs). Rend true si le mot est une forme conjuguée.
+async function conjugat(mot) {
+	const u = new URL('https://api.locongres.org/verboc.php');
+	u.searchParams.set('key', env.LOCONGRES_API_KEY);
+	u.searchParams.set('form', mot);
+	u.searchParams.set('var', 'lengadoc');
+	const res = await fetch(u, { signal: AbortSignal.timeout(6000) });
+	if (!res.ok) throw new Error(`vèrb'Òc : ${res.status}`);
+	const data = await res.json();
+	return (data?.query ?? []).some((f) => f.inf);
+}
+
+async function verificarUn(mot, cercar, conjugar) {
+	const candidats = [mot, ...(mot.endsWith('s') && mot.length > 3 ? [mot.slice(0, -1)] : [])];
+	let pana = false;
+	for (const c of candidats) {
+		try {
+			if ((await cercar('oc', c)).length) return 'ok';
+		} catch {
+			pana = true;
+		}
+	}
+	try {
+		if (await conjugar(mot)) return 'ok';
+	} catch {
+		pana = true;
+	}
+	return pana ? 'error' : 'absent';
+}
+
+/**
+ * Vérifie une liste de mots occitans (minuscules, 3 lettres au moins) ;
+ * rend { estat: 'ok' | 'sens-clau', mots: { mot: 'ok' | 'absent' | 'error' } }.
+ * « ok » = connu de lo Basic, ou reconnu comme forme conjuguée par vèrb'Òc.
+ * `cercar`, `clau` et `conjugar` sont injectables pour les tests.
+ */
+export async function verificarMots(mots, cercar = demandar, clau = clauPresenta(), conjugar = conjugat) {
+	if (!clau) return { estat: 'sens-clau', mots: {} };
+	const lista = [...new Set(mots)].slice(0, MAX_MOTS);
+	const r = {};
+	let i = 0;
+	const trabalh = async () => {
+		while (i < lista.length) {
+			const m = lista[i++];
+			r[m] = await verificarUn(m, cercar, conjugar);
+		}
+	};
+	await Promise.all(Array.from({ length: Math.min(SIMULTANIS, lista.length) }, trabalh));
+	return { estat: 'ok', mots: r };
+}
+
+export const MAX_MOTS_VERIFICAR = MAX_MOTS;

@@ -47,8 +47,10 @@ const csp = {
 		// sons des enquêtes de l'Atlas sonore (LISN), lus seulement quand on
 		// lance l'écoute sur la carte
 		// + le direct des radios en occitan, joué au clic (page d'essai des radios, 2026-10-25)
+		// + blob: pour réécouter une prise du studio de voix avant de la garder (2026-11-13)
 		'media-src': [
 			'self',
+			'blob:',
 			'https://*.supabase.co',
 			'https://atlas.lisn.upsaclay.fr',
 			'https://stream-ssl.radios-arra.fr:8443',

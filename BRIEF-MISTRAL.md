@@ -116,7 +116,7 @@ Ces règles viennent de trois mois de travail ensemble (fin juillet à début no
 
 ### 4.2 Accueil, ambiance et charte (barreaux 1 et 2 de l'échelle)
 - Thème sombre « Éclat » avec les « Venas d'aur » par défaut, thème clair « Plâtre » au choix (`app/src/lib/stores/ambianca.svelte.js`, liste des pages sombres tenue identique dans `app/src/app.html`).
-- Pourquoi, pour qui, les trois rubriques : tranchés (blocs 1 à 3 de `DIRECCION.md`). L'accueil montre « occitan ⇄ ta langue » avec animations.
+- Pourquoi, pour qui, les trois rubriques : tranchés (blocs 1 à 3 de `docs/archius/DIRECCION.md`). L'accueil montre « occitan ⇄ ta langue » avec animations.
 
 ### 4.3 La carte `/carta` (le gros du travail d'octobre, chantier 13)
 - Communes cliquables (10 042 noms, `app/static/data/comunas/noms.json`, recherche dans `app/src/lib/comunas.js`), fiches de communes, noms locaux dans leur dialecte, langues de France et langues voisines (hiérarchie langue, dialecte, sous-dialecte, sans trou), sources au survol.
@@ -170,7 +170,7 @@ Romain modifie lui-même textes, liens, images et listes, connecté en administr
 
 ### 5.1 Les points chauds, à traiter en premier
 1. **Le tri des noms de la carte du 27-10** (décisions de Romain : 242 communes alignées sur lo Congrès, six pays, communes du Lot-et-Garonne et du Médoc, reliefs et parcs sans forme sûre masqués) est **fusionné et en ligne depuis le 2026-11-02** (commit `3edeab5`, 85 tests et construction au vert), avec l'index de recherche des communes régénéré (`fff3a1a` : 398 communes gagnent leur nom occitan dans la recherche, *Cáors* devient *Caors* ; vérifié sur la carte avec *Horcas de Garòna*). **Reste** : les 150 communes nommées depuis Wikidata sont « à valider » par Romain (surtout les formes vivaro-alpines et provençales) ; 162 communes restent sans nom ; parcs, reliefs, provinces, surnoms, sous-dialectes, Calandretas et mots LISN attendent une source. Détail : `revisions/2026-10-27-tri-validations-occitanes.md`.
-2. **Les doutes A1 restants** : A1-13 à A1-20 et A1-27 à A1-36 (`DOBTES-OCCITAN.md` §5). Les poser à Romain **un par un**, dans la conversation, avec deux ou trois options ; appliquer, puis régénérer les fiches (`node scripts/fichas-relectura.mjs`) et relancer le contrôle des explications.
+2. **Les doutes A1 restants** : A1-13 à A1-20 et A1-27 à A1-36 (`docs/archius/DOBTES-OCCITAN.md` §5). Les poser à Romain **un par un**, dans la conversation, avec deux ou trois options ; appliquer, puis régénérer les fiches (`node scripts/fichas-relectura.mjs`) et relancer le contrôle des explications.
 3. **Vérifier l'A1 contre la grammaire de référence**, par lots : fait le 02-11 pour tout l'A1 : lot 1 (unités 1 à 4), négation *non… pas* partout, lot 2 (unités 5 à 8, haltes 3 et 4, mission) ; bilan et méthode dans `cursus/cobertura-gramatica.md` §4.
 4. **« Lo camin »** : la contre-relecture n'a pas été finie. Non vérifiés : clavier, lecteur d'écran, traductions es/en/ca/ar des nouveaux libellés. Les trois questions à creuser sont dans la fiche `revisions/2026-11-02-parcors-passation.md` §6.
 5. **Le déséquilibre** : depuis le 12-10, la moitié des changements a porté sur la carte et un sur dix sur l'apprentissage, alors que le site est d'abord le support des cours. Le rappeler à Romain quand un nouveau chantier de carte s'ouvre.
@@ -180,7 +180,7 @@ Romain modifie lui-même textes, liens, images et listes, connecté en administr
 (Liste tenue dans `PILOTATGE.md` §1 ; en résumé)
 - Tester tout l'A1 sur https://loligam.eu/aprene et relire l'occitan avec « Editar ».
 - Essayer l'édition sur place sur téléphone et ordinateur (image, lien, ajout, ordre, suppression).
-- Répondre au bloc 4 de `DIRECCION.md` (l'accueil, vue d'ensemble) : c'est le barreau 3 de l'échelle.
+- Répondre au bloc 4 de `docs/archius/DIRECCION.md` (l'accueil, vue d'ensemble) : c'est le barreau 3 de l'échelle.
 - Une question de couleur : le rouge du logo sur les boutons de zoom de la carte et sur « Écouter la voix la plus proche » ?
 - Recoller `supabase/supabase-pagina-elements.sql` dans Supabase (ajoute des textes, n'écrase rien) ; relire et publier son récit sur `/istoria`.
 - Faire le tri des 149 musiques dans `/admin/musica`.
@@ -213,7 +213,7 @@ Romain modifie lui-même textes, liens, images et listes, connecté en administr
 - **Avant le 2027-10-25** : renouveler la clé d'API des courriels Scaleway (dans Supabase et dans le conteneur).
 
 ### 5.6 Questions ouvertes (ne pas trancher sans Romain)
-Limite gratuit / payant du parcours autonome ; combien d'unités A1 pour lancer ; les 14 questions du §9 de `etat-de-l-art-parcours.md` ; casting des personnages et autorisations écrites ; héberger soi-même les photos satellite (environ 6 Go) ; **migration de Supabase vers un hébergeur européen** (reportée sciemment : loi américaine CLOUD Act).
+Limite gratuit / payant du parcours autonome ; combien d'unités A1 pour lancer ; les 14 questions du §9 de `docs/pedagogia/etat-de-l-art-parcours.md` ; casting des personnages et autorisations écrites ; héberger soi-même les photos satellite (environ 6 Go) ; **migration de Supabase vers un hébergeur européen** (reportée sciemment : loi américaine CLOUD Act).
 
 ## 6. Carte du dépôt
 
@@ -224,12 +224,12 @@ C:\Users\perie\Depots\Lo_Ligam\
 ├── CLAUDE.md                 consignes de Claude (contrôle)
 ├── PILOTATGE.md              tableau de bord : à ouvrir en début, à mettre à jour en fin
 ├── cahier-des-charges.md     source de vérité ; §11 = journal daté de toutes les décisions
-├── DIRECCION.md              direction du site en 8 blocs (bloc 4 en attente de Romain)
+├── docs/archius/DIRECCION.md              direction du site en 8 blocs (bloc 4 en attente de Romain)
 ├── charte-graphique.md       couleurs, polices, photos (§3bis « sang e aur »)
-├── DOBTES-OCCITAN.md         doutes d'occitan en file (§4 et §5)
+├── docs/archius/DOBTES-OCCITAN.md         doutes d'occitan en file (§4 et §5)
 ├── DOBTES-TRADUCION*.md, DOBTES-ARABE*.md   doutes de traduction
-├── corpus-design.md, transposicion-racine2.md, methode-pedagogique.md,
-│   construction-pedagogique.md, gamification.md, catalogue-exercicis.md, …  documents de fond
+├── corpus-design.md, transposicion-racine2.md, docs/pedagogia/methode-pedagogique.md,
+│   docs/pedagogia/construction-pedagogique.md, docs/pedagogia/gamification.md, docs/pedagogia/catalogue-exercicis.md, …  documents de fond
 ├── revisions/                points d'étape, fiches de passation, analyses datées
 ├── Modules_cors/lo-ligam-cursus-pour-claude-code/
 │   ├── CLAUDE.md             règles du cursus (valent pour toute IA)

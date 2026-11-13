@@ -56,6 +56,30 @@
 		nota('Lo SVG demòra refusat, quitament per tu', !!svg.error);
 		if (!svg.error) await supabase.storage.from('designs').remove([`_ensag/${id}.svg`]);
 
+		// Dossier des voix brutes (studio de voix, supabase-voix.sql, 2026-11-13) :
+		// l'administrateur y écrit, mais il reste fermé au public et n'accepte que
+		// du son. Libellés en français : pas d'occitan nouveau sans vérification.
+		const voixCamin = `_ensag/${id}.webm`;
+		const voix = await supabase.storage
+			.from('voix-brut')
+			.upload(voixCamin, new Blob([new Uint8Array([26, 69, 223, 163])], { type: 'audio/webm' }), {
+				contentType: 'audio/webm'
+			});
+		nota('Voix : envoyer une prise', !voix.error, voix.error?.message);
+		if (!voix.error) {
+			// une adresse publique ne doit rien rendre : le dossier est privé
+			const adresse = supabase.storage.from('voix-brut').getPublicUrl(voixCamin).data.publicUrl;
+			const lecturePublique = await fetch(adresse).catch(() => null);
+			nota('Voix : le dossier reste fermé au public', !lecturePublique?.ok, lecturePublique ? `réponse ${lecturePublique.status}` : '');
+			const voixLevat = await supabase.storage.from('voix-brut').remove([voixCamin]);
+			nota('Voix : retirer la prise d’essai', !voixLevat.error, voixLevat.error?.message);
+		}
+		const voixTexte = await supabase.storage
+			.from('voix-brut')
+			.upload(`_ensag/${id}.txt`, new Blob(['essai'], { type: 'text/plain' }), { contentType: 'text/plain' });
+		nota('Voix : un fichier qui n’est pas du son est refusé', !!voixTexte.error);
+		if (!voixTexte.error) await supabase.storage.from('voix-brut').remove([`_ensag/${id}.txt`]);
+
 		testejant = false;
 	}
 

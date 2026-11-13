@@ -2,7 +2,7 @@
 // ci-dessous sont des formes de réponse de l'API (structure seulement, mots
 // courants), pas des données gardées.
 import { describe, it, expect } from 'vitest';
-import { genre, ambArticle, couples, nomsWikidata, lecturaRevirada } from './congres.js';
+import { genre, ambArticle, couples, nomsWikidata, lecturaRevirada, verificarMots } from './congres.js';
 
 const nuatge = {
 	query: [
@@ -99,5 +99,37 @@ describe('Revirada : la traduction automatique', () => {
 		expect(lecturaRevirada({ translated_text: '*zorglub' }, 'zorglub')).toBeNull();
 		expect(lecturaRevirada({ translated_text: 'zorglub' }, 'zorglub')).toBeNull();
 		expect(lecturaRevirada({}, 'mer')).toBeNull();
+	});
+});
+
+describe('vérification mot à mot (Revirar)', () => {
+	const faus = async (_l, m) => (['gat', 'bana'].includes(m) ? [{ oc: m, fr: m, var: 'lengadoc' }] : []);
+	it('sépare mots connus et inconnus, essaie le pluriel sans « s »', async () => {
+		const r = await verificarMots(['gat', 'banas', 'gatz', 'gat'], faus, true, async () => false);
+		expect(r).toEqual({ estat: 'ok', mots: { gat: 'ok', banas: 'ok', gatz: 'absent' } });
+	});
+	it('reconnaît une forme conjuguée par vèrb\'Òc quand lo Basic ne la connaît pas', async () => {
+		const r = await verificarMots(['prepari', 'gatz'], faus, true, async (m) => m === 'prepari');
+		expect(r.mots).toEqual({ prepari: 'ok', gatz: 'absent' });
+	});
+	it('une panne de vèrb\'Òc donne « error », pas « absent » ; lo Basic garde la priorité', async () => {
+		const pana = async () => { throw new Error('x'); };
+		const r = await verificarMots(['gat', 'prepari'], faus, true, pana);
+		expect(r.mots).toEqual({ gat: 'ok', prepari: 'error' });
+	});
+	it('sans clé, ne demande rien', async () => {
+		let appels = 0;
+		const r = await verificarMots(['gat'], async () => (appels++, []), false);
+		expect(r).toEqual({ estat: 'sens-clau', mots: {} });
+		expect(appels).toBe(0);
+	});
+	it('un mot dont la demande plante est « error », pas « absent »', async () => {
+		const r = await verificarMots(['gat', 'plan'], async (_l, m) => { if (m === 'plan') throw new Error('x'); return [{}]; }, true, async () => false);
+		expect(r.mots).toEqual({ gat: 'ok', plan: 'error' });
+	});
+	it('plafonne le nombre de mots', async () => {
+		const mots = Array.from({ length: 50 }, (_, i) => 'mot' + String.fromCharCode(97 + (i % 26)) + String.fromCharCode(97 + Math.floor(i / 26)));
+		const r = await verificarMots(mots, async () => [{}], true, async () => false);
+		expect(Object.keys(r.mots).length).toBe(30);
 	});
 });

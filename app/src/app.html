@@ -21,6 +21,25 @@
 				d.dalt = localStorage.getItem('lo-ligam-dalt') === 'on' ? 'on' : 'off';
 			} catch (e) {}
 		</script>
+		<!-- Les couleurs que Romain a choisies depuis le site (outil « Colors », lib/colors,
+		     2026-11-13) : le serveur écrit ici la feuille qui les pose et leur liste
+		     (hooks.server.js), avant le premier affichage. Vides tant qu'il n'a rien changé.
+		     La « vista » est son brouillon en cours, gardé le temps de l'onglet. -->
+		<style id="colors-publicadas">%loligam.colors.css%</style>
+		<script nonce="%sveltekit.nonce%">
+			window.__loLigamColors = %loligam.colors.json%;
+			try {
+				var vista = sessionStorage.getItem('lo-ligam-colors-vista');
+				if (vista) {
+					window.__loLigamColorsVista = JSON.parse(vista);
+					// (la feuille gardée n'est reposée que si elle a exactement la forme que le site écrit :
+					// des variables et des couleurs #rrggbb, rien d'autre ; relecture de sécurité du 2026-11-13)
+					var css = sessionStorage.getItem('lo-ligam-colors-vista-css');
+					var forma = /^(html:root[a-z\[\]='():-]*\{--[a-zç0-9-]+:#[0-9a-f]{6}(;--[a-zç0-9-]+:#[0-9a-f]{6})*\}\n?)*$/;
+					if (css !== null && forma.test(css)) document.getElementById('colors-publicadas').textContent = css;
+				}
+			} catch (e) {}
+		</script>
 		<!-- Les polices sont hébergées par nos soins (voir src/fonts.css) :
 		     aucune requête vers Google. On précharge les deux voix principales
 		     (Limelight pour les titres, Luciole pour le courant). -->

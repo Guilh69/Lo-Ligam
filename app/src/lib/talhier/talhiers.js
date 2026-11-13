@@ -13,6 +13,10 @@ export const TALHIÈRS = [
 		grop: 'Contenu',
 		ateliers: [
 			{ href: '/admin/valider', oc: 'A validar', fr: 'garder, refaire ou répondre, une carte à la fois : la pile de l’IA, l’occitan des pages, le tri des dessins et des photos' },
+			// libellé en français : pas de mot d'occitan nouveau sans vérification (lot 2 du studio, 2026-11-13)
+			{ href: '/admin/voix', oc: 'Studio de voix', fr: 'enregistrer ta voix pour les phrases du parcours A1, une à une' },
+			// libellé en français : pas de mot d'occitan nouveau sans vérification
+			{ href: '/admin/revirar', oc: 'Traduire sans aide', fr: 't’entraîner à traduire une phrase du quotidien, mots vérifiés par lo Congrès' },
 			{ href: '/admin/textes', oc: 'Tèxtes', fr: 'tous les textes modifiables du site, rangés par endroit' },
 			{ href: '/admin/imaginar', oc: 'Imaginar', fr: 'entourer sur tes photos l’endroit où tu imagines une plaque, une enseigne, une publicité ; l’IA fabrique ensuite le montage' },
 			{ href: '/admin/musica', oc: 'Musica', fr: 'trier les artistes de l’espace musique' },
@@ -24,7 +28,8 @@ export const TALHIÈRS = [
 		grop: 'Pilotage',
 		ateliers: [
 			{ href: '/admin/labo', oc: 'Laboratòri', fr: 'les choix de design à faire, les essais en cours et tes inspirations' },
-			{ href: '/admin/seguit', oc: 'Ont ne sèm', fr: 'où en est chaque chantier, et ce qui t’attend' }
+			{ href: '/admin/seguit', oc: 'Ont ne sèm', fr: 'où en est chaque chantier, et ce qui t’attend' },
+			{ href: '/admin/libret', oc: 'Livret technique', fr: 'comment marche tout le projet, brique par brique' }
 		]
 	},
 	{
@@ -54,7 +59,10 @@ export const VERROLHS = { href: '/admin/verrolhs', oc: 'Verrolhs', fr: 'vérifie
 export const LARGEURS = {
 	'/admin': 'normal',
 	'/admin/valider': 'etroit',
+	'/admin/voix': 'etroit',
+	'/admin/revirar': 'etroit',
 	'/admin/seguit': 'normal',
+	'/admin/libret': 'normal',
 	'/admin/labo': 'large',
 	'/admin/imaginar': 'large',
 	'/admin/musica': 'large'
