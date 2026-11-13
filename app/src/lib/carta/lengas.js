@@ -8,7 +8,7 @@
 // amb los dels dialèctes occitans dins la causida (pastilhas, istoric).
 
 // Les couleurs des langues : lib/styles/palette.js (CARTE.langues).
-import { CARTE } from '../styles/palette.js';
+import { CARTE, quandCambia } from '../styles/palette.js';
 
 export const LENGAS = {
 	catalan: {
@@ -26,7 +26,10 @@ export const LENGAS = {
 		// 10-10, en camaïeu de bleu : catalan et alsacien or, arpitan ocre,
 		// basque et flamand olive, breton sarcelle, francique et corse prune ;
 		// une teinte ne revient que pour deux langues éloignées)
-		color: { sorne: CARTE.langues.catalan, clar: CARTE.langues.catalan, dalt: '#e69f00' },
+		get color() {
+			const c = CARTE.langues.catalan;
+			return { sorne: c, clar: c, dalt: '#e69f00' };
+		},
 		tèxt: { sorne: '#ffe2a0', clar: '#2a1a10', dalt: '#ffe0a0' },
 		// Los dos blòcs de Veny se legisson : l'oriental en blaus, l'occidental
 		// en verds (de tons freds, luènh de la paleta occitana, cauda)
@@ -73,7 +76,10 @@ export const LENGAS = {
 		eti: [5.65, 45.95],
 		// verd, coma sus las cartas de las lengas de França (Romain, 2026-10-09) ;
 		// lo basc aurà un verd pus escur (sorne #2f8a57, clar #1b5e20, dalt #004d40)
-		color: { sorne: CARTE.langues.arpitan, clar: CARTE.langues.arpitan, dalt: '#009e73' },
+		get color() {
+			const c = CARTE.langues.arpitan;
+			return { sorne: c, clar: c, dalt: '#009e73' };
+		},
 		tèxt: { sorne: '#d6f5d8', clar: '#fbf1e1', dalt: '#c8f0e2' },
 		// violets e malvas : luènh de la paleta occitana cauda (roge auvernhat e
 		// jaune vivaroaupenc vesins) e dels blaus-verds del catalan
@@ -112,7 +118,10 @@ export const LENGAS = {
 		// (entre Donostia e Iruña)
 		eti: [-1.95, 43.08],
 		// lo verd pus escur de las cartas de las lengas de França (Romain, 2026-10-09)
-		color: { sorne: CARTE.langues.basc, clar: CARTE.langues.basc, dalt: '#004d40' },
+		get color() {
+			const c = CARTE.langues.basc;
+			return { sorne: c, clar: c, dalt: '#004d40' };
+		},
 		tèxt: { sorne: '#cdeedc', clar: '#fbf1e1', dalt: '#c8f0e2' },
 		// de verds, de l'oliva a l'aiga-marina : luènh del violet gascon vesin
 		dial: {
@@ -151,7 +160,10 @@ export const LENGAS = {
 		// (en Alsàcia : lo nom de luènh, causida de Romain)
 		eti: [7.55, 48.45],
 		// roges e irangets, las colors d'Alsàcia : luènh del blau lorren e del verd arpitan
-		color: { sorne: CARTE.langues.alsacian, clar: CARTE.langues.alsacian, dalt: '#d55e00' },
+		get color() {
+			const c = CARTE.langues.alsacian;
+			return { sorne: c, clar: c, dalt: '#d55e00' };
+		},
 		tèxt: { sorne: '#ffe0da', clar: '#2a1a10', dalt: '#ffe8d8' },
 		dial: {
 			sorne: { niederalemannisch: '#ff6b5a', hochalemannisch: '#ff9a4d', hochstalemannisch: '#ffc44d', schwabisch: '#e0484f' },
@@ -186,7 +198,10 @@ export const LENGAS = {
 		// (en Mosèla, retorn de Romain : « le Platt devrait être sur la Moselle »)
 		eti: [6.75, 49.08],
 		// violets e ròses : luènh del blau lorren e del roge alsacian vesins
-		color: { sorne: CARTE.langues.francic, clar: CARTE.langues.francic, dalt: '#cc79a7' },
+		get color() {
+			const c = CARTE.langues.francic;
+			return { sorne: c, clar: c, dalt: '#cc79a7' };
+		},
 		tèxt: { sorne: '#efe0ff', clar: '#fbf1e1', dalt: '#ffe0f0' },
 		dial: {
 			sorne: { letzebuergesch: '#e85d9f', moselfrankisch: '#c86bff', rheinfrankisch: '#9a7bff', sudfrankisch: '#ff8fd0', ripuarisch: '#b04fd0', limburgisch: '#d68fff' },
@@ -223,7 +238,10 @@ export const LENGAS = {
 		eti: [4.9, 51.75],
 		// irangets (los Païses Basses) per lo neerlandés, bruns pel bas saxon,
 		// turquesa pel frison : luènh del blau picard vesin
-		color: { sorne: CARTE.langues.flamenc, clar: CARTE.langues.flamenc, dalt: '#e69f00' },
+		get color() {
+			const c = CARTE.langues.flamenc;
+			return { sorne: c, clar: c, dalt: '#e69f00' };
+		},
 		tèxt: { sorne: '#ffe6cc', clar: '#fbf1e1', dalt: '#fff0d0' },
 		dial: {
 			sorne: {
@@ -284,7 +302,10 @@ export const LENGAS = {
 		nom: { oc: 'còrs', fr: 'corse', endo: 'corsu' },
 		eti: [9.05, 42.15],
 		// ocres e tèrras cuechas (lo granit de Corsega), un blau pel ligur
-		color: { sorne: CARTE.langues.cors, clar: CARTE.langues.cors, dalt: '#e69f00' },
+		get color() {
+			const c = CARTE.langues.cors;
+			return { sorne: c, clar: c, dalt: '#e69f00' };
+		},
 		tèxt: { sorne: '#ffe3d6', clar: '#2a1a10', dalt: '#fff0d0' },
 		dial: {
 			sorne: { cismuntincu: '#ff8a5c', transizione: '#ffbf6b', oltramuntincu: '#e0503a', gadduresu: '#d99a5a', sassaresu: '#b8783f', bunifazzinu: '#7fb0ff', capraiese: '#ff8a5c' },
@@ -321,7 +342,10 @@ export const LENGAS = {
 		// (al mitan de Bretanha)
 		eti: [-3.25, 48.2],
 		// turquesa e verds : luènh del blau ardesa del galò vesin
-		color: { sorne: CARTE.langues.breton, clar: CARTE.langues.breton, dalt: '#009e73' },
+		get color() {
+			const c = CARTE.langues.breton;
+			return { sorne: c, clar: c, dalt: '#009e73' };
+		},
 		tèxt: { sorne: '#d3f7ec', clar: '#2a1a10', dalt: '#c8f0e2' },
 		dial: {
 			sorne: { leoneg: '#59d9a9', tregerieg: '#2fc4c4', kerneveg: '#7fd67a', gwenedeg: '#c8e070', gwenrann: '#c8e070' },
@@ -360,7 +384,10 @@ export const LENGAS = {
 		eti: [2.1, 48.3],
 		// lo blau de las cartas de las lengas de França, luènh del blau de la mar
 		// lo blau de Suècia (lo del drapèl, #006aa7 ; a l'ecran sus lo fons sorne, lo #005073 que Romain a mandat, 2026-10-10 : pas mai de blau violet)
-		color: { sorne: CARTE.langues.oil, clar: CARTE.langues.oil, dalt: '#0072b2' },
+		get color() {
+			const c = CARTE.langues.oil;
+			return { sorne: c, clar: c, dalt: '#0072b2' };
+		},
 		tèxt: { sorne: '#d6ebf8', clar: '#fbf1e1', dalt: '#cfe4ff' },
 		// quatre familhas de blaus, una per grope : indigò al Nòrd (picard,
 		// normand, valon), blau petròli a l'Èst (lo franc-comtés tira cap al verd
@@ -427,15 +454,21 @@ const mesclar = (a, b, t) => {
 	const h = (c, i) => parseInt(c.slice(1 + 2 * i, 3 + 2 * i), 16);
 	return '#' + [0, 1, 2].map((i) => Math.round(h(a, i) + (h(b, i) - h(a, i)) * t).toString(16).padStart(2, '0')).join('');
 };
-for (const l of Object.values(LENGAS)) {
-	for (const m of ['sorne', 'clar']) {
-		let i = 0;
-		for (const k of Object.keys(l.dial[m])) {
-			const [t, b] = CAMAIEU[i++ % CAMAIEU.length];
-			l.dial[m][k] = b ? mesclar(l.color[m], b, t) : l.color[m];
+// (Recalculé quand la palette change : Romain règle les couleurs depuis le site, lib/colors, 2026-11-13.)
+function pintarDialèctes() {
+	for (const l of Object.values(LENGAS)) {
+		const color = l.color;
+		for (const m of ['sorne', 'clar']) {
+			let i = 0;
+			for (const k of Object.keys(l.dial[m])) {
+				const [t, b] = CAMAIEU[i++ % CAMAIEU.length];
+				l.dial[m][k] = b ? mesclar(color[m], b, t) : color[m];
+			}
 		}
 	}
 }
+pintarDialèctes();
+quandCambia(pintarDialèctes);
 
 // Los prefixes de totas las lengas : un còdi sens prefix es occitan
 const PREFIXES = Object.values(LENGAS).map((l) => l.pref);

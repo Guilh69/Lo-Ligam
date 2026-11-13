@@ -1,4 +1,5 @@
 import { dev } from '$app/environment';
+import { colorsPublicadas } from '$lib/server/colors.js';
 
 // Une seule adresse pour le site (2026-10-15) : www.loligam.eu et l'adresse
 // technique de Scaleway (…scw.cloud) renvoient vers loligam.eu, même page.
@@ -41,7 +42,13 @@ export async function handle({ event, resolve }) {
 	const novèla = ANCIANAS[event.url.pathname];
 	if (novèla) return new Response(null, { status: 301, headers: { location: novèla + event.url.search } });
 
-	const response = await resolve(event);
+	// Les couleurs choisies par Romain depuis le site (lib/colors, 2026-11-13) : la feuille qui les
+	// pose et leur liste sont écrites dans la page (deux repères d'app.html), avant le premier
+	// affichage. Lues dans la base au plus toutes les vingt secondes ; rien si rien n'est changé.
+	const colors = await colorsPublicadas();
+	const response = await resolve(event, {
+		transformPageChunk: ({ html }) => html.replace('%loligam.colors.css%', () => colors.css).replace('%loligam.colors.json%', () => colors.json)
+	});
 
 	// Empêche le navigateur de « deviner » un type de fichier différent de
 	// celui annoncé — un fichier téléversé ne peut pas être réinterprété

@@ -25,48 +25,60 @@
 // le texte est crème partout, 4,65 sur l'aplat seul.
 import { TEINTES } from '$lib/styles/palette.js';
 
-// les teintes : lib/styles/palette.js ; l'or brun et la terre restent ici
-const CREMA = TEINTES.creme;
+// les teintes : lib/styles/palette.js, lues au moment de s'en servir (Romain les change depuis le site,
+// lib/colors, 2026-11-13) ; l'or brun et la terre restent ici
 
 export const TEMAS = [
 	{
 		id: 'lenga',
-		color: [TEINTES.sarcelle, CREMA],
+		get color() {
+			return [TEINTES.sarcelle, TEINTES.creme];
+		},
 		nom: { oc: 'La lenga', fr: 'La langue', es: 'La lengua', en: 'The language', ca: 'La llengua', ar: 'اللغة' },
 		detalh: { oc: 'd’ont venon los mots', fr: 'd’où viennent les mots', es: 'de dónde vienen las palabras', en: 'where words come from', ca: 'd’on vénen les paraules', ar: 'من أين جاءت الكلمات' },
 		exemple: 'òc, miègjorn, diluns, dimenge'
 	},
 	{
 		id: 'noms',
-		color: [TEINTES.bleu, CREMA],
+		get color() {
+			return [TEINTES.bleu, TEINTES.creme];
+		},
 		nom: { oc: 'Los noms', fr: 'Les noms', es: 'Los nombres', en: 'Names', ca: 'Els noms', ar: 'الأسماء' },
 		detalh: { oc: 'de familha, d’ostal, dels vents', fr: 'de famille, de maison, des vents', es: 'de familia, de casa, de los vientos', en: 'of families, houses and winds', ca: 'de família, de casa, dels vents', ar: 'أسماء العائلات والبيوت والرياح' },
 		exemple: 'l’escais, lo molinièr, l’ostal'
 	},
 	{
 		id: 'pais',
-		color: [TEINTES.olive, CREMA],
+		get color() {
+			return [TEINTES.olive, TEINTES.creme];
+		},
 		nom: { oc: 'Lo país', fr: 'Le pays', es: 'El país', en: 'The country', ca: 'El país', ar: 'البلاد' },
 		detalh: { oc: 'fèstas, taula, vilas', fr: 'fêtes, table, villes', es: 'fiestas, mesa, ciudades', en: 'festivals, food, towns', ca: 'festes, taula, ciutats', ar: 'الأعياد والمائدة والمدن' },
 		exemple: 'Carnaval, lo caçolet, lo mas, las bastidas'
 	},
 	{
 		id: 'poetas',
-		color: [TEINTES.prune, CREMA],
+		get color() {
+			return [TEINTES.prune, TEINTES.creme];
+		},
 		nom: { oc: 'Los poètas', fr: 'Les poètes', es: 'Los poetas', en: 'The poets', ca: 'Els poetes', ar: 'الشعراء' },
 		detalh: { oc: 'trobadors, Mistral, Tolosa', fr: 'troubadours, Mistral, Toulouse', es: 'trovadores, Mistral, Tolosa', en: 'troubadours, Mistral, Tolosa', ca: 'trobadors, Mistral, Tolosa', ar: 'التروبادور، Mistral، Tolosa' },
 		exemple: 'trobar, la fin’amor, lo solelh'
 	},
 	{
 		id: 'musica',
-		color: ['#8f6514', CREMA],
+		get color() {
+			return ['#8f6514', TEINTES.creme];
+		},
 		nom: { oc: 'La musica', fr: 'La musique', es: 'La música', en: 'Music', ca: 'La música', ar: 'الموسيقى' },
 		detalh: { oc: 'cançons d’ièr e d’uèi', fr: 'chansons d’hier et d’aujourd’hui', es: 'canciones de ayer y de hoy', en: 'songs of yesterday and today', ca: 'cançons d’ahir i d’avui', ar: 'أغانٍ من الأمس واليوم' },
 		exemple: 'Amor d’Aussau, A mon ostal, Parla patois'
 	},
 	{
 		id: 'uei',
-		color: ['#8a4f12', CREMA],
+		get color() {
+			return ['#8a4f12', TEINTES.creme];
+		},
 		nom: { oc: 'Uèi', fr: 'Aujourd’hui', es: 'Hoy', en: 'Today', ca: 'Avui', ar: 'اليوم' },
 		detalh: { oc: 'escòla, familha, vila', fr: 'école, famille, ville', es: 'escuela, familia, ciudad', en: 'school, family, town', ca: 'escola, família, ciutat', ar: 'المدرسة والعائلة والمدينة' },
 		exemple: 'la Calandreta, la mameta, lo papeta'

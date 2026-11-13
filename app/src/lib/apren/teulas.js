@@ -9,61 +9,108 @@
 // /apren?ensag=colors, tous pris dans la charte ou dérivés d'elle.
 // Les teintes viennent de lib/styles/palette.js (2026-11-07) : la palette
 // « charta » est CASES ; les camaïeux des sous-pages partent de la même teinte.
-import { CASES, TEINTES } from '$lib/styles/palette.js';
+import { CASES, TEINTES, TEINTES_DEFAUT } from '$lib/styles/palette.js';
+import { oklch, depuisOklch, contraste } from '$lib/palette/coherence.js';
 
-const CREMA = TEINTES.creme;
-const TINTA = TEINTES.encre;
+// Un camaïeu suit sa teinte mère. Tant qu'elle a sa valeur d'origine, ses nuances sont celles choisies à la
+// main. Si Romain la change depuis le site (lib/colors, 2026-11-13), chaque nuance garde son écart à la
+// teinte mère (clarté, intensité, teinte), et son texte est celui des deux qui s'y lit le mieux.
+function seguir(nom, cases) {
+	const origina = TEINTES_DEFAUT[nom],
+		actuala = TEINTES[nom];
+	if (origina === actuala) return cases;
+	const o = oklch(origina),
+		a = oklch(actuala);
+	const tintas = [TEINTES.creme, TEINTES.encre];
+	const melhora = (c) => tintas.reduce((m, t) => (contraste(c, t) > contraste(c, m) ? t : m));
+	return cases.map(([fons], i) => {
+		if (i === 0) return [fons, melhora(fons)];
+		const n = oklch(fons);
+		let c = depuisOklch(Math.min(0.97, Math.max(0.12, a.L + n.L - o.L)), o.C > 0.01 ? (n.C * a.C) / o.C : n.C, a.H + n.H - o.H);
+		let t = melhora(c);
+		// une nuance moyenne où ni le clair ni le foncé ne tiennent 4,5:1 : elle s'écarte un peu de son texte
+		for (let k = 0; k < 25 && contraste(c, t) < 4.5; k++) {
+			const x = oklch(c);
+			c = depuisOklch(Math.min(0.99, Math.max(0.05, x.L + (oklch(t).L > 0.5 ? -0.02 : 0.02))), x.C, x.H);
+			t = melhora(c);
+		}
+		return [c, t];
+	});
+}
+
+// (Lus au moment de s'en servir, pas recopiés ici : Romain change les couleurs depuis le site,
+// lib/colors, 2026-11-13.)
 
 export const PALETAS = {
 	// les accents de la charte (§1) : brique, pétrole, olive, bleu, or
 	charta: CASES,
 	// plus sourde : rouge brique, ocre, prune, olive, pétrole
-	terra: [
-		['#a5342a', CREMA],
-		['#c98a2b', TINTA],
-		['#6b3a5b', CREMA],
-		['#55702f', CREMA],
-		['#1f5f63', CREMA],
-		['#8a4f12', CREMA]
-	],
+	get terra() {
+		const CREMA = TEINTES.creme,
+			TINTA = TEINTES.encre;
+		return [
+			['#a5342a', CREMA],
+			['#c98a2b', TINTA],
+			['#6b3a5b', CREMA],
+			['#55702f', CREMA],
+			['#1f5f63', CREMA],
+			['#8a4f12', CREMA]
+		];
+	},
 	// plus franche, la plus proche des objectifs de l'ONU
-	viu: [
-		['#e8562a', TINTA],
-		['#0b7372', CREMA],
-		['#f6b73c', TINTA],
-		['#2d6fb0', CREMA],
-		['#7a3b69', CREMA],
-		['#3f7a2a', CREMA]
-	],
+	get viu() {
+		const CREMA = TEINTES.creme,
+			TINTA = TEINTES.encre;
+		return [
+			['#e8562a', TINTA],
+			['#0b7372', CREMA],
+			['#f6b73c', TINTA],
+			['#2d6fb0', CREMA],
+			['#7a3b69', CREMA],
+			['#3f7a2a', CREMA]
+		];
+	},
 	// Les sous-pages prennent les teintes de leur case dans Se parla (Romain,
 	// 2026-10-25 : « si on va dans Òbras, un camaïeu de vert… dans les médias,
 	// du jaune ») : on sait où l'on est, et l'on ne confond pas avec la page
 	// d'avant. La première case garde la couleur de la case mère ; texte
 	// choisi pour tenir 4,5:1 au moins.
-	verd: [
-		[TEINTES.olive, CREMA],
-		['#353c1a', CREMA],
-		['#879764', TINTA],
-		['#b0b791', TINTA],
-		['#425223', CREMA],
-		['#4a5f28', CREMA]
-	],
-	aur: [
-		[TEINTES.or, TINTA],
-		['#79591c', CREMA],
-		['#f2c368', TINTA],
-		['#f5d393', TINTA],
-		['#aa7d26', TINTA],
-		['#c8932c', TINTA]
-	],
-	blau: [
-		[TEINTES.bleu, CREMA],
-		['#233a4b', CREMA],
-		['#6c92b1', TINTA],
-		['#9fb4c2', TINTA],
-		['#284e6d', CREMA],
-		['#2b5a81', CREMA]
-	]
+	get verd() {
+		const CREMA = TEINTES.creme,
+			TINTA = TEINTES.encre;
+		return seguir('olive', [
+			[TEINTES.olive, CREMA],
+			['#353c1a', CREMA],
+			['#879764', TINTA],
+			['#b0b791', TINTA],
+			['#425223', CREMA],
+			['#4a5f28', CREMA]
+		]);
+	},
+	get aur() {
+		const CREMA = TEINTES.creme,
+			TINTA = TEINTES.encre;
+		return seguir('or', [
+			[TEINTES.or, TINTA],
+			['#79591c', CREMA],
+			['#f2c368', TINTA],
+			['#f5d393', TINTA],
+			['#aa7d26', TINTA],
+			['#c8932c', TINTA]
+		]);
+	},
+	get blau() {
+		const CREMA = TEINTES.creme,
+			TINTA = TEINTES.encre;
+		return seguir('bleu', [
+			[TEINTES.bleu, CREMA],
+			['#233a4b', CREMA],
+			['#6c92b1', TINTA],
+			['#9fb4c2', TINTA],
+			['#284e6d', CREMA],
+			['#2b5a81', CREMA]
+		]);
+	}
 };
 export const NOMS_PALETAS = [
 	['charta', 'Charte'],

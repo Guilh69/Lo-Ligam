@@ -4,6 +4,7 @@
 // crème ou encre, celui des deux qui contraste le plus (WCAG, 4,5:1 au moins
 // pour toutes les teintes ci-dessous, mesuré le 2026-11-02).
 import { PALETAS } from '$lib/apren/teulas.js';
+import { quandCambia } from '$lib/styles/palette.js';
 
 export const CREMA = '#fbf1e1';
 export const TINTA = '#2a1a10';
@@ -38,14 +39,19 @@ export const teula = (fons) => [fons, tintaPer(fons)];
 // pétrole, olive, bleu, or), puis la prune ; trois voisines de la charte
 // (ocre, caramel, sarcelle) pour que les huit unités de l'A1 aient chacune la
 // sienne.
-const [BRICA, PETROLI, OLIVA, BLAU, AUR, PRUNA] = PALETAS.charta.map(([c]) => c);
 export const OCRE = '#c98a2b';
 export const CARAMEL = '#8a4f12';
 export const SARCELA = '#0b7372';
-export { BRICA, PETROLI, OLIVA, BLAU, AUR, PRUNA };
-
+// (Recalculées quand la palette change : Romain règle les couleurs depuis le site, lib/colors, 2026-11-13.)
+export let BRICA, PETROLI, OLIVA, BLAU, AUR, PRUNA;
 /** la couleur d'une unité (1 à 8), puis la ronde recommence */
-export const UNITATS = [BRICA, PETROLI, OLIVA, BLAU, PRUNA, OCRE, CARAMEL, SARCELA];
+export let UNITATS;
+function seguirPaleta() {
+	[BRICA, PETROLI, OLIVA, BLAU, AUR, PRUNA] = PALETAS.charta.map(([c]) => c);
+	UNITATS = [BRICA, PETROLI, OLIVA, BLAU, PRUNA, OCRE, CARAMEL, SARCELA];
+}
+seguirPaleta();
+quandCambia(seguirPaleta);
 export const colorUnitat = (n) => UNITATS[(Math.max(1, n) - 1) % UNITATS.length];
 
 /**

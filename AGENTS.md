@@ -73,6 +73,9 @@ Tutoiement partout · pas de tirets longs · pas de jargon anglais · **aucun sl
 - Rien de plus de 1 Mo dans `design-stock/` (un crochet le refuse) : les fichiers lourds vont dans `C:\Users\perie\Documents\6_Projectes\Lo_Ligam_hors-git`, au même chemin relatif.
 - Le projet vit dans `C:\Users\perie\Depots\Lo_Ligam`, **jamais dans Documents** (Proton Drive abîme `.git`). Ne pas toucher `.claude/worktrees/` (copies de travail de Claude).
 
+## Couleurs
+Depuis le 2026-11-13, Romain règle aussi les couleurs du site depuis sa barre d'outils (« Colors », `app/src/lib/colors` ; ses choix sont des éléments de la « page » `colors` de `pagina_elements`, brouillon puis « Publicar »). `app/src/lib/styles/palette.js` et `app.css` gardent les valeurs d'origine. Deux règles : ne jamais recopier une couleur de la palette dans une constante au niveau d'un module (la lire au moment de s'en servir) ; une couleur d'interface nouvelle passe par une variable et une ligne de `app/src/lib/colors/registre.js`, jamais par un code écrit en dur. Détail : `revisions/2026-11-13-colors-sus-plaça.md`.
+
 ## Valeurs (non négociables)
 Éthique, écologie (**sobriété : poids des pages et des images**), inclusivité (RGAA/WCAG), fierté occitane, européen quand possible. Aucun service extérieur (statistiques, police, CDN) sans l'accord de Romain. Pas d'images générées par IA.
 
