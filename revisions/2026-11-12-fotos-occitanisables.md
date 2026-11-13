@@ -114,6 +114,18 @@ Reste à faire côté IA quand une demande arrive : retrouver la zone dans la ph
 
 Contrôles du 13-11 : tracé, fiche, envoi et liste essayés à l'écran en simulation (`?edicion=simular`, rien n'est écrit) sur ordinateur, mise en page vue sur téléphone ; 1077 tests passent ; `npm run build` passe.
 
+## La page couche la forme sur le mur et propose des styles (13-11, demande suivante)
+
+Romain : « il faut que l'outil soit capable de mettre en place la bonne perspective et que je puisse choisir le style ».
+
+- **Perspective calculée dans la page** (`app/src/lib/imagina/perspectiva.js`, testé) : les lignes du mur sont relevées dans la photo, puis la verticale, puis l'orientation du mur ; la forme tracée se couche sur le mur, avec une grille qu'on peut afficher. Quand les lignes manquent, le mur est pris de face et la page le dit. Réglage à la main : curseur « Tourner le mur », « Essayer une autre orientation », « Revenir au calcul ». La focale de chaque photo est dans `focales.json` (127 photos sur 139 ; seulement la focale et le centre optique, ni lieu, ni date, ni appareil).
+- **Styles** (`estils.js`, testé) : dix styles et « Autre style », proposés selon la nature choisie ; chacun dit par quelle voie il se fabrique (vraie plaque reprise, plaque dessinée, lettres peintes). L'aperçu (`Mostra.svelte`) est une esquisse à plat : couleurs, lettre, liseré. La lumière et le grain viennent à la fabrication.
+- **Format de la demande**, complété : `cibla` = `foto=<clau> zona=… natura=<id> estil=<id> quad=x,y,x,y,x,y,x,y` (les quatre coins de la forme couchée, en fractions de la photo). Les demandes anciennes, sans style ni coins, se lisent toujours.
+- **Couleurs** (règle Colors du 13-11) : la page ne se sert que des variables du site, sans valeur de secours écrite en dur. Deux exceptions voulues, hors palette comme les dessins : les repères posés sur la photo (grille, contours, poignées) restent en blanc et noir neutres, pour se lire sur n'importe quelle photo ; les couleurs d'objet de `estils.js` et la pierre sous les échantillons décrivent un objet, pas l'interface. À confirmer par L'amic.
+- **Laboratòri** : `/ensag/fotos-oc` est déclaré dans `app/src/lib/labo/registre-essais.js` (choix `photos`, 14 essais, test à jour).
+- **Contrôles du 13-11 au soir**, après fusion de `origin/master` : 1190 tests passent, `npm run build` passe, les deux pages regardées en capture à 1830 px et à 390 px (rien ne déborde), bascule « En occitan » vue sur les quatre montages, `app/static/imagina` inchangé à 524 Ko.
+- **Pas encore fait** : la fabrication à partir des coins envoyés par la page n'a pas été exercée de bout en bout (`talhar.py` part encore de coins relevés à la main) ; 12 photos sans focale connue (valeur par défaut) ; le relevé des lignes tourne dans la page elle-même, sa durée n'a pas été mesurée sur un vrai téléphone ; l'envoi réel n'a été essayé qu'en simulation (aucune écriture en base).
+
 ## Limites constatées (honnêtes)
 
 - Réalisme **bon sur les plaques et panneaux plats** (couleur franche, typographie simple), **pas encore au niveau « indiscernable »** : les lettres neuves sont un peu plus nettes et plus propres que des lettres vieillies (pas de relief d'émail, pas d'écaille sur la lettre). Améliorable par plaque : relief et reflet sur les lettres, usure, police plus proche.
@@ -127,6 +139,7 @@ Contrôles du 13-11 : tracé, fiche, envoi et liste essayés à l'écran en simu
 
 ## Garde-fous (à valider avec Romain)
 
-- Tout montage est annoncé comme montage (« Montatge : sus la fòto d'origina, lo tèxte es en francés ») et la photo d'origine reste à un clic (bouton Francés).
+- Tout montage est annoncé comme montage (« Montatge : sus la fòto d'origina, lo tèxte es en francés ») et la photo d'origine reste à un clic (bouton « Fòto d'origina »).
 - Les formes occitanes viennent de lo Congrès (carrièra, prat, òrba, androna vérifiés le 12-11 ; « Dels Nobles » vient de la plaque ovale déjà posée sur la photo). **À valider par Romain** : « Androna de Lo Prat » (la plaque d'origine écrit « Lou Pra », graphie non classique du Périgord) et le texte « Montatge… ».
+- Revérifiés avec lo Congrès le 13-11 : fòto, origina, montatge, paret, nuda, tèxte, fornariá, carrièra, sant, androna, prat, nòble, imaginar. « francés » est absent du Basic (comme les autres noms de langue) mais déjà employé dans les textes publiés du site.
 - Pas de photo où l'on reconnaît quelqu'un ; ne jamais montrer un montage comme une vraie plaque posée.
