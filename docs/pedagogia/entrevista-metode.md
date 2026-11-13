@@ -64,3 +64,9 @@ Lecture de L'amic (interprétation, pas une parole de Romain) : ces trois résis
 Romain a préféré écrire directement en occitan pour montrer son niveau réel. Son texte, mot pour mot, non corrigé : « Bon, lo mai simple es d'ensajar d'escruire aqui e de te mostrar mon nivel vertadièr. Per exemple trobi complicat d'èsser segur de la sintaxi de mas frasas e d'èsser confiant dels mots qu'utilizi. Ai totjorn un sentiment d'insecuritat mas qu'existis tanen en francés »
 
 Lecture de L'amic (interprétation, non vérifiée par l'API de lo Congrès, séance dans le nuage) : la syntaxe, les accords et les conjugaisons de ces trois phrases tiennent. Les écarts relevés sont d'orthographe (escriure, aquí, nivèl, existís, tanben) et un choix de mot à vérifier (« confiant dels mots »). L'échantillon est court et tout au présent : il ne dit rien du passé, du futur ni du subjonctif. Ce que Romain nomme lui-même : un sentiment d'insécurité, qui existe aussi en français.
+
+### Q7. Quand tu doutes d'une phrase aujourd'hui, que fais-tu ?
+
+Réponse de Romain, mot pour mot : « Je peux vérifier ou reformuler »
+
+(Il n'a pas précisé où il vérifie, ni si cela le rassure.)
