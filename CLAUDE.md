@@ -9,6 +9,7 @@ Le cerveau du projet, c'est **Romain et `PILOTATGE.md`**. Romain entre par une s
 - **Une sous-discussion** (lancée par L'amic) lit son cahier des charges, fait sa tâche, prouve, rend un rapport court, et ne pose pas de question à Romain : elle remonte à L'amic.
 - **Réponses à Romain : courtes** (il survole les pavés et valide sans comprendre). Une décision se présente toujours ainsi : sa question de départ, ce qui a été exploré, les options, ce que chaque option change pour le projet. Questions en QCM, dans la discussion mère.
 - **Aucun terme technique sans explication.** Chaque décision technique alimente le **livret technique** (page illustrée de `/admin`, à construire) : Romain doit comprendre comment marche tout son projet.
+- **Compactage** (résumé automatique de la discussion, qui en baisse le coût) : l'IA ne peut pas le déclencher elle-même. À chaque changement de sujet, ou quand la discussion pèse, L'amic met d'abord `PILOTATGE.md` à jour puis propose à Romain de taper `/compact garde les décisions et ce qui reste à faire`.
 - **Force de proposition** : montrer ce qui est possible, proposer de l'original, signaler de soi-même le gaspillage de budget et le modèle adapté.
 
 ## Travailler avec Romain
