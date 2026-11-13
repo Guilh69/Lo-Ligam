@@ -14,6 +14,7 @@
 // 4e signe 1 = singulier / 2 = pluriel. On garde le languedocien et l'occitan
 // commun (var « lengadoc » et « oc »).
 import { env } from '$env/dynamic/private';
+import { esAssumida } from '$lib/data/formas-assumidas.js';
 
 const API = 'https://api.locongres.org/basic.php';
 const VARIETATS = ['lengadoc', 'oc'];
@@ -204,8 +205,9 @@ export async function cercarTot(terme) {
 // ── Vérification mot à mot (Revirar, 2026-11-13) ──
 // Romain traduit une phrase sans aide ; chaque mot qu'il a écrit (et chaque mot
 // du modèle) est cherché dans lo Basic, côté occitan. Un mot est « ok » si lo
-// Basic le connaît (languedocien ou occitan commun), « absent » sinon, « error »
-// si lo Basic n'a pas répondu. Un pluriel régulier est essayé aussi sans son « s » ; un mot absent
+// Basic le connaît (languedocien ou occitan commun), « assumit » si c'est une forme
+// voulue par Romain (src/lib/data/formas-assumidas.js : « uèi », « siès »), « absent »
+// sinon, « error » si lo Basic n'a pas répondu. Un pluriel régulier est essayé aussi sans son « s » ; un mot absent
 // de lo Basic est cherché comme forme conjuguée dans vèrb'Òc. Rien n'est gardé ici.
 const MAX_MOTS = 30;
 const SIMULTANIS = 3; // sobriété envers l'API : trois demandes à la fois au plus
@@ -225,6 +227,8 @@ async function conjugat(mot) {
 }
 
 async function verificarUn(mot, cercar, conjugar) {
+	// forme voulue par Romain (« uèi », « siès »…) : ni lo Basic ni vèrb'Òc ne la connaissent, on ne les appelle pas
+	if (esAssumida(mot)) return 'assumit';
 	const candidats = [mot, ...(mot.endsWith('s') && mot.length > 3 ? [mot.slice(0, -1)] : [])];
 	let pana = false;
 	for (const c of candidats) {
@@ -244,8 +248,9 @@ async function verificarUn(mot, cercar, conjugar) {
 
 /**
  * Vérifie une liste de mots occitans (minuscules, 3 lettres au moins) ;
- * rend { estat: 'ok' | 'sens-clau', mots: { mot: 'ok' | 'absent' | 'error' } }.
- * « ok » = connu de lo Basic, ou reconnu comme forme conjuguée par vèrb'Òc.
+ * rend { estat: 'ok' | 'sens-clau', mots: { mot: 'ok' | 'assumit' | 'absent' | 'error' } }.
+ * « ok » = connu de lo Basic, ou reconnu comme forme conjuguée par vèrb'Òc ;
+ * « assumit » = forme locale voulue par Romain, que lo Basic ne contient pas.
  * `cercar`, `clau` et `conjugar` sont injectables pour les tests.
  */
 export async function verificarMots(mots, cercar = demandar, clau = clauPresenta(), conjugar = conjugat) {

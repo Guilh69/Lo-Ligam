@@ -1,7 +1,7 @@
 // Revirar : l'appel à la route serveur de vérification (côté navigateur).
 // La clé de lo Congrès reste sur le serveur. On ne garde, le temps de l'onglet
 // ouvert, que « ce mot est connu / inconnu » (aucune donnée brute de l'API).
-const memoire = new Map(); // mot → 'ok' | 'absent'
+const memoire = new Map(); // mot → 'ok' | 'assumit' | 'absent'
 
 /**
  * Vérifie des mots occitans ; rend { estat, mots } comme la route
@@ -23,7 +23,7 @@ export async function verificar(mots, jeton = '', fetchFn = fetch) {
 			else {
 				const d = await res.json();
 				estat = d.estat;
-				for (const [m, v] of Object.entries(d.mots ?? {})) if (v === 'ok' || v === 'absent') memoire.set(m, v);
+				for (const [m, v] of Object.entries(d.mots ?? {})) if (v === 'ok' || v === 'assumit' || v === 'absent') memoire.set(m, v);
 			}
 		} catch {
 			estat = 'error';

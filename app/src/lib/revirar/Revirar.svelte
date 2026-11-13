@@ -10,7 +10,7 @@
 	import { FRASAS, TEMAS } from './frasas.js';
 	import { decouper, raisonNonCherche, motsACercar, morceaux, memesMots } from './mots.js';
 	import { TOUCHES, NOM_TOUCHE, inserir } from './accents.js';
-	import { phraseSuivante, estatMot, resumir, annonce } from './sesilha.js';
+	import { phraseSuivante, estatMot, etiquette, resumir, annonce } from './sesilha.js';
 	import { verificar } from './verificacion.js';
 
 	const premiere = phraseSuivante(FRASAS, null, []);
@@ -25,6 +25,7 @@
 
 	const ETIQUETTES = {
 		confirmat: { icone: '✓', texte: 'confirmé' },
+		assumit: { icone: '✓', texte: 'forme assumée' },
 		inconegut: { icone: '⚠', texte: 'non trouvé' },
 		'pas-cercat': { icone: '–', texte: 'non cherché' },
 		indisponible: { icone: '?', texte: 'non vérifié' }
@@ -141,17 +142,17 @@
 			<ul class="mots" lang="oc">
 				{#each resultat.vous as m, i (i)}
 					{@const e = ETIQUETTES[m.estat]}
-					<li class="mot {m.estat}"><span class="oc">{m.brut}</span> <span class="etq"><span aria-hidden="true">{e.icone}</span> {e.texte}</span></li>
+					<li class="mot {m.estat}"><span class="oc">{m.brut}</span> <span class="etq"><span aria-hidden="true">{e.icone}</span> {etiquette(m.estat, m.raison, e.texte)}</span></li>
 				{/each}
 			</ul>
 			{#if resultat.c.inconegut}
 				<p class="doux">
 					« Non trouvé » : ni dans le dictionnaire ni parmi les formes conjuguées de lo Congrès. Vérifie l’accent, ou si ce n’est pas une forme française.
-					Ce qui peut encore échapper : certains féminins, les noms propres.
+					Ce qui peut encore échapper : certains féminins.
 				</p>
 			{/if}
 			<p class="doux">
-				Les mots courts et les petits mots grammaticaux (articles, élisions) ne sont pas cherchés. <strong>La page ne juge pas la syntaxe</strong> :
+				Les mots courts, les petits mots grammaticaux (articles, élisions) et les noms propres (un mot à majuscule qui n’ouvre pas la phrase) ne sont pas cherchés. <strong>La page ne juge pas la syntaxe</strong> :
 				compare ta phrase au modèle, il peut y avoir plusieurs traductions justes.
 			</p>
 			{#if resultat.identique}<p class="bravo">✓ Tes mots sont les mêmes que ceux du modèle.</p>{/if}
@@ -356,7 +357,8 @@
 		font-size: 0.78rem;
 		color: var(--doux);
 	}
-	.mot.confirmat {
+	.mot.confirmat,
+	.mot.assumit {
 		border-color: var(--bon);
 	}
 	.mot.inconegut {
