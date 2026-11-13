@@ -38,7 +38,7 @@ J'aimais bien pouvoir poser les questions que je voulais et surtout lire. Les ph
 
 ---
 
-## Proposition de méthode tirée de l'interview (L'amic, 13-11) : À VALIDER PAR ROMAIN
+## La méthode de Lo Ligam : huit principes (validés par Romain le 2026-11-13, cahier §11)
 
 Origine de chaque principe : [R] vient de Romain (question), [S] appuyé par la recherche citée dans `etat-de-l-art-parcours.md` §3.1, [IA] ajout de l'IA.
 
