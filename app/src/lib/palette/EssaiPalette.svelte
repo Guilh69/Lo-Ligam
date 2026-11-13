@@ -8,7 +8,7 @@
 	import Icona from '$lib/components/Icona.svelte';
 	import PaletteOutil from './PaletteOutil.svelte';
 	import { analyser, accorderTuiles, hexValide } from './coherence.js';
-	import { PISTES, ORDRE_PISTES, variablesCss, copierPiste } from './pistes.js';
+	import { PISTES, variablesCss, copierPiste } from './pistes.js';
 
 	let { piste } = $props();
 
@@ -109,13 +109,6 @@
 
 <div class="page">
 	<div class="colonne">
-		<nav class="comparer" aria-label="Comparer les pistes">
-			<span>Comparer :</span>
-			{#each ORDRE_PISTES as id (id)}
-				<a href="/ensag/palette-{id}" aria-current={id === piste ? 'page' : undefined}>{PISTES[id].nom.replace(' · ', ' ')}</a>
-			{/each}
-		</nav>
-
 		<main id="contengut" class="scene" style={vars}>
 			<p class="explic"><strong>{infos.titre}.</strong> {infos.mot}</p>
 
@@ -210,26 +203,6 @@
 	}
 	.colonne {
 		min-width: 0;
-	}
-	.comparer {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem 0.9rem;
-		align-items: center;
-		padding: 0.6rem clamp(1rem, 3vw, 2rem);
-		background: #ffffff;
-		color: #1d1b1a;
-		border-bottom: 1px solid #d6d2ce;
-		font: 0.85rem system-ui, sans-serif;
-	}
-	.comparer a {
-		color: #1d1b1a;
-		padding: 0.2rem 0;
-	}
-	.comparer a[aria-current='page'] {
-		font-weight: 700;
-		text-decoration: none;
-		border-bottom: 2px solid #1d1b1a;
 	}
 
 	/* ---- la scène : tout passe par les variables posées en style ---- */

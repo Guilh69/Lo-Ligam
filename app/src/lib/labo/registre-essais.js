@@ -14,36 +14,6 @@
 
 export const ESSAIS = [
 	{
-		chemin: '/ensag/papier-couleurs',
-		titre: 'Couleurs des pièces, thème sombre',
-		date: '2026-11-07',
-		choix: 'couleurs-pieces',
-		etat: 'obsolete',
-		pret: 'attendre',
-		raison: 'Remplacé : le parti « terre cuite » a été adopté (341e9e0b) puis remplacé par la crème #efe1c6 (c24b9d46) ; le site n’a plus rien de cet essai.',
-		suppression: 'Rien ne l’importe, mais la session « palette-couleurs » s’en sert peut-être de modèle : attendre qu’elle ait fini.'
-	},
-	{
-		chemin: '/ensag/papier-couleurs-clair',
-		titre: 'Couleurs des pièces, thème clair',
-		date: '2026-11-07',
-		choix: 'couleurs-pieces',
-		etat: 'adopte',
-		pret: 'attendre',
-		raison: 'Adopté : le parti « sarcelle seule » est dans app.css (commit 1afee504).',
-		suppression: 'Rien ne l’importe, mais la session « palette-couleurs » s’en sert peut-être de modèle : attendre qu’elle ait fini.'
-	},
-	{
-		chemin: '/ensag/clar',
-		titre: 'Refonte claire',
-		date: '2026-10-21',
-		choix: 'palette-claire',
-		etat: 'adopte',
-		pret: 'attendre',
-		raison: 'Adopté le 21-10 : le Plâtre est le thème clair (app.css). La page montre l’ancien accueil.',
-		suppression: 'La route ne sert plus, mais ses deux images (static/ensag/clar) sont utilisées par « Page presque blanche » : les garder. À retirer après la session « palette-couleurs ».'
-	},
-	{
 		chemin: '/ensag/blanc',
 		titre: 'Page presque blanche',
 		date: '2026-10-22',
@@ -123,8 +93,8 @@ export const ESSAIS = [
 		raison: 'Essai caché, pas encore intégré à Cultura.',
 		suppression: 'Garder tant que la décision n’est pas prise (27 vignettes dans static/ensag/occitanica).'
 	},
-	// Les sept pages de la session « palette-couleurs » (07-11) : diagnostic des couleurs, outil
-	// « Retoucher les couleurs » (lib/palette), pistes, modèles de pages, habillage, barre.
+	// Les deux pages gardées de la session « palette-couleurs » (07-11) : le diagnostic des couleurs avec l’outil
+	// « Retoucher les couleurs » (lib/palette) et les modèles de pages.
 	{
 		chemin: '/ensag/palette-actuel',
 		titre: 'Palette : le site d’aujourd’hui',
@@ -133,37 +103,7 @@ export const ESSAIS = [
 		etat: 'actif',
 		pret: 'non',
 		raison: 'La référence des essais de palette du 07-11, avec le panneau « Retoucher les couleurs » qui mesure la cohérence ; encore utile pour juger une couleur avant de la poser.',
-		suppression: 'Elle importe lib/palette (outil, pistes, composants d’essai) : à retirer avec les six autres pages palette-*, quand l’outil ne sert plus.'
-	},
-	{
-		chemin: '/ensag/palette-brique',
-		titre: 'Palette 1 : brique seule',
-		date: '2026-11-07',
-		choix: 'palette-claire',
-		etat: 'obsolete',
-		pret: 'attendre',
-		raison: 'Piste non retenue : Romain a choisi la base « mêlée » (rouge, ocre, vert, turquoise, brun) le 07-11.',
-		suppression: 'Rien ne l’importe ; elle partage lib/palette avec les autres pages palette-*, à retirer ensemble.'
-	},
-	{
-		chemin: '/ensag/palette-jaune',
-		titre: 'Palette 2 : jaune',
-		date: '2026-11-07',
-		choix: 'palette-claire',
-		etat: 'obsolete',
-		pret: 'attendre',
-		raison: 'Piste non retenue : Romain a choisi la base « mêlée » le 07-11 ; les jaunes moutarde ont été abandonnés.',
-		suppression: 'Rien ne l’importe ; elle partage lib/palette avec les autres pages palette-*, à retirer ensemble.'
-	},
-	{
-		chemin: '/ensag/palette-accordee',
-		titre: 'Palette 3 : accordée',
-		date: '2026-11-07',
-		choix: 'palette-claire',
-		etat: 'obsolete',
-		pret: 'attendre',
-		raison: 'Piste non retenue : Romain a choisi la base « mêlée » le 07-11.',
-		suppression: 'Rien ne l’importe ; elle partage lib/palette avec les autres pages palette-*, à retirer ensemble.'
+		suppression: 'Elle importe lib/palette (outil, pistes, composants d’essai) : à retirer avec palette-modeles, quand l’outil ne sert plus. Les sept autres pages palette-* ont été retirées le 13-11.'
 	},
 	{
 		chemin: '/ensag/palette-modeles',
@@ -173,17 +113,7 @@ export const ESSAIS = [
 		etat: 'actif',
 		pret: 'non',
 		raison: 'Accueil, S’apren, jeux, leçon et menu en modèles simplifiés dans la base mêlée choisie par Romain ; utile pour voir une couleur avant de la mettre sur le site.',
-		suppression: 'Elle importe lib/palette (ModelesPages) : à retirer avec les autres pages palette-*.'
-	},
-	{
-		chemin: '/ensag/palette-habillage',
-		titre: 'Palette : habiller un fond sobre',
-		date: '2026-11-07',
-		choix: 'palette-claire',
-		etat: 'obsolete',
-		pret: 'attendre',
-		raison: 'Essai de photos, dessins et bandeaux sur un fond sobre ; photos mises de côté par Romain le 07-11 (une photo choisie à la couleur, pas au sujet de la case).',
-		suppression: 'Rien ne l’importe ; elle partage lib/palette (HabillagePage) avec les autres pages palette-*.'
+		suppression: 'Elle importe lib/palette (ModelesPages) : à retirer avec palette-actuel, quand l’outil ne sert plus.'
 	},
 	{
 		chemin: '/ensag/flotants',
@@ -196,16 +126,6 @@ export const ESSAIS = [
 		suppression: 'À garder : Romain veut réutiliser les objets (lib/flotants/objets.js et le mode « objets ») pour un jeu. Les confettis du gabarit n’en dépendent pas (ils importent lib/flotants/moteur.js et Flotants.svelte, qui restent de toute façon).'
 	},
 	{
-		chemin: '/ensag/palette-bandeaux',
-		titre: 'Palette : quatre logiques de barre',
-		date: '2026-11-07',
-		choix: 'palette-claire',
-		etat: 'adopte',
-		pret: 'attendre',
-		raison: 'Adopté : la logique « téléphone d’abord » est sur les vraies pages (barre du bas sur téléphone, trois verbes sur ordinateur, commit 158f9b05).',
-		suppression: 'Rien ne l’importe ; elle partage lib/palette (BandeauxEssai) avec les autres pages palette-*.'
-	},
-	{
 		chemin: '/ensag/carta-papier',
 		titre: 'La carte en papier découpé (couche des dialectes)',
 		date: '2026-11-08',
@@ -214,16 +134,6 @@ export const ESSAIS = [
 		pret: 'attendre',
 		raison: 'Essai du 08-11 (quatre modes de coutures et un fondu de couleur entre parlers) : aucune mention dans le cahier ni dans PILOTATGE, la vraie carte n’a pas été changée.',
 		suppression: 'À supprimer avec lib/carta/papier.js (seule cette page l’importe) si la piste est abandonnée.'
-	},
-	{
-		chemin: '/ensag/pieces-defilement',
-		titre: 'La carte qui s’assemble au défilement',
-		date: '2026-11-12',
-		choix: 'accueil',
-		etat: 'actif',
-		pret: 'non',
-		raison: 'PILOTATGE 34 : essai en ligne le 12-11, jugé « bof » par Romain ; il regarde et dit s’il garde le mouvement lié au défilement.',
-		suppression: 'Elle importe lib/data/carta-dialectes.js, que la carte des radios utilise aussi : ne pas le retirer avec la page.'
 	},
 	{
 		chemin: '/ensag/motius-simbols',
@@ -237,6 +147,9 @@ export const ESSAIS = [
 	}
 	// Les trois essais du 12-11 (/ensag/barra, /ensag/confetis, /ensag/fenestra) ont été tranchés le jour même
 	// par Romain (barre « selon la page », confettis raffinés, fenêtre d'origine gardée et retouchée) : pages retirées.
+	// Neuf pages retirées le 13-11 (Romain : « Oui, retire-les », Per tu #158) : papier-couleurs, papier-couleurs-clair, clar
+	// (ses deux images static/ensag/clar restent : « Page presque blanche » s’en sert), palette-brique, palette-jaune,
+	// palette-accordee, palette-habillage, palette-bandeaux et pieces-defilement. Tout reste dans l’historique de Git.
 ];
 
 // Essais cachés hors du dossier /ensag, trouvés par l'audit du 07-11 et jamais recensés :
