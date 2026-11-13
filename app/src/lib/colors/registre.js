@@ -32,7 +32,8 @@ export const GROPS = [
 	{ id: 'lengas', nom: 'Carte : les autres langues' },
 	{ id: 'ens', nom: 'Carte : l’enseignement' },
 	{ id: 'lecons', nom: 'Leçons' },
-	{ id: 'ancianas', nom: 'Pages anciennes' }
+	{ id: 'ancianas', nom: 'Pages anciennes' },
+	{ id: 'imagina', nom: 'S’imagina : les esquisses sur les photos', mot: 'Le dessin posé sur la photo, et les repères des endroits à toucher.' }
 ];
 
 // --- les jetons d'app.css ----------------------------------------------------
@@ -68,7 +69,18 @@ const COMUNS = [
 	['color-brick', 'Brique', 'ancianas', '#a5342a'],
 	['color-cream', 'Fond', 'ancianas', '#f7f7f7'],
 	['color-sky', 'Bleu ciel', 'ancianas', '#3e7cb1'],
-	['color-olive', 'Olive', 'ancianas', '#5e7b3a']
+	['color-olive', 'Olive', 'ancianas', '#5e7b3a'],
+	// S'imagina, atelier des rues (essai du 13-11) : les esquisses posées sur les photos, et les repères des
+	// endroits à toucher (blanc sur noir, pour se lire sur n'importe quelle photo). Les mêmes dans les deux thèmes :
+	// l'image enregistrée ne dépend pas du thème de celui qui la fait.
+	['imagina-traç', 'Esquisse : le trait et les lettres', 'imagina', '#b53d17'],
+	['imagina-ponch', 'Esquisse : les points aux coins', 'imagina', '#eeaf34'],
+	['imagina-papier', 'Esquisse : le papier', 'imagina', '#f7f7f7'],
+	['imagina-ombra', 'Esquisse : l’ombre du papier', 'imagina', '#2a1a10'],
+	['imagina-calc', 'Esquisse : le voile du calque', 'imagina', '#ffffff'],
+	['imagina-grafit', 'Esquisse : le crayon du calque', 'imagina', '#2a1a10'],
+	['imagina-marca', 'Repères des endroits : le trait', 'imagina', '#ffffff'],
+	['imagina-marca-fons', 'Repères des endroits : le contour', 'imagina', '#000000']
 ];
 
 // --- les noms des couleurs de la palette ---------------------------------------

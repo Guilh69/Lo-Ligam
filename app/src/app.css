@@ -19,6 +19,15 @@
 	--color-teal: var(--p-sarcelle);
 	--color-sky: #3e7cb1;
 	--color-olive: #5e7b3a;
+	/* S'imagina : les esquisses posées sur les photos, pareilles dans les deux thèmes (registre Colors, 13-11) */
+	--imagina-traç: #b53d17;
+	--imagina-ponch: #eeaf34;
+	--imagina-papier: #f7f7f7;
+	--imagina-ombra: #2a1a10;
+	--imagina-calc: #ffffff;
+	--imagina-grafit: #2a1a10;
+	--imagina-marca: #ffffff;
+	--imagina-marca-fons: #000000;
 	--color-text: var(--p-encre); /* encre du Plâtre (2026-10-21), avant #3a2a20 */
 
 	/* Sistèma tipografic 2026-09-30, simplificat lo 2026-10-05 (jornal §11) :
