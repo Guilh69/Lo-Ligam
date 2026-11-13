@@ -1,0 +1,42 @@
+{
+ "clau": "impasse-lo-prat",
+ "l": 1643,
+ "h": 1184,
+ "zones": [
+  {
+   "id": "placa",
+   "patch": "impasse-lo-prat-placa.webp",
+   "x": 0.28484,
+   "y": 0.44088,
+   "l": 0.20816,
+   "h": 0.12922,
+   "octets": 17320,
+   "lignes": [
+    [
+     "ANDRONA",
+     82.5,
+     1.0
+    ],
+    [
+     "de LO PRAT",
+     82.9,
+     1.0
+    ]
+   ],
+   "flou_bord": 0.62,
+   "seuil": 54.8,
+   "fond": [
+    200,
+    175,
+    139
+   ],
+   "texte": [
+    70,
+    28,
+    16
+   ],
+   "pixels_changes": 28241,
+   "pixels_zone": 73177
+  }
+ ]
+}

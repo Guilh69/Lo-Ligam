@@ -1,0 +1,32 @@
+{
+ "clau": "fornaria",
+ "l": 1400,
+ "h": 1307,
+ "zones": [
+  {
+   "id": "mur",
+   "patch": "fornaria-mur.webp",
+   "x": 0.61071,
+   "y": 0.215,
+   "l": 0.21071,
+   "h": 0.11936,
+   "octets": 21530,
+   "lignes": [
+    [
+     "FORNARIÁ",
+     120.9,
+     1.0
+    ]
+   ],
+   "flou_bord": 0.9,
+   "mur": [
+    125,
+    101,
+    81
+   ],
+   "grain": 7.7,
+   "pixels_changes": 20748,
+   "pixels_zone": 22926
+  }
+ ]
+}

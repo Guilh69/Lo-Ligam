@@ -1,0 +1,42 @@
+{
+ "clau": "louis-blanc",
+ "l": 1200,
+ "h": 1092,
+ "zones": [
+  {
+   "id": "placa",
+   "patch": "louis-blanc-placa.webp",
+   "x": 0.21,
+   "y": 0.11172,
+   "l": 0.56333,
+   "h": 0.30861,
+   "octets": 45802,
+   "lignes": [
+    [
+     "CARRIÈRA",
+     143.4,
+     0.82
+    ],
+    [
+     "DELS NOBLES",
+     123.2,
+     0.66
+    ]
+   ],
+   "flou_bord": 1.1,
+   "seuil": 83.8,
+   "fond": [
+    25,
+    54,
+    89
+   ],
+   "texte": [
+    219,
+    231,
+    239
+   ],
+   "pixels_changes": 126908,
+   "pixels_zone": 270148
+  }
+ ]
+}

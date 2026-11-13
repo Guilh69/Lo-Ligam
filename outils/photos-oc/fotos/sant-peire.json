@@ -1,0 +1,194 @@
+{
+ "clau": "sant-peire",
+ "dossier": "C:/Users/perie/Documents/6_Projectes/Lo_Ligam_hors-git/design-stock/Fotos/Bases_foto",
+ "source": "PXL_20210726_161814537.jpg",
+ "cadre": [
+  2500,
+  900,
+  4032,
+  2500
+ ],
+ "largeur": 1200,
+ "zones": [
+  {
+   "id": "placa",
+   "mode": "poser",
+   "modele": "greffe",
+   "flou_bord": 0.95,
+   "blanc": 0.8,
+   "ombre_flou": 0.5,
+   "grain": 0.5,
+   "plan": {
+    "horizontales": [
+     [
+      [
+       3238,
+       1436
+      ],
+      [
+       4016,
+       1478
+      ]
+     ],
+     [
+      [
+       3419,
+       1879
+      ],
+      [
+       3535,
+       1916
+      ]
+     ],
+     [
+      [
+       3408,
+       2170
+      ],
+      [
+       3523,
+       2221
+      ]
+     ],
+     [
+      [
+       3400,
+       2460
+      ],
+      [
+       3511,
+       2517
+      ]
+     ]
+    ],
+    "verticales": [
+     [
+      [
+       3331,
+       1813
+      ],
+      [
+       3314,
+       2487
+      ]
+     ],
+     [
+      [
+       3709,
+       1853
+      ],
+      [
+       3675,
+       2711
+      ]
+     ],
+     [
+      [
+       3565,
+       1873
+      ],
+      [
+       3545,
+       2583
+      ]
+     ],
+     [
+      [
+       3428,
+       1821
+      ],
+      [
+       3405,
+       2503
+      ]
+     ]
+    ]
+   },
+   "ancre": [
+    3326,
+    1602
+   ],
+   "largeur_px": 138,
+   "proportion": 1.84,
+   "epaisseur": 0.07,
+   "rayon": 0.11,
+   "relief": 0.5,
+   "bord_roule": 0.1,
+   "greffon": {
+    "source": "20251226_134451.jpg",
+    "quad": [
+     [
+      1144.2,
+      1529.5
+     ],
+     [
+      1656.4,
+      1530.6
+     ],
+     [
+      1656.4,
+      1811.2
+     ],
+     [
+      1137.2,
+      1808.8
+     ]
+    ],
+    "miroir": [
+     0.0,
+     0.0,
+     0.2,
+     0.36
+    ],
+    "texte": {
+     "boite": [
+      0.085,
+      0.13,
+      0.915,
+      0.915
+     ],
+     "retrait": 2,
+     "police": "constanb.ttf",
+     "chasse": 0.8,
+     "lignes": [
+      {
+       "fr": "Plan",
+       "oc": "Carrièra",
+       "dy": 0.05,
+       "echelle": 0.94
+      },
+      {
+       "fr": "dau SAUVATGE",
+       "oc": "de SANT PÈIRE",
+       "dy": 0.06,
+       "echelle": 0.94
+      },
+      {
+       "fr": "Plan En Bedós",
+       "oc": ""
+      }
+     ],
+     "garder_taches": false,
+     "elargi": 4,
+     "teinte_lettres": "mediane",
+     "suivi_min": 0.06
+    }
+   },
+   "soleil": [
+    0.34,
+    0.62
+   ],
+   "ombre_teinte": [
+    0.58,
+    0.54,
+    0.47
+   ],
+   "neutre": [
+    212,
+    213,
+    210
+   ],
+   "flou_couleur": 1.3
+  }
+ ]
+}

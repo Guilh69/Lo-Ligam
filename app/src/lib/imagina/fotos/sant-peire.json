@@ -1,0 +1,26 @@
+{
+ "clau": "sant-peire",
+ "l": 1200,
+ "h": 1253,
+ "zones": [
+  {
+   "id": "placa",
+   "patch": "sant-peire-placa.webp",
+   "x": 0.49333,
+   "y": 0.39026,
+   "l": 0.1025,
+   "h": 0.10455,
+   "octets": 2786,
+   "lignes": [],
+   "flou_bord": 0.95,
+   "mur": [
+    216,
+    208,
+    191
+   ],
+   "grain": 8.81,
+   "pixels_changes": 14210,
+   "pixels_zone": 12113
+  }
+ ]
+}

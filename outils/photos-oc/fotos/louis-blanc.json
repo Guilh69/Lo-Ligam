@@ -1,0 +1,64 @@
+{
+ "clau": "louis-blanc",
+ "dossier": "C:/Users/perie/Documents/6_Projectes/Lo_Ligam_hors-git/design-stock/Fotos/Bases_foto",
+ "source": "received_194856153699914.jpeg",
+ "cadre": [
+  640,
+  1380,
+  2200,
+  2800
+ ],
+ "largeur": 1200,
+ "zones": [
+  {
+   "id": "placa",
+   "tipe": "placa-esmalh",
+   "quad": [
+    [
+     948,
+     1506
+    ],
+    [
+     1884,
+     1516
+    ],
+    [
+     1890,
+     2034
+    ],
+    [
+     948,
+     2006
+    ]
+   ],
+   "retrait": 6,
+   "ignorer": [
+    [
+     940,
+     1496,
+     1900,
+     1566
+    ]
+   ],
+   "gamma_lumiere": 0.2,
+   "elargi": 6,
+   "ouverture": 11,
+   "flou_bord": 1.1,
+   "police": "ROCKB.TTF",
+   "marge_largeur": 0.06,
+   "lignes": [
+    {
+     "fr": "RUE",
+     "oc": "CARRIÈRA"
+    },
+    {
+     "fr": "LOUIS BLANC",
+     "oc": "DELS NOBLES"
+    }
+   ],
+   "chasse": 0.76,
+   "usure_lettres": 0.5,
+   "lisere": 0.07
+  }
+ ]
+}

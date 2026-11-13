@@ -14,6 +14,7 @@ export const TALHIÈRS = [
 		ateliers: [
 			{ href: '/admin/valider', oc: 'A validar', fr: 'garder, refaire ou répondre, une carte à la fois : la pile de l’IA, l’occitan des pages, le tri des dessins et des photos' },
 			{ href: '/admin/textes', oc: 'Tèxtes', fr: 'tous les textes modifiables du site, rangés par endroit' },
+			{ href: '/admin/imaginar', oc: 'Imaginar', fr: 'entourer sur tes photos l’endroit où tu imagines une plaque, une enseigne, une publicité ; l’IA fabrique ensuite le montage' },
 			{ href: '/admin/musica', oc: 'Musica', fr: 'trier les artistes de l’espace musique' },
 			{ href: '/admin/designs', oc: 'Designs', fr: 'les designs : ajouter, publier, réordonner' },
 			{ href: '/admin/grops', oc: 'Grops', fr: 'les groupes de designs' }
@@ -55,5 +56,6 @@ export const LARGEURS = {
 	'/admin/valider': 'etroit',
 	'/admin/seguit': 'normal',
 	'/admin/labo': 'large',
+	'/admin/imaginar': 'large',
 	'/admin/musica': 'large'
 };
