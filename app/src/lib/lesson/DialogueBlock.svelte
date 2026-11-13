@@ -7,8 +7,11 @@
 	// affiche sa prononciation en même temps.
 	import { onDestroy } from 'svelte';
 	import { rich, insecable } from '$lib/lesson/rich.js';
+	import { sonDe } from '$lib/voix/phrases.js';
+	import { jouer, prendre, liberer } from '$lib/voix/lecteur.js';
 
-	let { block } = $props();
+	// modulId : clé du module (ex. '1-1'), pour retrouver le son de chaque réplique.
+	let { block, modulId = '' } = $props();
 
 	function norm(line) {
 		return typeof line === 'string' ? { oc: line, sound: null } : line;
@@ -19,6 +22,9 @@
 	let open = $state({});
 	let playingScene = $state(null);
 	let slow = $state(false);
+	// Réplique en cours de lecture (« scène-ligne »), pour son bouton d'écoute.
+	let playingLine = $state(null);
+	let arretLigne = null;
 
 	// Un lecteur par scène, créé au premier usage.
 	const players = {};
@@ -42,6 +48,33 @@
 			stopSegment = null;
 		}
 		playingScene = null;
+		if (arretLigne) arretLigne();
+	}
+
+	// Un seul son à la fois : la scène entière passe par le même lecteur commun
+	// que les phrases (lib/voix/lecteur.js).
+	function arretScene() {
+		for (const a of Object.values(players)) a.pause();
+		if (stopSegment) {
+			stopSegment();
+			stopSegment = null;
+		}
+		playingScene = null;
+	}
+
+	// Écouter une réplique : son fichier propre (lib/voix), s'il existe.
+	function toggleLine(cle, src) {
+		if (playingLine === cle && arretLigne) {
+			arretLigne();
+			return;
+		}
+		pauseAll();
+		playingLine = cle;
+		const arret = jouer(src, () => {
+			if (playingLine === cle) playingLine = null;
+			if (arretLigne === arret) arretLigne = null;
+		});
+		arretLigne = arret;
 	}
 
 	function toggleScene(si) {
@@ -52,6 +85,7 @@
 				return;
 			}
 			pauseAll();
+			prendre(arretScene);
 			a.playbackRate = slow ? 0.75 : 1;
 			a.play();
 			playingScene = si;
@@ -71,6 +105,7 @@
 		if (!l.t || !block.scenes[si].audio || !open[`${si}-${li}`]) return;
 		try {
 			pauseAll();
+			prendre(arretScene);
 			const a = player(si);
 			const [debut, fin] = l.t;
 			a.currentTime = debut;
@@ -97,7 +132,10 @@
 		}
 	}
 
-	onDestroy(pauseAll);
+	onDestroy(() => {
+		pauseAll();
+		liberer(arretScene);
+	});
 </script>
 
 <section class="block">
@@ -148,23 +186,38 @@
 			<div class="lines">
 				{#each scene.lines as line, li}
 					{@const l = norm(line)}
-					{#if l.sound}
-						<button
-							type="button"
-							class="line tappable"
-							aria-expanded={!!open[`${si}-${li}`]}
-							onclick={() => tapLine(si, li, l)}
-						>
-							<span class="line-oc"
-								>— {@html rich(l.oc)}{#if l.t && scene.audio}<span class="line-play" aria-hidden="true"> 🔉</span>{/if}</span
+					{@const son = sonDe(modulId, line)}
+					<div class="line-row">
+						{#if son}
+							<button
+								type="button"
+								class="pc pc-2 line-listen"
+								class:on={playingLine === `${si}-${li}`}
+								onclick={() => toggleLine(`${si}-${li}`, son)}
+								aria-pressed={playingLine === `${si}-${li}`}
+								aria-label="Écouter : {l.oc.replace(/\*/g, '')}"
 							>
-							{#if open[`${si}-${li}`]}
-								<span class="line-sound">{insecable(l.sound)}</span>
-							{/if}
-						</button>
-					{:else}
-						<p class="line">— {@html rich(l.oc)}</p>
-					{/if}
+								<Icona nom={playingLine === `${si}-${li}` ? 'pause' : 'son'} size="1.2em" />
+							</button>
+						{/if}
+						{#if l.sound}
+							<button
+								type="button"
+								class="line tappable"
+								aria-expanded={!!open[`${si}-${li}`]}
+								onclick={() => tapLine(si, li, l)}
+							>
+								<span class="line-oc"
+									>— {@html rich(l.oc)}{#if l.t && scene.audio}<span class="line-play" aria-hidden="true"> 🔉</span>{/if}</span
+								>
+								{#if open[`${si}-${li}`]}
+									<span class="line-sound">{insecable(l.sound)}</span>
+								{/if}
+							</button>
+						{:else}
+							<p class="line">— {@html rich(l.oc)}</p>
+						{/if}
+					</div>
 				{/each}
 			</div>
 		</div>
@@ -296,6 +349,33 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.35rem;
+	}
+
+	/* une réplique : (bouton d'écoute si son fichier existe) + texte */
+	.line-row {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.line-row > .line {
+		flex: 1;
+		min-width: 0;
+	}
+
+	/* bouton d'écoute d'une réplique : pièce de papier, cible de 44 px */
+	.line-listen {
+		--r: 10px;
+		flex-shrink: 0;
+		min-width: 44px;
+		min-height: 44px;
+		padding: 0;
+		--pc-tinta: var(--pc-carton-tinta);
+	}
+
+	.line-listen.on {
+		background: var(--color-gold);
+		color: var(--t-tinta);
 	}
 
 	.line {
