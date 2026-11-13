@@ -19,7 +19,7 @@ Site d'apprentissage de l'occitan (languedocien, norme classique) : https://loli
 - **Une décision à la fois**, deux ou trois options concrètes, ta recommandation en premier, les explications écrites **avant** la question.
 - **Ne jamais lui demander de clé d'API.** Ne jamais lui demander d'écrire dans un fichier : les doutes se posent un par un dans la conversation ; la relecture des textes se fait sur la page (bouton « Editar »). **Pour faire valider une série d'éléments** (dessins, photos, mots…) : un lot dans `app/src/lib/triar/lots.js`, Romain trie sur `/admin/triar` (cœur = garder, croix = refaire, avec un commentaire), et `node scripts/triar.mjs` lit ses choix (Romain, 06-11 : « ça ira plus vite et ça clarifie mon choix »).
 - Contredire quand c'est justifié ; signaler coûts, risques et dérives de périmètre. À « Es-tu sûr ? » : revérifier la source et répondre avec la preuve.
-- Rôles : l'IA conçoit, code, rédige, explique ; Romain installe, héberge, paie, décide et valide l'occitan.
+- Rôles : l'IA conçoit, code, rédige, explique ; Romain installe, héberge, paie, décide (l'occitan est vérifié par l'API, voir « Occitan »).
 - Dans tout plan, distinguer ce qu'il peut faire seul maintenant de ce qui demandera de l'aide plus tard.
 - Finir par une synthèse courte et **le lien direct** vers la bonne page (https://loligam.eu/…).
 
@@ -54,9 +54,9 @@ Options : `--entiere` (toute la hauteur), `--telephone` (vue étroite ; Firefox 
 
 ## Occitan
 - Tout mot occitan que tu écris : **le vérifier avant de le montrer** avec l'API de lo Congrès : `cd app` puis `node scripts/verificar-oc.mjs mot1 mot2` (ou `--fr mot` pour partir du français). Clé dans `app/.env` : ne jamais l'afficher.
-- « Absent du Basic » ou une erreur d'appel ne veut pas dire que le mot est faux : vérifier sur dicodòc, ne pas remplacer le mot.
+- « Absent du Basic » ou une erreur d'appel ne veut pas dire que le mot est faux : ne pas le remplacer avant d'avoir vérifié sur dicodòc ; s'il reste non confirmé, le corriger ou le retirer, sans le mettre en attente chez Romain.
 - Grammaire de référence depuis le 2026-11-02 : *Gramatica de l'occitan estandard* (Academia Occitana), hors Git. Négation : *non* devant le verbe et ses pronoms, *pas* après (*Non parli pas*), partout ; *pas* seul seulement dans une citation ou pour reconnaître la forme familière (`cursus/regles-redaccion-A1.md` §7). Formes tranchées au lot 2 (02-11) : *la frucha* (les fruits, sans pluriel) ; *dosen, dosena* (deuxième ; *segond* : le second, quand il n'y en a que deux) ; soudure obligatoire avec *a* et *de*, au choix avec *sus* et *jos* ; *setanta*, *lo lach*, *prene* et *comprene* gardés (le livre : *setenta*, *la lait*, *préner*) ; *blanc* « BLANK », *caud* « CAOUT » (`cursus/cobertura-gramatica.md` §4).
-- **Tout occitan est validé par Romain avant publication.** Prononciation : son usage vivant, pas un outil de phonétique.
+- **L'occitan est vérifié par l'API de lo Congrès, Romain ne valide pas chaque mot** (13-11, cahier §11) : on ne lui soumet que les vrais choix (deux formes correctes, usage local). Prononciation : son usage vivant, pas un outil de phonétique.
 - Fiches de grammaire (`/apren/gramatica`, dans S'apren) : un fichier de données par fiche, mode d'emploi dans `app/src/lib/gramatica/LEGIR-ME.md` ; la source (livre et page) sous chaque écran ; on prend les informations du livre de référence, jamais son texte ni son plan.
 
 ## Textes publics

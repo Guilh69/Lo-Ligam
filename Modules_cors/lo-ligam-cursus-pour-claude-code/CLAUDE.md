@@ -16,10 +16,10 @@ Contenu pédagogique du site Lo Ligam (source de vérité : `cursus/`).
 - `cursus/modules/relectura/` — depuis le 2026-10-25, l'unité 1 vit dans le code du site (`app/src/lib/lesson/moduls/modul-1-*.js`), qui remplace les fichiers .md ci-dessus ; une fiche de relecture et une liste d'enregistrement par module, générées par `node scripts/fichas-relectura.mjs` (dans `app/`).
 
 ## Règles non négociables pour tout code ou contenu généré ici
-- Graphie classique, languedocien central ; toute forme douteuse → `⚠️ À VÉRIFIER` (Dicod'òc, Vèrb'òc).
+- Graphie classique, languedocien central ; toute forme est vérifiée par l'API de lo Congrès (`cd app` puis `node scripts/verificar-oc.mjs mot`), un mot non confirmé est recoupé sur Dicod'òc ou Vèrb'òc puis corrigé ou retiré ; `⚠️ À VÉRIFIER` seulement pour un vrai choix (deux formes correctes, usage local), car Romain ne valide plus chaque mot (13-11).
 - La parole des natifs n'est jamais « francitan », « patois », « faute » : voir cadre §2 et §3.
 - Chaque module : sessions de 10-15 min, audio à deux voix (modèle + native), tâche en deux voies (privée / communautaire), briques « Los que parlan » et « Lo conselh dels vièlhs ».
-- A1-A2 : pas d'API dans les glossaires (notation « ça sonne comme »).
+- A1-A2 : pas d'alphabet phonétique (API) dans les glossaires (notation « ça sonne comme »). Ne pas confondre avec l'API de lo Congrès, qui vérifie les mots.
 - Ne pas inventer de mots ni de règles ; sources hiérarchisées dans cadre §2.
 - **Style des textes apprenants (Romain, 29/08/2026)** : pas de tirets longs « — » (tic d'IA) sauf tirets de dialogue ; pas de jargon anglophone (« chunk » → « expression ») ; ponctuation légère (deux-points, virgules, parenthèses).
 - **Prononciations** : l'usage vivant validé par Romain prime sur fon'Òc (lecture par règles) — ex. *adieu* = « a-DIOU », *adieu-siatz* = « a-di-SSIATS ». Ne pas s'appuyer sur des contrastes du français standard que l'accent du Sud ne fait pas (ex. « rose » vs « bol »).
