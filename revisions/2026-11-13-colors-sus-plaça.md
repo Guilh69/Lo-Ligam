@@ -54,7 +54,7 @@ Connecté avec son compte administrateur, sa barre d'outils (Lo talhièr) a une 
 - Relecture de sécurité (agent Rodrigo, 13-11) : rien de bloquant. Deux durcissements appliqués : le registre n'a plus de noms hérités (« constructor » n'est pas un identifiant), et la feuille gardée dans l'onglet n'est reposée que si elle a exactement la forme que le site écrit. Non vérifié par lui : les politiques réellement actives en base (lues dans le dépôt seulement).
 - En local, en simulation (`?edicion=simular`, rien n'est écrit dans la base) : changement en direct d'un bouton, d'une teinte, du fond et du texte ; brouillon retrouvé après rechargement ; publication simulée ; pipette ; clair, sombre, téléphone.
 - Rendu serveur, avec des couleurs publiées simulées dans le filet : la feuille et la liste sont dans le HTML, les cases et le bouton de langue sont rendus avec les bonnes couleurs, une valeur malveillante est rejetée, la carte s'affiche.
-- **Pas encore vérifié** : le vrai circuit avec la base (brouillon écrit, « Publicar », lecture par le public). Il ne peut l'être qu'avec le compte de Romain.
+- **Le vrai circuit avec la base** (brouillon écrit, « Publicar », lecture par le public) : essayé par Romain avec son compte administrateur le 13-11, il confirme que ça marche. Pas regardés : Firefox et Safari ; Joan n'a pas relu le panneau.
 
 ## Pour la suite
 
