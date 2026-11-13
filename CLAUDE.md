@@ -28,7 +28,7 @@ Le cerveau du projet, c'est **Romain et `PILOTATGE.md`**. Romain entre par une s
 Éthique, écologie (**sobriété : poids des pages et des images**), inclusivité (RGAA/WCAG, écriture inclusive), fierté occitane. Européen quand possible.
 
 ## Contenu
-- L'occitan produit par Claude est **toujours à valider par Romain** (dicodòc / lo Congrès) avant publication.
+- **L'occitan est vérifié par l'API de lo Congrès, pas mot à mot par Romain** (13-11, cahier §11 ; il l'avait dit plusieurs fois : il n'est pas en mesure de valider chaque mot). Un mot que l'API ne confirme pas est corrigé ou retiré, pas mis en attente chez Romain ; on ne lui soumet que les vrais choix (deux formes correctes, usage local). Le site dira que des erreurs peuvent subsister et recueillera les alertes par le contact, regroupées par un filtre (à construire).
 - **Vérifier d'abord avec l'API de lo Congrès**, avant de montrer un mot à Romain : `cd app` puis `node scripts/verificar-oc.mjs mot1 mot2` (occitan) ou `node scripts/verificar-oc.mjs --fr mot` (français → occitan, avec la variété). Clé dans `app/.env`, ne jamais l'afficher.
 - Depuis le 2026-10-25, **Claude rédige les unités du cursus** (revirement de la décision du 2026-10-04, cahier §11) : Romain fixe le cap, répond aux questions une à une, relit et valide l'occitan avant publication. Exigences : logique d'ensemble visible, un objectif clair par leçon, aucun mot ni notion non expliqués avant, répétition, découverte, variété des jeux.
 - UX : animations soignées, sons discrets et désactivables, humour fin par touches.

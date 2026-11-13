@@ -23,7 +23,8 @@ export const TALHIÈRS = [
 		grop: 'Pilotage',
 		ateliers: [
 			{ href: '/admin/labo', oc: 'Laboratòri', fr: 'les choix de design à faire, les essais en cours et tes inspirations' },
-			{ href: '/admin/seguit', oc: 'Ont ne sèm', fr: 'où en est chaque chantier, et ce qui t’attend' }
+			{ href: '/admin/seguit', oc: 'Ont ne sèm', fr: 'où en est chaque chantier, et ce qui t’attend' },
+			{ href: '/admin/libret', oc: 'Livret technique', fr: 'comment marche tout le projet, brique par brique' }
 		]
 	},
 	{
@@ -54,6 +55,7 @@ export const LARGEURS = {
 	'/admin': 'normal',
 	'/admin/valider': 'etroit',
 	'/admin/seguit': 'normal',
+	'/admin/libret': 'normal',
 	'/admin/labo': 'large',
 	'/admin/musica': 'large'
 };

@@ -19,7 +19,7 @@
 6. Regarder sur téléphone et valider : premiers pas de la carte (`app/src/lib/components/Guida.svelte`), famille Ensenhament (`SIG/ensenhament/LEGIR-ME.md` : « renfortit », « oras », « oraria »), libellés des cercles, des voix et de « La carta se prepara… ».
 7. Reprendre les visuels dans Canva (logo C, 4:5, six familles, un export sans textes) : débloque les scènes des unités (chantier 16).
 8. Pédagogie bloquée depuis le 18-09 : brouillon d'une page du module 0, un enregistrement (soir du 1.1, `app/static/audio/moduls/`), carnet de conception (`carnet-concepcion/`, huit pages vides).
-9. Pile de validations occitanes (environ 1 450 noms, dont 915 communes) : fichiers `*-a-validar.csv` de `SIG/`, `SIG/<lenga>/FONTS.md`, `SIG/lisn/mots-a-validar.csv`, mots du menu (« Menú », « Corses en visio », « Mon istòria », « Reservar un cors »).
+9. ~~Pile de validations occitanes~~ : levée le 13-11. L'occitan est vérifié par l'API de lo Congrès, Romain ne valide plus mot à mot (cahier §11). Les mentions « Romain relit l'occitan » des chantiers ci-dessous sont caduques.
 10. Courriels du compte : renouveler la clé Scaleway avant le 25-10-2027 (Supabase et conteneur) ; supprimer ou garder le compte d'essai créé avec l'alias loligam@.
 
 **Avant le lancement** (barreau 8)
@@ -127,5 +127,7 @@ Depuis le 2026-11-13 : une discussion mère (L'amic) et des sous-discussions par
 ## 8. Chantiers de la méthode L'amic (ouverts le 13-11)
 
 - 43 Ménage des consignes : `CLAUDE.md` et ce tableau allégés ; 18 documents de la racine rangés dans `docs/pedagogia/` et `docs/archius/` (13-11, index `docs/LEGIR-ME.md`). Reste : alléger `AGENTS.md`, `COORDINATION.md`, `BRIEF-MISTRAL.md`.
-- 44 Livret technique : page illustrée dans `/admin` (schéma du projet, une brique touchée ouvre son explication en 5 lignes), choisie par Romain le 13-11. Maquette montrée à Romain le 13-11 (neuf briques), en attente de son avis ; ensuite la coder dans `/admin` (déléguer).
+- 44 Livret technique : en ligne le 13-11, `/admin/libret` (neuf briques ; données `app/src/lib/libret/fichas.js`). À chaque décision technique : ajouter ou corriger une fiche.
 - 45 Séances dans le nuage : `app/.env` absent, donc pas de relève de « Per tu » ni de vérification de l'occitan. À décider avec Romain.
+- 46 Feuille de route (13-11) : cœur = apprendre l'A1 et explorer la carte ; février n'est plus une date ; à-côtés à trier au cas par cas avec Romain. Constat : 38 modules A1 sur 38 écrits et jouables, 1 fichier audio sur 39 pour la seule unité 1, aucun son branché, 26 pages d'essai `/ensag/`, deux parcours (`/apren`, `/aprene`). À écrire avec Romain.
+- 47 Alertes de langue : avertissement « des erreurs peuvent subsister » et filtre qui regroupe les alertes reçues par le contact. À cadrer.
