@@ -75,13 +75,13 @@ Format : numéro, chantier, état, prochaine action, référence. Détail dans l
 - 31 Illustrations IA et cagnotte : mention en ligne, `/illustracions` ; une seule caisse, la micro-entreprise. Avant la cagnotte : mentions légales, Urssaf, devis illustrateur (`revisions/2026-11-06-sosten-dons-transparence.md`).
 - 32 Papier découpé et couleurs : en ligne (07-11), `lib/styles/papier.css`, palette unique. Reste exprès : édition, onglets en verre, admin, Lo talhièr ; relecture de Joan.
 - 33 API de lo Congrès : séance 1 faite, « L'intrús » dans Jòcs (07-11). Romain joue aux séries ; séance 2 rimas ; `docs/pedagogia/construction-pedagogique.md` §2.
-- 34 Carte qui s'assemble au défilement : essai `/ensag/pieces-defilement` jugé « bof » (12-11). Page retirée le 13-11 (abandon, Per tu #158), récupérable dans Git ; sur la branche de travail.
+- 34 Carte qui s'assemble au défilement : essai `/ensag/pieces-defilement` jugé « bof » (12-11). Page retirée le 13-11 (abandon, Per tu #158), récupérable dans Git.
 - 35 Motifs-symboles au défilement : essai refait `/ensag/motius-simbols` (12-11). Romain regarde sur téléphone ; s'il garde, intégration à l'accueil.
 - 36 Audit final, la carte : fait (12-11), correction des noms inconnus (c0c4338f). Romain répond aux questions ; ensuite Claude.
 - 37 Audit final, l'accueil : fait et en ligne (12-11). Mesurer le moteur `app/src/lib/acuelh/motor.js` sur machine à carte graphique ; Romain regarde les confettis.
 - 38 Constitution en occitan : en ligne (12-11), `/constitucion`, hors menu. Romain relit l'occitan (`app/src/lib/constitucion/LEGIR-ME.md`), dit si elle entre dans Se parla.
 - 39 Audit final, code, couleurs, sources : fait (12-11), 1 047 tests verts. Avant lancement : accord LISN, lever le `noindex`, retirer les essais `/ensag/`.
-- 40 Une seule porte : fait (12-11). Cartes 155 à 159 appliquées le 13-11 (textes en base, ménage des essais sur la branche, cahier §11). Reste : notes 126 (flèche de Remira) et 128 (bouton de langue de `/apren/visio`), « rotge-carta ».
+- 40 Une seule porte : fait (12-11). Cartes 155 à 159 appliquées le 13-11 (textes en base, ménage des essais en ligne, cahier §11). Reste : notes 126 (flèche de Remira) et 128 (bouton de langue de `/apren/visio`), « rotge-carta ».
 - 41 S'imagina, 4e rubrique : étape 1 en ligne (12-11), `/imagina`. Romain : SQL, valider l'occitan, premières pièces ; accueil à rouvrir plus tard.
 - 42 Colors : en ligne et essayé (13-11), `revisions/2026-11-13-colors-sus-plaça.md`. Claude : mettre au registre ce qui est « écrit en dur », à la demande de Romain.
 
@@ -124,6 +124,8 @@ Depuis le 12-10 : 211 changements, la moitié pour la carte, un tiers pour l'acc
 
 Depuis le 2026-11-13 : une discussion mère (L'amic) et des sous-discussions par tâche ; l'ancienne liste est dans l'archive du 13-11.
 
+**Archivage du 13-11 au soir** (demande de Romain) : L'amic a lu la fin des 30 autres discussions Lo Ligam et contrôlé leurs copies de travail. 25 n'avaient rien hors de `master` ni de non committé (la fin de deux d'entre elles, la session cheffe de l'audit final et « Data Deception », ne disait rien d'exploitable) : leurs restes étaient déjà dans ce tableau ou sont repris au §9. Quatre branches portent du travail hors de `master` (chantiers 55, 57, 58, 59), gardé aussi sous `archiu/<nom>`. Deux discussions restent ouvertes : « Occitaniser photos avec switch langue » (travail non committé, chantier 56) et l'ancienne « Discussion mère (fork 2) », épinglée.
+
 ## 8. Chantiers de la méthode L'amic (ouverts le 13-11)
 
 - 43 Ménage des consignes : `CLAUDE.md` et ce tableau allégés ; 18 documents de la racine rangés dans `docs/pedagogia/` et `docs/archius/` (13-11, index `docs/LEGIR-ME.md`). Reste : alléger `AGENTS.md`, `COORDINATION.md`, `BRIEF-MISTRAL.md`.
@@ -140,3 +142,18 @@ Depuis le 2026-11-13 : une discussion mère (L'amic) et des sous-discussions par
 - 53 Module 0 (13-11) : proposition prête, `docs/pedagogia/11-modul-0-proposicion.md` (12 écrans, quatre décisions en QCM non encore posées : place des héritiers, écart entre portes, qui parle de la vergonha, vrai texte ou non). Mots à vérifier depuis l'ordinateur de Romain (commande dans le fichier).
 - 54 Entraînement à la traduction (13-11) : page d'administration pour Romain (phrase en français, traduction sans aide, touches d'accents, mots vérifiés par lo Congrès puis modèle) ; construite le 13-11 (`/admin/revirar`, `app/src/lib/revirar/`, route `/api/congres/verificar` réservée à l'administrateur : lo Basic puis vèrb'Òc), en ligne le 13-11 au soir avec l'accord de Romain (contrôle de sécurité de Rodrigo : rien de bloquant) ; la chaîne lo Basic puis vèrb'Òc répond avec la vraie clé (essai direct de L'amic), la page elle-même attend le premier essai de Romain connecté. Interview du parcours ouverte (Q5 à Q7 et deux textes d'essai dans `docs/pedagogia/entrevista-metode.md`) : sa mécanique tient, ses écarts sont les accents et les formes calquées du français ; il reste à tester le futur. État de S'imagina : `docs/vision/s-imagina-estat-2026-11-13.md` (cinq questions d'interview prêtes) ; grille des facettes à jour, en ligne le 13-11 au soir. Phrases de Revirar corrigées le 13-11 d'après lo Congrès (dormís, volriái, mainats) ; reste à faire reconnaître « uèi », « Tolosa » et les noms propres par la route de vérification.
 - 51, suite : lot 3 écrit et essayé sur de faux bruts (`app/scripts/voix-polir.mjs`, `outils/voix-polir.cmd`, `supabase/supabase-voix-lector.sql` non exécuté, fiche « La voix » du livret). Dans `master`. Reste à Romain : installer ffmpeg, créer le compte lecteur, essayer.
+
+## 9. Tâches reprises des anciennes discussions (13-11)
+
+Relevées à la fin de chaque discussion avant archivage. « Romain » = une décision à poser en QCM dans la discussion mère ; « sous-discussion » = un travail à confier.
+
+- 55 Audit critique du 13-11 : trois corrections committées sur `claude/site-critical-audit-529866` (tuiles d'Amassa et de Mèdias ; pied de page « Mencions legalas », confidentialité, méta de `/apren` ; compression du HTML par le serveur, accueil de 129 à 24 ko), pas en ligne. Sous-discussion : fusionner après avoir construit l'image Docker (jamais essayée) et fait relire la confidentialité par Aran. Romain : « ara, soi a Lion », entrées « Aviat », `/apren` ou `/aprene`, protection de `/ensag/*`.
+- 56 S'imagina, photos vues en occitan (`/admin/imaginar`) : perspective lue sur la photo, styles de plaque, demande envoyée ; construit les 12 et 13-11, **non committé** dans la copie `occitan-photo-language-switch-39b8aa` (arrêt sur la limite du forfait). Reste : construction et tests, regard à l'écran et sur téléphone, tabulations de `perspectiva.js`, note de révision, commit. Sa discussion reste ouverte tant que ce n'est pas committé.
+- 57 Carte en papier découpé (`/ensag/carta-papier`) : six commits sur `claude/map-paper-cutout-style-0679de`, pas en ligne. Romain : Lisérés (recommandé) ou Calque ; ensuite report dans la vraie carte ; déplacer ou non la frontière des six bandes qui penchent.
+- 58 Interpellation des parlementaires : phase 2 faite sur `claude/occitan-parliament-tool-c4e7c1` (`app/scripts/elus-generar.mjs`, `app/static/data/elus.json` : 156 députés et 94 sénateurs de la zone), non poussée. Romain : le texte du message et l'emplacement du lien de pétition. Avant mise en ligne : vérifier les sénatoriales de septembre 2026.
+- 59 Bibliothèque d'inspirations (14 boutons et éléments) : un commit sur `claude/inspirations-elements-67dbfd`. Romain : lesquels lui plaisent, et pourquoi en deux mots.
+- 60 Moteur de la carte : étude MapLibre faite (onze fichiers dépendent de Leaflet, neuf couches sur canevas ; poids et mémoire sur téléphone en jeu). Romain : essai `/ensag/carta-maplibre` d'abord (recommandé), tout migrer, ou garder Leaflet.
+- 61 Police à la main de Romain (Calligraphr) : sa sélection fait 73 signes, sans apostrophe, ponctuation ni chiffres. Romain : titres seulement (gratuit) ou textes courants (payant).
+- 62 Carte, noms : lo Congrès donne « Jarnat » (Les Issards) et « Lées e Atàs » (Lées-Athas), à afficher à la place du masque ; 63 noms gardés sans source ; noms à demi français en Ardèche ; deux écarts de l'audit A (Laà-Mondrans, La Rochette-du-Buis).
+- 63 Livre de Louis Pastre : corrections page par page sur captures de Romain ; lenteur à l'ouverture à confirmer par lui.
+- Petits restes : Remira (dessin doré peu lisible sur la porte ocre de L'ostal, cadrage du mode Paisatges) ; phrase sous la tuile « Mots en imatges » ; talhièr, lot 2 ; idée pour S'imagina : générateur de plaques de rue (noms du mod Cities Skylines II) ; page « Soutenir » : virement d'abord ou service de paiement (chantier 31) ; en-têtes de la grille des facettes qui se coupent.
