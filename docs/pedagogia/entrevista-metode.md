@@ -58,3 +58,9 @@ Origine de chaque principe : [R] vient de Romain (question), [S] appuyé par la 
 Réponse de Romain, mot pour mot : « Les accords, la conjugaison et certains mots de vocabulaire du quotidien »
 
 Lecture de L'amic (interprétation, pas une parole de Romain) : ces trois résistances relèvent de la grammaire et du lexique courant, pas de l'entrée dans la langue. Elles se situent donc au-delà de l'A1 du site. À rapprocher du principe 3 (des phrases entières avant la grammaire) : pour Romain, les phrases sont là, c'est la grammaire qui manque maintenant.
+
+### Q6. Trois phrases qui ont coincé récemment
+
+Romain a préféré écrire directement en occitan pour montrer son niveau réel. Son texte, mot pour mot, non corrigé : « Bon, lo mai simple es d'ensajar d'escruire aqui e de te mostrar mon nivel vertadièr. Per exemple trobi complicat d'èsser segur de la sintaxi de mas frasas e d'èsser confiant dels mots qu'utilizi. Ai totjorn un sentiment d'insecuritat mas qu'existis tanen en francés »
+
+Lecture de L'amic (interprétation, non vérifiée par l'API de lo Congrès, séance dans le nuage) : la syntaxe, les accords et les conjugaisons de ces trois phrases tiennent. Les écarts relevés sont d'orthographe (escriure, aquí, nivèl, existís, tanben) et un choix de mot à vérifier (« confiant dels mots »). L'échantillon est court et tout au présent : il ne dit rien du passé, du futur ni du subjonctif. Ce que Romain nomme lui-même : un sentiment d'insécurité, qui existe aussi en français.
