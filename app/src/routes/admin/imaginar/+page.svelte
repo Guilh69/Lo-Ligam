@@ -416,7 +416,7 @@
 <style>
 	.imaginar {
 		width: 100%;
-		color: var(--t-tinta, #2a1a10);
+		color: var(--t-tinta);
 		font-family: var(--font-body);
 	}
 	button {
@@ -426,7 +426,7 @@
 	button:focus-visible,
 	input:focus-visible,
 	textarea:focus-visible {
-		outline: 2px solid var(--t-aur, #c7811b);
+		outline: 2px solid var(--t-aur);
 		outline-offset: 2px;
 	}
 
@@ -439,17 +439,17 @@
 	}
 	.temas button {
 		padding: 0.35rem 0;
-		color: var(--t-tinta-2, #5d4733);
+		color: var(--t-tinta-2);
 		background: none;
 		border: 0;
 		border-bottom: 2px solid transparent;
 	}
 	.temas button:hover,
 	.temas button[aria-pressed='true'] {
-		color: var(--t-tinta, #2a1a10);
+		color: var(--t-tinta);
 	}
 	.temas button[aria-pressed='true'] {
-		border-bottom-color: var(--t-aur, #c7811b);
+		border-bottom-color: var(--t-aur);
 	}
 
 	/* la planche : des vignettes carrées, sans cadre */
@@ -467,7 +467,7 @@
 		width: 100%;
 		aspect-ratio: 4 / 3;
 		padding: 0;
-		background: var(--t-linha, rgba(42, 26, 16, 0.12));
+		background: var(--t-linha);
 		border: 0;
 	}
 	.planca img {
@@ -486,8 +486,8 @@
 		min-width: 1.5rem;
 		padding: 0.1rem 0.35rem;
 		font-size: 0.85rem;
-		color: #fff;
-		background: var(--p-brique, #b53d17);
+		color: var(--t-accion-tinta);
+		background: var(--t-accion);
 	}
 
 	.retorn {
@@ -498,7 +498,7 @@
 	}
 	.ligam {
 		padding: 0;
-		color: var(--t-tinta, #2a1a10);
+		color: var(--t-tinta);
 		background: none;
 		border: 0;
 		text-decoration: underline;
@@ -526,7 +526,7 @@
 		touch-action: none; /* le doigt trace, il ne fait pas défiler */
 		-webkit-user-select: none;
 		user-select: none;
-		background: var(--t-linha, rgba(42, 26, 16, 0.12));
+		background: var(--t-linha);
 	}
 	.tela img {
 		display: block;
@@ -535,7 +535,8 @@
 		object-fit: cover;
 		pointer-events: none;
 	}
-	/* tout ce qui est posé sur la photo laisse passer le geste */
+	/* tout ce qui est posé sur la photo laisse passer le geste ; grille, contours et poignées y sont en blanc et
+	   noir neutres (hors palette, comme les dessins) : ils doivent se lire sur toute photo, pas suivre le thème */
 	.pausat,
 	.sobre,
 	.numero,
@@ -569,7 +570,7 @@
 		stroke-width: 1;
 	}
 	.nova {
-		stroke: var(--p-brique, #b53d17);
+		stroke: var(--p-brique);
 		stroke-width: 1.5;
 	}
 	.mandada {
@@ -581,8 +582,8 @@
 		padding: 0 0.3rem;
 		font-size: 0.8rem;
 		line-height: 1.35;
-		color: #2a1a10;
-		background: #fff;
+		color: var(--t-tinta);
+		background: var(--t-fons);
 		transform: translate(-1px, -100%);
 	}
 	.punh {
@@ -590,18 +591,18 @@
 		height: 11px;
 		box-sizing: border-box;
 		background: #fff;
-		border: 2px solid var(--p-brique, #b53d17);
+		border: 2px solid var(--p-brique);
 		transform: translate(-50%, -50%);
 	}
 	.trac {
 		box-sizing: border-box;
-		border: 2px dashed var(--p-brique, #b53d17);
-		background: color-mix(in srgb, var(--p-brique, #b53d17) 14%, transparent);
+		border: 2px dashed var(--p-brique);
+		background: color-mix(in srgb, var(--p-brique) 14%, transparent);
 		box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.85);
 	}
 
 	.guida {
-		color: var(--t-tinta-2, #5d4733);
+		color: var(--t-tinta-2);
 	}
 	.ficha fieldset {
 		margin: 0 0 1.1rem;
@@ -632,7 +633,7 @@
 		width: 1.05rem;
 		height: 1.05rem;
 		margin: 0;
-		accent-color: var(--p-brique, #b53d17);
+		accent-color: var(--p-brique);
 	}
 
 	/* les styles : un échantillon sur fond de pierre, son nom dessous ; le choisi est souligné de brique */
@@ -653,6 +654,7 @@
 		opacity: 0;
 		pointer-events: none;
 	}
+	/* la pierre sous les échantillons de style fait partie du dessin (hors palette, comme les couleurs de estils.js) */
 	.peira {
 		display: flex;
 		align-items: center;
@@ -663,10 +665,10 @@
 		border-bottom: 3px solid transparent;
 	}
 	.estil input:checked + .peira {
-		border-bottom-color: var(--p-brique, #b53d17);
+		border-bottom-color: var(--p-brique);
 	}
 	.estil input:focus-visible + .peira {
-		outline: 2px solid var(--t-aur, #c7811b);
+		outline: 2px solid var(--t-aur);
 		outline-offset: 2px;
 	}
 	.estil input:checked ~ .nom {
@@ -676,12 +678,12 @@
 		display: block;
 		font-size: 0.85em;
 		font-weight: 400;
-		color: var(--t-tinta-2, #5d4733);
+		color: var(--t-tinta-2);
 	}
 
 	.perspectiva .estat {
 		margin: 0 0 0.35rem;
-		color: var(--t-tinta-2, #5d4733);
+		color: var(--t-tinta-2);
 	}
 	.ficha .virar {
 		margin: 0.5rem 0 0.4rem;
@@ -692,7 +694,7 @@
 		width: 100%;
 		margin-top: 0.3rem;
 		padding: 0;
-		accent-color: var(--p-brique, #b53d17);
+		accent-color: var(--p-brique);
 	}
 
 	.camp {
@@ -711,7 +713,7 @@
 		font-weight: 400;
 		color: inherit;
 		background: transparent;
-		border: 1px solid var(--t-tinta-2, #5d4733);
+		border: 1px solid var(--t-tinta-2);
 		border-radius: 2px;
 	}
 	.accions {
@@ -722,8 +724,8 @@
 	}
 	.principal {
 		padding: 0.6rem 1.1rem;
-		color: var(--t-accion-tinta, #fff);
-		background: var(--t-accion, #9c2626);
+		color: var(--t-accion-tinta);
+		background: var(--t-accion);
 		border: 0;
 		border-radius: 3px;
 	}
@@ -740,7 +742,7 @@
 		font-family: var(--font-body);
 		font-size: 1rem;
 		font-weight: 700;
-		border-top: 1px solid var(--t-linha, rgba(42, 26, 16, 0.2));
+		border-top: 1px solid var(--t-linha);
 	}
 	.mandadas {
 		margin: 0;
@@ -752,10 +754,10 @@
 	}
 	.mandadas .estat {
 		margin-left: 0.4rem;
-		color: var(--t-tinta-2, #5d4733);
+		color: var(--t-tinta-2);
 	}
 	.responsa {
 		display: block;
-		color: var(--t-tinta-2, #5d4733);
+		color: var(--t-tinta-2);
 	}
 </style>
