@@ -27,3 +27,26 @@ Pour l'accent français les 2 mais pour moi je peux bien reproduire l'accent mé
 
 [IA] Son chemin est une échelle d'audace, chaque marche un peu plus exposée : répéter seul, s'enregistrer, glisser des mots dans son français, un premier appel, des cours, des discussions. Le mélange avec le français est admis à chaque marche.
 [IA] La honte de l'accent, chez lui, fait écho à celle de son grand-père pour le « patois » (récit §7). À manier avec tact, et seulement s'il le souhaite.
+
+## Q4. La honte de l'accent ; ce qu'une bonne séance avait de particulier (CFPO, Collègi d'Occitània, catalan)
+
+**Romain (13-11)** : « Oui la vergonha et le sentiment d'illégitimité sont des freins importants.
+
+J'aimais bien pouvoir poser les questions que je voulais et surtout lire. Les phases de discussions étaient les plus coûteuses mais les plus formatrices. »
+
+[IA] Trois besoins : poser ses propres questions, lire, discuter (coûteux mais ce qui forme le plus). La vergonha et le sentiment d'illégitimité sont à nommer dans le site.
+
+---
+
+## Proposition de méthode tirée de l'interview (L'amic, 13-11) : À VALIDER PAR ROMAIN
+
+Origine de chaque principe : [R] vient de Romain (question), [S] appuyé par la recherche citée dans `etat-de-l-art-parcours.md` §3.1, [IA] ajout de l'IA.
+
+1. **Le son d'abord.** Chaque phrase s'écoute ; le geste de base est écouter puis répéter. [R Q1, Q2] [S Mayer 2017]
+2. **L'écrit vient après le son, une règle de lecture à la fois**, jamais un tableau d'exceptions. [R Q1]
+3. **Des phrases entières avant la grammaire.** [R Q3 « petites phrases »] [S Boers et Lindstromberg 2012]
+4. **Le droit de laisser de côté et de mélanger.** On peut garder des mots de français et remettre une subtilité à plus tard. [R Q2, Q3]
+5. **L'échelle d'audace.** Chaque unité se termine par une audace à tenter dans la vraie vie : répéter seul, s'enregistrer, glisser un mot dans son français, un premier échange, une discussion. [R Q3]
+6. **Nommer la vergonha et l'illégitimité**, dès l'accueil, pour les trois profils (locuteurs, néolocuteurs, curieux). [R Q3, Q4, récit §7]
+7. **Lire tôt de vrais textes, et pouvoir poser ses questions.** La discussion, ce qui forme le plus, se vit en visio et dans Amassa ; le parcours y prépare. [R Q4]
+8. **Se tester, espacer, expliquer chaque erreur en une ligne, peu mais souvent.** [S Roediger et Karpicke 2006 ; Van der Kleij 2015 ; Sudina et Plonsky 2024]
