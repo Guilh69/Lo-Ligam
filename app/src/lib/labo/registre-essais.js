@@ -144,6 +144,16 @@ export const ESSAIS = [
 		pret: 'non',
 		raison: 'PILOTATGE 35 : refait le soir du 12-11 après un « non, fais mieux » (neuf tuiles de papier découpé, un territoire chacune) ; Romain regarde.',
 		suppression: 'Rien ne l’importe ; elle n’utilise que des composants et styles partagés (AppHeader, Crotz, papier.css, palette.js).'
+	},
+	{
+		chemin: '/ensag/fotos-oc',
+		titre: 'Photos vues en occitan (S’imagina, « Las carrièras »)',
+		date: '2026-11-12',
+		choix: 'photos',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'Quatre montages français / occitan sur les photos de Romain (plaques, mur peint), pour juger le réalisme. Le 13-11 la méthode change : Romain entoure lui-même l’endroit dans /admin/imaginar, puis le montage est fabriqué.',
+		suppression: 'À garder tant que la rubrique « Las carrièras » n’existe pas. Dépendances : lib/imagina/FotoOc.svelte, lib/imagina/fotos-oc.js, lib/imagina/fotos et static/imagina (524 Ko).'
 	}
 	// Les trois essais du 12-11 (/ensag/barra, /ensag/confetis, /ensag/fenestra) ont été tranchés le jour même
 	// par Romain (barre « selon la page », confettis raffinés, fenêtre d'origine gardée et retouchée) : pages retirées.
