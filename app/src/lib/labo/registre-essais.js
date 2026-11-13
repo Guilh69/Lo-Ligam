@@ -154,6 +154,16 @@ export const ESSAIS = [
 		pret: 'non',
 		raison: 'Quatre montages français / occitan sur les photos de Romain (plaques, mur peint), pour juger le réalisme. Le 13-11 la méthode change : Romain entoure lui-même l’endroit dans /admin/imaginar, puis le montage est fabriqué.',
 		suppression: 'À garder tant que la rubrique « Las carrièras » n’existe pas. Dépendances : lib/imagina/FotoOc.svelte, lib/imagina/fotos-oc.js, lib/imagina/fotos et static/imagina (524 Ko).'
+	},
+	{
+		chemin: '/ensag/imagina-atelier',
+		titre: 'L’atelier des rues (S’imagina, « Las carrièras »)',
+		date: '2026-11-13',
+		choix: 'photos',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'Recadrage du 13-11 (entretien de Romain) : le visiteur touche un endroit repéré sur trois photos, prend un mot vérifié, voit une esquisse posée dans le plan du mur et peut l’enregistrer ; trois styles d’esquisse à comparer ; textes question et audace en brouillon.',
+		suppression: 'Dépendances : lib/imagina/atelier.js, esquissa.js, enregistrar.js, Estudi.svelte, les jetons --imagina-* (app.css et lib/colors/registre.js), static/imagina (photos de base et vignettes).'
 	}
 	// Les trois essais du 12-11 (/ensag/barra, /ensag/confetis, /ensag/fenestra) ont été tranchés le jour même
 	// par Romain (barre « selon la page », confettis raffinés, fenêtre d'origine gardée et retouchée) : pages retirées.

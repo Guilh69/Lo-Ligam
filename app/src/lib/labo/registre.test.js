@@ -126,7 +126,7 @@ describe('pages d’essai', () => {
 		}
 	});
 
-	it('les 24 pages d’essai de l’audit du 07-11 (celles du 12-11 tranchées le jour même) et les trois essais recensés le 12-11, moins les cinq retirés le 12-11 au soir, moins les neuf retirés le 13-11 (huit essais de couleur et la carte au défilement), plus les photos vues en occitan recensées le 13-11', () => {
-	expect(ESSAIS).toHaveLength(14);
+	it('les 24 pages d’essai de l’audit du 07-11 (celles du 12-11 tranchées le jour même) et les trois essais recensés le 12-11, moins les cinq retirés le 12-11 au soir, moins les neuf retirés le 13-11 (huit essais de couleur et la carte au défilement), plus les photos vues en occitan recensées le 13-11 et l’atelier des rues', () => {
+	expect(ESSAIS).toHaveLength(15);
 	});
 });
