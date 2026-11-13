@@ -10,27 +10,10 @@
 // Logique et règles de lo Congrès : $lib/server/congres.js.
 import { json } from '@sveltejs/kit';
 import { dev } from '$app/environment';
-import { env } from '$env/dynamic/public';
 import { cercarTot } from '$lib/server/congres.js';
+import { esAdmin } from '$lib/server/esadmin.js';
 
 const SENS_CACHE = { 'cache-control': 'no-store' }; // rien n'est gardé (CGU de lo Congrès)
-
-/** Le jeton est-il celui d'un administrateur ? (fonction is_admin de la base) */
-async function esAdmin(request) {
-	const jeton = request.headers.get('authorization')?.match(/^Bearer (\S{20,4000})$/)?.[1];
-	if (!jeton || !env.PUBLIC_SUPABASE_URL) return false;
-	try {
-		const r = await fetch(`${env.PUBLIC_SUPABASE_URL}/rest/v1/rpc/is_admin`, {
-			method: 'POST',
-			headers: { apikey: env.PUBLIC_SUPABASE_ANON_KEY, Authorization: `Bearer ${jeton}`, 'Content-Type': 'application/json' },
-			body: '{}',
-			signal: AbortSignal.timeout(5000)
-		});
-		return r.ok && (await r.json()) === true;
-	} catch {
-		return false;
-	}
-}
 
 export async function GET({ url, request }) {
 	// en développement, la simulation de l'espace admin (?edicion=simular) n'a pas de session
