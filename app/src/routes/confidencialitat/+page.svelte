@@ -125,7 +125,7 @@
 				'Precision que valèm mai dire clarament : tas donadas son gardadas sus de servidors situats dins l’Union europèa, mas la societat que gerís la basa de donadas es americana. Las autoritats dels Estats-Units pòdon doncas, en drech, ne demandar l’accès (çò que s’apèla lo CLOUD Act). L’albergament del site, el, es francés. Cercam un prestatari europèu per la basa de donadas ; cap reünís pas encara la maduretat e la compatibilitat necessàrias.',
 			cookiesT: 'Pistaires e emmagazinatge',
 			cookies:
-				'Cap de pistaire publicitari, cap de mesura d’audiéncia. Lo site garda solament qualques reglatges dins ton navegador : la lenga e lo tèma causits, ta progression dins las leiçons, ton quasernet de mots, e lo fach qu’ajas ja vist certans messatges d’acuèlh. Se siás connectat, ton navegador garda tanben ta connexion, e ta progression e ton quasernet son tanben gardats dins ton compte. Aquelas informacions servisson solament a far foncionar lo site, pas jamai a t’identificar ni a te seguir.',
+				'Cap de pistaire publicitari, cap de mesura d’audiéncia. Lo site garda solament qualques reglatges dins ton navigator : la lenga e lo tèma causits, ta progression dins las leiçons, ton quasernet de mots, e lo fach qu’ajas ja vist certans messatges d’acuèlh. Se siás connectat, ton navigator garda tanben ta connexion, e ta progression e ton quasernet son tanben gardats dins ton compte. Aquelas informacions servisson solament a far foncionar lo site, pas jamai a t’identificar ni a te seguir.',
 			roleBasa: 'basa de donadas e autentificacion',
 			roleAlbergament: 'albergament, e mandadís dels messatges del formulari de contacte',
 			tiersT: 'Ressorsas cargadas d’autres sites',

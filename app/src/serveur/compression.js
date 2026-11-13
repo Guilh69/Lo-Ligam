@@ -78,9 +78,30 @@ export function brancher(req, res, dossiers = new Set()) {
 	const ecrireTete = res.writeHead;
 	const ecrire = res.write;
 	const fin = res.end;
+	let decide = false;
+
+	// Quand le code appelle write() ou end() sans writeHead(), Node appelle
+	// writeHead() de l'intérieur puis envoie le corps aussitôt : si writeHead()
+	// n'a rien écrit (parce qu'on compresse), le corps partirait sans en-têtes.
+	// On appelle donc writeHead() soi-même avant, puis on passe par la version
+	// en place (celle qui garde le corps, si on compresse).
+	const avantTete = (/** @type {Function} */ original, /** @type {'write' | 'end'} */ nom) => {
+		/** @param {any[]} args */
+		const relais = function (...args) {
+			if (!decide && !res.headersSent) res.writeHead(res.statusCode);
+			const actuel = res[nom];
+			return (actuel === relais ? original : actuel).apply(res, args);
+		};
+		return relais;
+	};
+	res.write = /** @type {any} */ (avantTete(ecrire, 'write'));
+	res.end = /** @type {any} */ (avantTete(fin, 'end'));
 
 	res.writeHead = function (statut, ...reste) {
 		res.writeHead = ecrireTete;
+		decide = true;
+		// Le message de statut éventuel (writeHead(404, 'Not Found', …)) est gardé.
+		const message = reste.find((r) => typeof r === 'string');
 		// Forme exotique (tableau d'en-têtes) : on ne s'en mêle pas.
 		if (reste.some((r) => Array.isArray(r))) return ecrireTete.call(res, statut, ...reste);
 		const passes = reste.find((r) => r && typeof r === 'object');
@@ -108,7 +129,7 @@ export function brancher(req, res, dossiers = new Set()) {
 				: null;
 		const longueur = Number(res.getHeader('content-length')) || 0;
 		if (!codage || (longueur && (longueur < TAILLE_MIN || longueur > TAILLE_MAX))) {
-			return ecrireTete.call(res, statut);
+			return ecrireTete.call(res, statut, message);
 		}
 
 		// On garde la réponse entière (une page fait moins d'un Mo), on la
@@ -133,7 +154,7 @@ export function brancher(req, res, dossiers = new Set()) {
 			const corps = Buffer.concat(morceaux);
 
 			const clair = () => {
-				ecrireTete.call(res, statut);
+				ecrireTete.call(res, statut, message);
 				fin.call(res, corps, cb);
 			};
 			if (res.destroyed) return res;
@@ -148,7 +169,7 @@ export function brancher(req, res, dossiers = new Set()) {
 				res.setHeader('content-length', sortie.length);
 				const etag = res.getHeader('etag');
 				if (typeof etag === 'string' && !etag.startsWith('W/')) res.setHeader('etag', `W/${etag}`);
-				ecrireTete.call(res, statut);
+				ecrireTete.call(res, statut, message);
 				fin.call(res, sortie, cb);
 			};
 			if (codage === 'br') {

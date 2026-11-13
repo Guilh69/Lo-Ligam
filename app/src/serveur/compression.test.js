@@ -65,6 +65,19 @@ describe('brancher (serveur réel)', () => {
 				res.writeHead(200);
 				res.write(GROS.slice(0, 4000));
 				res.end(GROS.slice(4000));
+			} else if (chemin === '/implicite-end') {
+				// sans writeHead() : Node envoie les en-têtes de lui-même
+				res.setHeader('content-type', 'text/html');
+				res.end(GROS);
+			} else if (chemin === '/implicite-write') {
+				res.statusCode = 200;
+				res.setHeader('content-type', 'text/html');
+				res.write(GROS.slice(0, 50));
+				res.end(GROS.slice(50));
+			} else if (chemin === '/introuvable') {
+				res.setHeader('content-type', 'text/html');
+				res.writeHead(404, 'Pas trobat');
+				res.end(GROS);
 			} else {
 				res.setHeader('content-type', 'text/html');
 				res.setHeader('content-length', Buffer.byteLength(GROS));
@@ -78,13 +91,13 @@ describe('brancher (serveur réel)', () => {
 	});
 	afterAll(() => new Promise((ok) => serveur.close(ok)));
 
-	/** @returns {Promise<{ statut: number, entetes: http.IncomingHttpHeaders, corps: Buffer }>} */
+	/** @returns {Promise<{ statut: number, message?: string, entetes: http.IncomingHttpHeaders, corps: Buffer }>} */
 	function demander(chemin, entetes = {}, methode = 'GET') {
 		return new Promise((ok, ko) => {
 			const req = http.request({ host: '127.0.0.1', port, path: chemin, method: methode, headers: entetes }, (rep) => {
 				const morceaux = [];
 				rep.on('data', (m) => morceaux.push(m));
-				rep.on('end', () => ok({ statut: rep.statusCode ?? 0, entetes: rep.headers, corps: Buffer.concat(morceaux) }));
+				rep.on('end', () => ok({ statut: rep.statusCode ?? 0, message: rep.statusMessage, entetes: rep.headers, corps: Buffer.concat(morceaux) }));
 			});
 			req.on('error', ko);
 			req.end();
@@ -136,6 +149,25 @@ describe('brancher (serveur réel)', () => {
 		expect(tete.statut).toBe(200);
 		expect(tete.entetes['content-encoding']).toBeUndefined();
 		expect(tete.corps.length).toBe(0);
+	});
+
+	it('compresse aussi quand le code n’appelle pas writeHead()', async () => {
+		for (const chemin of ['/implicite-end', '/implicite-write']) {
+			const r = await demander(chemin, { 'accept-encoding': 'br' });
+			expect(r.statut).toBe(200);
+			expect(r.entetes['content-encoding']).toBe('br');
+			expect(zlib.brotliDecompressSync(r.corps).toString()).toBe(GROS);
+		}
+		const clair = await demander('/implicite-end');
+		expect(clair.corps.toString()).toBe(GROS);
+	});
+
+	it('garde le statut et son message hors 200, sans compresser', async () => {
+		const r = await demander('/introuvable', { 'accept-encoding': 'br' });
+		expect(r.statut).toBe(404);
+		expect(r.message).toBe('Pas trobat');
+		expect(r.entetes['content-encoding']).toBeUndefined();
+		expect(r.corps.toString()).toBe(GROS);
 	});
 
 	it('pose le cache sur les polices sans les recompresser', async () => {
