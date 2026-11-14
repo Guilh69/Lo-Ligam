@@ -39,8 +39,32 @@ export function lancarAcuelh(racina, opcions = {}) {
 		clar: { costa: 'rgba(42, 26, 16, 0.42)', bulla: 'rgba(250, 250, 250, 0.96)', riu: '#b06a14', estela: '#6b3a22', liser: 'rgba(247, 247, 247, 0.92)', fil: '#b06a14', riuTèxt: '#8a3f12', vilaTèxt: '#2a1a10', vel: 'rgba(247, 247, 247, 0.85)', velFin: 'rgba(247, 247, 247, 0)', crotzTraç: '#b53d17', crotzPonch: '#eeaf34', crotzMoieu: '#b53d17', crotzEstret: '#e4d2b0', crotzCrida: '#ead9bd', crotzFons: '#e8d8bf' }
 	};
 	let TEM = TEMAS.sorne, temaClar = false;
+	// Les couleurs du fond clair, lues dans le CSS au moment du dessin (règle des Colors, 13-11 :
+	// jamais recopiées ici), relues toutes les secondes au plus pour suivre les réglages de Romain.
+	const CLAR_REPLI = { kp: '#f7f7f7', ko: '#9c5611', kt: '#b53d17', ka: '#c28100' };
+	const CLAR_VARS = { kp: '--t-fons', ko: '--t-aur', kt: '--t-terra', ka: '--t-aur-gros' };
+	let cacheClar = null, cacheClarT = 0;
+	const sondaColor = document.createElement('i');
+	function enRGB(css, repli) {
+		sondaColor.style.color = '';
+		sondaColor.style.color = css || repli;
+		if (!sondaColor.style.color) sondaColor.style.color = repli;
+		racina.appendChild(sondaColor);
+		const m = getComputedStyle(sondaColor).color.match(/[\d.]+/g) || [0, 0, 0];
+		sondaColor.remove();
+		return [m[0] / 255, m[1] / 255, m[2] / 255];
+	}
+	function colorsClar() {
+		const ara = performance.now();
+		if (cacheClar && ara - cacheClarT < 1000) return cacheClar;
+		const cs = getComputedStyle(document.documentElement);
+		cacheClar = Object.fromEntries(Object.entries(CLAR_VARS).map(([k, v]) => [k, enRGB(cs.getPropertyValue(v).trim(), CLAR_REPLI[k])]));
+		cacheClarT = ara;
+		return cacheClar;
+	}
 	function aplicarTema(clar, dalt) {
 		temaClar = clar;
+		cacheClar = null;
 		// Daltonisme : los rius e lors noms ven blaus (lo blau se destria de l'aur per
 		// totes los daltonismes roge-verd), lo rèsta de la paleta se fa per CSS
 		TEM = { ...(clar ? TEMAS.clar : TEMAS.sorne), ...(dalt ? (clar ? { riu: '#1f5f8f', riuTèxt: '#174a72' } : { riu: '#6fb1ff', riuTèxt: '#a9d0ff' }) : {}) };
@@ -130,6 +154,8 @@ export function lancarAcuelh(racina, opcions = {}) {
 		precision highp float;
 		uniform vec2 r; uniform float t; uniform vec2 m; uniform float s; uniform float p; uniform float c;
 		uniform sampler2D rel; uniform vec4 g; uniform float ro; uniform float mo; uniform float cl;
+			// Couleurs du thème clair, lues dans le CSS (--t-fons, --t-aur, --t-terra, --t-aur-gros) : plâtre, ocre, brique, or
+			uniform vec3 kp; uniform vec3 ko; uniform vec3 kt; uniform vec3 ka;
 		float h(vec2 q){ return fract(sin(dot(q, vec2(41.3, 289.1))) * 43758.5453); }
 		float n(vec2 q){ vec2 i = floor(q), f = fract(q); vec2 u = f*f*(3.0-2.0*f);
 			return mix(mix(h(i), h(i+vec2(1,0)), u.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), u.x), u.y); }
@@ -145,7 +171,58 @@ export function lancarAcuelh(racina, opcions = {}) {
 			vec3 aur = vec3(0.93, 0.69, 0.20);
 			vec3 col;
 			vec3 basa = nuech; // la color de fons de referéncia (per lo mòde clar)
-			if (mo < 0.5) {
+			bool cla = cl > 0.5;
+			// Mode clair (2026-11-14, Romain : « dans clair on ne les voit pas vraiment ») : chaque
+			// fond a sa propre version, dessinée à l'encre sur le plâtre (ocre, brique, or en lavis),
+			// au lieu du négatif calculé du sombre qui donnait du vide ou des bandes teintées.
+			if (cla) {
+				col = kp;
+				if (mo < 0.5) {
+					// Veines d'or : les mêmes veines, en traits d'ocre fins, comme un marbre ou une feuille d'or
+					// sur le papier ; un lavis d'or à peine posé là où la matière s'épaissit. Pas de halo.
+					float tt = t * 0.045;
+					st += normalize(dm + 1e-4) * exp(-d * 4.5) * -0.32;
+					vec2 q = vec2(fbm(st + tt), fbm(st + vec2(5.2, 1.3) - tt));
+					vec2 w = vec2(fbm(st + q * 1.7 + vec2(1.7, 9.2) + s * 0.22), fbm(st + q * 1.7 + vec2(8.3, 2.8) - s * 0.12));
+					float v = fbm(st + w * 1.4);
+					col = mix(col, ka, smoothstep(0.5, 0.95, v) * 0.12);
+					col = mix(col, kt, smoothstep(0.7, 1.0, v) * 0.06 * (0.6 + 0.4 * p));
+					float f = abs(fract(v * 3.4 + tt * 0.6) - 0.5);
+					float vena = smoothstep(0.032, 0.0, f) * smoothstep(0.38, 0.82, v);
+					col = mix(col, mix(ka, ko, 0.35), vena * (0.55 + 0.12 * p) * (1.0 - 0.55 * c));
+				} else if (mo < 1.5) {
+					// Lumière et étoiles : de grands lavis d'or et de brique qui dérivent, comme le soleil
+					// à travers une fenêtre sur un mur ; une lueur d'or sous la souris. Pas de dégradé de haut en bas.
+					float T = t * 0.02;
+					vec2 c1 = vec2(0.25 + 0.12 * sin(T * 1.3), 0.45 + 0.12 * cos(T));
+					vec2 c2 = vec2(0.78 + 0.10 * cos(T * 0.9), 0.75 + 0.08 * sin(T * 1.1));
+					vec2 c3 = vec2(0.55 + 0.15 * sin(T * 0.7), 0.05 + 0.10 * cos(T * 1.2));
+					vec2 e1 = (uv - c1) * asp, e2 = (uv - c2) * asp, e3 = (uv - c3) * asp;
+					float k = 1.0 - 0.5 * c;
+					col = mix(col, ka, 0.24 * exp(-dot(e1, e1) * 4.0) * k);
+					col = mix(col, kt, 0.09 * exp(-dot(e2, e2) * 5.0) * k);
+					col = mix(col, ko, 0.12 * exp(-dot(e3, e3) * 3.0) * k);
+					col = mix(col, ka, 0.1 * exp(-d * d * 9.0));
+					col += (h(gl_FragCoord.xy) - 0.5) * 0.012;
+				} else if (mo < 2.5) {
+					// Courbes de niveau : les mêmes lignes, en ocre net, les maîtresses plus marquées ; un lavis
+					// de brique très léger sur la colline qui suit la main
+					float e = fbm(st * 0.93 + vec2(t * 0.006, -t * 0.004)) + 0.18 * exp(-d * d * 18.0);
+					float lv = e * 14.0;
+					#ifdef DERIV
+					float fw = max(fwidth(lv), 1e-4);
+					#else
+					float fw = 0.04;
+					#endif
+					float lm = 1.0 - smoothstep(0.0, 1.0, abs(fract(lv - 0.5) - 0.5) / fw);
+					float lM = 1.0 - smoothstep(0.0, 1.3, abs(fract(lv / 5.0 - 0.5) - 0.5) / (fw / 5.0));
+					col = mix(col, kt, 0.06 * exp(-d * 3.0));
+					col = mix(col, ko, clamp(lm * 0.26 + lM * 0.42, 0.0, 0.6) * (1.0 - 0.6 * c));
+				} else {
+					// Sobre : le plâtre, avec un soupçon d'ocre au pied de l'écran
+					col = mix(col, ko, 0.035 * smoothstep(0.7, -0.2, uv.y) * (1.0 - 0.5 * c));
+				}
+			} else if (mo < 0.5) {
 				// 0. Venas d'aur, paleta « Brasa » (causida per Romain lo 2026-10-07) : colors
 				// tiradas de sas publicacions Instagram (design-stock/canva-vf, 213 visuals) :
 				// brica prigonda → terracòta #a84830, tacas coral #e84848, venas d'aur #f0a830.
@@ -223,20 +300,17 @@ export function lancarAcuelh(racina, opcions = {}) {
 				float lM = 1.0 - smoothstep(0.0, 1.4, abs(fract(lv / 5.0 - 0.5) - 0.5) / (fw / 5.0));
 				// Ont las corbas se sarran tròp (pendís fòrts), s'escafan : un filigrana, pas una taca
 				float dens = smoothstep(0.4, 0.1, fw);
-				col += aur * (lm * 0.1 * dens + lM * 0.2 * smoothstep(1.6, 0.4, fw)) * smoothstep(4.0, 40.0, e) * dins * c;
+				float kc = (lm * 0.1 * dens + lM * 0.2 * smoothstep(1.6, 0.4, fw)) * smoothstep(4.0, 40.0, e) * dins * c;
+				if (cla) col = mix(col, ko, clamp(kc * 1.8, 0.0, 0.5)); else col += aur * kc;
 			}
 			float vig = mix(0.62, 1.0, smoothstep(0.0, 0.7, uv.x)) * smoothstep(1.45, 0.2, length((uv - vec2(0.58, 0.5)) * vec2(1.0, 1.25)));
 			// en clair (Venas d'aur), le vignettage n'agit que sur les courbes de niveau, jamais sur le plâtre
-			if (cl > 0.5 && mo < 0.5) col = basa + (col - basa) * vig; else col *= vig;
+			if (!cla) col *= vig;
 			// (le second vignettage est dans « vig », juste au-dessus)
 			// Gamme « Éclat » (Romain, 2026-10-15 : « un peu trop sombre ») : un fond
 			// plus chaud et un peu plus lumineux, comme les couleurs du thème sombre
 			if (cl < 0.5) col = col * 1.18 + vec3(0.03, 0.013, 0.006);
 			// Mòde clar : çò qu'èra lum sus la nuèch ven tencha terracòta sus lo papièr crèma
-			if (cl > 0.5) {
-				float i = clamp(dot(col - basa, vec3(0.6, 0.3, 0.1)) * 2.4, 0.0, 1.0);
-				col = mix(vec3(0.969, 0.969, 0.969), vec3(0.76, 0.43, 0.26), i); // basa : lo Plâtre (2026-10-21)
-			}
 			gl_FragColor = vec4(col, 1.0);
 		}`;
 		const vert = 'attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }';
@@ -249,7 +323,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
 		const a = gl.getAttribLocation(pr, 'a');
 		gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
-		U = Object.fromEntries(['r', 't', 'm', 's', 'p', 'c', 'rel', 'g', 'ro', 'mo', 'cl'].map((k) => [k, gl.getUniformLocation(pr, k)]));
+		U = Object.fromEntries(['r', 't', 'm', 's', 'p', 'c', 'rel', 'g', 'ro', 'mo', 'cl', 'kp', 'ko', 'kt', 'ka'].map((k) => [k, gl.getUniformLocation(pr, k)]));
 		fons.width = Math.round(W * ESCALA_FONS); fons.height = Math.round(H * ESCALA_FONS); gl.viewport(0, 0, fons.width, fons.height);
 		forçarFons = true;
 		if (reliefDemandat) cargarRelief();
@@ -908,6 +982,10 @@ export function lancarAcuelh(racina, opcions = {}) {
 			gl.uniform2f(U.m, ax / W, 1 - ay / H);
 			gl.uniform1f(U.mo, modeFons);
 			gl.uniform1f(U.cl, temaClar ? 1 : 0);
+			if (temaClar) {
+				const k = colorsClar();
+				gl.uniform3fv(U.kp, k.kp); gl.uniform3fv(U.ko, k.ko); gl.uniform3fv(U.kt, k.kt); gl.uniform3fv(U.ka, k.ka);
+			}
 			gl.uniform1f(U.s, sy / H);
 			gl.uniform1f(U.p, sy / maxSy);
 			// La nuèch se calma quand la carta se forma : las venas dauradas s'escafan

@@ -79,6 +79,7 @@ Format : numéro, chantier, état, prochaine action, référence. Détail dans l
 - 35 Motifs-symboles au défilement : essai refait `/ensag/motius-simbols` (12-11). Romain regarde sur téléphone ; s'il garde, intégration à l'accueil.
 - 36 Audit final, la carte : fait (12-11), correction des noms inconnus (c0c4338f). Romain répond aux questions ; ensuite Claude.
 - 37 Audit final, l'accueil : fait et en ligne (12-11). Mesurer le moteur `app/src/lib/acuelh/motor.js` sur machine à carte graphique ; Romain regarde les confettis.
+- 37 bis Fonds de l'accueil en clair (14-11) : les quatre fonds ont leur version claire (encre d'or, d'ocre et de brique sur le plâtre), en ligne. Romain regarde en clair, panneau Ambiance, et dit si l'intensité lui va.
 - 38 Constitution en occitan : en ligne (12-11), `/constitucion`, hors menu. Romain relit l'occitan (`app/src/lib/constitucion/LEGIR-ME.md`), dit si elle entre dans Se parla.
 - 39 Audit final, code, couleurs, sources : fait (12-11), 1 047 tests verts. Avant lancement : accord LISN, lever le `noindex`, retirer les essais `/ensag/`.
 - 40 Une seule porte : fait (12-11). Cartes 155 à 159 appliquées le 13-11 (textes en base, ménage des essais en ligne, cahier §11). Reste : notes 126 (flèche de Remira) et 128 (bouton de langue de `/apren/visio`), « rotge-carta ».
