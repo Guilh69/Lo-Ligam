@@ -27,7 +27,7 @@
 	const interesLlibre = (l) => libelles(AGRADA, l);
 	const cercaLlibre = (l) => libelles(CERCA, l);
 	// Le profil du compte se modifie là (la page sera déplacée plus tard)
-	const URL_PROFIL = '/grops/perfil';
+	const URL_PROFIL = '/compte/perfil';
 
 	const CONTACTES = [
 		['whatsapp', 'WhatsApp'],
