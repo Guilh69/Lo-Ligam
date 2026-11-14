@@ -14,6 +14,7 @@
 	import MenuVel from './MenuVel.svelte';
 	import { lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
 	import { tampaDefòra } from '$lib/tampaDefora.js';
+	import { LANGUES } from '$lib/styles/palette.js';
 	import { VISIO, PLAN } from '$lib/data/planSite.js';
 	import { esAdmin } from '$lib/adminStore';
 	import { session, authReady, pseudoCompte } from '$lib/authStore';
@@ -61,8 +62,12 @@
 	// sont pas déjà dans la bascule, en ordre alphabétique (Romain, 2026-10-26).
 	let segonda = $derived(langStore.segonda);
 	let autras = $derived(SEGONDAS.filter((c) => c !== segonda));
-	// le bouton de langue bascule entre l'occitan et la seconde langue : il montre celle où l'on passe
-	let cible = $derived(lang === 'oc' ? segonda : 'oc');
+	// la couleur d'une langue (palette.js, LANGUES), lue au moment de s'en servir (règle des couleurs du 13-11)
+	const pecaLenga = (code) => {
+		const l = LANGUES[code];
+		return l ? `--lenga-fons: ${l.fons[0]}; --lenga-tinta: ${l.tinta};` : undefined;
+	};
+	const LENGA_ETIQ = { oc: 'Lenga', fr: 'Langue', es: 'Idioma', en: 'Language', ca: 'Llengua', ar: 'اللغة' };
 	const GLOBE_ETIQ = { oc: 'Autras lengas', fr: 'Autres langues', es: 'Otros idiomas', en: 'Other languages', ca: 'Altres llengües', ar: 'لغات أخرى' };
 	let globeEtiq = $derived(GLOBE_ETIQ[lang] ?? GLOBE_ETIQ.oc);
 	function basculaGlobe() {
@@ -203,44 +208,49 @@
 
 			<AmbiancaPanel />
 
-			<div class="lengas">
-				<div class="lang-toggle" class:en-avant={crida}>
-					<!-- Un seul bouton uni, qui bascule d'une langue à l'autre (Romain, 2026-11-13, note 128) :
-					     il montre la langue où l'on passe. Rouge du logo, comme tout ce qui se clique (règle B). -->
-					<button
-						type="button"
-						class="pc lang-boto"
-						lang={cible}
-						title={LENGAS[cible].nom}
-						aria-label="{LENGAS[cible].curt} · {LENGAS[cible].nom}"
-						onclick={() => causirLenga(cible)}>{LENGAS[cible].curt}</button>
-					{#if crida}
-						<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
-					{/if}
+			<!-- L'interrupteur de langue (Romain, 2026-11-14) : Òc et la seconde langue côte à côte, la
+			     langue choisie allumée dans sa couleur (palette.js, LANGUES ; décision du 08-11), l'autre
+			     grisée ; au bout, une moitié de globe épouse l'arrondi et change la seconde langue. -->
+			<div class="lengas" class:en-avant={crida}>
+				<div class="lang-pista" role="group" aria-label={LENGA_ETIQ[lang] ?? LENGA_ETIQ.oc} style={pecaLenga(lang)}>
+					<span class="lang-peça" class:a-drecha={lang !== 'oc'} aria-hidden="true"></span>
+					<button type="button" class="lang-tria" lang="oc" aria-pressed={lang === 'oc'} title={LENGAS.oc.nom} aria-label={LENGAS.oc.nom} onclick={() => causirLenga('oc')}>{LENGAS.oc.curt}</button>
+					<button type="button" class="lang-tria" lang={segonda} aria-pressed={lang === segonda} title={LENGAS[segonda].nom} aria-label={LENGAS[segonda].nom} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
 				</div>
-				<div class="lang-globe">
-					<button
-						type="button"
-						class="pc pc-2 globe-boton"
-						bind:this={botonGlobe}
-						aria-expanded={globeDobert}
-						aria-controls="globe-panel"
-						title={globeEtiq}
-						onclick={basculaGlobe}>
-						<Icona nom="mond" size="1.2rem" />
-						<span class="sr-only">{globeEtiq}</span>
-					</button>
-					{#if globeDobert}
-						<div class="globe-panel" id="globe-panel" bind:this={panelGlobe} role="group" aria-label={globeEtiq}>
-							{#each autras as code (code)}
-								<button
-									type="button"
-									lang={code}
-									onclick={() => causirGlobe(code)}>{LENGAS[code].nom}</button>
-							{/each}
-						</div>
-					{/if}
-				</div>
+				<button
+					type="button"
+					class="lang-mond"
+					bind:this={botonGlobe}
+					aria-expanded={globeDobert}
+					aria-controls="globe-panel"
+					title={globeEtiq}
+					onclick={basculaGlobe}>
+					<!-- la moitié droite d’un globe, dans son arrondi : le méridien central est le filet de séparation,
+					     deux méridiens en demi-ellipses, l'équateur et deux parallèles -->
+					<svg viewBox="0 0 50 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+						<path d="M0 5 A45 45 0 0 1 0 95" />
+						<g class="mond-meridians">
+							<path d="M0 5 A28 45 0 0 1 0 95" />
+							<path d="M0 5 A12 45 0 0 1 0 95" />
+						</g>
+						<path d="M0 50 H45" />
+						<path d="M0 27.5 H39" />
+						<path d="M0 72.5 H39" />
+					</svg>
+					<span class="sr-only">{globeEtiq}</span>
+				</button>
+				{#if crida}
+					<span class="lang-crida" aria-hidden="true"><span lang="oc">lenga</span> · <span lang="fr">langue</span></span>
+				{/if}
+				{#if globeDobert}
+					<div class="globe-panel" id="globe-panel" bind:this={panelGlobe} role="group" aria-label={globeEtiq}>
+						{#each autras as code (code)}
+							<button type="button" lang={code} style={pecaLenga(code)} onclick={() => causirGlobe(code)}
+								><span class="globe-color" aria-hidden="true"></span>{LENGAS[code].nom}</button
+							>
+						{/each}
+					</div>
+				{/if}
 			</div>
 
 			<!-- « Menu » à droite du bandeau (Romain, 2026-11-03) : le dernier
@@ -346,8 +356,7 @@
 	}
 
 	/* pièces de papier (lib/styles/papier.css) : les boutons de la barre ; ouverts, ils passent à l'or */
-	.menu-boton,
-	.globe-boton {
+	.menu-boton {
 		--r: 9px;
 		gap: 0.45rem;
 		min-height: 0;
@@ -358,8 +367,7 @@
 		font-size: 0.82rem;
 	}
 
-	.menu-boton[aria-expanded='true'],
-	.globe-boton[aria-expanded='true'] {
+	.menu-boton[aria-expanded='true'] {
 		--pc-fons: var(--pc-or-fons);
 		--pc-tinta: #2a1a10;
 	}
@@ -422,80 +430,183 @@
 		white-space: nowrap;
 	}
 
-	/* La langue (Romain, 2026-11-13, note 128 : « la couleur ne va pas et la séparation oc et autre
-	   langue n'a pas été demandée ; un bouton uni qui bascule d'une langue à l'autre ») : un seul bouton,
-	   aplat du rouge du logo (--t-accion, la couleur de ce qui se clique, règle B ; défaut de .pc) sous un
-	   texte crème. Il montre la langue où l'on passe ; sa largeur ne bouge pas d'une langue à l'autre. */
-	.lang-toggle {
-		display: inline-flex;
-		border-radius: 9px;
-	}
-
-	.lang-boto {
-		--r: 9px;
-		min-height: 0;
-		min-width: 3rem;
-		height: 2.2rem;
-		padding: 0 0.85rem;
-		font-size: 0.82rem;
-	}
-
-	/* Globe : les langues de découverte (es / en / ca), à côté de la bascule. */
+	/* L'interrupteur de langue (Romain, 2026-11-14 ; remplace le bouton uni du 13-11) : un seul objet
+	   cerné d'un filet fin. À gauche la piste Òc | seconde langue, où une pièce de la couleur de la langue
+	   choisie glisse sous le mot allumé (l'autre reste grisé) ; à droite, la moitié d'un globe dont
+	   l'arrondi ferme l'objet. Hauteur --lh, le demi-globe fait --lh / 2 de large : un vrai demi-cercle. */
 	.lengas {
-		display: inline-flex;
-		align-items: center;
-		gap: 6px;
-	}
-	.lang-globe {
+		--lh: 2.2rem;
+		--lc: 2.6rem;
 		position: relative;
 		display: inline-flex;
+		align-items: stretch;
+		height: var(--lh);
+		border: 1px solid var(--t-linha);
+		border-radius: 8px calc(var(--lh) / 2) calc(var(--lh) / 2) 8px;
 	}
-	/* Même famille que le bouton Ambiance voisin : cercle de 2,2 rem qui devient
-	   une pilule quand le code Es/En/Ca s'affiche ; bordure rouge (--t-accion)
-	   au survol et à l'ouverture, comme Ambiance (règle B). */
-	.globe-boton {
-		gap: 4px;
-		min-width: 2.2rem;
-		padding: 0 0.55rem;
+	.lang-pista {
+		position: relative;
+		display: grid;
+		grid-template-columns: var(--lc) var(--lc);
+		padding: 3px;
+	}
+	.lang-peça {
+		position: absolute;
+		inset: 3px auto 3px 3px;
+		width: var(--lc);
+		border-radius: 5px;
+		background: var(--lenga-fons, var(--t-accion));
+		transition:
+			translate 0.42s cubic-bezier(0.65, 0, 0.25, 1),
+			background-color 0.42s ease;
+	}
+	.lang-peça.a-drecha {
+		translate: 100% 0;
+	}
+	.lang-tria {
+		position: relative;
+		min-width: 0;
+		min-height: 0;
+		z-index: 1;
+		border: 0;
+		margin: 0;
+		padding: 0;
+		background: none;
+		font: inherit;
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+		color: color-mix(in srgb, var(--t-tinta) 70%, transparent);
+		cursor: pointer;
+		transition: color 0.3s ease;
+	}
+	.lang-tria:hover {
+		color: var(--t-tinta);
+	}
+	.lang-tria[aria-pressed='true'] {
+		color: var(--lenga-tinta, #fff);
+		cursor: default;
 	}
 
-	/* Panneau d'en-tête opaque, comme celui d'Ambiance. */
+	/* Le demi-globe : son bord gauche (le méridien central) est le filet qui le sépare de la piste */
+	.lang-mond {
+		position: relative;
+		flex: none;
+		box-sizing: border-box;
+		min-width: 0;
+		min-height: 0;
+		width: calc(var(--lh) / 2);
+		margin: 0;
+		padding: 0;
+		border: 0;
+		border-left: 1px solid var(--t-linha);
+		border-radius: 0 calc(var(--lh) / 2) calc(var(--lh) / 2) 0;
+		background: transparent;
+		color: color-mix(in srgb, var(--t-tinta) 70%, transparent);
+		cursor: pointer;
+		transition:
+			color 0.3s ease,
+			background-color 0.3s ease;
+	}
+	/* la zone cliquable déborde du dessin, vers la droite et en hauteur (cible d.au moins 24 px de large) */
+	.lang-mond::before {
+		content: '';
+		position: absolute;
+		inset: -4px -10px -4px 0;
+	}
+	.lang-mond svg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1;
+		vector-effect: non-scaling-stroke;
+		overflow: visible;
+	}
+	.lang-mond svg path {
+		vector-effect: non-scaling-stroke;
+	}
+	/* au survol, le globe tourne d'un quart de méridien */
+	.mond-meridians {
+		transform-origin: 0 50%;
+		transition: transform 0.6s cubic-bezier(0.65, 0, 0.25, 1);
+	}
+	.lang-mond:hover,
+	.lang-mond[aria-expanded='true'] {
+		color: var(--t-accion);
+		background: color-mix(in srgb, var(--t-tinta) 6%, transparent);
+	}
+	.lang-mond:hover .mond-meridians,
+	.lang-mond[aria-expanded='true'] .mond-meridians {
+		transform: scaleX(0.55);
+	}
+	/* clavier : l'anneau d'or épouse la forme (la pièce arrondie, le demi-disque) */
+	.lang-tria:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: -1px;
+		border-radius: 5px;
+	}
+	.lang-mond:focus-visible {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 1px;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.lang-peça,
+		.mond-meridians {
+			transition: none;
+		}
+	}
+
+	/* Les autres langues : un panneau sobre sous le globe, chaque langue précédée de sa couleur */
 	.globe-panel {
 		position: absolute;
-		top: calc(100% + 12px);
-		right: 0;
+		top: calc(100% + 8px);
+		right: -1px;
 		z-index: 60;
 		display: flex;
 		flex-direction: column;
-		min-width: 9rem;
-		padding: 0.4rem;
+		min-width: 9.5rem;
+		padding: 0.3rem;
 		background: var(--t-fons-2);
 		color: var(--t-tinta);
 		border: 1px solid var(--t-linha);
-		border-radius: 18px;
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+		border-radius: 6px;
+		box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+		animation: globe-panel-ven 0.22s ease-out;
+	}
+	@keyframes globe-panel-ven {
+		from {
+			opacity: 0;
+			translate: 0 -4px;
+		}
 	}
 	.globe-panel button {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
 		border: 0;
 		background: transparent;
-		color: var(--t-tinta-2);
+		color: var(--t-tinta);
+		font: inherit;
 		font-weight: 600;
 		font-size: 0.86rem;
 		text-align: left;
-		padding: 0.5rem 0.7rem;
-		border-radius: 10px;
+		padding: 0.5rem 0.65rem;
+		border-radius: 4px;
 		cursor: pointer;
-		transition:
-			background 0.35s,
-			color 0.35s;
+		transition: background-color 0.25s;
 	}
 	.globe-panel button:hover {
-		background: color-mix(in srgb, var(--t-tinta) 10%, transparent);
-		color: var(--t-tinta);
+		background: color-mix(in srgb, var(--t-tinta) 8%, transparent);
 	}
-	.globe-panel button[aria-pressed='true'] {
-		background: var(--t-tinta);
-		color: var(--t-fons);
+	.globe-color {
+		flex: none;
+		width: 0.7rem;
+		height: 0.7rem;
+		border-radius: 2px;
+		background: var(--lenga-fons);
 	}
 	/* ---- téléphone d'abord (2026-11-07) ---- */
 	/* Les réglages et le menu sont de simples icônes et mots, sans pièce pleine (logique 3 choisie par
@@ -503,7 +614,6 @@
 	   plus de troisième couleur à choisir. Les états ouverts et la page courante gardent leur pièce. */
 	.header-right .compte-ligam:not([aria-current='page']),
 	.header-right .admin-link,
-	.header-right .globe-boton:not([aria-expanded='true']),
 	.header-right .menu-boton:not([aria-expanded='true']),
 	.header-right :global(.ambianca-boton:not([aria-expanded='true'])) {
 		--pc-fons: transparent;
@@ -512,7 +622,6 @@
 	}
 	.header-right .compte-ligam:not([aria-current='page']):hover:not(:disabled),
 	.header-right .admin-link:hover:not(:disabled),
-	.header-right .globe-boton:not([aria-expanded='true']):hover:not(:disabled),
 	.header-right .menu-boton:not([aria-expanded='true']):hover:not(:disabled),
 	.header-right :global(.ambianca-boton:not([aria-expanded='true']):hover:not(:disabled)) {
 		--pc-fons: color-mix(in srgb, var(--t-tinta) 9%, transparent);
@@ -640,14 +749,16 @@
 		/* cibles de 44 px au doigt (la règle du site) : les réglages du haut faisaient 35 px */
 		.top.avec-onglets .compte-ligam,
 		.top.avec-onglets .admin-link,
-		.top.avec-onglets .globe-boton,
 		.top.avec-onglets :global(.ambianca-boton) {
 			min-width: 2.75rem;
 			height: 2.75rem;
 		}
-		.top.avec-onglets .lang-boto {
-			min-width: 2.75rem;
-			height: 2.75rem;
+		.top.avec-onglets .lengas {
+			--lh: 2.75rem;
+			--lc: 2.75rem;
+		}
+		.top.avec-onglets .globe-panel button {
+			min-height: 2.75rem;
 		}
 		.top.avec-onglets .brand {
 			min-height: 2.75rem;
@@ -670,8 +781,7 @@
 
 	/* Première visite : le bouton se met en avant (halo d'or qui bat trois fois,
 	   légende dessous), puis s'efface ; immobile si « réduire les animations » */
-	.lang-toggle { position: relative; }
-	.lang-toggle.en-avant { border-color: var(--t-aur); box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); animation: lang-crida 1.6s ease-out 3; }
+	.lengas.en-avant { border-color: var(--t-aur); box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); animation: lang-crida 1.6s ease-out 3; }
 	.lang-crida {
 		position: absolute; top: calc(100% + 6px); right: 0; white-space: nowrap;
 		font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--t-aur);
@@ -680,12 +790,10 @@
 	@keyframes lang-crida { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); } 100% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--t-aur) 0%, transparent); } }
 	@keyframes lang-crida-tèxt { 0%, 8% { opacity: 0; translate: 0 -4px; } 20%, 85% { opacity: 1; translate: 0 0; } 100% { opacity: 0; } }
 	@media (prefers-reduced-motion: reduce) {
-		.lang-toggle.en-avant { animation: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--t-aur) 45%, transparent); }
+		.lengas.en-avant { animation: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--t-aur) 45%, transparent); }
 		.lang-crida { animation: none; }
 	}
 
-	.lang-boto:focus-visible,
-	.globe-boton:focus-visible,
 	.globe-panel button:focus-visible,
 	.compte-ligam:focus-visible,
 	.admin-link:focus-visible,
