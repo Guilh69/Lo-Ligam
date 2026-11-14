@@ -109,6 +109,7 @@ Depuis le 12-10 : 211 changements, la moitié pour la carte, un tiers pour l'acc
 12. **23-10** : règle B des couleurs : rouge du logo pour ce qui se clique, or et ocre pour mettre en valeur.
 13. Pas d'agents ni de longs enchaînements sans l'accord de Romain (forfait). **Accord donné le 13-11** pour la méthode L'amic : délégations courtes, cadrées, sur le modèle le moins coûteux.
 14. **02-11** : deux IA, une équipe, sans concurrence ni dénigrement. **Reporté le 06-11 au soir** : Claude garde la main, Mistral en soutien (`AGENTS.md`, `BRIEF-MISTRAL.md` §10).
+15. **14-11** : gel des nouveaux chantiers (sauf demande ou besoin majeur) ; on termine l'existant. Une règle ne change qu'après deux échecs ; une ajoutée, une retirée. Agents resserrés (cahier §11).
 
 ## 6. Les vraies questions ouvertes
 
@@ -142,6 +143,7 @@ Depuis le 2026-11-13 : une discussion mère (L'amic) et des sous-discussions par
 - 53 Module 0 (13-11) : proposition prête, `docs/pedagogia/11-modul-0-proposicion.md` (12 écrans, quatre décisions en QCM non encore posées : place des héritiers, écart entre portes, qui parle de la vergonha, vrai texte ou non). Mots à vérifier depuis l'ordinateur de Romain (commande dans le fichier).
 - 54 Entraînement à la traduction (13-11) : page d'administration pour Romain (phrase en français, traduction sans aide, touches d'accents, mots vérifiés par lo Congrès puis modèle) ; construite le 13-11 (`/admin/revirar`, `app/src/lib/revirar/`, route `/api/congres/verificar` réservée à l'administrateur : lo Basic puis vèrb'Òc), en ligne le 13-11 au soir avec l'accord de Romain (contrôle de sécurité de Rodrigo : rien de bloquant) ; la chaîne lo Basic puis vèrb'Òc répond avec la vraie clé (essai direct de L'amic), la page elle-même attend le premier essai de Romain connecté. Interview du parcours ouverte (Q5 à Q7 et deux textes d'essai dans `docs/pedagogia/entrevista-metode.md`) : sa mécanique tient, ses écarts sont les accents et les formes calquées du français ; il reste à tester le futur. État de S'imagina : `docs/vision/s-imagina-estat-2026-11-13.md` (cinq questions d'interview prêtes) ; grille des facettes à jour, en ligne le 13-11 au soir. Phrases de Revirar corrigées le 13-11 d'après lo Congrès (dormís, volriái, mainats) ; reste à faire reconnaître « uèi », « Tolosa » et les noms propres par la route de vérification.
 - 51, suite : lot 3 écrit et essayé sur de faux bruts (`app/scripts/voix-polir.mjs`, `outils/voix-polir.cmd`, `supabase/supabase-voix-lector.sql` non exécuté, fiche « La voix » du livret). Dans `master`. Reste à Romain : installer ffmpeg, créer le compte lecteur, essayer.
+- 55 Consolidation (14-11) : mémoire et consignes réduites de moitié, contradictions tranchées, agents recadrés (Joan réduit à la relecture à froid, définitions d'environ 500 mots). Discussion à part, Sonnet effort moyen ; liste des suppressions montrée à Romain avant d'agir.
 
 ## 9. Tâches reprises des anciennes discussions (13-11)
 
