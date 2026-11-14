@@ -15,9 +15,9 @@
 --     (public.ligam_contacte) ;
 --   - cinq demandes par semaine au plus ; une seule demande en cours par paire ;
 --   - bloquer : l'autre disparaît des listes et ne peut plus demander ;
---   - signaler un profil ; trois signalements de trois personnes suspendent le
---     compte en attendant que Romain regarde (public.bandiments, partagé avec
---     les groupes) ;
+--   - signaler un profil ; trois signalements de trois personnes masquent le
+--     profil de Parlar amassa (pas tout le site) en attendant que Romain
+--     regarde (public.ligam_moderacion, levée par ligam_levar_moderacion) ;
 --   - l'administrateur lit tout et tranche.
 --
 -- Données (RGPD, minimisation) :

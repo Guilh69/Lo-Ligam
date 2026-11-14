@@ -227,6 +227,24 @@ async function verificarEscritura(supabase) {
 	const barraInversa = await supabase.from('remarcas').insert({ ...nòta, pagina: '/\\_essai-verrolhs' });
 	verificar('ENVOYER une remarque dont l’adresse a une barre inverse est refusé', !!barraInversa.error);
 
+	// Parlar amassa (supabase-ligams.sql, 14-11) : un visiteur sans compte ne
+	// lit aucune table (refusé = erreur, pas un tableau vide), n'appelle aucune
+	// liste, ne demande ni ne lit aucun contact (audit de Rodrigo)
+	for (const t of ['ligam_perfils', 'ligam_contactes', 'ligam_cercles', 'ligam_anoncias', 'ligam_demandas', 'ligam_demandas_jornal', 'ligam_moderacion', 'ligam_blocatges', 'ligam_senhalaments']) {
+		const r = await supabase.from(t).select('*').limit(1);
+		verificar(`Parlar amassa : LIRE ${t} sans compte est refusé`, !!r.error);
+	}
+	const vesins = await supabase.rpc('ligam_vesins', { p_lat: 43.6, p_lon: 3.88, p_km: 200 });
+	verificar('Parlar amassa : LISTER les profils sans compte est refusé', !!vesins.error);
+	const ligamContacte = await supabase.rpc('ligam_contacte', { p_id: 1 });
+	verificar('Parlar amassa : LIRE un contact sans compte est refusé', !!ligamContacte.error);
+	const ligamDemanda = await supabase.rpc('ligam_demandar', { p_a: '00000000-0000-0000-0000-000000000001', p_messatge: 'Essai des verrous' });
+	verificar('Parlar amassa : DEMANDER un contact sans compte est refusé', !!ligamDemanda.error);
+	const ligamDirecte = await supabase.from('ligam_demandas').insert({ de: '00000000-0000-0000-0000-000000000001', a: '00000000-0000-0000-0000-000000000002', messatge: 'Essai des verrous' });
+	verificar('Parlar amassa : ÉCRIRE une demande directement est refusé', !!ligamDirecte.error);
+	const blocat = await supabase.rpc('ligam_blocat', { x: '00000000-0000-0000-0000-000000000001', y: '00000000-0000-0000-0000-000000000002' });
+	verificar('Parlar amassa : SAVOIR qui a bloqué qui est refusé', !!blocat.error);
+
 	// La tentative la plus grave : se déclarer administrateur.
 	const promocion = await supabase
 		.from('admins')
