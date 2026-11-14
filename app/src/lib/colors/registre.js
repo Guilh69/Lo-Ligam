@@ -27,6 +27,7 @@ export const GROPS = [
 	{ id: 'cases', nom: 'Cases des rubriques' },
 	{ id: 'jeux', nom: 'Familles de jeux' },
 	{ id: 'puces', nom: 'Salle de jeux : les thèmes' },
+	{ id: 'sala', nom: 'Salle de jeux : titre et confettis' },
 	{ id: 'langues', nom: 'Langues de l’en-tête' },
 	{ id: 'dialectes', nom: 'Carte : l’occitan et ses dialectes' },
 	{ id: 'lengas', nom: 'Carte : les autres langues' },
@@ -61,7 +62,15 @@ const JETONS = [
 	['l-marca', 'Titres des exercices', 'lecons', '#a5342a', '@tema.sorne.t-aur'],
 	['l-teal', 'Personnages et traductions', 'lecons', '@teinte.sarcelle', '#8fcfc6'],
 	['l-bon', 'Bravo', 'lecons', '@role.BOUTONS.juste', '#b8d27c'],
-	['l-carta', 'Carte de l’exercice', 'lecons', '#ffffff', null]
+	['l-carta', 'Carte de l’exercice', 'lecons', '#ffffff', null],
+	['sala-1', 'Rouge (titre et confettis)', 'sala', '#d42a1e', '#ff5a4a'],
+	['sala-2', 'Or (titre et confettis)', 'sala', '#c28100', '#f6b73c'],
+	['sala-3', 'Bleu (titre et confettis)', 'sala', '#1f6fc4', '#5aa9ec'],
+	['sala-4', 'Vert (titre et confettis)', 'sala', '#4c8a1f', '#9ccc4e'],
+	['sala-5', 'Violet (titre et confettis)', 'sala', '#9a3d8c', '#d07fc4'],
+	['sala-6', 'Orange (titre et confettis)', 'sala', '#e0531a', '#ff7a3d'],
+	['sala-7', 'Turquoise (titre et confettis)', 'sala', '#0f8a85', '#3cc4b8'],
+	['sala-8', 'Orange clair (confettis)', 'sala', '#e8892f', '#f4a261']
 ];
 // les jetons communs aux deux thèmes : [variable, nom, groupe, valeur]
 const COMUNS = [

@@ -15,7 +15,7 @@
 	import Illustracion from './Illustracion.svelte';
 	import Emblema from './Emblema.svelte';
 	import MencionIA from '$lib/components/MencionIA.svelte';
-	import { TEINTES, PUCES } from '$lib/styles/palette.js';
+	import { PUCES } from '$lib/styles/palette.js';
 	import { onMount } from 'svelte';
 
 	const T = {
@@ -35,12 +35,13 @@
 
 	// La pièce de chaque puce « Fa trabalhar » : une couleur par thème (palette.js, PUCES ; Romain, 2026-11-07)
 	const puce = (id) => (PUCES[id] ? `--pc-fons: ${PUCES[id][0]}; --pc-tinta: ${PUCES[id][1]};` : undefined);
-	// Le titre : une couleur de la palette par lettre (l'or passe par --t-aur-gros pour se lire sur le clair)
-	const COULEURS_TITRE = [TEINTES.rougeAction, 'var(--t-aur-gros)', TEINTES.bleu, TEINTES.olive, TEINTES.prune, TEINTES.brique, TEINTES.sarcelle];
+	// Le titre : une couleur vive par lettre, une suite par thème (app.css, --sala-1 à 8 ; réglables
+	// dans « Colors », Romain 2026-11-14 : « plus éclatant » et « me donner la possibilité de modifier »)
+	const COULEURS_TITRE = [1, 2, 3, 4, 5, 6, 7].map((n) => `var(--sala-${n})`);
 	// Les confettis (option A de Romain, 2026-11-07) : des pièces de papier découpé, semées une fois pour
 	// toutes (même suite à chaque chargement, donc rien ne change entre serveur et navigateur), autour
 	// du titre et dans les marges ; elles restent derrière le contenu et bougent à peine
-	const TEINTES_CONFETIS = [TEINTES.rougeAction, TEINTES.or, TEINTES.bleu, TEINTES.olive, TEINTES.prune, TEINTES.brique, TEINTES.sarcelle, TEINTES.orangeClair];
+	const TEINTES_CONFETIS = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `var(--sala-${n})`);
 	const FORMES = ['rond', 'carre', 'triangle', 'demi', 'carre'];
 	const ZONES = ['h', 'g', 'd', 'h', 'g', 'd', 'h']; // h : bandeau du titre, g : marge gauche, d : marge droite
 	let confetisEl;
@@ -339,10 +340,6 @@
 		color: var(--c, var(--t-tinta));
 		animation: onda-titol 3.6s ease-in-out infinite;
 		animation-delay: calc(var(--i) * 80ms);
-	}
-	/* en sombre, les teintes foncées de la palette s'éclaircissent pour se lire sur le fond */
-	:global(:root[data-tema='sorne']) .titol span {
-		color: color-mix(in oklab, var(--c, var(--t-tinta)), #fff 42%);
 	}
 	/* ── les confettis : du papier découpé posé derrière le titre et dans les marges ── */
 	.sala > :not(.confetis) {
