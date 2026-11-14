@@ -111,9 +111,31 @@ create table if not exists public.ligam_demandas (
 create index if not exists ligam_demandas_de on public.ligam_demandas (de, created_at);
 create index if not exists ligam_demandas_a on public.ligam_demandas (a);
 create index if not exists ligam_demandas_cercle on public.ligam_demandas (cercle_id);
--- Une seule demande vivante par paire (et par cercle)
-create unique index if not exists ligam_demandas_viva on public.ligam_demandas (de, a, coalesce(cercle_id, 0))
+-- Une seule demande vivante par paire, dans les deux sens (et par cercle)
+drop index if exists public.ligam_demandas_viva;
+create unique index ligam_demandas_viva on public.ligam_demandas (least(de, a), greatest(de, a), coalesce(cercle_id, 0))
 	where estat in ('espèra', 'acceptada');
+
+-- Journal des demandes, indépendant du profil : supprimer puis recréer son
+-- profil ne remet pas le compteur à zéro (audit de Rodrigo, 14-11). Personne
+-- ne le lit ni ne l'écrit directement ; effacé au bout de 90 jours.
+create table if not exists public.ligam_demandas_jornal (
+	id bigint generated always as identity primary key,
+	de uuid not null references auth.users (id) on delete cascade,
+	a uuid not null,
+	refusada boolean not null default false,
+	created_at timestamptz not null default now()
+);
+create index if not exists ligam_demandas_jornal_de on public.ligam_demandas_jornal (de, created_at);
+
+-- Profils masqués par la modération (trois signalements) : seulement de
+-- Parlar amassa, pas une suspension de tout le site ; Romain lève en
+-- supprimant la ligne. Personne d'autre n'y touche.
+create table if not exists public.ligam_moderacion (
+	user_id uuid primary key references auth.users (id) on delete cascade,
+	motiu text not null,
+	created_at timestamptz not null default now()
+);
 
 create table if not exists public.ligam_blocatges (
 	de uuid not null default auth.uid () references auth.users (id) on delete cascade,
@@ -177,8 +199,17 @@ set
 	end;
 $$;
 
-revoke all on function public.ligam_blocat (uuid, uuid) from public, anon;
-revoke all on function public.ligam_pot_agir () from public, anon;
+-- Profil masqué par la modération
+create or replace function public.ligam_amagat (x uuid) returns boolean language sql stable security definer
+set
+	search_path = '' as $$
+	select exists (select 1 from public.ligam_moderacion where user_id = x);
+$$;
+
+-- Ces trois-là ne servent qu'à l'intérieur des autres fonctions : personne ne
+-- les appelle (sinon ligam_blocat dirait qui a bloqué qui)
+revoke all on function public.ligam_blocat (uuid, uuid), public.ligam_pot_agir (), public.ligam_amagat (uuid)
+	from public, anon, authenticated;
 
 
 -- 2) LES DÉCLENCHEURS : arrondir, filtrer les mots, compter les signalements
@@ -193,6 +224,14 @@ begin
 	end if;
 	if tg_op = 'UPDATE' and new.user_id <> old.user_id then
 		raise exception 'ligam_interdit';
+	end if;
+	-- dates tenues par la base, pas par le navigateur
+	if tg_op = 'INSERT' then
+		new.created_at := now();
+		new.darriera_vista := now();
+	else
+		new.created_at := old.created_at;
+		new.darriera_vista := least(new.darriera_vista, now());
 	end if;
 	new.lat := round(new.lat, 2);
 	new.lon := round(new.lon, 2);
@@ -233,8 +272,11 @@ begin
 	if tg_op = 'UPDATE' and new.user_id <> old.user_id then
 		raise exception 'ligam_interdit';
 	end if;
-	if tg_op = 'INSERT' and (select count(*) from public.ligam_cercles where user_id = new.user_id) >= 3 then
-		raise exception 'ligam_limit';
+	if tg_op = 'INSERT' then
+		perform pg_advisory_xact_lock(hashtextextended('ligam:' || new.user_id::text, 0));
+		if (select count(*) from public.ligam_cercles where user_id = new.user_id) >= 3 then
+			raise exception 'ligam_limit';
+		end if;
 	end if;
 	new.lat := round(new.lat, 2);
 	new.lon := round(new.lon, 2);
@@ -259,6 +301,7 @@ begin
 		raise exception 'ligam_interdit';
 	end if;
 	if tg_op = 'INSERT' then
+		perform pg_advisory_xact_lock(hashtextextended('ligam:' || new.user_id::text, 0));
 		if (select count(*) from public.ligam_anoncias where user_id = new.user_id and expira > now()) >= 2 then
 			raise exception 'ligam_limit';
 		end if;
@@ -275,17 +318,44 @@ drop trigger if exists ligam_abans_anoncia on public.ligam_anoncias;
 create trigger ligam_abans_anoncia before insert or update on public.ligam_anoncias
 	for each row execute function public.ligam_abans_anoncia ();
 
--- Trois signalements non traités de trois personnes : suspension en attente
--- d'examen (fins = null), sauf si une suspension existe déjà
+-- Avant un signalement (audit de Rodrigo, 14-11, contre la suspension en
+-- masse par de faux comptes) : pouvoir agir, compte de plus de 7 jours,
+-- cible qui a un profil, trois signalements par jour au plus
+create or replace function public.ligam_abans_senhalament () returns trigger language plpgsql security definer
+set
+	search_path = '' as $$
+begin
+	perform pg_advisory_xact_lock(hashtextextended('ligam:' || new.de::text, 0));
+	if not public.ligam_pot_agir () then raise exception 'ligam_verificacion'; end if;
+	if (select created_at from auth.users where id = new.de) > now() - interval '7 days' then
+		raise exception 'ligam_novel';
+	end if;
+	if not exists (select 1 from public.ligam_perfils where user_id = new.a) then
+		raise exception 'ligam_introbable';
+	end if;
+	if (select count(*) from public.ligam_senhalaments where de = new.de and created_at > now() - interval '1 day') >= 3 then
+		raise exception 'ligam_limit';
+	end if;
+	new.created_at := now();
+	new.tractat := false;
+	return new;
+end;
+$$;
+drop trigger if exists ligam_abans_senhalament on public.ligam_senhalaments;
+create trigger ligam_abans_senhalament before insert on public.ligam_senhalaments
+	for each row execute function public.ligam_abans_senhalament ();
+
+-- Trois signalements non traités de trois personnes : le profil disparaît de
+-- Parlar amassa en attendant que Romain regarde. Pas de suspension de tout le
+-- site (un abus ne doit pas couper quelqu'un de ses leçons).
 create or replace function public.ligam_apres_senhalament () returns trigger language plpgsql security definer
 set
 	search_path = '' as $$
 begin
 	if (select count(*) from public.ligam_senhalaments where a = new.a and not tractat) >= 3 then
-		insert into public.bandiments (user_id, fins, motiu)
-		values (new.a, null, 'Suspendut : tres senhalaments sus Parlar amassa, en espèra d''examen.')
+		insert into public.ligam_moderacion (user_id, motiu)
+		values (new.a, 'Tres senhalaments, en espèra d''examen.')
 		on conflict (user_id) do nothing;
-		update public.ligam_perfils set visible = false where user_id = new.a;
 	end if;
 	return new;
 end;
@@ -295,7 +365,7 @@ create trigger ligam_apres_senhalament after insert on public.ligam_senhalaments
 	for each row execute function public.ligam_apres_senhalament ();
 
 revoke all on function public.ligam_abans_perfil (), public.ligam_abans_contacte (), public.ligam_abans_cercle (),
-	public.ligam_abans_anoncia (), public.ligam_apres_senhalament () from public, anon, authenticated;
+	public.ligam_abans_anoncia (), public.ligam_abans_senhalament (), public.ligam_apres_senhalament () from public, anon, authenticated;
 
 
 -- 3) LES RÈGLES D'ACCÈS (RLS)
@@ -308,10 +378,19 @@ alter table public.ligam_anoncias enable row level security;
 alter table public.ligam_demandas enable row level security;
 alter table public.ligam_blocatges enable row level security;
 alter table public.ligam_senhalaments enable row level security;
+alter table public.ligam_demandas_jornal enable row level security;
+alter table public.ligam_moderacion enable row level security;
 
 -- Personne sans compte n'a rien à faire ici
 revoke all on public.ligam_perfils, public.ligam_contactes, public.ligam_cercles, public.ligam_anoncias,
 	public.ligam_demandas, public.ligam_blocatges, public.ligam_senhalaments from anon;
+-- Journal et modération : aucune règle, donc aucun accès direct ; l'admin
+-- lit la modération et la lève (supprimer la ligne)
+revoke all on public.ligam_demandas_jornal, public.ligam_moderacion from anon, authenticated;
+drop policy if exists "ligam_moderacion : l'admin" on public.ligam_moderacion;
+create policy "ligam_moderacion : l'admin" on public.ligam_moderacion for all to authenticated
+	using ((select public.is_admin ())) with check ((select public.is_admin ()));
+grant select, delete on public.ligam_moderacion to authenticated;
 
 -- Profils : chacun lit et gère le sien ; les autres passent par ligam_vesins
 drop policy if exists "ligam_perfils : le sien, ou tout si admin" on public.ligam_perfils;
@@ -404,11 +483,12 @@ returns table (user_id uuid, pseudo text, rotle text, comuna text, km integer, i
 language sql stable security definer
 set
 	search_path = '' as $$
-	select p.user_id, pr.pseudo, p.rotle, p.comuna, public.ligam_km (p_lat, p_lon, p.lat, p.lon), p.interesses, p.presentacion, public.ligam_vist (p.darriera_vista)
+	select p.user_id, pr.pseudo, p.rotle, p.comuna, (public.ligam_km (p_lat, p_lon, p.lat, p.lon) / 5) * 5, p.interesses, p.presentacion, public.ligam_vist (p.darriera_vista)
 	from public.ligam_perfils p
 	join public.profiles pr on pr.user_id = p.user_id
-	where auth.uid () is not null
+	where public.ligam_pot_agir ()
 		and p.visible
+		and not public.ligam_amagat (p.user_id)
 		and p.user_id <> auth.uid ()
 		and not exists (select 1 from public.bandiments b where b.user_id = p.user_id and (b.fins is null or b.fins > now()))
 		and not public.ligam_blocat (auth.uid (), p.user_id)
@@ -424,13 +504,14 @@ returns table (id bigint, user_id uuid, pseudo text, rotle text, comuna text, km
 language sql stable security definer
 set
 	search_path = '' as $$
-	select a.id, a.user_id, pr.pseudo, p.rotle, p.comuna, public.ligam_km (p_lat, p_lon, p.lat, p.lon), a.texte, a.created_at
+	select a.id, a.user_id, pr.pseudo, p.rotle, p.comuna, (public.ligam_km (p_lat, p_lon, p.lat, p.lon) / 5) * 5, a.texte, a.created_at
 	from public.ligam_anoncias a
 	join public.ligam_perfils p on p.user_id = a.user_id
 	join public.profiles pr on pr.user_id = a.user_id
-	where auth.uid () is not null
+	where public.ligam_pot_agir ()
 		and a.expira > now()
 		and p.visible
+		and not public.ligam_amagat (p.user_id)
 		and not exists (select 1 from public.bandiments b where b.user_id = a.user_id and (b.fins is null or b.fins > now()))
 		and not public.ligam_blocat (auth.uid (), a.user_id)
 		and (p_rotle is null or p.rotle = p_rotle or p.rotle = 'los_dos')
@@ -445,10 +526,11 @@ returns table (id bigint, nom text, comuna text, km integer, luoc text, ritme te
 language sql stable security definer
 set
 	search_path = '' as $$
-	select c.id, c.nom, c.comuna, public.ligam_km (p_lat, p_lon, c.lat, c.lon), c.luoc, c.ritme, c.descripcion, c.interesses, c.membres, c.darriera_rencontra,
+	select c.id, c.nom, c.comuna, (public.ligam_km (p_lat, p_lon, c.lat, c.lon) / 5) * 5, c.luoc, c.ritme, c.descripcion, c.interesses, c.membres, c.darriera_rencontra,
 		coalesce(c.darriera_rencontra > current_date - 90, false)
 	from public.ligam_cercles c
-	where auth.uid () is not null
+	where public.ligam_pot_agir ()
+		and not public.ligam_amagat (c.user_id)
 		and not exists (select 1 from public.bandiments b where b.user_id = c.user_id and (b.fins is null or b.fins > now()))
 		and not public.ligam_blocat (auth.uid (), c.user_id)
 		and (p_interes is null or p_interes = any (c.interesses))
@@ -471,6 +553,7 @@ declare
 	cible uuid := p_a;
 	nou bigint;
 begin
+	perform pg_advisory_xact_lock(hashtextextended('ligam:' || moi::text, 0));
 	if not public.ligam_pot_agir () then raise exception 'ligam_verificacion'; end if;
 	if not exists (select 1 from public.ligam_perfils where user_id = moi) then raise exception 'ligam_sens_perfil'; end if;
 	if not exists (select 1 from public.ligam_contactes where user_id = moi) then raise exception 'ligam_sens_contacte'; end if;
@@ -483,8 +566,13 @@ begin
 		select 1 from public.ligam_perfils p where p.user_id = cible and (p.visible or p_cercle is not null)
 	) or exists (select 1 from public.bandiments b where b.user_id = cible and (b.fins is null or b.fins > now()))
 	then raise exception 'ligam_introbable'; end if;
-	if public.ligam_blocat (moi, cible) then raise exception 'ligam_introbable'; end if;
-	if (select count(*) from public.ligam_demandas where de = moi and created_at > now() - interval '7 days') >= 5 then
+	if public.ligam_blocat (moi, cible) or public.ligam_amagat (cible) then raise exception 'ligam_introbable'; end if;
+	-- refusé il y a moins de 90 jours : pas de nouvelle demande à la même personne
+	if exists (select 1 from public.ligam_demandas_jornal where de = moi and a = cible and refusada and created_at > now() - interval '90 days') then
+		raise exception 'ligam_introbable';
+	end if;
+	-- compté dans le journal, qui survit à la suppression du profil
+	if (select count(*) from public.ligam_demandas_jornal where de = moi and created_at > now() - interval '7 days') >= 5 then
 		raise exception 'ligam_limit';
 	end if;
 	if char_length(btrim(coalesce(p_messatge, ''))) not between 10 and 280 then raise exception 'ligam_messatge'; end if;
@@ -492,6 +580,7 @@ begin
 	insert into public.ligam_demandas (de, a, cercle_id, messatge)
 	values (moi, cible, p_cercle, btrim(p_messatge))
 	returning id into nou;
+	insert into public.ligam_demandas_jornal (de, a) values (moi, cible);
 	update public.ligam_perfils set darriera_vista = now() where user_id = moi;
 	return nou;
 exception
@@ -512,6 +601,11 @@ begin
 	set estat = case when p_accepta then 'acceptada' else 'refusada' end, respondut_at = now()
 	where id = p_id and a = auth.uid () and estat = 'espèra';
 	if not found then raise exception 'ligam_introbable'; end if;
+	if not p_accepta then
+		update public.ligam_demandas_jornal j set refusada = true
+		from public.ligam_demandas d
+		where d.id = p_id and j.de = d.de and j.a = d.a and j.created_at > now() - interval '90 days';
+	end if;
 	update public.ligam_perfils set darriera_vista = now() where user_id = auth.uid ();
 end;
 $$;
@@ -541,6 +635,7 @@ set
 		and d.estat = 'acceptada'
 		and auth.uid () in (d.de, d.a)
 		and not public.es_bandit ()
+		and exists (select 1 from public.ligam_contactes m where m.user_id = auth.uid ())
 		and not public.ligam_blocat (d.de, d.a)
 		and not exists (select 1 from public.bandiments b where b.user_id = c.user_id and (b.fins is null or b.fins > now()));
 $$;
@@ -576,6 +671,7 @@ begin
 	get diagnostics n = row_count;
 	delete from public.ligam_anoncias where expira < now();
 	get diagnostics m = row_count;
+	delete from public.ligam_demandas_jornal where created_at < now() - interval '90 days';
 	return n + m;
 end;
 $$;
