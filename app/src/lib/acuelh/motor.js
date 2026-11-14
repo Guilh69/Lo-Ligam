@@ -78,7 +78,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 
 	/* ================= Defilament doç ================= */
 	let lenis = null;
-	if (!calm) lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95 });
+	if (!calm) lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.95, anchors: true });
 
 	/* ================= Cursor e botons magnetics ================= */
 	let mx = innerWidth * 0.5, my = innerHeight * 0.45, mouVist = false;

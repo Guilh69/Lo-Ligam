@@ -77,6 +77,13 @@
 	let racina;
 	let motor = $state.raw(null);
 	// la note « trois mots » : une fois par visite, après 7 s en haut de l'accueil sans avoir survolé le titre, pendant 6 s
+	// Les trois mots du titre mènent chacun à sa rubrique (01, 02, 03) plus bas
+	// (Romain, 2026-11-14) ; le défilement doux vient de Lenis (anchors). En mode
+	// édition, un clic sert à modifier le mot : on ne saute pas.
+	function sautarRubrica(ev) {
+		if (edicion.actiu) ev.preventDefault();
+	}
+
 	let indiciVist = $state(false);
 	const CLAU_INDICI = 'lo-ligam-indici-tres-mots';
 	function noteIndici() {
@@ -240,9 +247,9 @@
 			</p>
 			<div class="eros-entitol">
 				<h1 class="eros-titol">
-					<span class="linha masc" hidden={amagat('acuelh.eros.titol.1')}><span class="masc-in" style="--i: 1" use:editar={'acuelh.eros.titol.1'}>{@render letras('acuelh.eros.titol.1')}</span></span>
-					<span class="linha masc" hidden={amagat('acuelh.eros.titol.2')}><span class="masc-in" style="--i: 2" use:editar={'acuelh.eros.titol.2'}>{@render letras('acuelh.eros.titol.2')}</span></span>
-					<span class="linha masc" hidden={amagat('acuelh.eros.titol.3')}><span class="masc-in" style="--i: 3" use:editar={'acuelh.eros.titol.3'}>{@render letras('acuelh.eros.titol.3')}</span></span>
+					<span class="linha masc" hidden={amagat('acuelh.eros.titol.1')}><a class="masc-in titol-ligam" href="#parla" style="--i: 1" onclick={sautarRubrica} use:editar={'acuelh.eros.titol.1'}>{@render letras('acuelh.eros.titol.1')}</a></span>
+					<span class="linha masc" hidden={amagat('acuelh.eros.titol.2')}><a class="masc-in titol-ligam" href="#apren" style="--i: 2" onclick={sautarRubrica} use:editar={'acuelh.eros.titol.2'}>{@render letras('acuelh.eros.titol.2')}</a></span>
+					<span class="linha masc" hidden={amagat('acuelh.eros.titol.3')}><a class="masc-in titol-ligam" href="#viu" style="--i: 3" onclick={sautarRubrica} use:editar={'acuelh.eros.titol.3'}>{@render letras('acuelh.eros.titol.3')}</a></span>
 				</h1>
 				<!-- « Passa la mirga suls tres mots » : plus sous le paragraphe ; une note furtive sous le titre, si l'on
 				     s'attarde sans y avoir touché (Romain, 2026-11-12). Toujours visible en mode édition. -->
