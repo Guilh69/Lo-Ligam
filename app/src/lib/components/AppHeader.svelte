@@ -210,8 +210,8 @@
 
 			<!-- L'interrupteur de langue (Romain, 2026-11-14) : Òc et la seconde langue côte à côte, la
 			     langue choisie allumée dans sa couleur (palette.js, LANGUES ; décision du 08-11), l'autre
-			     grisée. Au survol de la seconde langue, un petit globe sort de derrière elle, vers la
-			     droite ; un clic dessus déroule les autres langues (Romain, même jour). -->
+			     grisée ; au bout, une moitié de globe ferme l'objet et déroule les autres langues
+			     (Romain, même jour, après l'essai d'un globe qui sortait au survol : « pas très clair »). -->
 			<div class="lengas" class:en-avant={crida} class:mond-dobert={globeDobert}>
 				<div class="lang-pista" role="group" aria-label={LENGA_ETIQ[lang] ?? LENGA_ETIQ.oc} style={pecaLenga(lang)}>
 					<span class="lang-peça" class:a-drecha={lang !== 'oc'} aria-hidden="true"></span>
@@ -226,10 +226,14 @@
 					aria-controls="globe-panel"
 					title={globeEtiq}
 					onclick={basculaGlobe}>
-					<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-						<circle cx="12" cy="12" r="9.5" />
-						<ellipse cx="12" cy="12" rx="4" ry="9.5" />
-						<path d="M2.5 12h19M4 7.2h16M4 16.8h16" />
+					<!-- la moitié droite d'un globe ; son contour est le filet de l'interrupteur lui-même,
+					     son méridien central le filet qui le sépare de la langue : les lignes y aboutissent -->
+					<svg viewBox="0 0 50 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+						<g class="mond-meridians">
+							<path d="M0 0 A30 50 0 0 1 0 100" />
+							<path d="M0 0 A13 50 0 0 1 0 100" />
+						</g>
+						<path d="M0 50 H50 M0 27 H44.4 M0 73 H44.4" />
 					</svg>
 					<span class="sr-only">{globeEtiq}</span>
 				</button>
@@ -426,25 +430,29 @@
 
 	/* L'interrupteur de langue (Romain, 2026-11-14 ; remplace le bouton uni du 13-11) : la piste Òc |
 	   seconde langue, cernée d'un filet fin, où une pièce de la couleur de la langue choisie glisse sous
-	   le mot allumé (l'autre reste grisé). Le globe attend caché derrière la seconde langue ; une place
-	   lui est gardée à droite, pour que rien ne bouge quand il sort. */
+	   le mot allumé (l'autre reste grisé) ; au bout, la moitié d'un globe dont l'arrondi ferme l'objet.
+	   Un seul trait pour tout : le filet du contour, le méridien qui sépare et les lignes du globe ont la
+	   même couleur (--lenga-filet), si bien que le globe se lit d'un bloc ; tout fonce ensemble au survol
+	   du globe. Hauteur --lh ; le demi-globe fait --lh / 2 de large : un vrai demi-cercle. */
 	.lengas {
 		--lh: 2.2rem;
 		--lc: 2.6rem;
-		--lm: 1.55rem;
+		--lenga-filet: color-mix(in srgb, var(--t-tinta) 26%, transparent);
 		position: relative;
 		display: inline-flex;
-		align-items: center;
+		align-items: stretch;
 		height: var(--lh);
-		padding-right: calc(var(--lm) + 0.3rem);
+		box-sizing: border-box;
+		border: 1px solid var(--lenga-filet);
+		border-radius: 8px calc(var(--lh) / 2) calc(var(--lh) / 2) 8px;
+		transition: border-color 0.3s ease;
+	}
+	.lengas:has(.lang-mond:hover),
+	.lengas.mond-dobert {
+		--lenga-filet: color-mix(in srgb, var(--t-tinta) 55%, transparent);
 	}
 	.lang-pista {
 		position: relative;
-		z-index: 1;
-		height: 100%;
-		box-sizing: border-box;
-		border: 1px solid var(--t-linha);
-		border-radius: 8px;
 		display: grid;
 		grid-template-columns: var(--lc) var(--lc);
 		padding: 3px;
@@ -487,44 +495,31 @@
 		cursor: default;
 	}
 
-	/* Le globe : un trait fin de la couleur du texte, sans fond ni cadre. Caché derrière la seconde
-	   langue, il en sort en roulant vers la droite au survol de celle-ci (ou au clavier), reste là tant
-	   qu'on le survole ou que la liste est ouverte, et rentre doucement après un court délai. */
+	/* Le demi-globe : bord gauche = méridien central, bord droit = l'arrondi du contour */
 	.lang-mond {
-		position: absolute;
-		top: 50%;
-		right: 0;
-		z-index: 0;
+		position: relative;
+		flex: none;
 		box-sizing: border-box;
 		min-width: 0;
 		min-height: 0;
-		width: var(--lm);
-		height: var(--lm);
-		margin: calc(var(--lm) / -2) 0 0;
+		width: calc(var(--lh) / 2);
+		margin: 0;
 		padding: 0;
 		border: 0;
-		border-radius: 50%;
+		border-left: 1px solid var(--lenga-filet);
+		border-radius: 0 calc(var(--lh) / 2) calc(var(--lh) / 2) 0;
 		background: transparent;
-		color: var(--t-tinta-2);
+		color: var(--lenga-filet);
 		cursor: pointer;
-		opacity: 0;
-		visibility: hidden;
-		translate: -1.6rem 0;
-		rotate: -80deg;
-		scale: 0.7;
 		transition:
-			translate 0.45s cubic-bezier(0.65, 0, 0.25, 1) 0.35s,
-			rotate 0.45s cubic-bezier(0.65, 0, 0.25, 1) 0.35s,
-			scale 0.45s cubic-bezier(0.65, 0, 0.25, 1) 0.35s,
-			opacity 0.3s ease 0.4s,
-			visibility 0s linear 0.75s,
-			color 0.25s ease;
+			border-color 0.3s ease,
+			color 0.3s ease;
 	}
-	/* la zone qu'on peut viser déborde du dessin (cible d'au moins 32 px) et fait le pont avec la langue */
+	/* la zone qu'on peut viser déborde un peu du dessin, à droite et en hauteur */
 	.lang-mond::before {
 		content: '';
 		position: absolute;
-		inset: -0.35rem -0.25rem -0.35rem -0.6rem;
+		inset: -5px -8px -5px 0;
 	}
 	.lang-mond svg {
 		position: absolute;
@@ -533,40 +528,20 @@
 		height: 100%;
 		fill: none;
 		stroke: currentColor;
-		stroke-width: 1.15;
-		stroke-linecap: round;
+		stroke-width: 1;
+		overflow: visible;
 	}
-	.lengas:has(.segonda:hover) .lang-mond,
-	.lengas:has(.segonda:focus-visible) .lang-mond,
-	.lang-mond:focus-visible,
-	.lang-mond:hover,
-	.lengas.mond-dobert .lang-mond {
-		opacity: 1;
-		visibility: visible;
-		translate: 0 0;
-		rotate: 0deg;
-		scale: 1;
-		transition:
-			translate 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-			rotate 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-			scale 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-			opacity 0.2s ease,
-			visibility 0s,
-			color 0.25s ease;
+	.lang-mond svg path {
+		vector-effect: non-scaling-stroke;
 	}
-	.lang-mond:hover,
-	.lengas.mond-dobert .lang-mond {
-		color: var(--t-tinta);
+	/* au survol, le globe tourne d'un cran : les méridiens glissent vers le bord */
+	.mond-meridians {
+		transform-origin: 0 50%;
+		transition: transform 0.7s cubic-bezier(0.65, 0, 0.25, 1);
 	}
-	/* Écran tactile : pas de survol, le globe reste sorti */
-	@media (hover: none) {
-		.lang-mond {
-			opacity: 1;
-			visibility: visible;
-			translate: 0 0;
-			rotate: 0deg;
-			scale: 1;
-		}
+	.lang-mond:hover .mond-meridians,
+	.lengas.mond-dobert .mond-meridians {
+		transform: scaleX(1.6);
 	}
 	/* clavier : un anneau de la couleur du texte, qui épouse la forme */
 	.lang-tria:focus-visible {
@@ -580,11 +555,8 @@
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.lang-peça,
-		.lang-mond {
-			transition: opacity 0.2s ease !important;
-			translate: 0 0 !important;
-			rotate: 0deg !important;
-			scale: 1 !important;
+		.mond-meridians {
+			transition: none;
 		}
 	}
 
@@ -785,7 +757,6 @@
 		.top.avec-onglets .lengas {
 			--lh: 2.75rem;
 			--lc: 2.75rem;
-			--lm: 1.9rem;
 		}
 		.top.avec-onglets .globe-panel button {
 			min-height: 2.75rem;
@@ -811,7 +782,7 @@
 
 	/* Première visite : le bouton se met en avant (halo d'or qui bat trois fois,
 	   légende dessous), puis s'efface ; immobile si « réduire les animations » */
-	.lengas.en-avant .lang-pista { border-color: var(--t-aur); box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); animation: lang-crida 1.6s ease-out 3; }
+	.lengas.en-avant { border-color: var(--t-aur); box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); animation: lang-crida 1.6s ease-out 3; }
 	.lang-crida {
 		position: absolute; top: calc(100% + 6px); right: 0; white-space: nowrap;
 		font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--t-aur);
@@ -820,7 +791,7 @@
 	@keyframes lang-crida { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--t-aur) 55%, transparent); } 100% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--t-aur) 0%, transparent); } }
 	@keyframes lang-crida-tèxt { 0%, 8% { opacity: 0; translate: 0 -4px; } 20%, 85% { opacity: 1; translate: 0 0; } 100% { opacity: 0; } }
 	@media (prefers-reduced-motion: reduce) {
-		.lengas.en-avant .lang-pista { animation: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--t-aur) 45%, transparent); }
+		.lengas.en-avant { animation: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--t-aur) 45%, transparent); }
 		.lang-crida { animation: none; }
 	}
 

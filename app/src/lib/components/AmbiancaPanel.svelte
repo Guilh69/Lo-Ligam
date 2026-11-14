@@ -265,9 +265,31 @@
 		margin-bottom: 0.9rem;
 	}
 
+	/* chaque jeton montre son thème (Romain, 14-11) : sombre = encre et blanc,
+	   clair = blanc et encre, système = neutre (le fond du panneau) ; le choisi
+	   se marque par un filet d'or autour, pas par un aplat d'or */
 	.tema button {
 		padding-inline: 0.2rem;
 		font-size: 0.82rem;
+		transform: none;
+		box-shadow: none;
+		border: 1px solid var(--t-linha);
+	}
+	.tema button:nth-child(1) {
+		--pc-fons: var(--p-encre);
+		--pc-tinta: var(--p-creme);
+	}
+	.tema button:nth-child(2) {
+		--pc-fons: var(--p-creme);
+		--pc-tinta: var(--p-encre);
+	}
+	.tema button:nth-child(3) {
+		--pc-fons: transparent;
+		--pc-tinta: var(--t-tinta);
+	}
+	.tema button[aria-pressed='true'] {
+		outline: 2px solid var(--t-aur);
+		outline-offset: 2px;
 	}
 
 	.dalt:focus-visible {
