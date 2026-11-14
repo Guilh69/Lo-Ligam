@@ -398,7 +398,7 @@
 		<p>…</p>
 	{:else if !uid && !simular}
 		<h2>{x.titol}</h2>
-		<a class="pc boton" href="/compte?tornar={encodeURIComponent('/compte/perfil')}">{x.connectar}</a>
+		<a class="pc boton" href="/compte">{x.connectar}</a>
 	{:else}
 	<header>
 		<Avatar pseudo={ieu?.pseudo ?? '…'} id={uid ?? ''} size="4rem" />
