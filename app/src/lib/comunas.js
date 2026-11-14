@@ -40,6 +40,31 @@ export function cargarComunas() {
 	return promesa;
 }
 
+// Les coordonnées d'une commune à partir de son nom français et de son
+// département (le profil du compte les garde : ont, ont_dep). Arrondies à deux
+// décimales (environ 1 km), comme partout dans Parlar amassa. Rend
+// { lat, lon } ou null (commune inconnue, hors de France, homonyme sans
+// département : alors la plus peuplée). Ne touche pas à cargarComunas.
+let promesaCoords = null;
+export async function coordsComuna(fr, dep) {
+	if (!fr) return null;
+	promesaCoords ??= fetch('/data/comunas/noms.json')
+		.then((r) => (r.ok ? r.json() : null))
+		.then((d) => d?.c ?? [])
+		.catch(() => []);
+	const lista = await promesaCoords;
+	const n = normC(fr);
+	let mai = null;
+	for (const c of lista) {
+		if (normC(c[0]) !== n) continue;
+		if (dep != null && dep !== '' && String(c[5]) !== String(dep)) continue;
+		if (!mai || c[4] > mai[4]) mai = c;
+	}
+	if (!mai) return null;
+	const arr = (x) => Math.round(x * 100) / 100;
+	return { lat: arr(mai[3]), lon: arr(mai[2]) };
+}
+
 // Le reste du monde (New York, Lyon, Alger…) : Photon, déjà permis par la
 // politique de sécurité pour le questionnaire (LocationAutocomplete.svelte).
 // Les noms viennent en français ; en France, le département (tiré du code

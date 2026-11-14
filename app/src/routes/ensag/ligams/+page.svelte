@@ -15,27 +15,19 @@
 	import ComunaCausir from './ComunaCausir.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { session, authReady } from '$lib/authStore';
+	import { coordsComuna } from '$lib/comunas.js';
+	import { AGRADA, CERCA, NIVELS, nomLigne, nomDe } from '$lib/grops/grops.svelte.js';
 
-	// Goûts : [valeur permise par la base, libellé français]
-	const INTERESSES = [
-		['cant', 'chant'],
-		['cosina', 'cuisine'],
-		['istòria', 'histoire'],
-		['ortalha', 'jardin'],
-		['musica', 'musique'],
-		['caminada', 'randonnée'],
-		['rugbi', 'rugby'],
-		['teatre', 'théâtre'],
-		['vinha', 'vigne'],
-		['lectura', 'lecture'],
-		['cinèma', 'cinéma'],
-		['natura', 'nature'],
-		['jòcs', 'jeux'],
-		['dança', 'danse'],
-		['autre', 'autre']
-	];
+	// Goûts, ce qu'on cherche, niveaux : les listes du profil du compte (une seule
+	// source), en français : [valeur, libellé]
+	const enFr = (l) => l.map((x) => [x[0], nomLigne(x, 'fr')]);
+	const INTERESSES = enFr(AGRADA);
 	const NOM_INTERES = Object.fromEntries(INTERESSES);
-	const interesLlibre = (l) => (l || []).map((v) => NOM_INTERES[v] ?? v).join(', ');
+	const libelles = (lista, l) => (l || []).map((v) => nomDe(lista, v, 'fr') ?? v).join(', ');
+	const interesLlibre = (l) => libelles(AGRADA, l);
+	const cercaLlibre = (l) => libelles(CERCA, l);
+	// Le profil du compte se modifie là (la page sera déplacée plus tard)
+	const URL_PROFIL = '/grops/perfil';
 
 	const CONTACTES = [
 		['whatsapp', 'WhatsApp'],
@@ -64,7 +56,7 @@
 		{ id: 'anoncias', oc: 'Anóncias', fr: 'Annonces', un: 'annonce', unes: 'annonces' },
 		{ id: 'cercles', oc: 'Cercles', fr: 'Groupes', un: 'groupe', unes: 'groupes' },
 		{ id: 'demandas', fr: 'Mes demandes' },
-		{ id: 'perfil', oc: 'Perfil', fr: 'Mon profil' },
+		{ id: 'perfil', fr: 'Parlar amassa et moi' },
 		{ id: 'cossi', oc: 'Mòde d’emplec', fr: 'Mode d’emploi' }
 	];
 	const LISTES = ['personas', 'anoncias', 'cercles'];
@@ -93,7 +85,10 @@
 		const m = `${e?.message ?? ''} ${e?.code ?? ''}`;
 		if (m.includes('ligam_verificacion'))
 			return 'Il faut une adresse e-mail vérifiée et un compte non suspendu pour faire cela.';
-		if (m.includes('ligam_sens_perfil')) return 'Crée d’abord ton profil, dans l’onglet « Mon profil ».';
+		if (m.includes('ligam_perfil_verificat'))
+			return 'Ton profil doit d’abord être validé pour demander un contact. Tu seras visible et pourras écrire dès que ce sera fait.';
+		if (m.includes('ligam_sens_perfil'))
+			return 'Inscris-toi d’abord à Parlar amassa, dans l’onglet « Parlar amassa et moi ».';
 		if (m.includes('ligam_sens_contacte'))
 			return 'Ajoute d’abord un moyen de contact à ton profil. Il n’est montré à l’autre personne qu’après accord.';
 		if (m.includes('ligam_introbable'))
@@ -115,18 +110,23 @@
 		return 'Une erreur est survenue. Réessaie dans un instant.';
 	}
 
-	// ---- Mon profil ----
-	/** @type {any} undefined : pas encore chargé ; null : pas de profil */
+	// ---- Parlar amassa et moi : un seul profil ----
+	// Le profil du compte (table profiles : pseudo, niveau, présentation,
+	// goûts, commune, validation) se lit ici et se modifie ailleurs. Cette
+	// page ne garde que ce qui lui est propre : où chercher, ce qu'on cherche
+	// ici, le contact, la visibilité.
+	/** @type {any} undefined : pas encore chargé ; null : pas de profil de compte */
+	let compte = $state(undefined);
+	/** @type {any} undefined : pas encore chargé ; null : pas inscrit à Parlar amassa */
 	let perfil = $state(undefined);
 	/** @type {any} */
 	let contacte = $state(null);
+	let canviarContacte = $state(false);
 	const FORM_VIDE = () => ({
 		comuna: '',
 		lat: null,
 		lon: null,
-		rotle: '',
-		interesses: [],
-		presentacion: '',
+		cerca: [],
 		visible: true,
 		tipe: 'whatsapp',
 		valor: ''
@@ -135,6 +135,21 @@
 	let form = $state(FORM_VIDE());
 	let enregistre = $state(false);
 	let suppression = $state(false);
+
+	// Où en est le profil du compte
+	let estatCompte = $derived(
+		compte === undefined
+			? 'cargant'
+			: !compte || !compte.nivel
+				? 'manca'
+				: compte.verificacion === 'refusat'
+					? 'refusat'
+					: compte.verificacion === 'verificat'
+						? 'verificat'
+						: 'espera'
+	);
+	let potInscriure = $derived(estatCompte === 'verificat' || estatCompte === 'espera');
+	let contacteDemandat = $derived(!contacte || canviarContacte);
 
 	// Le centre de recherche : la commune du profil par défaut
 	/** @type {any} { nom, lat, lon } */
@@ -149,13 +164,23 @@
 			comuna: perfil.comuna,
 			lat: Number(perfil.lat),
 			lon: Number(perfil.lon),
-			rotle: perfil.rotle,
-			interesses: [...(perfil.interesses ?? [])],
-			presentacion: perfil.presentacion ?? '',
+			cerca: [...(perfil.cerca ?? [])],
 			visible: perfil.visible,
 			tipe: contacte?.tipe ?? 'whatsapp',
 			valor: contacte?.valor ?? ''
 		};
+	}
+
+	// Première inscription : tout vient du compte (commune, ce qu'on cherche)
+	async function remplirDepuisCompte() {
+		form = { ...FORM_VIDE(), cerca: [...(compte?.cerca ?? [])] };
+		if (!compte?.ont) return;
+		const c = await coordsComuna(compte.ont, compte.ont_dep);
+		if (c && !perfil && form.lat == null) {
+			form.comuna = compte.ont;
+			form.lat = c.lat;
+			form.lon = c.lon;
+		}
 	}
 
 	function centrerSurProfil() {
@@ -165,27 +190,30 @@
 	}
 
 	async function cargarPerfil() {
-		const [p, c] = await Promise.all([
+		const [p, c, cp] = await Promise.all([
+			supabase.from('ligam_perfils').select('comuna, lat, lon, cerca, visible').eq('user_id', uid).maybeSingle(),
+			supabase.from('ligam_contactes').select('tipe, valor').eq('user_id', uid).maybeSingle(),
 			supabase
-				.from('ligam_perfils')
-				.select('comuna, lat, lon, rotle, interesses, presentacion, visible')
+				.from('profiles')
+				.select('pseudo, presentacion, ont, ont_dep, nivel, cerca, agrada, verificacion')
 				.eq('user_id', uid)
-				.maybeSingle(),
-			supabase.from('ligam_contactes').select('tipe, valor').eq('user_id', uid).maybeSingle()
+				.maybeSingle()
 		]);
 		if (p.error) {
 			dire(erreur(p.error), false);
 			perfil = null;
 			return;
 		}
+		compte = cp.data ?? null;
 		perfil = p.data ?? null;
 		contacte = c.data ?? null;
+		canviarContacte = false;
 		if (perfil) {
 			remplir();
 			centrerSurProfil();
 			cargarMeves();
 		} else {
-			form = FORM_VIDE();
+			await remplirDepuisCompte();
 		}
 		if (premier) {
 			premier = false;
@@ -198,6 +226,7 @@
 		if (etat === 'ok' && u) untrack(cargarPerfil);
 		else {
 			perfil = undefined;
+			compte = undefined;
 			contacte = null;
 			centre = null;
 		}
@@ -206,10 +235,10 @@
 	async function gardarPerfil(e) {
 		e.preventDefault();
 		dire('');
-		if (form.lat == null) return dire('Choisis ta commune dans la liste proposée.', false);
-		if (!form.rotle) return dire('Dis si tu parles occitan, si tu l’apprends, ou les deux.', false);
-		if (form.interesses.length > 8) return dire('Huit goûts au plus.', false);
-		if (form.valor.trim().length < 3) return dire('Indique un moyen de contact (3 signes au moins).', false);
+		if (!potInscriure) return dire('Complète d’abord ton profil.', false);
+		if (form.lat == null) return dire('Choisis la commune où chercher dans la liste proposée.', false);
+		if (contacteDemandat && form.valor.trim().length < 3)
+			return dire('Indique un moyen de contact (3 signes au moins).', false);
 		enregistre = true;
 		const r1 = await supabase.from('ligam_perfils').upsert(
 			{
@@ -217,9 +246,7 @@
 				comuna: form.comuna,
 				lat: form.lat,
 				lon: form.lon,
-				rotle: form.rotle,
-				interesses: form.interesses,
-				presentacion: form.presentacion.trim() || null,
+				cerca: form.cerca,
 				visible: form.visible
 			},
 			{ onConflict: 'user_id' }
@@ -228,14 +255,25 @@
 			enregistre = false;
 			return dire(erreur(r1.error), false);
 		}
-		const r2 = await supabase
-			.from('ligam_contactes')
-			.upsert({ user_id: uid, tipe: form.tipe, valor: form.valor.trim() }, { onConflict: 'user_id' });
+		if (contacteDemandat) {
+			const r2 = await supabase
+				.from('ligam_contactes')
+				.upsert({ user_id: uid, tipe: form.tipe, valor: form.valor.trim() }, { onConflict: 'user_id' });
+			if (r2.error) {
+				enregistre = false;
+				return dire(erreur(r2.error), false);
+			}
+		}
 		enregistre = false;
-		if (r2.error) return dire(erreur(r2.error), false);
 		const nouveau = !perfil;
 		await cargarPerfil();
-		dire(nouveau ? 'Profil créé. Tu peux maintenant chercher des personnes près de chez toi.' : 'Profil enregistré.');
+		dire(
+			nouveau
+				? estatCompte === 'verificat'
+					? 'Inscription enregistrée. Tu peux maintenant chercher des personnes près de chez toi.'
+					: 'Inscription enregistrée. Tu apparaîtras dans les listes une fois ton profil validé.'
+				: 'Enregistré.'
+		);
 		if (nouveau) vista = 'personas';
 	}
 
@@ -246,12 +284,12 @@
 		perfil = null;
 		contacte = null;
 		centre = null;
-		form = FORM_VIDE();
 		llistas = { personas: [], anoncias: [], cercles: [] };
 		meves = [];
 		mesAnoncias = [];
 		mesCercles = [];
-		dire('Ton profil, ton contact, tes annonces, tes groupes et tes demandes sont effacés.');
+		await remplirDepuisCompte();
+		dire('Ton inscription, ton contact, tes annonces, tes groupes et tes demandes sont effacés. Ton profil de compte reste.');
 	}
 
 	// ---- Les listes (RPC) ----
@@ -299,7 +337,7 @@
 		const n = llistas[vista]?.length ?? 0;
 		let f = `${n} ${n > 1 ? v.unes : v.un} à moins de ${distància} km de ${centre.nom}`;
 		if (vista !== 'cercles' && ròtle !== 'tots') f += ròtle === 'parla' ? ', locuteurs' : ', apprenants';
-		if (interès) f += `, autour de : ${NOM_INTERES[interès]}`;
+		if (interès) f += `, autour de : ${NOM_INTERES[interès].toLowerCase()}`;
 		return f;
 	});
 
@@ -695,68 +733,100 @@
 			<p class="nota">Mécanique inspirée de Mintzalagun, programme de conversation du Pays basque.</p>
 		</section>
 	{:else if vista === 'perfil'}
-		<section class="cossi" aria-label="Mon profil">
-			{#if perfil === undefined}
+		<section class="cossi" aria-label="Parlar amassa et moi">
+			{#if perfil === undefined || estatCompte === 'cargant'}
 				<p class="nota">Chargement…</p>
 			{:else}
-				{#if !perfil}
-					<p class="nota">Tu n’as pas encore de profil. Il te faut une commune, ce que tu es, et un moyen de contact (montré seulement après accord).</p>
+				{#if estatCompte === 'manca'}
+					<p class="nota">
+						Parlar amassa s’appuie sur le profil de ton compte (pseudo, niveau, présentation, goûts), et il n’est pas encore complet.
+						<a href={URL_PROFIL}>Compléter mon profil</a>
+					</p>
+				{:else}
+					<div class="resum">
+						<p class="nom">{compte.pseudo ?? 'Sans pseudo'}</p>
+						<p class="meta">Niveau : {(nomDe(NIVELS, compte.nivel, 'fr') ?? compte.nivel).toLowerCase()}</p>
+						{#if compte.presentacion}<p class="meta presentacion">{compte.presentacion}</p>{/if}
+						{#if compte.agrada?.length}<p class="meta">Goûts : {interesLlibre(compte.agrada)}</p>{/if}
+						<p class="meta">
+							Validation :
+							{#if estatCompte === 'verificat'}profil validé{:else if estatCompte === 'refusat'}profil refusé{:else}en attente de validation{/if}
+							· <a href={URL_PROFIL}>Modifier mon profil</a>
+						</p>
+					</div>
+
+					{#if estatCompte === 'espera'}
+						<p class="nota">Ton profil est en attente de validation. Tu peux t’inscrire dès maintenant : il apparaîtra dans les listes, et tu pourras demander des contacts, une fois validé.</p>
+					{:else if estatCompte === 'refusat'}
+						<p class="nota">Ton profil n’a pas été retenu : l’inscription à Parlar amassa n’est pas ouverte pour l’instant. Tu peux le modifier depuis le lien ci-dessus.</p>
+					{/if}
+
+					{#if potInscriure}
+						<form class="formulari" onsubmit={gardarPerfil}>
+							<div class="camp">
+								<label class="etiq" for="p-comuna">Où chercher</label>
+								<ComunaCausir id="p-comuna" bind:value={form.comuna} onchoose={(c) => { form.comuna = c.nom; form.lat = c.lat; form.lon = c.lon; }} />
+								<span class="comptador esq">
+									{#if form.lat != null}Proposée d’après ton profil, tu peux la changer si tu cherches ailleurs. On ne garde que le centre de la commune ({form.lat} ; {form.lon}), jamais ta position.{:else}Choisis une commune dans la liste proposée.{/if}
+								</span>
+							</div>
+
+							<fieldset class="camp">
+								<legend>Ce que je cherche ici</legend>
+								<div class="cases">
+									{#each CERCA as l (l[0])}
+										<label class="casa">
+											<input
+												type="checkbox"
+												value={l[0]}
+												checked={form.cerca.includes(l[0])}
+												onchange={(e) => {
+													form.cerca = e.currentTarget.checked ? [...form.cerca, l[0]] : form.cerca.filter((x) => x !== l[0]);
+												}}
+											/>
+											<span>{nomLigne(l, 'fr')}</span>
+										</label>
+									{/each}
+								</div>
+							</fieldset>
+
+							<fieldset class="camp">
+								<legend>Mon moyen de contact</legend>
+								{#if contacteDemandat}
+									<div class="doble">
+										<select bind:value={form.tipe} aria-label="Type de contact">
+											{#each CONTACTES as [v, nom] (v)}<option value={v}>{nom}</option>{/each}
+										</select>
+										<input class="texte" type="text" bind:value={form.valor} maxlength="120" aria-label="Numéro ou identifiant" placeholder="Numéro, identifiant ou adresse" autocomplete="off" />
+									</div>
+									<span class="comptador esq">Il n’est montré qu’à une personne dont tu as accepté la demande (ou dont tu as accepté de te voir). Jamais dans les listes.</span>
+								{:else}
+									<p class="meta">{NOM_CONTACTE[contacte.tipe] ?? contacte.tipe} : {contacte.valor}
+										<button class="ligam" type="button" onclick={() => { canviarContacte = true; form.valor = ''; }}>Changer</button>
+									</p>
+								{/if}
+							</fieldset>
+
+							<label class="casa">
+								<input type="checkbox" bind:checked={form.visible} />
+								<span>Je suis visible dans les listes</span>
+							</label>
+
+							<p class="nota">En t’inscrivant, la présentation, le niveau et les goûts de ton profil seront montrés aux autres membres de Parlar amassa.</p>
+
+							<div class="accions">
+								<button class="boton" type="submit" disabled={enregistre}>{perfil ? 'Enregistrer' : 'M’inscrire'}</button>
+							</div>
+						</form>
+					{/if}
 				{/if}
-				<form class="formulari" onsubmit={gardarPerfil}>
-					<div class="camp">
-						<label class="etiq" for="p-comuna">Ma commune</label>
-						<ComunaCausir id="p-comuna" bind:value={form.comuna} onchoose={(c) => { form.comuna = c.nom; form.lat = c.lat; form.lon = c.lon; }} />
-						<span class="comptador esq">
-							{#if form.lat != null}On ne garde que le centre de la commune ({form.lat} ; {form.lon}), jamais ta position.{:else}Choisis une commune dans la liste proposée.{/if}
-						</span>
-					</div>
-
-					<fieldset class="camp">
-						<legend>Je…</legend>
-						<div class="causida colomna">
-							{#each [['parla', 'parle occitan'], ['apren', 'apprends l’occitan'], ['los_dos', 'parle et j’apprends encore']] as [v, nom] (v)}
-								<label class:actiu={form.rotle === v}>
-									<input type="radio" name="p-rotle" value={v} bind:group={form.rotle} />{nom}
-								</label>
-							{/each}
-						</div>
-					</fieldset>
-
-					{@render interets(form)}
-
-					<label class="camp">
-						<span>Présentation (facultatif)</span>
-						<textarea bind:value={form.presentacion} maxlength="280" rows="3" placeholder="Deux phrases sur toi. Pas de coordonnées ici : elles sont visibles de tous."></textarea>
-						<span class="comptador">{form.presentacion.length} / 280</span>
-					</label>
-
-					<label class="casa">
-						<input type="checkbox" bind:checked={form.visible} />
-						<span>Mon profil est visible dans les listes</span>
-					</label>
-
-					<fieldset class="camp">
-						<legend>Mon moyen de contact</legend>
-						<div class="doble">
-							<select bind:value={form.tipe} aria-label="Type de contact">
-								{#each CONTACTES as [v, nom] (v)}<option value={v}>{nom}</option>{/each}
-							</select>
-							<input class="texte" type="text" bind:value={form.valor} maxlength="120" aria-label="Numéro ou identifiant" placeholder="Numéro, identifiant ou adresse" autocomplete="off" />
-						</div>
-						<span class="comptador esq">Il n’est montré qu’à une personne dont tu as accepté la demande (ou dont tu as accepté de te voir). Jamais dans les listes.</span>
-					</fieldset>
-
-					<div class="accions">
-						<button class="boton" type="submit" disabled={enregistre}>{perfil ? 'Enregistrer' : 'Créer mon profil'}</button>
-					</div>
-				</form>
 
 				{#if perfil}
 					<div class="danger">
 						{#if !suppression}
-							<button class="ligam" type="button" onclick={() => (suppression = true)}>Supprimer mon profil</button>
+							<button class="ligam" type="button" onclick={() => (suppression = true)}>Supprimer mon inscription</button>
 						{:else}
-							<p>Supprimer ton profil efface aussi ton contact, tes annonces, tes groupes et tes demandes. C’est définitif. Ton compte Lo Ligam, lui, reste.</p>
+							<p>Supprimer ton inscription efface aussi ton contact, tes annonces, tes groupes et tes demandes. C’est définitif. Ton compte et ton profil Lo Ligam, eux, restent.</p>
 							<div class="accions">
 								<button class="boton" type="button" onclick={suprimirPerfil}>Oui, tout effacer</button>
 								<button class="ligam" type="button" onclick={() => (suppression = false)}>Annuler</button>
@@ -884,7 +954,7 @@
 				<p id="t-resumit" class="resumit">{resumit}</p>
 
 				{#if !perfil && perfil !== undefined}
-					<p class="nota">Tu n’as pas encore de profil : tu peux regarder, mais pas demander de contact. <button class="ligam" type="button" onclick={() => trie('perfil')}>Créer mon profil</button></p>
+					<p class="nota">Tu n’es pas encore inscrit·e à Parlar amassa : tu peux regarder, mais pas demander de contact. <button class="ligam" type="button" onclick={() => trie('perfil')}>M’inscrire</button></p>
 				{/if}
 				{#if erreurLlista}<p class="flash fail" role="alert">{erreurLlista}</p>{/if}
 				{#if centre && !cargantLlistas && !erreurLlista && llistas[vista].length === 0}
@@ -898,8 +968,9 @@
 								<div class="linha">
 									<div class="qui">
 										<span class="nom">{p.pseudo}</span>
-										<span class="meta">{ROTLE[p.rotle]} · {p.comuna}{p.km ? `, ${p.km} km` : ''} · {VIST[p.vist] ?? ''}</span>
-										{#if p.interesses?.length}<span class="meta">{interesLlibre(p.interesses)}</span>{/if}
+										<span class="meta">{(nomDe(NIVELS, p.nivel, 'fr') ?? ROTLE[p.rotle] ?? '').toLowerCase()} · {p.comuna}{p.km ? `, ${p.km} km` : ''} · {VIST[p.vist] ?? ''}</span>
+										{#if p.cerca?.length}<span class="meta">Cherche : {cercaLlibre(p.cerca).toLowerCase()}</span>{/if}
+										{#if p.agrada?.length}<span class="meta">Goûts : {interesLlibre(p.agrada).toLowerCase()}</span>{/if}
 										{#if p.presentacion}<span class="meta presentacion">{p.presentacion}</span>{/if}
 									</div>
 									{@render statutDemanda(p.user_id)}
@@ -955,7 +1026,7 @@
 							</form>
 						{/if}
 					{:else if perfil !== undefined}
-						<p class="nota">Pour déposer une annonce, crée d’abord ton profil.</p>
+						<p class="nota">Pour déposer une annonce, inscris-toi d’abord (onglet « Parlar amassa et moi »).</p>
 					{/if}
 				{:else if vista === 'cercles'}
 					<p class="nota">Des groupes qui se retrouvent en vrai. On voit s’ils sont actifs, puis on demande à les rejoindre ; le reste se passe chez eux.</p>
@@ -1028,7 +1099,7 @@
 							</form>
 						{/if}
 					{:else if perfil !== undefined}
-						<p class="nota">Pour déclarer un groupe, crée d’abord ton profil.</p>
+						<p class="nota">Pour déclarer un groupe, inscris-toi d’abord (onglet « Parlar amassa et moi »).</p>
 					{/if}
 				{/if}
 			</section>
@@ -1515,8 +1586,18 @@
 	.danger p {
 		line-height: 1.5;
 	}
-	.nota a {
+	.nota a,
+	.resum a {
 		color: var(--t-tinta);
+	}
+	.resum {
+		display: grid;
+		gap: var(--esp-8);
+		padding-bottom: var(--esp-16);
+		border-bottom: 1px solid var(--t-linha);
+	}
+	.resum p {
+		margin: 0;
 	}
 	@media (max-width: 520px) {
 		.doble {
