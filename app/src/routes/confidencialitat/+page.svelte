@@ -189,7 +189,7 @@
 				'Una precisión que preferimos decir con claridad: tus datos se almacenan en servidores situados en la Unión Europea, pero la empresa que gestiona la base de datos es estadounidense. Por tanto, las autoridades de Estados Unidos pueden, en derecho, solicitar acceso a ellos (es lo que se llama CLOUD Act). El alojamiento del sitio, en cambio, es francés. Buscamos un proveedor europeo para la base de datos; a día de hoy ninguno reúne la madurez y la compatibilidad necesarias.',
 			cookiesT: 'Rastreadores y almacenamiento',
 			cookies:
-				'Ningún rastreador publicitario, ninguna medición de audiencia. El sitio solo guarda unos pocos ajustes en tu navegador: la lengua y el tema elegidos, tu progreso en las lecciones, tu cuaderno de palabras y el hecho de que ya hayas visto ciertos mensajes de bienvenida. Si has iniciado sesión, tu navegador guarda también tu conexión, y tu progreso y tu cuaderno se guardan además en tu cuenta. Esta información solo sirve para que el sitio funcione, nunca para identificarte ni para seguirte.',
+				'Ningún rastreador publicitario, ninguna medición de audiencia. El sitio solo guarda unos pocos ajustes en tu navegador: la lengua y el tema elegidos, tu progreso en las lecciones, tu cuaderno de palabras y el hecho de que ya hayas visto ciertos mensajes de bienvenida. Si has iniciado sesión, tu navegador guarda también tu sesión, y tu progreso y tu cuaderno se guardan además en tu cuenta. Esta información solo sirve para que el sitio funcione, nunca para identificarte ni para seguirte.',
 			roleBasa: 'base de datos y autenticación',
 			roleAlbergament: 'alojamiento y envío de los mensajes del formulario de contacto',
 			tiersT: 'Recursos cargados desde otros sitios',
@@ -389,7 +389,7 @@
 				'تحمّل بعض الصفحات عناصر مستضافة في مكان آخر، مما ينقل عنوان IP الخاص بك إلى تلك الخدمات: خرائط الأساس (OpenStreetMap ونسختها الأوكسيتانية OSM-bzh، وOpenTopoMap، وصور IGN الجوية، وصور PNOA الإسبانية)، والبحث عن البلديات حين تكتب اسم مكان (API Adresse وPhoton)، والفيديوهات والموسيقى والإذاعات التي تختار تشغيلها (YouTube بوضع بلا ملفات تعريف الارتباط، وDeezer، وCanva، والإذاعات الناطقة بالأوكسيتانية؛ وبالنسبة إلى الموسيقى والإذاعات، تنبّهك جملة قبل ذلك)، وتسجيلات الأطلس الصوتي للغات الجهوية (LISN وUniversité Paris-Saclay) التي تختار الاستماع إليها على الخريطة. أما الخطوط والأيقونات فيقدّمها هذا الموقع نفسه، ولا يُرسَل أي طلب إلى Google.',
 			droitsT: 'حقوقك',
 			droits:
-				'يمكنك في أي وقت طلب الاطّلاع على بياناتك، أو تصحيحها، أو محوها، أو استرجاعها بصيغة مقروءة، أو سحب موافقتك على الإجابات الاختيارية. ويمكنك مراسلتنا على {email}، وسيصلك الرد في غضون شهر.',
+				'يمكنك في أي وقت طلب الاطّلاع على بياناتك، أو تصحيحها، أو محوها، أو استرجاعها بصيغة مقروءة، أو سحب موافقتك على الإجابات الاختيارية. راسلنا على {email}، وسيصلك الرد في غضون شهر.',
 			cnilT: 'في حال عدم الاتفاق',
 			cnil: 'إذا لم تقتنع بأحد الردود، يمكنك اللجوء إلى اللجنة الوطنية للمعلوماتية والحريات (CNIL)‏:'
 		}
