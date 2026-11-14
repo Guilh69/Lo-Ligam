@@ -19,6 +19,7 @@
 	import { onMount, untrack } from 'svelte';
 	import { dessenhDe, dessenhGuida, tintasDe } from './dessenhs.js';
 	import { prepAnim, traçarAnim } from './animacions.js';
+	import { forceDeLaMain } from './survol.js';
 
 	/** mots : [[oc, définition, id, dessin, langue], …] (les deux derniers pour
 	 *  l'explication de première visite : un dessin à elle, la langue choisie) ;
@@ -250,6 +251,7 @@
 		tempsAnim = 0,
 		main = null, // la souris ou le doigt dans la poussière : { x, y, vx, vy, t }
 		tireP = null,
+		elan = 0, // survol à la souris : de 0 à 1 pendant que la volée dure (voir SURVOL_ELAN)
 		toc0 = null; // début d'un toucher ou d'un clic : { x, y, t, bouge }
 
 	// ── Petites animations (Romain, 05-11 : « le tonnerre, faire qu'on sent qu'il
@@ -627,7 +629,11 @@
 
 		const tMain = ara(),
 			vMain = main && tMain - main.t < 0.1 ? Math.hypot(main.vx, main.vy) : 0,
-			forceMain = calme || vMain < 120 ? 0 : Math.min(1.6, vMain / 500) * 5500; // un curseur lent qui passe ne défait pas le mot
+			// au simple survol de la souris, il faut une volée rapide et tenue pour écarter la
+			// poussière ; appuyé (clic, doigt), la main répond tout de suite (voir survol.js)
+			poussee = forceDeLaMain({ vitesse: vMain, appuye: tireP !== null, elan, dt }),
+			forceMain = calme ? 0 : poussee.force;
+		elan = poussee.elan;
 		if (forceMain) idle = 0;
 
 		// au repos (tout est net, rien ne bouge), pas de calcul : chaque grain est à sa place

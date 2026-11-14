@@ -15,6 +15,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join } from 'node:path';
+import { FORMAS_ASSUMIDAS, esAssumida } from '../src/lib/data/formas-assumidas.js';
 
 const racina = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -149,13 +150,10 @@ console.log(`Vérification de ${mots.length} mots contre lo Basic (variété lan
 
 // Formes locales assumées par Romain (charte §2 bis) : hors Basic et vèrb'Òc,
 // mais voulues telles quelles ; on le dit au lieu de les signaler absentes.
-const FORMAS_ASSUMIDAS = {
-	'siès': 'montpelliéranisme assumé pour « tu es » (Romain, 2026-10-22, charte §2 bis)',
-	'uèi': '« aujourd’hui », mot validé par Romain (2026-10-23) : ne plus le signaler'
-};
+// La liste est partagée avec Revirar : src/lib/data/formas-assumidas.js.
 const absents = [];
 for (const mot of mots) {
-	if (FORMAS_ASSUMIDAS[mot]) {
+	if (esAssumida(mot)) {
 		console.log(`  ✓ ${mot}  (forme locale assumée : ${FORMAS_ASSUMIDAS[mot]})`);
 		continue;
 	}

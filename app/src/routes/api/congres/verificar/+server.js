@@ -4,9 +4,10 @@
 //
 //   POST /api/congres/verificar   corps : { mots: ['bonjorn', 'cossí'] }
 //   (en-tête Authorization: Bearer <jeton de session>)
-//   → { estat: 'ok' | 'sens-clau', mots: { bonjorn: 'ok', cossí: 'absent' } }
+//   → { estat: 'ok' | 'sens-clau', mots: { bonjorn: 'ok', uèi: 'assumit', cossí: 'absent' } }
 //
-// 'absent' = lo Basic ne connaît pas ce mot ; 'error' = lo Basic n'a pas répondu.
+// 'absent' = lo Basic ne connaît pas ce mot ; 'assumit' = forme voulue par Romain
+// (liste partagée avec scripts/verificar-oc.mjs) ; 'error' = lo Basic n'a pas répondu.
 // Logique : verificarMots dans $lib/server/congres.js. Rien n'est gardé.
 import { json } from '@sveltejs/kit';
 import { dev } from '$app/environment';

@@ -1,9 +1,13 @@
 import { describe, it, expect, beforeEach } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { decouper, raisonNonCherche, motsACercar, morceaux, memesMots } from './mots.js';
 import { TOUCHES, inserir } from './accents.js';
-import { phraseSuivante, estatMot, resumir, annonce } from './sesilha.js';
+import { phraseSuivante, estatMot, etiquette, resumir, annonce } from './sesilha.js';
 import { verificar, oublier } from './verificacion.js';
 import { FRASAS, TEMAS } from './frasas.js';
+import { FORMAS_ASSUMIDAS, esAssumida } from '../data/formas-assumidas.js';
+import { verificarMots } from '../server/congres.js';
 
 describe('découpage en mots', () => {
 	it('sépare apostrophes, traits d’union et ponctuation', () => {
@@ -26,13 +30,43 @@ describe('découpage en mots', () => {
 		expect(decouper('')).toEqual([]);
 		expect(decouper(null)).toEqual([]);
 	});
-	it('ne cherche pas élisions, mots courts et mots outils ; cherche le reste une fois', () => {
+	it('ne cherche pas élisions, mots courts, mots outils et noms propres ; cherche le reste une fois', () => {
 		const t = decouper('Lo gat e lo gat d’en Pèire dòrm');
-		expect(motsACercar(t)).toEqual(['gat', 'pèire', 'dòrm']);
+		// « Pèire » : majuscule au milieu de la phrase, donc un nom propre (avant : cherché, par erreur possible)
+		expect(motsACercar(t)).toEqual(['gat', 'dòrm']);
 		expect(raisonNonCherche(decouper('d’')[0])).toBe('elision');
 		expect(raisonNonCherche(decouper('lo')[0])).toBe('court');
 		expect(raisonNonCherche(decouper('los')[0])).toBe('outil');
 		expect(raisonNonCherche(decouper('dòrm')[0])).toBe(null);
+	});
+	it('marque le mot qui ouvre une phrase', () => {
+		const t = decouper('Lo gat dòrm. Ont es Tolosa ? « Aquí », ditz el.\nEra bèl');
+		const debut = Object.fromEntries(t.map((x) => [x.brut, x.debut]));
+		expect(debut).toMatchObject({ Lo: true, gat: false, dòrm: false, Ont: true, es: false, Tolosa: false, Aquí: true, ditz: false, Era: true, bèl: false });
+		expect(decouper('')).toEqual([]);
+	});
+	it('un nom propre (majuscule qui n’ouvre pas la phrase) n’est pas cherché : « Tolosa »', () => {
+		const t = decouper('M’agrada Tolosa e Montpelhièr');
+		expect(raisonNonCherche(t.find((x) => x.brut === 'Tolosa'))).toBe('nom-propre');
+		expect(raisonNonCherche(t.find((x) => x.brut === 'Montpelhièr'))).toBe('nom-propre');
+		expect(motsACercar(t)).toEqual(['agrada']);
+	});
+	it('le mot qui ouvre la phrase est cherché, même à majuscule ; une phrase après un point aussi', () => {
+		expect(raisonNonCherche(decouper('Tolosa es bèla')[0])).toBe(null);
+		expect(raisonNonCherche(decouper('Es bèl. Tolosa es bèla')[2])).toBe(null);
+		expect(raisonNonCherche(decouper('— Gràcias, dis Pèire')[0])).toBe(null);
+		expect(motsACercar(decouper('Cossí vas ? Plan, mercé'))).toEqual(['cossí', 'vas', 'plan', 'mercé']);
+	});
+	it('un mot tout en capitales n’est pas pris pour un nom propre, une minuscule non plus', () => {
+		expect(raisonNonCherche(decouper('Vau a TOLOSA')[2])).toBe(null);
+		expect(raisonNonCherche(decouper('Vau a tolosa')[2])).toBe(null);
+		// mais un mot grammatical ou court garde sa raison propre
+		expect(raisonNonCherche(decouper('Dison Los gats')[1])).toBe('outil');
+	});
+	it('les morceaux du modèle portent la même marque que le découpage', () => {
+		const tokens = morceaux('Ont es Tolosa ?').filter((m) => m.token).map((m) => m.token);
+		expect(tokens.map((t) => t.debut)).toEqual([true, false, false]);
+		expect(raisonNonCherche(tokens[2])).toBe('nom-propre');
 	});
 	it('redécoupe la phrase en gardant ponctuation et espaces', () => {
 		const m = morceaux('Ont es l’ostal ?');
@@ -91,21 +125,36 @@ describe('phrase suivante', () => {
 });
 
 describe('état de la correction', () => {
-	const ok = { estat: 'ok', mots: { gat: 'ok', gatz: 'absent', plan: 'error' } };
+	const ok = { estat: 'ok', mots: { gat: 'ok', gatz: 'absent', plan: 'error', uèi: 'assumit' } };
 	it('classe chaque mot', () => {
 		expect(estatMot('court', 'lo', ok)).toBe('pas-cercat');
+		expect(estatMot('nom-propre', 'tolosa', ok)).toBe('pas-cercat');
 		expect(estatMot(null, 'gat', ok)).toBe('confirmat');
+		expect(estatMot(null, 'uèi', ok)).toBe('assumit');
 		expect(estatMot(null, 'gatz', ok)).toBe('inconegut');
 		expect(estatMot(null, 'plan', ok)).toBe('indisponible');
 		expect(estatMot(null, 'gat', { estat: 'sens-clau', mots: {} })).toBe('indisponible');
 		expect(estatMot(null, 'gat', null)).toBe('indisponible');
 	});
+	it('dit pourquoi un nom propre n’est pas cherché, sans toucher aux autres étiquettes', () => {
+		expect(etiquette('pas-cercat', 'nom-propre', 'non cherché')).toBe('non cherché : nom propre');
+		expect(etiquette('pas-cercat', 'court', 'non cherché')).toBe('non cherché');
+		expect(etiquette('inconegut', null, 'non trouvé')).toBe('non trouvé');
+	});
 	it('compte et annonce', () => {
 		const c = resumir(['confirmat', 'confirmat', 'inconegut', 'pas-cercat']);
-		expect(c).toEqual({ confirmat: 2, inconegut: 1, 'pas-cercat': 1, indisponible: 0 });
+		expect(c).toEqual({ confirmat: 2, assumit: 0, inconegut: 1, 'pas-cercat': 1, indisponible: 0 });
 		expect(annonce(c, false)).toContain('2 mots confirmés, 1 mot non trouvé');
 		expect(annonce(c, true)).toContain('identique');
 		expect(annonce(resumir(['indisponible']), false)).toContain('indisponible');
+	});
+	it('une forme assumée est comptée à part, ni confirmée ni inconnue', () => {
+		const c = resumir(['confirmat', 'assumit', 'pas-cercat']);
+		expect(c.assumit).toBe(1);
+		expect(c.inconegut).toBe(0);
+		expect(annonce(c, false)).toContain('1 mot confirmé, 1 forme assumée, 0 mot non trouvé');
+		// avec seulement une forme assumée et un mot indisponible, la vérification n'est pas « indisponible »
+		expect(annonce(resumir(['assumit', 'indisponible']), false)).not.toContain('indisponible.');
 	});
 });
 
@@ -129,5 +178,62 @@ describe('appel de vérification', () => {
 		expect((await verificar(['gat'], '', rep(502, {}))).estat).toBe('error');
 		expect((await verificar(['gat'], '', async () => { throw new Error('réseau'); })).estat).toBe('error');
 		expect((await verificar(['gat'], '', rep(200, { estat: 'sens-clau', mots: {} }))).estat).toBe('sens-clau');
+	});
+});
+
+describe('formes assumées par Romain (uèi, siès) : liste partagée', () => {
+	beforeEach(() => oublier());
+	// lo Basic, faux : il ne connaît ni « uèi » ni « siès », comme le vrai
+	const faus = async (_l, m) => (m === 'gat' ? [{ oc: m, fr: m, var: 'lengadoc' }] : []);
+
+	it('la liste vient d’un seul fichier, que le script de vérification lit aussi', () => {
+		expect(Object.keys(FORMAS_ASSUMIDAS)).toEqual(expect.arrayContaining(['uèi', 'siès']));
+		expect(esAssumida('uèi')).toBe(true);
+		expect(esAssumida('gat')).toBe(false);
+		expect(esAssumida('constructor')).toBe(false);
+		const script = readFileSync(join(process.cwd(), 'scripts', 'verificar-oc.mjs'), 'utf8');
+		expect(script).toContain("from '../src/lib/data/formas-assumidas.js'");
+		expect(script).not.toMatch(/const FORMAS_ASSUMIDAS\s*=/); // plus de copie dans le script
+	});
+
+	it('le serveur rend « assumit » pour « uèi », sans appeler lo Basic ni vèrb’Òc', async () => {
+		const appels = [];
+		const cercar = async (l, m) => (appels.push(m), faus(l, m));
+		const conjugar = async (m) => (appels.push('v:' + m), false);
+		const r = await verificarMots(['uèi', 'siès', 'gat', 'gatz'], cercar, true, conjugar);
+		expect(r).toEqual({ estat: 'ok', mots: { uèi: 'assumit', siès: 'assumit', gat: 'ok', gatz: 'absent' } });
+		expect(appels).not.toContain('uèi');
+		expect(appels).not.toContain('v:uèi');
+		expect(appels).not.toContain('siès');
+	});
+
+	it('de bout en bout : « uèi » n’est plus signalé inconnu, « gatz » l’est toujours', async () => {
+		const f = async (_u, o) => {
+			const { mots } = JSON.parse(o.body);
+			const rep = await verificarMots(mots, faus, true, async () => false);
+			return { status: 200, ok: true, json: async () => rep };
+		};
+		const t = decouper('Uèi lo gat dòrm gatz');
+		const verifs = await verificar(motsACercar(t), 'jeton', f);
+		const estats = Object.fromEntries(t.map((x) => [x.mot, estatMot(raisonNonCherche(x), x.mot, verifs)]));
+		expect(estats.uèi).toBe('assumit');
+		expect(estats.gat).toBe('confirmat');
+		expect(estats.gatz).toBe('inconegut');
+		expect(estats.lo).toBe('pas-cercat');
+	});
+
+	it('« Tolosa » (nom propre) n’est pas envoyé : ni inconnu ni confirmé', async () => {
+		let envoyes = [];
+		const f = async (_u, o) => {
+			envoyes = JSON.parse(o.body).mots;
+			const rep = await verificarMots(envoyes, faus, true, async () => false);
+			return { status: 200, ok: true, json: async () => rep };
+		};
+		const t = decouper('Lo gat dòrm a Tolosa');
+		const verifs = await verificar(motsACercar(t), 'jeton', f);
+		expect(envoyes).not.toContain('tolosa');
+		const tolosa = t.find((x) => x.brut === 'Tolosa');
+		expect(estatMot(raisonNonCherche(tolosa), tolosa.mot, verifs)).toBe('pas-cercat');
+		expect(etiquette('pas-cercat', raisonNonCherche(tolosa), 'non cherché')).toBe('non cherché : nom propre');
 	});
 });
