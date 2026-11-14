@@ -469,8 +469,10 @@ drop policy if exists "ligam_senhalaments : l'admin traite" on public.ligam_senh
 create policy "ligam_senhalaments : l'admin traite" on public.ligam_senhalaments for update to authenticated
 	using ((select public.is_admin ())) with check ((select public.is_admin ()));
 drop policy if exists "ligam_senhalaments : retirer le sien, ou tout si admin" on public.ligam_senhalaments;
-create policy "ligam_senhalaments : retirer le sien, ou tout si admin" on public.ligam_senhalaments for delete to authenticated
-	using (de = (select auth.uid ()) or (select public.is_admin ()));
+drop policy if exists "ligam_senhalaments : l'admin retire" on public.ligam_senhalaments;
+-- (suppression réservée à l'admin : sinon le plafond par jour se contourne)
+create policy "ligam_senhalaments : l'admin retire" on public.ligam_senhalaments for delete to authenticated
+	using ((select public.is_admin ()));
 
 
 -- 4) LES LISTES (jamais de contact, jamais de coordonnées exactes)
@@ -494,7 +496,7 @@ set
 		and not public.ligam_blocat (auth.uid (), p.user_id)
 		and (p_rotle is null or p.rotle = p_rotle or p.rotle = 'los_dos')
 		and (p_interes is null or p_interes = any (p.interesses))
-		and public.ligam_km (p_lat, p_lon, p.lat, p.lon) <= least(greatest(p_km, 1), 200)
+		and public.ligam_km (p_lat, p_lon, p.lat, p.lon) <= (least(greatest(p_km, 5), 200) / 5) * 5
 	order by 5, p.darriera_vista desc
 	limit 100;
 $$;
@@ -516,7 +518,7 @@ set
 		and not public.ligam_blocat (auth.uid (), a.user_id)
 		and (p_rotle is null or p.rotle = p_rotle or p.rotle = 'los_dos')
 		and (p_interes is null or p_interes = any (p.interesses))
-		and public.ligam_km (p_lat, p_lon, p.lat, p.lon) <= least(greatest(p_km, 1), 200)
+		and public.ligam_km (p_lat, p_lon, p.lat, p.lon) <= (least(greatest(p_km, 5), 200) / 5) * 5
 	order by a.created_at desc
 	limit 100;
 $$;
@@ -534,7 +536,7 @@ set
 		and not exists (select 1 from public.bandiments b where b.user_id = c.user_id and (b.fins is null or b.fins > now()))
 		and not public.ligam_blocat (auth.uid (), c.user_id)
 		and (p_interes is null or p_interes = any (c.interesses))
-		and public.ligam_km (p_lat, p_lon, c.lat, c.lon) <= least(greatest(p_km, 1), 200)
+		and public.ligam_km (p_lat, p_lon, c.lat, c.lon) <= (least(greatest(p_km, 5), 200) / 5) * 5
 	order by 4
 	limit 100;
 $$;
@@ -555,6 +557,7 @@ declare
 begin
 	perform pg_advisory_xact_lock(hashtextextended('ligam:' || moi::text, 0));
 	if not public.ligam_pot_agir () then raise exception 'ligam_verificacion'; end if;
+	if public.ligam_amagat (moi) then raise exception 'ligam_verificacion'; end if;
 	if not exists (select 1 from public.ligam_perfils where user_id = moi) then raise exception 'ligam_sens_perfil'; end if;
 	if not exists (select 1 from public.ligam_contactes where user_id = moi) then raise exception 'ligam_sens_contacte'; end if;
 	if p_cercle is not null then
@@ -689,3 +692,17 @@ grant execute on function public.ligam_vesins (numeric, numeric, integer, text, 
 	public.ligam_demandar (uuid, text, bigint), public.ligam_respondre (bigint, boolean),
 	public.ligam_retirar (bigint), public.ligam_contacte (bigint), public.ligam_mas_demandas (),
 	public.purgar_ligams () to authenticated;
+
+-- Lever un masquage (admin) : marquer les signalements traités PUIS retirer
+-- la ligne, sinon le signalement suivant remasquerait aussitôt le profil
+create or replace function public.ligam_levar_moderacion (p_user uuid) returns void language plpgsql security definer
+set
+	search_path = '' as $$
+begin
+	if not public.is_admin () then raise exception 'ligam_interdit'; end if;
+	update public.ligam_senhalaments set tractat = true where a = p_user and not tractat;
+	delete from public.ligam_moderacion where user_id = p_user;
+end;
+$$;
+revoke all on function public.ligam_levar_moderacion (uuid) from public, anon;
+grant execute on function public.ligam_levar_moderacion (uuid) to authenticated;
