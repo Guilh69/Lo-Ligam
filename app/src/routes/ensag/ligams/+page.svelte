@@ -345,12 +345,26 @@
 	}
 	@media (min-width: 900px) {
 		.mesa {
-			grid-template-columns: 15rem minmax(0, 44rem);
+			grid-template-columns: 17rem minmax(0, 44rem);
 		}
+		/* Le panneau des filtres se lit comme un panneau à part (Romain, 14-11 :
+		   « je n'arrivais pas à comprendre si c'était en ligne ou en deux
+		   colonnes ») : fond plâtre, angles droits, et un filet vertical qui
+		   le sépare des résultats sur toute la hauteur. */
 		.filtres {
 			position: sticky;
 			top: 4rem;
 			align-self: start;
+			padding: var(--esp-16) var(--esp-24) var(--esp-24);
+			background: var(--t-fons-2);
+		}
+		.resultats {
+			border-left: 1px solid var(--t-linha);
+			padding-left: var(--esp-48);
+			min-height: 100%;
+		}
+		.mesa {
+			column-gap: var(--esp-48);
 		}
 		.plec {
 			display: none;
