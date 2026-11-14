@@ -691,7 +691,7 @@
 				<li><span class="n">02</span><div><h3>Une demande</h3><p>Tu demandes un contact avec une phrase. L’autre accepte ou non ; sans réponse, rien ne se passe. Cinq demandes par semaine au plus.</p></div></li>
 				<li><span class="n">03</span><div><h3>Un accord</h3><p>S’il ou elle accepte, chacun voit le moyen de contact que l’autre a choisi de montrer. Le site s’arrête là.</p></div></li>
 			</ol>
-			<p class="nota">Signaler ou bloquer à tout moment ; trois signalements suspendent un profil le temps d’un examen. Effacer son profil : un clic. Réservé aux plus de 18 ans.</p>
+			<p class="nota">Signaler ou bloquer à tout moment ; trois signalements retirent un profil de Parlar amassa le temps d’un examen. Effacer son profil : un clic. Réservé aux plus de 18 ans.</p>
 			<p class="nota">Mécanique inspirée de Mintzalagun, programme de conversation du Pays basque.</p>
 		</section>
 	{:else if vista === 'perfil'}
@@ -1157,6 +1157,7 @@
 		text-underline-offset: 0.2em;
 	}
 	h2 {
+		font-family: inherit;
 		margin: 0;
 		font-size: 1.15rem;
 		font-weight: 700;
@@ -1402,6 +1403,8 @@
 	}
 	.cossi h3 {
 		margin: 0 0 var(--esp-4);
+		font-family: inherit;
+		font-weight: 700;
 		font-size: 1.05rem;
 	}
 	.cossi li p {
