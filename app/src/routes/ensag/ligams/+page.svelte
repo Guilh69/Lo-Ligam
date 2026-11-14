@@ -56,7 +56,7 @@
 		{ id: 'anoncias', oc: 'Anóncias', fr: 'Annonces', un: 'annonce', unes: 'annonces' },
 		{ id: 'cercles', oc: 'Cercles', fr: 'Groupes', un: 'groupe', unes: 'groupes' },
 		{ id: 'demandas', fr: 'Mes demandes' },
-		{ id: 'perfil', fr: 'Parlar amassa et moi' },
+		{ id: 'perfil', fr: 'Mon inscription' },
 		{ id: 'cossi', oc: 'Mòde d’emplec', fr: 'Mode d’emploi' }
 	];
 	const LISTES = ['personas', 'anoncias', 'cercles'];
@@ -88,7 +88,7 @@
 		if (m.includes('ligam_perfil_verificat'))
 			return 'Ton profil doit d’abord être validé pour demander un contact. Tu seras visible et pourras écrire dès que ce sera fait.';
 		if (m.includes('ligam_sens_perfil'))
-			return 'Inscris-toi d’abord à Parlar amassa, dans l’onglet « Parlar amassa et moi ».';
+			return 'Inscris-toi d’abord à Parlar amassa, dans l’onglet « Mon inscription ».';
 		if (m.includes('ligam_sens_contacte'))
 			return 'Ajoute d’abord un moyen de contact à ton profil. Il n’est montré à l’autre personne qu’après accord.';
 		if (m.includes('ligam_introbable'))
@@ -110,7 +110,7 @@
 		return 'Une erreur est survenue. Réessaie dans un instant.';
 	}
 
-	// ---- Parlar amassa et moi : un seul profil ----
+	// ---- Mon inscription : un seul profil ----
 	// Le profil du compte (table profiles : pseudo, niveau, présentation,
 	// goûts, commune, validation) se lit ici et se modifie ailleurs. Cette
 	// page ne garde que ce qui lui est propre : où chercher, ce qu'on cherche
@@ -733,7 +733,7 @@
 			<p class="nota">Mécanique inspirée de Mintzalagun, programme de conversation du Pays basque.</p>
 		</section>
 	{:else if vista === 'perfil'}
-		<section class="cossi" aria-label="Parlar amassa et moi">
+		<section class="cossi" aria-label="Mon inscription">
 			{#if perfil === undefined || estatCompte === 'cargant'}
 				<p class="nota">Chargement…</p>
 			{:else}
@@ -1026,7 +1026,7 @@
 							</form>
 						{/if}
 					{:else if perfil !== undefined}
-						<p class="nota">Pour déposer une annonce, inscris-toi d’abord (onglet « Parlar amassa et moi »).</p>
+						<p class="nota">Pour déposer une annonce, inscris-toi d’abord (onglet « Mon inscription »).</p>
 					{/if}
 				{:else if vista === 'cercles'}
 					<p class="nota">Des groupes qui se retrouvent en vrai. On voit s’ils sont actifs, puis on demande à les rejoindre ; le reste se passe chez eux.</p>
@@ -1099,7 +1099,7 @@
 							</form>
 						{/if}
 					{:else if perfil !== undefined}
-						<p class="nota">Pour déclarer un groupe, inscris-toi d’abord (onglet « Parlar amassa et moi »).</p>
+						<p class="nota">Pour déclarer un groupe, inscris-toi d’abord (onglet « Mon inscription »).</p>
 					{/if}
 				{/if}
 			</section>
