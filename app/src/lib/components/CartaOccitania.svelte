@@ -975,7 +975,7 @@
 			comuna: 'O cèrca ta comuna', // (tutoiement, cahier §11 2026-10-22)
 			exemple: 'Rodés, Pau, Agen…',
 			cap: 'Cap de comuna trobada',
-			privat: 'Ta posicion demòra dins ton navegador : es pas mandada endacòm.',
+			privat: 'Ta posicion demòra dins ton navigator : es pas mandada endacòm.',
 			cerca: 'Cerca de ta posicion…',
 			refusada: 'Ta posicion es pas disponibla : cèrca ta comuna.',
 			distancia: (km) => `A ${km} a vòl d’aucèl`,
