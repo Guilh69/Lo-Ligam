@@ -111,7 +111,7 @@
 </svelte:head>
 
 <PaginaSimpla
-	titol="Parlar ensem"
+	titol="Parlar amassa"
 	frasa="Trouver près de chez toi des personnes qui parlent occitan ou qui l’apprennent. Lo Ligam vous présente ; la suite se passe ailleurs, entre vous."
 	parent={{ href: '/amassa', nom: 'Amassa' }}
 >
