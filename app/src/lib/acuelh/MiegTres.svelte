@@ -142,7 +142,7 @@
 
 <section class="mieg" bind:this={racina} aria-label={tria({ oc: 'Las tres rubricas', fr: 'Les trois rubriques', es: 'Las tres secciones', en: 'The three sections', ca: 'Les tres seccions', ar: 'الأقسام الثلاثة' })}>
 		{#each ENTITATS as e, i (e.sec.id)}
-			<section class="sistema-ent" data-revela class:invers={i % 2 === 1} class:sec-camin={e.vis === 'camin'} style="--color: {e.accent}">
+			<section class="sistema-ent" id={e.sec.id} data-revela class:invers={i % 2 === 1} class:sec-camin={e.vis === 'camin'} style="--color: {e.accent}">
 				<div class="sist-cors">
 					<div class="sist-gauche">
 						<div class="sist-cap">

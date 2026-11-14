@@ -251,6 +251,11 @@ html[lang='ar'] .acuelh .bi > .oc { position: absolute; top: 0.06em; inset-inlin
    la ligne, et la langue cachée (« S'apprend. », plus long) doublait la hauteur de
    la ligne sur téléphone, d'où un trou avant « Se viu. » (Romain, 2026-10-16) */
 .acuelh .eros-titol .bi > span { white-space: nowrap; }
+/* Chaque mot du titre mène à sa rubrique (Romain, 2026-11-14) : un lien sans
+   soulignement, la lettre qui s'allume au survol suffit à le signaler */
+.acuelh .eros-titol .titol-ligam { color: inherit; text-decoration: none; }
+.acuelh .eros-titol .titol-ligam:focus-visible { outline: 2px solid var(--t-aur-gros); outline-offset: 0.08em; }
+.acuelh .sistema-ent { scroll-margin-top: 4.5rem; }
 .acuelh .linha:nth-child(3) { --lum-b: var(--t-aur-gros); --lum: var(--crema); }
 .acuelh .eros-titol .letra:not(.espaci) {
 	display: inline-block;
