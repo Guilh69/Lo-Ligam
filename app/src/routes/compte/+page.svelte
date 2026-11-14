@@ -527,7 +527,7 @@
 				<ul class="paginas">
 					<li><a href="/aprene"><span>{x.moduls}</span><Icona nom="suivant" /></a></li>
 					{#if DOBÈRTS || $esAdmin}
-						<li><a href="/grops/perfil"><span>{x.perfil}</span><Icona nom="suivant" /></a></li>
+						<li><a href="/compte/perfil"><span>{x.perfil}</span><Icona nom="suivant" /></a></li>
 					{/if}
 				</ul>
 			</section>

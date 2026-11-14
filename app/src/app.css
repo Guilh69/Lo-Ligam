@@ -180,6 +180,30 @@
 	--l-teal: var(--p-sarcelle);
 	--l-bon: var(--pc-juste); /* avant #55702f, aligné sur l'olive des jeux */
 }
+/* La salle de jeux : les lettres du titre et les confettis (Romain, 2026-11-14 :
+   « un peu ternes… il faudrait que ce soit plus éclatant », et pouvoir les changer
+   lui-même). Des teintes vives, une suite par thème, réglables dans « Colors ». */
+:root,
+:root[data-tema='sorne'] {
+	--sala-1: #ff5a4a;
+	--sala-2: #f6b73c;
+	--sala-3: #5aa9ec;
+	--sala-4: #9ccc4e;
+	--sala-5: #d07fc4;
+	--sala-6: #ff7a3d;
+	--sala-7: #3cc4b8;
+	--sala-8: #f4a261;
+}
+:root[data-tema='clar'] {
+	--sala-1: #d42a1e;
+	--sala-2: #c28100;
+	--sala-3: #1f6fc4;
+	--sala-4: #4c8a1f;
+	--sala-5: #9a3d8c;
+	--sala-6: #e0531a;
+	--sala-7: #0f8a85;
+	--sala-8: #e8892f;
+}
 /* Colors adaptadas al daltonisme : lo terracòta ven blau (se destria de
    l'aur per totes los daltonismes roge-verd), mai de contraste. */
 :root[data-dalt='on'] {

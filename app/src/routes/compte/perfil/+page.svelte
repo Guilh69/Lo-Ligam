@@ -1,4 +1,6 @@
 <script>
+	// Modifier son profil depuis le compte (2026-11-14, les groupes sont retirés : le
+	// profil sert à Parlar amassa). Page autonome : la session vient de authStore.
 	// Son propre profil (2026-10-25) : ce que les autres membres vérifiés
 	// verront, et l'état de sa vérification. Surtout des cases à cocher
 	// (Romain : « flemme d'écrire ») ; le lieu se cherche dans les communes
@@ -10,7 +12,9 @@
 	import Icona from '$lib/components/Icona.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, cargarIeu, nomLigne } from '$lib/grops/grops.svelte.js';
+	import { session, authReady } from '$lib/authStore';
+	import AppHeader from '$lib/components/AppHeader.svelte';
+	import { DIALECTES, NIVELS, CERCA, AGRADA, nomLigne } from '$lib/grops/grops.svelte.js';
 	import { cargarComunas, cercarComunas, cercarMonde, normC, luòcAfichat } from '$lib/comunas.js';
 	import Crotz from '$lib/components/Crotz.svelte';
 	import Avatar from '$lib/grops/Avatar.svelte';
@@ -20,9 +24,10 @@
 	const X = {
 		oc: {
 			titol: 'Mon perfil',
-			tornar: 'Tornar a la lista',
+			connectar: 'Se connectar',
+			tornar: 'Tornar al compte',
 			estats: {
-				en_espèra: 'Ton perfil es en espèra : la moderacion lo legís lèu. Pòdes ja legir los grops.',
+				en_espèra: 'Ton perfil es en espèra : la moderacion lo legís lèu.',
 				verificat: 'Ton perfil es verificat : los autres membres lo veson.',
 				refusat: 'Ton perfil es pas estat acceptat. Pòdes escriure a la moderacion :'
 			},
@@ -40,7 +45,6 @@
 			presentacion_ajuda: 'Çò que vòls : d’ont venes, perqué l’occitan…',
 			enregistrar: 'Enregistrar',
 			enregistrat: 'Enregistrat.',
-			veire: 'Veire mon perfil',
 			questionnaire: 'Per començar, causís un pseudonim.',
 			causir: 'Causir un pseudonim',
 			perfil_mot: 'Un mot es pas possible dins un perfil.',
@@ -49,9 +53,10 @@
 		},
 		fr: {
 			titol: 'Mon profil',
-			tornar: 'Retour à la liste',
+			connectar: 'Se connecter',
+			tornar: 'Retour au compte',
 			estats: {
-				en_espèra: 'Ton profil est en attente : la modération le lit bientôt. Tu peux déjà lire les groupes.',
+				en_espèra: 'Ton profil est en attente : la modération le lit bientôt.',
 				verificat: 'Ton profil est vérifié : les autres membres le voient.',
 				refusat: 'Ton profil n’a pas été accepté. Tu peux écrire à la modération :'
 			},
@@ -69,7 +74,6 @@
 			presentacion_ajuda: 'Ce que tu veux : d’où tu viens, pourquoi l’occitan…',
 			enregistrar: 'Enregistrer',
 			enregistrat: 'Enregistré.',
-			veire: 'Voir mon profil',
 			questionnaire: 'Pour commencer, choisis un pseudo.',
 			causir: 'Choisir un pseudo',
 			perfil_mot: 'Un mot n’est pas possible dans un profil.',
@@ -78,9 +82,10 @@
 		},
 		es: {
 			titol: 'Mi perfil',
-			tornar: 'Volver a la lista',
+			connectar: 'Iniciar sesión',
+			tornar: 'Volver a la cuenta',
 			estats: {
-				en_espèra: 'Tu perfil está pendiente: la moderación lo leerá pronto. Ya puedes leer los grupos.',
+				en_espèra: 'Tu perfil está pendiente: la moderación lo leerá pronto.',
 				verificat: 'Tu perfil está verificado: los demás miembros lo ven.',
 				refusat: 'Tu perfil no ha sido aceptado. Puedes escribir a la moderación:'
 			},
@@ -98,7 +103,6 @@
 			presentacion_ajuda: 'Lo que quieras: de dónde vienes, por qué el occitano…',
 			enregistrar: 'Guardar',
 			enregistrat: 'Guardado.',
-			veire: 'Ver mi perfil',
 			questionnaire: 'Para empezar, elige un seudónimo.',
 			causir: 'Elegir un seudónimo',
 			perfil_mot: 'Una palabra no está permitida en un perfil.',
@@ -107,9 +111,10 @@
 		},
 		en: {
 			titol: 'My profile',
-			tornar: 'Back to the list',
+			connectar: 'Log in',
+			tornar: 'Back to the account',
 			estats: {
-				en_espèra: 'Your profile is pending: the moderators will read it soon. You can already read the groups.',
+				en_espèra: 'Your profile is pending: the moderators will read it soon.',
 				verificat: 'Your profile is verified: other members can see it.',
 				refusat: 'Your profile was not accepted. You can write to the moderators:'
 			},
@@ -127,7 +132,6 @@
 			presentacion_ajuda: 'Whatever you like: where you come from, why Occitan…',
 			enregistrar: 'Save',
 			enregistrat: 'Saved.',
-			veire: 'View my profile',
 			questionnaire: 'To get started, choose a nickname.',
 			causir: 'Choose a nickname',
 			perfil_mot: 'A word isn’t allowed in a profile.',
@@ -136,9 +140,10 @@
 		},
 		ca: {
 			titol: 'El meu perfil',
-			tornar: 'Torna a la llista',
+			connectar: 'Inicia la sessió',
+			tornar: 'Torna al compte',
 			estats: {
-				en_espèra: 'El teu perfil està pendent: la moderació el llegirà aviat. Ja pots llegir els grups.',
+				en_espèra: 'El teu perfil està pendent: la moderació el llegirà aviat.',
 				verificat: 'El teu perfil està verificat: els altres membres el veuen.',
 				refusat: 'El teu perfil no ha estat acceptat. Pots escriure a la moderació:'
 			},
@@ -156,7 +161,6 @@
 			presentacion_ajuda: 'El que vulguis: d’on véns, per què l’occità…',
 			enregistrar: 'Desa',
 			enregistrat: 'Desat.',
-			veire: 'Veure el meu perfil',
 			questionnaire: 'Per començar, tria un pseudònim.',
 			causir: 'Triar un pseudònim',
 			perfil_mot: 'Una paraula no està permesa en un perfil.',
@@ -165,9 +169,10 @@
 		},
 		ar: {
 			titol: 'ملفّي الشخصي',
-			tornar: 'العودة إلى القائمة',
+			connectar: 'تسجيل الدخول',
+			tornar: 'العودة إلى الحساب',
 			estats: {
-				en_espèra: 'ملفّك الشخصي قيد المراجعة: سيقرؤه فريق الإشراف قريبًا. ويمكنك قراءة المجموعات منذ الآن.',
+				en_espèra: 'ملفّك الشخصي قيد المراجعة: سيقرؤه فريق الإشراف قريبًا.',
 				verificat: 'تم التحقّق من ملفّك الشخصي: يراه بقية الأعضاء.',
 				refusat: 'لم يتم قبول ملفّك الشخصي. يمكنك مراسلة فريق الإشراف:'
 			},
@@ -185,7 +190,6 @@
 			presentacion_ajuda: 'ما تشاء: من أين أتيت، ولماذا الأوكسيتانية…',
 			enregistrar: 'حفظ',
 			enregistrat: 'تم الحفظ.',
-			veire: 'عرض ملفّي الشخصي',
 			questionnaire: 'للبدء، يلزم اختيار اسم مستعار.',
 			causir: 'اختيار اسم مستعار',
 			perfil_mot: 'توجد كلمة غير مسموح بها في الملف الشخصي.',
@@ -194,6 +198,14 @@
 		}
 	};
 	let x = $derived(X[langStore.current] ?? X.oc);
+
+	let uid = $derived($session?.user?.id ?? null);
+	// son pseudo et l'état de sa vérification
+	let ieu = $state(null);
+	async function cargarIeu() {
+		const { data } = await supabase.from('profiles').select('pseudo, verificacion').eq('user_id', uid).maybeSingle();
+		ieu = data;
+	}
 
 	let cargat = $state(false);
 	let existís = $state(false);
@@ -220,14 +232,15 @@
 	const simular = browser && import.meta.env.DEV && new URLSearchParams(location.search).has('simular');
 
 	$effect(() => {
-		if (!grops.uid) {
+		if (!uid) {
 			if (simular) existís = cargat = true;
 			return;
 		}
+		cargarIeu();
 		supabase
 			.from('profiles')
 			.select('presentacion, ont, ont_oc, ont_dep, ont_pais, ont_occitania, dialecte, nivel, cerca, agrada')
-			.eq('user_id', grops.uid)
+			.eq('user_id', uid)
 			.maybeSingle()
 			.then(({ data }) => {
 				existís = !!data;
@@ -337,7 +350,7 @@
 				cerca: cerca.length ? cerca : null,
 				agrada: agrada.length ? agrada : null
 			})
-			.eq('user_id', grops.uid);
+			.eq('user_id', uid);
 		enregistrant = false;
 		if (err) error = /perfil_mot|perfil_ligam/.exec(err.message)?.[0] ?? 'error';
 		else {
@@ -377,20 +390,28 @@
 	</fieldset>
 {/snippet}
 
-<div class="perfil">
-	<a class="tornar" href="/grops" aria-label={x.tornar}><Icona nom="revenir" size="1.4em" /></a>
+<div class="pagina">
+	<div class="capçal"><AppHeader /></div>
+<main class="perfil">
+	<a class="tornar" href="/compte" aria-label={x.tornar}><Icona nom="revenir" size="1.4em" /></a>
+	{#if !$authReady}
+		<p>…</p>
+	{:else if !uid && !simular}
+		<h2>{x.titol}</h2>
+		<a class="pc boton" href="/compte">{x.connectar}</a>
+	{:else}
 	<header>
-		<Avatar pseudo={grops.ieu?.pseudo ?? '…'} id={grops.uid ?? ''} size="4rem" />
+		<Avatar pseudo={ieu?.pseudo ?? '…'} id={uid ?? ''} size="4rem" />
 		<div>
 			<h2>{x.titol}</h2>
-			{#if grops.ieu}<p class="pseudo">{grops.ieu.pseudo}</p>{/if}
+			{#if ieu}<p class="pseudo">{ieu.pseudo}</p>{/if}
 		</div>
 	</header>
 
-	{#if grops.ieu}
-		<p class="estat estat-{grops.ieu.verificacion}" role="status">
-			{x.estats[grops.ieu.verificacion]}
-			{#if grops.ieu.verificacion === 'refusat'}<a href="/contacte">{x.contacte}</a>{/if}
+	{#if ieu}
+		<p class="estat estat-{ieu.verificacion}" role="status">
+			{x.estats[ieu.verificacion]}
+			{#if ieu.verificacion === 'refusat'}<a href="/contacte">{x.contacte}</a>{/if}
 		</p>
 	{/if}
 
@@ -464,36 +485,45 @@
 			</label>
 			<div class="accions">
 				<button type="submit" class="pc boton" disabled={enregistrant}>{enregistrant ? '…' : x.enregistrar}</button>
-				{#if grops.ieu?.verificacion === 'verificat'}
-					<a class="secondari" href="/grops/perfil/{encodeURIComponent(grops.ieu.pseudo)}">{x.veire}</a>
-				{/if}
 			</div>
 			{#if error}<p class="error" role="alert">{x[error]}</p>{/if}
 			{#if enregistrat}<p class="mercé" role="status">{x.enregistrat}</p>{/if}
 		</form>
 	{/if}
+	{/if}
+</main>
 </div>
 
 <style>
+	.pagina {
+		--marge: clamp(1rem, 4vw, 3.4rem);
+		min-height: 100vh;
+		color: var(--t-tinta);
+		background: var(--t-fons);
+		overflow-x: clip;
+	}
+	.capçal {
+		padding: 1.3rem var(--marge);
+	}
+	.capçal :global(.top) {
+		max-width: none;
+	}
 	.perfil {
 		display: grid;
 		align-content: start;
 		gap: var(--esp-24);
-		max-width: 38rem;
-		padding: var(--esp-24);
+		max-width: calc(38rem + 2 * var(--marge));
+		margin: 0 auto;
+		padding: clamp(1rem, 4vh, 3rem) var(--marge) var(--esp-96);
 	}
 	.tornar {
-		display: none;
+		display: grid;
+		justify-self: start;
 		place-items: center;
 		width: 44px;
 		height: 44px;
 		margin: -0.5rem 0 -1rem -0.6rem;
 		color: inherit;
-	}
-	@container cadre (width < 46rem) {
-		.tornar {
-			display: grid;
-		}
 	}
 	header {
 		display: flex;
@@ -584,7 +614,7 @@
 		min-height: 40px;
 		padding: 0.3rem 0.9rem;
 		border: 1px solid var(--t-linha);
-		border-radius: 999px;
+		border-radius: 4px;
 		cursor: pointer;
 	}
 	.chip:has(input:checked) {
@@ -670,19 +700,6 @@
 		font: 700 1rem/1 var(--font-body);
 	}
 
-	.secondari {
-		display: inline-flex;
-		align-items: center;
-		min-height: 40px;
-		padding: 0.4rem 0.9rem;
-		border: 1px solid var(--t-linha);
-		border-radius: 999px;
-		color: inherit;
-		text-decoration: none;
-	}
-	.secondari:hover {
-		border-color: var(--t-aur);
-	}
 	.error {
 		margin: 0;
 		padding-left: var(--esp-12);
@@ -699,7 +716,6 @@
 	input:focus-visible,
 	select:focus-visible,
 	.boton:focus-visible,
-	.secondari:focus-visible,
 	.estat a:focus-visible {
 		outline: 3px solid var(--t-aur);
 		outline-offset: 2px;
