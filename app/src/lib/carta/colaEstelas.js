@@ -2490,12 +2490,19 @@ export function crearColaEstelas(L, { clar = false, dalt = false, lang = 'oc', o
 					const tx = px + (dreta ? 16 : -16);
 					cx.textAlign = dreta ? 'left' : 'right';
 					cx.strokeStyle = T.liser;
-					cx.font = polissaVila(p.renc, 23);
-					const wN = cx.measureText(p.nom).width + 10,
+					// (le nom survolé garde le style de son nom sur la carte : police,
+					// espacement, capitales et liseré ; sans le liseré, un nom gras
+					// devenait fin sous la souris, retour de Romain du 2026-11-15)
+					const tn = aplicarVila(cx, p.renc, 23, p.nom);
+					const wN = cx.measureText(tn).width + 10,
 						bas = py + (p.sobrenom ? 52 : 30);
 					caixa = dreta ? [px - 12, py - 24, tx + wN, bas] : [tx - wN, py - 24, px + 12, bas];
+					cx.lineJoin = 'round';
+					cx.lineWidth = 2.2 + 23 * 0.12;
+					cx.strokeText(tn, tx, py + 2);
 					cx.fillStyle = T.riuTèxt;
-					escriure(p.nom, tx, py + 2, 5);
+					escriure(tn, tx, py + 2, 5);
+					sensEspaci(cx);
 					cx.font = '700 11px Luciole, sans-serif';
 					cx.fillStyle = T.vilaTèxt;
 					cx.globalAlpha = 0.8;
