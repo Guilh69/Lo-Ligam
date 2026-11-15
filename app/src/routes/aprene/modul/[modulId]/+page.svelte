@@ -13,6 +13,7 @@
 	import { tria } from '$lib/stores/lang.svelte.js';
 	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
 	import { playTick, playChime } from '$lib/lesson/sounds.js';
+	import { jogarEfiech } from '$lib/efiech/efiech.js';
 	import QcmBlock from '$lib/lesson/QcmBlock.svelte';
 	import RevealBlock from '$lib/lesson/RevealBlock.svelte';
 	import OrderBlock from '$lib/lesson/OrderBlock.svelte';
@@ -224,6 +225,8 @@
 			pillPulse = true;
 			setTimeout(() => (pillPulse = false), 260);
 			if (!muted) playChime();
+			// l'effet que Romain a publié pour la réussite d'une séance (atelier /admin/efiechs), s'il y en a un
+			jogarEfiech('reussita');
 			saveProgress();
 		}, delai);
 		setTimeout(() => {

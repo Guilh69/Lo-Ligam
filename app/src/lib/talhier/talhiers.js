@@ -20,7 +20,9 @@ export const TALHIÈRS = [
 			{ href: '/admin/textes', oc: 'Tèxtes', fr: 'tous les textes modifiables du site, rangés par endroit' },
 			{ href: '/admin/musica', oc: 'Musica', fr: 'trier les artistes de l’espace musique' },
 			{ href: '/admin/designs', oc: 'Designs', fr: 'les designs : ajouter, publier, réordonner' },
-			{ href: '/admin/grops', oc: 'Grops', fr: 'les groupes de designs' }
+			{ href: '/admin/grops', oc: 'Grops', fr: 'les groupes de designs' },
+			// Efièch : la bibliothèque d'effets commune aux sites (2026-11-15) ; « efièch » vérifié par lo Congrès
+			{ href: '/admin/efiechs', oc: 'Efièch', fr: 'les effets du site : ton dessin, son mouvement, son apparition, ses réglages' }
 		]
 	},
 	{
@@ -63,5 +65,6 @@ export const LARGEURS = {
 	'/admin/seguit': 'normal',
 	'/admin/libret': 'normal',
 	'/admin/labo': 'large',
-	'/admin/musica': 'large'
+	'/admin/musica': 'large',
+	'/admin/efiechs': 'large'
 };

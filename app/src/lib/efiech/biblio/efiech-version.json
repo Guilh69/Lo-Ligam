@@ -1,0 +1,11 @@
+{
+	"version": "0.1.0",
+	"empreintes": {
+		"apparitions.js": "a718eba861c811da",
+		"catalogue.js": "f1b39600ac7383dc",
+		"dessin.js": "b72916a63ab85e1b",
+		"index.js": "6bc72d4dec32e6fb",
+		"moteur.js": "98bec10b8ff5b786",
+		"mouvements.js": "c213f2696f87bb8a"
+	}
+}
