@@ -783,10 +783,15 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// Al subrevòl : lo nom occitan del luòc e son dialècte, sus un vel sorne doç
 		if (pus) {
 			const escriure = (t, x, y, liseré) => { cx.lineWidth = liseré; cx.strokeText(t, x, y); cx.fillText(t, x, y); };
+			// Une ville dont le nom est écrit en gras sur la carte le garde au survol (Luciole
+			// grasse, un peu plus grande) ; les autres lieux, sans nom au repos, gardent
+			// l'italique (Romain, 2026-11-15 : Montpelhièr devenait fin sous la souris)
+			const vp = plaçament.vilas.find((v) => v.e === pus);
+			const polissaNom = (italica) => (vp ? '700 ' + Math.max(14, vp.f * 1.25).toFixed(1) + 'px Luciole, sans-serif' : italica + ' "Cormorant Garamond", Georgia, serif');
 			if (detActiu && !finPointer) {
 				// Al det (telefon) : lo nom es desportat dins una bulla AL DESSÚS del det,
 				// religada a l'estela per un fial, per que lo pouce l'amague pas
-				const nomF = 'italic 22px "Cormorant Garamond", Georgia, serif', dialF = '700 11px Luciole, sans-serif';
+				const nomF = polissaNom('italic 22px'), dialF = '700 11px Luciole, sans-serif';
 				cx.font = nomF; const wn = cx.measureText(pus.nom).width;
 				cx.font = dialF; const wd = cx.measureText(dialDe(pus)).width;
 				const bw = Math.max(wn, wd) + 30, bh = 52;
@@ -811,7 +816,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 			cx.strokeStyle = TEM.fil; cx.lineWidth = 1.2;
 			cx.beginPath(); cx.arc(pus.px, pus.py, 8, 0, 6.283); cx.stroke();
 			cx.textAlign = dreta ? 'left' : 'right'; cx.strokeStyle = TEM.liser;
-			cx.font = (telefon ? 'italic 21px' : 'italic 26px') + ' "Cormorant Garamond", Georgia, serif'; cx.fillStyle = TEM.riuTèxt;
+			cx.font = polissaNom(telefon ? 'italic 21px' : 'italic 26px'); cx.fillStyle = TEM.riuTèxt;
 			escriure(pus.nom, tx, pus.py + 2, 5);
 			cx.font = '700 11px Luciole, sans-serif'; cx.fillStyle = TEM.vilaTèxt; cx.globalAlpha = 0.8;
 			escriure(dialDe(pus), tx, pus.py + 20, 4);
