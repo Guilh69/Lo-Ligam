@@ -101,6 +101,121 @@
 		}
 	}
 
+	// La photo et son cadre couvrent la hauteur du texte, lignes repliées (Romain,
+	// 15-11) : du haut du titre au dernier filet. Mesurée lignes fermées seulement,
+	// pour qu'elle ne grandisse pas quand on en ouvre une ; remesurée dès que le
+	// texte change de hauteur (police chargée, fenêtre redimensionnée). Sans
+	// JavaScript, elle garde une hauteur fixe.
+	function autorFoto(node) {
+		const cap = node.querySelector('.cap');
+		const plecs = node.querySelector('.plecs');
+		if (!cap || !plecs) return;
+		const mesura = () => {
+			if (plecs.querySelector('details[open]')) return;
+			const h = Math.round(plecs.getBoundingClientRect().bottom - cap.getBoundingClientRect().top);
+			if (h > 0) node.style.setProperty('--autor-foto', `${h}px`);
+		};
+		mesura();
+		const obs = new ResizeObserver(mesura);
+		obs.observe(cap);
+		obs.observe(plecs);
+		return { destroy: () => obs.disconnect() };
+	}
+
+	// Le découpage de la photo (Romain, 15-11, d'après son croquis) : un cadre
+	// invisible, comme une photo de montagne découpée en cœur. Seuls les bords de la
+	// photo prennent la forme d'une fenêtre verticale aux pierres bombées : en haut
+	// trois pierres (la plus haute au milieu, comme une clé), sur les côtés des
+	// pierres de tailles inégales, en bas un appui plat. Le découpage ne ronge que
+	// la lisière : la vue et la pierre de l'arche restent entières. Chaque pièce :
+	// x, y, largeur, hauteur, arrondi horizontal, arrondi vertical, dans un repère
+	// de 800 sur 1067 (la taille de la photo) ; elles se recouvrent et la forme est
+	// leur réunion. Elles sont ramenées entre 0 et 1, pour suivre la photo à
+	// n'importe quelle taille.
+	const MASCA = [
+		[34, 56, 732, 950, 4, 4], // le corps, entre les pierres
+		[22, 1000, 756, 67, 3, 3], // l'appui, plat
+		[0, 26, 170, 110, 20, 24], // en haut : cinq pierres du plafond, à des hauteurs inégales
+		[150, 4, 200, 100, 22, 22],
+		[332, 14, 150, 96, 18, 22],
+		[466, 0, 190, 110, 22, 26],
+		[640, 18, 160, 120, 24, 28],
+		[0, 110, 92, 290, 16, 20], // à gauche : les assises de la maçonnerie, jointes comme dans la photo
+		[8, 388, 70, 150, 14, 18],
+		[0, 526, 120, 250, 16, 20],
+		[6, 764, 112, 120, 14, 16],
+		[0, 872, 134, 148, 16, 22],
+		[688, 120, 112, 150, 30, 36], // à droite : les blocs de la roche éboulée, plus irréguliers
+		[704, 256, 96, 120, 26, 30],
+		[672, 364, 128, 160, 34, 40],
+		[696, 512, 104, 110, 24, 28],
+		[690, 610, 110, 150, 30, 34],
+		[668, 748, 132, 130, 32, 36],
+		[598, 862, 202, 158, 50, 60]
+	].map(([x, y, w, h, rx, ry]) => ({
+		x: x / 800,
+		y: y / 1067,
+		width: w / 800,
+		height: h / 1067,
+		rx: rx / 800,
+		ry: ry / 1067
+	}));
+
+	// La vue derrière la pierre : quand la photo arrive à l'écran, la vue
+	// s'approche une fois, lentement (moins de 5 s, sans boucle), et la pierre ne
+	// bouge pas. Ensuite, sur ordinateur, la vue suit un peu le pointeur, comme
+	// derrière une vraie fenêtre. Rien de tout cela si la personne a demandé moins
+	// d'animations.
+	let vistaViva = $state(false);
+	function viure(node) {
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const vista = node.querySelector('.vista');
+		const obs = new IntersectionObserver(
+			(e) => {
+				if (!e[0].isIntersecting) return;
+				vistaViva = true;
+				obs.disconnect();
+			},
+			{ threshold: 0.35 }
+		);
+		obs.observe(node);
+
+		let prèsta = false; // le pointeur ne compte qu'une fois la vue approchée
+		let raf = 0;
+		const pausar = (dx, dy) => {
+			node.style.setProperty('--dx', `${dx.toFixed(1)}px`);
+			node.style.setProperty('--dy', `${dy.toFixed(1)}px`);
+		};
+		const acabada = () => (prèsta = true);
+		const moure = (e) => {
+			if (!prèsta) return;
+			cancelAnimationFrame(raf);
+			raf = requestAnimationFrame(() => {
+				const r = node.getBoundingClientRect();
+				pausar(-((e.clientX - r.left) / r.width - 0.5) * 8, -((e.clientY - r.top) / r.height - 0.5) * 6);
+			});
+		};
+		const sortir = () => {
+			cancelAnimationFrame(raf);
+			pausar(0, 0);
+		};
+		if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+			vista?.addEventListener('animationend', acabada);
+			node.addEventListener('pointermove', moure);
+			node.addEventListener('pointerleave', sortir);
+		}
+		return {
+			destroy() {
+				obs.disconnect();
+				cancelAnimationFrame(raf);
+				vistaViva = false;
+				vista?.removeEventListener('animationend', acabada);
+				node.removeEventListener('pointermove', moure);
+				node.removeEventListener('pointerleave', sortir);
+			}
+		};
+	}
+
 	const tx = {
 		oc: { facultatiu: 'facultatiu', obligatòri: 'obligatòri', mantuna: 'mantuna responsa possibla', mandant: 'Mandadís…', seguent: 'Seguent', passar: 'Passar', tornar: 'Tornar', contacte: 'Per te respondre', question: (n, t) => `Question ${n} sus ${t}`,
 			error: { corrièl: 'Verifica ton corrièl.', ligams: 'Tròp de ligams dins lo messatge.', plafond: 'Tròp de messatges d’un còp. Torna ensajar d’aquí una ora.', geton: 'Las responsas son pas partidas. Torna ensajar.', mandadís: 'Las responsas son pas partidas. Torna ensajar, o escriu-me a :', pas_brancat: 'Las responsas son pas partidas. Torna ensajar, o escriu-me a :' } },
@@ -172,7 +287,7 @@
 		<!-- Sur ordinateur : le texte à gauche, la photo à droite ; sur téléphone,
 		     la photo vient sous le bouton (Romain, 15-11 : « une belle photo
 		     d'Occitanie » ; la page n'est plus calée à gauche) -->
-		<div class="entrada">
+		<div class="entrada" use:autorFoto>
 		<!-- L'accueil : le titre, une phrase, un bouton -->
 		<header class="cap">
 			<h1 id="visio-titol" tabindex="-1" hidden={amagat('visio.titol')} use:editar={'visio.titol'}>{@render t('visio.titol')}</h1>
@@ -180,17 +295,40 @@
 			{@render reservar('#questionari', començar)}
 		</header>
 
-		<!-- Une photo de Romain (Remira, Paisatges) : le pic Saint-Loup par une arche en ruine -->
-		<figure class="foto">
-			<img
-				src="/apren/paisatges/arcada-800.webp"
-				srcset="/apren/paisatges/arcada-800.webp 800w, /apren/paisatges/arcada-1600.webp 1600w"
-				sizes="(min-width: 60rem) 30rem, 100vw"
-				width="1600"
-				height="2133"
-				decoding="async"
-				alt={tria({ oc: 'Un puèg vist per una arcada de pèira en roïna, sus la garriga.', fr: 'Le pic Saint-Loup vu à travers une arche de pierre en ruine, au-dessus de la garrigue.', es: 'El pico de Saint-Loup visto a través de un arco de piedra en ruinas, sobre la garriga.', en: 'The Pic Saint-Loup seen through a ruined stone arch, above the garrigue.', ca: 'El pic Saint-Loup vist a través d’un arc de pedra en ruïnes, sobre la garriga.', ar: 'قمة سان لو كما تبدو عبر قوس حجري متهدّم فوق أحراش الغاريغ.' })}
-			/>
+		<!-- Une photo de Romain (Remira, Paisatges) : le pic Saint-Loup par une arche
+		     en ruine, découpée en fenêtre aux pierres bombées par un masque invisible
+		     (MASCA). Deux fois la même image : la vue, qui s'approche, et la pierre
+		     par-dessus, immobile (le navigateur ne la télécharge qu'une fois). Sur
+		     téléphone, on demande exprès la petite version : sobriété. -->
+		<figure class="foto" class:viva={vistaViva} use:viure>
+			<svg class="masca" width="0" height="0" aria-hidden="true" focusable="false">
+				<clipPath id="masca-foto" clipPathUnits="objectBoundingBox">
+					{#each MASCA as r, i (i)}<rect {...r} />{/each}
+				</clipPath>
+			</svg>
+			<div class="fenestra">
+				<img
+					class="vista"
+					src="/apren/paisatges/arcada-800.webp"
+					srcset="/apren/paisatges/arcada-800.webp 800w, /apren/paisatges/arcada-1600.webp 1600w"
+					sizes="(min-width: 60rem) 32rem, 60vw"
+					width="1600"
+					height="2133"
+					decoding="async"
+					alt={tria({ oc: 'Un puèg vist per una arcada de pèira en roïna, sus la garriga.', fr: 'Le pic Saint-Loup vu à travers une arche de pierre en ruine, au-dessus de la garrigue.', es: 'El pico de Saint-Loup visto a través de un arco de piedra en ruinas, sobre la garriga.', en: 'The Pic Saint-Loup seen through a ruined stone arch, above the garrigue.', ca: 'El pic Saint-Loup vist a través d’un arc de pedra en ruïnes, sobre la garriga.', ar: 'قمة سان لو كما تبدو عبر قوس حجري متهدّم فوق أحراش الغاريغ.' })}
+				/>
+				<img
+					class="peira"
+					src="/apren/paisatges/arcada-800.webp"
+					srcset="/apren/paisatges/arcada-800.webp 800w, /apren/paisatges/arcada-1600.webp 1600w"
+					sizes="(min-width: 60rem) 32rem, 60vw"
+					width="1600"
+					height="2133"
+					decoding="async"
+					alt=""
+					aria-hidden="true"
+				/>
+			</div>
 		</figure>
 
 		<!-- Le détail, replié : une ligne par sujet, séparées par des filets -->
@@ -473,37 +611,71 @@
 		grid-area: cap;
 		margin-bottom: var(--esp-48);
 	}
+	/* La photo, découpée par le masque invisible (voir MASCA) : sa forme suit la
+	   photo à toute taille. Une ombre courte est portée par la figure, donc elle
+	   suit le contour découpé, comme les illustrations en papier découpé du site. */
 	.foto {
 		grid-area: foto;
+		position: relative;
 		margin: 0 0 var(--esp-48);
+		aspect-ratio: 800 / 1067;
+		filter: drop-shadow(0 3px 2px var(--pc-ombre));
 	}
-	.foto img {
+	.masca {
+		position: absolute;
+		pointer-events: none;
+	}
+	.fenestra {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		clip-path: url(#masca-foto);
+	}
+	.fenestra img {
+		position: absolute;
+		inset: 0;
 		display: block;
 		width: 100%;
-		height: auto;
-		aspect-ratio: 4 / 3;
-		object-fit: cover;
-		object-position: 50% 42%;
-		border-radius: 6px;
+		height: 100%;
+	}
+	.vista {
+		transform-origin: 56% 40%;
+		translate: var(--dx, 0) var(--dy, 0);
+		transition: translate 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+	}
+	.peira {
+		-webkit-mask: url(/apren/paisatges/arcada-masca.svg) center / 100% 100% no-repeat;
+		mask: url(/apren/paisatges/arcada-masca.svg) center / 100% 100% no-repeat;
+	}
+	.viva .vista {
+		animation: aprochar 4.2s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+	}
+	@keyframes aprochar {
+		to {
+			scale: 1.07;
+		}
 	}
 	@media (min-width: 60rem) {
 		.entrada {
-			grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+			grid-template-columns: minmax(0, 1fr) auto;
 			grid-template-rows: auto 1fr;
 			grid-template-areas: 'cap foto' 'plecs foto';
 			column-gap: clamp(3rem, 6vw, 6rem);
 		}
 		.cap {
+			align-self: start;
 			margin-bottom: var(--esp-64);
+		}
+		.plecs {
+			align-self: start;
 		}
 		.foto {
 			position: sticky;
 			top: var(--esp-32);
 			align-self: start;
+			justify-self: end;
 			margin: 0;
-		}
-		.foto img {
-			aspect-ratio: 3 / 4;
+			height: var(--autor-foto, 40rem);
 			max-height: calc(100vh - 4rem);
 		}
 	}
@@ -975,8 +1147,12 @@
 		summary::after {
 			transition: none;
 		}
-		.pas-a-pas .ecran:not([hidden]) {
+		.pas-a-pas .ecran:not([hidden]),
+		.viva .vista {
 			animation: none;
+		}
+		.vista {
+			transition: none;
 		}
 	}
 </style>
