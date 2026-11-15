@@ -613,17 +613,38 @@ export function lancarAcuelh(racina, opcions = {}) {
 	}
 
 	let cacheEtiq = null;
-	function construirEtiquetas(clau, pusNom, pusLoc, zw, zh, fv = 12) {
+	// L'étiquette du lieu survolé : sa police, son côté et sa boîte (nom et dialecte, en
+	// coordonnées de l'écran). Une ville dont le nom est écrit en gras sur la carte le garde
+	// au survol (Luciole grasse, un peu plus grande) ; les autres lieux, sans nom au repos,
+	// gardent l'italique (Romain, 2026-11-15 : Montpelhièr devenait fin sous la souris)
+	function etiquetaPus(p, telefon) {
+		const vp = plaçament.vilas.find((v) => v.e === p);
+		const talha = vp ? Math.max(14, vp.f * 1.25) : 0;
+		const polissaNom = (italica) => (vp ? '700 ' + talha.toFixed(1) + 'px Luciole, sans-serif' : italica + ' "Cormorant Garamond", Georgia, serif');
+		const nomF = polissaNom(telefon ? 'italic 21px' : 'italic 26px');
+		const dreta = p.px < W - (telefon ? 150 : 260), tx = p.px + (dreta ? 16 : -16);
+		cx.font = nomF; const wn = cx.measureText(p.nom).width;
+		cx.font = '700 11px Luciole, sans-serif'; const wd = cx.measureText(dialDe(p)).width;
+		const larg = Math.max(wn, wd), naut = vp ? talha * 0.95 : (telefon ? 21 : 26) * 0.75;
+		const caixa = [dreta ? tx - 4 : tx - larg - 4, p.py + 2 - naut - 3, dreta ? tx + larg + 4 : tx + 4, p.py + 25];
+		return { polissaNom, nomF, dreta, tx, caixa };
+	}
+
+	function construirEtiquetas(clau, pusNom, pusLoc, zw, zh, fv = 12, pusCaixa = null) {
 		const M = 220, w = Math.ceil(zw + 2 * M), h = Math.ceil(zh + 2 * M), ox = w / 2, oy = h / 2;
 		const fa = () => { const c = document.createElement('canvas'); c.width = Math.ceil(w * DPR); c.height = Math.ceil(h * DPR); const g = c.getContext('2d'); g.setTransform(DPR, 0, 0, DPR, ox * DPR, oy * DPR); g.strokeStyle = TEM.liser; g.lineJoin = 'round'; return [c, g]; };
 		// Los noms vesins de l'estela subrevolada s'escafan (mai prèp sus telefon)
 		const rayVesins = fv < 12 ? 60 : 150;
 		const pres = (x, y) => (pusLoc ? Math.hypot(x - pusLoc[0], y - pusLoc[1]) < rayVesins : false);
+		// … et aussi ceux que l'étiquette survolée recouvrirait, même loin du point (Romain,
+		// 2026-11-15 : Tolosa survolée cachait le M de Montpelhièr)
+		const dinsCaixa = (x0, y0, x1, y1) => (pusCaixa ? x0 < pusCaixa[2] && x1 > pusCaixa[0] && y0 < pusCaixa[3] && y1 > pusCaixa[1] : false);
 		const [cr, gr] = fa();
 		gr.fillStyle = TEM.riuTèxt; gr.textAlign = 'center'; gr.textBaseline = 'middle'; gr.lineWidth = 3;
 		for (const r of plaçament.rius) {
 			gr.font = 'italic ' + r.fs + 'px "Cormorant Garamond", Georgia, serif';
-			gr.globalAlpha = pres(r.cx, r.cy) ? 0.12 : 1;
+			const d = r.fs * 0.45;
+			gr.globalAlpha = pres(r.cx, r.cy) || r.letras.some((g) => dinsCaixa(g.x - d, g.y - d, g.x + d, g.y + d)) ? 0.12 : 1;
 			for (const pas of ['strokeText', 'fillText']) for (const g of r.letras) {
 				gr.save(); gr.translate(g.x, g.y); gr.rotate(g.a); gr[pas](g.c, 0, 0); gr.restore();
 			}
@@ -633,7 +654,9 @@ export function lancarAcuelh(racina, opcions = {}) {
 		for (const v of plaçament.vilas) {
 			if (v.e.nom === pusNom) continue;
 			gv.font = '700 ' + v.f + 'px Luciole, sans-serif'; gv.lineWidth = v.e.renc === 1 ? 4.5 : 3.2;
-			gv.globalAlpha = (pres(v.e.lx, v.e.ly) ? 0.12 : 1) * (v.e.renc === 1 ? 1 : 0.85);
+			const lv = pusCaixa ? gv.measureText(v.e.nom).width : 0, x0 = v.al === 'left' ? v.x : v.al === 'right' ? v.x - lv : v.x - lv / 2;
+			const recobèrt = dinsCaixa(x0 - 3, v.y - v.f - 2, x0 + lv + 3, v.y + v.f * 0.3 + 2);
+			gv.globalAlpha = (pres(v.e.lx, v.e.ly) || recobèrt ? 0.12 : 1) * (v.e.renc === 1 ? 1 : 0.85);
 			gv.textAlign = v.al; gv.strokeText(v.e.nom, v.x, v.y); gv.fillText(v.e.nom, v.x, v.y);
 		}
 		return { clau, pusNom, dpr: DPR, tema: TEM, rius: cr, vilas: cv2, ox, oy, w, h };
@@ -770,12 +793,19 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// a cada imatge (Firefox o pagava car). Refachas sonque quand l'escala o
 		// l'estela subrevolada càmbian.
 		const telefon = W <= 700, fv = telefon ? 10 : 12;
+		// (au doigt, le nom part dans une bulle opaque au-dessus : rien à estomper de plus)
+		const enBulla = detActiu && !finPointer;
+		let etiq = null;
 		if (aRiu > 0.8 || aCarta > 0.6) {
 			const clau = esc.toFixed(1) + '|' + Math.round(zr.width) + '|' + Math.round(zr.height) + '|' + fv;
 			if (plaçament.clau !== clau) plaçament = plaçar(esc, clau, zr.width, zr.height, fv);
-			const pusNom = pus ? pus.nom : '';
-			if (!cacheEtiq || cacheEtiq.clau !== clau || cacheEtiq.pusNom !== pusNom || cacheEtiq.dpr !== DPR || cacheEtiq.tema !== TEM)
-				cacheEtiq = construirEtiquetas(clau, pusNom, pus ? [pus.px - zcx, pus.py - zcy] : null, zr.width, zr.height, fv);
+			const pusNom = pus ? pus.nom : '', clauPus = pusNom + (enBulla ? '|bulla' : '');
+			if (pus) etiq = etiquetaPus(pus, telefon);
+			const k = etiq?.caixa;
+			if (!cacheEtiq || cacheEtiq.clau !== clau || cacheEtiq.clauPus !== clauPus || cacheEtiq.dpr !== DPR || cacheEtiq.tema !== TEM) {
+				cacheEtiq = construirEtiquetas(clau, pusNom, pus ? [pus.px - zcx, pus.py - zcy] : null, zr.width, zr.height, fv, k && !enBulla ? [k[0] - zcx, k[1] - zcy, k[2] - zcx, k[3] - zcy] : null);
+				cacheEtiq.clauPus = clauPus;
+			}
 			const c = cacheEtiq;
 			if (aRiu > 0.8 && !telefon) { cx.globalAlpha = ((aRiu - 0.8) / 0.2) * 0.85; cx.drawImage(c.rius, zcx - c.ox, zcy - c.oy, c.w, c.h); }
 			if (aCarta > 0.6) { cx.globalAlpha = ((aCarta - 0.6) / 0.4) * 0.92; cx.drawImage(c.vilas, zcx - c.ox, zcy - c.oy, c.w, c.h); }
@@ -783,12 +813,9 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// Al subrevòl : lo nom occitan del luòc e son dialècte, sus un vel sorne doç
 		if (pus) {
 			const escriure = (t, x, y, liseré) => { cx.lineWidth = liseré; cx.strokeText(t, x, y); cx.fillText(t, x, y); };
-			// Une ville dont le nom est écrit en gras sur la carte le garde au survol (Luciole
-			// grasse, un peu plus grande) ; les autres lieux, sans nom au repos, gardent
-			// l'italique (Romain, 2026-11-15 : Montpelhièr devenait fin sous la souris)
-			const vp = plaçament.vilas.find((v) => v.e === pus);
-			const polissaNom = (italica) => (vp ? '700 ' + Math.max(14, vp.f * 1.25).toFixed(1) + 'px Luciole, sans-serif' : italica + ' "Cormorant Garamond", Georgia, serif');
-			if (detActiu && !finPointer) {
+			etiq ??= etiquetaPus(pus, telefon);
+			const { polissaNom, dreta, tx } = etiq;
+			if (enBulla) {
 				// Al det (telefon) : lo nom es desportat dins una bulla AL DESSÚS del det,
 				// religada a l'estela per un fial, per que lo pouce l'amague pas
 				const nomF = polissaNom('italic 22px'), dialF = '700 11px Luciole, sans-serif';
@@ -807,8 +834,6 @@ export function lancarAcuelh(racina, opcions = {}) {
 				cx.font = dialF; cx.fillStyle = TEM.vilaTèxt; cx.globalAlpha = 0.8; cx.fillText(dialDe(pus), bx, by + 18);
 				cx.textAlign = 'left'; cx.globalAlpha = 1;
 			} else {
-			const dreta = pus.px < W - (telefon ? 150 : 260);
-			const tx = pus.px + (dreta ? 16 : -16);
 			const vel = cx.createRadialGradient(pus.px, pus.py, 0, pus.px, pus.py, 130);
 			vel.addColorStop(0, TEM.vel); vel.addColorStop(1, TEM.velFin);
 			cx.globalAlpha = 1; cx.fillStyle = vel;
@@ -816,7 +841,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 			cx.strokeStyle = TEM.fil; cx.lineWidth = 1.2;
 			cx.beginPath(); cx.arc(pus.px, pus.py, 8, 0, 6.283); cx.stroke();
 			cx.textAlign = dreta ? 'left' : 'right'; cx.strokeStyle = TEM.liser;
-			cx.font = polissaNom(telefon ? 'italic 21px' : 'italic 26px'); cx.fillStyle = TEM.riuTèxt;
+			cx.font = etiq.nomF; cx.fillStyle = TEM.riuTèxt;
 			escriure(pus.nom, tx, pus.py + 2, 5);
 			cx.font = '700 11px Luciole, sans-serif'; cx.fillStyle = TEM.vilaTèxt; cx.globalAlpha = 0.8;
 			escriure(dialDe(pus), tx, pus.py + 20, 4);
