@@ -245,6 +245,18 @@ async function verificarEscritura(supabase) {
 	const blocat = await supabase.rpc('ligam_blocat', { x: '00000000-0000-0000-0000-000000000001', y: '00000000-0000-0000-0000-000000000002' });
 	verificar('Parlar amassa : SAVOIR qui a bloqué qui est refusé', !!blocat.error);
 
+	// Efièch, les effets du site (page « efiechs » de pagina_elements, 15-11 ;
+	// audit de Rodrigo) : un visiteur ne glisse pas de dessin, ne lit pas les
+	// brouillons de Romain, ne publie pas
+	const efiechPirata = await supabase
+		.from('pagina_elements')
+		.insert({ clau: 'efiechs._verrolh', estat: 'brolhon', pagina: 'efiechs', tipe: 'bloc', oc: '{"config":{}}' });
+	verificar('Efièch : ÉCRIRE un effet sans compte est refusé', !!efiechPirata.error);
+	const efiechBrolhons = await supabase.from('pagina_elements').select('clau').eq('pagina', 'efiechs').eq('estat', 'brolhon');
+	verificar('Efièch : LIRE les brouillons d’effets sans compte ne rend rien', !efiechBrolhons.error && efiechBrolhons.data.length === 0);
+	const efiechPublicar = await supabase.rpc('publicar_pagina', { p_pagina: 'efiechs' });
+	verificar('Efièch : PUBLIER les effets sans compte est refusé', !!efiechPublicar.error);
+
 	// La tentative la plus grave : se déclarer administrateur.
 	const promocion = await supabase
 		.from('admins')

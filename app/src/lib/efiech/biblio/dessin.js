@@ -75,11 +75,30 @@ function decoder(s) {
 		.replace(/&amp;/g, '&');
 }
 
+const estNomCar = (c) => /[\w:.-]/.test(c);
+
+// Lecture des attributs par une boucle simple (pas d'expression régulière qui
+// revient en arrière : un fichier piégé ne peut pas figer l'onglet, Rodrigo 15-11)
 function attributs(txt) {
 	const a = {};
-	const re = /([A-Za-z_][\w:.-]*)\s*=\s*(?:"([^"]*)"|'([^']*)')/g;
-	let m;
-	while ((m = re.exec(txt))) a[m[1].toLowerCase()] = decoder(m[2] ?? m[3] ?? '');
+	let i = 0;
+	const n = txt.length;
+	while (i < n) {
+		while (i < n && !/[A-Za-z_]/.test(txt[i])) i++;
+		const d = i;
+		while (i < n && estNomCar(txt[i])) i++;
+		const nom = txt.slice(d, i).toLowerCase();
+		while (i < n && /\s/.test(txt[i])) i++;
+		if (txt[i] !== '=') continue;
+		i++;
+		while (i < n && /\s/.test(txt[i])) i++;
+		const q = txt[i];
+		if (q !== '"' && q !== "'") continue;
+		const f = txt.indexOf(q, i + 1);
+		if (f < 0) break;
+		if (nom) a[nom] = decoder(txt.slice(i + 1, f));
+		i = f + 1;
+	}
 	// la règle « style » écrit les mêmes propriétés autrement (Affinity, Inkscape)
 	if (a.style) {
 		for (const decl of a.style.split(';')) {
@@ -173,6 +192,62 @@ function versTrace(nom, a) {
 }
 
 /**
+ * Les balises d'un texte, une à une, en un seul passage (temps proportionnel à
+ * la taille du fichier, même piégé). Commentaires, sections CDATA, instructions
+ * et déclaration de type sont sautés. Une balise jamais refermée arrête la lecture.
+ */
+function* balises(s) {
+	const n = s.length;
+	let i = 0;
+	const sauter = (debut, fin) => {
+		const f = s.indexOf(fin, debut);
+		return f < 0 ? -1 : f + fin.length;
+	};
+	while (true) {
+		const lt = s.indexOf('<', i);
+		if (lt < 0) return;
+		let suite;
+		if (s.startsWith('<!--', lt)) suite = sauter(lt + 4, '-->');
+		else if (s.startsWith('<![CDATA[', lt)) suite = sauter(lt + 9, ']]>');
+		else if (s[lt + 1] === '?') suite = sauter(lt + 2, '?>');
+		else if (s[lt + 1] === '!') {
+			const g = s.indexOf('>', lt + 2);
+			const c = s.indexOf('[', lt + 2);
+			if (g < 0) return;
+			suite = c >= 0 && c < g ? (() => { const e = s.indexOf(']', c); return e < 0 ? -1 : sauter(e, '>'); })() : g + 1;
+		}
+		if (suite !== undefined) {
+			if (suite < 0) return;
+			i = suite;
+			continue;
+		}
+		let j = lt + 1;
+		const fin = s[j] === '/';
+		if (fin) j++;
+		if (!/[A-Za-z]/.test(s[j] ?? '')) {
+			i = lt + 1;
+			continue;
+		}
+		const d = j;
+		while (j < n && estNomCar(s[j])) j++;
+		const nom = s.slice(d, j);
+		let q = null;
+		let k = j;
+		for (; k < n; k++) {
+			const c = s[k];
+			if (q) {
+				if (c === q) q = null;
+			} else if (c === '"' || c === "'") q = c;
+			else if (c === '>') break;
+		}
+		if (k >= n) return;
+		const attrs = s.slice(j, k);
+		yield { fin, nom, attrs, seule: attrs.trimEnd().endsWith('/') };
+		i = k + 1;
+	}
+}
+
+/**
  * Lit le texte d'un fichier SVG et n'en garde que le dessin.
  * Rend { dessin, avis } : dessin vaut null si rien d'utilisable n'a été trouvé ;
  * avis dit en français ce qui a été laissé de côté.
@@ -181,23 +256,16 @@ export function nettoyerSvg(texte) {
 	const avis = new Set();
 	if (typeof texte !== 'string' || !texte.trim()) return { dessin: null, avis: ['Le fichier est vide.'] };
 	if (texte.length > LIMITES.fichier) return { dessin: null, avis: ['Le fichier est trop lourd (400 Ko au plus).'] };
-	// commentaires, sections CDATA, instructions et déclaration de type : retirés d'emblée
-	let src = texte
-		.replace(/<!--[\s\S]*?-->/g, '')
-		.replace(/<!\[CDATA\[[\s\S]*?\]\]>/g, '')
-		.replace(/<\?[\s\S]*?\?>/g, '')
-		.replace(/<!DOCTYPE[^[>]*(\[[\s\S]*?\])?\s*>/gi, '');
 	const pile = [{ M: ID, f: '#000000', s: null, w: 1, r: null, o: 1, nom: '#' }];
 	let ignore = 0; // profondeur dans une balise ignorée
 	let vb = null;
 	const traces = [];
 	let total = 0;
-	const re = /<(\/?)([A-Za-z][\w:.-]*)((?:[^>"']|"[^"]*"|'[^']*')*?)(\/?)>/g;
-	let m;
-	while ((m = re.exec(src))) {
-		const fin = m[1] === '/';
-		const nom = m[2].toLowerCase().replace(/^svg:/, '');
-		const seule = m[4] === '/';
+	for (const b of balises(texte)) {
+		const fin = b.fin;
+		const nom = b.nom.toLowerCase().replace(/^svg:/, '');
+		const seule = b.seule;
+		const m = [null, null, null, b.attrs];
 		if (ignore) {
 			if (IGNORER.has(nom) && !seule) ignore += fin ? -1 : 1;
 			continue;
@@ -287,7 +355,8 @@ export function nettoyerSvg(texte) {
 	return { dessin: validerDessin({ vb: vb.map(r3), traces }), avis: [...avis] };
 }
 
-const estNombre = (x) => typeof x === 'number' && Number.isFinite(x);
+// nombres finis et raisonnables (une matrice de 1e308 ne sert à rien : refusée)
+const estNombre = (x) => typeof x === 'number' && Number.isFinite(x) && Math.abs(x) <= 1e6;
 const estCouleur = (c) => c === null || (typeof c === 'string' && /^#[0-9a-f]{6}$/.test(c));
 
 /**
