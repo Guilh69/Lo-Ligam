@@ -11,36 +11,32 @@
 	import { PALETAS } from '$lib/apren/teulas.js';
 	import { PREMSA, RITMES } from '$lib/data/medias.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+
+	let { data } = $props();
+	const lèvaEdicion = iniciar('premsa', data.elements);
+	$effect(() => () => lèvaEdicion?.());
+	const titol = $derived(tria(txt('premsa.titol')));
+	const frasa = $derived(tria(txt('premsa.frasa')));
 
 	const t = {
 		oc: {
-			titol: 'Premsa',
-			frasa: 'Los jornals e las revistas en occitan.',
 			legir: 'Legir'
 		},
 		fr: {
-			titol: 'Presse',
-			frasa: 'Les journaux et les revues en occitan.',
 			legir: 'Lire'
 		},
 		es: {
-			titol: 'Prensa',
-			frasa: 'Los periódicos y las revistas en occitano.',
 			legir: 'Leer'
 		},
 		en: {
-			titol: 'Press',
-			frasa: 'Newspapers and magazines in Occitan.',
 			legir: 'Read'
 		},
 		ca: {
-			titol: 'Premsa',
-			frasa: 'Els diaris i les revistes en occità.',
 			legir: 'Llegir'
 		},
 		ar: {
-			titol: 'الصحافة',
-			frasa: 'الصحف والمجلات بالأوكسيتانية.',
 			legir: 'قراءة'
 		}
 	};
@@ -54,18 +50,18 @@
 </script>
 
 <svelte:head>
-	<title>{tx.titol} · Lo Ligam</title>
+	<title>{titol} · Lo Ligam</title>
 </svelte:head>
 
 <div class="pagina">
 <div class="capçal"><AppHeader /></div>
 
 <main class="premsa">
-	<Retour actuelle={tx.titol} />
+	<Retour actuelle={titol} />
 
 	<header class="cap">
-		<h1 lang={langStore.current}>{tx.titol}</h1>
-		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
+		<h1 lang={langStore.current} use:editar={'premsa.titol'}>{titol}</h1>
+		<p class="frasa" lang={langStore.current} use:editar={'premsa.frasa'}>{frasa}</p>
 	</header>
 
 	<!-- le kiosque : les couvertures sur leurs rayons -->

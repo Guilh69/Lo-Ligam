@@ -27,7 +27,26 @@ export const CAMINS = {
 	obras: '/obras',
 	medias: '/medias',
 	grops: '/grops',
-	ideas: '/ideas'
+	ideas: '/ideas',
+	carta: '/carta',
+	cultura: '/cultura',
+	afichas: '/obras/afichas',
+	cinema: '/obras/cinema',
+	literatura: '/obras/literatura',
+	livres: '/medias/livres',
+	premsa: '/medias/premsa',
+	radios: '/medias/radios',
+	television: '/medias/television',
+	parcors: '/aprene',
+	anem: '/anem',
+	jocs: '/apren/jocs',
+	mots: '/mots',
+	remira: '/apren/remira',
+	gramatica: '/apren/gramatica',
+	accessibilitat: '/accessibilitat',
+	confidencialitat: '/confidencialitat',
+	mencions: '/mencions-legalas',
+	illustracions: '/illustracions'
 };
 const ÒRDRE = Object.keys(CAMINS);
 

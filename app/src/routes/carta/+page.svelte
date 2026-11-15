@@ -15,11 +15,17 @@
 	import { estatCarta, ecranCarta } from '$lib/carta/estatCarta.svelte.js';
 	import { sonAcabat } from '$lib/carta/sons.js';
 	import { LENGAS } from '$lib/carta/lengas.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
 	import { cargarColas } from '$lib/carta/colasBasa.js';
 	import { esAdmin } from '$lib/adminStore';
 	import { ambianca } from '$lib/stores/ambianca.svelte.js';
 	import { CATALOGUE, fusionarCatalogue, JACES_FONS } from '$lib/carta/catalogue.js';
+
+	let { data } = $props();
+	const lèvaEdicion = iniciar('carta', data.elements);
+	$effect(() => () => lèvaEdicion?.());
 
 	let lang = $derived(langStore.current);
 
@@ -283,13 +289,15 @@
 	const NÒTA = { oc: 'Per tornar veire los primièrs passes : aicí.', fr: 'Pour revoir les premiers pas : ici.', es: 'Para volver a ver los primeros pasos: aquí.', en: 'To see the first steps again: here.', ca: 'Per tornar a veure els primers passos: aquí.', ar: 'لإعادة عرض الخطوات الأولى: هنا.', cibla: '.info-trigger' };
 	let guida = $state(null);
 	let tx = $derived(t[lang] ?? t.oc);
+	// le texte modifiable sur place ; à défaut (rien en base ni dans le filet), le texte d'origine
+	const v = (clau, defaut) => tria(txt(clau)) || defaut;
 
 	let showInfo = $state(false);
 	// la pancarta se tampa d'un clic defòra o amb Escapar (principi del site,
 	// $lib/tampaDefora.js)
 	$effect(() => {
 		if (!showInfo) return;
-		const lèva = tampaDefòra((t) => !!t.closest('.info-card'), () => (showInfo = false));
+		const lèva = tampaDefòra((t) => !!t.closest('.info-card, .ed-panel, .ed-barra'), () => (showInfo = false));
 		const tòca = (e) => e.key === 'Escape' && (showInfo = false);
 		document.addEventListener('keydown', tòca);
 		return () => {
@@ -435,13 +443,13 @@
 					onclick={() => (showInfo = false)}
 					aria-label={tx.close}><Icona nom="fermer" size="1.25em" /></button
 				>
-				<h1>{tx.title}</h1>
+				<h1 hidden={amagat('carta.titol')} use:editar={'carta.titol'}>{v('carta.titol', tx.title)}</h1>
 				<p>
-					{tx.intro}
+					<span hidden={amagat('carta.intro')} use:editar={'carta.intro'}>{v('carta.intro', tx.intro)}</span>
 					<a href="https://www.openstreetmap.bzh/" target="_blank" rel="noopener noreferrer"
 						>OpenStreetMap e occitan</a
 					>
-					{tx.introEnd}
+					<span hidden={amagat('carta.introfin')} use:editar={'carta.introfin'}>{v('carta.introfin', tx.introEnd)}</span>
 				</p>
 				{#if guida}<button
 					type="button"

@@ -7,20 +7,28 @@
 	import Retour from '$lib/components/Retour.svelte';
 	import { LIVRES } from '$lib/data/livres.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+
+	let { data } = $props();
+	const lèvaEdicion = iniciar('livres', data.elements);
+	$effect(() => () => lèvaEdicion?.());
+	const titol = $derived(tria(txt('livres.titol')));
+	const frasa = $derived(tria(txt('livres.frasa')));
 
 	const t = {
-		oc: { titol: 'Libres', frasa: 'Los libres ancians, liures de dreches, de fulhetar.', legir: 'Legir lo libre', domeni: 'Domeni public' },
-		fr: { titol: 'Livres', frasa: 'Les livres anciens, libres de droits, à feuilleter.', legir: 'Lire le livre', domeni: 'Domaine public' },
-		es: { titol: 'Libros', frasa: 'Los libros antiguos, libres de derechos, para hojear.', legir: 'Leer el libro', domeni: 'Dominio público' },
-		en: { titol: 'Books', frasa: 'Old books, free of copyright, to browse.', legir: 'Read the book', domeni: 'Public domain' },
-		ca: { titol: 'Llibres', frasa: 'Els llibres antics, lliures de drets, per fullejar.', legir: 'Llegir el llibre', domeni: 'Domini públic' },
-		ar: { titol: 'الكتب', frasa: 'كتب قديمة خالية من حقوق النشر، للتصفّح.', legir: 'قراءة الكتاب', domeni: 'ملكية عامة' }
+		oc: { legir: 'Legir lo libre', domeni: 'Domeni public' },
+		fr: { legir: 'Lire le livre', domeni: 'Domaine public' },
+		es: { legir: 'Leer el libro', domeni: 'Dominio público' },
+		en: { legir: 'Read the book', domeni: 'Public domain' },
+		ca: { legir: 'Llegir el llibre', domeni: 'Domini públic' },
+		ar: { legir: 'قراءة الكتاب', domeni: 'ملكية عامة' }
 	};
 	let tx = $derived(t[langStore.current] ?? t.oc);
 </script>
 
 <svelte:head>
-	<title>{tx.titol} · Lo Ligam</title>
+	<title>{titol} · Lo Ligam</title>
 	<meta name="description" content="Los libres ancians de fulhetar. Les livres anciens à feuilleter." />
 </svelte:head>
 
@@ -28,11 +36,11 @@
 	<div class="capçal"><AppHeader /></div>
 
 	<main class="livres">
-		<Retour actuelle={tx.titol} />
+		<Retour actuelle={titol} />
 
 		<header class="cap">
-			<h1 lang={langStore.current}>{tx.titol}</h1>
-			<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
+			<h1 lang={langStore.current} use:editar={'livres.titol'}>{titol}</h1>
+			<p class="frasa" lang={langStore.current} use:editar={'livres.frasa'}>{frasa}</p>
 		</header>
 
 		<ul class="rai">

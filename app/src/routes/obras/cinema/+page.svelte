@@ -12,6 +12,12 @@
 	import { PALETAS } from '$lib/apren/teulas.js';
 	import { FILMES } from '$lib/data/arts.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+
+	let { data } = $props();
+	const lèvaEdicion = iniciar('cinema', data.elements);
+	$effect(() => () => lèvaEdicion?.());
 
 	const t = {
 		oc: {
@@ -58,6 +64,8 @@
 		}
 	};
 	let tx = $derived(t[langStore.current] ?? t.oc);
+	// le texte modifiable sur place ; à défaut (rien en base ni dans le filet), le texte d'origine
+	const v = (clau, defaut) => tria(txt(clau)) || defaut;
 
 	const VERD = PALETAS.verd;
 	const color = (i) => VERD[i % VERD.length];
@@ -80,11 +88,11 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="cinema">
-	<Retour actuelle={tx.titol} />
+	<Retour actuelle={v('cinema.titol', tx.titol)} />
 
 	<header class="cap">
-		<h1 lang={langStore.current}>{tx.titol}</h1>
-		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
+		<h1 lang={langStore.current} hidden={amagat('cinema.titol')} use:editar={'cinema.titol'}>{v('cinema.titol', tx.titol)}</h1>
+		<p class="frasa" lang={langStore.current} hidden={amagat('cinema.frasa')} use:editar={'cinema.frasa'}>{v('cinema.frasa', tx.frasa)}</p>
 	</header>
 
 	<!-- les affiches : le plus récent en grand -->
@@ -107,7 +115,7 @@
 
 	<!-- où voir les films : des billets -->
 	<section class="ont" aria-labelledby="ont-titol">
-		<h2 id="ont-titol" lang={langStore.current}>{tx.ont}</h2>
+		<h2 id="ont-titol" lang={langStore.current} hidden={amagat('cinema.ont')} use:editar={'cinema.ont'}>{v('cinema.ont', tx.ont)}</h2>
 		<ul class="bilhets">
 			{#each LUÒCS as l (l.id)}
 				<li>

@@ -2,160 +2,22 @@
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { lang as langStore } from '$lib/stores/lang.svelte.js';
 	import { editor, hebergeur, dataMiseAJour } from '$lib/data/legal';
+	import { tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt, ligam } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+	import { segments } from '$lib/edicion/marcat.js';
+
+	let { data } = $props();
+
+	const lèvaEdicion = iniciar('mencions', data.elements);
+	$effect(() => () => lèvaEdicion?.());
 
 	let lang = $derived(langStore.current);
 
 	// Le texte de référence est le français : c'est la langue dans laquelle
 	// la loi française exige ces informations. L'occitan est fourni à côté,
 	// à valider par Romain avant publication.
-	const t = {
-		oc: {
-			titre: 'Mencions legalas',
-			maj: 'Darrièra mesa a jorn',
-			editorT: 'Editor del site',
-			directorT: 'Director de la publicacion',
-			contactT: 'Contacte',
-			hebergeurT: 'Albergador',
-			proprietatT: 'Proprietat intellectuala',
-			proprietat:
-				'Los contenguts d’aqueste site (tèxtes, illustracions, fichas de vocabulari) son l’òbra de l’editor, levat mencion contrària. Tota reproduccion demanda son acòrd.',
-			// Romain, 06-11 : dire que les illustrations faites par IA ne sont pas son œuvre
-			ia: 'Las illustracions marcadas « facha per l’IA » son pas l’òbra de l’editor : l’IA las a fachas. Tot es detalhat sus la pagina dedicada :',
-			iaLink: 'Las illustracions',
-			ligamsT: 'Ligams extèrnes',
-			ligams:
-				'Aqueste site mena cap a de sites tèrces (Lo Congrès, OPLO, CIRDOC e autres). Sèm pas responsables de lor contengut.',
-			cartaT: 'Fons de carta',
-			carta:
-				'Lo fons de carta occitan ven d’OpenStreetMap e occitan, amb l’Institut d’Estudis Occitans. Las donadas cartograficas son jos licéncia ODbL.',
-			tipoT: 'Tipografia',
-			tipo: 'Lo site utiliza la poliça Luciole © Laurent Bourcellier e Jonathan Perez (CTRDV), jos licéncia CC BY 4.0.',
-			donadasT: 'Donadas personalas',
-			donadas: 'La gestion de tas donadas es detalhada sus la pagina dedicada :',
-			donadasLink: 'Politica de confidencialitat'
-		},
-		fr: {
-			titre: 'Mentions légales',
-			maj: 'Dernière mise à jour',
-			editorT: 'Éditeur du site',
-			directorT: 'Directeur de la publication',
-			contactT: 'Contact',
-			hebergeurT: 'Hébergeur',
-			proprietatT: 'Propriété intellectuelle',
-			proprietat:
-				'Les contenus de ce site (textes, illustrations, fiches de vocabulaire) sont l’œuvre de l’éditeur, sauf mention contraire. Toute reproduction nécessite son accord.',
-			ia: 'Les illustrations marquées « faite par IA » ne sont pas l’œuvre de l’éditeur : elles sont faites par IA. Tout est détaillé sur la page dédiée :',
-			iaLink: 'Les illustrations',
-			ligamsT: 'Liens externes',
-			ligams:
-				'Ce site renvoie vers des sites tiers (Lo Congrès, OPLO, CIRDOC et autres). Nous ne sommes pas responsables de leur contenu.',
-			cartaT: 'Fond de carte',
-			carta:
-				'Le fond de carte occitan provient d’OpenStreetMap e occitan, avec l’Institut d’Études Occitanes. Les données cartographiques sont sous licence ODbL.',
-			tipoT: 'Typographie',
-			tipo: 'Le site utilise la police Luciole © Laurent Bourcellier et Jonathan Perez (CTRDV), sous licence CC BY 4.0.',
-			donadasT: 'Données personnelles',
-			donadas: 'La gestion de tes données est détaillée sur la page dédiée :',
-			donadasLink: 'Politique de confidentialité'
-		},
-		es: {
-			titre: 'Avisos legales',
-			maj: 'Última actualización',
-			editorT: 'Editor del sitio',
-			directorT: 'Director de la publicación',
-			contactT: 'Contacto',
-			hebergeurT: 'Proveedor de alojamiento',
-			proprietatT: 'Propiedad intelectual',
-			proprietat:
-				'Los contenidos de este sitio (textos, ilustraciones, fichas de vocabulario) son obra del editor, salvo mención en contrario. Toda reproducción requiere su acuerdo.',
-			ia: 'Las ilustraciones marcadas «hecha por IA» no son obra del editor: las ha hecho una IA. Todo se detalla en la página dedicada:',
-			iaLink: 'Las ilustraciones',
-			ligamsT: 'Enlaces externos',
-			ligams:
-				'Este sitio remite a sitios de terceros (Lo Congrès, OPLO, CIRDOC y otros). No somos responsables de su contenido.',
-			cartaT: 'Mapa base',
-			carta:
-				'El mapa base occitano procede de OpenStreetMap en occitano, con el Institut d’Estudis Occitans. Los datos cartográficos están bajo licencia ODbL.',
-			tipoT: 'Tipografía',
-			tipo: 'El sitio utiliza la fuente Luciole © Laurent Bourcellier y Jonathan Perez (CTRDV), bajo licencia CC BY 4.0.',
-			donadasT: 'Datos personales',
-			donadas: 'La gestión de tus datos se detalla en la página dedicada:',
-			donadasLink: 'Política de privacidad'
-		},
-		en: {
-			titre: 'Legal notice',
-			maj: 'Last updated',
-			editorT: 'Publisher of the site',
-			directorT: 'Director of publication',
-			contactT: 'Contact',
-			hebergeurT: 'Hosting provider',
-			proprietatT: 'Intellectual property',
-			proprietat:
-				'The content of this site (texts, illustrations, vocabulary cards) is the work of the publisher, unless otherwise stated. Any reproduction requires the publisher’s agreement.',
-			ia: 'Illustrations marked “made by AI” are not the work of the publisher: they were made by AI. Full details are on the dedicated page:',
-			iaLink: 'The illustrations',
-			ligamsT: 'External links',
-			ligams:
-				'This site links to third-party sites (Lo Congrès, OPLO, CIRDOC and others). We are not responsible for their content.',
-			cartaT: 'Base map',
-			carta:
-				'The Occitan base map comes from OpenStreetMap in Occitan, with the Institut d’Estudis Occitans. The map data is licensed under the ODbL.',
-			tipoT: 'Typography',
-			tipo: 'The site uses the Luciole typeface © Laurent Bourcellier and Jonathan Perez (CTRDV), licensed under CC BY 4.0.',
-			donadasT: 'Personal data',
-			donadas: 'How your data is handled is detailed on the dedicated page:',
-			donadasLink: 'Privacy policy'
-		},
-		ca: {
-			titre: 'Avís legal',
-			maj: 'Darrera actualització',
-			editorT: 'Editor del web',
-			directorT: 'Director de la publicació',
-			contactT: 'Contacte',
-			hebergeurT: 'Proveïdor d’allotjament',
-			proprietatT: 'Propietat intel·lectual',
-			proprietat:
-				'Els continguts d’aquest web (textos, il·lustracions, fitxes de vocabulari) són obra de l’editor, tret que s’indiqui el contrari. Qualsevol reproducció requereix el seu acord.',
-			ia: 'Les il·lustracions marcades «feta per IA» no són obra de l’editor: les ha fetes una IA. Tot es detalla a la pàgina dedicada:',
-			iaLink: 'Les il·lustracions',
-			ligamsT: 'Enllaços externs',
-			ligams:
-				'Aquest web remet a llocs de tercers (Lo Congrès, OPLO, CIRDOC i altres). No som responsables del seu contingut.',
-			cartaT: 'Mapa de fons',
-			carta:
-				'El mapa de fons occità prové d’OpenStreetMap en occità, amb l’Institut d’Estudis Occitans. Les dades cartogràfiques estan sota llicència ODbL.',
-			tipoT: 'Tipografia',
-			tipo: 'El web utilitza la lletra Luciole © Laurent Bourcellier i Jonathan Perez (CTRDV), sota llicència CC BY 4.0.',
-			donadasT: 'Dades personals',
-			donadas: 'La gestió de les teves dades es detalla a la pàgina dedicada:',
-			donadasLink: 'Política de privadesa'
-		},
-		ar: {
-			titre: 'الإشعار القانوني',
-			maj: 'آخر تحديث',
-			editorT: 'ناشر الموقع',
-			directorT: 'مدير النشر',
-			contactT: 'التواصل',
-			hebergeurT: 'مزوّد الاستضافة',
-			proprietatT: 'الملكية الفكرية',
-			proprietat:
-				'محتويات هذا الموقع (من نصوص ورسوم وبطاقات مفردات) هي من إنتاج الناشر، ما لم يُذكر خلاف ذلك. ويتطلّب أي استنساخ لها موافقته.',
-			ia: 'الرسوم التي تحمل عبارة «صنع بالذكاء الاصطناعي» ليست من إنتاج الناشر، بل صنعها الذكاء الاصطناعي. وتجد التفاصيل في الصفحة المخصّصة:',
-			iaLink: 'الرسومات',
-			ligamsT: 'روابط خارجية',
-			ligams:
-				'يحيل هذا الموقع إلى مواقع أطراف ثالثة (Lo Congrès، OPLO، CIRDOC وغيرها). ولسنا مسؤولين عن محتواها.',
-			cartaT: 'خريطة الأساس',
-			carta:
-				'تأتي خريطة الأساس الأوكسيتانية من OpenStreetMap بالأوكسيتانية، بالتعاون مع Institut d’Estudis Occitans. والبيانات الخرائطية مرخّصة بموجب ODbL.',
-			tipoT: 'الخطوط',
-			tipo: 'يستخدم الموقع خط Luciole © Laurent Bourcellier وJonathan Perez (CTRDV)‎، بترخيص CC BY 4.0.',
-			donadasT: 'البيانات الشخصية',
-			donadas: 'يُفصَّل التعامل مع بياناتك في الصفحة المخصّصة:',
-			donadasLink: 'سياسة الخصوصية'
-		}
-	};
-	let tx = $derived(t[lang] ?? t.oc);
+	const titre = { oc: 'Mencions legalas', fr: 'Mentions légales', es: 'Avisos legales', en: 'Legal notice', ca: 'Avís legal', ar: 'الإشعار القانوني' };
 	// espace avant les deux-points : seulement en occitan et en français
 	let dp = $derived(lang === 'oc' || lang === 'fr' ? ' :' : ':');
 
@@ -167,9 +29,15 @@
 </script>
 
 <svelte:head>
-	<title>{tx.titre} · Lo Ligam</title>
+	<title>{tria(titre)} · Lo Ligam</title>
 	<meta name="robots" content="noindex" />
 </svelte:head>
+
+{#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
+<!-- (un texte absent dans une langue montre l'occitan : repli de tria) -->
+{#snippet t(clau)}{@const v = txt(clau)}<span lang={lang}>{@render marcat(tria(v))}</span>{/snippet}
+
+{#snippet lien(clau)}{@const l = ligam(clau)}<a href={l.href} target={l.defòra ? '_blank' : undefined} rel={l.defòra ? 'noopener noreferrer' : undefined} use:editar={clau}><span lang={lang}>{tria(l)}</span></a>{/snippet}
 
 <div class="page-bg" aria-hidden="true"></div>
 
@@ -177,11 +45,11 @@
 	<AppHeader />
 
 	<article class="doc">
-		<h1>{tx.titre}</h1>
-		<p class="maj">{tx.maj}{dp} {dataMiseAJour}</p>
+		<h1 use:editar={'mencions.titol'}>{@render t('mencions.titol')}</h1>
+		<p class="maj"><span use:editar={'mencions.maj'}>{@render t('mencions.maj')}</span>{dp} {dataMiseAJour}</p>
 
 		<section>
-			<h2>{tx.editorT}</h2>
+			<h2 use:editar={'mencions.editor.titol'}>{@render t('mencions.editor.titol')}</h2>
 			<p>
 				{editor.nom}<br />
 				{editor.statut}
@@ -194,17 +62,17 @@
 		</section>
 
 		<section>
-			<h2>{tx.directorT}</h2>
+			<h2 use:editar={'mencions.director.titol'}>{@render t('mencions.director.titol')}</h2>
 			<p>{editor.directeurPublication}</p>
 		</section>
 
 		<section>
-			<h2>{tx.contactT}</h2>
+			<h2 use:editar={'mencions.contacte.titol'}>{@render t('mencions.contacte.titol')}</h2>
 			<p><a href="mailto:{editor.email}">{editor.email}</a></p>
 		</section>
 
 		<section>
-			<h2>{tx.hebergeurT}</h2>
+			<h2 use:editar={'mencions.albergador.titol'}>{@render t('mencions.albergador.titol')}</h2>
 			<p>
 				{hebergeur.nom}<br />
 				{hebergeur.adresse}<br />
@@ -213,29 +81,29 @@
 		</section>
 
 		<section>
-			<h2>{tx.proprietatT}</h2>
-			<p>{tx.proprietat}</p>
-			<p>{tx.ia} <a href="/illustracions">{tx.iaLink}</a></p>
+			<h2 use:editar={'mencions.proprietat.titol'}>{@render t('mencions.proprietat.titol')}</h2>
+			<p use:editar={'mencions.proprietat.text'}>{@render t('mencions.proprietat.text')}</p>
+			<p><span use:editar={'mencions.proprietat.ia'}>{@render t('mencions.proprietat.ia')}</span> {@render lien('mencions.proprietat.ligam')}</p>
 		</section>
 
 		<section>
-			<h2>{tx.cartaT}</h2>
-			<p>{tx.carta}</p>
+			<h2 use:editar={'mencions.carta.titol'}>{@render t('mencions.carta.titol')}</h2>
+			<p use:editar={'mencions.carta.text'}>{@render t('mencions.carta.text')}</p>
 		</section>
 
 		<section>
-			<h2>{tx.tipoT}</h2>
-			<p>{tx.tipo}</p>
+			<h2 use:editar={'mencions.polica.titol'}>{@render t('mencions.polica.titol')}</h2>
+			<p use:editar={'mencions.polica.text'}>{@render t('mencions.polica.text')}</p>
 		</section>
 
 		<section>
-			<h2>{tx.ligamsT}</h2>
-			<p>{tx.ligams}</p>
+			<h2 use:editar={'mencions.ligams.titol'}>{@render t('mencions.ligams.titol')}</h2>
+			<p use:editar={'mencions.ligams.text'}>{@render t('mencions.ligams.text')}</p>
 		</section>
 
 		<section>
-			<h2>{tx.donadasT}</h2>
-			<p>{tx.donadas} <a href="/confidencialitat">{tx.donadasLink}</a></p>
+			<h2 use:editar={'mencions.donadas.titol'}>{@render t('mencions.donadas.titol')}</h2>
+			<p><span use:editar={'mencions.donadas.text'}>{@render t('mencions.donadas.text')}</span> {@render lien('mencions.donadas.ligam')}</p>
 		</section>
 	</article>
 </main>

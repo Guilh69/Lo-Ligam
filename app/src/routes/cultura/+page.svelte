@@ -25,8 +25,11 @@
 	import { foto, srcset, COMMONS } from '$lib/cultura/imatges.js';
 	import { IU as IU_G } from '$lib/gramatica/lengas.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar } from '$lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
+	const lèvaEdicion = iniciar('cultura', data.elements);
+	$effect(() => () => lèvaEdicion?.());
 
 	let lang = $derived(langStore.current);
 	let esOc = $derived(lang === 'oc');
@@ -94,7 +97,7 @@
 	<meta name="description" content={tria(IU.descripcion)} />
 </svelte:head>
 
-<PaginaSimpla titol="Cultura" frasa={FRASA} parent={{ href: '/parla', nom: 'Se parla' }}>
+<PaginaSimpla titol="Cultura" clauTitol="cultura.titol" frasa={FRASA} parent={{ href: '/parla', nom: 'Se parla' }}>
 	<div class="filtre">
 		<ul class="temas" aria-label={tria(IU_G.triarTema)}>
 			{#each TEMAS as t}

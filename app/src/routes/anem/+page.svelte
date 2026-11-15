@@ -24,6 +24,13 @@
 	import ScenaTocar from '$lib/anem/ScenaTocar.svelte';
 	import { OSTAL } from '$lib/anem/scenas.js';
 	import { tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+
+	// Le petit mot sous le titre est modifiable sur place (2026-11-15, page « anem »)
+	let { data } = $props();
+	const lèvaEdicion = iniciar('anem', data.elements);
+	$effect(() => () => lèvaEdicion?.());
 
 	// pron : la prononciation de Romain, telle qu'elle est sur ses fiches Canva
 	const BESTIAS = [
@@ -307,7 +314,7 @@
 	<!-- l'écran du moment, centré entre le titre et le coin des adultes -->
 	<div class="scena">
 	{#if ecran === 'acuelh'}
-		<p class="sostitol">{tria(T.sostitol)}</p>
+		<p class="sostitol" hidden={amagat('anem.sostitol')} use:editar={'anem.sostitol'}>{tria(txt('anem.sostitol').oc ? txt('anem.sostitol') : T.sostitol)}</p>
 		<nav class="cantons" aria-label={tria(T.causir)}>
 			<button class="canton" type="button" onclick={() => anar('imatgier')}>
 				<span class="vinheta"><img src={imatge(BESTIAS[0])} alt="" /></span>

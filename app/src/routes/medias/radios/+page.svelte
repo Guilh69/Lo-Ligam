@@ -13,51 +13,47 @@
 	import { RADIOS } from '$lib/data/medias.js';
 	import { DIALECTES, LARG, NAUT, proj } from '$lib/data/carta-dialectes.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+
+	let { data } = $props();
+	const lèvaEdicion = iniciar('radios', data.elements);
+	$effect(() => () => lèvaEdicion?.());
+	const titol = $derived(tria(txt('radios.titol')));
+	const frasa = $derived(tria(txt('radios.frasa')));
 
 	const t = {
 		oc: {
-			titol: 'Ràdios',
-			frasa: 'Las ràdios en occitan, en dirècte.',
 			avís: 'En escotant, la ràdio recebrà ton adreça IP.',
 			arrestar: 'Arrestar',
 			dirècte: 'En dirècte',
 			site: 'Son site'
 		},
 		fr: {
-			titol: 'Radios',
-			frasa: 'Les radios en occitan, en direct.',
 			avís: 'En écoutant, la radio recevra ton adresse IP.',
 			arrestar: 'Arrêter',
 			dirècte: 'En direct',
 			site: 'Son site'
 		},
 		es: {
-			titol: 'Radios',
-			frasa: 'Las radios en occitano, en directo.',
 			avís: 'Mientras escuchas, la emisora recibirá tu dirección IP.',
 			arrestar: 'Parar',
 			dirècte: 'En directo',
 			site: 'Su sitio web'
 		},
 		en: {
-			titol: 'Radio stations',
-			frasa: 'Radio stations in Occitan, live.',
 			avís: 'While you listen, the radio station will receive your IP address.',
 			arrestar: 'Stop',
 			dirècte: 'Live',
 			site: 'Its website'
 		},
 		ca: {
-			titol: 'Ràdios',
-			frasa: 'Les ràdios en occità, en directe.',
 			avís: 'Mentre escoltes, la ràdio rebrà la teva adreça IP.',
 			arrestar: 'Aturar',
 			dirècte: 'En directe',
 			site: 'El seu web'
 		},
 		ar: {
-			titol: 'الإذاعات',
-			frasa: 'الإذاعات الأوكسيتانية على الهواء مباشرةً.',
 			avís: 'عند الاستماع، تطّلع الإذاعة على عنوان IP الخاص بك.',
 			arrestar: 'إيقاف',
 			dirècte: 'بثّ مباشر',
@@ -98,7 +94,7 @@
 </script>
 
 <svelte:head>
-	<title>{tx.titol} · Lo Ligam</title>
+	<title>{titol} · Lo Ligam</title>
 </svelte:head>
 
 <!-- svelte-ignore a11y_media_has_caption -->
@@ -117,11 +113,11 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="radios">
-	<Retour actuelle={tx.titol} />
+	<Retour actuelle={titol} />
 
 	<header class="cap">
-		<h1 lang={langStore.current}>{tx.titol}</h1>
-		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
+		<h1 lang={langStore.current} use:editar={'radios.titol'}>{titol}</h1>
+		<p class="frasa" lang={langStore.current} use:editar={'radios.frasa'}>{frasa}</p>
 		<p class="avís" lang={langStore.current}><Icona nom="son" size="1.1em" /> {tx.avís}</p>
 	</header>
 

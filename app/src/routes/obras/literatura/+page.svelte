@@ -12,6 +12,12 @@
 	import { PALETAS } from '$lib/apren/teulas.js';
 	import { LIBRES } from '$lib/data/arts.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+
+	let { data } = $props();
+	const lèvaEdicion = iniciar('literatura', data.elements);
+	$effect(() => () => lèvaEdicion?.());
 
 	const t = {
 		oc: {
@@ -58,12 +64,14 @@
 		}
 	};
 	let tx = $derived(t[langStore.current] ?? t.oc);
+	// le texte modifiable sur place ; à défaut (rien en base ni dans le filet), le texte d'origine
+	const v = (clau, defaut) => tria(txt(clau)) || defaut;
 
 	const VERD = PALETAS.verd;
 	const color = (i) => VERD[i % VERD.length];
 	const GROPS = $derived([
-		{ id: 'editor', nom: tx.editors, lista: LIBRES.filter((l) => l.grop === 'editor') },
-		{ id: 'trobar', nom: tx.trobar, lista: LIBRES.filter((l) => l.grop === 'trobar') }
+		{ id: 'editor', clau: 'literatura.editors', nom: v('literatura.editors', tx.editors), lista: LIBRES.filter((l) => l.grop === 'editor') },
+		{ id: 'trobar', clau: 'literatura.trobar', nom: v('literatura.trobar', tx.trobar), lista: LIBRES.filter((l) => l.grop === 'trobar') }
 	]);
 	// les dos de livres : hauteur et largeur un peu différentes d'un livre à l'autre
 	const DOS = [
@@ -82,11 +90,11 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="literatura">
-	<Retour actuelle={tx.titol} />
+	<Retour actuelle={v('literatura.titol', tx.titol)} />
 
 	<header class="cap">
-		<h1 lang={langStore.current}>{tx.titol}</h1>
-		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
+		<h1 lang={langStore.current} hidden={amagat('literatura.titol')} use:editar={'literatura.titol'}>{v('literatura.titol', tx.titol)}</h1>
+		<p class="frasa" lang={langStore.current} hidden={amagat('literatura.frasa')} use:editar={'literatura.frasa'}>{v('literatura.frasa', tx.frasa)}</p>
 	</header>
 
 	<!-- la bibliothèque : un dos de livre par entrée, la fiche du livre tiré à droite -->
@@ -106,7 +114,7 @@
 							</li>
 						{/each}
 					</ul>
-					<p class="laissa-nom" lang={langStore.current}>{g.nom}</p>
+					<p class="laissa-nom" lang={langStore.current} hidden={amagat(g.clau)} use:editar={g.clau}>{g.nom}</p>
 				</div>
 			{/each}
 		</div>
