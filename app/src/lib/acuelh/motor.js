@@ -44,21 +44,43 @@ export function lancarAcuelh(racina, opcions = {}) {
 	const CLAR_REPLI = { kp: '#f7f7f7', ko: '#9c5611', kt: '#b53d17', ka: '#c28100' };
 	const CLAR_VARS = { kp: '--t-fons', ko: '--t-aur', kt: '--t-terra', ka: '--t-aur-gros' };
 	let cacheClar = null, cacheClarT = 0;
+	// Une couleur CSS, quelle que soit sa forme, en [r, g, b] de 0 à 1. On la peint sur un pixel et on
+	// relit le pixel (Romain, 2026-11-15 : fond noir en clair). Avant, on lisait le texte de la couleur
+	// calculée ; pour une couleur mélangée (color-mix, comme --t-fons), le navigateur la rend en
+	// « color(srgb 0.97 …) » ou « oklab(…) », en décimales : lues comme des 0 à 255, elles donnaient du noir.
 	const sondaColor = document.createElement('i');
+	const pixel = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
 	function enRGB(css, repli) {
 		sondaColor.style.color = '';
 		sondaColor.style.color = css || repli;
 		if (!sondaColor.style.color) sondaColor.style.color = repli;
 		racina.appendChild(sondaColor);
-		const m = getComputedStyle(sondaColor).color.match(/[\d.]+/g) || [0, 0, 0];
+		const calculada = getComputedStyle(sondaColor).color;
 		sondaColor.remove();
-		return [m[0] / 255, m[1] / 255, m[2] / 255];
+		const nums = (calculada.match(/-?[\d.]+/g) || []).map(Number);
+		// rgb(…) : de 0 à 255 ; color(srgb …) : déjà de 0 à 1 ; le reste (oklab…) passe par un pixel
+		if (/^rgba?\(/.test(calculada) && nums.length >= 3) return nums.slice(0, 3).map((v) => v / 255);
+		if (/^color\(srgb /.test(calculada) && nums.length >= 3) return nums.slice(0, 3);
+		try {
+			pixel.clearRect(0, 0, 1, 1);
+			pixel.fillStyle = repli;
+			pixel.fillStyle = calculada;
+			pixel.fillRect(0, 0, 1, 1);
+			const [r, g, b, a] = pixel.getImageData(0, 0, 1, 1).data;
+			if (a > 0) return [r / 255, g / 255, b / 255];
+		} catch {
+			// lecture de pixel refusée (protection contre le pistage) : on garde le repli
+		}
+		return enRGB(repli, '#000');
 	}
+	const luminança = ([r, g, b]) => 0.2126 * r + 0.7152 * g + 0.0722 * b;
 	function colorsClar() {
 		const ara = performance.now();
 		if (cacheClar && ara - cacheClarT < 1000) return cacheClar;
 		const cs = getComputedStyle(document.documentElement);
 		cacheClar = Object.fromEntries(Object.entries(CLAR_VARS).map(([k, v]) => [k, enRGB(cs.getPropertyValue(v).trim(), CLAR_REPLI[k])]));
+		// filet de sécurité : en thème clair, le fond n'est jamais sombre, quoi qu'il arrive à la lecture
+		if (luminança(cacheClar.kp) < 0.5) cacheClar.kp = enRGB(CLAR_REPLI.kp, '#f7f7f7');
 		cacheClarT = ara;
 		return cacheClar;
 	}
