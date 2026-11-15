@@ -44,6 +44,7 @@
 		const t = setTimeout(() => (crida = false), 7000);
 		return () => clearTimeout(t);
 	});
+	// un clic sur la langue déjà allumée bascule sur l'autre (Romain, 2026-11-15)
 	function causirLenga(v) {
 		langStore.current = v;
 		crida = false;
@@ -215,8 +216,8 @@
 			<div class="lengas" class:en-avant={crida} class:mond-dobert={globeDobert}>
 				<div class="lang-pista" role="group" aria-label={LENGA_ETIQ[lang] ?? LENGA_ETIQ.oc} style={pecaLenga(lang)}>
 					<span class="lang-peça" class:a-drecha={lang !== 'oc'} aria-hidden="true"></span>
-					<button type="button" class="lang-tria" lang="oc" aria-pressed={lang === 'oc'} title={LENGAS.oc.nom} aria-label={LENGAS.oc.nom} onclick={() => causirLenga('oc')}>{LENGAS.oc.curt}</button>
-					<button type="button" class="lang-tria segonda" lang={segonda} aria-pressed={lang === segonda} title={LENGAS[segonda].nom} aria-label={LENGAS[segonda].nom} onclick={() => causirLenga(segonda)}>{LENGAS[segonda].curt}</button>
+					<button type="button" class="lang-tria" lang="oc" aria-pressed={lang === 'oc'} title={LENGAS.oc.nom} aria-label={LENGAS.oc.nom} onclick={() => causirLenga(lang === 'oc' ? segonda : 'oc')}>{LENGAS.oc.curt}</button>
+					<button type="button" class="lang-tria segonda" lang={segonda} aria-pressed={lang === segonda} title={LENGAS[segonda].nom} aria-label={LENGAS[segonda].nom} onclick={() => causirLenga(lang === segonda ? 'oc' : segonda)}>{LENGAS[segonda].curt}</button>
 				</div>
 				<button
 					type="button"
@@ -492,7 +493,6 @@
 	}
 	.lang-tria[aria-pressed='true'] {
 		color: var(--lenga-tinta, #fff);
-		cursor: default;
 	}
 
 	/* Le demi-globe : bord gauche = méridien central, bord droit = l'arrondi du contour */
