@@ -14,6 +14,16 @@
 
 export const ESSAIS = [
 	{
+		chemin: '/ensag/visio',
+		titre: 'Cours en visio : une action par écran',
+		date: '2026-11-15',
+		choix: 'une-action-par-ecran',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'La nouvelle Corses en visio (charte §5quater) : un seul bouton, le détail replié sous des filets, les neuf questions une par écran. Mêmes textes et même envoi que /apren/visio.',
+		suppression: 'Quand Romain dit oui : son +page.svelte remplace celui de /apren/visio, puis on retire le dossier, « /ensag/visio » des deux listes ARMONIZADAS (app.html, ambianca.svelte.js) et de surVisio (AppHeader.svelte).'
+	},
+	{
 		chemin: '/ensag/blanc',
 		titre: 'Page presque blanche',
 		date: '2026-10-22',

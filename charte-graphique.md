@@ -241,17 +241,30 @@ L'app n'a aujourd'hui que 2 pôles (Aprendre, Compte), reliés par un simple bou
 
 ---
 
-## 5quater. Fluidité (décision 2026-09-18)
+## 5quater. Une action par écran (2026-11-15 ; remplace « Fluidité » du 2026-09-18)
 
-Kit de motifs actés lors de la transposition de la référence centre-racine2.com
-(analyse du 2026-09-18) : **blocs-déclarations à mots surlignés** (or/terracotta
-sur crème ou brique) · **carte-héros arrondie** en tête de chaque page feuille ·
-**accordéons souples** · **barre qui se condense** au défilement · **jamais
-d'impasse** (toute page se termine en renvoyant quelque part) · **transitions de
-page** (View Transitions, natif). Toujours : CSS pur, `prefers-reduced-motion`
-respecté, 60 fps (transform/opacity uniquement). Détail et justifications :
-`transposicion-racine2.md` §6 · démo interactive : « Fluiditat Lo Ligam »
-(https://claude.ai/artifact/UfWbWE9UPufi27nHf2pZkF).
+Beaucoup de visiteurs ont peu d'attention disponible (TDAH, téléphone, fatigue) :
+chaque écran se comprend d'un coup d'œil et propose une seule chose à faire.
+
+1. **Une action principale par écran** : un seul bouton en aplat brique ; le reste
+   en liens discrets, ou plus bas.
+2. **Peu de mots avant l'action** : un titre, une phrase ; le détail vient après,
+   ou replié.
+3. **Formulaires** : une question à la fois, seulement l'indispensable ; ce qui est
+   facultatif se dit et se saute.
+4. **Catalogues** (Gramatica, Mots, Cultura) : d'abord « par où commencer », le
+   reste derrière « tout voir ».
+5. **Pas d'encadrés** : ni carte-héros arrondie, ni fond teinté, ni pastille ; la
+   typographie, l'air et des filets fins font la mise en page. Seule exception :
+   les tuiles de couleur des pages de rubrique (S'apren, Se parla…).
+
+Gardé de « Fluidité » : jamais d'impasse (toute page renvoie quelque part),
+transitions de page natives, `prefers-reduced-motion` respecté, animations en
+transform et opacity seulement. Retiré : la carte-héros arrondie et les blocs
+surlignés (ils donnaient l'air « fait par une IA »).
+
+Test avant de montrer une page : dire en une phrase ce qu'on y fait ; se demander
+si elle ressemble à un site fait par une IA.
 
 
 ## 5quinquies. Animations de texte (2026-10-11)
