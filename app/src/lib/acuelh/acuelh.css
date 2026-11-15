@@ -66,6 +66,9 @@ html.lenis, html.lenis body { height: auto; }
 	--b-lum-2: transparent; --b-beluga: #8a3f12; --b-beluga-lum: #a85d12; --b-ombra: transparent; }
 :root[data-leugier='on'] .acuelh .brasa { display: block; }
 :root[data-leugier='on'] .acuelh #fons { display: none; }
+/* le dessin a échoué sur cette carte graphique (motor.js, renonciarGL) : même fond léger, pour la visite */
+.acuelh.sens-gl .brasa { display: block; }
+.acuelh.sens-gl #fons { display: none; }
 @starting-style { :root[data-leugier='on'] .acuelh .brasa { opacity: 0; } }
 .acuelh .brasa::after { content: ''; position: absolute; inset: 0;
 	background: radial-gradient(ellipse 75% 70% at 55% 48%, transparent 45%, var(--b-ombra)); }

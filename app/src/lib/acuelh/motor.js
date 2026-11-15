@@ -33,6 +33,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 	const easeIO = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 	let forçarFons = true;
+	let verificarFons = false; // contrôle du premier dessin en thème clair (renonciarGL)
 	/* ================= Tèma : sorne, clar, o coma lo sistèma ================= */
 	const TEMAS = {
 		sorne: { costa: 'rgba(245, 234, 216, 0.42)', bulla: 'rgba(47, 23, 14, 0.94)', riu: '#f6b73c', estela: '#fbf1e1', liser: 'rgba(34, 16, 10, 0.9)', fil: '#f6b73c', riuTèxt: '#ffd98a', vilaTèxt: '#fbf1e1', vel: 'rgba(34, 16, 10, 0.75)', velFin: 'rgba(34, 16, 10, 0)', crotzTraç: '#ffffff', crotzPonch: '#ffd47f', crotzMoieu: '#eeaf34', crotzEstret: '#8f5c28', crotzCrida: '#6e2e12', crotzFons: '#4a2313' },
@@ -91,6 +92,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		// totes los daltonismes roge-verd), lo rèsta de la paleta se fa per CSS
 		TEM = { ...(clar ? TEMAS.clar : TEMAS.sorne), ...(dalt ? (clar ? { riu: '#1f5f8f', riuTèxt: '#174a72' } : { riu: '#6fb1ff', riuTèxt: '#a9d0ff' }) : {}) };
 		forçarFons = true;
+		verificarFons = true; // le premier dessin dans ce thème sera contrôlé
 	}
 
 	/* ================= Ambiança del fons (personalizacion) ================= */
@@ -341,7 +343,15 @@ export function lancarAcuelh(racina, opcions = {}) {
 		const pr = gl.createProgram();
 		gl.attachShader(pr, sh(gl.VERTEX_SHADER, vert));
 		gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, frag));
-		gl.linkProgram(pr); gl.useProgram(pr);
+		gl.linkProgram(pr);
+		if (!gl.getProgramParameter(pr, gl.LINK_STATUS) && !gl.isContextLost()) {
+			// le dessin ne se construit pas sur cette carte graphique : fond léger à la place
+			console.warn('Lo Ligam, fons : ' + (gl.getProgramInfoLog(pr) || 'programa invalid'));
+			renonciarGL();
+			return;
+		}
+		gl.useProgram(pr);
+		verificarFons = true;
 		gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
 		const a = gl.getAttribLocation(pr, 'a');
@@ -355,6 +365,12 @@ export function lancarAcuelh(racina, opcions = {}) {
 	// changement d'écran). Le navigateur peut reprendre la carte graphique (autre écran, onglet en
 	// arrière-plan, mise en veille) ; la toile, opaque, restait alors noire pour de bon. On la cache
 	// pendant la perte (le fond CSS de la page reparaît) et on reconstruit tout quand le contexte revient.
+	// Renoncer au dessin : la toile se cache et le fond léger CSS (la brasa, qui a sa version claire)
+	// prend sa place, pour cette visite seulement ; le réglage du visiteur n'est pas touché.
+	function renonciarGL() {
+		gl = null; U = null;
+		racina.classList.add('sens-gl');
+	}
 	let perdaEscotada = false;
 	function escotarPerdaGL() {
 		if (perdaEscotada) return;
@@ -1036,6 +1052,18 @@ export function lancarAcuelh(racina, opcions = {}) {
 			gl.uniform1f(U.ro, reliefOK);
 			gl.uniform4f(U.g, geoFons[0], geoFons[1], geoFons[2], geoFons[3]);
 			gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+			// Contrôle après le premier dessin en clair (Romain, 2026-11-15 : fond noir en clair chez lui,
+			// introuvable ailleurs) : si le centre de l'image sort sombre, le dessin a échoué sur cette
+			// carte graphique (en sombre, l'échec passe inaperçu : il est noir comme la nuit voulue).
+			if (verificarFons && temaClar) {
+				verificarFons = false;
+				const px = new Uint8Array(4);
+				gl.readPixels(fons.width >> 1, fons.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+				if (!gl.isContextLost() && luminança([px[0] / 255, px[1] / 255, px[2] / 255]) < 0.35) {
+					console.warn('Lo Ligam, fons : dessenh escur en tèma clar, fons leugièr a la plaça');
+					renonciarGL();
+				}
+			}
 		}
 		if (!calm) idRaf = requestAnimationFrame(bocla);
 	}
