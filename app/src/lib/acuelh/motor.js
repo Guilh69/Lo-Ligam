@@ -418,7 +418,9 @@ export function lancarAcuelh(racina, opcions = {}) {
 	function talhar() {
 		W = innerWidth; H = innerHeight; DPR = Math.min(devicePixelRatio || 1, 2);
 		cv.width = W * DPR; cv.height = H * DPR; cx.setTransform(DPR, 0, 0, DPR, 0, 0);
-		if (gl) { fons.width = Math.round(W * ESCALA_FONS); fons.height = Math.round(H * ESCALA_FONS); gl.viewport(0, 0, fons.width, fons.height); }
+		// changer la taille de la toile la vide (en noir, alpha:false) : la redessiner, même pour le fond
+		// « Simple » (mode 3) qui ne se redessine sinon qu'au défilement (fond noir en clair, Romain 15-11)
+		if (gl) { fons.width = Math.round(W * ESCALA_FONS); fons.height = Math.round(H * ESCALA_FONS); gl.viewport(0, 0, fons.width, fons.height); forçarFons = true; }
 		estelas.forEach(semenar);
 		punts.forEach((pt) => semenar(pt.estela));
 	}
