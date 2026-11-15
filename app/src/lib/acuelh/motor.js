@@ -148,6 +148,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		glProvat = true;
 		gl = fons.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
 		if (!gl) return;
+		escotarPerdaGL();
 		// Las corbas de nivèl an besonh de las derivadas (fwidth) per un traç fin e regular
 		const deriv = gl.getExtension('OES_standard_derivatives');
 		const frag = (deriv ? '#extension GL_OES_standard_derivatives : enable\n#define DERIV\n' : '') + `
@@ -328,6 +329,26 @@ export function lancarAcuelh(racina, opcions = {}) {
 		forçarFons = true;
 		if (reliefDemandat) cargarRelief();
 	}
+	// Contèxte perdut (Romain, 2026-11-15, capture : fond noir sous un texte du thème clair, après un
+	// changement d'écran). Le navigateur peut reprendre la carte graphique (autre écran, onglet en
+	// arrière-plan, mise en veille) ; la toile, opaque, restait alors noire pour de bon. On la cache
+	// pendant la perte (le fond CSS de la page reparaît) et on reconstruit tout quand le contexte revient.
+	let perdaEscotada = false;
+	function escotarPerdaGL() {
+		if (perdaEscotada) return;
+		perdaEscotada = true;
+		fons.addEventListener('webglcontextlost', (e) => {
+			e.preventDefault(); // sans ça, le navigateur ne rend jamais le contexte
+			gl = null; U = null; reliefOK = 0;
+			fons.style.visibility = 'hidden';
+		}, { signal: ac.signal });
+		fons.addEventListener('webglcontextrestored', () => {
+			if (!viu) return;
+			glProvat = false;
+			fons.style.visibility = '';
+			iniciarGL();
+		}, { signal: ac.signal });
+	}
 	// Mièja resolucion : lo flou del bruch o perdona, la carta grafica trabalha 4 còps mens.
 	const ESCALA_FONS = 0.5;
 	// Lo relief (tuèlas Terrarium de Mapzen, dadas dobèrtas) : carta d'altitud 576×351,
@@ -340,7 +361,7 @@ export function lancarAcuelh(racina, opcions = {}) {
 		if (!gl) return;
 		const img = new Image();
 		img.onload = () => {
-			if (!viu) return;
+			if (!viu || !gl) return;
 			gl.activeTexture(gl.TEXTURE0);
 			gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
 			gl.pixelStorei(gl.UNPACK_ALIGNMENT, 1);
