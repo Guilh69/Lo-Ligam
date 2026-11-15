@@ -17,7 +17,7 @@ export const ESSAIS = [
 		chemin: '/ensag/visio',
 		titre: 'Cours en visio : une action par écran',
 		date: '2026-11-15',
-		choix: 'une-action-par-ecran',
+		choix: 'navigation-principe',
 		etat: 'actif',
 		pret: 'non',
 		raison: 'La nouvelle Corses en visio (charte §5quater) : un seul bouton, le détail replié sous des filets, les neuf questions une par écran. Mêmes textes et même envoi que /apren/visio.',
