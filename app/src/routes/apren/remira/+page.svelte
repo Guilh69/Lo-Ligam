@@ -16,6 +16,8 @@
 	import { onMount } from 'svelte';
 	import { tria, lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
 	import Icona from '$lib/components/Icona.svelte';
+	import { iniciar, txt, ligam, amagat } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
 	import MencionIA from '$lib/components/MencionIA.svelte';
 	import { SCENAS, GROPS, QUASERNET, motsDelQuasernet, fotoCamin, fotoSrcset, fotoSizes } from '$lib/plueja/scenas.js';
 	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
@@ -26,6 +28,12 @@
 	import { dev } from '$app/environment';
 	import { carnet, demarrerCarnet } from '$lib/carnet/carnet.svelte.js';
 	import { aRevoir } from '$lib/carnet/regles.js';
+
+	// Le titre et le lien de retour sont modifiables sur place (2026-11-15, page « remira »)
+	let { data } = $props();
+	const lèvaEdicion = iniciar('remira', data.elements);
+	$effect(() => () => lèvaEdicion?.());
+	const lienApren = $derived(ligam('remira.ligam.apren'));
 
 	const T = {
 		titol: { oc: 'Remira', fr: 'Remira' }, // impératif de remirar, contempler (vèrb'Òc, 05-11) ; un nom se lit comme il se dit, dans toutes les langues
@@ -661,8 +669,8 @@
 >
 	<header class="cap">
 		<div class="cap-nom">
-			<a class="tornar" href="/apren" aria-label={tria(T.tornar)} lang="oc"><span aria-hidden="true">‹</span> S’apren</a>
-			<h1>{tria(T.titol)}</h1>
+			<a class="tornar" href={lienApren.href === '#' ? '/apren' : lienApren.href} aria-label={tria(T.tornar)} lang="oc" hidden={amagat('remira.ligam.apren')} use:editar={'remira.ligam.apren'}><span aria-hidden="true">‹</span> {lienApren.oc || 'S’apren'}</a>
+			<h1 hidden={amagat('remira.titol')} use:editar={'remira.titol'}>{tria(txt('remira.titol').oc ? txt('remira.titol') : T.titol)}</h1>
 		</div>
 		<div class="cap-dreita">
 			<!-- toujours là, quel que soit le mouvement (Joan) : l'explication repasse à la poussière d'or -->

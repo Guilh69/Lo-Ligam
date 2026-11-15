@@ -14,59 +14,23 @@
 	// relire par Romain ; es, en, ca, ar par Aran (06-11).
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import { tria, lang } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+	import { segments } from '$lib/edicion/marcat.js';
 
-	const T = {
-		titol: { oc: 'Las illustracions', fr: 'Les illustrations', es: 'Las ilustraciones', en: 'The illustrations', ca: 'Les il·lustracions', ar: 'الرسومات' },
-		p1: {
-			oc: 'Lo Ligam a començat sens budgèt. L’IA a fach los dessenhs del site : los mots de Remira, las afichas de la sala de jòcs, las icònas.',
-			fr: 'Lo Ligam a commencé sans budget. Les dessins du site sont faits par IA : les mots de Remira, les affiches de la salle de jeux, les icônes.',
-			es: 'Lo Ligam empezó sin presupuesto. Los dibujos del sitio están hechos por IA: las palabras de Remira, los carteles de la sala de juegos, los iconos.',
-			en: 'Lo Ligam started with no budget. The site’s drawings were made by AI: the words in Remira, the posters in the games room, the icons.',
-			ca: 'Lo Ligam va començar sense pressupost. Els dibuixos del web són fets per IA: les paraules de Remira, els cartells de la sala de jocs, les icones.',
-			ar: 'بدأ Lo Ligam بلا ميزانية. ورسم الذكاء الاصطناعي رسومات الموقع: كلمات Remira وملصقات قاعة الألعاب والأيقونات.'
-		},
-		canhota: { oc: 'La canhòta', fr: 'La cagnotte', es: 'La colecta', en: 'The fundraiser', ca: 'La col·lecta', ar: 'حملة التبرعات' },
-		p2: {
-			oc: 'Una canhòta se dobrirà per pagar una persona que dessenha. Remplaçarà pauc a pauc los dessenhs de l’IA.',
-			fr: 'Une cagnotte va s’ouvrir pour payer un illustrateur ou une illustratrice, qui remplacera peu à peu les dessins de l’IA.',
-			es: 'Se abrirá una colecta para pagar a una persona ilustradora, que sustituirá poco a poco los dibujos de la IA.',
-			en: 'A fundraiser will open to pay an illustrator, who will gradually replace the AI drawings.',
-			ca: 'S’obrirà una col·lecta per pagar una persona il·lustradora, que substituirà a poc a poc els dibuixos de la IA.',
-			ar: 'ستُفتح حملة تبرعات لدفع أجر شخص يرسم، وسيحلّ تدريجيًا مكان رسومات الذكاء الاصطناعي.'
-		},
-		p3: {
-			oc: 'Aquel argent servirà sonque a aquò.',
-			fr: 'Cet argent servira uniquement à ça.',
-			es: 'Ese dinero se usará solo para eso.',
-			en: 'This money will be used only for that.',
-			ca: 'Aquests diners serviran només per a això.',
-			ar: 'سيُخصَّص هذا المال لهذا الغرض فقط.'
-		},
-		p4: {
-			// pas de facture publiée (Romain, 06-11 : « c'est ridicule ») : les montants,
-			// les postes de dépense et les artistes
-			oc: 'Aquí veiràs l’argent amassat, l’argent despensat, despensa per despensa, e lo nom de las personas que i an trabalhat.',
-			fr: 'Ici, tu verras l’argent récolté, l’argent dépensé, poste par poste, et le nom des artistes qui y ont travaillé.',
-			es: 'Aquí verás el dinero recaudado, el dinero gastado, partida por partida, y el nombre de quienes han trabajado en ello.',
-			en: 'Here you’ll see the money raised, the money spent, item by item, and the names of the artists who worked on it.',
-			ca: 'Aquí veuràs els diners recollits, els diners gastats, partida per partida, i el nom de qui hi ha treballat.',
-			ar: 'ستجد هنا المبلغ الذي جُمع، والمبلغ الذي أُنفق بندًا بندًا، وأسماء الفنانين الذين عملوا عليه.'
-		},
-		p5: {
-			oc: 'La canhòta es pas encara dobèrta.',
-			fr: 'La cagnotte n’est pas encore ouverte.',
-			es: 'La colecta todavía no está abierta.',
-			en: 'The fundraiser isn’t open yet.',
-			ca: 'La col·lecta encara no és oberta.',
-			ar: 'لم تُفتح حملة التبرعات بعد.'
-		},
-		descripcion: {
-			fr: 'Les illustrations de Lo Ligam sont faites par IA, en attendant un illustrateur ou une illustratrice payé·e par une cagnotte.',
-			es: 'Las ilustraciones de Lo Ligam están hechas por IA, a la espera de una persona ilustradora pagada con una colecta.',
-			en: 'Lo Ligam’s illustrations are made by AI, until an illustrator can be paid through a fundraiser.',
-			ca: 'Les il·lustracions de Lo Ligam són fetes per IA, a l’espera d’una persona il·lustradora pagada amb una col·lecta.',
-			ar: 'رسومات Lo Ligam من صنع الذكاء الاصطناعي، إلى أن يتولى شخص الرسم بأجر تموّله حملة تبرعات.'
-		}
+	let { data } = $props();
+
+	const lèvaEdicion = iniciar('illustracions', data.elements);
+	$effect(() => () => lèvaEdicion?.());
+
+	const titolPagina = { oc: 'Las illustracions', fr: 'Les illustrations', es: 'Las ilustraciones', en: 'The illustrations', ca: 'Les il·lustracions', ar: 'الرسومات' };
+	// (la description meta n'est pas modifiable sur place)
+	const descripcion = {
+		fr: 'Les illustrations de Lo Ligam sont faites par IA, en attendant un illustrateur ou une illustratrice payé·e par une cagnotte.',
+		es: 'Las ilustraciones de Lo Ligam están hechas por IA, a la espera de una persona ilustradora pagada con una colecta.',
+		en: 'Lo Ligam’s illustrations are made by AI, until an illustrator can be paid through a fundraiser.',
+		ca: 'Les il·lustracions de Lo Ligam són fetes per IA, a l’espera d’una persona il·lustradora pagada amb una col·lecta.',
+		ar: 'رسومات Lo Ligam من صنع الذكاء الاصطناعي، إلى أن يتولى شخص الرسم بأجر تموّله حملة تبرعات.'
 	};
 
 	// la langue réellement affichée (tria retombe sur l'occitan)
@@ -74,25 +38,29 @@
 </script>
 
 <svelte:head>
-	<title>{tria(T.titol)} · Lo Ligam</title>
-	<meta name="description" content={tria(T.descripcion)} />
+	<title>{tria(titolPagina)} · Lo Ligam</title>
+	<meta name="description" content={tria(descripcion)} />
 </svelte:head>
+
+{#snippet marcat(s)}{#each segments(s) as p, i (i)}{#if p.aur}<span class="aur">{p.t}</span>{:else if p.ital}<i>{p.t}</i>{:else}{p.t}{/if}{/each}{/snippet}
+<!-- (un texte absent dans une langue montre l'occitan : repli de tria) -->
+{#snippet t(clau)}{@const v = txt(clau)}<span lang={lg(v)}>{@render marcat(tria(v))}</span>{/snippet}
 
 <div class="pagina">
 	<div class="capçal"><AppHeader /></div>
 
 	<main id="contengut" class="illustracions">
 		<header class="cap">
-			<h1 lang={lg(T.titol)}>{tria(T.titol)}</h1>
-			<p class="frasa" lang={lg(T.p1)}>{tria(T.p1)}</p>
+			<h1 use:editar={'illustracions.titol'}>{@render t('illustracions.titol')}</h1>
+			<p class="frasa" use:editar={'illustracions.frasa'}>{@render t('illustracions.frasa')}</p>
 		</header>
 
 		<section class="canhota" aria-labelledby="canhota-titol">
-			<h2 id="canhota-titol" lang={lg(T.canhota)}>{tria(T.canhota)}</h2>
-			<p lang={lg(T.p2)}>{tria(T.p2)}</p>
-			<p lang={lg(T.p3)}>{tria(T.p3)}</p>
-			<p lang={lg(T.p4)}>{tria(T.p4)}</p>
-			<p class="estat" lang={lg(T.p5)}>{tria(T.p5)}</p>
+			<h2 id="canhota-titol" use:editar={'illustracions.canhota.titol'}>{@render t('illustracions.canhota.titol')}</h2>
+			<p use:editar={'illustracions.canhota.p1'}>{@render t('illustracions.canhota.p1')}</p>
+			<p use:editar={'illustracions.canhota.p2'}>{@render t('illustracions.canhota.p2')}</p>
+			<p use:editar={'illustracions.canhota.p3'}>{@render t('illustracions.canhota.p3')}</p>
+			<p class="estat" use:editar={'illustracions.canhota.estat'}>{@render t('illustracions.canhota.estat')}</p>
 		</section>
 	</main>
 </div>

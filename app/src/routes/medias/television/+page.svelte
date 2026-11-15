@@ -10,46 +10,42 @@
 	import Icona from '$lib/components/Icona.svelte';
 	import { TELES } from '$lib/data/medias.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+
+	let { data } = $props();
+	const lèvaEdicion = iniciar('television', data.elements);
+	$effect(() => () => lèvaEdicion?.());
+	const titol = $derived(tria(txt('television.titol')));
+	const frasa = $derived(tria(txt('television.frasa')));
 
 	const t = {
 		oc: {
-			titol: 'Television e video',
-			frasa: 'Las cadenas, las emissions e las videos en occitan.',
 			veire: 'Veire',
 			dirècte: 'En dirècte',
 			cadenas: 'Las cadenas'
 		},
 		fr: {
-			titol: 'Télévision et vidéo',
-			frasa: 'Les chaînes, les émissions et les vidéos en occitan.',
 			veire: 'Voir',
 			dirècte: 'En direct',
 			cadenas: 'Les chaînes'
 		},
 		es: {
-			titol: 'Televisión y vídeo',
-			frasa: 'Los canales, los programas y los vídeos en occitano.',
 			veire: 'Ver',
 			dirècte: 'En directo',
 			cadenas: 'Los canales'
 		},
 		en: {
-			titol: 'Television and video',
-			frasa: 'The channels, the programmes and the videos in Occitan.',
 			veire: 'Watch',
 			dirècte: 'Live',
 			cadenas: 'The channels'
 		},
 		ca: {
-			titol: 'Televisió i vídeo',
-			frasa: 'Els canals, els programes i els vídeos en occità.',
 			veire: 'Veure',
 			dirècte: 'En directe',
 			cadenas: 'Els canals'
 		},
 		ar: {
-			titol: 'التلفزيون والفيديو',
-			frasa: 'القنوات والبرامج ومقاطع الفيديو بالأوكسيتانية.',
 			veire: 'مشاهدة',
 			dirècte: 'بثّ مباشر',
 			cadenas: 'القنوات'
@@ -82,11 +78,11 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="tele">
-	<Retour actuelle={tx.titol} />
+	<Retour actuelle={titol} />
 
 	<header class="cap">
-		<h1 lang={langStore.current}>{tx.titol}</h1>
-		<p class="frasa" lang={langStore.current}>{tx.frasa}</p>
+		<h1 lang={langStore.current} use:editar={'television.titol'}>{titol}</h1>
+		<p class="frasa" lang={langStore.current} use:editar={'television.frasa'}>{frasa}</p>
 	</header>
 
 	<!-- le téléviseur : l'écran à gauche, la télécommande à droite -->

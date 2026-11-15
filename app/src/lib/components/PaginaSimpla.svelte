@@ -4,18 +4,25 @@
 	// une phrase, puis le contenu ; même fond de braise, même bandeau.
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import Retour from '$lib/components/Retour.svelte';
+	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { txt, amagat } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
 
-	/** titol : en occitan ; frasa : texte déjà balisé (marcar) ; parent : { href, nom } */
-	let { titol, frasa = '', parent = null, children } = $props();
+	/** titol : en occitan ; frasa : texte déjà balisé (marcar) ; parent : { href, nom } ;
+	    clauTitol : clé d'un élément modifiable sur place (la page a fait iniciar) qui remplace le titre ;
+	    sans elle, le titre reste fixe (cas des autres pages) ;
+	    clauFrasa : de même pour la phrase sous le titre (la page la lit et la balise elle-même) */
+	let { titol, frasa = '', parent = null, clauTitol = null, clauFrasa = null, children } = $props();
+	let titolVist = $derived(clauTitol ? tria(txt(clauTitol)) || titol : titol);
 </script>
 
 <div class="pagina">
 	<div class="entete"><AppHeader /></div>
 	<main class="principal">
 		<header class="cap">
-			{#if parent}<Retour actuelle={titol} />{/if}
-			<h1 lang="oc">{titol}</h1>
-			{#if frasa}<p class="frasa">{@html frasa}</p>{/if}
+			{#if parent}<Retour actuelle={titolVist} />{/if}
+			{#if clauTitol}<h1 lang={langStore.current} hidden={amagat(clauTitol)} use:editar={clauTitol}>{titolVist}</h1>{:else}<h1 lang="oc">{titol}</h1>{/if}
+			{#if frasa}{#if clauFrasa}<p class="frasa" hidden={amagat(clauFrasa)} use:editar={clauFrasa}>{@html frasa}</p>{:else}<p class="frasa">{@html frasa}</p>{/if}{/if}
 		</header>
 		{@render children()}
 	</main>

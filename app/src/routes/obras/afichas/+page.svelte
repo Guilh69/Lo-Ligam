@@ -7,6 +7,12 @@
 	import Retour from '$lib/components/Retour.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+
+	let { data } = $props();
+	const lèvaEdicion = iniciar('afichas', data.elements);
+	$effect(() => () => lèvaEdicion?.());
 	import { afichas } from '$lib/data/afichas.js';
 
 	let lang = $derived(langStore.current);
@@ -74,6 +80,8 @@
 		}
 	};
 	let tx = $derived(t[lang] ?? t.oc);
+	// le texte modifiable sur place ; à défaut (rien en base ni dans le filet), le texte d'origine
+	const v = (clau, defaut) => tria(txt(clau)) || defaut;
 
 	// Galerie : la grande image se charge seulement à l'ouverture (<dialog> natif :
 	// Échap ferme, le focus revient au bouton, la page derrière est inerte).
@@ -100,11 +108,11 @@
 <div class="capçal"><AppHeader /></div>
 
 <main class="obras">
-	<Retour actuelle={tx.title} />
+	<Retour actuelle={v('afichas.titol', tx.title)} />
 
 	<header class="cap">
-		<h1 lang={lang}>{tx.title}</h1>
-		<p class="frasa" lang={lang}>{tx.lead}</p>
+		<h1 lang={lang} hidden={amagat('afichas.titol')} use:editar={'afichas.titol'}>{v('afichas.titol', tx.title)}</h1>
+		<p class="frasa" lang={lang} hidden={amagat('afichas.frasa')} use:editar={'afichas.frasa'}>{v('afichas.frasa', tx.lead)}</p>
 	</header>
 
 	<section class="afichas" aria-label={tx.title}>

@@ -19,12 +19,20 @@
 	import FichaVideo from '$lib/components/FichaVideo.svelte';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import Retour from '$lib/components/Retour.svelte';
+	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
 
 	// Les fiches arrivent de la base via +page.js, qui se replie sur le
 	// catalogue gelé si elle ne répond pas.
 	let { data } = $props();
 	let categories = $derived(data.categories);
 	let fichas = $derived(data.fichas);
+
+	// Le petit mot, le titre et le chapeau sont modifiables sur place (2026-11-15, page « mots »)
+	const lèvaEdicion = iniciar('mots', data.elements);
+	$effect(() => () => lèvaEdicion?.());
+	/** l'élément modifiable dans la langue choisie ; sans lui, le texte d'origine (tx) */
+	const editable = (clau, base) => (txt(clau).oc ? tria(txt(clau)) : base);
 
 	let lang = $derived(langStore.current);
 
@@ -397,10 +405,10 @@
 	<main class="cors">
 		<Retour />
 		<header class="intro">
-			<p class="kicker">{tx.kicker}</p>
-			<h1>{tx.title}</h1>
+			<p class="kicker" hidden={amagat('mots.kicker')} use:editar={'mots.kicker'}>{editable('mots.kicker', tx.kicker)}</p>
+			<h1 hidden={amagat('mots.titol')} use:editar={'mots.titol'}>{editable('mots.titol', tx.title)}</h1>
 			<div class="intro-pe">
-				<p class="lead">{tx.lead}</p>
+				<p class="lead" hidden={amagat('mots.chapeu')} use:editar={'mots.chapeu'}>{editable('mots.chapeu', tx.lead)}</p>
 				<p class="comptes">
 					<span><b>{fichas.length}</b> {tx.fichasN ?? tx.fichas}</span>
 					<span><b>{categories.length}</b> {tx.temasN ?? tx.temas}</span>

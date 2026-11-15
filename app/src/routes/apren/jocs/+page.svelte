@@ -23,6 +23,14 @@
 	import Intrus from '$lib/jocs/Intrus.svelte';
 	import Sala from '$lib/jocs/sala/Sala.svelte';
 	import { tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt, ligam, amagat } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
+
+	// Le titre et le lien de retour sont modifiables sur place (2026-11-15, page « jocs »)
+	let { data } = $props();
+	const lèvaEdicion = iniciar('jocs', data.elements);
+	$effect(() => () => lèvaEdicion?.());
+	const lienApren = $derived(ligam('jocs.ligam.apren'));
 
 	const T = {
 		tornar: { oc: 'Tornar a S’apren', fr: 'Revenir à S’apprend' },
@@ -56,9 +64,9 @@
 		{#if joc}
 			<a class="tornar" href="/apren/jocs" lang="oc"><span aria-hidden="true">‹</span> {tria(T.sala)}</a>
 		{:else}
-			<a class="tornar" href="/apren" aria-label={tria(T.tornar)} lang="oc"><span aria-hidden="true">‹</span> S’apren</a>
+			<a class="tornar" href={lienApren.href === '#' ? '/apren' : lienApren.href} aria-label={tria(T.tornar)} lang="oc" hidden={amagat('jocs.ligam.apren')} use:editar={'jocs.ligam.apren'}><span aria-hidden="true">‹</span> {lienApren.oc || 'S’apren'}</a>
 		{/if}
-		<h1 class="marca" lang="oc">Jòcs</h1>
+		<h1 class="marca" lang="oc" hidden={amagat('jocs.titol')} use:editar={'jocs.titol'}>{txt('jocs.titol').oc || 'Jòcs'}</h1>
 		{#if joc}
 			<nav class="onglets" aria-label={tria(T.triar)}>
 				{#each JOCS as j (j.id)}

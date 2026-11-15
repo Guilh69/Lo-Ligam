@@ -20,6 +20,8 @@
 	import { legirAvancament } from './avancament.js';
 	import { T, NOTA_COMPTE } from './textes.js';
 	import Retour from '$lib/components/Retour.svelte';
+	import { txt } from '$lib/edicion/edicion.svelte.js';
+	import { editar } from '$lib/edicion/editar.svelte.js';
 
 	/** essai : ?simul=n simule l'avancement (pages /ensag/parcors) */
 	let { essai = false, children } = $props();
@@ -34,7 +36,15 @@
 	const simul = $derived(essai ? $page.url.searchParams.get('simul') : null);
 
 	// Le mot occitan garde la vedette ; la glose suit la langue choisie
-	const glosa = (v) => (langStore.current === 'oc' ? v.fr : (v[langStore.current] ?? v.fr));
+	const glosa = (v) => (langStore.current === 'oc' ? v.fr : (v[langStore.current] || v.fr));
+	// Le titre et la note du compte sont modifiables sur place (clés parcors.titol et
+	// parcors.nota) ; sans élément lu (page d'essai), les mots de textes.js servent
+	const modifiable = (clau, base) => {
+		const v = txt(clau);
+		return v.oc ? v : base;
+	};
+	const titol = $derived(modifiable('parcors.titol', T.titol));
+	const nota = $derived(modifiable('parcors.nota', NOTA_COMPTE));
 	const lg = $derived(langStore.current === 'oc' ? 'fr' : langStore.current);
 
 	$effect(() => {
@@ -105,8 +115,8 @@
 		<div class="entrada">
 			<header class="cap">
 				<Retour />
-				<h1 lang="oc">{T.titol.oc}</h1>
-				<p class="glosa" lang={lg}>({glosa(T.titol)})</p>
+				<h1 lang="oc" use:editar={'parcors.titol'}>{titol.oc}</h1>
+				<p class="glosa" lang={lg} use:editar={'parcors.titol'}>({glosa(titol)})</p>
 			</header>
 
 			<section class="resum" aria-labelledby="resum-titol">
@@ -164,9 +174,9 @@
 		{#if prèst && !ambCompte}
 			<p class="nota">
 				<Icona nom="persona" />
-				<span>
-					<span lang="oc">{NOTA_COMPTE.oc}</span>
-					<span class="glosa" lang={lg}>({glosa(NOTA_COMPTE)})</span>
+				<span use:editar={'parcors.nota'}>
+					<span lang="oc">{nota.oc}</span>
+					<span class="glosa" lang={lg}>({glosa(nota)})</span>
 				</span>
 			</p>
 		{/if}

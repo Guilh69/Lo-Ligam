@@ -27,6 +27,12 @@
 	import { FICHAS_LENGAS, IU } from '$lib/gramatica/lengas.js';
 	import { marcar } from '$lib/gramatica/marcar.js';
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
+
+	// Le titre et la phrase du haut sont modifiables sur place (2026-11-15, page « gramatica »)
+	let { data } = $props();
+	const lèvaEdicion = iniciar('gramatica', data.elements);
+	$effect(() => () => lèvaEdicion?.());
 
 	// Les langues (Romain, 2026-11-04) : tout suit la langue choisie ; en
 	// occitan, la bulle de survol donne des exemples ; dans une autre langue,
@@ -40,7 +46,7 @@
 	let monte = $state(false);
 	onMount(() => (monte = true));
 	const balisat = (v) => marcar(monte ? tria(v) : v.oc);
-	let FRASA = $derived(balisat(IU.frasa));
+	let FRASA = $derived(balisat(txt('gramatica.frasa').oc ? txt('gramatica.frasa') : IU.frasa));
 	const resumit = (f) => tria({ fr: f.resumit, ...FICHAS_LENGAS[f.id]?.resumit });
 	// le titre de la fiche dans la langue choisie (bulle), sauf en occitan
 	const titolTraduch = (f) => (lang === 'fr' ? f.fr : (FICHAS_LENGAS[f.id]?.titol?.[lang] ?? f.fr));
@@ -153,7 +159,7 @@
 	<Bulla {id} titol={esOc ? '' : nom.oc} etiqueta={esOc ? tria(IU.perExemple) : ''} text={exemple} />
 {/snippet}
 
-<PaginaSimpla titol="Gramatica" frasa={FRASA} parent={{ href: '/apren', nom: 'S’apren' }}>
+<PaginaSimpla titol="Gramatica" clauTitol="gramatica.titol" clauFrasa="gramatica.frasa" frasa={FRASA} parent={{ href: '/apren', nom: 'S’apren' }}>
 	<div class="filtre">
 		<ul class="temas" aria-label={tria(IU.triarTema)}>
 			{#each TEMAS as t}
