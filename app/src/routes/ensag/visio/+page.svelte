@@ -169,12 +169,29 @@
 	{#if veireAcuèlh}
 		<Retour chemin="/apren/visio" />
 
+		<!-- Sur ordinateur : le texte à gauche, la photo à droite ; sur téléphone,
+		     la photo vient sous le bouton (Romain, 15-11 : « une belle photo
+		     d'Occitanie » ; la page n'est plus calée à gauche) -->
+		<div class="entrada">
 		<!-- L'accueil : le titre, une phrase, un bouton -->
 		<header class="cap">
 			<h1 id="visio-titol" tabindex="-1" hidden={amagat('visio.titol')} use:editar={'visio.titol'}>{@render t('visio.titol')}</h1>
 			<p class="chapeu" hidden={amagat('visio.chapeu')} use:editar={'visio.chapeu'}>{@render t('visio.chapeu')}</p>
 			{@render reservar('#questionari', començar)}
 		</header>
+
+		<!-- Une photo de Romain (Remira, Paisatges) : le pic Saint-Loup par une arche en ruine -->
+		<figure class="foto">
+			<img
+				src="/apren/paisatges/arcada-800.webp"
+				srcset="/apren/paisatges/arcada-800.webp 800w, /apren/paisatges/arcada-1600.webp 1600w"
+				sizes="(min-width: 60rem) 30rem, 100vw"
+				width="1600"
+				height="2133"
+				decoding="async"
+				alt={tria({ oc: 'Un puèg vist per una arcada de pèira en roïna, sus la garriga.', fr: 'Le pic Saint-Loup vu à travers une arche de pierre en ruine, au-dessus de la garrigue.', es: 'El pico de Saint-Loup visto a través de un arco de piedra en ruinas, sobre la garriga.', en: 'The Pic Saint-Loup seen through a ruined stone arch, above the garrigue.', ca: 'El pic Saint-Loup vist a través d’un arc de pedra en ruïnes, sobre la garriga.', ar: 'قمة سان لو كما تبدو عبر قوس حجري متهدّم فوق أحراش الغاريغ.' })}
+			/>
+		</figure>
 
 		<!-- Le détail, replié : une ligne par sujet, séparées par des filets -->
 		<div class="plecs">
@@ -254,6 +271,7 @@
 					</div>
 				</details>
 			{/if}
+		</div>
 		</div>
 	{/if}
 
@@ -443,9 +461,51 @@
 		outline: none;
 	}
 
-	/* L'accueil : la typographie seule, comme les pages de rubrique */
+	/* L'accueil : sur téléphone, le titre, la photo, le détail, l'un sous
+	   l'autre ; sur ordinateur, le texte à gauche et la photo à droite, qui
+	   reste en vue pendant qu'on ouvre les lignes */
+	.entrada {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-areas: 'cap' 'foto' 'plecs';
+	}
 	.cap {
-		margin-bottom: var(--esp-64);
+		grid-area: cap;
+		margin-bottom: var(--esp-48);
+	}
+	.foto {
+		grid-area: foto;
+		margin: 0 0 var(--esp-48);
+	}
+	.foto img {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		object-position: 50% 42%;
+		border-radius: 6px;
+	}
+	@media (min-width: 60rem) {
+		.entrada {
+			grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+			grid-template-rows: auto 1fr;
+			grid-template-areas: 'cap foto' 'plecs foto';
+			column-gap: clamp(3rem, 6vw, 6rem);
+		}
+		.cap {
+			margin-bottom: var(--esp-64);
+		}
+		.foto {
+			position: sticky;
+			top: var(--esp-32);
+			align-self: start;
+			margin: 0;
+		}
+		.foto img {
+			aspect-ratio: 3 / 4;
+			max-height: calc(100vh - 4rem);
+		}
 	}
 	h1 {
 		margin: 0;
@@ -483,7 +543,7 @@
 
 	/* Le détail replié : des lignes, des filets fins, rien d'encadré */
 	.plecs {
-		max-width: 46rem;
+		grid-area: plecs;
 		border-bottom: 1px solid var(--t-linha);
 	}
 	details {
@@ -622,8 +682,10 @@
 		margin-top: var(--esp-96);
 		scroll-margin-top: var(--esp-24);
 	}
+	/* une question à la fois : au milieu de la page, plus calée à gauche */
 	.pas-a-pas .questionari {
 		margin-top: 0;
+		margin-inline: auto;
 	}
 	.questionari h2 {
 		margin: 0;
@@ -895,7 +957,11 @@
 		overflow: hidden;
 	}
 
-	/* le merci : une phrase, le bouton du calendrier */
+	/* le merci : une phrase, le bouton du calendrier, au milieu de la page */
+	.merce {
+		max-width: 40rem;
+		margin-inline: auto;
+	}
 	.merce h1 {
 		max-width: 18ch;
 		margin-bottom: var(--esp-48);
