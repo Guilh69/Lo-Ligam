@@ -14,6 +14,7 @@
 	import { onMount } from 'svelte';
 	import { confetisSurPage } from '$lib/flotants/pages.js';
 	import { efiechSurRoute } from '$lib/efiech/emplacaments.js';
+	import { edicion } from '$lib/edicion/edicion.svelte.js';
 	// le signal des couleurs (2026-11-13) : les pages suivent quand Romain change une couleur depuis le site
 	import '$lib/colors/senhal.svelte.js';
 	import { adminSabut } from '$lib/adminStore';
@@ -53,7 +54,8 @@
 	let monte = $state(false);
 	onMount(() => (monte = true));
 	// la couche des effets Efièch (atelier /admin/efiechs, 2026-11-15) : chargée seulement là où un effet peut jouer
-	let efiech = $derived(monte && efiechSurRoute(id));
+	// (et sur les pages modifiables : un effet peut y être posé sur un élément)
+	let efiech = $derived(monte && (efiechSurRoute(id) || !!edicion.pagina));
 	let confetis = $derived(monte && ambianca.clar && ambianca.confetis && !ambianca.leugier && confetisSurPage(id));
 	// la couche est DERRIÈRE le contenu : tant qu'elle est là, le cadre des pages (.pagina, .acuelh), plein, devient
 	// transparent (app.css, data-confetis) pour la laisser voir ; le fond de la page est celui du <body>

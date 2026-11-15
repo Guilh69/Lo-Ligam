@@ -13,7 +13,10 @@
 	import { onMount } from 'svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { simulacion } from '$lib/talhier/notas.svelte.js';
-	import { EMPLACAMENTS, PAGINA, clauDe } from '$lib/efiech/emplacaments.js';
+	import { page } from '$app/state';
+	import { EMPLACAMENTS, PAGINA, clauDe, PREFIXE_ELEMENT, idElement, elementDeId, clauElementValida, paginaDeClau, DECLENCHEURS } from '$lib/efiech/emplacaments.js';
+	import { CAMINS } from '$lib/talhier/pila.js';
+	import { etiqueta } from '$lib/edicion/etiquetas.js';
 	import { escriure, legir, couleursSite } from '$lib/efiech/legida.js';
 	import { MOUVEMENTS, APPARITIONS, reglagesDe, configPropre, nettoyerSvg, versSvg, couleursDessin, LIMITES, lancer } from '$lib/efiech/biblio/index.js';
 
@@ -35,7 +38,23 @@
 	let fichier = $state();
 
 	const vignette = (d) => (d ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(versSvg(d)) : '');
-	const emplacamentChoisi = $derived(EMPLACAMENTS.find((e) => e.id === choisi));
+	let declencheur = $state('apparition');
+
+	// un emplacement fixe, ou un élément d'une page (« cliquer l'élément », 15-11)
+	function emplacamentDe(id) {
+		const el = elementDeId(id);
+		if (!el) return EMPLACAMENTS.find((e) => e.id === id);
+		const pagina = paginaDeClau(el);
+		return { id, element: el, nom: etiqueta(el, true), texte: `sur la page ${CAMINS[pagina] ?? pagina}`, camin: CAMINS[pagina] ?? null };
+	}
+	const emplacamentChoisi = $derived(emplacamentDe(choisi));
+	// l'élément venu de la page (?element=…) et ceux qui ont déjà un effet
+	let elementDemande = $state(null);
+	const elements = $derived(
+		[...new Set([...(elementDemande ? [elementDemande] : []), ...Object.keys(lignes).filter((c) => c.startsWith(PREFIXE_ELEMENT)).map((c) => c.slice(PREFIXE_ELEMENT.length))])]
+			.filter((c) => clauElementValida(c) && CAMINS[paginaDeClau(c)])
+			.map((c) => emplacamentDe(idElement(c)))
+	);
 	const reglages = $derived(reglagesDe(config.mouvement, config.apparition));
 	const communs = $derived(reglages.filter((r) => !r.cle.includes('.')));
 	const duMouvement = $derived(reglages.filter((r) => r.cle.startsWith('m.')));
@@ -49,6 +68,11 @@
 	}
 
 	onMount(async () => {
+		const el = page.url.searchParams.get('element');
+		if (clauElementValida(el) && CAMINS[paginaDeClau(el)]) {
+			elementDemande = el;
+			choisi = idElement(el);
+		}
 		if (simular) {
 			cargat = true;
 			ouvrir(choisi);
@@ -73,7 +97,10 @@
 		const l = lignes[clauDe(id)];
 		const oc = l?.brolhon && !l.brolhon.suprimit ? l.brolhon.oc : l?.publicat;
 		const enr = oc ? legir(oc) : null;
-		config = enr?.config ?? configPropre({ mouvement: 'chute', apparition: id === 'reussita' ? 'explosion' : 'fondu', reglages: id === 'reussita' ? { vie: 3 } : {} });
+		// (un effet d'événement ou d'élément joue une fois : il a une durée de vie)
+		const unCop = id === 'reussita' || !!elementDeId(id);
+		config = enr?.config ?? configPropre({ mouvement: 'chute', apparition: id === 'reussita' ? 'explosion' : elementDeId(id) ? 'eclatement' : 'fondu', reglages: unCop ? { vie: 3 } : {} });
+		declencheur = enr?.declencheur ?? 'apparition';
 		dessin = enr?.dessin ?? null;
 		nomDessin = dessin ? 'dessin enregistré' : '';
 		avis = oc && !enr ? ['Ce qui était rangé n’a pas pu être relu : réglages par défaut.'] : [];
@@ -135,7 +162,17 @@
 
 	// --- la base
 	async function ecrire(ligne) {
-		if (simular) return null;
+		if (simular) {
+			// (essai : la page du site le joue en « ?edicion=simular », voir EfiechsSite)
+			try {
+				const l = JSON.parse(sessionStorage.getItem('efiech-simular') ?? '[]').filter((r) => r.clau !== ligne.clau);
+				if (!ligne.suprimit) l.push({ clau: ligne.clau, oc: ligne.oc });
+				sessionStorage.setItem('efiech-simular', JSON.stringify(l));
+			} catch {
+				// stockage indisponible
+			}
+			return null;
+		}
 		const { error } = await supabase.from('pagina_elements').upsert({ pagina: PAGINA, tipe: 'bloc', estat: 'brolhon', ...ligne }, { onConflict: 'clau,estat' });
 		return error;
 	}
@@ -143,7 +180,7 @@
 	async function garder() {
 		let oc;
 		try {
-			oc = escriure($state.snapshot(config), dessin ? $state.snapshot(dessin) : null);
+			oc = escriure($state.snapshot(config), dessin ? $state.snapshot(dessin) : null, elementDeId(choisi) ? declencheur : null);
 		} catch (e) {
 			msg = { tipe: 'error', text: e.message };
 			return false;
@@ -225,6 +262,37 @@
 				</li>
 			{/each}
 		</ul>
+
+		<h3 class="sous-titre">Sur un élément d’une page</h3>
+		<p class="aide">
+			Pour en ajouter un : ouvre la page, « Modifier la page », touche l’élément (un titre, un bouton, une image), puis « Un effet sur cet élément ». L’effet part de
+			l’élément.
+		</p>
+		{#if elements.length}
+			<ul class="endroits">
+				{#each elements as e (e.id)}
+					<li>
+						<button type="button" class="endroit" aria-pressed={choisi === e.id} onclick={() => ouvrir(e.id)}>
+							<span class="nom">{e.nom}</span>
+							<span class="texte">{e.texte}</span>
+							<span class="etat" class:vide={etat(e.id) === 'vide'}>{etat(e.id)}</span>
+						</button>
+					</li>
+				{/each}
+			</ul>
+		{/if}
+		{#if emplacamentChoisi?.element}
+			<fieldset class="choix-ligne declencheur">
+				<legend>Quand l’effet part</legend>
+				{#each DECLENCHEURS as d (d.id)}
+					<label title={d.texte}
+						><input type="radio" name="declencheur" value={d.id} checked={declencheur === d.id} onchange={() => ((declencheur = d.id), (modifie = true))} /> {d.nom}</label
+					>
+				{/each}
+			</fieldset>
+			<p class="desc">{DECLENCHEURS.find((d) => d.id === declencheur)?.texte}</p>
+			{#if emplacamentChoisi.camin}<p><a class="lien-page" href={emplacamentChoisi.camin}>Voir la page</a> (après « Publicar » ; recharger la page)</p>{/if}
+		{/if}
 	</section>
 
 	<div class="travail">
@@ -458,6 +526,17 @@
 	}
 	.endroit[aria-pressed='true'] .etat {
 		color: #fff;
+	}
+	.sous-titre {
+		margin: 1.6rem 0 0.3rem;
+		font-size: 1rem;
+	}
+	.declencheur {
+		margin-top: 1rem;
+	}
+	.lien-page {
+		color: inherit;
+		text-underline-offset: 0.2em;
 	}
 	.endroit:focus-visible,
 	.effets button:focus-visible {

@@ -4,7 +4,8 @@ import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { escriure, legir } from './legida.js';
-import { EMPLACAMENTS, efiechSurRoute } from './emplacaments.js';
+import { EMPLACAMENTS, efiechSurRoute, clauElementValida, clauDe, idElement, PREFIXE_ELEMENT } from './emplacaments.js';
+import { inscrireElement, noeudsDe, escotarInscriccions } from './efiech.js';
 import { FORMES } from './biblio/dessin.js';
 
 const ici = dirname(fileURLToPath(import.meta.url));
@@ -44,5 +45,31 @@ describe('les emplacements', () => {
 		expect(new Set(ids).size).toBe(ids.length);
 		expect(efiechSurRoute('/aprene/modul/[modulId]')).toBe(true);
 		expect(efiechSurRoute('/admin/efiechs')).toBe(false);
+	});
+});
+
+describe('un effet sur un élément (« cliquer l’élément », 15-11)', () => {
+	it('le déclencheur est rangé et relu, une valeur inconnue revient à « apparition »', () => {
+		const oc = escriure({ mouvement: 'chute', apparition: 'eclatement' }, null, 'clic');
+		expect(legir(oc).declencheur).toBe('clic');
+		const x = JSON.parse(oc);
+		x.declencheur = 'javascript:alert(1)';
+		expect(legir(JSON.stringify(x)).declencheur).toBe('apparition');
+	});
+	it('la clé de l’élément : rangée sous efiechs.el., jamais de joker ni d’espace', () => {
+		expect(clauDe(idElement('acuelh.eros.carta'))).toBe(PREFIXE_ELEMENT + 'acuelh.eros.carta');
+		expect(clauElementValida('acuelh.manifest.tèxt')).toBe(true);
+		for (const c of ['acuelh', 'acuelh.%', 'acuelh.a_b', 'a.b c', 'a.<b>', null, 'x.' + 'a'.repeat(120)]) expect(clauElementValida(c)).toBe(false);
+	});
+	it('les éléments inscrits sont retrouvés, puis oubliés', () => {
+		const n = {};
+		const vus = [];
+		const lève = escotarInscriccions((c) => vus.push(c));
+		const desinscrire = inscrireElement('apren.titol', n);
+		expect(noeudsDe('apren.titol')).toEqual([n]);
+		expect(vus).toEqual(['apren.titol']);
+		desinscrire();
+		lève();
+		expect(noeudsDe('apren.titol')).toEqual([]);
 	});
 });

@@ -31,3 +31,21 @@ export const emplacamentsDeRoute = (routeId) => EMPLACAMENTS.filter((e) => e.rou
 
 /** Vrai si la couche des effets a quelque chose à faire sur cette route */
 export const efiechSurRoute = (routeId) => EMPLACAMENTS.some((e) => e.route === routeId || e.pages?.includes(routeId));
+
+// --- Sur un élément d'une page (Romain, 15-11 : « cliquer l'élément »). En
+// mode Editar, le panneau d'un élément modifiable mène ici ; l'effet est rangé
+// sous efiechs.el.<clé de l'élément> (la clé commence par le nom de la page,
+// par exemple acuelh.eros.carta). Il part d'un déclencheur, depuis l'élément.
+export const PREFIXE_ELEMENT = `${PAGINA}.el.`;
+export const idElement = (clauElement) => `el.${clauElement}`;
+export const elementDeId = (id) => (typeof id === 'string' && id.startsWith('el.') ? id.slice(3) : null);
+/** Une clé d'élément acceptable : « page.quelque.chose », sans espace ni joker de recherche */
+export const clauElementValida = (c) => typeof c === 'string' && c.length <= 110 && /^[a-z]+\.[^\s%_*,()'"\\<>]+$/.test(c);
+export const paginaDeClau = (c) => c.split('.')[0];
+
+export const DECLENCHEURS = [
+	{ id: 'apparition', nom: 'Quand il apparaît', texte: 'une fois par visite de la page, quand l’élément arrive à l’écran' },
+	{ id: 'survol', nom: 'Au survol', texte: 'quand la souris passe dessus (sur téléphone : au toucher)' },
+	{ id: 'clic', nom: 'Au clic', texte: 'quand on clique ou touche l’élément, depuis le point touché' }
+];
+export const declencheurValide = (d) => (DECLENCHEURS.some((x) => x.id === d) ? d : 'apparition');

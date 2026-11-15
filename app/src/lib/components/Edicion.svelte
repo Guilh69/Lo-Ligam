@@ -56,6 +56,7 @@
 			non: 'Non',
 			validar: 'Validar',
 			puèi: 'Puèi « Publicar », en naut.',
+			efiech: 'Un efièch per aquel element',
 			bloc: 'Toca un tèxt o un ligam de la carta per lo cambiar.',
 			ocupat: 'Enregistrament…',
 			marcas: '*mot* = en aur · _mot_ = en italica'
@@ -88,6 +89,7 @@
 			non: 'Non',
 			validar: 'Valider',
 			puèi: 'Puis « Publier », en haut.',
+			efiech: 'Un effet sur cet élément',
 			bloc: 'Touche un texte ou un lien de la carte pour le changer.',
 			ocupat: 'Enregistrement…',
 			marcas: '*mot* = en or · _mot_ = en italique'
@@ -281,6 +283,8 @@
 					{/if}
 				{/if}
 			</div>
+			<!-- (Efièch sur un élément, 15-11 : « cliquer l'élément » ; l'atelier s'ouvre sur lui) -->
+			<a class="ed-efiech" href="/admin/efiechs?element={encodeURIComponent(e.clau)}">{t.efiech}</a>
 			<!-- (Romain, 2026-10-25 : « je comprends pas comment valider » ; tout est
 			     déjà gardé en brouillon, le bouton ferme le panneau et rappelle Publier) -->
 			<div class="ed-validar">
@@ -516,6 +520,13 @@
 		margin: 0.35rem 0 0;
 		font-size: 0.72rem;
 		color: var(--t-tinta-2);
+	}
+	.ed-efiech {
+		display: inline-block;
+		margin-top: 0.7rem;
+		color: inherit;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
 	}
 	.ed-validar {
 		display: flex;

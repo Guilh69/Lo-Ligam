@@ -1,16 +1,20 @@
 // Écrire et relire un effet rangé dans la base (page « efiechs » de
 // pagina_elements). La colonne oc porte un texte JSON { config, dessin } : la
-// configuration de l'effet et le dessin nettoyé (des données, jamais du SVG).
-// À la lecture, les deux repassent par les vérifications de la bibliothèque :
+// configuration de l'effet et le dessin nettoyé (des données, jamais du SVG) ;
+// pour un effet posé sur un élément, aussi son déclencheur.
+// À la lecture, tout repasse par les vérifications de la bibliothèque :
 // rien d'autre ne peut entrer dans une page.
 import { configPropre } from './biblio/catalogue.js';
 import { validerDessin } from './biblio/dessin.js';
+import { declencheurValide } from './emplacaments.js';
 
 export const TAILLE_MAX = 300000; // lettres du texte rangé, au plus
 
 /** Le texte rangé dans la base */
-export function escriure(config, dessin) {
-	const t = JSON.stringify({ config: configPropre(config), dessin: dessin ? validerDessin(dessin) : null });
+export function escriure(config, dessin, declencheur = null) {
+	const x = { config: configPropre(config), dessin: dessin ? validerDessin(dessin) : null };
+	if (declencheur) x.declencheur = declencheurValide(declencheur);
+	const t = JSON.stringify(x);
 	if (t.length > TAILLE_MAX) throw new Error('Le dessin est trop détaillé pour être rangé : le simplifier dans le logiciel de dessin.');
 	return t;
 }
@@ -28,7 +32,7 @@ export function legir(oc) {
 	const dessin = x.dessin ? validerDessin(x.dessin) : null;
 	// un dessin présent mais refusé : on ne joue rien plutôt que des formes inattendues
 	if (x.dessin && !dessin) return null;
-	return { config: configPropre(x.config), dessin };
+	return { config: configPropre(x.config), dessin, declencheur: declencheurValide(x.declencheur) };
 }
 
 // Les couleurs du site pour la teinte « palette », lues au moment de s'en

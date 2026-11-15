@@ -3,10 +3,13 @@
 // En mode édition : l'élément se surligne au survol, un toucher ouvre le
 // panneau (sans suivre le lien), l'élément caché reste là, estompé.
 import { edicion, element, causir } from './edicion.svelte.js';
+import { inscrireElement } from '$lib/efiech/efiech.js';
 
 export function editar(node, clau) {
 	// (la clé peut changer, par exemple quand une liste se réordonne)
 	let c = $state(clau);
+	// l'élément se fait connaître de la couche des effets (Efièch sur un élément, 15-11)
+	let desinscrire = inscrireElement(clau, node);
 	// (un bloc contient des éléments : seul le plus proche du toucher répond)
 	const mien = (e) => e.target instanceof Element && e.target.closest('.ed') === node;
 	const clic = (e) => {
@@ -54,9 +57,14 @@ export function editar(node, clau) {
 
 	return {
 		update(nòu) {
+			if (nòu !== c) {
+				desinscrire();
+				desinscrire = inscrireElement(nòu, node);
+			}
 			c = nòu;
 		},
 		destroy() {
+			desinscrire();
 			node.removeEventListener('click', clic, true);
 			node.removeEventListener('keydown', clavièr);
 		}
