@@ -17,6 +17,7 @@
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { edicion, iniciar, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
+	import { desplegar } from '$lib/actions/desplegar.js';
 	import { segments } from '$lib/edicion/marcat.js';
 
 	let { data, form } = $props();
@@ -119,7 +120,15 @@
 		const obs = new ResizeObserver(mesura);
 		obs.observe(cap);
 		obs.observe(plecs);
-		return { destroy: () => obs.disconnect() };
+		// une rubrique qui finit de se replier (lib/actions/desplegar.js) peut ne
+		// plus changer de hauteur au moment où elle se ferme : on remesure là
+		plecs.addEventListener('toggle', mesura, true);
+		return {
+			destroy: () => {
+				obs.disconnect();
+				plecs.removeEventListener('toggle', mesura, true);
+			}
+		};
 	}
 
 	// Le découpage de la photo (Romain, 15-11, d'après son croquis) : un cadre
@@ -270,7 +279,7 @@
 		<!-- Le détail, replié : une ligne par sujet, séparées par des filets -->
 		<div class="plecs">
 			{#if !amagat('visio.qual.tèxt') || edicion.actiu}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.qual.titol')} use:editar={'visio.qual.titol'}>{@render t('visio.qual.titol')}</span></summary>
 					<div class="plec">
 						<p hidden={amagat('visio.qual.tèxt')} use:editar={'visio.qual.tèxt'}>{@render t('visio.qual.tèxt')}</p>
@@ -279,7 +288,7 @@
 			{/if}
 
 			{#if metòde}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.metòde.titol')} use:editar={'visio.metòde.titol'}>{@render t('visio.metòde.titol')}</span></summary>
 					<div class="plec">
 						<p class="metode" hidden={amagat('visio.metòde.tèxt')} use:editar={'visio.metòde.tèxt'}>{@render t('visio.metòde.tèxt')}</p>
@@ -288,7 +297,7 @@
 			{/if}
 
 			{#if etapasCors.length || edicion.actiu}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.debana.titol')} use:editar={'visio.debana.titol'}>{@render t('visio.debana.titol')}</span></summary>
 					<div class="plec">
 						<ol class="debana">
@@ -304,7 +313,7 @@
 
 			<!-- Les prix (Romain, 2026-10-24 : grille A, solidaire sur simple déclaration) -->
 			{#if tarifs.length || edicion.actiu}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.pretz.titol')} use:editar={'visio.pretz.titol'}>{@render t('visio.pretz.titol')}</span></summary>
 					<div class="plec">
 						<p hidden={amagat('visio.pretz.intro')} use:editar={'visio.pretz.intro'}>{@render t('visio.pretz.intro')}</p>
@@ -333,7 +342,7 @@
 			{/if}
 
 			{#if practica.length || edicion.actiu}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.practica.titol')} use:editar={'visio.practica.titol'}>{@render t('visio.practica.titol')}</span></summary>
 					<div class="plec">
 						<ul class="practica">
@@ -655,7 +664,9 @@
 	summary::-webkit-details-marker {
 		display: none;
 	}
-	/* un plus fin qui devient un moins */
+	/* un plus fin qui devient un moins en faisant un demi-tour, la barre
+	   verticale se rétracte vers le centre (16-11) ; pendant le repli
+	   (data-desplegar="plegar"), il redevient plus sans attendre la fin */
 	summary::after {
 		content: '';
 		flex: none;
@@ -665,10 +676,15 @@
 			linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat,
 			linear-gradient(currentColor, currentColor) center / 1.5px 100% no-repeat;
 		color: var(--t-aur);
-		transition: transform 0.25s;
+		transition:
+			transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+			background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 	}
-	details[open] > summary::after {
-		background: linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat;
+	details[open]:not([data-desplegar='plegar']) > summary::after {
+		background-size:
+			100% 1.5px,
+			1.5px 0;
+		transform: rotate(180deg);
 	}
 	summary:hover {
 		color: var(--t-aur);
