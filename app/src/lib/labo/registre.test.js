@@ -126,7 +126,7 @@ describe('pages d’essai', () => {
 		}
 	});
 
-	it('les 24 pages d’essai de l’audit du 07-11 (celles du 12-11 tranchées le jour même) et les trois essais recensés le 12-11, moins les cinq retirés le 12-11 au soir, moins les neuf retirés le 13-11 (huit essais de couleur et la carte au défilement), plus Corses en visio le 15-11, moins Corses en visio adoptée et basculée le 16-11, plus Lo parcors le 16-11', () => {
-	expect(ESSAIS).toHaveLength(14);
+	it('les 24 pages d’essai de l’audit du 07-11 (celles du 12-11 tranchées le jour même) et les trois essais recensés le 12-11, moins les cinq retirés le 12-11 au soir, moins les neuf retirés le 13-11 (huit essais de couleur et la carte au défilement), plus Corses en visio le 15-11, moins Corses en visio adoptée et basculée le 16-11, plus Lo parcors le 16-11, plus les gabarits d’exercice le 17-11', () => {
+	expect(ESSAIS).toHaveLength(15);
 	});
 });

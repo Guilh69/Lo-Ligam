@@ -24,6 +24,16 @@ export const ESSAIS = [
 		suppression: 'Quand Romain dit oui : le composant ParcorsPagina prend « unPas » par défaut sur /aprene (page.svelte), on retire le dossier routes/ensag/parcors et « /ensag/parcors » des deux listes ARMONIZADAS (app.html, ambianca.svelte.js).'
 	},
 	{
+		chemin: '/ensag/gabarits',
+		titre: 'Gabarits d’exercice, lot 1',
+		date: '2026-11-17',
+		choix: 'ecran-lecon',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'Romain (17-11) : l’interface de chaque exercice dans la charte, déclinée par typologie. Cadre commun (avancement, consigne, média, action, retour expliqué, un bouton) et cinq écrans vivants : écouter et répéter, dialogue en bulles, dialogue à trous, vrai ou faux, choix multiple.',
+		suppression: 'Quand les gabarits sont branchés dans Bastir et dans le moteur des leçons : on retire le dossier routes/ensag/gabarits et « /ensag/gabarits » des deux listes ARMONIZADAS ; les composants de $lib/gabarits restent.'
+	},
+	{
 		chemin: '/ensag/blanc',
 		titre: 'Page presque blanche',
 		date: '2026-10-22',
