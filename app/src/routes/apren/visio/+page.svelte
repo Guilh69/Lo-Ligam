@@ -546,7 +546,7 @@
 
 	/* L'accueil : sur téléphone, le titre, la photo, le détail, l'un sous
 	   l'autre ; sur ordinateur, le texte à gauche et la photo à droite, qui
-	   reste en vue pendant qu'on ouvre les lignes */
+	   ne bouge pas quand on ouvre les lignes */
 	.entrada {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
@@ -597,9 +597,9 @@
 		.plecs {
 			align-self: start;
 		}
+		/* posée à sa place, plus collante (Romain, 16-11 : une fois la page
+		   un peu défilée, ouvrir une ligne la faisait glisser de 200 px) */
 		.foto {
-			position: sticky;
-			top: var(--esp-32);
 			align-self: start;
 			justify-self: end;
 			margin: 0;
