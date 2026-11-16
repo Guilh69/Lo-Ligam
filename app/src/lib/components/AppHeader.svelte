@@ -114,7 +114,7 @@
 	// « Mon compte » une fois connecté.
 	let surCompte = $derived(page.url.pathname.startsWith('/compte'));
 	// sur la page des cours elle-même, le bouton de la page suffit : une seule action par écran (charte §5quater, 15-11)
-	let surVisio = $derived(page.url.pathname === VISIO || page.url.pathname === '/ensag/visio');
+	let surVisio = $derived(page.url.pathname === VISIO);
 	let tornar = $derived(surCompte ? '/compte' : '/compte?tornar=' + encodeURIComponent(page.url.pathname));
 
 	// Téléphone d'abord (Romain, 2026-11-07, logique 3 de /ensag/palette-bandeaux) : sur téléphone, le haut
