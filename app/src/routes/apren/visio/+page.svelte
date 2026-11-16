@@ -677,8 +677,8 @@
 			linear-gradient(currentColor, currentColor) center / 1.5px 100% no-repeat;
 		color: var(--t-aur);
 		transition:
-			transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-			background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+			transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+			background-size 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 	}
 	details[open]:not([data-desplegar='plegar']) > summary::after {
 		background-size:

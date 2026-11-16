@@ -14,7 +14,7 @@
 	// Décor : rien n'est lu par un lecteur d'écran, sauf le mot attrapé (zone « polie » cachée).
 	// Rien ne bouge si l'appareil demande moins d'animations (les pièces sont juste posées).
 	import { onMount, tick } from 'svelte';
-	import { flotter } from './moteur.js';
+	import { flotter, INTERACTIU } from './moteur.js';
 	import { OBJETS } from './objets.js';
 	import { TEINTES as T } from '$lib/styles/palette.js';
 
@@ -169,7 +169,7 @@
 			if (objets && !reduit) {
 				toucher = (e) => {
 					// un lien, un bouton, un champ : on ne touche pas au jeu
-					if (e.target.closest?.('a, button, input, select, textarea, label, summary, [role="button"], [contenteditable]')) return;
+					if (e.target.closest?.(INTERACTIU)) return;
 					if (getSelection()?.toString()) return;
 					moteur?.attraperA(e.clientX, e.clientY, e.pointerType === 'touch' ? 28 : undefined);
 				};

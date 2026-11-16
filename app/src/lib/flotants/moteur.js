@@ -20,6 +20,15 @@
 // Les positions sont tenues ici (centre de la pièce, en pixels dans la zone) et posées par
 // transform : aucune mise en page à chaque image. La boucle s'arrête quand l'onglet est caché.
 
+// Ce qui se clique, se tape ou se manipule : la main n'y attrape rien et n'écarte rien (Romain, 16-11 :
+// l'attraction gênait le geste sur un lien, un menu, une rubrique dépliable ; elle ne joue que là où il n'y a
+// rien à faire). Arriver dessus relâche ce que la main tenait, avec son élan, comme une souris qui sort de la fenêtre.
+export const INTERACTIU =
+	'a, button, input, select, textarea, label, summary, nav, dialog, video, audio, iframe, .leaflet-container, ' +
+	'[role="button"], [role="link"], [role="menu"], [role="menubar"], [role="menuitem"], [role="tab"], [role="option"], ' +
+	'[role="checkbox"], [role="radio"], [role="switch"], [role="slider"], [role="dialog"], ' +
+	'[contenteditable]:not([contenteditable="false"]), [tabindex]:not([tabindex="-1"])';
+
 export function flotter(zone, elements, options = {}) {
 	const o = {
 		rayon: 95, // portée de la main à la souris
@@ -497,6 +506,7 @@ export function flotter(zone, elements, options = {}) {
 	// ── la main : le pointeur emporte et écarte ce qu'il frôle ──
 	let dernier = null;
 	let attente = null;
+	let doigtLibre = true;
 	const main = (x, y, rayon) => {
 		const t = performance.now();
 		let pvx = 0, pvy = 0;
@@ -538,14 +548,36 @@ export function flotter(zone, elements, options = {}) {
 				if (a) main(a[0], a[1], a[2]);
 			});
 	};
+	// la main est-elle sur quelque chose qui se clique ? (le résultat est gardé tant qu'on reste sur le même élément)
+	let cible = null;
+	let surInteractiu = false;
+	const interactiu = (el) => {
+		if (el !== cible) {
+			cible = el;
+			surInteractiu = !!el?.closest?.(INTERACTIU);
+		}
+		return surInteractiu;
+	};
 	const souris = (e) => {
 		if (e.pointerType === 'touch') return;
+		if (interactiu(e.target)) {
+			curseur = null;
+			dernier = null;
+			return;
+		}
 		curseur = [e.clientX - ox, e.clientY - oy];
 		passage(e.clientX, e.clientY, o.rayon);
 	};
 	const doigt = (e) => {
 		const t = e.touches[0];
 		if (!t) return;
+		// un doigt posé sur un bouton ou un lien : tout le geste lui appartient
+		if (e.type === 'touchstart') doigtLibre = !e.target?.closest?.(INTERACTIU);
+		if (!doigtLibre) {
+			touche = null;
+			dernier = null;
+			return;
+		}
 		touche = [t.clientX - ox, t.clientY - oy];
 		passage(t.clientX, t.clientY, o.rayonDoigt);
 	};

@@ -44,9 +44,10 @@ export function desplegar(details) {
 			? details.getBoundingClientRect().height
 			: summary.getBoundingClientRect().height + bords;
 
-		// plus la rubrique est haute, plus elle prend son temps (sans traîner)
+		// plus la rubrique est haute, plus elle prend son temps (sans traîner) ;
+		// ralenti le 16-11, Romain trouvait la première version un peu rapide
 		const distancia = Math.abs(a - de);
-		const durada = Math.min(560, 260 + distancia * 0.5) * (dobrir ? 1 : 0.8);
+		const durada = Math.min(820, 420 + distancia * 0.75) * (dobrir ? 1 : 0.85);
 		cap = dobrir;
 
 		const h = details.animate(
