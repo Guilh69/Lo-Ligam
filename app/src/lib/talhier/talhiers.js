@@ -12,6 +12,8 @@ export const TALHIÈRS = [
 	{
 		grop: 'Contenu',
 		ateliers: [
+			// Bastir : construire les leçons (2026-11-16) ; « bastir » vérifié par lo Congrès
+			{ href: '/admin/bastir', oc: 'Bastir', fr: 'construire les leçons : chaque unité, ses leçons, la matière déjà écrite et les modalités à choisir' },
 			{ href: '/admin/valider', oc: 'A validar', fr: 'garder, refaire ou répondre, une carte à la fois : la pile de l’IA, l’occitan des pages, le tri des dessins et des photos' },
 			// libellé en français : pas de mot d'occitan nouveau sans vérification (lot 2 du studio, 2026-11-13)
 			{ href: '/admin/voix', oc: 'Studio de voix', fr: 'enregistrer ta voix pour les phrases du parcours A1, une à une' },
@@ -66,5 +68,8 @@ export const LARGEURS = {
 	'/admin/libret': 'normal',
 	'/admin/labo': 'large',
 	'/admin/musica': 'large',
-	'/admin/efiechs': 'large'
+	'/admin/efiechs': 'large',
+	'/admin/bastir': 'large',
+	'/admin/bastir/[unitat]': 'large',
+	'/admin/bastir/leicon/[slug]': 'large'
 };
