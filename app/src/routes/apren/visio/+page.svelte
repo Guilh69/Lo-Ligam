@@ -17,6 +17,7 @@
 	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
 	import { edicion, iniciar, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
+	import { desplegar } from '$lib/actions/desplegar.js';
 	import { segments } from '$lib/edicion/marcat.js';
 
 	let { data, form } = $props();
@@ -119,7 +120,15 @@
 		const obs = new ResizeObserver(mesura);
 		obs.observe(cap);
 		obs.observe(plecs);
-		return { destroy: () => obs.disconnect() };
+		// une rubrique qui finit de se replier (lib/actions/desplegar.js) peut ne
+		// plus changer de hauteur au moment où elle se ferme : on remesure là
+		plecs.addEventListener('toggle', mesura, true);
+		return {
+			destroy: () => {
+				obs.disconnect();
+				plecs.removeEventListener('toggle', mesura, true);
+			}
+		};
 	}
 
 	// Le découpage de la photo (Romain, 15-11, d'après son croquis) : un cadre
@@ -160,61 +169,6 @@
 		rx: rx / 800,
 		ry: ry / 1067
 	}));
-
-	// La vue derrière la pierre : quand la photo arrive à l'écran, la vue
-	// s'approche une fois, lentement (moins de 5 s, sans boucle), et la pierre ne
-	// bouge pas. Ensuite, sur ordinateur, la vue suit un peu le pointeur, comme
-	// derrière une vraie fenêtre. Rien de tout cela si la personne a demandé moins
-	// d'animations.
-	let vistaViva = $state(false);
-	function viure(node) {
-		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-		const vista = node.querySelector('.vista');
-		const obs = new IntersectionObserver(
-			(e) => {
-				if (!e[0].isIntersecting) return;
-				vistaViva = true;
-				obs.disconnect();
-			},
-			{ threshold: 0.35 }
-		);
-		obs.observe(node);
-
-		let prèsta = false; // le pointeur ne compte qu'une fois la vue approchée
-		let raf = 0;
-		const pausar = (dx, dy) => {
-			node.style.setProperty('--dx', `${dx.toFixed(1)}px`);
-			node.style.setProperty('--dy', `${dy.toFixed(1)}px`);
-		};
-		const acabada = () => (prèsta = true);
-		const moure = (e) => {
-			if (!prèsta) return;
-			cancelAnimationFrame(raf);
-			raf = requestAnimationFrame(() => {
-				const r = node.getBoundingClientRect();
-				pausar(-((e.clientX - r.left) / r.width - 0.5) * 8, -((e.clientY - r.top) / r.height - 0.5) * 6);
-			});
-		};
-		const sortir = () => {
-			cancelAnimationFrame(raf);
-			pausar(0, 0);
-		};
-		if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
-			vista?.addEventListener('animationend', acabada);
-			node.addEventListener('pointermove', moure);
-			node.addEventListener('pointerleave', sortir);
-		}
-		return {
-			destroy() {
-				obs.disconnect();
-				cancelAnimationFrame(raf);
-				vistaViva = false;
-				vista?.removeEventListener('animationend', acabada);
-				node.removeEventListener('pointermove', moure);
-				node.removeEventListener('pointerleave', sortir);
-			}
-		};
-	}
 
 	const tx = {
 		oc: { facultatiu: 'facultatiu', obligatòri: 'obligatòri', mantuna: 'mantuna responsa possibla', mandant: 'Mandadís…', seguent: 'Seguent', passar: 'Passar', tornar: 'Tornar', contacte: 'Per te respondre', question: (n, t) => `Question ${n} sus ${t}`,
@@ -300,10 +254,10 @@
 
 		<!-- Une photo de Romain (Remira, Paisatges) : le pic Saint-Loup par une arche
 		     en ruine, découpée en fenêtre aux pierres bombées par un masque invisible
-		     (MASCA). Deux fois la même image : la vue, qui s'approche, et la pierre
-		     par-dessus, immobile (le navigateur ne la télécharge qu'une fois). Sur
+		     (MASCA). Immobile : l'animation (zoom lent, vue qui suit le pointeur) est
+		     retirée (Romain, 16-11 : « c'est pas ce que j'imaginais »). Sur
 		     téléphone, on demande exprès la petite version : sobriété. -->
-		<figure class="foto" class:viva={vistaViva} use:viure>
+		<figure class="foto">
 			<svg class="masca" width="0" height="0" aria-hidden="true" focusable="false">
 				<clipPath id="masca-foto" clipPathUnits="objectBoundingBox">
 					{#each MASCA as r, i (i)}<rect {...r} />{/each}
@@ -311,7 +265,6 @@
 			</svg>
 			<div class="fenestra">
 				<img
-					class="vista"
 					src="/apren/paisatges/arcada-800.webp"
 					srcset="/apren/paisatges/arcada-800.webp 800w, /apren/paisatges/arcada-1600.webp 1600w"
 					sizes="(min-width: 60rem) 32rem, 60vw"
@@ -320,24 +273,13 @@
 					decoding="async"
 					alt={tria({ oc: 'Un puèg vist per una arcada de pèira en roïna, sus la garriga.', fr: 'Le pic Saint-Loup vu à travers une arche de pierre en ruine, au-dessus de la garrigue.', es: 'El pico de Saint-Loup visto a través de un arco de piedra en ruinas, sobre la garriga.', en: 'The Pic Saint-Loup seen through a ruined stone arch, above the garrigue.', ca: 'El pic Saint-Loup vist a través d’un arc de pedra en ruïnes, sobre la garriga.', ar: 'قمة سان لو كما تبدو عبر قوس حجري متهدّم فوق أحراش الغاريغ.' })}
 				/>
-				<img
-					class="peira"
-					src="/apren/paisatges/arcada-800.webp"
-					srcset="/apren/paisatges/arcada-800.webp 800w, /apren/paisatges/arcada-1600.webp 1600w"
-					sizes="(min-width: 60rem) 32rem, 60vw"
-					width="1600"
-					height="2133"
-					decoding="async"
-					alt=""
-					aria-hidden="true"
-				/>
 			</div>
 		</figure>
 
 		<!-- Le détail, replié : une ligne par sujet, séparées par des filets -->
 		<div class="plecs">
 			{#if !amagat('visio.qual.tèxt') || edicion.actiu}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.qual.titol')} use:editar={'visio.qual.titol'}>{@render t('visio.qual.titol')}</span></summary>
 					<div class="plec">
 						<p hidden={amagat('visio.qual.tèxt')} use:editar={'visio.qual.tèxt'}>{@render t('visio.qual.tèxt')}</p>
@@ -346,7 +288,7 @@
 			{/if}
 
 			{#if metòde}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.metòde.titol')} use:editar={'visio.metòde.titol'}>{@render t('visio.metòde.titol')}</span></summary>
 					<div class="plec">
 						<p class="metode" hidden={amagat('visio.metòde.tèxt')} use:editar={'visio.metòde.tèxt'}>{@render t('visio.metòde.tèxt')}</p>
@@ -355,7 +297,7 @@
 			{/if}
 
 			{#if etapasCors.length || edicion.actiu}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.debana.titol')} use:editar={'visio.debana.titol'}>{@render t('visio.debana.titol')}</span></summary>
 					<div class="plec">
 						<ol class="debana">
@@ -371,7 +313,7 @@
 
 			<!-- Les prix (Romain, 2026-10-24 : grille A, solidaire sur simple déclaration) -->
 			{#if tarifs.length || edicion.actiu}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.pretz.titol')} use:editar={'visio.pretz.titol'}>{@render t('visio.pretz.titol')}</span></summary>
 					<div class="plec">
 						<p hidden={amagat('visio.pretz.intro')} use:editar={'visio.pretz.intro'}>{@render t('visio.pretz.intro')}</p>
@@ -400,7 +342,7 @@
 			{/if}
 
 			{#if practica.length || edicion.actiu}
-				<details open={edicion.actiu || undefined}>
+				<details open={edicion.actiu || undefined} use:desplegar>
 					<summary><span hidden={amagat('visio.practica.titol')} use:editar={'visio.practica.titol'}>{@render t('visio.practica.titol')}</span></summary>
 					<div class="plec">
 						<ul class="practica">
@@ -641,23 +583,6 @@
 		width: 100%;
 		height: 100%;
 	}
-	.vista {
-		transform-origin: 56% 40%;
-		translate: var(--dx, 0) var(--dy, 0);
-		transition: translate 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
-	}
-	.peira {
-		-webkit-mask: url(/apren/paisatges/arcada-masca.svg) center / 100% 100% no-repeat;
-		mask: url(/apren/paisatges/arcada-masca.svg) center / 100% 100% no-repeat;
-	}
-	.viva .vista {
-		animation: aprochar 4.2s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-	}
-	@keyframes aprochar {
-		to {
-			scale: 1.07;
-		}
-	}
 	@media (min-width: 60rem) {
 		.entrada {
 			grid-template-columns: minmax(0, 1fr) auto;
@@ -739,7 +664,9 @@
 	summary::-webkit-details-marker {
 		display: none;
 	}
-	/* un plus fin qui devient un moins */
+	/* un plus fin qui devient un moins en faisant un demi-tour, la barre
+	   verticale se rétracte vers le centre (16-11) ; pendant le repli
+	   (data-desplegar="plegar"), il redevient plus sans attendre la fin */
 	summary::after {
 		content: '';
 		flex: none;
@@ -749,10 +676,15 @@
 			linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat,
 			linear-gradient(currentColor, currentColor) center / 1.5px 100% no-repeat;
 		color: var(--t-aur);
-		transition: transform 0.25s;
+		transition:
+			transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+			background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 	}
-	details[open] > summary::after {
-		background: linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat;
+	details[open]:not([data-desplegar='plegar']) > summary::after {
+		background-size:
+			100% 1.5px,
+			1.5px 0;
+		transform: rotate(180deg);
 	}
 	summary:hover {
 		color: var(--t-aur);
@@ -1150,12 +1082,8 @@
 		summary::after {
 			transition: none;
 		}
-		.pas-a-pas .ecran:not([hidden]),
-		.viva .vista {
+		.pas-a-pas .ecran:not([hidden]) {
 			animation: none;
-		}
-		.vista {
-			transition: none;
 		}
 	}
 </style>
