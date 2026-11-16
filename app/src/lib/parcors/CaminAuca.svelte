@@ -16,7 +16,7 @@
 	import { T, nomEtapa, acabaPer, motEstat, ACABA_MISSION, A2_EN_PREPARACION } from './textes.js';
 	import { seguentaClavada, glosaCorta } from './parcors.js';
 
-	let { parcors, admin = false, glosa, lg } = $props();
+	let { parcors, admin = false, glosa, lg, replegable = false } = $props();
 
 	const indici = $derived(seguentaClavada(parcors));
 
@@ -69,6 +69,18 @@
 		return out;
 	});
 
+	// Replié (version « une action par écran », 2026-11-16) : on ne voit que la
+	// suite immédiate, l'unité du jour avec son titre (et le module 0 au tout
+	// début) ; « Veire tot lo parcors » ouvre le reste, « Replegar » le referme.
+	let tot = $state(false);
+	const visible = $derived.by(() => {
+		if (!replegable || tot || !dubèrta) return plateau;
+		const fi = plateau.findIndex((b) => b.tipe === 'rang' && b.etapa === dubèrta);
+		if (fi < 1) return plateau;
+		const de = fi - 1 === 1 && plateau[0].tipe === 'sola' ? 0 : fi - 1;
+		return plateau.slice(de, fi + 1);
+	});
+
 	const colorCas = (e, k) => (e.tipe === 'partença' ? teula(AUR) : e.tipe === 'mission' ? teula(PRUNA) : PALETAS.charta[k % 4]);
 
 	// L'unité dépliée : deux grandes cases à l'aller, deux au retour ; le
@@ -119,8 +131,18 @@
 	</li>
 {/snippet}
 
+{#snippet controle()}
+	<p class="tot">
+		<button type="button" aria-expanded={tot} onclick={() => (tot = !tot)}>
+			<span lang="oc">{tot ? T.replegar.oc : T.totVeire.oc}</span>
+			<span class="glosa" lang={lg}>({glosa(tot ? T.replegar : T.totVeire)})</span>
+		</button>
+	</p>
+{/snippet}
+
+{#if replegable && tot}{@render controle()}{/if}
 <div class="plateau camin-estat">
-	{#each plateau as b, i (i)}
+	{#each visible as b, i (i)}
 		{#if b.tipe === 'sola'}
 			{@const m = b.etapa.moduls[0]}
 			{@const nom = nomEtapa(b.etapa).oc}
@@ -213,8 +235,39 @@
 		{/if}
 	{/each}
 </div>
+{#if replegable && !tot}{@render controle()}{/if}
 
 <style>
+	/* Le lien qui ouvre ou referme le chemin : discret, une ligne soulignée */
+	.tot {
+		width: 100%;
+		max-width: 52rem;
+		margin: var(--esp-32) auto;
+	}
+	.tot button {
+		padding: var(--esp-8) 0;
+		border: 0;
+		background: none;
+		color: var(--t-tinta);
+		font: inherit;
+		font-weight: 700;
+		text-decoration: underline;
+		text-underline-offset: 0.3em;
+		text-decoration-thickness: 1px;
+		cursor: pointer;
+	}
+	.tot button:hover {
+		color: var(--t-aur);
+	}
+	.tot button:focus-visible {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 3px;
+	}
+	.tot .glosa {
+		font-weight: 400;
+		text-decoration: none;
+	}
+
 	.plateau {
 		/* l'écart entre deux cases ; le chemin passe dedans */
 		--g: clamp(0.6rem, 2.6cqi, 1.5rem);

@@ -14,6 +14,16 @@
 
 export const ESSAIS = [
 	{
+		chemin: '/ensag/parcors',
+		titre: 'Lo parcors : une action par écran',
+		date: '2026-11-16',
+		choix: 'navigation-principe',
+		etat: 'actif',
+		pret: 'non',
+		raison: 'La nouvelle Lo parcors (charte §5quater) : un bouton, l’avancement en une ligne, les niveaux sans cases, le chemin replié sur la suite immédiate. Mêmes éléments modifiables et même chemin que /aprene.',
+		suppression: 'Quand Romain dit oui : le composant ParcorsPagina prend « unPas » par défaut sur /aprene (page.svelte), on retire le dossier routes/ensag/parcors et « /ensag/parcors » des deux listes ARMONIZADAS (app.html, ambianca.svelte.js).'
+	},
+	{
 		chemin: '/ensag/blanc',
 		titre: 'Page presque blanche',
 		date: '2026-10-22',

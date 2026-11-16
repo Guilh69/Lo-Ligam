@@ -33,6 +33,9 @@ export const T = {
 	clavada: { oc: 'clavada', fr: 'fermée', es: 'cerrada', en: 'locked', ca: 'tancada', ar: 'مقفلة' },
 	facha: { oc: 'facha', fr: 'faite', es: 'hecha', en: 'done', ca: 'feta', ar: 'مكتملة' },
 	fogassas: { oc: 'fogassas', fr: 'fougasses', es: 'fougasses', en: 'fougasses', ca: 'fogasses', ar: 'فوغاسات' },
+	// le chemin replié (2026-11-16) : « veire, replegar, tot » vérifiés par l'API de lo Congrès
+	totVeire: { oc: 'Veire tot lo parcors', fr: 'voir tout le parcours', es: 'ver todo el recorrido', en: 'see the whole path', ca: 'veure tot el recorregut', ar: 'عرض المسار كاملًا' },
+	replegar: { oc: 'Replegar lo parcors', fr: 'replier le parcours', es: 'plegar el recorrido', en: 'fold the path', ca: 'plegar el recorregut', ar: 'طيّ المسار' },
 	acabat: { oc: 'Nivèl A1 acabat, òsca !', fr: 'niveau A1 terminé, bravo !', es: '¡nivel A1 terminado, bravo!', en: 'level A1 complete, well done!', ca: 'nivell A1 acabat, enhorabona!', ar: 'اكتمل المستوى\u00a0A1، أحسنت!' }
 };
 

@@ -23,8 +23,10 @@
 	import { txt } from '$lib/edicion/edicion.svelte.js';
 	import { editar } from '$lib/edicion/editar.svelte.js';
 
-	/** essai : ?simul=n simule l'avancement (pages /ensag/parcors) */
-	let { essai = false, children } = $props();
+	/** essai : ?simul=n simule l'avancement (pages /ensag/parcors)
+	 *  unPas : la version « une action par écran » (charte §5quater, 2026-11-16) :
+	 *  un bouton, l'avancement en une ligne, les niveaux sans cases, le chemin replié */
+	let { essai = false, unPas = false, children } = $props();
 
 	const etapas = camin(moduls, ordre);
 	const claus = etapas.flatMap((e) => e.moduls.map((m) => m.clau));
@@ -111,14 +113,56 @@
 <div class="pagina">
 	<div class="capçal"><AppHeader /></div>
 
-	<main class="parcors" class:cargant={!prèst}>
+	<main class="parcors" class:cargant={!prèst} class:un-pas={unPas}>
 		<div class="entrada">
 			<header class="cap">
-				<Retour />
+				<Retour chemin="/aprene" />
 				<h1 lang="oc" use:editar={'parcors.titol'}>{titol.oc}</h1>
 				<p class="glosa" lang={lg} use:editar={'parcors.titol'}>({glosa(titol)})</p>
 			</header>
 
+			{#if unPas}
+				<!-- Où l'on en est, un seul bouton, l'avancement en une ligne -->
+				<section class="suita" aria-labelledby="resum-titol">
+					<p class="sur" id="resum-titol">
+						<span lang="oc">{onSem((v) => v.oc)}</span>
+						<span class="glosa" lang={lg}>({onSem(glosa)})</span>
+					</p>
+					{#if bloc}<p class="bloc-nom"><span lang="oc">{bloc.oc}</span> <span class="glosa" lang="fr">({bloc.fr})</span></p>{/if}
+
+					{#if actual}
+						<a class="pc pc-grand" href="/aprene/modul/{actual.id}">
+							<span lang="oc">{començat ? T.contunhar.oc : T.començar.oc}</span>
+							<span class="g-boton" lang={lg}>({glosa(començat ? T.contunhar : T.començar)})</span>
+							<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" /></svg>
+						</a>
+						<p class="c-modul-un" lang="oc">{actual.num ? `${actual.num} · ` : ''}{insecable(actual.oc)}</p>
+					{:else}
+						<p class="acabat"><span lang="oc">{T.acabat.oc}</span> <span class="glosa" lang={lg}>({glosa(T.acabat)})</span></p>
+					{/if}
+
+					<div class="avanç">
+						<div
+							class="barra"
+							role="progressbar"
+							aria-valuemin="0"
+							aria-valuemax="100"
+							aria-valuenow={parcors.percent}
+							aria-label="{T.nivel.oc} A1"
+						>
+							<span style:width="{parcors.percent}%"></span>
+						</div>
+						<p class="comptes">
+							<span lang="oc"><b>{parcors.modulsFachs}</b> {T.moduls.oc} {T.sus.oc} {parcors.totalModuls}</span>
+							<span class="fogassas" title={tria(T.fogassas)}><FougasseIcon size={18} /> {fogassas}<span class="sr">{T.fogassas.oc}</span></span>
+						</p>
+					</div>
+
+					{#if $esAdmin}
+						<p class="admin">Administrateur : tu vois les cadenas d’un élève, mais tout s’ouvre pour toi.</p>
+					{/if}
+				</section>
+			{:else}
 			<section class="resum" aria-labelledby="resum-titol">
 				<div class="resum-cap">
 					<span class="insigna" aria-hidden="true">A1</span>
@@ -165,11 +209,12 @@
 					<p class="admin">Administrateur : tu vois les cadenas d’un élève, mais tout s’ouvre pour toi.</p>
 				{/if}
 			</section>
+			{/if}
 		</div>
 
 		{@render nivels()}
 
-		{@render children({ parcors, admin: $esAdmin, glosa, lg })}
+		{@render children({ parcors, admin: $esAdmin, glosa, lg, replegable: unPas })}
 
 		{#if prèst && !ambCompte}
 			<p class="nota">
@@ -544,6 +589,109 @@
 			width: 3.6rem;
 			height: 3.6rem;
 			font-size: 1.7rem;
+		}
+	}
+
+	/* Version une action par écran (2026-11-16, charte 5quater) : une colonne,
+	   un seul bouton, l avancement en une ligne, les niveaux en une ligne à
+	   filets, sans cases ni encadré */
+	.un-pas .entrada {
+		grid-template-columns: minmax(0, 1fr);
+		align-items: start;
+	}
+	.suita {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--esp-12);
+		max-width: 36rem;
+	}
+	.suita .pc {
+		margin-top: var(--esp-12);
+	}
+	.suita .sur {
+		font-size: 0.95rem;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+	.g-boton {
+		font-weight: 400;
+		font-size: 0.85em;
+		color: inherit;
+		opacity: 0.9;
+	}
+	.c-modul-un {
+		margin: 0;
+		font-size: 0.95rem;
+		color: var(--t-tinta-2);
+	}
+	.suita .avanç {
+		align-self: stretch;
+		margin-top: var(--esp-16);
+	}
+	.suita .barra {
+		height: 2px;
+		border-radius: 0;
+	}
+	.suita .barra span {
+		border-radius: 0;
+	}
+	.suita .fogassas {
+		padding: 0;
+		background: none;
+	}
+	.un-pas .nivels h2 {
+		margin-bottom: var(--esp-12);
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 1rem;
+	}
+	.un-pas .nivels h2 .glosa {
+		font-weight: 400;
+		font-size: 0.9rem;
+	}
+	.un-pas .nivels ol {
+		gap: 0;
+		border-block: 1px solid var(--t-linha);
+	}
+	.un-pas .nivels ol::before {
+		display: none;
+	}
+	.un-pas .nivels li {
+		flex-direction: row;
+		aspect-ratio: auto;
+		min-height: 0;
+		padding: var(--esp-12) var(--esp-8);
+		border: 0;
+		border-inline-start: 1px solid var(--t-linha);
+		border-radius: 0;
+		background: none;
+	}
+	.un-pas .nivels li:first-child {
+		border-inline-start: 0;
+	}
+	.un-pas .nivels li.actual {
+		border: 0;
+		background: none;
+		box-shadow: inset 0 -3px 0 var(--t-aur);
+	}
+	.un-pas .nivels li b {
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 1.05rem;
+	}
+	.un-pas .nivels small {
+		display: none;
+	}
+	@container parcors (max-width: 560px) {
+		.un-pas .nivels ol {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+		.un-pas .nivels li:nth-child(3n + 1) {
+			border-inline-start: 0;
+		}
+		.un-pas .nivels li:nth-child(n + 4) {
+			border-top: 1px solid var(--t-linha);
 		}
 	}
 
