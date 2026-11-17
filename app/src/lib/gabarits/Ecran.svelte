@@ -1,29 +1,59 @@
 <script>
 	// Le cadre commun des écrans d'exercice (gabarits, lot 1, 2026-11-17). Romain :
 	// « l'interface de chaque exercice dans ma charte, déclinée par typologie ».
-	// Toujours le même ordre : avancement, consigne en une ligne, média, action,
-	// retour qui explique (principe 8 : chaque erreur expliquée), un seul bouton
-	// en aplat brique (charte §5quater). « Passar » : le droit de laisser de côté
-	// (principe 4). Mécanique observée sur les captures d'applications de langues
-	// envoyées par Romain ; le style est celui de Lo Ligam.
+	// Toujours le même ordre : la tête (numéro de la leçon, consigne, avancement),
+	// le média, l'action, le retour qui explique (principe 8 : chaque erreur
+	// expliquée), un seul bouton en aplat brique (charte §5quater). « Passar » :
+	// le droit de laisser de côté (principe 4).
+	//
+	// Allure refaite le même jour (Romain : « pas très fidèle à ma DA, assez
+	// générique ») : le vocabulaire est celui du site, pas un vocabulaire sobre
+	// passe-partout. Tout ce qui se touche est une pièce de papier découpé
+	// (lib/styles/papier.css), le numéro et « Òsca ! » sont en Limelight, la
+	// traduction en italique entre parenthèses, l'avancement en petits carrés
+	// comme dans les jeux, la couleur vient de l'unité (lib/parcors/colors.js).
+	// Deux têtes à comparer sur /ensag/gabarits : « papièr » (sur le fond du
+	// site, numéro en or, comme la page d'un module) et « teula » (aplat de la
+	// couleur de l'unité, comme les tuiles de /apren).
+	import { getContext } from 'svelte';
 	import Icona from '$lib/components/Icona.svelte';
+	import { animat } from '$lib/actions/animarText.js';
+	import { colorUnitat, tintaPer } from '$lib/parcors/colors.js';
+	import { insecable } from '$lib/lesson/rich.js';
 
 	/**
 	 * avança : 0 à 1 ; consigna : { oc, fr } ; retorn : null ou { just, titol, explic } ;
-	 * boton : { oc, fr, actiu, onclick } ; media, accion : snippets
+	 * boton : { oc, actiu, onclick } ; media, accion : snippets ;
+	 * reserva : snippet facultatif, ce qu'on prend pour répondre (les mots à poser),
+	 * au pied de l'écran, près du pouce ; le retour le remplace après la réponse
 	 */
-	let { avança = 0, consigna, retorn = null, boton, onpassar = null, media, accion } = $props();
+	let { avança = 0, consigna, retorn = null, boton, onpassar = null, media, accion, reserva = null } = $props();
+
+	// la leçon qui porte l'écran, donnée par la page : { unitat, leiçon, total, cap }
+	const ctx = getContext('gabarit') ?? {};
+	const total = $derived(ctx.total ?? 5);
+	const pas = $derived(Math.min(total, Math.max(1, Math.round(avança * total))));
+	// la couleur de l'unité se lit au moment de s'en servir (Romain peut la changer)
+	const color = $derived(colorUnitat(ctx.unitat ?? 1));
+	const tinta = $derived(tintaPer(color));
+	const teula = $derived(ctx.cap === 'teula');
 </script>
 
-<div class="ecran">
+<div class="ecran" class:teula style:--g-color={color} style:--g-tinta={tinta}>
 	<div class="cap">
-		<span class="tancar" aria-hidden="true"><Icona nom="fermer" size="1.25rem" /></span>
-		<div class="avança" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(avança * 100)} aria-label="Avancement de la leçon">
-			<span style:width="{avança * 100}%"></span>
+		<div class="naut">
+			<span class="tancar" aria-hidden="true"><Icona nom="fermer" size="1.25rem" /></span>
+			<div class="granas" role="progressbar" aria-valuemin="1" aria-valuemax={total} aria-valuenow={pas} aria-valuetext="écran {pas} sur {total}" aria-label="Avancement de la leçon">
+				{#each Array.from({ length: total }, (_, i) => i) as i (i)}
+					<span class:fach={i < pas - 1} class:ara={i === pas - 1}></span>
+				{/each}
+			</div>
 		</div>
+		<p class="consigna">
+			<span class="num"><span class="sr">leçon </span>{ctx.leiçon ?? '1.1'}</span>
+			<span class="dich"><span class="oc" lang="oc">{insecable(consigna.oc)}</span> <span class="glosa">({insecable(consigna.fr)})</span></span>
+		</p>
 	</div>
-
-	<p class="consigna"><span lang="oc">{consigna.oc}</span> <span class="glosa">({consigna.fr})</span></p>
 
 	{#if media}<div class="media">{@render media()}</div>{/if}
 	<div class="accion">{@render accion()}</div>
@@ -32,13 +62,16 @@
 		{#if retorn}
 			<div class="retorn" class:just={retorn.just} role="status">
 				<p class="r-titol">
-					{#if retorn.just}<Icona nom="valide" size="1.15rem" />{/if}
-					<span lang="oc">{retorn.titol.oc}</span> <span class="glosa">({retorn.titol.fr})</span>
+					<span class="r-mot" lang="oc" {@attach retorn.just && animat('rebond')}>{insecable(retorn.titol.oc)}</span>
+					<span class="glosa">({retorn.titol.fr})</span>
 				</p>
-				{#if retorn.explic}<p class="r-explic">{retorn.explic}</p>{/if}
+				<span class="filet" aria-hidden="true"></span>
+				{#if retorn.explic}<p class="r-explic">{insecable(retorn.explic)}</p>{/if}
 			</div>
+		{:else if reserva}
+			<div class="reserva">{@render reserva()}</div>
 		{/if}
-		<button type="button" class="boton" disabled={!boton.actiu} onclick={boton.onclick}>
+		<button type="button" class="pc pc-grand boton" disabled={!boton.actiu} onclick={boton.onclick}>
 			<span lang="oc">{boton.oc}</span>
 		</button>
 		{#if onpassar}<button type="button" class="passar" onclick={onpassar}><span lang="oc">Passar aqueste</span> <span class="glosa">(passer celui-ci)</span></button>{/if}
@@ -47,6 +80,7 @@
 
 <style>
 	.ecran {
+		--g-grana: var(--t-aur);
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
@@ -56,98 +90,151 @@
 		background: var(--t-fons);
 		font-family: var(--font-body);
 	}
+
+	/* ── La tête : la croix et les carrés, puis le numéro et la consigne ── */
 	.cap {
 		display: flex;
+		flex-direction: column;
+		gap: 0.8rem;
+	}
+	.naut {
+		display: flex;
 		align-items: center;
-		gap: 0.75rem;
+		justify-content: space-between;
 	}
 	.tancar {
 		display: inline-flex;
 		color: var(--t-tinta-2);
 	}
-	.avança {
-		flex: 1;
-		height: 3px;
-		background: var(--t-linha);
+	/* les petits carrés des jeux : un par écran, celui du moment est soulevé */
+	.granas {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
 	}
-	.avança span {
-		display: block;
-		height: 100%;
-		background: var(--t-accion);
-		transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+	.granas span {
+		width: 0.7rem;
+		aspect-ratio: 1;
+		border-radius: 2px;
+		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, currentColor 45%, transparent);
+		transition:
+			background-color 0.3s,
+			transform 0.3s;
+	}
+	.granas .fach {
+		background: var(--g-grana);
+		box-shadow: none;
+	}
+	.granas .ara {
+		background: var(--g-grana);
+		box-shadow: 0 2px 2px var(--pc-ombre);
+		transform: translateY(-2px);
 	}
 	.consigna {
+		display: flex;
+		align-items: baseline;
+		gap: 0.7rem;
 		margin: 0;
-		font-size: 1rem;
-		line-height: 1.45;
+		line-height: 1.35;
+	}
+	.num {
+		flex: none;
+		font-family: var(--font-heading);
+		font-size: 2.2rem;
+		line-height: 1;
+		color: var(--t-aur-gros);
+	}
+	.oc {
+		font-size: 1.1rem;
+		font-weight: 700;
 	}
 	.glosa {
+		font-style: italic;
+		font-size: 0.92em;
 		color: var(--t-tinta-2);
-		font-size: 0.9em;
 	}
+	/* la consigne : le mot occitan, puis sa traduction sur sa propre ligne */
+	.dich .glosa {
+		display: block;
+		margin-top: 0.1rem;
+	}
+
+	/* la tête « teula » : la couleur du module en aplat, sur toute la largeur */
+	.teula .cap {
+		--g-grana: var(--g-tinta);
+		margin: -1rem -1.1rem 0;
+		padding: 1rem 1.1rem 1.2rem;
+		color: var(--g-tinta);
+		background: var(--g-color);
+	}
+	.teula .tancar,
+	.teula .num,
+	.teula .cap .glosa {
+		color: inherit;
+	}
+
 	.media {
 		flex: none;
 	}
+	/* la marge laisse la place aux ombres des pièces et au contour du clavier */
 	.accion {
 		flex: 1;
 		min-height: 0;
+		margin: -0.4rem -0.5rem -0.6rem;
+		padding: 0.4rem 0.5rem 0.6rem;
 		overflow-y: auto;
 	}
+
+	/* ── Le pied : le retour, le bouton, le droit de passer ── */
 	.pè {
 		display: flex;
 		flex-direction: column;
-		gap: 0.6rem;
+		gap: 0.7rem;
 	}
 	.retorn {
-		padding-top: 0.6rem;
-		border-top: 2px solid var(--t-tinta-2);
-	}
-	.retorn.just {
-		border-top-color: var(--t-aur);
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
 	}
 	.r-titol {
 		display: flex;
-		align-items: center;
-		gap: 0.4rem;
+		align-items: baseline;
+		gap: 0.5rem;
 		margin: 0;
-		font-size: 1.05rem;
 	}
-	.retorn.just .r-titol {
-		color: var(--t-aur);
+	.r-mot {
+		font-family: var(--font-heading);
+		font-size: 1.8rem;
+		line-height: 1.1;
 	}
-	.retorn.just .r-titol .glosa {
-		color: var(--t-tinta-2);
+	.just .r-mot {
+		color: var(--t-aur-gros);
+	}
+	/* un filet qui se trace, comme sous les titres des jeux */
+	.filet {
+		width: 3rem;
+		height: 2px;
+		background: var(--t-tinta-2);
+		transform-origin: left;
+		animation: trac 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+	}
+	.just .filet {
+		background: var(--t-aur);
+	}
+	@keyframes trac {
+		from {
+			transform: scaleX(0);
+		}
 	}
 	.r-explic {
-		margin: 0.3rem 0 0;
+		margin: 0;
 		font-size: 0.95rem;
 		line-height: 1.5;
 	}
 	.boton {
 		width: 100%;
-		min-height: 3rem;
-		border: 0;
-		border-radius: 3px;
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
-		font: inherit;
-		font-size: 1.05rem;
-		cursor: pointer;
-	}
-	.boton:hover:not(:disabled) {
-		background: var(--t-accion-viu);
-	}
-	.boton:disabled {
-		background: transparent;
-		color: var(--t-tinta-2);
-		outline: 1px solid var(--t-linha);
-		outline-offset: -1px;
-		cursor: default;
-	}
-	.boton:focus-visible,
-	.passar:focus-visible {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 2px;
+		min-height: 3.25rem;
+		font-size: 1.1rem;
 	}
 	.passar {
 		align-self: center;
@@ -161,9 +248,24 @@
 		text-underline-offset: 0.2em;
 		cursor: pointer;
 	}
+	.passar:focus-visible {
+		outline: 3px solid var(--t-aur);
+		outline-offset: 2px;
+	}
+	.sr {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
 	@media (prefers-reduced-motion: reduce) {
-		.avança span {
+		.granas span {
 			transition: none;
+		}
+		.filet {
+			animation: none;
 		}
 	}
 </style>

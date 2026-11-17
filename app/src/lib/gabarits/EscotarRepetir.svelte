@@ -1,17 +1,21 @@
 <script>
-	// Gabarit « écouter et répéter » : la photo du sujet, la phrase, le son ;
-	// puis le micro : on s'enregistre et on compare à l'oreille (pas de note
-	// automatique : l'oreille de l'apprenant juge, principe 1, le son d'abord).
+	// Gabarit « écouter et répéter » : le son d'abord (principe 1). Une photo du
+	// sujet, la phrase en grand, sa prononciation, puis trois gestes : écouter le
+	// modèle, s'enregistrer, se réécouter. Rien n'est noté : c'est l'oreille de
+	// l'apprenant qui juge. L'enregistrement reste dans le navigateur.
+	// Les trois gestes sont des pièces de papier : le micro, plus grand, au
+	// milieu ; il passe à l'or et respire tant qu'il enregistre.
 	import { onDestroy } from 'svelte';
 	import Ecran from './Ecran.svelte';
 	import BotonSon from './BotonSon.svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { creerEnregistreur } from '$lib/voix/enregistreur.js';
+	import { insecable } from '$lib/lesson/rich.js';
 
 	let { foto, frasa, son, avança = 0.2, oncontunhar } = $props();
 
 	let estat = $state('espèra'); // espèra | enregistra | presa
-	let presa = $state(null); // URL du son de l'apprenant
+	let presa = $state(null);
 	let error = $state('');
 	let enregistreur = null;
 
@@ -38,103 +42,101 @@
 	});
 
 	const retorn = $derived(
-		estat === 'presa' ? { just: true, titol: { oc: 'Òsca !', fr: 'bravo' }, explic: 'Réécoute le modèle, puis ta voix : ton oreille fait la différence. Tu peux recommencer autant que tu veux.' } : null
+		estat === 'presa'
+			? { just: true, titol: { oc: 'Òsca !', fr: 'bravo' }, explic: 'Réécoute le modèle, puis ta voix : ton oreille fait la différence. Tu peux recommencer autant que tu veux.' }
+			: null
 	);
 </script>
 
-<Ecran
-	{avança}
-	consigna={{ oc: 'Escota, puèi repetís', fr: 'écoute, puis répète' }}
-	{retorn}
-	boton={{ oc: 'Contunhar', actiu: estat === 'presa', onclick: oncontunhar }}
-	onpassar={oncontunhar}
->
+<Ecran {avança} consigna={{ oc: 'Escota, puèi repetís', fr: 'écoute, puis répète' }} {retorn} boton={{ oc: 'Contunhar', actiu: estat === 'presa', onclick: oncontunhar }} onpassar={oncontunhar}>
 	{#snippet media()}
 		<img class="foto" src={foto.src} alt={foto.alt} width="800" height="533" />
 	{/snippet}
 	{#snippet accion()}
-		<p class="frasa" lang="oc">{frasa.oc}</p>
-		<p class="sona">« {frasa.sound} »</p>
-		<p class="fr">{frasa.fr}</p>
+		<p class="frasa" lang="oc">{insecable(frasa.oc)}</p>
+		<p class="sona">{insecable(`« ${frasa.sound} »`)}</p>
+		<p class="fr">({insecable(frasa.fr)})</p>
+
 		<div class="gestes">
-			<BotonSon src={son} gran />
-			<button type="button" class="micro" class:actiu={estat === 'enregistra'} aria-pressed={estat === 'enregistra'} onclick={micro}>
-				<Icona nom={estat === 'enregistra' ? 'pause' : 'micro'} size="1.9rem" />
-				<span class="micro-nom">
-					{#if estat === 'enregistra'}<span lang="oc">Arrèsta</span>{:else}<span lang="oc">Repetís</span>{/if}
-				</span>
+			<div class="esq"><BotonSon src={son} gran pila /></div>
+			<button
+				type="button"
+				class="pc pc-grand micro"
+				class:pc-2={estat !== 'enregistra'}
+				class:pc-or={estat === 'enregistra'}
+				class:actiu={estat === 'enregistra'}
+				aria-pressed={estat === 'enregistra'}
+				onclick={micro}
+			>
+				<Icona nom={estat === 'enregistra' ? 'pause' : 'micro'} size="2rem" />
+				<span lang="oc">{estat === 'enregistra' ? 'Arrèsta' : 'Repetís'}</span>
 			</button>
-			{#if presa}<BotonSon src={presa} gran label="Ta votz" glosa="ta voix" />{/if}
+			<div class="dre">{#if presa}<BotonSon src={presa} gran pila label="Ta votz" glosa="ta voix" />{/if}</div>
 		</div>
 		{#if error}<p class="error" role="alert">{error}</p>{/if}
 	{/snippet}
 </Ecran>
 
 <style>
+	/* la photo dans la langue du site (.panel-media) : coins à 22 px, sans cadre */
 	.foto {
 		display: block;
 		width: 100%;
-		height: 9.5rem;
+		height: 9rem;
 		object-fit: cover;
-		border-radius: 3px;
+		border-radius: 22px;
 	}
 	.frasa {
 		margin: 0;
-		font-size: 1.6rem;
-		line-height: 1.25;
+		font-family: var(--font-heading);
+		font-size: 2rem;
+		line-height: 1.15;
+		text-wrap: balance;
 	}
 	.sona {
-		margin: 0.25rem 0 0;
+		margin: 0.45rem 0 0;
+		font-size: 1.05rem;
+		font-weight: 700;
 		color: var(--t-aur);
-		font-size: 0.95rem;
 	}
 	.fr {
 		margin: 0.15rem 0 0;
+		font-style: italic;
 		color: var(--t-tinta-2);
 	}
+	/* le micro reste au milieu, que la troisième pièce soit là ou non */
 	.gestes {
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
 		align-items: center;
-		gap: 0.75rem;
-		margin-top: 1.1rem;
+		gap: 0.8rem;
+		margin-top: 1.3rem;
+	}
+	.esq {
+		justify-self: end;
+	}
+	.dre {
+		justify-self: start;
 	}
 	.micro {
-		display: inline-flex;
 		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 0.15rem;
-		width: 4.75rem;
-		height: 4.75rem;
-		border: 1.5px solid var(--t-accion);
-		border-radius: 6px;
-		background: transparent;
-		color: var(--t-accion);
-		font: inherit;
-		cursor: pointer;
+		gap: 0.3rem;
+		width: 5.75rem;
+		height: 5.75rem;
+		padding: 0;
 	}
 	.micro.actiu {
-		background: var(--t-accion);
-		color: var(--t-accion-tinta);
 		animation: alen 1.4s ease-in-out infinite;
-	}
-	.micro:focus-visible {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 2px;
-	}
-	.micro-nom {
-		font-size: 0.85rem;
-	}
-	.error {
-		margin: 0.6rem 0 0;
-		color: var(--t-tinta-2);
-		font-size: 0.9rem;
 	}
 	@keyframes alen {
 		50% {
-			transform: scale(1.05);
+			transform: translateY(-2px) scale(1.04);
 		}
+	}
+	.error {
+		margin: 0.9rem 0 0;
+		font-size: 0.9rem;
+		color: var(--t-accion-viu);
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.micro.actiu {

@@ -1,8 +1,10 @@
 <script>
 	// Gabarit « choix multiple » : une question, trois ou quatre réponses ; un
 	// toucher suffit, le retour explique la réponse choisie et montre la bonne.
+	// Les réponses sont des pièces de papier (.pc-rep), comme dans le QCM du site.
 	import Ecran from './Ecran.svelte';
 	import Icona from '$lib/components/Icona.svelte';
+	import { insecable } from '$lib/lesson/rich.js';
 
 	let { question, opcions, foto = null, avança = 0.9, oncontunhar } = $props();
 	let causit = $state(null); // index de la réponse touchée
@@ -21,20 +23,20 @@
 		{#if foto}<img class="foto" src={foto.src} alt={foto.alt} width="800" height="533" />{/if}
 	{/snippet}
 	{#snippet accion()}
-		<p class="question">{question}</p>
+		<p class="question">{insecable(question)}</p>
 		<ul class="opcions">
 			{#each opcions as o, i (i)}
 				<li>
 					<button
 						type="button"
-						class="opcion"
-						class:causida={causit === i}
-						class:bona={causit !== null && i === bona}
+						class="pc pc-rep opcion"
+						class:est-bon={causit !== null && i === bona}
+						class:est-faux={causit === i && i !== bona}
 						disabled={causit !== null}
 						onclick={() => (causit = i)}
 						lang="oc"
 					>
-						<span>{o.oc}</span>
+						<span>{insecable(o.oc)}</span>
 						{#if causit !== null && i === bona}<Icona nom="valide" size="1.2rem" label="bonne réponse" />{/if}
 					</button>
 				</li>
@@ -49,55 +51,32 @@
 		width: 100%;
 		height: 8rem;
 		object-fit: cover;
-		border-radius: 3px;
+		border-radius: 22px;
 	}
 	.question {
-		margin: 0 0 0.9rem;
+		margin: 0 0 1.1rem;
 		font-size: 1.25rem;
+		font-weight: 700;
 		line-height: 1.4;
 	}
 	.opcions {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.7rem;
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
 	.opcion {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		width: 100%;
-		min-height: 3rem;
-		padding: 0.4rem 0.9rem;
-		border: 1px solid var(--t-tinta-2);
-		border-radius: 3px;
-		background: transparent;
-		color: var(--t-tinta);
-		font: inherit;
+		min-height: 3.25rem;
 		font-size: 1.1rem;
-		text-align: left;
-		cursor: pointer;
 	}
-	.opcion:disabled {
+	/* une fois répondu : la bonne et la choisie restent pleines, les autres pâlissent */
+	.opcion.est-bon:disabled,
+	.opcion.est-faux:disabled {
+		opacity: 1;
+		box-shadow: var(--pc-lev);
 		cursor: default;
-		opacity: 0.55;
-	}
-	.opcion.causida {
-		opacity: 1;
-		border-width: 2px;
-	}
-	.opcion.bona {
-		opacity: 1;
-		border: 2px solid var(--t-aur);
-		color: var(--t-tinta);
-	}
-	.opcion.bona :global(svg) {
-		color: var(--t-aur);
-	}
-	.opcion:focus-visible {
-		outline: 3px solid var(--t-aur);
-		outline-offset: 2px;
 	}
 </style>

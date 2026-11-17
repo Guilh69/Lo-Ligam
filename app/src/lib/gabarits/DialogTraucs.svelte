@@ -1,22 +1,27 @@
 <script>
-	// Gabarit « dialogue à trous » : toucher un mot le pose dans le premier trou
-	// libre ; toucher un trou rempli rend le mot (au clavier comme au doigt, sans
-	// glisser-déposer obligatoire). « Verificar » quand tout est rempli : chaque
-	// erreur reçoit son explication (principe 8), puis on retente les trous faux.
+	// Gabarit « dialogue à trous » : on écoute, puis on pose les mots dans les
+	// bulles, d'un toucher (le mot va dans le premier trou libre ; toucher un mot
+	// posé le retire). « Verificar » montre ce qui est juste et explique chaque
+	// erreur (principe 8) ; on peut recommencer, ou passer (principe 4).
+	// Les mots sont des pièces de papier : pétrole dans la réserve, or une fois
+	// posées, vertes ou brique après « Verificar ». Les trous sont creusés dans
+	// la bulle, comme le rail de l'interrupteur du site. La réserve est au pied
+	// de l'écran, près du pouce ; le retour la remplace après « Verificar ».
 	import Ecran from './Ecran.svelte';
 	import Bulla from './Bulla.svelte';
 	import BotonSon from './BotonSon.svelte';
+	import { insecable } from '$lib/lesson/rich.js';
 
 	let { replicas, tèulas, explics, personatges, son, avança = 0.6, oncontunhar } = $props();
 
-	// les trous, dans l'ordre de lecture : [{ r, p, mot }]
+	// les trous, dans l'ordre du dialogue
 	const traucs = $derived(replicas.flatMap((rep, r) => rep.parts.flatMap((part, p) => (typeof part === 'object' ? [{ r, p, mot: part.trauc }] : []))));
-	// pour chaque trou : index de la tuile posée, ou null (dérivée réassignable :
-	// repart de zéro si les répliques changent)
-	let pausats = $derived(traucs.map(() => null));
+	let pausats = $derived(traucs.map(() => null)); // index de la tuile posée dans chaque trou
 	let verificat = $state(false);
 
 	const indexTrauc = (r, p) => traucs.findIndex((t) => t.r === r && t.p === p);
+	// le nom s'écrit à la première réplique de chacun
+	const primièra = (r) => replicas.findIndex((x) => x.qui === replicas[r].qui) === r;
 	const usada = (k) => pausats.includes(k);
 	const plen = $derived(pausats.length > 0 && pausats.every((k) => k !== null));
 	const fals = $derived(verificat ? traucs.map((t, i) => tèulas[pausats[i]] !== t.mot) : []);
@@ -54,94 +59,120 @@
 
 <Ecran {avança} consigna={{ oc: 'Escota, puèi pausa los mots', fr: 'écoute, puis place les mots' }} {retorn} {boton} onpassar={oncontunhar}>
 	{#snippet media()}
-		<div class="haut">
-			<BotonSon src={son} />
-			<div class="tèulas" aria-label="Les mots à placer">
-				{#each tèulas as t, k (k)}
-					<button type="button" class="tèula" disabled={usada(k) || verificat} onclick={() => pausar(k)} lang="oc">{t}</button>
-				{/each}
-			</div>
+		<BotonSon src={son} gran />
+	{/snippet}
+	{#snippet reserva()}
+		<div class="tèulas" role="group" aria-label="Les mots à placer">
+			{#each tèulas as t, k (k)}
+				<button type="button" class="pc pc-2 pc-chip tèula" class:usada={usada(k)} disabled={usada(k)} onclick={() => pausar(k)} lang="oc">{t}</button>
+			{/each}
 		</div>
 	{/snippet}
 	{#snippet accion()}
 		{#each replicas as rep, r (r)}
-			<Bulla personatge={personatges[rep.qui]}>
-				{#each rep.parts as part, p (p)}
-					{#if typeof part === 'object'}
-						{@const i = indexTrauc(r, p)}
-						{@const k = pausats[i]}
-						<button
-							type="button"
-							class="trauc"
-							class:plen={k != null}
-							class:fals={verificat && fals[i]}
-							class:just={verificat && !fals[i]}
-							aria-label={k != null ? `${tèulas[k]}, toucher pour retirer` : 'trou vide'}
-							onclick={() => levar(i)}>{k != null ? tèulas[k] : ''}</button
-						>
-					{:else}{part}{/if}
-				{/each}
+			<Bulla personatge={personatges[rep.qui]} ambNom={primièra(r)}>
+				<span class="linha">
+					{#each rep.parts as part, p (p)}
+						{#if typeof part === 'object'}
+							{@const i = indexTrauc(r, p)}
+							{@const k = pausats[i]}
+							<button
+								type="button"
+								class="trauc"
+								class:plen={k != null}
+								class:fals={verificat && fals[i]}
+								class:just={verificat && !fals[i]}
+								aria-label={k != null ? `${tèulas[k]}, toucher pour retirer` : 'trou vide'}
+								onclick={() => levar(i)}>{k != null ? tèulas[k] : ''}</button
+							>
+						{:else}{insecable(part)}{/if}
+					{/each}
+				</span>
 			</Bulla>
 		{/each}
 	{/snippet}
 </Ecran>
 
 <style>
-	.haut {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.6rem;
-	}
 	.tèulas {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.4rem;
+		justify-content: center;
+		gap: 0.55rem;
 	}
 	.tèula {
-		min-height: 2.6rem;
-		padding: 0.3rem 0.75rem;
-		border: 1px solid var(--t-accion);
-		border-radius: 3px;
-		background: var(--t-fons);
-		color: var(--t-tinta);
-		font: inherit;
-		cursor: pointer;
+		font-size: 1rem;
 	}
-	.tèula:disabled {
-		border-style: dashed;
-		border-color: var(--t-linha);
+	/* le mot posé laisse sa place vide dans la réserve */
+	.tèula.usada:disabled {
+		--pc-fons: transparent;
 		color: transparent;
-		cursor: default;
+		opacity: 1;
+		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--t-tinta) 28%, transparent);
+	}
+
+	/* les trous tiennent dans le fil du texte : une ligne plus haute */
+	.linha {
+		display: block;
+		line-height: 2.25;
 	}
 	.trauc {
-		display: inline-block;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		min-width: 4.2rem;
-		min-height: 1.7rem;
-		margin: 0 0.1rem;
-		padding: 0 0.35rem;
+		height: 2rem;
+		margin: 0 0.15rem;
+		padding: 0 0.7rem;
 		border: 0;
-		border-bottom: 2px solid var(--t-tinta-2);
-		background: transparent;
-		color: var(--t-tinta);
+		border-radius: 8px;
+		vertical-align: middle;
+		color: inherit;
+		background: color-mix(in srgb, currentColor 14%, transparent);
+		box-shadow:
+			inset 0 2px 3px var(--pc-ombre),
+			inset 0 0 0 1.5px color-mix(in srgb, currentColor 26%, transparent);
 		font: inherit;
-		vertical-align: baseline;
+		font-weight: 700;
+		line-height: 1;
 		cursor: pointer;
+		transition:
+			background-color 0.2s,
+			color 0.2s;
 	}
 	.trauc.plen {
-		border-bottom-color: var(--t-accion);
+		color: var(--pc-or-tinta);
+		background: var(--pc-or-fons);
+		box-shadow: 0 2px 3px var(--pc-ombre);
+		animation: pausa 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
 	}
 	.trauc.just {
-		border-bottom-color: var(--t-aur);
+		color: var(--pc-juste-tinta);
+		background: var(--pc-juste);
+		animation: none;
 		cursor: default;
 	}
 	.trauc.fals {
-		border-bottom-style: dashed;
-		text-decoration: line-through;
-		text-decoration-color: var(--t-tinta-2);
+		color: var(--t-accion-tinta);
+		background: var(--t-accion);
+		animation: pc-tremble 0.4s ease-out;
 	}
-	.tèula:focus-visible,
 	.trauc:focus-visible {
-		outline: 3px solid var(--t-aur);
+		outline: 3px solid var(--t-aur-clar, #ffd98a);
 		outline-offset: 2px;
+	}
+	@keyframes pausa {
+		from {
+			transform: translateY(-7px);
+			box-shadow: 0 7px 6px var(--pc-ombre);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.trauc,
+		.trauc.plen,
+		.trauc.fals {
+			transition: none;
+			animation: none;
+		}
 	}
 </style>
