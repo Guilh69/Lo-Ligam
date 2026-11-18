@@ -6,9 +6,9 @@
 	// l'atelier Bastir, puis au moteur des leçons.
 	// Deuxième version (même jour, « pas très fidèle à ma DA, assez générique ») :
 	// les écrans parlent la langue du site (pièces de papier, grand chiffre en
-	// Limelight, grains de progression, photo à coins de 22 px). Deux têtes à
-	// comparer, sans recharger : « Papièr » (tête sur le fond de la page) et
-	// « Teula » (tête en aplat, à la couleur de l'unité).
+	// Limelight, grains de progression, photo à coins de 22 px). Deux têtes
+	// étaient à comparer ; Romain a gardé « Teula » le 18-11 (tête en aplat, à la
+	// couleur de l'unité). Reste une réglette : l'unité, pour voir les couleurs.
 	import { onMount, setContext } from 'svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import EscotarRepetir from '$lib/gabarits/EscotarRepetir.svelte';
@@ -29,19 +29,11 @@
 	let torns = $state(Object.fromEntries(ECRANS.map((e) => [e.id, 0])));
 	const tornar = (id) => () => (torns[id] += 1);
 
-	// la leçon qui porte les écrans : la tête à l'essai et l'unité (sa couleur)
-	const TÈSTAS = [
-		{ id: 'papièr', nom: 'Papièr' },
-		{ id: 'teula', nom: 'Teula' }
-	];
+	// la leçon qui porte les écrans : son unité donne la couleur de la tête
 	const UNITATS = [1, 2, 3, 4, 5, 6, 7, 8];
 	const CLAU = 'lo-ligam-ensag-gabarits';
-	let cap = $state('papièr');
 	let unitat = $state(1);
 	setContext('gabarit', {
-		get cap() {
-			return cap;
-		},
 		get unitat() {
 			return unitat;
 		},
@@ -54,17 +46,15 @@
 	onMount(() => {
 		try {
 			const m = JSON.parse(localStorage.getItem(CLAU) ?? 'null');
-			if (TÈSTAS.some((t) => t.id === m?.cap)) cap = m.cap;
 			if (UNITATS.includes(m?.unitat)) unitat = m.unitat;
 		} catch {
 			// pas de mémoire du navigateur : l'essai marche sans
 		}
 	});
-	function causir(c, u = unitat) {
-		cap = c;
+	function causir(u) {
 		unitat = u;
 		try {
-			localStorage.setItem(CLAU, JSON.stringify({ cap, unitat }));
+			localStorage.setItem(CLAU, JSON.stringify({ unitat }));
 		} catch {
 			// idem
 		}
@@ -82,8 +72,8 @@
 		<header class="cap">
 			<h1><span lang="oc">Gabarits d’exercici</span></h1>
 			<p class="frasa">
-				Lot 1, deuxième version : les cinq mêmes écrans, avec les pièces de papier du site. Deux têtes à comparer, en bas de la page. Touche-les, ils marchent. La
-				matière vient du module 1.1.
+				Lot 1 : cinq écrans, un par type d’exercice, avec les pièces de papier du site et la tête à la couleur de l’unité. Change d’unité en bas de la page pour voir
+				les autres couleurs. Touche-les, ils marchent. La matière vient du module 1.1.
 			</p>
 		</header>
 
@@ -114,18 +104,10 @@
 
 	<!-- L'outil d'essai, neutre exprès : il ne fait pas partie de l'interface. -->
 	<div class="ensags">
-		{#if cap === 'teula'}
-			<div class="ensag unitats" role="group" aria-label="Unité (la couleur de la tête)">
-				<span class="et">Unité</span>
-				{#each UNITATS as u (u)}
-					<button type="button" aria-pressed={unitat === u} onclick={() => causir(cap, u)}>{u}</button>
-				{/each}
-			</div>
-		{/if}
-		<div class="ensag" role="group" aria-label="Tête de l’écran">
-			<span class="et">Tête</span>
-			{#each TÈSTAS as t (t.id)}
-				<button type="button" aria-pressed={cap === t.id} onclick={() => causir(t.id)}><span lang="oc">{t.nom}</span></button>
+		<div class="ensag unitats" role="group" aria-label="Unité (la couleur de la tête)">
+			<span class="et">Unité</span>
+			{#each UNITATS as u (u)}
+				<button type="button" aria-pressed={unitat === u} onclick={() => causir(u)}>{u}</button>
 			{/each}
 		</div>
 	</div>
@@ -204,7 +186,7 @@
 		outline-offset: 2px;
 	}
 
-	/* les deux réglettes des essais, mêmes que celles de /apren : blanc et noir,
+	/* la réglette des essais, la même que celles de /apren : blanc et noir,
 	   hors palette, pour ne pas se confondre avec les écrans à juger */
 	.ensags {
 		position: fixed;
@@ -218,7 +200,7 @@
 		gap: 0.4rem;
 		max-width: calc(100vw - 1rem);
 	}
-	/* sur téléphone, les réglettes restent au-dessus de la barre du bas du site */
+	/* sur téléphone, la réglette reste au-dessus de la barre du bas du site */
 	@media (max-width: 40rem) {
 		.ensags {
 			bottom: calc(4.9rem + env(safe-area-inset-bottom, 0px));

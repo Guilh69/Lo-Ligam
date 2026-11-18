@@ -12,9 +12,9 @@
 	// (lib/styles/papier.css), le numéro et « Òsca ! » sont en Limelight, la
 	// traduction en italique entre parenthèses, l'avancement en petits carrés
 	// comme dans les jeux, la couleur vient de l'unité (lib/parcors/colors.js).
-	// Deux têtes à comparer sur /ensag/gabarits : « papièr » (sur le fond du
-	// site, numéro en or, comme la page d'un module) et « teula » (aplat de la
-	// couleur de l'unité, comme les tuiles de /apren).
+	// La tête est un aplat à la couleur de l'unité, comme les tuiles de /apren :
+	// « Teula », choisie par Romain le 18-11 face à « Papièr » (tête sur le fond
+	// du site, numéro en or), retirée ce jour-là.
 	import { getContext } from 'svelte';
 	import Icona from '$lib/components/Icona.svelte';
 	import { animat } from '$lib/actions/animarText.js';
@@ -29,17 +29,16 @@
 	 */
 	let { avança = 0, consigna, retorn = null, boton, onpassar = null, media, accion, reserva = null } = $props();
 
-	// la leçon qui porte l'écran, donnée par la page : { unitat, leiçon, total, cap }
+	// la leçon qui porte l'écran, donnée par la page : { unitat, leiçon, total }
 	const ctx = getContext('gabarit') ?? {};
 	const total = $derived(ctx.total ?? 5);
 	const pas = $derived(Math.min(total, Math.max(1, Math.round(avança * total))));
 	// la couleur de l'unité se lit au moment de s'en servir (Romain peut la changer)
 	const color = $derived(colorUnitat(ctx.unitat ?? 1));
 	const tinta = $derived(tintaPer(color));
-	const teula = $derived(ctx.cap === 'teula');
 </script>
 
-<div class="ecran" class:teula style:--g-color={color} style:--g-tinta={tinta}>
+<div class="ecran" style:--g-color={color} style:--g-tinta={tinta}>
 	<div class="cap">
 		<div class="naut">
 			<span class="tancar" aria-hidden="true"><Icona nom="fermer" size="1.25rem" /></span>
@@ -80,7 +79,6 @@
 
 <style>
 	.ecran {
-		--g-grana: var(--t-aur);
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
@@ -91,11 +89,16 @@
 		font-family: var(--font-body);
 	}
 
-	/* ── La tête : la croix et les carrés, puis le numéro et la consigne ── */
+	/* ── La tête : la couleur du module en aplat, sur toute la largeur ;
+	   la croix et les carrés, puis le numéro et la consigne ── */
 	.cap {
 		display: flex;
 		flex-direction: column;
 		gap: 0.8rem;
+		margin: -1rem -1.1rem 0;
+		padding: 1rem 1.1rem 1.2rem;
+		color: var(--g-tinta);
+		background: var(--g-color);
 	}
 	.naut {
 		display: flex;
@@ -104,7 +107,6 @@
 	}
 	.tancar {
 		display: inline-flex;
-		color: var(--t-tinta-2);
 	}
 	/* les petits carrés des jeux : un par écran, celui du moment est soulevé */
 	.granas {
@@ -122,11 +124,11 @@
 			transform 0.3s;
 	}
 	.granas .fach {
-		background: var(--g-grana);
+		background: currentColor;
 		box-shadow: none;
 	}
 	.granas .ara {
-		background: var(--g-grana);
+		background: currentColor;
 		box-shadow: 0 2px 2px var(--pc-ombre);
 		transform: translateY(-2px);
 	}
@@ -142,7 +144,6 @@
 		font-family: var(--font-heading);
 		font-size: 2.2rem;
 		line-height: 1;
-		color: var(--t-aur-gros);
 	}
 	.oc {
 		font-size: 1.1rem;
@@ -158,18 +159,8 @@
 		display: block;
 		margin-top: 0.1rem;
 	}
-
-	/* la tête « teula » : la couleur du module en aplat, sur toute la largeur */
-	.teula .cap {
-		--g-grana: var(--g-tinta);
-		margin: -1rem -1.1rem 0;
-		padding: 1rem 1.1rem 1.2rem;
-		color: var(--g-tinta);
-		background: var(--g-color);
-	}
-	.teula .tancar,
-	.teula .num,
-	.teula .cap .glosa {
+	/* dans la tête, la traduction prend la couleur du texte de la tête */
+	.cap .glosa {
 		color: inherit;
 	}
 
