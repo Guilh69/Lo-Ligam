@@ -264,7 +264,7 @@
 
 <div class="pagina">
 	<header class="barra">
-		<a class="acuelh" href="/" aria-label={tria({ oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici', ar: 'الرئيسية' })}>
+		<a class="logo-acuelh" href="/" aria-label={tria({ oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici', ar: 'الرئيسية' })}>
 			<Crotz talha={30} teula />
 			<span>{tria({ oc: 'Acuèlh', fr: 'Accueil', es: 'Inicio', en: 'Home', ca: 'Inici', ar: 'الرئيسية' })}</span>
 		</a>
@@ -456,7 +456,7 @@
 		padding: 1.3rem var(--marge);
 	}
 
-	.acuelh {
+	.logo-acuelh {
 		display: flex;
 		align-items: center;
 		gap: 0.55rem;
@@ -466,7 +466,7 @@
 		text-decoration: none;
 	}
 
-	.acuelh:hover span {
+	.logo-acuelh:hover span {
 		text-decoration: underline 2px var(--t-accion);
 		text-underline-offset: 4px;
 	}

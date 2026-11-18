@@ -13,14 +13,14 @@
 	/>
 </svelte:head>
 
-<div class="acuelh">
+<div class="acuelh-grops">
 	<Tèxte clau="grops.acuelh" class="frasa" />
 	<Tèxte clau="grops.pseudo" class="nota" />
 	<p class="causir">{tria({ oc: 'Causís un grop dins la lista.', fr: 'Choisis un groupe dans la liste.', es: 'Elige un grupo de la lista.', en: 'Pick a group from the list.', ca: 'Tria un grup de la llista.', ar: 'يمكنك اختيار مجموعة من القائمة.' })}</p>
 </div>
 
 <style>
-	.acuelh {
+	.acuelh-grops {
 		display: grid;
 		align-content: center;
 		gap: var(--esp-16);
@@ -30,13 +30,13 @@
 		padding: var(--esp-32) var(--esp-24);
 		box-sizing: border-box;
 	}
-	.acuelh :global(.frasa) {
+	.acuelh-grops :global(.frasa) {
 		margin: 0;
 		font-family: var(--font-heading);
 		font-size: clamp(1.4rem, 2.4vw, 2rem);
 		line-height: 1.3;
 	}
-	.acuelh :global(.nota),
+	.acuelh-grops :global(.nota),
 	.causir {
 		margin: 0;
 		line-height: 1.5;
