@@ -61,7 +61,11 @@
 		{#if retorn}
 			<div class="retorn" class:just={retorn.just} role="status">
 				<p class="r-titol">
-					<span class="r-mot" lang="oc" {@attach retorn.just && animat('rebond')}>{insecable(retorn.titol.oc)}</span>
+					<!-- l'animation découpe le mot en lettres et garde la main sur son contenu :
+					     un titre qui change (une réponse reprise) repart d'un élément neuf -->
+					{#key retorn.titol.oc}
+						<span class="r-mot" lang="oc" {@attach retorn.just && animat('rebond')}>{insecable(retorn.titol.oc)}</span>
+					{/key}
 					<span class="glosa">({retorn.titol.fr})</span>
 				</p>
 				<span class="filet" aria-hidden="true"></span>

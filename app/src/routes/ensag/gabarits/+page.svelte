@@ -9,6 +9,9 @@
 	// Limelight, grains de progression, photo à coins de 22 px). Deux têtes
 	// étaient à comparer ; Romain a gardé « Teula » le 18-11 (tête en aplat, à la
 	// couleur de l'unité). Reste une réglette : l'unité, pour voir les couleurs.
+	// Lot 2 (18-11) : huit écrans de plus, dans le même cadre : remettre dans
+	// l'ordre (mots, puis lettres), relier les paires, écrire la réponse, carte de
+	// mot, texte à lire, bilan, audace.
 	import { onMount, setContext } from 'svelte';
 	import AppHeader from '$lib/components/AppHeader.svelte';
 	import EscotarRepetir from '$lib/gabarits/EscotarRepetir.svelte';
@@ -16,14 +19,46 @@
 	import DialogTraucs from '$lib/gabarits/DialogTraucs.svelte';
 	import VertatFals from '$lib/gabarits/VertatFals.svelte';
 	import CausidaMultipla from '$lib/gabarits/CausidaMultipla.svelte';
-	import { SON_EXEMPLE, FOTO_EXEMPLE, PERSONATGES, ESCOTAR, DIALÒG, TRAUCS, VERTAT_FALS, CAUSIDA } from '$lib/gabarits/exemples.js';
+	import RemetreOrdre from '$lib/gabarits/RemetreOrdre.svelte';
+	import Parelhs from '$lib/gabarits/Parelhs.svelte';
+	import Escriure from '$lib/gabarits/Escriure.svelte';
+	import CartaMot from '$lib/gabarits/CartaMot.svelte';
+	import TextLegir from '$lib/gabarits/TextLegir.svelte';
+	import Bilanc from '$lib/gabarits/Bilanc.svelte';
+	import Audacia from '$lib/gabarits/Audacia.svelte';
+	import {
+		SON_EXEMPLE,
+		FOTO_EXEMPLE,
+		PERSONATGES,
+		ESCOTAR,
+		DIALÒG,
+		TRAUCS,
+		VERTAT_FALS,
+		CAUSIDA,
+		ÒRDRE_MOTS,
+		ÒRDRE_LETRAS,
+		PARELHS,
+		ESCRIURE,
+		CARTA_MOT,
+		TÈXT,
+		BILANÇ,
+		AUDÀCIA
+	} from '$lib/gabarits/exemples.js';
 
 	const ECRANS = [
 		{ id: 'escotar', nom: 'Écouter et répéter' },
 		{ id: 'bulles', nom: 'Dialogue en bulles' },
 		{ id: 'traucs', nom: 'Dialogue à trous' },
 		{ id: 'vertat', nom: 'Vrai ou faux' },
-		{ id: 'causida', nom: 'Choix multiple' }
+		{ id: 'causida', nom: 'Choix multiple' },
+		{ id: 'mots', nom: 'Remettre dans l’ordre' },
+		{ id: 'letras', nom: 'Lettres dans l’ordre' },
+		{ id: 'parelhs', nom: 'Relier les paires' },
+		{ id: 'escriure', nom: 'Écrire la réponse' },
+		{ id: 'carta', nom: 'Carte de mot' },
+		{ id: 'text', nom: 'Texte à lire' },
+		{ id: 'bilanc', nom: 'Bilan' },
+		{ id: 'audacia', nom: 'Audace' }
 	];
 	// un tour de plus : l'écran repart de zéro (« Contunhar » ou « recommencer »)
 	let torns = $state(Object.fromEntries(ECRANS.map((e) => [e.id, 0])));
@@ -72,8 +107,8 @@
 		<header class="cap">
 			<h1><span lang="oc">Gabarits d’exercici</span></h1>
 			<p class="frasa">
-				Lot 1 : cinq écrans, un par type d’exercice, avec les pièces de papier du site et la tête à la couleur de l’unité. Change d’unité en bas de la page pour voir
-				les autres couleurs. Touche-les, ils marchent. La matière vient du module 1.1.
+				Lots 1 et 2 : treize écrans, un par type d’exercice, avec les pièces de papier du site et la tête à la couleur de l’unité. Change d’unité en bas de la page
+				pour voir les autres couleurs. Touche-les, ils marchent. La matière vient du module 1.1.
 			</p>
 		</header>
 
@@ -91,8 +126,24 @@
 								<DialogTraucs {...TRAUCS} personatges={PERSONATGES} son={SON_EXEMPLE} oncontunhar={tornar(e.id)} />
 							{:else if e.id === 'vertat'}
 								<VertatFals foto={FOTO_EXEMPLE} {...VERTAT_FALS} oncontunhar={tornar(e.id)} />
-							{:else}
+							{:else if e.id === 'causida'}
 								<CausidaMultipla {...CAUSIDA} oncontunhar={tornar(e.id)} />
+							{:else if e.id === 'mots'}
+								<RemetreOrdre {...ÒRDRE_MOTS} oncontunhar={tornar(e.id)} />
+							{:else if e.id === 'letras'}
+								<RemetreOrdre {...ÒRDRE_LETRAS} oncontunhar={tornar(e.id)} />
+							{:else if e.id === 'parelhs'}
+								<Parelhs parelhs={PARELHS} oncontunhar={tornar(e.id)} />
+							{:else if e.id === 'escriure'}
+								<Escriure {...ESCRIURE} oncontunhar={tornar(e.id)} />
+							{:else if e.id === 'carta'}
+								<CartaMot mot={CARTA_MOT} oncontunhar={tornar(e.id)} />
+							{:else if e.id === 'text'}
+								<TextLegir {...TÈXT} oncontunhar={tornar(e.id)} />
+							{:else if e.id === 'bilanc'}
+								<Bilanc {...BILANÇ} oncontunhar={tornar(e.id)} />
+							{:else}
+								<Audacia {...AUDÀCIA} oncontunhar={tornar(e.id)} />
 							{/if}
 						{/key}
 					</div>

@@ -5,6 +5,13 @@
 // dialòg, mot, puèi, arrèsta, ta, pausa, los, pas, bona, responsa ; « cada » et
 // « lor » : l'API a planté, mots écartés). Le son est le seul enregistrement
 // existant du module 1.1 : il tient lieu d'exemple en attendant le studio.
+// Lot 2 (2026-11-18) : mots vérifiés le même jour (met, escriu, legís, fai,
+// farai, sabiái, solinhat, òrdre, dins, letra, parelh, qué, vòl, dire, tòca,
+// tèxt, bilanç, audàcia, còp, acabar, setmana, veire, occitan, las, o). « en »,
+// « lo » et « la » : l'API plante sur ces trois mots (erreur d'appel, pas une
+// absence) ; ils sont déjà dans les textes validés du site. La carte de mot et
+// le texte à lire n'ont pas de son : aucune expression du module 1.1 n'est
+// encore enregistrée seule.
 
 export const SON_EXEMPLE = '/audio/moduls/1-1/lo-matin-sul-mercat.m4a';
 export const FOTO_EXEMPLE = { src: '/aprene/fotos/5-1-mercat-800.webp', alt: 'Un marché en plein air, des étals et des passants' };
@@ -61,5 +68,79 @@ export const CAUSIDA = {
 		{ oc: 'A lèu !', just: false, explic: '« A lèu ! », c’est « à bientôt ! ».' },
 		{ oc: 'A deman !', just: true, explic: '« Deman », c’est « demain ».' },
 		{ oc: 'Bon ser !', just: false, explic: '« Bon ser ! », c’est « bonsoir ! », en arrivant.' }
+	]
+};
+
+/** remettre dans l'ordre : les mots d'une phrase */
+export const ÒRDRE_MOTS = {
+	enonciat: 'Je vais bien, merci. Et toi ?',
+	responsa: ['Vau', 'plan,', 'mercés.', 'E', 'tu ?'],
+	indici: 'La réponse d’abord, la question ensuite.',
+	explic: '« Vau plan, mercés. E tu ? » : répondre, puis retourner la question.'
+};
+
+/** remettre dans l'ordre : les lettres d'un mot */
+export const ÒRDRE_LETRAS = {
+	enonciat: 'Comment écrit-on « demain » ?',
+	sona: 'dé-MA',
+	responsa: ['d', 'e', 'm', 'a', 'n'],
+	indici: 'Le mot commence par « d » et finit par « n ».',
+	explic: 'On écrit « deman » et on entend « dé-MA » : ici, le « n » de la fin ne s’entend pas.',
+	letras: true
+};
+
+/** relier les paires */
+export const PARELHS = [
+	{ oc: 'Bon ser !', fr: 'bonsoir' },
+	{ oc: 'A lèu !', fr: 'à bientôt' },
+	{ oc: 'A deman !', fr: 'à demain' },
+	{ oc: 'Mercés !', fr: 'merci' }
+];
+
+/** écrire la réponse */
+export const ESCRIURE = {
+	demanda: 'Demande à ton ami comment il va.',
+	answers: ['Cossí vas ?'],
+	indici: 'Deux mots. Le premier, « cossí », veut dire « comment ».',
+	explic: '« Cossí vas ? » : comment vas-tu ?'
+};
+
+/** la carte de mot : penser, puis révéler */
+export const CARTA_MOT = { oc: 'Al còp que ven !', fr: 'à la prochaine !', sound: 'al COP qué BÈN' };
+
+/**
+ * le texte à lire : des paragraphes en morceaux ; un morceau { mot, fr, sound }
+ * se touche et donne son sens en pied d'écran
+ */
+export const TÈXT = {
+	intro: 'Loís a laissé ce mot à Yasmine.',
+	paragrafs: [
+		[{ mot: 'Bonjorn', fr: 'bonjour', sound: 'boun-DJOUR' }, ', Yasmine ! ', { mot: 'Cossí vas', fr: 'comment vas-tu', sound: 'cou-si BAS' }, ' ?'],
+		[{ mot: 'Vau plan', fr: 'je vais bien', sound: 'baou PLA' }, ', ', { mot: 'mercés', fr: 'merci', sound: 'mér-SÉS' }, '.'],
+		[{ mot: 'A deman', fr: 'à demain', sound: 'a dé-MA' }, ' !']
+	],
+	signatura: 'Loís'
+};
+
+/** le bilan : le texte du module 1.1 */
+export const BILANÇ = {
+	intro: 'Coche seulement ce que tu sais faire seul. Le reste reviendra.',
+	items: ['saluer le matin et le soir', 'demander comment ça va, et répondre', 'partir : à bientôt, à demain', 'choisir entre le « tu » et le « vous »']
+};
+
+/** l'audace : une chose à tenter dans la vraie vie (le défi du module 1.1) */
+export const AUDÀCIA = {
+	foto: {
+		src: '/aprene/fotos/8-1-placa-800.webp',
+		alt: 'Une place de ville en pierre claire, une fontaine, des terrasses de café et des passants',
+		position: '50% 85%'
+	},
+	acquis: 'Tu sais maintenant saluer, demander comment ça va, et partir.',
+	prepausa: [
+		'Si tu en as envie : en partant, dis ',
+		{ oc: 'A deman !' },
+		' ou ',
+		{ oc: 'A lèu !' },
+		' à quelqu’un que tu reverras bientôt, une collègue, un voisin, ton frère. Quand ? Où ? Choisis maintenant.'
 	]
 };
