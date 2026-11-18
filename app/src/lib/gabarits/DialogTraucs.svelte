@@ -7,9 +7,15 @@
 	// posées, vertes ou brique après « Verificar ». Les trous sont creusés dans
 	// la bulle, comme le rail de l'interrupteur du site. La réserve est au pied
 	// de l'écran, près du pouce ; le retour la remplace après « Verificar ».
+	// Les répliques se posent une à une (Romain, 18-11) : le dialogue s'arrête à
+	// la première bulle qui garde un trou vide, le mot posé appelle la suite, et
+	// le fil défile tout seul vers elle. Une bulle montrée reste montrée, même si
+	// on retire son mot.
+	import { tick } from 'svelte';
 	import Ecran from './Ecran.svelte';
 	import Bulla from './Bulla.svelte';
 	import BotonSon from './BotonSon.svelte';
+	import { seguirFil } from './fil.js';
 	import { insecable } from '$lib/lesson/rich.js';
 
 	let { replicas, tèulas, explics, personatges, son, avança = 0.6, oncontunhar } = $props();
@@ -27,30 +33,56 @@
 	const fals = $derived(verificat ? traucs.map((t, i) => tèulas[pausats[i]] !== t.mot) : []);
 	const totJust = $derived(verificat && fals.every((f) => !f));
 
-	function pausar(k) {
+	// jusqu'où va le dialogue : la bulle du premier trou vide, ou tout
+	const limit = $derived.by(() => {
+		const i = pausats.indexOf(null);
+		return i < 0 ? replicas.length : traucs[i].r + 1;
+	});
+	let vistas = $state(0); // ce qui a déjà été montré ne se retire pas
+	const mostradas = $derived(Math.max(vistas, limit));
+	// le délai d'entrée de chaque bulle arrivée en cours de route, fixé une fois
+	let retards = $state({});
+	let fil; // le dialogue
+	let fin; // le bout du fil, pour le suivre
+
+	async function pausar(k) {
 		if (verificat || usada(k)) return;
 		const i = pausats.indexOf(null);
-		if (i >= 0) pausats = pausats.with(i, k);
+		if (i < 0) return;
+		const abans = mostradas;
+		pausats = pausats.with(i, k);
+		// les bulles que ce mot appelle arrivent une fois le mot posé, l'une après l'autre
+		for (let r = abans; r < mostradas; r += 1) retards[r] = 0.3 + (r - abans) * 0.35;
+		await tick();
+		seguirFil(fin);
 	}
 	function levar(i) {
 		if (verificat && !fals[i]) return;
+		vistas = mostradas;
 		pausats = pausats.with(i, null);
 		verificat = false;
 	}
 	function tornar() {
+		vistas = mostradas;
 		pausats = pausats.map((k, i) => (fals[i] ? null : k));
 		verificat = false;
+	}
+	async function verificar() {
+		verificat = true;
+		await tick();
+		// le retour prend la place de la réserve : le premier mot à revoir revient sous les yeux
+		seguirFil(fil?.querySelector('.trauc.fals') ?? fin);
 	}
 
 	const retorn = $derived.by(() => {
 		if (!verificat) return null;
-		if (totJust) return { just: true, titol: { oc: 'Òsca !', fr: 'bravo' }, explic: 'Les quatre mots sont à leur place.' };
+		if (totJust) return { just: true, titol: { oc: 'Òsca !', fr: 'bravo' }, explic: 'Tous les mots sont à leur place.' };
 		const errors = traucs.filter((_, i) => fals[i]).map((t) => explics[t.mot]);
 		return { just: false, titol: { oc: 'Pas encara', fr: 'pas encore' }, explic: errors.join(' ') };
 	});
 	const boton = $derived(
 		!verificat
-			? { oc: 'Verificar', actiu: plen, onclick: () => (verificat = true) }
+			? { oc: 'Verificar', actiu: plen, onclick: verificar }
 			: totJust
 				? { oc: 'Contunhar', actiu: true, onclick: oncontunhar }
 				: { oc: 'Tòrna', actiu: true, onclick: tornar }
@@ -69,27 +101,30 @@
 		</div>
 	{/snippet}
 	{#snippet accion()}
-		{#each replicas as rep, r (r)}
-			<Bulla personatge={personatges[rep.qui]} ambNom={primièra(r)}>
-				<span class="linha">
-					{#each rep.parts as part, p (p)}
-						{#if typeof part === 'object'}
-							{@const i = indexTrauc(r, p)}
-							{@const k = pausats[i]}
-							<button
-								type="button"
-								class="trauc"
-								class:plen={k != null}
-								class:fals={verificat && fals[i]}
-								class:just={verificat && !fals[i]}
-								aria-label={k != null ? `${tèulas[k]}, toucher pour retirer` : 'trou vide'}
-								onclick={() => levar(i)}>{k != null ? tèulas[k] : ''}</button
-							>
-						{:else}{insecable(part)}{/if}
-					{/each}
-				</span>
-			</Bulla>
-		{/each}
+		<div role="log" aria-label="Dialogue" bind:this={fil}>
+			{#each replicas.slice(0, mostradas) as rep, r (r)}
+				<Bulla personatge={personatges[rep.qui]} ambNom={primièra(r)} entra={retards[r] != null} retard={retards[r] ?? 0}>
+					<span class="linha">
+						{#each rep.parts as part, p (p)}
+							{#if typeof part === 'object'}
+								{@const i = indexTrauc(r, p)}
+								{@const k = pausats[i]}
+								<button
+									type="button"
+									class="trauc"
+									class:plen={k != null}
+									class:fals={verificat && fals[i]}
+									class:just={verificat && !fals[i]}
+									aria-label={k != null ? `${tèulas[k]}, toucher pour retirer` : 'trou vide'}
+									onclick={() => levar(i)}>{k != null ? tèulas[k] : ''}</button
+								>
+							{:else}{insecable(part)}{/if}
+						{/each}
+					</span>
+				</Bulla>
+			{/each}
+		</div>
+		<span class="fin" bind:this={fin}></span>
 	{/snippet}
 </Ecran>
 
@@ -109,6 +144,10 @@
 		color: transparent;
 		opacity: 1;
 		box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--t-tinta) 28%, transparent);
+	}
+
+	.fin {
+		display: block;
 	}
 
 	/* les trous tiennent dans le fil du texte : une ligne plus haute */

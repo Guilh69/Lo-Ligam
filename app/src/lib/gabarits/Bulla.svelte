@@ -1,16 +1,22 @@
 <script>
 	// Une réplique de dialogue : l'initiale de la personne en Limelight, sa
-	// bulle, la traduction dessous. La personne de gauche parle sur le papier
-	// des leçons (--l-carta), celle de droite sur le carton pétrole. Les bulles
-	// sont du papier POSÉ (ombre courte) : seul ce qui se touche est soulevé.
+	// bulle, la traduction dessous. Les bulles sont du papier neutre, POSÉ (ombre
+	// courte) : la couleur est gardée pour ce qui se touche et pour la tête de
+	// l'écran, une bulle ne doit jamais ressembler à une pièce à toucher. La
+	// personne de gauche parle sur le papier des leçons (--l-carta), celle de
+	// droite sur le papier des panneaux (--t-fons-2) ; le nom les distingue.
 	// Le coin serré de la bulle est du côté de la personne qui parle.
 	// « ambNom » : le nom s'écrit à la première réplique de chacun ; ensuite
 	// l'initiale suffit à l'œil (le nom reste dit aux lecteurs d'écran).
-	let { personatge, fr = '', ambNom = true, children } = $props();
+	// « entra » : la réplique arrive pendant qu'on regarde (le dialogue se
+	// débloque une bulle après l'autre, Romain, 18-11) ; elle se pose comme une
+	// feuille, après « retard » secondes. Même geste que le mot qu'on pose dans
+	// un trou, sans rebond.
+	let { personatge, fr = '', ambNom = true, entra = false, retard = 0, children } = $props();
 	const drecha = $derived(personatge.costat === 'drecha');
 </script>
 
-<div class="replica" class:drecha>
+<div class="replica" class:drecha class:entra style:--retard={entra ? `${retard}s` : null}>
 	<span class="qui" aria-hidden="true">{personatge.nom[0]}</span>
 	<div class="bulla">
 		<span class="nom" class:sr={!ambNom}>{personatge.nom}</span>
@@ -51,8 +57,7 @@
 	}
 	.drecha .bulla {
 		border-radius: 14px 3px 14px 14px;
-		color: var(--pc-carton-tinta, var(--t-tinta));
-		background: var(--pc-carton);
+		background: var(--t-fons-2);
 	}
 	.nom {
 		display: block;
@@ -61,7 +66,7 @@
 		color: var(--l-teal);
 	}
 	.drecha .nom {
-		color: inherit;
+		color: var(--l-marca);
 	}
 	.nom.sr {
 		position: absolute;
@@ -85,5 +90,36 @@
 		font-style: italic;
 		line-height: 1.4;
 		opacity: 0.82;
+	}
+
+	/* la feuille qui se pose : elle descend de quelques pixels, son ombre se resserre */
+	.entra .bulla {
+		animation: pausa-bulla 0.36s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+		animation-delay: var(--retard, 0s);
+	}
+	.entra .qui {
+		animation: vista 0.2s ease-out both;
+		animation-delay: var(--retard, 0s);
+	}
+	@keyframes pausa-bulla {
+		0% {
+			opacity: 0;
+			transform: translateY(-10px);
+			box-shadow: 0 9px 8px var(--pc-ombre);
+		}
+		40% {
+			opacity: 1;
+		}
+	}
+	@keyframes vista {
+		from {
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.entra .bulla,
+		.entra .qui {
+			animation: none;
+		}
 	}
 </style>

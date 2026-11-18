@@ -3,12 +3,13 @@
 	// sujet, la phrase en grand, sa prononciation, puis trois gestes : écouter le
 	// modèle, s'enregistrer, se réécouter. Rien n'est noté : c'est l'oreille de
 	// l'apprenant qui juge. L'enregistrement reste dans le navigateur.
-	// Les trois gestes sont des pièces de papier : le micro, plus grand, au
-	// milieu ; il passe à l'or et respire tant qu'il enregistre.
+	// Les trois gestes sont trois pièces de papier identiques (BotonGest) : même
+	// carré, même pictogramme, même écriture. Le micro est au milieu ; il passe à
+	// l'or et respire tant qu'il enregistre.
 	import { onDestroy } from 'svelte';
 	import Ecran from './Ecran.svelte';
 	import BotonSon from './BotonSon.svelte';
-	import Icona from '$lib/components/Icona.svelte';
+	import BotonGest from './BotonGest.svelte';
 	import { creerEnregistreur } from '$lib/voix/enregistreur.js';
 	import { insecable } from '$lib/lesson/rich.js';
 
@@ -18,6 +19,7 @@
 	let presa = $state(null);
 	let error = $state('');
 	let enregistreur = null;
+	const enregistra = $derived(estat === 'enregistra');
 
 	async function micro() {
 		error = '';
@@ -58,20 +60,16 @@
 		<p class="fr">({insecable(frasa.fr)})</p>
 
 		<div class="gestes">
-			<div class="esq"><BotonSon src={son} gran pila /></div>
-			<button
-				type="button"
-				class="pc pc-grand micro"
-				class:pc-2={estat !== 'enregistra'}
-				class:pc-or={estat === 'enregistra'}
-				class:actiu={estat === 'enregistra'}
-				aria-pressed={estat === 'enregistra'}
+			<BotonSon src={son} pila />
+			<BotonGest
+				icona={enregistra ? 'pause' : 'micro'}
+				label={enregistra ? 'Arrèsta' : 'Repetís'}
+				glosa={enregistra ? 'arrête' : 'répète'}
+				actiu={enregistra}
+				alen
 				onclick={micro}
-			>
-				<Icona nom={estat === 'enregistra' ? 'pause' : 'micro'} size="2rem" />
-				<span lang="oc">{estat === 'enregistra' ? 'Arrèsta' : 'Repetís'}</span>
-			</button>
-			<div class="dre">{#if presa}<BotonSon src={presa} gran pila label="Ta votz" glosa="ta voix" />{/if}</div>
+			/>
+			{#if presa}<BotonSon src={presa} pila label="Ta votz" glosa="ta voix" />{/if}
 		</div>
 		{#if error}<p class="error" role="alert">{error}</p>{/if}
 	{/snippet}
@@ -104,43 +102,17 @@
 		font-style: italic;
 		color: var(--t-tinta-2);
 	}
-	/* le micro reste au milieu, que la troisième pièce soit là ou non */
+	/* trois colonnes égales : le micro reste au milieu, que la troisième pièce soit là ou non */
 	.gestes {
 		display: grid;
-		grid-template-columns: 1fr auto 1fr;
-		align-items: center;
+		grid-template-columns: repeat(3, minmax(0, 5.75rem));
+		justify-content: center;
 		gap: 0.8rem;
 		margin-top: 1.3rem;
-	}
-	.esq {
-		justify-self: end;
-	}
-	.dre {
-		justify-self: start;
-	}
-	.micro {
-		flex-direction: column;
-		gap: 0.3rem;
-		width: 5.75rem;
-		height: 5.75rem;
-		padding: 0;
-	}
-	.micro.actiu {
-		animation: alen 1.4s ease-in-out infinite;
-	}
-	@keyframes alen {
-		50% {
-			transform: translateY(-2px) scale(1.04);
-		}
 	}
 	.error {
 		margin: 0.9rem 0 0;
 		font-size: 0.9rem;
 		color: var(--t-accion-viu);
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.micro.actiu {
-			animation: none;
-		}
 	}
 </style>

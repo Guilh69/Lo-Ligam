@@ -3,8 +3,10 @@
 	// la fois sur la page ($lib/voix/lecteur.js). Une pièce de papier pétrole, qui
 	// passe à l'or tant que le son joue. « gran » : la pièce porte son nom (le
 	// geste principal d'un écran d'écoute), sinon une petite pièce carrée ;
-	// « pila » : le nom sous le pictogramme, pour tenir à côté du micro.
+	// « pila » : la pièce carrée des gestes (BotonGest), la même que le micro
+	// posé à côté.
 	import Icona from '$lib/components/Icona.svelte';
+	import BotonGest from './BotonGest.svelte';
 	import { jouer } from '$lib/voix/lecteur.js';
 
 	let { src, gran = false, pila = false, label = 'Escota', glosa = 'écoute', onfin = null } = $props();
@@ -19,25 +21,22 @@
 	}
 </script>
 
-<button type="button" class="pc son" class:pc-2={!arret} class:pc-or={!!arret} class:pc-icone={!gran} class:pila aria-pressed={!!arret} onclick={basculer}>
-	<Icona nom={arret ? 'pause' : 'son'} size="1.35rem" />
-	{#if gran}
-		<span class="nom"><span lang="oc">{label}</span> <span class="glosa">({glosa})</span></span>
-	{:else}
-		<span class="sr">{label} ({glosa})</span>
-	{/if}
-</button>
+{#if pila}
+	<BotonGest icona={arret ? 'pause' : 'son'} {label} {glosa} actiu={!!arret} onclick={basculer} />
+{:else}
+	<button type="button" class="pc son" class:pc-2={!arret} class:pc-or={!!arret} class:pc-icone={!gran} aria-pressed={!!arret} onclick={basculer}>
+		<Icona nom={arret ? 'pause' : 'son'} size="1.35rem" />
+		{#if gran}
+			<span class="nom"><span lang="oc">{label}</span> <span class="glosa">({glosa})</span></span>
+		{:else}
+			<span class="sr">{label} ({glosa})</span>
+		{/if}
+	</button>
+{/if}
 
 <style>
 	.son {
 		flex: none;
-	}
-	.pila {
-		flex-direction: column;
-		gap: 0.3rem;
-		min-width: 5.25rem;
-		min-height: 4.5rem;
-		padding: 0.6rem 0.7rem;
 	}
 	/* sur une pièce : le mot occitan, sa traduction dessous */
 	.nom {
@@ -45,9 +44,6 @@
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 0.1rem;
-	}
-	.pila .nom {
-		align-items: center;
 	}
 	.glosa {
 		font-style: italic;
