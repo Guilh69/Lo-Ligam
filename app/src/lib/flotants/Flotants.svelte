@@ -37,6 +37,7 @@
 
 	let zone;
 	let pieces = $state([]);
+	let fils = $state(null); // le canevas des fils fins qui relient les points du mot écrit
 	let legende = $state(null); // la traduction du mot écrit par les confettis
 	let mot = $state(null);
 	let annonce = $state('');
@@ -86,11 +87,15 @@
 					: {
 							mots: MOTS,
 							police: getComputedStyle(document.documentElement).getPropertyValue('--font-body').trim() || 'Luciole, sans-serif', // Limelight : traits trop fins pour des confettis, illisible
+							// l'encre du site, lue au moment de tracer (Romain règle les couleurs depuis sa barre d'outils)
+							couleurFil: () => getComputedStyle(document.documentElement).getPropertyValue('--color-text').trim(),
 							onMot: (m, b) => (legende = { fr: m.fr, x: (b.l + b.r) / 2, y: b.b + 2, vis: true }),
 							onEfface: () => {
 								if (legende) legende = { ...legende, vis: false };
 							}
 						},
+				fils,
+				filsAuBesoin: true,
 				repos: objets ? 0 : 20,
 				vmax: objets ? 6 : 11,
 				collisions: objets,
@@ -196,6 +201,7 @@
 </script>
 
 <div class="couche" class:objets={mode === 'objets'} class:fond bind:this={zone} aria-hidden="true">
+	{#if mode !== 'objets'}<canvas class="fils" bind:this={fils}></canvas>{/if}
 	{#each pieces as c, k (k)}
 		{#if mode === 'objets'}
 			<div class="p o">
@@ -245,6 +251,13 @@
 		width: 100%;
 		height: 100%;
 		background: var(--c);
+	}
+	/* les fils du mot : sous les confettis, sur toute la zone */
+	.fils {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
 	}
 	/* un confetti qui écrit un mot : plus franc, pour que les lettres se lisent ; il s'éclaire et pâlit lentement */
 	.c {

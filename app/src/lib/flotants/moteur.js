@@ -111,7 +111,7 @@ export function flotter(zone, elements, options = {}) {
 	if (o.immobile) return { pieces, attraper: () => false, attraperA: () => false, eviter() {}, arreter() {} };
 
 	// le canevas des fils de l'aimant : à la taille de la zone, net sur les écrans denses
-	const g = o.aimant && o.fils ? o.fils.getContext('2d') : null;
+	const g = (o.aimant || o.ecrire) && o.fils ? o.fils.getContext('2d') : null;
 	const tailleFils = () => {
 		if (!g) return;
 		const d = Math.min(devicePixelRatio || 1, 2);
@@ -342,7 +342,7 @@ export function flotter(zone, elements, options = {}) {
 	};
 
 	// ── l'écriture : la souris posée, les confettis proches écrivent un mot ──
-	const ec = o.ecrire ? { taille: 64, graisse: 'bold', attente: 1300, tenue: 3400, pause: 1600, max: 86, parLettre: 17, point: 5, ...o.ecrire } : null;
+	const ec = o.ecrire ? { taille: 100, graisse: 'normal', attente: 1300, tenue: 3800, pause: 1600, max: 88, parLettre: 20, point: 4.5, ...o.ecrire } : null;
 	let pose = null; // [x, y, t] : où la souris s'est posée (en pixels de la zone) et depuis quand
 	let ecrit = null; // le mot en cours : { phase (venir, tenir), fin, mot, pieces, boite }
 	let prochain = 0; // pas de nouveau mot avant cette date
@@ -355,29 +355,64 @@ export function flotter(zone, elements, options = {}) {
 	const police = ec ? `${ec.graisse} ${ec.taille}px ${ec.police}` : '';
 	if (ec) document.fonts?.load(police);
 	const toile = ec ? document.createElement('canvas') : null;
-	// les points du mot : on l'écrit sur une toile cachée et on relève l'encre sur une grille en quinconce, de plus en
-	// plus serrée, jusqu'à avoir autant de points que de confettis disponibles
+	// les points du mot (essai du 21-11 : une lettre grasse remplie de points ne se lisait pas) : on écrit le mot en trait
+	// fin sur une toile cachée, puis on pose des points le long du trait, à distance égale les uns des autres (aucun point
+	// à moins de « r » d'un autre) ; on cherche le plus grand écart qui donne assez de points pour les confettis disponibles
 	const relever = (txt, n) => {
 		const c = toile.getContext('2d', { willReadFrequently: true });
 		c.font = police;
 		const w = Math.ceil(c.measureText(txt).width) + 8;
-		const h = Math.ceil(ec.taille * 1.25);
+		const h = Math.ceil(ec.taille * 1.3);
 		toile.width = w;
 		toile.height = h;
 		c.font = police;
 		c.textBaseline = 'middle';
 		c.fillText(txt, 4, h / 2);
 		const d = c.getImageData(0, 0, w, h).data;
-		let pts = [];
-		for (let pas = 16; pas >= 2.5; pas -= 0.5) {
-			pts = [];
-			let rangee = 0;
-			for (let y = pas / 2; y < h; y += pas * 0.87, rangee++)
-				for (let x = (rangee % 2 ? pas : pas / 2); x < w; x += pas) if (d[((y | 0) * w + (x | 0)) * 4 + 3] > 140) pts.push([x, y]);
-			if (pts.length >= n) break;
+		// le squelette des lettres (amincissement de Zhang et Suen) : on ronge le trait de part et d'autre jusqu'à sa ligne
+		// centrale, d'un pixel de large ; les points s'y posent en file et les fils suivent le trait au lieu de s'emmêler
+		const img = new Uint8Array(w * h);
+		for (let i = 0; i < w * h; i++) img[i] = d[i * 4 + 3] > 120 ? 1 : 0;
+		for (let change = true; change; ) {
+			change = false;
+			for (let passe = 0; passe < 2; passe++) {
+				const ote = [];
+				for (let y = 1; y < h - 1; y++)
+					for (let x = 1; x < w - 1; x++) {
+						const i = y * w + x;
+						if (!img[i]) continue;
+						const p2 = img[i - w], p3 = img[i - w + 1], p4 = img[i + 1], p5 = img[i + w + 1];
+						const p6 = img[i + w], p7 = img[i + w - 1], p8 = img[i - 1], p9 = img[i - w - 1];
+						const B = p2 + p3 + p4 + p5 + p6 + p7 + p8 + p9;
+						if (B < 2 || B > 6) continue;
+						const A = (!p2 && p3 ? 1 : 0) + (!p3 && p4 ? 1 : 0) + (!p4 && p5 ? 1 : 0) + (!p5 && p6 ? 1 : 0) + (!p6 && p7 ? 1 : 0) + (!p7 && p8 ? 1 : 0) + (!p8 && p9 ? 1 : 0) + (!p9 && p2 ? 1 : 0);
+						if (A !== 1) continue;
+						if (passe === 0 ? p2 * p4 * p6 || p4 * p6 * p8 : p2 * p4 * p8 || p2 * p6 * p8) continue;
+						ote.push(i);
+					}
+				for (const i of ote) img[i] = 0;
+				if (ote.length) change = true;
+			}
+		}
+		// les pixels du squelette, dans un ordre mêlé (sinon les points s'alignent sur le balayage)
+		const encre = [];
+		for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (img[y * w + x]) encre.push([x, y]);
+		for (let i = encre.length - 1; i > 0; i--) {
+			const j = Math.floor(alea() * (i + 1));
+			[encre[i], encre[j]] = [encre[j], encre[i]];
+		}
+		const semer = (r) => {
+			const pts = [];
+			for (const q of encre) if (!pts.some((p) => Math.abs(p[0] - q[0]) < r && Math.abs(p[1] - q[1]) < r && Math.hypot(p[0] - q[0], p[1] - q[1]) < r)) pts.push(q);
+			return pts;
+		};
+		let r = 4, pts = semer(r);
+		for (let ra = 20; ra >= 4; ra -= 0.5) {
+			const essai = semer(ra);
+			if (essai.length >= n) { r = ra; pts = essai; break; }
 		}
 		while (pts.length > n) pts.splice(Math.floor(alea() * pts.length), 1);
-		return { pts, w, h };
+		return { pts, w, h, r };
 	};
 	const commencer = (t) => {
 		if (document.fonts && !document.fonts.check(police)) return false; // la police n'est pas encore là
@@ -385,7 +420,7 @@ export function flotter(zone, elements, options = {}) {
 		const m = ordre[rang % ordre.length];
 		const n = Math.min(libres.length, ec.max, Math.max(30, [...m.oc].length * ec.parLettre));
 		if (n < 24) return false;
-		const { pts, w, h } = relever(m.oc, n);
+		const { pts, w, h, r } = relever(m.oc, n);
 		// la place : au-dessus de la souris (qu'elle ne cache pas le mot), sinon dessous ; jamais sur du texte ni une image
 		const [cx, cy] = pose;
 		let boite = null;
@@ -415,7 +450,20 @@ export function flotter(zone, elements, options = {}) {
 			p.sc = Math.max(0.7, Math.min(1.5, ec.point / p.w));
 			p.el.classList.add('ecrit');
 		});
-		ecrit = { phase: 'venir', fin, mot: m, pieces: venus, boite };
+		// les fils : chaque point se relie à ses deux plus proches voisins sur le trait (pas plus loin que 1,8 écart) ;
+		// mis bout à bout, ils redessinent le trait de chaque lettre
+		const liens = new Set();
+		venus.forEach((a, i) => {
+			const proches = [];
+			venus.forEach((b, j) => {
+				if (i === j) return;
+				const dd = Math.hypot(a.ecrit.tx - b.ecrit.tx, a.ecrit.ty - b.ecrit.ty);
+				if (dd < r * 1.8) proches.push([dd, j]);
+			});
+			proches.sort((x, y) => x[0] - y[0]);
+			for (const [, j] of proches.slice(0, 2)) liens.add(i < j ? i * 1000 + j : j * 1000 + i);
+		});
+		ecrit = { phase: 'venir', fin, mot: m, pieces: venus, boite, liens: [...liens].map((k) => [venus[Math.floor(k / 1000)], venus[k % 1000]]), r };
 		return true;
 	};
 	// la pièce en route vers sa place : un trajet en douceur (lent au départ, lent à l'arrivée), sur un léger arc
@@ -424,6 +472,7 @@ export function flotter(zone, elements, options = {}) {
 		if (e.x0 === null) { e.x0 = p.x; e.y0 = p.y; }
 		const u = Math.min(1, (t - e.t0) / e.d);
 		const s = u < 0.5 ? 4 * u * u * u : 1 - (2 - 2 * u) ** 3 / 2;
+		e.s = s; // l'avancée du trajet : les fils n'apparaissent qu'à l'arrivée
 		const dx = e.tx - e.x0, dy = e.ty - e.y0, dl = Math.hypot(dx, dy) || 1;
 		const arc = Math.sin(Math.PI * s) * e.arc;
 		let x = e.x0 + dx * s - (dy / dl) * arc;
@@ -444,6 +493,7 @@ export function flotter(zone, elements, options = {}) {
 	const defaire = (t) => {
 		if (!ecrit) return;
 		const { boite } = ecrit;
+		partants = { liens: ecrit.liens, r: ecrit.r, t0: t };
 		const cx = (boite.l + boite.r) / 2, cy = (boite.t + boite.b) / 2;
 		for (const p of ecrit.pieces) {
 			p.ecrit = null;
@@ -470,6 +520,41 @@ export function flotter(zone, elements, options = {}) {
 		} else if (curseur && pose && t - pose[2] > ec.attente && t > prochain) {
 			if (!commencer(t)) prochain = t + 1200; // pas de place ici (ou la police manque) : on réessaiera
 		}
+	};
+	// les fils du mot, sur le canevas sous les confettis : fins, couleur d'encre, ils apparaissent quand les deux points
+	// qu'ils relient arrivent, et s'effacent en 0,7 s quand le mot se défait (les points s'écartent, le fil s'étire et pâlit)
+	let partants = null;
+	const tracerMot = (t) => {
+		if (!g) return;
+		const lots = [];
+		if (ecrit) lots.push([ecrit.liens, 1, ecrit.r]);
+		if (partants) {
+			const f = 1 - (t - partants.t0) / 700;
+			if (f <= 0) partants = null;
+			else lots.push([partants.liens, f, partants.r]);
+		}
+		if (!lots.length) {
+			if (filsSales) { g.clearRect(0, 0, L, H); filsSales = false; o.fils.style.display = 'none'; }
+			return;
+		}
+		if (!filsSales) o.fils.style.display = '';
+		g.clearRect(0, 0, L, H);
+		filsSales = true;
+		g.lineWidth = 0.9;
+		g.lineCap = 'round';
+		g.strokeStyle = ec.couleurFil?.() || '#3a2a20';
+		for (const [liens, f, r] of lots)
+			for (const [a, b] of liens) {
+				const k = Math.min(a.ecrit ? a.ecrit.s || 0 : 1, b.ecrit ? b.ecrit.s || 0 : 1);
+				const al = 0.55 * f * k * k * k;
+				if (al < 0.02 || Math.hypot(a.x - b.x, a.y - b.y) > r * 3) continue;
+				g.globalAlpha = al;
+				g.beginPath();
+				g.moveTo(a.x, a.y);
+				g.lineTo(b.x, b.y);
+				g.stroke();
+			}
+		g.globalAlpha = 1;
 	};
 	// la souris : posée, elle prépare un mot ; elle bouge, s'en va ou passe sur ce qui se clique, le mot se défait
 	const poser2 = (x, y) => {
@@ -642,7 +727,8 @@ export function flotter(zone, elements, options = {}) {
 			vP[1] *= 0.8 ** dt;
 			if (!pt) fortes = 0;
 		}
-		tracer();
+		if (ec) tracerMot(t);
+		else tracer();
 		if (vive || nTenus) eveil = Math.max(eveil, t + 600);
 		if (!document.hidden) enRoute = requestAnimationFrame(image);
 	};
