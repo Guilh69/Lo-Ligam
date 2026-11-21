@@ -58,6 +58,10 @@ export function flotter(zone, elements, options = {}) {
 		// la cadence de l'écran dès que la main bouge, tient ou lance une pièce
 		repos: 0,
 		filsAuBesoin: false, // le canevas des fils n'est affiché que lorsqu'un fil est tracé (sinon l'écran le recompose pour rien)
+		// l'écriture (Romain, 21-11, remplace l'aimant pour les confettis du fond) : la souris ne touche à rien ; posée
+		// sur un endroit vide, elle fait venir les confettis proches, qui écrivent un mot occitan ; le mot tient, se défait,
+		// puis un autre vient. { mots: [{ oc, fr }], police, taille, attente, tenue, pause, max, onMot, onEfface }
+		ecrire: null,
 		onAttrape: null,
 		onLache: null,
 		...options
@@ -337,6 +341,151 @@ export function flotter(zone, elements, options = {}) {
 		}
 	};
 
+	// ── l'écriture : la souris posée, les confettis proches écrivent un mot ──
+	const ec = o.ecrire ? { taille: 64, graisse: 'bold', attente: 1300, tenue: 3400, pause: 1600, max: 86, parLettre: 17, point: 5, ...o.ecrire } : null;
+	let pose = null; // [x, y, t] : où la souris s'est posée (en pixels de la zone) et depuis quand
+	let ecrit = null; // le mot en cours : { phase (venir, tenir), fin, mot, pieces, boite }
+	let prochain = 0; // pas de nouveau mot avant cette date
+	let rang = 0;
+	const ordre = ec ? [...ec.mots] : [];
+	for (let i = ordre.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[ordre[i], ordre[j]] = [ordre[j], ordre[i]];
+	}
+	const police = ec ? `${ec.graisse} ${ec.taille}px ${ec.police}` : '';
+	if (ec) document.fonts?.load(police);
+	const toile = ec ? document.createElement('canvas') : null;
+	// les points du mot : on l'écrit sur une toile cachée et on relève l'encre sur une grille en quinconce, de plus en
+	// plus serrée, jusqu'à avoir autant de points que de confettis disponibles
+	const relever = (txt, n) => {
+		const c = toile.getContext('2d', { willReadFrequently: true });
+		c.font = police;
+		const w = Math.ceil(c.measureText(txt).width) + 8;
+		const h = Math.ceil(ec.taille * 1.25);
+		toile.width = w;
+		toile.height = h;
+		c.font = police;
+		c.textBaseline = 'middle';
+		c.fillText(txt, 4, h / 2);
+		const d = c.getImageData(0, 0, w, h).data;
+		let pts = [];
+		for (let pas = 16; pas >= 2.5; pas -= 0.5) {
+			pts = [];
+			let rangee = 0;
+			for (let y = pas / 2; y < h; y += pas * 0.87, rangee++)
+				for (let x = (rangee % 2 ? pas : pas / 2); x < w; x += pas) if (d[((y | 0) * w + (x | 0)) * 4 + 3] > 140) pts.push([x, y]);
+			if (pts.length >= n) break;
+		}
+		while (pts.length > n) pts.splice(Math.floor(alea() * pts.length), 1);
+		return { pts, w, h };
+	};
+	const commencer = (t) => {
+		if (document.fonts && !document.fonts.check(police)) return false; // la police n'est pas encore là
+		const libres = pieces.filter((p) => p.etat === 'libre' && p.dedans && !p.tenu && p.fade > 0.6);
+		const m = ordre[rang % ordre.length];
+		const n = Math.min(libres.length, ec.max, Math.max(30, [...m.oc].length * ec.parLettre));
+		if (n < 24) return false;
+		const { pts, w, h } = relever(m.oc, n);
+		// la place : au-dessus de la souris (qu'elle ne cache pas le mot), sinon dessous ; jamais sur du texte ni une image
+		const [cx, cy] = pose;
+		let boite = null;
+		for (const yc of [cy - 30 - h / 2, cy + 36 + h / 2]) {
+			const l = Math.max(16, Math.min(L - 16 - w, cx - w / 2));
+			const b = { l, t: yc - h / 2, r: l + w, b: yc + h / 2 };
+			if (b.t < 16 || b.b > H - 16) continue;
+			if (zonesTexte.some((R) => R.l < b.r + 14 && R.r > b.l - 14 && R.t < b.b + 14 && R.b > b.t - 14)) continue;
+			boite = b;
+			break;
+		}
+		if (!boite) return false;
+		rang++;
+		// les plus proches viennent ; triées de gauche à droite comme les points, chacune va à peu près droit devant elle
+		libres.sort((a, b) => Math.hypot(a.x - cx, a.y - cy) - Math.hypot(b.x - cx, b.y - cy));
+		const venus = libres.slice(0, pts.length).sort((a, b) => a.x - b.x);
+		pts.sort((a, b) => a[0] - b[0]);
+		let fin = 0;
+		venus.forEach((p, k) => {
+			const [px, py] = pts[k];
+			// elles partent l'une après l'autre, de gauche à droite : le mot s'écrit dans le sens de la lecture
+			const t0 = t + (px / w) * 600 + alea() * 250;
+			const d = entre(1500, 2300);
+			fin = Math.max(fin, t0 + d);
+			p.ecrit = { t0, d, x0: null, y0: 0, tx: boite.l + px + (alea() - 0.5) * 1.5, ty: boite.t + py + (alea() - 0.5) * 1.5, arc: (alea() - 0.5) * 70 };
+			// des points de taille égale, pour que les lettres se lisent
+			p.sc = Math.max(0.7, Math.min(1.5, ec.point / p.w));
+			p.el.classList.add('ecrit');
+		});
+		ecrit = { phase: 'venir', fin, mot: m, pieces: venus, boite };
+		return true;
+	};
+	// la pièce en route vers sa place : un trajet en douceur (lent au départ, lent à l'arrivée), sur un léger arc
+	const guider = (p, t) => {
+		const e = p.ecrit;
+		if (e.x0 === null) { e.x0 = p.x; e.y0 = p.y; }
+		const u = Math.min(1, (t - e.t0) / e.d);
+		const s = u < 0.5 ? 4 * u * u * u : 1 - (2 - 2 * u) ** 3 / 2;
+		const dx = e.tx - e.x0, dy = e.ty - e.y0, dl = Math.hypot(dx, dy) || 1;
+		const arc = Math.sin(Math.PI * s) * e.arc;
+		let x = e.x0 + dx * s - (dy / dl) * arc;
+		let y = e.y0 + dy * s + (dx / dl) * arc;
+		if (u >= 1) {
+			// arrivée : elle respire à peine
+			const r = (t - e.t0 - e.d) / 1000;
+			x += Math.sin(r * 1.3 + p.i) * 0.5;
+			y += Math.cos(r * 1.1 + p.i * 0.7) * 0.5;
+		}
+		p.x = x;
+		p.y = y;
+		p.vx = p.vy = p.vr = 0;
+		// en chemin, elle se redresse (au quart de tour le plus proche) : des points droits, des lettres nettes
+		p.rot += (Math.round(p.rot / 90) * 90 - p.rot) * 0.08 * s;
+	};
+	// le mot se défait : chaque pièce repart doucement, loin du centre du mot, et reprend sa dérive
+	const defaire = (t) => {
+		if (!ecrit) return;
+		const { boite } = ecrit;
+		const cx = (boite.l + boite.r) / 2, cy = (boite.t + boite.b) / 2;
+		for (const p of ecrit.pieces) {
+			p.ecrit = null;
+			p.sc = 1;
+			p.el.classList.remove('ecrit');
+			const a = Math.atan2(p.y - cy, p.x - cx) + (alea() - 0.5) * 1.4;
+			const v = entre(0.4, 1.1);
+			p.vx = Math.cos(a) * v;
+			p.vy = Math.sin(a) * v;
+			p.ang = a;
+		}
+		ecrit = null;
+		ec.onEfface?.();
+		prochain = t + ec.pause;
+		eveil = Math.max(eveil, t + 2500);
+	};
+	const ecrire = (t) => {
+		if (ecrit) {
+			if (ecrit.phase === 'venir' && t >= ecrit.fin) {
+				ecrit.phase = 'tenir';
+				ecrit.fin = t + ec.tenue;
+				ec.onMot?.(ecrit.mot, ecrit.boite);
+			} else if (ecrit.phase === 'tenir' && t >= ecrit.fin) defaire(t);
+		} else if (curseur && pose && t - pose[2] > ec.attente && t > prochain) {
+			if (!commencer(t)) prochain = t + 1200; // pas de place ici (ou la police manque) : on réessaiera
+		}
+	};
+	// la souris : posée, elle prépare un mot ; elle bouge, s'en va ou passe sur ce qui se clique, le mot se défait
+	const poser2 = (x, y) => {
+		if (!ec) return;
+		const t = performance.now();
+		if (x === null) {
+			pose = null;
+			defaire(t);
+			return;
+		}
+		if (!pose || Math.hypot(x - pose[0], y - pose[1]) > 12) {
+			pose = [x, y, t];
+			defaire(t);
+		}
+	};
+
 	// ── la boucle ──
 	let enRoute = 0;
 	let avant = performance.now();
@@ -354,6 +503,8 @@ export function flotter(zone, elements, options = {}) {
 		// la pièce que la souris est sur le point d'attraper : elle grossit, ralentit et ne fuit plus
 		vCurseur *= 0.85 ** dt;
 		if (o.aimant) aimanter(t, dt);
+		if (ec) ecrire(t);
+		if (ecrit?.phase === 'venir') vive = true;
 		if (o.attrapables) {
 		let visee = null;
 		if (curseur && vCurseur < 10) {
@@ -375,7 +526,8 @@ export function flotter(zone, elements, options = {}) {
 			if (p.etat === 'absent') continue;
 			p.s += (p.sc - p.s) * Math.min(1, 0.2 * dt);
 			if (p.etat === 'attrape') { p.rot += p.spin / 60 * 0.3 * dt; poser(p); continue; }
-			if (p.etat === 'libre') {
+			if (p.ecrit && t >= p.ecrit.t0) guider(p, t);
+			else if (p.etat === 'libre') {
 				p.ang += p.dang * dt;
 				if (p.tenu) tenir(p, dt);
 				if (!p.tenu) {
@@ -521,7 +673,7 @@ export function flotter(zone, elements, options = {}) {
 		fortes = vCurseur > o.seuilLance ? fortes + 1 : 0;
 		dernier = [x, y, t];
 		eveil = t + 1500; // la main bouge : cadence de l'écran pendant 1,5 s
-		if (o.aimant) return; // la main attrape (boucle d'animation) au lieu d'écarter
+		if (o.aimant || ec) return; // la main attrape (boucle d'animation) ou fait écrire, au lieu d'écarter
 		const b = zone.getBoundingClientRect();
 		const mx = x - b.left, my = y - b.top;
 		for (const p of pieces) {
@@ -563,9 +715,11 @@ export function flotter(zone, elements, options = {}) {
 		if (interactiu(e.target)) {
 			curseur = null;
 			dernier = null;
+			poser2(null);
 			return;
 		}
 		curseur = [e.clientX - ox, e.clientY - oy];
+		poser2(curseur[0], curseur[1]);
 		passage(e.clientX, e.clientY, o.rayon);
 	};
 	const doigt = (e) => {
@@ -585,7 +739,10 @@ export function flotter(zone, elements, options = {}) {
 		dernier = null;
 		touche = null; // le doigt se lève : ce qu'il tenait part avec son élan
 	};
-	const sorti = () => (curseur = null);
+	const sorti = () => {
+		curseur = null;
+		poser2(null);
+	};
 	document.documentElement.addEventListener('mouseleave', sorti);
 	addEventListener('pointermove', souris, { passive: true });
 	addEventListener('touchstart', doigt, { passive: true });
@@ -600,6 +757,9 @@ export function flotter(zone, elements, options = {}) {
 		/** les zones de texte à éviter : [{ l, t, r, b }] en pixels de la zone */
 		eviter(rects) {
 			zonesTexte = rects;
+			// la page a défilé sous le mot : s'il touche maintenant du texte ou une image, il se défait
+			const b = ecrit?.boite;
+			if (b && rects.some((R) => R.l < b.r && R.r > b.l && R.t < b.b && R.b > b.t)) defaire(performance.now());
 		},
 		arreter() {
 			document.documentElement.removeEventListener('mouseleave', sorti);

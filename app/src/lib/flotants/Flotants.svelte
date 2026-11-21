@@ -16,6 +16,7 @@
 	import { onMount, tick } from 'svelte';
 	import { flotter, INTERACTIU } from './moteur.js';
 	import { OBJETS } from './objets.js';
+	import { MOTS } from './mots.js';
 	import { TEINTES as T } from '$lib/styles/palette.js';
 
 	// fond : monté une fois dans le gabarit racine (routes/+layout.svelte), VRAIMENT derrière tout le contenu
@@ -29,11 +30,14 @@
 	//    grandes plus franches et plus vives (elles sont près) ; beaucoup de lointaines, peu de proches ;
 	//  - de la sobriété : 20 images par seconde au repos, la cadence de l'écran dès que la main bouge, et le
 	//    canevas des fils n'est affiché que lorsqu'un fil est tracé.
+	// Écriture (Romain, 2026-11-21 : « l'effet avec la souris parasite l'interface ») : la main n'attrape plus rien. Posée
+	// un peu plus d'une seconde sur un endroit vide, elle fait venir les confettis proches, qui écrivent un mot occitan
+	// (mots.js), sa traduction en petit dessous ; le mot tient, se défait, puis un autre vient. Le moindre geste le défait.
 	let { mode = 'confettis', fond = false, onattrape = () => {} } = $props();
 
 	let zone;
-	let fils = $state(null); // le canevas des fils fins qui relient la main aux confettis qu'elle tient
 	let pieces = $state([]);
+	let legende = $state(null); // la traduction du mot écrit par les confettis
 	let mot = $state(null);
 	let annonce = $state('');
 	let moteur = null;
@@ -76,12 +80,18 @@
 				rayonDoigt: objets ? 85 : 115,
 				radial: objets ? 0.8 : 1.4,
 				transfert: objets ? 0.16 : 0.12,
-				// confettis (Romain, 08-11, sur le modèle de la constellation de l'accueil) : la main attrape ceux du
-				// secteur proche, les relie d'un fil fin, et un geste vif les lance dans tous les sens
-				aimant: !objets,
-				fils,
+				// confettis : la souris posée les fait écrire (l'aimant du 08-11 est retiré le 21-11)
+				ecrire: objets
+					? null
+					: {
+							mots: MOTS,
+							police: getComputedStyle(document.documentElement).getPropertyValue('--font-body').trim() || 'Luciole, sans-serif', // Limelight : traits trop fins pour des confettis, illisible
+							onMot: (m, b) => (legende = { fr: m.fr, x: (b.l + b.r) / 2, y: b.b + 2, vis: true }),
+							onEfface: () => {
+								if (legende) legende = { ...legende, vis: false };
+							}
+						},
 				repos: objets ? 0 : 20,
-				filsAuBesoin: true,
 				vmax: objets ? 6 : 11,
 				collisions: objets,
 				fondu: fond,
@@ -186,7 +196,6 @@
 </script>
 
 <div class="couche" class:objets={mode === 'objets'} class:fond bind:this={zone} aria-hidden="true">
-	{#if mode !== 'objets'}<canvas class="fils" bind:this={fils}></canvas>{/if}
 	{#each pieces as c, k (k)}
 		{#if mode === 'objets'}
 			<div class="p o">
@@ -196,6 +205,9 @@
 			<i class="p c" class:loin={c.loin} data-k={c.k} style={c.style}><b class={c.forme}></b></i>
 		{/if}
 	{/each}
+	{#if legende}
+		<small class="legende" class:vis={legende.vis} lang="fr" style="left: {legende.x}px; top: {legende.y}px">{legende.fr}</small>
+	{/if}
 	{#if mot}
 		<div class="mot" style="left: {mot.x}px; top: {mot.haut}px"><b lang="oc">{mot.oc}</b><small>{mot.fr}</small></div>
 	{/if}
@@ -234,19 +246,29 @@
 		height: 100%;
 		background: var(--c);
 	}
-	/* les fils de l'aimant : sous les confettis, sur toute la zone */
-	.fils {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-	}
-	/* un confetti tenu par la main : plus franc, pour qu'on voie qu'il est pris */
+	/* un confetti qui écrit un mot : plus franc, pour que les lettres se lisent ; il s'éclaire et pâlit lentement */
 	.c {
-		transition: opacity 0.25s;
+		transition: opacity 0.4s;
 	}
-	.c:global(.tenu) {
-		opacity: calc(0.92 * var(--fade, 1));
+	.c:global(.tenu),
+	.c:global(.ecrit) {
+		opacity: calc(0.9 * var(--fade, 1));
+		transition-duration: 1.2s;
+	}
+	/* la traduction, toute petite sous le mot : elle vient quand le mot est écrit, s'en va avec lui */
+	.legende {
+		position: absolute;
+		transform: translateX(-50%);
+		font-family: var(--font-body);
+		font-size: 0.8rem;
+		letter-spacing: 0.02em;
+		color: var(--color-text);
+		white-space: nowrap;
+		opacity: 0;
+		transition: opacity 1s;
+	}
+	.legende.vis {
+		opacity: 0.55;
 	}
 	.c .rond {
 		border-radius: 50%;
