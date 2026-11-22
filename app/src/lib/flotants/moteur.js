@@ -379,6 +379,28 @@ export function flotter(zone, elements, options = {}) {
 		// centrale, d'un pixel de large ; les points s'y posent en file et les fils suivent le trait au lieu de s'emmêler
 		const img = new Uint8Array(w * h);
 		for (let i = 0; i < w * h; i++) img[i] = d[i * 4 + 3] > 120 ? 1 : 0;
+		// avant d'amincir, les morceaux de la lettre pleine, d'un seul tenant chacun : les lettres, et les petits morceaux à
+		// part, un accent ou le point d'un i (Romain, 22-11 : l'accent de « cèl » n'attrapait qu'un confetti au hasard, on
+		// lisait « cel »). Mesurés pleins (le squelette d'un accent, trait court et épais, est trop court pour se mesurer)
+		const morceau = new Int32Array(w * h).fill(-1);
+		const pleins = [];
+		for (let i0 = 0; i0 < w * h; i0++) {
+			if (!img[i0] || morceau[i0] >= 0) continue;
+			const px = [];
+			const pile = [i0];
+			morceau[i0] = pleins.length;
+			while (pile.length) {
+				const i = pile.pop();
+				const x = i % w, y = (i - x) / w;
+				px.push([x, y]);
+				for (let dy = -1; dy <= 1; dy++)
+					for (let dx = -1; dx <= 1; dx++) {
+						const xx = x + dx, yy = y + dy, j = yy * w + xx;
+						if (xx >= 0 && yy >= 0 && xx < w && yy < h && img[j] && morceau[j] < 0) { morceau[j] = pleins.length; pile.push(j); }
+					}
+			}
+			pleins.push(px);
+		}
 		for (let change = true; change; ) {
 			change = false;
 			for (let passe = 0; passe < 2; passe++) {
@@ -400,15 +422,38 @@ export function flotter(zone, elements, options = {}) {
 				if (ote.length) change = true;
 			}
 		}
+		// les lettres donnent leur squelette ; un petit morceau a ses points à coup sûr : un seul au milieu pour un point
+		// (rond), et pour un accent (allongé) deux points sur son axe, trois s'il est assez long, que relève son propre fil
+		const seuil = ec.taille * ec.taille * 0.032; // en pixels pleins : un accent ou un point en a moins, une lettre bien plus
 		const encre = [];
-		for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (img[y * w + x]) encre.push([x, y]);
-		const s = { encre, w, h };
+		const petits = [];
+		for (let i = 0; i < w * h; i++) if (img[i] && pleins[morceau[i]].length >= seuil) encre.push([i % w, (i - (i % w)) / w]);
+		for (const px of pleins) {
+			if (px.length >= seuil) continue;
+			// son centre, son axe et ses deux longueurs (moments d'ordre deux : une barre de longueur l a une variance l²/12)
+			const n = px.length;
+			const mx = px.reduce((s, p) => s + p[0], 0) / n, my = px.reduce((s, p) => s + p[1], 0) / n;
+			let sxx = 0, syy = 0, sxy = 0;
+			for (const [x, y] of px) { sxx += (x - mx) ** 2; syy += (y - my) ** 2; sxy += (x - mx) * (y - my); }
+			sxx /= n; syy /= n; sxy /= n;
+			const dl = Math.sqrt(((sxx - syy) / 2) ** 2 + sxy * sxy);
+			const long = Math.sqrt(3 * ((sxx + syy) / 2 + dl)), large = Math.sqrt(3 * Math.max(0, (sxx + syy) / 2 - dl));
+			if (long < 1.6 * large) { petits.push([[Math.round(mx), Math.round(my)]]); continue; }
+			const th = 0.5 * Math.atan2(2 * sxy, sxx - syy);
+			const e = Math.max(3, long - 0.8 * large); // de part et d'autre du centre, en rentrant d'une demi-épaisseur
+			const ux = Math.cos(th) * e, uy = Math.sin(th) * e;
+			const a = [Math.round(mx - ux), Math.round(my - uy)], b = [Math.round(mx + ux), Math.round(my + uy)];
+			petits.push(2 * e >= 14 ? [a, [Math.round(mx), Math.round(my)], b] : [a, b]);
+		}
+		const s = { encre, petits, w, h };
 		// gardé seulement s'il est tracé dans la bonne police (pas dans celle de secours, en attendant Luciole)
 		if (!document.fonts || document.fonts.check(police)) squelettes.set(txt, s);
 		return s;
 	};
 	const relever = (txt, n) => {
-		const { encre: trait, w, h } = squelette(txt);
+		const { encre: trait, petits, w, h } = squelette(txt);
+		// les points des accents et des points sur les i d'abord, chacun marqué de son morceau (3e valeur) ; les lettres ensuite
+		const fixes = petits.flatMap((m, g) => m.map(([x, y], k) => [x, y, g, k]));
 		// les pixels du squelette, dans un ordre mêlé (sinon les points s'alignent sur le balayage)
 		const encre = trait.slice();
 		for (let i = encre.length - 1; i > 0; i--) {
@@ -416,7 +461,7 @@ export function flotter(zone, elements, options = {}) {
 			[encre[i], encre[j]] = [encre[j], encre[i]];
 		}
 		const semer = (r) => {
-			const pts = [];
+			const pts = fixes.slice();
 			for (const q of encre) if (!pts.some((p) => Math.abs(p[0] - q[0]) < r && Math.abs(p[1] - q[1]) < r && Math.hypot(p[0] - q[0], p[1] - q[1]) < r)) pts.push(q);
 			return pts;
 		};
@@ -430,7 +475,8 @@ export function flotter(zone, elements, options = {}) {
 		}
 		const r = bas;
 		if (!pts) pts = semer(r);
-		while (pts.length > n) pts.splice(Math.floor(alea() * pts.length), 1);
+		// trop de points : on en retire au hasard, jamais ceux des accents ni des points sur les i
+		while (pts.length > n && pts.length > fixes.length) pts.splice(fixes.length + Math.floor(alea() * (pts.length - fixes.length)), 1);
 		return { pts, w, h, r };
 	};
 	// les squelettes de tous les mots, calculés d'avance un par un quand le navigateur est libre, une fois la police là
@@ -483,18 +529,24 @@ export function flotter(zone, elements, options = {}) {
 			fin = Math.max(fin, t0 + d);
 			// chez elle : là où elle était avant le premier mot (elle y retournera ensuite)
 			if (!p.ecrit) p.chez = [p.x, p.y];
-			p.ecrit = { t0, d, x0: null, y0: 0, tx, ty, arc: (alea() - 0.5) * Math.min(70, dist * 0.25) };
+			// (grp, rang : le petit morceau, accent ou point d'un i, dont elle est un point, et son rang le long de ce morceau)
+			p.ecrit = { t0, d, x0: null, y0: 0, tx, ty, arc: (alea() - 0.5) * Math.min(70, dist * 0.25), grp: pts[k][2] ?? -1, rang: pts[k][3] };
 			// des points de taille égale, pour que les lettres se lisent
 			p.sc = Math.max(0.7, Math.min(1.5, ec.point / p.w));
 			p.el.classList.add('ecrit');
 		});
 		// les fils : chaque point se relie à ses deux plus proches voisins sur le trait (pas plus loin que 1,8 écart) ;
-		// mis bout à bout, ils redessinent le trait de chaque lettre
+		// mis bout à bout, ils redessinent le trait de chaque lettre. Un accent ne se relie qu'à lui-même, bout à bout
+		// (sinon un fil le rattachait à la lettre au-dessous) ; le point d'un i reste un point
 		const liens = new Set();
 		venus.forEach((a, i) => {
 			const proches = [];
 			venus.forEach((b, j) => {
-				if (i === j) return;
+				if (i === j || a.ecrit.grp !== b.ecrit.grp) return;
+				if (a.ecrit.grp >= 0) {
+					if (Math.abs(a.ecrit.rang - b.ecrit.rang) === 1) liens.add(i < j ? i * 1000 + j : j * 1000 + i);
+					return;
+				}
 				const dd = Math.hypot(a.ecrit.tx - b.ecrit.tx, a.ecrit.ty - b.ecrit.ty);
 				if (dd < r * 1.8) proches.push([dd, j]);
 			});
