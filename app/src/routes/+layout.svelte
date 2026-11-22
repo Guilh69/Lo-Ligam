@@ -13,6 +13,7 @@
 	import { browser, dev } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { confetisSurPage } from '$lib/flotants/pages.js';
+	import Flotants from '$lib/flotants/Flotants.svelte';
 	import { efiechSurRoute } from '$lib/efiech/emplacaments.js';
 	import { edicion } from '$lib/edicion/edicion.svelte.js';
 	// le signal des couleurs (2026-11-13) : les pages suivent quand Romain change une couleur depuis le site
@@ -48,7 +49,7 @@
 		ambianca.forçarClar = !armonizada(id);
 	});
 	// Les confettis qui flottent sur le fond clair (Romain, 2026-11-08 : « je préfère les confettis, on va
-	// mettre ça dans le template ») : une seule couche pour tout le site, chargée à la demande (rien pour
+	// mettre ça dans le template ») : une seule couche pour tout le site, montée seulement là où elle sert (rien pour
 	// le thème sombre, le fond léger, les écrans d'immersion et d'administration : lib/flotants/pages.js) ;
 	// réglable dans le panneau d'ambiance. Montée côté navigateur seulement, après l'hydratation.
 	let monte = $state(false);
@@ -57,12 +58,10 @@
 	// (et sur les pages modifiables : un effet peut y être posé sur un élément)
 	let efiech = $derived(monte && (efiechSurRoute(id) || !!edicion.pagina));
 	let confetis = $derived(monte && ambianca.clar && ambianca.confetis && !ambianca.leugier && confetisSurPage(id));
-	// la couche se télécharge dès le début de l'hydratation quand elle va servir (Romain, 2026-11-22 : « un peu long à
-	// l'ouverture ») : à l'accueil, demandée seulement une fois la page montée, elle attendait ensuite que le moteur de
-	// l'accueil ait démarré, et paraissait 1,3 à 1,6 s après la page ; prête à temps, elle passe avant lui
-	let chargeFlotants = null;
-	const flotants = () => (chargeFlotants ??= import('$lib/flotants/Flotants.svelte'));
-	if (browser && ambianca.clar && ambianca.confetis && !ambianca.leugier && confetisSurPage(page.route.id ?? '')) flotants();
+	// la couche arrive avec le reste de la page, et non plus à la demande (Romain, 2026-11-22 : « un peu long à
+	// l'ouverture ») : à l'accueil, demandée une fois la page montée, elle attendait souvent que le moteur de l'accueil
+	// ait démarré et paraissait jusqu'à 1,6 s après la page ; même téléchargée dès le début de l'hydratation, une fois sur
+	// trois elle passait encore après lui. Livrée avec la page (environ 19 Ko de plus), elle paraît dès le montage
 	// la couche est DERRIÈRE le contenu : tant qu'elle est là, le cadre des pages (.pagina, .acuelh), plein, devient
 	// transparent (app.css, data-confetis) pour la laisser voir ; le fond de la page est celui du <body>
 	$effect(() => {
@@ -115,9 +114,7 @@
 {@render children()}
 
 {#if confetis}
-	{#await flotants() then m}
-		<m.default mode="confettis" fond />
-	{/await}
+	<Flotants mode="confettis" fond />
 {/if}
 
 {#if efiech}
