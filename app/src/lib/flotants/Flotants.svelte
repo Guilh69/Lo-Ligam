@@ -31,8 +31,9 @@
 	//  - de la sobriété : 20 images par seconde au repos, la cadence de l'écran dès que la main bouge, et le
 	//    canevas des fils n'est affiché que lorsqu'un fil est tracé.
 	// Écriture (Romain, 2026-11-21 : « l'effet avec la souris parasite l'interface ») : la main n'attrape plus rien. Posée
-	// un peu plus d'une seconde sur un endroit vide, elle fait venir les confettis proches, qui écrivent un mot occitan
-	// (mots.js), sa traduction en petit dessous ; le mot tient, se défait, puis un autre vient. Le moindre geste le défait.
+	// un instant (0,4 s depuis le 22-11) sur un endroit vide, elle fait venir les confettis proches, qui écrivent un mot occitan
+	// (mots.js), sa traduction en petit dessous ; le mot tient, se défait, puis un autre vient. Le moindre geste le défait,
+	// et chaque confetti rentre alors là où il flottait avant.
 	let { mode = 'confettis', fond = false, onattrape = () => {} } = $props();
 
 	let zone;
@@ -133,15 +134,17 @@
 						rg.selectNodeContents(e);
 						const tr = rg.getBoundingClientRect();
 						if (tr.width > 8 && tr.height > 8) t = tr;
-						rects.push({ l: t.left - b.left, t: t.top - b.top, r: t.right - b.left, b: t.bottom - b.top });
+						rects.push({ l: t.left - b.left, t: t.top - b.top, r: t.right - b.left, b: t.bottom - b.top, barre });
 						if (rects.length >= 220) break;
 					}
 					// les blocs qui se suivent à moins de 34 px (titre puis paragraphe, paragraphes entre eux) ne font plus qu'une
 					// zone : sinon une pièce se coincerait dans l'interstice, repoussée par les deux à la fois
 					rects.sort((a, c) => a.t - c.t);
 					const zones = [];
+					// (sauf la barre du haut : soudée au titre de la page pendant qu'il s'anime, elle faisait de tout le haut de
+					// l'écran une seule zone, vidée de ses confettis ; Romain, 22-11)
 					for (const r of rects) {
-						const g = zones.find((x) => Math.min(x.r, r.r) - Math.max(x.l, r.l) > 0.4 * Math.max(x.r - x.l, r.r - r.l) && r.t - x.b < 34);
+						const g = !r.barre && zones.find((x) => !x.barre && Math.min(x.r, r.r) - Math.max(x.l, r.l) > 0.4 * Math.max(x.r - x.l, r.r - r.l) && r.t - x.b < 34);
 						if (g) {
 							g.l = Math.min(g.l, r.l);
 							g.r = Math.max(g.r, r.r);

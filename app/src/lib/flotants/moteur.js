@@ -342,7 +342,10 @@ export function flotter(zone, elements, options = {}) {
 	};
 
 	// ── l'écriture : la souris posée, les confettis proches écrivent un mot ──
-	const ec = o.ecrire ? { taille: 100, graisse: 'normal', attente: 1300, tenue: 3800, pause: 1600, max: 88, parLettre: 20, point: 4.5, ...o.ecrire } : null;
+	// Retour de Romain (22-11 : « trop de latence entre le moment où la souris s'arrête et la création du mot ») : le mot
+	// commence 0,4 s après l'arrêt (et non plus 1,3 s), chaque pièce part aussitôt et met le temps de sa distance (de 0,4
+	// à 1,3 s, et non plus 1,5 à 2,3 s), et la pause entre deux mots ne vaut que lorsqu'un mot s'est défait de lui-même.
+	const ec = o.ecrire ? { taille: 100, graisse: 'normal', attente: 400, tenue: 3800, pause: 1600, max: 88, parLettre: 20, point: 4.5, ...o.ecrire } : null;
 	let pose = null; // [x, y, t] : où la souris s'est posée (en pixels de la zone) et depuis quand
 	let ecrit = null; // le mot en cours : { phase (venir, tenir), fin, mot, pieces, boite }
 	let prochain = 0; // pas de nouveau mot avant cette date
@@ -353,12 +356,15 @@ export function flotter(zone, elements, options = {}) {
 		[ordre[i], ordre[j]] = [ordre[j], ordre[i]];
 	}
 	const police = ec ? `${ec.graisse} ${ec.taille}px ${ec.police}` : '';
-	if (ec) document.fonts?.load(police);
 	const toile = ec ? document.createElement('canvas') : null;
 	// les points du mot (essai du 21-11 : une lettre grasse remplie de points ne se lisait pas) : on écrit le mot en trait
-	// fin sur une toile cachée, puis on pose des points le long du trait, à distance égale les uns des autres (aucun point
-	// à moins de « r » d'un autre) ; on cherche le plus grand écart qui donne assez de points pour les confettis disponibles
-	const relever = (txt, n) => {
+	// fin sur une toile cachée, on en tire la ligne centrale des lettres (le squelette, calculé une fois par mot et gardé,
+	// d'avance quand le navigateur n'a rien à faire : il ne retarde plus le départ du mot), puis on pose des points le long
+	// du trait, à distance égale les uns des autres (aucun point à moins de « r » d'un autre) ; on cherche le plus grand
+	// écart qui donne assez de points pour les confettis disponibles
+	const squelettes = new Map();
+	const squelette = (txt) => {
+		if (squelettes.has(txt)) return squelettes.get(txt);
 		const c = toile.getContext('2d', { willReadFrequently: true });
 		c.font = police;
 		const w = Math.ceil(c.measureText(txt).width) + 8;
@@ -394,9 +400,17 @@ export function flotter(zone, elements, options = {}) {
 				if (ote.length) change = true;
 			}
 		}
-		// les pixels du squelette, dans un ordre mêlé (sinon les points s'alignent sur le balayage)
 		const encre = [];
 		for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (img[y * w + x]) encre.push([x, y]);
+		const s = { encre, w, h };
+		// gardé seulement s'il est tracé dans la bonne police (pas dans celle de secours, en attendant Luciole)
+		if (!document.fonts || document.fonts.check(police)) squelettes.set(txt, s);
+		return s;
+	};
+	const relever = (txt, n) => {
+		const { encre: trait, w, h } = squelette(txt);
+		// les pixels du squelette, dans un ordre mêlé (sinon les points s'alignent sur le balayage)
+		const encre = trait.slice();
 		for (let i = encre.length - 1; i > 0; i--) {
 			const j = Math.floor(alea() * (i + 1));
 			[encre[i], encre[j]] = [encre[j], encre[i]];
@@ -406,26 +420,44 @@ export function flotter(zone, elements, options = {}) {
 			for (const q of encre) if (!pts.some((p) => Math.abs(p[0] - q[0]) < r && Math.abs(p[1] - q[1]) < r && Math.hypot(p[0] - q[0], p[1] - q[1]) < r)) pts.push(q);
 			return pts;
 		};
-		let r = 4, pts = semer(r);
-		for (let ra = 20; ra >= 4; ra -= 0.5) {
-			const essai = semer(ra);
-			if (essai.length >= n) { r = ra; pts = essai; break; }
+		// le plus grand écart (entre 4 et 20 px) qui donne encore assez de points : par dichotomie, cinq essais au lieu de trente
+		let bas = 4, haut = 20, pts = null;
+		while (haut - bas > 0.5) {
+			const mi = (bas + haut) / 2;
+			const essai = semer(mi);
+			if (essai.length >= n) { bas = mi; pts = essai; }
+			else haut = mi;
 		}
+		const r = bas;
+		if (!pts) pts = semer(r);
 		while (pts.length > n) pts.splice(Math.floor(alea() * pts.length), 1);
 		return { pts, w, h, r };
 	};
+	// les squelettes de tous les mots, calculés d'avance un par un quand le navigateur est libre, une fois la police là
+	let arrete = false;
+	if (ec) {
+		const libre = window.requestIdleCallback || ((f) => setTimeout(f, 80));
+		const chauffer = (k) => {
+			if (arrete || k >= ordre.length) return;
+			libre(() => { if (!arrete) { squelette(ordre[k].oc); chauffer(k + 1); } }, { timeout: 3000 });
+		};
+		Promise.resolve(document.fonts?.load(police)).then(() => chauffer(0), () => {});
+	}
 	const commencer = (t) => {
 		if (document.fonts && !document.fonts.check(police)) return false; // la police n'est pas encore là
-		const libres = pieces.filter((p) => p.etat === 'libre' && p.dedans && !p.tenu && p.fade > 0.6);
+		// (une pièce qui rentre chez elle après le mot précédent peut repartir tout de suite)
+		const libres = pieces.filter((p) => p.etat === 'libre' && (p.dedans || p.ecrit) && !p.tenu && p.fade > 0.6);
 		const m = ordre[rang % ordre.length];
 		const n = Math.min(libres.length, ec.max, Math.max(30, [...m.oc].length * ec.parLettre));
 		if (n < 24) return false;
-		const { pts, w, h, r } = relever(m.oc, n);
-		// la place : au-dessus de la souris (qu'elle ne cache pas le mot), sinon dessous ; jamais sur du texte ni une image
+		const { w, h } = squelette(m.oc);
+		// la place : au-dessus de la souris (qu'elle ne cache pas le mot), sinon dessous, puis décalée à gauche ou à droite ;
+		// jamais sur du texte ni une image
 		const [cx, cy] = pose;
 		let boite = null;
-		for (const yc of [cy - 30 - h / 2, cy + 36 + h / 2]) {
-			const l = Math.max(16, Math.min(L - 16 - w, cx - w / 2));
+		const haut = cy - 30 - h / 2, bas = cy + 36 + h / 2, cote = w / 2 + 40;
+		for (const [xc, yc] of [[cx, haut], [cx, bas], [cx - cote, haut], [cx + cote, haut], [cx - cote, bas], [cx + cote, bas]]) {
+			const l = Math.max(16, Math.min(L - 16 - w, xc - w / 2));
 			const b = { l, t: yc - h / 2, r: l + w, b: yc + h / 2 };
 			if (b.t < 16 || b.b > H - 16) continue;
 			if (zonesTexte.some((R) => R.l < b.r + 14 && R.r > b.l - 14 && R.t < b.b + 14 && R.b > b.t - 14)) continue;
@@ -433,6 +465,7 @@ export function flotter(zone, elements, options = {}) {
 			break;
 		}
 		if (!boite) return false;
+		const { pts, r } = relever(m.oc, n);
 		rang++;
 		// les plus proches viennent ; triées de gauche à droite comme les points, chacune va à peu près droit devant elle
 		libres.sort((a, b) => Math.hypot(a.x - cx, a.y - cy) - Math.hypot(b.x - cx, b.y - cy));
@@ -441,11 +474,16 @@ export function flotter(zone, elements, options = {}) {
 		let fin = 0;
 		venus.forEach((p, k) => {
 			const [px, py] = pts[k];
-			// elles partent l'une après l'autre, de gauche à droite : le mot s'écrit dans le sens de la lecture
-			const t0 = t + (px / w) * 600 + alea() * 250;
-			const d = entre(1500, 2300);
+			const tx = boite.l + px + (alea() - 0.5) * 1.5, ty = boite.t + py + (alea() - 0.5) * 1.5;
+			const dist = Math.hypot(tx - p.x, ty - p.y);
+			// elles partent presque ensemble, de gauche à droite (le mot s'écrit dans le sens de la lecture), et chacune met
+			// le temps de sa distance : les plus proches dessinent déjà les lettres quand les lointaines arrivent
+			const t0 = t + (px / w) * 260 + alea() * 90;
+			const d = Math.min(1300, 400 + dist * 0.5) * entre(0.9, 1.1);
 			fin = Math.max(fin, t0 + d);
-			p.ecrit = { t0, d, x0: null, y0: 0, tx: boite.l + px + (alea() - 0.5) * 1.5, ty: boite.t + py + (alea() - 0.5) * 1.5, arc: (alea() - 0.5) * 70 };
+			// chez elle : là où elle était avant le premier mot (elle y retournera ensuite)
+			if (!p.ecrit) p.chez = [p.x, p.y];
+			p.ecrit = { t0, d, x0: null, y0: 0, tx, ty, arc: (alea() - 0.5) * Math.min(70, dist * 0.25) };
 			// des points de taille égale, pour que les lettres se lisent
 			p.sc = Math.max(0.7, Math.min(1.5, ec.point / p.w));
 			p.el.classList.add('ecrit');
@@ -466,17 +504,28 @@ export function flotter(zone, elements, options = {}) {
 		ecrit = { phase: 'venir', fin, mot: m, pieces: venus, boite, liens: [...liens].map((k) => [venus[Math.floor(k / 1000)], venus[k % 1000]]), r };
 		return true;
 	};
-	// la pièce en route vers sa place : un trajet en douceur (lent au départ, lent à l'arrivée), sur un léger arc
+	// la pièce en route, sur un léger arc : vers sa place dans le mot, elle part aussitôt et se pose en douceur ; quand le mot
+	// s'est défait, elle rentre chez elle (lente au départ, lente à l'arrivée), puis reprend sa dérive. Rend vrai tant qu'elle bouge.
 	const guider = (p, t) => {
 		const e = p.ecrit;
 		if (e.x0 === null) { e.x0 = p.x; e.y0 = p.y; }
 		const u = Math.min(1, (t - e.t0) / e.d);
-		const s = u < 0.5 ? 4 * u * u * u : 1 - (2 - 2 * u) ** 3 / 2;
+		const s = e.retour ? (u < 0.5 ? 4 * u * u * u : 1 - (2 - 2 * u) ** 3 / 2) : Math.sin((u * Math.PI) / 2);
 		e.s = s; // l'avancée du trajet : les fils n'apparaissent qu'à l'arrivée
 		const dx = e.tx - e.x0, dy = e.ty - e.y0, dl = Math.hypot(dx, dy) || 1;
 		const arc = Math.sin(Math.PI * s) * e.arc;
 		let x = e.x0 + dx * s - (dy / dl) * arc;
 		let y = e.y0 + dy * s + (dx / dl) * arc;
+		if (e.retour) {
+			p.x = x;
+			p.y = y;
+			if (u < 1) { p.vx = p.vy = 0; return true; }
+			// arrivée chez elle : elle repart dans sa dérive, comme si de rien n'était
+			p.ecrit = null;
+			p.vx = Math.cos(p.ang) * p.cr;
+			p.vy = Math.sin(p.ang) * p.cr;
+			return false;
+		}
 		if (u >= 1) {
 			// arrivée : elle respire à peine
 			const r = (t - e.t0 - e.d) / 1000;
@@ -488,26 +537,26 @@ export function flotter(zone, elements, options = {}) {
 		p.vx = p.vy = p.vr = 0;
 		// en chemin, elle se redresse (au quart de tour le plus proche) : des points droits, des lettres nettes
 		p.rot += (Math.round(p.rot / 90) * 90 - p.rot) * 0.08 * s;
+		return u < 1;
 	};
-	// le mot se défait : chaque pièce repart doucement, loin du centre du mot, et reprend sa dérive
-	const defaire = (t) => {
+	// le mot se défait : chaque pièce rentre chez elle, là où elle flottait avant le mot (Romain, 22-11 : les confettis
+	// « restent en haut ». Ils partaient en ligne droite loin du mot, et le mot s'écrit au-dessus de la souris : de mot en
+	// mot, tout finissait entassé contre le bord haut). « geste » : la souris a bougé, le mot suivant peut venir sans pause.
+	const defaire = (t, geste = false) => {
 		if (!ecrit) return;
-		const { boite } = ecrit;
 		partants = { liens: ecrit.liens, r: ecrit.r, t0: t };
-		const cx = (boite.l + boite.r) / 2, cy = (boite.t + boite.b) / 2;
 		for (const p of ecrit.pieces) {
-			p.ecrit = null;
 			p.sc = 1;
 			p.el.classList.remove('ecrit');
-			const a = Math.atan2(p.y - cy, p.x - cx) + (alea() - 0.5) * 1.4;
-			const v = entre(0.4, 1.1);
-			p.vx = Math.cos(a) * v;
-			p.vy = Math.sin(a) * v;
-			p.ang = a;
+			const [hx, hy] = p.chez || [p.x, p.y];
+			const tx = Math.max(p.r, Math.min(L - p.r, hx + (alea() - 0.5) * 30));
+			const ty = Math.max(p.r, Math.min(H - p.r, hy + (alea() - 0.5) * 30));
+			const dist = Math.hypot(tx - p.x, ty - p.y);
+			p.ecrit = { t0: t + alea() * 200, d: Math.min(1800, 600 + dist * 0.7) * entre(0.9, 1.15), x0: null, y0: 0, tx, ty, arc: (alea() - 0.5) * Math.min(80, dist * 0.3), retour: true };
 		}
 		ecrit = null;
 		ec.onEfface?.();
-		prochain = t + ec.pause;
+		prochain = geste ? 0 : t + ec.pause;
 		eveil = Math.max(eveil, t + 2500);
 	};
 	const ecrire = (t) => {
@@ -518,7 +567,7 @@ export function flotter(zone, elements, options = {}) {
 				ec.onMot?.(ecrit.mot, ecrit.boite);
 			} else if (ecrit.phase === 'tenir' && t >= ecrit.fin) defaire(t);
 		} else if (curseur && pose && t - pose[2] > ec.attente && t > prochain) {
-			if (!commencer(t)) prochain = t + 1200; // pas de place ici (ou la police manque) : on réessaiera
+			if (!commencer(t)) prochain = t + 400; // pas de place ici (ou la police manque) : on réessaiera
 		}
 	};
 	// les fils du mot, sur le canevas sous les confettis : fins, couleur d'encre, ils apparaissent quand les deux points
@@ -545,7 +594,8 @@ export function flotter(zone, elements, options = {}) {
 		g.strokeStyle = ec.couleurFil?.() || '#3a2a20';
 		for (const [liens, f, r] of lots)
 			for (const [a, b] of liens) {
-				const k = Math.min(a.ecrit ? a.ecrit.s || 0 : 1, b.ecrit ? b.ecrit.s || 0 : 1);
+				// (le fil d'une pièce en route vers le mot pousse à son arrivée ; celui d'une pièce qui rentre chez elle pâlit avec le mot)
+				const k = Math.min(a.ecrit && !a.ecrit.retour ? a.ecrit.s || 0 : 1, b.ecrit && !b.ecrit.retour ? b.ecrit.s || 0 : 1);
 				const al = 0.55 * f * k * k * k;
 				if (al < 0.02 || Math.hypot(a.x - b.x, a.y - b.y) > r * 3) continue;
 				g.globalAlpha = al;
@@ -562,12 +612,12 @@ export function flotter(zone, elements, options = {}) {
 		const t = performance.now();
 		if (x === null) {
 			pose = null;
-			defaire(t);
+			defaire(t, true);
 			return;
 		}
 		if (!pose || Math.hypot(x - pose[0], y - pose[1]) > 12) {
 			pose = [x, y, t];
-			defaire(t);
+			defaire(t, true);
 		}
 	};
 
@@ -611,7 +661,7 @@ export function flotter(zone, elements, options = {}) {
 			if (p.etat === 'absent') continue;
 			p.s += (p.sc - p.s) * Math.min(1, 0.2 * dt);
 			if (p.etat === 'attrape') { p.rot += p.spin / 60 * 0.3 * dt; poser(p); continue; }
-			if (p.ecrit && t >= p.ecrit.t0) guider(p, t);
+			if (p.ecrit && t >= p.ecrit.t0) { if (guider(p, t)) vive = true; }
 			else if (p.etat === 'libre') {
 				p.ang += p.dang * dt;
 				if (p.tenu) tenir(p, dt);
@@ -636,8 +686,12 @@ export function flotter(zone, elements, options = {}) {
 					const m = p.r + 8;
 					const g = R.l - m, d = R.r + m, h = R.t - m, b = R.b + m;
 					if (p.x <= g || p.x >= d || p.y <= h || p.y >= b) continue;
-					const dg = p.x - g, dd = d - p.x, dh = p.y - h, db = b - p.y;
+					// jamais de sortie par un bord de l'écran (Romain, 22-11) : une pièce poussée vers le haut d'un en-tête collé
+					// au haut de la page restait coincée contre le bord, à jamais
+					const dg = g > 0 ? p.x - g : Infinity, dd = d < L ? d - p.x : Infinity;
+					const dh = h > 0 ? p.y - h : Infinity, db = b < H ? b - p.y : Infinity;
 					const dm = Math.min(dg, dd, dh, db);
+					if (dm === Infinity) continue; // un bloc qui couvre tout l'écran : rien à contourner
 					// une barrière douce : presque rien au bord, de plus en plus forte vers l'intérieur
 					const f = Math.min(0.25, 0.0035 * dm) * dt;
 					let nx = 0, ny = 0;
@@ -692,10 +746,12 @@ export function flotter(zone, elements, options = {}) {
 			} else if (!p.dedans) {
 				if (p.x > p.r && p.x < L - p.r && p.y > p.r && p.y < H - p.r) p.dedans = true;
 			} else {
-				if (p.x < p.r) { p.x = p.r; p.vx = Math.abs(p.vx) * 0.85; }
-				else if (p.x > L - p.r) { p.x = L - p.r; p.vx = -Math.abs(p.vx) * 0.85; }
-				if (p.y < p.r) { p.y = p.r; p.vy = Math.abs(p.vy) * 0.85; }
-				else if (p.y > H - p.r) { p.y = H - p.r; p.vy = -Math.abs(p.vy) * 0.85; }
+				// le rebond renvoie aussi le cap de la dérive (Romain, 22-11) : sans cela, une pièce qui rebondit garde son cap
+				// vers le bord, y revient aussitôt et reste collée contre lui
+				if (p.x < p.r) { p.x = p.r; p.vx = Math.abs(p.vx) * 0.85; if (Math.cos(p.ang) < 0) p.ang = Math.PI - p.ang; }
+				else if (p.x > L - p.r) { p.x = L - p.r; p.vx = -Math.abs(p.vx) * 0.85; if (Math.cos(p.ang) > 0) p.ang = Math.PI - p.ang; }
+				if (p.y < p.r) { p.y = p.r; p.vy = Math.abs(p.vy) * 0.85; if (Math.sin(p.ang) < 0) p.ang = -p.ang; }
+				else if (p.y > H - p.r) { p.y = H - p.r; p.vy = -Math.abs(p.vy) * 0.85; if (Math.sin(p.ang) > 0) p.ang = -p.ang; }
 			}
 		}
 		if (o.collisions) {
@@ -842,12 +898,23 @@ export function flotter(zone, elements, options = {}) {
 		attraperA,
 		/** les zones de texte à éviter : [{ l, t, r, b }] en pixels de la zone */
 		eviter(rects) {
-			zonesTexte = rects;
+			// un bloc tout près d'un bord de l'écran se prolonge jusqu'au bord (Romain, 22-11) : sinon il reste entre les deux
+			// une bande étroite où les pièces se coincent, repoussées par le bloc vers le bord et par le bord vers le bloc
+			// (au-dessus de l'en-tête, toute une rangée de confettis restait collée en haut de l'écran)
+			const B = 56;
+			zonesTexte = rects.map((R) => ({
+				...R,
+				l: R.l < B ? Math.min(R.l, -B) : R.l,
+				t: R.t < B ? Math.min(R.t, -B) : R.t,
+				r: R.r > L - B ? Math.max(R.r, L + B) : R.r,
+				b: R.b > H - B ? Math.max(R.b, H + B) : R.b
+			}));
 			// la page a défilé sous le mot : s'il touche maintenant du texte ou une image, il se défait
 			const b = ecrit?.boite;
-			if (b && rects.some((R) => R.l < b.r && R.r > b.l && R.t < b.b && R.b > b.t)) defaire(performance.now());
+			if (b && zonesTexte.some((R) => R.l < b.r && R.r > b.l && R.t < b.b && R.b > b.t)) defaire(performance.now());
 		},
 		arreter() {
+			arrete = true;
 			document.documentElement.removeEventListener('mouseleave', sorti);
 			delete document.documentElement.dataset.flotantChaud;
 			cancelAnimationFrame(enRoute);
