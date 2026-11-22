@@ -40,13 +40,24 @@
 	let zone;
 	let pieces = $state([]);
 	let fils = $state(null); // le canevas des fils fins qui relient les points du mot écrit
-	// la traduction du mot écrit par les confettis, courbée sur un cercle fin autour de la souris (Romain, 22-11 : « posée sur
-	// le cercle de la souris, incurvée en suivant la ligne ») : sur le haut du cercle quand le mot est au-dessus, sur le bas
-	// quand il est dessous ; le cercle se trace quand le mot est écrit, et tous deux pâlissent quand il se défait
-	let legende = $state(null); // { fr, x, y (la souris), bas, vis, n }
+	// la traduction du mot écrit par les confettis, courbée autour de la souris (Romain, 22-11 : « posée sur le cercle de la
+	// souris, incurvée en suivant la ligne ») : calée sur l'anneau qui suit déjà la souris à l'accueil (.cur-anel, dessiné
+	// par le moteur de l'accueil), juste au-dehors ; aucun cercle ajouté (2e retour du 22-11 : « pourquoi tu as rajouté un
+	// rond ? »). Ailleurs, la flèche ordinaire : même courbe, un peu plus large pour ne pas passer sous elle. Sur le haut
+	// quand le mot est au-dessus, sur le bas quand il est dessous ; elle pâlit quand le mot se défait.
+	let legende = $state(null); // { fr, x, y (la souris), r (rayon de la ligne du texte), bas, vis, n }
 	const uid = $props.id();
-	const RC = 30; // le rayon du cercle, en pixels : la flèche de la souris y tient
-	const RT = RC + 3; // et celui de la ligne du texte, juste au-dehors
+	const rayonLegende = () => {
+		const anel = document.documentElement.classList.contains('cursor-viu') && document.querySelector('.cur-anel');
+		const w = anel ? anel.getBoundingClientRect().width : 0;
+		return w > 8 ? w / 2 + 2 : 30;
+	};
+	// le cercle entier du texte (centre 80, 80), parcouru depuis le bas par la gauche (le milieu tombe en haut, lu de gauche
+	// à droite), ou depuis le haut par la gauche (le milieu tombe en bas, lu de gauche à droite aussi)
+	const arc = (r, bas) =>
+		bas
+			? `M 80 ${80 - r} A ${r} ${r} 0 1 0 80 ${80 + r} A ${r} ${r} 0 1 0 80 ${80 - r}`
+			: `M 80 ${80 + r} A ${r} ${r} 0 1 1 80 ${80 - r} A ${r} ${r} 0 1 1 80 ${80 + r}`;
 	let mot = $state(null);
 	let annonce = $state('');
 	let moteur = null;
@@ -97,7 +108,7 @@
 							police: getComputedStyle(document.documentElement).getPropertyValue('--font-body').trim() || 'Luciole, sans-serif', // Limelight : traits trop fins pour des confettis, illisible
 							// l'encre du site, lue au moment de tracer (Romain règle les couleurs depuis sa barre d'outils)
 							couleurFil: () => getComputedStyle(document.documentElement).getPropertyValue('--color-text').trim(),
-							onMot: (m, b, [x, y]) => (legende = { fr: m.fr, x, y, bas: (b.t + b.b) / 2 > y, vis: true, n: (legende?.n ?? 0) + 1 }),
+							onMot: (m, b, [x, y]) => (legende = { fr: m.fr, x, y, r: rayonLegende(), bas: (b.t + b.b) / 2 > y, vis: true, n: (legende?.n ?? 0) + 1 }),
 							onEfface: () => {
 								if (legende) legende = { ...legende, vis: false };
 							}
@@ -224,9 +235,13 @@
 	{#if legende}
 		{#key legende.n}
 			<svg class="legende" class:vis={legende.vis} style="left: {legende.x - 80}px; top: {legende.y - 80}px" width="160" height="160" viewBox="0 0 160 160">
-				<circle cx="80" cy="80" r={RC} transform="rotate(-90 80 80)" />
-				<!-- le chemin du texte : un demi-cercle de gauche à droite, par le haut ou par le bas, pour qu'il se lise droit -->
-				<path id={uid} d="M {80 - RT} 80 A {RT} {RT} 0 0 {legende.bas ? 0 : 1} {80 + RT} 80" fill="none" />
+				<!-- le chemin du texte : un cercle entier, parcouru de façon que son milieu tombe en haut (ou en bas) et s'y lise
+				     de gauche à droite ; entier, pour qu'une traduction plus longue que le demi-cercle ne soit pas coupée -->
+				<path
+					id={uid}
+					d={arc(legende.r, legende.bas)}
+					fill="none"
+				/>
 				<text lang="fr" dominant-baseline={legende.bas ? 'hanging' : 'alphabetic'}><textPath href="#{uid}" startOffset="50%" text-anchor="middle">{legende.fr}</textPath></text>
 			</svg>
 		{/key}
@@ -285,8 +300,7 @@
 		opacity: calc(0.9 * var(--fade, 1));
 		transition-duration: 1.2s;
 	}
-	/* la traduction, toute petite, courbée sur un cercle fin autour de la souris : elle vient quand le mot est écrit
-	   (le cercle se trace en 0,7 s), s'en va avec lui */
+	/* la traduction, toute petite, courbée autour de la souris : elle vient quand le mot est écrit, s'en va avec lui */
 	.legende {
 		position: absolute;
 		overflow: visible;
@@ -296,26 +310,13 @@
 	.legende.vis {
 		opacity: 1;
 	}
-	.legende circle {
-		fill: none;
-		stroke: var(--color-text);
-		stroke-width: 0.75;
-		opacity: 0.3;
-		stroke-dasharray: 189;
-		animation: tracer 0.7s cubic-bezier(0.3, 0.6, 0.3, 1) both;
-	}
-	@keyframes tracer {
-		from {
-			stroke-dashoffset: 189;
-		}
-	}
 	.legende text {
 		font-family: var(--font-body);
 		font-size: 0.8rem;
-		letter-spacing: 0.04em;
+		letter-spacing: 0.03em;
 		fill: var(--color-text);
 		opacity: 0.6;
-		animation: venir 0.5s 0.25s both;
+		animation: venir 0.5s both;
 	}
 	@keyframes venir {
 		from {
