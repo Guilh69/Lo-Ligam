@@ -57,6 +57,12 @@
 	// (et sur les pages modifiables : un effet peut y être posé sur un élément)
 	let efiech = $derived(monte && (efiechSurRoute(id) || !!edicion.pagina));
 	let confetis = $derived(monte && ambianca.clar && ambianca.confetis && !ambianca.leugier && confetisSurPage(id));
+	// la couche se télécharge dès le début de l'hydratation quand elle va servir (Romain, 2026-11-22 : « un peu long à
+	// l'ouverture ») : à l'accueil, demandée seulement une fois la page montée, elle attendait ensuite que le moteur de
+	// l'accueil ait démarré, et paraissait 1,3 à 1,6 s après la page ; prête à temps, elle passe avant lui
+	let chargeFlotants = null;
+	const flotants = () => (chargeFlotants ??= import('$lib/flotants/Flotants.svelte'));
+	if (browser && ambianca.clar && ambianca.confetis && !ambianca.leugier && confetisSurPage(page.route.id ?? '')) flotants();
 	// la couche est DERRIÈRE le contenu : tant qu'elle est là, le cadre des pages (.pagina, .acuelh), plein, devient
 	// transparent (app.css, data-confetis) pour la laisser voir ; le fond de la page est celui du <body>
 	$effect(() => {
@@ -109,7 +115,7 @@
 {@render children()}
 
 {#if confetis}
-	{#await import('$lib/flotants/Flotants.svelte') then m}
+	{#await flotants() then m}
 		<m.default mode="confettis" fond />
 	{/await}
 {/if}

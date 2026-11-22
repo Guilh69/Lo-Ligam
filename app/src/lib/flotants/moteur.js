@@ -553,7 +553,7 @@ export function flotter(zone, elements, options = {}) {
 			proches.sort((x, y) => x[0] - y[0]);
 			for (const [, j] of proches.slice(0, 2)) liens.add(i < j ? i * 1000 + j : j * 1000 + i);
 		});
-		ecrit = { phase: 'venir', fin, mot: m, pieces: venus, boite, liens: [...liens].map((k) => [venus[Math.floor(k / 1000)], venus[k % 1000]]), r };
+		ecrit = { phase: 'venir', fin, mot: m, pieces: venus, boite, centre: [cx, cy], liens: [...liens].map((k) => [venus[Math.floor(k / 1000)], venus[k % 1000]]), r };
 		return true;
 	};
 	// la pièce en route, sur un léger arc : vers sa place dans le mot, elle part aussitôt et se pose en douceur ; quand le mot
@@ -616,7 +616,7 @@ export function flotter(zone, elements, options = {}) {
 			if (ecrit.phase === 'venir' && t >= ecrit.fin) {
 				ecrit.phase = 'tenir';
 				ecrit.fin = t + ec.tenue;
-				ec.onMot?.(ecrit.mot, ecrit.boite);
+				ec.onMot?.(ecrit.mot, ecrit.boite, ecrit.centre); // (centre : là où la souris s'est posée)
 			} else if (ecrit.phase === 'tenir' && t >= ecrit.fin) defaire(t);
 		} else if (curseur && pose && t - pose[2] > ec.attente && t > prochain) {
 			if (!commencer(t)) prochain = t + 400; // pas de place ici (ou la police manque) : on réessaiera
@@ -867,11 +867,14 @@ export function flotter(zone, elements, options = {}) {
 		fortes = vCurseur > o.seuilLance ? fortes + 1 : 0;
 		dernier = [x, y, t];
 		eveil = t + 1500; // la main bouge : cadence de l'écran pendant 1,5 s
-		if (o.aimant || ec) return; // la main attrape (boucle d'animation) ou fait écrire, au lieu d'écarter
+		// la main qui passe remue les confettis, même quand ils écrivent (Romain, 22-11 : « je veux garder l'interaction
+		// avec la souris, quand on passe ça les remue ») ; l'aimant, lui, attrape au lieu d'écarter
+		if (o.aimant) return;
 		const b = zone.getBoundingClientRect();
 		const mx = x - b.left, my = y - b.top;
 		for (const p of pieces) {
-			if (p.etat !== 'libre' || p === chaude) continue;
+			// (une pièce en route vers le mot ou vers chez elle suit son trajet)
+			if (p.etat !== 'libre' || p === chaude || p.ecrit) continue;
 			const d = Math.hypot(p.x - mx, p.y - my);
 			if (d > rayon) continue;
 			const f = (1 - d / rayon) ** 1.5;

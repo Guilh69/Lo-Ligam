@@ -32,14 +32,21 @@
 	//    canevas des fils n'est affiché que lorsqu'un fil est tracé.
 	// Écriture (Romain, 2026-11-21 : « l'effet avec la souris parasite l'interface ») : la main n'attrape plus rien. Posée
 	// un instant (0,4 s depuis le 22-11) sur un endroit vide, elle fait venir les confettis proches, qui écrivent un mot occitan
-	// (mots.js), sa traduction en petit dessous ; le mot tient, se défait, puis un autre vient. Le moindre geste le défait,
-	// et chaque confetti rentre alors là où il flottait avant.
+	// (mots.js), sa traduction courbée sur un cercle autour de la souris ; le mot tient, se défait, puis un autre vient. Le
+	// moindre geste le défait, et chaque confetti rentre alors là où il flottait avant. Depuis le 22-11, la main qui passe
+	// remue de nouveau les confettis (« je veux garder l'interaction avec la souris, quand on passe ça les remue »).
 	let { mode = 'confettis', fond = false, onattrape = () => {} } = $props();
 
 	let zone;
 	let pieces = $state([]);
 	let fils = $state(null); // le canevas des fils fins qui relient les points du mot écrit
-	let legende = $state(null); // la traduction du mot écrit par les confettis
+	// la traduction du mot écrit par les confettis, courbée sur un cercle fin autour de la souris (Romain, 22-11 : « posée sur
+	// le cercle de la souris, incurvée en suivant la ligne ») : sur le haut du cercle quand le mot est au-dessus, sur le bas
+	// quand il est dessous ; le cercle se trace quand le mot est écrit, et tous deux pâlissent quand il se défait
+	let legende = $state(null); // { fr, x, y (la souris), bas, vis, n }
+	const uid = $props.id();
+	const RC = 30; // le rayon du cercle, en pixels : la flèche de la souris y tient
+	const RT = RC + 3; // et celui de la ligne du texte, juste au-dehors
 	let mot = $state(null);
 	let annonce = $state('');
 	let moteur = null;
@@ -90,7 +97,7 @@
 							police: getComputedStyle(document.documentElement).getPropertyValue('--font-body').trim() || 'Luciole, sans-serif', // Limelight : traits trop fins pour des confettis, illisible
 							// l'encre du site, lue au moment de tracer (Romain règle les couleurs depuis sa barre d'outils)
 							couleurFil: () => getComputedStyle(document.documentElement).getPropertyValue('--color-text').trim(),
-							onMot: (m, b) => (legende = { fr: m.fr, x: (b.l + b.r) / 2, y: b.b + 2, vis: true }),
+							onMot: (m, b, [x, y]) => (legende = { fr: m.fr, x, y, bas: (b.t + b.b) / 2 > y, vis: true, n: (legende?.n ?? 0) + 1 }),
 							onEfface: () => {
 								if (legende) legende = { ...legende, vis: false };
 							}
@@ -215,7 +222,14 @@
 		{/if}
 	{/each}
 	{#if legende}
-		<small class="legende" class:vis={legende.vis} lang="fr" style="left: {legende.x}px; top: {legende.y}px">{legende.fr}</small>
+		{#key legende.n}
+			<svg class="legende" class:vis={legende.vis} style="left: {legende.x - 80}px; top: {legende.y - 80}px" width="160" height="160" viewBox="0 0 160 160">
+				<circle cx="80" cy="80" r={RC} transform="rotate(-90 80 80)" />
+				<!-- le chemin du texte : un demi-cercle de gauche à droite, par le haut ou par le bas, pour qu'il se lise droit -->
+				<path id={uid} d="M {80 - RT} 80 A {RT} {RT} 0 0 {legende.bas ? 0 : 1} {80 + RT} 80" fill="none" />
+				<text lang="fr" dominant-baseline={legende.bas ? 'hanging' : 'alphabetic'}><textPath href="#{uid}" startOffset="50%" text-anchor="middle">{legende.fr}</textPath></text>
+			</svg>
+		{/key}
 	{/if}
 	{#if mot}
 		<div class="mot" style="left: {mot.x}px; top: {mot.haut}px"><b lang="oc">{mot.oc}</b><small>{mot.fr}</small></div>
@@ -271,20 +285,42 @@
 		opacity: calc(0.9 * var(--fade, 1));
 		transition-duration: 1.2s;
 	}
-	/* la traduction, toute petite sous le mot : elle vient quand le mot est écrit, s'en va avec lui */
+	/* la traduction, toute petite, courbée sur un cercle fin autour de la souris : elle vient quand le mot est écrit
+	   (le cercle se trace en 0,7 s), s'en va avec lui */
 	.legende {
 		position: absolute;
-		transform: translateX(-50%);
-		font-family: var(--font-body);
-		font-size: 0.8rem;
-		letter-spacing: 0.02em;
-		color: var(--color-text);
-		white-space: nowrap;
+		overflow: visible;
 		opacity: 0;
 		transition: opacity 1s;
 	}
 	.legende.vis {
-		opacity: 0.55;
+		opacity: 1;
+	}
+	.legende circle {
+		fill: none;
+		stroke: var(--color-text);
+		stroke-width: 0.75;
+		opacity: 0.3;
+		stroke-dasharray: 189;
+		animation: tracer 0.7s cubic-bezier(0.3, 0.6, 0.3, 1) both;
+	}
+	@keyframes tracer {
+		from {
+			stroke-dashoffset: 189;
+		}
+	}
+	.legende text {
+		font-family: var(--font-body);
+		font-size: 0.8rem;
+		letter-spacing: 0.04em;
+		fill: var(--color-text);
+		opacity: 0.6;
+		animation: venir 0.5s 0.25s both;
+	}
+	@keyframes venir {
+		from {
+			opacity: 0;
+		}
 	}
 	.c .rond {
 		border-radius: 50%;
