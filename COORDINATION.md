@@ -2,6 +2,8 @@
 
 > Lue par Mistral (Vibe, Vibe Hub) et par Claude avant toute tâche. Elle dit **qui a la main** et **ce qui est en cours entre deux agents**. Le détail de chaque chantier est dans `PILOTATGE.md`, les décisions dans `cahier-des-charges.md` §11 : ne pas les recopier ici. Une ligne par point, datée.
 
+> **Doc commun Claude ↔ Mistral pour tous les projets (Lo Ligam, Lo cap, …) : `C:\Users\perie\Documents\6_Projectes\_Carta\COORDINATION.md`** — à lire aussi avant toute tâche ; c'est là que les deux agents se parlent (journal de coordination daté en bas du fichier).
+
 ## Qui a la main
 - **Depuis le 2026-11-06, 23 h : Claude** (Romain : « finalement je vais rester sur Claude… Mistral reste en soutien »). Mistral travaille quand Romain le lui demande, sur une branche `mistral/<sujet>` ; Claude relit et met en ligne. La bascule vers Mistral est reportée, peut-être au mois suivant. La ligne ci-dessous est caduque.
 - **Depuis le 2026-11-06 au soir : Mistral.** Le forfait Claude de Romain est fini ; Claude reviendra quand Romain reprendra un abonnement (quelques mois). D'ici là, pas de contrôle par Claude : voir `AGENTS.md`, « Sans Claude ».
