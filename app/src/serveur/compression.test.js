@@ -74,6 +74,12 @@ describe('brancher (serveur réel)', () => {
 				res.setHeader('content-type', 'text/html');
 				res.write(GROS.slice(0, 50));
 				res.end(GROS.slice(50));
+			} else if (chemin === '/page-sveltekit') {
+				// une page de SvelteKit arrive avec ses propres en-têtes de sécurité
+				res.setHeader('content-type', 'text/html');
+				res.setHeader('x-frame-options', 'SAMEORIGIN');
+				res.writeHead(200);
+				res.end('<p>court</p>');
 			} else if (chemin === '/introuvable') {
 				res.setHeader('content-type', 'text/html');
 				res.writeHead(404, 'Pas trobat');
@@ -175,5 +181,14 @@ describe('brancher (serveur réel)', () => {
 		expect(r.entetes['cache-control']).toBe('public, max-age=2592000');
 		expect(r.entetes['content-encoding']).toBeUndefined();
 		expect(r.corps.length).toBe(5000);
+	});
+
+	it('pose nosniff et DENY sur un fichier statique, sans écraser ceux d’une page', async () => {
+		const statique = await demander('/fonts/a.woff2');
+		expect(statique.entetes['x-content-type-options']).toBe('nosniff');
+		expect(statique.entetes['x-frame-options']).toBe('DENY');
+		const page = await demander('/page-sveltekit');
+		expect(page.entetes['x-frame-options']).toBe('SAMEORIGIN');
+		expect(page.entetes['x-content-type-options']).toBe('nosniff');
 	});
 });

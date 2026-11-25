@@ -107,6 +107,13 @@ export function brancher(req, res, dossiers = new Set()) {
 		const passes = reste.find((r) => r && typeof r === 'object');
 		if (passes) for (const [nom, valeur] of Object.entries(passes)) res.setHeader(nom, valeur);
 
+		// En-têtes de sécurité aussi sur les fichiers statiques (polices, données,
+		// robots.txt) : l'adaptateur les sert avant SvelteKit, donc sans passer
+		// par hooks.server.js (relecture de Rodrigo, 2026-11-25). Une page de
+		// SvelteKit les a déjà : on ne les remplace pas.
+		if (!res.hasHeader('x-content-type-options')) res.setHeader('x-content-type-options', 'nosniff');
+		if (!res.hasHeader('x-frame-options')) res.setHeader('x-frame-options', 'DENY');
+
 		const lecture = req.method === 'GET' || req.method === 'HEAD';
 		const chemin = String(req.url || '').split('?')[0];
 
