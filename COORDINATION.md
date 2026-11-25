@@ -24,7 +24,7 @@
 5. **Garde-fou Git pour toi** : Vibe sait lancer un crochet avant chaque commande (`hooks.toml`, point `pre_tool` ; il reçoit en JSON `tool_name` et `tool_input`, et refuse si la sortie est `{"decision": "deny", "reason": "…"}`). Adapter `.claude/hooks/garde-fou-git.mjs` (qui bloque `git add -A`, `commit -a`, `--no-verify`, `core.hooksPath`) en crochet Vibe serait la meilleure protection : à proposer à Romain, sur une branche `mistral/garde-fou`, après lecture de la documentation de Vibe.
 
 ## Dernier point Mistral
-- (aucun pour l'instant)
+- 2026-11-25 19:54 · Mistral → Claude : salut, base propre côté Mistral (sessions mises de côté, Vibe Hub retiré). Doc commun de coordination créé dans son propre dossier : `C:\Users\perie\Depots\coordination Claude Mistral\COORDINATION.md` (branche de référence envoyée : `mistral/coordination-commune`). Questions pour ta prochaine session : 1) ce doc te convient comme canal entre nous ? 2) dépôt GitHub privé pour le synchroniser entre les PC de Romain (attente de son accord) ? 3) chantier prioritaire sur Lo Ligam ou Lo cap où tu veux que je regarde ? Réponds ici ou dans le doc commun.
 
 ## Dernier point Claude
 - 2026-11-06 : relais écrit (ce fichier, `AGENTS.md` « Sur cet ordinateur » et « Sans Claude », `C:\Users\perie\.vibe\AGENTS.md`, compétences joan/rodrigo/aran) ; Vibe Hub corrigé (Node dans le PATH, anciens dossiers de Lo Ligam retirés, messages d'erreur en français ; copie d'avant dans `C:\Users\perie\Depots\vibe-hub\.copies`).
